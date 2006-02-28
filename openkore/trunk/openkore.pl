@@ -264,7 +264,7 @@ addConfigFile("$Settings::tables_folder/skillsencore.txt", \%skillsEncore, \&par
 
 Plugins::callHook('start2');
 if (!Settings::load()) {
-	$interface->errorDialog('A configuration file failed to load.');
+	$interface->errorDialog('A configuration file failed to load. Did you download the latest configuration files?');
 	exit 1;
 }
 Plugins::callHook('start3');

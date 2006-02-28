@@ -499,13 +499,12 @@ sub checkConnection {
 		undef $conState_tries;
 
 	} elsif ($conState == 5 && !$self->serverAlive()) {
-		error T("Disconnected from Map Server, "), "connection";
 		if ($config{dcOnDisconnect}) {
 			chatLog("k", "*** You disconnected, auto quit! ***\n");
-			error T("exiting...\n"), "connection";
+			error T("Disconnected from Map Server, exiting...\n"), "connection";
 			$quit = 1;
 		} else {
-			error T("connecting to Account Server in %s seconds...\n", $timeout_ex{master}{timeout}), "connection";
+			error TF("Disconnected from Map Server, connecting to Account Server in %s seconds...\n", $timeout_ex{master}{timeout}), "connection";
 			$timeout_ex{master}{time} = time;
 			$conState = 1;
 			undef $conState_tries;

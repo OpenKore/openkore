@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: openkore 1.9.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-02-25 08:05+0700\n"
+"POT-Creation-Date: 2006-02-28 19:38+0100\n"
 "PO-Revision-Date: 2006-02-25 09:27+0700\n"
 "Last-Translator: Richard <h4rry84@telkom.net>\n"
 "Language-Team: Indonesian\n"
@@ -50,8 +50,7 @@ msgstr "Melakukan koneksi ke Account Server...\n"
 msgid "Requesting permission to logon on account server...\n"
 msgstr "Meminta izin untuk logon ke account server...\n"
 
-#: ../Network.pm:333
-#: ../Network.pm:365
+#: ../Network.pm:333 ../Network.pm:365
 msgid "Secure Login...\n"
 msgstr "Login Keamanan...\n"
 
@@ -82,7 +81,8 @@ msgstr "Melakukan koneksi ke Character Select Server...\n"
 
 #: ../Network.pm:464
 msgid "Timeout on Character Select Server, reconnecting...\n"
-msgstr "Terputus dari Character Select Server, Berusaha untuk terhubung ulang...\n"
+msgstr ""
+"Terputus dari Character Select Server, Berusaha untuk terhubung ulang...\n"
 
 #: ../Network.pm:473
 msgid "Connecting to Map Server...\n"
@@ -92,24 +92,29 @@ msgstr "Melakukan koneksi ke Map Server...\n"
 msgid "Timeout on Map Server, connecting to Account Server...\n"
 msgstr "Timeout di Map Server, melakukan koneksi ke Account Server...\n"
 
-#: ../Network.pm:502
-msgid "Disconnected from Map Server, "
+#: ../Network.pm:504
+#, fuzzy
+msgid "Disconnected from Map Server, exiting...\n"
 msgstr "Disconnect dari Map Server, "
 
-#: ../Network.pm:505
-#: ../Network.pm:517
+#: ../Network.pm:507
+#, fuzzy, perl-format
+msgid ""
+"Disconnected from Map Server, connecting to Account Server in %s seconds...\n"
+msgstr "Timeout di Map Server, melakukan koneksi ke Account Server...\n"
+
+#: ../Network.pm:514
+msgid "Timeout on Map Server, "
+msgstr "Terputus dari Map Server,"
+
+#: ../Network.pm:516
 msgid "exiting...\n"
 msgstr "keluar...\n"
 
-#: ../Network.pm:508
-#: ../Network.pm:520
+#: ../Network.pm:519
 #, perl-format
 msgid "connecting to Account Server in %s seconds...\n"
 msgstr "Melakukan koneksi ke Account Server dalam %s detik...\n"
-
-#: ../Network.pm:515
-msgid "Timeout on Map Server, "
-msgstr "Terputus dari Map Server,"
 
 #: ../Settings.pm:48
 msgid "Custom Ragnarok Online client"
@@ -119,57 +124,65 @@ msgstr "Kustomisasi Klien Ragnarok Online"
 msgid "Welcome to "
 msgstr "Selamat Datang di"
 
-#: ../XKoreProxy.pm:64
+#: ../XKoreProxy.pm:65
 msgid "X-Kore mode intialized.\n"
 msgstr "Mode X-Kore di-inisialisasikan.\n"
 
-#: ../XKoreProxy.pm:329
+#: ../XKoreProxy.pm:333
 #, perl-format
 msgid "Waiting Ragnarok Client to connect on (%s:%s)\n"
 msgstr "menunggu Ragnarok Client untuk connect ke (%s:%s)\n"
 
-#: ../XKoreProxy.pm:352
+#: ../XKoreProxy.pm:359
 #, perl-format
 msgid "Proxying to [%s]\n"
 msgstr "Melakukan Proxy ke [%s]\n"
 
-#: ../XKoreProxy.pm:361
+#: ../XKoreProxy.pm:368
 msgid "Invalid server specified or server does not exist...\n"
 msgstr "Server yang dispesifikasikan salah atau server tidak ada...\n"
 
-#: ../XKoreProxy.pm:409
-#: ../Network/Receive.pm:439
+#: ../XKoreProxy.pm:394
+#, perl-format
+msgid ""
+"Client did not respond in time.\n"
+"Trying to replay the packet for %s of 3 times\n"
+msgstr ""
+
+#: ../XKoreProxy.pm:400
+msgid "Client did not respond. Forcing disconnection\n"
+msgstr ""
+
+#: ../XKoreProxy.pm:427
+msgid "Logon-grant packet received twice! Avoiding bug in client.\n"
+msgstr ""
+
+#: ../XKoreProxy.pm:466 ../Network/Receive.pm:439
 msgid "Closing connection to Account Server\n"
 msgstr "Mengakhiri koneksi ke Account server\n"
 
-#: ../XKoreProxy.pm:427
-#: ../Network/Receive.pm:4240
+#: ../XKoreProxy.pm:487 ../Network/Receive.pm:4241
 msgid "Closing connection to Character Server\n"
 msgstr "Mangakhiri koneksi ke Character Server\n"
 
-#: ../XKoreProxy.pm:429
-#: ../Network/Receive.pm:3432
+#: ../XKoreProxy.pm:489 ../Network/Receive.pm:3432
 msgid "Closing connection to Map Server\n"
 msgstr "Mengakhiri koneksi ke Map Server\n"
 
-#: ../XKoreProxy.pm:489
-#: ../../openkore.pl:383
+#: ../XKoreProxy.pm:551 ../../openkore.pl:383
 msgid "Master Servers"
 msgstr "master server"
 
-#: ../XKoreProxy.pm:490
-#: ../../openkore.pl:384
+#: ../XKoreProxy.pm:552 ../../openkore.pl:384
 msgid "#         Name\n"
 msgstr "#         Nama\n"
 
-#: ../XKoreProxy.pm:504
-#: ../../openkore.pl:398
+#: ../XKoreProxy.pm:566 ../../openkore.pl:398
 #, perl-format
 msgid "'%s' is not a valid server.\n"
 msgstr "'%s' bukan merupakan server yang benar.\n"
 
-#: ../XKoreProxy.pm:506
-#: ../../openkore.pl:400
+#: ../XKoreProxy.pm:568 ../../openkore.pl:400
 msgid "Enter the number of your master server: "
 msgstr "Masukkan nomer dari master server anda: "
 
@@ -223,14 +236,12 @@ msgstr "Anda baru saja mati.\n"
 msgid "Player Died: %s (%s) %s %s\n"
 msgstr "Player Mati: %s (%s) %s %s\n"
 
-#: ../Network/Receive.pm:956
-#: ../Network/Receive.pm:1168
+#: ../Network/Receive.pm:956 ../Network/Receive.pm:1168
 #, perl-format
 msgid "NPC Exists: %s (%s, %s) (ID %s) - (%s)\n"
 msgstr "Terdapat NPC : %s (%s, %s) (ID %s) - (%s)\n"
 
-#: ../Network/Receive.pm:958
-#: ../Network/Receive.pm:1149
+#: ../Network/Receive.pm:958 ../Network/Receive.pm:1149
 #, perl-format
 msgid "Portal Exists: %s (%s, %s) - (%s)\n"
 msgstr "Terdapat Portal : %s (%s, %s) - (%s)\n"
@@ -440,7 +451,8 @@ msgstr "%s (level %s) Mengajukan Transaksi\n"
 
 #: ../Network/Receive.pm:2280
 msgid "Type 'deal' to start dealing, or 'deal no' to deny the deal.\n"
-msgstr "Ketik 'deal' untuk mulai Transaksi, atau 'deal no' untuk menolak Transaksi.\n"
+msgstr ""
+"Ketik 'deal' untuk mulai Transaksi, atau 'deal no' untuk menolak Transaksi.\n"
 
 #: ../Network/Receive.pm:2302
 msgid "-----Egg Hatch Candidates-----\n"
@@ -475,14 +487,16 @@ msgid ""
 "\n"
 "%s will now immediately disconnect."
 msgstr ""
-"Critical Error: Tidak diperbolehkan Dual Login - Seseorang mencoba untuk login!\n"
+"Critical Error: Tidak diperbolehkan Dual Login - Seseorang mencoba untuk "
+"login!\n"
 "\n"
 "%s sekarang akan segera disconnect."
 
-#: ../Network/Receive.pm:2405
-#: ../Network/Receive.pm:2409
+#: ../Network/Receive.pm:2405 ../Network/Receive.pm:2409
 msgid "Critical Error: Dual login prohibited - Someone trying to login!\n"
-msgstr "Critical Error: Tidak diperbolehkan Dual Login - Seseorang mencoba untuk login!\n"
+msgstr ""
+"Critical Error: Tidak diperbolehkan Dual Login - Seseorang mencoba untuk "
+"login!\n"
 
 #: ../Network/Receive.pm:2406
 #, perl-format
@@ -499,23 +513,30 @@ msgstr "Error : Gangguan pada server dikarenakan kelebihan populasi.\n"
 
 #: ../Network/Receive.pm:2417
 msgid "Error: You are underaged and cannot join this server.\n"
-msgstr "Error : Anda tidak cukup umur dan tidak dapat bergabung dengan server ini.\n"
+msgstr ""
+"Error : Anda tidak cukup umur dan tidak dapat bergabung dengan server ini.\n"
 
 #: ../Network/Receive.pm:2419
 msgid "Critical Error: You must pay to play this account!"
-msgstr "Critical Error : Anda harus membayar untuk dapat memainkan account ini! "
+msgstr ""
+"Critical Error : Anda harus membayar untuk dapat memainkan account ini! "
 
 #: ../Network/Receive.pm:2422
 msgid "Error: The server still recognizes your last connection\n"
 msgstr "Error : Server masih mengenali login terakhir anda\n"
 
 #: ../Network/Receive.pm:2424
-msgid "Error: IP capacity of this Internet Cafe is full. Would you like to pay the personal base?"
-msgstr "Error : Kapasitas IP Internet Cafe ini sudah penuh. Apakah anda mau membayar untuk tempat sendiri?"
+msgid ""
+"Error: IP capacity of this Internet Cafe is full. Would you like to pay the "
+"personal base?"
+msgstr ""
+"Error : Kapasitas IP Internet Cafe ini sudah penuh. Apakah anda mau membayar "
+"untuk tempat sendiri?"
 
 #: ../Network/Receive.pm:2426
 msgid "Error: You are out of available time paid for\n"
-msgstr "Error : Anda sudah melewati batas waktu yang dibayarkan untuk bermain\n"
+msgstr ""
+"Error : Anda sudah melewati batas waktu yang dibayarkan untuk bermain\n"
 
 #: ../Network/Receive.pm:2428
 msgid "Error: You have been forced to disconnect by a GM\n"
@@ -572,8 +593,11 @@ msgstr "%s ingin menjadi temanmu\n"
 
 #: ../Network/Receive.pm:2576
 #, perl-format
-msgid "Type 'friend accept' to be friend with %s, otherwise type 'friend reject'\n"
-msgstr "Ketik 'friend accept' untuk menjadi teman %s, untuk kebalikannya ketik 'friend reject'\n"
+msgid ""
+"Type 'friend accept' to be friend with %s, otherwise type 'friend reject'\n"
+msgstr ""
+"Ketik 'friend accept' untuk menjadi teman %s, untuk kebalikannya ketik "
+"'friend reject'\n"
 
 #: ../Network/Receive.pm:2587
 #, perl-format
@@ -780,7 +804,9 @@ msgstr "Server ini sementara memblokir koneksi anda\n"
 
 #: ../Network/Receive.pm:3361
 msgid "Error logging into Character Server (invalid character specified)...\n"
-msgstr "Gagal menuju ke Character Server (Kesalahan pada karakter yang dispesifikasikan)...\n"
+msgstr ""
+"Gagal menuju ke Character Server (Kesalahan pada karakter yang "
+"dispesifikasikan)...\n"
 
 #: ../Network/Receive.pm:3394
 #, perl-format
@@ -840,7 +866,9 @@ msgstr "Bersiap untuk mulai menjual item\n"
 #: ../Network/Receive.pm:3610
 #, perl-format
 msgid "%s: Type 'store' to start buying, or type 'sell' to start selling\n"
-msgstr "%s: Ketik 'store' untuk mulai membeli, atau ketik 'sell' untuk mulai menjual\n"
+msgstr ""
+"%s: Ketik 'store' untuk mulai membeli, atau ketik 'sell' untuk mulai "
+"menjual\n"
 
 #: ../Network/Receive.pm:3644
 #, perl-format
@@ -953,7 +981,9 @@ msgstr "Memberi makan peliharaan dengan %s\n"
 #: ../Network/Receive.pm:3963
 #, perl-format
 msgid "Failed to feed pet with %s: no food in inventory.\n"
-msgstr "Gagal untuk memberi makan peliharaan dengan  %s: Tidak ada makanan dalam inventory.\n"
+msgstr ""
+"Gagal untuk memberi makan peliharaan dengan  %s: Tidak ada makanan dalam "
+"inventory.\n"
 
 #: ../Network/Receive.pm:4044
 #, perl-format
@@ -1001,226 +1031,229 @@ msgstr "Player tidak mau menerima pesan apapun\n"
 msgid "Received characters from Character Server\n"
 msgstr "Menerima karakter dari Character Server\n"
 
-#: ../Network/Receive.pm:4214
+#: ../Network/Receive.pm:4215
 msgid "Received character ID and Map IP from Character Server\n"
 msgstr "Menerima karakter ID dan Map IP dari Character Server\n"
 
-#: ../Network/Receive.pm:4254
+#: ../Network/Receive.pm:4255
 #, perl-format
 msgid "You successfully refined a weapon (ID %s)!\n"
 msgstr "Anda berhasil untuk menempa (ID %s)!\n"
 
-#: ../Network/Receive.pm:4256
+#: ../Network/Receive.pm:4257
 #, perl-format
 msgid "You failed to refine a weapon (ID %s)!\n"
 msgstr "Anda gagal untuk menempa (ID %s)!\n"
 
-#: ../Network/Receive.pm:4258
+#: ../Network/Receive.pm:4259
 #, perl-format
 msgid "You successfully made a potion (ID %s)!\n"
 msgstr "Anda berhasil membuat sebuah potion (ID %s)!\n"
 
-#: ../Network/Receive.pm:4260
+#: ../Network/Receive.pm:4261
 #, perl-format
 msgid "You failed to make a potion (ID %s)!\n"
 msgstr "Anda gagal membuat sebuah potion (ID %s)!\n"
 
-#: ../Network/Receive.pm:4262
+#: ../Network/Receive.pm:4263
 #, perl-format
 msgid "You tried to refine a weapon (ID %s); result: unknown %s\n"
 msgstr "Anda gagal menempa sebuah senjata (ID %s); Hasil: unknown %s\n"
 
-#: ../Network/Receive.pm:4290
+#: ../Network/Receive.pm:4291
 #, perl-format
 msgid "Repair of %s failed.\n"
 msgstr "Perbaikan untuk %s gagal.\n"
 
-#: ../Network/Receive.pm:4292
+#: ../Network/Receive.pm:4293
 #, perl-format
 msgid "Successfully repaired %s.\n"
 msgstr "Berhasil memperbaiki %s.\n"
 
-#: ../Network/Receive.pm:4303
+#: ../Network/Receive.pm:4304
 msgid "You have been resurrected\n"
 msgstr "Anda baru saja dihidupkan kembali\n"
 
-#: ../Network/Receive.pm:4313
+#: ../Network/Receive.pm:4314
 #, perl-format
 msgid "%s has been resurrected\n"
 msgstr "%s baru saja dihidupkan kembali\n"
 
-#: ../Network/Receive.pm:4370
+#: ../Network/Receive.pm:4371
 msgid "Sync packet requested for wrong ID\n"
 msgstr "Sync packet diminta karena kesalahan ID\n"
 
-#: ../Network/Receive.pm:4380
+#: ../Network/Receive.pm:4381
 msgid "Unavailable Area To Teleport\n"
 msgstr "Area ini tidak dapat digunakan untuk Teleport\n"
 
-#: ../Network/Receive.pm:4383
+#: ../Network/Receive.pm:4384
 msgid "Unavailable Area To Memo\n"
 msgstr "Area ini tidak dapat digunakan untuk Memo\n"
 
-#: ../Network/Receive.pm:4385
+#: ../Network/Receive.pm:4386
 #, perl-format
 msgid "Unavailable Area To Teleport (fail code %s)\n"
 msgstr "Area ini tidak dapat digunakan untuk Teleport (fail code %s)\n"
 
-#: ../Network/Receive.pm:4396
-#: ../Network/Receive.pm:4411
+#: ../Network/Receive.pm:4397 ../Network/Receive.pm:4412
 msgid "PvP Display Mode\n"
 msgstr "Mode PvP Display\n"
 
-#: ../Network/Receive.pm:4399
-#: ../Network/Receive.pm:4414
+#: ../Network/Receive.pm:4400 ../Network/Receive.pm:4415
 msgid "GvG Display Mode\n"
 msgstr "Mode GvG Display\n"
 
-#: ../Network/Receive.pm:4431
+#: ../Network/Receive.pm:4432
 #, perl-format
 msgid "Your PvP rank is: %s/%s\n"
 msgstr "Rank PvP anda adalah: %s/%s\n"
 
-#: ../Network/Receive.pm:4472
+#: ../Network/Receive.pm:4473
 #, perl-format
 msgid "sold out: %s\n"
 msgstr "Terjual : %s\n"
 
-#: ../Network/Receive.pm:4475
+#: ../Network/Receive.pm:4476
 msgid "Items have been sold out.\n"
 msgstr "Item sudah terjual habis.\n"
 
-#: ../Network/Receive.pm:4486
+#: ../Network/Receive.pm:4487
 #, perl-format
 msgid "You can sell %s items!\n"
 msgstr "Anda dapat menjual %s item!\n"
 
-#: ../Network/Receive.pm:4552
+#: ../Network/Receive.pm:4553
 #, perl-format
 msgid "Monster Skill - switch Target to : %s (%s)\n"
 msgstr "Monster Skill - berganti Target ke : %s (%s)\n"
 
-#: ../Network/Receive.pm:4581
+#: ../Network/Receive.pm:4582
 #, perl-format
 msgid "Avoid casting Skill - switch position to : %s,%s\n"
 msgstr "Menghindari casting Skill - berganti posisi ke : %s,%s\n"
 
-#: ../Network/Receive.pm:4866
+#: ../Network/Receive.pm:4867
 msgid "Not enough stat points to add\n"
 msgstr "Tidak cukup stat point untuk dtambahkan\n"
 
-#: ../Network/Receive.pm:4969
+#: ../Network/Receive.pm:4970
 msgid "Mute period expired.\n"
 msgstr "Periode dibisukan sudah lewat.\n"
 
-#: ../Network/Receive.pm:4975
+#: ../Network/Receive.pm:4976
 #, perl-format
 msgid "You've been muted for %s minutes, auto disconnect!\n"
-msgstr "Anda baru saja dibisukan selama %s menit, disconnect secara otomatis!\n"
+msgstr ""
+"Anda baru saja dibisukan selama %s menit, disconnect secara otomatis!\n"
 
-#: ../Network/Receive.pm:4979
+#: ../Network/Receive.pm:4980
 #, perl-format
 msgid "You've been muted for %s minutes\n"
 msgstr "Anda baru saja dibisukan selama %s menit\n"
 
-#: ../Network/Receive.pm:4999
+#: ../Network/Receive.pm:5000
 #, perl-format
 msgid "You are now level %s\n"
 msgstr "Anda sekarang level %s\n"
 
-#: ../Network/Receive.pm:5001
+#: ../Network/Receive.pm:5002
 #, perl-format
 msgid "Disconnecting on level %s!\n"
 msgstr "Disconnecting saat level %s!\n"
 
-#: ../Network/Receive.pm:5060
+#: ../Network/Receive.pm:5061
 #, perl-format
 msgid "You are now job level %s\n"
 msgstr "Anda sekarang job level %s\n"
 
-#: ../Network/Receive.pm:5062
+#: ../Network/Receive.pm:5063
 #, perl-format
 msgid "Disconnecting on job level %s!\n"
 msgstr "Disconnecting saat job level %s!\n"
 
-#: ../Network/Receive.pm:5127
+#: ../Network/Receive.pm:5128
 msgid "Storage closed.\n"
 msgstr "Storage ditutup.\n"
 
-#: ../Network/Receive.pm:5157
+#: ../Network/Receive.pm:5158
 #, perl-format
 msgid "Storage Item Added: %s (%s) x %s\n"
 msgstr "Menambahkan Item pada Storage : %s (%s) x %s\n"
 
-#: ../Network/Receive.pm:5169
+#: ../Network/Receive.pm:5170
 #, perl-format
 msgid "Storage Item Removed: %s (%s) x %s\n"
 msgstr "Storage Item Dipindahkan: %s (%s) x %s\n"
 
-#: ../Network/Receive.pm:5240
+#: ../Network/Receive.pm:5241
 msgid "Storage opened.\n"
 msgstr "Storage dibuka.\n"
 
-#: ../Network/Receive.pm:5249
+#: ../Network/Receive.pm:5250
 msgid "Please enter a new storage password:\n"
 msgstr "Silahkan masukkan password storage yang baru:\n"
 
-#: ../Network/Receive.pm:5253
+#: ../Network/Receive.pm:5254
 msgid "Please enter your storage password:\n"
 msgstr "Silahkan masukkan password storage anda:\n"
 
-#: ../Network/Receive.pm:5257
+#: ../Network/Receive.pm:5258
 #, perl-format
 msgid "Storage password set to: %s\n"
 msgstr "Password Storage di-set menjadi : %s\n"
 
-#: ../Network/Receive.pm:5267
-msgid "Unable to send storage password. You must set the 'storageEncryptKey' option in config.txt or servers.txt.\n"
-msgstr "Tidak dapat mengirimkan password storage. Anda harus menseting 'storageEncryptKey' di config.txt atau server.txt.\n"
+#: ../Network/Receive.pm:5268
+msgid ""
+"Unable to send storage password. You must set the 'storageEncryptKey' option "
+"in config.txt or servers.txt.\n"
+msgstr ""
+"Tidak dapat mengirimkan password storage. Anda harus menseting "
+"'storageEncryptKey' di config.txt atau server.txt.\n"
 
-#: ../Network/Receive.pm:5289
+#: ../Network/Receive.pm:5290
 msgid "Successfully changed storage password.\n"
 msgstr "Berhasil merubah password storage.\n"
 
-#: ../Network/Receive.pm:5291
+#: ../Network/Receive.pm:5292
 msgid "Error: Incorrect storage password.\n"
 msgstr "Error: storage password salah.\n"
 
-#: ../Network/Receive.pm:5293
+#: ../Network/Receive.pm:5294
 msgid "Successfully entered storage password.\n"
 msgstr "Successfully memasukkan password storage.\n"
 
-#: ../Network/Receive.pm:5340
+#: ../Network/Receive.pm:5341
 #, perl-format
 msgid "You unequip %s (%s) - %s\n"
 msgstr "Anda melepas equip %s (%s) - %s\n"
 
-#: ../Network/Receive.pm:5350
+#: ../Network/Receive.pm:5351
 #, perl-format
 msgid "%s gained a level!\n"
 msgstr "%s naik level!\n"
 
-#: ../Network/Receive.pm:5352
+#: ../Network/Receive.pm:5353
 #, perl-format
 msgid "%s gained a job level!\n"
 msgstr "%s naik job level!\n"
 
-#: ../Network/Receive.pm:5354
+#: ../Network/Receive.pm:5355
 #, perl-format
 msgid "%s failed to refine a weapon!\n"
 msgstr "%s gagal untuk menempa sebuah senjata!\n"
 
-#: ../Network/Receive.pm:5356
+#: ../Network/Receive.pm:5357
 #, perl-format
 msgid "%s successfully refined a weapon!\n"
 msgstr "%s berhasil menempa sebuah senjata!\n"
 
-#: ../Network/Receive.pm:5367
+#: ../Network/Receive.pm:5368
 #, perl-format
 msgid "You used Item: %s (%s) x %s\n"
 msgstr "Anda menggunakan Item: %s (%s) x %s\n"
 
-#: ../Network/Receive.pm:5377
+#: ../Network/Receive.pm:5378
 #, perl-format
 msgid "There are currently %s users online\n"
 msgstr "Saat ini ada %s pemain yang sedang online\n"
@@ -1230,7 +1263,8 @@ msgid ""
 "You have old files in the OpenKore folder, which may cause conflicts.\n"
 "Please delete your entire OpenKore source folder, and redownload everything."
 msgstr ""
-"Anda memiliki file data-data lama dalam folder Openkore yang mungkin dapat menyebabkan adanya konflik.\n"
+"Anda memiliki file data-data lama dalam folder Openkore yang mungkin dapat "
+"menyebabkan adanya konflik.\n"
 "Hapus seluruh folder Openkore, dan download ulang seluruhnya."
 
 #: ../../openkore.pl:159
@@ -1361,365 +1395,374 @@ msgstr "Selesai berbicara dengan %s.\n"
 msgid "NPC did not respond.\n"
 msgstr "NPC tidak merespon.\n"
 
-#: ../functions.pl:946
+#: ../functions.pl:950
 msgid "Can't reach or damage target, dropping target\n"
 msgstr "Tidak dapat mendekati atau menyerang target, pembatalan target\n"
 
-#: ../functions.pl:948
-#: ../functions.pl:1413
+#: ../functions.pl:952 ../functions.pl:1417
 msgid "Teleport due to dropping attack target\n"
 msgstr "Teleport dikarenakan pembatalan untuk menyerang target\n"
 
-#: ../functions.pl:959
+#: ../functions.pl:963
 msgid "Target died\n"
 msgstr "Target mati\n"
 
-#: ../functions.pl:994
+#: ../functions.pl:998
 msgid "Target lost\n"
 msgstr "Target hilang\n"
 
-#: ../functions.pl:1134
-#: ../functions.pl:1401
+#: ../functions.pl:1138 ../functions.pl:1405
 msgid "Dropping target - you will not kill steal others\n"
-msgstr "Pembatalan target - anda tidak akan melakukan kill steal pada lainnya\n"
+msgstr ""
+"Pembatalan target - anda tidak akan melakukan kill steal pada lainnya\n"
 
-#: ../functions.pl:1186
+#: ../functions.pl:1190
 #, perl-format
 msgid "%s; moving to (%s, %s)\n"
 msgstr "%s; berjalan ke (%s, %s)\n"
 
-#: ../functions.pl:1282
+#: ../functions.pl:1286
 msgid "Unable to calculate a route to target, dropping target\n"
 msgstr "Tidak dapat mengkalkulasi rute ke target, pembatalan target\n"
 
-#: ../functions.pl:1441
+#: ../functions.pl:1445
 msgid "Timeout equiping for skill\n"
 msgstr "Timeout selama menggunkan skill\n"
 
-#: ../functions.pl:1596
-#: ../functions.pl:1687
+#: ../functions.pl:1600 ../functions.pl:1691
 msgid "Destination reached.\n"
 msgstr "Tujuan telah sampai.\n"
 
-#: ../functions.pl:1749
+#: ../functions.pl:1753
 #, perl-format
-msgid "Unable to calculate how to walk from [%s(%s,%s)] to [%s%s] (no map solution).\n"
-msgstr "Tidak dapat mengkalkulasi bagaimana untuk berjalan dari [%s(%s,%s)] ke [%s%s] (tidak ada solusi map).\n"
+msgid ""
+"Unable to calculate how to walk from [%s(%s,%s)] to [%s%s] (no map "
+"solution).\n"
+msgstr ""
+"Tidak dapat mengkalkulasi bagaimana untuk berjalan dari [%s(%s,%s)] ke [%s%"
+"s] (tidak ada solusi map).\n"
 
-#: ../functions.pl:1784
+#: ../functions.pl:1788
 #, perl-format
 msgid "Unable to talk to NPC at %s (%s,%s).\n"
 msgstr "Tidak dapat berbicara dengan NPC di %s (%s,%s).\n"
 
-#: ../functions.pl:1799
+#: ../functions.pl:1803
 #, perl-format
 msgid "Insufficient zenny to pay for service at %s (%s,%s).\n"
 msgstr "Tidak cukup zenny untuk membayar servis di %s (%s,%s).\n"
 
-#: ../functions.pl:1823
+#: ../functions.pl:1827
 #, perl-format
 msgid "Unable to walk from %s (%s,%s) to NPC at (%s,%s).\n"
 msgstr "Tidak dapat berjalan dari %s (%s,%s) ke NPC di (%s,%s).\n"
 
-#: ../functions.pl:1852
+#: ../functions.pl:1856
 #, perl-format
 msgid "No LOS from %s (%s,%s) to Final Destination at (%s,%s).\n"
 msgstr "Tidak ada LOS dari %s (%s,%s) ke Tujuan Akhir di (%s,%s).\n"
 
-#: ../functions.pl:1853
+#: ../functions.pl:1857
 #, perl-format
 msgid "Cannot reach (%s,%s) from current position.\n"
 msgstr "Tidak dapat mencapai (%s,%s) dari posisi sekarang.\n"
 
-#: ../functions.pl:1903
+#: ../functions.pl:1907
 #, perl-format
 msgid "Attempting to teleport near portal, try #%s\n"
 msgstr "Mencoba untuk teleport mendekati portal, percobaan #%s\n"
 
-#: ../functions.pl:1939
+#: ../functions.pl:1943
 #, perl-format
 msgid "No LOS from %s (%s,%s) to Portal at (%s,%s).\n"
 msgstr "Tidak ada LOS dari %s (%s,%s) ke Portal di (%s,%s).\n"
 
-#: ../functions.pl:1940
+#: ../functions.pl:1944
 msgid "Cannot reach portal from current position\n"
 msgstr "Tidak dapt mencapai portal dari posisi sekarang\n"
 
-#: ../functions.pl:1962
+#: ../functions.pl:1966
 #, perl-format
 msgid "Failed to take %s (%s) from (%s, %s) to (%s, %s)\n"
 msgstr "Gagal untuk mengambil %s (%s) dari (%s, %s) ke (%s, %s)\n"
 
-#: ../functions.pl:1984
-#: ../functions.pl:4141
+#: ../functions.pl:1988 ../functions.pl:4145
 #, perl-format
 msgid "Routing to (%s, %s) to take %s (%s), distance %s\n"
 msgstr "Rute ke (%s, %s) untuk mengambil %s (%s), jarak %s\n"
 
-#: ../functions.pl:2090
+#: ../functions.pl:2094
 msgid "Auto-denying party request\n"
 msgstr "Menolak secara otomatis Permintaan party\n"
 
-#: ../functions.pl:2092
+#: ../functions.pl:2096
 msgid "Auto-accepting party request\n"
 msgstr "Menerima secara otomatis permintaan party\n"
 
-#: ../functions.pl:2246
+#: ../functions.pl:2250
 #, perl-format
 msgid "Arrived at waypoint %s\n"
 msgstr "Tiba di waypoint %s\n"
 
-#: ../functions.pl:2256
+#: ../functions.pl:2260
 #, perl-format
 msgid "Walking to waypoint %s: %s(%s): %s,%s\n"
 msgstr "Berjalan ke waypoint %s: %s(%s): %s,%s\n"
 
-#: ../functions.pl:2304
+#: ../functions.pl:2308
 msgid "Auto-storaging due to death\n"
 msgstr "Storage secara otomatis dikarenakan mati\n"
 
-#: ../functions.pl:2309
+#: ../functions.pl:2313
 msgid "Moving to "
 msgstr "Berjalan ke"
 
-#: ../functions.pl:2327
+#: ../functions.pl:2331
 msgid "Disconnecting on death!\n"
 msgstr "Disconnecting saat mati!\n"
 
-#: ../functions.pl:2425
+#: ../functions.pl:2429
 msgid "Auto-storaging due to excess weight\n"
 msgstr "Storage secara otomatis dikarenakan kelebihan berat\n"
 
-#: ../functions.pl:2448
-#: ../functions.pl:3562
+#: ../functions.pl:2452 ../functions.pl:3566
 #, perl-format
 msgid "Disconnecting on empty %s!\n"
 msgstr "Mengakhiri koneksi saat kehabisan %s!\n"
 
-#: ../functions.pl:2466
+#: ../functions.pl:2470
 #, perl-format
 msgid "Auto-storaging due to insufficient %s\n"
 msgstr "Storage secara otomatis dikarenakan tidak cukup %s\n"
 
-#: ../functions.pl:2520
+#: ../functions.pl:2524
 msgid "Teleporting to auto-storage\n"
 msgstr "Teleport untuk auto-storage\n"
 
-#: ../functions.pl:2525
+#: ../functions.pl:2529
 #, perl-format
 msgid "Calculating auto-storage route to: %s(%s): %s, %s\n"
 msgstr "Mengkalkulasi rute storage secara otomatis ke: %s(%s): %s, %s\n"
 
-#: ../functions.pl:2539
+#: ../functions.pl:2543
 msgid "Warning storageAuto has changed. Please read News.txt\n"
 msgstr "Pemberitahuan storageAuto telah berubah. Silahkan baca News.txt\n"
 
-#: ../functions.pl:2546
+#: ../functions.pl:2550
 msgid "Using storage steps defined in config.\n"
 msgstr "Menggunakan storage dengan step yang telah ditentukan di config.\n"
 
-#: ../functions.pl:2548
+#: ../functions.pl:2552
 msgid "Something is wrong with storageAuto_npc_type in your config.\n"
 msgstr "Ada yang salah dengan storageAuto_npc_type di config Anda.\n"
 
-#: ../functions.pl:2676
+#: ../functions.pl:2680
 #, perl-format
 msgid "Attempt to get %s x %s from storage, retry: %s\n"
 msgstr "Mencoba untuk mengambil %s x %s dari storage, percobaan: %s\n"
 
-#: ../functions.pl:2687
+#: ../functions.pl:2691
 #, perl-format
 msgid "storage: %s out of stock\n"
 msgstr "storage: %s kehabisan stok\n"
 
-#: ../functions.pl:2695
+#: ../functions.pl:2699
 msgid "Kore tried to get an item from storage 3 times, but failed.\n"
-msgstr "Kore mencoba untuk mengambil item dari storage sebanyak 3 kali, tapi gagal.\n"
+msgstr ""
+"Kore mencoba untuk mengambil item dari storage sebanyak 3 kali, tapi gagal.\n"
 
-#: ../functions.pl:2696
+#: ../functions.pl:2700
 msgid "This problem could be caused by a server bug.\n"
 msgstr "Problem ini kemungkinan disebabkan oleh server bug.\n"
 
-#: ../functions.pl:2697
-msgid "To work around this problem, set 'relogAfterStorage' to 1, and relogin.\n"
-msgstr "untuk mengatasi problem ini, set 'relogAfterStorage' jadi 1, dan login ulang.\n"
+#: ../functions.pl:2701
+msgid ""
+"To work around this problem, set 'relogAfterStorage' to 1, and relogin.\n"
+msgstr ""
+"untuk mengatasi problem ini, set 'relogAfterStorage' jadi 1, dan login "
+"ulang.\n"
 
-#: ../functions.pl:2710
+#: ../functions.pl:2714
 msgid "Character is still overweight after storageAuto (storage is full?)\n"
 msgstr "Karakter masih kelebihan berat setelah storageAuto (storage penuh?)\n"
 
-#: ../functions.pl:2712
+#: ../functions.pl:2716
 msgid "Disconnecting on storage full!\n"
 msgstr "mengakhiri koneksi saat storage penuh!\n"
 
-#: ../functions.pl:2753
+#: ../functions.pl:2757
 msgid "Auto-sell sequence completed.\n"
 msgstr "Sequence menjual secara otomatis Selesai.\n"
 
-#: ../functions.pl:2789
+#: ../functions.pl:2793
 msgid "Teleporting to auto-sell\n"
 msgstr "Teleport untuk menjual secara otomatis\n"
 
-#: ../functions.pl:2793
+#: ../functions.pl:2797
 #, perl-format
 msgid "Calculating auto-sell route to: %s(%s): %s, %s\n"
 msgstr "Mengkalkulasi rute menjual secara otomatis ke: %s(%s): %s, %s\n"
 
-#: ../functions.pl:2957
+#: ../functions.pl:2961
 msgid "Teleporting to auto-buy\n"
 msgstr "Teleport untuk membeli secara otomatis\n"
 
-#: ../functions.pl:2961
+#: ../functions.pl:2965
 #, perl-format
 msgid "Calculating auto-buy route to: %s (%s): %s, %s\n"
 msgstr "Mengkalkulasi rute membeli secara otomatis ke: %s(%s): %s, %s\n"
 
-#: ../functions.pl:3099
+#: ../functions.pl:3103
 #, perl-format
 msgid "Invalid map specified for lockMap - map %s doesn't exist\n"
 msgstr "Map yang dispesifikasikan untuk lockMap salah - map %s tidak ada\n"
 
-#: ../functions.pl:3121
+#: ../functions.pl:3125
 msgid "Invalid coordinates specified for lockMap, coordinates are unwalkable\n"
-msgstr "Koordinat yang dispesifikasikan untuk lockMap salah, Koordinat tersebut tidak dapat dijalani\n"
+msgstr ""
+"Koordinat yang dispesifikasikan untuk lockMap salah, Koordinat tersebut "
+"tidak dapat dijalani\n"
 
-#: ../functions.pl:3128
+#: ../functions.pl:3132
 #, perl-format
 msgid "Calculating lockMap route to: %s(%s): %s, %s\n"
 msgstr "Mengkalkulasi rute lockMap ke: %s(%s): %s, %s\n"
 
-#: ../functions.pl:3130
+#: ../functions.pl:3134
 #, perl-format
 msgid "Calculating lockMap route to: %s(%s)\n"
 msgstr "Mengkalkulasi rute lockMap ke: %s(%s)\n"
 
-#: ../functions.pl:3209
+#: ../functions.pl:3213
 #, perl-format
 msgid "Unknown skill '%s'; disabling skillsAddAuto\n"
 msgstr "Skill tidak diketahui '%s'; menonaktifkan skillsAddAuto\n"
 
-#: ../functions.pl:3220
+#: ../functions.pl:3224
 #, perl-format
 msgid "Auto-adding skill %s\n"
 msgstr "Menambahkan secara otomatis skill %s\n"
 
-#: ../functions.pl:3248
-msgid "Invalid coordinates specified for randomWalk (coordinates are unwalkable); randomWalk disabled\n"
-msgstr "Koordinat yang dispesifikasikan untuk randomWalk salah(Koordinat tidak dapat dijalani); randomWalk dinonaktifkan\n"
+#: ../functions.pl:3252
+msgid ""
+"Invalid coordinates specified for randomWalk (coordinates are unwalkable); "
+"randomWalk disabled\n"
+msgstr ""
+"Koordinat yang dispesifikasikan untuk randomWalk salah(Koordinat tidak dapat "
+"dijalani); randomWalk dinonaktifkan\n"
 
-#: ../functions.pl:3251
+#: ../functions.pl:3255
 #, perl-format
 msgid "Calculating random route to: %s(%s): %s, %s\n"
 msgstr "Mengkalkulasi rute random ke: %s(%s): %s, %s\n"
 
-#: ../functions.pl:3281
+#: ../functions.pl:3285
 #, perl-format
 msgid "Found my master - %s\n"
 msgstr "Menemukan master - %s\n"
 
-#: ../functions.pl:3288
+#: ../functions.pl:3292
 msgid "Found my master!\n"
 msgstr "Menemukan master!\n"
 
-#: ../functions.pl:3342
+#: ../functions.pl:3346
 msgid "Master died. I'll wait here.\n"
 msgstr "Master mati. Saya akan menunggu disini .\n"
 
-#: ../functions.pl:3345
+#: ../functions.pl:3349
 msgid "I lost my master\n"
 msgstr "Saya kehilangan master\n"
 
-#: ../functions.pl:3347
+#: ../functions.pl:3351
 msgid "Trying to get him back\n"
 msgstr "mecoba untuk mendapatkan dia kembali\n"
 
-#: ../functions.pl:3354
-#: ../functions.pl:3438
+#: ../functions.pl:3358 ../functions.pl:3442
 msgid "My master disconnected\n"
 msgstr "Master telah disconnect\n"
 
-#: ../functions.pl:3390
-#: ../functions.pl:3466
+#: ../functions.pl:3394 ../functions.pl:3470
 msgid "My master teleported\n"
 msgstr "Master telah teleport\n"
 
-#: ../functions.pl:3394
+#: ../functions.pl:3398
 msgid "Trying to find lost master\n"
 msgstr "Mencoba untuk menemukan master yang hilang\n"
 
-#: ../functions.pl:3418
+#: ../functions.pl:3422
 msgid "Don't know what happened to Master\n"
 msgstr "Tidak tahu apa yang terjadi pada Master\n"
 
-#: ../functions.pl:3434
+#: ../functions.pl:3438
 msgid "Couldn't find master, giving up\n"
 msgstr "Tidak dapat menemukan master, menyerah\n"
 
-#: ../functions.pl:3462
+#: ../functions.pl:3466
 #, perl-format
 msgid "My master warped at (%s, %s) - moving to warp point\n"
 msgstr "Master warp ke (%s, %s) - berjalan ke warp point\n"
 
-#: ../functions.pl:4095
+#: ../functions.pl:4099
 #, perl-format
 msgid "Gathering: %s (%s)\n"
 msgstr "Mengumpulkan: %s (%s)\n"
 
-#: ../functions.pl:4112
+#: ../functions.pl:4116
 #, perl-format
 msgid "Failed to gather %s (%s) : Lost target\n"
 msgstr "Gagal untuk mengumpulkan %s (%s) : Kehilangan target\n"
 
-#: ../functions.pl:4120
+#: ../functions.pl:4124
 #, perl-format
 msgid "Failed to gather %s (%s) : No looting!\n"
 msgstr "Gagal untuk mengumpulkan %s (%s) : Tidak memungut!\n"
 
-#: ../functions.pl:4124
+#: ../functions.pl:4128
 #, perl-format
 msgid "Failed to gather %s (%s) : Timeout\n"
 msgstr "gagal untuk mengumpulkan %s (%s) : Timeout\n"
 
-#: ../functions.pl:4174
+#: ../functions.pl:4178
 msgid "Teleporting to avoid all players\n"
 msgstr "Teleport untuk menghindari semua player\n"
 
-#: ../functions.pl:4214
+#: ../functions.pl:4218
 msgid "Teleporting due to insufficient HP/SP or too many aggressives\n"
-msgstr "Teleport dikarenakan tidak cukup HP/SP atau terlalu banyak aggressive\n"
+msgstr ""
+"Teleport dikarenakan tidak cukup HP/SP atau terlalu banyak aggressive\n"
 
-#: ../functions.pl:4225
+#: ../functions.pl:4229
 #, perl-format
 msgid "Teleporting to avoid %s\n"
 msgstr "Teleport untuk menghindari %s\n"
 
-#: ../functions.pl:4241
+#: ../functions.pl:4245
 msgid "Teleporting due to idle\n"
 msgstr "Teleport dikarenakan diam(tidak bergerak)\n"
 
-#: ../functions.pl:4253
+#: ../functions.pl:4257
 msgid "Teleporting to avoid portal\n"
 msgstr "Teleport untuk menghindari portal\n"
 
-#: ../functions.pl:4275
+#: ../functions.pl:4279
 #, perl-format
 msgid "The current map (%s) is not on the list of allowed maps.\n"
 msgstr "Map sekarang (%s) tidak ada pada list map yang diperbolehkan.\n"
 
-#: ../functions.pl:4278
+#: ../functions.pl:4282
 msgid "Respawning to save point.\n"
 msgstr "Spawn kembali ke simpan posisi.\n"
 
-#: ../functions.pl:4404
+#: ../functions.pl:4408
 msgid "Map loaded\n"
 msgstr "Map telah di-load\n"
 
 #~ msgid "Arrow equipped\n"
 #~ msgstr "Anak Panah sudah diequip\n"
+
 #~ msgid ""
 #~ "\n"
 #~ "Auto-generating Admin Password due to blank...\n"
 #~ msgstr ""
 #~ "\n"
 #~ "Auto-Generate Password Admin dikarenakan kosong...\n"
-
