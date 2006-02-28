@@ -936,6 +936,20 @@ sub actor_display {
 	# And use them to set status flags.
 	setStatus($args->{ID}, $args->{param1}, $args->{param2}, $args->{param3});
 
+	if (defined($justAdded)) {
+		objectAdded($justAdded, $args->{ID}, $actor);
+		if ($justAdded eq 'npc') {
+			my $ID = $args->{ID};
+			my $location = "$field{name} $npcs{$ID}{pos}{x} $npcs{$ID}{pos}{y}";
+			if ($npcs_lut{$location}) {
+				$npcs{$ID}{name} = $npcs_lut{$location};
+				$npcs{$ID}{gotName} = 1;
+			} else {
+				$npcs{$ID}{name} = "Unknown $nameID";
+			}
+		}
+	}
+
 	# Packet specific
 	if ($args->{switch} eq "0078" ||
 		$args->{switch} eq "01D8" ||
@@ -988,16 +1002,6 @@ sub actor_display {
 			debug "Player Moved: " . $actor->name . " ($actor->{binID}) Level $actor->{lv} $sex_lut{$actor->{sex}} $jobs_lut{$actor->{jobID}} - ($coordsFrom{x}, $coordsFrom{y}) -> ($coordsTo{x}, $coordsTo{y})\n", "parseMsg";
 		} else {
 			debug "$type Moved: $actor->{name} ($actor->{binID}) - ($coordsFrom{x}, $coordsFrom{y}) -> ($coordsTo{x}, $coordsTo{y})\n", "parseMsg";
-		}
-	}
-
-	if (defined($justAdded)) {
-		objectAdded($justAdded, $args->{ID}, $actor);
-		if ($justAdded eq 'npc') {
-			my $ID = $args->{ID};
-			my $location = "$field{name} $npcs{$ID}{pos}{x} $npcs{$ID}{pos}{y}";
-			$npcs{$ID}{name} = $npcs_lut{$location} || "Unknown $nameID";
-			$npcs{$ID}{gotName} = 1;
 		}
 	}
 }
@@ -2030,6 +2034,7 @@ sub chat_info {
 
 	my $title;
 	decrypt(\$title, $args->{title});
+	$title = bytesToString($title);
 
 	my $chat = $chatRooms{$args->{ID}};
 	if (!$chat || !%{$chat}) {
@@ -2058,6 +2063,7 @@ sub chat_modified {
 	
 	my $title;
 	decrypt(\$title, $args->{title});
+	$title = bytesToString($title);
 
 	my ($ownerID, $ID, $limit, $public, $num_users) = @{$args}{qw(ownerID ID limit public num_users)};
 
