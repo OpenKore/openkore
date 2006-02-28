@@ -48,10 +48,10 @@ sub init {
 
 my $result 	= 0;
 # the database depending variables could be added to config.txt
-my $dbUser	= "roshop";	# the name of the mysql user that has read/write access to database $database
-my $dbPassword	= "roshop";	# his password
-my $database	= "ro_shop";	# the used database
-my $dbHostname	= "192.168.6.1";	# mysql server 
+my $dbUser	= "dataBase_user";	# the name of the mysql user that has read/write access to database $database
+my $dbPassword	= "dataBase_password";	# his password
+my $database	= "dataBase_name";	# the used database
+my $dbHostname	= "localhost";	# mysql server 
 my $dbPort	= "3306";	# mysql server port
 my $dsn		= "DBI:mysql:database=$database;host=$dbHostname;port=$dbPort"; 
 my $dbh;
@@ -168,7 +168,8 @@ sub mercDbFill{
 	my @myItemList;
 	
 	my $shopOwnerID = unpack("L1",$myItemList->{venderID});
-	my $shopOwner = $::players{$myItemList->{venderID}}{'name'};
+	my $playerA = Actor::get($myItemList->{venderID});
+	my $shopOwner = $playerA->name;
 	$shopOwner =~ s/\\/\\\\/g;
 	$shopOwner =~ s/'/\\'/g;
 	my $shopName = $::venderLists{$myItemList->{venderID}}{'title'};
@@ -500,7 +501,7 @@ sub charNameUpdate{
 #	$dbh = DBI->connect($dsn, $dbUser, $dbPassword) or die $dbh->errstr;
 	my $datum	= strftime("%d.%m.%Y %T", localtime(time));
 
-	my $shopOwnerID = $player->{ID};
+	my $shopOwnerID = unpack("L1",$player->{ID});
 	my $shopOwner = $player->{name};
 	$shopOwner =~ s/\\/\\\\/g;
 	$shopOwner =~ s/'/\\'/g;
