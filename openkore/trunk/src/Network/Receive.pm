@@ -1417,16 +1417,18 @@ sub actor_name_received {
 	my $player = $players{$args->{ID}};
 	if ($player && %{$player}) {
 		# Receive names of players who are in a guild.
-		$player->{name} = $args->{name};
+		$player->{name} = bytesToString($args->{name});
 		$player->{gotName} = 1;
-		$player->{party}{name} = $args->{partyName};
-		$player->{guild}{name} = $args->{guildName};
-		$player->{guild}{title} = $args->{guildTitle};
+		$player->{party}{name} = bytesToString($args->{partyName});
+		$player->{guild}{name} = bytesToString($args->{guildName});
+		$player->{guild}{title} = bytesToString($args->{guildTitle});
 		updatePlayerNameCache($player);
 		debug "Player Info: $player->{name} ($player->{binID})\n", "parseMsg_presence", 2;
 		Plugins::callHook('charNameUpdate', $player);
 	} else {
-		debug "Player Info for ".unpack("V", $args->{ID})." (not on screen): $args->{name}\n", "parseMsg_presence/remote", 2;
+		debug "Player Info for " . unpack("V", $args->{ID}) .
+			" (not on screen): " . bytesToString($args->{name}) . "\n",
+			"parseMsg_presence/remote", 2;
 	}
 }
 
