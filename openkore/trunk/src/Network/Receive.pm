@@ -3980,7 +3980,7 @@ sub pet_food {
 
 sub pet_info {
 	my ($self, $args) = @_;
-	$pet{name} = $args->{name};
+	$pet{name} = bytesToString($args->{name});
 	$pet{nameflag} = $args->{nameflag};
 	$pet{level} = $args->{level};
 	$pet{hungry} = $args->{hungry};
