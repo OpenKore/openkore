@@ -24,6 +24,7 @@ use strict;
 use File::Spec;
 use Exporter;
 use base qw(Exporter);
+use encoding 'utf8';
 use Carp;
 
 use Utils;
@@ -82,7 +83,7 @@ sub parseArrayFile {
 	my $r_array = shift;
 	undef @{$r_array};
 
-	open FILE, "< $file";
+	open FILE, "<:utf8", $file;
 	my @lines = <FILE>;
 	@{$r_array} = scalar(@lines) + 1;
 	my $i = 1;
@@ -132,7 +133,7 @@ sub parseChatResp {
 	my $file = shift;
 	my $r_array = shift;
 
-	open FILE, "< $file";
+	open FILE, "<:utf8", $file;
 	foreach (<FILE>) {
 		s/[\r\n]//g;
 		next if ($_ eq "" || /^#/);
@@ -166,7 +167,7 @@ sub parseCommandsDescription {
 	undef %{$r_hash} unless $no_undef;
 	my ($key, $commentBlock, $description);
 
-	open FILE, "< $file";
+	open FILE, "<:utf8", $file;
 	foreach (<FILE>) {
 		next if (/^[\s\t]*#/);
 		s/[\r\n]//g;	# Remove line endings
@@ -210,7 +211,7 @@ sub parseConfigFile {
 	undef %{$r_hash} unless $no_undef;
 	my ($key, $value, $inBlock, $commentBlock, %blocks);
 
-	open FILE, "< $file";
+	open FILE, "<:utf8", $file;
 	foreach (<FILE>) {
 		next if (/^[\s\t]*#/);
 		s/[\r\n]//g;	# Remove line endings
@@ -297,7 +298,7 @@ sub parseEmotionsFile {
 	my $r_hash = shift;
 	undef %{$r_hash};
 	my ($line, $key, $word, $name);
-	open FILE, $file;
+	open FILE, "<:utf8", $file;
 	foreach (<FILE>) {
 		next if (/^#/);
 		s/[\r\n]//g;
@@ -321,7 +322,7 @@ sub parseDataFile {
 	my $r_hash = shift;
 	undef %{$r_hash};
 	my ($key,$value);
-	open FILE, "< $file";
+	open FILE, "<:utf8", $file;
 	foreach (<FILE>) {
 		next if (/^#/);
 		s/[\r\n]//g;
@@ -407,7 +408,7 @@ sub parseShopControl {
 	my ($file, $shop) = @_;
 
 	%{$shop} = ();
-	open(SHOP, $file);
+	open(SHOP, "<:utf8", $file);
 
 	# Read shop items
 	$shop->{items} = [];
@@ -465,7 +466,7 @@ sub parseItemsControl {
 	undef %{$r_hash};
 	my ($key, $args_text, %cache);
 
-	open FILE, "< $file";
+	open FILE, "<:utf8", $file;
 	foreach (<FILE>) {
 		next if (/^#/);
 		s/[\r\n]//g;
@@ -497,8 +498,8 @@ sub parseNPCs {
 	my $r_hash = shift;
 	my ($i, $string);
 	undef %{$r_hash};
-	my ($key,$value,@args);
-	open FILE, $file;
+	my ($key, $value, @args);
+	open FILE, "<:utf8", $file;
 	while (my $line = <FILE>) {
 		$line =~ s/\cM|\cJ//g;
 		$line =~ s/^\s+|\s+$//g;
@@ -518,7 +519,7 @@ sub parseMonControl {
 	undef %{$r_hash};
 	my ($key,@args,$args);
 
-	open FILE, "< $file";
+	open FILE, "<:utf8", $file;
 	foreach (<FILE>) {
 		next if (/^#/);
 		s/[\r\n]//g;
@@ -551,7 +552,7 @@ sub parsePortals {
 	my $file = shift;
 	my $r_hash = shift;
 	undef %{$r_hash};
-	open FILE, "< $file";
+	open FILE, "<", $file;
 	while (my $line = <FILE>) {
 		next if $line =~ /^#/;
 		$line =~ s/\cM|\cJ//g;
@@ -580,7 +581,7 @@ sub parsePortalsLOS {
 	my $r_hash = shift;
 	undef %{$r_hash};
 	my $key;
-	open FILE, $file;
+	open FILE, "<", $file;
 	foreach (<FILE>) {
 		next if (/^#/);
 		s/[\r\n]//g;
@@ -603,7 +604,7 @@ sub parsePortalsLOS {
 sub parsePriority {
 	my $file = shift;
 	my $r_hash = shift;
-	return unless open (FILE, "< $file");
+	return unless open (FILE, "<:utf8", $file);
 
 	my @lines = <FILE>;
 	my $pri = $#lines;
@@ -623,7 +624,7 @@ sub parseResponses {
 	undef %{$r_hash};
 	my ($key,$value);
 	my $i;
-	open FILE, $file;
+	open FILE, "<:utf8", $file;
 	foreach (<FILE>) {
 		next if (/^#/);
 		s/[\r\n]//g;
@@ -651,7 +652,7 @@ sub parseROLUT {
 	return if ($ret{return});
 
 	undef %{$r_hash};
-	open FILE, "< $file";
+	open FILE, "<:utf8", $file;
 	foreach (<FILE>) {
 		s/[\r\n]//g;
 		next if (length($_) == 0 || /^\/\//);
@@ -962,7 +963,7 @@ sub processUltimate {
 	my ($section, $rule, @lines, %written, %sectionsWritten);
 
 	undef %{$hash} if (!$writeMode);
-	if (open($f, "< $file")) {
+	if (open($f, "<:utf8", $file)) {
 
 	foreach (<$f>) {
 		s/[\r\n]//g;
@@ -1238,7 +1239,7 @@ sub writeSectionedFileIntact {
 	my $section = "";
 	my @lines;
 
-	open(FILE, "< $file");
+	open(FILE, "<:utf8", $file);
 	foreach (<FILE>) {
 		s/[\r\n]//g;
 		if (/^#/ || /^ *$/) {
@@ -1263,7 +1264,7 @@ sub writeSectionedFileIntact {
 	}
 	close FILE;
 
-	open(FILE, "> $file");
+	open(FILE, ">:utf8", $file);
 	print FILE join("\n", @lines) . "\n";
 	close FILE;
 }
@@ -1272,7 +1273,7 @@ sub updateMonsterLUT {
 	my $file = shift;
 	my $ID = shift;
 	my $name = shift;
-	open FILE, ">> $file";
+	open FILE, ">>:utf8", $file;
 	print FILE "$ID $name\n";
 	close FILE;
 }
@@ -1287,7 +1288,7 @@ sub updatePortalLUT {
 sub updateNPCLUT {
 	my ($file, $location, $name) = @_;
 	return unless $name;
-	open FILE, ">> $file";
+	open FILE, ">>:utf8", $file;
 	print FILE "$location $name\n";
 	close FILE;
 }
