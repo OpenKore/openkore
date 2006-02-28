@@ -23,14 +23,14 @@
 
 	$datum 		= getdate(time());
 	$debug 		= 0;	
-	$user		= "roshop";
-	$pass		= "roshop";
-	$database	= "ro_shop";
+	$user		= "dataBase_user";
+	$pass		= "dataBase_password";
+	$database	= "dataBase_name";
 	$server		= "localhost";
 	$port		= "3306";
 	import_request_variables('p', 'p_');
 	import_request_variables('g', 'g_');
-	$image_path	= "items/";
+	$image_path     = "http://roempire.com/database/images/items/small/";
 	$ext_info_url	= "http://www.roempire.com/database/?page=items&act=view&iid=";
 	if (!isset($p_ROserver)) $p_ROserver = "Loki";
 	if ($p_ROserver == "") $p_ROserver = "Loki";
