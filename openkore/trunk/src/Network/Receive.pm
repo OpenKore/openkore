@@ -707,7 +707,7 @@ sub actor_display {
 	my ($self, $args) = @_;
 	change_to_constate5();
 
-	my ($actor, $type);
+	my ($actor, $type, $justAdded);
 
 	# Initialize
 	my $nameID = unpack("V1", $args->{ID});
@@ -747,8 +747,7 @@ sub actor_display {
 			binAdd(\@playersID, $args->{ID});
 			$actor->{binID} = binFind(\@playersID, $args->{ID});
 			$actor->{appear_time} = time;
-
-			objectAdded('player', $args->{ID}, $actor);
+			$justAdded = 'player';
 		}
 
 		$actor->{nameID} = $nameID;
@@ -802,7 +801,7 @@ sub actor_display {
 					delete $monsters{$args->{ID}};
 				}
 
-				objectAdded('pet', $args->{ID}, $pets{$args->{ID}}{$args->{ID}});
+				$justAdded = 'pet';
 			}
 			$actor = $pets{$args->{ID}};
 
@@ -819,7 +818,7 @@ sub actor_display {
 						? $monsters_lut{$args->{type}}
 						: "Unknown ".$args->{type};
 
-				objectAdded('monster', $args->{ID}, $monsters{$args->{ID}});
+				$justAdded = 'monster';
 			}
 			$actor = $monsters{$args->{ID}};
 
@@ -831,17 +830,14 @@ sub actor_display {
 	} else {	# ($args->{type} < 1000 && $args->{type} != 45 && !$jobs_lut{$args->{type}})
 		# Actor is an NPC
 		$type = "NPC";
-		if (!$npcs{$args->{ID}} || !%{$npcs{$args->{ID}}}) {
-			binAdd(\@npcsID, $args->{ID});
-			$npcs{$args->{ID}}{binID} = binFind(\@npcsID, $args->{ID});
-			$npcs{$args->{ID}}{appear_time} = time;
-
-			my $location = "$field{name} $npcs{$args->{ID}}{pos}{x} $npcs{$args->{ID}}{pos}{y}";
-			$npcs{$args->{ID}}{name} = $npcs_lut{$location} || "Unknown $nameID";
-
-			objectAdded('npc', $args->{ID}, $npcs{$args->{ID}});
+		my $ID = $args->{ID};
+		if (!$npcs{$ID} || !%{$npcs{$ID}}) {
+			binAdd(\@npcsID, $ID);
+			$npcs{$ID}{binID} = binFind(\@npcsID, $ID);
+			$npcs{$ID}{appear_time} = time;
+			$justAdded = 'npc';
 		}
-		$actor = $npcs{$args->{ID}};
+		$actor = $npcs{$ID};
 
 		$actor->{nameID} = $nameID;
 	}
@@ -859,18 +855,18 @@ sub actor_display {
 
 	$actor->{lv} = $args->{lv};
 
-	%{$actor->{pos_to}} = %coordsTo;
+	$actor->{pos_to} = {%coordsTo};
 	if (length($args->{coords}) >= 5) {
 		if (($type) ne 'NPC') {
-			%{$actor->{pos}} = %coordsFrom;
+			$actor->{pos} = {%coordsFrom};
 		} else {
-			%{$actor->{pos}} = %coordsTo;
+			$actor->{pos} = {%coordsTo};
 		}
 		$actor->{walk_speed} = $args->{walk_speed} / 1000;
 		$actor->{time_move} = time;
 		$actor->{time_move_calc} = distance(\%coordsFrom, \%coordsTo) * $actor->{walk_speed};
 	} else {
-		%{$actor->{pos}} = %coordsTo;
+		$actor->{pos} = {%coordsTo};
 	}
 
 	if ($type eq "Player") {
@@ -992,6 +988,16 @@ sub actor_display {
 			debug "Player Moved: " . $actor->name . " ($actor->{binID}) Level $actor->{lv} $sex_lut{$actor->{sex}} $jobs_lut{$actor->{jobID}} - ($coordsFrom{x}, $coordsFrom{y}) -> ($coordsTo{x}, $coordsTo{y})\n", "parseMsg";
 		} else {
 			debug "$type Moved: $actor->{name} ($actor->{binID}) - ($coordsFrom{x}, $coordsFrom{y}) -> ($coordsTo{x}, $coordsTo{y})\n", "parseMsg";
+		}
+	}
+
+	if (defined($justAdded)) {
+		objectAdded($justAdded, $args->{ID}, $actor);
+		if ($justAdded eq 'npc') {
+			my $ID = $args->{ID};
+			my $location = "$field{name} $npcs{$ID}{pos}{x} $npcs{$ID}{pos}{y}";
+			$npcs{$ID}{name} = $npcs_lut{$location} || "Unknown $nameID";
+			$npcs{$ID}{gotName} = 1;
 		}
 	}
 }
