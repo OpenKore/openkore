@@ -189,6 +189,15 @@ secureLogin_requestCode
 secureLogin_account 0
 gameGuard 1
 
+[Japan - jRO: Verdandi]
+ip 61.215.212.13
+port 6900
+master_version 3
+version 10
+serverType 7
+secureLogin 1
+serverEncoding Japanese
+
 [Thailand - tRO Account 1: Sol, Chaos, Loki, Iris]
 ip 203.144.244.10
 port 6900
@@ -261,15 +270,6 @@ secureLogin_requestCode
 secureLogin_account 0
 serverEncoding Thai
 
-[Japan - jRO: Verdandi]
-ip 61.215.212.13
-port 6900
-master_version 3
-version 10
-serverType 7
-secureLogin 1
-serverEncoding Japanese
-
 ## http://ro.vinagame.com.vn/
 [Vietnam - vRO: SD]
 ip 222.255.122.20
@@ -315,6 +315,15 @@ port 2485
 master_version 0
 version 20
 serverType 4
+serverEncoding Western
+
+## http://theanimaro.com/
+[AnimaRO Private Server]
+ip 66.111.61.90
+port 6900
+master_version 18
+version 0
+serverType 0
 serverEncoding Western
 
 ## http://www.andzro.org/
@@ -446,6 +455,14 @@ serverType 5
 private 1
 serverEncoding Western
 
+## http://www.raggame.ru/
+[RuRO Private Server]
+ip 81.177.13.7
+port 6900
+master_version 25
+version 1
+serverEncoding Russian
+
 ## http://www.ragmaniacos.net/include/
 [RagnaManiacos Private Server]
 ip 72.232.11.18
@@ -502,14 +519,6 @@ serverEncoding Western
 
 
 # The server details below are old and needs verification
-
-[AnimaRO Private Server]
-ip 66.111.61.90
-port 6900
-master_version 18
-version 0
-serverType 0
-serverEncoding Western
 
 [AniRO: Chaos Private Server]
 ip 82.211.6.25
@@ -794,23 +803,3 @@ master_version 17
 version 20
 serverType 3
 serverEncoding Western
-
-
-# Non-working server details
-
-#[ProjectRO Private Server]
-#ip 66.111.48.190
-#port 6900
-#master_version 0
-#version 1
-#serverType 0
-#serverEncoding Western
-
-#[XaosRO Private Server]
-#ip 67.18.209.218
-#port 6900
-#master_version 2
-#version 0
-#serverType 4
-#serverEncoding Western
-
