@@ -5327,13 +5327,12 @@ sub switch_character {
 
 sub system_chat {
 	my ($self, $args) = @_;
-	#my $chat = substr($msg, 4, $msg_size - 4);
-	#$chat =~ s/\000$//;
 
-	stripLanguageCode(\$args->{message});
-	chatLog("s", "$args->{message}\n") if ($config{'logSystemChat'});
-	message "[GM] $args->{message}\n", "schat";
-	ChatQueue::add('gm', undef, undef, $args->{message});
+	my $message = bytesToString($args->{message});
+	stripLanguageCode($message);
+	chatLog("s", "$message\n") if ($config{logSystemChat});
+	message "[GM] $message\n", "schat";
+	ChatQueue::add('gm', undef, undef, $message);
 }
 
 sub unequip_item {

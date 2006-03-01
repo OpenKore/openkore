@@ -884,7 +884,7 @@ sub parseSkillsSPLUT {
 sub parseTimeouts {
 	my $file = shift;
 	my $r_hash = shift;
-	open(FILE, "< $file");
+	open(FILE, "<:utf8", $file);
 	foreach (<FILE>) {
 		next if (/^#/);
 		s/[\r\n]//g;
@@ -1094,7 +1094,7 @@ sub processUltimate {
 			}
 		}
 
-		open($f, "> $file");
+		open($f, ">:utf8", $file);
 		print $f join("\n", @lines) . "\n";
 		close $f;
 	}
@@ -1123,7 +1123,7 @@ sub writeDataFileIntact {
 	my $no_undef = shift;
 
 	my (@lines, $key, $value, $inBlock, $commentBlock, %blocks);
-	open FILE, "< $file";
+	open FILE, "<:utf8", $file;
 	foreach (<FILE>) {
 		s/[\r\n]//g;	# Remove line endings
 		if (/^[\s\t]*#/ || /^[\s\t]*$/ || /^\!include( |$)/) {
@@ -1190,7 +1190,7 @@ sub writeDataFileIntact {
 	}
 	close FILE;
 
-	open FILE, "> $file";
+	open FILE, ">:utf8", $file;
 	print FILE join("\n", @lines) . "\n";
 	close FILE;
 }
@@ -1201,7 +1201,7 @@ sub writeDataFileIntact2 {
 	my $data;
 	my $key;
 
-	open(FILE, "< $file");
+	open(FILE, "<:utf8", $file);
 	foreach (<FILE>) {
 		if (/^#/ || $_ =~ /^\n/ || $_ =~ /^\r/) {
 			$data .= $_;
@@ -1213,7 +1213,7 @@ sub writeDataFileIntact2 {
 		$data .= "\n";
 	}
 	close FILE;
-	open(FILE, "> $file");
+	open(FILE, ">:utf8", $file);
 	print FILE $data;
 	close FILE;
 }
