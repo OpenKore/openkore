@@ -721,7 +721,7 @@ sub parseSectionedFile {
 	my $file = shift;
 	my $r_hash = shift;
 	undef %{$r_hash};
-	open(FILE, "< $file");
+	open(FILE, "<:utf8", $file);
 
 	my $section = "";
 	foreach (<FILE>) {
