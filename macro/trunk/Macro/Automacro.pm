@@ -21,7 +21,9 @@ use Macro::Utilities qw(between cmpr match getArgs setVar getVar refreshGlobal
     getPlayerID getSoldOut getInventoryAmount getCartAmount getShopAmount
     getStorageAmount);
 
-our $Version = sprintf("%d", q$Revision$ =~ /(\d+)/);
+our $Changed = sprintf("%s %s %s",
+   q$Date$
+   =~ /(\d{4}-\d{2}-\d{2}) (\d{2}:\d{2}:\d{2}) ([+-]\d{4})/);
 
 # taken from Item.pm
 my @slots = qw(

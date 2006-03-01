@@ -1,4 +1,3 @@
-# $Header$
 package Macro::Parser;
 
 use strict;
@@ -15,8 +14,10 @@ use Macro::Utilities qw(setVar getVar getnpcID getItemIDs getStorageIDs
     getPlayerID getRandom getInventoryAmount getCartAmount getShopAmount
     getStorageAmount getConfig getWord);
 
-our $Version = sprintf("%d", q$Revision$ =~ /(\d+)/);
-
+our $Changed = sprintf("%s %s %s",
+    q$Date$
+    =~ /(\d{4}-\d{2}-\d{2}) (\d{2}:\d{2}:\d{2}) ([+-]\d{4})/);
+      
 # adapted config file parser
 sub parseMacroFile {
   my ($file, $no_undef) = @_;
