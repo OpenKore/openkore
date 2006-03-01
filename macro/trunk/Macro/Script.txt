@@ -1,4 +1,6 @@
-macro script syntax (bnf):
+macro script syntax (bnf)
+-------------------------
+Last changed: $Date$ by $Author$
 
 
 <letter>  ::= 'a' | 'b' | 'c' | .. | 'z' |

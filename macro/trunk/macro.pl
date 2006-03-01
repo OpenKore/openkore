@@ -1,5 +1,3 @@
-# $Header$
-#
 # macro by Arachno
 #
 #
@@ -8,8 +6,10 @@
 # See http://www.gnu.org/licenses/gpl.html
 
 package macro;
-my $vMajor = "1.1";
-my $Version = sprintf("%s rev%d", $vMajor, q$Revision$ =~ /(\d+)/);
+my $Version = "1.1";
+my $Changed = sprintf("%s %s %s",
+   q$Date$
+   =~ /(\d{4}-\d{2}-\d{2}) (\d{2}:\d{2}:\d{2}) ([+-]\d{4})/);
 
 use strict;
 use Plugins;
@@ -158,7 +158,7 @@ sub commandHandler {
       "macro reset [automacro]: resets run-once status for all or given automacro(s)\n";
     return
   }
-  my ($arg, $argt) = split(/\s+/, $_[1], 2);
+  my ($arg, @params) = split(/\s+/, $_[1]);
   ### parameter: list
   if ($arg eq 'list') {
     message(sprintf("The following macros are available:\n%smacros%s\n","-"x10,"-"x9), "list");
@@ -200,10 +200,15 @@ sub commandHandler {
     } else {
       warning "There's no macro currently running.\n";
     }
-  ### parameter: set
+  ### parameter: set foo bar
   } elsif ($arg eq 'set')  {
-    my ($var, $val) = split(/\s+/, $argt, 2);
-    if (defined $val) {
+    unless (defined $params[0]) {
+      warning "syntax: 'macro set variable value' or 'macro set variable'";
+      return;
+    }
+    my $var = shift @params;
+    my $val = join " ", @params;
+    if ($val ne '') {
       setVar($var, $val);
       message "[macro] $var set to $val\n", "macro";
     } else {
@@ -212,22 +217,25 @@ sub commandHandler {
     }
   ### parameter: reset
   } elsif ($arg eq 'reset') {
-    if (!defined $argt) {
+    if (!defined $params[0]) {
       foreach my $am (keys %automacro) {undef $automacro{$am}->{disabled}};
       message "[macro] automacro runonce list cleared.\n", "macro";
       return;
     }
-    my $ret = releaseAM($argt);
-    if ($ret == 1)    {message "[macro] automacro $argt reenabled.\n", "macro"}
-    elsif ($ret == 0) {warning "[macro] automacro $argt wasn't disabled.\n"}
-    else              {error "[macro] automacro $argt not found.\n"}
+    for my $reset (@params) {
+      my $ret = releaseAM($reset);
+      if ($ret == 1)    {message "[macro] automacro $reset reenabled.\n", "macro"}
+      elsif ($ret == 0) {warning "[macro] automacro $reset wasn't disabled.\n"}
+      else              {error "[macro] automacro $reset not found.\n"}
+    }
   ### parameter: version
   } elsif ($arg eq 'version') {
     message "macro plugin version $Version\n", "list";
-    message "Macro::Automacro ".$Macro::Automacro::Version."\n";
-    message "Macro::Script ".$Macro::Script::Version."\n";
-    message "Macro::Parser ".$Macro::Parser::Version."\n";
-    message "Macro::Utilities ".$Macro::Utilities::Version."\n";
+    message "macro.pl ". $Changed."\n";
+    message "Macro::Automacro ".$Macro::Automacro::Changed."\n";
+    message "Macro::Script ".$Macro::Script::Changed."\n";
+    message "Macro::Parser ".$Macro::Parser::Changed."\n";
+    message "Macro::Utilities ".$Macro::Utilities::Changed."\n";
   ### parameter: dump (hidden)
   } elsif ($arg eq 'dump') {
     $cvs->dump;
@@ -237,9 +245,22 @@ sub commandHandler {
       warning "[macro] a macro is already running. Wait until the macro has finished or call 'macro stop'\n";
       return;
     }
-    $queue = new Macro::Script($arg, $argt);
+    my ($repeat, $oAI, $mdelay) = (1, 0, undef);
+    for (my $idx = 0; $idx <= @params; $idx++) {
+      if ($params[$idx] eq '-repeat') {$repeat += $params[++$idx]}
+      if ($params[$idx] eq '-overrideAI') {$oAI = 1}
+      if ($params[$idx] eq '-macro_delay') {$mdelay = $params[++$idx]}
+      if ($params[$idx] eq '--') {splice @params, 0, ++$idx; last}
+    }
+    foreach my $p (1..@params) {setVar(".param".$p, $params[$p-1])}
+    $queue = new Macro::Script($arg, $repeat);
     if (!defined $queue) {error "[macro] $arg not found or error in queue\n"}
-    else {$cvs->debug("macro $arg selected.", $logfac{'function_call_macro'}); $onHold = 0}
+    else {
+      $cvs->debug("macro $arg selected.", $logfac{'function_call_macro'});
+      $onHold = 0;
+      if ($oAI) {$queue->setOverrideAI}
+      if (defined $mdelay) {$queue->setMacro_delay($mdelay)}
+    }
   }
 }
 

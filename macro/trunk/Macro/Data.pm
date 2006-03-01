@@ -1,4 +1,3 @@
-# $Header$
 package Macro::Data;
 
 use strict;

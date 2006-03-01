@@ -1,5 +1,3 @@
-# $Header$
-#
 # package cvsdebug (arachno)
 #
 # copy this file into your openkore top folder
@@ -97,7 +95,7 @@ cvsdebug - package for debugging openkore plugins
 
 =head1 VERSION
 
-$Revision$
+    Version: 1.0 (2005/10/28)
 
 =head1 SYNOPSIS
 

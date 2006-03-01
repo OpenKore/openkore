@@ -1,5 +1,3 @@
-# $Header$
-
 package Macro::Script;
 
 use strict;
@@ -16,8 +14,10 @@ use Macro::Parser qw(parseCmd);
 use Macro::Utilities qw(setVar getVar cmpr);
 use Macro::Automacro qw(releaseAM lockAM);
 use Log qw(message);
-our $Version = sprintf("%d", q$Revision$ =~ /(\d+)/);
-
+our $Changed = sprintf("%s %s %s",
+  q$Date$
+  =~ /(\d{4}-\d{2}-\d{2}) (\d{2}:\d{2}:\d{2}) ([+-]\d{4})/);
+      
 # constructor
 sub new {
   my ($class, $name, $repeat) = @_;
@@ -41,32 +41,32 @@ sub new {
     orphan => $::config{macro_orphans}
   };
   bless ($self, $class);
-  return $self;
+  return $self
 }
 
 # destructor
 sub DESTROY {
   my $self = shift;
-  AI::dequeue() if (AI::is('macro') && !$self->{submacro});
+  AI::dequeue() if (AI::is('macro') && !$self->{submacro})
 }
 
 # declares current macro to be a submacro
 sub regSubmacro {
   my $self = shift;
-  $self->{submacro} = 1;
+  $self->{submacro} = 1
 }
 
 # registers to AI queue
 sub register {
   my $self = shift;
   AI::queue('macro') unless $self->{overrideAI};
-  $self->{registered} = 1;
+  $self->{registered} = 1
 }
 
 # checks register status
 sub registered {
   my $self = shift;
-  return $self->{registered};
+  return $self->{registered}
 }
 
 # sets and gets method for orphaned macros
@@ -79,75 +79,75 @@ sub orphan {
 # sets repeat
 sub setRepeat {
   my $self = shift;
-  $self->{repeat} = shift;
+  $self->{repeat} = shift
 }
 
 # for debugging purposes
 sub printLabels {
   my $self = shift;
   foreach my $k (keys %{$self->{label}}) {
-    $cvs->debug(sprintf("%s->%s", $k, ${$self->{label}}{$k}), $logfac{developers});
+    $cvs->debug(sprintf("%s->%s", $k, ${$self->{label}}{$k}), $logfac{developers})
   }
 }
 
 # sets timeout for next command
 sub setTimeout {
   my $self = shift;
-  $self->{timeout} = shift;
+  $self->{timeout} = shift
 }
 
 # sets macro_delay timeout for this macro
 sub setMacro_delay {
   my $self = shift;
-  $self->{macro_delay} = shift;
+  $self->{macro_delay} = shift
 }
 
 # gets timeout for next command
 sub timeout {
   my $self = shift;
-  return (time => $self->{time}, timeout => $self->{timeout});
+  return (time => $self->{time}, timeout => $self->{timeout})
 }
 
 # sets override AI
 sub setOverrideAI {
   my $self = shift;
-  $self->{overrideAI} = 1;
+  $self->{overrideAI} = 1
 }
 
 # gets override AI value
 sub overrideAI {
   my $self = shift;
-  return $self->{overrideAI};
+  return $self->{overrideAI}
 }
 
 # returns whether or not the macro finished
 sub finished {
   my $self = shift;
-  return $self->{finished};
+  return $self->{finished}
 }
 
 # returns the name of the current macro
 sub name {
   my $self = shift;
-  return $self->{name};
+  return $self->{name}
 }
 
 # returns the current line number
 sub line {
   my $self = shift;
-  return $self->{line};
+  return $self->{line}
 }
 
 # returns the error line
 sub error {
   my $self = shift;
-  return $self->{error};
+  return $self->{error}
 }
 
 # re-sets the timer
 sub ok {
   my $self = shift;
-  $self->{time} = time;
+  $self->{time} = time
 }
 
 # scans the script for labels
@@ -157,18 +157,18 @@ sub scanLabels {
   for (my $line = 0; $line < @{$script}; $line++) {
     if (${$script}[$line] =~ /^:/) {
       my ($label) = ${$script}[$line] =~ /^:(.*)$/;
-      $labels{$label} = $line;
+      $labels{$label} = $line
     }
     if (${$script}[$line] =~ /^while\s+/) {
       my ($label) = ${$script}[$line] =~ /\s+as\s+(.*)$/;
-      $labels{$label} = $line;
+      $labels{$label} = $line
     }
     if (${$script}[$line] =~ /^end\s+/) {
       my ($label) = ${$script}[$line] =~ /^end\s+(.*)$/;
-      $labels{"end ".$label} = $line;
+      $labels{"end ".$label} = $line
     }
   }
-  return %labels;
+  return %labels
 }
 
 # processes next line
@@ -182,21 +182,21 @@ sub next {
       $self->{time} = $tmptime{time};
       if ($self->{subcall}->finished) {
         undef $self->{subcall};
-        $self->{line}++;
+        $self->{line}++
       }
-      return $command;
+      return $command
     }
     $self->{error} = $self->{subcall}->{error};
     return
   }
-  $self->{timeout} = $self->{macro_delay};
+
   my $line = ${$self->{script}}[$self->{line}];
   if (!defined $line) {
     if ($self->{repeat} > 1) {
       $self->{repeat}--;
-      $self->{line} = 0;
+      $self->{line} = 0
     } else {
-      $self->{finished} = 1;
+      $self->{finished} = 1
     }
     return ""
   }
@@ -205,87 +205,94 @@ sub next {
   if ($line =~ /^goto\s/) {
     my ($tmp) = $line =~ /^goto\s+([a-zA-Z][a-zA-Z\d]*)/;
     if (exists $self->{label}->{$tmp}) {
-      $self->{line} = $self->{label}->{$tmp};
+      $self->{line} = $self->{label}->{$tmp}
     } else {
-      $self->{error} = "error in ".$self->{line}.": cannot find label ".$tmp;
+      $self->{error} = "error in ".$self->{line}.": cannot find label ".$tmp
     }
+    $self->{timeout} = 0
   ##########################################
   # declare block ending: end label
   } elsif ($line =~ /^end\s/) {
     my ($tmp) = $line =~ /^end\s+(.*)/;
     if (exists $self->{label}->{$tmp}) {
-      $self->{line} = $self->{label}->{$tmp};
+      $self->{line} = $self->{label}->{$tmp}
     } else {
-      $self->{error} = "error in ".$self->{line}.": cannot find block start";
+      $self->{error} = "error in ".$self->{line}.": cannot find block start"
     }
+    $self->{timeout} = 0
   ##########################################
   # if statement: if (foo = bar) goto label?
   } elsif ($line =~ /^if\s/) {
-    my ($first, $cond, $last, $then) = $line =~ /^if\s+\(\s*"?(.*?)"?\s+([<>=!]+?)\s+"?(.*)"?\s*\)\s+(.*?)$/;
+    my ($first, $cond, $last, $then) = $line =~ /^if\s+\(\s*"?(.*?)"?\s+([<>=!]+?)\s+"?(.*?)"?\s*\)\s+(.*?)$/;
     if (!defined $first || !defined $cond || !defined $last || !defined $then || $then !~ /^(goto\s|stop)/) {
-      $self->{error} = "error in ".$self->{line}.": syntax error in if statement";
+      $self->{error} = "error in ".$self->{line}.": syntax error in if statement"
     } else {
       $first = parseCmd($first); $last = parseCmd($last);
       if (cmpr($first, $cond, $last)) {
         if ($then =~ /^goto\s/) {
           my ($tmp) = $then =~ /^goto\s+([a-zA-Z][a-zA-Z\d]*)$/;
           if (exists $self->{label}->{$tmp}) {
-            $self->{line} = $self->{label}->{$tmp};
+            $self->{line} = $self->{label}->{$tmp}
           } else {
-            $self->{error} = "error in ".$self->{line}.": cannot find label ".$tmp;
+            $self->{error} = "error in ".$self->{line}.": cannot find label ".$tmp
           }
         } elsif ($then =~ /^stop$/) {
-          $self->{finished} = 1;
+          $self->{finished} = 1
         }
       } else {
-        $self->{line}++;
+        $self->{line}++
       }
     }
+    $self->{timeout} = 0
   ##########################################
   # while statement: while (foo <= bar) as label
   } elsif ($line =~ /^while\s/) {
     my ($first, $cond, $last, $label) = $line =~ /^while\s+\(\s*"?(.*?)"?\s+([<>=!]+?)\s+"?(.*?)"?\s*\)\s+as\s+(.*)$/;
     if (!defined $first || !defined $cond || !defined $last || !defined $label) {
-      $self->{error} = "error in ".$self->{line}.": syntax error in while statement";
+      $self->{error} = "error in ".$self->{line}.": syntax error in while statement"
     } else {
       $first = parseCmd($first); $last = parseCmd($last);
       if (!cmpr($first, $cond, $last)) {
         $self->{line} = $self->{label}->{"end ".$label}
       }
-      $self->{line}++;
+      $self->{line}++
     }
+    $self->{timeout} = 0
   ##########################################
   # set variable: $variable = value
   } elsif ($line =~ /^\$[a-z]/i) {
     my ($var, $val);
     if (($var, $val) = $line =~ /^\$([a-z][a-z\d]*?)\s+=\s+(.*)$/i) {
-      setVar($var, parseCmd($val));
+      setVar($var, parseCmd($val))
     } elsif (($var, $val) = $line =~ /^\$([a-z][a-z\d]*?)([+-]{2})$/i) {
       if ($val eq '++') {setVar($var, getVar($var)+1)}
       else {setVar($var, getVar($var)-1)}
     } else {
-      $self->{error} = "error in ".$self->{line}.": unrecognized assignment";
+      $self->{error} = "error in ".$self->{line}.": unrecognized assignment"
     }
     $self->{line}++;
+    $self->{timeout} = $self->{macro_delay}
   ##########################################
   # set doublevar: ${$variable} = value
   } elsif ($line =~ /^\$\{\$[.a-z]/i) {
     my ($dvar, $val);
     if (($dvar, $val) = $line =~ /^\$\{\$([.a-z][a-z\d]*?)\}\s+=\s+(.*)$/i) {
       my $var = getVar($dvar);
-      setVar("#".$var, parseCmd($val));
+      setVar("#".$var, parseCmd($val))
     } elsif (($dvar, $val) = $line =~ /^\$\{\$([.a-z][a-z\d]*?)\}([+-]{2})$/i) {
       my $var = getVar($dvar);
       if ($val eq '++') {setVar("#".$var, getVar("#".$var)+1)}
       else {setVar("#".$var, getVar("#".$var)-1)}
     } else {
-        $self->{error} = "error in ".$self->{line}.": unrecognized assignment.";
+        $self->{error} = "error in ".$self->{line}.": unrecognized assignment."
     }
     $self->{line}++;
+    $self->{timeout} = $self->{macro_delay}
   ##########################################
   # label definition: :label
   } elsif ($line =~ /^:/) {
     $self->{line}++;
+    $self->{timeout} = 0
   ##########################################
   # returns command: do whatever
   } elsif ($line =~ /^do\s/) {
@@ -313,7 +320,8 @@ sub next {
       return;
     }
     $self->{line}++;
-    return parseCmd($tmp);
+    $self->{timeout} = $self->{macro_delay};
+    return parseCmd($tmp)
   ##########################################
   # log command
   } elsif ($line =~ /^log\s+/) {
@@ -321,32 +329,36 @@ sub next {
     $tmp = parseCmd($tmp);
     message "[macro][log] $tmp\n", "macro";
     $self->{line}++;
+    $self->{timeout} = $self->{macro_delay}
   ##########################################
   # pause command
   } elsif ($line =~ /^pause/) {
     my ($tmp) = $line =~ /^pause\s+(\d+)/;
     if (defined $tmp) {$self->{timeout} = $tmp}
-    $self->{line}++
+    $self->{line}++;
+    $self->{timeout} = $self->{macro_delay}
   ##########################################
   # stop command
   } elsif ($line =~ /^stop$/) {
-    $self->{finished} = 1;
+    $self->{finished} = 1
   ##########################################
   # release command
   } elsif ($line =~ /^release\s+/) {
     my ($tmp) = $line =~ /^release\s+(.*)/;
     if (!releaseAM(parseCmd($tmp))) {
-      $self->{error} = "error in ".$self->{line}.": releasing $tmp failed";
+      $self->{error} = "error in ".$self->{line}.": releasing $tmp failed"
     }
     $self->{line}++;
+    $self->{timeout} = $self->{macro_delay}
   ##########################################
   # lock command
   } elsif ($line =~ /^lock\s+/) {
     my ($tmp) = $line =~ /^lock\s+(.*)/;
     if (!lockAM(parseCmd($tmp))) {
-      $self->{error} = "error in ".$self->{line}.": locking $tmp failed";
+      $self->{error} = "error in ".$self->{line}.": locking $tmp failed"
     }
     $self->{line}++;
+    $self->{timeout} = $self->{macro_delay}
   ##########################################
   # call command
   } elsif ($line =~ /^call\s+/) {
@@ -354,19 +366,20 @@ sub next {
     if ($tmp =~ /\s/) {
       my ($name, $times) = $tmp =~ /(.*?)\s+(.*)/;
       $times = parseCmd($times);
-      $self->{subcall} = new Macro::Script($name, $times);
+      $self->{subcall} = new Macro::Script($name, $times)
     } else {
-      $self->{subcall} = new Macro::Script($tmp);
+      $self->{subcall} = new Macro::Script($tmp)
     }
     if (!defined $self->{subcall}) {
-      $self->{error} = "error in ".$self->{line}.": failed to call script";
+      $self->{error} = "error in ".$self->{line}.": failed to call script"
     } else {
       $self->{subcall}->regSubmacro;
+      $self->{timeout} = $self->{macro_delay}
     }
   ##########################################
   # unrecognized line
   } else {
-    $self->{error} = "error in ".$self->{line}.": syntax error";
+    $self->{error} = "error in ".$self->{line}.": syntax error"
   }
   if (defined $self->{error}) {return} else {return ""}
 }

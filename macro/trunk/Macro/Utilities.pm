@@ -1,4 +1,3 @@
-# $Header$
 package Macro::Utilities;
 
 use strict;
@@ -18,7 +17,10 @@ use AI;
 use Log qw(warning error);
 use Macro::Data;
 
-our $Version = sprintf("%d", q$Revision$ =~ /(\d+)/);
+our $Changed = sprintf("%s %s %s",
+  q$Date$
+  =~ /(\d{4}-\d{2}-\d{2}) (\d{2}:\d{2}:\d{2}) ([+-]\d{4})/);
+      
 my $orphanWarn = 1;
 
 # own ai_Isidle check that excludes deal
@@ -80,7 +82,7 @@ sub cmpr {
     if ($cond eq "!=" && $a != $b) {return 1}
     return 0;
   }
-  if ($cond eq "="  && $a eq $b) {return 1}
+  if (($cond eq "=" || $cond eq "==") && $a eq $b) {return 1}
   if ($cond eq "!=" && $a ne $b) {return 1}
   return 0;
 }
