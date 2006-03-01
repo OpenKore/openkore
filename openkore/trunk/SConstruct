@@ -112,8 +112,10 @@ if cygwin:
 
 		(temp, dllname) = os.path.split(str(target[0]))
 		(targetName, temp) = os.path.splitext(str(target[0]))
-		command = ['dlltool', '--dllname', dllname, '--output-def',
-			targetName + '.def', '--export-all-symbols',
+		command = ['dlltool', '--dllname', dllname,
+			'-z', targetName + '.def',
+			'-l', targetName + '.lib',
+			'--export-all-symbols',
 			'--add-stdcall-alias'] + sources
 		print ' '.join(command)
 		ret = os.spawnvp(os.P_WAIT, command[0], command)
@@ -138,10 +140,7 @@ if cygwin:
 		emitter = '$LIBEMITTER',
 		suffix = 'dll',
 		src_suffix = '$OBJSUFFIX',
-		src_builder = 'StaticObject')
-	#NativeDLLBuilder = Builder(action = [
-	#	['dllwrap', '--target=i386-mingw32', '-mno-cygwin', '$SOURCES', '-o', '$TARGET']
-	#])
+		src_builder = 'SharedObject')
 else:
 	NativeDLLBuilder = libenv['BUILDERS']['SharedLibrary']
 libenv['BUILDERS']['NativeDLL'] = NativeDLLBuilder
@@ -155,9 +154,9 @@ if win32:
 	perlenv['LIBPATH'] += [perlconfig['coredir']]
 else:
 	perlenv['CFLAGS'] += Split('-D_REENTRANT -D_GNU_SOURCE' +
-		' -D_LARGEFILE_SOURCE -DVERSION=\\"1.0\\" -DXS_VERSION=\\"1.0\\" ' +
-		' -D_FILE_OFFSET_BITS=64')
-perlenv['CFLAGS'] += ["-I" + perlconfig['coredir']]
+		' -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64')
+perlenv['CFLAGS'] += ["-I" + perlconfig['coredir'],
+		'-DVERSION=\\"1.0\\"', '-DXS_VERSION=\\"1.0\\"']
 perlenv['CCFLAGS'] = perlenv['CFLAGS']
 
 def buildXS(target, source, env):
