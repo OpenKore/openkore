@@ -62,7 +62,7 @@ for input, output in XS_sources.iteritems():
 	perlenv.XS(output, input)
 
 
-############### Define dependencies ###############
+############### XSTools ###############
 
 # External library dependencies
 deps = []
@@ -90,3 +90,15 @@ if not win32:
 	perlenv.Command('XSTools.so', XSTools,
 		[['ln', '-sf', 'libXSTools.so', 'XSTools.so']],
 		chdir=1)
+
+
+############### NetRedirect.dll ###############
+
+if win32:
+	sources = [
+		'win32/netredirect.cpp',
+		'win32/utils-netredirect.cpp'
+	]
+	libenv.NativeDLL('NetRedirect', sources,
+		CC = 'g++',
+		LIBS = ['ws2_32'])
