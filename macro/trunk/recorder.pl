@@ -1,5 +1,3 @@
-# $Header$
-#
 # macro recorder by Arachno
 #
 #
@@ -8,8 +6,10 @@
 # See http://www.gnu.org/licenses/gpl.html
 
 package recorder;
-my $vMajor = "1.0";
-my $Version = sprintf("%s rev%d.%02d", $vMajor, q$Revision$ =~ /(\d+)\.(\d+)/);
+
+my $Version = sprintf("1.0 %s %s %s",
+   q$Date$
+   =~ /(\d{4}-\d{2}-\d{2}) (\d{2}:\d{2}:\d{2}) ([+-]\d{4})/);
 
 use strict;
 use Plugins;
@@ -43,7 +43,7 @@ sub Unload {
 }
 
 sub commandHandler {
-  my $arg = $_[1];
+  my (undef, $arg) = @_;
   if (!defined $arg) {
     message "Macro recorder\n", "list";
     message "start recording with 'record NAME', end with 'record stop'\n";
@@ -57,7 +57,7 @@ sub commandHandler {
     } else {
       error "nothing to do.\n";
     }
-  } elsif ($arg =~ /^save/) {
+  } elsif ($arg eq 'save') {
     my $filename = $Settings::control_folder."/macros-".time.".rec";
     open MACRO, "> $filename";
     foreach my $m (keys %macros) {
