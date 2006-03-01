@@ -12,6 +12,7 @@
 use FindBin qw($RealBin);
 use lib "$RealBin";
 use lib "$RealBin/src";
+use strict;
 
 srand;
 
@@ -131,6 +132,7 @@ my $parseArgResult = Settings::parseArguments();
 Settings::parseSysConfig();
 Translation::initDefault(undef, $sys{locale});
 
+use Globals;
 use Interface;
 $interface = Interface->switchInterface($Settings::default_interface, 1);
 
@@ -172,7 +174,6 @@ require PathFinding;
 require WinUtils if ($^O eq 'MSWin32');
 
 require 'functions.pl';
-use Globals;
 use Modules;
 use Log;
 use Utils;
@@ -384,7 +385,7 @@ if ($net->version != 1) {
 			Log::message(T("#         Name\n"), "connection");
 
 			my $i = 0;
-			my @servers = sort(keys %masterServers);
+			my @servers = sort { lc($a) cmp lc($b) } keys(%masterServers);
 			foreach my $name (@servers) {
 				Log::message(swrite(
 					"@<<  @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
