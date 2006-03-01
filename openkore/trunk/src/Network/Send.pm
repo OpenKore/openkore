@@ -337,8 +337,8 @@ sub encrypt {
 
 sub injectMessage {
 	my $message = shift;
-	my $name = "|";
-	my $msg .= $name . " : " . $message . chr(0);
+	my $name = stringToBytes("|");
+	my $msg .= $name . stringToBytes(" : $message") . chr(0);
 	encrypt(\$msg, $msg);
 	$msg = pack("C*",0x09, 0x01) . pack("v*", length($name) + length($message) + 12) . pack("C*",0,0,0,0) . $msg;
 	encrypt(\$msg, $msg);
@@ -346,7 +346,7 @@ sub injectMessage {
 }
 
 sub injectAdminMessage {
-	my $message = shift;
+	my $message = stringToBytes(shift);
 	my $msg = pack("C*",0x9A, 0x00) . pack("v*", length($message)+5) . $message .chr(0);
 	encrypt(\$msg, $msg);
 	$net->clientSend($msg);
@@ -814,9 +814,12 @@ sub sendFriendReject {
 sub sendFriendRequest {
 	my $r_net = shift;
 	my $name = shift;
-	$name = substr($name, 0, 24) if (length($name) > 24);
-	$name = $name . chr(0) x (24 - length($name));
-	my $msg = pack("C*", 0x02, 0x02).$name;
+
+	my $binName = stringToBytes($name);
+	$binName = substr($binName, 0, 24) if (length($binName) > 24);
+	$binName = $binName . chr(0) x (24 - length($binName));
+	my $msg = pack("C*", 0x02, 0x02) . $binName;
+
 	sendMsgToServer($net, $msg);
 	debug "Sent Request to be a friend: $name\n", "sendPacket";
 }
@@ -1012,7 +1015,8 @@ sub sendGuildNotice {
 	my $guildID = shift;
 	my $name = shift;
 	my $notice = shift;
-	my $msg = pack("C*", 0x6E, 0x01).$guildID.pack("a60 a120",$name,$notice);
+	my $msg = pack("C*", 0x6E, 0x01) . $guildID .
+		pack("a60 a120", stringToBytes($name), stringToBytes($notice));
 	sendMsgToServer($net, $msg);
 	debug "Sent Change Guild Notice: $notice\n", "sendPacket", 2;
 }
@@ -1054,11 +1058,14 @@ sub sendIdentify {
 
 sub sendIgnore {
 	my $r_net = shift;
-	my $name = stringToBytes(shift);
+	my $name = shift;
 	my $flag = shift;
-	$name = substr($name, 0, 24) if (length($name) > 24);
-	$name = $name . chr(0) x (24 - length($name));
-	my $msg = pack("C*", 0xCF, 0x00).$name.pack("C*", $flag);
+
+	my $binName = stringToBytes($name);
+	$binName = substr($binName, 0, 24) if (length($binName) > 24);
+	$binName = $binName . chr(0) x (24 - length($binName));
+	my $msg = pack("C*", 0xCF, 0x00) . $binName . pack("C*", $flag);
+
 	sendMsgToServer($r_net, $msg);
 	debug "Sent Ignore: $name, $flag\n", "sendPacket", 2;
 }
@@ -1463,7 +1470,7 @@ sub sendPartyOrganize {
 	my $binName = stringToBytes($name);
 	$binName = substr($binName, 0, 24) if (length($binName) > 24);
 	$binName .= chr(0) x (24 - length($binName));
-	my $msg = pack("C*", 0xF9, 0x00) . $name;
+	my $msg = pack("C*", 0xF9, 0x00) . $binName;
 
 	sendMsgToServer($r_net, $msg);
 	debug "Sent Organize Party: $name\n", "sendPacket", 2;
@@ -1508,7 +1515,7 @@ sub sendPetHatch {
 
 sub sendPetName {
 	my $name = shift;
-	my $msg = pack("C1 C1 a24", 0xA5, 0x01, $name);
+	my $msg = pack("C1 C1 a24", 0xA5, 0x01, stringToBytes($name));
 	sendMsgToServer($net, $msg);
 	debug "Sent Pet Rename: $name\n", "sendPacket", 2;
 }
