@@ -165,7 +165,7 @@ sub handle {
 # Returns the name of the skill.
 sub name {
 	my $self = shift;
-	return $skills{id}{$self->{id}}{name};
+	return $skills{id}{$self->{id}}{name} || "Unknown ".$self->{id};
 }
 
 sub complete {
