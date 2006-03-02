@@ -13,6 +13,7 @@ our @EXPORT = qw(checkVar checkVarVar checkLoc checkLevel checkLevel checkClass
 
 use Utils;
 use Globals;
+use Skills;
 use AI;
 #use Item;
 use Log qw(message error warning);
@@ -258,7 +259,7 @@ sub checkCast {
   if (($target eq $accountID ||
      ($pos->{x} == $args->{x} && $pos->{y} == $args->{y}) ||
      distance($pos, $args) <= judgeSkillArea($args->{skillID})) &&
-     existsInList(lc($cast), lc($skillsID_lut{$args->{skillID}}))) {return 1}
+     existsInList(lc($cast), lc(Skills->new(id => $args->{skillID})->name))) {return 1}
   return 0;
 }
 
