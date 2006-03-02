@@ -3216,8 +3216,8 @@ sub item_skill {
 	my $sp = $args->{sp}; # we don't use this yet
 	my $skillName = $args->{skillName};
 
-	message TF("Permitted to use %s (%s), level %s\n", $skillsID_lut{$skillID}, $skillID, $skillLv);
 	my $skill = Skills->new(id => $skillID);
+	message TF("Permitted to use %s (%s), level %s\n", $skill->name, $skillID, $skillLv);
 
 	unless ($config{noAutoSkill}) {
 		sendSkillUse($net, $skillID, $skillLv, $accountID);
@@ -4549,8 +4549,8 @@ sub skill_cast {
 	countCastOn($sourceID, $targetID, $skillID, $x, $y);
 
 	my $domain = ($sourceID eq $accountID) ? "selfSkill" : "skill";
-	message "$source $verb ".skillName($skillID)." on $targetString (time ${wait}ms)\n", $domain, 1;
-		Plugins::callHook('is_casting', {
+	message "$source $verb ".$skill->name." on $targetString (time ${wait}ms)\n", $domain, 1;
+	Plugins::callHook('is_casting', {
 		sourceID => $sourceID,
 		targetID => $targetID,
 		source => $source,
@@ -4720,7 +4720,7 @@ sub skill_use_failed {
 		9 => '90% Overweight',
 		10 => 'Requirement'
 		);
-	warning "Skill $skillsID_lut{$skillID} failed ($failtype{$type})\n", "skill";
+	warning "Skill ".Skills->new(id => $skillID)->name." failed ($failtype{$type})\n", "skill";
 	Plugins::callHook('packet_skillfail', {'skillID' => $skillID, 'failType' => $failtype{$type}});
 }
 
@@ -4739,7 +4739,7 @@ sub skill_use_location {
 
 	# Resolve source name
 	my ($source, $uses) = getActorNames($sourceID, 0, 'use', 'uses');
-	my $disp = "$source $uses ".skillName($skillID);
+	my $disp = "$source $uses ".Skills->new(id => $skillID)->name;
 	$disp .= " (lvl $lv)" unless $lv == 65535;
 	$disp .= " on location ($x, $y)\n";
 
@@ -4809,10 +4809,10 @@ sub skill_used_no_damage {
 		# Handle auto-response on heal
 		if (($players{$args->{sourceID}} && %{$players{$args->{sourceID}}}) && (($args->{skillID} == 28) || ($args->{skillID} == 29) || ($args->{skillID} == 34))) {
 			if ($args->{targetID} eq $accountID) {
-				chatLog("k", "***$source ".skillName($args->{skillID})." on $target$extra***\n");
+				chatLog("k", "***$source ".$skill->name." on $target$extra***\n");
 				sendMessage($net, "pm", getResponse("skillgoodM"), $players{$args->{sourceID}}{'name'});
 			} elsif ($monsters{$args->{targetID}}) {
-				chatLog("k", "***$source ".skillName($args->{skillID})." on $target$extra***\n");
+				chatLog("k", "***$source ".$skill->name." on $target$extra***\n");
 				sendMessage($net, "pm", getResponse("skillbadM"), $players{$args->{sourceID}}{'name'});
 			}
 		}
@@ -4863,7 +4863,12 @@ sub skills_list {
 		if (!$char->{skills}{$skillName}{lv}) {
 			$char->{skills}{$skillName}{lv} = $level;
 		}
-		$skillsID_lut{$skillID} = $skills_lut{$skillName};
+		##
+		# I have no idea what the importance of this line (original) is:
+		#     $skillsID_lut{$skillID} = $skills_lut{$skillName};
+		# translated to new Skill syntax:
+		#     $Skills::skills{id}{$skillID}{name} = Skills->new(handle => lc($skillName))->name;
+		# commented out
 		binAdd(\@skillsID, $skillName);
 
 		Plugins::callHook('packet_charSkills', {
