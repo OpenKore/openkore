@@ -7,6 +7,7 @@
   actor_died_or_disappeared.
 - Config option 'exeName' renamed to 'XKore_exeName'.
 - Renamed skill: "A Moonlit Water Mill"
+- Format of skills.txt have changed.
 
 Bug fixes:
 - Fixed the unknown packets when switching characters on servers
@@ -73,6 +74,7 @@ New features:
 - New conversation code a="" to execute console commands. Example:
   talknpc 115 111 c r0 c a="is Novice Potion" c c c r0 c n
 - Another mapname redirect for "force_1-1.fld => force_map1.fld"
+- Added latest skills list (including Guild Skills)
 
 New config options:
 - autoMoveOnDeath set:
@@ -139,6 +141,8 @@ Internal:
 - additional conStates 1.2 and 1.3 for servers who need to receive proper
   gameguard authentication first before allowing the client to continue
   its login sequence
+- Removed %skills_lut, %skills_rlut, %skillsID_lut and %skillsID_rlut
+  Use Skills->new() instead.
 
 Credits:
 - id-mardi: fix for setPartySkillTimer, move the rest of the receive packets

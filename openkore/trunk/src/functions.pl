@@ -1326,9 +1326,10 @@ sub AI {
 				delete $args->{attackMethod};
 
 				ai_setSuspend(0);
-				if (!ai_getSkillUseType($skills_rlut{lc($config{"attackSkillSlot_$slot"})})) {
+				my $skill = Skills->new(name => lc($config{"attackSkillSlot_$slot"}));
+				if (!ai_getSkillUseType($skill->handle)) {
 					ai_skillUse(
-						$skills_rlut{lc($config{"attackSkillSlot_$slot"})},
+						$skill->handle,
 						$config{"attackSkillSlot_${slot}_lvl"},
 						$config{"attackSkillSlot_${slot}_maxCastTime"},
 						$config{"attackSkillSlot_${slot}_minCastTime"},
@@ -1341,7 +1342,7 @@ sub AI {
 				} else {
 					my $pos = calcPosition($config{"attackSkillSlot_${slot}_isSelfSkill"} ? $char : $target);
 					ai_skillUse(
-						$skills_rlut{lc($config{"attackSkillSlot_$slot"})},
+						$skill->handle,
 						$config{"attackSkillSlot_${slot}_lvl"},
 						$config{"attackSkillSlot_${slot}_maxCastTime"},
 						$config{"attackSkillSlot_${slot}_minCastTime"},
@@ -3581,7 +3582,7 @@ sub AI {
 		for (my $i = 0; exists $config{"useSelf_skill_$i"}; $i++) {
 			if ($config{"useSelf_skill_$i"} && checkSelfCondition("useSelf_skill_$i")) {
 				$ai_v{"useSelf_skill_$i"."_time"} = time;
-				$self_skill{ID} = $skills_rlut{lc($config{"useSelf_skill_$i"})};
+				$self_skill{ID} = Skills->new(name => lc($config{"useSelf_skill_$i"}))->handle;
 				unless ($self_skill{ID}) {
 					error "Unknown skill name '".$config{"useSelf_skill_$i"}."' in useSelf_skill_$i\n";
 					configModify("useSelf_skill_${i}_disabled", 1);
@@ -3620,7 +3621,7 @@ sub AI {
 			$self_skill{ID} = 'BD_ENCORE';
 		}
 		if ($self_skill{lvl} > 0) {
-			debug qq~Auto-skill on self: $skills_lut{$self_skill{ID}} (lvl $self_skill{lvl})\n~, "ai";
+			debug qq~Auto-skill on self: $config{$self_skill{prefix}} (lvl $self_skill{lvl})\n~, "ai";
 			if (!ai_getSkillUseType($self_skill{ID})) {
 				ai_skillUse($self_skill{ID}, $self_skill{lvl}, $self_skill{maxCastTime}, $self_skill{minCastTime}, $accountID, undef, undef, undef, undef, $self_skill{prefix});
 			} else {
@@ -3645,7 +3646,7 @@ sub AI {
 					&& checkPlayerCondition("partySkill_$i"."_target", $ID)
 					&& checkSelfCondition("partySkill_$i")
 					){
-					$party_skill{ID} = $skills_rlut{lc($config{"partySkill_$i"})};
+					$party_skill{ID} = Skills->new(name => lc($config{"partySkill_$i"}))->handle;
 					$party_skill{lvl} = $config{"partySkill_$i"."_lvl"};
 					$party_skill{target} = $player->{name};
 					my $pos = $player->position;
@@ -3690,7 +3691,7 @@ sub AI {
 			$party_skill{lvl} = $smartHeal_lv;
 		}
 		if (defined $party_skill{targetID}) {
-			debug qq~Party Skill used ($party_skill{target}) Skills Used: $skills_lut{$party_skill{ID}} (lvl $party_skill{lvl})\n~, "skill";
+			debug qq~Party Skill used ($party_skill{target}) Skills Used: $config{$party_skill{prefix}} (lvl $party_skill{lvl})\n~, "skill";
 			if (!ai_getSkillUseType($party_skill{ID})) {
 				ai_skillUse(
 					$party_skill{ID},

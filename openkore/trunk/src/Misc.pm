@@ -3016,14 +3016,6 @@ sub getNPCInfo {
 	}
 }
 
-# Resolve the name of a skill
-# FIXME: This function is deprecated. Use Skills.pm instead
-sub skillName {
-	my $skillID = shift;
-
-	return $skillsID_lut{$skillID} || "Unknown $skillID";
-}
-
 sub checkSelfCondition {
 	my $prefix = shift;
 
@@ -3049,7 +3041,7 @@ sub checkSelfCondition {
 
 	# check skill use SP if this is a 'use skill' condition
 	if ($prefix =~ /skill/i) {
-		my $skill_handle = $skills_rlut{lc($config{$prefix})};
+		my $skill_handle = Skills->new(name => lc($config{$prefix}))->handle;
 		return 0 unless (($char->{skills}{$skill_handle} && $char->{skills}{$skill_handle}{lv} >= 1)
 						|| ($char->{permitSkill} &&	$char->{permitSkill}->name eq $config{$prefix})
 						|| $config{$prefix."_equip_leftAccessory"}

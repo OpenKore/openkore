@@ -40,7 +40,8 @@ package Skills;
 use strict;
 use Globals qw($accountID $net $char %skillsSP_lut);
 use Network::Send qw(sendSkillUse);
-use vars qw(@skills %handles %names);
+use vars qw(%skills);
+use Log qw(warning);
 
 use overload '""' => \&name;
 
@@ -50,39 +51,36 @@ use overload '""' => \&name;
 
 # These data structures work as follows:
 #
-# @skill = (
-#     ['NV_BASIC', 'Basic Skill'],
-#     ['SM_SWORD', 'Sword Mastery'],
-#     ['SM_TWOHAND', 'Two-Handed Sword Mastery'],
-#     ...
+# %skills = (
+#     'id' => (
+#         '1' => (
+#             'handle' => 'NV_BASIC',
+#             'name' => 'Basic Skill'
+#         )
+#         '2' => (
+#             'handle' => 'SM_SWORD',
+#             'name' => 'Sword Mastery'
+#         )
+#         '3' => (
+#             'handle' => 'SM_TWOHAND',
+#             'name' => 'Two-Handed Sword Mastery'
+#         )
+#         ...
+#     )
+#     'handle' => (
+#         'NV_BASIC' => 1,
+#         'SM_SWORD' => 2,
+#         'SM_TWOHAND' => 3,
+#         ...
+#     )
+#     'name' => (
+#         'basic skill' => 1,
+#         'sword mastery' => 2,
+#         'two-handed sword mastery' => 3,
+#         ...
+#     )
 # );
 #
-# %handle = (
-#     'NV_BASIC' => 0,
-#     'SM_SWORD' => 1,
-#     'SM_TWOHAND' => 2,
-#     ...
-# );
-#
-# %name = (
-#     'basic skill' => 0,
-#     'sword mastery' => 1,
-#     'two-handed sword mastery' => 2,
-#     ...
-# );
-#
-# Skills->init()
-#
-# Initializes %handles and %names after @skills has been set.
-# Called automatically by FileParsers::parseSkills().
-
-sub init {
-	for (my $id = 0; $id <= $#skills; $id++) {
-		$handles{$skills[$id][0]} = $id;
-		$names{lc($skills[$id][1])} = $id;
-	}
-}
-
 
 ##############################
 ### CATEGORY: Constructor
@@ -111,11 +109,11 @@ sub new {
 
 	my %self;
 	if ($key eq 'id' || ($key eq 'auto' && $value =~ /^\d+$/)) {
-		$self{id} = $value if $skills[$value];
+		$self{id} = $value if defined($skills{id});
 	} elsif ($key eq 'handle' || ($key eq 'auto' && uc($value) eq $value)) {
-		$self{id} = $handles{$value};
+		$self{id} = $skills{handle}{$value};
 	} elsif ($key eq 'name' || $key eq 'auto') {
-		$self{id} = $names{lc($value)};
+		$self{id} = $skills{name}{lc($value)};
 	}
 	bless \%self, $class;
 	return \%self;
@@ -158,7 +156,7 @@ sub id {
 # Returns the handle of the skill.
 sub handle {
 	my $self = shift;
-	return $skills[$self->{id}][0];
+	return $skills{id}{$self->{id}}{handle};
 }
 
 ##
@@ -167,15 +165,15 @@ sub handle {
 # Returns the name of the skill.
 sub name {
 	my $self = shift;
-	return $skills[$self->{id}][1];
+	return $skills{id}{$self->{id}}{name};
 }
 
 sub complete {
 	my $name = quotemeta(shift);
 	my @matches;
-	foreach my $skill (@skills) {
-		if ($skill->[1] =~ /^$name/i) {
-			push @matches, $skill->[1];
+	foreach my $skill (@{$skills{id}}) {
+		if ($skill->{name} =~ /^$name/i) {
+			push @matches, $skill->{name};
 		}
 	}
 	return @matches;

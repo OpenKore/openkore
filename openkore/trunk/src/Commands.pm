@@ -2938,12 +2938,12 @@ sub cmdSkills {
 	my ($arg2) = $args =~ /^\w+ (\d+)/;
 	if ($arg1 eq "") {
 		my $msg = "----------Skill List-----------\n";
-		$msg .=   "  # Skill Name                     Lv      SP\n";
+		$msg .=   "   # Skill Name                     Lv      SP\n";
 		for my $handle (@skillsID) {
 			my $skill = Skills->new(handle => $handle);
 			my $sp = $char->{skills}{$handle}{sp} || '';
 			$msg .= swrite(
-				"@>> @<<<<<<<<<<<<<<<<<<<<<<<<<<<< @>>    @>>>",
+				"@>>> @<<<<<<<<<<<<<<<<<<<<<<<<<<<< @>>    @>>>",
 				[$skill->id, $skill->name, $char->{skills}{$handle}{lv}, $sp]);
 		}
 		$msg .= "\nSkill Points: $char->{points_skill}\n";

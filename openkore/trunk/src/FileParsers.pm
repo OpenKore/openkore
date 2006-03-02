@@ -749,113 +749,23 @@ sub parseSectionedFile {
 }
 
 sub parseSkills {
-	my ($file, $r_array) = @_;
-
-	# skill ID is numbered starting from 1, not 0
-	@{$r_array} = ([undef, undef]);
+	my ($file, $r_hash) = @_;
 
 	open(FILE, "<$file");
 	foreach (<FILE>) {
 		next if (/^\/\//);
-		my ($handle, $name) = split(/#/);
-		$name =~ s/_/ /g;
-		$name =~ s/ *$//;
-		if ($handle ne "" && $name ne "") {
-			push(@{$r_array}, [$handle, $name]);
+		s/[\r\n]//g;
+		s/\s+$//g;
+		my ($id, $handle, $name) = split(' ', $_, 3);
+		if ($id && $handle ne "" && $name ne "") {
+			$$r_hash{id}{$id}{handle} = $handle;
+			$$r_hash{id}{$id}{name} = $name;
+			$$r_hash{handle}{$handle} = $id;
+			$$r_hash{name}{lc($name)} = $id;
 		}
 	}
 	close(FILE);
 
-	# FIXME: global variable abuse; this assumes that $r_array is
-	# \@Skills::skills
-	Skills->init();
-	return 1;
-}
-
-sub parseSkillsLUT {
-	my $file = shift;
-	my $r_hash = shift;
-	undef %{$r_hash};
-	my @stuff;
-	my $i;
-	open(FILE, "<$file");
-	$i = 1;
-	foreach (<FILE>) {
-		next if (/^\/\//);
-		@stuff = split /#/, $_;
-		$stuff[1] =~ s/_/ /g;
-		$stuff[1] =~ s/ *$//;
-		if ($stuff[0] ne "" && $stuff[1] ne "") {
-			$$r_hash{$stuff[0]} = $stuff[1];
-		}
-		$i++;
-	}
-	close FILE;
-	return 1;
-}
-
-
-sub parseSkillsIDLUT {
-	my $file = shift;
-	my $r_hash = shift;
-	undef %{$r_hash};
-	my @stuff;
-	my $i;
-	open(FILE, "<$file");
-	$i = 1;
-	foreach (<FILE>) {
-		next if (/^\/\//);
-		@stuff = split /#/, $_;
-		$stuff[1] =~ s/_/ /g;
-		if ($stuff[0] ne "" && $stuff[1] ne "") {
-			$$r_hash{$i} = $stuff[1];
-		}
-		$i++;
-	}
-	close FILE;
-	return 1;
-}
-
-sub parseSkillsReverseIDLUT_lc {
-	my $file = shift;
-	my $r_hash = shift;
-	undef %{$r_hash};
-	my @stuff;
-	my $i;
-	open(FILE, "<$file");
-	$i = 1;
-	foreach (<FILE>) {
-		next if (/^\/\//);
-		@stuff = split /#/, $_;
-		$stuff[1] =~ s/_/ /g;
-		if ($stuff[0] ne "" && $stuff[1] ne "") {
-			$$r_hash{lc($stuff[1])} = $i;
-		}
-		$i++;
-	}
-	close FILE;
-	return 1;
-}
-
-sub parseSkillsReverseLUT_lc {
-	my $file = shift;
-	my $r_hash = shift;
-	undef %{$r_hash};
-	my @stuff;
-	my $i;
-	open(FILE, "< $file");
-	$i = 1;
-	foreach (<FILE>) {
-		next if (/^\/\//);
-		@stuff = split /#/, $_;
-		$stuff[1] =~ s/_/ /g;
-		$stuff[1] =~ s/ *$//;
-		if ($stuff[0] ne "" && $stuff[1] ne "") {
-			$$r_hash{lc($stuff[1])} = $stuff[0];
-		}
-		$i++;
-	}
-	close FILE;
 	return 1;
 }
 
