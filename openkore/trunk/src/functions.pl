@@ -131,6 +131,7 @@ sub initMapChangeVars {
 	$ai_v{cart_time} = time + 60;
 	$ai_v{inventory_time} = time + 60;
 	$ai_v{temp} = {};
+	$cart{exists} = 0;
 	$cart{inventory} = [];
 	$chars[$config{char}]{inventory} = [];
 	undef @venderItemList;
@@ -3030,7 +3031,7 @@ sub AI {
 
 	if ((AI::isIdle || AI::is(qw/route move buyAuto follow sitAuto items_take items_gather/))) {
 		my $timeout = $timeout{ai_cartAutoCheck}{timeout} || 2;
-		if (timeOut($AI::Timeouts::autoCart, $timeout) && hasCart()) {
+		if (timeOut($AI::Timeouts::autoCart, $timeout) && $cart{exists}) {
 			my @addItems;
 			my @getItems;
 			my $inventory = $char->{inventory};
