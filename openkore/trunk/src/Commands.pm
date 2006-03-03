@@ -729,6 +729,10 @@ sub cmdCart {
 		
 	} elsif ($arg1 eq "release") {
 		sendCompanionRelease();
+		if ($conState == 5) {
+			message("Cart released.\n", "success");
+			$cart{exists} = 0;
+		}
 	
 	} else {
 		error	"Error in function 'cart'\n" .
