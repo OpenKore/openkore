@@ -688,7 +688,12 @@ sub cmdCart {
 	my (undef, $input) = @_;
 	my ($arg1, $arg2) = split(' ', $input, 2);
 
-	if (!defined $cart{'inventory'}) {
+	if (!$cart{exists}) {
+		error	"Error in function 'cart' (Cart Management)\n" .
+			"You do not have a cart.\n";
+		return;
+		
+	} elsif (!defined $cart{'inventory'}) {
 		error "Cart inventory is not available.\n";
 		return;
 
@@ -723,12 +728,7 @@ sub cmdCart {
 		}
 		
 	} elsif ($arg1 eq "release") {
-		if (!hasCart()) {
-			error	"Error in function 'cart release' (Remove Cart Status)\n" .
-				"You don't possess a cart.\n";
-		} else {
-			sendCompanionRelease();
-		}
+		sendCompanionRelease();
 	
 	} else {
 		error	"Error in function 'cart'\n" .
@@ -742,12 +742,6 @@ sub cmdCart_add {
 	if (!defined $name) {
 		error	"Syntax Error in function 'cart add' (Add Item to Cart)\n" .
 			"Usage: cart add <item>\n";
-		return;
-	}
-
-	if (!hasCart()) {
-		error	"Error in function 'cart add' (Add Item to Cart)\n" .
-			"You do not have a cart.\n";
 		return;
 	}
 

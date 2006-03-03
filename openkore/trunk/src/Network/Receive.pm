@@ -1785,6 +1785,7 @@ sub cart_info {
 	$cart{items_max} = $args->{items_max};
 	$cart{weight} = int($args->{weight} / 10);
 	$cart{weight_max} = int($args->{weight_max} / 10);
+	$cart{exists} = 1;
 }
 
 sub cart_add_failed {
