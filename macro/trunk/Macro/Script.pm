@@ -227,8 +227,10 @@ sub next {
     if (!defined $first || !defined $cond || !defined $last || !defined $then || $then !~ /^(goto\s|stop)/) {
       $self->{error} = "error in ".$self->{line}.": syntax error in if statement"
     } else {
-      $first = parseCmd($first); $last = parseCmd($last);
-      if (cmpr($first, $cond, $last)) {
+      my $pfirst = parseCmd($first); my $plast = parseCmd($last);
+      unless (defined $pfirst && defined $plast) {
+        $self->{error} = "error in ".$self->{line}.": either '$first' or '$last' has failed"
+      } elsif (cmpr($pfirst, $cond, $plast)) {
         if ($then =~ /^goto\s/) {
           my ($tmp) = $then =~ /^goto\s+([a-zA-Z][a-zA-Z\d]*)$/;
           if (exists $self->{label}->{$tmp}) {
@@ -251,8 +253,10 @@ sub next {
     if (!defined $first || !defined $cond || !defined $last || !defined $label) {
       $self->{error} = "error in ".$self->{line}.": syntax error in while statement"
     } else {
-      $first = parseCmd($first); $last = parseCmd($last);
-      if (!cmpr($first, $cond, $last)) {
+      my $pfirst = parseCmd($first); my $plast = parseCmd($last);
+      unless (defined $pfirst && defined $plast) {
+        $self->{error} = "error in ".$self->{line}.": either '$first' or '$last' has failed"
+      } elsif (!cmpr($pfirst, $cond, $plast)) {
         $self->{line} = $self->{label}->{"end ".$label}
       }
       $self->{line}++
@@ -263,10 +267,12 @@ sub next {
   } elsif ($line =~ /^\$[a-z]/i) {
     my ($var, $val);
     if (($var, $val) = $line =~ /^\$([a-z][a-z\d]*?)\s+=\s+(.*)$/i) {
-      setVar($var, parseCmd($val))
+      my $pval = parseCmd($val);
+      if (defined $pval) {setVar($var, $pval)}
+      else {$self->{error} = "error in ".$self->{line}.": $val failed"}
     } elsif (($var, $val) = $line =~ /^\$([a-z][a-z\d]*?)([+-]{2})$/i) {
-      if ($val eq '++') {setVar($var, getVar($var)+1)}
-      else {setVar($var, getVar($var)-1)}
+      if ($val eq '++') {setVar($var, (getVar($var) or 0)+1)}
+      else {setVar($var, (getVar($var) or 0)-1)}
     } else {
       $self->{error} = "error in ".$self->{line}.": unrecognized assignment"
     }
@@ -278,11 +284,24 @@ sub next {
     my ($dvar, $val);
     if (($dvar, $val) = $line =~ /^\$\{\$([.a-z][a-z\d]*?)\}\s+=\s+(.*)$/i) {
       my $var = getVar($dvar);
-      setVar("#".$var, parseCmd($val))
+      unless (defined $var) {
+        $self->{error} = "error in ".$self->{line}.": $dvar not defined"
+      } else {
+        my $pval = parseCmd($val);
+        unless (defined $pval) {
+          $self->{error} = "error in ".$self->{line}.": $val failed"
+        } else {
+          setVar("#".$var, parseCmd($val))
+        }
+      }
     } elsif (($dvar, $val) = $line =~ /^\$\{\$([.a-z][a-z\d]*?)\}([+-]{2})$/i) {
       my $var = getVar($dvar);
-      if ($val eq '++') {setVar("#".$var, getVar("#".$var)+1)}
-      else {setVar("#".$var, getVar("#".$var)-1)}
+      unless (defined $var) {
+        $self->{error} = "error in ".$self->{line}.": $dvar undefined"
+      } else {
+        if ($val eq '++') {setVar("#".$var, (getVar("#".$var) or 0)+1)}
+        else {setVar("#".$var, (getVar("#".$var) or 0)-1)}
+      }
     } else {
         $self->{error} = "error in ".$self->{line}.": unrecognized assignment."
     }
@@ -317,17 +336,26 @@ sub next {
       }
     } elsif ($tmp =~ /^ai\s+clear$/) {
       $self->{error} = "error in ".$self->{line}.": do not mess around with ai in macros";
-      return;
+      return
+    }
+    my $result = parseCmd($tmp);
+    unless (defined $result) {
+      $self->{error} = "error in ".$self->{line}.": command $tmp failed";
+      return
     }
     $self->{line}++;
     $self->{timeout} = $self->{macro_delay};
-    return parseCmd($tmp)
+    return $result
   ##########################################
   # log command
   } elsif ($line =~ /^log\s+/) {
     my ($tmp) = $line =~ /^log\s+(.*)/;
-    $tmp = parseCmd($tmp);
-    message "[macro][log] $tmp\n", "macro";
+    my $result = parseCmd($tmp);
+    unless (defined $result) {
+      $self->{error} = "error in ".$self->{line}.": $tmp failed"
+    } else {
+      message "[macro][log] $result\n", "macro";
+    }
     $self->{line}++;
     $self->{timeout} = $self->{macro_delay}
   ##########################################
@@ -365,8 +393,12 @@ sub next {
     my ($tmp) = $line =~ /^call\s+(.*)/;
     if ($tmp =~ /\s/) {
       my ($name, $times) = $tmp =~ /(.*?)\s+(.*)/;
-      $times = parseCmd($times);
-      $self->{subcall} = new Macro::Script($name, $times)
+      my $ptimes = parseCmd($times);
+      unless (defined $ptimes) {
+        $self->{error} = "error in ".$self->{line}.": $times failed"
+      } else {
+        $self->{subcall} = new Macro::Script($name, $ptimes)
+      }
     } else {
       $self->{subcall} = new Macro::Script($tmp)
     }
