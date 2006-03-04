@@ -9,7 +9,7 @@ our @EXPORT_OK = qw(ai_isIdle between cmpr match getArgs
                  setVar getVar refreshGlobal getnpcID getPlayerID
                  getItemIDs getStorageIDs getSoldOut getInventoryAmount
                  getCartAmount getShopAmount getStorageAmount
-                 getRandom getConfig getWord callMacro);
+                 getRandom getRandomRange getConfig getWord callMacro);
 
 use Utils;
 use Globals;
@@ -313,6 +313,13 @@ sub getRandom {
     return
   }
   return $items[rand $id-1]
+}
+
+# returns random number within the given range  ###########
+sub getRandomRange {
+  $cvs->debug("getRandomRange(@_)", $logfac{function_call_macro});
+  my ($low, $high) = split(/,\s*/, $_[0]);
+  return int(rand($high-$low+1))+$low if (defined $high && defined $low)
 }
 
 # macro/script

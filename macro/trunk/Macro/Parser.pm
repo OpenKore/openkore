@@ -11,8 +11,8 @@ use Globals;
 use Log qw(message error);
 use Macro::Data;
 use Macro::Utilities qw(setVar getVar getnpcID getItemIDs getStorageIDs
-    getPlayerID getRandom getInventoryAmount getCartAmount getShopAmount
-    getStorageAmount getConfig getWord);
+    getPlayerID getRandom getRandomRange getInventoryAmount getCartAmount
+    getShopAmount getStorageAmount getConfig getWord);
 
 our $Changed = sprintf("%s %s %s",
     q$Date$
@@ -107,7 +107,7 @@ sub parseMacroFile {
 # should be an adequate workaround for the parser bug
 sub parseKw {
   my $text = shift;
-  my $keywords = "npc|cart|inventory|store|storage|player|vender|random|".
+  my $keywords = "npc|cart|inventory|store|storage|player|vender|random|rand|".
                  "invamount|cartamount|shopamount|storamount|config|eval|arg";
   my @pair = $text =~ /\@($keywords)\s*\(\s*(.*?)\s*\)/i;
   return unless @pair;
@@ -149,6 +149,7 @@ sub parseCmd {
     elsif ($kw eq 'player')     {$ret = getPlayerID($arg, \@::playersID)}
     elsif ($kw eq 'vender')     {$ret = getPlayerID($arg, \@::venderListsID)}
     elsif ($kw eq 'random')     {$ret = getRandom($arg)}
+    elsif ($kw eq 'rand')	{$ret = getRandomRange($arg)}
     elsif ($kw eq 'invamount')  {$ret = getInventoryAmount($arg)}
     elsif ($kw eq 'cartamount') {$ret = getCartAmount($arg)}
     elsif ($kw eq 'shopamount') {$ret = getShopAmount($arg)}
