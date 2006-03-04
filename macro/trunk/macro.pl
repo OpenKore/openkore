@@ -246,13 +246,14 @@ sub commandHandler {
       return;
     }
     my ($repeat, $oAI, $mdelay) = (1, 0, undef);
+    my $cparms = 0;
     for (my $idx = 0; $idx <= @params; $idx++) {
       if ($params[$idx] eq '-repeat') {$repeat += $params[++$idx]}
       if ($params[$idx] eq '-overrideAI') {$oAI = 1}
       if ($params[$idx] eq '-macro_delay') {$mdelay = $params[++$idx]}
-      if ($params[$idx] eq '--') {splice @params, 0, ++$idx; last}
+      if ($params[$idx] eq '--') {splice @params, 0, ++$idx; $cparms = 1; last}
     }
-    foreach my $p (1..@params) {setVar(".param".$p, $params[$p-1])}
+    if ($cparms) {foreach my $p (1..@params) {setVar(".param".$p, $params[$p-1])}}
     $queue = new Macro::Script($arg, $repeat);
     if (!defined $queue) {error "[macro] $arg not found or error in queue\n"}
     else {
@@ -265,3 +266,22 @@ sub commandHandler {
 }
 
 1;
+
+__END__
+
+=head1 NAME
+
+macro.pl - plugin for openkore 1.6.2 and later
+
+=head1 AVAILABILITY
+
+Get the latest release from L<http://openkore.sf.net/macro/#download>
+or via SVN:
+
+C<svn co https://svn.sourceforge.net/svnroot/openkore/macro/trunk/>
+
+=head1 AUTHOR
+
+Arachno <arachnophobia at users dot sf dot net>
+
+=cut
