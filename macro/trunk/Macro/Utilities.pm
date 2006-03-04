@@ -34,7 +34,7 @@ sub ai_isIdle {
       error "[macro] orphaned macro!\n";
       warning "found an active macro '".$queue->name."' but no 'macro' record in ai queue\n";
       warning "using method '$method' to solve this problem\n";
-      $orphanWarn = 0;
+      $orphanWarn = 0
     }
     # 'terminate' undefs the macro object and returns "ai is not idle"
     if ($method eq 'terminate') {
@@ -53,7 +53,7 @@ sub ai_isIdle {
         $orphanWarn = 1;
         return 1
       }
-      return 0;
+      return 0
     # everything else terminates the macro (default behaviour)
     } else {
       warning "unknown method. terminating macro\n";
@@ -62,12 +62,12 @@ sub ai_isIdle {
       return 0
     }
   }
-  return AI::is('macro', 'deal');
+  return AI::is('macro', 'deal')
 }
 
 sub between {
   if ($_[0] <= $_[1] && $_[1] <= $_[2]) {return 1}
-  return 0;
+  return 0
 }
 
 sub cmpr {
@@ -80,11 +80,11 @@ sub cmpr {
     if ($cond eq ">"  && $a > $b)  {return 1}
     if ($cond eq "<"  && $a < $b)  {return 1}
     if ($cond eq "!=" && $a != $b) {return 1}
-    return 0;
+    return 0
   }
   if (($cond eq "=" || $cond eq "==") && $a eq $b) {return 1}
   if ($cond eq "!=" && $a ne $b) {return 1}
-  return 0;
+  return 0
 }
 
 sub match {
@@ -109,7 +109,7 @@ sub match {
 
   use warnings;
 
-  return 0;
+  return 0
 }
 
 sub getArgs {
@@ -117,7 +117,7 @@ sub getArgs {
   if ($arg =~ /".*"/) {
     my @ret = $arg =~ /^"(.*?)"\s+(.*?)( .*)?$/;
     $ret[2] =~ s/^\s+//g if defined $ret[2];
-    return @ret;
+    return @ret
   }
   else {return split(/\s/, $arg, 3)}
 }
@@ -132,15 +132,16 @@ sub getWord {
   foreach (@words) {
     next if /^$/;
     return $_ if ($no == $wordno);
-    $no++;
+    $no++
   }
+  return ""
 }
 
 # gets openkore setting
 sub getConfig {
   $cvs->debug("getConfig(@_)", $logfac{function_call_macro});
   my $setting = shift;
-  return (defined $::config{$setting})?$::config{$setting}:"";
+  return (defined $::config{$setting})?$::config{$setting}:""
 }
 
 # adds variable and value to stack
@@ -149,7 +150,7 @@ sub setVar {
   my ($var, $val) = @_;
   $cvs->debug("'$var' = '$val'", $logfac{variable_trace});
   $varStack{$var} = $val;
-  return 1;
+  return 1
 }
 
 # gets variable's value from stack
@@ -158,7 +159,7 @@ sub getVar {
   my $var = shift;
   refreshGlobal($var);
   return unless defined $varStack{$var};
-  return $varStack{$var};
+  return $varStack{$var}
 }
 
 # sets and/or refreshes global variables
@@ -166,19 +167,19 @@ sub refreshGlobal {
   $cvs->debug("refreshGlobal(@_)", $logfac{function_call_macro} | $logfac{function_call_auto});
   my $var = shift;
   if (!defined $var || $var eq '.map') {
-    setVar(".map", $field{name});
+    setVar(".map", $field{name})
   }
   if (!defined $var || $var eq '.pos') {
     my $pos = calcPosition($char);
     my $val = sprintf("%d %d", $pos->{x}, $pos->{y});
-    setVar(".pos", $val);
+    setVar(".pos", $val)
   }
   if (!defined $var || $var eq '.time') {
-    setVar(".time", time);
+    setVar(".time", time)
   }
   if (!defined $var || $var eq '.datetime') {
     my $val = localtime;
-    setVar(".datetime", $val);
+    setVar(".datetime", $val)
   }
 }
 
@@ -191,7 +192,7 @@ sub getnpcID {
     if ($npcs{$npcsID[$id]}{pos}{x} == $tmpx &&
         $npcs{$npcsID[$id]}{pos}{y} == $tmpy) {return $id}
   }
-  return;
+  return -1
 }
 
 ## getPlayerID(name, r_array)
@@ -204,7 +205,7 @@ sub getPlayerID {
     next unless $players{$$pool[$id]}->{name};
     if ($players{$$pool[$id]}->{name} eq $name) {return $id}
   }
-  return;
+  return -1
 }
 
 # get item array index
@@ -216,7 +217,7 @@ sub getItemIDs {
     next unless $$pool[$id];
     if (lc($$pool[$id]{name}) eq lc($item)) {push @ids, $id}
   }
-  return @ids;
+  return @ids
 }
 
 # get storage array index
@@ -228,7 +229,7 @@ sub getStorageIDs {
     next unless $storageID[$id];
     if (lc($storage{$storageID[$id]}{name}) eq lc($item)) {push @ids, $id}
   }
-  return @ids;
+  return @ids
 }
 
 # get amount of sold out slots
@@ -240,7 +241,7 @@ sub getSoldOut {
     next unless $aitem;
     if ($aitem->{quantity} == 0) {$soldout++}
   }
-  return $soldout;
+  return $soldout
 }
 
 # get amount of an item in inventory
@@ -254,7 +255,7 @@ sub getInventoryAmount {
     next unless defined $id;
     $amount += $char->{inventory}[$id]{amount}
   }
-  return $amount;
+  return $amount
 }
 
 # get amount of an item in cart
@@ -268,7 +269,7 @@ sub getCartAmount {
     next unless defined $id;
     $amount += $cart{inventory}[$id]{amount}
   }
-  return $amount;
+  return $amount
 }
 
 # get amount of an item in shop
@@ -278,11 +279,9 @@ sub getShopAmount {
   my $amount = 0;
   foreach my $aitem (@::articles) {
     next unless $aitem;
-    if (lc($aitem->{name}) eq lc($item)) {
-      $amount += $aitem->{quantity};
-    }
+    if (lc($aitem->{name}) eq lc($item)) {$amount += $aitem->{quantity}}
   }
-  return $amount;
+  return $amount
 }
 
 # get amount of an item in storage
@@ -296,7 +295,7 @@ sub getStorageAmount {
     next unless defined $id;
     $amount += $storage{$storageID[$id]}{amount}
   }
-  return $amount;
+  return $amount
 }
 
 # returns random item from argument list ##################
@@ -311,9 +310,9 @@ sub getRandom {
   pop @items;
   if (!@items) {
     warning "[macro] wrong syntax in \@random\n";
-    return;
+    return
   }
-  return $items[rand $id-1];
+  return $items[rand $id-1]
 }
 
 # macro/script
@@ -332,15 +331,15 @@ sub callMacro {
         if (!Commands::run($command)) {
           error(sprintf("[macro] %s failed with %s\n", $queue->name, $command));
           undef $queue;
-          return;
+          return
         }
       }
       $queue->ok;
-      if (defined $queue && $queue->finished) {undef $queue};
+      if (defined $queue && $queue->finished) {undef $queue}
     } else {
       error(sprintf("[macro] %s error: %s\n", $queue->name, $queue->error));
       warning "the line number may be incorrect if you called a sub-macro.\n";
-      undef $queue;
+      undef $queue
     }
   }
 }
