@@ -131,7 +131,6 @@ sub initMapChangeVars {
 	$ai_v{cart_time} = time + 60;
 	$ai_v{inventory_time} = time + 60;
 	$ai_v{temp} = {};
-	$cart{exists} = 0;
 	$cart{inventory} = [];
 	$chars[$config{char}]{inventory} = [];
 	undef @venderItemList;
