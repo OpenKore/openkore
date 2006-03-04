@@ -1786,7 +1786,7 @@ sub cart_info {
 	$cart{weight} = int($args->{weight} / 10);
 	$cart{weight_max} = int($args->{weight_max} / 10);
 	$cart{exists} = 1;
-	debug "[cart_info] received.\n", "success", "parseMsg";
+	debug "[cart_info] received.\n", "parseMsg";
 }
 
 sub cart_add_failed {
