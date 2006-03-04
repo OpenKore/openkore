@@ -127,14 +127,14 @@ sub parseCmd {
   # substitute variables
   while ((undef, $var) = $command =~ /(^|[^\\])\$(\.?[a-z][a-z\d]*)/i) {
     $cvs->debug("found variable $var in $command", $logfac{parser_steps});
-    my $tmp = getVar($var); $tmp = "" if !defined $tmp;
+    my $tmp = getVar($var) or "";
     $var = quotemeta $var;
     $command =~ s/(^|[^\\])\$$var([^a-zA-Z\d]|$)/$1$tmp$2/g;
   }
   # substitute doublevars
   while (($var) = $command =~ /\$\{(.*?)\}/i) {
     $cvs->debug("found doublevar $var in $command", $logfac{parser_steps});
-    my $tmp = getVar("#".$var); $tmp = "" if !defined $tmp;
+    my $tmp = getVar("#".$var) or "";
     $var = quotemeta $var;
     $command =~ s/\$\{$var\}/$tmp/g;
   }
@@ -156,13 +156,9 @@ sub parseCmd {
     elsif ($kw eq 'config')     {$ret = getConfig($arg)}
     elsif ($kw eq 'arg')        {$ret = getWord($arg)}
     elsif ($kw eq 'eval')       {$ret = eval($arg)};
-    if (defined $ret) {
-      return $command if $ret eq '_%_';
-      $arg = quotemeta $arg; $command =~ s/\@$kw\s*\(\s*$arg\s*\)/$ret/g
-    } else {
-      error "[macro] command $command failed.\n";
-      return
-    }
+    return unless defined $ret;
+    return $command if $ret eq '_%_';
+    $arg = quotemeta $arg; $command =~ s/\@$kw\s*\(\s*$arg\s*\)/$ret/g
   }
   return $command;
 }
