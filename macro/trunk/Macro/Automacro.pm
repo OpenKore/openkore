@@ -1,4 +1,3 @@
-# $Header$
 package Macro::Automacro;
 
 use strict;
@@ -15,7 +14,6 @@ use Utils;
 use Globals;
 use Skills;
 use AI;
-#use Item;
 use Log qw(message error warning);
 use Macro::Data;
 use Macro::Utilities qw(between cmpr match getArgs setVar getVar refreshGlobal
@@ -379,8 +377,8 @@ sub lockAM {
 
 # parses automacros and checks conditions #################
 sub automacroCheck {
-  return if $conState < 5;
   my ($trigger, $args) = @_;
+  return unless $conState == 5 || $trigger =~ /^Network/;
 
   # do not run an automacro if there's already a macro running
   return 0 if (AI::inQueue('macro') || defined $queue);
@@ -391,52 +389,55 @@ sub automacroCheck {
 
     if (defined $automacro{$am}->{call} && !defined $macro{$automacro{$am}->{call}}) {
       error "[macro] automacro $am: macro ".$automacro{$am}->{call}." not found.\n";
-      $automacro{$am}->{disabled} = 1; undef $lockAMC; return;
+      $automacro{$am}->{disabled} = 1; undef $lockAMC; return
+    }
+    if (defined $automacro{$am}->{hook}) {
+      next CHKAM unless $trigger eq $automacro{$am}->{hook}
     }
     if (defined $automacro{$am}->{console}) {
       if ($trigger eq 'log') {
-        next CHKAM if !checkConsole($automacro{$am}->{console}, $args);
+        next CHKAM unless checkConsole($automacro{$am}->{console}, $args)
       } else {next CHKAM}
     }
     if (defined $automacro{$am}->{spell}) {
       if ($trigger =~ /^(is_casting|packet_skilluse)$/) {
-        next CHKAM if !checkCast($automacro{$am}->{spell}, $args);
+        next CHKAM unless checkCast($automacro{$am}->{spell}, $args)
       } else {next CHKAM}
     }
     if (defined $automacro{$am}->{pm}) {
       if ($trigger eq 'packet_privMsg') {
-        next CHKAM if !checkMsg(".lastpm", $automacro{$am}->{pm}, $args);
+        next CHKAM unless checkMsg(".lastpm", $automacro{$am}->{pm}, $args)
       } else {next CHKAM}
     }
     if (defined $automacro{$am}->{pubm}) {
       if ($trigger eq 'packet_pubMsg') {
-        next CHKAM if !checkMsg(".lastpub", $automacro{$am}->{pubm}, $args);
+        next CHKAM unless checkMsg(".lastpub", $automacro{$am}->{pubm}, $args)
       } else {next CHKAM}
     }
     if (defined $automacro{$am}->{party}) {
       if ($trigger eq 'packet_partyMsg') {
-        next CHKAM if !checkMsg(".lastparty", $automacro{$am}->{party}, $args);
+        next CHKAM unless checkMsg(".lastparty", $automacro{$am}->{party}, $args)
       } else {next CHKAM}
     }
     if (defined $automacro{$am}->{guild}) {
       if ($trigger eq 'packet_guildMsg') {
-        next CHKAM if !checkMsg(".lastguild", $automacro{$am}->{guild}, $args);
+        next CHKAM unless checkMsg(".lastguild", $automacro{$am}->{guild}, $args)
       } else {next CHKAM}
     }
     if (defined $automacro{$am}->{mapchange}) {
       if ($trigger eq 'packet_mapChange') {
-        next CHKAM if !checkMapChange($automacro{$am}->{mapchange});
+        next CHKAM unless checkMapChange($automacro{$am}->{mapchange})
       } else {next CHKAM}
     }
     if (defined $automacro{$am}->{timeout}) {
       $automacro{$am}->{time} = 0 unless $automacro{$am}->{time};
       my %tmptimer = (timeout => $automacro{$am}->{timeout}, time => $automacro{$am}->{time});
       next CHKAM unless timeOut(\%tmptimer);
-      $automacro{$am}->{time} = time;
+      $automacro{$am}->{time} = time
     }
     next CHKAM if (defined $automacro{$am}->{map}     && $automacro{$am}->{map} ne $field{name});
     next CHKAM if (defined $automacro{$am}->{class}   && !checkClass($automacro{$am}->{class}));
-    foreach my $i (@{$automacro{$am}->{monster}})   {next CHKAM unless checkMonster($i)};
+    foreach my $i (@{$automacro{$am}->{monster}})   {next CHKAM unless checkMonster($i)}
     foreach my $i (@{$automacro{$am}->{location}})  {next CHKAM unless checkLoc($i)}
     foreach my $i (@{$automacro{$am}->{var}})       {next CHKAM unless checkVar($i)}
     foreach my $i (@{$automacro{$am}->{varvar}})    {next CHKAM unless checkVarVar($i)}
@@ -463,14 +464,14 @@ sub automacroCheck {
     message "[macro] automacro $am triggered.\n", "macro";
 
     if (!defined $automacro{$am}->{call} && !$::config{macro_nowarn}) {
-      warning "[macro] automacro $am: call not defined.\n";
+      warning "[macro] automacro $am: call not defined.\n"
     }
 
     $automacro{$am}->{disabled} = 1 if $automacro{$am}->{'run-once'};
 
     foreach my $i (@{$automacro{$am}->{set}}) {
        my ($var, $val) = $i =~ /^(.*?)\s+(.*)$/;
-       setVar($var, $val);
+       setVar($var, $val)
     }
 
     if (defined $automacro{$am}->{call}) {
@@ -481,17 +482,16 @@ sub automacroCheck {
         $queue->setTimeout($automacro{$am}->{delay}) if $automacro{$am}->{delay};
         $queue->setMacro_delay($automacro{$am}->{macro_delay}) if $automacro{$am}->{macro_delay};
         setVar(".caller", $am);
-        $onHold = 0;
+        $onHold = 0
       } else {
-        error "[macro] unable to create macro queue.\n";
+        error "[macro] unable to create macro queue.\n"
       }
     }
 
     undef $lockAMC;
-    return; # don't execute multiple macros at once
+    return # don't execute multiple macros at once
   }
-  undef $lockAMC;
+  undef $lockAMC
 }
-
 
 1;
