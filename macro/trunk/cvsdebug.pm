@@ -1,3 +1,4 @@
+# $Id$
 # package cvsdebug (arachno)
 #
 # copy this file into your openkore top folder
@@ -16,13 +17,12 @@ sub new {
   my ($name) = $file =~ /^.*\/(.*)\.pl$/;
   my $self = { name => $name,
                file => $file,
-               revision => getRevision($file),
                debug => $debug,
                examine => @ex
              };
   bless ($self, $class);
   message "[$self->{name}] cvsdebug initialized\n", "cvsdebug";
-  return $self;
+  return $self
 }
 
 sub DESTROY {
@@ -30,7 +30,7 @@ sub DESTROY {
   return unless $self->{debug};
   message "[$self->{name}] unloading $self->{file} ".
                "debug level was $self->{debug}, have a nice day.\n", "cvsdebug";
-  $self->dump();
+  $self->dump()
 }
 
 sub dump {
@@ -40,8 +40,8 @@ sub dump {
     message "parsing $dmp\n", "cvsdebug";
     if (ref($dmp) eq 'ARRAY') {dumpArray(\@{$dmp})}
     elsif (ref($dmp) eq 'HASH') {dumpHash(\%{$dmp})}
-    else {message "$$dmp\n", "cvsdebug"};
-    message "--\n", "cvsdebug";
+    else {message "$$dmp\n", "cvsdebug"}
+    message "--\n", "cvsdebug"
   }
 }
 
@@ -52,11 +52,7 @@ sub debug {
 
 sub setDebug {
   my $self = shift; $self->{debug} = shift if @_;
-  message "[$self->{name}] debug level: $self->{debug}\n", "cvsdebug";
-}
-
-sub revision {
-  my $self = shift; return $self->{revision}
+  message "[$self->{name}] debug level: $self->{debug}\n", "cvsdebug"
 }
 
 sub dumpHash {
@@ -73,18 +69,6 @@ sub dumpArray {
   foreach my $a (@{$_[0]}) {message "  "x$_[1]." $a\n", "cvsdebug"}
 }
 
-sub getRevision {
-  my $fname = shift;
-  open(F, "< $fname" ) or die "Can't open $fname: $!";
-  while (<F>) {
-    if (/Header:/) {
-       my ($rev) = $_ =~ /.pl,v (.*?) [0-9]{4}/i;
-       close F; return $rev;
-    }
-  }
-  close F;
-}
-
 1;
 
 __END__
@@ -95,7 +79,7 @@ cvsdebug - package for debugging openkore plugins
 
 =head1 VERSION
 
-    Version: 1.0 (2005/10/28)
+    Version: 1.0 $Date$
 
 =head1 SYNOPSIS
 
@@ -113,8 +97,6 @@ cvsdebug - package for debugging openkore plugins
     $cvs->dump();
     ...
     $cvs->setDebug($level);
-    ...
-    $cvs->getRevision();
     ...
     undef $cvs;
 
@@ -165,10 +147,6 @@ Dumps the content of the hashes or arrays specified with C<new>
 
 Sets debug level to I<$level>.
 
-=item C<getRevision()>
-
-Parses F</path/to/your/plugin.pl> and looks for a cvs C<$Header>. Returns the cvs revision.
-
 =back
 
 =head2 destroying a cvsdebug object
@@ -186,11 +164,9 @@ The destructor needs some refining.
 
 =head1 AVAILABILITY
 
-Get it via CVS:
+Get it via SVN:
 
-C<cvs -d:pserver:anonymous@cvs.sf.net:/cvsroot/openkore login>
-
-C<cvs -d:pserver:anonymous@cvs.sf.net:/cvsroot/openkore co -P macro>
+C<svn co https://svn.sourceforge.net/svnroot/openkore/macro/trunk/>
 
 =head1 AUTHOR
 
