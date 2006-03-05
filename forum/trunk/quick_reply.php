@@ -20,9 +20,10 @@
  ***************************************************************************/
 
 // Do not display the quick reply box for people who have less than x posts,
-// in order to avoid n00b replies.
+// or people who have not done the quiz yet, in order to avoid n00b replies.
 require_once($phpbb_root_path . 'includes/openkore.' . $phpEx);
-if ($userdata['user_posts'] < OConstants::MIN_USER_POSTS) {
+if ($userdata['user_posts'] < OConstants::MIN_USER_POSTS
+ || !$userdata['user_done_quiz']) {
 	return;
 }
 

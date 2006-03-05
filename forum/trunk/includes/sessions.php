@@ -514,4 +514,12 @@ function append_sid($url, $non_html_amp = false)
 	return $url;
 }
 
+function remove_sid($url) {
+	if (preg_match('/\&sid=[a-z0-9]+/', $url)) {
+		$url = preg_replace('/\&sid=[a-z0-9]+/', '', $url);
+	} else {
+		$url = preg_replace('/\?sid=[a-z0-9]+/', '?', $url);
+	}
+	return preg_replace('/\?$/', '', $url);
+}
 ?>

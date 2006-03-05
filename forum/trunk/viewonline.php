@@ -167,6 +167,10 @@ while ( $row = $db->sql_fetchrow($result) )
 					$location = $lang['Posting_message'];
 					$location_url = "index.$phpEx";
 					break;
+				case PAGE_QUIZ:
+					$location = 'Having quiz';
+					$location_url = "quiz.$phpEx";
+					break;
 				case PAGE_LOGIN:
 					$location = $lang['Logging_on'];
 					$location_url = "index.$phpEx";

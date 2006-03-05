@@ -93,13 +93,20 @@ init_userprefs($userdata);
 // End session management
 //
 
-$my_user_time = localtime($userdata['user_regdate'], 1);
-if ($my_user_time['tm_year'] > 103) {
-	// User is registered after 2004
-	if ($_COOKIE['openkore_forum_read_rules'] != '1' && $_GET['f'] == '4') {
-		header("Location: /enter.php?redirect=" . urlencode($_SERVER['REQUEST_URI']));
-		exit;
+if (!$userdata['user_done_quiz']) {
+	$extra = '';
+	if (isset($_GET['mode'])) {
+		if ($_GET['mode'] == "newtopic" && isset($_GET['f'])) {
+			$extra = '&mode=newtopic&f=' . urlencode($_GET['f']);
+		} else if ($_GET['mode'] == "reply" && isset($_GET['t'])) {
+			$extra = '&mode=reply&t=' . urlencode($_GET['t']);
+		} else if (($_GET['mode'] == "quote" || $_GET['mode'] == "editpost" || $_GET['mode'] == "delete")
+			&& isset($_GET['p'])) {
+			$extra = '&mode=' . $_GET['mode'] . "&p=" . urlencode($_GET['p']);
+		}
 	}
+	header("Location: " . append_sid("quiz.${phpEx}?from=posting" . $extra));
+	exit;
 }
 
 //
