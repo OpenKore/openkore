@@ -93,7 +93,7 @@ init_userprefs($userdata);
 // End session management
 //
 
-if ($userdata['user_id'] != -1 && !$userdata['user_done_quiz']) {
+if ($userdata['session_logged_in'] && !$userdata['user_done_quiz']) {
 	$extra = '';
 	if (isset($_GET['mode'])) {
 		if ($_GET['mode'] == "newtopic" && isset($_GET['f'])) {
