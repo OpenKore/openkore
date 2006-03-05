@@ -88,6 +88,7 @@ sub hookOnDemand {
     if (defined $automacro{$a}->{party} && !defined $load{'packet_partyMsg'}) {$load{'packet_partyMsg'} = 1}
     if (defined $automacro{$a}->{guild} && !defined $load{'packet_guildMsg'}) {$load{'packet_guildMsg'} = 1}
     if (defined $automacro{$a}->{mapchange} && !defined $load{'packet_mapChange'}) {$load{'packet_mapChange'} = 1}
+    if (defined $automacro{$a}->{hook} && !defined $load{$automacro{$a}->{hook}}) {$load{$automacro{$a}->{hook}} = 1}
     if (defined $automacro{$a}->{console} && !defined $hookToLog) {$hookToLog = 1}
   }
   foreach my $l (keys %load) {
