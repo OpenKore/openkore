@@ -505,7 +505,7 @@ port 6900
 version 60101
 master_version 4
 serverType 5
-serverEncoding Chinese
+serverEncoding Traditional Chinese
 
 ## http://ti-server.com/
 [TrinityRO Private Server]
