@@ -40,14 +40,14 @@ sub checkVar {
   my ($var, $cond, $val) = getArgs($arg);
   if ($cond eq "unset") {
     return 1 if !exists $varStack{$var};
-    return 0;
+    return 0
   }
   refreshGlobal($var);
   if (exists $varStack{$var}) {
     $cvs->debug("comparing: $var ($varStack{$var}) $cond $val", 4);
-    return 1 if cmpr($varStack{$var}, $cond, $val);
+    return 1 if cmpr($varStack{$var}, $cond, $val)
   }
-  return 0;
+  return 0
 }
 
 # check for a variable's variable ##########################
@@ -57,9 +57,9 @@ sub checkVarVar {
   my ($varvar) = $arg =~ /^(.*?) /;
   if (exists $varStack{$varvar}) {
     $arg =~ s/$varvar/"#$varStack{$varvar}"/g;
-    return checkVar($arg);
+    return checkVar($arg)
   }
-  return 0;
+  return 0
 }
 
 # checks for location ######################################
@@ -74,7 +74,7 @@ sub checkLoc {
   if ($arg =~ /,/) {
     my @locs = split(/\s*,\s*/, $arg);
     foreach my $l (@locs) {return 1 if checkLoc($l)}
-    return 0;
+    return 0
   }
   my $not = 0;
   if ($arg =~ /^not /) {$not = 1; $arg =~ s/^not //g}
@@ -84,14 +84,14 @@ sub checkLoc {
       my $pos = calcPosition($char);
       if ($x2 && $y2) {
         if (between($x1, $pos->{x}, $x2) && between($y2, $pos->{y}, $y1)) {return $not?0:1}
-        return $not?1:0;
+        return $not?1:0
       }
       if ($x1 == $pos->{x} && $y1 == $pos->{y}) {return $not?0:1}
-      return $not?1:0;
+      return $not?1:0
     }
-    return $not?0:1;
+    return $not?0:1
   }
-  return $not?1:0;
+  return $not?1:0
 }
 
 # checks for base/job level ################################
@@ -105,14 +105,15 @@ sub checkLevel {
   elsif ($what eq 'job') {$lvl = $char->{lv_job}}
   else                   {return 0}
   return 1 if cmpr($lvl, $cond, $level);
-  return 0;
+  return 0
 }
 
 # checks for player's jobclass #############################
 sub checkClass {
   $cvs->debug("checkClass(@_)", $logfac{function_call_auto} | $logfac{automacro_checks});
+  return 0 unless defined $char->{jobID};
   if (lc($_[0]) eq lc($::jobs_lut{$char->{jobID}})) {return 1}
-  return 0;
+  return 0
 }
 
 # checks for HP/SP/Weight ##################################
@@ -125,20 +126,20 @@ sub checkPercent {
     if ($amount =~ /\d+%$/ && $char->{$what."_max"}) {
       $amount =~ s/%$//;
       my $percent = $char->{$what} / $char->{$what."_max"} * 100;
-      return 1 if cmpr($percent, $cond, $amount);
+      return 1 if cmpr($percent, $cond, $amount)
     } else {
-      return 1 if cmpr($char->{$what}, $cond, $amount);
+      return 1 if cmpr($char->{$what}, $cond, $amount)
     }
   } elsif ($what eq 'cweight') {
     if ($amount =~ /\d+%$/ && $cart{weight_max}) {
       $amount =~ s/%$//;
       my $percent = $cart{weight} / $cart{weight_max} * 100;
-      return 1 if cmpr($percent, $cond, $amount);
+      return 1 if cmpr($percent, $cond, $amount)
     } else {
-      return 1 if cmpr($cart{weight}, $cond, $amount);
+      return 1 if cmpr($cart{weight}, $cond, $amount)
     }
   }
-  return 0;
+  return 0
 }
 
 # checks for status #######################################
@@ -148,7 +149,7 @@ sub checkStatus {
   if ($status =~ /,/) {
     my @statuses = split(/\s*,\s*/, $status);
     foreach my $s (@statuses) {return 1 if checkStatus($s)}
-    return 0;
+    return 0
   }
   my $not = 0;
   if ($status =~ /^not /) {$not = 1; $status =~ s/^not +//g}
@@ -164,7 +165,7 @@ sub checkStatus {
   foreach (keys %{$char->{statuses}}) {
     if (lc($_) eq lc($status)) {return $not?0:1}
   }
-  return $not?1:0;
+  return $not?1:0
 }
 
 # checks for item conditions ##############################
@@ -176,7 +177,7 @@ sub checkItem {
   if ($check =~ /,/) {
     my @checks = split(/\s*,\s*/, $check);
     foreach my $c (@checks) {return 1 if checkItem($where, $c)}
-    return 0;
+    return 0
   }
   my ($item, $cond, $amount) = getArgs($check);
   my $what;
@@ -184,13 +185,13 @@ sub checkItem {
   if ($where eq 'cart') {$what = getCartAmount($item)};
   if ($where eq 'shop') {
     return 0 unless $shopstarted;
-    $what = getShopAmount($item);
+    $what = getShopAmount($item)
   }
   if ($where eq 'stor') {
     return 0 unless $::storage{opened};
-    $what = getStorageAmount($item);
+    $what = getStorageAmount($item)
   }
-  return cmpr($what, $cond, $amount)?1:0;
+  return cmpr($what, $cond, $amount)?1:0
 }
 
 # checks for near person ##################################
@@ -203,7 +204,7 @@ sub checkPerson {
   return 1 unless $dist;
   my $mypos = calcPosition($char);
   my $pos = calcPosition($::players{$::playersID[$r_id]});
-  return distance($mypos, $pos) <= $dist ?1:0;
+  return distance($mypos, $pos) <= $dist ?1:0
 }
 
 # checks arg1 for condition in arg3 #######################
@@ -212,7 +213,7 @@ sub checkCond {
   $cvs->debug("checkCond(@_)", $logfac{function_call_auto} | $logfac{automacro_checks});
   my $what = shift;
   my ($cond, $amount) = split(/ /, $_[0]);
-  return cmpr($what, $cond, $amount)?1:0;
+  return cmpr($what, $cond, $amount)?1:0
 }
 
 # checks for equipment ####################################
@@ -226,7 +227,7 @@ sub checkEquip {
   if ($arg =~ /,/) {
     my @equip = split(/\s*,\s*/, $arg);
     foreach my $e (@equip) {return 1 if checkEquip($e)}
-    return 0;
+    return 0
   }
   # check whether or not a slot is given (equipped rightHand whatever)
   foreach my $slot (@slots) {
@@ -241,9 +242,9 @@ sub checkEquip {
   }
   # check for item (equipped whatever)
   foreach my $item (@{$char->{inventory}}) {
-     return 1 if ($item->{equipped} && lc($item->{name}) eq lc($arg));
+     return 1 if ($item->{equipped} && lc($item->{name}) eq lc($arg))
   }
-  return 0;
+  return 0
 };
 
 # checks for a spell casted on us #########################
@@ -258,7 +259,7 @@ sub checkCast {
      ($pos->{x} == $args->{x} && $pos->{y} == $args->{y}) ||
      distance($pos, $args) <= judgeSkillArea($args->{skillID})) &&
      existsInList(lc($cast), lc(Skills->new(id => $args->{skillID})->name))) {return 1}
-  return 0;
+  return 0
 }
 
 # checks for public, private, party or guild message ######
@@ -273,7 +274,7 @@ sub checkMsg {
     $distance = 15 if ($distance eq '');
     my $mypos = calcPosition($char);
     my $pos = calcPosition($::players{$arg->{pubID}});
-    return 0 unless distance($mypos, $pos) <= $distance;
+    return 0 unless distance($mypos, $pos) <= $distance
   } elsif ($var eq '.lastpm') {
     ($msg, my $allowed) = $tmp =~ /^([\/"].*?[\/"]\w*)\s*,?\s*(.*)/;
     my $auth;
@@ -286,17 +287,17 @@ sub checkMsg {
         if ($arg->{privMsgUser} eq $tfld[$i]) {$auth = 1; last}
       }
     }
-    return 0 unless $auth;
+    return 0 unless $auth
   } else {
-    $msg = $tmp;
+    $msg = $tmp
   }
   $arg->{Msg} =~ s/[\r\n]*$//g;
   if (match($arg->{Msg},$msg)){
     setVar($var, $arg->{MsgUser});
     setVar($var."Msg", $arg->{Msg});
-    return 1;
+    return 1
   }
-  return 0;
+  return 0
 }
 
 # checks for monster, credits to illusionist
@@ -310,10 +311,10 @@ sub checkMonster {
       my $val = sprintf("%d %d %s", $pos->{x}, $pos->{y}, $field{name});
       setVar(".lastMonster", $monsters{$_}->{name});
       setVar(".lastMonsterPos", $val);
-      return 1;
+      return 1
     }
   }
-  return 0;
+  return 0
 }
 
 # checks for console message
@@ -324,9 +325,9 @@ sub checkConsole {
   if (match($$arg[4],$msg)){
     $$arg[4] =~ s/\n$//g;
     setVar(".lastLogMsg", $$arg[4]);
-    return 1;
+    return 1
   }
-  return 0;
+  return 0
 }
 
 sub consoleCheckWrapper {
@@ -335,14 +336,14 @@ sub consoleCheckWrapper {
   # skip "selfchat", "macro" and "cvsdebug" domains to avoid loops
   return if $_[1] =~ /^(selfchat|macro|cvsdebug)/;
   my @args = @_;
-  automacroCheck("log", \@args);
+  automacroCheck("log", \@args)
 }
 
 # checks for map change
 sub checkMapChange {
   $cvs->debug("checkMapChange(@_)", $logfac{function_call_auto} | $logfac{automacro_checks});
   my $map = shift;
-  return ($map eq '*' || existsInList($map, $field{name}))?1:0;
+  return ($map eq '*' || existsInList($map, $field{name}))?1:0
 }
 
 # releases a locked automacro ##################
