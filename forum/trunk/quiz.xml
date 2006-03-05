@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+	<item>
+		<question>After downloading OpenKore/VisualKore, you want to start some configuration but you don't know how. What do you do FIRST?</question>
+		<answer>Go to the forum and ask right away.</answer>
+		<answer correct="yes">Search the manual, search the FAQ, search the forum and search the website.</answer>
+		<answer>Go to the IRC channel and ask.</answer>
+		<answer>Send the moderators a private message.</answer>
+	</item>
+	<item>
+		<question>It's your first time to use Openkore and you need a config ASAP. What should you do?</question>
+		<answer>Go to the forum and ask for a config.</answer>
+		<answer>Go to the IRC channel and ask if someone can send you a config.</answer>
+		<answer correct="yes">Read the manual, search the FAQ, search the forum, and then create your own config.</answer>
+		<answer>Send a private message to everyone.</answer>
+	</item>
+	<item>
+		<question>If you created a new topic and it was moved to the Trashcan, you would:</question>
+		<answer>Send a private message to the moderators and complain why it was moved.</answer>
+		<answer>Post the same topic again.</answer>
+		<answer>Post your question on someone else's thread.</answer>
+		<answer correct="yes">Read the rules again to see if you made a violation and try not to do it again.</answer>
+	</item>
+	<item>
+		<question>After you read the manual, and searched the FAQ and the forum, you are still having problems with Openkore/VisualKore. In which of the following forum sections would you ask for help?</question>
+		<answer correct="yes">Openkore &amp; VisualKore Support</answer>
+		<answer>Frequently Asked Questions</answer>
+		<answer>Discussion</answer>
+		<answer>Botting Tips &amp; Tricks</answer>
+	</item>
+	<item>
+		<question>Which of the following does Openkore support?</question>
+		<answer>Kill stealing</answer>
+		<answer>Looting</answer>
+		<answer>Item/zenny duplication</answer>
+		<answer correct="yes">None of the above</answer>
+	</item>
+	<item>
+		<question>When you ask the forum and someone gave you an answer that didn't solve your problem, what would you do?</question>
+		<answer correct="yes">Tell the person how you tried the suggestion and how/why it didn't work.</answer>
+		<answer>Tell the person to not bother replying because he/she is a n00b.</answer>
+		<answer>Laugh at the person.</answer>
+	</item>
+	<item>
+		<question>If you read a topic in the forum asking for help and you don't know the answer, what would you do?</question>
+		<answer>Pretend you know something and answer the topic.</answer>
+		<answer correct="yes">Ignore the topic and only reply if you have useful suggestions.</answer>
+		<answer>Reply to the topic and say "I don't know".</answer>
+		<answer>Laugh at the person.</answer>
+	</item>
+	<item>
+		<question>You want to ask a question in the forum. Which of the following set of additional information is best included in your post?</question>
+		<answer>Openkore version, RO server, and the name of your Lunatic pet.</answer>
+		<answer>Your whole config, Openkore version, and RO server.</answer>
+		<answer>A snippet of your config, what you have done so far, and your e-mail address.</answer>
+		<answer correct="yes">What you have done so far, a snippet of your config, Openkore version and RO server.</answer>
+	</item>
+	<item>
+		<question>When you first visited a forum section, what would you do FIRST?</question>
+		<answer>Read the hot topics right away.</answer>
+		<answer correct="yes">Read the Announcement and pinned ("Please Read") topics.</answer>
+		<answer>Post a new topic to say "Hi!".</answer>
+	</item>
+	<item>
+		<question>If you have configured Openkore/Visualkore to automatically use Red Potions but it didn't work the way you want it to. What would be the best topic title for your question?</question>
+		<answer>"Pleeaase help!!!"</answer>
+		<answer>"Unable to use potions... WTF? Give me answer please"</answer>
+		<answer correct="yes">"Red Potions config doesn't work as I intended (version 1.6.6)"</answer>
+		<answer>"Please look here!"</answer>
+	</item>
+	<item>
+		<question>While reading the forum, you encountered a term that you don't know (for instance, the word "SVN"). What would you do FIRST?</question>
+		<answer correct="yes">Search the OpenKore website, search the FAQ and search the forum for answers.</answer>
+		<answer>Post a new thread named "Help mee!!!"</answer>
+		<answer>Post a new thread named "What is SVN?"</answer>
+		<answer>Send a private message to the moderators.</answer>
+	</item>
+	<item>
+		<question>OpenKore suddenly stops working on your server because of a recent server update. What would you do FIRST?</question>
+		<answer>Post a new thread called "OMG bot doesn't work!"</answer>
+		<answer>Send a private message to the moderators, asking what's going on.</answer>
+		<answer>Go to the IRC channel, and say that the bot doesn't work.</answer>
+		<answer>Post a new thread called "Wah botting doesnt work we're doomed!"</answer>
+		<answer correct="yes">Browse the forum and see whether there's already an announcement about the problem.</answer>
+	</item>
+</quiz>
