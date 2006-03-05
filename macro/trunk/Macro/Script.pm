@@ -364,7 +364,6 @@ sub next {
     my ($tmp) = $line =~ /^pause\s+(\d+)/;
     if (defined $tmp) {$self->{timeout} = $tmp}
     $self->{line}++;
-    $self->{timeout} = $self->{macro_delay}
   ##########################################
   # stop command
   } elsif ($line =~ /^stop$/) {
