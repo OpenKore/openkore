@@ -1945,6 +1945,7 @@ sub character_creation_successful {
 	$char->{ID} = $args->{ID};
 	$char->{name} = bytesToString($args->{name});
 	$char->{zenny} = $args->{zenny};
+	$char->{jobID} = 0;
 	$char->{str} = $args->{str};
 	$char->{agi} = $args->{agi};
 	$char->{vit} = $args->{vit};
