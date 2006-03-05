@@ -29,14 +29,15 @@ use Encode::Alias;
 
 our @EXPORT_OK = qw(bytesToString stringToBytes stringToUTF8 UTF8ToString);
 
-define_alias('Western'  => 'ISO-8859-1');
-define_alias('Tagalog'  => 'ISO-8859-1');
-define_alias('Chinese'  => 'EUC-CN');
-define_alias('Korean'   => 'EUC-KR');
-define_alias('Russian'  => 'CP1251');
-define_alias('Cyrillic' => 'CP1251');
-define_alias('Japanese' => 'Shift_JIS');
-define_alias('Thai'     => 'ISO-8859-11');
+define_alias('Western'             => 'ISO-8859-1');
+define_alias('Tagalog'             => 'ISO-8859-1');
+define_alias('Simplified Chinese'  => 'GBK');
+define_alias('Traditional Chinese' => 'Big5');
+define_alias('Korean'              => 'EUC-KR');
+define_alias('Russian'             => 'CP1251');
+define_alias('Cyrillic'            => 'CP1251');
+define_alias('Japanese'            => 'Shift_JIS');
+define_alias('Thai'                => 'ISO-8859-11');
 
 
 ##
