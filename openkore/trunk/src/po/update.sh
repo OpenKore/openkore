@@ -3,7 +3,7 @@
 # updates openkore.pot and *.po, and compiles *.po to .mo.
 set -e
 
-LANGUAGES="tl id pt cn"
+LANGUAGES="tl id pt zh"
 
 echo "Extracting messages from source..."
 xgettext -L perl --force-po -o openkore.pot --keyword=T --keyword=TF \
