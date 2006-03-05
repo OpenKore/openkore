@@ -200,7 +200,7 @@ sub checkPerson {
   my ($who, $dist) = $_[0] =~ /^"(.*)"\s*,?\s*(.*)/;
   return 0 unless defined $who;
   my $r_id = getPlayerID($who, \@playersID);
-  return 0 unless defined $r_id;
+  return 0 if $r_id < 0;
   return 1 unless $dist;
   my $mypos = calcPosition($char);
   my $pos = calcPosition($::players{$::playersID[$r_id]});
