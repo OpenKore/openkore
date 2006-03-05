@@ -290,6 +290,10 @@ function storeCaret(textEl) {
 		<td class="row1"><span class="gen"><b>{L_USERNAME}</b></span></td>
 		<td class="row2"><span class="genmed"><input type="text" class="post" tabindex="1" name="username" size="25" maxlength="25" value="{USERNAME}" /></span></td>
 	</tr>
+	<tr>
+		<td class="row1"><span class="gen"><b>Enter the text <i>NOT SPAMBOT</i></span></td>
+		<td class="row2"><span class="genmed"><input type="text" class="post" name="spambotcheck" size="25" maxlength="25" /></span></td>
+	</tr>
 	<!-- END switch_username_select -->
 	<!-- BEGIN switch_privmsg -->
 	<tr> 

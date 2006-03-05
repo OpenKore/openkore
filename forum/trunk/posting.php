@@ -181,6 +181,15 @@ switch( $mode )
 		break;
 }
 
+function spambotCheck() {
+	global $userdata;
+	$anonymous = !$userdata['session_logged_in'] || ( $mode == 'editpost' && $post_info['poster_id'] == ANONYMOUS );
+	$spambotcheckField = isset($_POST['spambotcheck']) ? $_POST['spambotcheck'] : '';
+	if (isset($_POST['post']) && $anonymous && $spambotcheckField != "NOT SPAMBOT") {
+		message_die(GENERAL_MESSAGE, "You didn't correctly enter the 'not spambot' field.");
+	}
+}
+
 //
 // Here we do various lookups to find topic_id, forum_id, post_id etc.
 // Doing it here prevents spoofing (eg. faking forum_id, topic_id or post_id
@@ -190,6 +199,7 @@ $post_data = array();
 switch ( $mode )
 {
 	case 'newtopic':
+		spambotCheck();
 		if ( empty($forum_id) )
 		{
 			message_die(GENERAL_MESSAGE, $lang['Forum_not_exist']);
@@ -201,6 +211,7 @@ switch ( $mode )
 		break;
 
 	case 'reply':
+		spambotCheck();
 	case 'vote':
 		if ( empty( $topic_id) )
 		{
@@ -214,6 +225,7 @@ switch ( $mode )
 		break;
 
 	case 'quote':
+		spambotCheck();
 	case 'editpost':
 	case 'delete':
 	case 'poll_delete':
