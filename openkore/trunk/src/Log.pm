@@ -224,7 +224,7 @@ sub processMsg {
 				}
 
 				if ($config{logConsole} &&
-				    open(F, ">> $Settings::logs_folder/console.txt")) {
+				    open(F, ">>:utf8", "$Settings::logs_folder/console.txt")) {
 					print F $message2;
 					close(F);
 				}
@@ -236,7 +236,7 @@ sub processMsg {
 
 	# Print to files
 	foreach my $file (@{$files->{$domain}}) {
-		if (open(F, ">> $Settings::logs_folder/$file")) {
+		if (open(F, ">>:utf8", "$Settings::logs_folder/$file")) {
 			print F '['. getFormattedDate(int(time)) .'] ' if ($logTimestamp);
 			print F $message;
 			close(F);
