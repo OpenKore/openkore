@@ -420,7 +420,7 @@ sub account_server_info {
 		$servers[$num]{ip} = makeIP(substr($msg, $i, 4));
 		$servers[$num]{ip} = $masterServer->{ip} if ($masterServer && $masterServer->{private});
 		$servers[$num]{port} = unpack("v1", substr($msg, $i+4, 2));
-		($servers[$num]{name}) = unpack("Z*", substr($msg, $i + 6, 20));
+		($servers[$num]{name}) = bytesToString(unpack("Z*", substr($msg, $i + 6, 20)));
 		$servers[$num]{users} = unpack("V",substr($msg, $i + 26, 4));
 		$num++;
 	}
