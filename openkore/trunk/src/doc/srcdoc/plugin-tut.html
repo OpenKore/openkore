@@ -28,7 +28,7 @@
 
 <div id="navigation">
 	<ul>
-	<li><a href="http://openkore.sourceforge.net/">Main website</a></li>
+	<li><a href="http://www.openkore.com/">Main website</a></li>
 	<li><a href="index.html">Table of contents</a></li>
 	<li><b>Plugin Writing Tutorial</b></li>
 	</ul>
@@ -55,6 +55,7 @@ familiar with OpenKore's internals.
 <ol>
 <li><a href="#hello">Your first plugin: Hello World</a></li>
 <li><a href="#hooks">Moving on: using Hooks</a></li>
+<li><a href="#network-hooks">Network packet handler hooks</a></li>
 <li><a href="#where">Where to put plugins to?</a></li>
 <li><a href="#data">How to locate data files</a></li>
 </ol>
@@ -170,6 +171,36 @@ unload callback, but not in the reload callback, so you can immediately reuse th
 <p>Usually you don't need to special-case reloading. If you do not pass a reload callback to
 <tt><a href="Plugins.html#Plugins::register">Plugins::register()</a></tt>, then the unload callback will be
 automatically called when your plugin is being reloaded.
+
+
+<a name="network-hooks"></a>
+<h2>Network packet handler hooks</h2>
+
+OpenKore 1.9 and up has a new network packet parser. In the intialization phase of this network packet parser,
+a list of packet switches and their associated handler functions are defined. There is a hook for every packet that OpenKore
+supports.
+
+<p>
+The list of supported packets (the packet handler definition list) is initialized in the method <code>new()</code> in src/Network/Receive.pm.
+Here's a fragment of the code:
+<pre class="example"># Defines a list of Packet Handlers and decoding information
+# 'packetSwitch' => ['handler function','unpack string',[qw(argument names)]]
+
+$self{packet_list} = {
+        '0069' => ['account_server_info', 'x2 a4 a4 a4 x30 C1 a*', [qw(sessionID accountID sessionID2 accountSex serverInfo)]],
+        '006A' => ['login_error', 'C1', [qw(type)]],
+        ...</pre>
+
+Each packet handler has two hooks: a pre and a post hook.
+<ul>
+<li>The pre hook is called before the packet handling function is called. This allows you to change the parsed packet's arguments.
+The hook's name is <code>"packet_pre/$handlerFunctionName"</code>. For instance, the pre hook for 'account_server_info' is
+<code>"packet_pre/account_server_info"</code></li>
+<li>The post hook is called after the packet handling function is called. The name is <code>"packet/$handlerFunctionName"</code>. For instance,
+the post hook for 'login_error' is <code>"packet/login_error"</code></li>
+</ul>
+
+Beware that these hooks <i>only exist in OpenKore 1.9 and up!</i>
 
 
 <a name="where"></a>
