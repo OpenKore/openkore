@@ -287,7 +287,7 @@
 1312 Turtle General
 1313 Mobster
 1314 Permeter
-1315 Assaulter
+1315 Assulter
 1316 Solider
 1317 Seal
 1318 Heater
