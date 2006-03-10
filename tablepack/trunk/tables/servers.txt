@@ -319,7 +319,7 @@ serverEncoding Western
 
 ## http://theanimaro.com/
 [AnimaRO Private Server]
-ip 66.111.61.90
+ip 65.110.33.20
 port 6900
 master_version 18
 version 0
