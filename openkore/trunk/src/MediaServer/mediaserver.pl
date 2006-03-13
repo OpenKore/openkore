@@ -3,7 +3,7 @@ use Time::HiRes qw(time sleep);
 use FindBin qw($RealBin);
 use lib "$RealBin/..";
 use lib "$RealBin/../src";
-use mediaServer;
+use MediaServer;
 
 use constant MEDIA_SERVER_HOST => '127.0.0.1';
 use constant MEDIA_SERVER_PORT => 12701;
