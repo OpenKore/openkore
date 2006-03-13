@@ -67,6 +67,7 @@ sub process {
 			}
 			$self->{"ALERT $channel"} = new SDL::Sound($file);
 			$self->{mixer}->play_channel($channel,$self->{"ALERT $channel"}, ($loop - 1));
+			print "Playing $domain $file\n";
 
 		} elsif ($domain eq 'SFX') {
 			my $channel = SFX;

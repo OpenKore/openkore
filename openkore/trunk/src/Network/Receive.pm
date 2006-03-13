@@ -2748,6 +2748,7 @@ sub guild_invite_result {
 
 sub guild_location {
 	# FIXME: not implemented
+	my ($self, $args) = @_;
 }
 
 sub guild_logon {
@@ -2826,12 +2827,12 @@ sub guild_name_request {
 	my ($self, $args) = @_;
 
 	my $ID = $args->{ID};
-	my $TargetID =	$args->{TargetID};
+	my $targetID =	$args->{targetID};
 	my $online = $args->{online};
 	undef %guildNameRequest;
-	$guildNameRequest{ID} = $TargetID;
+	$guildNameRequest{ID} = $targetID;
 	$guildNameRequest{online} = $online;
-	sendGuildMemberNameRequest($net, $TargetID);
+	sendGuildMemberNameRequest($net, $targetID);
 }
 
 sub guild_notice {

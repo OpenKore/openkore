@@ -49,6 +49,8 @@ Bug fixes:
   target, dropping target".
 - Conversation code t="" now works with quotes only to support 
   longer strings with whitespace and other special chars.
+- Minor cosmetic fix in 's' command
+- Fixed disconnections when a guild member logs in/out
 
 New features:
 - Added XKoreProxy module. Set configuration to 'XKore proxy' to work as
@@ -102,7 +104,12 @@ New config options:
 	XKore_listenIp
 	XKore_listenPort
 - removeActorWithDistance
+  Automatically remove actors from a specified distance (useful for merchants
+  vending in prontera - set removeActorWithDistance to ~5 and you will not
+  send as many getPlayerInfo packets, thus lessening the lag caused by you)
 - route_randomWalk_inTown
+  Allow character to random walk in towns (useful for scouting all npcs in
+  a town without manually directing the character)
 - teleportAuto_useChatCommand <command>
   Use a specified chat command for random teleport.
 - saveMap_warpChatCommand <command>

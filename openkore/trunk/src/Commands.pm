@@ -1705,9 +1705,9 @@ sub cmdGuild {
 		}
 
 		my $msg = "------------ Guild  Member ------------\n";
-		$msg .= "#  Name                       Job        Lv  Title                       Online\n";
+		$msg .= "#  Name                       Job        Lv  Title                    Online\n";
 
-		my ($i, $name, $job, $lvl, $title, $online);
+		my ($i, $name, $job, $lvl, $title, $online, $ID, $charID);
 		my $count = @{$guild{member}};
 		for ($i = 0; $i < $count; $i++) {
 			$name  = $guild{member}[$i]{name};
@@ -1717,9 +1717,11 @@ sub cmdGuild {
 			$lvl   = $guild{member}[$i]{lvl};
 			$title = $guild{member}[$i]{title};
 			$online = $guild{member}[$i]{online} ? "Yes" : "No";
+			$ID = unpack("V",$guild{member}[$i]{ID});
+			$charID = unpack("V",$guild{member}[$i]{charID});
 
-			$msg .= swrite("@< @<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<< @>  @<<<<<<<<<<<<<<<<<<<<<<<<<< @<<",
-					[$i, $name, $job, $lvl, $title, $online]);
+			$msg .= swrite("@< @<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<< @>  @<<<<<<<<<<<<<<<<<<<<<<< @<<",
+					[$i, $name, $job, $lvl, $title, $online, $ID, $charID]);
 		}
 		$msg .= "---------------------------------------\n";
 		message $msg, "list";
@@ -3106,11 +3108,11 @@ sub cmdStatus {
 
 	$msg = "----------------------- Status -------------------------\n" .
 		swrite(
-		"@<<<<<<<<<<<<<<<<<<<<<<<          HP: @>>>>>>>>>>>>>>>>>", [$char->{'name'}, $hp_string],
-		"@<<<<<<<<<<<<<<<<<<<<<<<          SP: @>>>>>>>>>>>>>>>>>", [$job_name_string, $sp_string],
+		"@<<<<<<<<<<<<<<<<<<<<<<<         HP: @>>>>>>>>>>>>>>>>>>", [$char->{'name'}, $hp_string],
+		"@<<<<<<<<<<<<<<<<<<<<<<<         SP: @>>>>>>>>>>>>>>>>>>", [$job_name_string, $sp_string],
 		"Base: @<<    @>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", [$char->{'lv'}, $base_string],
 		"Job : @<<    @>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", [$char->{'lv_job'}, $job_string],
-		"Zeny: @<<<<<<<<<<<<<<<<<      Weight: @>>>>>>>>>>>>>>>>>", [$zeny_string, $weight_string]);
+		"Zeny: @<<<<<<<<<<<<<<<<<     Weight: @>>>>>>>>>>>>>>>>>>", [$zeny_string, $weight_string]);
 
 	my $statuses = 'none';
 	if (defined $char->{statuses} && %{$char->{statuses}}) {
