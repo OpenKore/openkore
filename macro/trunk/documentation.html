@@ -139,19 +139,19 @@ openkore
 [macro] Parameter 2 is bar
 </pre>
 </dd>
-		
+
 		<dt><b>macro list</b></dt>
 		<dd>Lists all available macros.</dd>
-		
+
 		<dt><b>macro stop</b></dt>
 		<dd>Stop current macro.</dd>
-		
+
 		<dt><b>macro pause</b></dt>
 		<dd>interrupts the running macro</dd>
-		
+
 		<dt><b>macro resume</b></dt>
 		<dd>resumes an interrupted macro</dd>
-		
+
 		<dt><b>macro set</b> <i>variable</i> <i>value</i></dt>
 		<dd>set/change <i>varibale</i> to <i>value</i> or delete <i>variable</i> if no value is given.</dd>
 
@@ -177,7 +177,7 @@ macro registered to AI queue</dd>
 	<dl class="commands">
 		<dt>controls/macros.txt</dt>
 		<dd>Put your macros and automacros in here.</dd>
-		
+
 		<dt>controls/timeouts.txt</dt>
 		<dd>Add <tt>macro_delay</tt> and set it to the number of seconds you want the plugin to pause between commands.</dd>
 
@@ -244,7 +244,7 @@ macro registered to AI queue</dd>
 	<dt><b>stop</b></dt>
 	<dd>immediately terminates the running macro</dd>
 	</dl>
-	
+
 	<h3><a name="macro_1"></a>Variable declaration and usage</h3>
 	You can define and work with own variables.<br />
 	To set a variable use <i>$variable = value</i>, to recall the value use <i>$variable</i>.<br />
@@ -288,7 +288,7 @@ macro registered to AI queue</dd>
 		<li><a name=".param"></a><tt>$.param<i>N</i></tt> - command line parameters (see <a href="#commands">commands</a>)</li>
 		<li><a name=".caller"></a><tt>$.caller</tt> - name of the last triggered automacro</li>
 	</ul>
-	
+
 	<p />
 	<h3><a name="macro_3"></a>Nested variables</h3>
 	You can define dynamic or nested variables.<br />
@@ -474,7 +474,7 @@ automacro mi {
 	<dl class="commands">
 	<dt><b>map</b> <i>&lt;mapname&gt;</i></dt>
 	<dd>triggers when your current map is <i>&lt;mapname&gt;</i></dd>
-	
+
 	<dt><b>location</b> [not] <i>&lt;mapname</i> [<i>&lt;x1&gt; &lt;y1&gt;</i> [<i>&lt;x2&gt; &lt;y2&gt;</i>]] [, ...]</dt>
 	<dd>triggers when you are [not] at the specified location.<br />
 	When neither <i>&lt;x1&gt; &lt;y1&gt;</i> nor <i>&lt;x2&gt; &lt;y2&gt;</i> are given it triggers when you are [not] on <i>&lt;mapname&gt;</i>.<br />
@@ -489,11 +489,11 @@ automacro mi {
 	<pre class="code">location not geffen
 location not prontera</pre>
 	triggers when you are neither in geffen nor in prontera.</dd>
-	
+
 	<dt><b>mapchange</b> <i>(&lt;mapname&gt;</i>|<tt>any</tt><i>)</i> [, ...]</dt>
 	<dd>triggers when changing map to <i>&lt;mapname&gt;</i>. If the argument is <tt>any</tt> then it triggers on any map change.<br />
 	Comma-separated arguments are treated as OR conditions.</dd>
-	
+
 	<dt><b>hp</b> <tt>&lt;<a href="#condition">condition</a>&gt;</tt> <i>&lt;amount&gt;</i>[%]</dt>
 	<dd>triggers when your hp match <i>&lt;<a href="#condition">condition</a>&gt;
 &lt;amount&gt;</i> (absolute value) or <i>&lt;<a href="#condition">condition</a>&gt;
@@ -508,13 +508,13 @@ location not prontera</pre>
 <tr class="two"><td>!=</td><td>not equal to</td></tr>
 </table>
 	Multiple lines are treated as AND conditions.</dd>
-	
+
 	<dt><b>sp</b> <tt>&lt;<a href="#condition">condition</a>&gt;</tt> <i>&lt;amount&gt;</i>[%]</dt>
 	<dd>triggers when your sp match <i>&lt;<a href="#condition">condition</a>&gt;
 &lt;amount&gt;</i> (absolute value) or <i>&lt;<a href="#condition">condition</a>&gt;
 &lt;amount&gt;</i> percent. (relative value)<br />
         Multiple lines are treated as AND conditions.</dd>
-	
+
 	<dt><b>spirit</b> <tt>&lt;<a href="#condition">condition</a>&gt;</tt> <i>&lt;amount&gt;</i></dt>
 	<dd>triggers when your spirits match <i>&lt;<a href="#condition">condition</a>&gt; &lt;amount&gt;</i>.<br />
 	Multiple lines are treated as AND conditions.</dd>
@@ -524,27 +524,27 @@ location not prontera</pre>
 &lt;amount&gt;</i> (absolute value) or <i>&lt;<a href="#condition">condition</a>&gt;
 &lt;amount&gt;</i> percent. (relative value)<br />
 	Multiple lines are treated as AND conditions.</dd>
-	
+
 	<dt><b>cartweight</b> <tt>&lt;<a href="#condition">condition</a>&gt;</tt> <i>&lt;amount&gt;</i>[%]</dt>
 	<dd>triggers when your cart weight matches <i>&lt;<a href="#condition">condition</a>&gt;
 &lt;amount&gt;</i> (absolute value) or <i>&lt;<a href="#condition">condition</a>&gt;
 &lt;amount&gt;</i> percent. (relative value)<br />
 	Multiple lines are treated as AND conditions.</dd>
-	
+
 	<dt><b>zeny</b> <tt>&lt;<a href="#condition">condition</a>&gt;</tt> <i>&lt;amount&gt;</i></dt>
 	<dd>triggers when your zeny amount matches <i>&lt;<a href="#condition">condition</a>&gt; &lt;amount&gt;</i>.<br />
 	Multiple lines are treated as AND conditions.</dd>
-	
+
 	<dt><b>soldout</b> <tt>&lt;<a href="#condition">condition</a>&gt;</tt> <i>&lt;slots&gt;</i></dt>
 	<dd>triggers when the amount of sold out item slots in your shop matches <i>&lt;<a href="#condition">condition</a>&gt; &lt;slots&gt;</i>.<br />
 	Multiple lines are treated as AND conditions.</dd>
-	
+
 	<dt><b>status</b> [not] <i>&lt;status&gt;</i> [, ...]</dt>
 	<dd>triggers when you are [not] <i>&lt;status&gt;</i>.<br />
 	The statuses "dead" and "muted" are supported additionally.<br />
 	Comma-separated arguments are treated as OR conditions.<br />
 	Multiple lines are treated as AND conditions.</dd>
-	
+
 	<dt><b>inventory</b> "<i>&lt;item&gt;</i>" <tt>&lt;<a href="#condition">condition</a>&gt;</tt> <i>&lt;amount&gt;</i> [, ...]</dt>
 	<dd>triggers when you have <i>&lt;<a href="#condition">condition</a>&gt; &lt;amount&gt;</i> of <i>&lt;item&gt;</i> in your inventory.<br />
 	Comma-separated arguments are treated as OR conditions.<br />
@@ -568,25 +568,25 @@ location not prontera</pre>
 	<dt><b>base</b> <tt>&lt;<a href="#condition">condition</a>&gt;</tt> <i>&lt;level&gt;</i></dt>
 	<dd>triggers when your baselevel matches <i>&lt;<a href="#condition">condition</a>&gt; &lt;level&gt;</i>.<br />
 	Multiple lines are treated as AND conditions.</dd>
-	
+
 	<dt><b>job</b> <tt>&lt;<a href="#condition">condition</a>&gt;</tt> <i>&lt;level&gt;</i></dt>
 	<dd>triggers when your joblevel matches <i>&lt;<a href="#condition">condition</a>&gt; &lt;level&gt;</i>.<br />
 	Multiple lines are treated as AND conditions.</dd>
-	
+
 	<dt><b>class</b> <i>&lt;job&gt;</i></dt>
 	<dd>triggers when your jobclass is <i>&lt;job&gt;</i></dd>
-	
+
 	<dt><b>spell</b> <i>&lt;spell&gt;</i> [, ...]</dt>
 	<dd>triggers when someone casts <i>&lt;spell&gt;</i> on you or you are in it's scope.<br />
 	Comma-separated arguments are treated as OR conditions.</dd>
-	
+
 	<dt><b>monster</b> <i>&lt;monstername&gt;</i> [, ...]</dt>
 	<dd>triggers when <i>&lt;monstername&gt;</i> is near.<br />
 	When triggered the special variables <tt><a href="#.lastMonster">$.lastMonster</a></tt> and
 	<tt><a href="#.lastMonsterPos">$.lastMonsterPos</a></tt> are set.<br />
 	Comma-separated arguments are treated as OR conditions.<br />
 	Multiple lines are treated as AND conditions.</dd>
-	
+
 	<dt><b>player</b> "<i>&lt;playername&gt;</i>" [, <i>&lt;distance&gt;</i> ]</dt>
 	<dd>triggers when <i>&lt;playername&gt;</i> is on screen or not more than <i>&lt;distance&gt;</i> blocks away.<br />
 	Multiple lines are treated as AND conditions.</dd>
@@ -602,11 +602,11 @@ location not prontera</pre>
 	<dt><b>var</b> <i>&lt;variable&gt;</i> <i>(</i><tt>unset</tt>|<tt>&lt;<a href="#condition">condition</a>&gt;</tt> <i>&lt;value&gt;)</i></dt>
 	<dd>triggers when <i>&lt;variable&gt;</i> is either <tt>unset</tt> or matches <i>&lt;<a href="#condition">condition</a>&gt; &lt;value&gt;</i>.<br />
 	Multiple lines are treated as AND conditions.</dd>
-	
+
 	<dt><b>varvar</b> <i>&lt;nested variable&gt;</i> <i>(</i><tt>unset</tt>|<tt>&lt;<a href="#condition">condition</a>&gt;</tt> <i>&lt;value&gt;)</i></dt>
 	<dd>triggers when <i>&lt;nested variable&gt;</i> is either <tt>unset</tt> or matches <i>&lt;<a href="#condition">condition</a>&gt; &lt;value&gt;</i>.<br />
 	Multiple lines are treated as AND conditions.</dd>
-	
+
 	<dt><b>console</b> <i>(</i>"<i>&lt;text&gt;</i>"|/<i>&lt;regexp&gt;</i>/[i]<i>)</i></dt>
 	<dd>triggers when <i>&lt;text&gt;</i> is received on console or the text received matches &lt;regexp&gt;.<br />
 	The <b>i</b> switch means the regexp is case insensitive.<br/>
@@ -632,35 +632,38 @@ location not prontera</pre>
 	The <b>i</b> switch means the regexp is case insensitive.<br/>
 	Sets <tt><a href="#.lastguild">$.lastguild</a></tt> and <tt><a href="#.lastguildMsg">$.lastguildMsg</a></tt>.</dd>
 
+	<dt><b>hook</b> <i>&lt;hookname&gt;</i></dt>
+	<dd>triggers when openkore calls <i>&lt;hookname&gt;</i>.</dd>
+
 	<dt><b>run-once</b> <i>(</i><tt>0</tt>|<tt>1</tt><i>)</i></dt>
 	<dd>When set to <tt>1</tt> the automacro will be deactivated after being triggered.<br />
 	Use the macro command <tt><a href="#macro_release">release</a></tt> to reenable this automacro.</dd>
-	
+
 	<dt><b>overrideAI</b> <i>(</i>0|1<i>)</i></dt>
 	<dd>When set to <tt>1</tt> the macro ignores openkore's AI.
 	This means it won't pause upon "move" or "status dead".</dd>
-	
+
 	<dt><b>delay</b> <i>&lt;n&gt;</i></dt>
 	<dd>Waits for <i>&lt;n&gt;</i> seconds before calling the corresponding macro.</dd>
-	
+
 	<dt><b>timeout</b> <i>&lt;n&gt;</i></dt>
 	<dd>Wait at least for <i>&lt;n&gt;</i> seconds before this automacro can be triggered again.</dd>
 
 	<dt><b>macro_delay</b> <i>&lt;n&gt;</i></dt>
 	<dd>Overrides the global <a href="#files"><tt>macro_delay</tt></a> setting for the called macro</dd>
-	
+
 	<dt><b>set</b> <i>&lt;variable&gt;</i> <i>&lt;value&gt;</i></dt>
 	<dd>Sets variable <i>&lt;variable&gt;</i> to <i>&lt;value&gt;</i>
 	You can have multiple <tt><b>set</b></tt> lines per automacro.</dd>
-	
+
 	<dt><b>call</b> <i>&lt;name&gt;</i></dt>
 	<dd>Calls macro <i>&lt;name&gt;</i> when the automacro is triggered.</dd>
-	
+
 	<dt><b>call</b> {<br />
 &nbsp;&nbsp;&nbsp;&nbsp;<i>&lt;instructions&gt;</i><br />
 }</dt>
 	<dd>Runs <i>&lt;instructions&gt;</i> when the automacro is triggered.</dd>
-	
+
 	<dt><b>orphan</b> <i>&lt;method&gt;</i></dt>
 	<dd>Sets the method of how to deal with <a href="#orphan">orphaned</a> macros.</dd>
 	</dl>
@@ -719,32 +722,32 @@ macro reopenshop {
 	<dl class="commands">
 	<dt><b>variable_trace</b></dt>
 	<dd>tracks variables</dd>
-	
+
 	<dt><b>command_preparsed</b></dt>
 	<dd>unparsed command line</dd>
-	
+
 	<dt><b>command_parsed</b></dt>
 	<dd>parsed command line</dd>
-	
+
 	<dt><b>parser_steps</b></dt>
 	<dd>parser steps</dd>
-	
+
 	<dt><b>function_call_macro</b></dt>
 	<dd>macro functions (low traffic)</dd>
-	
+
 	<dt><b>function_call_auto</b></dt>
 	<dd>automacro functions (high traffic)</dd>
-	
+
 	<dt><b>automacro_checks</b></dt>
 	<dd>automacro checks (high traffic)</dd>
-	
+
 	<dt><b>developers</b></dt>
 	<dd>debugging messages (only?) useful for developers</dd>
-	
+
 	<dt><b>full</b></dt>
 	<dd>full debug, all levels.</dd>
 	</dl>
-	
+
 	Debug levels are separated by pipes <tt>|</tt><br />
 	Example:<br />
 	<pre class="code">macro_debug variable_trace|parser_steps</pre>
