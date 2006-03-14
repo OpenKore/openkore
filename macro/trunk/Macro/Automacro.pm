@@ -332,7 +332,7 @@ sub checkConsole {
 
 sub consoleCheckWrapper {
   return unless defined $conState;
-  return unless $_[0] eq 'message';
+  return if $_[4] =~ /^\[macro\]/;
   # skip "selfchat", "macro" and "cvsdebug" domains to avoid loops
   return if $_[1] =~ /^(selfchat|macro|cvsdebug)/;
   my @args = @_;
