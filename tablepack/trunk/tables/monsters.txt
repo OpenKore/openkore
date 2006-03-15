@@ -242,6 +242,7 @@
 1264 Merman
 1265 Cookie
 1266 Aster
+1267 Carat
 1268 Bloody Knight
 1269 Clock
 1270 Clock Tower Manager
