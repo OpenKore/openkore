@@ -37,7 +37,7 @@
 <h1><a name="top"></a>Version</h1>
 <div class="p">
 	This manual is for macro plugin version 1.2.0.<br />
-	$LastChangedDate$
+	$Date$
 </div>
 
 <h1>What is the macro plugin?</h1>
@@ -103,7 +103,6 @@ openkore
 |   |   |-- Automacro.pm
 |   |   |-- Data.pm
 |   |   |-- Parser.pm
-|   |   |-- Queue.pm
 |   |   |-- Script.pm
 |   |   `-- Utilities.pm
 |   `-- macro.pl
@@ -284,7 +283,7 @@ macro registered to AI queue</dd>
 		<li><a name=".lastpartyMsg"></a><tt>$.lastpartyMsg</tt> - what he wrote</li>
 		<li><a name=".lastMonster"></a><tt>$.lastMonster</tt> - the name of the monster which triggered the last automacro condition "monster"</li>
 		<li><a name=".lastMonsterPos"></a><tt>$.lastMonsterPos</tt> - the last known position of that monster ("123 234 prontera")</li>
-		<li><a name=".lastMatch"></a><tt>$.lastMatch<i>N</i></tt> - backreferences for the last regexp match</li>
+		<li><a name=".lastMatch"></a><tt>$.lastMatch<i>N</i></tt> - backreferences for the last <a href="http://www.regular-expressions.info">regexp</a> match</li>
 		<li><a name=".param"></a><tt>$.param<i>N</i></tt> - command line parameters (see <a href="#commands">commands</a>)</li>
 		<li><a name=".caller"></a><tt>$.caller</tt> - name of the last triggered automacro</li>
 	</ul>
@@ -426,7 +425,7 @@ macro registered to AI queue</dd>
 <tr class="one"><td>&lt;macro name&gt;</td><td> &lt;word&gt;</td></tr>
 <tr class="two"><td>&lt;keyword&gt;</td><td> '@npc' | '@cart' | '@inventory' | '@store' | '@storage' | '@player' | '@vender' | '@var' | '@random' | '@rand' | '@invamount' | '@cartamount' | '@shopamount' | '@storamount' | '@eval' | '@arg' | '@config' </td></tr>
 <tr class="one"><td>&lt;argument&gt;</td><td> '(' &lt;string&gt; ')' | '(' &lt;expression&gt; ')'</td></tr>
-<tr class="two"><td>&lt;parseable&gt;</td><td> &lt;string&gt; | &lt;keyword&gt; &lt;argument&gt;</td></tr>
+<tr class="two"><td>&lt;parseable&gt;</td><td> &lt;string&gt; | &lt;keyword&gt; &lt;argument&gt; | &lt;parseable&gt;</td></tr>
 <tr class="one"><td>&lt;macro command&gt;</td><td> 'log' &lt;parseable&gt; | 'lock' &lt;parseable&gt; | 'release'
 [&lt;parseable&gt; | 'all'] | 'pause' [&lt;u_int&gt;] | 'call' &lt;macro name&gt; [&lt;u_int&gt; | &lt;parseable&gt;] | 'stop'</td></tr>
 <tr class="two"><td>&lt;openkore command&gt;</td><td> (see openkore manual for console commands)</td></tr>
@@ -502,7 +501,7 @@ location not prontera</pre>
 <tr class="head"><th>condition</th><th>meaning</th></tr>
 <tr class="one"><td>&lt;</td><td>less than</td></tr>
 <tr class="two"><td>&lt;=</td><td>less than or equal to</td></tr>
-<tr class="one"><td>=</td><td>equal to</td></tr>
+<tr class="one"><td>==</td><td>equal to</td></tr>
 <tr class="two"><td>&gt;=</td><td>greater than or equal to</td></tr>
 <tr class="one"><td>&gt;</td><td>greater than</td></tr>
 <tr class="two"><td>!=</td><td>not equal to</td></tr>
@@ -607,29 +606,29 @@ location not prontera</pre>
 	<dd>triggers when <i>&lt;nested variable&gt;</i> is either <tt>unset</tt> or matches <i>&lt;<a href="#condition">condition</a>&gt; &lt;value&gt;</i>.<br />
 	Multiple lines are treated as AND conditions.</dd>
 
-	<dt><b>console</b> <i>(</i>"<i>&lt;text&gt;</i>"|/<i>&lt;regexp&gt;</i>/[i]<i>)</i></dt>
-	<dd>triggers when <i>&lt;text&gt;</i> is received on console or the text received matches &lt;regexp&gt;.<br />
-	The <b>i</b> switch means the regexp is case insensitive.<br/>
+	<dt><b>console</b> <i>(</i>"<i>&lt;text&gt;</i>"|/<i>&lt;<a href="http://www.regular-expressions.info">regexp</a>&gt;</i>/[i]<i>)</i></dt>
+	<dd>triggers when <i>&lt;text&gt;</i> is received on console or the text received matches &lt;<a href="http://www.regular-expressions.info">regexp</a>&gt;.<br />
+	The <b>i</b> switch means the <a href="http://www.regular-expressions.info">regexp</a> is case insensitive.<br/>
 	Sets <tt><a href="#.lastLogMsg">$.lastLogMsg</a></tt>.</dd>
 
-	<dt><b>pm</b> <i>(</i>"<i>&lt;text&gt;</i>"|/<i>&lt;regexp&gt;</i>/[i]<i>)</i> [, <i>&lt;player&gt;</i>]</dt>
-	<dd>triggers when <i>&lt;text&gt;</i> is received by pm [from <i>&lt;player&gt;</i>] or the text received matches &lt;regexp&gt;.<br />
-	The <b>i</b> switch means the regexp is case insensitive.<br/>
+	<dt><b>pm</b> <i>(</i>"<i>&lt;text&gt;</i>"|/<i>&lt;<a href="http://www.regular-expressions.info">regexp</a>&gt;</i>/[i]<i>)</i> [, <i>&lt;player&gt;</i>]</dt>
+	<dd>triggers when <i>&lt;text&gt;</i> is received by pm [from <i>&lt;player&gt;</i>] or the text received matches &lt;<a href="http://www.regular-expressions.info">regexp</a>&gt;.<br />
+	The <b>i</b> switch means the <a href="http://www.regular-expressions.info">regexp</a> is case insensitive.<br/>
 	Sets <tt><a href="#.lastpm">$.lastpm</a></tt> and <tt><a href="#.lastpmMsg">$.lastpmMsg</a></tt>.</dd>
 
-	<dt><b>pubm</b> <i>(</i>"<i>&lt;text&gt;</i>"|/<i>&lt;regexp&gt;</i>/[i]<i>)</i> [, <i>&lt;distance&gt;</i>]</dt>
-	<dd>triggers when a public message [within a distance of <i>&lt;distance&gt;</i>] is received and it is <i>&lt;text&gt;</i> or matches &lt;regexp&gt;<br />
-	The <b>i</b> switch means the regexp is case insensitive.<br/>
+	<dt><b>pubm</b> <i>(</i>"<i>&lt;text&gt;</i>"|/<i>&lt;<a href="http://www.regular-expressions.info">regexp</a>&gt;</i>/[i]<i>)</i> [, <i>&lt;distance&gt;</i>]</dt>
+	<dd>triggers when a public message [within a distance of <i>&lt;distance&gt;</i>] is received and it is <i>&lt;text&gt;</i> or matches &lt;<a href="http://www.regular-expressions.info">regexp</a>&gt;<br />
+	The <b>i</b> switch means the <a href="http://www.regular-expressions.info">regexp</a> is case insensitive.<br/>
 	Sets <tt><a href="#.lastpub">$.lastpub</a></tt> and <tt><a href="#.lastpubMsg">$.lastpubMsg</a></tt>.</dd>
 
-	<dt><b>party</b> <i>(</i>"<i>&lt;text&gt;</i>"|/<i>&lt;regexp&gt;</i>/[i]<i>)</i></dt>
-	<dd>triggers when <i>&lt;text&gt;</i> is received by partychat or the text received matches &lt;regexp&gt;.<br />
-	The <b>i</b> switch means the regexp is case insensitive.<br/>
+	<dt><b>party</b> <i>(</i>"<i>&lt;text&gt;</i>"|/<i>&lt;<a href="http://www.regular-expressions.info">regexp</a>&gt;</i>/[i]<i>)</i></dt>
+	<dd>triggers when <i>&lt;text&gt;</i> is received by partychat or the text received matches &lt;<a href="http://www.regular-expressions.info">regexp</a>&gt;.<br />
+	The <b>i</b> switch means the <a href="http://www.regular-expressions.info">regexp</a> is case insensitive.<br/>
 	Sets <tt><a href="#.lastparty">$.lastparty</a></tt> and <tt><a href="#.lastpartyMsg">$.lastpartyMsg</a></tt>.</dd>
 
-	<dt><b>guild</b> <i>(</i>"<i>&lt;text&gt;</i>"|/<i>&lt;regexp&gt;</i>/[i]<i>)</i></dt>
-	<dd>triggers when <i>&lt;text&gt;</i> is received by guildchat or the text received matches &lt;regexp&gt;.<br />
-	The <b>i</b> switch means the regexp is case insensitive.<br/>
+	<dt><b>guild</b> <i>(</i>"<i>&lt;text&gt;</i>"|/<i>&lt;<a href="http://www.regular-expressions.info">regexp</a>&gt;</i>/[i]<i>)</i></dt>
+	<dd>triggers when <i>&lt;text&gt;</i> is received by guildchat or the text received matches &lt;<a href="http://www.regular-expressions.info">regexp</a>&gt;.<br />
+	The <b>i</b> switch means the <a href="http://www.regular-expressions.info">regexp</a> is case insensitive.<br/>
 	Sets <tt><a href="#.lastguild">$.lastguild</a></tt> and <tt><a href="#.lastguildMsg">$.lastguildMsg</a></tt>.</dd>
 
 	<dt><b>hook</b> <i>&lt;hookname&gt;</i></dt>
@@ -761,6 +760,7 @@ macro reopenshop {
 	<ul>
 	<li>automacros are not supposed to run when another macro is active</li>
 	<li>automacro check <tt>console</tt> ignores the following domains: <tt>selfchat</tt>, <tt>macro</tt> and <tt>cvsdebug</tt>.</li>
+	<li>automacro check <tt>console</tt> ignores everything that begins with "[macro]" to avoid infinite loops</li>
 	<li>do <b>not</b> use closing brackets ")" in keyword arguments unless
 it's the closing bracket for an argument.<br />
 for example: <tt>@random ("foo", "bar", "@eval (4 + 5)", "yatta")</tt> is
