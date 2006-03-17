@@ -5339,7 +5339,7 @@ sub system_chat {
 	my ($self, $args) = @_;
 
 	my $message = bytesToString($args->{message});
-	stripLanguageCode($message);
+	stripLanguageCode(\$message);
 	chatLog("s", "$message\n") if ($config{logSystemChat});
 	message "[GM] $message\n", "schat";
 	ChatQueue::add('gm', undef, undef, $message);
