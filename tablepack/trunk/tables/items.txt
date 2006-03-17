@@ -1330,7 +1330,7 @@
 7160#Transit_Permitt_from_the_Feudal_Lord#
 551#Sushi#
 // --------iRO event : St. Patrick's Day--------------------------
-668#Gold_Coin#
+7517#Gold_Coin#
 //=====Valentine's day event==============
 
 7182#Cacao#
