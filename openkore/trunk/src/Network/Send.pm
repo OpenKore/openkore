@@ -549,7 +549,7 @@ sub sendCharDelete {
 	my $charID = shift;
 	my $email = shift;
 	my $msg = pack("C*", 0x68, 0x00) .
-			$charID . pack("a40", bytesToString($email));
+			$charID . pack("a40", stringToBytes($email));
 	sendMsgToServer($r_net, $msg);
 }
 
