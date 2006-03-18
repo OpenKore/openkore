@@ -1,17 +1,8 @@
--- MySQL dump 10.9
+-- MySQL dump 9.11
 --
--- Host: localhost    Database: mercdb
+-- Host: leetbox.de    Database: mercdb
 -- ------------------------------------------------------
 -- Server version	4.1.15-Debian_1-log
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
 -- Table structure for table `botcont`
@@ -20,22 +11,12 @@
 DROP TABLE IF EXISTS `botcont`;
 CREATE TABLE `botcont` (
   `bcbcid` int(11) NOT NULL auto_increment,
-  `bcdate` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+  `bcdate` timestamp NOT NULL,
   `bcusid` int(11) NOT NULL default '0',
   `bccommand` varchar(255) default NULL,
   `bcdone` enum('Yes','No') NOT NULL default 'No',
   PRIMARY KEY  (`bcbcid`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `botcont`
---
-
-
-/*!40000 ALTER TABLE `botcont` DISABLE KEYS */;
-LOCK TABLES `botcont` WRITE;
-UNLOCK TABLES;
-/*!40000 ALTER TABLE `botcont` ENABLE KEYS */;
+) ENGINE=InnoDB;
 
 --
 -- Table structure for table `botpos`
@@ -44,23 +25,12 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `botpos`;
 CREATE TABLE `botpos` (
   `bpbpid` int(11) NOT NULL auto_increment,
-  `bpdate` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+  `bpdate` timestamp NOT NULL,
   `bpposx` int(11) NOT NULL default '0',
   `bpposy` int(11) NOT NULL default '0',
   `bpmap` varchar(30) default NULL,
   PRIMARY KEY  (`bpbpid`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `botpos`
---
-
-
-/*!40000 ALTER TABLE `botpos` DISABLE KEYS */;
-LOCK TABLES `botpos` WRITE;
-INSERT INTO `botpos` VALUES (14324,'2006-03-16 21:01:58',176,186,'Connecting');
-UNLOCK TABLES;
-/*!40000 ALTER TABLE `botpos` ENABLE KEYS */;
+) ENGINE=InnoDB;
 
 --
 -- Table structure for table `botruns`
@@ -69,20 +39,10 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `botruns`;
 CREATE TABLE `botruns` (
   `brbrid` int(11) NOT NULL auto_increment,
-  `brdate` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+  `brdate` timestamp NOT NULL,
   `brdone` enum('Yes','No') NOT NULL default 'No',
   PRIMARY KEY  (`brbrid`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `botruns`
---
-
-
-/*!40000 ALTER TABLE `botruns` DISABLE KEYS */;
-LOCK TABLES `botruns` WRITE;
-UNLOCK TABLES;
-/*!40000 ALTER TABLE `botruns` ENABLE KEYS */;
+) ENGINE=InnoDB;
 
 --
 -- Table structure for table `logins`
@@ -91,21 +51,11 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `logins`;
 CREATE TABLE `logins` (
   `lglgid` int(11) NOT NULL auto_increment,
-  `lgdate` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+  `lgdate` timestamp NOT NULL,
   `lgusid` int(11) NOT NULL default '0',
   `lgip` varchar(255) default NULL,
   PRIMARY KEY  (`lglgid`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `logins`
---
-
-
-/*!40000 ALTER TABLE `logins` DISABLE KEYS */;
-LOCK TABLES `logins` WRITE;
-UNLOCK TABLES;
-/*!40000 ALTER TABLE `logins` ENABLE KEYS */;
+) ENGINE=InnoDB;
 
 --
 -- Table structure for table `queryhist`
@@ -114,21 +64,11 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `queryhist`;
 CREATE TABLE `queryhist` (
   `qhqhid` int(11) NOT NULL auto_increment,
-  `qhdate` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+  `qhdate` timestamp NOT NULL,
   `qhusid` int(11) NOT NULL default '0',
   `qhquery` varchar(255) default NULL,
   PRIMARY KEY  (`qhqhid`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `queryhist`
---
-
-
-/*!40000 ALTER TABLE `queryhist` DISABLE KEYS */;
-LOCK TABLES `queryhist` WRITE;
-UNLOCK TABLES;
-/*!40000 ALTER TABLE `queryhist` ENABLE KEYS */;
+) ENGINE=InnoDB;
 
 --
 -- Table structure for table `shopcont`
@@ -187,17 +127,7 @@ CREATE TABLE `shopcont` (
   KEY `isstillin` (`isstillin`),
   KEY `map` (`map`),
   KEY `server` (`server`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='RO Shop Database';
-
---
--- Dumping data for table `shopcont`
---
-
-
-/*!40000 ALTER TABLE `shopcont` DISABLE KEYS */;
-LOCK TABLES `shopcont` WRITE;
-UNLOCK TABLES;
-/*!40000 ALTER TABLE `shopcont` ENABLE KEYS */;
+) ENGINE=InnoDB COMMENT='RO Shop Database';
 
 --
 -- Table structure for table `shopvisit`
@@ -211,17 +141,7 @@ CREATE TABLE `shopvisit` (
   `server` varchar(40) NOT NULL default 'Chaos',
   UNIQUE KEY `id` (`id`),
   KEY `shopOwnerID` (`shopOwnerID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `shopvisit`
---
-
-
-/*!40000 ALTER TABLE `shopvisit` DISABLE KEYS */;
-LOCK TABLES `shopvisit` WRITE;
-UNLOCK TABLES;
-/*!40000 ALTER TABLE `shopvisit` ENABLE KEYS */;
+) ENGINE=InnoDB;
 
 --
 -- Table structure for table `shoutbox`
@@ -230,21 +150,11 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `shoutbox`;
 CREATE TABLE `shoutbox` (
   `sbsbid` int(11) NOT NULL auto_increment,
-  `sbdate` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+  `sbdate` timestamp NOT NULL,
   `sbusid` int(11) NOT NULL default '0',
   `sbmessage` text,
   PRIMARY KEY  (`sbsbid`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `shoutbox`
---
-
-
-/*!40000 ALTER TABLE `shoutbox` DISABLE KEYS */;
-LOCK TABLES `shoutbox` WRITE;
-UNLOCK TABLES;
-/*!40000 ALTER TABLE `shoutbox` ENABLE KEYS */;
+) ENGINE=InnoDB;
 
 --
 -- Table structure for table `users`
@@ -262,23 +172,5 @@ CREATE TABLE `users` (
   `usshortsearch` enum('Yes','No') NOT NULL default 'No',
   `usrefresh` int(11) NOT NULL default '0',
   PRIMARY KEY  (`ususid`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `users`
---
-
-
-/*!40000 ALTER TABLE `users` DISABLE KEYS */;
-LOCK TABLES `users` WRITE;
-UNLOCK TABLES;
-/*!40000 ALTER TABLE `users` ENABLE KEYS */;
-
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+) ENGINE=InnoDB;
 
