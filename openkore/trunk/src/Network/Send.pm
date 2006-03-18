@@ -94,6 +94,7 @@ our @EXPORT = qw(
 	sendGuildNotice
 	sendGuildRankChange
 	sendGuildRequest
+	sendGuildSetAlly
 	sendIdentify
 	sendIgnore
 	sendIgnoreAll
@@ -1048,6 +1049,24 @@ sub sendGuildRequest {
 	debug "Sent Guild Request Page : ".$page."\n", "sendPacket";
 }
 
+
+sub sendGuildSetAlly {
+	# this packet is for guildmaster asking to set alliance with another guildmaster
+	# the other sub for sendGuildAlly are responses to this sub
+	# kept the parameters open, but everything except $targetAID could be replaced with Global variables
+	# unless you plan to mess around with the alliance packet, no exploits though, I tried ;-)
+	# -zdivpsa
+	my $r_net = shift;	# remote socket, $net
+	my $targetAID = shift;	# binary Account ID
+	my $myAID = shift;	# binary Account ID, $accountID
+	my $charID = shift;	# binary Character ID, $charID
+	my $msg =	pack("C*", 0x70, 0x01) .
+			$targetAID .
+			$myAID .
+			$charID;
+	sendMsgToServer($r_net, $msg);
+
+}
 sub sendIdentify {
 	my $r_net = shift;
 	my $index = shift;
