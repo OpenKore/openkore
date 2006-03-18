@@ -1,0 +1,5 @@
+see, who started bot last, or if it was done to timeout
+show last commands sendet to bot via bot control
+
+more random walking and random waypoints
+post to irc channel, when hot item found
