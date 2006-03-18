@@ -51,6 +51,7 @@ Bug fixes:
   longer strings with whitespace and other special chars.
 - Minor cosmetic fix in 's' command
 - Fixed disconnections when a guild member logs in/out
+- Fix guild alliances not properly cleared
 
 New features:
 - Added XKoreProxy module. Set configuration to 'XKore proxy' to work as
@@ -127,6 +128,7 @@ New commands:
 - pecopeco [release]: Display or remove pecopeco status
 - ai manual: Pause automated botting and allow manual control
 - ai auto: Same as 'ai on'
+- guild ally <playerID | name> : ally with another guild
 
 Internal:
 - Implemented the beginning of a localization framework.
@@ -164,6 +166,7 @@ Credits:
 - rufvin: useSelf_skill_smartHeal bug
 - piroJOKE: field files updates.
 - Crypticode: fix and improve npc talk sequence, mapname redirects
+- zdivpsa: fix guild packets, guild ally command
 
 ==================
 ### 1.9.0
