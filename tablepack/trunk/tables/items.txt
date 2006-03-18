@@ -1616,7 +1616,7 @@
 4228#Sleeper_Card#
 4229#Clock_Tower_Manager_Card#
 4230#Shinobi_Card#
-4231#Increase_Soil_Card#
+4231#Mi_Gao_Card#
 4232#Hermit_Plant_Card#
 4233#Baby_Leopard_Card#
 4234#Anolian_Card#
