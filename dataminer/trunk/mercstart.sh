@@ -1,6 +1,10 @@
 #!/bin/bash
-
 export LC_ALL="C"
+
+# run openkore with this unix user
+RUNAS="dave"
+# wait as many seconds before doing the next tour
+WAITSECS=1800
 
 echo "update botruns set brdone='Yes'" | mysql -u mercdbadm mercdb
 echo "update botcont set bcdone='Yes'" | mysql -u mercdbadm mercdb
@@ -19,8 +23,8 @@ botrun() {
 	fi
 	echo "Inserting running bot"
 	echo 'insert into botruns (brdone) values ("No") ' | mysql -u mercdbadm mercdb
-#	su -c "perl ./openkore.pl \"$1\"" dave
-	su -c "perl ./openkore.pl --control=/home/dave/openkore-cvs20060227/control.gspot" dave
+#	su -c "perl ./openkore.pl \"$1\"" $RUNAS
+	su -c "perl ./openkore.pl --control=/home/dave/openkore-cvs20060227/control.gspot" $RUNAS
 	echo "Setting bots to deactive"
 	echo "update botruns set brdone='Yes'" | mysql -u mercdbadm mercdb
 	echo "update botcont set bcdone='Yes'" | mysql -u mercdbadm mercdb
@@ -33,7 +37,7 @@ tour() {
 	echo "update shopcont set isstillin = 'No'" | mysql -u mercdbadm mercdb
 	echo "Inserting running bot"
 	echo 'insert into botruns (brdone) values ("No") ' | mysql -u mercdbadm mercdb
-	su -c "perl ./openkore.pl" dave
+	su -c "perl ./openkore.pl" $RUNAS
 	echo "Setting bots to deactive"
 	echo "update botruns set brdone='Yes'" | mysql -u mercdbadm mercdb	
 	echo "update botcont set bcdone='Yes'" | mysql -u mercdbadm mercdb	
@@ -41,10 +45,10 @@ tour() {
 }
 
 while [ 1 ]; do
-	echo "Waiting max 1800 sec at:"
+	echo "Waiting max $WAITSECS sec at:"
 	date
 	CURTIME=$(date +%s)
-	TIMEMAX=$[ $CURTIME + 1800 ]
+	TIMEMAX=$[ $CURTIME + $WAITSECS ]
 	TOURDONE="No"
 	
 	while [ "$TOURDONE" = "No" -a "$TIMEMAX" -gt "$CURTIME" ]; do
@@ -54,7 +58,7 @@ while [ 1 ]; do
 			echo "Starting Tour"
 			tour
 			TOURDONE="Yes"
-			TIMEMAX=$[ $CURTIME + 1800 ]
+			TIMEMAX=$[ $CURTIME + $WAITSECS ]
 		fi
 		if [ "$TOURDONE" = "No" -a ! -z "$(echo $RES | grep macro)" ]; then
 			echo "Found Command " $RES
