@@ -1485,11 +1485,17 @@ sub sendPartyLeave {
 sub sendPartyOrganize {
 	my $r_net = shift;
 	my $name = shift;
+	my $share1 = shift || 1;
+	my $share2 = shift || 1;
 
 	my $binName = stringToBytes($name);
 	$binName = substr($binName, 0, 24) if (length($binName) > 24);
 	$binName .= chr(0) x (24 - length($binName));
-	my $msg = pack("C*", 0xF9, 0x00) . $binName;
+	#my $msg = pack("C*", 0xF9, 0x00) . $binName;
+	# I think this is obsolete - which serverTypes still support this packet anyway?
+	# FIXME: what are shared with $share1 and $share2? experience? item? vice-versa?
+	
+	my $msg = pack("C*", 0xE8, 0x01) . $binName . pack("C*", $share1, $share2);
 
 	sendMsgToServer($r_net, $msg);
 	debug "Sent Organize Party: $name\n", "sendPacket", 2;
