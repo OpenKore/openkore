@@ -148,8 +148,8 @@ elif darwin:
 		for f in source:
 			sources += [str(f)]
 
-		command = [env['CXX'], '-bundle', '-undefined dynamic_lookup',
-			   '-o', str(target[0])] + sources
+		command = [env['CXX'], '-bundle', '-undefined',
+			   ' dynamic_lookup', '-o', str(target[0])] + sources
 		if env.has_key('LIBPATH'):
 			for dir in env['LIBPATH']:
 				command += ['-L' + dir]
