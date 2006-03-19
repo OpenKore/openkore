@@ -4,6 +4,7 @@ import os
 
 platform = str(ARGUMENTS.get('OS', Platform()))
 cygwin = platform == "cygwin"
+darwin = platform == "darwin"
 win32 = cygwin or platform == "windows"
 have_ncurses = False
 
@@ -82,7 +83,7 @@ conf.Finish()
 
 ### Environment setup ###
 
-env['CFLAGS'] = ['-Wall', '-g', '-O2']
+env['CFLAGS'] = ['-Wall', '-g', '-O2', '-pipe']
 env['LINKFLAGS'] = []
 env['LIBPATH'] = []
 env['LIBS'] = []
@@ -99,7 +100,7 @@ if win32:
 	if cygwin:
 		libenv['CFLAGS'] += ['-mdll']
 	libenv['CPPDEFINES'] += ['WIN32']
-else:
+elif not darwin:
 	libenv['CFLAGS'] += ['-fPIC']
 	libenv['LINKFLAGS'] += ['-fPIC']
 libenv['CCFLAGS'] = libenv['CFLAGS']
@@ -141,6 +142,30 @@ if cygwin:
 		suffix = 'dll',
 		src_suffix = '$OBJSUFFIX',
 		src_builder = 'SharedObject')
+elif darwin:
+	def linkBundleAction(target, source, env):
+		sources = []
+		for f in source:
+			sources += [str(f)]
+
+		command = [env['CXX'], '-bundle', '-undefined dynamic_lookup',
+			   '-o', str(target[0])] + sources
+		if env.has_key('LIBPATH'):
+			for dir in env['LIBPATH']:
+				command += ['-L' + dir]
+		if env.has_key('LIBS'):
+		 	for flag in env['LIBS']:
+				command += ['-l' + flag]
+
+		print ' '.join(command)
+		return os.spawnvp(os.P_WAIT, command[0], command)
+
+	NativeDLLBuilder = Builder(action = linkBundleAction,
+				   emitter = '$LIBEMITTER',
+				   prefix = '',
+				   suffix = 'bundle',
+				   src_suffix = '$OBJSUFFIX',
+				   src_builder = 'SharedObject')
 else:
 	NativeDLLBuilder = libenv['BUILDERS']['SharedLibrary']
 libenv['BUILDERS']['NativeDLL'] = NativeDLLBuilder
@@ -152,12 +177,19 @@ if win32:
 		' -DWIN32IO_IS_STDIO -D_INTPTR_T_DEFINED -D_UINTPTR_T_DEFINED')
 	perlenv['LIBS'] += ['perl58']
 	perlenv['LIBPATH'] += [perlconfig['coredir']]
-else:
+elif not darwin:
 	perlenv['CFLAGS'] += Split('-D_REENTRANT -D_GNU_SOURCE' +
 		' -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64')
+else:
+	perlenv['CFLAGS'] += ['-no-cpp-precomp', '-DPERL_DARWIN',
+			      '-fno-strict-aliasing']
+	perlenv['LIBS'] += ['perl']
+	perlenv['LIBPATH'] += [perlconfig['coredir']]
+
 perlenv['CFLAGS'] += ["-I" + perlconfig['coredir'],
 		'-DVERSION=\\"1.0\\"', '-DXS_VERSION=\\"1.0\\"']
 perlenv['CCFLAGS'] = perlenv['CFLAGS']
+
 
 def buildXS(target, source, env):
 	global perlconfig
@@ -189,5 +221,5 @@ perlenv['BUILDERS']['XS'] = Builder(action = buildXS)
 
 ### Invoke SConscripts ###
 
-Export('env libenv perlenv win32 cygwin have_ncurses')
+Export('env libenv perlenv win32 cygwin darwin have_ncurses')
 SConscript('src/auto/XSTools/SConscript')

@@ -33,7 +33,7 @@ BEGIN {
 
 	} else {
 		# We're on Unix
-		my $libName = 'XSTools.so';
+		my $libName = ($^O eq 'darwin') ? 'XSTools.bundle' : 'XSTools.so';
 		my $libFound = 0;
 		foreach (@INC) {
 			if (-f "$_/$libName" || -f "$_/auto/XSTools/$libName") {
@@ -49,7 +49,7 @@ BEGIN {
 					# Ctrl+C pressed
 					exit 1;
 				} else {
-					print STDERR "Unable to compile XSTools.so. Please report this error at our forums.\n";
+					print STDERR "Unable to compile $libName. Please report this error at our forums.\n";
 					exit 1;
 				}
 			}
