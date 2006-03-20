@@ -19,7 +19,7 @@ version 18
 serverType 0
 serverEncoding Western
 
-[Malaysia - mRO: Main Server: Chaos/Loki]
+[Malaysia - mRO: Main Server: Balder]
 ip 61.220.63.248
 port 6900
 master_version 16
