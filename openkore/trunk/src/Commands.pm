@@ -1634,6 +1634,22 @@ sub cmdGuild {
 			message "Sent guild join request to $player->{name}\n";
 		}
 
+	} elsif ($arg1 eq "ally") {
+		if (!$guild{master}) {
+			error "No guild information available. Type guild to refresh and then try again.\n";
+			return;
+		}
+		my $player = Match::player($arg2);
+		if (!$player) {
+			error "Player $arg2 does not exist.\n";
+		} elsif (!$char->{name} eq $guild{master}) {
+			error "You must be guildmaster to set an alliance\n";
+			return;
+		} else {
+			sendGuildSetAlly($net,$player->{ID},$accountID,$charID);
+			message "Sent guild alliance request to $player->{name}\n";
+		}
+
 	} elsif ($arg1 eq "leave") {
 		sendGuildLeave($arg2);
 		message "Sending guild leave: $arg2\n";
@@ -2313,22 +2329,6 @@ sub cmdParty {
 			"Can't request to join party - player $arg2 does not exist.\n";
 	} elsif ($arg1 eq "request") {
 		sendPartyJoinRequest($net, $playersID[$arg2]);
-
-	} elsif ($arg1 eq "ally") {
-		if (!$guild{master}) {
-			error "No guild information available. Type guild to refresh and then try again.\n";
-			return;
-		}
-		my $player = Match::player($arg2);
-		if (!$player) {
-			error "Player $arg2 does not exist.\n";
-		} elsif (!$char->{name} eq $guild{master}) {
-			error "You must be guildmaster to set an alliance\n";
-			return;
-		} else {
-			sendGuildSetAlly($net,$player->{ID},$accountID,$charID);
-			message "Sent guild alliance request to $player->{name}\n";
-		}
 
 	} elsif ($arg1 eq "leave" && (!$char->{'party'} || !%{$char->{'party'}} ) ) {
 		error	"Error in function 'party leave' (Leave Party)\n" .
