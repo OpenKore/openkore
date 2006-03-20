@@ -1,4 +1,4 @@
-abyss_03#Glast Heim Abyss#
+abyss_03.rsw#Glast Heim Abyss#
 airplane.rsw#Airship#
 airport.rsw#Einbroch Airport#
 alb2trea.rsw# Alberta Island#
