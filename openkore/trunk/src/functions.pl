@@ -1067,7 +1067,12 @@ sub AI {
 
 				$args->{attackComboSlot_uses}{$i}++;
 				delete $char->{last_skill_used};
-				$config{"attackComboSlot_${i}_waitBeforeUse"} = $char->{combo_packet} if $config{"attackComboSlot_${i}_autoCombo"};
+				if ($config{"attackComboSlot_${i}_autoCombo"}) {
+					$char->{combo_packet} = 1500 if ($char->{combo_packet} > 1500);
+					# eAthena seems to have a bug where the combo_packet overflows and gives an
+					# abnormally high number. This causes kore to get stuck in a waitBeforeUse timeout.
+					$config{"attackComboSlot_${i}_waitBeforeUse"} = ($char->{combo_packet} / 1000);
+				}
 				delete $char->{combo_packet};
 				$args->{attackMethod}{type} = "combo";
 				$args->{attackMethod}{comboSlot} = $i;

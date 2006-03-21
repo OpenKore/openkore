@@ -1897,7 +1897,9 @@ sub cart_items_list {
 sub combo_delay {
 	my ($self, $args) = @_;
 
-	$char->{combo_packet} = ($args->{delay} * 15) / 100000;
+	$char->{combo_packet} = ($args->{delay}); #* 15) / 100000;
+	# How was the above formula derived? I think it's better that the manipulation be
+	# done in functions.pl (or whatever sub that handles this) instead of here.
 
 	$args->{actor} = Actor::get($args->{ID});
 	my $verb = $args->{actor}->verb('have', 'has');
