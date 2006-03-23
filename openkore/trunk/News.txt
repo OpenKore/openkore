@@ -78,6 +78,24 @@ New features:
   talknpc 115 111 c r0 c a="is Novice Potion" c c c r0 c n
 - Another mapname redirect for "force_1-1.fld => force_map1.fld"
 - Added latest skills list (including Guild Skills)
+- Homunculus are properly detected now. For the moment, use their monster ID's
+  in your mon_control.txt (e.g. 6001 -1 0 0). The list of the homunculus are:
+  6001,Lif
+  6002,Amistr
+  6003,Filir
+  6004,Vanilmirth
+  6005,Lif level 2
+  6006,Amistr level 2
+  6007,Filir level 2
+  6008,Vanilmirth level 2
+  6009,Lif high
+  6010,Amistr high
+  6011,Filir high
+  6012,Vanilmirth high
+  6013,Lif high level 2
+  6014,Amistr high level 2
+  6015,Filir high level 2
+  6016,Vanilmirth high level 2
 
 New config options:
 - autoMoveOnDeath set:
@@ -163,6 +181,7 @@ Credits:
 - illusionist: move receive packets to Receive.pm, falcon and peco release
   support, fix for manual 'sit' behavior, support for bRO
 - vivi: autoMoveOnDeath, check XKore 2 username, Kaite/Kaizel/Kaupe statuses
+  homunculus monster ID and names
 - rufvin: useSelf_skill_smartHeal bug
 - piroJOKE: field files updates.
 - Crypticode: fix and improve npc talk sequence, mapname redirects
