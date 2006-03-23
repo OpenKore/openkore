@@ -44,8 +44,11 @@ sub checkVar {
   }
   refreshGlobal($var);
   if (exists $varStack{$var}) {
-    $cvs->debug("comparing: $var ($varStack{$var}) $cond $val", 4);
     return 1 if cmpr($varStack{$var}, $cond, $val)
+  } else {
+    # checking undef against anything is always false.
+    # comparing undef != anything is always true.
+    return 1 if $cond eq "!="
   }
   return 0
 }
@@ -54,10 +57,16 @@ sub checkVar {
 sub checkVarVar {
   $cvs->debug("checkVarVar(@_)", $logfac{function_call_auto} | $logfac{automacro_checks});
   my $arg = shift;
-  my ($varvar) = $arg =~ /^(.*?) /;
+  my ($varvar, $cond, $val) = getArgs($arg);
+  if ($cond eq "unset") {
+    return 1 if !exists $varStack{$varvar};
+    return 0
+  }
   if (exists $varStack{$varvar}) {
     $arg =~ s/$varvar/"#$varStack{$varvar}"/g;
     return checkVar($arg)
+  } else {
+    return 1 if $cond eq "!="
   }
   return 0
 }
