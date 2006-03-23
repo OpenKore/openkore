@@ -391,7 +391,7 @@ sub automacroCheck {
   return unless $conState == 5 || $trigger =~ /^Network/;
 
   # do not run an automacro if there's already a macro running
-  return 0 if (AI::inQueue('macro') || defined $queue);
+  return if (AI::inQueue('macro') || defined $queue);
   $lockAMC = 1; # to avoid checking two events at the same time
 
   CHKAM: foreach my $am (keys %automacro) {
