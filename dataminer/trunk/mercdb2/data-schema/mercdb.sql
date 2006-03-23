@@ -54,6 +54,7 @@ CREATE TABLE `logins` (
   `lgdate` timestamp NOT NULL,
   `lgusid` int(11) NOT NULL default '0',
   `lgip` varchar(255) default NULL,
+  KEY `lgdate` (`lgdate`),
   PRIMARY KEY  (`lglgid`)
 ) ENGINE=InnoDB;
 
@@ -67,6 +68,7 @@ CREATE TABLE `queryhist` (
   `qhdate` timestamp NOT NULL,
   `qhusid` int(11) NOT NULL default '0',
   `qhquery` varchar(255) default NULL,
+  KEY `qhdate` (`qhdate`),
   PRIMARY KEY  (`qhqhid`)
 ) ENGINE=InnoDB;
 
@@ -77,10 +79,10 @@ CREATE TABLE `queryhist` (
 DROP TABLE IF EXISTS `shopcont`;
 CREATE TABLE `shopcont` (
   `id` int(11) NOT NULL auto_increment,
-  `shopOwnerID` varchar(20) NOT NULL default '0',
+  `shopOwnerID` int NOT NULL default '0',
   `shopOwner` varchar(254) NOT NULL default '',
-  `shopName` varchar(30) NOT NULL default '',
-  `itemID` varchar(20) NOT NULL default '0',
+  `shopName` varchar(50) NOT NULL default '',
+  `itemID` int NOT NULL default '0',
   `name` varchar(254) NOT NULL default '',
   `amount` int(6) NOT NULL default '0',
   `typus` varchar(254) NOT NULL default '',
@@ -88,13 +90,13 @@ CREATE TABLE `shopcont` (
   `custom` tinyint(3) NOT NULL default '0',
   `broken` tinyint(3) NOT NULL default '0',
   `slots` int(4) NOT NULL default '0',
-  `card1ID` varchar(20) NOT NULL default '0',
+  `card1ID` int NOT NULL default '0',
   `card1` varchar(254) NOT NULL default '',
-  `card2ID` varchar(20) NOT NULL default '0',
+  `card2ID` int NOT NULL default '0',
   `card2` varchar(254) NOT NULL default '',
-  `card3ID` varchar(20) NOT NULL default '0',
+  `card3ID` int NOT NULL default '0',
   `card3` varchar(254) NOT NULL default '',
-  `card4ID` varchar(20) NOT NULL default '0',
+  `card4ID` int NOT NULL default '0',
   `card4` varchar(254) NOT NULL default '',
   `crafted_by` varchar(30) NOT NULL default '',
   `element` varchar(5) NOT NULL default '',
@@ -126,6 +128,11 @@ CREATE TABLE `shopcont` (
   KEY `itemID` (`itemID`),
   KEY `isstillin` (`isstillin`),
   KEY `map` (`map`),
+  KEY `card1` (`card1`),
+  KEY `card2` (`card2`),
+  KEY `card3` (`card3`),
+  KEY `card4` (`card4`),
+  KEY `slots` (`slots`),
   KEY `server` (`server`)
 ) ENGINE=InnoDB COMMENT='RO Shop Database';
 

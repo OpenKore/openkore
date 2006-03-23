@@ -1,6 +1,6 @@
 <?php
 /* roshop v.0.9.2
-**
+** 429
 ** this programm is ...
 ** ... dont want to write much right now
 **
@@ -18,7 +18,7 @@ $progVersion="v.0.9.2";
 $datum=getdate(time());
 $debug="0";
 $user="mercdb";
-$pass="setthis";
+$pass="znrCCQqahCuqXYuy";
 $database="mercdb";
 $server="localhost";
 $port="3306";
@@ -195,14 +195,13 @@ echo "<script language=\"JavaScript\" type=\"text/javascript\" src=\"/scripts/de
 echo "</head>\n";
 echo "<body>\n";
 
-
 echo "".$progName." ".$progVersion." | ";
 $query_time = "SELECT max( time ) AS last FROM `shopvisit` WHERE 1";
 $res_time = mysql_query($query_time, $link);
 $d_time = mysql_fetch_array($res_time);
 echo "Last Tour: " .  strftime("%c", $d_time[last]) . "<br/>";
 
-$query_count = "SELECT count( id ) AS p_count FROM `shopcont`";
+$query_count = "SELECT count( * ) AS p_count FROM `shopcont`";
 $res_count = mysql_query($query_count, $link);
 $d_count = mysql_fetch_array($res_count);
 echo "Total Items ever seen: " . $d_count[p_count] . " | ";
@@ -219,23 +218,23 @@ $res_count = mysql_query($query_count, $link);
 $d_count = mysql_fetch_array($res_count);
 echo "Current open Shops: " . $d_count[p_count] . "<br/>";
 
-$query_count = "SELECT count( qhqhid ) AS p_count FROM `queryhist`";
+$today = date('Y-m-d');
+$query_count = "SELECT count( * ) AS p_count FROM `queryhist`";
 $res_count = mysql_query($query_count, $link);
 $d_count = mysql_fetch_array($res_count);
 echo "Total Number of Queries: " . $d_count[p_count] . " | ";
-$query_count = "SELECT count( qhqhid ) AS p_count FROM `queryhist` where date(qhdate) = date(now())";
+$query_count = "SELECT count( * ) AS p_count FROM `queryhist` where qhdate > '$today 00:00:00'";
 $res_count = mysql_query($query_count, $link);
 $d_count = mysql_fetch_array($res_count);
 echo "Queries today: " . $d_count[p_count] . " | ";
-$query_count = "SELECT count( lglgid ) AS p_count FROM `logins`";
+$query_count = "SELECT count( * ) AS p_count FROM `logins`";
 $res_count = mysql_query($query_count, $link);
 $d_count = mysql_fetch_array($res_count);
 echo "Total Number of Logins: " . $d_count[p_count] . " | ";
-$query_count = "SELECT count( lglgid ) AS p_count FROM `logins` where date(lgdate) = date(now())";
+$query_count = "SELECT count( * ) AS p_count FROM `logins` where lgdate > '$today 00:00:00'";
 $res_count = mysql_query($query_count, $link);
 $d_count = mysql_fetch_array($res_count);
 echo "Logins today: " . $d_count[p_count] . "<br>";
-
 
 echo "<div class=\"pagedirection\">\n";
 echo "<H1><a href=\"index.php\">Price-Check</a></H1>\n";
@@ -438,13 +437,15 @@ if ((!($cntActiveBots>0 && ($p_name=="%%" || $p_name=="%"))) && ($p_name<>"" || 
 			$query_insert = "insert into queryhist (qhusid, qhquery) values ('" . $_SESSION['userid'] . "', '" . $p_name . "')";
 			mysql_query($query_insert);
 		}
-		$query_search = "SELECT name, MIN( price ) AS min, MAX( price ) AS max, AVG( price ) AS mid, STD( price ) AS dev, slots, card1, card2, card3, card4, card1ID, card2ID, card3ID, card4ID, itemID, custom, broken, element, star_crumb FROM shopcont WHERE name LIKE '%$p_name%' AND server = '$p_ROserver'";
+		$query_search = "SELECT name, avg(price), slots, card1, card2, card3, card4, card1ID, card2ID, card3ID, card4ID, itemID, custom, broken, element, star_crumb FROM shopcont WHERE name LIKE '%$p_name%' AND server = '$p_ROserver'";
+		if ($p_name == "%%")
+			$query_search .= " AND isstillin = 'Yes'";
 		if (!($p_map=="" || !isset($p_map) || $p_map=="-")){
-#		if ($p_map!=""){
+//		if ($p_map!=""){
 			$query_search .= " AND map = '$p_map'";
 		}
 		if ($p_cards) $query_search .= " OR card1 LIKE '%$p_name%' OR card2 LIKE '%$p_name%' OR card3 LIKE '%$p_name%' OR card4 LIKE '%$p_name%'";
-		$query_search .= " GROUP BY itemID, custom, broken, slots, card1, card2, card3, card4, element, star_crumb order by 4 desc, itemID";
+		$query_search .= " GROUP BY itemID, custom, broken, slots, card1, card2, card3, card4, element, star_crumb order by 2 desc, 1";
 		$res_search = mysql_query($query_search, $link);
 		$rows_search = mysql_num_rows($res_search);
 		if ((!$res_search) or ($rows_search<1)){
@@ -483,13 +484,18 @@ if ((!($cntActiveBots>0 && ($p_name=="%%" || $p_name=="%"))) && ($p_name<>"" || 
 			echo "</tr>\n";
 			$hotcount=0;
 			while($d_search = mysql_fetch_array($res_search)){
-				$query_count = "SELECT * FROM shopcont WHERE slots = '" . $d_search[slots] . "' AND card1ID = '" . $d_search[card1ID] . "' AND card2ID = '" . $d_search[card2ID] . "' AND card3ID = '" . $d_search[card3ID] . "' AND card4ID = '" . $d_search[card4ID] . "' AND custom = '" . $d_search[custom] . "' AND element = '" . $d_search[element] . "' AND star_crumb = '" . $d_search[star_crumb] . "' AND itemID = '" . $d_search[itemID] . "' AND server = '$p_ROserver'";
+				$query_count = "SELECT count(*), MIN( price ) AS min, MAX( price ) AS max, AVG( price ) AS mid, STD( price ) AS dev FROM shopcont WHERE slots = '" . $d_search[slots] . "' AND card1ID = '" . $d_search[card1ID] . "' AND card2ID = '" . $d_search[card2ID] . "' AND card3ID = '" . $d_search[card3ID] . "' AND card4ID = '" . $d_search[card4ID] . "' AND custom = '" . $d_search[custom] . "' AND element = '" . $d_search[element] . "' AND star_crumb = '" . $d_search[star_crumb] . "' AND itemID = '" . $d_search[itemID] . "' AND server = '$p_ROserver'";
 				if (!($p_map=="" || !isset($p_map) || $p_map=="-"))
 					$query_count .= " AND map = '" . $p_map . "'";
 
 				//echo $query_count . "<br/>\n";
 				$res_count = mysql_query($query_count, $link);
-				$rows_count = mysql_num_rows($res_count);
+				$row_count = mysql_fetch_row($res_count);
+				$rows_count = $row_count[0];
+				$min=$row_count[1];
+				$max=$row_count[2];
+				$avg=$row_count[3];
+				$std=$row_count[4];
 
 				// Minimum available price for item
 				$qrMinIn="select min(price), count(*) from shopcont WHERE slots = '" . $d_search[slots] .
@@ -504,7 +510,7 @@ if ((!($cntActiveBots>0 && ($p_name=="%%" || $p_name=="%"))) && ($p_name<>"" || 
 				$rowMinIn=mysql_fetch_row($resMinIn);
 				$rows_avail=$rowMinIn[1];
 				// hot deal calc
-				$hot_deal = $d_search[mid] - $d_search[dev];
+				$hot_deal = $avg - $std;
 				$qrIsIn="select id from shopcont WHERE slots = '" . $d_search[slots] .
 					"' AND card1ID = '" . $d_search[card1ID] . "' AND card2ID = '" . $d_search[card2ID] .
 					"' AND card3ID = '" . $d_search[card3ID] . "' AND card4ID = '" . $d_search[card4ID] .
@@ -517,7 +523,7 @@ if ((!($cntActiveBots>0 && ($p_name=="%%" || $p_name=="%"))) && ($p_name<>"" || 
 				$rowsIsIn=mysql_num_rows($resIsIn);
 
 				// skip row if only hot price check
-				if ($p_name=="%%" && ($hot_deal <= $d_search[min] || $rowsIsIn == 0))
+				if ($p_name=="%%" && ($hot_deal <= $min || $rowsIsIn == 0))
 					continue;
 
 				$hotcount++;
@@ -551,21 +557,7 @@ if ((!($cntActiveBots>0 && ($p_name=="%%" || $p_name=="%"))) && ($p_name<>"" || 
 				}else{
 					echo "<td>-</td>\n";
 				}
-/*				if ($d_search[custom]>0){
-					echo "<td>+" . $d_search[custom] . "&nbsp;</td>\n";
-				}else{
-					echo "<td>-</td>\n";
-				}
-				if ($d_search[broken]>0){
-					echo "<td>+</td>\n";
-				}else{
-					echo "<td>-</td>\n";
-				}
-				echo "<td>" . $d_search[card1] . "&nbsp;</td>\n";
-				echo "<td>" . $d_search[card2] . "&nbsp;</td>\n";
-				echo "<td>" . $d_search[card3] . "&nbsp;</td>\n";
-				echo "<td>" . $d_search[card4] . "&nbsp;</td>\n";
-*/
+
 				if($d_search[card1]!="") $cardsall[0] = $d_search[card1];
 				if($d_search[card2]!="") $cardsall[1] = $d_search[card2];
 				if($d_search[card3]!="") $cardsall[2] = $d_search[card3];
@@ -582,14 +574,12 @@ if ((!($cntActiveBots>0 && ($p_name=="%%" || $p_name=="%"))) && ($p_name<>"" || 
 				for ($i=1; $i<= $d_search[star_crumb]; $i++)
 					echo "V";
 				echo " " . $d_search[element] . "&nbsp;</td>\n";
-//				echo "<td>" . $d_search[crafted_by] . "&nbsp;</td>\n";
-				echo "<td align='right'>" . number_format($d_search[min]) . "&nbsp;</td>\n";
-				echo "<td align='right'>" . number_format($d_search[max]) . "&nbsp;</td>\n";
-				echo "<td align='right'>" . number_format($d_search[mid]) . "</td>";
-//				echo "<td align='right'>&plusmn;&nbsp;" . number_format($d_search[dev]) . "&nbsp;</td>\n";
+				echo "<td align='right'>" . number_format($min) . "&nbsp;</td>\n";
+				echo "<td align='right'>" . number_format($max) . "&nbsp;</td>\n";
+				echo "<td align='right'>" . number_format($avg) . "</td>";
 
 				echo "<td align='right'>";
-				echo number_format( $hot_deal);
+				echo number_format($hot_deal);
 				echo "&nbsp;</td>\n";
 
 				echo "<td align='right'";
@@ -605,7 +595,7 @@ if ((!($cntActiveBots>0 && ($p_name=="%%" || $p_name=="%"))) && ($p_name<>"" || 
 				
 				if($p_name=="%%"){
 					echo "<td align='right'>";
-					echo number_format( $d_search[mid]-$rowMinIn[0]);
+					echo number_format( $avg-$rowMinIn[0]);
 					echo "&nbsp;</td>\n";
 				}
 
@@ -626,10 +616,10 @@ if ((!($cntActiveBots>0 && ($p_name=="%%" || $p_name=="%"))) && ($p_name<>"" || 
 
 if ($g_shopcontent > 0){
 
-	$query_search = "SELECT * FROM shopcont WHERE shopOwnerID='$g_shopcontent' AND server = '$g_ROserver' AND isstillin='Yes' GROUP BY itemID, amount, price, timstamp ORDER BY price DESC";
+	$query_search = "SELECT * FROM shopcont WHERE shopOwnerID='$g_shopcontent' AND server = '$g_ROserver' AND isstillin='Yes' ORDER BY price DESC";
 	$res_search = mysql_query($query_search);
 	$rows_search = mysql_num_rows($res_search);
-	$query_search2 = "SELECT * FROM shopcont WHERE shopOwnerID='$g_shopcontent' AND server = '$g_ROserver' AND isstillin='No' GROUP BY itemID, amount, price, timstamp ORDER BY price DESC";
+	$query_search2 = "SELECT * FROM shopcont WHERE shopOwnerID='$g_shopcontent' AND server = '$g_ROserver' AND isstillin='No' ORDER BY price DESC";
 	$res_search2 = mysql_query($query_search2);
 	$rows_search2 = mysql_num_rows($res_search2);
 	echo "<font class=\"bold\">Shop-Details</font><br/>\n";
