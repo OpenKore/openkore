@@ -2142,7 +2142,7 @@ sub cmdMemo {
 sub cmdMonsterList {
 	my ($dmgTo, $dmgFrom, $dist, $pos);
 	message("-----------Monster List-----------\n" .
-		"#    Name                        ID DmgTo    DmgFrom    Distance    Coordinates\n",
+		"#    Name                          ID DmgTo    DmgFrom    Distance    Coordinates\n",
 		"list");
 	for (my $i = 0; $i < @monstersID; $i++) {
 		next if ($monstersID[$i] eq "");
@@ -2157,8 +2157,8 @@ sub cmdMonsterList {
 		$pos = '(' . $monsters{$monstersID[$i]}{'pos_to'}{'x'} . ', ' . $monsters{$monstersID[$i]}{'pos_to'}{'y'} . ')';
 
 		message(swrite(
-			"@<<< @<<<<<<<<<<<<<<<<<<<<<<< @<<<<<< @<<<<    @<<<<      @<<<<<      @<<<<<<<<<<",
-			[$i, $monsters{$monstersID[$i]}{'name'}, unpack("V1",$monstersID[$i]), $dmgTo, $dmgFrom, $dist, $pos]),
+			"@<<< @<<<<<<<<<<<<<<<<<<<<<<< @>>>>>> @<<<<    @<<<<      @<<<<<      @<<<<<<<<<<",
+			[$i, $monsters{$monstersID[$i]}{'name'}, $monsters{$monstersID[$i]}{'binType'}, $dmgTo, $dmgFrom, $dist, $pos]),
 			"list");
 	}
 	message("----------------------------------\n", "list");

@@ -805,6 +805,26 @@ sub actor_display {
 			}
 			$actor = $pets{$args->{ID}};
 
+		} elsif ($args->{type} >= 6000) {
+			# Actor is a homunculus
+			# FIXME: what to do here?
+			# right now, i'm setting the name of the monster to their monster id number
+			# and not the owner-given names. this is to allow people to add them into
+			# mon_control.txt so that they don't auto-attack homunculus (e.g. 6001 -1 0 0)
+			$type = "Monster";
+			if (!$monsters{$args->{ID}} || !%{$monsters{$args->{ID}}}) {
+				$actor = $monsters{$args->{ID}} = new Actor::Monster();
+				binAdd(\@monstersID, $args->{ID});
+				$actor->{binID} = binFind(\@monstersID, $args->{ID});
+				$actor->{appear_time} = time;
+
+				$actor->{name} = $args->{type};
+				$actor->{binType} = $args->{type};
+
+				$justAdded = 'monster';
+			}
+			$actor = $monsters{$args->{ID}};
+
 		} else {
 			# Actor really is a monster
 			$type = "Monster";
@@ -817,6 +837,7 @@ sub actor_display {
 				$actor->{name} = ($monsters_lut{$args->{type}} ne "")
 						? $monsters_lut{$args->{type}}
 						: "Unknown ".$args->{type};
+				$actor->{binType} = $args->{type};
 
 				$justAdded = 'monster';
 			}
