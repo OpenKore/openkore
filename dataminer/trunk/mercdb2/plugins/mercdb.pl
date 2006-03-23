@@ -37,7 +37,7 @@ my $startHook = Plugins::addHook('start3', \&init);
 my ($venderHook, $venderStoreHook2, $hkAiPost, $hkNetCon);
 
 # seconds till next shopvisit - should not be to low if your tour has loops
-my $visitTimeout = 420; 
+my $visitTimeout = 120; 
 
 		$venderHook = Plugins::addHook('packet_vender', \&Called);
 		$venderStoreHook2 = Plugins::addHook('packet_vender_store2', \&mercDbFill);
@@ -58,7 +58,7 @@ sub init {
 my $result 	= 0;
 # the database depending variables could be added to config.txt
 my $dbUser	= "mercdb";	# the name of the mysql user that has read/write access to database $database
-my $dbPassword	= "setthis";	# his password
+my $dbPassword	= "znrCCQqahCuqXYuy";	# his password
 my $database	= "mercdb";	# the used database
 my $dbHostname	= "localhost";	# mysql server 
 my $dbPort	= "3306";	# mysql server port
@@ -180,11 +180,6 @@ sub mercDbFill{
 	my $myHotDeal = $Globals::config{'merchantDB_myHotDeal'}; 
 	$myHotDeal = 1 	if !$myHotDeal;
 
-	# connecting to the database
-	my $locdbh;
-	$locdbh=$dbh;
-	#$locdbh = DBI->connect($dsn, $dbUser, $dbPassword) or die $locdbh->errstr;
-	
 	my (undef, $myItemList) = @_;
 	my $myItem;
 	my @myItem;
@@ -223,7 +218,14 @@ sub mercDbFill{
 				push(@cards, $card);
 				($cards{$card} ||= 0) += 1;
 			}
-			
+
+			$card1ID=0;
+			$card2ID=0;
+			$card3ID=0;
+			$card4ID=0;
+			$elementName="";
+			$starCrumb="";
+
 			if ($cards[0] == 254) {
 				# Alchemist-made potion
 				#
@@ -305,29 +307,34 @@ sub mercDbFill{
 			$slots = $itemSlotCount_lut{$iid};
 			
 			# decide for update or insert - have we seen this item already ?
-			my $qrIsAlrdyIn = "SELECT id FROM shopcont WHERE shopOwnerId = '$shopOwnerID' AND shopName = '$shopName' AND server = '$servername' AND
-					itemID = $iid AND price = '" . $myItemList->{itemList}[$idx]{'price'} ."'" . " AND custom = '$custom'" .
-					" AND broken = '$broken' AND server = '$servername' AND card1ID = '$card1ID' AND card2ID = '$card2ID'" .
-					" AND card3ID = '$card3ID' AND card4ID = '$card4ID' AND element = '$elementName' AND star_crumb = '$starCrumb' \n";
-			my $sthin = $locdbh->prepare($qrIsAlrdyIn);
-			$sthin->execute or die "\n" . $qrIsAlrdyIn . "\n" . $locdbh->errstr;
-			my $rvin = $sthin->rows;
 			
-			if($rvin>0){
-				my $qrIsInUpd = "UPDATE shopcont SET isstillin = 'Yes', timstamp = 
-					'$datum', amount = " . $myItemList->{itemList}[$idx]{'amount'} .
-					      ", timstamp = '" . $datum ."'" .
-                                              ", posx = " . $shopPosX .
-                                              ", posy = " . $shopPosY .
-					      ", price = '" . $myItemList->{itemList}[$idx]{'price'} . "'" .
-					" WHERE shopOwnerID = $shopOwnerID AND server = '$servername' AND
-					itemID = $iid AND shopName = '$shopName' AND price = '" . $myItemList->{itemList}[$idx]{'price'} ."' AND custom = '$custom'" .
-					" AND broken = '$broken' AND server = '$servername' AND card1ID = '$card1ID' AND card2ID = '$card2ID'" .
-					" AND card3ID = '$card3ID' AND card4ID = '$card4ID' AND element = '$elementName' AND star_crumb = '$starCrumb' \n";
+			my $qrIsAlrdyIn = "SELECT id FROM shopcont" .
+					" WHERE shopOwnerId = '$shopOwnerID' AND itemID = $iid AND custom = '$custom' AND shopname = '$shopName'".
+					" AND server = '$servername' AND posX = $shopPosX AND posY = $shopPosY" .
+					" AND card1ID = '$card1ID' AND card2ID = '$card2ID' AND card3ID = '$card3ID' AND card4ID = '$card4ID'".
+					" AND element = '$elementName' AND star_crumb = '$starCrumb' AND custom = '$custom'". 
+					" AND price = '" . $myItemList->{itemList}[$idx]{'price'} . "'";
+			$sth = $dbh->prepare($qrIsAlrdyIn);
+			$sth->execute or die "\n" . $qrIsAlrdyIn . "\n" . $dbh->errstr;
+			my $rvin = $sth->rows;
+			
+			if(!($rvin==0 || $rvin==1) ){
+				print "Error! $rvin rows found in update-check\nQuery:\n$qrIsAlrdyIn\n";
+			}
 
-				my $sthisin = $locdbh->prepare($qrIsInUpd);
-				$sthisin->execute or die "\n" . $qrIsInUpd . "\n" . $locdbh->errstr;
-			}else{
+			if($rvin == 1){
+				my $qrIsInUpd = "UPDATE shopcont" .
+					" SET isstillin = 'Yes', timstamp = '$datum', amount = " . $myItemList->{itemList}[$idx]{'amount'} .
+					" WHERE shopOwnerId = '$shopOwnerID' AND itemID = $iid AND custom = '$custom' AND shopname = '$shopName'".
+					" AND server = '$servername' AND posX = $shopPosX AND posY = $shopPosY" .
+					" AND card1ID = '$card1ID' AND card2ID = '$card2ID' AND card3ID = '$card3ID' AND card4ID = '$card4ID'".
+					" AND element = '$elementName' AND star_crumb = '$starCrumb' AND custom = '$custom'". 
+					" AND price = '" . $myItemList->{itemList}[$idx]{'price'} . "'";
+
+				my $sth = $dbh->prepare($qrIsInUpd);
+				$sth->execute or die "\n" . $qrIsInUpd . "\n" . $dbh->errstr;
+			}
+			if($rvin == 0){
 				my $insertQuery = "INSERT INTO shopcont SET
 				shopOwnerID 		= '$shopOwnerID', 
 				shopOwner 			= '$shopOwner', 
@@ -341,6 +348,7 @@ sub mercDbFill{
 				slots 					= '$slots', \n";
 				
 				$insertQuery .= $insertQuery2 . $insertTemp;
+				
 				$insertQuery .= " price = '" . $myItemList->{itemList}[$idx]{'price'} . "', 
 				posx 						= '$shopPosX', 
 				posy 						= '$shopPosY', 
@@ -353,14 +361,11 @@ sub mercDbFill{
 				$insertQuery .= ";";
 				# print $insertQuery . "\n";
 	
-				my $sth2 = $locdbh->prepare($insertQuery);
-				$sth2->execute or die $locdbh->errstr;
-				
-				undef $insertQuery;
+				my $sth = $dbh->prepare($insertQuery);
+				$sth->execute or die $dbh->errstr;
 			}
 		 }		
 	} # END for	
-	#$locdbh->disconnect;
 	return $result;
 }
 
