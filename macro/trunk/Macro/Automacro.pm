@@ -59,10 +59,10 @@ sub checkVarVar {
   my $arg = shift;
   my ($varvar, $cond, $val) = getArgs($arg);
   if ($cond eq "unset") {
-    return 1 if !exists $varStack{$varvar};
+    return 1 if !exists $varStack{"#".$varStack{$varvar}};
     return 0
   }
-  if (exists $varStack{$varvar}) {
+  if (exists $varStack{"#".$varStack{$varvar}}) {
     $arg =~ s/$varvar/"#$varStack{$varvar}"/g;
     return checkVar($arg)
   } else {
