@@ -402,7 +402,14 @@ sub automacroCheck {
       $automacro{$am}->{disabled} = 1; undef $lockAMC; return
     }
     if (defined $automacro{$am}->{hook}) {
-      next CHKAM unless $trigger eq $automacro{$am}->{hook}
+      next CHKAM unless $trigger eq $automacro{$am}->{hook};
+      # save arguments
+      my $s = 0;
+      while (my $save = $automacro{$am}->{'save'.$s}) {
+        if (defined $args->{$save}) {setVar(".hooksave$s", $args->{$save})}
+        else {error "[macro] \$args->{$save} does not exist\n"}
+        $s++
+      }
     }
     if (defined $automacro{$am}->{console}) {
       if ($trigger eq 'log') {
