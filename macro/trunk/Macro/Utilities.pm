@@ -217,6 +217,7 @@ sub getItemIDs {
     next unless $$pool[$id];
     if (lc($$pool[$id]{name}) eq lc($item)) {push @ids, $id}
   }
+  unless (@ids) {push @ids, -1}
   return @ids
 }
 
@@ -229,6 +230,7 @@ sub getStorageIDs {
     next unless $storageID[$id];
     if (lc($storage{$storageID[$id]}{name}) eq lc($item)) {push @ids, $id}
   }
+  unless (@ids) {push @ids, -1}
   return @ids
 }
 
