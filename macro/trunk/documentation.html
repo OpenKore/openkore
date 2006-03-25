@@ -210,7 +210,7 @@ macro registered to AI queue</dd>
 	<dd>let openkore run <i>&lt;command&gt;</i>.<br />
 	Examples:
 	<pre class="code">macro foo {
-    do move prontera 123 234
+    do move 123 234 prontera
     do sit
     do c "hello world"
 }</pre></dd>
@@ -235,10 +235,10 @@ macro registered to AI queue</dd>
 	<dt><b>call</b> <i>&lt;macroname&gt;</i> [<i>&lt;n&gt;</i>]</dt>
 	<dd>calls a macro <i>&lt;macroname&gt;</i> [<i>&lt;n&gt;</i> times]. When <i>&lt;macroname&gt;</i> is finished the current macro continues.</dd>
 
-	<dt><a name="macro_release"></a><b>release</b> (<i>name</i> | <tt>all</tt>)</dt>
+	<dt><a name="macro_release"></a><b>release</b> (<i>&lt;name&gt;</i> | <tt>all</tt>)</dt>
 	<dd>reenables a locked automacro ("run-once" keyword or locked by "lock") or reenables all automacros when using <tt>release all</tt></dd>
 
-	<dt><a name="macro_lock"></a><b>lock</b> (<i>name</i>)</dt>
+	<dt><a name="macro_lock"></a><b>lock</b> <i>&lt;name&gt;</i></dt>
 	<dd>locks an automacro and disables it's checks</dd>
 
 	<dt><b>stop</b></dt>
@@ -319,8 +319,8 @@ macro registered to AI queue</dd>
 	Examples:
 	<pre class="code">macro foo {
    $i = @random ("1", "2", "3")
-   if ($i = 1) goto one
-   if ($i = 2) goto two
+   if ($i == 1) goto one
+   if ($i == 2) goto two
    log i is three.
    goto end
    :one
@@ -335,19 +335,26 @@ macro registered to AI queue</dd>
 	<h3><a name="macro_5"></a>Special keywords</h3>
 	<dl class="commands">
 	<dt><b>@npc</b> (<i>&lt;x&gt; &lt;y&gt;</i>)</dt>
-	<dd>expands to npc's ID who's located at <i>&lt;x&gt;</i>, <i>&lt;y&gt;</i></dd>
+	<dd>expands to npc's ID who's located at <i>&lt;x&gt;</i>, <i>&lt;y&gt;</i>
+	or to <tt>-1</tt> if the npc was not found</dd>
 	<dt><b>@inventory</b> (<i>&lt;item&gt;</i>)</dt>
-	<dd>searches your inventory for <i>&lt;item&gt;</i> and returns ID</dd>
+	<dd>searches your inventory for <i>&lt;item&gt;</i> and returns ID
+	or <tt>-1</tt> if the item was not found</dd>
 	<dt><b>@cart</b> (<i>&lt;item&gt;</i>)</dt>
-	<dd>searches your cart for <i>&lt;item&gt;</i> and returns ID</dd>
+	<dd>searches your cart for <i>&lt;item&gt;</i> and returns ID
+	or <tt>-1</tt> if the item was not found</dd>
 	<dt><b>@storage</b> (<i>&lt;item&gt;</i>)</dt>
-	<dd>searches your storage for <i>&lt;item&gt;</i> and returns ID</dd>
+	<dd>searches your storage for <i>&lt;item&gt;</i> and returns ID
+	or <tt>-1</tt> if the item was not found</dd>
 	<dt><b>@player</b> (<i>&lt;name&gt;</i>)</dt>
-	<dd>looks for a player and returns ID</dd>
+	<dd>looks for a player and returns ID or <tt>-1</tt> if the player
+	was not found</dd>
 	<dt><b>@vender</b> (<i>&lt;name&gt;</i>)</dt>
-	<dd>looks for a vender and returns ID</dd>
+	<dd>looks for a vender and returns ID or <tt>-1</tt> if the vender
+	was not found</dd>
 	<dt><b>@store</b> (<i>&lt;name&gt;</i>)</dt>
-	<dd>looks for an item in a store and returns ID</dd>
+	<dd>looks for an item in a store and returns ID or <tt>-1</tt> if
+	the item was not found</dd>
 	<dt><b>@random</b> ("<i>&lt;argument1&gt;</i>"[, "<i>&lt;argument2&gt;</i>"[, ...]])</dt>
 	<dd>returns randomly one of the given arguments</dd>
 	<dt><b>@rand</b> (<i>&lt;n&gt;</i>, <i>&lt;m&gt;</i>)</dt>
@@ -363,7 +370,8 @@ macro registered to AI queue</dd>
 	<dt><b>@eval</b> (<i>&lt;argument&gt;</i>)</dt>
 	<dd>evaluates the given <i>&lt;argument&gt;</i></dd>
 	<dt><b>@arg</b> ("<i>&lt;argument&gt;</i>", <i>&lt;n&gt;</i>)</dt>
-	<dd>returns the <i>&lt;n&gt;</i>th word of <i>&lt;argument&gt;</i></dd>
+	<dd>returns the <i>&lt;n&gt;</i>th word of <i>&lt;argument&gt;</i>
+	or an empty string if the word index is out of range</dd>
 	<dt><b>@config</b> (<i>&lt;variable&gt;</i>)</dt>
 	<dd>returns the value of <i>&lt;variable&gt;</i> specified in <tt>config.txt</tt></dd>
 	</dl>
@@ -633,7 +641,7 @@ location not prontera</pre>
 	Sets <tt><a href="#.lastguild">$.lastguild</a></tt> and <tt><a href="#.lastguildMsg">$.lastguildMsg</a></tt>.</dd>
 
 	<dt><b>hook</b> <i>&lt;hookname&gt;</i></dt>
-	<dd>triggers when openkore calls <i>&lt;hookname&gt;</i>.</dd>
+	<dd>triggers when openkore calls <i>&lt;<a href="http://forums.openkore.com/viewtopic.php?t=18612">hookname</a>&gt;</i>.</dd>
 
 	<dt><b>run-once</b> <i>(</i><tt>0</tt>|<tt>1</tt><i>)</i></dt>
 	<dd>When set to <tt>1</tt> the automacro will be deactivated after being triggered.<br />
