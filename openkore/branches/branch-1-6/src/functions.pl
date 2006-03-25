@@ -5173,6 +5173,37 @@ sub parseMsg {
 
 				objectAdded('pet', $ID, $pets{$ID}) if ($added);
 
+			} elsif ($args->{type} >= 6000) {
+				# Actor is a homunculus
+				# FIXME: what to do here?
+				# right now, i'm setting the name of the monster to their monster id number
+				# and not the owner-given names. this is to allow people to add them into
+				# mon_control.txt so that they don't auto-attack homunculus (e.g. 6001 -1 0 0)
+				if (!$monsters{$ID} || !%{$monsters{$ID}}) {
+					$monsters{$ID} = new Actor::Monster;
+					$monsters{$ID}{'appear_time'} = time;
+					my $display = ($monsters_lut{$type} ne "") 
+							? $monsters_lut{$type}
+							: "Unknown ".$type;
+					binAdd(\@monstersID, $ID);
+					$monsters{$ID}{ID} = $ID;
+					$monsters{$ID}{'nameID'} = $type;
+					$monsters{$ID}{'name'} = $type; # quick hack for homunculus
+					$monsters{$ID}{'binID'} = binFind(\@monstersID, $ID);
+					$added = 1;
+				}
+				$monsters{$ID}{'walk_speed'} = $walk_speed;
+				%{$monsters{$ID}{'pos'}} = %coords;
+				%{$monsters{$ID}{'pos_to'}} = %coords;
+
+				debug "Monster Exists: $monsters{$ID}{'name'} ($monsters{$ID}{'binID'})\n", "parseMsg_presence", 1;
+
+				objectAdded('monster', $ID, $monsters{$ID}) if ($added);
+
+				# Monster state
+				$param1 = 0 if $param1 == 5; # 5 has got something to do with the monster being undead
+				setStatus($ID,$param1,$param2,$param3);
+
 			} else {
 				if (!$monsters{$ID} || !%{$monsters{$ID}}) {
 					$monsters{$ID} = new Actor::Monster;
