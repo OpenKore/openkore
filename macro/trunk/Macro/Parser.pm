@@ -145,9 +145,12 @@ sub parseCmd {
     my $ret = "_%_";
     if ($kw eq 'npc')           {$ret = getnpcID($arg)}
     elsif ($kw eq 'cart')       {($ret, undef) = getItemIDs($arg, \@{$cart{inventory}})}
+    elsif ($kw eq 'Cart')       {my @ids = getItemIDs($arg, \@{$cart{inventory}}); $ret = join ',', @ids}
     elsif ($kw eq 'inventory')  {($ret, undef) = getItemIDs($arg, \@{$char->{inventory}})}
+    elsif ($kw eq 'Inventory')  {my @ids = getItemIDs($arg, \@{$char->{inventory}}); $ret = join ',', @ids}
     elsif ($kw eq 'store')      {($ret, undef) = getItemIDs($arg, \@::storeList)}
     elsif ($kw eq 'storage')    {($ret, undef) = getStorageIDs($arg)}
+    elsif ($kw eq 'Storage')    {my @ids = getStorageIDs($arg); $ret = join ',', @ids}
     elsif ($kw eq 'player')     {$ret = getPlayerID($arg, \@::playersID)}
     elsif ($kw eq 'vender')     {$ret = getPlayerID($arg, \@::venderListsID)}
     elsif ($kw eq 'random')     {$ret = getRandom($arg)}
