@@ -52,6 +52,8 @@ Bug fixes:
 - Minor cosmetic fix in 's' command
 - Fixed disconnections when a guild member logs in/out
 - Fix guild alliances not properly cleared
+- Removed the guild member log in/out messages when forged items are seen.
+- Fixed guild kick command sending the wrong packet.
 
 New features:
 - Added XKoreProxy module. Set configuration to 'XKore proxy' to work as
@@ -96,6 +98,8 @@ New features:
   6014,Amistr high level 2
   6015,Filir high level 2
   6016,Vanilmirth high level 2
+- Support for tRO's new login packets (update your servers.txt)
+- Support for andzRO's new login packets (update your servers.txt)
 
 New config options:
 - autoMoveOnDeath set:
@@ -136,7 +140,7 @@ New config options:
 - statsAdd_over_99: set this option to make Kore lift the restriction on adding
   stat points over 99
 - _whenNotEquipped checkSelfCondition, opposite of _whenEquipped
-  - gameGuard (flag)
+- gameGuard (flag)
   Set this option to 1 if you play inRO or pRO Sakray.
   Set this option to 2 if you play bRO.
 
@@ -170,6 +174,11 @@ Internal:
   its login sequence
 - Removed %skills_lut, %skills_rlut, %skillsID_lut and %skillsID_rlut
   Use Skills->new() instead.
+- Renamed subs:
+  Receive.pm: guild_name_request => guild_member_online_status
+  Receive.pm: guild_logon => character_name
+  Send.pm: sendGuildMemberNameRequest => sendGetCharacterName
+- guildID and guildEmblem unpacking format changed from "V" to "a4"
 
 Credits:
 - id-mardi: fix for setPartySkillTimer, move the rest of the receive packets
@@ -185,7 +194,10 @@ Credits:
 - rufvin: useSelf_skill_smartHeal bug
 - piroJOKE: field files updates.
 - Crypticode: fix and improve npc talk sequence, mapname redirects
-- zdivpsa: fix guild packets, guild ally command
+- zdivpsa: fix guild packets, guild ally command, guild kick bug
+- abt123: new tRO login packets
+- Star-Kung: new tRO login packet enhancement
+- --Roger--: reconnect timeout bug
 
 ==================
 ### 1.9.0
