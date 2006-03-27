@@ -767,8 +767,7 @@ sub AI {
 			}
 
 
-		} elsif ($args->{mapChanged} || $ai_v{npc_talk}{talk} eq 'close') {
-			message TF("Done talking with %s.\n",$args->{name}), "ai_npcTalk";
+		} elsif ($args->{mapChanged} || ($ai_v{npc_talk}{talk} eq 'close' && $args->{steps}[0] !~ /x/i)) {			message TF("Done talking with %s.\n",$args->{name}), "ai_npcTalk";
 
 			# Cancel conversation only if NPC is still around; otherwise
 			# we could get disconnected.
@@ -783,6 +782,9 @@ sub AI {
 			AI::dequeue;
 
 		} elsif (timeOut($ai_v{'npc_talk'}{'time'}, 0.25)) {
+if ($ai_v{npc_talk}{talk} eq 'close' && $args->{steps}[0] =~ /x/i) {
+undef $ai_v{npc_talk}{talk};
+}
 			$args->{time} = time;
 			# this time will be reset once the NPC responds
 			$ai_v{'npc_talk'}{'time'} = time + $timeout{'ai_npcTalk'}{'timeout'} + 5;

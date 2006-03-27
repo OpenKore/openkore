@@ -54,6 +54,7 @@ Bug fixes:
 - Fix guild alliances not properly cleared
 - Removed the guild member log in/out messages when forged items are seen.
 - Fixed guild kick command sending the wrong packet.
+- Fixed talknpc option x
 
 New features:
 - Added XKoreProxy module. Set configuration to 'XKore proxy' to work as
