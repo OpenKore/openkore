@@ -351,10 +351,10 @@ serverEncoding Western
 [AndzRO Private Server]
 ip 64.92.173.26
 port 6904
-master_version 20
+master_version 1
 version 0
-private 1
 serverType 5
+masterLogin_packet 0060
 serverEncoding Western
 
 ## http://angelusonline.net/
