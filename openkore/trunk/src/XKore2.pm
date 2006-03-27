@@ -924,7 +924,7 @@ sub checkClient {
 			shiftPack(\$coords, $players{$ID}{pos_to}{y}, 10);
 			shiftPack(\$coords, $players{$ID}{look}{body}, 4);
 
-			$msg .= pack('C2 a4 v4 x2 v8 x2 v V2 v x2 C2 a3 x2 C v', 0x2A, 0x02, $ID, $players{$ID}{walk_speed} * 1000,
+			$msg .= pack('C2 a4 v4 x2 v8 x2 v a4 a4 v x2 C2 a3 x2 C v', 0x2A, 0x02, $ID, $players{$ID}{walk_speed} * 1000,
 				$players{$ID}{param1}, $players{$ID}{param2}, $players{$ID}{param3},
 				$players{$ID}{jobID}, $players{$ID}{hair_style}, $players{$ID}{weapon}, $players{$ID}{shield},
 				$players{$ID}{headgear}{low}, $players{$ID}{headgear}{top}, $players{$ID}{headgear}{mid},

@@ -504,8 +504,9 @@ sub checkConnection {
 			error T("Disconnected from Map Server, exiting...\n"), "connection";
 			$quit = 1;
 		} else {
-			error TF("Disconnected from Map Server, connecting to Account Server in %s seconds...\n", $timeout_ex{master}{timeout}), "connection";
+			error TF("Disconnected from Map Server, connecting to Account Server in %s seconds...\n", $timeout{reconnect}{timeout}), "connection";
 			$timeout_ex{master}{time} = time;
+			$timeout_ex{master}{timeout} = $timeout{reconnect}{timeout};
 			$conState = 1;
 			undef $conState_tries;
 		}

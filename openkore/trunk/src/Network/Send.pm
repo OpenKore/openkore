@@ -999,7 +999,7 @@ sub sendGuildMemberKick {
 	my $accountID = shift;
 	my $charID = shift;
 	my $cause = shift;
-	my $msg = pack("C*", 0x59, 0x01).$guildID.$accountID.$charID.pack("a40", stringToBytes($cause));
+	my $msg = pack("C*", 0x5B, 0x01).$guildID.$accountID.$charID.pack("a40", stringToBytes($cause));
 	sendMsgToServer($net, $msg);
 	debug "Sent Guild Kick: ".getHex($charID)."\n", "sendPacket";
 }
