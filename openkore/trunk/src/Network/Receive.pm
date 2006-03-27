@@ -175,13 +175,16 @@ sub new {
 		'0154' => ['guild_members_list'],
 		#'015A' => ['guild_leave', 'Z24 Z40', [qw(name message)]],
 		#'015C' => ['guild_expulsion', 'Z24 Z40 Z24', [qw(name message unknown)]],
-		#'015E' => ['guild_broken', 'V1', [qw(flag)]], # clif_guild_broken
+		'015E' => ['guild_broken', 'V1', [qw(flag)]], # clif_guild_broken
+		#'0160' => ['guild_member_setting_list'],
+		#'0162' => ['guild_skills_list'],
 		'0163' => ['guild_expulsionlist'],
 		'0166' => ['guild_members_title_list'],
+		'0167' => ['guild_create_result', 'C1', [qw(type)]],
 		'0169' => ['guild_invite_result', 'C1', [qw(type)]],
 		'016A' => ['guild_request', 'a4 Z24', [qw(ID name)]],
 		'016C' => ['guild_name', 'V3 x5 Z24', [qw(guildID emblemID mode guildName)]],
-		'016D' => ['guild_name_request', 'a4 a4 V1', [qw(ID targetID online)]],
+		'016D' => ['guild_member_online_status', 'a4 a4 V1', [qw(ID charID online)]],
 		'016F' => ['guild_notice'],
 		'0171' => ['guild_ally_request', 'a4 Z24', [qw(ID name)]],
 		#'0173' => ['guild_alliance', 'V1', [qw(flag)]],
@@ -199,7 +202,7 @@ sub new {
 		'018D' => ['forge_list'],
 		'018F' => ['refine_result', 'v1 v1', [qw(fail nameID)]],
 		#'0191' => ['talkie_box', 'a4 Z80', [qw(ID message)]], # talkie box message
-		'0194' => ['guild_logon', 'a4 Z24', [qw(ID name)]],
+		'0194' => ['character_name', 'a4 Z24', [qw(ID name)]],
 		'0195' => ['actor_name_received', 'a4 Z24 Z24 Z24 Z24', [qw(ID name partyName guildName guildTitle)]],
 		'0196' => ['actor_status_active', 'v1 a4 C1', [qw(type ID flag)]],
 		'0199' => ['pvp_mode1', 'v1', [qw(type)]],
@@ -268,6 +271,7 @@ sub new {
 		'022A' => ['actor_display', 'a4 v4 x2 v8 x2 v V2 v x2 C2 a3 x2 C v', [qw(ID walk_speed param1 param2 param3 type hair_style weapon shield lowhead tophead midhead hair_color head_dir guildID guildEmblem visual_effects stance sex coords act lv)]],
 		'022B' => ['actor_display', 'a4 v4 x2 v8 x2 v V2 v x2 C2 a3 x2 v', [qw(ID walk_speed param1 param2 param3 type hair_style weapon shield lowhead tophead midhead hair_color head_dir guildID guildEmblem visual_effects stance sex coords lv)]],
 		'022C' => ['actor_display', 'a4 v4 x2 v5 V1 v3 x4 V2 v x2 C2 a5 x3 v', [qw(ID walk_speed param1 param2 param3 type hair_style weapon shield lowhead timestamp tophead midhead hair_color guildID guildEmblem visual_effects stance sex coords lv)]],
+		'0274' => ['account_server_info', 'x2 a4 a4 a4 x30 C1 x4 a*', [qw(sessionID accountID sessionID2 accountSex serverInfo)]],
 		};
 
 	bless \%self, $class;
@@ -1435,6 +1439,9 @@ sub actor_muted {
 sub actor_name_received {
 	my ($self, $args) = @_;
 
+	# FIXME: There is more to this packet than just party name and guild name.
+	# This packet is received when you leave a guild
+	# (with cryptic party and guild name fields, at least for now)
 	my $player = $players{$args->{ID}};
 	if ($player && %{$player}) {
 		# Receive names of players who are in a guild.
@@ -2033,6 +2040,14 @@ sub character_moves {
 	debug "You're moving from ($char->{pos}{x}, $char->{pos}{y}) to ($char->{pos_to}{x}, $char->{pos_to}{y}) - distance $dist, unknown $args->{unknown}\n", "parseMsg_move";
 	$char->{time_move} = time;
 	$char->{time_move_calc} = distance($char->{pos}, $char->{pos_to}) * ($char->{walk_speed} || 0.12);
+}
+
+sub character_name {
+	my ($self, $args) = @_;
+	my $name; # Type: String
+
+	$name = bytesToString($args->{name});
+	debug "Character name received: $name\n";
 }
 
 sub character_status {
@@ -2714,6 +2729,16 @@ sub guild_ally_request {
 	$timeout{ai_guildAutoDeny}{time} = time;
 }
 
+sub guild_broken {
+	my ($self, $args) = @_;
+	# FIXME: determine the real significance of flag
+	my $flag = $args->{flag};
+	message T("Guild broken.\n");
+	undef %{$char->{guild}};
+	undef $char->{guildID};
+	undef %guild;
+}
+
 sub guild_chat {
 	my ($self, $args) = @_;
 	my ($chatMsgUser, $chatMsg); # Type: String
@@ -2735,6 +2760,22 @@ sub guild_chat {
 		MsgUser => $chatMsgUser,
 		Msg => $chatMsg
 	});
+}
+
+sub guild_create_result {
+	my ($self, $args) = @_;
+	my $type = $args->{type};
+	
+	my %types = (
+		0 => T('successful.'),
+		2 => T('failed: Guild name already exists.'),
+		3 => T('failed: Emperium is needed.')
+	);
+	if ($types{$type}) {
+		message TF("Guild create %s\n", $types{$type});
+	} else {
+		message TF("Guild create: Unknown %s\n", $type);
+	}
 }
 
 sub guild_expulsionlist {
@@ -2777,18 +2818,6 @@ sub guild_location {
 	my ($self, $args) = @_;
 }
 
-sub guild_logon {
-	my ($self, $args) = @_;
-	my $name; # Type: String
-
-	$name = bytesToString($args->{name});
-	if ($guildNameRequest{online}) {
-		message TF("Guild member %s logged in.\n", $name), "guildchat";
-	} else {
-		message TF("Guild member %s logged out.\n", $name), "guildchat";
-	}
-}
-
 sub guild_members_list {
 	my ($self, $args) = @_;
 
@@ -2821,6 +2850,21 @@ sub guild_members_list {
 	
 }
 
+sub guild_member_online_status {
+	my ($self, $args) = @_;
+
+	foreach my $guildmember (@{$guild{'member'}}) {
+		if ($guildmember->{'charID'} eq $args->{charID}) {
+			if ($guildmember->{'online'} = $args->{online}) {
+				message TF("Guild member %s logged in.\n", $guildmember->{'name'}), "guildchat";
+			} else {
+				message TF("Guild member %s logged out.\n", $guildmember->{'name'}), "guildchat";
+			}
+			last;
+		}
+	}
+}
+
 sub guild_members_title_list {
 	my ($self, $args) = @_;
 	
@@ -2847,18 +2891,11 @@ sub guild_name {
 	$char->{guild}{name} = $guildName;
 	$char->{guildID} = $guildID;
 	$char->{guild}{emblem} = $emblemID;
-}
-
-sub guild_name_request {
-	my ($self, $args) = @_;
-
-	my $ID = $args->{ID};
-	my $targetID =	$args->{targetID};
-	my $online = $args->{online};
-	undef %guildNameRequest;
-	$guildNameRequest{ID} = $targetID;
-	$guildNameRequest{online} = $online;
-	sendGuildMemberNameRequest($net, $targetID);
+	
+	sendGuildInfoRequest($net);	# Is this necessary?? (requests for guild info packet 014E)
+	
+	sendGuildRequest($net, 0);	#requests for guild info packet 01B6 and 014C
+	sendGuildRequest($net, 1);	#requests for guild member packet 0166 and 0154
 }
 
 sub guild_notice {
@@ -3503,6 +3540,7 @@ sub map_changed {
 	undef $char->{permitSkill};
 	undef $char->{encoreSkill};
 	$cart{exists} = 0;
+	undef %guild;
 }
 
 sub map_loaded {

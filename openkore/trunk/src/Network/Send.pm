@@ -21,7 +21,7 @@ use Digest::MD5;
 use Exporter;
 use base qw(Exporter);
 
-use Globals qw($accountID $char $charID %config $conState $encryptVal %guild $net @chars %packetDescriptions $bytesSent);
+use Globals qw($accountID $char $charID %config $conState $encryptVal %guild $net @chars %packetDescriptions $bytesSent $masterServer);
 use Log qw(message warning error debug);
 use Utils;
 use I18N qw(stringToBytes);
@@ -77,6 +77,7 @@ our @EXPORT = qw(
 	sendFriendRemove
 	sendForgeItem
 	sendGameLogin
+	sendGetCharacterName
 	sendGetPlayerInfo
 	sendGetStoreList
 	sendGetSellList
@@ -89,7 +90,6 @@ our @EXPORT = qw(
 	sendGuildJoinRequest
 	sendGuildLeave
 	sendGuildMemberKick
-	sendGuildMemberNameRequest
 	sendGuildMemberTitleSelect
 	sendGuildNotice
 	sendGuildRankChange
@@ -852,8 +852,35 @@ sub sendGameLogin {
 	my $sessionID = shift;
 	my $sessionID2 = shift;
 	my $sex = shift;
-	my $msg = pack("C*", 0x65,0) . $accountID . $sessionID . $sessionID2 . pack("C*", 0,0,$sex);
+	my $msg = pack("v1", hex($masterServer->{gameLogin_packet}) || 0x65) . $accountID . $sessionID . $sessionID2 . pack("C*", 0, 0, $sex);
+	if (hex($masterServer->{gameLogin_packet}) == 0x0273) {
+		my ($serv) = $masterServer->{ip} =~ /\d+\.\d+\.\d+\.(\d+)/;
+		$msg .= pack("x16 C1 x3", $serv);
+	}
 	sendMsgToServer($r_net, $msg);
+}
+
+sub sendGetCharacterName {
+	my $r_net = shift;
+	my $ID = shift;
+	my $msg;
+	if ($config{serverType} == 3) {
+		$msg = pack("C*", 0xa2, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00) .
+				$ID;
+
+	} elsif ($config{serverType} == 4) {
+		$msg = pack("C*", 0xA2, 0x00, 0x39, 0x33, 0x68, 0x3B, 0x68, 0x3B, 0x6E, 0x0A, 0xE4, 0x16) .
+				$ID;
+
+	} elsif ($config{serverType} == 5) {
+		$msg = pack("C*", 0xa2, 0x00, 0x00, 0x00, 0x00) .
+				$ID;
+
+	} else {
+		$msg = pack("C*", 0x93, 0x01) . $ID;
+	}
+	sendMsgToServer($r_net, $msg);
+	debug "Sent get character name: ID - ".getHex($ID)."\n", "sendPacket", 2;
 }
 
 sub sendGetPlayerInfo {
@@ -975,29 +1002,6 @@ sub sendGuildMemberKick {
 	my $msg = pack("C*", 0x59, 0x01).$guildID.$accountID.$charID.pack("a40", stringToBytes($cause));
 	sendMsgToServer($net, $msg);
 	debug "Sent Guild Kick: ".getHex($charID)."\n", "sendPacket";
-}
-
-sub sendGuildMemberNameRequest {
-	my $r_net = shift;
-	my $ID = shift;
-	my $msg;
-	if ($config{serverType} == 3) {
-		$msg = pack("C*", 0xa2, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00) .
-				$ID;
-
-	} elsif ($config{serverType} == 4) {
-		$msg = pack("C*", 0xA2, 0x00, 0x39, 0x33, 0x68, 0x3B, 0x68, 0x3B, 0x6E, 0x0A, 0xE4, 0x16) .
-				$ID;
-
-	} elsif ($config{serverType} == 5) {
-		$msg = pack("C*", 0xa2, 0x00, 0x00, 0x00, 0x00) .
-				$ID;
-
-	} else {
-		$msg = pack("C*", 0x93, 0x01) . $ID;
-	}
-	sendMsgToServer($r_net, $msg);
-	debug "Sent Guild Member Name Request : ".getHex($ID)."\n", "sendPacket", 2;
 }
 
 sub sendGuildMemberTitleSelect {
