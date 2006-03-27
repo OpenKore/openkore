@@ -3,6 +3,61 @@
 #####################
 # Official RO Servers
 
+[Brazil - bRO]
+ip 200.229.49.10
+port 6900
+master_version 22
+version 1
+serverType 0
+field_payon old_payon.fld
+gameGuard 2
+
+[Europe - euRO]
+ip 217.68.157.42
+port 6900
+master_version 20
+version 1
+chatLangCode 1
+patchserver wpatch.euro-ro.net
+patchpath /patch02
+serverEncoding Western
+storageEncryptKey 0x050B6F79, 0x0202C179, 0x0E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+
+[Indonesia - idRO: Chaos/Loki/Iris/Fenrir]
+ip 202.43.167.66
+port 6900
+master_version 12
+version 2
+serverType 0
+secureLogin 1
+secureLogin_type 0
+secureLogin_requestCode
+secureLogin_account 0
+serverEncoding Western
+
+[India - inRO]
+ip 202.92.9.35
+port 6900
+version 1
+master_version 21
+serverType 0
+secureLogin 1
+secureLogin_type 0
+secureLogin_requestCode
+secureLogin_account 0
+gameGuard 1
+
+[Indonesia - idRO: Sakray]
+ip 202.93.18.250
+port 6900
+master_version 13
+version 2
+serverType 0
+secureLogin 1
+secureLogin_type 0
+secureLogin_account 0
+serverEncoding Western
+
 [International - iRO: Chaos/Loki/Iris]
 ip 38.144.194.2
 port 6900
@@ -18,6 +73,15 @@ master_version 14
 version 18
 serverType 0
 serverEncoding Western
+
+[Japan - jRO: Verdandi]
+ip 61.215.212.13
+port 6900
+master_version 3
+version 10
+serverType 7
+secureLogin 1
+serverEncoding Japanese
 
 [Malaysia - mRO: Main Server: Balder]
 ip 61.220.63.248
@@ -43,28 +107,22 @@ version 102
 serverType 0
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
 
-[Indonesia - idRO: Chaos/Loki/Iris/Fenrir]
-ip 202.43.167.66
+[Oceania/Australia - oRO]
+ip 202.168.25.133
 port 6900
-master_version 12
+master_version 23
 version 2
-serverType 0
-secureLogin 1
-secureLogin_type 0
-secureLogin_requestCode
-secureLogin_account 0
-serverEncoding Western
+serverType 6
+chatLangCode 1
 
-[Indonesia - idRO: Sakray]
-ip 202.93.18.250
+[Oceania/Australia - oRO: Sakray]
+ip 202.168.25.142
 port 6900
-master_version 13
+master_version 23
 version 2
 serverType 0
-secureLogin 1
-secureLogin_type 0
-secureLogin_account 0
-serverEncoding Western
+chatLangCode 1
+field_payon old_payon.fld
 
 [Philippines - pRO: Fenrir/Iris/Lydia]
 ip 202.57.118.232
@@ -140,64 +198,6 @@ storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x
 serverEncoding Tagalog
 gameGuard 1
 
-[Europe - euRO]
-ip 217.68.157.42
-port 6900
-master_version 20
-version 1
-chatLangCode 1
-patchserver wpatch.euro-ro.net
-patchpath /patch02
-serverEncoding Western
-storageEncryptKey 0x050B6F79, 0x0202C179, 0x0E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
-
-[Oceania/Australia - oRO]
-ip 202.168.25.133
-port 6900
-master_version 23
-version 2
-serverType 6
-chatLangCode 1
-
-[Oceania/Australia - oRO: Sakray]
-ip 202.168.25.142
-port 6900
-master_version 23
-version 2
-serverType 0
-chatLangCode 1
-field_payon old_payon.fld
-
-[Brazil - bRO]
-ip 200.229.49.10
-port 6900
-master_version 22
-version 1
-serverType 0
-field_payon old_payon.fld
-gameGuard 2
-
-[India - inRO]
-ip 202.92.9.35
-port 6900
-version 1
-master_version 21
-serverType 0
-secureLogin 1
-secureLogin_type 0
-secureLogin_requestCode
-secureLogin_account 0
-gameGuard 1
-
-[Japan - jRO: Verdandi]
-ip 61.215.212.13
-port 6900
-master_version 3
-version 10
-serverType 7
-secureLogin 1
-serverEncoding Japanese
-
 ## www.ragnarok.in.th/
 [Thailand - tRO Account 1: Sol, Chaos, Loki, Iris, Valkyrie]
 ip 203.144.244.10
@@ -209,8 +209,7 @@ secureLogin 3
 secureLogin_type 0
 secureLogin_requestCode
 secureLogin_account 3
-gameLogin_packet_switch 0x0273
-gameLogin_packet_code 0x00, 0x00, 0x00, 0x00, 0x0A
+gameLogin_packet 0273
 serverEncoding Thai
 
 ## www.ragnarok.in.th/
@@ -224,8 +223,7 @@ secureLogin 3
 secureLogin_type 0
 secureLogin_requestCode
 secureLogin_account 3
-gameLogin_packet_switch 0x0273
-gameLogin_packet_code 0x00, 0x00, 0x00, 0x00, 0x79
+gameLogin_packet 0273
 serverEncoding Thai
 
 ## www.ragnarok.in.th/
@@ -239,8 +237,7 @@ secureLogin 3
 secureLogin_type 0
 secureLogin_requestCode
 secureLogin_account 3
-gameLogin_packet_switch 0x0273
-gameLogin_packet_code 0x00, 0x00, 0x00, 0x00, 0x05
+gameLogin_packet 0273
 serverEncoding Thai
 
 ## www.ragnarok.in.th/
@@ -254,8 +251,7 @@ secureLogin 3
 secureLogin_type 0
 secureLogin_requestCode
 secureLogin_account 3
-gameLogin_packet_switch 0x0273
-gameLogin_packet_code 0x00, 0x00, 0x00, 0x00, 0x7A
+gameLogin_packet 0273
 serverEncoding Thai
 
 ## www.ragnarok.in.th/
@@ -269,8 +265,7 @@ secureLogin 3
 secureLogin_type 0
 secureLogin_requestCode
 secureLogin_account 3
-gameLogin_packet_switch 0x0273
-gameLogin_packet_code 0x00, 0x00, 0x00, 0x00, 0x07
+gameLogin_packet 0273
 serverEncoding Thai
 
 ## www.ragnarok.in.th/
@@ -284,8 +279,7 @@ secureLogin 3
 secureLogin_type 0
 secureLogin_requestCode
 secureLogin_account 3
-gameLogin_packet_switch 0x0273
-gameLogin_packet_code 0x00, 0x00, 0x00, 0x00, 0x7B
+gameLogin_packet 0273
 serverEncoding Thai
 
 ## http://ro.vinagame.com.vn/
@@ -418,9 +412,18 @@ serverType 5
 serverEncoding Western
 
 ## http://www.euphro.com/
-[EuphRO Private Server]
+[EuphRO (Alpha) Private Server]
 ip euphro.game-server.cc
 port 6900
+master_version 14
+version 14
+serverType 5
+serverEncoding Western
+
+## http://www.euphro.com/
+[EuphRO (Eden) Private Server]
+ip euphro.game-server.cc
+port 6901
 master_version 14
 version 14
 serverType 5
@@ -524,6 +527,24 @@ port 6901
 master_version 7
 version 20
 serverType 5
+
+## http://www.raggame.ru/
+[RuRO Private Server]
+ip 81.177.13.7
+port 6900
+master_version 25
+version 1
+serverType 0
+serverEncoding Russian
+
+## http://www.speedro.de/speedro.html
+[SpeedRO Private Server]
+ip 205.177.72.106
+port 6900
+version 0
+master_version 16
+serverType 5
+serverEncoding Western
 
 ## http://www.sukiro.com/
 [SukiRO (Silk) Private Server]
