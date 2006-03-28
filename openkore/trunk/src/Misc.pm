@@ -807,6 +807,38 @@ sub getField {
 			'force_1-3.fld' => 'force_map3.fld',
 			'force_2-3.fld' => 'force_map3.fld',
 			'force_3-3.fld' => 'force_map3.fld',
+			
+			'pvp_n_1-2.fld' => 'job_hunter.fld',
+			'pvp_n_1-3.fld' => 'job_wizard.fld',
+			'pvp_n_1-5.fld' => 'job_knight.fld',
+			
+			'pvp_n_2-2.fld' => 'job_hunter.fld',
+			'pvp_n_2-3.fld' => 'job_wizard.fld',
+			'pvp_n_2-5.fld' => 'job_knight.fld',
+			
+			'pvp_n_3-2.fld' => 'job_hunter.fld',
+			'pvp_n_3-3.fld' => 'job_wizard.fld',
+			'pvp_n_3-5.fld' => 'job_knight.fld',
+			
+			'pvp_n_4-2.fld' => 'job_hunter.fld',
+			'pvp_n_4-3.fld' => 'job_wizard.fld',
+			'pvp_n_4-5.fld' => 'job_knight.fld',
+			
+			'pvp_n_5-2.fld' => 'job_hunter.fld',
+			'pvp_n_5-3.fld' => 'job_wizard.fld',
+			'pvp_n_5-5.fld' => 'job_knight.fld',
+			
+			'pvp_n_6-2.fld' => 'job_hunter.fld',
+			'pvp_n_6-3.fld' => 'job_wizard.fld',
+			'pvp_n_6-5.fld' => 'job_knight.fld',
+			
+			'pvp_n_7-2.fld' => 'job_hunter.fld',
+			'pvp_n_7-3.fld' => 'job_wizard.fld',
+			'pvp_n_7-5.fld' => 'job_knight.fld',
+			
+			'pvp_n_8-2.fld' => 'job_hunter.fld',
+			'pvp_n_8-3.fld' => 'job_wizard.fld',
+			'pvp_n_8-5.fld' => 'job_knight.fld',
 		);
 
 		my ($dir, $base) = $file =~ /^(.*[\\\/])?(.*)$/;
