@@ -199,6 +199,7 @@ Credits:
 - abt123: new tRO login packets
 - Star-Kung: new tRO login packet enhancement
 - --Roger--: reconnect timeout bug
+- windserfer: aliases for PvP/MvP Rooms (Room Rock On, Four Room, and Copass)
 
 ==================
 ### 1.9.0
