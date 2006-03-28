@@ -254,7 +254,7 @@ sub getInventoryAmount {
   my @ids = getItemIDs($item, \@{$char->{inventory}});
   my $amount = 0;
   foreach my $id (@ids) {
-    next unless defined $id;
+    next unless $id >= 0;
     $amount += $char->{inventory}[$id]{amount}
   }
   return $amount
@@ -268,7 +268,7 @@ sub getCartAmount {
   my @ids = getItemIDs($item, \@{$cart{inventory}});
   my $amount = 0;
   foreach my $id (@ids) {
-    next unless defined $id;
+    next unless $id >= 0;
     $amount += $cart{inventory}[$id]{amount}
   }
   return $amount
@@ -294,7 +294,7 @@ sub getStorageAmount {
   my @ids = getStorageIDs($item);
   my $amount = 0;
   foreach my $id (@ids) {
-    next unless defined $id;
+    next unless $id >= 0;
     $amount += $storage{$storageID[$id]}{amount}
   }
   return $amount
