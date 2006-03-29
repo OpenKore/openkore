@@ -12,6 +12,11 @@ use Utils;
 Plugins::register('Game Master', 'Enables usage of GM commands', \&on_unload);
 my $commands = Commands::register(
 	['gmb',          'Broadcast a global message.', \&gmb],
+	['gmbb',          'Broadcast a global message in blue.', \&gmbb],
+	['gmnb',          'Broadcast a global message in blue.', \&gmnb],
+	['gmlb',          'Broadcast a global message in blue.', \&gmlb],
+	['gmlbb',          'Broadcast a global message in blue.', \&gmlbb],
+	['gmnlb',          'Broadcast a global message in blue.', \&gmnlb],
 	['gmmapmove',    'Move to the specified map.',  \&gmmapmove],
 	['gmcreate',     'Create items or monsters.',   \&gmcreate],
 	['gmhide',       'Toggle perfect GM hide.',     \&gmhide],
@@ -40,6 +45,76 @@ sub gmb {
 
 	my $msg = "$char->{name}: $args" . chr(0);
 	my $packet = pack("C*", 0x99, 0x00) . pack("v", length($msg) + 4) . $msg;
+	sendMsgToServer(\$remote_socket, $packet);
+}
+
+sub gmbb {
+	my (undef, $args) = @_;
+	return unless ($char);
+
+	if ($args eq '') {
+		error "Usage: gmbb <MESSAGE>\n";
+		return;
+	}
+
+	my $msg = "blue$args" . chr(0);
+	my $packet = pack("C*", 0x99, 0x00) . pack("v", length($msg) + 4) . $msg;
+	sendMsgToServer(\$remote_socket, $packet);
+}
+
+sub gmnb {
+	my (undef, $args) = @_;
+	return unless ($char);
+
+	if ($args eq '') {
+		error "Usage: gmnb <MESSAGE>\n";
+		return;
+	}
+
+	my $msg = $args . chr(0);
+	my $packet = pack("C*", 0x99, 0x00) . pack("v", length($msg) + 4) . $msg;
+	sendMsgToServer(\$remote_socket, $packet);
+}
+
+sub gmlb {
+	my (undef, $args) = @_;
+	return unless ($char);
+
+	if ($args eq '') {
+		error "Usage: gmlb <MESSAGE>\n";
+		return;
+	}
+
+	my $msg = "$char->{name}: $args" . chr(0);
+	my $packet = pack("C*", 0x9c, 0x01) . pack("v", length($msg) + 4) . $msg;
+	sendMsgToServer(\$remote_socket, $packet);
+}
+
+sub gmlbb {
+	my (undef, $args) = @_;
+	return unless ($char);
+
+	if ($args eq '') {
+		error "Usage: gmlbb <MESSAGE>\n";
+		return;
+	}
+
+	my $msg = "blue$args" . chr(0);
+	my $packet = pack("C*", 0x9c, 0x01) . pack("v", length($msg) + 4) . $msg;
+	sendMsgToServer(\$remote_socket, $packet);
+}
+
+sub gmnlb {
+	my (undef, $args) = @_;
+	return unless ($char);
+
+	if ($args eq '') {
+		error "Usage: gmnlb <MESSAGE>\n";
+		return;
+	}
+
+	my $msg = $args . chr(0);
+	my $packet = pack("C*", 0x9c, 0x01) . pack("v", length($msg) + 4) . $msg;
 	sendMsgToServer(\$remote_socket, $packet);
 }
 
