@@ -41,37 +41,37 @@ sub parseMacroFile {
       my ($key, $value) = $_ =~ /^(.*?)\s+(.*)/;
       if ($key eq 'macro') {
         %block = (name => $value, type => "macro");
-        $macro{$value} = [];
+        $macro{$value} = []
       } elsif ($key eq 'automacro') {
-        %block = (name => $value, type => "auto");
+        %block = (name => $value, type => "auto")
       }
     } elsif (%block && $block{type} eq "macro") {
       if ($_ eq "}") {
-        undef %block;
+        undef %block
       } else {
-        push(@{$macro{$block{name}}}, $_);
+        push(@{$macro{$block{name}}}, $_)
       }
     } elsif (%block && $block{type} eq "auto") {
       if ($_ eq "}") {
         if ($block{loadmacro}) {
-          undef $block{loadmacro};
+          undef $block{loadmacro}
         } else {
-          undef %block;
+          undef %block
         }
       } elsif ($_ eq "call {") {
         $block{loadmacro} = 1;
         $block{loadmacro_name} = "tempMacro".$tempmacro++;
         $automacro{$block{name}}->{call} = $block{loadmacro_name};
-        $macro{$block{loadmacro_name}} = [];
+        $macro{$block{loadmacro_name}} = []
       } elsif ($block{loadmacro}) {
-        push(@{$macro{$block{loadmacro_name}}}, $_);
+        push(@{$macro{$block{loadmacro_name}}}, $_)
       } else {
         my ($key, $value) = $_ =~ /^(.*?)\s+(.*)/;
         next unless $key;
-        if ($key =~ /^(map|mapchange|class|timeout|delay|disabled|call|spell|pm|pubm|guild|party|console|overrideAI|orphan|macro_delay|hook|save\d+)$/) {
-          $automacro{$block{name}}->{$key} = $value;
+        if ($key =~ /^(map|mapchange|class|timeout|delay|disabled|call|spell|pm|pubm|guild|party|console|overrideAI|orphan|macro_delay|hook|save\d+|priority)$/) {
+          $automacro{$block{name}}->{$key} = $value
         } else {
-          push(@{$automacro{$block{name}}->{$key}}, $value);
+          push(@{$automacro{$block{name}}->{$key}}, $value)
         }
       }
     } else {
@@ -83,24 +83,24 @@ sub parseMacroFile {
           if ($file =~ /[\/\\]/) {
             $f = $file;
             $f =~ s/(.*)[\/\\].*/$1/;
-            $f = File::Spec->catfile($f, $value);
+            $f = File::Spec->catfile($f, $value)
           } else {
-            $f = $value;
+            $f = $value
           }
         }
         if (-f $f) {
           my $ret = parseMacroFile($f, 1);
-          return $ret unless $ret;
+          return $ret unless $ret
         } else {
           error "$file: Include file not found: $f\n";
-          return 0;
+          return 0
         }
       }
     }
   }
   close FILE;
   return 0 if %block;
-  return 1;
+  return 1
 }
 
 # parses a text for keywords and returns keyword + argument as array
@@ -130,7 +130,7 @@ sub parseCmd {
     my $tmp = getVar($var);
     $tmp = "" unless defined $tmp;
     $var = quotemeta $var;
-    $command =~ s/(^|[^\\])\$$var([^a-zA-Z\d]|$)/$1$tmp$2/g;
+    $command =~ s/(^|[^\\])\$$var([^a-zA-Z\d]|$)/$1$tmp$2/g
   }
   # substitute doublevars
   while (($var) = $command =~ /\$\{(.*?)\}/i) {
@@ -138,7 +138,7 @@ sub parseCmd {
     my $tmp = getVar("#".$var);
     $tmp = "" unless defined $tmp;
     $var = quotemeta $var;
-    $command =~ s/\$\{$var\}/$tmp/g;
+    $command =~ s/\$\{$var\}/$tmp/g
   }
   while (my ($kw, $arg) = parseKw($command)) {
     $cvs->debug("parsing '$command': '$kw', '$arg'", $logfac{parser_steps});
@@ -166,7 +166,7 @@ sub parseCmd {
     return $command if $ret eq '_%_';
     $arg = quotemeta $arg; $command =~ s/\@$kw\s*\(\s*$arg\s*\)/$ret/g
   }
-  return $command;
+  return $command
 }
 
 1;

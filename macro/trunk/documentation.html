@@ -287,6 +287,7 @@ macro registered to AI queue</dd>
 		<li><a name=".lastMatch"></a><tt>$.lastMatch<i>N</i></tt> - backreferences for the last <a href="http://www.regular-expressions.info">regexp</a> match</li>
 		<li><a name=".param"></a><tt>$.param<i>N</i></tt> - command line parameters (see <a href="#commands">commands</a>)</li>
 		<li><a name=".caller"></a><tt>$.caller</tt> - name of the last triggered automacro</li>
+		<li><a name=".hooksafe"></a><tt>$.hooksafe<i>N</i></tt> - value of a hash key (argument that's given with <tt>hook</tt>)</li>
 	</ul>
 
 	<p />
@@ -340,12 +341,21 @@ macro registered to AI queue</dd>
 	<dt><b>@inventory</b> (<i>&lt;item&gt;</i>)</dt>
 	<dd>searches your inventory for <i>&lt;item&gt;</i> and returns ID
 	or <tt>-1</tt> if the item was not found</dd>
+	<dt><b>@Inventory</b> (<i>&lt;item&gt;</i>)</dt>
+	<dd>same as <tt>@inventory</tt> but returns <b>all</b> matching IDs as a
+	comma-separated list or <tt>-1</tt> if the item was not found</dd>
 	<dt><b>@cart</b> (<i>&lt;item&gt;</i>)</dt>
 	<dd>searches your cart for <i>&lt;item&gt;</i> and returns ID
 	or <tt>-1</tt> if the item was not found</dd>
+	<dt><b>@Cart</b> (<i>&lt;item&gt;</i>)</dt>
+	<dd>same as <tt>@cart</tt> but returns <b>all</b> matching IDs as a
+	comma-separated list or <tt>-1</tt> if the item was not found</dd>
 	<dt><b>@storage</b> (<i>&lt;item&gt;</i>)</dt>
 	<dd>searches your storage for <i>&lt;item&gt;</i> and returns ID
 	or <tt>-1</tt> if the item was not found</dd>
+	<dt><b>@Storage</b> (<i>&lt;item&gt;</i>)</dt>
+	<dd>same as <tt>@storage</tt> but returns <b>all</b> matching IDs as a
+	comma-separated list or <tt>-1</tt> if the item was not found</dd>
 	<dt><b>@player</b> (<i>&lt;name&gt;</i>)</dt>
 	<dd>looks for a player and returns ID or <tt>-1</tt> if the player
 	was not found</dd>
@@ -643,6 +653,10 @@ location not prontera</pre>
 	<dt><b>hook</b> <i>&lt;hookname&gt;</i></dt>
 	<dd>triggers when openkore calls <i>&lt;<a href="http://forums.openkore.com/viewtopic.php?t=18612">hookname</a>&gt;</i>.</dd>
 
+	<dt><b>save<i>N</i></b> <i>&lt;hash key&gt;</i></dt>
+	<dd>(use in combination with <tt>hook</tt>)<br />
+	saves the value of <i>&lt;hash key&gt;</i> in a variable <a href="#.hooksafe"><tt>.hooksave1</tt></a> to <tt>.hooksafe<i>N</i></dd>
+
 	<dt><b>run-once</b> <i>(</i><tt>0</tt>|<tt>1</tt><i>)</i></dt>
 	<dd>When set to <tt>1</tt> the automacro will be deactivated after being triggered.<br />
 	Use the macro command <tt><a href="#macro_release">release</a></tt> to reenable this automacro.</dd>
@@ -659,6 +673,11 @@ location not prontera</pre>
 
 	<dt><b>macro_delay</b> <i>&lt;n&gt;</i></dt>
 	<dd>Overrides the global <a href="#files"><tt>macro_delay</tt></a> setting for the called macro</dd>
+
+	<dt><b>priority</b> <i>&lt;num&gt;</i></dt>
+	<dd>Choose which automacros should be checked before others. The smaller &lt;num&gt; is is the sooner the
+	automacro gets checked. If <tt>priority</tt> is not given, the priority is assumed to be <tt>0</tt>
+	(zero: check first).</tt>
 
 	<dt><b>set</b> <i>&lt;variable&gt;</i> <i>&lt;value&gt;</i></dt>
 	<dd>Sets variable <i>&lt;variable&gt;</i> to <i>&lt;value&gt;</i>
