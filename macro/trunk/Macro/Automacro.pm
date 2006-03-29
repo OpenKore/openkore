@@ -394,9 +394,10 @@ sub automacroCheck {
   return if (AI::inQueue('macro') || defined $queue);
   $lockAMC = 1; # to avoid checking two events at the same time
 
-  CHKAM: foreach my $am (
-    sort {$automacro{$a}->{priority} <=> $automacro{$b}->{priority}}
-    (keys %automacro)) {
+  CHKAM:
+  foreach my $am (sort {
+      ($automacro{$a}->{priority} or 0) <=> ($automacro{$b}->{priority} or 1)
+  } keys %automacro) {
     next CHKAM if $automacro{$am}->{disabled};
 
     if (defined $automacro{$am}->{call} && !defined $macro{$automacro{$am}->{call}}) {
