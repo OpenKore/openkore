@@ -970,7 +970,7 @@ undef $ai_v{npc_talk}{talk};
 				AI::clear("items_take");
 				ai_items_take($monsters_old{$ID}{pos}{x}, $monsters_old{$ID}{pos}{y},
 					$monsters_old{$ID}{pos_to}{x}, $monsters_old{$ID}{pos_to}{y});
-			} elsif (!ai_getAggressives()) {
+			} else {
 				# Cheap way to suspend all movement to make it look real
 				ai_clientSuspend(0, $timeout{'ai_attack_waitAfterKill'}{'timeout'});
 			}

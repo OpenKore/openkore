@@ -55,6 +55,8 @@ Bug fixes:
 - Removed the guild member log in/out messages when forged items are seen.
 - Fixed guild kick command sending the wrong packet.
 - Fixed talknpc option x
+- Quick-hack-fix for the dancing problem which occurs whenever Kore has
+  multiple monsters queued to attack
 
 New features:
 - Added XKoreProxy module. Set configuration to 'XKore proxy' to work as
