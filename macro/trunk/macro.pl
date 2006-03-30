@@ -165,7 +165,9 @@ sub commandHandler {
     message(sprintf("The following macros are available:\n%smacros%s\n","-"x10,"-"x9), "list");
     foreach my $m (keys %macro) {message "$m\n" unless $m =~ /^tempMacro/}
     message(sprintf("%sautomacros%s\n", "-"x8, "-"x7), "list");
-    foreach my $a (sort {$automacro{$a}->{priority} <=> $automacro{$b}->{priority}} (keys %automacro)) {message "$a\n"}
+    foreach my $a (sort {
+      ($automacro{$a}->{priority} or 0) <=> ($automacro{$b}->{priority} or 0)
+    } keys %automacro) {message "$a\n"}
     message(sprintf("%s\n","-"x25), "list");
   ### parameter: status
   } elsif ($arg eq 'status') {

@@ -396,7 +396,7 @@ sub automacroCheck {
 
   CHKAM:
   foreach my $am (sort {
-      ($automacro{$a}->{priority} or 0) <=> ($automacro{$b}->{priority} or 1)
+      ($automacro{$a}->{priority} or 0) <=> ($automacro{$b}->{priority} or 0)
   } keys %automacro) {
     next CHKAM if $automacro{$am}->{disabled};
 
