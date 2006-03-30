@@ -3133,7 +3133,8 @@ sub checkSelfCondition {
 			my ($item,$count) = $input =~ /(.*?)(\s+[><= 0-9]+)?$/;
 			$count = '>0' if $count eq '';
 			my $iX = findIndexString_lc($char->{inventory}, "name", $item);
- 			return 0 if !inRange(!defined $iX ? 0 : $char->{inventory}[$iX]{amount}, $count);		}
+ 			return 0 if !inRange(!defined $iX ? 0 : $char->{inventory}[$iX]{amount}, $count);
+		}
 	}
 
 	if ($config{$prefix."_inCart"}) {
@@ -3141,7 +3142,9 @@ sub checkSelfCondition {
 			my ($item,$count) = $input =~ /(.*?)(\s+[><= 0-9]+)?$/;
 			$count = '>0' if $count eq '';
 			my $iX = findIndexString_lc($cart{inventory}, "name", $item);
- 			return 0 if !inRange(!defined $iX ? 0 : $cart{inventory}[$iX]{amount}, $count);		}
+ 			my $item = $cart{inventory}[$iX];
+			return 0 if !inRange(!defined $iX ? 0 : $item->{amount}, $count);
+		}
 	}
 
 	if ($config{$prefix."_whenGround"}) {
