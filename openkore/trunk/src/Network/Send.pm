@@ -445,6 +445,14 @@ sub sendAttack {
 		$msg = pack("C*", 0x89, 0x00, 0x00, 0x00, 0x00, 0x25) .
 		$monID .
 		pack("C*", 0x03, 0x04, 0x01, 0xb7, 0x39, 0x03, 0x00, $flag);
+
+	} elsif ($config{serverType} == 8) { #kRO 28 march 2006
+#  0>  90 01 63 63 62 00 00 00    00 61 64 33 32 31 65 61
+# 16>  61 61 03
+#  0>  90 01 36 61 32 00 00 00    00 38 66 33 65 33 65 61
+# 16>  38 38 02
+		$msg = pack("C*", 0x90, 0x01, 0x00, 0x00, 0x00) . 
+		$monID . pack("C*",0x00, 0x00, 0x00, 0x00, 0x37, 0x66, 0x61, 0x32, 0x00, $flag);
 	}
 
 	sendMsgToServer($r_net, $msg);
