@@ -215,7 +215,7 @@ addConfigFile($Settings::config_file, \%config,\&parseConfigFile);
 addConfigFile($Settings::items_control_file, \%items_control,\&parseItemsControl);
 addConfigFile($Settings::mon_control_file, \%mon_control, \&parseMonControl);
 addConfigFile("$Settings::control_folder/overallAuth.txt", \%overallAuth, \&parseDataFile);
-addConfigFile($Settings::pickupitems_file, \%itemsPickup, \&parseDataFile_lc);
+addConfigFile($Settings::pickupitems_file, \%pickupitems, \&parseDataFile_lc);
 addConfigFile("$Settings::control_folder/responses.txt", \%responses, \&parseResponses);
 addConfigFile("$Settings::control_folder/timeouts.txt", \%timeout, \&parseTimeouts);
 addConfigFile($Settings::shop_file, \%shop, \&parseShopControl);

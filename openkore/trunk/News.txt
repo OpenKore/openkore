@@ -55,8 +55,7 @@ Bug fixes:
 - Removed the guild member log in/out messages when forged items are seen.
 - Fixed guild kick command sending the wrong packet.
 - Fixed talknpc option x
-- Quick-hack-fix for the dancing problem which occurs whenever Kore has
-  multiple monsters queued to attack
+- Fixed "-1" flag for "all" keyword in pickupitems.txt being meaningless
 
 New features:
 - Added XKoreProxy module. Set configuration to 'XKore proxy' to work as
@@ -182,6 +181,7 @@ Internal:
   Receive.pm: guild_logon => character_name
   Send.pm: sendGuildMemberNameRequest => sendGetCharacterName
 - guildID and guildEmblem unpacking format changed from "V" to "a4"
+- %itemsPickup renamed to %pickupitems
 
 Credits:
 - id-mardi: fix for setPartySkillTimer, move the rest of the receive packets

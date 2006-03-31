@@ -2595,10 +2595,9 @@ undef $ai_v{npc_talk}{talk};
 						next if ($item->{broken} && $item->{type} == 7); # dont store pet egg in use
 
 						my $control = items_control($item->{name});
-						my $store = $control->{storage};
-						my $keep = $control->{keep};
-						debug "AUTOSTORAGE: $item->{name} x $item->{amount} - store = $store, keep = $keep\n", "storage";
-						if ($store && $item->{amount} > $keep) {
+
+						debug "AUTOSTORAGE: $item->{name} x $item->{amount} - store = $control->{storage}, keep = $control->{keep}\n", "storage";
+						if ($control->{storage} && $item->{amount} > $control->{keep}) {
 							if ($args->{lastIndex} == $item->{index} &&
 								timeOut($timeout{'ai_storageAuto_giveup'})) {
 								last AUTOSTORAGE;
@@ -2607,7 +2606,7 @@ undef $ai_v{npc_talk}{talk};
 							}
 							undef $args->{done};
 							$args->{lastIndex} = $item->{index};
-							sendStorageAdd($item->{index}, $item->{amount} - $keep);
+							sendStorageAdd($item->{index}, $item->{amount} - $control->{keep});
 							$timeout{ai_storageAuto}{time} = time;
 							$args->{nextItem} = $i + 1;
 							last AUTOSTORAGE;
@@ -2623,11 +2622,10 @@ undef $ai_v{npc_talk}{talk};
 						next unless ($item && %{$item});
 
 						my $control = items_control($item->{name});
-						my $store = $control->{storage};
-						my $keep = $control->{keep};
-						debug "AUTOSTORAGE (cart): $item->{name} x $item->{amount} - store = $store, keep = $keep\n", "storage";
+
+						debug "AUTOSTORAGE (cart): $item->{name} x $item->{amount} - store = $control->{storage}, keep = $control->{keep}\n", "storage";
 						# store from cart as well as inventory if the flag is equal to 2
-						if ($store == 2 && $item->{amount} > $keep) {
+						if ($control->{storage} == 2 && $item->{amount} > $control->{keep}) {
 							if ($args->{cartLastIndex} == $item->{index} &&
 								timeOut($timeout{'ai_storageAuto_giveup'})) {
 								last AUTOSTORAGE;
@@ -2636,7 +2634,7 @@ undef $ai_v{npc_talk}{talk};
 							}
 							undef $args->{done};
 							$args->{cartLastIndex} = $item->{index};
-							sendStorageAddFromCart($item->{index}, $item->{amount} - $keep);
+							sendStorageAddFromCart($item->{index}, $item->{amount} - $control->{keep});
 							$timeout{ai_storageAuto}{time} = time;
 							$args->{cartNextItem} = $i + 1;
 							last AUTOSTORAGE;
@@ -2829,12 +2827,10 @@ undef $ai_v{npc_talk}{talk};
 				for (my $i = 0; $i < @{$char->{inventory}};$i++) {
 					my $item = $char->{inventory}[$i];
 					next if (!$item || !%{$item} || $item->{equipped});
-					my $sell = $items_control{all}{sell};
-					$sell = $items_control{lc($item->{name})}{sell} if ($items_control{lc($item->{name})});
-					my $keep = $items_control{all}{keep};
-					$keep = $items_control{lc($item->{name})}{keep} if ($items_control{lc($item->{name})});
 
-					if ($sell && $item->{'amount'} > $keep) {
+					my $control = items_control($item->{name});
+
+					if ($control->{'sell'} && $item->{'amount'} > $control->{keep}) {
 						if ($args->{lastIndex} ne "" && $args->{lastIndex} == $item->{index} && timeOut($timeout{'ai_sellAuto_giveup'})) {
 							last AUTOSELL;
 						} elsif ($args->{lastIndex} eq "" || $args->{lastIndex} != $item->{index}) {
@@ -2845,7 +2841,7 @@ undef $ai_v{npc_talk}{talk};
 
 						my %obj;
 						$obj{index} = $item->{index};
-						$obj{amount} = $item->{amount} - $keep;
+						$obj{amount} = $item->{amount} - $control->{keep};
 						push @sellItems, \%obj;
 
 						$timeout{ai_sellAuto}{time} = time;
@@ -3052,8 +3048,7 @@ undef $ai_v{npc_talk}{talk};
 					next if ($item->{broken} && $item->{type} == 7); # dont auto-cart add pet eggs in use
 					next if ($item->{equipped});
 
-					my $control = $items_control{'all'};
-					$control = $items_control{lc($item->{name})} if ($items_control{lc($item->{name})});
+					my $control = items_control($item->{name});
 
 					if ($control->{cart_add} && $item->{amount} > $control->{keep}) {
 						my %obj;
@@ -3070,8 +3065,7 @@ undef $ai_v{npc_talk}{talk};
 			for (my $i = 0; $i < $max; $i++) {
 				my $cartItem = $cartInventory->[$i];
 				next unless ($cartItem);
-				my $control = $items_control{'all'};
-				$control = $items_control{lc($cartItem->{name})} if ($items_control{lc($cartItem->{name})});
+				my $control = items_control($cartItem->{name});
 				next unless ($control->{cart_get});
 
 				my $invIndex = findIndexString_lc($inventory, "name", $cartItem->{name});
@@ -3865,16 +3859,14 @@ undef $ai_v{npc_talk}{talk};
 				next if (!$_ || !checkMonsterCleanness($_));
 				my $monster = $monsters{$_};
 				# Ignore ignored monsters in mon_control.txt
-				my $monName = lc($monster->{name});
-				if ((my $monCtrl = mon_control($monName))) {
-					next if ( ($monCtrl->{attack_auto} ne "" && $monCtrl->{attack_auto} <= 0)
-						|| ($monCtrl->{attack_lvl} ne "" && $monCtrl->{attack_lvl} > $char->{lv})
-						|| ($monCtrl->{attack_jlvl} ne "" && $monCtrl->{attack_jlvl} > $char->{lv_job})
-						|| ($monCtrl->{attack_hp}  ne "" && $monCtrl->{attack_hp} > $char->{hp})
-						|| ($monCtrl->{attack_sp}  ne "" && $monCtrl->{attack_sp} > $char->{sp})
+				if ((my $control = mon_control($monster->{name}))) {
+					next if ( ($control->{attack_auto} ne "" && $control->{attack_auto} <= 0)
+						|| ($control->{attack_lvl} ne "" && $control->{attack_lvl} > $char->{lv})
+						|| ($control->{attack_jlvl} ne "" && $control->{attack_jlvl} > $char->{lv_job})
+						|| ($control->{attack_hp}  ne "" && $control->{attack_hp} > $char->{hp})
+						|| ($control->{attack_sp}  ne "" && $control->{attack_sp} > $char->{sp})
 						);
 				}
-
 
 				my $pos = calcPosition($monster);
 				OpenKoreMod::autoAttack($monster) if (defined &OpenKoreMod::autoAttack);
@@ -3948,11 +3940,16 @@ undef $ai_v{npc_talk}{talk};
 				next if (positionNearPortal($pos, $portalDist));
 
 				# Don't attack ignored monsters
-				my $name = lc $monster->{name};
-				next if (mon_control($name)->{attack_auto} == -1);
-				next if (mon_control($name)->{attack_lvl} ne "" && mon_control($name)->{attack_lvl} > $char->{lv});
-				next if (mon_control($name)->{attack_jlvl} ne "" && mon_control($name)->{attack_jlvl} > $char->{lv_job});
+				if ((my $control = mon_control($monster->{name}))) {
+					next if ( ($control->{attack_auto} == -1)
+						|| ($control->{attack_lvl} ne "" && $control->{attack_lvl} > $char->{lv})
+						|| ($control->{attack_jlvl} ne "" && $control->{attack_jlvl} > $char->{lv_job})
+						|| ($control->{attack_hp}  ne "" && $control->{attack_hp} > $char->{hp})
+						|| ($control->{attack_sp}  ne "" && $control->{attack_sp} > $char->{sp})
+						);
+				}
 
+				my $name = lc $monster->{name};
 				if (defined($priority{$name}) && $priority{$name} > $highestPri) {
 					$highestPri = $priority{$name};
 				}
@@ -3968,10 +3965,14 @@ undef $ai_v{npc_talk}{talk};
 					next if (positionNearPortal($pos, $portalDist));
 
 					# Don't attack ignored monsters
-					my $name = lc $monster->{name};
-					next if (mon_control($name)->{attack_auto} == -1);
-					next if (mon_control($name)->{attack_lvl} ne "" && mon_control($name)->{attack_lvl} > $char->{lv});
-					next if (mon_control($name)->{attack_jlvl} ne "" && mon_control($name)->{attack_jlvl} > $char->{lv_job});
+					if ((my $control = mon_control($monster->{name}))) {
+						next if ( ($control->{attack_auto} == -1)
+							|| ($control->{attack_lvl} ne "" && $control->{attack_lvl} > $char->{lv})
+							|| ($control->{attack_jlvl} ne "" && $control->{attack_jlvl} > $char->{lv_job})
+							|| ($control->{attack_hp}  ne "" && $control->{attack_hp} > $char->{hp})
+							|| ($control->{attack_sp}  ne "" && $control->{attack_sp} > $char->{sp})
+							);
+					}
 
 					if (!defined($smallestDist) || (my $dist = distance($myPos, $pos)) < $smallestDist) {
 						$smallestDist = $dist;
@@ -3987,10 +3988,14 @@ undef $ai_v{npc_talk}{talk};
 					next if (positionNearPortal($pos, $portalDist));
 
 					# Don't attack ignored monsters
-					my $name = lc $monster->{name};
-					next if (mon_control($name)->{attack_auto} == -1);
-					next if (mon_control($name)->{attack_lvl} ne "" && mon_control($name)->{attack_lvl} > $char->{lv});
-					next if (mon_control($name)->{attack_jlvl} ne "" && mon_control($name)->{attack_jlvl} > $char->{lv_job});
+					if ((my $control = mon_control($monster->{name}))) {
+						next if ( ($control->{attack_auto} == -1)
+							|| ($control->{attack_lvl} ne "" && $control->{attack_lvl} > $char->{lv})
+							|| ($control->{attack_jlvl} ne "" && $control->{attack_jlvl} > $char->{lv_job})
+							|| ($control->{attack_hp}  ne "" && $control->{attack_hp} > $char->{hp})
+							|| ($control->{attack_sp}  ne "" && $control->{attack_sp} > $char->{sp})
+							);
+					}
 
 					if (!defined($smallestDist) || (my $dist = distance($myPos, $pos)) < $smallestDist) {
 						$smallestDist = $dist;
@@ -4063,13 +4068,12 @@ undef $ai_v{npc_talk}{talk};
 
 		foreach (@itemsID) {
 			next unless $_;
-			my $name = lc $items{$_}{name};
-			next if ($itemsPickup{$name} eq "0" || $itemsPickup{$name} == -1
-				|| ( !$itemsPickup{all} && !$itemsPickup{$name} ));
+			my $item = $items{$_};
+			next if (pickupitems($item->{name}) eq "0" || pickupitems($item->{name}) == -1);
 
-			$dist = distance($items{$_}{pos}, AI::args->{pos});
-			$dist_to = distance($items{$_}{pos}, AI::args->{pos_to});
-			if (($dist <= 4 || $dist_to <= 4) && $items{$_}{take_failed} == 0) {
+			$dist = distance($item->{pos}, AI::args->{pos});
+			$dist_to = distance($item->{pos}, AI::args->{pos_to});
+			if (($dist <= 4 || $dist_to <= 4) && $item->{take_failed} == 0) {
 				$foundID = $_;
 				last;
 			}
@@ -4099,9 +4103,8 @@ undef $ai_v{npc_talk}{talk};
 			next if ($item eq ""
 				|| !timeOut($items{$item}{appear_time}, $timeout{ai_items_gather_start}{timeout})
 				|| $items{$item}{take_failed} >= 1
-				|| $itemsPickup{lc($items{$item}{name})} eq "0"
-				|| $itemsPickup{lc($items{$item}{name})} == -1
-				|| ( !$itemsPickup{all} && !$itemsPickup{lc($items{$item}{name})} ) );
+				|| pickupitems(lc($items{$item}{name})) eq "0"
+				|| pickupitems(lc($items{$item}{name})) == -1 );
 			if (!positionNearPlayer($items{$item}{pos}, 12) &&
 			    !positionNearPortal($items{$item}{pos}, 10)) {
 				message TF("Gathering: %s (%s)\n", $items{$item}{name}, $items{$item}{binID});

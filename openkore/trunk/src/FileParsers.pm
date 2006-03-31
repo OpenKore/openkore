@@ -55,10 +55,6 @@ our @EXPORT = qw(
 	parseSectionedFile
 	parseShopControl
 	parseSkills
-	parseSkillsLUT
-	parseSkillsIDLUT
-	parseSkillsReverseLUT_lc
-	parseSkillsReverseIDLUT_lc
 	parseSkillsSPLUT
 	parseTimeouts
 	parseWaypoint
