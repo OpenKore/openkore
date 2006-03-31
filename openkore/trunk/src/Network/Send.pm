@@ -1249,6 +1249,18 @@ sub sendMapLogin {
 			pack("V1", getTickCount()) .
 			pack("C*",$sex);
 
+	} elsif ($config{serverType} == 8) { #kRO 28 march 2006
+#  0>  9B 00 39 33 58 DE 4B 00    65 B0 05 0C 00 37 33 36
+# 16>  64 63 6F 83 44 34 60 6B    0A 00
+		$msg = pack("C*", 0x9b, 0, 0x39, 0x33) .
+			$accountID .
+			pack("C*", 0x65) .
+			$charID .
+			pack("C*", 0x37, 0x33, 0x36, 0x64) . 
+			$sessionID .
+			pack("V", getTickCount()) .
+			pack("C*", $sex);
+
 	} else { #oRO and pRO and idRO
 		# $config{serverType} == 1 || $config{serverType} == 2
 
@@ -1402,6 +1414,9 @@ sub sendMove {
 	} elsif ($config{serverType} == 6) {
 		$msg = pack("C*", 0x85, 0x00, 0x4b) . getCoordString($x, $y);
 		
+	} elsif ($config{serverType} == 8) { #kRO 28 march 2006
+		#  0>  A7 00 37 30 36 2F 13 A0
+		$msg = pack("C*", 0xA7, 0x00) . getCoordString($x, $y);
 	} else {
 		$msg = pack("C*", 0x85, 0x00) . getCoordString($x, $y);
 	}
