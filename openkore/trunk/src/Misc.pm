@@ -117,6 +117,7 @@ our @EXPORT = (
 	objectAdded
 	objectRemoved
 	items_control
+	pickupitems
 	mon_control
 	positionNearPlayer
 	positionNearPortal
@@ -1892,7 +1893,7 @@ sub objectRemoved {
 ##
 # items_control($name)
 #
-# Returns the items_control.txt settings for monster name $name.
+# Returns the items_control.txt settings for item name $name.
 # If $name has no specific settings, use 'all'.
 sub items_control {
 	my ($name) = @_;
@@ -1908,9 +1909,18 @@ sub items_control {
 sub mon_control {
 	my ($name) = @_;
 
-	return $mon_control{lc($name)} ||
-		$mon_control{all} ||
-		{ attack_auto => 1 };
+	return $mon_control{lc($name)} || $mon_control{all} || { attack_auto => 1 };
+}
+
+##
+# pickupitems($name)
+#
+# Returns the pickupitems.txt settings for item name $name.
+# If $name has no specific settings, use 'all'.
+sub pickupitems {
+	my ($name) = @_;
+
+	return ($pickupitems{lc($name)} ne '') ? $pickupitems{lc($name)} : $pickupitems{all};
 }
 
 sub positionNearPlayer {

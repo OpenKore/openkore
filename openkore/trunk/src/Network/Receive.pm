@@ -3037,7 +3037,7 @@ sub inventory_item_added {
 		if ($AI == 2) {
 			# Auto-drop item
 			$item = $char->{inventory}[$invIndex];
-			if ($itemsPickup{lc($item->{name})} == -1 && !AI::inQueue('storageAuto', 'buyAuto')) {
+			if (pickupitems(lc($item->{name})) == -1 && !AI::inQueue('storageAuto', 'buyAuto')) {
 				sendDrop($net, $item->{index}, $amount);
 				message TF("Auto-dropping item: %s (%s) x %s\n", $item->{name}, $invIndex, $amount), "drop";
 			}
@@ -3218,7 +3218,7 @@ sub item_appeared {
 	$item->{pos}{y} = $args->{y};
 
 	# Take item as fast as possible
-	if ($AI == 2 && $itemsPickup{lc($item->{name})} == 2 && distance($item->{pos}, $char->{pos_to}) <= 5) {
+	if ($AI == 2 && pickupitems(lc($item->{name})) == 2 && distance($item->{pos}, $char->{pos_to}) <= 5) {
 		sendTake($net, $args->{ID});
 	}
 
@@ -3247,15 +3247,15 @@ sub item_disappeared {
 	my ($self, $args) = @_;
 	change_to_constate5();
 	if ($items{$args->{ID}} && %{$items{$args->{ID}}}) {
-		if ($config{attackLooters} && AI::action ne "sitAuto" && ( $itemsPickup{lc($items{$args->{ID}}{name})} ne '' ? $itemsPickup{lc($items{$args->{ID}}{name})} : $itemsPickup{'all'} ) ) {
+		if ($config{attackLooters} && AI::action ne "sitAuto" && pickupitems(lc($items{$args->{ID}}{name})) > 0) {
 			foreach my $looter (values %monsters) { #attack looter code
 				next if (!$looter || !%{$looter});
-				if (my $monCtrl = mon_control(lc($monsters{name}))) {
-					next if ( ($monCtrl->{attack_auto} ne "" && $monCtrl->{attack_auto} == -1)
-						|| ($monCtrl->{attack_lvl} ne "" && $monCtrl->{attack_lvl} > $char->{lv})
-						|| ($monCtrl->{attack_jlvl} ne "" && $monCtrl->{attack_jlvl} > $char->{lv_job})
-						|| ($monCtrl->{attack_hp}  ne "" && $monCtrl->{attack_hp} > $char->{hp})
-						|| ($monCtrl->{attack_sp}  ne "" && $monCtrl->{attack_sp} > $char->{sp})
+				if (my $control = mon_control($monsters{name})) {
+					next if ( ($control->{attack_auto} ne "" && $control->{attack_auto} == -1)
+						|| ($control->{attack_lvl} ne "" && $control->{attack_lvl} > $char->{lv})
+						|| ($control->{attack_jlvl} ne "" && $control->{attack_jlvl} > $char->{lv_job})
+						|| ($control->{attack_hp}  ne "" && $control->{attack_hp} > $char->{hp})
+						|| ($control->{attack_sp}  ne "" && $control->{attack_sp} > $char->{sp})
 						);
 				}
 				if (distance($items{$args->{ID}}{pos},$looter->{pos}) == 0) {

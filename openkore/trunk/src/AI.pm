@@ -269,8 +269,9 @@ sub ai_getAggressives {
 	foreach (@monstersID) {
 		next if (!$_);
 		my $monster = $monsters{$_};
+		my $control = Misc::mon_control($monster->{name}) if $type || !$wantArray;
 
-		if ((($type && Misc::mon_control($monster->{name})->{attack_auto} == 2) ||
+		if (($type && ($control->{attack_auto} == 2) ||
 		    $monster->{dmgToYou} || $monster->{missedYou} ||
 			($party && ($monster->{dmgToParty} || $monster->{missedToParty} || $monster->{dmgFromParty})))
 		  && timeOut($monster->{attack_failed}, $timeout{ai_attack_unfail}{timeout})) {
@@ -284,20 +285,14 @@ sub ai_getAggressives {
 			# Also, check if the forced aggressive is a clean target when it has not marked as "yours".
 			my $pos = calcPosition($monster);
 
-			if ($config{'attackCanSnipe'}) {
-				next if (($type && Misc::mon_control($monster->{name})->{attack_auto} == 2) && 
-					(!Misc::checkLineSnipable($char->{pos_to}, $pos)) && 
-					!$monster->{dmgToYou} && !$monster->{missedYou} &&
-				    ($party && (!$monster->{dmgToParty} && !$monster->{missedToParty} && !$monster->{dmgFromParty})));
-			} else {
-				next if (($type && Misc::mon_control($monster->{name})->{attack_auto} == 2) && 
-					(!Misc::checkLineWalkable($char->{pos_to}, $pos)) && 
-					!$monster->{dmgToYou} && !$monster->{missedYou} &&
-				    ($party && (!$monster->{dmgToParty} && !$monster->{missedToParty} && !$monster->{dmgFromParty})));
-			}
+			next if (($type && $control->{attack_auto} == 2)
+				&& (($config{'attackCanSnipe'}) ? !Misc::checkLineSnipable($char->{pos_to}, $pos) : !Misc::checkLineWalkable($char->{pos_to}, $pos))
+				&& !$monster->{dmgToYou} && !$monster->{missedYou}
+				&& ($party && (!$monster->{dmgToParty} && !$monster->{missedToParty} && !$monster->{dmgFromParty}))
+				);
 			
 			# Continuing, check whether the forced Agro is really a clean monster;
-			next if (($type && Misc::mon_control($monster->{name})->{attack_auto} == 2) && !Misc::checkMonsterCleanness($_));
+			next if (($type && $control->{attack_auto} == 2) && !Misc::checkMonsterCleanness($_));
 			  
 			if ($wantArray) {
 				# Function is called in array context
@@ -305,10 +300,9 @@ sub ai_getAggressives {
 
 			} else {
 				# Function is called in scalar context
-				my $mon_control = Misc::mon_control($monster->{name});
-				if ($mon_control->{weight} > 0) {
-					$num += $mon_control->{weight};
-				} elsif ($mon_control->{weight} != -1) {
+				if ($control->{weight} > 0) {
+					$num += $control->{weight};
+				} elsif ($control->{weight} != -1) {
 					$num++;
 				}
 			}
@@ -576,12 +570,10 @@ sub ai_route_getRoute {
 #sellAuto for items_control - chobit andy 20030210
 sub ai_sellAutoCheck {
 	for (my $i = 0; $i < @{$char->{inventory}}; $i++) {
-		next if (!$char->{inventory}[$i] || !%{$char->{inventory}[$i]} || $char->{inventory}[$i]{equipped});
-		my $sell = $items_control{'all'}{'sell'};
-		$sell = $items_control{lc($chars[$config{'char'}]{'inventory'}[$i]{'name'})}{'sell'} if ($items_control{lc($chars[$config{'char'}]{'inventory'}[$i]{'name'})});
-		my $keep = $items_control{'all'}{'keep'};
-		$keep = $items_control{lc($chars[$config{'char'}]{'inventory'}[$i]{'name'})}{'keep'} if ($items_control{lc($chars[$config{'char'}]{'inventory'}[$i]{'name'})});
-		if ($sell && $chars[$config{'char'}]{'inventory'}[$i]{'amount'} > $keep) {
+		my $item = $char->{inventory}[$i];
+		next if (!$item || !%{$item} || $item->{equipped});
+		my $control = Misc::items_control($item->{'name'});
+		if ($control->{'sell'} && $item->{'amount'} > $control->{'keep'}) {
 			return 1;
 		}
 	}
@@ -661,13 +653,10 @@ sub ai_skillUse2 {
 sub ai_storageAutoCheck {
 	return 0 if ($char->{skills}{NV_BASIC}{lv} < 6);
 	for (my $i = 0; $i < @{$char->{inventory}}; $i++) {
-		my $slot = $char->{inventory}[$i];
-		next if (!$slot || $slot->{equipped});
-		my $store = $items_control{'all'}{'storage'};
-		$store = $items_control{lc($slot->{name})}{'storage'} if ($items_control{lc($slot->{name})});
-		my $keep = $items_control{'all'}{'keep'};
-		$keep = $items_control{lc($slot->{name})}{'keep'} if ($items_control{lc($slot->{name})});
-		if ($store && $slot->{amount} > $keep) {
+		my $item = $char->{inventory}[$i];
+		next if (!$item || !%{$item} || $item->{equipped});
+		my $control = Misc::items_control($item->{name});
+		if ($control->{'storage'} && $item->{amount} > $control->{'keep'}) {
 			return 1;
 		}
 	}
