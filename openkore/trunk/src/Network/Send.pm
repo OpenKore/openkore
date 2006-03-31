@@ -1416,7 +1416,7 @@ sub sendMove {
 		
 	} elsif ($config{serverType} == 8) { #kRO 28 march 2006
 		#  0>  A7 00 37 30 36 2F 13 A0
-		$msg = pack("C*", 0xA7, 0x00) . getCoordString($x, $y);
+		$msg = pack("C*", 0xA7, 0x00, 0x00, 0x00) . getCoordString($x, $y);
 	} else {
 		$msg = pack("C*", 0x85, 0x00) . getCoordString($x, $y);
 	}
