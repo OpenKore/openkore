@@ -769,8 +769,8 @@ serverEncoding Western
 [Localhost]
 ip 127.0.0.1
 port 6900
-serverType 2
-secureLogin 1
+serverType 5
+secureLogin 0
 secureLogin_type 0
 secureLogin_requestCode
 secureLogin_account 0
@@ -895,3 +895,11 @@ master_version 17
 version 20
 serverType 3
 serverEncoding Western
+
+[Korea - kRO] 
+ip 211.172.247.192 
+port 6900 
+master_version 0 
+version 19 
+serverType 8 
+serverEncoding Korean
