@@ -2047,8 +2047,12 @@ sub sendSync {
 		$msg .= pack("C*", 0x30) if ($initialSync);
 		$msg .= pack("C*", 0x94) if (!$initialSync);
 		$msg .= pack("V", getTickCount());
-	}
 
+	} elsif ($config{serverType} == 8) { #kRO 28 march 2006
+		# 89 00 61 30 08 b0 a6 0a
+		$msg = pack("C*", 0x89, 0x00, 0x00, 0x00);
+		$msg .= pack("V", getTickCount());
+	}
 	
 	sendMsgToServer($r_net, $msg);
 	debug "Sent Sync\n", "sendPacket", 2;
