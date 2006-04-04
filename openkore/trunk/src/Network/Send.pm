@@ -446,11 +446,7 @@ sub sendAttack {
 		$monID .
 		pack("C*", 0x03, 0x04, 0x01, 0xb7, 0x39, 0x03, 0x00, $flag);
 
-	} elsif ($config{serverType} == 8) { #kRO 28 march 2006
-#  0>  90 01 63 63 62 00 00 00    00 61 64 33 32 31 65 61
-# 16>  61 61 03
-#  0>  90 01 36 61 32 00 00 00    00 38 66 33 65 33 65 61
-# 16>  38 38 02
+	} elsif ($config{serverType} == 8) { 
 		$msg = pack("C*", 0x90, 0x01, 0x00, 0x00, 0x00) . 
 		$monID . pack("C*",0x00, 0x00, 0x00, 0x00, 0x37, 0x66, 0x61, 0x32, 0x00, $flag);
 	}
@@ -1423,7 +1419,6 @@ sub sendMove {
 		$msg = pack("C*", 0x85, 0x00, 0x4b) . getCoordString($x, $y);
 		
 	} elsif ($config{serverType} == 8) { #kRO 28 march 2006
-		#  0>  A7 00 37 30 36 2F 13 A0
 		$msg = pack("C*", 0xA7, 0x00, 0x00, 0x00) . getCoordString($x, $y);
 
 	} else {
@@ -1724,10 +1719,6 @@ sub sendSit {
 			pack("C*", 0x00, 0x00, 0x00, 0x00, 0x00, 0xFE, 0xFF, 0x02, 0x00, 0x00, 0x00);
 
 	} elsif ($config{serverType} == 8) { #kRO 28 march 2006
-#  0>  90 01 63 63 62 00 00 00    00 61 64 33 32 31 65 61
-# 16>  61 61 03
-#  0>  90 01 36 61 32 00 00 00    00 38 66 33 65 33 65 61
-# 16>  38 38 02
 		$msg = pack("C*", 0x90, 0x01, 0x00, 0x00, 0x00, 0x00 ,0x00 ,0x00,
   			0x00, 0x00, 0x00, 0x00, 0x00, 0x00 ,0x00 ,0x00,
 			0x00, 0x00, 0x02);
@@ -2005,10 +1996,6 @@ sub sendStand {
 			pack("C*", 0x00, 0x00, 0x00, 0x00, 0x00, 0xFE, 0xFF, 0x03, 0x00, 0x00, 0x00);
 
 	} elsif ($config{serverType} == 8) { #kRO 28 march 2006
-#  0>  90 01 63 63 62 00 00 00    00 61 64 33 32 31 65 61
-# 16>  61 61 03
-#  0>  90 01 36 61 32 00 00 00    00 38 66 33 65 33 65 61
-# 16>  38 38 02
 		$msg = pack("C*", 0x90, 0x01, 0x00, 0x00, 0x00, 0x00 ,0x00 ,0x00,
   			0x00, 0x00, 0x00, 0x00, 0x00, 0x00 ,0x00 ,0x00,
 			0x00, 0x00, 0x03);
@@ -2160,7 +2147,7 @@ sub sendTalkText {
 	my $input = shift;
 	my $msg = pack("C*", 0xD5, 0x01) . pack("v*", length($input)+length($ID)+5) . $ID . $input . chr(0);
 	sendMsgToServer($r_net, $msg);
-	warning "Sent talk text: ".getHex($ID).", $input\n", "sendPacket", 2;
+	debug "Sent talk text: ".getHex($ID).", $input\n", "sendPacket", 2;
 }
 
 sub sendTeleport {

@@ -57,14 +57,14 @@ sub switchInterface {
 	eval "use Interface::$new_if_name;";
 	if ($@) {
 		die $@ if ($die);
-		Log::error("Failed to load $new_if_name: $@\n");
+		Log::error(Translation::TF("Failed to load %s: %s\n", $new_if_name, $@));
 		return $self;
 	}
 
 	my $new_interface = eval "new Interface::$new_if_name;";
 	if (!defined($new_interface) || $@) {
 		die $@ if ($die);
-		Log::error("Failed to create $new_if_name: $@\n");
+		Log::error(Translation::TF("Failed to create %s: %s\n", $new_if_name, $@));
 		return $self;
 	}
 	Modules::register("Interface::$new_if_name");
@@ -165,9 +165,9 @@ sub errorDialog {
 
 	$self->writeOutput("error", "$message\n");
 	if ($fatal) {
-		$self->writeOutput("message", "Press ENTER to exit this program.\n")
+		$self->writeOutput("message", Translation::T("Press ENTER to exit this program.\n"))
 	} else {
-		$self->writeOutput("message", "Press ENTER to continue...\n")
+		$self->writeOutput("message", Translation::T("Press ENTER to continue...\n"))
 	}
 	$self->getInput(-1);
 }

@@ -330,7 +330,7 @@ sub checkTracker {
 			debug("connected\n", "connection");
 			$$t_state = 1;
 		} else {
-			error("couldn't connect: $!\n", "connection");
+			error TF("couldn't connect: %s\n", $!), "connection";
 		}
 		$timeout{xkore_tracker}{time} = time;
 	} elsif ($$t_state == 1 && $self->trackerAlive) {
@@ -462,7 +462,7 @@ sub checkClient {
 			Listen		=> 1,
 			Proto		=> 'tcp',
 			ReuseAddr   => 1);
-		die "Unable to listen on XKore2 port ($ip:$self->{client_listenPort}): $@" unless $self->{client_listen};
+		die TF("Unable to listen on XKore2 port (%s:%s): %s", $ip, $self->{client_listenPort}, $@) unless $self->{client_listen};
 
 		return;
 	}
@@ -526,7 +526,7 @@ sub checkClient {
 			(($config{adminPassword} && $password ne $config{adminPassword}) ||
 			lc($username) ne lc($config{username}))) {
 
-			error "XKore 2 failed login: Invalid Username and/or Password.\n", "connection";
+			error T("XKore 2 failed login: Invalid Username and/or Password.\n"), "connection";
 			$self->clientSend(pack('C3 x20', 0x6A, 00, 1),1);
 		} else {
 			# Determine public IP
@@ -555,10 +555,10 @@ sub checkClient {
 		# client to continue the login sequence. Since this is just a fake server,
 		# there is no need to go through all that and we can do a shortcut.
 		if ($self->{challengeNum} == 0) {
-			print "Received GameGuard sync request. Client allowed to login account server.\n";
+			message T("Received GameGuard sync request. Client allowed to login account server.\n");
 			$self->clientSend(pack("C*", 0x59,0x02,0x01));
 		} else {
-			print "Received GameGuard sync request. Client allowed to login char/map server.\n";
+			message T("Received GameGuard sync request. Client allowed to login char/map server.\n");
 			$self->clientSend(pack("C*", 0x59,0x02,0x02));
 		}
 		$self->{challengeNum}++;
@@ -1042,11 +1042,10 @@ sub checkClient {
 
 			} elsif ($$c_state == -2) {
 				# Inform the client that the connection to the server was lost
-				$errMsg = "blueConnection to server lost. " .
-					"Please wait while the connection is reestablished.";
+				$errMsg = T("blueConnection to server lost. Please wait while the connection is reestablished.");
 
 			} else {
-				$errMsg = "Unknown error within XKore 2";
+				$errMsg = T("Unknown error within XKore 2");
 			}
 
 
@@ -1077,7 +1076,7 @@ sub checkClient {
 				if ($conState > 4) {
 					# Plunk the character back down in the regular map they're on, and
 					# tell them that we've reconnected.
-					$msg = "blueConnection reestablished. Enjoy. =)";
+					$msg = T("blueConnection reestablished. Enjoy. =)");
 
 					# Allow client to change map and coords
 					my ($map, $x, $y) = ($self->{client_saved}{map}, $char->{pos_to}{x}, $char->{pos_to}{y});
@@ -1090,7 +1089,7 @@ sub checkClient {
 					$$c_state = 4;
 					$self->{client_saved}{gave_error} = 0;
 				} else {
-					$msg = "blueStill trying to connect...";
+					$msg = T("blueStill trying to connect...");
 					$msg = pack('C2 v Z'.(length($msg)+1).' x', 0x9A, 0x00, length($msg) + 6, $msg);
 					$self->clientSend($msg,1);
 				}
@@ -1103,7 +1102,7 @@ sub checkClient {
 
 	} else {
 		# Something wasn't right, kick the client
-		error "Unknown/unexpected XKore 2 packet: $switch (state: $$c_state).\n", "connection";
+		error TF("Unknown/unexpected XKore 2 packet: %s (state: %s).\n", $switch, $$c_state), "connection";
 
 		main::visualDump($msg);
 

@@ -16,6 +16,7 @@ use Scalar::Util;
 use Base::Server;
 use IPC::Messages qw(encode decode);
 use Log qw(message);
+use Translation qw(T TF);
 use base qw(Base::Server);
 
 my $CLASS = "Poseidon::EmbedServer";
@@ -43,8 +44,8 @@ sub new {
 	$self->{"$CLASS queue"} = [];
 	$self->{"$CLASS responseQueue"} = [];
 	$self->{sentQuery} = 0;
-	message "Embed Poseidon Server initialized\nPlease read " . POSEIDON_SUPPORT_URL .
-			" for more information.\n\n", "startup";
+	message TF("Embed Poseidon Server initialized\n" . 
+		"Please read %s for more information.\n\n", POSEIDON_SUPPORT_URL), "startup";
 
 	return $self;
 }
@@ -60,7 +61,7 @@ sub process {
 		$client->close();
 		return;
 	}
-	message "Poseidon: received query from client " . $client->getIndex() . "\n", "poseidon";
+	message TF("Poseidon: received query from client %s\n", $client->getIndex()), "poseidon";
 
 	my %request = (
 		packet => $args->{packet},
@@ -105,13 +106,13 @@ sub iterate {
 			$data = encode("Poseidon Reply", \%args);
 			$queue->[0]{client}->send($data);
 			$queue->[0]{client}->close();
-			message "Poseidon: Sent result to client " . $queue->[0]{client}->getIndex() . "\n", "poseidon";
+			message TF("Poseidon: Sent result to client %s\n", $queue->[0]{client}->getIndex()), "poseidon";
 		}
 		$self->{sentQuery} = 0;
 		shift @{$queue};
 
 	} elsif (@{$queue} > 0 && !$self->{sentQuery}) {
-		message "Poseidon: Querying Ragnarok Online client.\n", "poseidon";
+		message T("Poseidon: Querying Ragnarok Online client.\n"), "poseidon";
 		$r_net->clientSend($queue->[0]{packet});
 		$self->{sentQuery} = 1;
 	}

@@ -254,16 +254,16 @@ sub processChatCommand {
 			my $rsw = "${map}.rsw";
 			if ($maps_lut{$rsw}) {
 				if ($x ne "" && $y ne "") {
-					message "Calculating route to: $maps_lut{$rsw}($map): $x, $y\n", "route";
+					message TF("Calculating route to: %s(%s): %d, %d\n", $maps_lut{$rsw}, $map, $x, $y), "route";
 				} else {
-					message "Calculating route to: $maps_lut{$rsw}($map)\n", "route";
+					message TF("Calculating route to: %s(%s)\n", $maps_lut{$rsw}, $map), "route";
 				}
 				sendMessage($net, $type, getResponse("moveS"), $user) if $config{verbose};
 				main::ai_route($map, $x, $y, attackOnRoute => 1);
 				$timeout{ai_thanks_set}{time} = time;
 
 			} else {
-				error "Map $map does not exist\n";
+				error TF("Map %s does not exist\n", $map);
 				sendMessage($net, $type, getResponse("moveF"), $user) if $config{verbose};
 			}
 

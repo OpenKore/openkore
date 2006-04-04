@@ -31,7 +31,8 @@ use Misc qw(configModify visualDump);
 use Translation;
 use I18N qw(bytesToString);
 
-
+my $clientBuffer;
+my %flushTimer;
 
 ##
 # XKoreProxy->new()
@@ -61,6 +62,7 @@ sub new {
 	$self{gotError} = 0;
 	$self{packetPending} = '';
 	$self{waitingClient} = 1;
+	$clientBuffer = '';
 	
 	message T("X-Kore mode intialized.\n"), "startup";
 	
@@ -167,6 +169,8 @@ sub serverDisconnect {
 	my $self = shift;
 	my $preserveClient = shift;
 
+	return unless ($self->serverAlive);
+	
 	close($self->{proxy}) unless $preserveClient;
 	$self->{waitClientDC} = 1 if $preserveClient;
 
@@ -229,13 +233,31 @@ sub clientSend {
 	my $msg = shift;
 	my $dontMod = shift;
 
+	return unless ($self->proxyAlive);
+	
 	$msg = $self->modifyPacketIn($msg) unless ($dontMod);
 	if ($config{debugPacket_ro_received}) {
 		debug "Modified packet sent to client\n";
 		visualDump($msg, 'clientSend');
 	}
-	$self->{proxy}->send($msg) if ($self->proxyAlive);
+
+	# queue message instead of sending directly
+	$clientBuffer .= $msg;
 }
+
+##
+# $net->clientFlush
+#
+sub clientFlush {
+	my $self = shift;
+	
+	return unless (length($clientBuffer));
+	
+	$self->{proxy}->send($clientBuffer);	
+	debug "Client network buffer flushed out\n";
+	$clientBuffer = '';
+}
+
 
 ##
 # $net->clientRecv
@@ -303,7 +325,7 @@ sub checkProxy {
 	} elsif (!$self->proxyAlive) {
 		# Client disconnected... (or never existed)
 		if ($self->serverAlive()) {
-			message "Client disconnected\n", "connection";
+			message T("Client disconnected\n"), "connection";
 			$conState = 1 if ($conState == 5);
 			$self->{waitingClient} = 1;
 			$self->serverDisconnect();
@@ -499,10 +521,13 @@ sub modifyPacketIn {
 		$self->{nextPort} = undef;
 		$self->{charServerIp} = undef;
 		$self->{charServerPort} = undef;
+		$self->serverDisconnect(1);
 		
 	} elsif ($switch eq "00B3") {
 		$self->{nextIp} = $self->{charServerIp};
 		$self->{nextPort} = $self->{charServerPort};		
+		$self->serverDisconnect(1);
+		
 	} elsif ($switch eq "0259") {
 		# queue the packet as requiring client's response in time
 		$self->{packetPending} = $msg;

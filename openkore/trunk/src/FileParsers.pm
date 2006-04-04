@@ -134,7 +134,7 @@ sub parseChatResp {
 		s/[\r\n]//g;
 		next if ($_ eq "" || /^#/);
 		if (/^first_resp_/) {
-			Log::error("The chat_resp.txt format has changed. Please read News.txt and upgrade to the new format.\n");
+			Log::error(Translation::T("The chat_resp.txt format has changed. Please read News.txt and upgrade to the new format.\n"));
 			close FILE;
 			return;
 		}
@@ -270,7 +270,7 @@ sub parseConfigFile {
 					my $ret = parseConfigFile($f, $r_hash, 1);
 					return $ret unless $ret;
 				} else {
-					error "$file: Include file not found: $f\n";
+					error Translation::TF("%s: Include file not found: %s\n", $file, $f);
 					return 0;
 				}
 
@@ -283,7 +283,7 @@ sub parseConfigFile {
 	close FILE;
 
 	if ($inBlock) {
-		error "$file: Unclosed { at EOF\n";
+		error Translation::TF("%s: Unclosed { at EOF\n", $file);
 		return 0;
 	}
 	return 1;
@@ -428,19 +428,19 @@ sub parseShopControl {
 		my $real_price = $price;
 		$real_price =~ s/,//g;
 
-		my $loc = "Line $linenum: Item '$name'";
+		my $loc = Translation::TF("Line %s: Item '%s'", $linenum, $name);
 		if ($real_price !~ /^\d+$/) {
-			push(@errors, "$loc has non-integer price: $price");
+			push(@errors, Translation::TF("%s has non-integer price: %s", $loc, $price));
 		} elsif ($price ne $real_price && formatNumber($real_price) ne $price) {
-			push(@errors, "$loc has incorrect comma placement in price: $price");
+			push(@errors, Translation::TF("%s has incorrect comma placement in price: %s", $loc, $price));
 		} elsif ($real_price < 0) {
-			push(@errors, "$loc has non-positive price: $price");
+			push(@errors, Translation::TF("%s has non-positive price: %s", $loc, $price));
 		} elsif ($real_price > 1000000000) {
-			push(@errors, "$loc has price over 1,000,000,000: $price");
+			push(@errors, Translation::TF("%s has price over 1,000,000,000: %s", $loc, $price));
 		}
 
 		if ($amount > 30000) {
-			push(@errors, "$loc has amount over 30,000: $amount");
+			push(@errors, Translation::TF("%s has amount over 30,000: %s", $loc, $amount));
 		}
 
 		push(@{$shop->{items}}, {name => $name, price => $real_price, amount => $amount});
@@ -448,9 +448,9 @@ sub parseShopControl {
 	close(SHOP);
 
 	if (@errors) {
-		error("Errors were found in $file:\n");
+		error Translation::TF("Errors were found in %s:\n", $file);
 		foreach (@errors) { error("$_\n"); }
-		error("Please correct the above errors and type 'reload $file'.\n");
+		error Translation::TF("Please correct the above errors and type 'reload %s'.\n", $file);
 		return 0;
 	}
 	return 1;

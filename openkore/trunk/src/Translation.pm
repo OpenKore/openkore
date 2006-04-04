@@ -193,7 +193,8 @@ sub T {
 sub TF {
 	my $message = shift;
 	_translate($_translation, \$message);
-	return sprintf($message, $_[0], $_[1], $_[2], $_[3], $_[4]);
+	return sprintf($message, @_);
+	#return sprintf($message, $_[0], $_[1], $_[2], $_[3], $_[4]);
 }
 
 

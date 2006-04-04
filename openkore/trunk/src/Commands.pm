@@ -24,6 +24,7 @@ use warnings;
 no warnings qw(redefine uninitialized);
 use Time::HiRes qw(time);
 use encoding 'utf8';
+use Translation;
 
 use Globals;
 use Log qw(message debug error warning);
@@ -216,7 +217,7 @@ sub run {
 		my %params = ( switch => $switch, input => $input );
 		Plugins::callHook('Command_post', \%params);
 		if (!$params{return}) {
-			error "Unknown command '$switch'. Please read the documentation for a list of commands.\n";
+			error TF("Unknown command '%s'. Please read the documentation for a list of commands.\n", $switch);
 		} else {
 			return $params{return}
 		}
@@ -374,18 +375,18 @@ sub cmdAI {
 		AI::clear;
 		delete $ai_v{temp};
 		undef $char->{dead};
-		message "AI sequences cleared\n", "success";
+		message T("AI sequences cleared\n"), "success";
 
 	} elsif ($args eq 'print') {
 		# Display detailed info about current AI sequence
-		message("------ AI Sequence ---------------------\n", "list");
+		message T("------ AI Sequence ---------------------\n"), "list";
 		my $index = 0;
 		foreach (@ai_seq) {
 			message("$index: $_ " . dumpHash(\%{$ai_seq_args[$index]}) . "\n\n", "list");
 			$index++;
 		}
 
-		message("------ AI Sequences --------------------\n", "list");
+		message T("------ AI Sequences --------------------\n"), "list";
 
 	} elsif ($args eq 'ai_v') {
 		message dumpHash(\%ai_v) . "\n", "list";
@@ -393,29 +394,29 @@ sub cmdAI {
 	} elsif ($args eq 'on' || $args eq 'auto') {
 		# Set AI to auto mode
 		if ($AI == 2) {
-			message "AI is already set to auto mode\n", "success";
+			message T("AI is already set to auto mode\n"), "success";
 		} else {
 			$AI = 2;
 			undef $AI_forcedOff;
-			message "AI set to auto mode\n", "success";
+			message T("AI set to auto mode\n"), "success";
 		}
 	} elsif ($args eq 'manual') {
 		# Set AI to manual mode
 		if ($AI == 1) {
-			message "AI is already set to manual mode\n", "success";
+			message T("AI is already set to manual mode\n"), "success";
 		} else {
 			$AI = 1;
 			$AI_forcedOff = 1;
-			message "AI set to manual mode\n", "success";
+			message T("AI set to manual mode\n"), "success";
 		}
 	} elsif ($args eq 'off') {
 		# Turn AI off
 		if ($AI) {
 			undef $AI;
 			$AI_forcedOff = 1;
-			message "AI turned off\n", "success";
+			message T("AI turned off\n"), "success";
 		} else {
-			message "AI is already off\n", "success";
+			message T("AI is already off\n"), "success";
 		}
 
 	} elsif ($args eq '') {
@@ -423,20 +424,20 @@ sub cmdAI {
 		if ($AI == 2) {
 			undef $AI;
 			$AI_forcedOff = 1;
-			message "AI turned off\n", "success";
+			message T("AI turned off\n"), "success";
 		} elsif (!$AI) {
 			$AI = 1;
 			$AI_forcedOff = 1;
-			message "AI set to manual mode\n", "success";
+			message T("AI set to manual mode\n"), "success";
 		} elsif ($AI == 1) {
 			$AI = 2;
 			undef $AI_forcedOff;
-			message "AI set to auto mode\n", "success";
+			message T("AI set to auto mode\n"), "success";
 		}
 
 	} else {
-		error	"Syntax Error in function 'ai' (AI Commands)\n" .
-			"Usage: ai [ clear | print | ai_v | auto | manual | off ]\n";
+		error T("Syntax Error in function 'ai' (AI Commands)\n" .
+			"Usage: ai [ clear | print | ai_v | auto | manual | off ]\n");
 	}
 }
 
@@ -444,14 +445,13 @@ sub cmdAIv {
 	# Display current AI sequences
 	my $on;
 	if (!$AI) {
-		$on = 'off';
+		message TF("ai_seq (off) = %s\n", @ai_seq), "list";
 	} elsif ($AI == 1) {
-		$on = 'manual';
+		message TF("ai_seq (manual) = %s\n", @ai_seq), "list";
 	} elsif ($AI == 2) {
-		$on = 'auto';
+		message TF("ai_seq (auto) = %s\n", @ai_seq), "list";
 	}
-	message("ai_seq ($on) = @ai_seq\n", "list");
-	message("solution\n", "list") if (AI::args->{'solution'});
+	message T("solution\n"), "list" if (AI::args->{'solution'});
 }
 
 sub cmdArrowCraft {
@@ -462,7 +462,7 @@ sub cmdArrowCraft {
 	#print "-$arg1-\n";
 	if ($arg1 eq "") {
 		if (@arrowCraftID) {
-			message("----------------- Item To Craft -----------------\n", "info");
+			message T("----------------- Item To Craft -----------------\n"), "info";
 			for (my $i = 0; $i < @arrowCraftID; $i++) {
 				next if ($arrowCraftID[$i] eq "");
 				message(swrite(
@@ -472,30 +472,30 @@ sub cmdArrowCraft {
 			}
 			message("-------------------------------------------------\n","list")
 		} else {
-			error	"Error in function 'arrowcraft' (Create Arrows)\n" .
-				"Type 'arrowcraft use' to get list.\n";
+			error T("Error in function 'arrowcraft' (Create Arrows)\n" .
+			 	"Type 'arrowcraft use' to get list.\n");
 		}
 	} elsif ($arg1 eq "use") {
 		if (defined binFind(\@skillsID, 'AC_MAKINGARROW')) {
 			main::ai_skillUse('AC_MAKINGARROW', 1, 0, 0, $accountID);
 		} else {
-			error	"Error in function 'arrowcraft' (Create Arrows)\n" .
-				"You don't have Arrow Making Skill.\n";
+			error T("Error in function 'arrowcraft' (Create Arrows)\n" . 
+				"You don't have Arrow Making Skill.\n");
 		}
 	} elsif ($arg1 eq "forceuse") {
 		if ($char->{inventory}[$arg2] && %{$char->{inventory}[$arg2]}) {
 			sendArrowCraft($net, $char->{inventory}[$arg2]{nameID});
 		} else {
-			error	"Error in function 'arrowcraft forceuse #' (Create Arrows)\n" .
-				"You don't have item $arg2 in your inventory.\n";
+			error TF("Error in function 'arrowcraft forceuse #' (Create Arrows)\n" . 
+				"You don't have item %s in your inventory.\n", $arg2);
 		}
 	} else {
 		if ($arrowCraftID[$arg1] ne "") {
 			sendArrowCraft($net, $char->{inventory}[$arrowCraftID[$arg1]]{nameID});
 		} else {
-			error	"Error in function 'arrowcraft' (Create Arrows)\n" .
-				"Usage: arrowcraft [<identify #>]",
-				"Type 'arrowcraft use' to get list.\n";
+			error T("Error in function 'arrowcraft' (Create Arrows)\n" .
+				"Usage: arrowcraft [<identify #>]\n" .
+				"Type 'arrowcraft use' to get list.\n");
 		}
 	}
 }
@@ -504,8 +504,8 @@ sub cmdAttack {
 	my (undef, $arg1) = @_;
 	if ($arg1 =~ /^\d+$/) {
 		if ($monstersID[$arg1] eq "") {
-			error	"Error in function 'a' (Attack Monster)\n" .
-				"Monster $arg1 does not exist.\n";
+			error TF("Error in function 'a' (Attack Monster)\n" . 
+				"Monster %s does not exist.\n", $arg1);
 		} else {
 			main::attack($monstersID[$arg1]);
 		}
@@ -516,8 +516,8 @@ sub cmdAttack {
 		configModify("attackAuto", 2);
 
 	} else {
-		error	"Syntax Error in function 'a' (Attack Monster)\n" .
-			"Usage: attack <monster # | no | yes >\n";
+		error T("Syntax Error in function 'a' (Attack Monster)\n" . 
+			"Usage: attack <monster # | no | yes >\n");
 	}
 }
 
@@ -529,7 +529,8 @@ sub cmdAttackStop {
 		if ($monster) {
 			$monster->{ignore} = 1;
 			stopAttack();
-			message "Stopped attacking $monster->{name} ($monster->{binID})\n", "success";
+			message TF("Stopped attacking %s (%s)\n", 
+				$monster->{name}, $monster->{binID}), "success";
 			AI::clear("attack");
 		}
 	}
@@ -539,25 +540,25 @@ sub cmdAuthorize {
 	my (undef, $args) = @_;
 	my ($arg1, $arg2) = $args =~ /^([\s\S]*) ([\s\S]*?)$/;
 	if ($arg1 eq "" || ($arg2 ne "1" && $arg2 ne "0")) {
-		error	"Syntax Error in function 'auth' (Overall Authorize)\n" .
-			"Usage: auth <username> <flag>\n";
+		error T("Syntax Error in function 'auth' (Overall Authorize)\n" . 
+			"Usage: auth <username> <flag>\n");
 	} else {
 		auth($arg1, $arg2);
 	}
 }
 
 sub cmdAutoBuy {
-	message "Initiating auto-buy.\n";
+	message T("Initiating auto-buy.\n");
 	AI::queue("buyAuto");
 }
 
 sub cmdAutoSell {
-	message "Initiating auto-sell.\n";
+	message T("Initiating auto-sell.\n");
 	AI::queue("sellAuto");
 }
 
 sub cmdAutoStorage {
-	message "Initiating auto-storage.\n";
+	message T("Initiating auto-storage.\n");
 	AI::queue("storageAuto");
 }
 
@@ -577,11 +578,11 @@ sub cmdBuy {
 	my ($arg1) = $args =~ /^(\d+)/;
 	my ($arg2) = $args =~ /^\d+ (\d+)$/;
 	if ($arg1 eq "") {
-		error	"Syntax Error in function 'buy' (Buy Store Item)\n" .
-			"Usage: buy <item #> [<amount>]\n";
+		error T("Syntax Error in function 'buy' (Buy Store Item)\n" . 
+			"Usage: buy <item #> [<amount>]\n");
 	} elsif ($storeList[$arg1] eq "") {
-		error	"Error in function 'buy' (Buy Store Item)\n" .
-			"Store Item $arg1 does not exist.\n";
+		error TF("Error in function 'buy' (Buy Store Item)\n" . 
+			"Store Item %s does not exist.\n", $arg1);
 	} else {
 		if ($arg2 <= 0) {
 			$arg2 = 1;
@@ -600,16 +601,16 @@ sub cmdCard {
 		if ($cardMergeIndex ne "") {
 			undef $cardMergeIndex;
 			sendCardMerge($net, -1, -1);
-			message "Cancelling card merge.\n";
+			message T("Cancelling card merge.\n");
 		} else {
-			error	"Error in function 'card mergecancel' (Cancel a card merge request)\n" .
-				"You are not currently in a card merge session.\n";
+			error T("Error in function 'card mergecancel' (Cancel a card merge request)\n" . 
+				"You are not currently in a card merge session.\n");
 		}
 	} elsif ($arg1 eq "mergelist") {
 		# FIXME: if your items change order or are used, this list will be wrong
 		if (@cardMergeItemsID) {
 			my $msg;
-			$msg .= "-----Card Merge Candidates-----\n";
+			$msg .= T("-----Card Merge Candidates-----\n");
 			foreach my $card (@cardMergeItemsID) {
 				next if $card eq "" || !$char->{inventory}[$card] ||
 					!%{$char->{inventory}[$card]};
@@ -620,8 +621,8 @@ sub cmdCard {
 			$msg .= "-------------------------------\n";
 			message $msg, "list";
 		} else {
-			error	"Error in function 'card mergelist' (List availible card merge items)\n" .
-				"You are not currently in a card merge session.\n";
+			error T("Error in function 'card mergelist' (List availible card merge items)\n" . 
+				"You are not currently in a card merge session.\n");
 		}
 	} elsif ($arg1 eq "merge") {
 		if ($arg2 =~ /^\d+$/) {
@@ -630,36 +631,37 @@ sub cmdCard {
 				sendCardMerge($net, $char->{inventory}[$cardMergeIndex]{index}, $char->{inventory}[$arg2]{index});
 			} else {
 				if ($cardMergeIndex ne "") {
-					error	"Error in function 'card merge' (Finalize card merging onto item)\n" .
-						"There is no item $arg2 in the card mergelist.\n";
+					error TF("Error in function 'card merge' (Finalize card merging onto item)\n" . 
+						"There is no item %s in the card mergelist.\n", $arg2);
 				} else {
-					error	"Error in function 'card merge' (Finalize card merging onto item)\n" .
-						"You are not currently in a card merge session.\n";
+					error T("Error in function 'card merge' (Finalize card merging onto item)\n" . 
+						"You are not currently in a card merge session.\n");
 				}
 			}
 		} else {
-			error	"Syntax Error in function 'card merge' (Finalize card merging onto item)\n" .
-				"Usage: card merge <item number>\n" .
-				"<item number> - Merge item number. Type 'card mergelist' to get number.\n";
+			error T("Syntax Error in function 'card merge' (Finalize card merging onto item)\n" .
+				"Usage: card merge <item number>\n" . 
+				"<item number> - Merge item number. Type 'card mergelist' to get number.\n");
 		}
 	} elsif ($arg1 eq "use") {
 		if ($arg2 =~ /^\d+$/) {
 			if ($char->{inventory}[$arg2] && %{$char->{inventory}[$arg2]}) {
 				$cardMergeIndex = $arg2;
 				sendCardMergeRequest($net, $char->{inventory}[$cardMergeIndex]{index});
-				message "Sending merge list request for $char->{inventory}[$cardMergeIndex]{name}...\n";
+				message TF("Sending merge list request for %s...\n", 
+					$char->{inventory}[$cardMergeIndex]{name});
 			} else {
-				error	"Error in function 'card use' (Request list of items for merging with card)\n" .
-					"Card $arg2 does not exist.\n";
+				error TF("Error in function 'card use' (Request list of items for merging with card)\n" . 
+					"Card %s does not exist.\n", $arg2);
 			}
 		} else {
-			error	"Syntax Error in function 'card use' (Request list of items for merging with card)\n" .
+			error T("Syntax Error in function 'card use' (Request list of items for merging with card)\n" .
 				"Usage: card use <item number>\n" .
-				"<item number> - Card inventory number. Type 'i' to get number.\n";
+				"<item number> - Card inventory number. Type 'i' to get number.\n");
 		}
 	} elsif ($arg1 eq "list") {
 		my $msg;
-		$msg .= "-----------Card List-----------\n";
+		$msg .= T("-----------Card List-----------\n");
 		for (my $i = 0; $i < @{$char->{inventory}}; $i++) {
 			next if (!$char->{'inventory'}[$i] || !%{$char->{'inventory'}[$i]});
 			if ($char->{inventory}[$i]{type} == 6) {
@@ -670,17 +672,17 @@ sub cmdCard {
 		message $msg, "list";
 	} elsif ($arg1 eq "forceuse") {
 		if (!$char->{inventory}[$arg2] || !%{$char->{inventory}[$arg2]}) {
-			error	"Error in function 'arrowcraft forceuse #' (Create Arrows)\n" .
-				"You don't have item $arg2 in your inventory.\n";
+			error TF("Error in function 'arrowcraft forceuse #' (Create Arrows)\n" .
+				"You don't have item %s in your inventory.\n", $arg2);
 		} elsif (!$char->{inventory}[$arg3] || !%{$char->{inventory}[$arg3]}) {
-			error	"Error in function 'arrowcraft forceuse #' (Create Arrows)\n" .
-				"You don't have item $arg3 in your inventory.\n";
+			error TF("Error in function 'arrowcraft forceuse #' (Create Arrows)\n" .
+				"You don't have item %s in your inventory.\n"), $arg3;
 		} else {
 			sendCardMerge($net, $char->{inventory}[$arg2]{index}, $char->{inventory}[$arg3]{index});
 		}
 	} else {
-		error	"Syntax Error in function 'card' (Card Compounding)\n" .
-			"Usage: card <use|mergelist|mergecancel|merge>\n";
+		error T("Syntax Error in function 'card' (Card Compounding)\n" .
+			"Usage: card <use|mergelist|mergecancel|merge>\n");
 	}
 }
 
@@ -689,24 +691,25 @@ sub cmdCart {
 	my ($arg1, $arg2) = split(' ', $input, 2);
 
 	if (!$cart{exists}) {
-		error	"Error in function 'cart' (Cart Management)\n" .
-			"You do not have a cart.\n";
+		error T("Error in function 'cart' (Cart Management)\n" .
+			"You do not have a cart.\n");
 		return;
 		
 	} elsif (!defined $cart{'inventory'}) {
-		error "Cart inventory is not available.\n";
+		error T("Cart inventory is not available.\n");
 		return;
 
 	} elsif ($arg1 eq "") {
-		my $msg = "-------------Cart--------------\n" .
-			"#  Name\n";
+		my $msg = T("-------------Cart--------------\n" .
+			"#  Name\n");
 		for (my $i = 0; $i < @{$cart{'inventory'}}; $i++) {
 			next if (!$cart{'inventory'}[$i] || !%{$cart{'inventory'}[$i]});
 			my $display = "$cart{'inventory'}[$i]{'name'} x $cart{'inventory'}[$i]{'amount'}";
-			$display .= " -- Not Identified" if !$cart{inventory}[$i]{identified};
+			$display .= T(" -- Not Identified") if !$cart{inventory}[$i]{identified};
 			$msg .= sprintf("%-2d %-34s\n", $i, $display);
 		}
-		$msg .= "\nCapacity: " . int($cart{'items'}) . "/" . int($cart{'items_max'}) . "  Weight: " . int($cart{'weight'}) . "/" . int($cart{'weight_max'}) . "\n";
+		$msg .= TF("\nCapacity: %d/%d  Weight: %d/%d\n", 
+			int($cart{'items'}), int($cart{'items_max'}), int($cart{'weight'}), int($cart{'weight_max'}));
 		$msg .= "-------------------------------\n";
 		message($msg, "list");
 
@@ -718,11 +721,11 @@ sub cmdCart {
 
 	} elsif ($arg1 eq "desc") {
 		if (!($arg2 =~ /\d+/)) {
-			error	"Syntax Error in function 'cart desc' (Show Cart Item Description)\n" .
-				"'$arg2' is not a valid cart item number.\n";
+			error TF("Syntax Error in function 'cart desc' (Show Cart Item Description)\n" .
+				"'%s' is not a valid cart item number.\n", $arg2);
 		} elsif (!$cart{'inventory'}[$arg2]) {
-			error	"Error in function 'cart desc' (Show Cart Item Description)\n" .
-				"Cart Item $arg2 does not exist.\n";
+			error TF("Error in function 'cart desc' (Show Cart Item Description)\n" .
+				"Cart Item %s does not exist.\n", $arg2);
 		} else {
 			printItemDesc($cart{'inventory'}[$arg2]{'nameID'});
 		}
@@ -730,13 +733,13 @@ sub cmdCart {
 	} elsif ($arg1 eq "release") {
 		sendCompanionRelease();
 		if ($conState == 5) {
-			message("Cart released.\n", "success");
+			message T("Cart released.\n"), "success";
 			$cart{exists} = 0;
 		}
 	
 	} else {
-		error	"Error in function 'cart'\n" .
-			"Command '$arg1' is not a known command.\n";
+		error TF("Error in function 'cart'\n" .
+			"Command '%s' is not a known command.\n", $arg1);
 	}
 }
 
@@ -744,8 +747,8 @@ sub cmdCart_add {
 	my ($name) = @_;
 
 	if (!defined $name) {
-		error	"Syntax Error in function 'cart add' (Add Item to Cart)\n" .
-			"Usage: cart add <item>\n";
+		error T("Syntax Error in function 'cart add' (Add Item to Cart)\n" . 
+			"Usage: cart add <item>\n");
 		return;
 	}
 
@@ -758,8 +761,8 @@ sub cmdCart_add {
 	my $item = Match::inventoryItem($name);
 
 	if (!$item) {
-		error	"Error in function 'cart add' (Add Item to Cart)\n" .
-			"Inventory Item $name does not exist.\n";
+		error TF("Error in function 'cart add' (Add Item to Cart)\n" .
+			"Inventory Item %s does not exist.\n", $name);
 		return;
 	}
 
@@ -773,8 +776,8 @@ sub cmdCart_get {
 	my ($name) = @_;
 
 	if (!defined $name) {
-		error	"Syntax Error in function 'cart get' (Get Item from Cart)\n" .
-			"Usage: cart get <cart item>\n";
+		error T("Syntax Error in function 'cart get' (Get Item from Cart)\n" .
+			"Usage: cart get <cart item>\n");
 		return;
 	}
 
@@ -786,8 +789,8 @@ sub cmdCart_get {
 
 	my $item = Match::cartItem($name);
 	if (!$item) {
-		error	"Error in function 'cart get' (Get Item from Cart)\n" .
-			"Cart Item $name does not exist.\n";
+		error TF("Error in function 'cart get' (Get Item from Cart)\n" .
+			"Cart Item %s does not exist.\n", $name);
 		return;
 	}
 
@@ -801,8 +804,8 @@ sub cmdCart_get {
 sub cmdChat {
 	my (undef, $arg1) = @_;
 	if ($arg1 eq "") {
-		error	"Syntax Error in function 'c' (Chat)\n" .
-			"Usage: c <message>\n";
+		error T("Syntax Error in function 'c' (Chat)\n" .
+			"Usage: c <message>\n");
 	} else {
 		sendMessage($net, "c", $arg1);
 	}
@@ -810,7 +813,7 @@ sub cmdChat {
 
 sub cmdChatLogClear {
 	chatLog_clear();
-	message("Chat log cleared.\n", "success");
+	message T("Chat log cleared.\n"), "success";
 }
 
 sub cmdChatRoom {
@@ -821,14 +824,14 @@ sub cmdChatRoom {
 		my ($arg2) = $args =~ /^\w+ (\d+)/;
 
 		if ($currentChatRoom eq "") {
-			error	"Error in function 'chat bestow' (Bestow Admin in Chat)\n" .
-				"You are not in a Chat Room.\n";
+			error T("Error in function 'chat bestow' (Bestow Admin in Chat)\n" .
+				"You are not in a Chat Room.\n");
 		} elsif ($arg2 eq "") {
-			error	"Syntax Error in function 'chat bestow' (Bestow Admin in Chat)\n" .
-				"Usage: chat bestow <user #>\n";
+			error T("Syntax Error in function 'chat bestow' (Bestow Admin in Chat)\n" .
+				"Usage: chat bestow <user #>\n");
 		} elsif ($currentChatRoomUsers[$arg2] eq "") {
-			error	"Error in function 'chat bestow' (Bestow Admin in Chat)\n" .
-				"Chat Room User $arg2 doesn't exist; type 'chat info' to see the list of users\n";
+			error TF("Error in function 'chat bestow' (Bestow Admin in Chat)\n" .
+				"Chat Room User %s doesn't exist; type 'chat info' to see the list of users\n", $arg2);
 		} else {
 			sendChatRoomBestow($net, $currentChatRoomUsers[$arg2]);
 		}
@@ -840,8 +843,8 @@ sub cmdChatRoom {
 		my ($password) = $args =~ /^\w+ \"[\s\S]*?\" \d+ \d+ ([\s\S]+)/;
 
 		if ($title eq "") {
-			error	"Syntax Error in function 'chatmod' (Modify Chat Room)\n" .
-				"Usage: chat modify \"<title>\" [<limit #> <public flag> <password>]\n";
+			error T("Syntax Error in function 'chatmod' (Modify Chat Room)\n" .
+				"Usage: chat modify \"<title>\" [<limit #> <public flag> <password>]\n");
 		} else {
 			if ($users eq "") {
 				$users = 20;
@@ -856,14 +859,14 @@ sub cmdChatRoom {
 		my ($arg2) = $args =~ /^\w+ (\d+)/;
 
 		if ($currentChatRoom eq "") {
-			error	"Error in function 'chat kick' (Kick from Chat)\n" .
-				"You are not in a Chat Room.\n";
+			error T("Error in function 'chat kick' (Kick from Chat)\n" .
+				"You are not in a Chat Room.\n");
 		} elsif ($arg2 eq "") {
-			error	"Syntax Error in function 'chat kick' (Kick from Chat)\n" .
-				"Usage: chat kick <user #>\n";
+			error T("Syntax Error in function 'chat kick' (Kick from Chat)\n" .
+				"Usage: chat kick <user #>\n");
 		} elsif ($currentChatRoomUsers[$arg2] eq "") {
-			error	"Error in function 'chat kick' (Kick from Chat)\n" .
-				"Chat Room User $arg2 doesn't exist\n";
+			error TF("Error in function 'chat kick' (Kick from Chat)\n" .
+				"Chat Room User %s doesn't exist\n", $arg2);
 		} else {
 			sendChatRoomKick($net, $currentChatRoomUsers[$arg2]);
 		}
@@ -873,22 +876,22 @@ sub cmdChatRoom {
 		my ($arg3) = $args =~ /^\w+ \d+ (\d+)/;
 
 		if ($arg2 eq "") {
-			error	"Syntax Error in function 'chat join' (Join Chat Room)\n" .
-				"Usage: chat join <chat room #> [<password>]\n";
+			error T("Syntax Error in function 'chat join' (Join Chat Room)\n" .
+				"Usage: chat join <chat room #> [<password>]\n");
 		} elsif ($currentChatRoom ne "") {
-			error	"Error in function 'chat join' (Join Chat Room)\n" .
-				"You are already in a chat room.\n";
+			error T("Error in function 'chat join' (Join Chat Room)\n" .
+				"You are already in a chat room.\n");
 		} elsif ($chatRoomsID[$arg2] eq "") {
-			error	"Error in function 'chat join' (Join Chat Room)\n" .
-				"Chat Room $arg2 does not exist.\n";
+			error TF("Error in function 'chat join' (Join Chat Room)\n" .
+				"Chat Room %s does not exist.\n", $arg2);
 		} else {
 			sendChatRoomJoin($net, $chatRoomsID[$arg2], $arg3);
 		}
 
 	} elsif ($arg1 eq "leave") {
 		if ($currentChatRoom eq "") {
-			error	"Error in function 'chat leave' (Leave Chat Room)\n" .
-				"You are not in a Chat Room.\n";
+			error T("Error in function 'chat leave' (Leave Chat Room)\n" .
+				"You are not in a Chat Room.\n");
 		} else {
 			sendChatRoomLeave($net);
 		}
@@ -900,11 +903,11 @@ sub cmdChatRoom {
 		my ($password) = $args =~ /^\w+ \"[\s\S]*?\" \d+ \d+ ([\s\S]+)/;
 
 		if ($title eq "") {
-			error	"Syntax Error in function 'chat create' (Create Chat Room)\n" .
-				"Usage: chat create \"<title>\" [<limit #> <public flag> <password>]\n";
+			error T("Syntax Error in function 'chat create' (Create Chat Room)\n" .
+				"Usage: chat create \"<title>\" [<limit #> <public flag> <password>]\n");
 		} elsif ($currentChatRoom ne "") {
-			error	"Error in function 'chat create' (Create Chat Room)\n" .
-				"You are already in a chat room.\n";
+			error T("Error in function 'chat create' (Create Chat Room)\n" .
+				"You are already in a chat room.\n");
 		} else {
 			if ($users eq "") {
 				$users = 20;
@@ -923,9 +926,8 @@ sub cmdChatRoom {
 		}
 
 	} elsif ($arg1 eq "list") {
-		message("------------------------------- Chat Room List --------------------------------\n" .
-			"#   Title                                  Owner                Users   Type\n",
-			"list");
+		message T("------------------------------- Chat Room List --------------------------------\n" .
+			"#   Title                                  Owner                Users   Type\n"), "list";
 		for (my $i = 0; $i < @chatRoomsID; $i++) {
 			next if ($chatRoomsID[$i] eq "");
 			my $owner_string = ($chatRooms{$chatRoomsID[$i]}{'ownerID'} ne $accountID) ? $players{$chatRooms{$chatRoomsID[$i]}{'ownerID'}}{'name'} : $char->{'name'};
@@ -940,11 +942,10 @@ sub cmdChatRoom {
 
 	} elsif ($arg1 eq "info") {
 		if ($currentChatRoom eq "") {
-			error "There is no chat room info - you are not in a chat room\n";
+			error T("There is no chat room info - you are not in a chat room\n");
 		} else {
-			message("-----------Chat Room Info-----------\n" .
-				"Title                     Users   Public/Private\n",
-				"list");
+			message T("-----------Chat Room Info-----------\n" .
+				"Title                     Users   Public/Private\n"), "list";
 			my $public_string = ($chatRooms{$currentChatRoom}{'public'}) ? "Public" : "Private";
 			my $limit_string = $chatRooms{$currentChatRoom}{'num_users'}."/".$chatRooms{$currentChatRoom}{'limit'};
 
@@ -953,7 +954,8 @@ sub cmdChatRoom {
 				[$chatRooms{$currentChatRoom}{'title'}, $limit_string, $public_string]),
 				"list");
 
-			message("-- Users --\n", "list");
+			# Translation Comment: Users in chat room
+			message T("-- Users --\n"), "list";
 			for (my $i = 0; $i < @currentChatRoomUsers; $i++) {
 				next if ($currentChatRoomUsers[$i] eq "");
 				my $user_string = $currentChatRoomUsers[$i];
@@ -966,8 +968,8 @@ sub cmdChatRoom {
 			message("------------------------------------\n", "list");
 		}
 	} else {
-		error	"Syntax Error in function 'chat' (Chat room management)\n" .
-			"Usage: chat <create|modify|join|kick|leave|info|list|bestow>\n";
+		error T("Syntax Error in function 'chat' (Chat room management)\n" .
+			"Usage: chat <create|modify|join|kick|leave|info|list|bestow>\n");
 	}
 
 }
@@ -978,22 +980,22 @@ sub cmdChist {
 	$args = 5 if ($args eq "");
 
 	if (!($args =~ /^\d+$/)) {
-		error	"Syntax Error in function 'chist' (Show Chat History)\n" .
-			"Usage: chist [<number of entries #>]\n";
+		error T("Syntax Error in function 'chist' (Show Chat History)\n" .
+			"Usage: chist [<number of entries #>]\n");
 
 	} elsif (open(CHAT, "<:utf8", $Settings::chat_file)) {
 		my @chat = <CHAT>;
 		close(CHAT);
-		message("------ Chat History --------------------\n", "list");
+		message T("------ Chat History --------------------\n"), "list";
 		my $i = @chat - $args;
 		$i = 0 if ($i < 0);
 		for (; $i < @chat; $i++) {
 			message($chat[$i], "list");
 		}
-		message("----------------------------------------\n", "list");
+		message "----------------------------------------\n", "list";
 
 	} else {
-		error "Unable to open $Settings::chat_file\n";
+		error TF("Unable to open %s\n", $Settings::chat_file);
 	}
 }
 
@@ -1007,16 +1009,19 @@ sub cmdConf {
 	my ($arg2) = $args =~ /^\w+\s+([\s\S]+)\s*$/;
 
 	if ($arg1 eq "") {
-		error	"Syntax Error in function 'conf' (Change a Configuration Key)\n" .
-			"Usage: conf <variable> [<value>|none]\n";
+		error T("Syntax Error in function 'conf' (Change a Configuration Key)\n" .
+			"Usage: conf <variable> [<value>|none]\n");
 
 	} elsif (!exists $config{$arg1}) {
-		error "Config variable $arg1 doesn't exist\n";
+		error TF("Config variable %s doesn't exist\n", $arg1);
 
 	} elsif ($arg2 eq "") {
 		my $value = $config{$arg1};
-		$value = "-not-displayed-" if ($arg1 =~ /password/i);
-		message "Config '$arg1' is $value\n", "info";
+		if ($arg1 =~ /password/i) {
+			message TF("Config '%s' is not displayed\n", $arg1), "info";
+		} else {
+			message TF("Config '%s' is %s\n", $arg1, $value), "info";
+		}
 
 	} else {
 		undef $arg2 if ($arg2 eq "none");
@@ -1034,7 +1039,7 @@ sub cmdDamage {
 	
 	if ($args eq "") {
 		my $total = 0;
-		message("Damage Taken Report:\n", "list");
+		message T("Damage Taken Report:\n"), "list";
 		message(sprintf("%-40s %-20s %-10s\n", 'Name', 'Skill', 'Damage'), "list");
 		for my $monsterName (sort keys %damageTaken) {
 			my $monsterHref = $damageTaken{$monsterName};
@@ -1043,15 +1048,15 @@ sub cmdDamage {
 				$total += $monsterHref->{$skillName};
 			}
 		}
-		message("Total Damage Taken: $total\n", "list");
-		message("End of report.\n", "list");
+		message TF("Total Damage Taken: %s\n", $total), "list";
+		message T("End of report.\n"), "list";
 
 	} elsif ($args eq "reset") {
 		undef %damageTaken;
-		message "Damage Taken Report reset.\n", "success";
+		message T("Damage Taken Report reset.\n"), "success";
 	} else {
-		error "Error in function 'damage' (Damage Report)\n" .
-			"Usage: damage [reset]\n";
+		error T("Syntax error in function 'damage' (Damage Report)\n" .
+			"Usage: damage [reset]\n");
 	}
 }
 
@@ -1060,59 +1065,59 @@ sub cmdDeal {
 	my @arg = split / /, $args;
 
 	if (%currentDeal && $arg[0] =~ /\d+/) {
-		error	"Error in function 'deal' (Deal a Player)\n" .
-			"You are already in a deal\n";
+		error T("Error in function 'deal' (Deal a Player)\n" .
+			"You are already in a deal\n");
 	} elsif (%incomingDeal && $arg[0] =~ /\d+/) {
-		error	"Error in function 'deal' (Deal a Player)\n" .
-			"You must first cancel the incoming deal\n";
+		error T("Error in function 'deal' (Deal a Player)\n" .
+			"You must first cancel the incoming deal\n");
 	} elsif ($arg[0] =~ /\d+/ && !$playersID[$arg[0]]) {
-		error	"Error in function 'deal' (Deal a Player)\n" .
-			"Player $arg[0] does not exist\n";
+		error TF("Error in function 'deal' (Deal a Player)\n" .
+			"Player %s does not exist\n", $arg[0]);
 	} elsif ($arg[0] =~ /\d+/) {
 		my $ID = $playersID[$arg[0]];
 		my $player = Actor::get($ID);
-		message "Attempting to deal $player\n";
+		message TF("Attempting to deal %s\n", $player);
 		deal($player);
 
 	} elsif ($arg[0] eq "no" && !%incomingDeal && !%outgoingDeal && !%currentDeal) {
-		error	"Error in function 'deal' (Deal a Player)\n" .
-			"There is no incoming/current deal to cancel\n";
+		error T("Error in function 'deal' (Deal a Player)\n" .
+			"There is no incoming/current deal to cancel\n");
 	} elsif ($arg[0] eq "no" && (%incomingDeal || %outgoingDeal)) {
 		sendDealCancel();
 	} elsif ($arg[0] eq "no" && %currentDeal) {
 		sendCurrentDealCancel();
 
 	} elsif ($arg[0] eq "" && !%incomingDeal && !%currentDeal) {
-		error	"Error in function 'deal' (Deal a Player)\n" .
-			"There is no deal to accept\n";
+		error T("Error in function 'deal' (Deal a Player)\n" .
+			"There is no deal to accept\n");
 	} elsif ($arg[0] eq "" && $currentDeal{'you_finalize'} && !$currentDeal{'other_finalize'}) {
-		error	"Error in function 'deal' (Deal a Player)\n" .
-			"Cannot make the trade - $currentDeal{'name'} has not finalized\n";
+		error TF("Error in function 'deal' (Deal a Player)\n" .
+			"Cannot make the trade - %s has not finalized\n", $currentDeal{'name'});
 	} elsif ($arg[0] eq "" && $currentDeal{'final'}) {
-		error	"Error in function 'deal' (Deal a Player)\n" .
-			"You already accepted the final deal\n";
+		error T("Error in function 'deal' (Deal a Player)\n" .
+			"You already accepted the final deal\n");
 	} elsif ($arg[0] eq "" && %incomingDeal) {
 		sendDealAccept();
 	} elsif ($arg[0] eq "" && $currentDeal{'you_finalize'} && $currentDeal{'other_finalize'}) {
 		sendDealTrade();
 		$currentDeal{'final'} = 1;
-		message("You accepted the final Deal\n", "deal");
+		message T("You accepted the final Deal\n"), "deal";
 	} elsif ($arg[0] eq "" && %currentDeal) {
 		sendDealAddItem(0, $currentDeal{'you_zenny'});
 		sendDealFinalize();
 
 	} elsif ($arg[0] eq "add" && !%currentDeal) {
-		error	"Error in function 'deal_add' (Add Item to Deal)\n" .
-			"No deal in progress\n";
+		error T("Error in function 'deal_add' (Add Item to Deal)\n" .
+			"No deal in progress\n");
 	} elsif ($arg[0] eq "add" && $currentDeal{'you_finalize'}) {
-		error	"Error in function 'deal_add' (Add Item to Deal)\n" .
-			"Can't add any Items - You already finalized the deal\n";
+		error T("Error in function 'deal_add' (Add Item to Deal)\n" .
+			"Can't add any Items - You already finalized the deal\n");
 	} elsif ($arg[0] eq "add" && $arg[1] =~ /\d+/ && ( !$char->{'inventory'}[$arg[1]] || !%{$char->{'inventory'}[$arg[1]]} )) {
-		error	"Error in function 'deal_add' (Add Item to Deal)\n" .
-			"Inventory Item $arg[1] does not exist.\n";
+		error TF("Error in function 'deal_add' (Add Item to Deal)\n" .
+			"Inventory Item %s does not exist.\n", $arg[1]);
 	} elsif ($arg[0] eq "add" && $arg[2] && $arg[2] !~ /\d+/) {
-		error	"Error in function 'deal_add' (Add Item to Deal)\n" .
-			"Amount must either be a number, or not specified.\n";
+		error T("Error in function 'deal_add' (Add Item to Deal)\n" .
+			"Amount must either be a number, or not specified.\n");
 	} elsif ($arg[0] eq "add" && $arg[1] =~ /\d+/) {
 		if ($currentDeal{you_items} < 10) {
 			if (!$arg[2] || $arg[2] > $char->{'inventory'}[$arg[1]]{'amount'}) {
@@ -1120,27 +1125,27 @@ sub cmdDeal {
 			}
 			dealAddItem($char->{inventory}[$arg[1]], $arg[2]);
 		} else {
-			error("You can't add any more items to the deal\n", "deal");
+			error T("You can't add any more items to the deal\n"), "deal";
 		}
 	} elsif ($arg[0] eq "add" && $arg[1] eq "z") {
 		if (!$arg[2] || $arg[2] > $char->{'zenny'}) {
 			$arg[2] = $char->{'zenny'};
 		}
 		$currentDeal{'you_zenny'} = $arg[2];
-		message("You put forward " . formatNumber($arg[2]) . "z to Deal\n", "deal");
+		message TF("You put forward %sz to Deal\n", formatNumber($arg[2])), "deal";
 
 	} else {
-		error	"Syntax Error in function 'deal' (Deal a player)\n" .
-			"Usage: deal [<Player # | no | add>] [<item #>] [<amount>]\n";
+		error T("Syntax Error in function 'deal' (Deal a player)\n" .
+			"Usage: deal [<Player # | no | add>] [<item #>] [<amount>]\n");
 	}
 }
 
 sub cmdDealList {
 	if (!%currentDeal) {
-		error "There is no deal list - You are not in a deal\n";
+		error T("There is no deal list - You are not in a deal\n");
 
 	} else {
-		message("-----------Current Deal-----------\n", "list");
+		message T("-----------Current Deal-----------\n"), "list";
 		my $other_string = $currentDeal{'name'};
 		my $you_string = "You";
 		if ($currentDeal{'other_finalize'}) {
@@ -1193,10 +1198,8 @@ sub cmdDealList {
 		$you_string = ($currentDeal{'you_zenny'} ne "") ? $currentDeal{'you_zenny'} : 0;
 		$other_string = ($currentDeal{'other_zenny'} ne "") ? $currentDeal{'other_zenny'} : 0;
 
-		message(swrite(
-			"Zenny: @<<<<<<<<<<<<<            Zenny: @<<<<<<<<<<<<<",
-			[formatNumber($you_string), formatNumber($other_string)]),
-			"list");
+		message TF("Zenny: %-25s Zenny: %-14s", 
+			formatNumber($you_string), formatNumber($other_string)), "list";
 		message("----------------------------------\n", "list");
 	}
 }
@@ -1219,14 +1222,16 @@ sub cmdDebug {
 		my $ai_timeout = sprintf("%.2f", time - $timeout{'ai'}{'time'});
 		my $ai_time = sprintf("%.4f", time - $ai_v{'AI_last_finished'});
 
-		message "------------ Debug information ------------\n", "list";
-		message "ConState: $conState              Connected: $connected\n", "list";
-		message "AI enabled: $AI            AI_forcedOff: $AI_forcedOff\n", "list";
-		message "\@ai_seq = @ai_seq\n", "list";
-		message "Last packet: $time secs ago\n", "list";
-		message "\$timeout{ai}: $ai_timeout secs ago  (value should be >$timeout{'ai'}{'timeout'})\n", "list";
-		message "Last AI() call: $ai_time secs ago\n", "list";
-		message "-------------------------------------------\n", "list";
+		message TF("------------ Debug information ------------\n" .
+			"ConState: %s             Connected: %s\n" .
+			"AI enabled: %s            AI_forcedOff: %s\n" .
+			"\@ai_seq = %s\n" .
+			"Last packet: %.2f secs ago\n" .
+			"\$timeout{ai}: %.2f secs ago  (value should be >%d)\n" .
+			"Last AI() call: %.2f secs ago\n" .
+			"-------------------------------------------\n",
+		$conState, $connected, $AI, $AI_forcedOff, @ai_seq, $time, $ai_timeout, 
+		$timeout{'ai'}{'timeout'}, $ai_time), "list";
 	}
 }
 
@@ -1245,8 +1250,8 @@ sub cmdDrop {
 	my ($arg1) = $args =~ /^([\d,-]+)/;
 	my ($arg2) = $args =~ /^[\d,-]+ (\d+)$/;
 	if ($arg1 eq "") {
-		error	"Syntax Error in function 'drop' (Drop Inventory Item)\n" .
-			"Usage: drop <item #> [<amount>]\n";
+		error T("Syntax Error in function 'drop' (Drop Inventory Item)\n" .	
+			"Usage: drop <item #> [<amount>]\n");
 	} else {
 		my @temp = split(/,/, $arg1);
 		@temp = grep(!/^$/, @temp); # Remove empty entries
@@ -1264,7 +1269,7 @@ sub cmdDrop {
 		if (@items > 0) {
 			main::ai_drop(\@items, $arg2);
 		} else {
-			error "No items were dropped.\n";
+			error T("No items were dropped.\n");
 		}
 	}
 }
@@ -1285,8 +1290,8 @@ sub cmdEmotion {
 	my $num = getEmotionByCommand($args);
 
 	if (!defined $num) {
-		error	"Syntax Error in function 'e' (Emotion)\n" .
-			"Usage: e <command>\n";
+		error T("Syntax Error in function 'e' (Emotion)\n" .
+			"Usage: e <command>\n");
 	} else {
 		sendEmotion($net, $num);
 	}
@@ -1305,7 +1310,9 @@ sub cmdEquip {
 	}
 
 	if ($arg1 eq "slots") {
-		message "Slots:\n".join("\n", @Item::slots)."\n", "list";
+		 
+		# Translation Comment: List of equiped items on each slot
+		message T("Slots:\n") . join("\n", @Item::slots). "\n", "list";
 		return;
 	}
 
@@ -1318,12 +1325,13 @@ sub cmdEquip {
 	$item = Item::get(defined $slot ? $arg2 : $arg1, undef, 1);
 
 	if (!$item) {
-		error "You don't have $arg1.\n";
+		error TF("You don't have %s.\n", $arg1);
 		return;
 	}
 
 	if (!$item->{type_equip} && $item->{type} != 10) {
-		error "Inventory Item $item->{name} ($item->{invIndex}) can't be equipped.\n";
+		error TF("Inventory Item %s (%s) can't be equipped.\n", 
+			$item->{name}, $item->{invIndex});
 		return;
 	}
 	if ($slot) {
@@ -1344,8 +1352,8 @@ sub cmdEquip_list {
 
 sub cmdEval {
 	if ($_[1] eq "") {
-		error	"Syntax Error in function 'eval' (Evaluate a Perl expression)\n" .
-			"Usage: eval <expression>\n";
+		error T("Syntax Error in function 'eval' (Evaluate a Perl expression)\n" .
+			"Usage: eval <expression>\n");
 	} else {
 		package main;
 		no strict;
@@ -1384,19 +1392,24 @@ sub cmdExp {
 			}
 		}
 		$char->{deathCount} = 0 if (!defined $char->{deathCount});
-		message("------------Exp Report------------\n" .
-		"Botting time : " . timeConvert($w_sec) . "\n" .
-		"BaseExp      : " . formatNumber($totalBaseExp) . " $percentB\n" .
-		"JobExp       : " . formatNumber($totalJobExp) . " $percentJ\n" .
-		"BaseExp/Hour : " . formatNumber($bExpPerHour) . " $percentBhr\n" .
-		"JobExp/Hour  : " . formatNumber($jExpPerHour) . " $percentJhr\n" .
-		"Zenny        : " . formatNumber($zennyMade) . "\n" .
-		"Zenny/Hour   : " . formatNumber($zennyPerHour) . "\n" .
-		"Base Levelup Time Estimation : " . timeConvert($EstB_sec) . "\n" .
-		"Job Levelup Time Estimation  : " . timeConvert($EstJ_sec) . "\n" .
-		"Died : $char->{'deathCount'}\n" .
-		"Bytes Sent   : " . formatNumber($bytesSent) . "\n" .
-		"Bytes Rcvd   : " . formatNumber($bytesReceived) . "\n", "info");
+		message TF( "------------Exp Report------------\n" .
+					"Botting time : %s\n" .
+					"BaseExp      : %s %s\n" .
+					"JobExp       : %s %s\n" .
+					"BaseExp/Hour : %s %s\n" .
+					"JobExp/Hour  : %s %s\n" .
+					"Zenny        : %s\n" .
+					"Zenny/Hour   : %s\n" .
+					"Base Levelup Time Estimation : %s\n" .
+					"Job Levelup Time Estimation  : %s\n" .
+					"Died : %s\n" .
+					"Bytes Sent   : %s\n" .
+					"Bytes Rcvd   : %s\n",
+			timeConvert($w_sec), formatNumber($totalBaseExp), $percentB, formatNumber($totalJobExp), $percentJ,
+			formatNumber($bExpPerHour), $percentBhr, formatNumber($jExpPerHour), $percentJhr,
+			formatNumber($zennyMade), formatNumber($zennyPerHour), timeConvert($EstB_sec), timeConvert($EstJ_sec), 
+			$char->{'deathCount'}, formatNumber($bytesSent), formatNumber($bytesReceived)), "info";
+			
 		if ($arg1 eq "") {
 			message("---------------------------------\n", "list");
 		}
@@ -1407,9 +1420,8 @@ sub cmdExp {
  
 		$knownArg = 1;
 
-		message("-[Monster Killed Count]-----------------------\n" .
-			"#   ID     Name                      Count\n",
-			"list");
+		message T("-[Monster Killed Count]-----------------------\n" .
+			"#   ID     Name                      Count\n"), "list";
 		for (my $i = 0; $i < @monsters_Killed; $i++) {
 			next if ($monsters_Killed[$i] eq "");
 			message(swrite(
@@ -1419,7 +1431,7 @@ sub cmdExp {
 			$total += $monsters_Killed[$i]{count};
 		}
 		message("----------------------------------------------\n" .
-			"Total number of killed monsters: $total\n" .
+			TF("Total number of killed monsters: %s\n", $total) .
 			"----------------------------------------------\n",
 			"list");
 	}
@@ -1427,8 +1439,8 @@ sub cmdExp {
 	if (($arg1 eq "item") || ($arg1 eq "report")) {
 		$knownArg = 1;
 
-		message("-[Item Change Count]--------------------------\n", "list");
-		message(sprintf("%-40s %s\n", 'Name', 'Count'), "list");
+		message T("-[Item Change Count]--------------------------\n" .
+			"Name                                    Count\n"), "list";
 		for my $item (sort keys %itemChange) {
 			next unless $itemChange{$item};
 			message(sprintf("%-40s %5d\n", $item, $itemChange{$item}), "list");
@@ -1450,12 +1462,12 @@ sub cmdExp {
 		undef %itemChange;
 		$bytesSent = 0;
 		$bytesReceived = 0;
-		message "Exp counter reset.\n", "success";
+		message T("Exp counter reset.\n"), "success";
 	}
 	
 	if (!$knownArg) {
-		error "Error in function 'exp' (Exp Report)\n" .
-			"Usage: exp [<report | monster | item | reset>]\n";
+		error T("Syntax error in function 'exp' (Exp Report)\n" .
+			"Usage: exp [<report | monster | item | reset>]\n");
 	}
 }
 
@@ -1463,11 +1475,15 @@ sub cmdFalcon {
 	my (undef, $arg1) = @_;
 
 	if ($arg1 eq "") {
-		message "Your falcon is " . (hasFalcon() ? "active" : "inactive");
+		if (hasFalcon()) {
+			message T("Your falcon is active\n");
+		} else {
+			message T("Your falcon is inactive\n");
+		}
 	} elsif ($arg1 eq "release") {
 		if (!hasFalcon()) {
-		error	"Error in function 'falcon release' (Remove Falcon Status)\n" .
-			"You don't possess a falcon.\n";
+		error T("Error in function 'falcon release' (Remove Falcon Status)\n" .
+			"You don't possess a falcon.\n");
 		} else {
 			sendCompanionRelease();
 		}
@@ -1477,15 +1493,15 @@ sub cmdFalcon {
 sub cmdFollow {
 	my (undef, $arg1) = @_;
 	if ($arg1 eq "") {
-		error	"Syntax Error in function 'follow' (Follow Player)\n" .
-			"Usage: follow <player #>\n";
+		error T("Syntax Error in function 'follow' (Follow Player)\n" .
+			"Usage: follow <player #>\n");
 	} elsif ($arg1 eq "stop") {
 		AI::clear("follow");
 		configModify("follow", 0);
 	} elsif ($arg1 =~ /^\d+$/) {
 		if (!$playersID[$arg1]) {
-			error	"Error in function 'follow' (Follow Player)\n" .
-				"Player $arg1 either not visible or not online in party.\n";
+			error TF("Error in function 'follow' (Follow Player)\n" .
+				"Player %s either not visible or not online in party.\n", $arg1);
 		} else {
 			AI::clear("follow");
 			main::ai_follow($players{$playersID[$arg1]}->name);
@@ -1509,9 +1525,9 @@ sub cmdFriend {
 		my $player = Match::player($arg2);
 
 		if (!$player) {
-			error "Player $arg2 does not exist\n";
+			error T("Player %s does not exist\n", $arg2);
 		} elsif (!$player->{gotName}) {
-			error "Player name has not been received, please try again\n";
+			error T("Player name has not been received, please try again\n");
 		} else {
 			my $alreadyFriend = 0;
 			for (my $i = 0; $i < @friendsID; $i++) {
@@ -1521,60 +1537,60 @@ sub cmdFriend {
 				}
 			}
 			if ($alreadyFriend) {
-				error "$player->{name} is already your friend\n";
+				error TF("%s is already your friend\n", $player->{name});
 			} else {
-				message "Requesting $player->{name} to be your friend\n";
+				message TF("Requesting %s to be your friend\n", $player->{name});
 				sendFriendRequest($net, $players{$playersID[$arg2]}{name});
 			}
 		}
 
 	} elsif ($arg1 eq "remove") {
 		if ($arg2 < 1 || $arg2 > @friendsID) {
-			error "Friend #$arg2 does not exist\n";
+			error TF("Friend #%s does not exist\n", $arg2);
 		} else {
 			$arg2--;
-			message "Attempting to remove $friends{$arg2}{'name'} from your friend list\n";
+			message TF("Attempting to remove %s from your friend list\n", $friends{$arg2}{'name'});
 			sendFriendRemove($net, $friends{$arg2}{'accountID'}, $friends{$arg2}{'charID'});
 		}
 
 	} elsif ($arg1 eq "accept") {
 		if ($incomingFriend{'accountID'} eq "") {
-			error "Can't accept the friend request, no incoming request\n";
+			error T("Can't accept the friend request, no incoming request\n");
 		} else {
-			message "Accepting the friend request from $incomingFriend{'name'}\n";
+			message TF("Accepting the friend request from %s\n", $incomingFriend{'name'});
 			sendFriendAccept($net, $incomingFriend{'accountID'}, $incomingFriend{'charID'});
 			undef %incomingFriend;
 		}
 
 	} elsif ($arg1 eq "reject") {
 		if ($incomingFriend{'accountID'} eq "") {
-			error "Can't reject the friend request - no incoming request\n";
+			error T("Can't reject the friend request - no incoming request\n");
 		} else {
-			message "Rejecting the friend request from $incomingFriend{'name'}\n";
+			message TF("Rejecting the friend request from %s\n", $incomingFriend{'name'});
 			sendFriendReject($net, $incomingFriend{'accountID'}, $incomingFriend{'charID'});
 			undef %incomingFriend;
 		}
 
 	} elsif ($arg1 eq "pm") {
 		if ($arg2 < 1 || $arg2 > @friendsID) {
-			error "Friend #$arg2 does not exist\n";
+			error TF("Friend #%s does not exist\n", $arg2);
 		} else {
 			$arg2--;
 			if (binFind(\@privMsgUsers, $friends{$arg2}{'name'}) eq "") {
-				message "Friend $friends{$arg2}{'name'} has been added to the PM list as ".@privMsgUsers."\n";
+				message TF("Friend %s has been added to the PM list as %s\n", $friends{$arg2}{'name'}, @privMsgUsers);
 				$privMsgUsers[@privMsgUsers] = $friends{$arg2}{'name'};
 			} else {
-				message "Friend $friends{$arg2}{'name'} is already in the PM list\n";
+				message TF("Friend %s is already in the PM list\n", $friends{$arg2}{'name'});
 			}
 		}
 
 	} elsif ($arg1 ne "") {
-		error "Syntax Error in function 'friend' (Manage Friends List)\n" .
-			"Usage: friend [request|remove|accept|reject|pm]\n";
+		error T("Syntax Error in function 'friend' (Manage Friends List)\n" .
+			"Usage: friend [request|remove|accept|reject|pm]\n");
 
 	} else {
-		message("------------- Friends --------------\n", "list");
-		message("#   Name                      Online\n", "list");
+		message T("------------- Friends --------------\n" .
+			"#   Name                      Online\n"), "list";
 		for (my $i = 0; $i < @friendsID; $i++) {
 			message(swrite(
 				"@<  @<<<<<<<<<<<<<<<<<<<<<<<  @",
@@ -1597,74 +1613,74 @@ sub cmdGuild {
 
 	if ($arg1 eq "join") {
 		if ($arg2 ne "1" && $arg2 ne "0") {
-			error	"Syntax Error in function 'guild join' (Accept/Deny Guild Join Request)\n" .
-				"Usage: guild join <flag>\n";
+			error T("Syntax Error in function 'guild join' (Accept/Deny Guild Join Request)\n" .
+				"Usage: guild join <flag>\n");
 			return;
 		} elsif ($incomingGuild{'ID'} eq "") {
-			error	"Error in function 'guild join' (Join/Request to Join Guild)\n" .
-				"Can't accept/deny guild request - no incoming request.\n";
+			error T("Error in function 'guild join' (Join/Request to Join Guild)\n" .
+				"Can't accept/deny guild request - no incoming request.\n");
 			return;
 		}
 
 		sendGuildJoin($net, $incomingGuild{ID}, $arg2);
 		undef %incomingGuild;
 		if ($arg2) {
-			message "You accepted the guild join request.\n", "success";
+			message T("You accepted the guild join request.\n"), "success";
 		} else {
-			message "You denied the guild join request.\n", "info";
+			message T("You denied the guild join request.\n"), "info";
 		}
 
 	} elsif ($arg1 eq "create") {
 		if (!$arg2) {
-			error	"Syntax Error in function 'guild create' (Create Guild)\n" .
-				"Usage: guild create <name>\n";
+			error T("Syntax Error in function 'guild create' (Create Guild)\n" .
+				"Usage: guild create <name>\n");
 		} else {
 			sendGuildCreate($arg2);
 		}
 
 	} elsif (!defined $char->{guild}) {
-		error "You are not in a guild.\n";
+		error T("You are not in a guild.\n");
 
 	} elsif ($arg1 eq "request") {
 		my $player = Match::player($arg2);
 		if (!$player) {
-			error "Player $arg2 does not exist.\n";
+			error TF("Player %s does not exist.\n", $arg2);
 		} else {
 			sendGuildJoinRequest($player->{ID});
-			message "Sent guild join request to $player->{name}\n";
+			message TF("Sent guild join request to %s\n", $player->{name});
 		}
 
 	} elsif ($arg1 eq "ally") {
 		if (!$guild{master}) {
-			error "No guild information available. Type guild to refresh and then try again.\n";
+			error T("No guild information available. Type guild to refresh and then try again.\n");
 			return;
 		}
 		my $player = Match::player($arg2);
 		if (!$player) {
-			error "Player $arg2 does not exist.\n";
+			error TF("Player %s does not exist.\n", $arg2);
 		} elsif (!$char->{name} eq $guild{master}) {
-			error "You must be guildmaster to set an alliance\n";
+			error T("You must be guildmaster to set an alliance\n");
 			return;
 		} else {
 			sendGuildSetAlly($net,$player->{ID},$accountID,$charID);
-			message "Sent guild alliance request to $player->{name}\n";
+			message TF("Sent guild alliance request to %s\n", $player->{name});
 		}
 
 	} elsif ($arg1 eq "leave") {
 		sendGuildLeave($arg2);
-		message "Sending guild leave: $arg2\n";
+		message TF("Sending guild leave: %s\n", $arg2);
 
 	} elsif ($arg1 eq "break") {
 		if (!$arg2) {
-			error	"Syntax Error in function 'guild break' (Break Guild)\n" .
-				"Usage: guild break <guild name>\n";
+			error T("Syntax Error in function 'guild break' (Break Guild)\n" .
+				"Usage: guild break <guild name>\n");
 		} else {
 			sendGuildBreak($arg2);
-			message "Sending guild break: $arg2\n";
+			message TF("Sending guild break: %s\n", $arg2);
 		}
 
 	} elsif ($arg1 eq "" || !%guild) {
-		message	"Requesting guild information...\n", "info";
+		message	T("Requesting guild information...\n"), "info";
 		sendGuildInfoRequest($net);
 
 		# Replies 01B6 (Guild Info) and 014C (Guild Ally/Enemy List)
@@ -1674,28 +1690,29 @@ sub cmdGuild {
 		sendGuildRequest($net, 1);
 
 		if ($arg1 eq "") {
-			message "Enter command to view guild information: guild < info | member >\n", "info";
+			message T("Enter command to view guild information: guild <info | member>\n"), "info";
 		} else {
-			message	"Type 'guild $args' again to view the information.\n", "info";
+			message	TF("Type 'guild %s' again to view the information.\n", $args), "info";
 		}
 
 	} elsif ($arg1 eq "info") {
-		message("---------- Guild Information ----------\n", "info");
-		message(swrite(
-			"Name    : @<<<<<<<<<<<<<<<<<<<<<<<<",	[$guild{name}],
-			"Lv      : @<<",			[$guild{lvl}],
-			"Exp     : @>>>>>>>>>/@<<<<<<<<<<",	[$guild{exp}, $guild{next_exp}],
-			"Master  : @<<<<<<<<<<<<<<<<<<<<<<<<",	[$guild{master}],
-			"Connect : @>>/@<<",			[$guild{conMember}, $guild{maxMember}]),
-			"info");
+		message swrite(T("---------- Guild Information ----------\n" .
+			"Name    : \@<<<<<<<<<<<<<<<<<<<<<<<<\n" .
+			"Lv      : \@<<\n" .
+			"Exp     : \@>>>>>>>>>/\@<<<<<<<<<<\n" .
+			"Master  : \@<<<<<<<<<<<<<<<<<<<<<<<<\n" .
+			"Connect : \@>>/\@<<"),
+			[$guild{name}, $guild{lvl}, $guild{exp}, $guild{next_exp}, $guild{master}, 
+			$guild{conMember}, $guild{maxMember}]),	"info";
 		for my $ally (keys %{$guild{ally}}) {
-			message "Ally    : $guild{ally}{$ally} ($ally)\n", "info";
+			# Translation Comment: List of allies. Keep the same spaces of the - Guild Information - tag.
+			message TF("Ally    : %s (%s)\n", $guild{ally}{$ally}, $ally), "info";
 		}
 		message("---------------------------------------\n", "info");
 
 	} elsif ($arg1 eq "kick") {
 		if (!$guild{member}) {
-			error "No guild member information available.\n";
+			error T("No guild member information available.\n");
 			return;
 		}
 		my @params = split(' ', $arg2, 2);
@@ -1706,22 +1723,22 @@ sub cmdGuild {
 					$guild{member}[$params[0]]{charID},
 					$params[1]);
 			} else {
-				error	"Error in function 'guild kick' (Kick Guild Member)\n" .
-					"Invalid guild member '$params[0]' specified.\n";
+				error TF("Error in function 'guild kick' (Kick Guild Member)\n" .
+					"Invalid guild member '%s' specified.\n", $params[0]);
 			}
 		} else {
-			error	"Syntax Error in function 'guild kick' (Kick Guild Member)\n" .
-				"Usage: guild kick <number> <reason>\n";
+			error T("Syntax Error in function 'guild kick' (Kick Guild Member)\n" .
+				"Usage: guild kick <number> <reason>\n");
 		}
 
 	} elsif ($arg1 eq "member") {
 		if (!$guild{member}) {
-			error "No guild member information available.\n";
+			error T("No guild member information available.\n");
 			return;
 		}
 
-		my $msg = "------------ Guild  Member ------------\n";
-		$msg .= "#  Name                       Job        Lv  Title                    Online\n";
+		my $msg = T("------------ Guild  Member ------------\n" .
+			"#  Name                       Job        Lv  Title                    Online\n");
 
 		my ($i, $name, $job, $lvl, $title, $online, $ID, $charID);
 		my $count = @{$guild{member}};
@@ -1732,7 +1749,8 @@ sub cmdGuild {
 			$job   = $jobs_lut{$guild{member}[$i]{jobID}};
 			$lvl   = $guild{member}[$i]{lvl};
 			$title = $guild{member}[$i]{title};
-			$online = $guild{member}[$i]{online} ? "Yes" : "No";
+ 			# Translation Comment: Guild member online
+			$online = $guild{member}[$i]{online} ? T("Yes") : T("No");
 			$ID = unpack("V",$guild{member}[$i]{ID});
 			$charID = unpack("V",$guild{member}[$i]{charID});
 
@@ -1748,8 +1766,8 @@ sub cmdGuild {
 sub cmdGuildChat {
 	my (undef, $arg1) = @_;
 	if ($arg1 eq "") {
-		error 	"Syntax Error in function 'g' (Guild Chat)\n" .
-			"Usage: g <message>\n";
+		error T("Syntax Error in function 'g' (Guild Chat)\n" .
+			"Usage: g <message>\n");
 	} else {
 		sendMessage($net, "g", $arg1);
 	}
@@ -1766,7 +1784,7 @@ sub cmdHelp {
 
 	my ($message,$cmd);
 
-	$message .= "--------------- Available commands ---------------\n" unless @commands_req;
+	$message .= T("--------------- Available commands ---------------\n") unless @commands_req;
 	foreach my $switch (@commands) {
 		if ($descriptions{$switch}) {
 			if (ref($descriptions{$switch}) eq 'ARRAY') {
@@ -1804,11 +1822,11 @@ sub cmdHelp {
 
 	if (@unknown) {
 		if (@unknown == 1) {
-			error("The command \"$unknown[0]\" doesn't exist.\n");
+			error TF("The command \"%s\" doesn't exist.\n", $unknown[0]);
 		} else {
-			error("These commands don't exist: " . join(', ', @unknown) . "\n");
+			error TF("These commands don't exist: %s\n", join(', ', @unknown));
 		}
-		error("Type 'help' to see a list of all available commands.\n");
+		error T("Type 'help' to see a list of all available commands.\n");
 	}
 	$message .= "--------------------------------------------------\n"unless @commands_req;
 
@@ -1823,7 +1841,7 @@ sub helpIndent {
 	my @words;
 	my $length = 0;
 
-	$message = "------------ Help for '$cmd' ------------\n";
+	$message = TF("------------ Help for '%s' ------------\n", $cmd);
 	$message .= shift(@{$desc}) . "\n";
 
 	foreach (@{$desc}) {
@@ -1859,7 +1877,7 @@ sub helpIndent {
 sub cmdIdentify {
 	my (undef, $arg1) = @_;
 	if ($arg1 eq "") {
-		message("---------Identify List--------\n", "list");
+		message T("---------Identify List--------\n"), "list";
 		for (my $i = 0; $i < @identifyID; $i++) {
 			next if ($identifyID[$i] eq "");
 			message(swrite(
@@ -1871,15 +1889,15 @@ sub cmdIdentify {
 
 	} elsif ($arg1 =~ /^\d+$/) {
 		if ($identifyID[$arg1] eq "") {
-			error	"Error in function 'identify' (Identify Item)\n" .
-				"Identify Item $arg1 does not exist\n";
+			error TF("Error in function 'identify' (Identify Item)\n" .
+				"Identify Item %s does not exist\n", $arg1);
 		} else {
 			sendIdentify($net, $char->{'inventory'}[$identifyID[$arg1]]{'index'});
 		}
 
 	} else {
-		error	"Syntax Error in function 'identify' (Identify Item)\n" .
-			"Usage: identify [<identify #>]\n";
+		error TF("Syntax Error in function 'identify' (Identify Item)\n" .
+			"Usage: identify [<identify #>]\n");
 	}
 }
 
@@ -1887,8 +1905,8 @@ sub cmdIgnore {
 	my (undef, $args) = @_;
 	my ($arg1, $arg2) = $args =~ /^(\d+) ([\s\S]*)/;
 	if ($arg1 eq "" || $arg2 eq "" || ($arg1 ne "0" && $arg1 ne "1")) {
-		error	"Syntax Error in function 'ignore' (Ignore Player/Everyone)\n" .
-			"Usage: ignore <flag> <name | all>\n";
+		error T("Syntax Error in function 'ignore' (Ignore Player/Everyone)\n" .
+			"Usage: ignore <flag> <name | all>\n");
 	} else {
 		if ($arg2 eq "all") {
 			sendIgnoreAll($net, !$arg1);
@@ -1904,13 +1922,13 @@ sub cmdIhist {
 	$args = 5 if ($args eq "");
 
 	if (!($args =~ /^\d+$/)) {
-		error	"Syntax Error in function 'ihist' (Show Item History)\n" .
-			"Usage: ihist [<number of entries #>]\n";
+		error T("Syntax Error in function 'ihist' (Show Item History)\n" .
+			"Usage: ihist [<number of entries #>]\n");
 
 	} elsif (open(ITEM, "<", $Settings::item_log_file)) {
 		my @item = <ITEM>;
 		close(ITEM);
-		message("------ Item History --------------------\n", "list");
+		message T("------ Item History --------------------\n"), "list";
 		my $i = @item - $args;
 		$i = 0 if ($i < 0);
 		for (; $i < @item; $i++) {
@@ -1919,7 +1937,7 @@ sub cmdIhist {
 		message("----------------------------------------\n", "list");
 
 	} else {
-		error "Unable to open $Settings::item_log_file\n";
+		error TF("Unable to open %s\n", $Settings::item_log_file);
 	}
 }
 
@@ -1930,7 +1948,7 @@ sub cmdInventory {
 	my ($arg2) = $args =~ /^\w+ (.+)/;
 
 	if (!$char->{'inventory'}) {
-		error "Inventory is empty\n";
+		error T("Inventory is empty\n");
 		return;
 	}
 
@@ -1959,7 +1977,8 @@ sub cmdInventory {
 				$eqp{type} = $itemTypes_lut{$item->{type}};
 				$eqp{equipped} = ($item->{type} == 10) ? $item->{amount} . " left" : $equipTypes_lut{$item->{equipped}};
 				$eqp{equipped} .= " ($item->{equipped})";
-				$eqp{identified} = " -- Not Identified" if !$item->{identified};
+				# Translation Comment: Mark to tell item not identified
+				$eqp{identified} = " -- " . T("Not Identified") if !$item->{identified};
 				if ($item->{equipped}) {
 					push @equipment, \%eqp;
 				} else {
@@ -1968,42 +1987,47 @@ sub cmdInventory {
 			}
 		}
 
-		my $msg = "-----------Inventory-----------\n";
+		my $msg = T("-----------Inventory-----------\n");
 		if ($arg1 eq "" || $arg1 eq "eq") {
-			$msg .= "-- Equipment (Equipped) --\n";
+			# Translation Comment: List of usable equipments
+			$msg .= T("-- Equipment (Equipped) --\n");
 			foreach my $item (@equipment) {
-				$sell = defined(findIndex(\@sellList, "invIndex", $item->{binID})) ? "Will be sold" : "";
+				$sell = defined(findIndex(\@sellList, "invIndex", $item->{binID})) ? T("Will be sold") : "";
 				$display = sprintf("%-3d  %s -- %s", $item->{binID}, $item->{name}, $item->{equipped});
 				$msg .= sprintf("%-57s %s\n", $display, $sell);
 			}
 		}
 		if ($arg1 eq "" || $arg1 eq "neq") {
-			$msg .= "-- Equipment (Not Equipped) --\n";
+			# Translation Comment: List of equipments
+			$msg .= T("-- Equipment (Not Equipped) --\n");
 			foreach my $item (@uequipment) {
-				$sell = defined(findIndex(\@sellList, "invIndex", $item->{binID})) ? "Will be sold" : "";
+				$sell = defined(findIndex(\@sellList, "invIndex", $item->{binID})) ? T("Will be sold") : "";
 				$display = sprintf("%-3d  %s (%s) %s", $item->{binID}, $item->{name}, $item->{type}, $item->{identified});
 				$msg .= sprintf("%-57s %s\n", $display, $sell);
 			}
 		}
 		if ($arg1 eq "" || $arg1 eq "nu") {
-			$msg .= "-- Non-Usable --\n";
+			# Translation Comment: List of non-usable items
+			$msg .= T("-- Non-Usable --\n");
 			for ($i = 0; $i < @non_useable; $i++) {
 				$index = $non_useable[$i];
 				$display = $char->{inventory}[$index]{name};
 				$display .= " x $char->{inventory}[$index]{amount}";
-				$sell = defined(findIndex(\@sellList, "invIndex", $index)) ? "Will be sold" : "";
+				# Translation Comment: Tell if the item is marked to be sold 				
+				$sell = defined(findIndex(\@sellList, "invIndex", $index)) ? T("Will be sold") : "";
 				$msg .= swrite(
 					"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<",
 					[$index, $display, $sell]);
 			}
 		}
 		if ($arg1 eq "" || $arg1 eq "u") {
-			$msg .= "-- Usable --\n";
+			# Translation Comment: List of usable items
+			$msg .= T("-- Usable --\n");
 			for ($i = 0; $i < @useable; $i++) {
 				$index = $useable[$i];
 				$display = $char->{inventory}[$index]{name};
 				$display .= " x $char->{inventory}[$index]{amount}";
-				$sell = defined(findIndex(\@sellList, "invIndex", $index)) ? "Will be sold" : "";
+				$sell = defined(findIndex(\@sellList, "invIndex", $index)) ? T("Will be sold") : "";
 				$msg .= swrite(
 					"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<",
 					[$index, $display, $sell]);
@@ -2016,8 +2040,8 @@ sub cmdInventory {
 		cmdInventory_desc($arg2);
 
 	} else {
-		error	"Syntax Error in function 'i' (Inventory List)\n" .
-			"Usage: i [<u|eq|neq|nu|desc>] [<inventory item>]\n";
+		error T("Syntax Error in function 'i' (Inventory List)\n" .
+			"Usage: i [<u|eq|neq|nu|desc>] [<inventory item>]\n");
 	}
 }
 
@@ -2026,8 +2050,8 @@ sub cmdInventory_desc {
 
 	my $item = Match::inventoryItem($name);
 	if (!$item) {
-		error	"Error in function 'i' (Inventory Item Desciption)\n" .
-			"Inventory Item $name does not exist\n";
+		error TF("Error in function 'i' (Inventory Item Description)\n" .
+			"Inventory Item %s does not exist\n", $name);
 		return;
 	}
 
@@ -2035,9 +2059,8 @@ sub cmdInventory_desc {
 }
 
 sub cmdItemList {
-	message("-----------Item List-----------\n" .
-		"   # Name                           Coord\n",
-		"list");
+	message T("-----------Item List-----------\n" .
+		"   # Name                           Coord\n"), "list";
 	for (my $i = 0; $i < @itemsID; $i++) {
 		next if ($itemsID[$i] eq "");
 		my $item = $items{$itemsID[$i]};
@@ -2051,7 +2074,7 @@ sub cmdItemList {
 
 sub cmdItemLogClear {
 	itemLog_clear();
-	message("Item log cleared.\n", "success");
+	message T("Item log cleared.\n"), "success";
 }
 
 #sub cmdJudge {
@@ -2075,7 +2098,7 @@ sub cmdKill {
 
 	my $target = $playersID[$ID];
 	unless ($target) {
-		error "Player $ID does not exist.\n";
+		error TF("Player %s does not exist.\n", $ID);
 		return;
 	}
 
@@ -2087,8 +2110,8 @@ sub cmdLook {
 	my ($arg1) = $args =~ /^(\d+)/;
 	my ($arg2) = $args =~ /^\d+ (\d+)$/;
 	if ($arg1 eq "") {
-		error	"Syntax Error in function 'look' (Look a Direction)\n" .
-			"Usage: look <body dir> [<head dir>]\n";
+		error T("Syntax Error in function 'look' (Look a Direction)\n" .
+			"Usage: look <body dir> [<head dir>]\n");
 	} else {
 		look($arg1, $arg2);
 	}
@@ -2097,11 +2120,11 @@ sub cmdLook {
 sub cmdLookPlayer {
 	my (undef, $arg1) = @_;
 	if ($arg1 eq "") {
-		error	"Syntax Error in function 'lookp' (Look at Player)\n" .
-			"Usage: lookp <player #>\n";
+		error T("Syntax Error in function 'lookp' (Look at Player)\n" .
+			"Usage: lookp <player #>\n");
 	} elsif (!$playersID[$arg1]) {
-		error	"Error in function 'lookp' (Look at Player)\n" .
-			"'$arg1' is not a valid player number.\n";
+		error TF("Error in function 'lookp' (Look at Player)\n" .
+			"'%s' is not a valid player number.\n", $arg1);
 	} else {
 		lookAtPosition($players{$playersID[$arg1]}{pos_to});
 	}
@@ -2112,8 +2135,8 @@ sub cmdManualMove {
 	if (!$steps) {
 		$steps = 5; 
 	} elsif ($steps !~ /^\d+$/) {
-		error	"Error in function '$switch' (Manual Move)\n" .
-			"Usage: $switch [distance]\n";
+		error TF("Error in function '%s' (Manual Move)\n" .
+			"Usage: %s [distance]\n", $switch, $switch);
 		return;
 	}
 	if ($switch eq "east") {
@@ -2141,9 +2164,8 @@ sub cmdMemo {
 
 sub cmdMonsterList {
 	my ($dmgTo, $dmgFrom, $dist, $pos);
-	message("-----------Monster List-----------\n" .
-		"#    Name                          ID DmgTo    DmgFrom    Distance    Coordinates\n",
-		"list");
+	message TF("-----------Monster List-----------\n" .
+		"#    Name                          ID DmgTo    DmgFrom    Distance    Coordinates\n"),	"list";
 	for (my $i = 0; $i < @monstersID; $i++) {
 		next if ($monstersID[$i] eq "");
 		$dmgTo = ($monsters{$monstersID[$i]}{'dmgTo'} ne "")
@@ -2178,28 +2200,31 @@ sub cmdMove {
 	# FIXME: this should be integrated with the other numbers
 	if ($args eq "0") {
 		if ($portalsID[0]) {
-			message("Move into portal number 0 ($portals{$portalsID[0]}{'pos'}{'x'},$portals{$portalsID[0]}{'pos'}{'y'})\n");
+			message TF("Move into portal number 0 (%s,%s)\n", 
+				$portals{$portalsID[0]}{'pos'}{'x'}, $portals{$portalsID[0]}{'pos'}{'y'});
 			main::ai_route($field{name}, $portals{$portalsID[0]}{'pos'}{'x'}, $portals{$portalsID[0]}{'pos'}{'y'}, attackOnRoute => 1, noSitAuto => 1);
 		} else {
-			error "No portals exist.\n";
+			error T("No portals exist.\n");
 		}
 	} elsif (($arg1 eq "" || $arg2 eq "") && !$map) {
-		error	"Syntax Error in function 'move' (Move Player)\n" .
-			"Usage: move <x> <y> &| <map>\n";
+		error T("Syntax Error in function 'move' (Move Player)\n" .
+			"Usage: move <x> <y> &| <map>\n");
 	} elsif ($map eq "stop") {
 		AI::clear(qw/move route mapRoute/);
-		message "Stopped all movement\n", "success";
+		message T("Stopped all movement\n"), "success";
 	} else {
 		AI::clear(qw/move route mapRoute/);
 		$map = $field{name} if ($map eq "");
 		if ($maps_lut{"${map}.rsw"}) {
 			my ($x, $y);
 			if ($arg2 ne "") {
-				message("Calculating route to: $maps_lut{$map.'.rsw'}($map): $arg1, $arg2\n", "route");
+				message TF("Calculating route to: %s(%s): %s, %s\n", 
+					$maps_lut{$map.'.rsw'}, $map, $arg1, $arg2), "route";
 				$x = $arg1;
 				$y = $arg2;
 			} else {
-				message("Calculating route to: $maps_lut{$map.'.rsw'}($map)\n", "route");
+				message TF("Calculating route to: %s(%s)\n", 
+					$maps_lut{$map.'.rsw'}, $map), "route";
 			}
 			main::ai_route($map, $x, $y,
 				attackOnRoute => 1,
@@ -2207,13 +2232,14 @@ sub cmdMove {
 				notifyUponArrival => 1);
 		} elsif ($map =~ /^\d$/) {
 			if ($portalsID[$map]) {
-				message("Move into portal number $map ($portals{$portalsID[$map]}{'pos'}{'x'},$portals{$portalsID[$map]}{'pos'}{'y'})\n");
+				message TF("Move into portal number %s (%s,%s)\n", 
+					$map, $portals{$portalsID[$map]}{'pos'}{'x'}, $portals{$portalsID[$map]}{'pos'}{'y'});
 				main::ai_route($field{name}, $portals{$portalsID[$map]}{'pos'}{'x'}, $portals{$portalsID[$map]}{'pos'}{'y'}, attackOnRoute => 1, noSitAuto => 1);
 			} else {
-				error "No portals exist.\n";
+				error T("No portals exist.\n");
 			}
 		} else {
-			error "Map $map does not exist\n";
+			error TF("Map %s does not exist\n", $map);
 		}
 	}
 }
@@ -2221,8 +2247,8 @@ sub cmdMove {
 sub cmdNPCList {
 	my (undef, $args) = @_;
 	my @arg = parseArgs($args);
-	my $msg = "-----------NPC List-----------\n" .
-		"#    Name                         Coordinates   ID\n";
+	my $msg = T("-----------NPC List-----------\n" .
+		"#    Name                         Coordinates   ID\n");
 
 	if ($arg[0] =~ /^\d+$/) {
 		my $i = $arg[0];
@@ -2235,8 +2261,8 @@ sub cmdNPCList {
 			message $msg, "info";
 
 		} else {
-			error	"Syntax Error in function 'nl' (List NPCs)\n" .
-				"Usage: nl [<npc #>]\n";
+			error T("Syntax Error in function 'nl' (List NPCs)\n" .
+				"Usage: nl [<npc #>]\n");
 		}
 		return;
 	}
@@ -2262,12 +2288,13 @@ sub cmdParty {
 	my ($arg2) = $args =~ /^\w* (\d+)\b/;
 
 	if ($arg1 eq "" && ( !$char->{'party'} || !%{$char->{'party'}} )) {
-		error	"Error in function 'party' (Party Functions)\n" .
-			"Can't list party - you're not in a party.\n";
+		error T("Error in function 'party' (Party Functions)\n" .
+			"Can't list party - you're not in a party.\n");
 	} elsif ($arg1 eq "") {
-		message("----------Party-----------\n", "list");
-		message($char->{'party'}{'name'}."\n", "list");
-		message("#      Name                  Map                    Online    HP\n", "list");
+		message TF("----------Party-----------\n" .
+			"%s\n" .
+			"#      Name                  Map                    Online    HP\n", 
+			$char->{'party'}{'name'}), "list";
 		for (my $i = 0; $i < @partyUsersID; $i++) {
 			next if ($partyUsersID[$i] eq "");
 			my $coord_string = "";
@@ -2278,14 +2305,15 @@ sub cmdParty {
 			my $map_string;
 
 			if ($partyUsersID[$i] eq $accountID) {
-				$online_string = "Yes";
+				# Translation Comment: Is the party user on list online?
+				$online_string = T("Yes");
 				($map_string) = $field{name};
 				$coord_string = $char->{'pos'}{'x'}. ", ".$char->{'pos'}{'y'};
 				$hp_string = $char->{'hp'}."/".$char->{'hp_max'}
 						." (".int($char->{'hp'}/$char->{'hp_max'} * 100)
 						."%)";
 			} else {
-				$online_string = ($char->{'party'}{'users'}{$partyUsersID[$i]}{'online'}) ? "Yes" : "No";
+				$online_string = ($char->{'party'}{'users'}{$partyUsersID[$i]}{'online'}) ? T("Yes") : T("No");
 				($map_string) = $char->{'party'}{'users'}{$partyUsersID[$i]}{'map'} =~ /([\s\S]*)\.gat/;
 				$coord_string = $char->{'party'}{'users'}{$partyUsersID[$i]}{'pos'}{'x'}
 					. ", ".$char->{'party'}{'users'}{$partyUsersID[$i]}{'pos'}{'y'}
@@ -2305,71 +2333,71 @@ sub cmdParty {
 	} elsif ($arg1 eq "create") {
 		my ($arg2) = $args =~ /^\w* ([\s\S]*)/;
 		if ($arg2 eq "") {
-			error	"Syntax Error in function 'party create' (Organize Party)\n" .
-				"Usage: party create <party name>\n";
+			error T("Syntax Error in function 'party create' (Organize Party)\n" .
+				"Usage: party create <party name>\n");
 		} else {
 			sendPartyOrganize($net, $arg2);
 		}
 
 	} elsif ($arg1 eq "join" && $arg2 ne "1" && $arg2 ne "0") {
-		error	"Syntax Error in function 'party join' (Accept/Deny Party Join Request)\n" .
-			"Usage: party join <flag>\n";
+		error T("Syntax Error in function 'party join' (Accept/Deny Party Join Request)\n" .
+			"Usage: party join <flag>\n");
 	} elsif ($arg1 eq "join" && $incomingParty{'ID'} eq "") {
-		error	"Error in function 'party join' (Join/Request to Join Party)\n" .
-			"Can't accept/deny party request - no incoming request.\n";
+		error T("Error in function 'party join' (Join/Request to Join Party)\n" .
+			"Can't accept/deny party request - no incoming request.\n");
 	} elsif ($arg1 eq "join") {
 		sendPartyJoin($net, $incomingParty{'ID'}, $arg2);
 		undef %incomingParty;
 
 	} elsif ($arg1 eq "request" && ( !$char->{'party'} || !%{$char->{'party'}} )) {
-		error	"Error in function 'party request' (Request to Join Party)\n" .
-			"Can't request a join - you're not in a party.\n";
+		error T("Error in function 'party request' (Request to Join Party)\n" .
+			"Can't request a join - you're not in a party.\n");
 	} elsif ($arg1 eq "request" && $playersID[$arg2] eq "") {
-		error	"Error in function 'party request' (Request to Join Party)\n" .
-			"Can't request to join party - player $arg2 does not exist.\n";
+		error TF("Error in function 'party request' (Request to Join Party)\n" .
+			"Can't request to join party - player %s does not exist.\n", $arg2);
 	} elsif ($arg1 eq "request") {
 		sendPartyJoinRequest($net, $playersID[$arg2]);
 
 	} elsif ($arg1 eq "leave" && (!$char->{'party'} || !%{$char->{'party'}} ) ) {
-		error	"Error in function 'party leave' (Leave Party)\n" .
-			"Can't leave party - you're not in a party.\n";
+		error T("Error in function 'party leave' (Leave Party)\n" .
+			"Can't leave party - you're not in a party.\n");
 	} elsif ($arg1 eq "leave") {
 		sendPartyLeave($net);
 
 
 	} elsif ($arg1 eq "share" && ( !$char->{'party'} || !%{$char->{'party'}} )) {
-		error	"Error in function 'party share' (Set Party Share EXP)\n" .
-			"Can't set share - you're not in a party.\n";
+		error T("Error in function 'party share' (Set Party Share EXP)\n" .
+			"Can't set share - you're not in a party.\n");
 	} elsif ($arg1 eq "share" && $arg2 ne "1" && $arg2 ne "0") {
-		error	"Syntax Error in function 'party share' (Set Party Share EXP)\n" .
-			"Usage: party share <flag>\n";
+		error T("Syntax Error in function 'party share' (Set Party Share EXP)\n" .
+			"Usage: party share <flag>\n");
 	} elsif ($arg1 eq "share") {
 		sendPartyShareEXP($net, $arg2);
 
 
 	} elsif ($arg1 eq "kick" && ( !$char->{'party'} || !%{$char->{'party'}} )) {
-		error	"Error in function 'party kick' (Kick Party Member)\n" .
-			"Can't kick member - you're not in a party.\n";
+		error T("Error in function 'party kick' (Kick Party Member)\n" .
+			"Can't kick member - you're not in a party.\n");
 	} elsif ($arg1 eq "kick" && $arg2 eq "") {
-		error	"Syntax Error in function 'party kick' (Kick Party Member)\n" .
-			"Usage: party kick <party member #>\n";
+		error T("Syntax Error in function 'party kick' (Kick Party Member)\n" . 
+			"Usage: party kick <party member #>\n");
 	} elsif ($arg1 eq "kick" && $partyUsersID[$arg2] eq "") {
-		error	"Error in function 'party kick' (Kick Party Member)\n" .
-			"Can't kick member - member $arg2 doesn't exist.\n";
+		error TF("Error in function 'party kick' (Kick Party Member)\n" .
+			"Can't kick member - member %s doesn't exist.\n", $arg2);
 	} elsif ($arg1 eq "kick") {
 		sendPartyKick($net, $partyUsersID[$arg2]
 				,$char->{'party'}{'users'}{$partyUsersID[$arg2]}{'name'});
 	} else {
-		error	"Syntax Error in function 'party' (Party Management)\n" .
-			"Usage: party [<create|join|request|leave|share|kick>]\n";
+		error T("Syntax Error in function 'party' (Party Management)\n" .
+			"Usage: party [<create|join|request|leave|share|kick>]\n");
 	}
 }
 
 sub cmdPartyChat {
 	my (undef, $arg1) = @_;
 	if ($arg1 eq "") {
-		error	"Syntax Error in function 'p' (Party Chat)\n" .
-			"Usage: p <message>\n";
+		error T("Syntax Error in function 'p' (Party Chat)\n" .
+			"Usage: p <message>\n");
 	} else {
 		sendMessage($net, "p", $arg1);
 	}
@@ -2379,11 +2407,15 @@ sub cmdPecopeco {
 	my (undef, $arg1) = @_;
 
 	if ($arg1 eq "") {
-		message "Your Pecopeco is " . (hasPecopeco() ? "active" : "inactive");
+		if (hasPecopeco()) {
+			message T("Your Pecopeco is active");
+		} else {
+			message T("Your Pecopeco is inactive");			
+		}
 	} elsif ($arg1 eq "release") {
 		if (!hasPecopeco()) {
-		error	"Error in function 'Pecopeco release' (Remove Pecopeco Status)\n" .
-			"You don't possess a Pecopeco.\n";
+		error T("Error in function 'pecopeco release' (Remove Pecopeco Status)\n" .
+			"You don't possess a Pecopeco.\n");
 		} else {
 			sendCompanionRelease();
 		}
@@ -2393,14 +2425,11 @@ sub cmdPecopeco {
 sub cmdPet {
 	my (undef, $subcmd) = @_;
 	if (!%pet) {
-		error	"Error in function 'pet' (Pet Management)\n" .
-			"You don't have a pet.";
+		error T("Error in function 'pet' (Pet Management)\n" .
+			"You don't have a pet.\n");
 
 	} elsif ($subcmd eq "s" || $subcmd eq "status") {
-		message "-----------Pet Status-----------\n" .
-			swrite(
-			"Name: @<<<<<<<<<<<<<<<<<<<<<<< Accessory: @*",
-			[$pet{name}, itemNameSimple($pet{accessory})]), "list";
+		message TF("-----------Pet Status-----------\nName: %-23s Accessory: %s", $pet{name}, itemNameSimple($pet{accessory})), "list";
 
 	} elsif ($subcmd eq "p" || $subcmd eq "performance") {
 		sendPetPerformance($net);
@@ -2414,9 +2443,8 @@ sub cmdPet {
 }
 
 sub cmdPetList {
-	message("-----------Pet List-----------\n" .
-		"#    Type                     Name\n",
-		"list");
+	message T("-----------Pet List-----------\n" .
+		"#    Type                     Name\n"), "list";
 	for (my $i = 0; $i < @petsID; $i++) {
 		next if ($petsID[$i] eq "");
 		message(swrite(
@@ -2436,7 +2464,7 @@ sub cmdPlayerList {
 		my $ID;
 		if ($args =~ /^\d+$/) {
 			if (!$playersID[$args]) {
-				error "Player #$args does not exist.\n";
+				error TF("Player #%s does not exist.\n", $args);
 				return;
 			}
 			$player = $players{$playersID[$args]};
@@ -2452,7 +2480,7 @@ sub cmdPlayerList {
 				}
 			}
 			if (!$player) {
-				error "Player \"$args\" does not exist.\n";
+				error TF("Player \"%s\" does not exist.\n", $args);
 				return;
 			}
 		}
@@ -2481,46 +2509,46 @@ sub cmdPlayerList {
 		my $hex = getHex($ID);
 		my $playerToYou = int(sprintf("%.0f", (360 - $degPlayerToYou) / 45)) % 8;
 		my $youToPlayer = int(sprintf("%.0f", (360 - $degYouToPlayer) / 45)) % 8;
-
-		$msg = "------------------ Player Info ------------------\n";
-		$msg .= $player->name." ($player->{binID})\n";
-		$msg .= "Account ID: $player->{nameID} (Hex: $hex)\n";
-		$msg .= "Party: $player->{party}{name}\n" if ($player->{party} && $player->{party}{name} ne '');
-		$msg .= "Guild: $player->{guild}{name}\n" if ($player->{guild});
-		$msg .= "Position: $pos->{x}, $pos->{y} ($directions_lut{$youToPlayer} of you: " . int($degYouToPlayer) . " degrees)\n";
-		$msg .= swrite(
-			"Level: @<<      Distance: @<<<<<<<<<<<<<<<<<",
-			[$player->{lv}, $dist]);
-		$msg .= swrite(
-			"Sex: @<<<<<<    Class: @*",
-			[$sex_lut{$player->{sex}}, $jobs_lut{$player->{jobID}}]);
-
 		my $headTop = headgearName($player->{headgear}{top});
 		my $headMid = headgearName($player->{headgear}{mid});
 		my $headLow = headgearName($player->{headgear}{low});
-		$msg .= "-------------------------------------------------\n";
-		$msg .= swrite(
-			"Body direction: @<<<<<<<<<<<<<<<<<<< Head direction:  @<<<<<<<<<<<<<<<<<<<",
-			["$directions_lut{$body} ($body)", "$directions_lut{$head} ($head)"]);
-		$msg .= "Weapon: ".main::itemName({nameID => $player->{weapon}})."\n";
-		$msg .= "Shield: ".main::itemName({nameID => $player->{shield}})."\n";
-		$msg .= "Shoes : ".main::itemName({nameID => $player->{shoes}})."\n";
-		$msg .= swrite(
-			"Upper headgear: @<<<<<<<<<<<<<<<<<<< Middle headgear: @<<<<<<<<<<<<<<<<<<<",
-			[$headTop, $headMid]);
-		$msg .= swrite(
-			"Lower headgear: @<<<<<<<<<<<<<<<<<<< Hair color:      @<<<<<<<<<<<<<<<<<<<",
-			[$headLow, "$haircolors{$player->{hair_color}} ($player->{hair_color})"]);
 
-		$msg .= sprintf("Walk speed: %s secs per block\n", $player->{walk_speed});
+		$msg = TF("------------------ Player Info ------------------\n" .
+			"%s (%d)\n" .
+			"Account ID: %s (Hex: %s)\n" .
+			"Party: %s\n" .
+			"Guild: %s\n" .
+			"Position: %s, %s (%s of you: %s degrees)\n" .
+			"Level: %-7d Distance: %-17s\n" .
+			"Sex: %-6s    Class: %s\n" .
+			"-------------------------------------------------\n" .
+			"Body direction: %-19s Head direction:  %-19s\n" .
+			"Weapon: %s\n" .
+			"Shield: %s\n" .
+			"Shoes : %s\n" .
+			"Upper headgear: %-19s Middle headgear: %-19s\n" .
+			"Lower headgear: %-19s Hair color:      %-19s\n" .
+			"Walk speed: %s secs per block\n", 
+		$player->name, $player->{binID}, $player->{nameID}, $hex, 
+		($player->{party} && $player->{party}{name} ne '') ? $player->{party}{name} : '',
+		($player->{guild}) ? $player->{guild}{name} : '',
+		$pos->{x}, $pos->{y}, $directions_lut{$youToPlayer}, int($degYouToPlayer),
+		$player->{lv}, $dist, $sex_lut{$player->{sex}}, $jobs_lut{$player->{jobID}},
+		"$directions_lut{$body} ($body)", "$directions_lut{$head} ($head)",
+		main::itemName({nameID => $player->{weapon}}),
+		main::itemName({nameID => $player->{shield}}),
+		main::itemName({nameID => $player->{shoes}}), $headTop, $headMid, 
+		$headLow, "$haircolors{$player->{hair_color}} ($player->{hair_color})", $player->{walk_speed});
+		
+		
 		if ($player->{dead}) {
-			$msg .= "Player is dead.\n";
+			$msg .= T("Player is dead.\n");
 		} elsif ($player->{sitting}) {
-			$msg .= "Player is sitting.\n";
+			$msg .= T("Player is sitting.\n");
 		}
 
 		if ($degPlayerToYou >= $head * 45 - 29 && $degPlayerToYou <= $head * 45 + 29) {
-			$msg .= "Player is facing towards you.\n";
+			$msg .= T("Player is facing towards you.\n");
 		}
 
 		$msg .= "-------------------------------------------------\n";
@@ -2528,8 +2556,8 @@ sub cmdPlayerList {
 		return;
 	}
 
-	$msg =  "-----------Player List-----------\n" .
-		"#    Name                                Sex   Lv  Job         Dist  Coord\n";
+	$msg =  T("-----------Player List-----------\n" .
+		"#    Name                                Sex   Lv  Job         Dist  Coord\n");
 	for (my $i = 0; $i < @playersID; $i++) {
 		my $player = $players{$playersID[$i]};
 		next unless UNIVERSAL::isa($player, 'Actor');
@@ -2573,8 +2601,8 @@ sub cmdPlayerSkill {
 	}
 
 	if (@args < 1) {
-		error	"Syntax Error in function 'sp' (Use Skill on Player)\n" .
-			"Usage: sp (skill # or name) [player # or name] [level]\n";
+		error T("Syntax Error in function 'sp' (Use Skill on Player)\n" .
+			"Usage: sp (skill # or name) [player # or name] [level]\n");
 		return;
 	}
 
@@ -2585,16 +2613,16 @@ sub cmdPlayerSkill {
 	my $lv = $args[2] || $char_skill->{lv} || 10;
 
 	if (!defined $skill->id) {
-		error	"Error in function 'sp' (Use Skill on Player)\n" .
-			"'$args[0]' is not a valid skill.\n";
+		error TF("Error in function 'sp' (Use Skill on Player)\n" .
+			"'%s' is not a valid skill.\n", $args[0]);
 		return;
 	}
 
 	if ($args[1] ne "") {
 		$target = Match::player($args[1], 1);
 		if (!$target) {
-			error	"Error in function 'sp' (Use Skill on Player)\n" .
-				"Player '$args[1]' does not exist.\n";
+			error TF("Error in function 'sp' (Use Skill on Player)\n" .
+				"Player '%s' does not exist.\n", $args[1]);
 			return;
 		}
 		$targetID = $target->{ID};
@@ -2616,8 +2644,8 @@ sub cmdPlugin {
 	my @args = split(/ +/, $input, 2);
 
 	if (@args == 0) {
-		message("--------- Currently loaded plugins ---------\n", "list");
-		message("#   Name              Description\n", "list");
+		message T("--------- Currently loaded plugins ---------\n" .
+			"#   Name              Description\n"), "list";
 		my $i = 0;
 		foreach my $plugin (@Plugins::plugins) {
 			next unless $plugin;
@@ -2636,8 +2664,8 @@ sub cmdPlugin {
 			push @names, $Plugins::plugins[$args[1]]{name};
 
 		} elsif ($args[1] eq '') {
-			error	"Syntax Error in function 'plugin reload' (Reload Plugin)\n" .
-				"Usage: plugin reload <plugin name|plugin number#|\"all\">\n";
+			error T("Syntax Error in function 'plugin reload' (Reload Plugin)\n" .
+				"Usage: plugin reload <plugin name|plugin number#|\"all\">\n");
 			return;
 
 		} elsif ($args[1] eq 'all') {
@@ -2652,8 +2680,8 @@ sub cmdPlugin {
 				}
 			}
 			if (!@names) {
-				error	"Error in function 'plugin reload' (Reload Plugin)\n" .
-					"The specified plugin names do not exist.\n";
+				error T("Error in function 'plugin reload' (Reload Plugin)\n" .
+					"The specified plugin names do not exist.\n");
 				return;
 			}
 		}
@@ -2664,8 +2692,8 @@ sub cmdPlugin {
 
 	} elsif ($args[0] eq 'load') {
 		if ($args[1] eq '') {
-			error   "Syntax Error in function 'plugin load' (Load Plugin)\n" .
-				"Usage: plugin load <filename|\"all\">\n";
+			error T("Syntax Error in function 'plugin load' (Load Plugin)\n" .
+				"Usage: plugin load <filename|\"all\">\n");
 			return;
 		} elsif ($args[1] eq 'all') {
 			Plugins::loadAll();
@@ -2678,14 +2706,14 @@ sub cmdPlugin {
 			if ($Plugins::plugins[$args[1]]) {
 				my $name = $Plugins::plugins[$args[1]]{name};
 				Plugins::unload($name);
-				message "Plugin $name unloaded.\n", "system";
+				message TF("Plugin %s unloaded.\n", $name), "system";
 			} else {
-				error "'$args[1]' is not a valid plugin number.\n";
+				error TF("'%s' is not a valid plugin number.\n", $args[1]);
 			}
 
 		} elsif ($args[1] eq '') {
-			error	"Syntax Error in function 'plugin unload' (Unload Plugin)\n" .
-				"Usage: plugin unload <plugin name|plugin number#|\"all\">\n";
+			error T("Syntax Error in function 'plugin unload' (Unload Plugin)\n" .
+				"Usage: plugin unload <plugin name|plugin number#|\"all\">\n");
 			return;
 
 		} elsif ($args[1] eq 'all') {
@@ -2696,31 +2724,31 @@ sub cmdPlugin {
 				if ($plugin->{name} =~ /$args[1]/i) {
 					my $name = $plugin->{name};
 					Plugins::unload($name);
-					message "Plugin $name unloaded.\n", "system";
+					message TF("Plugin %s unloaded.\n", $name), "system";
 				}
 			}
 		}
 
 	} else {
 		my $msg;
-		$msg =	"--------------- Plugin command syntax ---------------\n" .
+		$msg = T("--------------- Plugin command syntax ---------------\n" .
 			"Command:                                              Description:\n" .
 			" plugin                                                List loaded plugins\n" .
 			" plugin load <filename>                                Load a plugin\n" .
 			" plugin unload <plugin name|plugin number#|\"all\">      Unload a loaded plugin\n" .
 			" plugin reload <plugin name|plugin number#|\"all\">      Reload a loaded plugin\n" .
-			"-----------------------------------------------------\n";
+			"-----------------------------------------------------\n");
 		if ($args[0] eq 'help') {
 			message($msg, "info");
 		} else {
-			error "Syntax Error in function 'plugin' (Control Plugins)\n";
+			error T("Syntax Error in function 'plugin' (Control Plugins)\n");
 			error($msg);
 		}
 	}
 }
 
 sub cmdPMList {
-	message("-----------PM List-----------\n", "list");
+	message T("-----------PM List-----------\n"), "list";
 	for (my $i = 1; $i <= @privMsgUsers; $i++) {
 		message(swrite(
 			"@<<< @<<<<<<<<<<<<<<<<<<<<<<<",
@@ -2734,9 +2762,8 @@ sub cmdPortalList {
 	my (undef, $args) = @_;
 	my ($arg) = parseArgs($args,1);
 	if ($arg eq '') {
-		message("-----------Portal List-----------\n" .
-			"#    Name                                Coordinates\n",
-			"list");
+		message T("-----------Portal List-----------\n" .
+			"#    Name                                Coordinates\n"), "list";
 		for (my $i = 0; $i < @portalsID; $i++) {
 			next if $portalsID[$i] eq "";
 			my $portal = $portals{$portalsID[$i]};
@@ -2758,18 +2785,17 @@ sub cmdPrivateMessage {
 	my ($user, $msg) = parseArgs($args, 2);
 
 	if ($user eq "" || $msg eq "") {
-		error	"Syntax Error in function 'pm' (Private Message)\n" .
-			"Usage: pm (username) (message)\n" .
-			"       pm (<#>) (message)\n";
+		error T("Syntax Error in function 'pm' (Private Message)\n" .
+			"Usage: pm (username) (message)\n       pm (<#>) (message)\n");
 		return;
 
 	} elsif ($user =~ /^\d+$/) {
 		if ($user - 1 >= @privMsgUsers) {
-			error	"Error in function 'pm' (Private Message)\n" .
-				"Quick look-up $user does not exist\n";
+			error TF("Error in function 'pm' (Private Message)\n" .
+				"Quick look-up %s does not exist\n", $user);
 		} elsif (!@privMsgUsers) {
-			error	"Error in function 'pm' (Private Message)\n" .
-				"You have not pm-ed anyone before\n";
+			error T("Error in function 'pm' (Private Message)\n" .
+				"You have not pm-ed anyone before\n");
 		} else {
 			sendMessage($net, "pm", $msg, $privMsgUsers[$user - 1]);
 			$lastpm{msg} = $msg;
@@ -2793,8 +2819,8 @@ sub cmdQuit {
 sub cmdReload {
 	my (undef, $args) = @_;
 	if ($args eq '') {
-		error	"Syntax Error in function 'reload' (Reload Configuration Files)\n" .
-			"Usage: reload <name|\"all\">\n";
+		error T("Syntax Error in function 'reload' (Reload Configuration Files)\n" .
+			"Usage: reload <name|\"all\">\n");
 
 	} else {
 		Settings::parseReload($args);
@@ -2817,8 +2843,8 @@ sub cmdRelog {
 	if (!$arg || $arg =~ /^\d+$/) {
 		relog($arg);
 	} else {
-		error	"Syntax Error in function 'relog' (Log out then log in.)\n" .
-			"Usage: relog [delay]\n";
+		error T("Syntax Error in function 'relog' (Log out then log in.)\n" .
+			"Usage: relog [delay]\n");
 	}
 }
 
@@ -2827,8 +2853,8 @@ sub cmdRepair {
 	if ($args =~ /^\d+$/) {
 		sendRepairItem($args);
 	} else {
-		error	"Syntax Error in function 'repair' (Repair player's items.)\n" .
-			"Usage: repair [item number]\n";
+		error T("Syntax Error in function 'repair' (Repair player's items.)\n" .
+			"Usage: repair [item number]\n");
 	}
 }
 
@@ -2848,11 +2874,11 @@ sub cmdSell {
 
 	} elsif ($args[0] eq "list") {
 		if (@sellList == 0) {
-			message("Your sell list is empty.\n", "info");
+			message T("Your sell list is empty.\n"), "info";
 		} else {
 			my $text = '';
-			$text .= "------------- Sell list -------------\n";
-			$text .= "#   Item                           Amount\n";
+			$text .= T("------------- Sell list -------------\n" .
+				"#   Item                           Amount\n");
 			foreach my $item (@sellList) {
 				$text .= sprintf("%-3d %-30s %d\n", $item->{invIndex}, $item->{name}, $item->{amount});
 			}
@@ -2862,19 +2888,19 @@ sub cmdSell {
 
 	} elsif ($args[0] eq "done") {
 		sendSellBulk($net, \@sellList);
-		message "Sold " . @sellList . " items.\n", "success";
+		message TF("Sold %s items.\n", @sellList), "success";
 		@sellList = ();
 
 	} elsif ($args[0] eq "cancel") {
 		@sellList = ();
-		message "Sell list has been cleared.\n", "info";
+		message T("Sell list has been cleared.\n"), "info";
 
 	} elsif ($args[0] eq "" || ($args[0] !~ /^\d+$/ && $args[0] !~ /[,\-]/)) {
-		error	"Syntax Error in function 'sell' (Sell Inventory Item)\n" .
+		error T("Syntax Error in function 'sell' (Sell Inventory Item)\n" .
 			"Usage: sell <inventory item index #> [<amount>]\n" .
 			"       sell list\n" .
 			"       sell done\n" .
-			"       sell cancel\n";
+			"       sell cancel\n");
 
 	} else {
 		my @items = Item::getMultiple($args[0]);
@@ -2883,7 +2909,7 @@ sub cmdSell {
 				my %obj;
 
 				if (defined(findIndex(\@sellList, "invIndex", $item->{invIndex}))) {
-					error $item->nameString . " ($item->{invIndex}) is already in the sell list.\n";
+					error TF("%s (%s) is already in the sell list.\n", $item->nameString, $item->{invIndex});
 					next;
 				}
 
@@ -2896,13 +2922,14 @@ sub cmdSell {
 					$obj{amount} = $args[1];
 				}
 				push @sellList, \%obj;
-				message "Added to sell list: $obj{name} ($obj{invIndex}) x $obj{amount}\n", "info";
+				message TF("Added to sell list: %s (%s) x %s\n", $obj{name}, $obj{invIndex}, $obj{amount}), "info";
 			}
-			message "Type 'sell done' to sell everything in your sell list.\n", "info";
+			message T("Type 'sell done' to sell everything in your sell list.\n"), "info";
 
 		} else {
-			error	"Error in function 'sell' (Sell Inventory Item)\n" .
-				"'$args[0]' is not a valid item index #; no item has been added to the sell list.\n";
+			error TF("Error in function 'sell' (Sell Inventory Item)\n" .
+				"'%s' is not a valid item index #; no item has been added to the sell list.\n", 
+				$args[0]);
 		}
 	}
 }
@@ -2914,13 +2941,14 @@ sub cmdSendRaw {
 
 sub cmdShopInfoSelf {
 	if (!$shopstarted) {
-		error("You do not have a shop open.\n");
+		error T("You do not have a shop open.\n");
 		return;
 	}
 	# FIXME: Read the packet the server sends us to determine
 	# the shop title instead of using $shop{title}.
-	message(center(" $shop{title} ", 79, '-')."\n", "list");
-	message("#  Name                                     Type         Qty       Price   Sold\n", "list");
+	message TF("%s\n" .
+		"#  Name                                     Type         Qty       Price   Sold\n",
+		center(" $shop{title} ", 79, '-')), "list";
 
 	my $priceAfterSale=0;
 	my $i = 1;
@@ -2932,11 +2960,13 @@ sub cmdShopInfoSelf {
 			"list");
 		$priceAfterSale += ($item->{quantity} * $item->{price});
 	}
-	message(('-'x79)."\n", "list");
-	message("You have earned: " . formatNumber($shopEarned) . "z.\n", "list");
-	message("Current zeny:    " . formatNumber($char->{zenny}) . "z.\n", "list");
-	message("Maximum earned:  " . formatNumber($priceAfterSale) . "z.\n", "list");
-	message("Maximum zeny:   " . formatNumber($priceAfterSale + $char->{zenny}) . "z.\n", "list");
+	message TF("%s\n" .
+		"You have earned: %dz.\n" .
+		"Current zeny:    %dz.\n" .
+		"Maximum earned:  %dz.\n" .
+		"Maximum zeny:    %dz.\n",
+		('-'x79), formatNumber($shopEarned), formatNumber($char->{zenny}), 
+		formatNumber($priceAfterSale), formatNumber($priceAfterSale + $char->{zenny})), "list";
 }
 
 sub cmdSit {
@@ -2952,8 +2982,8 @@ sub cmdSkills {
 	my ($arg1) = $args =~ /^(\w+)/;
 	my ($arg2) = $args =~ /^\w+ (\d+)/;
 	if ($arg1 eq "") {
-		my $msg = "----------Skill List-----------\n";
-		$msg .=   "   # Skill Name                     Lv      SP\n";
+		my $msg = T("----------Skill List-----------\n" .
+			"   # Skill Name                     Lv      SP\n");
 		for my $handle (@skillsID) {
 			my $skill = Skills->new(handle => $handle);
 			my $sp = $char->{skills}{$handle}{sp} || '';
@@ -2961,18 +2991,18 @@ sub cmdSkills {
 				"@>>> @<<<<<<<<<<<<<<<<<<<<<<<<<<<< @>>    @>>>",
 				[$skill->id, $skill->name, $char->{skills}{$handle}{lv}, $sp]);
 		}
-		$msg .= "\nSkill Points: $char->{points_skill}\n";
+		$msg .= TF("\nSkill Points: %d\n", $char->{points_skill});
 		$msg .= "-------------------------------\n";
 		message($msg, "list");
 
 	} elsif ($arg1 eq "add" && $arg2 =~ /\d+/) {
 		my $skill = Skills->new(id => $arg2);
 		if (!$skill->id || !$char->{skills}{$skill->handle}) {
-			error	"Error in function 'skills add' (Add Skill Point)\n" .
-				"Skill $arg2 does not exist.\n";
+			error TF("Error in function 'skills add' (Add Skill Point)\n" .
+				"Skill %s does not exist.\n", $arg2);
 		} elsif ($char->{points_skill} < 1) {
-			error	"Error in function 'skills add' (Add Skill Point)\n" .
-				"Not enough skill points to increase ".$skill->name.".\n";
+			error TF("Error in function 'skills add' (Add Skill Point)\n" .
+				"Not enough skill points to increase %s\n", $skill->name);
 		} else {
 			sendAddSkillPoint($net, $skill->id);
 		}
@@ -2980,24 +3010,24 @@ sub cmdSkills {
 	} elsif ($arg1 eq "desc" && $arg2 =~ /\d+/) {
 		my $skill = Skills->new(id => $arg2);
 		if (!$skill->id) {
-			error	"Error in function 'skills desc' (Skill Description)\n" .
-				"Skill $arg2 does not exist.\n";
+			error TF("Error in function 'skills desc' (Skill Description)\n" .
+				"Skill %s does not exist.\n", $arg2);
 		} else {
-			my $description = $skillsDesc_lut{$skill->handle} || "Error: No description available.\n";
-			message("===============Skill Description===============\n", "info");
-			message("Skill: ".$skill->name."\n\n", "info");
-			message($description, "info");
-			message("==============================================\n", "info");
+			my $description = $skillsDesc_lut{$skill->handle} || T("Error: No description available.\n");
+			message TF("===============Skill Description===============\n" .
+				"Skill: %s\n\n", $skill->name), "info";
+			message $description, "info";
+			message "==============================================\n", "info";
 		}
 	} else {
-		error	"Syntax Error in function 'skills' (Skills Functions)\n" .
-			"Usage: skills [<add | desc>] [<skill #>]\n";
+		error T("Syntax Error in function 'skills' (Skills Functions)\n" .
+			"Usage: skills [<add | desc>] [<skill #>]\n");
 	}
 }
 
 sub cmdSpells {
-	message "-----------Area Effects List-----------\n", "list";
-	message "  # Type                 Source                   X   Y\n", "list";
+	message T("-----------Area Effects List-----------\n" .
+		"  # Type                 Source                   X   Y\n"), "list";
 	for my $ID (@spellsID) {
 		my $spell = $spells{$ID};
 		next unless $spell;
@@ -3018,16 +3048,16 @@ sub cmdStatAdd {
 	my (undef, $arg) = @_;
 	if ($arg ne "str" && $arg ne "agi" && $arg ne "vit" && $arg ne "int"
 	 && $arg ne "dex" && $arg ne "luk") {
-		error	"Syntax Error in function 'stat_add' (Add Status Point)\n" .
-			"Usage: stat_add <str | agi | vit | int | dex | luk>\n";
+		error T("Syntax Error in function 'stat_add' (Add Status Point)\n" .
+			"Usage: stat_add <str | agi | vit | int | dex | luk>\n");
 
 	} elsif ($char->{'$arg'} >= 99 && !$config{statsAdd_over_99}) {
-		error	"Error in function 'stat_add' (Add Status Point)\n" .
-			"You cannot add more stat points than 99\n";
+		error T("Error in function 'stat_add' (Add Status Point)\n" .
+			"You cannot add more stat points than 99\n");
 
 	} elsif ($char->{"points_$arg"} > $char->{'points_free'}) {
-			error	"Error in function 'stat_add' (Add Status Point)\n" .
-				"Not enough status points to increase $arg\n";
+		error TF("Error in function 'stat_add' (Add Status Point)\n" .
+			"Not enough status points to increase %s\n", $arg);
 
 	} else {
 		my $ID;
@@ -3051,29 +3081,28 @@ sub cmdStatAdd {
 }
 
 sub cmdStats {
-	my $msg = "-----------Char Stats-----------\n";
-	$msg .= swrite(
-		"Str: @<<+@<< #@< Atk:  @<<+@<< Def:  @<<+@<<",
-		[$char->{'str'}, $char->{'str_bonus'}, $char->{'points_str'}, $char->{'attack'}, $char->{'attack_bonus'}, $char->{'def'}, $char->{'def_bonus'}],
-		"Agi: @<<+@<< #@< Matk: @<<@@<< Mdef: @<<+@<<",
-		[$char->{'agi'}, $char->{'agi_bonus'}, $char->{'points_agi'}, $char->{'attack_magic_min'}, '~', $char->{'attack_magic_max'}, $char->{'def_magic'}, $char->{'def_magic_bonus'}],
-		"Vit: @<<+@<< #@< Hit:  @<<     Flee: @<<+@<<",
-		[$char->{'vit'}, $char->{'vit_bonus'}, $char->{'points_vit'}, $char->{'hit'}, $char->{'flee'}, $char->{'flee_bonus'}],
-		"Int: @<<+@<< #@< Critical: @<< Aspd: @<<",
-		[$char->{'int'}, $char->{'int_bonus'}, $char->{'points_int'}, $char->{'critical'}, $char->{'attack_speed'}],
-		"Dex: @<<+@<< #@< Status Points: @<<<",
-		[$char->{'dex'}, $char->{'dex_bonus'}, $char->{'points_dex'}, $char->{'points_free'}],
-		"Luk: @<<+@<< #@< Guild: @<<<<<<<<<<<<<<<<<<<<<",
-		[$char->{'luk'}, $char->{'luk_bonus'}, $char->{'points_luk'}, $char->{guild} ? $char->{guild}{name} : 'None']);
-	$msg .= "--------------------------------\n";
+	my $msg = swrite(TF(
+		"---------- Char Stats ----------\n" .
+		"Str: \@<<+\@<< #\@< Atk:  \@<<+\@<< Def:  \@<<+\@<<\n" .
+		"Agi: \@<<+\@<< #\@< Matk: \@<<\@\@<< Mdef: \@<<+\@<<\n" .
+		"Vit: \@<<+\@<< #\@< Hit:  \@<<     Flee: \@<<+\@<<\n" .
+		"Int: \@<<+\@<< #\@< Critical: \@<< Aspd: \@<<\n" .
+		"Dex: \@<<+\@<< #\@< Status Points: \@<<<\n" .
+		"Luk: \@<<+\@<< #\@< Guild: \@<<<<<<<<<<<<<<<<<<<<<\n" .
+		"--------------------------------\n" .
+		"Hair color: \@<<<<<<<<<<<<<<<<<\n" .
+		"Walk speed: %.2f secs per block\n" .
+		"--------------------------------", $char->{walk_speed}),	
+	[$char->{'str'}, $char->{'str_bonus'}, $char->{'points_str'}, $char->{'attack'}, $char->{'attack_bonus'}, $char->{'def'}, $char->{'def_bonus'},
+	$char->{'agi'}, $char->{'agi_bonus'}, $char->{'points_agi'}, $char->{'attack_magic_min'}, '~', $char->{'attack_magic_max'}, $char->{'def_magic'}, $char->{'def_magic_bonus'},
+	$char->{'vit'}, $char->{'vit_bonus'}, $char->{'points_vit'}, $char->{'hit'}, $char->{'flee'}, $char->{'flee_bonus'},
+	$char->{'int'}, $char->{'int_bonus'}, $char->{'points_int'}, $char->{'critical'}, $char->{'attack_speed'},
+	$char->{'dex'}, $char->{'dex_bonus'}, $char->{'points_dex'}, $char->{'points_free'},
+	$char->{'luk'}, $char->{'luk_bonus'}, $char->{'points_luk'}, $char->{guild} ? $char->{guild}{name} : T("None"),
+	"$haircolors{$char->{hair_color}} ($char->{hair_color})"]);
+	
+	$msg .= T("You are sitting.\n") if ($char->{sitting});
 
-	$msg .= swrite(
-		"Hair color: @<<<<<<<<<<<<<<<<<",
-		["$haircolors{$char->{hair_color}} ($char->{hair_color})"]);
-	$msg .= sprintf("Walk speed: %.2f secs per block\n", $char->{walk_speed});
-	$msg .= "You are sitting.\n" if ($char->{sitting});
-
-	$msg .= "--------------------------------\n";
 	message $msg, "info";
 }
 
@@ -3121,35 +3150,35 @@ sub cmdStatus {
 	$job_name_string = "$jobs_lut{$char->{'jobID'}} $sex_lut{$char->{'sex'}}";
 	$zeny_string = formatNumber($char->{'zenny'}) if (defined($char->{'zenny'}));
 
-	$msg = "----------------------- Status -------------------------\n" .
-		swrite(
-		"@<<<<<<<<<<<<<<<<<<<<<<<         HP: @>>>>>>>>>>>>>>>>>>", [$char->{'name'}, $hp_string],
-		"@<<<<<<<<<<<<<<<<<<<<<<<         SP: @>>>>>>>>>>>>>>>>>>", [$job_name_string, $sp_string],
-		"Base: @<<    @>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", [$char->{'lv'}, $base_string],
-		"Job : @<<    @>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", [$char->{'lv_job'}, $job_string],
-		"Zeny: @<<<<<<<<<<<<<<<<<     Weight: @>>>>>>>>>>>>>>>>>>", [$zeny_string, $weight_string]);
-
+	# Translation Comment: No status effect on player		
 	my $statuses = 'none';
 	if (defined $char->{statuses} && %{$char->{statuses}}) {
 		$statuses = join(", ", keys %{$char->{statuses}});
 	}
-	$msg .= "Statuses: $statuses\n";
-	$msg .= "Spirits: $char->{spirits}\n" if (exists $char->{spirits});
-	$msg .= "--------------------------------------------------------\n";
-
 
 	my $dmgpsec_string = sprintf("%.2f", $dmgpsec);
 	my $totalelasped_string = sprintf("%.2f", $totalelasped);
 	my $elasped_string = sprintf("%.2f", $elasped);
-
-	$msg .= swrite(
-		"Total Damage: @>>>>>>>>>>>>> Dmg/sec: @<<<<<<<<<<<<<<",
-		[$totaldmg, $dmgpsec_string],
-		"Total Time spent (sec): @>>>>>>>>",
-		[$totalelasped_string],
-		"Last Monster took (sec): @>>>>>>>",
-		[$elasped_string]);
-	$msg .= "--------------------------------------------------------\n";
+	
+	$msg = swrite(
+		TF("----------------------- Status -------------------------\n" .
+		"\@<<<<<<<<<<<<<<<<<<<<<<<         HP: \@>>>>>>>>>>>>>>>>>>\n" .
+		"\@<<<<<<<<<<<<<<<<<<<<<<<         SP: \@>>>>>>>>>>>>>>>>>>\n" .
+		"Base: \@<<    \@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n" .
+		"Job : \@<<    \@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n" .
+		"Zeny: \@<<<<<<<<<<<<<<<<<     Weight: \@>>>>>>>>>>>>>>>>>>\n" .
+		"Statuses: %s\n" .
+		"Spirits: %s\n" .
+		"--------------------------------------------------------\n" .
+		"Total Damage: \@>>>>>>>>>>>>> Dmg/sec: \@<<<<<<<<<<<<<<\n" .
+		"Total Time spent (sec): \@>>>>>>>>\n" .
+		"Last Monster took (sec): \@>>>>>>>\n" .
+		"--------------------------------------------------------",
+		$statuses, (exists $char->{spirits} ? $char->{spirits} : 0)),
+		[$char->{'name'}, $hp_string, $job_name_string, $sp_string,
+		$char->{'lv'}, $base_string, $char->{'lv_job'}, $job_string, $zeny_string, $weight_string,
+		$totaldmg, $dmgpsec_string, $totalelasped_string, $elasped_string]);
+		
 	message($msg, "info");
 }
 
@@ -3175,20 +3204,18 @@ sub cmdStorage {
 		} elsif ($switch eq 'desc') {
 			cmdStorage_desc($items);
 		} else {
-			error <<"_";
-Syntax Error in function 'storage' (Storage Functions)
-Usage: storage [<eq|u|nu>]
-       storage close
-       storage add <inventory_item> [<amount>]
-       storage addfromcart <cart_item> [<amount>]
-       storage get <storage_item> [<amount>]
-       storage gettocart <storage_item> [<amount>]
-       storage desc <storage_item_#>
-       storage log
-_
+			error T("Syntax Error in function 'storage' (Storage Functions)\n" .
+				"Usage: storage [<eq|u|nu>]\n" .
+				"       storage close\n" .
+				"       storage add <inventory_item> [<amount>]\n" .
+				"       storage addfromcart <cart_item> [<amount>]\n" . 
+				"       storage get <storage_item> [<amount>]\n" . 
+				"       storage gettocart <storage_item> [<amount>]\n" .
+				"       storage desc <storage_item_#>\n".
+				"       storage log");
 		}
 	} else {
-		error "No information about storage; it has not been opened before in this session\n";
+		error T("No information about storage; it has not been opened before in this session\n");
 	}
 }
 
@@ -3214,22 +3241,22 @@ sub cmdStorage_list {
 			$eqp{binID} = $i;
 			$eqp{name} = $item->{name};
 			$eqp{type} = $itemTypes_lut{$item->{type}};
-			$eqp{identified} = " -- Not Identified" if !$item->{identified};
+			$eqp{identified} = " -- " . T("Not Identified") if !$item->{identified};
 			push @equipment, \%eqp;
 		}
 	}
 	
-	my $msg = "-----------Storage-------------\n";
+	my $msg = T("-----------Storage-------------\n");
 	
 	if (!$type || $type eq 'eq') {
-		$msg .= "-- Equipment --\n";
+		$msg .= T("-- Equipment --\n");
 		foreach my $item (@equipment) {
 			$msg .= sprintf("%-3d  %s (%s) %s\n", $item->{binID}, $item->{name}, $item->{type}, $item->{identified});
 		}
 	}
 	
 	if (!$type || $type eq 'nu') {
-		$msg .= "-- Non-Usable --\n";
+		$msg .= T("-- Non-Usable --\n");
 		for (my $i = 0; $i < @non_useable; $i++) {
 			my $item = $non_useable[$i];
 			my $binID = $item->{binID};
@@ -3242,7 +3269,7 @@ sub cmdStorage_list {
 	}
 	
 	if (!$type || $type eq 'u') {
-		$msg .= "-- Usable --\n";
+		$msg .= T("-- Usable --\n");
 		for (my $i = 0; $i < @useable; $i++) {
 			my $item = $useable[$i];
 			my $binID = $item->{binID};
@@ -3255,7 +3282,7 @@ sub cmdStorage_list {
 	}
 	
 	$msg .= "-------------------------------\n";
-	$msg .= "Capacity: $storage{items}/$storage{items_max}\n";
+	$msg .= TF("Capacity: %d/%d\n", $storage{items}, $storage{items_max});
 	$msg .= "-------------------------------\n";
 	message($msg, "list");
 }
@@ -3266,12 +3293,12 @@ sub cmdStorage_add {
 	my ($name, $amount) = $items =~ /^(.*?)(?: (\d+))?$/;
 	my $item = Match::inventoryItem($name);
 	if (!$item) {
-		error "Inventory Item '$name' does not exist.\n";
+		error TF("Inventory Item '%s' does not exist.\n", $name);
 		return;
 	}
 
 	if ($item->{equipped}) {
-		error "Inventory Item '$name' is equipped.\n";
+		error TF("Inventory Item '%s' is equipped.\n", $name);
 		return;
 	}
 
@@ -3287,7 +3314,7 @@ sub cmdStorage_addfromcart {
 	my ($name, $amount) = $items =~ /^(.*?)(?: (\d+))?$/;
 	my $item = Match::cartItem($name);
 	if (!$item) {
-		error "Cart Item '$name' does not exist.\n";
+		error TF("Cart Item '%s' does not exist.\n", $name);
 		return;
 	}
 
@@ -3313,7 +3340,7 @@ sub cmdStorage_get {
 		} else {
 			my $item = Match::storageItem($name);
 			if (!$item) {
-				error "Storage Item '$name' does not exist.\n";
+				error TF("Storage Item '%s' does not exist.\n", $name);
 				next;
 			}
 			push @items, $item;
@@ -3339,7 +3366,7 @@ sub cmdStorage_gettocart {
 		} else {
 			my $item = Match::storageItem($name);
 			if (!$item) {
-				error "Storage Item '$name' does not exist.\n";
+				error TF("Storage Item '%s' does not exist.\n", $name);
 				next;
 			}
 			push @items, $item;
@@ -3361,8 +3388,8 @@ sub cmdStorage_desc {
 	my $items = shift;
 	my $item = Match::storageItem($items);
 	if (!$item) {
-		error	"Error in function 'storage desc' (Show Storage Item Description)\n" .
-			"Storage Item $items does not exist.\n";
+		error TF("Error in function 'storage desc' (Show Storage Item Description)\n" .
+			"Storage Item %s does not exist.\n", $items);
 	} else {
 		printItemDesc($item->{nameID});
 	}
@@ -3373,8 +3400,8 @@ sub cmdStore {
 	my ($arg1) = $args =~ /^(\w+)/;
 	my ($arg2) = $args =~ /^\w+ (\d+)/;
 	if ($arg1 eq "" && !$talk{'buyOrSell'}) {
-		message("----------Store List-----------\n", "list");
-		message("#  Name                    Type           Price\n", "list");
+		message T("----------Store List-----------\n" .
+			"#  Name                    Type           Price\n"), "list";
 		my $display;
 		for (my $i = 0; $i < @storeList; $i++) {
 			$display = $storeList[$i]{'name'};
@@ -3388,45 +3415,45 @@ sub cmdStore {
 		sendGetStoreList($net, $talk{'ID'});
 
 	} elsif ($arg1 eq "desc" && $arg2 =~ /\d+/ && !$storeList[$arg2]) {
-		error	"Error in function 'store desc' (Store Item Description)\n" .
-			"Usage: Store item $arg2 does not exist\n";
+		error TF("Error in function 'store desc' (Store Item Description)\n" .
+			"Store item %s does not exist\n", $arg2);
 	} elsif ($arg1 eq "desc" && $arg2 =~ /\d+/) {
 		printItemDesc($storeList[$arg2]{nameID});
 
 	} else {
-		error	"Syntax Error in function 'store' (Store Functions)\n" .
-			"Usage: store [<desc>] [<store item #>]\n";
+		error T("Syntax Error in function 'store' (Store Functions)\n" .
+			"Usage: store [<desc>] [<store item #>]\n");
 	}
 }
 
 sub cmdSwitchConf {
 	my (undef, $filename) = @_;
 	if (!defined $filename) {
-		error	"Syntax Error in function 'switchconf' (Switch Configuration File)\n" .
-			"Usage: switchconf <filename>\n";
+		error T("Syntax Error in function 'switchconf' (Switch Configuration File)\n" .
+			"Usage: switchconf <filename>\n");
 	} elsif (! -f $filename) {
-		error	"Syntax Error in function 'switchconf' (Switch Configuration File)\n" .
-			"File $filename does not exist.\n";
+		error TF("Syntax Error in function 'switchconf' (Switch Configuration File)\n" .
+			"File %s does not exist.\n", $filename);
 	} else {
 		switchConfigFile($filename);
-		message "Switched config file to \"$filename\".\n", "system";
+		message TF("Switched config file to \"%s\".\n", $filename), "system";
 	}
 }
 
 sub cmdTake {
 	my (undef, $arg1) = @_;
 	if ($arg1 eq "") {
-		error	"Syntax Error in function 'take' (Take Item)\n" .
-			"Usage: take <item #>\n";
+		error T("Syntax Error in function 'take' (Take Item)\n" .
+			"Usage: take <item #>\n");
 	} elsif ($arg1 eq "first" && scalar(keys(%items)) == 0) {
-		error	"Error in function 'take first' (Take Item)\n" .
-			"There are no items near.\n";
+		error T("Error in function 'take first' (Take Item)\n" .
+			"There are no items near.\n");
 	} elsif ($arg1 eq "first") {
 		my @keys = keys %items;
 		AI::take($keys[0]);
 	} elsif (!$itemsID[$arg1]) {
-		error	"Error in function 'take' (Take Item)\n" .
-			"Item $arg1 does not exist.\n";
+		error TF("Error in function 'take' (Take Item)\n" .
+			"Item %s does not exist.\n", $arg1);
 	} else {
 		main::take($itemsID[$arg1]);
 	}
@@ -3438,25 +3465,25 @@ sub cmdTalk {
 	my ($arg2) = $args =~ /^\w+ (\d+)/;
 
 	if ($arg1 =~ /^\d+$/ && $npcsID[$arg1] eq "") {
-		error	"Error in function 'talk' (Talk to NPC)\n" .
-			"NPC $arg1 does not exist\n";
+		error TF("Error in function 'talk' (Talk to NPC)\n" .
+			"NPC %s does not exist\n", $arg1);
 	} elsif ($arg1 =~ /^\d+$/) {
 		sendTalk($net, $npcsID[$arg1]);
 
 	} elsif (($arg1 eq "resp" || $arg1 eq "num" || $arg1 eq "text") && !%talk) {
-		error	"Error in function 'talk $arg1' (Respond to NPC)\n" .
-			"You are not talking to any NPC.\n";
+		error TF("Error in function 'talk %s' (Respond to NPC)\n" .
+			"You are not talking to any NPC.\n", $arg1);
 
 	} elsif ($arg1 eq "resp" && $arg2 eq "") {
 		if (!$talk{'responses'}) {
-		error	"Error in function 'talk resp' (Respond to NPC)\n" .
-			"No NPC response list available.\n";
+		error T("Error in function 'talk resp' (Respond to NPC)\n" .
+			"No NPC response list available.\n");
 			return;
 		}
 		my $display = $talk{name};
-		message("----------Responses-----------\n", "list");
-		message("NPC: $display\n", "list");
-		message("#  Response\n", "list");
+		message TF("----------Responses-----------\n" .
+			"NPC: %s\n" .
+			"#  Response\n", $display),"list";
 		for (my $i = 0; $i < @{$talk{'responses'}}; $i++) {
 			message(sprintf(
 				"%2s %s\n",
@@ -3466,8 +3493,8 @@ sub cmdTalk {
 		message("-------------------------------\n", "list");
 
 	} elsif ($arg1 eq "resp" && $arg2 ne "" && $talk{'responses'}[$arg2] eq "") {
-		error	"Error in function 'talk resp' (Respond to NPC)\n" .
-			"Response $arg2 does not exist.\n";
+		error TF("Error in function 'talk resp' (Respond to NPC)\n" .
+			"Response %s does not exist.\n", $arg2);
 
 	} elsif ($arg1 eq "resp" && $arg2 ne "") {
 		if ($talk{'responses'}[$arg2] eq "Cancel Chat") {
@@ -3478,12 +3505,12 @@ sub cmdTalk {
 		sendTalkResponse($net, $talk{'ID'}, $arg2);
 
 	} elsif ($arg1 eq "num" && $arg2 eq "") {
-		error "Error in function 'talk num' (Respond to NPC)\n" .
-			"You must specify a number.\n";
+		error T("Error in function 'talk num' (Respond to NPC)\n" .
+			"You must specify a number.\n");
 
 	} elsif ($arg1 eq "num" && !($arg2 =~ /^\d+$/)) {
-		error "Error in function 'talk num' (Respond to NPC)\n" .
-			"$arg2 is not a valid number.\n";
+		error TF("Error in function 'talk num' (Respond to NPC)\n" .
+			"%s is not a valid number.\n", $arg2);
 
 	} elsif ($arg1 eq "num" && $arg2 =~ /^\d+$/) {
 		sendTalkNumber($net, $talk{'ID'}, $arg2);
@@ -3491,29 +3518,29 @@ sub cmdTalk {
 	} elsif ($arg1 eq "text") {
 		my ($arg2) = $args =~ /^\w+ (.*)/;
 		if ($arg2 eq "") {
-			error "Error in function 'talk text' (Respond to NPC)\n" .
-				"You must specify a string.\n";
+			error T("Error in function 'talk text' (Respond to NPC)\n" .
+				"You must specify a string.\n");
 		} else {
 			sendTalkText($net, $talk{'ID'}, $arg2);
 		}
 
 	} elsif ($arg1 eq "cont" && !%talk) {
-		error	"Error in function 'talk cont' (Continue Talking to NPC)\n" .
-			"You are not talking to any NPC.\n";
+		error T("Error in function 'talk cont' (Continue Talking to NPC)\n" .
+			"You are not talking to any NPC.\n");
 
 	} elsif ($arg1 eq "cont") {
 		sendTalkContinue($net, $talk{'ID'});
 
 	} elsif ($arg1 eq "no") {
 		if (!%talk) {
-			error "You are not talking to any NPC.\n";
+			error T("You are not talking to any NPC.\n");
 		} else {
 			sendTalkCancel($net, $talk{'ID'});
 		}
 
 	} else {
-		error	"Syntax Error in function 'talk' (Talk to NPC)\n" .
-			"Usage: talk <NPC # | cont | resp | num> [<response #>|<number #>]\n";
+		error T("Syntax Error in function 'talk' (Talk to NPC)\n" .
+			"Usage: talk <NPC # | cont | resp | num> [<response #>|<number #>]\n");
 	}
 }
 
@@ -3522,12 +3549,12 @@ sub cmdTalkNPC {
 
 	my ($x, $y, $sequence) = $args =~ /^(\d+) (\d+) (.+)$/;
 	unless (defined $x) {
-		error "Syntax Error in function 'talknpc' (Talk to an NPC)\n".
-			"Usage: talknpc <x> <y> <sequence>\n";
+		error T("Syntax Error in function 'talknpc' (Talk to an NPC)\n" .
+			"Usage: talknpc <x> <y> <sequence>\n");
 		return;
 	}
 
-	message "Talking to NPC at ($x, $y) using sequence: $sequence\n";
+	message TF("Talking to NPC at (%d, %d) using sequence: %s\n", $x, $y, $sequence);
 	main::ai_talkNPC($x, $y, $sequence);
 }
 
@@ -3536,16 +3563,16 @@ sub cmdTank {
 	$arg =~ s/ .*//;
 
 	if ($arg eq "") {
-		error	"Syntax Error in function 'tank' (Tank for a Player)\n" .
-			"Usage: tank <player #|player name>\n";
+		error T("Syntax Error in function 'tank' (Tank for a Player)\n" .
+			"Usage: tank <player #|player name>\n");
 
 	} elsif ($arg eq "stop") {
 		configModify("tankMode", 0);
 
 	} elsif ($arg =~ /^\d+$/) {
 		if (!$playersID[$arg]) {
-			error	"Error in function 'tank' (Tank for a Player)\n" .
-				"Player $arg does not exist.\n";
+			error TF("Error in function 'tank' (Tank for a Player)\n" .
+				"Player %s does not exist.\n", $arg);
 		} else {
 			configModify("tankMode", 1);
 			configModify("tankModeTarget", $players{$playersID[$arg]}{name});
@@ -3565,8 +3592,8 @@ sub cmdTank {
 			configModify("tankMode", 1);
 			configModify("tankModeTarget", $players{$found}{name});
 		} else {
-			error	"Error in function 'tank' (Tank for a Player)\n" .
-				"Player $arg does not exist.\n";
+			error TF("Error in function 'tank' (Tank for a Player)\n" .
+				"Player %s does not exist.\n", $arg);
 		}
 	}
 }
@@ -3582,13 +3609,15 @@ sub cmdTestShop {
 	my @items = main::makeShop();
 	return unless @items;
 
-	message(center(" $shop{title} ", 79, '-')."\n", "list");
-	message(sprintf("%-40s  %-7s %-10s\n", 'Name', 'Amount', 'Price'), "list");
+	message TF("%s\n" .
+		"Name                                      Amount  Price\n", 
+		center(" $shop{title} ", 79, '-')), "list";
 	for my $item (@items) {
-		message(sprintf("%-40s %7d %10s z\n", $item->{name}, $item->{amount}, main::formatNumber($item->{price})), "list");
+		message(sprintf("%-40s %7d %10s z\n", $item->{name}, 
+			$item->{amount}, main::formatNumber($item->{price})), "list");
 	}
 	message("-------------------------------------------------------------------------------\n", "list");
-	message("Total of ".@items." items to sell.\n", "list");
+	message TF("Total of %d items to sell.\n", @items), "list";
 }
 
 sub cmdTimeout {
@@ -3596,13 +3625,14 @@ sub cmdTimeout {
 	my ($arg1) = $args =~ /^(\w+)/;
 	my ($arg2) = $args =~ /^\w+\s+([\s\S]+)\s*$/;
 	if ($arg1 eq "") {
-		error	"Syntax Error in function 'timeout' (set a timeout)\n" .
-			"Usage: timeout <type> [<seconds>]\n";
+		error T("Syntax Error in function 'timeout' (set a timeout)\n" .
+			"Usage: timeout <type> [<seconds>]\n");
 	} elsif ($timeout{$arg1} eq "") {
-		error	"Error in function 'timeout' (set a timeout)\n" .
-			"Timeout $arg1 doesn't exist\n";
+		error TF("Error in function 'timeout' (set a timeout)\n" .
+			"Timeout %s doesn't exist\n", $arg1);
 	} elsif ($arg2 eq "") {
-		message "Timeout '$arg1' is $timeout{$arg1}{timeout}\n", "info";
+		message TF("Timeout '%s' is %s\n", 
+			$arg1, $timeout{$arg1}{timeout}), "info";
 	} else {
 		setTimeout($arg1, $arg2);
 	}
@@ -3613,20 +3643,20 @@ sub cmdUnequip {
 	my ($arg1) = $args;
 
 	if ($arg1 eq "") {
-		error "You must specify an item to unequip.\n";
+		error T("You must specify an item to unequip.\n");
 		return;
 	}
 
 	my $item = Match::inventoryItem($arg1);
 
 	if (!$item) {
-		error "You don't have $arg1.\n";
+		error TF("You don't have %s.\n", $arg1);
 		return;
 	}
 
 	if (!$item->{equipped} && $item->{type} != 10) {
-		error	"Error in function 'unequip' (Unequip Inventory Item)\n" .
-			"Inventory Item $arg1 is not equipped.\n";
+		error TF("Error in function 'unequip' (Unequip Inventory Item)\n" .
+			"Inventory Item %s is not equipped.\n", $arg1);
 		return;
 	}
 	sendUnequip($net, $item->{index});
@@ -3638,17 +3668,17 @@ sub cmdUseItemOnMonster {
 	my ($arg2) = $args =~ /^\d+ (\d+)/;
 
 	if ($arg1 eq "" || $arg2 eq "") {
-		error	"Syntax Error in function 'im' (Use Item on Monster)\n" .
-			"Usage: im <item #> <monster #>\n";
+		error T("Syntax Error in function 'im' (Use Item on Monster)\n" .
+			"Usage: im <item #> <monster #>\n");
 	} elsif (!$char->{'inventory'}[$arg1] || !%{$char->{'inventory'}[$arg1]}) {
-		error	"Error in function 'im' (Use Item on Monster)\n" .
-			"Inventory Item $arg1 does not exist.\n";
+		error TF("Error in function 'im' (Use Item on Monster)\n" .
+			"Inventory Item %s does not exist.\n", $arg1);
 	} elsif ($char->{'inventory'}[$arg1]{'type'} > 2) {
-		error	"Error in function 'im' (Use Item on Monster)\n" .
-			"Inventory Item $arg1 is not of type Usable.\n";
+		error TF("Error in function 'im' (Use Item on Monster)\n" .
+			"Inventory Item %s is not of type Usable.\n", $arg1);
 	} elsif ($monstersID[$arg2] eq "") {
-		error	"Error in function 'im' (Use Item on Monster)\n" .
-			"Monster $arg2 does not exist.\n";
+		error TF("Error in function 'im' (Use Item on Monster)\n" .
+			"Monster %s does not exist.\n", $arg2);
 	} else {
 		$char->{'inventory'}[$arg1]->use($monstersID[$arg2]);
 	}
@@ -3659,17 +3689,17 @@ sub cmdUseItemOnPlayer {
 	my ($arg1) = $args =~ /^(\d+)/;
 	my ($arg2) = $args =~ /^\d+ (\d+)/;
 	if ($arg1 eq "" || $arg2 eq "") {
-		error	"Syntax Error in function 'ip' (Use Item on Player)\n" .
-			"Usage: ip <item #> <player #>\n";
+		error T("Syntax Error in function 'ip' (Use Item on Player)\n" .
+			"Usage: ip <item #> <player #>\n");
 	} elsif (!$char->{'inventory'}[$arg1] || !%{$char->{'inventory'}[$arg1]}) {
-		error	"Error in function 'ip' (Use Item on Player)\n" .
-			"Inventory Item $arg1 does not exist.\n";
+		error TF("Error in function 'ip' (Use Item on Player)\n" .
+			"Inventory Item %s does not exist.\n", $arg1);
 	} elsif ($char->{'inventory'}[$arg1]{'type'} > 2) {
-		error	"Error in function 'ip' (Use Item on Player)\n" .
-			"Inventory Item $arg1 is not of type Usable.\n";
+		error TF("Error in function 'ip' (Use Item on Player)\n" .
+			"Inventory Item %s is not of type Usable.\n", $arg1);
 	} elsif ($playersID[$arg2] eq "") {
-		error	"Error in function 'ip' (Use Item on Player)\n" .
-			"Player $arg2 does not exist.\n";
+		error TF("Error in function 'ip' (Use Item on Player)\n" .
+			"Player %s does not exist.\n", $arg2);
 	} else {
 		$char->{'inventory'}[$arg1]->use($playersID[$arg2]);
 	}
@@ -3678,19 +3708,19 @@ sub cmdUseItemOnPlayer {
 sub cmdUseItemOnSelf {
 	my (undef, $args) = @_;
 	if ($args eq "") {
-		error	"Syntax Error in function 'is' (Use Item on Yourself)\n" .
-			"Usage: is <item>\n";
+		error T("Syntax Error in function 'is' (Use Item on Yourself)\n" .
+			"Usage: is <item>\n");
 		return;
 	}
 	my $item = Item::get($args);
 	if (!$item) {
-		error	"Error in function 'is' (Use Item on Yourself)\n" .
-			"Inventory Item $args does not exist.\n";
+		error TF("Error in function 'is' (Use Item on Yourself)\n" .
+			"Inventory Item %s does not exist.\n", $args);
 		return;
 	}
 	if ($item->{type} > 2) {
-		error	"Error in function 'is' (Use Item on Yourself)\n" .
-			"Inventory Item $item is not of type Usable.\n";
+		error TF("Error in function 'is' (Use Item on Yourself)\n" .
+			"Inventory Item %s is not of type Usable.\n", $item);
 		return;
 	}
 	$item->use;
@@ -3704,7 +3734,7 @@ sub cmdUseSkill {
 	($skillID, $args) = split(/ /, $args, 2);
 	my $skill = Skills->new(id => $skillID);
 	if (!defined $skill->id) {
-		error "Skill $skillID does not exist.\n";
+		error TF("Skill %s does not exist.\n", $skillID);
 		return;
 	}
 	my $char_skill = $char->{skills}{$skill->handle};
@@ -3717,7 +3747,7 @@ sub cmdUseSkill {
 	} else {
 		($targetNum, $lv) = split(/ /, $args);
 		if ($targetNum !~ /^\d+$/) {
-			error "$targetNum is not a number.\n";
+			error TF("%s is not a number.\n", $targetNum);
 			return;
 		}
 	}
@@ -3741,14 +3771,14 @@ sub cmdUseSkill {
 	} elsif ($switch eq 'sp') {
 		$targetID = $playersID[$targetNum];
 		if (!$targetID) {
-			error "Player $targetNum does not exist.\n";
+			error TF("Player %d does not exist.\n", $targetNum);
 			return;
 		}
 		$target = $players{$targetID};
 	} elsif ($switch eq 'sm') {
 		$targetID = $monstersID[$targetNum];
 		if (!$targetID) {
-			error "Monster $targetNum does not exist.\n";
+			error T("Monster %d does not exist.\n", $targetNum);
 			return;
 		}
 		$target = $monsters{$targetID};
@@ -3772,19 +3802,19 @@ sub cmdVender {
 	my ($arg2) = $args =~ /^[\d\w]+ (\d+)/;
 	my ($arg3) = $args =~ /^[\d\w]+ \d+ (\d+)/;
 	if ($arg1 eq "") {
-		error	"Error in function 'vender' (Vender Shop)\n" .
-			"Usage: vender <vender # | end> [<item #> <amount>]\n";
+		error T("Syntax error in function 'vender' (Vender Shop)\n" .
+			"Usage: vender <vender # | end> [<item #> <amount>]\n");
 	} elsif ($arg1 eq "end") {
 		undef @venderItemList;
 		undef $venderID;
 	} elsif ($venderListsID[$arg1] eq "") {
-		error	"Error in function 'vender' (Vender Shop)\n" .
-			"Vender $arg1 does not exist.\n";
+		error TF("Error in function 'vender' (Vender Shop)\n" .
+			"Vender %s does not exist.\n", $arg1);
 	} elsif ($arg2 eq "") {
 		sendEnteringVender($net, $venderListsID[$arg1]);
 	} elsif ($venderListsID[$arg1] ne $venderID) {
-		error	"Error in function 'vender' (Vender Shop)\n" .
-			"Vender ID is wrong.\n";
+		error T("Error in function 'vender' (Vender Shop)\n" .
+			"Vender ID is wrong.\n");
 	} else {
 		if ($arg3 <= 0) {
 			$arg3 = 1;
@@ -3794,9 +3824,8 @@ sub cmdVender {
 }
 
 sub cmdVenderList {
-	message("-----------Vender List-----------\n" .
-		"#   Title                                Coords     Owner\n",
-		"list");
+	message T("-----------Vender List-----------\n" .
+		"#   Title                                Coords     Owner\n"), "list";
 	for (my $i = 0; $i < @venderListsID; $i++) {
 		next if ($venderListsID[$i] eq "");
 		my $player = Actor::get($venderListsID[$i]);
@@ -3826,32 +3855,33 @@ sub cmdWarp {
 	my (undef, $map) = @_;
 
 	if ($map eq '') {
-		error	"Error in function 'warp' (Open/List Warp Portal)\n" .
-			"Usage: warp <map name | map number# | list>\n";
+		error T("Error in function 'warp' (Open/List Warp Portal)\n" .
+			"Usage: warp <map name | map number# | list>\n");
 
 	} elsif ($map =~ /^\d+$/) {
 		if (!$char->{warp}{memo} || !@{$char->{warp}{memo}}) {
-			error "You didn't cast warp portal.\n";
+			error T("You didn't cast warp portal.\n");
 			return;
 		}
 
 		if ($map < 0 || $map > @{$char->{warp}{memo}}) {
-			error "Invalid map number $map.\n";
+			error TF("Invalid map number %s.\n", $map);
 		} else {
 			my $name = $char->{warp}{memo}[$map];
 			my $rsw = "$name.rsw";
-			message "Attempting to open a warp portal to $maps_lut{$rsw} ($name)\n", "info";
+			message TF("Attempting to open a warp portal to %s (%s)\n", 
+				$maps_lut{$rsw}, $name), "info";
 			sendOpenWarp($net, "$name.gat");
 		}
 
 	} elsif ($map eq 'list') {
 		if (!$char->{warp}{memo} || !@{$char->{warp}{memo}}) {
-			error "You didn't cast warp portal.\n";
+			error T("You didn't cast warp portal.\n");
 			return;
 		}
 
-		message("----------------- Warp Portal --------------------\n", "list");
-		message("#  Place                           Map\n", "list");
+		message T("----------------- Warp Portal --------------------\n" .
+			"#  Place                           Map\n", "list");
 		for (my $i = 0; $i < @{$char->{warp}{memo}}; $i++) {
 			message(swrite(
 				"@< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<<<<",
@@ -3862,11 +3892,12 @@ sub cmdWarp {
 		message("--------------------------------------------------\n", "list");
 
 	} elsif (!defined $maps_lut{$map.'.rsw'}) {
-		error "Map '$map' does not exist.\n";
+		error TF("Map '%s' does not exist.\n", $map);
 
 	} else {
 		my $rsw = "$map.rsw";
-		message "Attempting to open a warp portal to $maps_lut{$rsw} ($map)\n", "info";
+		message TF("Attempting to open a warp portal to %s (%s)\n", 
+			$maps_lut{$rsw}, $map), "info";
 		sendOpenWarp($net, "$map.gat");
 	}
 }
@@ -3877,31 +3908,33 @@ sub cmdWeight {
 	$itemWeight ||= 1;
 
 	if ($itemWeight !~ /^\d+$/) {
-		error	"Error in function 'weight' (Inventory Weight Info)\n" .
-			"Usage: weight [item weight]\n";
+		error T("Syntax error in function 'weight' (Inventory Weight Info)\n" .
+			"Usage: weight [item weight]\n");
 		return;
 	}
 
 	my $itemString = $itemWeight == 1 ? '' : "*$itemWeight";
-	message "Weight: $char->{weight}/$char->{weight_max} (".
-		sprintf("%.02f", $char->weight_percent)."%)\n", "list";
+	message TF("Weight: %s/%s (%s\%)\n", $char->{weight}, $char->{weight_max}, sprintf("%.02f", $char->weight_percent)), "list";
 	if ($char->weight_percent < 90) {
 		if ($char->weight_percent < 50) {
 			my $weight_50 = int((int($char->{weight_max}*0.5) - $char->{weight}) / $itemWeight);
-			message "You can carry $weight_50$itemString before 50% overweight.\n", "list";
+			message TF("You can carry %s%s before %s overweight.\n", 
+				$weight_50, $itemString, '50%'), "list";
 		} else {
-			message "You are 50% overweight.\n", "list";
+			message TF("You are %s overweight.\n", '50%'), "list";
 		}
 		my $weight_90 = int((int($char->{weight_max}*0.9) - $char->{weight}) / $itemWeight);
-		message "You can carry $weight_90$itemString before 90% overweight.\n", "list";
+		message TF("You can carry %s%s before %s overweight.\n", 
+			$weight_90, $itemString, '90%'), "list";
 	} else {
-		message "You are 90% overweight.\n";
+		message TF("You are %s overweight.\n", '90%');
 	}
 }
 
 sub cmdWhere {
 	my $pos = calcPosition($char);
-	message("Location $maps_lut{$field{name}.'.rsw'} ($field{name}) : $pos->{x}, $pos->{y}\n", "info");
+	message TF("Location %s (%s) : %d, %d\n", $maps_lut{$field{name}.'.rsw'}, 
+		$field{name}, $pos->{x}, $pos->{y}), "info";
 }
 
 sub cmdWho {
@@ -3911,9 +3944,11 @@ sub cmdWho {
 sub cmdWhoAmI {
 	my $GID = unpack("L1", $charID);
 	my $AID = unpack("L1", $accountID);
-	message "Name:    $char->{name} (Level $char->{lv} $sex_lut{$char->{sex}} $jobs_lut{$char->{jobID}})\n", "list";
-	message "Char ID: $GID\n", "list";
-	message "Acct ID: $AID\n", "list";
+	message TF("Name:    %s (Level %s %s %s)\n" .
+		"Char ID: %s\n" .
+		"Acct ID: %s\n", 
+		$char->{name}, $char->{lv}, $sex_lut{$char->{sex}}, $jobs_lut{$char->{jobID}}, 
+		$GID, $AID), "list";
 }
 
 return 1;
