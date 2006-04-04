@@ -45,9 +45,9 @@ sub new {
 		LocalPort	=> $port,
 		Proto		=> 'tcp');
 	if (!$self{server}) {
-		$@ = "Unable to start the X-Kore server.\n" .
-			"You can only run one X-Kore session at the same time.\n\n" .
-			"And make sure no other servers are running on port $port.";
+		$@ = TF("Unable to start the X-Kore server.\n" . 
+			"You can only run one X-Kore session at the same time.\n" . 
+			"And make sure no other servers are running on port %s.\n", $port);
 		return undef;
 	}
 
@@ -57,7 +57,7 @@ sub new {
 
 	$packetParser = Network::Receive->create($config{serverType});
 
-	message "X-Kore mode intialized.\n", "startup";
+	message T("X-Kore mode intialized.\n"), "startup";
 
 	bless \%self, $class;
 	return \%self;
@@ -246,7 +246,7 @@ sub checkConnection {
 	my $pid;
 	# Wait until the RO client has started
 	while (!($pid = WinUtils::GetProcByName($config{XKore_exeName}))) {
-		message("Please start the Ragnarok Online client ($config{XKore_exeName})\n", "startup") unless $printed;
+		message TF("Please start the Ragnarok Online client (%s)\n", $config{XKore_exeName}), "startup" unless $printed;
 		$printed = 1;
 		$interface->iterate;
 		if (defined(my $input = $interface->getInput(0))) {
@@ -254,7 +254,7 @@ sub checkConnection {
 				$quit = 1;
 				last;
 			} else {
-				message("Error: You cannot type anything except 'quit' right now.\n");
+				message T("Error: You cannot type anything except 'quit' right now.\n");
 			}
 		}
 		usleep 20000;
@@ -263,7 +263,7 @@ sub checkConnection {
 	return if $quit;
 
 	# Inject DLL
-	message("Ragnarok Online client found\n", "startup");
+	message T("Ragnarok Online client found\n"), "startup";
 	sleep 1 if $printed;
 	if (!$self->inject($pid)) {
 		# Failed to inject
@@ -276,7 +276,7 @@ sub checkConnection {
 
 	# Wait until the RO client has connected to us
 	$self->waitForClient;
-	message("You can login with the Ragnarok Online client now.\n", "startup");
+	message T("You can login with the Ragnarok Online client now.\n"), "startup";
 	$timeout{'injectSync'}{'time'} = time;
 }
 
@@ -302,14 +302,14 @@ sub inject {
 	}
 
 	if (!$dll) {
-		$@ = "Cannot find NetRedirect.dll. Please check your installation.";
+		$@ = T("Cannot find NetRedirect.dll. Please check your installation.");
 		return 0;
 	}
 
 	if (WinUtils::InjectDLL($pid, $dll)) {
 		return 1;
 	} else {
-		$@ = 'Unable to inject NetRedirect.dll';
+		$@ = T("Unable to inject NetRedirect.dll");
 		return undef;
 	}
 }
@@ -324,9 +324,10 @@ sub inject {
 sub waitForClient {
 	my $self = shift;
 
-	message "Waiting for the Ragnarok Online client to connect to X-Kore...", "startup";
+	message T("Waiting for the Ragnarok Online client to connect to X-Kore..."), "startup";
 	$self->{client} = $self->{server}->accept;
-	message " ready\n", "startup";
+	# Translation Comment: Waiting for the Ragnarok Online client to connect to X-Kore...
+	message " " . T("ready\n"), "startup";
 	return $self->{client};
 }
 
@@ -420,7 +421,7 @@ sub hackClient {
 	
 	$original = $patchFind . $original . $patchFind2;
 
-	message "Patching client to remove bot detection:\n", "startup";
+	message T("Patching client to remove bot detection:\n"), "startup";
 
 	# Open Ragnarok's process
 	my $hnd = WinUtils::OpenProcess(0x638, $pid);
@@ -482,7 +483,7 @@ sub hackClient {
 	# Close Ragnarok's process
 	WinUtils::CloseProcess($hnd);
 
-	message "Client modified in $patchCount places.\n", "startup";
+	message TF("Client modified in %d places.\n", $patchCount), "startup";
 }
 
 #

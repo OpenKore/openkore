@@ -112,21 +112,21 @@ sub loadAll {
 sub load {
 	my $file = shift;
 	return unless defined $file;
-	Log::message("Loading plugin $file...\n", "plugins");
+	Log::message(Translation::TF("Loading plugin %s...\n", $file), "plugins");
 
 	$current_plugin = $file;
 	$current_plugin_folder = $file;
 	$current_plugin_folder =~ s/(.*)[\/\\].*/$1/;
 
 	if (!-e $file) {
-		Log::error("Unable to load plugin $file: does not exist", "plugins");
+		Log::error(Translation::TF("Unable to load plugin: %s does not exist\n", $file), "plugins");
 		return 0;
 	}
 
 	undef $@;
 	if (!do $file) {
-		$@ = "cannot open file" if (!defined $@);
-		Log::error("Unable to load plugin $file: $@\n", "plugins");
+		$@ = Translation::T("cannot open file") if (!defined $@);
+		Log::error(Translation::TF("Unable to load plugin %s: %s\n", $file, $@), "plugins");
 		return 0;
 	}
 	return 1;

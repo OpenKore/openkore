@@ -10,6 +10,8 @@ xgettext -L perl --force-po -o openkore.pot --keyword=T --keyword=TF \
 	--add-comments='Translation Comment:' \
 	../*.pm \
 	../Network/*.pm \
+	../Network/Receive/*.pm \
+	../Poseidon/EmbedServer.pm \
 	../../openkore.pl \
 	../functions.pl
 

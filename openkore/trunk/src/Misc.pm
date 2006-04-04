@@ -36,6 +36,7 @@ use AI;
 use Actor;
 use Actor::You;
 use Time::HiRes qw(time usleep);
+use Translation;
 
 our @EXPORT = (
 	# Config modifiers
@@ -188,9 +189,9 @@ sub auth {
 	my $user = shift;
 	my $flag = shift;
 	if ($flag) {
-		message "Authorized user '$user' for admin\n", "success";
+		message TF("Authorized user '%s' for admin\n", $user), "success";
 	} else {
-		message "Revoked admin privilages for user '$user'\n", "success";
+		message TF("Revoked admin privilages for user '%s'\n", $user), "success";
 	}
 	$overallAuth{$user} = $flag;
 	writeDataFile("$Settings::control_folder/overallAuth.txt", \%overallAuth);
@@ -216,9 +217,12 @@ sub configModify {
 	});
 
 	my $oldval = $config{$key};
-	$oldval = "-not-displayed-" if ($key =~ /password/i);
+	if ($key =~ /password/i) {
+		message TF("Config '%s' set to %s (was *not-displayed*)\n", $key, $val), "info" unless ($silent);
+	} else {
+		message TF("Config '%s' set to %s (was %s)\n", $key, $val, $oldval), "info" unless ($silent);
+	}		
 
-	message("Config '$key' set to $val (was $oldval)\n", "info") unless ($silent);
 	$config{$key} = $val;
 	saveConfigFile();
 }
@@ -242,11 +246,14 @@ sub bulkConfigModify {
 		});
 
 		$oldval = $config{$key};
-		$oldval = "-not-displayed-" if ($key =~ /password/i);
 
 		$config{$key} = $r_hash->{$key};
 		
-		message("Config '$key' set to $r_hash->{$key} (was $oldval)\n", "info") unless ($silent);
+		if ($key =~ /password/i) {
+			message TF("Config '%s' set to %s (was *not-displayed*)\n", $key, $r_hash->{$key}), "info" unless ($silent);
+		} else {
+			message TF("Config '%s' set to %s (was %s)\n", $key, $r_hash->{$key}, $oldval), "info" unless ($silent);
+		}		
 	}
 	saveConfigFile();
 }
@@ -262,7 +269,7 @@ sub saveConfigFile {
 sub setTimeout {
 	my $timeout = shift;
 	my $time = shift;
-	message "Timeout '$timeout' set to $time (was $timeout{$timeout}{timeout})\n", "info";
+	message TF("Timeout '%s' set to %s (was %s)\n", $timeout, $time, $timeout{$timeout}{timeout}), "info";
 	$timeout{$timeout}{'timeout'} = $time;
 	writeDataFileIntact2("$Settings::control_folder/timeouts.txt", \%timeout);
 }
@@ -755,7 +762,7 @@ sub getField {
 	my ($file, $dist_file);
 
 	if ($name eq '') {
-		error "Unable to load field file: no field name specified.\n";
+		error T("Unable to load field file: no field name specified.\n");
 		return 0;
 	}
 
@@ -849,7 +856,7 @@ sub getField {
 		}
 
 		if (! -e $file) {
-			warning "Could not load field $file - you must install the kore-field pack!\n";
+			warning TF("Could not load field %s - you must install the kore-field pack!\n", $file);
 			return 0;
 		}
 	}
@@ -902,7 +909,7 @@ sub getField {
 	# The .dist file is not available; create it
 	unless ($r_hash->{dstMap}) {
 		$r_hash->{dstMap} = makeDistMap($r_hash->{rawMap}, $r_hash->{width}, $r_hash->{height});
-		open FILE, "> $dist_file" or die "Could not write dist cache file: $!\n";
+		open FILE, "> $dist_file" or die TF("Could not write dist cache file: %s\n", $!);
 		binmode(FILE);
 		print FILE pack("a2 v1", 'V#', 3);
 		print FILE pack("v1 v1", @$r_hash{'width', 'height'});
@@ -1024,8 +1031,7 @@ sub launchURL {
 			} elsif (checkCommand('mozillaa')) {
 				launchApp(1, 'mozilla', $url);
 			} else {
-				$interface->errorDialog("No suitable browser detected. " .
-					"Please launch your favorite browser and go to:\n$url");
+				$interface->errorDialog(TF("No suitable browser detected. Please launch your favorite browser and go to:\n%s", $url));
 			}
 		}
 	}
@@ -1054,11 +1060,11 @@ sub avoidGM_talk {
 		Plugins::callHook('avoidGM_talk', \%args);
 		return 1 if ($args{return});
 
-		warning "Disconnecting to avoid GM!\n";
-		main::chatLog("k", "*** The GM $user talked to you, auto disconnected ***\n");
+		warning T("Disconnecting to avoid GM!\n");
+		main::chatLog("k", TF("*** The GM %s talked to you, auto disconnected ***\n", $user));
 
 		my $tmp = $config{avoidGM_reconnect};
-		warning "Disconnect for $tmp seconds...\n";
+		warning TF("Disconnect for %s seconds...\n", $tmp);
 		$timeout_ex{master}{time} = time;
 		$timeout_ex{master}{timeout} = $tmp;
 		$net->serverDisconnect();
@@ -1072,9 +1078,9 @@ sub avoidList_talk {
 	my ($user, $msg, $ID) = @_;
 
 	if ($avoid{Players}{lc($user)}{disconnect_on_chat} || $avoid{ID}{$ID}{disconnect_on_chat}) {
-		warning "Disconnecting to avoid $user!\n";
-		main::chatLog("k", "*** $user talked to you, auto disconnected ***\n");
-		warning "Disconnect for $config{avoidList_reconnect} seconds...\n";
+		warning TF("Disconnecting to avoid %s!\n", $user);
+		main::chatLog("k", TF("*** %s talked to you, auto disconnected ***\n", $user));
+		warning TF("Disconnect for %s seconds...\n", $config{avoidList_reconnect});
 		$timeout_ex{master}{time} = time;
 		$timeout_ex{master}{timeout} = $config{avoidList_reconnect};
 		$net->serverDisconnect();
@@ -1120,25 +1126,21 @@ sub charSelectScreen {
 		next unless ($chars[$num] && %{$chars[$num]});
 		if (0) {
 		$msg .= swrite(
-			"-------  Character @< ---------",
-			[$num],
-			"Name: @<<<<<<<<<<<<<<<<<<<<<<<<",
-			[$chars[$num]{'name'}],
-			"Job:  @<<<<<<<      Job Exp: @<<<<<<<",
-			[$jobs_lut{$chars[$num]{'jobID'}}, $chars[$num]{'exp_job'}],
-			"Lv:   @<<<<<<<      Str: @<<<<<<<<",
-			[$chars[$num]{'lv'}, $chars[$num]{'str'}],
-			"J.Lv: @<<<<<<<      Agi: @<<<<<<<<",
-			[$chars[$num]{'lv_job'}, $chars[$num]{'agi'}],
-			"Exp:  @<<<<<<<      Vit: @<<<<<<<<",
-			[$chars[$num]{'exp'}, $chars[$num]{'vit'}],
-			"HP:   @||||/@||||   Int: @<<<<<<<<",
-			[$chars[$num]{'hp'}, $chars[$num]{'hp_max'}, $chars[$num]{'int'}],
-			"SP:   @||||/@||||   Dex: @<<<<<<<<",
-			[$chars[$num]{'sp'}, $chars[$num]{'sp_max'}, $chars[$num]{'dex'}],
-			"Zenny: @<<<<<<<<<<  Luk: @<<<<<<<<",
-			[$chars[$num]{'zenny'}, $chars[$num]{'luk'}],
-			"-------------------------------", []);
+			T("-------  Character \@< ---------\n" .
+			"Name: \@<<<<<<<<<<<<<<<<<<<<<<<<\n" .
+			"Job:  \@<<<<<<<      Job Exp: \@<<<<<<<\n" .
+			"Lv:   \@<<<<<<<      Str: \@<<<<<<<<\n" .
+			"J.Lv: \@<<<<<<<      Agi: \@<<<<<<<<\n" .
+			"Exp:  \@<<<<<<<      Vit: \@<<<<<<<<\n" .
+			"HP:   \@||||/\@||||   Int: \@<<<<<<<<\n" .
+			"SP:   \@||||/\@||||   Dex: \@<<<<<<<<\n" .
+			"Zenny: \@<<<<<<<<<<  Luk: \@<<<<<<<<\n" .
+			"-------------------------------"),
+			$num, $chars[$num]{'name'}, $jobs_lut{$chars[$num]{'jobID'}}, $chars[$num]{'exp_job'},
+			$chars[$num]{'lv'}, $chars[$num]{'str'}, $chars[$num]{'lv_job'}, $chars[$num]{'agi'},
+			$chars[$num]{'exp'}, $chars[$num]{'vit'}, $chars[$num]{'hp'}, $chars[$num]{'hp_max'}, 
+			$chars[$num]{'int'}, $chars[$num]{'sp'}, $chars[$num]{'sp_max'}, $chars[$num]{'dex'},
+			$chars[$num]{'zenny'}, $chars[$num]{'luk'});
 		}
 		$msg .= sprintf("%3s %-34s %-15s %2d/%2d\n",
 			$num, $chars[$num]{name},
@@ -1148,11 +1150,10 @@ sub charSelectScreen {
 
 	if ($msg) {
 		message
-			"---------------------- Character List ----------------------\n".
-			sprintf("%3s %-34s %-15s %-6s\n", '#', 'Name', 'Job', 'Lv') .
-			$msg .
-			"------------------------------------------------------------\n",
-			"connection";
+			TF("---------------------- Character List ----------------------\n" .
+			"  # Name                               Job             Lv\n" .
+			"%s" .
+			"------------------------------------------------------------\n", $msg), "connection";
 	}
 	return 1 if $net->clientAlive;
 
@@ -1167,7 +1168,7 @@ sub charSelectScreen {
 
 
 	if (@chars) {
-		message("Type 'c' to create a new character, or type 'd' to delete a character.\n" .
+		message T("Type 'c' to create a new character, or type 'd' to delete a character.\n" .
 			"Or choose a character by entering its number.\n", "input");
 		while (!$quit) {
 			my $input = $interface->getInput(-1);
@@ -1187,9 +1188,9 @@ sub charSelectScreen {
 				quit();
 				return 0;
 			} elsif ($input !~ /^\d+$/) {
-				error "\"$input\" is not a valid character number.\n";
+				error TF("\"%s\" is not a valid character number.\n", $input);
 			} elsif (!$chars[$input]) {
-				error "Character #$input does not exist.\n";
+				error TF("Character #%s does not exist.\n", $input);
 			} else {
 				configModify('char', $input, 1);
 				$net->sendCharLogin($config{'char'});
@@ -1198,13 +1199,13 @@ sub charSelectScreen {
 			}
 		}
 	} else {
-		message("There are no characters on this account.\n", "connection");
+		message T("There are no characters on this account.\n"), "connection";
 		$mode = "create";
 	}
 
 	if ($mode eq "create") {
-		my $message = "Please enter the desired properties for your characters, in this form:\n" .
-				"(slot) \"(name)\" [(str) (agi) (vit) (int) (dex) (luk) [(hairstyle) [(haircolor)]]]\n";
+		my $message = T("Please enter the desired properties for your characters, in this form:\n" .
+			"(slot) \"(name)\" [(str) (agi) (vit) (int) (dex) (luk) [(hairstyle) [(haircolor)]]]\n");
 		message($message, "input") if ($input2 eq "");
 
 		while (!$quit) {
@@ -1231,15 +1232,15 @@ sub charSelectScreen {
 				next;
 			}
 
-			message "Creating character \"$args[1]\" in slot \"$args[0]\"...\n", "connection";
+			message TF("Creating character \"%s\" in slot \"%s\"...\n", $args[1], $args[0]), "connection";
 			$timeout{'charlogin'}{'time'} = time;
 			last if (createCharacter(@args));
 			message($message, "input");
 		}
 
 	} elsif ($mode eq "delete") {
-		my $message = "Enter the number of the character you want to delete, and your email,\n" .
-				"in this form: (slot) (email address)\n";
+		my $message = T("Enter the number of the character you want to delete\n" . 
+			"and your email in this form: (slot) (email address)\n");
 		message $message, "input";
 
 		while (!$quit) {
@@ -1258,21 +1259,21 @@ sub charSelectScreen {
 				error $message;
 				next;
 			} elsif ($args[0] !~ /^\d+/) {
-				error "\"$args[0]\" is not a valid character number.\n";
+				error TF("\"%s\" is not a valid character number.\n", $args[0]);
 				next;
 			} elsif (!$chars[$args[0]]) {
-				error "Character #$args[0] does not exist.\n";
+				error TF("Character #%s does not exist.\n", $args[0]);
 				next;
 			}
 
-			warning "Are you ABSOLUTELY SURE you want to delete $chars[$args[0]]{name} ($args[0])? (y/n) ";
+			warning TF("Are you ABSOLUTELY SURE you want to delete %s (%s)? %s ", $chars[$args[0]]{name}, $args[0], "(y/n)");
 			$input = $interface->getInput(-1);
 			if ($input eq "y") {
 				$net->sendCharDelete($chars[$args[0]]{ID}, $args[1]);
-				message "Deleting character $chars[$args[0]]{name}...\n", "connection";
+				message TF("Deleting character %s...\n", $chars[$args[0]]{name}), "connection";
 				$AI::temp::delIndex = $args[0];
 			} else {
-				message "Deletion aborted\n", "info";
+				message T("Deletion aborted\n"), "info";
 				goto TOP;
 			}
 			$timeout{'charlogin'}{'time'} = time;
@@ -1301,9 +1302,9 @@ sub checkAllowedMap {
 	return if existsInList($config{allowedMaps}, $map);
 	return if $config{allowedMaps_reaction} == 0;
 
-	warning "The current map ($map) is not on the list of allowed maps.\n";
-	main::chatLog("k", "** The current map ($map) is not on the list of allowed maps.\n");
-	main::chatLog("k", "** Exiting...\n");
+	warning TF("The current map (%s) is not on the list of allowed maps.\n", $map);
+	main::chatLog("k", TF("** The current map (%s) is not on the list of allowed maps.\n", $map));
+	main::chatLog("k", T("** Exiting...\n"));
 	quit();
 }
 
@@ -1401,26 +1402,26 @@ sub createCharacter {
 	}
 
 	if ($conState != 3) {
-		error "We're not currently connected to the character login server.\n";
+		error T("We're not currently connected to the character login server.\n");
 	} elsif ($slot !~ /^\d+$/) {
-		error "Slot \"$slot\" is not a valid number.\n";
+		error TF("Slot \"%s\" is not a valid number.\n", $slot);
 	} elsif ($slot < 0 || $slot > 4) {
-		error "The slot must be comprised between 0 and 2\n";
+		error T("The slot must be comprised between 0 and 4\n");
 	} elsif ($chars[$slot]) {
-		error "Slot $slot already contains a character ($chars[$slot]{name}).\n";
+		error TF("Slot %s already contains a character (%s).\n", $slot, $chars[$slot]{name});
 	} elsif (length($name) > 23) {
-		error "Name must not be longer than 23 characters\n";
+		error T("Name must not be longer than 23 characters\n");
 
 	} else {
 		for ($str,$agi,$vit,$int,$dex,$luk) {
 			if ($_ > 9 || $_ < 1) {
-				error "Stats must be comprised between 1 and 9\n";
+				error T("Stats must be comprised between 1 and 9\n");
 				return;
 			}
 		}
 		for ($str+$int, $agi+$luk, $vit+$dex) {
 			if ($_ != 10) {
-				error "The sums Str + Int, Agi + Luk and Vit + Dex must all be equal to 10\n" ;
+				error T("The sums Str + Int, Agi + Luk and Vit + Dex must all be equal to 10\n");
 				return;
 			}
 		}
@@ -1508,7 +1509,7 @@ sub dumpData {
 	close DUMP;
 
 	debug "$dump\n", "parseMsg", 2;
-	message "Message Dumped into DUMP.txt!\n", undef, 1 unless ($silent);
+	message T("Message Dumped into DUMP.txt!\n"), undef, 1 unless ($silent);
 }
 
 sub getEmotionByCommand {
@@ -1651,7 +1652,7 @@ sub inventoryItemRemoved {
 	if (!$char->{arrow} ||
 	    $char->{arrow} != $char->{inventory}[$invIndex]{index}) {
 		# This item is not an equipped arrow
-		message "Inventory Item Removed: $item->{name} ($invIndex) x $amount\n", "inventory";
+		message TF("Inventory Item Removed: %s (%d) x %d\n", $item->{name}, $invIndex, $amount), "inventory";
 	}
 	$item->{amount} -= $amount;
 	delete $char->{inventory}[$invIndex] if $item->{amount} <= 0;
@@ -1955,9 +1956,8 @@ sub positionNearPortal {
 sub printItemDesc {
 	my $itemID = shift;
 	my $itemName = itemNameSimple($itemID);
-	my $description = $itemsDesc_lut{$itemID} || "Error: No description available.\n";
-	message("===============Item Description===============\n", "info");
-	message("Item: $itemName\n\n", "info");
+	my $description = $itemsDesc_lut{$itemID} || T("Error: No description available.\n");
+	message TF("===============Item Description===============\nItem: %s\n\n", $itemName), "info";
 	message($description, "info");
 	message("==============================================\n", "info");
 }
@@ -1994,7 +1994,7 @@ sub processNameRequestQueue {
 
 sub quit {
 	$quit = 1;
-	message "Exiting...\n", "system";
+	message T("Exiting...\n"), "system";
 }
 
 sub relog {
@@ -2004,7 +2004,7 @@ sub relog {
 	$timeout_ex{'master'}{'time'} = time;
 	$timeout_ex{'master'}{'timeout'} = $timeout;
 	$net->serverDisconnect();
-	message "Relogging in $timeout seconds...\n", "connection";
+	message TF("Relogging in %d seconds...\n", $timeout), "connection";
 }
 
 sub sendMessage {
@@ -2207,13 +2207,13 @@ sub setStatus {
 	# remove perfectly hidden objects
 	if ($actor->{statuses}{'GM Perfect Hide'}) {
 		if ($players{$ID}) {
-			message "Remove perfectly hidden $actor\n";
+			message TF("Remove perfectly hidden %s\n", $actor);
 			binRemove(\@playersID, $ID);
 			objectRemoved('player', $ID, $players{$ID});
 			delete $players{$ID};
 		}
 		if ($monsters{$ID}) {
-			message "Remove perfectly hidden $actor\n";
+			message TF("Remove perfectly hidden %s\n", $actor);
 			binRemove(\@monstersID, $ID);
 			objectRemoved('monster', $ID, $monsters{$ID});
 			delete $monsters{$ID};
@@ -2287,7 +2287,7 @@ sub stripLanguageCode {
 sub switchConfigFile {
 	my $filename = shift;
 	if (! -f $filename) {
-		error "$filename does not exist.\n";
+		error TF("%s does not exist.\n", $filename);
 		return 0;
 	}
 
@@ -2333,11 +2333,11 @@ sub updateDamageTables {
 				$monsters{$ID2}{'atkMiss'} = 0;
 			}
 			 if ($config{'teleportAuto_atkMiss'} && $monsters{$ID2}{'atkMiss'} >= $config{'teleportAuto_atkMiss'}) {
-				message "Teleporting because of attack miss\n", "teleport";
+				message T("Teleporting because of attack miss\n"), "teleport";
 				useTeleport(1);
 			}
 			if ($config{'teleportAuto_atkCount'} && $monsters{$ID2}{'numAtkFromYou'} >= $config{'teleportAuto_atkCount'}) {
-				message "Teleporting after attacking a monster $config{'teleportAuto_atkCount'} times\n", "teleport";
+				message TF("Teleporting after attacking a monster %d times\n", $config{'teleportAuto_atkCount'}), "teleport";
 				useTeleport(1);
 			}
 		}
@@ -2361,28 +2361,36 @@ sub updateDamageTables {
 			if ($AI == 2) {
 				my $teleport = 0;
 				if (mon_control($monsters{$ID1}{'name'})->{'teleport_auto'} == 2 && $damage){
-					message "Teleporting due to attack from $monsters{$ID1}{'name'}\n", "teleport";
+					message TF("Teleporting due to attack from %s\n", 
+						$monsters{$ID1}{'name'}), "teleport";
 					$teleport = 1;
 				} elsif ($config{'teleportAuto_deadly'} && $damage >= $chars[$config{'char'}]{'hp'} && !whenStatusActive("Hallucination")) {
-					message "Next $damage dmg could kill you. Teleporting...\n", "teleport";
+					message TF("Next %d dmg could kill you. Teleporting...\n", 
+						$damage), "teleport";
 					$teleport = 1;
 				} elsif ($config{'teleportAuto_maxDmg'} && $damage >= $config{'teleportAuto_maxDmg'} && !whenStatusActive("Hallucination") && !($config{'teleportAuto_maxDmgInLock'} && $field{'name'} eq $config{'lockMap'})) {
-					message "$monsters{$ID1}{'name'} hit you for more than $config{'teleportAuto_maxDmg'} dmg. Teleporting...\n", "teleport";
+					message TF("%s hit you for more than %d dmg. Teleporting...\n", 
+						$monsters{$ID1}{'name'}, $config{'teleportAuto_maxDmg'}), "teleport";
 					$teleport = 1;
 				} elsif ($config{'teleportAuto_maxDmgInLock'} && $field{'name'} eq $config{'lockMap'} && $damage >= $config{'teleportAuto_maxDmgInLock'} && !whenStatusActive("Hallucination")) {
-					message "$monsters{$ID1}{'name'} hit you for more than $config{'teleportAuto_maxDmgInLock'} dmg in lockMap. Teleporting...\n", "teleport";
+					message TF("%s hit you for more than %d dmg in lockMap. Teleporting...\n", 
+						$monsters{$ID1}{'name'}, $config{'teleportAuto_maxDmgInLock'}), "teleport";
 					$teleport = 1;
 				} elsif (AI::inQueue("sitAuto") && $config{'teleportAuto_attackedWhenSitting'} && $damage > 0) {
-					message "$monsters{$ID1}{'name'} attacks you while you are sitting. Teleporting...\n", "teleport";
+					message TF("%s attacks you while you are sitting. Teleporting...\n", 
+						$monsters{$ID1}{'name'}), "teleport";
 					$teleport = 1;
 				} elsif ($config{'teleportAuto_totalDmg'} && $monsters{$ID1}{'dmgToYou'} >= $config{'teleportAuto_totalDmg'} && !whenStatusActive("Hallucination") && !($config{'teleportAuto_totalDmgInLock'} && $field{'name'} eq $config{'lockMap'})) {
-					message "$monsters{$ID1}{'name'} hit you for a total of more than $config{'teleportAuto_totalDmg'} dmg. Teleporting...\n", "teleport";
+					message TF("%s hit you for a total of more than %d dmg. Teleporting...\n", 
+						$monsters{$ID1}{'name'}, $config{'teleportAuto_totalDmg'}), "teleport";
 					$teleport = 1;
 				} elsif ($config{'teleportAuto_totalDmgInLock'} && $field{'name'} eq $config{'lockMap'} && $monsters{$ID1}{'dmgToYou'} >= $config{'teleportAuto_totalDmgInLock'} && !whenStatusActive("Hallucination")) {
-					message "$monsters{$ID1}{'name'} hit you for a total of more than $config{'teleportAuto_totalDmgInLock'} dmg in lockMap. Teleporting...\n", "teleport";
+					message TF("%s hit you for a total of more than %d dmg in lockMap. Teleporting...\n", 
+						$monsters{$ID1}{'name'}, $config{'teleportAuto_totalDmgInLock'}), "teleport";
 					$teleport = 1;
 				} elsif ($config{teleportAuto_hp} && percent_hp($char) <= $config{teleportAuto_hp}) {
-					message "$monsters{$ID1}{name} hit you when your HP is too low. Teleporting...\n", "teleport";
+					message TF("%s hit you when your HP is too low. Teleporting...\n", 
+						$monsters{$ID1}{name}), "teleport";
 					$teleport = 1;
 				}
 				useTeleport(1, undef, 1) if ($teleport);
@@ -2534,7 +2542,7 @@ sub useTeleport {
 			return 1;
 		} elsif ($use_lvl == 2) {
 			# check for possible skill level abuse
-			message "Using Teleport Skill Level 2 though we not have it !\n", "useTeleport" if ($sk_lvl == 1);
+			message T("Using Teleport Skill Level 2 though we not have it!\n"), "useTeleport" if ($sk_lvl == 1);
 
 			# If saveMap is not set simply use a wrong .gat.
 			# eAthena servers ignore it, but this trick doesn't work
@@ -2589,15 +2597,15 @@ sub useTeleport {
 
 	# no item, but skill is still available
 	if ( $sk_lvl > 0 ) {
-		message "No Fly Wing or Butterfly Wing, fallback to Teleport Skill\n", "useTeleport";
+		message T("No Fly Wing or Butterfly Wing, fallback to Teleport Skill\n"), "useTeleport";
 		return useTeleport($use_lvl, 1, $emergency);
 	}
 
 
 	if ($use_lvl == 1) {
-		message "You don't have the Teleport skill or a Fly Wing\n", "teleport";
+		message T("You don't have the Teleport skill or a Fly Wing\n"), "teleport";
 	} else {
-		message "You don't have the Teleport skill or a Butterfly Wing\n", "teleport";
+		message T("You don't have the Teleport skill or a Butterfly Wing\n"), "teleport";
 	}
 
 	return 0;
@@ -2666,24 +2674,27 @@ sub writeStorageLog {
 	my $f;
 
 	if (open($f, "> $Settings::storage_file")) {
-		print $f "---------- Storage ". getFormattedDate(int(time)) ." -----------\n";
+		print $f TF("---------- Storage %s -----------\n", getFormattedDate(int(time)));
 		for (my $i = 0; $i < @storageID; $i++) {
 			next if (!$storageID[$i]);
 			my $item = $storage{$storageID[$i]};
 
 			my $display = sprintf "%2d %s x %s", $i, $item->{name}, $item->{amount};
-			$display .= " -- Not Identified" if !$item->{identified};
-			$display .= " -- Broken" if $item->{broken};
+			# Translation Comment: Mark to show not identified items
+			$display .= " -- " . T("Not Identified") if !$item->{identified};
+			# Translation Comment: Mark to show broken items
+			$display .= " -- " . T("Broken") if $item->{broken};
 			print $f "$display\n";
 		}
-		print $f "\nCapacity: $storage{items}/$storage{items_max}\n";
+		# Translation Comment: Storage Capacity
+		print $f TF("\nCapacity: %d/%d\n", $storage{items}, $storage{items_max});
 		print $f "-------------------------------\n";
 		close $f;
 
-		message "Storage logged\n", "success";
+		message T("Storage logged\n"), "success";
 
 	} elsif ($show_error_on_fail) {
-		error "Unable to write to $Settings::storage_file\n";
+		error TF("Unable to write to %s\n", $Settings::storage_file);
 	}
 }
 
@@ -2771,12 +2782,12 @@ sub avoidGM_near {
 		Plugins::callHook('avoidGM_near', \%args);
 		return 1 if ($args{return});
 
-		my $msg = "GM $player->{name} is nearby, ";
+		my $msg;
 		if ($config{avoidGM_near} == 1) {
 			# Mode 1: teleport & disconnect
 			useTeleport(1);
 			my $tmp = $config{avoidGM_reconnect};
-			$msg .= "teleport & disconnect for $tmp seconds";
+			$msg = TF("GM %s is nearby, teleport & disconnect for %d seconds", $player->{name}, $tmp);
 			$timeout_ex{master}{time} = time;
 			$timeout_ex{master}{timeout} = $tmp;
 			$net->serverDisconnect();
@@ -2784,7 +2795,7 @@ sub avoidGM_near {
 		} elsif ($config{avoidGM_near} == 2) {
 			# Mode 2: disconnect
 			my $tmp = $config{avoidGM_reconnect};
-			$msg .= "disconnect for $tmp seconds";
+			$msg = TF("GM %s is nearby, disconnect for %s seconds", $player->{name}, $tmp);
 			$timeout_ex{master}{time} = time;
 			$timeout_ex{master}{timeout} = $tmp;
 			$net->serverDisconnect();
@@ -2792,12 +2803,12 @@ sub avoidGM_near {
 		} elsif ($config{avoidGM_near} == 3) {
 			# Mode 3: teleport
 			useTeleport(1);
-			$msg .= "teleporting";
+			$msg = TF("GM %s is nearby, teleporting", $player->{name});
 
 		} elsif ($config{avoidGM_near} >= 4) {
 			# Mode 4: respawn
 			useTeleport(2);
-			$msg .= "respawning";
+			$msg = TF("GM %s is nearby, respawning", $player->{name});
 		}
 
 		warning "$msg\n";
@@ -2823,17 +2834,17 @@ sub avoidList_near {
 		my $avoidPlayer = $avoid{Players}{lc($player->{name})};
 		my $avoidID = $avoid{ID}{$player->{nameID}};
 		if (!$net->clientAlive() && ( ($avoidPlayer && $avoidPlayer->{disconnect_on_sight}) || ($avoidID && $avoidID->{disconnect_on_sight}) )) {
-			warning "$player->{name} ($player->{nameID}) is nearby, disconnecting...\n";
-			chatLog("k", "*** Found $player->{name} ($player->{nameID}) nearby and disconnected ***\n");
-			warning "Disconnect for $config{avoidList_reconnect} seconds...\n";
+			warning TF("%s (%s) is nearby, disconnecting...\n", $player->{name}, $player->{nameID});
+			chatLog("k", TF("*** Found %s (%s) nearby and disconnected ***\n", $player->{name}, $player->{nameID}));
+			warning TF("Disconnect for %s seconds...\n", $config{avoidList_reconnect});
 			$timeout_ex{master}{time} = time;
 			$timeout_ex{master}{timeout} = $config{avoidList_reconnect};
 			$net->serverDisconnect();
 			return 1;
 
 		} elsif (($avoidPlayer && $avoidPlayer->{teleport_on_sight}) || ($avoidID && $avoidID->{teleport_on_sight})) {
-			message "Teleporting to avoid player $player->{name} ($player->{nameID})\n", "teleport";
-			chatLog("k", "*** Found $player->{name} ($player->{nameID}) nearby and teleported ***\n");
+			message TF("Teleporting to avoid player %s (%s)\n", $player->{name}, $player->{nameID}), "teleport";
+			chatLog("k", TF("*** Found %s (%s) nearby and teleported ***\n", $player->{name}, $player->{nameID}));
 			useTeleport(1);
 			return 1;
 		}
@@ -2866,7 +2877,7 @@ sub compilePortals {
 
 	# Calculate LOS values from each spawn point per map to other portals on same map
 	foreach my $map (sort keys %mapSpawns) {
-		message "Processing map $map...\n", "system" unless $checkOnly;
+		message TF("Processing map %s...\n", $map), "system" unless $checkOnly;
 		foreach my $spawn (keys %{$mapSpawns{$map}}) {
 			foreach my $portal (keys %{$mapPortals{$map}}) {
 				next if $spawn eq $portal;
@@ -2896,15 +2907,15 @@ sub compilePortals {
 
 	# Write new portalsLOS.txt
 	writePortalsLOS("$Settings::tables_folder/portalsLOS.txt", \%portals_los);
-	message "Wrote portals Line of Sight table to '$Settings::tables_folder/portalsLOS.txt'\n", "system";
+	message TF("Wrote portals Line of Sight table to '%s/portalsLOS.txt'\n", $Settings::tables_folder), "system";
 
 	# Print warning for missing fields
 	if (%missingMap) {
-		warning "----------------------------Error Summary----------------------------\n";
-		warning "Missing: $_.fld\n" foreach (sort keys %missingMap);
-		warning "Note: LOS information for the above listed map(s) will be inaccurate;\n";
-		warning "      however it is safe to ignore if those map(s) are not used\n";
-		warning "----------------------------Error Summary----------------------------\n";
+		warning TF("----------------------------Error Summary----------------------------\n");
+		warning TF("Missing: %s.fld\n", $_) foreach (sort keys %missingMap);
+		warning TF("Note: LOS information for the above listed map(s) will be inaccurate;\n" .
+			"      however it is safe to ignore if those map(s) are not used\n");
+		warning TF("----------------------------Error Summary----------------------------\n");
 	}
 }
 
@@ -3040,7 +3051,7 @@ sub getNPCInfo {
 	if (defined($$return_hash{map}) && defined($$return_hash{pos}{x}) && defined($$return_hash{pos}{y})) {
 		$$return_hash{ok} = 1;
 	} else {
-		error "Incomplete NPC info found in npcs.txt\n";
+		error T("Incomplete NPC info found in npcs.txt\n");
 	}
 }
 
@@ -3410,17 +3421,17 @@ sub findCartItem {
 # and nothing will be returned.
 sub makeShop {
 	if ($shopstarted) {
-		error "A shop has already been opened.\n";
+		error T("A shop has already been opened.\n");
 		return;
 	}
 
 	if (!$char->{skills}{MC_VENDING}{lv}) {
-		error "You don't have the Vending skill.\n";
+		error T("You don't have the Vending skill.\n");
 		return;
 	}
 
 	if (!$shop{title}) {
-		error "Your shop does not have a title.\n";
+		error T("Your shop does not have a title.\n");
 		return;
 	}
 
@@ -3451,7 +3462,7 @@ sub makeShop {
 	}
 
 	if (!@items) {
-		error "There are no items to sell.\n";
+		error T("There are no items to sell.\n");
 		return;
 	}
 	shuffleArray(\@items) if ($config{shop_random});
@@ -3463,14 +3474,14 @@ sub openShop {
 	return unless @items;
 	$shop{title} = ($config{shopTitleOversize}) ? $shop{title} : substr($shop{title},0,36);
 	sendOpenShop($shop{title}, \@items);
-	message "Shop opened ($shop{title}) with ".@items." selling items.\n", "success";
+	message TF("Shop opened (%s) with %d selling items.\n", $shop{title}, @items), "success";
 	$shopstarted = 1;
 	$shopEarned = 0;
 }
 
 sub closeShop {
 	if (!$shopstarted) {
-		error "A shop has not been opened.\n";
+		error T("A shop has not been opened.\n");
 		return;
 	}
 
@@ -3478,7 +3489,7 @@ sub closeShop {
 
 	$shopstarted = 0;
 	$timeout{'ai_shop'}{'time'} = time;
-	message "Shop closed.\n";
+	message T("Shop closed.\n");
 }
 
 

@@ -207,6 +207,7 @@ sub mainLoop {
 			last if ($msg_length == length($msg));
 			$msg_length = length($msg);
 		}
+		$net->clientFlush() if ($net->version > 0);
 	}
 
 	# Receive and handle data from the RO client
@@ -297,7 +298,7 @@ sub mainLoop {
 			# Choose a random configuration file
 			my @files = split(/,+/, $selected);
 			my $file = $files[rand(@files)];
-			message "Changing configuration file (from \"$Settings::config_file\" to \"$file\")...\n", "system";
+			message TF("Changing configuration file (from \"%s\" to \"%s\")...\n", $Settings::config_file, $file), "system";
 
 			# A relogin is necessary if the server host/port, username
 			# or char is different.
@@ -369,13 +370,19 @@ sub mainLoop {
 		$weight = int($chars[$config{'char'}]{'weight'} / $chars[$config{'char'}]{'weight_max'} * 100) . "%" if $chars[$config{'char'}]{'weight_max'};
 		$pos = " : $char->{pos_to}{x},$char->{pos_to}{y} $field{'name'}" if ($char->{pos_to} && $field{'name'});
 
-		$title = "${charName} B$chars[$config{'char'}]{'lv'} ($basePercent%), J$chars[$config{'char'}]{'lv_job'}($jobPercent%) : w$weight${pos} - $Settings::NAME";
+		# Translation Comment: Interface Title with character status
+		$title = TF("%s B%s (%s), J%s (%s) : w%s%s - %s", 
+			${charName}, $chars[$config{'char'}]{'lv'}, $basePercent.'%', 
+			$chars[$config{'char'}]{'lv_job'}, $jobPercent.'%',
+			$weight, ${pos}, $Settings::NAME);
 		$interface->title($title);
 
 	} elsif ($conState == 1) {
-		$interface->title("${charName}Not connected - $Settings::NAME");
+		# Translation Comment: Interface Title
+		$interface->title(TF("%sNot connected - %s", ${charName}, $Settings::NAME));
 	} else {
-		$interface->title("${charName}Connecting - $Settings::NAME");
+		# Translation Comment: Interface Title
+		$interface->title(TF("%sConnecting - %s", ${charName}, $Settings::NAME));
 	}
 
 	Plugins::callHook('mainLoop_post');
@@ -1292,7 +1299,7 @@ undef $ai_v{npc_talk}{talk};
 				AI::dequeue;
  				message T("Unable to calculate a route to target, dropping target\n"), "ai_attack";
 				if ($config{'teleportAuto_dropTarget'}) {
-					message "Teleport due to dropping attack target\n";
+					message T("Teleport due to dropping attack target\n");
 					useTeleport(1);
 				}
 			}
@@ -1632,8 +1639,9 @@ undef $ai_v{npc_talk}{talk};
 					}
 				} elsif (!$wasZero) {
 					# We're stuck
-					my $msg = "Stuck at $field{name} ($char->{pos_to}{x},$char->{pos_to}{y}), while walking from ($cur_x,$cur_y) to ($args->{dest}{pos}{x},$args->{dest}{pos}{y}).";
-					$msg .= " Teleporting to unstuck." if $config{teleportAuto_unstuck};
+					my $msg = TF("Stuck at %s (%d,%d), while walking from (%d,%d) to (%d,%d).", 
+						$field{name}, $char->{pos_to}{x}, $char->{pos_to}{y}, $cur_x, $cur_y, $args->{dest}{pos}{x}, $args->{dest}{pos}{y});
+					$msg .= T(" Teleporting to unstuck.") if $config{teleportAuto_unstuck};
 					$msg .= "\n";
 					warning $msg, "route";
 					useTeleport(1) if $config{teleportAuto_unstuck};
@@ -2186,9 +2194,9 @@ undef $ai_v{npc_talk}{talk};
 				debug "Update check - least version: $data\n";
 				unless (($Settings::VERSION cmp $data) >= 0) {
 					$net->serverDisconnect();
-					$interface->errorDialog("Your version of $Settings::NAME " .
-						"(${Settings::VERSION}${Settings::CVS}) is too old.\n" .
-						"Please upgrade to at least version $data\n");
+					$interface->errorDialog(TF("Your version of %s " .
+						"(%s%s) is too old.\n" .
+						"Please upgrade to at least version %s\n", $Settings::NAME, ${Settings::VERSION}, ${Settings::CVS}, $data));
 					quit();
 
 				} else {
@@ -2230,8 +2238,8 @@ undef $ai_v{npc_talk}{talk};
 					}
 					my $reconnect_time = $hr * 3600 + $min * 60;
 
-					message("\nDisconnecting due to break time: " . $config{"autoBreakTime_$i"."_startTime"} . " to " . $config{"autoBreakTime_$i"."_stopTime"}."\n\n", "system");
-					chatLog("k", "*** Disconnected due to Break Time: " . $config{"autoBreakTime_$i"."_startTime"}." to " . $config{"autoBreakTime_$i"."_stopTime"}." ***\n");
+					message TF("\nDisconnecting due to break time: %s to %s\n\n", $config{"autoBreakTime_$i"."_startTime"}, $config{"autoBreakTime_$i"."_stopTime"}), "system";
+					chatLog("k", TF("*** Disconnected due to Break Time: %s to %s ***\n", $config{"autoBreakTime_$i"."_startTime"}, $config{"autoBreakTime_$i"."_stopTime"}));
 
 					$timeout_ex{'master'}{'timeout'} = $reconnect_time;
 					$timeout_ex{'master'}{'time'} = time;
@@ -2318,7 +2326,7 @@ undef $ai_v{npc_talk}{talk};
 			}
 
 			if ($config{autoMoveOnDeath} && $config{autoMoveOnDeath_x} && $config{autoMoveOnDeath_y} && $config{autoMoveOnDeath_map}) {
-				message T("Moving to ".$config{autoMoveOnDeath_map}." - ".$config{autoMoveOnDeath_x}.",".$config{autoMoveOnDeath_y}."\n");
+				message TF("Moving to %s - %d,%d\n", $config{autoMoveOnDeath_map}, $config{autoMoveOnDeath_x}, $config{autoMoveOnDeath_y});
 				AI::queue("sitAuto");
 				ai_route($config{autoMoveOnDeath_map}, $config{autoMoveOnDeath_x}, $config{autoMoveOnDeath_y});
 				}
@@ -2337,7 +2345,7 @@ undef $ai_v{npc_talk}{talk};
 
 	if (AI::action eq "dead" && $config{dcOnDeath} && $config{dcOnDeath} != -1) {
 		message T("Disconnecting on death!\n");
-		chatLog("k", "*** You died, auto disconnect! ***\n");
+		chatLog("k", T("*** You died, auto disconnect! ***\n"));
 		$quit = 1;
 	}
 
@@ -2458,7 +2466,7 @@ undef $ai_v{npc_talk}{talk};
 					if ($storage{opened} && findKeyString(\%storage, "name", $config{"getAuto_$i"}) eq '') {
 						if ($config{"getAuto_${i}_dcOnEmpty"}) {
  						message TF("Disconnecting on empty %s!\n", $config{"getAuto_$i"});
-							chatLog("k", "Disconnecting on empty ".$config{"getAuto_$i"}."!\n");
+							chatLog("k", TF("Disconnecting on empty %s!\n", $config{"getAuto_$i"}));
 							quit();
 						}
 					} else {
@@ -2702,9 +2710,9 @@ undef $ai_v{npc_talk}{talk};
 							# There is a weird server bug which causes this to happen,
 							# but I can't reproduce it. This can be worked around by
 							# relogging in after autostorage.
-	 						warning T("Kore tried to get an item from storage 3 times, but failed.\n");
-	 						warning T("This problem could be caused by a server bug.\n");
-	 						warning T("To work around this problem, set 'relogAfterStorage' to 1, and relogin.\n");
+	 						warning T("Kore tried to get an item from storage 3 times, but failed.\n" .
+	 							"This problem could be caused by a server bug.\n" .
+	 							"To work around this problem, set 'relogAfterStorage' to 1, and relogin.\n");
 							$args->{warned} = 1;
 						}
 
@@ -2720,7 +2728,7 @@ undef $ai_v{npc_talk}{talk};
 	 				error T("Character is still overweight after storageAuto (storage is full?)\n");
 					if ($config{dcOnStorageFull}) {
 	 					error T("Disconnecting on storage full!\n");
-						chatLog("k", "Disconnecting on storage full!\n");
+						chatLog("k", T("Disconnecting on storage full!\n"));
 						quit();
 					}
 				}
@@ -3179,8 +3187,8 @@ undef $ai_v{npc_talk}{talk};
 
 					$char->{$st} += 1;
 					# Raise stat
+					message TF("Auto-adding stat %s\n", $st);
 					sendAddStatusPoint($net, $ID);
-					message "Auto-adding stat $st\n";
 					# Save which stat was raised, so that when we received the
 					# "stat changed" packet (00BC?) we can changed $statChanged
 					# back to 0 so that kore will start checking again if stats
@@ -3566,7 +3574,7 @@ undef $ai_v{npc_talk}{talk};
 					last;
 				} elsif ($config{"useSelf_item_${i}_dcOnEmpty"} && @{$char->{inventory}} > 0) {
 					error TF("Disconnecting on empty %s!\n", $config{"useSelf_item_$i"});
-					chatLog("k", "Disconnecting on empty ".$config{"useSelf_item_$i"}."!\n");
+					chatLog("k", TF("Disconnecting on empty %s!\n", $config{"useSelf_item_$i"}));
 					quit();
 				}
 			}
@@ -4288,10 +4296,10 @@ undef $ai_v{npc_talk}{talk};
 		!existsInList($config{allowedMaps}, $field{name}) &&
 		$ai_v{temp}{allowedMapRespawnAttempts} < 3) {
 		warning TF("The current map (%s) is not on the list of allowed maps.\n", $field{name});
-		chatLog("k", "** The current map ($field{name}) is not on the list of allowed maps.\n");
+		chatLog("k", TF("** The current map (%s) is not on the list of allowed maps.\n", $field{name}));
 		ai_clientSuspend(0, 5);
 		message T("Respawning to save point.\n");
-		chatLog("k", "** Respawning to save point.\n");
+		chatLog("k", T("** Respawning to save point.\n"));
 		$ai_v{temp}{allowedMapRespawnAttempts}++;
 		useTeleport(2);
 		$timeout{ai_teleport}{time} = time;
@@ -4646,7 +4654,7 @@ sub parseMsg {
 		} else {
 			# Unknown packet - ignore it
 			if (!existsInList($config{'debugPacket_exclude'}, $switch)) {
-				warning("Unknown packet - $switch\n", "connection");
+				warning TF("Unknown packet - %s\n", $switch), "connection";
 				dumpData($msg) if ($config{'debugPacket_unparsed'});
 			}
 

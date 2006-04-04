@@ -429,8 +429,8 @@ sub account_server_info {
 		$num++;
 	}
 
-	message("--------- Servers ----------\n", 'connection');
-	message("#	   Name 	   Users  IP		  Port\n", 'connection');
+	message T("--------- Servers ----------\n" .
+			"#   Name                  Users  IP              Port\n"), 'connection';
 	for (my $num = 0; $num < @servers; $num++) {
 		message(swrite(
 			"@<< @<<<<<<<<<<<<<<<<<<<< @<<<<< @<<<<<<<<<<<<<< @<<<<<",
@@ -447,7 +447,7 @@ sub account_server_info {
 			$waitingForInput = 1;
 
 		} elsif ($masterServer->{charServer_ip}) {
-			message TF("Forcing connect to char server %s:%s\n", $masterServer->{charServer_ip}, $masterServer->{charServer_port}), 'connection';	
+			message TF("Forcing connect to char server %s: %s\n", $masterServer->{charServer_ip}, $masterServer->{charServer_port}), 'connection';	
 			
 		} else {
 			message TF("Server %s selected\n",$config{server}), 'connection';
@@ -1430,9 +1430,9 @@ sub actor_muted {
 	my $duration = $args->{duration};
 	if ($duration > 0) {
 		$duration = 0xFFFFFFFF - $duration + 1;
-		message getActorName($ID) . " is muted for $duration minutes\n", "parseMsg_statuslook", 2;
+		message TF("%s is muted for %d minutes\n", getActorName($ID), $duration), "parseMsg_statuslook", 2;
 	} else {
-		message getActorName($ID) . " is no longer muted\n", "parseMsg_statuslook", 2;
+		message TF("%s is no longer muted\n", getActorName($ID)), "parseMsg_statuslook", 2;
 	}
 }
 
@@ -1626,7 +1626,7 @@ sub area_spell {
 	$spells{$ID}{'binID'} = $binID;
 	$spells{$ID}{'type'} = $type;
 	if ($type == 0x81) {
-		message getActorName($sourceID)." opened Warp Portal on ($x, $y)\n", "skill";
+		message TF("%s opened Warp Portal on (%d, %d)\n", getActorName($sourceID), $x, $y), "skill";
 	}
 	debug "Area effect ".getSpellName($type)." ($binID) from ".getActorName($sourceID)." appeared on ($x, $y)\n", "skill", 2;
 
@@ -1741,7 +1741,7 @@ sub card_merge_list {
 	my ($len) = unpack("x2 v1", $msg);
 
 	my $display;
-	$display .= "-----Card Merge Candidates-----\n";
+	$display .= T("-----Card Merge Candidates-----\n");
 
 	my $index;
 	my $invIndex;
@@ -1959,7 +1959,8 @@ sub change_to_constate5 {
 }
 
 sub character_creation_failed {
-	message ("Character cannot be to created. If you didn't make any mistake, then the name you chose already exists.\n", "info");
+	message T("Character cannot be to created." . 
+		"If you didn't make any mistake, then the name you chose already exists.\n"), "info";
 	if (charSelectScreen() == 1) {
 		$conState = 3;
 		$firstLoginMap = 1;
@@ -2339,7 +2340,7 @@ sub devotion {
 	my ($self, $args) = @_;
 
 	my $source = Actor::get($args->{sourceID});
-	my $msg = "$source is using devotion on:";
+	my $msg = TF("%s is using devotion on:", $source);
 
 	for (my $i = 0; $i < 5; $i++) {
 		my $ID = substr($args->{data}, $i*4, 4);
@@ -2379,7 +2380,8 @@ sub emoticon {
 		my $dist = distance($char->{pos_to}, $player->{pos_to});
 		$dist = sprintf("%.1f", $dist) if ($dist =~ /\./);
 
-		message "[dist=$dist] $name ($player->{binID}): $emotion\n", "emotion";
+		# Translation Comment: "[dist=$dist] $name ($player->{binID}): $emotion\n"
+		message TF("[dist=%s] %s (%s): %s\n", $dist, $name, $player->{binID}, $emotion), "emotion";
 		chatLog("e", "$name".": $emotion\n") if (existsInList($config{'logEmoticons'}, $args->{type}) || $config{'logEmoticons'} eq "all");
 
 		my $index = AI::findAction("follow");
@@ -2471,12 +2473,12 @@ sub errors {
 	} elsif ($args->{type} == 5) {
 		error T("Error: You are underaged and cannot join this server.\n"), "connection";
 	} elsif ($args->{type} == 6) {
-		$interface->errorDialog(T("Critical Error: You must pay to play this account!"));
+		$interface->errorDialog(T("Critical Error: You must pay to play this account!\n"));
 		$quit = 1 unless ($net->version == 1);
 	} elsif ($args->{type} == 8) {
 		error T("Error: The server still recognizes your last connection\n"), "connection";
 	} elsif ($args->{type} == 9) {
-		error T("Error: IP capacity of this Internet Cafe is full. Would you like to pay the personal base?"), "connection";
+		error T("Error: IP capacity of this Internet Cafe is full. Would you like to pay the personal base?\n"), "connection";
 	} elsif ($args->{type} == 10) {
 		error T("Error: You are out of available time paid for\n"), "connection";
 	} elsif ($args->{type} == 15) {
@@ -2533,7 +2535,7 @@ sub exp_zeny_info {
 		my $jobPercent = $char->{exp_job_max} ?
 			($monsterJobExp / $char->{exp_job_max} * 100) :
 			0;
-		message sprintf("Exp gained: %d/%d (%.2f%%/%.2f%%)\n", $monsterBaseExp, $monsterJobExp, $basePercent, $jobPercent), "exp";
+		message TF("Exp gained: %d/%d (%.2f%%/%.2f%%)\n", $monsterBaseExp, $monsterJobExp, $basePercent, $jobPercent), "exp";
 
 	} elsif ($args->{type} == 20) {
 		my $change = $args->{val} - $char->{zenny};
@@ -2559,8 +2561,8 @@ sub exp_zeny_info {
 	} elsif ($args->{type} == 23) {
 		$char->{exp_job_max_last} = $char->{exp_job_max};
 		$char->{exp_job_max} = $args->{val};
-		debug(TF("Required Job Exp: %s\n", $args->{val}), "parseMsg");
-		message("BaseExp:$monsterBaseExp | JobExp:$monsterJobExp\n","info", 2) if ($monsterBaseExp);
+		debug("Required Job Exp: $args->{val}\n", "parseMsg");
+		message TF("BaseExp: %s | JobExp: %s\n", $monsterBaseExp, $monsterJobExp), "info", 2 if ($monsterBaseExp);
 	}
 }
 
@@ -2752,7 +2754,8 @@ sub guild_chat {
 	}
 
 	chatLog("g", "$chat\n") if ($config{'logGuildChat'});
-	message "[Guild] $chat\n", "guildchat";
+	# Translation Comment: Guild Chat
+	message TF("[Guild] %s\n", $chat), "guildchat";
 	# Only queue this if it's a real chat message
 	ChatQueue::add('g', 0, $chatMsgUser, $chatMsg) if ($chatMsgUser);
 
@@ -2767,14 +2770,14 @@ sub guild_create_result {
 	my $type = $args->{type};
 	
 	my %types = (
-		0 => T('successful.'),
-		2 => T('failed: Guild name already exists.'),
-		3 => T('failed: Emperium is needed.')
+		0 => T("Guild create successful.\n"),
+		2 => T("Guild create failed: Guild name already exists.\n"),
+		3 => T("Guild create failed: Emperium is needed.\n")
 	);
 	if ($types{$type}) {
-		message TF("Guild create %s\n", $types{$type});
+		message $types{$type};
 	} else {
-		message TF("Guild create: Unknown %s\n", $type);
+		message TF("Guild create: Unknown error %s\n", $type);
 	}
 }
 
@@ -2912,10 +2915,10 @@ sub guild_notice {
 	# don't show the huge guildmessage notice if there is none
 	# the client does something similar to this...
 	if ($address || $message) {
-		my $msg = "---Guild Notice---\n";
-		$msg .= "$address\n\n";
-		$msg .= "$message\n";
-		$msg .= "------------------\n";
+		my $msg = TF("---Guild Notice---\n"	.
+			"%s\n\n" .
+			"%s\n" .
+			"------------------\n", $address, $message);
 		message $msg, "guildnotice";
 	}
 }
@@ -3424,10 +3427,10 @@ sub login_error {
 		$quit = 1 unless ($net->clientAlive());
 	} elsif ($args->{type} == 5) {
 		my $master = $masterServer;
-		error("Connect failed, something is wrong with the login settings:\n" .
-			"version: $master->{version}\n" .
-			"master_version: $master->{master_version}\n" .
-			"serverType: $config{serverType}\n", "connection");
+		error TF("Connect failed, something is wrong with the login settings:\n" .
+			"version: %s\n" .
+			"master_version: %s\n" .
+			"serverType: %s\n", $master->{version}, $master->{master_version}, $config{serverType}), "connection";
 		relog(30);
 	} elsif ($args->{type} == 6) {
 		error T("The server is temporarily blocking your connection\n"), "connection";
@@ -3588,7 +3591,7 @@ sub minimap_indicator {
 		"with the color %s cleared\n", $args->{x}, $args->{y}, $args->{color}),
 		"info";
 	} else {
-		message TF("Minimap indicator at location %s, %s ".
+		message TF("Minimap indicator at location %s, %s " .
 		"with the color %s shown\n", $args->{x}, $args->{y}, $args->{color}),
 		"info";
 	}
@@ -3636,19 +3639,19 @@ sub mvp_item {
 	my ($self, $args) = @_;
 	my $display = itemNameSimple($args->{itemID});
 	message TF("Get MVP item %s\n", $display);
-	chatLog("k", "Get MVP item $display\n");
+	chatLog("k", TF("Get MVP item %s\n", $display));
 }
 
 sub mvp_other {
 	my ($self, $args) = @_;
 	my $display = Actor::get($args->{ID});
 	message TF("%s become MVP!\n", $display);
-	chatLog("k", "$display became MVP!\n");
+	chatLog("k", TF("%s became MVP!\n", $display));
 }
 
 sub mvp_you {
 	my ($self, $args) = @_;
-	my $msg = "Congratulations, you are the MVP! Your reward is $args->{expAmount} exp!\n";
+	my $msg = TF("Congratulations, you are the MVP! Your reward is %s exp!\n", $args->{expAmount});
 	message $msg;
 	chatLog("k", $msg);
 }
@@ -3724,8 +3727,8 @@ sub npc_store_info {
 	$ai_v{'npc_talk'}{'time'} = time;
 
 	if (AI::action ne 'buyAuto') {
-		message TF("----------%s's Store List-----------\n", $name), "list";
-		message("#  Name		    Type	   Price\n", "list");
+		message TF("----------%s's Store List-----------\n" .
+			"#  Name                    Type               Price\n", $name), "list";
 		my $display;
 		for (my $i = 0; $i < @storeList; $i++) {
 			$display = $storeList[$i]{'name'};
@@ -3836,8 +3839,8 @@ sub npc_talk_responses {
 	$ai_v{'npc_talk'}{'talk'} = 'select';
 	$ai_v{'npc_talk'}{'time'} = time;
 
-	my $list = "----------Responses-----------\n";
-	$list .=   "#  Response\n";
+	my $list = T("----------Responses-----------\n" .
+		"#  Response\n");
 	for (my $i = 0; $i < @{$talk{'responses'}}; $i++) {
 		my $responseMsg = ($talk{'responses'}[$i] =~ /^\^nItemID\^(\d+)$/) ? itemNameSimple($1) : $talk{'responses'}[$i];
 		$list .= swrite(
@@ -3877,7 +3880,7 @@ sub party_chat {
 	stripLanguageCode(\$chatMsg);
 	# Type: String
 	my $chat = "$chatMsgUser : $chatMsg";
-	message "[Party] $chat\n", "partychat";
+	message TF("[Party] %s\n", $chat), "partychat";
 
 	chatLog("p", "$chat\n") if ($config{'logPartyChat'});
 	ChatQueue::add('p', $args->{ID}, $chatMsgUser, $chatMsg);
@@ -4033,7 +4036,7 @@ sub pet_emotion {
 
 	my $emote = $emotions_lut{$type}{display} || "/e$type";
 	if ($pets{$ID}) {
-		my $name = $pets{$ID}{name} || "Unknown Pet #".unpack("V1", $ID);
+		my $name = $pets{$ID}{name} || TF("Unknown Pet #%s", unpack("V1", $ID));
 		message "$pets{$ID}{name} : $emote\n", "emotion";
 	}
 }
@@ -4162,7 +4165,7 @@ sub public_chat {
 	# this code autovivifies $actor->{pos_to} but it doesnt matter
 	chatLog("c", "[$field{name} $char->{pos_to}{x}, $char->{pos_to}{y}] [$actor->{pos_to}{x}, $actor->{pos_to}{y}] [dist=$dist] " .
 		"$message\n") if ($config{logChat});
-	message "[dist=$dist] $message\n", "publicchat";
+	message TF("[dist=%.2f] %s\n", $dist, $message), "publicchat";
 
 	ChatQueue::add('c', $args->{ID}, $chatMsgUser, $chatMsg);
 	Plugins::callHook('packet_pubMsg', {
@@ -4195,7 +4198,7 @@ sub private_message {
 	}
 
 	stripLanguageCode(\$privMsg);
-	chatLog("pm", "(From: $privMsgUser) : $privMsg\n") if ($config{'logPrivateChat'});
+	chatLog("pm", TF("(From: %s) : %s\n", $privMsgUser, $privMsg)) if ($config{'logPrivateChat'});
  	message TF("(From: %s) : %s\n", $privMsgUser, $privMsg), "pm";
 
 	ChatQueue::add('pm', undef, $privMsgUser, $privMsg);
@@ -4207,7 +4210,7 @@ sub private_message {
 	});
 
 	if ($config{dcOnPM} && $AI == 2) {
-		chatLog("k", "*** You were PM'd, auto disconnect! ***\n");
+		chatLog("k", T("*** You were PM'd, auto disconnect! ***\n"));
 		message T("Disconnecting on PM!\n");
 		quit();
 	}
@@ -4313,12 +4316,13 @@ sub received_character_ID_and_Map {
 	$map_ip = makeIP($args->{mapIP});
 	$map_ip = $masterServer->{ip} if ($masterServer && $masterServer->{private});
 	$map_port = $args->{mapPort};
-	message "----------Game Info----------\n", "connection";
-	message "Char ID: ".getHex($charID)." (".unpack("V1", $charID).")\n", "connection";
-	message "MAP Name: $args->{mapName}\n", "connection";
-	message "MAP IP: $map_ip\n", "connection";
-	message "MAP Port: $map_port\n", "connection";
-	message "-----------------------------\n", "connection";
+	message TF("----------Game Info----------\n" .
+		"Char ID: %s (%s)\n" .
+		"MAP Name: %s\n" .
+		"MAP IP: %s\n" .
+		"MAP Port: %s\n" .
+		"-----------------------------\n", getHex($charID), unpack("V1", $charID),
+		$args->{mapName}, $map_ip, $map_port), "connection";
 	($ai_v{temp}{map}) = $args->{mapName} =~ /([\s\S]*)\./;
 	checkAllowedMap($ai_v{temp}{map});
 	message(T("Closing connection to Character Server\n"), "connection") unless ($net->version == 1);
@@ -4350,7 +4354,7 @@ sub refine_result {
 sub repair_list {
 	my ($self, $args) = @_;
 	my $msg;
-	$msg .= "--------Repair List--------\n";
+	$msg .= T("--------Repair List--------\n");
 	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 13) {
 		my $index = unpack("v1", substr($args->{RAW_MSG}, $i, 2));
 		my $nameID = unpack("v1", substr($args->{RAW_MSG}, $i+2, 2));
@@ -4522,14 +4526,14 @@ sub sense_result {
 	# nameID level size hp def race mdef element ice earth fire wind poison holy dark spirit undead
 	my @race_lut = qw(Formless Undead Beast Plant Insect Fish Demon Demi-Human Angel Dragon Boss Non-Boss);
 	my @size_lut = qw(Small Medium Large);
-	message sprintf("=====================Sense========================\n" .
+	message TF("=====================Sense========================\n" .
 			"Monster: %-16s Level: %-12s\n" .
-			"Size:	  %-16s Race:  %-12s\n" .
-			"Def:	  %-16s MDef:  %-12s\n" .
+			"Size:    %-16s Race:  %-12s\n" .
+			"Def:     %-16s MDef:  %-12s\n" .
 			"Element: %-16s HP:    %-12s\n" .
 			"=================Damage Modifiers=================\n" .
-			"Ice: %-3s     Earth: %-3s  Fire: %-3s	Wind: %-3s\n" .
-			"Poison: %-3s  Holy: %-3s   Dark: %-3s	Spirit: %-3s\n" .
+			"Ice: %-3s     Earth: %-3s  Fire: %-3s  Wind: %-3s\n" .
+			"Poison: %-3s  Holy: %-3s   Dark: %-3s  Spirit: %-3s\n" .
 			"Undead: %-3s\n" .
 			"==================================================\n",
 			$monsters_lut{$args->{nameID}}, $args->{level}, $size_lut[$args->{size}], $race_lut[$args->{race}], $args->{def},
@@ -4549,7 +4553,7 @@ sub shop_sold {
 	my $earned = $amount * $articles[$number]{price};
 	$shopEarned += $earned;
 	$articles[$number]{quantity} -= $amount;
-	my $msg = "sold: $amount $articles[$number]{name} - $earned z\n";
+	my $msg = TF("sold: %s - %s %sz\n", $amount, $articles[$number]{name}, $earned);
 	shopLog($msg);
 	message($msg, "sold");
 	if ($articles[$number]{quantity} < 1) {
@@ -5062,7 +5066,7 @@ sub stat_info {
 			$char->{muted} = time;
 			if ($config{dcOnMute}) {
 				message TF("You've been muted for %s minutes, auto disconnect!\n", $val);
-				chatLog("k", "*** You have been muted for $val minutes, auto disconnect! ***\n");
+				chatLog("k", TF("*** You have been muted for %s minutes, auto disconnect! ***\n", $val));
 				quit();
 			} else {
 				message TF("You've been muted for %s minutes\n", $val);
@@ -5088,7 +5092,7 @@ sub stat_info {
 		message TF("You are now level %s\n", $args->{val}), "success";
 		if ($config{dcOnLevel} && $char->{lv} >= $config{dcOnLevel}) {
 			message TF("Disconnecting on level %s!\n", $config{dcOnLevel});
-			chatLog("k", "Disconnecting on level $config{dcOnLevel}!\n");
+			chatLog("k", TF("Disconnecting on level %s!\n", $config{dcOnLevel}));
 			quit();
 		}
 	} elsif ($args->{type} == 12) {
@@ -5149,7 +5153,7 @@ sub stat_info {
 		message TF("You are now job level %s\n", $args->{val}), "success";
 		if ($config{dcOnJobLevel} && $char->{lv_job} >= $config{dcOnJobLevel}) {
 			message TF("Disconnecting on job level %s!\n", $config{dcOnJobLevel});
-			chatLog("k", "Disconnecting on job level $config{dcOnJobLevel}!\n");
+			chatLog("k", TF("Disconnecting on job level %s!\n", $config{dcOnJobLevel}));
 			quit();
 		}
 	} elsif ($args->{type} == 124) {
@@ -5405,7 +5409,8 @@ sub system_chat {
 	my $message = bytesToString($args->{message});
 	stripLanguageCode(\$message);
 	chatLog("s", "$message\n") if ($config{logSystemChat});
-	message "[GM] $message\n", "schat";
+	# Translation Comment: System/GM chat
+	message TF("[GM] %s\n", $message), "schat";
 	ChatQueue::add('gm', undef, undef, $message);
 }
 
@@ -5490,8 +5495,9 @@ sub vender_items_list {
 	$venderID = substr($msg,4,4);
 	my $player = Actor::get($venderID);
 		
-	message(center(' Vender: ' . $player->nameIdx . ' ', 79, '-')."\n", "list");
-	message("#  Name				       Type	      Amount	   Price\n", "list");
+	message TF("%s\n" .
+		"#  Name                                       Type           Amount       Price\n", 
+		center(' Vender: ' . $player->nameIdx . ' ', 79, '-')), "list";
 	for (my $i = 8; $i < $msg_size; $i+=22) {
 		my $number = unpack("v1", substr($msg, $i + 6, 2));
 
@@ -5542,13 +5548,12 @@ sub vender_buy_fail {
 
 	my $reason;
 	if ($args->{fail} == 1) {
-		$reason = 'insufficient zeny';
+		error TF("Failed to buy %s of item #%s from vender (insufficient zeny).\n", $args->{amount}, $args->{index});
 	} elsif ($args->{fail} == 2) {
-		$reason = 'overweight';
+		error TF("Failed to buy %s of item #%s from vender (overweight).\n", $args->{amount}, $args->{index});
 	} else {
-		$reason = "unknown code $args->{fail}";
+		error TF("Failed to buy %s of item #%s from vender (unknown code %s).\n", $args->{amount}, $args->{index}, $args->{fail});
 	}
-	error "Failed to buy $args->{amount} of item #$args->{index} from vender ($reason).\n";
 }
 
 sub vending_start {
@@ -5564,8 +5569,9 @@ sub vending_start {
 
 	# FIXME: Read the packet the server sends us to determine
 	# the shop title instead of using $shop{title}.
-	message(center(" $shop{title} ", 79, '-')."\n", "list");
-	message("#  Name					  Type	      Amount	   Price\n", "list");
+	message TF("%s\n" .
+		"#  Name                                          Type        Amount       Price\n", 
+		center(" $shop{title} ", 79, '-')), "list";
 	for (my $i = 8; $i < $msg_size; $i += 22) {
 		my $number = unpack("v1", substr($msg, $i + 4, 2));
 		my $item = $articles[$number] = {};
@@ -5613,8 +5619,8 @@ sub warp_portal_list {
 	push @{$char->{warp}{memo}}, $args->{memo3} if $args->{memo3} ne "";
 	push @{$char->{warp}{memo}}, $args->{memo4} if $args->{memo4} ne "";
 
-	message("----------------- Warp Portal --------------------\n", "list");
-	message("#  Place			    Map\n", "list");
+	message T("----------------- Warp Portal --------------------\n" .
+		"#  Place                           Map\n"), "list";
 	for (my $i = 0; $i < @{$char->{warp}{memo}}; $i++) {
 		message(swrite(
 			"@< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<<<<",

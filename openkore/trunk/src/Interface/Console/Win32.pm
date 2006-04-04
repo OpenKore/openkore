@@ -37,6 +37,8 @@ use Text::Wrap;
 use Win32::Console;
 use WinUtils;
 use encoding 'utf8';
+use I18N qw(stringToBytes);
+
 
 use Globals;
 use Settings qw(%sys);
@@ -323,7 +325,7 @@ sub color {
 
 sub title {
 	my $self = shift;
-	my $title = shift;
+	my $title = stringToBytes(shift);
 
 	if (defined $title) {
 		if (!defined $self->{currentTitle} || $self->{currentTitle} ne $title) {

@@ -229,9 +229,9 @@ sub ai_partyfollow {
 			$ai_v{master}{time} = time;
 
 			if ($ai_v{master}{map} ne $field{name}) {
-				message "Calculating route to find master: $ai_v{master}{map}\n", "follow";
+				message TF("Calculating route to find master: %s\n", $ai_v{master}{map}), "follow";
 			} elsif (distance(\%master, $char->{pos_to}) > $config{followDistanceMax} ) {
-				message "Calculating route to find master: $ai_v{master}{map} ($ai_v{master}{x},$ai_v{master}{y})\n", "follow";
+				message TF("Calculating route to find master: %s (%s,%s)\n", $ai_v{master}{map}, $ai_v{master}{x}, $ai_v{master}{y}), "follow";
 			} else {
 				return;
 			}
@@ -680,7 +680,7 @@ sub ai_waypoint {
 	);
 
 	if ($args{whenDone} && $args{whenDone} ne "repeat" && $args{whenDone} ne "reverse") {
-		error "Unknown waypoint argument: $args{whenDone}\n";
+		error TF("Unknown waypoint argument: %s\n", $args{whenDone});
 		return;
 	}
 	AI::queue("waypoint", \%args);
@@ -786,9 +786,9 @@ sub attack {
 	AI::queue("attack", \%args);
 
 	if ($priorityAttack) {
-		message "Priority Attacking: $target\n";
+		message TF("Priority Attacking: %s\n", $target);
 	} else {
-		message "Attacking: $target\n";
+		message TF("Attacking: %s\n", $target);
 	}
 
 	$startedattack = 1;
@@ -809,14 +809,14 @@ sub attack {
 			}
 
 			if (existsInList($config{"autoSwitch_$i"}, $monsters{$ID}{'name'})) {
-				message "Encounter Monster : ".$monsters{$ID}{'name'}."\n";
+				message TF("Encounter Monster : %s\n", $monsters{$ID}{'name'});
 
 				$Req = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{"autoSwitch_$i"."_rightHand"}) if ($config{"autoSwitch_$i"."_rightHand"});
 				$Leq = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{"autoSwitch_$i"."_leftHand"}) if ($config{"autoSwitch_$i"."_leftHand"});
 				$arrow = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{"autoSwitch_$i"."_arrow"}) if ($config{"autoSwitch_$i"."_arrow"});
 
 				if ($Leq ne "" && !$char->{inventory}[$Leq]{equipped}) {
-					message "Auto Equiping [L] :".$config{"autoSwitch_$i"."_leftHand"}." ($Leq)\n", "equip";
+					message TF("Auto Equiping [L]: %s (%s)\n", $config{"autoSwitch_$i"."_leftHand"}, $Leq), "equip";
 					$Lequip = 1;
 				}
 				if ($Req ne "" && !$chars[$config{'char'}]{'inventory'}[$Req]{'equipped'} || $config{"autoSwitch_$i"."_rightHand"} eq "[NONE]") {
@@ -843,7 +843,7 @@ sub attack {
 						}
 					}
 					if ($config{"autoSwitch_$i"."_rightHand"} ne "[NONE]") {
-						message "Auto Equiping [R] :".$config{"autoSwitch_$i"."_rightHand"}."\n", "equip";
+						message TF("Auto Equiping [R]: %s\n", $config{"autoSwitch_$i"."_rightHand"}), "equip";
 						$char->{inventory}[$Req]->equip();
 						if ($Lequip == 0) {
 							if ($config{'autoSwitch_default_leftHand'}) {
@@ -856,18 +856,18 @@ sub attack {
 				$char->{inventory}[$Leq]->equip() if ($Leq ne "" && $Lequip == 1);
 
 				if ($arrow ne "" && !$chars[$config{'char'}]{'inventory'}[$arrow]{'equipped'}) {
-					message "Auto Equiping [A] :".$config{"autoSwitch_$i"."_arrow"}."\n", "equip";
+					message TF("Auto Equiping [A]: %s\n", $config{"autoSwitch_$i"."_arrow"}), "equip";
 					$chars[$config{'char'}]{'inventory'}[$arrow]->equip();
 				}
 				if ($config{"autoSwitch_$i"."_distance"} && $config{"autoSwitch_$i"."_distance"} != $config{'attackDistance'}) {
 					$ai_v{'attackDistance'} = $config{'attackDistance'};
 					$config{'attackDistance'} = $config{"autoSwitch_$i"."_distance"};
-					message "Change Attack Distance to : ".$config{'attackDistance'}."\n", "equip";
+					message TF("Change Attack Distance to : %s\n", $config{'attackDistance'}), "equip";
 				}
 				if ($config{"autoSwitch_$i"."_useWeapon"} ne "") {
 					$ai_v{'attackUseWeapon'} = $config{'attackUseWeapon'};
 					$config{'attackUseWeapon'} = $config{"autoSwitch_$i"."_useWeapon"};
-					message "Change Attack useWeapon to : ".$config{'attackUseWeapon'}."\n", "equip";
+					message TF("Change Attack useWeapon to : %s\n", $config{'attackUseWeapon'}), "equip";
 				}
 				last AUTOEQUIP;
 			}
@@ -880,7 +880,7 @@ sub attack {
 		if ($config{'autoSwitch_default_leftHand'}) {
 			$Leq = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{'autoSwitch_default_leftHand'});
 			if ($Leq ne "" && !$chars[$config{'char'}]{'inventory'}[$Leq]{'equipped'}) {
-				message "Auto equiping default [L] :".$config{'autoSwitch_default_leftHand'}."\n", "equip";
+				message TF("Auto equiping default [L]: %s\n", $config{'autoSwitch_default_leftHand'}), "equip";
 				$Lequip = 1;
 			}
 		}
@@ -904,7 +904,8 @@ sub attack {
 				$Rdef = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "equipped", 2) if ($Rdef eq "");
 				$net->sendUnequip($chars[$config{'char'}]{'inventory'}[$Rdef]{'index'}) if($Rdef ne "" && $chars[$config{'char'}]{'inventory'}[$Rdef]{'equipped'} && $Rdef ne $Ldef);
 
-				message "Auto equiping default [R] :".$config{'autoSwitch_default_rightHand'}." (unequip $Rdef)\n", "equip";
+				message TF("Auto equiping default [R]: %s (unequip %s)\n", 
+					$config{'autoSwitch_default_rightHand'}, $Rdef), "equip";
 				$chars[$config{'char'}]{'inventory'}[$Req]->equip();
 			}
 		}
@@ -912,17 +913,17 @@ sub attack {
 		if ($config{'autoSwitch_default_arrow'}) {
 			$arrow = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{'autoSwitch_default_arrow'});
 			if($arrow ne "" && !$chars[$config{'char'}]{'inventory'}[$arrow]{'equipped'}) {
-				message "Auto equiping default [A] :".$config{'autoSwitch_default_arrow'}."\n", "equip";
+				message TF("Auto equiping default [A]: %s\n", $config{'autoSwitch_default_arrow'}), "equip";
 				$chars[$config{'char'}]{'inventory'}[$arrow]->equip();
 			}
 		}
 		if ($ai_v{'attackDistance'} && $config{'attackDistance'} != $ai_v{'attackDistance'}) {
 			$config{'attackDistance'} = $ai_v{'attackDistance'};
-			message "Change Attack Distance to Default : ".$config{'attackDistance'}."\n", "equip";
+			message TF("Change Attack Distance to Default : %s\n", $config{'attackDistance'}), "equip";
 		}
 		if ($ai_v{'attackUseWeapon'} ne "" && $config{'attackUseWeapon'} != $ai_v{'attackUseWeapon'}) {
 			$config{'attackUseWeapon'} = $ai_v{'attackUseWeapon'};
-			message "Change Attack useWeapon to default : ".$config{'attackUseWeapon'}."\n", "equip";
+			message TF("Change Attack useWeapon to default : %s\n", $config{'attackUseWeapon'}), "equip";
 		}
 	} #END OF BLOCK AUTOEQUIP
 }

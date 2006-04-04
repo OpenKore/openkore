@@ -500,7 +500,7 @@ sub checkConnection {
 
 	} elsif ($conState == 5 && !$self->serverAlive()) {
 		if ($config{dcOnDisconnect}) {
-			chatLog("k", "*** You disconnected, auto quit! ***\n");
+			chatLog("k", T("*** You disconnected, auto quit! ***\n"));
 			error T("Disconnected from Map Server, exiting...\n"), "connection";
 			$quit = 1;
 		} else {

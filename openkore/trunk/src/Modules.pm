@@ -145,39 +145,42 @@ sub reloadFile {
 	}
 
 	if (!$found) {
-		$err->("Unable to reload code: $filename not found\n");
+		$err->(Translation::TF("Unable to reload code: %s not found\n", $filename));
 		return;
 	}
 	if (!-f $Config{'perlpath'}) {
-		$err->("Cannot find Perl interpreter $Config{'perlpath'}\n");
+		$err->(Translation::TF("Cannot find Perl interpreter %s\n", $Config{'perlpath'}));
 		return;
 	}
 
-	$msg->("Checking $filename for errors...\n", "info");
+	$msg->(Translation::TF("Checking %s for errors...\n", $filename), "info");
 
 	system($Config{perlpath}, '-I', "$FindBin::RealBin/src", '-c', "$path/$filename");
 	if ($? == -1) {
-		$err->("Failed to execute $Config{'perlpath'}\n");
+		$err->(Translation::TF("Failed to execute %s\n", $Config{'perlpath'}));
 		return;
 	} elsif ($? & 127) {
-		$err->("$Config{perlpath} exited abnormally\n");
+		$err->(Translation::TF("%s exited abnormally\n", $Config{perlpath}));
 		return;
 	} elsif (($? >> 8) == 0) {
-		$msg->("$filename passed syntax check.\n", "success");
+		$msg->(Translation::TF("%s passed syntax check.\n", $filename), "success");
 	} else {
-		$err->("$filename contains syntax errors.\n");
+		$err->(Translation::TF("%s contains syntax errors.\n", $filename));
 		return;
 	}
 
-	$msg->("Reloading $filename...\n", "info");
+	# Translation Comment: Reloading a Kore's module
+	$msg->(Translation::TF("Reloading %s...\n", $filename), "info");
 	{
 		package main;
 		if (!do $filename || $@) {
-			error("Unable to reload $filename\n");
+			# Translation Comment: Unable to Reload a Kore's module
+			error(Translation::TF("Unable to reload %s\n", $filename));
 			error("$@\n", "syntax", 1) if ($@);
 		}
 	}
-	$msg->("Reloaded.\n", "info");
+	# Translation Comment: Kore's module reloaded successfully
+	$msg->(Translation::T("Reloaded.\n"), "info");
 }
 
 ##

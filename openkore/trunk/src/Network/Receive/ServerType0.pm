@@ -17,6 +17,7 @@ use Plugins;
 use Utils;
 use Skills;
 use AI;
+use Translation;
 
 sub new {
 	my ($class) = @_;
@@ -32,11 +33,11 @@ sub map_loaded {
 
 	if ($net->version == 1) {
 		$conState = 4;
-		message("Waiting for map to load...\n", "connection");
+		message(T("Waiting for map to load...\n"), "connection");
 		ai_clientSuspend(0, 10);
 		main::initMapChangeVars();
 	} else {
-		message("You are now in the game\n", "connection");
+		message(T("You are now in the game\n"), "connection");
 		$net->sendMapLoaded();
 		$timeout{'ai'}{'time'} = time;
 	}
@@ -44,7 +45,7 @@ sub map_loaded {
 	$char->{pos} = {};
 	makeCoords($char->{pos}, $args->{coords});
 	$char->{pos_to} = {%{$char->{pos}}};
-	message("Your Coordinates: $char->{pos}{x}, $char->{pos}{y}\n", undef, 1);
+	message(TF("Your Coordinates: %s, %s\n", $char->{pos}{x}, $char->{pos}{y}), undef, 1);
 
 	$net->sendIgnoreAll("all") if ($config{'ignoreAll'});
 }

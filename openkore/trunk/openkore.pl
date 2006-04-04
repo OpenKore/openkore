@@ -66,7 +66,7 @@ $SIG{__DIE__} = sub {
 	# Determine what function to use to print the error
 	my $err;
 	if (!$Globals::interface || UNIVERSAL::isa($Globals::interface, "Interface::Startup")) {
-		$err = sub { print "$_[0]\nPress ENTER to exit this program.\n"; <STDIN>; }
+		$err = sub { print TF("%s\nPress ENTER to exit this program.\n", $_[0]); <STDIN>; }
 	} else {
 		$err = sub { $Globals::interface->errorDialog($_[0]); };
 	}
@@ -79,8 +79,8 @@ $SIG{__DIE__} = sub {
 	$dieMsg =~ s/ \(\@INC contains: .*\)//;
 
 	# Create error message and display it
-	my $msg = "Program terminated unexpectedly. Error message:\n" .
-		"$dieMsg\nA more detailed error report is saved to errors.txt";
+	my $msg = TF("Program terminated unexpectedly. Error message:\n" .
+		"%s\nA more detailed error report is saved to errors.txt", $dieMsg);
 
 	my $log = '';
 	$log .= "\@ai_seq = @Globals::ai_seq\n\n" if (defined @Globals::ai_seq);
@@ -100,7 +100,7 @@ $SIG{__DIE__} = sub {
 		$msg .= "* $lines[$line-1]";
 		$msg .= "  $lines[$line]" if (@lines > $line);
 		$msg .= "\n" unless $msg =~ /\n$/s;
-		$log .= "\n\nDied at this line:\n$msg\n";
+		$log .= TF("\n\nDied at this line:\n%s\n", $msg);
 	}
 
 	if (open(F, "> errors.txt")) {
@@ -292,8 +292,9 @@ if ($XKore_version eq "1" || $XKore_version eq "inject") {
 	require XKore;
 	Modules::register("XKore");
 	$net = new XKore;
-	Log::warning "If you are having problems with XKore 1 because of GameGuard,\ntry changing the config to 'XKore proxy' (without quotes)\n" .
-		"Read more about it on [to be defined].\n" if ($config{gameGuard} == 2);
+	Log::warning TF("If you are having problems with XKore 1 because of GameGuard,\n" .
+		"try changing the config to 'XKore proxy' (without quotes)\n" .
+		"Read more about it on %s.\n", "[to be defined]") if ($config{gameGuard} == 2);
 } elsif ($XKore_version eq "2") {
 	# Run as a proxy bot, allowing Ragnarok to connect while botting
 	require XKore2;
@@ -342,7 +343,7 @@ Log::message(T("Checking for new portals... "));
 if (compilePortals_check()) {
 	Log::message(T("found new portals!\n"));
 	Log::message(TF("Auto-compile in %d seconds...\n", $timeout{compilePortals_auto}{timeout}));
-	Log::message(T("Compile portals now? (Y/n) "));
+	Log::message(TF("Compile portals now? %s", "(Y/n) "));
 	$timeout{compilePortals_auto}{time} = time;
 
 	my $msg = $interface->getInput($timeout{compilePortals_auto}{timeout});
@@ -377,8 +378,8 @@ if ($net->version != 1) {
 	if ($config{'master'} eq "" || $config{'master'} =~ /^\d+$/ || !exists $masterServers{$config{'master'}}) {
 		my $err;
 		while (!$quit) {
-			Log::message(sprintf("------- %s --------\n", T("Master Servers")), "connection");
-			Log::message(T("#         Name\n"), "connection");
+			Log::message(T("------- Master Servers --------\n" .
+				"#         Name\n"), "connection");
 
 			my $i = 0;
 			my @servers = sort { lc($a) cmp lc($b) } keys(%masterServers);
@@ -445,8 +446,8 @@ Plugins::unloadAll();
 
 # Shutdown everything else
 undef $net;
-
-Log::message("Bye!\n");
+# Translation Comment: Kore's exit message
+Log::message(T("Bye!\n"));
 Log::message($Settings::versionText);
 }
 
