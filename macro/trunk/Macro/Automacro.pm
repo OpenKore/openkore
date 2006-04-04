@@ -108,7 +108,7 @@ sub checkLoc {
 sub checkLevel {
   $cvs->debug("checkLevel(@_)", $logfac{function_call_auto} | $logfac{automacro_checks});
   my ($arg, $what) = @_;
-  my ($cond, $level) = split(/ /, $arg);
+  my ($cond, $level) = $arg =~ /([<>=!]+)\s*(\d+)/;
   my $lvl;
   if ($what eq 'base')   {$lvl = $char->{lv}}
   elsif ($what eq 'job') {$lvl = $char->{lv_job}}
@@ -130,7 +130,7 @@ sub checkClass {
 sub checkPercent {
   $cvs->debug("checkPercent(@_)", $logfac{function_call_auto} | $logfac{automacro_checks});
   my ($arg, $what) = @_;
-  my ($cond, $amount) = split(/ /, $arg);
+  my ($cond, $amount) = $arg =~ /([<>=!]+)\s*(\d+[%])/;
   if ($what =~ /^(hp|sp|weight)$/) {
     if ($amount =~ /\d+%$/ && $char->{$what."_max"}) {
       $amount =~ s/%$//;
@@ -221,7 +221,7 @@ sub checkPerson {
 sub checkCond {
   $cvs->debug("checkCond(@_)", $logfac{function_call_auto} | $logfac{automacro_checks});
   my $what = shift;
-  my ($cond, $amount) = split(/ /, $_[0]);
+  my ($cond, $level) = $_[0] =~ /([<>=!]+)\s*(\d+)/;
   return cmpr($what, $cond, $amount)?1:0
 }
 

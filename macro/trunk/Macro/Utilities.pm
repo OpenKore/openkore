@@ -73,6 +73,10 @@ sub between {
 sub cmpr {
   $cvs->debug("cmpr (@_)", $logfac{function_call_auto});
   my ($a, $cond, $b) = @_;
+  unless (defined $a && defined $cond && defined $b) {
+    error "cmpr: wrong # of arguments\n";
+    return 0
+  }
   if ($a =~ /^[\d.]+$/ && $b =~ /^[\d.]+$/) {
     if (($cond eq "=" || $cond eq "==") && $a == $b) {return 1}
     if ($cond eq ">=" && $a >= $b) {return 1}
@@ -90,13 +94,20 @@ sub cmpr {
 sub match {
   $cvs->debug("match (@_)", $logfac{function_call_auto});
   my ($text, $kw) = @_;
+
+  unless (defined $text && defined $kw) {
+    error "match: wrong # of args\n";
+    return 0
+  }
+
   my $match;
   my $flag;
   
-  no warnings;
+#  no warnings;
 
-  if ($kw =~ /^".*"$/)      {$match = 0}
-  if ($kw =~ /^\/.*\/\w?$/) {$match = 1}
+  if ($kw =~ /^".*"$/) {$match = 0}
+  elsif ($kw =~ /^\/.*\/\w?$/) {$match = 1}
+  else {return 0}
   ($kw, $flag) = $kw =~ /^[\/"](.*?)[\/"](\w?)/;
   
   if ($match == 0 && $text eq $kw) {return 1}
@@ -107,7 +118,7 @@ sub match {
     return 1
   }
 
-  use warnings;
+#  use warnings;
 
   return 0
 }
