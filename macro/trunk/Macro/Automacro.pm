@@ -221,7 +221,7 @@ sub checkPerson {
 sub checkCond {
   $cvs->debug("checkCond(@_)", $logfac{function_call_auto} | $logfac{automacro_checks});
   my $what = shift;
-  my ($cond, $level) = $_[0] =~ /([<>=!]+)\s*(\d+)/;
+  my ($cond, $amount) = $_[0] =~ /([<>=!]+)\s*(\d+)/;
   return cmpr($what, $cond, $amount)?1:0
 }
 
