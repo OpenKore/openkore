@@ -207,7 +207,7 @@ sub mainLoop {
 			last if ($msg_length == length($msg));
 			$msg_length = length($msg);
 		}
-		$net->clientFlush() if ($net->version > 0);
+		$net->clientFlush() if (UNIVERSAL::isa($net, 'XKoreProxy'));
 	}
 
 	# Receive and handle data from the RO client
