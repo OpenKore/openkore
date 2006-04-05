@@ -3931,6 +3931,8 @@ sub party_join {
 	my ($self, $args) = @_;
 
 	my ($ID, $x, $y, $type, $name, $user, $map) = @{$args}{qw(ID x y type name user map)};
+	$name = bytesToString($name);
+	$user = bytesToString($user);
 
 	if (!$char->{party} || !%{$char->{party}} || !$chars[$config{char}]{party}{users}{$ID} || !%{$chars[$config{char}]{party}{users}{$ID}}) {
 		binAdd(\@partyUsersID, $ID) if (binFind(\@partyUsersID, $ID) eq "");
@@ -3969,7 +3971,7 @@ sub party_leave {
 		delete $chars[$config{char}]{party} if ($chars[$config{char}]{party});
 		undef @partyUsersID;
 	} else {
-		message TF("%s left the party\n", $args->{name});
+		message TF("%s left the party\n", bytesToString($args->{name}));
 	}
 }
 
@@ -3998,7 +4000,7 @@ sub party_users_info {
 	my $msg;
 	decrypt(\$msg, substr($args->{RAW_MSG}, 28));
 	$msg = substr($args->{RAW_MSG}, 0, 28).$msg;
-	$char->{party}{name} = $args->{party_name};
+	$char->{party}{name} = bytesToString($args->{party_name});
 
 	for (my $i = 28; $i < $args->{RAW_MSG_SIZE}; $i += 46) {
 		my $ID = substr($msg, $i, 4);
@@ -4007,7 +4009,7 @@ sub party_users_info {
 			binAdd(\@partyUsersID, $ID);
 		}
 		$chars[$config{char}]{party}{users}{$ID} = new Actor::Party;
-		$chars[$config{char}]{party}{users}{$ID}{name} = unpack("Z24", substr($msg, $i + 4, 24));
+		$chars[$config{char}]{party}{users}{$ID}{name} = bytesToString(unpack("Z24", substr($msg, $i + 4, 24)));
 		message TF("Party Member: %s\n", $chars[$config{char}]{party}{users}{$ID}{name}), undef, 1;
 		$chars[$config{char}]{party}{users}{$ID}{map} = unpack("Z16", substr($msg, $i + 28, 16));
 		$chars[$config{char}]{party}{users}{$ID}{online} = !(unpack("C1",substr($msg, $i + 45, 1)));
