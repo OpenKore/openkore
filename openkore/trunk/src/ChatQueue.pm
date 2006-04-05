@@ -27,7 +27,7 @@ use Plugins;
 use Log qw(message error);
 use Utils qw(parseArgs getFormattedDate timeOut);
 use Misc qw(auth configModify setTimeout sendMessage getIDFromChat avoidGM_talk avoidList_talk getResponse relog quit);
-
+use Translation;
 
 our @queue;
 our $wordSplitters = qr/(\b| |,|\.|\!)/;
