@@ -111,9 +111,9 @@ sub parseKw {
                  "invamount|cartamount|shopamount|storamount|config|eval|arg";
   my @pair = $text =~ /\@($keywords)\s*\(\s*(.*?)\s*\)/i;
   return unless @pair;
-  if (my @tmppair = $pair[1] =~ /\@($keywords)\s*\(\s*(.*)/i) {return @tmppair}
-  if ($pair[0] eq 'arg') {@pair = $text =~ /\@(arg)\s*\(\s*(".*?",\s+\d+)\s*\)/}
-  elsif ($pair[0] eq 'random') {@pair = $text =~ /\@(random)\s*\(\s*(".*?")\s*\)/}
+  if ($pair[0] eq 'arg') {return $text =~ /\@(arg)\s*\(\s*(".*?",\s+\d+)\s*\)/}
+  elsif ($pair[0] eq 'random') {return $text =~ /\@(random)\s*\(\s*(".*?")\s*\)/}
+  while ($pair[1] =~ /^\@($keywords)\s*\(/) {@pair = $pair[1] =~ /^\@($keywords)\s*\((.*)/}
   return @pair
 }
 
