@@ -12,6 +12,7 @@ use Log qw(message warning error debug);
 use Utils;
 use Exporter;
 use base qw(Exporter);
+use Translation;
 
 our @EXPORT = (
 	qw/

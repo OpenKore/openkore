@@ -23,6 +23,7 @@ use Globals;
 use Log qw(message debug error);
 use Utils qw(dataWaiting timeOut shiftPack unShiftPack);
 use Misc;
+use Translation;
 
 use Network::Send;
 

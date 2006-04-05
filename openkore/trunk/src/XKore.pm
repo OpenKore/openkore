@@ -20,6 +20,7 @@ use Exporter;
 use IO::Socket::INET;
 use Time::HiRes qw(time usleep);
 use Win32;
+use Translation;
 
 use Globals;
 use Log qw(message error);
