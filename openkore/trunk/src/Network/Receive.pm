@@ -3021,9 +3021,8 @@ sub inventory_item_added {
 		$item->{invIndex} = $invIndex;
 
 		$itemChange{$item->{name}} += $amount;
-		my $disp = T("Item added to inventory: ");
-		$disp .= $item->{name};
-		$disp .= " ($invIndex) x $amount - $itemTypes_lut{$item->{type}}";
+		my $disp = TF("Item added to inventory: %s (%s) x %s - %s", 
+			$item->{name}, $invIndex, $amount, $itemTypes_lut{$item->{type}});
 		message "$disp\n", "drop";
 
 		$disp .= " ($field{name})\n";
