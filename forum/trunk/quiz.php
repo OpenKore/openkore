@@ -87,6 +87,8 @@ class QuizModel {
 			return $phpbb_root_path . "quiz/pt.xml";
 		} else if ($language == "id") {
 			return $phpbb_root_path . "quiz/id.xml";
+		} else if ($language == "tl") {
+			return $phpbb_root_path . "quiz/tl.xml";
 		} else {
 			throw new QuizIllegalLanguageException();
 		}

@@ -10,6 +10,7 @@
 		<li><a href="quiz.php?{intro.QUERY_PARAMS}">English</a></li>
 		<li><a href="quiz.php?language=pt&{intro.QUERY_PARAMS}">Portuguese</a></li>
 		<li><a href="quiz.php?language=id&{intro.QUERY_PARAMS}">Bahasa Indonesia</a></li>
+		<li><a href="quiz.php?language=tl&{intro.QUERY_PARAMS}">Philipinnes (Tagalog)</a></li>
 	</ul>
 </div>
 <!-- END intro -->
