@@ -16,6 +16,7 @@ use Base::Server;
 use IPC::Messages qw(encode decode);
 use Poseidon::RagnarokServer;
 use base qw(Base::Server);
+use Plugins;
 
 my $CLASS = "Poseidon::QueryServer";
 
@@ -67,6 +68,16 @@ sub process {
 		packet => $args->{packet},
 		client => $client
 	);
+
+	# perform client authentication here
+	Plugins::callHook('Poseidon/server_authenticate', {
+		args_hash => $args,
+	});
+
+	# note: the authentication plugin must set auth_failed to true if it doesn't
+	# want the Poseidon server to respond to the query
+	return if ($args->{auth_failed});
+
 	Scalar::Util::weaken($request{client});
 	push @{$self->{"$CLASS queue"}}, \%request;
 #	my $packet = substr($ipcArgs->{packet}, 0, 18);
