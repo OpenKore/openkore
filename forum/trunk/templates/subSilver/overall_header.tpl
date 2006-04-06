@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="templates/subSilver/{T_HEAD_STYLESHEET}" type="text/css">
 <link href="http://www.openkore.com/include/openkore-topbar.css" media="screen" rel="stylesheet" type="text/css">
 <link href="http://www.openkore.com/include/statcounter.css" media="screen" rel="stylesheet" type="text/css">
+<link href="http://www.openkore.com/include/independent.css" media="screen" rel="stylesheet" type="text/css">
 <!-- Fix broken PNG transparency and CSS support for IE/Win5-6+ -->
 <!--[if gte IE 5.5000]>
 <script type="text/javascript" src="/include/pngfix.js"></script>
@@ -70,7 +71,7 @@
 					<tr> 
 						<td align="center" valign="top" nowrap="nowrap"><!-- <span class="mainmenu">&nbsp;<a href="{U_FAQ}" class="mainmenu"><img src="templates/subSilver/images/icon_mini_faq.gif" width="12" height="13" border="0" alt="{L_FAQ}" hspace="3" />{L_FAQ}</a>&nbsp; &nbsp; --><a href="{U_SEARCH}" class="mainmenu"><img src="templates/subSilver/images/icon_mini_search.gif" width="12" height="13" border="0" alt="{L_SEARCH}" hspace="3" />{L_SEARCH}</a>&nbsp; &nbsp;<a href="{U_MEMBERLIST}" class="mainmenu"><img src="templates/subSilver/images/icon_mini_members.gif" width="12" height="13" border="0" alt="{L_MEMBERLIST}" hspace="3" />{L_MEMBERLIST}</a>&nbsp; &nbsp;<a href="{U_GROUP_CP}" class="mainmenu"><img src="templates/subSilver/images/icon_mini_groups.gif" width="12" height="13" border="0" alt="{L_USERGROUPS}" hspace="3" />{L_USERGROUPS}</a>&nbsp; 
 						<!-- BEGIN switch_user_logged_out -->
-						&nbsp;<a href="/enter.php?redirect=%2Fprofile.php%3Fmode%3Dregister%26agreed%3Dtrue" class="mainmenu"><img src="templates/subSilver/images/icon_mini_register.gif" width="12" height="13" border="0" alt="{L_REGISTER}" hspace="3" />{L_REGISTER}</a>&nbsp;
+						&nbsp;<a href="profile.php?mode=register&agreed=yes" class="mainmenu"><img src="templates/subSilver/images/icon_mini_register.gif" width="12" height="13" border="0" alt="{L_REGISTER}" hspace="3" />{L_REGISTER}</a>&nbsp;
 						<!-- END switch_user_logged_out -->
 						</span></td>
 					</tr>

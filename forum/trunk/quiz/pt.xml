@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Portuguese translation by illusionist -->
+<quiz>
+        <introText>Nossos forums possuem regras de etiqueta e regras gerais.
+    Então, antes de proceder, você precisa terminar este teste
+    para que verifiquemos se você tem conhecimentos suficientes das regras gerais e de etiqueta.</introText>
+        <rulesLinkText>Clique aqui para ler as regras.</rulesLinkText>
+        <correctAnswerText>%d questões foram respondidas corretamente.</correctAnswerText>
+
+        <item>
+                <question>
+      Após fazer o download do OpenKore/VisualKore, você quer começar sua própria
+      configuração, mas ainda não sabe como. Qual seria sua PRIMEIRA reação?</question>
+                <answer>Vai no forum e pergunta de uma vez.</answer>
+                <answer correct="yes">Pesquisa no manual, nos FAQ, faz uma busca no forum e no site.</answer>
+                <answer>Entra no canal de IRC e pergunta.</answer>
+                <answer>Manda PM para algum moderador.</answer>
+        </item>
+        <item>
+                <question>É a sua primeira vez com o Openkore e você precisa de uma config o mais rápido possíve. O que você deve fazer?</question>
+                <answer>Pedir uma configuração no forum.</answer>
+                <answer>Ir ao canal de IRC e pedir a alguém que te mande uma config.</answer>
+                <answer correct="yes">Ler o manual, os FAQ, pesquisar o forum e então fazer a sua própria config.</answer>
+                <answer>Mandar PM pra todo mundo.</answer>
+        </item>
+        <item>
+                <question>Se você criou um tópico e este for movido para a Lixeira, você:</question>
+                <answer>Manda uma PM pro moderador reclamando porque ele moveu pra lá.</answer>
+                <answer>Posta a mesma mensagem uma segunda vez.</answer>
+                <answer>Posta sua pergunta no tópico de outra pessoa.</answer>
+                <answer correct="yes">Lê as regras outra vez para ver qual das violações você cometeu e tenta não fazer isto outra vez.</answer>
+        </item>
+        <item>
+                <question>Depois de ler o manual, buscar nos FAQ e no forum, você ainda está com problemas no Openkore/VisualKore.
+      Em qual das seções do forum você pedirá ajuda?</question>
+                <answer correct="yes">Openkore &amp; VisualKore Supporte</answer>
+                <answer>Perguntas Mais Frequentes (FAQ)</answer>
+                <answer>Discussões</answer>
+                <answer>Dicas (Botting Tips &amp; Tricks)</answer>
+        </item>
+        <item>
+                <question>Qual das características abaixo tem suporte no Openkore?</question>
+                <answer>Kill stealing (KS)</answer>
+                <answer>Looting</answer>
+                <answer>Duplicação de item/zenny</answer>
+                <answer correct="yes">Nenhuma das alternativas</answer>
+        </item>
+        <item>
+                <question>Quando você pergunta no forum e alguém deu uma resposta que não resolveu seu problema, o que você faz?</question>
+                <answer correct="yes">Diz pra pessoa que você tentou a sugestão e como/porque não funcionou.</answer>
+                <answer>Diz para a pessoa não se incomodar em responder, porque ela é mais um n00b na vida.</answer>
+                <answer>Ri da cara dela.</answer>
+        </item>
+        <item>
+                <question>Se você leu um tópico no forum pedindo ajuda e você não conhece a resposta, o que você faz?</question>
+                <answer>Finge que sabe e responde o tópico.</answer>
+                <answer correct="yes">Ignora o tópico e só responde quando você tem sugestões práticas.</answer>
+                <answer>Responde "eu não sei" no tópico.</answer>
+                <answer>Ri da pessoa.</answer>
+        </item>
+        <item>
+                <question>
+      Você quer perguntar algo no forum. Qual dos conjuntos de informações adicionais descritos abaixo
+      você incluiria no seu post?</question>
+                <answer>Versão do Openkore, versão do Ragnarok e o nome do seu Lunático.</answer>
+                <answer>Sua configuração inteira, versão do Openkore e versão do Ragnarok.</answer>
+                <answer>Uma parte da config, o que você já fez e o seu e-mail.</answer>
+                <answer correct="yes">O que você já fez, uma parte da config, versão do Openkore e versão do Ragnarok.</answer>
+        </item>
+        <item>
+                <question>Na sua primeira visita a qualquer das seções do forum, qual seria sua PRIMEIRA reação?</question>
+                <answer>Ler os tópicos mais "quentes" logo de cara.</answer>
+                <answer correct="yes">Ler os anúncios e tópicos fixos (marcados com "Please Read").</answer>
+                <answer>Postar um novo tópico e dizer "Oi!".</answer>
+        </item>
+        <item>
+                <question>Se você configurou o Openkore/Visualkore para usar automaticamente Poções Vermelhas mas não
+      funcionou da maneira como você esperava. Qual seria o melhor título para o seu tópico?</question>
+                <answer>"Ajudaaaaaa plzz!!!"</answer>
+                <answer>"Não consigo usar poção... WTF? Me responde aí"</answer>
+                <answer correct="yes">"Config de Poção Vermelha não funciona como esperado (versão 1.6.6)"</answer>
+                <answer>"Por favor, entrem aqui!"</answer>
+        </item>
+        <item>
+                <question>Enquanto lia o forum, você achou um termo não conhecido (por exemplo, "SVN"). Qual sua PRIMEIRA reação?</question>
+                <answer correct="yes">Fazer uma busca no site do Openkore, pesquisar os FAQ e o forum.</answer>
+                <answer>Postar um tópico de nome "Ajuda ake!!!"</answer>
+                <answer>Postar um novo tópico com o nome "O que é SVN?"</answer>
+                <answer>Mandar PM para os moderadores.</answer>
+        </item>
+        <item>
+                <question>O Openkore de repente parou de funcionar depois de uma manutenção no seu servidor. Qual sua PRIMEIRA reação?</question>
+                <answer>Postar um tópico novo entitulado "OMG, bot não funciona!"</answer>
+                <answer>Mandar PM aos moderadores perguntando o que é que está havendo.</answer>
+                <answer>Ir ao canal de IRC dizer que o bot não funciona.</answer>
+                <answer>Postar um novo tópico com o título "Wah, o bot não funciona, a gente tá ferrado!"</answer>
+                <answer correct="yes">Navegar no forum pra saber se já existe algum anúncio sobre o problema.</answer>
+        </item>
+</quiz>

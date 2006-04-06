@@ -271,4 +271,41 @@ class OWordLinker {
 		return $message;
 	}
 }
+
+/**
+ * Various utility functions.
+ */
+class OUtils {
+	/**
+	 * Remove one or more keys (and their values) from a query string.
+	 *
+	 * @param queryString A query string (the part which comes after 'http://foo.com/bar.php?').
+	 * @param keys An array of keys you want to remove.
+	 * @require !is_null($queryString) && !is_null($keys)
+	 */
+	public static function removeKeys($queryString, $keys) {
+		$result = '';
+		$items = explode('&', $queryString);
+		foreach ($items as $item) {
+			$temp = explode('=', $item);
+
+			$removeThis = false;
+			$i = 0;
+			$count = count($keys);
+			while ($i < $count && !$removeThis) {
+				$removeThis = $keys[$i] == $temp[0];
+				$i++;
+			}
+
+			if (!$removeThis) {
+				$result .= '&' . $item;
+			}
+		}
+		if (strlen($result) > 0 && $result{0} == '&') {
+			return substr_replace($result, '', 0, 1);
+		} else {
+			return $result;
+		}
+	}
+}
 ?>

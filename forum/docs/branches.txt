@@ -4,7 +4,9 @@ orig
 +- attachment_mod
 +- multi-bbcode
 +- quick_reply_mod
-   |
-   +- bbcode-buttons-organizer
-      |
-      +- syntax_mod
+|  |
+|  +- bbcode-buttons-organizer
+|     |
+|     +- syntax_mod
++- seperate_announcements_mod
++- simply-merge-threads

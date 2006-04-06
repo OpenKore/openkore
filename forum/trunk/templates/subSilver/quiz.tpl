@@ -2,14 +2,24 @@
 
 <!-- BEGIN intro -->
 <div style="background: #ffe8e8; border: 1px solid #ffd0d0; margin: 1em; margin-bottom: 2em; padding: 0.5em;">
-	Our forums have etiquettes and rules. So before you can proceed, you must finish this quiz,
-	in order to test whether you know enough about the etiquettes and rules.
+	<p style="margin: 0px; margin-bottom: 0.9em; padding: 0px;">
+		{intro.INTRO_TEXT}
+		<a href="http://www.openkore.com/wiki/index.php/International_forum_rules" target="_blank">{intro.RULES_LINK_TEXT}</a>
+	</p>
+	<ul class="openkore_linklist">
+		<li><a href="quiz.php?{intro.QUERY_PARAMS}">English</a></li>
+		<li><a href="quiz.php?language=pt&{intro.QUERY_PARAMS}">Portuguese</a></li>
+		<li><a href="quiz.php?language=id&{intro.QUERY_PARAMS}">Bahasa Indonesia</a></li>
+	</ul>
 </div>
 <!-- END intro -->
 
 <!-- BEGIN answered -->
-<div style="color: blue; font-weight: bold;">
-	{answered.NUMBER} questions have been correctly answered.
+<div>
+	<span style="color: blue; font-weight: bold;">
+	{answered.NUMBER}
+	</span>
+	<a href="http://www.openkore.com/wiki/index.php/International_forum_rules" target="_blank">{answered.RULES_LINK_TEXT}</a>
 </div>
 <!-- END answered -->
 
