@@ -95,6 +95,19 @@ class QuizSource {
 	 * @invariant for all $k in $items: $k instanceof QuizItem
 	 */
 	private $items;
+	/**
+	 * The introduction text.
+	 */
+	private $introText;
+	/**
+	 * The rules link text.
+	 */
+	private $rulesLinkText;
+	/**
+	 * The message to display when correct answer(s) have
+	 * been inputted.
+	 */
+	private $correctAnswerText;
 
 	// Temporary variables for parser.
 	private $currentItem;
@@ -135,6 +148,34 @@ class QuizSource {
 	 */
 	public function getCount() {
 		return count($this->items);
+	}
+
+	/**
+	 * Return the introduction text.
+	 *
+	 * @ensure !is_null(result)
+	 */
+	public function getIntroText() {
+		return $this->introText;
+	}
+
+	/**
+	 * Return the rules link text.
+	 *
+	 * @ensure !is_null(result)
+	 */
+	public function getRulesLinkText() {
+		return $this->rulesLinkText;
+	}
+
+	/**
+	 * Return the message to display when correct answer(s) have
+	 * been inputted.
+	 *
+	 * @ensure !is_null(result)
+	 */
+	public function getCorrectAnswerText() {
+		return $this->correctAnswerText;
 	}
 
 	/**
@@ -182,14 +223,25 @@ class QuizSource {
 			$this->answerNumber++;
 		}
 
-		if ($name == "ANSWER" || $name == "QUESTION") {
+		if ($name == "ANSWER" || $name == "QUESTION"
+		    || $name == "INTROTEXT" || $name == "RULESLINKTEXT"
+		    || $name == "CORRECTANSWERTEXT") {
 			$this->currentCharData = '';
 		}
 	}
 
 	private function handleEndElement($parser, $name) {
 		array_shift($this->tagstack);
-		if ($name == "ITEM") {
+		if ($name == "INTROTEXT") {
+			$this->introText = $this->currentCharData;
+
+		} else if ($name == "RULESLINKTEXT") {
+			$this->rulesLinkText = $this->currentCharData;
+
+		} else if ($name == "CORRECTANSWERTEXT") {
+			$this->correctAnswerText = $this->currentCharData;
+
+		} else if ($name == "ITEM") {
 			if (is_null($this->currentItem->getQuestion())) {
 				$error = sprintf("No question defined (XML line %d)",
 					xml_get_current_line_number($parser));

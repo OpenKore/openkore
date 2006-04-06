@@ -1,1 +1,0 @@
-<a href="/enter.php?redirect=%2Fprofile.php%3Fmode%3Dregister%26agreed%3Dtrue">Click here.</a>

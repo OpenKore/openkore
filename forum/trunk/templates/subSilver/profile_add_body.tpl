@@ -31,7 +31,7 @@
 	<tr> 
 		<td class="row1"><span class="gen">{L_EMAIL_ADDRESS}: *</span></td>
 		<td class="row2"><input type="text" class="post" style="width:200px" name="email" size="25" maxlength="255" value="{EMAIL}" /><br>
-			This <b>must</b> be a <b>valid</b> email address!</td>
+			<b style="color: red;">This must be a valid email address!</b></td>
 	</tr>
 	<!-- BEGIN switch_edit_profile -->
 	<tr> 
@@ -267,8 +267,18 @@
 	</tr>
 	<!-- END switch_avatar_local_gallery -->
 	<!-- END switch_avatar_block -->
+	<tr> 
+	  <th class="thSides" colspan="2" height="25" valign="middle">Rules</th>
+	</tr>
 	<tr>
-		<td class="catBottom" colspan="2" align="center" height="28">{S_HIDDEN_FIELDS}<input type="submit" name="submit" value="{L_SUBMIT}" class="mainoption" />&nbsp;&nbsp;<input type="reset" value="{L_RESET}" name="reset" class="liteoption" /></td>
+		<td class="row1">
+			<input type="checkbox" id="rulesCheck" onchange="document.getElementById('submitButton').disabled = !document.getElementById('rulesCheck').checked;">
+			<label for="rulesCheck">Yes, I agree with</label>
+			<a target="_blank" href="http://www.openkore.com/wiki/index.php/International_forum_rules">the rules.</a>
+		</td>
+	</tr>
+	<tr>
+		<td class="catBottom" colspan="2" align="center" height="28">{S_HIDDEN_FIELDS}<input type="submit" name="submit" id="submitButton" disabled value="{L_SUBMIT}" class="mainoption" />&nbsp;&nbsp;<input type="reset" value="{L_RESET}" name="reset" class="liteoption" /></td>
 	</tr>
 </table>
 

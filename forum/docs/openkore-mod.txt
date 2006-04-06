@@ -1,11 +1,12 @@
-// Our own mod
+// OOptions
 CREATE TABLE openkore_forum_config (
     config_name VARCHAR(255) NOT NULL,
     config_value TEXT
 );
 
-INSERT INTO openkore_forum_config VALUES('important_announcement', '');
-
 // "User must wait x days before he can post" (timeblock) mod
 ALTER TABLE phpbb_users ADD user_timeblock TINYINT(1) default '1';
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('user_block_time','0');
+
+// Quiz
+ALTER TABLE phpbb_users ADD user_done_quiz TINYINT(1) default '0';

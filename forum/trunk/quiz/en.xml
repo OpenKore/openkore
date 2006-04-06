@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <quiz>
+	<introText>Our forums have etiquettes and rules. So before you can proceed, you must finish this quiz, in order to test whether you know enough about the etiquettes and rules.</introText>
+	<rulesLinkText>Click here to read the rules.</rulesLinkText>
+	<correctAnswerText>%d questions have been correctly answered.</correctAnswerText>
+
 	<item>
 		<question>After downloading OpenKore/VisualKore, you want to start some configuration but you don't know how. What do you do FIRST?</question>
 		<answer>Go to the forum and ask right away.</answer>

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Indonesian translation by h4rry84 -->
+<quiz>
+        <introText>Forum kami memiliki kode etik dan peraturan. Jadi sebelum anda bisa melanjutkan, anda harus menyelesaikan kuis ini, untuk mengetahui apakah anda sudah cukup tahu mengenai kode etik dan peraturan.</introText>
+        <rulesLinkText>Klik disini untuk membaca peraturan.</rulesLinkText>
+        <correctAnswerText>pertanyaan %d sudah dijawab dengan benar.</correctAnswerText>
+
+        <item>
+                <question>Setelah men-download OpenKore/VisualKore, anda ingin memulai untuk mengkonfigurasi tetapi anda tidak tahu bagaimana caranya. Apa yang akan anda lakukan PERTAMA KALI?</question>
+                <answer>Pergi ke forum dan segera bertanya dengan benar.</answer>
+                <answer correct="yes">Mencari manual, mencari di FAQ, mencari di forum dan mencari di website.</answer>
+                <answer>Pergi ke channel IRC dan bertanya.</answer>
+                <answer>Mengirimkan private message (pesan pribadi) pada moderator.</answer>
+        </item>
+        <item>
+                <question>Ini adalah pertama kalinya anda menggunakan Openkore dan anda membutuhkan config secepat-cepatnya. Apa yang seharusnya anda lakukan?</question>
+                <answer>Pergi ke forum dan bertanya untuk sebuah config.</answer>
+                <answer>Pergi ke channel IRC dan bertanya apakah seseorang bisa memberikan anda sebuah config.</answer>
+                <answer correct="yes">Membaca manual, mencari di FAQ, mencari di forum dan kemudian membuat config anda sendiri.</answer>
+                <answer>Mengirimkan private message (pesan pribadi) pada semua orang.</answer>
+        </item>
+        <item>
+                <question>Jika anda membuat sebuah topik baru dan topik tersebut dipindah ke Trashcan (Tong Sampah), anda akan:</question>
+                <answer>Mengirimkan private message (pesan pribadi) pada moderator dan komplain mengapa topic tersebut dipindahkan.</answer>
+                <answer>Post topic yang sama lagi.</answer>
+                <answer>Post pertanyaan anda di thread orang lain.</answer>
+                <answer correct="yes">Membaca peraturan lagi untuk melihat apakah anda sudah melakukan pelanggaran dan mencoba untuk tidak melakukannya lagi.</answer>
+        </item>
+        <item>
+                <question>Setelah anda membaca manual, dan mencari di FAQ dan di forum, anda masih mengalami masalah dengan Openkore/VisualKore. Dimana dari pilihan section forum berikut yang seharusnya anda gunakan untuk meminta bantuan?</question>
+                <answer correct="yes">Openkore &amp; VisualKore Support</answer>
+                <answer>Frequently Asked Questions</answer>
+                <answer>Discussion</answer>
+                <answer>Botting Tips &amp; Tricks</answer>
+        </item>
+        <item>
+                <question>Dimana dari pilihan berikut yang disupport oleh Openkore?</question>
+                <answer>Kill stealing</answer>
+                <answer>Looting</answer>
+                <answer>Duplikasi Item/zenny</answer>
+                <answer correct="yes">Tidak ada jawaban yang benar</answer>
+        </item>
+        <item>
+                <question>Ketika anda bertanya di forum dan seseorang memberikan anda sebuah jawaban yang tidak menyelesaikan masalah anda, apa yang akan anda lakukan?</question>
+                <answer correct="yes">Mengatakan pada orang tersebuat bahwa anda sudah mencoba pendapatnya dan bagaimana/kenapa masih tidak bisa.</answer>
+                <answer>Mengatakan pada orang tersebut agar tidak perlu repot-repot membalas karena dia adalah seorang n00b.</answer>
+                <answer>Tertawa pada orang tersebut.</answer>
+        </item>
+        <item>
+                <question>Jika anda membaca sebuah topik di forum yang menanyakan untuk bantuan dan anda tidak tahu jawabannya, apa yang akan anda lakukan?</question>
+                <answer>Berpura-pura anda tahu sesuatu dan menjawab topik tersebut.</answer>
+                <answer correct="yes">Tidak menghiraukan topic tersebut dan hanya membalas jika mempunyai informasi pendapat yang berguna.</answer>
+                <answer>Membalas topik tersebut dan berkata "Saya tidak tahu".</answer>
+                <answer>Tertawa pada orang tersebut.</answer>
+        </item>
+        <item>
+                <question>Anda ingin mengajukan sebuah pertanyaan di forum. Dimana dari pilihan berikut yang merupakan kumpulan informasi tambahan yang baik untuk ditambahkan pada post anda?</question>
+                <answer>Versi Openkore, server RO, dan nama dari pet Lunatic anda.</answer>
+                <answer>Seluruh config anda, Versi Openkore, dan server RO.</answer>
+                <answer>Sebagian dari config anda, apa yang telah anda lakukan sejauh ini, dan alamat e-mail anda.</answer>
+                <answer correct="yes">Apa yang telah anda lakukan sejauh ini, sebagian dari config anda, Versi Openkore dan server RO.</answer>
+        </item>
+        <item>
+                <question>Ketika anda pertama kali mengunjungi sebuah section forum, apa yang seharusnya anda lakukan PERTAMA KALI?</question>
+                <answer>Membaca Topic yang paling sering dikunjungi segera.</answer>
+                <answer correct="yes">Membaca topik Announcement dan pinned ("Please Read").</answer>
+                <answer>Post sebuah topic untuk mengatakan "Hi!".</answer>
+        </item>
+        <item>
+                <question>Jika anda sudah melakukan konfigurasi pada Openkore/Visualkore untuk secara otomatis menggunakan Red Potion tetapi tidak bekerja sesuai yang anda inginkan. Judul topik apa yang paling baik untuk pertanyaan anda?</question>
+                <answer>"Tuoloonggggg !!!"</answer>
+                <answer>"Tidak dapat menggunakan potion... Apa-apaan? Tolong beritahu jawabannya dong"</answer>
+                <answer correct="yes">"config Red Potions tidak dapat berfungsi seperti yang saya inginkan (version 1.6.6)"</answer>
+                <answer>"Tolong lihat kemari!"</answer>
+        </item>
+        <item>
+                <question>Selama membaca forum, anda menghadapi kata-kata yang anda tidak ketahui (sebagai contoh, kata "SVN"). Apa yang akan anda lakukan PERTAMA KALI?</question>
+                <answer correct="yes">Mencari website OpenKore, mencari FAQ dan mencari di forum untuk jawabannya.</answer>
+                <answer>Membuat thread baru dengan judul "Bantu aku!!!"</answer>
+                <answer>Membuat thread baru dengan judul "Apa itu SVN?"</answer>
+                <answer>Mengirimkan private message (pesan pribadi) pada moderator.</answer>
+        </item>
+        <item>
+                <question>OpenKore secara mendadak tidak dapat bekerja di server anda karena adanya update dari server. Apa yang seharusnya anda lakukan PERTAMA KALI?</question>
+                <answer>membuat thread baru dengan judul "OMG Bot tidak jalan!"</answer>
+                <answer>Mengirimkan private message (pesan pribadi) pada moderator, menanyakan apa yang terjadi.</answer>
+                <answer>Pergi ke channel IRC, dan berkata kenapa botnya tidak bekerja.</answer>
+                <answer>Membuat thread baru dengan judul "Wah bot tidak bisa jalan, kita terpuruk!!"</answer>
+                <answer correct="yes">Jelajahi forum dan lihat apakah sudah ada announcement (pemberitahuan) tentang masalah.</answer>
+        </item>
+</quiz>
