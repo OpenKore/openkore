@@ -20,6 +20,7 @@ use Globals qw(%config);
 use Log qw(error debug);
 use IPC::Messages qw(encode decode);
 use Utils qw(dataWaiting);
+use Plugins;
 
 use constant DEFAULT_POSEIDON_SERVER_PORT => 24390;
 use constant POSEIDON_SUPPORT_URL => 'http://www.openkore.com/aliases/poseidon.php';
@@ -72,6 +73,11 @@ sub query {
 	}
 
 	my (%args, $data);
+	# Plugin hook to make it possible to add additional data piggy-backed
+	# to the Poseidon request packet (auth information for example)
+	Plugins::callHook('Poseidon/client_authenticate', {
+		args => \%args,
+	});
 	$args{packet} = $packet;
 	$data = encode("Poseidon Query", \%args);
 	$socket->send($data);
