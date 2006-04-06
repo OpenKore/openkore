@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Translation by arachno -->
+<quiz>
+	<introText>Unsere Foren haben Umgangsformen und Regeln. Bevor Du fortfahren kannst, mußt Du diesen Test bestehen, welcher prüft, ob Du genug über Umgangsformen und Regeln weißt.</introText>
+	<rulesLinkText>Klicke hier, um die Regeln zu lesen.</rulesLinkText>
+	<correctAnswerText>%d Fragen wurden korrekt beantwortet.</correctAnswerText>
+
+	<item>
+		<question>Nachdem Du Openkore/VisualKore heruntergeladen hast, möchtest Du eine Konfiguration erstellen, aber Du weißt nicht, wie. Was unternimmst Du ZUERST?</question>
+		<answer>Das Forum aufrufen und direkt fragen.</answer>
+		<answer correct="yes">Das Handbuch, die FAQ, das Forum und die Webseite durchsuchen.</answer>
+		<answer>In den IRC channel gehen und fragen.</answer>
+		<answer>Den Moderatoren eine private Nachricht senden.</answer>
+	</item>
+	<item>
+		<question>Es ist das erste Mal, daß Du Openkore benutzt und Du brauchst unbedingt und sobald wie möglich eine Konfiguration. Was solltest Du tun?</question>
+		<answer>Das Forum aufrufen und nach einer Konfiguration fragen.</answer>
+		<answer>In den IRC channel gehen und fragen, ob jemand Dir eine Konfiguration schicken kann.</answer>
+		<answer correct="yes">Das Handbuch, die FAQ und das Forum durchsuchen und dann eine eigene Konfiguration erstellen.</answer>
+		<answer>Jedem eine private Nachricht senden.</answer>
+	</item>
+	<item>
+		<question>Wenn Du ein neues Thema eröffnet hast und es wurde in den Papierkorb verschoben, würdest Du:</question>
+		<answer>den Moderatoren eine private Nachricht senden, um Dich zu beschweren, warum es verschoben wurde.</answer>
+		<answer>dasselbe Thema noch einmal eröffnen.</answer>
+		<answer>Deine Frage in einem anderen Thread stellen.</answer>
+		<answer correct="yes">die Regeln nochmals lesen um festzustellen, ob Du sie verletzt hat und versuchen, es nicht zu wiederholen.</answer>
+	</item>
+	<item>
+		<question>Nachdem Du das Handbuch gelesen und FAQ und Forum durchsucht hast, hast Du noch immer Probleme mit Openkore/Visualkore. In welchem der folgenden Unterforen würdest Du um Hilfe bitten?</question>
+		<answer correct="yes">Openkore &amp; VisualKore Support</answer>
+		<answer>Frequently Asked Questions</answer>
+		<answer>Discussion</answer>
+		<answer>Botting Tips &amp; Tricks</answer>
+	</item>
+	<item>
+		<question>Was wird von Openkore unterstützt?</question>
+		<answer>Kill stealing</answer>
+		<answer>Looting</answer>
+		<answer>Item/zenny Vervielfachung</answer>
+		<answer correct="yes">keines der genannten</answer>
+	</item>
+	<item>
+		<question>Wenn Du im Forum um Hilfe gebeten hast und jemand Dir eine Antwort gab, die Dein Problem nicht lösen konnte, was würdest Du tun?</question>
+		<answer correct="yes">Dem-/derjenigen mitteilen, wie Du den Vorschlag versucht hast umzusetzen und wie/warum es nicht funktioniert hat.</answer>
+		<answer>Dem-/derjenigen nahelegen, nicht zu antworten, weil er/sie ein n00b ist.</answer>
+		<answer>Den-/diejenige auslachen.</answer>
+	</item>
+	<item>
+		<question>Wenn Du ein Thema im Forum gelesen hast, in dem jemand um Hilfe bittet, aber Du kennst keine Lösung - was würdest Du tun?</question>
+		<answer>Vorgeben, etwas zu wissen und auf das Thema antworten.</answer>
+		<answer correct="yes">Das Thema ignorieren und nur dann etwas antworten, wenn Du sinnvolle Vorschläge hast.</answer>
+		<answer>Mit "ich weiß es nicht"/"I don't know" antworten.</answer>
+		<answer>Den-/diejenige auslachen.</answer>
+	</item>
+	<item>
+		<question>Du möchtest eine Frage im Forum stellen. Welche der folgenden zusätzlichen Informationen solltest Du mitliefern?</question>
+		<answer>Openkore Version, RO Server und den Namen Deines Lunatics.</answer>
+		<answer>Deine komplette Konfiguration, Openkore Version und RO Server.</answer>
+		<answer>Einen Auszug Deiner Konfiguration, was Du bisher unternommen hast und Deine email Adresse.</answer>
+		<answer correct="yes">Was Du bisher unternommen hast, einen Auszug Deiner Konfiguration, Openkore Version und RO Server.</answer>
+	</item>
+	<item>
+		<question>Wenn Du das erste Mal ein Unterforum besuchst, was unternimmst Du ZUERST?</question>
+		<answer>Die heißen Themen lesen.</answer>
+		<answer correct="yes">Die Ankündigungen und die gepinnten Themen ("Please Read") lesen.</answer>
+		<answer>Ein neues Thema eröffnen, um "Hi!" zu sagen.</answer>
+	</item>
+	<item>
+		<question>Du hast Openkore/Visualkore so konfiguriert, daß es automatisch Red Potions nutzen soll, aber es funktioniert nicht so, wie Du Dir das vorgestellt hast. Was wäre die beste Themenüberschrift für Deine Frage?</question>
+		<answer>"Pleeaase help!!!"</answer>
+		<answer>"Unable to use potions... WTF? Give me answer please"</answer>
+		<answer correct="yes">"Red Potions config doesn't work as I intended (version 1.6.6)"</answer>
+		<answer>"Please look here!"</answer>
+	</item>
+	<item>
+		<question>Während Du das Forum liest, triffst Du auf einen Ausdruck, den Du nicht kennst (z.B. "SVN"). Was würdest Du ZUERST unternehmen?</question>
+		<answer correct="yes">Die Openkore Webseite, die FAQ und das Forum durchsuchen, um eine Antwort zu finden.</answer>
+		<answer>Ein neues Thema mit dem Titel "Help mee!!!" eröffnen.</answer>
+		<answer>Ein neues Thema mit dem Titel "What is SVN?" eröffnen.</answer>
+		<answer>Den Moderatoren eine private Nachricht schicken.</answer>
+	</item>
+	<item>
+		<question>Openkore funktioniert plötzlich wegen eines kürzlich erfolgten Serverupdates nicht mehr auf Deinem Server. Was würdest Du ZUERST tun?</question>
+		<answer>Ein neues Thema mit dem Titel "OMG bot doesn't work!" eröffnen.</answer>
+		<answer>Den Moderatoren eine private Nachricht senden und fragen, was los sei.</answer>
+		<answer>In den IRC channel gehen und verkünden, daß der Bot nicht mehr funktioniert.</answer>
+		<answer>Ein neues Thema mit dem Titel "Wah botting doesnt work we're doomed!" eröffnen.</answer>
+		<answer correct="yes">Dich im Forum umsehen und schauen, ob es schon eine Ankündigung zu dem Problem gibt.</answer>
+	</item>
+</quiz>
