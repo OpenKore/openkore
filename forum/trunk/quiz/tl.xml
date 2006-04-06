@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Tagalog translation by sola_phides -->
+<quiz>
+        <introText>Ang forum na ito ay may mga panuntunan at alituntunin. Kung kaya't bago magpatuloy, kinakailangang tapusin ang maikling pagsusulit na ito, upang masubok ang iyong kakayahan at kaalaman tungkol sa mga panuntunan at alituntunin ng forum na ito.</introText>
+        <rulesLinkText>I-Click dito upang basahin ang mga alituntunin.</rulesLinkText>
+        <correctAnswerText>%d nasagot ng tama ang mga katanungan.</correctAnswerText>
+
+        <item>
+                <question>Matapos mag download ng OpenKore/VisualKore, nais mong gumawa ng configuration ngunit di alam kung papaano. Ano ang UNA mong gagawin?</question>
+                <answer>Magtungo sa forum at agarang magtanong.</answer>
+                <answer correct="yes">Maghanap sa manual, maghanap FAQ, maghanap sa forum at hanapin sa website.</answer>
+                <answer>Magtungo sa IRC channel at doon magtanong.</answer>
+                <answer>Magpadala ng pribadong mensahe sa mga tagapamagitan.</answer>
+        </item>
+        <item>
+                <question>Ito ang unang pagkakataon mong gumamit ng Openkore at kinakailangan mo ng config ASAP. Ano ang gagawin mo?</question>
+                <answer>Magtungo sa forum at manghingi ng config.</answer>
+                <answer>Magtungo sa IRC channel at magtanong kung meron bang maaaring makapagbigay ng config.</answer>
+                <answer correct="yes">Basahin ang manual, Maghanap sa FAQ, Maghanap sa forum, at gumawa ng sariling config.</answer>
+                <answer>Magpadala ng pribadong mensahe sa lahat.</answer>
+        </item>
+        <item>
+                <question>Kung ikaw ay gumawa ng isang bagong paksa at ito ay ibinasura, ang gagawin mo ay:</question>
+                <answer>Magpadala ng pribadong mensahe sa mga tagapamigtan at magreklamo kung bakit inalis ang iyong paksa.</answer>
+                <answer>Magpaskil ulit ng kaparehong paksa.</answer>
+                <answer>Ilagay ang iyong katanungan sa thread na gawa ng iba.</answer>
+                <answer correct="yes">Basahin ang mga alituntunin at tingnan kung may pagkakamaling nagawa at piliting huwag na itong maulit muli.</answer>
+        </item>
+        <item>
+                <question>Makaraang basahin ang manual, at maghanap sa FAQ at sa forum, ikaw ay nahaharap pa rin sa mga problema ukol sa paggamit ng Openkore/VisualKore. Saang bahagi ng forum ka pupunta at magtatanong?</question>
+                <answer correct="yes">Openkore &amp; VisualKore Support</answer>
+                <answer>Frequently Asked Questions</answer>
+                <answer>Discussion</answer>
+                <answer>Botting Tips &amp; Tricks</answer>
+        </item>
+        <item>
+                <question>Alin sa mga sumusunod ang sinusuportahan ng Openkore?</question>
+                <answer>Kill stealing</answer>
+                <answer>Looting</answer>
+                <answer>Item/zenny duplication</answer>
+                <answer correct="yes">Wala sa mga nabanggit</answer>
+        </item>
+        <item>
+                <question>Kung ikaw ay nagtanong sa forum at may nagbigay ng sagot sa iyong katanungan ngunit hindi nakatulong sa paglutas ng iyong problema, ano ang gagawin mo?</question>
+                <answer correct="yes">Ipaalam sa taong iyon kung paano mo ginawa ang kanyang suhestiyon at ipaalam kung bakit/papaano ito hindi gumana.</answer>
+                <answer>Sabihan ang taong ito na wag nang sumagot dahil siya ay isang "n00b".</answer>
+                <answer>Pagtawanan ang taong iyon.</answer>
+        </item>
+        <item>
+                <question>If you read a topic in the forum asking for help and you don't know the answer, what would you do?</question>
+                <answer>Pretend you know something and answer the topic.</answer>
+                <answer correct="yes">Ignore the topic and only reply if you have useful suggestions.</answer>
+                <answer>Reply to the topic and say "I don't know".</answer>
+                <answer>Laugh at the person.</answer>
+        </item>
+        <item>
+                <question>Kung nais mong magtanong sa forum. Alin sa mga sumusunod na karagdagang impormasyon ang nararapat na isama sa iyong katanungan?</question>
+                <answer>Openkore version, RO server, at ang pangalan ng iyong alagang Lunatic.</answer>
+                <answer>Ang iyong buong config, Openkore version, and RO server.</answer>
+                <answer>Bahagi ng iyong config, ano ang kaukulang ginawa, at ang iyong e-mail address.</answer>
+                <answer correct="yes">Ano ang kaukulang ginawa, bahagi ng iyong config, Openkore version at RO server.</answer>
+        </item>
+        <item>
+                <question>Sa unang pagbisita mo sa forum section, ano ang UNA mong gagawin?</question>
+                <answer>Agad na basahin ang mga paksa.</answer>
+                <answer correct="yes">Basahin ang nakapaskil na anunsyo/pahayag ("Please Read") na paksa.</answer>
+                <answer>Magpaskil ng bagong paksa upang sabihing "Hi!".</answer>
+        </item>
+        <item>
+                <question>Kung naiayos mo na ang iyong Openkore/Visualkore upang bumili ng Red Potions ngunit di gumana ayon sa iyong kagustuhan. Ano ang pinakamahusay na pamagat para sa iyong paksa?</question>
+                <answer>"Pleeaase help!!!"</answer>
+                <answer>"Unable to use potions... WTF? Give me answer please"</answer>
+                <answer correct="yes">"Red Potions config doesn't work as I intended (version 1.6.6)"</answer>
+                <answer>"Please look here!"</answer>
+        </item>
+        <item>
+                <question>Sa iyong pagbabasa sa forum, nakatagpo ka ng katagang hindi mo maintindihan (halimbawa, ang salitang "SVN"). Ano ang UNA mong gagawin?</question>
+                <answer correct="yes">Maghanap OpenKore website, Maghanap sa FAQ at maghanap sa forum ng kasagutan.</answer>
+                <answer>Magpaskil ng bagong thread na may paksang "Help mee!!!"</answer>
+                <answer>Magpaskil ng bagong thread na may paksang "What is SVN?"</answer>
+                <answer>Magpadala ng pribadong mensahe sa mga tagapamagitan.</answer>
+        </item>
+        <item>
+                <question>Biglang tumigil at ayaw gumana ng Openkore sa iyong server dulot ng mga pagbabago. Ano ang UNA mong gagawin?</question>
+                <answer>Magpaskil ng bagong thread na may paksang "OMG bot doesn't work!"</answer>
+                <answer>Magpadala ng pribadong mensahe sa mga tagapamagitan at itanong kung anong nangyayari.</answer>
+                <answer>Magtungo sa IRC channel, at banggitin ang hindi paggana ng bot.</answer>
+                <answer>Magpaskil ng bagong thread na may paksang "Wah botting doesnt work we're doomed!"</answer>
+                <answer correct="yes">Magbrowse sa forum at tingnan kung mayroong mga kaukulang anunsyo/pahayag ukol sa problema.</answer>
+        </item>
+</quiz>
