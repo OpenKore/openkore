@@ -177,6 +177,9 @@ sub getInput {
 sub askInput {
 	my ($self, $message) = @_;
 	my $cancelable = !exists($_[2]) || $_[2];
+
+	$message = wrapText($message, 70);
+	$message =~ s/\n$//s;
 	my $dialog = new Wx::TextEntryDialog($self->{frame}, $message, "Input");
 	while (1) {
 		my $result;
@@ -199,6 +202,9 @@ sub askPassword {
 	# WxPerl doesn't support wxPasswordEntryDialog :(
 	my ($self, $message) = @_;
 	my $cancelable = !exists($_[2]) || $_[2];
+
+	$message = wrapText($message, 70);
+	$message =~ s/\n$//s;
 	my $dialog = new Interface::Wx::PasswordDialog($self->{frame}, $message,
 		"Password Input");
 	while (1) {
@@ -221,6 +227,9 @@ sub askPassword {
 sub showMenu {
 	my ($self, $title, $message, $choices) = @_;
 	my $cancelable = !exists($_[3]) || $_[3];
+
+	$message = wrapText($message, 70);
+	$message =~ s/\n$//s;
 	my $dialog = new Wx::SingleChoiceDialog($self->{frame},
 		$message, $title, $choices);
 	while (1) {

@@ -23,6 +23,7 @@ use strict;
 use Time::HiRes qw(time usleep);
 use IO::Socket::INET;
 use Math::Trig;
+use Text::Wrap;
 use Exporter;
 use base qw(Exporter);
 use Config;
@@ -42,7 +43,7 @@ our @EXPORT = (
 	# Other stuff
 	qw(dataWaiting dumpHash formatNumber getCoordString getFormattedDate getHex giveHex getRange getTickCount
 	inRange judgeSkillArea makeCoords makeCoords2 makeDistMap makeIP encodeIP parseArgs shiftPack swrite timeConvert timeOut
-	urldecode unShiftPack vocalString)
+	urldecode unShiftPack vocalString wrapText)
 	);
 
 
@@ -1557,6 +1558,19 @@ sub vocalString {
 	}
 	$$r_string = $password if ($r_string);
 	return $password;
+}
+
+##
+# String wrapText(String text, int maxLineLength)
+# text: The text to wrap.
+# maxLineLength: The maximum length of a line.
+# Requires: defined($text) && $maxLineLength > 1
+# Ensures: defined(result)
+#
+# Wrap the given text at the given length.
+sub wrapText {
+	local($Text::Wrap::columns) = $_[1];
+	return wrap('', '', $_[0]);
 }
 
 return 1;
