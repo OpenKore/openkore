@@ -20,6 +20,7 @@ attacked magenta
 attackedMiss magenta 
 
 connection darkgreen
+menu yellow
 drop blue
 useItem blue
 
