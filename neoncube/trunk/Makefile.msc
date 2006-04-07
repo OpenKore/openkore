@@ -1,0 +1,145 @@
+# This is a Makefile for Microsoft NMAKE and compatible.
+# This file builds the NeonCube executable.
+# Please note, when specifying 'clean' as target, files in $(OUTDIR) are not deleted.
+#
+
+# DEBUG=1
+# To produce a debug binary, invoke nmake by specifying DEBUG=1 on the command line
+# ! Make sure you clean the project and delete output files
+# prior to switching configurations !
+#
+# LOG=1
+# To redirect build output to build.log, specify LOG=1.
+#
+# MSVCRT=1
+# To link against the dll runtime instead of statically.
+# Please note that use of multithreaded library is forced.
+#
+
+# Targets for this make file:
+# 	neoncube.exe
+# 	neoncubed.exe (debug build)
+
+!include sln.cfg
+
+#ZLIB_INCLUDE=-I"$(DIR_ZLIB)"
+#GRF_INCLUDE=-I"$(DIR_GRF)"
+#UNRAR_INCLUDE=-I"$(DIR_UNRAR)"
+#BROWSER_INCLUDE=-I"$(DIR_UNRAR)"
+#
+#INCL	= $(ZLIB_INCLUDE) $(GRF_INCLUDE) $(UNRAR_INCLUDE) $(BROWSER_INCLUDE)
+
+# Configure target: output dir, intermediate dir
+OUTDIR	=	.
+
+!IF DEFINED(DEBUG)
+INTDIR	=	Debug
+TARGET	=	neoncubed
+EXT	=	exe
+!MESSAGE Using Debug preset.
+!ELSE
+INTDIR	=	Release
+TARGET	=	neoncube
+EXT	=	exe
+!MESSAGE Using Release preset.
+!ENDIF
+
+!IF DEFINED(LOG)
+ERRFILE	=	>> build.log
+!ENDIF
+
+
+
+# command processor programs
+MAKE	=	nmake -nologo
+CC	=	cl -nologo
+CXX	=	cl -nologo
+RC	=	rc /r
+AR	=	lib -nologo
+LD	=	link -nologo
+RM	=       del /q
+MKDIR	=	md
+CP	=	copy /y
+
+####################### Compiler related options. #######################
+# _MBCS is always defined.
+COMMON_DEFS =	-D_CRT_SECURE_NO_DEPRECATE -DSTRICT -DWIN32 -D_MBCS -DZLIB_WINAPI -DGRF_STATIC -DSPR_STATIC -Fd"$(INTDIR)\\" -Fo"$(INTDIR)\\" -I . $(INCL)
+# EHsc  enables C++ exceptions, GR enables RTTI. You may want to disable some flags if applicable.
+OPTFLAGS =	-W3 -Wp64 -EHsc -GR -Zc:forScope,wchar_t -wd4290 -Gz
+
+# Select whether to link to MSVCRT(D) e.g. msvcr71.dll/msvcp71.dll or to link statically.
+# First option is -MD, Second is -MT (resp. -MDd -MTd)
+# Please note that use of multithreaded library is forced.
+
+!IF DEFINED(MSVCRT)
+LINKSPEC =	-MD
+!ELSE
+LINKSPEC =	-MT
+!ENDIF
+
+!IF DEFINED(DEBUG)
+OPTFLAGS =	$(OPTFLAGS) -Od
+CFLAGS_DEBUG=$(LINKSPEC)d -RTCsu -D_DEBUG -Zi
+!ELSE
+# Tweak optimization here
+OPTFLAGS =	$(OPTFLAGS) -Ox
+CFLAGS_RELEASE=$(LINKSPEC) -Gs -GS -DNDEBUG
+!ENDIF
+
+CXXFLAGS =	$(OPTFLAGS) $(COMMON_DEFS)
+
+####################### Project specific options. #######################
+
+COMMON_DEFS	=	$(COMMON_DEFS)
+
+CXXFLAGS	=	$(CXXFLAGS)
+!IF DEFINED(DEBUG)
+CXXFLAGS	=	$(CXXFLAGS) $(CFLAGS_DEBUG)
+LIBS_3	=	zlibsd.lib grfsd.lib browsersd.lib unrarsd.lib
+!ELSE
+CXXFLAGS	=	$(CXXFLAGS) $(CFLAGS_RELEASE)
+LIBS_3	=	zlibs.lib grfs.lib browsers.lib unrars.lib
+!ENDIF
+
+LIBS	=	kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib wininet.lib shlwapi.lib \
+		$(LIBS_3)
+RCFLAGS	=	/dWIN32	/d_MBCS
+
+####################### Compilation rules #######################
+
+.cpp{$(INTDIR)}.obj::
+   $(CC) $(CXXFLAGS) -c $< $(ERRFILE)
+
+ALL : "$(OUTDIR)\$(TARGET).$(EXT)"
+
+
+
+"$(OUTDIR)" :
+    if not exist "$(OUTDIR)/" $(MKDIR) "$(OUTDIR)"
+
+"$(INTDIR)" :
+    if not exist "$(INTDIR)/" $(MKDIR) "$(INTDIR)"
+
+
+CLEAN :
+	-@$(RM) "$(INTDIR)\*.obj" 2> NUL > NUL
+	-@$(RM) "$(INTDIR)\*.idb" 2> NUL > NUL
+	-@$(RM) "$(INTDIR)\*.ilk" 2> NUL > NUL
+	-@$(RM) "$(INTDIR)\*.res" 2> NUL > NUL
+
+
+OBJ	=\
+	"$(INTDIR)\archivefunc.obj" \
+	"$(INTDIR)\btn_load.obj" \
+	"$(INTDIR)\grf_func.obj" \
+	"$(INTDIR)\main.obj" \
+	"$(INTDIR)\rar_func.obj" \
+	"$(INTDIR)\resource.res"
+
+"$(OUTDIR)\$(TARGET).exe" : "$(OUTDIR)" "$(INTDIR)" $(OBJ)
+	$(CC) -o "$(OUTDIR)\$(TARGET).exe" $(OBJ) $(ERRFILE) /link -LIBPATH:lib $(LIBS)
+
+SOURCE	=	resource.rc
+"$(INTDIR)\resource.res" : "$(INTDIR)" $(SOURCE)
+	$(RC) $(RCFLAGS) /fo $@ $(SOURCE) $(ERRFILE)
+

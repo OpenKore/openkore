@@ -25,13 +25,30 @@
 
 #include <windows.h>
 
+#define MYWINAPI __stdcall
+
+#if 0
+	#ifdef DLL_BUILDING
+	#define MYEXPORT __declspec(dllexport)
+	#else
+	#define MYEXPORT __declspec(dllimport)
+	#endif
+#else
+	#define MYEXPORT
+#endif
+
+
+#ifdef __cplusplus
 extern "C" {
+#endif
+
 //########################################################
 // Embeds the OLE object to a window
 //
 // @param hwndWindow - handle of the window
 //########################################################
-long EmbedBrowserObject(HWND hwndWindow);
+MYEXPORT
+long MYWINAPI EmbedBrowserObject(HWND hwndWindow);
 
 
 //########################################################
@@ -39,7 +56,8 @@ long EmbedBrowserObject(HWND hwndWindow);
 //
 // @param hwndWindow - Handle of the window
 //########################################################
-void UnEmbedBrowserObject(HWND hwndWindow);
+MYEXPORT
+void MYWINAPI UnEmbedBrowserObject(HWND hwndWindow);
 
 
 //########################################################
@@ -50,7 +68,8 @@ void UnEmbedBrowserObject(HWND hwndWindow);
 //
 // @param lpszPath - URL of the page that will be displayed
 //########################################################
-long DisplayHTMLPage(HWND hwndWindow, LPCTSTR lpszPath);
+MYEXPORT
+long MYWINAPI DisplayHTMLPage(HWND hwndWindow, LPCTSTR lpszPath);
 
 
 //########################################################
@@ -62,8 +81,11 @@ long DisplayHTMLPage(HWND hwndWindow, LPCTSTR lpszPath);
 // @param lpszHtmlContent - Pointer to a null terminated string
 //			    (the HTML code itself)
 //#########################################################
-long DisplayHTMLStr(HWND hwndWindow, LPCTSTR lpszHtmlContent);
+MYEXPORT
+long MYWINAPI DisplayHTMLStr(HWND hwndWindow, LPCTSTR lpszHtmlContent);
 
+#ifdef __cplusplus
 }
+#endif
 
 #endif

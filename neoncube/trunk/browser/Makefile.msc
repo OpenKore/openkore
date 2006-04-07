@@ -1,0 +1,126 @@
+# This is a Makefile for Microsoft NMAKE and compatible.
+# This file is not officially part of the browser source distribution. Use at your own risk.
+# Please note, when specifying 'clean' as target, files in $(OUTDIR) are not deleted.
+#
+
+# DEBUG=1
+# To produce a debug binary, invoke nmake by specifying DEBUG=1 on the command line
+# ! Make sure you clean the project and delete output files
+# prior to switching configurations !
+#
+# LOG=1
+# To redirect build output to build.log, specify LOG=1.
+#
+# MSVCRT=1
+# To link against the dll runtime instead of statically.
+# Please note that use of multithreaded library is forced.
+#
+
+# Targets for this make file:
+# 	browsers.lib static library
+# 	browsersd.lib static library (debug build)
+
+
+# Configure target: output dir, intermediate dir
+OUTDIR	=	..\lib
+
+!IF DEFINED(DEBUG)
+INTDIR	=	Debug
+TARGET	=	browsersd
+EXT	=	lib
+!MESSAGE Using Debug preset.
+!ELSE
+INTDIR	=	Release
+TARGET	=	browsers
+EXT	=	lib
+!MESSAGE Using Release preset.
+!ENDIF
+
+!IF DEFINED(LOG)
+ERRFILE	=	>> build.log
+!ENDIF
+
+
+
+# command processor programs
+MAKE	=	nmake -nologo
+CC	=	cl -nologo
+CXX	=	cl -nologo
+RC	=	rc /r
+AR	=	lib -nologo
+LD	=	link -nologo
+RM	=       del /q
+MKDIR	=	md
+CP	=	copy /y
+
+####################### Compiler related options. #######################
+# _MBCS is always defined.
+COMMON_DEFS =	-D_CRT_SECURE_NO_DEPRECATE -DSTRICT -DWIN32 -D_MBCS -Fd"$(INTDIR)\\" -Fo"$(INTDIR)\\"
+# EHsc  enables C++ exceptions, GR enables RTTI. You may want to disable some flags if applicable.
+OPTFLAGS =	-W3 -Wp64 -Gz
+#-EHsc -GR -Zc:forScope,wchar_t
+
+# Select whether to link to MSVCRT(D) e.g. msvcr71.dll/msvcp71.dll or to link statically.
+# First option is -MD, Second is -MT (resp. -MDd -MTd)
+# Please note that use of multithreaded library is forced.
+
+!IF DEFINED(MSVCRT)
+LINKSPEC =	-MD
+!ELSE
+LINKSPEC =	-MT
+!ENDIF
+
+!IF DEFINED(DEBUG)
+OPTFLAGS =	$(OPTFLAGS) -Od -D_LIB
+CFLAGS_DEBUG=$(LINKSPEC)d -RTCsu -D_DEBUG -Zi
+!ELSE
+# Tweak optimization here
+OPTFLAGS =	$(OPTFLAGS) -Ox -D_LIB
+CFLAGS_RELEASE=$(LINKSPEC) -Gs -GS -DNDEBUG
+!ENDIF
+
+CFLAGS =	$(OPTFLAGS) $(COMMON_DEFS)
+
+####################### Project specific options. #######################
+
+COMMON_DEFS	=	$(COMMON_DEFS)
+
+CFLAGS	=	$(CFLAGS)
+!IF DEFINED(DEBUG)
+CFLAGS	=	$(CFLAGS) $(CFLAGS_DEBUG)
+!ELSE
+CFLAGS	=	$(CFLAGS) $(CFLAGS_RELEASE)
+!ENDIF
+
+####################### Compilation rules #######################
+
+.c{$(INTDIR)}.obj::
+   $(CC) $(CFLAGS) -c $< $(ERRFILE)
+
+ALL : "$(OUTDIR)\$(TARGET).$(EXT)"
+
+
+
+"$(OUTDIR)" :
+    if not exist "$(OUTDIR)/" $(MKDIR) "$(OUTDIR)"
+
+"$(INTDIR)" :
+    if not exist "$(INTDIR)/" $(MKDIR) "$(INTDIR)"
+
+
+CLEAN :
+	-@$(RM) "$(INTDIR)\*.obj" 2> NUL > NUL
+	-@$(RM) "$(INTDIR)\*.idb" 2> NUL > NUL
+	-@$(RM) "$(INTDIR)\*.ilk" 2> NUL > NUL
+
+
+OBJ	=\
+	"$(INTDIR)\browser.obj"
+
+"$(OUTDIR)\$(TARGET).lib" : "$(OUTDIR)" "$(INTDIR)" $(OBJ)
+	echo something to del > "$(OUTDIR)\$(TARGET).lib"
+	$(RM) "$(OUTDIR)\$(TARGET).lib"
+	$(AR) /out:"$(OUTDIR)\$(TARGET).lib" $(OBJ) $(ERRFILE)
+
+
+browser.obj: browser.c browser.h "$(INTDIR)"
