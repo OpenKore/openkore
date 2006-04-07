@@ -42,7 +42,7 @@ if not win32:
 ## Win32
 if win32:
 	sources += [
-		'win32/utils.c',
+		'win32/utils.cpp',
 		'win32/wrapper.c'
 	]
 	XS_sources['win32/wrapper.xs'] = 'win32/wrapper.c'

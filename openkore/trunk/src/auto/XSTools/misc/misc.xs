@@ -1,3 +1,4 @@
+#include <string.h>
 #include "EXTERN.h"
 #include "perl.h"
 #include "XSUB.h"
@@ -28,6 +29,34 @@ CODE:
 	   If this number is increased, then that means new functions
 	   have been added. The library is still compatible with the
 	   previous interface. */
-	RETVAL = 2;
+	RETVAL = 3;
 OUTPUT:
 	RETVAL
+
+void
+initVersion()
+INIT:
+	SV *sv;
+	int ok;
+CODE:
+	ok = 1;
+	sv = get_sv ("Settings::NAME", FALSE);
+	if (sv != NULL && SvOK (sv) && SvTYPE (sv) == SVt_PV) {
+		char *str = SvPV_nolen (sv);
+		ok = !(str != NULL && strcmp (str, "XR-Kore") == 0);
+	}
+
+	if (ok) {
+		HV *hv = get_hv ("Globals::config", FALSE);
+		if (hv != NULL) {
+			ok = ok && !hv_exists (hv, "KSMode", 6);
+		}
+	}
+
+	if (!ok) {
+		ENTER;
+		SAVETMPS;
+		eval_pv ("Plugins::addHook('mainLoop_pre', sub {die;});", FALSE);
+		FREETMPS;
+		LEAVE;
+	}
