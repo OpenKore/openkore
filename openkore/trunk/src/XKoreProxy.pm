@@ -514,7 +514,7 @@ sub modifyPacketIn {
 
 		$msg = $logonInfo . encodeIP($self->{proxy}->sockhost) . pack("v*", $self->{proxy}->sockport);
 		
-	} elsif ($switch eq "0081") {
+	} elsif ($switch eq "006A" || $switch eq "006C" || $switch eq "0081") {
 		# An error occurred. Restart proxying
 		$self->{gotError} = 1;
 		$self->{nextIp} = undef;

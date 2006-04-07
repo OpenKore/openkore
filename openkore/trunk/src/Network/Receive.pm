@@ -409,14 +409,15 @@ sub account_server_info {
 	$accountSex = $args->{accountSex} % 2;
 	$accountSex2 = ($config{'sex'} ne "") ? $config{'sex'} : $accountSex;
 
-	message(swrite(
-		"---------Account Info-------------", [undef],
-		"Account ID: @<<<<<<<<< @<<<<<<<<<<", [unpack("V1",$accountID), getHex($accountID)],
-		"Sex:	     @<<<<<<<<<<<<<<<<<<<<<", [$sex_lut{$accountSex}],
-		"Session ID: @<<<<<<<<< @<<<<<<<<<<", [unpack("V1",$sessionID), getHex($sessionID)],
-		"	     @<<<<<<<<< @<<<<<<<<<<", [unpack("V1",$sessionID2), getHex($sessionID2)],
-		"----------------------------------", [undef],
-	), 'connection');
+	message swrite(
+		T("-----------Account Info------------\n" . 
+		"Account ID: \@<<<<<<<<< \@<<<<<<<<<<\n" .
+		"Sex:        \@<<<<<<<<<<<<<<<<<<<<<\n" .
+		"Session ID: \@<<<<<<<<< \@<<<<<<<<<<\n" .
+		"            \@<<<<<<<<< \@<<<<<<<<<<\n" .
+		"-----------------------------------"), 
+		[unpack("V1",$accountID), getHex($accountID), $sex_lut{$accountSex}, unpack("V1",$sessionID), getHex($sessionID),
+		unpack("V1",$sessionID2), getHex($sessionID2)]), 'connection';
 
 	my $num = 0;
 	undef @servers;
@@ -3402,7 +3403,7 @@ sub login_error {
 	$net->serverDisconnect();
 	if ($args->{type} == 0) {
 		error T("Account name doesn't exist\n"), "connection";
-		if (!$net->clientAlive() && !$config{'ignoreInvalidLogin'}) {
+		if (!$net->clientAlive() && !$config{'ignoreInvalidLogin'} && !UNIVERSAL::isa($net, 'XKoreProxy')) {
 			my $username = $interface->askInput(T("Enter username again: "));
 			if (defined($username)) {
 				configModify('username', $username, 1);
@@ -3415,7 +3416,7 @@ sub login_error {
 		}
 	} elsif ($args->{type} == 1) {
 		error T("Password Error\n"), "connection";
-		if (!$net->clientAlive() && !$config{'ignoreInvalidLogin'}) {
+		if (!$net->clientAlive() && !$config{'ignoreInvalidLogin'} && !UNIVERSAL::isa($net, 'XKoreProxy')) {
 			my $password = $interface->askPassword(T("Enter password again: "));
 			if (defined($password)) {
 				configModify('password', $password, 1);
@@ -4173,7 +4174,7 @@ sub public_chat {
 	# this code autovivifies $actor->{pos_to} but it doesnt matter
 	chatLog("c", "[$field{name} $char->{pos_to}{x}, $char->{pos_to}{y}] [$actor->{pos_to}{x}, $actor->{pos_to}{y}] [dist=$dist] " .
 		"$message\n") if ($config{logChat});
-	message TF("[dist=%.2f] %s\n", $dist, $message), "publicchat";
+	message TF("[dist=%s] %s\n", $dist, $message), "publicchat";
 
 	ChatQueue::add('c', $args->{ID}, $chatMsgUser, $chatMsg);
 	Plugins::callHook('packet_pubMsg', {
@@ -4544,8 +4545,8 @@ sub sense_result {
 			"Poison: %-3s  Holy: %-3s   Dark: %-3s  Spirit: %-3s\n" .
 			"Undead: %-3s\n" .
 			"==================================================\n",
-			$monsters_lut{$args->{nameID}}, $args->{level}, $size_lut[$args->{size}], $race_lut[$args->{race}], $args->{def},
-			$args->{mdef}, $elements_lut{$args->{element}}, $args->{hp},
+			$monsters_lut{$args->{nameID}}, $args->{level}, $size_lut[$args->{size}], $race_lut[$args->{race}], 
+			$args->{def}, $args->{mdef}, $elements_lut{$args->{element}}, $args->{hp},
 			$args->{ice}, $args->{earth}, $args->{fire}, $args->{wind}, $args->{poison}, $args->{holy}, $args->{dark},
 			$args->{spirit}, $args->{undead}), "list";
 }
