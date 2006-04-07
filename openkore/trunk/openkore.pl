@@ -342,18 +342,17 @@ if ($sys{ipc}) {
 Log::message(T("Checking for new portals... "));
 if (compilePortals_check()) {
 	Log::message(T("found new portals!\n"));
-	Log::message(TF("Auto-compile in %d seconds...\n", $timeout{compilePortals_auto}{timeout}));
-	Log::message(TF("Compile portals now? %s", "(Y/n) "));
-	$timeout{compilePortals_auto}{time} = time;
-
-	my $msg = $interface->getInput($timeout{compilePortals_auto}{timeout});
-	if ($msg =~ /y/i || $msg eq "") {
+	my $choice = $interface->showMenu(T("Compile portals?"),
+		T("New portals have been added to the portals database. " .
+		"The portals database must be compiled before the new portals can be used. " .
+		"Would you like to compile portals now?\n"),
+		[T("Yes, compile now."), T("No, don't compile it.")]);
+	if ($choice == 0) {
 		Log::message(T("compiling portals") . "\n\n");
 		compilePortals();
 	} else {
 		Log::message(T("skipping compile") . "\n\n");
 	}
-	undef $msg;
 } else {
 	Log::message(T("none found\n\n"));
 }
