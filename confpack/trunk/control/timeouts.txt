@@ -108,7 +108,6 @@ ai_npcTalk 8
 # Don't change the following timeouts!
 ai_sync 12
 
-compilePortals_auto 10
 injectSync 5
 injectKeepAlive 12
 welcomeText 4
