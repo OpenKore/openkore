@@ -1,127 +1,119 @@
 /*############################################################################
-##			NEONCUBE - RAGNAROK ONLINE PATCH CLIENT
+##  NEONCUBE - RAGNAROK ONLINE PATCH CLIENT (GNU General Public License)
 ##
 ##  http://openkore.sourceforge.net/neoncube
 ##  (c) 2005 Ansell "Cliffe" Cruz (Cliffe@xeronhosting.com)
-##  
-##  This program is free software; you can redistribute it and/or modify
-##  it under the terms of the GNU General Public License as published by
-##  the Free Software Foundation; either version 2 of the License, or
-##  (at your option) any later version.
-##
-##  This program is distributed in the hope that it will be useful,
-##  but WITHOUT ANY WARRANTY; without even the implied warranty of
-##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-##  GNU General Public License for more details.
-##
-## You should have received a copy of the GNU General Public License
-##  along with this program; if not, write to the Free Software
-##  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 ##
 ##############################################################################*/
 
-#include "grf_func.h"
+#include "precompiled.h"
 
+#include <libgrf/grf.h>
+#include <commctrl.h>
+
+#include "main.h"
+#include "archivefunc.h"
+
+extern HWND hwndProgress;
 
 
 //########################################################
 // Extracts a GRF/GPF file
-// 
+//
 // @param fname - Filename to be extracted
 //
 // @return value - FALSE if an error occured, otherwise
 //		    it returns TRUE.
 //#########################################################
-BOOL ExtractGRF(LPCTSTR fname, LPCTSTR fpath)
+BOOL ExtractGRF(LPCSTR fname, LPCSTR fpath)
 {
-	
-    Grf *grf;
-    GrfError err;
+	Grf *grf;
+	GrfError err;
 
-    grf = grf_open(fname, "r+b", &err);
-	
-    if(!grf)
-	return FALSE;
+	grf = grf_open(fname, "r+b", &err);
 
+	if(!grf)
+	{
+		PostError(FALSE, "grflib failure message: %s", grf_strerror(err));
+		return FALSE;
+	}
 
-    //progress bar
-    SendMessage(hwndProgress, PBM_SETRANGE32, (WPARAM)0, (LPARAM)grf->nfiles);
+	SendMessage(hwndProgress, PBM_SETRANGE32, 0, grf->nfiles);
+	StatusMessage("Status: Extracting %s...\r\nInfo:------\r\nProgress:-----", fname);
 
-    //status message
-    StatusMessage("Status: Extracting %s...\r\nInfo:------\r\nProgress:-----", fname);
-    for(DWORD ctr = 0;ctr < grf->nfiles; ctr++) {
+	for(DWORD ctr = 0;ctr < grf->nfiles; ctr++)
+	{
 
-	BOOL restarted = FALSE;
+		BOOL restarted = FALSE;
+
 restart:
-	TCHAR szPath[256];
-	int folders = 0;
-	int i;
+		char szPath[GRF_NAMELEN];
+		int folders = 0;
+		int i;
 
-	if(_tcscmp(fpath, "FLD") == 0) {
-	    //patches will not be packed into a GRF
-	    _tcscpy(szPath, grf->files[ctr].name);
-	}
-	    
-	else if(_tcscmp(fpath, "GRF") == 0) {
-	    //patches will be packed
-	    _tcscpy(szPath, "neoncube\\");
-	    _tcscat(szPath, grf->files[ctr].name);
-
-	} else {
-	    PostError(TRUE, "Invalid patch_list string: %s \n2nd flag must be: FLD or GRF", fpath);
-	}
-	    
-	folders = CountFolders(szPath);
-	for(i = 1;i <= folders; i++) {
-	    
-	    TCHAR szCurrentFolder[256];
-
-	    _tcscpy(szCurrentFolder,GetFolder(szPath,i));
-	    CreateDirectory(szCurrentFolder,NULL);
-	    
-	}
-
-    	GRF_normalize_path(szPath, szPath);
-
-	// if file doesn't contain a '.', we assume it is a directory
-	if(strchr(szPath, '.') == NULL) {
-
-	    CreateDirectory(szPath, NULL);
-
-	// else we extract it
-	} else {
-	
-	    if(grf_index_extract(grf, ctr, szPath, &err) > 0) {
-			    
-		StatusMessage("Status: %s...\r\nInfo: %d of %d extracted\r\nProgress:-----", grf->files[ctr].name, ctr, grf->nfiles);
-	    
-	    } else {
-		
-	    
-		if(!restarted) {
-
-
-    		    TCHAR buff[256];
-		    WCHAR wcBuff[256];
-		    MultiByteToWideChar(CP_ACP, 0, grf->files[ctr].name, -1, wcBuff, sizeof(wcBuff)/sizeof(wcBuff[0]));
-		    
-		    WideCharToMultiByte(CP_ACP, 0, wcBuff, -1, buff, sizeof(buff), NULL, NULL);
-		    _tcscpy(grf->files[ctr].name, buff);
-			    
-			restarted = TRUE;
-			
-			goto restart;
-
-		} else {
-
-		    AddErrorLog("Failed to extract %s [code: %d]\n", grf->files[ctr].name, err.type);
+		if(lstrcmpiA(fpath, "FLD") == 0)
+		{
+			//patches will not be packed into a GRF
+			_tcscpy(szPath, grf->files[ctr].name);
 		}
-		
-	    }
-	}
-	SendMessage(hwndProgress, PBM_SETPOS, (WPARAM)ctr+1, 0);
-    }
+		else if(lstrcmpiA(fpath, "GRF") == 0)
+		{
+			//patches will be packed
+			lstrcpyA(szPath, "neoncube\\");
+			lstrcatA(szPath, grf->files[ctr].name);
+		}
+		else
+		{
+			PostError(TRUE, "Invalid patch_list string: %s \n2nd flag must be: FLD or GRF", fpath);
+		}
 
-    grf_free(grf);	
-    return TRUE;
+		folders = CountFolders(szPath);
+
+		for(i = 1;i <= folders; i++)
+		{
+			char szCurrentFolder[GRF_NAMELEN];
+
+			lstrcpyA(szCurrentFolder,GetFolder(szPath,i));
+			CreateDirectory(szCurrentFolder,NULL);
+		}
+
+		GRF_normalize_path(szPath, szPath);
+
+		if(GRFFILE_IS_DIR(grf->files[ctr]))
+		{
+			CreateDirectory(szPath, NULL);
+			// else we extract it
+		}
+		else
+		{
+			if(grf_index_extract(grf, ctr, szPath, &err) > 0)
+			{
+				StatusMessage("Status: %s...\r\nInfo: %d of %d extracted\r\nProgress:-----", grf->files[ctr].name, ctr, grf->nfiles);
+			}
+			else
+			{
+				if(!restarted)
+				{
+					char buff[256];
+					WCHAR wcBuff[256];
+					MultiByteToWideChar(CP_ACP, 0, grf->files[ctr].name, -1, wcBuff, sizeof(wcBuff)/sizeof(wcBuff[0]));
+					WideCharToMultiByte(CP_ACP, 0, wcBuff, -1, buff, sizeof(buff), NULL, NULL);
+					lstrcpyA(grf->files[ctr].name, buff);
+
+					restarted = TRUE;
+					goto restart;
+				}
+				else
+				{
+					AddErrorLog("Failed to extract %s [code: %d, %s]\n", grf->files[ctr].name, err.type, grf_strerror(err));
+				}
+
+			}
+		}
+
+		SendMessage(hwndProgress, PBM_SETPOS, (WPARAM)ctr+1, 0);
+	}
+
+	grf_free(grf);
+	return TRUE;
 }

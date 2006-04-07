@@ -24,7 +24,8 @@
 #include <mshtml.h>		/* Defines of stuff like IHTMLDocument2. This is an include file with Visual C 6 and above */
 #include <crtdbg.h>		/* for _ASSERT() */
 
-
+//#define DLL_BUILDING
+#include "browser.h"
 
 
 
@@ -479,7 +480,7 @@ HRESULT STDMETHODCALLTYPE Site_QueryInterface(IOleClientSite FAR* This, REFIID r
 	// _IOleClientSiteEx is an embedded IOleClientSite, so the browser doesn't mind. We want the browser
 	// to continue passing our _IOleClientSiteEx pointer wherever it would normally pass a IOleClientSite
 	// pointer.
-	// 
+	//
 	// The IUnknown interface uses the same VTable as the first object in our _IOleClientSiteEx
 	// struct (which happens to be an IOleClientSite). So if the browser is asking us to match
 	// IID_IUnknown, then we'll also return a pointer to our _IOleClientSiteEx.
@@ -770,14 +771,14 @@ HRESULT STDMETHODCALLTYPE Frame_TranslateAccelerator(IOleInPlaceFrame FAR* This,
  * with a HWND that wasn't successfully passed to EmbedBrowserObject().
  */
 
-void WINAPI UnEmbedBrowserObject(HWND hwnd)
+void MYWINAPI UnEmbedBrowserObject(HWND hwnd)
 {
 	IOleObject	**browserHandle;
 	IOleObject	*browserObject;
 
 	// Retrieve the browser object's pointer we stored in our window's GWL_USERDATA when
 	// we initially attached the browser object to this window.
-	if ((browserHandle = (IOleObject **)GetWindowLong(hwnd, GWL_USERDATA)))
+	if ((browserHandle = (IOleObject **)GetWindowLongPtr(hwnd, GWLP_USERDATA)))
 	{
 		// Unembed the browser object, and release its resources.
 		browserObject = *browserHandle;
@@ -814,7 +815,8 @@ void WINAPI UnEmbedBrowserObject(HWND hwnd)
  * this function to display numerous pages in the specified window.
  */
 
-long WINAPI DisplayHTMLPage(HWND hwnd, LPCTSTR webPageName)
+MYEXPORT
+long MYWINAPI DisplayHTMLPage(HWND hwnd, LPCTSTR webPageName)
 {
 	IWebBrowser2	*webBrowser2;
 	VARIANT			myURL;
@@ -822,7 +824,7 @@ long WINAPI DisplayHTMLPage(HWND hwnd, LPCTSTR webPageName)
 
 	// Retrieve the browser object's pointer we stored in our window's GWL_USERDATA when
 	// we initially attached the browser object to this window.
-	browserObject = *((IOleObject **)GetWindowLong(hwnd, GWL_USERDATA));
+	browserObject = *((IOleObject **)GetWindowLongPtr(hwnd, GWLP_USERDATA));
 
 	// We want to get the base address (ie, a pointer) to the IWebBrowser2 object embedded within the browser
 	// object, so we can call some of the functions in the former's table.
@@ -911,7 +913,8 @@ badalloc:	webBrowser2->lpVtbl->Release(webBrowser2);
  * the browser can call our functions in our struct's VTables.
  */
 
-long WINAPI EmbedBrowserObject(HWND hwnd)
+MYEXPORT
+long MYWINAPI EmbedBrowserObject(HWND hwnd)
 {
 	IOleObject			*browserObject;
 	IWebBrowser2		*webBrowser2;
@@ -941,7 +944,7 @@ long WINAPI EmbedBrowserObject(HWND hwnd)
 	// One final thing. We're going to allocate extra room to store the pointer to the browser object.
 	if (!(ptr = (char *)GlobalAlloc(GMEM_FIXED, sizeof(IOleInPlaceFrameEx) + sizeof(_IOleClientSiteEx) + sizeof(IOleObject *))))
 		return(-1);
-	
+
 	// Initialize our IOleInPlaceFrame object with a pointer to our IOleInPlaceFrame VTable.
 	iOleInPlaceFrameEx = (IOleInPlaceFrameEx *)(ptr + sizeof(IOleObject *));
 	iOleInPlaceFrameEx->frame.lpVtbl = (IOleInPlaceFrameVtbl *)&MyIOleInPlaceFrameTable;
@@ -961,7 +964,7 @@ long WINAPI EmbedBrowserObject(HWND hwnd)
 
 	// Get a pointer to the browser object and lock it down (so it doesn't "disappear" while we're using
 	// it in this program). We do this by calling the OS function OleCreate().
-	//	
+	//
 	// NOTE: We need this pointer to interact with and control the browser. With normal WIN32 controls such as a
 	// Static, Edit, Combobox, etc, you obtain an HWND and send messages to it with SendMessage(). Not so with
 	// the browser object. You need to get a pointer to its "base structure" (as returned by OleCreate()). This
@@ -991,13 +994,13 @@ long WINAPI EmbedBrowserObject(HWND hwnd)
 		// call EmbedBrowserObject() for each one, and easily associate the appropriate browser object with
 		// its matching window and its own objects containing per-window data.
 		*((IOleObject **)ptr) = browserObject;
-		SetWindowLong(hwnd, GWL_USERDATA, (LONG)ptr);
+		SetWindowLong(hwnd, GWLP_USERDATA, (LONG_PTR)ptr);
 
 		// We can now call the browser object's SetHostNames function. SetHostNames lets the browser object know our
 		// application's name and the name of the document in which we're embedding the browser. (Since we have no
 		// document name, we'll pass a 0 for the latter). When the browser object is opened for editing, it displays
 		// these names in its titlebar.
-		//	
+		//
 		// We are passing 3 args to SetHostNames. You'll note that the first arg to SetHostNames is the base
 		// address of our browser control. This is something that you always have to remember when working in C
 		// (as opposed to C++). When calling a VTable function, the first arg to that function must always be the
@@ -1071,20 +1074,21 @@ long WINAPI EmbedBrowserObject(HWND hwnd)
 }
 
 
-
+#ifdef DLL_BUILDING
 
 /******************************** DllMain() ********************************
  * Automatically called by Win32 when the DLL is loaded or unloaded.
  */
 
+__declspec(dllexport)
 #if defined(_MSC_VER)
 #ifndef _DEBUG
-BOOL WINAPI _DllMainCRTStartup(HANDLE hinstDLL, DWORD fdwReason, LPVOID lpvReserved)
+BOOL MYWINAPI _DllMainCRTStartup(HANDLE hinstDLL, DWORD fdwReason, LPVOID lpvReserved)
 #else
-BOOL WINAPI DllMain(HANDLE hinstDLL, DWORD fdwReason, LPVOID lpvReserved)  /* <--- Doesn't replace startup code */
+BOOL MYWINAPI DllMain(HANDLE hinstDLL, DWORD fdwReason, LPVOID lpvReserved)  /* <--- Doesn't replace startup code */
 #endif
 #else
-BOOL WINAPI DllMain(HANDLE hinstDLL, DWORD fdwReason, LPVOID lpvReserved)
+BOOL MYWINAPI DllMain(HANDLE hinstDLL, DWORD fdwReason, LPVOID lpvReserved)
 #endif
 {
     switch(fdwReason)
@@ -1130,3 +1134,5 @@ BOOL WINAPI DllMain(HANDLE hinstDLL, DWORD fdwReason, LPVOID lpvReserved)
 	/* Success */
 	return(1);
 }
+
+#endif  // DLL_BUILDING

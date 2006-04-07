@@ -27,18 +27,18 @@ LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 // TEXTINCLUDE
 //
 
-1 TEXTINCLUDE DISCARDABLE 
+1 TEXTINCLUDE DISCARDABLE
 BEGIN
     "resource.h\0"
 END
 
-2 TEXTINCLUDE DISCARDABLE 
+2 TEXTINCLUDE DISCARDABLE
 BEGIN
     "#include ""afxres.h""\r\n"
     "\0"
 END
 
-3 TEXTINCLUDE DISCARDABLE 
+3 TEXTINCLUDE DISCARDABLE
 BEGIN
     "\r\n"
     "\0"
@@ -54,8 +54,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 1,0,0,0
- PRODUCTVERSION 1,0,0,0
+ FILEVERSION 1,1,0,5
+ PRODUCTVERSION 1,1,0,5
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -70,17 +70,17 @@ BEGIN
     BEGIN
         BLOCK "040904b0"
         BEGIN
-            VALUE "Comments", "A Ragnarok Online custom patch client. This software is released under the terms of the GNU General Public License.\0"
-            VALUE "CompanyName", "\0"
-            VALUE "FileDescription", "Ragnarok Online patch client\0"
-            VALUE "FileVersion", "1.0.0\0"
-            VALUE "InternalName", "neoncube\0"
-            VALUE "LegalCopyright", "Copyright © 2005 Ansell Cruz / OpenKore (http://openkore.sf.net)\0"
-            VALUE "LegalTrademarks", "\0"
-            VALUE "OriginalFilename", "neoncube.exe\0"
-            VALUE "PrivateBuild", "\0"
-            VALUE "ProductName", "  neoncube\0"
-            VALUE "ProductVersion", "1.0.0\0"
+            VALUE "Comments", "A Ragnarok Online custom patch client. This software is released under the terms of the GNU General Public License."
+            VALUE "CompanyName", ""
+            VALUE "FileDescription", "Ragnarok Online patch client"
+            VALUE "FileVersion", "1.1.0.5"
+            VALUE "InternalName", "neoncube"
+            VALUE "LegalCopyright", "Copyright © 2005 Ansell Cruz / OpenKore (http://openkore.sf.net)"
+            VALUE "LegalTrademarks", ""
+            VALUE "OriginalFilename", "neoncube.exe"
+            VALUE "PrivateBuild", "1"
+            VALUE "ProductName", "  neoncube"
+            VALUE "ProductVersion", "1.1.0.5"
             VALUE "SpecialBuild", "\0"
         END
     END

@@ -1,12 +1,23 @@
 
 
-- Support for the following archive: .rgz, .tar.gz, .tar.bz2, .zip
+- Support for the following archive: .rgz, .tar.gz, .tar.bz2, .zip, .7z
 - Resume broken downloads
-- XP style progress bar (marquee while repacking/downloading files with unkown file size)
+- XP style progress bar (marquee while repacking/downloading files with unknown file size) = progress bar that does not progress
 - [added][ver 1.1] Option to use data folder instead of GRF file; or both at the same time
-- Multiple GRF patching (adata.grf, bdata.grf, etc)
-- Multi-part download (download accelerator-like download system)
+>> NEXT - Multiple GRF patching (adata.grf, bdata.grf, etc)
+>> NO :P - Multi-part download (download accelerator-like download system)
 - remotely hosted neoncube.ini
+- possibility to specify URLs for patches
+- [already done: ragexe_call ini option] arguments to executable
+- specify main window width in .style file
+- support for .gif / .png file formats (transparencies)
+- ? Bundle RO Mouse Freedom (known for instability)
+- skin-in-a-zip (r)
+- download from FTP as well
+- authenticity checks to help troubleshooting
+- ? binary delta diff
+
 
 suggestions?
-ansell@users.sf.net
+ansell@users.sf.net / gryff@rasqual.silk.com
+http://eathena.deltaanime.net/board/index.php?showtopic=52577 [recommended]

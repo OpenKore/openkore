@@ -1,14 +1,40 @@
 ###############################
-## 1.2 (beta)
+## 1.1 (beta)
 ###############################
+10/11/05
+--------
+Fixed: Buffer overflow when a patch is smaller than 10000 bytes. [Rasqual]
+Fixed: (libgrf) grf_index_get_z() returns compressed buffer, even if real length is zero. Empty files now repack correctly. [Rasqual] - rep/dex, kib, Benoittr
+
+10/07/05
+--------
+Note: from now on, I will credit people with suggestions and bugreports they contributed.
+
+Improved: Tracks progress when full-repacking grf archive. [Rasqual] - rep/kib
+Added: Support for passworded RAR archives ([general] archive_passphrase in neoncube.ini) [Rasqual] - req/Lupus
+Fixed: Reverted to former behavior for "executable ", allowing extensionless or non-.exe extension files to be executed. [Rasqual] - req/Rems
+
+09/21/05
+--------
+Fixed: Use ragexe_call from ini when launching the executable. [Rasqual] rep/CAHTEXHuK
+Fixed: Improper warning when delete a folder and it does not exist. [Rasqual]
+Improved: Uses less memory when downloading a file. [Rasqual] rep/kib
+Added: Can delete a complete folder in FLD mode. Syntax is relative_path\* [Rasqual] req/Gwendalin
+
+09/20/05
+--------
+Improved: cleans up properly RAR extracted files in "GRF" mode even when they don't extract only into a data folder [Rasqual]
+Improved: Skips previously downloaded patches if file size matches. [Rasqual]
+Improved: Repacking without external application [Rasqual]
+Improved: More C++ constructs [Rasqual]
+Added: Can specify HTTP port other than 80. [Rasqual]
+Added: Debug option in neoncube.ini. [Rasqual]
+Added: Makefile for command-line compilation, VC.NET 2003 projects [Rasqual]
 
 06/30/05
 --------
 Improved: Grf Extraction
 
-###############################
-## 1.1 (beta)
-###############################
 06/26/05
 --------
 added: 1rag1/1sak1 call
