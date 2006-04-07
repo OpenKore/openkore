@@ -3403,21 +3403,28 @@ sub login_error {
 	if ($args->{type} == 0) {
 		error T("Account name doesn't exist\n"), "connection";
 		if (!$net->clientAlive() && !$config{'ignoreInvalidLogin'}) {
-			message T("Enter Username Again: "), "input";
-			my $username = $interface->getInput(-1);
-			configModify('username', $username, 1);
-			$timeout_ex{'master'}{'time'} = 0;
-			$conState_tries = 0;
+			my $username = $interface->askInput(T("Enter username again: "));
+			if (defined($username)) {
+				configModify('username', $username, 1);
+				$timeout_ex{master}{time} = 0;
+				$conState_tries = 0;
+			} else {
+				quit();
+				return;
+			}
 		}
 	} elsif ($args->{type} == 1) {
 		error T("Password Error\n"), "connection";
 		if (!$net->clientAlive() && !$config{'ignoreInvalidLogin'}) {
-			message T("Enter Password Again: "), "input";
-			# Set -9 on getInput timeout field mean this is password field
-			my $password = $interface->getInput(-9);
-			configModify('password', $password, 1);
-			$timeout_ex{'master'}{'time'} = 0;
-			$conState_tries = 0;
+			my $password = $interface->askPassword(T("Enter password again: "));
+			if (defined($password)) {
+				configModify('password', $password, 1);
+				$timeout_ex{master}{time} = 0;
+				$conState_tries = 0;
+			} else {
+				quit();
+				return;
+			}
 		}
 	} elsif ($args->{type} == 3) {
 		error T("Server connection has been denied\n"), "connection";
@@ -5343,16 +5350,13 @@ sub storage_password_request {
 		message T("Please enter a new storage password:\n");
 
 	} elsif ($args->{flag} == 1) {
-		while ($config{storageAuto_password} eq '' && !$quit) {
-			message T("Please enter your storage password:\n");
-			my $input = $interface->getInput(-1);
-			if ($input ne '') {
-				configModify('storageAuto_password', $input, 1);
-				message TF("Storage password set to: %s\n", $input), "success";
-				last;
-			}
+		my $input = $interface->askPassword(T("Please enter your storage password:\n"));
+		if (!defined($input)) {
+			return;
 		}
-		return if ($quit);
+		configModify('storageAuto_password', $input, 1);
+		message TF("Storage password set to: %s\n", $input), "success";
+
 		$config{storageEncryptKey} = $masterServers{storageEncryptKey} if exists($masterServers{storageEncryptKey});
 		# is this the correct way to access the entries in servers.txt?
 		#my @key = $config{storageEncryptKey} =~ /(.+)[, ]+(.+)[, ]+(.+)[, ]+(.+)[, ]+(.+)[, ]+(.+)[, ]+(.+)[, ]+(.+)/;

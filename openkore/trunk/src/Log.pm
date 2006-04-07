@@ -70,6 +70,7 @@
 # useItem		You used item
 # list			List of information (monster list, player list, item list, etc.)
 # load			Loading config files
+# menu			Menu choices
 # npc			NPC messages
 # party			Party/follow related
 # partychat		Party chat messages

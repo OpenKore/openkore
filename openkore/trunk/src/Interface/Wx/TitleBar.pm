@@ -34,7 +34,8 @@ our ($detachBitmap, $closeBitmap);
 
 sub new {
 	my ($class, $parent, $title, $no_buttons) = @_;
-	my $self = $class->SUPER::new($parent, -1);
+	my $self = $class->SUPER::new($parent, -1, wxDefaultPosition,
+		wxDefaultSize, wxFULL_REPAINT_ON_RESIZE);
 
 	$self->SetBackgroundColour(new Wx::Colour(98, 165, 241));
 	EVT_PAINT($self, \&onPaint);

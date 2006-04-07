@@ -295,7 +295,7 @@ sub inject {
 	my $dll;
 
 	undef $@;
-	foreach ("$cwd\\src\\auto\\XSTools\\win32\\NetRedirect.dll", "$cwd\\NetRedirect.dll", "$cwd\\Inject.dll") {
+	foreach ("$cwd\\src\\auto\\XSTools\\NetRedirect.dll", "$cwd\\src\\auto\\XSTools\\win32\\NetRedirect.dll", "$cwd\\NetRedirect.dll", "$cwd\\Inject.dll") {
 		if (-f $_) {
 			$dll = $_;
 			last;
