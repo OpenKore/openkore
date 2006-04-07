@@ -569,44 +569,17 @@ sub modifyPacketOut {
 
 
 sub getMainServer {
-	
 	if ($config{'master'} eq "" || $config{'master'} =~ /^\d+$/ || !exists $masterServers{$config{'master'}}) {
-		my $err;
-		while (!$quit) {
-			message(sprintf("------- %s --------\n", T("Master Servers")), "connection");
-			message(T("#         Name\n"), "connection");
-
-			my $i = 0;
-			my @servers = sort(keys %masterServers);
-			foreach my $name (@servers) {
-				Log::message(swrite(
-					"@<<  @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
-					[$i,  $name],
-					), "connection");
-				$i++;
-			}
-			message("-------------------------------\n", "connection");
-
-			if (defined $err) {
-				Log::error(TF("'%s' is not a valid server.\n", $err));
-			}
-			message(T("Enter the number of your master server: "));
-			$msg = $interface->getInput(-1);
-
-			my $serverName;
-			if ($msg =~ /^\d+$/) {
-				$serverName = $servers[$msg];
-				$err = $msg;
-			} else {
-				$serverName = $err = $msg;
-			}
-
-			if ($masterServers{$serverName}) {
-				configModify('master', $serverName, 1);
-				last;
-			}
+		my @servers = sort { lc($a) cmp lc($b) } keys(%masterServers);
+		my $choice = $interface->showMenu("Master servers",
+			"Please choose a master server to connect to: ",
+			\@servers);
+		if ($choice == -1) {
+			exit;
+		} else {
+			configModify('master', $servers[$choice], 1);
 		}
-	}	
+	}
 }
 
 return 1;

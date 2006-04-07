@@ -363,53 +363,30 @@ if (compilePortals_check()) {
 
 if ($net->version != 1) {
 	my $msg;
-	if (!$config{'username'}) {
-		Log::message(T("Enter Username: "));
-		$msg = $interface->getInput(-1);
+	if (!$config{username}) {
+		$msg = $interface->askInput(T("Enter Username: "));
+		if (!defined($msg)) {
+			exit;
+		}
 		configModify('username', $msg, 1);
 	}
-	if (!$config{'password'}) {
-		Log::message(T("Enter Password: "));
-		# Set -9 on getInput timeout field mean this is password field
-		$msg = $interface->getInput(-9);
+	if (!$config{password}) {
+		$msg = $interface->askPassword(T("Enter Password: "));
+		if (!defined($msg)) {
+			exit;
+		}
 		configModify('password', $msg, 1);
 	}
 
 	if ($config{'master'} eq "" || $config{'master'} =~ /^\d+$/ || !exists $masterServers{$config{'master'}}) {
-		my $err;
-		while (!$quit) {
-			Log::message(T("------- Master Servers --------\n" .
-				"#         Name\n"), "connection");
-
-			my $i = 0;
-			my @servers = sort { lc($a) cmp lc($b) } keys(%masterServers);
-			foreach my $name (@servers) {
-				Log::message(swrite(
-					"@<<  @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
-					[$i,  $name],
-					), "connection");
-				$i++;
-			}
-			Log::message("-------------------------------\n", "connection");
-
-			if (defined $err) {
-				Log::error(TF("'%s' is not a valid server.\n", $err));
-			}
-			Log::message(T("Enter the number of your master server: "));
-			$msg = $interface->getInput(-1);
-
-			my $serverName;
-			if ($msg =~ /^\d+$/) {
-				$serverName = $servers[$msg];
-				$err = $msg;
-			} else {
-				$serverName = $err = $msg;
-			}
-
-			if ($masterServers{$serverName}) {
-				configModify('master', $serverName, 1);
-				last;
-			}
+		my @servers = sort { lc($a) cmp lc($b) } keys(%masterServers);
+		my $choice = $interface->showMenu("Master servers",
+			"Please choose a master server to connect to: ",
+			\@servers);
+		if ($choice == -1) {
+			exit;
+		} else {
+			configModify('master', $servers[$choice], 1);
 		}
 	}
 

@@ -1112,91 +1112,90 @@ sub center {
 # Returns: 0 if user chose to quit, 1 if user chose a character, 2 if user created or deleted a character
 sub charSelectScreen {
 	my %plugin_args = (autoLogin => shift);
-	my $msg;
+	# A list of character names
+	my @charNames;
+	# An array which maps an index in @charNames to an index in @chars
+	my @charNameIndices;
 	my $mode;
-	my $input2;
 
 	TOP: {
 		undef $mode;
-		undef $input2;
-		undef $msg;
+		@charNames = ();
+		@charNameIndices = ();
 	}
 
 	for (my $num = 0; $num < @chars; $num++) {
 		next unless ($chars[$num] && %{$chars[$num]});
 		if (0) {
-		$msg .= swrite(
-			T("-------  Character \@< ---------\n" .
-			"Name: \@<<<<<<<<<<<<<<<<<<<<<<<<\n" .
-			"Job:  \@<<<<<<<      Job Exp: \@<<<<<<<\n" .
-			"Lv:   \@<<<<<<<      Str: \@<<<<<<<<\n" .
-			"J.Lv: \@<<<<<<<      Agi: \@<<<<<<<<\n" .
-			"Exp:  \@<<<<<<<      Vit: \@<<<<<<<<\n" .
-			"HP:   \@||||/\@||||   Int: \@<<<<<<<<\n" .
-			"SP:   \@||||/\@||||   Dex: \@<<<<<<<<\n" .
-			"Zenny: \@<<<<<<<<<<  Luk: \@<<<<<<<<\n" .
-			"-------------------------------"),
-			$num, $chars[$num]{'name'}, $jobs_lut{$chars[$num]{'jobID'}}, $chars[$num]{'exp_job'},
-			$chars[$num]{'lv'}, $chars[$num]{'str'}, $chars[$num]{'lv_job'}, $chars[$num]{'agi'},
-			$chars[$num]{'exp'}, $chars[$num]{'vit'}, $chars[$num]{'hp'}, $chars[$num]{'hp_max'}, 
-			$chars[$num]{'int'}, $chars[$num]{'sp'}, $chars[$num]{'sp_max'}, $chars[$num]{'dex'},
-			$chars[$num]{'zenny'}, $chars[$num]{'luk'});
+			# The old (more verbose) message
+			$msg .= swrite(
+				T("-------  Character \@< ---------\n" .
+				"Name: \@<<<<<<<<<<<<<<<<<<<<<<<<\n" .
+				"Job:  \@<<<<<<<      Job Exp: \@<<<<<<<\n" .
+				"Lv:   \@<<<<<<<      Str: \@<<<<<<<<\n" .
+				"J.Lv: \@<<<<<<<      Agi: \@<<<<<<<<\n" .
+				"Exp:  \@<<<<<<<      Vit: \@<<<<<<<<\n" .
+				"HP:   \@||||/\@||||   Int: \@<<<<<<<<\n" .
+				"SP:   \@||||/\@||||   Dex: \@<<<<<<<<\n" .
+				"Zenny: \@<<<<<<<<<<  Luk: \@<<<<<<<<\n" .
+				"-------------------------------"),
+				$num, $chars[$num]{'name'}, $jobs_lut{$chars[$num]{'jobID'}}, $chars[$num]{'exp_job'},
+				$chars[$num]{'lv'}, $chars[$num]{'str'}, $chars[$num]{'lv_job'}, $chars[$num]{'agi'},
+				$chars[$num]{'exp'}, $chars[$num]{'vit'}, $chars[$num]{'hp'}, $chars[$num]{'hp_max'}, 
+				$chars[$num]{'int'}, $chars[$num]{'sp'}, $chars[$num]{'sp_max'}, $chars[$num]{'dex'},
+				$chars[$num]{'zenny'}, $chars[$num]{'luk'});
 		}
-		$msg .= sprintf("%3s %-34s %-15s %2d/%2d\n",
-			$num, $chars[$num]{name},
+		push @charNames, TF("Slot %d: %s (%s, level %d/%d)",
+			$num,
+			$chars[$num]{name},
 			$jobs_lut{$chars[$num]{'jobID'}},
-			$chars[$num]{lv}, $chars[$num]{lv_job});
+			$chars[$num]{lv},
+			$chars[$num]{lv_job});
+		push @charNameIndices, $num;
 	}
 
-	if ($msg) {
-		message
-			TF("---------------------- Character List ----------------------\n" .
-			"  # Name                               Job             Lv\n" .
-			"%s" .
-			"------------------------------------------------------------\n", $msg), "connection";
+	if (@charNames) {
+		message(TF("------------- Character List -------------\n" .
+		           "%s\n" .
+		           "------------------------------------------\n",
+		           join("\n", @charNames)),
+		           "connection");
 	}
 	return 1 if $net->clientAlive;
 
 	Plugins::callHook('charSelectScreen', \%plugin_args);
 	return $plugin_args{return} if ($plugin_args{return});
 
-	if ($plugin_args{autoLogin} && @chars && $config{'char'} ne "" && $chars[$config{'char'}]) {
-		$net->sendCharLogin($config{'char'});
-		$timeout{'charlogin'}{'time'} = time;
+	if ($plugin_args{autoLogin} && @chars && $config{char} ne "" && $chars[$config{char}]) {
+		$net->sendCharLogin($config{char});
+		$timeout{charlogin}{time} = time;
 		return 1;
 	}
 
-
 	if (@chars) {
-		message T("Type 'c' to create a new character, or type 'd' to delete a character.\n" .
-			"Or choose a character by entering its number.\n", "input");
-		while (!$quit) {
-			my $input = $interface->getInput(-1);
-			next if (!defined $input);
+		my @choices = @charNames;
+		push @choices, (T('Create a new character'), T('Delete a character'));
+		my $choice = $interface->showMenu(T("Character selection"),
+			T("Please chooce a character or an action: "), \@choices);
+		if ($choice == -1) {
+			# User cancelled
+			quit();
+			return 0;
 
-			my @args = parseArgs($input);
+		} elsif ($choice < @charNames) {
+			# Character chosen
+			configModify('char', $charNameIndices[$choice], 1);
+			$net->sendCharLogin($config{char});
+			$timeout{charlogin}{time} = time;
+			return 1;
 
-			if ($args[0] eq "c") {
-				$mode = "create";
-				($input2) = $input =~ /^.*? +(.*)/;
-				last;
-			} elsif ($args[0] eq "d") {
-				$mode = "delete";
-				($input2) = $input =~ /^.*? +(.*)/;
-				last;
-			} elsif ($args[0] eq "quit") {
-				quit();
-				return 0;
-			} elsif ($input !~ /^\d+$/) {
-				error TF("\"%s\" is not a valid character number.\n", $input);
-			} elsif (!$chars[$input]) {
-				error TF("Character #%s does not exist.\n", $input);
-			} else {
-				configModify('char', $input, 1);
-				$net->sendCharLogin($config{'char'});
-				$timeout{'charlogin'}{'time'} = time;
-				return 1;
-			}
+		} elsif ($choice == @charNames) {
+			# 'Create character' chosen
+			$mode = "create";
+
+		} else {
+			# 'Delete character' chosen
+			$mode = "delete";
 		}
 	} else {
 		message T("There are no characters on this account.\n"), "connection";
@@ -1204,81 +1203,49 @@ sub charSelectScreen {
 	}
 
 	if ($mode eq "create") {
-		my $message = T("Please enter the desired properties for your characters, in this form:\n" .
-			"(slot) \"(name)\" [(str) (agi) (vit) (int) (dex) (luk) [(hairstyle) [(haircolor)]]]\n");
-		message($message, "input") if ($input2 eq "");
-
-		while (!$quit) {
-			my $input;
-			if ($input2 ne "") {
-				$input = $input2;
-				undef $input2;
+		while (1) {
+			my $message = T("Please enter the desired properties for your characters, in this form:\n" .
+				"(slot) \"(name)\" [ (str) (agi) (vit) (int) (dex) (luk) [ (hairstyle) [(haircolor)] ] ]\n");
+			my $input = $interface->askInput($message);
+			if (!defined($input)) {
+				goto TOP;
 			} else {
-				$input = $interface->getInput(-1);
-			}
-			next if (!defined $input);
-			if ($input eq "quit") {
-				if (@chars) {
-					goto TOP;
-				} else {
-					quit();
-					last;
+				my @args = parseArgs($input);
+				if (@args < 2) {
+					$interface->errorDialog(T("You didn't specify enough parameters."), 0);
+					next;
 				}
-			}
 
-			my @args = parseArgs($input);
-			if (@args < 2) {
-				error $message;
-				next;
+				message TF("Creating character \"%s\" in slot \"%s\"...\n", $args[1], $args[0]), "connection";
+				$timeout{charlogin}{time} = time;
+				last if (createCharacter(@args));
 			}
-
-			message TF("Creating character \"%s\" in slot \"%s\"...\n", $args[1], $args[0]), "connection";
-			$timeout{'charlogin'}{'time'} = time;
-			last if (createCharacter(@args));
-			message($message, "input");
 		}
 
 	} elsif ($mode eq "delete") {
-		my $message = T("Enter the number of the character you want to delete\n" . 
-			"and your email in this form: (slot) (email address)\n");
-		message $message, "input";
-
-		while (!$quit) {
-			my $input;
-			if ($input2 ne "") {
-				$input = $input2;
-				undef $input2;
-			} else {
-				$input = $interface->getInput(-1);
-			}
-			next if (!defined $input);
-			goto TOP if ($input eq "quit");
-
-			my @args = parseArgs($input);
-			if (@args < 2) {
-				error $message;
-				next;
-			} elsif ($args[0] !~ /^\d+/) {
-				error TF("\"%s\" is not a valid character number.\n", $args[0]);
-				next;
-			} elsif (!$chars[$args[0]]) {
-				error TF("Character #%s does not exist.\n", $args[0]);
-				next;
-			}
-
-			warning TF("Are you ABSOLUTELY SURE you want to delete %s (%s)? %s ", $chars[$args[0]]{name}, $args[0], "(y/n)");
-			$input = $interface->getInput(-1);
-			if ($input eq "y") {
-				$net->sendCharDelete($chars[$args[0]]{ID}, $args[1]);
-				message TF("Deleting character %s...\n", $chars[$args[0]]{name}), "connection";
-				$AI::temp::delIndex = $args[0];
-			} else {
-				message T("Deletion aborted\n"), "info";
-				goto TOP;
-			}
-			$timeout{'charlogin'}{'time'} = time;
-			last;
+		my $choice = $interface->showMenu(T("Delete character"), T("Select the character you want to delete: "),
+			\@charNames);
+		if ($choice == -1) {
+			goto TOP;
 		}
+		my $charIndex = @charNameIndices[$choice];
+
+		my $email = $interface->askInput("Enter your email address: ");
+		if (!defined($email)) {
+			goto TOP;
+		}
+
+		my $confirmation = $interface->showMenu(T("Confirm delete"),
+			TF("Are you ABSOLUTELY SURE you want to delete:\n%s\n", $charNames[$choice]),
+			[T("No, don't delete"), T("Yes, delete")]);
+		if ($confirmation != 1) {
+			goto TOP;
+		}
+
+		$net->sendCharDelete($chars[$charIndex]{ID}, $email);
+		message TF("Deleting character %s...\n", $chars[$charIndex]{name}), "connection";
+		$AI::temp::delIndex = $charIndex;
+		$timeout{charlogin}{time} = time;
 	}
 	return 2;
 }
@@ -1387,9 +1354,11 @@ sub checkMonsterCleanness {
 }
 
 ##
-# createCharacter(slot, name, [str,agi,vit,int,dex,luk] = 5)
-# slot: the slot in which to create the character (1st slot is 0).
-# name: the name of the character to create.
+# boolean createCharacter(int slot, String name, int [str,agi,vit,int,dex,luk] = 5)
+# slot: The slot in which to create the character (1st slot is 0).
+# name: The name of the character to create.
+# Returns: Whether the parameters are correct. Only a character creation command
+#          will be sent to the server if all parameters are correct.
 #
 # Create a new character. You must be currently connected to the character login server.
 sub createCharacter {
@@ -1402,26 +1371,31 @@ sub createCharacter {
 	}
 
 	if ($conState != 3) {
-		error T("We're not currently connected to the character login server.\n");
+		$interface->errorDialog(T("We're not currently connected to the character login server."), 0);
+		return 0;
 	} elsif ($slot !~ /^\d+$/) {
-		error TF("Slot \"%s\" is not a valid number.\n", $slot);
+		$interface->errorDialog(TF("Slot \"%s\" is not a valid number.", $slot), 0);
+		return 0;
 	} elsif ($slot < 0 || $slot > 4) {
-		error T("The slot must be comprised between 0 and 4\n");
+		$interface->errorDialog(T("The slot must be comprised between 0 and 4."), 0);
+		return 0;
 	} elsif ($chars[$slot]) {
-		error TF("Slot %s already contains a character (%s).\n", $slot, $chars[$slot]{name});
+		$interface->errorDialog(TF("Slot %s already contains a character (%s).", $slot, $chars[$slot]{name}), 0);
+		return 0;
 	} elsif (length($name) > 23) {
-		error T("Name must not be longer than 23 characters\n");
+		$interface->errorDialog(T("Name must not be longer than 23 characters."), 0);
+		return 0;
 
 	} else {
 		for ($str,$agi,$vit,$int,$dex,$luk) {
 			if ($_ > 9 || $_ < 1) {
-				error T("Stats must be comprised between 1 and 9\n");
+				$interface->errorDialog(T("Stats must be comprised between 1 and 9."), 0);
 				return;
 			}
 		}
 		for ($str+$int, $agi+$luk, $vit+$dex) {
 			if ($_ != 10) {
-				error T("The sums Str + Int, Agi + Luk and Vit + Dex must all be equal to 10\n");
+				$interface->errorDialog(T("The sums Str + Int, Agi + Luk and Vit + Dex must all be equal to 10."), 0);
 				return;
 			}
 		}

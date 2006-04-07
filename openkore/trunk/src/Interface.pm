@@ -34,9 +34,11 @@ no warnings 'redefine';
 use Exporter;
 use base qw(Exporter);
 use Time::HiRes qw(usleep);
+use encoding 'utf8';
 
 use Globals qw(%config $quit);
 use Modules;
+use Translation qw(T TF);
 
 
 ##
@@ -96,15 +98,107 @@ sub iterate {
 }
 
 ##
-# $interface->getInput(timeout)
+# String $interface->getInput(float timeout)
 # timeout: Number of second to wait until keyboard data is available. 
 #          Negative numbers will wait forever, 0 will not wait at all.
-# Returns: The keyboard data (including newline) as a string, or undef if there's no
+# Returns: The keyboard data (excluding newline), or undef if there's no
 #          keyboard data available.
 #
 # Reads keyboard data.
 sub getInput {
 	# Do nothing; this is a dummy parent class
+}
+
+##
+# String $interface->askInput(String message, boolean cancelable = true)
+# message: The message to display when asking for input.
+# cancelable: Whether the user is allowed to enter nothing.
+# Returns: The user input, or undef if the user cancelled.
+# Requires: defined($message)
+#
+# Ask the user to enter a one-line input text.
+# In GUIs this will be displayed as a dialog.
+sub askInput {
+	my ($self, $message, $cancelable) = @_;
+	while (1) {
+		$self->writeOutput("message", $message, "input");
+		my $result = $self->getInput(-1);
+		if (!defined($result) || $result eq '') {
+			if ($cancelable || !exists($_[2])) {
+				return undef;
+			}
+		} else {
+			return $result;
+		}
+	}
+}
+
+##
+# String $interface->askPassword(String message, boolean cancelable = true)
+# message: The message to display when asking for a password.
+# cancelable: Whether the user is allowed to enter nothing.
+# Returns: The password, or undef if the user cancelled.
+# Requires: defined($message)
+#
+# Ask the user to enter a password.
+# In GUIs this will be displayed as a dialog.
+sub askPassword {
+	my ($self, $message) = @_;
+	my $cancelable = !exists($_[2]) || $_[2];
+	while (1) {
+		$self->writeOutput("message", $message, "input");
+		my $result = $self->getInput(-9);
+		if (!defined($result) || $result eq '') {
+			if ($cancelable) {
+				return undef;
+			}
+		} else {
+			return $result;
+		}
+	}
+}
+
+##
+# int $interface->showMenu(String title, String message, Array<String>* choices, boolean cancelable = true)
+# title: The title to display when presenting the choices to the user.
+# message: The message to display while asking the user to make a choice.
+# choices: The possible choices.
+# cancelable: Whether the user is allowed to not choose.
+# Returns: The index of the chosen item, or -1 if the user cancelled.
+# Requires:
+#     defined($title)
+#     defined($message)
+#     defined($choices)
+#     for all $k in @{$choices}: defined($k)
+# Ensures: -1 <= result < @{$choices}
+#
+# Ask the user to choose an item from a menu of choices.
+sub showMenu {
+	my ($self, $title, $message, $choices) = @_;
+	my $cancelable = !exists($_[3]) || $_[3];
+
+	my $maxNumberLength = length(@{$choices} + 1);
+	my $format = "%-" . $maxNumberLength . "s   %-s\n";
+	my $output = sprintf($format, "#", T("Choice"));
+
+	my $i = 0;
+	foreach my $item (@{$choices}) {
+		$output .= sprintf($format, $i, $item);
+		$i++;
+	}
+	$self->writeOutput("message", "-------- $title --------\n", "menu");
+	$self->writeOutput("message", $output, "menu");
+
+	while (1) {
+		my $choice = $self->askInput($message, $cancelable);
+		if (!defined($choice)) {
+			return -1;
+		} elsif ($choice !~ /^\d+$/ || $choice < 0 || $choice >= @{$choices}) {
+			$self->writeOutput("error", TF("'%s' is not a valid choice number.\n", $choice));
+		} else {
+			return $choice;
+		}
+	}
 }
 
 ##

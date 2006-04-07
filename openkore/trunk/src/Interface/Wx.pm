@@ -46,6 +46,7 @@ use Interface::Wx::Console;
 use Interface::Wx::Input;
 use Interface::Wx::ItemList;
 use Interface::Wx::DockNotebook;
+use Interface::Wx::PasswordDialog;
 use AI;
 use Settings qw(%sys);
 use Plugins;
@@ -79,6 +80,8 @@ sub OnInit {
 
 	$self->{history} = [];
 	$self->{historyIndex} = -1;
+
+	$self->{frame}->Update;
 
 	return 1;
 }
@@ -129,10 +132,11 @@ sub mainLoop {
 sub iterate {
 	my $self = shift;
 
-	while ($self->Pending) {
-		$self->Dispatch;
+	if ($self->{iterating} == 0) {
+		$self->{console}->Refresh;
+		$self->{console}->Update;
 	}
-	$self->Yield;
+	$self->Yield();
 	$iterationTime = time;
 }
 
@@ -168,6 +172,72 @@ sub getInput {
 	$self->iterate if (timeOut($iterationTime, 0.05));
 
 	return $msg;
+}
+
+sub askInput {
+	my ($self, $message) = @_;
+	my $cancelable = !exists($_[2]) || $_[2];
+	my $dialog = new Wx::TextEntryDialog($self->{frame}, $message, "Input");
+	while (1) {
+		my $result;
+		if ($dialog->ShowModal == wxID_OK) {
+			$result = $dialog->GetValue;
+		}
+		if (!defined($result) || $result eq '') {
+			if ($cancelable) {
+				$dialog->Destroy;
+				return undef;
+			}
+		} else {
+			$dialog->Destroy;
+			return $result;
+		}
+	}
+}
+
+sub askPassword {
+	# WxPerl doesn't support wxPasswordEntryDialog :(
+	my ($self, $message) = @_;
+	my $cancelable = !exists($_[2]) || $_[2];
+	my $dialog = new Interface::Wx::PasswordDialog($self->{frame}, $message,
+		"Password Input");
+	while (1) {
+		my $result;
+		if ($dialog->ShowModal == wxID_OK) {
+			$result = $dialog->getValue;
+		}
+		if (!defined($result) || $result eq '') {
+			if ($cancelable) {
+				$dialog->Destroy;
+				return undef;
+			}
+		} else {
+			$dialog->Destroy;
+			return $result;
+		}
+	}
+}
+
+sub showMenu {
+	my ($self, $title, $message, $choices) = @_;
+	my $cancelable = !exists($_[3]) || $_[3];
+	my $dialog = new Wx::SingleChoiceDialog($self->{frame},
+		$message, $title, $choices);
+	while (1) {
+		my $result;
+		if ($dialog->ShowModal == wxID_OK) {
+			$result = $dialog->GetSelection;
+		}
+		if (!defined($result)) {
+			if ($cancelable) {
+				$dialog->Destroy;
+				return -1;
+			}
+		} else {
+			$dialog->Destroy;
+			return $result;
+		}
+	}
 }
 
 sub writeOutput {
@@ -242,9 +312,10 @@ sub createInterface {
 	my $splitter = new Wx::SplitterWindow($frame, 928, wxDefaultPosition, wxDefaultSize,
 		wxSP_LIVE_UPDATE);
 	$self->{splitter} = $splitter;
-	$splitter->SetMinimumPaneSize(25);
 	$vsizer->Add($splitter, 1, wxGROW);
 	$self->createSplitterContent;
+	$splitter->SetSashGravity(1);
+	$splitter->SetMinimumPaneSize(50);
 
 
 	### Input field
@@ -263,7 +334,6 @@ sub createInterface {
 	$frame->SetClientSize(730, 400);
 	$frame->SetIcon(Wx::GetWxPerlIcon);
 	$frame->Show(1);
-	$self->SetTopWindow($frame);
 	EVT_CLOSE($frame, \&onClose);
 
 	# For some reason the input box doesn't get focus even if
@@ -276,7 +346,7 @@ sub createInterface {
 
 	# Hide console on Win32
 	if ($^O eq 'MSWin32' && $sys{wxHideConsole}) {
-		eval 'use Win32::Console; Win32::Console->new(STD_OUTPUT_HANDLE)->Free();';
+		#eval 'use Win32::Console; Win32::Console->new(STD_OUTPUT_HANDLE)->Free();';
 	}
 }
 
@@ -484,7 +554,7 @@ sub createSplitterContent {
 		$mapView->set($field{name}, $char->{pos_to}{x}, $char->{pos_to}{y}, \%field);
 	}
 
-	$splitter->SplitVertically($notebook, $subSplitter, -150);
+	$splitter->SplitVertically($notebook, $subSplitter, 245);
 }
 
 
@@ -705,9 +775,11 @@ sub onMinimizeToTray {
 }
 
 sub onClose {
-	my $self = shift;
-	$self->Show(0);
+	my ($self, $event) = @_;
 	quit();
+	if ($event->CanVeto) {
+		$self->Show(0);
+	}
 }
 
 sub onFontChange {
