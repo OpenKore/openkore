@@ -324,12 +324,11 @@ sub color {
 }
 
 sub title {
-	my $self = shift;
-	my $title = stringToBytes(shift);
+	my ($self, $title) = @_;
 
 	if (defined $title) {
 		if (!defined $self->{currentTitle} || $self->{currentTitle} ne $title) {
-			$self->{out_con}->Title($title);
+			WinUtils::setConsoleTitle($title);
 			$self->{currentTitle} = $title;
 		}
 	} else {

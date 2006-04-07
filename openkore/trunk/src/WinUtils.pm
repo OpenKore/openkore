@@ -24,4 +24,22 @@ use Carp;
 use XSTools;
 XSTools::bootModule('WinUtils');
 
+##
+# void playSound(String file)
+# Requires: defined($file)
+#
+# Play a .wav file.
+
+##
+# void WinUtils::printConsole(String message)
+# Requires: defined($message)
+#
+# Print a message to the console. This function supports Unicode.
+
+##
+# void WinUtils::setConsoleTitle(String title)
+# Requires: defined($title)
+#
+# Sets the current console's title. This function supports Unicode.
+
 1;

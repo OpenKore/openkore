@@ -2,6 +2,7 @@
 #include <wchar.h>
 #include <Tlhelp32.h>
 #include <stdlib.h>
+#include "utils.h"
 
 static int initialized = 0;
 static int isNT = 0;
@@ -31,8 +32,39 @@ basename (const char *filename)
 		return filename;
 }
 
+/**
+ * Convert a UTF-8 string to a Unicode wide string.
+ *
+ * @param str A UTF-8 string.
+ * @param len The length of str, in bytes.
+ * @param resultLength A pointer to an int. If not NULL, the length of the result
+ *                     (in characters) will be stored here.
+ * @return A Unicode wide string.
+ * @requires str != NULL && len >= 0
+ * @ensure
+ *     result != NULL
+ *     if resultLength != NULL: *resultLength >= 0
+ */
+static WCHAR *
+utf8ToWidechar (const char *str, int len, int *resultLength = NULL)
+{
+	int size;
+	WCHAR *unicode;
+
+	size = MultiByteToWideChar (CP_UTF8, 0, str,
+		len, NULL, 0);
+	unicode = (WCHAR *) malloc (sizeof (WCHAR) * size);
+	MultiByteToWideChar (CP_UTF8, 0, str,
+		len, unicode, size);
+	if (resultLength != NULL) {
+		*resultLength = size;
+	}
+
+	return unicode;
+}
+
 DWORD 
-GetProcByName (char *name)
+GetProcByName (const char *name)
 {
 	HANDLE toolhelp;
 	PROCESSENTRY32 pe;
@@ -51,8 +83,8 @@ GetProcByName (char *name)
 	return 0;
 }
 
-int
-InjectDLL (DWORD ProcID, LPCTSTR dll)
+bool
+InjectDLL (DWORD ProcID, const char *dll)
 {
 	#define TESTING_INJECT9x 0
 	#ifdef TESTING_INJECT9x
@@ -79,31 +111,32 @@ InjectDLL (DWORD ProcID, LPCTSTR dll)
 		}
 		if (!hwnd) {
 			debug ("No RO window found.");
-			return 0;
+			return false;
 		}
 
 		lib = LoadLibrary (dll);
 		if (!lib) {
 			debug ("Could not load library.");
-			return 0;
+			return false;
 		}
 
 		injectSelf = (injectSelfFunc) GetProcAddress (lib, "injectSelf");
 		if (!injectSelf) {
 			debug ("No injectSelf() function.");
 			FreeLibrary (lib);
-			return 0;
+			return false;
 		}
 
 		injectSelf (hwnd);
-		return 1;
+		return true;
 	}
 
 
 	/* Attach to ragexe */
 	HANDLE hProcessToAttach = OpenProcess(PROCESS_ALL_ACCESS, FALSE, ProcID);
-	if (!hProcessToAttach)
-		return 0;
+	if (!hProcessToAttach) {
+		return false;
+	}
 
 	LPVOID pAttachProcessMemory = NULL;
 	DWORD dwBytesWritten = 0;
@@ -119,7 +152,7 @@ InjectDLL (DWORD ProcID, LPCTSTR dll)
 		PAGE_EXECUTE_READWRITE );
 	if (!pAttachProcessMemory) {
 		CloseHandle(hProcessToAttach);
-		return 0;
+		return false;
 	}
 
 	/* Write our DLL filename to that allocated piece of memory. */
@@ -129,8 +162,9 @@ InjectDLL (DWORD ProcID, LPCTSTR dll)
 		(LPVOID)dll, strlen(dll) + 1,
 		&dwBytesWritten );
 
-	if (!dwBytesWritten)
-		return 0;
+	if (!dwBytesWritten) {
+		return false;
+	}
 
 
 	/* Create a remote thread in the ragexe.exe process, which
@@ -140,8 +174,9 @@ InjectDLL (DWORD ProcID, LPCTSTR dll)
 		(LPTHREAD_START_ROUTINE)GetProcAddress(kDLL, "LoadLibraryA"),
 		(LPVOID)pAttachProcessMemory, 0,   
 		NULL);
-	if (!hThread)
-		return 0;
+	if (!hThread) {
+		return false;
+	}
 
 	WaitForSingleObject(hThread, INFINITE);
 
@@ -152,36 +187,37 @@ InjectDLL (DWORD ProcID, LPCTSTR dll)
 		(LPVOID)dllRemove, strlen(dll) + 1, 
 		&dwBytesWritten );
 
-	if (!dwBytesWritten)
-		return 0;
+	if (!dwBytesWritten) {
+		return false;
+	}
 	VirtualFreeEx( 
 		hProcessToAttach,      
 		pAttachProcessMemory, 
 		strlen(dll) + 1, 
 		MEM_RELEASE);
 
-	if(hThread) CloseHandle(hThread);
-	return 1;
+	if (hThread) {
+		CloseHandle(hThread);
+	}
+	return true;
 }
 
-/**
- * Print an UTF-8 string to the console.
- *
- * @param message A UTF-8 string.
- * @require message != NULL && len >= 0
- */
 void
 printConsole (const char *message, int len) {
 	int size;
 	WCHAR *unicode;
 
-	size = MultiByteToWideChar (CP_UTF8, 0, message,
-		len, NULL, 0);
-	unicode = (WCHAR *) malloc (sizeof (WCHAR) * size);
-	MultiByteToWideChar (CP_UTF8, 0, message,
-		len, unicode, size);
-
+	unicode = utf8ToWidechar(message, len, &size);
 	WriteConsoleW (GetStdHandle(STD_OUTPUT_HANDLE), unicode,
 		size, NULL, NULL);
+	free (unicode);
+}
+
+void
+setConsoleTitle (const char *title, int len) {
+	WCHAR *unicode;
+
+	unicode = utf8ToWidechar(title, len);
+	SetConsoleTitleW (unicode);
 	free (unicode);
 }

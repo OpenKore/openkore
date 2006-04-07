@@ -6,11 +6,7 @@
 #include "perl.h"
 #include "XSUB.h"
 #include "locale.c"
-
-DWORD GetProcByName (char * name);
-int InjectDLL(DWORD ProcID, LPCTSTR dll);
-void printConsole (const char *message, int len);
-
+#include "utils.h"
 
 MODULE = WinUtils		PACKAGE = WinUtils		PREFIX = WinUtils_
 PROTOTYPES: ENABLE
@@ -18,20 +14,12 @@ PROTOTYPES: ENABLE
 
 unsigned long
 GetProcByName(name)
-		char *name
-	CODE:
-		RETVAL = (unsigned long) GetProcByName(name);
-	OUTPUT:
-		RETVAL
+	char *name
 
-int
+bool
 InjectDLL(ProcID, dll)
-		unsigned long ProcID
-		char *dll
-	CODE:
-		RETVAL = InjectDLL((DWORD) ProcID, dll);
-	OUTPUT:
-		RETVAL
+	unsigned long ProcID
+	char *dll
 
 int
 ShellExecute(handle, operation, file)
@@ -204,4 +192,17 @@ CODE:
 		msg = SvPV (message, len);
 		if (msg != NULL)
 			printConsole(msg, len);
+	}
+
+void
+setConsoleTitle(title)
+	SV *title
+CODE:
+	if (title && SvOK (title)) {
+		char *str;
+		STRLEN len;
+
+		str = SvPV (title, len);
+		if (str != NULL)
+			setConsoleTitle(str, len);
 	}
