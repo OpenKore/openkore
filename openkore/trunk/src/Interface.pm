@@ -49,8 +49,8 @@ use Translation qw(T TF);
 #          interface object on failure.
 #
 # Changes the interface being used by Kore.
-# The default method may be overridden by an Interface that needs to do special work
-# when changing to another interface.
+# The default method may be overridden by an Interface that needs to do special
+# work when changing to another interface.
 sub switchInterface {
 	my $self = shift;
 	my $new_if_name = shift;
@@ -75,7 +75,7 @@ sub switchInterface {
 }
 
 ##
-# $interface->mainLoop()
+# void $interface->mainLoop()
 #
 # Enter the interface's main loop.
 sub mainLoop {
@@ -88,7 +88,7 @@ sub mainLoop {
 }
 
 ##
-# $interface->iterate()
+# void $interface->iterate()
 #
 # Process messages in the user interface message queue.
 # In other words: make sure the user interface updates itself
@@ -194,7 +194,7 @@ sub showMenu {
 		if (!defined($choice)) {
 			return -1;
 		} elsif ($choice !~ /^\d+$/ || $choice < 0 || $choice >= @{$choices}) {
-			$self->writeOutput("error", TF("'%s' is not a valid choice number.\n", $choice));
+			$self->writeOutput("error", TF("'%s' is not a valid choice number.\n", $choice), "default");
 		} else {
 			return $choice;
 		}
@@ -202,8 +202,8 @@ sub showMenu {
 }
 
 ##
-# $interface->writeOutput(type, message, domain)
-# Requires: $message must be encoded in UTF-8.
+# void $interface->writeOutput(String type, String message, String domain)
+# Requires: defined($type) && defined($message) && defined($domain)
 # 
 # Writes a message to the interface's console.
 # This method should not be used directly, use Log::message() instead.
@@ -212,7 +212,7 @@ sub writeOutput {
 }
 
 ##
-# $interface->beep()
+# void $interface->beep()
 # 
 # Emit a beep on the available audio device.
 sub beep {
@@ -220,7 +220,7 @@ sub beep {
 }
 
 ##
-# $interface->title([title])
+# String $interface->title([String title])
 #
 # If $title is given, set the interface's window's title to $title.
 # If not given, returns the current window title.
@@ -229,8 +229,9 @@ sub title {
 }
 
 ##
-# $interface->displayUsage(text)
+# void $interface->displayUsage(String text)
 # text: The 'usage' text to display.
+# Requires: defined($text)
 #
 # Display a 'usage' text. This method is only used for displaying the usage text
 # when the user runs the "openkore --help" command in the operating system's commandline.
@@ -241,16 +242,18 @@ sub displayUsage {
 }
 
 ##
-# $interface->errorDialog(message, [fatal = 1])
+# void $interface->errorDialog(String message, [boolean fatal = true])
 # message: The error message to display.
 # fatal: Indicate that this is a fatal error (meaning that the application will
 #        exit after this dialog is closed). If set, the console interfaces
 #        will warn the user that the app is about to exit.
+# Requires: defined($message)
 #
-# Display an error dialog. This function blocks until the user has closed the dialog.
+# Display an error dialog. This function blocks until the user has closed the
+# dialog.
 #
-# Consider using Log::error() if your message is not a fatal error, because Log::error()
-# does not require any user interaction.
+# Consider using Log::error() if your message is not a fatal error, because
+# Log::error() does not require any user interaction.
 sub errorDialog {
 	my $self = shift;
 	my $message = shift;
