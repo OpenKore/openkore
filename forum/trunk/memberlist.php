@@ -235,7 +235,7 @@ if ( $row = $db->sql_fetchrow($result) )
 		$row_class = ( !($i % 2) ) ? $theme['td_class1'] : $theme['td_class2'];
 
 		$template->assign_block_vars('memberrow', array(
-			'ROW_NUMBER' => $i + ( $start + 1 ),
+			'ROW_NUMBER' => $i + ( $start + 1 ) . (($userdata['user_level'] == ADMIN) ? '<a href="' . append_sid("delete_users.$phpEx?mode=user_id&amp;del_user=$user_id") . '"><img src="' . $images['icon_delpost'] . '" alt="' . $lang['Delete'] . ' '.$username.'" title="' . $lang['Delete'] . ' '.$username.'" border="0" /></a>&nbsp;':''),
 			'ROW_COLOR' => '#' . $row_color,
 			'ROW_CLASS' => $row_class,
 			'USERNAME' => $username,
