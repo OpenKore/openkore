@@ -12,6 +12,7 @@
 		<li><a href="quiz.php?language=id&{intro.QUERY_PARAMS}">Bahasa Indonesia</a></li>
 		<li><a href="quiz.php?language=tl&{intro.QUERY_PARAMS}">Philipinnes (Tagalog)</a></li>
 		<li><a href="quiz.php?language=de&{intro.QUERY_PARAMS}">Deutsch</a></li>
+		<li><a href="quiz.php?language=zh&{intro.QUERY_PARAMS}">中文（简体）</a></li>
 	</ul>
 </div>
 <!-- END intro -->

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Simplified Chinese translations by LKM -->
+<quiz>
+	<introText>我们的论坛有一套守则. 在你开始之前, 我们需要给你做个小测试, 来确定你是否已经了解论坛的守则.</introText>
+	<rulesLinkText>点击阅读守则.</rulesLinkText>
+	<correctAnswerText>%d 个问题已经回答正确.</correctAnswerText>
+
+	<item>
+		<question>在下载 OpenKore/VisualKore 之后, 你想开始运行但是确不知道从那里入手. 你第一要做什么？</question>
+		<answer>马上去论坛上问人.</answer>
+		<answer correct="yes">查看帮助手册, 查看 FAQ, 爬贴以及查看主页.</answer>
+		<answer>去 IRC 上提问.</answer>
+		<answer>PM某高手.</answer>
+	</item>
+	<item>
+		<question>现在你已经可以运行 Openkore 并想设置confid. 你应该怎么做？</question>
+		<answer>去论坛上问问怎么设置 config.</answer>
+		<answer>去 IRC 里求一份 config.</answer>
+		<answer correct="yes">查看帮助手册, 查看 FAQ, 爬贴, 然后自己写 config.</answer>
+		<answer>PM某强人.</answer>
+	</item>
+	<item>
+		<question>如果你的帖子被转移到了‘垃圾站’, 你会怎么做:</question>
+		<answer>PM管理员询问为什么会被转移.</answer>
+		<answer>再发次相同的主题.</answer>
+		<answer>开贴询问为什么被转移.</answer>
+		<answer correct="yes">看看守则是不是发了违反守则的主题.</answer>
+	</item>
+	<item>
+		<question>在你查看手册, 阅读了 FAQ 和论坛后, 仍然有 Openkore/VisualKore 的问题. 你会在下列那个讨论区寻求帮助？</question>
+		<answer correct="yes">Openkore &amp; VisualKore Support（Openkore &amp; VisualKore 支持中心）</answer>
+		<answer>Frequently Asked Questions（FAQ）</answer>
+		<answer>Discussion（讨论区）</answer>
+		<answer>Botting Tips &amp; Tricks（诀窍和心得）</answer>
+	</item>
+	<item>
+		<question>Openkore 支持下列各项当中哪一个?</question>
+		<answer>杀和偷</answer>
+		<answer>抢夺</answer>
+		<answer>Item/zenny 复制</answer>
+		<answer correct="yes">都不支持</answer>
+	</item>
+	<item>
+		<question>当你询问了论坛而别人给你的答复无法解决你的问题的时候, 你会怎么办？</question>
+		<answer correct="yes">告诉他他给的答案无法解决你的问题.</answer>
+		<answer>告诉人别回复，因为他/她是 n00b.</answer>
+		<answer>嘲笑别人.</answer>
+	</item>
+	<item>
+		<question>如果你在阅读一个别人的问题贴, 你会怎么做？</question>
+		<answer>告诉他假的答案.</answer>
+		<answer correct="yes">忽视该贴或回答正确的答案.</answer>
+		<answer>回复 "我不知道".</answer>
+		<answer>嘲笑他.</answer>
+	</item>
+	<item>
+		<question>你有问题要在论坛上问. 以下那些信息是你需要的？</question>
+		<answer>Openkore 版本, RO 服务器, 和你的宠物.</answer>
+		<answer>你的整个设置文件, Openkore 版本, 和 RO 服务器.</answer>
+		<answer>你的设置文件, 你是如何操作的, 还有你的 e-mail 等等.</answer>
+		<answer correct="yes">你是如何操作的, 你的设置文件, Openkore 版本 和 RO 服务器.</answer>
+	</item>
+	<item>
+		<question>当你第一次去一个板块, 你最先做什么？</question>
+		<answer>马上看帖子.</answer>
+		<answer correct="yes">查看公告.</answer>
+		<answer>发个主题说 "Hi!".</answer>
+	</item>
+	<item>
+		<question>如果你设置了 Openkore/Visualkore 自动使用红色药水但是它没有工作. 你会发那个主题？</question>
+		<answer>"请帮助我!!!"</answer>
+		<answer>"不能使用红色药水... WTF? 求助"</answer>
+		<answer correct="yes">"红色药水无法使用 (版本 1.6.6)"</answer>
+		<answer>"请看这里!"</answer>
+	</item>
+	<item>
+		<question>在论坛上, 你不知道的东西 (比如, "SVN"). 你会怎么做？</question>
+		<answer correct="yes">查看 OpenKore 主页, 查看 FAQ 查看论坛.</answer>
+		<answer>发个帖子 "求助!!!"</answer>
+		<answer>发个帖子 "什么是 SVN?"</answer>
+		<answer>PM高手.</answer>
+	</item>
+	<item>
+		<question>OpenKore 突然无法在你的服务器工作了. 你会怎么办？</question>
+		<answer>发贴 "不能用拉!"</answer>
+		<answer>PM高手.</answer>
+		<answer>去 IRC 里说无法工作.</answer>
+		<answer>发贴 "高手来看看!"</answer>
+		<answer correct="yes">看看论坛是不是已经有一个相关公告或主题.</answer>
+	</item>
+</quiz>
