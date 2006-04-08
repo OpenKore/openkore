@@ -128,7 +128,8 @@ while (isset($user_list[$i]['user_id']))
 	}
 	
 	$sql = "UPDATE " . POSTS_TABLE . "
-		SET poster_id = " . DELETED . ", post_username = '$username' 
+		SET poster_id = " . DELETED . ", post_username = '" .
+		addslashes($username) . "' 
 		WHERE poster_id = $user_id";
 	if( !$db->sql_query($sql) )
 	{
@@ -283,33 +284,33 @@ while (isset($user_list[$i]['user_id']))
 		message_die(GENERAL_ERROR, 'Could not update private messages saved from the user', '', __LINE__, __FILE__, $sql);
 	}
 
-if (NOTIFY_USERS && !empty($user_email))
-{
+	if (NOTIFY_USERS && !empty($user_email))
+	{
 
 		$script_name = preg_replace('/^\/?(.*?)\/?$/', '\1', trim($board_config['script_path'])). '/profile.'.$phpEx.'?mode=register';
 		$server_name = trim($board_config['server_name']);
 		$server_protocol = ( $board_config['cookie_secure'] ) ? 'https://' : 'http://';
 		$server_port = ( $board_config['server_port'] <> 80 ) ? ':' . trim($board_config['server_port']) . '/' : '/';
 
-            $emailer = new emailer($board_config['smtp_delivery']); 
-	      $emailer->email_address($user_email); 
-      	$email_headers = "To: \"".$username."\" <".$user_email. ">\r\n"; 
-	            $email_headers .= "From: \"".$board_config['sitename']."\" <".$board_config['board_email'].">\r\n"; 
-      	      $email_headers .= "Return-Path: " . (($userdata['user_email']&&$userdata['user_viewemail'])? $userdata['user_email']."\r\n":"\r\n"); 
-            	$email_headers .= "X-AntiAbuse: Board servername - " . $server_name . "\r\n"; 
-	            $email_headers .= "X-AntiAbuse: User_id - " . $userdata['user_id'] . "\r\n"; 
-      	      $email_headers .= "X-AntiAbuse: Username - " . $userdata['username'] . "\r\n"; 
-            	$email_headers .= "X-AntiAbuse: User IP - " . decode_ip($user_ip) . "\r\n"; 
-	            $emailer->use_template("delete_users",(file_exists($phpbb_root_path . "language/lang_" . $user_lang . "/email/delete_users.tpl"))? $user_lang : ""); 
-	            $emailer->extra_headers($email_headers); 
-      	      $emailer->assign_vars(array( 
-			   'U_REGISTER' => $server_protocol . $server_name . $server_port . $script_name,
-	               'USER' => $userdata['username'],
-			   'USERNAME' =>  $username,
-	               'SITENAME' => $board_config['sitename'], 
-      	         'BOARD_EMAIL' => $board_config['board_email'])); 
-            	$emailer->send(); 
-	            $emailer->reset(); 
+		$emailer = new emailer($board_config['smtp_delivery']);
+		$emailer->email_address($user_email);
+		$email_headers = "To: \"". addslashes($username)."\" <".$user_email. ">\r\n";
+		$email_headers .= "From: \"".$board_config['sitename']."\" <".$board_config['board_email'].">\r\n";
+		$email_headers .= "Return-Path: " . (($userdata['user_email']&&$userdata['user_viewemail'])? $userdata['user_email']."\r\n":"\r\n");
+		$email_headers .= "X-AntiAbuse: Board servername - " . $server_name . "\r\n";
+		$email_headers .= "X-AntiAbuse: User_id - " . $userdata['user_id'] . "\r\n";
+		$email_headers .= "X-AntiAbuse: Username - " . $userdata['username'] . "\r\n";
+		$email_headers .= "X-AntiAbuse: User IP - " . decode_ip($user_ip) . "\r\n";
+		$emailer->use_template("delete_users",(file_exists($phpbb_root_path . "language/lang_" . $user_lang . "/email/delete_users.tpl"))? $user_lang : "");
+		$emailer->extra_headers($email_headers);
+		$emailer->assign_vars(array(
+			'U_REGISTER' => $server_protocol . $server_name . $server_port . $script_name,
+			'USER' => $userdata['username'],
+			'USERNAME' =>  $username,
+			'SITENAME' => $board_config['sitename'], 
+			'BOARD_EMAIL' => $board_config['board_email']));
+		$emailer->send();
+		$emailer->reset();
 	}
 	$name_list .= (($name_list) ? ' , ':'</br>') .$username;
 	$i++;
