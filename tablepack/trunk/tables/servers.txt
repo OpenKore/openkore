@@ -429,11 +429,11 @@ version 14
 serverType 5
 serverEncoding Western
 
-## http://www.faithro.net/
+## http://www.faithro.com/
 [FaithRO (High Rate) Private Server]
-ip 209.190.93.35
-port 6900
-master_version 18
+ip 72.232.69.34
+port 6910
+master_version 0
 version 0
 servertype 5
 serverEncoding Western
