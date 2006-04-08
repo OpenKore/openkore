@@ -517,7 +517,7 @@ serverEncoding Western
 ip 81.177.13.7
 port 6900
 master_version 25
-version 1
+version 61
 serverEncoding Russian
 
 ## http://www.ragmaniacos.net/include/
