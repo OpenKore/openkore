@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-04-07 17:39-0300\n"
+"POT-Creation-Date: 2006-04-08 10:18+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2211,11 +2211,11 @@ msgstr ""
 msgid "'%s' is not a valid choice number.\n"
 msgstr ""
 
-#: ../Interface.pm:262
+#: ../Interface.pm:265
 msgid "Press ENTER to exit this program.\n"
 msgstr ""
 
-#: ../Interface.pm:264
+#: ../Interface.pm:267
 msgid "Press ENTER to continue...\n"
 msgstr ""
 
@@ -2854,6 +2854,53 @@ msgstr ""
 msgid "Error: Couldn't load %s\n"
 msgstr ""
 
+#: ../XKore2.pm:334
+#, perl-format
+msgid "couldn't connect: %s\n"
+msgstr ""
+
+#: ../XKore2.pm:466
+#, perl-format
+msgid "Unable to listen on XKore2 port (%s:%s): %s"
+msgstr ""
+
+#: ../XKore2.pm:530
+msgid "XKore 2 failed login: Invalid Username and/or Password.\n"
+msgstr ""
+
+#: ../XKore2.pm:559
+msgid ""
+"Received GameGuard sync request. Client allowed to login account server.\n"
+msgstr ""
+
+#: ../XKore2.pm:562
+msgid ""
+"Received GameGuard sync request. Client allowed to login char/map server.\n"
+msgstr ""
+
+#: ../XKore2.pm:1046
+msgid ""
+"blueConnection to server lost. Please wait while the connection is "
+"reestablished."
+msgstr ""
+
+#: ../XKore2.pm:1049
+msgid "Unknown error within XKore 2"
+msgstr ""
+
+#: ../XKore2.pm:1080
+msgid "blueConnection reestablished. Enjoy. =)"
+msgstr ""
+
+#: ../XKore2.pm:1093
+msgid "blueStill trying to connect..."
+msgstr ""
+
+#: ../XKore2.pm:1106
+#, perl-format
+msgid "Unknown/unexpected XKore 2 packet: %s (state: %s).\n"
+msgstr ""
+
 #: ../XKore.pm:49
 #, perl-format
 msgid ""
@@ -2907,53 +2954,6 @@ msgstr ""
 #: ../XKore.pm:487
 #, perl-format
 msgid "Client modified in %d places.\n"
-msgstr ""
-
-#: ../XKore2.pm:334
-#, perl-format
-msgid "couldn't connect: %s\n"
-msgstr ""
-
-#: ../XKore2.pm:466
-#, perl-format
-msgid "Unable to listen on XKore2 port (%s:%s): %s"
-msgstr ""
-
-#: ../XKore2.pm:530
-msgid "XKore 2 failed login: Invalid Username and/or Password.\n"
-msgstr ""
-
-#: ../XKore2.pm:559
-msgid ""
-"Received GameGuard sync request. Client allowed to login account server.\n"
-msgstr ""
-
-#: ../XKore2.pm:562
-msgid ""
-"Received GameGuard sync request. Client allowed to login char/map server.\n"
-msgstr ""
-
-#: ../XKore2.pm:1046
-msgid ""
-"blueConnection to server lost. Please wait while the connection is "
-"reestablished."
-msgstr ""
-
-#: ../XKore2.pm:1049
-msgid "Unknown error within XKore 2"
-msgstr ""
-
-#: ../XKore2.pm:1080
-msgid "blueConnection reestablished. Enjoy. =)"
-msgstr ""
-
-#: ../XKore2.pm:1093
-msgid "blueStill trying to connect..."
-msgstr ""
-
-#: ../XKore2.pm:1106
-#, perl-format
-msgid "Unknown/unexpected XKore 2 packet: %s (state: %s).\n"
 msgstr ""
 
 #: ../XKoreProxy.pm:328
