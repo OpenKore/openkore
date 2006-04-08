@@ -743,6 +743,10 @@ $lang['Socket_functions_disabled'] = 'Unable to use socket functions.';
 $lang['Mailing_list_subscribe_reminder'] = 'For the latest information on updates to phpBB, why not <a href="http://www.phpbb.com/support/" target="_new">subscribe to our mailing list</a>.';
 $lang['Version_information'] = 'Version Information';
 
+// Start add - Prune users MOD
+$lang['Prune_users'] = 'Prune users';
+// End add - Prune users MOD
+
 //
 // Begin Syntax Highlighting Mod
 //
