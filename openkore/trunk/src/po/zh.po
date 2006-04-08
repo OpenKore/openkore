@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: OpenKore 1.9.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-04-08 10:18+0200\n"
-"PO-Revision-Date: 2006-04-06 08:13+0800\n"
+"PO-Revision-Date: 2006-04-08 11:21+0800\n"
 "Last-Translator: Lkm <lj88kc@yahoo.com.cn>\n"
 "Language-Team: Lkm <lj88kc@yhaoo.com.cn>\n"
 "MIME-Version: 1.0\n"
@@ -1372,7 +1372,6 @@ msgstr ""
 "用法: %s [distance]\n"
 
 #: ../Commands.pm:2167
-#, fuzzy
 msgid ""
 "-----------Monster List-----------\n"
 "#   Name                        ID      DmgTo DmgFrom  Distance    "
@@ -2679,12 +2678,12 @@ msgstr "创建失败 %s: %s\n"
 
 #: ../Interface.pm:182
 msgid "Choice"
-msgstr ""
+msgstr "选择"
 
 #: ../Interface.pm:197
-#, fuzzy, perl-format
+#, perl-format
 msgid "'%s' is not a valid choice number.\n"
-msgstr "'%s' 不是一个合法的插件数字.\n"
+msgstr "'%s' 不是已经有效的数字.\n"
 
 #: ../Interface.pm:265
 msgid "Press ENTER to exit this program.\n"
@@ -2794,51 +2793,52 @@ msgstr ""
 #: ../Misc.pm:1148
 #, perl-format
 msgid "Slot %d: %s (%s, level %d/%d)"
-msgstr ""
+msgstr "Slot %d: %s (%s, 等级 %d/%d)"
 
 #: ../Misc.pm:1158
-#, fuzzy, perl-format
+#, perl-format
 msgid ""
 "------------- Character List -------------\n"
 "%s\n"
 "------------------------------------------\n"
-msgstr "----------------------------错误摘要----------------------------\n"
+msgstr ""
+"------------- 人物列表 -------------\n"
+"%s\n"
+"------------------------------------------\n"
 
 #: ../Misc.pm:1177
 msgid "Create a new character"
-msgstr ""
+msgstr "创建一个人物"
 
 #: ../Misc.pm:1177
-#, fuzzy
 msgid "Delete a character"
-msgstr "删除人物 %s...\n"
+msgstr "删除人物"
 
 #: ../Misc.pm:1178
-#, fuzzy
 msgid "Character selection"
-msgstr "人物已经删除.\n"
+msgstr "选择人物"
 
 #: ../Misc.pm:1179
 msgid "Please chooce a character or an action: "
-msgstr ""
+msgstr "请选择一个人物或动作: "
 
 #: ../Misc.pm:1201
 msgid "There are no characters on this account.\n"
 msgstr "此帐号上没有角色.\n"
 
 #: ../Misc.pm:1207
-#, fuzzy
 msgid ""
 "Please enter the desired properties for your characters, in this form:\n"
 "(slot) \"(name)\" [ (str) (agi) (vit) (int) (dex) (luk) [ (hairstyle) "
 "[(haircolor)] ] ]\n"
 msgstr ""
 "请输入你的角色的各项数据:\n"
-"(slot) \"(名字)\" [(str) (agi) (vit) (int) (dex) (luk) [(发型) [(发色)]]]\n"
+"(slot) \"(名字)\" [ (str) (agi) (vit) (int) (dex) (luk) [ (发型) [(发"
+"色)] ] ]\n"
 
 #: ../Misc.pm:1215
 msgid "You didn't specify enough parameters."
-msgstr ""
+msgstr "你没有表达足够的参数."
 
 #: ../Misc.pm:1219
 #, perl-format
@@ -2846,32 +2846,33 @@ msgid "Creating character \"%s\" in slot \"%s\"...\n"
 msgstr "创建角色 \"%s\" 在 slot \"%s\"...\n"
 
 #: ../Misc.pm:1226
-#, fuzzy
 msgid "Delete character"
-msgstr "删除人物 %s...\n"
+msgstr "删除人物"
 
 #: ../Misc.pm:1226
 msgid "Select the character you want to delete: "
-msgstr ""
+msgstr "选择你要删除的人物: "
 
 #: ../Misc.pm:1238
 msgid "Confirm delete"
-msgstr ""
+msgstr "确定删除"
 
 #: ../Misc.pm:1239
-#, fuzzy, perl-format
+#, perl-format
 msgid ""
 "Are you ABSOLUTELY SURE you want to delete:\n"
 "%s\n"
-msgstr "你确定要删除吗 %s (%s)? %s "
+msgstr ""
+"你确定要删除:\n"
+"%s\n"
 
 #: ../Misc.pm:1240
 msgid "No, don't delete"
-msgstr ""
+msgstr "不, 不要删除"
 
 #: ../Misc.pm:1240
 msgid "Yes, delete"
-msgstr ""
+msgstr "是的, 删除"
 
 #: ../Misc.pm:1246
 #, perl-format
@@ -2893,39 +2894,34 @@ msgid "** Exiting...\n"
 msgstr "** 退出中...\n"
 
 #: ../Misc.pm:1374
-#, fuzzy
 msgid "We're not currently connected to the character login server."
-msgstr "我们现在无法连接到角色服务器.\n"
+msgstr "我们现在无法连接到角色服务器."
 
 #: ../Misc.pm:1377
-#, fuzzy, perl-format
+#, perl-format
 msgid "Slot \"%s\" is not a valid number."
-msgstr "Slot \"%s\" 不是已经有效的数字.\n"
+msgstr "Slot \"%s\" 不是已经有效的数字."
 
 #: ../Misc.pm:1380
-#, fuzzy
 msgid "The slot must be comprised between 0 and 4."
-msgstr "slot 必须在 0 和 4 之间\n"
+msgstr "slot 必须在 0 和 4 之间."
 
 #: ../Misc.pm:1383
-#, fuzzy, perl-format
+#, perl-format
 msgid "Slot %s already contains a character (%s)."
-msgstr "Slot %s 已经有一个人物了 (%s).\n"
+msgstr "Slot %s 已经有一个人物了 (%s)."
 
 #: ../Misc.pm:1386
-#, fuzzy
 msgid "Name must not be longer than 23 characters."
-msgstr "名字不能超过 23 个字符\n"
+msgstr "名字不能超过 23 个字符."
 
 #: ../Misc.pm:1392
-#, fuzzy
 msgid "Stats must be comprised between 1 and 9."
-msgstr "状态需在 1 到 9 之间\n"
+msgstr "状态需在 1 到 9 之间."
 
 #: ../Misc.pm:1398
-#, fuzzy
 msgid "The sums Str + Int, Agi + Luk and Vit + Dex must all be equal to 10."
-msgstr "状态 Str + Int, Agi + Luk 和 Vit + Dex 不能超过 10\n"
+msgstr "状态点数 Str + Int, Agi + Luk 和 Vit + Dex 不能超过 10."
 
 #: ../Misc.pm:1486
 msgid "Message Dumped into DUMP.txt!\n"
@@ -3527,6 +3523,12 @@ msgid ""
 "            @<<<<<<<<< @<<<<<<<<<<\n"
 "-----------------------------------"
 msgstr ""
+"-----------帐号信息------------\n"
+"Account ID: @<<<<<<<<< @<<<<<<<<<<\n"
+"Sex:        @<<<<<<<<<<<<<<<<<<<<<\n"
+"Session ID: @<<<<<<<<< @<<<<<<<<<<\n"
+"            @<<<<<<<<< @<<<<<<<<<<\n"
+"-----------------------------------"
 
 #: ../Network/Receive.pm:433
 msgid ""
@@ -4184,7 +4186,6 @@ msgid "Account name doesn't exist\n"
 msgstr "用户名不存在\n"
 
 #: ../Network/Receive.pm:3407
-#, fuzzy
 msgid "Enter username again: "
 msgstr "请再次输入用户名: "
 
@@ -4193,7 +4194,6 @@ msgid "Password Error\n"
 msgstr "密码错误\n"
 
 #: ../Network/Receive.pm:3420
-#, fuzzy
 msgid "Enter password again: "
 msgstr "请再次输入密码:"
 
@@ -4447,9 +4447,9 @@ msgid "%s changed Shoes to: %s\n"
 msgstr "%s 改变鞋子为: %s\n"
 
 #: ../Network/Receive.pm:4177
-#, fuzzy, perl-format
+#, perl-format
 msgid "[dist=%s] %s\n"
-msgstr "[dist=%.2f] %s\n"
+msgstr "[存在=%s] %s\n"
 
 #: ../Network/Receive.pm:4210 ../Network/Receive.pm:4211
 #, perl-format
@@ -4949,9 +4949,8 @@ msgid "found new portals!\n"
 msgstr "发现新的传送点!\n"
 
 #: ../../openkore.pl:345
-#, fuzzy
 msgid "Compile portals?"
-msgstr "是否立即编译路点? %s"
+msgstr "是否立即编译路点?"
 
 #: ../../openkore.pl:346
 msgid ""
@@ -4959,14 +4958,15 @@ msgid ""
 "must be compiled before the new portals can be used. Would you like to "
 "compile portals now?\n"
 msgstr ""
+"新的入口已经被加入到数据库. 在使用之前你必须编译数据库. 你想现在就编译吗?\n"
 
 #: ../../openkore.pl:349
 msgid "Yes, compile now."
-msgstr ""
+msgstr "是的, 马上编译."
 
 #: ../../openkore.pl:349
 msgid "No, don't compile it."
-msgstr ""
+msgstr "不, 不要编译."
 
 #: ../../openkore.pl:351
 msgid "compiling portals"
@@ -5447,57 +5447,3 @@ msgstr "读取地图\n"
 #, perl-format
 msgid "Unknown packet - %s\n"
 msgstr "未知封包 - %s\n"
-
-#~ msgid ""
-#~ "---------------------- Character List ----------------------\n"
-#~ "  # Name                               Job             Lv\n"
-#~ "%s------------------------------------------------------------\n"
-#~ msgstr ""
-#~ "---------------------- 人物列表 ----------------------\n"
-#~ "  # 名字                               职业             Lv\n"
-#~ "%s------------------------------------------------------------\n"
-
-#~ msgid ""
-#~ "Type 'c' to create a new character, or type 'd' to delete a character.\n"
-#~ "Or choose a character by entering its number.\n"
-#~ msgstr ""
-#~ "输入 'c' 创建新角色, 输入 'd' 删除角色.\n"
-#~ "输入编号选项角色进入游戏.\n"
-
-#~ msgid "\"%s\" is not a valid character number.\n"
-#~ msgstr "\"%s\" 是错误的人物编号.\n"
-
-#~ msgid "Character #%s does not exist.\n"
-#~ msgstr "人物 #%s 不存在.\n"
-
-#~ msgid ""
-#~ "Enter the number of the character you want to delete\n"
-#~ "and your email in this form: (slot) (email address)\n"
-#~ msgstr ""
-#~ "请输入你要删除的角色的编号\n"
-#~ "同时输入mail: (slot) (email address)\n"
-
-#~ msgid "Deletion aborted\n"
-#~ msgstr "删除失败\n"
-
-#~ msgid "Master Servers"
-#~ msgstr "主服务器"
-
-#~ msgid "#         Name\n"
-#~ msgstr "#         名称\n"
-
-#~ msgid "'%s' is not a valid server.\n"
-#~ msgstr "'%s' 不是支持的服务器.\n"
-
-#~ msgid "Enter the number of your master server: "
-#~ msgstr "输入您所在游戏服务器: "
-
-#~ msgid "Auto-compile in %d seconds...\n"
-#~ msgstr "自动完成编译在 %d 秒后...\n"
-
-#~ msgid ""
-#~ "------- Master Servers --------\n"
-#~ "#         Name\n"
-#~ msgstr ""
-#~ "------- 主服务器 --------\n"
-#~ "#         名字\n"
