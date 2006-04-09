@@ -39,11 +39,9 @@ basename (const char *filename)
  * @param len The length of str, in bytes.
  * @param resultLength A pointer to an int. If not NULL, the length of the result
  *                     (in characters) will be stored here.
- * @return A Unicode wide string.
+ * @return A Unicode wide string, or NULL of the conversion failed.
  * @requires str != NULL && len >= 0
- * @ensure
- *     result != NULL
- *     if resultLength != NULL: *resultLength >= 0
+ * @ensure if result != NULL && resultLength != NULL: *resultLength >= 0
  */
 static WCHAR *
 utf8ToWidechar (const char *str, int len, int *resultLength = NULL)
@@ -51,14 +49,28 @@ utf8ToWidechar (const char *str, int len, int *resultLength = NULL)
 	int size;
 	WCHAR *unicode;
 
+	// Determine the size (in characters) the buffer must be.
 	size = MultiByteToWideChar (CP_UTF8, 0, str,
 		len, NULL, 0);
-	unicode = (WCHAR *) malloc (sizeof (WCHAR) * size);
-	MultiByteToWideChar (CP_UTF8, 0, str,
-		len, unicode, size);
+	if (size == 0) {
+		return NULL;
+	}
+
+	// Allocate the buffer and convert UTF-8 to Unicode.
+	unicode = (WCHAR *) malloc (sizeof (WCHAR) * (size + 1));
+	if (unicode == NULL) {
+		return NULL;
+	}
+
+	if (MultiByteToWideChar (CP_UTF8, 0, str, len, unicode, size) == 0) {
+		return NULL;
+	}
 	if (resultLength != NULL) {
 		*resultLength = size;
 	}
+
+	// NULL-terminate the string.
+	unicode[size] = (WCHAR) 0;
 
 	return unicode;
 }
@@ -208,9 +220,14 @@ printConsole (const char *message, int len) {
 	WCHAR *unicode;
 
 	unicode = utf8ToWidechar(message, len, &size);
-	WriteConsoleW (GetStdHandle(STD_OUTPUT_HANDLE), unicode,
-		size, NULL, NULL);
-	free (unicode);
+	if (unicode != NULL) {
+		WriteConsoleW (GetStdHandle (STD_OUTPUT_HANDLE), unicode,
+			size, NULL, NULL);
+		free (unicode);
+	} else {
+		WriteConsoleA (GetStdHandle (STD_OUTPUT_HANDLE), message,
+			len, NULL, NULL);
+	}
 }
 
 void
@@ -218,6 +235,10 @@ setConsoleTitle (const char *title, int len) {
 	WCHAR *unicode;
 
 	unicode = utf8ToWidechar(title, len);
-	SetConsoleTitleW (unicode);
-	free (unicode);
+	if (unicode != NULL) {
+		SetConsoleTitleW (unicode);
+		free (unicode);
+	} else {
+		SetConsoleTitleA (title);
+	}
 }
