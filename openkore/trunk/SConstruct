@@ -74,10 +74,35 @@ def CheckPerl(context):
 			perlconfig['coredir'] = perlconfig['coredir'].replace('\\', '/')
 	return ret == 0
 
-conf = Configure(env, custom_tests = {'CheckPerl' : CheckPerl})
-conf.CheckPerl()
+def CheckReadline(context):
+	context.Message('Checking for GNU readline 4.3 or higher...')
+	result = context.TryCompile("""
+		#include <stdio.h>
+		#include <readline/readline.h>
+		#if !defined(RL_READLINE_VERSION)
+			#error "You do not have the GNU readline development headers installed!"
+		#elif RL_READLINE_VERSION < 0x0403
+			#error "Your version of GNU readline is too old. Please install version 4.3 or higher."
+		#endif
+""", '.c')
+	context.Result(result)
+	return result
+
+
+conf = Configure(env, custom_tests = {
+	'CheckPerl' : CheckPerl,
+	'CheckReadline' : CheckReadline
+})
+if not conf.CheckPerl():
+	print "You do not have Perl installed! Read:"
+	print "http://www.openkore.com/wiki/index.php/How_to_run_OpenKore_on_Linux/Unix#Perl.27s_Time::HiRes_module"
+	Exit(1)
 if not win32:
 	have_ncurses = conf.CheckLib('ncurses')
+	if not conf.CheckReadline():
+		print "You don't have GNU readline installed, or your version of GNU readline is not recent enough! Read:"
+		print "http://www.openkore.com/wiki/index.php/How_to_run_OpenKore_on_Linux/Unix#GNU_readline"
+		Exit(1)
 conf.Finish()
 
 
