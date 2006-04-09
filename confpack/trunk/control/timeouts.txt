@@ -101,7 +101,7 @@ ai_cartAuto 0.15
 # delay between checking if we need to do any cartAuto functions
 ai_cartAutoCheck 2
 ai_avoidcheck 0.5
-ai_shop 9
+ai_shop 4
 ai_npcTalk 8
 
 
