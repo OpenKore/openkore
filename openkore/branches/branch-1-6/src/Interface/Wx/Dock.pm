@@ -120,15 +120,18 @@ sub Fit {
 
 			my @timers;
 			my $set = sub {
-				$self->{dialog}->SetClientSize($w, $h);
+				if ($self->{dialog}) {
+					$self->{dialog}->SetClientSize($w, $h);
+				}
 				foreach (@timers) {
-					$_->Stop();
+					$_->Stop() if ($_);
 				}
 			};
 
 			$set->();
 			# We set the size again after some time, to work around a bug
 			foreach (10, 100, 500, 1000) {
+				next if (!$self->{dialog});
 				my $timer = new Wx::Timer($self->{dialog}, $_);
 				EVT_TIMER($self->{dialog}, $_, $set);
 				push @timers, $timer;
