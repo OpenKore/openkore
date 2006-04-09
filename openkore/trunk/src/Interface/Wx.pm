@@ -323,7 +323,6 @@ sub createInterface {
 	$self->{splitter} = $splitter;
 	$vsizer->Add($splitter, 1, wxGROW);
 	$self->createSplitterContent;
-	$splitter->SetSashGravity(1);
 	$splitter->SetMinimumPaneSize(50);
 
 
@@ -346,10 +345,13 @@ sub createInterface {
 	EVT_CLOSE($frame, \&onClose);
 
 	# For some reason the input box doesn't get focus even if
-	# I call SetFocus(), so do it in 100 msec
+	# I call SetFocus(), so do it in 100 msec.
+	# And the splitter window's sash position is placed incorrectly
+	# if I call SetSashGravity immediately.
 	my $timer = new Wx::Timer($self, 73289);
 	EVT_TIMER($self, 73289, sub {
 		$self->{inputBox}->SetFocus;
+		$splitter->SetSashGravity(1);
 	});
 	$timer->Start(100, 1);
 
@@ -563,7 +565,13 @@ sub createSplitterContent {
 		$mapView->set($field{name}, $char->{pos_to}{x}, $char->{pos_to}{y}, \%field);
 	}
 
-	$splitter->SplitVertically($notebook, $subSplitter, 245);
+	my $position;
+	if (Wx::wxMSW()) {
+		$position = 245;
+	} else {
+		$position = 545;
+	}
+	$splitter->SplitVertically($notebook, $subSplitter, $position);
 }
 
 
