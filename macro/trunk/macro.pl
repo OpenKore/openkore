@@ -47,6 +47,12 @@ my $loghook;
 my $file = "$Settings::control_folder/macros.txt";
 my $cfID = Settings::addConfigFile($file, \%macro, \&parseAndHook);
 undef $file;
+
+if (defined %config) {
+	Settings::parseReload("macros");
+	postsetDebug();
+	checkConfig();
+}
 #########
 
 # onUnload
