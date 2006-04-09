@@ -31,28 +31,10 @@ use Globals;
 use constant STYLE_SLOT => 4;
 use constant MAX_LINES => 1000;
 
-our $platform;
 our %fgcolors;
 
 sub new {
 	my ($class, $parent, $noColors) = @_;
-
-	if (!$platform) {
-		if ($^O eq 'MSWin32') {
-			$platform = 'win32';
-		} else {
-			my $mod = 'use IPC::Open2; use POSIX;';
-			eval $mod;
-			if (DynaLoader::dl_find_symbol_anywhere('pango_font_description_new')) {
-				# wxGTK is linked to GTK 2
-				$platform = 'gtk2';
-				# GTK 2 will segfault if we try to use non-UTF 8 characters,
-				# so we need functions to convert them to UTF-8
-			} else {
-				$platform = 'gtk1';
-			}
-		}
-	}
 
 	my $self = $class->SUPER::new($parent, -1, '',
 		wxDefaultPosition, wxDefaultSize,
@@ -65,14 +47,12 @@ sub new {
 
 	### Fonts
 	my ($fontName, $fontSize);
-	if ($platform eq 'win32') {
+	if (Wx::wxMSW()) {
 		$fontSize = 9;
 		$fontName = 'Courier New';
-	} elsif ($platform eq 'gtk2') {
+	} else {
 		$fontSize = 10;
 		$fontName = 'MiscFixed';
-	} else {
-		$fontSize = 12;
 	}
 
 	if ($fontName) {
