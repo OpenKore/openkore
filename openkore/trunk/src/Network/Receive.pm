@@ -737,9 +737,9 @@ sub actor_display {
 	# beyond removeActorWithDistance.
 	if ($config{removeActorWithDistance}) {
 		if ((my $block_dist = blockDistance($char->{pos_to}, {%coordsTo})) > ($config{removeActorWithDistance})) {
-				my $nameIdTmp = unpack("V1", $args->{ID});
-				debug "Removed out of sight actor $nameIdTmp at ($coordsTo{x}, $coordsTo{y}) (distance: $block_dist)\n";
-				return;
+			my $nameIdTmp = unpack("V1", $args->{ID});
+			debug "Removed out of sight actor $nameIdTmp at ($coordsTo{x}, $coordsTo{y}) (distance: $block_dist)\n";
+			return;
 		}
 	}
 
@@ -780,55 +780,36 @@ sub actor_display {
 
 		$actor->{nameID} = $nameID;
 
-	} elsif ($args->{type} >= 1000) {
-		# Actor is a monster
+	} elsif ($args->{type} >= 1000 || ($args->{type} >= 6000 && $pvp == 0)) {
+		# Actor might be a monster
 		if ($args->{hair_style} == 0x64) {
-			# Actor is a pet
-			$type = "Pet";
-			if (!$pets{$args->{ID}} || !%{$pets{$args->{ID}}}) {
-				binAdd(\@petsID, $args->{ID});
-				# WARNING: In the actor_exists function, pets are referred to
-				#	using their ID twice (example: $pets{$args->{ID}}{$args->{ID}}{binID}).
-				#	As I find this to be a waste of memory and harder to read, I've not
-				#	continued it. Perhaps it is a bug that'll be eliminated? Or perhaps
-				#	I'll be creating a bug... This should be watched.
-				$pets{$args->{ID}}{binID} = binFind(\@petsID, $args->{ID});
-				$pets{$args->{ID}}{appear_time} = time;
+			# Actor is a pet or a homunculus
+			# When not in PVP mode, the Homunculus are recognized as pet.
+			# Otherwise, Homunculus are recognized as monsters.
+			# Right now, i'm setting the name of the monster to their monster id number.
+			# and not the owner-given names.
 
-				$pets{$args->{ID}}{name} = ($monsters_lut{$args->{type}} ne "")
+			$type = "Pet";
+			my $ID = $args->{ID};
+			if (!$pets{$ID} || !%{$pets{$ID}}) {
+				binAdd(\@petsID, $ID);
+				$pets{$ID}{binID} = binFind(\@petsID, $args->{ID});
+				$pets{$ID}{appear_time} = time;
+
+				$pets{$ID}{name} = ($monsters_lut{$args->{type}} ne "")
 						? $monsters_lut{$args->{type}}
 						: "Unknown $args->{type}";
-				$pets{$args->{ID}}{name_given} = "Unknown";
+				$pets{$ID}{name_given} = "Unknown";
 
-				if ($monsters{$args->{ID}}) {
-					binRemove(\@monstersID, $args->{ID});
-					objectRemoved('monster', $args->{ID}, $monsters{$args->{ID}});
-					delete $monsters{$args->{ID}};
+				if ($monsters{$ID}) {
+					binRemove(\@monstersID, $ID);
+					objectRemoved('monster', $ID, $monsters{$ID});
+					delete $monsters{$ID};
 				}
 
 				$justAdded = 'pet';
 			}
-			$actor = $pets{$args->{ID}};
-
-		} elsif ($args->{type} >= 6000) {
-			# Actor is a homunculus
-			# FIXME: what to do here?
-			# right now, i'm setting the name of the monster to their monster id number
-			# and not the owner-given names. this is to allow people to add them into
-			# mon_control.txt so that they don't auto-attack homunculus (e.g. 6001 -1 0 0)
-			$type = "Monster";
-			if (!$monsters{$args->{ID}} || !%{$monsters{$args->{ID}}}) {
-				$actor = $monsters{$args->{ID}} = new Actor::Monster();
-				binAdd(\@monstersID, $args->{ID});
-				$actor->{binID} = binFind(\@monstersID, $args->{ID});
-				$actor->{appear_time} = time;
-
-				$actor->{name} = $args->{type};
-				$actor->{binType} = $args->{type};
-
-				$justAdded = 'monster';
-			}
-			$actor = $monsters{$args->{ID}};
+			$actor = $pets{$ID};
 
 		} else {
 			# Actor really is a monster
@@ -1059,9 +1040,9 @@ sub actor_exists {
 	# beyond removeActorWithDistance.
 	if ($config{removeActorWithDistance}) {
 		if ((my $block_dist = blockDistance($char->{pos_to}, {%coords})) > ($config{removeActorWithDistance})) {
-				my $nameIdTmp = unpack("V1", $args->{ID});
-				debug "Removed out of sight actor $nameIdTmp at $coords{x} $coords{y} (distance: $block_dist)\n";
-				return;
+			my $nameIdTmp = unpack("V1", $args->{ID});
+			debug "Removed out of sight actor $nameIdTmp at $coords{x} $coords{y} (distance: $block_dist)\n";
+			return;
 		}
 	}
 
@@ -1114,30 +1095,32 @@ sub actor_exists {
 
 	} elsif ($args->{type} >= 1000) {
 		if ($args->{hair_style}) {
-			if (!$pets{$args->{ID}}{$args->{ID}} || !%{$pets{$args->{ID}}{$args->{ID}}}) {
-				$pets{$args->{ID}}{$args->{ID}}{'appear_time'} = time;
+			# Actor is a pet
+			my $ID = $args->{ID};
+			if (!$pets{$ID} || !%{$pets{$ID}}) {
+				$pets{$ID}{appear_time} = time;
 				my $display = ($monsters_lut{$args->{type}} ne "")
 						? $monsters_lut{$args->{type}}
 						: "Unknown ".$args->{type};
-				binAdd(\@petsID, $args->{ID});
-				$pets{$args->{ID}}{$args->{ID}}{'nameID'} = $args->{type};
-				$pets{$args->{ID}}{$args->{ID}}{'name'} = $display;
-				$pets{$args->{ID}}{$args->{ID}}{'name_given'} = "Unknown";
-				$pets{$args->{ID}}{$args->{ID}}{'binID'} = binFind(\@petsID, $args->{ID});
+				binAdd(\@petsID, $ID);
+				$pets{$ID}{nameID} = $args->{type};
+				$pets{$ID}{name} = $display;
+				$pets{$ID}{name_given} = "Unknown";
+				$pets{$ID}{binID} = binFind(\@petsID, $ID);
 				$added = 1;
 			}
-			$pets{$args->{ID}}{$args->{ID}}{'walk_speed'} = $args->{walk_speed} / 1000;
-			%{$pets{$args->{ID}}{$args->{ID}}{'pos'}} = %coords;
-			%{$pets{$args->{ID}}{$args->{ID}}{'pos_to'}} = %coords;
-			debug "Pet Exists: $pets{$args->{ID}}{$args->{ID}}{'name'} ($pets{$args->{ID}}{$args->{ID}}{'binID'})\n", "parseMsg";
+			$pets{$ID}{walk_speed} = $args->{walk_speed} / 1000;
+			$pets{$ID}{pos} = {%coords};
+			$pets{$ID}{pos_to} = {%coords};
+			debug "Pet Exists: $pets{$ID}{name} ($pets{$ID}{binID})\n", "parseMsg";
 
-			if ($monsters{$args->{ID}}) {
-				binRemove(\@monstersID, $args->{ID});
-				objectRemoved('monster', $args->{ID}, $monsters{$args->{ID}});
-				delete $monsters{$args->{ID}};
+			if ($monsters{$ID}) {
+				binRemove(\@monstersID, $ID);
+				objectRemoved('monster', $ID, $monsters{$ID});
+				delete $monsters{$ID};
 			}
 
-			objectAdded('pet', $args->{ID}, $pets{$args->{ID}}{$args->{ID}}) if ($added);
+			objectAdded('pet', $ID, $pets{$ID}{$ID}) if ($added);
 
 		} else {
 			if (!$monsters{$args->{ID}} || !%{$monsters{$args->{ID}}}) {
