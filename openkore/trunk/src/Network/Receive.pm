@@ -5351,22 +5351,20 @@ sub storage_password_request {
 		message T("Please enter a new storage password:\n");
 
 	} elsif ($args->{flag} == 1) {
-		my $input = $interface->askPassword(T("Please enter your storage password:\n"));
-		if (!defined($input)) {
-			return;
+		if ($config{storageAuto_password} eq '') {
+			my $input = $interface->askPassword(T("Please enter your storage password:\n"));
+			if (!defined($input)) {
+				return;
+			}
+			configModify('storageAuto_password', $input, 1);
+			message TF("Storage password set to: %s\n", $input), "success";
 		}
-		configModify('storageAuto_password', $input, 1);
-		message TF("Storage password set to: %s\n", $input), "success";
 
-		$config{storageEncryptKey} = $masterServers{storageEncryptKey} if exists($masterServers{storageEncryptKey});
-		# is this the correct way to access the entries in servers.txt?
-		#my @key = $config{storageEncryptKey} =~ /(.+)[, ]+(.+)[, ]+(.+)[, ]+(.+)[, ]+(.+)[, ]+(.+)[, ]+(.+)[, ]+(.+)/;
 		my @key = split /[, ]+/, $config{storageEncryptKey};
 		if (!@key) {
 			error T("Unable to send storage password. You must set the 'storageEncryptKey' option in config.txt or servers.txt.\n");
 			return;
 		}
-
 		my $crypton = new Utils::Crypton(pack("V*", @key), 32);
 		my $num = $config{storageAuto_password};
 		$num = sprintf("%d%08d", length($num), $num);
