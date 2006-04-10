@@ -85,6 +85,7 @@
 124 Head Crush
 125 Joint Beat
 127 Memorize
+131 Magnum Break
 132 Auto Berserk
 135 Ready Storm
 137 Ready Down

@@ -430,12 +430,30 @@ serverType 5
 serverEncoding Western
 
 ## http://www.faithro.com/
+[FaithRO (Low Rate) Private Server]
+ip 72.232.69.18
+port 9005
+master_version 18
+version 0
+serverType 5
+serverEncoding Western
+
+## http://www.faithro.com/
 [FaithRO (High Rate) Private Server]
 ip 72.232.69.34
 port 6910
 master_version 0
 version 0
 servertype 5
+serverEncoding Western
+
+## http://www.f-ro.com/mainsite/
+[FancyRO Private Server]
+ip 209.190.23.122
+port 6900
+master_version 18
+version 122
+serverType 5
 serverEncoding Western
 
 ## http://www.funro.mu/
@@ -472,6 +490,15 @@ port 6900
 master_version 16
 version number 20
 serverType 5
+serverEncoding Western
+
+## http://k3ro.com/
+[K3RO (Dynasty) Private Server]
+ip 206.225.95.57
+port 6900
+master_version
+version 20
+serverType 4
 serverEncoding Western
 
 ## http://www.mysticalro.tk/
@@ -512,14 +539,6 @@ serverType 5
 private 1
 serverEncoding Western
 
-## http://www.raggame.ru/
-[RuRO Private Server]
-ip 81.177.13.7
-port 6900
-master_version 25
-version 61
-serverEncoding Russian
-
 ## http://www.ragmaniacos.net/include/
 [RagnaManiacos Private Server]
 ip 72.232.11.18
@@ -533,8 +552,7 @@ serverType 5
 ip 81.177.13.7
 port 6900
 master_version 25
-version 1
-serverType 0
+version 61
 serverEncoding Russian
 
 ## http://www.speedro.de/speedro.html
@@ -583,12 +601,12 @@ serverType 5
 serverEncoding Western
 
 ## http://www.valhallaro.org/
-[ValhallaRO Private Server]
-ip valhalla.servegame.com
-port 6080
-version 21
-master_version 16
-serverType 5
+#[ValhallaRO Private Server]
+#ip valhalla.servegame.com
+#port 6080
+#version 21
+#master_version 16
+#serverType 5
 
 ## http://www.wafflenet.net/
 [WaffleRO2 (Gold) Private Server]
