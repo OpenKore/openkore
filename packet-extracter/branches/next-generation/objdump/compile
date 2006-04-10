@@ -1,0 +1,22 @@
+#!/bin/sh
+cd bfd
+gcc -g -I../include -DHAVE_CONFIG_H  -c *.c
+ar cru libbfd.a *.o
+ranlib libbfd.a
+cd ..
+
+cd opcodes
+gcc -c *.c -DHAVE_CONFIG_H -I../include -I../bfd
+ar cru libopcodes.a *.o
+ranlib libopcodes.a
+cd ..
+
+cd libiberty
+gcc -DHAVE_CONFIG_H -I../include -c *.c
+ar cru libiberty.a *.o
+ranlib libiberty.a
+cd ..
+
+gcc -Ibfd -Iinclude -DHAVE_CONFIG_H -DTARGET=\"i386-win32-pe\" -Dbin_dummy_emulation=bin_vanilla_emulation -DLOCALEDIR=\".\" -c *.c
+
+gcc *.o -o objdump opcodes/libopcodes.a bfd/libbfd.a libiberty/libiberty.a
