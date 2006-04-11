@@ -3,8 +3,7 @@
 #include "packet-length-analyzer.h"
 
 PacketLengthAnalyzer::PacketLengthAnalyzer()
-	: error(""),
-	  firstPacketSwitch("mov    DWORD PTR \\[ebp-8\\],0x187", wxRE_NOSUB),
+	: firstPacketSwitch("mov    DWORD PTR \\[ebp-8\\],0x187", wxRE_NOSUB),
 	  packetLengthFunctionStart("push   ebp", wxRE_NOSUB),
 	  packetLengthFunctionEnd  ("ret ", wxRE_NOSUB),
 	  progressRegex("^Progress: (.*)"),
@@ -75,7 +74,7 @@ PacketLengthAnalyzer::getState() {
 	return state;
 }
 
-wxString &
+wxString
 PacketLengthAnalyzer::getError() {
 	return error;
 }
@@ -199,7 +198,7 @@ PacketLengthAnalyzer::analyzeLine(const wxString &line) {
 }
 
 void
-PacketLengthAnalyzer::setFailed(wxString &error) {
+PacketLengthAnalyzer::setFailed(const wxString &error) {
 	this->error = error;
 	state = FAILED;
 }

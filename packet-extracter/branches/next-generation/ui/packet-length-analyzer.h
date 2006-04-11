@@ -44,7 +44,7 @@ public:
 	 *
 	 * @require getState() == FAILED
 	 */
-	wxString &getError();
+	wxString getError();
 
 	/**
 	 * Return the extracted packet lengths.
@@ -119,7 +119,7 @@ private:
 	 * @param error An error message explaining why.
 	 * @ensure getError() == error
 	 */
-	void setFailed(wxString &error);
+	void setFailed(const wxString &error);
 	void setFailed(const char *error);
 };
 

@@ -9,4 +9,6 @@
  */
 wxString createRecvpackets(PacketLengthMap &lengths);
 
+wxString findObjdump();
+
 #endif /* _UTILS_H_ */
