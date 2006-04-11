@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.  */
 #endif
 
 #ifndef PROGRESS
-#define PROGRESS(X)
+#define PROGRESS(X) printf("Progress: %.1f\n", X)
 #endif
 
 #ifndef END_PROGRESS

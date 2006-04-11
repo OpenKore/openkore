@@ -1264,6 +1264,7 @@ disassemble_bytes (struct disassemble_info * info,
   unsigned int skip_zeroes_at_end = info->skip_zeroes_at_end;
   int octets = opb;
   SFILE sfile;
+  unsigned long progress_counter = 0;
 
   aux = (struct objdump_disasm_info *) info->application_data;
   section = aux->sec;
@@ -1603,8 +1604,16 @@ disassemble_bytes (struct disassemble_info * info,
 	printf ("\n");
 
       addr_offset += octets / opb;
+
+      progress_counter++;
+      if (progress_counter == 5000)
+	{
+	  PROGRESS ((addr_offset - start_offset) / (double) (stop_offset - start_offset) * 100.0);
+	  progress_counter = 0;
+	}
     }
 
+  PROGRESS (100.0);
   free (sfile.buffer);
 }
 
@@ -1956,7 +1965,7 @@ disassemble_data (bfd *abfd)
     free (aux.dynrelbuf);
   free (sorted_syms);
 }
-
+
 /* Read ABFD's stabs section STABSECT_NAME, and return a pointer to
    it.  Return NULL on failure.   */
 
@@ -2779,20 +2788,13 @@ display_file (char *filename, char *target)
 
   bfd_close (file);
 }
-
+
 int
 main (int argc, char **argv)
 {
   int c;
   char *target = default_target;
   bfd_boolean seenflag = FALSE;
-
-#if defined (HAVE_SETLOCALE)
-#if defined (HAVE_LC_MESSAGES)
-  setlocale (LC_MESSAGES, "");
-#endif
-  setlocale (LC_CTYPE, "");
-#endif
 
   bindtextdomain (PACKAGE, LOCALEDIR);
   textdomain (PACKAGE);

@@ -1,5 +1,8 @@
 #!/bin/sh
-CFLAGS='-O2 -pipe -mno-cygwin'
+CFLAGS='-pipe'
+if [[ "`uname`" == "Cygwin" ]]; then
+    CFLAGS="$CFLAGS -mno-cygwin"
+fi
 
 cd bfd
 echo BFD
