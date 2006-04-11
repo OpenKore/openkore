@@ -357,7 +357,7 @@ sub createInterface {
 
 	# Hide console on Win32
 	if ($^O eq 'MSWin32' && $sys{wxHideConsole}) {
-		#eval 'use Win32::Console; Win32::Console->new(STD_OUTPUT_HANDLE)->Free();';
+		eval 'use Win32::Console; Win32::Console->new(STD_OUTPUT_HANDLE)->Free();';
 	}
 }
 
