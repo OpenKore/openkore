@@ -30,6 +30,14 @@ View::View()
 	}
 
 	thread = NULL;
+
+	if (findObjdump() == "") {
+		wxMessageBox("The internal disassembler program, "
+			     "objdump, is not found. Please redownload "
+			     "this program.",
+			     "Error", wxOK | wxICON_ERROR, this);
+		Close();
+	}
 }
 
 View::~View() {
@@ -82,12 +90,12 @@ View::onExtractClick(wxCommandEvent &event) {
 	wxProcess *process = new Process();
 	long pid;
 
-	command[0] = "objdump/objdump";
+	command[0] = const_cast<char *>(findObjdump().c_str());
 	command[1] = "objdump";
 	command[2] = "-d";
 	command[3] = "-M";
 	command[4] = "intel";
-	command[5] = const_cast<char *>((const char *) fileInput->GetValue());
+	command[5] = const_cast<char *>(fileInput->GetValue().c_str());
 	command[6] = NULL;
 
 	pid = wxExecute((char **) command, wxEXEC_ASYNC, process);

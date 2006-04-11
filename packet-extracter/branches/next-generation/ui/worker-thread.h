@@ -6,6 +6,9 @@
 #include "lineparser.h"
 #include "packet-length-analyzer.h"
 
+/**
+ * A thread which runs the analyzing process.
+ */
 class WorkerThread: public wxThread {
 public:
 	WorkerThread(wxProcess *process, long pid);
