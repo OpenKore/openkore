@@ -53,6 +53,11 @@ public:
 	 */
 	PacketLengthMap &getPacketLengths();
 
+	/**
+	 * @ensure 0 <= result <= 100
+	 */
+	double getProgress();
+
 private:
 	static const unsigned int MAX_BACKLOG_SIZE = 100;
 
@@ -61,11 +66,13 @@ private:
 	PacketLengthMap lengths;
 	State state;
 	wxString error;
+	double progress;
 
 	// Regular expressions
 	wxRegEx firstPacketSwitch;
 	wxRegEx packetLengthFunctionStart;
 	wxRegEx packetLengthFunctionEnd;
+	wxRegEx progressRegex;
 	wxRegEx movDword;
 	wxRegEx movToEbx;
 

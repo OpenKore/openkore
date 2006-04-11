@@ -2,6 +2,9 @@
 # extract-packets.pl by VCL
 # Modified a little bit by SnT2k and Rasqual
 # Modified to use with W32DSM by Karasu (code commented out; they conflict with the original code)
+#
+# This was the old packet extractor script, but now it isn't used anymore.
+# It's still kept around for archival purposes.
 
 use strict;
 use warnings;
