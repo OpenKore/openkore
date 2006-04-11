@@ -2,15 +2,24 @@
 #define _VIEW_H_
 
 #include "mainframe.h"
+#include "worker-thread.h"
 
 class View: public MainFrame {
+public:
+	View();
+	~View();
 protected:
 	void onBrowseClick(wxCommandEvent &event);
 	void onExtractClick(wxCommandEvent &event);
 	void onCancelClick(wxCommandEvent &event);
-public:
-	View();
-	~View();
+	void onTimer(wxTimerEvent &event);
+private:
+	WorkerThread *thread;
+	wxTimer timer;
+
+	void saveRecvpackets(PacketLengthAnalyzer &analyzer);
+
+	DECLARE_EVENT_TABLE();
 };
 
 #endif /* _VIEW_H_ */
