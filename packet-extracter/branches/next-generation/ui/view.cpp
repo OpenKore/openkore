@@ -16,12 +16,18 @@ View::View()
 
 	GetClientSize(&width, &height);
 	SetClientSize(350, height);
-	Connect(browseButton->GetId(), wxEVT_COMMAND_BUTTON_CLICKED,
+	Connect(browseButton->GetId(),  wxEVT_COMMAND_BUTTON_CLICKED,
 		wxCommandEventHandler(View::onBrowseClick));
 	Connect(extractButton->GetId(), wxEVT_COMMAND_BUTTON_CLICKED,
 		wxCommandEventHandler(View::onExtractClick));
-	Connect(cancelButton->GetId(), wxEVT_COMMAND_BUTTON_CLICKED,
+	Connect(cancelButton->GetId(),  wxEVT_COMMAND_BUTTON_CLICKED,
 		wxCommandEventHandler(View::onCancelClick));
+	Connect(aboutButton->GetId(),   wxEVT_COMMAND_BUTTON_CLICKED,
+		wxCommandEventHandler(View::onAboutClick));
+
+	if (wxApp::GetInstance()->argc >= 2) {
+		fileInput->SetValue(wxApp::GetInstance()->argv[1]);
+	}
 
 	thread = NULL;
 }
@@ -104,34 +110,53 @@ View::onCancelClick(wxCommandEvent &event) {
 }
 
 void
+View::onAboutClick(wxCommandEvent &event) {
+	wxMessageBox("OpenKore Packet Length Extractor\n"
+		     "Version 1.0.0\n"
+		     "http://www.openkore.com/\n\n"
+		     "Copyright (c) 2006 - written by VCL\n"
+		     "Licensed under the GNU General Public License.\n"
+		     "Parts of this program are copied from GNU binutils.",
+		     "Information", wxOK | wxICON_INFORMATION,
+		     this);
+}
+
+void
 View::onTimer(wxTimerEvent &event) {
 	if (thread->IsAlive()) {
+		PacketLengthAnalyzer &analyzer = thread->getAnalyzer();
+		double progress = analyzer.getProgress();
+		this->progress->SetValue(static_cast<int>(progress));
+
 	} else {
+		timer.Stop();
+		progress->SetValue(100);
+
 		thread->Wait();
 		PacketLengthAnalyzer &analyzer = thread->getAnalyzer();
 		int state = analyzer.getState();
 
 		if (state == PacketLengthAnalyzer::DONE) {
 			saveRecvpackets(analyzer);
-
 		} else if (state == PacketLengthAnalyzer::FAILED) {
 			wxMessageBox(wxString::Format(
 				"An error occured:\n%s",
 				(const char *) analyzer.getError()
-				), "Error", wxOK | wxICON_ERROR);
+				), "Error", wxOK | wxICON_ERROR,
+				this);
 		} else {
 			wxMessageBox(wxString::Format(
 				"Error: packet analyzer is in an inconsistent state. "
 				"Please report this bug.\n\n"
 				"Technical details:\n"
 				"state == %d",
-				state), "Error", wxOK | wxICON_ERROR);
+				state), "Error", wxOK | wxICON_ERROR,
+				this);
 		}
 
-		Close();
 		delete thread;
 		thread = NULL;
-		timer.Stop();
+		Close();
 	}
 }
 
@@ -139,7 +164,8 @@ void
 View::saveRecvpackets(PacketLengthAnalyzer &analyzer) {
 	wxMessageBox("The packets lengths have been successfully extracted.\n"
 		     "Please choose a file to save them to.",
-		     "Extraction successful", wxOK | wxICON_INFORMATION);
+		     "Extraction successful", wxOK | wxICON_INFORMATION,
+		     this);
 
 	wxString contents = createRecvpackets(analyzer.getPacketLengths());
 	wxFileDialog dialog(this, "Save recvpackets.txt", "",
@@ -149,7 +175,8 @@ View::saveRecvpackets(PacketLengthAnalyzer &analyzer) {
 		wxFile file(dialog.GetPath(), wxFile::write);
 		if (!file.IsOpened()) {
 			wxMessageBox("Unable to save to the specified file.",
-				     "Error", wxOK | wxICON_ERROR);
+				     "Error", wxOK | wxICON_ERROR,
+				     this);
 			return;
 		}
 

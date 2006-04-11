@@ -12,6 +12,7 @@ protected:
 	void onBrowseClick(wxCommandEvent &event);
 	void onExtractClick(wxCommandEvent &event);
 	void onCancelClick(wxCommandEvent &event);
+	void onAboutClick(wxCommandEvent &event);
 	void onTimer(wxTimerEvent &event);
 private:
 	WorkerThread *thread;

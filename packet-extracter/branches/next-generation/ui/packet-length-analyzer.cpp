@@ -1,16 +1,19 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "packet-length-analyzer.h"
 
 PacketLengthAnalyzer::PacketLengthAnalyzer()
 	: error(""),
-	  firstPacketSwitch ("mov    DWORD PTR \\[ebp-8\\],0x187", wxRE_NOSUB),
-	  packetLengthFunctionStart ("push   ebp", wxRE_NOSUB),
-	  packetLengthFunctionEnd   ("ret ", wxRE_NOSUB),
-	  movDword ("mov    DWORD PTR \\[(.*?)\\],(.*?)$"),
-	  movToEbx ("mov    ebx,(.*?)$")
+	  firstPacketSwitch("mov    DWORD PTR \\[ebp-8\\],0x187", wxRE_NOSUB),
+	  packetLengthFunctionStart("push   ebp", wxRE_NOSUB),
+	  packetLengthFunctionEnd  ("ret ", wxRE_NOSUB),
+	  progressRegex("^Progress: (.*)"),
+	  movDword("mov    DWORD PTR \\[(.*?)\\],(.*?)$"),
+	  movToEbx("mov    ebx,(.*?)$")
 {
 	state = FINDING_PACKET_LENGTH_FUNCTION;
 	ebx = 0;
+	progress = 0;
 }
 
 PacketLengthAnalyzer::~PacketLengthAnalyzer() {
@@ -43,6 +46,7 @@ PacketLengthAnalyzer::processLine(const char *line) {
 	case ANALYZING_PACKET_LENGTHS:
 		if (packetLengthFunctionEnd.Matches(line)) {
 			state = DONE;
+			progress = 100;
 		} else {
 			wxString l (line);
 			analyzeLine(l);
@@ -79,6 +83,11 @@ PacketLengthAnalyzer::getError() {
 PacketLengthMap&
 PacketLengthAnalyzer::getPacketLengths() {
 	return lengths;
+}
+
+double
+PacketLengthAnalyzer::getProgress() {
+	return progress;
 }
 
 void
@@ -122,9 +131,15 @@ hexToInt(const wxString &hex, unsigned int &result) {
 
 void
 PacketLengthAnalyzer::analyzeLine(const wxString &line) {
+	// This is a progress message:
+	// Progress: (double number)
+	if (progressRegex.Matches(line)) {
+		wxString progressString = progressRegex.GetMatch(line, 1);
+		progress = strtod(progressString, NULL);
+
 	// Looking for something like:
 	// mov   DWORD PTR [ebp-1],0x123
-	if (movDword.Matches(line)) {
+	} else if (movDword.Matches(line)) {
 		wxString to = movDword.GetMatch(line, 1);
 		wxString from = movDword.GetMatch(line, 2);
 		static wxString ebp = "ebp";

@@ -1606,7 +1606,7 @@ disassemble_bytes (struct disassemble_info * info,
       addr_offset += octets / opb;
 
       progress_counter++;
-      if (progress_counter == 5000)
+      if (progress_counter == 500)
 	{
 	  PROGRESS ((addr_offset - start_offset) / (double) (stop_offset - start_offset) * 100.0);
 	  progress_counter = 0;
