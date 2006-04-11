@@ -37,6 +37,14 @@ sub map_loaded {
 		ai_clientSuspend(0, 10);
 		main::initMapChangeVars();
 	} else {
+		message	T("Requesting guild information...\n"), "info";
+		sendGuildInfoRequest($net);
+
+		# Replies 01B6 (Guild Info) and 014C (Guild Ally/Enemy List)
+		sendGuildRequest($net, 0);
+
+		# Replies 0166 (Guild Member Titles List) and 0154 (Guild Members List)
+		sendGuildRequest($net, 1);
 		message(T("You are now in the game\n"), "connection");
 		$net->sendMapLoaded();
 		$timeout{'ai'}{'time'} = time;
