@@ -29,6 +29,13 @@ public:
 	void addData(const char *data, unsigned long size);
 
 	/**
+	 * Indicate that the end-of-file has been reached.
+	 * This object may not be used anymore after having
+	 * called this function.
+	 */
+	void setEOF();
+
+	/**
 	 * Thrown when data cannot be added because the buffer
 	 * will overflow. When thrown, this means that a line is too long.
 	 */

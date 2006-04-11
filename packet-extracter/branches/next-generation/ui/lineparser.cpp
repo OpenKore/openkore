@@ -18,10 +18,15 @@ LineParser::addData(const char *data, unsigned long size) {
 	processBuffer();
 }
 
+void
+LineParser::setEOF() {
+	handler->processEOF();
+}
+
 int
 LineParser::findNewline() {
 	int index = -1;
-	int i = 0;
+	unsigned int i = 0;
 
 	while (i < bufferSize && index == -1) {
 		if (buffer[i] == '\n') {
@@ -36,7 +41,7 @@ LineParser::findNewline() {
 void
 LineParser::processBuffer() {
 	// Size of the line, excluding '\n'
-	unsigned int lineSize;
+	int lineSize;
 
 	lineSize = findNewline();
 	while (lineSize != -1) {

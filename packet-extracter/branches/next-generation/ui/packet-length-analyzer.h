@@ -1,7 +1,8 @@
 #ifndef _PACKET_LENGTH_ANALYZER_H_
 #define _PACKET_LENGTH_ANALYZER_H_
 
-#include <wx/wx.h>
+#include <wx/string.h>
+#include <wx/arrstr.h>
 #include <wx/regex.h>
 #include <wx/hashmap.h>
 #include "linehandler.h"
@@ -21,11 +22,29 @@ public:
 		FAILED
 	};
 
+	/**
+	 * Create a new PacketLengthAnalyzer object.
+	 *
+	 * @ensure getState() == FINDING_PACKET_LENGTH_FUNCTION
+	 */
 	PacketLengthAnalyzer();
+
 	~PacketLengthAnalyzer();
 	virtual void processLine(const char *line);
+	virtual void processEOF();
 
+	/**
+	 * Return the current state.
+	 */
 	State getState();
+
+	/**
+	 * Return an error message which explained why
+	 * the analyzation failed.
+	 *
+	 * @require getState() == FAILED
+	 */
+	wxString &getError();
 
 	/**
 	 * Return the extracted packet lengths.
@@ -41,6 +60,7 @@ private:
 	wxArrayString backlog;
 	PacketLengthMap lengths;
 	State state;
+	wxString error;
 
 	// Regular expressions
 	wxRegEx firstPacketSwitch;
@@ -85,6 +105,15 @@ private:
 	 * @ensure  state == ANALYZING_PACKET_LENGTHS || state == DONE || state == FAILED
 	 */
 	void analyzeLine(const wxString &line);
+
+	/**
+	 * Indicate that the analyzation has failed.
+	 *
+	 * @param error An error message explaining why.
+	 * @ensure getError() == error
+	 */
+	void setFailed(wxString &error);
+	void setFailed(const char *error);
 };
 
 #endif /* _PACKET_LENGTH_ANALYZER_H_ */

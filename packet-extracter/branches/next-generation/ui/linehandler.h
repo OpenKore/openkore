@@ -1,8 +1,6 @@
 #ifndef _LINEHANDLER_H_
 #define _LINEHANDLER_H_
 
-#include <wx/wx.h>
-
 /**
  * An interface which processes lines parsed by LineParser.
  */
@@ -18,6 +16,11 @@ public:
 	 * @require line != NULL
 	 */
 	virtual void processLine(const char *line) = 0;
+
+	/**
+	 * Process an end-of-file event.
+	 */
+	virtual void processEOF() = 0;
 };
 
 #endif /* _LINEHANDLER_H_ */

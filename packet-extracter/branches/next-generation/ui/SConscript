@@ -1,0 +1,16 @@
+Import('*')
+
+sources = Split('''
+	linehandler.cpp
+	lineparser.cpp
+	main.cpp
+	mainframe.cpp
+	packet-length-analyzer.cpp
+	utils.cpp
+	view.cpp
+	worker-thread.cpp
+''')
+
+e = env.Copy()
+e.ParseConfig('wx-config --cflags --libs')
+e.Program('openkore-packet-length-extractor', sources)

@@ -2,7 +2,8 @@
 #include "packet-length-analyzer.h"
 
 PacketLengthAnalyzer::PacketLengthAnalyzer()
-	: firstPacketSwitch ("mov    DWORD PTR \\[ebp-8\\],0x187", wxRE_NOSUB),
+	: error(""),
+	  firstPacketSwitch ("mov    DWORD PTR \\[ebp-8\\],0x187", wxRE_NOSUB),
 	  packetLengthFunctionStart ("push   ebp", wxRE_NOSUB),
 	  packetLengthFunctionEnd   ("ret ", wxRE_NOSUB),
 	  movDword ("mov    DWORD PTR \\[(.*?)\\],(.*?)$"),
@@ -53,9 +54,26 @@ PacketLengthAnalyzer::processLine(const char *line) {
 	};
 }
 
+void
+PacketLengthAnalyzer::processEOF() {
+	switch (state) {
+	case FINDING_PACKET_LENGTH_FUNCTION:
+	case ANALYZING_PACKET_LENGTHS:
+		setFailed("End of file reached unexpectedly.");
+		break;
+	default:
+		break;
+	};
+}
+
 PacketLengthAnalyzer::State
 PacketLengthAnalyzer::getState() {
 	return state;
+}
+
+wxString &
+PacketLengthAnalyzer::getError() {
+	return error;
 }
 
 PacketLengthMap&
@@ -85,7 +103,7 @@ PacketLengthAnalyzer::findPacketLengthFunction() {
 	}
 
 	if (result == -1) {
-		state = FAILED;
+		setFailed("Cannot find packet length function.");
 	}
 
 	return result;
@@ -118,7 +136,9 @@ PacketLengthAnalyzer::analyzeLine(const wxString &line) {
 			unsigned int value;
 
 			if (!hexToInt(from, value)) {
-				state = FAILED;
+				setFailed(wxString::Format(
+					"Invalid hexadecimal number encountered at line:\n%s",
+					(const char *) line));
 			} else {
 				packetSwitch = wxString::Format("%04X", value);
 			}
@@ -131,14 +151,18 @@ PacketLengthAnalyzer::analyzeLine(const wxString &line) {
 				len = ebx;
 			} else if (from.StartsWith(hexPrefix)) {
 				if (!hexToInt(from, len)) {
-					state = FAILED;
+					setFailed(wxString::Format(
+						"Invalid hexadecimal number encountered "
+						"at line:\n%s",
+						(const char *) line));
 				}
 			} else {
 				len = 0;
 			}
 
 			if (packetSwitch.Len() == 0) {
-				state = FAILED;
+				setFailed("Packet length instruction encountered "
+					  "but no packet switch instruction encountered.");
 			} else {
 				lengths[packetSwitch] = len;
 			}
@@ -152,7 +176,20 @@ PacketLengthAnalyzer::analyzeLine(const wxString &line) {
 
 		value = movToEbx.GetMatch(line, 1);
 		if (!hexToInt(value, ebx)) {
-			state = FAILED;
+			setFailed(wxString::Format(
+				"Invalid hexadecimal number encountered at line:\n%s",
+				(const char *) line));
 		}
 	}
+}
+
+void
+PacketLengthAnalyzer::setFailed(wxString &error) {
+	this->error = error;
+	state = FAILED;
+}
+
+void
+PacketLengthAnalyzer::setFailed(const char *error) {
+	setFailed(*(new wxString(error)));
 }
