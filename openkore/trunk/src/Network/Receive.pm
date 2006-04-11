@@ -3469,6 +3469,14 @@ sub map_change {
 	if ($net->version == 1) {
 		ai_clientSuspend(0, 10);
 	} else {
+		message	T("Requesting guild information...\n"), "info";
+		sendGuildInfoRequest($net);
+
+		# Replies 01B6 (Guild Info) and 014C (Guild Ally/Enemy List)
+		sendGuildRequest($net, 0);
+
+		# Replies 0166 (Guild Member Titles List) and 0154 (Guild Members List)
+		sendGuildRequest($net, 1);
 		sendMapLoaded($net);
 		$timeout{'ai'}{'time'} = time;
 	}
@@ -3508,6 +3516,7 @@ sub map_changed {
 
 	# Reset item and skill times. The effect of items (like aspd potions)
 	# and skills (like Twohand Quicken) disappears when we change map server.
+	# NOTE: with the newer servers, this isn't true anymore
 	my $i = 0;
 	while (exists $config{"useSelf_item_$i"}) {
 		if (!$config{"useSelf_item_$i"}) {
