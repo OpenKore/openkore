@@ -4,12 +4,11 @@
 #include "utils.h"
 
 PacketLengthAnalyzer::PacketLengthAnalyzer()
-	: firstPacketSwitch(wxS("mov    DWORD PTR \\[ebp-8\\],0x187"), wxRE_NOSUB),
-	  packetLengthFunctionStart(wxS("push   ebp"), wxRE_NOSUB),
+	: packetLengthFunctionStart(wxS("push   ebp"), wxRE_NOSUB),
 	  packetLengthFunctionEnd  (wxS("ret "), wxRE_NOSUB),
 	  progressRegex(wxS("^Progress: (.*)")),
-	  movDword(wxS("mov    DWORD PTR \\[(.*?)\\],(.*?)$")),
-	  movToEbx(wxS("mov    ebx,(.*?)$"))
+	  movDword(wxS("mov    DWORD PTR \\[(.*)\\],(.*)")),
+	  movToEbx(wxS("mov    ebx,(.*)"))
 {
 	state = FINDING_PACKET_LENGTH_FUNCTION;
 	ebx = 0;
@@ -21,10 +20,12 @@ PacketLengthAnalyzer::~PacketLengthAnalyzer() {
 
 void
 PacketLengthAnalyzer::processLine(const wxString &line) {
+	static wxString firstPacketSwitch(wxT("mov    DWORD PTR [ebp-8],0x187"));
+
 	switch (state) {
 	case FINDING_PACKET_LENGTH_FUNCTION:
 		addToBacklog(line);
-		if (firstPacketSwitch.Matches(line)) {
+		if (line.Contains(firstPacketSwitch)) {
 			// Find the start of the packet length function in the backlog,
 			// and analyze everything in the backlog starting from that point,
 			// plus the current line.

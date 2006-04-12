@@ -69,7 +69,6 @@ private:
 	double progress;
 
 	// Regular expressions
-	wxRegEx firstPacketSwitch;
 	wxRegEx packetLengthFunctionStart;
 	wxRegEx packetLengthFunctionEnd;
 	wxRegEx progressRegex;

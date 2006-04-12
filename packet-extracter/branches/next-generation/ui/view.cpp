@@ -59,17 +59,6 @@ View::onBrowseClick(wxCommandEvent &event)
 	}
 }
 
-/*
- * A wxProcess which does nothing in OnTerminate.
- * This avoids some crashes.
- */
-class Process: public wxProcess {
-public:
-	Process() : wxProcess(wxPROCESS_REDIRECT) {}
-protected:
-	virtual void OnTerminate(int pid, int status) {}
-};
-
 void
 View::onExtractClick(wxCommandEvent &event) {
 	if (fileInput->GetValue().Len() == 0) {
@@ -86,17 +75,14 @@ View::onExtractClick(wxCommandEvent &event) {
 	browseButton->Enable(false);
 	extractButton->Enable(false);
 
-	wxChar *command[7];
-	wxProcess *process = new Process();
+	wxString command;
+	wxProcess *process = new wxProcess(wxPROCESS_REDIRECT);
 	long pid;
 
-	command[0] = const_cast<wxChar *>(findObjdump().c_str());
-	command[1] = wxT("objdump");
-	command[2] = wxT("-d");
-	command[3] = wxT("-M");
-	command[4] = wxT("intel");
-	command[5] = const_cast<wxChar *>(fileInput->GetValue().c_str());
-	command[6] = NULL;
+	command = wxString::Format(wxT("\"%s\" -d -M intel \"%s\""),
+		findObjdump().c_str(),
+		fileInput->GetValue().c_str());
+	process->Detach();
 
 	pid = wxExecute(command, wxEXEC_ASYNC, process);
 	if (pid == 0) {
@@ -175,12 +161,11 @@ View::saveRecvpackets(PacketLengthAnalyzer &analyzer) {
 		     wxS("Extraction successful"),
 		     wxOK | wxICON_INFORMATION, this);
 
-	wxString contents = createRecvpackets(analyzer.getPacketLengths());
 	wxFileDialog dialog(this, wxS("Save recvpackets.txt"), wxS(""),
 			    wxS("recvpackets.txt"), wxS("Text files (*.txt)|*.txt"),
 			    wxSAVE | wxOVERWRITE_PROMPT);
 	if (dialog.ShowModal() == wxID_OK) {
-		wxFile file(dialog.GetPath(), wxFile::write);
+		wxFFile file(dialog.GetPath(), wxT("w"));
 		if (!file.IsOpened()) {
 			wxMessageBox(wxS("Unable to save to the specified file."),
 				     wxS("Error"), wxOK | wxICON_ERROR,
@@ -188,7 +173,7 @@ View::saveRecvpackets(PacketLengthAnalyzer &analyzer) {
 			return;
 		}
 
-		file.Write(contents);
+		createRecvpackets(file, analyzer.getPacketLengths());
 		file.Close();
 	}
 }
