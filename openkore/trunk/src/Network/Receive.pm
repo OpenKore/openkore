@@ -512,14 +512,15 @@ sub actor_action {
 
 		$target->{sitting} = 0 unless $args->{type} == 4 || $args->{type} == 9 || $totalDamage == 0;
 
-		my $msg = "$source $verb $target - Dmg: $dmgdisplay (delay ".($args->{src_speed}/10).")";
+#		my $msg = "$source $verb $target - Dmg: $dmgdisplay (delay ".($args->{src_speed}/10).")";
+		my $msg = attack_string($source, $target, $dmgdisplay, ($args->{src_speed}/10));
 
 		Plugins::callHook('packet_attack', {sourceID => $args->{sourceID}, targetID => $args->{targetID}, msg => \$msg, dmg => $totalDamage, type => $args->{type}});
 
 		my $status = sprintf("[%3d/%3d]", percent_hp($char), percent_sp($char));
 
 		if ($args->{sourceID} eq $accountID) {
-			message("$status $msg\n", $totalDamage > 0 ? "attackMon" : "attackMonMiss");
+			message("$status $msg", $totalDamage > 0 ? "attackMon" : "attackMonMiss");
 			if ($startedattack) {
 				$monstarttime = time();
 				$monkilltime = time();
@@ -538,13 +539,13 @@ sub actor_action {
 					delete $monsters{$args->{sourceID}};
 				}
 			}
-			message("$status $msg\n", $args->{damage} > 0 ? "attacked" : "attackedMiss");
+			message("$status $msg", $args->{damage} > 0 ? "attacked" : "attackedMiss");
 
 			if ($args->{damage} > 0) {
 				$damageTaken{$source->{name}}{attack} += $args->{damage};
 			}
 		} else {
-			debug("$msg\n", 'parseMsg_damage');
+			debug("$msg", 'parseMsg_damage');
 		}
 	}
 }
@@ -4631,7 +4632,10 @@ sub skill_cast {
 	countCastOn($sourceID, $targetID, $skillID, $x, $y);
 
 	my $domain = ($sourceID eq $accountID) ? "selfSkill" : "skill";
-	message "$source $verb ".$skill->name." on $targetString (time ${wait}ms)\n", $domain, 1;
+#	message "$source $verb ".$skill->name." on $targetString (time ${wait}ms)\n", $domain, 1;
+	my $disp = skillCast_string($source, $target, $skill->name, $wait);
+	message $disp, $domain, 1;	
+	
 	Plugins::callHook('is_casting', {
 		sourceID => $sourceID,
 		targetID => $targetID,
@@ -4727,16 +4731,18 @@ sub skill_use {
 	countCastOn($args->{sourceID}, $args->{targetID}, $args->{skillID});
 
 	# Resolve source and target names
-	$args->{damage} ||= "Miss!";
-	my $verb = $source->verb('use', 'uses');
+#	$args->{damage} ||= "Miss!";
+#	my $verb = $source->verb('use', 'uses');
 	my $skill = new Skills(id => $args->{skillID});
 	$args->{skill} = $skill;
-	my $disp = "$source $verb ".$skill->name;
-	$disp .= ' (lvl '.$args->{level}.')' unless $args->{level} == 65535;
-	$disp .= " on $target";
-	$disp .= ' - Dmg: '.$args->{damage} unless $args->{damage} == -30000;
-	$disp .= " (delay ".($args->{src_speed}/10).")";
-	$disp .= "\n";
+#	my $disp = "$source $verb ".$skill->name;
+#	$disp .= ' (lvl '.$args->{level}.')' unless $args->{level} == 65535;
+#	$disp .= " on $target";
+#	$disp .= ' - Dmg: '.$args->{damage} unless $args->{damage} == -30000;
+#	$disp .= " (delay ".($args->{src_speed}/10).")";
+#	$disp .= "\n";
+	my $disp = skillUse_string($source, $target, $skill->name, $args->{damage}, 
+		$args->{level}, ($args->{src_speed}/10));
 
 	if ($args->{damage} != -30000 &&
 	    $args->{sourceID} eq $accountID &&
@@ -4802,7 +4808,7 @@ sub skill_use_failed {
 		9 => '90% Overweight',
 		10 => 'Requirement'
 		);
-	warning "Skill ".Skills->new(id => $skillID)->name." failed ($failtype{$type})\n", "skill";
+	warning TF("Skill %s failed (%s)\n", Skills->new(id => $skillID)->name, $failtype{$type}), "skill";
 	Plugins::callHook('packet_skillfail', {'skillID' => $skillID, 'failType' => $failtype{$type}});
 }
 
@@ -4820,10 +4826,13 @@ sub skill_use_location {
 	setSkillUseTimer($skillID) if $sourceID eq $accountID;
 
 	# Resolve source name
-	my ($source, $uses) = getActorNames($sourceID, 0, 'use', 'uses');
-	my $disp = "$source $uses ".Skills->new(id => $skillID)->name;
-	$disp .= " (lvl $lv)" unless $lv == 65535;
-	$disp .= " on location ($x, $y)\n";
+#	my ($source, $uses) = getActorNames($sourceID, 0, 'use', 'uses');
+#	my $disp = "$source $uses ".Skills->new(id => $skillID)->name;
+#	$disp .= " (lvl $lv)" unless $lv == 65535;
+#	$disp .= " on location ($x, $y)\n";
+	my $source = Actor::get($sourceID);
+	my $skillName = Skills->new(id => $skillID)->name;
+	my $disp = skillUseLocation_string($source, $skillName, $args);
 
 	# Print skill use message
 	my $domain = ($sourceID eq $accountID) ? "selfSkill" : "skill";
@@ -4880,8 +4889,10 @@ sub skill_used_no_damage {
 
 	my $domain = ($args->{sourceID} eq $accountID) ? "selfSkill" : "skill";
 	my $skill = $args->{skill} = new Skills(id => $args->{skillID});
-	message "$source $verb ".$skill->name()." on ".$target->nameString($source)."$extra\n", $domain;
-
+#	message "$source $verb ".$skill->name()." on ".$target->nameString($source)."$extra\n", $domain;
+	my $disp = skillUseNoDamage_string($source, $target, $skill->id, $skill->name, $args->{amount});		
+	message $disp, $domain;
+	
 	# Set teleport time
 	if ($args->{sourceID} eq $accountID && $skill->handle eq 'AL_TELEPORT') {
 		$timeout{ai_teleport_delay}{time} = time;

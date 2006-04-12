@@ -35,6 +35,10 @@ use Network::Send;
 use AI;
 use Actor;
 use Actor::You;
+use Actor::Player;
+use Actor::Monster;
+use Actor::Party;
+use Actor::Unknown;
 use Time::HiRes qw(time usleep);
 use Translation;
 
@@ -142,6 +146,13 @@ our @EXPORT = (
 	whenStatusActiveMon
 	whenStatusActivePL
 	writeStorageLog/,
+	
+	# Actor's Actions Text
+	qw/attack_string
+	skillCast_string
+	skillUse_string
+	skillUseLocation_string
+	skillUseNoDamage_string/,
 
 	# AI Math
 	qw/lineIntersection
@@ -2669,6 +2680,366 @@ sub writeStorageLog {
 
 	} elsif ($show_error_on_fail) {
 		error TF("Unable to write to %s\n", $Settings::storage_file);
+	}
+}
+
+#######################################
+#######################################
+###CATEGORY: Actor's Actions Text
+#######################################
+#######################################
+
+sub attack_string {
+	my ($source, $target, $damage, $delay) = @_;
+	
+	# You
+	if ($source->{type} eq 'You') {
+		if ($target->{type} eq 'Player') {
+			return TF("You attack player %s (%d) - Dmg: %s (delay %s)\n", $target->{name}, $target->{binID}, 
+				$damage, $delay);
+		} elsif ($target->{type} eq 'Monster') {
+			return TF("You attack monster %s (%d) - Dmg: %s (delay %s)\n", $target->{name}, $target->{binID}, 
+				$damage, $delay);
+		} elsif ($target->{type} eq 'Unknown') {
+			return TF("You attack Unknown #%s (%d) - Dmg: %s (delay %s)\n", $target->{nameID}, $target->{binID}, 
+				$damage, $delay);
+		}	
+	# Player
+	} elsif ($source->{type} eq 'Player') {
+		if ($target->{type} eq 'You') {
+			return TF("Player %s (%d) attacks you - Dmg: %s (delay %s)\n", $source->{name}, $source->{binID}, 
+				$damage, $delay);
+		} elsif ($target->{type} eq 'Player') {
+			return TF("Player %s (%d) attacks player %s (%d) - Dmg: %s (delay %s)\n", $source->{name}, 
+				$source->{binID},  $target->{name}, $target->{binID}, $damage, $delay);
+		} elsif ($target->{type} eq 'Monster') {
+			return TF("Player %s (%d) attacks monster %s (%d) - Dmg: %s (delay %s)\n", $source->{name}, 
+				$source->{binID}, $target->{name}, $target->{binID}, $damage, $delay);				
+		} elsif ($target->{type} eq 'Unknown') {
+			return TF("Player %s (%d) attacks Unknown #%s (%d) - Dmg: %s (delay %s)\n", $source->{name}, 
+				$source->{binID}, $target->{nameID}, $target->{binID}, $damage, $delay);
+		}		
+	# Monster
+	} elsif ($source->{type} eq 'Monster') {
+		if ($target->{type} eq 'You') {
+			return TF("Monster %s (%d) attacks you - Dmg: %s (delay %s)\n", $source->{name}, $source->{binID}, 
+				$damage, $delay);			
+		} elsif ($target->{type} eq 'Player') {
+			return TF("Monster %s (%d) attacks player %s (%d) - Dmg: %s (delay %s)\n", $source->{name}, 
+				$source->{binID}, $target->{name}, $target->{binID}, $damage, $delay);
+		} elsif ($target->{type} eq 'Monster') {
+			return TF("Monster %s (%d) attacks monster %s (%d) - Dmg: %s (delay %s)\n", $source->{name}, 
+				$source->{binID}, $target->{name}, $target->{binID}, $damage, $delay);				
+		} elsif ($target->{type} eq 'Unknown') {
+			return TF("Monster %s (%d) attacks Unknown #%s (%d) - Dmg: %s (delay %s)\n", $source->{name}, 
+				$source->{binID}, $target->{nameID}, $target->{binID}, $damage, $delay);
+		}
+	# Unknown		
+	} elsif ($source->{type} eq 'Unknown') {
+		if ($target->{type} eq 'You') {
+			return TF("Unknown #%s (%d) attacks you - Dmg: %s (delay %s)\n", $source->{nameID}, $source->{binID}, 
+				$damage, $delay);			
+		} elsif ($target->{type} eq 'Player') {
+			return TF("Unknown #%s (%d) attacks player %s (%d) - Dmg: %s (delay %s)\n", $source->{nameID}, 
+				$source->{binID}, $target->{name}, $target->{binID}, $damage, $delay);
+		} elsif ($target->{type} eq 'Monster') {
+			return TF("Unknown #%s (%d) attacks monster %s (%d) - Dmg: %s (delay %s)\n", $source->{nameID}, 
+				$source->{binID}, $target->{name}, $target->{binID}, $damage, $delay);				
+		} elsif ($target->{type} eq 'Unknown') {
+			return TF("Unknown #%s (%d) attacks Unknown #%s (%d) - Dmg: %s (delay %s)\n", $source->{nameID}, 
+				$source->{binID}, $target->{nameID}, $target->{binID}, $damage, $delay);
+		}
+	}
+}
+
+sub skillCast_string {
+	my ($source, $target, $skillName, $delay) = @_;
+	
+	# You
+	if ($source->{type} eq 'You') {
+		if ($target->{type} eq 'You') {
+			return TF("You are casting %s on yourself (time %sms)\n", $skillName, $delay);
+		} elsif ($target->{type} eq 'Player') {
+			return TF("You are casting %s on player %s (%d) (time %sms)\n", $skillName, 
+				$target->{name}, $target->{binID}, $delay);
+		} elsif ($target->{type} eq 'Monster') {
+			return TF("You are casting %s on monster %s (%d) (time %sms)\n", $skillName, 
+				$target->{name}, $target->{binID}, $delay);
+		} elsif ($target->{type} eq 'Unknown') {
+			return TF("You are casting %s on Unknown #%s (%d) (time %sms)\n", $skillName, 
+				$target->{nameID}, $target->{binID}, $delay);			
+		}	
+	# Player
+	} elsif ($source->{type} eq 'Player') {
+		if ($target->{type} eq 'You') {
+			return TF("Player %s (%d) is casting %s on you (time %sms)\n", $source->{name}, $source->{binID}, 
+				$skillName, $delay);
+		} elsif ($target->{type} eq 'Player') {
+			# consider gender
+			if ($source ne $target) {
+				return TF("Player %s (%d) is casting %s on player %s (%d) (time %sms)\n", $source->{name}, 
+					$source->{binID}, $skillName, $target->{name}, $target->{binID}, $delay);
+			} elsif ($source->{sex}) {
+				return TF("Player %s (%d) is casting %s on himself (time %sms)\n", $source->{name}, 
+					$source->{binID}, $skillName, $delay);				
+			} else {
+				return TF("Player %s (%d) is casting %s on herself (time %sms)\n", $source->{name}, 
+					$source->{binID}, $skillName, $delay);								
+			}
+		} elsif ($target->{type} eq 'Monster') {
+			return TF("Player %s (%d) is casting %s on monster %s (%d) (time %sms)\n", $source->{name}, 
+				$source->{binID}, $skillName, $target->{name}, $target->{binID}, $delay);				
+		} elsif ($target->{type} eq 'Unknown') {
+			return TF("Player %s (%d) is casting %s on Unknown #%s (%d) (time %sms)\n", $source->{name}, 
+				$source->{binID}, $skillName, $target->{nameID}, $target->{binID}, $delay);
+		}		
+	# Monster
+	} elsif ($source->{type} eq 'Monster') {
+		if ($target->{type} eq 'You') {
+			return TF("Monster %s (%d) is casting %s on you (time %sms)\n", $source->{name}, 
+				$source->{binID}, $skillName, $delay);			
+		} elsif ($target->{type} eq 'Player') {
+			return TF("Monster %s (%d) is casting %s on player %s (%d) (time %sms)\n", $source->{name}, 
+				$source->{binID}, $skillName, $target->{name}, $target->{binID}, $delay);
+		} elsif ($target->{type} eq 'Monster') {
+			if ($source ne $target) {
+				return TF("Monster %s (%d) is casting %s on monster %s (%d) (time %sms)\n", $source->{name}, 
+					$source->{binID}, $skillName, $target->{name}, $target->{binID}, $delay);				
+			} else {
+				return TF("Monster %s (%d) is casting %s on itself (time %sms)\n", $source->{name}, 
+					$source->{binID}, $skillName, $delay);
+			}				
+		} elsif ($target->{type} eq 'Unknown') {
+			return TF("Monster %s (%d) is casting %s on Unknown #%s (%d) (time %sms)\n", $source->{name}, 
+				$source->{binID}, $skillName, $target->{nameID}, $target->{binID}, $delay);
+		}
+	# Unknown		
+	} elsif ($source->{type} eq 'Unknown') {
+		if ($target->{type} eq 'You') {
+			return TF("Unknown #%s (%d) is casting %s on you (time %sms)\n", $source->{nameID}, 
+				$source->{binID}, $skillName, $delay);			
+		} elsif ($target->{type} eq 'Player') {
+			return TF("Unknown #%s (%d) is casting %s on player %s (%d) (time %sms)\n", $source->{nameID}, 
+				$source->{binID}, $skillName, $target->{name}, $target->{binID}, $delay);
+		} elsif ($target->{type} eq 'Monster') {
+			return TF("Unknown #%s (%d) is casting %s on monster %s (%d) (time %sms)\n", $source->{nameID}, 
+				$source->{binID}, $skillName, $target->{name}, $target->{binID}, $delay);
+		} elsif ($target->{type} eq 'Unknown') {
+			if ($source ne $target) {
+				return TF("Unknown #%s (%d) is casting %s on Unknown #%s (%d) (time %sms)\n", $source->{nameID}, 
+					$source->{binID}, $skillName, $target->{nameID}, $target->{binID}, $delay);
+			} else {
+				return TF("Unknown #%s (%d) is casting %s on himself (time %sms)\n", $source->{nameID}, 
+					$source->{binID}, $skillName, $delay);
+			}				
+		}
+	}	
+}
+
+sub skillUse_string {
+	my ($source, $target, $skillName, $damage, $level, $delay) = @_;
+	
+	$damage ||= "Miss!";
+	if ($damage != -30000) {
+		# Translation Comment: Ammount of Damage on Skill
+		$damage = "- " . TF("Dmg: %s", $damage) . " ";
+	} else {
+		$damage = '';
+	}
+	
+	# Translation Comment: Skill name + level
+	$skillName = ' ' . TF("%s (lvl %s)", $skillName, $level) unless $level == 65535;
+	
+	# You
+	if ($source->{type} eq 'You') {
+		if ($target->{type} eq 'You') {
+			return TF("You use %s on yourself %s(delay %s)\n", $skillName, $damage, $delay);
+		} elsif ($target->{type} eq 'Player') {
+			return TF("You use %s on player %s (%d) %s(delay %s)\n", $skillName, 
+				$target->{name}, $target->{binID}, $damage, $delay);
+		} elsif ($target->{type} eq 'Monster') {
+			return TF("You use %s on monster %s (%d) %s(delay %s)\n", $skillName, 
+				$target->{name}, $target->{binID}, $damage, $delay);
+		} elsif ($target->{type} eq 'Unknown') {
+			return TF("You use %s on Unknown #%s (%d) %s(delay %s)\n", $skillName, 
+				$target->{nameID}, $target->{binID}, $damage, $delay);			
+		}	
+	# Player
+	} elsif ($source->{type} eq 'Player') {
+		if ($target->{type} eq 'You') {
+			return TF("Player %s (%d) uses %s on you %s(delay %s)\n", $source->{name}, $source->{binID}, 
+				$skillName, $damage, $delay);
+		} elsif ($target->{type} eq 'Player') {
+			# consider gender
+			if ($source ne $target) {
+				return TF("Player %s (%d) uses %s on player %s (%d) %s(delay %s)\n", $source->{name}, 
+					$source->{binID}, $skillName, $target->{name}, $target->{binID}, $damage, $delay);
+			} elsif ($source->{sex}) {
+				return TF("Player %s (%d) uses %s on himself %s(delay %s)\n", $source->{name}, 
+					$source->{binID}, $skillName, $damage, $delay);
+			} else {
+				return TF("Player %s (%d) uses %s on herself %s(delay %s)\n", $source->{name}, 
+					$source->{binID}, $skillName, $damage, $delay);
+			}
+		} elsif ($target->{type} eq 'Monster') {
+			return TF("Player %s (%d) uses %s on monster %s (%d) %s(delay %s)\n", $source->{name}, 
+				$source->{binID}, $skillName, $target->{name}, $target->{binID}, $damage, $delay);				
+		} elsif ($target->{type} eq 'Unknown') {
+			return TF("Player %s (%d) uses %s on Unknown #%s (%d) %s(delay %s)\n", $source->{name}, 
+				$source->{binID}, $skillName, $target->{nameID}, $target->{binID}, $damage, $delay);
+		}
+	# Monster
+	} elsif ($source->{type} eq 'Monster') {
+		if ($target->{type} eq 'You') {
+			return TF("Monster %s (%d) uses %s on you %s(delay %s)\n", $source->{name}, 
+				$source->{binID}, $skillName, $damage, $delay);
+		} elsif ($target->{type} eq 'Player') {
+			return TF("Monster %s (%d) uses %s on player %s (%d) %s(delay %s)\n", $source->{name}, 
+				$source->{binID}, $skillName, $target->{name}, $target->{binID}, $damage, $delay);
+		} elsif ($target->{type} eq 'Monster') {
+			if ($source ne $target) {
+				return TF("Monster %s (%d) uses %s on monster %s (%d) %s(delay %s)\n", $source->{name}, 
+					$source->{binID}, $skillName, $target->{name}, $target->{binID}, $damage, $delay);
+			} else {
+				return TF("Monster %s (%d) uses %s on itself %s(delay %s)\n", $source->{name}, 
+					$source->{binID}, $skillName, $damage, $delay);
+			}				
+		} elsif ($target->{type} eq 'Unknown') {
+			return TF("Monster %s (%d) uses %s on Unknown #%s (%d) %s(delay %s)\n", $source->{name}, 
+				$source->{binID}, $skillName, $target->{nameID}, $target->{binID}, $damage, $delay);
+		}
+	# Unknown		
+	} elsif ($source->{type} eq 'Unknown') {
+		if ($target->{type} eq 'You') {
+			return TF("Unknown #%s (%d) uses %s on you %s(delay %s)\n", $source->{nameID}, 
+				$source->{binID}, $skillName, $damage, $delay);
+		} elsif ($target->{type} eq 'Player') {
+			return TF("Unknown #%s (%d) uses %s on player %s (%d) %s(delay %s)\n", $source->{nameID}, 
+				$source->{binID}, $skillName, $target->{name}, $target->{binID}, $damage, $delay);
+		} elsif ($target->{type} eq 'Monster') {
+			return TF("Unknown #%s (%d) uses %s on monster %s (%d) %s(delay %s)\n", $source->{nameID}, 
+				$source->{binID}, $skillName, $target->{name}, $target->{binID}, $damage, $delay);
+		} elsif ($target->{type} eq 'Unknown') {
+			if ($source ne $target) {
+				return TF("Unknown #%s (%d) uses %s on Unknown #%s (%d) %s(delay %s)\n", $source->{nameID}, 
+					$source->{binID}, $skillName, $target->{nameID}, $target->{binID}, $damage, $delay);
+			} else {
+				return TF("Unknown #%s (%d) uses %s on himself %s(delay %s)\n", $source->{nameID}, 
+					$source->{binID}, $skillName, $damage, $delay);
+			}
+		}
+	}
+}
+
+sub skillUseLocation_string {
+	my ($source, $skillName, $args) = @_;
+	
+	# Translation Comment: Skill name + level
+	$skillName = ' ' . TF("%s (lvl %s)", $skillName, $args->{lv}) unless $args->{lv} == 65535;
+	
+	if ($source->{type} eq 'You') {
+		return TF("You use %s on location (%d, %d)\n", $skillName, $args->{x}, $args->{y});
+	} elsif ($source->{type} eq 'Player') {
+		return TF("Player %s (%d) uses %s on location (%d, %d)\n", $source->{name}, 
+			$source->{binID}, $skillName, $args->{x}, $args->{y});
+	} elsif ($source->{type} eq 'Monster') {
+		return TF("Monster %s (%d) uses %s on location (%d, %d)\n", $source->{name}, 
+			$source->{binID}, $skillName, $args->{x}, $args->{y});
+	} elsif ($source->{type} eq 'Unknown') {
+		return TF("Unknown #%s (%d) uses %s on location (%d, %d)\n", $source->{nameID}, 
+			$source->{binID}, $skillName, $args->{x}, $args->{y});
+	}
+}
+
+sub skillUseNoDamage_string {
+	my ($source, $target, $skillID, $skillName, $amount) = @_;
+	
+	if ($skillID == 28) {
+		# Translation Comment: used Healing skill
+		$amount = ': ' . TF("%s hp gained", $amount);
+	} else {
+		# Translation Comment: used non-Healing skill - displays skill level
+		$amount = ': ' . TF("Lv %s", $amount);
+	}
+	
+	# You
+	if ($source->{type} eq 'You') {
+		if ($target->{type} eq 'You') {
+			return TF("You use %s on yourself %s\n", $skillName, $amount);
+		} elsif ($target->{type} eq 'Player') {
+			return TF("You use %s on player %s (%d) %s\n", $skillName, 
+				$target->{name}, $target->{binID}, $amount);
+		} elsif ($target->{type} eq 'Monster') {
+			return TF("You use %s on monster %s (%d) %s)\n", $skillName, 
+				$target->{name}, $target->{binID}, $amount);
+		} elsif ($target->{type} eq 'Unknown') {
+			return TF("You use %s on Unknown #%s (%d) %s\n", $skillName, 
+				$target->{nameID}, $target->{binID}, $amount);
+		}	
+	# Player
+	} elsif ($source->{type} eq 'Player') {
+		if ($target->{type} eq 'You') {
+			return TF("Player %s (%d) uses %s on you %s\n", $source->{name}, 
+				$source->{binID}, $skillName, $amount);
+		} elsif ($target->{type} eq 'Player') {
+			# consider gender
+			if ($source ne $target) {
+				return TF("Player %s (%d) uses %s on player %s (%d) %s\n", $source->{name}, 
+					$source->{binID}, $skillName, $target->{name}, $target->{binID}, $amount);
+			} elsif ($source->{sex}) {
+				return TF("Player %s (%d) uses %s on himself %s\n", $source->{name}, 
+					$source->{binID}, $skillName, $amount);
+			} else {
+				return TF("Player %s (%d) uses %s on herself %s\n", $source->{name}, 
+					$source->{binID}, $skillName, $amount);
+			}
+		} elsif ($target->{type} eq 'Monster') {
+			return TF("Player %s (%d) uses %s on monster %s (%d) %s\n", $source->{name}, 
+				$source->{binID}, $skillName, $target->{name}, $target->{binID}, $amount);
+		} elsif ($target->{type} eq 'Unknown') {
+			return TF("Player %s (%d) uses %s on Unknown #%s (%d) %s\n", $source->{name}, 
+				$source->{binID}, $skillName, $target->{nameID}, $target->{binID}, $amount);
+		}		
+	# Monster
+	} elsif ($source->{type} eq 'Monster') {
+		if ($target->{type} eq 'You') {
+			return TF("Monster %s (%d) uses %s on you %s\n", $source->{name}, 
+				$source->{binID}, $skillName, $amount);
+		} elsif ($target->{type} eq 'Player') {
+			return TF("Monster %s (%d) uses %s on player %s (%d) %s\n", $source->{name}, 
+				$source->{binID}, $skillName, $target->{name}, $target->{binID}, $amount);
+		} elsif ($target->{type} eq 'Monster') {
+			if ($source ne $target) {
+				return TF("Monster %s (%d) uses %s on monster %s (%d) %s\n", $source->{name}, 
+					$source->{binID}, $skillName, $target->{name}, $target->{binID}, $amount);
+			} else {
+				return TF("Monster %s (%d) uses %s on itself %s\n", $source->{name}, 
+					$source->{binID}, $skillName, $amount);
+			}				
+		} elsif ($target->{type} eq 'Unknown') {
+			return TF("Monster %s (%d) uses %s on Unknown #%s (%d) %s\n", $source->{name}, 
+				$source->{binID}, $skillName, $target->{nameID}, $target->{binID}, $amount);
+		}
+	# Unknown		
+	} elsif ($source->{type} eq 'Unknown') {
+		if ($target->{type} eq 'You') {
+			return TF("Unknown #%s (%d) uses %s on you %s\n", $source->{nameID}, 
+				$source->{binID}, $skillName, $amount);
+		} elsif ($target->{type} eq 'Player') {
+			return TF("Unknown #%s (%d) uses %s on player %s (%d) %s\n", $source->{nameID}, 
+				$source->{binID}, $skillName, $target->{name}, $target->{binID}, $amount);
+		} elsif ($target->{type} eq 'Monster') {
+			return TF("Unknown #%s (%d) uses %s on monster %s (%d) %s\n", $source->{nameID}, 
+				$source->{binID}, $skillName, $target->{name}, $target->{binID}, $amount);
+		} elsif ($target->{type} eq 'Unknown') {
+			if ($source ne $target) {
+				return TF("Unknown #%s (%d) uses %s on Unknown #%s (%d) %s\n", $source->{nameID}, 
+					$source->{binID}, $skillName, $target->{nameID}, $target->{binID}, $amount);
+			} else {
+				return TF("Unknown #%s (%d) uses %s on himself %s\n", $source->{nameID}, 
+					$source->{binID}, $skillName, $amount);
+			}				
+		}
 	}
 }
 
