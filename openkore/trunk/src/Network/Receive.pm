@@ -512,7 +512,6 @@ sub actor_action {
 
 		$target->{sitting} = 0 unless $args->{type} == 4 || $args->{type} == 9 || $totalDamage == 0;
 
-#		my $msg = "$source $verb $target - Dmg: $dmgdisplay (delay ".($args->{src_speed}/10).")";
 		my $msg = attack_string($source, $target, $dmgdisplay, ($args->{src_speed}/10));
 
 		Plugins::callHook('packet_attack', {sourceID => $args->{sourceID}, targetID => $args->{targetID}, msg => \$msg, dmg => $totalDamage, type => $args->{type}});
@@ -4731,16 +4730,8 @@ sub skill_use {
 	countCastOn($args->{sourceID}, $args->{targetID}, $args->{skillID});
 
 	# Resolve source and target names
-#	$args->{damage} ||= "Miss!";
-#	my $verb = $source->verb('use', 'uses');
 	my $skill = new Skills(id => $args->{skillID});
 	$args->{skill} = $skill;
-#	my $disp = "$source $verb ".$skill->name;
-#	$disp .= ' (lvl '.$args->{level}.')' unless $args->{level} == 65535;
-#	$disp .= " on $target";
-#	$disp .= ' - Dmg: '.$args->{damage} unless $args->{damage} == -30000;
-#	$disp .= " (delay ".($args->{src_speed}/10).")";
-#	$disp .= "\n";
 	my $disp = skillUse_string($source, $target, $skill->name, $args->{damage}, 
 		$args->{level}, ($args->{src_speed}/10));
 
@@ -4826,10 +4817,6 @@ sub skill_use_location {
 	setSkillUseTimer($skillID) if $sourceID eq $accountID;
 
 	# Resolve source name
-#	my ($source, $uses) = getActorNames($sourceID, 0, 'use', 'uses');
-#	my $disp = "$source $uses ".Skills->new(id => $skillID)->name;
-#	$disp .= " (lvl $lv)" unless $lv == 65535;
-#	$disp .= " on location ($x, $y)\n";
 	my $source = Actor::get($sourceID);
 	my $skillName = Skills->new(id => $skillID)->name;
 	my $disp = skillUseLocation_string($source, $skillName, $args);
@@ -4889,7 +4876,6 @@ sub skill_used_no_damage {
 
 	my $domain = ($args->{sourceID} eq $accountID) ? "selfSkill" : "skill";
 	my $skill = $args->{skill} = new Skills(id => $args->{skillID});
-#	message "$source $verb ".$skill->name()." on ".$target->nameString($source)."$extra\n", $domain;
 	my $disp = skillUseNoDamage_string($source, $target, $skill->id, $skill->name, $args->{amount});		
 	message $disp, $domain;
 	
