@@ -14,10 +14,10 @@ sources = Split('''
 ''')
 
 e = env.Copy()
-e.ParseConfig('wx-config --cflags')
+e.ParseConfig('wx-config --cflags base core')
 
 # ParseConfig can't handle absolute filenames for static libraries, bah.
-config = os.popen('wx-config --libs', 'r')
+config = os.popen('wx-config --libs base core', 'r')
 e['LINKFLAGS'] += Split(' '.join(config.readlines()))
 config.close()
 

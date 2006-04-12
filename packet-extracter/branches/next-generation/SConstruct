@@ -1,12 +1,35 @@
-### Platform configuration ###
+import os
+
+######## Platform configuration ########
 
 platform = str(ARGUMENTS.get('OS', Platform()))
 cygwin = platform == "cygwin"
 darwin = platform == "darwin"
 win32 = cygwin or platform == "windows"
 
-######## Setup environment ########
 env = Environment()
+
+######## Dependency checks ########
+
+def CheckWx(context, minVersion):
+	context.Message('Checking for WxWidgets... ')
+	f = os.popen('wx-config --version')
+	line = f.readline()
+	f.close()
+	line = line.rstrip("\r\n")
+	context.Result(line)
+	return line >= minVersion
+
+conf = Configure(env, custom_tests = {
+	'CheckWx' : CheckWx
+})
+if not conf.CheckWx('2.6.0'):
+	print "WxWidgets 2.6.0 or higher is required. You can get it from:"
+	print "http://www.wxwidgets.org/"
+	Exit(1)
+conf.Finish()
+
+######## Setup environment ########
 env['CFLAGS'] = ['-g', '-pipe', '-Wall']
 env['LINKFLAGS'] = []
 env['LIBPATH'] = []
