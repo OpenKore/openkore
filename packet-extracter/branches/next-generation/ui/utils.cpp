@@ -8,8 +8,8 @@
 	#include <unistd.h>
 #endif
 
-wxString
-createRecvpackets(PacketLengthMap &lengths) {
+void
+createRecvpackets(wxFFile &file, PacketLengthMap &lengths) {
 	PacketLengthMap::iterator it;
 	wxArrayString packets;
 
@@ -19,13 +19,12 @@ createRecvpackets(PacketLengthMap &lengths) {
 	}
 	packets.Sort();
 
-	wxString result;
 	for (size_t i = 0; i < packets.GetCount(); i++) {
 		wxString &packet = packets[i];
-		result += wxString::Format(wxT("%s %d\n"),
-			packet.c_str(), lengths[packet]);
+		wxString line = wxString::Format(
+			wxT("%s %d\n"), packet.c_str(), lengths[packet]);
+		file.Write(line);
 	}
-	return result;
 }
 
 wxString

@@ -11,7 +11,7 @@ WorkerThread::WorkerThread(wxProcess *process, long pid)
 }
 
 WorkerThread::~WorkerThread() {
-	delete process;
+	//delete process;
 }
 
 wxThread::ExitCode
