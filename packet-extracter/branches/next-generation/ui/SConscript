@@ -1,3 +1,5 @@
+import os
+
 Import('*')
 
 sources = Split('''
@@ -12,5 +14,11 @@ sources = Split('''
 ''')
 
 e = env.Copy()
-e.ParseConfig('wx-config --cflags --libs')
+e.ParseConfig('wx-config --cflags')
+
+# ParseConfig can't handle absolute filenames for static libraries, bah.
+config = os.popen('wx-config --libs', 'r')
+e['LINKFLAGS'] += Split(' '.join(config.readlines()))
+config.close()
+
 e.Program('openkore-packet-length-extractor', sources)

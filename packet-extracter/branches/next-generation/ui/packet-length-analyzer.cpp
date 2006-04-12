@@ -1,14 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "packet-length-analyzer.h"
+#include "utils.h"
 
 PacketLengthAnalyzer::PacketLengthAnalyzer()
-	: firstPacketSwitch("mov    DWORD PTR \\[ebp-8\\],0x187", wxRE_NOSUB),
-	  packetLengthFunctionStart("push   ebp", wxRE_NOSUB),
-	  packetLengthFunctionEnd  ("ret ", wxRE_NOSUB),
-	  progressRegex("^Progress: (.*)"),
-	  movDword("mov    DWORD PTR \\[(.*?)\\],(.*?)$"),
-	  movToEbx("mov    ebx,(.*?)$")
+	: firstPacketSwitch(wxS("mov    DWORD PTR \\[ebp-8\\],0x187"), wxRE_NOSUB),
+	  packetLengthFunctionStart(wxS("push   ebp"), wxRE_NOSUB),
+	  packetLengthFunctionEnd  (wxS("ret "), wxRE_NOSUB),
+	  progressRegex(wxS("^Progress: (.*)")),
+	  movDword(wxS("mov    DWORD PTR \\[(.*?)\\],(.*?)$")),
+	  movToEbx(wxS("mov    ebx,(.*?)$"))
 {
 	state = FINDING_PACKET_LENGTH_FUNCTION;
 	ebx = 0;
@@ -19,7 +20,7 @@ PacketLengthAnalyzer::~PacketLengthAnalyzer() {
 }
 
 void
-PacketLengthAnalyzer::processLine(const char *line) {
+PacketLengthAnalyzer::processLine(const wxString &line) {
 	switch (state) {
 	case FINDING_PACKET_LENGTH_FUNCTION:
 		addToBacklog(line);
@@ -30,7 +31,6 @@ PacketLengthAnalyzer::processLine(const char *line) {
 
 			int start = findPacketLengthFunction();
 			if (start == -1) {
-				printf ("Cannot find packet length function\n");
 				break;
 			}
 
@@ -47,8 +47,7 @@ PacketLengthAnalyzer::processLine(const char *line) {
 			state = DONE;
 			progress = 100;
 		} else {
-			wxString l (line);
-			analyzeLine(l);
+			analyzeLine(line);
 		}
 		break;
 
@@ -62,7 +61,7 @@ PacketLengthAnalyzer::processEOF() {
 	switch (state) {
 	case FINDING_PACKET_LENGTH_FUNCTION:
 	case ANALYZING_PACKET_LENGTHS:
-		setFailed("End of file reached unexpectedly.");
+		setFailed(wxT("End of file reached unexpectedly."));
 		break;
 	default:
 		break;
@@ -90,8 +89,8 @@ PacketLengthAnalyzer::getProgress() {
 }
 
 void
-PacketLengthAnalyzer::addToBacklog(const char *line) {
-	backlog.Add(wxString(line));
+PacketLengthAnalyzer::addToBacklog(const wxString &line) {
+	backlog.Add(line);
 	if (backlog.GetCount() > MAX_BACKLOG_SIZE) {
 		backlog.RemoveAt(0);
 	}
@@ -111,7 +110,7 @@ PacketLengthAnalyzer::findPacketLengthFunction() {
 	}
 
 	if (result == -1) {
-		setFailed("Cannot find packet length function.");
+		setFailed(wxT("Cannot find packet length function."));
 	}
 
 	return result;
@@ -125,7 +124,7 @@ PacketLengthAnalyzer::findPacketLengthFunction() {
  */
 static bool
 hexToInt(const wxString &hex, unsigned int &result) {
-	return sscanf(hex, "%x", &result) == 1;
+	return sscanf(hex.ToAscii(), "%x", &result) == 1;
 }
 
 void
@@ -134,16 +133,16 @@ PacketLengthAnalyzer::analyzeLine(const wxString &line) {
 	// Progress: (double number)
 	if (progressRegex.Matches(line)) {
 		wxString progressString = progressRegex.GetMatch(line, 1);
-		progress = strtod(progressString, NULL);
+		progress = strtod(progressString.ToAscii(), NULL);
 
 	// Looking for something like:
 	// mov   DWORD PTR [ebp-1],0x123
 	} else if (movDword.Matches(line)) {
 		wxString to = movDword.GetMatch(line, 1);
 		wxString from = movDword.GetMatch(line, 2);
-		static wxString ebp = "ebp";
-		static wxString hexPrefix = "0x";
-		static wxString eax = "eax";
+		static wxString ebp(wxT("ebp"));
+		static wxString hexPrefix(wxT("0x"));
+		static wxString eax(wxT("eax"));
 
 		if (to.Contains(ebp) && from.StartsWith(hexPrefix)) {
 			// Packet switch
@@ -151,32 +150,32 @@ PacketLengthAnalyzer::analyzeLine(const wxString &line) {
 
 			if (!hexToInt(from, value)) {
 				setFailed(wxString::Format(
-					"Invalid hexadecimal number encountered at line:\n%s",
-					(const char *) line));
+					wxT("Invalid hexadecimal number encountered at line:\n%s"),
+					line.c_str()));
 			} else {
-				packetSwitch = wxString::Format("%04X", value);
+				packetSwitch = wxString::Format(wxT("%04X"), value);
 			}
 
 		} else if (to.Contains(eax)) {
 			// Packet length
 			unsigned int len;
 
-			if (from == "ebx") {
+			if (from == wxT("ebx")) {
 				len = ebx;
 			} else if (from.StartsWith(hexPrefix)) {
 				if (!hexToInt(from, len)) {
 					setFailed(wxString::Format(
-						"Invalid hexadecimal number encountered "
-						"at line:\n%s",
-						(const char *) line));
+						wxT("Invalid hexadecimal number encountered "
+						"at line:\n%s"),
+						line.c_str()));
 				}
 			} else {
 				len = 0;
 			}
 
 			if (packetSwitch.Len() == 0) {
-				setFailed("Packet length instruction encountered "
-					  "but no packet switch instruction encountered.");
+				setFailed(wxS("Packet length instruction encountered "
+					  "but no packet switch instruction encountered."));
 			} else {
 				lengths[packetSwitch] = len;
 			}
@@ -191,8 +190,8 @@ PacketLengthAnalyzer::analyzeLine(const wxString &line) {
 		value = movToEbx.GetMatch(line, 1);
 		if (!hexToInt(value, ebx)) {
 			setFailed(wxString::Format(
-				"Invalid hexadecimal number encountered at line:\n%s",
-				(const char *) line));
+				wxT("Invalid hexadecimal number encountered at line:\n%s"),
+				line.c_str()));
 		}
 	}
 }
@@ -204,6 +203,6 @@ PacketLengthAnalyzer::setFailed(const wxString &error) {
 }
 
 void
-PacketLengthAnalyzer::setFailed(const char *error) {
-	setFailed(*(new wxString(error)));
+PacketLengthAnalyzer::setFailed(const wxChar *error) {
+	setFailed(wxString(error));
 }

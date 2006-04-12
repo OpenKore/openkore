@@ -51,7 +51,9 @@ LineParser::processBuffer() {
 			buffer[lineSize - 1] = '\0';
 		}
 
-		handler->processLine(buffer);
+		wxCSConv conv(wxT("ISO-8859-1"));
+		wxString line(const_cast<const char *>(buffer), conv);
+		handler->processLine(line);
 
 		// Remove line from the buffer.
 		size_t size = bufferSize - lineSize - 1;

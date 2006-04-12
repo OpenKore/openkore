@@ -1,7 +1,7 @@
 #ifndef _LINEPARSER_H_
 #define _LINEPARSER_H_
 
-#include <wx/wx.h>
+#include <wx/string.h>
 #include "linehandler.h"
 
 /**

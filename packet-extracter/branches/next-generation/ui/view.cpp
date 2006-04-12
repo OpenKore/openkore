@@ -9,7 +9,7 @@ BEGIN_EVENT_TABLE(View, MainFrame)
 END_EVENT_TABLE()
 
 View::View()
-	: MainFrame(NULL, -1, "",  wxDefaultPosition, wxDefaultSize, 0),
+	: MainFrame(NULL, -1, wxS(""),  wxDefaultPosition, wxDefaultSize, 0),
 	  timer(this, WORKER_THREAD_POLL_ID)
 {
 	int width, height;
@@ -31,11 +31,11 @@ View::View()
 
 	thread = NULL;
 
-	if (findObjdump() == "") {
-		wxMessageBox("The internal disassembler program, "
+	if (findObjdump().Len() == 0) {
+		wxMessageBox(wxS("The internal disassembler program, "
 			     "objdump, is not found. Please redownload "
-			     "this program.",
-			     "Error", wxOK | wxICON_ERROR, this);
+			     "this program."),
+			     wxS("Error"), wxOK | wxICON_ERROR, this);
 		Close();
 	}
 }
@@ -51,8 +51,8 @@ View::~View() {
 void
 View::onBrowseClick(wxCommandEvent &event)
 {
-	wxFileDialog dialog (this, "Open RO executable", "", "",
-			     "Executables (*.exe)|*.exe|All files (*.*)|*.*",
+	wxFileDialog dialog (this, wxS("Open RO executable"), wxS(""), wxS(""),
+			     wxS("Executables (*.exe)|*.exe|All files (*.*)|*.*"),
 			     wxOPEN | wxFILE_MUST_EXIST);
 	if (dialog.ShowModal() == wxID_OK) {
 		fileInput->SetValue(dialog.GetPath());
@@ -73,11 +73,11 @@ protected:
 void
 View::onExtractClick(wxCommandEvent &event) {
 	if (fileInput->GetValue().Len() == 0) {
-		wxMessageBox("You didn't specify a file.", "Error",
+		wxMessageBox(wxS("You didn't specify a file."), wxS("Error"),
 			     wxOK | wxICON_ERROR, this);
 		return;
 	} else if (!wxFileExists(fileInput->GetValue())) {
-		wxMessageBox("The specified file does not exist.", "Error",
+		wxMessageBox(wxS("The specified file does not exist."), wxS("Error"),
 			     wxOK | wxICON_ERROR, this);
 		return;
 	}
@@ -86,21 +86,21 @@ View::onExtractClick(wxCommandEvent &event) {
 	browseButton->Enable(false);
 	extractButton->Enable(false);
 
-	char *command[7];
+	wxChar *command[7];
 	wxProcess *process = new Process();
 	long pid;
 
-	command[0] = const_cast<char *>(findObjdump().c_str());
-	command[1] = "objdump";
-	command[2] = "-d";
-	command[3] = "-M";
-	command[4] = "intel";
-	command[5] = const_cast<char *>(fileInput->GetValue().c_str());
+	command[0] = const_cast<wxChar *>(findObjdump().c_str());
+	command[1] = wxT("objdump");
+	command[2] = wxT("-d");
+	command[3] = wxT("-M");
+	command[4] = wxT("intel");
+	command[5] = const_cast<wxChar *>(fileInput->GetValue().c_str());
 	command[6] = NULL;
 
-	pid = wxExecute((char **) command, wxEXEC_ASYNC, process);
+	pid = wxExecute(command, wxEXEC_ASYNC, process);
 	if (pid == 0) {
-		wxMessageBox("Unable to launch the disassembler.", "Error",
+		wxMessageBox(wxS("Unable to launch the disassembler."), wxS("Error"),
 			     wxOK | wxICON_ERROR, this);
 		Close();
 		return;
@@ -119,13 +119,13 @@ View::onCancelClick(wxCommandEvent &event) {
 
 void
 View::onAboutClick(wxCommandEvent &event) {
-	wxMessageBox("OpenKore Packet Length Extractor\n"
+	wxMessageBox(wxS("OpenKore Packet Length Extractor\n"
 		     "Version 1.0.0\n"
 		     "http://www.openkore.com/\n\n"
 		     "Copyright (c) 2006 - written by VCL\n"
 		     "Licensed under the GNU General Public License.\n"
-		     "Parts of this program are copied from GNU binutils.",
-		     "Information", wxOK | wxICON_INFORMATION,
+		     "Parts of this program are copied from GNU binutils."),
+		     wxS("Information"), wxOK | wxICON_INFORMATION,
 		     this);
 }
 
@@ -148,18 +148,18 @@ View::onTimer(wxTimerEvent &event) {
 			saveRecvpackets(analyzer);
 		} else if (state == PacketLengthAnalyzer::FAILED) {
 			wxMessageBox(wxString::Format(
-				"An error occured:\n%s",
-				(const char *) analyzer.getError()
-				), "Error", wxOK | wxICON_ERROR,
-				this);
+				wxS("An error occured:\n%s"),
+				analyzer.getError().c_str()
+				),
+				wxS("Error"), wxOK | wxICON_ERROR, this);
 		} else {
 			wxMessageBox(wxString::Format(
-				"Error: packet analyzer is in an inconsistent state. "
+				wxS("Error: packet analyzer is in an inconsistent state. "
 				"Please report this bug.\n\n"
 				"Technical details:\n"
-				"state == %d",
-				state), "Error", wxOK | wxICON_ERROR,
-				this);
+				"state == %d"),
+				state),
+				wxS("Error"), wxOK | wxICON_ERROR, this);
 		}
 
 		delete thread;
@@ -170,20 +170,20 @@ View::onTimer(wxTimerEvent &event) {
 
 void
 View::saveRecvpackets(PacketLengthAnalyzer &analyzer) {
-	wxMessageBox("The packets lengths have been successfully extracted.\n"
-		     "Please choose a file to save them to.",
-		     "Extraction successful", wxOK | wxICON_INFORMATION,
-		     this);
+	wxMessageBox(wxS("The packets lengths have been successfully extracted.\n"
+		     "Please choose a file to save them to."),
+		     wxS("Extraction successful"),
+		     wxOK | wxICON_INFORMATION, this);
 
 	wxString contents = createRecvpackets(analyzer.getPacketLengths());
-	wxFileDialog dialog(this, "Save recvpackets.txt", "",
-			    "recvpackets.txt", "Text files (*.txt)|*.txt",
+	wxFileDialog dialog(this, wxS("Save recvpackets.txt"), wxS(""),
+			    wxS("recvpackets.txt"), wxS("Text files (*.txt)|*.txt"),
 			    wxSAVE | wxOVERWRITE_PROMPT);
 	if (dialog.ShowModal() == wxID_OK) {
 		wxFile file(dialog.GetPath(), wxFile::write);
 		if (!file.IsOpened()) {
-			wxMessageBox("Unable to save to the specified file.",
-				     "Error", wxOK | wxICON_ERROR,
+			wxMessageBox(wxS("Unable to save to the specified file."),
+				     wxS("Error"), wxOK | wxICON_ERROR,
 				     this);
 			return;
 		}
