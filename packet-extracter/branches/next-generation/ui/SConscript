@@ -16,9 +16,13 @@ sources = Split('''
 e = env.Copy()
 e.ParseConfig('wx-config --cflags base core')
 
-# ParseConfig can't handle absolute filenames for static libraries, bah.
-config = os.popen('wx-config --libs base core', 'r')
-e['LINKFLAGS'] += Split(' '.join(config.readlines()))
-config.close()
+# ParseConfig can't handle absolute filenames for static libraries
+f = os.popen('wx-config --libs base core', 'r')
+e.Append(LINKFLAGS = Split(' '.join(f.readlines())))
+f.close()
+
+# Linking will mess up if the libraries come before the object files
+# (as scons does by default), so we specify a custom linking command.
+e['LINKCOM'] = '$LINK $_LIBDIRFLAGS $_LIBFLAGS -o $TARGET $SOURCES $LINKFLAGS'
 
 e.Program('openkore-packet-length-extractor', sources)
