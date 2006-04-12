@@ -11,4 +11,6 @@ wxString createRecvpackets(PacketLengthMap &lengths);
 
 wxString findObjdump();
 
+#define wxS(s) wxString(wxT(s))
+
 #endif /* _UTILS_H_ */

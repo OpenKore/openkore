@@ -1,6 +1,8 @@
 #ifndef _LINEHANDLER_H_
 #define _LINEHANDLER_H_
 
+#include <wx/string.h>
+
 /**
  * An interface which processes lines parsed by LineParser.
  */
@@ -15,7 +17,7 @@ public:
 	 * @param line Contains exactly one line, excluding any newline characters.
 	 * @require line != NULL
 	 */
-	virtual void processLine(const char *line) = 0;
+	virtual void processLine(const wxString &line) = 0;
 
 	/**
 	 * Process an end-of-file event.

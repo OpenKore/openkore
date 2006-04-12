@@ -30,7 +30,7 @@ public:
 	PacketLengthAnalyzer();
 
 	~PacketLengthAnalyzer();
-	virtual void processLine(const char *line);
+	virtual void processLine(const wxString &line);
 	virtual void processEOF();
 
 	/**
@@ -84,10 +84,8 @@ private:
 	/**
 	 * Add a line to the backlog. This function makes sure
 	 * the backlog stays small by removing the oldest items.
-	 *
-	 * @require line != NULL
 	 */
-	void addToBacklog(const char *line);
+	void addToBacklog(const wxString &line);
 
 	/**
 	 * Find an item in the backlog which represents the start of
@@ -120,7 +118,7 @@ private:
 	 * @ensure getError() == error
 	 */
 	void setFailed(const wxString &error);
-	void setFailed(const char *error);
+	void setFailed(const wxChar *error);
 };
 
 #endif /* _PACKET_LENGTH_ANALYZER_H_ */
