@@ -85,13 +85,18 @@ public:
 class OutStream: public OutputStream {
 private:
 	int fd;
+	bool closed;
 public:
 	OutStream(int fd) {
 		this->fd = fd;
+		closed = false;
 	}
 
 	virtual void close() {
-		shutdown(fd, SHUT_WR);
+		if (!closed) {
+			shutdown(fd, SHUT_WR);
+			closed = true;
+		}
 	}
 
 	virtual void flush() {
@@ -162,9 +167,11 @@ UnixSocket::construct(int fd) {
 }
 
 UnixSocket::~UnixSocket() {
+	in->close();
 	in->unref();
+	out->close();
 	out->unref();
-	close (fd);
+	close(fd);
 }
 
 InputStream *
