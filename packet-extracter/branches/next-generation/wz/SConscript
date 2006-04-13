@@ -1,0 +1,14 @@
+Import('*')
+
+sources = Split('''
+	buffered-output-stream.cpp
+	exception.cpp
+	object.cpp
+	output-stream.cpp
+	server-socket.cpp
+	socket.cpp
+''')
+
+e = wxenv.Copy()
+e.Append(CPPPATH = ['..'])
+e.StaticLibrary('wz', sources)

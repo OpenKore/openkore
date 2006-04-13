@@ -69,15 +69,20 @@ objdump_sources = Split('''
 	debug.c
 	filemode.c
 	ieee.c
+	messages.c
 	objdump.c
 	prdbg.c
 	rdcoff.c
 	rddbg.c
+	remote.cpp
 	stabs.c
 	version.c
 ''')
 
-env.Program('objdump',
-	    bfd_sources + opcodes_sources + libiberty_sources + objdump_sources,
-	    CPPDEFINES = ['HAVE_CONFIG_H', ('TARGET', '\\"i386-win32-pe\\"')],
-	    CPPPATH = ['bfd', 'include', 'libiberty'])
+e = wxenv.Copy()
+e.Append(CPPDEFINES = ['HAVE_CONFIG_H', ('TARGET', '\\"i386-win32-pe\\"')])
+e.Append(CPPPATH = ['bfd', 'include', 'libiberty', '..'])
+e.Append(LIBPATH = ['../wz'])
+e.Append(LIBS = ['wz'])
+e.Program('objdump', bfd_sources + opcodes_sources +
+	  libiberty_sources + objdump_sources)

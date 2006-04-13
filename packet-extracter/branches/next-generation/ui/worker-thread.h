@@ -3,6 +3,7 @@
 
 #include <wx/thread.h>
 #include <wx/process.h>
+#include <wz/server-socket.h>
 #include "lineparser.h"
 #include "packet-length-analyzer.h"
 
@@ -11,21 +12,31 @@
  */
 class WorkerThread: public wxThread {
 public:
-	WorkerThread(wxProcess *process, long pid);
+	WorkerThread(long pid, Wz::ServerSocket *server);
 	~WorkerThread();
 
 	PacketLengthAnalyzer &getAnalyzer();
 	void stop();
 
+	enum Status {
+		OK,
+		ERROR,
+		STOPPED
+	};
+	Status getStatus();
+	wxString getError();
+
 protected:
 	virtual ExitCode Entry();
 
 private:
-	wxProcess *process;
 	long pid;
+	Wz::ServerSocket *server;
 	PacketLengthAnalyzer analyzer;
 	LineParser parser;
 	bool stopped;
+	Status status;
+	wxString error;
 };
 
 #endif /* _WORKER_THREAD_H_ */
