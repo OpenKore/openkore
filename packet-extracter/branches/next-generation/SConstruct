@@ -30,7 +30,7 @@ if not conf.CheckWx('2.6.0'):
 conf.Finish()
 
 ######## Setup environment ########
-env['CCFLAGS'] = ['-g', '-pipe', '-Wall', '-fvisibility=hidden']
+env['CCFLAGS'] = ['-g', '-pipe', '-Wall', '-fvisibility=hidden', '-ffunction-sections', '-fdata-sections']
 env['LINKFLAGS'] = ['-Wl,--gc-sections']
 env['LIBPATH'] = []
 env['LIBS'] = []
