@@ -1250,7 +1250,7 @@ sub sendMapLogin {
 			$charID .
 			pack("C*", 0xFF, 0xCC, 0xFA, 0x12, 0x00, 0x61) .
 			$sessionID .
-			pack("V1", getTickCount()) .
+			pack("V", getTickCount()) .
 			pack("C*",$sex);
 
 	} elsif ($config{serverType} == 8) { #kRO 28 march 2006
