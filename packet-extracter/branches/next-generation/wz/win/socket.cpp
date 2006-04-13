@@ -157,5 +157,9 @@ WinSocket::WinSocket(SOCKET sock) {
 }
 
 virtual ~WinClientSocket() {
+	in->close();
+	in->unref();
+	out->close();
+	out->unref();
 	closesocket(fd);
 }
