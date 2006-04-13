@@ -3819,7 +3819,7 @@ sub openShop {
 	return unless @items;
 	$shop{title} = ($config{shopTitleOversize}) ? $shop{title} : substr($shop{title},0,36);
 	sendOpenShop($shop{title}, \@items);
-	message TF("Shop opened (%s) with %d selling items.\n", $shop{title}, @items), "success";
+	message TF("Shop opened (%s) with %d selling items.\n", $shop{title}, @items.""), "success";
 	$shopstarted = 1;
 	$shopEarned = 0;
 }

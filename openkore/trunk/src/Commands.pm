@@ -2962,10 +2962,10 @@ sub cmdShopInfoSelf {
 		$priceAfterSale += ($item->{quantity} * $item->{price});
 	}
 	message TF("%s\n" .
-		"You have earned: %dz.\n" .
-		"Current zeny:    %dz.\n" .
-		"Maximum earned:  %dz.\n" .
-		"Maximum zeny:    %dz.\n",
+		"You have earned: %sz.\n" .
+		"Current zeny:    %sz.\n" .
+		"Maximum earned:  %sz.\n" .
+		"Maximum zeny:    %sz.\n",
 		('-'x79), formatNumber($shopEarned), formatNumber($char->{zenny}), 
 		formatNumber($priceAfterSale), formatNumber($priceAfterSale + $char->{zenny})), "list";
 }
