@@ -1,6 +1,9 @@
 #include <wx/file.h>
+#include <wz/server-socket.h>
 #include "view.h"
 #include "utils.h"
+
+using namespace Wz;
 
 #define WORKER_THREAD_POLL_ID 1201
 
@@ -75,24 +78,39 @@ View::onExtractClick(wxCommandEvent &event) {
 	browseButton->Enable(false);
 	extractButton->Enable(false);
 
+
+	// Start a server socket
+	ServerSocket *server;
+	try {
+		server = ServerSocket::create(NULL, 0);
+	} catch (SocketException &e) {
+		wxString message;
+		message.Printf(wxT("Unable to start a server socket: %s"),
+			       e.getMessage().c_str());
+		wxMessageBox(message, wxS("Error"), wxOK | wxICON_ERROR, this);
+		Close();
+		return;
+	}
+
+	// Start the disassembler.
 	wxString command;
-	wxProcess *process = new wxProcess(wxPROCESS_REDIRECT);
 	long pid;
 
-	command = wxString::Format(wxT("\"%s\" -d -M intel \"%s\""),
+	command = wxString::Format(wxT("\"%s\" -d -M intel --remote=%d \"%s\""),
 		findObjdump().c_str(),
+		server->getPort(),
 		fileInput->GetValue().c_str());
-	process->Detach();
-
-	pid = wxExecute(command, wxEXEC_ASYNC, process);
+	pid = wxExecute(command, wxEXEC_ASYNC, NULL);
 	if (pid == 0) {
+		delete server;
 		wxMessageBox(wxS("Unable to launch the disassembler."), wxS("Error"),
 			     wxOK | wxICON_ERROR, this);
 		Close();
 		return;
 	}
 
-	thread = new WorkerThread(process, pid);
+	thread = new WorkerThread(pid, server);
+	server->unref();
 	thread->Create();
 	thread->Run();
 	timer.Start(100);
@@ -121,37 +139,46 @@ View::onTimer(wxTimerEvent &event) {
 		PacketLengthAnalyzer &analyzer = thread->getAnalyzer();
 		double progress = analyzer.getProgress();
 		this->progress->SetValue(static_cast<int>(progress));
+		return;
+	}
 
-	} else {
-		timer.Stop();
-		progress->SetValue(100);
 
-		thread->Wait();
-		PacketLengthAnalyzer &analyzer = thread->getAnalyzer();
-		int state = analyzer.getState();
+	timer.Stop();
+	progress->SetValue(100);
 
-		if (state == PacketLengthAnalyzer::DONE) {
-			saveRecvpackets(analyzer);
-		} else if (state == PacketLengthAnalyzer::FAILED) {
-			wxMessageBox(wxString::Format(
-				wxS("An error occured:\n%s"),
-				analyzer.getError().c_str()
-				),
-				wxS("Error"), wxOK | wxICON_ERROR, this);
-		} else {
-			wxMessageBox(wxString::Format(
-				wxS("Error: packet analyzer is in an inconsistent state. "
-				"Please report this bug.\n\n"
-				"Technical details:\n"
-				"state == %d"),
-				state),
-				wxS("Error"), wxOK | wxICON_ERROR, this);
-		}
-
+	thread->Wait();
+	if (thread->getStatus() == WorkerThread::ERROR) {
+		wxMessageBox(thread->getError(), wxS("Error"), wxOK | wxICON_ERROR, this);
 		delete thread;
 		thread = NULL;
 		Close();
+		return;
 	}
+
+	PacketLengthAnalyzer &analyzer = thread->getAnalyzer();
+	int state = analyzer.getState();
+
+	if (state == PacketLengthAnalyzer::DONE) {
+		saveRecvpackets(analyzer);
+	} else if (state == PacketLengthAnalyzer::FAILED) {
+		wxMessageBox(wxString::Format(
+			wxS("An error occured:\n%s"),
+			analyzer.getError().c_str()
+			),
+			wxS("Error"), wxOK | wxICON_ERROR, this);
+	} else {
+		wxMessageBox(wxString::Format(
+			wxS("Error: packet analyzer is in an inconsistent state. "
+			"Please report this bug.\n\n"
+			"Technical details:\n"
+			"state == %d"),
+			state),
+			wxS("Error"), wxOK | wxICON_ERROR, this);
+	}
+
+	delete thread;
+	thread = NULL;
+	Close();
 }
 
 void

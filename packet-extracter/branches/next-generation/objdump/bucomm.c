@@ -28,6 +28,7 @@
 #include "bucomm.h"
 #include "filenames.h"
 #include "libbfd.h"
+#include "messages.h"
 
 #include <sys/stat.h>
 #include <time.h>		/* ctime, maybe time_t */
@@ -53,9 +54,9 @@ bfd_nonfatal (const char *string)
   const char *errmsg = bfd_errmsg (bfd_get_error ());
 
   if (string)
-    fprintf (stderr, "%s: %s: %s\n", program_name, string, errmsg);
+    o_fmessage (stderr, "%s: %s: %s\n", program_name, string, errmsg);
   else
-    fprintf (stderr, "%s: %s\n", program_name, errmsg);
+    o_fmessage (stderr, "%s: %s\n", program_name, errmsg);
 }
 
 void
@@ -68,9 +69,9 @@ bfd_fatal (const char *string)
 void
 report (const char * format, va_list args)
 {
-  fprintf (stderr, "%s: ", program_name);
-  vfprintf (stderr, format, args);
-  putc ('\n', stderr);
+  o_fmessage (stderr, "%s: ", program_name);
+  o_vfmessage (stderr, format, args);
+  o_putchar ('\n');
 }
 
 void
@@ -117,9 +118,9 @@ set_default_bfd_target (void)
 void
 list_matching_formats (char **p)
 {
-  fprintf (stderr, _("%s: Matching formats:"), program_name);
+  o_fmessage (stderr, _("%s: Matching formats:"), program_name);
   while (*p)
-    fprintf (stderr, " %s", *p++);
+    o_fmessage (stderr, " %s", *p++);
   fputc ('\n', stderr);
 }
 
@@ -190,7 +191,7 @@ display_target_list (void)
       bfd *abfd = bfd_openw (dummy_name, p->name);
       int a;
 
-      printf ("%s\n (header %s, data %s)\n", p->name,
+      o_message ("%s\n (header %s, data %s)\n", p->name,
 	      endian_string (p->header_byteorder),
 	      endian_string (p->byteorder));
 
@@ -214,7 +215,7 @@ display_target_list (void)
 
       for (a = (int) bfd_arch_obscure + 1; a < (int) bfd_arch_last; a++)
 	if (bfd_set_arch_mach (abfd, (enum bfd_architecture) a, 0))
-	  printf ("  %s\n",
+	  o_message ("  %s\n",
 		  bfd_printable_arch_mach ((enum bfd_architecture) a, 0));
       bfd_close_all_done (abfd);
     }
@@ -237,16 +238,16 @@ display_info_table (int first, int last)
   char *dummy_name;
 
   /* Print heading of target names.  */
-  printf ("\n%*s", (int) LONGEST_ARCH, " ");
+  o_message ("\n%*s", (int) LONGEST_ARCH, " ");
   for (t = first; t < last && bfd_target_vector[t]; t++)
-    printf ("%s ", bfd_target_vector[t]->name);
-  putchar ('\n');
+    o_message ("%s ", bfd_target_vector[t]->name);
+  o_putchar ('\n');
 
   dummy_name = make_temp_file (NULL);
   for (a = (int) bfd_arch_obscure + 1; a < (int) bfd_arch_last; a++)
     if (strcmp (bfd_printable_arch_mach (a, 0), "UNKNOWN!") != 0)
       {
-	printf ("%*s ", (int) LONGEST_ARCH - 1,
+	o_message ("%*s ", (int) LONGEST_ARCH - 1,
 		bfd_printable_arch_mach (a, 0));
 	for (t = first; t < last && bfd_target_vector[t]; t++)
 	  {
@@ -281,18 +282,18 @@ display_info_table (int first, int last)
 	      }
 
 	    if (ok)
-	      printf ("%s ", p->name);
+	      o_message ("%s ", p->name);
 	    else
 	      {
 		int l = strlen (p->name);
 		while (l--)
-		  putchar ('-');
-		putchar (' ');
+		  o_putchar ('-');
+		o_putchar (' ');
 	      }
 	    if (abfd != NULL)
 	      bfd_close_all_done (abfd);
 	  }
-	putchar ('\n');
+	o_putchar ('\n');
       }
   unlink (dummy_name);
   free (dummy_name);
@@ -345,7 +346,7 @@ display_target_tables (void)
 int
 display_info (void)
 {
-  printf (_("BFD header file version %s\n"), BFD_VERSION_STRING);
+  o_message (_("BFD header file version %s\n"), BFD_VERSION_STRING);
   if (! display_target_list () || ! display_target_tables ())
     return 1;
   else

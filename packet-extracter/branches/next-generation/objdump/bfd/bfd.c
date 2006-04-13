@@ -216,7 +216,8 @@ CODE_FRAGMENT
 #include "libecoff.h"
 #undef obj_symbols
 #include "elf-bfd.h"
-
+#include "messages.h"
+
 /* provide storage for subsystem, stack and heap data which may have been
    passed in on the command line.  Ld puts this data into a bfd_link_info
    struct which ultimately gets passed in to the bfd.  When it arrives, copy
@@ -383,9 +384,9 @@ bfd_perror (const char *message)
   else
     {
       if (message == NULL || *message == '\0')
-	fprintf (stderr, "%s\n", bfd_errmsg (bfd_get_error ()));
+	o_message ("%s\n", bfd_errmsg (bfd_get_error ()));
       else
-	fprintf (stderr, "%s: %s\n", message, bfd_errmsg (bfd_get_error ()));
+	o_message ("%s: %s\n", message, bfd_errmsg (bfd_get_error ()));
     }
 }
 
@@ -426,9 +427,9 @@ _bfd_default_error_handler (const char *fmt, ...)
   char buf[1000];
 
   if (_bfd_error_program_name != NULL)
-    fprintf (stderr, "%s: ", _bfd_error_program_name);
+    o_message ("%s: ", _bfd_error_program_name);
   else
-    fprintf (stderr, "BFD: ");
+    o_message ("BFD: ");
 
   va_start (ap, fmt);
   new_fmt = fmt;
@@ -551,7 +552,7 @@ _bfd_default_error_handler (const char *fmt, ...)
       p = p + 2;
     }
 
-  vfprintf (stderr, new_fmt, ap);
+  o_vfmessage (stderr, new_fmt, ap);
   va_end (ap);
 
   putc ('\n', stderr);

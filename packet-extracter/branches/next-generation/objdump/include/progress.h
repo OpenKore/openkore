@@ -22,12 +22,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.  */
 #ifndef _PROGRESS_H
 #define _PROGRESS_H
 
+#include "messages.h"
+
 #ifndef START_PROGRESS
 #define START_PROGRESS(STR,N)
 #endif
 
 #ifndef PROGRESS
-#define PROGRESS(X) printf("Progress: %.1f\n", X)
+#define PROGRESS(X) o_message ("Progress: %.1f\n", X)
 #endif
 
 #ifndef END_PROGRESS
