@@ -43,7 +43,7 @@ our @EXPORT = (
 	# Other stuff
 	qw(dataWaiting dumpHash formatNumber getCoordString getFormattedDate getHex giveHex getRange getTickCount
 	inRange judgeSkillArea makeCoords makeCoords2 makeDistMap makeIP encodeIP parseArgs shiftPack swrite timeConvert timeOut
-	urldecode unShiftPack vocalString wrapText)
+	urldecode urlencode unShiftPack vocalString wrapText)
 	);
 
 
