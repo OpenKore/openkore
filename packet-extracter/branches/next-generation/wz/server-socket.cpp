@@ -22,7 +22,6 @@
 #ifdef WIN32
 	#define WIN32_LEAN_AND_MEAN
 	#include <wz/win/socket.h>
-	#include <wz/win/server-socket.h>
 	#include <windows.h>
 	#include <winsock2.h>
 #else
@@ -37,6 +36,7 @@ namespace Wz {
 
 	namespace Internal {
 		#ifdef WIN32
+			#include <wz/win/server-socket.cpp>
 		#else
 			#include <wz/unix/server-socket.cpp>
 		#endif
@@ -46,7 +46,11 @@ namespace Wz {
 
 	ServerSocket *
 	ServerSocket::create(const wxChar *address, unsigned short port) {
-		return new UnixServerSocket(address, port);
+		#ifdef WIN32
+			return new WinServerSocket(address, port);
+		#else
+			return new UnixServerSocket(address, port);
+		#endif
 	}
 
 }

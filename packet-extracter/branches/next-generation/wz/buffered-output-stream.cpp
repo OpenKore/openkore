@@ -50,7 +50,7 @@ namespace Wz {
 
 	void BufferedOutputStream::flush() {
 		if (stream == NULL) {
-			throw IOException("The stream is closed.");
+			throw IOException(wxT("The stream is closed."));
 
 		} else if (count > 0) {
 			// We make a copy of count just in case write() or
@@ -67,7 +67,7 @@ namespace Wz {
 		assert(size > 0);
 
 		if (stream == NULL) {
-			throw IOException("The stream is closed.");
+			throw IOException(wxT("The stream is closed."));
 		}
 
 		unsigned int written = 0;
