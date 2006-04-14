@@ -708,6 +708,15 @@ serverType 5
 serverEncoding Western
 
 ## http://www.xilero.net/
+[XileRO EX Private Server]
+ip 66.197.156.53
+port 6901
+master_version 1
+version 20
+serverType 4
+serverEncoding Western
+
+## http://www.xilero.net/
 [XileRO PK Private Server]
 ip xilero2.no-ip.info
 #static ip 72.29.82.150
