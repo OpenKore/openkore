@@ -37,17 +37,17 @@ namespace Wz {
 		/**
 		 * Create a new ServerSocket.
 		 *
-		 * @param address The address to bind this server socket to,
-		 *                or NULL to not bind to a specific address.
-		 * @param port    The port to start the server socket on, or 0
-		 *                to use an available port.
+		 * @param ip    The IP address to bind this server socket to,
+		 *              or NULL to not bind to a specific address.
+		 * @param port  The port to start the server socket on, or 0
+		 *              to use an available port.
 		 * @ensure
 		 *     result->getRefCount() == 1
 		 *     !result->isClosed()
 		 *     if port != 0: result->getPort() == port
 		 * @throws SocketException
 		 */
-		static ServerSocket *create(const wxChar *address = NULL, unsigned short port = 0);
+		static ServerSocket *create(const wxChar *ip = NULL, unsigned short port = 0);
 
 		/**
 		 * Accept a new client.

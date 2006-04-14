@@ -39,16 +39,21 @@ WorkerThread::Entry() {
 		return 0;
 	}
 
-	while (!input->eof() && analyzer.getState() != PacketLengthAnalyzer::DONE
-	       && analyzer.getState() != PacketLengthAnalyzer::FAILED
-	       && !stopped) {
-		char buffer[1024 * 24];
-		int size;
+	try {
+		while (!input->eof() && analyzer.getState() != PacketLengthAnalyzer::DONE
+		       && analyzer.getState() != PacketLengthAnalyzer::FAILED
+		       && !stopped) {
+			char buffer[1024 * 24];
+			int size;
 
-		size = input->read(buffer, sizeof(buffer));
-		if (size > 0) {
-			parser.addData(buffer, size);
+			size = input->read(buffer, sizeof(buffer));
+			if (size > 0) {
+				parser.addData(buffer, size);
+			}
 		}
+	} catch (IOException &e) {
+		status = STATUS_ERROR;
+		error = wxT("The disassembler exited unexpectedly.");
 	}
 
 	delete socket;
