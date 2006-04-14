@@ -128,7 +128,8 @@ View::onAboutClick(wxCommandEvent &event) {
 		     "http://www.openkore.com/\n\n"
 		     "Copyright (c) 2006 - written by VCL\n"
 		     "Licensed under the GNU General Public License.\n"
-		     "Parts of this program are copied from GNU binutils."),
+		     "Parts of this program are copied from GNU binutils.\n"
+		     "Written using WxWidgets (www.wxwidgets.org)"),
 		     wxS("Information"), wxOK | wxICON_INFORMATION,
 		     this);
 }
