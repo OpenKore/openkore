@@ -17,4 +17,8 @@ e = wxenv.Copy()
 e.Append(CPPPATH = ['..'])
 e.Append(LIBPATH = ['../wz'])
 e.Prepend(LIBS = ['wz'])
+if win32:
+	target = e.Command('ui.o', 'ui.rc',
+		'windres -i $SOURCE -o $TARGET --include-dir=ui')
+	sources += [target]
 e.Program('openkore-packet-length-extractor', sources)
