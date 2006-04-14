@@ -86,6 +86,14 @@ serverType 7
 secureLogin 1
 serverEncoding Japanese
 
+[Korea - kRO] 
+ip 211.172.247.192 
+port 6900 
+master_version 0 
+version 19 
+serverType 8 
+serverEncoding Korean
+
 [Malaysia - mRO: Main Server: Balder]
 ip 61.220.63.248
 port 6900
@@ -118,7 +126,7 @@ ip 202.168.25.133
 port 6900
 master_version 23
 version 2
-serverType 6
+serverType 0
 chatLangCode 1
 serverEncoding Western
 
@@ -205,14 +213,6 @@ serverType 2
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
 serverEncoding Tagalog
 gameGuard 1
-
-[Korea - kRO] 
-ip 211.172.247.192 
-port 6900 
-master_version 0 
-version 19 
-serverType 8 
-serverEncoding Korean
 
 ## www.ragnarok.in.th/
 [Thailand - tRO Account 1: Sol, Chaos, Loki, Iris, Valkyrie]
@@ -319,6 +319,14 @@ serverEncoding Western
 # master_version 1
 # version 20
 
+[Localhost]
+ip 127.0.0.1
+port 6900
+master_version 1
+version 20
+serverType 5
+serverEncoding Western
+
 ## http://acro.animeconnection.net/
 [acRO Private Server]
 ip 203.116.44.98
@@ -355,15 +363,6 @@ version 20
 serverType 4
 serverEncoding Western
 
-## http://theanimaro.com/
-[AnimaRO Private Server]
-ip 65.110.33.20
-port 6900
-master_version 18
-version 0
-serverType 0
-serverEncoding Western
-
 ## http://www.andzro.org/
 [AndzRO Private Server]
 ip 64.92.173.26
@@ -381,6 +380,24 @@ port 6900
 master_version 20
 version 20
 serverType 5
+serverEncoding Western
+
+## http://theanimaro.com/
+[AnimaRO Private Server]
+ip 65.110.33.20
+port 6900
+master_version 18
+version 0
+serverType 0
+serverEncoding Western
+
+## http://excalibur-ro.com/
+[AvalonRO Private Server]
+ip 206.222.29.186
+port 6900
+master_version 0
+version 0
+serverType 0
 serverEncoding Western
 
 ## http://www.aiyumi-ro.com/
@@ -444,6 +461,15 @@ port 6901
 master_version 14
 version 14
 serverType 5
+serverEncoding Western
+
+## http://excalibur-ro.com/
+[ExcaliburRO Private Server]
+ip 206.222.28.58
+port 6900
+master_version 0
+version 0
+serverType 0
 serverEncoding Western
 
 ## http://www.faithro.com/
@@ -527,6 +553,24 @@ version 20
 serverType 5
 serverEncoding Western
 
+## http://nlro.net/index.php
+[NamelessRO: Eclipse Private Server]
+ip 72.29.76.150
+port 6900
+master_version 14
+version 18
+serverType 4
+serverEncoding Western
+
+## http://nlro.net/index.php
+[NamelessRO: Sunrise Private Server]
+ip 72.29.76.150
+port 6901
+master_version 14
+version 18
+serverType 4
+serverEncoding Western
+
 ## http://subwaytovenus.free.fr/
 [NiktoutRO Private Server]
 ip 213.186.35.44
@@ -600,6 +644,15 @@ master_version 4
 serverType 5
 serverEncoding Traditional Chinese
 
+## http://www.titanro.com
+[TitanRO (High Rate) Private Server]
+ip titanro.systeminplace.net
+port 6900
+master_version 18
+version 20
+serverType 0
+serverEncoding Western
+
 ## http://ti-server.com/
 [TrinityRO Private Server]
 ip 218.208.91.34
@@ -626,6 +679,25 @@ serverEncoding Western
 #master_version 16
 #serverType 5
 
+## http://www.vanserver.com/
+[VanRO: Medium Rate Private Server]
+ip 66.111.51.160
+port 6800
+master_version 20
+version 18
+serverType 4
+clientSight 20
+serverEncoding Western
+
+## http://www.vanserver.com/
+[VanRO: High Rate Private Server]
+ip 70.84.205.242
+port 6800
+master_version 18
+version 20
+serverType 4
+serverEncoding Western
+
 ## http://www.wafflenet.net/
 [WaffleRO2 (Gold) Private Server]
 ip 66.240.239.24
@@ -646,16 +718,10 @@ serverType 3
 serverEncoding Western
 
 
-# The server details below are old and needs verification
 
-[AniRO: Chaos Private Server]
-ip 82.211.6.25
-port 6900
-master_version 18
-version 54
-serverType 3
-serverEncoding Western
+# The server details below needs verification
 
+## http://anti-gravity.cc/
 [Anti-GravityRO Private Server]
 ip 63.246.131.80
 port 6900
@@ -664,31 +730,7 @@ version 0
 serverType 0
 serverEncoding Western
 
-[AvalonRO Private Server]
-ip 206.222.29.186
-port 6900
-master_version 14
-version 0
-serverType 4
-clientSight 16
-serverEncoding Western
-
-[AxionRO Private Server]
-ip axionro.no-ip.org
-port 6900
-master_version 14
-version 20
-serverType 4
-serverEncoding Western
-
-[ChocoRO Private Server]
-ip 65.110.62.150
-port 6901
-master_version 14
-version 20
-serverType 3
-serverEncoding Western
-
+## http://mobro.mob-games.com/
 [DiscoveryRO: Low Rate Private Server]
 ip 72.36.206.226
 port 6901
@@ -697,6 +739,7 @@ master_version 18
 serverType 3
 serverEncoding Western
 
+## http://mobro.mob-games.com/
 [DiscoveryRO: Revolution Private Server]
 ip 66.111.53.60
 port 6900
@@ -705,39 +748,7 @@ master_version 18
 serverType 3
 serverEncoding Western
 
-[dutchRO Private Server]
-ip 62.163.217.88
-port 6900
-master_version 14
-version 20
-private 1
-serverType 0
-serverEncoding Western
-
-[ExcaliburRO Private Server]
-ip 206.222.29.186
-port 6900
-master_version 18
-version 0
-serverType 0
-serverEncoding Western
-
-[FenixRO Private Server]
-ip 72.36.216.219
-port 5001
-master_version 14
-version 20
-serverType 3
-serverEncoding Western
-
-[GPhase Networks Private Server]
-ip gpn.sytes.net
-port 6900
-master_version 18
-version 20
-serverType 3
-serverEncoding Western
-
+## http://www.hopero.net
 [HopeRO Private Server]
 ip 66.199.253.146
 port 6900
@@ -746,189 +757,11 @@ version 20
 serverType 4
 serverEncoding Western
 
-[Kaz3RO Private Server]
-ip 192.168.2.3
-port 6901
-master_version 1
-version 17
-serverType 4
-serverEncoding Western
-
-[Kaz3RO (2) Private Server]
-ip 206.225.95.57
-port 6900
-master_version 1
-version 17
-serverType 4
-serverEncoding Western
-
-[Kaz3RO (Destiny) Private Server]
-ip 12.158.191.43
-port 6901
-master_version 1
-version 17
-serverType 4
-serverEncoding Western
-
-[Kaz3RO (Holy) Private Server]
-ip 206.225.82.3
-port 6901
-master_version 1
-version 17
-serverType 4
-serverEncoding Western
-
-[Kaz3RO (Serenity) Private Server]
-ip 206.225.83.7
-port 6901
-master_version 1
-version 17
-serverType 4
-serverEncoding Western
-
-[Kaz3RO (Trinity) Private Server]
-ip 206.225.95.57
-port 6901
-master_version 1
-version 17
-serverType 4
-serverEncoding Western
-
-[LegendRO Private Server]
-ip 64.147.163.114
-port 6900
-version 0
-master_version 1
-serverType 5
-serverEncoding Western
-
-[Localhost]
-ip 127.0.0.1
-port 6900
-serverType 5
-secureLogin 0
-secureLogin_type 0
-secureLogin_requestCode
-secureLogin_account 0
-serverEncoding Western
-
-## No homepage yet
-[NamelessRO: Eclipse Private Server]
-ip 72.29.76.150
-port 6900
-master_version 14
-version 18
-serverType 4
-serverEncoding Western
-
-## No homepage yet
-[NamelessRO: Sunrise Private Server]
-ip 72.29.76.150
-port 6901
-master_version 14
-version 18
-serverType 4
-serverEncoding Western
-
-[PheyRO Private Server]
-ip 206.53.56.67
-port 6900
-master_version 18
-version 20
-serverType 3
-serverEncoding Western
-
-[Planet RO Private Server]
-ip 66.111.58.180
-port 6900
-master_version 10
-version 20
-serverType 4
-serverEncoding Western
-
-[powRO Private Server]
-ip 64.69.46.56
-port 6900
-master_version 2
-version 0
-serverType 3
-serverEncoding Western
-
+## http://ro.psiblade.net/
 [PSIBlade Online Private Server]
 ip 72.36.139.114
 port 6900
 master_version 2
 version 0
-serverType 3
-serverEncoding Western
-
-[Ragnarok Frontier Private Server]
-ip 70.68.0.160
-port 6902
-master_version 20
-version 1
-private 1
-serverType 1
-serverEncoding Western
-
-[RusRO Private Server]
-ip 213.219.220.20
-port 6956
-master_version 1
-version 20
-private 1
-serverType 0
-serverEncoding Western
-
-[SonicRO Private Server]
-ip 70.84.81.42
-port 6901
-master_version 18
-version 20
-serverType 0
-serverEncoding Western
-
-[SuperRO Brasil Private Server]
-ip 201.30.187.6
-port 6901
-version 20
-master_version 1
-serverType 0
-serverEncoding Western
-
-[Symphonia RO Private Server]
-ip 68.127.114.140
-port 6900
-master_version 18
-version 20
-private 1
-serverType 0
-serverEncoding Western
-
-## http://www.vanserver.com/
-[VanRO: Medium Rate Private Server]
-ip 66.111.51.160
-port 6800
-master_version 20
-version 18
-serverType 4
-clientSight 20
-serverEncoding Western
-
-## http://www.vanserver.com/
-[VanRO: High Rate Private Server]
-ip 70.84.205.242
-port 6800
-master_version 18
-version 20
-serverType 4
-serverEncoding Western
-
-## http://www.xilero.net/
-[XileRO Private Server]
-ip xilero.no-ip.info
-port 6901
-master_version 17
-version 20
 serverType 3
 serverEncoding Western
