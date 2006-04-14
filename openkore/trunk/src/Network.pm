@@ -517,7 +517,7 @@ sub checkConnection {
 			error T("exiting...\n"), "connection";
 			$quit = 1;
 		} else {
-			error T("connecting to Account Server in %s seconds...\n", $timeout{reconnect}{timeout}), "connection";
+			error TF("connecting to Account Server in %s seconds...\n", $timeout{reconnect}{timeout}), "connection";
 			$timeout_ex{master}{time} = time;
 			$timeout_ex{master}{timeout} = $timeout{reconnect}{timeout};
 			$self->serverDisconnect;
