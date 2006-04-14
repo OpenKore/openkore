@@ -42,8 +42,8 @@ conf.Finish()
 
 ######## Setup environment ########
 env = Environment()
-env['CCFLAGS'] = ['-Wall', '-ffunction-sections', '-fdata-sections']
-env['LINKFLAGS'] = ['-Wl,--gc-sections']
+env['CCFLAGS'] = ['-Wall']
+env['LINKFLAGS'] = []
 env['LIBPATH'] = []
 env['LIBS'] = []
 env['CPPDEFINES'] = []
@@ -51,8 +51,8 @@ env['CPPPATH'] = []
 if have_visibilityHidden:
 	env['CCFLAGS'] += ['-fvisibility=hidden']
 if cygwin:
-	env['CCFLAGS'] += ['-mno-cygwin']
-	env['LINKFLAGS'] += ['-mno-cygwin']
+	env['CCFLAGS'] += ['-mno-cygwin', '-ffunction-sections', '-fdata-sections']
+	env['LINKFLAGS'] += ['-mno-cygwin', '-Wl,--gc-sections']
 
 wxenv = env.Copy()
 wxenv.ParseConfig('wx-config --cflags base core')
