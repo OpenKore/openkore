@@ -56,7 +56,7 @@ if cygwin:
 
 wxenv = env.Copy()
 wxenv.ParseConfig('wx-config --cflags base core')
-wxenv['CXXFLAGS'] = wxenv['CCFLAGS']
+wxenv.Append(CXXFLAGS = wxenv['CCFLAGS'])
 if have_visibilityHidden:
 	wxenv['CXXFLAGS'] += ['-fvisibility-inlines-hidden']
 
