@@ -126,7 +126,8 @@ UnixSocket::UnixSocket(const wxChar *address, unsigned short port) {
 	}
 
 	struct hostent *ent;
-	ent = gethostbyname (static_cast<const char *>(address));
+	wxString addrString(address);
+	ent = gethostbyname (addrString.mb_str(wxConvUTF8));
 	if (ent == NULL) {
 		wxString message;
 		message.Printf(wxT("Host %s not found"), address);
