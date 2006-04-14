@@ -41,7 +41,8 @@ public:
 	UnixServerSocket(const wxChar *address, unsigned short port) {
 		fd = socket (PF_INET, SOCK_STREAM, 0);
 		if (fd == -1) {
-			throw SocketException(strerror(errno), errno);
+			wxString message(strerror(errno), wxConvUTF8);
+			throw SocketException(message, errno);
 		}
 
 		struct sockaddr_in addr;
@@ -50,7 +51,8 @@ public:
 		if (address == NULL) {
 			addr.sin_addr.s_addr = htonl(INADDR_ANY);
 		} else {
-			addr.sin_addr.s_addr = inet_addr(address);
+			wxString addrString(address);
+			addr.sin_addr.s_addr = inet_addr(addrString.mb_str(wxConvUTF8));
 		}
 		if (bind(fd, (struct sockaddr *) &addr, sizeof(addr)) == -1) {
 			wxString message;
@@ -101,7 +103,8 @@ public:
 			if (result == 0) {
 				return NULL;
 			} else if (result == -1) {
-				throw IOException(strerror(errno), errno);
+				wxString message(strerror(errno), wxConvUTF8);
+				throw IOException(message, errno);
 			} else if (ufds.revents & POLLERR) {
 				throw IOException(wxT("A socket error condition occured"));
 			} else if (ufds.revents & POLLHUP) {
@@ -115,7 +118,8 @@ public:
 		socklen_t len = sizeof(addr);
 		int clientfd = ::accept(fd, (struct sockaddr *) &addr, &len);
 		if (clientfd == -1) {
-			throw IOException(strerror(errno), errno);
+			wxString message(strerror(errno), wxConvUTF8);
+			throw IOException(message, errno);
 		}
 
 		return new UnixSocket(clientfd);
