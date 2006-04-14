@@ -9,6 +9,7 @@ port 6900
 master_version 22
 version 1
 serverType 0
+serverEncoding Western
 field_payon old_payon.fld
 gameGuard 2
 
@@ -20,6 +21,7 @@ version 1
 chatLangCode 1
 patchserver wpatch.euro-ro.net
 patchpath /patch02
+serverType 0
 serverEncoding Western
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x0E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
 
@@ -45,6 +47,7 @@ secureLogin 1
 secureLogin_type 0
 secureLogin_requestCode
 secureLogin_account 0
+serverEncoding Western
 gameGuard 1
 
 [Indonesia - idRO: Sakray]
@@ -89,6 +92,7 @@ port 6900
 master_version 16
 version 102
 serverType 0
+serverEncoding Western
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
 
 [Malaysia - mRO (English): Aegir/Idun]
@@ -97,6 +101,7 @@ port 6900
 master_version 17
 version 102
 serverType 0
+serverEncoding Western
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
 
 [Malaysia - mRO: Sakray]
@@ -105,6 +110,7 @@ port 6900
 master_version 16
 version 102
 serverType 0
+serverEncoding Western
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
 
 [Oceania/Australia - oRO]
@@ -114,6 +120,7 @@ master_version 23
 version 2
 serverType 6
 chatLangCode 1
+serverEncoding Western
 
 [Oceania/Australia - oRO: Sakray]
 ip 202.168.25.142
@@ -122,6 +129,7 @@ master_version 23
 version 2
 serverType 0
 chatLangCode 1
+serverEncoding Western
 field_payon old_payon.fld
 
 [Philippines - pRO: Fenrir/Iris/Lydia]
@@ -197,6 +205,14 @@ serverType 2
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
 serverEncoding Tagalog
 gameGuard 1
+
+[Korea - kRO] 
+ip 211.172.247.192 
+port 6900 
+master_version 0 
+version 19 
+serverType 8 
+serverEncoding Korean
 
 ## www.ragnarok.in.th/
 [Thailand - tRO Account 1: Sol, Chaos, Loki, Iris, Valkyrie]
@@ -293,6 +309,7 @@ secureLogin 1
 secureLogin_type 0
 secureLogin_requestCode
 secureLogin_account 0
+serverEncoding Western
 
 
 ####################
@@ -546,6 +563,7 @@ port 6901
 master_version 7
 version 20
 serverType 5
+serverEncoding Western
 
 ## http://www.raggame.ru/
 [RuRO Private Server]
@@ -875,6 +893,7 @@ ip 201.30.187.6
 port 6901
 version 20
 master_version 1
+serverType 0
 serverEncoding Western
 
 [Symphonia RO Private Server]
@@ -913,11 +932,3 @@ master_version 17
 version 20
 serverType 3
 serverEncoding Western
-
-[Korea - kRO] 
-ip 211.172.247.192 
-port 6900 
-master_version 0 
-version 19 
-serverType 8 
-serverEncoding Korean
