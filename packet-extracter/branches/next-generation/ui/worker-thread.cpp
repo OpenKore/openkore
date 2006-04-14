@@ -51,6 +51,7 @@ WorkerThread::Entry() {
 		}
 	}
 
+	delete socket;
 	parser.setEOF();
 	return 0;
 }
