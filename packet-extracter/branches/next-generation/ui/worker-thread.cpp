@@ -26,8 +26,8 @@ WorkerThread::Entry() {
 	InputStream *input;
 
 	try {
-		socket = server->accept(3000);
-		if (input == NULL) {
+		socket = server->accept(4000);
+		if (socket == NULL) {
 			status = STATUS_ERROR;
 			error = wxT("The internal disassembler program failed to start.");
 			return 0;
