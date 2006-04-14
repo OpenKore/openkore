@@ -66,7 +66,7 @@ public:
 
 		ssize_t result = recv(fd, buffer, size, 0);
 		if (result == -1) {
-			wxString message(strerror(errno));
+			wxString message(strerror(errno), wxConvUTF8);
 			throw IOException(message, errno);
 		}
 
@@ -108,7 +108,7 @@ public:
 
 		ssize_t result = send(fd, data, size, MSG_NOSIGNAL);
 		if (result == -1) {
-			wxString message(strerror(errno));
+			wxString message(strerror(errno), wxConvUTF8);
 			throw IOException(message, errno);
 		}
 		return result;
