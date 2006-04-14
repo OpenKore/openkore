@@ -18,12 +18,14 @@
  *  MA  02110-1301  USA
  */
 
+#include <string.h>
+#include <wx/strconv.h>
 #include "output-stream.h"
 
 namespace Wz {
 	unsigned int
 	OutputStream::write(wxString &data) {
-		return write(static_cast<const char *>(data.c_str()),
-			     data.size());
+		const char *str = wxConvUTF8.cWX2MB(data.c_str());
+		return write(str, strlen(str));
 	}
 }

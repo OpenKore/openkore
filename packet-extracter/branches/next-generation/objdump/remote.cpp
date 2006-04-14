@@ -23,7 +23,7 @@ hook(const char *message) {
 char *
 remote_control_init(const char *address, unsigned int port) {
 	try {
-		socket = Socket::create(address, port);
+		socket = Socket::create(wxString::FromAscii(address), port);
 		output = new BufferedOutputStream(socket->getOutputStream(), 1024 * 32);
 		o_message_set_hook(hook);
 		return NULL;

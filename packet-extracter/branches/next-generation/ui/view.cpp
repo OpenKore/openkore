@@ -147,7 +147,7 @@ View::onTimer(wxTimerEvent &event) {
 	progress->SetValue(100);
 
 	thread->Wait();
-	if (thread->getStatus() == WorkerThread::ERROR) {
+	if (thread->getStatus() == WorkerThread::STATUS_ERROR) {
 		wxMessageBox(thread->getError(), wxS("Error"), wxOK | wxICON_ERROR, this);
 		delete thread;
 		thread = NULL;

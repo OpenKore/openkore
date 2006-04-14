@@ -13,7 +13,7 @@ WorkerThread::WorkerThread(long pid, ServerSocket *server)
 	this->server = server;
 	server->ref();
 	stopped = false;
-	status = OK;
+	status = STATUS_OK;
 }
 
 WorkerThread::~WorkerThread() {
@@ -28,13 +28,13 @@ WorkerThread::Entry() {
 	try {
 		socket = server->accept(3000);
 		if (input == NULL) {
-			status = ERROR;
+			status = STATUS_ERROR;
 			error = wxT("The internal disassembler program failed to start.");
 			return 0;
 		}
 		input = socket->getInputStream();
 	} catch (IOException &e) {
-		status = ERROR;
+		status = STATUS_ERROR;
 		error = wxT("Socket error: ") + e.getMessage();
 		return 0;
 	}
@@ -63,7 +63,7 @@ WorkerThread::getAnalyzer() {
 void
 WorkerThread::stop() {
 	stopped = true;
-	status = STOPPED;
+	status = STATUS_STOPPED;
 }
 
 WorkerThread::Status

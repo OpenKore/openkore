@@ -25,7 +25,7 @@
 class WinServerSocket: public ServerSocket {
 private:
 	/** The server socket. */
-	SOCK fd;
+	SOCKET fd;
 	/**
 	 * The server socket's port.
 	 * @invariant port > 0
@@ -48,7 +48,8 @@ public:
 		if (address == NULL) {
 			addr.sin_addr.s_addr = htonl(INADDR_ANY);
 		} else {
-			addr.sin_addr.s_addr = inet_addr(address);
+			wxString addrString(address);
+			addr.sin_addr.s_addr = inet_addr(addrString.mb_str(wxConvUTF8));
 		}
 		addr.sin_port = htons(port);
 		if (bind(fd, (struct sockaddr *) &addr, sizeof(addr)) == SOCKET_ERROR) {
@@ -61,7 +62,7 @@ public:
 		}
 
 		if (port == 0) {
-			socklen_t len = sizeof(addr);
+			int len = sizeof(addr);
 			if (getsockname(fd, (struct sockaddr *) &addr, &len) == SOCKET_ERROR) {
 				int error = WSAGetLastError();
 				closesocket(fd);
@@ -88,7 +89,7 @@ public:
 
 	virtual Socket *accept(int timeout) {
 		assert(timeout >= -1);
-		if (fd == -1) {
+		if (fd == INVALID_SOCKET) {
 			throw IOException(wxT("Server socket is closed"));
 		}
 
@@ -106,14 +107,18 @@ public:
 			if (result == 0) {
 				return NULL;
 			} else if (result == SOCKET_ERROR) {
-				throw IOException(strerror(errno), errno);
+				int error = WSAGetLastError();
+				wxString message;
+				message.Printf(wxT("Cannot poll socket (error %d)"),
+					error);
+				throw IOException(message, error);
 			}
 		}
 
 		struct sockaddr_in addr;
-		socklen_t len;
+		int len = sizeof(addr);
 		SOCKET clientfd = ::accept(fd, (struct sockaddr *) &addr, &len);
-		if (clientfd == -1) {
+		if (clientfd == INVALID_SOCKET) {
 			int error = WSAGetLastError();
 			wxString message;
 			message.Printf(wxT("Cannot accept client socket (error %d)"),

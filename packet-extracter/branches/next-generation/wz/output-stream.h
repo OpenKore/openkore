@@ -49,7 +49,8 @@ namespace Wz {
 		virtual void flush() = 0;
 
 		/**
-		 * Write data into the stream.
+		 * Write a string into the stream. A UTF-8
+		 * version of the string data is written to the stream.
 		 *
 		 * @param data The data to send.
 		 * @param size The number of bytes in data.

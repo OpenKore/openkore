@@ -16,5 +16,5 @@ sources = Split('''
 e = wxenv.Copy()
 e.Append(CPPPATH = ['..'])
 e.Append(LIBPATH = ['../wz'])
-e.Append(LIBS = ['wz'])
+e.Prepend(LIBS = ['wz'])
 e.Program('openkore-packet-length-extractor', sources)

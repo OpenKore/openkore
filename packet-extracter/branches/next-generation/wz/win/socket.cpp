@@ -122,7 +122,8 @@ WinSocket::WinSocket(const wxChar *address, unsigned short port) {
 
 	struct hostent *ent;
 	char *ip;
-	ent = gethostbyname (static_cast<const char *>(address));
+	wxString addrString(address);
+	ent = gethostbyname (addrString.mb_str(wxConvUTF8));
 	if (ent == NULL) {
 		wxString message;
 		int error = WSAGetLastError();
@@ -156,10 +157,20 @@ WinSocket::WinSocket(SOCKET sock) {
 	out = new OutStream(fd);
 }
 
-virtual ~WinClientSocket() {
+WinSocket::~WinSocket() {
 	in->close();
 	in->unref();
 	out->close();
 	out->unref();
 	closesocket(fd);
+}
+
+InputStream *
+WinSocket::getInputStream() {
+	return in;
+}
+
+OutputStream *
+WinSocket::getOutputStream() {
+	return out;
 }

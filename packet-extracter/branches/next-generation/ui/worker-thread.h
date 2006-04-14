@@ -19,9 +19,9 @@ public:
 	void stop();
 
 	enum Status {
-		OK,
-		ERROR,
-		STOPPED
+		STATUS_OK,
+		STATUS_ERROR,
+		STATUS_STOPPED
 	};
 	Status getStatus();
 	wxString getError();

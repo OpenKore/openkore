@@ -112,7 +112,7 @@ public:
 		}
 
 		struct sockaddr_in addr;
-		socklen_t len;
+		socklen_t len = sizeof(addr);
 		int clientfd = ::accept(fd, (struct sockaddr *) &addr, &len);
 		if (clientfd == -1) {
 			throw IOException(strerror(errno), errno);
