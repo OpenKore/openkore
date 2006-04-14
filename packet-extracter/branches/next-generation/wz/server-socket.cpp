@@ -45,11 +45,11 @@ namespace Wz {
 	using namespace Internal;
 
 	ServerSocket *
-	ServerSocket::create(const wxChar *address, unsigned short port) {
+	ServerSocket::create(const wxChar *ip, unsigned short port) {
 		#ifdef WIN32
-			return new WinServerSocket(address, port);
+			return new WinServerSocket(ip, port);
 		#else
-			return new UnixServerSocket(address, port);
+			return new UnixServerSocket(ip, port);
 		#endif
 	}
 

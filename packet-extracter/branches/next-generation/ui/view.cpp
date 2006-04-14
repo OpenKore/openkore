@@ -82,7 +82,7 @@ View::onExtractClick(wxCommandEvent &event) {
 	// Start a server socket
 	ServerSocket *server;
 	try {
-		server = ServerSocket::create(NULL, 0);
+		server = ServerSocket::create(wxT("127.0.0.1"), 0);
 	} catch (SocketException &e) {
 		wxString message;
 		message.Printf(wxT("Unable to start a server socket: %s"),

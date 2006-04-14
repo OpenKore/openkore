@@ -18,6 +18,7 @@
  *  MA  02110-1301  USA
  */
 
+#include <string.h>
 #include <assert.h>
 
 #define DEFAULT_BACKLOG_SIZE 5
@@ -44,12 +45,15 @@ public:
 		}
 
 		struct sockaddr_in addr;
+		char *c_address = NULL;
+
 		addr.sin_family = AF_INET;
 		if (address == NULL) {
 			addr.sin_addr.s_addr = htonl(INADDR_ANY);
 		} else {
 			wxString addrString(address);
-			addr.sin_addr.s_addr = inet_addr(addrString.mb_str(wxConvUTF8));
+			c_address = strdup(addrString.mb_str(wxConvUTF8));
+			addr.sin_addr.s_addr = inet_addr(c_address);
 		}
 		addr.sin_port = htons(port);
 		if (bind(fd, (struct sockaddr *) &addr, sizeof(addr)) == SOCKET_ERROR) {
@@ -59,6 +63,10 @@ public:
 				       address, error);
 			closesocket(fd);
 			throw SocketException(message, error);
+		}
+
+		if (c_address != NULL) {
+			free(c_address);
 		}
 
 		if (port == 0) {
