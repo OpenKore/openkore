@@ -38,7 +38,7 @@ my $XSUBPP = '$(PERL) ' . convertPath(search(\@INC, "ExtUtils/xsubpp") || search
 my $TYPEMAP = convertPath search(\@INC, "ExtUtils/typemap");
 my $COREDIR = convertPath "$Config{installarchlib}/CORE";
 my $PERLCFLAGS = ($win32) ?
-		'-Wno-unused -Wno-implicit -D__MINGW32__ -D_INTPTR_T_DEFINED -D_UINTPTR_T_DEFINED' :
+		'-Wno-unused -Wno-comments -Wno-implicit -D__MINGW32__ -D_INTPTR_T_DEFINED -D_UINTPTR_T_DEFINEDzz' :
 		'-fPIC -Wno-unused -Wno-implicit -D_REENTRANT -D_GNU_SOURCE -DTHREADS_HAVE_PIDS -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64';
 my $LIBPERL = ($win32) ? "$COREDIR/perl58.lib" : "";
 my $SOCFLAGS = ($win32) ? "" : "-fPIC";
