@@ -77,7 +77,7 @@
 00F4 Storage Added
 00F6 Storage Removed
 00F8 Storage Closed
-00FA Party Create Failed
+00FA Party Creation Result
 00FB Party Users List
 00FD Party Join Request (From You)
 00FE Party Join Request (From Other)
