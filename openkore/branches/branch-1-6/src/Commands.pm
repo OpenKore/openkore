@@ -2093,6 +2093,7 @@ sub cmdParty {
 				"Usage: party create \"<party name>\"\n";
 		} else {
 			sendPartyOrganize(\$remote_socket, $arg2);
+			$lastPartyOrganizeName = $arg2;
 		}
 
 	} elsif ($arg1 eq "join" && $arg2 ne "1" && $arg2 ne "0") {
@@ -2115,14 +2116,14 @@ sub cmdParty {
 		sendPartyJoinRequest(\$remote_socket, $playersID[$arg2]);
 
 
-	} elsif ($arg1 eq "leave" && !%{$chars[$config{'char'}]{'party'}}) {
+	} elsif ($arg1 eq "leave" && !$chars[$config{'char'}]{'party'}) {
 		error	"Error in function 'party leave' (Leave Party)\n" .
 			"Can't leave party - you're not in a party.\n";
 	} elsif ($arg1 eq "leave") {
 		sendPartyLeave(\$remote_socket);
 
 
-	} elsif ($arg1 eq "share" && ( !$chars[$config{'char'}]{'party'} || !%{$chars[$config{'char'}]{'party'}} )) {
+	} elsif ($arg1 eq "share" && !$chars[$config{'char'}]{'party'}) {
 		error	"Error in function 'party share' (Set Party Share EXP)\n" .
 			"Can't set share - you're not in a party.\n";
 	} elsif ($arg1 eq "share" && $arg2 ne "1" && $arg2 ne "0") {
