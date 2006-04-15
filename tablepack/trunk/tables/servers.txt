@@ -637,13 +637,23 @@ master_version 25
 version 61
 serverEncoding Russian
 
+## http://www.rusro.com/index_eng.php
+[RusRO Private Server]
+ip 209.97.213.90
+port 6957
+version 2349
+master_version 0
+serverType 9
+private 1
+serverEncoding Russian
+
 ## http://www.speedro.de/speedro.html
 [SpeedRO Private Server]
 ip 205.177.72.106
 port 6900
 version 0
 master_version 16
-serverType 5
+serverType 9
 serverEncoding Western
 
 ## http://www.sukiro.com/
@@ -692,12 +702,13 @@ serverType 5
 serverEncoding Western
 
 ## http://www.valhallaro.org/
-#[ValhallaRO Private Server]
-#ip valhalla.servegame.com
-#port 6080
-#version 21
-#master_version 16
-#serverType 5
+[ValhallaRO Private Server]
+ip valhalla.servegame.com
+port 6080
+version 30
+master_version 16
+serverType 9
+serverEncoding Western
 
 ## http://www.vanserver.com/
 [VanRO: Medium Rate Private Server]
