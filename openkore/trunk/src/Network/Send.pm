@@ -460,6 +460,9 @@ sub sendAttack {
 	} elsif ($config{serverType} == 8) { 
 		$msg = pack("C*", 0x90, 0x01, 0x00, 0x00, 0x00) . 
 		$monID . pack("C*",0x00, 0x00, 0x00, 0x00, 0x37, 0x66, 0x61, 0x32, 0x00, $flag);
+
+	} elsif ($config{serverType} == 9) {
+		$msg = pack("C*", 0x90, 0x01) . pack("x5") . $monID . pack("x6") . pack("C", $flag);
 	}
 
 	sendMsgToServer($r_net, $msg);
@@ -584,7 +587,7 @@ sub sendChat {
 	$message = stringToBytes($message); # Type: Bytes
 	$charName = stringToBytes($char->{name});
 
-	if (($config{serverType} == 3) || ($config{serverType} == 5)) {
+	if (($config{serverType} == 3) || ($config{serverType} == 5) || ($config{serverType} == 9)) {
 		$data = pack("C*", 0xf3, 0x00) .
 			pack("v*", length($charName) + length($message) + 8) .
 			$charName . " : " . $message . chr(0);
@@ -786,6 +789,12 @@ sub sendDrop {
 			pack("v*", $index) .
 			pack("C*", 0xC8, 0xFE, 0xB2, 0x07, 0x63, 0x01, 0x00) .
 			pack("v*", $amount);
+
+	} elsif ($config{serverType} == 9) {
+		$msg = pack("C*", 0x16, 0x01) . pack("x6") .
+			pack("v*", $index) .
+			pack("x5") .
+			pack("v*", $amount);
 	}
 	sendMsgToServer($r_net, $msg);
 	debug "Sent drop: $index x $amount\n", "sendPacket", 2;
@@ -927,6 +936,9 @@ sub sendGetPlayerInfo {
 
 	} elsif ($config{serverType} == 7) {
 		$msg = pack("C*", 0x94, 0x00) . pack("C*", 0x5B, 0x04, 0x0C, 0xF9, 0x12, 0x00, 0x36, 0xAE) . $ID;
+
+	} elsif ($config{serverType} == 9) {
+		$msg = pack("C*", 0x8c, 0x00) . pack("x6") . $ID;
 	}
 
 	sendMsgToServer($r_net, $msg);
@@ -1160,6 +1172,7 @@ sub sendItemUse {
 			pack("v*", $ID) .
 			pack("C*", 0x00, 0x18, 0xfb, 0x12) .
 			$targetID;
+
 	} elsif ($config{serverType} == 6) {
 		$msg = pack("C*", 0xA7, 0x00, 0x49).pack("v*", $ID).
 		pack("C*", 0xfa, 0x12, 0x00, 0xdc, 0xf9, 0x12).$targetID;
@@ -1168,6 +1181,12 @@ sub sendItemUse {
 		$msg = pack("C*", 0xA7, 0x00, 0x12, 0x00, 0xB0, 0x5A, 0x61) .
 			pack("v*", $ID) .
 			pack("C*", 0xFA, 0x12, 0x00, 0xDA, 0xF9, 0x12, 0x00) .
+			$targetID;
+
+	} elsif ($config{serverType} == 9) {
+		$msg = pack("C*", 0x9f, 0x00) . pack("x7") .
+			pack("v*", $ID) .
+			pack("x9") .
 			$targetID;
 	}
 	sendMsgToServer($r_net, $msg);
@@ -1199,10 +1218,15 @@ sub sendLook {
 		$msg = pack("C*", 0x85, 0x00, 0x54, 0x00, 0xD8, 0x5D, 0x2E, 0x14) .
 			pack("C*", $head, 0x00, 0x00, 0x00, 0x08, 0x60, 0x13, 0x14) .
 			pack("C*", $body);
-			
+
 	} elsif ($config{serverType} == 7) {
 		$msg = pack("C*", 0x9B, 0x00, 0x67, 0x00, $head,
 			0x00, 0x5B, 0x04, 0xE2, $body);
+
+	} elsif ($config{serverType} == 9) {
+		$msg = pack("C*", 0x85, 0x00) . pack("x5") .
+			pack("C*", $head, 0x00) . pack("x2") .
+			pack("C*", $body);
 	}
 	sendMsgToServer($r_net, $msg);
 	debug "Sent look: $body $head\n", "sendPacket", 2;
@@ -1297,19 +1321,12 @@ sub sendMapLogin {
 			pack("C*", $sex);
 
 	} elsif ($config{serverType} == 9) { # New eAthena
-		# These codes changes from server to server
-		# it is still being verified if these values are dynamic
-		# it is suspected that these codes may be used by the server
-		# as anti-bot signature.
-		my $key1 = substr($masterServer->{mapLogin_key}, 0, 7) || pack("x7");
-		my $key2 = substr($masterServer->{mapLogin_key}, 7, 8) || pack("x8");
-		my $key3 = substr($masterServer->{mapLogin_key}, 15, 3) || pack("x3");
 		$msg = pack("C*", 0x9b, 0) .
-			$key1 .
+			pack("x7") .
 			$accountID .
-			$key2 .
+			pack("x8") .
 			$charID .
-			$key3 .
+			pack("x3") .
 			$sessionID .
 			pack("V", getTickCount()) .
 			pack("C*", $sex);
@@ -1472,6 +1489,10 @@ sub sendMove {
 		
 	} elsif ($config{serverType} == 8) { #kRO 28 march 2006
 		$msg = pack("C*", 0xA7, 0x00, 0x00, 0x00) . getCoordString($x, $y);
+
+	} elsif ($config{serverType} == 9) {
+		$msg = pack("C*", 0xa7, 0x00) . pack("x9") .
+		getCoordString($x, $y);
 
 	} else {
 		$msg = pack("C*", 0x85, 0x00) . getCoordString($x, $y);
@@ -1759,7 +1780,7 @@ sub sendSit {
 	} elsif ($config{serverType} == 5) {
 		$msg = pack("C*", 0x90, 0x01, 0x00, 0x40, 0x00, 0x00, 0x00, 0x00, 0x08, 0xb0, 0x58,
 			0x00, 0x00, 0x00, 0x00, 0x3f, 0x74, 0xfb, 0x12, 0x00, 0xd0, 0xda, 0x63, 0x02);
-			
+
 	} elsif ($config{serverType} == 6) {
 		$msg = pack("C*", 0x89, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00) .
 		pack("C*", 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02);
@@ -1776,6 +1797,9 @@ sub sendSit {
 		$msg = pack("C*", 0x90, 0x01, 0x00, 0x00, 0x00, 0x00 ,0x00 ,0x00,
   			0x00, 0x00, 0x00, 0x00, 0x00, 0x00 ,0x00 ,0x00,
 			0x00, 0x00, 0x02);
+
+	} elsif ($config{serverType} == 9) {
+		$msg = pack("C*", 0x90, 0x01) . pack("x5") . pack("x4") . pack("x6") . pack("C", 0x02);
 	}
 	sendMsgToServer($r_net, $msg);
 	debug "Sitting\n", "sendPacket", 2;
@@ -1838,6 +1862,12 @@ sub sendSkillUse {
 			AI::dequeue();
 		}
 		return;
+
+	} elsif ($config{serverType} == 9) {
+		$msg = pack("C*", 0x72, 0x00) . pack("x9") .
+			pack("v*", $lv) . pack("x5") .
+			pack("v*", $ID) . pack("x2") .
+			$targetID;
 	}
 	sendMsgToServer($r_net, $msg);
 	debug "Skill Use: $ID\n", "sendPacket", 2;
@@ -1898,7 +1928,23 @@ sub sendSkillUseLoc {
 			pack("v*", $x, 0x1ad8, 0x76b4, $y);
 
 	} elsif ($config{serverType} == 7) {
-		# place holder
+		error "Skill use location packet not yet implemented.\n";
+		if (AI::action() eq "skill_use") {
+			error "Failed to use skill.\n";
+			AI::dequeue();
+		}
+		return;
+
+	} elsif ($config{serverType} == 9) {
+		$msg = pack("C*", 0x13, 0x01) .
+			pack("x3") .
+			pack("v*", $lv) .
+			pack("x8") .
+			pack("v*", $ID) .
+			pack("x12") .
+			pack("v*", $x) .
+			pack("C*", 0x3D, 0xF8, 0xFA, 0x12, 0x00, 0x18, 0xEE) .
+			pack("v*", $y);
 	}
 	sendMsgToServer($r_net, $msg);
 	debug "Skill Use on Location: $ID, ($x, $y)\n", "sendPacket", 2;
@@ -1944,6 +1990,12 @@ sub sendStorageAdd {
 			pack("v", $index) .
 			pack("C*", 0x88, 0xC5, 0x07, 0x00, 0x00, 0x00, 0x00, 0x7F, 0x0C, 0x7F) .
 			pack("V", $amount);
+
+	} elsif ($config{serverType} == 9) {
+		$msg = pack("C*", 0x94, 0x00) . pack("x3") .
+			pack("v*", $index) .
+			pack("x12") .
+			pack("V*", $amount);
 	}
 	sendMsgToServer($net, $msg);
 	debug "Sent Storage Add: $index x $amount\n", "sendPacket", 2;
@@ -1960,7 +2012,7 @@ sub sendStorageAddFromCart {
 
 sub sendStorageClose {
 	my $msg;
-	if (($config{serverType} == 3) || ($config{serverType} == 5)) {
+	if (($config{serverType} == 3) || ($config{serverType} == 5) || ($config{serverType} == 9)) {
 		$msg = pack("C*", 0x93, 0x01);
 	} else {
 		$msg = pack("C*", 0xF7, 0x00);
@@ -2008,6 +2060,11 @@ sub sendStorageGet {
 		$msg = pack("C*", 0xF5, 0x00, 0x00) .
 			pack("v*", $index) .
 			pack("C*", 0x00, 0x00, 0x00, 0x60, 0xF7, 0x12, 0x00, 0xB8) .
+			pack("V*", $amount);
+
+	} elsif ($config{serverType} == 9) {
+		$msg = pack("C*", 0xf7, 0x00) . pack("x9") .
+			pack("v*", $index) . pack("x9") .
 			pack("V*", $amount);
 	}
 	sendMsgToServer($net, $msg);
@@ -2072,6 +2129,9 @@ sub sendStand {
 		$msg = pack("C*", 0x90, 0x01, 0x00, 0x00, 0x00, 0x00 ,0x00 ,0x00,
   			0x00, 0x00, 0x00, 0x00, 0x00, 0x00 ,0x00 ,0x00,
 			0x00, 0x00, 0x03);
+
+	} elsif ($config{serverType} == 9) {
+		$msg = pack("C*", 0x90, 0x01) . pack("x5") . pack("x4") . pack("x6") . pack("C", 0x03);
 	}
 	sendMsgToServer($r_net, $msg);
 	debug "Standing\n", "sendPacket", 2;
@@ -2121,7 +2181,7 @@ sub sendSync {
 		$msg .= pack("V", getTickCount());
 		$msg .= pack("C*", 0x0B);
 
-	} elsif ($config{serverType} == 5) {
+	} elsif ($config{serverType} == 5 || $config{serverType} == 9) {
 		$msg = pack("C*", 0x89, 0x00);
 		$msg .= pack("C*", 0x00, 0x00, 0x40) if ($initialSync);
 		$msg .= pack("C*", 0x00, 0x00, 0x1F) if (!$initialSync);
@@ -2174,6 +2234,12 @@ sub sendTake {
 
 	} elsif ($config{serverType} == 7) {
 		$msg = pack("C*", 0x9F, 0x00, 0x00, 0x00, 0xE8, 0x3C, 0x5B) . $itemID;
+
+	} elsif ($config{serverType} == 9) {
+		# this is the same with serverType 5,
+		# but we separate it in case we get to implement
+		# the variable keys included in the packets.
+		$msg = pack("C*", 0xf5, 0x00) . pack("x7") . $itemID;
 	}
 
 	sendMsgToServer($r_net, $msg);
