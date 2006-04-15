@@ -446,6 +446,17 @@ sub sendAttack {
 		$monID .
 		pack("C*", 0x03, 0x04, 0x01, 0xb7, 0x39, 0x03, 0x00, $flag);
 
+	} elsif ($config{serverType} == 7) {
+		error "Mutating attack packet not yet implemented.\n";
+		if (AI::action() eq "NPC") {
+			error "Failed to talk to monster NPC.\n";
+			AI::dequeue();
+		} elsif (AI::action() eq "attack") {
+			error "Failed to attack target.\n";
+			AI::dequeue();
+		}
+		return;
+
 	} elsif ($config{serverType} == 8) { 
 		$msg = pack("C*", 0x90, 0x01, 0x00, 0x00, 0x00) . 
 		$monID . pack("C*",0x00, 0x00, 0x00, 0x00, 0x37, 0x66, 0x61, 0x32, 0x00, $flag);
@@ -735,7 +746,7 @@ sub sendDrop {
 	if ($config{serverType} == 0) {
 		$msg = pack("C*", 0xA2, 0x00) . pack("v*", $index, $amount);
 
-	} elsif (($config{serverType} == 1) || ($config{serverType} == 2) || ($config{serverType} == 7)) {
+	} elsif (($config{serverType} == 1) || ($config{serverType} == 2)) {
 		$msg = pack("C*", 0xA2, 0x00) .
 			pack("C*", 0xFF, 0xFF, 0x08, 0x10) .
 			pack("v*", $index) .
@@ -767,6 +778,13 @@ sub sendDrop {
 		$msg = pack("C*", 0xA2, 0x00, 0, 0) .
 			pack("v*", $index) .
 			pack("C*", 0x7f, 0x03, 0xD2, 0xf2) .
+			pack("v*", $amount);
+	
+	} elsif ($config{serverType} == 7) {
+		$msg = pack("C*", 0xA2, 0x00) .
+			pack("C*", 0x4B, 0x00, 0xB8, 0x00) .
+			pack("v*", $index) .
+			pack("C*", 0xC8, 0xFE, 0xB2, 0x07, 0x63, 0x01, 0x00) .
 			pack("v*", $amount);
 	}
 	sendMsgToServer($r_net, $msg);
@@ -906,6 +924,9 @@ sub sendGetPlayerInfo {
 		
 	} 	if ($config{serverType} == 6) {
 		$msg = pack("C*", 0x94, 0x00, 0x54, 0x00, 0x44, 0xc1, 0x4b, 0x02, 0x44) . $ID;
+
+	} elsif ($config{serverType} == 7) {
+		$msg = pack("C*", 0x94, 0x00) . pack("C*", 0x5B, 0x04, 0x0C, 0xF9, 0x12, 0x00, 0x36, 0xAE) . $ID;
 	}
 
 	sendMsgToServer($r_net, $msg);
@@ -1121,7 +1142,7 @@ sub sendItemUse {
 	if ($config{serverType} == 0) {
 		$msg = pack("C*", 0xA7, 0x00).pack("v*",$ID).$targetID;
 
-	} elsif (($config{serverType} == 1) || ($config{serverType} == 2) || ($config{serverType} == 7)) {
+	} elsif (($config{serverType} == 1) || ($config{serverType} == 2)) {
 		$msg = pack("C*", 0xA7, 0x00, 0x9A, 0x12, 0x1C).pack("v*", $ID, 0).$targetID;
 
 	} elsif ($config{serverType} == 3) {
@@ -1142,6 +1163,12 @@ sub sendItemUse {
 	} elsif ($config{serverType} == 6) {
 		$msg = pack("C*", 0xA7, 0x00, 0x49).pack("v*", $ID).
 		pack("C*", 0xfa, 0x12, 0x00, 0xdc, 0xf9, 0x12).$targetID;
+
+	} elsif ($config{serverType} == 7) {
+		$msg = pack("C*", 0xA7, 0x00, 0x12, 0x00, 0xB0, 0x5A, 0x61) .
+			pack("v*", $ID) .
+			pack("C*", 0xFA, 0x12, 0x00, 0xDA, 0xF9, 0x12, 0x00) .
+			$targetID;
 	}
 	sendMsgToServer($r_net, $msg);
 	debug "Item Use: $ID\n", "sendPacket", 2;
@@ -1155,7 +1182,7 @@ sub sendLook {
 	if ($config{serverType} == 0) {
 		$msg = pack("C*", 0x9B, 0x00, $head, 0x00, $body);
 
-	} elsif (($config{serverType} == 1) || ($config{serverType} == 2) || ($config{serverType} == 7)) {
+	} elsif (($config{serverType} == 1) || ($config{serverType} == 2)) {
 		$msg = pack("C*", 0x9B, 0x00, 0xF2, 0x04, 0xC0, 0xBD, $head,
 			0x00, 0xA0, 0x71, 0x75, 0x12, 0x88, 0xC1, $body);
 
@@ -1172,6 +1199,10 @@ sub sendLook {
 		$msg = pack("C*", 0x85, 0x00, 0x54, 0x00, 0xD8, 0x5D, 0x2E, 0x14) .
 			pack("C*", $head, 0x00, 0x00, 0x00, 0x08, 0x60, 0x13, 0x14) .
 			pack("C*", $body);
+			
+	} elsif ($config{serverType} == 7) {
+		$msg = pack("C*", 0x9B, 0x00, 0x67, 0x00, $head,
+			0x00, 0x5B, 0x04, 0xE2, $body);
 	}
 	sendMsgToServer($r_net, $msg);
 	debug "Sent look: $body $head\n", "sendPacket", 2;
@@ -1243,7 +1274,7 @@ sub sendMapLogin {
 			pack("V", getTickCount()) .
 			pack("C*", $sex);
 
-	} elsif ($config{serverType} == 7) { #
+	} elsif ($config{serverType} == 7) { #Aegis 10.2
 			$msg = pack("C*", 0x72, 0, 0, 0, 0, 0, 0) .
 			$accountID .
 			pack("C*", 0x00, 0x10, 0xEE, 0x65) .
@@ -1265,12 +1296,30 @@ sub sendMapLogin {
 			pack("V", getTickCount()) .
 			pack("C*", $sex);
 
+	} elsif ($config{serverType} == 9) { # New eAthena
+		# These codes changes from server to server
+		# it is still being verified if these values are dynamic
+		# it is suspected that these codes may be used by the server
+		# as anti-bot signature.
+		my $key1 = substr($masterServer->{mapLogin_key}, 0, 7) || pack("x7");
+		my $key2 = substr($masterServer->{mapLogin_key}, 7, 8) || pack("x8");
+		my $key3 = substr($masterServer->{mapLogin_key}, 15, 3) || pack("x3");
+		$msg = pack("C*", 0x9b, 0) .
+			$key1 .
+			$accountID .
+			$key2 .
+			$charID .
+			$key3 .
+			$sessionID .
+			pack("V", getTickCount()) .
+			pack("C*", $sex);
+
 	} else { #oRO and pRO and idRO
 		# $config{serverType} == 1 || $config{serverType} == 2
 
 		my $key;
 
-		if ($config{serverType} == 1 || $config{serverType} == 7) {
+		if ($config{serverType} == 1) {
 			$key = pack("C*",0xFC,0x2B,0x8B,0x01,0x00);
 			#	0xFA,0x12,0x00,0xE0,0x5D
 			#	0xFA,0x12,0x00,0xD0,0x7B
@@ -1417,6 +1466,9 @@ sub sendMove {
 		
 	} elsif ($config{serverType} == 6) {
 		$msg = pack("C*", 0x85, 0x00, 0x4b) . getCoordString($x, $y);
+
+	} elsif ($config{serverType} == 7) {
+		$msg = pack("C*", 0x85, 0x00, 0xA8, 0x07, 0xE8) . getCoordString($x, $y);
 		
 	} elsif ($config{serverType} == 8) { #kRO 28 march 2006
 		$msg = pack("C*", 0xA7, 0x00, 0x00, 0x00) . getCoordString($x, $y);
@@ -1712,11 +1764,13 @@ sub sendSit {
 		$msg = pack("C*", 0x89, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00) .
 		pack("C*", 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02);
 
-	} elsif ($config{serverType} == 7) { #idRO - doesn't work
-		$msg = pack("C*", 0x89, 0x00, 0x3B, 0x00, 0x00, 0x00, 0xFE, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFB, 0x00) .
-			pack("C*", 0x00, 0x00, 0x00, 0xFF, 0xFE, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00) .
-			pack("C*", 0x00, 0x00, 0x00, 0xFD, 0xFF, 0x00, 0x00, 0x00, 0x00, 0xFF, 0xFF, 0xFF, 0xFF, 0x01, 0x00, 0x00) .
-			pack("C*", 0x00, 0x00, 0x00, 0x00, 0x00, 0xFE, 0xFF, 0x02, 0x00, 0x00, 0x00);
+	} elsif ($config{serverType} == 7) {
+		error "Mutating sit packet not yet implemented.\n";
+		if (AI::action() eq "sitting") {
+			error "Failed to sit.\n";
+			AI::dequeue();
+		}
+		return;
 
 	} elsif ($config{serverType} == 8) { #kRO 28 march 2006
 		$msg = pack("C*", 0x90, 0x01, 0x00, 0x00, 0x00, 0x00 ,0x00 ,0x00,
@@ -1775,7 +1829,15 @@ sub sendSkillUse {
 			pack("v", 0x0060) . $targetID;
 
 	} elsif ($config{serverType} == 7) {
-		# place holder
+		error "Mutating skill use packet not yet implemented.\n";
+		if (AI::action() eq 'teleport') {
+			error "Failed to use teleport skill.\n";
+			AI::dequeue();
+		} elsif (AI::action() ne "skill_use") {
+			error "Failed to use skill.\n";
+			AI::dequeue();
+		}
+		return;
 	}
 	sendMsgToServer($r_net, $msg);
 	debug "Skill Use: $ID\n", "sendPacket", 2;
@@ -1849,7 +1911,7 @@ sub sendStorageAdd {
 	if ($config{serverType} == 0) {
 		$msg = pack("C*", 0xF3, 0x00) . pack("v*", $index) . pack("V*", $amount);
 
-	} elsif (($config{serverType} == 1) || ($config{serverType} == 2) || ($config{serverType} == 7)) {
+	} elsif (($config{serverType} == 1) || ($config{serverType} == 2)) {
 		$msg = pack("C*", 0xF3, 0x00) . pack("C*", 0x12, 0x00, 0x40, 0x73) .
 			pack("v", $index) .
 			pack("C", 0xFF) .
@@ -1876,6 +1938,12 @@ sub sendStorageAdd {
 
 	} elsif ($config{serverType} == 6) {
 		# place holder
+
+	} elsif ($config{serverType} == 7) {
+		$msg = pack("C*", 0xF3, 0x00, 0x1B) .
+			pack("v", $index) .
+			pack("C*", 0x88, 0xC5, 0x07, 0x00, 0x00, 0x00, 0x00, 0x7F, 0x0C, 0x7F) .
+			pack("V", $amount);
 	}
 	sendMsgToServer($net, $msg);
 	debug "Sent Storage Add: $index x $amount\n", "sendPacket", 2;
@@ -1909,7 +1977,7 @@ sub sendStorageGet {
 	if ($config{serverType} == 0) {
 		$msg = pack("C*", 0xF5, 0x00) . pack("v*", $index) . pack("V*", $amount);
 
-	} elsif (($config{serverType} == 1) || ($config{serverType} == 2) || ($config{serverType} == 7)) {
+	} elsif (($config{serverType} == 1) || ($config{serverType} == 2)) {
 		$msg = pack("v*", 0x00F5, 0, 0, 0, 0, 0, $index, 0, 0) . pack("V*", $amount);
 
 	} elsif ($config{serverType} == 3) {
@@ -1937,7 +2005,10 @@ sub sendStorageGet {
 		# place holder
 
 	} elsif ($config{serverType} == 7) {
-		# place holder
+		$msg = pack("C*", 0xF5, 0x00, 0x00) .
+			pack("v*", $index) .
+			pack("C*", 0x00, 0x00, 0x00, 0x60, 0xF7, 0x12, 0x00, 0xB8) .
+			pack("V*", $amount);
 	}
 	sendMsgToServer($net, $msg);
 	debug "Sent Storage Get: $index x $amount\n", "sendPacket", 2;
@@ -1989,11 +2060,13 @@ sub sendStand {
 		$msg = pack("C*", 0x89, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00) .
 		pack("C*", 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x03);
 
-	} elsif ($config{serverType} == 7) { #idRO - doesn't work
-		$msg = pack("C*", 0x89, 0x00, 0x3B, 0x00, 0x00, 0x00, 0xFE, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFB, 0x00) .
-			pack("C*", 0x00, 0x00, 0x00, 0xFF, 0xFE, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00) .
-			pack("C*", 0x00, 0x00, 0x00, 0xFD, 0xFF, 0x00, 0x00, 0x00, 0x00, 0xFF, 0xFF, 0xFF, 0xFF, 0x01, 0x00, 0x00) .
-			pack("C*", 0x00, 0x00, 0x00, 0x00, 0x00, 0xFE, 0xFF, 0x03, 0x00, 0x00, 0x00);
+	} elsif ($config{serverType} == 7) {
+		error "Mutating stand packet not yet implemented.\n";
+		if (AI::action() eq "standing") {
+			error "Failed to stand.\n";
+			AI::dequeue();
+		}
+		return;
 
 	} elsif ($config{serverType} == 8) { #kRO 28 march 2006
 		$msg = pack("C*", 0x90, 0x01, 0x00, 0x00, 0x00, 0x00 ,0x00 ,0x00,
@@ -2027,7 +2100,7 @@ sub sendSync {
 	if ($config{serverType} == 0) {
 		$msg = pack("C*", 0x7E, 0x00) . pack("V1", getTickCount());
 
-	} elsif (($config{serverType} == 1) || ($config{serverType} == 2) || ($config{serverType} == 7)) {
+	} elsif (($config{serverType} == 1) || ($config{serverType} == 2)) {
 		$msg = pack("C*", 0x7E, 0x00);
 		$msg .= pack("C*", 0x30, 0x00, 0x40) if ($initialSync);
 		$msg .= pack("C*", 0x00, 0x00, 0x1F) if (!$initialSync);
@@ -2061,6 +2134,12 @@ sub sendSync {
 		$msg .= pack("C*", 0x94) if (!$initialSync);
 		$msg .= pack("V", getTickCount());
 
+	} elsif ($config{serverType} == 7) {
+		$msg = pack("C*", 0x7E, 0x00);
+		$msg .= pack("C*", 0x30, 0x00, 0x80, 0x02, 0x00) if ($initialSync);
+		$msg .= pack("C*", 0x00, 0x00, 0xD0, 0x4F, 0x74) if (!$initialSync);
+		$msg .= pack("V", getTickCount());
+
 	} elsif ($config{serverType} == 8) { #kRO 28 march 2006
 		# 89 00 61 30 08 b0 a6 0a
 		$msg = pack("C*", 0x89, 0x00, 0x00, 0x00);
@@ -2078,7 +2157,7 @@ sub sendTake {
 	if ($config{serverType} == 0) {
 		$msg = pack("C*", 0x9F, 0x00) . $itemID;
 
-	} elsif (($config{serverType} == 1) || ($config{serverType} == 2) || $config{serverType} == 7) {
+	} elsif (($config{serverType} == 1) || ($config{serverType} == 2)) {
 		$msg = pack("C*", 0x9F, 0x00, 0x00, 0x00, 0x68) . $itemID;
 
 	} elsif ($config{serverType} == 3) {
@@ -2092,6 +2171,9 @@ sub sendTake {
 
 	} elsif ($config{serverType} == 6) {
 		$msg = pack("C*", 0x9F, 0x00, 0x7f,) . $itemID;
+
+	} elsif ($config{serverType} == 7) {
+		$msg = pack("C*", 0x9F, 0x00, 0x00, 0x00, 0xE8, 0x3C, 0x5B) . $itemID;
 	}
 
 	sendMsgToServer($r_net, $msg);
