@@ -974,7 +974,7 @@ sub actor_display {
 		} elsif ($type eq "Portal") {
 			message TF("Portal Exists: %s (%s, %s) - (%s)\n", $actor->{name}, $coordsTo{x}, $coordsTo{y}, $actor->{binID}), "portals", 1;
 		} else {
-			debug TF("%s Exists: %s (%s)\n", $type, $actor->{name}, $actor->{binID}), "parseMsg_presence", 1;
+			debug sprintf("%s Exists: %s (%s)\n", $type, $actor->{name}, $actor->{binID}), "parseMsg_presence", 1;
 		}
 
 	} elsif ($args->{switch} eq "0079" ||
