@@ -273,10 +273,10 @@ sub ai_getAggressives {
 		my $control = Misc::mon_control($monster->{name}) if $type || !$wantArray;
 
 		if (($type && ($control->{attack_auto} == 2) ||
-		    $monster->{dmgToYou} || $monster->{missedYou} ||
+			(($monster->{dmgToYou} || $monster->{missedYou}) && Misc::checkMonsterCleanness($_)) ||
 			($party && ($monster->{dmgToParty} || $monster->{missedToParty} || $monster->{dmgFromParty})))
-		  && timeOut($monster->{attack_failed}, $timeout{ai_attack_unfail}{timeout})) {
-
+			&& timeOut($monster->{attack_failed}, $timeout{ai_attack_unfail}{timeout}))
+		{
 			# Remove monsters that are considered forced agressive (when set to 2 on Mon_Control)
 			# but has not yet been damaged or attacked by party AND currently has no LOS
 			# if this is not done, Kore will keep trying infinitely attack targets set to aggro but who
@@ -294,7 +294,7 @@ sub ai_getAggressives {
 			
 			# Continuing, check whether the forced Agro is really a clean monster;
 			next if (($type && $control->{attack_auto} == 2) && !Misc::checkMonsterCleanness($_));
-			  
+
 			if ($wantArray) {
 				# Function is called in array context
 				push @agMonsters, $_;
