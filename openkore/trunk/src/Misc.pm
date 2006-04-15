@@ -2848,7 +2848,7 @@ sub skillUse_string {
 	}
 	
 	# Translation Comment: Skill name + level
-	$skillName = ' ' . TF("%s (lvl %s)", $skillName, $level) unless $level == 65535;
+	$skillName = TF("%s (lvl %s)", $skillName, $level) unless $level == 65535;
 	
 	# You
 	if ($source->{type} eq 'You') {
@@ -2935,7 +2935,7 @@ sub skillUseLocation_string {
 	my ($source, $skillName, $args) = @_;
 	
 	# Translation Comment: Skill name + level
-	$skillName = ' ' . TF("%s (lvl %s)", $skillName, $args->{lv}) unless $args->{lv} == 65535;
+	$skillName = TF("%s (lvl %s)", $skillName, $args->{lv}) unless $args->{lv} == 65535;
 	
 	if ($source->{type} eq 'You') {
 		return TF("You use %s on location (%d, %d)\n", $skillName, $args->{x}, $args->{y});

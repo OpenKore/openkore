@@ -1227,7 +1227,7 @@ sub cmdDebug {
 			"AI enabled: %s            AI_forcedOff: %s\n" .
 			"\@ai_seq = %s\n" .
 			"Last packet: %.2f secs ago\n" .
-			"\$timeout{ai}: %.2f secs ago  (value should be >%d)\n" .
+			"\$timeout{ai}: %.2f secs ago  (value should be >%s)\n" .
 			"Last AI() call: %.2f secs ago\n" .
 			"-------------------------------------------\n",
 		$conState, $connected, $AI, $AI_forcedOff, @ai_seq, $time, $ai_timeout, 
@@ -1525,7 +1525,7 @@ sub cmdFriend {
 		my $player = Match::player($arg2);
 
 		if (!$player) {
-			error T("Player %s does not exist\n", $arg2);
+			error TF("Player %s does not exist\n", $arg2);
 		} elsif (!$player->{gotName}) {
 			error T("Player name has not been received, please try again\n");
 		} else {
@@ -3618,7 +3618,7 @@ sub cmdTestShop {
 			$item->{amount}, main::formatNumber($item->{price})), "list");
 	}
 	message("-------------------------------------------------------------------------------\n", "list");
-	message TF("Total of %d items to sell.\n", @items), "list";
+	message TF("Total of %d items to sell.\n", binSize(\@items)), "list";
 }
 
 sub cmdTimeout {
