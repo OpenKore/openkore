@@ -181,6 +181,8 @@ sub processMsg {
 	my $currentVerbosity = shift;
 	my $consoleVar = shift;
 	my $files = shift;
+	my (undef, undef, undef, $near) = caller(2);
+	my (undef, undef, undef, $far) = caller(3);
 
 	$currentVerbosity = 1 if ($currentVerbosity eq "");
 
@@ -247,7 +249,7 @@ sub processMsg {
 	# Call hooks
 	foreach (@hooks) {
 		next if (!defined($_));
-		$_->{'func'}->($type, $domain, $level, $currentVerbosity, $message, $_->{'user_data'});
+		$_->{'func'}->($type, $domain, $level, $currentVerbosity, $message, $_->{'user_data'}, $near, $far);
 	}
 }
 
@@ -359,6 +361,8 @@ sub debug {
 # $globalVerbosity : The global verbosity level.
 # $message : The message itself.
 # $user_data : The value of user_data, as passed to addHook.
+# $near : The function that called "message", "warning", "error" or "debug"
+# $far : The function that called $near
 # </pre>
 #
 # See also: Log::delHook()
@@ -371,6 +375,8 @@ sub debug {
 #	my $globalVerbosity = shift;	# 1 (equal to $config{'verbose'})
 #	my $message = shift;		# "Hello World"
 #	my $user_data = shift;		# "my_user_data"
+#	my $near = shift;		# "Commands::cmdWhere"
+#	my $far = shift;		# "Commands::run"
 # 	# Do whatever you want here
 # }
 # Log::addHook(\&hook, "my_user_data");
