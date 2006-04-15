@@ -427,6 +427,17 @@ version 0
 servertype 0
 serverEncoding Western
 
+## http://www.dutchro.tk/
+[dutchRO Private Server]
+ip 195.64.88.248
+port 6900
+master_version 21
+version 20
+serverType 7
+private 1
+chatLangCode 1
+serverEncoding Western
+
 ## http://eathenaro.net/
 [eAthenaRO Private Server]
 ip 72.36.236.18
