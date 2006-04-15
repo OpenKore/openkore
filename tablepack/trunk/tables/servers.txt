@@ -511,12 +511,12 @@ serverType 5
 serverEncoding Western
 
 ## http://www.funro.mu/
-[FunRO Private Server]
+[FunRO (hellraiser) Private Server]
 ip 207.226.22.221
 port 6900
-master_version 0
+master_version 16
 version 0
-serverType 5
+serverType 9
 serverEncoding Western
 
 ## http://utopianz.net/ro/main.php
