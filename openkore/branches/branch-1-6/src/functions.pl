@@ -7240,7 +7240,22 @@ sub parseMsg {
 		my $type = unpack("C1", substr($msg, 2, 1));
 		if ($type == 1) {
 			warning "Can't organize party - party name exists\n";
-		} 
+		} else {
+			my %party;
+			my %user;
+			$user{name} = $char->{name};
+			$user{admin} = 1;
+			$user{online} = 1;
+			$user{pos} = {$char->{pos_to}};
+			$user{hp} = $char->{hp};
+			$user{hp} = $char->{hp_max};
+			$party{name} = $lastPartyOrganizeName;
+			$party{users}{$accountID} = \%user;
+			$char->{party} = \%party;
+			@partyUsersID = ($accountID);
+			message "Party $lastPartyOrganizeName organized.\n", "info";
+			undef $lastPartyOrganizeName;
+		}
 
 	} elsif ($switch eq "00FB") {
 		my $newmsg;
@@ -7331,8 +7346,7 @@ sub parseMsg {
 		binRemove(\@partyUsersID, $ID);
 		if ($ID eq $accountID) {
 			message "You left the party\n";
-			undef %{$chars[$config{'char'}]{'party'}} if ($chars[$config{'char'}]{'party'});
-			$chars[$config{'char'}]{'party'} = "";
+			delete $chars[$config{'char'}]{'party'};
 			undef @partyUsersID;
 		} else {
 			message "$name left the party\n";

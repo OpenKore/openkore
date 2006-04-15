@@ -5,6 +5,7 @@
 Bug fixes:
 - Homunculus support.
 - Slightly improved compatibility with some servers.
+- Fix party creation.
 
 
 ==================

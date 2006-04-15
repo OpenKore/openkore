@@ -1321,9 +1321,7 @@ sub sendPartyLeave {
 sub sendPartyOrganize {
 	my $r_socket = shift;
 	my $name = shift;
-	$name = substr($name, 0, 24) if (length($name) > 24);
-	$name = $name . chr(0) x (24 - length($name));
-	my $msg = pack("C*", 0xF9, 0x00).$name;
+	my $msg = pack("C*", 0xE8, 0x01) . pack("a24", $name) . pack("C*", 1, 1);
 	sendMsgToServer($r_socket, $msg);
 	debug "Sent Organize Party: $name\n", "sendPacket", 2;
 }
