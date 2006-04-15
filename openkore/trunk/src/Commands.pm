@@ -2889,7 +2889,7 @@ sub cmdSell {
 
 	} elsif ($args[0] eq "done") {
 		sendSellBulk($net, \@sellList);
-		message TF("Sold %s items.\n", @sellList), "success";
+		message TF("Sold %s items.\n", @sellList.""), "success";
 		@sellList = ();
 
 	} elsif ($args[0] eq "cancel") {
