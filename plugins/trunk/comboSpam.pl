@@ -37,7 +37,10 @@ sub AI_pre {
 	my ($self, $args) = @_;
 	
 	if ($combo && main::timeOut($time, $delay)) {
-		sendSkillUse($net, 272, 5, $accountID);
+		sendSkillUse($net, 272, 5, $accountID); # Chain Combo
+		if ($char->{spirits}) { # Make sure there is a spirit sphere
+			sendSkillUse($net, 273, 5, $accountID); # Combo Finish
+		}
 		$time = time;
 	}
 }
