@@ -1,4 +1,13 @@
 ==================
+### 1.6.7
+==================
+
+Bug fixes:
+- Homunculus support.
+- Slightly improved compatibility with some servers.
+
+
+==================
 ### 1.6.6
 ==================
 

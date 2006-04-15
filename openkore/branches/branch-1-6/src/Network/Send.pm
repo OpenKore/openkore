@@ -1175,11 +1175,11 @@ sub sendMasterLogin {
 		substr($tmp, 0, length($password) + 1, $password . chr(0));
 		$password = $tmp;
 
-		$msg = pack("C*", 0x64, 0x00, $version, 0, 0, 0) .
+		$msg = pack("v1 V", 0x64, $version) .
 			$username . $password .
 			pack("C*", $master_version);
 	} else {
-		$msg = pack("C*", 0x64, 0x00, $version, 0, 0, 0) .
+		$msg = pack("v1 V", 0x64, $version) .
 			pack("a24", $username) .
 			pack("a24", $password) .
 			pack("C*", $master_version);
