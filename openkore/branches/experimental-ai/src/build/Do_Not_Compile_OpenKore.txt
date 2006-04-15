@@ -1,0 +1,8 @@
+Before you think "ha now I can compile OpenKore using these bat files":
+DON'T DO IT!
+
+You are not supposed to compile OpenKore unless you have a very good
+reason to do so! Every day, people keep coming to the forum asking "how 
+do I compile?", "why does compilation fail?", etc. You are NOT supposed
+to compile! Save yourself all the hassle and read this:
+http://openkore.sourceforge.net/forum/viewtopic.php?p=15303#15303
