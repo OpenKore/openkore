@@ -70,6 +70,9 @@ WorkerThread::Entry() {
 				parser.addData(buffer, size);
 			}
 		}
+	} catch (LineParser::BufferOverflowException &e) {
+		status = STATUS_ERROR;
+		error = wxT("The disassembler generated a line that's too long.");
 	} catch (IOException &e) {
 		status = STATUS_ERROR;
 		error = wxT("The disassembler exited unexpectedly.");
