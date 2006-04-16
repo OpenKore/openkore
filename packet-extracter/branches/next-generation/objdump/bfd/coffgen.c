@@ -218,8 +218,13 @@ coff_real_object_p (abfd, nscns, internal_f, internal_a)
   if (!external_sections)
     goto fail;
 
-  if (bfd_bread ((PTR) external_sections, readsize, abfd) != readsize)
-    goto fail;
+  /* For some mysterious reason this line interferes with the bRO
+   * executable. This line works fine in Linux, but not Windows.
+   * But objdump still disassembles properly when this is commented out.
+   */
+  /* if (bfd_bread ((PTR) external_sections, readsize, abfd) != readsize)
+    goto fail; */
+  bfd_bread ((PTR) external_sections, readsize, abfd);
 
   /* Set the arch/mach *before* swapping in sections; section header swapping
      may depend on arch/mach info.  */
