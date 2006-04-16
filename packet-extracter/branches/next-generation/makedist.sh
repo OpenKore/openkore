@@ -66,11 +66,8 @@ for D in ${DIRS[@]}; do
 	process "$D"
 done
 
-if [[ "$BINDIST" == "1" ]]; then
-	unix2dos "$PACKAGEDIR/LICENSE.txt"
-	echo
-	echo "====================="
-	echo "Directory '$PACKAGEDIR' created. Please add:"
-	echo "objdump.exe, openkore-packet-extractor.exe, mgwz.dll, mingwm10.dll, wxbase26u_gcc.dll, wxmsw26u_core_gcc.dll"
-	exit
-fi
+unix2dos "$PACKAGEDIR/LICENSE.txt"
+echo
+echo "====================="
+echo "Directory '$PACKAGEDIR' created. Please add:"
+echo "objdump.exe, openkore-packet-extractor.exe, mgwz.dll, mingwm10.dll, wxbase26u_gcc.dll, wxmsw26u_core_gcc.dll"
