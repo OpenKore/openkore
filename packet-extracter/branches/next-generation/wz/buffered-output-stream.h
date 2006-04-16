@@ -33,6 +33,8 @@ namespace Wz {
 	 *
 	 * When a BufferedOutputStream is closed or deleted, its underlying
 	 * output stream is also closed, and dereferenced.
+	 *
+	 * This implementation is NOT thread-safe!
 	 */
 	class BufferedOutputStream: public OutputStream {
 	private:

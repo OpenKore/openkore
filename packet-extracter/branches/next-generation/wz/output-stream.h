@@ -31,6 +31,8 @@ namespace Wz {
 
 	/**
 	 * An abstract base class for all output stream classes.
+	 * This abstract class does not guarantee thread-safety.
+	 * Thread-safety is implementation-dependent.
 	 */
 	class OutputStream: public Object {
 	public:

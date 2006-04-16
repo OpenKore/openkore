@@ -80,7 +80,7 @@ void
 PacketLengthAnalyzer::processEOF() {
 	switch (state) {
 	case FINDING_PACKET_LENGTH_FUNCTION:
-		setFailed(wxT("Cannot find packet length function."));
+		setFailed(wxT("Cannot find the packet length function."));
 		break;
 	case ANALYZING_PACKET_LENGTHS:
 		setFailed(wxT("End of packet length function reached unexpectedly."));

@@ -80,6 +80,8 @@ namespace Wz {
 		 * Note that when read() returns -1, it means that the peer
 		 * has closed the connection. read() will never return 0.
 		 *
+		 * This stream is thread-safe.
+		 *
 		 * @ensure result != NULL
 		 */
 		virtual InputStream *getInputStream() = 0;
@@ -91,6 +93,8 @@ namespace Wz {
 		 * You may want to wrap a BufferedOutputStream() arround this
 		 * for performance gains, unless you're writing large chunks of
 		 * data at a time.
+		 *
+		 * This stream is thread-safe.
 		 *
 		 * @ensure result != NULL;
 		 */

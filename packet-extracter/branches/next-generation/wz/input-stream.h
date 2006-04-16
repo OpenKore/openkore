@@ -24,6 +24,11 @@
 #include <wz/object.h>
 
 namespace Wz {
+	/**
+	 * An abstract class for all input stream classes.
+	 * This abstract class does not guarantee thread-safety.
+	 * Thread-safety is implementation-dependent.
+	 */
 	class InputStream: public Object {
 	public:
 		/**
