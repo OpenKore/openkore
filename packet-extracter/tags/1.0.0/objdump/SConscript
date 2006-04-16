@@ -1,0 +1,88 @@
+Import('*')
+
+bfd_sources = Split('''
+	bfd/archive.c
+	bfd/archures.c
+	bfd/bfd.c
+	bfd/bfdio.c
+	bfd/bfdwin.c
+	bfd/binary.c
+	bfd/cache.c
+	bfd/coffgen.c
+	bfd/coff-i386.c
+	bfd/cofflink.c
+	bfd/corefile.c
+	bfd/cpu-i386.c
+	bfd/dwarf2.c
+	bfd/format.c
+	bfd/hash.c
+	bfd/ihex.c
+	bfd/init.c
+	bfd/libbfd.c
+	bfd/linker.c
+	bfd/merge.c
+	bfd/opncls.c
+	bfd/pe-i386.c
+	bfd/peigen.c
+	bfd/pei-i386.c
+	bfd/reloc.c
+	bfd/section.c
+	bfd/simple.c
+	bfd/srec.c
+	bfd/stabs.c
+	bfd/stab-syms.c
+	bfd/syms.c
+	bfd/targets.c
+	bfd/tekhex.c
+	bfd/trad-core.c
+''')
+
+opcodes_sources = Split('''
+	opcodes/disassemble.c
+	opcodes/dis-buf.c
+	opcodes/dis-init.c
+	opcodes/i386-dis.c
+''')
+
+libiberty_sources = Split('''
+	libiberty/concat.c
+	libiberty/cp-demangle.c
+	libiberty/cp-demint.c
+	libiberty/cplus-dem.c
+	libiberty/fnmatch.c
+	libiberty/hex.c
+	libiberty/lbasename.c
+	libiberty/make-temp-file.c
+	libiberty/mkstemps.c
+	libiberty/objalloc.c
+	libiberty/safe-ctype.c
+	libiberty/unlink-if-ordinary.c
+	libiberty/xexit.c
+	libiberty/xmalloc.c
+	libiberty/xstrdup.c
+	libiberty/xstrerror.c
+''')
+
+objdump_sources = Split('''
+	bucomm.c
+	budemang.c
+	debug.c
+	filemode.c
+	ieee.c
+	messages.c
+	objdump.c
+	prdbg.c
+	rdcoff.c
+	rddbg.c
+	remote.cpp
+	stabs.c
+	version.c
+''')
+
+e = wxenv.Copy()
+e.Append(CPPDEFINES = ['HAVE_CONFIG_H', ('TARGET', '\\"i386-win32-pe\\"')])
+e.Append(CPPPATH = ['bfd', 'include', 'libiberty', '..'])
+e.Append(LIBPATH = ['../wz'])
+e.Append(LIBS = ['wz'])
+e.Program('objdump', bfd_sources + opcodes_sources +
+	  libiberty_sources + objdump_sources)
