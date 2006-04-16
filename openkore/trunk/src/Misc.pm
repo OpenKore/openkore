@@ -1074,11 +1074,8 @@ sub avoidGM_talk {
 		warning T("Disconnecting to avoid GM!\n");
 		main::chatLog("k", TF("*** The GM %s talked to you, auto disconnected ***\n", $user));
 
-		my $tmp = $config{avoidGM_reconnect};
-		warning TF("Disconnect for %s seconds...\n", $tmp);
-		$timeout_ex{master}{time} = time;
-		$timeout_ex{master}{timeout} = $tmp;
-		$net->serverDisconnect();
+		warning TF("Disconnect for %s seconds...\n", $config{avoidGM_reconnect});
+		relog($config{avoidGM_reconnect}, 1);
 		return 1;
 	}
 	return 0;
@@ -1092,9 +1089,7 @@ sub avoidList_talk {
 		warning TF("Disconnecting to avoid %s!\n", $user);
 		main::chatLog("k", TF("*** %s talked to you, auto disconnected ***\n", $user));
 		warning TF("Disconnect for %s seconds...\n", $config{avoidList_reconnect});
-		$timeout_ex{master}{time} = time;
-		$timeout_ex{master}{timeout} = $config{avoidList_reconnect};
-		$net->serverDisconnect();
+		relog($config{avoidList_reconnect}, 1);
 		return 1;
 	}
 	return 0;
@@ -1984,12 +1979,13 @@ sub quit {
 
 sub relog {
 	my $timeout = (shift || 5);
+	my $silent = shift;
 	$conState = 1;
 	undef $conState_tries;
 	$timeout_ex{'master'}{'time'} = time;
 	$timeout_ex{'master'}{'timeout'} = $timeout;
 	$net->serverDisconnect();
-	message TF("Relogging in %d seconds...\n", $timeout), "connection";
+	message TF("Relogging in %d seconds...\n", $timeout), "connection" unless $silent;
 }
 
 sub sendMessage {
@@ -3131,19 +3127,13 @@ sub avoidGM_near {
 		if ($config{avoidGM_near} == 1) {
 			# Mode 1: teleport & disconnect
 			useTeleport(1);
-			my $tmp = $config{avoidGM_reconnect};
-			$msg = TF("GM %s is nearby, teleport & disconnect for %d seconds", $player->{name}, $tmp);
-			$timeout_ex{master}{time} = time;
-			$timeout_ex{master}{timeout} = $tmp;
-			$net->serverDisconnect();
+			$msg = TF("GM %s is nearby, teleport & disconnect for %d seconds", $player->{name}, $config{avoidGM_reconnect});
+			relog($config{avoidGM_reconnect}, 1);
 
 		} elsif ($config{avoidGM_near} == 2) {
 			# Mode 2: disconnect
-			my $tmp = $config{avoidGM_reconnect};
-			$msg = TF("GM %s is nearby, disconnect for %s seconds", $player->{name}, $tmp);
-			$timeout_ex{master}{time} = time;
-			$timeout_ex{master}{timeout} = $tmp;
-			$net->serverDisconnect();
+			$msg = TF("GM %s is nearby, disconnect for %s seconds", $player->{name}, $config{avoidGM_reconnect});
+			relog($config{avoidGM_reconnect}, 1);
 
 		} elsif ($config{avoidGM_near} == 3) {
 			# Mode 3: teleport
@@ -3182,9 +3172,7 @@ sub avoidList_near {
 			warning TF("%s (%s) is nearby, disconnecting...\n", $player->{name}, $player->{nameID});
 			chatLog("k", TF("*** Found %s (%s) nearby and disconnected ***\n", $player->{name}, $player->{nameID}));
 			warning TF("Disconnect for %s seconds...\n", $config{avoidList_reconnect});
-			$timeout_ex{master}{time} = time;
-			$timeout_ex{master}{timeout} = $config{avoidList_reconnect};
-			$net->serverDisconnect();
+			relog($config{avoidList_reconnect}, 1);
 			return 1;
 
 		} elsif (($avoidPlayer && $avoidPlayer->{teleport_on_sight}) || ($avoidID && $avoidID->{teleport_on_sight})) {
