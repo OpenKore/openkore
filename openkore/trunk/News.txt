@@ -56,6 +56,7 @@ Bug fixes:
 - Fixed guild kick command sending the wrong packet.
 - Fixed talknpc option x
 - Fixed "-1" flag for "all" keyword in pickupitems.txt being meaningless
+- Fixed avoidGM_reconnect and avoidList_reconnect not being used.
 
 New features:
 - Added XKoreProxy module. Set configuration to 'XKore proxy' to work as
