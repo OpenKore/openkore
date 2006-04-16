@@ -42,7 +42,7 @@
 		<li style="margin-left: 0.5cm;">&nbsp;</li>
 		<li><a href="http://forums.openkore.com/" title="International forum"><img src="images/international.png" width="48" height="48" alt=""><br>International</a></li>
 		<li><a href="http://www.openkore-brasil.com/" title="Brazilian forum"><img src="images/brazil.png" width="48" height="48" alt=""><br>Brazil</a></li>
-		<li><a href="http://techie.sytes.net/index.php" title="Filipino forum"><img src="images/philippines.png" width="48" height="48" alt=""><br>Philippines</a></li>
+		<li><a href="http://darkmoon.ath.cx/" title="Filipino forum"><img src="images/philippines.png" width="48" height="48" alt=""><br>Philippines</a></li>
 		<li><a href="http://www.d-bests.com/" title="Indonesian forum"><img src="images/indonesia.png" width="48" height="48" alt=""><br>Indonesia</a></li>
 		</ul>
 	</div>
@@ -71,9 +71,9 @@
 					<tr> 
 						<td align="center" valign="top" nowrap="nowrap"><!-- <span class="mainmenu">&nbsp;<a href="{U_FAQ}" class="mainmenu"><img src="templates/subSilver/images/icon_mini_faq.gif" width="12" height="13" border="0" alt="{L_FAQ}" hspace="3" />{L_FAQ}</a>&nbsp; &nbsp; --><a href="{U_SEARCH}" class="mainmenu"><img src="templates/subSilver/images/icon_mini_search.gif" width="12" height="13" border="0" alt="{L_SEARCH}" hspace="3" />{L_SEARCH}</a>&nbsp; &nbsp;<a href="{U_MEMBERLIST}" class="mainmenu"><img src="templates/subSilver/images/icon_mini_members.gif" width="12" height="13" border="0" alt="{L_MEMBERLIST}" hspace="3" />{L_MEMBERLIST}</a>&nbsp; &nbsp;<a href="{U_GROUP_CP}" class="mainmenu"><img src="templates/subSilver/images/icon_mini_groups.gif" width="12" height="13" border="0" alt="{L_USERGROUPS}" hspace="3" />{L_USERGROUPS}</a>&nbsp; 
 						<!-- BEGIN switch_user_logged_out -->
-						&nbsp;<a href="profile.php?mode=register&agreed=yes" class="mainmenu"><img src="templates/subSilver/images/icon_mini_register.gif" width="12" height="13" border="0" alt="{L_REGISTER}" hspace="3" />{L_REGISTER}</a>&nbsp;
+						&nbsp;<a href="profile.php?mode=register&amp;agreed=yes" class="mainmenu"><img src="templates/subSilver/images/icon_mini_register.gif" width="12" height="13" border="0" alt="{L_REGISTER}" hspace="3" />{L_REGISTER}</a>&nbsp;
 						<!-- END switch_user_logged_out -->
-						</span></td>
+						</td>
 					</tr>
 					<tr>
 						<td height="25" align="center" valign="top" nowrap="nowrap"><span class="mainmenu">&nbsp;<a href="{U_PROFILE}" class="mainmenu"><img src="templates/subSilver/images/icon_mini_profile.gif" width="12" height="13" border="0" alt="{L_PROFILE}" hspace="3" />{L_PROFILE}</a>&nbsp; &nbsp;<a href="{U_PRIVATEMSGS}" class="mainmenu"><img src="templates/subSilver/images/icon_mini_message.gif" width="12" height="13" border="0" alt="{PRIVATE_MESSAGE_INFO}" hspace="3" />{PRIVATE_MESSAGE_INFO}</a>&nbsp; &nbsp;<a href="{U_LOGIN_LOGOUT}" class="mainmenu"><img src="templates/subSilver/images/icon_mini_login.gif" width="12" height="13" border="0" alt="{L_LOGIN_LOGOUT}" hspace="3" />{L_LOGIN_LOGOUT}</a>&nbsp;</span></td>
