@@ -19,6 +19,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 #include "packet-length-analyzer.h"
 #include "utils.h"
 
@@ -40,6 +41,13 @@ PacketLengthAnalyzer::~PacketLengthAnalyzer() {
 void
 PacketLengthAnalyzer::processLine(const wxString &line) {
 	static wxString firstPacketSwitch(wxT("mov    DWORD PTR [ebp-8],0x187"));
+	static wxString errorPrefix(wxT("ERROR: "));
+
+	if (line.StartsWith(errorPrefix)) {
+		wxString message = line.Mid(errorPrefix.Len());
+		setFailed(message);
+		return;
+	}
 
 	switch (state) {
 	case FINDING_PACKET_LENGTH_FUNCTION:
@@ -97,11 +105,13 @@ PacketLengthAnalyzer::getState() {
 
 wxString
 PacketLengthAnalyzer::getError() {
+	assert(state == FAILED);
 	return error;
 }
 
 PacketLengthMap&
 PacketLengthAnalyzer::getPacketLengths() {
+	assert(state == DONE);
 	return lengths;
 }
 

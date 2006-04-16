@@ -54,9 +54,9 @@ bfd_nonfatal (const char *string)
   const char *errmsg = bfd_errmsg (bfd_get_error ());
 
   if (string)
-    o_fmessage (stderr, "%s: %s: %s\n", program_name, string, errmsg);
+    o_fmessage (stderr, "ERROR: %s: %s\n", string, errmsg);
   else
-    o_fmessage (stderr, "%s: %s\n", program_name, errmsg);
+    o_fmessage (stderr, "ERROR: %s\n", errmsg);
 }
 
 void
