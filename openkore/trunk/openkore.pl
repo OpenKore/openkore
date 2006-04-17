@@ -261,7 +261,7 @@ addConfigFile("$Settings::tables_folder/skillsencore.txt", \%skillsEncore, \&par
 
 Plugins::callHook('start2');
 if (!Settings::load()) {
-	$interface->errorDialog('A configuration file failed to load. Did you download the latest configuration files?');
+	$interface->errorDialog(T("A configuration file failed to load. Did you download the latest configuration files?"));
 	exit 1;
 }
 Plugins::callHook('start3');
@@ -379,8 +379,8 @@ if ($net->version != 1) {
 
 	if ($config{'master'} eq "" || $config{'master'} =~ /^\d+$/ || !exists $masterServers{$config{'master'}}) {
 		my @servers = sort { lc($a) cmp lc($b) } keys(%masterServers);
-		my $choice = $interface->showMenu("Master servers",
-			"Please choose a master server to connect to: ",
+		my $choice = $interface->showMenu(T("Master servers"),
+			T("Please choose a master server to connect to: "),
 			\@servers);
 		if ($choice == -1) {
 			exit;

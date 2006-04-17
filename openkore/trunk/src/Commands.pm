@@ -3779,7 +3779,7 @@ sub cmdUseSkill {
 	} elsif ($switch eq 'sm') {
 		$targetID = $monstersID[$targetNum];
 		if (!$targetID) {
-			error T("Monster %d does not exist.\n", $targetNum);
+			error TF("Monster %d does not exist.\n", $targetNum);
 			return;
 		}
 		$target = $monsters{$targetID};
