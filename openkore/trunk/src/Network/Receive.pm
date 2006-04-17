@@ -2905,6 +2905,16 @@ sub guild_notice {
 			"------------------\n", $address, $message);
 		message $msg, "guildnotice";
 	}
+
+	message	T("Requesting guild information...\n"), "info";
+	sendGuildInfoRequest($net);
+
+	# Replies 01B6 (Guild Info) and 014C (Guild Ally/Enemy List)
+	sendGuildRequest($net, 0);
+
+	# Replies 0166 (Guild Member Titles List) and 0154 (Guild Members List)
+	sendGuildRequest($net, 1);
+
 }
 
 sub guild_request {
@@ -3469,14 +3479,6 @@ sub map_change {
 	if ($net->version == 1) {
 		ai_clientSuspend(0, 10);
 	} else {
-		message	T("Requesting guild information...\n"), "info";
-		sendGuildInfoRequest($net);
-
-		# Replies 01B6 (Guild Info) and 014C (Guild Ally/Enemy List)
-		sendGuildRequest($net, 0);
-
-		# Replies 0166 (Guild Member Titles List) and 0154 (Guild Members List)
-		sendGuildRequest($net, 1);
 		sendMapLoaded($net);
 		$timeout{'ai'}{'time'} = time;
 	}
