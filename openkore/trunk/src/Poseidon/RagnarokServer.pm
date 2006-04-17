@@ -272,6 +272,7 @@ sub onClientData {
 
 	} elsif ($switch eq '0089') { # sendAttack
 		print "Received packet $switch: sendAttack.\n";
+		visualDump($msg, "$switch");
 
 	} elsif ($switch eq '008C') { # public chat
 		print "Received packet $switch: public chat.\n";
