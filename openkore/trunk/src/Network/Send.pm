@@ -1928,12 +1928,14 @@ sub sendSkillUseLoc {
 			pack("v*", $x, 0x1ad8, 0x76b4, $y);
 
 	} elsif ($config{serverType} == 7) {
-		error "Skill use location packet not yet implemented.\n";
-		if (AI::action() eq "skill_use") {
-			error "Failed to use skill.\n";
-			AI::dequeue();
-		}
-		return;
+		$msg = pack("C*", 0x16, 0x01, 0x7F, 0x00, 0x04, 0xFA, 0x12, 0x00, 0xAF, 0x41) .
+			pack("v", $lv) .
+			pack("C*", 0x20, 0x09) .
+			pack("v*", $ID) .
+			pack("C*", 0xA8, 0xBE) .
+			pack("v*", $x) . 
+			pack("C*", 0x5B, 0x4E, 0xB4) .
+			pack("v*", $y);
 
 	} elsif ($config{serverType} == 9) {
 		$msg = pack("C*", 0x13, 0x01) .
