@@ -1462,14 +1462,14 @@ sub actor_status_active {
 			$again = 'again' if $actor->{statuses}{$skillName};
 			$actor->{statuses}{$skillName} = 1;
 		}
-		message "$name $is $again: $skillName\n", "parseMsg_statuslook",
-			$ID eq $accountID ? 1 : 2;
+		my $disp = status_string($actor, $skillName, $again);
+		message $disp, "parseMsg_statuslook", $ID eq $accountID ? 1 : 2;
 
 	} else {
 		# Skill de-activated (expired)
 		delete $actor->{statuses}{$skillName} if $actor;
-		message "$name $is no longer: $skillName\n", "parseMsg_statuslook",
-			$ID eq $accountID ? 1 : 2;
+		my $disp = status_string($actor, $skillName, 'no longer');
+		message $disp, "parseMsg_statuslook", $ID eq $accountID ? 1 : 2;
 	}
 }
 
@@ -2324,17 +2324,17 @@ sub devotion {
 	my ($self, $args) = @_;
 
 	my $source = Actor::get($args->{sourceID});
-	my $msg = TF("%s is using devotion on:", $source);
+	my $msg = '';
 
 	for (my $i = 0; $i < 5; $i++) {
 		my $ID = substr($args->{data}, $i*4, 4);
 		last if unpack("L1", $ID) == 0;
 
 		my $actor = Actor::get($ID);
-		$msg .= " $actor";
+		$msg .= skillUseNoDamage_string($source, $actor, 0, 'devotion');
 	}
 
-	message "$msg\n";
+	message "$msg";
 }
 
 sub egg_list {
@@ -4631,7 +4631,6 @@ sub skill_cast {
 	countCastOn($sourceID, $targetID, $skillID, $x, $y);
 
 	my $domain = ($sourceID eq $accountID) ? "selfSkill" : "skill";
-#	message "$source $verb ".$skill->name." on $targetString (time ${wait}ms)\n", $domain, 1;
 	my $disp = skillCast_string($source, $target, $skill->name, $wait);
 	message $disp, $domain, 1;	
 	

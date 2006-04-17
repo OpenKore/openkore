@@ -152,7 +152,8 @@ our @EXPORT = (
 	skillCast_string
 	skillUse_string
 	skillUseLocation_string
-	skillUseNoDamage_string/,
+	skillUseNoDamage_string
+	status_string/,
 
 	# AI Math
 	qw/lineIntersection
@@ -2954,8 +2955,12 @@ sub skillUseNoDamage_string {
 		# Translation Comment: used Healing skill
 		$amount = ': ' . TF("%s hp gained", $amount);
 	} else {
-		# Translation Comment: used non-Healing skill - displays skill level
-		$amount = ': ' . TF("Lv %s", $amount);
+		if ($amount) {
+			# Translation Comment: used non-Healing skill - displays skill level
+			$amount = ': ' . TF("Lv %s", $amount);
+		} else {
+			$amount = '';
+		}
 	}
 	
 	# You
@@ -3035,6 +3040,42 @@ sub skillUseNoDamage_string {
 				return TF("Unknown #%s (%d) uses %s on himself %s\n", $source->{nameID}, 
 					$source->{binID}, $skillName, $amount);
 			}				
+		}
+	}
+}
+
+sub status_string {
+	my ($source, $statusName, $mode) = @_;
+	
+	if ($mode eq 'now') {
+		if ($source->{type} eq 'You') {
+			return TF("You are now: %s\n", $statusName);
+		} elsif ($source->{type} eq 'Player') {
+			return TF("Player %s (%d) is now: %s\n", $source->{name}, $source->{binID}, $statusName);
+		} elsif ($source->{type} eq 'Monster') {
+			return TF("Monster %s (%d) is now: %s\n", $source->{name}, $source->{binID}, $statusName);
+		} elsif ($source->{type} eq 'Unknown') {
+			return TF("Unknown #%s (%d) is now: %s\n", $source->{nameID}, $source->{binID}, $statusName);
+		}
+	} elsif ($mode eq 'again') {
+		if ($source->{type} eq 'You') {
+			return TF("You are again: %s\n", $statusName);
+		} elsif ($source->{type} eq 'Player') {
+			return TF("Player %s (%d) is again: %s\n", $source->{name}, $source->{binID}, $statusName);
+		} elsif ($source->{type} eq 'Monster') {
+			return TF("Monster %s (%d) is again: %s\n", $source->{name}, $source->{binID}, $statusName);
+		} elsif ($source->{type} eq 'Unknown') {
+			return TF("Unknown #%s (%d) is again: %s\n", $source->{nameID}, $source->{binID}, $statusName);
+		}
+	} elsif ($mode eq 'no longer') {
+		if ($source->{type} eq 'You') {
+			return TF("You are no longer: %s\n", $statusName);
+		} elsif ($source->{type} eq 'Player') {
+			return TF("Player %s (%d) is no longer: %s\n", $source->{name}, $source->{binID}, $statusName);
+		} elsif ($source->{type} eq 'Monster') {
+			return TF("Monster %s (%d) is no longer: %s\n", $source->{name}, $source->{binID}, $statusName);
+		} elsif ($source->{type} eq 'Unknown') {
+			return TF("Unknown #%s (%d) is no longer: %s\n", $source->{nameID}, $source->{binID}, $statusName);
 		}
 	}
 }
