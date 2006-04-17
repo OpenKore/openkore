@@ -315,10 +315,6 @@ serverEncoding Western
 ####################
 # Private RO Servers
 
-# eAthena private servers use these options:
-# master_version 1
-# version 20
-
 [Localhost]
 ip 127.0.0.1
 port 6900
@@ -554,6 +550,14 @@ master_version
 version 20
 serverType 4
 serverEncoding Western
+
+## http://www.mavero.de/
+[MaveRO]
+ip 62.75.165.110
+port 6900
+master_version 17
+version 254833758
+serverType 0
 
 ## http://mobro.mob-games.com/
 [mobRO Private Server]
