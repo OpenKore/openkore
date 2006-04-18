@@ -105,6 +105,7 @@ New features:
 - Support for andzRO's new login packets (update your servers.txt)
 - Partial support for Aegis 10.2 servers. Use serverType 7 for these.
 - Support for eAthena servers with episode X.5 update. Use serverType 9 for these.
+- Support for kRO. Use serverType 8.
 
 New config options:
 - autoMoveOnDeath set:
