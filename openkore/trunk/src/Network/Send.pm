@@ -587,7 +587,7 @@ sub sendChat {
 	$message = stringToBytes($message); # Type: Bytes
 	$charName = stringToBytes($char->{name});
 
-	if (($config{serverType} == 3) || ($config{serverType} == 5) || ($config{serverType} == 9)) {
+	if (($config{serverType} == 3) || ($config{serverType} == 5) || ($config{serverType} == 8) || ($config{serverType} == 9)) {
 		$data = pack("C*", 0xf3, 0x00) .
 			pack("v*", length($charName) + length($message) + 8) .
 			$charName . " : " . $message . chr(0);
@@ -790,6 +790,12 @@ sub sendDrop {
 			pack("C*", 0xC8, 0xFE, 0xB2, 0x07, 0x63, 0x01, 0x00) .
 			pack("v*", $amount);
 
+	} elsif ($config{serverType} == 8) {
+		$msg = pack("C*", 0x16, 0x01, 0x35, 0x34, 0x33) .
+			pack("v*", $index) .
+			pack("C*", 0x61) .
+			pack("v*", $amount);
+
 	} elsif ($config{serverType} == 9) {
 		$msg = pack("C*", 0x16, 0x01) . pack("x6") .
 			pack("v*", $index) .
@@ -936,6 +942,9 @@ sub sendGetPlayerInfo {
 
 	} elsif ($config{serverType} == 7) {
 		$msg = pack("C*", 0x94, 0x00) . pack("C*", 0x5B, 0x04, 0x0C, 0xF9, 0x12, 0x00, 0x36, 0xAE) . $ID;
+
+	} elsif ($config{serverType} == 8) {
+		$msg = pack("v1 x5", 0x8c) . $ID;
 
 	} elsif ($config{serverType} == 9) {
 		$msg = pack("C*", 0x8c, 0x00) . pack("x6") . $ID;
@@ -1183,6 +1192,12 @@ sub sendItemUse {
 			pack("C*", 0xFA, 0x12, 0x00, 0xDA, 0xF9, 0x12, 0x00) .
 			$targetID;
 
+	} elsif ($config{serverType} == 8) {
+		$msg = pack("C*", 0x9f, 0x00, 0x61, 0x62) .
+			pack("v*", $ID) .
+			pack("C*", 0x34, 0x35, 0x32, 0x61) .
+			$targetID;
+
 	} elsif ($config{serverType} == 9) {
 		$msg = pack("C*", 0x9f, 0x00) . pack("x7") .
 			pack("v*", $ID) .
@@ -1222,6 +1237,9 @@ sub sendLook {
 	} elsif ($config{serverType} == 7) {
 		$msg = pack("C*", 0x9B, 0x00, 0x67, 0x00, $head,
 			0x00, 0x5B, 0x04, 0xE2, $body);
+
+	} elsif ($config{serverType} == 8) {
+		$msg = pack("v1 x5 C1 x2 C1", 0x85, $head, $body);
 
 	} elsif ($config{serverType} == 9) {
 		$msg = pack("C*", 0x85, 0x00) . pack("x5") .
@@ -1337,7 +1355,7 @@ sub sendMapLogin {
 		my $key;
 
 		if ($config{serverType} == 1) {
-			$key = pack("C*",0xFC,0x2B,0x8B,0x01,0x00);
+			$key = pack("C*", 0xFC, 0x2B, 0x8B, 0x01, 0x00);
 			#	0xFA,0x12,0x00,0xE0,0x5D
 			#	0xFA,0x12,0x00,0xD0,0x7B
 		} else {
@@ -1793,13 +1811,11 @@ sub sendSit {
 		}
 		return;
 
-	} elsif ($config{serverType} == 8) { #kRO 28 march 2006
-		$msg = pack("C*", 0x90, 0x01, 0x00, 0x00, 0x00, 0x00 ,0x00 ,0x00,
-  			0x00, 0x00, 0x00, 0x00, 0x00, 0x00 ,0x00 ,0x00,
-			0x00, 0x00, 0x02);
+	} elsif ($config{serverType} == 8) {
+		$msg = pack("C2 x16 C1", 0x90, 0x01, 0x02);
 
 	} elsif ($config{serverType} == 9) {
-		$msg = pack("C*", 0x90, 0x01) . pack("x5") . pack("x4") . pack("x6") . pack("C", 0x02);
+		$msg = pack("C2 x15 C1", 0x90, 0x01, 0x02);
 	}
 	sendMsgToServer($r_net, $msg);
 	debug "Sitting\n", "sendPacket", 2;
@@ -1862,6 +1878,9 @@ sub sendSkillUse {
 			AI::dequeue();
 		}
 		return;
+
+	} elsif ($config{serverType} == 8) {
+		$msg = pack("v1 x4 v1 x2 v1 x9 V1", 0x72, $lv, $ID, $targetID);
 
 	} elsif ($config{serverType} == 9) {
 		$msg = pack("C*", 0x72, 0x00) . pack("x9") .
@@ -1937,6 +1956,9 @@ sub sendSkillUseLoc {
 			pack("C*", 0x5B, 0x4E, 0xB4) .
 			pack("v*", $y);
 
+	} elsif ($config{serverType} == 8) {
+		$msg = pack("C2 x3 v1 x2 v1 x1 v1 x6 v1", 0x13, 0x01, $lv, $ID, $x, $y);
+
 	} elsif ($config{serverType} == 9) {
 		$msg = pack("C*", 0x13, 0x01) .
 			pack("x3") .
@@ -1993,6 +2015,9 @@ sub sendStorageAdd {
 			pack("C*", 0x88, 0xC5, 0x07, 0x00, 0x00, 0x00, 0x00, 0x7F, 0x0C, 0x7F) .
 			pack("V", $amount);
 
+	} elsif ($config{serverType} == 8) {
+		$msg = pack("v1 x5 v1 x1 V1", 0x94, $index, $amount);
+
 	} elsif ($config{serverType} == 9) {
 		$msg = pack("C*", 0x94, 0x00) . pack("x3") .
 			pack("v*", $index) .
@@ -2014,7 +2039,7 @@ sub sendStorageAddFromCart {
 
 sub sendStorageClose {
 	my $msg;
-	if (($config{serverType} == 3) || ($config{serverType} == 5) || ($config{serverType} == 9)) {
+	if (($config{serverType} == 3) || ($config{serverType} == 5) || ($config{serverType} == 8) || ($config{serverType} == 9)) {
 		$msg = pack("C*", 0x93, 0x01);
 	} else {
 		$msg = pack("C*", 0xF7, 0x00);
@@ -2063,6 +2088,9 @@ sub sendStorageGet {
 			pack("v*", $index) .
 			pack("C*", 0x00, 0x00, 0x00, 0x60, 0xF7, 0x12, 0x00, 0xB8) .
 			pack("V*", $amount);
+
+	} elsif ($config{serverType} == 8) {
+		$msg = pack("v1 x12 v1 x2 V1", 0xf7, $index, $amount);
 
 	} elsif ($config{serverType} == 9) {
 		$msg = pack("C*", 0xf7, 0x00) . pack("x9") .
@@ -2127,10 +2155,8 @@ sub sendStand {
 		}
 		return;
 
-	} elsif ($config{serverType} == 8) { #kRO 28 march 2006
-		$msg = pack("C*", 0x90, 0x01, 0x00, 0x00, 0x00, 0x00 ,0x00 ,0x00,
-  			0x00, 0x00, 0x00, 0x00, 0x00, 0x00 ,0x00 ,0x00,
-			0x00, 0x00, 0x03);
+	} elsif ($config{serverType} == 8) {
+		$msg = pack("C2 x16 C1", 0x90, 0x01, 0x03);
 
 	} elsif ($config{serverType} == 9) {
 		$msg = pack("C*", 0x90, 0x01) . pack("x5") . pack("x4") . pack("x6") . pack("C", 0x03);
@@ -2236,6 +2262,9 @@ sub sendTake {
 
 	} elsif ($config{serverType} == 7) {
 		$msg = pack("C*", 0x9F, 0x00, 0x00, 0x00, 0xE8, 0x3C, 0x5B) . $itemID;
+
+	} elsif ($config{serverType} == 8) {
+		$msg = pack("v1 x2", 0xf5) . $itemID;
 
 	} elsif ($config{serverType} == 9) {
 		# this is the same with serverType 5,
