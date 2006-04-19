@@ -68,15 +68,23 @@ use constant USERDATA => 3;
 # }
 
 ##
-# CallbackList CallbackList->new()
-# Ensures: $self->size() == 0
+# CallbackList CallbackList->new(String name)
+# name: A name for the event this CallbackList represents.
+# Requires: defined($name)
+# Ensures:
+#     $self->size() == 0
+#     getName() eq $name
 #
 # Create a new CallbackList object.
 sub new {
-	my ($class) = @_;
+	my ($class, $name) = @_;
 	my %self = (
-		# Array<CallbackItem> callbacks
+		# String name
 		#
+		# Invariant: defined(name)
+		name => $name,
+
+		# Array<CallbackItem> callbacks
 		#
 		# Invariant:
 		#     defined(callbacks)
@@ -146,18 +154,22 @@ sub remove {
 }
 
 ##
-# void $CallbackList->call([argument])
+# void $CallbackList->call(Scalar source, [argument])
+# source: The object which emitted this event.
 #
 # Call all callback functions in this CallbackList. Each function
 # $function will be called as follows:
 # <pre>
-# $function->($object, $list, $argument, $userData);
+# $function->($object, $source, $list, $argument, $userData);
 # </pre>
-# where $object and $userData are the arguments passed to $CallbackList->add(),
-# and $list is this CallbackList.
+# `l
+# - $object and $userData are the arguments passed to $CallbackList->add()
+# - $list is this CallbackList.
+# - $source and $argument are the parameters passed to this method.
+# `l`
 sub call {
 	foreach my $item (@{$_[0]->{callbacks}}) {
-		$item->[FUNCTION]->($item->[OBJECT], $_[0], $_[1], $item->[USERDATA]);
+		$item->[FUNCTION]->($item->[OBJECT], $_[1], $_[0], $_[2], $item->[USERDATA]);
 	}
 }
 
@@ -171,12 +183,23 @@ sub size {
 }
 
 ##
+# String $CallbackList->getName()
+# Ensures: defined(result)
+#
+# Returns the name of the event this CallbackList represents, as passed to
+# the constructor.
+sub getName {
+	return $_[0]->{name};
+}
+
+##
 # void $CallbackList->checkValidity()
 #
 # Check whether all internal invariants are true.
 sub checkValidity {
 	my ($self) = @_;
 
+	assert defined($self->{name});
 	assert defined($self->{callbacks});
 	for (my $i = 0; $i < @{$self->{callbacks}}; $i++) {
 		my $k = $self->{callbacks}[$i];
