@@ -101,16 +101,16 @@ sub new {
 		OL_cItems => [],
 
 		# Invariant: defined(onAdd)
-		OL_onAdd => new CallbackList(),
+		OL_onAdd => new CallbackList("onAdd"),
 
 		# Invariant: defined(onRemove)
-		OL_onRemove => new CallbackList(),
+		OL_onRemove => new CallbackList("onRemove"),
 
 		# Invariant: defined(onClearBegin)
-		OL_onClearBegin => new CallbackList(),
+		OL_onClearBegin => new CallbackList("onClearBegin"),
 
 		# Invariant: defined(onClearEnd)
-		OL_onClearEnd => new CallbackList()
+		OL_onClearEnd => new CallbackList("onClearEnd")
 	);
 	return bless \%self, $class;
 }
@@ -137,7 +137,7 @@ sub add {
 	my $index = _findEmptyIndex($self->{OL_items});
 	$self->{OL_items}[$index] = $item;
 	splice(@{$self->{OL_cItems}}, $index, 0, $item);
-	$self->{OL_onAdd}->call([$item, $index]);
+	$self->{OL_onAdd}->call($self, [$item, $index]);
 	return $index;
 }
 
@@ -212,7 +212,7 @@ sub remove {
 		delete $self->{OL_items}[$index];
 		my $cItemIndex = _findItem($self->{OL_cItems}, $item);
 		splice(@{$self->{OL_cItems}}, $cItemIndex, 1);
-		$self->{OL_onRemove}->call([$item, $index]);
+		$self->{OL_onRemove}->call($self, [$item, $index]);
 		return 1;
 	}
 }
@@ -228,9 +228,9 @@ sub remove {
 # `l`
 sub clear {
 	my ($self) = @_;
-	$self->{OL_onClearBegin}->call();
+	$self->{OL_onClearBegin}->call($self);
 	$self->doClear();
-	$self->{OL_onClearEnd}->call();
+	$self->{OL_onClearEnd}->call($self);
 }
 
 ##

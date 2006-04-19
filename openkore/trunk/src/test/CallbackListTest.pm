@@ -14,6 +14,7 @@ use Utils::CallbackList;
 	}
 }
 
+use constant EVENT_NAME => "onEvent";
 my $self = new CallbackListTest::Object;
 my $list;
 
@@ -25,7 +26,9 @@ sub start {
 }
 
 sub init {
-	$list = new CallbackList;
+	$list = new CallbackList(EVENT_NAME);
+	is($list->size(), 0);
+	is($list->getName(), EVENT_NAME);
 }
 
 # Test whether add() and call() correctly work together
@@ -35,7 +38,6 @@ sub testAddAndCall {
 	my $sub2CallCount = 0;
 
 	init();
-	is($list->size(), 0);
 
 	$sub = sub {
 		$sub1CallCount++;
@@ -44,10 +46,10 @@ sub testAddAndCall {
 	$list->checkValidity();
 	is($list->size(), 1);
 
-	$list->call();
+	$list->call($self);
 	$list->checkValidity();
 	is($sub1CallCount, 1);
-	$list->call();
+	$list->call($self);
 	$list->checkValidity();
 	is($sub1CallCount, 2);
 
@@ -57,12 +59,12 @@ sub testAddAndCall {
 	$list->add(undef, $sub);
 	is($list->size(), 2);
 	$list->checkValidity();
-	$list->call();
+	$list->call($self);
 	$list->checkValidity();
 	is($sub1CallCount, 3);
 	is($sub2CallCount, 1);
 
-	$list->call();
+	$list->call($self);
 	$list->checkValidity();
 	is($sub1CallCount, 4);
 	is($sub2CallCount, 2);
@@ -74,21 +76,21 @@ sub testAddAndCall {
 sub testParams {
 	my $sub;
 	my $count = 0;
-	my ($object, $l, $arg, $userData);
+	my ($object, $source, $l, $arg, $userData);
 
 	init();
-	is($list->size(), 0);
 
 	$sub = sub {
-		($object, $l, $arg, $userData) = @_;
+		($object, $source, $l, $arg, $userData) = @_;
 		$count++;
 	};
 	$list->add($self, $sub);
 	$list->checkValidity();
-	$list->call(123);
+	$list->call($self, 123);
 	$list->checkValidity();
 	is($count, 1);
 	is($object, $self);
+	is($source, $self);
 	is($l, $list);
 	is($arg, 123);
 	ok(!defined($userData));
@@ -97,20 +99,22 @@ sub testParams {
 	# this one is supposed to be called after the last one.
 	$list->add($self, $sub, "my user data");
 	$list->checkValidity();
-	$list->call("abc");
+	$list->call(undef, "abc");
 	$list->checkValidity();
 	is($count, 3);
 	is($object, $self);
+	ok(!defined $source);
 	is($l, $list);
 	is($arg, "abc");
 	is($userData, "my user data");
 
 	$list->add(undef, $sub, 456);
 	$list->checkValidity();
-	$list->call();
+	$list->call($self);
 	$list->checkValidity();
 	is($count, 6);
-	ok(!defined($object));
+	ok(!defined $object);
+	ok($source == $self);
 	is($l, $list);
 	ok(!defined($arg));
 	is($userData, 456);
@@ -122,7 +126,6 @@ sub testRemove {
 	my $count = 0;
 
 	init();
-	is($list->size(), 0);
 
 	$sub = sub {
 		$count++;
@@ -130,13 +133,13 @@ sub testRemove {
 	$ID1 = $list->add(undef, $sub);
 	$ID2 = $list->add(undef, $sub);
 	is($list->size(), 2);
-	$list->call();
+	$list->call($self);
 	is($count, 2);
 
 	$list->remove($ID1);
 	is($list->size(), 1);
 	$list->checkValidity();
-	$list->call();
+	$list->call(undef, $self);
 	is($count, 3);
 	ok(!defined $$ID1);
 
@@ -145,14 +148,14 @@ sub testRemove {
 	$list->checkValidity();
 	ok(!defined $$ID1);
 
-	$list->call();
+	$list->call(undef, $self);
 	$list->checkValidity();
 	is($count, 4);
 
 	$list->remove($ID2);
 	is($list->size(), 0);
 	$list->checkValidity();
-	$list->call();
+	$list->call(undef, $self);
 	is($count, 4);
 
 	$count = 0;
@@ -163,7 +166,7 @@ sub testRemove {
 	$ID5 = $list->add(undef, $sub);
 	is($list->size(), 5);
 	$list->checkValidity();
-	$list->call();
+	$list->call(undef, $self);
 	is($count, 5);
 
 	$list->remove($ID3);
@@ -175,7 +178,7 @@ sub testRemove {
 	is($$ID4, 2);
 	is($$ID5, 3);
 
-	$list->call();
+	$list->call(undef, $self);
 	is($count, 9);
 	$list->checkValidity();
 }
