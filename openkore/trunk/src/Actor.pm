@@ -26,7 +26,9 @@
 # Child classes: @MODULE(Actor::Monster), @MODULE(Actor::Player) and @MODULE(Actor::You)
 
 package Actor;
+
 use strict;
+use Scalar::Util;
 use Globals;
 use Utils;
 use Log qw(message error debug);
@@ -37,24 +39,31 @@ use Misc;
 # acts the same as
 #     print $actor->nameString;
 use overload '""' => \&_nameString;
+# The eq operator checks whether two variables refer to compatible objects.
 use overload 'eq' => \&_eq;
 use overload 'ne' => \&_ne;
+# The == operator is to check whether two variables refer to the
+# exact same object.
+use overload '==' => \&_isis;
 
 sub _eq {
-	my ($self, $other) = @_;
-	return $self->{ID} eq $other->{ID};
+	return UNIVERSAL::isa($_[0], "Actor")
+		&& UNIVERSAL::isa($_[1], "Actor")
+		&& $_[0]->{ID} eq $_[1]->{ID};
 }
 
 sub _ne {
-	my ($self, $other) = @_;
-	return $self->{ID} ne $other->{ID};
+	return !&_eq;
 }
 
 # This function is needed to make the operator overload respect inheritance.
 sub _nameString {
 	my $self = shift;
+	return $self->nameString(@_);
+}
 
-	$self->nameString(@_);
+sub _isis {
+	return Scalar::Util::refaddr($_[0]) == Scalar::Util::refaddr($_[1]);
 }
 
 ### CATEGORY: Class methods

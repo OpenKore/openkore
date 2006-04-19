@@ -1,5 +1,5 @@
 #########################################################################
-#  OpenKore - Item object
+#  OpenKore - Entity lookup and matching
 #  Copyright (c) 2005 OpenKore Team
 #
 #  This software is open source, licensed under the GNU General Public

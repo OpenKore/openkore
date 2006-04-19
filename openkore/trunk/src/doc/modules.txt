@@ -2,6 +2,7 @@ Actor
 Actor::Monster
 Actor::Player
 Actor::You
+ActorList
 Base::Server
 Base::Server::Client
 Base::WebServer
@@ -23,8 +24,10 @@ Misc
 
 Utils
 Utils::AppLauncher
+Utils::CallbackList
 Utils::Crypton
 Utils::PerlLauncher
+Utils::ObjectList
 Utils::Core::Exception
 Utils::StartupNotification::Launcher
 Utils::StartupNotification::Launchee

@@ -1,4 +1,6 @@
 AppLauncher.pm
+Callbacklist.pm
 Crypton.pm
 Downloader.pm
+ObjectList.pm
 PerlLauncher.pm
