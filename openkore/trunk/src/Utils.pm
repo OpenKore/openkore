@@ -1005,10 +1005,11 @@ sub _find_x_top {
 sub getCoordString {
 	my $x = int(shift);
 	my $y = int(shift);
+	my $nopadding = shift;
 	my $coords = "";
  
 	shiftPack(\$coords, 0x44, 8)
-		unless (($config{serverType} == 0) || ($config{serverType} == 3) || ($config{serverType} == 5));
+		unless (($config{serverType} == 0) || ($config{serverType} == 3) || ($config{serverType} == 5) || $nopadding);
 	shiftPack(\$coords, $x, 10);
 	shiftPack(\$coords, $y, 10);
 	shiftPack(\$coords, 0, 4);
