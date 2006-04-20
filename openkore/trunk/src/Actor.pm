@@ -77,12 +77,16 @@ sub get {
 
 	if ($ID eq $accountID) {
 		return $char;
-	} elsif ($players{$ID}) {
-		return $players{$ID} if UNIVERSAL::isa($players{$ID}, "Actor");
-		return new Actor::Unknown($ID);
-	} elsif ($monsters{$ID}) {
-		return $monsters{$ID} if UNIVERSAL::isa($monsters{$ID}, "Actor");
-		return new Actor::Unknown($ID);
+	} elsif ($playersList->getByID($ID)) {
+		return $playersList->getByID($ID);
+	} elsif ($monstersList->getByID($ID)) {
+		return $monstersList->getByID($ID);
+	} elsif ($npcsList->getByID($ID)) {
+		return $npcsList->getByID($ID);
+	} elsif ($petsList->getByID($ID)) {
+		return $petsList->getByID($ID);
+	} elsif ($portalsList->getByID($ID)) {
+		return $portalsList->getByID($ID);
 	} elsif ($items{$ID}) {
 		return $items{$ID};
 	} else {
@@ -100,7 +104,7 @@ sub get {
 
 ##
 # int $Actor->{binID}
-# Invariant: value > 0
+# Invariant: value >= 0
 #
 # The index of this actor inside its associated actor list.
 
@@ -112,13 +116,13 @@ sub get {
 
 ##
 # int $Actor->{nameID}
-# Invariant: value > 0
+# Invariant: value >= 0
 #
 # $Actor->{ID} decoded into an 32-bit little endian integer.
 
 ##
 # int $Actor->{appear_time}
-# Invariant: value > 0
+# Invariant: value >= 0
 #
 # The time when this actor first appeared on screen.
 
@@ -183,7 +187,7 @@ sub nameIdx {
 sub verb {
 	my ($self, $you, $other) = @_;
 
-	return $you if $self->{type} eq 'You';
+	return $you if $self->isa('Actor::You');
 	return $other;
 }
 

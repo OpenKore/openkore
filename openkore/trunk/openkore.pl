@@ -115,7 +115,6 @@ $SIG{__DIE__} = sub {
 #### INITIALIZE STARTUP INTERFACE ####
 
 use Time::HiRes qw(time usleep);
-use Getopt::Long;
 use IO::Socket;
 use Digest::MD5;
 use Carp;
@@ -190,7 +189,11 @@ use Actor::Player;
 use Actor::Monster;
 use Actor::You;
 use Actor::Party;
+use Actor::Portal;
+use Actor::NPC;
+use Actor::Pet;
 use Actor::Unknown;
+use ActorList;
 use Interface;
 use ChatQueue;
 use Poseidon::Client;
@@ -396,14 +399,25 @@ if ($net->version != 1) {
 
 undef $msg;
 undef $msgOut;
-our $KoreStartTime = time;
-our $conState = 1;
+$KoreStartTime = time;
+$conState = 1;
 our $nextConfChangeTime;
-our $bExpSwitch = 2;
-our $jExpSwitch = 2;
-our $totalBaseExp = 0;
-our $totalJobExp = 0;
-our $startTime_EXP = time;
+$bExpSwitch = 2;
+$jExpSwitch = 2;
+$totalBaseExp = 0;
+$totalJobExp = 0;
+$startTime_EXP = time;
+
+$monstersList = new ActorList('Actor::Monster');
+$playersList = new ActorList('Actor::Player');
+$petsList = new ActorList('Actor::Pet');
+$npcsList = new ActorList('Actor::NPC');
+$portalsList = new ActorList('Actor::Portal');
+foreach my $list ($monstersList, $playersList, $petsList, $npcsList, $portalsList) {
+	$list->onAdd()->add(undef, \&actorAdded);
+	$list->onRemove()->add(undef, \&actorRemoved);
+	$list->onClearBegin()->add(undef, \&actorListClearing);
+}
 
 initStatVars();
 initRandomRestart();

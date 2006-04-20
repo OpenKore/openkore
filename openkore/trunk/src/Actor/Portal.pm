@@ -1,5 +1,5 @@
 #########################################################################
-#  OpenKore - Player actor object
+#  OpenKore - Portal actor object
 #  Copyright (c) 2005 OpenKore Team
 #
 #  This software is open source, licensed under the GNU General Public
@@ -9,42 +9,25 @@
 #  also distribute the source code.
 #  See http://www.gnu.org/licenses/gpl.html for the full license.
 #
-#  $Revision$
-#  $Id$
+#  $Revision: 3869 $
+#  $Id: Player.pm 3869 2006-02-02 12:10:15Z hongli $
 #
 #########################################################################
 ##
-# MODULE DESCRIPTION: Player actor object
+# MODULE DESCRIPTION: Portal actor object
 #
-# All members in %players are of the Actor::Player class.
+# All members in %portals are of the Actor::Portal class.
 #
 # @MODULE(Actor) is the base class for this class.
-package Actor::Player;
+package Actor::Portal;
 
 use strict;
 use Actor;
-use Globals;
 use base qw(Actor);
 
 sub new {
 	my ($class) = @_;
 	return bless {}, $class;
-}
-
-sub selfString {
-	my ($self) = @_;
-
-	return $self->{sex} ? 'himself' : 'herself';
-}
-
-##
-# String $actor->job
-#
-# Returns the job string (e.g. "Knight") of the actor.
-sub job {
-	my ($self) = @_;
-
-	return $jobs_lut{$self->{jobID}};
 }
 
 1;

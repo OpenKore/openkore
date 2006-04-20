@@ -109,20 +109,11 @@ sub initMapChangeVars {
 	undef %currentDeal;
 	undef $currentChatRoom;
 	undef @currentChatRoomUsers;
-	undef @playersID;
-	undef @monstersID;
-	undef @portalsID;
 	undef @itemsID;
-	undef @npcsID;
 	undef @identifyID;
 	undef @spellsID;
-	undef @petsID;
 	undef @arrowCraftID;
-	undef %players;
-	undef %monsters;
-	undef %portals;
 	undef %items;
-	undef %npcs;
 	undef %spells;
 	undef %incomingParty;
 	#undef $msg;		# Why're these undefined?
@@ -143,6 +134,12 @@ sub initMapChangeVars {
 	undef @lastpm;
 	undef %incomingFriend;
 
+	$monstersList->clear();
+	$playersList->clear();
+	$petsList->clear();
+	$portalsList->clear();
+	$npcsList->clear();
+
 	@unknownPlayers = ();
 	@unknownNPCs = ();
 	@sellList = ();
@@ -157,7 +154,7 @@ sub initMapChangeVars {
 
 	initOtherVars();
 	Plugins::callHook('packet_mapChange');
-	
+
 	$logAppend = ($config{logAppendUsername}) ? "_$config{username}_$config{char}" : '';
 	if ($config{logAppendUsername} && !($Settings::storage_file =~ /$logAppend/)) {
 		$Settings::chat_file	 = substr($Settings::chat_file,0,length($Settings::chat_file)-4)."$logAppend.txt";
@@ -474,12 +471,12 @@ sub AI {
 
 		# Remove players that are too far away; sometimes they don't get
 		# removed from the list for some reason
-		foreach (keys %players) {
-			if (distance($char->{pos_to}, $players{$_}{pos_to}) > 35) {
-				delete $players{$_};
-				binRemove(\@playersID, $_);
-			}
-		}
+		#foreach (keys %players) {
+		#	if (distance($char->{pos_to}, $players{$_}{pos_to}) > 35) {
+		#		$playersList->remove($players{$_});
+		#		last;
+		#	}
+		#}
 
 		$timeout{'ai_wipe_check'}{'time'} = time;
 		debug "Wiped old\n", "ai", 2;
