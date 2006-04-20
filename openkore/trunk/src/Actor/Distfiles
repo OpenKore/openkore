@@ -3,3 +3,6 @@ Player.pm
 Monster.pm
 Unknown.pm
 You.pm
+Pet.pm
+NPC.pm
+Portal.pm

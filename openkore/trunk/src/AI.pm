@@ -798,7 +798,7 @@ sub attack {
 
 	#Mod Start
 	AUTOEQUIP: {
-		last AUTOEQUIP if ($target->{type} eq 'Player');
+		last AUTOEQUIP if (UNIVERSAL::isa($target, 'Actor::Player'));
 
 		my $i = 0;
 		my $Lequip = 0;

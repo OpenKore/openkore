@@ -3,6 +3,7 @@ package Network::Receive;
 use strict;
 use Time::HiRes qw(time usleep);
 use encoding 'utf8';
+use Carp::Assert;
 
 use Globals;
 use Actor;
@@ -52,10 +53,10 @@ sub new {
 		'0075' => ['change_to_constate5'],
 		'0077' => ['change_to_constate5'],
 		'0078' => ['actor_display', 'a4 v14 a4 x7 C1 a3 x2 C1 v1', [qw(ID walk_speed param1 param2 param3 type hair_style weapon lowhead shield tophead midhead hair_color clothes_color head_dir guildID sex coords act lv)]],
-		'0079' => ['actor_connected', 'a4 v14 a4 x7 C1 a3 x2 v1', [qw(ID walk_speed param1 param2 param3 type hair_style weapon lowhead shield tophead midhead hair_color clothes_color head_dir guildID sex coords lv)]],
+		'0079' => ['actor_display', 'a4 v14 a4 x7 C1 a3 x2 v1',    [qw(ID walk_speed param1 param2 param3 type hair_style weapon lowhead shield tophead midhead hair_color clothes_color head_dir guildID sex coords lv)]],
 		'007A' => ['change_to_constate5'],
-		'007B' => ['actor_display', 'a4 v8 x4 v6 a4 x7 C1 a5 x3 v1', [qw(ID walk_speed param1 param2 param3 type hair_style weapon lowhead shield tophead midhead hair_color clothes_color head_dir guildID sex coords lv)]],
-		'007C' => ['actor_spawned', 'a4 v1 v1 v1 v1 x6 v1 C1 x12 C1 a3', [qw(ID walk_speed param1 param2 param3 type pet sex coords)]],
+		'007B' => ['actor_display', 'a4 v8 x4 v6 a4 x7 C1 a5 x3 v1',     [qw(ID walk_speed param1 param2 param3 type hair_style weapon lowhead shield tophead midhead hair_color clothes_color head_dir guildID sex coords lv)]],
+		'007C' => ['actor_display', 'a4 v1 v1 v1 v1 x6 v1 C1 x12 C1 a3', [qw(ID walk_speed param1 param2 param3 type pet sex coords)]],
 		'007F' => ['received_sync', 'V1', [qw(time)]],
 		'0080' => ['actor_died_or_disappeared', 'a4 C1', [qw(ID type)]],
 		'0081' => ['errors', 'C1', [qw(type)]],
@@ -233,8 +234,8 @@ sub new {
 		'01D4' => ['npc_talk_text', 'a4', [qw(ID)]],
 		'01D7' => ['player_equipment', 'a4 C1 v2', [qw(sourceID type ID1 ID2)]],
 		'01D8' => ['actor_display', 'a4 v14 a4 x4 v1 x1 C1 a3 x2 C1 v1', [qw(ID walk_speed param1 param2 param3 type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID skillstatus sex coords act lv)]],
-		'01D9' => ['actor_connected', 'a4 v14 a4 x4 v1 x1 C1 a3 x2 v1', [qw(ID walk_speed param1 param2 param3 type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID skillstatus sex coords lv)]],
-		'01DA' => ['actor_moved', 'a4 v5 C1 x1 v3 x4 v5 a4 x4 v1 x1 C1 a5 x3 v1', [qw(ID walk_speed param1 param2 param3 type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID skillstatus sex coords lv)]],
+		'01D9' => ['actor_display', 'a4 v14 a4 x4 v1 x1 C1 a3 x2 v1',    [qw(ID walk_speed param1 param2 param3 type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID skillstatus sex coords lv)]],
+		'01DA' => ['actor_display', 'a4 v5 C1 x1 v3 x4 v5 a4 x4 v1 x1 C1 a5 x3 v1', [qw(ID walk_speed param1 param2 param3 type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID skillstatus sex coords lv)]],
 		'01DC' => ['secure_login_key', 'x2 a*', [qw(secure_key)]],
 		'01D6' => ['pvp_mode2', 'v1', [qw(type)]],
 		'01DE' => ['skill_use', 'v1 a4 a4 V1 V1 V1 l1 v1 v1 C1', [qw(skillID sourceID targetID tick src_speed dst_speed damage level param3 type)]],
@@ -513,7 +514,6 @@ sub actor_action {
 		$target->{sitting} = 0 unless $args->{type} == 4 || $args->{type} == 9 || $totalDamage == 0;
 
 		my $msg = attack_string($source, $target, $dmgdisplay, ($args->{src_speed}/10));
-
 		Plugins::callHook('packet_attack', {sourceID => $args->{sourceID}, targetID => $args->{targetID}, msg => \$msg, dmg => $totalDamage, type => $args->{type}});
 
 		my $status = sprintf("[%3d/%3d]", percent_hp($char), percent_sp($char));
@@ -526,199 +526,141 @@ sub actor_action {
 				$startedattack = 0;
 			}
 			calcStat($args->{damage});
-		} elsif ($args->{targetID} eq $accountID) {
-			# Check for monster with empty name
-			if ($monsters{$args->{sourceID}} && %{$monsters{$args->{sourceID}}} && $monsters{$args->{sourceID}}{'name'} eq "") {
-				if ($config{'teleportAuto_emptyName'} ne '0') {
-					message T("Monster with empty name attacking you. Teleporting...\n");
-					useTeleport(1);
-				} else {
-					# Delete monster from hash; monster will be
-					# re-added to the hash next time it moves.
-					delete $monsters{$args->{sourceID}};
-				}
-			}
-			message("$status $msg", $args->{damage} > 0 ? "attacked" : "attackedMiss");
 
+		} elsif ($args->{targetID} eq $accountID) {
+			message("$status $msg", $args->{damage} > 0 ? "attacked" : "attackedMiss");
 			if ($args->{damage} > 0) {
 				$damageTaken{$source->{name}}{attack} += $args->{damage};
 			}
+
 		} else {
 			debug("$msg", 'parseMsg_damage');
 		}
 	}
 }
 
-sub actor_connected {
-	my ($self,$args) = @_;
-	change_to_constate5();
-	my %coords;
-	makeCoords(\%coords, $args->{coords});
-
-	if ($jobs_lut{$args->{type}}) {
-		my $added;
-		if (!UNIVERSAL::isa($players{$args->{ID}}, 'Actor')) {
-			$players{$args->{ID}} = new Actor::Player();
-			$players{$args->{ID}}{'appear_time'} = time;
-			binAdd(\@playersID, $args->{ID});
-			$players{$args->{ID}}{'ID'} = $args->{ID};
-			$players{$args->{ID}}{'jobID'} = $args->{type};
-			$players{$args->{ID}}{'sex'} = $args->{sex};
-			$players{$args->{ID}}{'nameID'} = unpack("V1", $args->{ID});
-			$players{$args->{ID}}{'binID'} = binFind(\@playersID, $args->{ID});
-			$added = 1;
-		}
-
-		$players{$args->{ID}}{weapon} = $args->{weapon};
-		$players{$args->{ID}}{shield} = $args->{shield};
-		$players{$args->{ID}}{walk_speed} = $args->{walk_speed} / 1000;
-		$players{$args->{ID}}{headgear}{low} = $args->{lowhead};
-		$players{$args->{ID}}{headgear}{top} = $args->{tophead};
-		$players{$args->{ID}}{headgear}{mid} = $args->{midhead};
-		$players{$args->{ID}}{hair_color} = $args->{hair_color};
-		$players{$args->{ID}}{guildID} = $args->{guildID};
-		$players{$args->{ID}}{look}{body} = 0;
-		$players{$args->{ID}}{look}{head} = 0;
-		$players{$args->{ID}}{lv} = $args->{lv};
-		$players{$args->{ID}}{pos} = {%coords};
-		$players{$args->{ID}}{pos_to} = {%coords};
-		my $domain = existsInList($config{friendlyAID}, unpack("V1", $args->{ID})) ? 'parseMsg_presence' : 'parseMsg_presence/player';
-		debug "Player Connected: ".$players{$args->{ID}}->name." ($players{$args->{ID}}{'binID'}) Level $args->{lv} $sex_lut{$players{$args->{ID}}{'sex'}} $jobs_lut{$players{$args->{ID}}{'jobID'}} ($coords{x}, $coords{y})\n", $domain;
-
-		objectAdded('player', $args->{ID}, $players{$args->{ID}}) if ($added);
-		Plugins::callHook('player', {player => $players{$args->{ID}}});
-
-		setStatus($args->{ID}, $args->{param1}, $args->{param2}, $args->{param3});
-
-	} else {
-		debug "Unknown Connected: $args->{type} - ", "parseMsg";
-	}
-}
-
 sub actor_died_or_disappeared {
 	my ($self,$args) = @_;
 	change_to_constate5();
+	my $ID = $args->{ID};
 
-	if ($args->{ID} eq $accountID) {
+	if ($ID eq $accountID) {
 		message T("You have died\n");
 		closeShop() unless !$shopstarted || $config{'dcOnDeath'} == -1 || !$AI;
 		$char->{deathCount}++;
 		$char->{dead} = 1;
 		$char->{dead_time} = time;
 
-	} elsif ($monsters{$args->{ID}} && %{$monsters{$args->{ID}}}) {
-		%{$monsters_old{$args->{ID}}} = %{$monsters{$args->{ID}}};
-		$monsters_old{$args->{ID}}{'gone_time'} = time;
+	} elsif (defined $monstersList->getByID($ID)) {
+		my $monster = $monstersList->getByID($ID);
+		$monsters_old{$ID} = {%{$monster}};
+		$monsters_old{$ID}{gone_time} = time;
 		if ($args->{type} == 0) {
-			debug "Monster Disappeared: $monsters{$args->{ID}}{'name'} ($monsters{$args->{ID}}{'binID'})\n", "parseMsg_presence";
-			$monsters_old{$args->{ID}}{'disappeared'} = 1;
+			debug "Monster Disappeared: $monster->{name} ($monster->{binID})\n", "parseMsg_presence";
+			$monsters_old{$ID}{disappeared} = 1;
 
 		} elsif ($args->{type} == 1) {
-			debug "Monster Died: $monsters{$args->{ID}}{'name'} ($monsters{$args->{ID}}{'binID'})\n", "parseMsg_damage";
-			$monsters_old{$args->{ID}}{'dead'} = 1;
+			debug "Monster Died: $monster->{name} ($monster->{binID})\n", "parseMsg_damage";
+			$monsters_old{$ID}{dead} = 1;
 
 			if ($config{itemsTakeAuto_party} &&
-			    ($monsters{$args->{ID}}{dmgFromParty} > 0 ||
-			     $monsters{$args->{ID}}{dmgFromYou} > 0)) {
+			    ($monster->{dmgFromParty} > 0 ||
+			     $monster->{dmgFromYou} > 0)) {
 				AI::clear("items_take");
-				ai_items_take($monsters{$args->{ID}}{pos}{x}, $monsters{$args->{ID}}{pos}{y},
-					$monsters{$args->{ID}}{pos_to}{x}, $monsters{$args->{ID}}{pos_to}{y});
+				ai_items_take($monster->{pos}{x}, $monster->{pos}{y},
+					$monster->{pos_to}{x}, $monster->{pos_to}{y});
 			}
 
 		} elsif ($args->{type} == 2) { # What's this?
-			debug "Monster Disappeared: $monsters{$args->{ID}}{'name'} ($monsters{$args->{ID}}{'binID'})\n", "parseMsg_presence";
-			$monsters_old{$args->{ID}}{'disappeared'} = 1;
+			debug "Monster Disappeared: $monster->{name} ($monster->{binID})\n", "parseMsg_presence";
+			$monsters_old{$ID}{disappeared} = 1;
 
 		} elsif ($args->{type} == 3) {
-			debug "Monster Teleported: $monsters{$args->{ID}}{'name'} ($monsters{$args->{ID}}{'binID'})\n", "parseMsg_presence";
-			$monsters_old{$args->{ID}}{'teleported'} = 1;
+			debug "Monster Teleported: $monster->{name} ($monster->{binID})\n", "parseMsg_presence";
+			$monsters_old{$ID}{teleported} = 1;
 		}
-		binRemove(\@monstersID, $args->{ID});
-		objectRemoved('monster', $args->{ID}, $monsters{$args->{ID}});
-		delete $monsters{$args->{ID}};
 
-	} elsif (UNIVERSAL::isa($players{$args->{ID}}, 'Actor')) {
+		$monstersList->remove($monster);
+
+	} elsif (defined $playersList->getByID($ID)) {
+		my $player = $playersList->getByID($ID);
 		if ($args->{type} == 1) {
-			message TF("Player Died: %s (%s) %s %s\n", $players{$args->{ID}}->name, $players{$args->{ID}}{'binID'}, $sex_lut{$players{$args->{ID}}{'sex'}}, $jobs_lut{$players{$args->{ID}}{'jobID'}});
-			$players{$args->{ID}}{'dead'} = 1;
+			message TF("Player Died: %s (%s) %s %s\n", $player->name, $player->{binID}, $sex_lut{$player->{sex}}, $jobs_lut{$player->{jobID}});
+			$player->{dead} = 1;
 		} else {
 			if ($args->{type} == 0) {
-				debug "Player Disappeared: ".$players{$args->{ID}}->name." ($players{$args->{ID}}{'binID'}) $sex_lut{$players{$args->{ID}}{'sex'}} $jobs_lut{$players{$args->{ID}}{'jobID'}} ($players{$args->{ID}}{pos_to}{x}, $players{$args->{ID}}{pos_to}{y})\n", "parseMsg_presence";
-				$players{$args->{ID}}{'disappeared'} = 1;
+				debug "Player Disappeared: ".$player->name." ($player->{binID}) $sex_lut{$player->{sex}} $jobs_lut{$player->{jobID}} ($player->{pos_to}{x}, $player->{pos_to}{y})\n", "parseMsg_presence";
+				$player->{disappeared} = 1;
 			} elsif ($args->{type} == 2) {
-				debug "Player Disconnected: ".$players{$args->{ID}}->name." ($players{$args->{ID}}{'binID'}) $sex_lut{$players{$args->{ID}}{'sex'}} $jobs_lut{$players{$args->{ID}}{'jobID'}} ($players{$args->{ID}}{pos_to}{x}, $players{$args->{ID}}{pos_to}{y})\n", "parseMsg_presence";
-				$players{$args->{ID}}{'disconnected'} = 1;
+				debug "Player Disconnected: ".$player->name." ($player->{binID}) $sex_lut{$player->{sex}} $jobs_lut{$player->{jobID}} ($player->{pos_to}{x}, $player->{pos_to}{y})\n", "parseMsg_presence";
+				$player->{disconnected} = 1;
 			} elsif ($args->{type} == 3) {
-				debug "Player Teleported: ".$players{$args->{ID}}->name." ($players{$args->{ID}}{'binID'}) $sex_lut{$players{$args->{ID}}{'sex'}} $jobs_lut{$players{$args->{ID}}{'jobID'}} ($players{$args->{ID}}{pos_to}{x}, $players{$args->{ID}}{pos_to}{y})\n", "parseMsg_presence";
-				$players{$args->{ID}}{'teleported'} = 1;
+				debug "Player Teleported: ".$player->name." ($player->{binID}) $sex_lut{$player->{sex}} $jobs_lut{$player->{jobID}} ($player->{pos_to}{x}, $player->{pos_to}{y})\n", "parseMsg_presence";
+				$player->{teleported} = 1;
 			} else {
-				debug "Player Disappeared in an unknown way: ".$players{$args->{ID}}->name." ($players{$args->{ID}}{'binID'}) $sex_lut{$players{$args->{ID}}{'sex'}} $jobs_lut{$players{$args->{ID}}{'jobID'}}\n", "parseMsg_presence";
-				$players{$args->{ID}}{'disappeared'} = 1;
+				debug "Player Disappeared in an unknown way: ".$player->name." ($player->{binID}) $sex_lut{$player->{sex}} $jobs_lut{$player->{jobID}}\n", "parseMsg_presence";
+				$player->{disappeared} = 1;
 			}
 
-			%{$players_old{$args->{ID}}} = %{$players{$args->{ID}}};
-			$players_old{$args->{ID}}{'gone_time'} = time;
-			binRemove(\@playersID, $args->{ID});
-			objectRemoved('player', $args->{ID}, $players{$args->{ID}});
-			delete $players{$args->{ID}};
-
-			binRemove(\@venderListsID, $args->{ID});
-			delete $venderLists{$args->{ID}};
+			$players_old{$ID} = {%{$player}};
+			$players_old{$ID}{gone_time} = time;
+			$playersList->remove($player);
 		}
 
-	} elsif ($players_old{$args->{ID}} && %{$players_old{$args->{ID}}}) {
+	} elsif ($players_old{$ID}) {
 		if ($args->{type} == 2) {
-			debug "Player Disconnected: $players_old{$args->{ID}}{'name'}\n", "parseMsg_presence";
-			$players_old{$args->{ID}}{'disconnected'} = 1;
+			debug "Player Disconnected: $players_old{$ID}{name}\n", "parseMsg_presence";
+			$players_old{$ID}{disconnected} = 1;
 		} elsif ($args->{type} == 3) {
-			debug "Player Teleported: $players_old{$args->{ID}}{'name'}\n", "parseMsg_presence";
-			$players_old{$args->{ID}}{'teleported'} = 1;
+			debug "Player Teleported: $players_old{$ID}{name}\n", "parseMsg_presence";
+			$players_old{$ID}{teleported} = 1;
 		}
 
-	} elsif ($portals{$args->{ID}} && %{$portals{$args->{ID}}}) {
-		debug "Portal Disappeared: $portals{$args->{ID}}{'name'} ($portals{$args->{ID}}{'binID'})\n", "parseMsg";
-		$portals_old{$args->{ID}} = {%{$portals{$args->{ID}}}};
-		$portals_old{$args->{ID}}{'disappeared'} = 1;
-		$portals_old{$args->{ID}}{'gone_time'} = time;
-		binRemove(\@portalsID, $args->{ID});
-		delete $portals{$args->{ID}};
+	} elsif (defined $portalsList->getByID($ID)) {
+		my $portal = $portalsList->getByID($ID);
+		debug "Portal Disappeared: $portal->{name} ($portal->{binID})\n", "parseMsg";
+		$portals_old{$ID} = {%{$portal}};
+		$portals_old{$ID}{disappeared} = 1;
+		$portals_old{$ID}{gone_time} = time;
+		$portalsList->remove($portal);
 
-	} elsif ($npcs{$args->{ID}} && %{$npcs{$args->{ID}}}) {
-		debug "NPC Disappeared: $npcs{$args->{ID}}{'name'} ($npcs{$args->{ID}}{'binID'})\n", "parseMsg";
-		%{$npcs_old{$args->{ID}}} = %{$npcs{$args->{ID}}};
-		$npcs_old{$args->{ID}}{'disappeared'} = 1;
-		$npcs_old{$args->{ID}}{'gone_time'} = time;
-		binRemove(\@npcsID, $args->{ID});
-		objectRemoved('npc', $args->{ID}, $npcs{$args->{ID}});
-		delete $npcs{$args->{ID}};
+	} elsif (defined $npcsList->getByID($ID)) {
+		my $npc = $npcsList->getByID($ID);
+		debug "NPC Disappeared: $npc->{name} ($npc->{binID})\n", "parseMsg";
+		$npcs_old{$ID} = {%{$npc}};
+		$npcs_old{$ID}{disappeared} = 1;
+		$npcs_old{$ID}{gone_time} = time;
+		$npcsList->remove($npc);
 
-	} elsif ($pets{$args->{ID}} && %{$pets{$args->{ID}}}) {
-		debug "Pet Disappeared: $pets{$args->{ID}}{'name'} ($pets{$args->{ID}}{'binID'})\n", "parseMsg";
-		binRemove(\@petsID, $args->{ID});
-		delete $pets{$args->{ID}};
+	} elsif (defined $petsList->getByID($ID)) {
+		my $pet = $petsList->getByID($ID);
+		debug "Pet Disappeared: $pet->{name} ($pet->{binID})\n", "parseMsg";
+		$petsList->remove($pet);
+
 	} else {
-		debug "Unknown Disappeared: ".getHex($args->{ID})."\n", "parseMsg";
+		debug "Unknown Disappeared: ".getHex($ID)."\n", "parseMsg";
 	}
 }
 
-# This packet is a merge of actor_exists, actor_connected, actor_moved, etc...
-#
-# Tested with packets:
-# 0078, 022A, 022B, 022C
-# ['actor_moved', 'a4 v1 v1 v1 v1 v1 v1 v1 v1 x4 v1 v1 v1 v1 v1 v1 V1 x7 C1 a5 x3 v1',
-# [qw(ID walk_speed param1 param2 param3 type hair_style weapon lowhead shield tophead midhead hair_color clothes_color head_dir guildID sex coords lv)]],
-
+# This function is a merge of actor_exists, actor_connected, actor_moved, etc...
 sub actor_display {
 	my ($self, $args) = @_;
 	change_to_constate5();
+	my ($actor, $mustAdd);
 
-	my ($actor, $type, $justAdded);
 
-	# Initialize
+	#### Initialize ####
+
 	my $nameID = unpack("V1", $args->{ID});
 
 	my (%coordsFrom, %coordsTo);
-	if (length($args->{coords}) >= 5) {
+	if ($args->{switch} eq "007C") {
+		makeCoords(\%coordsTo, $args->{coords});
+		%coordsFrom = %coordsTo;
+	} elsif ($args->{switch} eq "01DA") {
+		makeCoords(\%coordsFrom, substr($args->{RAW_MSG}, 50, 3));
+		makeCoords2(\%coordsTo, substr($args->{RAW_MSG}, 52, 3));
+	} elsif (length($args->{coords}) >= 5) {
 		my $coordsArg = $args->{coords};
 		unShiftPack(\$coordsArg, \$coordsTo{y}, 10);
 		unShiftPack(\$coordsArg, \$coordsTo{x}, 10);
@@ -729,55 +671,51 @@ sub actor_display {
 		unShiftPack(\$coordsArg, \$args->{body_dir}, 4);
 		unShiftPack(\$coordsArg, \$coordsTo{y}, 10);
 		unShiftPack(\$coordsArg, \$coordsTo{x}, 10);
-		%{coordsFrom} = %coordsTo;
+		%coordsFrom = %coordsTo;
 	}
 
 	# Remove actors with a distance greater than removeActorWithDistance. Useful for vending (so you don't spam
 	# too many packets in prontera and cause server lag). As a side effect, you won't be able to "see" actors
 	# beyond removeActorWithDistance.
 	if ($config{removeActorWithDistance}) {
-		if ((my $block_dist = blockDistance($char->{pos_to}, {%coordsTo})) > ($config{removeActorWithDistance})) {
+		if ((my $block_dist = blockDistance($char->{pos_to}, \%coordsTo)) > ($config{removeActorWithDistance})) {
 			my $nameIdTmp = unpack("V1", $args->{ID});
 			debug "Removed out of sight actor $nameIdTmp at ($coordsTo{x}, $coordsTo{y}) (distance: $block_dist)\n";
 			return;
 		}
 	}
 
+
+	#### Step 1: create/get the correct actor object ####
+
 	if ($jobs_lut{$args->{type}}) {
 		# Actor is a player
-		$actor = $players{$args->{ID}};
-		$type = "Player";
-		if (!UNIVERSAL::isa($actor, 'Actor')) {
-			$actor = $players{$args->{ID}} = new Actor::Player();
-			binAdd(\@playersID, $args->{ID});
-			$actor->{binID} = binFind(\@playersID, $args->{ID});
+		$actor = $playersList->getByID($args->{ID});
+		if (!defined $actor) {
+			$actor = new Actor::Player();
 			$actor->{appear_time} = time;
-			$justAdded = 'player';
+			$mustAdd = 1;
 		}
-
 		$actor->{nameID} = $nameID;
 
 	} elsif ($args->{type} == 45) {
 		# Actor is a portal
-		$type = "Portal";
-		if (!$portals{$args->{ID}} || !%{$npcs{$args->{ID}}}) {
-			binAdd(\@portalsID, $args->{ID});
-			$portals{$args->{ID}}{binID} = binFind(\@portalsID, $args->{ID});
-			$portals{$args->{ID}}{appear_time} = time;
-
+		$actor = $portalsList->getByID($args->{ID});
+		if (!defined $actor) {
+			$actor = new Actor::Portal();
+			$actor->{appear_time} = time;
 			my $exists = portalExists($field{name}, \%coordsTo);
-			$portals{$args->{ID}}{source}{map} = $field{name};
-			$portals{$args->{ID}}{name} = ($exists ne "")
+			$actor->{source}{map} = $field{name};
+			$actor->{name} = ($exists ne "")
 				? "$portals_lut{$exists}{source}{map} -> " . getPortalDestName($exists)
 				: "Unknown $nameID";
+			$mustAdd = 1;
 
 			# Strangely enough, portals (like all other actors) have names, too.
 			# We _could_ send a "actor_info_request" packet to find the names of each portal,
 			# however I see no gain from this. (And it might even provide another way of private
 			# servers to auto-ban bots.)
 		}
-		$actor = $portals{$args->{ID}};
-
 		$actor->{nameID} = $nameID;
 
 	} elsif ($args->{type} >= 1000 || ($args->{type} >= 6000 && $pvp == 0)) {
@@ -789,94 +727,73 @@ sub actor_display {
 			# Right now, i'm setting the name of the monster to their monster id number.
 			# and not the owner-given names.
 
-			$type = "Pet";
-			my $ID = $args->{ID};
-			if (!$pets{$ID} || !%{$pets{$ID}}) {
-				binAdd(\@petsID, $ID);
-				$pets{$ID}{binID} = binFind(\@petsID, $args->{ID});
-				$pets{$ID}{appear_time} = time;
-
-				$pets{$ID}{name} = ($monsters_lut{$args->{type}} ne "")
+			$actor = $petsList->getByID($args->{ID});
+			if (!defined $actor) {
+				$actor = new Actor::Pet();
+				$actor->{appear_time} = time;
+				$actor->{name} = ($monsters_lut{$args->{type}} ne "")
 						? $monsters_lut{$args->{type}}
 						: "Unknown $args->{type}";
-				$pets{$ID}{name_given} = "Unknown";
+				$actor->{name_given} = "Unknown";
+				$mustAdd = 1;
 
-				if ($monsters{$ID}) {
-					binRemove(\@monstersID, $ID);
-					objectRemoved('monster', $ID, $monsters{$ID});
-					delete $monsters{$ID};
+				# Previously identified monsters could suddenly be identified as pets.
+				if ($monstersList->getByID($args->{ID})) {
+					$monstersList->removeByID($args->{ID});
 				}
-
-				$justAdded = 'pet';
 			}
-			$actor = $pets{$ID};
 
 		} else {
 			# Actor really is a monster
-			$type = "Monster";
-			if (!$monsters{$args->{ID}} || !%{$monsters{$args->{ID}}}) {
-				$actor = $monsters{$args->{ID}} = new Actor::Monster();
-				binAdd(\@monstersID, $args->{ID});
-				$actor->{binID} = binFind(\@monstersID, $args->{ID});
+			$actor = $monstersList->getByID($args->{ID});
+			if (!defined $actor) {
+				$actor = new Actor::Monster();
 				$actor->{appear_time} = time;
-
 				$actor->{name} = ($monsters_lut{$args->{type}} ne "")
 						? $monsters_lut{$args->{type}}
 						: "Unknown ".$args->{type};
 				$actor->{binType} = $args->{type};
-
-				$justAdded = 'monster';
+				$mustAdd = 1;
 			}
-			$actor = $monsters{$args->{ID}};
-
 		}
 
-		# Why do monsters use nameID as type?
+		# Why do monsters and pets use nameID as type?
 		$actor->{nameID} = $args->{type};
 
 	} else {	# ($args->{type} < 1000 && $args->{type} != 45 && !$jobs_lut{$args->{type}})
 		# Actor is an NPC
-		$type = "NPC";
-		my $ID = $args->{ID};
-		if (!$npcs{$ID} || !%{$npcs{$ID}}) {
-			binAdd(\@npcsID, $ID);
-			$npcs{$ID}{binID} = binFind(\@npcsID, $ID);
-			$npcs{$ID}{appear_time} = time;
-			$justAdded = 'npc';
+		$actor = $npcsList->getByID($args->{ID});
+		if (!defined $actor) {
+			$actor = new Actor::NPC();
+			$actor->{appear_time} = time;
+			$mustAdd = 1;
 		}
-		$actor = $npcs{$ID};
-
 		$actor->{nameID} = $nameID;
 	}
 
+
+	#### Step 2: update actor information ####
+
 	$actor->{ID} = $args->{ID};
 	$actor->{jobID} = $args->{type};
-
-	# I do wish $actor->{type} would be consistent, but this is
-	# how the old functions were. I do this to not break anything >.>
-	if ($type eq "Player" || $type eq "Monster") {
-		$actor->{type} = $type;
-	} else {
-		$actor->{type} = $args->{type};
-	}
-
+	$actor->{type} = $args->{type};
 	$actor->{lv} = $args->{lv};
-
 	$actor->{pos_to} = {%coordsTo};
+	$actor->{walk_speed} = $args->{walk_speed} / 1000 if (exists $args->{walk_speed});
+	$actor->{time_move} = time;
+	$actor->{time_move_calc} = distance(\%coordsFrom, \%coordsTo) * $actor->{walk_speed};
+
 	if (length($args->{coords}) >= 5) {
-		if (($type) ne 'NPC') {
+		if (!$actor->isa('Player::NPC')) {
 			$actor->{pos} = {%coordsFrom};
 		} else {
 			$actor->{pos} = {%coordsTo};
 		}
-		$actor->{walk_speed} = $args->{walk_speed} / 1000;
-		$actor->{time_move} = time;
-		$actor->{time_move_calc} = distance(\%coordsFrom, \%coordsTo) * $actor->{walk_speed};
 	} else {
 		$actor->{pos} = {%coordsTo};
 	}
 
-	if ($type eq "Player") {
+	if (UNIVERSAL::isa($actor, "Actor::Player")) {
 		# None of this stuff should matter if the actor isn't a player...
 
 		# Interesting note about guildEmblem. If it is 0 (or none), the Ragnarok
@@ -884,13 +801,15 @@ sub actor_display {
 		# invitation priveledges), regardless of whether or not guildID is set.
 		# I bet that this is yet another brilliant "feature" by GRAVITY's good programmers.
 		$actor->{guildEmblem} = $args->{guildEmblem} if (exists $args->{guildEmblem});
-		$actor->{guildID} = $args->{guildID};
+		$actor->{guildID} = $args->{guildID} if (exists $args->{guildID});
 
-		$actor->{headgear}{low} = $args->{lowhead};
-		$actor->{headgear}{mid} = $args->{midhead};
-		$actor->{headgear}{top} = $args->{tophead};
-		$actor->{weapon} = $args->{weapon};
-		$actor->{shield} = $args->{shield};
+		if (exists $args->{lowhead}) {
+			$actor->{headgear}{low} = $args->{lowhead};
+			$actor->{headgear}{mid} = $args->{midhead};
+			$actor->{headgear}{top} = $args->{tophead};
+			$actor->{weapon} = $args->{weapon};
+			$actor->{shield} = $args->{shield};
+		}
 
 		$actor->{sex} = $args->{sex};
 
@@ -901,13 +820,13 @@ sub actor_display {
 		}
 
 		# Monsters don't have hair colors or heads to look around...
-		$actor->{hair_color} = $args->{hair_color};
-		$actor->{look}{head} = $args->{head_dir};
+		$actor->{hair_color} = $args->{hair_color} if (exists $args->{hair_color});
 	}
 
 	# But hair_style is used for pets, and their bodies can look different ways...
-	$actor->{hair_style} = $args->{hair_style};
-	$actor->{look}{body} = $args->{body_dir};
+	$actor->{hair_style} = $args->{hair_style} if (exists $args->{hair_style});
+	$actor->{look}{body} = $args->{body_dir} if (exists $args->{body_dir});
+	$actor->{look}{head} = $args->{head_dir} if (exists $args->{head_dir});
 
 	# When stance is non-zero, character is bobbing as if they had just got hit,
 	# but the cursor also turns to a sword when they are mouse-overed.
@@ -941,48 +860,76 @@ sub actor_display {
 	$actor->{param3} = $args->{param3};
 
 	# And use them to set status flags.
-	setStatus($args->{ID}, $args->{param1}, $args->{param2}, $args->{param3});
+	if (setStatus($actor, $args->{param1}, $args->{param2}, $args->{param3})) {
+		$mustAdd = 0;
+	}
 
-	if (defined($justAdded)) {
-		objectAdded($justAdded, $args->{ID}, $actor);
-		if ($justAdded eq 'npc') {
+
+	#### Step 3: Add actor to actor list ####
+
+	if ($mustAdd) {
+		if (UNIVERSAL::isa($actor, "Actor::Player")) {
+			$playersList->add($actor);
+
+		} elsif (UNIVERSAL::isa($actor, "Actor::Monster")) {
+			$monstersList->add($actor);
+
+		} elsif (UNIVERSAL::isa($actor, "Actor::Pet")) {
+			$petsList->add($actor);
+
+		} elsif (UNIVERSAL::isa($actor, "Actor::Portal")) {
+			$portalsList->add($actor);
+
+		} elsif (UNIVERSAL::isa($actor, "Actor::NPC")) {
 			my $ID = $args->{ID};
-			my $location = "$field{name} $npcs{$ID}{pos}{x} $npcs{$ID}{pos}{y}";
+			my $location = "$field{name} $actor->{pos}{x} $actor->{pos}{y}";
 			if ($npcs_lut{$location}) {
-				$npcs{$ID}{name} = $npcs_lut{$location};
-				$npcs{$ID}{gotName} = 1;
+				$actor->{name} = $npcs_lut{$location};
+				$actor->{gotName} = 1;
 			} else {
-				$npcs{$ID}{name} = "Unknown $nameID";
+				$actor->{name} = "Unknown $nameID";
 			}
+			$npcsList->add($actor);
 		}
 	}
 
-	# Packet specific
+
+	#### Packet specific ####
 	if ($args->{switch} eq "0078" ||
 		$args->{switch} eq "01D8" ||
 		$args->{switch} eq "022A") {
 		# Actor Exists
 
-		if ($type eq "Player") {
+		if ($actor->isa('Actor::Player')) {
 			my $domain = existsInList($config{friendlyAID}, unpack("V1", $actor->{ID})) ? 'parseMsg_presence' : 'parseMsg_presence/player';
 			debug "Player Exists: " . $actor->name . " ($actor->{binID}) Level $actor->{lv} $sex_lut{$actor->{sex}} $jobs_lut{$actor->{jobID}} ($coordsFrom{x}, $coordsFrom{y})\n", $domain;
 
 			# Shouldn't this have a more specific hook name?
 			Plugins::callHook('player', {player => $actor});
-		} elsif ($type eq "NPC") {
+
+		} elsif ($actor->isa('Actor::NPC')) {
 			message TF("NPC Exists: %s (%s, %s) (ID %s) - (%s)\n", $actor->{name}, $actor->{pos}{x}, $actor->{pos}{y}, $actor->{nameID}, $actor->{binID}), "parseMsg_presence", 1;
-		} elsif ($type eq "Portal") {
+
+		} elsif ($actor->isa('Actor::Portal')) {
 			message TF("Portal Exists: %s (%s, %s) - (%s)\n", $actor->{name}, $coordsTo{x}, $coordsTo{y}, $actor->{binID}), "portals", 1;
+
+		} elsif ($actor->isa('Actor::Monster')) {
+			debug sprintf("Monster Exists: %s (%s)\n", $actor->{name}, $actor->{binID}), "parseMsg_presence", 1;
+
+		} elsif ($actor->isa('Actor::Pet')) {
+			debug sprintf("Pet Exists: %s (%s)\n", $actor->{name}, $actor->{binID}), "parseMsg_presence", 1;
+
 		} else {
-			debug sprintf("%s Exists: %s (%s)\n", $type, $actor->{name}, $actor->{binID}), "parseMsg_presence", 1;
+			debug sprintf("Unknown Actor Exists: %s (%s)\n", $actor->{name}, $actor->{binID}), "parseMsg_presence", 1;
 		}
 
 	} elsif ($args->{switch} eq "0079" ||
 		$args->{switch} eq "01DB" ||
-		$args->{switch} eq "022B") {
+		$args->{switch} eq "022B" ||
+		$args->{switch} eq "01D9") {
 		# Actor Connected
 
-		if ($type eq "Player") {
+		if ($actor->isa('Actor::Player')) {
 			my $domain = existsInList($config{friendlyAID}, unpack("V1", $args->{ID})) ? 'parseMsg_presence' : 'parseMsg_presence/player';
 			debug "Player Connected: ".$actor->name." ($actor->{binID}) Level $args->{lv} $sex_lut{$actor->{sex}} $jobs_lut{$actor->{jobID}} ($coordsTo{x}, $coordsTo{y})\n", $domain;
 
@@ -1005,193 +952,38 @@ sub actor_display {
 		$actor->{look}{body} = $direction;
 		$actor->{look}{head} = 0;
 
-		if ($type eq "Player") {
+		if ($actor->isa('Actor::Player')) {
 			debug "Player Moved: " . $actor->name . " ($actor->{binID}) Level $actor->{lv} $sex_lut{$actor->{sex}} $jobs_lut{$actor->{jobID}} - ($coordsFrom{x}, $coordsFrom{y}) -> ($coordsTo{x}, $coordsTo{y})\n", "parseMsg";
-		} else {
-			debug "$type Moved: $actor->{name} ($actor->{binID}) - ($coordsFrom{x}, $coordsFrom{y}) -> ($coordsTo{x}, $coordsTo{y})\n", "parseMsg";
-		}
-	}
-}
 
-sub actor_exists {
-	# 0078: long ID, word speed, word state, word ailment, word look, word
-	# class, word hair, word weapon, word head_option_bottom, word shield,
-	# word head_option_top, word head_option_mid, word hair_color, word ?,
-	# word head_dir, long guild, long emblem, word manner, byte karma, byte
-	# sex, 3byte coord, byte body_dir, byte ?, byte ?, byte sitting, word
-	# level
-	my ($self, $args) = @_;
-	change_to_constate5();
-	my %coords;
-	my %coords_from;
-	if ($args->{switch} eq '022C') {
-		unShiftPack(\$args->{coords}, \$coords{'y'}, 10);
-		unShiftPack(\$args->{coords}, \$coords{'x'}, 10);
-		unShiftPack(\$args->{coords}, \$coords_from{'y'}, 10);
-		unShiftPack(\$args->{coords}, \$coords_from{'x'}, 10);
-	} else {
-		makeCoords(\%coords, $args->{coords});
-	}
-	#debug ("$coords{x}x$coords{y}\n");
+		} elsif ($actor->isa('Actor::Monster')) {
+			debug "Monster Moved: $actor->{name} ($actor->{binID}) - ($coordsFrom{x}, $coordsFrom{y}) -> ($coordsTo{x}, $coordsTo{y})\n", "parseMsg";
 
+		} elsif ($actor->isa('Actor::Pet')) {
+			debug "Pet Moved: $actor->{name} ($actor->{binID}) - ($coordsFrom{x}, $coordsFrom{y}) -> ($coordsTo{x}, $coordsTo{y})\n", "parseMsg";
 
-	# Remove actors with a distance greater than removeActorWithDistance. Useful for vending (so you don't spam
-	# too many packets in prontera and cause server lag). As a side effect, you won't be able to "see" actors
-	# beyond removeActorWithDistance.
-	if ($config{removeActorWithDistance}) {
-		if ((my $block_dist = blockDistance($char->{pos_to}, {%coords})) > ($config{removeActorWithDistance})) {
-			my $nameIdTmp = unpack("V1", $args->{ID});
-			debug "Removed out of sight actor $nameIdTmp at $coords{x} $coords{y} (distance: $block_dist)\n";
-			return;
-		}
-	}
+		} elsif ($actor->isa('Actor::Portal')) {
+			# This can never happen of course.
+			debug "Portal Moved: $actor->{name} ($actor->{binID}) - ($coordsFrom{x}, $coordsFrom{y}) -> ($coordsTo{x}, $coordsTo{y})\n", "parseMsg";
 
-	$args->{body_dir} = unpack("v", substr($args->{RAW_MSG}, 48, 1)) % 8;
-	my $added;
-
-	if ($jobs_lut{$args->{type}}) {
-		my $player = $players{$args->{ID}};
-		if (!UNIVERSAL::isa($player, 'Actor')) {
-			$player = $players{$args->{ID}} = new Actor::Player();
-			binAdd(\@playersID, $args->{ID});
-			$player->{appear_time} = time;
-			$player->{binID} = binFind(\@playersID, $args->{ID});
-			$added = 1;
-		}
-
-		$player->{ID} = $args->{ID};
-		$player->{jobID} = $args->{type};
-		$player->{sex} = $args->{sex};
-		$player->{nameID} = unpack("V1", $args->{ID});
-
-		$player->{walk_speed} = $args->{walk_speed} / 1000;
-		$player->{headgear}{low} = $args->{lowhead};
-		$player->{headgear}{top} = $args->{tophead};
-		$player->{headgear}{mid} = $args->{midhead};
-		$player->{hair_style} = $args->{hair_style};
-		$player->{hair_color} = $args->{hair_color};
-		$player->{look}{body} = $args->{body_dir};
-		$player->{look}{head} = $args->{head_dir};
-		$player->{weapon} = $args->{weapon};
-		$player->{shield} = $args->{shield};
-		$player->{guildID} = $args->{guildID};
-		if ($args->{act} == 1) {
-			$player->{dead} = 1;
-		} elsif ($args->{act} == 2) {
-			$player->{sitting} = 1;
-		}
-		$player->{lv} = $args->{lv};
-		$player->{pos} = ($args->{switch} eq "022C")? {%coords_from} : {%coords};
-		$player->{pos_to} = {%coords};
-
-		my $domain = existsInList($config{friendlyAID}, unpack("V1", $player->{ID})) ? 'parseMsg_presence' : 'parseMsg_presence/player';
-		debug "Player Exists: " . $player->name . " ($player->{binID}) Level $args->{lv} " . $sex_lut{$player->{sex}} . " $jobs_lut{$player->{jobID}} ($coords{x}, $coords{y})\n", $domain, 1;
-
-		objectAdded('player', $args->{ID}, $player) if ($added);
-
-		Plugins::callHook('player', {player => $player});
-
-		setStatus($args->{ID},$args->{param1},$args->{param2},$args->{param3});
-
-	} elsif ($args->{type} >= 1000) {
-		if ($args->{hair_style}) {
-			# Actor is a pet
-			my $ID = $args->{ID};
-			if (!$pets{$ID} || !%{$pets{$ID}}) {
-				$pets{$ID}{appear_time} = time;
-				my $display = ($monsters_lut{$args->{type}} ne "")
-						? $monsters_lut{$args->{type}}
-						: "Unknown ".$args->{type};
-				binAdd(\@petsID, $ID);
-				$pets{$ID}{nameID} = $args->{type};
-				$pets{$ID}{name} = $display;
-				$pets{$ID}{name_given} = "Unknown";
-				$pets{$ID}{binID} = binFind(\@petsID, $ID);
-				$added = 1;
-			}
-			$pets{$ID}{walk_speed} = $args->{walk_speed} / 1000;
-			$pets{$ID}{pos} = {%coords};
-			$pets{$ID}{pos_to} = {%coords};
-			debug "Pet Exists: $pets{$ID}{name} ($pets{$ID}{binID})\n", "parseMsg";
-
-			if ($monsters{$ID}) {
-				binRemove(\@monstersID, $ID);
-				objectRemoved('monster', $ID, $monsters{$ID});
-				delete $monsters{$ID};
-			}
-
-			objectAdded('pet', $ID, $pets{$ID}{$ID}) if ($added);
+		} elsif ($actor->isa('Actor::NPC')) {
+			# Neither can this.
+			debug "Monster Moved: $actor->{name} ($actor->{binID}) - ($coordsFrom{x}, $coordsFrom{y}) -> ($coordsTo{x}, $coordsTo{y})\n", "parseMsg";
 
 		} else {
-			if (!$monsters{$args->{ID}} || !%{$monsters{$args->{ID}}}) {
-				$monsters{$args->{ID}} = new Actor::Monster();
-				$monsters{$args->{ID}}{'appear_time'} = time;
-				my $display = ($monsters_lut{$args->{type}} ne "")
-						? $monsters_lut{$args->{type}}
-						: "Unknown ".$args->{type};
-				binAdd(\@monstersID, $args->{ID});
-				$monsters{$args->{ID}}{ID} = $args->{ID};
-				$monsters{$args->{ID}}{'nameID'} = $args->{type};
-				$monsters{$args->{ID}}{'name'} = $display;
-				$monsters{$args->{ID}}{'binID'} = binFind(\@monstersID, $args->{ID});
-				$added = 1;
-			}
-			$monsters{$args->{ID}}{'walk_speed'} = $args->{walk_speed} / 1000;
-			%{$monsters{$args->{ID}}{'pos'}} = %coords;
-			%{$monsters{$args->{ID}}{'pos_to'}} = %coords;
-
-			debug "Monster Exists: $monsters{$args->{ID}}{'name'} ($monsters{$args->{ID}}{'binID'})\n", "parseMsg_presence", 1;
-
-			objectAdded('monster', $args->{ID}, $monsters{$args->{ID}}) if ($added);
-
-			# Monster state
-			$args->{param1} = 0 if $args->{param1} == 5; # 5 has got something to do with the monster being undead
-			setStatus($args->{ID},$args->{param1},$args->{param2},$args->{param3});
+			debug "Unknown Actor Moved: $actor->{name} ($actor->{binID}) - ($coordsFrom{x}, $coordsFrom{y}) -> ($coordsTo{x}, $coordsTo{y})\n", "parseMsg";
 		}
 
-	} elsif ($args->{type} == 45) {
-		if (!$portals{$args->{ID}} || !%{$portals{$args->{ID}}}) {
-			$portals{$args->{ID}}{'appear_time'} = time;
-			my $nameID = unpack("V1", $args->{ID});
-			my $exists = portalExists($field{'name'}, \%coords);
-			my $display = ($exists ne "")
-				? "$portals_lut{$exists}{'source'}{'map'} -> " . getPortalDestName($exists)
-				: "Unknown ".$nameID;
-			binAdd(\@portalsID, $args->{ID});
-			$portals{$args->{ID}}{'source'}{'map'} = $field{'name'};
-			$portals{$args->{ID}}{'type'} = $args->{type};
-			$portals{$args->{ID}}{'nameID'} = $nameID;
-			$portals{$args->{ID}}{'name'} = $display;
-			$portals{$args->{ID}}{'binID'} = binFind(\@portalsID, $args->{ID});
-		}
-		%{$portals{$args->{ID}}{'pos'}} = %coords;
-		message TF("Portal Exists: %s (%s, %s) - (%s)\n", $portals{$args->{ID}}{'name'}, $coords{x}, $coords{y}, $portals{$args->{ID}}{'binID'}), "portals", 1;
-
-	} elsif ($args->{type} < 1000) {
-		if (!$npcs{$args->{ID}} || !%{$npcs{$args->{ID}}}) {
-			my $nameID = unpack("V1", $args->{ID});
-			$npcs{$args->{ID}}{'appear_time'} = time;
-
-			$npcs{$args->{ID}}{pos} = {%coords};
-			my $location = "$field{name} $npcs{$args->{ID}}{pos}{x} $npcs{$args->{ID}}{pos}{y}";
-			my $display = $npcs_lut{$location} || "Unknown ".$nameID;
-			binAdd(\@npcsID, $args->{ID});
-			$npcs{$args->{ID}}{'type'} = $args->{type};
-			$npcs{$args->{ID}}{'nameID'} = $nameID;
-			$npcs{$args->{ID}}{'name'} = $display;
-			$npcs{$args->{ID}}{'binID'} = binFind(\@npcsID, $args->{ID});
-			$added = 1;
+	} elsif ($args->{switch} eq "007C") {
+		# Actor Spawned
+		if ($actor->isa('Actor::Player')) {
+			debug "Player Spawned: $actor->{name} ($actor->{binID}) $sex_lut{$actor->{sex}} $jobs_lut{$actor->{jobID}}\n", "parseMsg";
+		} elsif ($actor->isa('Actor::Monster')) {
+			debug "Monster Spawned: $actor->{name} ($actor->{binID})\n", "parseMsg";
+		} elsif ($actor->isa('NPC')) {
+			debug "NPC Spawned: $actor->{name} ($actor->{binID})\n", "parseMsg";
 		} else {
-			$npcs{$args->{ID}}{pos} = {%coords};
+			debug "Unknown Spawned: $actor->{name} ($actor->{binID})\n", "parseMsg";
 		}
-		message TF("NPC Exists: %s (%s, %s) (ID %s) - (%s)\n", $npcs{$args->{ID}}{'name'}, $npcs{$args->{ID}}{pos}{x}, $npcs{$args->{ID}}{pos}{y}, $npcs{$args->{ID}}{'nameID'}, $npcs{$args->{ID}}{'binID'}), undef, 1;
-
-		objectAdded('npc', $args->{ID}, $npcs{$args->{ID}}) if ($added);
-
-		setStatus($args->{ID}, $args->{param1}, $args->{param2}, $args->{param3});
-
-	} else {
-		debug "Unknown Exists: $args->{type} - ".unpack("V*",$args->{ID})."\n", "parseMsg";
 	}
 }
 
@@ -1256,8 +1048,8 @@ sub actor_look_at {
 	my ($self, $args) = @_;
 	change_to_constate5();
 	if ($args->{ID} eq $accountID) {
-		$chars[$config{'char'}]{'look'}{'head'} = $args->{head};
-		$chars[$config{'char'}]{'look'}{'body'} = $args->{body};
+		$char->{look}{head} = $args->{head};
+		$char->{look}{body} = $args->{body};
 		debug "You look at $args->{body}, $args->{head}\n", "parseMsg", 2;
 
 	} elsif ($players{$args->{ID}} && %{$players{$args->{ID}}}) {
@@ -1269,119 +1061,6 @@ sub actor_look_at {
 		$monsters{$args->{ID}}{'look'}{'head'} = $args->{head};
 		$monsters{$args->{ID}}{'look'}{'body'} = $args->{body};
 		debug "Monster $monsters{$args->{ID}}{'name'} ($monsters{$args->{ID}}{'binID'}) looks at $monsters{$args->{ID}}{'look'}{'body'}, $monsters{$args->{ID}}{'look'}{'head'}\n", "parseMsg";
-	}
-}
-
-sub actor_moved {
-	my ($self, $args) = @_;
-
-	my (%coordsFrom, %coordsTo);
-	makeCoords(\%coordsFrom, substr($args->{RAW_MSG}, 50, 3));
-	makeCoords2(\%coordsTo, substr($args->{RAW_MSG}, 52, 3));
-
-	my $added;
-	my %vec;
-	getVector(\%vec, \%coordsTo, \%coordsFrom);
-	my $direction = int sprintf("%.0f", (360 - vectorToDegree(\%vec)) / 45);
-
-	if ($jobs_lut{$args->{type}}) {
-		my $player = $players{$args->{ID}};
-		if (!UNIVERSAL::isa($players{$args->{ID}}, 'Actor')) {
-			$players{$args->{ID}} = $player = new Actor::Player();
-			binAdd(\@playersID, $args->{ID});
-			$player->{appear_time} = time;
-			$player->{sex} = $args->{sex};
-			$player->{ID} = $args->{ID};
-			$player->{jobID} = $args->{type};
-			$player->{nameID} = unpack("V1", $args->{ID});
-			$player->{binID} = binFind(\@playersID, $args->{ID});
-			my $domain = existsInList($config{friendlyAID}, unpack("V1", $args->{ID})) ? 'parseMsg_presence' : 'parseMsg_presence/player';
-			debug "Player Appeared: ".$player->name." ($player->{'binID'}) Level $args->{lv} $sex_lut{$args->{sex}} $jobs_lut{$args->{type}} ($coordsFrom{x}, $coordsFrom{y})\n", $domain;
-			$added = 1;
-		}
-
-		$player->{weapon} = $args->{weapon};
-		$player->{shield} = $args->{shield};
-		$player->{walk_speed} = $args->{walk_speed} / 1000;
-		$player->{look}{head} = 0;
-		$player->{look}{body} = $direction;
-		$player->{headgear}{low} = $args->{lowhead};
-		$player->{headgear}{top} = $args->{tophead};
-		$player->{headgear}{mid} = $args->{midhead};
-		$player->{hair_color} = $args->{hair_color};
-		$player->{lv} = $args->{lv};
-		$player->{guildID} = $args->{guildID};
-		$player->{pos} = {%coordsFrom};
-		$player->{pos_to} = {%coordsTo};
-		$player->{time_move} = time;
-		$player->{time_move_calc} = distance(\%coordsFrom, \%coordsTo) * $player->{walk_speed};
-		debug "Player Moved: ".$player->name." ($player->{'binID'}) $sex_lut{$player->{'sex'}} $jobs_lut{$player->{'jobID'}}\n", "parseMsg";
-
-		Plugins::callHook('player', {player => $player}) if $added;
-		objectAdded('player', $args->{ID}, $player) if ($added);
-
-		setStatus($args->{ID}, $args->{param1}, $args->{param2}, $args->{param3});
-
-	} elsif ($args->{type} >= 1000) {
-		if ($args->{hair_style}) {
-			my $pet = $pets{$args->{ID}} ||= {};
-			if (!%{$pets{$args->{ID}}}) {
-				$pet->{'appear_time'} = time;
-				my $display = ($monsters_lut{$args->{type}} ne "")
-						? $monsters_lut{$args->{type}}
-						: "Unknown ".$args->{type};
-				binAdd(\@petsID, $args->{ID});
-				$pet->{'nameID'} = $args->{type};
-				$pet->{'name'} = $display;
-				$pet->{'name_given'} = "Unknown";
-				$pet->{'binID'} = binFind(\@petsID, $args->{ID});
-			}
-			$pet->{look}{head} = 0;
-			$pet->{look}{body} = $direction;
-			$pet->{pos} = {%coordsFrom};
-			$pet->{pos_to} = {%coordsTo};
-			$pet->{time_move} = time;
-			$pet->{walk_speed} = $args->{walk_speed} / 1000;
-			$pet->{time_move_calc} = distance(\%coordsFrom, \%coordsTo) * $pet->{walk_speed};
-
-			if ($monsters{$args->{ID}}) {
-				binRemove(\@monstersID, $args->{ID});
-				objectRemoved('monster', $args->{ID}, $monsters{$args->{ID}});
-				delete $monsters{$args->{ID}};
-			}
-
-			debug "Pet Moved: $pet->{name} ($pet->{binID})\n", "parseMsg";
-
-		} else {
-			if (!$monsters{$args->{ID}} || !%{$monsters{$args->{ID}}}) {
-				$monsters{$args->{ID}} = new Actor::Monster();
-				binAdd(\@monstersID, $args->{ID});
-				$monsters{$args->{ID}}{ID} = $args->{ID};
-				$monsters{$args->{ID}}{'appear_time'} = time;
-				$monsters{$args->{ID}}{'nameID'} = $args->{type};
-				my $display = ($monsters_lut{$args->{type}} ne "")
-					? $monsters_lut{$args->{type}}
-					: "Unknown ".$args->{type};
-				$monsters{$args->{ID}}{'name'} = $display;
-				$monsters{$args->{ID}}{'binID'} = binFind(\@monstersID, $args->{ID});
-				debug "Monster Appeared: $monsters{$args->{ID}}{'name'} ($monsters{$args->{ID}}{'binID'})\n", "parseMsg_presence";
-				$added = 1;
-			}
-			$monsters{$args->{ID}}{look}{head} = 0;
-			$monsters{$args->{ID}}{look}{body} = $direction;
-			$monsters{$args->{ID}}{pos} = {%coordsFrom};
-			$monsters{$args->{ID}}{pos_to} = {%coordsTo};
-			$monsters{$args->{ID}}{time_move} = time;
-			$monsters{$args->{ID}}{walk_speed} = $args->{walk_speed} / 1000;
-			$monsters{$args->{ID}}{time_move_calc} = distance(\%coordsFrom, \%coordsTo) * $monsters{$args->{ID}}{walk_speed};
-			debug "Monster Moved: $monsters{$args->{ID}}{'name'} ($monsters{$args->{ID}}{'binID'})\n", "parseMsg", 2;
-
-			objectAdded('monster', $args->{ID}, $monsters{$args->{ID}}) if ($added);
-
-			setStatus($args->{ID}, $args->{param1}, $args->{param2}, $args->{param3});
-		}
-	} else {
-		debug "Unknown Moved: $args->{type} - ".getHex($args->{ID})."\n", "parseMsg";
 	}
 }
 
@@ -1426,8 +1105,8 @@ sub actor_name_received {
 	# FIXME: There is more to this packet than just party name and guild name.
 	# This packet is received when you leave a guild
 	# (with cryptic party and guild name fields, at least for now)
-	my $player = $players{$args->{ID}};
-	if ($player && %{$player}) {
+	my $player = $playersList->getByID($args->{ID});
+	if (defined $player) {
 		# Receive names of players who are in a guild.
 		$player->{name} = bytesToString($args->{name});
 		$player->{gotName} = 1;
@@ -1470,115 +1149,6 @@ sub actor_status_active {
 		delete $actor->{statuses}{$skillName} if $actor;
 		my $disp = status_string($actor, $skillName, 'no longer');
 		message $disp, "parseMsg_statuslook", $ID eq $accountID ? 1 : 2;
-	}
-}
-
-sub actor_spawned {
-	my ($self, $args) = @_;
-	change_to_constate5();
-	my %coords;
-	makeCoords(\%coords, $args->{coords});
-	my $added;
-
-	if ($jobs_lut{$args->{type}}) {
-		if (!UNIVERSAL::isa($players{$args->{ID}}, 'Actor')) {
-			$players{$args->{ID}} = new Actor::Player();
-			binAdd(\@playersID, $args->{ID});
-			$players{$args->{ID}}{'jobID'} = $args->{type};
-			$players{$args->{ID}}{'sex'} = $args->{sex};
-			$players{$args->{ID}}{'ID'} = $args->{ID};
-			$players{$args->{ID}}{'nameID'} = unpack("V1", $args->{ID});
-			$players{$args->{ID}}{'appear_time'} = time;
-			$players{$args->{ID}}{'binID'} = binFind(\@playersID, $args->{ID});
-			$added = 1;
-		}
-		$players{$args->{ID}}{look}{head} = 0;
-		$players{$args->{ID}}{look}{body} = 0;
-		$players{$args->{ID}}{pos} = {%coords};
-		$players{$args->{ID}}{pos_to} = {%coords};
-		debug "Player Spawned: ".$players{$args->{ID}}->name." ($players{$args->{ID}}{'binID'}) $sex_lut{$players{$args->{ID}}{'sex'}} $jobs_lut{$players{$args->{ID}}{'jobID'}}\n", "parseMsg";
-
-		objectAdded('player', $args->{ID}, $players{$args->{ID}}) if ($added);
-
-		setStatus($args->{ID}, $args->{param1}, $args->{param2}, $args->{param3});
-
-	} elsif ($args->{type} >= 1000) {
-		if ($args->{hair_style}) {
-			if (!$pets{$args->{ID}} || !%{$pets{$args->{ID}}}) {
-				binAdd(\@petsID, $args->{ID});
-				$pets{$args->{ID}}{'nameID'} = $args->{type};
-				$pets{$args->{ID}}{'appear_time'} = time;
-				my $display = ($monsters_lut{$pets{$args->{ID}}{'nameID'}} ne "")
-				? $monsters_lut{$pets{$args->{ID}}{'nameID'}}
-				: "Unknown ".$pets{$args->{ID}}{'nameID'};
-				$pets{$args->{ID}}{'name'} = $display;
-				$pets{$args->{ID}}{'name_given'} = "Unknown";
-				$pets{$args->{ID}}{'binID'} = binFind(\@petsID, $args->{ID});
-			}
-			$pets{$args->{ID}}{look}{head} = 0;
-			$pets{$args->{ID}}{look}{body} = 0;
-			%{$pets{$args->{ID}}{'pos'}} = %coords;
-			%{$pets{$args->{ID}}{'pos_to'}} = %coords;
-			debug "Pet Spawned: $pets{$args->{ID}}{'name'} ($pets{$args->{ID}}{'binID'}) Monster type: $args->{type}\n", "parseMsg";
-
-			if ($monsters{$args->{ID}}) {
-				binRemove(\@monstersID, $args->{ID});
-				objectRemoved('monster', $args->{ID}, $monsters{$args->{ID}});
-				delete $monsters{$args->{ID}};
-			}
-
-		} else {
-			if (!$monsters{$args->{ID}} || !%{$monsters{$args->{ID}}}) {
-				$monsters{$args->{ID}} = new Actor::Monster();
-				binAdd(\@monstersID, $args->{ID});
-				$monsters{$args->{ID}}{ID} = $args->{ID};
-				$monsters{$args->{ID}}{'nameID'} = $args->{type};
-				$monsters{$args->{ID}}{'appear_time'} = time;
-				my $display = ($monsters_lut{$monsters{$args->{ID}}{'nameID'}} ne "")
-						? $monsters_lut{$monsters{$args->{ID}}{'nameID'}}
-						: "Unknown ".$monsters{$args->{ID}}{'nameID'};
-				$monsters{$args->{ID}}{'name'} = $display;
-				$monsters{$args->{ID}}{'binID'} = binFind(\@monstersID, $args->{ID});
-				$added = 1;
-			}
-			$monsters{$args->{ID}}{look}{head} = 0;
-			$monsters{$args->{ID}}{look}{body} = 0;
-			%{$monsters{$args->{ID}}{'pos'}} = %coords;
-			%{$monsters{$args->{ID}}{'pos_to'}} = %coords;
-			debug "Monster Spawned: $monsters{$args->{ID}}{'name'} ($monsters{$args->{ID}}{'binID'})\n", "parseMsg_presence";
-			objectAdded('monster', $args->{ID}, $monsters{$args->{ID}}) if ($added);
-
-			setStatus($args->{ID}, $args->{param1}, $args->{param2}, $args->{param3});
-		}
-
-	# portals don't spawn
-	#} elsif ($args->{type} == 45) {
-
-	} elsif ($args->{type} < 1000) {
-		if (!$npcs{$args->{ID}} || !%{$npcs{$args->{ID}}}) {
-			my $nameID = unpack("V1", $args->{ID});
-			$npcs{$args->{ID}}{'appear_time'} = time;
-
-			$npcs{$args->{ID}}{pos} = {%coords};
-			my $location = "$field{name} $npcs{$args->{ID}}{pos}{x} $npcs{$args->{ID}}{pos}{y}";
-			my $display = $npcs_lut{$location} || "Unknown ".$nameID;
-			binAdd(\@npcsID, $args->{ID});
-			$npcs{$args->{ID}}{'type'} = $args->{type};
-			$npcs{$args->{ID}}{'nameID'} = $nameID;
-			$npcs{$args->{ID}}{'name'} = $display;
-			$npcs{$args->{ID}}{'binID'} = binFind(\@npcsID, $args->{ID});
-			$added = 1;
-		} else {
-			$npcs{$args->{ID}}{pos} = {%coords};
-		}
-		message TF("NPC Spawned: %s (%s, %s) (ID %s) - (%s)\n", $npcs{$args->{ID}}{'name'}, $npcs{$args->{ID}}{pos}{x}, $npcs{$args->{ID}}{pos}{y}, $npcs{$args->{ID}}{'nameID'}, $npcs{$args->{ID}}{'binID'}), undef, 1;
-
-		objectAdded('npc', $args->{ID}, $npcs{$args->{ID}}) if ($added);
-
-		setStatus($args->{ID}, $args->{param1}, $args->{param2}, $args->{param3});
-
-	} else {
-		debug "Unknown Spawned: $args->{type} - ".getHex($args->{ID})."\n", "parseMsg_presence";
 	}
 }
 
@@ -1663,7 +1233,6 @@ sub arrow_none {
 	} elsif ($type == 3) {
 		debug "Arrow equipped\n";
 	}
-	
 }
 
 sub arrowcraft_list {
@@ -1681,7 +1250,7 @@ sub arrowcraft_list {
 		my $index = findIndex($char->{inventory}, "nameID", $ID);
 		binAdd(\@arrowCraftID, $index);
 	}
-	
+
 	message T("Received Possible Arrow Craft List - type 'arrowcraft'\n");
 }
 
@@ -2044,7 +1613,7 @@ sub character_status {
 		$char->{param3} = $args->{param3};
 	}
 
-	setStatus($args->{ID}, $args->{param1}, $args->{param2}, $args->{param3});
+	setStatus(Actor::get($args->{ID}), $args->{param1}, $args->{param2}, $args->{param3});
 }
 
 sub chat_created {
@@ -3315,30 +2884,32 @@ sub job_equipment_hair_change {
 	change_to_constate5();
 
 	my $actor = Actor::get($args->{ID});
+	assert(UNIVERSAL::isa($actor, "Actor")) if DEBUG;
+
 	if ($args->{part} == 0) {
 		# Job change
 		$actor->{jobID} = $args->{number};
- 		message TF("%s changed job to: %s\n", $actor, $jobs_lut{$args->{number}}), "parseMsg/job", ($actor->{type} eq 'You' ? 0 : 2);
+ 		message TF("%s changed job to: %s\n", $actor, $jobs_lut{$args->{number}}), "parseMsg/job", ($actor->isa('Actor::You') ? 0 : 2);
 
 	} elsif ($args->{part} == 3) {
 		# Bottom headgear change
- 		message TF("%s changed bottom headgear to: %s\n", $actor, headgearName($args->{number})), "parseMsg_statuslook", 2 unless $actor->{type} eq 'You';
-		$actor->{headgear}{low} = $args->{number} if ($actor->{type} eq 'Player' || $actor->{type} eq 'You');
+ 		message TF("%s changed bottom headgear to: %s\n", $actor, headgearName($args->{number})), "parseMsg_statuslook", 2 unless $actor->isa('Actor::You');
+		$actor->{headgear}{low} = $args->{number} if ($actor->isa('Actor::Player') || $actor->isa('Actor::You'));
 
 	} elsif ($args->{part} == 4) {
 		# Top headgear change
- 		message TF("%s changed top headgear to: %s\n", $actor, headgearName($args->{number})), "parseMsg_statuslook", 2 unless $actor->{type} eq 'You';
-		$actor->{headgear}{top} = $args->{number} if ($actor->{type} eq 'Player' || $actor->{type} eq 'You');
+ 		message TF("%s changed top headgear to: %s\n", $actor, headgearName($args->{number})), "parseMsg_statuslook", 2 unless $actor->isa('Actor::You');
+		$actor->{headgear}{top} = $args->{number} if ($actor->isa('Actor::Player') || $actor->isa('Actor::You'));
 
 	} elsif ($args->{part} == 5) {
 		# Middle headgear change
- 		message TF("%s changed middle headgear to: %s\n", $actor, headgearName($args->{number})), "parseMsg_statuslook", 2 unless $actor->{type} eq 'You';
-		$actor->{headgear}{mid} = $args->{number} if ($actor->{type} eq 'Player' || $actor->{type} eq 'You');
+ 		message TF("%s changed middle headgear to: %s\n", $actor, headgearName($args->{number})), "parseMsg_statuslook", 2 unless $actor->isa('Actor::You');
+		$actor->{headgear}{mid} = $args->{number} if ($actor->isa('Actor::Player') || $actor->isa('Actor::You'));
 
 	} elsif ($args->{part} == 6) {
 		# Hair color change
 		$actor->{hair_color} = $args->{number};
- 		message TF("%s changed hair color to: %s (%s)\n", $actor, $haircolors{$args->{number}}, $args->{number}), "parseMsg/hairColor", ($actor->{type} eq 'You' ? 0 : 2);
+ 		message TF("%s changed hair color to: %s (%s)\n", $actor, $haircolors{$args->{number}}, $args->{number}), "parseMsg/hairColor", ($actor->isa('Actor::You') ? 0 : 2);
 	}
 
 	#my %parts = (
