@@ -23,6 +23,7 @@
 package Item;
 
 use strict;
+use Carp::Assert;
 use Globals;
 use Utils;
 use Log qw(message error warning debug);
@@ -42,8 +43,7 @@ our @slots = qw(
 sub new {
 	my $class = shift;
 	my %self;
-	bless \%self, $class;
-	return \%self;
+	return bless \%self, $class;
 }
 
 
@@ -62,9 +62,7 @@ sub new {
 #
 # See also: Item::getMultiple()
 sub get {
-	my $name = shift;
-	my $skipIndex = shift;
-	my $notEquipped = shift;
+	my ($name, $skipIndex, $notEquipped) = @_;
 
 	return $name if UNIVERSAL::isa($name, 'Item');
 
@@ -72,9 +70,8 @@ sub get {
 	if ($name =~ /^\d+$/) {
 		my $item = $char->{inventory}[$name];
 		return undef unless $item;
-		return $item if UNIVERSAL::isa($item, 'Item');
-		error "BUG: Item::get($name, $skipIndex, $notEquipped) => $item is not of class Item\n";
-		return undef;
+		assert(UNIVERSAL::isa($item, 'Item')) if DEBUG;
+		return $item;
 
 	# user supplied an item name
 	} else {
@@ -87,9 +84,9 @@ sub get {
 		return undef if !defined($index);
 		my $item = $char->{inventory}[$index];
 		return undef unless $item;
-		return $item if UNIVERSAL::isa($item, 'Item');
-		error "BUG: Item::get($name, $skipIndex, $notEquipped) => $item is not of class Item\n";
-		return undef;
+
+		assert(UNIVERSAL::isa($item, 'Item')) if DEBUG;
+		return $item;
 	}
 }
 
@@ -186,23 +183,16 @@ sub scanConfigAndEquip {
 #
 # Similiar to Item::scanConfigAndEquip() but only checks if a Item needs to be equipped.
 sub scanConfigAndCheck {
-	my $prefix = shift;
+	my $prefix = $_[0];
 	return 0 unless $prefix;
 
-	my %eq_list;
 	my $count = 0;
-
-	foreach my $slot (%equipSlot_lut) {
-		if ($config{"${prefix}_$slot"}){
-			$eq_list{$slot} = $config{"${prefix}_$slot"};
-		}
-	}
-	return 0 unless %eq_list;
-	my $item;
-	foreach (keys %eq_list) {
-		$item = get($eq_list{$_});
-		if ($item) {
-			$count++ unless ($char->{equipment}{$_}	&& $char->{equipment}{$_}{name} eq $item->{name});
+	foreach my $slot (values %equipSlot_lut) {
+		if (exists $config{"${prefix}_$slot"}){
+			my $item = get($config{"${prefix}_$slot"});
+			if ($item && !($char->{equipment}{$slot} && $char->{equipment}{$slot}{name} eq $item->{name})) {
+				$count++;
+			}
 		}
 	}
 	return $count;
