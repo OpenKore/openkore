@@ -67,7 +67,7 @@ sub query {
 
 	for (my $i = 0; $i < @{$clients}; $i++) {
 		if ($clients->[$i]) {
-			$clients->[0]->send($packet);
+			$clients->[$i]->send($packet);
 			$self->{state} = 'requesting';
 			return;
 		}
