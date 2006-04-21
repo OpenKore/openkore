@@ -284,14 +284,14 @@ sub findIndex {
 	if ($num ne "") {
 		my $max = @{$r_array};
 		for (my $i = 0; $i < $max; $i++) {
-			return $i if ($r_array->[$i]{$key} == $num);
+			return $i if (exists $r_array->[$i] && $r_array->[$i]{$key} == $num);
 		}
 		return undef;
 	} else {
 		my $max = @{$r_array};
 		my $i;
 		for ($i = 0; $i < $max; $i++) {
-			return $i if (!$r_array->[$i] || !keys(%{$r_array->[$i]}));
+			return $i if (!$r_array->[$i] || !%{$r_array->[$i]});
 		}
 		return $i;
 	}
@@ -311,7 +311,7 @@ sub findIndexString {
 	if ($str ne "") {
 		my $max = @{$r_array};
 		for (my $i = 0; $i < $max; $i++) {
-			if ($r_array->[$i]{$key} eq $str) {
+			if (exists $r_array->[$i] && $r_array->[$i]{$key} eq $str) {
 				return $i;
 			}
 		}
@@ -320,7 +320,7 @@ sub findIndexString {
 		my $max = @{$r_array};
 		my $i;
 		for ($i = 0; $i < $max; $i++) {
-			return $i if (!$r_array->[$i] || !keys(%{$r_array->[$i]}));
+			return $i if (!$r_array->[$i] || !%{$r_array->[$i]});
 		}
 		return $i;
 	}
@@ -341,14 +341,14 @@ sub findIndexString_lc {
 		$str = lc $str;
 		my $max = @{$r_array};
 		for (my $i = 0; $i < $max; $i++) {
-			return $i if (lc $r_array->[$i]{$key} eq $str);
+			return $i if (exists $r_array->[$i] && lc($r_array->[$i]{$key}) eq $str);
 		}
 		return undef;
 	} else {
 		my $max = @{$r_array};
 		my $i;
 		for ($i = 0; $i < $max; $i++) {
-			return $i if (!$r_array->[$i] || !keys(%{$r_array->[$i]}));
+			return $i if (!$r_array->[$i] || !%{$r_array->[$i]});
 		}
 		return $i;
 	}
@@ -377,7 +377,7 @@ sub findIndexStringList_lc {
 	foreach (@{$arr}) {
 		for ($i = 0; $i < $max; $i++) {
 			next if $i eq $skipID;
-			if (lc($r_array->[$i]{$match}) eq $_) {
+			if (exists $r_array->[$i] && lc($r_array->[$i]{$match}) eq $_) {
 				return $i;
 			}
 		}
@@ -401,7 +401,7 @@ sub findIndexString_lc_not_equip {
 	my $ID = lc(shift);
 	my $i;
 	for ($i = 0; $i < @{$r_array} ;$i++) {
-		if ((lc($$r_array[$i]{$match}) eq $ID && ($$r_array[$i]{'identified'}) && !($$r_array[$i]{'equipped'}))
+		if ((exists $r_array->[$i] && lc($$r_array[$i]{$match}) eq $ID && ($$r_array[$i]{'identified'}) && !($$r_array[$i]{'equipped'}))
 			 || (!$$r_array[$i] && $ID eq "")) {
 			return $i;
 		}
@@ -422,14 +422,14 @@ sub findLastIndex {
 	if ($num ne "") {
 		my $max = @{$r_array};
 		for (my $i = $max-1; $i > -1; $i--) {
-			return $i if ($r_array->[$i]{$key} == $num);
+			return $i if (exists $r_array->[$i] && $r_array->[$i]{$key} == $num);
 		}
 		return undef;
 	} else {
 		my $max = @{$r_array};
 		my $i;
 		for ($i = $max-1; $i > -1; $i--) {
-			return $i if (!$r_array->[$i] || !keys(%{$r_array->[$i]}));
+			return $i if (!$r_array->[$i] || !%{$r_array->[$i]});
 		}
 		return $i;
 	}
@@ -440,7 +440,7 @@ sub findKey {
 	my $match = shift;
 	my $ID = shift;
 	foreach (keys %{$r_hash}) {
-		if ($r_hash->{$_}{$match} == $ID) {
+		if (exists $r_hash->{$_} && $r_hash->{$_}{$match} == $ID) {
 			return $_;
 		}
 	}
@@ -467,10 +467,10 @@ sub findKeyString {
 # target hash
 #
 sub hashCopyByKey {
-  my ($target, $source, @keys) = @_;
-  foreach (@keys){
-    $target->{$_} = $source->{$_} if exists $source->{$_};
-  }
+	my ($target, $source, @keys) = @_;
+	foreach (@keys) {
+		$target->{$_} = $source->{$_} if exists $source->{$_};
+	}
 }
 
 sub minHeapAdd {
@@ -481,7 +481,7 @@ sub minHeapAdd {
 	my $found;
 	my @newArray;
 	for ($i = 0; $i < @{$r_array};$i++) {
-		if (!$found && $$r_hash{$match} < $$r_array[$i]{$match}) {
+		if (!$found && exists $r_array->[$i] && $$r_hash{$match} < $$r_array[$i]{$match}) {
 			push @newArray, $r_hash;
 			$found = 1;
 		}
