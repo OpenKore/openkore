@@ -13,6 +13,7 @@ use strict;
 use Time::HiRes qw(time usleep);
 use IO::Socket;
 use Text::ParseWords;
+use Carp::Assert;
 use Config;
 use encoding 'utf8';
 
@@ -30,6 +31,7 @@ use Plugins;
 use Utils;
 use ChatQueue;
 use I18N;
+use Utils::Benchmark;
 
 
 # use SelfLoader; 1;
@@ -183,6 +185,7 @@ sub initOtherVars {
 }
 
 sub mainLoop {
+	Benchmark::begin("mainLoop") if DEBUG;
 	Plugins::callHook('mainLoop_pre');
 
 	# Parse command input
@@ -197,6 +200,7 @@ sub mainLoop {
 	# Receive and handle data from the RO server
 	my $servMsg = $net->serverRecv;
 	if ($servMsg && length($servMsg)) {
+		Benchmark::begin("parseMsg") if DEBUG;
 		$msg .= $servMsg;
 		my $msg_length = length($msg);
 		while ($msg ne "") {
@@ -205,6 +209,7 @@ sub mainLoop {
 			$msg_length = length($msg);
 		}
 		$net->clientFlush() if (UNIVERSAL::isa($net, 'XKoreProxy'));
+		Benchmark::end("parseMsg") if DEBUG;
 	}
 
 	# Receive and handle data from the RO client
@@ -231,7 +236,9 @@ sub mainLoop {
 
 	# Process AI
 	if ($conState == 5 && timeOut($timeout{ai}) && $net->serverAlive()) {
+		Benchmark::begin("ai") if DEBUG;
 		AI();
+		Benchmark::end("ai") if DEBUG;
 		return if $quit;
 	}
 
@@ -383,6 +390,7 @@ sub mainLoop {
 	}
 
 	Plugins::callHook('mainLoop_post');
+	Benchmark::end("mainLoop") if DEBUG;
 
 	# Reload any modules that requested to be reloaded
 	Modules::doReload();
@@ -441,6 +449,8 @@ sub parseInput {
 
 
 sub AI {
+	Benchmark::begin("ai_prepare") if DEBUG;
+
 	if (timeOut($timeout{ai_wipe_check})) {
 		my $timeout = $timeout{ai_wipe_old}{timeout};
 
@@ -510,6 +520,8 @@ sub AI {
 		delete $char->{muted};
 		delete $char->{mute_period};
 	}
+	
+	Benchmark::end("ai_prepare") if DEBUG;
 
 
 	##### PORTALRECORD #####
@@ -898,6 +910,8 @@ sub AI {
 
 
 	##### ATTACK #####
+
+	Benchmark::begin("ai_attack") if DEBUG;
 
 	if (AI::action eq "attack" && AI::args->{suspended}) {
 		AI::args->{ai_attack_giveup}{time} += time - AI::args->{suspended};
@@ -1431,6 +1445,8 @@ sub AI {
 			}
 		}
 	}
+
+	Benchmark::end("ai_attack") if DEBUG;
 
 
 	##### SKILL USE #####
@@ -3557,6 +3573,8 @@ sub AI {
 
 	##### AUTO-ITEM USE #####
 
+	Benchmark::begin("ai_autoItemUse") if DEBUG;
+
 	if ((AI::isIdle || AI::is(qw(route mapRoute follow sitAuto take items_gather items_take attack skill_use)))
 	  && timeOut($timeout{ai_item_use_auto})) {
 		my $i = 0;
@@ -3579,8 +3597,12 @@ sub AI {
 		}
 	}
 
+	Benchmark::end("ai_autoItemUse") if DEBUG;
+
 
 	##### AUTO-SKILL USE #####
+
+	Benchmark::begin("ai_autoSkillUse") if DEBUG;
 
 	if (AI::isIdle || AI::is(qw(route mapRoute follow sitAuto take items_gather items_take attack))
 	|| (AI::action eq "skill_use" && AI::args->{tag} eq "attackSkill")) {
@@ -3635,6 +3657,9 @@ sub AI {
 			}
 		}
 	}
+
+	Benchmark::end("ai_autoSkillUse") if DEBUG;
+
 
 	##### PARTY-SKILL USE #####
 
@@ -3759,6 +3784,7 @@ sub AI {
 	}
 
 	##### AUTO-EQUIP #####
+
 	if ((AI::isIdle || AI::is(qw(route mapRoute follow sitAuto skill_use take items_gather items_take attack)))
 	  && timeOut($timeout{ai_item_equip_auto}) && time > $ai_v{'inventory_time'}) {
 
@@ -3773,28 +3799,29 @@ sub AI {
 		# we will create a list of items to equip
 		my %eq_list;
 
+		Benchmark::begin("ai_autoEquip_loop") if DEBUG;
 		for (my $i = 0; exists $config{"equipAuto_$i"}; $i++) {
-			if (Item::scanConfigAndCheck("equipAuto_$i")
-			 && checkSelfCondition("equipAuto_$i")
-			 && checkMonsterCondition("equipAuto_${i}_target", $monster)
-			 && (!$config{"equipAuto_${i}_weight"} || $char->{percent_weight} >= $config{"equipAuto_$i" . "_weight"})
+			if ((!$config{"equipAuto_${i}_weight"} || $char->{percent_weight} >= $config{"equipAuto_$i" . "_weight"})
 			 && (!$config{"equipAuto_${i}_whileSitting"} || ($config{"equipAuto_${i}_whileSitting"} && $char->{sitting}))
 			 && (!$config{"equipAuto_${i}_target"} || (defined $monster && existsInList($config{"equipAuto_$i" . "_target"}, $monster->{name})))
+			 && checkMonsterCondition("equipAuto_${i}_target", $monster)
+			 && checkSelfCondition("equipAuto_$i")
+			 && Item::scanConfigAndCheck("equipAuto_$i")
 			) {
-
-				foreach my $slot (%equipSlot_lut) {
-					if ($config{"equipAuto_$i"."_$slot"}) {
-						debug "equip $slot with ".$config{"equipAuto_$i"."_$slot"}."\n";
+				foreach my $slot (values %equipSlot_lut) {
+					if (exists $config{"equipAuto_$i"."_$slot"}) {
+						debug "Equip $slot with ".$config{"equipAuto_$i"."_$slot"}."\n";
 						$eq_list{$slot} = $config{"equipAuto_$i"."_$slot"} if (!$eq_list{$slot});
 					}
 				}
 			}
 		}
+		Benchmark::end("ai_autoEquip_loop") if DEBUG;
 
 		if (%eq_list) {
-				$timeout{ai_item_equip_auto}{time} = time;
-				debug "Auto-equipping items\n", "equipAuto";
-				Item::bulkEquip(\%eq_list);
+			$timeout{ai_item_equip_auto}{time} = time;
+			debug "Auto-equipping items\n", "equipAuto";
+			Item::bulkEquip(\%eq_list);
 		}
 	}
 
@@ -3803,6 +3830,8 @@ sub AI {
 	# The auto-attack logic is as follows:
 	# 1. Generate a list of monsters that we are allowed to attack.
 	# 2. Pick the "best" monster out of that list, and attack it.
+
+	Benchmark::begin("ai_autoAttack") if DEBUG;
 
 	if ((AI::isIdle || AI::is(qw/route follow sitAuto take items_gather items_take/) || (AI::action eq "mapRoute" && AI::args->{stage} eq 'Getting Map Solution'))
 	     # Don't auto-attack monsters while taking loot, and itemsTake/GatherAuto >= 2
@@ -4053,6 +4082,8 @@ sub AI {
 			$timeout{'ai_attack_auto'}{'time'} = time;
 		}
 	}
+
+	Benchmark::end("ai_autoAttack") if DEBUG;
 
 
 	##### ITEMS TAKE #####

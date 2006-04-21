@@ -1,4 +1,5 @@
 AppLauncher.pm
+Benchmark.pm
 Callbacklist.pm
 Crypton.pm
 Downloader.pm

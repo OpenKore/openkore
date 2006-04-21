@@ -24,6 +24,7 @@ Misc
 
 Utils
 Utils::AppLauncher
+Utils::Benchmark
 Utils::CallbackList
 Utils::Crypton
 Utils::PerlLauncher
