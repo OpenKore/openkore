@@ -118,6 +118,7 @@ use Time::HiRes qw(time usleep);
 use IO::Socket;
 use Digest::MD5;
 use Carp;
+use Carp::Assert;
 
 
 ##### PARSE ARGUMENTS, FURTHER INITIALIZE INTERFACE & LOAD PLUGINS #####
@@ -196,6 +197,7 @@ use Actor::Unknown;
 use ActorList;
 use Interface;
 use ChatQueue;
+use Utils::Benchmark;
 use Poseidon::Client;
 Modules::register(qw/Globals Modules Log Utils Settings Plugins FileParsers
 	Network::Receive Network::Send Commands Misc AI Skills
@@ -432,7 +434,9 @@ Log::message("\n");
 
 Plugins::callHook('initialized');
 XSTools::initVersion();
+Benchmark::begin("Real time") if DEBUG;
 $interface->mainLoop();
+Benchmark::end("Real time") if DEBUG;
 Plugins::unloadAll();
 
 # Shutdown everything else
@@ -440,6 +444,13 @@ undef $net;
 # Translation Comment: Kore's exit message
 Log::message(T("Bye!\n"));
 Log::message($Settings::versionText);
+
+if (open(F, ">:utf8", "benchmark-results.txt")) {
+	print F Benchmark::results("mainLoop");
+	close F;
+	print "Benchmark results saved to benchmark-results.txt\n";
 }
+
+} # __start()
 
 __start() unless defined $ENV{INTERPRETER};

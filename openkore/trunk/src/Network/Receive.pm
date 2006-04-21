@@ -1817,7 +1817,7 @@ sub deal_add_you {
 
 	return unless $args->{index} > 0;
 
-	my $invIndex = findIndex(\@{$char->{inventory}}, 'index', $args->{index});
+	my $invIndex = findIndex($char->{inventory}, 'index', $args->{index});
 	my $item = $char->{inventory}[$invIndex];
 	$currentDeal{you}{$item->{nameID}}{amount} += $currentDeal{lastItemAmount};
 	$item->{amount} -= $currentDeal{lastItemAmount};
@@ -2561,10 +2561,10 @@ sub inventory_item_added {
 
 	if (!$fail) {
 		my $item;
-		my $invIndex = findIndex(\@{$char->{inventory}}, "index", $index);
+		my $invIndex = findIndex($char->{inventory}, "index", $index);
 		if (!defined $invIndex) {
 			# Add new item
-			$invIndex = findIndex(\@{$char->{inventory}}, "nameID", "");
+			$invIndex = findIndex($char->{inventory}, "nameID", "");
 			$item = $char->{inventory}[$invIndex] = new Item();
 			$item->{index} = $index;
 			$item->{nameID} = $args->{nameID};
@@ -4989,7 +4989,7 @@ sub system_chat {
 
 sub unequip_item {
 	my ($self, $args) = @_;
-	
+
 	change_to_constate5();
 	my $invIndex = findIndex($char->{inventory}, "index", $args->{index});
 	$char->{inventory}[$invIndex]{equipped} = "";
