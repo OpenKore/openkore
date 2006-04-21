@@ -1740,7 +1740,7 @@ sub inventoryItemRemoved {
 
 	my $item = $char->{inventory}[$invIndex];
 	if (!$char->{arrow} ||
-	    $char->{arrow} != $char->{inventory}[$invIndex]{index}) {
+	    ($char->{inventory}[$invIndex] && $char->{arrow} != $char->{inventory}[$invIndex]{index})) {
 		# This item is not an equipped arrow
 		message TF("Inventory Item Removed: %s (%d) x %d\n", $item->{name}, $invIndex, $amount), "inventory";
 	}
