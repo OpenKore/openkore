@@ -6,7 +6,7 @@
  *   copyright            : (C) 2001 The phpBB Group
  *   email                : support@phpbb.com
  *
- *   $Id: install.php,v 1.6.2.13 2005/03/15 18:33:16 acydburn Exp $
+ *   $Id: install.php,v 1.6.2.14 2005/12/29 11:51:11 acydburn Exp $
  *
  ***************************************************************************/
 
@@ -333,7 +333,7 @@ $available_dbms = array(
 		'COMMENTS'		=> 'remove_remarks'
 	), 
 	'mysql4' => array(
-		'LABEL'			=> 'MySQL 4.x',
+		'LABEL'			=> 'MySQL 4.x/5.x',
 		'SCHEMA'		=> 'mysql', 
 		'DELIM'			=> ';', 
 		'DELIM_BASIC'	=> ';',

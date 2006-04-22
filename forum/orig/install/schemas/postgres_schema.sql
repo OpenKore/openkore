@@ -2,7 +2,7 @@
  phpBB2 PostgreSQL DB schema - phpBB group 2001
 
 
- $Id: postgres_schema.sql,v 1.1.2.5 2005/05/06 20:50:13 acydburn Exp $
+ $Id: postgres_schema.sql,v 1.1.2.9 2006/02/12 16:14:58 grahamje Exp $
 */
 
 CREATE SEQUENCE phpbb_banlist_id_seq start 1 increment 1 maxvalue 2147483647 minvalue 1 cache 1;
@@ -248,6 +248,7 @@ CREATE TABLE phpbb_ranks (
 CREATE TABLE phpbb_search_results (
   search_id int4 NOT NULL default '0',
   session_id char(32) NOT NULL default '',
+  search_time int4 DEFAULT '0' NOT NULL,
   search_array text NOT NULL,
   CONSTRAINT phpbb_search_results_pkey PRIMARY KEY (search_id)
 );
@@ -295,6 +296,17 @@ CREATE TABLE phpbb_sessions (
 CREATE INDEX session_user_id_phpbb_sessions_index ON phpbb_sessions (session_user_id);
 CREATE INDEX session_id_ip_user_id_phpbb_sessions_index ON phpbb_sessions (session_id, session_ip, session_user_id);
 
+/* --------------------------------------------------------
+  Table structure for table phpbb_sessions_keys
+-------------------------------------------------------- */
+CREATE TABLE phpbb_sessions_keys (
+  key_id char(32) DEFAULT '0' NOT NULL,
+  user_id int4 DEFAULT '0' NOT NULL,
+  last_ip char(8) DEFAULT '0' NOT NULL,
+  last_login int4 DEFAULT '0' NOT NULL,
+  CONSTRAINT phpbb_sessions_keys_pkey PRIMARY KEY (key_id, user_id)
+);
+CREATE INDEX last_login_phpbb_sessions_keys_index ON phpbb_sessions_keys (last_login);
 
 /* --------------------------------------------------------
   Table structure for table phpbb_smilies
@@ -477,6 +489,8 @@ CREATE TABLE phpbb_users (
    user_new_privmsg int2 DEFAULT '0' NOT NULL,
    user_unread_privmsg int2 DEFAULT '0' NOT NULL,
    user_last_privmsg int4 DEFAULT '0' NOT NULL,
+   user_login_tries int2 DEFAULT '0' NOT NULL,
+   user_last_login_try int4 DEFAULT '0' NOT NULL,
    user_emailtime int4,
    user_viewemail int2,
    user_attachsig int2,
@@ -489,10 +503,10 @@ CREATE TABLE phpbb_users (
    user_rank int4 DEFAULT '0',
    user_avatar varchar(100),
    user_avatar_type int2 DEFAULT '0' NOT NULL,
-   user_level int4 DEFAULT '1',
+   user_level int4 DEFAULT '0',
    user_lang varchar(255),
-   user_timezone decimal(5) DEFAULT '0' NOT NULL,
-   user_dateformat varchar(14) DEFAULT 'd M Y H:m' NOT NULL,
+   user_timezone decimal(5,2) DEFAULT '0.0' NOT NULL,
+   user_dateformat varchar(14) DEFAULT 'd M Y H:i' NOT NULL,
    user_notify_pm int2 DEFAULT '0' NOT NULL,
    user_popup_pm int2 DEFAULT '0' NOT NULL,
    user_notify int2,

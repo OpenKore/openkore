@@ -39,15 +39,15 @@ h3 {font-size:12pt;}
 
 <p><b>NOTE</b>: Once you have made use of files contained in this directory it should be deleted from your server. You should <b>NOT</b> leave this directory in place!</p>
 
-<h2><u>Template cacheing</u></h2>
+<h2><u>Template caching</u></h2>
 
 <p><b>Authors: Crimsonbane, psoTFX and nathan</b></p>
 
 <p align="center"><b>File Caching Updated</b></p>
 
-<p>During development of phpBB2 a recurring issue of server load has cropped up. phpBB 2.0.0 differs from many of its contemporaries by doing many more tasks at runtime. While this allows for simpler upgrade and modification paths it also leads to a greater strain being placed on the server. To help reduce this issue a cacheing template system was created based on work by Crimsonbane. This stores a compiled version of each template resulting in a generally significant reduction in server load and perhaps page generation time.</p>
+<p>During development of phpBB2 a recurring issue of server load has cropped up. phpBB 2.0.0 differs from many of its contemporaries by doing many more tasks at runtime. While this allows for simpler upgrade and modification paths it also leads to a greater strain being placed on the server. To help reduce this issue a caching template system was created based on work by Crimsonbane. This stores a compiled version of each template resulting in a generally significant reduction in server load and perhaps page generation time.</p>
 
-<p>Two versions of the cacheing system are contained in this directory, one uses flat files the other a MySQL database. Testing has shown that, in general, the average virtual host seems to show better performance with the flat file solution. However this may not be the case for your system, so please feel free to try both.</p>
+<p>Two versions of the caching system are contained in this directory, one uses flat files the other a MySQL database. Testing has shown that, in general, the average virtual host seems to show better performance with the flat file solution. However this may not be the case for your system, so please feel free to try both.</p>
 
 <p>In both cases you need to rename your existing template.php script (in includes/) and replace it with whichever template_*.php you want to try.</p>
 
@@ -182,7 +182,7 @@ $lang['Visual_confirm_explain'] = 'Requires users enter a code defined by an ima
 
 <h2><u>Copyright and disclaimer</u></h2>
 
-<p>This application is opensource software released under the <a href="http://www.gnu.org/licenses/gpl.html" target="_new">GPL</a>. Please see source code and the <u>docs/</u> directory for more details. The phpBB2 package, its contents and the template cacheing files are Copyright © 2002 <a href="http://www.phpbb.com/" target="_new">phpBB Group</a>, All Rights Reserved. Other packages are the copyright of their respective authors.</p>
+<p>This application is opensource software released under the <a href="http://www.gnu.org/licenses/gpl.html" target="_new">GPL</a>. Please see source code and the <u>docs/</u> directory for more details. The phpBB2 package, its contents and the template caching files are Copyright © 2002 <a href="http://www.phpbb.com/" target="_new">phpBB Group</a>, All Rights Reserved. Other packages are the copyright of their respective authors.</p>
 
 				</td>
 			</tr>

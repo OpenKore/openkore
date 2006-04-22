@@ -6,7 +6,7 @@
  *   copyright            : (C) 2001 The phpBB Group
  *   email                : supportphpbb.com
  *
- *   $Id: mssql.php,v 1.22.2.2 2002/12/21 18:31:53 psotfx Exp $
+ *   $Id: mssql.php,v 1.22.2.4 2006/03/09 19:57:37 grahamje Exp $
  *
  ***************************************************************************/
 
@@ -289,7 +289,7 @@ class sql_db
 
 			while( list($key, $value) = @each($row) )
 			{
-				$row[$key] = stripslashes($value);
+				$row[$key] = ($value === ' ') ? '' : stripslashes($value);
 			}
 			@reset($row);
 
@@ -317,7 +317,7 @@ class sql_db
 			{
 				while( list($key, $value) = @each($row) )
 				{
-					$rowset[$i][$key] = stripslashes($value);
+					$rowset[$i][$key] = ($value === ' ') ? '' : stripslashes($value);
 				}
 				$i++;
 			}
@@ -356,7 +356,7 @@ class sql_db
 				if( empty($this->row[$query_id]) )
 				{
 					$this->row[$query_id] = @mssql_fetch_array($query_id);
-					$result = stripslashes($this->row[$query_id][$field]);
+					$result = ($this->row[$query_id][$field] === ' ') ? '' : stripslashes($this->row[$query_id][$field]);
 				}
 			}
 

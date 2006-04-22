@@ -6,7 +6,7 @@
 *     copyright            : (C) 2001 The phpBB Group
 *     email                : support@phpbb.com
 *
-*     $Id: admin_db_utilities.php,v 1.42.2.12 2005/11/05 21:18:12 grahamje Exp $
+*     $Id: admin_db_utilities.php,v 1.42.2.14 2006/02/10 20:35:40 grahamje Exp $
 *
 ****************************************************************************/
 
@@ -499,9 +499,9 @@ function get_table_content_postgresql($table, $handler)
 
 	while($row = $db->sql_fetchrow($result))
 	{
-		unset($schema_vals);
-		unset($schema_fields);
-		unset($schema_insert);
+		$schema_vals = '';
+		$schema_fields = '';
+		$schema_insert = '';
 		//
 		// Build the SQL statement to recreate the data.
 		//
@@ -516,7 +516,7 @@ function get_table_content_postgresql($table, $handler)
 			}
 			elseif (eregi("date|timestamp", $aryType[$i]))
 			{
-				if ($empty($strVal))
+				if (empty($strVal))
 				{
 					$strQuote = "";
 				}
