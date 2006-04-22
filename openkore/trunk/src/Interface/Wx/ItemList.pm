@@ -110,6 +110,7 @@ sub OnGetItemText {
 				print $f "ID = " . unpack("V", $ID) . "\n";
 				print $f "\n";
 				print $f Data::Dumper::Dumper($objects);
+				print $f Data::Dumper::Dumper($self->{objectsID});
 				print $f "\n--------------------------\n\n";
 				close $f;
 				Log::warning("Internal error detected. Please submit a bug report and attach the file $file.\n");

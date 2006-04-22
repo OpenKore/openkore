@@ -28,6 +28,7 @@
 package Actor;
 
 use strict;
+use Carp::Assert;
 use Scalar::Util;
 use Globals;
 use Utils;
@@ -69,11 +70,16 @@ sub _isis {
 ### CATEGORY: Class methods
 
 ##
-# Actor Actor::get(ID)
+# Actor Actor::get(Bytes ID)
+# ID: an actor ID.
+# Returns: the associated Actor object, or a new Actor::Unknown object if not found.
+# Requires: defined($ID)
+# Ensures:  defined(result)
 #
-# Returns the actor object for $ID.
+# Returns the Actor object for $ID.
 sub get {
 	my ($ID) = @_;
+	assert(defined $ID) if DEBUG;
 
 	if ($ID eq $accountID) {
 		return $char;
@@ -87,7 +93,7 @@ sub get {
 		return $petsList->getByID($ID);
 	} elsif ($portalsList->getByID($ID)) {
 		return $portalsList->getByID($ID);
-	} elsif ($items{$ID}) {
+	} elsif (exists $items{$ID}) {
 		return $items{$ID};
 	} else {
 		return new Actor::Unknown($ID);
