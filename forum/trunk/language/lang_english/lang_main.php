@@ -6,7 +6,7 @@
  *     copyright            : (C) 2001 The phpBB Group
  *     email                : support@phpbb.com
  *
- *     $Id: lang_main.php,v 1.85.2.20 2005/12/30 09:51:02 acydburn Exp $
+ *     $Id: lang_main.php,v 1.85.2.21 2006/02/05 15:59:48 grahamje Exp $
  *
  ****************************************************************************/
 
@@ -792,6 +792,7 @@ $lang['No_searchable_forums'] = 'You do not have permissions to search any forum
 $lang['No_search_match'] = 'No topics or posts met your search criteria';
 $lang['Found_search_match'] = 'Search found %d match'; // eg. Search found 1 match
 $lang['Found_search_matches'] = 'Search found %d matches'; // eg. Search found 24 matches
+$lang['Search_Flood_Error'] = 'You cannot make another search so soon after your last; please try again in a short while.';
 
 $lang['Close_window'] = 'Close Window';
 

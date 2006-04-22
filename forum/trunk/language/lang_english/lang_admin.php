@@ -7,7 +7,7 @@
  *     copyright            : (C) 2001 The phpBB Group
  *     email                : support@phpbb.com
  *
- *     $Id: lang_admin.php,v 1.35.2.13 2005/12/29 11:51:12 acydburn Exp $
+ *     $Id: lang_admin.php,v 1.35.2.17 2006/02/05 15:59:48 grahamje Exp $
  *
  ****************************************************************************/
 
@@ -341,6 +341,10 @@ $lang['Allow_autologin_explain'] = 'Determines whether users are allowed to sele
 $lang['Autologin_time'] = 'Automatic login key expiry';
 $lang['Autologin_time_explain'] = 'How long a autologin key is valid for in days if the user does not visit the board. Set to zero to disable expiry.';
 
+// Search Flood Control - added 2.0.20
+$lang['Search_Flood_Interval'] = 'Search Flood Interval';
+$lang['Search_Flood_Interval_explain'] = 'Number of seconds a user must wait between search requests'; 
+
 //
 // Forum Management
 //
@@ -425,6 +429,7 @@ $lang['smiley_import_success'] = 'The Smiley Pack was imported successfully!';
 $lang['smiley_del_success'] = 'The Smiley was successfully removed';
 $lang['Click_return_smileadmin'] = 'Click %sHere%s to return to Smiley Administration';
 
+$lang['Confirm_delete_smiley'] = 'Are you sure you want to delete this Smiley?';
 
 //
 // User Management
@@ -518,6 +523,8 @@ $lang['Word_removed'] = 'The selected word censor has been successfully removed'
 
 $lang['Click_return_wordadmin'] = 'Click %sHere%s to return to Word Censor Administration';
 
+$lang['Confirm_delete_word'] = 'Are you sure you want to delete this word censor?';
+
 
 //
 // Mass Email
@@ -557,6 +564,7 @@ $lang['No_update_ranks'] = 'The rank was successfully deleted. However, user acc
 
 $lang['Click_return_rankadmin'] = 'Click %sHere%s to return to Rank Administration';
 
+$lang['Confirm_delete_rank'] = 'Are you sure you want to delete this rank?';
 
 //
 // Disallow Username Admin
