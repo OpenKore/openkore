@@ -6,7 +6,7 @@
  *   copyright            : (C) 2001 The phpBB Group
  *   email                : support@phpbb.com
  *
- *   $Id: functions.php,v 1.133.2.38 2005/12/19 18:01:36 acydburn Exp $
+ *   $Id: functions.php,v 1.133.2.44 2006/02/26 19:37:50 grahamje Exp $
  *
  *
  ***************************************************************************/
@@ -139,6 +139,37 @@ function phpbb_rtrim($str, $charlist = false)
 	return $str;
 }
 
+/**
+* Our own generator of random values
+* This uses a constantly changing value as the base for generating the values
+* The board wide setting is updated once per page if this code is called
+* With thanks to Anthrax101 for the inspiration on this one
+* Added in phpBB 2.0.20
+*/
+function dss_rand()
+{
+	global $db, $board_config, $dss_seeded;
+
+	$val = $board_config['rand_seed'] . microtime();
+	$val = md5($val);
+	$board_config['rand_seed'] = md5($board_config['rand_seed'] . $val . 'a');
+   
+	if($dss_seeded !== true)
+	{
+		$sql = "UPDATE " . CONFIG_TABLE . " SET
+			config_value = '" . $board_config['rand_seed'] . "'
+			WHERE config_name = 'rand_seed'";
+		
+		if( !$db->sql_query($sql) )
+		{
+			message_die(GENERAL_ERROR, "Unable to reseed PRNG", "", __LINE__, __FILE__, $sql);
+		}
+
+		$dss_seeded = true;
+	}
+
+	return substr($val, 16);
+}
 //
 // Get Userdata, $user can be username or user_id. If force_str is true, the username will be forced.
 //
@@ -372,7 +403,40 @@ function setup_style($style)
 
 	if ( !($row = $db->sql_fetchrow($result)) )
 	{
-		message_die(CRITICAL_ERROR, "Could not get theme data for themes_id [$style]");
+		// We are trying to setup a style which does not exist in the database
+		// Try to fallback to the board default (if the user had a custom style)
+		// and then any users using this style to the default if it succeeds
+		if ( $style != $board_config['default_style'])
+		{
+			$sql = 'SELECT *
+				FROM ' . THEMES_TABLE . '
+				WHERE themes_id = ' . $board_config['default_style'];
+			if ( !($result = $db->sql_query($sql)) )
+			{
+				message_die(CRITICAL_ERROR, 'Could not query database for theme info');
+			}
+
+			if ( $row = $db->sql_fetchrow($result) )
+			{
+				$db->sql_freeresult($result);
+
+				$sql = 'UPDATE ' . USERS_TABLE . '
+					SET user_style = ' . $board_config['default_style'] . "
+					WHERE user_style = $style";
+				if ( !($result = $db->sql_query($sql)) )
+				{
+					message_die(CRITICAL_ERROR, 'Could not update user theme info');
+				}
+			}
+			else
+			{
+				message_die(CRITICAL_ERROR, "Could not get theme data for themes_id [$style]");
+			}
+		}
+		else
+		{
+			message_die(CRITICAL_ERROR, "Could not get theme data for themes_id [$style]");
+		}
 	}
 
 	$template_path = 'templates/' ;
@@ -634,7 +698,7 @@ function message_die($msg_code, $msg_text = '', $msg_title = '', $err_line = '',
 
 		if ( $err_line != '' && $err_file != '' )
 		{
-			$debug_text .= '</br /><br />Line : ' . $err_line . '<br />File : ' . basename($err_file);
+			$debug_text .= '<br /><br />Line : ' . $err_line . '<br />File : ' . basename($err_file);
 		}
 	}
 
@@ -661,11 +725,7 @@ function message_die($msg_code, $msg_text = '', $msg_title = '', $err_line = '',
 			}
 		}
 
-		if ( empty($template) )
-		{
-			$template = new Template($phpbb_root_path . 'templates/' . $board_config['board_template']);
-		}
-		if ( empty($theme) )
+		if ( empty($template) || empty($theme) )
 		{
 			$theme = setup_style($board_config['default_style']);
 		}

@@ -6,7 +6,7 @@
  *   copyright            : (C) 2001 The phpBB Group
  *   email                : support@phpbb.com
  *
- *   $Id: functions_post.php,v 1.9.2.40 2005/12/22 11:34:02 acydburn Exp $
+ *   $Id: functions_post.php,v 1.9.2.49 2006/03/14 20:40:32 grahamje Exp $
  *
  *
  ***************************************************************************/
@@ -46,57 +46,25 @@ function prepare_message($message, $html_on, $bbcode_on, $smile_on, $bbcode_uid 
 
 	if ($html_on)
 	{
-		$allowed_html_tags = split(',', $board_config['allow_html_tags']);
+		// If HTML is on, we try to make it safe
+		// This approach is quite agressive and anything that does not look like a valid tag
+		// is going to get converted to HTML entities
+		$message = stripslashes($message);
+		$html_match = '#<[^\w<]*(\w+)((?:"[^"]*"|\'[^\']*\'|[^<>\'"])+)?>#';
+		$matches = array();
 
-		$end_html = 0;
-		$start_html = 1;
-		$tmp_message = '';
-		$message = ' ' . $message . ' ';
+		$message_split = preg_split($html_match, $message);
+		preg_match_all($html_match, $message, $matches);
 
-		while ($start_html = strpos($message, '<', $start_html))
+		$message = '';
+
+		foreach ($message_split as $part)
 		{
-			$tmp_message .= preg_replace($html_entities_match, $html_entities_replace, substr($message, $end_html + 1, ($start_html - $end_html - 1)));
-
-			if ($end_html = strpos($message, '>', $start_html))
-			{
-				$length = $end_html - $start_html + 1;
-				$hold_string = substr($message, $start_html, $length);
-
-				if (($unclosed_open = strrpos(' ' . $hold_string, '<')) != 1)
-				{
-					$tmp_message .= preg_replace($html_entities_match, $html_entities_replace, substr($hold_string, 0, $unclosed_open - 1));
-					$hold_string = substr($hold_string, $unclosed_open - 1);
-				}
-
-				$tagallowed = false;
-				for ($i = 0; $i < sizeof($allowed_html_tags); $i++)
-				{
-					$match_tag = trim($allowed_html_tags[$i]);
-					if (preg_match('#^<\/?' . $match_tag . '[> ]#i', $hold_string))
-					{
-						$tagallowed = (preg_match('#^<\/?' . $match_tag . ' .*?(style[\t ]*?=|on[\w]+[\t ]*?=)#i', $hold_string)) ? false : true;
-					}
-				}
-
-				$tmp_message .= ($length && !$tagallowed) ? preg_replace($html_entities_match, $html_entities_replace, $hold_string) : $hold_string;
-
-				$start_html += $length;
-			}
-			else
-			{
-				$tmp_message .= preg_replace($html_entities_match, $html_entities_replace, substr($message, $start_html, strlen($message)));
-
-				$start_html = strlen($message);
-				$end_html = $start_html;
-			}
+			$tag = array(array_shift($matches[0]), array_shift($matches[1]), array_shift($matches[2]));
+			$message .= htmlspecialchars($part) . clean_html($tag);
 		}
 
-		if (!$end_html || ($end_html != strlen($message) && $tmp_message != ''))
-		{
-			$tmp_message .= preg_replace($html_entities_match, $html_entities_replace, substr($message, $end_html + 1));
-		}
-
-		$message = ($tmp_message != '') ? trim($tmp_message) : trim($message);
+		$message = addslashes($message);
 	}
 	else
 	{
@@ -187,7 +155,7 @@ function prepare_post(&$mode, &$post_data, &$bbcode_on, &$html_on, &$smilies_on,
 				$option_text = trim($option_text);
 				if (!empty($option_text))
 				{
-					$temp_option_text[$option_id] = htmlspecialchars($option_text);
+					$temp_option_text[intval($option_id)] = htmlspecialchars($option_text);
 				}
 			}
 			$option_text = $temp_option_text;
@@ -850,4 +818,66 @@ function generate_smilies($mode, $page_id)
 	}
 }
 
+/**
+* Called from within prepare_message to clean included HTML tags if HTML is
+* turned on for that post
+* @param array $tag Matching text from the message to parse
+*/
+function clean_html($tag)
+{
+	global $board_config;
+
+	if (empty($tag[0]))
+	{
+		return '';
+	}
+
+	$allowed_html_tags = preg_split('/, */', strtolower($board_config['allow_html_tags']));
+	$disallowed_attributes = '/^(?:style|on)/i';
+
+	// Check if this is an end tag
+	preg_match('/<[^\w\/]*\/[\W]*(\w+)/', $tag[0], $matches);
+	if (sizeof($matches))
+	{
+		if (in_array(strtolower($matches[1]), $allowed_html_tags))
+		{
+			return  '</' . $matches[1] . '>';
+		}
+		else
+		{
+			return  htmlspecialchars('</' . $matches[1] . '>');
+		}
+	}
+
+	// Check if this is an allowed tag
+	if (in_array(strtolower($tag[1]), $allowed_html_tags))
+	{
+		$attributes = '';
+		if (!empty($tag[2]))
+		{
+			preg_match_all('/[\W]*?(\w+)[\W]*?=[\W]*?(["\'])((?:(?!\2).)*)\2/', $tag[2], $test);
+			for ($i = 0; $i < sizeof($test[0]); $i++)
+			{
+				if (preg_match($disallowed_attributes, $test[1][$i]))
+				{
+					continue;
+				}
+				$attributes .= ' ' . $test[1][$i] . '=' . $test[2][$i] . str_replace(array('[', ']'), array('&#91;', '&#93;'), htmlspecialchars($test[3][$i])) . $test[2][$i];
+			}
+		}
+		if (in_array(strtolower($tag[1]), $allowed_html_tags))
+		{
+			return '<' . $tag[1] . $attributes . '>';
+		}
+		else
+		{
+			return htmlspecialchars('<' . $tag[1] . $attributes . '>');
+		}
+	}
+	// Finally, this is not an allowed tag so strip all the attibutes and escape it
+	else
+	{
+		return htmlspecialchars('<' .   $tag[1] . '>');
+	}
+}
 ?>

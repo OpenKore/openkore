@@ -1,7 +1,7 @@
 /*
 * Basic DB data for phpBB2 devel
 *
-* $Id: postgres_basic.sql,v 1.1.2.19 2005/07/19 20:01:18 acydburn Exp $
+* $Id: postgres_basic.sql,v 1.1.2.25 2006/03/09 21:55:09 grahamje Exp $
 */
 
 -- Config
@@ -24,7 +24,9 @@ INSERT INTO phpbb_config (config_name, config_value) VALUES ('allow_theme_create
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('allow_avatar_local','0');
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('allow_avatar_remote','0');
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('allow_avatar_upload','0');
-INSERT INTO phpbb_config (config_name, config_value) VALUES ('enable_confirm', '0');
+INSERT INTO phpbb_config (config_name, config_value) VALUES ('enable_confirm', '1');
+INSERT INTO phpbb_config (config_name, config_value) VALUES ('allow_autologin','1');
+INSERT INTO phpbb_config (config_name, config_value) VALUES ('max_autologin_time','0');
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('override_user_style','0');
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('posts_per_page','15');
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('topics_per_page','50');
@@ -43,6 +45,9 @@ INSERT INTO phpbb_config (config_name, config_value) VALUES ('smtp_password','')
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('sendmail_fix','0');
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('require_activation','0');
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('flood_interval','15');
+INSERT INTO phpbb_config (config_name, config_value) VALUES ('search_flood_interval','15');
+INSERT INTO phpbb_config (config_name, config_value) VALUES ('max_login_attempts', '5');
+INSERT INTO phpbb_config (config_name, config_value) VALUES ('login_reset_time', '30');
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('board_email_form','0');
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('avatar_filesize','6144');
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('avatar_max_width','80');
@@ -63,14 +68,15 @@ INSERT INTO phpbb_config (config_name, config_value) VALUES ('record_online_date
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('server_name', 'www.yourdomain.tld');
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('server_port', '80');
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('script_path', '/phpBB2/');
-INSERT INTO phpbb_config (config_name, config_value) VALUES ('version', '.0.17');
+INSERT INTO phpbb_config (config_name, config_value) VALUES ('version', '.0.20');
+INSERT INTO phpbb_config (config_name, config_value) VALUES ('rand_seed', '0');
 
 -- Categories
 INSERT INTO phpbb_categories (cat_id, cat_title, cat_order) VALUES (1, 'Test category 1', 10);
 
 
 -- Forums
-INSERT INTO phpbb_forums (forum_id, forum_name, forum_desc, cat_id, forum_order, forum_posts, forum_topics, forum_last_post_id, auth_view, auth_read, auth_post, auth_reply, auth_edit, auth_delete, auth_announce, auth_sticky, auth_pollcreate, auth_vote, auth_attachments) VALUES (1, 'Test Forum 1', 'This is just a test forum.', 1, 10, 1, 1, 1, 0, 0, 0, 0, 1, 1, 3, 3, 1, 1, 3);
+INSERT INTO phpbb_forums (forum_id, forum_name, forum_desc, cat_id, forum_order, forum_posts, forum_topics, forum_last_post_id, auth_view, auth_read, auth_post, auth_reply, auth_edit, auth_delete, auth_announce, auth_sticky, auth_pollcreate, auth_vote, auth_attachments) VALUES (1, 'Test Forum 1', 'This is just a test forum.', 1, 10, 1, 1, 1, 0, 0, 1, 1, 1, 1, 3, 3, 1, 1, 3);
 
 -- Users
 INSERT INTO phpbb_users (user_id, username, user_level, user_regdate, user_password, user_email, user_icq, user_website, user_occ, user_from, user_interests, user_sig, user_viewemail, user_style, user_aim, user_yim, user_msnm, user_posts, user_attachsig, user_allowsmile, user_allowhtml, user_allowbbcode, user_allow_pm, user_notify_pm, user_allow_viewonline, user_rank, user_avatar, user_lang, user_timezone, user_dateformat, user_actkey, user_newpasswd, user_notify, user_active) VALUES ( -1, 'Anonymous', 0, 0, '', '', '', '', '', '', '', '', 0, NULL, '', '', '', 0, 0, 1, 1, 1, 0, 1, 1, NULL, '', '', 0, '', '', '', 0, 0);

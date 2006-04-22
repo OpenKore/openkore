@@ -6,7 +6,7 @@
  *   copyright            : (C) 2001 The phpBB Group
  *   email                : support@phpbb.com
  *
- *   $Id: usercp_confirm.php,v 1.1.2.2 2005/12/29 11:51:11 acydburn Exp $
+ *   $Id: usercp_confirm.php,v 1.1.2.3 2006/03/25 14:22:43 grahamje Exp $
  *
  ***************************************************************************/
 
@@ -155,7 +155,9 @@ else
 {
 	$_png = define_raw_pngs();
 
-	$char = substr($code, -1);
+	$c = intval($HTTP_GET_VARS['c']);
+	$char = substr($code, $c - 1, 1);
+	
 	header('Content-Type: image/png');
 	header('Cache-control: no-cache, no-store');
 	echo base64_decode($_png[$char]);

@@ -2,7 +2,7 @@
 
   Basic DB data for phpBB2 devel (MSSQL)
 
- $Id: mssql_basic.sql,v 1.1.2.19 2005/07/19 20:01:17 acydburn Exp $
+ $Id: mssql_basic.sql,v 1.1.2.25 2006/03/09 21:55:09 grahamje Exp $
 
 */
 
@@ -41,7 +41,9 @@ INSERT INTO phpbb_config (config_name, config_value) VALUES ('max_sentbox_privms
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('max_savebox_privmsgs','50');
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('board_email_sig','Thanks, The Management');
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('board_email','youraddress@yourdomain.com');
-INSERT INTO phpbb_config (config_name, config_value) VALUES ('enable_confirm', '0');
+INSERT INTO phpbb_config (config_name, config_value) VALUES ('enable_confirm', '1');
+INSERT INTO phpbb_config (config_name, config_value) VALUES ('allow_autologin','1');
+INSERT INTO phpbb_config (config_name, config_value) VALUES ('max_autologin_time','0');
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('smtp_delivery','0');
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('smtp_host','');
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('smtp_username','');
@@ -49,6 +51,9 @@ INSERT INTO phpbb_config (config_name, config_value) VALUES ('smtp_password','')
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('sendmail_fix','0');
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('require_activation','0');
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('flood_interval','15');
+INSERT INTO phpbb_config (config_name, config_value) VALUES ('search_flood_interval','15');
+INSERT INTO phpbb_config (config_name, config_value) VALUES ('max_login_attempts', '5');
+INSERT INTO phpbb_config (config_name, config_value) VALUES ('login_reset_time', '30');
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('board_email_form','0');
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('avatar_filesize','6144');
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('avatar_max_width','80');
@@ -69,7 +74,8 @@ INSERT INTO phpbb_config (config_name, config_value) VALUES ('record_online_date
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('server_name', 'www.yourdomain.tld');
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('server_port', '80');
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('script_path', '/phpBB2/');
-INSERT INTO phpbb_config (config_name, config_value) VALUES ('version', '.0.17');
+INSERT INTO phpbb_config (config_name, config_value) VALUES ('version', '.0.20');
+INSERT INTO phpbb_config (config_name, config_value) VALUES ('rand_seed', '0');
 
 /*
   -- Categories
@@ -84,7 +90,7 @@ SET IDENTITY_INSERT phpbb_categories OFF;
 /*
   -- Forums
 */
-INSERT INTO phpbb_forums (forum_id, cat_id, forum_name, forum_desc, forum_status, forum_order, forum_posts, forum_topics, forum_last_post_id, prune_next, prune_enable, auth_view, auth_read, auth_post, auth_reply, auth_edit, auth_delete, auth_announce, auth_sticky, auth_pollcreate, auth_vote, auth_attachments) VALUES (1, 1, 'Test Forum 1', 'This is just a test forum, nothing special here.', '', 1, 1, 1, 1, '', 1, '', '', '', '', 1, 1, 3, 3, 1, 1, 3);
+INSERT INTO phpbb_forums (forum_id, cat_id, forum_name, forum_desc, forum_status, forum_order, forum_posts, forum_topics, forum_last_post_id, prune_next, prune_enable, auth_view, auth_read, auth_post, auth_reply, auth_edit, auth_delete, auth_announce, auth_sticky, auth_pollcreate, auth_vote, auth_attachments) VALUES (1, 1, 'Test Forum 1', 'This is just a test forum, nothing special here.', '', 1, 1, 1, 1, '', 1, '', '', 1, 1, 1, 1, 3, 3, 1, 1, 3);
 
 /*
   -- Users

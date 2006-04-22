@@ -6,7 +6,7 @@
  *   copyright            : (C) 2001 The phpBB Group
  *   email                : support@phpbb.com
  *
- *   $Id: sessions.php,v 1.58.2.16 2005/10/30 15:17:14 acydburn Exp $
+ *   $Id: sessions.php,v 1.58.2.23 2006/04/05 12:42:23 grahamje Exp $
  *
  *
  ***************************************************************************/
@@ -177,9 +177,7 @@ function session_begin($user_id, $user_ip, $page_id, $auto_create = 0, $enable_a
 			AND session_ip = '$user_ip'";
 	if ( !$db->sql_query($sql) || !$db->sql_affectedrows() )
 	{
-		list($sec, $usec) = explode(' ', microtime());
-		mt_srand((float) $sec + ((float) $usec * 100000));
-		$session_id = md5(uniqid(mt_rand(), true));
+		$session_id = md5(dss_rand());
 
 		$sql = "INSERT INTO " . SESSIONS_TABLE . "
 			(session_id, session_user_id, session_start, session_time, session_ip, session_page, session_logged_in, session_admin)
@@ -212,9 +210,7 @@ function session_begin($user_id, $user_ip, $page_id, $auto_create = 0, $enable_a
 		//
 		if ($enable_autologin)
 		{
-			list($sec, $usec) = explode(' ', microtime());
-			mt_srand(hexdec(substr($session_id, 0, 8)) + (float) $sec + ((float) $usec * 1000000));
-			$auto_login_key = uniqid(mt_rand(), true);
+			$auto_login_key = dss_rand() . dss_rand();
 			
 			if (isset($sessiondata['autologinid']) && (string) $sessiondata['autologinid'] != '')
 			{
@@ -494,6 +490,65 @@ function session_clean($session_id)
 	}
 
 	return true;
+}
+
+/**
+* Reset all login keys for the specified user
+* Called on password changes
+*/
+function session_reset_keys($user_id, $user_ip)
+{
+	global $db, $userdata;
+
+	$key_sql = ($user_id == $userdata['user_id'] && !empty($userdata['session_key'])) ? "AND key_id != '" . md5($userdata['session_key']) . "'" : '';
+
+	$sql = 'DELETE FROM ' . SESSIONS_KEYS_TABLE . '
+		WHERE user_id = ' . (int) $user_id . "
+			$key_sql";
+
+	if ( !$db->sql_query($sql) )
+	{
+		message_die(CRITICAL_ERROR, 'Error removing auto-login keys', '', __LINE__, __FILE__, $sql);
+	}
+
+	$where_sql = 'session_user_id = ' . (int) $user_id;
+	$where_sql .= ($user_id == $userdata['user_id']) ? " AND session_id <> '" . $userdata['session_id'] . "'" : '';
+	$sql = 'DELETE FROM ' . SESSIONS_TABLE . "
+		WHERE $where_sql";
+	if ( !$db->sql_query($sql) )
+	{
+		message_die(CRITICAL_ERROR, 'Error removing user session(s)', '', __LINE__, __FILE__, $sql);
+	}
+
+	if ( !empty($key_sql) )
+	{
+		$auto_login_key = dss_rand() . dss_rand();
+
+		$current_time = time();
+		
+		$sql = 'UPDATE ' . SESSIONS_KEYS_TABLE . "
+			SET last_ip = '$user_ip', key_id = '" . md5($auto_login_key) . "', last_login = $current_time
+			WHERE key_id = '" . md5($userdata['session_key']) . "'";
+		
+		if ( !$db->sql_query($sql) )
+		{
+			message_die(CRITICAL_ERROR, 'Error updating session key', '', __LINE__, __FILE__, $sql);
+		}
+
+		// And now rebuild the cookie
+		$sessiondata['userid'] = $user_id;
+		$sessiondata['autologinid'] = $autologin_id;
+		$cookiename = $board_config['cookie_name'];
+		$cookiepath = $board_config['cookie_path'];
+		$cookiedomain = $board_config['cookie_domain'];
+		$cookiesecure = $board_config['cookie_secure'];
+
+		setcookie($cookiename . '_data', serialize($sessiondata), $current_time + 31536000, $cookiepath, $cookiedomain, $cookiesecure);
+		
+		$userdata['session_key'] = $auto_login_key;
+		unset($sessiondata);
+		unset($auto_login_key);
+	}
 }
 
 //
