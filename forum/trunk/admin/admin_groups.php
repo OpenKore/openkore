@@ -6,7 +6,7 @@
  *   copyright            : (C) 2001 The phpBB Group
  *   email                : support@phpbb.com
  *
- *   $Id: admin_groups.php,v 1.1 2005/02/28 18:24:07 acydburn Exp $
+ *   $Id: admin_groups.php,v 1.25.2.13 2006/03/09 19:42:41 grahamje Exp $
  *
  *
  ***************************************************************************/
@@ -105,21 +105,26 @@ if ( isset($HTTP_POST_VARS['edit']) || isset($HTTP_POST_VARS['new']) )
 	//
 	// Ok, now we know everything about them, let's show the page.
 	//
-	$sql = "SELECT user_id, username
-		FROM " . USERS_TABLE . "
-		WHERE user_id <> " . ANONYMOUS . "
-		ORDER BY username";
-	if ( !($result = $db->sql_query($sql)) )
+	if ($group_info['group_moderator'] != '')
 	{
-		message_die(GENERAL_ERROR, 'Could not obtain user info for moderator list', '', __LINE__, __FILE__, $sql);
-	}
-
-	while ( $row = $db->sql_fetchrow($result) )
-	{
-		if ( $row['user_id'] == $group_info['group_moderator'] ) 
+		$sql = "SELECT user_id, username
+			FROM " . USERS_TABLE . "
+			WHERE user_id = " . $group_info['group_moderator'];
+		if ( !($result = $db->sql_query($sql)) )
 		{
-			$group_moderator = $row['username'];
+			message_die(GENERAL_ERROR, 'Could not obtain user info for moderator list', '', __LINE__, __FILE__, $sql);
 		}
+
+		if ( !($row = $db->sql_fetchrow($result)) )
+		{
+			message_die(GENERAL_ERROR, 'Could not obtain user info for moderator list', '', __LINE__, __FILE__, $sql);
+		}
+
+		$group_moderator = $row['username'];
+	}
+	else
+	{
+		$group_moderator = '';
 	}
 
 	$group_open = ( $group_info['group_type'] == GROUP_OPEN ) ? ' checked="checked"' : '';
@@ -251,7 +256,7 @@ else if ( isset($HTTP_POST_VARS['group_update']) )
 	else
 	{
 		$group_type = isset($HTTP_POST_VARS['group_type']) ? intval($HTTP_POST_VARS['group_type']) : GROUP_OPEN;
-		$group_name = isset($HTTP_POST_VARS['group_name']) ? trim($HTTP_POST_VARS['group_name']) : '';
+		$group_name = isset($HTTP_POST_VARS['group_name']) ? htmlspecialchars(trim($HTTP_POST_VARS['group_name'])) : '';
 		$group_description = isset($HTTP_POST_VARS['group_description']) ? trim($HTTP_POST_VARS['group_description']) : '';
 		$group_moderator = isset($HTTP_POST_VARS['username']) ? $HTTP_POST_VARS['username'] : '';
 		$delete_old_moderator = isset($HTTP_POST_VARS['delete_old_moderator']) ? true : false;

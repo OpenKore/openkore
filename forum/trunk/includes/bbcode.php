@@ -6,7 +6,7 @@
  *   copyright            : (C) 2001 The phpBB Group
  *   email                : support@phpbb.com
  *
- *   $Id: bbcode.php,v 1.36.2.39 2005/12/29 15:12:20 acydburn Exp $
+ *   $Id: bbcode.php,v 1.36.2.41 2006/02/26 17:34:50 grahamje Exp $
  *
  ***************************************************************************/
 
@@ -436,15 +436,15 @@ function bbencode_second_pass($text, $uid)
 
 	// [img]image_url_here[/img] code..
 	// This one gets first-passed..
-	$patterns[] = "#\[img:$uid\]([^?].*?)\[/img:$uid\]#i";
+	$patterns[] = "#\[img:$uid\]([^?](?:[^\[]+|\[(?!url))*?)\[/img:$uid\]#i";
 	$replacements[] = $bbcode_tpl['img'];
 
 	// matches a [url]xxxx://www.phpbb.com[/url] code..
-	$patterns[] = "#\[url\]([\w]+?://([\w\#$%&~/.\-;:=,?@\]+]|\[(?!url=))*?)\[/url\]#is";
+	$patterns[] = "#\[url\]([\w]+?://([\w\#$%&~/.\-;:=,?@\]+]+|\[(?!url=))*?)\[/url\]#is";
 	$replacements[] = $bbcode_tpl['url1'];
 
 	// [url]www.phpbb.com[/url] code.. (no xxxx:// prefix).
-	$patterns[] = "#\[url\]((www|ftp)\.([\w\#$%&~/.\-;:=,?@\]+]|\[(?!url=))*?)\[/url\]#is";
+	$patterns[] = "#\[url\]((www|ftp)\.([\w\#$%&~/.\-;:=,?@\]+]+|\[(?!url=))*?)\[/url\]#is";
 	$replacements[] = $bbcode_tpl['url2'];
 
 	// [url=xxxx://www.phpbb.com]phpBB[/url] code..
@@ -475,7 +475,7 @@ function make_bbcode_uid()
 {
 	// Unique ID for this message..
 
-	$uid = md5(mt_rand());
+	$uid = dss_rand();
 	$uid = substr($uid, 0, BBCODE_UID_LEN);
 
 	return $uid;

@@ -6,7 +6,7 @@
  *   copyright            : (C) 2001 The phpBB Group
  *   email                : support@phpbb.com
  *
- *   $Id: usercp_register.php,v 1.20.2.70 2005/12/29 11:51:11 acydburn Exp $
+ *   $Id: usercp_register.php,v 1.20.2.74 2006/04/05 12:42:23 grahamje Exp $
  *
  *
  ***************************************************************************/
@@ -132,7 +132,8 @@ if (
 		}
 	}
 
-	$signature = str_replace('<br />', "\n", $signature);
+	$signature = (isset($signature)) ? str_replace('<br />', "\n", $signature) : '';
+	$signature_bbcode_uid = '';
 
 	// Run some validation on the optional fields. These are pass-by-ref, so they'll be changed to
 	// empty strings if they fail.
@@ -296,12 +297,6 @@ if ( isset($HTTP_POST_VARS['submit']) )
 
 			if ($row = $db->sql_fetchrow($result))
 			{
-				// Only compare one char if the zlib-extension is not loaded
-				if (!@extension_loaded('zlib'))
-				{
-					$row['code'] = substr($row['code'], -1);
-				}
-
 				if ($row['code'] != $confirm_code)
 				{
 					$error = TRUE;
@@ -525,6 +520,13 @@ if ( isset($HTTP_POST_VARS['submit']) )
 			if ( !($result = $db->sql_query($sql)) )
 			{
 				message_die(GENERAL_ERROR, 'Could not update users table', '', __LINE__, __FILE__, $sql);
+			}
+
+			// We remove all stored login keys since the password has been updated
+			// and change the current one (if applicable)
+			if ( !empty($passwd_sql) )
+			{
+				session_reset_keys($user_id, $user_ip);
 			}
 
 			if ( !$user_active )
@@ -769,6 +771,7 @@ if ( $error )
 	//
 	$username = stripslashes($username);
 	$email = stripslashes($email);
+	$cur_password = '';
 	$new_password = '';
 	$password_confirm = '';
 
@@ -793,6 +796,7 @@ else if ( $mode == 'editprofile' && !isset($HTTP_POST_VARS['avatargallery']) && 
 	$user_id = $userdata['user_id'];
 	$username = $userdata['username'];
 	$email = $userdata['user_email'];
+	$cur_password = '';
 	$new_password = '';
 	$password_confirm = '';
 
@@ -984,17 +988,10 @@ else
 		}
 		$db->sql_freeresult($result);
 		
-		$confirm_chars = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J',  'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T',  'U', 'V', 'W', 'X', 'Y', 'Z', '1', '2', '3', '4', '5', '6', '7', '8', '9');
-
-		list($usec, $sec) = explode(' ', microtime()); 
-		mt_srand($sec * $usec); 
-
-		$max_chars = count($confirm_chars) - 1;
-		$code = '';
-		for ($i = 0; $i < 6; $i++)
-		{
-			$code .= $confirm_chars[mt_rand(0, $max_chars)];
-		}
+		// Generate the required confirmation code
+		// NB 0 (zero) could get confused with O (the letter) so we make change it
+		$code = dss_rand();
+		$code = strtoupper(str_replace('0', 'o', substr($code, 6)));
 
 		$confirm_id = md5(uniqid($user_ip));
 
@@ -1022,11 +1019,11 @@ else
 	$form_enctype = ( @$ini_val('file_uploads') == '0' || strtolower(@$ini_val('file_uploads') == 'off') || phpversion() == '4.0.4pl1' || !$board_config['allow_avatar_upload'] || ( phpversion() < '4.0.3' && @$ini_val('open_basedir') != '' ) ) ? '' : 'enctype="multipart/form-data"';
 
 	$template->assign_vars(array(
-		'USERNAME' => $username,
-		'CUR_PASSWORD' => $cur_password,
-		'NEW_PASSWORD' => $new_password,
-		'PASSWORD_CONFIRM' => $password_confirm,
-		'EMAIL' => $email,
+		'USERNAME' => isset($username) ? $username : '',
+		'CUR_PASSWORD' => isset($cur_password) ? $cur_password : '',
+		'NEW_PASSWORD' => isset($new_password) ? $new_password : '',
+		'PASSWORD_CONFIRM' => isset($password_confirm) ? $password_confirm : '',
+		'EMAIL' => isset($email) ? $email : '',
 		'CONFIRM_IMG' => $confirm_image, 
 		'YIM' => $yim,
 		'ICQ' => $icq,
