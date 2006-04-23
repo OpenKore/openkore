@@ -26,13 +26,13 @@ use strict;
 use IO::Socket;
 use Time::HiRes qw(time sleep);
 use POSIX;
-use ReadLine;
 
 use Globals qw(%consoleColors);
 use Interface;
+use base qw(Interface);
 use Utils qw(timeOut);
 use I18N qw(UTF8ToString);
-use base qw(Interface);
+use UnixUtils;
 
 our (%fgcolors, %bgcolors);
 
@@ -45,7 +45,7 @@ sub new {
 		# Only initialize readline if we have a controlling
 		# terminal to read input from.
 		$self{readline} = 1;
-		ReadLine::init();
+		UnixUtils::ConsoleUI::start();
 	}
 
 	bless \%self, $class;
@@ -54,7 +54,7 @@ sub new {
 
 sub DESTROY {
 	my $self = shift;
-	ReadLine::stop() if ($self->{readline});
+	UnixUtils::ConsoleUI::stop() if ($self->{readline});
 }
 
 sub getInput {
@@ -65,17 +65,17 @@ sub getInput {
 
 	if ($timeout < 0) {
 		do {
-			$line = ReadLine::pop();
+			$line = UnixUtils::ConsoleUI::getInput();
 			sleep 0.01;
 		} while (!defined $line);
 
 	} elsif ($timeout == 0) {
-		$line = ReadLine::pop();
+		$line = UnixUtils::ConsoleUI::getInput();
 
 	} else {
 		my $time = time;
 		do {
-			$line = ReadLine::pop();
+			$line = UnixUtils::ConsoleUI::getInput();
 			sleep 0.01;
 		} while (!defined($line) && !timeOut($time, $timeout));
 	}
@@ -97,39 +97,28 @@ sub writeOutput {
 	my $code;
 
 	# Hide prompt and input buffer
-	ReadLine::hide() if ($self->{readline});
 	$code = getColorForMessage($type, $domain);
 
 	if (!$self->{readline}) {
+		use bytes;
 		print $code . $message . getColor('reset');
 		STDOUT->flush;
-
-	} elsif ($message =~ /\n$/s) {
-		# Line ends with a newline; print it normally
-		ReadLine::print($code . $message . getColor('reset'));
-		if ($self->{last_message_had_no_newline}) {
-			ReadLine::setPrompt("");
-			$self->{last_message_had_no_newline} = 0;
-		}
-
 	} else {
-		# Line doesn't end with a newline.
-		# Print all lines except the last one,
-		# and set the last line as readline's prompt.
-		my @lines = split /\n/, $message;
-		my $lastLine = $lines[@lines - 1];
-
-		ReadLine::print($code);
-		for (my $i = 0; $i < @lines - 1; $i++) {
-			ReadLine::print($lines[$i]);
+		while (length($message) > 0) {
+			$message =~ /^(.*?)(\n|$)(.*)/s;
+			my $line = $1 . $2;
+			$message = $3;
+			{
+				use bytes;
+				UnixUtils::ConsoleUI::print($code . $line . getColor('reset'));
+			}
 		}
-
-		ReadLine::setPrompt($code . $lastLine . getColor('reset'));
-		$self->{last_message_had_no_newline} = 1;
 	}
+}
 
-	# Show prompt and input buffer
-	ReadLine::show() if ($self->{readline});
+sub beep {
+	print STDOUT "\a";
+	STDOUT->flush;
 }
 
 
@@ -142,7 +131,7 @@ sub getColorForMessage {
 	my ($type, $domain) = @_;
 	my $color = $consoleColors{$type}{$domain};
 	$color = $consoleColors{$type}{default} if (!defined $color);
-	
+
 	my $code = '';
 	$code = getColor($color) if (defined $color);
 	return $code;
@@ -162,6 +151,8 @@ sub getColor {
 }
 
 
+{
+	use bytes;
 %fgcolors = (
 	'reset'		=> "\e[0m",
 	'default'	=> "\e[0m",
@@ -222,11 +213,7 @@ sub getColor {
 	'grey'		=> "\e[22;47m",
 	'white'		=> "\e[5;47m",
 );
-
-
-sub beep {
-	print STDOUT "\a";
-	STDOUT->flush;
 }
+
 
 1;

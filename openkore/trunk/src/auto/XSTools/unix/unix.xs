@@ -1,6 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/ioctl.h>
+#include <string.h>
+#include "consoleui.h"
+
 #include "EXTERN.h"
 #include "perl.h"
 #include "XSUB.h"
@@ -28,3 +31,5 @@ getTerminalSize()
 		}
 		XPUSHs (sv_2mortal (newSVnv (size.ws_col)));
 		XPUSHs (sv_2mortal (newSVnv (size.ws_row)));
+
+INCLUDE: consoleui-perl.xs
