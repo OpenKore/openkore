@@ -24,6 +24,7 @@ package Misc;
 use strict;
 use Exporter;
 use Carp::Assert;
+use Data::Dumper;
 use base qw(Exporter);
 
 use Globals;
@@ -196,6 +197,38 @@ our @EXPORT = (
 # use SelfLoader; 1;
 # __DATA__
 
+
+
+# Checks whether the internal state of some variables are correct.
+sub checkValidity {
+	return unless DEBUG;
+	my ($name) = @_;
+	$name = "Validity check:" if (!defined $name);
+
+	if ($char && $char->{inventory}) {
+		for (my $i = 0; $i < @{$char->{inventory}}; $i++) {
+			if ($char->{inventory}[$i] && !UNIVERSAL::isa($char->{inventory}[$i], "Item")) {
+				die "$name\n" .
+					"Inventory item $i is not an Item:\n" .
+					Dumper($char->{inventory});
+			}
+		}
+	}
+
+	foreach my $monster (values %monsters) {
+		if (!UNIVERSAL::isa($monster, 'Actor::Monster')) {
+			die "$name\nUnblessed item in monster list:\n" .
+				Dumper(\%monsters);
+		}
+	}
+
+	foreach my $player (values %players) {
+		if (!UNIVERSAL::isa($player, 'Actor::Player')) {
+			die "$name\nUnblessed item in player list:\n" .
+				Dumper(\%players);
+		}
+	}
+}
 
 
 #######################################

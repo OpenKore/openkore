@@ -235,9 +235,11 @@ sub mainLoop {
 
 	# Process AI
 	if ($conState == 5 && timeOut($timeout{ai}) && $net->serverAlive()) {
+		Misc::checkValidity("AI");
 		Benchmark::begin("ai") if DEBUG;
 		AI::CoreLogic::iterate();
 		Benchmark::end("ai") if DEBUG;
+		Misc::checkValidity("AI");
 		return if $quit;
 	}
 
