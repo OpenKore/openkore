@@ -16,10 +16,13 @@ private:
 
 	static ConsoleUI *instance;
 	pthread_t thread;
+
 	pthread_mutex_t inputLock;
 	pthread_mutex_t outputLock;
+	pthread_cond_t outputCond;
 	std::queue<char *> input;
 	std::queue<char *> output;
+
 	bool quit;
 	bool lineProcessed;
 
@@ -50,11 +53,19 @@ public:
 	void stop();
 
 	/**
-	 * Print a message to the console.
+	 * Print a message to the console. This method does not
+	 * print messages to screen immediately. Instead, the
+	 * message is put into a queue, which will be processed
+	 * later.
 	 *
 	 * @require msg != NULL
 	 */
 	void print(const char *msg);
+
+	/**
+	 * Wait until all messages in the queue have been printed.
+	 */
+	void waitUntilPrinted();
 
 	/**
 	 * Get the next input line in the input queue.
