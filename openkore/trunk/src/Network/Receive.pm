@@ -4207,7 +4207,7 @@ sub skill_cast {
 	my $domain = ($sourceID eq $accountID) ? "selfSkill" : "skill";
 	my $disp = skillCast_string($source, $target, $skill->name, $wait);
 	message $disp, $domain, 1;	
-	
+
 	Plugins::callHook('is_casting', {
 		sourceID => $sourceID,
 		targetID => $targetID,
@@ -4220,17 +4220,17 @@ sub skill_cast {
 	});
 
 	# Skill Cancel
-	if ($AI == 2 && $monsters{$sourceID} && %{$monsters{$sourceID}} && mon_control($monsters{$sourceID}{'name'})->{'skillcancel_auto'}) {
+	if ($AI == 2 && $monsters{$sourceID} && mon_control($monsters{$sourceID}{name})->{skillcancel_auto}) {
 		if ($targetID eq $accountID || $dist > 0 || (AI::action eq "attack" && AI::args->{ID} ne $sourceID)) {
 			message TF("Monster Skill - switch Target to : %s (%s)\n", $monsters{$sourceID}{name}, $monsters{$sourceID}{binID});
 			stopAttack();
 			AI::dequeue;
 			attack($sourceID);
 		}
-		
+
 		# Skill area casting -> running to monster's back
 		my $ID = AI::args->{ID};
-		if ($dist > 0) {
+		if ($dist > 0 && defined $ID) {
 			# Calculate X axis
 			if ($char->{pos_to}{x} - $monsters{$ID}{pos_to}{x} < 0) {
 				$coords{x} = $monsters{$ID}{pos_to}{x} + 3;
@@ -4243,7 +4243,7 @@ sub skill_cast {
 			} else {
 				$coords{y} = $monsters{$ID}{pos_to}{y} - 3;
 			}
-			
+
 			my (%vec, %pos);
 			getVector(\%vec, \%coords, $char->{pos_to});
 			moveAlongVector(\%pos, $char->{pos_to}, \%vec, distance($char->{'pos_to'}, \%coords));
