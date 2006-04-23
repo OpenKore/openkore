@@ -393,7 +393,7 @@ sub parse {
 sub checkValidity {
 	if (DEBUG && $char && $char->{inventory}) {
 		for (my $i = 0; $i < @{$char->{inventory}}; $i++) {
-			if ($char->{inventory}[$i] && !UNIVERSAL::isa($char->{inventory}[$i], "Item") {
+			if ($char->{inventory}[$i] && !UNIVERSAL::isa($char->{inventory}[$i], "Item")) {
 				use Data::Dumper;
 				die "Inventory item $i is not an Item:\n" .
 					Dumper($char->{inventory});
