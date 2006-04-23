@@ -378,13 +378,28 @@ sub parse {
 	my $callback = $self->can($handler->[0]);
 	if ($callback) {
 		Plugins::callHook("packet_pre/$handler->[0]", \%args);
+		checkValidity();
 		$self->$callback(\%args);
+		checkValidity();
 	} else {
 		debug "Packet Parser: Unhandled Packet: $switch Handler: $handler->[0]\n", "packetParser", 2;
 	}
 
 	Plugins::callHook("packet/$handler->[0]", \%args);
 	return \%args;
+}
+
+# Checks whether the internal state of some variables are correct.
+sub checkValidity {
+	if (DEBUG && $char && $char->{inventory}) {
+		for (my $i = 0; $i < @{$char->{inventory}}; $i++) {
+			if ($char->{inventory}[$i] && !UNIVERSAL::isa($char->{inventory}[$i], "Item") {
+				use Data::Dumper;
+				die "Inventory item $i is not an Item:\n" .
+					Dumper($char->{inventory});
+			}
+		}
+	}
 }
 
 
@@ -1209,7 +1224,7 @@ sub arrow_equipped {
 	return unless $args->{index};
 	$char->{arrow} = $args->{index};
 
-	my $invIndex = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "index", $args->{index});
+	my $invIndex = findIndex($char->{inventory}, "index", $args->{index});
 	if ($invIndex ne "" && $char->{equipment}{arrow} != $char->{inventory}[$invIndex]) {
 		$char->{equipment}{arrow} = $char->{inventory}[$invIndex];
 		$char->{inventory}[$invIndex]{equipped} = 32768;
@@ -1970,8 +1985,7 @@ sub equip_item {
 		$item->{equipped} = $args->{type};
 		if ($args->{type} == 10) {
 			$char->{equipment}{arrow} = $item;
-		}
-		else {
+		} else {
 			foreach (%equipSlot_rlut){
 				if ($_ & $args->{type}){
 					next if $_ == 10; # work around Arrow bug
@@ -4994,12 +5008,12 @@ sub unequip_item {
 	my $invIndex = findIndex($char->{inventory}, "index", $args->{index});
 	$char->{inventory}[$invIndex]{equipped} = "";
 	if ($args->{type} == 10) {
-		$char->{equipment}{arrow} = undef;
+		delete $char->{equipment}{arrow};
 	} else {
 		foreach (%equipSlot_rlut){
 			if ($_ & $args->{type}){
 				next if $_ == 10; #work around Arrow bug
-				$char->{equipment}{$equipSlot_lut{$_}} = undef;
+				delete $char->{equipment}{$equipSlot_lut{$_}};
 			}
 		}
 	}

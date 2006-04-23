@@ -15,6 +15,9 @@
 extern char *rl_display_prompt;
 
 
+/**
+ * This class delegates callback functions back to the ConsoleUI instance.
+ */
 class ConsoleUICallbacks {
 public:
 	static void *threadMain(void *arg) {
@@ -30,10 +33,10 @@ public:
 ConsoleUI *ConsoleUI::instance = NULL;
 
 ConsoleUI::ConsoleUI() {
-	rl_initialize();
 	thread = 0;
 	pthread_mutex_init(&inputLock, NULL);
 	pthread_mutex_init(&outputLock, NULL);
+	pthread_cond_init(&outputCond, NULL);
 }
 
 ConsoleUI::~ConsoleUI() {
@@ -46,6 +49,9 @@ ConsoleUI::~ConsoleUI() {
 		free(output.front());
 		output.pop();
 	}
+	pthread_mutex_destroy(&inputLock);
+	pthread_mutex_destroy(&outputLock);
+	pthread_cond_destroy(&outputCond);
 }
 
 void
@@ -84,6 +90,7 @@ ConsoleUI::threadMain(void *arg) {
 		pthread_mutex_lock(&outputLock);
 		if (!output.empty()) {
 			processOutput();
+			pthread_cond_broadcast(&outputCond);
 		}
 		pthread_mutex_unlock(&outputLock);
 
@@ -174,6 +181,7 @@ ConsoleUI::getInstance() {
 void
 ConsoleUI::start() {
 	quit = false;
+	rl_initialize();
 	pthread_create(&thread, NULL, ConsoleUICallbacks::threadMain, NULL);
 }
 
@@ -191,6 +199,16 @@ ConsoleUI::print(const char *msg) {
 	assert(msg != NULL);
 	pthread_mutex_lock(&outputLock);
 	output.push(strdup(msg));
+	pthread_cond_broadcast(&outputCond);
+	pthread_mutex_unlock(&outputLock);
+}
+
+void
+ConsoleUI::waitUntilPrinted() {
+	pthread_mutex_lock(&outputLock);
+	while (!output.empty()) {
+		pthread_cond_wait(&outputCond, &outputLock);
+	}
 	pthread_mutex_unlock(&outputLock);
 }
 

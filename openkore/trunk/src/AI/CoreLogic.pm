@@ -3416,264 +3416,7 @@ sub iterate {
 	}
 
 
-	##### AUTO-ATTACK #####
-	# The auto-attack logic is as follows:
-	# 1. Generate a list of monsters that we are allowed to attack.
-	# 2. Pick the "best" monster out of that list, and attack it.
-
-	Benchmark::begin("ai_autoAttack") if DEBUG;
-
-	if ((AI::isIdle || AI::is(qw/route follow sitAuto take items_gather items_take/) || (AI::action eq "mapRoute" && AI::args->{stage} eq 'Getting Map Solution'))
-	     # Don't auto-attack monsters while taking loot, and itemsTake/GatherAuto >= 2
-	  && !($config{'itemsTakeAuto'} >= 2 && AI::is("take", "items_take"))
-	  && !($config{'itemsGatherAuto'} >= 2 && AI::is("take", "items_gather"))
-	  && timeOut($timeout{ai_attack_auto})
-	  && (!$config{teleportAuto_search} || $ai_v{temp}{searchMonsters} >= $config{teleportAuto_search})
-	  && (!$config{attackAuto_notInTown} || !$cities_lut{$field{name}.'.rsw'})) {
-
-		# If we're in tanking mode, only attack something if the person we're tanking for is on screen.
-		my $foundTankee;
-		if ($config{'tankMode'}) {
-			foreach (@playersID) {
-				next if (!$_);
-				if ($config{'tankModeTarget'} eq $players{$_}{'name'}) {
-					$foundTankee = 1;
-					last;
-				}
-			}
-		}
-
-		my $attackTarget;
-		my $priorityAttack;
-
-		if (!$config{'tankMode'} || $foundTankee) {
-			# This variable controls how far monsters must be away from portals and players.
-			my $portalDist = $config{'attackMinPortalDistance'} || 4;
-			my $playerDist = $config{'attackMinPlayerDistance'};
-			$playerDist = 1 if ($playerDist < 1);
-
-			# Detect whether we are currently in follow mode
-			my $following;
-			my $followID;
-			if (defined(my $followIndex = AI::findAction("follow"))) {
-				$following = AI::args($followIndex)->{following};
-				$followID = AI::args($followIndex)->{ID};
-			}
-
-			my $routeIndex = AI::findAction("route");
-			$routeIndex = AI::findAction("mapRoute") if (!defined $routeIndex);
-			my $attackOnRoute;
-			if (defined $routeIndex) {
-				$attackOnRoute = AI::args($routeIndex)->{attackOnRoute};
-			} else {
-				$attackOnRoute = 2;
-			}
-
-
-			### Step 1: Generate a list of all monsters that we are allowed to attack. ###
-			my @aggressives;
-			my @partyMonsters;
-			my @cleanMonsters;
-
-			# List aggressive monsters
-			@aggressives = ai_getAggressives(1) if ($config{'attackAuto'} && $attackOnRoute);
-
-			# There are two types of non-aggressive monsters. We generate two lists:
-			foreach (@monstersID) {
-				next if (!$_ || !checkMonsterCleanness($_));
-				my $monster = $monsters{$_};
-				# Ignore ignored monsters in mon_control.txt
-				if ((my $control = mon_control($monster->{name}))) {
-					next if ( ($control->{attack_auto} ne "" && $control->{attack_auto} <= 0)
-						|| ($control->{attack_lvl} ne "" && $control->{attack_lvl} > $char->{lv})
-						|| ($control->{attack_jlvl} ne "" && $control->{attack_jlvl} > $char->{lv_job})
-						|| ($control->{attack_hp}  ne "" && $control->{attack_hp} > $char->{hp})
-						|| ($control->{attack_sp}  ne "" && $control->{attack_sp} > $char->{sp})
-						);
-				}
-
-				my $pos = calcPosition($monster);
-				OpenKoreMod::autoAttack($monster) if (defined &OpenKoreMod::autoAttack);
-
-				# List monsters that party members are attacking
-				if ($config{attackAuto_party} && $attackOnRoute && !AI::is("take", "items_take")
-				 && !$ai_v{sitAuto_forcedBySitCommand}
-				 && (($monster->{dmgFromParty} && $config{attackAuto_party} != 2) ||
-				     $monster->{dmgToParty} || $monster->{missedToParty})
-				 && timeOut($monster->{attack_failed}, $timeout{ai_attack_unfail}{timeout})) {
-					push @partyMonsters, $_;
-					next;
-				}
-
-				# List monsters that the master is attacking
-				if ($following && $config{'attackAuto_followTarget'} && $attackOnRoute && !AI::is("take", "items_take")
-				 && ($monster->{dmgToPlayer}{$followID} || $monster->{dmgFromPlayer}{$followID} || $monster->{missedToPlayer}{$followID})
-				 && timeOut($monster->{attack_failed}, $timeout{ai_attack_unfail}{timeout})) {
-					push @partyMonsters, $_;
-					next;
-				}
-
-
-				### List normal, non-aggressive monsters. ###
-
-				# Ignore monsters that
-				# - Have a status (such as poisoned), because there's a high chance
-				#   they're being attacked by other players
-				# - Are inside others' area spells (this includes being trapped).
-				# - Are moving towards other players.
-				# - Are behind a wall
-				next if (( $monster->{statuses} && scalar(keys %{$monster->{statuses}}) )
-					|| objectInsideSpell($monster)
-					|| objectIsMovingTowardsPlayer($monster));
-				if ($config{'attackCanSnipe'}) {
-					next if (!checkLineSnipable($char->{pos_to}, $pos));
-				} else {
-					next if (!checkLineWalkable($char->{pos_to}, $pos));
-				}
-
-				my $safe = 1;
-				if ($config{'attackAuto_onlyWhenSafe'}) {
-					foreach (@playersID) {
-						if ($_ && !$char->{party}{users}{$_}) {
-							$safe = 0;
-							last;
-						}
-					}
-				}
-
-				if (!AI::is(qw/sitAuto take items_gather items_take/)
-				 && $config{'attackAuto'} >= 2 && !$ai_v{sitAuto_forcedBySitCommand}
-				 && $attackOnRoute >= 2 && !$monster->{dmgFromYou} && $safe
-				 && !positionNearPlayer($pos, $playerDist) && !positionNearPortal($pos, $portalDist)
-				 && timeOut($monster->{attack_failed}, $timeout{ai_attack_unfail}{timeout})) {
-					push @cleanMonsters, $_;
-				}
-			}
-
-
-			### Step 2: Pick out the "best" monster ###
-
-			my $myPos = calcPosition($char);
-			my $highestPri;
-
-			# Look for the aggressive monster that has the highest priority
-			foreach (@aggressives) {
-				my $monster = $monsters{$_};
-				my $pos = calcPosition($monster);
-				# Don't attack monsters near portals
-				next if (positionNearPortal($pos, $portalDist));
-
-				# Don't attack ignored monsters
-				if ((my $control = mon_control($monster->{name}))) {
-					next if ( ($control->{attack_auto} == -1)
-						|| ($control->{attack_lvl} ne "" && $control->{attack_lvl} > $char->{lv})
-						|| ($control->{attack_jlvl} ne "" && $control->{attack_jlvl} > $char->{lv_job})
-						|| ($control->{attack_hp}  ne "" && $control->{attack_hp} > $char->{hp})
-						|| ($control->{attack_sp}  ne "" && $control->{attack_sp} > $char->{sp})
-						);
-				}
-
-				my $name = lc $monster->{name};
-				if (defined($priority{$name}) && $priority{$name} > $highestPri) {
-					$highestPri = $priority{$name};
-				}
-			}
-
-			my $smallestDist;
-			if (!defined $highestPri) {
-				# If not found, look for the closest aggressive monster (without priority)
-				foreach (@aggressives) {
-					my $monster = $monsters{$_};
-					my $pos = calcPosition($monster);
-					# Don't attack monsters near portals
-					next if (positionNearPortal($pos, $portalDist));
-
-					# Don't attack ignored monsters
-					if ((my $control = mon_control($monster->{name}))) {
-						next if ( ($control->{attack_auto} == -1)
-							|| ($control->{attack_lvl} ne "" && $control->{attack_lvl} > $char->{lv})
-							|| ($control->{attack_jlvl} ne "" && $control->{attack_jlvl} > $char->{lv_job})
-							|| ($control->{attack_hp}  ne "" && $control->{attack_hp} > $char->{hp})
-							|| ($control->{attack_sp}  ne "" && $control->{attack_sp} > $char->{sp})
-							);
-					}
-
-					if (!defined($smallestDist) || (my $dist = distance($myPos, $pos)) < $smallestDist) {
-						$smallestDist = $dist;
-						$attackTarget = $_;
-					}
-				}
-			} else {
-				# If found, look for the closest aggressive monster with the highest priority
-				foreach (@aggressives) {
-					my $monster = $monsters{$_};
-					my $pos = calcPosition($monster);
-					# Don't attack monsters near portals
-					next if (positionNearPortal($pos, $portalDist));
-
-					# Don't attack ignored monsters
-					if ((my $control = mon_control($monster->{name}))) {
-						next if ( ($control->{attack_auto} == -1)
-							|| ($control->{attack_lvl} ne "" && $control->{attack_lvl} > $char->{lv})
-							|| ($control->{attack_jlvl} ne "" && $control->{attack_jlvl} > $char->{lv_job})
-							|| ($control->{attack_hp}  ne "" && $control->{attack_hp} > $char->{hp})
-							|| ($control->{attack_sp}  ne "" && $control->{attack_sp} > $char->{sp})
-							);
-					}
-
-					if (!defined($smallestDist) || (my $dist = distance($myPos, $pos)) < $smallestDist) {
-						$smallestDist = $dist;
-						$attackTarget = $_;
-						$priorityAttack = 1;
-					}
-				}
-			}
-
-			if (!$attackTarget) {
-				undef $smallestDist;
-				# There are no aggressive monsters; look for the closest monster that a party member/master is attacking
-				foreach (@partyMonsters) {
-					my $monster = $monsters{$_};
-					my $pos = calcPosition($monster);
-					if (!defined($smallestDist) || (my $dist = distance($myPos, $pos)) < $smallestDist) {
-						$smallestDist = $dist;
-						$attackTarget = $_;
-					}
-				}
-			}
-
-			if (!$attackTarget) {
-				# No party monsters either; look for the closest, non-aggressive monster that:
-				# 1) nobody's attacking
-				# 2) has the highest priority
-
-				undef $smallestDist;
-				foreach (@cleanMonsters) {
-					my $monster = $monsters{$_};
-					next unless $monster;
-					my $pos = calcPosition($monster);
-					my $dist = distance($myPos, $pos);
-					my $name = lc $monster->{name};
-
-					if (!defined($smallestDist) || $priority{$name} > $highestPri
-					  || ( $priority{$name} == $highestPri && $dist < $smallestDist )) {
-						$smallestDist = $dist;
-						$attackTarget = $_;
-						$highestPri = $priority{$monster};
-					}
-				}
-			}
-		}
-		# If an appropriate monster's found, attack it. If not, wait ai_attack_auto secs before searching again.
-		if ($attackTarget) {
-			ai_setSuspend(0);
-			attack($attackTarget, $priorityAttack);
-		} else {
-			$timeout{'ai_attack_auto'}{'time'} = time;
-		}
-	}
-
-	Benchmark::end("ai_autoAttack") if DEBUG;
+	processAutoAttack();
 
 
 	##### ITEMS TAKE #####
@@ -3995,6 +3738,267 @@ sub iterate {
 	$ai_v{'AI_last_finished'} = time;
 
 	Plugins::callHook('AI_post');
+}
+
+##### AUTO-ATTACK #####
+sub processAutoAttack {
+	# The auto-attack logic is as follows:
+	# 1. Generate a list of monsters that we are allowed to attack.
+	# 2. Pick the "best" monster out of that list, and attack it.
+
+	Benchmark::begin("ai_autoAttack") if DEBUG;
+
+	if ((AI::isIdle || AI::is(qw/route follow sitAuto take items_gather items_take/) || (AI::action eq "mapRoute" && AI::args->{stage} eq 'Getting Map Solution'))
+	     # Don't auto-attack monsters while taking loot, and itemsTake/GatherAuto >= 2
+	  && !($config{'itemsTakeAuto'} >= 2 && AI::is("take", "items_take"))
+	  && !($config{'itemsGatherAuto'} >= 2 && AI::is("take", "items_gather"))
+	  && timeOut($timeout{ai_attack_auto})
+	  && (!$config{teleportAuto_search} || $ai_v{temp}{searchMonsters} >= $config{teleportAuto_search})
+	  && (!$config{attackAuto_notInTown} || !$cities_lut{$field{name}.'.rsw'})) {
+
+		# If we're in tanking mode, only attack something if the person we're tanking for is on screen.
+		my $foundTankee;
+		if ($config{'tankMode'}) {
+			foreach (@playersID) {
+				next if (!$_);
+				if ($config{'tankModeTarget'} eq $players{$_}{'name'}) {
+					$foundTankee = 1;
+					last;
+				}
+			}
+		}
+
+		my $attackTarget;
+		my $priorityAttack;
+
+		if (!$config{'tankMode'} || $foundTankee) {
+			# This variable controls how far monsters must be away from portals and players.
+			my $portalDist = $config{'attackMinPortalDistance'} || 4;
+			my $playerDist = $config{'attackMinPlayerDistance'};
+			$playerDist = 1 if ($playerDist < 1);
+
+			# Detect whether we are currently in follow mode
+			my $following;
+			my $followID;
+			if (defined(my $followIndex = AI::findAction("follow"))) {
+				$following = AI::args($followIndex)->{following};
+				$followID = AI::args($followIndex)->{ID};
+			}
+
+			my $routeIndex = AI::findAction("route");
+			$routeIndex = AI::findAction("mapRoute") if (!defined $routeIndex);
+			my $attackOnRoute;
+			if (defined $routeIndex) {
+				$attackOnRoute = AI::args($routeIndex)->{attackOnRoute};
+			} else {
+				$attackOnRoute = 2;
+			}
+
+
+			### Step 1: Generate a list of all monsters that we are allowed to attack. ###
+			my @aggressives;
+			my @partyMonsters;
+			my @cleanMonsters;
+
+			# List aggressive monsters
+			@aggressives = ai_getAggressives(1) if ($config{'attackAuto'} && $attackOnRoute);
+
+			# There are two types of non-aggressive monsters. We generate two lists:
+			foreach (@monstersID) {
+				next if (!$_ || !checkMonsterCleanness($_));
+				my $monster = $monsters{$_};
+				# Ignore ignored monsters in mon_control.txt
+				if ((my $control = mon_control($monster->{name}))) {
+					next if ( ($control->{attack_auto} ne "" && $control->{attack_auto} <= 0)
+						|| ($control->{attack_lvl} ne "" && $control->{attack_lvl} > $char->{lv})
+						|| ($control->{attack_jlvl} ne "" && $control->{attack_jlvl} > $char->{lv_job})
+						|| ($control->{attack_hp}  ne "" && $control->{attack_hp} > $char->{hp})
+						|| ($control->{attack_sp}  ne "" && $control->{attack_sp} > $char->{sp})
+						);
+				}
+
+				my $pos = calcPosition($monster);
+				OpenKoreMod::autoAttack($monster) if (defined &OpenKoreMod::autoAttack);
+
+				# List monsters that party members are attacking
+				if ($config{attackAuto_party} && $attackOnRoute && !AI::is("take", "items_take")
+				 && !$ai_v{sitAuto_forcedBySitCommand}
+				 && (($monster->{dmgFromParty} && $config{attackAuto_party} != 2) ||
+				     $monster->{dmgToParty} || $monster->{missedToParty})
+				 && timeOut($monster->{attack_failed}, $timeout{ai_attack_unfail}{timeout})) {
+					push @partyMonsters, $_;
+					next;
+				}
+
+				# List monsters that the master is attacking
+				if ($following && $config{'attackAuto_followTarget'} && $attackOnRoute && !AI::is("take", "items_take")
+				 && ($monster->{dmgToPlayer}{$followID} || $monster->{dmgFromPlayer}{$followID} || $monster->{missedToPlayer}{$followID})
+				 && timeOut($monster->{attack_failed}, $timeout{ai_attack_unfail}{timeout})) {
+					push @partyMonsters, $_;
+					next;
+				}
+
+
+				### List normal, non-aggressive monsters. ###
+
+				# Ignore monsters that
+				# - Have a status (such as poisoned), because there's a high chance
+				#   they're being attacked by other players
+				# - Are inside others' area spells (this includes being trapped).
+				# - Are moving towards other players.
+				# - Are behind a wall
+				next if (( $monster->{statuses} && scalar(keys %{$monster->{statuses}}) )
+					|| objectInsideSpell($monster)
+					|| objectIsMovingTowardsPlayer($monster));
+				if ($config{'attackCanSnipe'}) {
+					next if (!checkLineSnipable($char->{pos_to}, $pos));
+				} else {
+					next if (!checkLineWalkable($char->{pos_to}, $pos));
+				}
+
+				my $safe = 1;
+				if ($config{'attackAuto_onlyWhenSafe'}) {
+					foreach (@playersID) {
+						if ($_ && !$char->{party}{users}{$_}) {
+							$safe = 0;
+							last;
+						}
+					}
+				}
+
+				if (!AI::is(qw/sitAuto take items_gather items_take/)
+				 && $config{'attackAuto'} >= 2 && !$ai_v{sitAuto_forcedBySitCommand}
+				 && $attackOnRoute >= 2 && !$monster->{dmgFromYou} && $safe
+				 && !positionNearPlayer($pos, $playerDist) && !positionNearPortal($pos, $portalDist)
+				 && timeOut($monster->{attack_failed}, $timeout{ai_attack_unfail}{timeout})) {
+					push @cleanMonsters, $_;
+				}
+			}
+
+
+			### Step 2: Pick out the "best" monster ###
+
+			my $myPos = calcPosition($char);
+			my $highestPri;
+
+			# Look for the aggressive monster that has the highest priority
+			foreach (@aggressives) {
+				my $monster = $monsters{$_};
+				my $pos = calcPosition($monster);
+				# Don't attack monsters near portals
+				next if (positionNearPortal($pos, $portalDist));
+
+				# Don't attack ignored monsters
+				if ((my $control = mon_control($monster->{name}))) {
+					next if ( ($control->{attack_auto} == -1)
+						|| ($control->{attack_lvl} ne "" && $control->{attack_lvl} > $char->{lv})
+						|| ($control->{attack_jlvl} ne "" && $control->{attack_jlvl} > $char->{lv_job})
+						|| ($control->{attack_hp}  ne "" && $control->{attack_hp} > $char->{hp})
+						|| ($control->{attack_sp}  ne "" && $control->{attack_sp} > $char->{sp})
+						);
+				}
+
+				my $name = lc $monster->{name};
+				if (defined($priority{$name}) && $priority{$name} > $highestPri) {
+					$highestPri = $priority{$name};
+				}
+			}
+
+			my $smallestDist;
+			if (!defined $highestPri) {
+				# If not found, look for the closest aggressive monster (without priority)
+				foreach (@aggressives) {
+					my $monster = $monsters{$_};
+					my $pos = calcPosition($monster);
+					# Don't attack monsters near portals
+					next if (positionNearPortal($pos, $portalDist));
+
+					# Don't attack ignored monsters
+					if ((my $control = mon_control($monster->{name}))) {
+						next if ( ($control->{attack_auto} == -1)
+							|| ($control->{attack_lvl} ne "" && $control->{attack_lvl} > $char->{lv})
+							|| ($control->{attack_jlvl} ne "" && $control->{attack_jlvl} > $char->{lv_job})
+							|| ($control->{attack_hp}  ne "" && $control->{attack_hp} > $char->{hp})
+							|| ($control->{attack_sp}  ne "" && $control->{attack_sp} > $char->{sp})
+							);
+					}
+
+					if (!defined($smallestDist) || (my $dist = distance($myPos, $pos)) < $smallestDist) {
+						$smallestDist = $dist;
+						$attackTarget = $_;
+					}
+				}
+			} else {
+				# If found, look for the closest aggressive monster with the highest priority
+				foreach (@aggressives) {
+					my $monster = $monsters{$_};
+					my $pos = calcPosition($monster);
+					# Don't attack monsters near portals
+					next if (positionNearPortal($pos, $portalDist));
+
+					# Don't attack ignored monsters
+					if ((my $control = mon_control($monster->{name}))) {
+						next if ( ($control->{attack_auto} == -1)
+							|| ($control->{attack_lvl} ne "" && $control->{attack_lvl} > $char->{lv})
+							|| ($control->{attack_jlvl} ne "" && $control->{attack_jlvl} > $char->{lv_job})
+							|| ($control->{attack_hp}  ne "" && $control->{attack_hp} > $char->{hp})
+							|| ($control->{attack_sp}  ne "" && $control->{attack_sp} > $char->{sp})
+							);
+					}
+
+					if (!defined($smallestDist) || (my $dist = distance($myPos, $pos)) < $smallestDist) {
+						$smallestDist = $dist;
+						$attackTarget = $_;
+						$priorityAttack = 1;
+					}
+				}
+			}
+
+			if (!$attackTarget) {
+				undef $smallestDist;
+				# There are no aggressive monsters; look for the closest monster that a party member/master is attacking
+				foreach (@partyMonsters) {
+					my $monster = $monsters{$_};
+					my $pos = calcPosition($monster);
+					if (!defined($smallestDist) || (my $dist = distance($myPos, $pos)) < $smallestDist) {
+						$smallestDist = $dist;
+						$attackTarget = $_;
+					}
+				}
+			}
+
+			if (!$attackTarget) {
+				# No party monsters either; look for the closest, non-aggressive monster that:
+				# 1) nobody's attacking
+				# 2) has the highest priority
+
+				undef $smallestDist;
+				foreach (@cleanMonsters) {
+					my $monster = $monsters{$_};
+					next unless $monster;
+					my $pos = calcPosition($monster);
+					my $dist = distance($myPos, $pos);
+					my $name = lc $monster->{name};
+
+					if (!defined($smallestDist) || $priority{$name} > $highestPri
+					  || ( $priority{$name} == $highestPri && $dist < $smallestDist )) {
+						$smallestDist = $dist;
+						$attackTarget = $_;
+						$highestPri = $priority{$monster};
+					}
+				}
+			}
+		}
+		# If an appropriate monster's found, attack it. If not, wait ai_attack_auto secs before searching again.
+		if ($attackTarget) {
+			ai_setSuspend(0);
+			attack($attackTarget, $priorityAttack);
+		} else {
+			$timeout{'ai_attack_auto'}{'time'} = time;
+		}
+	}
+
+	Benchmark::end("ai_autoAttack") if DEBUG;
 }
 
 1;

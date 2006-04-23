@@ -31,3 +31,8 @@ print(msg)
 	char *msg
 CODE:
 	ConsoleUI::getInstance()->print(msg);
+
+void
+waitUntilPrinted()
+CODE:
+	ConsoleUI::getInstance()->waitUntilPrinted();

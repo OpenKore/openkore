@@ -90,6 +90,7 @@ sub errorDialog {
 	# so don't block execution
 	my ($self, $message) = @_;
 	$self->writeOutput("error", "$message\n");
+	UnixUtils::ConsoleUI::waitUntilPrinted() if ($self->{readline});
 }
 
 sub writeOutput {
