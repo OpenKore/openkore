@@ -22,6 +22,7 @@ DIRS=(.
 	src/scons-local-0.96.91/SCons/Tool
 	src/po
 	src/Actor
+	src/AI
 	src/Base
 	src/Base/Server
 	src/Base/WebServer

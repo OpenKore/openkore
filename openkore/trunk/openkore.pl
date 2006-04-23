@@ -184,6 +184,7 @@ use Network::Send;
 use Commands;
 use Misc;
 use AI;
+use AI::CoreLogic;
 use Skills;
 use Actor;
 use Actor::Player;
@@ -200,7 +201,7 @@ use ChatQueue;
 use Utils::Benchmark;
 use Poseidon::Client;
 Modules::register(qw/Globals Modules Log Utils Settings Plugins FileParsers
-	Network::Receive Network::Send Commands Misc AI Skills
+	Network::Receive Network::Send Commands Misc AI AI::CoreLogic Skills
 	Interface ChatQueue Actor Actor::Player Actor::Monster Actor::You
 	Actor::Party Actor::Unknown Item Match/);
 
