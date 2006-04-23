@@ -1094,8 +1094,10 @@ sub actorAdded {
 	}
 
 	if (defined $type) {
-		use Carp::Assert;
-		assert(scalar(keys %{$hash}) + 1 == $source->size()) if DEBUG;
+		use Data::Dumper;
+		if (DEBUG && scalar(keys %{$hash}) + 1 != $source->size()) {
+			die scalar(keys %{$hash}) . " + 1 != " . $source->size() . "\n" . Dumper($hash);
+		}
 		assert(binSize($list) + 1 == $source->size()) if DEBUG;
 
 		binAdd($list, $actor->{ID});
@@ -1135,8 +1137,10 @@ sub actorRemoved {
 	}
 
 	if (defined $type) {
-		use Carp::Assert;
-		assert(scalar(keys %{$hash}) - 1 == $source->size()) if DEBUG;
+		use Data::Dumper;
+		if (DEBUG && scalar(keys %{$hash}) - 1 != $source->size()) {
+			die scalar(keys %{$hash}) . " - 1 != " . $source->size() . "\n" . Dumper($hash);
+		}
 		assert(binSize($list) - 1 == $source->size()) if DEBUG;
 
 		binRemove($list, $actor->{ID});
