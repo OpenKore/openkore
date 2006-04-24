@@ -216,10 +216,10 @@ sub checkValidity {
 	}
 
 	sub checkActorHash {
-		my ($hash, $type, $name) = @_;
+		my ($hash, $type, $hashName) = @_;
 		foreach my $actor (values %{$hash}) {
 			if (!UNIVERSAL::isa($actor, $type)) {
-				die "$name\nUnblessed item in $name list:\n" .
+				die "$name\nUnblessed item in $hashName list:\n" .
 					Dumper($hash);
 			}
 		}
