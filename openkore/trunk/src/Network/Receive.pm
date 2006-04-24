@@ -3746,7 +3746,7 @@ sub public_chat {
 	$message = "$chatMsgUser ($actor->{binID}): $chatMsg";
 
 	# this code autovivifies $actor->{pos_to} but it doesnt matter
-	chatLog("c", "[$field{name} $char->{pos_to}{x}, $char->{pos_to}{y}] [$actor->{pos_to}{x}, $actor->{pos_to}{y}] [dist=$dist] " .
+	chatLog("c", "[$field{name} $char->{pos_to}{x}, $char->{pos_to}{y}] [$actor->{pos_to}{x}, $actor->{pos_to}{y}] [dist=$dist] ($actor->{nameID})" .
 		"$message\n") if ($config{logChat});
 	message TF("[dist=%s] %s\n", $dist, $message), "publicchat";
 
