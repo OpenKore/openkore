@@ -215,19 +215,21 @@ sub checkValidity {
 		}
 	}
 
-	foreach my $monster (values %monsters) {
-		if (!UNIVERSAL::isa($monster, 'Actor::Monster')) {
-			die "$name\nUnblessed item in monster list:\n" .
-				Dumper(\%monsters);
+	sub checkActorHash {
+		my ($hash, $type, $name) = @_;
+		foreach my $actor (values %{$hash}) {
+			if (!UNIVERSAL::isa($actor, $type)) {
+				die "$name\nUnblessed item in $name list:\n" .
+					Dumper($hash);
+			}
 		}
 	}
 
-	foreach my $player (values %players) {
-		if (!UNIVERSAL::isa($player, 'Actor::Player')) {
-			die "$name\nUnblessed item in player list:\n" .
-				Dumper(\%players);
-		}
-	}
+	checkActorHash(\%monsters, 'Actor::Monster', 'monster');
+	checkActorHash(\%players, 'Actor::Player', 'player');
+	checkActorHash(\%pets, 'Actor::Pet', 'pet');
+	checkActorHash(\%npcs, 'Actor::NPC', 'NPC');
+	checkActorHash(\%portals, 'Actor::Portal', 'portals');
 }
 
 
