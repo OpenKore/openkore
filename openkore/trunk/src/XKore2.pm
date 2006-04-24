@@ -868,12 +868,14 @@ sub checkClient {
 
 		# Send info about items on the ground
 		foreach my $ID (@itemsID) {
+			next if !defined $ID;
 			$msg .= pack('C2 a4 v1 x1 v3 x2', 0x9D, 0x00, $ID, $items{$ID}{nameID},
 				$items{$ID}{pos}{x}, $items{$ID}{pos}{y}, $items{$ID}{amount});
 		}
 
 		# Send all portal info
 		foreach my $ID (@portalsID) {
+			next if !defined $ID;
 			my $coords = "";
 			shiftPack(\$coords, $portals{$ID}{pos}{x}, 10);
 			shiftPack(\$coords, $portals{$ID}{pos}{y}, 10);
@@ -884,6 +886,7 @@ sub checkClient {
 
 		# Send all NPC info
 		foreach my $ID (@npcsID) {
+			next if !defined $ID;
 			my $coords = "";
 			shiftPack(\$coords, $npcs{$ID}{pos}{x}, 10);
 			shiftPack(\$coords, $npcs{$ID}{pos}{y}, 10);
@@ -896,6 +899,7 @@ sub checkClient {
 
 		# Send all monster info
 		foreach my $ID (@monstersID) {
+			next if !defined $ID;
 			my $coords = "";
 			shiftPack(\$coords, $monsters{$ID}{pos_to}{x}, 10);
 			shiftPack(\$coords, $monsters{$ID}{pos_to}{y}, 10);
@@ -909,6 +913,7 @@ sub checkClient {
 
 		# Send info about pets
 		foreach my $ID (@petsID) {
+			next if !defined $ID;
 			my $coords = "";
 			shiftPack(\$coords, $pets{$ID}{pos_to}{x}, 10);
 			shiftPack(\$coords, $pets{$ID}{pos_to}{y}, 10);
@@ -920,6 +925,7 @@ sub checkClient {
 
 		# Send info about surrounding players
 		foreach my $ID (@playersID) {
+			next if !defined $ID;
 			my $coords = "";
 			shiftPack(\$coords, $players{$ID}{pos_to}{x}, 10);
 			shiftPack(\$coords, $players{$ID}{pos_to}{y}, 10);
@@ -936,11 +942,13 @@ sub checkClient {
 
 		# Send vendor list
 		foreach my $ID (@venderListsID) {
+			next if !defined $ID;
 			$msg .= pack('C2 a4 a30 x50', 0x31, 0x01, $ID, $venderLists{$ID}{title});
 		}
 
 		# Send chatrooms
 		foreach my $ID (@chatRoomsID) {
+			next if !defined $ID;
 			next if (! $chatRooms{$ID}{ownerID});
 
 			# '00D7' => ['chat_info', 'x2 a4 a4 v1 v1 C1 a*', [qw(ownerID ID limit num_users public title)]],
@@ -952,6 +960,7 @@ sub checkClient {
 
 		# Send active ground effect skills
 		foreach my $ID (@skillsID) {
+			next if !defined $ID;
 			$msg .= pack('C2 a4 a4 v2 C2 x81', 0xC9, 0x01, $ID, $spells{$ID}{sourceID},
 				$spells{$ID}{pos}{x}, $spells{$ID}{pos}{y}, $spells{$ID}{type},
 				$spells{$ID}{fail});
@@ -960,6 +969,7 @@ sub checkClient {
 		# Send friend list
 		my ($friendMsg, $friendOnlineMsg);
 		foreach my $ID (@friendsID) {
+			next if !defined $ID;
 			$friendMsg .= pack('a4 a4 Z24', $friends{$ID}{accountID}, $friends{$ID}{charID}, $friends{$ID}{name});
 			$friendOnlineMsg .= pack('C2 a4 a4 C', 0x06, 0x02, $friends{$ID}{accountID}, $friends{$ID}{charID},
 				0) if ($friends{$ID}{online});
@@ -972,6 +982,7 @@ sub checkClient {
 		if ($char->{party}) {
 			my ($partyMsg, $num);
 			foreach my $ID (@partyUsersID) {
+			next if !defined $ID;
 				$num++ unless ($char->{party}{users}{$ID}{admin});
 				$partyMsg .= pack("a4 Z24 Z16 C2", $ID, $char->{party}{users}{$ID}{name}, $char->{party}{users}{$ID}{map},
 					$char->{party}{users}{$ID}{admin}? 0 : $num, 1 - $char->{party}{users}{$ID}{online});
