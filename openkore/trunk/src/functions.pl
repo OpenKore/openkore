@@ -190,7 +190,9 @@ sub mainLoop {
 	# Parse command input
 	my $input;
 	if (defined($input = $interface->getInput(0))) {
+		Misc::checkValidity("parseInput (pre)");
 		parseInput($input);
+		Misc::checkValidity("parseInput");
 	}
 
 	# Handle connection states
@@ -235,7 +237,7 @@ sub mainLoop {
 
 	# Process AI
 	if ($conState == 5 && timeOut($timeout{ai}) && $net->serverAlive()) {
-		Misc::checkValidity("AI");
+		Misc::checkValidity("AI (pre)");
 		Benchmark::begin("ai") if DEBUG;
 		AI::CoreLogic::iterate();
 		Benchmark::end("ai") if DEBUG;
@@ -337,6 +339,7 @@ sub mainLoop {
 	if ($conState == 5 && timeOut($AI::Timeouts::mapdrt, $config{intervalMapDrt})) {
 		$AI::Timeouts::mapdrt = time;
 		if ($field{name}) {
+			Misc::checkValidity("walk.dat (pre)");
 			my $pos = calcPosition($char);
 			open(DATA, ">$Settings::logs_folder/walk.dat");
 			print DATA "$field{name} $field{baseName}\n";
@@ -361,6 +364,7 @@ sub mainLoop {
 			}
 
 			close(DATA);
+			Misc::checkValidity("walk.dat");
 		}
 	}
 
