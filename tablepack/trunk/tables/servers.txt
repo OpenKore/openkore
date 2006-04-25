@@ -311,6 +311,14 @@ secureLogin_requestCode
 secureLogin_account 0
 serverEncoding Western
 
+## http://www.raggame.ru/
+[Russia - rRO]
+ip 81.177.13.7
+port 6900
+master_version 25
+version 61
+serverEncoding Russian
+
 
 ####################
 # Private RO Servers
@@ -380,7 +388,7 @@ serverEncoding Western
 
 ## http://theanimaro.com/
 [AnimaRO Private Server]
-ip 65.110.33.20
+ip a.theanimaro.com
 port 6900
 master_version 18
 version 0
@@ -632,14 +640,6 @@ master_version 7
 version 20
 serverType 5
 serverEncoding Western
-
-## http://www.raggame.ru/
-[RuRO Private Server]
-ip 81.177.13.7
-port 6900
-master_version 25
-version 61
-serverEncoding Russian
 
 ## http://www.rusro.com/index_eng.php
 [RusRO Private Server]
