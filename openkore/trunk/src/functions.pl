@@ -187,6 +187,8 @@ sub mainLoop {
 	Benchmark::begin("mainLoop") if DEBUG;
 	Plugins::callHook('mainLoop_pre');
 
+	Benchmark::begin("mainLoop_part1") if DEBUG;
+
 	# Parse command input
 	my $input;
 	if (defined($input = $interface->getInput(0))) {
@@ -235,6 +237,9 @@ sub mainLoop {
 		}
 	}
 
+	Benchmark::end("mainLoop_part1") if DEBUG;
+	Benchmark::begin("mainLoop_part2") if DEBUG;
+
 	# Process AI
 	if ($conState == 5 && timeOut($timeout{ai}) && $net->serverAlive()) {
 		Misc::checkValidity("AI (pre)");
@@ -255,6 +260,9 @@ sub mainLoop {
 			}
 		}
 	}
+
+	Benchmark::end("mainLoop_part2") if DEBUG;
+	Benchmark::begin("mainLoop_part3") if DEBUG;
 
 
 	###### Other stuff that's run in the main loop #####
@@ -393,6 +401,8 @@ sub mainLoop {
 		# Translation Comment: Interface Title
 		$interface->title(TF("%sConnecting - %s", ${charName}, $Settings::NAME));
 	}
+
+	Benchmark::end("mainLoop_part3") if DEBUG;
 
 	Plugins::callHook('mainLoop_post');
 	Benchmark::end("mainLoop") if DEBUG;

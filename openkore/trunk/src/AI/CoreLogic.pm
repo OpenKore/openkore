@@ -2288,49 +2288,7 @@ sub iterate {
 		}
 	}
 
-	##### AUTO-EQUIP #####
-
-	if ((AI::isIdle || AI::is(qw(route mapRoute follow sitAuto skill_use take items_gather items_take attack)))
-	  && timeOut($timeout{ai_item_equip_auto}) && time > $ai_v{'inventory_time'}) {
-
-		my $ai_index_attack = AI::findAction("attack");
-
-		my $monster;
-		if (defined $ai_index_attack) {
-			my $ID = AI::args($ai_index_attack)->{ID};
-			$monster = $monsters{$ID};
-		}
-
-		# we will create a list of items to equip
-		my %eq_list;
-
-		Benchmark::begin("ai_autoEquip_loop") if DEBUG;
-		for (my $i = 0; exists $config{"equipAuto_$i"}; $i++) {
-			if ((!$config{"equipAuto_${i}_weight"} || $char->{percent_weight} >= $config{"equipAuto_$i" . "_weight"})
-			 && (!$config{"equipAuto_${i}_whileSitting"} || ($config{"equipAuto_${i}_whileSitting"} && $char->{sitting}))
-			 && (!$config{"equipAuto_${i}_target"} || (defined $monster && existsInList($config{"equipAuto_$i" . "_target"}, $monster->{name})))
-			 && checkMonsterCondition("equipAuto_${i}_target", $monster)
-			 && checkSelfCondition("equipAuto_$i")
-			 && Item::scanConfigAndCheck("equipAuto_$i")
-			) {
-				foreach my $slot (values %equipSlot_lut) {
-					if (exists $config{"equipAuto_$i"."_$slot"}) {
-						debug "Equip $slot with ".$config{"equipAuto_$i"."_$slot"}."\n";
-						$eq_list{$slot} = $config{"equipAuto_$i"."_$slot"} if (!$eq_list{$slot});
-					}
-				}
-			}
-		}
-		Benchmark::end("ai_autoEquip_loop") if DEBUG;
-
-		if (%eq_list) {
-			$timeout{ai_item_equip_auto}{time} = time;
-			debug "Auto-equipping items\n", "equipAuto";
-			Item::bulkEquip(\%eq_list);
-		}
-	}
-
-
+	processAutoEquip();
 	processAutoAttack();
 
 
@@ -3748,6 +3706,50 @@ sub processMapRouteAI {
 			}
 		}
 	}
+}
+
+##### AUTO-EQUIP #####
+sub processAutoEquip {
+	Benchmark::begin("ai_autoEquip") if DEBUG;
+	if ((AI::isIdle || AI::is(qw(route mapRoute follow sitAuto skill_use take items_gather items_take attack)))
+	  && timeOut($timeout{ai_item_equip_auto}) && time > $ai_v{'inventory_time'}) {
+
+		my $ai_index_attack = AI::findAction("attack");
+
+		my $monster;
+		if (defined $ai_index_attack) {
+			my $ID = AI::args($ai_index_attack)->{ID};
+			$monster = $monsters{$ID};
+		}
+
+		# we will create a list of items to equip
+		my %eq_list;
+
+		for (my $i = 0; exists $config{"equipAuto_$i"}; $i++) {
+			if ((!$config{"equipAuto_${i}_weight"} || $char->{percent_weight} >= $config{"equipAuto_$i" . "_weight"})
+			 && (!$config{"equipAuto_${i}_whileSitting"} || ($config{"equipAuto_${i}_whileSitting"} && $char->{sitting}))
+			 && (!$config{"equipAuto_${i}_target"} || (defined $monster && existsInList($config{"equipAuto_$i" . "_target"}, $monster->{name})))
+			 && checkMonsterCondition("equipAuto_${i}_target", $monster)
+			 && checkSelfCondition("equipAuto_$i")
+			 && Item::scanConfigAndCheck("equipAuto_$i")
+			) {
+				foreach my $slot (values %equipSlot_lut) {
+					if (exists $config{"equipAuto_$i"."_$slot"}) {
+						debug "Equip $slot with ".$config{"equipAuto_$i"."_$slot"}."\n";
+						$eq_list{$slot} = $config{"equipAuto_$i"."_$slot"} if (!$eq_list{$slot});
+					}
+				}
+			}
+		}
+
+		if (%eq_list) {
+			debug "Auto-equipping items\n", "equipAuto";
+			Item::bulkEquip(\%eq_list);
+		}
+		$timeout{ai_item_equip_auto}{time} = time;
+
+	}
+	Benchmark::end("ai_autoEquip") if DEBUG;
 }
 
 ##### AUTO-ATTACK #####
