@@ -108,27 +108,27 @@ conf.Finish()
 
 ### Environment setup ###
 
-env['CFLAGS'] = ['-Wall', '-g', '-O2', '-pipe']
+env['CCFLAGS'] = ['-Wall', '-g', '-O2', '-pipe']
 env['LINKFLAGS'] = []
 env['LIBPATH'] = []
 env['LIBS'] = []
 env['CPPDEFINES'] = []
-env['INCLUDE'] = []
+env['CPPPATH'] = []
 if cygwin:
-	env['CFLAGS'] += ['-mno-cygwin']
+	env['CCFLAGS'] += ['-mno-cygwin']
 	env['LINKFLAGS'] += ['-mno-cygwin']
-env['CCFLAGS'] = env['CFLAGS']
+env.Replace(CXXFLAGS = env['CCFLAGS'])
 
 
 libenv = env.Copy()
 if win32:
 	if cygwin:
-		libenv['CFLAGS'] += ['-mdll']
+		libenv['CCFLAGS'] += ['-mdll']
 	libenv['CPPDEFINES'] += ['WIN32']
 elif not darwin:
-	libenv['CFLAGS'] += ['-fPIC']
+	libenv['CCFLAGS'] += ['-fPIC']
 	libenv['LINKFLAGS'] += ['-fPIC']
-libenv['CCFLAGS'] = libenv['CFLAGS']
+libenv.Replace(CXXFLAGS = libenv['CCFLAGS'])
 
 if cygwin:
 	def linkDLLAction(target, source, env):
@@ -198,22 +198,22 @@ libenv['BUILDERS']['NativeDLL'] = NativeDLLBuilder
 
 perlenv = libenv.Copy()
 if win32:
-	perlenv['CFLAGS'] += Split('-Wno-comments -D__MINGW32__' +
+	perlenv['CCFLAGS'] += Split('-Wno-comments -D__MINGW32__' +
 		' -DWIN32IO_IS_STDIO -D_INTPTR_T_DEFINED -D_UINTPTR_T_DEFINED')
 	perlenv['LIBS'] += ['perl58']
 	perlenv['LIBPATH'] += [perlconfig['coredir']]
 elif not darwin:
-	perlenv['CFLAGS'] += Split('-D_REENTRANT -D_GNU_SOURCE' +
+	perlenv['CCFLAGS'] += Split('-D_REENTRANT -D_GNU_SOURCE' +
 		' -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64')
 else:
-	perlenv['CFLAGS'] += ['-no-cpp-precomp', '-DPERL_DARWIN',
+	perlenv['CCFLAGS'] += ['-no-cpp-precomp', '-DPERL_DARWIN',
 			      '-fno-strict-aliasing']
 	perlenv['LIBS'] += ['perl']
 	perlenv['LIBPATH'] += [perlconfig['coredir']]
 
-perlenv['CFLAGS'] += ["-I" + perlconfig['coredir'],
+perlenv['CCFLAGS'] += ["-I" + perlconfig['coredir'],
 		'-DVERSION=\\"1.0\\"', '-DXS_VERSION=\\"1.0\\"']
-perlenv['CCFLAGS'] = perlenv['CFLAGS']
+perlenv.Replace(CXXFLAGS = perlenv['CCFLAGS'])
 
 
 def buildXS(target, source, env):
@@ -247,4 +247,4 @@ perlenv['BUILDERS']['XS'] = Builder(action = buildXS)
 ### Invoke SConscripts ###
 
 Export('env libenv perlenv win32 cygwin darwin have_ncurses')
-SConscript('src/auto/XSTools/SConscript')
+SConscript(['src/auto/XSTools/SConscript', 'src/test/SConscript'])

@@ -14,6 +14,8 @@
 // It is unclear now to solve this problem correctly.
 extern char *rl_display_prompt;
 
+static pthread_mutex_t singletonLock = PTHREAD_MUTEX_INITIALIZER;
+
 
 /**
  * This class delegates callback functions back to the ConsoleUI instance.
@@ -153,7 +155,6 @@ ConsoleUI::processOutput() {
 	}
 
 	// Restore readline's state.
-	rl_restore_prompt();
 	if (prompt != NULL) {
 		rl_set_prompt(prompt);
 		free(prompt);
@@ -172,9 +173,12 @@ ConsoleUI::processOutput() {
 
 ConsoleUI *
 ConsoleUI::getInstance() {
+	pthread_mutex_lock(&singletonLock);
 	if (instance == NULL) {
 		instance = new ConsoleUI();
+		atexit(cleanup);
 	}
+	pthread_mutex_unlock(&singletonLock);
 	return instance;
 }
 
@@ -223,4 +227,12 @@ ConsoleUI::getInput() {
 	}
 	pthread_mutex_unlock(&inputLock);
 	return result;
+}
+
+void
+ConsoleUI::cleanup() {
+	if (instance != NULL) {
+		delete instance;
+		instance = NULL;
+	}
 }
