@@ -8,7 +8,7 @@ class ConsoleUICallbacks;
 
 /**
  * This class provides an easy-to-use interface for interactive
- * GNU readline-based console applications.
+ * GNU readline-based console applications. This class is thread-safe.
  */
 class ConsoleUI {
 private:
@@ -33,6 +33,7 @@ private:
 	void processOutput();
 	void lineRead(char *line);
 	bool canRead();
+	static void cleanup();
 
 public:
 	/**
@@ -44,11 +45,15 @@ public:
 
 	/**
 	 * Start this ConsoleUI.
+	 *
+	 * @require The interface must not be started.
 	 */
 	void start();
 
 	/**
 	 * Stop this ConsoleUI.
+	 *
+	 * @require The interface must have already been started.
 	 */
 	void stop();
 
@@ -58,12 +63,16 @@ public:
 	 * message is put into a queue, which will be processed
 	 * later.
 	 *
-	 * @require msg != NULL
+	 * @require
+	 *    msg != NULL &&
+	 *    The interface must have already been started.
 	 */
 	void print(const char *msg);
 
 	/**
 	 * Wait until all messages in the queue have been printed.
+	 *
+	 * @require The interface must have already been started.
 	 */
 	void waitUntilPrinted();
 
@@ -72,6 +81,7 @@ public:
 	 *
 	 * @return A line (without newline character) which must be
 	 *         freed, or NULL if there is nothing in the queue.
+	 * @require The interface must have already been started.
 	 */
 	char *getInput();
 };

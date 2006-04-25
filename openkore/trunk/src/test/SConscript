@@ -1,0 +1,11 @@
+Import('*')
+
+XSTools_dir = '../auto/XSTools'
+consoleui_dir = XSTools_dir + '/unix'
+
+e = perlenv.Copy()
+e.Append(CPPPATH = consoleui_dir)
+e.Program('consoleui-test', [
+	'consoleui-test.cpp',
+	consoleui_dir + '/consoleui.cpp'
+])
