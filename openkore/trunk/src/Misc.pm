@@ -215,7 +215,7 @@ sub checkValidity {
 		}
 	}
 
-	sub checkActorHash($$$$ {
+	sub checkActorHash($$$$) {
 		my ($name, $hash, $type, $hashName) = @_;
 		foreach my $actor (values %{$hash}) {
 			if (!UNIVERSAL::isa($actor, $type)) {
