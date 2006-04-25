@@ -114,133 +114,7 @@ sub iterate {
 	Benchmark::end("ai_prepare") if DEBUG;
 
 
-	##### PORTALRECORD #####
-	# Automatically record new unknown portals
-
-	PORTALRECORD: {
-		last unless $config{portalRecord};
-		last unless $ai_v{portalTrace_mapChanged} && timeOut($ai_v{portalTrace_mapChanged}, 0.5);
-		delete $ai_v{portalTrace_mapChanged};
-
-		debug "Checking for new portals...\n", "portalRecord";
-		my $first = 1;
-		my ($foundID, $smallDist, $dist);
-
-		if (!$field{name}) {
-			debug "Field name not known - abort\n", "portalRecord";
-			last PORTALRECORD;
-		}
-
-
-		# Find the nearest portal or the only portal on the map
-		# you came from (source portal)
-		foreach (@portalsID_old) {
-			next if (!$_);
-			$dist = distance($char->{old_pos_to}, $portals_old{$_}{pos});
-			if ($dist <= 7 && ($first || $dist < $smallDist)) {
-				$smallDist = $dist;
-				$foundID = $_;
-				undef $first;
-			}
-		}
-
-		my ($sourceMap, $sourceID, %sourcePos, $sourceIndex);
-		if (defined $foundID) {
-			$sourceMap = $portals_old{$foundID}{source}{map};
-			$sourceID = $portals_old{$foundID}{nameID};
-			%sourcePos = %{$portals_old{$foundID}{pos}};
-			$sourceIndex = $foundID;
-			debug "Source portal: $sourceMap ($sourcePos{x}, $sourcePos{y})\n", "portalRecord";
-		} else {
-			debug "No source portal found.\n", "portalRecord";
-			last PORTALRECORD;
-		}
-
-		#if (defined portalExists($sourceMap, \%sourcePos)) {
-		#	debug "Source portal is already in portals.txt - abort\n", "portalRecord";
-		#	last PORTALRECORD;
-		#}
-
-
-		# Find the nearest portal or only portal on the
-		# current map (destination portal)
-		$first = 1;
-		undef $foundID;
-		undef $smallDist;
-
-		foreach (@portalsID) {
-			next if (!$_);
-			$dist = distance($chars[$config{'char'}]{pos_to}, $portals{$_}{pos});
-			if ($first || $dist < $smallDist) {
-				$smallDist = $dist;
-				$foundID = $_;
-				undef $first;
-			}
-		}
-
-		# Sanity checks
-		if (!defined $foundID) {
-			debug "No destination portal found.\n", "portalRecord";
-			last PORTALRECORD;
-		}
-		#if (defined portalExists($field{name}, $portals{$foundID}{pos})) {
-		#	debug "Destination portal is already in portals.txt\n", "portalRecord";
-		#	last PORTALRECORD;
-		#}
-		if (defined portalExists2($sourceMap, \%sourcePos, $field{name}, $portals{$foundID}{pos})) {
-			debug "This portal is already in portals.txt\n", "portalRecord";
-			last PORTALRECORD;
-		}
-
-
-		# And finally, record the portal information
-		my ($destMap, $destID, %destPos);
-		$destMap = $field{name};
-		$destID = $portals{$foundID}{nameID};
-		%destPos = %{$portals{$foundID}{pos}};
-		debug "Destination portal: $destMap ($destPos{x}, $destPos{y})\n", "portalRecord";
-
-		$portals{$foundID}{name} = "$field{name} -> $sourceMap";
-		$portals_old{$sourceIndex}{name} = "$sourceMap -> $field{name}";
-
-
-		my ($ID, $destName);
-
-		# Record information about destination portal
-		if ($config{portalRecord} > 1 &&
-		    !defined portalExists($field{name}, $portals{$foundID}{pos})) {
-			$ID = "$field{name} $destPos{x} $destPos{y}";
-			$portals_lut{$ID}{source}{map} = $field{name};
-			$portals_lut{$ID}{source}{x} = $destPos{x};
-			$portals_lut{$ID}{source}{y} = $destPos{y};
-			$destName = "$sourceMap $sourcePos{x} $sourcePos{y}";
-			$portals_lut{$ID}{dest}{$destName}{map} = $sourceMap;
-			$portals_lut{$ID}{dest}{$destName}{x} = $sourcePos{x};
-			$portals_lut{$ID}{dest}{$destName}{y} = $sourcePos{y};
-
-			message TF("Recorded new portal (destination): %s (%s, %s) -> %s (%s, %s)\n", $field{name}, $destPos{x}, $destPos{y}, $sourceMap, $sourcePos{x}, $sourcePos{y}), "portalRecord";
-			updatePortalLUT("$Settings::tables_folder/portals.txt",
-				$field{name}, $destPos{x}, $destPos{y},
-				$sourceMap, $sourcePos{x}, $sourcePos{y});
-		}
-
-		# Record information about the source portal
-		if (!defined portalExists($sourceMap, \%sourcePos)) {
-			$ID = "$sourceMap $sourcePos{x} $sourcePos{y}";
-			$portals_lut{$ID}{source}{map} = $sourceMap;
-			$portals_lut{$ID}{source}{x} = $sourcePos{x};
-			$portals_lut{$ID}{source}{y} = $sourcePos{y};
-			$destName = "$field{name} $destPos{x} $destPos{y}";
-			$portals_lut{$ID}{dest}{$destName}{map} = $field{name};
-			$portals_lut{$ID}{dest}{$destName}{x} = $destPos{x};
-			$portals_lut{$ID}{dest}{$destName}{y} = $destPos{y};
-
-			message TF("Recorded new portal (source): %s (%s, %s) -> %s (%s, %s)\n", $sourceMap, $sourcePos{x}, $sourcePos{y}, $field{name}, $char->{pos}{x}, $char->{pos}{y}), "portalRecord";
-			updatePortalLUT("$Settings::tables_folder/portals.txt",
-				$sourceMap, $sourcePos{x}, $sourcePos{y},
-				$field{name}, $char->{pos}{x}, $char->{pos}{y});
-		}
-	}
+	processPortalRecording();
 
 	return if (!$AI);
 
@@ -3738,6 +3612,134 @@ sub iterate {
 	$ai_v{'AI_last_finished'} = time;
 
 	Plugins::callHook('AI_post');
+}
+
+
+##### PORTALRECORD #####
+# Automatically record new unknown portals
+sub processPortalRecording {
+	return unless $config{portalRecord};
+	return unless $ai_v{portalTrace_mapChanged} && timeOut($ai_v{portalTrace_mapChanged}, 0.5);
+	delete $ai_v{portalTrace_mapChanged};
+
+	debug "Checking for new portals...\n", "portalRecord";
+	my $first = 1;
+	my ($foundID, $smallDist, $dist);
+
+	if (!$field{name}) {
+		debug "Field name not known - abort\n", "portalRecord";
+		return;
+	}
+
+
+	# Find the nearest portal or the only portal on the map
+	# you came from (source portal)
+	foreach (@portalsID_old) {
+		next if (!$_);
+		$dist = distance($char->{old_pos_to}, $portals_old{$_}{pos});
+		if ($dist <= 7 && ($first || $dist < $smallDist)) {
+			$smallDist = $dist;
+			$foundID = $_;
+			undef $first;
+		}
+	}
+
+	my ($sourceMap, $sourceID, %sourcePos, $sourceIndex);
+	if (defined $foundID) {
+		$sourceMap = $portals_old{$foundID}{source}{map};
+		$sourceID = $portals_old{$foundID}{nameID};
+		%sourcePos = %{$portals_old{$foundID}{pos}};
+		$sourceIndex = $foundID;
+		debug "Source portal: $sourceMap ($sourcePos{x}, $sourcePos{y})\n", "portalRecord";
+	} else {
+		debug "No source portal found.\n", "portalRecord";
+		return;
+	}
+
+	#if (defined portalExists($sourceMap, \%sourcePos)) {
+	#	debug "Source portal is already in portals.txt - abort\n", "portalRecord";
+	#	return;
+	#}
+
+
+	# Find the nearest portal or only portal on the
+	# current map (destination portal)
+	$first = 1;
+	undef $foundID;
+	undef $smallDist;
+
+	foreach (@portalsID) {
+		next if (!$_);
+		$dist = distance($chars[$config{'char'}]{pos_to}, $portals{$_}{pos});
+		if ($first || $dist < $smallDist) {
+			$smallDist = $dist;
+			$foundID = $_;
+			undef $first;
+		}
+	}
+
+	# Sanity checks
+	if (!defined $foundID) {
+		debug "No destination portal found.\n", "portalRecord";
+		return;
+	}
+	#if (defined portalExists($field{name}, $portals{$foundID}{pos})) {
+	#	debug "Destination portal is already in portals.txt\n", "portalRecord";
+	#	last PORTALRECORD;
+	#}
+	if (defined portalExists2($sourceMap, \%sourcePos, $field{name}, $portals{$foundID}{pos})) {
+		debug "This portal is already in portals.txt\n", "portalRecord";
+		return;
+	}
+
+
+	# And finally, record the portal information
+	my ($destMap, $destID, %destPos);
+	$destMap = $field{name};
+	$destID = $portals{$foundID}{nameID};
+	%destPos = %{$portals{$foundID}{pos}};
+	debug "Destination portal: $destMap ($destPos{x}, $destPos{y})\n", "portalRecord";
+
+	$portals{$foundID}{name} = "$field{name} -> $sourceMap";
+	$portals_old{$sourceIndex}{name} = "$sourceMap -> $field{name}";
+
+
+	my ($ID, $destName);
+
+	# Record information about destination portal
+	if ($config{portalRecord} > 1 &&
+	    !defined portalExists($field{name}, $portals{$foundID}{pos})) {
+		$ID = "$field{name} $destPos{x} $destPos{y}";
+		$portals_lut{$ID}{source}{map} = $field{name};
+		$portals_lut{$ID}{source}{x} = $destPos{x};
+		$portals_lut{$ID}{source}{y} = $destPos{y};
+		$destName = "$sourceMap $sourcePos{x} $sourcePos{y}";
+		$portals_lut{$ID}{dest}{$destName}{map} = $sourceMap;
+		$portals_lut{$ID}{dest}{$destName}{x} = $sourcePos{x};
+		$portals_lut{$ID}{dest}{$destName}{y} = $sourcePos{y};
+
+		message TF("Recorded new portal (destination): %s (%s, %s) -> %s (%s, %s)\n", $field{name}, $destPos{x}, $destPos{y}, $sourceMap, $sourcePos{x}, $sourcePos{y}), "portalRecord";
+		updatePortalLUT("$Settings::tables_folder/portals.txt",
+				$field{name}, $destPos{x}, $destPos{y},
+				$sourceMap, $sourcePos{x}, $sourcePos{y});
+	}
+
+	# Record information about the source portal
+	if (!defined portalExists($sourceMap, \%sourcePos)) {
+		$ID = "$sourceMap $sourcePos{x} $sourcePos{y}";
+		$portals_lut{$ID}{source}{map} = $sourceMap;
+		$portals_lut{$ID}{source}{x} = $sourcePos{x};
+		$portals_lut{$ID}{source}{y} = $sourcePos{y};
+		$destName = "$field{name} $destPos{x} $destPos{y}";
+		$portals_lut{$ID}{dest}{$destName}{map} = $field{name};
+		$portals_lut{$ID}{dest}{$destName}{x} = $destPos{x};
+		$portals_lut{$ID}{dest}{$destName}{y} = $destPos{y};
+
+		message TF("Recorded new portal (source): %s (%s, %s) -> %s (%s, %s)\n", $sourceMap, $sourcePos{x}, $sourcePos{y}, $field{name}, $char->{pos}{x}, $char->{pos}{y}), "portalRecord";
+		updatePortalLUT("$Settings::tables_folder/portals.txt",
+				$sourceMap, $sourcePos{x}, $sourcePos{y},
+				$field{name}, $char->{pos}{x}, $char->{pos}{y});
+	}
 }
 
 ##### AUTO-ATTACK #####
