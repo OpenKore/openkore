@@ -124,12 +124,18 @@ ConsoleUI::processOutput() {
 	rl_display_prompt = NULL;
 	rl_redisplay();
 
-	// If there was already a prompt, then print it to
-	// the screen and clear the prompt.
-	if (prompt != NULL && prompt[0] != '\0') {
-		fputs(prompt, stream);
-		prompt[0] = '\0';
+	// If there was already a prompt (previous printed message didn't
+	// contain a newline), then print it to the screen and clear the
+	// prompt.
+	if (prompt != NULL) {
+		if (prompt[0] != '\0') {
+			fputs(prompt, stream);
+		}
+		free(prompt);
+		prompt = NULL;
 	}
+	// Make sure the prompt color will be set to default.
+	prompt = strdup("\e[0m");
 
 	while (!output.empty()) {
 		char *msg = output.front();
@@ -139,7 +145,10 @@ ConsoleUI::processOutput() {
 		if (output.size() == 1 && len > 0 && msg[len - 1] != '\n') {
 			// This is the last message and it doesn't end with a newline.
 			// Use this message as prompt.
-			rl_set_prompt(msg);
+			char buf[1024 * 32];
+			// Reset the prompt color.
+			snprintf(buf, sizeof(buf) - 1, "%s\e[0m", msg);
+			rl_set_prompt(buf);
 
 			// Prevent prompt from being set to an empty string.
 			if (prompt != NULL) {
@@ -166,6 +175,7 @@ ConsoleUI::processOutput() {
 	rl_point = point;
 	rl_mark = mark;
 
+	rl_on_new_line();
 	rl_display_prompt = NULL;
 	rl_redisplay();
 	fflush(stream);

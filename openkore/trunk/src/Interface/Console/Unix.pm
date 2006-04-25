@@ -55,6 +55,8 @@ sub new {
 sub DESTROY {
 	my $self = shift;
 	UnixUtils::ConsoleUI::stop() if ($self->{readline});
+	print getColor('default');
+	STDOUT->flush;
 }
 
 sub getInput {
@@ -111,7 +113,7 @@ sub writeOutput {
 			$message = $3;
 			{
 				use bytes;
-				UnixUtils::ConsoleUI::print($code . $line . getColor('reset'));
+				UnixUtils::ConsoleUI::print($code . $line);
 			}
 		}
 	}
@@ -132,10 +134,8 @@ sub getColorForMessage {
 	my ($type, $domain) = @_;
 	my $color = $consoleColors{$type}{$domain};
 	$color = $consoleColors{$type}{default} if (!defined $color);
-
-	my $code = '';
-	$code = getColor($color) if (defined $color);
-	return $code;
+	$color = 'default' if (!defined $color);
+	return getColor($color);
 }
 
 # Get the color code for the given color name
@@ -154,66 +154,66 @@ sub getColor {
 
 {
 	use bytes;
-%fgcolors = (
-	'reset'		=> "\e[0m",
-	'default'	=> "\e[0m",
+	%fgcolors = (
+		'reset'		=> "\e[0m",
+		'default'	=> "\e[0m",
 
-	'black'		=> "\e[0;30m",
-	'darkgray'	=> "\e[1;30m",
-	'darkgrey'	=> "\e[1;30m",
+		'black'		=> "\e[0;30m",
+		'darkgray'	=> "\e[1;30m",
+		'darkgrey'	=> "\e[1;30m",
 
-	'darkred'	=> "\e[0;31m",
-	'red'		=> "\e[1;31m",
+		'darkred'	=> "\e[0;31m",
+		'red'		=> "\e[1;31m",
 
-	'darkgreen'	=> "\e[0;32m",
-	'green'		=> "\e[1;32m",
+		'darkgreen'	=> "\e[0;32m",
+		'green'		=> "\e[1;32m",
 
-	'brown'		=> "\e[0;33m",
-	'yellow'	=> "\e[1;33m",
+		'brown'		=> "\e[0;33m",
+		'yellow'	=> "\e[1;33m",
 
-	'darkblue'	=> "\e[0;34m",
-	'blue'		=> "\e[1;34m",
+		'darkblue'	=> "\e[0;34m",
+		'blue'		=> "\e[1;34m",
 
-	'darkmagenta'	=> "\e[0;35m",
-	'magenta'	=> "\e[1;35m",
+		'darkmagenta'	=> "\e[0;35m",
+		'magenta'	=> "\e[1;35m",
 
-	'darkcyan'	=> "\e[0;36m",
-	'cyan'		=> "\e[1;36m",
+		'darkcyan'	=> "\e[0;36m",
+		'cyan'		=> "\e[1;36m",
 
-	'gray'		=> "\e[0;37m",
-	'grey'		=> "\e[0;37m",
-	'white'		=> "\e[1;37m",
-);
+		'gray'		=> "\e[0;37m",
+		'grey'		=> "\e[0;37m",
+		'white'		=> "\e[1;37m",
+	);
 
-%bgcolors = (
-	'default'	=> "\e[22;40m",
+	%bgcolors = (
+		'default'	=> "\e[22;40m",
 
-	'black'		=> "\e[22;40m",
-	'darkgray'	=> "\e[5;40m",
-	'darkgrey'	=> "\e[5;40m",
+		'black'		=> "\e[22;40m",
+		'darkgray'	=> "\e[5;40m",
+		'darkgrey'	=> "\e[5;40m",
 
-	'darkred'	=> "\e[22;41m",
-	'red'		=> "\e[5;41m",
+		'darkred'	=> "\e[22;41m",
+		'red'		=> "\e[5;41m",
 
-	'darkgreen'	=> "\e[22;42m",
-	'green'		=> "\e[5;42m",
+		'darkgreen'	=> "\e[22;42m",
+		'green'		=> "\e[5;42m",
 
-	'brown'		=> "\e[22;43m",
-	'yellow'	=> "\e[5;43m",
+		'brown'		=> "\e[22;43m",
+		'yellow'	=> "\e[5;43m",
 
-	'darkblue'	=> "\e[22;44m",
-	'blue'		=> "\e[5;44m",
+		'darkblue'	=> "\e[22;44m",
+		'blue'		=> "\e[5;44m",
 
-	'darkmagenta'	=> "\e[22;45m",
-	'magenta'	=> "\e[5;45m",
+		'darkmagenta'	=> "\e[22;45m",
+		'magenta'	=> "\e[5;45m",
 
-	'darkcyan'	=> "\e[22;46m",
-	'cyan'		=> "\e[5;46m",
+		'darkcyan'	=> "\e[22;46m",
+		'cyan'		=> "\e[5;46m",
 
-	'gray'		=> "\e[22;47m",
-	'grey'		=> "\e[22;47m",
-	'white'		=> "\e[5;47m",
-);
+		'gray'		=> "\e[22;47m",
+		'grey'		=> "\e[22;47m",
+		'white'		=> "\e[5;47m",
+	);
 }
 
 

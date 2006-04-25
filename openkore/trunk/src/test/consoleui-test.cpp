@@ -24,14 +24,22 @@ main() {
 	ui = ConsoleUI::getInstance();
 	ui->start();
 
-	for (int i = 1; i <= 30; i++) {
+	for (int i = 1; i <= 5; i++) {
 		show("Loading %d...\n", i);
 		usleep(rand() % 200000);
 	}
 
 	show("Checking for new portals...");
-	sleep(3);
+	sleep(1);
 	show(" none found.\n");
+
+	show("\e[1;31mThis is a test error.");
+	sleep(2);
+	show("\e[1;31m This is another test error.\n");
+	sleep(2);
+	show("\e[1;32mThis is a green message.\n");
+	show("\e[0mThis is a message with normal color.\n");
+	show("\e[1;32mThis is a green message.\n");
 
 	bool quit = false;
 	while (!quit) {
@@ -39,7 +47,7 @@ main() {
 		if (input != NULL) {
 			if (strcmp(input, "quit") == 0) {
 				quit = true;
-			} else {
+			} else if (strlen(input) > 0) {
 				show("Unknown command '%s'\n", input);
 			}
 			free(input);
