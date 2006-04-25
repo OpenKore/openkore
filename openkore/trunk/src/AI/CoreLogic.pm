@@ -152,22 +152,25 @@ sub iterate {
 			} elsif ($args->{'args'}[0] == 3) {
 				$args->{'timeout'} = 6;
 			} else {
+				my $ID = $args->{args}[1];
+				my $monster = $monstersList->getByID($ID);
+
 				if (!$args->{'forceGiveup'}{'timeout'}) {
 					$args->{'forceGiveup'}{'timeout'} = 6;
 					$args->{'forceGiveup'}{'time'} = time;
 				}
-				if ($args->{'dmgFromYou_last'} != $monsters{$args->{'args'}[1]}{'dmgFromYou'}) {
-					$args->{'forceGiveup'}{'time'} = time;
-				}
-				$args->{'dmgFromYou_last'} = $monsters{$args->{'args'}[1]}{'dmgFromYou'};
-				$args->{'missedFromYou_last'} = $monsters{$args->{'args'}[1]}{'missedFromYou'};
-				if ($monsters{$args->{'args'}[1]} && %{$monsters{$args->{'args'}[1]}}) {
-					$args->{'time'} = time;
+				if ($monster) {
+					$args->{time} = time;
+					$args->{dmgFromYou_last} = $monster->{dmgFromYou};
+					$args->{missedFromYou_last} = $monster->{missedFromYou};
+					if ($args->{dmgFromYou_last} != $monster->{dmgFromYou}) {
+						$args->{forceGiveup}{time} = time;
+					}
 				} else {
-					$args->{'time'} -= $args->{'timeout'};
+					$args->{time} -= $args->{'timeout'};
 				}
-				if (timeOut($args->{'forceGiveup'})) {
-					$args->{'time'} -= $args->{'timeout'};
+				if (timeOut($args->{forceGiveup})) {
+					$args->{time} -= $args->{timeout};
 				}
 			}
 
@@ -177,7 +180,7 @@ sub iterate {
 				$args->{'forceGiveup'}{'timeout'} = 4;
 				$args->{'forceGiveup'}{'time'} = time;
 			}
-			if ($items{$args->{'args'}[0]} && %{$items{$args->{'args'}[0]}}) {
+			if ($items{$args->{'args'}[0]}) {
 				$args->{'time'} = time;
 			} else {
 				$args->{'time'} -= $args->{'timeout'};

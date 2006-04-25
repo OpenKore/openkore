@@ -374,13 +374,12 @@ sub parse {
 		}
 	}
 
-	# TODO: this might be slow. We should pre-resolve function references.
 	my $callback = $self->can($handler->[0]);
 	if ($callback) {
 		Plugins::callHook("packet_pre/$handler->[0]", \%args);
-		Misc::checkValidity($handler->[0] . " (pre)");
+		Misc::checkValidity("Packet: " . $handler->[0] . " (pre)");
 		$self->$callback(\%args);
-		Misc::checkValidity($handler->[0]);
+		Misc::checkValidity("Packet: " . $handler->[0]);
 	} else {
 		debug "Packet Parser: Unhandled Packet: $switch Handler: $handler->[0]\n", "packetParser", 2;
 	}

@@ -215,8 +215,8 @@ sub checkValidity {
 		}
 	}
 
-	sub checkActorHash {
-		my ($hash, $type, $hashName) = @_;
+	sub checkActorHash($$$$ {
+		my ($name, $hash, $type, $hashName) = @_;
 		foreach my $actor (values %{$hash}) {
 			if (!UNIVERSAL::isa($actor, $type)) {
 				die "$name\nUnblessed item in $hashName list:\n" .
@@ -225,11 +225,11 @@ sub checkValidity {
 		}
 	}
 
-	checkActorHash(\%monsters, 'Actor::Monster', 'monster');
-	checkActorHash(\%players, 'Actor::Player', 'player');
-	checkActorHash(\%pets, 'Actor::Pet', 'pet');
-	checkActorHash(\%npcs, 'Actor::NPC', 'NPC');
-	checkActorHash(\%portals, 'Actor::Portal', 'portals');
+	checkActorHash($name, \%monsters, 'Actor::Monster', 'monster');
+	checkActorHash($name, \%players, 'Actor::Player', 'player');
+	checkActorHash($name, \%pets, 'Actor::Pet', 'pet');
+	checkActorHash($name, \%npcs, 'Actor::NPC', 'NPC');
+	checkActorHash($name, \%portals, 'Actor::Portal', 'portals');
 }
 
 
