@@ -52,6 +52,7 @@ attackNoGiveup 0
 attackCanSnipe 0
 attackCheckLOS 0
 attackLooters 0
+aggressiveAntiKS 0
 
 attackEquip_topHead
 attackEquip_midHead
@@ -193,7 +194,6 @@ teleportAuto_maxDmgInLock 0
 teleportAuto_deadly 1
 teleportAuto_useSkill 3
 teleportAuto_useChatCommand
-teleportAuto_emptyName 1
 teleportAuto_allPlayers 0
 teleportAuto_atkCount 0
 teleportAuto_atkMiss 10
