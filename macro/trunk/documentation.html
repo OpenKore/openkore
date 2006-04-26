@@ -474,13 +474,13 @@ macro registered to AI queue</dd>
 <h2><a name="automacro"></a>Automacro syntax</h2>
 <div class="p">
 	<pre class="code">automacro foo {
-    condition bar
-    condition baz, yatta
+    &lt;condition&gt; bar
+    &lt;condition&gt; baz, yatta
     call macroname
 }
 automacro mi {
-    condition moo
-    condition xyz
+    &lt;condition&gt; moo
+    &lt;condition&gt; xyz
     call {
     	do this
     	do that
@@ -515,7 +515,7 @@ location not prontera</pre>
 	<dt><b>hp</b> <tt>&lt;<a href="#condition">condition</a>&gt;</tt> <i>&lt;amount&gt;</i>[%]</dt>
 	<dd>triggers when your hp match <i>&lt;<a href="#condition">condition</a>&gt;
 &lt;amount&gt;</i> (absolute value) or <i>&lt;<a href="#condition">condition</a>&gt;
-&lt;amount&gt;</i> percent. (relative value)<br />
+&lt;amount&gt;</i> percent (relative value).<br />
 <a name="condition"></a><table>
 <tr class="head"><th>condition</th><th>meaning</th></tr>
 <tr class="one"><td>&lt;</td><td>less than</td></tr>
@@ -530,7 +530,7 @@ location not prontera</pre>
 	<dt><b>sp</b> <tt>&lt;<a href="#condition">condition</a>&gt;</tt> <i>&lt;amount&gt;</i>[%]</dt>
 	<dd>triggers when your sp match <i>&lt;<a href="#condition">condition</a>&gt;
 &lt;amount&gt;</i> (absolute value) or <i>&lt;<a href="#condition">condition</a>&gt;
-&lt;amount&gt;</i> percent. (relative value)<br />
+&lt;amount&gt;</i> percent (relative value).<br />
         Multiple lines are treated as AND conditions.</dd>
 
 	<dt><b>spirit</b> <tt>&lt;<a href="#condition">condition</a>&gt;</tt> <i>&lt;amount&gt;</i></dt>
@@ -540,13 +540,13 @@ location not prontera</pre>
 	<dt><b>weight</b> <tt>&lt;<a href="#condition">condition</a>&gt;</tt> <i>&lt;amount&gt;</i>[%]</dt>
 	<dd>triggers when your weight matches <i>&lt;<a href="#condition">condition</a>&gt;
 &lt;amount&gt;</i> (absolute value) or <i>&lt;<a href="#condition">condition</a>&gt;
-&lt;amount&gt;</i> percent. (relative value)<br />
+&lt;amount&gt;</i> percent (relative value).<br />
 	Multiple lines are treated as AND conditions.</dd>
 
 	<dt><b>cartweight</b> <tt>&lt;<a href="#condition">condition</a>&gt;</tt> <i>&lt;amount&gt;</i>[%]</dt>
 	<dd>triggers when your cart weight matches <i>&lt;<a href="#condition">condition</a>&gt;
 &lt;amount&gt;</i> (absolute value) or <i>&lt;<a href="#condition">condition</a>&gt;
-&lt;amount&gt;</i> percent. (relative value)<br />
+&lt;amount&gt;</i> percent (relative value).<br />
 	Multiple lines are treated as AND conditions.</dd>
 
 	<dt><b>zeny</b> <tt>&lt;<a href="#condition">condition</a>&gt;</tt> <i>&lt;amount&gt;</i></dt>
@@ -672,7 +672,7 @@ location not prontera</pre>
 	<dd>Wait at least for <i>&lt;n&gt;</i> seconds before this automacro can be triggered again.</dd>
 
 	<dt><b>macro_delay</b> <i>&lt;n&gt;</i></dt>
-	<dd>Overrides the global <a href="#files"><tt>macro_delay</tt></a> setting for the called macro</dd>
+	<dd>Overrides the global <a href="#files"><tt>macro_delay</tt></a> setting for the called macro.</dd>
 
 	<dt><b>priority</b> <i>&lt;num&gt;</i></dt>
 	<dd>Choose which automacros should be checked before others. The smaller &lt;num&gt; is is the sooner the
@@ -705,7 +705,7 @@ location not prontera</pre>
 }
 
 macro reopenshop {
-   closeshop
+   do closeshop
 }</pre>
 
 	This automacro is triggered when you have a shop open in Prontera and there are three or more
@@ -867,8 +867,18 @@ allowed, <tt>@random ("foo", "bar", ":-)", "yatta")</tt> is not.</li>
 	<dt><i>Where can I get a macro that does [insert feature here]?</i></dt>
 	<dd>Search the <a href="http://forums.openkore.com/viewforum.php?f=18">forum</a>. If you
 	cannot find a macro for your purposes, write it. No spoonfeeding.</dd>
-	</dl>
 
+	<dt><i>I have an automacro that checks for the amount of an item in my
+inventory / cart to be less than a given value or equal to zero (e.g. <tt>inventory
+"red potion" <= 30</tt>) but that automacro triggers also on map change. Why
+is that so and what should I do?</i></dt>
+	<dd>When you're changing the map all items vanish from your
+inventory for a short time. That happens with the official client, too. To
+avoid this, add an additional check for an item that you always carry with
+you, like <tt>inventory "Jellopy" > 0</tt></dd>
+
+	</dl>
+	
 <a href="#top"><small>back to top</small></a>
 </div>
 
