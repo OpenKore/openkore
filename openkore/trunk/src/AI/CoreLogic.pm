@@ -35,6 +35,7 @@ use ChatQueue;
 use Utils;
 use Misc;
 use Commands;
+use FileParsers;
 use Translation;
 
 
