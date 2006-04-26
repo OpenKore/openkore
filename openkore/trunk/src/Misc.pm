@@ -1477,6 +1477,14 @@ sub checkMonsterCleanness {
 	# If monster attacked/missed you
 	return 1 if ($monster->{'dmgToYou'} || $monster->{'missedYou'});
 
+	if ($config{aggressiveAntiKS}) {
+		# Aggressive anti-KS mode, for people who are paranoid about not kill stealing.
+
+		# If others attacked the monster then always drop it.
+		return 0 if (($monster->{dmgFromPlayer} && %{$monster->{dmgFromPlayer}})
+			  || ($monster->{missedFromPlayer} && %{$monster->{missedFromPlayer}}));
+	}
+
 	# If monster hasn't been attacked by other players
 	if (!binSize([keys %{$monster->{'missedFromPlayer'}}])
 	 && !binSize([keys %{$monster->{'dmgFromPlayer'}}])
