@@ -1841,8 +1841,15 @@ sub deal_begin {
 			$currentDeal{name} = $incomingDeal{name};
 			undef %incomingDeal;
 		} else {
-			$currentDeal{ID} = $outgoingDeal{ID};
-			$currentDeal{name} = $players{$outgoingDeal{ID}}{name};
+			my $ID = $outgoingDeal{ID};
+			my $player;
+			$player = $playersList->getByID($ID) if (defined $ID);
+			$currentDeal{ID} = $ID;
+			if ($player) {
+				$currentDeal{name} = $player->{name};
+			} else {
+				$currentDeal{name} = 'Unknown #' . unpack("V", $ID);
+			}
 			undef %outgoingDeal;
 		}
 		message TF("Engaged Deal with %s\n", $currentDeal{name}), "deal";
