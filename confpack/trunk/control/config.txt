@@ -4,10 +4,10 @@
 ######## Login options and server-specific options ########
 
 master
-server
+server 0
 username
 password
-char
+char 2
 sex
 
 bindIp
@@ -143,6 +143,7 @@ lockMap_y
 lockMap_randX
 lockMap_randY
 
+route_escape_unknownMap 0
 route_randomWalk 1
 route_randomWalk_inTown 0
 route_randomWalk_maxRouteTime 75
