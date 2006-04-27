@@ -36,7 +36,7 @@ my $hooks = Plugins::addHooks(
             ['configModify', \&debuglevel, undef],
             ['start3',       \&postsetDebug, undef],
             ['start3',       \&checkConfig, undef],
-            ['AI_pre',       \&callMacro, undef]
+            ['mainLoop_pre', \&callMacro, undef]
 );
 my $chooks = Commands::register(
             ['macro', "Macro plugin", \&commandHandler]
