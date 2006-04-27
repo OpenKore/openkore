@@ -106,6 +106,7 @@ sub new {
 sub get {
 	my ($name, $skipIndex, $notEquipped) = @_;
 
+	return undef if (!defined $name);
 	return $name if UNIVERSAL::isa($name, 'Item');
 
 	# user supplied an inventory index
