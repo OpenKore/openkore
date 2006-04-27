@@ -46,6 +46,7 @@ use overload 'ne' => \&_ne;
 # The == operator is to check whether two variables refer to the
 # exact same object.
 use overload '==' => \&_isis;
+use overload '!=' => \&_not_is;
 
 sub _eq {
 	return UNIVERSAL::isa($_[0], "Actor")
@@ -65,6 +66,10 @@ sub _nameString {
 
 sub _isis {
 	return Scalar::Util::refaddr($_[0]) == Scalar::Util::refaddr($_[1]);
+}
+
+sub _not_is {
+	return !&_isis;
 }
 
 ### CATEGORY: Class methods

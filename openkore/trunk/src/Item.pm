@@ -35,6 +35,7 @@ use AI;
 
 use overload '""' => \&_toString;
 use overload '==' => \&_isis;
+use overload '!=' => \&_not_is;
 use overload 'eq' => \&_eq;
 use overload 'ne' => \&_ne;
 
@@ -44,6 +45,10 @@ sub _toString {
 
 sub _isis {
 	return Scalar::Util::refaddr($_[0]) == Scalar::Util::refaddr($_[1]);
+}
+
+sub _not_is {
+	return !&_isis;
 }
 
 sub _eq {
