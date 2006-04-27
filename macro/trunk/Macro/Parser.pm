@@ -2,6 +2,7 @@ package Macro::Parser;
 
 use strict;
 use warnings;
+use encoding 'utf8';
 
 require Exporter;
 our @ISA = qw(Exporter);
@@ -28,7 +29,7 @@ sub parseMacroFile {
 
   my %block;
   my $tempmacro = 0;
-  open FILE, "< $file" or return 0;
+  open FILE, "<:utf8", $file or return 0;
   foreach (<FILE>) {
     next if (/^\s*#/); # skip comments
     s/^\s*//g;         # remove leading whitespaces

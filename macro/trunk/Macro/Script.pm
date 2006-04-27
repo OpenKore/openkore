@@ -200,6 +200,7 @@ sub next {
     }
     return ""
   }
+  my $errtpl = "error in ".$self->{line};
   ##########################################
   # jump to label: goto label
   if ($line =~ /^goto\s/) {
@@ -207,7 +208,7 @@ sub next {
     if (exists $self->{label}->{$tmp}) {
       $self->{line} = $self->{label}->{$tmp}
     } else {
-      $self->{error} = "error in ".$self->{line}.": cannot find label ".$tmp
+      $self->{error} = "$errtpl: cannot find label ".$tmp
     }
     $self->{timeout} = 0
   ##########################################
@@ -217,7 +218,7 @@ sub next {
     if (exists $self->{label}->{$tmp}) {
       $self->{line} = $self->{label}->{$tmp}
     } else {
-      $self->{error} = "error in ".$self->{line}.": cannot find block start"
+      $self->{error} = "$errtpl: cannot find block start"
     }
     $self->{timeout} = 0
   ##########################################
@@ -225,18 +226,18 @@ sub next {
   } elsif ($line =~ /^if\s/) {
     my ($first, $cond, $last, $then) = $line =~ /^if\s+\(\s*"?(.*?)"?\s+([<>=!]+?)\s+"?(.*?)"?\s*\)\s+(.*?)$/;
     if (!defined $first || !defined $cond || !defined $last || !defined $then || $then !~ /^(goto\s|stop)/) {
-      $self->{error} = "error in ".$self->{line}.": syntax error in if statement"
+      $self->{error} = "$errtpl: syntax error in if statement"
     } else {
       my $pfirst = parseCmd($first); my $plast = parseCmd($last);
       unless (defined $pfirst && defined $plast) {
-        $self->{error} = "error in ".$self->{line}.": either '$first' or '$last' has failed"
+        $self->{error} = "$errtpl: either '$first' or '$last' has failed"
       } elsif (cmpr($pfirst, $cond, $plast)) {
         if ($then =~ /^goto\s/) {
           my ($tmp) = $then =~ /^goto\s+([a-zA-Z][a-zA-Z\d]*)$/;
           if (exists $self->{label}->{$tmp}) {
             $self->{line} = $self->{label}->{$tmp}
           } else {
-            $self->{error} = "error in ".$self->{line}.": cannot find label ".$tmp
+            $self->{error} = "$errtpl: cannot find label ".$tmp
           }
         } elsif ($then =~ /^stop$/) {
           $self->{finished} = 1
@@ -251,11 +252,11 @@ sub next {
   } elsif ($line =~ /^while\s/) {
     my ($first, $cond, $last, $label) = $line =~ /^while\s+\(\s*"?(.*?)"?\s+([<>=!]+?)\s+"?(.*?)"?\s*\)\s+as\s+(.*)$/;
     if (!defined $first || !defined $cond || !defined $last || !defined $label) {
-      $self->{error} = "error in ".$self->{line}.": syntax error in while statement"
+      $self->{error} = "$errtpl: syntax error in while statement"
     } else {
       my $pfirst = parseCmd($first); my $plast = parseCmd($last);
       unless (defined $pfirst && defined $plast) {
-        $self->{error} = "error in ".$self->{line}.": either '$first' or '$last' has failed"
+        $self->{error} = "$errtpl: either '$first' or '$last' has failed"
       } elsif (!cmpr($pfirst, $cond, $plast)) {
         $self->{line} = $self->{label}->{"end ".$label}
       }
@@ -269,12 +270,12 @@ sub next {
     if (($var, $val) = $line =~ /^\$([a-z][a-z\d]*?)\s+=\s+(.*)$/i) {
       my $pval = parseCmd($val);
       if (defined $pval) {setVar($var, $pval)}
-      else {$self->{error} = "error in ".$self->{line}.": $val failed"}
+      else {$self->{error} = "$errtpl: $val failed"}
     } elsif (($var, $val) = $line =~ /^\$([a-z][a-z\d]*?)([+-]{2})$/i) {
       if ($val eq '++') {setVar($var, (getVar($var) or 0)+1)}
       else {setVar($var, (getVar($var) or 0)-1)}
     } else {
-      $self->{error} = "error in ".$self->{line}.": unrecognized assignment"
+      $self->{error} = "$errtpl: unrecognized assignment"
     }
     $self->{line}++;
     $self->{timeout} = $self->{macro_delay}
@@ -285,11 +286,11 @@ sub next {
     if (($dvar, $val) = $line =~ /^\$\{\$([.a-z][a-z\d]*?)\}\s+=\s+(.*)$/i) {
       my $var = getVar($dvar);
       unless (defined $var) {
-        $self->{error} = "error in ".$self->{line}.": $dvar not defined"
+        $self->{error} = "$errtpl: $dvar not defined"
       } else {
         my $pval = parseCmd($val);
         unless (defined $pval) {
-          $self->{error} = "error in ".$self->{line}.": $val failed"
+          $self->{error} = "$errtpl: $val failed"
         } else {
           setVar("#".$var, parseCmd($val))
         }
@@ -297,13 +298,13 @@ sub next {
     } elsif (($dvar, $val) = $line =~ /^\$\{\$([.a-z][a-z\d]*?)\}([+-]{2})$/i) {
       my $var = getVar($dvar);
       unless (defined $var) {
-        $self->{error} = "error in ".$self->{line}.": $dvar undefined"
+        $self->{error} = "$errtpl: $dvar undefined"
       } else {
         if ($val eq '++') {setVar("#".$var, (getVar("#".$var) or 0)+1)}
         else {setVar("#".$var, (getVar("#".$var) or 0)-1)}
       }
     } else {
-        $self->{error} = "error in ".$self->{line}.": unrecognized assignment."
+        $self->{error} = "$errtpl: unrecognized assignment."
     }
     $self->{line}++;
     $self->{timeout} = $self->{macro_delay}
@@ -319,28 +320,23 @@ sub next {
     if ($tmp =~ /^macro\s+/) {
       my ($arg) = $tmp =~ /^macro\s+(.*)/;
       if ($arg =~ /^reset/) {
-        $self->{error} = "error in ".$self->{line}.": use 'release' instead of 'macro reset'";
-        return
-      }
-      if ($arg eq 'pause' || $arg eq 'resume') {
-        $self->{error} = "error in ".$self->{line}.": do not use 'macro pause' or 'macro resume' within a macro";
-        return
-      }
-      if ($arg =~ /^set\s/) {
-        $self->{error} = "error in ".$self->{line}.": do not use 'macro set'. Use \$foo = bar";
-        return
-      }
-      if ($arg !~ /^(list|status|stop)$/) {
-        $self->{error} = "error in ".$self->{line}.": use 'call $arg' instead of 'macro $arg'";
-        return
+        $self->{error} = "$errtpl: use 'release' instead of 'macro reset'"
+      } elsif ($arg eq 'pause' || $arg eq 'resume') {
+        $self->{error} = "$errtpl: do not use 'macro pause' or 'macro resume' within a macro"
+      } elsif ($arg =~ /^set\s/) {
+        $self->{error} = "$errtpl: do not use 'macro set'. Use \$foo = bar"
+      } elsif ($arg eq 'stop') {
+        $self->{error} = "$errtpl: use 'stop' instead"
+      } elsif ($arg !~ /^(list|status)$/) {
+        $self->{error} = "$errtpl: use 'call $arg' instead of 'macro $arg'"
       }
     } elsif ($tmp =~ /^ai\s+clear$/) {
-      $self->{error} = "error in ".$self->{line}.": do not mess around with ai in macros";
-      return
+      $self->{error} = "$errtpl: do not mess around with ai in macros"
     }
+    return if defined $self->{error};
     my $result = parseCmd($tmp);
     unless (defined $result) {
-      $self->{error} = "error in ".$self->{line}.": command $tmp failed";
+      $self->{error} = "$errtpl: command $tmp failed";
       return
     }
     $self->{line}++;
@@ -352,7 +348,7 @@ sub next {
     my ($tmp) = $line =~ /^log\s+(.*)/;
     my $result = parseCmd($tmp);
     unless (defined $result) {
-      $self->{error} = "error in ".$self->{line}.": $tmp failed"
+      $self->{error} = "$errtpl: $tmp failed"
     } else {
       message "[macro][log] $result\n", "macro";
     }
@@ -373,7 +369,7 @@ sub next {
   } elsif ($line =~ /^release\s+/) {
     my ($tmp) = $line =~ /^release\s+(.*)/;
     if (!releaseAM(parseCmd($tmp))) {
-      $self->{error} = "error in ".$self->{line}.": releasing $tmp failed"
+      $self->{error} = "$errtpl: releasing $tmp failed"
     }
     $self->{line}++;
     $self->{timeout} = $self->{macro_delay}
@@ -382,7 +378,7 @@ sub next {
   } elsif ($line =~ /^lock\s+/) {
     my ($tmp) = $line =~ /^lock\s+(.*)/;
     if (!lockAM(parseCmd($tmp))) {
-      $self->{error} = "error in ".$self->{line}.": locking $tmp failed"
+      $self->{error} = "$errtpl: locking $tmp failed"
     }
     $self->{line}++;
     $self->{timeout} = $self->{macro_delay}
@@ -393,16 +389,14 @@ sub next {
     if ($tmp =~ /\s/) {
       my ($name, $times) = $tmp =~ /(.*?)\s+(.*)/;
       my $ptimes = parseCmd($times);
-      unless (defined $ptimes) {
-        $self->{error} = "error in ".$self->{line}.": $times failed"
-      } else {
+      if (defined $ptimes) {
         $self->{subcall} = new Macro::Script($name, $ptimes)
       }
     } else {
       $self->{subcall} = new Macro::Script($tmp)
     }
-    if (!defined $self->{subcall}) {
-      $self->{error} = "error in ".$self->{line}.": failed to call script"
+    unless (defined $self->{subcall}) {
+      $self->{error} = "$errtpl: failed to call script"
     } else {
       $self->{subcall}->regSubmacro;
       $self->{timeout} = $self->{macro_delay}
@@ -410,7 +404,7 @@ sub next {
   ##########################################
   # unrecognized line
   } else {
-    $self->{error} = "error in ".$self->{line}.": syntax error"
+    $self->{error} = "$errtpl: syntax error"
   }
   if (defined $self->{error}) {return} else {return ""}
 }
