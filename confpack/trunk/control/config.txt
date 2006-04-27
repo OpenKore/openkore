@@ -4,10 +4,10 @@
 ######## Login options and server-specific options ########
 
 master
-server 0
+server
 username
 password
-char 2
+char
 sex
 
 bindIp
