@@ -67,7 +67,6 @@ if (0) {
 	require Win32;
 	require Win32::Console;
 	require Win32::Process;
-	require Thread::Queue; #for xkore2
 	require XSTools;
 	require Encode;
 	require encoding;
