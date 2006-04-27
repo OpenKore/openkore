@@ -24,13 +24,37 @@ package Item;
 
 use strict;
 use Carp::Assert;
+use Scalar::Util;
+use Time::HiRes qw(time);
+
 use Globals;
 use Utils;
 use Log qw(message error warning debug);
-use Time::HiRes qw(time);
 use Network::Send;
+use AI;
 
-use overload '""' => \&nameString;
+use overload '""' => \&_toString;
+use overload '==' => \&_isis;
+use overload 'eq' => \&_eq;
+use overload 'ne' => \&_ne;
+
+sub _toString {
+	return $_[0]->nameString();
+}
+
+sub _isis {
+	return Scalar::Util::refaddr($_[0]) == Scalar::Util::refaddr($_[1]);
+}
+
+sub _eq {
+	return UNIVERSAL::isa($_[0], 'Item') && UNIVERSAL::isa($_[1], 'Item')
+		&& $_[0]->{nameID} == $_[1]->{nameID};
+}
+
+sub _ne {
+	return !&_eq;
+}
+
 
 our @slots = qw(
 	topHead midHead lowHead
@@ -40,9 +64,27 @@ our @slots = qw(
 	arrow
 );
 
+
+##############################
+### CATEGORY: Constructor
+##############################
+
+##
+# Item Item->new()
+#
+# Creates a new Item object.
 sub new {
-	my $class = shift;
-	my %self;
+	my $class = $_[0];
+	my %self = (
+		name => 'Uninitialized Item',
+		index => 0,
+		amount => 0,
+		type => 0,
+		equipped => 0,
+		identified => 0,
+		nameID => 0,
+		invIndex => 0
+	);
 	return bless \%self, $class;
 }
 
@@ -228,6 +270,65 @@ sub UnEquipByType {
 
 	return undef;
 }
+
+
+################################
+### CATEGORY: Public Members
+################################
+
+##
+# String $Item->{name}
+# Invariant: defined(value)
+#
+# The name for this item.
+
+##
+# int $Item->{index}
+# Invariant: value >= 0
+#
+# The index of this item in the inventory, as stored on the RO server. It is usually
+# used when sending item-related commands (such as 'use this item' or 'drop this item')
+# to the RO server.
+# This index does not necessarily equals the inventory index, as stored by OpenKore.
+#
+# Ssee also: $Item->{invIndex}
+
+##
+# int $Item->{amount}
+# Invariant: value >= 0
+#
+# The amount of this item in the inventory.
+
+##
+# int $Item->{type}
+# Invariant: value >= 0
+#
+# The item type (usable, unusable, armor, etc.), as defined by itemtypes.txt.
+
+##
+# boolean $Item->{equipped}
+#
+# Whether this item is currently equipped.
+
+##
+# boolean $Item->{identified}
+#
+# Whether this item is identified.
+
+##
+# int $Item->{nameID}
+# Invariant: value >= 0
+#
+# The ID of this item. This ID is unique for each item class.
+# Use this in combination with %items_lut to retrieve the item name.
+
+##
+# int $Item->{invIndex}
+#
+# The index of this item in the inventory data structure, as stored by OpenKore.
+# This index does not necessarily correspond with the index as stored by the RO server.
+#
+# See also: $Item->{index}
 
 
 ################################
