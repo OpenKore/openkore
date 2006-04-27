@@ -333,6 +333,22 @@ sub iterate {
 		AI::dequeue if (@{AI::args->{'items'}} <= 0);
 	}
 
+     ##### ESCAPE UNKNOWN MAPS #####      
+     #escape from unknown maps. Happens when kore accidentally teleports onto an
+     #portal. With this, kore should automaticly go into the portal on the other side
+	#Todo: Make kore do a random walk searching for portal if there's no portal arround.
+	if (AI::action eq "escape" && $AI == 2) {
+		AI::dequeue;
+		if ($portalsID[0]) {
+			message T("Escaping to into nearest portal.\n",
+				$portals{$portalsID[0]}{'pos'}{'x'}, $portals{$portalsID[0]}{'pos'}{'y'});
+			main::ai_route($field{name}, $portals{$portalsID[0]}{'pos'}{'x'},
+				$portals{$portalsID[0]}{'pos'}{'y'}, attackOnRoute => 1, noSitAuto => 1);
+		} else {
+			error T("Escape failed no portal found.\n");
+		}
+	}
+
 	##### DELAYED-TELEPORT #####
 
 	if (AI::action eq 'teleport') {
@@ -804,7 +820,7 @@ sub iterate {
 				tags => "waypoint");
 			if (!$result) {
 				error TF("Unable to calculate how to walk to %s (%s, %s)\n", $point->{map}, $point->{x}, $point->{y});
-				AI::dequeue;
+				AI::dequeue;            
 			}
 
 		} else {
@@ -1900,7 +1916,7 @@ sub iterate {
 				my %vec;
 				
 				debug "Last time i saw, master was moving from ($oldPos->{x}, $oldPos->{y}) to ($pos->{x}, $pos->{y})\n", "follow";
-				
+
 				# We must check the ground about 9x9 area of where we last saw our master. That's the only way
 				# to ensure he walked through a warp portal. The range is because of lag in some situations.
 				@blocks = calcRectArea2($pos->{x}, $pos->{y}, 4, 0);
@@ -1912,7 +1928,7 @@ sub iterate {
 					$found = $_;
 					last;
 				}
-				
+
 				if ($found) {
 					%{$ai_v{'temp'}{'warp_pos'}} = %{$found};
 					$args->{'ai_follow_lost_warped'} = 1;
@@ -3514,6 +3530,7 @@ sub processMapRouteAI {
 				warning TF("Unable to calculate how to walk from [%s(%s,%s)] " .
 					"to [%s%s] (no map solution).\n", $field{name}, $char->{pos_to}{x}, $char->{pos_to}{y}, $args->{dest}{map}, ${destpos}), "route";
 				AI::dequeue;
+				AI::queue("escape") if $config{route_escape_unknownMap};         
 			}
 
 		} elsif ( $args->{stage} eq 'Traverse the Map Solution' ) {
