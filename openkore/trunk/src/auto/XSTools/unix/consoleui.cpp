@@ -202,6 +202,7 @@ ConsoleUI::start() {
 void
 ConsoleUI::stop() {
 	if (thread != 0) {
+		waitUntilPrinted();
 		quit = true;
 		pthread_join(thread, NULL);
 		thread = 0;
