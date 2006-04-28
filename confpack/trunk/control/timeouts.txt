@@ -104,6 +104,8 @@ ai_avoidcheck 0.5
 ai_shop 4
 ai_npcTalk 8
 
+# delay before starting escape sequence
+ai_route_escape 8
 
 # Don't change the following timeouts!
 ai_sync 12

@@ -144,6 +144,8 @@ lockMap_randX
 lockMap_randY
 
 route_escape_unknownMap 0
+route_escape_reachedNoPortal 0
+route_escape_randomWalk 0
 route_randomWalk 1
 route_randomWalk_inTown 0
 route_randomWalk_maxRouteTime 75
