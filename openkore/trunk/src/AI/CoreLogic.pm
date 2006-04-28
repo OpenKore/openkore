@@ -337,16 +337,58 @@ sub iterate {
      #escape from unknown maps. Happens when kore accidentally teleports onto an
      #portal. With this, kore should automaticly go into the portal on the other side
 	#Todo: Make kore do a random walk searching for portal if there's no portal arround.
+
 	if (AI::action eq "escape" && $AI == 2) {
-		AI::dequeue;
-		if ($portalsID[0]) {
-			message T("Escaping to into nearest portal.\n",
-				$portals{$portalsID[0]}{'pos'}{'x'}, $portals{$portalsID[0]}{'pos'}{'y'});
-			main::ai_route($field{name}, $portals{$portalsID[0]}{'pos'}{'x'},
-				$portals{$portalsID[0]}{'pos'}{'y'}, attackOnRoute => 1, noSitAuto => 1);
-		} else {
-			error T("Escape failed no portal found.\n");
-		}
+		my $skip = 0;
+          if (timeOut($timeout{ai_route_escape}) && $timeout{ai_route_escape}{time}){
+               AI::dequeue;
+			if ($portalsID[0]) {
+				message T("Escaping to into nearest portal.\n");
+				main::ai_route($field{name}, $portals{$portalsID[0]}{'pos'}{'x'},
+					$portals{$portalsID[0]}{'pos'}{'y'}, attackOnRoute => 1, noSitAuto => 1);
+				$skip = 1;
+
+			} elsif ($spellsID[0]){   #get into the first portal you see
+			     my $spell = $spells{$spellsID[0]};
+				if (getSpellName($spell->{type}) eq "Warp Portal" ){
+					message T("Found warp portal escaping into warp portal.\n");
+					main::ai_route($field{name}, $spell->{pos}{x},
+						$spell->{pos}{y}, attackOnRoute => 1, noSitAuto => 1);
+					$skip = 1;
+				}else{
+					error T("Escape failed no portal found.\n");;
+				}
+				
+			} else {
+				error T("Escape failed no portal found.\n");
+			}
+	     }
+		if ($config{route_escape_randomWalk} && !$skip) { #randomly search for portals...
+		   my ($randX, $randY);
+		   my $i = 500;
+		   my $pos = calcPosition($char);
+		   do {
+			   	 if ((rand(2)+1)%2){
+				    $randX = $pos->{x} + int(rand(9) + 1);
+	   		  	 }else{
+	 	  	 	    $randX = $pos->{x} - int(rand(9) + 1);
+	    	           }
+				 if ((rand(2)+1)%2){
+					$randY = $pos->{y} + int(rand(9) + 1);
+	                }else{
+		               $randY = $pos->{y} - int(rand(9) + 1);
+		     	 }
+		   } while (--$i && !checkFieldWalkable(\%field, $randX, $randY));
+			   	if (!$i) {
+				   error T("Invalid coordinates specified for randomWalk (coordinates are unwalkable); randomWalk disabled\n");
+	 	   		} else {
+			        message TF("Calculating random route to: %s(%s): %s, %s\n", $maps_lut{$field{name}.'.rsw'}, $field{name}, $randX, $randY), "route";
+				   ai_route($field{name}, $randX, $randY,
+				   maxRouteTime => $config{route_randomWalk_maxRouteTime},
+				   			 attackOnRoute => 2,
+					  		 noMapRoute => ($config{route_randomWalk} == 2 ? 1 : 0) );
+			     }
+		    }
 	}
 
 	##### DELAYED-TELEPORT #####
@@ -3530,7 +3572,10 @@ sub processMapRouteAI {
 				warning TF("Unable to calculate how to walk from [%s(%s,%s)] " .
 					"to [%s%s] (no map solution).\n", $field{name}, $char->{pos_to}{x}, $char->{pos_to}{y}, $args->{dest}{map}, ${destpos}), "route";
 				AI::dequeue;
-				AI::queue("escape") if $config{route_escape_unknownMap};         
+                    if ($config{route_escape_unknownMap}) {
+				   $timeout{ai_route_escape}{time} = time;
+				   AI::queue("escape");
+       			}
 			}
 
 		} elsif ( $args->{stage} eq 'Traverse the Map Solution' ) {
