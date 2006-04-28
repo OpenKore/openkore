@@ -1,4 +1,4 @@
-==================
+﻿==================
 ### 1.9.1
 ==================
 
@@ -153,6 +153,19 @@ New config options:
   Set this to 1 to make the anti-KS code more aggressive. Kore will drop
   the monster if others have attacked it, regardless of whether the monster
   attacked you or whether you have attacked it.
+- route_escape_unknownMap (flag)
+  Set this to 1 to make openkore escape from unknown places. For Example,
+  kore teleports into a portal and landed into another map with a portal 
+  not in portals.txt, with this function, kore will attempt to enter the 
+  nearest portal or warp portal.
+- route_escape_randomWalk (flag)
+  route_escape_unknownMap must be set to 1 for this function to work.
+  Randomly walk arround the map if it got teleported into an unknown map.
+- route_escape_reachedNoPortal (flag)
+  route_escape_unknownMap must be set to 1 for this function to work.
+  if the map kore "accidentally" teleports into doesn't have a portal,it 
+  would activate the escape AI this is usually accompanied with 
+  route_escape_randomWalk. 
 
 New commands:
 - cart release: remove cart status
