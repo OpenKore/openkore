@@ -8,6 +8,14 @@
 static ConsoleUI *ui = NULL;
 
 static void
+usage() {
+	fprintf(stderr, "Usage: consoleui-test <-c|-p>\n"
+		"  -c  Test for correctness.\n"
+		"  -p  Test for performance.\n");
+	exit(1);
+}
+
+static void
 show(const char *format, ...) {
 	va_list ap;
 	char buf[1024 * 4];
@@ -18,11 +26,29 @@ show(const char *format, ...) {
 	ui->print(buf);
 }
 
-int
-main() {
-	srand(time(NULL));
+/*
+static void
+doNothing(unsigned int maxIterations) {
+	FILE *f = fopen("/dev/urandom", "r");
+	if (f == NULL) {
+		show("Cannot open /dev/urandom for reading.\n");
+		exit(1);
+	}
+
+	unsigned int i = 0;
+	while (i < maxIterations && !feof(f)) {
+		fgetc(f);
+		i++;
+	}
+	fclose(f);
+}
+*/
+
+static int
+testCorrectness() {
 	ui = ConsoleUI::getInstance();
 	ui->start();
+	srand(time(NULL));
 
 	for (int i = 1; i <= 5; i++) {
 		show("Loading %d...\n", i);
@@ -57,3 +83,31 @@ main() {
 	}
 	return 0;
 }
+
+static int
+testPerformance() {
+	ui = ConsoleUI::getInstance();
+	ui->start();
+
+	for (int i = 1; i <= 5000000; i++) {
+		show("Loading %d...\n", i);
+	}
+	return 0;
+}
+
+int
+main(int argc, char *argv[]) {
+	if (argc != 2) {
+		usage();
+	}
+
+	if (strcmp(argv[1], "-c") == 0) {
+		return testCorrectness();
+	} else if (strcmp(argv[1], "-p") == 0) {
+		return testPerformance();
+	} else {
+		usage();
+		return 1; // Never reached.
+	}
+}
+
