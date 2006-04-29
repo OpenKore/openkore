@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: Openkore\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-04-17 09:57-0300\n"
-"PO-Revision-Date: 2006-04-17 10:00-0300\n"
-"Last-Translator: Illusionist\n"
+"PO-Revision-Date: 2006-04-29 16:47-0300\n"
+"Last-Translator: Illusionist <illusion.kore@hotmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -38,7 +38,7 @@ msgstr "Atacando: %s\n"
 #: ../AI.pm:813
 #, perl-format
 msgid "Encounter Monster : %s\n"
-msgstr "Encontro com Monstro: %s\n"
+msgstr "Encontro com monstro: %s\n"
 
 #: ../AI.pm:820
 #, perl-format
@@ -3091,7 +3091,7 @@ msgstr "Você atacou o monstro %s (%d) - Dano: %s (atraso %s)\n"
 #: ../Misc.pm:2701
 #, perl-format
 msgid "You attack Unknown #%s (%d) - Dmg: %s (delay %s)\n"
-msgstr "Você atacou algo Desconhecido #%s (%d) - Dano: %s (atraso %s)\n"
+msgstr "Você atacou algo desconhecido #%s (%d) - Dano: %s (atraso %s)\n"
 
 #: ../Misc.pm:2707
 #, perl-format
@@ -3111,47 +3111,47 @@ msgstr "O jogador %s (%d) atacou o monstro %s (%d) - Dano: %s (atraso %s)\n"
 #: ../Misc.pm:2716
 #, perl-format
 msgid "Player %s (%d) attacks Unknown #%s (%d) - Dmg: %s (delay %s)\n"
-msgstr "O jogador %s (%d) atacou algo Desconhecido #%s (%d) - Dano: %s (atraso %s)\n"
+msgstr "O jogador %s (%d) atacou algo desconhecido #%s (%d) - Dano: %s (atraso %s)\n"
 
 #: ../Misc.pm:2722
 #, perl-format
 msgid "Monster %s (%d) attacks you - Dmg: %s (delay %s)\n"
-msgstr "O Monstro %s (%d) te atacou - Dano: %s (atraso %s)\n"
+msgstr "O monstro %s (%d) te atacou - Dano: %s (atraso %s)\n"
 
 #: ../Misc.pm:2725
 #, perl-format
 msgid "Monster %s (%d) attacks player %s (%d) - Dmg: %s (delay %s)\n"
-msgstr "O Monstro %s (%d) atacou o jogador %s (%d) - Dano: %s (atraso %s)\n"
+msgstr "O monstro %s (%d) atacou o jogador %s (%d) - Dano: %s (atraso %s)\n"
 
 #: ../Misc.pm:2728
 #, perl-format
 msgid "Monster %s (%d) attacks monster %s (%d) - Dmg: %s (delay %s)\n"
-msgstr "O Monstro %s (%d) atacou o monstro %s (%d) - Dano: %s (atraso %s)\n"
+msgstr "O monstro %s (%d) atacou o monstro %s (%d) - Dano: %s (atraso %s)\n"
 
 #: ../Misc.pm:2731
 #, perl-format
 msgid "Monster %s (%d) attacks Unknown #%s (%d) - Dmg: %s (delay %s)\n"
-msgstr "O Monstro %s (%d) atacou algo Desconhecido #%s (%d) - Dano: %s (atraso %s)\n"
+msgstr "O monstro %s (%d) atacou algo desconhecido #%s (%d) - Dano: %s (atraso %s)\n"
 
 #: ../Misc.pm:2737
 #, perl-format
 msgid "Unknown #%s (%d) attacks you - Dmg: %s (delay %s)\n"
-msgstr "Algo Desconhecido #%s (%d) te atacou - Dano: %s (atraso %s)\n"
+msgstr "Algo desconhecido #%s (%d) te atacou - Dano: %s (atraso %s)\n"
 
 #: ../Misc.pm:2740
 #, perl-format
 msgid "Unknown #%s (%d) attacks player %s (%d) - Dmg: %s (delay %s)\n"
-msgstr "Algo Desconhecido #%s (%d) atacou o jogador %s (%d) - Dano: %s (atraso %s)\n"
+msgstr "Algo desconhecido #%s (%d) atacou o jogador %s (%d) - Dano: %s (atraso %s)\n"
 
 #: ../Misc.pm:2743
 #, perl-format
 msgid "Unknown #%s (%d) attacks monster %s (%d) - Dmg: %s (delay %s)\n"
-msgstr "Algo Desconhecido #%s (%d) atacou o monstro %s (%d) - Dano: %s (atraso %s)\n"
+msgstr "Algo desconhecido #%s (%d) atacou o monstro %s (%d) - Dano: %s (atraso %s)\n"
 
 #: ../Misc.pm:2746
 #, perl-format
 msgid "Unknown #%s (%d) attacks Unknown #%s (%d) - Dmg: %s (delay %s)\n"
-msgstr "Algo Desconhecido #%s (%d) atacou outro desconhecido %s (%d) - Dano: %s (atraso %s)\n"
+msgstr "Algo desconhecido #%s (%d) atacou outro desconhecido #%s (%d) - Dano: %s (atraso %s)\n"
 
 #: ../Misc.pm:2758
 #, perl-format
@@ -3201,57 +3201,57 @@ msgstr "O jogador %s (%d) está conjurando %s no monstro %s (%d) (tempo %sms)\n"
 #: ../Misc.pm:2790
 #, perl-format
 msgid "Player %s (%d) is casting %s on Unknown #%s (%d) (time %sms)\n"
-msgstr "O jogador %s (%d) está conjurando %s em algo Desconhecido #%s (%d) (tempo %sms)\n"
+msgstr "O jogador %s (%d) está conjurando %s em algo desconhecido #%s (%d) (tempo %sms)\n"
 
 #: ../Misc.pm:2796
 #, perl-format
 msgid "Monster %s (%d) is casting %s on you (time %sms)\n"
-msgstr "O Monstro %s (%d) está conjurando %s em você (tempo %sms)\n"
+msgstr "O monstro %s (%d) está conjurando %s em você (tempo %sms)\n"
 
 #: ../Misc.pm:2799
 #, perl-format
 msgid "Monster %s (%d) is casting %s on player %s (%d) (time %sms)\n"
-msgstr "O Monstro %s (%d) está conjurando %s no jogador %s (%d) (tempo %sms)\n"
+msgstr "O monstro %s (%d) está conjurando %s no jogador %s (%d) (tempo %sms)\n"
 
 #: ../Misc.pm:2803
 #, perl-format
 msgid "Monster %s (%d) is casting %s on monster %s (%d) (time %sms)\n"
-msgstr "O Monstro %s (%d) está conjurando %s no monstro %s (%d) (tempo %sms)\n"
+msgstr "O monstro %s (%d) está conjurando %s no monstro %s (%d) (tempo %sms)\n"
 
 #: ../Misc.pm:2806
 #, perl-format
 msgid "Monster %s (%d) is casting %s on itself (time %sms)\n"
-msgstr "O Monstro %s (%d) está conjurando %s em si (tempo %sms)\n"
+msgstr "O monstro %s (%d) está conjurando %s em si (tempo %sms)\n"
 
 #: ../Misc.pm:2810
 #, perl-format
 msgid "Monster %s (%d) is casting %s on Unknown #%s (%d) (time %sms)\n"
-msgstr "O Monstro %s (%d) está conjurando %s em algo Desconhecido #%s (%d) (tempo %sms)\n"
+msgstr "O monstro %s (%d) está conjurando %s em algo desconhecido #%s (%d) (tempo %sms)\n"
 
 #: ../Misc.pm:2816
 #, perl-format
 msgid "Unknown #%s (%d) is casting %s on you (time %sms)\n"
-msgstr "Algo Desconhecido %s (%d) está conjurando %s em você (tempo %sms)\n"
+msgstr "Algo desconhecido #%s (%d) está conjurando %s em você (tempo %sms)\n"
 
 #: ../Misc.pm:2819
 #, perl-format
 msgid "Unknown #%s (%d) is casting %s on player %s (%d) (time %sms)\n"
-msgstr "Algo Desconhecido %s (%d) está conjurando %s no jogador %s (%d) (tempo %sms)\n"
+msgstr "Algo desconhecido #%s (%d) está conjurando %s no jogador %s (%d) (tempo %sms)\n"
 
 #: ../Misc.pm:2822
 #, perl-format
 msgid "Unknown #%s (%d) is casting %s on monster %s (%d) (time %sms)\n"
-msgstr "Algo Desconhecido %s (%d) está conjurando %s no monstro %s (%d) (tempo %sms)\n"
+msgstr "Algo desconhecido #%s (%d) está conjurando %s no monstro %s (%d) (tempo %sms)\n"
 
 #: ../Misc.pm:2826
 #, perl-format
 msgid "Unknown #%s (%d) is casting %s on Unknown #%s (%d) (time %sms)\n"
-msgstr "Algo Desconhecido %s (%d) está conjurando %s em outro Desconhecido #%s (%d) (tempo %sms)\n"
+msgstr "Algo desconhecido #%s (%d) está conjurando %s em outro Desconhecido #%s (%d) (tempo %sms)\n"
 
 #: ../Misc.pm:2829
 #, perl-format
 msgid "Unknown #%s (%d) is casting %s on himself (time %sms)\n"
-msgstr "Algo Desconhecido %s (%d) está conjurando %s em si (tempo %sms)\n"
+msgstr "Algo desconhecido #%s (%d) está conjurando %s em si (tempo %sms)\n"
 
 #. Translation Comment: Ammount of Damage on Skill
 #: ../Misc.pm:2842
@@ -3284,87 +3284,87 @@ msgstr "Você usou %s no monstro %s (%d) %s(atraso %s)\n"
 #: ../Misc.pm:2861
 #, perl-format
 msgid "You use %s on Unknown #%s (%d) %s(delay %s)\n"
-msgstr "Você usou %s em algo Desconhecido #%s (%d) %s(atraso %s)\n"
+msgstr "Você usou %s em algo desconhecido #%s (%d) %s(atraso %s)\n"
 
 #: ../Misc.pm:2867
 #, perl-format
 msgid "Player %s (%d) uses %s on you %s(delay %s)\n"
-msgstr "O Jogador %s (%d) usou %s em você %s(atraso %s)\n"
+msgstr "O jogador %s (%d) usou %s em você %s(atraso %s)\n"
 
 #: ../Misc.pm:2872
 #, perl-format
 msgid "Player %s (%d) uses %s on player %s (%d) %s(delay %s)\n"
-msgstr "O Jogador %s (%d) usou %s no jogador %s (%d) %s(atraso %s)\n"
+msgstr "O jogador %s (%d) usou %s no jogador %s (%d) %s(atraso %s)\n"
 
 #: ../Misc.pm:2875
 #, perl-format
 msgid "Player %s (%d) uses %s on himself %s(delay %s)\n"
-msgstr "O Jogador %s (%d) usou %s em si %s(atraso %s)\n"
+msgstr "O jogador %s (%d) usou %s em si %s(atraso %s)\n"
 
 #: ../Misc.pm:2878
 #, perl-format
 msgid "Player %s (%d) uses %s on herself %s(delay %s)\n"
-msgstr "A Jogadora %s (%d) usou %s em si %s(atraso %s)\n"
+msgstr "A jogadora %s (%d) usou %s em si %s(atraso %s)\n"
 
 #: ../Misc.pm:2882
 #, perl-format
 msgid "Player %s (%d) uses %s on monster %s (%d) %s(delay %s)\n"
-msgstr "O Jogador %s (%d) usou %s no monstro %s (%d) %s(atraso %s)\n"
+msgstr "O jogador %s (%d) usou %s no monstro %s (%d) %s(atraso %s)\n"
 
 #: ../Misc.pm:2885
 #, perl-format
 msgid "Player %s (%d) uses %s on Unknown #%s (%d) %s(delay %s)\n"
-msgstr "O Jogador %s (%d) usou %s em algo Desconhecido %s (%d) %s(atraso %s)\n"
+msgstr "O jogador %s (%d) usou %s em algo desconhecido %s (%d) %s(atraso %s)\n"
 
 #: ../Misc.pm:2891
 #, perl-format
 msgid "Monster %s (%d) uses %s on you %s(delay %s)\n"
-msgstr "O Monstro %s (%d) usou %s em você %s(atraso %s)\n"
+msgstr "O monstro %s (%d) usou %s em você %s(atraso %s)\n"
 
 #: ../Misc.pm:2894
 #, perl-format
 msgid "Monster %s (%d) uses %s on player %s (%d) %s(delay %s)\n"
-msgstr "O Monstro %s (%d) usou %s no jogador %s (%d) %s(atraso %s)\n"
+msgstr "O monstro %s (%d) usou %s no jogador %s (%d) %s(atraso %s)\n"
 
 #: ../Misc.pm:2898
 #, perl-format
 msgid "Monster %s (%d) uses %s on monster %s (%d) %s(delay %s)\n"
-msgstr "O Monstro %s (%d) usou %s no monstro %s (%d) %s(atraso %s)\n"
+msgstr "O monstro %s (%d) usou %s no monstro %s (%d) %s(atraso %s)\n"
 
 #: ../Misc.pm:2901
 #, perl-format
 msgid "Monster %s (%d) uses %s on itself %s(delay %s)\n"
-msgstr "O Monstro %s (%d) usou %s em si %s(atraso %s)\n"
+msgstr "O monstro %s (%d) usou %s em si %s(atraso %s)\n"
 
 #: ../Misc.pm:2905
 #, perl-format
 msgid "Monster %s (%d) uses %s on Unknown #%s (%d) %s(delay %s)\n"
-msgstr "O Monstro %s (%d) usou %s em algo Desconhecido #%s (%d) %s(atraso %s)\n"
+msgstr "O monstro %s (%d) usou %s em algo desconhecido #%s (%d) %s(atraso %s)\n"
 
 #: ../Misc.pm:2911
 #, perl-format
 msgid "Unknown #%s (%d) uses %s on you %s(delay %s)\n"
-msgstr "Algo Desconhecido #%s (%d) usou %s em você %s(atraso %s)\n"
+msgstr "Algo desconhecido #%s (%d) usou %s em você %s(atraso %s)\n"
 
 #: ../Misc.pm:2914
 #, perl-format
 msgid "Unknown #%s (%d) uses %s on player %s (%d) %s(delay %s)\n"
-msgstr "Algo Desconhecido #%s (%d) usou %s no jogador %s (%d) %s(atraso %s)\n"
+msgstr "Algo desconhecido #%s (%d) usou %s no jogador %s (%d) %s(atraso %s)\n"
 
 #: ../Misc.pm:2917
 #, perl-format
 msgid "Unknown #%s (%d) uses %s on monster %s (%d) %s(delay %s)\n"
-msgstr "Algo Desconhecido #%s (%d) usou %s no monstro %s (%d) %s(atraso %s)\n"
+msgstr "Algo desconhecido #%s (%d) usou %s no monstro %s (%d) %s(atraso %s)\n"
 
 #: ../Misc.pm:2921
 #, perl-format
 msgid "Unknown #%s (%d) uses %s on Unknown #%s (%d) %s(delay %s)\n"
-msgstr "Algo Desconhecido #%s (%d) usou %s em outro Desconhecido #%s (%d) %s(atraso %s)\n"
+msgstr "Algo desconhecido #%s (%d) usou %s em outro desconhecido #%s (%d) %s(atraso %s)\n"
 
 #: ../Misc.pm:2924
 #, perl-format
 msgid "Unknown #%s (%d) uses %s on himself %s(delay %s)\n"
-msgstr "Algo Desconhecido #%s (%d) usou %s em si %s(atraso %s)\n"
+msgstr "Algo desconhecido #%s (%d) usou %s em si %s(atraso %s)\n"
 
 #: ../Misc.pm:2938
 #, perl-format
@@ -3374,17 +3374,17 @@ msgstr "Você usou %s no local (%d, %d)\n"
 #: ../Misc.pm:2940
 #, perl-format
 msgid "Player %s (%d) uses %s on location (%d, %d)\n"
-msgstr "O Jogador %s (%d) usou %s no local (%d, %d)\n"
+msgstr "O jogador %s (%d) usou %s no local (%d, %d)\n"
 
 #: ../Misc.pm:2943
 #, perl-format
 msgid "Monster %s (%d) uses %s on location (%d, %d)\n"
-msgstr "O Monstro %s (%d) usou %s no local (%d, %d)\n"
+msgstr "O monstro %s (%d) usou %s no local (%d, %d)\n"
 
 #: ../Misc.pm:2946
 #, perl-format
 msgid "Unknown #%s (%d) uses %s on location (%d, %d)\n"
-msgstr "Algo Desconhecido #%s (%d) usou %s no local (%d, %d)\n"
+msgstr "Algo desconhecido #%s (%d) usou %s no local (%d, %d)\n"
 
 #. Translation Comment: used Healing skill
 #: ../Misc.pm:2956
@@ -3416,87 +3416,87 @@ msgstr "Você usou %s no monstro %s (%d) %s\n"
 #: ../Misc.pm:2977
 #, perl-format
 msgid "You use %s on Unknown #%s (%d) %s\n"
-msgstr "Você usou %s em algo Desconhecido %s (%d) %s\n"
+msgstr "Você usou %s em algo desconhecido #%s (%d) %s\n"
 
 #: ../Misc.pm:2983
 #, perl-format
 msgid "Player %s (%d) uses %s on you %s\n"
-msgstr "O Jogador %s (%d) usou %s em você %s\n"
+msgstr "O jogador %s (%d) usou %s em você %s\n"
 
 #: ../Misc.pm:2988
 #, perl-format
 msgid "Player %s (%d) uses %s on player %s (%d) %s\n"
-msgstr "O Jogador %s (%d) usou %s no jogador %s (%d) %s\n"
+msgstr "O jogador %s (%d) usou %s no jogador %s (%d) %s\n"
 
 #: ../Misc.pm:2991
 #, perl-format
 msgid "Player %s (%d) uses %s on himself %s\n"
-msgstr "O Jogador %s (%d) usou %s em si %s\n"
+msgstr "O jogador %s (%d) usou %s em si %s\n"
 
 #: ../Misc.pm:2994
 #, perl-format
 msgid "Player %s (%d) uses %s on herself %s\n"
-msgstr "A Jogadora %s (%d) usou %s em si %s\n"
+msgstr "A jogadora %s (%d) usou %s em si %s\n"
 
 #: ../Misc.pm:2998
 #, perl-format
 msgid "Player %s (%d) uses %s on monster %s (%d) %s\n"
-msgstr "O Jogador %s (%d) usou %s no monstro %s (%d) %s\n"
+msgstr "O jogador %s (%d) usou %s no monstro %s (%d) %s\n"
 
 #: ../Misc.pm:3001
 #, perl-format
 msgid "Player %s (%d) uses %s on Unknown #%s (%d) %s\n"
-msgstr "O Jogador %s (%d) usou %s em algo Desconhecido #%s (%d) %s\n"
+msgstr "O jogador %s (%d) usou %s em algo desconhecido #%s (%d) %s\n"
 
 #: ../Misc.pm:3007
 #, perl-format
 msgid "Monster %s (%d) uses %s on you %s\n"
-msgstr "O Monstro %s (%d) usou %s em você %s\n"
+msgstr "O monstro %s (%d) usou %s em você %s\n"
 
 #: ../Misc.pm:3010
 #, perl-format
 msgid "Monster %s (%d) uses %s on player %s (%d) %s\n"
-msgstr "O Monstro %s (%d) usou %s no jogador %s (%d) %s\n"
+msgstr "O monstro %s (%d) usou %s no jogador %s (%d) %s\n"
 
 #: ../Misc.pm:3014
 #, perl-format
 msgid "Monster %s (%d) uses %s on monster %s (%d) %s\n"
-msgstr "O Monstro %s (%d) usou %s no monstro %s (%d) %s\n"
+msgstr "O monstro %s (%d) usou %s no monstro %s (%d) %s\n"
 
 #: ../Misc.pm:3017
 #, perl-format
 msgid "Monster %s (%d) uses %s on itself %s\n"
-msgstr "O Jogador %s (%d) usou %s em si %s\n"
+msgstr "O jogador %s (%d) usou %s em si %s\n"
 
 #: ../Misc.pm:3021
 #, perl-format
 msgid "Monster %s (%d) uses %s on Unknown #%s (%d) %s\n"
-msgstr "O Jogador %s (%d) usou %s em algo Desconhecido #%s (%d) %s\n"
+msgstr "O jogador %s (%d) usou %s em algo desconhecido #%s (%d) %s\n"
 
 #: ../Misc.pm:3027
 #, perl-format
 msgid "Unknown #%s (%d) uses %s on you %s\n"
-msgstr "Algo Desconhecido #%s (%d) usou %s em você %s\n"
+msgstr "Algo desconhecido #%s (%d) usou %s em você %s\n"
 
 #: ../Misc.pm:3030
 #, perl-format
 msgid "Unknown #%s (%d) uses %s on player %s (%d) %s\n"
-msgstr "Algo Desconhecido #%s (%d) usou %s no jogador %s (%d) %s\n"
+msgstr "Algo desconhecido #%s (%d) usou %s no jogador %s (%d) %s\n"
 
 #: ../Misc.pm:3033
 #, perl-format
 msgid "Unknown #%s (%d) uses %s on monster %s (%d) %s\n"
-msgstr "Algo Desconhecido #%s (%d) usou %s no monstro %s (%d) %s\n"
+msgstr "Algo desconhecido #%s (%d) usou %s no monstro %s (%d) %s\n"
 
 #: ../Misc.pm:3037
 #, perl-format
 msgid "Unknown #%s (%d) uses %s on Unknown #%s (%d) %s\n"
-msgstr "Algo Desconhecido #%s (%d) usou %s em algo Desconhecido %s (%d) %s\n"
+msgstr "Algo desconhecido #%s (%d) usou %s em algo desconhecido #%s (%d) %s\n"
 
 #: ../Misc.pm:3040
 #, perl-format
 msgid "Unknown #%s (%d) uses %s on himself %s\n"
-msgstr "Algo Desconhecido #%s (%d) usou %s em si %s\n"
+msgstr "Algo desconhecido #%s (%d) usou %s em si %s\n"
 
 #: ../Misc.pm:3052
 #, perl-format
@@ -3506,17 +3506,17 @@ msgstr "Você está agora com: %s\n"
 #: ../Misc.pm:3054
 #, perl-format
 msgid "Player %s (%d) is now: %s\n"
-msgstr "O Jogador %s (%d) está agora com: %s\n"
+msgstr "O jogador %s (%d) está agora com: %s\n"
 
 #: ../Misc.pm:3056
 #, perl-format
 msgid "Monster %s (%d) is now: %s\n"
-msgstr "O Monstro %s (%d) está agora com: %s\n"
+msgstr "O monstro %s (%d) está agora com: %s\n"
 
 #: ../Misc.pm:3058
 #, perl-format
 msgid "Unknown #%s (%d) is now: %s\n"
-msgstr "Algo Desconhecido #%s (%d) está agora com: %s\n"
+msgstr "Algo desconhecido #%s (%d) está agora com: %s\n"
 
 #: ../Misc.pm:3062
 #, perl-format
@@ -3526,17 +3526,17 @@ msgstr "Você está novamente com: %s\n"
 #: ../Misc.pm:3064
 #, perl-format
 msgid "Player %s (%d) is again: %s\n"
-msgstr "O Jogador %s (%d) está novamente com: %s\n"
+msgstr "O jogador %s (%d) está novamente com: %s\n"
 
 #: ../Misc.pm:3066
 #, perl-format
 msgid "Monster %s (%d) is again: %s\n"
-msgstr "O Monstro %s (%d) está novamente com: %s\n"
+msgstr "O monstro %s (%d) está novamente com: %s\n"
 
 #: ../Misc.pm:3068
 #, perl-format
 msgid "Unknown #%s (%d) is again: %s\n"
-msgstr "Algo Desconhecido #%s (%d) está novamente com: %s\n"
+msgstr "Algo desconhecido #%s (%d) está novamente com: %s\n"
 
 #: ../Misc.pm:3072
 #, perl-format
@@ -3546,17 +3546,17 @@ msgstr "Você não está mais com: %s\n"
 #: ../Misc.pm:3074
 #, perl-format
 msgid "Player %s (%d) is no longer: %s\n"
-msgstr "O Jogador %s (%d) não está mais com: %s\n"
+msgstr "O jogador %s (%d) não está mais com: %s\n"
 
 #: ../Misc.pm:3076
 #, perl-format
 msgid "Monster %s (%d) is no longer: %s\n"
-msgstr "O Monstro %s (%d) não está mais com: %s\n"
+msgstr "O monstro %s (%d) não está mais com: %s\n"
 
 #: ../Misc.pm:3078
 #, perl-format
 msgid "Unknown #%s (%d) is no longer: %s\n"
-msgstr "Algo Desconhecido #%s (%d) não está mais com: %s\n"
+msgstr "Algo desconhecido #%s (%d) não está mais com: %s\n"
 
 #: ../Misc.pm:3171
 #, perl-format
@@ -3803,7 +3803,7 @@ msgstr "Desconectado do Servidor de Mapas, conectando-se ao Servidor de Contas e
 
 #: ../Network.pm:515
 msgid "Timeout on Map Server, "
-msgstr "Tempo esgotado no Servidor de Mada, "
+msgstr "Tempo esgotado no Servidor de Mapa, "
 
 #: ../Network.pm:517
 msgid "exiting...\n"
@@ -4515,7 +4515,7 @@ msgstr "Pedido de se unir ao clã: %s\n"
 #: ../Network/Receive.pm:2801
 #, perl-format
 msgid "Guild join request: Unknown %s\n"
-msgstr "Pedido de ingresso ao clã: Desconhecido %s\n"
+msgstr "Pedido de ingresso ao clã: desconhecido %s\n"
 
 #: ../Network/Receive.pm:2848
 #, perl-format
@@ -5128,7 +5128,7 @@ msgstr "Você pode vender %s itens!\n"
 #: ../Network/Receive.pm:4653
 #, perl-format
 msgid "Monster Skill - switch Target to : %s (%s)\n"
-msgstr "Habilidade de Monstro - mudança de Alvo para : %s (%s)\n"
+msgstr "Habilidade de Monstro - mudança de alvo para : %s (%s)\n"
 
 #: ../Network/Receive.pm:4682
 #, perl-format
