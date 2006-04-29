@@ -132,6 +132,7 @@ sub checkPercent {
   my ($arg, $what) = @_;
   my ($cond, $amount) = $arg =~ /([<>=!]+)\s*(\d+[%])/;
   if ($what =~ /^(hp|sp|weight)$/) {
+    return 0 unless (defined $char->{$what} && defined $char->{$what."_max"});
     if ($amount =~ /\d+%$/ && $char->{$what."_max"}) {
       $amount =~ s/%$//;
       my $percent = $char->{$what} / $char->{$what."_max"} * 100;
@@ -140,6 +141,7 @@ sub checkPercent {
       return 1 if cmpr($char->{$what}, $cond, $amount)
     }
   } elsif ($what eq 'cweight') {
+    return 0 unless (defined $cart{weight} && defined $cart{weight_max});
     if ($amount =~ /\d+%$/ && $cart{weight_max}) {
       $amount =~ s/%$//;
       my $percent = $cart{weight} / $cart{weight_max} * 100;
@@ -455,8 +457,8 @@ sub automacroCheck {
       next CHKAM unless timeOut(\%tmptimer);
       $automacro{$am}->{time} = time
     }
-    next CHKAM if (defined $automacro{$am}->{map}     && $automacro{$am}->{map} ne $field{name});
-    next CHKAM if (defined $automacro{$am}->{class}   && !checkClass($automacro{$am}->{class}));
+    next CHKAM if (defined $automacro{$am}->{map}   && $automacro{$am}->{map} ne $field{name});
+    next CHKAM if (defined $automacro{$am}->{class} && !checkClass($automacro{$am}->{class}));
     foreach my $i (@{$automacro{$am}->{monster}})   {next CHKAM unless checkMonster($i)}
     foreach my $i (@{$automacro{$am}->{location}})  {next CHKAM unless checkLoc($i)}
     foreach my $i (@{$automacro{$am}->{var}})       {next CHKAM unless checkVar($i)}
@@ -465,10 +467,7 @@ sub automacroCheck {
     foreach my $i (@{$automacro{$am}->{job}})       {next CHKAM unless checkLevel($i, "job")}
     foreach my $i (@{$automacro{$am}->{hp}})        {next CHKAM unless checkPercent($i, "hp")}
     foreach my $i (@{$automacro{$am}->{sp}})        {next CHKAM unless checkPercent($i, "sp")}
-    foreach my $i (@{$automacro{$am}->{spirit}})    {
-      if (!defined $char->{spirits}) {$char->{spirits} = 0}
-      next CHKAM unless checkCond($char->{spirits}, $i)
-    }
+    foreach my $i (@{$automacro{$am}->{spirit}})    {next CHKAM unless checkCond($char->{spirits} or 0, $i)}
     foreach my $i (@{$automacro{$am}->{weight}})    {next CHKAM unless checkPercent($i, "weight")}
     foreach my $i (@{$automacro{$am}->{cartweight}}){next CHKAM unless checkPercent($i, "cweight")}
     foreach my $i (@{$automacro{$am}->{soldout}})   {next CHKAM unless checkCond(getSoldOut(), $i)}

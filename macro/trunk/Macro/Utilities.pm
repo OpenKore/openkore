@@ -103,8 +103,6 @@ sub match {
   my $match;
   my $flag;
   
-#  no warnings;
-
   if ($kw =~ /^".*"$/) {$match = 0}
   elsif ($kw =~ /^\/.*\/\w?$/) {$match = 1}
   else {return 0}
@@ -117,8 +115,6 @@ sub match {
     use strict;
     return 1
   }
-
-#  use warnings;
 
   return 0
 }
