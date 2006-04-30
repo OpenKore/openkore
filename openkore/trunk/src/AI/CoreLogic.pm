@@ -2819,7 +2819,7 @@ sub processAttack {
 		undef AI::args->{unstuck}{time};
 		undef AI::args->{move_start};
 
-	} elsif (AI::action eq "attack" && AI::args->{avoiding}) {
+	} elsif (AI::action eq "attack" && AI::args->{avoiding} && AI::args->{attackID}) {
 		my $target = Actor::get(AI::args->{attackID});
 		AI::args->{ai_attack_giveup}{time} = time + $target->{time_move_calc} + 3;
 		undef AI::args->{avoiding};
