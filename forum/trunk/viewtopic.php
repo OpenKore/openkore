@@ -31,6 +31,7 @@ include($phpbb_root_path . 'includes/openkore.'.$phpEx);
 // Start initial var setup
 //
 $topic_id = $post_id = 0;
+$vote_id = array();
 if ( isset($HTTP_GET_VARS[POST_TOPIC_URL]) )
 {
 	$topic_id = intval($HTTP_GET_VARS[POST_TOPIC_URL]);
@@ -690,7 +691,7 @@ if ( !empty($forum_topic_data['topic_vote']) )
 {
 	$s_hidden_fields = '';
 
-	$sql = "SELECT vd.vote_id, vd.vote_text, vd.vote_start, vd.vote_length, vr.vote_option_id, vr.vote_option_text, vr.vote_result
+	$sql = "SELECT vd.vote_id, vd.vote_text, vd.vote_start, vd.vote_length, vd.vote_max, vd.vote_voted, vd.vote_hide, vd.vote_tothide, vr.vote_option_id, vr.vote_option_text, vr.vote_result
 		FROM " . VOTE_DESC_TABLE . " vd, " . VOTE_RESULTS_TABLE . " vr
 		WHERE vd.topic_id = $topic_id
 			AND vr.vote_id = vd.vote_id
@@ -707,6 +708,10 @@ if ( !empty($forum_topic_data['topic_vote']) )
 
 		$vote_id = $vote_info[0]['vote_id'];
 		$vote_title = $vote_info[0]['vote_text'];
+		$max_vote = $vote_info[0]['vote_max'];
+		$voted_vote = $vote_info[0]['vote_voted'];
+		$hide_vote = $vote_info[0]['vote_hide'];
+		$tothide_vote = $vote_info[0]['vote_tothide'];
 
 		$sql = "SELECT vote_id
 			FROM " . VOTE_USERS_TABLE . "
@@ -760,19 +765,75 @@ if ( !empty($forum_topic_data['topic_vote']) )
 					$vote_info[$i]['vote_option_text'] = preg_replace($orig_word, $replacement_word, $vote_info[$i]['vote_option_text']);
 				}
 
-				$template->assign_block_vars("poll_option", array(
-					'POLL_OPTION_CAPTION' => $vote_info[$i]['vote_option_text'],
-					'POLL_OPTION_RESULT' => $vote_info[$i]['vote_result'],
-					'POLL_OPTION_PERCENT' => sprintf("%.1d%%", ($vote_percent * 100)),
+				$hide_vote_bl = '';
+				$hide_vote_zr = '0';
+				$total_votes_1 = $lang['Total_votes'] ;
+				$total_votes_2 = $vote_results_sum ;
+				if ( ( $poll_expired == 0 ) && ( $hide_vote == 1 ) && ( $vote_info[0]['vote_length'] <> 0 ) )
+				{
+					if ( $tothide_vote == 1 )
+					{
+						$total_votes_1 = '' ;
+						$total_votes_2 = '' ;
+					}
+					$poll_expires_c = $lang['Results_after'];
+					$template->assign_block_vars("poll_option", array(
+						'POLL_OPTION_CAPTION' => $vote_info[$i]['vote_option_text'],
+						'POLL_OPTION_RESULT' => $hide_vote_bl,
+						'POLL_OPTION_PERCENT' => $hide_vote_bl,
+						'POLL_OPTION_IMG' => $vote_graphic_img,
+						'POLL_OPTION_IMG_WIDTH' => $hide_vote_zr)
+					);
+				} else {
+					$poll_expires_c = '';
+					$template->assign_block_vars("poll_option", array(
+						'POLL_OPTION_CAPTION' => $vote_info[$i]['vote_option_text'],
+						'POLL_OPTION_RESULT' => $vote_info[$i]['vote_result'],
+						'POLL_OPTION_PERCENT' => sprintf("%.1d%%", ($vote_percent * 100)),
 
-					'POLL_OPTION_IMG' => $vote_graphic_img,
-					'POLL_OPTION_IMG_WIDTH' => $vote_graphic_length)
-				);
+						'POLL_OPTION_IMG' => $vote_graphic_img,
+						'POLL_OPTION_IMG_WIDTH' => $vote_graphic_length)
+					);
+				}
 			}
 
+			if ( ( $poll_expired == 0 ) && ( $vote_info[0]['vote_length'] <> 0 ) )
+			{
+				$poll_expire_1 = (( $vote_info[0]['vote_start'] + $vote_info[0]['vote_length'] ) - time() );
+				$poll_expire_2 = intval($poll_expire_1/86400);
+				$poll_expire_a = $poll_expire_2*86400;
+				$poll_expire_3 = intval(($poll_expire_1 - ($poll_expire_a))/3600);
+				$poll_expire_b = $poll_expire_3*3600;
+				$poll_expire_4 = intval((($poll_expire_1 - ($poll_expire_a) - ($poll_expire_b)))/60);
+				$poll_comma = ', ';
+				$poll_space = ' ';
+				$poll_expire_2 == '0' ? $poll_expire_6='' : ( ( $poll_expire_3 == 0 && $poll_expire_4 == 0 ) ? $poll_expire_6=$poll_expire_2.$poll_space.$lang['Days'] : $poll_expire_6=$poll_expire_2.$poll_space.$lang['Days'].$poll_comma ) ;
+				$poll_expire_3 == '0' ? $poll_expire_7='' : ( $poll_expire_4 == 0 ? $poll_expire_7=$poll_expire_3.$poll_space.$lang['Hours'] : $poll_expire_7=$poll_expire_3.$poll_space.$lang['Hours'].$poll_comma ) ;
+				$poll_expire_4 == '0' ? $poll_expire_8='' : $poll_expire_8=$poll_expire_4.$poll_space.$lang['Minutes'] ;
+				$poll_expires_d = $lang['Poll_expires'];
+			}
+			else if ($poll_expired == 1)
+			{
+				$poll_expires_6 = '';
+				$poll_expires_7 = '';
+				$poll_expires_8 = '';
+				$poll_expires_d = $lang['Poll_expiredyes'];
+			}
+			else
+			{
+				$poll_expires_6 = '';
+				$poll_expires_7 = '';
+				$poll_expires_8 = '';
+				$poll_expires_d = $lang['Poll_noexpire'];
+			}
+			$voted_vote_nb = $voted_vote;
 			$template->assign_vars(array(
-				'L_TOTAL_VOTES' => $lang['Total_votes'],
-				'TOTAL_VOTES' => $vote_results_sum)
+				'VOTED_SHOW' => $lang['Voted_show'],
+				'L_TOTAL_VOTES' => $total_votes_1,
+				'L_RESULTS_AFTER' => $poll_expires_c,
+				'L_POLL_EXPIRES' => $poll_expires_d,
+				'POLL_EXPIRES' => ($poll_expire_6.$poll_expire_7.$poll_expire_8),
+				'TOTAL_VOTES' => $total_votes_2)
 			);
 
 		}
@@ -781,6 +842,11 @@ if ( !empty($forum_topic_data['topic_vote']) )
 			$template->set_filenames(array(
 				'pollbox' => 'viewtopic_poll_ballot.tpl')
 			);
+			if ( $max_vote > 1 ) {
+				$vote_box = 'checkbox';
+			} else {
+				$vote_box = 'radio';
+			}
 
 			for($i = 0; $i < $vote_options; $i++)
 			{
@@ -790,6 +856,7 @@ if ( !empty($forum_topic_data['topic_vote']) )
 				}
 
 				$template->assign_block_vars("poll_option", array(
+					'POLL_VOTE_BOX' => $vote_box,
 					'POLL_OPTION_ID' => $vote_info[$i]['vote_option_id'],
 					'POLL_OPTION_CAPTION' => $vote_info[$i]['vote_option_text'])
 				);
@@ -804,6 +871,19 @@ if ( !empty($forum_topic_data['topic_vote']) )
 
 			$s_hidden_fields = '<input type="hidden" name="topic_id" value="' . $topic_id . '" /><input type="hidden" name="mode" value="vote" />';
 		}
+		if ( ( $max_vote > 1 ) && ( $max_vote < $vote_options ) )
+		{
+			$vote_br = '<br/>';
+			$max_vote_nb = $max_vote;
+		}
+		else
+		{
+			$vote_br = '';
+			$lang['Max_voting_1_explain'] = '';
+			$lang['Max_voting_2_explain'] = '';
+			$lang['Max_voting_3_explain'] = '';
+			$max_vote_nb = '';
+		}
 
 		if ( count($orig_word) )
 		{
@@ -814,6 +894,12 @@ if ( !empty($forum_topic_data['topic_vote']) )
 
 		$template->assign_vars(array(
 			'POLL_QUESTION' => $vote_title,
+			'POLL_VOTE_BR' => $vote_br,
+			'MAX_VOTING_1_EXPLAIN' => $lang['Max_voting_1_explain'],
+			'MAX_VOTING_2_EXPLAIN' => $lang['Max_voting_2_explain'],
+			'MAX_VOTING_3_EXPLAIN' => $lang['Max_voting_3_explain'],
+			'max_vote' => $max_vote_nb,
+			'voted_vote' => $voted_vote_nb,
 
 			'S_HIDDEN_FIELDS' => $s_hidden_fields,
 			'S_POLL_ACTION' => append_sid("posting.$phpEx?mode=vote&amp;" . POST_TOPIC_URL . "=$topic_id"))

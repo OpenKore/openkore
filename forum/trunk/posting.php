@@ -305,7 +305,11 @@ if ( $userdata['user_timeblock'] == '1' && time() - $userdata['user_regdate'] <=
 			{
 				$poll_title = $row['vote_text'];
 				$poll_id = $row['vote_id'];
-				$poll_length = $row['vote_length'] / 86400;
+				$poll_length = intval($row['vote_length'] / 86400);
+				$poll_length_h = intval( ( $row['vote_length'] - ( $poll_length *86400) ) /3600 ) ;
+				$max_vote = $row['vote_max'];
+				$hide_vote = $row['vote_hide'];
+				$tothide_vote = $row['vote_tothide'];
 
 				do
 				{
@@ -498,9 +502,34 @@ else if ( $mode == 'vote' )
 	//
 	// Vote in a poll
 	//
-	if ( !empty($HTTP_POST_VARS['vote_id']) )
+	if ( (!empty($HTTP_POST_VARS['vote_id'])) and (is_array($HTTP_POST_VARS['vote_id'])) and (isset($HTTP_POST_VARS['vote_id'])) )
 	{
 		$vote_option_id = intval($HTTP_POST_VARS['vote_id']);
+		$vote_id = $HTTP_POST_VARS['vote_id'];
+		$sql = "SELECT vd.vote_id, vd.vote_max    
+			FROM " . VOTE_DESC_TABLE . " vd, " . VOTE_RESULTS_TABLE . " vr
+			WHERE vd.topic_id = $topic_id 
+				AND vr.vote_id = vd.vote_id 
+				AND vr.vote_option_id = $vote_option_id
+			GROUP BY vd.vote_id";
+		if ( !($result = $db->sql_query($sql)) )
+		{
+			message_die(GENERAL_ERROR, 'Could not obtain vote data for this topic', '', __LINE__, __FILE__, $sql);
+		}
+
+		if ( $vote_info = $db->sql_fetchrow($result) )
+		{
+			$max_vote = $vote_info['vote_max'];
+		}
+		$max_voting=count($vote_id);
+		if ($max_voting>$max_vote)
+		{
+			$max_voting=$max_vote;
+		}
+		for($i = 0; $i < $max_voting; $i++)
+		{
+			$vbn[$i]= $vote_id[$i];
+		}
 
 		$sql = "SELECT vd.vote_id    
 			FROM " . VOTE_DESC_TABLE . " vd, " . VOTE_RESULTS_TABLE . " vr
@@ -528,13 +557,26 @@ else if ( $mode == 'vote' )
 
 			if ( !($row = $db->sql_fetchrow($result2)) )
 			{
-				$sql = "UPDATE " . VOTE_RESULTS_TABLE . " 
-					SET vote_result = vote_result + 1 
+				for($i = 0; $i < $max_voting; $i++)
+				{
+					$vote_option_id = $vbn[$i];
+					$sql = "UPDATE " . VOTE_RESULTS_TABLE . " 
+						SET vote_result = vote_result + 1 
+						WHERE vote_id = $vote_id 
+							AND vote_option_id = $vote_option_id";
+					$vote_option_id = '';
+					if ( !$db->sql_query($sql, BEGIN_TRANSACTION) )
+					{
+						message_die(GENERAL_ERROR, 'Could not update poll result', '', __LINE__, __FILE__, $sql);
+					}
+				}
+				$sql = "UPDATE " . VOTE_DESC_TABLE . " 
+					SET vote_voted = vote_voted + 1 
 					WHERE vote_id = $vote_id 
-						AND vote_option_id = $vote_option_id";
+						AND topic_id = $topic_id";
 				if ( !$db->sql_query($sql, BEGIN_TRANSACTION) )
 				{
-					message_die(GENERAL_ERROR, 'Could not update poll result', '', __LINE__, __FILE__, $sql);
+					message_die(GENERAL_ERROR, 'Could not update poll voted', '', __LINE__, __FILE__, $sql);
 				}
 
 				$sql = "INSERT INTO " . VOTE_USERS_TABLE . " (vote_id, vote_user_id, vote_user_ip) 
@@ -587,16 +629,23 @@ else if ( $submit || $confirm )
 			$message = ( !empty($HTTP_POST_VARS['message']) ) ? $HTTP_POST_VARS['message'] : '';
 			$poll_title = ( isset($HTTP_POST_VARS['poll_title']) && $is_auth['auth_pollcreate'] ) ? $HTTP_POST_VARS['poll_title'] : '';
 			$poll_options = ( isset($HTTP_POST_VARS['poll_option_text']) && $is_auth['auth_pollcreate'] ) ? $HTTP_POST_VARS['poll_option_text'] : '';
-			$poll_length = ( isset($HTTP_POST_VARS['poll_length']) && $is_auth['auth_pollcreate'] ) ? $HTTP_POST_VARS['poll_length'] : '';
+			$poll_length = ( isset($HTTP_POST_VARS['poll_length']) && $is_auth['auth_pollcreate'] ) ? intval($HTTP_POST_VARS['poll_length']) : '0';
+			$poll_length_h = ( isset($HTTP_POST_VARS['poll_length_h']) && $is_auth['auth_pollcreate'] ) ? intval($HTTP_POST_VARS['poll_length_h']) : '0';
+			$poll_length = $poll_length*24;
+			$poll_length = $poll_length_h+$poll_length;
+			$poll_length = ($poll_length) ? max(0, ($poll_length/24)) : 0;
+			$max_vote = ( isset($HTTP_POST_VARS['max_vote']) && $is_auth['auth_pollcreate'] ) ? ( ( $HTTP_POST_VARS['max_vote'] == 0 ) ? 1 : $HTTP_POST_VARS['max_vote'] ) : '';
+			$hide_vote = ( isset($HTTP_POST_VARS['hide_vote']) && $is_auth['auth_pollcreate'] && ($poll_length>0) ) ? 1 : '';
+			$tothide_vote = ( isset($HTTP_POST_VARS['tothide_vote']) && isset($HTTP_POST_VARS['hide_vote']) && $is_auth['auth_pollcreate'] && ($poll_length>0) ) ? 1 : '';
 			$bbcode_uid = '';
 
-			prepare_post($mode, $post_data, $bbcode_on, $html_on, $smilies_on, $error_msg, $username, $bbcode_uid, $subject, $message, $poll_title, $poll_options, $poll_length);
+			prepare_post($mode, $post_data, $bbcode_on, $html_on, $smilies_on, $error_msg, $username, $bbcode_uid, $subject, $message, $poll_title, $poll_options, $poll_length, $max_vote, $hide_vote, $tothide_vote);
 
 			if ( $error_msg == '' )
 			{
 				$topic_type = ( $topic_type != $post_data['topic_type'] && !$is_auth['auth_sticky'] && !$is_auth['auth_announce'] ) ? $post_data['topic_type'] : $topic_type;
 
-				submit_post($mode, $post_data, $return_message, $return_meta, $forum_id, $topic_id, $post_id, $poll_id, $topic_type, $bbcode_on, $html_on, $smilies_on, $attach_sig, $bbcode_uid, str_replace("\'", "''", $username), str_replace("\'", "''", $subject), str_replace("\'", "''", $message), str_replace("\'", "''", $poll_title), $poll_options, $poll_length);
+				submit_post($mode, $post_data, $return_message, $return_meta, $forum_id, $topic_id, $post_id, $poll_id, $topic_type, $bbcode_on, $html_on, $smilies_on, $attach_sig, $bbcode_uid, str_replace("\'", "''", $username), str_replace("\'", "''", $subject), str_replace("\'", "''", $message), str_replace("\'", "''", $poll_title), $poll_options, $poll_length, $max_vote, $hide_vote, $tothide_vote);
 			}
 			break;
 
@@ -651,6 +700,9 @@ if( $refresh || isset($HTTP_POST_VARS['del_poll_option']) || $error_msg != '' )
 
 	$poll_title = ( !empty($HTTP_POST_VARS['poll_title']) ) ? htmlspecialchars(trim(stripslashes($HTTP_POST_VARS['poll_title']))) : '';
 	$poll_length = ( isset($HTTP_POST_VARS['poll_length']) ) ? max(0, intval($HTTP_POST_VARS['poll_length'])) : 0;
+	$max_vote = ( isset($HTTP_POST_VARS['max_vote']) ) ? max(0, intval($HTTP_POST_VARS['max_vote'])) : 0;
+	$hide_vote = ( isset($HTTP_POST_VARS['hide_vote']) ) ? max(0, intval($HTTP_POST_VARS['hide_vote'])) : 0;
+	$tothide_vote = ( isset($HTTP_POST_VARS['tothide_vote']) ) ? max(0, intval($HTTP_POST_VARS['tothide_vote'])) : 0;
 
 	$poll_options = array();
 	if ( !empty($HTTP_POST_VARS['poll_option_text']) )
@@ -790,6 +842,10 @@ else
 		$username = ($userdata['session_logged_in']) ? $userdata['username'] : '';
 		$poll_title = '';
 		$poll_length = '';
+		$poll_length_h = '';
+		$max_vote = '1';
+		$hide_vote = '';
+		$tothide_vote = '';
 		$subject = '';
 		$message = '';
 	}
@@ -1113,11 +1169,25 @@ if( ( $mode == 'newtopic' || ( $mode == 'editpost' && $post_data['edit_poll']) )
 		'L_UPDATE_OPTION' => $lang['Update'],
 		'L_DELETE_OPTION' => $lang['Delete'], 
 		'L_POLL_LENGTH' => $lang['Poll_for'],  
+		'L_MAX_VOTE' => $lang['Max_vote'],  
+		'L_MAX_VOTE_EXPLAIN' => $lang['Max_vote_explain'], 
+		'L_MAX_VOTING_1_EXPLAIN' => $lang['Max_voting_1_explain'], 
+		'L_MAX_VOTING_2_EXPLAIN' => $lang['Max_voting_2_explain'], 
+		'L_MAX_VOTING_3_EXPLAIN' => $lang['Max_voting_3_explain'], 
+		'L_VHIDE' => $lang['Vhide'], 
+		'L_HIDE_VOTE' => $lang['Hide_vote'], 
+		'L_TOTHIDE_VOTE' => $lang['Tothide_vote'], 
+		'L_HIDE_VOTE_EXPLAIN' => $lang['Hide_vote_explain'], 
+		'L_HOURS' => $lang['Hours'], 
 		'L_DAYS' => $lang['Days'], 
 		'L_POLL_LENGTH_EXPLAIN' => $lang['Poll_for_explain'], 
 		'L_POLL_DELETE' => $lang['Delete_poll'],
 		
 		'POLL_TITLE' => $poll_title,
+		'HIDE_VOTE' => ( $hide_vote ) ? 'checked="checked"' : '',
+		'TOTHIDE_VOTE' => ( $tothide_vote ) ? 'checked="checked"' : '',
+		'POLL_LENGTH_H' => $poll_length_h,
+		'MAX_VOTE' => $max_vote,
 		'POLL_LENGTH' => $poll_length)
 	);
 

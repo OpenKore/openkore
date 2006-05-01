@@ -298,7 +298,13 @@ $lang['Start_watching_topic'] = 'Watch this topic for replies';
 $lang['No_longer_watching'] = 'You are no longer watching this topic';
 $lang['You_are_watching'] = 'You are now watching this topic';
 
-$lang['Total_votes'] = 'Total Votes';
+$lang['Total_votes'] = 'Total Votes : ';
+$lang['Voted_show'] = 'Voted : '; // it means :  users that voted  (the number of voters will follow)
+$lang['Results_after'] = 'Results will be visible after the poll expires';
+$lang['Poll_expires'] = 'Poll expires in ';
+$lang['Poll_expiredyes'] = '- Poll expired -'; 
+$lang['Poll_noexpire'] = 'This poll does not expire'; 
+$lang['Minutes'] = 'Minutes';
 
 //
 // Posting/Replying (Not private messaging!)
@@ -352,6 +358,15 @@ $lang['Poll_for'] = 'Run poll for';
 $lang['Days'] = 'Days'; // This is used for the Run poll for ... Days + in admin_forums for pruning
 $lang['Poll_for_explain'] = '[ Enter 0 or leave blank for a never-ending poll ]';
 $lang['Delete_poll'] = 'Delete Poll';
+$lang['Max_vote'] = 'Maximum selections';
+$lang['Max_vote_explain'] = '[ Enter 1 or leave blank to allow only one selection ]';
+$lang['Max_voting_1_explain'] = 'Please select only ';
+$lang['Max_voting_2_explain'] = ' answers';
+$lang['Max_voting_3_explain'] = ' (selections above limit will be ignored)';
+$lang['Vhide'] = 'Hide';
+$lang['Hide_vote'] = 'Results';
+$lang['Tothide_vote'] = 'Sum of votes';
+$lang['Hide_vote_explain'] = '[ Hide until poll expires ]';
 
 $lang['Disable_HTML_post'] = 'Disable HTML in this post';
 $lang['Disable_BBCode_post'] = 'Disable BBCode in this post';
