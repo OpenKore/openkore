@@ -61,10 +61,9 @@ function prepare_message($message, $html_on, $bbcode_on, $smile_on, $bbcode_uid 
 		foreach ($message_split as $part)
 		{
 			$tag = array(array_shift($matches[0]), array_shift($matches[1]), array_shift($matches[2]));
-			$message .= htmlspecialchars($part) . clean_html($tag);
+			$message .= htmlspecialchars(addslashes($part)) . clean_html($tag);
 		}
 
-		$message = addslashes($message);
 	}
 	else
 	{
@@ -89,7 +88,7 @@ function unprepare_message($message)
 //
 // Prepare a message for posting
 // 
-function prepare_post(&$mode, &$post_data, &$bbcode_on, &$html_on, &$smilies_on, &$error_msg, &$username, &$bbcode_uid, &$subject, &$message, &$poll_title, &$poll_options, &$poll_length)
+function prepare_post(&$mode, &$post_data, &$bbcode_on, &$html_on, &$smilies_on, &$error_msg, &$username, &$bbcode_uid, &$subject, &$message, &$poll_title, &$poll_options, &$poll_length, &$max_vote, &$hide_vote, &$tothide_vote)
 {
 	global $board_config, $userdata, $lang, $phpEx, $phpbb_root_path;
 
@@ -140,7 +139,10 @@ function prepare_post(&$mode, &$post_data, &$bbcode_on, &$html_on, &$smilies_on,
 	//
 	if ($mode == 'newtopic' || ($mode == 'editpost' && $post_data['first_post']))
 	{
-		$poll_length = (isset($poll_length)) ? max(0, intval($poll_length)) : 0;
+		$poll_length = (isset($poll_length)) ? max(0, ($poll_length+$poll_length_h/24)) : 0;
+		$$max_vote = (isset($max_vote)) ? max(0, intval($max_vote)) : 0;
+		$$hide_vote = (isset($hide_vote)) ? max(0, intval($hide_vote)) : 0;
+		$$tothide_vote = (isset($tothide_vote)) ? max(0, intval($tothide_vote)) : 0;
 
 		if (!empty($poll_title))
 		{
@@ -181,7 +183,7 @@ function prepare_post(&$mode, &$post_data, &$bbcode_on, &$html_on, &$smilies_on,
 //
 // Post a new topic/reply/poll or edit existing post/poll
 //
-function submit_post($mode, &$post_data, &$message, &$meta, &$forum_id, &$topic_id, &$post_id, &$poll_id, &$topic_type, &$bbcode_on, &$html_on, &$smilies_on, &$attach_sig, &$bbcode_uid, $post_username, $post_subject, $post_message, $poll_title, &$poll_options, &$poll_length)
+function submit_post($mode, &$post_data, &$message, &$meta, &$forum_id, &$topic_id, &$post_id, &$poll_id, &$topic_type, &$bbcode_on, &$html_on, &$smilies_on, &$attach_sig, &$bbcode_uid, $post_username, $post_subject, $post_message, $poll_title, &$poll_options, &$poll_length, &$max_vote, &$hide_vote, &$tothide_vote)
 {
 	global $board_config, $lang, $db, $phpbb_root_path, $phpEx;
 	global $userdata, $user_ip;
@@ -257,7 +259,7 @@ function submit_post($mode, &$post_data, &$message, &$meta, &$forum_id, &$topic_
 	// 
 	if (($mode == 'newtopic' || ($mode == 'editpost' && $post_data['edit_poll'])) && !empty($poll_title) && count($poll_options) >= 2)
 	{
-		$sql = (!$post_data['has_poll']) ? "INSERT INTO " . VOTE_DESC_TABLE . " (topic_id, vote_text, vote_start, vote_length) VALUES ($topic_id, '$poll_title', $current_time, " . ($poll_length * 86400) . ")" : "UPDATE " . VOTE_DESC_TABLE . " SET vote_text = '$poll_title', vote_length = " . ($poll_length * 86400) . " WHERE topic_id = $topic_id";
+		$sql = (!$post_data['has_poll']) ? "INSERT INTO " . VOTE_DESC_TABLE . " (topic_id, vote_text, vote_start, vote_length, vote_max, vote_hide, vote_tothide) VALUES ($topic_id, '$poll_title', $current_time, " . ($poll_length * 86400) . ", '$max_vote', '$hide_vote', '$tothide_vote')" : "UPDATE " . VOTE_DESC_TABLE . " SET vote_text = '$poll_title', vote_length = " . ($poll_length * 86400) . ", vote_max = '$max_vote', vote_hide = '$hide_vote', vote_tothide = '$tothide_vote' WHERE topic_id = $topic_id";
 		if (!$db->sql_query($sql))
 		{
 			message_die(GENERAL_ERROR, 'Error in posting', '', __LINE__, __FILE__, $sql);

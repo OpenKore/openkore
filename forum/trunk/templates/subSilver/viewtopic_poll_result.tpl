@@ -28,7 +28,16 @@
 		</td>
 	  </tr>
 	  <tr> 
-		<td colspan="4" align="center"><span class="gen"><b>{L_TOTAL_VOTES} : {TOTAL_VOTES}</b></span></td>
+		<td colspan="4" align="center"><span class="gen"><b>{VOTED_SHOW}{voted_vote}</b></span></td>
+	  </tr>
+	  <tr> 
+		<td colspan="4" align="center"><span class="gen"><b>{L_TOTAL_VOTES}{TOTAL_VOTES}</b></span></td>
+	  </tr>
+	  <tr> 
+		<td colspan="4" align="center"><span class="gensmall">{L_RESULTS_AFTER}</span></td>
+	  </tr>
+	  <tr> 
+		<td colspan="4" align="center"><span class="gensmall">{L_POLL_EXPIRES}{POLL_EXPIRES}</span></td>
 	  </tr>
 	</table>
 	<br clear="all" />
