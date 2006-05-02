@@ -3980,21 +3980,21 @@ sub resurrection {
 	my ($self, $args) = @_;
 	
 	my $targetID = $args->{targetID};
+	my $player = $playersList->getByID($targetID);
 	my $type = $args->{type};
 
 	if ($targetID eq $accountID) {
 		message T("You have been resurrected\n"), "info";
-		undef $chars[$config{'char'}]{'dead'};
-		undef $chars[$config{'char'}]{'dead_time'};
-		$chars[$config{'char'}]{'resurrected'} = 1;
+		undef $char->{'dead'};
+		undef $char->{'dead_time'};
+		$char->{'resurrected'} = 1;
 
-	} elsif ($players{$targetID} && %{$players{$targetID}}) {
-		undef $players{$targetID}{'dead'};
-	}
-
-	if ($targetID ne $accountID) {
-		message TF("%s has been resurrected\n", getActorName($targetID)), "info";
-		$players{$targetID}{deltaHp} = 0;
+	} else {
+		if ($player) {
+			undef $player->{'dead'};
+			$player->{deltaHp} = 0;
+		}
+		message TF("%s has been resurrected\n", getActorName($targetID)), "info";		
 	}	
 }
 
