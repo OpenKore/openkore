@@ -319,6 +319,17 @@ master_version 25
 version 61
 serverEncoding Russian
 
+## http://www.rohispano.com/
+[Latin America - RO Hispano]
+ip 200.73.73.2
+port 6900
+master_version 30
+version 1
+serverType 0
+serverEncoding Western
+secureLogin 1
+secureLogin_type 0
+
 
 ####################
 # Private RO Servers
