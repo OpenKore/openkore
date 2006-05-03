@@ -402,10 +402,10 @@ sub checkClient {
 			$self->realClientRecv();
 
 		} else {
-			# Plunk the user down in novice-land, and give them a warning that we got disconnected
+			# Plunk the user down in a black hole, and give them a warning that we got disconnected
 
 			# Allow the plugins to change the map
-			my ($map, $x, $y) = ('new_1-1.gat', 53, 109);
+			my ($map, $x, $y) = ("$field{name}.gat", 500, 500);
 			Plugins::callHook('XKore/map', {r_map => \$map, r_x => \$x, r_y => \$y});
 
 			$msg = pack('C2 Z16 v2', 0x91, 0, $map, $x, $y);
