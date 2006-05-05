@@ -228,9 +228,11 @@ ayothaya 202 161 ayo_in01 31 108
 ayothaya 62 104 ayo_in01 191 183
 ayothaya 208 283 ayo_in02 100 152
 ayo_fild01 32 240 ayothaya 273 176
+ayo_fild02 285 149 ayo_dun01 275 18
 ayo_in01 31 111 ayothaya 202 161
 ayo_in01 194 183 ayothaya 62 104
 ayo_in02 100 148 ayothaya 208 283
+ayo_dun01 274 14 ayo_fild02 285 149
 beach_dun 276 67 comodo 24 214
 beach_dun2 154 13 comodo 176 358
 beach_dun2 258 244 um_fild01 31 274
@@ -968,6 +970,16 @@ orcsdun01 32 172 in_orcs01 30 182
 orcsdun01 183 8 orcsdun02 21 188
 orcsdun02 21 188 orcsdun01 183 8
 orcsdun02 180 15 in_orcs01 108 114
+payon 267 89 pay_fild08 17 75
+payon 228 329 pay_arche 81 22
+payon 122 27 pay_fild01 333 356
+payon 16 143 pay_gld 370 149
+payon 141 85 payon_in01 14 51
+payon 151 127 payon_in01 56 53
+payon 136 158 payon_in01 20 129
+payon 130 169 payon_in01 13 139
+payon 189 233 payon_in03 149 39
+payon 187 233 payon_in03 149 39
 pay_arche 36 131 pay_dun00 21 186
 pay_arche 81 17 payon 228 329
 pay_arche 145 165 payon_in02 64 56
@@ -1086,10 +1098,14 @@ payg_cas05 290 43 payg_cas05 287 256
 payg_cas05 242 41 payg_cas05 18 18
 payg_cas05 14 14 payg_cas05 246 41
 payg_cas05 62 223 pay_gld 198 264
-payon 267 89 pay_fild08 17 75
-payon 228 329 pay_arche 81 22
-payon 122 27 pay_fild01 333 356
-payon 16 143 pay_gld 370 149
+payon_in01 17 51 payon 141 85
+payon_in01 10 80 payon_in01 10 59
+payon_in01 10 59 payon_in01 10 83
+payon_in01 10 38 payon_in01 10 80
+payon_in01 10 17 payon_in01 10 38
+payon_in01 56 50 payon 151 127
+payon_in01 23 129 payon 136 158
+payon_in01 13 139 payon 130 172
 payon_in01 22 26 payon_in01 30 81
 payon_in01 26 115 payon_in01 30 126
 payon_in01 26 164 payon_in01 30 151
@@ -1137,10 +1153,16 @@ payon_in02 64 56 pay_arche 145 165
 payon_in02 70 33 payon_in02 61 33
 payon_in02 75 67 payon_in02 10 25
 payon_in02 82 45 pay_arche 71 156
-payon 187 233 payon_in03 149 39
 payon_in03 172 33 payon_in03 160 14
 payon_in03 160 15 payon_in03 172 35
 payon_in03 147 39 payon 186 233
+payon_in03 158 32 payon 189 233
+payon_in03 130 17 payon_in03 158 32
+payon_in03 172 32 payon_in03 130 17
+payon_in03 160 17 payon_in03 172 32
+payon_in03 186 32 payon_in03 160 17
+payon_in03 190 17 payon_in03 186 32
+payon_in03 146 39 payon 186 233
 prontera 22 203 prt_fild05 373 205
 prontera 42 67 prt_in 47 29
 prontera 45 346 prt_in 80 113
@@ -1612,6 +1634,7 @@ yuno_fild07 352 292 yuno_fild08 27 275
 yuno_fild07 360 72 yuno_fild08 35 61
 yuno_fild07 57 79 ein_fild06 352 95
 yuno_fild07 92 28 yuno_fild11 91 369
+yuno_fild07 208 175 jupe_cave 143 52
 yuno_fild08 31 58 yuno_fild07 357 75
 yuno_fild08 24 275 yuno_fild07 348 288
 yuno_fild08 134 29 yuno_fild12 197 371
@@ -1721,7 +1744,6 @@ xmas_in 163 93 xmas 173 160
 xmas_in 168 160 xmas 189 278
 xmas_in 179 109 xmas 181 169
 
-ayo_dun01 274 14 ayo_fild02 285 149
-ayo_fild02 285 149 ayo_dun01 275 18
-yuno_fild07 208 175 jupe_cave 143 52
+
+
 jupe_cave 147 52 yuno_fild07 202 175
