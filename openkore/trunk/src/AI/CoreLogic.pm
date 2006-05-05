@@ -2065,8 +2065,9 @@ sub iterate {
 					move($ai_v{'temp'}{'pos'}{'x'}, $ai_v{'temp'}{'pos'}{'y'});
 				}
 			} else {
-				if ($args->{'follow_lost_portalID'} ne "") {
-					if ($portals{$args->{'follow_lost_portalID'}} && %{$portals{$args->{'follow_lost_portalID'}}} && !$args->{'follow_lost_portal_tried'}) {
+				my $portalID = $args->{follow_lost_portalID};
+				if ($args->{'follow_lost_portalID'} ne "" && $portalID) {
+					if ($portals{$portalID} && !$args->{'follow_lost_portal_tried'}) {
 						$args->{'follow_lost_portal_tried'} = 1;
 						%{$ai_v{'temp'}{'pos'}} = %{$portals{$args->{'follow_lost_portalID'}}{'pos'}};
 						ai_route($field{'name'}, $ai_v{'temp'}{'pos'}{'x'}, $ai_v{'temp'}{'pos'}{'y'},
