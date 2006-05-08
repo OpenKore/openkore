@@ -2000,6 +2000,7 @@ sub iterate {
 				my $foundID;
 				my $smallDist;
 				foreach (@portalsID) {
+					next if (!defined $_);
 					$ai_v{'temp'}{'dist'} = distance($players_old{$args->{'ID'}}{'pos_to'}, $portals{$_}{'pos'});
 					if ($ai_v{'temp'}{'dist'} <= 7 && ($first || $ai_v{'temp'}{'dist'} < $smallDist)) {
 						$smallDist = $ai_v{'temp'}{'dist'};
