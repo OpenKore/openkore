@@ -216,6 +216,7 @@ class OConstants {
 	 */
 	const MIN_USER_POSTS = 40;
 	const SVN_GUIDE_URL = "http://www.openkore.com/wiki/index.php/What_is_SVN%3F";
+	const TRASH_FORUM_NAME = "Trashcan";
 
 	/**
 	 * Get the advertisement content.

@@ -44,7 +44,7 @@ function make_forum_select($box_name, $ignore_forum = false, $select_forum = '')
 	{
 		if ( $is_auth_ary[$row['forum_id']]['auth_read'] && $ignore_forum != $row['forum_id'] )
 		{
-			$selected = ( $select_forum == $row['forum_id'] ) ? ' selected="selected"' : '';
+			$selected = ( $select_forum == $row['forum_id'] || $select_forum == $row['forum_name'] ) ? ' selected="selected"' : '';
 			$forum_list .= '<option value="' . $row['forum_id'] . '"' . $selected .'>' . $row['forum_name'] . '</option>';
 		}
 	}
