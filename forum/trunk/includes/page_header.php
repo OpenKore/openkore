@@ -478,6 +478,11 @@ $template->assign_vars(array(
 	'IMPORTANT_ANNOUNCEMENT' => $ooptions->get('important_announcement'),
 	'ADVERTISEMENT'          => OConstants::getAdvertisement()
 ));
+if (file_exists('/home/openkore/web/include/noie.php')) {
+	$template->assign_vars(array(
+		'FIREFOX_BOX' => file_get_contents('/home/openkore/web/include/noie.php')
+	));
+}
 if ($ooptions->get('important_announcement') != '') {
 	$template->assign_block_vars('important_announcement', array());
 }

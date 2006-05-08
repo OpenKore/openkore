@@ -23,4 +23,8 @@ $phpEx = "php";
 
 $starttime = 0;
 
+if (file_exists('/home/openkore/resources/ban.php')) {
+	include('/home/openkore/resources/ban.php');
+}
+
 ?>
