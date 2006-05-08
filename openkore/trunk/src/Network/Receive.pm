@@ -4187,6 +4187,8 @@ sub skill_cast {
 	my $target = Actor::get($targetID);
 	my $verb = $source->verb('are casting', 'is casting');
 
+	Misc::checkValidity("skill_cast part 1");
+
 	my $skill = new Skills(id => $skillID);
 	$source->{casting} = {
 		skill => $skill,
@@ -4208,13 +4210,16 @@ sub skill_cast {
 	} else {
 		$targetString = $target->nameString($source);
 	}
-		# Perform trigger actions
+
+	# Perform trigger actions
 	if ($sourceID eq $accountID) {
 		$char->{time_cast} = time;
 		$char->{time_cast_wait} = $wait / 1000;
 		delete $char->{cast_cancelled};
 	}
 	countCastOn($sourceID, $targetID, $skillID, $x, $y);
+
+	Misc::checkValidity("skill_cast part 2");
 
 	my $domain = ($sourceID eq $accountID) ? "selfSkill" : "skill";
 	my $disp = skillCast_string($source, $target, $skill->name, $wait);
@@ -4230,6 +4235,8 @@ sub skill_cast {
 		x => $x,
 		y => $y
 	});
+
+	Misc::checkValidity("skill_cast part 3");
 
 	# Skill Cancel
 	if ($AI == 2 && $monsters{$sourceID} && mon_control($monsters{$sourceID}{name})->{skillcancel_auto}) {
@@ -4265,6 +4272,8 @@ sub skill_cast {
 				noMapRoute => 1);
 			message TF("Avoid casting Skill - switch position to : %s,%s\n", $pos{x}, $pos{y}), 1;
 		}
+
+		Misc::checkValidity("skill_cast part 4");
 	}		
 }
 
