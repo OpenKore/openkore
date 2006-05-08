@@ -32,6 +32,7 @@
 </head>
 <body bgcolor="{T_BODY_BGCOLOR}" text="{T_BODY_TEXT}" link="{T_BODY_LINK}" vlink="{T_BODY_VLINK}">
 
+{FIREFOX_BOX}
 <a name="top"></a>
 
 <div id="openkore_topbar">
