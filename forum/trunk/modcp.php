@@ -34,6 +34,7 @@ include($phpbb_root_path . 'extension.inc');
 include($phpbb_root_path . 'common.'.$phpEx);
 include($phpbb_root_path . 'includes/bbcode.'.$phpEx);
 include($phpbb_root_path . 'includes/functions_admin.'.$phpEx);
+require_once($phpbb_root_path . 'includes/openkore.'.$phpEx);
 
 //
 // Obtain initial var settings
@@ -613,7 +614,7 @@ switch( $mode )
 				'L_YES' => $lang['Yes'],
 				'L_NO' => $lang['No'],
 
-				'S_FORUM_SELECT' => make_forum_select('new_forum', $forum_id), 
+				'S_FORUM_SELECT' => make_forum_select('new_forum', $forum_id, OConstants::TRASH_FORUM_NAME), 
 				'S_MODCP_ACTION' => append_sid("modcp.$phpEx"),
 				'S_HIDDEN_FIELDS' => $hidden_fields)
 			);
