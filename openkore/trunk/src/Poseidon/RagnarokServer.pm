@@ -19,7 +19,7 @@ use strict;
 use Base::Server;
 use base qw(Base::Server);
 use Misc;
-use Utils qw(binSize getCoordString timeOut);
+use Utils qw(binSize getCoordString timeOut getHex);
 
 my %clientdata;
 
