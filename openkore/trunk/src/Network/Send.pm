@@ -1433,6 +1433,15 @@ sub sendMasterLogin {
 		$msg = pack("v1 V", hex($masterServer->{masterLogin_packet}) || 0x64, $version) .
 			$username . $password .
 			pack("C*", $master_version);
+
+	} elsif ($config{serverType} == 8) {
+		$msg = pack("v1 V", hex($masterServer->{masterLogin_packet}) || 0x277, $version) .
+			pack("a24", $username) .
+			pack("a24", $password) .
+			pack("C", $master_version) .
+			pack("a15", join(".", unpack("C4", $r_net->{remote_socket}->sockaddr()))) .
+			pack("C*", 0xAB, 0x31, 0x31, 0x31, 0x31, 0x31, 0x31, 0x31, 0x31, 0x31, 0x31, 0x31, 0x31, 0);
+
 	} else {
 		$msg = pack("v1 V", hex($masterServer->{masterLogin_packet}) || 0x64, $version) .
 			pack("a24", $username) .
