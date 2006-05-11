@@ -4,7 +4,7 @@
 1002 Poring
 1003 Thief Bug's Egg
 1004 Hornet
-1005 Farmiliar
+1005 Familiar
 1006 Thief Bug's Larva
 1007 Fabre
 1008 Pupa
@@ -388,7 +388,7 @@
 1416 Wicked Nymph
 1417 Zipper Bear
 1418 Dark Snake Lord
-1419 Farmiliar
+1419 Familiar
 1420 Skel Archer
 1421 Isis
 1422 Hunter Fly
