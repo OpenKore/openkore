@@ -140,7 +140,7 @@ sub onClientData {
 	my $itemID = pack("a4", "itm1");
 
 	my $switch = uc(unpack("H2", substr($msg, 1, 1))) . uc(unpack("H2", substr($msg, 0, 1)));
-	my $packed_switch = substr($msg, 0, 2);
+	my $packed_switch = quotemeta substr($msg, 0, 2);
 
 	# Note:
 	# The switch packets are pRO specific and assumes the use of secureLogin 1. It may or may not work with other
