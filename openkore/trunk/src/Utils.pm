@@ -1052,18 +1052,18 @@ sub getRange {
 	return if (!defined $param);
 
 	# remove % from the first number here (i.e. hp 50%..60%) because it's easiest
-	if (($param =~ /(\d+)\%*\s*-\s*(\d+)/) || ($param =~ /(\d+)\%*\s*\.\.\s*(\d+)/)) {
-		return ($1, $2);
-	} elsif ($param =~ />\s*(\d+)/) {
-		return ($1+1, undef);
-	} elsif ($param =~ />=\s*(\d+)/) {
-		return ($1, undef);
-	} elsif ($param =~ /<\s*(\d+)/) {
-		return (undef, $1-1);
-	} elsif ($param =~ /<=\s*(\d+)/) {
-		return (undef, $1);
-	} elsif ($param =~/^(\d+)/) {
-		return ($1, $1);
+	if ($param =~ /(\d+(?:\.\d+)?)\%?\s*(?:-|\.\.)\s*(\d+(?:\.\d+)?)/) {
+		return ($1, $2, 1);
+	} elsif ($param =~ />\s*(\d+(?:\.\d+)?)/) {
+		return ($1, undef, 0);
+	} elsif ($param =~ />=\s*(\d+(?:\.\d+)?)/) {
+		return ($1, undef, 1);
+	} elsif ($param =~ /<\s*(\d+(?:\.\d+)?)/) {
+		return (undef, $1, 0);
+	} elsif ($param =~ /<=\s*(\d+(?:\.\d+)?)/) {
+		return (undef, $1, 1);
+	} elsif ($param =~/^(\d+(?:\.\d+)?)/) {
+		return ($1, $1, 1);
 	}
 }
 
@@ -1081,14 +1081,14 @@ sub inRange {
 	my $param = shift;
 
 	return 1 if (!defined $param);
-	my ($min, $max) = getRange($param);
+	my ($min, $max, $inclusive) = getRange($param);
 
 	if (defined $min && defined $max) {
 		return 1 if ($value >= $min && $value <= $max);
 	} elsif (defined $min) {
-		return 1 if ($value >= $min);
+		return 1 if ($value > $min || ($inclusive && $value == $min));
 	} elsif (defined $max) {
-		return 1 if ($value <= $max);
+		return 1 if ($value < $max || ($inclusive && $value == $min));
 	}
 
 	return 0;

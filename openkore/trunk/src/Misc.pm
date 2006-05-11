@@ -2777,10 +2777,8 @@ sub whenGroundStatus {
 
 sub whenStatusActive {
 	my $statuses = shift;
-	my @arr = split /,/, $statuses;
+	my @arr = split /\s*,\s*/, $statuses;
 	foreach (@arr) {
-		s/^\s+//g;
-		s/\s+$//g;
 		return 1 if exists($char->{statuses}{$_});
 	}
 	return 0;
@@ -2788,10 +2786,8 @@ sub whenStatusActive {
 
 sub whenStatusActiveMon {
 	my ($monster, $statuses) = @_;
-	my @arr = split /,/, $statuses;
+	my @arr = split /\s*,\s*/, $statuses;
 	foreach (@arr) {
-		s/^\s+//g;
-		s/\s+$//g;
 		return 1 if $monster->{statuses}{$_};
 	}
 	return 0;
@@ -2800,10 +2796,8 @@ sub whenStatusActiveMon {
 sub whenStatusActivePL {
 	my ($ID, $statuses) = @_;
 	if ($ID eq $accountID) { return whenStatusActive($statuses) }
-	my @arr = split /,/, $statuses;
+	my @arr = split /\s*,\s*/, $statuses;
 	foreach (@arr) {
-		s/^\s+//g;
-		s/\s+$//g;
 		return 1 if $players{$ID}{statuses}{$_};
 	}
 	return 0;
@@ -3697,7 +3691,7 @@ sub checkSelfCondition {
 
 	if ($config{$prefix."_inInventory"}) {
 		foreach my $input (split / *, */, $config{$prefix."_inInventory"}) {
-			my ($item,$count) = $input =~ /(.*?)(\s+[><= 0-9]+)?$/;
+			my ($item,$count) = $input =~ /(.*?)(?:\s+([><]=? *\d+))?$/;
 			$count = '>0' if $count eq '';
 			my $iX = findIndexString_lc($char->{inventory}, "name", $item);
  			return 0 if !inRange(!defined $iX ? 0 : $char->{inventory}[$iX]{amount}, $count);
@@ -3706,7 +3700,7 @@ sub checkSelfCondition {
 
 	if ($config{$prefix."_inCart"}) {
 		foreach my $input (split / *, */, $config{$prefix."_inCart"}) {
-			my ($item,$count) = $input =~ /(.*?)(\s+[><= 0-9]+)?$/;
+			my ($item,$count) = $input =~ /(.*?)(?:\s+([><]=? *\d+))?$/;
 			$count = '>0' if $count eq '';
 			my $iX = findIndexString_lc($cart{inventory}, "name", $item);
  			my $item = $cart{inventory}[$iX];
