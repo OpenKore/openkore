@@ -30,7 +30,7 @@ $cvs = new cvsdebug($Plugins::current_plugin, 0, []);
 
 #########
 # startup
-Plugins::register('macro', 'allows usage of macros', \&Unload);
+Plugins::register('macro', 'allows usage of macros', \&Unload, \&Reload);
 
 my $hooks = Plugins::addHooks(
             ['configModify', \&debuglevel, undef],
@@ -54,6 +54,13 @@ if (defined %config) {
 	checkConfig();
 }
 #########
+
+# onReload
+sub Reload {
+  &Unload;
+  message "macro reloading\m", "macro";
+  &checkConfig
+}
 
 # onUnload
 sub Unload {
