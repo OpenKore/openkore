@@ -95,7 +95,7 @@ serverType 8
 serverEncoding Korean
 
 [Malaysia - mRO: Main Server: Balder]
-ip 61.220.63.248
+ip 202.71.105.21
 port 6900
 master_version 16
 version 102
@@ -104,7 +104,7 @@ serverEncoding Western
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
 
 [Malaysia - mRO (English): Aegir/Idun]
-ip 61.220.63.129
+ip 202.71.105.23
 port 6900
 master_version 17
 version 102
@@ -113,7 +113,7 @@ serverEncoding Western
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
 
 [Malaysia - mRO: Sakray]
-ip 220.130.113.227
+ip 202.71.105.27
 port 6900
 master_version 16
 version 102
