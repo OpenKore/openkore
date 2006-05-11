@@ -8,7 +8,7 @@ our @ISA = qw(Exporter);
 our @EXPORT_OK = qw(releaseAM lockAM automacroCheck consoleCheckWrapper);
 our @EXPORT = qw(checkVar checkVarVar checkLoc checkLevel checkLevel checkClass
     checkPercent checkStatus checkItem checkPerson checkCond checkEquip checkCast
-    checkEquip checkMsg checkMonster checkConsole checkMapChange);
+    checkEquip checkMsg checkMonster checkAggressives checkConsole checkMapChange);
 
 use Utils;
 use Globals;
@@ -328,6 +328,14 @@ sub checkMonster {
   return 0
 }
 
+# checks for aggressives
+sub checkAggressives {
+  $cvs->debug("checkAggressives(@_)", $logfac{function_call_auto} | $logfac{automacro_checks});
+  my $arg = shift;
+  my ($cond, $amount) = $arg =~ /([<>=!]+)\s*(\d+)/;
+  return cmpr(scalar ai_getAggressives, $cond, $amount)
+}
+
 # checks for console message
 sub checkConsole {
   $cvs->debug("checkConsole(@_)", $logfac{function_call_auto} | $logfac{automacro_checks}) if defined $cvs;
@@ -460,6 +468,7 @@ sub automacroCheck {
     next CHKAM if (defined $automacro{$am}->{map}   && $automacro{$am}->{map} ne $field{name});
     next CHKAM if (defined $automacro{$am}->{class} && !checkClass($automacro{$am}->{class}));
     foreach my $i (@{$automacro{$am}->{monster}})   {next CHKAM unless checkMonster($i)}
+    foreach my $i (@{$automacro{$am}->{aggressives}}){next CHKAM unless checkAggressives($i)}
     foreach my $i (@{$automacro{$am}->{location}})  {next CHKAM unless checkLoc($i)}
     foreach my $i (@{$automacro{$am}->{var}})       {next CHKAM unless checkVar($i)}
     foreach my $i (@{$automacro{$am}->{varvar}})    {next CHKAM unless checkVarVar($i)}

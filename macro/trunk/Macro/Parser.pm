@@ -162,7 +162,7 @@ sub parseCmd {
     elsif ($kw eq 'storamount') {$ret = getStorageAmount($arg)}
     elsif ($kw eq 'config')     {$ret = getConfig($arg)}
     elsif ($kw eq 'arg')        {$ret = getWord($arg)}
-    elsif ($kw eq 'eval')       {$ret = eval($arg)};
+    elsif ($kw eq 'eval')       {$ret = eval($arg)}
     return unless defined $ret;
     return $command if $ret eq '_%_';
     $arg = quotemeta $arg; $command =~ s/\@$kw\s*\(\s*$arg\s*\)/$ret/g
