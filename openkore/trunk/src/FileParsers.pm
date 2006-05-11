@@ -727,7 +727,7 @@ sub parseSectionedFile {
 		next if ($_ eq "");
 
 		my $line = $_;
-		if (/^\[(.*)\]$/) {
+		if (/^\[(.*)\]$/i) {
 			$section = $1;
 			next;
 		} else {
