@@ -446,7 +446,7 @@ undef $net;
 Log::message(T("Bye!\n"));
 Log::message($Settings::versionText);
 
-if (open(F, ">:utf8", "benchmark-results.txt")) {
+if (DEBUG && open(F, ">:utf8", "benchmark-results.txt")) {
 	print F Benchmark::results("mainLoop");
 	close F;
 	print "Benchmark results saved to benchmark-results.txt\n";

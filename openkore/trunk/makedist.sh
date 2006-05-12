@@ -21,6 +21,7 @@ DIRS=(.
 	src/scons-local-0.96.91/SCons/Sig
 	src/scons-local-0.96.91/SCons/Tool
 	src/po
+	src/test
 	src/Actor
 	src/AI
 	src/Base
@@ -145,13 +146,14 @@ findTablepackDir
 make -C "$confpackDir" distdir DISTDIR="$dir/control"
 make -C "$tablepackDir" distdir DISTDIR="$dir/tables"
 
-# Convert openkore.pl to Unix
+# Convert openkore.pl to Unix line format, otherwise Unix users can't
+# execute it directly.
 perl src/build/dos2unix.pl "$PACKAGEDIR/openkore.pl"
+perl "$confpackDir/unix2dos.pl" "$PACKAGEDIR/News.txt"
 
 # Stop if this is going to be a binary distribution
 if [[ "$BINDIST" == "1" ]]; then
 	rm -f "$PACKAGEDIR/Makefile"
-	perl "$confpackDir/unix2dos.pl" "$PACKAGEDIR/News.txt"
 	echo
 	echo "====================="
 	echo "Directory '$PACKAGEDIR' created. Please add (wx)start.exe and NetRedirect.dll."
