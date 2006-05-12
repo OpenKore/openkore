@@ -3,11 +3,21 @@
 ==================
 
 *** INCOMPATIBLE CHANGES ***:
-- Typo'd packet name actor_died_or_disappeard renamed to
-  actor_died_or_disappeared.
 - Config option 'exeName' renamed to 'XKore_exeName'.
 - Renamed skill: "A Moonlit Water Mill"
 - Format of skills.txt have changed.
+
+** Major updates in this release:
+- Much improved server compatibility. (Note: pRO Sakray is NOT supported yet!)
+- Support for more maps.
+- Support for multiple languages. OpenKore has currently been translated to:
+    Simplified Chinese, Portuguese, Thai, Tagalog, Indonesian
+  OpenKore will automatically detect your language by looking at what
+  language your Windows version is.
+- Many bug fixes.
+
+
+** Detailed list of changes:
 
 Bug fixes:
 - Fixed the unknown packets when switching characters on servers
@@ -60,6 +70,8 @@ Bug fixes:
 - fixed not self skill combo not executing for certain skills
   "un-hard code" the skill_used_no_damage combo problem
   refer to : http://forums.openkore.com/viewtopic.php?p=64881
+- Typo'd packet name actor_died_or_disappeard renamed to
+  actor_died_or_disappeared.
 
 New features:
 - Added XKoreProxy module. Set configuration to 'XKore proxy' to work as
@@ -86,24 +98,7 @@ New features:
   talknpc 115 111 c r0 c a="is Novice Potion" c c c r0 c n
 - Another mapname redirect for "force_1-1.fld => force_map1.fld"
 - Added latest skills list (including Guild Skills)
-- Homunculus are properly detected now. For the moment, use their monster ID's
-  in your mon_control.txt (e.g. 6001 -1 0 0). The list of the homunculus are:
-  6001,Lif
-  6002,Amistr
-  6003,Filir
-  6004,Vanilmirth
-  6005,Lif level 2
-  6006,Amistr level 2
-  6007,Filir level 2
-  6008,Vanilmirth level 2
-  6009,Lif high
-  6010,Amistr high
-  6011,Filir high
-  6012,Vanilmirth high
-  6013,Lif high level 2
-  6014,Amistr high level 2
-  6015,Filir high level 2
-  6016,Vanilmirth high level 2
+- Homunculus are properly detected now. They're currently recognized as pets.
 - Support for tRO's new login packets (update your servers.txt)
 - Support for andzRO's new login packets (update your servers.txt)
 - Partial support for Aegis 10.2 servers. Use serverType 7 for these.
