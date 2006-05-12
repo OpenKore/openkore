@@ -112,10 +112,46 @@ for D in ${DIRS[@]}; do
 	process "$D"
 done
 
+# Copy the confpack and tablepack files to the distribution's folder
+function findConfpackDir() {
+	if [[ -d confpack ]]; then
+		confpackDir=confpack
+	elif [[ -d control/confpack ]]; then
+		confpackDir=control/confpack
+	elif [[ -d ../confpack ]]; then
+		confpackDir=../confpack
+	else
+		echo "Cannot find the confpack folder. Please put it in the current directory."
+		exit 1;
+	fi
+}
+
+function findTablepackDir() {
+	if [[ -d tablepack ]]; then
+		tablepackDir=tablepack
+	elif [[ -d tables/tablepack ]]; then
+		tablepackDir=tables/tablepack
+	elif [[ -d ../tablepack ]]; then
+		tablepackDir=../tablepack
+	else
+		echo "Cannot find the tablepack folder. Please put it in the current directory."
+		exit 1;
+	fi
+}
+
+dir=`cd "$PACKAGEDIR"; pwd`
+findConfpackDir
+findTablepackDir
+make -C "$confpackDir" distdir DISTDIR="$dir/control"
+make -C "$tablepackDir" distdir DISTDIR="$dir/tables"
+
+# Convert openkore.pl to Unix
+perl src/build/dos2unix.pl "$PACKAGEDIR/openkore.pl"
+
 # Stop if this is going to be a binary distribution
 if [[ "$BINDIST" == "1" ]]; then
 	rm -f "$PACKAGEDIR/Makefile"
-	unix2dos "$PACKAGEDIR/News.txt"
+	perl "$confpackDir/unix2dos.pl" "$PACKAGEDIR/News.txt"
 	echo
 	echo "====================="
 	echo "Directory '$PACKAGEDIR' created. Please add (wx)start.exe and NetRedirect.dll."

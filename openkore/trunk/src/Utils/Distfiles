@@ -1,6 +1,7 @@
 AppLauncher.pm
 Benchmark.pm
-Callbacklist.pm
+CallbackList.pm
+CRAM.pm
 Crypton.pm
 Downloader.pm
 ObjectList.pm
