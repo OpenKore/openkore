@@ -4,22 +4,23 @@ use strict;
 use warnings;
 
 foreach my $f (@ARGV) {
-	if (!open(F, "< $f")) {
+	local($/);
+	if (!open(F, "<", $f)) {
 		print STDERR "Can't open $f for reading\n";
-		next;
+		exit 1;
 	}
 
 	print "Converting $f...\n";
-	my @lines = <F>;
+	binmode F;
+	my $data = <F>;
 	close(F);
 
-	if (!open(F, "> $f")) {
+	if (!open(F, ">", $f)) {
 		print STDERR "Can't open $f for writing\n";
-		next;
+		exit 1;
 	}
-	foreach (@lines) {
-		s/[\r\n]//g;
-	}
-	print F join("\r\n", @lines) . "\r\n";
+	binmode F;
+	$data =~ s/\r?\n/\r\n/sg;
+	print F $data;
 	close(F);
 }
