@@ -3,3 +3,4 @@ openkore.ico
 compile.bat
 compile-wx.bat
 autoload.pl
+dos2unix.pl
