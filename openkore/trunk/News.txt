@@ -227,6 +227,8 @@ Credits:
 - --Roger--: reconnect timeout bug
 - windserfer: aliases for PvP/MvP Rooms (Room Rock On, Four Room, and Copass)
 - lighthazen: major help on cleaning up old servers.txt entries
+- DesperadoStrike: new monster names
+
 
 ==================
 ### 1.9.0
