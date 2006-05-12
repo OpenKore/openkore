@@ -29,7 +29,7 @@ distdir:
 	@if [[ "$(DISTDIR)" == "" ]]; then echo "You didn't set the DISTDIR parameter."; exit 1; fi
 	rm -rf "$(DISTDIR)"
 	mkdir -p "$(DISTDIR)"
-	cp control/*.txt "$(DISTDIR)"/
+	cp $(DIR)/*.txt "$(DISTDIR)"/
 	perl unix2dos.pl "$(DISTDIR)"/*.txt
 	echo -n $(VERSION) > "$(DISTDIR)"/$(VERSIONFILE)
 
