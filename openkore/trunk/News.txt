@@ -72,6 +72,8 @@ Bug fixes:
   refer to : http://forums.openkore.com/viewtopic.php?p=64881
 - Typo'd packet name actor_died_or_disappeard renamed to
   actor_died_or_disappeared.
+- Rewrite Misc::skillUse_string() function to fix bug where PVP damage
+  messages aren't showing up at all.
 
 New features:
 - Added XKoreProxy module. Set configuration to 'XKore proxy' to work as
