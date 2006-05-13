@@ -219,6 +219,9 @@ sub mainLoop {
 	my $cliMsg = $net->clientRecv;
 	if ($cliMsg && length($cliMsg)) {
 		use bytes; # pmak/VCL - fix corrupted data introduced by UTF8
+		if (Encode::is_utf8($msgOut)) {
+			$msgOut = Encode::decode_utf8($msgOut);
+		}
 		$msgOut .= $cliMsg;
 		my $msg_length = length($msgOut);
 		while ($msgOut ne "") {
