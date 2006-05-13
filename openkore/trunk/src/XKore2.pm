@@ -217,6 +217,8 @@ sub clientConnect {
 # $net->clientSend
 #
 sub clientSend {
+	use bytes;
+	no encoding 'utf8';
 	my $self = shift;
 	my $msg = shift;
 	my $dontMod = shift;
@@ -234,6 +236,8 @@ sub clientSend {
 #
 # Returns undef unless the client is fully logged in.
 sub clientRecv {
+	use bytes;
+	no encoding 'utf8';
 	my $self = shift;
 	my $msg;
 
@@ -249,6 +253,8 @@ sub clientRecv {
 # Returns data coming from the client. Used internally until client is fully
 # logged in. Should only be used internally.
 sub realClientRecv {
+	use bytes;
+	no encoding 'utf8';
 	my $self = shift;
 	my $msg;
 
@@ -1221,6 +1227,8 @@ sub modifyPacketIn {
 # msg: A scalar being sent to the RO server
 #
 sub modifyPacketOut {
+	use bytes;
+	no encoding 'utf8';
 	my ($self, $msg) = @_;
 
 	return undef if (length($msg) < 1);

@@ -466,6 +466,8 @@ sub parseInput {
 #######################################
 
 sub parseSendMsg {
+	use bytes;
+	no encoding 'utf8';
 	my $msg = shift;
 
 	my $sendMsg = $msg;
@@ -651,22 +653,10 @@ sub parseSendMsg {
 		$shopstarted = 0;
 	}
 
-	#elsif ($switch eq "007E") {
-	#	my $a = unpack("V", substr($msg, 4, 4));
-	#	my $b = int(time / 12 * 3075000) - 284089912922934;
-	#	open(F, ">> DUMP.txt");
-	#	print F "\n\n";
-	#	print F "$a\n";
-	#	print F "$b\n";
-	#	print(F ($b - $a) . "\n");
-	#	close F;
-	#	dumpData($msg);
-	#}
-
 	if ($sendMsg ne "") {
 		$net->serverSend($sendMsg);
 	}
-	
+
 	# This should be changed to packets that haven't been parsed yet, in a similar manner
 	# as parseMsg
 	return "";
