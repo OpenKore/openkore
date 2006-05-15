@@ -220,6 +220,7 @@ sub new {
 		'01AD' => ['arrowcraft_list'],
 		'01B0' => ['monster_typechange', 'a4 a1 V1', [qw(ID unknown type)]],
 		'01B3' => ['npc_image', 'Z63 C1', [qw(npc_image type)]],
+		'01B5' => ['account_payment_info', 'V1 V1', [qw(D_minute H_minute)]],
 		'01B6' => ['guild_info', 'a4 V1 V1 V1 V1 V1 V1 x12 V1 Z24 Z24', [qw(ID lvl conMember maxMember average exp next_exp members name master)]],
 		'01B9' => ['cast_cancelled', 'a4', [qw(ID)]],
 		'01C3' => ['local_broadcast', 'x2 a3 x9 Z*', [qw(color message)]],
@@ -393,6 +394,25 @@ sub parse {
 ###### Packet handling callbacks ######
 #######################################
 
+
+sub account_payment_info {
+	my ($self, $args) = @_;
+my $D_minute = $args->{D_minute};
+	my $H_minute = $args->{H_minute};
+
+	my $D_d = int($D_minute / 1440);
+	my $D_h = int(($D_minute % 1440) / 60);
+	my $D_m = int(($D_minute % 1440) % 60);
+
+	my $H_d = int($H_minute / 1440);
+	my $H_h = int(($H_minute % 1440) / 60);
+	my $H_m = int(($H_minute % 1440) % 60);
+
+	message  T("============= Account payment information =============\n"), "info";
+	message TF("Pay per day  : %s day(s) %s hour(s) and %s minute(s)\n", $D_d, $D_h, $D_m), "info";
+	message TF("Pay per hour : %s day(s) %s hour(s) and %s minute(s)\n", $H_d, $H_h, $H_m), "info";
+	message  T("-------------------------------------------------------\n"), "info";
+}
 
 sub account_server_info {
 	my ($self, $args) = @_;
