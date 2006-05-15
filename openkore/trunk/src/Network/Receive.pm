@@ -1464,7 +1464,8 @@ sub cart_items_list {
 			$item->{index} = $index;
 			$item->{nameID} = $ID;
 			$item->{amount} = $amount;
-			$item->{name} = itemNameSimple($ID);
+			$item->{cards} = substr($msg, $i + 10, 8) if ($psize == 18);
+			$item->{name} = itemName($item);
 			$item->{identified} = 1;
 		}
 		debug "Stackable Cart Item: $item->{name} ($index) x $amount\n", "parseMsg";
@@ -2765,11 +2766,12 @@ sub inventory_items_stackable {
 		$item->{amount} = unpack("v1", substr($msg, $i + 6, 2));
 		$item->{type} = unpack("C1", substr($msg, $i + 4, 1));
 		$item->{identified} = 1;
+		$item->{cards} = substr($msg, $i + 10, 8) if ($psize == 18);
 		if (defined $char->{arrow} && $index == $char->{arrow}) {
 			$item->{equipped} = 32768;
 			$char->{equipment}{arrow} = $item;
 		}
-		$item->{name} = itemNameSimple($item->{nameID});
+		$item->{name} = itemName($item);
 		debug "Inventory: $item->{name} ($invIndex) x $item->{amount} - " .
 			"$itemTypes_lut{$item->{type}}\n", "parseMsg";
 		Plugins::callHook('packet_inventory', {index => $invIndex, item => $item});
@@ -4915,7 +4917,8 @@ sub storage_items_stackable {
 		$item->{nameID} = $ID;
 		$item->{type} = unpack("C1", substr($msg, $i + 4, 1));
 		$item->{amount} = unpack("V1", substr($msg, $i + 6, 4)) & ~0x80000000;
-		$item->{name} = itemNameSimple($ID);
+		$item->{cards} = substr($msg, $i + 10, 8) if ($psize == 18);
+		$item->{name} = itemName($item);
 		$item->{binID} = binFind(\@storageID, $index);
 		$item->{identified} = 1;
 		debug "Storage: $item->{name} ($item->{binID}) x $item->{amount}\n", "parseMsg";
