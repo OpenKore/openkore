@@ -26,7 +26,8 @@ use strict;
 our @ISA = qw(Actor);
 
 sub new {
-	return bless({type => 'Monster'});
+	my ($class) = @_;
+	return bless {actorType => 'Monster'}, $class;
 }
 
 1;

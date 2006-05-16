@@ -28,7 +28,7 @@ use base qw(Actor);
 
 sub new {
 	my ($class) = @_;
-	return bless {}, $class;
+	return bless {actorType => 'Player'}, $class;
 }
 
 sub selfString {

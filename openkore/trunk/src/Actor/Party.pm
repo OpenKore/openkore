@@ -16,10 +16,11 @@
 ##
 # MODULE DESCRIPTION: Party actor object
 #
+# Represents a party member.
 # All members in $char->{party}{users} are of the Actor::Party class.
 #
 # Actor.pm is the base class for this class.
-package Actor::Party ;
+package Actor::Party;
 
 use strict;
 use Actor;
@@ -27,7 +28,8 @@ use Actor;
 our @ISA = qw(Actor);
 
 sub new {
-	return bless({type => 'Party'});
+	my ($class) = @_;
+	return bless {actorType => 'Party'}, $class;
 }
 
 ##

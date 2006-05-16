@@ -24,12 +24,12 @@ use strict;
 our @ISA = qw(Actor);
 
 sub new {
-	my (undef, $ID) = @_;
-	return bless({
-		type => 'Unknown',
+	my ($class, $ID) = @_;
+	return bless {
+		actorType => 'Unknown',
 		ID => $ID,
 		nameID => unpack("V1", $ID)
-	});
+	}, $class;
 }
 
 sub nameString {
