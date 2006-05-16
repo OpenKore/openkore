@@ -29,7 +29,8 @@ use Log qw(message);
 our @ISA = qw(Actor);
 
 sub new {
-	return bless({type => 'You'});
+	my ($class) = @_;
+	return bless {actorType => 'You'}, $class;
 }
 
 sub nameString {

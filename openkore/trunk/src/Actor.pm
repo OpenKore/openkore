@@ -111,7 +111,9 @@ sub get {
 # String $Actor->{type}
 # Invariant: defined(value)
 #
-# The actor's type. Can be "Monster", "Player" or "You".
+# An identifier for this actor's type. The meaning for this field
+# depends on the actor's class. For example, for Player actors,
+# this is the job ID (though you should use $ActorPlayer->{jobID} instead).
 
 ##
 # int $Actor->{binID}
@@ -137,6 +139,14 @@ sub get {
 #
 # The time when this actor first appeared on screen.
 
+##
+# String $Actor->{actorType}
+# Invariant: defined(value)
+#
+# A human-friendly name which describes this actor type.
+# For instance, "Player", "Monster", "NPC", "You", etc.
+# Do not confuse this with $Actor->{type}
+
 
 ### CATEGORY: Methods
 
@@ -153,7 +163,7 @@ sub nameString {
 
 	return $self->selfString if $self->{ID} eq $otherActor->{ID};
 
-	my $nameString = "$self->{type} ".$self->name;
+	my $nameString = "$self->{actorType} " . $self->name;
 	$nameString .= " ($self->{binID})" if defined $self->{binID};
 	return $nameString;
 }
