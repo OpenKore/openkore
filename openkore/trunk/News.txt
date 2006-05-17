@@ -67,13 +67,12 @@ Bug fixes:
 - Fixed talknpc option x
 - Fixed "-1" flag for "all" keyword in pickupitems.txt being meaningless
 - Fixed avoidGM_reconnect and avoidList_reconnect not being used.
-- fixed not self skill combo not executing for certain skills
+- Fixed not self skill combo not executing for certain skills
   "un-hard code" the skill_used_no_damage combo problem
   refer to : http://forums.openkore.com/viewtopic.php?p=64881
 - Typo'd packet name actor_died_or_disappeard renamed to
   actor_died_or_disappeared.
-- Rewrite Misc::skillUse_string() function to fix bug where PVP damage
-  messages aren't showing up at all.
+- PVP damage messages are now correctly displayed.
 
 New features:
 - Added XKoreProxy module. Set configuration to 'XKore proxy' to work as
@@ -165,7 +164,7 @@ New config options:
   route_escape_unknownMap must be set to 1 for this function to work.
   if the map kore "accidentally" teleports into doesn't have a portal,it 
   would activate the escape AI this is usually accompanied with 
-  route_escape_randomWalk. 
+  route_escape_randomWalk.
 
 New commands:
 - cart release: remove cart status
