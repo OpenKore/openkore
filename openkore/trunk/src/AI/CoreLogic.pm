@@ -2268,7 +2268,7 @@ sub iterate {
 			last if (defined $party_skill{targetID});
 		}
 
-		if ($config{useSelf_skill_smartHeal} && $party_skill{ID} eq "AL_HEAL") {
+		if ($config{useSelf_skill_smartHeal} && $party_skill{ID} eq "AL_HEAL" && !$config{$party_skill{prefix}."_noSmartHeal"}) {
 			my $smartHeal_lv = 1;
 			my $hp_diff;
 			if ($char->{party} && $char->{party}{users}{$party_skill{targetID}} && $char->{party}{users}{$party_skill{targetID}}{hp}) {
