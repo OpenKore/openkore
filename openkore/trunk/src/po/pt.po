@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Openkore\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-05-16 18:11+0200\n"
+"POT-Creation-Date: 2006-05-17 19:14+0200\n"
 "PO-Revision-Date: 2006-04-29 16:47-0300\n"
 "Last-Translator: Illusionist <illusion.kore@hotmail.com>\n"
 "Language-Team: \n"
@@ -2895,12 +2895,12 @@ msgstr "Sim, apague"
 msgid "Deleting character %s...\n"
 msgstr "Apagando personagem %s...\n"
 
-#: ../Misc.pm:1427
+#: ../Misc.pm:1427 ../AI/CoreLogic.pm:2596
 #, perl-format
 msgid "The current map (%s) is not on the list of allowed maps.\n"
 msgstr "O mapa atual (%s) não está na lista dos mapas permitidos.\n"
 
-#: ../Misc.pm:1428
+#: ../Misc.pm:1428 ../AI/CoreLogic.pm:2597
 #, perl-format
 msgid "** The current map (%s) is not on the list of allowed maps.\n"
 msgstr "** O mapa atual (%s) não está na lista dos mapas permitidos.\n"
@@ -3630,32 +3630,32 @@ msgstr ""
 msgid "Incomplete NPC info found in npcs.txt\n"
 msgstr "Informação de NPC incompleta localizada no npcs.txt\n"
 
-#: ../Misc.pm:3964
+#: ../Misc.pm:3971
 msgid "A shop has already been opened.\n"
 msgstr "Já foi aberta uma loja.\n"
 
-#: ../Misc.pm:3969
+#: ../Misc.pm:3976
 msgid "You don't have the Vending skill.\n"
 msgstr "Você não possui a habilidade Comércio.\n"
 
-#: ../Misc.pm:3974
+#: ../Misc.pm:3981
 msgid "Your shop does not have a title.\n"
 msgstr "Sua loja não tem um nome.\n"
 
-#: ../Misc.pm:4005
+#: ../Misc.pm:4012
 msgid "There are no items to sell.\n"
 msgstr "Não há itens para vender.\n"
 
-#: ../Misc.pm:4017
+#: ../Misc.pm:4024
 #, perl-format
 msgid "Shop opened (%s) with %d selling items.\n"
 msgstr "Loja aberta (%s) com %d itens à venda.\n"
 
-#: ../Misc.pm:4024
+#: ../Misc.pm:4031
 msgid "A shop has not been opened.\n"
 msgstr "Não há uma loja aberta.\n"
 
-#: ../Misc.pm:4032
+#: ../Misc.pm:4039
 msgid "Shop closed.\n"
 msgstr "Loja fechada.\n"
 
@@ -5377,6 +5377,426 @@ msgstr "Poseidon: Resultado enviado ao cliente %s\n"
 msgid "Poseidon: Querying Ragnarok Online client.\n"
 msgstr "Poseidon: Consultando cliente de Ragnarok Online.\n"
 
+#: ../AI/CoreLogic.pm:209
+msgid "Could not find the NPC at the designated location.\n"
+msgstr "Não foi possível localizar o NPC na coordenada indicada.\n"
+
+#: ../AI/CoreLogic.pm:254
+#, perl-format
+msgid "Done talking with %s.\n"
+msgstr "Conversa com %s finalizada.\n"
+
+#: ../AI/CoreLogic.pm:264
+msgid "NPC did not respond.\n"
+msgstr "O NPC não responde.\n"
+
+#: ../AI/CoreLogic.pm:346
+msgid "Escaping to into nearest portal.\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:354
+msgid "Found warp portal escaping into warp portal.\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:363
+#, fuzzy
+msgid "Escape failed no portal found.\n"
+msgstr "%s: Arquivo de include não encontrado: %s\n"
+
+#: ../AI/CoreLogic.pm:383 ../AI/CoreLogic.pm:1842
+msgid ""
+"Invalid coordinates specified for randomWalk (coordinates are unwalkable); "
+"randomWalk disabled\n"
+msgstr ""
+"Coordenadas inválidas especificadas no randomWalk (são posições bloqueadas); "
+"randomWalk desabilitado\n"
+
+#: ../AI/CoreLogic.pm:385 ../AI/CoreLogic.pm:1845
+#, perl-format
+msgid "Calculating random route to: %s(%s): %s, %s\n"
+msgstr "Calculando rota aleatória para: %s(%s): %s, %s\n"
+
+#: ../AI/CoreLogic.pm:462
+msgid "Timeout equiping for skill\n"
+msgstr "Tempo esgotado ao equipar acessório necessário para a skill\n"
+
+#: ../AI/CoreLogic.pm:562
+#, perl-format
+msgid "Failed to take %s (%s) from (%s, %s) to (%s, %s)\n"
+msgstr "Falha ao pegar %s (%s) de (%s, %s) para (%s, %s)\n"
+
+#: ../AI/CoreLogic.pm:584 ../AI/CoreLogic.pm:2462
+#, perl-format
+msgid "Routing to (%s, %s) to take %s (%s), distance %s\n"
+msgstr "Calculando rota (%s, %s) para pegar %s (%s), distância de %s\n"
+
+#: ../AI/CoreLogic.pm:690
+msgid "Auto-denying party request\n"
+msgstr "Auto-negando pedido de grupo\n"
+
+#: ../AI/CoreLogic.pm:692
+msgid "Auto-accepting party request\n"
+msgstr "Auto-aceitando pedido de grupo\n"
+
+#: ../AI/CoreLogic.pm:777
+#, perl-format
+msgid ""
+"Your version of %s (%s%s) is too old.\n"
+"Please upgrade to at least version %s\n"
+msgstr ""
+"Sua versão de %s (%s%s) é muito antiga.\n"
+"Por favor atualize-a ao menos para a versão %s\n"
+
+#: ../AI/CoreLogic.pm:821
+#, perl-format
+msgid ""
+"\n"
+"Disconnecting due to break time: %s to %s\n"
+"\n"
+msgstr ""
+"\n"
+"Desconectando-se para dar uma pausa no jogo entre %s a %s\n"
+"\n"
+
+#: ../AI/CoreLogic.pm:822
+#, perl-format
+msgid "*** Disconnected due to Break Time: %s to %s ***\n"
+msgstr "*** Disconectado para Período de Pausa: %s a %s ***\n"
+
+#: ../AI/CoreLogic.pm:846
+#, perl-format
+msgid "Arrived at waypoint %s\n"
+msgstr "Chegada no ponto do percurso %s\n"
+
+#: ../AI/CoreLogic.pm:856
+#, perl-format
+msgid "Walking to waypoint %s: %s(%s): %s,%s\n"
+msgstr "Caminhando ao ponto de percurso %s: %s(%s): %s,%s\n"
+
+#: ../AI/CoreLogic.pm:904
+msgid "Auto-storaging due to death\n"
+msgstr "Auto-armazenamento por causa de morte\n"
+
+#: ../AI/CoreLogic.pm:909
+#, perl-format
+msgid "Moving to %s - %d,%d\n"
+msgstr "Movendo-se para %s - %d,%d\n"
+
+#: ../AI/CoreLogic.pm:927
+msgid "Disconnecting on death!\n"
+msgstr "Desconectando-se ao morrer!\n"
+
+#: ../AI/CoreLogic.pm:928
+msgid "*** You died, auto disconnect! ***\n"
+msgstr "*** Você morreu, auto-desconexão! ***\n"
+
+#: ../AI/CoreLogic.pm:1025
+msgid "Auto-storaging due to excess weight\n"
+msgstr "Auto-armazenagem devido a excesso de peso\n"
+
+#: ../AI/CoreLogic.pm:1048 ../AI/CoreLogic.pm:1049 ../AI/CoreLogic.pm:2160
+#: ../AI/CoreLogic.pm:2161
+#, perl-format
+msgid "Disconnecting on empty %s!\n"
+msgstr "Desconectando-se devido a %s vazio!\n"
+
+#: ../AI/CoreLogic.pm:1066
+#, perl-format
+msgid "Auto-storaging due to insufficient %s\n"
+msgstr "Auto-armazenamento por %s insuficiente\n"
+
+#: ../AI/CoreLogic.pm:1120
+msgid "Teleporting to auto-storage\n"
+msgstr "Teleportando para auto-armazenagem\n"
+
+#: ../AI/CoreLogic.pm:1125
+#, perl-format
+msgid "Calculating auto-storage route to: %s(%s): %s, %s\n"
+msgstr "Calculando rota para auto-armazenagem em: %s(%s): %s, %s\n"
+
+#: ../AI/CoreLogic.pm:1139
+msgid "Warning storageAuto has changed. Please read News.txt\n"
+msgstr "Aviso: storageAuto modificado. Por favor, leia o News.txt\n"
+
+#: ../AI/CoreLogic.pm:1146
+msgid "Using storage steps defined in config.\n"
+msgstr "Usando os passos de armazenagem definidos na config.\n"
+
+#: ../AI/CoreLogic.pm:1148
+msgid "Something is wrong with storageAuto_npc_type in your config.\n"
+msgstr "Há algo de errado com a opção storageAuto_npc_type no seu config.\n"
+
+#: ../AI/CoreLogic.pm:1274
+#, perl-format
+msgid "Attempt to get %s x %s from storage, retry: %s\n"
+msgstr "Tentativa de adquirir %s x %s do armazém nº %s\n"
+
+#: ../AI/CoreLogic.pm:1285
+#, perl-format
+msgid "storage: %s out of stock\n"
+msgstr "armazém: %s esgotado\n"
+
+#: ../AI/CoreLogic.pm:1293
+msgid ""
+"Kore tried to get an item from storage 3 times, but failed.\n"
+"This problem could be caused by a server bug.\n"
+"To work around this problem, set 'relogAfterStorage' to 1, and relogin.\n"
+msgstr ""
+"O Kore tentou obter um item do armazém 3 vezes, mas falhou.\n"
+"Este problema pode ser ocasionado por um bug no servidor.\n"
+"Para contorná-lo, configure 'relogAfterStorage' para 1 e reconecte.\n"
+
+#: ../AI/CoreLogic.pm:1308
+msgid "Character is still overweight after storageAuto (storage is full?)\n"
+msgstr ""
+"O personagem ainda está com sobrepeso depois da storageAuto (armazém "
+"lotado?)\n"
+
+#: ../AI/CoreLogic.pm:1310 ../AI/CoreLogic.pm:1311
+msgid "Disconnecting on storage full!\n"
+msgstr "Desconectando-se pois o armazém está lotado!\n"
+
+#: ../AI/CoreLogic.pm:1351
+msgid "Auto-sell sequence completed.\n"
+msgstr "Seqüência de auto-vendas concluída.\n"
+
+#: ../AI/CoreLogic.pm:1387
+msgid "Teleporting to auto-sell\n"
+msgstr "Teleportando para auto-venda\n"
+
+#: ../AI/CoreLogic.pm:1391
+#, perl-format
+msgid "Calculating auto-sell route to: %s(%s): %s, %s\n"
+msgstr "Calculando rota de auto-venda em: %s(%s): %s, %s\n"
+
+#: ../AI/CoreLogic.pm:1553
+msgid "Teleporting to auto-buy\n"
+msgstr "Teleportando para auto-compras\n"
+
+#: ../AI/CoreLogic.pm:1557
+#, perl-format
+msgid "Calculating auto-buy route to: %s (%s): %s, %s\n"
+msgstr "Calculando rota de auto-compra em: %s(%s): %s, %s\n"
+
+#: ../AI/CoreLogic.pm:1693
+#, perl-format
+msgid "Invalid map specified for lockMap - map %s doesn't exist\n"
+msgstr "Mapa inválido especificado para o lockMap - mapa %s inexistente\n"
+
+#: ../AI/CoreLogic.pm:1715
+msgid "Invalid coordinates specified for lockMap, coordinates are unwalkable\n"
+msgstr ""
+"Coordenadas inválidas especificadas para o lockMap, as coordenadas não são "
+"livres para andar\n"
+
+#: ../AI/CoreLogic.pm:1722
+#, perl-format
+msgid "Calculating lockMap route to: %s(%s): %s, %s\n"
+msgstr "Calculando rota de lockMap para: %s(%s): %s, %s\n"
+
+#: ../AI/CoreLogic.pm:1724
+#, perl-format
+msgid "Calculating lockMap route to: %s(%s)\n"
+msgstr "Calculando rota de lockMap para: %s(%s)\n"
+
+#: ../AI/CoreLogic.pm:1770
+#, perl-format
+msgid "Auto-adding stat %s\n"
+msgstr "Auto-adicionando atributo %s\n"
+
+#: ../AI/CoreLogic.pm:1803
+#, perl-format
+msgid "Unknown skill '%s'; disabling skillsAddAuto\n"
+msgstr "Habilidade desconhecida '%s'; desabilitando skillsAddAuto\n"
+
+#: ../AI/CoreLogic.pm:1814
+#, perl-format
+msgid "Auto-adding skill %s\n"
+msgstr "Auto-adicionando habilidade %s\n"
+
+#: ../AI/CoreLogic.pm:1875
+#, perl-format
+msgid "Found my master - %s\n"
+msgstr "Encontrei meu mestre - %s\n"
+
+#: ../AI/CoreLogic.pm:1882
+msgid "Found my master!\n"
+msgstr "Encontrei meu mestre!\n"
+
+#: ../AI/CoreLogic.pm:1936
+msgid "Master died. I'll wait here.\n"
+msgstr "O mestre morreu. Esperarei aqui.\n"
+
+#: ../AI/CoreLogic.pm:1939
+msgid "I lost my master\n"
+msgstr "Perdi meu mestre\n"
+
+#: ../AI/CoreLogic.pm:1941
+msgid "Trying to get him back\n"
+msgstr "Tentando chamá-lo de volta\n"
+
+#: ../AI/CoreLogic.pm:1948 ../AI/CoreLogic.pm:2033
+msgid "My master disconnected\n"
+msgstr "Meu mestre desconectou-se\n"
+
+#: ../AI/CoreLogic.pm:1984 ../AI/CoreLogic.pm:2061
+msgid "My master teleported\n"
+msgstr "Meu mestre teleportou\n"
+
+#: ../AI/CoreLogic.pm:1988
+msgid "Trying to find lost master\n"
+msgstr "Tentando localizar o mestre\n"
+
+#: ../AI/CoreLogic.pm:2013
+msgid "Don't know what happened to Master\n"
+msgstr "Não sei o que houve com o Mestre\n"
+
+#: ../AI/CoreLogic.pm:2029
+msgid "Couldn't find master, giving up\n"
+msgstr "Não consegui localizar meu mestre, desistindo\n"
+
+#: ../AI/CoreLogic.pm:2057
+#, perl-format
+msgid "My master warped at (%s, %s) - moving to warp point\n"
+msgstr ""
+"Meu mestre entrou num portal em  (%s, %s) - movendo-se ao Portal de Warp\n"
+
+#: ../AI/CoreLogic.pm:2416
+#, perl-format
+msgid "Gathering: %s (%s)\n"
+msgstr "Coletando: %s (%s)\n"
+
+#: ../AI/CoreLogic.pm:2433
+#, perl-format
+msgid "Failed to gather %s (%s) : Lost target\n"
+msgstr "Falha ao coletar %s (%s) : Alvo perdido\n"
+
+#: ../AI/CoreLogic.pm:2441
+#, perl-format
+msgid "Failed to gather %s (%s) : No looting!\n"
+msgstr "Falha ao coletar %s (%s) : Sem looting!\n"
+
+#: ../AI/CoreLogic.pm:2445
+#, perl-format
+msgid "Failed to gather %s (%s) : Timeout\n"
+msgstr "Falha ao coletar %s (%s) : Tempo esgotado\n"
+
+#: ../AI/CoreLogic.pm:2495
+msgid "Teleporting to avoid all players\n"
+msgstr "Teleportando para evitar todos os jogadores\n"
+
+#: ../AI/CoreLogic.pm:2535
+msgid "Teleporting due to insufficient HP/SP or too many aggressives\n"
+msgstr ""
+"Teleportando por causa de HP/SP insuficiente ou muitos monstros agressivos\n"
+
+#: ../AI/CoreLogic.pm:2546
+#, perl-format
+msgid "Teleporting to avoid %s\n"
+msgstr "Teleportando para evitar %s\n"
+
+#: ../AI/CoreLogic.pm:2562
+msgid "Teleporting due to idle\n"
+msgstr "Teleportando por estar ocioso\n"
+
+#: ../AI/CoreLogic.pm:2574
+msgid "Teleporting to avoid portal\n"
+msgstr "Teleportando para evitar um portal\n"
+
+#: ../AI/CoreLogic.pm:2599
+msgid "Respawning to save point.\n"
+msgstr "Renascendo no Ponto de Retorno.\n"
+
+#: ../AI/CoreLogic.pm:2600
+msgid "** Respawning to save point.\n"
+msgstr "** Renascendo no Ponto de Retorno.\n"
+
+#: ../AI/CoreLogic.pm:2866
+msgid "Can't reach or damage target, dropping target\n"
+msgstr "Nao foi possível atingir o alvo, desistindo\n"
+
+#: ../AI/CoreLogic.pm:2868 ../AI/CoreLogic.pm:3209 ../AI/CoreLogic.pm:3339
+msgid "Teleport due to dropping attack target\n"
+msgstr "Teleportando devido à desistência de atacar o alvo\n"
+
+#: ../AI/CoreLogic.pm:2879
+msgid "Target died\n"
+msgstr "Alvo morreu\n"
+
+#: ../AI/CoreLogic.pm:2914
+msgid "Target lost\n"
+msgstr "Alvo perdido\n"
+
+#: ../AI/CoreLogic.pm:3059 ../AI/CoreLogic.pm:3327
+msgid "Dropping target - you will not kill steal others\n"
+msgstr "Desistindo do alvo - você não roubará o monstro de outros\n"
+
+#: ../AI/CoreLogic.pm:3111
+#, perl-format
+msgid "%s; moving to (%s, %s)\n"
+msgstr "%s; movendo-se para (%s, %s)\n"
+
+#: ../AI/CoreLogic.pm:3207
+msgid "Unable to calculate a route to target, dropping target\n"
+msgstr "Não foi possível calcular uma rota para o alvo, desistindo\n"
+
+#: ../AI/CoreLogic.pm:3419 ../AI/CoreLogic.pm:3511
+msgid "Destination reached.\n"
+msgstr "Destino alcançado.\n"
+
+#: ../AI/CoreLogic.pm:3446
+#, perl-format
+msgid "Stuck at %s (%d,%d), while walking from (%d,%d) to (%d,%d)."
+msgstr "Travamos em %s (%d,%d), enquanto andávamos de (%d,%d) até (%d,%d)."
+
+#: ../AI/CoreLogic.pm:3574
+#, perl-format
+msgid ""
+"Unable to calculate how to walk from [%s(%s,%s)] to [%s%s] (no map "
+"solution).\n"
+msgstr ""
+"Não foi possível calcular rota de  [%s(%s,%s)] até [%s%s] (sem solução para "
+"o mapa).\n"
+
+#: ../AI/CoreLogic.pm:3613
+#, perl-format
+msgid "Unable to talk to NPC at %s (%s,%s).\n"
+msgstr "Não foi possível falar com o NPC em %s (%s,%s).\n"
+
+#: ../AI/CoreLogic.pm:3628
+#, perl-format
+msgid "Insufficient zenny to pay for service at %s (%s,%s).\n"
+msgstr "Zenny insuficiente para pagar ao serviço em %s (%s,%s).\n"
+
+#: ../AI/CoreLogic.pm:3652
+#, perl-format
+msgid "Unable to walk from %s (%s,%s) to NPC at (%s,%s).\n"
+msgstr "Não foi possível andar de %s (%s,%s) ao NPC em (%s,%s).\n"
+
+#: ../AI/CoreLogic.pm:3681
+#, perl-format
+msgid "No LOS from %s (%s,%s) to Final Destination at (%s,%s).\n"
+msgstr "Sem Campo de Visão de %s (%s,%s) para o destino final em (%s,%s).\n"
+
+#: ../AI/CoreLogic.pm:3682
+#, perl-format
+msgid "Cannot reach (%s,%s) from current position.\n"
+msgstr "Não se consegue alcançar (%s,%s) da posição atual.\n"
+
+#: ../AI/CoreLogic.pm:3732
+#, perl-format
+msgid "Attempting to teleport near portal, try #%s\n"
+msgstr "Tentativa nº %s de se teleportar próximo ao portal\n"
+
+#: ../AI/CoreLogic.pm:3768
+#, perl-format
+msgid "No LOS from %s (%s,%s) to Portal at (%s,%s).\n"
+msgstr "Sem Campo de Visão de %s (%s,%s) ao Portal em (%s,%s).\n"
+
+#: ../AI/CoreLogic.pm:3769
+msgid "Cannot reach portal from current position\n"
+msgstr "Não se consegue alcançar o portal da posição atual.\n"
+
 #: ../../openkore.pl:69
 #, perl-format
 msgid ""
@@ -5584,7 +6004,7 @@ msgid "Changing configuration file (from \"%s\" to \"%s\")...\n"
 msgstr "Mudando arquivo de configuração (de \"%s\" para \"%s\")...\n"
 
 #. Translation Comment: Interface Title with character status
-#: ../functions.pl:392
+#: ../functions.pl:393
 #, perl-format
 msgid "%s B%s (%s), J%s (%s) : w%s%s - %s"
 msgstr "%s B%s (%s), C%s (%s) : p%s%s - %s"
@@ -5601,11 +6021,11 @@ msgstr "%sNão conectado - %s"
 msgid "%sConnecting - %s"
 msgstr "%sConectando-se - %s "
 
-#: ../functions.pl:521
+#: ../functions.pl:524
 msgid "Map loaded\n"
 msgstr "Mapa Carregado\n"
 
-#: ../functions.pl:739
+#: ../functions.pl:742
 #, perl-format
 msgid "Unknown packet - %s\n"
 msgstr "Pacote desconhecido %s\n"
@@ -5624,290 +6044,6 @@ msgstr "Pacote desconhecido %s\n"
 
 #~ msgid "NPC Spawned: %s (%s, %s) (ID %s) - (%s)\n"
 #~ msgstr "NPC Nascido: %s (%s, %s) (ID %s) - (%s)\n"
-
-#~ msgid "Could not find the NPC at the designated location.\n"
-#~ msgstr "Não foi possível localizar o NPC na coordenada indicada.\n"
-
-#~ msgid "Done talking with %s.\n"
-#~ msgstr "Conversa com %s finalizada.\n"
-
-#~ msgid "NPC did not respond.\n"
-#~ msgstr "O NPC não responde.\n"
-
-#~ msgid "Can't reach or damage target, dropping target\n"
-#~ msgstr "Nao foi possível atingir o alvo, desistindo\n"
-
-#~ msgid "Teleport due to dropping attack target\n"
-#~ msgstr "Teleportando devido à desistência de atacar o alvo\n"
-
-#~ msgid "Target died\n"
-#~ msgstr "Alvo morreu\n"
-
-#~ msgid "Target lost\n"
-#~ msgstr "Alvo perdido\n"
-
-#~ msgid "Dropping target - you will not kill steal others\n"
-#~ msgstr "Desistindo do alvo - você não roubará o monstro de outros\n"
-
-#~ msgid "%s; moving to (%s, %s)\n"
-#~ msgstr "%s; movendo-se para (%s, %s)\n"
-
-#~ msgid "Unable to calculate a route to target, dropping target\n"
-#~ msgstr "Não foi possível calcular uma rota para o alvo, desistindo\n"
-
-#~ msgid "Timeout equiping for skill\n"
-#~ msgstr "Tempo esgotado ao equipar acessório necessário para a skill\n"
-
-#~ msgid "Destination reached.\n"
-#~ msgstr "Destino alcançado.\n"
-
-#~ msgid "Stuck at %s (%d,%d), while walking from (%d,%d) to (%d,%d)."
-#~ msgstr "Travamos em %s (%d,%d), enquanto andávamos de (%d,%d) até (%d,%d)."
-
-#~ msgid ""
-#~ "Unable to calculate how to walk from [%s(%s,%s)] to [%s%s] (no map "
-#~ "solution).\n"
-#~ msgstr ""
-#~ "Não foi possível calcular rota de  [%s(%s,%s)] até [%s%s] (sem solução "
-#~ "para o mapa).\n"
-
-#~ msgid "Unable to talk to NPC at %s (%s,%s).\n"
-#~ msgstr "Não foi possível falar com o NPC em %s (%s,%s).\n"
-
-#~ msgid "Insufficient zenny to pay for service at %s (%s,%s).\n"
-#~ msgstr "Zenny insuficiente para pagar ao serviço em %s (%s,%s).\n"
-
-#~ msgid "Unable to walk from %s (%s,%s) to NPC at (%s,%s).\n"
-#~ msgstr "Não foi possível andar de %s (%s,%s) ao NPC em (%s,%s).\n"
-
-#~ msgid "No LOS from %s (%s,%s) to Final Destination at (%s,%s).\n"
-#~ msgstr "Sem Campo de Visão de %s (%s,%s) para o destino final em (%s,%s).\n"
-
-#~ msgid "Cannot reach (%s,%s) from current position.\n"
-#~ msgstr "Não se consegue alcançar (%s,%s) da posição atual.\n"
-
-#~ msgid "Attempting to teleport near portal, try #%s\n"
-#~ msgstr "Tentativa nº %s de se teleportar próximo ao portal\n"
-
-#~ msgid "No LOS from %s (%s,%s) to Portal at (%s,%s).\n"
-#~ msgstr "Sem Campo de Visão de %s (%s,%s) ao Portal em (%s,%s).\n"
-
-#~ msgid "Cannot reach portal from current position\n"
-#~ msgstr "Não se consegue alcançar o portal da posição atual.\n"
-
-#~ msgid "Failed to take %s (%s) from (%s, %s) to (%s, %s)\n"
-#~ msgstr "Falha ao pegar %s (%s) de (%s, %s) para (%s, %s)\n"
-
-#~ msgid "Routing to (%s, %s) to take %s (%s), distance %s\n"
-#~ msgstr "Calculando rota (%s, %s) para pegar %s (%s), distância de %s\n"
-
-#~ msgid "Auto-denying party request\n"
-#~ msgstr "Auto-negando pedido de grupo\n"
-
-#~ msgid "Auto-accepting party request\n"
-#~ msgstr "Auto-aceitando pedido de grupo\n"
-
-#~ msgid ""
-#~ "Your version of %s (%s%s) is too old.\n"
-#~ "Please upgrade to at least version %s\n"
-#~ msgstr ""
-#~ "Sua versão de %s (%s%s) é muito antiga.\n"
-#~ "Por favor atualize-a ao menos para a versão %s\n"
-
-#~ msgid ""
-#~ "\n"
-#~ "Disconnecting due to break time: %s to %s\n"
-#~ "\n"
-#~ msgstr ""
-#~ "\n"
-#~ "Desconectando-se para dar uma pausa no jogo entre %s a %s\n"
-#~ "\n"
-
-#~ msgid "*** Disconnected due to Break Time: %s to %s ***\n"
-#~ msgstr "*** Disconectado para Período de Pausa: %s a %s ***\n"
-
-#~ msgid "Arrived at waypoint %s\n"
-#~ msgstr "Chegada no ponto do percurso %s\n"
-
-#~ msgid "Walking to waypoint %s: %s(%s): %s,%s\n"
-#~ msgstr "Caminhando ao ponto de percurso %s: %s(%s): %s,%s\n"
-
-#~ msgid "Auto-storaging due to death\n"
-#~ msgstr "Auto-armazenamento por causa de morte\n"
-
-#~ msgid "Moving to %s - %d,%d\n"
-#~ msgstr "Movendo-se para %s - %d,%d\n"
-
-#~ msgid "Disconnecting on death!\n"
-#~ msgstr "Desconectando-se ao morrer!\n"
-
-#~ msgid "*** You died, auto disconnect! ***\n"
-#~ msgstr "*** Você morreu, auto-desconexão! ***\n"
-
-#~ msgid "Auto-storaging due to excess weight\n"
-#~ msgstr "Auto-armazenagem devido a excesso de peso\n"
-
-#~ msgid "Disconnecting on empty %s!\n"
-#~ msgstr "Desconectando-se devido a %s vazio!\n"
-
-#~ msgid "Auto-storaging due to insufficient %s\n"
-#~ msgstr "Auto-armazenamento por %s insuficiente\n"
-
-#~ msgid "Teleporting to auto-storage\n"
-#~ msgstr "Teleportando para auto-armazenagem\n"
-
-#~ msgid "Calculating auto-storage route to: %s(%s): %s, %s\n"
-#~ msgstr "Calculando rota para auto-armazenagem em: %s(%s): %s, %s\n"
-
-#~ msgid "Warning storageAuto has changed. Please read News.txt\n"
-#~ msgstr "Aviso: storageAuto modificado. Por favor, leia o News.txt\n"
-
-#~ msgid "Using storage steps defined in config.\n"
-#~ msgstr "Usando os passos de armazenagem definidos na config.\n"
-
-#~ msgid "Something is wrong with storageAuto_npc_type in your config.\n"
-#~ msgstr "Há algo de errado com a opção storageAuto_npc_type no seu config.\n"
-
-#~ msgid "Attempt to get %s x %s from storage, retry: %s\n"
-#~ msgstr "Tentativa de adquirir %s x %s do armazém nº %s\n"
-
-#~ msgid "storage: %s out of stock\n"
-#~ msgstr "armazém: %s esgotado\n"
-
-#~ msgid ""
-#~ "Kore tried to get an item from storage 3 times, but failed.\n"
-#~ "This problem could be caused by a server bug.\n"
-#~ "To work around this problem, set 'relogAfterStorage' to 1, and relogin.\n"
-#~ msgstr ""
-#~ "O Kore tentou obter um item do armazém 3 vezes, mas falhou.\n"
-#~ "Este problema pode ser ocasionado por um bug no servidor.\n"
-#~ "Para contorná-lo, configure 'relogAfterStorage' para 1 e reconecte.\n"
-
-#~ msgid "Character is still overweight after storageAuto (storage is full?)\n"
-#~ msgstr ""
-#~ "O personagem ainda está com sobrepeso depois da storageAuto (armazém "
-#~ "lotado?)\n"
-
-#~ msgid "Disconnecting on storage full!\n"
-#~ msgstr "Desconectando-se pois o armazém está lotado!\n"
-
-#~ msgid "Auto-sell sequence completed.\n"
-#~ msgstr "Seqüência de auto-vendas concluída.\n"
-
-#~ msgid "Teleporting to auto-sell\n"
-#~ msgstr "Teleportando para auto-venda\n"
-
-#~ msgid "Calculating auto-sell route to: %s(%s): %s, %s\n"
-#~ msgstr "Calculando rota de auto-venda em: %s(%s): %s, %s\n"
-
-#~ msgid "Teleporting to auto-buy\n"
-#~ msgstr "Teleportando para auto-compras\n"
-
-#~ msgid "Calculating auto-buy route to: %s (%s): %s, %s\n"
-#~ msgstr "Calculando rota de auto-compra em: %s(%s): %s, %s\n"
-
-#~ msgid "Invalid map specified for lockMap - map %s doesn't exist\n"
-#~ msgstr "Mapa inválido especificado para o lockMap - mapa %s inexistente\n"
-
-#~ msgid ""
-#~ "Invalid coordinates specified for lockMap, coordinates are unwalkable\n"
-#~ msgstr ""
-#~ "Coordenadas inválidas especificadas para o lockMap, as coordenadas não "
-#~ "são livres para andar\n"
-
-#~ msgid "Calculating lockMap route to: %s(%s): %s, %s\n"
-#~ msgstr "Calculando rota de lockMap para: %s(%s): %s, %s\n"
-
-#~ msgid "Calculating lockMap route to: %s(%s)\n"
-#~ msgstr "Calculando rota de lockMap para: %s(%s)\n"
-
-#~ msgid "Auto-adding stat %s\n"
-#~ msgstr "Auto-adicionando atributo %s\n"
-
-#~ msgid "Unknown skill '%s'; disabling skillsAddAuto\n"
-#~ msgstr "Habilidade desconhecida '%s'; desabilitando skillsAddAuto\n"
-
-#~ msgid "Auto-adding skill %s\n"
-#~ msgstr "Auto-adicionando habilidade %s\n"
-
-#~ msgid ""
-#~ "Invalid coordinates specified for randomWalk (coordinates are "
-#~ "unwalkable); randomWalk disabled\n"
-#~ msgstr ""
-#~ "Coordenadas inválidas especificadas no randomWalk (são posições "
-#~ "bloqueadas); randomWalk desabilitado\n"
-
-#~ msgid "Calculating random route to: %s(%s): %s, %s\n"
-#~ msgstr "Calculando rota aleatória para: %s(%s): %s, %s\n"
-
-#~ msgid "Found my master - %s\n"
-#~ msgstr "Encontrei meu mestre - %s\n"
-
-#~ msgid "Found my master!\n"
-#~ msgstr "Encontrei meu mestre!\n"
-
-#~ msgid "Master died. I'll wait here.\n"
-#~ msgstr "O mestre morreu. Esperarei aqui.\n"
-
-#~ msgid "I lost my master\n"
-#~ msgstr "Perdi meu mestre\n"
-
-#~ msgid "Trying to get him back\n"
-#~ msgstr "Tentando chamá-lo de volta\n"
-
-#~ msgid "My master disconnected\n"
-#~ msgstr "Meu mestre desconectou-se\n"
-
-#~ msgid "My master teleported\n"
-#~ msgstr "Meu mestre teleportou\n"
-
-#~ msgid "Trying to find lost master\n"
-#~ msgstr "Tentando localizar o mestre\n"
-
-#~ msgid "Don't know what happened to Master\n"
-#~ msgstr "Não sei o que houve com o Mestre\n"
-
-#~ msgid "Couldn't find master, giving up\n"
-#~ msgstr "Não consegui localizar meu mestre, desistindo\n"
-
-#~ msgid "My master warped at (%s, %s) - moving to warp point\n"
-#~ msgstr ""
-#~ "Meu mestre entrou num portal em  (%s, %s) - movendo-se ao Portal de Warp\n"
-
-#~ msgid "Gathering: %s (%s)\n"
-#~ msgstr "Coletando: %s (%s)\n"
-
-#~ msgid "Failed to gather %s (%s) : Lost target\n"
-#~ msgstr "Falha ao coletar %s (%s) : Alvo perdido\n"
-
-#~ msgid "Failed to gather %s (%s) : No looting!\n"
-#~ msgstr "Falha ao coletar %s (%s) : Sem looting!\n"
-
-#~ msgid "Failed to gather %s (%s) : Timeout\n"
-#~ msgstr "Falha ao coletar %s (%s) : Tempo esgotado\n"
-
-#~ msgid "Teleporting to avoid all players\n"
-#~ msgstr "Teleportando para evitar todos os jogadores\n"
-
-#~ msgid "Teleporting due to insufficient HP/SP or too many aggressives\n"
-#~ msgstr ""
-#~ "Teleportando por causa de HP/SP insuficiente ou muitos monstros "
-#~ "agressivos\n"
-
-#~ msgid "Teleporting to avoid %s\n"
-#~ msgstr "Teleportando para evitar %s\n"
-
-#~ msgid "Teleporting due to idle\n"
-#~ msgstr "Teleportando por estar ocioso\n"
-
-#~ msgid "Teleporting to avoid portal\n"
-#~ msgstr "Teleportando para evitar um portal\n"
-
-#~ msgid "Respawning to save point.\n"
-#~ msgstr "Renascendo no Ponto de Retorno.\n"
-
-#~ msgid "** Respawning to save point.\n"
-#~ msgstr "** Renascendo no Ponto de Retorno.\n"
 
 #~ msgid "%s is using devotion on:"
 #~ msgstr "%s está usando Sacrifício em:"

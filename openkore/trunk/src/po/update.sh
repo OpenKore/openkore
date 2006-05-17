@@ -12,6 +12,7 @@ xgettext -L perl --force-po -o openkore.pot --keyword=T --keyword=TF \
 	../Network/*.pm \
 	../Network/Receive/*.pm \
 	../Poseidon/EmbedServer.pm \
+	../AI/*.pm \
 	../../openkore.pl \
 	../functions.pl
 
