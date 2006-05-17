@@ -379,9 +379,10 @@ sub mainLoop {
 
 	# Set interface title
 	my $charName = $chars[$config{'char'}]{'name'};
+	my $title;
 	$charName .= ': ' if defined $charName;
 	if ($conState == 5) {
-		my ($title, $basePercent, $jobPercent, $weight, $pos);
+		my ($basePercent, $jobPercent, $weight, $pos);
 
 		$basePercent = sprintf("%.2f", $chars[$config{'char'}]{'exp'} / $chars[$config{'char'}]{'exp_max'} * 100) if $chars[$config{'char'}]{'exp_max'};
 		$jobPercent = sprintf("%.2f", $chars[$config{'char'}]{'exp_job'} / $chars[$config{'char'}]{'exp_job_max'} * 100) if $chars[$config{'char'}]{'exp_job_max'};
@@ -393,15 +394,17 @@ sub mainLoop {
 			${charName}, $chars[$config{'char'}]{'lv'}, $basePercent.'%', 
 			$chars[$config{'char'}]{'lv_job'}, $jobPercent.'%',
 			$weight, ${pos}, $Settings::NAME);
-		$interface->title($title);
 
 	} elsif ($conState == 1) {
 		# Translation Comment: Interface Title
-		$interface->title(TF("%sNot connected - %s", ${charName}, $Settings::NAME));
+		$title = TF("%sNot connected - %s", ${charName}, $Settings::NAME);
 	} else {
 		# Translation Comment: Interface Title
-		$interface->title(TF("%sConnecting - %s", ${charName}, $Settings::NAME));
+		$title = TF("%sConnecting - %s", ${charName}, $Settings::NAME);
 	}
+	my %args = (return => $title);
+	Plugins::callHook('mainLoop::setTitle',\%args);
+	$interface->title($args{return});
 
 	Benchmark::end("mainLoop_part3") if DEBUG;
 

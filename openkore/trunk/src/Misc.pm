@@ -3854,7 +3854,14 @@ sub checkPlayerCondition {
 		return 0 unless inRange(distance(calcPosition($char), calcPosition($players{$id})), $config{$prefix."_dist"});
 	}
 
-	return 1;
+	my %args = (
+		player => $player,
+		prefix => $prefix,
+		return => 1
+	);
+
+	Plugins::callHook('checkPlayerCondition', \%args);
+	return $args{return};
 }
 
 sub checkMonsterCondition {
