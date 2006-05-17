@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenKore 1.9.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-05-16 18:11+0200\n"
-"PO-Revision-Date: 2006-04-18 13:01+0800\n"
+"POT-Creation-Date: 2006-05-17 19:14+0200\n"
+"PO-Revision-Date: 2006-05-17 15:42+0800\n"
 "Last-Translator: Lkm <lj88kc@yahoo.com.cn>\n"
 "Language-Team: Lkm <lj88kc@yhaoo.com.cn>\n"
 "MIME-Version: 1.0\n"
@@ -2879,12 +2879,12 @@ msgstr "是的, 删除"
 msgid "Deleting character %s...\n"
 msgstr "删除人物 %s...\n"
 
-#: ../Misc.pm:1427
+#: ../Misc.pm:1427 ../AI/CoreLogic.pm:2596
 #, perl-format
 msgid "The current map (%s) is not on the list of allowed maps.\n"
 msgstr "当前的地图 (%s) 是不在运行列表里的地图.\n"
 
-#: ../Misc.pm:1428
+#: ../Misc.pm:1428 ../AI/CoreLogic.pm:2597
 #, perl-format
 msgid "** The current map (%s) is not on the list of allowed maps.\n"
 msgstr "** 当前的地图 (%s) 是不在运行列表里的地图.\n"
@@ -3503,22 +3503,22 @@ msgstr "未知 #%s (%d) 再次: %s\n"
 #: ../Misc.pm:3238
 #, perl-format
 msgid "You are no longer: %s\n"
-msgstr "你不再: %s\n"
+msgstr "你不再是: %s\n"
 
 #: ../Misc.pm:3240
 #, perl-format
 msgid "Player %s (%d) is no longer: %s\n"
-msgstr "玩家 %s (%d) 不再: %s\n"
+msgstr "玩家 %s (%d) 不再是: %s\n"
 
 #: ../Misc.pm:3242
 #, perl-format
 msgid "Monster %s (%d) is no longer: %s\n"
-msgstr "怪物 %s (%d) 不再: %s\n"
+msgstr "怪物 %s (%d) 不再是: %s\n"
 
 #: ../Misc.pm:3244
 #, perl-format
 msgid "Unknown #%s (%d) is no longer: %s\n"
-msgstr "未知 #%s (%d) 不再: %s\n"
+msgstr "未知 #%s (%d) 不再是: %s\n"
 
 #: ../Misc.pm:3337
 #, perl-format
@@ -3593,32 +3593,32 @@ msgstr ""
 msgid "Incomplete NPC info found in npcs.txt\n"
 msgstr "不完整的 NPC 信息在 npcs.txt 里发现\n"
 
-#: ../Misc.pm:3964
+#: ../Misc.pm:3971
 msgid "A shop has already been opened.\n"
 msgstr "开了一家商店.\n"
 
-#: ../Misc.pm:3969
+#: ../Misc.pm:3976
 msgid "You don't have the Vending skill.\n"
 msgstr "你没有开店技能.\n"
 
-#: ../Misc.pm:3974
+#: ../Misc.pm:3981
 msgid "Your shop does not have a title.\n"
 msgstr "你的商店没有名字.\n"
 
-#: ../Misc.pm:4005
+#: ../Misc.pm:4012
 msgid "There are no items to sell.\n"
 msgstr "没有出售的道具.\n"
 
-#: ../Misc.pm:4017
+#: ../Misc.pm:4024
 #, perl-format
 msgid "Shop opened (%s) with %d selling items.\n"
 msgstr "商店打开 (%s) 出售 %d 道具.\n"
 
-#: ../Misc.pm:4024
+#: ../Misc.pm:4031
 msgid "A shop has not been opened.\n"
 msgstr "开店失败.\n"
 
-#: ../Misc.pm:4032
+#: ../Misc.pm:4039
 msgid "Shop closed.\n"
 msgstr "停止关闭.\n"
 
@@ -3979,27 +3979,22 @@ msgid "Cannot load packet parser for ServerType '%s'.\n"
 msgstr "无法载入ServerType的封包 '%s'.\n"
 
 #: ../Network/Receive.pm:411
-#, fuzzy
 msgid "============= Account payment information =============\n"
-msgstr ""
-"===============道具说明===============\n"
-"道具: %s\n"
-"\n"
+msgstr "============= 解析帐号信息 =============\n"
 
 #: ../Network/Receive.pm:412
 #, perl-format
 msgid "Pay per day  : %s day(s) %s hour(s) and %s minute(s)\n"
-msgstr ""
+msgstr "游戏天数 : %s 天(s) %s 小时(s) %s 分钟(s)\n"
 
 #: ../Network/Receive.pm:413
 #, perl-format
 msgid "Pay per hour : %s day(s) %s hour(s) and %s minute(s)\n"
-msgstr ""
+msgstr "游戏小时 : %s 天(s) %s 小时(s) %s 分钟(s)\n"
 
 #: ../Network/Receive.pm:414
-#, fuzzy
 msgid "-------------------------------------------------------\n"
-msgstr "----------------------------错误摘要----------------------------\n"
+msgstr "-------------------------------------------------------\n"
 
 #: ../Network/Receive.pm:435
 msgid ""
@@ -5309,6 +5304,426 @@ msgstr "Poseidon: 把结果返回给客户端 %s\n"
 msgid "Poseidon: Querying Ragnarok Online client.\n"
 msgstr "Poseidon: 查找仙境客户端.\n"
 
+#: ../AI/CoreLogic.pm:209
+msgid "Could not find the NPC at the designated location.\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:254
+#, fuzzy, perl-format
+msgid "Done talking with %s.\n"
+msgstr "%s: 完成对话\n"
+
+#: ../AI/CoreLogic.pm:264
+msgid "NPC did not respond.\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:346
+msgid "Escaping to into nearest portal.\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:354
+msgid "Found warp portal escaping into warp portal.\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:363
+#, fuzzy
+msgid "Escape failed no portal found.\n"
+msgstr "%s: 没有发现文件: %s\n"
+
+#: ../AI/CoreLogic.pm:383 ../AI/CoreLogic.pm:1842
+msgid ""
+"Invalid coordinates specified for randomWalk (coordinates are unwalkable); "
+"randomWalk disabled\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:385 ../AI/CoreLogic.pm:1845
+#, fuzzy, perl-format
+msgid "Calculating random route to: %s(%s): %s, %s\n"
+msgstr "计算锁定地图路径: %s(%s): %s, %s\n"
+
+#: ../AI/CoreLogic.pm:462
+#, fuzzy
+msgid "Timeout equiping for skill\n"
+msgstr "静止 %s\n"
+
+#: ../AI/CoreLogic.pm:562
+#, fuzzy, perl-format
+msgid "Failed to take %s (%s) from (%s, %s) to (%s, %s)\n"
+msgstr "出现物品 : %s (%s) x %s (%s, %s)\n"
+
+#: ../AI/CoreLogic.pm:584 ../AI/CoreLogic.pm:2462
+#, perl-format
+msgid "Routing to (%s, %s) to take %s (%s), distance %s\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:690
+msgid "Auto-denying party request\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:692
+#, fuzzy
+msgid "Auto-accepting party request\n"
+msgstr "%s 已经接受您的邀请\n"
+
+#: ../AI/CoreLogic.pm:777
+#, fuzzy, perl-format
+msgid ""
+"Your version of %s (%s%s) is too old.\n"
+"Please upgrade to at least version %s\n"
+msgstr ""
+"你的 XSTools库 太旧了.请升级.\n"
+"请查看 %s"
+
+#: ../AI/CoreLogic.pm:821
+#, fuzzy, perl-format
+msgid ""
+"\n"
+"Disconnecting due to break time: %s to %s\n"
+"\n"
+msgstr "金钱数量不足.断开连接 %s."
+
+#: ../AI/CoreLogic.pm:822
+#, fuzzy, perl-format
+msgid "*** Disconnected due to Break Time: %s to %s ***\n"
+msgstr "*** 你断开连接, 自动退出! ***\n"
+
+#: ../AI/CoreLogic.pm:846
+#, fuzzy, perl-format
+msgid "Arrived at waypoint %s\n"
+msgstr "喂养宠物 %s\n"
+
+#: ../AI/CoreLogic.pm:856
+#, fuzzy, perl-format
+msgid "Walking to waypoint %s: %s(%s): %s,%s\n"
+msgstr "计算锁定地图路径: %s(%s): %s, %s\n"
+
+#: ../AI/CoreLogic.pm:904
+msgid "Auto-storaging due to death\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:909
+#, fuzzy, perl-format
+msgid "Moving to %s - %d,%d\n"
+msgstr "位置 %s (%s) : %d, %d\n"
+
+#: ../AI/CoreLogic.pm:927
+#, fuzzy
+msgid "Disconnecting on death!\n"
+msgstr "断开连接.接受到密语!\n"
+
+#: ../AI/CoreLogic.pm:928
+#, fuzzy
+msgid "*** You died, auto disconnect! ***\n"
+msgstr "*** 你收到 PM'd, 自动断线! ***\n"
+
+#: ../AI/CoreLogic.pm:1025
+msgid "Auto-storaging due to excess weight\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:1048 ../AI/CoreLogic.pm:1049 ../AI/CoreLogic.pm:2160
+#: ../AI/CoreLogic.pm:2161
+#, fuzzy, perl-format
+msgid "Disconnecting on empty %s!\n"
+msgstr "断开连接.等级达到 %s!\n"
+
+#: ../AI/CoreLogic.pm:1066
+#, perl-format
+msgid "Auto-storaging due to insufficient %s\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:1120
+#, fuzzy
+msgid "Teleporting to auto-storage\n"
+msgstr "开始自动存仓.\n"
+
+#: ../AI/CoreLogic.pm:1125
+#, fuzzy, perl-format
+msgid "Calculating auto-storage route to: %s(%s): %s, %s\n"
+msgstr "计算锁定地图路径: %s(%s): %s, %s\n"
+
+#: ../AI/CoreLogic.pm:1139
+msgid "Warning storageAuto has changed. Please read News.txt\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:1146
+msgid "Using storage steps defined in config.\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:1148
+msgid "Something is wrong with storageAuto_npc_type in your config.\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:1274
+#, fuzzy, perl-format
+msgid "Attempt to get %s x %s from storage, retry: %s\n"
+msgstr "尝试把 %s 从你的朋友列表中移开\n"
+
+#: ../AI/CoreLogic.pm:1285
+#, perl-format
+msgid "storage: %s out of stock\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:1293
+msgid ""
+"Kore tried to get an item from storage 3 times, but failed.\n"
+"This problem could be caused by a server bug.\n"
+"To work around this problem, set 'relogAfterStorage' to 1, and relogin.\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:1308
+msgid "Character is still overweight after storageAuto (storage is full?)\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:1310 ../AI/CoreLogic.pm:1311
+#, fuzzy
+msgid "Disconnecting on storage full!\n"
+msgstr "断开连接.职业等级达到 %s!\n"
+
+#: ../AI/CoreLogic.pm:1351
+#, fuzzy
+msgid "Auto-sell sequence completed.\n"
+msgstr "AI 列表被清除\n"
+
+#: ../AI/CoreLogic.pm:1387
+#, fuzzy
+msgid "Teleporting to auto-sell\n"
+msgstr "好像 %s 打你了，闪\n"
+
+#: ../AI/CoreLogic.pm:1391
+#, fuzzy, perl-format
+msgid "Calculating auto-sell route to: %s(%s): %s, %s\n"
+msgstr "计算锁定地图路径: %s(%s): %s, %s\n"
+
+#: ../AI/CoreLogic.pm:1553
+#, fuzzy
+msgid "Teleporting to auto-buy\n"
+msgstr "好像 %s 打你了，闪\n"
+
+#: ../AI/CoreLogic.pm:1557
+#, fuzzy, perl-format
+msgid "Calculating auto-buy route to: %s (%s): %s, %s\n"
+msgstr "计算锁定地图路径: %s(%s): %s, %s\n"
+
+#: ../AI/CoreLogic.pm:1693
+#, fuzzy, perl-format
+msgid "Invalid map specified for lockMap - map %s doesn't exist\n"
+msgstr "服务器指定错误或服务器不存在...\n"
+
+#: ../AI/CoreLogic.pm:1715
+msgid "Invalid coordinates specified for lockMap, coordinates are unwalkable\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:1722
+#, fuzzy, perl-format
+msgid "Calculating lockMap route to: %s(%s): %s, %s\n"
+msgstr "计算锁定地图路径: %s(%s): %s, %s\n"
+
+#: ../AI/CoreLogic.pm:1724
+#, fuzzy, perl-format
+msgid "Calculating lockMap route to: %s(%s)\n"
+msgstr "计算路径: %s(%s)\n"
+
+#: ../AI/CoreLogic.pm:1770
+#, perl-format
+msgid "Auto-adding stat %s\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:1803
+#, perl-format
+msgid "Unknown skill '%s'; disabling skillsAddAuto\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:1814
+#, perl-format
+msgid "Auto-adding skill %s\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:1875
+#, perl-format
+msgid "Found my master - %s\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:1882
+msgid "Found my master!\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:1936
+msgid "Master died. I'll wait here.\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:1939
+msgid "I lost my master\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:1941
+msgid "Trying to get him back\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:1948 ../AI/CoreLogic.pm:2033
+#, fuzzy
+msgid "My master disconnected\n"
+msgstr "中断\n"
+
+#: ../AI/CoreLogic.pm:1984 ../AI/CoreLogic.pm:2061
+#, fuzzy
+msgid "My master teleported\n"
+msgstr "人物已经删除.\n"
+
+#: ../AI/CoreLogic.pm:1988
+msgid "Trying to find lost master\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:2013
+msgid "Don't know what happened to Master\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:2029
+msgid "Couldn't find master, giving up\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:2057
+#, perl-format
+msgid "My master warped at (%s, %s) - moving to warp point\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:2416
+#, fuzzy, perl-format
+msgid "Gathering: %s (%s)\n"
+msgstr "负重: %s/%s (%s%)\n"
+
+#: ../AI/CoreLogic.pm:2433
+#, fuzzy, perl-format
+msgid "Failed to gather %s (%s) : Lost target\n"
+msgstr "创建失败 %s: %s\n"
+
+#: ../AI/CoreLogic.pm:2441
+#, fuzzy, perl-format
+msgid "Failed to gather %s (%s) : No looting!\n"
+msgstr "创建失败 %s: %s\n"
+
+#: ../AI/CoreLogic.pm:2445
+#, fuzzy, perl-format
+msgid "Failed to gather %s (%s) : Timeout\n"
+msgstr "创建失败 %s: %s\n"
+
+#: ../AI/CoreLogic.pm:2495
+#, fuzzy
+msgid "Teleporting to avoid all players\n"
+msgstr "发现垃圾 %s (%s) 我飞啊～\n"
+
+#: ../AI/CoreLogic.pm:2535
+msgid "Teleporting due to insufficient HP/SP or too many aggressives\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:2546
+#, fuzzy, perl-format
+msgid "Teleporting to avoid %s\n"
+msgstr "发现垃圾 %s (%s) 我飞啊～\n"
+
+#: ../AI/CoreLogic.pm:2562
+#, fuzzy
+msgid "Teleporting due to idle\n"
+msgstr "好像 %s 打你了，闪\n"
+
+#: ../AI/CoreLogic.pm:2574
+#, fuzzy
+msgid "Teleporting to avoid portal\n"
+msgstr "发现垃圾 %s (%s) 我飞啊～\n"
+
+#: ../AI/CoreLogic.pm:2599
+msgid "Respawning to save point.\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:2600
+msgid "** Respawning to save point.\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:2866
+msgid "Can't reach or damage target, dropping target\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:2868 ../AI/CoreLogic.pm:3209 ../AI/CoreLogic.pm:3339
+#, fuzzy
+msgid "Teleport due to dropping attack target\n"
+msgstr "好像 %s 打你了，闪\n"
+
+#: ../AI/CoreLogic.pm:2879
+#, fuzzy
+msgid "Target died\n"
+msgstr "你挂了.\n"
+
+#: ../AI/CoreLogic.pm:2914
+msgid "Target lost\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:3059 ../AI/CoreLogic.pm:3327
+msgid "Dropping target - you will not kill steal others\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:3111
+#, perl-format
+msgid "%s; moving to (%s, %s)\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:3207
+msgid "Unable to calculate a route to target, dropping target\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:3419 ../AI/CoreLogic.pm:3511
+msgid "Destination reached.\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:3446
+#, perl-format
+msgid "Stuck at %s (%d,%d), while walking from (%d,%d) to (%d,%d)."
+msgstr ""
+
+#: ../AI/CoreLogic.pm:3574
+#, perl-format
+msgid ""
+"Unable to calculate how to walk from [%s(%s,%s)] to [%s%s] (no map "
+"solution).\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:3613
+#, fuzzy, perl-format
+msgid "Unable to talk to NPC at %s (%s,%s).\n"
+msgstr "不能写到 %s\n"
+
+#: ../AI/CoreLogic.pm:3628
+#, perl-format
+msgid "Insufficient zenny to pay for service at %s (%s,%s).\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:3652
+#, perl-format
+msgid "Unable to walk from %s (%s,%s) to NPC at (%s,%s).\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:3681
+#, perl-format
+msgid "No LOS from %s (%s,%s) to Final Destination at (%s,%s).\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:3682
+#, perl-format
+msgid "Cannot reach (%s,%s) from current position.\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:3732
+#, fuzzy, perl-format
+msgid "Attempting to teleport near portal, try #%s\n"
+msgstr "常识对入口 %s (%s)\n"
+
+#: ../AI/CoreLogic.pm:3768
+#, perl-format
+msgid "No LOS from %s (%s,%s) to Portal at (%s,%s).\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:3769
+msgid "Cannot reach portal from current position\n"
+msgstr ""
+
 #: ../../openkore.pl:69
 #, perl-format
 msgid ""
@@ -5512,7 +5927,7 @@ msgid "Changing configuration file (from \"%s\" to \"%s\")...\n"
 msgstr "变更设置文件 (从 \"%s\" 到 \"%s\")...\n"
 
 #. Translation Comment: Interface Title with character status
-#: ../functions.pl:392
+#: ../functions.pl:393
 #, perl-format
 msgid "%s B%s (%s), J%s (%s) : w%s%s - %s"
 msgstr "%s B%s (%s), J%s (%s) : w%s%s - %s"
@@ -5529,299 +5944,11 @@ msgstr "%s没有连接 - %s"
 msgid "%sConnecting - %s"
 msgstr "%s连接 - %s"
 
-#: ../functions.pl:521
+#: ../functions.pl:524
 msgid "Map loaded\n"
 msgstr "读取地图\n"
 
-#: ../functions.pl:739
+#: ../functions.pl:742
 #, perl-format
 msgid "Unknown packet - %s\n"
 msgstr "未知封包 - %s\n"
-
-#~ msgid "Player %s (%d) uses %s on location (%d, %d)\n"
-#~ msgstr "玩家 %s (%d) 使用 %s 在位置 (%d, %d)\n"
-
-#~ msgid "Monster %s (%d) uses %s on location (%d, %d)\n"
-#~ msgstr "怪物 %s (%d) 使用 %s 在位置 (%d, %d)\n"
-
-#~ msgid "Unknown #%s (%d) uses %s on location (%d, %d)\n"
-#~ msgstr "未知 #%s (%d) 使用 %s 在位置 (%d, %d)\n"
-
-#~ msgid "Monster with empty name attacking you. Teleporting...\n"
-#~ msgstr "未知怪物名的怪物正在攻击您. 瞬移...\n"
-
-#~ msgid "NPC Spawned: %s (%s, %s) (ID %s) - (%s)\n"
-#~ msgstr "产生 NPC : %s (%s, %s) (ID %s) - (%s)\n"
-
-#~ msgid "Could not find the NPC at the designated location.\n"
-#~ msgstr "无法在指定的位置找到 NPC.\n"
-
-#~ msgid "Done talking with %s.\n"
-#~ msgstr "与角色正在交谈 %s.\n"
-
-#~ msgid "NPC did not respond.\n"
-#~ msgstr "NPC 没有回应.\n"
-
-#~ msgid "Can't reach or damage target, dropping target\n"
-#~ msgstr "无法到达或伤害目标, 放弃目标\n"
-
-#~ msgid "Teleport due to dropping attack target\n"
-#~ msgstr "由于放弃目标，随机移动\n"
-
-#~ msgid "Target died\n"
-#~ msgstr "目标死亡\n"
-
-#~ msgid "Target lost\n"
-#~ msgstr "目标消失\n"
-
-#~ msgid "Dropping target - you will not kill steal others\n"
-#~ msgstr "放弃目标 - 你将不能偷或杀死目标\n"
-
-#~ msgid "%s; moving to (%s, %s)\n"
-#~ msgstr "%s; 移动到 (%s, %s)\n"
-
-#~ msgid "Unable to calculate a route to target, dropping target\n"
-#~ msgstr "不能计算到目标的路径, 放弃目标\n"
-
-#~ msgid "Timeout equiping for skill\n"
-#~ msgstr "装备技能超时\n"
-
-#~ msgid "Destination reached.\n"
-#~ msgstr "目的地到达.\n"
-
-#~ msgid "Stuck at %s (%d,%d), while walking from (%d,%d) to (%d,%d)."
-#~ msgstr "附着在 %s (%d,%d), 当步行的时候从 (%d,%d) 到 (%d,%d)."
-
-#~ msgid ""
-#~ "Unable to calculate how to walk from [%s(%s,%s)] to [%s%s] (no map "
-#~ "solution).\n"
-#~ msgstr "不能计算行走路径从 [%s(%s,%s)] 到 [%s%s] (没有地图).\n"
-
-#~ msgid "Unable to talk to NPC at %s (%s,%s).\n"
-#~ msgstr "不能和 NPC 对话，在 %s (%s,%s).\n"
-
-#~ msgid "Insufficient zenny to pay for service at %s (%s,%s).\n"
-#~ msgstr "不够金钱支付 %s (%s,%s) 服务费.\n"
-
-#~ msgid "Unable to walk from %s (%s,%s) to NPC at (%s,%s).\n"
-#~ msgstr "无法行走从 %s (%s,%s) 到 NPC 在 (%s,%s).\n"
-
-#~ msgid "No LOS from %s (%s,%s) to Final Destination at (%s,%s).\n"
-#~ msgstr "没有发现从 %s (%s,%s) 到目的地在 (%s,%s).\n"
-
-#~ msgid "Cannot reach (%s,%s) from current position.\n"
-#~ msgstr "从当前的位置不能到达 (%s,%s) .\n"
-
-#~ msgid "Attempting to teleport near portal, try #%s\n"
-#~ msgstr "在路点使用传送, 尝试 #%s\n"
-
-#~ msgid "No LOS from %s (%s,%s) to Portal at (%s,%s).\n"
-#~ msgstr "没有发现从 %s (%s,%s) 到路点在 (%s,%s).\n"
-
-#~ msgid "Cannot reach portal from current position\n"
-#~ msgstr "从当前的位置不能到达路点\n"
-
-#~ msgid "Failed to take %s (%s) from (%s, %s) to (%s, %s)\n"
-#~ msgstr "拿取失败 %s (%s) 在 (%s, %s) 到 (%s, %s)\n"
-
-#~ msgid "Routing to (%s, %s) to take %s (%s), distance %s\n"
-#~ msgstr "走到 (%s, %s) 拿 %s (%s),的距离 %s\n"
-
-#~ msgid "Auto-denying party request\n"
-#~ msgstr "自动拒绝组队邀请\n"
-
-#~ msgid "Auto-accepting party request\n"
-#~ msgstr "自动接受组队邀请\n"
-
-#~ msgid ""
-#~ "Your version of %s (%s%s) is too old.\n"
-#~ "Please upgrade to at least version %s\n"
-#~ msgstr ""
-#~ "你的版本 %s (%s%s) 太老了.\n"
-#~ "请更新新版本 %s\n"
-
-#~ msgid ""
-#~ "\n"
-#~ "Disconnecting due to break time: %s to %s\n"
-#~ "\n"
-#~ msgstr ""
-#~ "\n"
-#~ "断开连接: %s 到 %s\n"
-#~ "\n"
-
-#~ msgid "*** Disconnected due to Break Time: %s to %s ***\n"
-#~ msgstr "*** 断开连接时间: %s 到 %s ***\n"
-
-#~ msgid "Arrived at waypoint %s\n"
-#~ msgstr "到达路点 %s\n"
-
-#~ msgid "Walking to waypoint %s: %s(%s): %s,%s\n"
-#~ msgstr "走到路点 %s: %s(%s): %s,%s\n"
-
-#~ msgid "Auto-storaging due to death\n"
-#~ msgstr "人物死亡.自动存仓\n"
-
-#~ msgid "Moving to %s - %d,%d\n"
-#~ msgstr "移动到 %s - %d,%d\n"
-
-#~ msgid "Disconnecting on death!\n"
-#~ msgstr "人物死亡.断开连接!\n"
-
-#~ msgid "*** You died, auto disconnect! ***\n"
-#~ msgstr "*** 你挂了, 自动断开连接! ***\n"
-
-#~ msgid "Auto-storaging due to excess weight\n"
-#~ msgstr "超过负重.自动存仓\n"
-
-#~ msgid "Disconnecting on empty %s!\n"
-#~ msgstr "断开连接在空的 %s!\n"
-
-#~ msgid "Auto-storaging due to insufficient %s\n"
-#~ msgstr "自动存仓由于 %s 不足\n"
-
-#~ msgid "Teleporting to auto-storage\n"
-#~ msgstr "瞬移.自动存仓\n"
-
-#~ msgid "Calculating auto-storage route to: %s(%s): %s, %s\n"
-#~ msgstr "自动计算储存路径到: %s(%s): %s, %s\n"
-
-#~ msgid "Warning storageAuto has changed. Please read News.txt\n"
-#~ msgstr "警告： storageAuto 已经改变. 请看 News.txt\n"
-
-#~ msgid "Using storage steps defined in config.\n"
-#~ msgstr "储存步长定义在config.txt.\n"
-
-#~ msgid "Something is wrong with storageAuto_npc_type in your config.\n"
-#~ msgstr "storageAuto_npc_type 设置错误.\n"
-
-#~ msgid "Attempt to get %s x %s from storage, retry: %s\n"
-#~ msgstr "在仓库中取出 %s x %s , 尝试: %s\n"
-
-#~ msgid "storage: %s out of stock\n"
-#~ msgstr "仓库: %s 数量不够\n"
-
-#~ msgid ""
-#~ "Kore tried to get an item from storage 3 times, but failed.\n"
-#~ "This problem could be caused by a server bug.\n"
-#~ "To work around this problem, set 'relogAfterStorage' to 1, and relogin.\n"
-#~ msgstr ""
-#~ "Kore 已经连续3次设法得到道具从仓库, 但未成功.\n"
-#~ "这个问题可能是服务器BUG.\n"
-#~ "请设置' relogAfterStorage ' 为1, 并且relogin .\n"
-
-#~ msgid "Character is still overweight after storageAuto (storage is full?)\n"
-#~ msgstr "人物超重 (仓库已经满了?)\n"
-
-#~ msgid "Disconnecting on storage full!\n"
-#~ msgstr "仓库满了，断开连接!\n"
-
-#~ msgid "Auto-sell sequence completed.\n"
-#~ msgstr "自动出售完成.\n"
-
-#~ msgid "Teleporting to auto-sell\n"
-#~ msgstr "瞬移.自动出售物品\n"
-
-#~ msgid "Calculating auto-sell route to: %s(%s): %s, %s\n"
-#~ msgstr "计算自动出售路径: %s(%s): %s, %s\n"
-
-#~ msgid "Teleporting to auto-buy\n"
-#~ msgstr "瞬移.自动购买物品\n"
-
-#~ msgid "Calculating auto-buy route to: %s (%s): %s, %s\n"
-#~ msgstr "计算自动购买路径: %s (%s): %s, %s\n"
-
-#~ msgid "Invalid map specified for lockMap - map %s doesn't exist\n"
-#~ msgstr "锁定地图错误 - 地图 %s 不存在\n"
-
-#~ msgid ""
-#~ "Invalid coordinates specified for lockMap, coordinates are unwalkable\n"
-#~ msgstr "错误的锁定地图, 坐标走不到\n"
-
-#~ msgid "Calculating lockMap route to: %s(%s): %s, %s\n"
-#~ msgstr "计算锁定地图路径: %s(%s): %s, %s\n"
-
-#~ msgid "Calculating lockMap route to: %s(%s)\n"
-#~ msgstr "计算锁定地图路径: %s(%s)\n"
-
-#~ msgid "Auto-adding stat %s\n"
-#~ msgstr "自动增加状态 %s\n"
-
-#~ msgid "Unknown skill '%s'; disabling skillsAddAuto\n"
-#~ msgstr "未知技能 '%s'; 关闭 skillsAddAuto\n"
-
-#~ msgid "Auto-adding skill %s\n"
-#~ msgstr "自动增加技能 %s\n"
-
-#~ msgid ""
-#~ "Invalid coordinates specified for randomWalk (coordinates are "
-#~ "unwalkable); randomWalk disabled\n"
-#~ msgstr "randomWalk 指定了错误的坐标 (无法走到); randomWalk 关闭\n"
-
-#~ msgid "Calculating random route to: %s(%s): %s, %s\n"
-#~ msgstr "计算随机行走路线: %s(%s): %s, %s\n"
-
-#~ msgid "Found my master - %s\n"
-#~ msgstr "发现主人 - %s\n"
-
-#~ msgid "Found my master!\n"
-#~ msgstr "发现主人！\n"
-
-#~ msgid "Master died. I'll wait here.\n"
-#~ msgstr "主人死了. 继续等待.\n"
-
-#~ msgid "I lost my master\n"
-#~ msgstr "失去主人\n"
-
-#~ msgid "Trying to get him back\n"
-#~ msgstr "等待主人回来\n"
-
-#~ msgid "My master disconnected\n"
-#~ msgstr "主人已经下线\n"
-
-#~ msgid "My master teleported\n"
-#~ msgstr "主人已经飞了\n"
-
-#~ msgid "Trying to find lost master\n"
-#~ msgstr "尝试寻找主人\n"
-
-#~ msgid "Don't know what happened to Master\n"
-#~ msgstr "不知主人发生了什么\n"
-
-#~ msgid "Couldn't find master, giving up\n"
-#~ msgstr "无法找到主人, 放弃\n"
-
-#~ msgid "My master warped at (%s, %s) - moving to warp point\n"
-#~ msgstr "主人移动在 (%s, %s) - 走到WARP点\n"
-
-#~ msgid "Gathering: %s (%s)\n"
-#~ msgstr "拾取: %s (%s)\n"
-
-#~ msgid "Failed to gather %s (%s) : Lost target\n"
-#~ msgstr "不能拾取 %s (%s) : 失去目标\n"
-
-#~ msgid "Failed to gather %s (%s) : No looting!\n"
-#~ msgstr "不能拾取 %s (%s) : 不是自己的东西!\n"
-
-#~ msgid "Failed to gather %s (%s) : Timeout\n"
-#~ msgstr "不能拾取 %s (%s) : 超时\n"
-
-#~ msgid "Teleporting to avoid all players\n"
-#~ msgstr "避免所有玩家，飞～\n"
-
-#~ msgid "Teleporting due to insufficient HP/SP or too many aggressives\n"
-#~ msgstr "由于 HP/SP 不足或被多数怪围殴，飞！\n"
-
-#~ msgid "Teleporting to avoid %s\n"
-#~ msgstr "避免 %s ，飞～\n"
-
-#~ msgid "Teleporting due to idle\n"
-#~ msgstr "发呆了，飞～\n"
-
-#~ msgid "Teleporting to avoid portal\n"
-#~ msgstr "避免入口，飞～\n"
-
-#~ msgid "Respawning to save point.\n"
-#~ msgstr "回到记录点.\n"
-
-#~ msgid "** Respawning to save point.\n"
-#~ msgstr "** 回到记录点.\n"
