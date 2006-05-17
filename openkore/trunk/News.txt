@@ -225,6 +225,7 @@ Credits:
 - windserfer: aliases for PvP/MvP Rooms (Room Rock On, Four Room, and Copass)
 - lighthazen: major help on cleaning up old servers.txt entries
 - DesperadoStrike: new monster names
+- patapum: new hooks and some bug fixes
 
 
 ==================
