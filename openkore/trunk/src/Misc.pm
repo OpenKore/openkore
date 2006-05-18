@@ -2889,7 +2889,7 @@ sub attack_string {
 			return TF("Monster %s (%d) attacks Unknown #%s (%d) - Dmg: %s (delay %s)\n", $source->{name}, 
 				$source->{binID}, $target->{nameID}, $target->{binID}, $damage, $delay);
 		}
-	# Unknown		
+	# Unknown
 	} elsif ($source->isa('Actor::Unknown')) {
 		if ($target->isa('Actor::You')) {
 			return TF("Unknown #%s (%d) attacks you - Dmg: %s (delay %s)\n", $source->{nameID}, $source->{binID}, 
