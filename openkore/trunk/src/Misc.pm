@@ -1246,7 +1246,7 @@ sub avoidList_talk {
 
 sub calcStat {
 	my $damage = shift;
-    $totaldmg += $damage;
+	$totaldmg += $damage;
 }
 
 ##

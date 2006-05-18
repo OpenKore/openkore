@@ -501,6 +501,8 @@ sub actor_action {
 			message TF("%s is sitting.\n", getActorName($args->{sourceID})), 'parseMsg_statuslook', 2;
 			$players{$args->{sourceID}}{sitting} = 1 if ($players{$args->{sourceID}});
 		}
+		Misc::checkValidity("actor_action (take item)");
+
 	} elsif ($args->{type} == 3) {
 		# Stand
 		my ($source, $verb) = getActorNames($args->{sourceID}, 0, 'are', 'is');
@@ -514,6 +516,8 @@ sub actor_action {
 			message TF("%s is standing.\n", getActorName($args->{sourceID})), 'parseMsg_statuslook', 2;
 			$players{$args->{sourceID}}{sitting} = 0 if ($players{$args->{sourceID}});
 		}
+		Misc::checkValidity("actor_action (stand)");
+
 	} else {
 		# Attack
 		my $dmgdisplay;
@@ -557,6 +561,8 @@ sub actor_action {
 		} else {
 			debug("$msg", 'parseMsg_damage');
 		}
+
+		Misc::checkValidity("actor_action (attack)");
 	}
 }
 
