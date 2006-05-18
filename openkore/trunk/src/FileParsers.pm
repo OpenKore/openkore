@@ -337,7 +337,7 @@ sub parseDataFile_lc {
 	my $r_hash = shift;
 	undef %{$r_hash};
 	my ($key,$value);
-	open FILE, $file;
+	open FILE, "<:utf8", $file;
 	foreach (<FILE>) {
 		next if (/^#/);
 		s/[\r\n]//g;
@@ -355,7 +355,7 @@ sub parseDataFile2 {
 	my ($file, $r_hash) = @_;
 
 	%{$r_hash} = ();
-	open FILE, "< $file";
+	open FILE, "<:8utf", $file;
 	foreach (<FILE>) {
 		next if (/^#/);
 		s/[\r\n]//g;
@@ -374,7 +374,7 @@ sub parseList {
 
 	undef %{$r_hash};
 
-	open FILE, "< $file";
+	open FILE, "<:utf8", $file;
 	foreach (<FILE>) {
 		chomp;
 		$r_hash->{$_} = 1;
@@ -1012,7 +1012,7 @@ sub writeDataFile {
 	my $file = shift;
 	my $r_hash = shift;
 	my ($key,$value);
-	open(FILE, "+> $file");
+	open(FILE, ">>:utf8", $file);
 	foreach (keys %{$r_hash}) {
 		if ($_ ne "") {
 			print FILE $_;
