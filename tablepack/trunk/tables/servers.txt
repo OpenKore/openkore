@@ -138,7 +138,6 @@ version 2
 serverType 0
 chatLangCode 1
 serverEncoding Western
-field_payon old_payon.fld
 
 [Philippines - pRO: Fenrir/Iris/Lydia]
 ip 202.57.118.232
