@@ -355,7 +355,7 @@ sub parseDataFile2 {
 	my ($file, $r_hash) = @_;
 
 	%{$r_hash} = ();
-	open FILE, "<:8utf", $file;
+	open FILE, "<:utf8", $file;
 	foreach (<FILE>) {
 		next if (/^#/);
 		s/[\r\n]//g;
