@@ -2,9 +2,11 @@
 #define _WINDOW_H_
 
 #include <gtk/gtk.h>
+#include <glibmm/ustring.h>
 #include "utils.h"
 #include "sprite-viewer.h"
 
+using namespace Glib;
 
 class MainWindow {
 public:
@@ -12,12 +14,11 @@ public:
 
 	void busy (bool b);
 	void preview (char *displayName, char *fname);
-	string selectOpenFile ();
+	ustring selectOpenFile ();
 	void status (String msg);
 	void statusf (const char *format, ...);
 private:
 	GdkCursor *busyCursor;
-	GtkWidget *opensel;
 	SpriteViewer *spriteViewer;
 };
 

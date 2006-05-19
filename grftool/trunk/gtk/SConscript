@@ -1,8 +1,8 @@
 Import('*')
 
 gtk = env.Copy();
-gtk.ParseConfig('pkg-config --cflags gtk+-2.0 libglade-2.0 gthread-2.0')
-gtk['LINKFLAGS'] = "`pkg-config --libs gtk+-2.0 libglade-2.0 gthread-2.0` -Wl,-export-dynamic"
+gtk.ParseConfig('pkg-config --cflags gtk+-2.0 libglade-2.0 gthread-2.0 gtkmm-2.4')
+gtk['LINKFLAGS'] = "`pkg-config --libs gtk+-2.0 libglade-2.0 gthread-2.0 gtkmm-2.4` -Wl,-export-dynamic"
 gtk['CPPPATH'] += ['../lib']
 gtk['LIBPATH'] += ['../lib/static']
 

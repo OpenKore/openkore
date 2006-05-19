@@ -1,4 +1,5 @@
 #include <gtk/gtk.h>
+#include <gtkmm/filechooserdialog.h>
 #include <stdarg.h>
 #include "sprite.h"
 
@@ -6,6 +7,8 @@
 #include "main.h"
 #include "utils.h"
 #include "callbacks.h"
+
+using namespace Gtk;
 
 static void sort_by_column (GtkTreeViewColumn *col, gpointer column);
 
@@ -201,23 +204,29 @@ MainWindow::preview (char *displayName, char *fname)
 	}
 }
 
-string
+ustring
 MainWindow::selectOpenFile ()
 {
-	const char *fname = NULL;
+	ustring result;
+	FileFilter grfFilter, allFilter;
+	FileChooserDialog dialog(_("Open GRF archive"), FILE_CHOOSER_ACTION_OPEN);
 
-	if (!opensel)
-		opensel = gtk_file_selection_new (_("Open GRF archive"));
+	dialog.add_button(GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL);
+	dialog.add_button(GTK_STOCK_OPEN, GTK_RESPONSE_OK);
+	dialog.set_default_response(GTK_RESPONSE_OK);
 
-	gtk_file_selection_show_fileop_buttons (GTK_FILE_SELECTION (opensel));
-	if (gtk_dialog_run (GTK_DIALOG (opensel)) == GTK_RESPONSE_OK)
-		fname = gtk_file_selection_get_filename (GTK_FILE_SELECTION (opensel));
-	gtk_widget_hide (opensel);
+	grfFilter.set_name(_("GRF files (*.grf)"));
+	grfFilter.add_pattern("*.grf");
+	dialog.add_filter(grfFilter);
 
-	if (fname)
-		return fname;
-	else
-		return "";
+	allFilter.set_name(_("All files (*.*)"));
+	allFilter.add_pattern("*");
+	dialog.add_filter(allFilter);
+
+	if (dialog.run() == GTK_RESPONSE_OK) {
+		result = dialog.get_filename();
+	}
+	return result;
 }
 
 void

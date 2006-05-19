@@ -1,4 +1,5 @@
 #include <gtk/gtk.h>
+#include <gtkmm/main.h>
 #include <glib/gthread.h>
 #include <glade/glade.h>
 #include <string.h>
@@ -474,8 +475,8 @@ extract_files (const char *savedir, GList *files, GList *indices)
 int
 main (int argc, char *argv[])
 {
-	g_thread_init (NULL);
-	gtk_init (&argc, &argv);
+	Glib::thread_init();
+	Gtk::Main kit(argc, argv);
 	document.grf = (Grf *) 0;
 	mainWin.init ();
 
@@ -486,6 +487,6 @@ main (int argc, char *argv[])
 		gtk_idle_add (idle_open, argv[1]);
 	gtk_widget_realize (W(main));
 	gtk_widget_show (W(main));
-	gtk_main ();
+	Gtk::Main::run();
 	return 0;
 }
