@@ -26,26 +26,12 @@ MainWindow::init ()
 	GtkTreeView *tree;
 	GtkTreeViewColumn *column;
 	GtkTreeSelection *selection;
-	GtkTooltips *tips;
 	GdkPixbuf *pixbuf;
 	#include "grftool-gtk.csource"
 
 
 	busyCursor = gdk_cursor_new (GDK_WATCH);
 	xml = load_glade ("grftool.glade");
-
-
-	/* Manually set tooltips (libglade bug??) */
-	tips = gtk_tooltips_new ();
-	gtk_tooltips_set_tip (tips, W(open),
-		_("Open GRF archive"), NULL);
-	gtk_tooltips_set_tip (tips, W(extract),
-		_("Extract all files or selected files"), NULL);
-	gtk_tooltips_set_tip (tips, W(preview_toggle),
-		_("Enable/disable preview of files"), NULL);
-	gtk_tooltips_set_tip (tips, W(about),
-		_("Show about box"), NULL);
-
 
 	/* Setup the file list model and widget */
 	filelist = GTK_TREE_MODEL (gtk_list_store_new (N_COLS,
@@ -138,7 +124,7 @@ MainWindow::preview (char *displayName, char *fname)
 	char *tmp;
 	string ext;
 
-	if (!gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (W(preview_toggle))))
+	if (!gtk_toggle_tool_button_get_active (GTK_TOGGLE_TOOL_BUTTON (W(preview_toggle))))
 		return;
 
 	tmp = strrchr (displayName, '.');
