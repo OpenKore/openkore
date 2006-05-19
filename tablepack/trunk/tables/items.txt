@@ -1,4 +1,4 @@
-// When configuring your bot, do not use item names in this file!
+﻿// When configuring your bot, do not use item names in this file!
 // Check the item name as shown by the bot, not this file!
 // Underscores (_) are never used in your configuration!
 

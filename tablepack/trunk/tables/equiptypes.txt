@@ -1,4 +1,4 @@
-0 Item
+﻿0 Item
 1 Lower Mask
 2 One-Handed Weapon
 4 Cape

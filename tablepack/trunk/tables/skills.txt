@@ -1,4 +1,4 @@
-1 NV_BASIC Basic Skill
+﻿1 NV_BASIC Basic Skill
 2 SM_SWORD Sword Mastery
 3 SM_TWOHAND Two-Handed Sword Mastery
 4 SM_RECOVERY Increase HP Recovery
