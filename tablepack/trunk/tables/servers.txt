@@ -1,4 +1,4 @@
-# This file contains information about master servers.
+﻿# This file contains information about master servers.
 
 #####################
 # Official RO Servers

@@ -1,4 +1,4 @@
-NV_BASIC#
+﻿NV_BASIC#
 Basic Skill
 ^777777Enables to apply Basic Interface Skills.^000000
 [Level 1] : Enable to Trade

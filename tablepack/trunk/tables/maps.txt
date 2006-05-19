@@ -1,4 +1,4 @@
-abyss_03.rsw#Glast Heim Abyss#
+﻿abyss_03.rsw#Glast Heim Abyss#
 jupe_cave.rsw#Juperos Dungeon Entrance#
 juperos_01.rsw#the Ruins of Juperos#
 juperos_02.rsw#the Ruins of Juperos#

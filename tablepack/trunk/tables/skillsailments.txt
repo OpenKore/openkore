@@ -1,4 +1,4 @@
-1 Poisoned
+﻿1 Poisoned
 2 Cursed
 4 Silenced
 16 Blinded

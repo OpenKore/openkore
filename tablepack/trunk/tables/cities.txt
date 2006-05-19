@@ -1,4 +1,4 @@
-alb_ship.rsw#Alberta Ship#
+﻿alb_ship.rsw#Alberta Ship#
 alberta.rsw#Alberta#
 alberta_in.rsw#Inside Alberta#
 alb2trea.rsw# Alberta Island#

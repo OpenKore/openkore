@@ -1,4 +1,4 @@
-#Here are the command descriptions stored.
+﻿#Here are the command descriptions stored.
 #
 #[command] -is the name of the command
 #the first line is a short description

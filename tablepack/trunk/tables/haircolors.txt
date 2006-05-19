@@ -1,4 +1,4 @@
-0 Dark Brown
+﻿0 Dark Brown
 1 Brown/Blond
 2 Purple
 3 Light Brown

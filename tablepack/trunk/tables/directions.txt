@@ -1,4 +1,4 @@
-0 North
+﻿0 North
 1 Northwest
 2 West
 3 Southwest
