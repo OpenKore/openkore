@@ -149,7 +149,7 @@ preview_toggled_cb ()
 {
 	gboolean active;
 
-	active = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (W(preview_toggle)));
+	active = gtk_toggle_tool_button_get_active (GTK_TOGGLE_TOOL_BUTTON (W(preview_toggle)));
 	if (active)
 		gtk_widget_show (W(preview_pane));
 	else
