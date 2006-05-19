@@ -58,10 +58,33 @@ def CheckGtk(context, version):
 	else:
 		return 0
 
+def CheckGtkmm(context, version):
+	context.Message('Checking for Gtkmm >= ' + version + '... ')
+	pipes = os.popen3('pkg-config --modversion gtkmm-2.4')
+	out = pipes[1].read().rstrip("\n")
+	pipes[0].close()
+	pipes[2].close()
+	if out <> '':
+		context.Result(out)
+	else:
+		context.Result('not found')
+
+	if out >= version:
+		return 1
+	else:
+		return 0
+
 if platform != "cygwin":
-	conf = env.Configure(custom_tests = {'CheckGtk': CheckGtk})
+	conf = env.Configure(custom_tests = {'CheckGtk': CheckGtk, 'CheckGtkmm': CheckGtkmm})
 	USE_GTK = 1
-	if not conf.CheckGtk('2.2.0'):
+	if not conf.CheckGtk('2.4.0'):
+		if ARGUMENTS.get('gtk', 0):
+			print "*** Stop"
+			Exit(1)
+		else:
+			print 'GTK frontend will be disabled.'
+		USE_GTK = 0
+	if not conf.CheckGtkmm('2.4.0'):
 		if ARGUMENTS.get('gtk', 0):
 			print "*** Stop"
 			Exit(1)
