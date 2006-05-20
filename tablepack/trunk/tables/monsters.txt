@@ -1,4 +1,4 @@
-﻿#A default english table has been provided
+#A default english table has been provided
 #Remove all lines below to have Kore auto-generate this table
 1001 Scorpion
 1002 Poring

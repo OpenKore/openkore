@@ -1,4 +1,4 @@
-﻿# Packet lengths for oRO (November 11, 2005)
+# Packet lengths for oRO (November 11, 2005)
 # Rename this file to recvpackets.txt if you play oRO.
 0064 55
 0065 17

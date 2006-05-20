@@ -1,2 +1,2 @@
-﻿0 Girl
+0 Girl
 1 Boy

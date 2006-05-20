@@ -1,4 +1,4 @@
-﻿alb2trea 62 69 alb2trea 88 111 69 alb2trea 39 50 43
+alb2trea 62 69 alb2trea 88 111 69 alb2trea 39 50 43
 alb2trea 88 111 alb2trea 39 50 111
 alb_ship 160 171 alb_ship 68 99 0 alb_ship 37 174 0 alb_ship 26 166 0 alb_ship 41 163 0
 alb_ship 26 166 alb_ship 160 171 0 alb_ship 68 99 0 alb_ship 37 174 20 alb_ship 41 163 27

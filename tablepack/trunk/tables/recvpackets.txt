@@ -1,4 +1,4 @@
-﻿# Packet lengths for iRO (April 13 2006)
+# Packet lengths for iRO (April 13 2006)
 0064 55
 0065 17
 0066 3

@@ -1,4 +1,4 @@
-﻿0 Usable
+0 Usable
 1 Usable
 2 Usable
 3 Non-usable

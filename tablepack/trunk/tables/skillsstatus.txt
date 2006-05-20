@@ -1,4 +1,4 @@
-﻿0 Provoke
+0 Provoke
 1 Endure
 2 Twohand Quicken
 3 Improve Concentration
