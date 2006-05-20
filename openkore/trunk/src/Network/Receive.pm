@@ -531,7 +531,12 @@ sub actor_action {
 			$dmgdisplay .= " + $args->{param3}" if $args->{param3};
 		}
 
+		Misc::checkValidity("actor_action (attack 1)");
+
 		updateDamageTables($args->{sourceID}, $args->{targetID}, $totalDamage);
+
+		Misc::checkValidity("actor_action (attack 2)");
+
 		my $source = Actor::get($args->{sourceID});
 		my $target = Actor::get($args->{targetID});
 		my $verb = $source->verb('attack', 'attacks');
@@ -543,6 +548,8 @@ sub actor_action {
 
 		my $status = sprintf("[%3d/%3d]", percent_hp($char), percent_sp($char));
 
+		Misc::checkValidity("actor_action (attack 3)");
+
 		if ($args->{sourceID} eq $accountID) {
 			message("$status $msg", $totalDamage > 0 ? "attackMon" : "attackMonMiss");
 			if ($startedattack) {
@@ -550,7 +557,9 @@ sub actor_action {
 				$monkilltime = time();
 				$startedattack = 0;
 			}
+			Misc::checkValidity("actor_action (attack 4)");
 			calcStat($args->{damage});
+			Misc::checkValidity("actor_action (attack 5)");
 
 		} elsif ($args->{targetID} eq $accountID) {
 			message("$status $msg", $args->{damage} > 0 ? "attacked" : "attackedMiss");
@@ -562,7 +571,7 @@ sub actor_action {
 			debug("$msg", 'parseMsg_damage');
 		}
 
-		Misc::checkValidity("actor_action (attack)");
+		Misc::checkValidity("actor_action (attack 6)");
 	}
 }
 
