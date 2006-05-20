@@ -1,4 +1,4 @@
-﻿[Recv]
+[Recv]
 0000 Idle
 0069 Account Info
 006A Connection Failed

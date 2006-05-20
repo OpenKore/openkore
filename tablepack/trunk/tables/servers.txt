@@ -1,4 +1,4 @@
-﻿# This file contains information about master servers.
+# This file contains information about master servers.
 
 #####################
 # Official RO Servers
@@ -398,7 +398,7 @@ serverEncoding Western
 
 ## http://theanimaro.com/
 [AnimaRO Private Server]
-ip a.theanimaro.com
+ip b.animaro.com
 port 6900
 master_version 18
 version 0
