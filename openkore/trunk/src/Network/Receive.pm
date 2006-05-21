@@ -265,6 +265,7 @@ sub new {
 		'020A' => ['friend_removed', 'a4 a4', [qw(friendAccountID friendCharID)]],
 		'023A' => ['storage_password_request', 'v1', [qw(flag)]],
 		'023C' => ['storage_password_result', 'v1 v1', [qw(type val)]],
+		'023E' => ['storage_password_request', 'v1', [qw(flag)]],
 
 		'0259' => ['gameguard_grant', 'C1', [qw(server)]],
 		'0227' => ['gameguard_request'],
@@ -4977,34 +4978,53 @@ sub storage_password_request {
 	my ($self, $args) = @_;
 
 	if ($args->{flag} == 0) {
-		message T("Please enter a new storage password:\n");
+		message (($args->{switch} eq '023E') ?
+			T("Please enter a new character password:\n") :
+			T("Please enter a new storage password:\n"));
 
 	} elsif ($args->{flag} == 1) {
-		if ($config{storageAuto_password} eq '') {
-			my $input = $interface->askPassword(T("Please enter your storage password:\n"));
-			if (!defined($input)) {
-				return;
+		if ($args->{switch} eq '023E') {
+			if ($config{charSelect_password} eq '') {
+				my $input = $interface->askPassword(T("Please enter your character password:\n"));
+				if (!defined($input)) {
+					return;
+				}
+				configModify('charSelect_password', $input, 1);
+				message TF("Character password set to: %s\n", $input), "success";
 			}
-			configModify('storageAuto_password', $input, 1);
-			message TF("Storage password set to: %s\n", $input), "success";
+		} else {
+			if ($config{storageAuto_password} eq '') {
+				my $input = $interface->askPassword(T("Please enter your storage password:\n"));
+				if (!defined($input)) {
+					return;
+				}
+				configModify('storageAuto_password', $input, 1);
+				message TF("Storage password set to: %s\n", $input), "success";
+			}
 		}
 
 		my @key = split /[, ]+/, $config{storageEncryptKey};
 		if (!@key) {
-			error T("Unable to send storage password. You must set the 'storageEncryptKey' option in config.txt or servers.txt.\n");
+			error (($args->{switch} eq '023E') ?
+				T("Unable to send character password. You must set the 'storageEncryptKey' option in config.txt or servers.txt.\n") :
+				T("Unable to send storage password. You must set the 'storageEncryptKey' option in config.txt or servers.txt.\n"));
 			return;
 		}
 		my $crypton = new Utils::Crypton(pack("V*", @key), 32);
-		my $num = $config{storageAuto_password};
+		my $num = ($args->{switch} eq '023E') ? $config{charSelect_password} : $config{storageAuto_password};
 		$num = sprintf("%d%08d", length($num), $num);
 		my $ciphertextBlock = $crypton->encrypt(pack("V*", $num, 0, 0, 0));
 		sendStoragePassword($ciphertextBlock, 3);
 
 	} elsif ($args->{flag} == 8) {	# apparently this flag means that you have entered the wrong password
 									# too many times, and now the server is blocking you from using storage
-		debug "Storage password: unknown flag $args->{flag}\n";
+		debug (($args->{switch} eq '023E') ?
+			T("Character password: unknown flag $args->{flag}\n") :
+			T("Storage password: unknown flag $args->{flag}\n"));
 	} else {
-		debug "Storage password: unknown flag $args->{flag}\n";
+		debug (($args->{switch} eq '023E') ?
+			T("Character password: unknown flag $args->{flag}\n") :
+			T("Storage password: unknown flag $args->{flag}\n"));
 	}
 }
 
