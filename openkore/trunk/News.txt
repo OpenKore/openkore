@@ -73,6 +73,7 @@ Bug fixes:
 - Typo'd packet name actor_died_or_disappeard renamed to
   actor_died_or_disappeared.
 - PVP damage messages are now correctly displayed.
+- Fix display of Clown/Gypsy class name.
 
 New features:
 - Added XKoreProxy module. Set configuration to 'XKore proxy' to work as
