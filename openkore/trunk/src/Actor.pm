@@ -30,6 +30,7 @@ package Actor;
 use strict;
 use Carp::Assert;
 use Scalar::Util;
+use Storable;
 use Globals;
 use Utils;
 use Log qw(message error debug);
@@ -81,7 +82,9 @@ sub _not_is {
 # Requires: defined($ID)
 # Ensures:  defined(result)
 #
-# Returns the Actor object for $ID.
+# Returns the Actor object for $ID. This function will look at the various
+# actor lists. If $ID is not in any of the actor lists, it will return
+# a new Actor::Unknown object.
 sub get {
 	my ($ID) = @_;
 	assert(defined $ID) if DEBUG;
@@ -146,6 +149,14 @@ sub get {
 # A human-friendly name which describes this actor type.
 # For instance, "Player", "Monster", "NPC", "You", etc.
 # Do not confuse this with $Actor->{type}
+
+##
+# String $Actor->{name}
+#
+# The name of the actor, e.g. "Joe", "Jane", "Poring", etc.
+# This field is undefined if the name for this actor isn't known yet,
+# so generally you use use $Actor->name() instead, which automatically
+# takes care of actor objects that don't have a name yet.
 
 
 ### CATEGORY: Methods
@@ -252,6 +263,15 @@ sub snipable {
 	my ($self) = @_;
 
 	return checkLineSnipable($char->position, $self->position);
+}
+
+##
+# Actor $Actor->deepCopy()
+# Ensures: defined(result)
+#
+# Create a deep copy of this actor object.
+sub deepCopy {
+	return Storable::dclone($_[0]);
 }
 
 1;
