@@ -71,6 +71,7 @@ if (0) {
 	require Encode;
 	require encoding;
 	require Carp::Assert;
+	require Storable;
 	require "unicore/lib/gc_sc/SpacePer.pl";
 	require "unicore/lib/gc_sc/Word.pl";
 	require "unicore/lib/gc_sc/Digit.pl";
