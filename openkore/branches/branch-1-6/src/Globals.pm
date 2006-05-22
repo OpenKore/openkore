@@ -135,8 +135,8 @@ our %jobs_lut = (
 	177 => 'Professor',
 	178 => 'Stalker',
 	179 => 'Creator',
-	180 => 'Clown / Gypsy',
-	181 => 'Peco Paladin',
+	180 => 'Clown',
+	181 => 'Gypsy',
 
 	4001 => 'High Novice',
 	4002 => 'High Swordsman',
