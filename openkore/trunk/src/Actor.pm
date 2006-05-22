@@ -77,7 +77,7 @@ sub _not_is {
 
 ##
 # Actor Actor::get(Bytes ID)
-# ID: an actor ID.
+# ID: an actor ID, in binary format.
 # Returns: the associated Actor object, or a new Actor::Unknown object if not found.
 # Requires: defined($ID)
 # Ensures:  defined(result)

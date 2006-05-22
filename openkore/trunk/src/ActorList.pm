@@ -16,6 +16,9 @@
 # <b>Derived from: @CLASS(ObjectList)</b>
 #
 # The ActorList class holds a list of Actor-objects.
+# OpenKore stores lists of players/monsters/portals/NPCs/etc. in lists
+# of this type. Those lists are $playersList, $monstersList, $npcsList,
+# $petsList and $portalsList, defined in Globals.pm.
 #
 # <h3>Differences compared to ObjectList</h3>
 # All items in ActorList are of the same class, and are all a

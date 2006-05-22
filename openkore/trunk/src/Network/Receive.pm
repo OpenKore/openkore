@@ -491,6 +491,7 @@ sub actor_action {
 		my $target = getActorName($args->{targetID});
 		debug "$source $verb $target\n", 'parseMsg_presence';
 		$items{$args->{targetID}}{takenBy} = $args->{sourceID} if ($items{$args->{targetID}});
+
 	} elsif ($args->{type} == 2) {
 		# Sit
 		my ($source, $verb) = getActorNames($args->{sourceID}, 0, 'are', 'is');
@@ -500,7 +501,8 @@ sub actor_action {
 			AI::queue("sitAuto") unless (AI::inQueue("sitAuto")) || $ai_v{sitAuto_forcedBySitCommand};
 		} else {
 			message TF("%s is sitting.\n", getActorName($args->{sourceID})), 'parseMsg_statuslook', 2;
-			$players{$args->{sourceID}}{sitting} = 1 if ($players{$args->{sourceID}});
+			my $player = $playersList->getByID($args->{sourceID});
+			$player->{sitting} = 1 if ($player);
 		}
 		Misc::checkValidity("actor_action (take item)");
 
@@ -515,7 +517,8 @@ sub actor_action {
 			$char->{sitting} = 0;
 		} else {
 			message TF("%s is standing.\n", getActorName($args->{sourceID})), 'parseMsg_statuslook', 2;
-			$players{$args->{sourceID}}{sitting} = 0 if ($players{$args->{sourceID}});
+			my $player = $playersList->getByID($args->{sourceID});
+			$player->{sitting} = 1 if ($player);
 		}
 		Misc::checkValidity("actor_action (stand)");
 
@@ -971,7 +974,7 @@ sub actor_display {
 			debug "Player Connected: ".$actor->name." ($actor->{binID}) Level $args->{lv} $sex_lut{$actor->{sex}} $jobs_lut{$actor->{jobID}} ($coordsTo{x}, $coordsTo{y})\n", $domain;
 
 			# Again, this hook name isn't very specific.
-			Plugins::callHook('player', {player => $players{$args->{ID}}});
+			Plugins::callHook('player', {player => $actor});
 		} else {
 			debug "Unknown Connected: $args->{type} - ", "parseMsg";
 		}
@@ -1030,7 +1033,7 @@ sub actor_info {
 
 	debug "Received object info: $args->{name}\n", "parseMsg_presence/name", 2;
 
-	my $player = $players{$args->{ID}};
+	my $player = $playersList->getByID($args->{ID});
 	if ($player && %{$player}) {
 		# This packet tells us the names of players who aren't in a guild, as opposed to 0195.
 		$player->{name} = bytesToString($args->{name});
@@ -1096,20 +1099,16 @@ sub actor_movement_interrupted {
 	my %coords;
 	$coords{x} = $args->{x};
 	$coords{y} = $args->{y};
-	if ($args->{ID} eq $accountID) {
-		%{$chars[$config{'char'}]{'pos'}} = %coords;
-		%{$chars[$config{'char'}]{'pos_to'}} = %coords;
-		$char->{sitting} = 0;
+
+	my $actor = Actor::get($args->{ID});
+	$actor->{pos} = \%coords;
+	$actor->{pos_to} = \%coords;
+	if ($actor->isa('Actor::You') || $actor->isa('Actor::Player')) {
+		$actor->{sitting} = 0;
+	}
+	if ($actor->isa('Actor::You')) {
 		debug "Movement interrupted, your coordinates: $coords{x}, $coords{y}\n", "parseMsg_move";
 		AI::clear("move");
-	} elsif ($monsters{$args->{ID}}) {
-		%{$monsters{$args->{ID}}{pos}} = %coords;
-		%{$monsters{$args->{ID}}{pos_to}} = %coords;
-		$monsters{$args->{ID}}{sitting} = 0;
-	} elsif ($players{$args->{ID}}) {
-		%{$players{$args->{ID}}{pos}} = %coords;
-		%{$players{$args->{ID}}{pos_to}} = %coords;
-		$players{$args->{ID}}{sitting} = 0;
 	}
 }
 
@@ -1965,9 +1964,7 @@ sub emoticon {
 		message "$char->{name}: $emotion\n", "emotion";
 		chatLog("e", "$char->{name}: $emotion\n") if (existsInList($config{'logEmoticons'}, $args->{type}) || $config{'logEmoticons'} eq "all");
 
-	} elsif ($players{$args->{ID}} && %{$players{$args->{ID}}}) {
-		my $player = $players{$args->{ID}};
-
+	} elsif ((my $player = $playersList->getByID($args->{ID}))) {
 		my $name = $player->{name} || "Unknown #".unpack("V", $args->{ID});
 
 		#my $dist = "unknown";
@@ -3741,7 +3738,7 @@ sub player_equipment {
 	my ($self, $args) = @_;
 
 	my ($sourceID, $type, $ID1, $ID2) = @{$args}{qw(sourceID type ID1 ID2)};
-	my $player = ($sourceID ne $accountID)? $players{$sourceID} : $char;
+	my $player = ($sourceID ne $accountID)? $playersList->getByID($sourceID) : $char;
 	return unless $player;
 
 	if ($type == 0) {
@@ -4508,13 +4505,14 @@ sub skill_used_no_damage {
 
 	if ($AI == 2 && $config{'autoResponseOnHeal'}) {
 		# Handle auto-response on heal
-		if (($players{$args->{sourceID}} && %{$players{$args->{sourceID}}}) && (($args->{skillID} == 28) || ($args->{skillID} == 29) || ($args->{skillID} == 34))) {
+		my $player = $playersList->getByID($args->{sourceID});
+		if ($player && ($args->{skillID} == 28 || $args->{skillID} == 29 || $args->{skillID} == 34)) {
 			if ($args->{targetID} eq $accountID) {
 				chatLog("k", "***$source ".$skill->name." on $target$extra***\n");
-				sendMessage($net, "pm", getResponse("skillgoodM"), $players{$args->{sourceID}}{'name'});
+				sendMessage($net, "pm", getResponse("skillgoodM"), $player->name);
 			} elsif ($monsters{$args->{targetID}}) {
 				chatLog("k", "***$source ".$skill->name." on $target$extra***\n");
-				sendMessage($net, "pm", getResponse("skillbadM"), $players{$args->{sourceID}}{'name'});
+				sendMessage($net, "pm", getResponse("skillbadM"), $player->name);
 			}
 		}
 	}
@@ -5137,7 +5135,7 @@ sub vender_items_list {
 	undef $venderID;
 	$venderID = substr($msg,4,4);
 	my $player = Actor::get($venderID);
-		
+
 	message TF("%s\n" .
 		"#  Name                                       Type           Amount       Price\n", 
 		center(' Vender: ' . $player->nameIdx . ' ', 79, '-')), "list";
