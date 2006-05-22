@@ -145,6 +145,15 @@ if ($parseArgResult eq '2') {
 	exit 1;
 }
 
+if ($^O eq 'MSWin32' && !defined(getprotobyname("tcp"))) {
+	$interface->errorDialog(TF(
+		"Your Windows TCP/IP stack is broken. Please read\n" .
+		"  %s\n" .
+		"to learn how to solve this.",
+		"http://visualkore.aaanime.net/faq.php#tcp"));
+	exit 1;
+}
+
 # If Misc.pm is in the same folder as openkore.pl, then the
 # user is still using the old (pre-CVS cleanup) source tree.
 # So bail out to prevent weird errors.
