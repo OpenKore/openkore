@@ -2536,9 +2536,9 @@ sub cmdPlayerList {
 		$pos->{x}, $pos->{y}, $directions_lut{$youToPlayer}, int($degYouToPlayer),
 		$player->{lv}, $dist, $sex_lut{$player->{sex}}, $jobs_lut{$player->{jobID}},
 		"$directions_lut{$body} ($body)", "$directions_lut{$head} ($head)",
-		main::itemName({nameID => $player->{weapon}}),
-		main::itemName({nameID => $player->{shield}}),
-		main::itemName({nameID => $player->{shoes}}), $headTop, $headMid, 
+		itemName({nameID => $player->{weapon}}),
+		itemName({nameID => $player->{shield}}),
+		itemName({nameID => $player->{shoes}}), $headTop, $headMid, 
 		$headLow, "$haircolors{$player->{hair_color}} ($player->{hair_color})", $player->{walk_speed});
 		
 		
@@ -2559,21 +2559,19 @@ sub cmdPlayerList {
 
 	$msg =  T("-----------Player List-----------\n" .
 		"#    Name                                Sex   Lv  Job         Dist  Coord\n");
-	for (my $i = 0; $i < @playersID; $i++) {
-		my $player = $players{$playersID[$i]};
-		next unless UNIVERSAL::isa($player, 'Actor');
+	foreach my $player (@{$playersList->getItems()}) {
 		my ($name, $dist, $pos);
 		$name = $player->name;
 		if ($player->{guild} && %{$player->{guild}}) {
 			$name .= " [$player->{guild}{name}]";
 		}
-		$dist = distance(\%{$char->{'pos_to'}}, \%{$players{$playersID[$i]}{'pos_to'}});
+		$dist = distance($char->{pos_to}, $player->{pos_to});
 		$dist = sprintf("%.1f", $dist) if (index ($dist, '.') > -1);
-		$pos = '(' . $players{$playersID[$i]}{'pos_to'}{'x'} . ', ' . $players{$playersID[$i]}{'pos_to'}{'y'} . ')';
+		$pos = '(' . $player->{pos_to}{x} . ', ' . $player->{pos_to}{y} . ')';
 
 		$msg .= swrite(
 			"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<< @<< @<<<<<<<<<< @<<<< @<<<<<<<<<<",
-			[$i, $name, $sex_lut{$players{$playersID[$i]}{'sex'}}, $players{$playersID[$i]}{lv}, $jobs_lut{$players{$playersID[$i]}{'jobID'}}, $dist, $pos]);
+			[$player->{binID}, $name, $sex_lut{$player->{sex}}, $player->{lv}, $player->job, $dist, $pos]);
 	}
 	$msg .= "---------------------------------\n";
 	message($msg, "list");
