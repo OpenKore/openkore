@@ -757,40 +757,6 @@ sub objectIsMovingTowardsPlayer {
 #######################################
 #######################################
 
-sub chatLog {
-	my $type = shift;
-	my $message = shift;
-	open CHAT, ">>:utf8", $Settings::chat_file;
-	print CHAT "[".getFormattedDate(int(time))."][".uc($type)."] $message";
-	close CHAT;
-}
-
-sub shopLog {
-	my $crud = shift;
-	open SHOPLOG, ">>:utf8", $Settings::shop_log_file;
-	print SHOPLOG "[".getFormattedDate(int(time))."] $crud";
-	close SHOPLOG;
-}
-
-sub monsterLog {
-	my $crud = shift;
-	return if (!$config{'monsterLog'});
-	open MONLOG, ">>:utf8", $Settings::monster_log;
-	print MONLOG "[".getFormattedDate(int(time))."] $crud\n";
-	close MONLOG;
-}
-
-sub convertGatField {
-	my $file = shift;
-	my $r_hash = shift;
-	my $i;
-	open FILE, "+> $file";
-	binmode(FILE);
-	print FILE pack("v*", $$r_hash{'width'}, $$r_hash{'height'});
-	print FILE $$r_hash{'rawMap'};
-	close FILE;
-}
-
 ##
 # getField(name, r_field)
 # name: the name of the field you want to load.
@@ -974,26 +940,6 @@ sub getField {
 	return 1;
 }
 
-sub getGatField {
-	my $file = shift;
-	my $r_hash = shift;
-	my ($i, $data);
-	undef %{$r_hash};
-	($$r_hash{'name'}) = $file =~ /([\s\S]*)\./;
-	open FILE, $file;
-	binmode(FILE);
-	read(FILE, $data, 16);
-	my $width = unpack("V1", substr($data, 6,4));
-	my $height = unpack("V1", substr($data, 10,4));
-	$$r_hash{'width'} = $width;
-	$$r_hash{'height'} = $height;
-	while (read(FILE, $data, 20)) {
-		$$r_hash{'rawMap'} .= substr($data, 14, 1);
-		$i++;
-	}
-	close FILE;
-}
-
 
 #########################################
 #########################################
@@ -1008,6 +954,30 @@ sub itemLog {
 	print ITEMLOG "[".getFormattedDate(int(time))."] $crud";
 	close ITEMLOG;
 }
+
+sub chatLog {
+	my $type = shift;
+	my $message = shift;
+	open CHAT, ">>:utf8", $Settings::chat_file;
+	print CHAT "[".getFormattedDate(int(time))."][".uc($type)."] $message";
+	close CHAT;
+}
+
+sub shopLog {
+	my $crud = shift;
+	open SHOPLOG, ">>:utf8", $Settings::shop_log_file;
+	print SHOPLOG "[".getFormattedDate(int(time))."] $crud";
+	close SHOPLOG;
+}
+
+sub monsterLog {
+	my $crud = shift;
+	return if (!$config{'monsterLog'});
+	open MONLOG, ">>:utf8", $Settings::monster_log;
+	print MONLOG "[".getFormattedDate(int(time))."] $crud\n";
+	close MONLOG;
+}
+
 
 #########################################
 #########################################
@@ -2460,121 +2430,139 @@ sub updateDamageTables {
 	}
 
 	if ($ID1 eq $accountID) {
-		if ($monsters{$ID2}) {
+		if ((my $monster = $monstersList->getByID($ID2))) {
 			# You attack monster
-			$monsters{$ID2}{'dmgTo'} += $damage;
-			$monsters{$ID2}{'dmgFromYou'} += $damage;
-			$monsters{$ID2}{'numAtkFromYou'}++;
+			$monster->{dmgTo} += $damage;
+			$monster->{dmgFromYou} += $damage;
+			$monster->{numAtkFromYou}++;
 			if ($damage <= ($config{missDamage} || 0)) {
-				$monsters{$ID2}{'missedFromYou'}++;
-				debug "Incremented missedFromYou count to $monsters{$ID2}{'missedFromYou'}\n", "attackMonMiss";
-				$monsters{$ID2}{'atkMiss'}++;
+				$monster->{missedFromYou}++;
+				debug "Incremented missedFromYou count to $monster->{missedFromYou}\n", "attackMonMiss";
+				$monster->{atkMiss}++;
 			} else {
-				$monsters{$ID2}{'atkMiss'} = 0;
+				$monster->{atkMiss} = 0;
 			}
-			 if ($config{'teleportAuto_atkMiss'} && $monsters{$ID2}{'atkMiss'} >= $config{'teleportAuto_atkMiss'}) {
+			if ($config{teleportAuto_atkMiss} && $monster->{atkMiss} >= $config{teleportAuto_atkMiss}) {
 				message T("Teleporting because of attack miss\n"), "teleport";
 				useTeleport(1);
 			}
-			if ($config{'teleportAuto_atkCount'} && $monsters{$ID2}{'numAtkFromYou'} >= $config{'teleportAuto_atkCount'}) {
-				message TF("Teleporting after attacking a monster %d times\n", $config{'teleportAuto_atkCount'}), "teleport";
+			if ($config{teleportAuto_atkCount} && $monster->{numAtkFromYou} >= $config{teleportAuto_atkCount}) {
+				message TF("Teleporting after attacking a monster %d times\n", $config{teleportAuto_atkCount}), "teleport";
 				useTeleport(1);
 			}
 		}
 
 	} elsif ($ID2 eq $accountID) {
-		if ($monsters{$ID1}) {
+		if ((my $monster = $monstersList->getByID($ID1))) {
 			# Monster attacks you
-			$monsters{$ID1}{'dmgFrom'} += $damage;
-			$monsters{$ID1}{'dmgToYou'} += $damage;
+			$monster->{dmgFrom} += $damage;
+			$monster->{dmgToYou} += $damage;
 			if ($damage == 0) {
-				$monsters{$ID1}{'missedYou'}++;
+				$monster->{missedYou}++;
 			}
-			$monsters{$ID1}{'attackedYou'}++ unless (
-					scalar(keys %{$monsters{$ID1}{'dmgFromPlayer'}}) ||
-					scalar(keys %{$monsters{$ID1}{'dmgToPlayer'}}) ||
-					$monsters{$ID1}{'missedFromPlayer'} ||
-					$monsters{$ID1}{'missedToPlayer'}
+			$monster->{attackedYou}++ unless (
+					scalar(keys %{$monster->{dmgFromPlayer}}) ||
+					scalar(keys %{$monster->{dmgToPlayer}}) ||
+					$monster->{missedFromPlayer} ||
+					$monster->{missedToPlayer}
 				);
-			$monsters{$ID1}{target} = $ID2;
+			$monster->{target} = $ID2;
 
 			if ($AI == 2) {
 				my $teleport = 0;
-				if (mon_control($monsters{$ID1}{'name'})->{'teleport_auto'} == 2 && $damage){
+				if (mon_control($monster->{name})->{teleport_auto} == 2 && $damage){
 					message TF("Teleporting due to attack from %s\n", 
-						$monsters{$ID1}{'name'}), "teleport";
+						$monster->{name}), "teleport";
 					$teleport = 1;
-				} elsif ($config{'teleportAuto_deadly'} && $damage >= $chars[$config{'char'}]{'hp'} && !whenStatusActive("Hallucination")) {
+
+				} elsif ($config{teleportAuto_deadly} && $damage >= $char->{hp}
+				      && !whenStatusActive("Hallucination")) {
 					message TF("Next %d dmg could kill you. Teleporting...\n", 
 						$damage), "teleport";
 					$teleport = 1;
-				} elsif ($config{'teleportAuto_maxDmg'} && $damage >= $config{'teleportAuto_maxDmg'} && !whenStatusActive("Hallucination") && !($config{'teleportAuto_maxDmgInLock'} && $field{'name'} eq $config{'lockMap'})) {
-					message TF("%s hit you for more than %d dmg. Teleporting...\n", 
-						$monsters{$ID1}{'name'}, $config{'teleportAuto_maxDmg'}), "teleport";
+
+				} elsif ($config{teleportAuto_maxDmg} && $damage >= $config{teleportAuto_maxDmg}
+				      && !whenStatusActive("Hallucination")
+				      && !($config{teleportAuto_maxDmgInLock} && $field{name} eq $config{lockMap})) {
+					message TF("%s hit you for more than %d dmg. Teleporting...\n",
+						$monster->{name}, $config{teleportAuto_maxDmg}), "teleport";
 					$teleport = 1;
-				} elsif ($config{'teleportAuto_maxDmgInLock'} && $field{'name'} eq $config{'lockMap'} && $damage >= $config{'teleportAuto_maxDmgInLock'} && !whenStatusActive("Hallucination")) {
+
+				} elsif ($config{teleportAuto_maxDmgInLock} && $field{name} eq $config{lockMap}
+				      && $damage >= $config{teleportAuto_maxDmgInLock}
+				      && !whenStatusActive("Hallucination")) {
 					message TF("%s hit you for more than %d dmg in lockMap. Teleporting...\n", 
-						$monsters{$ID1}{'name'}, $config{'teleportAuto_maxDmgInLock'}), "teleport";
+						$monster->{name}, $config{teleportAuto_maxDmgInLock}), "teleport";
 					$teleport = 1;
-				} elsif (AI::inQueue("sitAuto") && $config{'teleportAuto_attackedWhenSitting'} && $damage > 0) {
+
+				} elsif (AI::inQueue("sitAuto") && $config{teleportAuto_attackedWhenSitting}
+				      && $damage > 0) {
 					message TF("%s attacks you while you are sitting. Teleporting...\n", 
-						$monsters{$ID1}{'name'}), "teleport";
+						$monster->{name}), "teleport";
 					$teleport = 1;
-				} elsif ($config{'teleportAuto_totalDmg'} && $monsters{$ID1}{'dmgToYou'} >= $config{'teleportAuto_totalDmg'} && !whenStatusActive("Hallucination") && !($config{'teleportAuto_totalDmgInLock'} && $field{'name'} eq $config{'lockMap'})) {
+
+				} elsif ($config{teleportAuto_totalDmg}
+				      && $monster->{dmgToYou} >= $config{teleportAuto_totalDmg}
+				      && !whenStatusActive("Hallucination")
+				      && !($config{teleportAuto_totalDmgInLock} && $field{name} eq $config{lockMap})) {
 					message TF("%s hit you for a total of more than %d dmg. Teleporting...\n", 
-						$monsters{$ID1}{'name'}, $config{'teleportAuto_totalDmg'}), "teleport";
+						$monster->{name}, $config{teleportAuto_totalDmg}), "teleport";
 					$teleport = 1;
-				} elsif ($config{'teleportAuto_totalDmgInLock'} && $field{'name'} eq $config{'lockMap'} && $monsters{$ID1}{'dmgToYou'} >= $config{'teleportAuto_totalDmgInLock'} && !whenStatusActive("Hallucination")) {
+
+				} elsif ($config{teleportAuto_totalDmgInLock} && $field{name} eq $config{lockMap}
+				      && $monster->{dmgToYou} >= $config{teleportAuto_totalDmgInLock}
+				      && !whenStatusActive("Hallucination")) {
 					message TF("%s hit you for a total of more than %d dmg in lockMap. Teleporting...\n", 
-						$monsters{$ID1}{'name'}, $config{'teleportAuto_totalDmgInLock'}), "teleport";
+						$monster->{name}, $config{teleportAuto_totalDmgInLock}), "teleport";
 					$teleport = 1;
+
 				} elsif ($config{teleportAuto_hp} && percent_hp($char) <= $config{teleportAuto_hp}) {
 					message TF("%s hit you when your HP is too low. Teleporting...\n", 
-						$monsters{$ID1}{name}), "teleport";
+						$monster->{name}), "teleport";
 					$teleport = 1;
 				}
 				useTeleport(1, undef, 1) if ($teleport);
 			}
 		}
 
-	} elsif ($monsters{$ID1}) {
-		if ($players{$ID2}) {
+	} elsif ((my $monster = $monstersList->getByID($ID1))) {
+		if ((my $player = $playersList->getByID($ID2))) {
 			# Monster attacks player
-			$monsters{$ID1}{'dmgFrom'} += $damage;
-			$monsters{$ID1}{'dmgToPlayer'}{$ID2} += $damage;
-			$players{$ID2}{'dmgFromMonster'}{$ID1} += $damage;
+			$monster->{dmgFrom} += $damage;
+			$monster->{dmgToPlayer}{$ID2} += $damage;
+			$player->{dmgFromMonster}{$ID1} += $damage;
 			if ($damage == 0) {
-				$monsters{$ID1}{'missedToPlayer'}{$ID2}++;
-				$players{$ID2}{'missedFromMonster'}{$ID1}++;
+				$monster->{missedToPlayer}{$ID2}++;
+				$player->{missedFromMonster}{$ID1}++;
 			}
-			if (existsInList($config{tankersList}, $players{$ID2}{name}) ||
-			    ($chars[$config{'char'}]{'party'} && %{$chars[$config{'char'}]{'party'}} && $chars[$config{'char'}]{'party'}{'users'}{$ID2} && %{$chars[$config{'char'}]{'party'}{'users'}{$ID2}})) {
+			if (existsInList($config{tankersList}, $player->{name}) ||
+			    ($char->{party} && %{$char->{party}} && $char->{party}{users}{$ID2} && %{$char->{party}{users}{$ID2}})) {
 				# Monster attacks party member
-				$monsters{$ID1}{'dmgToParty'} += $damage;
-				$monsters{$ID1}{'missedToParty'}++ if ($damage == 0);
+				$monster->{dmgToParty} += $damage;
+				$monster->{missedToParty}++ if ($damage == 0);
 			}
-			$monsters{$ID1}{target} = $ID2;
-			OpenKoreMod::updateDamageTables($monsters{$ID1}) if (defined &OpenKoreMod::updateDamageTables);
+			$monster->{target} = $ID2;
+			OpenKoreMod::updateDamageTables($monster) if (defined &OpenKoreMod::updateDamageTables);
 		}
 
-	} elsif ($players{$ID1}) {
-		if ($monsters{$ID2}) {
+	} elsif ((my $player = $playersList->getByID($ID1))) {
+		if ((my $monster = $monstersList->getByID($ID2))) {
 			# Player attacks monster
-			$monsters{$ID2}{'dmgTo'} += $damage;
-			$monsters{$ID2}{'dmgFromPlayer'}{$ID1} += $damage;
-			$monsters{$ID2}{'lastAttackFrom'} = $ID1;
-			$players{$ID1}{'dmgToMonster'}{$ID2} += $damage;
+			$monster->{dmgTo} += $damage;
+			$monster->{dmgFromPlayer}{$ID1} += $damage;
+			$monster->{lastAttackFrom} = $ID1;
+			$player->{dmgToMonster}{$ID2} += $damage;
 
 			if ($damage == 0) {
-				$monsters{$ID2}{'missedFromPlayer'}{$ID1}++;
-				$players{$ID1}{'missedToMonster'}{$ID2}++;
+				$monster->{missedFromPlayer}{$ID1}++;
+				$player->{missedToMonster}{$ID2}++;
 			}
 
-			if (existsInList($config{tankersList}, $players{$ID1}{name}) ||
-			    ($chars[$config{'char'}]{'party'} && %{$chars[$config{'char'}]{'party'}} && $chars[$config{'char'}]{'party'}{'users'}{$ID1} && %{$chars[$config{'char'}]{'party'}{'users'}{$ID1}})) {
-				$monsters{$ID2}{'dmgFromParty'} += $damage;
+			if (existsInList($config{tankersList}, $player->{name}) ||
+			    ($char->{party} && %{$char->{paty}} && $char->{party}{users}{$ID1} && %{$char->{party}{users}{$ID1}})) {
+				$monster->{dmgFromParty} += $damage;
 			}
-			OpenKoreMod::updateDamageTables($monsters{$ID2}) if (defined &OpenKoreMod::updateDamageTables);
+			OpenKoreMod::updateDamageTables($monster) if (defined &OpenKoreMod::updateDamageTables);
 		}
 	}
 }
@@ -2795,10 +2783,14 @@ sub whenStatusActiveMon {
 
 sub whenStatusActivePL {
 	my ($ID, $statuses) = @_;
-	if ($ID eq $accountID) { return whenStatusActive($statuses) }
-	my @arr = split /\s*,\s*/, $statuses;
-	foreach (@arr) {
-		return 1 if $players{$ID}{statuses}{$_};
+	return whenStatusActive($statuses) if ($ID eq $accountID);
+
+	my $player = $playersList->getByID($ID);
+	if ($player) {
+		my @arr = split /\s*,\s*/, $statuses;
+		foreach (@arr) {
+			return 1 if $player->{statuses}{$_};
+		}
 	}
 	return 0;
 }
