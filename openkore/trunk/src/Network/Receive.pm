@@ -590,14 +590,14 @@ sub actor_died_or_disappeared {
 
 	} elsif (defined $monstersList->getByID($ID)) {
 		my $monster = $monstersList->getByID($ID);
-		$monsters_old{$ID} = {%{$monster}};
+		$monsters_old{$ID} = $monster->deepCopy();
 		$monsters_old{$ID}{gone_time} = time;
 		if ($args->{type} == 0) {
-			debug "Monster Disappeared: $monster->{name} ($monster->{binID})\n", "parseMsg_presence";
+			debug "Monster Disappeared: " . $monster->name . " ($monster->{binID})\n", "parseMsg_presence";
 			$monsters_old{$ID}{disappeared} = 1;
 
 		} elsif ($args->{type} == 1) {
-			debug "Monster Died: $monster->{name} ($monster->{binID})\n", "parseMsg_damage";
+			debug "Monster Died: " . $monster->name . " ($monster->{binID})\n", "parseMsg_damage";
 			$monsters_old{$ID}{dead} = 1;
 
 			if ($config{itemsTakeAuto_party} &&
@@ -609,11 +609,11 @@ sub actor_died_or_disappeared {
 			}
 
 		} elsif ($args->{type} == 2) { # What's this?
-			debug "Monster Disappeared: $monster->{name} ($monster->{binID})\n", "parseMsg_presence";
+			debug "Monster Disappeared: " . $monster->name . " ($monster->{binID})\n", "parseMsg_presence";
 			$monsters_old{$ID}{disappeared} = 1;
 
 		} elsif ($args->{type} == 3) {
-			debug "Monster Teleported: $monster->{name} ($monster->{binID})\n", "parseMsg_presence";
+			debug "Monster Teleported: " . $monster->name . " ($monster->{binID})\n", "parseMsg_presence";
 			$monsters_old{$ID}{teleported} = 1;
 		}
 
@@ -626,7 +626,7 @@ sub actor_died_or_disappeared {
 			$player->{dead} = 1;
 		} else {
 			if ($args->{type} == 0) {
-				debug "Player Disappeared: ".$player->name." ($player->{binID}) $sex_lut{$player->{sex}} $jobs_lut{$player->{jobID}} ($player->{pos_to}{x}, $player->{pos_to}{y})\n", "parseMsg_presence";
+				debug "Player Disappeared: " . $player->name . " ($player->{binID}) $sex_lut{$player->{sex}} $jobs_lut{$player->{jobID}} ($player->{pos_to}{x}, $player->{pos_to}{y})\n", "parseMsg_presence";
 				$player->{disappeared} = 1;
 			} elsif ($args->{type} == 2) {
 				debug "Player Disconnected: ".$player->name." ($player->{binID}) $sex_lut{$player->{sex}} $jobs_lut{$player->{jobID}} ($player->{pos_to}{x}, $player->{pos_to}{y})\n", "parseMsg_presence";
@@ -639,39 +639,39 @@ sub actor_died_or_disappeared {
 				$player->{disappeared} = 1;
 			}
 
-			$players_old{$ID} = {%{$player}};
+			$players_old{$ID} = $player->deepCopy();
 			$players_old{$ID}{gone_time} = time;
 			$playersList->remove($player);
 		}
 
 	} elsif ($players_old{$ID}) {
 		if ($args->{type} == 2) {
-			debug "Player Disconnected: $players_old{$ID}{name}\n", "parseMsg_presence";
+			debug "Player Disconnected: " . $players_old{$ID}->name . "\n", "parseMsg_presence";
 			$players_old{$ID}{disconnected} = 1;
 		} elsif ($args->{type} == 3) {
-			debug "Player Teleported: $players_old{$ID}{name}\n", "parseMsg_presence";
+			debug "Player Teleported: " . $players_old{$ID}->name . "\n", "parseMsg_presence";
 			$players_old{$ID}{teleported} = 1;
 		}
 
 	} elsif (defined $portalsList->getByID($ID)) {
 		my $portal = $portalsList->getByID($ID);
-		debug "Portal Disappeared: $portal->{name} ($portal->{binID})\n", "parseMsg";
-		$portals_old{$ID} = {%{$portal}};
+		debug "Portal Disappeared: " . $portal->name . " ($portal->{binID})\n", "parseMsg";
+		$portals_old{$ID} = $portal->deepCopy();
 		$portals_old{$ID}{disappeared} = 1;
 		$portals_old{$ID}{gone_time} = time;
 		$portalsList->remove($portal);
 
 	} elsif (defined $npcsList->getByID($ID)) {
 		my $npc = $npcsList->getByID($ID);
-		debug "NPC Disappeared: $npc->{name} ($npc->{binID})\n", "parseMsg";
-		$npcs_old{$ID} = {%{$npc}};
+		debug "NPC Disappeared: " . $npc->name . " ($npc->{nameID})\n", "parseMsg";
+		$npcs_old{$ID} = $npc->deepCopy();
 		$npcs_old{$ID}{disappeared} = 1;
 		$npcs_old{$ID}{gone_time} = time;
 		$npcsList->remove($npc);
 
 	} elsif (defined $petsList->getByID($ID)) {
 		my $pet = $petsList->getByID($ID);
-		debug "Pet Disappeared: $pet->{name} ($pet->{binID})\n", "parseMsg";
+		debug "Pet Disappeared: " . $pet->name . " ($pet->{binID})\n", "parseMsg";
 		$petsList->remove($pet);
 
 	} else {
@@ -1084,21 +1084,11 @@ sub actor_info {
 sub actor_look_at {
 	my ($self, $args) = @_;
 	change_to_constate5();
-	if ($args->{ID} eq $accountID) {
-		$char->{look}{head} = $args->{head};
-		$char->{look}{body} = $args->{body};
-		debug "You look at $args->{body}, $args->{head}\n", "parseMsg", 2;
 
-	} elsif ($players{$args->{ID}} && %{$players{$args->{ID}}}) {
-		$players{$args->{ID}}{'look'}{'head'} = $args->{head};
-		$players{$args->{ID}}{'look'}{'body'} = $args->{body};
-		debug "Player $players{$args->{ID}}{'name'} ($players{$args->{ID}}{'binID'}) looks at $players{$args->{ID}}{'look'}{'body'}, $players{$args->{ID}}{'look'}{'head'}\n", "parseMsg";
-
-	} elsif ($monsters{$args->{ID}} && %{$monsters{$args->{ID}}}) {
-		$monsters{$args->{ID}}{'look'}{'head'} = $args->{head};
-		$monsters{$args->{ID}}{'look'}{'body'} = $args->{body};
-		debug "Monster $monsters{$args->{ID}}{'name'} ($monsters{$args->{ID}}{'binID'}) looks at $monsters{$args->{ID}}{'look'}{'body'}, $monsters{$args->{ID}}{'look'}{'head'}\n", "parseMsg";
-	}
+	my $actor = Actor::get($args->{ID});
+	$actor->{look}{head} = $args->{head};
+	$actor->{look}{body} = $args->{body};
+	debug $actor->nameString . " looks at $args->{body}, $args->{head}\n", "parseMsg";
 }
 
 sub actor_movement_interrupted {
@@ -4508,7 +4498,7 @@ sub skill_used_no_damage {
 
 	my $domain = ($args->{sourceID} eq $accountID) ? "selfSkill" : "skill";
 	my $skill = $args->{skill} = new Skills(id => $args->{skillID});
-	my $disp = skillUseNoDamage_string($source, $target, $skill->id, $skill->name, $args->{amount});		
+	my $disp = skillUseNoDamage_string($source, $target, $skill->id, $skill->name, $args->{amount});
 	message $disp, $domain;
 	
 	# Set teleport time
