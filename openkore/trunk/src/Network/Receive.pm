@@ -1044,8 +1044,8 @@ sub actor_info {
 		Plugins::callHook('charNameUpdate', $player);
 	}
 
-	my $monster = $monsters{$args->{ID}};
-	if ($monster && %{$monster}) {
+	my $monster = $monstersList->getByID($args->{ID});
+	if ($monster) {
 		my $name = bytesToString($args->{name});
 		if ($config{debug} >= 2) {
 			my $binID = binFind(\@monstersID, $args->{ID});
@@ -2849,25 +2849,25 @@ sub item_exists {
 sub item_disappeared {
 	my ($self, $args) = @_;
 	change_to_constate5();
-	if ($items{$args->{ID}} && %{$items{$args->{ID}}}) {
+	if ($items{$args->{ID}}) {
 		if ($config{attackLooters} && AI::action ne "sitAuto" && pickupitems(lc($items{$args->{ID}}{name})) > 0) {
-			foreach my $looter (values %monsters) { #attack looter code
-				next if (!$looter || !%{$looter});
-				if (my $control = mon_control($monsters{name})) {
-					next if ( ($control->{attack_auto} ne "" && $control->{attack_auto} == -1)
-						|| ($control->{attack_lvl} ne "" && $control->{attack_lvl} > $char->{lv})
+			foreach my Actor::Monster $monster (@{$monstersList->items()}) { # attack looter code
+				if (my $control = mon_control($monster->name)) {
+					next if ( ($control->{attack_auto}  ne "" && $control->{attack_auto} == -1)
+						|| ($control->{attack_lvl}  ne "" && $control->{attack_lvl} > $char->{lv})
 						|| ($control->{attack_jlvl} ne "" && $control->{attack_jlvl} > $char->{lv_job})
-						|| ($control->{attack_hp}  ne "" && $control->{attack_hp} > $char->{hp})
-						|| ($control->{attack_sp}  ne "" && $control->{attack_sp} > $char->{sp})
+						|| ($control->{attack_hp}   ne "" && $control->{attack_hp} > $char->{hp})
+						|| ($control->{attack_sp}   ne "" && $control->{attack_sp} > $char->{sp})
 						);
 				}
-				if (distance($items{$args->{ID}}{pos},$looter->{pos}) == 0) {
-					attack ($looter->{ID});
-					message TF("Attack Looter: %s looted %s\n", $looter, $items{$args->{ID}}{'name'}),"looter";
+				if (distance($items{$args->{ID}}{pos}, $monster->{pos}) == 0) {
+					attack($monster->{ID});
+					message TF("Attack Looter: %s looted %s\n", $monster->nameIdx, $items{$args->{ID}}{name}), "looter";
 					last;
 				}
 			}
 		}
+
 		debug "Item Disappeared: $items{$args->{ID}}{'name'} ($items{$args->{ID}}{'binID'})\n", "parseMsg_presence";
 		$items_old{$args->{ID}} = {%{$items{$args->{ID}}}};
 		$items_old{$args->{ID}}{'disappeared'} = 1;
@@ -3222,15 +3222,15 @@ sub monster_typechange {
 	# 01B0 : long ID, byte WhateverThisIs, long type
 	my $ID = $args->{ID};
 	my $type = $args->{type};
-
-	if ($monsters{$ID}) {
+	my $monster = $monstersList->getByID($ID);
+	if ($monster) {
 		my $name = $monsters_lut{$type} || "Unknown $type";
-		message TF("Monster %s (%s) changed to %s\n", $monsters{$ID}{name}, $monsters{$ID}{binID}, $name);
-		$monsters{$ID}{nameID} = $type;
-		$monsters{$ID}{name} = $name;
-		$monsters{$ID}{dmgToParty} = 0;
-		$monsters{$ID}{dmgFromParty} = 0;
-		$monsters{$ID}{missedToParty} = 0;
+		message TF("Monster %s (%s) changed to %s\n", $monster->name, $monster->{binID}, $name);
+		$monster->{nameID} = $type;
+		$monster->{name} = $name;
+		$monster->{dmgToParty} = 0;
+		$monster->{dmgFromParty} = 0;
+		$monster->{missedToParty} = 0;
 	}
 }
 
@@ -3241,16 +3241,18 @@ sub monster_ranged_attack {
 	my $type = $args->{type};
 	
 	my %coords1;
-	$coords1{'x'} = $args->{sourceX};
-	$coords1{'y'} = $args->{sourceY};
+	$coords1{x} = $args->{sourceX};
+	$coords1{y} = $args->{sourceY};
 	my %coords2;
-	$coords2{'x'} = $args->{targetX};
-	$coords2{'y'} = $args->{targetY};
-	%{$monsters{$ID}{'pos_attack_info'}} = %coords1 if ($monsters{$ID});
-	%{$chars[$config{'char'}]{'pos'}} = %coords2;
-	%{$chars[$config{'char'}]{'pos_to'}} = %coords2;
-	debug "Received attack location - monster: $coords1{'x'},$coords1{'y'} - " .
-		"you: $coords2{'x'},$coords2{'y'}\n", "parseMsg_move", 2;	
+	$coords2{x} = $args->{targetX};
+	$coords2{y} = $args->{targetY};
+
+	my $monster = $monstersList->getByID($ID);
+	$monster->{pos_attack_info} = \%coords1 if ($monster);
+	$char->{pos} = \%coords2;
+	$char->{pos_to} = \%coords2;
+	debug "Received attack location - monster: $coords1{x},$coords1{y} - " .
+		"you: $coords2{x},$coords2{y}\n", "parseMsg_move", 2;	
 }
 
 sub mvp_item {
@@ -4264,9 +4266,12 @@ sub skill_cast {
 	Misc::checkValidity("skill_cast part 3");
 
 	# Skill Cancel
-	if ($AI == 2 && $monsters{$sourceID} && mon_control($monsters{$sourceID}{name})->{skillcancel_auto}) {
+	my $monster = $monstersList->getByID($sourceID);
+	my $control;
+	$control = mon_control($monster->name) if ($monster);
+	if ($AI == 2 && $control->{skillcancel_auto}) {
 		if ($targetID eq $accountID || $dist > 0 || (AI::action eq "attack" && AI::args->{ID} ne $sourceID)) {
-			message TF("Monster Skill - switch Target to : %s (%s)\n", $monsters{$sourceID}{name}, $monsters{$sourceID}{binID});
+			message TF("Monster Skill - switch Target to : %s (%s)\n", $monster->name, $monster->{binID});
 			stopAttack();
 			AI::dequeue;
 			attack($sourceID);
@@ -4274,26 +4279,27 @@ sub skill_cast {
 
 		# Skill area casting -> running to monster's back
 		my $ID = AI::args->{ID};
+		my $monster2 = $monstersList->getByID($ID);
 		if ($dist > 0 && defined $ID) {
 			# Calculate X axis
-			if ($char->{pos_to}{x} - $monsters{$ID}{pos_to}{x} < 0) {
-				$coords{x} = $monsters{$ID}{pos_to}{x} + 3;
+			if ($char->{pos_to}{x} - $monster2->{pos_to}{x} < 0) {
+				$coords{x} = $monster2->{pos_to}{x} + 3;
 			} else {
-				$coords{x} = $monsters{$ID}{pos_to}{x} - 3;
+				$coords{x} = $monster2->{pos_to}{x} - 3;
 			}
 			# Calculate Y axis
-			if ($char->{pos_to}{y} - $monsters{$ID}{pos_to}{y} < 0) {
-				$coords{y} = $monsters{$ID}{pos_to}{y} + 3;
+			if ($char->{pos_to}{y} - $monster2->{pos_to}{y} < 0) {
+				$coords{y} = $monster2->{pos_to}{y} + 3;
 			} else {
-				$coords{y} = $monsters{$ID}{pos_to}{y} - 3;
+				$coords{y} = $monster2->{pos_to}{y} - 3;
 			}
 
 			my (%vec, %pos);
 			getVector(\%vec, \%coords, $char->{pos_to});
-			moveAlongVector(\%pos, $char->{pos_to}, \%vec, distance($char->{'pos_to'}, \%coords));
+			moveAlongVector(\%pos, $char->{pos_to}, \%vec, distance($char->{pos_to}, \%coords));
 			ai_route($field{name}, $pos{x}, $pos{y},
-				maxRouteDistance => $config{'attackMaxRouteDistance'},
-				maxRouteTime => $config{'attackMaxRouteTime'},
+				maxRouteDistance => $config{attackMaxRouteDistance},
+				maxRouteTime => $config{attackMaxRouteTime},
 				noMapRoute => 1);
 			message TF("Avoid casting Skill - switch position to : %s,%s\n", $pos{x}, $pos{y}), 1;
 		}
@@ -4510,7 +4516,7 @@ sub skill_used_no_damage {
 			if ($args->{targetID} eq $accountID) {
 				chatLog("k", "***$source ".$skill->name." on $target$extra***\n");
 				sendMessage($net, "pm", getResponse("skillgoodM"), $player->name);
-			} elsif ($monsters{$args->{targetID}}) {
+			} elsif ($monstersList->getByID($args->{targetID})) {
 				chatLog("k", "***$source ".$skill->name." on $target$extra***\n");
 				sendMessage($net, "pm", getResponse("skillbadM"), $player->name);
 			}
