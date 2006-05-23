@@ -141,13 +141,17 @@ h2:hover {
 	margin-bottom: 12px;
 }
 .example {
-	border: lightgray dotted 1px;
+	border: #ffe0bb dotted 1px;
 	background: #fffde8;
 	padding: 6px;
 	overflow: auto;
+	margin-left: 1.5em;
 }
 .example .comment {
 	color: darkblue;
+}
+dl .example {
+	margin-left: 0;
 }
 
 .moduleIndex a {

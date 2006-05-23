@@ -4,6 +4,7 @@ use strict;
 use warnings;
 use FindBin;
 use Extractor;
+use Utils;
 use CGI qw(escapeHTML);
 
 
@@ -28,8 +29,9 @@ sub makeupText {
 		my ($attrs, $text) = @_;
 		$attrs = '' if (!defined($attrs));
 		# Remove auto-generated tags inside <pre> blocks.
-		$text =~ s/\n<{.*?}>//sg;
-		return "<pre${attrs}>" . escapeHTML($text) . "</pre>";
+		$text =~ s/\n<{p}>//sg;
+		$text =~ s/<{.*?}>//sg;
+		return "<pre${attrs}>" . Utils::syntaxHighlight($text) . "</pre>";
 	}
 
 	$text =~ s/\n\n/\n<{p}>\n\n/sg;
@@ -38,7 +40,6 @@ sub makeupText {
 	$text =~ s/^`l`$/<\/ul>/gm;
 	$text =~ s/<ul>(.*?)<\/ul>/&list($1)/gse;
 	$text =~ s/(^| |\n)(http:\/\/.*?)($| |\n)/$1<a href="$2">$2<\/a>$3/gs;
-	$text =~ s/(<pre( .*?)?>(.*?)<\/pre>)/&preformatted($2, $3)/gse;
 
 
 	sub createFuncLink {
@@ -88,6 +89,7 @@ sub makeupText {
 	$text =~ s/(\$?[a-z0-9_:\->]+\(\))/&createFuncLink($1)/gie;
 	# Variables
 	$text =~ s/(^|\n| )([\$\%\@][a-z0-9_{\'}:]+)/$1<{code}>$2<{\/code}>/gis;
+	$text =~ s/(<pre( .*?)?>(.*?)<\/pre>)/&preformatted($2, $3)/gse;
 
 	$text =~ s/<{(.*?)}>/<$1>/gs;
 	return $text;
@@ -286,13 +288,11 @@ sub writeModuleHTML {
 			$text .= "\t\t<div class=\"desc\">" . makeupText($func->{desc}) . "</div>\n";
 
 			if ($func->{example} ne '') {
-				my $example = escapeHTML($func->{example});
-				$example =~ s/(#.*)/<i class="comment">$1<\/i>/mg;
-
+				my $example = $func->{example};
 				$text .= "\n\t\t<dl class=\"example\">\n" .
-					"\t\t\t<dt><strong>Example</strong>:</dt>\n" .
+					"\t\t\t<dt><strong>Example:</strong></dt>\n" .
 					"\t\t\t<dd><pre>";
-				$text .= $example;
+				$text .= Utils::syntaxHighlight($example);
 				$text .= "</pre></dd>\n\t\t</dl>\n";
 			}
 
