@@ -214,7 +214,7 @@ serverEncoding Tagalog
 gameGuard 1
 
 ## www.ragnarok.in.th/
-[Thailand - tRO Account 1: Sol, Chaos, Loki, Iris, Valkyrie]
+[Thailand - tRO: Sol]
 ip 203.144.244.10
 port 6900
 master_version 7
@@ -225,10 +225,64 @@ secureLogin_type 0
 secureLogin_requestCode
 secureLogin_account 3
 gameLogin_packet 0273
+charServer_ip 203.144.132.212
+charServer_port 4500
+patchserver wpatch.ragnarok.in.th
+patchpath /patch70
 serverEncoding Thai
 
-## www.ragnarok.in.th/
-[Thailand - tRO Account 1: Fenrir, Lydia, Sarah, Valkyrie]
+[Thailand - tRO: Chaos]
+ip 203.144.244.10
+port 6900
+master_version 7
+version 24
+serverType 0
+secureLogin 3
+secureLogin_type 0
+secureLogin_requestCode
+secureLogin_account 3
+gameLogin_packet 0273
+charServer_ip 203.144.244.22
+charServer_port 5000
+patchserver wpatch.ragnarok.in.th
+patchpath /patch70
+serverEncoding Thai
+
+[Thailand - tRO: Loki]
+ip 203.144.244.10
+port 6900
+master_version 7
+version 24
+serverType 0
+secureLogin 3
+secureLogin_type 0
+secureLogin_requestCode
+secureLogin_account 3
+gameLogin_packet 0273
+charServer_ip 203.144.244.42
+charServer_port 5000
+patchserver wpatch.ragnarok.in.th
+patchpath /patch70
+serverEncoding Thai
+
+[Thailand - tRO: Iris]
+ip 203.144.244.10
+port 6900
+master_version 7
+version 24
+serverType 0
+secureLogin 3
+secureLogin_type 0
+secureLogin_requestCode
+secureLogin_account 3
+gameLogin_packet 0273
+charServer_ip 203.144.244.62
+charServer_port 4500
+patchserver wpatch.ragnarok.in.th
+patchpath /patch70
+serverEncoding Thai
+
+[Thailand - tRO: Fenrir]
 ip 203.144.244.121
 port 6900
 master_version 7
@@ -239,10 +293,47 @@ secureLogin_type 0
 secureLogin_requestCode
 secureLogin_account 3
 gameLogin_packet 0273
+charServer_ip 203.144.244.82
+charServer_port 5000
+patchserver wpatch.ragnarok.in.th
+patchpath /patch70
 serverEncoding Thai
 
-## www.ragnarok.in.th/
-[Thailand - tRO Account 2: Frigg, Freya, Baldur, Heimdal, Valkyrie]
+[Thailand - tRO: Lydia]
+ip 203.144.244.121
+port 6900
+master_version 7
+version 24
+serverType 0
+secureLogin 3
+secureLogin_type 0
+secureLogin_requestCode
+secureLogin_account 3
+gameLogin_packet 0273
+charServer_ip 203.144.244.102
+charServer_port 5000
+patchserver wpatch.ragnarok.in.th
+patchpath /patch70
+serverEncoding Thai
+
+[Thailand - tRO: Sarah]
+ip 203.144.244.121
+port 6900
+master_version 7
+version 24
+serverType 0
+secureLogin 3
+secureLogin_type 0
+secureLogin_requestCode
+secureLogin_account 3
+gameLogin_packet 0273
+charServer_ip 203.144.244.132
+charServer_port 5000
+patchserver wpatch.ragnarok.in.th
+patchpath /patch70
+serverEncoding Thai
+
+[Thailand - tRO: Frigg]
 ip 203.144.244.5
 port 6900
 master_version 7
@@ -253,10 +344,64 @@ secureLogin_type 0
 secureLogin_requestCode
 secureLogin_account 3
 gameLogin_packet 0273
+charServer_ip 203.144.132.232
+charServer_port 5000
+patchserver wpatch.ragnarok.in.th
+patchpath /patch70
 serverEncoding Thai
 
-## www.ragnarok.in.th/
-[Thailand - tRO Account 2: Honir, Odin, Thor, Valkyrie]
+[Thailand - tRO: Freya]
+ip 203.144.244.5
+port 6900
+master_version 7
+version 24
+serverType 0
+secureLogin 3
+secureLogin_type 0
+secureLogin_requestCode
+secureLogin_account 3
+gameLogin_packet 0273
+charServer_ip 203.144.244.222
+charServer_port 5000
+patchserver wpatch.ragnarok.in.th
+patchpath /patch70
+serverEncoding Thai
+
+[Thailand - tRO: Baldur]
+ip 203.144.244.5
+port 6900
+master_version 7
+version 24
+serverType 0
+secureLogin 3
+secureLogin_type 0
+secureLogin_requestCode
+secureLogin_account 3
+gameLogin_packet 0273
+charServer_ip 203.144.132.22
+charServer_port 5000
+patchserver wpatch.ragnarok.in.th
+patchpath /patch70
+serverEncoding Thai
+
+[Thailand - tRO: Heimdal]
+ip 203.144.244.5
+port 6900
+master_version 7
+version 24
+serverType 0
+secureLogin 3
+secureLogin_type 0
+secureLogin_requestCode
+secureLogin_account 3
+gameLogin_packet 0273
+charServer_ip 203.144.132.42
+charServer_port 5000
+patchserver wpatch.ragnarok.in.th
+patchpath /patch70
+serverEncoding Thai
+
+[Thailand - tRO: Honir]
 ip 203.144.244.122
 port 6900
 master_version 7
@@ -267,10 +412,47 @@ secureLogin_type 0
 secureLogin_requestCode
 secureLogin_account 3
 gameLogin_packet 0273
+charServer_ip 203.144.132.62
+charServer_port 5000
+patchserver wpatch.ragnarok.in.th
+patchpath /patch70
 serverEncoding Thai
 
-## www.ragnarok.in.th/
-[Thailand - tRO Account 3: Mani, Isa, Tyr, Idun, Valkyrie]
+[Thailand - tRO: Odin]
+ip 203.144.244.122
+port 6900
+master_version 7
+version 24
+serverType 0
+secureLogin 3
+secureLogin_type 0
+secureLogin_requestCode
+secureLogin_account 3
+gameLogin_packet 0273
+charServer_ip 203.144.244.182
+charServer_port 5000
+patchserver wpatch.ragnarok.in.th
+patchpath /patch70
+serverEncoding Thai
+
+[Thailand - tRO: Thor]
+ip 203.144.244.122
+port 6900
+master_version 7
+version 24
+serverType 0
+secureLogin 3
+secureLogin_type 0
+secureLogin_requestCode
+secureLogin_account 3
+gameLogin_packet 0273
+charServer_ip 203.144.244.202
+charServer_port 5000
+patchserver wpatch.ragnarok.in.th
+patchpath /patch70
+serverEncoding Thai
+
+[Thailand - tRO: Mani]
 ip 203.144.244.7
 port 6900
 master_version 7
@@ -281,10 +463,64 @@ secureLogin_type 0
 secureLogin_requestCode
 secureLogin_account 3
 gameLogin_packet 0273
+charServer_ip 61.90.227.22
+charServer_port 5000
+patchserver wpatch.ragnarok.in.th
+patchpath /patch70
 serverEncoding Thai
 
-## www.ragnarok.in.th/
-[Thailand - tRO Account 3: Bijou, Grimnir, Bragi, Valkyrie]
+[Thailand - tRO: Isa]
+ip 203.144.244.7
+port 6900
+master_version 7
+version 24
+serverType 0
+secureLogin 3
+secureLogin_type 0
+secureLogin_requestCode
+secureLogin_account 3
+gameLogin_packet 0273
+charServer_ip 203.144.132.172
+charServer_port 5000
+patchserver wpatch.ragnarok.in.th
+patchpath /patch70
+serverEncoding Thai
+
+[Thailand - tRO: Tyr]
+ip 203.144.244.7
+port 6900
+master_version 7
+version 24
+serverType 0
+secureLogin 3
+secureLogin_type 0
+secureLogin_requestCode
+secureLogin_account 3
+gameLogin_packet 0273
+charServer_ip 203.144.132.192
+charServer_port 5000
+patchserver wpatch.ragnarok.in.th
+patchpath /patch70
+serverEncoding Thai
+
+[Thailand - tRO: Idun]
+ip 203.144.244.7
+port 6900
+master_version 7
+version 24
+serverType 0
+secureLogin 3
+secureLogin_type 0
+secureLogin_requestCode
+secureLogin_account 3
+gameLogin_packet 0273
+charServer_ip 203.144.132.152
+charServer_port 5000
+patchserver wpatch.ragnarok.in.th
+patchpath /patch70
+serverEncoding Thai
+
+[Thailand - tRO: Bijou]
 ip 203.144.244.123
 port 6900
 master_version 7
@@ -295,6 +531,146 @@ secureLogin_type 0
 secureLogin_requestCode
 secureLogin_account 3
 gameLogin_packet 0273
+charServer_ip 203.144.132.132
+charServer_port 5000
+patchserver wpatch.ragnarok.in.th
+patchpath /patch70
+serverEncoding Thai
+
+[Thailand - tRO: Grimnir]
+ip 203.144.244.123
+port 6900
+master_version 7
+version 24
+serverType 0
+secureLogin 3
+secureLogin_type 0
+secureLogin_requestCode
+secureLogin_account 3
+gameLogin_packet 0273
+charServer_ip 203.144.132.102
+charServer_port 5000
+patchserver wpatch.ragnarok.in.th
+patchpath /patch70
+serverEncoding Thai
+
+[Thailand - tRO: Bragi]
+ip 203.144.244.123
+port 6900
+master_version 7
+version 24
+serverType 0
+secureLogin 3
+secureLogin_type 0
+secureLogin_requestCode
+secureLogin_account 3
+gameLogin_packet 0273
+charServer_ip 203.144.132.82
+charServer_port 5000
+patchserver wpatch.ragnarok.in.th
+patchpath /patch70
+serverEncoding Thai
+
+[Thailand - tRO: Valkyrie (Account 1)]
+ip 203.144.244.10
+port 6900
+master_version 7
+version 24
+serverType 0
+secureLogin 3
+secureLogin_type 0
+secureLogin_requestCode
+secureLogin_account 3
+gameLogin_packet 0273
+charServer_ip 61.90.227.32
+charServer_port 5000
+patchserver wpatch.ragnarok.in.th
+patchpath /patch70
+serverEncoding Thai
+
+[Thailand - tRO: Valkyrie (Account 1.1)]
+ip 203.144.244.121
+port 6900
+master_version 7
+version 24
+serverType 0
+secureLogin 3
+secureLogin_type 0
+secureLogin_requestCode
+secureLogin_account 3
+gameLogin_packet 0273
+charServer_ip 61.90.227.32
+charServer_port 5000
+patchserver wpatch.ragnarok.in.th
+patchpath /patch70
+serverEncoding Thai
+
+[Thailand - tRO: Valkyrie (Account 2)]
+ip 203.144.244.5
+port 6900
+master_version 7
+version 24
+serverType 0
+secureLogin 3
+secureLogin_type 0
+secureLogin_requestCode
+secureLogin_account 3
+gameLogin_packet 0273
+charServer_ip 61.90.227.32
+charServer_port 5000
+patchserver wpatch.ragnarok.in.th
+patchpath /patch70
+serverEncoding Thai
+
+[Thailand - tRO: Valkyrie (Account 2.1)]
+ip 203.144.244.122
+port 6900
+master_version 7
+version 24
+serverType 0
+secureLogin 3
+secureLogin_type 0
+secureLogin_requestCode
+secureLogin_account 3
+gameLogin_packet 0273
+charServer_ip 61.90.227.32
+charServer_port 5000
+patchserver wpatch.ragnarok.in.th
+patchpath /patch70
+serverEncoding Thai
+
+[Thailand - tRO: Valkyrie (Account 3)]
+ip 203.144.244.7
+port 6900
+master_version 7
+version 24
+serverType 0
+secureLogin 3
+secureLogin_type 0
+secureLogin_requestCode
+secureLogin_account 3
+gameLogin_packet 0273
+charServer_ip 61.90.227.32
+charServer_port 5000
+patchserver wpatch.ragnarok.in.th
+patchpath /patch70
+serverEncoding Thai
+
+[Thailand - tRO: Valkyrie (Account 3.1)]
+ip 203.144.244.123
+port 6900
+master_version 7
+version 24
+serverType 0
+secureLogin 3
+secureLogin_type 0
+secureLogin_requestCode
+secureLogin_account 3
+gameLogin_packet 0273
+charServer_ip 61.90.227.32
+charServer_port 5000
+patchserver wpatch.ragnarok.in.th
+patchpath /patch70
 serverEncoding Thai
 
 ## http://ro.vinagame.com.vn/
