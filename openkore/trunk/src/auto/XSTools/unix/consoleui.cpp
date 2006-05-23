@@ -58,10 +58,12 @@ ConsoleUI::~ConsoleUI() {
 
 void
 ConsoleUI::lineRead(char *line) {
-	pthread_mutex_lock(&inputLock);
-	input.push(line);
-	pthread_mutex_unlock(&inputLock);
-	add_history(line);
+	if (*line != '\0') {
+		pthread_mutex_lock(&inputLock);
+		input.push(line);
+		pthread_mutex_unlock(&inputLock);
+		add_history(line);
+	}
 	lineProcessed = true;
 }
 
