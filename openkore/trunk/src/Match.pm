@@ -33,36 +33,32 @@ use Utils;
 
 
 ##
-# Match::player(ID, [partial_match])
+# Actor::Player Match::player(ID, [boolean partial_match = false])
 # ID: either a number in the player list, or a player name.
-# Returns: a player hash, or undef if not found.
+# Returns: an Actor::Player object, or undef if not found.
 #
-# Find an item in the player list.
+# Find an player in the global player list based on the given match criteria.
 sub player {
 	my $ID = shift;
 	my $partial = shift;
 
 	if ($ID =~ /^\d+$/) {
-		if (defined($ID = $playersID[$ID])) {
-			return $players{$ID};
-		}
+		return $playersList->get($ID);
 	} elsif ($partial) {
 		$ID = quotemeta $ID;
-		foreach (@playersID) {
-			next if (!$_);
-			return $players{$_} if ($players{$_}{name} =~ /^$ID/i);
+		foreach my Actor::Player $player (@{$playersList->getItems()}) {
+			return $player if ($player->name =~ /^$ID/i);
 		}
 	} else {
-		foreach (@playersID) {
-			next if (!$_);
-			return $players{$_} if (lc($players{$_}{name}) eq lc($ID));
+		foreach my Actor::Player $player (@{$playersList->getItems()}) {
+			return $player if (lc($player->name) eq lc($ID));
 		}
 	}
 	return undef;
 }
 
 ##
-# Match::inventoryItem(name)
+# Item Match::inventoryItem(name)
 # name: either a number in the inventory list, or an item name.
 # Returns: the hash to the inventory item matching $name, or undef.
 #

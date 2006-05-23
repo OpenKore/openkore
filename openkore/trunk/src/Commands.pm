@@ -2461,31 +2461,13 @@ sub cmdPlayerList {
 	my $msg;
 
 	if ($args ne "") {
-		my $player;
-		my $ID;
-		if ($args =~ /^\d+$/) {
-			if (!$playersID[$args]) {
-				error TF("Player #%s does not exist.\n", $args);
-				return;
-			}
-			$player = $players{$playersID[$args]};
-			$ID = $playersID[$args];
-		} else {
-			$args =~ s/ *$//;
-			foreach (@playersID) {
-				next unless $_;
-				if (lc($players{$_}{name}) eq lc($args)) {
-					$player = $players{$_};
-					$ID = $_;
-					last;
-				}
-			}
-			if (!$player) {
-				error TF("Player \"%s\" does not exist.\n", $args);
-				return;
-			}
+		my Actor::Player $player = Match::player($args);
+		if (!$player) {
+			error TF("Player \"%s\" does not exist.\n", $args);
+			return;
 		}
 
+		my $ID = $player->{ID};
 		my $body = $player->{look}{body} % 8;
 		my $head = $player->{look}{head};
 		if ($head == 0) {
@@ -2539,7 +2521,8 @@ sub cmdPlayerList {
 		itemName({nameID => $player->{weapon}}),
 		itemName({nameID => $player->{shield}}),
 		itemName({nameID => $player->{shoes}}), $headTop, $headMid, 
-		$headLow, "$haircolors{$player->{hair_color}} ($player->{hair_color})", $player->{walk_speed});
+			  $headLow, "$haircolors{$player->{hair_color}} ($player->{hair_color})",
+			  $player->{walk_speed});
 		
 		
 		if ($player->{dead}) {
@@ -2559,7 +2542,7 @@ sub cmdPlayerList {
 
 	$msg =  T("-----------Player List-----------\n" .
 		"#    Name                                Sex   Lv  Job         Dist  Coord\n");
-	foreach my $player (@{$playersList->getItems()}) {
+	foreach my Actor::Player $player (@{$playersList->getItems()}) {
 		my ($name, $dist, $pos);
 		$name = $player->name;
 		if ($player->{guild} && %{$player->{guild}}) {
