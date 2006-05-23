@@ -5006,11 +5006,11 @@ sub storage_password_request {
 
 	} elsif ($args->{flag} == 8) {	# apparently this flag means that you have entered the wrong password
 									# too many times, and now the server is blocking you from using storage
-		debug (($args->{switch} eq '023E') ?
+		debug(($args->{switch} eq '023E') ?
 			"Character password: unknown flag $args->{flag}\n" :
 			"Storage password: unknown flag $args->{flag}\n");
 	} else {
-		debug (($args->{switch} eq '023E') ?
+		debug(($args->{switch} eq '023E') ?
 			"Character password: unknown flag $args->{flag}\n" :
 			"Storage password: unknown flag $args->{flag}\n");
 	}
