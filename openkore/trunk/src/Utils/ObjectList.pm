@@ -49,7 +49,7 @@
 # To iterate through the list, you must <b>not</b> write this:
 # <pre class="example">
 # for (my $i = 0; $i < $list->size(); $i++) {
-#     doSomethignWith($list->get($i));
+#     doSomethingWith($list->get($i));
 # }
 # </pre>
 # Use $ObjectList->getItems() instead:
