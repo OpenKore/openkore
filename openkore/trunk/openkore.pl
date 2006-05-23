@@ -82,8 +82,22 @@ $SIG{__DIE__} = sub {
 	my $msg = TF("Program terminated unexpectedly. Error message:\n" .
 		"%s\nA more detailed error report is saved to errors.txt", $dieMsg);
 
+	# Create the errors.txt error log
 	my $log = '';
-	$log .= "\@ai_seq = @Globals::ai_seq\n\n" if (defined @Globals::ai_seq);
+	$log .= "$Settings::NAME version $Settings::VERSION\n" if (defined $Settings::VERSION);
+	$log .= "\@ai_seq = @Globals::ai_seq\n" if (defined @Globals::ai_seq);
+	if (defined @Plugins::plugins) {
+		$log .= "Loaded plugins:\n";
+		foreach my $plugin (@Plugins::plugins) {
+			next if (!defined $plugin);
+			$log .= "  $plugin->{filename} ($plugin->{name})\n";
+		}
+	} else {
+		$log .= "No loaded plugins.\n";
+	}
+	$log .= "\n";
+
+	# Add stack trace
 	if (defined &Carp::longmess) {
 		$log .= Carp::longmess(@_);
 	} else {
@@ -95,7 +109,6 @@ $SIG{__DIE__} = sub {
 		close F;
 
 		my $msg;
-		$msg = "$Settings::NAME version $Settings::VERSION\n\n" if (defined $Settings::VERSION);
 		$msg .=  "  $lines[$line-2]" if ($line - 2 >= 0);
 		$msg .= "* $lines[$line-1]";
 		$msg .= "  $lines[$line]" if (@lines > $line);
