@@ -265,7 +265,7 @@ sub ai_partyfollow {
 
 ##
 # ai_getAggressives([check_mon_control], [party])
-# Returns: an array of monster hashes.
+# Returns: an array of monster IDs, or a number.
 #
 # Get a list of all aggressive monsters on screen.
 # The definition of "aggressive" is: a monster who has hit or missed me.
@@ -282,13 +282,12 @@ sub ai_getAggressives {
 	my $num = 0;
 	my @agMonsters;
 
-	foreach (@monstersID) {
-		next if (!$_);
-		my $monster = $monsters{$_};
-		my $control = Misc::mon_control($monster->{name}) if $type || !$wantArray;
+	foreach my $monster (@{$monstersList->items()}) {
+		my $control = Misc::mon_control($monster->name) if $type || !$wantArray;
+		my $ID = $monster->{ID};
 
 		if (($type && ($control->{attack_auto} == 2)) ||
-			(($monster->{dmgToYou} || $monster->{missedYou}) && Misc::checkMonsterCleanness($_)) ||
+			(($monster->{dmgToYou} || $monster->{missedYou}) && Misc::checkMonsterCleanness($ID)) ||
 			($party && ($monster->{dmgToParty} || $monster->{missedToParty} || $monster->{dmgFromParty})) &&
 			timeOut($monster->{attack_failed}, $timeout{ai_attack_unfail}{timeout}))
 		{
@@ -306,13 +305,13 @@ sub ai_getAggressives {
 				&& !$monster->{dmgToYou} && !$monster->{missedYou}
 				&& ($party && (!$monster->{dmgToParty} && !$monster->{missedToParty} && !$monster->{dmgFromParty}))
 				);
-			
+
 			# Continuing, check whether the forced Agro is really a clean monster;
-			next if (($type && $control->{attack_auto} == 2) && !Misc::checkMonsterCleanness($_));
+			next if (($type && $control->{attack_auto} == 2) && !Misc::checkMonsterCleanness($ID));
 
 			if ($wantArray) {
 				# Function is called in array context
-				push @agMonsters, $_;
+				push @agMonsters, $ID;
 
 			} else {
 				# Function is called in scalar context
