@@ -2559,7 +2559,7 @@ sub updateDamageTables {
 			}
 
 			if (existsInList($config{tankersList}, $player->{name}) ||
-			    ($char->{party} && %{$char->{paty}} && $char->{party}{users}{$ID1} && %{$char->{party}{users}{$ID1}})) {
+			    ($char->{party} && %{$char->{party}} && $char->{party}{users}{$ID1} && %{$char->{party}{users}{$ID1}})) {
 				$monster->{dmgFromParty} += $damage;
 			}
 			OpenKoreMod::updateDamageTables($monster) if (defined &OpenKoreMod::updateDamageTables);
