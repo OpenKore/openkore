@@ -1414,15 +1414,16 @@ sub checkFollowMode {
 }
 
 ##
-# checkMonsterCleanness(ID)
+# boolean checkMonsterCleanness(Bytes ID)
 # ID: the monster's ID.
+# Requires: $ID is a valid monster ID.
 #
 # Checks whether a monster is "clean" (not being attacked by anyone).
 sub checkMonsterCleanness {
 	return 1 if (!$config{attackAuto});
 	my $ID = shift;
-	return 1 if ($players{$ID});
-	my $monster = $monsters{$ID};
+	return 1 if ($playersList->getByID($ID));
+	my $monster = $monstersList->getByID($ID);
 
 	# If party attacked monster, or if monster attacked/missed party
 	if ($monster->{'dmgFromParty'} > 0 || $monster->{'dmgToParty'} > 0 || $monster->{'missedToParty'} > 0) {
@@ -1665,12 +1666,12 @@ sub getIDFromChat {
 # Find the name of an NPC: could be NPC, monster, or unknown.
 sub getNPCName {
 	my $ID = shift;
-	if ($npcs{$ID}) {
-		return $npcs{$ID}{name};
-	} elsif ($monsters{$ID}) {
-		return $monsters{$ID}{name};
+	if ((my $npc = $npcsList->getByID($ID))) {
+		return $npc->name;
+	} elsif ((my $monster = $monstersList->getByID($ID))) {
+		return $monster->name;
 	} else {
-		return "Unknown #".unpack("V1", $ID);
+		return "Unknown #" . unpack("V1", $ID);
 	}
 }
 
@@ -3646,7 +3647,7 @@ sub checkSelfCondition {
 	if ($config{$prefix . "_monsters"} && !($prefix =~ /skillSlot/i) && !($prefix =~ /ComboSlot/i)) {
 		my $exists;
 		foreach (ai_getAggressives()) {
-			if (existsInList($config{$prefix . "_monsters"}, $monsters{$_}{name})) {
+			if (existsInList($config{$prefix . "_monsters"}, $monsters{$_}->name)) {
 				$exists = 1;
 				last;
 			}
@@ -3657,7 +3658,7 @@ sub checkSelfCondition {
 	if ($config{$prefix . "_defendMonsters"}) {
 		my $exists;
 		foreach (ai_getMonstersAttacking($accountID)) {
-			if (existsInList($config{$prefix . "_defendMonsters"}, $monsters{$_}{name})) {
+			if (existsInList($config{$prefix . "_defendMonsters"}, $monsters{$_}->name)) {
 				$exists = 1;
 				last;
 			}
@@ -3668,7 +3669,7 @@ sub checkSelfCondition {
 	if ($config{$prefix . "_notMonsters"} && !($prefix =~ /skillSlot/i) && !($prefix =~ /ComboSlot/i)) {
 		my $exists;
 		foreach (ai_getAggressives()) {
-			if (existsInList($config{$prefix . "_notMonsters"}, $monsters{$_}{name})) {
+			if (existsInList($config{$prefix . "_notMonsters"}, $monsters{$_}->name)) {
 				return 0;
 			}
 		}
