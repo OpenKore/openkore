@@ -4278,9 +4278,8 @@ sub skill_cast {
 		}
 
 		# Skill area casting -> running to monster's back
-		my $ID = AI::args->{ID};
-		my $monster2 = $monstersList->getByID($ID);
-		if ($dist > 0 && defined $ID) {
+		my $ID;
+		if ($dist > 0 && AI::action eq "attack" && ($ID = AI::args->{ID}) && (my $monster2 = $monstersList->getByID($ID))) {
 			# Calculate X axis
 			if ($char->{pos_to}{x} - $monster2->{pos_to}{x} < 0) {
 				$coords{x} = $monster2->{pos_to}{x} + 3;
