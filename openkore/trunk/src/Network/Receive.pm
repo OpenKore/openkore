@@ -2851,7 +2851,7 @@ sub item_disappeared {
 	change_to_constate5();
 	if ($items{$args->{ID}}) {
 		if ($config{attackLooters} && AI::action ne "sitAuto" && pickupitems(lc($items{$args->{ID}}{name})) > 0) {
-			foreach my Actor::Monster $monster (@{$monstersList->items()}) { # attack looter code
+			foreach my Actor::Monster $monster (@{$monstersList->getItems()}) { # attack looter code
 				if (my $control = mon_control($monster->name)) {
 					next if ( ($control->{attack_auto}  ne "" && $control->{attack_auto} == -1)
 						|| ($control->{attack_lvl}  ne "" && $control->{attack_lvl} > $char->{lv})
