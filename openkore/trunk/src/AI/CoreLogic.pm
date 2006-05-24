@@ -196,129 +196,7 @@ sub iterate {
 	}
 
 
-	##### TALK WITH NPC ######
-	NPCTALK: {
-		last NPCTALK if (AI::action ne "NPC");
-		my $args = AI::args;
-		$args->{time} = time unless $args->{time};
-
-		if ($args->{stage} eq '') {
-			unless (timeOut($char->{time_move}, $char->{time_move_calc} + 0.2)) {
-				# Wait for us to stop moving before talking
-			} elsif (timeOut($args->{time}, $timeout{ai_npcTalk}{timeout})) {
-				error T("Could not find the NPC at the designated location.\n"), "ai_npcTalk";
-				AI::dequeue;
-
-			} else {
-				# An x,y position has been passed
-				foreach my $npc (@npcsID) {
-					next if !$npc || $npcs{$npc}{'name'} eq '' || $npcs{$npc}{'name'} =~ /Unknown/i;
-					if ( $npcs{$npc}{'pos'}{'x'} eq $args->{pos}{'x'} &&
-					     $npcs{$npc}{'pos'}{'y'} eq $args->{pos}{'y'} ) {
-						debug "Target NPC $npcs{$npc}{'name'} at ($args->{pos}{x},$args->{pos}{y}) found.\n", "ai_npcTalk";
-						$args->{'nameID'} = $npcs{$npc}{'nameID'};
-						$args->{'ID'} = $npc;
-						$args->{'name'} = $npcs{$npc}{'name'};
-						$args->{'stage'} = 'Talking to NPC';
-						$args->{steps} = [];
-						@{$args->{steps}} = parseArgs("x $args->{sequence}");
-						undef $args->{time};
-						undef $ai_v{npc_talk}{time};
-						undef $ai_v{npc_talk}{talk};
-						lookAtPosition($args->{pos});
-						last NPCTALK;
-					}
-				}
-				foreach my $ID (@monstersID) {
-					next if !$ID;
-					if ( $monsters{$ID}{'pos'}{'x'} eq $args->{pos}{'x'} &&
-					     $monsters{$ID}{'pos'}{'y'} eq $args->{pos}{'y'} ) {
-						debug "Target Monster-NPC $monsters{$ID}{name} at ($args->{pos}{x},$args->{pos}{y}) found.\n", "ai_npcTalk";
-						$args->{'nameID'} = $monsters{$ID}{'nameID'};
-						$args->{'ID'} = $ID;
-						$args->{monster} = 1;
-						$args->{'name'} = $monsters{$ID}{'name'};
-						$args->{'stage'} = 'Talking to NPC';
-						$args->{steps} = [];
-						@{$args->{steps}} = parseArgs("x $args->{sequence}");
-						undef $args->{time};
-						undef $ai_v{npc_talk}{time};
-						undef $ai_v{npc_talk}{talk};
-						lookAtPosition($args->{pos});
-						last NPCTALK;
-					}
-				}
-			}
-
-
-		} elsif ($args->{mapChanged} || ($ai_v{npc_talk}{talk} eq 'close' && $args->{steps}[0] !~ /x/i)) {			message TF("Done talking with %s.\n",$args->{name}), "ai_npcTalk";
-
-			# Cancel conversation only if NPC is still around; otherwise
-			# we could get disconnected.
-			sendTalkCancel($net, $args->{ID}) if $npcs{$args->{ID}};;
-			AI::dequeue;
-
-		} elsif (timeOut($args->{time}, $timeout{'ai_npcTalk'}{'timeout'})) {
-			# If NPC does not respond before timing out, then by default, it's
-			# a failure
-			error T("NPC did not respond.\n"), "ai_npcTalk";
-			sendTalkCancel($net, $args->{ID});
-			AI::dequeue;
-
-		} elsif (timeOut($ai_v{'npc_talk'}{'time'}, 0.25)) {
-			if ($ai_v{npc_talk}{talk} eq 'close' && $args->{steps}[0] =~ /x/i) {
-				undef $ai_v{npc_talk}{talk};
-			}
-			$args->{time} = time;
-			# this time will be reset once the NPC responds
-			$ai_v{'npc_talk'}{'time'} = time + $timeout{'ai_npcTalk'}{'timeout'} + 5;
-
-			if ($config{autoTalkCont}) {
-				while ($args->{steps}[0] =~ /c/i) {
-					shift @{$args->{steps}};
-				}
-			}
-
-			if ($args->{steps}[0] =~ /w(\d+)/i) {
-				my $time = $1;
-				$ai_v{'npc_talk'}{'time'} = time + $time;
-				$args->{time} = time + $time;
-			} elsif ( $args->{steps}[0] =~ /^t=(.*)/i ) {
-				sendTalkText($net, $args->{ID}, $1);
-			} elsif ( $args->{steps}[0] =~ /^a=(.*)/i ) {
-				$ai_v{'npc_talk'}{'time'} = time + 1;
-				$args->{time} = time + 1;
-				Commands::run("$1");
-			} elsif ($args->{steps}[0] =~ /d(\d+)/i) {
-				sendTalkNumber($net, $args->{ID}, $1);
-			} elsif ( $args->{steps}[0] =~ /x/i ) {
-				if (!$args->{monster}) {
-					sendTalk($net, $args->{ID});
-				} else {
-					sendAttack($net, $args->{ID}, 0);
-				}
-			} elsif ( $args->{steps}[0] =~ /c/i ) {
-				sendTalkContinue($net, $args->{ID});
-			} elsif ( $args->{steps}[0] =~ /r(\d+)/i ) {
-				sendTalkResponse($net, $args->{ID}, $1+1);
-			} elsif ( $args->{steps}[0] =~ /n/i ) {
-				sendTalkCancel($net, $args->{ID});
-				$ai_v{'npc_talk'}{'time'} = time;
-				$args->{time}	= time;
-			} elsif ( $args->{steps}[0] =~ /^b(\d+),(\d+)/i ) {
-				my $itemID = $storeList[$1]{nameID};
-				$ai_v{npc_talk}{itemID} = $itemID;
-				sendBuy($net, $itemID, $2);
-			} elsif ( $args->{steps}[0] =~ /b/i ) {
-				sendGetStoreList($net, $args->{ID});
-			} elsif ( $args->{steps}[0] =~ /s/i ) {
-				sendGetSellList($net, $args->{ID});
-			} elsif ( $args->{steps}[0] =~ /e/i ) {
-				$ai_v{npc_talk}{talk} = 'close';
-			}
-			shift @{$args->{steps}};
-		}
-	}
+	processNPCTalk();
 
 	##### DROPPING #####
 	# Drop one or more items from inventory.
@@ -333,15 +211,15 @@ sub iterate {
 		AI::dequeue if (@{AI::args->{'items'}} <= 0);
 	}
 
-     ##### ESCAPE UNKNOWN MAPS #####      
-     #escape from unknown maps. Happens when kore accidentally teleports onto an
-     #portal. With this, kore should automaticly go into the portal on the other side
-	#Todo: Make kore do a random walk searching for portal if there's no portal arround.
+	##### ESCAPE UNKNOWN MAPS #####      
+	# escape from unknown maps. Happens when kore accidentally teleports onto an
+	# portal. With this, kore should automaticly go into the portal on the other side
+	# Todo: Make kore do a random walk searching for portal if there's no portal arround.
 
 	if (AI::action eq "escape" && $AI == 2) {
 		my $skip = 0;
-          if (timeOut($timeout{ai_route_escape}) && $timeout{ai_route_escape}{time}){
-               AI::dequeue;
+		if (timeOut($timeout{ai_route_escape}) && $timeout{ai_route_escape}{time}){
+			AI::dequeue;
 			if ($portalsID[0]) {
 				message T("Escaping to into nearest portal.\n");
 				main::ai_route($field{name}, $portals{$portalsID[0]}{'pos'}{'x'},
@@ -406,143 +284,10 @@ sub iterate {
 		}
 	}
 
-	##### SITTING #####
-	if (AI::action eq "sitting") {
-		if ($char->{sitting} || $char->{skills}{NV_BASIC}{lv} < 3) {
-			# Stop if we're already sitting
-			AI::dequeue;
-			$timeout{ai_sit}{time} = $timeout{ai_sit_wait}{time} = 0;
-
-		} elsif (!$char->{sitting} && timeOut($timeout{ai_sit}) && timeOut($timeout{ai_sit_wait})) {
-			# Send the 'sit' packet every x seconds until we're sitting
-			sendSit($net);
-			$timeout{ai_sit}{time} = time;
-
-			look($config{sitAuto_look}) if (defined $config{sitAuto_look});
-		}
-	}
-
-	##### STANDING #####
-	# Same logic as the 'sitting' AI
-	if (AI::action eq "standing") {
-		if (!$char->{sitting}) {
-			AI::dequeue;
-
-		} elsif (timeOut($timeout{ai_sit}) && timeOut($timeout{ai_stand_wait})) {
-			sendStand($net);
-			$timeout{ai_sit}{time} = time;
-		}
-	}
-
-
+	processSitting();
+	processStand();
 	processAttack();
-
-
-	##### SKILL USE #####
-	#FIXME: need to move closer before using skill on player,
-	#there might be line of sight problem too
-	#or the player disappers from the area
-
-	if (AI::action eq "skill_use" && AI::args->{suspended}) {
-		AI::args->{giveup}{time} += time - AI::args->{suspended};
-		AI::args->{minCastTime}{time} += time - AI::args->{suspended};
-		AI::args->{maxCastTime}{time} += time - AI::args->{suspended};
-		delete AI::args->{suspended};
-	}
-
-	SKILL_USE: {
-		last SKILL_USE if (AI::action ne "skill_use");
-		my $args = AI::args;
-
-		if ($args->{monsterID} && $skillsArea{$args->{skillHandle}} == 2) {
-			delete $args->{monsterID};
-		}
-
-		if (exists $args->{ai_equipAuto_skilluse_giveup} && binFind(\@skillsID, $args->{skillHandle}) eq "" && timeOut($args->{ai_equipAuto_skilluse_giveup})) {
-			warning T("Timeout equiping for skill\n");
-			AI::dequeue;
-			${$args->{ret}} = 'equip timeout' if ($args->{ret});
-		} elsif (Item::scanConfigAndCheck("$args->{prefix}_equip")) {
-			#check if item needs to be equipped
-			Item::scanConfigAndEquip("$args->{prefix}_equip");
-		} elsif (timeOut($args->{waitBeforeUse})) {
-			if (defined $args->{monsterID} && !defined $monsters{$args->{monsterID}}) {
-				# This skill is supposed to be used for attacking a monster, but that monster has died
-				AI::dequeue;
-				${$args->{ret}} = 'target gone' if ($args->{ret});
-
-			} elsif ($char->{sitting}) {
-				AI::suspend;
-				stand();
-
-			# Use skill if we haven't done so yet
-			} elsif (!$args->{skill_used}) {
-				my $handle = $args->{skillHandle};
-				if (!defined $args->{skillID}) {
-					my $skill = new Skills(handle => $handle);
-					$args->{skillID} = $skill->id;
-				}
-				my $skillID = $args->{skillID};
-
-				if ($handle eq 'AL_TELEPORT') {
-					${$args->{ret}} = 'ok' if ($args->{ret});
-					AI::dequeue;
-					useTeleport($args->{lv});
-					last SKILL_USE;
-				}
-
-				$args->{skill_used} = 1;
-				$args->{giveup}{time} = time;
-
-				# Stop attacking, otherwise skill use might fail
-				my $attackIndex = AI::findAction("attack");
-				if (defined($attackIndex) && AI::args($attackIndex)->{attackMethod}{type} eq "weapon") {
-					# 2005-01-24 pmak: Commenting this out since it may
-					# be causing bot to attack slowly when a buff runs
-					# out.
-					#stopAttack();
-				}
-
-				# Give an error if we don't actually possess this skill
-				my $skill = new Skills(handle => $handle);
-				if ($char->{skills}{$handle}{lv} <= 0 && (!$char->{permitSkill} || $char->{permitSkill}->handle ne $handle)) {
-					debug "Attempted to use skill (".$skill->name.") which you do not have.\n";
-				}
-
-				$args->{maxCastTime}{time} = time;
-				if ($skillsArea{$handle} == 2) {
-					sendSkillUse($net, $skillID, $args->{lv}, $accountID);
-				} elsif ($args->{x} ne "") {
-					sendSkillUseLoc($net, $skillID, $args->{lv}, $args->{x}, $args->{y});
-				} else {
-					sendSkillUse($net, $skillID, $args->{lv}, $args->{target});
-				}
-				undef $char->{permitSkill};
-				$args->{skill_use_last} = $char->{skills}{$handle}{time_used};
-
-				delete $char->{cast_cancelled};
-
-			} elsif (timeOut($args->{minCastTime})) {
-				if ($args->{skill_use_last} != $char->{skills}{$args->{skillHandle}}{time_used}) {
-					AI::dequeue;
-					${$args->{ret}} = 'ok' if ($args->{ret});
-
-				} elsif ($char->{cast_cancelled} > $char->{time_cast}) {
-					AI::dequeue;
-					${$args->{ret}} = 'cancelled' if ($args->{ret});
-
-				} elsif (timeOut($char->{time_cast}, $char->{time_cast_wait} + 0.5)
-				  && ( (timeOut($args->{giveup}) && (!$char->{time_cast} || !$args->{maxCastTime}{timeout}) )
-				      || ( $args->{maxCastTime}{timeout} && timeOut($args->{maxCastTime})) )
-				) {
-					AI::dequeue;
-					${$args->{ret}} = 'timeout' if ($args->{ret});
-				}
-			}
-		}
-	}
-
-
+	processSkillUse();
 	processRouteAI();
 	processMapRouteAI();
 
@@ -1008,322 +753,7 @@ sub iterate {
 	}
 
 
-	#storageAuto - chobit aska 20030128
-	#####AUTO STORAGE#####
-
-	AUTOSTORAGE: {
-
-		if (AI::is("", "route", "sitAuto", "follow")
-			&& $config{storageAuto} && ($config{storageAuto_npc} ne "" || $config{storageAuto_useChatCommand})
-			&& !$ai_v{sitAuto_forcedBySitCommand}
-			&& (($config{'itemsMaxWeight_sellOrStore'} && percent_weight($char) >= $config{'itemsMaxWeight_sellOrStore'})
-				|| (!$config{'itemsMaxWeight_sellOrStore'} && percent_weight($char) >= $config{'itemsMaxWeight'}))
-			&& !AI::inQueue("storageAuto") && time > $ai_v{'inventory_time'}) {
-
-			# Initiate autostorage when the weight limit has been reached
-			my $routeIndex = AI::findAction("route");
-			my $attackOnRoute = 2;
-			$attackOnRoute = AI::args($routeIndex)->{attackOnRoute} if (defined $routeIndex);
-			# Only autostorage when we're on an attack route, or not moving
-			if ($attackOnRoute > 1 && ai_storageAutoCheck()) {
-				message T("Auto-storaging due to excess weight\n");
-				AI::queue("storageAuto");
-			}
-
-		} elsif (AI::is("", "route", "attack")
-			&& $config{storageAuto} && ($config{storageAuto_npc} ne "" || $config{storageAuto_useChatCommand})
-			&& !$ai_v{sitAuto_forcedBySitCommand}
-			&& !AI::inQueue("storageAuto")
-			&& @{$char->{inventory}} > 0) {
-
-			# Initiate autostorage when we're low on some item, and getAuto is set
-			my $found;
-			my $i;
-			for ($i = 0; exists $config{"getAuto_$i"}; $i++) {
-				my $invIndex = findIndexString_lc($char->{inventory}, "name", $config{"getAuto_$i"});
-				if ($config{"getAuto_${i}_minAmount"} ne "" &&
-					$config{"getAuto_${i}_maxAmount"} ne "" &&
-					!$config{"getAuto_${i}_passive"} &&
-						(!defined($invIndex) ||
-						 ($char->{inventory}[$invIndex]{amount} <= $config{"getAuto_${i}_minAmount"} &&
-						  $char->{inventory}[$invIndex]{amount} < $config{"getAuto_${i}_maxAmount"}))) {
-					if ($storage{opened} && findKeyString(\%storage, "name", $config{"getAuto_$i"}) eq '') {
-						if ($config{"getAuto_${i}_dcOnEmpty"}) {
- 						message TF("Disconnecting on empty %s!\n", $config{"getAuto_$i"});
-							chatLog("k", TF("Disconnecting on empty %s!\n", $config{"getAuto_$i"}));
-							quit();
-						}
-					} else {
-						$found = 1;
-					}
-					last;
-				}
-			}
-
-			my $routeIndex = AI::findAction("route");
-			my $attackOnRoute;
-			$attackOnRoute = AI::args($routeIndex)->{attackOnRoute} if (defined $routeIndex);
-
-			# Only autostorage when we're on an attack route, or not moving
-			if ((!defined($routeIndex) || $attackOnRoute > 1) && $found &&
-				@{$char->{inventory}} > 0) {
-	 			message TF("Auto-storaging due to insufficient %s\n", $config{"getAuto_$i"});
-				AI::queue("storageAuto");
-			}
-			$timeout{'ai_storageAuto'}{'time'} = time;
-		}
-
-
-		if (AI::action eq "storageAuto" && AI::args->{done}) {
-			# Autostorage finished; trigger sellAuto unless autostorage was already triggered by it
-			my $forcedBySell = AI::args->{forcedBySell};
-			my $forcedByBuy = AI::args->{forcedByBuy};
-			AI::dequeue;
-			if ($forcedByBuy) {
-				AI::queue("sellAuto", {forcedByBuy => 1});
-			} elsif (!$forcedBySell && ai_sellAutoCheck() && $config{sellAuto}) {
-				AI::queue("sellAuto", {forcedByStorage => 1});
-			}
-
-		} elsif (AI::action eq "storageAuto" && timeOut($timeout{'ai_storageAuto'})) {
-			# Main autostorage block
-			my $args = AI::args;
-
-			my $do_route;
-
-			if (!$config{storageAuto_useChatCommand}) {
-				# Stop if the specified NPC is invalid
-				$args->{npc} = {};
-				getNPCInfo($config{'storageAuto_npc'}, $args->{npc});
-				if (!defined($args->{npc}{ok})) {
-					$args->{done} = 1;
-					last AUTOSTORAGE;
-				}
-
-				# Determine whether we have to move to the NPC
-				if ($field{'name'} ne $args->{npc}{map}) {
-					$do_route = 1;
-				} else {
-					my $distance = distance($args->{npc}{pos}, $char->{pos_to});
-					if ($distance > $config{'storageAuto_distance'}) {
-						$do_route = 1;
-					}
-				}
-
-				if ($do_route) {
-					if ($args->{warpedToSave} && !$args->{mapChanged} && !timeOut($args->{warpStart}, 8)) {
-						undef $args->{warpedToSave};
-					}
-
-					# If warpToBuyOrSell is set, warp to saveMap if we haven't done so
-					if ($config{'saveMap'} ne "" && $config{'saveMap_warpToBuyOrSell'} && !$args->{warpedToSave}
-					&& !$cities_lut{$field{'name'}.'.rsw'} && $config{'saveMap'} ne $field{name}) {
-						$args->{warpedToSave} = 1;
-						# If we still haven't warped after a certain amount of time, fallback to walking
-						$args->{warpStart} = time unless $args->{warpStart};
-						message T("Teleporting to auto-storage\n"), "teleport";
-						useTeleport(2);
-						$timeout{'ai_storageAuto'}{'time'} = time;
-					} else {
-						# warpToBuyOrSell is not set, or we've already warped, or timed out. Walk to the NPC
-	 					message TF("Calculating auto-storage route to: %s(%s): %s, %s\n", $maps_lut{$args->{npc}{map}.'.rsw'}, $args->{npc}{map}, $args->{npc}{pos}{x}, $args->{npc}{pos}{y}), "route";
-						ai_route($args->{npc}{map}, $args->{npc}{pos}{x}, $args->{npc}{pos}{y},
-							attackOnRoute => 1,
-							distFromGoal => $config{'storageAuto_distance'});
-					}
-				}
-			}
-			if (!$do_route) {
-				# Talk to NPC if we haven't done so
-				if (!defined($args->{sentStore})) {
-					if ($config{storageAuto_useChatCommand}) {
-						sendMessage($net, "c", $config{storageAuto_useChatCommand});
-					} else {
-						if ($config{'storageAuto_npc_type'} eq "" || $config{'storageAuto_npc_type'} eq "1") {
-	 						warning T("Warning storageAuto has changed. Please read News.txt\n") if ($config{'storageAuto_npc_type'} eq "");
-							$config{'storageAuto_npc_steps'} = "c r1 n";
-							debug "Using standard iRO npc storage steps.\n", "npc";
-						} elsif ($config{'storageAuto_npc_type'} eq "2") {
-							$config{'storageAuto_npc_steps'} = "c c r1 n";
-							debug "Using iRO comodo (location) npc storage steps.\n", "npc";
-						} elsif ($config{'storageAuto_npc_type'} eq "3") {
-	 						message T("Using storage steps defined in config.\n"), "info";
-						} elsif ($config{'storageAuto_npc_type'} ne "" && $config{'storageAuto_npc_type'} ne "1" && $config{'storageAuto_npc_type'} ne "2" && $config{'storageAuto_npc_type'} ne "3") {
-	 						error T("Something is wrong with storageAuto_npc_type in your config.\n");
-						}
-
-						ai_talkNPC($args->{npc}{pos}{x}, $args->{npc}{pos}{y}, $config{'storageAuto_npc_steps'});
-					}
-
-					delete $ai_v{temp}{storage_opened};
-					$args->{sentStore} = 1;
-
-					# NPC talk retry
-					$AI::Timeouts::storageOpening = time;
-					$timeout{'ai_storageAuto'}{'time'} = time;
-					last AUTOSTORAGE;
-				}
-
-				if (!defined $ai_v{temp}{storage_opened}) {
-					# NPC talk retry
-					if (timeOut($AI::Timeouts::storageOpening, 40)) {
-						undef $args->{sentStore};
-						debug "Retry talking to autostorage NPC.\n", "npc";
-					}
-
-					# Storage not yet opened; stop and wait until it's open
-					last AUTOSTORAGE;
-				}
-
-				if (!$args->{getStart}) {
-					$args->{done} = 1;
-
-					# inventory to storage
-					$args->{nextItem} = 0 unless $args->{nextItem};
-					for (my $i = $args->{nextItem}; $i < @{$char->{inventory}}; $i++) {
-						my $item = $char->{inventory}[$i];
-						next unless ($item && %{$item});
-						next if $item->{equipped};
-						next if ($item->{broken} && $item->{type} == 7); # dont store pet egg in use
-
-						my $control = items_control($item->{name});
-
-						debug "AUTOSTORAGE: $item->{name} x $item->{amount} - store = $control->{storage}, keep = $control->{keep}\n", "storage";
-						if ($control->{storage} && $item->{amount} > $control->{keep}) {
-							if ($args->{lastIndex} == $item->{index} &&
-								timeOut($timeout{'ai_storageAuto_giveup'})) {
-								last AUTOSTORAGE;
-							} elsif ($args->{lastIndex} != $item->{index}) {
-								$timeout{ai_storageAuto_giveup}{time} = time;
-							}
-							undef $args->{done};
-							$args->{lastIndex} = $item->{index};
-							sendStorageAdd($item->{index}, $item->{amount} - $control->{keep});
-							$timeout{ai_storageAuto}{time} = time;
-							$args->{nextItem} = $i + 1;
-							last AUTOSTORAGE;
-						}
-					}
-
-					# cart to storage
-					# we don't really need to check if we have a cart
-					# if we don't have one it will not find any items to loop through
-					$args->{cartNextItem} = 0 unless $args->{cartNextItem};
-					for (my $i = $args->{cartNextItem}; $i < @{$cart{inventory}}; $i++) {
-						my $item = $cart{inventory}[$i];
-						next unless ($item && %{$item});
-
-						my $control = items_control($item->{name});
-
-						debug "AUTOSTORAGE (cart): $item->{name} x $item->{amount} - store = $control->{storage}, keep = $control->{keep}\n", "storage";
-						# store from cart as well as inventory if the flag is equal to 2
-						if ($control->{storage} == 2 && $item->{amount} > $control->{keep}) {
-							if ($args->{cartLastIndex} == $item->{index} &&
-								timeOut($timeout{'ai_storageAuto_giveup'})) {
-								last AUTOSTORAGE;
-							} elsif ($args->{cartLastIndex} != $item->{index}) {
-								$timeout{ai_storageAuto_giveup}{time} = time;
-							}
-							undef $args->{done};
-							$args->{cartLastIndex} = $item->{index};
-							sendStorageAddFromCart($item->{index}, $item->{amount} - $control->{keep});
-							$timeout{ai_storageAuto}{time} = time;
-							$args->{cartNextItem} = $i + 1;
-							last AUTOSTORAGE;
-						}
-					}
-
-					if ($args->{done}) {
-						# plugins can hook here and decide to keep storage open longer
-						my %hookArgs;
-						Plugins::callHook("AI_storage_done", \%hookArgs);
-						undef $args->{done} if ($hookArgs{return});
-					}
-				}
-
-
-				# getAuto begin
-
-				if (!$args->{getStart} && $args->{done} == 1) {
-					$args->{getStart} = 1;
-					undef $args->{done};
-					$args->{index} = 0;
-					$args->{retry} = 0;
-					last AUTOSTORAGE;
-				}
-
-				if (defined($args->{getStart}) && $args->{done} != 1) {
-					while (exists $config{"getAuto_$args->{index}"}) {
-						if (!$config{"getAuto_$args->{index}"}) {
-							$args->{index}++;
-							next;
-						}
-
-						my %item;
-						$item{name} = $config{"getAuto_$args->{index}"};
-						$item{inventory}{index} = findIndexString_lc(\@{$chars[$config{char}]{inventory}}, "name", $item{name});
-						$item{inventory}{amount} = ($item{inventory}{index} ne "") ? $chars[$config{char}]{inventory}[$item{inventory}{index}]{amount} : 0;
-						$item{storage}{index} = findKeyString(\%storage, "name", $item{name});
-						$item{storage}{amount} = ($item{storage}{index} ne "")? $storage{$item{storage}{index}}{amount} : 0;
-						$item{max_amount} = $config{"getAuto_$args->{index}"."_maxAmount"};
-						$item{amount_needed} = $item{max_amount} - $item{inventory}{amount};
-
-						# Calculate the amount to get
-						if ($item{amount_needed} > 0) {
-							$item{amount_get} = ($item{storage}{amount} >= $item{amount_needed})? $item{amount_needed} : $item{storage}{amount};
-						}
-
-						# Try at most 3 times to get the item
-						if (($item{amount_get} > 0) && ($args->{retry} < 3)) {
-	 						message TF("Attempt to get %s x %s from storage, retry: %s\n", $item{amount_get}, $item{name}, $ai_seq_args[0]{retry}), "storage", 1;
-							sendStorageGet($item{storage}{index}, $item{amount_get});
-							$timeout{ai_storageAuto}{time} = time;
-							$args->{retry}++;
-							last AUTOSTORAGE;
-
-							# we don't inc the index when amount_get is more then 0, this will enable a way of retrying
-							# on next loop if it fails this time
-						}
-
-						if ($item{storage}{amount} < $item{amount_needed}) {
-	 						warning TF("storage: %s out of stock\n", $item{name});
-						}
-
-						if (!$config{relogAfterStorage} && $args->{retry} >= 3 && !$args->{warned}) {
-							# We tried 3 times to get the item and failed.
-							# There is a weird server bug which causes this to happen,
-							# but I can't reproduce it. This can be worked around by
-							# relogging in after autostorage.
-	 						warning T("Kore tried to get an item from storage 3 times, but failed.\n" .
-	 							"This problem could be caused by a server bug.\n" .
-	 							"To work around this problem, set 'relogAfterStorage' to 1, and relogin.\n");
-							$args->{warned} = 1;
-						}
-
-						# We got the item, or we tried 3 times to get it, but failed.
-						# Increment index and process the next item.
-						$args->{index}++;
-						$args->{retry} = 0;
-					}
-				}
-
-				sendStorageClose() unless $config{storageAuto_keepOpen};
-				if (percent_weight($char) >= $config{'itemsMaxWeight_sellOrStore'} && ai_storageAutoCheck()) {
-	 				error T("Character is still overweight after storageAuto (storage is full?)\n");
-					if ($config{dcOnStorageFull}) {
-	 					error T("Disconnecting on storage full!\n");
-						chatLog("k", T("Disconnecting on storage full!\n"));
-						quit();
-					}
-				}
-				if ($config{'relogAfterStorage'}) {
-					writeStorageLog(0);
-					relog();
-				}
-				$args->{done} = 1;
-			}
-		}
-	} #END OF BLOCK AUTOSTORAGE
+	processAutoStorage();
 
 
 
@@ -2682,6 +2112,131 @@ sub iterate {
 }
 
 
+##### TALK WITH NPC ######
+sub processNPCTalk {
+	return if (AI::action ne "NPC");
+	my $args = AI::args;
+	$args->{time} = time unless $args->{time};
+
+	if ($args->{stage} eq '') {
+		unless (timeOut($char->{time_move}, $char->{time_move_calc} + 0.2)) {
+			# Wait for us to stop moving before talking
+		} elsif (timeOut($args->{time}, $timeout{ai_npcTalk}{timeout})) {
+			error T("Could not find the NPC at the designated location.\n"), "ai_npcTalk";
+			AI::dequeue;
+
+		} else {
+			# An x,y position has been passed
+			foreach my $npc (@npcsID) {
+				next if !$npc || $npcs{$npc}{'name'} eq '' || $npcs{$npc}{'name'} =~ /Unknown/i;
+				if ( $npcs{$npc}{'pos'}{'x'} eq $args->{pos}{'x'} &&
+					     $npcs{$npc}{'pos'}{'y'} eq $args->{pos}{'y'} ) {
+					debug "Target NPC $npcs{$npc}{'name'} at ($args->{pos}{x},$args->{pos}{y}) found.\n", "ai_npcTalk";
+					$args->{'nameID'} = $npcs{$npc}{'nameID'};
+					$args->{'ID'} = $npc;
+					$args->{'name'} = $npcs{$npc}{'name'};
+					$args->{'stage'} = 'Talking to NPC';
+					$args->{steps} = [];
+					@{$args->{steps}} = parseArgs("x $args->{sequence}");
+					undef $args->{time};
+					undef $ai_v{npc_talk}{time};
+					undef $ai_v{npc_talk}{talk};
+					lookAtPosition($args->{pos});
+					return;
+				}
+			}
+			foreach my $ID (@monstersID) {
+				next if !$ID;
+				if ( $monsters{$ID}{'pos'}{'x'} eq $args->{pos}{'x'} &&
+					     $monsters{$ID}{'pos'}{'y'} eq $args->{pos}{'y'} ) {
+					debug "Target Monster-NPC $monsters{$ID}{name} at ($args->{pos}{x},$args->{pos}{y}) found.\n", "ai_npcTalk";
+					$args->{'nameID'} = $monsters{$ID}{'nameID'};
+					$args->{'ID'} = $ID;
+					$args->{monster} = 1;
+					$args->{'name'} = $monsters{$ID}{'name'};
+					$args->{'stage'} = 'Talking to NPC';
+					$args->{steps} = [];
+					@{$args->{steps}} = parseArgs("x $args->{sequence}");
+					undef $args->{time};
+					undef $ai_v{npc_talk}{time};
+					undef $ai_v{npc_talk}{talk};
+					lookAtPosition($args->{pos});
+					return;
+				}
+			}
+		}
+
+
+	} elsif ($args->{mapChanged} || ($ai_v{npc_talk}{talk} eq 'close' && $args->{steps}[0] !~ /x/i)) {
+		message TF("Done talking with %s.\n",$args->{name}), "ai_npcTalk";
+
+		# Cancel conversation only if NPC is still around; otherwise
+		# we could get disconnected.
+		sendTalkCancel($net, $args->{ID}) if $npcs{$args->{ID}};;
+		AI::dequeue;
+
+	} elsif (timeOut($args->{time}, $timeout{'ai_npcTalk'}{'timeout'})) {
+		# If NPC does not respond before timing out, then by default, it's
+		# a failure
+		error T("NPC did not respond.\n"), "ai_npcTalk";
+		sendTalkCancel($net, $args->{ID});
+		AI::dequeue;
+
+	} elsif (timeOut($ai_v{'npc_talk'}{'time'}, 0.25)) {
+		if ($ai_v{npc_talk}{talk} eq 'close' && $args->{steps}[0] =~ /x/i) {
+			undef $ai_v{npc_talk}{talk};
+		}
+		$args->{time} = time;
+		# this time will be reset once the NPC responds
+		$ai_v{'npc_talk'}{'time'} = time + $timeout{'ai_npcTalk'}{'timeout'} + 5;
+
+		if ($config{autoTalkCont}) {
+			while ($args->{steps}[0] =~ /c/i) {
+				shift @{$args->{steps}};
+			}
+		}
+
+		if ($args->{steps}[0] =~ /w(\d+)/i) {
+			my $time = $1;
+			$ai_v{'npc_talk'}{'time'} = time + $time;
+			$args->{time} = time + $time;
+		} elsif ( $args->{steps}[0] =~ /^t=(.*)/i ) {
+			sendTalkText($net, $args->{ID}, $1);
+		} elsif ( $args->{steps}[0] =~ /^a=(.*)/i ) {
+			$ai_v{'npc_talk'}{'time'} = time + 1;
+			$args->{time} = time + 1;
+			Commands::run("$1");
+		} elsif ($args->{steps}[0] =~ /d(\d+)/i) {
+			sendTalkNumber($net, $args->{ID}, $1);
+		} elsif ( $args->{steps}[0] =~ /x/i ) {
+			if (!$args->{monster}) {
+				sendTalk($net, $args->{ID});
+			} else {
+				sendAttack($net, $args->{ID}, 0);
+			}
+		} elsif ( $args->{steps}[0] =~ /c/i ) {
+			sendTalkContinue($net, $args->{ID});
+		} elsif ( $args->{steps}[0] =~ /r(\d+)/i ) {
+			sendTalkResponse($net, $args->{ID}, $1+1);
+		} elsif ( $args->{steps}[0] =~ /n/i ) {
+			sendTalkCancel($net, $args->{ID});
+			$ai_v{'npc_talk'}{'time'} = time;
+			$args->{time}	= time;
+		} elsif ( $args->{steps}[0] =~ /^b(\d+),(\d+)/i ) {
+			my $itemID = $storeList[$1]{nameID};
+			$ai_v{npc_talk}{itemID} = $itemID;
+			sendBuy($net, $itemID, $2);
+		} elsif ( $args->{steps}[0] =~ /b/i ) {
+			sendGetStoreList($net, $args->{ID});
+		} elsif ( $args->{steps}[0] =~ /s/i ) {
+			sendGetSellList($net, $args->{ID});
+		} elsif ( $args->{steps}[0] =~ /e/i ) {
+			$ai_v{npc_talk}{talk} = 'close';
+		}
+		shift @{$args->{steps}};
+	}
+}
+
 ##### PORTALRECORD #####
 # Automatically record new unknown portals
 sub processPortalRecording {
@@ -2806,6 +2361,38 @@ sub processPortalRecording {
 		updatePortalLUT("$Settings::tables_folder/portals.txt",
 				$sourceMap, $sourcePos{x}, $sourcePos{y},
 				$field{name}, $char->{pos}{x}, $char->{pos}{y});
+	}
+}
+
+##### SITTING #####
+sub processSit {
+	if (AI::action eq "sitting") {
+		if ($char->{sitting} || $char->{skills}{NV_BASIC}{lv} < 3) {
+			# Stop if we're already sitting
+			AI::dequeue;
+			$timeout{ai_sit}{time} = $timeout{ai_sit_wait}{time} = 0;
+
+		} elsif (!$char->{sitting} && timeOut($timeout{ai_sit}) && timeOut($timeout{ai_sit_wait})) {
+			# Send the 'sit' packet every x seconds until we're sitting
+			sendSit($net);
+			$timeout{ai_sit}{time} = time;
+
+			look($config{sitAuto_look}) if (defined $config{sitAuto_look});
+		}
+	}
+}
+
+##### STANDING #####
+sub processStand {
+	# Same logic as the 'sitting' AI
+	if (AI::action eq "standing") {
+		if (!$char->{sitting}) {
+			AI::dequeue;
+
+		} elsif (timeOut($timeout{ai_sit}) && timeOut($timeout{ai_stand_wait})) {
+			sendStand($net);
+			$timeout{ai_sit}{time} = time;
+		}
 	}
 }
 
@@ -3349,6 +2936,112 @@ sub processAttack {
 	Benchmark::end("ai_attack") if DEBUG;
 }
 
+##### SKILL USE #####
+sub processSkillUse {
+	#FIXME: need to move closer before using skill on player,
+	#there might be line of sight problem too
+	#or the player disappers from the area
+
+	if (AI::action eq "skill_use" && AI::args->{suspended}) {
+		AI::args->{giveup}{time} += time - AI::args->{suspended};
+		AI::args->{minCastTime}{time} += time - AI::args->{suspended};
+		AI::args->{maxCastTime}{time} += time - AI::args->{suspended};
+		delete AI::args->{suspended};
+	}
+
+	SKILL_USE: {
+		last SKILL_USE if (AI::action ne "skill_use");
+		my $args = AI::args;
+
+		if ($args->{monsterID} && $skillsArea{$args->{skillHandle}} == 2) {
+			delete $args->{monsterID};
+		}
+
+		if (exists $args->{ai_equipAuto_skilluse_giveup} && binFind(\@skillsID, $args->{skillHandle}) eq "" && timeOut($args->{ai_equipAuto_skilluse_giveup})) {
+			warning T("Timeout equiping for skill\n");
+			AI::dequeue;
+			${$args->{ret}} = 'equip timeout' if ($args->{ret});
+		} elsif (Item::scanConfigAndCheck("$args->{prefix}_equip")) {
+			#check if item needs to be equipped
+			Item::scanConfigAndEquip("$args->{prefix}_equip");
+		} elsif (timeOut($args->{waitBeforeUse})) {
+			if (defined $args->{monsterID} && !defined $monsters{$args->{monsterID}}) {
+				# This skill is supposed to be used for attacking a monster, but that monster has died
+				AI::dequeue;
+				${$args->{ret}} = 'target gone' if ($args->{ret});
+
+			} elsif ($char->{sitting}) {
+				AI::suspend;
+				stand();
+
+			# Use skill if we haven't done so yet
+			} elsif (!$args->{skill_used}) {
+				my $handle = $args->{skillHandle};
+				if (!defined $args->{skillID}) {
+					my $skill = new Skills(handle => $handle);
+					$args->{skillID} = $skill->id;
+				}
+				my $skillID = $args->{skillID};
+
+				if ($handle eq 'AL_TELEPORT') {
+					${$args->{ret}} = 'ok' if ($args->{ret});
+					AI::dequeue;
+					useTeleport($args->{lv});
+					last SKILL_USE;
+				}
+
+				$args->{skill_used} = 1;
+				$args->{giveup}{time} = time;
+
+				# Stop attacking, otherwise skill use might fail
+				my $attackIndex = AI::findAction("attack");
+				if (defined($attackIndex) && AI::args($attackIndex)->{attackMethod}{type} eq "weapon") {
+					# 2005-01-24 pmak: Commenting this out since it may
+					# be causing bot to attack slowly when a buff runs
+					# out.
+					#stopAttack();
+				}
+
+				# Give an error if we don't actually possess this skill
+				my $skill = new Skills(handle => $handle);
+				if ($char->{skills}{$handle}{lv} <= 0 && (!$char->{permitSkill} || $char->{permitSkill}->handle ne $handle)) {
+					debug "Attempted to use skill (".$skill->name.") which you do not have.\n";
+				}
+
+				$args->{maxCastTime}{time} = time;
+				if ($skillsArea{$handle} == 2) {
+					sendSkillUse($net, $skillID, $args->{lv}, $accountID);
+				} elsif ($args->{x} ne "") {
+					sendSkillUseLoc($net, $skillID, $args->{lv}, $args->{x}, $args->{y});
+				} else {
+					sendSkillUse($net, $skillID, $args->{lv}, $args->{target});
+				}
+				undef $char->{permitSkill};
+				$args->{skill_use_last} = $char->{skills}{$handle}{time_used};
+
+				delete $char->{cast_cancelled};
+
+			} elsif (timeOut($args->{minCastTime})) {
+				if ($args->{skill_use_last} != $char->{skills}{$args->{skillHandle}}{time_used}) {
+					AI::dequeue;
+					${$args->{ret}} = 'ok' if ($args->{ret});
+
+				} elsif ($char->{cast_cancelled} > $char->{time_cast}) {
+					AI::dequeue;
+					${$args->{ret}} = 'cancelled' if ($args->{ret});
+
+				} elsif (timeOut($char->{time_cast}, $char->{time_cast_wait} + 0.5)
+				  && ( (timeOut($args->{giveup}) && (!$char->{time_cast} || !$args->{maxCastTime}{timeout}) )
+				      || ( $args->{maxCastTime}{timeout} && timeOut($args->{maxCastTime})) )
+				) {
+					AI::dequeue;
+					${$args->{ret}} = 'timeout' if ($args->{ret});
+				}
+			}
+		}
+	}
+}
+
 ####### ROUTE #######
 sub processRouteAI {
 	if (AI::action eq "route" && AI::args->{suspended}) {
@@ -3776,6 +3469,324 @@ sub processMapRouteAI {
 					}
 				}
 			}
+		}
+	}
+}
+
+##### AUTO STORAGE #####
+sub processAutoStorage {
+	# storageAuto - chobit aska 20030128
+	if (AI::is("", "route", "sitAuto", "follow")
+		  && $config{storageAuto} && ($config{storageAuto_npc} ne "" || $config{storageAuto_useChatCommand})
+		  && !$ai_v{sitAuto_forcedBySitCommand}
+		  && (($config{'itemsMaxWeight_sellOrStore'} && percent_weight($char) >= $config{'itemsMaxWeight_sellOrStore'})
+		      || (!$config{'itemsMaxWeight_sellOrStore'} && percent_weight($char) >= $config{'itemsMaxWeight'}))
+		  && !AI::inQueue("storageAuto") && time > $ai_v{'inventory_time'}) {
+
+		# Initiate autostorage when the weight limit has been reached
+		my $routeIndex = AI::findAction("route");
+		my $attackOnRoute = 2;
+		$attackOnRoute = AI::args($routeIndex)->{attackOnRoute} if (defined $routeIndex);
+		# Only autostorage when we're on an attack route, or not moving
+		if ($attackOnRoute > 1 && ai_storageAutoCheck()) {
+			message T("Auto-storaging due to excess weight\n");
+			AI::queue("storageAuto");
+		}
+
+	} elsif (AI::is("", "route", "attack")
+		  && $config{storageAuto}
+		  && ($config{storageAuto_npc} ne "" || $config{storageAuto_useChatCommand})
+		  && !$ai_v{sitAuto_forcedBySitCommand}
+		  && !AI::inQueue("storageAuto")
+		  && @{$char->{inventory}} > 0) {
+
+		# Initiate autostorage when we're low on some item, and getAuto is set
+		my $found;
+		my $i;
+		for ($i = 0; exists $config{"getAuto_$i"}; $i++) {
+			my $invIndex = findIndexString_lc($char->{inventory}, "name", $config{"getAuto_$i"});
+			if ($config{"getAuto_${i}_minAmount"} ne "" &&
+			    $config{"getAuto_${i}_maxAmount"} ne "" &&
+			    !$config{"getAuto_${i}_passive"} &&
+			    (!defined($invIndex) ||
+				 ($char->{inventory}[$invIndex]{amount} <= $config{"getAuto_${i}_minAmount"} &&
+				  $char->{inventory}[$invIndex]{amount} < $config{"getAuto_${i}_maxAmount"})
+			    )
+			) {
+				if ($storage{opened} && findKeyString(\%storage, "name", $config{"getAuto_$i"}) eq '') {
+					if ($config{"getAuto_${i}_dcOnEmpty"}) {
+ 						message TF("Disconnecting on empty %s!\n", $config{"getAuto_$i"});
+						chatLog("k", TF("Disconnecting on empty %s!\n", $config{"getAuto_$i"}));
+						quit();
+					}
+				} else {
+					$found = 1;
+				}
+				last;
+			}
+		}
+
+		my $routeIndex = AI::findAction("route");
+		my $attackOnRoute;
+		$attackOnRoute = AI::args($routeIndex)->{attackOnRoute} if (defined $routeIndex);
+
+		# Only autostorage when we're on an attack route, or not moving
+		if ((!defined($routeIndex) || $attackOnRoute > 1) && $found &&
+			@{$char->{inventory}} > 0) {
+	 		message TF("Auto-storaging due to insufficient %s\n", $config{"getAuto_$i"});
+			AI::queue("storageAuto");
+		}
+		$timeout{'ai_storageAuto'}{'time'} = time;
+	}
+
+
+	if (AI::action eq "storageAuto" && AI::args->{done}) {
+		# Autostorage finished; trigger sellAuto unless autostorage was already triggered by it
+		my $forcedBySell = AI::args->{forcedBySell};
+		my $forcedByBuy = AI::args->{forcedByBuy};
+		AI::dequeue;
+		if ($forcedByBuy) {
+			AI::queue("sellAuto", {forcedByBuy => 1});
+		} elsif (!$forcedBySell && ai_sellAutoCheck() && $config{sellAuto}) {
+			AI::queue("sellAuto", {forcedByStorage => 1});
+		}
+
+	} elsif (AI::action eq "storageAuto" && timeOut($timeout{'ai_storageAuto'})) {
+		# Main autostorage block
+		my $args = AI::args;
+
+		my $do_route;
+
+		if (!$config{storageAuto_useChatCommand}) {
+			# Stop if the specified NPC is invalid
+			$args->{npc} = {};
+			getNPCInfo($config{'storageAuto_npc'}, $args->{npc});
+			if (!defined($args->{npc}{ok})) {
+				$args->{done} = 1;
+				return;
+			}
+
+			# Determine whether we have to move to the NPC
+			if ($field{'name'} ne $args->{npc}{map}) {
+				$do_route = 1;
+			} else {
+				my $distance = distance($args->{npc}{pos}, $char->{pos_to});
+				if ($distance > $config{'storageAuto_distance'}) {
+					$do_route = 1;
+				}
+			}
+
+			if ($do_route) {
+				if ($args->{warpedToSave} && !$args->{mapChanged} && !timeOut($args->{warpStart}, 8)) {
+					undef $args->{warpedToSave};
+				}
+
+				# If warpToBuyOrSell is set, warp to saveMap if we haven't done so
+				if ($config{'saveMap'} ne "" && $config{'saveMap_warpToBuyOrSell'} && !$args->{warpedToSave}
+				    && !$cities_lut{$field{'name'}.'.rsw'} && $config{'saveMap'} ne $field{name}) {
+					$args->{warpedToSave} = 1;
+					# If we still haven't warped after a certain amount of time, fallback to walking
+					$args->{warpStart} = time unless $args->{warpStart};
+					message T("Teleporting to auto-storage\n"), "teleport";
+					useTeleport(2);
+					$timeout{'ai_storageAuto'}{'time'} = time;
+				} else {
+					# warpToBuyOrSell is not set, or we've already warped, or timed out. Walk to the NPC
+					message TF("Calculating auto-storage route to: %s(%s): %s, %s\n", $maps_lut{$args->{npc}{map}.'.rsw'}, $args->{npc}{map}, $args->{npc}{pos}{x}, $args->{npc}{pos}{y}), "route";
+					ai_route($args->{npc}{map}, $args->{npc}{pos}{x}, $args->{npc}{pos}{y},
+						 attackOnRoute => 1,
+						 distFromGoal => $config{'storageAuto_distance'});
+				}
+			}
+		}
+		if (!$do_route) {
+			# Talk to NPC if we haven't done so
+			if (!defined($args->{sentStore})) {
+				if ($config{storageAuto_useChatCommand}) {
+					sendMessage($net, "c", $config{storageAuto_useChatCommand});
+				} else {
+					if ($config{'storageAuto_npc_type'} eq "" || $config{'storageAuto_npc_type'} eq "1") {
+						warning T("Warning storageAuto has changed. Please read News.txt\n") if ($config{'storageAuto_npc_type'} eq "");
+						$config{'storageAuto_npc_steps'} = "c r1 n";
+						debug "Using standard iRO npc storage steps.\n", "npc";
+					} elsif ($config{'storageAuto_npc_type'} eq "2") {
+						$config{'storageAuto_npc_steps'} = "c c r1 n";
+						debug "Using iRO comodo (location) npc storage steps.\n", "npc";
+					} elsif ($config{'storageAuto_npc_type'} eq "3") {
+						message T("Using storage steps defined in config.\n"), "info";
+					} elsif ($config{'storageAuto_npc_type'} ne "" && $config{'storageAuto_npc_type'} ne "1" && $config{'storageAuto_npc_type'} ne "2" && $config{'storageAuto_npc_type'} ne "3") {
+						error T("Something is wrong with storageAuto_npc_type in your config.\n");
+					}
+
+					ai_talkNPC($args->{npc}{pos}{x}, $args->{npc}{pos}{y}, $config{'storageAuto_npc_steps'});
+				}
+
+				delete $ai_v{temp}{storage_opened};
+				$args->{sentStore} = 1;
+
+				# NPC talk retry
+				$AI::Timeouts::storageOpening = time;
+				$timeout{'ai_storageAuto'}{'time'} = time;
+				return;
+			}
+
+			if (!defined $ai_v{temp}{storage_opened}) {
+				# NPC talk retry
+				if (timeOut($AI::Timeouts::storageOpening, 40)) {
+					undef $args->{sentStore};
+					debug "Retry talking to autostorage NPC.\n", "npc";
+				}
+
+				# Storage not yet opened; stop and wait until it's open
+				return;
+			}
+
+			if (!$args->{getStart}) {
+				$args->{done} = 1;
+
+				# inventory to storage
+				$args->{nextItem} = 0 unless $args->{nextItem};
+				for (my $i = $args->{nextItem}; $i < @{$char->{inventory}}; $i++) {
+					my $item = $char->{inventory}[$i];
+					next unless ($item && %{$item});
+					next if $item->{equipped};
+					next if ($item->{broken} && $item->{type} == 7); # dont store pet egg in use
+
+					my $control = items_control($item->{name});
+
+					debug "AUTOSTORAGE: $item->{name} x $item->{amount} - store = $control->{storage}, keep = $control->{keep}\n", "storage";
+					if ($control->{storage} && $item->{amount} > $control->{keep}) {
+						if ($args->{lastIndex} == $item->{index} &&
+						    timeOut($timeout{'ai_storageAuto_giveup'})) {
+							return;
+						} elsif ($args->{lastIndex} != $item->{index}) {
+							$timeout{ai_storageAuto_giveup}{time} = time;
+						}
+						undef $args->{done};
+						$args->{lastIndex} = $item->{index};
+						sendStorageAdd($item->{index}, $item->{amount} - $control->{keep});
+						$timeout{ai_storageAuto}{time} = time;
+						$args->{nextItem} = $i + 1;
+						return;
+					}
+				}
+
+				# cart to storage
+				# we don't really need to check if we have a cart
+				# if we don't have one it will not find any items to loop through
+				$args->{cartNextItem} = 0 unless $args->{cartNextItem};
+				for (my $i = $args->{cartNextItem}; $i < @{$cart{inventory}}; $i++) {
+					my $item = $cart{inventory}[$i];
+					next unless ($item && %{$item});
+
+					my $control = items_control($item->{name});
+
+					debug "AUTOSTORAGE (cart): $item->{name} x $item->{amount} - store = $control->{storage}, keep = $control->{keep}\n", "storage";
+					# store from cart as well as inventory if the flag is equal to 2
+					if ($control->{storage} == 2 && $item->{amount} > $control->{keep}) {
+						if ($args->{cartLastIndex} == $item->{index} &&
+						    timeOut($timeout{'ai_storageAuto_giveup'})) {
+							return;
+						} elsif ($args->{cartLastIndex} != $item->{index}) {
+							$timeout{ai_storageAuto_giveup}{time} = time;
+						}
+						undef $args->{done};
+						$args->{cartLastIndex} = $item->{index};
+						sendStorageAddFromCart($item->{index}, $item->{amount} - $control->{keep});
+						$timeout{ai_storageAuto}{time} = time;
+						$args->{cartNextItem} = $i + 1;
+						return;
+					}
+				}
+
+				if ($args->{done}) {
+					# plugins can hook here and decide to keep storage open longer
+					my %hookArgs;
+					Plugins::callHook("AI_storage_done", \%hookArgs);
+					undef $args->{done} if ($hookArgs{return});
+				}
+			}
+
+
+			# getAuto begin
+
+			if (!$args->{getStart} && $args->{done} == 1) {
+				$args->{getStart} = 1;
+				undef $args->{done};
+				$args->{index} = 0;
+				$args->{retry} = 0;
+				return;
+			}
+
+			if (defined($args->{getStart}) && $args->{done} != 1) {
+				while (exists $config{"getAuto_$args->{index}"}) {
+					if (!$config{"getAuto_$args->{index}"}) {
+						$args->{index}++;
+						next;
+					}
+
+					my %item;
+					$item{name} = $config{"getAuto_$args->{index}"};
+					$item{inventory}{index} = findIndexString_lc(\@{$chars[$config{char}]{inventory}}, "name", $item{name});
+					$item{inventory}{amount} = ($item{inventory}{index} ne "") ? $chars[$config{char}]{inventory}[$item{inventory}{index}]{amount} : 0;
+					$item{storage}{index} = findKeyString(\%storage, "name", $item{name});
+					$item{storage}{amount} = ($item{storage}{index} ne "")? $storage{$item{storage}{index}}{amount} : 0;
+					$item{max_amount} = $config{"getAuto_$args->{index}"."_maxAmount"};
+					$item{amount_needed} = $item{max_amount} - $item{inventory}{amount};
+
+					# Calculate the amount to get
+					if ($item{amount_needed} > 0) {
+						$item{amount_get} = ($item{storage}{amount} >= $item{amount_needed})? $item{amount_needed} : $item{storage}{amount};
+					}
+
+					# Try at most 3 times to get the item
+					if (($item{amount_get} > 0) && ($args->{retry} < 3)) {
+						message TF("Attempt to get %s x %s from storage, retry: %s\n", $item{amount_get}, $item{name}, $ai_seq_args[0]{retry}), "storage", 1;
+						sendStorageGet($item{storage}{index}, $item{amount_get});
+						$timeout{ai_storageAuto}{time} = time;
+						$args->{retry}++;
+						return;
+
+						# we don't inc the index when amount_get is more then 0, this will enable a way of retrying
+						# on next loop if it fails this time
+					}
+
+					if ($item{storage}{amount} < $item{amount_needed}) {
+						warning TF("storage: %s out of stock\n", $item{name});
+					}
+
+					if (!$config{relogAfterStorage} && $args->{retry} >= 3 && !$args->{warned}) {
+						# We tried 3 times to get the item and failed.
+						# There is a weird server bug which causes this to happen,
+						# but I can't reproduce it. This can be worked around by
+						# relogging in after autostorage.
+						warning T("Kore tried to get an item from storage 3 times, but failed.\n" .
+							  "This problem could be caused by a server bug.\n" .
+							  "To work around this problem, set 'relogAfterStorage' to 1, and relogin.\n");
+						$args->{warned} = 1;
+					}
+
+					# We got the item, or we tried 3 times to get it, but failed.
+					# Increment index and process the next item.
+					$args->{index}++;
+					$args->{retry} = 0;
+				}
+			}
+
+			sendStorageClose() unless $config{storageAuto_keepOpen};
+			if (percent_weight($char) >= $config{'itemsMaxWeight_sellOrStore'} && ai_storageAutoCheck()) {
+				error T("Character is still overweight after storageAuto (storage is full?)\n");
+				if ($config{dcOnStorageFull}) {
+					error T("Disconnecting on storage full!\n");
+					chatLog("k", T("Disconnecting on storage full!\n"));
+					quit();
+				}
+			}
+			if ($config{'relogAfterStorage'}) {
+				writeStorageLog(0);
+				relog();
+			}
+			$args->{done} = 1;
 		}
 	}
 }
