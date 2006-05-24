@@ -282,7 +282,7 @@ sub ai_getAggressives {
 	my $num = 0;
 	my @agMonsters;
 
-	foreach my $monster (@{$monstersList->items()}) {
+	foreach my $monster (@{$monstersList->getItems()}) {
 		my $control = Misc::mon_control($monster->name) if $type || !$wantArray;
 		my $ID = $monster->{ID};
 
