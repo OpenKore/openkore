@@ -1,3 +1,4 @@
+# -*-python-*-
 import os
 
 ### Platform configuration ###
