@@ -951,12 +951,14 @@ sub iterate {
 	if (AI::action eq "cartAdd" && timeOut(AI::args)) {
 		my $item = AI::args->{items}[0];
 		my $i = $item->{index};
-		my $amount = $item->{amount};
 
-		if (!$amount || $amount > $char->{inventory}[$i]{amount}) {
-			$amount = $char->{inventory}[$i]{amount};
+		if ($char->{inventory}[$i]) {
+			my $amount = $item->{amount};
+			if (!$amount || $amount > $char->{inventory}[$i]{amount}) {
+				$amount = $char->{inventory}[$i]{amount};
+			}
+			sendCartAdd($char->{inventory}[$i]{index}, $amount);
 		}
-		sendCartAdd($char->{inventory}[$i]{index}, $amount);
 		shift @{AI::args->{items}};
 		AI::args->{time} = time;
 		AI::dequeue if (@{AI::args->{items}} <= 0);
@@ -968,12 +970,14 @@ sub iterate {
 	if (AI::action eq "cartGet" && timeOut(AI::args)) {
 		my $item = AI::args->{items}[0];
 		my $i = $item->{index};
-		my $amount = $item->{amount};
 
-		if (!$amount || $amount > $cart{inventory}[$i]{amount}) {
-			$amount = $cart{inventory}[$i]{amount};
+		if ($cart{inventory}[$i]) {
+			my $amount = $item->{amount};
+			if (!$amount || $amount > $cart{inventory}[$i]{amount}) {
+				$amount = $cart{inventory}[$i]{amount};
+			}
+			sendCartGet($i, $amount);
 		}
-		sendCartGet($i, $amount);
 		shift @{AI::args->{items}};
 		AI::args->{time} = time;
 		AI::dequeue if (@{AI::args->{items}} <= 0);
