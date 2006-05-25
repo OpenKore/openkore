@@ -1,5 +1,6 @@
 ActorListTest.pm
 CallbackListTest.pm
 ObjectListTest.pm
-consoleui-test.cpp
 unittests.pl
+consoleui-test.cpp
+http-reader-test.cpp

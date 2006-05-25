@@ -46,6 +46,8 @@ DIRS=(.
 	src/auto/XSTools/unix
 	src/auto/XSTools/win32
 	src/auto/XSTools/translation
+	src/auto/XSTools/utils
+	src/auto/XSTools/utils/win32
 )
 PACKAGEDIR=$PACKAGE-$VERSION
 

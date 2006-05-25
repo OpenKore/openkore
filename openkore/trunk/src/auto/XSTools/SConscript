@@ -1,3 +1,4 @@
+# -*-python-*-
 Import('*')
 import os.path;
 
@@ -46,6 +47,13 @@ if win32:
 	]
 	XS_sources['win32/wrapper.xs'] = 'win32/wrapper.c'
 
+## Utils
+if win32:
+	sources += [
+		'utils/http-reader.cpp',
+		'utils/std-http-reader.cpp'
+	]
+
 ### Misc
 sources += [
 	'misc/misc.c',
@@ -75,7 +83,7 @@ if not win32:
 		deps += ['termcap']
 		deps_path += ['/usr/lib/termcap']
 else:
-	deps += ['winmm']
+	deps += ['winmm', 'wininet']
 
 if not darwin:
 	perlenv['LINKFLAGS'] += ['-pthread']
