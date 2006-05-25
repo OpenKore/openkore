@@ -284,7 +284,7 @@ sub iterate {
 		}
 	}
 
-	processSitting();
+	processSit();
 	processStand();
 	processAttack();
 	processSkillUse();
