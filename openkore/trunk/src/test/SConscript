@@ -1,12 +1,26 @@
+# -*-python-*-
 Import('*')
 
-if not win32:
-	XSTools_dir = '../auto/XSTools'
-	consoleui_dir = XSTools_dir + '/unix'
+XSTools_dir = '../auto/XSTools'
 
-	e = perlenv.Copy()
-	e.Append(CPPPATH = consoleui_dir)
+if not win32:
+	dir = XSTools_dir + '/unix'
+
+	e = env.Copy()
+	e.Append(CPPPATH = dir)
 	e.Program('consoleui-test', [
 		'consoleui-test.cpp',
-		consoleui_dir + '/consoleui.cpp'
+		dir + '/consoleui.cpp'
+	])
+
+else:
+	dir = XSTools_dir + '/utils'
+
+	e = env.Copy()
+	e.Append(CPPPATH = dir)
+	e.Append(LIBS = ['wininet'])
+	e.Program('http-reader-test', [
+		'http-reader-test.cpp',
+		dir + '/http-reader.cpp',
+		dir + '/std-http-reader.cpp'
 	])
