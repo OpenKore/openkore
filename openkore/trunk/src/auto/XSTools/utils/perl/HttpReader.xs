@@ -6,15 +6,21 @@
 #include "../mirror-http-reader.h"
 
 using namespace std;
+using namespace OpenKore;
 
 
-MODULE = Utils::HttpReader	PACKAGE = Utils::HttpReader
+MODULE = Utils::HttpReader	PACKAGE = HttpReader
+PROTOTYPES: ENABLED
 
 HttpReaderStatus
 HttpReader::getStatus()
 
 char *
 HttpReader::getError()
+CODE:
+	RETVAL = (char *) THIS->getError();
+OUTPUT:
+	RETVAL
 
 int
 HttpReader::pullData(buf, size)
@@ -24,6 +30,11 @@ HttpReader::pullData(buf, size)
 char *
 HttpReader::getData(len)
 	unsigned int &len
+CODE:
+	RETVAL = (char *) THIS->getData(len);
+OUTPUT:
+	len
+	RETVAL
 
 int
 HttpReader::getSize()
@@ -32,11 +43,12 @@ void
 HttpReader::DESTROY()
 
 
-MODULE = Utils::HttpReader	PACKAGE = Utils::MirrorHttpReader
+MODULE = Utils::HttpReader	PACKAGE = MirrorHttpReader
 
 MirrorHttpReader *
-MirrorHttpReader::new(urls)
+MirrorHttpReader::new(urls, timeout = 0)
 	AV *urls
+	unsigned int timeout
 INIT:
 	list<const char *> urls_list;
 	I32 i, len;
@@ -45,12 +57,12 @@ CODE:
 	for (i = 0; i <= len; i++) {
 		SV **item;
 
-		item = av_fetch(av, i, 0);
+		item = av_fetch(urls, i, 0);
 		if (item && *item && SvOK(*item)) {
 			char *url = SvPV_nolen(*item);
 			urls_list.push_back(url);
 		}
 	}
-	RETVAL = new MirrorHttpReader(urls_list);
+	RETVAL = new MirrorHttpReader(urls_list, timeout);
 OUTPUT:
 	RETVAL

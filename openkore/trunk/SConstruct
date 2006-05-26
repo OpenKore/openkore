@@ -199,8 +199,9 @@ libenv['BUILDERS']['NativeDLL'] = NativeDLLBuilder
 
 perlenv = libenv.Copy()
 if win32:
-	perlenv['CCFLAGS'] += Split('-Wno-comments -D__MINGW32__' +
-		' -DWIN32IO_IS_STDIO -D_INTPTR_T_DEFINED -D_UINTPTR_T_DEFINED')
+	perlenv['CCFLAGS'] += Split('-Wno-comments')
+	perlenv['CPPDEFINES'] += Split('__MINGW32__ WIN32IO_IS_STDIO ' +
+		'_INTPTR_T_DEFINED _UINTPTR_T_DEFINED CHECK_FORMAT')
 	perlenv['LIBS'] += ['perl58']
 	perlenv['LIBPATH'] += [perlconfig['coredir']]
 elif not darwin:
@@ -225,7 +226,12 @@ def buildXS(target, source, env):
 	my $out = shift;
 	my $file = shift;
 
-	open(STDOUT, ">", $out);
+	close STDOUT;
+	if (!open(STDOUT, ">", $out)) {
+		print STDERR "Cannot open $out for writing: $!\n";
+		exit 1;
+	}
+	select STDOUT;
 	do $file;
 	'''
 

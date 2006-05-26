@@ -53,8 +53,10 @@ if win32:
 		'utils/http-reader.cpp',
 		'utils/std-http-reader.cpp',
 		'utils/mirror-http-reader.cpp',
-		'utils/c-bindings/http-reader.cpp'
+		'utils/c-bindings/http-reader.cpp',
+		'utils/perl/HttpReader.cpp'
 	]
+	XS_sources['utils/perl/HttpReader.xs'] = 'utils/perl/HttpReader.cpp'
 
 ### Misc
 sources += [

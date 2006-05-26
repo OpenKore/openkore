@@ -12,11 +12,21 @@
 #  $Id: WinUtils.pm 4169 2006-04-07 19:39:53Z hongli $
 #
 #########################################################################
-package Utils::HttpReader;
+package HttpReader;
 
 use strict;
 use XSTools;
 
+use constant CONNECTING => 0;
+use constant DOWNLOADING => 1;
+use constant DONE => 2;
+use constant ERROR => 3;
+
 XSTools::bootModule('Utils::HttpReader');
+
+
+package MirrorHttpReader;
+
+use base qw(HttpReader);
 
 1;
