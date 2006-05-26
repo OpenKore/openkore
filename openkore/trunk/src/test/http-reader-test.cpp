@@ -20,6 +20,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <assert.h>
+#include <time.h>
 #include <list>
 
 #ifdef WIN32
@@ -44,13 +45,29 @@ typedef HttpReader * (*HttpReaderCreator) (const char *url);
 #define SMALL_TEST_SIZE 13
 #define SMALL_TEST_CHECKSUM 2773980202U
 
-#define LARGE_TEST_URL "http://www.openkore.com/misc/testHttpReaderLarge.txt"
+#define LARGE_TEST_URL "http://www.openkore.com:80/misc/testHttpReaderLarge.txt"
 #define LARGE_TEST_SIZE 74048
 #define LARGE_TEST_CHECKSUM 1690026430U
+
+#define SLOW_TEST_URL "http://kambing.vlsm.org/gnu/gcc/gcc-4.1.0/gcc-core-4.1.0.tar.bz2"
 
 #define ERROR_URL "http://www.openkore.com/FileNotFound.txt"
 #define INVALID_URL "http://111.111.111.111:82/"
 #define SECURE_URL "https://sourceforge.net"
+
+
+static HttpReader *
+createStdHttpReader(const char *url) {
+	return StdHttpReader::create(url);
+}
+
+static HttpReader *
+createMirrorHttpReader(const char *url) {
+	list<const char *> urls;
+	urls.push_back(url);
+	return new MirrorHttpReader(urls);
+}
+
 
 /**
  * A class for testing a HttpReader implementation.
@@ -69,7 +86,7 @@ public:
 
 	/** Run the unit tests. */
 	void
-	run() {
+	virtual run() {
 		printf("Testing status transitions (1)...\n");
 		assert( testStatusTransitions(SMALL_TEST_URL) );
 		printf("Testing status transitions (2)...\n");
@@ -93,6 +110,11 @@ public:
 		assert( testPullData(LARGE_TEST_URL, LARGE_TEST_SIZE, LARGE_TEST_CHECKSUM) );
 		printf("Testing pullData (3)...\n");
 		assert( !testPullData(ERROR_URL, 0, 0) );
+
+		printf("Testing cancellation while connecting...\n");
+		testConnectCancellation(INVALID_URL);
+		printf("Testing cancellation while downloading...\n");
+		testDownloadCancellation(SLOW_TEST_URL);
 	}
 
 private:
@@ -210,19 +232,57 @@ private:
 		delete http;
 		return result;
 	}
+
+	// Test whether cancellation while connecting works.
+	void
+	testConnectCancellation(const char *url) {
+		HttpReader *http = createHttpReader(url);
+		time_t time1, time2;
+
+		Sleep(1000);
+		assert(http->getStatus() == HTTP_READER_CONNECTING);
+		time1 = time(NULL);
+		delete http;
+		time2 = time(NULL);
+		// Verify that cancellation doesn't take more than 2 seconds
+		assert(time1 + 2 > time2);
+	}
+
+	// Test whether cancellation while downloading works.
+	// You must pass an URL to a large file so that download
+	// takes a while to complete.
+	bool
+	testDownloadCancellation(const char *url) {
+		HttpReader *http = createHttpReader(url);
+		time_t time1, time2;
+
+		while (http->getStatus() == HTTP_READER_CONNECTING) {
+			Sleep(10);
+		}
+		assert(http->getStatus() == HTTP_READER_DOWNLOADING);
+		Sleep(1000);
+
+		time1 = time(NULL);
+		delete http;
+		time2 = time(NULL);
+		assert(time1 + 2 > time2);
+	}
 };
 
-static HttpReader *
-createStdHttpReader(const char *url) {
-	return StdHttpReader::create(url);
-}
+/**
+ * A class for testing MirrorHttpReader.
+ */
+class MirrorTester: public Tester {
+public:
+	MirrorTester() : Tester(createMirrorHttpReader) {
+	}
 
-static HttpReader *
-createMirrorHttpReader(const char *url) {
-	list<const char *> urls;
-	urls.push_back(url);
-	return new MirrorHttpReader(urls);
-}
+	virtual void
+	run() {
+		Tester::run();
+		
+	}
+};
 
 int
 main() {
@@ -234,7 +294,7 @@ main() {
 	delete tester;
 
 	printf("### MirrorHttpReader\n");
-	tester = new Tester(createMirrorHttpReader);
+	tester = new MirrorTester();
 	tester->run();
 	delete tester;
 
