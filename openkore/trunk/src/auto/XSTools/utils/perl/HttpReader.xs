@@ -8,7 +8,7 @@
 using namespace std;
 
 
-MODULE = HttpReader	PACKAGE = Utils::HttpReader
+MODULE = Utils::HttpReader	PACKAGE = Utils::HttpReader
 
 HttpReaderStatus
 HttpReader::getStatus()
@@ -32,7 +32,7 @@ void
 HttpReader::DESTROY()
 
 
-MODULE = HttpReader	PACKAGE = Utils::MirrorHttpReader
+MODULE = Utils::HttpReader	PACKAGE = Utils::MirrorHttpReader
 
 MirrorHttpReader *
 MirrorHttpReader::new(urls)
