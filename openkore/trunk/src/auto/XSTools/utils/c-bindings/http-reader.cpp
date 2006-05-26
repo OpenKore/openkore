@@ -18,7 +18,11 @@
 
 #include "http-reader.h"
 #include "../http-reader.h"
+#include "../std-http-reader.h"
+#include "../mirror-http-reader.h"
 
+#include <stdio.h>
+#include <stdlib.h>
 #include <list>
 
 using namespace std;
@@ -27,7 +31,7 @@ using namespace OpenKore;
 
 struct _OHttpReader {
 	HttpReader *obj;
-}
+};
 
 O_DECL(OHttpReader *)
 o_mirror_http_reader_new(const char *urls[]) {
@@ -66,6 +70,10 @@ o_http_reader_get_status(OHttpReader *http) {
 		return O_HTTP_READER_DONE;
 	case HTTP_READER_ERROR:
 		return O_HTTP_READER_ERROR;
+	default:
+		fprintf(stdout, "OHttpReader: invalid status %d\n", (int) status);
+		abort(); // Never reached
+		return O_HTTP_READER_ERROR;
 	};
 }
 
@@ -83,7 +91,8 @@ O_DECL(const char *)
 o_http_reader_get_data(OHttpReader *http, unsigned int *len) {
 	unsigned int len2;
 	const char *result;
-	result = http->obj->getData(http, len2);
+
+	result = http->obj->getData(len2);
 	*len = len2;
 	return result;
 }

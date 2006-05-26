@@ -322,8 +322,8 @@ sub createInterface {
 		wxSP_LIVE_UPDATE);
 	$self->{splitter} = $splitter;
 	$vsizer->Add($splitter, 1, wxGROW);
+#	$splitter->SetMinimumPaneSize(50);
 	$self->createSplitterContent;
-	$splitter->SetMinimumPaneSize(50);
 
 
 	### Input field
@@ -351,7 +351,7 @@ sub createInterface {
 	my $timer = new Wx::Timer($self, 73289);
 	EVT_TIMER($self, 73289, sub {
 		$self->{inputBox}->SetFocus;
-		$splitter->SetSashGravity(1);
+#		$splitter->SetSashGravity(1);
 	});
 	$timer->Start(100, 1);
 
@@ -567,7 +567,7 @@ sub createSplitterContent {
 
 	my $position;
 	if (Wx::wxMSW()) {
-		$position = 245;
+		$position = 600;
 	} else {
 		$position = 545;
 	}
