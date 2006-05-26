@@ -20,6 +20,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <assert.h>
+#include <list>
+
 #ifdef WIN32
 	#define WIN32_LEAN_AND_MEAN
 	#include <windows.h>
@@ -27,17 +29,79 @@
 	#include <unistd.h>
 	#define Sleep(miliseconds) usleep(miliseconds * 1000)
 #endif
-#include "std-http-reader.h"
 
+#include "std-http-reader.h"
+#include "mirror-http-reader.h"
+
+using namespace std;
 using namespace OpenKore;
 
 
+typedef HttpReader * (*HttpReaderCreator) (const char *url);
+
+#define SMALL_TEST_URL "http://www.openkore.com/misc/testHttpReader.txt"
+#define SMALL_TEST_CONTENT "Hello world!\n"
+#define SMALL_TEST_SIZE 13
+#define SMALL_TEST_CHECKSUM 2773980202U
+
+#define LARGE_TEST_URL "http://www.openkore.com/misc/testHttpReaderLarge.txt"
+#define LARGE_TEST_SIZE 74048
+#define LARGE_TEST_CHECKSUM 1690026430U
+
+#define ERROR_URL "http://www.openkore.com/FileNotFound.txt"
+#define INVALID_URL "http://111.111.111.111:82/"
+#define SECURE_URL "https://sourceforge.net"
+
+/**
+ * A class for testing a HttpReader implementation.
+ */
 class Tester {
 public:
+	/**
+	 * Create a new Tester object.
+	 *
+	 * @param creatorFunc  A function which creates a HttpReader instance.
+	 * @require creatorFunc != NULL
+	 */
+	Tester(HttpReaderCreator creatorFunc) {
+		this->createHttpReader = creatorFunc;
+	}
+
+	/** Run the unit tests. */
+	void
+	run() {
+		printf("Testing status transitions (1)...\n");
+		assert( testStatusTransitions(SMALL_TEST_URL) );
+		printf("Testing status transitions (2)...\n");
+		assert( testStatusTransitions(LARGE_TEST_URL) );
+		printf("Testing status transitions (3)...\n");
+		assert( !testStatusTransitions(ERROR_URL) );
+		printf("Testing status transitions (4)...\n");
+		assert( testStatusTransitions(SECURE_URL) );
+		printf("Testing status transitions (5)...\n");
+	
+		printf("Testing getData (1)...\n");
+		assert( testGetData(SMALL_TEST_URL, SMALL_TEST_CONTENT, SMALL_TEST_SIZE) );
+		printf("Testing getData (2)...\n");
+		assert( testGetData(LARGE_TEST_URL, NULL, LARGE_TEST_SIZE) );
+		printf("Testing getData (3)...\n");
+		assert( !testGetData(ERROR_URL, NULL, 0) );
+	
+		printf("Testing pullData (1)...\n");
+		assert( testPullData(SMALL_TEST_URL, SMALL_TEST_SIZE, SMALL_TEST_CHECKSUM) );
+		printf("Testing pullData (2)...\n");
+		assert( testPullData(LARGE_TEST_URL, LARGE_TEST_SIZE, LARGE_TEST_CHECKSUM) );
+		printf("Testing pullData (3)...\n");
+		assert( !testPullData(ERROR_URL, 0, 0) );
+	}
+
+private:
+	HttpReaderCreator createHttpReader;
+
 	// Test whether status transitions behave as documented.
 	bool
 	testStatusTransitions(const char *url) {
-		HttpReader *http = StdHttpReader::create(url);
+		HttpReader *http = createHttpReader(url);
 		HttpReaderStatus status = HTTP_READER_CONNECTING, oldStatus;
 		do {
 			oldStatus = status;
@@ -81,7 +145,7 @@ public:
 	// Test whether getData() works
 	bool
 	testGetData(const char *url, const char *content, unsigned int size) {
-		HttpReader *http = StdHttpReader::create(url);
+		HttpReader *http = createHttpReader(url);
 		while (http->getStatus() != HTTP_READER_DONE
 		    && http->getStatus() != HTTP_READER_ERROR) {
 			Sleep(10);
@@ -106,7 +170,7 @@ public:
 	// Test whether pullData() works
 	bool
 	testPullData(const char *url, unsigned int expectedSize, unsigned int expectedChecksum) {
-		HttpReader *http = StdHttpReader::create(url);
+		HttpReader *http = createHttpReader(url);
 		bool result;
 		unsigned int checksum = 0;
 		unsigned int size = 0;
@@ -148,47 +212,31 @@ public:
 	}
 };
 
+static HttpReader *
+createStdHttpReader(const char *url) {
+	return StdHttpReader::create(url);
+}
+
+static HttpReader *
+createMirrorHttpReader(const char *url) {
+	list<const char *> urls;
+	urls.push_back(url);
+	return new MirrorHttpReader(urls);
+}
+
 int
 main() {
-	#define SMALL_TEST_URL "http://www.openkore.com/misc/testHttpReader.txt"
-	#define SMALL_TEST_CONTENT "Hello world!\n"
-	#define SMALL_TEST_SIZE 13
-	#define SMALL_TEST_CHECKSUM 2773980202U
+	Tester *tester;
 
-	#define LARGE_TEST_URL "http://www.openkore.com/misc/testHttpReaderLarge.txt"
-	#define LARGE_TEST_SIZE 74048
-	#define LARGE_TEST_CHECKSUM 1690026430U
-
-	#define ERROR_URL "http://www.openkore.com/FileNotFound.txt"
-	#define INVALID_URL "http://111.111.111.111:82/"
-	#define SECURE_URL "https://sourceforge.net"
-
-	Tester *tester = new Tester();
-
-	printf("Testing status transitions (1)...\n");
-	assert( tester->testStatusTransitions(SMALL_TEST_URL) );
-	printf("Testing status transitions (2)...\n");
-	assert( tester->testStatusTransitions(LARGE_TEST_URL) );
-	printf("Testing status transitions (3)...\n");
-	assert( !tester->testStatusTransitions(ERROR_URL) );
-	printf("Testing status transitions (4)...\n");
-	assert( tester->testStatusTransitions(SECURE_URL) );
-	printf("Testing status transitions (5)...\n");
-
-	printf("Testing getData (1)...\n");
-	assert( tester->testGetData(SMALL_TEST_URL, SMALL_TEST_CONTENT, SMALL_TEST_SIZE) );
-	printf("Testing getData (2)...\n");
-	assert( tester->testGetData(LARGE_TEST_URL, NULL, LARGE_TEST_SIZE) );
-	printf("Testing getData (3)...\n");
-	assert( !tester->testGetData(ERROR_URL, NULL, 0) );
-
-	printf("Testing pullData (1)...\n");
-	assert( tester->testPullData(SMALL_TEST_URL, SMALL_TEST_SIZE, SMALL_TEST_CHECKSUM) );
-	printf("Testing pullData (2)...\n");
-	assert( tester->testPullData(LARGE_TEST_URL, LARGE_TEST_SIZE, LARGE_TEST_CHECKSUM) );
-	printf("Testing pullData (3)...\n");
-	assert( !tester->testPullData(ERROR_URL, 0, 0) );
-
+	printf("### StdHttpReader\n");
+	tester = new Tester(createStdHttpReader);
+	tester->run();
 	delete tester;
+
+	printf("### MirrorHttpReader\n");
+	tester = new Tester(createMirrorHttpReader);
+	tester->run();
+	delete tester;
+
 	return 0;
 }

@@ -51,7 +51,8 @@ if win32:
 if win32:
 	sources += [
 		'utils/http-reader.cpp',
-		'utils/std-http-reader.cpp'
+		'utils/std-http-reader.cpp',
+		'utils/mirror-http-reader.cpp'
 	]
 
 ### Misc
