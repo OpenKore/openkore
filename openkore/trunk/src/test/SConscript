@@ -29,5 +29,6 @@ else:
 	e.Program('http-reader-test', [
 		'http-reader-test.cpp',
 		dir + '/http-reader.cpp',
-		dir + '/std-http-reader.cpp'
+		dir + '/std-http-reader.cpp',
+		dir + '/mirror-http-reader.cpp'
 	])
