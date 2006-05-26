@@ -285,6 +285,16 @@ function storeCaret(textEl) {
 	<tr> 
 		<th class="thHead" colspan="2" height="25"><b>{L_POST_A}</b></th>
 	</tr>
+	<!-- BEGIN switch_privmsg -->
+	<tr>
+	<td colspan="2">
+		<div style="margin: 0.5cm; padding: 1em; background: #ffff00; border: 2px red dotted; margin-bottom: 3cm;">
+		<b>Do not send private messages to administrators or moderators without a good reason!</b>
+		If you're looking for help, such as on how to configure OpenKore, go to the Support forum.
+		</div>
+	</td>
+	</tr>
+	<!-- END switch_privmsg -->
 	<!-- BEGIN switch_username_select -->
 	<tr> 
 		<td class="row1"><span class="gen"><b>{L_USERNAME}</b></span></td>
