@@ -40,6 +40,7 @@ namespace OpenKore {
 		MirrorHttpReader *parent;
 		HANDLE thread;
 		CRITICAL_SECTION cs;
+		bool stop;
 
 		static DWORD WINAPI threadEntry(void *arg) {
 			_MirrorHttpReaderPrivate *priv = (_MirrorHttpReaderPrivate *) arg;
@@ -53,8 +54,13 @@ namespace OpenKore {
 			while (!urls.empty() && !found) {
 				http = StdHttpReader::create(urls.front(),
 							     self->userAgent);
-				while (http->getStatus() == HTTP_READER_CONNECTING) {
+				while (http->getStatus() == HTTP_READER_CONNECTING
+				    && !priv->stop) {
 					Sleep(10);
+				}
+				if (priv->stop) {
+					delete http;
+					return 0;
 				}
 
 				if (http->getStatus() == HTTP_READER_ERROR) {
@@ -87,11 +93,13 @@ namespace OpenKore {
 
 			InitializeCriticalSection(&cs);
 			parent = http;
+			stop = false;
 			thread = CreateThread(NULL, 0, threadEntry, this,
 				0, &threadID);
 		}
 
 		~_MirrorHttpReaderPrivate() {
+			stop = true;
 			WaitForSingleObject(thread, INFINITE);
 			CloseHandle(thread);
 		}
@@ -129,7 +137,6 @@ namespace OpenKore {
 		delete priv;
 
 		list<char *>::iterator it;
-
 		for (it = urls.begin(); it != urls.end(); it++) {
 			free(*it);
 		}
