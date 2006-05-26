@@ -117,6 +117,15 @@ public:
 		testDownloadCancellation(SLOW_TEST_URL);
 	}
 
+protected:
+	unsigned int
+	calcHash(const char *data, unsigned int len, unsigned int seed = 0) {
+		for (unsigned int i = 0; i < len; i++) {
+			seed = seed * 32 + data[i];
+		}
+		return seed;
+	}
+
 private:
 	HttpReaderCreator createHttpReader;
 
@@ -209,9 +218,7 @@ private:
 				Sleep(10);
 
 			} else if (ret > 0) {
-				for (int i = 0; i < ret; i++) {
-					checksum = checksum * 32 + buffer[i];
-				}
+				checksum = calcHash(buffer, ret, checksum);
 				size += ret;
 
 			} else if (ret == -2 || ret == 0) {
@@ -279,8 +286,55 @@ public:
 
 	virtual void
 	run() {
+		list<const char *> urls;
 		Tester::run();
-		
+
+		printf("Testing usage of multiple mirrors (1)...\n");
+		urls.push_back(INVALID_URL);
+		urls.push_back(ERROR_URL);
+		urls.push_back(LARGE_TEST_URL);
+		urls.push_back(SECURE_URL); // Will never be used
+		assert( testMirrors(urls, LARGE_TEST_SIZE, LARGE_TEST_CHECKSUM) );
+
+		printf("Testing usage of multiple mirrors (2)...\n");
+		urls.clear();
+		urls.push_back(INVALID_URL);
+		urls.push_back(ERROR_URL);
+		urls.push_back("http://www.gnome.org:90");
+		assert( !testMirrors(urls, 0, 0) );
+
+		printf("Testing usage of multiple mirrors (3)...\n");
+		urls.clear();
+		urls.push_back(SECURE_URL);
+		urls.push_back(INVALID_URL); // Never used
+		urls.push_back(ERROR_URL);   // ditto
+		assert( testMirrors(urls, 0, 0) );
+	}
+
+private:
+	bool
+	testMirrors(const list<const char *> &urls, unsigned int expectedSize,
+		    unsigned int expectedChecksum) {
+		HttpReader *http = new MirrorHttpReader(urls, 3000);
+		HttpReaderStatus status;
+
+		status = http->getStatus();
+		while (status != HTTP_READER_DONE && status != HTTP_READER_ERROR) {
+			Sleep(10);
+			status = http->getStatus();
+		}
+
+		if (status == HTTP_READER_DONE && expectedChecksum != 0) {
+			unsigned int len, checksum;
+			const char *data;
+
+			data = http->getData(len);
+			assert(len == expectedSize);
+			checksum = calcHash(data, len);
+			assert(checksum == expectedChecksum);
+		}
+		delete http;
+		return status == HTTP_READER_DONE;
 	}
 };
 
