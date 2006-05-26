@@ -248,7 +248,8 @@ perlenv['BUILDERS']['XS'] = Builder(action = buildXS)
 ### Invoke SConscripts ###
 
 Export('env libenv perlenv win32 cygwin darwin have_ncurses')
-SConscript([
-	#'src/auto/XSTools/SConscript',
-	'src/test/SConscript'
-])
+sconscripts = []
+if not int(ARGUMENTS.get('TESTS_ONLY', 0)):
+	sconscripts += ['src/auto/XSTools/SConscript']
+sconscripts += ['src/test/SConscript']
+SConscript(sconscripts)
