@@ -118,8 +118,11 @@ public:
 	}
 
 protected:
+	/**
+	 * Calculate a simple checksum of the specified data.
+	 */
 	unsigned int
-	calcHash(const char *data, unsigned int len, unsigned int seed = 0) {
+	calcChecksum(const char *data, unsigned int len, unsigned int seed = 0) {
 		for (unsigned int i = 0; i < len; i++) {
 			seed = seed * 32 + data[i];
 		}
@@ -218,7 +221,7 @@ private:
 				Sleep(10);
 
 			} else if (ret > 0) {
-				checksum = calcHash(buffer, ret, checksum);
+				checksum = calcChecksum(buffer, ret, checksum);
 				size += ret;
 
 			} else if (ret == -2 || ret == 0) {
@@ -330,7 +333,7 @@ private:
 
 			data = http->getData(len);
 			assert(len == expectedSize);
-			checksum = calcHash(data, len);
+			checksum = calcChecksum(data, len);
 			assert(checksum == expectedChecksum);
 		}
 		delete http;
