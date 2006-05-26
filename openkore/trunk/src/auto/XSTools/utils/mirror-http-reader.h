@@ -36,6 +36,8 @@ namespace OpenKore {
 	private:
 		_MirrorHttpReaderPrivate *priv;
 		std::list<char *> urls;
+		unsigned int timeout;
+		/** @invariant userAgent != NULL */
 		char *userAgent;
 
 		/**
@@ -64,7 +66,21 @@ namespace OpenKore {
 		HttpReader *http;
 
 	public:
+		/**
+		 * Create a new MirrorHttpReader object. It will immediately
+		 * start connecting and downloading.
+		 *
+		 * @param urls     A list of mirror URLs to try.
+		 * @param timeout  The maximum amount of time (in miliseconds) that MirrorHttpReader
+		 *                 is allowed to spend on connecting to one mirror.
+		 *                 A value of 0 means that the default timeout will be used (which is
+		 *                 undefined; it may be 30 seconds or forever, for example).
+		 *                 This parameter does not affect the download time.
+		 * @param userAgent  The useragent string to use.
+		 * @require !urls.empty()
+		 */
 		MirrorHttpReader(const std::list<const char *> &urls,
+				 unsigned int timeout = 0,
 				 const char *userAgent = HttpReader::DEFAULT_USER_AGENT);
 		~MirrorHttpReader();
 

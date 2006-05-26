@@ -52,18 +52,22 @@ namespace OpenKore {
 
 			// Find a mirror to use.
 			while (!urls.empty() && !found) {
+				DWORD beginTime;
+				bool timeout = false;
+
 				http = StdHttpReader::create(urls.front(),
 							     self->userAgent);
+				beginTime = GetTickCount();
 				while (http->getStatus() == HTTP_READER_CONNECTING
-				    && !priv->stop) {
+				    && !priv->stop && !timeout) {
 					Sleep(10);
+					timeout = self->timeout != 0 && GetTickCount() >= beginTime + self->timeout;
 				}
+
 				if (priv->stop) {
 					delete http;
 					return 0;
-				}
-
-				if (http->getStatus() == HTTP_READER_ERROR) {
+				} else if (http->getStatus() == HTTP_READER_ERROR || timeout) {
 					// Failed; try next mirror.
 					delete http;
 					free(urls.front());
@@ -119,13 +123,16 @@ namespace OpenKore {
 	 *****************************/
 
 	MirrorHttpReader::MirrorHttpReader(const list<const char *> &urls,
-			 const char *userAgent) {
-		// Create a local copy of the URLs
+			unsigned int timeout, const char *userAgent) {
+		assert(!urls.empty());
+
+		// Create a private copy of the URLs.
 		list<const char *>::const_iterator it;
 		for (it = urls.begin(); it != urls.end(); it++) {
 			this->urls.push_back(strdup(*it));
 		}
 
+		this->timeout = timeout;
 		this->userAgent = strdup(userAgent);
 		status = HTTP_READER_CONNECTING;
 		error = NULL;
