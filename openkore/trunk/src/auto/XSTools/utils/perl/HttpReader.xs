@@ -33,7 +33,13 @@ CODE:
 	SvPV_force(buf, dummy);
 	buffer = SvGROW(buf, size + 1);
 	RETVAL = THIS->pullData(buffer, size);
-	SvCUR_set(buf, RETVAL);
+	if (RETVAL < 0) {
+		SvCUR_set(buf, 0);
+		buffer[0] = '\0';
+	} else {
+		SvCUR_set(buf, RETVAL);
+		buffer[RETVAL] = '\0';
+	}
 OUTPUT:
 	RETVAL
 
