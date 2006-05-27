@@ -97,7 +97,21 @@
   <tr> 
 	<td width="40%" valign="top" nowrap="nowrap" align="left"><span class="gensmall">{S_WATCH_TOPIC}</span><br />
 	  &nbsp;<br />
-	  {S_TOPIC_ADMIN}</td>
+	  {S_TOPIC_ADMIN}
+	  <!-- BEGIN is_moderator -->
+	  <div style="margin: 0.5em; background: #e0e0ff; padding: 0.75em; display: none;" id="trash-and-warn">
+		Warning message:
+		<form action="{is_moderator.URL}" method="post" style="margin: 0; padding: 0;">
+		<div>
+			<textarea name="warning" cols="40" rows="6" style="width: 100%; border: solid 1px #cccccc;"></textarea>
+			<div style="margin-bottom: 0.5em;"></div>
+			<input type="submit" value="Lock &amp; Trash" style="font-weight: bold; margin-right: 0.5em;">
+			<input type="button" value="Hide" onclick="document.getElementById('trash-and-warn').style.display = 'none'">
+		</div>
+		</form>
+	  </div>
+	  <!-- END is_moderator -->
+	</td>
 	<td align="right" valign="top" nowrap="nowrap">{JUMPBOX}<span class="gensmall">{S_AUTH_LIST}</span></td>
   </tr>
 </table>

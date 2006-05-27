@@ -308,5 +308,22 @@ class OUtils {
 			return $result;
 		}
 	}
+
+	/**
+	 * Retrieve an integer value from the GET or POST array,
+	 * whichever is first available.
+	 *
+	 * @param name  The name of the key.
+	 * @return An integer value, or an empty string if not found.
+	 * @require !is_null($name)
+	 * @ensure  !is_null(result)
+	 */
+	public static function getIntSetting($name) {
+		if (isset($_GET[$name]) || isset($_POST[$name])) {
+			return (isset($_GET[$name])) ? intval($_GET[$name]) : intval($_POST[$name]);
+		} else {
+			return '';
+		}
+	}
 }
 ?>

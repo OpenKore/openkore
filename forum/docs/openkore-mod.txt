@@ -10,3 +10,9 @@ INSERT INTO phpbb_config (config_name, config_value) VALUES ('user_block_time','
 
 // Quiz
 ALTER TABLE phpbb_users ADD user_done_quiz TINYINT(1) default '0';
+
+// multivote_mod
+ALTER TABLE `phpbb_vote_desc` ADD `vote_max` INT( 3 ) DEFAULT '1' NOT NULL;
+ALTER TABLE `phpbb_vote_desc` ADD `vote_voted` INT( 7 ) DEFAULT '0' NOT NULL;
+ALTER TABLE `phpbb_vote_desc` ADD `vote_hide` TINYINT( 1 ) DEFAULT '0' NOT NULL;
+ALTER TABLE `phpbb_vote_desc` ADD `vote_tothide` TINYINT( 1 ) DEFAULT '0' NOT NULL;

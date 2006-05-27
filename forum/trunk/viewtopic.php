@@ -610,6 +610,10 @@ if ( $is_auth['auth_mod'] )
 	$topic_mod .= "<a href=\"modcp.$phpEx?" . POST_TOPIC_URL . "=$topic_id&amp;mode=split&amp;sid=" . $userdata['session_id'] . '"><img src="' . $images['topic_mod_split'] . '" alt="' . $lang['Split_topic'] . '" title="' . $lang['Split_topic'] . '" border="0" /></a>&nbsp;';
 
 	$topic_mod .= '<a href="' . append_sid("merge.$phpEx?" . POST_TOPIC_URL . '=' . $topic_id) . '"><img src="' . $images['topic_mod_merge'] . '" alt="' . $lang['Merge_topics'] . '" title="' . $lang['Merge_topics'] . '" border="0" /></a>&nbsp;';
+
+	$topic_mod .= '<a href="' . "trash-and-warn.$phpEx?" . POST_TOPIC_URL . '=' . $topic_id . '&amp;sid=' . $userdata['session_id'] . '">' .
+		'<img src="images/trash-and-warn.png" alt="Trash &amp; lock topic"' .
+		' title="Trash &amp; lock topic" border="0"></a>&nbsp;';
 }
 
 //
