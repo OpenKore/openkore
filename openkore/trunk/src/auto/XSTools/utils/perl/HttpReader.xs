@@ -26,6 +26,14 @@ int
 HttpReader::pullData(buf, size)
 	SV *buf
 	unsigned int size
+INIT:
+	char *buffer;
+CODE:
+	buffer = SvGROW(buf, size);
+	RETVAL = THIS->pullData(buffer, size);
+	SvCUR_set(buf, RETVAL);
+OUTPUT:
+	RETVAL
 
 char *
 HttpReader::getData(len)
