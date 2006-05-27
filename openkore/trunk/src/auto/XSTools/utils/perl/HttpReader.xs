@@ -27,9 +27,11 @@ HttpReader::pullData(buf, size)
 	SV *buf
 	unsigned int size
 INIT:
+	STRLEN dummy;
 	char *buffer;
 CODE:
-	buffer = SvGROW(buf, size);
+	SvPV_force(buf, dummy);
+	buffer = SvGROW(buf, size + 1);
 	RETVAL = THIS->pullData(buffer, size);
 	SvCUR_set(buf, RETVAL);
 OUTPUT:
