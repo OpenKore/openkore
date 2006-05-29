@@ -270,6 +270,7 @@
 1293 Creamy Fear
 1294 Killer Mantis
 1295 Owl Baron
+1296 Kobold Leader
 1297 Ancient Mummy
 1298 Zombie Master
 1299 Goblin Leader
@@ -492,6 +493,7 @@
 1585 Mime Monkey
 1586 Leaf Cat
 1587 Kraben
+1606 Unknown1606
 1614 Metaling
 1615 Mineral
 1617 Pitman
