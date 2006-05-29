@@ -39,6 +39,7 @@
 38 Awakening Potion
 39 Berserk Potion
 42 Speed Up
+49 Barrier
 50 Strip Weapon
 51 Strip Shield
 52 Strip Armor
