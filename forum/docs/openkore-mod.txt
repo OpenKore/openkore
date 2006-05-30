@@ -72,3 +72,6 @@ INSERT INTO phpbb_syntax_language_config VALUES ('vb.php', 'vb', 'VisualBASIC');
 INSERT INTO phpbb_syntax_language_config VALUES ('vhdl.php', 'vhdl', 'VHDL');
 INSERT INTO phpbb_syntax_language_config VALUES ('visualfoxpro.php', 'vfp', 'Visual FoxPro');
 INSERT INTO phpbb_syntax_language_config VALUES ('xml.php', 'xml', 'XML');
+
+// Simple subforums mod
+ALTER TABLE phpbb_forums ADD forum_parent INT NOT NULL DEFAULT '0';
