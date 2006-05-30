@@ -185,7 +185,24 @@ if( empty($forum_id) )
 	$select_list = '<select name="' . POST_FORUM_URL . '">';
 	for($i = 0; $i < count($forum_rows); $i++)
 	{
-		$select_list .= '<option value="' . $forum_rows[$i]['forum_id'] . '">' . $forum_rows[$i]['forum_name'] . '</option>';
+		// Begin Simple Subforums MOD
+		if( !$forum_rows[$i]['forum_parent'] )
+		{
+		// End Simple Subforums MOD
+
+			$select_list .= '<option value="' . $forum_rows[$i]['forum_id'] . '">' . $forum_rows[$i]['forum_name'] . '</option>';
+
+		// Begin Simple Subforums MOD
+			$parent_id = $forum_rows[$i]['forum_id'];
+			for( $j = 0; $j < count($forum_rows); $j++ )
+			{
+				if( $forum_rows[$j]['forum_parent'] == $parent_id )
+				{
+					$select_list .= '<option value="' . $forum_rows[$j]['forum_id'] . '">-- ' . $forum_rows[$j]['forum_name'] . '</option>';
+				}
+			}
+		}
+		// End Simple Subforums MOD
 	}
 	$select_list .= '</select>';
 
