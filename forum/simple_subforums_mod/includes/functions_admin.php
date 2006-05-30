@@ -30,7 +30,7 @@ function make_forum_select($box_name, $ignore_forum = false, $select_forum = '')
 
 	$is_auth_ary = auth(AUTH_READ, AUTH_LIST_ALL, $userdata);
 
-	$sql = 'SELECT f.forum_id, f.forum_name
+	$sql = 'SELECT f.forum_id, f.forum_name, f.forum_parent
 		FROM ' . CATEGORIES_TABLE . ' c, ' . FORUMS_TABLE . ' f
 		WHERE f.cat_id = c.cat_id 
 		ORDER BY c.cat_order, f.forum_order';
@@ -39,13 +39,49 @@ function make_forum_select($box_name, $ignore_forum = false, $select_forum = '')
 		message_die(GENERAL_ERROR, 'Couldn not obtain forums information', '', __LINE__, __FILE__, $sql);
 	}
 
-	$forum_list = '';
+	// Begin Simple Subforums MOD
+	$list = array();
+	// End Simple Subforums MOD
 	while( $row = $db->sql_fetchrow($result) )
 	{
-		if ( $is_auth_ary[$row['forum_id']]['auth_read'] && $ignore_forum != $row['forum_id'] )
+		// Begin Simple Subforums MOD
+		$list[] = $row;
+	}
+	$forum_list = '';
+	for( $i = 0; $i < count($list); $i++ )
+	{
+		if( !$list[$i]['forum_parent'] )
 		{
-			$selected = ( $select_forum == $row['forum_id'] ) ? ' selected="selected"' : '';
-			$forum_list .= '<option value="' . $row['forum_id'] . '"' . $selected .'>' . $row['forum_name'] . '</option>';
+			$row = $list[$i];
+			$parent_hidden = true;
+			// End Simple Subforums MOD
+
+			if ( $is_auth_ary[$row['forum_id']]['auth_read'] && $ignore_forum != $row['forum_id'] )
+			{
+				$selected = ( $select_forum == $row['forum_id'] || $select_forum == $row['forum_name'] ) ? ' selected="selected"' : '';
+				$forum_list .= '<option value="' . $row['forum_id'] . '"' . $selected .'>' . $row['forum_name'] . '</option>';
+				// Begin Simple Subforums MOD
+				$parent_hidden = false;
+			}
+			if ( $is_auth_ary[$row['forum_id']]['auth_read'] )
+			{
+				$parent_id = $row['forum_id'];
+				for($j=0; $j<count($list); $j++)
+				{
+					$row = $list[$j];
+					if( $row['forum_parent'] == $parent_id && $is_auth_ary[$row['forum_id']]['auth_read'] && $ignore_forum != $row['forum_id'] )
+					{
+						if( $parent_hidden )
+						{
+							$forum_list .= '<option value="" disabled="disabled">' . $list[$i]['forum_name'] . '</option>';
+							$parent_hidden = false;
+						}
+						$selected = ( $select_forum == $row['forum_id'] ) ? ' selected="selected"' : '';
+						$forum_list .= '<option value="' . $row['forum_id'] . '"' . $selected .'>-- ' . $row['forum_name'] . '</option>';
+					}
+				}			
+			}
+			// End Simple Subforums MOD
 		}
 	}
 
@@ -188,4 +224,7 @@ function sync($type, $id = false)
 	return true;
 }
 
+// Begin Simple Subforums MOD
+$lang['Subforums'] = 'Subforums';
+// End Simple Subforums MOD
 ?>

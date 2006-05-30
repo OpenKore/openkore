@@ -165,6 +165,77 @@ function get_list($mode, $id, $select)
 	return($catlist);
 }
 
+// Begin Simple Subforums MOD
+function get_list_cat($id, $parent, $forum_id)
+{
+	global $db;
+
+	// Get categories
+	$sql = 'SELECT * FROM ' . CATEGORIES_TABLE . ' ORDER BY cat_order ASC';
+	
+	if( !($result = $db->sql_query($sql)) )
+	{
+		message_die(GENERAL_ERROR, "Couldn't get list of categories", '', __LINE__, __FILE__, $sql);
+	}
+	
+	$cat_list = array();
+	
+	while( $row = $db->sql_fetchrow($result) )
+	{
+		$cat_list[] = $row;
+	}
+
+	$db->sql_freeresult($result);
+
+	// Get all forums and check if forum has subforums
+	$has_sub = false;
+	$sql = 'SELECT forum_id, cat_id, forum_name, forum_parent FROM ' . FORUMS_TABLE . ' ORDER BY forum_order ASC';
+	
+	if( !($result = $db->sql_query($sql)) )
+	{
+		message_die(GENERAL_ERROR, "Couldn't get list of forums", '', __LINE__, __FILE__, $sql);
+	}
+	
+	$forums_list = array();
+	
+	while( $row = $db->sql_fetchrow($result) )
+	{
+		if( $row['forum_parent'] > 0 && $row['forum_parent'] == $forum_id )
+		{
+			$has_sub = true;
+		}
+		
+		if( !$row['forum_parent'] )
+		{
+			$forums_list[] = $row;
+		}
+	}
+	$db->sql_freeresult($result);
+
+	// Generate select
+	for( $i = 0; $i < count($cat_list); $i++ )
+	{
+		$cat_id = $cat_list[$i]['cat_id'];
+		$selected = ( $id == $cat_id && $parent == 0 ) ? ' selected="selected"' : '';
+		$str .= '<option value="' . $cat_id . '"' . $selected . '>' . $cat_list[$i]['cat_title'] . '</option>';
+		
+		if( !$has_sub )
+		{
+			for( $j = 0; $j < count($forums_list); $j++)
+			{
+				if( $forums_list[$j]['cat_id'] == $cat_id && $forums_list[$j]['forum_id'] != $forum_id )
+				{
+					$forum_id2 = $forums_list[$j]['forum_id'];
+					$selected = ( $id == $cat_id && $parent == $forum_id2 ) ? ' selected="selected"' : '';
+					$str .= '<option value="' . $cat_id . ',' . $forum_id2 . '"' . $selected . '>- ' . $forums_list[$j]['forum_name'] . '</option>';
+				}
+			}
+		}
+	}
+	return $str;
+}
+// End Simple Subforums MOD
+
 function renumber_order($mode, $cat = 0)
 {
 	global $db;
@@ -263,6 +334,9 @@ if( !empty($mode) )
 				$row = get_info('forum', $forum_id);
 
 				$cat_id = $row['cat_id'];
+				// Begin Simple Subforums MOD
+				$parent_id = $row['forum_parent'];
+				// End Simple Subforums MOD
 				$forumname = $row['forum_name'];
 				$forumdesc = $row['forum_desc'];
 				$forumstatus = $row['forum_status'];
@@ -298,9 +372,14 @@ if( !empty($mode) )
 				$forumstatus = FORUM_UNLOCKED;
 				$forum_id = ''; 
 				$prune_enabled = '';
+				// Begin Simple Subforums MOD
+				$parent_id = 0;
+				// End Simple Subforums MOD
 			}
 
-			$catlist = get_list('category', $cat_id, TRUE);
+			// Begin Simple Subforums MOD
+			$catlist = get_list_cat($cat_id, $parent_id, $forum_id);
+			// End Simple Subforums MOD
 
 			$forumstatus == ( FORUM_LOCKED ) ? $forumlocked = "selected=\"selected\"" : $forumunlocked = "selected=\"selected\"";
 			
@@ -330,7 +409,7 @@ if( !empty($mode) )
 				'L_FORUM_EXPLAIN' => $lang['Forum_edit_delete_explain'], 
 				'L_FORUM_SETTINGS' => $lang['Forum_settings'], 
 				'L_FORUM_NAME' => $lang['Forum_name'], 
-				'L_CATEGORY' => $lang['Category'], 
+				'L_CATEGORY' => $lang['Category'] . ' / ' . $lang['Forum'], 
 				'L_FORUM_DESCRIPTION' => $lang['Forum_desc'],
 				'L_FORUM_STATUS' => $lang['Forum_status'],
 				'L_AUTO_PRUNE' => $lang['Forum_pruning'],
@@ -391,9 +470,15 @@ if( !empty($mode) )
 
 			}
 
+			// Begin Simple Subforums MOD
+			$list = explode(',', $HTTP_POST_VARS[POST_CAT_URL]);
+			$new_cat = ( count($list) ) ? intval($list[0]) : intval($HTTP_POST_VARS[POST_CAT_URL]);
+			$new_parent = ( isset($list[1]) ) ? intval($list[1]) : 0;
+			// End Simple Subforums MOD
+
 			// There is no problem having duplicate forum names so we won't check for it.
-			$sql = "INSERT INTO " . FORUMS_TABLE . " (forum_id, forum_name, cat_id, forum_desc, forum_order, forum_status, prune_enable" . $field_sql . ")
-				VALUES ('" . $next_id . "', '" . str_replace("\'", "''", $HTTP_POST_VARS['forumname']) . "', " . intval($HTTP_POST_VARS[POST_CAT_URL]) . ", '" . str_replace("\'", "''", $HTTP_POST_VARS['forumdesc']) . "', $next_order, " . intval($HTTP_POST_VARS['forumstatus']) . ", " . intval($HTTP_POST_VARS['prune_enable']) . $value_sql . ")";
+			$sql = "INSERT INTO " . FORUMS_TABLE . " (forum_id, forum_name, cat_id, forum_parent, forum_desc, forum_order, forum_status, prune_enable" . $field_sql . ")
+				VALUES ('" . $next_id . "', '" . str_replace("\'", "''", $HTTP_POST_VARS['forumname']) . "', " . $new_cat . ', ' . $new_parent . ", '" . str_replace("\'", "''", $HTTP_POST_VARS['forumdesc']) . "', $next_order, " . intval($HTTP_POST_VARS['forumstatus']) . ", " . intval($HTTP_POST_VARS['prune_enable']) . $value_sql . ")";
 			if( !$result = $db->sql_query($sql) )
 			{
 				message_die(GENERAL_ERROR, "Couldn't insert row in forums table", "", __LINE__, __FILE__, $sql);
@@ -422,6 +507,21 @@ if( !empty($mode) )
 			break;
 
 		case 'modforum':
+			// Begin Simple Subforums MOD
+			$forum_id = intval($HTTP_POST_VARS[POST_FORUM_URL]);
+			$row = get_info('forum', $forum_id);
+			$list = explode(',', $HTTP_POST_VARS[POST_CAT_URL]);
+			$new_cat = ( count($list) ) ? intval($list[0]) : intval($HTTP_POST_VARS[POST_CAT_URL]);
+			$new_parent = ( isset($list[1]) ) ? intval($list[1]) : 0;
+			
+			if( !$row['forum_parent'] && $row['cat_id'] !== $new_cat )
+			{
+				// Move subforums to new category
+				$sql = "UPDATE " . FORUMS_TABLE . " SET cat_id='$new_cat' WHERE forum_parent='$forum_id'";
+				$db->sql_query($sql);
+			}
+			// End Simple Subforums MOD
+
 			// Modify a forum in the DB
 			if( isset($HTTP_POST_VARS['prune_enable']))
 			{
@@ -432,7 +532,7 @@ if( !empty($mode) )
 			}
 
 			$sql = "UPDATE " . FORUMS_TABLE . "
-				SET forum_name = '" . str_replace("\'", "''", $HTTP_POST_VARS['forumname']) . "', cat_id = " . intval($HTTP_POST_VARS[POST_CAT_URL]) . ", forum_desc = '" . str_replace("\'", "''", $HTTP_POST_VARS['forumdesc']) . "', forum_status = " . intval($HTTP_POST_VARS['forumstatus']) . ", prune_enable = " . intval($HTTP_POST_VARS['prune_enable']) . "
+				SET forum_name = '" . str_replace("\'", "''", $HTTP_POST_VARS['forumname']) . "', cat_id = $new_cat, forum_parent = $new_parent, forum_desc = '" . str_replace("\'", "''", $HTTP_POST_VARS['forumdesc']) . "', forum_status = " . intval($HTTP_POST_VARS['forumstatus']) . ", prune_enable = " . intval($HTTP_POST_VARS['prune_enable']) . "
 				WHERE forum_id = " . intval($HTTP_POST_VARS[POST_FORUM_URL]);
 			if( !$result = $db->sql_query($sql) )
 			{
@@ -735,6 +835,12 @@ if( !empty($mode) )
 			{
 				message_die(GENERAL_ERROR, "Couldn't delete forum", "", __LINE__, __FILE__, $sql);
 			}
+
+			// Begin Simple Subforums MOD
+			// Move subforums to category
+			$sql = "UPDATE " . FORUMS_TABLE . " SET forum_parent = '0' WHERE forum_parent = '$from_id'";
+			$db->sql_query($sql);
+			// End Simple Subforums MOD
 			
 			$sql = "DELETE FROM " . AUTH_ACCESS_TABLE . "
 				WHERE forum_id = $from_id";
@@ -872,15 +978,54 @@ if( !empty($mode) )
 
 			$cat_id = $forum_info['cat_id'];
 
-			$sql = "UPDATE " . FORUMS_TABLE . "
-				SET forum_order = forum_order + $move
-				WHERE forum_id = $forum_id";
-			if( !$result = $db->sql_query($sql) )
+			// Begin Simple Subforums MOD
+			if( !$forum_info['forum_parent'] )
 			{
-				message_die(GENERAL_ERROR, "Couldn't change category order", "", __LINE__, __FILE__, $sql);
+				// Find previous/next forum
+				if( $move > 0 )
+				{
+					$sql = "SELECT forum_id, forum_order FROM " . FORUMS_TABLE . " WHERE cat_id = '$cat_id' AND forum_parent = '0' AND forum_order > '" . $forum_info['forum_order'] . "' ORDER BY forum_order ASC";
+				}
+				
+				else
+				{
+					$sql = "SELECT forum_id, forum_order FROM " . FORUMS_TABLE . " WHERE cat_id = '$cat_id' AND forum_parent = '0' AND forum_order < '" . $forum_info['forum_order'] . "' ORDER BY forum_order DESC";
+				}
+				
+				if( !($result = $db->sql_query($sql)) )
+				{
+					message_die(GENERAL_ERROR, "Couldn't change category order", '', __LINE__, __FILE__, $sql);
+				}
+				
+				$row = $db->sql_fetchrow($result);
+				$db->sql_freeresult($result);
+				if($row !== false)
+				{
+					// Swap forum orders
+					$sql = "UPDATE " . FORUMS_TABLE . " SET forum_order = '" . $row['forum_order'] . "' WHERE forum_id = '$forum_id'";
+					$db->sql_query($sql);
+					
+					$sql = "UPDATE " . FORUMS_TABLE . " SET forum_order = '" . $forum_info['forum_order'] . "' WHERE forum_id = '" . $row['forum_id'];
+					$db->sql_query($sql);
+				}
 			}
+			
+			else
+			{
+			// End Simple Subforums MOD
 
-			renumber_order('forum', $forum_info['cat_id']);
+				$sql = "UPDATE " . FORUMS_TABLE . "
+					SET forum_order = forum_order + $move
+					WHERE forum_id = $forum_id";
+				if( !$result = $db->sql_query($sql) )
+				{
+					message_die(GENERAL_ERROR, "Couldn't change category order", "", __LINE__, __FILE__, $sql);
+				}
+
+				renumber_order('forum', $forum_info['cat_id']);
+			// Begin Simple Subforums MOD
+			}
+			// End Simple Subforums MOD
 			$show_index = TRUE;
 
 			break;
@@ -995,7 +1140,7 @@ if( $total_categories = $db->sql_numrows($q_categories) )
 		{
 			$forum_id = $forum_rows[$j]['forum_id'];
 			
-			if ($forum_rows[$j]['cat_id'] == $cat_id)
+			if ($forum_rows[$j]['cat_id'] == $cat_id && $forum_rows[$j]['forum_parent'] == 0)
 			{
 
 				$template->assign_block_vars("catrow.forumrow",	array(
@@ -1012,6 +1157,33 @@ if( $total_categories = $db->sql_numrows($q_categories) )
 					'U_FORUM_MOVE_DOWN' => append_sid("admin_forums.$phpEx?mode=forum_order&amp;move=15&amp;" . POST_FORUM_URL . "=$forum_id"),
 					'U_FORUM_RESYNC' => append_sid("admin_forums.$phpEx?mode=forum_sync&amp;" . POST_FORUM_URL . "=$forum_id"))
 				);
+
+				// Begin Simple Subforums MOD
+				for( $k = 0; $k < $total_forums; $k++ )
+				{
+					$forum_id2 = $forum_rows[$k]['forum_id'];
+					if ( $forum_rows[$k]['forum_parent'] == $forum_id )
+					{
+						$template->assign_block_vars("catrow.forumrow",	array(
+							'FORUM_NAME' => $forum_rows[$k]['forum_name'],
+							'FORUM_DESC' => $forum_rows[$k]['forum_desc'],
+							'ROW_COLOR' => $row_color,
+							'NUM_TOPICS' => $forum_rows[$k]['forum_topics'],
+							'NUM_POSTS' => $forum_rows[$k]['forum_posts'],
+							'STYLE' => ' style="padding-left: 20px;" ',
+	
+							'U_VIEWFORUM' => append_sid($phpbb_root_path."viewforum.$phpEx?" . POST_FORUM_URL . "=$forum_id2"),
+							'U_FORUM_EDIT' => append_sid("admin_forums.$phpEx?mode=editforum&amp;" . POST_FORUM_URL . "=$forum_id2"),
+							'U_FORUM_DELETE' => append_sid("admin_forums.$phpEx?mode=deleteforum&amp;" . POST_FORUM_URL . "=$forum_id2"),
+							'U_FORUM_MOVE_UP' => append_sid("admin_forums.$phpEx?mode=forum_order&amp;move=-15&amp;" . POST_FORUM_URL . "=$forum_id2"),
+							'U_FORUM_MOVE_DOWN' => append_sid("admin_forums.$phpEx?mode=forum_order&amp;move=15&amp;" . POST_FORUM_URL . "=$forum_id2"),
+							'U_FORUM_RESYNC' => append_sid("admin_forums.$phpEx?mode=forum_sync&amp;" . POST_FORUM_URL . "=$forum_id2"))
+						);
+
+					}
+					
+				} // for ... forums
+				// End Simple Subforums MOD
 
 			}// if ... forumid == catid
 			

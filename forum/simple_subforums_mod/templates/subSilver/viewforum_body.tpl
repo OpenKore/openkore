@@ -7,10 +7,34 @@
 	</tr>
 	<tr> 
 	  <td align="left" valign="middle" width="50"><a href="{U_POST_NEW_TOPIC}"><img src="{POST_IMG}" border="0" alt="{L_POST_NEW_TOPIC}" /></a></td>
-	  <td align="left" valign="middle" class="nav" width="100%"><span class="nav">&nbsp;&nbsp;&nbsp;<a href="{U_INDEX}" class="nav">{L_INDEX}</a> -> <a class="nav" href="{U_VIEW_FORUM}">{FORUM_NAME}</a></span></td>
+	  <td align="left" valign="middle" class="nav" width="100%"><span class="nav">&nbsp;&nbsp;&nbsp;<a href="{U_INDEX}" class="nav">{L_INDEX}</a> <!-- IF PARENT_FORUM --> -> <a class="nav" href="{U_VIEW_PARENT_FORUM}">{PARENT_FORUM_NAME}</a> <!-- ENDIF --> -> <a class="nav" href="{U_VIEW_FORUM}">{FORUM_NAME}</a></span></td>
 	  <td align="right" valign="bottom" class="nav" nowrap="nowrap"><span class="gensmall"><a href="{U_MARK_READ}">{L_MARK_TOPICS_READ}</a></span></td>
 	</tr>
   </table>
+  <!-- BEGIN catrow -->
+<table width="100%" cellpadding="2" cellspacing="1" border="0" class="forumline">
+  <tr> 
+	<th colspan="2" class="thCornerL" height="25" nowrap="nowrap">&nbsp;{catrow.CAT_DESC}&nbsp;</th>
+	<th width="50" class="thTop" nowrap="nowrap">&nbsp;{L_TOPICS}&nbsp;</th>
+	<th width="50" class="thTop" nowrap="nowrap">&nbsp;{L_POSTS}&nbsp;</th>
+	<th class="thCornerR" nowrap="nowrap">&nbsp;{L_LASTPOST}&nbsp;</th>
+  </tr>
+  <!-- BEGIN forumrow -->
+  <tr> 
+	<td class="row1" align="center" valign="middle" height="50"><img src="{catrow.forumrow.FORUM_FOLDER_IMG}" width="46" height="25" alt="{catrow.forumrow.L_FORUM_FOLDER_ALT}" title="{catrow.forumrow.L_FORUM_FOLDER_ALT}" /></td>
+	<td class="row1" width="100%" height="50"><span class="forumlink"> <a href="{catrow.forumrow.U_VIEWFORUM}" class="forumlink<!-- IF catrow.forumrow.UNREAD --> topic-new<!-- ENDIF -->">{catrow.forumrow.FORUM_NAME}</a><br />
+	  </span> <span class="genmed">{catrow.forumrow.FORUM_DESC}<br />
+	  </span><span class="gensmall">{catrow.forumrow.L_MODERATOR} {catrow.forumrow.MODERATORS}</span></td>
+	<td class="row2" align="center" valign="middle" height="50"><span class="gensmall">{catrow.forumrow.TOPICS}</span></td>
+	<td class="row2" align="center" valign="middle" height="50"><span class="gensmall">{catrow.forumrow.POSTS}</span></td>
+	<td class="row2" align="center" valign="middle" height="50" nowrap="nowrap"> <span class="gensmall">{catrow.forumrow.LAST_POST}</span></td>
+  </tr>
+  <!-- END forumrow -->
+</table>
+<br />
+<!-- END catrow -->
+
+<!-- IF NUM_TOPICS || ! HAS_SUBFORUMS -->
 
   <table border="0" cellpadding="4" cellspacing="1" width="100%" class="forumline">
 	<tr> 
@@ -46,7 +70,7 @@
   <table width="100%" cellspacing="2" border="0" align="center" cellpadding="2">
 	<tr> 
 	  <td align="left" valign="middle" width="50"><a href="{U_POST_NEW_TOPIC}"><img src="{POST_IMG}" border="0" alt="{L_POST_NEW_TOPIC}" /></a></td>
-	  <td align="left" valign="middle" width="100%"><span class="nav">&nbsp;&nbsp;&nbsp;<a href="{U_INDEX}" class="nav">{L_INDEX}</a> -> <a class="nav" href="{U_VIEW_FORUM}">{FORUM_NAME}</a></span></td>
+	  <td align="left" valign="middle" width="100%"><span class="nav">&nbsp;&nbsp;&nbsp;<a href="{U_INDEX}" class="nav">{L_INDEX}</a> <!-- IF PARENT_FORUM --> -> <a class="nav" href="{U_VIEW_PARENT_FORUM}">{PARENT_FORUM_NAME}</a><!-- ENDIF --> -> <a class="nav" href="{U_VIEW_FORUM}">{FORUM_NAME}</a></span></td>
 	  <td align="right" valign="middle" nowrap="nowrap"><span class="gensmall">{S_TIMEZONE}</span><br /><span class="nav">{PAGINATION}</span> 
 		</td>
 	</tr>
@@ -96,3 +120,11 @@
 		<td align="right"><span class="gensmall">{S_AUTH_LIST}</span></td>
 	</tr>
 </table>
+
+<!-- ELSE -->
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr> 
+	<td align="right">{JUMPBOX}</td>
+  </tr>
+</table>
+<!-- ENDIF -->
