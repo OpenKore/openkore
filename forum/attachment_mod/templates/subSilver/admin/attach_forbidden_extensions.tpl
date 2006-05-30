@@ -20,7 +20,7 @@
 		<td class="row2" align="center" valign="middle"><input type="checkbox" name="add_extension_check" /></td>
 	</tr>
 	<tr align="right">
-	  <td class="catBottom" colspan="5" height="29"> {S_HIDDEN_FIELDS} <input type="submit" name="submit" class="liteoption" value="Submit" /></td>
+	  <td class="catBottom" colspan="5" height="29"> {S_HIDDEN_FIELDS} <input type="submit" name="submit" class="liteoption" value="{L_SUBMIT}" /></td>
 	</tr>
 	<tr> 
 	  <th class="thLeft">&nbsp;{L_EXTENSION}&nbsp;</th>
@@ -33,7 +33,7 @@
 	</tr>
 <!-- END extensionrow -->
 	<tr align="right">
-	  <td class="catBottom" colspan="5" height="29"> <input type="submit" name="submit" class="liteoption" value="Submit" /></td>
+	  <td class="catBottom" colspan="5" height="29"> <input type="submit" name="submit" class="liteoption" value="{L_SUBMIT}" /></td>
 	</tr>
 </table>
 

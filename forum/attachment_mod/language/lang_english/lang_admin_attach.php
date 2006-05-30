@@ -1,23 +1,22 @@
 <?php
-/***************************************************************************
- *                            lang_admin_attach.php [English]
- *                              -------------------
- *     begin                : Thu Feb 07 2002
- *     copyright            : (C) 2002 Meik Sievertsen
- *     email                : acyd.burn@gmx.de
- *
- *     $Id: lang_admin_attach.php,v 1.36 2003/08/30 15:47:39 acydburn Exp $
- *
- ****************************************************************************/
+/** 
+*
+* attachment mod admin [English]
+*
+* @package attachment_mod
+* @version $Id: lang_admin_attach.php,v 1.3 2005/11/20 13:38:55 acydburn Exp $
+* @copyright (c) 2002 Meik Sievertsen
+* @license http://opensource.org/licenses/gpl-license.php GNU Public License 
+*
+*/
 
-/***************************************************************************
- *
- *   This program is free software; you can redistribute it and/or modify
- *   it under the terms of the GNU General Public License as published by
- *   the Free Software Foundation; either version 2 of the License, or
- *   (at your option) any later version.
- *
- ***************************************************************************/
+/**
+* DO NOT CHANGE
+*/
+if (!isset($lang) || !is_array($lang))
+{
+	$lang = array();
+}
 
 //
 // Attachment Mod Admin Language Variables
@@ -35,7 +34,7 @@ $lang['Quota_limits'] = 'Quota Limits';
 
 // Attachments -> Management
 $lang['Attach_settings'] = 'Attachment Settings';
-$lang['Manage_attachments_explain'] = 'Here you can configure the Main Settings for the Attachment Mod. If you press the Test Settings Button, the Attachment Mod does a few System Tests to be sure that the Mod will work properly. If you have problems with uploading Files, please run this Test, to become a detailed error-message.';
+$lang['Manage_attachments_explain'] = 'Here you can configure the Main Settings for the Attachment Mod. If you press the Test Settings Button, the Attachment Mod does a few System Tests to be sure that the Mod will work properly. If you have problems with uploading Files, please run this Test, to get a detailed error-message.';
 $lang['Attach_filesize_settings'] = 'Attachment Filesize Settings';
 $lang['Attach_number_settings'] = 'Attachment Number Settings';
 $lang['Attach_options_settings'] = 'Attachment Options';
@@ -95,6 +94,10 @@ $lang['Empty_file_entry'] = 'Empty File Entry';
 // Attachments -> Sync
 $lang['Sync_thumbnail_resetted'] = 'Thumbnail resetted for Attachment: %s'; // replace %s with physical Filename
 $lang['Attach_sync_finished'] = 'Attachment Syncronization Finished.';
+$lang['Sync_topics'] = 'Sync Topics';
+$lang['Sync_posts'] = 'Sync Posts';
+$lang['Sync_thumbnails'] = 'Sync Thumbnails';
+
 
 // Extensions -> Extension Control
 $lang['Manage_extensions'] = 'Manage Extensions';

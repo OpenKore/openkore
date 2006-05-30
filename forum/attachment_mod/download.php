@@ -1,26 +1,16 @@
 <?php
-/***************************************************************************
- *								download.php
- *                            -------------------
- *   begin                : Monday, Apr 1, 2002
- *   copyright            : (C) 2002 Meik Sievertsen
- *   email                : acyd.burn@gmx.de
- *
- *   $Id: download.php,v 1.42 2005/07/16 14:32:27 acydburn Exp $
- *
- *
- ***************************************************************************/
+/** 
+*
+* @package attachment_mod
+* @version $Id: download.php,v 1.5 2006/04/13 14:48:50 acydburn Exp $
+* @copyright (c) 2002 Meik Sievertsen
+* @license http://opensource.org/licenses/gpl-license.php GNU Public License 
+*
+*/
 
-/***************************************************************************
- *
- *   This program is free software; you can redistribute it and/or modify
- *   it under the terms of the GNU General Public License as published by
- *   the Free Software Foundation; either version 2 of the License, or
- *   (at your option) any later version.
- *
- ***************************************************************************/
-
-if ( defined('IN_PHPBB') )
+/**
+*/
+if (defined('IN_PHPBB'))
 {
 	die('Hacking attempt');
 	exit;
@@ -29,7 +19,7 @@ if ( defined('IN_PHPBB') )
 define('IN_PHPBB', true);
 $phpbb_root_path = './';
 include($phpbb_root_path . 'extension.inc');
-include($phpbb_root_path . 'common.'.$phpEx);
+include($phpbb_root_path . 'common.' . $phpEx);
 
 //
 // Delete the / * to uncomment the block, and edit the values (read the comments) to
@@ -106,11 +96,11 @@ $thumbnail = get_var('thumb', 0);
 // Send file to browser
 function send_file_to_browser($attachment, $upload_dir)
 {
-	global $_SERVER, $HTTP_USER_AGENT, $HTTP_SERVER_VARS, $lang, $db, $attach_config;
+	global $HTTP_USER_AGENT, $HTTP_SERVER_VARS, $lang, $db, $attach_config;
 
 	$filename = ($upload_dir == '') ? $attachment['physical_filename'] : $upload_dir . '/' . $attachment['physical_filename'];
 
-	$gotit = FALSE;
+	$gotit = false;
 
 	if (!intval($attach_config['allow_ftp_upload']))
 	{
@@ -120,7 +110,7 @@ function send_file_to_browser($attachment, $upload_dir)
 		}
 		else
 		{
-			$gotit = TRUE;
+			$gotit = true;
 		}
 	}
 
@@ -128,11 +118,7 @@ function send_file_to_browser($attachment, $upload_dir)
 	// Determine the Browser the User is using, because of some nasty incompatibilities.
 	// Most of the methods used in this function are from phpMyAdmin. :)
 	//
-	if (!empty($_SERVER['HTTP_USER_AGENT'])) 
-	{
-		$HTTP_USER_AGENT = $_SERVER['HTTP_USER_AGENT'];
-	} 
-	else if (!empty($HTTP_SERVER_VARS['HTTP_USER_AGENT'])) 
+	if (!empty($HTTP_SERVER_VARS['HTTP_USER_AGENT'])) 
 	{
 		$HTTP_USER_AGENT = $HTTP_SERVER_VARS['HTTP_USER_AGENT'];
 	}
@@ -190,10 +176,14 @@ function send_file_to_browser($attachment, $upload_dir)
 	header('Pragma: public');
 //	header('Content-Transfer-Encoding: none');
 
-	// Send out the Headers
-	header('Content-Type: ' . $attachment['mimetype'] . '; name="' . $attachment['real_filename'] . '"');
-	header('Content-Disposition: inline; filename="' . $attachment['real_filename'] . '"');
+	$real_filename = html_entity_decode(basename($attachment['real_filename']));
 
+	// Send out the Headers
+	header('Content-Type: ' . $attachment['mimetype'] . '; name="' . $real_filename . '"');
+	header('Content-Disposition: inline; filename="' . $real_filename . '"');
+
+	unset($real_filename);
+	
 	//
 	// Now send the File Contents to the Browser
 	//
@@ -212,7 +202,7 @@ function send_file_to_browser($attachment, $upload_dir)
 
 		$ini_val = ( @phpversion() >= '4.0.0' ) ? 'ini_get' : 'get_cfg_var';
 
-		$tmp_path = ( !@$ini_val('safe_mode') ) ? '/tmp' : $upload_dir . '/tmp';
+		$tmp_path = ( !@$ini_val('safe_mode') ) ? '/tmp' : $upload_dir;
 		$tmp_filename = @tempnam($tmp_path, 't0000');
 
 		@unlink($tmp_filename);
@@ -268,8 +258,8 @@ if ($attach_config['disable_mod'] && $userdata['user_level'] != ADMIN)
 }
 	
 $sql = 'SELECT *
-	FROM ' . ATTACHMENTS_DESC_TABLE . "
-	WHERE attach_id = $download_id";
+	FROM ' . ATTACHMENTS_DESC_TABLE . '
+	WHERE attach_id = ' . (int) $download_id;
 
 if (!($result = $db->sql_query($sql)))
 {
@@ -290,7 +280,7 @@ $authorised = false;
 
 $sql = 'SELECT *
 	FROM ' . ATTACHMENTS_TABLE . '
-	WHERE attach_id = ' . $attachment['attach_id'];
+	WHERE attach_id = ' . (int) $attachment['attach_id'];
 
 if (!($result = $db->sql_query($sql)))
 {
@@ -302,11 +292,13 @@ $num_auth_pages = $db->sql_numrows($result);
 
 for ($i = 0; $i < $num_auth_pages && $authorised == false; $i++)
 {
-	if (intval($auth_pages[$i]['post_id']) != 0)
+	$auth_pages[$i]['post_id'] = intval($auth_pages[$i]['post_id']);
+
+	if ($auth_pages[$i]['post_id'] != 0)
 	{
 		$sql = 'SELECT forum_id
 			FROM ' . POSTS_TABLE . '
-			WHERE post_id = ' . $auth_pages[$i]['post_id'];
+			WHERE post_id = ' . (int) $auth_pages[$i]['post_id'];
 
 		if ( !($result = $db->sql_query($sql)) )
 		{
@@ -362,10 +354,8 @@ for ($i = 0; $i < $num_rows; $i++)
 	$download_mode[$extension] = $rows[$i]['download_mode'];
 }
 
-//
 // disallowed ?
-//
-if ( (!in_array($attachment['extension'], $allowed_extensions)) && ($userdata['user_level'] != ADMIN) )
+if (!in_array($attachment['extension'], $allowed_extensions) && $userdata['user_level'] != ADMIN)
 {
 	message_die(GENERAL_MESSAGE, sprintf($lang['Extension_disabled_after_posting'], $attachment['extension']));
 } 
@@ -377,14 +367,12 @@ if ($thumbnail)
 	$attachment['physical_filename'] = THUMB_DIR . '/t_' . $attachment['physical_filename'];
 }
 
-//
 // Update download count
-//
 if (!$thumbnail)
 {
 	$sql = 'UPDATE ' . ATTACHMENTS_DESC_TABLE . ' 
 	SET download_count = download_count + 1 
-	WHERE attach_id = ' . $attachment['attach_id'];
+	WHERE attach_id = ' . (int) $attachment['attach_id'];
 	
 	if (!$db->sql_query($sql))
 	{
@@ -392,9 +380,7 @@ if (!$thumbnail)
 	}
 }
 
-//
 // Determine the 'presenting'-method
-//
 if ($download_mode == PHYSICAL_LINK)
 {
 	$server_protocol = ($board_config['cookie_secure']) ? 'https://' : 'http://';

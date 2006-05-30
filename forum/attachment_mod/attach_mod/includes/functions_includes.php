@@ -1,33 +1,20 @@
 <?php
-/***************************************************************************
- *                            functions_includes.php
- *                            -------------------
- *   begin                : Sunday, Mar 31, 2002
- *   copyright            : (C) 2002 Meik Sievertsen
- *   email                : acyd.burn@gmx.de
- *
- *   $Id: functions_includes.php,v 1.39 2005/05/10 16:03:54 acydburn Exp $
- *
- *
- ***************************************************************************/
+/** 
+*
+* @package attachment_mod
+* @version $Id: functions_includes.php,v 1.3 2005/11/06 16:32:19 acydburn Exp $
+* @copyright (c) 2002 Meik Sievertsen
+* @license http://opensource.org/licenses/gpl-license.php GNU Public License 
+*
+*/
 
-/***************************************************************************
- *
- *   This program is free software; you can redistribute it and/or modify
- *   it under the terms of the GNU General Public License as published by
- *   the Free Software Foundation; either version 2 of the License, or
- *   (at your option) any later version.
- *
- *
- ***************************************************************************/
+/**
+* These are functions called directly from phpBB2 Files
+*/
 
-//
-// These are functions called directly from phpBB2 Files
-//
-
-//
-// Include the FAQ-File (faq.php)
-//
+/**
+* Include the FAQ-File (faq.php)
+*/
 function attach_faq_include($lang_file)
 {
 	global $phpbb_root_path, $board_config, $phpEx, $faq, $attach_config;
@@ -39,20 +26,14 @@ function attach_faq_include($lang_file)
 
 	if ($lang_file == 'lang_faq')
 	{
-		if (!file_exists($phpbb_root_path . 'language/lang_' . $board_config['default_lang'] . '/lang_faq_attach.'.$phpEx))
-		{
-			include($phpbb_root_path . 'language/lang_english/lang_faq_attach.'.$phpEx);
-		}
-		else
-		{
-			include($phpbb_root_path . 'language/lang_' . $board_config['default_lang'] . '/lang_faq_attach.' . $phpEx);
-		}
+		$language = attach_mod_get_lang('lang_faq_attach');
+		include($phpbb_root_path . 'language/lang_' . $language . '/lang_faq_attach.'.$phpEx);
 	}
 }
 
-//
-// Setup Basic Authentication (auth.php)
-//
+/**
+* Setup Basic Authentication (includes/auth.php)
+*/
 function attach_setup_basic_auth($type, &$auth_fields, &$a_sql)
 {
 	switch ($type)
@@ -61,33 +42,31 @@ function attach_setup_basic_auth($type, &$auth_fields, &$a_sql)
 			$a_sql .= ', a.auth_attachments, a.auth_download';
 			$auth_fields[] = 'auth_attachments';
 			$auth_fields[] = 'auth_download';
-			break;
+		break;
 
 		case AUTH_ATTACH:
 			$a_sql = 'a.auth_attachments';
 			$auth_fields = array('auth_attachments');
-			break;
+		break;
 		
 		case AUTH_DOWNLOAD:
 			$a_sql = 'a.auth_download';
 			$auth_fields = array('auth_download');
-			break;
+		break;
 		
 		default:
 			break;
 	}
 }
 
-//
-// Setup Forum Authentication (admin_forumauth.php)
-//
+/**
+* Setup Forum Authentication (admin/admin_forumauth.php)
+*/
 function attach_setup_forum_auth(&$simple_auth_ary, &$forum_auth_fields, &$field_names)
 {
 	global $lang;
 
-	//
 	// Add Attachment Auth
-	//
 	//					Post Attachments
 	$simple_auth_ary[0][] = AUTH_MOD;
 	$simple_auth_ary[1][] = AUTH_MOD;
@@ -113,40 +92,36 @@ function attach_setup_forum_auth(&$simple_auth_ary, &$forum_auth_fields, &$field
 	$field_names['auth_download'] = $lang['Auth_download'];
 }
 
-//
-// Setup Usergroup Authentication (admin_ug_auth.php)
-//
+/**
+* Setup Usergroup Authentication (admin/admin_ug_auth.php)
+*/
 function attach_setup_usergroup_auth(&$forum_auth_fields, &$auth_field_match, &$field_names)
 {
 	global $lang;
 
-	//
 	// Post Attachments
-	//
 	$forum_auth_fields[] = 'auth_attachments';
 	$auth_field_match['auth_attachments'] = AUTH_ATTACH;
 	$field_names['auth_attachments'] = $lang['Auth_attach'];
 
-	//
 	// Download Attachments
-	//
 	$forum_auth_fields[] = 'auth_download';
 	$auth_field_match['auth_download'] = AUTH_DOWNLOAD;
 	$field_names['auth_download'] = $lang['Auth_download'];
 }
 
-//
-// Setup Viewtopic Authentication for f_access
-//
+/**
+* Setup Viewtopic Authentication for f_access (viewtopic.php:includes/topic_review.php)
+*/
 function attach_setup_viewtopic_auth(&$order_sql, &$sql)
 {
 	$order_sql = str_replace('f.auth_attachments', 'f.auth_attachments, f.auth_download, t.topic_attachment', $order_sql);
 	$sql = str_replace('f.auth_attachments', 'f.auth_attachments, f.auth_download, t.topic_attachment', $sql);
 }
 
-//
-// Setup s_auth_can in viewforum and viewtopic
-//
+/**
+* Setup s_auth_can in viewforum and viewtopic (viewtopic.php/viewforum.php)
+*/
 function attach_build_auth_levels($is_auth, &$s_auth_can)
 {
 	global $lang, $attach_config, $phpEx, $forum_id;
@@ -164,24 +139,25 @@ function attach_build_auth_levels($is_auth, &$s_auth_can)
 	$s_auth_can .= (($is_auth['auth_download']) ? $lang['Rules_download_can'] : $lang['Rules_download_cannot'] ) . '<br />';
 }
 
-//
-// Called from admin_users.php and admin_groups.php in order to process Quota Settings
-//
-function attachment_quota_settings($admin_mode, $submit = FALSE, $mode)
+/**
+* Called from admin_users.php and admin_groups.php in order to process Quota Settings (admin/admin_users.php:admin/admin_groups.php)
+*/
+function attachment_quota_settings($admin_mode, $submit = false, $mode)
 {
 	global $template, $db, $HTTP_POST_VARS, $HTTP_GET_VARS, $lang, $lang, $phpbb_root_path, $phpEx, $attach_config;
 
+	// Make sure constants got included
 	include_once($phpbb_root_path . 'attach_mod/includes/constants.'.$phpEx);
 
 	if (!intval($attach_config['allow_ftp_upload']))
 	{
-		if ( ($attach_config['upload_dir'][0] == '/') || ( ($attach_config['upload_dir'][0] != '/') && ($attach_config['upload_dir'][1] == ':') ) )
+		if ($attach_config['upload_dir'][0] == '/' || ($attach_config['upload_dir'][0] != '/' && $attach_config['upload_dir'][1] == ':'))
 		{
 			$upload_dir = $attach_config['upload_dir'];
 		}
 		else
 		{
-			$upload_dir = '../' . $attach_config['upload_dir'];
+			$upload_dir = $phpbb_root_path . $attach_config['upload_dir'];
 		}
 	}
 	else
@@ -192,8 +168,11 @@ function attachment_quota_settings($admin_mode, $submit = FALSE, $mode)
 	include_once($phpbb_root_path . 'attach_mod/includes/functions_selects.' . $phpEx);
 	include_once($phpbb_root_path . 'attach_mod/includes/functions_admin.' . $phpEx);
 
+	$user_id = 0;
+
 	if ($admin_mode == 'user')
 	{
+		// We overwrite submit here... to be sure
 		$submit = (isset($HTTP_POST_VARS['submit'])) ? true : false;
 
 		if (!$submit && $mode != 'save')
@@ -212,7 +191,8 @@ function attachment_quota_settings($admin_mode, $submit = FALSE, $mode)
 			}
 			else
 			{
-				$this_userdata = get_userdata($u_name);
+				// Get userdata is handling the sanitizing of username
+				$this_userdata = get_userdata($HTTP_POST_VARS['username'], true);
 			}
 
 			$user_id = (int) $this_userdata['user_id'];
@@ -231,16 +211,15 @@ function attachment_quota_settings($admin_mode, $submit = FALSE, $mode)
 	if ($admin_mode == 'user' && !$submit && $mode != 'save')
 	{
 		// Show the contents
-		$sql = 'SELECT quota_limit_id, quota_type FROM ' . QUOTA_TABLE . " 
-			WHERE user_id = $user_id";
+		$sql = 'SELECT quota_limit_id, quota_type FROM ' . QUOTA_TABLE . ' 
+			WHERE user_id = ' . (int) $user_id;
 
 		if( !($result = $db->sql_query($sql)) )
 		{
 			message_die(GENERAL_ERROR, 'Unable to get Quota Settings', '', __LINE__, __FILE__, $sql);
 		}
 
-		$pm_quota = 0;
-		$upload_quota = 0;
+		$pm_quota = $upload_quota = 0;
 		
 		if ($row = $db->sql_fetchrow($result))
 		{
@@ -262,7 +241,6 @@ function attachment_quota_settings($admin_mode, $submit = FALSE, $mode)
 			// Set Default Quota Limit
 			$upload_quota = $attach_config['default_upload_quota'];
 			$pm_quota = $attach_config['default_pm_quota'];
-		
 		}
 		$db->sql_freeresult($result);
 
@@ -300,8 +278,8 @@ function attachment_quota_settings($admin_mode, $submit = FALSE, $mode)
 		$group_id = get_var(POST_GROUPS_URL, 0);
 	
 		// Show the contents
-		$sql = 'SELECT quota_limit_id, quota_type FROM ' . QUOTA_TABLE . " 
-			WHERE group_id = $group_id";
+		$sql = 'SELECT quota_limit_id, quota_type FROM ' . QUOTA_TABLE . ' 
+			WHERE group_id = ' . (int) $group_id;
 
 		if( !($result = $db->sql_query($sql)) )
 		{
@@ -362,10 +340,11 @@ function attachment_quota_settings($admin_mode, $submit = FALSE, $mode)
 
 }
 
-//
-// Called from usercp_viewprofile, displays the User Upload Quota Box, Upload Stats and a Link to the User Attachment Control Panel
-// Groups are able to be grabbed, but it's not used within the Attachment Mod. ;)
-//
+/**
+* Called from usercp_viewprofile, displays the User Upload Quota Box, Upload Stats and a Link to the User Attachment Control Panel
+* Groups are able to be grabbed, but it's not used within the Attachment Mod. ;)
+* (includes/usercp_viewprofile.php)
+*/
 function display_upload_attach_box_limits($user_id, $group_id = 0)
 {
 	global $attach_config, $board_config, $phpbb_root_path, $lang, $db, $template, $phpEx, $userdata, $profiledata;
@@ -394,17 +373,20 @@ function display_upload_attach_box_limits($user_id, $group_id = 0)
 		}
 	}
 	
+	$user_id = (int) $user_id;
+	$group_id = (int) $group_id;
+
 	$attachments = new attach_posting();
-	$attachments->PAGE = PAGE_INDEX;
+	$attachments->page = PAGE_INDEX;
 	
 	// Get the assigned Quota Limit. For Groups, we are directly getting the value, because this Quota can change from user to user.
 	if ($group_id)
 	{
 		$sql = 'SELECT l.quota_limit 
-			FROM ' . QUOTA_TABLE . ' q, ' . QUOTA_LIMITS_TABLE . " l
-			WHERE (q.group_id = $group_id) 
-				AND (q.quota_type = " . QUOTA_UPLOAD_LIMIT . ') 
-				AND (q.quota_limit_id = l.quota_limit_id) 
+			FROM ' . QUOTA_TABLE . ' q, ' . QUOTA_LIMITS_TABLE . ' l
+			WHERE q.group_id = ' . (int) $group_id . ' 
+				AND q.quota_type = ' . QUOTA_UPLOAD_LIMIT . ' 
+				AND q.quota_limit_id = l.quota_limit_id 
 			LIMIT 1';
 
 		if ( !($result = $db->sql_query($sql)) )
@@ -432,9 +414,9 @@ function display_upload_attach_box_limits($user_id, $group_id = 0)
 			else
 			{
 				$sql = 'SELECT quota_limit 
-					FROM ' . QUOTA_LIMITS_TABLE . "
-					WHERE quota_limit_id = $quota_id 
-					LIMIT 1";
+					FROM ' . QUOTA_LIMITS_TABLE . '
+					WHERE quota_limit_id = ' . (int) $quota_id . '
+					LIMIT 1';
 
 				if ( !($result = $db->sql_query($sql)) )
 				{
@@ -497,14 +479,12 @@ function display_upload_attach_box_limits($user_id, $group_id = 0)
 		}
 	}
 
-	//
 	// Get all attach_id's the specific user posted, but only uploads to the board and not Private Messages
-	//
 	$sql = 'SELECT attach_id 
-		FROM ' . ATTACHMENTS_TABLE . "
-		WHERE user_id_1 = $user_id
+		FROM ' . ATTACHMENTS_TABLE . '
+		WHERE user_id_1 = ' . (int) $user_id . '
 			AND privmsgs_id = 0
-		GROUP BY attach_id";
+		GROUP BY attach_id';
 		
 	if ( !($result = $db->sql_query($sql)) )
 	{
@@ -521,7 +501,7 @@ function display_upload_attach_box_limits($user_id, $group_id = 0)
 		$attach_id[] = intval($attach_ids[$j]['attach_id']);
 	}
 
-	$upload_filesize = (count($attach_id) > 0) ? get_total_attach_filesize(implode(',', $attach_id)) : 0;
+	$upload_filesize = (sizeof($attach_id) > 0) ? get_total_attach_filesize($attach_id) : 0;
 
 	$size_lang = ($upload_filesize >= 1048576) ? $lang['MB'] : ( ($upload_filesize >= 1024) ? $lang['KB'] : $lang['Bytes'] );
 
@@ -551,27 +531,37 @@ function display_upload_attach_box_limits($user_id, $group_id = 0)
 	$template->assign_block_vars('switch_upload_limits', array());
 
 	$template->assign_vars(array(
-		'L_UACP' => $lang['UACP'],
-		'L_UPLOAD_QUOTA' => $lang['Upload_quota'],
-		'U_UACP' => append_sid($phpbb_root_path . 'uacp.' . $phpEx . '?u=' . $user_id . '&amp;sid=' . $userdata['session_id']),
-		'UPLOADED' => sprintf($lang['User_uploaded_profile'], $user_uploaded),
-		'QUOTA' => sprintf($lang['User_quota_profile'], $user_quota),
-		'UPLOAD_LIMIT_IMG_WIDTH' => $upload_limit_img_length, 
-		'UPLOAD_LIMIT_PERCENT' => $upload_limit_pct, 
-		'PERCENT_FULL' => $l_box_size_status)
+		'L_UACP'			=> $lang['UACP'],
+		'L_UPLOAD_QUOTA'	=> $lang['Upload_quota'],
+		'U_UACP'			=> $phpbb_root_path . 'uacp.' . $phpEx . '?u=' . $user_id . '&amp;sid=' . $userdata['session_id'],
+		'UPLOADED'			=> sprintf($lang['User_uploaded_profile'], $user_uploaded),
+		'QUOTA'				=> sprintf($lang['User_quota_profile'], $user_quota),
+		'UPLOAD_LIMIT_IMG_WIDTH'	=> $upload_limit_img_length, 
+		'UPLOAD_LIMIT_PERCENT'		=> $upload_limit_pct, 
+		'PERCENT_FULL'				=> $l_box_size_status)
 	);
 }
 
-//
-// Function responsible for viewonline (within viewonline.php and the admin index page)
-//
-// added directly after the switch statement
-// viewonline.php:
-//		perform_attach_pageregister($row['session_page']);
-// admin/index.php:
-//		perform_attach_pageregister($onlinerow_reg[$i]['user_session_page'], TRUE);
-//		perform_attach_pageregister($onlinerow_guest[$i]['session_page'], TRUE);
-//
+/**
+* Prune Attachments (includes/prune.php)
+*/
+function prune_attachments($sql_post)
+{
+	// prune it.
+	delete_attachment($sql_post);
+}
+
+/**
+* Function responsible for viewonline (within viewonline.php and the admin index page)
+* not included in vanilla attachment mod
+*
+* added directly after the switch statement
+* viewonline.php:
+*		perform_attach_pageregister($row['session_page']);
+* admin/index.php:
+*		perform_attach_pageregister($onlinerow_reg[$i]['user_session_page'], TRUE);
+*		perform_attach_pageregister($onlinerow_guest[$i]['session_page'], TRUE);
+*/
 function perform_attach_pageregister($session_page, $in_admin = false)
 {
 	global $location, $location_url, $lang;
@@ -581,11 +571,12 @@ function perform_attach_pageregister($session_page, $in_admin = false)
 		case (PAGE_UACP):
 			$location = $lang['User_acp_title'];
 			$location_url = ($in_admin) ? "index.$phpEx?pane=right" : "index.$phpEx";
-			break;
+		break;
+
 		case (PAGE_RULES):
 			$location = $lang['Rules_page'];
 			$location_url = ($in_admin) ? "index.$phpEx?pane=right" : "index.$phpEx";
-			break;
+		break;
 	}
 }
 
