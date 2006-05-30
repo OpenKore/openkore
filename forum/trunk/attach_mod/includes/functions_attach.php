@@ -1,33 +1,33 @@
 <?php
-/***************************************************************************
- *                            functions_attach.php
- *                            -------------------
- *   begin                : Friday, Mar 29, 2002
- *   copyright            : (C) 2002 Meik Sievertsen
- *   email                : acyd.burn@gmx.de
- *
- *   $Id: functions_attach.php,v 1.42 2005/05/09 19:30:29 acydburn Exp $
- *
- *
- ***************************************************************************/
+/** 
+*
+* @package attachment_mod
+* @version $Id: functions_attach.php,v 1.5 2006/04/09 13:25:51 acydburn Exp $
+* @copyright (c) 2002 Meik Sievertsen
+* @license http://opensource.org/licenses/gpl-license.php GNU Public License 
+*
+*/
 
-/***************************************************************************
- *
- *   This program is free software; you can redistribute it and/or modify
- *   it under the terms of the GNU General Public License as published by
- *   the Free Software Foundation; either version 2 of the License, or
- *   (at your option) any later version.
- *
- *
- ***************************************************************************/
+/**
+* All Attachment Functions needed everywhere
+*/
 
-//
-// All Attachment Functions needed everywhere
-//
+/**
+* html_entity_decode replacement (from php manual)
+*/
+if (!function_exists('html_entity_decode'))
+{
+	function html_entity_decode($given_html, $quote_style = ENT_QUOTES)
+	{
+		$trans_table = array_flip(get_html_translation_table(HTML_SPECIALCHARS, $quote_style));
+		$trans_table['&#39;'] = "'";
+		return (strtr($given_html, $trans_table));
+	}
+}
 
-//
-// A simple dectobase64 function
-//
+/**
+* A simple dectobase64 function
+*/
 function base64_pack($number) 
 { 
 	$chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ+-';
@@ -59,9 +59,9 @@ function base64_pack($number)
 	return $hexval; 
 }
 
-//
-// base64todec function
-//
+/**
+* base64todec function
+*/
 function base64_unpack($string)
 {
 	$chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ+-';
@@ -82,10 +82,10 @@ function base64_unpack($string)
 	return $number; 
 }
 
-//
-// Per Forum based Extension Group Permissions (Encode Number) -> Theoretically up to 158 Forums saveable. :)
-// We are using a base of 64, but splitting it to one-char and two-char numbers. :)
-//
+/**
+* Per Forum based Extension Group Permissions (Encode Number) -> Theoretically up to 158 Forums saveable. :)
+* We are using a base of 64, but splitting it to one-char and two-char numbers. :)
+*/
 function auth_pack($auth_array)
 {
 	$one_char_encoding = '#';
@@ -113,9 +113,9 @@ function auth_pack($auth_array)
 	return $auth_cache;
 }
 
-//
-// Reverse the auth_pack process
-//
+/**
+* Reverse the auth_pack process
+*/
 function auth_unpack($auth_cache)
 {
 	$one_char_encoding = '#';
@@ -146,9 +146,9 @@ function auth_unpack($auth_cache)
 	return $auth;
 }
 
-//
-// Used for determining if Forum ID is authed, please use this Function on all Posting Screens
-//
+/**
+* Used for determining if Forum ID is authed, please use this Function on all Posting Screens
+*/
 function is_forum_authed($auth_cache, $check_forum_id)
 {
 	$one_char_encoding = '#';
@@ -187,9 +187,9 @@ function is_forum_authed($auth_cache, $check_forum_id)
 	return false;
 }
 
-//
-// Init FTP Session
-//
+/**
+* Init FTP Session
+*/
 function attach_init_ftp($mode = false)
 {
 	global $lang, $attach_config;
@@ -207,7 +207,7 @@ function attach_init_ftp($mode = false)
 
 	$login_result = @ftp_login($conn_id, $attach_config['ftp_user'], $attach_config['ftp_pass']);
 
-	if ( (!$login_result) )
+	if (!$login_result)
 	{
 		message_die(GENERAL_ERROR, sprintf($lang['Ftp_error_login'], $attach_config['ftp_user']));
 	}
@@ -227,9 +227,9 @@ function attach_init_ftp($mode = false)
 	return $conn_id;
 }
 
-//
-// Deletes an Attachment
-//
+/**
+* Deletes an Attachment
+*/
 function unlink_attach($filename, $mode = false)
 {
 	global $upload_dir, $attach_config, $lang;
@@ -278,18 +278,16 @@ function unlink_attach($filename, $mode = false)
 	return $deleted;
 }
 
-//
-// FTP File to Location
-//
+/**
+* FTP File to Location
+*/
 function ftp_file($source_file, $dest_file, $mimetype, $disable_error_mode = false)
 {
 	global $attach_config, $lang, $error, $error_msg;
 
 	$conn_id = attach_init_ftp();
 
-	//
 	// Binary or Ascii ?
-	//
 	$mode = FTP_BINARY;
 	if (preg_match("/text/i", $mimetype) || preg_match("/html/i", $mimetype))
 	{
@@ -297,7 +295,7 @@ function ftp_file($source_file, $dest_file, $mimetype, $disable_error_mode = fal
 	}
 
 	$res = @ftp_put($conn_id, $dest_file, $source_file, $mode);
-				
+
 	if (!$res && !$disable_error_mode)
 	{
 		$error = true;
@@ -314,18 +312,20 @@ function ftp_file($source_file, $dest_file, $mimetype, $disable_error_mode = fal
 	{
 		return false;
 	}
-				
+
 	@ftp_site($conn_id, 'CHMOD 0644 ' . $dest_file);
 	@ftp_quit($conn_id);
 	return true;
 }
 
-//
-// Check if Attachment exist
-//
+/**
+* Check if Attachment exist
+*/
 function attachment_exists($filename)
 {
 	global $upload_dir, $attach_config;
+
+	$filename = basename($filename);
 
 	if (!intval($attach_config['allow_ftp_upload']))
 	{
@@ -348,7 +348,7 @@ function attachment_exists($filename)
 
 		$file_listing = @ftp_rawlist($conn_id, $filename);
 
-		for ($i = 0; $i < sizeof($file_listing); $i++)
+		for ($i = 0, $size = sizeof($file_listing); $i < $size; $i++)
 		{
 			if (ereg("([-d])[rwxst-]{9}.* ([0-9]*) ([a-zA-Z]+[0-9: ]*[0-9]) ([0-9]{2}:[0-9]{2}) (.+)", $file_listing[$i], $regs))
 			{
@@ -374,12 +374,14 @@ function attachment_exists($filename)
 	}
 }
 
-//
-// Check if Thumbnail exist
-//
+/**
+* Check if Thumbnail exist
+*/
 function thumbnail_exists($filename)
 {
 	global $upload_dir, $attach_config;
+
+	$filename = basename($filename);
 
 	if (!intval($attach_config['allow_ftp_upload']))
 	{
@@ -403,7 +405,7 @@ function thumbnail_exists($filename)
 		$filename = 't_' . $filename;
 		$file_listing = @ftp_rawlist($conn_id, $filename);
 
-		for ($i = 0; $i < sizeof($file_listing); $i++)
+		for ($i = 0, $size = sizeof($file_listing); $i < $size; $i++)
 		{
 			if (ereg("([-d])[rwxst-]{9}.* ([0-9]*) ([a-zA-Z]+[0-9: ]*[0-9]) ([0-9]{2}:[0-9]{2}) (.+)", $file_listing[$i], $regs))
 			{
@@ -429,9 +431,9 @@ function thumbnail_exists($filename)
 	}
 }
 
-//
-// Physical Filename stored already ?
-//
+/**
+* Physical Filename stored already ?
+*/
 function physical_filename_already_stored($filename)
 {
 	global $db;
@@ -441,25 +443,31 @@ function physical_filename_already_stored($filename)
 		return false;
 	}
 
+	$filename = basename($filename);
+
 	$sql = 'SELECT attach_id 
 		FROM ' . ATTACHMENTS_DESC_TABLE . "
-		WHERE physical_filename = '" . str_replace("'", "''", basename($filename)) . "' 
+		WHERE physical_filename = '" . attach_mod_sql_escape($filename) . "' 
 		LIMIT 1";
 
 	if (!($result = $db->sql_query($sql)))
 	{
-		message_die(GENERAL_ERROR, 'Could not get attachment information for filename: ' . $filename, '', __LINE__, __FILE__, $sql);
+		message_die(GENERAL_ERROR, 'Could not get attachment information for filename: ' . htmlspecialchars($filename), '', __LINE__, __FILE__, $sql);
 	}
-	
-	return ($db->sql_numrows($result) == 0) ? false : true;
+	$num_rows = $db->sql_numrows($result);
+	$db->sql_freeresult($result);
+
+	return ($num_rows == 0) ? false : true;
 }
 
-//
-// Determine if an Attachment exist in a post/pm
-//
+/**
+* Determine if an Attachment exist in a post/pm
+*/
 function attachment_exists_db($post_id, $page = 0)
 {
 	global $db;
+
+	$post_id = (int) $post_id;
 
 	if ($page == PAGE_PRIVMSGS)
 	{
@@ -475,12 +483,15 @@ function attachment_exists_db($post_id, $page = 0)
 		WHERE $sql_id = $post_id 
 		LIMIT 1";
 
-	if ( !($result = $db->sql_query($sql)) )
+	if (!($result = $db->sql_query($sql)))
 	{
 		message_die(GENERAL_ERROR, 'Could not get attachment informations for specific posts', '', __LINE__, __FILE__, $sql);
 	}
+	
+	$num_rows = $db->sql_numrows($result);
+	$db->sql_freeresult($result);
 
-	if (($db->sql_numrows($result)) > 0)
+	if ($num_rows > 0)
 	{
 		return true;
 	}
@@ -490,9 +501,9 @@ function attachment_exists_db($post_id, $page = 0)
 	}
 }
 
-//
-// get all attachments from a post (could be an post array too)
-//
+/**
+* get all attachments from a post (could be an post array too)
+*/
 function get_attachments_from_post($post_id_array)
 {
 	global $db, $attach_config;
@@ -512,7 +523,7 @@ function get_attachments_from_post($post_id_array)
 		$post_id_array[] = $post_id;
 	}
 
-	$post_id_array = implode(', ', $post_id_array);
+	$post_id_array = implode(', ', array_map('intval', $post_id_array));
 
 	if ($post_id_array == '')
 	{
@@ -531,21 +542,22 @@ function get_attachments_from_post($post_id_array)
 	{
 		message_die(GENERAL_ERROR, 'Could not get Attachment Informations for post number ' . $post_id_array, '', __LINE__, __FILE__, $sql);
 	}
-
-	if ( ($db->sql_numrows($result)) == 0 )
-	{
-		return $attachments;
-	}
-		
+	
+	$num_rows = $db->sql_numrows($result);
 	$attachments = $db->sql_fetchrowset($result);
 	$db->sql_freeresult($result);
 
+	if ($num_rows == 0)
+	{
+		return array();
+	}
+		
 	return $attachments;
 }
 
-//
-// get all attachments from a pm
-//
+/**
+* get all attachments from a pm
+*/
 function get_attachments_from_pm($privmsgs_id_array)
 {
 	global $db, $attach_config;
@@ -565,7 +577,7 @@ function get_attachments_from_pm($privmsgs_id_array)
 		$privmsgs_id_array[] = $privmsgs_id;
 	}
 
-	$privmsgs_id_array = implode(', ', $privmsgs_id_array);
+	$privmsgs_id_array = implode(', ', array_map('intval', $privmsgs_id_array));
 
 	if ($privmsgs_id_array == '')
 	{
@@ -584,24 +596,37 @@ function get_attachments_from_pm($privmsgs_id_array)
 	{
 		message_die(GENERAL_ERROR, 'Could not get Attachment Informations for private message number ' . $privmsgs_id_array, '', __LINE__, __FILE__, $sql);
 	}
-
-	if ( ($db->sql_numrows($result)) == 0 )
-	{
-		return $attachments;
-	}
-		
+	
+	$num_rows = $db->sql_numrows($result);
 	$attachments = $db->sql_fetchrowset($result);
 	$db->sql_freeresult($result);
+
+	if ($num_rows == 0 )
+	{
+		return array();
+	}
 
 	return $attachments;
 }
 
-//
-// Count Filesize of Attachments in Database based on the attachment id
-//
+/**
+* Count Filesize of Attachments in Database based on the attachment id
+*/
 function get_total_attach_filesize($attach_ids)
 {
 	global $db;
+
+	if (!is_array($attach_ids) || !sizeof($attach_ids))
+	{
+		return 0;
+	}
+
+	$attach_ids = implode(', ', array_map('intval', $attach_ids));
+
+	if (!$attach_ids)
+	{
+		return 0;
+	}
 
 	$sql = 'SELECT filesize
 		FROM ' . ATTACHMENTS_DESC_TABLE . "
@@ -623,9 +648,9 @@ function get_total_attach_filesize($attach_ids)
 	return $total_filesize;
 }
 
-//
-// Count Filesize for Attachments in Users PM Boxes (Do not count the SENT Box)
-//
+/**
+* Count Filesize for Attachments in Users PM Boxes (Do not count the SENT Box)
+*/
 function get_total_attach_pm_filesize($direction, $user_id)
 {
 	global $db;
@@ -656,6 +681,7 @@ function get_total_attach_pm_filesize($direction, $user_id)
 
 	if ($num_rows == 0)
 	{
+		$db->sql_freeresult($result);
 		return $pm_filesize_total;
 	}
 	
@@ -665,25 +691,13 @@ function get_total_attach_pm_filesize($direction, $user_id)
 	}
 	$db->sql_freeresult($result);
 
-	$pm_filesize_total = get_total_attach_filesize(implode(', ', $attach_id));
+	$pm_filesize_total = get_total_attach_filesize($attach_id);
 	return $pm_filesize_total;
 }
 
-//
-// Prune Attachments <- called from includes/prune.php
-//
-function prune_attachments($sql_post)
-{
-	
-	//
-	// Yeah, prune it.
-	//
-	delete_attachment($sql_post);
-}
-
-//
-// Get allowed Extensions and their respective Values
-//
+/**
+* Get allowed Extensions and their respective Values
+*/
 function get_extension_informations()
 {
 	global $db;
@@ -696,7 +710,7 @@ function get_extension_informations()
 		WHERE e.group_id = g.group_id
 			AND g.allow_group = 1';
 	
-	if ( !($result = $db->sql_query($sql)) )
+	if (!($result = $db->sql_query($sql)))
 	{
 		message_die(GENERAL_ERROR, 'Could not query Allowed Extensions.', '', __LINE__, __FILE__, $sql);
 	}
@@ -706,24 +720,26 @@ function get_extension_informations()
 	return $extensions;
 }
 
-//
-// Sync Topic
-//
+/**
+* Sync Topic (includes/functions_admin.php)
+*/
 function attachment_sync_topic($topic_id)
 {
 	global $db;
-				
+
 	if (!$topic_id)
 	{
 		return;
 	}
+
+	$topic_id = (int) $topic_id;
 
 	$sql = 'SELECT post_id 
 		FROM ' . POSTS_TABLE . " 
 		WHERE topic_id = $topic_id
 		GROUP BY post_id";
 		
-	if ( !($result = $db->sql_query($sql)) )
+	if (!($result = $db->sql_query($sql)))
 	{
 		message_die(GENERAL_ERROR, 'Couldn\'t select Post ID\'s', '', __LINE__, __FILE__, $sql);
 	}
@@ -770,7 +786,7 @@ function attachment_sync_topic($topic_id)
 		message_die(GENERAL_ERROR, 'Couldn\'t update Topics Table', '', __LINE__, __FILE__, $sql);
 	}
 		
-	for ($i = 0; $i < count($post_ids); $i++)
+	for ($i = 0; $i < sizeof($post_ids); $i++)
 	{
 		$sql = 'SELECT attach_id 
 			FROM ' . ATTACHMENTS_TABLE . ' 
@@ -793,18 +809,20 @@ function attachment_sync_topic($topic_id)
 	}
 }
 
-//
-// Get Extension
-//
+/**
+* Get Extension
+*/
 function get_extension($filename)
 {
 	if (!stristr($filename, '.'))
 	{
 		return '';
 	}
+
 	$extension = strrchr(strtolower($filename), '.');
 	$extension[0] = ' ';
 	$extension = strtolower(trim($extension));
+	
 	if (is_array($extension))
 	{
 		return '';
@@ -815,22 +833,25 @@ function get_extension($filename)
 	}
 }
 
-//
-// Delete Extension
-//
+/**
+* Delete Extension
+*/
 function delete_extension($filename)
 {
 	return substr($filename, 0, strrpos(strtolower(trim($filename)), '.'));
 }
 
-// 
-// Check if a user is within Group
-//
+/** 
+* Check if a user is within Group
+*/
 function user_in_group($user_id, $group_id)
 {
 	global $db;
 
-	if (empty($user_id) || empty($group_id))
+	$user_id = (int) $user_id;
+	$group_id = (int) $group_id;
+
+	if (!$user_id || !$group_id)
 	{
 		return false;
 	}
@@ -838,29 +859,44 @@ function user_in_group($user_id, $group_id)
 	$sql = 'SELECT u.group_id 
 		FROM ' . USER_GROUP_TABLE . ' u, ' . GROUPS_TABLE . " g 
 		WHERE g.group_single_user = 0
+			AND u.user_pending = 0
 			AND u.group_id = g.group_id
 			AND u.user_id = $user_id 
-			AND g.group_id = $group_id)
+			AND g.group_id = $group_id
 		LIMIT 1";
 			
-	if ( !($result = $db->sql_query($sql)) )
+	if (!($result = $db->sql_query($sql)))
 	{
 		message_die(GENERAL_ERROR, 'Could not get User Group', '', __LINE__, __FILE__, $sql);
 	}
 
-	if ($db->sql_numrows($result) == 0)
+	$num_rows = $db->sql_numrows($result);
+	$db->sql_freeresult($result);
+
+	if ($num_rows == 0)
 	{
 		return false;
 	}
+	
 	return true;
 }
 
+/**
+* Realpath replacement for attachment mod
+*/
 function amod_realpath($path)
 {
 	return (function_exists('realpath')) ? realpath($path) : $path;
 }
 
-function _set_var(&$result, $var, $type)
+/**
+* _set_var
+*
+* Set variable, used by {@link get_var the get_var function}
+*
+* @private
+*/
+function _set_var(&$result, $var, $type, $multibyte = false)
 {
 	settype($var, $type);
 	$result = $var;
@@ -868,33 +904,193 @@ function _set_var(&$result, $var, $type)
 	if ($type == 'string')
 	{
 		$result = trim(htmlspecialchars(str_replace(array("\r\n", "\r", '\xFF'), array("\n", "\n", ' '), $result)));
+		// 2.0.x is doing addslashes on all variables
+		$result = stripslashes($result);
+		if ($multibyte)
+		{
+			$result = preg_replace('#&amp;(\#[0-9]+;)#', '&\1', $result);
+		}
 	}
 }
 
-function get_var($var_name, $default)
+/**
+* get_var
+*
+* Used to get passed variable
+*/
+function get_var($var_name, $default, $multibyte = false)
 {
 	global $HTTP_POST_VARS, $HTTP_GET_VARS;
 
-	if (!isset($HTTP_POST_VARS[$var_name]) && !isset($HTTP_GET_VARS[$var_name]))
+	$request_var = (isset($HTTP_POST_VARS[$var_name])) ? $HTTP_POST_VARS : $HTTP_GET_VARS;
+
+	if (!isset($request_var[$var_name]) || (is_array($request_var[$var_name]) && !is_array($default)) || (is_array($default) && !is_array($request_var[$var_name])))
 	{
-		return $default;
+		return (is_array($default)) ? array() : $default;
+	}
+
+	$var = $request_var[$var_name];
+
+	if (!is_array($default))
+	{
+		$type = gettype($default);
 	}
 	else
 	{
-		$var = (isset($HTTP_POST_VARS[$var_name])) ? $HTTP_POST_VARS[$var_name] : $HTTP_GET_VARS[$var_name];
-		$type = gettype($default);
-
-		if (is_array($var))
-		{
-			return $default;
-		}
-		else
-		{
-			_set_var($var, $var, $type);
-		}
-
-		return $var;
+		list($key_type, $type) = each($default);
+		$type = gettype($type);
+		$key_type = gettype($key_type);
 	}
+
+	if (is_array($var))
+	{
+		$_var = $var;
+		$var = array();
+
+		foreach ($_var as $k => $v)
+		{
+			if (is_array($v))
+			{
+				foreach ($v as $_k => $_v)
+				{
+					_set_var($k, $k, $key_type);
+					_set_var($_k, $_k, $key_type);
+					_set_var($var[$k][$_k], $_v, $type, $multibyte);
+				}
+			}
+			else
+			{
+				_set_var($k, $k, $key_type);
+				_set_var($var[$k], $v, $type, $multibyte);
+			}
+		}
+	}
+	else
+	{
+		_set_var($var, $var, $type, $multibyte);
+	}
+		
+	return $var;
+}
+
+/**
+* Escaping SQL
+*/
+function attach_mod_sql_escape($text)
+{
+	switch (SQL_LAYER)
+	{
+		case 'postgresql':
+			return pg_escape_string($text);
+		break;
+
+		case 'mysql':
+		case 'mysql4':
+			if (function_exists('mysql_escape_string'))
+			{
+				return mysql_escape_string($text);
+			}
+			else
+			{
+				return str_replace("'", "''", str_replace('\\', '\\\\', $text));
+			}
+		break;
+
+		default:
+			return str_replace("'", "''", str_replace('\\', '\\\\', $text));
+		break;
+	}
+}
+
+/**
+* Build sql statement from array for insert/update/select statements
+*
+* Idea for this from Ikonboard
+* Possible query values: INSERT, INSERT_SELECT, MULTI_INSERT, UPDATE, SELECT
+*/
+function attach_mod_sql_build_array($query, $assoc_ary = false)
+{
+	if (!is_array($assoc_ary))
+	{
+		return false;
+	}
+
+	$fields = array();
+	$values = array();
+	if ($query == 'INSERT' || $query == 'INSERT_SELECT')
+	{
+		foreach ($assoc_ary as $key => $var)
+		{
+			$fields[] = $key;
+
+			if (is_null($var))
+			{
+				$values[] = 'NULL';
+			}
+			else if (is_string($var))
+			{
+				$values[] = "'" . attach_mod_sql_escape($var) . "'";
+			}
+			else if (is_array($var) && is_string($var[0]))
+			{
+				$values[] = $var[0];
+			}
+			else
+			{
+				$values[] = (is_bool($var)) ? intval($var) : $var;
+			}
+		}
+
+		$query = ($query == 'INSERT') ? ' (' . implode(', ', $fields) . ') VALUES (' . implode(', ', $values) . ')' : ' (' . implode(', ', $fields) . ') SELECT ' . implode(', ', $values) . ' ';
+	}
+	else if ($query == 'MULTI_INSERT')
+	{
+		$ary = array();
+		foreach ($assoc_ary as $id => $sql_ary)
+		{
+			$values = array();
+			foreach ($sql_ary as $key => $var)
+			{
+				if (is_null($var))
+				{
+					$values[] = 'NULL';
+				}
+				elseif (is_string($var))
+				{
+					$values[] = "'" . attach_mod_sql_escape($var) . "'";
+				}
+				else
+				{
+					$values[] = (is_bool($var)) ? intval($var) : $var;
+				}
+			}
+			$ary[] = '(' . implode(', ', $values) . ')';
+		}
+
+		$query = ' (' . implode(', ', array_keys($assoc_ary[0])) . ') VALUES ' . implode(', ', $ary);
+	}
+	else if ($query == 'UPDATE' || $query == 'SELECT')
+	{
+		$values = array();
+		foreach ($assoc_ary as $key => $var)
+		{
+			if (is_null($var))
+			{
+				$values[] = "$key = NULL";
+			}
+			elseif (is_string($var))
+			{
+				$values[] = "$key = '" . attach_mod_sql_escape($var) . "'";
+			}
+			else
+			{
+				$values[] = (is_bool($var)) ? "$key = " . intval($var) : "$key = $var";
+			}
+		}
+		$query = implode(($query == 'UPDATE') ? ', ' : ' AND ', $values);
+	}
+
+	return $query;
 }
 
 ?>
