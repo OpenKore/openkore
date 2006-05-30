@@ -1,43 +1,34 @@
 <?php
-/***************************************************************************
- *                            functions_admin.php
- *                            -------------------
- *   begin                : Sunday, Mar 31, 2002
- *   copyright            : (C) 2002 Meik Sievertsen
- *   email                : acyd.burn@gmx.de
- *
- *   $Id: functions_admin.php,v 1.16 2004/11/30 17:56:11 acydburn Exp $
- *
- *
- ***************************************************************************/
+/** 
+*
+* @package attachment_mod
+* @version $Id: functions_admin.php,v 1.4 2006/04/22 16:21:09 acydburn Exp $
+* @copyright (c) 2002 Meik Sievertsen
+* @license http://opensource.org/licenses/gpl-license.php GNU Public License 
+*
+*/
 
-/***************************************************************************
- *
- *   This program is free software; you can redistribute it and/or modify
- *   it under the terms of the GNU General Public License as published by
- *   the Free Software Foundation; either version 2 of the License, or
- *   (at your option) any later version.
- *
- *
- ***************************************************************************/
+/**
+* All Attachment Functions only needed in Admin
+*/
 
-//
-// All Attachment Functions only needed in Admin
-//
-
-//
-// Set/Change Quotas
-//
+/**
+* Set/Change Quotas
+*/
 function process_quota_settings($mode, $id, $quota_type, $quota_limit_id = 0)
 {
 	global $db;
+
+	$id = (int) $id;
+	$quota_type = (int) $quota_type;
+	$quota_limit_id = (int) $quota_limit_id;
 
 	if ($mode == 'user')
 	{
 		if (!$quota_limit_id)
 		{
-			$sql = 'DELETE FROM ' . QUOTA_TABLE . " 
-				WHERE user_id = $id 
+			$sql = 'DELETE FROM ' . QUOTA_TABLE . "
+				WHERE user_id = $id
 					AND quota_type = $quota_type";
 		}
 		else
@@ -48,26 +39,33 @@ function process_quota_settings($mode, $id, $quota_type, $quota_limit_id = 0)
 				WHERE user_id = $id
 					AND quota_type = $quota_type";
 
-			if( !($result = $db->sql_query($sql)) )
+			if (!($result = $db->sql_query($sql)))
 			{
 				message_die(GENERAL_ERROR, 'Could not get Entry', '', __LINE__, __FILE__, $sql);
 			}
 
 			if ($db->sql_numrows($result) == 0)
 			{
-				$sql = 'INSERT INTO ' . QUOTA_TABLE . " (user_id, group_id, quota_type, quota_limit_id) 
-					VALUES ($id, 0, $quota_type, $quota_limit_id)";
+				$sql_ary = array(
+					'user_id'		=> (int) $id,
+					'group_id'		=> 0,
+					'quota_type'	=> (int) $quota_type,
+					'quota_limit_id'=> (int) $quota_limit_id
+				);
+
+				$sql = 'INSERT INTO ' . QUOTA_TABLE . ' ' . attach_mod_sql_build_array('INSERT', $sql_ary);
 			}
 			else
 			{
-				$sql = 'UPDATE ' . QUOTA_TABLE . " 
-					SET quota_limit_id = $quota_limit_id 
-					WHERE user_id = $id 
+				$sql = 'UPDATE ' . QUOTA_TABLE . "
+					SET quota_limit_id = $quota_limit_id
+					WHERE user_id = $id
 						AND quota_type = $quota_type";
 			}
+			$db->sql_freeresult($result);
 		}
 	
-		if( !($result = $db->sql_query($sql)) )
+		if (!($result = $db->sql_query($sql)))
 		{
 			message_die(GENERAL_ERROR, 'Unable to update quota Settings', '', __LINE__, __FILE__, $sql);
 		}
@@ -81,7 +79,7 @@ function process_quota_settings($mode, $id, $quota_type, $quota_limit_id = 0)
 				WHERE group_id = $id 
 					AND quota_type = $quota_type";
 
-			if( !($result = $db->sql_query($sql)) )
+			if (!($result = $db->sql_query($sql)))
 			{
 				message_die(GENERAL_ERROR, 'Unable to delete quota Settings', '', __LINE__, __FILE__, $sql);
 			}
@@ -94,7 +92,7 @@ function process_quota_settings($mode, $id, $quota_type, $quota_limit_id = 0)
 				WHERE group_id = $id 
 					AND quota_type = $quota_type";
 
-			if( !($result = $db->sql_query($sql)) )
+			if (!($result = $db->sql_query($sql)))
 			{
 				message_die(GENERAL_ERROR, 'Could not get Entry', '', __LINE__, __FILE__, $sql);
 			}
@@ -118,16 +116,16 @@ function process_quota_settings($mode, $id, $quota_type, $quota_limit_id = 0)
 	}
 }
 
-//
-// sort multi-dimensional Array
-//
+/**
+* sort multi-dimensional Array
+*/
 function sort_multi_array ($sort_array, $key, $sort_order, $pre_string_sort = 0) 
 {
 	$last_element = sizeof($sort_array) - 1;
 
 	if (!$pre_string_sort)
 	{
-		$string_sort = (is_string($sort_array[$last_element-1][$key]) ) ? true : false;
+		$string_sort = (!is_numeric($sort_array[$last_element-1][$key]) ) ? true : false;
 	}
 	else
 	{
@@ -142,13 +140,11 @@ function sort_multi_array ($sort_array, $key, $sort_order, $pre_string_sort = 0)
 		{
 			$next = 0;
 
-			//
 			// do checks based on key
-			//
 			$switch = false;
 			if (!$string_sort)
 			{
-				if (($sort_order == 'DESC' && intval($sort_array[$j][$key]) < intval($sort_array[$j + 1][$key])) || ($sort_order == 'ASC' &&    intval($sort_array[$j][$key]) > intval($sort_array[$j + 1][$key])))
+				if (($sort_order == 'DESC' && intval($sort_array[$j][$key]) < intval($sort_array[$j + 1][$key])) || ($sort_order == 'ASC' && intval($sort_array[$j][$key]) > intval($sort_array[$j + 1][$key])))
 				{
 					$switch = true;
 				}
@@ -173,29 +169,33 @@ function sort_multi_array ($sort_array, $key, $sort_order, $pre_string_sort = 0)
 	return $sort_array;
 }
 
-//
-// See if a post or pm really exist
-//
+/**
+* See if a post or pm really exist
+*/
 function entry_exists($attach_id)
 {
 	global $db;
 
-	if (empty($attach_id))
+	$attach_id = (int) $attach_id;
+
+	if (!$attach_id)
 	{
 		return false;
 	}
 	
 	$sql = 'SELECT post_id, privmsgs_id
-		FROM ' . ATTACHMENTS_TABLE . '
-		WHERE attach_id = ' . intval($attach_id);
+		FROM ' . ATTACHMENTS_TABLE . "
+		WHERE attach_id = $attach_id";
+	$result = $db->sql_query($sql);
 
-	if( !$db->sql_query($sql) )
+	if (!$result)
 	{
 		message_die(GENERAL_ERROR, 'Could not get Entry', '', __LINE__, __FILE__, $sql);
 	}
 
 	$ids = $db->sql_fetchrowset($result);
 	$num_ids = $db->sql_numrows($result);
+	$db->sql_freeresult($result);
 
 	$exists = false;
 	
@@ -213,26 +213,29 @@ function entry_exists($attach_id)
 				FROM ' . PRIVMSGS_TABLE . '
 				WHERE privmsgs_id = ' . intval($ids[$i]['privmsgs_id']);
 		}
+		$result = $db->sql_query($sql);
 
-		if (!$db->sql_query($sql))
+		if (!$result)
 		{
 			message_die(GENERAL_ERROR, 'Could not get Entry', '', __LINE__, __FILE__, $sql);
 		}
 	
-		if (($db->sql_numrows($result)) > 0)
+		$num_rows = $db->sql_numrows($result);
+		$db->sql_freeresult($result);
+
+		if ($num_rows > 0)
 		{
 			$exists = true;
 			break;
 		}
-		$db->sql_freeresult($result);
 	}
 
 	return $exists;
 }
 
-//
-// Collect all Attachments in Filesystem
-//
+/**
+* Collect all Attachments in Filesystem
+*/
 function collect_attachments()
 {
 	global $upload_dir, $attach_config;
@@ -255,7 +258,7 @@ function collect_attachments()
 		}
 		else
 		{
-			message_die(GENERAL_ERROR, 'Is Safe Mode Restriction in effect? The Attachment Mod seems to be unable to collect the Attachments within the upload Directory. Try to use FTP Upload to circumvent this error.');
+			message_die(GENERAL_ERROR, 'Is Safe Mode Restriction in effect? The Attachment Mod seems to be unable to collect the Attachments within the upload Directory. Try to use FTP Upload to circumvent this error. Another reason could be that the directory ' . $upload_dir . ' does not exist.');
 		}
 	}
 	else
@@ -271,7 +274,7 @@ function collect_attachments()
 			message_die(GENERAL_ERROR, 'Unable to get Raw File Listing. Please be sure the LIST command is enabled at your FTP Server.');
 		}
 
-		for ($i = 0; $i < count($file_listing); $i++)
+		for ($i = 0; $i < sizeof($file_listing); $i++)
 		{
 			if (ereg("([-d])[rwxst-]{9}.* ([0-9]*) ([a-zA-Z]+[0-9: ]*[0-9]) ([0-9]{2}:[0-9]{2}) (.+)", $file_listing[$i], $regs))
 			{
@@ -297,9 +300,9 @@ function collect_attachments()
 	return $file_attachments;
 }
 
-//
-// Returns the filesize of the upload directory in human readable format
-//
+/**
+* Returns the filesize of the upload directory in human readable format
+*/
 function get_formatted_dirsize()
 {
 	global $attach_config, $upload_dir, $lang;
@@ -378,18 +381,16 @@ function get_formatted_dirsize()
 	return $upload_dir_size;
 }
 
-//
-// Build SQL-Statement for the search feature
-//
+/*
+* Build SQL-Statement for the search feature
+*/
 function search_attachments($order_by, &$total_rows)
 {
 	global $db, $HTTP_POST_VARS, $HTTP_GET_VARS, $lang;
 	
 	$where_sql = array();
 
-	//
 	// Get submitted Vars
-	//
 	$search_vars = array('search_keyword_fname', 'search_keyword_comment', 'search_author', 'search_size_smaller', 'search_size_greater', 'search_count_smaller', 'search_count_greater', 'search_days_greater', 'search_forum', 'search_cat');
 	
 	for ($i = 0; $i < sizeof($search_vars); $i++)
@@ -400,32 +401,33 @@ function search_attachments($order_by, &$total_rows)
 	// Author name search 
 	if ($search_author != '')
 	{
-		$search_author = htmlspecialchars(rtrim(trim($search_author), "\\"));
-		$search_author = substr(str_replace("\\'", "'", $search_author), 0, 25);
-		$search_author = str_replace("'", "\\'", $search_author);
+		// Bring in line with 2.0.x expected username
+		$search_author = addslashes(html_entity_decode($search_author));
+		$search_author = stripslashes(phpbb_clean_username($search_author));
 
-		$search_author = str_replace('*', '%', trim(str_replace("\'", "''", $search_author)));
+		// Prepare for directly going into sql query
+		$search_author = str_replace('*', '%', attach_mod_sql_escape($search_author));
 
-		//
 		// We need the post_id's, because we want to query the Attachment Table
-		//
 		$sql = 'SELECT user_id
 			FROM ' . USERS_TABLE . "
 			WHERE username LIKE '$search_author'";
 
-		if ( !($result = $db->sql_query($sql)) )
+		if (!($result = $db->sql_query($sql)))
 		{
 			message_die(GENERAL_ERROR, 'Couldn\'t obtain list of matching users (searching for: ' . $search_author . ')', '', __LINE__, __FILE__, $sql);
 		}
 
 		$matching_userids = '';
-		if ( $row = $db->sql_fetchrow($result) )
+		if ($row = $db->sql_fetchrow($result))
 		{
 			do
 			{
 				$matching_userids .= (($matching_userids != '') ? ', ' : '') . intval($row['user_id']);
 			}
 			while ($row = $db->sql_fetchrow($result));
+			
+			$db->sql_freeresult($result);
 		}
 		else
 		{
@@ -435,24 +437,20 @@ function search_attachments($order_by, &$total_rows)
 		$where_sql[] = ' (t.user_id_1 IN (' . $matching_userids . ')) ';
 	}
 
-	//
 	// Search Keyword
-	//
 	if ($search_keyword_fname != '')
 	{
 		$match_word = str_replace('*', '%', $search_keyword_fname);
-		$where_sql[] = " (a.real_filename LIKE '" . str_replace("\'", "''", $match_word) . "') ";
+		$where_sql[] = " (a.real_filename LIKE '" . attach_mod_sql_escape($match_word) . "') ";
 	}
 
 	if ($search_keyword_comment != '')
 	{
 		$match_word = str_replace('*', '%', $search_keyword_comment);
-		$where_sql[] = " (a.comment LIKE '" . str_replace("\'", "''", $match_word) . "') ";
+		$where_sql[] = " (a.comment LIKE '" . attach_mod_sql_escape($match_word) . "') ";
 	}
 
-	//
 	// Search Download Count
-	//
 	if ($search_count_smaller != '' || $search_count_greater != '')
 	{
 		if ($search_count_smaller != '')
@@ -465,9 +463,7 @@ function search_attachments($order_by, &$total_rows)
 		}
 	}
 
-	//
 	// Search Filesize
-	//
 	if ($search_size_smaller != '' || $search_size_greater != '')
 	{
 		if ($search_size_smaller != '')
@@ -480,17 +476,13 @@ function search_attachments($order_by, &$total_rows)
 		}
 	}
 
-	//
 	// Search Attachment Time
-	//
 	if ($search_days_greater != '')
 	{
 		$where_sql[] = ' (a.filetime < ' . ( time() - ((int) $search_days_greater * 86400)) . ') ';
 	}
 
-	//
 	// Search Forum
-	//
 	if ($search_forum)
 	{
 		$where_sql[] = ' (p.forum_id = ' . intval($search_forum) . ') ';
@@ -501,7 +493,7 @@ function search_attachments($order_by, &$total_rows)
 	$sql = 'SELECT a.*, t.post_id, p.post_time, p.topic_id
 		FROM ' . ATTACHMENTS_TABLE . ' t, ' . ATTACHMENTS_DESC_TABLE . ' a, ' . POSTS_TABLE . ' p WHERE ';
 	
-	if (count($where_sql) > 0)
+	if (sizeof($where_sql) > 0)
 	{
 		$sql .= implode('AND', $where_sql) . ' AND ';
 	}
@@ -519,31 +511,31 @@ function search_attachments($order_by, &$total_rows)
 
 	$attachments = $db->sql_fetchrowset($result);
 	$num_attach = $db->sql_numrows($result);
+	$db->sql_freeresult($result);
 
 	if ($num_attach == 0)
 	{
 		message_die(GENERAL_MESSAGE, $lang['No_attach_search_match']);
 	}
 
-	if ( !($result = $db->sql_query($total_rows_sql)) )
+	if (!($result = $db->sql_query($total_rows_sql)))
 	{
 		message_die(GENERAL_ERROR, 'Could not query attachments', '', __LINE__, __FILE__, $sql);
 	}
 
 	$total_rows = $db->sql_numrows($result);
-		
+	$db->sql_freeresult($result);
+
 	return $attachments;
 }
 
-//
-// perform LIMIT statement on arrays
-//
+/**
+* perform LIMIT statement on arrays
+*/
 function limit_array($array, $start, $pagelimit)
 {
-	//
 	// array from start - start+pagelimit
-	//
-	$limit = ( count($array) < $start + $pagelimit ) ? count($array) : $start + $pagelimit;
+	$limit = (sizeof($array) < ($start + $pagelimit)) ? sizeof($array) : $start + $pagelimit;
 
 	$limit_array = array();
 

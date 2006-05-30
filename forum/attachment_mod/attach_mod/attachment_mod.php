@@ -1,71 +1,83 @@
 <?php
-/***************************************************************************
- *							   attachment_mod.php
- *                            -------------------
- *   begin                : Monday, Jan 07, 2002
- *   copyright            : (C) 2002 Meik Sievertsen
- *   email                : acyd.burn@gmx.de
- *
- *   $Id: attachment_mod.php,v 1.20 2004/07/31 15:15:53 acydburn Exp $
- *
- *
- ***************************************************************************/
+/** 
+*
+* @package attachment_mod
+* @version $Id: attachment_mod.php,v 1.6 2005/11/06 18:35:43 acydburn Exp $
+* @copyright (c) 2002 Meik Sievertsen
+* @license http://opensource.org/licenses/gpl-license.php GNU Public License 
+*
+* Minimum Requirement: PHP 4.2.0
+*/
 
-/***************************************************************************
- *
- *   This program is free software; you can redistribute it and/or modify
- *   it under the terms of the GNU General Public License as published by
- *   the Free Software Foundation; either version 2 of the License, or
- *   (at your option) any later version.
- *
- ***************************************************************************/
-
-if ( !defined('IN_PHPBB') )
+/**
+*/
+if (!defined('IN_PHPBB'))
 {
 	die('Hacking attempt');
 	exit;
 }
 
-include($phpbb_root_path . 'attach_mod/includes/constants.'.$phpEx);
-include($phpbb_root_path . 'attach_mod/includes/functions_includes.'.$phpEx);
-include($phpbb_root_path . 'attach_mod/includes/functions_attach.'.$phpEx);
-include($phpbb_root_path . 'attach_mod/includes/functions_delete.'.$phpEx);
-include($phpbb_root_path . 'attach_mod/includes/functions_thumbs.'.$phpEx);
-include($phpbb_root_path . 'attach_mod/includes/functions_filetypes.'.$phpEx);
+include($phpbb_root_path . 'attach_mod/includes/constants.' . $phpEx);
+include($phpbb_root_path . 'attach_mod/includes/functions_includes.' . $phpEx);
+include($phpbb_root_path . 'attach_mod/includes/functions_attach.' . $phpEx);
+include($phpbb_root_path . 'attach_mod/includes/functions_delete.' . $phpEx);
+include($phpbb_root_path . 'attach_mod/includes/functions_thumbs.' . $phpEx);
+include($phpbb_root_path . 'attach_mod/includes/functions_filetypes.' . $phpEx);
 
 if (defined('ATTACH_INSTALL'))
 {
 	return;
 }
 
+/**
+* wrapper function for determining the correct language directory
+*/
+function attach_mod_get_lang($language_file)
+{
+	global $phpbb_root_path, $phpEx, $attach_config, $board_config;
+
+	$language = $board_config['default_lang'];
+
+	if (!file_exists($phpbb_root_path . 'language/lang_' . $language . '/' . $language_file . '.' . $phpEx))
+	{
+		$language = $attach_config['board_lang'];
+		
+		if (!file_exists($phpbb_root_path . 'language/lang_' . $language . '/' . $language_file . '.' . $phpEx))
+		{
+			message_die(GENERAL_MESSAGE, 'Attachment Mod language file does not exist: language/lang_' . $language . '/' . $language_file . '.' . $phpEx);
+		}
+		else
+		{
+			return $language;
+		}
+	}
+	else
+	{
+		return $language;
+	}
+}
+
+/**
+* Include attachment mod language entries
+*/
 function include_attach_lang()
 {
 	global $phpbb_root_path, $phpEx, $lang, $board_config, $attach_config;
 	
-	//
 	// Include Language
-	//
-	$language = $board_config['default_lang'];
-
-	if (!file_exists($phpbb_root_path . 'language/lang_' . $language . '/lang_main_attach.'.$phpEx))
-	{
-		$language = $attach_config['board_lang'];
-	}
-
-	include($phpbb_root_path . 'language/lang_' . $language . '/lang_main_attach.' . $phpEx);
+	$language = attach_mod_get_lang('lang_main_attach');
+	include_once($phpbb_root_path . 'language/lang_' . $language . '/lang_main_attach.' . $phpEx);
 
 	if (defined('IN_ADMIN'))
 	{
-		if (!file_exists($phpbb_root_path . 'language/lang_' . $language . '/lang_admin_attach.'.$phpEx))
-		{
-			$language = $attach_config['board_lang'];
-		}
-
-		include($phpbb_root_path . 'language/lang_' . $language . '/lang_admin_attach.' . $phpEx);
+		$language = attach_mod_get_lang('lang_admin_attach');
+		include_once($phpbb_root_path . 'language/lang_' . $language . '/lang_admin_attach.' . $phpEx);
 	}
-
 }
 
+/**
+* Get attachment mod configuration
+*/
 function get_config()
 {
 	global $db, $board_config;
@@ -74,8 +86,7 @@ function get_config()
 
 	$sql = 'SELECT *
 		FROM ' . ATTACH_CONFIG_TABLE;
-	 
-	if ( !($result = $db->sql_query($sql)) )
+	if (!($result = $db->sql_query($sql)))
 	{
 		message_die(GENERAL_ERROR, 'Could not query attachment information', '', __LINE__, __FILE__, $sql);
 	}
@@ -85,14 +96,13 @@ function get_config()
 		$attach_config[$row['config_name']] = trim($row['config_value']);
 	}
 
+	// We assign the original default board language here, because it gets overwritten later with the users default language
 	$attach_config['board_lang'] = trim($board_config['default_lang']);
 
 	return $attach_config;
 }
 
-//
 // Get Attachment Config
-//
 $cache_dir = $phpbb_root_path . '/cache';
 $cache_file = $cache_dir . '/attach_config.php';
 $attach_config = array();
@@ -109,14 +119,26 @@ if (file_exists($cache_dir) && is_dir($cache_dir) && is_writable($cache_dir))
 		$fp = @fopen($cache_file, 'wt+');
 		if ($fp)
 		{
-			@reset($attach_config);
-			fwrite($fp, "<?php\n");
-			while (list($key, $value) = @each($attach_config) )
+			$lines = array();
+			foreach ($attach_config as $k => $v)
 			{
-				fwrite($fp, '$attach_config[\'' . $key . '\'] = \'' . trim($value) . '\';' . "\n");
+				if (is_int($v))
+				{
+					$lines[] = "'$k'=>$v";
+				}
+				else if (is_bool($v))
+				{
+					$lines[] = "'$k'=>" . (($v) ? 'TRUE' : 'FALSE');
+				}
+				else
+				{
+					$lines[] = "'$k'=>'" . str_replace("'", "\\'", str_replace('\\', '\\\\', $v)) . "'";
+				}
 			}
-			fwrite($fp, '?>');
+			fwrite($fp, '<?php $attach_config = array(' . implode(',', $lines) . '); ?>');
 			fclose($fp);
+
+			@chmod($cache_file, 0777);
 		}
 	}
 }
@@ -127,11 +149,13 @@ else
 
 // Please do not change the include-order, it is valuable for proper execution.
 // Functions for displaying Attachment Things
-include($phpbb_root_path . 'attach_mod/displaying.'.$phpEx);
+include($phpbb_root_path . 'attach_mod/displaying.' . $phpEx);
+
 // Posting Attachments Class (HAVE TO BE BEFORE PM)
-include($phpbb_root_path . 'attach_mod/posting_attachments.'.$phpEx);
+include($phpbb_root_path . 'attach_mod/posting_attachments.' . $phpEx);
+
 // PM Attachments Class
-include($phpbb_root_path . 'attach_mod/pm_attachments.'.$phpEx);
+include($phpbb_root_path . 'attach_mod/pm_attachments.' . $phpEx);
 
 if (!intval($attach_config['allow_ftp_upload']))
 {
@@ -141,5 +165,11 @@ else
 {
 	$upload_dir = $attach_config['download_path'];
 }
+
+if (!function_exists('attach_mod_sql_escape'))
+{
+	message_die(GENERAL_MESSAGE, 'You haven\'t correctly updated/installed the Attachment Mod.<br />You seem to forgot uploading a new file. Please refer to the update instructions for help and make sure you have uploaded every file correctly.');
+}
+
 
 ?>

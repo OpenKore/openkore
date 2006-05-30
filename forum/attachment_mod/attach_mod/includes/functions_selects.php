@@ -1,30 +1,20 @@
 <?php
-/***************************************************************************
- *                            functions_selects.php
- *                            -------------------
- *   begin                : Saturday, Mar 30, 2002
- *   copyright            : (C) 2002 Meik Sievertsen
- *   email                : acyd.burn@gmx.de
- *
- *   $Id: functions_selects.php,v 1.11 2004/07/31 15:15:54 acydburn Exp $
- *
- *
- ***************************************************************************/
+/** 
+*
+* @package attachment_mod
+* @version $Id: functions_selects.php,v 1.2 2005/12/14 13:08:23 acydburn Exp $
+* @copyright (c) 2002 Meik Sievertsen
+* @license http://opensource.org/licenses/gpl-license.php GNU Public License 
+*
+*/
 
-/***************************************************************************
- *
- *   This program is free software; you can redistribute it and/or modify
- *   it under the terms of the GNU General Public License as published by
- *   the Free Software Foundation; either version 2 of the License, or
- *   (at your option) any later version.
- *
- *
- ***************************************************************************/
+/**
+* Functions to build select boxes ;)
+*/
 
-//
-// Functions to build select boxes ;)
-//
-
+/**
+* select group
+*/
 function group_select($select_name, $default_group = 0)
 {
 	global $db, $lang;
@@ -33,17 +23,21 @@ function group_select($select_name, $default_group = 0)
 		FROM ' . EXTENSION_GROUPS_TABLE . '
 		ORDER BY group_name';
 
-	if ( !($result = $db->sql_query($sql)) )
+	if (!($result = $db->sql_query($sql)))
 	{
 		message_die(GENERAL_ERROR, "Couldn't query Extension Groups Table", "", __LINE__, __FILE__, $sql);
 	}
 
 	$group_select = '<select name="' . $select_name . '">';
-	if (($db->sql_numrows($result)) > 0)
+	
+	$group_name = $db->sql_fetchrowset($result);
+	$num_rows = $db->sql_numrows($result);
+	$db->sql_freeresult($result);
+
+	if ($num_rows > 0)
 	{
-		$group_name = $db->sql_fetchrowset($result);
-		$group_name[$db->sql_numrows($result)]['group_id'] = 0;
-		$group_name[$db->sql_numrows($result)]['group_name'] = $lang['Not_assigned'];
+		$group_name[$num_rows]['group_id'] = 0;
+		$group_name[$num_rows]['group_name'] = $lang['Not_assigned'];
 
 		for ($i = 0; $i < sizeof($group_name); $i++)
 		{
@@ -59,13 +53,15 @@ function group_select($select_name, $default_group = 0)
 			$group_select .= '<option value="' . $group_name[$i]['group_id'] . '"' . $selected . '>' . $group_name[$i]['group_name'] . '</option>';
 		}
 	}
-	$db->sql_freeresult($result);
 
 	$group_select .= '</select>';
 
 	return $group_select;
 }
 
+/**
+* select download mode
+*/
 function download_select($select_name, $group_id = 0)
 {
 	global $db, $types_download, $modes_download;
@@ -73,9 +69,10 @@ function download_select($select_name, $group_id = 0)
 	if ($group_id)
 	{
 		$sql = 'SELECT download_mode
-			FROM ' . EXTENSION_GROUPS_TABLE . "
-			WHERE group_id = $group_id";
-		if ( !($result = $db->sql_query($sql)) )
+			FROM ' . EXTENSION_GROUPS_TABLE . '
+			WHERE group_id = ' . (int) $group_id;
+
+		if (!($result = $db->sql_query($sql)))
 		{
 			message_die(GENERAL_ERROR, "Couldn't query Extension Groups Table", "", __LINE__, __FILE__, $sql);
 		}
@@ -111,6 +108,9 @@ function download_select($select_name, $group_id = 0)
 	return $group_select;
 }
 
+/**
+* select category types
+*/
 function category_select($select_name, $group_id = 0)
 {
 	global $db, $types_category, $modes_category;
@@ -118,7 +118,7 @@ function category_select($select_name, $group_id = 0)
 	$sql = 'SELECT group_id, cat_id
 		FROM ' . EXTENSION_GROUPS_TABLE;
 
-	if ( !($result = $db->sql_query($sql)) )
+	if (!($result = $db->sql_query($sql)))
 	{
 		message_die(GENERAL_ERROR, "Couldn't select Category", "", __LINE__, __FILE__, $sql);
 	}
@@ -170,6 +170,9 @@ function category_select($select_name, $group_id = 0)
 	return $group_select;
 }
 
+/**
+* Select size mode
+*/
 function size_select($select_name, $size_compare)
 {
 	global $lang;
@@ -190,6 +193,9 @@ function size_select($select_name, $size_compare)
 	return $select_field;
 }
 
+/**
+* select quota limit
+*/
 function quota_limit_select($select_name, $default_quota = 0)
 {
 	global $db, $lang;
@@ -223,6 +229,9 @@ function quota_limit_select($select_name, $default_quota = 0)
 	return $quota_select;
 }
 
+/**
+* select default quota limit
+*/
 function default_quota_limit_select($select_name, $default_quota = 0)
 {
 	global $db, $lang;

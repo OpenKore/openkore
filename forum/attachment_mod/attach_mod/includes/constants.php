@@ -1,28 +1,18 @@
 <?php
-/***************************************************************************
- *                               constants.php
- *                            -------------------
- *   begin                : Saturday, Mar 30, 2002
- *   copyright            : (C) 2002 Meik Sievertsen
- *   email                : acyd.burn@gmx.de
- *
- *   $Id: constants.php,v 1.30 2005/07/16 14:32:26 acydburn Exp $
- *
- *
- ***************************************************************************/
+/** 
+*
+* @package attachment_mod
+* @version $Id: constants.php,v 1.5 2006/04/22 16:21:09 acydburn Exp $
+* @copyright (c) 2002 Meik Sievertsen
+* @license http://opensource.org/licenses/gpl-license.php GNU Public License 
+*
+*/
 
-/***************************************************************************
- *
- *   This program is free software; you can redistribute it and/or modify
- *   it under the terms of the GNU General Public License as published by
- *   the Free Software Foundation; either version 2 of the License', or
- *   ('at your option) any later version.
- *
- ***************************************************************************/
-
-if ( !defined('IN_PHPBB') )
+/**
+*/
+if (!defined('IN_PHPBB'))
 {
-	die("Hacking attempt");
+	die('Hacking attempt');
 	exit;
 }
 
@@ -56,8 +46,8 @@ define('QUOTA_TABLE', $table_prefix . 'attach_quota');
 define('QUOTA_LIMITS_TABLE', $table_prefix . 'quota_limits');
 
 // Pages
-define('PAGE_UACP', -32);
-define('PAGE_RULES', -33);
+define('PAGE_UACP', -1210);
+define('PAGE_RULES', -1214);
 
 // Misc
 define('MEGABYTE', 1024);
@@ -72,6 +62,11 @@ define('GPERM_ALL', 0); // ALL FORUMS
 define('QUOTA_UPLOAD_LIMIT', 1);
 define('QUOTA_PM_LIMIT', 2);
 
-define('ATTACH_VERSION', '2.3.14');
+define('ATTACH_VERSION', '2.4.3');
+
+
+
+// Additional Constants
+
 
 ?>
