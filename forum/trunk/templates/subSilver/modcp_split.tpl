@@ -3,7 +3,8 @@
   <table width="100%" cellspacing="2" cellpadding="2" border="0" align="center">
 	<tr> 
 	  <td align="left" class="nav"><a href="{U_INDEX}" class="nav">{L_INDEX}</a><span class="nav"> 
-		-> <a href="{U_VIEW_FORUM}" class="nav">{FORUM_NAME}</a></span></td>
+		<!-- IF PARENT_FORUM --> -&gt; <a class="nav" href="{U_VIEW_PARENT_FORUM}">{PARENT_FORUM_NAME}</a> <!-- ENDIF -->
+		-&gt; <a href="{U_VIEW_FORUM}" class="nav">{FORUM_NAME}</a></span></td>
 	</tr>
   </table>
   <table width="100%" cellpadding="4" cellspacing="1" border="0" class="forumline">

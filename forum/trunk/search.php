@@ -1304,7 +1304,7 @@ else if ( $search_keywords != '' || $search_author != '' || $search_id )
 //
 // Search forum
 //
-$sql = "SELECT c.cat_title, c.cat_id, f.forum_name, f.forum_id  
+$sql = "SELECT c.cat_title, c.cat_id, f.forum_name, f.forum_id, f.forum_parent  
 	FROM " . CATEGORIES_TABLE . " c, " . FORUMS_TABLE . " f
 	WHERE f.cat_id = c.cat_id 
 	ORDER BY c.cat_order, f.forum_order";
@@ -1317,14 +1317,34 @@ if ( !$result )
 $is_auth_ary = auth(AUTH_READ, AUTH_LIST_ALL, $userdata);
 
 $s_forums = '';
+$list = array();
 while( $row = $db->sql_fetchrow($result) )
 {
 	if ( $is_auth_ary[$row['forum_id']]['auth_read'] )
 	{
+		$list[] = $row;
+	}
+}
+
+for( $i = 0; $i < count($list); $i++ )
+{
+	if( !$list[$i]['forum_parent'] )
+	{
+		$row = $list[$i];
 		$s_forums .= '<option value="' . $row['forum_id'] . '">' . $row['forum_name'] . '</option>';
 		if ( empty($list_cat[$row['cat_id']]) )
 		{
 			$list_cat[$row['cat_id']] = $row['cat_title'];
+		}
+
+		$parent_id = $row['forum_id'];
+		for( $j = 0; $j < count($list); $j++ )
+		{
+			if( $list[$j]['forum_parent'] == $parent_id )
+			{
+				$row = $list[$j];
+				$s_forums .= '<option value="' . $row['forum_id'] . '">-- ' . $row['forum_name'] . '</option>';
+			}
 		}
 	}
 }

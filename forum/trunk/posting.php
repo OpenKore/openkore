@@ -1057,7 +1057,34 @@ $template->set_filenames(array(
 	'pollbody' => 'posting_poll_body.tpl', 
 	'reviewbody' => 'posting_topic_review.tpl')
 );
-make_jumpbox('viewforum.'.$phpEx);
+// Begin Simple Subforums MOD
+$all_forums = array();
+make_jumpbox_ref('viewforum.'.$phpEx, $forum_id, $all_forums);
+
+$parent_id = 0;
+for( $i = 0; $i < count($all_forums); $i++ )
+{
+	if( $all_forums[$i]['forum_id'] == $forum_id )
+	{
+		$parent_id = $all_forums[$i]['forum_parent'];
+	}
+}
+
+if( $parent_id )
+{
+	for( $i = 0; $i < count($all_forums); $i++)
+	{
+		if( $all_forums[$i]['forum_id'] == $parent_id )
+		{
+			$template->assign_vars(array(
+				'PARENT_FORUM'			=> 1,
+				'U_VIEW_PARENT_FORUM'	=> append_sid("viewforum.$phpEx?" . POST_FORUM_URL .'=' . $all_forums[$i]['forum_id']),
+				'PARENT_FORUM_NAME'		=> $all_forums[$i]['forum_name'],
+				));
+		}
+	}
+}
+// End Simple Subforums MOD
 Multi_BBCode();
 
 $template->assign_vars(array(
