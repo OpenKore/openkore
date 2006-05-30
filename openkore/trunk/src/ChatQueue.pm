@@ -130,13 +130,13 @@ sub processChatCommand {
 		$timeout{ai_thanks_set}{time} = time;
 
 	} elsif ($switch eq "relog") {
-		relog($args[0]);
 		sendMessage($net, $type, getResponse("relogS"), $user) if $config{verbose};
+		relog($args[0]);
 		$timeout{ai_thanks_set}{time} = time;
 
 	} elsif ($switch eq "logout") {
-		quit();
 		sendMessage($net, $type, getResponse("quitS"), $user) if $config{verbose};
+		quit();
 		$timeout{ai_thanks_set}{time} = time;
 
 	} elsif ($switch eq "reload") {
@@ -469,8 +469,11 @@ sub processChatCommand {
 
 	# Kyrie
 	} elsif ($switch eq "kyrie"){
-		my $targetID = $accountID;
-		if ($char->{skills}{PR_KYRIE}{lv} > 0) {
+		my $targetID = getIDFromChat(\%players, $user, $after);
+		if ($targetID eq "") {
+			sendMessage($net, $type, getResponse("healF1"), $user) if $config{verbose};
+
+		} elsif ($char->{skills}{PR_KYRIE}{lv} > 0) {
 			my $failed = 1;
 			for (my $i = $char->{skills}{PR_KYRIE}{lv}; $i >= 1; $i--) {
 				if ($char->{sp} >= $skillsSP_lut{PR_KYRIE}{$i}) {
@@ -493,11 +496,8 @@ sub processChatCommand {
 
 	# Magnificat
 	} elsif ($switch eq "mag"){
-		my $targetID = getIDFromChat(\%players, $user, $after);
-		if ($targetID eq "") {
-			sendMessage($net, $type, getResponse("healF1"), $user) if $config{verbose};
-
-		} elsif ($char->{skills}{PR_MAGNIFICAT}{lv} > 0) {
+		my $targetID = $accountID;
+		if ($char->{skills}{PR_MAGNIFICAT}{lv} > 0) {
 			my $failed = 1;
 			for (my $i = $char->{skills}{PR_MAGNIFICAT}{lv}; $i >= 1; $i--) {
 				if ($char->{sp} >= $skillsSP_lut{PR_MAGNIFICAT}{$i}) {
