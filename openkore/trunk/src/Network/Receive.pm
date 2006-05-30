@@ -1101,8 +1101,8 @@ sub actor_movement_interrupted {
 	$coords{y} = $args->{y};
 
 	my $actor = Actor::get($args->{ID});
-	$actor->{pos} = \%coords;
-	$actor->{pos_to} = \%coords;
+	$actor->{pos} = {%coords};
+	$actor->{pos_to} = {%coords};
 	if ($actor->isa('Actor::You') || $actor->isa('Actor::Player')) {
 		$actor->{sitting} = 0;
 	}
@@ -3248,9 +3248,9 @@ sub monster_ranged_attack {
 	$coords2{y} = $args->{targetY};
 
 	my $monster = $monstersList->getByID($ID);
-	$monster->{pos_attack_info} = \%coords1 if ($monster);
-	$char->{pos} = \%coords2;
-	$char->{pos_to} = \%coords2;
+	$monster->{pos_attack_info} = {%coords1} if ($monster);
+	$char->{pos} = {%coords2};
+	$char->{pos_to} = {%coords2};
 	debug "Received attack location - monster: $coords1{x},$coords1{y} - " .
 		"you: $coords2{x},$coords2{y}\n", "parseMsg_move", 2;	
 }
