@@ -222,3 +222,8 @@ input.liteoption {
 	border: none;
 	background-color: #FAFAFA;
 }
+
+/* Begin Simple Subforums MOD */
+a.topic-new, a.topic-new:visited { color: {T_BODY_HLINK}; }
+a.topic-new:hover, a.topic-new:active { color: {T_BODY_LINK}; }
+/* End Simple Subforums MOD */

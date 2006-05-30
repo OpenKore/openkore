@@ -200,6 +200,12 @@ function get_userdata($user, $force_str = false)
 
 function make_jumpbox($action, $match_forum_id = 0)
 {
+	$list = array();
+	return make_jumpbox_ref($action, $match_forum_id, $list);
+}
+
+function make_jumpbox_ref($action, $match_forum_id, &$forums_list)
+{
 	global $template, $userdata, $lang, $db, $nav_links, $phpEx, $SID;
 
 //	$is_auth = auth(AUTH_VIEW, AUTH_LIST_ALL, $userdata);
@@ -236,6 +242,10 @@ function make_jumpbox($action, $match_forum_id = 0)
 		while ( $row = $db->sql_fetchrow($result) )
 		{
 			$forum_rows[] = $row;
+
+			// Begin Simple Subforums MOD
+			$forums_list[] = $row;
+			// End Simple Subforums MOD
 		}
 
 		if ( $total_forums = count($forum_rows) )
@@ -245,11 +255,14 @@ function make_jumpbox($action, $match_forum_id = 0)
 				$boxstring_forums = '';
 				for($j = 0; $j < $total_forums; $j++)
 				{
-					if ( $forum_rows[$j]['cat_id'] == $category_rows[$i]['cat_id'] && $forum_rows[$j]['auth_view'] <= AUTH_REG )
+					if ( !$forum_rows[$j]['forum_parent'] && !$forum_rows[$j]['forum_parent'] && $forum_rows[$j]['cat_id'] == $category_rows[$i]['cat_id'] && $forum_rows[$j]['auth_view'] <= AUTH_REG )
 					{
 
 //					if ( $forum_rows[$j]['cat_id'] == $category_rows[$i]['cat_id'] && $is_auth[$forum_rows[$j]['forum_id']]['auth_view'] )
 //					{
+						// Begin Simple Subforums MOD
+						$id = $forum_rows[$j]['forum_id'];
+						// End Simple Subforums MOD
 						$selected = ( $forum_rows[$j]['forum_id'] == $match_forum_id ) ? 'selected="selected"' : '';
 						$boxstring_forums .=  '<option value="' . $forum_rows[$j]['forum_id'] . '"' . $selected . '>' . $forum_rows[$j]['forum_name'] . '</option>';
 
@@ -261,6 +274,29 @@ function make_jumpbox($action, $match_forum_id = 0)
 							'url' => append_sid("viewforum.$phpEx?" . POST_FORUM_URL . "=" . $forum_rows[$j]['forum_id']),
 							'title' => $forum_rows[$j]['forum_name']
 						);
+
+						// Begin Simple Subforums MOD
+						for( $k = 0; $k < $total_forums; $k++ )
+						{
+							if ( $forum_rows[$k]['forum_parent'] == $id && $forum_rows[$k]['cat_id'] == $category_rows[$i]['cat_id'] && $forum_rows[$k]['auth_view'] <= AUTH_REG )
+							{
+//							if ( $forum_rows[$k]['forum_parent'] == $id && $forum_rows[$k]['cat_id'] == $category_rows[$i]['cat_id'] && $is_auth[$forum_rows[$k]['forum_id']]['auth_view'] )
+//							{
+								$selected = ( $forum_rows[$k]['forum_id'] == $match_forum_id ) ? 'selected="selected"' : '';
+								$boxstring_forums .=  '<option value="' . $forum_rows[$k]['forum_id'] . '"' . $selected . '>-- ' . $forum_rows[$k]['forum_name'] . '</option>';
+
+								//
+								// Add an array to $nav_links for the Mozilla navigation bar.
+								// 'chapter' and 'forum' can create multiple items, therefore we are using a nested array.
+								//
+								$nav_links['chapter forum'][$forum_rows[$k]['forum_id']] = array (
+									'url' => append_sid("viewforum.$phpEx?" . POST_FORUM_URL . "=" . $forum_rows[$k]['forum_id']),
+									'title' => $forum_rows[$k]['forum_name']
+								);
+								
+							}
+						}
+						// End Simple Subforums MOD
 								
 					}
 				}
