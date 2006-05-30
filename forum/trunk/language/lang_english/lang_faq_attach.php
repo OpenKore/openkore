@@ -1,23 +1,22 @@
 <?php
-/***************************************************************************
- *                            lang_faq_attach.php [English]
- *                              -------------------
- *     begin                : Tue Feb 12 2002
- *     copyright			: (C) 2002 torgeir andrew waterhouse
- *     email				: torgeir.waterhouse@forbrukerradet.no
- *
- *     $Id: lang_faq_attach.php,v 1.2 2002/08/11 15:37:32 meik Exp $
- *
- ****************************************************************************/
+/** 
+*
+* attachment mod faq [English]
+*
+* @package attachment_mod
+* @version $Id: lang_faq_attach.php,v 1.1 2005/11/05 10:25:02 acydburn Exp $
+* @copyright (c) 2002 torgeir andrew waterhouse
+* @license http://opensource.org/licenses/gpl-license.php GNU Public License 
+*
+*/
 
-/***************************************************************************
- *
- *   This program is free software; you can redistribute it and/or modify
- *   it under the terms of the GNU General Public License as published by
- *   the Free Software Foundation; either version 2 of the License, or
- *   (at your option) any later version.
- *
- ***************************************************************************/
+/**
+* DO NOT CHANGE
+*/
+if (!isset($faq) || !is_array($faq))
+{
+	$faq = array();
+}
 
 $faq[] = array("--","Attachments");
 

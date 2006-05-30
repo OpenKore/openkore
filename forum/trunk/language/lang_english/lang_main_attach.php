@@ -1,23 +1,22 @@
 <?php
-/***************************************************************************
- *                            lang_main_attach.php [English]
- *                              -------------------
- *     begin                : Thu Feb 07 2002
- *     copyright            : (C) 2002 Meik Sievertsen
- *     email                : acyd.burn@gmx.de
- *
- *     $Id: lang_main_attach.php,v 1.27 2003/01/16 11:11:56 acydburn Exp $
- *
- ****************************************************************************/
+/** 
+*
+* attachment mod main [English]
+*
+* @package attachment_mod
+* @version $Id: lang_main_attach.php,v 1.1 2005/11/05 10:25:02 acydburn Exp $
+* @copyright (c) 2002 Meik Sievertsen
+* @license http://opensource.org/licenses/gpl-license.php GNU Public License 
+*
+*/
 
-/***************************************************************************
- *
- *   This program is free software; you can redistribute it and/or modify
- *   it under the terms of the GNU General Public License as published by
- *   the Free Software Foundation; either version 2 of the License, or
- *   (at your option) any later version.
- *
- ***************************************************************************/
+/**
+* DO NOT CHANGE
+*/
+if (!isset($lang) || !is_array($lang))
+{
+	$lang = array();
+}
 
 //
 // Attachment Mod Main Language Variables

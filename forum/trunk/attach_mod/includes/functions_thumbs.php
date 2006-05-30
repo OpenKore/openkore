@@ -1,29 +1,19 @@
 <?php
-/***************************************************************************
- *                            functions_thumbs.php
- *                            -------------------
- *   begin                : Sat, Jul 27, 2002
- *   copyright            : (C) 2002 Meik Sievertsen
- *   email                : acyd.burn@gmx.de
- *
- *   $Id: functions_thumbs.php,v 1.29 2005/07/16 14:32:27 acydburn Exp $
- *
- *
- ***************************************************************************/
+/** 
+*
+* @package attachment_mod
+* @version $Id: functions_thumbs.php,v 1.3 2005/11/15 21:26:47 acydburn Exp $
+* @copyright (c) 2002 Meik Sievertsen
+* @license http://opensource.org/licenses/gpl-license.php GNU Public License 
+*
+*/
 
-/***************************************************************************
- *
- *   This program is free software; you can redistribute it and/or modify
- *   it under the terms of the GNU General Public License as published by
- *   the Free Software Foundation; either version 2 of the License, or
- *   (at your option) any later version.
- *
- *
- ***************************************************************************/
+/**
+* All Attachment Functions needed to create Thumbnails
+*/
 
-//
-// All Attachment Functions needed to create Thumbnails
-//
+/**
+*/
 if ( !defined('IN_PHPBB') )
 {
 	die('Hacking attempt');
@@ -32,9 +22,9 @@ if ( !defined('IN_PHPBB') )
 
 $imagick = '';
 
-//
-// Calculate the needed size for Thumbnail
-//
+/**
+* Calculate the needed size for Thumbnail
+*/
 function get_img_size_format($width, $height)
 {
 	// Maximum Width the Image can take
@@ -56,9 +46,9 @@ function get_img_size_format($width, $height)
 	}
 }
 
-//
-// Check if imagick is present
-//
+/**
+* Check if imagick is present
+*/
 function is_imagick() 
 {
 	global $imagick, $attach_config;
@@ -74,6 +64,9 @@ function is_imagick()
 	}
 }
 
+/**
+* Get supported image types
+*/
 function get_supported_image_types($type)
 {
 	if (@extension_loaded('gd'))
@@ -112,13 +105,14 @@ function get_supported_image_types($type)
 	return array('gd' => false);
 }
 
+/**
+* Create thumbnail
+*/
 function create_thumbnail($source, $new_file, $mimetype) 
 {
 	global $attach_config, $imagick;
 
-//	$source = amod_realpath($source);
-	
-	$source = realpath($source);
+	$source = amod_realpath($source);
 	$min_filesize = (int) $attach_config['img_min_thumb_filesize'];
 	$img_filesize = (@file_exists($source)) ? @filesize($source) : false;
 
@@ -126,7 +120,7 @@ function create_thumbnail($source, $new_file, $mimetype)
 	{
 		return false;
 	}
-    
+
 	list($width, $height, $type, ) = getimagesize($source);
 
 	if (!$width || !$height)
@@ -136,8 +130,7 @@ function create_thumbnail($source, $new_file, $mimetype)
 
 	list($new_width, $new_height) = get_img_size_format($width, $height);
 
-	$tmp_path = '';
-	$old_file = '';
+	$tmp_path = $old_file = '';
 
 	if (intval($attach_config['allow_ftp_upload']))
 	{
@@ -158,8 +151,12 @@ function create_thumbnail($source, $new_file, $mimetype)
 		{
 			$value[strlen($value)-1] = ' ';
 		}
-			
-		$new_file = trim($value) . '/t00000';
+
+		// 
+		$new_file = tempnam(trim($value), 't00000');
+
+		// We remove it now because it gets created again later
+		@unlink($new_file);
 	}
 
 	$used_imagick = false;
@@ -234,6 +231,8 @@ function create_thumbnail($source, $new_file, $mimetype)
 	if (intval($attach_config['allow_ftp_upload']))
 	{
 		$result = ftp_file($new_file, $old_file, $mimetype, true); // True for disable error-mode
+		@unlink($new_file);
+
 		if (!$result)
 		{
 			return false;
