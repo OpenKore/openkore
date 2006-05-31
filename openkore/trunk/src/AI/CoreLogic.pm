@@ -461,7 +461,7 @@ sub iterate {
 		my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime;
 		my $hormin = sprintf("%02d:%02d", $hour, $min);
 		my @wdays = ('sun','mon','tue','wed','thu','fri','sat');
-		debug "$hormin $wdays[$wday]\n", "autoBreakTime", 2;
+		debug "autoBreakTime: hormin = $hormin, weekday = $wdays[$wday]\n", "autoBreakTime", 2;
 		for (my $i = 0; exists $config{"autoBreakTime_$i"}; $i++) {
 			next if (!$config{"autoBreakTime_$i"});
 
@@ -469,20 +469,14 @@ sub iterate {
 				if ($config{"autoBreakTime_${i}_startTime"} eq $hormin) {
 					my ($hr1, $min1) = split /:/, $config{"autoBreakTime_${i}_startTime"};
 					my ($hr2, $min2) = split /:/, $config{"autoBreakTime_${i}_stopTime"};
-					my $halt_sec = 0;
-					my $hr = $hr2-$hr1;
-					my $min = $min2-$min1;
-					if ($hr < 0) {
-						$hr = $hr+24;
-					} elsif ($min < 0) {
-						$hr = 24;
-					}
-					my $reconnect_time = $hr * 3600 + $min * 60;
+					my $time1 = $hr1 * 60 * 60 + $min1 * 60;
+					my $time2 = $hr2 * 60 * 60 + $min2 * 60;
+					my $diff = ($time2 - $time1) % (60 * 60 * 24);
 
 					message TF("\nDisconnecting due to break time: %s to %s\n\n", $config{"autoBreakTime_$i"."_startTime"}, $config{"autoBreakTime_$i"."_stopTime"}), "system";
 					chatLog("k", TF("*** Disconnected due to Break Time: %s to %s ***\n", $config{"autoBreakTime_$i"."_startTime"}, $config{"autoBreakTime_$i"."_stopTime"}));
 
-					$timeout_ex{'master'}{'timeout'} = $reconnect_time;
+					$timeout_ex{'master'}{'timeout'} = $diff;
 					$timeout_ex{'master'}{'time'} = time;
 					$KoreStartTime = time;
 					$net->serverDisconnect();
