@@ -7,6 +7,7 @@ Bug fixes:
 - Win32 interface: fix compatibility with recent versions of ActivePerl.
 - Fix display of Clown/Gypsy class name.
 - Some Linux compatibility fixes.
+- Fix autoBreakTime.
 
 
 ==================
