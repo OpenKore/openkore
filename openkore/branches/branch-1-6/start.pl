@@ -1,3 +1,4 @@
+#!/usr/bin/env perl
 # Win32 Perl script launcher
 # This file is meant to be compiled by PerlApp. It acts like a mini-Perl interpreter.
 #
