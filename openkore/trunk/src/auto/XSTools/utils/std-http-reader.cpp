@@ -17,19 +17,33 @@
  */
 
 #include "std-http-reader.h"
-#define WIN32_MEAN_AND_LEAN
-#include <windows.h>
-#include <wininet.h>
-#include <string>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <assert.h>
+#include <string>
+#ifdef WIN32
+	#define WIN32_MEAN_AND_LEAN
+	#include <windows.h>
+	#include <wininet.h>
+#else
+	#include <unistd.h>
+	#include <curl/curl.h>
+	#include <pthread.h>
+#endif
+
 
 namespace OpenKore {
 
 	namespace {
-		#include "win32/http-reader.cpp"
+		#ifdef WIN32
+			#include "win32/http-reader.cpp"
+			#define NativeHttpReader WinHttpReader
+		#else
+			#include "unix/http-reader.cpp"
+			#define NativeHttpReader UnixHttpReader
+			#define Sleep(msec) usleep(msec * 1000)
+		#endif
 	}
 
 	StdHttpReader *
@@ -37,7 +51,7 @@ namespace OpenKore {
 			      const char *userAgent) {
 		assert(url != NULL);
 		assert(userAgent != NULL);
-		return new WinHttpReader(url, userAgent);
+		return new NativeHttpReader(url, userAgent);
 	}
 
 	char *
@@ -45,7 +59,7 @@ namespace OpenKore {
 				const char *userAgent) {
 		assert(url != NULL);
 		assert(userAgent != NULL);
-		WinHttpReader http(url, userAgent);
+		NativeHttpReader http(url, userAgent);
 
 		HttpReaderStatus status = http.getStatus();
 		while (status != HTTP_READER_DONE && status != HTTP_READER_ERROR) {
@@ -54,7 +68,7 @@ namespace OpenKore {
 		}
 
 		if (status == HTTP_READER_DONE) {
-			unsigned int len;
+			unsigned int len = 0;
 			const char *data = http.getData(len);
 			char *result = (char *) malloc(len + 1);
 			memcpy(result, data, len);

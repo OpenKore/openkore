@@ -48,6 +48,7 @@ DIRS=(.
 	src/auto/XSTools/translation
 	src/auto/XSTools/utils
 	src/auto/XSTools/utils/win32
+	src/auto/XSTools/utils/unix
 	src/auto/XSTools/utils/c-bindings
 	src/auto/XSTools/utils/perl
 )

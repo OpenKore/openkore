@@ -38,7 +38,7 @@ private:
 	 *         This string is guaranteed to be NULL-terminated.
 	 */
 	char *
-	strndup (const char *str, size_t size) {
+	strndup(const char *str, size_t size) {
 		char *result = (char *) NULL;
 		size_t len;
 
@@ -342,6 +342,15 @@ public:
 	virtual int
 	getSize() const {
 		assert(status != HTTP_READER_CONNECTING);
-		return size;
+		int result;
+
+		EnterCriticalSection((CRITICAL_SECTION *) &lock);
+		if (status == HTTP_READER_ERROR) {
+			result = -2;
+		} else {
+			result = size;
+		}
+		LeaveCriticalSection((CRITICAL_SECTION *) &lock);
+		return result;
 	}
 };

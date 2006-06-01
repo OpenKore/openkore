@@ -84,6 +84,8 @@ public:
 		this->createHttpReader = creatorFunc;
 	}
 
+	virtual ~Tester() {}
+
 	/** Run the unit tests. */
 	void
 	virtual run() {
@@ -136,10 +138,13 @@ private:
 	bool
 	testStatusTransitions(const char *url) {
 		HttpReader *http = createHttpReader(url);
-		HttpReaderStatus status = HTTP_READER_CONNECTING, oldStatus;
+		HttpReaderStatus status = HTTP_READER_CONNECTING;
+		HttpReaderStatus oldStatus;
+
 		do {
 			oldStatus = status;
 			status = http->getStatus();
+
 			switch (oldStatus) {
 			case HTTP_READER_CONNECTING:
 				assert(status == HTTP_READER_CONNECTING
@@ -171,6 +176,7 @@ private:
 			assert(http->getStatus() == HTTP_READER_DONE);
 		} else {
 			assert(http->getStatus() == HTTP_READER_ERROR);
+			assert(http->getSize() == -2);
 		}
 		delete http;
 		return status == HTTP_READER_DONE;
@@ -186,6 +192,7 @@ private:
 		}
 
 		if (http->getStatus() != HTTP_READER_DONE) {
+			assert(http->getSize() == -2);
 			delete http;
 			return false;
 		}
@@ -237,6 +244,8 @@ private:
 		if (result) {
 			assert(expectedSize == size);
 			assert(expectedChecksum == checksum);
+		} else {
+			assert(http->getSize() == -2);
 		}
 
 		delete http;
@@ -261,7 +270,7 @@ private:
 	// Test whether cancellation while downloading works.
 	// You must pass an URL to a large file so that download
 	// takes a while to complete.
-	bool
+	void
 	testDownloadCancellation(const char *url) {
 		HttpReader *http = createHttpReader(url);
 		time_t time1, time2;
