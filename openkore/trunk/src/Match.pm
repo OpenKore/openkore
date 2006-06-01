@@ -38,6 +38,17 @@ use Utils;
 # Returns: an Actor::Player object, or undef if not found.
 #
 # Find an player in the global player list based on the given match criteria.
+# You can either find a player by name, or by number (as displayed in the 'pl' command).
+#
+# Example:
+# # Suppose these players are on screen:
+# # 0     SuperPlayer
+# # 1     BigKnight
+# # 3     MyHunter
+# Match::player(1);           # Returns the Actor::Player object for BigKnight
+# Match::player(2);           # undef - player 2 does not exist
+# Match::player("MyHunter");  # Returns the Actor::Player object for MyHunter
+# Match::player("someone");   # undef - there is no such player on screen
 sub player {
 	my $ID = shift;
 	my $partial = shift;
