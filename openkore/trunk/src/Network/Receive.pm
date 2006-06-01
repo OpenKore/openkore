@@ -518,7 +518,7 @@ sub actor_action {
 		} else {
 			message TF("%s is standing.\n", getActorName($args->{sourceID})), 'parseMsg_statuslook', 2;
 			my $player = $playersList->getByID($args->{sourceID});
-			$player->{sitting} = 1 if ($player);
+			$player->{sitting} = 0 if ($player);
 		}
 		Misc::checkValidity("actor_action (stand)");
 
