@@ -20,7 +20,7 @@
 
 namespace OpenKore {
 
-	const char *const HttpReader::DEFAULT_USER_AGENT = "VisualKore";
+	const char *const HttpReader::DEFAULT_USER_AGENT = "OpenKore HttpReader";
 
 	HttpReader::~HttpReader() {
 	}
