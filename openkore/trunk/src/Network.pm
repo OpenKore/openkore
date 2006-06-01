@@ -428,7 +428,7 @@ sub checkConnection {
 			error TF("Invalid server specified, server %s does not exist...\n", $config{server}), "connection";
 			message T("Choose your server.  Enter the server number: "), "input";
 			$waitingForInput = 1;
-			configModify('server', '', 1);
+			main::configModify('server', '', 1);
 			undef $conState_tries;
 			return;
 		}
