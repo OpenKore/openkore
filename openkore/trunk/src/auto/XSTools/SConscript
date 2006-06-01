@@ -48,15 +48,16 @@ if win32:
 	XS_sources['win32/wrapper.xs'] = 'win32/wrapper.c'
 
 ## Utils
-if win32:
-	sources += [
-		'utils/http-reader.cpp',
-		'utils/std-http-reader.cpp',
-		'utils/mirror-http-reader.cpp',
-		'utils/c-bindings/http-reader.cpp',
-		'utils/perl/HttpReader.cpp'
-	]
-	XS_sources['utils/perl/HttpReader.xs'] = 'utils/perl/HttpReader.cpp'
+sources += [
+	'utils/http-reader.cpp',
+	'utils/std-http-reader.cpp',
+	'utils/mirror-http-reader.cpp',
+	'utils/c-bindings/http-reader.cpp',
+	'utils/perl/HttpReader.cpp'
+]
+XS_sources['utils/perl/HttpReader.xs'] = 'utils/perl/HttpReader.cpp'
+if not win32:
+	perlenv.ParseConfig('curl-config --cflags --libs')
 
 ### Misc
 sources += [

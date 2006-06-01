@@ -89,10 +89,29 @@ def CheckReadline(context):
 	context.Result(result)
 	return result
 
+def CheckLibCurl(context):
+	context.Message('Checking for libcurl...')
+	(input, output, error) = os.popen3('curl-config --version', 'r')
+	if input != None:
+		input.close()
+	if error != None:
+		error.close()
+	if output != None:
+		version = "\n".join(output.readlines())
+		output.close()
+		version = version.rstrip("\n")
+		version = version.rstrip("\r")
+		result = version
+	else:
+		result = False
+	context.Result(result)
+	return result
+
 
 conf = Configure(env, custom_tests = {
 	'CheckPerl' : CheckPerl,
-	'CheckReadline' : CheckReadline
+	'CheckReadline' : CheckReadline,
+	'CheckLibCurl'  : CheckLibCurl
 })
 if not conf.CheckPerl():
 	print "You do not have Perl installed! Read:"
@@ -104,11 +123,16 @@ if not win32:
 		print "You don't have GNU readline installed, or your version of GNU readline is not recent enough! Read:"
 		print "http://www.openkore.com/wiki/index.php/How_to_run_OpenKore_on_Linux/Unix#GNU_readline"
 		Exit(1)
+	if not conf.CheckLibCurl():
+		print "You don't have libcurl installed. Please download it at:";
+		print "http://curl.haxx.se/libcurl/";
+		Exit(1)
 conf.Finish()
 
 
 ### Environment setup ###
 
+# Standard environment for programs
 env['CCFLAGS'] = ['-Wall', '-g', '-O2', '-pipe']
 env['LINKFLAGS'] = []
 env['LIBPATH'] = []
@@ -121,6 +145,7 @@ if cygwin:
 env.Replace(CXXFLAGS = env['CCFLAGS'])
 
 
+# Environment for libraries
 libenv = env.Copy()
 if win32:
 	if cygwin:
@@ -132,6 +157,7 @@ elif not darwin:
 libenv.Replace(CXXFLAGS = libenv['CCFLAGS'])
 
 if cygwin:
+	# We want to build native Win32 DLLs on Cygwin
 	def linkDLLAction(target, source, env):
 		sources = []
 		for f in source:
@@ -197,6 +223,7 @@ else:
 libenv['BUILDERS']['NativeDLL'] = NativeDLLBuilder
 
 
+# Environment for Perl libraries
 perlenv = libenv.Copy()
 if win32:
 	perlenv['CCFLAGS'] += Split('-Wno-comments')

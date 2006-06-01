@@ -22,8 +22,13 @@
 #include <string.h>
 #include <assert.h>
 
-#define WIN32_MEAN_AND_LEAN
-#include <windows.h>
+// Platform abstraction layer.
+#ifdef WIN32
+	#include "win32/platform.h"
+#else
+	#include "unix/platform.h"
+#endif
+
 
 using namespace std;
 
@@ -38,11 +43,11 @@ namespace OpenKore {
 	class _MirrorHttpReaderPrivate {
 	private:
 		MirrorHttpReader *parent;
-		HANDLE thread;
-		CRITICAL_SECTION cs;
+		Thread thread;
+		Mutex mutex;
 		bool stop;
 
-		static DWORD WINAPI threadEntry(void *arg) {
+		static ThreadValue ThreadCallConvention threadEntry(void *arg) {
 			_MirrorHttpReaderPrivate *priv = (_MirrorHttpReaderPrivate *) arg;
 			MirrorHttpReader *self = priv->parent;
 
@@ -88,32 +93,29 @@ namespace OpenKore {
 				priv->unlock();
 			}
 
-			return 0;
+			return THREAD_DEFAULT_RETURN_VALUE;
 		}
 
 	public:
 		_MirrorHttpReaderPrivate(MirrorHttpReader *http) {
-			DWORD threadID;
-
-			InitializeCriticalSection(&cs);
 			parent = http;
 			stop = false;
-			thread = CreateThread(NULL, 0, threadEntry, this,
-				0, &threadID);
+			NewMutex(mutex);
+			NewThread(thread, threadEntry, this);
 		}
 
 		~_MirrorHttpReaderPrivate() {
 			stop = true;
-			WaitForSingleObject(thread, INFINITE);
-			CloseHandle(thread);
+			WaitThread(thread);
+			FreeMutex(mutex);
 		}
 
 		void lock() {
-			EnterCriticalSection(&cs);
+			LockMutex(mutex);
 		}
 
 		void unlock() {
-			LeaveCriticalSection(&cs);
+			UnlockMutex(mutex);
 		}
 	};
 

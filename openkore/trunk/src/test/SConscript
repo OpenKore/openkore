@@ -19,7 +19,6 @@ if not win32:
 		'consoleui-test.cpp',
 		dir + '/consoleui.cpp'
 	])
-
 else:
 	dir = XSTools_dir + '/utils'
 
@@ -32,3 +31,18 @@ else:
 		dir + '/std-http-reader.cpp',
 		dir + '/mirror-http-reader.cpp'
 	])
+
+dir = XSTools_dir + '/utils'
+e = env.Copy()
+e.Append(CPPPATH = dir)
+if win32:
+	e.Append(LIBS = ['wininet'])
+else:
+	e.ParseConfig('curl-config --cflags --libs')
+	e.Append(LINKFLAGS = ['-pthread'])
+e.Program('http-reader-test', [
+	'http-reader-test.cpp',
+	dir + '/http-reader.cpp',
+	dir + '/std-http-reader.cpp',
+	dir + '/mirror-http-reader.cpp'
+])
