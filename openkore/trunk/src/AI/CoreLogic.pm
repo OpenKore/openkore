@@ -321,7 +321,7 @@ sub iterate {
 		} elsif ($dist > 2) {
 			if (!$config{itemsTakeAuto_new}) {
 				my (%vec, %pos);
-				getVector(\%vec, $items{$ID}{pos}, $myPos);
+				getVector(\%vec, $item->{pos}, $myPos);
 				moveAlongVector(\%pos, $myPos, \%vec, $dist - 1);
 				move($pos{x}, $pos{y});
 			} else {
@@ -331,6 +331,11 @@ sub iterate {
 			}
 
 		} elsif (timeOut($timeout{ai_take})) {
+			my %vec;
+			my $direction;
+			getVector(\%vec, $item->{pos}, $myPos);
+			$direction = int(sprintf("%.0f", (360 - vectorToDegree(\%vec)) / 45)) % 8;
+			sendLook($net, $direction, 0) if ($direction != $char->{look}{body});
 			sendTake($net, $ID);
 			$timeout{ai_take}{time} = time;
 		}
