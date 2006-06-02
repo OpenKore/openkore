@@ -12,7 +12,7 @@
 		DWORD threadID; \
 		handle = CreateThread(NULL, 0, entry, userData, 0, &threadID); \
 	} while (0)
-#define WaitThread(handle) WaitForSingleObject(handle); CloseHandle(handle)
+#define WaitThread(handle) WaitForSingleObject(handle, INFINITE); CloseHandle(handle)
 #define NewMutex(mutex) InitializeCriticalSection(&mutex)
 #define FreeMutex(mutex)
 #define LockMutex(mutex) EnterCriticalSection(&mutex)
