@@ -3,6 +3,7 @@
 #include "XSUB.h"
 
 #include "../http-reader.h"
+#include "../std-http-reader.h"
 #include "../mirror-http-reader.h"
 
 using namespace std;
@@ -57,6 +58,22 @@ HttpReader::getSize()
 
 void
 HttpReader::DESTROY()
+
+
+MODULE = Utils::StdHttpReader   PACKAGE = StdHttpReader
+
+void
+init()
+CODE:
+	StdHttpReader::init();
+
+StdHttpReader *
+StdHttpReader::new(url)
+	char *url
+CODE:
+	RETVAL = StdHttpReader::create(url);
+OUTPUT:
+	RETVAL
 
 
 MODULE = Utils::HttpReader	PACKAGE = MirrorHttpReader

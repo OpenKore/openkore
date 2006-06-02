@@ -1,5 +1,6 @@
 TYPEMAP
 HttpReader *		O_OBJECT
+StdHttpReader *		O_OBJECT
 MirrorHttpReader *	O_OBJECT
 HttpReaderStatus	T_IV
 

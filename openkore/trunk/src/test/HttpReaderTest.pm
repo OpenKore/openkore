@@ -16,6 +16,7 @@ use constant INVALID_URL => "http://111.111.111.111:82";
 
 sub start {
 	print "### Starting HttpReaderTest\n";
+	StdHttpReader::init();
 	HttpReaderTest->new()->run();
 }
 

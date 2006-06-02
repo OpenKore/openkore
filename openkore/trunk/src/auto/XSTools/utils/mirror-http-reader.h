@@ -70,6 +70,9 @@ namespace OpenKore {
 		 * Create a new MirrorHttpReader object. It will immediately
 		 * start connecting and downloading.
 		 *
+		 * Before creating a MirrorHttpReader, you must have called
+		 * StdHttpReader::init().
+		 *
 		 * @param urls     A list of mirror URLs to try.
 		 * @param timeout  The maximum amount of time (in miliseconds) that MirrorHttpReader
 		 *                 is allowed to spend on connecting to one mirror.
@@ -77,7 +80,9 @@ namespace OpenKore {
 		 *                 undefined; it may be 30 seconds or forever, for example).
 		 *                 This parameter does not affect the download time.
 		 * @param userAgent  The useragent string to use.
-		 * @require !urls.empty()
+		 * @require
+		 *     !urls.empty()
+		 *     StdHttpReader::init() must have been called.
 		 */
 		MirrorHttpReader(const std::list<const char *> &urls,
 				 unsigned int timeout = 0,

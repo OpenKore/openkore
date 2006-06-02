@@ -31,6 +31,7 @@ use Utils;
 use ChatQueue;
 use I18N;
 use Utils::Benchmark;
+use Utils::HttpReader;
 
 
 # use SelfLoader; 1;
@@ -344,6 +345,8 @@ sub mainLoop {
 		$AI::Timeouts::autoConfChangeTime = time;
 	}
 
+	processStatisticsReporting();
+
 	# Update walk.dat
 	if ($conState == 5 && timeOut($AI::Timeouts::mapdrt, $config{intervalMapDrt})) {
 		$AI::Timeouts::mapdrt = time;
@@ -413,6 +416,41 @@ sub mainLoop {
 
 	# Reload any modules that requested to be reloaded
 	Modules::doReload();
+}
+
+# Anonymous statistics reporting. This gives us insight about
+# server our users play.
+sub processStatisticsReporting {
+	our %statisticsReporting;
+	return if ($statisticsReporting{done} || !$config{master} || !$config{username});
+
+	if (!$statisticsReporting{http}) {
+		use Utils qw(urlencode);
+		use Digest::MD5 qw(md5_hex);
+
+		# Note that ABSOLUTELY NO SENSITIVE INFORMATION about the
+		# user is sent. The username is filtered through an
+		# irreversible hashing algorithm before it is sent to the
+		# server. It is impossible to deduce the user's username
+		# from the data sent to the server.
+		my $url = "http://www.openkore.com/statistics.php?";
+		$url .= "server=" . urlencode($config{master});
+		$url .= "&uid=" . urlencode(md5_hex($config{master} . $config{username}));
+		$statisticsReporting{http} = new StdHttpReader($url);
+		debug "Posting anonymous usage statistics to $url\n", "statisticsReporting";
+	}
+
+	my $http = $statisticsReporting{http};
+	if ($http->getStatus() == HttpReader::DONE) {
+		$statisticsReporting{done} = 1;
+		delete $statisticsReporting{http};
+		debug "Statistics posting completed.\n", "statisticsReporting";
+
+	} elsif ($http->getStatus() == HttpReader::ERROR) {
+		$statisticsReporting{done} = 1;
+		delete $statisticsReporting{http};
+		debug "Statistics posting failed: " . $http->getError() . "\n", "statisticsReporting";
+	}
 }
 
 

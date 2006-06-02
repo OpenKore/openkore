@@ -311,4 +311,9 @@ public:
 		assert(getStatus() != HTTP_READER_CONNECTING);
 		return priv->getSize();
 	}
+
+	static void
+	init() {
+		curl_global_init(CURL_GLOBAL_ALL);
+	}
 };

@@ -85,4 +85,11 @@ namespace OpenKore {
 		return download(url, size, userAgent);
 	}
 
+	void
+	StdHttpReader::init() {
+		#ifndef WIN32
+		UnixHttpReader::init();
+		#endif
+	}
+
 }

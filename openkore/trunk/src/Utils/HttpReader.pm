@@ -25,6 +25,11 @@ use constant ERROR => 3;
 XSTools::bootModule('Utils::HttpReader');
 
 
+package StdHttpReader;
+
+use base qw(HttpReader);
+
+
 package MirrorHttpReader;
 
 use base qw(HttpReader);
