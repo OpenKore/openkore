@@ -3889,7 +3889,7 @@ sub cmdWeight {
 
 	$itemWeight ||= 1;
 
-	if ($itemWeight !~ /^\d+$/) {
+	if ($itemWeight !~ /^\d+(\.\d+)?$/) {
 		error T("Syntax error in function 'weight' (Inventory Weight Info)\n" .
 			"Usage: weight [item weight]\n");
 		return;
