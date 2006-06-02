@@ -3,6 +3,7 @@ Import('*')
 
 XSTools_dir = '../auto/XSTools'
 
+### consoleui-test ###
 if not win32:
 	dir = XSTools_dir + '/unix'
 
@@ -19,19 +20,8 @@ if not win32:
 		'consoleui-test.cpp',
 		dir + '/consoleui.cpp'
 	])
-else:
-	dir = XSTools_dir + '/utils'
 
-	e = env.Copy()
-	e.Append(CPPPATH = dir)
-	e.Append(LIBS = ['wininet'])
-	e.Program('http-reader-test', [
-		'http-reader-test.cpp',
-		dir + '/http-reader.cpp',
-		dir + '/std-http-reader.cpp',
-		dir + '/mirror-http-reader.cpp'
-	])
-
+### http-reader-test ###
 dir = XSTools_dir + '/utils'
 e = env.Copy()
 e.Append(CPPPATH = dir)
