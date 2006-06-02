@@ -14,20 +14,16 @@ Powered by <a href="http://www.phpbb.com/" target="_phpbb" class="copyright">php
 
 <br/>
 <div id="statcounter" style="text-align: center;">
-	<!-- Start of StatCounter Code -->
 	<script type="text/javascript">
-	var sc_project=1188444;
-	var sc_invisible=1;
-	var sc_partition=10;
-	var sc_security="f6c0ca54";
+	var sc_project=1188444; 
+	var sc_invisible=1; 
+	var sc_partition=10; 
+	var sc_security="f6c0ca54"; 
 	</script>
 
 	<script type="text/javascript" src="http://www.statcounter.com/counter/counter.js"></script>
-	<noscript>
-		<div><a href="http://www.statcounter.com/" target="_blank"><img  src="http://c11.statcounter.com/counter.php?sc_project=1188444&amp;amp;java=0&amp;amp;security=f6c0ca54&amp;amp;invisible=1" alt="html hit counter"></a></div>
-	</noscript>
-	<!-- End of StatCounter Code -->
-	<a href="http://my.statcounter.com/project/standard/stats.php?project_id=1188444&amp;amp;guest=1">View My Stats</a>
+	<noscript><div><a href="http://www.statcounter.com/" target="_blank"><img src="http://c11.statcounter.com/counter.php?sc_project=1188444&amp;amp;java=0&amp;amp;security=f6c0ca54&amp;amp;invisible=1" alt="advanced web statistics"></a></div></noscript>
+	<!-- End of StatCounter Code --><a href="http://my.statcounter.com/project/standard/stats.php?project_id=1188444&amp;guest=1">View My Stats</a>
 </div>
 
 		</td>

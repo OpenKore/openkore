@@ -45,6 +45,7 @@
 		<li><a href="http://www.openkore-brasil.com/" title="Brazilian forum"><img src="images/brazil.png" width="48" height="48" alt=""><br>Brazil</a></li>
 		<li><a href="http://darkmoon.ath.cx/" title="Filipino forum"><img src="images/philippines.png" width="48" height="48" alt=""><br>Philippines</a></li>
 		<li><a href="http://www.d-bests.com/" title="Indonesian forum"><img src="images/indonesia.png" width="48" height="48" alt=""><br>Indonesia</a></li>
+		<li><a href="http://ro.yyro.com/thread.php?fid=23" title="Chinese forum"><img src="images/chinese.png" width="48" height="48" alt=""><br>中文</a></li>
 		</ul>
 	</div>
 
