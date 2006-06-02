@@ -92,6 +92,7 @@ sub initHandlers {
 	g                  => \&cmdGuildChat,
 	getplayerinfo      => \&cmdGetPlayerInfo,
 	guild              => \&cmdGuild,
+	help               => \&cmdHelp,
 	i                  => \&cmdInventory,
 	identify           => \&cmdIdentify,
 	ignore             => \&cmdIgnore,
@@ -103,7 +104,6 @@ sub initHandlers {
 	kill               => \&cmdKill,
 	look               => \&cmdLook,
 	lookp              => \&cmdLookPlayer,
-	help               => \&cmdHelp,
 	memo               => \&cmdMemo,
 	ml                 => \&cmdMonsterList,
 	move               => \&cmdMove,
@@ -137,6 +137,7 @@ sub initHandlers {
 	sm                 => \&cmdUseSkill,
 	sp                 => \&cmdPlayerSkill,
 	ss                 => \&cmdUseSkill,
+	ssp                => \&cmdUseSkill,
 	st                 => \&cmdStats,
 	stand              => \&cmdStand,
 	stat_add           => \&cmdStatAdd,
@@ -3764,6 +3765,13 @@ sub cmdUseSkill {
 			return;
 		}
 		$target = $monsters{$targetID};
+	} elsif ($switch eq 'ssp') {
+		$targetID = $spellsID[$targetNum];
+		if (!$targetID) {
+			error TF("Spell %d does not exist.\n", $targetNum);
+			return;
+		}
+		$target = $spells{$targetID};
 	}
 
 	# Resolve target location as necessary

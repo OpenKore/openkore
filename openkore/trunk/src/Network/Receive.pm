@@ -1202,6 +1202,8 @@ sub area_spell {
 	$spells{$ID}{'sourceID'} = $sourceID;
 	$spells{$ID}{'pos'}{'x'} = $x;
 	$spells{$ID}{'pos'}{'y'} = $y;
+	$spells{$ID}{'pos_to'}{'x'} = $x;
+	$spells{$ID}{'pos_to'}{'y'} = $y;
 	my $binID = binAdd(\@spellsID, $ID);
 	$spells{$ID}{'binID'} = $binID;
 	$spells{$ID}{'type'} = $type;

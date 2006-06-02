@@ -176,6 +176,8 @@ New commands:
 - ai manual: Pause automated botting and allow manual control
 - ai auto: Same as 'ai on'
 - guild ally <playerID | name> : ally with another guild
+- ssp: Same as sm and sp commands, but takes a spell # as parameter
+  this is for skills used for spells/traps like Remove Trap
 
 Internal:
 - Implemented the beginning of a localization framework.
@@ -228,6 +230,7 @@ Credits:
 - lighthazen: major help on cleaning up old servers.txt entries
 - DesperadoStrike: new monster names
 - patapum: new hooks and some bug fixes
+- chade: ssp command
 
 
 ==================
