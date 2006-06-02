@@ -39,8 +39,8 @@ private:
 	char *url;
 	/** @invariant userAgent != NULL */
 	char *userAgent;
-	bool lockInitialized;
-	pthread_mutex_t lock;
+	bool mutexInitialized;
+	pthread_mutex_t mutex;
 	pthread_t thread;
 
 	CURL *handle;
@@ -50,9 +50,11 @@ private:
 	writeCallback(void *ptr, size_t size, size_t nmemb, void *user_data) {
 		Private *self = (Private *) user_data;
 
-		pthread_mutex_lock(&self->lock);
+		self->lock();
 
 		self->status = HTTP_READER_DOWNLOADING;
+		self->downloadBuffer.append(static_cast<const char *>(ptr), size * nmemb);
+
 		if (self->size == -1) {
 			double length;
 
@@ -62,9 +64,7 @@ private:
 			}
 		}
 
-		self->downloadBuffer.append(static_cast<const char *>(ptr), size * nmemb);
-
-		pthread_mutex_unlock(&self->lock);
+		self->unlock();
 		return size * nmemb;
 	}
 
@@ -85,42 +85,58 @@ private:
 			curl_easy_setopt(self->handle, CURLOPT_FAILONERROR, 1);
 
 			if (curl_easy_perform(self->handle) == 0) {
-				pthread_mutex_lock(&self->lock);
+				self->lock();
 				self->status = HTTP_READER_DONE;
-				pthread_mutex_unlock(&self->lock);
+				self->unlock();
 			} else {
-				pthread_mutex_lock(&self->lock);
+				self->lock();
 				self->status = HTTP_READER_ERROR;
 				self->error = "Cannot send HTTP request.";
 				self->size = -2;
-				pthread_mutex_unlock(&self->lock);
+				self->unlock();
 			}
 		} else {
-			pthread_mutex_lock(&self->lock);
+			self->lock();
 			self->status = HTTP_READER_ERROR;
 			self->error = "Cannot initialize libcurl.";
 			self->size = -2;
-			pthread_mutex_unlock(&self->lock);
+			self->unlock();
 		}
 
 		self->unref();
 		return NULL;
 	}
 
+	void
+	lock() const {
+		if (mutexInitialized) {
+			pthread_mutex_lock((pthread_mutex_t *) &mutex);
+		}
+	}
+
+	void
+	unlock() const {
+		if (mutexInitialized) {
+			pthread_mutex_unlock((pthread_mutex_t *) &mutex);
+		}
+	}
+
 public:
 	Private(const char *url, const char *userAgent) {
 		refCount = 1;
+		this->url = NULL;
+		this->userAgent = NULL;
 		handle = NULL;
 		status = HTTP_READER_ERROR;
 		size = -2;
 
-		if (pthread_mutex_init(&lock, NULL) != 0) {
+		if (pthread_mutex_init(&mutex, NULL) != 0) {
 			error = "Cannot initialize mutex.";
-			lockInitialized = false;
+			mutexInitialized = false;
 			return;
 		}
 
-		lockInitialized = true;
+		mutexInitialized = true;
 		this->url = strdup(url);
 		this->userAgent = strdup(userAgent);
 
@@ -149,14 +165,14 @@ public:
 	}
 
 	~Private() {
-		free(url);
-		free(userAgent);
-		if (handle != NULL) {
+		if (url != NULL)
+			free(url);
+		if (userAgent != NULL)
+			free(userAgent);
+		if (handle != NULL)
 			curl_easy_cleanup(handle);
-		}
-		if (lockInitialized) {
-			pthread_mutex_destroy(&lock);
-		}
+		if (mutexInitialized)
+			pthread_mutex_destroy(&mutex);
 	}
 
 	/**
@@ -164,9 +180,9 @@ public:
 	 */
 	void
 	ref() {
-		pthread_mutex_lock(&lock);
+		lock();
 		refCount++;
-		pthread_mutex_unlock(&lock);
+		unlock();
 	}
 
 	/**
@@ -177,10 +193,10 @@ public:
 	unref() {
 		bool mustDelete;
 
-		pthread_mutex_lock(&lock);
+		lock();
 		refCount--;
 		mustDelete = refCount == 0;
-		pthread_mutex_unlock(&lock);
+		unlock();
 		if (mustDelete) {
 			delete this;
 		}
@@ -190,9 +206,9 @@ public:
 	getStatus() const {
 		HttpReaderStatus result;
 
-		pthread_mutex_lock((pthread_mutex_t *) &lock);
+		lock();
 		result = status;
-		pthread_mutex_unlock((pthread_mutex_t *) &lock);
+		unlock();
 		return result;
 	}
 
@@ -200,9 +216,9 @@ public:
 	getError() const {
 		const char *result;
 
-		pthread_mutex_lock((pthread_mutex_t *) &lock);
+		lock();
 		result = error;
-		pthread_mutex_unlock((pthread_mutex_t *) &lock);
+		unlock();
 		return result;
 	}
 
@@ -210,7 +226,7 @@ public:
 	pullData(void *buf, unsigned int size) {
 		int result;
 
-		pthread_mutex_lock((pthread_mutex_t *) &lock);
+		lock();
 
 		switch (status) {
 		case HTTP_READER_ERROR:
@@ -245,7 +261,7 @@ public:
 			break;
 		};
 
-		pthread_mutex_unlock((pthread_mutex_t *) &lock);
+		unlock();
 
 		return result;
 	}
@@ -260,9 +276,9 @@ public:
 	getSize() const {
 		int result;
 
-		pthread_mutex_lock((pthread_mutex_t *) &lock);
+		lock();
 		result = size;
-		pthread_mutex_unlock((pthread_mutex_t *) &lock);
+		unlock();
 		return result;
 	}
 };
