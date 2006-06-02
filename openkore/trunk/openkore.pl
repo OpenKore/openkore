@@ -221,6 +221,7 @@ use ActorList;
 use Interface;
 use ChatQueue;
 use Utils::Benchmark;
+use Utils::HttpReader;
 use Poseidon::Client;
 Modules::register(qw/Globals Modules Log Utils Settings Plugins FileParsers
 	Network::Receive Network::Send Commands Misc AI AI::CoreLogic Skills
@@ -444,6 +445,7 @@ foreach my $list ($monstersList, $playersList, $petsList, $npcsList, $portalsLis
 	$list->onClearBegin()->add(undef, \&actorListClearing);
 }
 
+StdHttpReader::init();
 initStatVars();
 initRandomRestart();
 initConfChange();

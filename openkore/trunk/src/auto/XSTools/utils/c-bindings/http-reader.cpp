@@ -49,6 +49,11 @@ o_mirror_http_reader_new(const char *urls[]) {
 	return reader;
 }
 
+O_DECL(void)
+o_std_http_reader_init() {
+	StdHttpReader::init();
+}
+
 O_DECL(OHttpReader *)
 o_std_http_reader_new(const char *url) {
 	OHttpReader *reader;

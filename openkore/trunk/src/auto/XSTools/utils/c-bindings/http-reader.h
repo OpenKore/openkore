@@ -32,6 +32,7 @@ typedef enum {
 typedef struct _OHttpReader OHttpReader;
 
 O_DECL(OHttpReader *) o_mirror_http_reader_new(const char *urls[]);
+O_DECL(void)          o_std_http_reader_init();
 O_DECL(OHttpReader *) o_std_http_reader_new(const char *url);
 
 O_DECL(OHttpReaderStatus) o_http_reader_get_status(OHttpReader *http);

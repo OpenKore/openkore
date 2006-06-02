@@ -352,6 +352,7 @@ private:
 
 int
 main() {
+	StdHttpReader::init();
 	Tester *tester;
 
 	printf("### StdHttpReader\n");

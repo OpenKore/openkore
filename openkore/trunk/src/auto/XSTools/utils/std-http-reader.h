@@ -36,12 +36,27 @@ namespace OpenKore {
 	class StdHttpReader: public HttpReader {
 	public:
 		/**
+		 * Initialize any subsystems that StdHttpReader will need.
+		 * This function must be called before you may call
+		 * StdHttpReader::create()
+		 *
+		 * You may only call this function once.
+		 */
+		static void init();
+
+		/**
 		 * Create a new StdHttpReader object. It will immediately start
 		 * connecting and downloading.
 		 *
+		 * Before calling this function, you must have called init()
+		 * exactly once.
+		 *
 		 * @param url        The URL to download.
 		 * @param userAgent  The useragent string to use.
-		 * @require url != NULL && userAgent != NULL
+		 * @require
+		 *     url != NULL
+		 *     userAgent != NULL
+		 *     init() must have been called.
 		 */
 		static StdHttpReader *create(const char *url,
 				      const char *userAgent = DEFAULT_USER_AGENT);
