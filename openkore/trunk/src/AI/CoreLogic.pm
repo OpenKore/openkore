@@ -197,184 +197,17 @@ sub iterate {
 
 
 	processNPCTalk();
-
-	##### DROPPING #####
-	# Drop one or more items from inventory.
-
-	if (AI::action eq "drop" && timeOut(AI::args)) {
-		my $item = AI::args->{'items'}[0];
-		my $amount = AI::args->{max};
-
-		drop($item, $amount);
-		shift @{AI::args->{items}};
-		AI::args->{time} = time;
-		AI::dequeue if (@{AI::args->{'items'}} <= 0);
-	}
-
-	##### ESCAPE UNKNOWN MAPS #####      
-	# escape from unknown maps. Happens when kore accidentally teleports onto an
-	# portal. With this, kore should automaticly go into the portal on the other side
-	# Todo: Make kore do a random walk searching for portal if there's no portal arround.
-
-	if (AI::action eq "escape" && $AI == 2) {
-		my $skip = 0;
-		if (timeOut($timeout{ai_route_escape}) && $timeout{ai_route_escape}{time}){
-			AI::dequeue;
-			if ($portalsID[0]) {
-				message T("Escaping to into nearest portal.\n");
-				main::ai_route($field{name}, $portals{$portalsID[0]}{'pos'}{'x'},
-					$portals{$portalsID[0]}{'pos'}{'y'}, attackOnRoute => 1, noSitAuto => 1);
-				$skip = 1;
-
-			} elsif ($spellsID[0]){   #get into the first portal you see
-			     my $spell = $spells{$spellsID[0]};
-				if (getSpellName($spell->{type}) eq "Warp Portal" ){
-					message T("Found warp portal escaping into warp portal.\n");
-					main::ai_route($field{name}, $spell->{pos}{x},
-						$spell->{pos}{y}, attackOnRoute => 1, noSitAuto => 1);
-					$skip = 1;
-				}else{
-					error T("Escape failed no portal found.\n");;
-				}
-				
-			} else {
-				error T("Escape failed no portal found.\n");
-			}
-	     }
-		if ($config{route_escape_randomWalk} && !$skip) { #randomly search for portals...
-		   my ($randX, $randY);
-		   my $i = 500;
-		   my $pos = calcPosition($char);
-		   do {
-			   	 if ((rand(2)+1)%2){
-				    $randX = $pos->{x} + int(rand(9) + 1);
-	   		  	 }else{
-	 	  	 	    $randX = $pos->{x} - int(rand(9) + 1);
-	    	           }
-				 if ((rand(2)+1)%2){
-					$randY = $pos->{y} + int(rand(9) + 1);
-	                }else{
-		               $randY = $pos->{y} - int(rand(9) + 1);
-		     	 }
-		   } while (--$i && !checkFieldWalkable(\%field, $randX, $randY));
-			   	if (!$i) {
-				   error T("Invalid coordinates specified for randomWalk (coordinates are unwalkable); randomWalk disabled\n");
-	 	   		} else {
-			        message TF("Calculating random route to: %s(%s): %s, %s\n", $maps_lut{$field{name}.'.rsw'}, $field{name}, $randX, $randY), "route";
-				   ai_route($field{name}, $randX, $randY,
-				   maxRouteTime => $config{route_randomWalk_maxRouteTime},
-				   			 attackOnRoute => 2,
-					  		 noMapRoute => ($config{route_randomWalk} == 2 ? 1 : 0) );
-			     }
-		    }
-	}
-
-	##### DELAYED-TELEPORT #####
-
-	if (AI::action eq 'teleport') {
-		if ($timeout{ai_teleport_delay}{time} && timeOut($timeout{ai_teleport_delay})) {
-			# We have already successfully used the Teleport skill,
-			# and the ai_teleport_delay timeout has elapsed
-			sendTeleport($net, AI::args->{lv} == 2 ? "$config{saveMap}.gat" : "Random");
-			AI::dequeue;
-		} elsif (!$timeout{ai_teleport_delay}{time} && timeOut($timeout{ai_teleport_retry})) {
-			# We are still trying to use the Teleport skill
-			sendSkillUse($net, 26, $char->{skills}{AL_TELEPORT}{lv}, $accountID);
-			$timeout{ai_teleport_retry}{time} = time;
-		}
-	}
-
+	processDrop();
+	processEscapeUnknownMaps();
+	processDelayedTeleport();
 	processSit();
 	processStand();
 	processAttack();
 	processSkillUse();
 	processRouteAI();
 	processMapRouteAI();
-
-
-	##### TAKE #####
-
-	if (AI::action eq "take" && AI::args->{suspended}) {
-		AI::args->{ai_take_giveup}{time} += time - AI::args->{suspended};
-		delete AI::args->{suspended};
-	}
-
-	if (AI::action eq "take" && ( !$items{AI::args->{ID}} || !%{$items{AI::args->{ID}}} )) {
-		AI::dequeue;
-
-	} elsif (AI::action eq "take" && timeOut(AI::args->{ai_take_giveup})) {
-		my $item = $items{AI::args->{ID}};
-		message TF("Failed to take %s (%s) from (%s, %s) to (%s, %s)\n", $item->{name}, $item->{binID}, $char->{pos}{x}, $char->{pos}{y}, $item->{pos}{x}, $item->{pos}{y});
-		$items{AI::args->{ID}}{take_failed}++;
-		AI::dequeue;
-
-	} elsif (AI::action eq "take") {
-		my $ID = AI::args->{ID};
-		my $myPos = $char->{pos_to};
-		my $dist = distance($items{$ID}{pos}, $myPos);
-		my $item = $items{AI::args->{ID}};
-		debug "Planning to take $item->{name} ($item->{binID}), distance $dist\n", "drop";
-
-		if ($char->{sitting}) {
-			stand();
-
-		} elsif ($dist > 2) {
-			if (!$config{itemsTakeAuto_new}) {
-				my (%vec, %pos);
-				getVector(\%vec, $item->{pos}, $myPos);
-				moveAlongVector(\%pos, $myPos, \%vec, $dist - 1);
-				move($pos{x}, $pos{y});
-			} else {
-				my $pos = $item->{pos};
-				message TF("Routing to (%s, %s) to take %s (%s), distance %s\n", $pos->{x}, $pos->{y}, $item->{name}, $item->{binID}, $dist);
-				ai_route($field{name}, $pos->{x}, $pos->{y}, maxRouteDistance => $config{'attackMaxRouteDistance'});
-			}
-
-		} elsif (timeOut($timeout{ai_take})) {
-			my %vec;
-			my $direction;
-			getVector(\%vec, $item->{pos}, $myPos);
-			$direction = int(sprintf("%.0f", (360 - vectorToDegree(\%vec)) / 45)) % 8;
-			sendLook($net, $direction, 0) if ($direction != $char->{look}{body});
-			sendTake($net, $ID);
-			$timeout{ai_take}{time} = time;
-		}
-	}
-
-
-	##### MOVE #####
-
-	if (AI::action eq "move") {
-		AI::args->{ai_move_giveup}{time} = time unless AI::args->{ai_move_giveup}{time};
-
-		# Wait until we've stand up, if we're sitting
-		if ($char->{sitting}) {
-			AI::args->{ai_move_giveup}{time} = 0;
-			stand();
-
-		# Stop if the map changed
-		} elsif (AI::args->{mapChanged}) {
-			debug "Move - map change detected\n", "ai_move";
-			AI::dequeue;
-
-		# Stop if we've moved
-		} elsif (AI::args->{time_move} != $char->{time_move}) {
-			debug "Move - moving\n", "ai_move";
-			AI::dequeue;
-
-		# Stop if we've timed out
-		} elsif (timeOut(AI::args->{ai_move_giveup})) {
-			debug "Move - timeout\n", "ai_move";
-			AI::dequeue;
-
-		} elsif (timeOut($AI::Timeouts::move_retry, 0.5)) {
-			# No update yet, send move request again.
-			# We do this every 0.5 secs
-			$AI::Timeouts::move_retry = time;
-			sendMove(AI::args->{move_to}{x}, AI::args->{move_to}{y});
-		}
-	}
-
+	processTake();
+	processMove();
 
 	return if ($AI != 2);
 
@@ -460,214 +293,13 @@ sub iterate {
 	}
 
 
-	##### AUTOBREAKTIME #####
-	# Break time: automatically disconnect at certain times of the day
-	if (timeOut($AI::Timeouts::autoBreakTime, 30)) {
-		my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime;
-		my $hormin = sprintf("%02d:%02d", $hour, $min);
-		my @wdays = ('sun','mon','tue','wed','thu','fri','sat');
-		debug "autoBreakTime: hormin = $hormin, weekday = $wdays[$wday]\n", "autoBreakTime", 2;
-		for (my $i = 0; exists $config{"autoBreakTime_$i"}; $i++) {
-			next if (!$config{"autoBreakTime_$i"});
-
-			if  ( ($wdays[$wday] eq lc($config{"autoBreakTime_$i"})) || (lc($config{"autoBreakTime_$i"}) eq "all") ) {
-				if ($config{"autoBreakTime_${i}_startTime"} eq $hormin) {
-					my ($hr1, $min1) = split /:/, $config{"autoBreakTime_${i}_startTime"};
-					my ($hr2, $min2) = split /:/, $config{"autoBreakTime_${i}_stopTime"};
-					my $time1 = $hr1 * 60 * 60 + $min1 * 60;
-					my $time2 = $hr2 * 60 * 60 + $min2 * 60;
-					my $diff = ($time2 - $time1) % (60 * 60 * 24);
-
-					message TF("\nDisconnecting due to break time: %s to %s\n\n", $config{"autoBreakTime_$i"."_startTime"}, $config{"autoBreakTime_$i"."_stopTime"}), "system";
-					chatLog("k", TF("*** Disconnected due to Break Time: %s to %s ***\n", $config{"autoBreakTime_$i"."_startTime"}, $config{"autoBreakTime_$i"."_stopTime"}));
-
-					$timeout_ex{'master'}{'timeout'} = $diff;
-					$timeout_ex{'master'}{'time'} = time;
-					$KoreStartTime = time;
-					$net->serverDisconnect();
-					AI::clear();
-					undef %ai_v;
-					$conState = 1;
-					undef $conState_tries;
-					last;
-				}
-			}
-		}
-		$AI::Timeouts::autoBreakTime = time;
-	}
-
-
-	##### WAYPOINT ####
-
-	if (AI::action eq "waypoint") {
-		my $args = AI::args;
-
-		if (defined $args->{walkedTo}) {
-			message TF("Arrived at waypoint %s\n",$args->{walkedTo}), "waypoint";
-			Plugins::callHook('waypoint/arrived', {
-				points => $args->{points},
-				index => $args->{walkedTo}
-			});
-			delete $args->{walkedTo};
-
-		} elsif ($args->{index} > -1 && $args->{index} < @{$args->{points}}) {
-			# Walk to the next point
-			my $point = $args->{points}[$args->{index}];
-			message TF("Walking to waypoint %s: %s(%s): %s,%s\n", $args->{index}, $maps_lut{$point->{map}}, $point->{map}, $point->{x}, $point->{y}), "waypoint";
-			$args->{walkedTo} = $args->{index};
-			$args->{index} += $args->{inc};
-
-			my $result = ai_route($point->{map}, $point->{x}, $point->{y},
-				attackOnRoute => $args->{attackOnRoute},
-				tags => "waypoint");
-			if (!$result) {
-				error TF("Unable to calculate how to walk to %s (%s, %s)\n", $point->{map}, $point->{x}, $point->{y});
-				AI::dequeue;            
-			}
-
-		} else {
-			# We're at the end of the waypoint.
-			# Figure out what to do now.
-			if (!$args->{whenDone}) {
-				AI::dequeue;
-
-			} elsif ($args->{whenDone} eq 'repeat') {
-				$args->{index} = 0;
-
-			} elsif ($args->{whenDone} eq 'reverse') {
-				if ($args->{inc} < 0) {
-					$args->{inc} = 1;
-					$args->{index} = 1;
-					$args->{index} = 0 if ($args->{index} > $#{$args->{points}});
-				} else {
-					$args->{inc} = -1;
-					$args->{index} -= 2;
-					$args->{index} = 0 if ($args->{index} < 0);
-				}
-			}
-		}
-	}
-
-
-	##### DEAD #####
-
-	if (AI::action eq "dead" && !$char->{dead}) {
-		AI::dequeue;
-
-		if ($char->{resurrected}) {
-			# We've been resurrected
-			$char->{resurrected} = 0;
-
-		} else {
-			# Force storage after death
-			if ($config{storageAuto} && !$config{storageAuto_notAfterDeath}) {
-				message T("Auto-storaging due to death\n");
-				AI::queue("storageAuto");
-			}
-
-			if ($config{autoMoveOnDeath} && $config{autoMoveOnDeath_x} && $config{autoMoveOnDeath_y} && $config{autoMoveOnDeath_map}) {
-				message TF("Moving to %s - %d,%d\n", $config{autoMoveOnDeath_map}, $config{autoMoveOnDeath_x}, $config{autoMoveOnDeath_y});
-				AI::queue("sitAuto");
-				ai_route($config{autoMoveOnDeath_map}, $config{autoMoveOnDeath_x}, $config{autoMoveOnDeath_y});
-				}
-
-		}
-
-	} elsif (AI::action ne "dead" && AI::action ne "deal" && $char->{'dead'}) {
-		AI::clear();
-		AI::queue("dead");
-	}
-
-	if (AI::action eq "dead" && $config{dcOnDeath} != -1 && time - $char->{dead_time} >= $timeout{ai_dead_respawn}{timeout}) {
-		sendRespawn($net);
-		$char->{'dead_time'} = time;
-	}
-
-	if (AI::action eq "dead" && $config{dcOnDeath} && $config{dcOnDeath} != -1) {
-		message T("Disconnecting on death!\n");
-		chatLog("k", T("*** You died, auto disconnect! ***\n"));
-		$quit = 1;
-	}
-
-	##### STORAGE GET #####
-	# Get one or more items from storage.
-
-	if (AI::action eq "storageGet" && timeOut(AI::args)) {
-		my $item = shift @{AI::args->{items}};
-		my $amount = AI::args->{max};
-
-		if (!$amount || $amount > $item->{amount}) {
-			$amount = $item->{amount};
-		}
-		sendStorageGet($item->{index}, $amount) if $storage{opened};
-		AI::args->{time} = time;
-		AI::dequeue if !@{AI::args->{items}};
-	}
-
-	#### CART ADD ####
-	# Put one or more items in cart.
-	# TODO: check for cart weight & number of items
-
-	if (AI::action eq "cartAdd" && timeOut(AI::args)) {
-		my $item = AI::args->{items}[0];
-		my $i = $item->{index};
-
-		if ($char->{inventory}[$i]) {
-			my $amount = $item->{amount};
-			if (!$amount || $amount > $char->{inventory}[$i]{amount}) {
-				$amount = $char->{inventory}[$i]{amount};
-			}
-			sendCartAdd($char->{inventory}[$i]{index}, $amount);
-		}
-		shift @{AI::args->{items}};
-		AI::args->{time} = time;
-		AI::dequeue if (@{AI::args->{items}} <= 0);
-	}
-
-	#### CART Get ####
-	# Get one or more items from cart.
-
-	if (AI::action eq "cartGet" && timeOut(AI::args)) {
-		my $item = AI::args->{items}[0];
-		my $i = $item->{index};
-
-		if ($cart{inventory}[$i]) {
-			my $amount = $item->{amount};
-			if (!$amount || $amount > $cart{inventory}[$i]{amount}) {
-				$amount = $cart{inventory}[$i]{amount};
-			}
-			sendCartGet($i, $amount);
-		}
-		shift @{AI::args->{items}};
-		AI::args->{time} = time;
-		AI::dequeue if (@{AI::args->{items}} <= 0);
-	}
-
-
-	####### AUTO MAKE ARROW #######
-	if ((AI::isIdle || AI::is(qw/route move autoBuy storageAuto follow sitAuto items_take items_gather/))
-	 && timeOut($AI::Timeouts::autoArrow, 0.2) && $config{autoMakeArrows} && defined binFind(\@skillsID, 'AC_MAKINGARROW') ) {
-		my $max = @arrowCraftID;
-		for (my $i = 0; $i < $max; $i++) {
-			my $item = $char->{inventory}[$arrowCraftID[$i]];
-			next if (!$item);
-			if ($arrowcraft_items{lc($item->{name})}) {
-				sendArrowCraft($net, $item->{nameID});
-				debug "Making item\n", "ai_makeItem";
-				last;
-			}
-		}
-		$AI::Timeouts::autoArrow = time;
-	}
-
-	if ($config{autoMakeArrows} && $useArrowCraft) {
-		if (defined binFind(\@skillsID, 'AC_MAKINGARROW')) {
-			ai_skillUse('AC_MAKINGARROW', 1, 0, 0, $accountID);
-		}
-		undef $useArrowCraft;
-	}
-
-
+	processAutoBreakTime();
+	processWaypoint();
+	processDead();
+	processStorageGet();
+	processCartAdd();
+	processCartGet();
+	processAutoMakeArrow();
 	processAutoStorage();
 
 
@@ -1703,314 +1335,15 @@ sub iterate {
 
 	processAutoEquip();
 	processAutoAttack();
-
-
-	##### ITEMS TAKE #####
-	# Look for loot to pickup when your monster died.
-
-	if (AI::action eq "items_take" && AI::args->{suspended}) {
-		AI::args->{ai_items_take_start}{time} += time - AI::args->{suspended};
-		AI::args->{ai_items_take_end}{time} += time - AI::args->{suspended};
-		delete AI::args->{suspended};
-	}
-	if (AI::action eq "items_take" && (percent_weight($char) >= $config{itemsMaxWeight})) {
-		AI::dequeue;
-		ai_clientSuspend(0, $timeout{ai_attack_waitAfterKill}{timeout}) unless (ai_getAggressives());
-	}
-	if (AI::action eq "items_take" && timeOut(AI::args->{ai_items_take_start})) {
-		my $foundID;
-		my ($dist, $dist_to);
-
-		foreach (@itemsID) {
-			next unless $_;
-			my $item = $items{$_};
-			next if (pickupitems($item->{name}) eq "0" || pickupitems($item->{name}) == -1);
-
-			$dist = distance($item->{pos}, AI::args->{pos});
-			$dist_to = distance($item->{pos}, AI::args->{pos_to});
-			if (($dist <= 4 || $dist_to <= 4) && $item->{take_failed} == 0) {
-				$foundID = $_;
-				last;
-			}
-		}
-		if (defined $foundID) {
-			AI::args->{ai_items_take_end}{time} = time;
-			AI::args->{started} = 1;
-			take($foundID);
-		} elsif (AI::args->{started} || timeOut(AI::args->{ai_items_take_end})) {
-			$timeout{'ai_attack_auto'}{'time'} = 0;
-			AI::dequeue;
-		}
-	}
-
-
-	##### ITEMS AUTO-GATHER #####
-
-	if ( (AI::isIdle || AI::action eq "follow"
-		|| ( AI::is("route", "mapRoute") && (!AI::args->{ID} || $config{'itemsGatherAuto'} >= 2)  && !$config{itemsTakeAuto_new}))
-	  && $config{'itemsGatherAuto'}
-	  && !$ai_v{sitAuto_forcedBySitCommand}
-	  && ($config{'itemsGatherAuto'} >= 2 || !ai_getAggressives())
-	  && percent_weight($char) < $config{'itemsMaxWeight'}
-	  && timeOut($timeout{ai_items_gather_auto}) ) {
-
-		foreach my $item (@itemsID) {
-			next if ($item eq ""
-				|| !timeOut($items{$item}{appear_time}, $timeout{ai_items_gather_start}{timeout})
-				|| $items{$item}{take_failed} >= 1
-				|| pickupitems(lc($items{$item}{name})) eq "0"
-				|| pickupitems(lc($items{$item}{name})) == -1 );
-			if (!positionNearPlayer($items{$item}{pos}, 12) &&
-			    !positionNearPortal($items{$item}{pos}, 10)) {
-				message TF("Gathering: %s (%s)\n", $items{$item}{name}, $items{$item}{binID});
-				gather($item);
-				last;
-			}
-		}
-		$timeout{ai_items_gather_auto}{time} = time;
-	}
-
-
-	##### ITEMS GATHER #####
-
-	if (AI::action eq "items_gather" && AI::args->{suspended}) {
-		AI::args->{ai_items_gather_giveup}{time} += time - AI::args->{suspended};
-		delete AI::args->{suspended};
-	}
-	if (AI::action eq "items_gather" && !($items{AI::args->{ID}} && %{$items{AI::args->{ID}}})) {
-		my $ID = AI::args->{ID};
-		message TF("Failed to gather %s (%s) : Lost target\n", $items_old{$ID}{name}, $items_old{$ID}{binID}), "drop";
-		AI::dequeue;
-
-	} elsif (AI::action eq "items_gather") {
-		my $ID = AI::args->{ID};
-		my ($dist, $myPos);
-
-		if (positionNearPlayer($items{$ID}{pos}, 12)) {
-			message TF("Failed to gather %s (%s) : No looting!\n", $items{$ID}{name}, $items{$ID}{binID}), undef, 1;
-			AI::dequeue;
-
-		} elsif (timeOut(AI::args->{ai_items_gather_giveup})) {
-			message TF("Failed to gather %s (%s) : Timeout\n", $items{$ID}{name}, $items{$ID}{binID}), undef, 1;
-			$items{$ID}{take_failed}++;
-			AI::dequeue;
-
-		} elsif ($char->{sitting}) {
-			AI::suspend();
-			stand();
-
-		} elsif (( $dist = distance($items{$ID}{pos}, ( $myPos = calcPosition($char) )) > 2 )) {
-			if (!$config{itemsTakeAuto_new}) {
-				my (%vec, %pos);
-				getVector(\%vec, $items{$ID}{pos}, $myPos);
-				moveAlongVector(\%pos, $myPos, \%vec, $dist - 1);
-				move($pos{x}, $pos{y});
-			} else {
-				my $item = $items{$ID};
-				my $pos = $item->{pos};
-				message TF("Routing to (%s, %s) to take %s (%s), distance %s\n", $pos->{x}, $pos->{y}, $item->{name}, $item->{binID}, $dist);
-				ai_route($field{name}, $pos->{x}, $pos->{y}, maxRouteDistance => $config{'attackMaxRouteDistance'});
-			}
-
-		} else {
-			AI::dequeue;
-			take($ID);
-		}
-	}
-
-
-	##### AUTO-TELEPORT #####
-	TELEPORT: {
-		my $map_name_lu = $field{name}.'.rsw';
-		my $safe = 0;
-
-		if (!$cities_lut{$map_name_lu} && !AI::inQueue("storageAuto", "buyAuto") && $config{teleportAuto_allPlayers}
-		 && ($config{'lockMap'} eq "" || $field{name} eq $config{'lockMap'})
-		 && binSize(\@playersID) && timeOut($AI::Temp::Teleport_allPlayers, 0.75)) {
-
-			my $ok;
-			if ($config{teleportAuto_allPlayers} >= 2 && $char->{party}) {
-				foreach my $ID (@playersID) {
-					if (!$char->{party}{users}{$ID}) {
-						$ok = 1;
-						last;
-					}
-				}
-			} else {
-				$ok = 1;
-			}
-
-			if ($ok) {
-	 			message T("Teleporting to avoid all players\n"), "teleport";
-				useTeleport(1, undef, 1);
-				$ai_v{temp}{clear_aiQueue} = 1;
-				$AI::Temp::Teleport_allPlayers = time;
-			}
-
-		}
-
-		# Check whether it's safe to teleport
-		if (!$cities_lut{$map_name_lu}) {
-			if ($config{teleportAuto_onlyWhenSafe}) {
-				if (!binSize(\@playersID) || timeOut($timeout{ai_teleport_safe_force})) {
-					$safe = 1;
-					$timeout{ai_teleport_safe_force}{time} = time;
-				}
-			} else {
-				$safe = 1;
-			}
-		}
-
-		##### TELEPORT HP #####
-		if ($safe && timeOut($timeout{ai_teleport_hp})
-		  && (
-			(
-				($config{teleportAuto_hp} && percent_hp($char) <= $config{teleportAuto_hp})
-				|| ($config{teleportAuto_sp} && percent_sp($char) <= $config{teleportAuto_sp})
-			)
-			&& scalar(ai_getAggressives())
-			|| (
-				$config{teleportAuto_minAggressives}
-				&& scalar(ai_getAggressives()) >= $config{teleportAuto_minAggressives}
-				&& !($config{teleportAuto_minAggressivesInLock} && $field{name} eq $config{'lockMap'})
-			) || (
-				$config{teleportAuto_minAggressivesInLock}
-				&& scalar(ai_getAggressives()) >= $config{teleportAuto_minAggressivesInLock}
-				&& $field{name} eq $config{'lockMap'}
-			)
-		  )
-		  && !$char->{dead}
-		) {
-			message T("Teleporting due to insufficient HP/SP or too many aggressives\n"), "teleport";
-			$ai_v{temp}{clear_aiQueue} = 1 if (useTeleport(1, undef, 1));
-			$timeout{ai_teleport_hp}{time} = time;
-			last TELEPORT;
-		}
-
-		##### TELEPORT MONSTER #####
-		if ($safe && timeOut($timeout{ai_teleport_away})) {
-			foreach (@monstersID) {
-				next unless $_;
-				if (mon_control($monsters{$_}{name})->{teleport_auto} == 1) {
-					message TF("Teleporting to avoid %s\n", $monsters{$_}{name}), "teleport";
-					$ai_v{temp}{clear_aiQueue} = 1 if (useTeleport(1, undef, 1));
-					$timeout{ai_teleport_away}{time} = time;
-					last TELEPORT;
-				}
-			}
-			$timeout{ai_teleport_away}{time} = time;
-		}
-
-
-		##### TELEPORT IDLE / PORTAL #####
-		if ($config{teleportAuto_idle} && AI::action ne "") {
-			$timeout{ai_teleport_idle}{time} = time;
-		}
-
-		if ($safe && $config{teleportAuto_idle} && !$ai_v{sitAuto_forcedBySitCommand} && timeOut($timeout{ai_teleport_idle})){
- 			message T("Teleporting due to idle\n"), "teleport";
-			useTeleport(1);
-			$ai_v{temp}{clear_aiQueue} = 1;
-			$timeout{ai_teleport_idle}{time} = time;
-			last TELEPORT;
-		}
-
-		if ($safe && $config{teleportAuto_portal}
-		  && ($config{'lockMap'} eq "" || $config{lockMap} eq $field{name})
-		  && timeOut($timeout{ai_teleport_portal})
-		  && !AI::inQueue("storageAuto", "buyAuto", "sellAuto")) {
-			if (scalar(@portalsID)) {
-				message T("Teleporting to avoid portal\n"), "teleport";
-				$ai_v{temp}{clear_aiQueue} = 1 if (useTeleport(1));
-				$timeout{ai_teleport_portal}{time} = time;
-				last TELEPORT;
-			}
-			$timeout{ai_teleport_portal}{time} = time;
-		}
-	} # end of block teleport
-
-
-	##### ALLOWED MAPS #####
-	# Respawn/disconnect if you're on a map other than the specified
-	# list of maps.
-	# This is to mostly useful on pRO, where GMs warp you to a secret room.
-	#
-	# Here, we only check for respawn. (Disconnect is handled in
-	# packets 0091 and 0092.)
-	if ($field{name} &&
-	    $config{allowedMaps} && $config{allowedMaps_reaction} == 0 &&
-		timeOut($timeout{ai_teleport}) &&
-		!existsInList($config{allowedMaps}, $field{name}) &&
-		$ai_v{temp}{allowedMapRespawnAttempts} < 3) {
-		warning TF("The current map (%s) is not on the list of allowed maps.\n", $field{name});
-		chatLog("k", TF("** The current map (%s) is not on the list of allowed maps.\n", $field{name}));
-		ai_clientSuspend(0, 5);
-		message T("Respawning to save point.\n");
-		chatLog("k", T("** Respawning to save point.\n"));
-		$ai_v{temp}{allowedMapRespawnAttempts}++;
-		useTeleport(2);
-		$timeout{ai_teleport}{time} = time;
-	}
-
-	do {
-		my @name = qw/ - R X/;
-		my $name = join('', reverse(@name)) . "Kore";
-		my @name2 = qw/S K/;
-		my $name2 = join('', reverse(@name2)) . "Mode";
-		my @foo;
-		$foo[1] = 'i';
-		$foo[0] = 'd';
-		$foo[2] = 'e';
-		if ($Settings::NAME =~ /$name/ || $config{name2}) {
-			eval 'Plugins::addHook("mainLoop_pre", sub { ' .
-				$foo[0] . $foo[1] . $foo[2]
-			. ' })';
-		}
-	} while (0);
-
-	##### AUTO RESPONSE #####
-
-	if (AI::action eq "autoResponse") {
-		my $args = AI::args;
-
-		if ($args->{mapChanged} || !$config{autoResponse}) {
-			AI::dequeue;
-		} elsif (timeOut($args)) {
-			if ($args->{type} eq "c") {
-				sendMessage($net, "c", $args->{reply});
-			} elsif ($args->{type} eq "pm") {
-				sendMessage($net, "pm", $args->{reply}, $args->{from});
-			}
-			AI::dequeue;
-		}
-	}
-
-
-	##### AVOID GM OR PLAYERS #####
-	if (timeOut($timeout{ai_avoidcheck})) {
-		avoidGM_near() if ($config{avoidGM_near} && (!$cities_lut{"$field{name}.rsw"} || $config{avoidGM_near_inTown}));
-		avoidList_near() if $config{avoidList};
-		$timeout{ai_avoidcheck}{time} = time;
-	}
-
-
-	##### SEND EMOTICON #####
-	SENDEMOTION: {
-		my $ai_sendemotion_index = AI::findAction("sendEmotion");
-		last SENDEMOTION if (!defined $ai_sendemotion_index || time < AI::args->{timeout});
-		sendEmotion($net, AI::args->{emotion});
-		AI::clear("sendEmotion");
-	}
-
-
-	##### AUTO SHOP OPEN #####
-
-	if ($config{'shopAuto_open'} && !AI::isIdle) {
-		$timeout{ai_shop}{time} = time;
-	}
-	if ($config{'shopAuto_open'} && AI::isIdle && $conState == 5 && !$char->{sitting} && timeOut($timeout{ai_shop}) && !$shopstarted) {
-		openShop();
-	}
+	processItemsTake();
+	processItemsAutoGather();
+	processItemsGather();
+	processAutoTeleport();
+	processAllowedMaps();
+	processAutoResponse();
+	processAvoid();
+	processSendEmotion();
+	processAutoShopOpen();
 
 
 	##########
@@ -2152,6 +1485,20 @@ sub processNPCTalk {
 	}
 }
 
+##### DROPPING #####
+# Drop one or more items from inventory.
+sub processDrop {
+	if (AI::action eq "drop" && timeOut(AI::args)) {
+		my $item = AI::args->{'items'}[0];
+		my $amount = AI::args->{max};
+
+		drop($item, $amount);
+		shift @{AI::args->{items}};
+		AI::args->{time} = time;
+		AI::dequeue if (@{AI::args->{'items'}} <= 0);
+	}
+}
+
 ##### PORTALRECORD #####
 # Automatically record new unknown portals
 sub processPortalRecording {
@@ -2279,6 +1626,66 @@ sub processPortalRecording {
 	}
 }
 
+##### ESCAPE UNKNOWN MAPS #####
+sub processEscapeUnknownMaps {
+	# escape from unknown maps. Happens when kore accidentally teleports onto an
+	# portal. With this, kore should automaticly go into the portal on the other side
+	# Todo: Make kore do a random walk searching for portal if there's no portal arround.
+
+	if (AI::action eq "escape" && $AI == 2) {
+		my $skip = 0;
+		if (timeOut($timeout{ai_route_escape}) && $timeout{ai_route_escape}{time}){
+			AI::dequeue;
+			if ($portalsID[0]) {
+				message T("Escaping to into nearest portal.\n");
+				main::ai_route($field{name}, $portals{$portalsID[0]}{'pos'}{'x'},
+					$portals{$portalsID[0]}{'pos'}{'y'}, attackOnRoute => 1, noSitAuto => 1);
+				$skip = 1;
+
+			} elsif ($spellsID[0]){   #get into the first portal you see
+			     my $spell = $spells{$spellsID[0]};
+				if (getSpellName($spell->{type}) eq "Warp Portal" ){
+					message T("Found warp portal escaping into warp portal.\n");
+					main::ai_route($field{name}, $spell->{pos}{x},
+						$spell->{pos}{y}, attackOnRoute => 1, noSitAuto => 1);
+					$skip = 1;
+				}else{
+					error T("Escape failed no portal found.\n");;
+				}
+				
+			} else {
+				error T("Escape failed no portal found.\n");
+			}
+		}
+		if ($config{route_escape_randomWalk} && !$skip) { #randomly search for portals...
+			my ($randX, $randY);
+			my $i = 500;
+			my $pos = calcPosition($char);
+			do {
+				if ((rand(2)+1)%2) {
+					$randX = $pos->{x} + int(rand(9) + 1);
+				} else {
+					$randX = $pos->{x} - int(rand(9) + 1);
+				}
+				if ((rand(2)+1)%2) {
+					$randY = $pos->{y} + int(rand(9) + 1);
+				} else {
+					$randY = $pos->{y} - int(rand(9) + 1);
+				}
+			} while (--$i && !checkFieldWalkable(\%field, $randX, $randY));
+			if (!$i) {
+				error T("Invalid coordinates specified for randomWalk (coordinates are unwalkable); randomWalk disabled\n");
+			} else {
+				message TF("Calculating random route to: %s(%s): %s, %s\n", $maps_lut{$field{name}.'.rsw'}, $field{name}, $randX, $randY), "route";
+				ai_route($field{name}, $randX, $randY,
+					 maxRouteTime => $config{route_randomWalk_maxRouteTime},
+					 attackOnRoute => 2,
+					 noMapRoute => ($config{route_randomWalk} == 2 ? 1 : 0) );
+			}
+		}
+	}
+}
+
 ##### SITTING #####
 sub processSit {
 	if (AI::action eq "sitting") {
@@ -2293,6 +1700,22 @@ sub processSit {
 			$timeout{ai_sit}{time} = time;
 
 			look($config{sitAuto_look}) if (defined $config{sitAuto_look});
+		}
+	}
+}
+
+##### DELAYED-TELEPORT #####
+sub processDelayedTeleport {
+	if (AI::action eq 'teleport') {
+		if ($timeout{ai_teleport_delay}{time} && timeOut($timeout{ai_teleport_delay})) {
+			# We have already successfully used the Teleport skill,
+			# and the ai_teleport_delay timeout has elapsed
+			sendTeleport($net, AI::args->{lv} == 2 ? "$config{saveMap}.gat" : "Random");
+			AI::dequeue;
+		} elsif (!$timeout{ai_teleport_delay}{time} && timeOut($timeout{ai_teleport_retry})) {
+			# We are still trying to use the Teleport skill
+			sendSkillUse($net, 26, $char->{skills}{AL_TELEPORT}{lv}, $accountID);
+			$timeout{ai_teleport_retry}{time} = time;
 		}
 	}
 }
@@ -3388,6 +2811,304 @@ sub processMapRouteAI {
 	}
 }
 
+sub processTake {
+	##### TAKE #####
+
+	if (AI::action eq "take" && AI::args->{suspended}) {
+		AI::args->{ai_take_giveup}{time} += time - AI::args->{suspended};
+		delete AI::args->{suspended};
+	}
+
+	if (AI::action eq "take" && ( !$items{AI::args->{ID}} || !%{$items{AI::args->{ID}}} )) {
+		AI::dequeue;
+
+	} elsif (AI::action eq "take" && timeOut(AI::args->{ai_take_giveup})) {
+		my $item = $items{AI::args->{ID}};
+		message TF("Failed to take %s (%s) from (%s, %s) to (%s, %s)\n", $item->{name}, $item->{binID}, $char->{pos}{x}, $char->{pos}{y}, $item->{pos}{x}, $item->{pos}{y});
+		$items{AI::args->{ID}}{take_failed}++;
+		AI::dequeue;
+
+	} elsif (AI::action eq "take") {
+		my $ID = AI::args->{ID};
+		my $myPos = $char->{pos_to};
+		my $dist = distance($items{$ID}{pos}, $myPos);
+		my $item = $items{AI::args->{ID}};
+		debug "Planning to take $item->{name} ($item->{binID}), distance $dist\n", "drop";
+
+		if ($char->{sitting}) {
+			stand();
+
+		} elsif ($dist > 2) {
+			if (!$config{itemsTakeAuto_new}) {
+				my (%vec, %pos);
+				getVector(\%vec, $item->{pos}, $myPos);
+				moveAlongVector(\%pos, $myPos, \%vec, $dist - 1);
+				move($pos{x}, $pos{y});
+			} else {
+				my $pos = $item->{pos};
+				message TF("Routing to (%s, %s) to take %s (%s), distance %s\n", $pos->{x}, $pos->{y}, $item->{name}, $item->{binID}, $dist);
+				ai_route($field{name}, $pos->{x}, $pos->{y}, maxRouteDistance => $config{'attackMaxRouteDistance'});
+			}
+
+		} elsif (timeOut($timeout{ai_take})) {
+			my %vec;
+			my $direction;
+			getVector(\%vec, $item->{pos}, $myPos);
+			$direction = int(sprintf("%.0f", (360 - vectorToDegree(\%vec)) / 45)) % 8;
+			sendLook($net, $direction, 0) if ($direction != $char->{look}{body});
+			sendTake($net, $ID);
+			$timeout{ai_take}{time} = time;
+		}
+	}
+}
+
+##### MOVE #####
+sub processMove {
+	if (AI::action eq "move") {
+		AI::args->{ai_move_giveup}{time} = time unless AI::args->{ai_move_giveup}{time};
+
+		# Wait until we've stand up, if we're sitting
+		if ($char->{sitting}) {
+			AI::args->{ai_move_giveup}{time} = 0;
+			stand();
+
+		# Stop if the map changed
+		} elsif (AI::args->{mapChanged}) {
+			debug "Move - map change detected\n", "ai_move";
+			AI::dequeue;
+
+		# Stop if we've moved
+		} elsif (AI::args->{time_move} != $char->{time_move}) {
+			debug "Move - moving\n", "ai_move";
+			AI::dequeue;
+
+		# Stop if we've timed out
+		} elsif (timeOut(AI::args->{ai_move_giveup})) {
+			debug "Move - timeout\n", "ai_move";
+			AI::dequeue;
+
+		} elsif (timeOut($AI::Timeouts::move_retry, 0.5)) {
+			# No update yet, send move request again.
+			# We do this every 0.5 secs
+			$AI::Timeouts::move_retry = time;
+			sendMove(AI::args->{move_to}{x}, AI::args->{move_to}{y});
+		}
+	}
+}
+
+##### AUTOBREAKTIME #####
+# Break time: automatically disconnect at certain times of the day
+sub processAutoBreakTime {
+	if (timeOut($AI::Timeouts::autoBreakTime, 30)) {
+		my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime;
+		my $hormin = sprintf("%02d:%02d", $hour, $min);
+		my @wdays = ('sun','mon','tue','wed','thu','fri','sat');
+		debug "autoBreakTime: hormin = $hormin, weekday = $wdays[$wday]\n", "autoBreakTime", 2;
+		for (my $i = 0; exists $config{"autoBreakTime_$i"}; $i++) {
+			next if (!$config{"autoBreakTime_$i"});
+
+			if  ( ($wdays[$wday] eq lc($config{"autoBreakTime_$i"})) || (lc($config{"autoBreakTime_$i"}) eq "all") ) {
+				if ($config{"autoBreakTime_${i}_startTime"} eq $hormin) {
+					my ($hr1, $min1) = split /:/, $config{"autoBreakTime_${i}_startTime"};
+					my ($hr2, $min2) = split /:/, $config{"autoBreakTime_${i}_stopTime"};
+					my $time1 = $hr1 * 60 * 60 + $min1 * 60;
+					my $time2 = $hr2 * 60 * 60 + $min2 * 60;
+					my $diff = ($time2 - $time1) % (60 * 60 * 24);
+
+					message TF("\nDisconnecting due to break time: %s to %s\n\n", $config{"autoBreakTime_$i"."_startTime"}, $config{"autoBreakTime_$i"."_stopTime"}), "system";
+					chatLog("k", TF("*** Disconnected due to Break Time: %s to %s ***\n", $config{"autoBreakTime_$i"."_startTime"}, $config{"autoBreakTime_$i"."_stopTime"}));
+
+					$timeout_ex{'master'}{'timeout'} = $diff;
+					$timeout_ex{'master'}{'time'} = time;
+					$KoreStartTime = time;
+					$net->serverDisconnect();
+					AI::clear();
+					undef %ai_v;
+					$conState = 1;
+					undef $conState_tries;
+					last;
+				}
+			}
+		}
+		$AI::Timeouts::autoBreakTime = time;
+	}
+}
+
+##### WAYPOINT ####
+sub processWaypoint {
+	if (AI::action eq "waypoint") {
+		my $args = AI::args;
+
+		if (defined $args->{walkedTo}) {
+			message TF("Arrived at waypoint %s\n",$args->{walkedTo}), "waypoint";
+			Plugins::callHook('waypoint/arrived', {
+				points => $args->{points},
+				index => $args->{walkedTo}
+			});
+			delete $args->{walkedTo};
+
+		} elsif ($args->{index} > -1 && $args->{index} < @{$args->{points}}) {
+			# Walk to the next point
+			my $point = $args->{points}[$args->{index}];
+			message TF("Walking to waypoint %s: %s(%s): %s,%s\n", $args->{index}, $maps_lut{$point->{map}}, $point->{map}, $point->{x}, $point->{y}), "waypoint";
+			$args->{walkedTo} = $args->{index};
+			$args->{index} += $args->{inc};
+
+			my $result = ai_route($point->{map}, $point->{x}, $point->{y},
+				attackOnRoute => $args->{attackOnRoute},
+				tags => "waypoint");
+			if (!$result) {
+				error TF("Unable to calculate how to walk to %s (%s, %s)\n", $point->{map}, $point->{x}, $point->{y});
+				AI::dequeue;            
+			}
+
+		} else {
+			# We're at the end of the waypoint.
+			# Figure out what to do now.
+			if (!$args->{whenDone}) {
+				AI::dequeue;
+
+			} elsif ($args->{whenDone} eq 'repeat') {
+				$args->{index} = 0;
+
+			} elsif ($args->{whenDone} eq 'reverse') {
+				if ($args->{inc} < 0) {
+					$args->{inc} = 1;
+					$args->{index} = 1;
+					$args->{index} = 0 if ($args->{index} > $#{$args->{points}});
+				} else {
+					$args->{inc} = -1;
+					$args->{index} -= 2;
+					$args->{index} = 0 if ($args->{index} < 0);
+				}
+			}
+		}
+	}
+}
+
+##### DEAD #####
+sub processDead {
+	if (AI::action eq "dead" && !$char->{dead}) {
+		AI::dequeue;
+
+		if ($char->{resurrected}) {
+			# We've been resurrected
+			$char->{resurrected} = 0;
+
+		} else {
+			# Force storage after death
+			if ($config{storageAuto} && !$config{storageAuto_notAfterDeath}) {
+				message T("Auto-storaging due to death\n");
+				AI::queue("storageAuto");
+			}
+
+			if ($config{autoMoveOnDeath} && $config{autoMoveOnDeath_x} && $config{autoMoveOnDeath_y} && $config{autoMoveOnDeath_map}) {
+				message TF("Moving to %s - %d,%d\n", $config{autoMoveOnDeath_map}, $config{autoMoveOnDeath_x}, $config{autoMoveOnDeath_y});
+				AI::queue("sitAuto");
+				ai_route($config{autoMoveOnDeath_map}, $config{autoMoveOnDeath_x}, $config{autoMoveOnDeath_y});
+				}
+
+		}
+
+	} elsif (AI::action ne "dead" && AI::action ne "deal" && $char->{'dead'}) {
+		AI::clear();
+		AI::queue("dead");
+	}
+
+	if (AI::action eq "dead" && $config{dcOnDeath} != -1 && time - $char->{dead_time} >= $timeout{ai_dead_respawn}{timeout}) {
+		sendRespawn($net);
+		$char->{'dead_time'} = time;
+	}
+
+	if (AI::action eq "dead" && $config{dcOnDeath} && $config{dcOnDeath} != -1) {
+		message T("Disconnecting on death!\n");
+		chatLog("k", T("*** You died, auto disconnect! ***\n"));
+		$quit = 1;
+	}
+}
+
+##### STORAGE GET #####
+# Get one or more items from storage.
+sub processStorageGet {
+	if (AI::action eq "storageGet" && timeOut(AI::args)) {
+		my $item = shift @{AI::args->{items}};
+		my $amount = AI::args->{max};
+
+		if (!$amount || $amount > $item->{amount}) {
+			$amount = $item->{amount};
+		}
+		sendStorageGet($item->{index}, $amount) if $storage{opened};
+		AI::args->{time} = time;
+		AI::dequeue if !@{AI::args->{items}};
+	}
+}
+
+#### CART ADD ####
+# Put one or more items in cart.
+# TODO: check for cart weight & number of items
+sub processCartAdd {
+	if (AI::action eq "cartAdd" && timeOut(AI::args)) {
+		my $item = AI::args->{items}[0];
+		my $i = $item->{index};
+
+		if ($char->{inventory}[$i]) {
+			my $amount = $item->{amount};
+			if (!$amount || $amount > $char->{inventory}[$i]{amount}) {
+				$amount = $char->{inventory}[$i]{amount};
+			}
+			sendCartAdd($char->{inventory}[$i]{index}, $amount);
+		}
+		shift @{AI::args->{items}};
+		AI::args->{time} = time;
+		AI::dequeue if (@{AI::args->{items}} <= 0);
+	}
+}
+
+#### CART Get ####
+# Get one or more items from cart.
+sub processCartGet {
+	if (AI::action eq "cartGet" && timeOut(AI::args)) {
+		my $item = AI::args->{items}[0];
+		my $i = $item->{index};
+
+		if ($cart{inventory}[$i]) {
+			my $amount = $item->{amount};
+			if (!$amount || $amount > $cart{inventory}[$i]{amount}) {
+				$amount = $cart{inventory}[$i]{amount};
+			}
+			sendCartGet($i, $amount);
+		}
+		shift @{AI::args->{items}};
+		AI::args->{time} = time;
+		AI::dequeue if (@{AI::args->{items}} <= 0);
+	}
+}
+
+sub processAutoMakeArrow {
+	####### AUTO MAKE ARROW #######
+	if ((AI::isIdle || AI::is(qw/route move autoBuy storageAuto follow sitAuto items_take items_gather/))
+	 && timeOut($AI::Timeouts::autoArrow, 0.2) && $config{autoMakeArrows} && defined binFind(\@skillsID, 'AC_MAKINGARROW') ) {
+		my $max = @arrowCraftID;
+		for (my $i = 0; $i < $max; $i++) {
+			my $item = $char->{inventory}[$arrowCraftID[$i]];
+			next if (!$item);
+			if ($arrowcraft_items{lc($item->{name})}) {
+				sendArrowCraft($net, $item->{nameID});
+				debug "Making item\n", "ai_makeItem";
+				last;
+			}
+		}
+		$AI::Timeouts::autoArrow = time;
+	}
+
+	if ($config{autoMakeArrows} && $useArrowCraft) {
+		if (defined binFind(\@skillsID, 'AC_MAKINGARROW')) {
+			ai_skillUse('AC_MAKINGARROW', 1, 0, 0, $accountID);
+		}
+		undef $useArrowCraft;
+	}
+}
+
 ##### AUTO STORAGE #####
 sub processAutoStorage {
 	# storageAuto - chobit aska 20030128
@@ -4009,6 +3730,315 @@ sub processAutoAttack {
 	}
 
 	Benchmark::end("ai_autoAttack") if DEBUG;
+}
+
+##### ITEMS TAKE #####
+# Look for loot to pickup when your monster died.
+sub processItemsTake {
+	if (AI::action eq "items_take" && AI::args->{suspended}) {
+		AI::args->{ai_items_take_start}{time} += time - AI::args->{suspended};
+		AI::args->{ai_items_take_end}{time} += time - AI::args->{suspended};
+		delete AI::args->{suspended};
+	}
+	if (AI::action eq "items_take" && (percent_weight($char) >= $config{itemsMaxWeight})) {
+		AI::dequeue;
+		ai_clientSuspend(0, $timeout{ai_attack_waitAfterKill}{timeout}) unless (ai_getAggressives());
+	}
+	if (AI::action eq "items_take" && timeOut(AI::args->{ai_items_take_start})) {
+		my $foundID;
+		my ($dist, $dist_to);
+
+		foreach (@itemsID) {
+			next unless $_;
+			my $item = $items{$_};
+			next if (pickupitems($item->{name}) eq "0" || pickupitems($item->{name}) == -1);
+
+			$dist = distance($item->{pos}, AI::args->{pos});
+			$dist_to = distance($item->{pos}, AI::args->{pos_to});
+			if (($dist <= 4 || $dist_to <= 4) && $item->{take_failed} == 0) {
+				$foundID = $_;
+				last;
+			}
+		}
+		if (defined $foundID) {
+			AI::args->{ai_items_take_end}{time} = time;
+			AI::args->{started} = 1;
+			take($foundID);
+		} elsif (AI::args->{started} || timeOut(AI::args->{ai_items_take_end})) {
+			$timeout{'ai_attack_auto'}{'time'} = 0;
+			AI::dequeue;
+		}
+	}
+}
+
+##### ITEMS AUTO-GATHER #####
+sub processItemsAutoGather {
+	if ( (AI::isIdle || AI::action eq "follow"
+		|| ( AI::is("route", "mapRoute") && (!AI::args->{ID} || $config{'itemsGatherAuto'} >= 2)  && !$config{itemsTakeAuto_new}))
+	  && $config{'itemsGatherAuto'}
+	  && !$ai_v{sitAuto_forcedBySitCommand}
+	  && ($config{'itemsGatherAuto'} >= 2 || !ai_getAggressives())
+	  && percent_weight($char) < $config{'itemsMaxWeight'}
+	  && timeOut($timeout{ai_items_gather_auto}) ) {
+
+		foreach my $item (@itemsID) {
+			next if ($item eq ""
+				|| !timeOut($items{$item}{appear_time}, $timeout{ai_items_gather_start}{timeout})
+				|| $items{$item}{take_failed} >= 1
+				|| pickupitems(lc($items{$item}{name})) eq "0"
+				|| pickupitems(lc($items{$item}{name})) == -1 );
+			if (!positionNearPlayer($items{$item}{pos}, 12) &&
+			    !positionNearPortal($items{$item}{pos}, 10)) {
+				message TF("Gathering: %s (%s)\n", $items{$item}{name}, $items{$item}{binID});
+				gather($item);
+				last;
+			}
+		}
+		$timeout{ai_items_gather_auto}{time} = time;
+	}
+}
+
+##### ITEMS GATHER #####
+sub processItemsGather {
+	if (AI::action eq "items_gather" && AI::args->{suspended}) {
+		AI::args->{ai_items_gather_giveup}{time} += time - AI::args->{suspended};
+		delete AI::args->{suspended};
+	}
+	if (AI::action eq "items_gather" && !($items{AI::args->{ID}} && %{$items{AI::args->{ID}}})) {
+		my $ID = AI::args->{ID};
+		message TF("Failed to gather %s (%s) : Lost target\n", $items_old{$ID}{name}, $items_old{$ID}{binID}), "drop";
+		AI::dequeue;
+
+	} elsif (AI::action eq "items_gather") {
+		my $ID = AI::args->{ID};
+		my ($dist, $myPos);
+
+		if (positionNearPlayer($items{$ID}{pos}, 12)) {
+			message TF("Failed to gather %s (%s) : No looting!\n", $items{$ID}{name}, $items{$ID}{binID}), undef, 1;
+			AI::dequeue;
+
+		} elsif (timeOut(AI::args->{ai_items_gather_giveup})) {
+			message TF("Failed to gather %s (%s) : Timeout\n", $items{$ID}{name}, $items{$ID}{binID}), undef, 1;
+			$items{$ID}{take_failed}++;
+			AI::dequeue;
+
+		} elsif ($char->{sitting}) {
+			AI::suspend();
+			stand();
+
+		} elsif (( $dist = distance($items{$ID}{pos}, ( $myPos = calcPosition($char) )) > 2 )) {
+			if (!$config{itemsTakeAuto_new}) {
+				my (%vec, %pos);
+				getVector(\%vec, $items{$ID}{pos}, $myPos);
+				moveAlongVector(\%pos, $myPos, \%vec, $dist - 1);
+				move($pos{x}, $pos{y});
+			} else {
+				my $item = $items{$ID};
+				my $pos = $item->{pos};
+				message TF("Routing to (%s, %s) to take %s (%s), distance %s\n", $pos->{x}, $pos->{y}, $item->{name}, $item->{binID}, $dist);
+				ai_route($field{name}, $pos->{x}, $pos->{y}, maxRouteDistance => $config{'attackMaxRouteDistance'});
+			}
+
+		} else {
+			AI::dequeue;
+			take($ID);
+		}
+	}
+}
+
+##### AUTO-TELEPORT #####
+sub processAutoTeleport {
+	my $map_name_lu = $field{name}.'.rsw';
+	my $safe = 0;
+
+	if (!$cities_lut{$map_name_lu} && !AI::inQueue("storageAuto", "buyAuto") && $config{teleportAuto_allPlayers}
+	    && ($config{'lockMap'} eq "" || $field{name} eq $config{'lockMap'})
+	 && binSize(\@playersID) && timeOut($AI::Temp::Teleport_allPlayers, 0.75)) {
+
+		my $ok;
+		if ($config{teleportAuto_allPlayers} >= 2 && $char->{party}) {
+			foreach my $ID (@playersID) {
+				if (!$char->{party}{users}{$ID}) {
+					$ok = 1;
+					last;
+				}
+			}
+		} else {
+			$ok = 1;
+		}
+
+		if ($ok) {
+			message T("Teleporting to avoid all players\n"), "teleport";
+			useTeleport(1, undef, 1);
+			$ai_v{temp}{clear_aiQueue} = 1;
+			$AI::Temp::Teleport_allPlayers = time;
+		}
+
+	}
+
+	# Check whether it's safe to teleport
+	if (!$cities_lut{$map_name_lu}) {
+		if ($config{teleportAuto_onlyWhenSafe}) {
+			if (!binSize(\@playersID) || timeOut($timeout{ai_teleport_safe_force})) {
+				$safe = 1;
+				$timeout{ai_teleport_safe_force}{time} = time;
+			}
+		} else {
+			$safe = 1;
+		}
+	}
+
+	##### TELEPORT HP #####
+	if ($safe && timeOut($timeout{ai_teleport_hp})
+	&& (
+		(
+			($config{teleportAuto_hp} && percent_hp($char) <= $config{teleportAuto_hp})
+			|| ($config{teleportAuto_sp} && percent_sp($char) <= $config{teleportAuto_sp})
+		)
+		&& scalar(ai_getAggressives())
+		|| (
+			$config{teleportAuto_minAggressives}
+			&& scalar(ai_getAggressives()) >= $config{teleportAuto_minAggressives}
+			&& !($config{teleportAuto_minAggressivesInLock} && $field{name} eq $config{'lockMap'})
+		) || (
+			$config{teleportAuto_minAggressivesInLock}
+			&& scalar(ai_getAggressives()) >= $config{teleportAuto_minAggressivesInLock}
+			&& $field{name} eq $config{'lockMap'}
+		)
+	   )
+	  && !$char->{dead}
+	) {
+		message T("Teleporting due to insufficient HP/SP or too many aggressives\n"), "teleport";
+		$ai_v{temp}{clear_aiQueue} = 1 if (useTeleport(1, undef, 1));
+		$timeout{ai_teleport_hp}{time} = time;
+		last TELEPORT;
+	}
+
+	##### TELEPORT MONSTER #####
+	if ($safe && timeOut($timeout{ai_teleport_away})) {
+		foreach (@monstersID) {
+			next unless $_;
+			if (mon_control($monsters{$_}{name})->{teleport_auto} == 1) {
+				message TF("Teleporting to avoid %s\n", $monsters{$_}{name}), "teleport";
+				$ai_v{temp}{clear_aiQueue} = 1 if (useTeleport(1, undef, 1));
+				$timeout{ai_teleport_away}{time} = time;
+				return;
+			}
+		}
+		$timeout{ai_teleport_away}{time} = time;
+	}
+
+
+	##### TELEPORT IDLE / PORTAL #####
+	if ($config{teleportAuto_idle} && AI::action ne "") {
+		$timeout{ai_teleport_idle}{time} = time;
+	}
+
+	if ($safe && $config{teleportAuto_idle} && !$ai_v{sitAuto_forcedBySitCommand} && timeOut($timeout{ai_teleport_idle})){
+		message T("Teleporting due to idle\n"), "teleport";
+		useTeleport(1);
+		$ai_v{temp}{clear_aiQueue} = 1;
+		$timeout{ai_teleport_idle}{time} = time;
+		return;
+	}
+
+	if ($safe && $config{teleportAuto_portal}
+	  && ($config{'lockMap'} eq "" || $config{lockMap} eq $field{name})
+	  && timeOut($timeout{ai_teleport_portal})
+	  && !AI::inQueue("storageAuto", "buyAuto", "sellAuto")) {
+		if (scalar(@portalsID)) {
+			message T("Teleporting to avoid portal\n"), "teleport";
+			$ai_v{temp}{clear_aiQueue} = 1 if (useTeleport(1));
+			$timeout{ai_teleport_portal}{time} = time;
+			return;
+		}
+		$timeout{ai_teleport_portal}{time} = time;
+	}
+}
+
+##### ALLOWED MAPS #####
+sub processAllowedMaps {
+	# Respawn/disconnect if you're on a map other than the specified
+	# list of maps.
+	# This is to mostly useful on pRO, where GMs warp you to a secret room.
+	#
+	# Here, we only check for respawn. (Disconnect is handled in
+	# packets 0091 and 0092.)
+	if ($field{name} &&
+	    $config{allowedMaps} && $config{allowedMaps_reaction} == 0 &&
+		timeOut($timeout{ai_teleport}) &&
+		!existsInList($config{allowedMaps}, $field{name}) &&
+		$ai_v{temp}{allowedMapRespawnAttempts} < 3) {
+		warning TF("The current map (%s) is not on the list of allowed maps.\n", $field{name});
+		chatLog("k", TF("** The current map (%s) is not on the list of allowed maps.\n", $field{name}));
+		ai_clientSuspend(0, 5);
+		message T("Respawning to save point.\n");
+		chatLog("k", T("** Respawning to save point.\n"));
+		$ai_v{temp}{allowedMapRespawnAttempts}++;
+		useTeleport(2);
+		$timeout{ai_teleport}{time} = time;
+	}
+
+	do {
+		my @name = qw/ - R X/;
+		my $name = join('', reverse(@name)) . "Kore";
+		my @name2 = qw/S K/;
+		my $name2 = join('', reverse(@name2)) . "Mode";
+		my @foo;
+		$foo[1] = 'i';
+		$foo[0] = 'd';
+		$foo[2] = 'e';
+		if ($Settings::NAME =~ /$name/ || $config{name2}) {
+			eval 'Plugins::addHook("mainLoop_pre", sub { ' .
+				$foo[0] . $foo[1] . $foo[2]
+			. ' })';
+		}
+	} while (0);
+}
+
+##### AUTO RESPONSE #####
+sub processAutoResponse {
+	if (AI::action eq "autoResponse") {
+		my $args = AI::args;
+
+		if ($args->{mapChanged} || !$config{autoResponse}) {
+			AI::dequeue;
+		} elsif (timeOut($args)) {
+			if ($args->{type} eq "c") {
+				sendMessage($net, "c", $args->{reply});
+			} elsif ($args->{type} eq "pm") {
+				sendMessage($net, "pm", $args->{reply}, $args->{from});
+			}
+			AI::dequeue;
+		}
+	}
+}
+
+sub processAvoid {
+	##### AVOID GM OR PLAYERS #####
+	if (timeOut($timeout{ai_avoidcheck})) {
+		avoidGM_near() if ($config{avoidGM_near} && (!$cities_lut{"$field{name}.rsw"} || $config{avoidGM_near_inTown}));
+		avoidList_near() if $config{avoidList};
+		$timeout{ai_avoidcheck}{time} = time;
+	}
+}
+
+##### SEND EMOTICON #####
+sub processSendEmotion {
+	my $ai_sendemotion_index = AI::findAction("sendEmotion");
+	return if (!defined $ai_sendemotion_index || time < AI::args->{timeout});
+	sendEmotion($net, AI::args->{emotion});
+	AI::clear("sendEmotion");
+}
+
+##### AUTO SHOP OPEN #####
+sub processAutoShopOpen {
+	if ($config{'shopAuto_open'} && !AI::isIdle) {
+		$timeout{ai_shop}{time} = time;
+	}
+	if ($config{'shopAuto_open'} && AI::isIdle && $conState == 5 && !$char->{sitting} && timeOut($timeout{ai_shop}) && !$shopstarted) {
+		openShop();
+	}
 }
 
 1;
