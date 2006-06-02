@@ -187,7 +187,7 @@ if (!defined &XSTools::majorVersion) {
 	$interface->errorDialog(TF("Your version of XSTools library is incompatible.\n" .
 		"Please read %s", "http://www.openkore.com/aliases/xstools.php"));
 	exit 1;
-} elsif (XSTools::minorVersion() < 3) {
+} elsif (XSTools::minorVersion() < 4) {
 	$interface->errorDialog(TF("Your version of the XSTools library is too old. Please upgrade it.\n" .
 		"Please read %s", "http://www.openkore.com/aliases/xstools.php"));
 	exit 1;
