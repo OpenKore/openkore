@@ -125,77 +125,8 @@ sub iterate {
 
 	Plugins::callHook('AI_pre/manual');
 
-	if (AI::action eq "look" && timeOut($timeout{'ai_look'})) {
-		$timeout{'ai_look'}{'time'} = time;
-		sendLook($net, AI::args->{'look_body'}, AI::args->{'look_head'});
-		AI::dequeue;
-	}
-
-
-	##### CLIENT SUSPEND #####
-	# The clientSuspend AI sequence is used to freeze all other AI activity
-	# for a certain period of time.
-
-	if (AI::action eq 'clientSuspend' && timeOut(AI::args)) {
-		debug "AI suspend by clientSuspend dequeued\n";
-		AI::dequeue;
-	} elsif (AI::action eq "clientSuspend" && $net->clientAlive()) {
-		# When XKore mode is turned on, clientSuspend will increase it's timeout
-		# every time the user tries to do something manually.
-		my $args = AI::args;
-
-		if ($args->{'type'} eq "0089") {
-			# Player's manually attacking
-			if ($args->{'args'}[0] == 2) {
-				if ($chars[$config{'char'}]{'sitting'}) {
-					$args->{'time'} = time;
-				}
-			} elsif ($args->{'args'}[0] == 3) {
-				$args->{'timeout'} = 6;
-			} else {
-				my $ID = $args->{args}[1];
-				my $monster = $monstersList->getByID($ID);
-
-				if (!$args->{'forceGiveup'}{'timeout'}) {
-					$args->{'forceGiveup'}{'timeout'} = 6;
-					$args->{'forceGiveup'}{'time'} = time;
-				}
-				if ($monster) {
-					$args->{time} = time;
-					$args->{dmgFromYou_last} = $monster->{dmgFromYou};
-					$args->{missedFromYou_last} = $monster->{missedFromYou};
-					if ($args->{dmgFromYou_last} != $monster->{dmgFromYou}) {
-						$args->{forceGiveup}{time} = time;
-					}
-				} else {
-					$args->{time} -= $args->{'timeout'};
-				}
-				if (timeOut($args->{forceGiveup})) {
-					$args->{time} -= $args->{timeout};
-				}
-			}
-
-		} elsif ($args->{'type'} eq "009F") {
-			# Player's manually picking up an item
-			if (!$args->{'forceGiveup'}{'timeout'}) {
-				$args->{'forceGiveup'}{'timeout'} = 4;
-				$args->{'forceGiveup'}{'time'} = time;
-			}
-			if ($items{$args->{'args'}[0]}) {
-				$args->{'time'} = time;
-			} else {
-				$args->{'time'} -= $args->{'timeout'};
-			}
-			if (timeOut($args->{'forceGiveup'})) {
-				$args->{'time'} -= $args->{'timeout'};
-			}
-		}
-
-		# Client suspended, do not continue with AI
-		return;
-	}
-
-
+	return if processClientSuspend();
+	processLook();
 	processNPCTalk();
 	processDrop();
 	processEscapeUnknownMaps();
@@ -208,12 +139,13 @@ sub iterate {
 	processMapRouteAI();
 	processTake();
 	processMove();
+	Misc::checkValidity("AI part 1");
 
 	return if ($AI != 2);
 
 
 
-	##### REAL AI STARTS HERE #####
+	##### AUTOMATIC AI STARTS HERE #####
 
 	Plugins::callHook('AI_pre');
 
@@ -301,7 +233,7 @@ sub iterate {
 	processCartGet();
 	processAutoMakeArrow();
 	processAutoStorage();
-
+	Misc::checkValidity("AI part 2");
 
 
 	#####AUTO SELL#####
@@ -1333,6 +1265,7 @@ sub iterate {
 		}
 	}
 
+	Misc::checkValidity("AI part 3");
 	processAutoEquip();
 	processAutoAttack();
 	processItemsTake();
@@ -1359,6 +1292,79 @@ sub iterate {
 	Plugins::callHook('AI_post');
 }
 
+##### CLIENT SUSPEND #####
+# The clientSuspend AI sequence is used to freeze all other AI activity
+# for a certain period of time.
+sub processClientSuspend {
+	my $result = 0;
+	if (AI::action eq 'clientSuspend' && timeOut(AI::args)) {
+		debug "AI suspend by clientSuspend dequeued\n";
+		AI::dequeue;
+	} elsif (AI::action eq "clientSuspend" && $net->clientAlive()) {
+		# When XKore mode is turned on, clientSuspend will increase it's timeout
+		# every time the user tries to do something manually.
+		my $args = AI::args;
+
+		if ($args->{'type'} eq "0089") {
+			# Player's manually attacking
+			if ($args->{'args'}[0] == 2) {
+				if ($chars[$config{'char'}]{'sitting'}) {
+					$args->{'time'} = time;
+				}
+			} elsif ($args->{'args'}[0] == 3) {
+				$args->{'timeout'} = 6;
+			} else {
+				my $ID = $args->{args}[1];
+				my $monster = $monstersList->getByID($ID);
+
+				if (!$args->{'forceGiveup'}{'timeout'}) {
+					$args->{'forceGiveup'}{'timeout'} = 6;
+					$args->{'forceGiveup'}{'time'} = time;
+				}
+				if ($monster) {
+					$args->{time} = time;
+					$args->{dmgFromYou_last} = $monster->{dmgFromYou};
+					$args->{missedFromYou_last} = $monster->{missedFromYou};
+					if ($args->{dmgFromYou_last} != $monster->{dmgFromYou}) {
+						$args->{forceGiveup}{time} = time;
+					}
+				} else {
+					$args->{time} -= $args->{'timeout'};
+				}
+				if (timeOut($args->{forceGiveup})) {
+					$args->{time} -= $args->{timeout};
+				}
+			}
+
+		} elsif ($args->{'type'} eq "009F") {
+			# Player's manually picking up an item
+			if (!$args->{'forceGiveup'}{'timeout'}) {
+				$args->{'forceGiveup'}{'timeout'} = 4;
+				$args->{'forceGiveup'}{'time'} = time;
+			}
+			if ($items{$args->{'args'}[0]}) {
+				$args->{'time'} = time;
+			} else {
+				$args->{'time'} -= $args->{'timeout'};
+			}
+			if (timeOut($args->{'forceGiveup'})) {
+				$args->{'time'} -= $args->{'timeout'};
+			}
+		}
+
+		# Client suspended, do not continue with AI
+		$result = 1;
+	}
+	return $result;
+}
+
+sub processLook {
+	if (AI::action eq "look" && timeOut($timeout{'ai_look'})) {
+		$timeout{'ai_look'}{'time'} = time;
+		sendLook($net, AI::args->{'look_body'}, AI::args->{'look_head'});
+		AI::dequeue;
+	}
+}
 
 ##### TALK WITH NPC ######
 sub processNPCTalk {
