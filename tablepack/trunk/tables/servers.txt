@@ -213,6 +213,15 @@ storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x
 serverEncoding Tagalog
 gameGuard 1
 
+[Taiwan - twRO: Test]
+ip 61.220.62.26
+port 6900
+master_version 5
+version 301
+serverType 0
+serverEncoding Traditional Chinese
+storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+
 ## www.ragnarok.in.th/
 [Thailand - tRO: Sol]
 ip 203.144.244.10
@@ -736,21 +745,30 @@ serverType 0
 serverEncoding Western
 
 ## http://aero2.nu/
-[aeRO2 (Low Rate) Private Server]
-ip 66.118.185.75
+[aeRO2 Private Server]
+ip 72.20.3.62
 port 2485
 master_version 0
 version 20
 serverType 4
 serverEncoding Western
 
-## http://aero2.nu/
-[aeRO2 (High Rate) Private Server]
-ip 72.36.230.188
-port 2485
-master_version 1
+## http://www.ancientro.com/
+[AncientRO (Low Rate) Private Server]
+ip ancient-low.no-ip.info
+port 6900
+master_version 18
 version 20
-serverType 4
+serverType 0
+serverEncoding Western
+
+## http://www.ancientro.com/
+[AncientRO (High Rate) Private Server]
+ip ancientro.no-ip.info
+port 6900
+master_version 18
+version 20
+serverType 0
 serverEncoding Western
 
 ## http://www.andzro.org/
@@ -758,9 +776,8 @@ serverEncoding Western
 ip 64.92.173.26
 port 6904
 master_version 1
-version 0
-serverType 5
-masterLogin_packet 0060
+version 20
+serverType 9
 serverEncoding Western
 
 ## http://angelusonline.net/
@@ -799,13 +816,50 @@ version 0
 serverType 5
 serverEncoding Western
 
-## http://www.ceres-ro.net/
-[CeresRO Private Server]
-ip 70.84.99.26
+## http://celestialro.net/
+[CelestialRO Private Server]
+ip 209.190.19.186
 port 6900
-master_version 20
+master_version 14
+version 0
+private 1
+servertype 3
+serverEncoding Western
+
+## http://www.ceres-ro.net/
+[CeresRO (Low Rate) Private Server]
+ip 70.84.99.26
+port 9001
+master_version 18
 version 20
-serverType 5
+serverType 9
+serverEncoding Western
+
+## http://www.ceres-ro.net/
+[CeresRO (High Rate) Private Server]
+ip 70.84.99.26
+port 8001
+master_version 18
+version 20
+serverType 9
+serverEncoding Western
+
+## http://cp.crescendo-ro.com/
+[Crescendo Private Server]
+ip 206.51.224.5
+port 6990
+master_version 14
+version 18
+serverType 9
+serverEncoding Western
+
+## http://www.crossworld2.com/
+[Crossworld2 RO Private Server]
+ip 64.71.161.17
+port 6900
+master_Version 18
+version 20
+serverType 0
 serverEncoding Western
 
 ## http://dark-ro.net/
@@ -815,6 +869,15 @@ port 6910
 master_version 16
 version 0
 servertype 0
+serverEncoding Western
+
+## http://www.deliverance-online.com/invision/index.php
+[DeliveranceRO Private Server]
+ip 206.116.63.79
+port 6901
+master_version 18
+version 20
+serverType 0
 serverEncoding Western
 
 ## http://www.dutchro.tk/
@@ -834,6 +897,15 @@ ip 72.36.236.18
 port 6902
 master_version 20
 version 2
+serverType 5
+serverEncoding Western
+
+## http://www.envyro.com/
+[EnvyRO Private Server]
+ip 209.30.173.93
+port 4022
+version 20
+master_version 16
 serverType 5
 serverEncoding Western
 
@@ -940,13 +1012,22 @@ serverEncoding Western
 [K3RO (Dynasty) Private Server]
 ip 206.225.95.57
 port 6900
-master_version
+master_version 18
 version 20
 serverType 4
 serverEncoding Western
 
+## http://kitakro.ath.cx
+[Kitakro private server]
+ip kitakro.ath.cx
+port 6900
+master_version 13
+version 20
+serverType 5
+serverEncoding Western
+
 ## http://www.mavero.de/
-[MaveRO]
+[MaveRO Private Server]
 ip 62.75.165.110
 port 6900
 master_version 17
@@ -992,16 +1073,27 @@ serverEncoding Western
 ## http://subwaytovenus.free.fr/
 [NiktoutRO Private Server]
 ip 213.186.35.44
-port 6901
+port 6904
 version 20
 master_version 14
 serverType 5
+private 1
 serverEncoding Western
+
+## http://pbro.com.br/ 
+[Private Brazil - pbRO]
+ip 72.21.50.122
+port 6600
+version 20
+master_version 7
+serverType 5
+serverEncoding Western
+field_payon old_payon.fld
 
 ## http://q-ro.net/qro/web/
 [qRO (Low Rate) Private Server]
 ip 64.71.161.251
-port 6821
+port 6828
 version 20
 master_version 18
 serverType 5
@@ -1011,7 +1103,7 @@ serverEncoding Western
 ## http://q-ro.net/qro/web/
 [qRO (High Rate) Private Server]
 ip 64.71.161.252
-port 6821
+port 6828
 version 20
 master_version 18
 serverType 5
@@ -1025,6 +1117,15 @@ port 6901
 master_version 7
 version 20
 serverType 5
+serverEncoding Western
+
+## http://www.roforever.com/
+[RoForever Private Server]
+ip 69.125.34.102
+port 6000
+master_version 1
+version 0
+severType 0
 serverEncoding Western
 
 ## http://www.rusro.com/index_eng.php
@@ -1082,6 +1183,16 @@ version 7
 serverType 4
 serverEncoding Western
 
+## http://www.tsunamiro.com/
+[TsunamiRO Private Server]
+ip tsunamiro.no-ip.info
+port 6900
+master_version 1
+version 20
+serverType 4
+private 1
+serverEncoding Western
+
 ## http://www.utopiaro.com/
 [UtopiaRO (Jupiter) Private Server]
 ip 216.55.159.15
@@ -1098,6 +1209,7 @@ port 6080
 version 30
 master_version 16
 serverType 9
+masterLogin_packet 0061
 serverEncoding Western
 
 ## http://www.vanserver.com/
@@ -1119,6 +1231,14 @@ version 20
 serverType 4
 serverEncoding Western
 
+## http://vendetta-online.net/
+[VendettaRO Private Server]
+ip 64.71.161.23
+port 6900
+version 18
+master_version 18
+serverType 5
+
 ## http://www.wafflenet.net/
 [WaffleRO2 (Gold) Private Server]
 ip 66.240.239.24
@@ -1126,6 +1246,15 @@ port 6900
 master_version 14
 version 20
 serverType 5
+serverEncoding Western
+
+## http://www.xilero.net/
+[XileRO Main Private Server]
+ip xilero.no-ip.info
+port 6901
+master_version 17
+version 20
+serverType 3
 serverEncoding Western
 
 ## http://www.xilero.net/
@@ -1140,11 +1269,11 @@ serverEncoding Western
 ## http://www.xilero.net/
 [XileRO PK Private Server]
 ip xilero2.no-ip.info
-#static ip 72.29.82.150
 port 6901
 master_version 17
 version 20
 serverType 3
+private 1
 serverEncoding Western
 
 
