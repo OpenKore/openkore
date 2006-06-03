@@ -3917,7 +3917,7 @@ sub processAutoTeleport {
 		message T("Teleporting due to insufficient HP/SP or too many aggressives\n"), "teleport";
 		$ai_v{temp}{clear_aiQueue} = 1 if (useTeleport(1, undef, 1));
 		$timeout{ai_teleport_hp}{time} = time;
-		last TELEPORT;
+		return;
 	}
 
 	##### TELEPORT MONSTER #####
