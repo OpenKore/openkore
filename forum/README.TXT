@@ -1,23 +1,72 @@
-// OOptions
+Introduction
+------------
+This repository contains a modified version of PhpBB, which
+is the forum software used by forums.openkore.com. Our PhpBB
+contains a lot of third party mods, as well as some of our
+own.
+
+
+Branches
+--------
+* The 'orig' folder contains the original, unmodified PhpBB sources.
+* All other folders (except 'trunk') are PhpBB with exactly one mod
+  installed. This makes it easier to keep track of new mod versions.
+* The 'trunk' folder contains the sources that forums.openkore.com
+  uses. It's a merge of all the other mods, plus some of our own.
+
+The branches can be visualized as follows:
+orig
+ |
+ +- trunk
+ +- attachment_mod
+ +- multi-bbcode
+ +- quick_reply_mod
+ |  |
+ |  +- bbcode-buttons-organizer
+ |     |
+ |     +- syntax_mod
+ +- seperate_announcements_mod
+ +- simply-merge-threads
+ +- multivote_mod
+ +- xs_mod
+    |
+    +- simple_subforums_mod
+
+
+Installation
+------------
+The installation is very similar to a normal PhpBB installation:
+1. Copy the 'trunk' folder to a location reachable by your web server.
+   That will be your root PhpBB folder.
+2. Copy the 'orig/install' folder to the folder you copied to in step 1.
+3. Start your web server.
+4. Start your web browser and go to the URL for install.php.
+
+You must also run some post-installation SQL queries because of all
+the mods we have:
+
+### ==== SQL queries begin ==== ###
+
+# OOptions
 CREATE TABLE openkore_forum_config (
     config_name VARCHAR(255) NOT NULL,
     config_value TEXT
 );
 
-// "User must wait x days before he can post" (timeblock) mod
+# "User must wait x days before he can post" (timeblock) mod
 ALTER TABLE phpbb_users ADD user_timeblock TINYINT(1) default '1';
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('user_block_time','0');
 
-// Quiz
+# Quiz
 ALTER TABLE phpbb_users ADD user_done_quiz TINYINT(1) default '0';
 
-// multivote_mod
+# multivote_mod
 ALTER TABLE `phpbb_vote_desc` ADD `vote_max` INT( 3 ) DEFAULT '1' NOT NULL;
 ALTER TABLE `phpbb_vote_desc` ADD `vote_voted` INT( 7 ) DEFAULT '0' NOT NULL;
 ALTER TABLE `phpbb_vote_desc` ADD `vote_hide` TINYINT( 1 ) DEFAULT '0' NOT NULL;
 ALTER TABLE `phpbb_vote_desc` ADD `vote_tothide` TINYINT( 1 ) DEFAULT '0' NOT NULL;
 
-// Syntax highlighting mod
+# Syntax highlighting mod
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('syntax_status', '2');
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('syntax_enable_cache', '1');
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('syntax_cache_check_time', '5000');
@@ -73,5 +122,7 @@ INSERT INTO phpbb_syntax_language_config VALUES ('vhdl.php', 'vhdl', 'VHDL');
 INSERT INTO phpbb_syntax_language_config VALUES ('visualfoxpro.php', 'vfp', 'Visual FoxPro');
 INSERT INTO phpbb_syntax_language_config VALUES ('xml.php', 'xml', 'XML');
 
-// Simple subforums mod
+# Simple subforums mod
 ALTER TABLE phpbb_forums ADD forum_parent INT NOT NULL DEFAULT '0';
+
+### ==== SQL queries end ==== ###
