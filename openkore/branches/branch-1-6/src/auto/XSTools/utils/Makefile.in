@@ -1,10 +1,11 @@
 CC=gcc
-CFLAGS=-Wall -Wno-uninitialized -O2 -funroll-loops -finline-functions $(CYGWIN) `curl-config --cflags`
+CFLAGS=-Wall -Wno-uninitialized -O2 -funroll-loops -finline-functions $(CYGWIN)
 CXX=g++
 CXXFLAGS=$(CFLAGS)
 @HEADER@
 #if unix
 IMPL=unix
+CFLAGS+=`curl-config --cflags`
 #endif
 #if win32
 IMPL=win32

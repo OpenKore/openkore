@@ -10,7 +10,7 @@ LIBS=-lreadline -L/usr/lib/termcap -ltermcap -pthread `curl-config --libs`
 #if win32
 OBJ+=win32/wrapper.o win32/utils.o
 DLLNAME=--dllname XSTools.dll
-LIBS=-lwinmm
+LIBS=-lwinmm -lwininet
 #endif
 
 XSTools.$(DLLEXT): sub
