@@ -2,6 +2,7 @@
 use strict;
 no strict 'refs';
 use FindBin qw($RealBin);
+use lib "$RealBin";
 use lib "$RealBin/..";
 
 use Test::More qw(no_plan);
