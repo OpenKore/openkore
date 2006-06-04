@@ -53,6 +53,7 @@ typedef HttpReader * (*HttpReaderCreator) (const char *url);
 
 #define ERROR_URL "http://www.openkore.com/FileNotFound.txt"
 #define INVALID_URL "http://111.111.111.111:82/"
+#define INVALID_URL2 "http://www.foooooo.com"
 #define SECURE_URL "https://sourceforge.net"
 
 
@@ -65,7 +66,7 @@ static HttpReader *
 createMirrorHttpReader(const char *url) {
 	list<const char *> urls;
 	urls.push_back(url);
-	return new MirrorHttpReader(urls);
+	return new MirrorHttpReader(urls, 3000);
 }
 
 
@@ -98,23 +99,29 @@ public:
 		printf("Testing status transitions (4)...\n");
 		assert( testStatusTransitions(SECURE_URL) );
 		printf("Testing status transitions (5)...\n");
-	
+
 		printf("Testing getData (1)...\n");
 		assert( testGetData(SMALL_TEST_URL, SMALL_TEST_CONTENT, SMALL_TEST_SIZE) );
 		printf("Testing getData (2)...\n");
 		assert( testGetData(LARGE_TEST_URL, NULL, LARGE_TEST_SIZE) );
 		printf("Testing getData (3)...\n");
 		assert( !testGetData(ERROR_URL, NULL, 0) );
-	
+		printf("Testing getData (4)...\n");
+		assert( !testGetData(INVALID_URL2, NULL, 0) );
+
 		printf("Testing pullData (1)...\n");
 		assert( testPullData(SMALL_TEST_URL, SMALL_TEST_SIZE, SMALL_TEST_CHECKSUM) );
 		printf("Testing pullData (2)...\n");
 		assert( testPullData(LARGE_TEST_URL, LARGE_TEST_SIZE, LARGE_TEST_CHECKSUM) );
 		printf("Testing pullData (3)...\n");
 		assert( !testPullData(ERROR_URL, 0, 0) );
+		printf("Testing pullData (4)...\n");
+		assert( !testPullData(INVALID_URL2, 0, 0) );
 
-		printf("Testing cancellation while connecting...\n");
+		printf("Testing cancellation while connecting (1)...\n");
 		testConnectCancellation(INVALID_URL);
+		printf("Testing cancellation while connecting (2)...\n");
+		testConnectCancellation(INVALID_URL2);
 		printf("Testing cancellation while downloading...\n");
 		testDownloadCancellation(SLOW_TEST_URL);
 	}
@@ -134,6 +141,7 @@ protected:
 private:
 	HttpReaderCreator createHttpReader;
 
+protected:
 	// Test whether status transitions behave as documented.
 	bool
 	testStatusTransitions(const char *url) {
@@ -259,7 +267,8 @@ private:
 		time_t time1, time2;
 
 		Sleep(1000);
-		assert(http->getStatus() == HTTP_READER_CONNECTING);
+		assert(http->getStatus() == HTTP_READER_CONNECTING
+			|| http->getStatus() == HTTP_READER_ERROR);
 		time1 = time(NULL);
 		delete http;
 		time2 = time(NULL);
@@ -321,6 +330,12 @@ public:
 		urls.push_back(INVALID_URL); // Never used
 		urls.push_back(ERROR_URL);   // ditto
 		assert( testMirrors(urls, 0, 0) );
+
+		printf("Testing getData (5)...\n");
+		assert( !testGetData(INVALID_URL, NULL, 0) );
+
+		printf("Testing pullData (5)...\n");
+		assert( !testPullData(INVALID_URL, 0, 0) );
 	}
 
 private:
