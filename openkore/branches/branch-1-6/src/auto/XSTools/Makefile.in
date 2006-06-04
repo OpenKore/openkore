@@ -2,10 +2,10 @@ CXX=g++
 @HEADER@
 .PHONY: sub clean
 
-OBJ=pathfinding/*.o misc/*.o
+OBJ=pathfinding/*.o misc/*.o utils/*.o utils/perl/*.o utils/c-bindings/*.o
 #if unix
 OBJ+=unix/*.o
-LIBS=-lreadline -L/usr/lib/termcap -ltermcap -pthread
+LIBS=-lreadline -L/usr/lib/termcap -ltermcap -pthread `curl-config --libs`
 #endif
 #if win32
 OBJ+=win32/wrapper.o win32/utils.o
@@ -21,6 +21,7 @@ XSTools.$(DLLEXT): sub
 sub:
 	make -C pathfinding
 	make -C misc
+	make -C utils
 #if unix
 	make -C unix
 #endif
@@ -33,6 +34,7 @@ clean:
 	rm -f XSTools.$(DLLEXT) symbols.gccdef Makefile.real
 	make clean -C pathfinding
 	make clean -C misc
+	make clean -C utils
 #if unix
 	make clean -C unix
 #endif
