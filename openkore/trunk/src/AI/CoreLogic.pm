@@ -38,10 +38,131 @@ use Commands;
 use FileParsers;
 use Translation;
 
-
+# This is the main function from which the rest of the AI
+# will be invoked.
 sub iterate {
 	Benchmark::begin("ai_prepare") if DEBUG;
+	processWipeOldActors();
+	processGetPlayerInfo();
+	processMisc();
+	processPortalRecording();
+	Benchmark::end("ai_prepare") if DEBUG;
 
+	return if (!$AI);
+	if (!$accountID) {
+		$AI = 0;
+		injectAdminMessage("Please relogin to enable X-${Settings::NAME}.") if ($config{verbose});
+		return;
+	}
+	if ($net->clientAlive() && !$sentWelcomeMessage && timeOut($timeout{'welcomeText'})) {
+		injectAdminMessage($Settings::welcomeText) if ($config{'verbose'} && !$config{'XKore_silent'});
+		$sentWelcomeMessage = 1;
+	}
+
+
+	##### MANUAL AI STARTS HERE #####
+
+	Plugins::callHook('AI_pre/manual');
+	return if processClientSuspend();
+	processLook();
+	processNPCTalk();
+	processDrop();
+	processEscapeUnknownMaps();
+	processDelayedTeleport();
+	processSit();
+	processStand();
+	processAttack();
+	processSkillUse();
+	processRouteAI();
+	processMapRouteAI();
+	processTake();
+	processMove();
+
+	Misc::checkValidity("AI part 1");
+	return if ($AI != 2);
+
+
+	##### AUTOMATIC AI STARTS HERE #####
+
+	Plugins::callHook('AI_pre');
+
+	ChatQueue::processFirst;
+
+	processEquip();
+	processDeal();
+	processDealAuto();
+	processPartyAuto();
+	processGuildAutoDeny();
+
+	processAutoBreakTime();
+	processWaypoint();
+	processDead();
+	processStorageGet();
+	processCartAdd();
+	processCartGet();
+	processAutoMakeArrow();
+	processAutoStorage();
+	Misc::checkValidity("AI part 2");
+
+	processAutoSell();
+	Misc::checkValidity("AI (autosell)");
+	processAutoBuy();
+	Misc::checkValidity("AI (autobuy)");
+	processAutoCart();
+	Misc::checkValidity("AI (autocart)");
+
+	processLockMap();
+	processAutoStatsRaise();
+	processAutoSkillsRaise();
+	processRandomWalk();
+	processFollow();
+	processSitAutoIdle();
+	processSitAuto();
+
+	Benchmark::begin("ai_autoItemUse") if DEBUG;
+	processAutoItemUse();
+	Benchmark::end("ai_autoItemUse") if DEBUG;
+
+	Benchmark::begin("ai_autoSkillUse") if DEBUG;
+	processAutoSkillUse();
+	Benchmark::end("ai_autoSkillUse") if DEBUG;
+
+	processPartySkillUse();
+	processMonsterSkillUse();
+
+	Misc::checkValidity("AI part 3");
+	processAutoEquip();
+	processAutoAttack();
+	processItemsTake();
+	processItemsAutoGather();
+	processItemsGather();
+	processAutoTeleport();
+	processAllowedMaps();
+	processAutoResponse();
+	processAvoid();
+	processSendEmotion();
+	processAutoShopOpen();
+
+
+	##########
+
+	# DEBUG CODE
+	if (timeOut($ai_v{time}, 2) && $config{'debug'} >= 2) {
+		my $len = @ai_seq_args;
+		debug "AI: @ai_seq | $len\n", "ai", 2;
+		$ai_v{time} = time;
+	}
+	$ai_v{'AI_last_finished'} = time;
+
+	Plugins::callHook('AI_post');
+}
+
+
+#############################################################
+
+
+# Wipe old entries in the %actor_old hashes.
+sub processWipeOldActors {
 	if (timeOut($timeout{ai_wipe_check})) {
 		my $timeout = $timeout{ai_wipe_old}{timeout};
 
@@ -82,7 +203,9 @@ sub iterate {
 		$timeout{'ai_wipe_check'}{'time'} = time;
 		debug "Wiped old\n", "ai", 2;
 	}
+}
 
+sub processGetPlayerInfo {
 	if (timeOut($timeout{ai_getInfo})) {
 		processNameRequestQueue(\@unknownPlayers, \%players);
 		processNameRequestQueue(\@unknownNPCs, \%npcs);
@@ -101,7 +224,9 @@ sub iterate {
 		}
 		$timeout{ai_getInfo}{time} = time;
 	}
+}
 
+sub processMisc {
 	if (timeOut($timeout{ai_sync})) {
 		$timeout{ai_sync}{time} = time;
 		sendSync($net);
@@ -111,263 +236,6 @@ sub iterate {
 		delete $char->{muted};
 		delete $char->{mute_period};
 	}
-
-	Benchmark::end("ai_prepare") if DEBUG;
-
-
-	processPortalRecording();
-
-	return if (!$AI);
-
-
-
-	##### MANUAL AI STARTS HERE #####
-
-	Plugins::callHook('AI_pre/manual');
-
-	return if processClientSuspend();
-	processLook();
-	processNPCTalk();
-	processDrop();
-	processEscapeUnknownMaps();
-	processDelayedTeleport();
-	processSit();
-	processStand();
-	processAttack();
-	processSkillUse();
-	processRouteAI();
-	processMapRouteAI();
-	processTake();
-	processMove();
-	Misc::checkValidity("AI part 1");
-
-	return if ($AI != 2);
-
-
-
-	##### AUTOMATIC AI STARTS HERE #####
-
-	Plugins::callHook('AI_pre');
-
-	if (!$accountID) {
-		$AI = 0;
-		injectAdminMessage("Please relogin to enable X-${Settings::NAME}.") if ($config{'verbose'});
-		return;
-	}
-
-	ChatQueue::processFirst;
-
-
-	##### MISC #####
-
-	if (AI::action eq "equip") {
-		#just wait until everything is equipped or timedOut
-		if (!$ai_v{temp}{waitForEquip} || timeOut($timeout{ai_equip_giveup})) {
-			AI::dequeue;
-			delete $ai_v{temp}{waitForEquip};
-		}
-	}
-
-	if (AI::action ne "deal" && %currentDeal) {
-		AI::queue('deal');
-	} elsif (AI::action eq "deal") {
-		if (%currentDeal) {
-			if (!$currentDeal{you_finalize} && timeOut($timeout{ai_dealAuto}) &&
-			    ($config{dealAuto} == 2 ||
-				 $config{dealAuto} == 3 && $currentDeal{other_finalize})) {
-				sendDealAddItem(0, $currentDeal{'you_zenny'});
-				sendDealFinalize();
-				$timeout{ai_dealAuto}{time} = time;
-			} elsif ($currentDeal{other_finalize} && $currentDeal{you_finalize} &&timeOut($timeout{ai_dealAuto}) && $config{dealAuto} >= 2) {
-				sendDealTrade($net);
-				$timeout{ai_dealAuto}{time} = time;
-			}
-		} else {
-			AI::dequeue();
-		}
-	}
-
-	# dealAuto 1=refuse 2,3=accept
-	if ($config{'dealAuto'} && %incomingDeal) {
-		if ($config{'dealAuto'} == 1 && timeOut($timeout{ai_dealAutoCancel})) {
-			sendDealCancel($net);
-			$timeout{'ai_dealAuto'}{'time'} = time;
-		} elsif ($config{'dealAuto'} >= 2 && timeOut($timeout{ai_dealAuto})) {
-			sendDealAccept($net);
-			$timeout{'ai_dealAuto'}{'time'} = time;
-		}
-	}
-
-
-	# partyAuto 1=refuse 2=accept
-	if ($config{'partyAuto'} && %incomingParty && timeOut($timeout{'ai_partyAuto'})) {
-		if ($config{partyAuto} == 1) {
-			message T("Auto-denying party request\n");
-		} else {
-			message T("Auto-accepting party request\n");
-		}
-		sendPartyJoin($net, $incomingParty{'ID'}, $config{'partyAuto'} - 1);
-		$timeout{'ai_partyAuto'}{'time'} = time;
-		undef %incomingParty;
-	}
-
-	if ($config{'guildAutoDeny'} && %incomingGuild && timeOut($timeout{'ai_guildAutoDeny'})) {
-		sendGuildJoin($net, $incomingGuild{'ID'}, 0) if ($incomingGuild{'Type'} == 1);
-		sendGuildAlly($net, $incomingGuild{'ID'}, 0) if ($incomingGuild{'Type'} == 2);
-		$timeout{'ai_guildAutoDeny'}{'time'} = time;
-		undef %incomingGuild;
-	}
-
-
-	if ($net->clientAlive() && !$sentWelcomeMessage && timeOut($timeout{'welcomeText'})) {
-		injectAdminMessage($Settings::welcomeText) if ($config{'verbose'} && !$config{'XKore_silent'});
-		$sentWelcomeMessage = 1;
-	}
-
-
-	processAutoBreakTime();
-	processWaypoint();
-	processDead();
-	processStorageGet();
-	processCartAdd();
-	processCartGet();
-	processAutoMakeArrow();
-	processAutoStorage();
-	Misc::checkValidity("AI part 2");
-
-	processAutoSell();
-	Misc::checkValidity("AI (autosell)");
-	processAutoBuy();
-	Misc::checkValidity("AI (autobuy)");
-	processAutoCart();
-	Misc::checkValidity("AI (autocart)");
-
-	processLockMap();
-	processAutoStats();
-	processAutoSkills();
-	processRandomWalk();
-	processFollow();
-	processSitAutoIdle();
-	processSitAuto();
-
-
-	##### AUTO-ITEM USE #####
-
-	Benchmark::begin("ai_autoItemUse") if DEBUG;
-
-	if ((AI::isIdle || AI::is(qw(route mapRoute follow sitAuto take items_gather items_take attack skill_use)))
-	  && timeOut($timeout{ai_item_use_auto})) {
-		my $i = 0;
-		while (exists $config{"useSelf_item_$i"}) {
-			if ($config{"useSelf_item_$i"} && checkSelfCondition("useSelf_item_$i")) {
-				my $index = findIndexStringList_lc($char->{inventory}, "name", $config{"useSelf_item_$i"});
-				if (defined $index) {
-					sendItemUse($net, $char->{inventory}[$index]{index}, $accountID);
-					$ai_v{"useSelf_item_$i"."_time"} = time;
-					$timeout{ai_item_use_auto}{time} = time;
-					debug qq~Auto-item use: $char->{inventory}[$index]{name}\n~, "ai";
-					last;
-				} elsif ($config{"useSelf_item_${i}_dcOnEmpty"} && @{$char->{inventory}} > 0) {
-					error TF("Disconnecting on empty %s!\n", $config{"useSelf_item_$i"});
-					chatLog("k", TF("Disconnecting on empty %s!\n", $config{"useSelf_item_$i"}));
-					quit();
-				}
-			}
-			$i++;
-		}
-	}
-
-	Benchmark::end("ai_autoItemUse") if DEBUG;
-
-
-	##### AUTO-SKILL USE #####
-
-	Benchmark::begin("ai_autoSkillUse") if DEBUG;
-
-	if (AI::isIdle || AI::is(qw(route mapRoute follow sitAuto take items_gather items_take attack))
-	|| (AI::action eq "skill_use" && AI::args->{tag} eq "attackSkill")) {
-		my %self_skill;
-		for (my $i = 0; exists $config{"useSelf_skill_$i"}; $i++) {
-			if ($config{"useSelf_skill_$i"} && checkSelfCondition("useSelf_skill_$i")) {
-				$ai_v{"useSelf_skill_$i"."_time"} = time;
-				$self_skill{ID} = Skills->new(name => lc($config{"useSelf_skill_$i"}))->handle;
-				unless ($self_skill{ID}) {
-					error "Unknown skill name '".$config{"useSelf_skill_$i"}."' in useSelf_skill_$i\n";
-					configModify("useSelf_skill_${i}_disabled", 1);
-					next;
-				}
-				$self_skill{lvl} = $config{"useSelf_skill_$i"."_lvl"};
-				$self_skill{maxCastTime} = $config{"useSelf_skill_$i"."_maxCastTime"};
-				$self_skill{minCastTime} = $config{"useSelf_skill_$i"."_minCastTime"};
-				$self_skill{prefix} = "useSelf_skill_$i";
-				last;
-			}
-		}
-		if ($config{useSelf_skill_smartHeal} && $self_skill{ID} eq "AL_HEAL") {
-			my $smartHeal_lv = 1;
-			my $hp_diff = $char->{hp_max} - $char->{hp};
-			my $meditatioBonus = 1;
-			$meditatioBonus = 1 + int(($char->{skills}{HP_MEDITATIO}{lv} * 2) / 100) if ($char->{skills}{HP_MEDITATIO});
-			for (my $i = 1; $i <= $char->{skills}{$self_skill{ID}}{lv}; $i++) {
-				my ($sp_req, $amount);
-
-				$smartHeal_lv = $i;
-				$sp_req = 10 + ($i * 3);
-				$amount = (int(($char->{lv} + $char->{int}) / 8) * (4 + $i * 8)) * $meditatioBonus;
-				if ($char->{sp} < $sp_req) {
-					$smartHeal_lv--;
-					last;
-				}
-				last if ($amount >= $hp_diff);
-			}
-			$self_skill{lvl} = $smartHeal_lv;
-		}
-		if ($config{$self_skill{prefix}."_smartEncore"} &&
-			$char->{encoreSkill} &&
-			$char->{encoreSkill}->handle eq $self_skill{ID}) {
-			# Use Encore skill instead if applicable
-			$self_skill{ID} = 'BD_ENCORE';
-		}
-		if ($self_skill{lvl} > 0) {
-			debug qq~Auto-skill on self: $config{$self_skill{prefix}} (lvl $self_skill{lvl})\n~, "ai";
-			if (!ai_getSkillUseType($self_skill{ID})) {
-				ai_skillUse($self_skill{ID}, $self_skill{lvl}, $self_skill{maxCastTime}, $self_skill{minCastTime}, $accountID, undef, undef, undef, undef, $self_skill{prefix});
-			} else {
-				ai_skillUse($self_skill{ID}, $self_skill{lvl}, $self_skill{maxCastTime}, $self_skill{minCastTime}, $char->{pos_to}{x}, $char->{pos_to}{y}, undef, undef, undef, $self_skill{prefix});
-			}
-		}
-	}
-
-	Benchmark::end("ai_autoSkillUse") if DEBUG;
-
-	processPartySkillUse();
-	processMonsterSkillUse();
-
-	Misc::checkValidity("AI part 3");
-	processAutoEquip();
-	processAutoAttack();
-	processItemsTake();
-	processItemsAutoGather();
-	processItemsGather();
-	processAutoTeleport();
-	processAllowedMaps();
-	processAutoResponse();
-	processAvoid();
-	processSendEmotion();
-	processAutoShopOpen();
-
-
-	##########
-
-	# DEBUG CODE
-	if (timeOut($ai_v{time}, 2) && $config{'debug'} >= 2) {
-		my $len = @ai_seq_args;
-		debug "AI: @ai_seq | $len\n", "ai", 2;
-		$ai_v{time} = time;
-	}
-	$ai_v{'AI_last_finished'} = time;
-
-	Plugins::callHook('AI_post');
 }
 
 ##### CLIENT SUSPEND #####
@@ -1980,6 +1848,73 @@ sub processMove {
 	}
 }
 
+sub processEquip {
+	if (AI::action eq "equip") {
+		# Just wait until everything is equipped or timedOut
+		if (!$ai_v{temp}{waitForEquip} || timeOut($timeout{ai_equip_giveup})) {
+			AI::dequeue;
+			delete $ai_v{temp}{waitForEquip};
+		}
+	}
+}
+
+sub processDeal {
+	if (AI::action ne "deal" && %currentDeal) {
+		AI::queue('deal');
+	} elsif (AI::action eq "deal") {
+		if (%currentDeal) {
+			if (!$currentDeal{you_finalize} && timeOut($timeout{ai_dealAuto}) &&
+			    ($config{dealAuto} == 2 ||
+				 $config{dealAuto} == 3 && $currentDeal{other_finalize})) {
+				sendDealAddItem(0, $currentDeal{'you_zenny'});
+				sendDealFinalize();
+				$timeout{ai_dealAuto}{time} = time;
+			} elsif ($currentDeal{other_finalize} && $currentDeal{you_finalize} &&timeOut($timeout{ai_dealAuto}) && $config{dealAuto} >= 2) {
+				sendDealTrade($net);
+				$timeout{ai_dealAuto}{time} = time;
+			}
+		} else {
+			AI::dequeue();
+		}
+	}
+}
+
+sub processDealAuto {
+	# dealAuto 1=refuse 2,3=accept
+	if ($config{'dealAuto'} && %incomingDeal) {
+		if ($config{'dealAuto'} == 1 && timeOut($timeout{ai_dealAutoCancel})) {
+			sendDealCancel($net);
+			$timeout{'ai_dealAuto'}{'time'} = time;
+		} elsif ($config{'dealAuto'} >= 2 && timeOut($timeout{ai_dealAuto})) {
+			sendDealAccept($net);
+			$timeout{'ai_dealAuto'}{'time'} = time;
+		}
+	}
+}
+
+sub processPartyAuto {
+	# partyAuto 1=refuse 2=accept
+	if ($config{'partyAuto'} && %incomingParty && timeOut($timeout{'ai_partyAuto'})) {
+		if ($config{partyAuto} == 1) {
+			message T("Auto-denying party request\n");
+		} else {
+			message T("Auto-accepting party request\n");
+		}
+		sendPartyJoin($net, $incomingParty{'ID'}, $config{'partyAuto'} - 1);
+		$timeout{'ai_partyAuto'}{'time'} = time;
+		undef %incomingParty;
+	}
+}
+
+sub processGuildAutoDeny {
+	if ($config{'guildAutoDeny'} && %incomingGuild && timeOut($timeout{'ai_guildAutoDeny'})) {
+		sendGuildJoin($net, $incomingGuild{'ID'}, 0) if ($incomingGuild{'Type'} == 1);
+		sendGuildAlly($net, $incomingGuild{'ID'}, 0) if ($incomingGuild{'Type'} == 2);
+		$timeout{'ai_guildAutoDeny'}{'time'} = time;
+		undef %incomingGuild;
+	}
+}
+
 ##### AUTOBREAKTIME #####
 # Break time: automatically disconnect at certain times of the day
 sub processAutoBreakTime {
@@ -2905,8 +2840,8 @@ sub processLockMap {
 	}
 }
 
-##### AUTO STATS #####
-sub processAutoStats {
+##### AUTO STATS RAISE #####
+sub processAutoStatsRaise {
 	if (!$statChanged && $config{statsAddAuto}) {
 		# Split list of stats/values
 		my @list = split(/ *,+ */, $config{"statsAddAuto_list"});
@@ -2964,8 +2899,8 @@ sub processAutoStats {
 	}
 }
 
-##### AUTO SKILLS #####
-sub processAutoSkills {
+##### AUTO SKILLS RAISE #####
+sub processAutoSkillsRaise {
 	if (!$skillChanged && $config{skillsAddAuto}) {
 		# Split list of skills and levels
 		my @list = split / *,+ */, lc($config{skillsAddAuto_list});
@@ -3310,6 +3245,88 @@ sub processSitAuto {
 			&& (percent_hp($char) < $config{'sitAuto_hp_lower'} || percent_sp($char) < $config{'sitAuto_sp_lower'})) {
 				AI::queue("sitAuto");
 				debug "Auto-sitting\n", "sitAuto";
+			}
+		}
+	}
+}
+
+##### AUTO-ITEM USE #####
+sub processAutoItemUse {
+	if ((AI::isIdle || AI::is(qw(route mapRoute follow sitAuto take items_gather items_take attack skill_use)))
+	  && timeOut($timeout{ai_item_use_auto})) {
+		my $i = 0;
+		while (exists $config{"useSelf_item_$i"}) {
+			if ($config{"useSelf_item_$i"} && checkSelfCondition("useSelf_item_$i")) {
+				my $index = findIndexStringList_lc($char->{inventory}, "name", $config{"useSelf_item_$i"});
+				if (defined $index) {
+					sendItemUse($net, $char->{inventory}[$index]{index}, $accountID);
+					$ai_v{"useSelf_item_$i"."_time"} = time;
+					$timeout{ai_item_use_auto}{time} = time;
+					debug qq~Auto-item use: $char->{inventory}[$index]{name}\n~, "ai";
+					last;
+				} elsif ($config{"useSelf_item_${i}_dcOnEmpty"} && @{$char->{inventory}} > 0) {
+					error TF("Disconnecting on empty %s!\n", $config{"useSelf_item_$i"});
+					chatLog("k", TF("Disconnecting on empty %s!\n", $config{"useSelf_item_$i"}));
+					quit();
+				}
+			}
+			$i++;
+		}
+	}
+}
+
+##### AUTO-SKILL USE #####
+sub processAutoSkillUse {
+	if (AI::isIdle || AI::is(qw(route mapRoute follow sitAuto take items_gather items_take attack))
+	|| (AI::action eq "skill_use" && AI::args->{tag} eq "attackSkill")) {
+		my %self_skill;
+		for (my $i = 0; exists $config{"useSelf_skill_$i"}; $i++) {
+			if ($config{"useSelf_skill_$i"} && checkSelfCondition("useSelf_skill_$i")) {
+				$ai_v{"useSelf_skill_$i"."_time"} = time;
+				$self_skill{ID} = Skills->new(name => lc($config{"useSelf_skill_$i"}))->handle;
+				unless ($self_skill{ID}) {
+					error "Unknown skill name '".$config{"useSelf_skill_$i"}."' in useSelf_skill_$i\n";
+					configModify("useSelf_skill_${i}_disabled", 1);
+					next;
+				}
+				$self_skill{lvl} = $config{"useSelf_skill_$i"."_lvl"};
+				$self_skill{maxCastTime} = $config{"useSelf_skill_$i"."_maxCastTime"};
+				$self_skill{minCastTime} = $config{"useSelf_skill_$i"."_minCastTime"};
+				$self_skill{prefix} = "useSelf_skill_$i";
+				last;
+			}
+		}
+		if ($config{useSelf_skill_smartHeal} && $self_skill{ID} eq "AL_HEAL") {
+			my $smartHeal_lv = 1;
+			my $hp_diff = $char->{hp_max} - $char->{hp};
+			my $meditatioBonus = 1;
+			$meditatioBonus = 1 + int(($char->{skills}{HP_MEDITATIO}{lv} * 2) / 100) if ($char->{skills}{HP_MEDITATIO});
+			for (my $i = 1; $i <= $char->{skills}{$self_skill{ID}}{lv}; $i++) {
+				my ($sp_req, $amount);
+
+				$smartHeal_lv = $i;
+				$sp_req = 10 + ($i * 3);
+				$amount = (int(($char->{lv} + $char->{int}) / 8) * (4 + $i * 8)) * $meditatioBonus;
+				if ($char->{sp} < $sp_req) {
+					$smartHeal_lv--;
+					last;
+				}
+				last if ($amount >= $hp_diff);
+			}
+			$self_skill{lvl} = $smartHeal_lv;
+		}
+		if ($config{$self_skill{prefix}."_smartEncore"} &&
+			$char->{encoreSkill} &&
+			$char->{encoreSkill}->handle eq $self_skill{ID}) {
+			# Use Encore skill instead if applicable
+			$self_skill{ID} = 'BD_ENCORE';
+		}
+		if ($self_skill{lvl} > 0) {
+			debug qq~Auto-skill on self: $config{$self_skill{prefix}} (lvl $self_skill{lvl})\n~, "ai";
+			if (!ai_getSkillUseType($self_skill{ID})) {
+				ai_skillUse($self_skill{ID}, $self_skill{lvl}, $self_skill{maxCastTime}, $self_skill{minCastTime}, $accountID, undef, undef, undef, undef, $self_skill{prefix});
+			} else {
+				ai_skillUse($self_skill{ID}, $self_skill{lvl}, $self_skill{maxCastTime}, $self_skill{minCastTime}, $char->{pos_to}{x}, $char->{pos_to}{y}, undef, undef, undef, $self_skill{prefix});
 			}
 		}
 	}
