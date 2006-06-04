@@ -41,7 +41,7 @@ our @EXPORT = (
 	# Other stuff
 	qw(dataWaiting dumpHash formatNumber getCoordString getFormattedDate getHex giveHex getRange getTickCount
 	inRange judgeSkillArea makeCoords makeCoords2 makeDistMap makeIP parseArgs swrite timeConvert timeOut
-	vocalString)
+	vocalString urlencode)
 	);
 
 
@@ -1393,6 +1393,16 @@ sub vocalString {
 	}
 	$$r_string = $password if ($r_string);
 	return $password;
+}
+
+##
+# urlencode(str)
+#
+# URL-encodes a string.
+sub urlencode {
+	my ($str) = @_;
+	$str =~ s/([\W])/"%" . uc(sprintf("%2.2x", ord($1)))/eg;
+	return $str;
 }
 
 return 1;
