@@ -242,464 +242,13 @@ sub iterate {
 	processAutoCart();
 	Misc::checkValidity("AI (autocart)");
 
-	##### LOCKMAP #####
-
-	if (AI::isIdle && $config{lockMap}
-		&& !$ai_v{sitAuto_forcedBySitCommand}
-		&& ($field{name} ne $config{lockMap}
-			|| ($config{lockMap_x} ne '' && ($char->{pos_to}{x} < $config{lockMap_x} - $config{lockMap_randX} || $char->{pos_to}{x} > $config{lockMap_x} + $config{lockMap_randX}))
-			|| ($config{lockMap_y} ne '' && ($char->{pos_to}{y} < $config{lockMap_y} - $config{lockMap_randY} || $char->{pos_to}{y} > $config{lockMap_y} + $config{lockMap_randY}))
-	)) {
-
-		if ($maps_lut{$config{lockMap}.'.rsw'} eq '') {
-			error TF("Invalid map specified for lockMap - map %s doesn't exist\n", $config{lockMap});
-			$config{lockMap} = '';
-		} else {
-			my %args;
-			Plugins::callHook("AI/lockMap", \%args);
-			if (!$args{return}) {
-				my %lockField;
-				getField($config{lockMap}, \%lockField);
-
-				my ($lockX, $lockY);
-				my $i = 500;
-				if ($config{lockMap_x} ne '' || $config{lockMap_y} ne '') {
-					do {
-						$lockX = int($config{lockMap_x}) if ($config{lockMap_x} ne '');
-						$lockX = int(rand($field{width}) + 1) if (!$config{lockMap_x} && $config{lockMap_y});
-						$lockX += (int(rand($config{lockMap_randX}))+1) if ($config{lockMap_randX} ne '');
-						$lockY = int($config{lockMap_y}) if ($config{lockMap_y} ne '');
-						$lockY = int(rand($field{width}) + 1) if (!$config{lockMap_y} && $config{lockMap_x});
-						$lockY += (int(rand($config{lockMap_randY}))+1) if ($config{lockMap_randY} ne '');
-					} while (--$i && !checkFieldWalkable(\%lockField, $lockX, $lockY));
-				}
-				if (!$i) {
-					error T("Invalid coordinates specified for lockMap, coordinates are unwalkable\n");
-					$config{lockMap} = '';
-				} else {
-					my $attackOnRoute = 2;
-					$attackOnRoute = 1 if ($config{attackAuto_inLockOnly} == 1);
-					$attackOnRoute = 0 if ($config{attackAuto_inLockOnly} > 1);
-					if (defined $lockX || defined $lockY) {
-						message TF("Calculating lockMap route to: %s(%s): %s, %s\n", $maps_lut{$config{lockMap}.'.rsw'}, $config{lockMap}, $lockX, $lockY), "route";
-					} else {
-						message TF("Calculating lockMap route to: %s(%s)\n", $maps_lut{$config{lockMap}.'.rsw'}, $config{lockMap}), "route";
-					}
-					ai_route($config{lockMap}, $lockX, $lockY, attackOnRoute => $attackOnRoute);
-				}
-			}
-		}
-	}
-
-
-	##### AUTO STATS #####
-
-	if (!$statChanged && $config{statsAddAuto}) {
-		# Split list of stats/values
-		my @list = split(/ *,+ */, $config{"statsAddAuto_list"});
-		my $statAmount;
-		my ($num, $st);
-
-		foreach my $item (@list) {
-			# Split each stat/value pair
-			($num, $st) = $item =~ /(\d+) (str|vit|dex|int|luk|agi)/i;
-			$st = lc $st;
-			# If stat needs to be raised to match desired amount
-			$statAmount = $char->{$st};
-			$statAmount += $char->{"${st}_bonus"} if (!$config{statsAddAuto_dontUseBonus});
-
-			if ($statAmount < $num && ($char->{$st} < 99 || $config{statsAdd_over_99})) {
-				# If char has enough stat points free to raise stat
-				if ($char->{points_free} &&
-				    $char->{points_free} >= $char->{"points_$st"}) {
-					my $ID;
-					if ($st eq "str") {
-						$ID = 0x0D;
-					} elsif ($st eq "agi") {
-						$ID = 0x0E;
-					} elsif ($st eq "vit") {
-						$ID = 0x0F;
-					} elsif ($st eq "int") {
-						$ID = 0x10;
-					} elsif ($st eq "dex") {
-						$ID = 0x11;
-					} elsif ($st eq "luk") {
-						$ID = 0x12;
-					}
-
-					$char->{$st} += 1;
-					# Raise stat
-					message TF("Auto-adding stat %s\n", $st);
-					sendAddStatusPoint($net, $ID);
-					# Save which stat was raised, so that when we received the
-					# "stat changed" packet (00BC?) we can changed $statChanged
-					# back to 0 so that kore will start checking again if stats
-					# need to be raised.
-					# This basically prevents kore from sending packets to the
-					# server super-fast, by only allowing another packet to be
-					# sent when $statChanged is back to 0 (when the server has
-					# replied with a a stat change)
-					$statChanged = $st;
-					# After we raise a stat, exit loop
-					last;
-				}
-				# If stat needs to be changed but char doesn't have enough stat points to raise it then
-				# don't raise it, exit loop
-				last;
-			}
-		}
-	}
-
-	##### AUTO SKILLS #####
-
-	if (!$skillChanged && $config{skillsAddAuto}) {
-		# Split list of skills and levels
-		my @list = split / *,+ */, lc($config{skillsAddAuto_list});
-
-		foreach my $item (@list) {
-			# Split each skill/level pair
-			my ($sk, $num) = $item =~ /(.*) (\d+)/;
-			my $skill = new Skills(auto => $sk);
-
-			if (!$skill->id) {
-				error TF("Unknown skill '%s'; disabling skillsAddAuto\n", $sk);
-				$config{skillsAddAuto} = 0;
-				last;
-			}
-
-			my $handle = $skill->handle;
-
-			# If skill needs to be raised to match desired amount && skill points are available
-			if ($skill->id && $char->{points_skill} > 0 && $char->{skills}{$handle}{lv} < $num) {
-				# raise skill
-				sendAddSkillPoint($net, $skill->id);
-				message TF("Auto-adding skill %s\n", $skill->name);
-
-				# save which skill was raised, so that when we received the
-				# "skill changed" packet (010F?) we can changed $skillChanged
-				# back to 0 so that kore will start checking again if skills
-				# need to be raised.
-				# this basically does what $statChanged does for stats
-				$skillChanged = $handle;
-				# after we raise a skill, exit loop
-				last;
-			}
-		}
-	}
-
-
-	##### RANDOM WALK #####
-	if (AI::isIdle && $config{route_randomWalk} && !$ai_v{sitAuto_forcedBySitCommand}
-		&& (!$cities_lut{$field{name}.'.rsw'} || $config{route_randomWalk_inTown})
-		&& length($field{rawMap}) ) {
-		my ($randX, $randY);
-		my $i = 500;
-		do {
-			$randX = int(rand($field{width}) + 1);
-			$randX = int($config{'lockMap_x'} - $config{'lockMap_randX'} + rand(2*$config{'lockMap_randX'}+1)) if ($config{'lockMap_x'} ne '' && $config{'lockMap_randX'} ne '');
-			$randY = int(rand($field{height}) + 1);
-			$randY = int($config{'lockMap_y'} - $config{'lockMap_randY'} + rand(2*$config{'lockMap_randY'}+1)) if ($config{'lockMap_y'} ne '' && $config{'lockMap_randY'} ne '');
-		} while (--$i && !checkFieldWalkable(\%field, $randX, $randY));
-		if (!$i) {
-			error T("Invalid coordinates specified for randomWalk (coordinates are unwalkable); randomWalk disabled\n");
-			$config{route_randomWalk} = 0;
-		} else {
-			message TF("Calculating random route to: %s(%s): %s, %s\n", $maps_lut{$field{name}.'.rsw'}, $field{name}, $randX, $randY), "route";
-			ai_route($field{name}, $randX, $randY,
-				maxRouteTime => $config{route_randomWalk_maxRouteTime},
-				attackOnRoute => 2,
-				noMapRoute => ($config{route_randomWalk} == 2 ? 1 : 0) );
-		}
-	}
-
-
-	##### FOLLOW #####
-
-	# TODO: follow should be a 'mode' rather then a sequence, hence all
-	# var/flag about follow should be moved to %ai_v
-
-	FOLLOW: {
-		last FOLLOW	if (!$config{follow});
-
-		my $followIndex;
-		if (($followIndex = AI::findAction("follow")) eq "") {
-			# ai_follow will determine if the Target is 'follow-able'
-			last FOLLOW if (!ai_follow($config{followTarget}));
-		}
-		my $args = AI::args($followIndex);
-
-		# if we are not following now but master is in the screen...
-		if (!defined $args->{'ID'}) {
-			foreach (keys %players) {
-				if ($players{$_}{'name'} eq $args->{'name'} && !$players{$_}{'dead'}) {
-					$args->{'ID'} = $_;
-					$args->{'following'} = 1;
-	 				message TF("Found my master - %s\n", $ai_seq_args[$followIndex]{'name'}), "follow";
-					last;
-				}
-			}
-		} elsif (!$args->{'following'} && $players{$args->{'ID'}} && %{$players{$args->{'ID'}}}) {
-			$args->{'following'} = 1;
-			delete $args->{'ai_follow_lost'};
-	 		message TF("Found my master!\n"), "follow"
-		}
-
-		# if we are not doing anything else now...
-		if (AI::action eq "follow") {
-			if (AI::args->{'suspended'}) {
-				if (AI::args->{'ai_follow_lost'}) {
-					AI::args->{'ai_follow_lost_end'}{'time'} += time - AI::args->{'suspended'};
-				}
-				delete AI::args->{'suspended'};
-			}
-
-			# if we are not doing anything else now...
-			if (!$args->{ai_follow_lost}) {
-				my $ID = $args->{ID};
-				my $player = $players{$ID};
-
-				if ($args->{following} && $player->{pos_to}) {
-					my $dist = distance($char->{pos_to}, $player->{pos_to});
-					if ($dist > $config{followDistanceMax} && timeOut($args->{move_timeout}, 0.25)) {
-						$args->{move_timeout} = time;
-						if ( $dist > 15 || ($config{followCheckLOS} && !checkLineWalkable($char->{pos_to}, $player->{pos_to})) ) {
-							ai_route($field{name}, $player->{pos_to}{x}, $player->{pos_to}{y},
-								attackOnRoute => 1,
-								distFromGoal => $config{followDistanceMin});
-						} else {
-							my (%vec, %pos);
-
-							stand() if ($char->{sitting});
-							getVector(\%vec, $player->{pos_to}, $char->{pos_to});
-							moveAlongVector(\%pos, $char->{pos_to}, \%vec, $dist - $config{followDistanceMin});
-							$timeout{ai_sit_idle}{time} = time;
-							sendMove($pos{x}, $pos{y});
-						}
-					}
-				}
-
-				if ($args->{following} && $player && %{$player}) {
-					if ($config{'followSitAuto'} && $players{$args->{'ID'}}{'sitting'} == 1 && $chars[$config{'char'}]{'sitting'} == 0) {
-						sit();
-					}
-
-					my $dx = $args->{'last_pos_to'}{'x'} - $players{$args->{'ID'}}{'pos_to'}{'x'};
-					my $dy = $args->{'last_pos_to'}{'y'} - $players{$args->{'ID'}}{'pos_to'}{'y'};
-					$args->{'last_pos_to'}{'x'} = $players{$args->{'ID'}}{'pos_to'}{'x'};
-					$args->{'last_pos_to'}{'y'} = $players{$args->{'ID'}}{'pos_to'}{'y'};
-					if ($dx != 0 || $dy != 0) {
-						lookAtPosition($players{$args->{'ID'}}{'pos_to'}) if ($config{'followFaceDirection'});
-					}
-				}
-			}
-		}
-
-		if (AI::action eq "follow" && $args->{'following'} && ( ( $players{$args->{'ID'}} && $players{$args->{'ID'}}{'dead'} ) || ( ( !$players{$args->{'ID'}} || !%{$players{$args->{'ID'}}} ) && $players_old{$args->{'ID'}}{'dead'}))) {
-	 		message T("Master died. I'll wait here.\n"), "party";
-			delete $args->{'following'};
-		} elsif ($args->{'following'} && ( !$players{$args->{'ID'}} || !%{$players{$args->{'ID'}}} )) {
-	 		message T("I lost my master\n"), "follow";
-			if ($config{'followBot'}) {
-	 			message T("Trying to get him back\n"), "follow";
-				sendMessage($net, "pm", "move $chars[$config{'char'}]{'pos_to'}{'x'} $chars[$config{'char'}]{'pos_to'}{'y'}", $config{followTarget});
-			}
-
-			delete $args->{'following'};
-
-			if ($players_old{$args->{'ID'}}{'disconnected'}) {
-	 			message T("My master disconnected\n"), "follow";
-
-			} elsif ($players_old{$args->{'ID'}}{'teleported'}) {
-				delete $args->{'ai_follow_lost_warped'};
-				delete $ai_v{'temp'}{'warp_pos'};
-
-				# Check to see if the player went through a warp portal and follow him through it.
-				my $pos = calcPosition($players_old{$args->{'ID'}});
-				my $oldPos = $players_old{$args->{'ID'}}->{pos};
-				my (@blocks, $found);
-				my %vec;
-				
-				debug "Last time i saw, master was moving from ($oldPos->{x}, $oldPos->{y}) to ($pos->{x}, $pos->{y})\n", "follow";
-
-				# We must check the ground about 9x9 area of where we last saw our master. That's the only way
-				# to ensure he walked through a warp portal. The range is because of lag in some situations.
-				@blocks = calcRectArea2($pos->{x}, $pos->{y}, 4, 0);
-				foreach (@blocks) {
-					next unless (whenGroundStatus($_, "Warp Portal"));
-					# We must certify that our master was walking towards that portal.
-					getVector(\%vec, $_, $oldPos);
-					next unless (checkMovementDirection($oldPos, \%vec, $_, 15));
-					$found = $_;
-					last;
-				}
-
-				if ($found) {
-					%{$ai_v{'temp'}{'warp_pos'}} = %{$found};
-					$args->{'ai_follow_lost_warped'} = 1;
-					$args->{'ai_follow_lost'} = 1;
-					$args->{'ai_follow_lost_end'}{'timeout'} = $timeout{'ai_follow_lost_end'}{'timeout'};
-					$args->{'ai_follow_lost_end'}{'time'} = time;
-					$args->{'ai_follow_lost_vec'} = {};
-					getVector($args->{'ai_follow_lost_vec'}, $players_old{$args->{'ID'}}{'pos_to'}, $chars[$config{'char'}]{'pos_to'});
-					
-				} else {
-	 				message T("My master teleported\n"), "follow", 1;
-				}
-
-			} elsif ($players_old{$args->{'ID'}}{'disappeared'}) {
-	 			message T("Trying to find lost master\n"), "follow", 1;
-
-				delete $args->{'ai_follow_lost_char_last_pos'};
-				delete $args->{'follow_lost_portal_tried'};
-				$args->{'ai_follow_lost'} = 1;
-				$args->{'ai_follow_lost_end'}{'timeout'} = $timeout{'ai_follow_lost_end'}{'timeout'};
-				$args->{'ai_follow_lost_end'}{'time'} = time;
-				$args->{'ai_follow_lost_vec'} = {};
-				getVector($args->{'ai_follow_lost_vec'}, $players_old{$args->{'ID'}}{'pos_to'}, $chars[$config{'char'}]{'pos_to'});
-
-				#check if player went through portal
-				my $first = 1;
-				my $foundID;
-				my $smallDist;
-				foreach (@portalsID) {
-					next if (!defined $_);
-					$ai_v{'temp'}{'dist'} = distance($players_old{$args->{'ID'}}{'pos_to'}, $portals{$_}{'pos'});
-					if ($ai_v{'temp'}{'dist'} <= 7 && ($first || $ai_v{'temp'}{'dist'} < $smallDist)) {
-						$smallDist = $ai_v{'temp'}{'dist'};
-						$foundID = $_;
-						undef $first;
-					}
-				}
-				$args->{'follow_lost_portalID'} = $foundID;
-			} else {
-	 			message T("Don't know what happened to Master\n"), "follow", 1;
-			}
-		}
-
-		##### FOLLOW-LOST #####
-
-		if (AI::action eq "follow" && $args->{'ai_follow_lost'}) {
-			if ($args->{'ai_follow_lost_char_last_pos'}{'x'} == $chars[$config{'char'}]{'pos_to'}{'x'} && $args->{'ai_follow_lost_char_last_pos'}{'y'} == $chars[$config{'char'}]{'pos_to'}{'y'}) {
-				$args->{'lost_stuck'}++;
-			} else {
-				delete $args->{'lost_stuck'};
-			}
-			%{AI::args->{'ai_follow_lost_char_last_pos'}} = %{$chars[$config{'char'}]{'pos_to'}};
-
-			if (timeOut($args->{'ai_follow_lost_end'})) {
-				delete $args->{'ai_follow_lost'};
-	 			message T("Couldn't find master, giving up\n"), "follow";
-
-			} elsif ($players_old{$args->{'ID'}}{'disconnected'}) {
-				delete AI::args->{'ai_follow_lost'};
-	 			message T("My master disconnected\n"), "follow";
-				
-			} elsif ($args->{'ai_follow_lost_warped'} && $ai_v{'temp'}{'warp_pos'} && %{$ai_v{'temp'}{'warp_pos'}}) {
-				my $pos = $ai_v{'temp'}{'warp_pos'};
-				
-				if ($config{followCheckLOS} && !checkLineWalkable($char->{pos_to}, $pos)) {
-					ai_route($field{name}, $pos->{x}, $pos->{y},
-						attackOnRoute => 0); #distFromGoal => 0);
-				} else { 
-					my (%vec, %pos_to);
-					my $dist = distance($char->{pos_to}, $pos);
-
-					stand() if ($char->{sitting});
-					getVector(\%vec, $pos, $char->{pos_to});
-					moveAlongVector(\%pos_to, $char->{pos_to}, \%vec, $dist);
-					$timeout{ai_sit_idle}{time} = time;
-					move($pos_to{x}, $pos_to{y});
-					$pos->{x} = int $pos_to{x};
-					$pos->{y} = int $pos_to{y};
-
-				}
-				delete $args->{'ai_follow_lost_warped'};
-				delete $ai_v{'temp'}{'warp_pos'};
-				
-	 			message TF("My master warped at (%s, %s) - moving to warp point\n", $pos->{x}, $pos->{y}), "follow";
-
-			} elsif ($players_old{$args->{'ID'}}{'teleported'}) {
-				delete AI::args->{'ai_follow_lost'};
-	 			message T("My master teleported\n"), "follow";
-
-			} elsif ($args->{'lost_stuck'}) {
-				if ($args->{'follow_lost_portalID'} eq "") {
-					moveAlongVector($ai_v{'temp'}{'pos'}, $chars[$config{'char'}]{'pos_to'}, $args->{'ai_follow_lost_vec'}, $config{'followLostStep'} / ($args->{'lost_stuck'} + 1));
-					move($ai_v{'temp'}{'pos'}{'x'}, $ai_v{'temp'}{'pos'}{'y'});
-				}
-			} else {
-				my $portalID = $args->{follow_lost_portalID};
-				if ($args->{'follow_lost_portalID'} ne "" && $portalID) {
-					if ($portals{$portalID} && !$args->{'follow_lost_portal_tried'}) {
-						$args->{'follow_lost_portal_tried'} = 1;
-						%{$ai_v{'temp'}{'pos'}} = %{$portals{$args->{'follow_lost_portalID'}}{'pos'}};
-						ai_route($field{'name'}, $ai_v{'temp'}{'pos'}{'x'}, $ai_v{'temp'}{'pos'}{'y'},
-							attackOnRoute => 1);
-					}
-				} else {
-					moveAlongVector($ai_v{'temp'}{'pos'}, $chars[$config{'char'}]{'pos_to'}, $args->{'ai_follow_lost_vec'}, $config{'followLostStep'});
-					move($ai_v{'temp'}{'pos'}{'x'}, $ai_v{'temp'}{'pos'}{'y'});
-				}
-			}
-		}
-
-		# Use party information to find master
-		if (!exists $args->{following} && !exists $args->{ai_follow_lost}) {
-			ai_partyfollow();
-		}
-	} # end of FOLLOW block
-
-
-	##### SITAUTO-IDLE #####
-	if ($config{sitAuto_idle}) {
-		if (!AI::isIdle && AI::action ne "follow") {
-			$timeout{ai_sit_idle}{time} = time;
-		}
-
-		if ( !$char->{sitting} && timeOut($timeout{ai_sit_idle})
-		 && (!$config{shopAuto_open} || timeOut($timeout{ai_shop})) ) {
-			sit();
-		}
-	}
-
-
-	##### SIT AUTO #####
-	SITAUTO: {
-		my $weight = percent_weight($char);
-		my $action = AI::action;
-		my $lower_ok = (percent_hp($char) >= $config{'sitAuto_hp_lower'} && percent_sp($char) >= $config{'sitAuto_sp_lower'});
-		my $upper_ok = (percent_hp($char) >= $config{'sitAuto_hp_upper'} && percent_sp($char) >= $config{'sitAuto_sp_upper'});
-
-		if ($ai_v{'sitAuto_forceStop'} && $lower_ok) {
-			$ai_v{'sitAuto_forceStop'} = 0;
-		}
-
-		# Sit if we're not already sitting
-		if ($action eq "sitAuto" && !$char->{sitting} && $char->{skills}{NV_BASIC}{lv} >= 3 &&
-		  !ai_getAggressives() && ($weight < 50 || $config{'sitAuto_over_50'})) {
-			debug "sitAuto - sit\n", "sitAuto";
-			sit();
-
-		# Stand if our HP is high enough
-		} elsif ($action eq "sitAuto" && ($ai_v{'sitAuto_forceStop'} || $upper_ok)) {
-			AI::dequeue;
-			debug "HP is now > $config{sitAuto_hp_upper}\n", "sitAuto";
-			stand() if (!AI::isIdle && !AI::is(qw(follow sitting clientSuspend)) && !$config{'sitAuto_idle'} && $char->{sitting});
-
-		} elsif (!$ai_v{'sitAuto_forceStop'} && ($weight < 50 || $config{'sitAuto_over_50'}) && AI::action ne "sitAuto") {
-			if ($action eq "" || $action eq "follow"
-			|| ($action eq "route" && !AI::args->{noSitAuto})
-			|| ($action eq "mapRoute" && !AI::args->{noSitAuto})
-			) {
-				if (!AI::inQueue("attack") && !ai_getAggressives()
-				&& !AI::inQueue("sitAuto")  # do not queue sitAuto if there is an existing sitAuto sequence
-				&& (percent_hp($char) < $config{'sitAuto_hp_lower'} || percent_sp($char) < $config{'sitAuto_sp_lower'})) {
-					AI::queue("sitAuto");
-					debug "Auto-sitting\n", "sitAuto";
-				}
-			}
-		}
-	}
+	processLockMap();
+	processAutoStats();
+	processAutoSkills();
+	processRandomWalk();
+	processFollow();
+	processSitAutoIdle();
+	processSitAuto();
 
 
 	##### AUTO-ITEM USE #####
@@ -791,128 +340,8 @@ sub iterate {
 
 	Benchmark::end("ai_autoSkillUse") if DEBUG;
 
-
-	##### PARTY-SKILL USE #####
-
-	if (AI::isIdle || AI::is(qw(route mapRoute follow sitAuto take items_gather items_take attack move))){
-		my %party_skill;
-		for (my $i = 0; exists $config{"partySkill_$i"}; $i++) {
-			next if (!$config{"partySkill_$i"});
-			foreach my $ID (@playersID) {
-				next if ($ID eq "");
-				next if ((!$char->{party} || !$char->{party}{users}{$ID}) && !$config{"partySkill_$i"."_notPartyOnly"});
-				my $player = Actor::get($ID);
-				next unless UNIVERSAL::isa($player, 'Actor::Player');
-				if (inRange(distance($char->{pos_to}, $players{$ID}{pos}), $config{partySkillDistance} || "1..8")
-					&& (!$config{"partySkill_$i"."_target"} || existsInList($config{"partySkill_$i"."_target"}, $player->{name}))
-					&& checkPlayerCondition("partySkill_$i"."_target", $ID)
-					&& checkSelfCondition("partySkill_$i")
-					){
-					$party_skill{ID} = Skills->new(name => lc($config{"partySkill_$i"}))->handle;
-					$party_skill{lvl} = $config{"partySkill_$i"."_lvl"};
-					$party_skill{target} = $player->{name};
-					my $pos = $player->position;
-					$party_skill{x} = $pos->{x};
-					$party_skill{y} = $pos->{y};
-					$party_skill{targetID} = $ID;
-					$party_skill{maxCastTime} = $config{"partySkill_$i"."_maxCastTime"};
-					$party_skill{minCastTime} = $config{"partySkill_$i"."_minCastTime"};
-					$party_skill{isSelfSkill} = $config{"partySkill_$i"."_isSelfSkill"};
-					$party_skill{prefix} = "partySkill_$i";
-					# This is used by setSkillUseTimer() to set
-					# $ai_v{"partySkill_${i}_target_time"}{$targetID}
-					# when the skill is actually cast
-					$targetTimeout{$ID}{$party_skill{ID}} = $i;
-					last;
-				}
-
-			}
-			last if (defined $party_skill{targetID});
-		}
-
-		if ($config{useSelf_skill_smartHeal} && $party_skill{ID} eq "AL_HEAL" && !$config{$party_skill{prefix}."_noSmartHeal"}) {
-			my $smartHeal_lv = 1;
-			my $hp_diff;
-			if ($char->{party} && $char->{party}{users}{$party_skill{targetID}} && $char->{party}{users}{$party_skill{targetID}}{hp}) {
-				$hp_diff = $char->{party}{users}{$party_skill{targetID}}{hp_max} - $char->{party}{users}{$party_skill{targetID}}{hp};
-			} else {
-				$hp_diff = -$players{$party_skill{targetID}}{deltaHp};
-			}
-			for (my $i = 1; $i <= $char->{skills}{$party_skill{ID}}{lv}; $i++) {
-				my ($sp_req, $amount);
-
-				$smartHeal_lv = $i;
-				$sp_req = 10 + ($i * 3);
-				$amount = int(($char->{lv} + $char->{int}) / 8) * (4 + $i * 8);
-				if ($char->{sp} < $sp_req) {
-					$smartHeal_lv--;
-					last;
-				}
-				last if ($amount >= $hp_diff);
-			}
-			$party_skill{lvl} = $smartHeal_lv;
-		}
-		if (defined $party_skill{targetID}) {
-			debug qq~Party Skill used ($party_skill{target}) Skills Used: $config{$party_skill{prefix}} (lvl $party_skill{lvl})\n~, "skill";
-			if (!ai_getSkillUseType($party_skill{ID})) {
-				ai_skillUse(
-					$party_skill{ID},
-					$party_skill{lvl},
-					$party_skill{maxCastTime},
-					$party_skill{minCastTime},
-					$party_skill{isSelfSkill} ? $accountID : $party_skill{targetID},
-					undef,
-					undef,
-					undef,
-					undef,
-					$party_skill{prefix});
-			} else {
-				my $pos = ($party_skill{isSelfSkill}) ? $char->{pos_to} : \%party_skill;
-				ai_skillUse(
-					$party_skill{ID},
-					$party_skill{lvl},
-					$party_skill{maxCastTime},
-					$party_skill{minCastTime},
-					$pos->{x},
-					$pos->{y},
-					undef,
-					undef,
-					undef,
-					$party_skill{prefix});
-			}
-		}
-	}
-
-	##### MONSTER SKILL USE #####
-	if (AI::isIdle || AI::is(qw(route mapRoute follow sitAuto take items_gather items_take attack move))) {
-		my $i = 0;
-		my $prefix = "monsterSkill_$i";
-		while ($config{$prefix}) {
-			# monsterSkill can be used on any monster that we could
-			# attackAuto
-			my @monsterIDs = ai_getAggressives(1, 1);
-			for my $monsterID (@monsterIDs) {
-				my $monster = $monsters{$monsterID};
-				if (checkSelfCondition($prefix)
-				    && checkMonsterCondition("${prefix}_target", $monster)) {
-					my $skill = Skills->new(name => $config{$prefix});
-
-					next if $config{"${prefix}_maxUses"} && $monster->{skillUses}{$skill->handle} >= $config{"${prefix}_maxUses"};
-					next if $config{"${prefix}_target"} && !existsInList($config{"${prefix}_target"}, $monster->{name});
-
-					my $lvl = $config{"${prefix}_lvl"};
-					my $maxCastTime = $config{"${prefix}_maxCastTime"};
-					my $minCastTime = $config{"${prefix}_minCastTime"};
-					debug "Auto-monsterSkill on $monster->{name} ($monster->{binID}): ".$skill->name." (lvl $lvl)\n", "monsterSkill";
-					ai_skillUse2($skill, $lvl, $maxCastTime, $minCastTime, $monster, $prefix);
-					$ai_v{$prefix . "_time"}{$monsterID} = time;
-					last;
-				}
-			}
-			$i++;
-			$prefix = "monsterSkill_$i";
-		}
-	}
+	processPartySkillUse();
+	processMonsterSkillUse();
 
 	Misc::checkValidity("AI part 3");
 	processAutoEquip();
@@ -3423,6 +2852,591 @@ sub processAutoCart {
 			cartGet(\@getItems);
 		}
 		$AI::Timeouts::autoCart = time;
+	}
+}
+
+##### LOCKMAP #####
+sub processLockMap {
+	if (AI::isIdle && $config{lockMap}
+		&& !$ai_v{sitAuto_forcedBySitCommand}
+		&& ($field{name} ne $config{lockMap}
+			|| ($config{lockMap_x} ne '' && ($char->{pos_to}{x} < $config{lockMap_x} - $config{lockMap_randX} || $char->{pos_to}{x} > $config{lockMap_x} + $config{lockMap_randX}))
+			|| ($config{lockMap_y} ne '' && ($char->{pos_to}{y} < $config{lockMap_y} - $config{lockMap_randY} || $char->{pos_to}{y} > $config{lockMap_y} + $config{lockMap_randY}))
+	)) {
+
+		if ($maps_lut{$config{lockMap}.'.rsw'} eq '') {
+			error TF("Invalid map specified for lockMap - map %s doesn't exist\n", $config{lockMap});
+			$config{lockMap} = '';
+		} else {
+			my %args;
+			Plugins::callHook("AI/lockMap", \%args);
+			if (!$args{return}) {
+				my %lockField;
+				getField($config{lockMap}, \%lockField);
+
+				my ($lockX, $lockY);
+				my $i = 500;
+				if ($config{lockMap_x} ne '' || $config{lockMap_y} ne '') {
+					do {
+						$lockX = int($config{lockMap_x}) if ($config{lockMap_x} ne '');
+						$lockX = int(rand($field{width}) + 1) if (!$config{lockMap_x} && $config{lockMap_y});
+						$lockX += (int(rand($config{lockMap_randX}))+1) if ($config{lockMap_randX} ne '');
+						$lockY = int($config{lockMap_y}) if ($config{lockMap_y} ne '');
+						$lockY = int(rand($field{width}) + 1) if (!$config{lockMap_y} && $config{lockMap_x});
+						$lockY += (int(rand($config{lockMap_randY}))+1) if ($config{lockMap_randY} ne '');
+					} while (--$i && !checkFieldWalkable(\%lockField, $lockX, $lockY));
+				}
+				if (!$i) {
+					error T("Invalid coordinates specified for lockMap, coordinates are unwalkable\n");
+					$config{lockMap} = '';
+				} else {
+					my $attackOnRoute = 2;
+					$attackOnRoute = 1 if ($config{attackAuto_inLockOnly} == 1);
+					$attackOnRoute = 0 if ($config{attackAuto_inLockOnly} > 1);
+					if (defined $lockX || defined $lockY) {
+						message TF("Calculating lockMap route to: %s(%s): %s, %s\n", $maps_lut{$config{lockMap}.'.rsw'}, $config{lockMap}, $lockX, $lockY), "route";
+					} else {
+						message TF("Calculating lockMap route to: %s(%s)\n", $maps_lut{$config{lockMap}.'.rsw'}, $config{lockMap}), "route";
+					}
+					ai_route($config{lockMap}, $lockX, $lockY, attackOnRoute => $attackOnRoute);
+				}
+			}
+		}
+	}
+}
+
+##### AUTO STATS #####
+sub processAutoStats {
+	if (!$statChanged && $config{statsAddAuto}) {
+		# Split list of stats/values
+		my @list = split(/ *,+ */, $config{"statsAddAuto_list"});
+		my $statAmount;
+		my ($num, $st);
+
+		foreach my $item (@list) {
+			# Split each stat/value pair
+			($num, $st) = $item =~ /(\d+) (str|vit|dex|int|luk|agi)/i;
+			$st = lc $st;
+			# If stat needs to be raised to match desired amount
+			$statAmount = $char->{$st};
+			$statAmount += $char->{"${st}_bonus"} if (!$config{statsAddAuto_dontUseBonus});
+
+			if ($statAmount < $num && ($char->{$st} < 99 || $config{statsAdd_over_99})) {
+				# If char has enough stat points free to raise stat
+				if ($char->{points_free} &&
+				    $char->{points_free} >= $char->{"points_$st"}) {
+					my $ID;
+					if ($st eq "str") {
+						$ID = 0x0D;
+					} elsif ($st eq "agi") {
+						$ID = 0x0E;
+					} elsif ($st eq "vit") {
+						$ID = 0x0F;
+					} elsif ($st eq "int") {
+						$ID = 0x10;
+					} elsif ($st eq "dex") {
+						$ID = 0x11;
+					} elsif ($st eq "luk") {
+						$ID = 0x12;
+					}
+
+					$char->{$st} += 1;
+					# Raise stat
+					message TF("Auto-adding stat %s\n", $st);
+					sendAddStatusPoint($net, $ID);
+					# Save which stat was raised, so that when we received the
+					# "stat changed" packet (00BC?) we can changed $statChanged
+					# back to 0 so that kore will start checking again if stats
+					# need to be raised.
+					# This basically prevents kore from sending packets to the
+					# server super-fast, by only allowing another packet to be
+					# sent when $statChanged is back to 0 (when the server has
+					# replied with a a stat change)
+					$statChanged = $st;
+					# After we raise a stat, exit loop
+					last;
+				}
+				# If stat needs to be changed but char doesn't have enough stat points to raise it then
+				# don't raise it, exit loop
+				last;
+			}
+		}
+	}
+}
+
+##### AUTO SKILLS #####
+sub processAutoSkills {
+	if (!$skillChanged && $config{skillsAddAuto}) {
+		# Split list of skills and levels
+		my @list = split / *,+ */, lc($config{skillsAddAuto_list});
+
+		foreach my $item (@list) {
+			# Split each skill/level pair
+			my ($sk, $num) = $item =~ /(.*) (\d+)/;
+			my $skill = new Skills(auto => $sk);
+
+			if (!$skill->id) {
+				error TF("Unknown skill '%s'; disabling skillsAddAuto\n", $sk);
+				$config{skillsAddAuto} = 0;
+				last;
+			}
+
+			my $handle = $skill->handle;
+
+			# If skill needs to be raised to match desired amount && skill points are available
+			if ($skill->id && $char->{points_skill} > 0 && $char->{skills}{$handle}{lv} < $num) {
+				# raise skill
+				sendAddSkillPoint($net, $skill->id);
+				message TF("Auto-adding skill %s\n", $skill->name);
+
+				# save which skill was raised, so that when we received the
+				# "skill changed" packet (010F?) we can changed $skillChanged
+				# back to 0 so that kore will start checking again if skills
+				# need to be raised.
+				# this basically does what $statChanged does for stats
+				$skillChanged = $handle;
+				# after we raise a skill, exit loop
+				last;
+			}
+		}
+	}
+}
+
+##### RANDOM WALK #####
+sub processRandomWalk {
+	if (AI::isIdle && $config{route_randomWalk} && !$ai_v{sitAuto_forcedBySitCommand}
+		&& (!$cities_lut{$field{name}.'.rsw'} || $config{route_randomWalk_inTown})
+		&& length($field{rawMap}) ) {
+		my ($randX, $randY);
+		my $i = 500;
+		do {
+			$randX = int(rand($field{width}) + 1);
+			$randX = int($config{'lockMap_x'} - $config{'lockMap_randX'} + rand(2*$config{'lockMap_randX'}+1)) if ($config{'lockMap_x'} ne '' && $config{'lockMap_randX'} ne '');
+			$randY = int(rand($field{height}) + 1);
+			$randY = int($config{'lockMap_y'} - $config{'lockMap_randY'} + rand(2*$config{'lockMap_randY'}+1)) if ($config{'lockMap_y'} ne '' && $config{'lockMap_randY'} ne '');
+		} while (--$i && !checkFieldWalkable(\%field, $randX, $randY));
+		if (!$i) {
+			error T("Invalid coordinates specified for randomWalk (coordinates are unwalkable); randomWalk disabled\n");
+			$config{route_randomWalk} = 0;
+		} else {
+			message TF("Calculating random route to: %s(%s): %s, %s\n", $maps_lut{$field{name}.'.rsw'}, $field{name}, $randX, $randY), "route";
+			ai_route($field{name}, $randX, $randY,
+				maxRouteTime => $config{route_randomWalk_maxRouteTime},
+				attackOnRoute => 2,
+				noMapRoute => ($config{route_randomWalk} == 2 ? 1 : 0) );
+		}
+	}
+}
+
+##### FOLLOW #####
+sub processFollow {
+	# TODO: follow should be a 'mode' rather then a sequence, hence all
+	# var/flag about follow should be moved to %ai_v
+
+	return if (!$config{follow});
+
+	my $followIndex;
+	if (($followIndex = AI::findAction("follow")) eq "") {
+		# ai_follow will determine if the Target is 'follow-able'
+		return if (!ai_follow($config{followTarget}));
+	}
+	my $args = AI::args($followIndex);
+
+	# if we are not following now but master is in the screen...
+	if (!defined $args->{'ID'}) {
+		foreach (keys %players) {
+			if ($players{$_}{'name'} eq $args->{'name'} && !$players{$_}{'dead'}) {
+				$args->{'ID'} = $_;
+				$args->{'following'} = 1;
+ 				message TF("Found my master - %s\n", $ai_seq_args[$followIndex]{'name'}), "follow";
+				last;
+			}
+		}
+	} elsif (!$args->{'following'} && $players{$args->{'ID'}} && %{$players{$args->{'ID'}}}) {
+		$args->{'following'} = 1;
+		delete $args->{'ai_follow_lost'};
+ 		message TF("Found my master!\n"), "follow"
+	}
+
+	# if we are not doing anything else now...
+	if (AI::action eq "follow") {
+		if (AI::args->{'suspended'}) {
+			if (AI::args->{'ai_follow_lost'}) {
+				AI::args->{'ai_follow_lost_end'}{'time'} += time - AI::args->{'suspended'};
+			}
+			delete AI::args->{'suspended'};
+		}
+
+		# if we are not doing anything else now...
+		if (!$args->{ai_follow_lost}) {
+			my $ID = $args->{ID};
+			my $player = $players{$ID};
+
+			if ($args->{following} && $player->{pos_to}) {
+				my $dist = distance($char->{pos_to}, $player->{pos_to});
+				if ($dist > $config{followDistanceMax} && timeOut($args->{move_timeout}, 0.25)) {
+					$args->{move_timeout} = time;
+					if ( $dist > 15 || ($config{followCheckLOS} && !checkLineWalkable($char->{pos_to}, $player->{pos_to})) ) {
+						ai_route($field{name}, $player->{pos_to}{x}, $player->{pos_to}{y},
+							attackOnRoute => 1,
+							distFromGoal => $config{followDistanceMin});
+					} else {
+						my (%vec, %pos);
+
+						stand() if ($char->{sitting});
+						getVector(\%vec, $player->{pos_to}, $char->{pos_to});
+						moveAlongVector(\%pos, $char->{pos_to}, \%vec, $dist - $config{followDistanceMin});
+						$timeout{ai_sit_idle}{time} = time;
+						sendMove($pos{x}, $pos{y});
+					}
+				}
+			}
+
+			if ($args->{following} && $player && %{$player}) {
+				if ($config{'followSitAuto'} && $players{$args->{'ID'}}{'sitting'} == 1 && $chars[$config{'char'}]{'sitting'} == 0) {
+					sit();
+				}
+
+				my $dx = $args->{'last_pos_to'}{'x'} - $players{$args->{'ID'}}{'pos_to'}{'x'};
+				my $dy = $args->{'last_pos_to'}{'y'} - $players{$args->{'ID'}}{'pos_to'}{'y'};
+				$args->{'last_pos_to'}{'x'} = $players{$args->{'ID'}}{'pos_to'}{'x'};
+				$args->{'last_pos_to'}{'y'} = $players{$args->{'ID'}}{'pos_to'}{'y'};
+				if ($dx != 0 || $dy != 0) {
+					lookAtPosition($players{$args->{'ID'}}{'pos_to'}) if ($config{'followFaceDirection'});
+				}
+			}
+		}
+	}
+
+	if (AI::action eq "follow" && $args->{'following'} && ( ( $players{$args->{'ID'}} && $players{$args->{'ID'}}{'dead'} ) || ( ( !$players{$args->{'ID'}} || !%{$players{$args->{'ID'}}} ) && $players_old{$args->{'ID'}}{'dead'}))) {
+ 		message T("Master died. I'll wait here.\n"), "party";
+		delete $args->{'following'};
+	} elsif ($args->{'following'} && ( !$players{$args->{'ID'}} || !%{$players{$args->{'ID'}}} )) {
+ 		message T("I lost my master\n"), "follow";
+		if ($config{'followBot'}) {
+ 			message T("Trying to get him back\n"), "follow";
+			sendMessage($net, "pm", "move $chars[$config{'char'}]{'pos_to'}{'x'} $chars[$config{'char'}]{'pos_to'}{'y'}", $config{followTarget});
+		}
+
+		delete $args->{'following'};
+
+		if ($players_old{$args->{'ID'}}{'disconnected'}) {
+ 			message T("My master disconnected\n"), "follow";
+
+		} elsif ($players_old{$args->{'ID'}}{'teleported'}) {
+			delete $args->{'ai_follow_lost_warped'};
+			delete $ai_v{'temp'}{'warp_pos'};
+
+			# Check to see if the player went through a warp portal and follow him through it.
+			my $pos = calcPosition($players_old{$args->{'ID'}});
+			my $oldPos = $players_old{$args->{'ID'}}->{pos};
+			my (@blocks, $found);
+			my %vec;
+			
+			debug "Last time i saw, master was moving from ($oldPos->{x}, $oldPos->{y}) to ($pos->{x}, $pos->{y})\n", "follow";
+
+			# We must check the ground about 9x9 area of where we last saw our master. That's the only way
+			# to ensure he walked through a warp portal. The range is because of lag in some situations.
+			@blocks = calcRectArea2($pos->{x}, $pos->{y}, 4, 0);
+			foreach (@blocks) {
+				next unless (whenGroundStatus($_, "Warp Portal"));
+				# We must certify that our master was walking towards that portal.
+				getVector(\%vec, $_, $oldPos);
+				next unless (checkMovementDirection($oldPos, \%vec, $_, 15));
+				$found = $_;
+				last;
+			}
+
+			if ($found) {
+				%{$ai_v{'temp'}{'warp_pos'}} = %{$found};
+				$args->{'ai_follow_lost_warped'} = 1;
+				$args->{'ai_follow_lost'} = 1;
+				$args->{'ai_follow_lost_end'}{'timeout'} = $timeout{'ai_follow_lost_end'}{'timeout'};
+				$args->{'ai_follow_lost_end'}{'time'} = time;
+				$args->{'ai_follow_lost_vec'} = {};
+				getVector($args->{'ai_follow_lost_vec'}, $players_old{$args->{'ID'}}{'pos_to'}, $chars[$config{'char'}]{'pos_to'});
+				
+			} else {
+ 				message T("My master teleported\n"), "follow", 1;
+			}
+
+		} elsif ($players_old{$args->{'ID'}}{'disappeared'}) {
+ 			message T("Trying to find lost master\n"), "follow", 1;
+
+			delete $args->{'ai_follow_lost_char_last_pos'};
+			delete $args->{'follow_lost_portal_tried'};
+			$args->{'ai_follow_lost'} = 1;
+			$args->{'ai_follow_lost_end'}{'timeout'} = $timeout{'ai_follow_lost_end'}{'timeout'};
+			$args->{'ai_follow_lost_end'}{'time'} = time;
+			$args->{'ai_follow_lost_vec'} = {};
+			getVector($args->{'ai_follow_lost_vec'}, $players_old{$args->{'ID'}}{'pos_to'}, $chars[$config{'char'}]{'pos_to'});
+
+			#check if player went through portal
+			my $first = 1;
+			my $foundID;
+			my $smallDist;
+			foreach (@portalsID) {
+				next if (!defined $_);
+				$ai_v{'temp'}{'dist'} = distance($players_old{$args->{'ID'}}{'pos_to'}, $portals{$_}{'pos'});
+				if ($ai_v{'temp'}{'dist'} <= 7 && ($first || $ai_v{'temp'}{'dist'} < $smallDist)) {
+					$smallDist = $ai_v{'temp'}{'dist'};
+					$foundID = $_;
+					undef $first;
+				}
+			}
+			$args->{'follow_lost_portalID'} = $foundID;
+		} else {
+ 			message T("Don't know what happened to Master\n"), "follow", 1;
+		}
+	}
+
+	##### FOLLOW-LOST #####
+
+	if (AI::action eq "follow" && $args->{'ai_follow_lost'}) {
+		if ($args->{'ai_follow_lost_char_last_pos'}{'x'} == $chars[$config{'char'}]{'pos_to'}{'x'} && $args->{'ai_follow_lost_char_last_pos'}{'y'} == $chars[$config{'char'}]{'pos_to'}{'y'}) {
+			$args->{'lost_stuck'}++;
+		} else {
+			delete $args->{'lost_stuck'};
+		}
+		%{AI::args->{'ai_follow_lost_char_last_pos'}} = %{$chars[$config{'char'}]{'pos_to'}};
+
+		if (timeOut($args->{'ai_follow_lost_end'})) {
+			delete $args->{'ai_follow_lost'};
+ 			message T("Couldn't find master, giving up\n"), "follow";
+
+		} elsif ($players_old{$args->{'ID'}}{'disconnected'}) {
+			delete AI::args->{'ai_follow_lost'};
+ 			message T("My master disconnected\n"), "follow";
+			
+		} elsif ($args->{'ai_follow_lost_warped'} && $ai_v{'temp'}{'warp_pos'} && %{$ai_v{'temp'}{'warp_pos'}}) {
+			my $pos = $ai_v{'temp'}{'warp_pos'};
+			
+			if ($config{followCheckLOS} && !checkLineWalkable($char->{pos_to}, $pos)) {
+				ai_route($field{name}, $pos->{x}, $pos->{y},
+					attackOnRoute => 0); #distFromGoal => 0);
+			} else { 
+				my (%vec, %pos_to);
+				my $dist = distance($char->{pos_to}, $pos);
+
+				stand() if ($char->{sitting});
+				getVector(\%vec, $pos, $char->{pos_to});
+				moveAlongVector(\%pos_to, $char->{pos_to}, \%vec, $dist);
+				$timeout{ai_sit_idle}{time} = time;
+				move($pos_to{x}, $pos_to{y});
+				$pos->{x} = int $pos_to{x};
+				$pos->{y} = int $pos_to{y};
+
+			}
+			delete $args->{'ai_follow_lost_warped'};
+			delete $ai_v{'temp'}{'warp_pos'};
+			
+ 			message TF("My master warped at (%s, %s) - moving to warp point\n", $pos->{x}, $pos->{y}), "follow";
+
+		} elsif ($players_old{$args->{'ID'}}{'teleported'}) {
+			delete AI::args->{'ai_follow_lost'};
+ 			message T("My master teleported\n"), "follow";
+
+		} elsif ($args->{'lost_stuck'}) {
+			if ($args->{'follow_lost_portalID'} eq "") {
+				moveAlongVector($ai_v{'temp'}{'pos'}, $chars[$config{'char'}]{'pos_to'}, $args->{'ai_follow_lost_vec'}, $config{'followLostStep'} / ($args->{'lost_stuck'} + 1));
+				move($ai_v{'temp'}{'pos'}{'x'}, $ai_v{'temp'}{'pos'}{'y'});
+			}
+		} else {
+			my $portalID = $args->{follow_lost_portalID};
+			if ($args->{'follow_lost_portalID'} ne "" && $portalID) {
+				if ($portals{$portalID} && !$args->{'follow_lost_portal_tried'}) {
+					$args->{'follow_lost_portal_tried'} = 1;
+					%{$ai_v{'temp'}{'pos'}} = %{$portals{$args->{'follow_lost_portalID'}}{'pos'}};
+					ai_route($field{'name'}, $ai_v{'temp'}{'pos'}{'x'}, $ai_v{'temp'}{'pos'}{'y'},
+						attackOnRoute => 1);
+				}
+			} else {
+				moveAlongVector($ai_v{'temp'}{'pos'}, $chars[$config{'char'}]{'pos_to'}, $args->{'ai_follow_lost_vec'}, $config{'followLostStep'});
+				move($ai_v{'temp'}{'pos'}{'x'}, $ai_v{'temp'}{'pos'}{'y'});
+			}
+		}
+	}
+
+	# Use party information to find master
+	if (!exists $args->{following} && !exists $args->{ai_follow_lost}) {
+		ai_partyfollow();
+	}
+}
+
+##### SITAUTO-IDLE #####
+sub processSitAutoIdle {
+	if ($config{sitAuto_idle}) {
+		if (!AI::isIdle && AI::action ne "follow") {
+			$timeout{ai_sit_idle}{time} = time;
+		}
+
+		if ( !$char->{sitting} && timeOut($timeout{ai_sit_idle})
+		 && (!$config{shopAuto_open} || timeOut($timeout{ai_shop})) ) {
+			sit();
+		}
+	}
+}
+
+##### SIT AUTO #####
+sub processSitAuto {
+	my $weight = percent_weight($char);
+	my $action = AI::action;
+	my $lower_ok = (percent_hp($char) >= $config{'sitAuto_hp_lower'} && percent_sp($char) >= $config{'sitAuto_sp_lower'});
+	my $upper_ok = (percent_hp($char) >= $config{'sitAuto_hp_upper'} && percent_sp($char) >= $config{'sitAuto_sp_upper'});
+
+	if ($ai_v{'sitAuto_forceStop'} && $lower_ok) {
+		$ai_v{'sitAuto_forceStop'} = 0;
+	}
+
+	# Sit if we're not already sitting
+	if ($action eq "sitAuto" && !$char->{sitting} && $char->{skills}{NV_BASIC}{lv} >= 3 &&
+	    !ai_getAggressives() && ($weight < 50 || $config{'sitAuto_over_50'})) {
+		debug "sitAuto - sit\n", "sitAuto";
+		sit();
+
+	# Stand if our HP is high enough
+	} elsif ($action eq "sitAuto" && ($ai_v{'sitAuto_forceStop'} || $upper_ok)) {
+		AI::dequeue;
+		debug "HP is now > $config{sitAuto_hp_upper}\n", "sitAuto";
+		stand() if (!AI::isIdle && !AI::is(qw(follow sitting clientSuspend)) && !$config{'sitAuto_idle'} && $char->{sitting});
+
+	} elsif (!$ai_v{'sitAuto_forceStop'} && ($weight < 50 || $config{'sitAuto_over_50'}) && AI::action ne "sitAuto") {
+		if ($action eq "" || $action eq "follow"
+		|| ($action eq "route" && !AI::args->{noSitAuto})
+		|| ($action eq "mapRoute" && !AI::args->{noSitAuto})
+		) {
+			if (!AI::inQueue("attack") && !ai_getAggressives()
+			&& !AI::inQueue("sitAuto")  # do not queue sitAuto if there is an existing sitAuto sequence
+			&& (percent_hp($char) < $config{'sitAuto_hp_lower'} || percent_sp($char) < $config{'sitAuto_sp_lower'})) {
+				AI::queue("sitAuto");
+				debug "Auto-sitting\n", "sitAuto";
+			}
+		}
+	}
+}
+
+##### PARTY-SKILL USE #####
+sub processPartySkillUse {
+	if (AI::isIdle || AI::is(qw(route mapRoute follow sitAuto take items_gather items_take attack move))){
+		my %party_skill;
+		for (my $i = 0; exists $config{"partySkill_$i"}; $i++) {
+			next if (!$config{"partySkill_$i"});
+			foreach my $ID (@playersID) {
+				next if ($ID eq "");
+				next if ((!$char->{party} || !$char->{party}{users}{$ID}) && !$config{"partySkill_$i"."_notPartyOnly"});
+				my $player = Actor::get($ID);
+				next unless UNIVERSAL::isa($player, 'Actor::Player');
+				if (inRange(distance($char->{pos_to}, $players{$ID}{pos}), $config{partySkillDistance} || "1..8")
+					&& (!$config{"partySkill_$i"."_target"} || existsInList($config{"partySkill_$i"."_target"}, $player->{name}))
+					&& checkPlayerCondition("partySkill_$i"."_target", $ID)
+					&& checkSelfCondition("partySkill_$i")
+					){
+					$party_skill{ID} = Skills->new(name => lc($config{"partySkill_$i"}))->handle;
+					$party_skill{lvl} = $config{"partySkill_$i"."_lvl"};
+					$party_skill{target} = $player->{name};
+					my $pos = $player->position;
+					$party_skill{x} = $pos->{x};
+					$party_skill{y} = $pos->{y};
+					$party_skill{targetID} = $ID;
+					$party_skill{maxCastTime} = $config{"partySkill_$i"."_maxCastTime"};
+					$party_skill{minCastTime} = $config{"partySkill_$i"."_minCastTime"};
+					$party_skill{isSelfSkill} = $config{"partySkill_$i"."_isSelfSkill"};
+					$party_skill{prefix} = "partySkill_$i";
+					# This is used by setSkillUseTimer() to set
+					# $ai_v{"partySkill_${i}_target_time"}{$targetID}
+					# when the skill is actually cast
+					$targetTimeout{$ID}{$party_skill{ID}} = $i;
+					last;
+				}
+
+			}
+			last if (defined $party_skill{targetID});
+		}
+
+		if ($config{useSelf_skill_smartHeal} && $party_skill{ID} eq "AL_HEAL" && !$config{$party_skill{prefix}."_noSmartHeal"}) {
+			my $smartHeal_lv = 1;
+			my $hp_diff;
+			if ($char->{party} && $char->{party}{users}{$party_skill{targetID}} && $char->{party}{users}{$party_skill{targetID}}{hp}) {
+				$hp_diff = $char->{party}{users}{$party_skill{targetID}}{hp_max} - $char->{party}{users}{$party_skill{targetID}}{hp};
+			} else {
+				$hp_diff = -$players{$party_skill{targetID}}{deltaHp};
+			}
+			for (my $i = 1; $i <= $char->{skills}{$party_skill{ID}}{lv}; $i++) {
+				my ($sp_req, $amount);
+
+				$smartHeal_lv = $i;
+				$sp_req = 10 + ($i * 3);
+				$amount = int(($char->{lv} + $char->{int}) / 8) * (4 + $i * 8);
+				if ($char->{sp} < $sp_req) {
+					$smartHeal_lv--;
+					last;
+				}
+				last if ($amount >= $hp_diff);
+			}
+			$party_skill{lvl} = $smartHeal_lv;
+		}
+		if (defined $party_skill{targetID}) {
+			debug qq~Party Skill used ($party_skill{target}) Skills Used: $config{$party_skill{prefix}} (lvl $party_skill{lvl})\n~, "skill";
+			if (!ai_getSkillUseType($party_skill{ID})) {
+				ai_skillUse(
+					$party_skill{ID},
+					$party_skill{lvl},
+					$party_skill{maxCastTime},
+					$party_skill{minCastTime},
+					$party_skill{isSelfSkill} ? $accountID : $party_skill{targetID},
+					undef,
+					undef,
+					undef,
+					undef,
+					$party_skill{prefix});
+			} else {
+				my $pos = ($party_skill{isSelfSkill}) ? $char->{pos_to} : \%party_skill;
+				ai_skillUse(
+					$party_skill{ID},
+					$party_skill{lvl},
+					$party_skill{maxCastTime},
+					$party_skill{minCastTime},
+					$pos->{x},
+					$pos->{y},
+					undef,
+					undef,
+					undef,
+					$party_skill{prefix});
+			}
+		}
+	}
+}
+
+##### MONSTER SKILL USE #####
+sub processMonsterSkillUse {
+	if (AI::isIdle || AI::is(qw(route mapRoute follow sitAuto take items_gather items_take attack move))) {
+		my $i = 0;
+		my $prefix = "monsterSkill_$i";
+		while ($config{$prefix}) {
+			# monsterSkill can be used on any monster that we could
+			# attackAuto
+			my @monsterIDs = ai_getAggressives(1, 1);
+			for my $monsterID (@monsterIDs) {
+				my $monster = $monsters{$monsterID};
+				if (checkSelfCondition($prefix)
+				    && checkMonsterCondition("${prefix}_target", $monster)) {
+					my $skill = Skills->new(name => $config{$prefix});
+
+					next if $config{"${prefix}_maxUses"} && $monster->{skillUses}{$skill->handle} >= $config{"${prefix}_maxUses"};
+					next if $config{"${prefix}_target"} && !existsInList($config{"${prefix}_target"}, $monster->{name});
+
+					my $lvl = $config{"${prefix}_lvl"};
+					my $maxCastTime = $config{"${prefix}_maxCastTime"};
+					my $minCastTime = $config{"${prefix}_minCastTime"};
+					debug "Auto-monsterSkill on $monster->{name} ($monster->{binID}): ".$skill->name." (lvl $lvl)\n", "monsterSkill";
+					ai_skillUse2($skill, $lvl, $maxCastTime, $minCastTime, $monster, $prefix);
+					$ai_v{$prefix . "_time"}{$monsterID} = time;
+					last;
+				}
+			}
+			$i++;
+			$prefix = "monsterSkill_$i";
+		}
 	}
 }
 
