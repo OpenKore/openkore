@@ -816,6 +816,15 @@ version 0
 serverType 5
 serverEncoding Western
 
+## http://baka-gaming.net
+[BakaRO]
+ip 72.36.225.26
+port 1069
+master_version 14
+version 20
+serverType 9
+serverEncoding Western
+
 ## http://celestialro.net/
 [CelestialRO Private Server]
 ip 209.190.19.186
@@ -1080,15 +1089,30 @@ serverType 5
 private 1
 serverEncoding Western
 
-## http://pbro.com.br/ 
-[Private Brazil - pbRO]
+## http://www.pbro.com.br/ 
+[pbRO (Private Brazil: FuN Rate) Private Server]
+ip 72.36.224.170
+port 6600
+master_version 0
+version 0
+serverType 5
+private 1
+
+[pbRO (Private Brazil: Low Rate) Private Server]
+ip 72.232.212.10
+port 6600
+master_version 0
+version 0
+serverType 5
+private 1
+
+[pbRO (Private Brazil: High Rate) Private Server]
 ip 72.21.50.122
 port 6600
-version 20
-master_version 7
+master_version 0
+version 0
 serverType 5
-serverEncoding Western
-field_payon old_payon.fld
+private 1
 
 ## http://q-ro.net/qro/web/
 [qRO (Low Rate) Private Server]
