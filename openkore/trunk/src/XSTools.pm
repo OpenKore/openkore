@@ -9,10 +9,13 @@ XSLoader::load('XSTools');
 # Convenience function for loading other modules in the XSTools library
 sub bootModule {
 	my $module = shift;
-	$module =~ s/::/__/;
-	my $sym = DynaLoader::dl_find_symbol_anywhere("boot_$module");
-	die "Unable to find symbol boot_$module" if !$sym;
-	my $sub = DynaLoader::dl_install_xsub("${module}::bootstrap", $sym);
+	my $symbolName = $module;
+	$symbolName =~ s/::/__/;
+	$symbolName = "boot_$symbolName";
+
+	my $symbol = DynaLoader::dl_find_symbol_anywhere($symbolName);
+	die "Unable to find symbol $symbolName" if !$symbol;
+	my $sub = DynaLoader::dl_install_xsub("${module}::bootstrap", $symbol);
 	die "Cannot bootstrap $module" if (!$sub);
 	$sub->();
 }

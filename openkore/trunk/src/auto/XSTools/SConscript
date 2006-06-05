@@ -87,11 +87,12 @@ if not win32:
 	else:
 		deps += ['termcap']
 		deps_path += ['/usr/lib/termcap']
+	if not darwin:
+		deps += ['pthread']
+		perlenv['LINKFLAGS'] += ['-pthread']
 else:
 	deps += ['winmm', 'wininet']
 
-if not darwin:
-	perlenv['LINKFLAGS'] += ['-pthread']
 perlenv['LIBS'] += deps
 perlenv['LIBPATH'] += deps_path
 
