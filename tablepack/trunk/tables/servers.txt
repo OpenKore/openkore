@@ -89,8 +89,8 @@ serverEncoding Japanese
 [Korea - kRO] 
 ip 211.172.247.192 
 port 6900
-master_version 15
-version 20
+master_version 0
+version 19
 serverType 8 
 serverEncoding Korean
 
@@ -688,7 +688,7 @@ ip 222.255.122.20
 port 6900
 master_version 26
 version 1
-serverType 0
+serverType 1
 secureLogin 1
 secureLogin_type 0
 secureLogin_requestCode
