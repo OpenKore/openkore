@@ -13,7 +13,7 @@
 	  <td align="right" valign="bottom" nowrap="nowrap"><span class="gensmall"><b>{PAGINATION}</b></span></td>
 	</tr>
 	<tr> 
-	  <td align="left" valign="middle" nowrap="nowrap"><a href="{U_POST_NEW_TOPIC}"><img src="{POST_IMG}" border="0" alt="{L_POST_NEW_TOPIC}" /></a>&nbsp;&nbsp;&nbsp;<a href="search.php"><img src="/images/search.png" border="0" alt="Search forum" valign="middle"/></a></td>
+	  <td align="left" valign="middle" nowrap="nowrap"><a href="{U_POST_NEW_TOPIC}"><img src="{POST_IMG}" border="0" alt="{L_POST_NEW_TOPIC}" /></a>&nbsp;&nbsp;&nbsp;<a href="search.php"><img src="/images/search.png" border="0" alt="Search forum" valign="middle"/></a>&nbsp;&nbsp;&nbsp;<a href="http://bugs.openkore.com/"><img src="/images/report-bug.png" border="0" alt="Report a bug" valign="middle"/></a></td>
 	  <td align="left" valign="middle" class="nav" width="100%"><span class="nav">&nbsp;&nbsp;&nbsp;<a href="{U_INDEX}" class="nav">{L_INDEX}</a> <!-- IF PARENT_FORUM --> -> <a class="nav" href="{U_VIEW_PARENT_FORUM}">{PARENT_FORUM_NAME}</a> <!-- ENDIF --> -> <a class="nav" href="{U_VIEW_FORUM}">{FORUM_NAME}</a></span></td>
 	  <td align="right" valign="bottom" class="nav" nowrap="nowrap"><span class="gensmall"><a href="{U_MARK_READ}">{L_MARK_TOPICS_READ}</a></span></td>
 	</tr>
