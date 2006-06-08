@@ -215,6 +215,10 @@ sub processGetPlayerInfo {
 				sendGetPlayerInfo($net, $_);
 				last;
 			}
+			if ($monsters{$_}{'name_given'} =~ /Unknown/) {
+				sendGetPlayerInfo($net, $_);
+				last;
+			}
 		}
 		foreach (keys %pets) {
 			if ($pets{$_}{'name_given'} =~ /Unknown/) {

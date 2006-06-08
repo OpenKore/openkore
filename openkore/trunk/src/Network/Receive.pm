@@ -792,6 +792,7 @@ sub actor_display {
 				$actor->{name} = ($monsters_lut{$args->{type}} ne "")
 						? $monsters_lut{$args->{type}}
 						: "Unknown ".$args->{type};
+				$actor->{name_given} = "Unknown";
 				$actor->{binType} = $args->{type};
 				$mustAdd = 1;
 			}
@@ -1056,6 +1057,7 @@ sub actor_info {
 			$monsters_lut{$monster->{nameID}} = $name;
 			updateMonsterLUT("$Settings::tables_folder/monsters.txt", $monster->{nameID}, $name);
 		}
+		$monster->{name_given} = $name;
 	}
 
 	my $npc = $npcs{$args->{ID}};
