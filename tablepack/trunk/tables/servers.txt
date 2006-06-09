@@ -688,7 +688,7 @@ ip 222.255.122.20
 port 6900
 master_version 26
 version 1
-serverType 1
+serverType 2
 secureLogin 1
 secureLogin_type 0
 secureLogin_requestCode
