@@ -5015,9 +5015,16 @@ sub storage_password_request {
 
 	} elsif ($args->{flag} == 8) {	# apparently this flag means that you have entered the wrong password
 									# too many times, and now the server is blocking you from using storage
-		debug(($args->{switch} eq '023E') ?
-			"Character password: unknown flag $args->{flag}\n" :
-			"Storage password: unknown flag $args->{flag}\n");
+		error T("You have entered the wrong password 5 times. Please try again later.\n");
+		# temporarily disable storageAuto
+		$config{storageAuto} = 0;
+		my $index = AI::findAction('storageAuto');
+		if (defined $index) {
+			AI::args($index)->{done} = 1;
+			while (AI::action ne 'storageAuto') {
+				AI::dequeue;
+			}
+		}
 	} else {
 		debug(($args->{switch} eq '023E') ?
 			"Character password: unknown flag $args->{flag}\n" :
@@ -5034,6 +5041,17 @@ sub storage_password_result {
 		error T("Error: Incorrect storage password.\n");
 	} elsif ($args->{type} == 6) {
 		message T("Successfully entered storage password.\n"), "success";
+	} elsif ($args->{type} == 7) {
+		error T("Error: Incorrect storage password.\n");
+		# disable storageAuto or the Kafra storage will be blocked
+		configModify("storageAuto", 0);
+		my $index = AI::findAction('storageAuto');
+		if (defined $index) {
+			AI::args($index)->{done} = 1;
+			while (AI::action ne 'storageAuto') {
+				AI::dequeue;
+			}
+		}
 	} else {
 		#message "Storage password: unknown type $args->{type}\n";
 	}
