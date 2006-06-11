@@ -69,7 +69,7 @@ sub parseMacroFile {
       } else {
         my ($key, $value) = $_ =~ /^(.*?)\s+(.*)/;
         next unless $key;
-        if ($key =~ /^(map|mapchange|class|timeout|delay|disabled|call|spell|pm|pubm|guild|party|console|overrideAI|orphan|macro_delay|hook|save\d+|priority)$/) {
+        if ($key =~ /^(map|mapchange|class|timeout|delay|disabled|call|spell|pm|pubm|guild|party|console|overrideAI|orphan|macro_delay|hook|save\d+|priority|exclusive)$/) {
           $automacro{$block{name}}->{$key} = $value
         } else {
           push(@{$automacro{$block{name}}->{$key}}, $value)
@@ -112,7 +112,7 @@ sub parseKw {
                  "invamount|cartamount|shopamount|storamount|config|eval|arg";
   my @pair = $text =~ /\@($keywords)\s*\(\s*(.*?)\s*\)/i;
   return unless @pair;
-  if ($pair[0] eq 'arg') {return $text =~ /\@(arg)\s*\(\s*(".*?",\s+\d+)\s*\)/}
+  if ($pair[0] eq 'arg') {return $text =~ /\@(arg)\s*\(\s*(".*?",\s*\d+)\s*\)/}
   elsif ($pair[0] eq 'random') {return $text =~ /\@(random)\s*\(\s*(".*?")\s*\)/}
   while ($pair[1] =~ /^\@($keywords)\s*\(/) {@pair = $pair[1] =~ /^\@($keywords)\s*\((.*)/}
   return @pair

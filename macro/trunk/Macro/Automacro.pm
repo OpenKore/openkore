@@ -46,8 +46,6 @@ sub checkVar {
   if (exists $varStack{$var}) {
     return 1 if cmpr($varStack{$var}, $cond, $val)
   } else {
-    # checking undef against anything is always false.
-    # comparing undef != anything is always true.
     return 1 if $cond eq "!="
   }
   return 0
@@ -109,11 +107,7 @@ sub checkLevel {
   $cvs->debug("checkLevel(@_)", $logfac{function_call_auto} | $logfac{automacro_checks});
   my ($arg, $what) = @_;
   my ($cond, $level) = $arg =~ /([<>=!]+)\s*(\d+)/;
-  my $lvl;
-  if ($what eq 'base')   {$lvl = $char->{lv}}
-  elsif ($what eq 'job') {$lvl = $char->{lv_job}}
-  else                   {return 0}
-  return 1 if cmpr($lvl, $cond, $level);
+  return 1 if cmpr($char->{$what}, $cond, $level);
   return 0
 }
 
@@ -135,8 +129,7 @@ sub checkPercent {
     return 0 unless (defined $char->{$what} && defined $char->{$what."_max"});
     if ($amount =~ /\d+%$/ && $char->{$what."_max"}) {
       $amount =~ s/%$//;
-      my $percent = $char->{$what} / $char->{$what."_max"} * 100;
-      return 1 if cmpr($percent, $cond, $amount)
+      return 1 if cmpr(($char->{$what} / $char->{$what."_max"} * 100), $cond, $amount)
     } else {
       return 1 if cmpr($char->{$what}, $cond, $amount)
     }
@@ -144,8 +137,7 @@ sub checkPercent {
     return 0 unless (defined $cart{weight} && defined $cart{weight_max});
     if ($amount =~ /\d+%$/ && $cart{weight_max}) {
       $amount =~ s/%$//;
-      my $percent = $cart{weight} / $cart{weight_max} * 100;
-      return 1 if cmpr($percent, $cond, $amount)
+      return 1 if cmpr(($cart{weight} / $cart{weight_max} * 100), $cond, $amount)
     } else {
       return 1 if cmpr($cart{weight}, $cond, $amount)
     }
@@ -274,23 +266,24 @@ sub checkCast {
 }
 
 # checks for public, private, party or guild message ######
-# requires function.pl 1.998
 # uses calcPosition, distance (Utils?), setVar (Macro::Utils?)
 sub checkMsg {
   $cvs->debug("checkMsg(@_)", $logfac{function_call_auto} | $logfac{automacro_checks});
   my ($var, $tmp, $arg) = @_;
   my $msg;
   if ($var eq '.lastpub') {
-    ($msg, my $distance) = $tmp =~ /^([\/"].*?[\/"]\w*)\s*,?\s*(.*)/;
-    $distance = 15 if ($distance eq '');
-    my $mypos = calcPosition($char);
-    my $pos = calcPosition($::players{$arg->{pubID}});
-    return 0 unless distance($mypos, $pos) <= $distance
+    ($msg, my $distance) = $tmp =~ /^([\/"].*?[\/"]\w*)\s*,?\s*(\d*)/;
+    if ($distance ne '') {
+      my $mypos = calcPosition($char);
+      my $pos = calcPosition($::players{$arg->{pubID}});
+      return 0 unless distance($mypos, $pos) <= $distance
+    }
   } elsif ($var eq '.lastpm') {
     ($msg, my $allowed) = $tmp =~ /^([\/"].*?[\/"]\w*)\s*,?\s*(.*)/;
     my $auth;
-    if (!$allowed) {$auth = 1}
-    else {
+    if (!$allowed) {
+      $auth = 1
+    } else {
       my @tfld = split(/,/, $allowed);
       for (my $i = 0; $i < @tfld; $i++) {
         next unless defined $tfld[$i];
@@ -352,8 +345,8 @@ sub checkConsole {
 sub consoleCheckWrapper {
   return unless defined $conState;
   return if $_[4] =~ /^\[macro\]/;
-  # skip "selfchat", "macro" and "cvsdebug" domains to avoid loops
-  return if $_[1] =~ /^(selfchat|macro|cvsdebug)/;
+  # skip "macro" and "cvsdebug" domains to avoid loops
+  return if $_[1] =~ /^(macro|cvsdebug)$/;
   my @args = @_;
   automacroCheck("log", \@args)
 }
@@ -400,9 +393,9 @@ sub automacroCheck {
   my ($trigger, $args) = @_;
   return unless $conState == 5 || $trigger =~ /^Network/;
 
-  # do not run an automacro if there's already a macro running
-  return if (AI::inQueue('macro') || defined $queue);
-  $lockAMC = 1; # to avoid checking two events at the same time
+  # do not run an automacro if there's already a macro running and the running
+  # macro is non-interruptible
+  return if (defined $queue && !$queue->interruptible);
 
   CHKAM:
   foreach my $am (sort {
@@ -412,7 +405,7 @@ sub automacroCheck {
 
     if (defined $automacro{$am}->{call} && !defined $macro{$automacro{$am}->{call}}) {
       error "[macro] automacro $am: macro ".$automacro{$am}->{call}." not found.\n";
-      $automacro{$am}->{disabled} = 1; undef $lockAMC; return
+      $automacro{$am}->{disabled} = 1; return
     }
     if (defined $automacro{$am}->{hook}) {
       next CHKAM unless $trigger eq $automacro{$am}->{hook};
@@ -472,8 +465,8 @@ sub automacroCheck {
     foreach my $i (@{$automacro{$am}->{location}})  {next CHKAM unless checkLoc($i)}
     foreach my $i (@{$automacro{$am}->{var}})       {next CHKAM unless checkVar($i)}
     foreach my $i (@{$automacro{$am}->{varvar}})    {next CHKAM unless checkVarVar($i)}
-    foreach my $i (@{$automacro{$am}->{base}})      {next CHKAM unless checkLevel($i, "base")}
-    foreach my $i (@{$automacro{$am}->{job}})       {next CHKAM unless checkLevel($i, "job")}
+    foreach my $i (@{$automacro{$am}->{base}})      {next CHKAM unless checkLevel($i, "lv")}
+    foreach my $i (@{$automacro{$am}->{job}})       {next CHKAM unless checkLevel($i, "lv_job")}
     foreach my $i (@{$automacro{$am}->{hp}})        {next CHKAM unless checkPercent($i, "hp")}
     foreach my $i (@{$automacro{$am}->{sp}})        {next CHKAM unless checkPercent($i, "sp")}
     foreach my $i (@{$automacro{$am}->{spirit}})    {next CHKAM unless checkCond($char->{spirits} or 0, $i)}
@@ -491,7 +484,7 @@ sub automacroCheck {
 
     message "[macro] automacro $am triggered.\n", "macro";
 
-    if (!defined $automacro{$am}->{call} && !$::config{macro_nowarn}) {
+    unless (defined $automacro{$am}->{call} || $::config{macro_nowarn}) {
       warning "[macro] automacro $am: call not defined.\n"
     }
 
@@ -503,11 +496,13 @@ sub automacroCheck {
     }
 
     if (defined $automacro{$am}->{call}) {
+      undef $queue if defined $queue;
       $queue = new Macro::Script($automacro{$am}->{call});
       if (defined $queue) {
-        $queue->setOverrideAI if $automacro{$am}->{overrideAI};
+        $queue->overrideAI(1) if $automacro{$am}->{overrideAI};
+        $queue->interruptible(0) if $automacro{$am}->{exclusive};
         $queue->orphan($automacro{$am}->{orphan}) if defined $automacro{$am}->{orphan};
-        $queue->setTimeout($automacro{$am}->{delay}) if $automacro{$am}->{delay};
+        $queue->timeout($automacro{$am}->{delay}) if $automacro{$am}->{delay};
         $queue->setMacro_delay($automacro{$am}->{macro_delay}) if $automacro{$am}->{macro_delay};
         setVar(".caller", $am);
         $onHold = 0
@@ -516,10 +511,8 @@ sub automacroCheck {
       }
     }
 
-    undef $lockAMC;
     return # don't execute multiple macros at once
   }
-  undef $lockAMC
 }
 
 1;

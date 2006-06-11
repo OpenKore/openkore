@@ -5,14 +5,13 @@ use warnings;
 
 require Exporter;
 our @ISA = qw(Exporter);
-our @EXPORT = qw(%macro %automacro %varStack $queue $cvs %logfac $lockAMC $onHold);
+our @EXPORT = qw(%macro %automacro %varStack $queue $cvs %logfac $onHold);
 
 our %macro;
 our %automacro;
 our %varStack;
 our $queue;
 our $cvs;
-our $lockAMC;
 our $onHold;
 
 our %logfac = (

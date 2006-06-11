@@ -125,6 +125,7 @@ openkore
 <tr class="one"><td>-repeat</td><td>n</td><td>repeat the macro <i>n</i> times</td></tr>
 <tr class="two"><td>-overrideAI</td><td>(none)</td><td>override openkore's AI</td></tr>
 <tr class="one"><td>-macro_delay</td><td>delay</td><td>override global macro_delay for this macro</td></tr>
+<tr class="two"><td>-exclusive</td><td>(none)</td><td>do not allow automacros to cancel this macro</td></tr>
 <tr class="one"><td>-orphan</td><td>method</td><td>use <i>method</i> for handling <a href="#orphan">orphaned</a> macros</td></tr>
 </table>
 		Parameters for the macro can be specified after a double dash (--). These parameters are saved to
@@ -153,7 +154,7 @@ openkore
 		<dd>resumes an interrupted macro</dd>
 
 		<dt><b>macro set</b> <i>variable</i> <i>value</i></dt>
-		<dd>set/change <i>varibale</i> to <i>value</i> or delete <i>variable</i> if no value is given.</dd>
+		<dd>set/change <i>variable</i> to <i>value</i> or delete <i>variable</i> if no value is given.</dd>
 
 		<dt><b>macro version</b></dt>
 		<dd>Print version number.</dd>
@@ -681,7 +682,12 @@ location not prontera</pre>
 	<dt><b>priority</b> <i>&lt;num&gt;</i></dt>
 	<dd>Choose which automacros should be checked before others. The smaller &lt;num&gt; is is the sooner the
 	automacro gets checked. If <tt>priority</tt> is not given, the priority is assumed to be <tt>0</tt>
-	(zero: check first).</tt>
+	(zero: check first).</dd>
+
+	<dt><b>exclusive</b> <i>(</i>0|1<i>)</i></dt>
+	<dd>Automacros which have <tt>exclusive</tt> set cannot be interrupted by other automacros.<br />
+	As of macro 1.3.0 running macros can be interrupted by automacros by default. To disallow that behaviour
+	either set this option or use the command line option <tt>-exclusive</tt></dd>
 
 	<dt><b>set</b> <i>&lt;variable&gt;</i> <i>&lt;value&gt;</i></dt>
 	<dd>Sets variable <i>&lt;variable&gt;</i> to <i>&lt;value&gt;</i>
@@ -790,8 +796,7 @@ macro reopenshop {
 <h2><a name="todo"></a>Todos/Known bugs/Known limitations</h2>
 <div class="p">
 	<ul>
-	<li>automacros are not supposed to run when another macro is active</li>
-	<li>automacro check <tt>console</tt> ignores the following domains: <tt>selfchat</tt>, <tt>macro</tt> and <tt>cvsdebug</tt>.</li>
+	<li>automacro check <tt>console</tt> ignores the following domains: <tt>macro</tt> and <tt>cvsdebug</tt>.</li>
 	<li>automacro check <tt>console</tt> ignores everything that begins with "[macro]" to avoid infinite loops</li>
 	<li>do <b>not</b> use closing brackets ")" in keyword arguments unless
 it's the closing bracket for an argument.<br />

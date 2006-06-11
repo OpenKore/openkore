@@ -38,7 +38,8 @@ sub new {
     repeat => $repeat,
     subcall => undef,
     error => undef,
-    orphan => $::config{macro_orphans}
+    orphan => $::config{macro_orphans},
+    interruptible => 1
   };
   bless ($self, $class);
   return $self
@@ -47,6 +48,7 @@ sub new {
 # destructor
 sub DESTROY {
   my $self = shift;
+#  message "[macro] deregistering macro from queue\n";
   AI::dequeue() if (AI::is('macro') && !$self->{submacro})
 }
 
@@ -73,27 +75,13 @@ sub registered {
 sub orphan {
   my ($self, $method) = @_;
   if (defined $method) {$self->{orphan} = $method}
-  else {return $self->{orphan}}
+  return $self->{orphan}
 }
 
 # sets repeat
 sub setRepeat {
   my $self = shift;
   $self->{repeat} = shift
-}
-
-# for debugging purposes
-sub printLabels {
-  my $self = shift;
-  foreach my $k (keys %{$self->{label}}) {
-    $cvs->debug(sprintf("%s->%s", $k, ${$self->{label}}{$k}), $logfac{developers})
-  }
-}
-
-# sets timeout for next command
-sub setTimeout {
-  my $self = shift;
-  $self->{timeout} = shift
 }
 
 # sets macro_delay timeout for this macro
@@ -104,20 +92,23 @@ sub setMacro_delay {
 
 # gets timeout for next command
 sub timeout {
-  my $self = shift;
+  my ($self, $timeout) = @_;
+  if (defined $timeout) {$self->{timeout} = $timeout}
   return (time => $self->{time}, timeout => $self->{timeout})
-}
-
-# sets override AI
-sub setOverrideAI {
-  my $self = shift;
-  $self->{overrideAI} = 1
 }
 
 # gets override AI value
 sub overrideAI {
-  my $self = shift;
+  my ($self, $flag) = @_;
+  if (defined $flag) {$self->{overrideAI} = $flag}
   return $self->{overrideAI}
+}
+
+# sets interruptible flag
+sub interruptible {
+  my ($self, $flag) = @_;
+  if (defined $flag) {$self->{interruptible} = $flag}
+  return $self->{interruptible}
 }
 
 # returns whether or not the macro finished
