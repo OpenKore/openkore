@@ -261,11 +261,12 @@ sub commandHandler {
       warning "[macro] a macro is already running. Wait until the macro has finished or call 'macro stop'\n";
       return;
     }
-    my ($repeat, $oAI, $mdelay, $orphan) = (1, 0, undef, undef);
+    my ($repeat, $oAI, $exclusive, $mdelay, $orphan) = (1, 0, 0, undef, undef);
     my $cparms = 0;
     for (my $idx = 0; $idx <= @params; $idx++) {
       if ($params[$idx] eq '-repeat') {$repeat += $params[++$idx]}
       if ($params[$idx] eq '-overrideAI') {$oAI = 1}
+      if ($params[$idx] eq '-exclusive') {$exclusive = 1}
       if ($params[$idx] eq '-macro_delay') {$mdelay = $params[++$idx]}
       if ($params[$idx] eq '-orphan') {$orphan = $params[++$idx]}
       if ($params[$idx] eq '--') {splice @params, 0, ++$idx; $cparms = 1; last}
@@ -276,7 +277,8 @@ sub commandHandler {
     else {
       $cvs->debug("macro $arg selected.", $logfac{'function_call_macro'});
       $onHold = 0;
-      if ($oAI) {$queue->setOverrideAI}
+      if ($oAI) {$queue->overrideAI(1)}
+      if ($exclusive) {$queue->interruptible(0)}
       if (defined $mdelay) {$queue->setMacro_delay($mdelay)}
       if (defined $orphan) {$queue->orphan($orphan)}
     }
