@@ -244,6 +244,17 @@ macro registered to AI queue</dd>
 
 	<dt><b>stop</b></dt>
 	<dd>immediately terminates the running macro</dd>
+
+	<dt><b>set</b> <i>&lt;option&gt;</i> <i>&lt;value&gt;</i></dt>
+	<dd>sets macro features:<br />
+	<ul>
+	<li><tt>orphan</tt> <i>method</i></li>
+	<li><tt>macro_delay</tt> <i>timeout</i></li>
+	<li><tt>overrideAI</tt> <i>[</i>0|1<i>]</i></li>
+	<li><tt>repeat</tt> <i>times</i></li>
+	<li><tt>exclusive</tt> <i>[</i>0|1<i>]</i></li>
+	</ul>
+	See <a href="#automacro">automacro</a> section.</dd>
 	</dl>
 
 	<h3><a name="macro_1"></a>Variable declaration and usage</h3>
@@ -447,7 +458,7 @@ macro registered to AI queue</dd>
 <tr class="one"><td>&lt;argument&gt;</td><td> '(' &lt;string&gt; ')' | '(' &lt;expression&gt; ')'</td></tr>
 <tr class="two"><td>&lt;parseable&gt;</td><td> &lt;string&gt; | &lt;keyword&gt; &lt;argument&gt; | &lt;parseable&gt;</td></tr>
 <tr class="one"><td>&lt;macro command&gt;</td><td> 'log' &lt;parseable&gt; | 'lock' &lt;parseable&gt; | 'release'
-[&lt;parseable&gt; | 'all'] | 'pause' [&lt;u_int&gt;] | 'call' &lt;macro name&gt; [&lt;u_int&gt; | &lt;parseable&gt;] | 'stop'</td></tr>
+[&lt;parseable&gt; | 'all'] | 'pause' [&lt;u_int&gt;] | 'call' &lt;macro name&gt; [&lt;u_int&gt; | &lt;parseable&gt;] | 'stop' | 'set' &lt;option&gt; &lt;word&gt;</td></tr>
 <tr class="two"><td>&lt;openkore command&gt;</td><td> (see openkore manual for console commands)</td></tr>
 <tr class="one"><td>&lt;command&gt;</td><td> &lt;macro command&gt; | 'do' &lt;openkore command&gt; &lt;parseable&gt;</td></tr>
 <tr class="two"><td>&lt;variable&gt;</td><td> '$' &lt;ident&gt;</td></tr>
@@ -466,7 +477,8 @@ macro registered to AI queue</dd>
 <tr class="one"><td>&lt;ifstat&gt;</td><td> 'if' '(' ['"'] (&lt;variable&gt;|&lt;parseable&gt;) ['"'] &lt;cond&gt; ['"'] (&lt;variable&gt;|&lt;parseable&gt;) ['"'] ')' (&lt;gotostat&gt; | 'stop')</td></tr>
 <tr class="two"><td>&lt;whilestat&gt;</td><td> 'while' '(' ['"'] (&lt;variable&gt;|&lt;parseable&gt;) ['"'] &lt;cond&gt; ['"'] (&lt;variable&gt;|&lt;parseable&gt;) ['"'] ')' 'as' &lt;label&gt; &lt;newline&gt;<br />
 &lt;block&gt;<br />
-'end' &lt;label&gt;</td></tr>
+'end' &lt;label&gt;</td>
+<tr class="one"><td>&lt;option&gt;</td><td>'macro_delay' | 'orphan' | 'repeat' | 'overrideAI' | 'exclusive'</td></tr>
 </table>
 <a href="#top"><small>back to top</small></a>
 </div>

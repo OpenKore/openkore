@@ -199,7 +199,7 @@ sub next {
     if (exists $self->{label}->{$tmp}) {
       $self->{line} = $self->{label}->{$tmp}
     } else {
-      $self->{error} = "$errtpl: cannot find label ".$tmp
+      $self->{error} = "$errtpl: cannot find label $tmp"
     }
     $self->{timeout} = 0
   ##########################################
@@ -209,7 +209,7 @@ sub next {
     if (exists $self->{label}->{$tmp}) {
       $self->{line} = $self->{label}->{$tmp}
     } else {
-      $self->{error} = "$errtpl: cannot find block start"
+      $self->{error} = "$errtpl: cannot find block start for $tmp"
     }
     $self->{timeout} = 0
   ##########################################
@@ -228,7 +228,7 @@ sub next {
           if (exists $self->{label}->{$tmp}) {
             $self->{line} = $self->{label}->{$tmp}
           } else {
-            $self->{error} = "$errtpl: cannot find label ".$tmp
+            $self->{error} = "$errtpl: cannot find label $tmp"
           }
         } elsif ($then =~ /^stop$/) {
           $self->{finished} = 1
@@ -269,7 +269,7 @@ sub next {
       $self->{error} = "$errtpl: unrecognized assignment"
     }
     $self->{line}++;
-    $self->{timeout} = $self->{macro_delay}
+    $self->{timeout} = 0
   ##########################################
   # set doublevar: ${$variable} = value
   } elsif ($line =~ /^\$\{\$[.a-z]/i) {
@@ -298,7 +298,7 @@ sub next {
         $self->{error} = "$errtpl: unrecognized assignment."
     }
     $self->{line}++;
-    $self->{timeout} = $self->{macro_delay}
+    $self->{timeout} = 0
   ##########################################
   # label definition: :label
   } elsif ($line =~ /^:/) {
@@ -363,7 +363,7 @@ sub next {
       $self->{error} = "$errtpl: releasing $tmp failed"
     }
     $self->{line}++;
-    $self->{timeout} = $self->{macro_delay}
+    $self->{timeout} = 0
   ##########################################
   # lock command
   } elsif ($line =~ /^lock\s+/) {
@@ -372,7 +372,7 @@ sub next {
       $self->{error} = "$errtpl: locking $tmp failed"
     }
     $self->{line}++;
-    $self->{timeout} = $self->{macro_delay}
+    $self->{timeout} = 0
   ##########################################
   # call command
   } elsif ($line =~ /^call\s+/) {
@@ -392,6 +392,24 @@ sub next {
       $self->{subcall}->regSubmacro;
       $self->{timeout} = $self->{macro_delay}
     }
+  ##########################################
+  # set command
+  } elsif ($line =~ /^set\s+/) {
+    my ($var, $val) = $line =~ /^set\s+([\w]+)\s+(.*)$/;
+    if ($var eq 'macro_delay' && $val =~ /^\d+$/) {
+      $self->{macro_delay} = $val
+    } elsif ($var eq 'repeat' && $val =~ /^\d+$/) {
+      $self->{repeat} = $val
+    } elsif ($var eq 'overrideAI' && $val =~ /^[01]$/) {
+      $self->{overrideAI} = $val
+    } elsif ($var eq 'exclusive' && $val =~ /^[01]$/) {
+      $self->{interruptible} = $val?0:1
+    } elsif ($var eq 'orphan' && $val =~ /^$/) {
+      $self->{orphan} = $val
+    } else {
+      $self->{error} = "$errtpl: unrecognized key or wrong value"
+    }
+    $self->{timeout} = 0
   ##########################################
   # unrecognized line
   } else {

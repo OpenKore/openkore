@@ -69,7 +69,7 @@ sub parseMacroFile {
       } else {
         my ($key, $value) = $_ =~ /^(.*?)\s+(.*)/;
         next unless $key;
-        if ($key =~ /^(map|mapchange|class|timeout|delay|disabled|call|spell|pm|pubm|guild|party|console|overrideAI|orphan|macro_delay|hook|save\d+|priority|exclusive)$/) {
+        if ($amSingle{$key}) {
           $automacro{$block{name}}->{$key} = $value
         } else {
           push(@{$automacro{$block{name}}->{$key}}, $value)

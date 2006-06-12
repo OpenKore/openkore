@@ -8,7 +8,8 @@ our @ISA = qw(Exporter);
 our @EXPORT_OK = qw(releaseAM lockAM automacroCheck consoleCheckWrapper);
 our @EXPORT = qw(checkVar checkVarVar checkLoc checkLevel checkLevel checkClass
     checkPercent checkStatus checkItem checkPerson checkCond checkEquip checkCast
-    checkEquip checkMsg checkMonster checkAggressives checkConsole checkMapChange);
+    checkEquip checkMsg checkMonster checkAggressives checkConsole checkMapChange
+    checkNotMonster);
 
 use Utils;
 use Globals;
@@ -321,6 +322,19 @@ sub checkMonster {
   return 0
 }
 
+# checks for forbidden monster
+# quick hack, maybe combine it with checkMonster later
+sub checkNotMonster {
+  $cvs->debug("checkNotMonster(@_)", $logfac{function_call_auto} | $logfac{automacro_checks});
+  my $monsterList = shift;
+  foreach (@monstersID) {
+    next unless defined $_;
+    next if existsInList($monsterList, $monsters{$_}->{name});
+    return 1
+  }
+  return 0
+}
+
 # checks for aggressives
 sub checkAggressives {
   $cvs->debug("checkAggressives(@_)", $logfac{function_call_auto} | $logfac{automacro_checks});
@@ -460,6 +474,7 @@ sub automacroCheck {
     }
     next CHKAM if (defined $automacro{$am}->{map}   && $automacro{$am}->{map} ne $field{name});
     next CHKAM if (defined $automacro{$am}->{class} && !checkClass($automacro{$am}->{class}));
+    next CHKAM if (defined $automacro{$am}->{notMonster} && !checkNotMonster($automacro{$am}->{notMonster}));
     foreach my $i (@{$automacro{$am}->{monster}})   {next CHKAM unless checkMonster($i)}
     foreach my $i (@{$automacro{$am}->{aggressives}}){next CHKAM unless checkAggressives($i)}
     foreach my $i (@{$automacro{$am}->{location}})  {next CHKAM unless checkLoc($i)}
