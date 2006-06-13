@@ -398,7 +398,7 @@ sub next {
     my ($var, $val) = $line =~ /^set\s+([\w]+)\s+(.*)$/;
     if ($var eq 'macro_delay' && $val =~ /^\d+$/) {
       $self->{macro_delay} = $val
-    } elsif ($var eq 'repeat' && $val =~ /^\d+$/) {
+    } elsif ($var eq 'repeat' && $val =~ /^[\d\.]\d+$/) {
       $self->{repeat} = $val
     } elsif ($var eq 'overrideAI' && $val =~ /^[01]$/) {
       $self->{overrideAI} = $val
