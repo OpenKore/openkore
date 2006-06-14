@@ -396,9 +396,9 @@ sub next {
   # set command
   } elsif ($line =~ /^set\s+/) {
     my ($var, $val) = $line =~ /^set\s+([\w]+)\s+(.*)$/;
-    if ($var eq 'macro_delay' && $val =~ /^\d+$/) {
+    if ($var eq 'macro_delay' && $val =~ /^[\d\.]*\d+$/) {
       $self->{macro_delay} = $val
-    } elsif ($var eq 'repeat' && $val =~ /^[\d\.]\d+$/) {
+    } elsif ($var eq 'repeat' && $val =~ /^\d+$/) {
       $self->{repeat} = $val
     } elsif ($var eq 'overrideAI' && $val =~ /^[01]$/) {
       $self->{overrideAI} = $val
@@ -409,6 +409,7 @@ sub next {
     } else {
       $self->{error} = "$errtpl: unrecognized key or wrong value"
     }
+    $self->{line}++;
     $self->{timeout} = 0
   ##########################################
   # unrecognized line
