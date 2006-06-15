@@ -380,6 +380,7 @@ pay_arche.rsw#Archer Village #
 payon.rsw#Payon Town #
 payon_in01.rsw#Inside Payon #
 payon_in02.rsw#Inside Payon #
+payon_in03.rsw#Inside Payon #
 prontera.rsw#Prontera City, Capitol of Rune-Midgarts #
 prt_in.rsw#Inside Prontera #
 prt_castle.rsw#Prontera Castle #
