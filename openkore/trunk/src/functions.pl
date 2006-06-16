@@ -516,13 +516,22 @@ sub parseSendMsg {
 		decrypt(\$msg, $msg);
 	}
 	my $switch = uc(unpack("H2", substr($msg, 1, 1))) . uc(unpack("H2", substr($msg, 0, 1)));
-	if ($config{'debugPacket_ro_sent'} && !existsInList($config{'debugPacket_exclude'}, $switch)) {
+	if ($config{'debugPacket_ro_sent'} && !existsInList($config{'debugPacket_exclude'}, $switch)
+	   || $config{debugPacket_include_dumpMethod} && existsInList($config{'debugPacket_include'}, $switch)) {
 		my $label = $packetDescriptions{Send}{$switch} ?
 			" - $packetDescriptions{Send}{$switch})" : '';
+		
 		if ($config{debugPacket_ro_sent} == 1) {
 			debug "Packet SENT_BY_CLIENT: $switch$label\n", "parseSendMsg", 0;
-		} else {
+		} elsif ($config{debugPacket_ro_sent} == 2) {
 			visualDump($sendMsg, $switch . $label);
+		}
+		if ($config{debugPacket_include_dumpMethod} == 1) {
+			debug "Packet: $switch$label\n", "parseMsg", 0;
+		} elsif ($config{debugPacket_include_dumpMethod} == 2) {
+			visualDump($sendMsg, $switch . $label);
+		} elsif ($config{debugPacket_include_dumpMethod} == 3) {
+			dumpData($msg,1);
 		}
 	}
 
@@ -814,7 +823,7 @@ sub parseMsg {
 	}
 
 	Plugins::callHook('parseMsg/pre', {switch => $switch, msg => $msg, msg_size => $msg_size});
-	
+
 	if ($msg_size > 0 && !$packetParser->willMangle($switch)) {
 		# Continue the message to the client
 		$net->clientSend(substr($msg, 0, $msg_size));
