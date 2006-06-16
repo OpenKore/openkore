@@ -3,10 +3,10 @@
 
 ######## Login options and server-specific options ########
 
-master Philippines - pRO: Odin/Chaos
-server 1
-username venderlog4
-password venderlog4
+master
+server
+username
+password
 char
 sex
 
