@@ -648,6 +648,18 @@ Credits:
 
 
 ==================
+### 1.6.8
+==================
+
+Bug fixes:
+- Fix a crash bug in Poseidon.
+- Win32 interface: fix compatibility with recent versions of ActivePerl.
+- Fix display of Clown/Gypsy class name.
+- Some Linux compatibility fixes.
+- Fix autoBreakTime.
+
+
+==================
 ### 1.6.7
 ==================
 
