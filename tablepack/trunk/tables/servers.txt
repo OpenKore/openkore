@@ -682,7 +682,7 @@ patchserver wpatch.ragnarok.in.th
 patchpath /patch70
 serverEncoding Thai
 
-## http://ro.vinagame.com.vn/
+http://www.rovietnam.com.vn/
 [Vietnam - vRO: SD]
 ip 222.255.122.20
 port 6900
