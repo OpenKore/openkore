@@ -213,7 +213,7 @@ sub nameIdx {
 }
 
 ##
-# String $Actor->verb(Actor you, Actor other)
+# String $Actor->verb(String you, String other)
 #
 # Returns $you if $actor is you; $other otherwise.
 sub verb {
