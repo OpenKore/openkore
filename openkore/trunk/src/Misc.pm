@@ -2840,64 +2840,11 @@ sub attack_string {
 	assert(UNIVERSAL::isa($source, 'Actor')) if DEBUG;
 	assert(UNIVERSAL::isa($target, 'Actor')) if DEBUG;
 
-	# You
-	if ($source->isa('Actor::You')) {
-		if ($target->isa('Actor::Player')) {
-			return TF("You attack player %s (%d) - Dmg: %s (delay %s)\n", $target->name, $target->{binID}, 
-				$damage, $delay);
-		} elsif ($target->isa('Actor::Monster')) {
-			return TF("You attack monster %s (%d) - Dmg: %s (delay %s)\n", $target->name, $target->{binID}, 
-				$damage, $delay);
-		} elsif ($target->isa('Actor::Unknown')) {
-			return TF("You attack Unknown #%s (%d) - Dmg: %s (delay %s)\n", $target->{nameID}, $target->{binID}, 
-				$damage, $delay);
-		}
-	# Player
-	} elsif ($source->isa('Actor::Player')) {
-		if ($target->isa('Actor::You')) {
-			return TF("Player %s (%d) attacks you - Dmg: %s (delay %s)\n", $source->name, $source->{binID}, 
-				$damage, $delay);
-		} elsif ($target->isa('Actor::Player')) {
-			return TF("Player %s (%d) attacks player %s (%d) - Dmg: %s (delay %s)\n", $source->name, 
-				$source->{binID},  $target->name, $target->{binID}, $damage, $delay);
-		} elsif ($target->isa('Actor::Monster')) {
-			return TF("Player %s (%d) attacks monster %s (%d) - Dmg: %s (delay %s)\n", $source->name, 
-				$source->{binID}, $target->name, $target->{binID}, $damage, $delay);
-		} elsif ($target->isa('Actor::Unknown')) {
-			return TF("Player %s (%d) attacks Unknown #%s (%d) - Dmg: %s (delay %s)\n", $source->name, 
-				$source->{binID}, $target->{nameID}, $target->{binID}, $damage, $delay);
-		}
-	# Monster
-	} elsif ($source->isa('Actor::Monster')) {
-		if ($target->isa('Actor::You')) {
-			return TF("Monster %s (%d) attacks you - Dmg: %s (delay %s)\n", $source->name, $source->{binID}, 
-				$damage, $delay);
-		} elsif ($target->isa('Actor::Player')) {
-			return TF("Monster %s (%d) attacks player %s (%d) - Dmg: %s (delay %s)\n", $source->name, 
-				$source->{binID}, $target->name, $target->{binID}, $damage, $delay);
-		} elsif ($target->isa('Actor::Monster')) {
-			return TF("Monster %s (%d) attacks monster %s (%d) - Dmg: %s (delay %s)\n", $source->name, 
-				$source->{binID}, $target->name, $target->{binID}, $damage, $delay);
-		} elsif ($target->isa('Actor::Unknown')) {
-			return TF("Monster %s (%d) attacks Unknown #%s (%d) - Dmg: %s (delay %s)\n", $source->name, 
-				$source->{binID}, $target->{nameID}, $target->{binID}, $damage, $delay);
-		}
-	# Unknown
-	} elsif ($source->isa('Actor::Unknown')) {
-		if ($target->isa('Actor::You')) {
-			return TF("Unknown #%s (%d) attacks you - Dmg: %s (delay %s)\n", $source->{nameID}, $source->{binID}, 
-				$damage, $delay);
-		} elsif ($target->isa('Actor::Player')) {
-			return TF("Unknown #%s (%d) attacks player %s (%d) - Dmg: %s (delay %s)\n", $source->{nameID}, 
-				$source->{binID}, $target->name, $target->{binID}, $damage, $delay);
-		} elsif ($target->isa('Actor::Monster')) {
-			return TF("Unknown #%s (%d) attacks monster %s (%d) - Dmg: %s (delay %s)\n", $source->{nameID}, 
-				$source->{binID}, $target->name, $target->{binID}, $damage, $delay);
-		} elsif ($target->isa('Actor::Unknown')) {
-			return TF("Unknown #%s (%d) attacks Unknown #%s (%d) - Dmg: %s (delay %s)\n", $source->{nameID}, 
-				$source->{binID}, $target->{nameID}, $target->{binID}, $damage, $delay);
-		}
-	}
+	return TF("%s %s %s - Dmg: %s (delay %s)\n",
+		$source->nameString,
+		$source->verb('attack', 'attacks'),
+		$target->nameString($source),
+		$damage, $delay);
 }
 
 sub skillCast_string {
