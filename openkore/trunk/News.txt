@@ -76,6 +76,7 @@ Bug fixes:
 - Fix display of Clown/Gypsy class name.
 - Warn about broken TCP/IP stack on Windows.
 - Kore will now properly look at the direction of the items being picked up.
+- "You attack yourself" message is no longer blank.
 
 New features:
 - Added XKoreProxy module. Set configuration to 'XKore proxy' to work as
