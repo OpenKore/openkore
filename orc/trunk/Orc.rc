@@ -1,0 +1,26 @@
+#include <windows.h> // include for version info constants
+#include "Orc.h" // include for version info constants
+
+A ICON MOVEABLE PURE LOADONCALL DISCARDABLE "Orc.ico"
+
+1 VERSIONINFO
+FILEVERSION 0,0,2,0
+PRODUCTVERSION 0,0,2,0
+FILETYPE VFT_APP
+{
+    BLOCK "StringFileInfo"
+    {
+        BLOCK "040904E4"
+        {
+            VALUE "CompanyName", COMPANY_NAME
+            VALUE "FileVersion", FILE_VERSION
+            VALUE "FileDescription", FILE_DESCRIPTION
+            VALUE "InternalName", INTERNAL_NAME
+            VALUE "LegalCopyright", LEGAL_COPYRIGHT
+            VALUE "LegalTrademarks", LEGAL_TRADEMARKS
+            VALUE "OriginalFilename", ORIGINAL_FILENAME
+            VALUE "ProductName", PRODUCT_NAME
+            VALUE "ProductVersion", PRODUCT_VERSION
+        }
+    }
+}
