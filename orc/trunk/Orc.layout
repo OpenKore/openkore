@@ -8,7 +8,7 @@
 		<Cursor position="952" topLine="0" />
 	</File>
 	<File name="src\3d_math.h" open="0" top="0" tabpos="0">
-		<Cursor position="1067" topLine="0" />
+		<Cursor position="310" topLine="0" />
 	</File>
 	<File name="src\CSDL\csdl.h" open="0" top="0" tabpos="0">
 		<Cursor position="1083" topLine="12" />
@@ -46,19 +46,19 @@
 	<File name="src\orc_main.cpp" open="0" top="0" tabpos="1">
 		<Cursor position="137" topLine="0" />
 	</File>
-	<File name="src\ro_types.h" open="1" top="0" tabpos="1">
+	<File name="src\ro_types.h" open="0" top="0" tabpos="1">
 		<Cursor position="62" topLine="0" />
 	</File>
-	<File name="src\rsm_model.cpp" open="1" top="0" tabpos="2">
+	<File name="src\rsm_model.cpp" open="0" top="0" tabpos="2">
 		<Cursor position="0" topLine="0" />
 	</File>
-	<File name="src\rsm_model.h" open="1" top="0" tabpos="3">
+	<File name="src\rsm_model.h" open="0" top="0" tabpos="3">
 		<Cursor position="51" topLine="0" />
 	</File>
-	<File name="src\rsw_world.cpp" open="1" top="0" tabpos="4">
+	<File name="src\rsw_world.cpp" open="0" top="0" tabpos="4">
 		<Cursor position="0" topLine="0" />
 	</File>
-	<File name="src\rsw_world.h" open="1" top="1" tabpos="5">
+	<File name="src\rsw_world.h" open="0" top="0" tabpos="5">
 		<Cursor position="52" topLine="0" />
 	</File>
 </CodeBlocks_layout_file>
