@@ -45,6 +45,7 @@ type
     SaveDialog1: TTntSaveDialog;
     SettingsBtn: TSpeedButton;
     PaintBox3: TPaintBox;
+    SpriteCycleTimer: TTimer;
     procedure FormResize(Sender: TObject);
     procedure OpenBtnClick(Sender: TObject);
     procedure SpeedButton1Click(Sender: TObject);
@@ -75,6 +76,8 @@ type
     procedure Copy1Click(Sender: TObject);
     procedure PopupMenu1Popup(Sender: TObject);
     procedure SettingsBtnClick(Sender: TObject);
+    procedure SpriteCycleTimerFire(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     Grf: TGrf;
     FSortColumn: Integer;
@@ -100,7 +103,7 @@ function KoreanToUnicode(Str: AnsiString): WideString;
 implementation
 
 uses
-  About, GPattern, TntSysUtils, SettingsForms;
+  About, GPattern, TntSysUtils, SettingsForms, LibSpr;
 
 {$R *.dfm}
 
@@ -149,6 +152,9 @@ var
   Error: TGrfError;
   NewGrf: TGrf;
 begin
+  SpriteCycleTimer.Enabled := False;
+  CurrentLoadedSprites.Clear;
+
   NewGrf := grf_callback_open (PChar(FileName), 'rb', Error, nil);
   if NewGrf = nil then
   begin
@@ -192,6 +198,10 @@ begin
       Result := 'Sprite Data'
   else if Ext = '.XML' then
       Result := 'XML Document'
+  else if Ext = '.GR2' then
+      Result := 'Granny File'
+  else if Ext = '.GAT' then
+      Result := 'Map Area File'
   else
       Result := Ext;
 end;
@@ -348,10 +358,14 @@ var
   Error: TGrfError;
 
   TempDir, TempFile: array[0..MAX_PATH] of Char;
+  Bitmap: TBitmap;
 begin
   UpdateSelectionStatus;
   if (Grf = nil) or (FileList.SelectedCount <> 1) or (not PreviewBtn.Down) then
       Exit;
+
+  SpriteCycleTimer.Enabled := False;
+  CurrentLoadedSprites.Clear;
 
   Item := FileList.GetNodeData(FileList.GetNextSelected(FileList.RootNode));
   FType := UpperCase(ExtractFileExt(Grf.files[Item.i].Name));
@@ -382,6 +396,8 @@ begin
           Exit;
       end;
 
+      Image1.AutoSize := True; // May have been set to false when cycling through sprites
+
       try
           // Delphi has a bug which makes it unable to load RLE bitmaps. :(
           // Use the Win32 API as workaround.
@@ -390,6 +406,41 @@ begin
                 PChar(FName), IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE)
           else
              Image1.Picture.LoadFromFile(FName);
+      except
+          // Do nothing
+      end;
+      DeleteFile(FName);
+      Notebook1.PageIndex := 1;
+
+  end else if (FType = '.SPR') then
+  begin
+      GetTempPath(SizeOf(TempDir) - 1, @TempDir);
+      GetTempFileName(TempDir, 'grf', 1, @TempFile);
+      FName := TempFile + FType;
+
+      if grf_extract(Grf, Grf.files[Item.i].Name, PChar(FName), Error) <= 0 then
+      begin
+          MessageBox(Handle, grf_strerror (Error), 'Error', MB_ICONERROR);
+          Exit;
+      end;
+
+      try
+          if Settings.SpritePrevMode = SPRPREV_CYCLING then
+            begin
+                CurrentLoadedSprites.Clear;
+                LoadSpritesFromFile(FName, CurrentLoadedSprites);
+                SpriteCycleTimer.Enabled := True;
+            end
+           else
+            begin
+                Bitmap := TBitmap.Create;
+                CurrentLoadedSprites.Clear;
+                LoadSpritesFromFile(FName, CurrentLoadedSprites);
+                CreateSpriteSheet(CurrentLoadedSprites, Bitmap);
+                Image1.AutoSize := True; // May have been set to false when cycling through sprites
+                Image1.Picture.Bitmap.Assign(Bitmap);
+                Bitmap.Free;
+            end;
       except
           // Do nothing
       end;
@@ -477,6 +528,8 @@ var
 const
   BIF_NEWDIALOGSTYLE = 64;
 begin
+  SpriteCycleTimer.Enabled := False;
+
   Files := TStringList.Create;
   Files.BeginUpdate;
   if FileList.SelectedCount = 0 then
@@ -501,7 +554,29 @@ begin
                   PChar('Unable to extract ' + ExtractFileName(Files[0]) + ':' + #13#10 + grf_strerror(Error)),
                   'Error', MB_ICONERROR)
           else
-              StatusBar1.SimpleText := 'Successfully extracted ' + ExtractFileName(Files[0]);
+              begin
+                  StatusBar1.SimpleText := 'Successfully extracted ' + ExtractFileName(Files[0]);
+
+                  // If it's a sprite we might have to extract its bitmaps
+                  if UpperCase(ExtractFileExt(PChar(Files[0]))) = '.SPR' then
+                      begin
+                          if Settings.SpriteSaveMode = SPRSAVE_NUMBERED then
+                              begin
+                                  if Settings.Unicode then
+                                      ExtractSpritesW(SaveDialog1.FileName, True)
+                                  else
+                                      ExtractSprites(UnicodeToKorean(SaveDialog1.FileName), True);
+                              end;
+
+                          if Settings.SpriteSaveMode = SPRSAVE_SHEET then
+                              begin
+                                  if Settings.Unicode then
+                                      ExtractSpritesAsSheetW(SaveDialog1.FileName, True)
+                                  else
+                                      ExtractSpritesAsSheet(UnicodeToKorean(SaveDialog1.FileName), True);
+                              end;
+                      end;
+              end;
       end;
       Files.Free;
 
@@ -540,6 +615,10 @@ begin
       ExtractBtn.Enabled := False;
       Extractor.Resume;
   end;
+
+  if (Settings.SpritePrevMode = SPRPREV_CYCLING) and
+   (not CurrentLoadedSprites.IsEmpty) then
+   SpriteCycleTimer.Enabled := True;
 end;
 
 procedure TForm1.ExtractWatcherTimer(Sender: TObject);
@@ -674,6 +753,29 @@ begin
   finally
      Free;
   end;
+end;
+
+procedure TForm1.SpriteCycleTimerFire(Sender: TObject);
+begin
+  // Don't do anything if there's only one image
+  if CurrentLoadedSprites.Bitmaps = 1 then SpriteCycleTimer.Enabled := False;
+
+  if CurrentLoadedSprites.GetCurrent <> nil then
+  with Image1 do
+  begin
+      AutoSize := False;
+      Width := Notebook1.Width-5;
+      Height := Notebook1.Height-5;
+      Center := True;
+      Image1.Picture.Bitmap.Assign(CurrentLoadedSprites.GetCurrent);
+  end;
+
+  CurrentLoadedSprites.Next;
+end;
+
+procedure TForm1.FormShow(Sender: TObject);
+begin
+  InitSettings;
 end;
 
 end.

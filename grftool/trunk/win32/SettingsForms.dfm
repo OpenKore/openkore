@@ -1,10 +1,10 @@
 object SettingsForm: TSettingsForm
-  Left = 192
-  Top = 107
+  Left = 219
+  Top = 114
   BorderStyle = bsDialog
   Caption = 'Settings'
-  ClientHeight = 123
-  ClientWidth = 197
+  ClientHeight = 268
+  ClientWidth = 229
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -16,47 +16,15 @@ object SettingsForm: TSettingsForm
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
-  object Label1: TLabel
-    Left = 8
-    Top = 8
-    Width = 175
-    Height = 13
-    Caption = 'Filename encoding for extracted files:'
-  end
-  object Bevel1: TBevel
-    Left = 8
-    Top = 64
-    Width = 177
-    Height = 9
-    Shape = bsBottomLine
-  end
-  object RadioButton1: TRadioButton
-    Left = 16
-    Top = 24
-    Width = 169
-    Height = 17
-    Caption = 'Use &original filename encoding'
-    Checked = True
-    TabOrder = 0
-    TabStop = True
-  end
-  object Unicode: TRadioButton
-    Left = 16
-    Top = 40
-    Width = 169
-    Height = 17
-    Caption = 'Convert to &Unicode'
-    TabOrder = 1
-  end
   object BitBtn1: TBitBtn
-    Left = 30
-    Top = 88
+    Left = 58
+    Top = 232
     Width = 75
     Height = 25
     Caption = 'OK'
     Default = True
     ModalResult = 1
-    TabOrder = 2
+    TabOrder = 3
     OnClick = BitBtn1Click
     Glyph.Data = {
       22050000424D2205000000000000620300002800000020000000100000000100
@@ -104,14 +72,14 @@ object SettingsForm: TSettingsForm
     NumGlyphs = 2
   end
   object BitBtn2: TBitBtn
-    Left = 112
-    Top = 88
+    Left = 140
+    Top = 232
     Width = 75
     Height = 25
     Cancel = True
     Caption = 'Cancel'
     ModalResult = 2
-    TabOrder = 3
+    TabOrder = 4
     Glyph.Data = {
       36030000424D3603000000000000360000002800000010000000100000000100
       18000000000000030000120B0000120B00000000000000000000FF00FFFF00FF
@@ -139,5 +107,87 @@ object SettingsForm: TSettingsForm
       192042171C39FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF0202
       02050505FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
       00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF}
+  end
+  object GroupBox1: TGroupBox
+    Left = 4
+    Top = 4
+    Width = 221
+    Height = 61
+    Caption = ' Filename encoding for extracted files '
+    TabOrder = 0
+    object RB_Unicode: TRadioButton
+      Left = 12
+      Top = 38
+      Width = 201
+      Height = 17
+      Caption = 'Convert to &Unicode'
+      TabOrder = 0
+    end
+    object RB_OriginalEnc: TRadioButton
+      Left = 12
+      Top = 18
+      Width = 201
+      Height = 17
+      Caption = 'Use &original filename encoding'
+      TabOrder = 1
+    end
+  end
+  object GroupBox2: TGroupBox
+    Left = 4
+    Top = 72
+    Width = 221
+    Height = 61
+    Caption = ' Sprite file preview mode '
+    TabOrder = 1
+    object RB_SprPrev_Cycling: TRadioButton
+      Left = 12
+      Top = 18
+      Width = 201
+      Height = 17
+      Caption = '&Cycle through sprites (as on Linux)'
+      TabOrder = 0
+    end
+    object RB_SprPrev_Sheet: TRadioButton
+      Left = 12
+      Top = 38
+      Width = 201
+      Height = 17
+      Caption = 'Show as sprite sh&eet'
+      TabOrder = 1
+    end
+  end
+  object GroupBox3: TGroupBox
+    Left = 4
+    Top = 140
+    Width = 221
+    Height = 81
+    Caption = ' When extracting sprite files, save them as '
+    TabOrder = 2
+    object RB_SprSave_AsIs: TRadioButton
+      Left = 12
+      Top = 18
+      Width = 201
+      Height = 17
+      Caption = '.spr &files'
+      Checked = True
+      TabOrder = 0
+      TabStop = True
+    end
+    object RB_SprSave_Numbered: TRadioButton
+      Left = 12
+      Top = 38
+      Width = 201
+      Height = 17
+      Caption = 'Single &bitmaps for each sprite therein'
+      TabOrder = 1
+    end
+    object RB_SprSave_Sheet: TRadioButton
+      Left = 12
+      Top = 58
+      Width = 201
+      Height = 17
+      Caption = 'Sprite &sheet bitmaps'
+      TabOrder = 2
+    end
   end
 end

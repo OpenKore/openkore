@@ -16,6 +16,7 @@ object Form1: TForm1
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
   OnResize = FormResize
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object Splitter1: TSplitter
@@ -1858,5 +1859,12 @@ object Form1: TForm1
     Title = 'Extract file'
     Left = 224
     Top = 120
+  end
+  object SpriteCycleTimer: TTimer
+    Enabled = False
+    Interval = 200
+    OnTimer = SpriteCycleTimerFire
+    Left = 192
+    Top = 152
   end
 end

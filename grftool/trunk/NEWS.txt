@@ -1,3 +1,11 @@
+**** Version 1.?
+
+- Sprite preview support in the Win32 frontend.
+
+Credits:
+- Abraxa: Win32 frontend sprite preview support.
+
+
 **** Version 1.2.0
 
 - Sprite preview support in the Linux/GTK frontend.
