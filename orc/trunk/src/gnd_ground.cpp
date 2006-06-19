@@ -88,7 +88,7 @@ void GND::DisplayWater(int frameno, float wavephase, float waterlevel, CFrustum*
     glMultMatrixf(Rot);
 
     //Center it
-    glTranslatef(-iSizeX*L/2, -iSizeY*L/2, waterlevel);
+    glTranslatef(-iSizeX*TILE_WIDTH/2, -iSizeY*TILE_WIDTH/2, waterlevel);
 
     pFrustum->CalculateFrustum();
 
@@ -109,16 +109,16 @@ void GND::DisplayWater(int frameno, float wavephase, float waterlevel, CFrustum*
             int tileotherside;
 
 
-            if (pFrustum->CubeInFrustum(j*L, i*L, h1,L*2)) {
+            if (pFrustum->CubeInFrustum(j*TILE_WIDTH, i*TILE_WIDTH, h1,TILE_WIDTH*2)) {
 
                 h1 = sinf(j*5 + wavephase) + sinf(i*7 + wavephase);
                 h2 = sinf(j*5 + wavephase) + sinf((i+1)*7 + wavephase);
                 h3 = sinf((j+1)*5 + wavephase) + sinf((i+1)*7 + wavephase);
                 h4 = sinf((j+1)*5 + wavephase) + sinf(i*7 + wavephase);
 
-                vTriangle[0] = MatrixMultVect3f(Mat, j*L,     i*L,	   h1);
-                vTriangle[1] = MatrixMultVect3f(Mat, j*L,     (i+1)*L, h2);
-                vTriangle[2] = MatrixMultVect3f(Mat, (j+1)*L, (i+1)*L, h3);
+                vTriangle[0] = MatrixMultVect3f(Mat, j*TILE_WIDTH,     i*TILE_WIDTH,	   h1);
+                vTriangle[1] = MatrixMultVect3f(Mat, j*TILE_WIDTH,     (i+1)*TILE_WIDTH, h2);
+                vTriangle[2] = MatrixMultVect3f(Mat, (j+1)*TILE_WIDTH, (i+1)*TILE_WIDTH, h3);
 
                 vNormal = Normal(vTriangle);
 
@@ -137,16 +137,16 @@ void GND::DisplayWater(int frameno, float wavephase, float waterlevel, CFrustum*
                 glNormal3f(vNormal.x,vNormal.y,vNormal.z);
 
                 glTexCoord2f(t1, s1);
-                glVertex3f(j*L, i*L, h1);
+                glVertex3f(j*TILE_WIDTH, i*TILE_WIDTH, h1);
 
                 glTexCoord2f(t1, s2);
-                glVertex3f(j*L, (i+1)*L, h2);
+                glVertex3f(j*TILE_WIDTH, (i+1)*TILE_WIDTH, h2);
 
                 glTexCoord2f(t2, s2);
-                glVertex3f((j+1)*L, (i+1)*L, h3);
+                glVertex3f((j+1)*TILE_WIDTH, (i+1)*TILE_WIDTH, h3);
 
                 glTexCoord2f(t2, s1);
-                glVertex3f((j+1)*L, i*L, h4);
+                glVertex3f((j+1)*TILE_WIDTH, i*TILE_WIDTH, h4);
 
                 glEnd();
 
@@ -266,7 +266,7 @@ void GND::Display(CFrustum* pFrustum) {
     glPushMatrix();     // Save current matrix
     glMultMatrixf(Rot); // Rotate 90 degrees about the z axis
 
-    glTranslatef(-iSizeX*L/2, -iSizeY*L/2, 0); // Center it
+    glTranslatef(-iSizeX*TILE_WIDTH/2, -iSizeY*TILE_WIDTH/2, 0); // Center it
 
     glGetFloatv(GL_MODELVIEW_MATRIX, &Mat[0]);
 
@@ -286,7 +286,7 @@ void GND::Display(CFrustum* pFrustum) {
             int tileotherside;
 
 
-            if (pFrustum->CubeInFrustum(j*L, i*L, cubes[i*iSizeX+j].y1,L*2)) {
+            if (pFrustum->CubeInFrustum(j*TILE_WIDTH, i*TILE_WIDTH, cubes[i*iSizeX+j].y1,TILE_WIDTH*2)) {
 
                 tilesup = cubes[i*iSizeX+j].tilesup;
                 tileside = cubes[i*iSizeX+j].tileside;
@@ -306,21 +306,21 @@ void GND::Display(CFrustum* pFrustum) {
                     //glNormal3f(vNormal.x,vNormal.y,vNormal.z);
 
                     glTexCoord2f(tiles[tileotherside].u1, tiles[tileotherside].v1);
-                    glVertex3f(j*L, (i+1)*L, cubes[i*iSizeX+j].y3);
+                    glVertex3f(j*TILE_WIDTH, (i+1)*TILE_WIDTH, cubes[i*iSizeX+j].y3);
                     glTexCoord2f(tiles[tileotherside].u2, tiles[tileotherside].v2);
-                    glVertex3f((j+1)*L, (i+1)*L, cubes[i*iSizeX+j].y4);
+                    glVertex3f((j+1)*TILE_WIDTH, (i+1)*TILE_WIDTH, cubes[i*iSizeX+j].y4);
                     glTexCoord2f(tiles[tileotherside].u4, tiles[tileotherside].v4);
-                    glVertex3f((j+1)*L, (i+1)*L, cubes[(i+1)*iSizeX+j].y2);
+                    glVertex3f((j+1)*TILE_WIDTH, (i+1)*TILE_WIDTH, cubes[(i+1)*iSizeX+j].y2);
                     glTexCoord2f(tiles[tileotherside].u3, tiles[tileotherside].v3);
-                    glVertex3f(j*L, (i+1)*L, cubes[(i+1)*iSizeX+j].y1);
+                    glVertex3f(j*TILE_WIDTH, (i+1)*TILE_WIDTH, cubes[(i+1)*iSizeX+j].y1);
                     glEnd();
                 }
 
                 if (tileside != -1) {
 
-                    //vTriangle[0] = MatrixMultVect3f(Mat, (j+1)*L, i*L,     cubes[i*sizeX+j].y4);
-                    //vTriangle[1] = MatrixMultVect3f(Mat, (j+1)*L, i*L,     cubes[(i+1)*sizeX+j].y3);
-                    //vTriangle[2] = MatrixMultVect3f(Mat, (j+1)*L, (i+1)*L, cubes[i*sizeX+j].y2);
+                    //vTriangle[0] = MatrixMultVect3f(Mat, (j+1)*TILE_WIDTH, i*TILE_WIDTH,     cubes[i*sizeX+j].y4);
+                    //vTriangle[1] = MatrixMultVect3f(Mat, (j+1)*TILE_WIDTH, i*TILE_WIDTH,     cubes[(i+1)*sizeX+j].y3);
+                    //vTriangle[2] = MatrixMultVect3f(Mat, (j+1)*TILE_WIDTH, (i+1)*TILE_WIDTH, cubes[i*sizeX+j].y2);
 
                     //vNormal = Normal(vTriangle);
 
@@ -342,13 +342,13 @@ void GND::Display(CFrustum* pFrustum) {
                     //glNormal3f(vNormal.x,vNormal.y,vNormal.z);
 
                     glTexCoord2f(tiles[tileside].u1, tiles[tileside].v1);
-                    glVertex3f((j+1)*L, (i+1)*L, cubes[i*iSizeX+j].y4);
+                    glVertex3f((j+1)*TILE_WIDTH, (i+1)*TILE_WIDTH, cubes[i*iSizeX+j].y4);
                     glTexCoord2f(tiles[tileside].u2, tiles[tileside].v2);
-                    glVertex3f((j+1)*L, i*L, cubes[i*iSizeX+j].y2);
+                    glVertex3f((j+1)*TILE_WIDTH, i*TILE_WIDTH, cubes[i*iSizeX+j].y2);
                     glTexCoord2f(tiles[tileside].u4, tiles[tileside].v4);
-                    glVertex3f((j+1)*L, i*L, cubes[i*iSizeX+j+1].y1);
+                    glVertex3f((j+1)*TILE_WIDTH, i*TILE_WIDTH, cubes[i*iSizeX+j+1].y1);
                     glTexCoord2f(tiles[tileside].u3, tiles[tileside].v3);
-                    glVertex3f((j+1)*L, (i+1)*L, cubes[i*iSizeX+j+1].y3);
+                    glVertex3f((j+1)*TILE_WIDTH, (i+1)*TILE_WIDTH, cubes[i*iSizeX+j+1].y3);
                     glEnd();
                 }
 
@@ -356,17 +356,17 @@ void GND::Display(CFrustum* pFrustum) {
 
 
                     /*
-                    vTriangle[0] = CVector3(j*L,     i*L,     cubes[i*sizeX+j].y1);
-                    vTriangle[1] = CVector3((j+1)*L, i*L,     cubes[i*sizeX+j].y2);
-                    vTriangle[2] = CVector3(j*L,     (i+1)*L, cubes[(i+1)*sizeX+j].y3);
+                    vTriangle[0] = CVector3(j*TILE_WIDTH,     i*TILE_WIDTH,     cubes[i*sizeX+j].y1);
+                    vTriangle[1] = CVector3((j+1)*TILE_WIDTH, i*TILE_WIDTH,     cubes[i*sizeX+j].y2);
+                    vTriangle[2] = CVector3(j*TILE_WIDTH,     (i+1)*TILE_WIDTH, cubes[(i+1)*sizeX+j].y3);
 
                     vTriangle[0] = vTriangle[0] * Mat;
                     vTriangle[1] = vTriangle[1] * Mat;
                     vTriangle[2] = vTriangle[2] * Mat;
 
-                    //vTriangle[0] = MatrixMultVect3f(Mat, j*L,     i*L,     cubes[i*sizeX+j].y1);
-                    //vTriangle[2] = MatrixMultVect3f(Mat, (j+1)*L, i*L,     cubes[i*sizeX+j].y2);
-                    //vTriangle[1] = MatrixMultVect3f(Mat, j*L,     (i+1)*L, cubes[(i+1)*sizeX+j].y3);
+                    //vTriangle[0] = MatrixMultVect3f(Mat, j*TILE_WIDTH,     i*TILE_WIDTH,     cubes[i*sizeX+j].y1);
+                    //vTriangle[2] = MatrixMultVect3f(Mat, (j+1)*TILE_WIDTH, i*TILE_WIDTH,     cubes[i*sizeX+j].y2);
+                    //vTriangle[1] = MatrixMultVect3f(Mat, j*TILE_WIDTH,     (i+1)*TILE_WIDTH, cubes[(i+1)*sizeX+j].y3);
 
                     vNormal = Normal(vTriangle);
                     */
@@ -387,13 +387,13 @@ void GND::Display(CFrustum* pFrustum) {
 
                     //glNormal3f(vNormal.x,vNormal.y,vNormal.z);
                     glTexCoord2f(tiles[tilesup].u1, tiles[tilesup].v1);
-                    glVertex3f(j*L, i*L, cubes[i*iSizeX+j].y1);
+                    glVertex3f(j*TILE_WIDTH, i*TILE_WIDTH, cubes[i*iSizeX+j].y1);
                     glTexCoord2f(tiles[tilesup].u2, tiles[tilesup].v2);
-                    glVertex3f((j+1)*L, i*L, cubes[i*iSizeX+j].y2);
+                    glVertex3f((j+1)*TILE_WIDTH, i*TILE_WIDTH, cubes[i*iSizeX+j].y2);
                     glTexCoord2f(tiles[tilesup].u4, tiles[tilesup].v4);
-                    glVertex3f((j+1)*L, (i+1)*L, cubes[i*iSizeX+j].y4);
+                    glVertex3f((j+1)*TILE_WIDTH, (i+1)*TILE_WIDTH, cubes[i*iSizeX+j].y4);
                     glTexCoord2f(tiles[tilesup].u3, tiles[tilesup].v3);
-                    glVertex3f(j*L, (i+1)*L, cubes[i*iSizeX+j].y3);
+                    glVertex3f(j*TILE_WIDTH, (i+1)*TILE_WIDTH, cubes[i*iSizeX+j].y3);
 
                     glColor3f(1.0f,1.0f,1.0f);
 
