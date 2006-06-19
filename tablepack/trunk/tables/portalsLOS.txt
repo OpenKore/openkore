@@ -690,6 +690,43 @@ izlude_in 65 84 izlude_in 148 127 0 izlude_in 74 158 0 izlude_in 171 97 0 izlude
 izlude_in 74 158 izlude_in 148 127 0 izlude_in 171 97 0 izlude_in 87 169 25 izlude_in 116 46 0 izlude_in 65 84 0 izlude_in 172 158 0 izlude_in 172 139 0 izlude_in 108 169 0 izlude_in 172 116 0
 izlude_in 87 169 izlude_in 148 127 0 izlude_in 74 158 25 izlude_in 171 97 0 izlude_in 116 46 0 izlude_in 65 84 0 izlude_in 172 158 0 izlude_in 172 139 0 izlude_in 108 169 0 izlude_in 172 116 0
 jupe_cave 143 52 jupe_cave 147 52 5
+lhz_cube 231 12 lhz_cube 231 96 85
+lhz_cube 231 90 lhz_cube 231 96 7 lhz_cube 231 12 79
+lhz_dun01 144 9 lhz_dun01 149 291 474 lhz_dun01 281 150 349 lhz_dun01 149 9 6 lhz_dun01 18 145 403
+lhz_dun01 18 150 lhz_dun01 149 291 339 lhz_dun01 281 150 390 lhz_dun01 149 9 403 lhz_dun01 18 145 6
+lhz_dun01 18 150lhz_dun02 lhz_dun01 149 291 339 lhz_dun01 281 150 390 lhz_dun01 149 9 403 lhz_dun01 18 145 6
+lhz_dun01 281 154 lhz_dun01 149 291 316 lhz_dun01 281 150 5 lhz_dun01 149 9 350 lhz_dun01 18 145 391
+lhz_dun02 149 142 lhz_dun02 17 156 261 lhz_dun02 224 6 350 lhz_dun02 146 19 239 lhz_dun02 282 161 207 lhz_dun02 17 153 258 lhz_dun02 283 153 200 lhz_dun02 149 149 8
+lhz_dun02 153 19 lhz_dun02 17 156 308 lhz_dun02 224 6 525 lhz_dun02 146 19 8 lhz_dun02 282 161 382 lhz_dun02 17 153 305 lhz_dun02 283 153 375 lhz_dun02 149 149 239
+lhz_dun02 159 33 lhz_dun02 17 156 266 lhz_dun02 224 6 483 lhz_dun02 146 19 92 lhz_dun02 282 161 340 lhz_dun02 17 153 263 lhz_dun02 283 153 333 lhz_dun02 149 149 197
+lhz_dun02 17 150 lhz_dun02 17 156 7 lhz_dun02 224 6 572 lhz_dun02 146 19 309 lhz_dun02 282 161 429 lhz_dun02 17 153 4 lhz_dun02 283 153 422 lhz_dun02 149 149 248
+lhz_dun02 220 6 lhz_dun02 17 156 574 lhz_dun02 224 6 5 lhz_dun02 146 19 528 lhz_dun02 282 161 246 lhz_dun02 17 153 571 lhz_dun02 283 153 239 lhz_dun02 149 149 353
+lhz_dun02 282 153 lhz_dun02 17 156 427 lhz_dun02 224 6 242 lhz_dun02 146 19 381 lhz_dun02 282 161 9 lhz_dun02 17 153 424 lhz_dun02 283 153 2 lhz_dun02 149 149 206
+lhz_dun03 140 133 lhz_dun03 139 137 6
+lhz_in01 100 52 lhz_in01 188 253 0 lhz_in01 158 15 96 lhz_in01 194 55 156 lhz_in01 251 226 0 lhz_in01 140 215 0 lhz_in01 76 254 0 lhz_in01 88 215 0 lhz_in01 231 227 0 lhz_in01 106 15 44 lhz_in01 149 55 113 lhz_in01 98 55 6
+lhz_in01 106 18 lhz_in01 188 253 0 lhz_in01 158 15 56 lhz_in01 194 55 126 lhz_in01 251 226 0 lhz_in01 140 215 0 lhz_in01 76 254 0 lhz_in01 88 215 0 lhz_in01 231 227 0 lhz_in01 106 15 4 lhz_in01 149 55 83 lhz_in01 98 55 46
+lhz_in01 140 211 lhz_in01 188 253 195 lhz_in01 158 15 0 lhz_in01 194 55 0 lhz_in01 251 226 0 lhz_in01 140 215 5 lhz_in01 76 254 188 lhz_in01 88 215 139 lhz_in01 231 227 212 lhz_in01 106 15 0 lhz_in01 149 55 0 lhz_in01 98 55 0
+lhz_in01 158 18 lhz_in01 188 253 0 lhz_in01 158 15 4 lhz_in01 194 55 74 lhz_in01 251 226 0 lhz_in01 140 215 0 lhz_in01 76 254 0 lhz_in01 88 215 0 lhz_in01 231 227 0 lhz_in01 106 15 56 lhz_in01 149 55 49 lhz_in01 98 55 98
+lhz_in01 188 250 lhz_in01 188 253 4 lhz_in01 158 15 0 lhz_in01 194 55 0 lhz_in01 251 226 0 lhz_in01 140 215 196 lhz_in01 76 254 151 lhz_in01 88 215 226 lhz_in01 231 227 67 lhz_in01 106 15 0 lhz_in01 149 55 0 lhz_in01 98 55 0
+lhz_in01 191 52 lhz_in01 188 253 0 lhz_in01 158 15 71 lhz_in01 194 55 7 lhz_in01 251 226 0 lhz_in01 140 215 0 lhz_in01 76 254 0 lhz_in01 88 215 0 lhz_in01 231 227 0 lhz_in01 106 15 123 lhz_in01 149 55 106 lhz_in01 98 55 155
+lhz_in01 225 226 lhz_in01 188 253 65 lhz_in01 158 15 0 lhz_in01 194 55 0 lhz_in01 251 226 0 lhz_in01 140 215 209 lhz_in01 76 254 178 lhz_in01 88 215 239 lhz_in01 231 227 8 lhz_in01 106 15 0 lhz_in01 149 55 0 lhz_in01 98 55 0
+lhz_in01 257 226 lhz_in01 188 253 0 lhz_in01 158 15 0 lhz_in01 194 55 0 lhz_in01 251 226 7 lhz_in01 140 215 0 lhz_in01 76 254 0 lhz_in01 88 215 0 lhz_in01 231 227 0 lhz_in01 106 15 0 lhz_in01 149 55 0 lhz_in01 98 55 0
+lhz_in01 33 224 lhz_in01 188 253 285 lhz_in01 158 15 0 lhz_in01 194 55 0 lhz_in01 251 226 0 lhz_in01 140 215 199 lhz_in01 76 254 220 lhz_in01 88 215 87 lhz_in01 231 227 302 lhz_in01 106 15 0 lhz_in01 149 55 0 lhz_in01 98 55 0
+lhz_in01 76 250 lhz_in01 188 253 150 lhz_in01 158 15 0 lhz_in01 194 55 0 lhz_in01 251 226 0 lhz_in01 140 215 188 lhz_in01 76 254 5 lhz_in01 88 215 160 lhz_in01 231 227 179 lhz_in01 106 15 0 lhz_in01 149 55 0 lhz_in01 98 55 0
+lhz_in01 88 211 lhz_in01 188 253 225 lhz_in01 158 15 0 lhz_in01 194 55 0 lhz_in01 251 226 0 lhz_in01 140 215 139 lhz_in01 76 254 160 lhz_in01 88 215 5 lhz_in01 231 227 242 lhz_in01 106 15 0 lhz_in01 149 55 0 lhz_in01 98 55 0
+lhz_in02 17 155 lhz_in02 13 155 5 lhz_in02 21 191 0 lhz_in02 39 204 0 lhz_in02 89 144 0 lhz_in02 79 223 0 lhz_in02 49 154 36 lhz_in02 103 155 0 lhz_in02 36 136 51 lhz_in02 94 212 0
+lhz_in02 21 195 lhz_in02 13 155 0 lhz_in02 21 191 5 lhz_in02 39 204 28 lhz_in02 89 144 0 lhz_in02 79 223 0 lhz_in02 49 154 0 lhz_in02 103 155 0 lhz_in02 36 136 0 lhz_in02 94 212 0
+lhz_in02 34 204 lhz_in02 13 155 0 lhz_in02 21 191 27 lhz_in02 39 204 6 lhz_in02 89 144 0 lhz_in02 79 223 0 lhz_in02 49 154 0 lhz_in02 103 155 0 lhz_in02 36 136 0 lhz_in02 94 212 0
+lhz_in02 41 136 lhz_in02 13 155 50 lhz_in02 21 191 0 lhz_in02 39 204 0 lhz_in02 89 144 0 lhz_in02 79 223 0 lhz_in02 49 154 29 lhz_in02 103 155 0 lhz_in02 36 136 6 lhz_in02 94 212 0
+lhz_in02 44 154 lhz_in02 13 155 35 lhz_in02 21 191 0 lhz_in02 39 204 0 lhz_in02 89 144 0 lhz_in02 79 223 0 lhz_in02 49 154 6 lhz_in02 103 155 0 lhz_in02 36 136 29 lhz_in02 94 212 0
+lhz_in02 84 223 lhz_in02 13 155 0 lhz_in02 21 191 0 lhz_in02 39 204 0 lhz_in02 89 144 0 lhz_in02 79 223 6 lhz_in02 49 154 0 lhz_in02 103 155 0 lhz_in02 36 136 0 lhz_in02 94 212 22
+lhz_in02 89 212 lhz_in02 13 155 0 lhz_in02 21 191 0 lhz_in02 39 204 0 lhz_in02 89 144 0 lhz_in02 79 223 22 lhz_in02 49 154 0 lhz_in02 103 155 0 lhz_in02 36 136 0 lhz_in02 94 212 6
+lhz_in02 94 144 lhz_in02 13 155 0 lhz_in02 21 191 0 lhz_in02 39 204 0 lhz_in02 89 144 6 lhz_in02 79 223 0 lhz_in02 49 154 0 lhz_in02 103 155 21 lhz_in02 36 136 0 lhz_in02 94 212 0
+lhz_in02 98 155 lhz_in02 13 155 0 lhz_in02 21 191 0 lhz_in02 39 204 0 lhz_in02 89 144 21 lhz_in02 79 223 0 lhz_in02 49 154 0 lhz_in02 103 155 6 lhz_in02 36 136 0 lhz_in02 94 212 0
+lighthalzen 202 160 lighthalzen 267 200 106 lighthalzen 313 301 0 lighthalzen 198 163 8 lighthalzen 294 223 0
+lighthalzen 260 199 lighthalzen 267 200 9 lighthalzen 313 301 0 lighthalzen 198 163 99 lighthalzen 294 223 0
+lighthalzen 303 229 lighthalzen 267 200 0 lighthalzen 313 301 83 lighthalzen 198 163 0 lighthalzen 294 223 16
+lighthalzen 310 302 lighthalzen 267 200 0 lighthalzen 313 301 3 lighthalzen 198 163 0 lighthalzen 294 223 96
 lou_dun01 218 195 lou_dun01 221 195 4 lou_dun01 40 201 521
 lou_dun01 40 201 lou_dun01 221 195 524
 lou_dun02 165 269 lou_dun02 288 18 1281
