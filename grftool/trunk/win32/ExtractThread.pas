@@ -24,7 +24,7 @@ type
 implementation
 
 uses
-  Main, SettingsForms, TntSysUtils;
+  Main, SettingsForms, TntSysUtils, LibSpr;
 
 procedure MkDirs(Dir: String);
 var
@@ -118,7 +118,27 @@ begin
               Result := grf_extract(Grf, PChar(Files[i]), PChar(FileName), Error) <= 0;
 
           if Result then
-              Inc(Failed);
+              Inc(Failed)
+          else
+              // If it's a sprite we might have to extract its bitmaps
+              if UpperCase(ExtractFileExt(FileName)) = '.SPR' then
+                  begin
+                      if Settings.SpriteSaveMode = SPRSAVE_NUMBERED then
+                          begin
+                              if Settings.Unicode then
+                                  ExtractSpritesW(KoreanToUnicode(FileName), True)
+                              else
+                                  ExtractSprites(FileName, True);
+                          end;
+
+                      if Settings.SpriteSaveMode = SPRSAVE_SHEET then
+                          begin
+                              if Settings.Unicode then
+                                  ExtractSpritesAsSheetW(KoreanToUnicode(FileName), True)
+                              else
+                                  ExtractSpritesAsSheet(FileName, True);
+                          end;
+                  end;
       end;
       Current := i + 1;
       CurrentFile := FileName;
