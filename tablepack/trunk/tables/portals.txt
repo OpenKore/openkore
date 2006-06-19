@@ -720,6 +720,45 @@ izlude_in 171 97 izlude_in 172 116
 izlude_in 172 116 izlude_in 171 97
 izlude_in 172 139 izlude_in 172 158
 izlude_in 172 158 izlude_in 172 139
+lhz_cube 231 12 lighthalzen 310 302
+lhz_cube 231 96 lhz_dun02 220 6
+lhz_dun01 149 9 lhz_dun02 153 19
+lhz_dun01 18 145 lhz_dun02 17 150
+lhz_dun01 281 150 lhz_dun02 282 153
+lhz_dun01 149 291 lhz_in01 33 224
+lhz_dun02 224 6 lhz_cube 231 90
+lhz_dun02 149 149 lhz_dun03 140 133
+lhz_dun03 139 137 lhz_dun02 149 142
+lhz_dun02 283 153 lhz_dun01 281 154
+lhz_dun02 17 153 lhz_dun01 18 150lhz_dun02 146 19 lhz_dun02 17 156
+lhz_dun02 17 156 lhz_dun02 159 33
+lhz_dun02 146 19 lhz_dun01 144 9
+lhz_dun02 17 156 lhz_dun01 18 150
+lhz_dun02 282 161 lhz_dun01 281 154
+lhz_in01 88 215 lhz_in01 106 18
+lhz_in01 106 15 lhz_in01 88 211
+lhz_in01 251 226 lhz_in01 225 226
+lhz_in01 231 227 lhz_in01 257 226
+lhz_in01 188 253 lhz_in01 191 52
+lhz_in01 194 55 lhz_in01 188 250
+lhz_in01 76 254 lhz_in01 100 52
+lhz_in01 98 55 lhz_in01 76 250
+lhz_in01 149 55 lhz_in01 188 250
+lhz_in01 158 15 lhz_in01 140 211
+lhz_in01 140 215 lhz_in01 158 18
+lhz_in02 21 191 lighthalzen 202 160
+lhz_in02 39 204 lhz_in02 41 136
+lhz_in02 36 136 lhz_in02 34 204
+lhz_in02 13 155 lhz_in02 84 223
+lhz_in02 79 223 lhz_in02 17 155
+lhz_in02 94 212 lhz_in02 94 144
+lhz_in02 89 144 lhz_in02 89 212
+lhz_in02 103 155 lhz_in02 44 154
+lhz_in02 49 154 lhz_in02 98 155
+lighthalzen 267 200 lighthalzen 303 229 0 c n
+lighthalzen 294 223 lighthalzen 260 199 0 c n
+lighthalzen 313 301 lhz_cube 231 12 0 c c r0 n
+lighthalzen 198 163 lhz_in02 21 195
 louyang 218 19 lou_fild01 233 356
 louyang 130 63 lou_in02 72 31
 louyang 37 271 lou_dun01 218 195
