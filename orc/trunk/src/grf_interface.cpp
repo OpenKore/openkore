@@ -21,4 +21,5 @@
  *  $Id$
  *
  */
+
 #include "grf_interface.h"

@@ -36,189 +36,16 @@
 // Smart interface to libgrf
 #include "grf_interface.h"
 
-
+// File loaders
 #include "ro_types.h"
 #include "gnd_ground.h"
 #include "rsm_model.h"
-
-
-// This belongs to CSDL...
-#define SET_ENTRY_CLASS(classname) \
-int SDL_main( int argc, char * argv[] ) { \
-    g_pApp = new classname(); \
-    if( g_pApp == NULL ) { \
-        printf("Fatal error: Constructor " #classname "::" #classname "() aborted.\n"); \
-        exit(EXIT_FAILURE); \
-    } \
-    g_pApp->SetCaption( APPTITLE ); \
-    return g_pApp->Main( argc, argv ); \
-} \
-
-// And that too
-CSDL_ApplicationBase* g_pApp = NULL;
+#include "rsw_world.h"
 
 // Global subsystem pointers
 CGRF_Interface* g_pGrfInterface = NULL;
 
-
-class CGL_Interface {
-    CGL_Interface() {}
-    virtual ~CGL_Interface() {}
-};
-
-class CDebugConsole {
-public:
-    CDebugConsole() {}
-    virtual ~CDebugConsole() {}
-    void Render() {
-
-        int posx = 0;
-        int posy = 400;
-        int width = 480;
-        int height = 200;
-
-        goOrtho();
-        glLoadIdentity();
-
-        glTranslatef(posx,posy,0);
-
-        glColor4f(ZERO, ZERO, ZERO, 0.60);
-        glBegin(GL_QUADS);
-        glVertex3f(	ZERO, ZERO, ZERO);
-        glVertex3f(	(float)width, ZERO, ZERO);
-        glVertex3f( (float)width, (float)height, ZERO);
-        glVertex3f( ZERO, (float)height, ZERO);
-        glEnd();
-
-        glColor4f(1, 1, 1, 1);
-
-        goPerspective();
-
-    }
-
-};
-
-CDebugConsole* g_pDebugConsole = new CDebugConsole();
-// void con_printf(char* sz, ...) {
-//   g_pDebugConsole->AddText();
-// }
-
-
-
-
-class CResource_World_File {
-public:
-    CResource_World_File( char* szFilename );
-    virtual ~CResource_World_File();
-
-    bool LoadFromMemory( void* pData, uint32_t nSize );
-
-//        int getWidth() { return(ground.sizeX); }
-//        int getHeight() { return(ground.sizeY); }
-    int GetNumModels() {
-        return m_nModels;
-    };
-
-    int GetNumUniqueModels() {
-        return m_nUniqueModels;
-    };
-
-    char m_szMapName[ 128 ];
-    char m_szMiniMap[ 128 ];
-
-//private:
-    rsw_object_t* m_Models;
-    rsw_header_t* m_Header;
-    Uint16 m_nModels;
-    Uint16 m_nUniqueModels;
-
-    CResource_Model_File* m_RealModels;
-//        GND ground;
-};
-
-CResource_World_File::CResource_World_File( char* szFilename ) {
-    m_nModels = 0;
-    m_nUniqueModels = 0;
-    memset( &m_szMapName[ 0 ], 0, 128 );
-    memset( &m_szMiniMap[ 0 ], 0, 128 );
-
-    uint32_t filesize;
-    void* filedata;
-    filedata = g_pGrfInterface->GetRSW( szFilename, &filesize );
-
-    if ( filedata == NULL || !LoadFromMemory( filedata, filesize ) )
-        return;
-}
-
-CResource_World_File::~CResource_World_File() {}
-
-bool CResource_World_File::LoadFromMemory( void* pData, uint32_t nSize ) {
-    m_Header = ( rsw_header_t* ) pData;
-    m_Models = ( rsw_object_t* ) ( ( ( unsigned char* ) pData ) + sizeof( rsw_header_t ) );
-
-    if ( strcmp( m_Header->id, "GRSW" ) ) {
-        memcpy( &m_szMapName[ 0 ], &m_Header->szGndFile[ 0 ], strlen( m_Header->szGndFile ) - 4 );
-        strcpy( &m_szMapName[ strlen( m_Header->szGndFile ) - 4 ], "\0" );
-        sprintf( m_szMiniMap, "data\\texture\\유저인터페이스\\map\\%s.bmp", m_szMapName );
-        printf( "Loading World File \"%s\"...\n", m_szMapName );
-    } else {
-        printf( "Error: no valid RSW format !\n" );
-        return false;
-    }
-
-    m_nUniqueModels = 0;
-
-    for ( int i = 0; i < m_Header->object_count; i++ ) {
-        if ( m_Models[ i ].type > 1 ) {
-            m_nModels = i;
-            break;
-        }
-
-        m_Models[ i ].bIsUnique = true;
-
-        for ( int j = 0; j < i; j++ ) {
-            if ( !strcmp( &m_Models[ j ].szFilename[ 0 ], &m_Models[ i ].szFilename[ 0 ] ) ) {
-                m_Models[ i ].bIsUnique = false;
-                break;
-            }
-        }
-
-        if ( m_Models[ i ].bIsUnique ) {
-            // loading should be done here
-            m_nUniqueModels++;
-        }
-    }
-
-    printf( "%i/%i (%i) objects are unique\n", m_nUniqueModels, m_nModels, m_Header->object_count );
-
-
-    ro_string_t *realmodelspath = new ro_string_t[ m_nUniqueModels ];
-    m_RealModels = new CResource_Model_File[ m_nUniqueModels ];
-
-    for ( int i = 0, k = 0; i < m_nModels; i++ ) {
-        if ( m_Models[ i ].bIsUnique ) {
-            strcpy( realmodelspath[ k ], m_Models[ i ].szFilename );
-            m_RealModels[ k ].LoadFromGRF( realmodelspath[ k ] );
-            k++;
-        }
-    }
-
-    for ( int i = 0; i < m_nModels; i++ ) {
-        m_Models[ i ].model = 1;
-
-        for ( int num = 0; num < m_nUniqueModels; num++ ) {
-            if ( !strcmp( m_Models[ i ].szFilename, realmodelspath[ num ] ) ) {
-                m_Models[ i ].model = num;
-                break;
-
-            }
-        }
-    }
-
-    return true;
-}
-
-
+// The application class
 class Orc : public CSDL_ApplicationBase {
 public:
     Orc();
@@ -240,69 +67,11 @@ public:
 };
 
 
-int InitGL() {
-    glClearColor ( 1.0f, 1.0f, 1.0f, 0.0f );
-    glClearDepth( 1.0f );
-    glEnable( GL_TEXTURE_2D );
-
-    float fogColor[ 4 ] = {0.95f, 0.95f, 1.0f, 1.0f};
-
-    glFogi( GL_FOG_MODE, GL_EXP2 );    // Fog Mode
-    glFogfv( GL_FOG_COLOR, fogColor );    // Set Fog Color
-    glFogf( GL_FOG_DENSITY, 0.05f );    // How Dense Will The Fog Be
-    glHint( GL_FOG_HINT, GL_DONT_CARE );   // The Fog's calculation accuracy
-    glFogf( GL_FOG_START, 1000.0f );     // Fog Start Depth
-    glFogf( GL_FOG_END, 1000.0f );     // Fog End Depth
-
-//#ifdef LIGHT_ENABLE
-    float ambience[ 4 ] = {0.3f, 0.3f, 0.3f, 1.0};  // The color of the light in the world
-    float diffuse[ 4 ] = {1.0f, 1.0f, 1.0f, 1.0};   // The color of the positioned light
-    float light0[ 3 ] = {1.0f, 1.0f, 1.0f};       // The color of the positioned light
-    glLightfv( GL_LIGHT0, GL_AMBIENT, ambience );  // Set our ambience values (Default color without direct light)
-    glLightfv( GL_LIGHT0, GL_DIFFUSE, diffuse );  // Set our diffuse color (The light color)
-    glLightfv( GL_LIGHT0, GL_POSITION, light0 );     // This Sets our light position
-
-    glEnable(  GL_LIGHT0   );       // Turn this light on
-    glEnable(  GL_LIGHTING );       // This turns on lighting
-    glEnable( GL_COLOR_MATERIAL );
-//#endif
-
-    glShadeModel ( GL_SMOOTH );
-
-
-    glEnable( GL_DEPTH_TEST );
-// glDepthFunc(GL_LESS);
-    glDepthFunc( GL_LEQUAL );
-
-
-    glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );   // Enable Alpha Blending (disable alpha testing)
-    glEnable( GL_BLEND );              // Enable Blending       (disable alpha testing)
-
-    glHint( GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST );
-    glEnable(GL_FOG);
-
-    glFrontFace(GL_CW);
-    glEnable(GL_CULL_FACE);
-
-    return TRUE;          // Initialization Went OK
-}
-
-void ReSizeGLScene( GLsizei w, GLsizei h ) {
-
-    glViewport ( 0, 0, ( GLsizei ) w, ( GLsizei ) h );
-    glMatrixMode ( GL_PROJECTION );
-    glLoadIdentity();
-
-    gluPerspective ( 40.0, ( GLfloat ) w / ( GLfloat ) h, 1.0, 1000.0 );
-    glMatrixMode ( GL_MODELVIEW );
-    glLoadIdentity();
-}
-
 /*
     SET_ENTRY_CLASS creates our class instance and calls the inherited main function,
     which pumps the events and calls OnPreEvents, OnPaint, OnPostEvents...
 */
-SET_ENTRY_CLASS(Orc);
+SET_ENTRY_CLASS(Orc, APPTITLE);
 Orc::Orc() : CSDL_ApplicationBase( SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_OPENGL ) {
 
     // TODO: Load a configuration file
@@ -337,6 +106,7 @@ Orc::Orc() : CSDL_ApplicationBase( SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_OPENGL 
     ReSizeGLScene( m_nScreenWidth, m_nScreenHeight );
 }
 
+
 Orc::~Orc() {
 
     if( m_pFrustum )
@@ -354,7 +124,6 @@ Orc::~Orc() {
     if( g_pGrfInterface )
         delete g_pGrfInterface;
 }
-
 
 
 void Orc::OnPaint( CSDL_Surface* display, double dt ) {
@@ -380,8 +149,8 @@ void Orc::OnPaint( CSDL_Surface* display, double dt ) {
     m_pCamera->Look(); // Tell OpenGL where to look
     glPushMatrix();
 
-    //m_pWorld->m_Header
-// glLightfv( GL_LIGHT0, GL_POSITION, g_LightPosition ); // This Sets our light position
+    // m_pWorld->m_Header
+    // glLightfv( GL_LIGHT0, GL_POSITION, g_LightPosition ); // This Sets our light position
     glPopMatrix();
 
     // update the fog
@@ -416,13 +185,13 @@ void Orc::OnPaint( CSDL_Surface* display, double dt ) {
         }
     }
 
-    //g_pDebugConsole->Render();
-}
+} // OnPaint
 
-//#ifdef WIN32
-//* Undo packing */
-//#include <poppack.h>
-//#else /* WIN32 */
-//* Undo packing */
-//#pragma pack()
-//#endif /* WIN32 */
+
+#ifdef WIN32
+/* Undo packing */
+#include <poppack.h>
+#else /* WIN32 */
+/* Undo packing */
+#pragma pack()
+#endif /* WIN32 */

@@ -1,5 +1,5 @@
 /*
- *  ORC - Open Ragnarok Client
+ *  CSDL - Wrapper classes for the Simple Direct Media Layer (SDL) and OpenGL
  *  csdl_gl.cpp - Wrapper for SDL & GL
  *
  *  Copyright (C) 2006 Crypticode <crypticode@users.sf.net>
@@ -177,4 +177,64 @@ void goPerspective() {
     glMatrixMode( GL_PROJECTION );
     glPopMatrix();
     glMatrixMode( GL_MODELVIEW );
+}
+
+
+
+int InitGL() {
+    glClearColor ( 1.0f, 1.0f, 1.0f, 0.0f );
+    glClearDepth( 1.0f );
+    glEnable( GL_TEXTURE_2D );
+
+    float fogColor[ 4 ] = {0.95f, 0.95f, 1.0f, 1.0f};
+
+    glFogi( GL_FOG_MODE, GL_EXP2 );    // Fog Mode
+    glFogfv( GL_FOG_COLOR, fogColor );    // Set Fog Color
+    glFogf( GL_FOG_DENSITY, 0.05f );    // How Dense Will The Fog Be
+    glHint( GL_FOG_HINT, GL_DONT_CARE );   // The Fog's calculation accuracy
+    glFogf( GL_FOG_START, 1000.0f );     // Fog Start Depth
+    glFogf( GL_FOG_END, 1000.0f );     // Fog End Depth
+
+//#ifdef LIGHT_ENABLE
+    float ambience[ 4 ] = {0.3f, 0.3f, 0.3f, 1.0};  // The color of the light in the world
+    float diffuse[ 4 ] = {1.0f, 1.0f, 1.0f, 1.0};   // The color of the positioned light
+    float light0[ 3 ] = {1.0f, 1.0f, 1.0f};       // The color of the positioned light
+    glLightfv( GL_LIGHT0, GL_AMBIENT, ambience );  // Set our ambience values (Default color without direct light)
+    glLightfv( GL_LIGHT0, GL_DIFFUSE, diffuse );  // Set our diffuse color (The light color)
+    glLightfv( GL_LIGHT0, GL_POSITION, light0 );     // This Sets our light position
+
+    glEnable(  GL_LIGHT0   );       // Turn this light on
+    glEnable(  GL_LIGHTING );       // This turns on lighting
+    glEnable( GL_COLOR_MATERIAL );
+//#endif
+
+    glShadeModel ( GL_SMOOTH );
+
+
+    glEnable( GL_DEPTH_TEST );
+// glDepthFunc(GL_LESS);
+    glDepthFunc( GL_LEQUAL );
+
+
+    glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );   // Enable Alpha Blending (disable alpha testing)
+    glEnable( GL_BLEND );              // Enable Blending       (disable alpha testing)
+
+    glHint( GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST );
+    glEnable(GL_FOG);
+
+    glFrontFace(GL_CW);
+    glEnable(GL_CULL_FACE);
+
+    return TRUE;          // Initialization Went OK
+}
+
+void ReSizeGLScene( GLsizei w, GLsizei h ) {
+
+    glViewport ( 0, 0, ( GLsizei ) w, ( GLsizei ) h );
+    glMatrixMode ( GL_PROJECTION );
+    glLoadIdentity();
+
+    gluPerspective ( 40.0, ( GLfloat ) w / ( GLfloat ) h, 1.0, 1000.0 );
+    glMatrixMode ( GL_MODELVIEW );
+    glLoadIdentity();
 }

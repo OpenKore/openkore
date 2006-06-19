@@ -1,5 +1,5 @@
 /*
- *  ORC - Open Ragnarok Client
+ *  CSDL - Wrapper classes for the Simple Direct Media Layer (SDL) and OpenGL
  *  csdl_gl.h - Wrapper for SDL & GL
  *
  *  Copyright (C) 2006 Crypticode <crypticode@users.sf.net>
@@ -21,6 +21,7 @@
  *  $Id$
  *
  */
+
 #ifndef CSDL_GL_H
 #define CSDL_GL_H
 
@@ -94,6 +95,9 @@ void DisplayBoundingBox(float *max, float *min, float r, float g, float b);
 
 void goOrtho();
 void goPerspective();
+
+int InitGL();
+void ReSizeGLScene( GLsizei w, GLsizei h );
 
 
 #endif // CSDL_GL_H
