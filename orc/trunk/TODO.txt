@@ -1,0 +1,22 @@
+*** Maintainance specific ***
+TODO:
+- Define roadmap
+- Create documentation page with fileformat information and links to all public information available
+  How to Checkout&Compile
+- Attract as many developers as possible
+- Automated build system for cross-plattform releases
+
+*** Code specific ***
+- (WORK IN PROGRESS) - Identify unknown members in file structures 
+- (WORK IN PROGRESS) - Correctly load "Ground Field Files (GND)", "Ground Altitude Files" (GAT) and display the landscape
+- (WORK IN PROGRESS) - Correctly load "Resource World Files (RSW)", "Resource Model Files" (RSM) and display the objects
+- (WORK IN PROGRESS) - Correctly display water...
+
+- (WORK IN PROGRESS) - Add "grf_chunk_get" to CGRF_Interface and make all loading functions use that to load the data
+											instead of the cranky way it works now...
+
+
+- (IN THE FUTUTRE) - Use libsprite (hongli) to load and display sprites
+- (IN THE FUTUTRE) - Internal world representation (monsters, players) with a mini game emulator (game of life with porings :?)
+- (IN THE FUTUTRE) - IPC Interface to use Openkore as backend
+- (IN THE FUTUTRE) - Abstract render interface to be able to switch away from OpenGL

@@ -1,0 +1,12 @@
+==================
+### 0.0.2
+==================
+
+*** INCOMPATIBLE CHANGES ***:
+- 
+
+** Major updates in this release:
+- 
+
+** Detailed list of changes:
+- 
