@@ -9,15 +9,29 @@
 		zlib
 		libjpeg
 		libpng
-		SDL, SDL_Sound, SDL_Mixer, SDL_Image (without TIFF support)
+		SDL, SDL_Sound, SDL_Mixer, SDL_Image (without TIFF support?)
 
 		libgrf (Get it from http://openkore.sourceforge.net/grftool/)
-		## WE SHOULD BUILD A DEVPACK for LIBGRF ##
+		
+		TODO: ## WE SHOULD BUILD A DEVPACK for LIBGRF ##
+		
+		Extract libgrf to C:\CodeBlocks\include\libgrf
+		
+		Copy C:\CodeBlocks\include\libgrf\headers\*.*  to  C:\CodeBlocks\include\libgrf\
+		Copy C:\CodeBlocks\include\libgrf\dll\grf.dll  to  C:\CodeBlocks\dll
+		Copy C:\CodeBlocks\include\libgrf\dll\grf.def, grf.exp, grf.lib  to  C:\CodeBlocks\lib
 
-4.) Close C::B
+4.) Close Code::Blocks
 
 ### Howto compile ORC on Windows using Code::Blocks ###
 
-4.) How to Checkout from SVN with CodeBlocks... (not possible yet, yawn!)
-5.) Extract the file cb-workspace.zip in the top folder... :/
+### 4.) How to Checkout from SVN with CodeBlocks... (not possible yet, yawn!)
 
+[code]
+mkdir C:\Projects\Orc
+cd C:\Projects\Orc
+svn checkout https://svn.sourceforge.net/svnroot/openkore/orc/trunk
+[/code]
+
+5.) Open "Orc.cbp" with Code::Blocks
+6.) Press CTRL+F9 and it should compile
