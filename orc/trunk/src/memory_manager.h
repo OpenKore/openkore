@@ -1,6 +1,6 @@
 /*
- *  OR.... what was this supposed to be ?
- *  /s/startup-sequence - It's 2:25am and i still examine hex dumps x_X
+ *  ORC - Open Ragnarok Client
+ *  memory_manager.h -
  *
  *  Copyright (C) 2006 Crypticode <crypticode@users.sf.net>
  *
@@ -22,6 +22,8 @@
  *
  */
 
+
+// TODO: implement memory manager
 
 void dump(void* p, int len) {
     unsigned char* start = (unsigned char*)p;
