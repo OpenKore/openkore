@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>ORC - Open Ragnarok Client</title>
+<link rel="shortcut icon" href="Orc.ico">
+<style type="text/css">
+	body { font-family: Bitstream Vera Sans, Arial; font-size: small; margin-left: 10%; margin-right: 10% }
+	h1 { font-size: 14pt }
+	h2 { font-size: 12pt }
+	h3 { font-size: medium; margin: 0; padding: 0 }
+	h1, h2 { border-bottom: 1px #cccccc solid; padding-bottom: 0.05cm; color: #336688 }
+	dd { margin-bottom: 10px }
+	a { text-decoration: none }
+	a:hover { text-decoration: underline }
+	.commands dt { font-family: Monospace, Bitstream Vera Sans Mono, Courier New, Courier }
+	.commands dd { margin-bottom: 0.2cm }
+	.code { background: #ffffea; border: #d0d0d0 1px dotted; padding: 0.1cm; margin-left: 0.4cm; width: 75% }
+	.quote { color: #00f000; background: #000000; border: #d0d0d0 1px solid; padding: 0.1cm; margin-left: 0.4cm; width: 75% }
+	.contents { background: #f5efff; border: #bfa9e5 1px solid; padding: 0.17cm; width: 75% }
+	.contents h1 { margin: 0; padding: 0; border: none; color: black; font-size: 12pt }
+	.contents ul { margin: 0; padding: 0; margin-left: 0.75cm; margin-top: 0.1cm }
+	.keywords tt { color: #005500 }
+	.p { margin-bottom: 0.7cm; margin-left: 0.2cm }
+	.linux { margin: 0; padding: 0; margin: 0.1cm; margin-left: 0.5cm }
+	table { margin-left: 0.75cm; margin-right: 0.75cm }
+	tr.head { background: #c0c0ff }
+	tr.one { background: #f5efff }
+	tr.two { background: #f0f0f0 }
+	td { padding: 5px }
+</style>
+</head>
+<body>
+<base target="_blank">
+<a name="top"></a>
+
+<h1>What is ORC ?</h1>
+<div class="p">
+	ORC is the abbreviation for (<b>O</b>)pen (<b>R</b>)agnarok (<b>C</b>)lient.<br>
+<br>
+	It's what the name suggests, an <a href="http://www.opensource.org/">Open Source</a>, <a href="http://en.wikipedia.org/wiki/Cross-platform">cross-platform</a> Ragnarok Client emulator written in C/C++.
+	OpenGL is used to render the graphics and SDL is used for everything else.<br><br>
+	The main goal is to make it smooth playable. But hopefully it will get as complete as the original client. It is planned that
+	the network handling will be done by <a href="http://www.openkore.com/">Openkore</a> and that the client is controlable by it too.
+<p />
+
+<h1>Can i help with the development ?</h1>
+<div class="p">
+	Yes. New developers are always welcome to the <a href="http://www.openkore.com/">Openkore</a> project, and as this is related to
+	<a href="http://www.openkore.com/">Openkore</a> the 	same <a href="http://www.openkore.com/wiki/index.php/Developers">guidelines</a> apply.
+	The code is written in C/C++ using <a href="http://www.codeblocks.org/">Code::Blocks</a> as IDE, and it is recommended that you use it too.
+<p />
+
+<div class="contents">
+	<ul>
+		<li><a href="#install">Installing Code::Blocks on Windows</a></li>
+		<li><a href="#depend">Required dependencies</a></li>
+		<li><a href="#compile">Compiling the Code</a></li>
+		<li><a href="#todo">What needs to be done ?</a></li>
+		<li><a href="#info">Where can i find information on RO file formats ?</a></li>
+	</ul>
+</div>
+
+<h2><a name="install"></a>Installing Code::Blocks on Windows</h2>
+<div class="p">
+	Download <a href="http://prdownloads.sourceforge.net/codeblocks/codeblocks-1.0rc2_mingw.exe?download">Code::Blocks IDE, with MINGW compiler</a>
+	and install it to "C:\CodeBlocks" for example.<br>
+<a href="#top"><small>back to top</small></a>
+</div>
+
+<h2><a name="depend"></a>Required dependencies</h2>
+<div class="p">
+
+	In <a href="http://www.codeblocks.org/">Code::Blocks</a>, open the DevPak plugin, set the directory for installations to "C:\CodeBlocks".
+   Download and install the following devpaks, in that order:<br>
+	<ul>
+		<li>zlib</li>
+		<li>libjpeg</li>
+		<li>libpng</li>
+		<li>libtiff</li>
+		<li>SDL</li>
+		<li>SDL_Sound</li>
+		<li>SDL_Mixer</li>
+		<li>SDL_Image</li>
+		<li>libgrf</li>
+	</ul>
+<a href="#top"><small>back to top</small></a>
+</div>
+
+<h2><a name="compile"></a>Compiling the Code</h2>
+<div class="p">
+	In <a href="http://www.codeblocks.org/">Code::Blocks</a>, open the SVN plugin and checkout from "https://svn.sourceforge.net/svnroot/openkore/orc/trunk"
+	into some folder on your drive, e.g. "C:\OrcSVN"<br>
+	<br>
+	Go into that folder and open the "Orc.cbp", it should compile without any problems.
+	<br>
+<a href="#top"><small>back to top</small></a>
+</div>
+
+<h2><a name="todo"></a>What needs to be done ?</h2>
+<div class="p">
+	<ul>
+		<li>Objects show up in the wrong positions</li>
+		<li>Use "grf_chunk_get" in the CGRF_Interface</li>
+		<li>Identify the unknown members in file structures</li>
+		<li>Implement a GUI</li>
+		<li>RO text file parser (e.g. resnametable.txt)</li>
+		<li>Show a loading screen</li>
+		<li>Use libsprite (from hongli) to load and display sprites</li>
+		<li>Integrate Openkore (IPC or API ?)</li>
+		<li>Implement texture manager</li>
+		<li>Implement memory manager</li>
+	</ul>
+
+<a href="#top"><small>back to top</small></a>
+</div>
+
+<h2><a name="info"></a>Where can i find information on RO file formats ?</h2>
+<div class="p">
+	<ul>
+		<li><a href="http://www.openkore.com/wiki/index.php/Field_file_format#The_GAT_file_format">The GAT file format</a></li>
+		<li><a href="http://mist.in/gratia/ro/spr/deufeufeu_files/">Deufeufeu</a></li>
+		<li><a href="http://www.geocities.com/saintender.geo/">Endersoft</a></li>
+		<li><a href="http://www.ximosoft.com/">Ximosoft</a></li>
+	</ul>
+
+    If someone still have <b>yarec.tgz</b> from Deufeufeu laying around,
+    or knows another source of information, please tell me !<br>
+
+<a href="#top"><small>back to top</small></a>
+</div>
+
+<h2><a name="license"></a>License</h2>
+<div class="p">
+	ORC is licensed under the <a href="http://www.gnu.org/licenses/gpl.html">GNU General Public License</a>.<br />
+
+<a href="#top"><small>back to top</small></a>
+</div>
+
+<h2><a name="author"></a>Author</h2>
+<div class="p">
+
+	Written by <a href="http://forums.openkore.com/profile.php?mode=viewprofile&u=12787">Crypticode</a> &lt;crypticode at users dot sourceforge dot net&gt;<br />
+
+<a href="#top"><small>back to top</small></a>
+</div>
+
+<p>
+<a href="http://validator.w3.org/check?uri=referer"><img
+          src="http://www.w3.org/Icons/valid-xhtml10"
+          alt="Valid XHTML 1.0!" height="31" width="88" border="0" /></a>
+</p>
+
+</body>
+</html>
