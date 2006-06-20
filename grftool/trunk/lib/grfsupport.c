@@ -54,7 +54,7 @@ GRFEXTERN_BEGIN
  * @param p A uint8_t (char) array holding the bytes
  * @return A uint32_t in Little Endian order
  */
-GRFINLINE uint32_t
+uint32_t
 LittleEndian32(uint8_t *p)
 {
 	return ((p[3] * 256 + p[2]) * 256 + p[1]) * 256 + *p;
@@ -68,7 +68,7 @@ LittleEndian32(uint8_t *p)
  * @param hi A host uint32_t value
  * @return A uint32_t in Little Endian order
  */
-GRFINLINE uint32_t
+uint32_t
 ToLittleEndian32(uint32_t hi)
 {
 	uint32_t lei;
@@ -330,7 +330,7 @@ GRFEXPORT GrfError *GRF_SetError(GrfError *err, GrfErrorType errtype, uint32_t l
 		err->line = line;
 		err->file = file;
 		err->func = func;
-		err->extra = extra;
+		err->extra = (uintptr_t *) extra;
 	}
 
 	return err;

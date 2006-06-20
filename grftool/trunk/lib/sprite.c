@@ -201,7 +201,7 @@ sprite_open (const char *fname, SpriteError *error)
 	fseek (f, 0, SEEK_END);
 	size = ftell (f);
 	fseek (f, 0, SEEK_SET);
-	data = malloc (size);
+	data = (unsigned char *) malloc (size);
 	fread (data, size, 1, f);
 	fclose (f);
 
