@@ -372,47 +372,52 @@ void CRSM_Mesh::Render( bounding_box_t *box, ro_transf_t *ptransf ) {
 }
 
 
+/*
+    Model class
+*/
+CResource_Model_File::CResource_Model_File() {
+    //
+}
 
-
-
-
-CResource_Model_File::CResource_Model_File() {}
-
-CResource_Model_File::~CResource_Model_File() {}
+CResource_Model_File::~CResource_Model_File() {
+    if( szTextureNames != NULL )
+        delete[] szTextureNames;
+}
 
 void CResource_Model_File::LoadFromGRF( char* szFilename ) {
     uint32_t filesize;
     void* filedata;
+    strcpy(m_szFilename, szFilename);
+
     filedata = g_pGrfInterface->GetRSM( szFilename, &filesize );
     if ( filedata == NULL || !LoadFromMemory( filedata, filesize ) )
         return;
-
-    printf( "Loading object \"%s\"...\n", szFilename );
 }
 
 bool CResource_Model_File::LoadFromMemory( void* pData, uint32_t nSize ) {
-
-    READ(dwFileID, 0, 4);
+    BEGIN_READ(0);
+    AUTO_READ(dwFileID, 4);
 
     if( dwFileID != RSMHEADER ) { // "GRSM"
         printf("No valid RSM header...\n");
         return false;
     }
 
-    READ(bMajorVersion, 4, 1);
-    READ(bMinorVersion, 5, 1);
+    AUTO_READ(bMajorVersion, 1);
+    AUTO_READ(bMinorVersion, 1);
 
-    READ(uUnknown1, 6, 25); // TODO: identify, i bet m_nMeshes is there too :p
-    READ(iNumTextures, 31, 4);
+    AUTO_READ(uUnknown1, 25); // TODO: identify, i bet m_nMeshes is there too :p
+    AUTO_READ(iNumTextures, 4);
 
-    printf( "Loading model file \"%s\" (0x%02X%02X) with %i textures...\n", "filename.rsm", bMajorVersion, bMinorVersion, iNumTextures );
+    // printf( "Loading model file \"%s\" (0x%02X%02X) with %i textures...\n", m_szFilename, bMajorVersion, bMinorVersion, iNumTextures );
 
     szTextureNames = new ro_string_t[iNumTextures];
 
     for(int i=0; i<iNumTextures; i++) {
-        READ(szTextureNames[i], 35 + (i * 40), 40);
-        printf("Loading model texture: \"%s\"\n", szTextureNames[i]);
+        AUTO_READ(szTextureNames[i], 40);
+        // printf("\"%s\" ", szTextureNames[i]);
     }
+    // printf("\n");
 
     m_glTextures = new GLuint[ iNumTextures ];
 
@@ -421,8 +426,6 @@ bool CResource_Model_File::LoadFromMemory( void* pData, uint32_t nSize ) {
         m_glTextures[ i ] = temp->m_iID;
         delete temp;
     }
-
-    unsigned long iOffset = 35 + (iNumTextures * 40);
 
     // now load the meshes
     // set pointer to start of mesh data

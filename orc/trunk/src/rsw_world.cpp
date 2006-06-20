@@ -26,7 +26,7 @@
 
 
 
-CResource_World_File::CResource_World_File( char* szFilename ) {
+CRSW::CRSW( char* szFilename ) {
     m_nModels = 0;
     m_nUniqueModels = 0;
     memset( &m_szMapName[ 0 ], 0, 128 );
@@ -40,70 +40,78 @@ CResource_World_File::CResource_World_File( char* szFilename ) {
         return;
 }
 
-CResource_World_File::~CResource_World_File() {}
+CRSW::~CRSW() {
+    if( m_Models != NULL )
+        delete[] m_Models;
 
-bool CResource_World_File::LoadFromMemory( void* pData, uint32_t nSize ) {
-    m_Header = ( rsw_header_t* ) pData;
-    m_Models = ( rsw_object_t* ) ( ( ( unsigned char* ) pData ) + sizeof( rsw_header_t ) );
+    if( m_RealModels != NULL )
+        delete[] m_RealModels;
+}
 
-    if ( strcmp( m_Header->id, "GRSW" ) ) {
-        memcpy( &m_szMapName[ 0 ], &m_Header->szGndFile[ 0 ], strlen( m_Header->szGndFile ) - 4 );
-        strcpy( &m_szMapName[ strlen( m_Header->szGndFile ) - 4 ], "\0" );
-        sprintf( m_szMiniMap, "data\\texture\\유저인터페이스\\map\\%s.bmp", m_szMapName );
-        printf( "Loading World File \"%s\"...\n", m_szMapName );
-    } else {
-        printf( "Error: no valid RSW format !\n" );
+bool CRSW::LoadFromMemory( void* pData, uint32_t nSize ) {
+    BEGIN_READ(0);
+    AUTO_READ(dwFileID, 4);
+
+    if( dwFileID != RSWHEADER ) { // "GRSW"
+        printf("No valid RSW header...\n");
         return false;
     }
 
+    AUTO_READ(bMajorVersion, 1);
+    AUTO_READ(bMinorVersion, 1);
+    AUTO_READ(szIniFile, 240);  // read in the header in one go
+
+    // TODO: make all types into a union ?
+    m_Models = new rsw_object_type1[object_count];
+
+    // now read in all objects
+    unsigned long objType = 1;
+    while(objType == 1) {
+        AUTO_READ(objType, 4);
+        AUTO_READ(m_Models[m_nModels++], sizeof(rsw_object_type1));
+    }
+
+    // TODO: Move to another function ?
     m_nUniqueModels = 0;
-
-    for ( int i = 0; i < m_Header->object_count; i++ ) {
-        if ( m_Models[ i ].type > 1 ) {
-            m_nModels = i;
-            break;
-        }
-
+    for(int i=0; i<m_nModels; i++) {
         m_Models[ i ].bIsUnique = true;
-
         for ( int j = 0; j < i; j++ ) {
-            if ( !strcmp( &m_Models[ j ].szFilename[ 0 ], &m_Models[ i ].szFilename[ 0 ] ) ) {
+            if ( !strcmp( m_Models[j].szFilename, m_Models[i].szFilename) ) {
                 m_Models[ i ].bIsUnique = false;
                 break;
             }
         }
-
-        if ( m_Models[ i ].bIsUnique ) {
-            // loading should be done here
+        if ( m_Models[i].bIsUnique ) {
+            // loading should be done here ?
             m_nUniqueModels++;
         }
     }
 
-    printf( "%i/%i (%i) objects are unique\n", m_nUniqueModels, m_nModels, m_Header->object_count );
-
+    printf( "Loading world file with %i objects, %i models (%i)...\n", object_count, m_nModels, m_nUniqueModels );
 
     ro_string_t *realmodelspath = new ro_string_t[ m_nUniqueModels ];
     m_RealModels = new CResource_Model_File[ m_nUniqueModels ];
 
     for ( int i = 0, k = 0; i < m_nModels; i++ ) {
         if ( m_Models[ i ].bIsUnique ) {
-            strcpy( realmodelspath[ k ], m_Models[ i ].szFilename );
-            m_RealModels[ k ].LoadFromGRF( realmodelspath[ k ] );
-            k++;
+             strcpy( realmodelspath[ k ], m_Models[ i ].szFilename );
+            m_RealModels[ k++ ].LoadFromGRF( realmodelspath[ k ] );
         }
     }
 
     for ( int i = 0; i < m_nModels; i++ ) {
-        m_Models[ i ].model = 1;
+        m_Models[ i ].iModelID = 1;
 
         for ( int num = 0; num < m_nUniqueModels; num++ ) {
             if ( !strcmp( m_Models[ i ].szFilename, realmodelspath[ num ] ) ) {
-                m_Models[ i ].model = num;
+                m_Models[ i ].iModelID = num;
                 break;
 
             }
         }
     }
+
+    printf("-------------------------------------------------------------------------------\n");
 
     return true;
 }
