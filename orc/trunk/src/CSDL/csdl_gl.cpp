@@ -181,7 +181,7 @@ void goPerspective() {
 
 
 
-int InitGL() {
+bool InitGL() {
     glClearColor ( 1.0f, 1.0f, 1.0f, 0.0f );
     glClearDepth( 1.0f );
     glEnable( GL_TEXTURE_2D );
@@ -225,7 +225,7 @@ int InitGL() {
     glFrontFace(GL_CW);
     glEnable(GL_CULL_FACE);
 
-    return TRUE;          // Initialization Went OK
+    return true;          // Initialization Went OK
 }
 
 void ReSizeGLScene( GLsizei w, GLsizei h ) {

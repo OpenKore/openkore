@@ -23,10 +23,10 @@
  */
 
 // For our version string
-#include "..\Orc.h"
+#include "../Orc.h"
 
 // Wrapper for SDL and GL
-#include "csdl\csdl.h"
+#include "csdl/csdl.h"
 
 // Basic 3D functions
 #include "3d_math.h"
@@ -67,11 +67,6 @@ public:
 };
 
 
-/*
-    SET_ENTRY_CLASS creates our class instance and calls the inherited main function,
-    which pumps the events and calls OnPreEvents, OnPaint, OnPostEvents...
-*/
-SET_ENTRY_CLASS(Orc, APPTITLE);
 Orc::Orc() : CSDL_ApplicationBase( SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_OPENGL ) {
 
     // TODO: Load a configuration file
@@ -186,6 +181,19 @@ void Orc::OnPaint( CSDL_Surface* display, double dt ) {
     }
 
 } // OnPaint
+
+
+int
+main(int argc, char *argv[]) {
+    g_pApp = new Orc();
+    if (g_pApp == NULL) {
+        printf("%s\n", APPTITLE);
+	printf("Fatal error: Constructor Orc::Orc() aborted.\n");
+	exit(EXIT_FAILURE);
+    }
+    g_pApp->SetCaption(APPTITLE);
+    return g_pApp->Main(argc, argv);
+}
 
 
 #ifdef WIN32

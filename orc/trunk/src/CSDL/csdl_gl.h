@@ -96,7 +96,7 @@ void DisplayBoundingBox(float *max, float *min, float r, float g, float b);
 void goOrtho();
 void goPerspective();
 
-int InitGL();
+bool InitGL();
 void ReSizeGLScene( GLsizei w, GLsizei h );
 
 

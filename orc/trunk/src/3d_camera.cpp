@@ -25,8 +25,7 @@
 #include "3d_math.h"
 #include "3d_camera.h"
 
-#include <SDL\sdl.h>
-#include <SDL\sdl_opengl.h>
+#include <SDL/SDL.h>
 
 
 

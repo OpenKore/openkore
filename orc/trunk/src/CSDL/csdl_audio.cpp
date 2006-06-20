@@ -176,7 +176,7 @@ bool CSDL_Music::SetPosition(double position) {
         fprintf(stderr, "Mix_SetMusicPosition: %s\n", ::Mix_GetError());
         return false;
     }
-    timestamp[0] -= (position * 1000);
+    timestamp[0] -= (Uint32) (position * 1000);
     return true;
 }
 
