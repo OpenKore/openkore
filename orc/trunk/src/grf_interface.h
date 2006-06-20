@@ -26,7 +26,7 @@
 #define GRF_INTERFACE_H
 
 #include <libgrf/grf.h>
-#include <SDL/sdl.h> // for SDL_RWops
+#include <SDL/SDL.h> // for SDL_RWops
 
 #include <string.h> // for strlen()
 #include <ctype.h> // for tolower()

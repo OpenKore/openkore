@@ -32,9 +32,7 @@
 #include <math.h>
 
 #ifdef WIN32
-#include <windows.h>
-#else
-#define NULL (void*)0
+	#include <windows.h>
 #endif
 
 #include <SDL/SDL.h>
@@ -62,17 +60,6 @@
 // Used to create a instance of a derived class with SET_ENTRY_CLASS
 class CSDL_ApplicationBase; // Forward declaration
 extern CSDL_ApplicationBase* g_pApp;
-#define SET_ENTRY_CLASS(classname, title) \
-int SDL_main( int argc, char * argv[] ) { \
-    g_pApp = new classname(); \
-    if( g_pApp == NULL ) { \
-        printf("%s\n", title); \
-        printf("Fatal error: Constructor " #classname "::" #classname "() aborted.\n"); \
-        exit(EXIT_FAILURE); \
-    } \
-    g_pApp->SetCaption( title ); \
-    return g_pApp->Main( argc, argv ); \
-} \
 
 
 class CSDL_ApplicationBase : public CSDL_EventHandler {

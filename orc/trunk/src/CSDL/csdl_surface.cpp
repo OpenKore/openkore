@@ -39,7 +39,7 @@ CSDL_SubSurface::~CSDL_SubSurface() {
 }
 int CSDL_SubSurface::Blit(int nFrame, CSDL_Surface *dst, SDL_Rect *dstrect) {
 
-    int row = (int)1+floor(nFrame / m_nSubCols);
+	int row = 1 + (int) floor(nFrame / m_nSubCols);
     int col = 1+ (nFrame % m_nSubCols);
     int x, y, w, h;
 
