@@ -16,7 +16,77 @@ prt_fild05 270 212 prt_sewb1 135 248 0 c r0
 aldebaran 223 222 xmas_fild01 78 68 0 c r1 c c n
 moc_fild12 35 303 cmd_fild08 331 319 0 c r0 n
 ayothaya 152 68 alberta 247 42 0 c r0 n
-ayo_fild01 129 197 ayo_fild02 100 100 0 c c c c c r0 c c c 
+ayo_fild01 129 197 ayo_fild02 100 100 0 c c c c c r0 c c c
+
+# Uncomment these fields if you wish to use Kapra warps
+#yuno 142 183 prontera 116 72 1800 c c c c c r0
+#yuno 142 183 izlude 94 103 1800 c c c c c r1
+#yuno 142 183 geffen 120 39 1800 c c c c c r2
+#yuno 142 183 morocc 156 47 1800 c c c c c r3
+#yuno 142 183 payon 161 58 1800 c c c c c r4
+#yuno 142 183 alberta 117 56 1800 c c c c c r5
+#yuno 142 183 comodo 209 143 1800 c c c c c r6
+#yuno 152 187 aldebaran 168 112 1200 c r2 c r0
+#aldebaran 143 119 geffen 120 39 2300 c r2 c r0
+#aldebaran 143 119 yuno 158 125 1200 c r2 c r1
+#aldebaran 143 119 izude 94 103 1800 c r2 c r2
+#aldebaran 143 119 mjolnir_02 99 351 1700 c r2 c r3
+#morocc 156 97 prontera 116 72 1200 c r2 c r0
+#morocc 156 97 payon 161 58 1200 c r2 c r1
+#morocc 156 97 alberta 117 56 1800 c r2 c r2
+#morocc 156 97 comodo 209 143 1800 c r2 c r3
+#morocc 156 97 cmd_fild07 127 134 1200 c r2 c r4
+#morocc 160 258 prontera 116 72 1200 c r2 c r0
+#morocc 160 258 payon 161 58 1200 c r2 c r1
+#morocc 160 258 alberta 117 56 1800 c r2 c r2
+#morocc 160 258 comodo 209 143 1800 c r2 c r3
+#morocc 160 258 cmd_fild07 127 134 1200 c r2 c r4
+#cmd_fild07 136 134 morocc 156 47 1200 c c r2 c r0
+#cmd_fild07 136 134 comodo 209 143 1200 c c r2 c r1
+#comodo 195 150 morocc 156 47 1800 c c r2 c r0
+#comodo 195 150 cmd_fild07 127 134 1200 c c r2 c r1
+#comodo 195 150 umbala 100 154 1800 c c r2 c r2
+#umbala 87 160 comodo 209 143 1800 c r2 c r0
+#prontera 146 89 izlude 94 103 600 c r2 c r0
+#prontera 146 89 geffen 120 39 1200 c r2 c r1
+#prontera 146 89 payon 161 58 1200 c r2 c r2
+#prontera 146 89 morocc 156 47 1200 c r2 c r3
+#prontera 146 89 gef_fild10 52 326 1700 c r2 c r4
+#prontera 146 89 alberta 117 56 1800 c r2 c r5
+#prontera 151 29 izlude 94 103 600 c r2 c r0
+#prontera 151 29 geffen 120 39 1200 c r2 c r1
+#prontera 151 29 payon 161 58 1200 c r2 c r2
+#prontera 151 29 morocc 156 47 1200 c r2 c r3
+#prontera 151 29 gef_fild10 52 326 1700 c r2 c r4
+#prontera 151 29 alberta 117 56 1800 c r2 c r5
+#prontera 282 200 izlude 94 103 600 c r2 c r0
+#prontera 282 200 geffen 120 39 1200 c r2 c r1
+#prontera 282 200 payon 161 58 1200 c r2 c r2
+#prontera 282 200 morocc 156 47 1200 c r2 c r3
+#prontera 282 200 gef_fild10 52 326 1700 c r2 c r4
+#prontera 282 200 alberta 117 56 1800 c r2 c r5
+#prontera 29 207 izlude 94 103 600 c r2 c r0
+#prontera 29 207 geffen 120 39 1200 c r2 c r1
+#prontera 29 207 payon 161 58 1200 c r2 c r2
+#prontera 29 207 morocc 156 47 1200 c r2 c r3
+#prontera 29 207 gef_fild10 52 326 1700 c r2 c r4
+#prontera 29 207 alberta 117 56 1800 c r2 c r5
+#payon 175 226 prontera 116 72 1200 c r2 c r0
+#payon 175 226 alberta 117 56 1200 c r2 c r1
+#payon 175 226 morocc 156 47 1200 c r2 c r2
+#payon 181 104 prontera 116 72 1200 c r2 c r0
+#payon 181 104 alberta 117 56 1200 c r2 c r1
+#payon 181 104 morocc 156 47 1200 c r2 c r2
+#alberta 113 60 payon 161 58 1200 c r2 c r0
+#alberta 113 60 morocc 156 47 1800 c r2 c r1
+#alberta 113 60 prontera 116 72 1800 c r2 c r2
+#alberta 28 229 payon 161 58 1200 c r2 c r0
+#alberta 28 229 morocc 156 47 1800 c r2 c r1
+#alberta 28 229 prontera 116 72 1800 c r2 c r2
+#izlude 134 88 geffen 120 39 1200 c r2 c r0
+#izlude 134 88 payon 161 58 1200 c r2 c r1
+#izlude 134 88 morocc 156 47 1200 c r2 c r2
+#izlude 134 88 aldebaran 168 112 1800 c r2 c r3
 
 alb_ship 26 166 alberta 170 170
 alb_ship 37 174 alb_ship 68 99
@@ -64,6 +134,7 @@ alde_dun03 12 267 alde_dun02 279 250
 alde_dun03 191 31 c_tower3 212 159
 alde_dun03 276 48 c_tower1 235 226
 alde_dun03 277 183 c_tower2 24 24
+alde_dun03 264 16 alde_dun04 78 268 0 c r2 c
 aldeba_in 24 224 aldebaran 51 218
 aldeba_in 27 34 aldebaran 72 197
 aldeba_in 27 71 aldeba_in 27 102
@@ -947,6 +1018,7 @@ moc_prydb1 142 115 moc_prydb1 111 115
 moc_ruins 54 161 moc_pryd01 195 9
 moc_ruins 71 16 moc_fild19 71 170
 moc_ruins 159 37 morocc 25 294
+monk_test 329 61 job_monk 226 175 0 c c r0 c
 morocc 24 164 moc_fild19 169 107
 morocc 25 294 moc_ruins 159 37
 morocc 46 46 morocc_in 68 75
@@ -1479,6 +1551,7 @@ prt_maze03 84 96 prt_maze03 191 54
 prt_maze03 97 44 prt_maze03 140 71
 prt_maze03 98 155 prt_maze03 23 128
 prt_monk 22 248 prt_fild03 371 255
+prt_monk 192 172 monk_test 329 50
 prt_sewb1 135 248 prt_fild05 270 212
 prt_sewb1 188 247 prt_sewb2 19 12
 prt_sewb2 19 12 prt_sewb1 188 247
