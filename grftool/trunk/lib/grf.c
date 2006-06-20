@@ -1718,7 +1718,7 @@ grf_index_get (Grf *grf, uint32_t index, uint32_t *size, GrfError *error)
 		 *	of just returning "<directory>"
 		 */
 		*size = 12;
-		return "<directory>";
+		return (void *) "<directory>";
 	}
 
 	/* Return NULL if there is no data */
@@ -1737,7 +1737,8 @@ grf_index_get (Grf *grf, uint32_t index, uint32_t *size, GrfError *error)
 	}
 
 	/* Retrieve the unencrypted block */
-	if ((zbuf = grf_index_get_z(grf, index, &zsiz, &rsiz, error))==NULL) {
+	zbuf = (char *) grf_index_get_z(grf, index, &zsiz, &rsiz, error);
+	if (zbuf == NULL) {
 		return NULL;
 	}
 
@@ -2247,17 +2248,18 @@ grf_index_replace (Grf *grf, uint32_t index, const void *data, uint32_t len, uin
 	}
 
 	/* Check the index */
-	if (index>=grf->nfiles) {
+	if (index >= grf->nfiles) {
 		GRF_SETERR(error,GE_INDEX,grf_index_replace);
 		return 0;
 	}
 
-	gf=&(grf->files[index]);
+	gf = &(grf->files[index]);
 
 	/* Make sure the data is longer than 0 bytes */
-	if (len>0) {
+	if (len > 0) {
 		/* Reallocate the memory */
-		if ((grf->files[index].data=(void*)realloc(grf->files[index].data,len))==NULL) {
+		grf->files[index].data = (char *) realloc(grf->files[index].data, len);
+		if (grf->files[index].data == NULL) {
 			GRF_SETERR(error,GE_ERRNO,realloc);
 			return 0;
 		}
