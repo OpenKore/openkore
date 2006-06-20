@@ -55,9 +55,10 @@ public:
     CFrustum*   m_pFrustum;
 
     CSDL_Music* m_pBGM;
+    CRSW*       m_pWorld;
+    GND*        m_pGnd;
+
     // CSDL_GL_Texture* bgi_temp;
-    CResource_World_File* m_pWorld;
-    GND* m_pGnd;
 
     virtual void OnPaint( CSDL_Surface* display, double dt );
     virtual void OnKeypress( SDL_KeyboardEvent key, SDLMod mod ) {
@@ -69,27 +70,32 @@ public:
 
 Orc::Orc() : CSDL_ApplicationBase( SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_OPENGL ) {
 
-    // TODO: Load a configuration file
-    // TODO: Use resnametable.txt in grf_interface
-    // TODO: automatically search for data.grf or should we use a .INI ?
-    char szRagnarokPath[] = "c:/programme/funro";
-    char szTmpPath[256];
-    sprintf(szTmpPath, "%s/data.grf", szRagnarokPath);
-    g_pGrfInterface = new CGRF_Interface( szTmpPath );
+    // Load settings from orc.ini (TODO: make portable)
+    char szRagnarokPath[MAX_PATH];
+    char szTempPath[MAX_PATH];
+    char szDefaultMap[64];
+
+#ifdef WIN32
+    GetPrivateProfileString("data", "folder", "c:/ragnarokonline", szRagnarokPath, MAX_PATH, ".\\orc.ini");
+    GetPrivateProfileString("world", "map", "newzone01", szDefaultMap, 64, ".\\orc.ini");
+#endif
+
+    sprintf(szTempPath, "%s/data.grf", szRagnarokPath);
+    g_pGrfInterface = new CGRF_Interface( szTempPath );
     if( g_pGrfInterface == NULL) {
         exit(0);
     }
+    // TODO: Use resnametable.txt in grf_interface
+    sprintf(szTempPath, "%s.rsw", szDefaultMap);
 
-    m_pWorld = new CResource_World_File( "prontera.rsw" );
-    m_pGnd = new GND(m_pWorld->m_Header->szGndFile, m_pWorld->m_Header->water_type);
+    m_pWorld = new CRSW( szTempPath );
+    m_pGnd = new GND(m_pWorld->szGndFile, m_pWorld->water_type);
 
-//    m_loginBkgnd = new CSDL_Surface(g_pGrfInterface->Get("data\\texture\\유저인터페이스\\bgi_temp.bmp"));
 //    bgi_temp = new CSDL_GL_Texture("유저인터페이스\\bgi_temp.bmp");
-//    m_loginBkgnd = new CSDL_Surface(g_pGrfInterface->GetTexture(world->m_RealModels[1].m_TextureNames[1].szFilename));
-//    GLuint m_loginBkgndID = ::SDL_GL_LoadTexture(m_loginBkgnd->surface, &m_loginBkgndID_rc[0]);
 
-    sprintf(szTmpPath, "%s/bgm/30.mp3", szRagnarokPath);
-    m_pBGM = new CSDL_Music(szTmpPath);
+
+    sprintf(szTempPath, "%s/bgm/30.mp3", szRagnarokPath);
+    m_pBGM = new CSDL_Music(szTempPath);
     m_pBGM->Play(-1);
 
     m_pCamera = new CCamera();
@@ -155,7 +161,7 @@ void Orc::OnPaint( CSDL_Surface* display, double dt ) {
 
     // TODO: render landscape
     m_pGnd->Display(m_pFrustum);
-    m_pGnd->DisplayWater(0, m_pWorld->m_Header->water_phase, m_pWorld->m_Header->water_height, m_pFrustum);
+    m_pGnd->DisplayWater(0, m_pWorld->water_phase, m_pWorld->water_height, m_pFrustum);
 
     goPerspective();
     m_pFrustum->CalculateFrustum();
@@ -166,8 +172,8 @@ void Orc::OnPaint( CSDL_Surface* display, double dt ) {
 
     // render the world objects
     for ( int i = 0; i < m_pWorld->m_nModels; i++ ) {
-        rsw_object_t* tmp = &m_pWorld->m_Models[ i ];
-        CResource_Model_File* tmp2 = &m_pWorld->m_RealModels[ m_pWorld->m_Models[ i ].model ];
+        rsw_object_type1* tmp = &m_pWorld->m_Models[ i ];
+        CResource_Model_File* tmp2 = &m_pWorld->m_RealModels[ m_pWorld->m_Models[ i ].iModelID ];
 
         if( m_pFrustum->BoxInFrustum(
                     tmp->position.x,
@@ -176,20 +182,19 @@ void Orc::OnPaint( CSDL_Surface* display, double dt ) {
                     tmp2->box.range[0] * tmp->position.sx,
                     tmp2->box.range[1] * tmp->position.sy,
                     tmp2->box.range[2] * tmp->position.sz) ) {
-            m_pWorld->m_RealModels[ m_pWorld->m_Models[ i ].model ].Render( m_pWorld->m_Models[ i ].position );
+            m_pWorld->m_RealModels[ m_pWorld->m_Models[ i ].iModelID ].Render( m_pWorld->m_Models[ i ].position );
         }
     }
 
 } // OnPaint
 
 
-int
-main(int argc, char *argv[]) {
+int main(int argc, char *argv[]) {
     g_pApp = new Orc();
     if (g_pApp == NULL) {
-        printf("%s\n", APPTITLE);
-	printf("Fatal error: Constructor Orc::Orc() aborted.\n");
-	exit(EXIT_FAILURE);
+		printf("%s\n", APPTITLE);
+		printf("Fatal error: Constructor Orc::Orc() aborted.\n");
+		exit(EXIT_FAILURE);
     }
     g_pApp->SetCaption(APPTITLE);
     return g_pApp->Main(argc, argv);
