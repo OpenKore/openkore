@@ -24,37 +24,54 @@
 
 #include "3d_math.h"
 #include "3d_frustum.h"
-
 #include "ro_types.h"
-
 #include "rsm_model.h"
 
-class CResource_World_File {
+class CRSW {
 public:
-    CResource_World_File( char* szFilename );
-    virtual ~CResource_World_File();
+    CRSW( char* szFilename );
+    virtual ~CRSW();
 
+    // rsw file structure
+    struct {
+        // field
+        unsigned long dwFileID;
+        unsigned char bMajorVersion;
+        unsigned char bMinorVersion;
+        char szIniFile[ FIXEDSTRINGLEN ]; // Only in Alpha
+        char szGndFile[ FIXEDSTRINGLEN ];
+        char szGatFile[ FIXEDSTRINGLEN ];
+        char szSrcFile[ FIXEDSTRINGLEN ]; // Only in Alpha
+
+        // water properties
+        float   water_height;
+        Uint32  water_type;
+        float   water_amplitude;
+        float   water_phase;
+        float   water_curve_level;
+        Uint32  water_cycles;
+
+        // light properties
+        float ambient_color[ 3 ];
+        float diffuse_color[ 3 ];
+        float shadow_color[ 3 ];
+        float alpha_value; // map transparency, huh ??
+
+        Uint8 _unknown1[ 12 ];
+        Uint32 object_count;
+    }; // rsw file structure
+
+//private:
     bool LoadFromMemory( void* pData, uint32_t nSize );
-
-//        int getWidth() { return(ground.sizeX); }
-//        int getHeight() { return(ground.sizeY); }
-    int GetNumModels() {
-        return m_nModels;
-    };
-
-    int GetNumUniqueModels() {
-        return m_nUniqueModels;
-    };
 
     char m_szMapName[ 128 ];
     char m_szMiniMap[ 128 ];
 
-//private:
-    rsw_object_t* m_Models;
-    rsw_header_t* m_Header;
+    rsw_object_type1* m_Models;
+
     Uint16 m_nModels;
     Uint16 m_nUniqueModels;
 
     CResource_Model_File* m_RealModels;
-//        GND ground;
+
 };

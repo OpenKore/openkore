@@ -84,6 +84,16 @@ public:
     CResource_Model_File();
     virtual ~CResource_Model_File();
 
+    // rsm file structure
+    struct {
+        unsigned long dwFileID;
+        unsigned char bMajorVersion;
+        unsigned char bMinorVersion;
+        unsigned char uUnknown1[ 25 ]; // TODO: identify
+        unsigned long iNumTextures;
+        ro_string_t* szTextureNames; // 40 * iNumTextures
+    }; // rsm file structure
+
     void LoadFromGRF( char* szFilename );
     bool LoadFromMemory( void* pData, uint32_t nSize );
 
@@ -91,14 +101,7 @@ public:
     void Render( ro_position_t pos );
     void DisplayMesh( bounding_box_t *b, int n, ro_transf_t *ptransf = NULL );
 
-    // rsm file structure
-    unsigned long dwFileID;
-    unsigned char bMajorVersion;
-    unsigned char bMinorVersion;
-    unsigned char uUnknown1[ 25 ]; // TODO: identify
-    unsigned long iNumTextures;
-
-    ro_string_t* szTextureNames; // 40 * iNumTextures
+    char m_szFilename[MAX_PATH];
 
     CRSM_Mesh* m_Mesh[ 8 ];
     GLuint* m_glTextures;

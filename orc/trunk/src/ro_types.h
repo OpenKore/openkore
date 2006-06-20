@@ -37,10 +37,15 @@
 
 #define READ(dst, offset, len) MEMCPY(dst, pData, nSize, offset, len);
 
+#define BEGIN_READ(n)       unsigned long iOffset = n;
+#define AUTO_READ(d, l)     READ(d, iOffset, l) \
+                            iOffset += l; \
+
+
 // TODO: consider byte order
 #define GNDHEADER   0x4E475247
 #define RSMHEADER   0x4D535247
-
+#define RSWHEADER   0x57535247
 
 
 #ifdef WIN32
@@ -67,58 +72,17 @@ typedef struct {
     float sx;
     float sy;
     float sz;
-}
-ro_position_t;
-
-
-
-typedef struct {
-    Uint16 m_ModelID;
-    ro_string_t m_FilePath;
-    Uint8 unknown1[ 120 ];
-    Uint8 unknown2[ 56 ];
-    ro_position_t position;
-}
-ro_model_t;
-
-typedef struct {
-    char id[ 4 ]; // GRSW
-    unsigned char major_version;
-    unsigned char minor_version;
-    char szIniFile[ FIXEDSTRINGLEN ]; // Only in Alpha
-    char szGndFile[ FIXEDSTRINGLEN ];
-    char szGatFile[ FIXEDSTRINGLEN ];
-    char szSrcFile[ FIXEDSTRINGLEN ]; // Only in Alpha
-
-    // water properties
-    float water_height;
-    Uint32 water_type;
-    float water_amplitude;
-    float water_phase;
-    float water_curve_level;
-    Uint32 water_cycles;
-
-    // light properties
-    float ambient_color[ 3 ];
-    float diffuse_color[ 3 ];
-    float shadow_color[ 3 ];
-
-    float alpha_value; // map transparency, huh ??
-
-    Uint8 _unknown1[ 12 ];
-    Uint32 object_count;
-}
-rsw_header_t;
+} ro_position_t;
 
 
 typedef struct {
-    Uint32 type;
+//    Uint32 type;
     char szName[ FIXEDSTRINGLEN ]; // Unique name
 
-//    Uint32 unknown1; // As long as nobody tells me its terribly wrong i use this for storing a boolean...
-    Uint8 bIsUnique;
-    Uint8 model; // blerks
-    Uint8 unk[ 2 ];
+    // Uint32 unknown1; // TODO: identify
+    // As long as i don't know, i use this for my purpose... :P
+    Uint16 iModelID;
+    Uint16 bIsUnique;
 
     float unknown2;
     float unknown3;
@@ -131,24 +95,8 @@ typedef struct {
     char szSound[ FIXEDSTRINGLEN ]; // Sound associated
     // char szUnknown[40];
 
-    /*    float pos_x;
-        float pos_y;
-        float pos_z;
-
-        float rot_x;
-        float rot_y;
-        float rot_z;
-
-        float scale_x;
-        float scale_y;
-        float scale_z;*/
-
     ro_position_t position;
-
-}
-rsw_object_t;
-
-
+} rsw_object_type1;
 
 
 typedef struct {
