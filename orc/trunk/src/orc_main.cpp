@@ -70,7 +70,7 @@ public:
 
 Orc::Orc() : CSDL_ApplicationBase( SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_OPENGL ) {
 
-    // Load settings from orc.ini (TODO: make portable)
+    // Load settings from orc.ini (TODO: make it portable)
     char szRagnarokPath[MAX_PATH];
     char szTempPath[MAX_PATH];
     char szDefaultMap[64];
@@ -78,6 +78,9 @@ Orc::Orc() : CSDL_ApplicationBase( SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_OPENGL 
 #ifdef WIN32
     GetPrivateProfileString("data", "folder", "c:/ragnarokonline", szRagnarokPath, MAX_PATH, ".\\orc.ini");
     GetPrivateProfileString("world", "map", "newzone01", szDefaultMap, 64, ".\\orc.ini");
+#else
+    strcpy(szRagnarokPath, "./");
+    strcpy(szDefaultMap, "newzone01");
 #endif
 
     sprintf(szTempPath, "%s/data.grf", szRagnarokPath);

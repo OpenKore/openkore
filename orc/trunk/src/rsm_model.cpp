@@ -37,62 +37,60 @@ CRSM_Mesh::CRSM_Mesh( GLuint* glTextures, bool* glTextureIsAlpha ) {
     m_glTextureIsAlpha = glTextureIsAlpha;
 }
 
-CRSM_Mesh::~CRSM_Mesh() {}
+CRSM_Mesh::~CRSM_Mesh() {
+    if( m_TexIDs != NULL)
+        delete[] m_TexIDs;
+    if( m_Vertices != NULL)
+        delete[] m_Vertices;
+    if( m_TexVertices != NULL)
+        delete[] m_TexVertices;
+    if( m_Faces != NULL)
+        delete[] m_Faces;
+    if( m_Frames != NULL)
+        delete[] m_Frames;
+}
 
 int CRSM_Mesh::LoadFromMemory( void* pData, uint32_t nSize, bool bIsParent ) {
-    unsigned long iOffset = 0;
+    BEGIN_READ(0);
 
-    READ(szMeshName, iOffset, 40);
-    iOffset += 40;
-
-    if ( bIsParent == true ) {
-        READ(iUnknown1, iOffset, 4);
-        iOffset += 4;
-    }
-
-    READ(szParentName, iOffset, 40);
-    iOffset += 40;
+    AUTO_READ(szMeshName, 40);
 
     if ( bIsParent == true ) {
-        READ(fUnknown2, iOffset, 40);
-        iOffset += 40;
+        AUTO_READ(iUnknown1, 4);
     }
 
-    READ(iNumTextures, iOffset, 4);
-    iOffset += 4;
+    AUTO_READ(szParentName, 40);
+
+    if ( bIsParent == true ) {
+        AUTO_READ(fUnknown2, 40);
+    }
+
+    AUTO_READ(iNumTextures, 4);
+
     m_TexIDs = new unsigned int[iNumTextures];
-    READ(m_TexIDs, iOffset, 4 * iNumTextures);
-    iOffset += 4 * iNumTextures;
-    READ(m_Transf, iOffset, sizeof(ro_transf_t));
-    iOffset += sizeof(ro_transf_t);
+    AUTO_READ(m_TexIDs[0], 4 * iNumTextures);
 
-    READ(m_nVertices, iOffset, 4);
-    iOffset += 4;
+    AUTO_READ(m_Transf, sizeof(ro_transf_t));
+
+    AUTO_READ(m_nVertices, 4);
     m_Vertices = new ro_vertex_t[m_nVertices];
-    READ(m_Vertices[0], iOffset, sizeof(ro_vertex_t) * m_nVertices);
-    iOffset += sizeof(ro_vertex_t) * m_nVertices;
+    AUTO_READ(m_Vertices[0], sizeof(ro_vertex_t) * m_nVertices);
 
-    READ(m_nTexVertices, iOffset, 4);
-    iOffset += 4;
+    AUTO_READ(m_nTexVertices, 4);
     m_TexVertices = new ro_vertex_t[m_nTexVertices];
-    READ(m_TexVertices[0], iOffset, sizeof(ro_vertex_t) * m_nTexVertices);
-    iOffset += sizeof(ro_vertex_t) * m_nTexVertices;
+    AUTO_READ(m_TexVertices[0], sizeof(ro_vertex_t) * m_nTexVertices);
 
-    READ(m_nFaces, iOffset, 4);
-    iOffset += 4;
+    AUTO_READ(m_nFaces, 4);
     m_Faces = new ro_face_t[m_nFaces];
-    READ(m_Faces[0], iOffset, sizeof(ro_face_t) * m_nFaces);
-    iOffset += sizeof(ro_face_t) * m_nFaces;
+    AUTO_READ(m_Faces[0], sizeof(ro_face_t) * m_nFaces);
 
     if( iOffset < nSize) {
-        READ(m_nFrames, iOffset, 4);
-        iOffset += 4;
+        AUTO_READ(m_nFrames, 4);
         m_Frames = new ro_frame_t[m_nFrames];
-        READ(m_Frames[0], iOffset, sizeof(ro_frame_t) * m_nFrames);
-        iOffset += sizeof(ro_frame_t) * m_nFrames;
+        AUTO_READ(m_Frames[0], sizeof(ro_frame_t) * m_nFrames);
     }
 
-    printf( "Loading mesh \"%s\" with %i textures, %i vertices and %i texture vertices on %i faces...\n", szMeshName, iNumTextures, m_nVertices, m_nTexVertices, m_nFaces );
+    // printf( "Loading mesh \"%s\" with %i textures, %i vertices and %i texture vertices on %i faces...\n", szMeshName, iNumTextures, m_nVertices, m_nTexVertices, m_nFaces );
 
     return iOffset;
 } // LoadFromMemory
@@ -101,65 +99,83 @@ int CRSM_Mesh::LoadFromMemory( void* pData, uint32_t nSize, bool bIsParent ) {
 
 void CRSM_Mesh::BoundingBox( ro_transf_t *ptransf ) {
 
+    // are we parent or child mesh ?
     int main = ( ptransf == NULL );
-    GLfloat Rot[ 16 ];
-    int i;
-    int j;
-    //int k;
-    //GLfloat pmax[3], pmin[3];
     ro_transf_t transf = m_Transf;
 
-    Rot[ 0 ] = transf.todo[ 0 ];
-    Rot[ 1 ] = transf.todo[ 1 ];
-    Rot[ 2 ] = transf.todo[ 2 ];
-    Rot[ 3 ] = 0.0;
+    float matRotation[16];
 
-    Rot[ 4 ] = transf.todo[ 3 ];
-    Rot[ 5 ] = transf.todo[ 4 ];
-    Rot[ 6 ] = transf.todo[ 5 ];
-    Rot[ 7 ] = 0.0;
+    if(!main && !only) transf = *ptransf;
 
-    Rot[ 8 ] = transf.todo[ 6 ];
-    Rot[ 9 ] = transf.todo[ 7 ];
-    Rot[ 10 ] = transf.todo[ 8 ];
-    Rot[ 11 ] = 0.0;
+    matRotation[ 0 ] = transf.matrix[0][0];
+    matRotation[ 1 ] = transf.matrix[0][1];
+    matRotation[ 2 ] = transf.matrix[0][2];
+    matRotation[ 3 ] = 0.0;
 
-    Rot[ 12 ] = 0.0;
-    Rot[ 13 ] = 0.0;
-    Rot[ 14 ] = 0.0;
-    Rot[ 15 ] = 1.0;
+    matRotation[ 4 ] = transf.matrix[1][0];
+    matRotation[ 5 ] = transf.matrix[1][1];
+    matRotation[ 6 ] = transf.matrix[1][2];
+    matRotation[ 7 ] = 0.0;
+
+    matRotation[ 8 ] = transf.matrix[2][0];
+    matRotation[ 9 ] = transf.matrix[2][1];
+    matRotation[ 10 ] = transf.matrix[2][2];
+    matRotation[ 11 ] = 0.0;
+
+    matRotation[ 12 ] = 0.0;
+    matRotation[ 13 ] = 0.0;
+    matRotation[ 14 ] = 0.0;
+    matRotation[ 15 ] = 1.0;
 
     max[ 0 ] = max[ 1 ] = max[ 2 ] = -999999.0;
     min[ 0 ] = min[ 1 ] = min[ 2 ] = 999999.0;
 
+    // calculate our bounding box
+    CVector3 relative;
 
-    for ( i = 0; i < m_nVertices; i++ ) {
-        GLfloat vout[ 3 ]; // vtemp[3]
-        MatrixMultVect( Rot, m_Vertices[ i ], vout );
+    for(int i=0; i < m_nVertices; i++ ) {
+        // float vout[ 3 ];
+        //MatrixMultVect( Rot, m_Vertices[ i ], vout );
+        relative = MatrixMultVect3f( matRotation, m_Vertices[i][0], m_Vertices[i][1], m_Vertices[i][2] );
 
-        for ( j = 0; j < 3; j++ ) {
-            GLfloat f;
-
+/*
+        for(int j=0; j<3; j++ ) {
+            float f;
             if ( !only )
                 f = vout[ j ] + transf.todo[ 12 + j ] + transf.todo[ 9 + j ];
             else
                 f = vout[ j ];
 
             min[ j ] = MIN( f, min[ j ] );
-
             max[ j ] = MAX( f, max[ j ] );
         }
+
+        CVector3 absolute = relative + transf.position + transf.childpos;
+*/
+        CVector3 absolute;
+        absolute.x = relative.x + transf.position.x + transf.childpos.x;
+        absolute.y = relative.y + transf.position.y + transf.childpos.y;
+        absolute.z = relative.z + transf.position.z + transf.childpos.z;
+
+        min[0] = MIN( absolute.x, min[0] );
+        max[0] = MAX( absolute.x, max[0] );
+        min[1] = MIN( absolute.y, min[1] );
+        max[1] = MAX( absolute.y, max[1] );
+        min[2] = MIN( absolute.z, min[2] );
+        max[2] = MAX( absolute.z, max[2] );
+
     }
 
-    for ( j = 0; j < 3; j++ )
-        range[ j ] = ( max[ j ] + min[ j ] ) / 2.0;
+    for(int j=0; j<3; j++ ) {
+        range[ j ] = ( max[ j ] - min[ j ] ) / 2.0;
+    }
 }
 
 
 void CRSM_Mesh::Render( bounding_box_t *box, ro_transf_t *ptransf ) {
 
-    GLfloat Rot[ 16 ];
-    GLfloat Ori[ 16 ];
+    float matRotation[16];
+    float matOrientation[16];
 
     int main = ( ptransf == NULL );
 
@@ -168,25 +184,25 @@ void CRSM_Mesh::Render( bounding_box_t *box, ro_transf_t *ptransf ) {
 
     ro_transf_t transf = m_Transf;
 
-    Rot[ 0 ] = transf.todo[ 0 ];
-    Rot[ 1 ] = transf.todo[ 1 ];
-    Rot[ 2 ] = transf.todo[ 2 ];
-    Rot[ 3 ] = 0.0;
+    matRotation[ 0 ] = transf.matrix[0][0];
+    matRotation[ 1 ] = transf.matrix[0][1];
+    matRotation[ 2 ] = transf.matrix[0][2];
+    matRotation[ 3 ] = 0.0;
 
-    Rot[ 4 ] = transf.todo[ 3 ];
-    Rot[ 5 ] = transf.todo[ 4 ];
-    Rot[ 6 ] = transf.todo[ 5 ];
-    Rot[ 7 ] = 0.0;
+    matRotation[ 4 ] = transf.matrix[1][0];
+    matRotation[ 5 ] = transf.matrix[1][1];
+    matRotation[ 6 ] = transf.matrix[1][2];
+    matRotation[ 7 ] = 0.0;
 
-    Rot[ 8 ] = transf.todo[ 6 ];
-    Rot[ 9 ] = transf.todo[ 7 ];
-    Rot[ 10 ] = transf.todo[ 8 ];
-    Rot[ 11 ] = 0.0;
+    matRotation[ 8 ] = transf.matrix[2][0];
+    matRotation[ 9 ] = transf.matrix[2][1];
+    matRotation[ 10 ] = transf.matrix[2][2];
+    matRotation[ 11 ] = 0.0;
 
-    Rot[ 12 ] = 0.0;
-    Rot[ 13 ] = 0.0;
-    Rot[ 14 ] = 0.0;
-    Rot[ 15 ] = 1.0;
+    matRotation[ 12 ] = 0.0;
+    matRotation[ 13 ] = 0.0;
+    matRotation[ 14 ] = 0.0;
+    matRotation[ 15 ] = 1.0;
 
     if ( m_nFrames ) {
         int current = 0;
@@ -213,60 +229,41 @@ void CRSM_Mesh::Render( bounding_box_t *box, ro_transf_t *ptransf ) {
 
 
         x = m_Frames[ current ].orientation[ 0 ] * ( 1 - t ) + t * m_Frames[ next ].orientation[ 0 ];
-
         y = m_Frames[ current ].orientation[ 1 ] * ( 1 - t ) + t * m_Frames[ next ].orientation[ 1 ];
-
         z = m_Frames[ current ].orientation[ 2 ] * ( 1 - t ) + t * m_Frames[ next ].orientation[ 2 ];
-
         w = m_Frames[ current ].orientation[ 3 ] * ( 1 - t ) + t * m_Frames[ next ].orientation[ 3 ];
 
         GLfloat norm;
 
         norm = sqrtf( x * x + y * y + z * z + w * w );
-
         x /= norm;
-
         y /= norm;
-
         z /= norm;
-
         w /= norm;
 
         // First row
-        Ori[ 0 ] = 1.0f - 2.0f * ( y * y + z * z );
-
-        Ori[ 1 ] = 2.0f * ( x * y + z * w );
-
-        Ori[ 2 ] = 2.0f * ( x * z - y * w );
-
-        Ori[ 3 ] = 0.0f;
+        matOrientation[ 0 ] = 1.0f - 2.0f * ( y * y + z * z );
+        matOrientation[ 1 ] = 2.0f * ( x * y + z * w );
+        matOrientation[ 2 ] = 2.0f * ( x * z - y * w );
+        matOrientation[ 3 ] = 0.0f;
 
         // Second row
-        Ori[ 4 ] = 2.0f * ( x * y - z * w );
-
-        Ori[ 5 ] = 1.0f - 2.0f * ( x * x + z * z );
-
-        Ori[ 6 ] = 2.0f * ( z * y + x * w );
-
-        Ori[ 7 ] = 0.0f;
+        matOrientation[ 4 ] = 2.0f * ( x * y - z * w );
+        matOrientation[ 5 ] = 1.0f - 2.0f * ( x * x + z * z );
+        matOrientation[ 6 ] = 2.0f * ( z * y + x * w );
+        matOrientation[ 7 ] = 0.0f;
 
         // Third row
-        Ori[ 8 ] = 2.0f * ( x * z + y * w );
-
-        Ori[ 9 ] = 2.0f * ( y * z - x * w );
-
-        Ori[ 10 ] = 1.0f - 2.0f * ( x * x + y * y );
-
-        Ori[ 11 ] = 0.0f;
+        matOrientation[ 8 ] = 2.0f * ( x * z + y * w );
+        matOrientation[ 9 ] = 2.0f * ( y * z - x * w );
+        matOrientation[ 10 ] = 1.0f - 2.0f * ( x * x + y * y );
+        matOrientation[ 11 ] = 0.0f;
 
         // Fourth row
-        Ori[ 12 ] = 0;
-
-        Ori[ 13 ] = 0;
-
-        Ori[ 14 ] = 0;
-
-        Ori[ 15 ] = 1.0f;
+        matOrientation[ 12 ] = 0;
+        matOrientation[ 13 ] = 0;
+        matOrientation[ 14 ] = 0;
+        matOrientation[ 15 ] = 1.0f;
 
         nstep += 100;
 
@@ -274,7 +271,8 @@ void CRSM_Mesh::Render( bounding_box_t *box, ro_transf_t *ptransf ) {
             nstep = 0;
     }
 
-    glScalef ( transf.todo[ 19 ], transf.todo[ 20 ], transf.todo[ 21 ] );
+    // apply mesh scaling
+    glScalef ( transf.scale.x, transf.scale.y, transf.scale.z );
 
     if ( main )
         if ( !only ) {
@@ -284,13 +282,13 @@ void CRSM_Mesh::Render( bounding_box_t *box, ro_transf_t *ptransf ) {
         }
 
     if ( !main )
-        glTranslatef( transf.todo[ 12 ], transf.todo[ 13 ], transf.todo[ 14 ] );
+        glTranslatef( transf.childpos.x, transf.childpos.y, transf.childpos.z );
 
     if ( !m_nFrames )
-        glRotatef( transf.todo[ 15 ] * 180.0 / 3.14159,
-                   transf.todo[ 16 ], transf.todo[ 17 ], transf.todo[ 18 ] );
+        glRotatef( transf.angle * 180.0 / 3.14159,
+                   transf.rotation.x, transf.rotation.y, transf.rotation.z );
     else
-        glMultMatrixf( Ori );
+        glMultMatrixf( matOrientation );
 
 
     glPushMatrix();
@@ -299,9 +297,10 @@ void CRSM_Mesh::Render( bounding_box_t *box, ro_transf_t *ptransf ) {
         glTranslatef( -box->range[ 0 ], -box->range[ 1 ], -box->range[ 2 ] );
 
     if ( !main || !only )
-        glTranslatef( transf.todo[ 9 ], transf.todo[ 10 ], transf.todo[ 11 ] );
+        glTranslatef( transf.position.x, transf.position.y, transf.position.z );
 
-    glMultMatrixf( Rot );
+
+    glMultMatrixf( matRotation );
 
     GLfloat Mat[ 16 ];
 
@@ -368,7 +367,8 @@ void CRSM_Mesh::Render( bounding_box_t *box, ro_transf_t *ptransf ) {
         */
     }
 
-    DisplayBoundingBox(&max[0], &min[0], 1, 0, 0);
+    BoundingBox();
+    DisplayBoundingBox(&max[0], &min[0], 0, 0, 1);
 }
 
 
@@ -415,7 +415,7 @@ bool CResource_Model_File::LoadFromMemory( void* pData, uint32_t nSize ) {
 
     for(int i=0; i<iNumTextures; i++) {
         AUTO_READ(szTextureNames[i], 40);
-        // printf("\"%s\" ", szTextureNames[i]);
+        printf("\"%s\"\n", szTextureNames[i]);
     }
     // printf("\n");
 

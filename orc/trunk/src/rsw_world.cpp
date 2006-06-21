@@ -68,7 +68,9 @@ bool CRSW::LoadFromMemory( void* pData, uint32_t nSize ) {
     unsigned long objType = 1;
     while(objType == 1) {
         AUTO_READ(objType, 4);
-        AUTO_READ(m_Models[m_nModels++], sizeof(rsw_object_type1));
+        if(objType == 1) {
+            AUTO_READ(m_Models[m_nModels++], sizeof(rsw_object_type1));
+        }
     }
 
     // TODO: Move to another function ?
@@ -87,15 +89,16 @@ bool CRSW::LoadFromMemory( void* pData, uint32_t nSize ) {
         }
     }
 
-    printf( "Loading world file with %i objects, %i models (%i)...\n", object_count, m_nModels, m_nUniqueModels );
+    // printf( "Loading world file with %i objects, %i models (%i)...\n", object_count, m_nModels, m_nUniqueModels );
 
     ro_string_t *realmodelspath = new ro_string_t[ m_nUniqueModels ];
     m_RealModels = new CResource_Model_File[ m_nUniqueModels ];
 
     for ( int i = 0, k = 0; i < m_nModels; i++ ) {
         if ( m_Models[ i ].bIsUnique ) {
-             strcpy( realmodelspath[ k ], m_Models[ i ].szFilename );
-            m_RealModels[ k++ ].LoadFromGRF( realmodelspath[ k ] );
+            strcpy( realmodelspath[ k ], m_Models[ i ].szFilename );
+            m_RealModels[ k ].LoadFromGRF( realmodelspath[ k ] );
+            k++;
         }
     }
 
@@ -111,7 +114,9 @@ bool CRSW::LoadFromMemory( void* pData, uint32_t nSize ) {
         }
     }
 
-    printf("-------------------------------------------------------------------------------\n");
+    delete[] realmodelspath;
+
+    // printf("-------------------------------------------------------------------------------\n\n");
 
     return true;
 }

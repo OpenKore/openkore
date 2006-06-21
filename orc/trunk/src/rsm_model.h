@@ -61,7 +61,7 @@ public:
     unsigned int iNumTextures;
 
     unsigned int* m_TexIDs;
-    ro_transf_t m_Transf;
+    ro_transf_t   m_Transf;
     unsigned int m_nVertices;
     ro_vertex_t* m_Vertices;
 
