@@ -100,9 +100,24 @@ typedef struct {
 
 
 typedef struct {
-    float todo[ 22 ];
-}
-ro_transf_t;
+    float x;
+    float y;
+    float z;
+} VECTOR;
+
+typedef float MATRIX[3][3];
+
+
+typedef struct {
+    //float todo[ 22 ];
+    MATRIX  matrix;
+    VECTOR  position; // if !main
+    VECTOR  childpos; // if !main && !only
+    float   angle;
+    VECTOR  rotation;
+    VECTOR  scale;
+} ro_transf_t;
+
 
 typedef float ro_vertex_t[ 3 ];
 
