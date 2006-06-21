@@ -232,6 +232,7 @@ Credits:
 - DesperadoStrike: new monster names
 - patapum: new hooks and some bug fixes
 - chade: ssp command
+- FIrewall: Lighthalzen portals contributions
 
 
 ==================
