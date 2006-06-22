@@ -1,5 +1,6 @@
 # -*-python-*-
 import os
+import sys
 
 ### Platform configuration ###
 
@@ -8,6 +9,7 @@ cygwin = platform == "cygwin"
 darwin = platform == "darwin"
 win32 = cygwin or platform == "windows"
 have_ncurses = False
+READLINE_LIB = 'readline'
 
 perlconfig = {}
 env = Environment()
@@ -75,7 +77,7 @@ def CheckPerl(context):
 			perlconfig['coredir'] = perlconfig['coredir'].replace('\\', '/')
 	return ret == 0
 
-def CheckReadline(context):
+def CheckReadline(context, conf):
 	context.Message('Checking for GNU readline 4.3 or higher...')
 	result = context.TryCompile("""
 		#include <stdio.h>
@@ -119,10 +121,21 @@ if not conf.CheckPerl():
 	Exit(1)
 if not win32:
 	have_ncurses = conf.CheckLib('ncurses')
-	if not conf.CheckReadline():
+	if not conf.CheckReadline(conf):
 		print "You don't have GNU readline installed, or your version of GNU readline is not recent enough! Read:"
 		print "http://www.openkore.com/wiki/index.php/How_to_run_OpenKore_on_Linux/Unix#GNU_readline"
 		Exit(1)
+
+	if darwin:
+		has_readline_5 = conf.CheckLib('readline.5')
+		sys.stdout.write('Checking whether Readline 5 is available...')
+		sys.stdout.flush
+		if has_readline_5:
+			READLINE_LIB = 'readline.5'
+			sys.stdout.write(" yes\n")
+		else:
+			sys.stdout.write(" no\n")
+
 	if not conf.CheckLibCurl():
 		print "You don't have libcurl installed. Please download it at:";
 		print "http://curl.haxx.se/libcurl/";
@@ -200,8 +213,9 @@ elif darwin:
 		for f in source:
 			sources += [str(f)]
 
-		command = [env['CXX'], '-bundle', '-undefined',
-			   ' dynamic_lookup', '-o', str(target[0])] + sources
+		command = [env['CXX'], '-flat_namespace', '-bundle',
+			'-undefined', 'dynamic_lookup',
+			'-o', str(target[0])] + sources
 		if env.has_key('LIBPATH'):
 			for dir in env['LIBPATH']:
 				command += ['-L' + dir]
@@ -280,7 +294,7 @@ perlenv['BUILDERS']['XS'] = Builder(action = buildXS)
 
 ### Invoke SConscripts ###
 
-Export('env libenv perlenv win32 cygwin darwin have_ncurses')
+Export('env libenv perlenv win32 cygwin darwin have_ncurses READLINE_LIB')
 sconscripts = []
 if not int(ARGUMENTS.get('TESTS_ONLY', 0)):
 	sconscripts += ['src/auto/XSTools/SConscript']
