@@ -81,15 +81,12 @@ deps = []
 deps_path = []
 
 if not win32:
-	deps += ['readline']
+	deps += [READLINE_LIB, 'pthread']
 	if have_ncurses:
 		deps += ['ncurses']
 	else:
 		deps += ['termcap']
 		deps_path += ['/usr/lib/termcap']
-	if not darwin:
-		deps += ['pthread']
-		perlenv['LINKFLAGS'] += ['-pthread']
 else:
 	deps += ['winmm', 'wininet']
 

@@ -9,13 +9,12 @@ if not win32:
 
 	e = env.Copy()
 	e.Append(CPPPATH = dir)
-	e.Append(LIBS = ['readline'])
+	e.Append(LIBS = [READLINE_LIB, 'pthread'])
 	if have_ncurses:
 		e.Append(LIBS = ['ncurses'])
 	else:
 		e.Append(LIBS = ['termcap'])
 		e.Append(LIBPATH = ['/usr/lib/termcap'])
-	e.Append(LINKFLAGS = ['-pthread'])
 	e.Program('consoleui-test', [
 		'consoleui-test.cpp',
 		dir + '/consoleui.cpp'
@@ -28,8 +27,8 @@ e.Append(CPPPATH = dir)
 if win32:
 	e.Append(LIBS = ['wininet'])
 else:
+	e.Append(LIBS = ['pthread'])
 	e.ParseConfig('curl-config --cflags --libs')
-	e.Append(LINKFLAGS = ['-pthread'])
 e.Program('http-reader-test', [
 	'http-reader-test.cpp',
 	dir + '/http-reader.cpp',

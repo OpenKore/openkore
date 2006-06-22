@@ -1,10 +1,10 @@
-#include "EXTERN.h"
-#include "perl.h"
-#include "XSUB.h"
-
 #include "../http-reader.h"
 #include "../std-http-reader.h"
 #include "../mirror-http-reader.h"
+
+#include "EXTERN.h"
+#include "perl.h"
+#include "XSUB.h"
 
 using namespace std;
 using namespace OpenKore;
