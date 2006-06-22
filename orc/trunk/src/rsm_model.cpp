@@ -100,26 +100,25 @@ int CRSM_Mesh::LoadFromMemory( void* pData, uint32_t nSize, bool bIsParent ) {
 void CRSM_Mesh::BoundingBox( ro_transf_t *ptransf ) {
 
     // are we parent or child mesh ?
-    int main = ( ptransf == NULL );
-    ro_transf_t transf = m_Transf;
+    bool IsParent = ( ptransf == NULL ) ? true : false;
+
 
     float matRotation[16];
 
-    if(!main && !only) transf = *ptransf;
 
-    matRotation[ 0 ] = transf.matrix[0][0];
-    matRotation[ 1 ] = transf.matrix[0][1];
-    matRotation[ 2 ] = transf.matrix[0][2];
+    matRotation[ 0 ] = m_Transf.matrix[0][0];
+    matRotation[ 1 ] = m_Transf.matrix[0][1];
+    matRotation[ 2 ] = m_Transf.matrix[0][2];
     matRotation[ 3 ] = 0.0;
 
-    matRotation[ 4 ] = transf.matrix[1][0];
-    matRotation[ 5 ] = transf.matrix[1][1];
-    matRotation[ 6 ] = transf.matrix[1][2];
+    matRotation[ 4 ] = m_Transf.matrix[1][0];
+    matRotation[ 5 ] = m_Transf.matrix[1][1];
+    matRotation[ 6 ] = m_Transf.matrix[1][2];
     matRotation[ 7 ] = 0.0;
 
-    matRotation[ 8 ] = transf.matrix[2][0];
-    matRotation[ 9 ] = transf.matrix[2][1];
-    matRotation[ 10 ] = transf.matrix[2][2];
+    matRotation[ 8 ] = m_Transf.matrix[2][0];
+    matRotation[ 9 ] = m_Transf.matrix[2][1];
+    matRotation[ 10 ] = m_Transf.matrix[2][2];
     matRotation[ 11 ] = 0.0;
 
     matRotation[ 12 ] = 0.0;
@@ -136,7 +135,7 @@ void CRSM_Mesh::BoundingBox( ro_transf_t *ptransf ) {
     for(int i=0; i < m_nVertices; i++ ) {
         // float vout[ 3 ];
         //MatrixMultVect( Rot, m_Vertices[ i ], vout );
-        relative = MatrixMultVect3f( matRotation, m_Vertices[i][0], m_Vertices[i][1], m_Vertices[i][2] );
+        relative = m_Vertices[i]; //MatrixMultVect3f( matRotation, m_Vertices[i][0], m_Vertices[i][1], m_Vertices[i][2] );
 
 /*
         for(int j=0; j<3; j++ ) {
@@ -153,9 +152,9 @@ void CRSM_Mesh::BoundingBox( ro_transf_t *ptransf ) {
         CVector3 absolute = relative + transf.position + transf.childpos;
 */
         CVector3 absolute;
-        absolute.x = relative.x + transf.position.x + transf.childpos.x;
-        absolute.y = relative.y + transf.position.y + transf.childpos.y;
-        absolute.z = relative.z + transf.position.z + transf.childpos.z;
+        absolute.x = relative.x + m_Transf.position.x + m_Transf.childpos.x;
+        absolute.y = relative.y + m_Transf.position.y + m_Transf.childpos.y;
+        absolute.z = relative.z + m_Transf.position.z + m_Transf.childpos.z;
 
         min[0] = MIN( absolute.x, min[0] );
         max[0] = MAX( absolute.x, max[0] );
@@ -177,26 +176,25 @@ void CRSM_Mesh::Render( bounding_box_t *box, ro_transf_t *ptransf ) {
     float matRotation[16];
     float matOrientation[16];
 
-    int main = ( ptransf == NULL );
+    bool IsParent = ( ptransf == NULL) ? true : false;
 
     CVector3 vNormal;
     CVector3 vTriangle[ 3 ];
 
-    ro_transf_t transf = m_Transf;
 
-    matRotation[ 0 ] = transf.matrix[0][0];
-    matRotation[ 1 ] = transf.matrix[0][1];
-    matRotation[ 2 ] = transf.matrix[0][2];
+    matRotation[ 0 ] = m_Transf.matrix[0][0];
+    matRotation[ 1 ] = m_Transf.matrix[0][1];
+    matRotation[ 2 ] = m_Transf.matrix[0][2];
     matRotation[ 3 ] = 0.0;
 
-    matRotation[ 4 ] = transf.matrix[1][0];
-    matRotation[ 5 ] = transf.matrix[1][1];
-    matRotation[ 6 ] = transf.matrix[1][2];
+    matRotation[ 4 ] = m_Transf.matrix[1][0];
+    matRotation[ 5 ] = m_Transf.matrix[1][1];
+    matRotation[ 6 ] = m_Transf.matrix[1][2];
     matRotation[ 7 ] = 0.0;
 
-    matRotation[ 8 ] = transf.matrix[2][0];
-    matRotation[ 9 ] = transf.matrix[2][1];
-    matRotation[ 10 ] = transf.matrix[2][2];
+    matRotation[ 8 ] = m_Transf.matrix[2][0];
+    matRotation[ 9 ] = m_Transf.matrix[2][1];
+    matRotation[ 10 ] = m_Transf.matrix[2][2];
     matRotation[ 11 ] = 0.0;
 
     matRotation[ 12 ] = 0.0;
@@ -204,6 +202,7 @@ void CRSM_Mesh::Render( bounding_box_t *box, ro_transf_t *ptransf ) {
     matRotation[ 14 ] = 0.0;
     matRotation[ 15 ] = 1.0;
 
+/*
     if ( m_nFrames ) {
         int current = 0;
         int next;
@@ -270,34 +269,35 @@ void CRSM_Mesh::Render( bounding_box_t *box, ro_transf_t *ptransf ) {
         if ( nstep >= m_Frames[ m_nFrames - 1 ].time )
             nstep = 0;
     }
+*/
 
     // apply mesh scaling
-    glScalef ( transf.scale.x, transf.scale.y, transf.scale.z );
+    glScalef ( m_Transf.scale.x, m_Transf.scale.y, m_Transf.scale.z );
 
-    if ( main )
+    if ( IsParent )
         if ( !only ) {
             glTranslatef( -box->range[ 0 ], -box->max[ 1 ], -box->range[ 2 ] );
         } else {
             glTranslatef( 0.0, -box->max[ 1 ] + box->range[ 1 ], 0.0 );
         }
 
-    if ( !main )
-        glTranslatef( transf.childpos.x, transf.childpos.y, transf.childpos.z );
+    if ( !IsParent )
+        glTranslatef( m_Transf.childpos.x, m_Transf.childpos.y, m_Transf.childpos.z );
 
     if ( !m_nFrames )
-        glRotatef( transf.angle * 180.0 / 3.14159,
-                   transf.rotation.x, transf.rotation.y, transf.rotation.z );
+        glRotatef( m_Transf.angle * 180.0 / 3.14159,
+                   m_Transf.rotation.x, m_Transf.rotation.y, m_Transf.rotation.z );
     else
         glMultMatrixf( matOrientation );
 
 
     glPushMatrix();
 
-    if ( main && only )
+    if ( IsParent && only )
         glTranslatef( -box->range[ 0 ], -box->range[ 1 ], -box->range[ 2 ] );
 
-    if ( !main || !only )
-        glTranslatef( transf.position.x, transf.position.y, transf.position.z );
+    if ( !IsParent || !only )
+        glTranslatef( m_Transf.position.x, m_Transf.position.y, m_Transf.position.z );
 
 
     glMultMatrixf( matRotation );
@@ -455,6 +455,10 @@ bool CResource_Model_File::LoadFromMemory( void* pData, uint32_t nSize ) {
         m_Mesh[ m_nMeshes ] = new CRSM_Mesh( m_glTextures, NULL );
         bRead = m_Mesh[ m_nMeshes ] ->LoadFromMemory( meshdata, nSize - ( meshdata - ( unsigned char* ) pData ), false );
         printf( "(%i) read %i bytes...\n", meshsize, bRead );
+
+        // crash ?!?!?!
+        m_Mesh[ m_nMeshes ]->only = true;
+
         m_nMeshes++;
         meshdata += bRead;
         meshsize -= bRead;
@@ -510,9 +514,11 @@ void CResource_Model_File::BoundingBox() {
 void CResource_Model_File::Render( ro_position_t pos ) {
     glPushMatrix();
     glTranslatef( pos.x, -pos.y, pos.z );
+
     glRotatef( pos.ry, 0.0, 1.0, 0.0 );
     glRotatef( pos.rz, 1.0, 0.0, 0.0 );
     glRotatef( pos.rx, 0.0, 0.0, 1.0 );
+
     glScalef( pos.sx, -pos.sy, pos.sz );
     DisplayMesh( &box, 0 );
     glPopMatrix();
@@ -524,7 +530,7 @@ void CResource_Model_File::DisplayMesh( bounding_box_t *b, int n, ro_transf_t *p
 
     for ( int i = 0; i < m_nMeshes; i++ )
         if ( ( i != n ) && ( father[ i ] == n ) ) {
-            DisplayMesh( ( n == 0 ) ? b : NULL, i, &m_Mesh[ n ] ->m_Transf );
+          //  DisplayMesh( ( n == 0 ) ? b : NULL, i, &m_Mesh[ n ] ->m_Transf );
         }
 
     glPopMatrix();
