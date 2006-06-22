@@ -63,6 +63,10 @@ public:
     virtual void OnPaint( CSDL_Surface* display, double dt );
     virtual void OnKeypress( SDL_KeyboardEvent key, SDLMod mod ) {
         if ( ( key.keysym.sym == SDLK_END ) && ( key.keysym.mod & KMOD_CTRL ) ) m_bIsRunning = false;
+        if ( ( key.keysym.sym == SDLK_F12 ) ) {
+             // save screenshot
+             // m_PrimarySurface->SaveBMP("screenshot.bmp");
+        }
         CSDL_ApplicationBase::OnKeypress(key, mod);
     }
 };
