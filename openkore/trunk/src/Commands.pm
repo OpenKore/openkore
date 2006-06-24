@@ -1606,12 +1606,11 @@ sub cmdFriend {
 
 sub cmdHomunculus {
 	my (undef, $subcmd) = @_;
-	if ($subcmd eq "feed")
-		{
+	if ($subcmd eq "feed") {
 		sendHomunculusFeed();
-		} elsif ($subcmd eq "") {
+	} elsif ($subcmd eq "") {
 		error T("Usage: homunculus feed\n");
-		}
+	}
 }
 
 sub cmdGetPlayerInfo {
