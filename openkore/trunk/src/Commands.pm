@@ -89,6 +89,7 @@ sub initHandlers {
 	falcon             => \&cmdFalcon,
 	follow             => \&cmdFollow,
 	friend             => \&cmdFriend,
+	homunculus         => \&cmdHomunculus,
 	g                  => \&cmdGuildChat,
 	getplayerinfo      => \&cmdGetPlayerInfo,
 	guild              => \&cmdGuild,
@@ -1601,6 +1602,16 @@ sub cmdFriend {
 		message("----------------------------------\n", "list");
 	}
 
+}
+
+sub cmdHomunculus {
+	my (undef, $subcmd) = @_;
+	if ($subcmd eq "feed")
+		{
+		sendHomunculusFeed();
+		} elsif ($subcmd eq "") {
+		error T("Usage: homunculus feed\n");
+		}
 }
 
 sub cmdGetPlayerInfo {
