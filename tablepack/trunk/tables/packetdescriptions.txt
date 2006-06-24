@@ -307,7 +307,7 @@
 018E Tempering
 0193 Character Name Request
 019F Pet Catch
-01A1 Pet Command
+01A1 Pet Feed
 01A5 Pet Name
 01A7 Pet Incubator
 01A9 Pet Talk / Emo
@@ -320,3 +320,4 @@
 0203 Friend Remove
 0208 Friend Request Accept/Reject
 0228 gameguard_sync
+020D Homunculus Feed
