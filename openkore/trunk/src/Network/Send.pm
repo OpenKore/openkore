@@ -1118,7 +1118,7 @@ sub sendGuildSetAlly {
 	sendMsgToServer($r_net, $msg);
 
 }
-+
+
 sub sendHomunculusFeed {
 	my $r_net = shift;
 	my $msg = pack("C*", 0x2D, 0x02, 0x00, 0x00, 0x01);
