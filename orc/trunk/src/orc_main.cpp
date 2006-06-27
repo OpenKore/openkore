@@ -22,6 +22,8 @@
  *
  */
 
+#include <limits.h>
+
 // For our version string
 #include "../Orc.h"
 
@@ -75,8 +77,8 @@ public:
 Orc::Orc() : CSDL_ApplicationBase( SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_OPENGL ) {
 
     // Load settings from orc.ini (TODO: make it portable)
-    char szRagnarokPath[MAX_PATH];
-    char szTempPath[MAX_PATH];
+    char szRagnarokPath[PATH_MAX];
+    char szTempPath[PATH_MAX];
     char szDefaultMap[64];
 
 #ifdef WIN32
