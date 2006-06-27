@@ -25,6 +25,8 @@
 #ifndef RSM_MODEL_H
 #define RSM_MODEL_H
 
+#include <limits.h>
+
 #include "3d_math.h"
 #include "3d_frustum.h"
 
@@ -101,7 +103,7 @@ public:
     void Render( ro_position_t pos );
     void DisplayMesh( bounding_box_t *b, int n, ro_transf_t *ptransf = NULL );
 
-    char m_szFilename[MAX_PATH];
+    char m_szFilename[PATH_MAX];
 
     CRSM_Mesh* m_Mesh[ 8 ];
     GLuint* m_glTextures;
