@@ -6,7 +6,7 @@
  *   copyright            : (C) 2001 The phpBB Group
  *   email                : support@phpbb.com
  *
- *   $Id: admin_styles.php,v 1.27.2.16 2005/12/18 13:57:50 grahamje Exp $
+ *   $Id: admin_styles.php,v 1.27.2.17 2006/04/20 13:34:15 grahamje Exp $
  *
  *
  ***************************************************************************/
@@ -836,7 +836,7 @@ switch( $mode )
 			// Set template files
 			//
 			$template->set_filenames(array(
-				"confirm" => "confirm_body.tpl")
+				"confirm" => "admin/confirm_body.tpl")
 			);
 
 			$template->assign_vars(array(
