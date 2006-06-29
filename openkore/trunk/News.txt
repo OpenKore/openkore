@@ -181,6 +181,7 @@ New commands:
   this is for skills used for spells/traps like Remove Trap
 
 Internal:
+- Removed "proxied" string from XKoreProxy by users request.
 - Implemented the beginning of a localization framework.
 - Actor::get($ID) now returns $players{$ID} instead of $monsters{$ID}
   when both exist (which shouldn't happen, but this is a workaround for
