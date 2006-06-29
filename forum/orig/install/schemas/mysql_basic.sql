@@ -1,7 +1,7 @@
 #
 # Basic DB data for phpBB2 devel
 #
-# $Id: mysql_basic.sql,v 1.29.2.25 2006/03/09 21:55:09 grahamje Exp $
+# $Id: mysql_basic.sql,v 1.29.2.27 2006/05/20 14:01:48 grahamje Exp $
 
 # -- Config
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('config_id','1');
@@ -45,6 +45,7 @@ INSERT INTO phpbb_config (config_name, config_value) VALUES ('sendmail_fix','0')
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('require_activation','0');
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('flood_interval','15');
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('search_flood_interval','15');
+INSERT INTO phpbb_config (config_name, config_value) VALUES ('search_min_chars','3');
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('max_login_attempts', '5');
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('login_reset_time', '30');
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('board_email_form','0');
@@ -67,7 +68,7 @@ INSERT INTO phpbb_config (config_name, config_value) VALUES ('record_online_date
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('server_name', 'www.myserver.tld');
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('server_port', '80');
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('script_path', '/phpBB2/');
-INSERT INTO phpbb_config (config_name, config_value) VALUES ('version', '.0.20');
+INSERT INTO phpbb_config (config_name, config_value) VALUES ('version', '.0.21');
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('rand_seed', '0');
 
 

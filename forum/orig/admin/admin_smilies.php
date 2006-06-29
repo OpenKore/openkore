@@ -6,7 +6,7 @@
 *     copyright            : (C) 2001 The phpBB Group
 *     email                : support@phpbb.com
 *
-*     $Id: admin_smilies.php,v 1.22.2.17 2006/01/28 12:46:53 grahamje Exp $
+*     $Id: admin_smilies.php,v 1.22.2.18 2006/04/13 09:56:48 grahamje Exp $
 *
 ****************************************************************************/
 
@@ -49,7 +49,16 @@ if( isset($HTTP_GET_VARS['export_pack']) )
 
 $phpbb_root_path = "./../";
 require($phpbb_root_path . 'extension.inc');
+
+$cancel = ( isset($HTTP_POST_VARS['cancel']) ) ? true : false;
+$no_page_header = $cancel;
+
 require('./pagestart.' . $phpEx);
+
+if ($cancel)
+{
+	redirect('admin/' . append_sid("admin_smilies.$phpEx", true));
+}
 
 //
 // Check to see what mode we should operate in.
