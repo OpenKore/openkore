@@ -476,7 +476,7 @@ sub modifyPacketIn {
 				$self->{charServerPort} = $self->{nextPort};
 
 				my $newName = unpack("Z*", substr($serverInfo, $i + 6, 20));
-				$newName = "$newName (proxied)";
+				#$newName = "$newName (proxied)";
 				$newServers .= encodeIP($self->{proxy}->sockhost) . pack("v*", $self->{proxy}->sockport) . 
 					pack("Z20", $newName) . substr($serverInfo, $i + 26, 4) . pack("v1", 0);
 				
