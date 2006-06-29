@@ -6,7 +6,7 @@
  *   copyright            : (C) 2001 The phpBB Group
  *   email                : support@phpbb.com
  *
- *   $Id: profile.php,v 1.193.2.6 2006/02/26 17:34:50 grahamje Exp $
+ *   $Id: profile.php,v 1.193.2.7 2006/04/09 16:17:27 grahamje Exp $
  *
  *
  ***************************************************************************/
@@ -62,7 +62,7 @@ function gen_rand_string($hash)
 {
 	$rand_str = dss_rand();
 
-	return ( $hash ) ? md5($rand_str) : substr($rand_str, 8);
+	return ( $hash ) ? md5($rand_str) : substr($rand_str, 0, 8);
 }
 //
 // End page specific functions

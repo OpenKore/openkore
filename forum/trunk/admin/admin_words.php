@@ -6,7 +6,7 @@
  *   copyright            : (C) 2001 The phpBB Group
  *   email                : support@phpbb.com
  *
- *   $Id: admin_words.php,v 1.10.2.5 2006/01/23 21:24:40 grahamje Exp $
+ *   $Id: admin_words.php,v 1.10.2.6 2006/04/13 09:56:48 grahamje Exp $
  *
  *
  ***************************************************************************/
@@ -34,7 +34,16 @@ define('IN_PHPBB', 1);
 //
 $phpbb_root_path = "./../";
 require($phpbb_root_path . 'extension.inc');
+
+$cancel = ( isset($HTTP_POST_VARS['cancel']) ) ? true : false;
+$no_page_header = $cancel;
+
 require('./pagestart.' . $phpEx);
+
+if ($cancel)
+{
+	redirect('admin/' . append_sid("admin_words.$phpEx", true));
+}
 
 if( isset($HTTP_GET_VARS['mode']) || isset($HTTP_POST_VARS['mode']) )
 {

@@ -6,7 +6,7 @@
  *   copyright            : (C) 2001 The phpBB Group
  *   email                : support@phpbb.com
  *
- *   $Id: common.php,v 1.74.2.23 2006/02/26 17:34:50 grahamje Exp $
+ *   $Id: common.php,v 1.74.2.25 2006/05/26 17:46:59 grahamje Exp $
  *
  ***************************************************************************/
 
@@ -82,10 +82,11 @@ if (@ini_get('register_globals') == '1' || strtolower(@ini_get('register_globals
 
 	while (list($var,) = @each($input))
 	{
-		if (!in_array($var, $not_unset))
+		if (in_array($var, $not_unset))
 		{
-			unset($$var);
+			die('Hacking attempt!');
 		}
+		unset($$var);
 	}
 
 	unset($input);
