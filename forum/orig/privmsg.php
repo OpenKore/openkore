@@ -6,7 +6,7 @@
  *   copyright            : (C) 2001 The phpBB Group
  *   email                : support@phpbb.com
  *
- *   $Id: privmsg.php,v 1.96.2.48 2006/03/18 12:33:06 grahamje Exp $
+ *   $Id: privmsg.php,v 1.96.2.49 2006/04/10 21:08:15 grahamje Exp $
  *
  *
  ***************************************************************************/
@@ -1508,7 +1508,7 @@ else if ( $submit || $refresh || $mode != '' )
 			}
 
 			$orig_word = $replacement_word = array();
-			obtain_word_list($orig_word, $replace_word);
+			obtain_word_list($orig_word, $replacement_word);
 
 			$privmsg_subject = ( ( !preg_match('/^Re:/', $privmsg['privmsgs_subject']) ) ? 'Re: ' : '' ) . $privmsg['privmsgs_subject'];
 			$privmsg_subject = preg_replace($orig_word, $replacement_word, $privmsg_subject);

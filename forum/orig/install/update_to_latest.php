@@ -6,7 +6,7 @@
  *   copyright            : (C) 2001 The phpBB Group
  *   email                : support@phpbb.com
  *
- *   $Id: update_to_latest.php,v 1.1.2.12 2006/02/26 21:16:52 grahamje Exp $
+ *   $Id: update_to_latest.php,v 1.1.2.14 2006/05/20 14:01:48 grahamje Exp $
  *
  ***************************************************************************/
 
@@ -59,7 +59,7 @@ include($phpbb_root_path . 'includes/db.'.$phpEx);
 //
 //
 //
-$updates_to_version = '.0.20';
+$updates_to_version = '.0.21';
 //
 //
 //
@@ -1092,6 +1092,12 @@ switch ($row['config_value'])
 			VALUES ('rand_seed', '0')";
 		_sql($sql, $errored, $error_ary);
 
+	case '.0.20':
+
+		$sql = 'INSERT INTO ' . CONFIG_TABLE . " (config_name, config_value)
+			VALUES ('search_min_chars', '3')";
+		_sql($sql, $errored, $error_ary);
+
 		// We reset those having autologin enabled and forcing the re-assignment of a session id
 		// since there have been changes to the way these are handled from previous versions
 		$sql = 'DELETE FROM ' . SESSIONS_TABLE;
@@ -1103,7 +1109,7 @@ switch ($row['config_value'])
 		break;
 
 	default:
-		echo " No updates where required</b></p>\n";
+		echo " No updates were required</b></p>\n";
 		break;
 }
 
