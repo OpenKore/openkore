@@ -91,8 +91,8 @@ Orc::Orc() : CSDL_ApplicationBase( SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_OPENGL 
 
     sprintf(szTempPath, "%s/data.grf", szRagnarokPath);
     g_pGrfInterface = new CGRF_Interface( szTempPath );
-    if( g_pGrfInterface == NULL) {
-        exit(0);
+    if( !g_pGrfInterface ) {
+        return;
     }
     // TODO: Use resnametable.txt in grf_interface
     sprintf(szTempPath, "%s.rsw", szDefaultMap);
@@ -113,7 +113,7 @@ Orc::Orc() : CSDL_ApplicationBase( SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_OPENGL 
     m_pFrustum = new CFrustum();
 
     InitGL();
-    ReSizeGLScene( m_nScreenWidth, m_nScreenHeight );
+    myglResizeScene( m_nScreenWidth, m_nScreenHeight );
 }
 
 
@@ -184,6 +184,7 @@ void Orc::OnPaint( CSDL_Surface* display, double dt ) {
         rsw_object_type1* tmp = &m_pWorld->m_Models[ i ];
         CResource_Model_File* tmp2 = &m_pWorld->m_RealModels[ m_pWorld->m_Models[ i ].iModelID ];
 
+/*
         if( m_pFrustum->BoxInFrustum(
                     tmp->position.x,
                     tmp->position.y,
@@ -191,8 +192,9 @@ void Orc::OnPaint( CSDL_Surface* display, double dt ) {
                     tmp2->box.range[0] * tmp->position.sx,
                     tmp2->box.range[1] * tmp->position.sy,
                     tmp2->box.range[2] * tmp->position.sz) ) {
+                        */
             m_pWorld->m_RealModels[ m_pWorld->m_Models[ i ].iModelID ].Render( m_pWorld->m_Models[ i ].position );
-        }
+//        }
     }
 
 } // OnPaint

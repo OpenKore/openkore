@@ -34,6 +34,7 @@
 
 
 
+
 class CRSM_Mesh {
 public:
     CRSM_Mesh( GLuint* glTextures, bool* glTextureIsAlpha );
