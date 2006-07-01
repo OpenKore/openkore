@@ -32,7 +32,7 @@
 #ifndef CSDL_AUDIO_H
 #define CSDL_AUDIO_H
 
-#include <SDL/SDL.h>
+#include <SDL.h>
 
 #define USE_RWOPS
 #include <SDL/SDL_mixer.h>

@@ -35,10 +35,10 @@
 	#include <windows.h>
 #endif
 
-#include <SDL/SDL.h>
+#include <SDL.h>
 #include <SDL/SDL_mixer.h>
 #include <SDL/SDL_image.h>
-#include <SDL/SDL_opengl.h>
+#include <SDL_opengl.h>
 
 #include "csdl_surface.h"
 #include "csdl_event.h"
