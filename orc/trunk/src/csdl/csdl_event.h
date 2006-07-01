@@ -25,7 +25,7 @@
 #ifndef CSDL_EVENT_H
 #define CSDL_EVENT_H
 
-#include <SDL/SDL.h>
+#include <SDL.h>
 
 class CSDL_EventHandler {
     public:
