@@ -19,13 +19,11 @@ use base qw(Exporter);
 use Exporter;
 use IO::Socket::INET;
 use Time::HiRes qw(time usleep);
-use Win32;
 use Network::Send;
 use encoding 'utf8';
 
 use Globals;
 use Log qw(message warning error debug);
-use WinUtils;
 use Utils qw(dataWaiting timeOut makeIP encodeIP swrite existsInList);
 use Misc qw(configModify visualDump);
 use Translation;
