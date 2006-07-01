@@ -932,7 +932,7 @@ sub cmdChatRoom {
 			"#   Title                                  Owner                Users   Type\n"), "list";
 		for (my $i = 0; $i < @chatRoomsID; $i++) {
 			next if ($chatRoomsID[$i] eq "");
-			my $owner_string = ($chatRooms{$chatRoomsID[$i]}{'ownerID'} ne $accountID) ? $players{$chatRooms{$chatRoomsID[$i]}{'ownerID'}}{'name'} : $char->{'name'};
+			my $owner_string = Actor::get($chatRooms{$chatRoomsID[$i]}{'ownerID'})->name;
 			my $public_string = ($chatRooms{$chatRoomsID[$i]}{'public'}) ? "Public" : "Private";
 			my $limit_string = $chatRooms{$chatRoomsID[$i]}{'num_users'}."/".$chatRooms{$chatRoomsID[$i]}{'limit'};
 			message(swrite(
