@@ -493,7 +493,8 @@
 1585 Mime Monkey
 1586 Leaf Cat
 1587 Kraben
-1606 Unknown1606
+1606 Garm Baby
+1607 Gobline Xmas
 1614 Metaling
 1615 Mineral
 1617 Pitman
