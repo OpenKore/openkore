@@ -1,190 +1,192 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<?xml version="1.0"?>
+<!DOCTYPE CodeBlocks_project_file>
 <CodeBlocks_project_file>
-	<FileVersion major="1" minor="4" />
+	<FileVersion major="1" minor="1"/>
 	<Project>
-		<Option title="Orc" />
-		<Option pch_mode="2" />
-		<Option compiler="gcc" />
+		<Option title="Orc"/>
+		<Option makefile="Makefile"/>
+		<Option makefile_is_custom="0"/>
+		<Option compiler="0"/>
 		<Build>
 			<Target title="Debug">
-				<Option output="bin\Orc.exe" />
-				<Option working_dir="bin" />
-				<Option object_output="obj\" />
-				<Option type="1" />
-				<Option compiler="gcc" />
-				<Option projectResourceIncludeDirsRelation="0" />
+				<Option output="bin\Orc.exe"/>
+				<Option working_dir="bin"/>
+				<Option object_output="obj\"/>
+				<Option deps_output=".deps"/>
+				<Option type="1"/>
+				<Option compiler="0"/>
+				<Option projectResourceIncludeDirsRelation="1"/>
 			</Target>
 		</Build>
 		<Compiler>
-			<Add option="-g" />
-			<Add option='-I&quot;&lt;INCLUDE&gt;\SDL&quot; -Dmain=SDL_main -DSVN_REV=&quot;`svnversion -n .`&quot;' />
-			<Add directory="src\" />
+			<Add option="-g"/>
+			<Add option="-I&quot;<INCLUDE>\SDL&quot; -Dmain=SDL_main -DSVN_REV=&quot;`svnversion -n .`&quot;"/>
+			<Add directory="src\"/>
 		</Compiler>
 		<Linker>
-			<Add library="mingw32" />
-			<Add library="SDLmain" />
-			<Add library="SDL" />
-			<Add library="SDL_mixer" />
-			<Add library="SDL_image" />
-			<Add library="glu32" />
-			<Add library="opengl32" />
-			<Add library="iberty" />
-			<Add library="grf" />
+			<Add library="mingw32"/>
+			<Add library="SDLmain"/>
+			<Add library="SDL"/>
+			<Add library="SDL_mixer"/>
+			<Add library="SDL_image"/>
+			<Add library="glu32"/>
+			<Add library="opengl32"/>
+			<Add library="grf"/>
 		</Linker>
 		<Unit filename="Orc.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="Debug" />
+			<Option compilerVar="CPP"/>
+			<Option compile="0"/>
+			<Option link="0"/>
+			<Option target="Debug"/>
 		</Unit>
 		<Unit filename="Orc.rc">
-			<Option compilerVar="WINDRES" />
-			<Option weight="100" />
-			<Option objectName="Orc.res" />
-			<Option target="Debug" />
+			<Option compilerVar="WINDRES"/>
+			<Option weight="100"/>
+			<Option objectName="Orc.res"/>
+			<Option target="Debug"/>
 		</Unit>
 		<Unit filename="src\3d_camera.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="Debug" />
+			<Option compilerVar="CPP"/>
+			<Option target="Debug"/>
 		</Unit>
 		<Unit filename="src\3d_camera.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="Debug" />
+			<Option compilerVar="CPP"/>
+			<Option compile="0"/>
+			<Option link="0"/>
+			<Option target="Debug"/>
 		</Unit>
 		<Unit filename="src\3d_frustum.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="Debug" />
+			<Option compilerVar="CPP"/>
+			<Option target="Debug"/>
 		</Unit>
 		<Unit filename="src\3d_frustum.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="Debug" />
+			<Option compilerVar="CPP"/>
+			<Option compile="0"/>
+			<Option link="0"/>
+			<Option target="Debug"/>
 		</Unit>
 		<Unit filename="src\3d_math.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="Debug" />
+			<Option compilerVar="CPP"/>
+			<Option target="Debug"/>
 		</Unit>
 		<Unit filename="src\3d_math.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="Debug" />
+			<Option compilerVar="CPP"/>
+			<Option compile="0"/>
+			<Option link="0"/>
+			<Option target="Debug"/>
 		</Unit>
-		<Unit filename="src\CSDL\csdl.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="Debug" />
+		<Unit filename="src\csdl\csdl.cpp">
+			<Option compilerVar="CPP"/>
+			<Option target="Debug"/>
+			<Breakpoint line="259" enabled="1" pass="0" />
 		</Unit>
-		<Unit filename="src\CSDL\csdl.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="Debug" />
+		<Unit filename="src\csdl\csdl.h">
+			<Option compilerVar="CPP"/>
+			<Option compile="0"/>
+			<Option link="0"/>
+			<Option target="Debug"/>
 		</Unit>
-		<Unit filename="src\CSDL\csdl_audio.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="Debug" />
+		<Unit filename="src\csdl\csdl_audio.cpp">
+			<Option compilerVar="CPP"/>
+			<Option target="Debug"/>
 		</Unit>
-		<Unit filename="src\CSDL\csdl_audio.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="Debug" />
+		<Unit filename="src\csdl\csdl_audio.h">
+			<Option compilerVar="CPP"/>
+			<Option compile="0"/>
+			<Option link="0"/>
+			<Option target="Debug"/>
 		</Unit>
-		<Unit filename="src\CSDL\csdl_event.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="Debug" />
+		<Unit filename="src\csdl\csdl_event.cpp">
+			<Option compilerVar="CPP"/>
+			<Option target="Debug"/>
 		</Unit>
-		<Unit filename="src\CSDL\csdl_event.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="Debug" />
+		<Unit filename="src\csdl\csdl_event.h">
+			<Option compilerVar="CPP"/>
+			<Option compile="0"/>
+			<Option link="0"/>
+			<Option target="Debug"/>
 		</Unit>
-		<Unit filename="src\CSDL\csdl_gl.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="Debug" />
+		<Unit filename="src\csdl\csdl_gl.cpp">
+			<Option compilerVar="CPP"/>
+			<Option target="Debug"/>
 		</Unit>
-		<Unit filename="src\CSDL\csdl_gl.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="Debug" />
+		<Unit filename="src\csdl\csdl_gl.h">
+			<Option compilerVar="CPP"/>
+			<Option compile="0"/>
+			<Option link="0"/>
+			<Option target="Debug"/>
 		</Unit>
-		<Unit filename="src\CSDL\csdl_surface.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="Debug" />
+		<Unit filename="src\csdl\csdl_surface.cpp">
+			<Option compilerVar="CPP"/>
+			<Option target="Debug"/>
 		</Unit>
-		<Unit filename="src\CSDL\csdl_surface.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="Debug" />
+		<Unit filename="src\csdl\csdl_surface.h">
+			<Option compilerVar="CPP"/>
+			<Option compile="0"/>
+			<Option link="0"/>
+			<Option target="Debug"/>
 		</Unit>
-		<Unit filename="src\CSDL\textfont8x8.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="Debug" />
+		<Unit filename="src\csdl\textfont8x8.h">
+			<Option compilerVar="CPP"/>
+			<Option compile="0"/>
+			<Option link="0"/>
+			<Option target="Debug"/>
 		</Unit>
 		<Unit filename="src\gnd_ground.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="Debug" />
+			<Option compilerVar="CPP"/>
+			<Option target="Debug"/>
 		</Unit>
 		<Unit filename="src\gnd_ground.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="Debug" />
+			<Option compilerVar="CPP"/>
+			<Option compile="0"/>
+			<Option link="0"/>
+			<Option target="Debug"/>
 		</Unit>
 		<Unit filename="src\grf_interface.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="Debug" />
+			<Option compilerVar="CPP"/>
+			<Option target="Debug"/>
 		</Unit>
 		<Unit filename="src\grf_interface.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="Debug" />
+			<Option compilerVar="CPP"/>
+			<Option compile="0"/>
+			<Option link="0"/>
+			<Option target="Debug"/>
 		</Unit>
 		<Unit filename="src\memory_manager.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="Debug" />
+			<Option compilerVar="CPP"/>
+			<Option compile="0"/>
+			<Option link="0"/>
+			<Option target="Debug"/>
 		</Unit>
 		<Unit filename="src\orc_main.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="Debug" />
+			<Option compilerVar="CPP"/>
+			<Option target="Debug"/>
 		</Unit>
 		<Unit filename="src\ro_types.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="Debug" />
+			<Option compilerVar="CPP"/>
+			<Option compile="0"/>
+			<Option link="0"/>
+			<Option target="Debug"/>
 		</Unit>
 		<Unit filename="src\rsm_model.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="Debug" />
+			<Option compilerVar="CPP"/>
+			<Option target="Debug"/>
 		</Unit>
 		<Unit filename="src\rsm_model.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="Debug" />
+			<Option compilerVar="CPP"/>
+			<Option compile="0"/>
+			<Option link="0"/>
+			<Option target="Debug"/>
 		</Unit>
 		<Unit filename="src\rsw_world.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="Debug" />
+			<Option compilerVar="CPP"/>
+			<Option target="Debug"/>
 		</Unit>
 		<Unit filename="src\rsw_world.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="Debug" />
+			<Option compilerVar="CPP"/>
+			<Option compile="0"/>
+			<Option link="0"/>
+			<Option target="Debug"/>
 		</Unit>
-		<Extensions />
 	</Project>
 </CodeBlocks_project_file>

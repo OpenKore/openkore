@@ -35,6 +35,8 @@ extern CGRF_Interface* g_pGrfInterface;
 CRSM_Mesh::CRSM_Mesh( GLuint* glTextures, bool* glTextureIsAlpha ) {
     m_glTextures = glTextures;
     m_glTextureIsAlpha = glTextureIsAlpha;
+
+    only = false;
 }
 
 CRSM_Mesh::~CRSM_Mesh() {
@@ -202,7 +204,7 @@ void CRSM_Mesh::Render( bounding_box_t *box, ro_transf_t *ptransf ) {
     matRotation[ 14 ] = 0.0;
     matRotation[ 15 ] = 1.0;
 
-/*
+
     if ( m_nFrames ) {
         int current = 0;
         int next;
@@ -269,7 +271,7 @@ void CRSM_Mesh::Render( bounding_box_t *box, ro_transf_t *ptransf ) {
         if ( nstep >= m_Frames[ m_nFrames - 1 ].time )
             nstep = 0;
     }
-*/
+
 
     // apply mesh scaling
     glScalef ( m_Transf.scale.x, m_Transf.scale.y, m_Transf.scale.z );
@@ -368,7 +370,7 @@ void CRSM_Mesh::Render( bounding_box_t *box, ro_transf_t *ptransf ) {
     }
 
     BoundingBox();
-    DisplayBoundingBox(&max[0], &min[0], 0, 0, 1);
+    //DisplayBoundingBox(&max[0], &min[0], 0, 0, 1);
 }
 
 
@@ -457,7 +459,7 @@ bool CResource_Model_File::LoadFromMemory( void* pData, uint32_t nSize ) {
         printf( "(%i) read %i bytes...\n", meshsize, bRead );
 
         // crash ?!?!?!
-        m_Mesh[ m_nMeshes ]->only = true;
+        m_Mesh[ m_nMeshes ]->only = false;
 
         m_nMeshes++;
         meshdata += bRead;
@@ -530,7 +532,7 @@ void CResource_Model_File::DisplayMesh( bounding_box_t *b, int n, ro_transf_t *p
 
     for ( int i = 0; i < m_nMeshes; i++ )
         if ( ( i != n ) && ( father[ i ] == n ) ) {
-          //  DisplayMesh( ( n == 0 ) ? b : NULL, i, &m_Mesh[ n ] ->m_Transf );
+            DisplayMesh( ( n == 0 ) ? b : NULL, i, &m_Mesh[ n ] ->m_Transf );
         }
 
     glPopMatrix();

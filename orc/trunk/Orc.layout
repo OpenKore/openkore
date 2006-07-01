@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<!DOCTYPE CodeBlocks_layout_file>
+<CodeBlocks_layout_file>
+	<File name="src\3d_camera.cpp" open="0" top="0">
+		<Cursor position="984" topLine="2"/>
+	</File>
+	<File name="src\3d_math.cpp" open="0" top="0">
+		<Cursor position="1304" topLine="6"/>
+	</File>
+	<File name="src\3d_math.h" open="0" top="0">
+		<Cursor position="1729" topLine="45"/>
+	</File>
+	<File name="src\csdl\csdl.cpp" open="0" top="0">
+		<Cursor position="7925" topLine="210"/>
+	</File>
+	<File name="src\csdl\csdl.h" open="0" top="0">
+		<Cursor position="3877" topLine="93"/>
+	</File>
+	<File name="src\csdl\csdl_audio.h" open="0" top="0">
+		<Cursor position="1338" topLine="14"/>
+	</File>
+	<File name="src\csdl\csdl_event.h" open="0" top="0">
+		<Cursor position="1060" topLine="7"/>
+	</File>
+	<File name="src\csdl\csdl_gl.cpp" open="0" top="0">
+		<Cursor position="7334" topLine="180"/>
+	</File>
+	<File name="src\csdl\csdl_surface.h" open="0" top="0">
+		<Cursor position="1170" topLine="13"/>
+	</File>
+	<File name="src\grf_interface.h" open="0" top="0">
+		<Cursor position="1053" topLine="8"/>
+	</File>
+	<File name="src\orc_main.cpp" open="1" top="1">
+		<Cursor position="3496" topLine="0"/>
+	</File>
+	<File name="src\ro_types.h" open="0" top="0">
+		<Cursor position="1770" topLine="13"/>
+	</File>
+	<File name="src\rsm_model.cpp" open="0" top="0">
+		<Cursor position="1979" topLine="245"/>
+	</File>
+	<File name="src\rsm_model.h" open="0" top="0">
+		<Cursor position="1412" topLine="67"/>
+	</File>
+	<File name="src\rsw_world.cpp" open="0" top="0">
+		<Cursor position="994" topLine="73"/>
+	</File>
+	<File name="src\rsw_world.h" open="0" top="0">
+		<Cursor position="1775" topLine="28"/>
+	</File>
+</CodeBlocks_layout_file>

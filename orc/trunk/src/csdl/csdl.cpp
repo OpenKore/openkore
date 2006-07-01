@@ -255,3 +255,13 @@ void CSDL_ApplicationBase::OnPreEvents() {
 
         return EXIT_SUCCESS;
     }
+
+
+void CSDL_ApplicationBase::myglResizeScene( GLsizei w, GLsizei h ) {
+    glViewport ( 0, 0, ( GLsizei ) w, ( GLsizei ) h );
+    glMatrixMode ( GL_PROJECTION );
+    glLoadIdentity();
+    gluPerspective ( 40.0, ( GLfloat ) w / ( GLfloat ) h, 1.0, 1000.0 );
+    glMatrixMode ( GL_MODELVIEW );
+    glLoadIdentity();
+}

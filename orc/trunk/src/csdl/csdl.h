@@ -134,6 +134,9 @@ class CSDL_ApplicationBase : public CSDL_EventHandler {
         void FPS_Init();
         void FPS_Update();
         Uint32 FPS_TimeLeft();
+
+
+        void myglResizeScene( GLsizei w, GLsizei h );
 };
 
 #endif // CSDL_H

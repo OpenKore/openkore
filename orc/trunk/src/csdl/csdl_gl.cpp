@@ -220,21 +220,10 @@ bool InitGL() {
     glEnable( GL_BLEND );              // Enable Blending       (disable alpha testing)
 
     glHint( GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST );
-    glEnable(GL_FOG);
+//    glEnable(GL_FOG);
 
     glFrontFace(GL_CW);
     glEnable(GL_CULL_FACE);
 
     return true;          // Initialization Went OK
-}
-
-void ReSizeGLScene( GLsizei w, GLsizei h ) {
-
-    glViewport ( 0, 0, ( GLsizei ) w, ( GLsizei ) h );
-    glMatrixMode ( GL_PROJECTION );
-    glLoadIdentity();
-
-    gluPerspective ( 40.0, ( GLfloat ) w / ( GLfloat ) h, 1.0, 1000.0 );
-    glMatrixMode ( GL_MODELVIEW );
-    glLoadIdentity();
 }

@@ -1,0 +1,137 @@
+# depslib dependency file v1.0
+1151768374 d:\my projects\testit\src\csdl\csdl_gl.cpp
+	"csdl_gl.h"
+
+1151018079 d:\my projects\testit\src\csdl\csdl_gl.h
+	"csdl.h"
+	"../grf_interface.h"
+
+1151768411 d:\my projects\testit\src\csdl\csdl.h
+	<stdio.h>
+	<stdlib.h>
+	<stdarg.h>
+	<string.h>
+	<math.h>
+	<windows.h>
+	<SDL.h>
+	<SDL/SDL_mixer.h>
+	<SDL/SDL_image.h>
+	<SDL_opengl.h>
+	"csdl_surface.h"
+	"csdl_event.h"
+	"csdl_audio.h"
+	"csdl_gl.h"
+
+1151767683 d:\my projects\testit\src\csdl\csdl_surface.h
+	<stdio.h>
+	<stdlib.h>
+	<stdarg.h>
+	<string.h>
+	<SDL.h>
+	<SDL/SDL_image.h>
+
+1151767684 d:\my projects\testit\src\csdl\csdl_event.h
+	<SDL.h>
+
+1151767684 d:\my projects\testit\src\csdl\csdl_audio.h
+	<SDL.h>
+	<SDL/SDL_mixer.h>
+
+1151767684 d:\my projects\testit\src\grf_interface.h
+	<libgrf/grf.h>
+	<SDL.h>
+	<string.h>
+	<ctype.h>
+
+1151767684 d:\my projects\testit\src\3d_camera.cpp
+	"3d_math.h"
+	"3d_camera.h"
+	<SDL.h>
+
+1150727413 d:\my projects\testit\src\3d_math.h
+	"csdl/csdl.h"
+
+1150727413 d:\my projects\testit\src\3d_camera.h
+
+1150681466 d:\my projects\testit\src\3d_frustum.cpp
+	"3d_frustum.h"
+
+1150727413 d:\my projects\testit\src\3d_frustum.h
+	"3d_math.h"
+
+1150727413 d:\my projects\testit\src\3d_math.cpp
+	"3d_math.h"
+
+1151768176 d:\my projects\testit\src\csdl\csdl.cpp
+	"csdl.h"
+
+1151018079 d:\my projects\testit\src\csdl\csdl_audio.cpp
+	"csdl_audio.h"
+
+1151018079 d:\my projects\testit\src\csdl\csdl_event.cpp
+	"csdl_event.h"
+
+1150897460 d:\my projects\testit\src\rsw_world.cpp
+	"rsw_world.h"
+
+1150844707 d:\my projects\testit\src\rsw_world.h
+	"3d_math.h"
+	"3d_frustum.h"
+	"ro_types.h"
+	"rsm_model.h"
+
+1151765087 d:\my projects\testit\src\ro_types.h
+	<pshpack1.h>
+
+1151766969 d:\my projects\testit\src\rsm_model.h
+	<limits.h>
+	"3d_math.h"
+	"3d_frustum.h"
+	"ro_types.h"
+
+1151018079 d:\my projects\testit\src\csdl\csdl_surface.cpp
+	<math.h>
+	"csdl_surface.h"
+	"textfont8x8.h"
+
+1151018005 d:\my projects\testit\src\csdl\textfont8x8.h
+
+1150760796 d:\my projects\testit\src\gnd_ground.cpp
+	"gnd_ground.h"
+	"grf_interface.h"
+
+1150727413 d:\my projects\testit\src\gnd_ground.h
+	"3d_math.h"
+	"3d_frustum.h"
+	"ro_types.h"
+
+1150727413 d:\my projects\testit\src\grf_interface.cpp
+	"grf_interface.h"
+
+1151766150 d:\my projects\testit\src\rsm_model.cpp
+	"rsm_model.h"
+	"grf_interface.h"
+	"memory_manager.h"
+
+1150727413 d:\my projects\testit\src\memory_manager.h
+
+1150681477 d:\my projects\testit\orc.rc
+	<windows.h>
+	"Orc.h"
+
+1150681477 d:\my projects\testit\orc.h
+
+1151768954 d:\my projects\testit\src\orc_main.cpp
+	<limits.h>
+	"../Orc.h"
+	"csdl/csdl.h"
+	"3d_math.h"
+	"3d_camera.h"
+	"3d_frustum.h"
+	"grf_interface.h"
+	"ro_types.h"
+	"gnd_ground.h"
+	"rsm_model.h"
+	"rsw_world.h"
+	<poppack.h>
+
