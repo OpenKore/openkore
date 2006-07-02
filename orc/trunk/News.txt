@@ -9,4 +9,13 @@
 - 
 
 ** Detailed list of changes:
-- 
+- Added key options (temporary for development?)
+  F1 enable/disable frustum culling
+  F2 enable/disable fog (keypad +/-)
+  F3 enable/disable show bounding boxes
+  F4 enable/disable texture mapping
+
+- Settings for display resolution in orc.ini
+- Added DevC++ project file
+- Exported makefile from Code::Blocks project file
+- Added Code::Blocks project file
