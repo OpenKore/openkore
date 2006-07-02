@@ -44,15 +44,31 @@
 #include "rsm_model.h"
 #include "rsw_world.h"
 
+// TODO: Name of the .INI file to use, perhaps make it a command line option ?
+#define INIFILE "./orc.ini"
+
 // Global subsystem pointers
 CGRF_Interface* g_pGrfInterface = NULL;
 
+
 // The application class
-class Orc : public CSDL_ApplicationBase {
+class Orc : public CSDLGL_ApplicationBase {
 public:
     Orc();
     ~Orc();
 
+private:
+    bool bUseFrustum;
+    bool bUseFog;
+    bool bShowTextures;
+    bool bShowBoxes; // Bounding Boxes
+    float fFogDepth;
+
+    virtual bool InitGL();
+    virtual void OnPaint( CSDL_Surface* display, double dt );
+    virtual void OnKeypress( SDL_KeyboardEvent key, SDLMod mod );
+
+protected:
     CCamera*    m_pCamera;
     CFrustum*   m_pFrustum;
 
@@ -60,34 +76,32 @@ public:
     CRSW*       m_pWorld;
     GND*        m_pGnd;
 
-    // CSDL_GL_Texture* bgi_temp;
-
-    virtual void OnPaint( CSDL_Surface* display, double dt );
-    virtual void OnKeypress( SDL_KeyboardEvent key, SDLMod mod ) {
-        if ( ( key.keysym.sym == SDLK_END ) && ( key.keysym.mod & KMOD_CTRL ) ) m_bIsRunning = false;
-        if ( ( key.keysym.sym == SDLK_F12 ) ) {
-             // save screenshot
-             // m_PrimarySurface->SaveBMP("screenshot.bmp");
-        }
-        CSDL_ApplicationBase::OnKeypress(key, mod);
-    }
 };
 
 
-Orc::Orc() : CSDL_ApplicationBase( SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_OPENGL ) {
+Orc::Orc() : CSDLGL_ApplicationBase(), fFogDepth(0.001), bUseFrustum(true), bUseFog(true), bShowTextures(true), bShowBoxes(false) {
 
     // Load settings from orc.ini (TODO: make it portable)
     char szRagnarokPath[PATH_MAX];
     char szTempPath[PATH_MAX];
     char szDefaultMap[64];
+    int  iDisplayWidth = 800, iDisplayHeight = 600, iDisplayBpp = 32;
 
 #ifdef WIN32
-    GetPrivateProfileString("data", "folder", "c:/ragnarokonline", szRagnarokPath, MAX_PATH, ".\\orc.ini");
-    GetPrivateProfileString("world", "map", "newzone01", szDefaultMap, 64, ".\\orc.ini");
+    GetPrivateProfileString("data", "folder", "c:/ragnarokonline", szRagnarokPath, MAX_PATH, INIFILE);
+    GetPrivateProfileString("world", "map", "newzone01", szDefaultMap, 64, INIFILE);
+
+    iDisplayWidth = GetPrivateProfileInt("viewport", "width", 800, INIFILE);
+    iDisplayHeight = GetPrivateProfileInt("viewport", "height", 600, INIFILE);
+    iDisplayBpp = GetPrivateProfileInt("viewport", "bpp", 32, INIFILE);
 #else
     strcpy(szRagnarokPath, "./");
     strcpy(szDefaultMap, "newzone01");
 #endif
+
+
+    InitVideoMode(iDisplayWidth, iDisplayHeight, iDisplayBpp);
+
 
     sprintf(szTempPath, "%s/data.grf", szRagnarokPath);
     g_pGrfInterface = new CGRF_Interface( szTempPath );
@@ -113,7 +127,7 @@ Orc::Orc() : CSDL_ApplicationBase( SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_OPENGL 
     m_pFrustum = new CFrustum();
 
     InitGL();
-    myglResizeScene( m_nScreenWidth, m_nScreenHeight );
+    ResizeGL( m_nScreenWidth, m_nScreenHeight );
 }
 
 
@@ -133,6 +147,55 @@ Orc::~Orc() {
 
     if( g_pGrfInterface )
         delete g_pGrfInterface;
+}
+
+
+bool Orc::InitGL() {
+    CSDLGL_ApplicationBase::InitGL();                  // Setup default attributes
+
+    glClearColor ( 1.0f, 1.0f, 1.0f, 0.0f );
+    glClearDepth( 1.0f );
+    glEnable( GL_TEXTURE_2D );
+
+    float fogColor[ 4 ] = {0.95f, 0.95f, 1.0f, 1.0f};
+
+
+    glFogi( GL_FOG_MODE, GL_EXP2 );    // Fog Mode
+    glFogfv( GL_FOG_COLOR, fogColor );    // Set Fog Color
+    glFogf( GL_FOG_DENSITY, fFogDepth );    // How Dense Will The Fog Be
+    glHint( GL_FOG_HINT, GL_DONT_CARE );   // The Fog's calculation accuracy
+    glFogf( GL_FOG_START, 500.0f );     // Fog Start Depth
+    glFogf( GL_FOG_END, 1000.0f );     // Fog End Depth
+
+    float ambience[ 4 ] = {HALF, HALF, HALF, 1.0};  // The color of the light in the world
+    float diffuse[ 4 ] = {ONE, ONE, ONE, 1.0};  // The color of the light in the world
+    float light0[ 3 ] = {1.0f, 1.0f, 1.0f};       // The color of the positioned light
+
+    glLightfv( GL_LIGHT0, GL_AMBIENT, ambience );  // Set our ambience values (Default color without direct light)
+    glLightfv( GL_LIGHT0, GL_DIFFUSE, diffuse );  // Set our diffuse color (The light color)
+    glLightfv( GL_LIGHT0, GL_POSITION, light0 );     // This Sets our light position
+
+    glEnable(  GL_LIGHT0   );       // Turn this light on
+    glEnable(  GL_LIGHTING );       // This turns on lighting
+    glEnable( GL_COLOR_MATERIAL );
+
+    glShadeModel ( GL_SMOOTH );
+
+    glEnable( GL_DEPTH_TEST );
+    glDepthFunc( GL_LEQUAL );
+
+
+    glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );   // Enable Alpha Blending (disable alpha testing)
+    glEnable( GL_BLEND );              // Enable Blending       (disable alpha testing)
+
+    glHint( GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST );
+//    glEnable(GL_FOG);
+
+    glFrontFace(GL_CW);
+    glEnable(GL_CULL_FACE);
+
+    return true;          // Initialization Went OK
+
 }
 
 
@@ -157,14 +220,14 @@ void Orc::OnPaint( CSDL_Surface* display, double dt ) {
     goPerspective(); // hmm
     glPopMatrix();
     m_pCamera->Look(); // Tell OpenGL where to look
-    glPushMatrix();
+
+
+    //glPushMatrix();
 
     // m_pWorld->m_Header
     // glLightfv( GL_LIGHT0, GL_POSITION, g_LightPosition ); // This Sets our light position
-    glPopMatrix();
+    //glPopMatrix();
 
-    // update the fog
-    glFogf( GL_FOG_DENSITY, 0.002 );    // How Dense Will The Fog Be
     glScalef ( 1.0, 1.0, -1.0 );
 
 
@@ -174,7 +237,7 @@ void Orc::OnPaint( CSDL_Surface* display, double dt ) {
 
     goPerspective();
     m_pFrustum->CalculateFrustum();
-    glFrontFace(GL_CW);
+//    glFrontFace(GL_CW);
 //    glDisable(GL_BLEND);
     glColor4f(ONE, ONE, ONE, ONE);
 
@@ -184,20 +247,61 @@ void Orc::OnPaint( CSDL_Surface* display, double dt ) {
         rsw_object_type1* tmp = &m_pWorld->m_Models[ i ];
         CResource_Model_File* tmp2 = &m_pWorld->m_RealModels[ m_pWorld->m_Models[ i ].iModelID ];
 
-/*
-        if( m_pFrustum->BoxInFrustum(
+        if( (bUseFrustum && m_pFrustum->BoxInFrustum(
                     tmp->position.x,
                     tmp->position.y,
                     tmp->position.z,
                     tmp2->box.range[0] * tmp->position.sx,
                     tmp2->box.range[1] * tmp->position.sy,
-                    tmp2->box.range[2] * tmp->position.sz) ) {
-                        */
+                    tmp2->box.range[2] * tmp->position.sz)) || !bUseFrustum ) {
+
             m_pWorld->m_RealModels[ m_pWorld->m_Models[ i ].iModelID ].Render( m_pWorld->m_Models[ i ].position );
-//        }
+
+            if(bShowBoxes) {
+                m_pWorld->m_RealModels[ m_pWorld->m_Models[ i ].iModelID ].m_Mesh[0]->BoundingBox();
+                DisplayBoundingBox(
+                    &m_pWorld->m_RealModels[ m_pWorld->m_Models[ i ].iModelID ].m_Mesh[0]->max[0],
+                    &m_pWorld->m_RealModels[ m_pWorld->m_Models[ i ].iModelID ].m_Mesh[0]->min[0], 0, 0, 1
+                );
+            }
+        }
     }
 
 } // OnPaint
+
+
+void Orc::OnKeypress( SDL_KeyboardEvent key, SDLMod mod ) {
+    if ( ( key.keysym.sym == SDLK_END ) && ( key.keysym.mod & KMOD_CTRL ) ) m_bIsRunning = false;
+    if ( (key.type == SDL_KEYDOWN) && ( key.keysym.sym == SDLK_F1 ) ) {
+        bUseFrustum = (bUseFrustum) ? false : true;
+    }
+    if ( (key.type == SDL_KEYDOWN) && ( key.keysym.sym == SDLK_F2 ) ) {
+        bUseFog = (bUseFog) ? false : true;
+        if( bUseFog ) glEnable(GL_FOG);
+        else glDisable(GL_FOG);
+    }
+    if ( (key.type == SDL_KEYDOWN) && ( key.keysym.sym == SDLK_F3 ) ) {
+        bShowBoxes = (bShowBoxes) ? false : true;
+    }
+    if ( (key.type == SDL_KEYDOWN) && ( key.keysym.sym == SDLK_F4 ) ) {
+        bShowTextures = (bShowTextures) ? false : true;
+        if( bShowTextures ) glEnable(GL_TEXTURE_2D);
+        else glDisable(GL_TEXTURE_2D);
+    }
+    if ( ( key.keysym.sym == SDLK_KP_PLUS ) ) {
+        fFogDepth = (fFogDepth < 1.0) ? fFogDepth + 0.001 : 1.0;
+        glFogf( GL_FOG_DENSITY, fFogDepth );
+    }
+    if ( ( key.keysym.sym == SDLK_KP_MINUS ) ) {
+        fFogDepth = (fFogDepth > 0.0) ? fFogDepth - 0.001 : 0.0;
+        glFogf( GL_FOG_DENSITY, fFogDepth );
+    }
+    if ( ( key.keysym.sym == SDLK_F12 ) ) {
+        // TODO: save screenshot
+        // m_PrimarySurface->SaveBMP("screenshot.bmp");
+    }
+    CSDLGL_ApplicationBase::OnKeypress(key, mod);
+}
 
 
 int main(int argc, char *argv[]) {

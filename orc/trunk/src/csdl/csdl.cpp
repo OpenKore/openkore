@@ -91,7 +91,7 @@ void CSDL_ApplicationBase::MsgBox(const char* msg, ...) {
     va_end(va);
 }
 
-int CSDL_ApplicationBase::InitVideo() {
+bool CSDL_ApplicationBase::InitVideo() {
     if(::SDL_Init(SDL_INIT_VIDEO) < 0) {
         MsgBox("Couldn't initialise Video: %s", ::SDL_GetError());
         ::exit(EXIT_VIDEO);
@@ -256,12 +256,3 @@ void CSDL_ApplicationBase::OnPreEvents() {
         return EXIT_SUCCESS;
     }
 
-
-void CSDL_ApplicationBase::myglResizeScene( GLsizei w, GLsizei h ) {
-    glViewport ( 0, 0, ( GLsizei ) w, ( GLsizei ) h );
-    glMatrixMode ( GL_PROJECTION );
-    glLoadIdentity();
-    gluPerspective ( 40.0, ( GLfloat ) w / ( GLfloat ) h, 1.0, 1000.0 );
-    glMatrixMode ( GL_MODELVIEW );
-    glLoadIdentity();
-}

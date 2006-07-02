@@ -65,8 +65,10 @@ extern CSDL_ApplicationBase* g_pApp;
 class CSDL_ApplicationBase : public CSDL_EventHandler {
     public:
         /* constructor and destructor */
+        CSDL_ApplicationBase() { }
+
         CSDL_ApplicationBase(long flags);
-        ~CSDL_ApplicationBase();
+        virtual ~CSDL_ApplicationBase();
 
 
         CSDL_DisplaySurface* m_PrimarySurface;
@@ -97,9 +99,11 @@ class CSDL_ApplicationBase : public CSDL_EventHandler {
         Uint16 m_nScreenHeight;
         Uint8 m_nScreenBPP;
         Uint32 m_nScreenFlags;
-        int InitVideo();
+
+        bool InitVideo(); // OpenGL need a different setup
+
         int SetVideoMode(int width, int height, int bpp, int flags);
-        void ToggleFullscreen();
+        virtual void ToggleFullscreen();
 
 
         /* Audio handling */
@@ -135,8 +139,22 @@ class CSDL_ApplicationBase : public CSDL_EventHandler {
         void FPS_Update();
         Uint32 FPS_TimeLeft();
 
-
-        void myglResizeScene( GLsizei w, GLsizei h );
 };
+
+class CSDLGL_ApplicationBase : public CSDL_ApplicationBase {
+    public:
+        /* constructor and destructor */
+        CSDLGL_ApplicationBase();
+        ~CSDLGL_ApplicationBase();
+
+        bool InitVideoMode(int width, int height, int bpp);
+
+        virtual void ToggleFullscreen();
+        virtual void OnPostEvents();
+
+        virtual void ResizeGL( GLsizei w, GLsizei h );
+        virtual bool InitGL();
+};
+
 
 #endif // CSDL_H
