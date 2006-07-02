@@ -96,8 +96,5 @@ void DisplayBoundingBox(float *max, float *min, float r, float g, float b);
 void goOrtho();
 void goPerspective();
 
-bool InitGL();
-void ReSizeGLScene( GLsizei w, GLsizei h );
-
 
 #endif // CSDL_GL_H

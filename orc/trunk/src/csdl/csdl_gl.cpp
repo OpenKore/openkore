@@ -25,6 +25,103 @@
 #include "csdl_gl.h"
 
 
+
+/* constructor and destructor */
+CSDLGL_ApplicationBase::CSDLGL_ApplicationBase() : CSDL_ApplicationBase(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_OPENGL){
+
+    m_bIsOpenGL = true; // tell CSDL_ApplicationBase that it has a OpenGL descendant
+
+    // Set OpenGL pre-initialisation attributes
+    SDL_GL_SetAttribute( SDL_GL_DEPTH_SIZE, 16 );
+    SDL_GL_SetAttribute( SDL_GL_DOUBLEBUFFER, 1 ) ;
+
+
+
+} // constructor
+
+CSDLGL_ApplicationBase::~CSDLGL_ApplicationBase() {
+} // destructor
+
+bool CSDLGL_ApplicationBase::InitVideoMode(int width, int height, int bpp) {
+    SetVideoMode(width, height, bpp, ((m_bIsFullscreen) ? SDL_FULLSCREEN : 0) | ((m_bIsOpenGL) ? SDL_OPENGL : SDL_HWSURFACE|SDL_DOUBLEBUF));
+}
+
+void CSDLGL_ApplicationBase::ToggleFullscreen() {
+    m_nScreenFlags ^= SDL_FULLSCREEN;
+    m_bIsFullscreen = (m_nScreenFlags & SDL_FULLSCREEN) ? false : true;
+
+    if( SetVideoMode(m_nScreenWidth, m_nScreenHeight, m_nScreenBPP, m_nScreenFlags) ) {
+        InitGL();
+        ResizeGL(m_nScreenWidth, m_nScreenHeight);
+        // TODO: Reload textures
+    } else {
+        MsgBox("Unable to toggle fullscreen");
+    }
+
+}
+
+void CSDLGL_ApplicationBase::OnPostEvents() {
+    OnPaint(m_PrimarySurface, TICK_INTERVAL);   // Let our descendants do their dispaying
+    ::SDL_GL_SwapBuffers();                     // Bring it on screen
+
+    ::SDL_Delay(FPS_TimeLeft());                // Keep up the fixed frame rate, TODO: only code it in SDL_ApplicationBase
+     m_nNexttime += TICK_INTERVAL;
+     FPS_Update();
+}
+
+void CSDLGL_ApplicationBase::ResizeGL( GLsizei w, GLsizei h ) {
+    glViewport ( 0, 0, ( GLsizei ) w, ( GLsizei ) h );
+    glMatrixMode ( GL_PROJECTION );
+    glLoadIdentity();
+    gluPerspective ( 40.0, ( GLfloat ) w / ( GLfloat ) h, 1.0, 1000.0 );
+    glMatrixMode ( GL_MODELVIEW );
+    glLoadIdentity();
+}
+
+bool CSDLGL_ApplicationBase::InitGL() {
+    float fogColor[ 4 ] = {0.95f, 0.95f, 1.0f, 1.0f};
+    float ambience[ 4 ] = {0.3f, 0.3f, 0.3f, 1.0};      // The color of the light in the world
+    float diffuse[ 4 ] = {1.0f, 1.0f, 1.0f, 1.0};       // The color of the positioned light
+    float light0[ 3 ] = {1.0f, 1.0f, 1.0f};             // The color of the positioned light
+
+    glClearColor ( 1.0f, 1.0f, 1.0f, 0.0f );            // Set the clearing color and depth
+    glClearDepth( 1.0f );
+
+    glFogi( GL_FOG_MODE, GL_EXP2 );                     // Fog Mode
+    glFogfv( GL_FOG_COLOR, fogColor );                  // Set Fog Color
+    glFogf( GL_FOG_DENSITY, 0.05f );                    // How Dense Will The Fog Be
+    glHint( GL_FOG_HINT, GL_DONT_CARE );                // The Fog's calculation accuracy
+    glFogf( GL_FOG_START, 1.0f );                       // Fog Start Depth
+    glFogf( GL_FOG_END, 1000.0f );                      // Fog End Depth
+
+    glShadeModel ( GL_SMOOTH );
+
+    glLightfv( GL_LIGHT0, GL_AMBIENT, ambience );       // Set our ambience values (Default color without direct light)
+    glLightfv( GL_LIGHT0, GL_DIFFUSE, diffuse );        // Set our diffuse color (The light color)
+    glLightfv( GL_LIGHT0, GL_POSITION, light0 );        // This Sets our light position
+
+    glEnable( GL_COLOR_MATERIAL );
+    glEnable( GL_TEXTURE_2D );
+
+    glEnable( GL_LIGHTING );                            // This turns on lighting
+    glEnable( GL_LIGHT0 );                              // Turn this light on
+
+    glEnable( GL_DEPTH_TEST );                          // Enable z-buffer
+    glDepthFunc( GL_LEQUAL );
+
+    glEnable( GL_BLEND );                               // Enable Blending (disable alpha testing)
+    glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
+
+    glHint( GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST );
+    glEnable(GL_FOG);
+
+    glFrontFace(GL_CW);
+    glEnable(GL_CULL_FACE);
+
+    return true;                                        // Initialization Went OK
+}
+
+
 GLuint CSDL_GL_Texture::SDL_GL_LoadTexture( SDL_Surface *surface, GLfloat *texcoord, int alpha ) {
     GLuint texture;
     int w, h;
@@ -123,7 +220,7 @@ GLuint CSDL_GL_Texture::SDL_GL_LoadTexture( SDL_Surface *surface, GLfloat *texco
 
 
 void DisplayBoundingBox(float *max, float *min, float r, float g, float b) {
-    glDisable(GL_TEXTURE_2D);
+//    glDisable(GL_TEXTURE_2D);
     glDisable(GL_CULL_FACE);
     glEnable(GL_BLEND);
     glColor4f(r, g, b, 0.41);
@@ -162,7 +259,7 @@ void DisplayBoundingBox(float *max, float *min, float r, float g, float b) {
     glColor4f(1.0, 1.0, 1.0, 1.0);
     glDisable(GL_BLEND);
     glEnable(GL_CULL_FACE);
-    glEnable(GL_TEXTURE_2D);
+//    glEnable(GL_TEXTURE_2D);
 }
 
 void goOrtho() {
@@ -179,51 +276,3 @@ void goPerspective() {
     glMatrixMode( GL_MODELVIEW );
 }
 
-
-
-bool InitGL() {
-    glClearColor ( 1.0f, 1.0f, 1.0f, 0.0f );
-    glClearDepth( 1.0f );
-    glEnable( GL_TEXTURE_2D );
-
-    float fogColor[ 4 ] = {0.95f, 0.95f, 1.0f, 1.0f};
-
-    glFogi( GL_FOG_MODE, GL_EXP2 );    // Fog Mode
-    glFogfv( GL_FOG_COLOR, fogColor );    // Set Fog Color
-    glFogf( GL_FOG_DENSITY, 0.05f );    // How Dense Will The Fog Be
-    glHint( GL_FOG_HINT, GL_DONT_CARE );   // The Fog's calculation accuracy
-    glFogf( GL_FOG_START, 1000.0f );     // Fog Start Depth
-    glFogf( GL_FOG_END, 1000.0f );     // Fog End Depth
-
-//#ifdef LIGHT_ENABLE
-    float ambience[ 4 ] = {0.3f, 0.3f, 0.3f, 1.0};  // The color of the light in the world
-    float diffuse[ 4 ] = {1.0f, 1.0f, 1.0f, 1.0};   // The color of the positioned light
-    float light0[ 3 ] = {1.0f, 1.0f, 1.0f};       // The color of the positioned light
-    glLightfv( GL_LIGHT0, GL_AMBIENT, ambience );  // Set our ambience values (Default color without direct light)
-    glLightfv( GL_LIGHT0, GL_DIFFUSE, diffuse );  // Set our diffuse color (The light color)
-    glLightfv( GL_LIGHT0, GL_POSITION, light0 );     // This Sets our light position
-
-    glEnable(  GL_LIGHT0   );       // Turn this light on
-    glEnable(  GL_LIGHTING );       // This turns on lighting
-    glEnable( GL_COLOR_MATERIAL );
-//#endif
-
-    glShadeModel ( GL_SMOOTH );
-
-
-    glEnable( GL_DEPTH_TEST );
-// glDepthFunc(GL_LESS);
-    glDepthFunc( GL_LEQUAL );
-
-
-    glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );   // Enable Alpha Blending (disable alpha testing)
-    glEnable( GL_BLEND );              // Enable Blending       (disable alpha testing)
-
-    glHint( GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST );
-//    glEnable(GL_FOG);
-
-    glFrontFace(GL_CW);
-    glEnable(GL_CULL_FACE);
-
-    return true;          // Initialization Went OK
-}

@@ -370,7 +370,6 @@ void CRSM_Mesh::Render( bounding_box_t *box, ro_transf_t *ptransf ) {
     }
 
     BoundingBox();
-    //DisplayBoundingBox(&max[0], &min[0], 0, 0, 1);
 }
 
 
@@ -532,7 +531,7 @@ void CResource_Model_File::DisplayMesh( bounding_box_t *b, int n, ro_transf_t *p
 
     for ( int i = 0; i < m_nMeshes; i++ )
         if ( ( i != n ) && ( father[ i ] == n ) ) {
-            DisplayMesh( ( n == 0 ) ? b : NULL, i, &m_Mesh[ n ] ->m_Transf );
+          //  DisplayMesh( ( n == 0 ) ? b : NULL, i, &m_Mesh[ n ] ->m_Transf );
         }
 
     glPopMatrix();

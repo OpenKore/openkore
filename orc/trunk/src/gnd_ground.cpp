@@ -270,7 +270,7 @@ void GND::Display(CFrustum* pFrustum) {
 
     glGetFloatv(GL_MODELVIEW_MATRIX, &Mat[0]);
 
-    glEnable(GL_TEXTURE_2D);
+//    glEnable(GL_TEXTURE_2D);
     glColor4f(1.0f,1.0f,1.0f,1.0f);
 
     glFrontFace(GL_CCW);

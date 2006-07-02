@@ -1,12 +1,12 @@
 # depslib dependency file v1.0
-1151768374 d:\my projects\testit\src\csdl\csdl_gl.cpp
+1151838347 d:\my projects\testit\src\csdl\csdl_gl.cpp
 	"csdl_gl.h"
 
-1151018079 d:\my projects\testit\src\csdl\csdl_gl.h
+1151775585 d:\my projects\testit\src\csdl\csdl_gl.h
 	"csdl.h"
 	"../grf_interface.h"
 
-1151768411 d:\my projects\testit\src\csdl\csdl.h
+1151779293 d:\my projects\testit\src\csdl\csdl.h
 	<stdio.h>
 	<stdlib.h>
 	<stdarg.h>
@@ -62,7 +62,7 @@
 1150727413 d:\my projects\testit\src\3d_math.cpp
 	"3d_math.h"
 
-1151768176 d:\my projects\testit\src\csdl\csdl.cpp
+1151776735 d:\my projects\testit\src\csdl\csdl.cpp
 	"csdl.h"
 
 1151018079 d:\my projects\testit\src\csdl\csdl_audio.cpp
@@ -83,7 +83,7 @@
 1151765087 d:\my projects\testit\src\ro_types.h
 	<pshpack1.h>
 
-1151766969 d:\my projects\testit\src\rsm_model.h
+1151771386 d:\my projects\testit\src\rsm_model.h
 	<limits.h>
 	"3d_math.h"
 	"3d_frustum.h"
@@ -96,7 +96,7 @@
 
 1151018005 d:\my projects\testit\src\csdl\textfont8x8.h
 
-1150760796 d:\my projects\testit\src\gnd_ground.cpp
+1151838347 d:\my projects\testit\src\gnd_ground.cpp
 	"gnd_ground.h"
 	"grf_interface.h"
 
@@ -108,7 +108,7 @@
 1150727413 d:\my projects\testit\src\grf_interface.cpp
 	"grf_interface.h"
 
-1151766150 d:\my projects\testit\src\rsm_model.cpp
+1151837421 d:\my projects\testit\src\rsm_model.cpp
 	"rsm_model.h"
 	"grf_interface.h"
 	"memory_manager.h"
@@ -121,7 +121,7 @@
 
 1150681477 d:\my projects\testit\orc.h
 
-1151768954 d:\my projects\testit\src\orc_main.cpp
+1151838156 d:\my projects\testit\src\orc_main.cpp
 	<limits.h>
 	"../Orc.h"
 	"csdl/csdl.h"
