@@ -1604,12 +1604,39 @@ sub cmdFriend {
 
 }
 
-sub cmdHomunculus {
-	my (undef, $subcmd) = @_;
-	if ($subcmd eq "feed") {
-		sendHomunculusFeed();
-	} elsif ($subcmd eq "") {
-		error T("Usage: homunculus feed\n");
+ sub cmdHomunculus {
+ 	my (undef, $subcmd) = @_;
+	
+	if (!$homunculus{'ID'}) {
+		error T("Error: No Homunculus detected.\n");
+	} elsif ($subcmd eq "feed") {
+ 		sendHomunculusFeed();
+	} elsif ($subcmd eq "s" || $subcmd eq "status") {
+		my $hp_string = $char->{'hp'}. '/' .$char->{'hp_max'} . ' (' . int($homunculus{'hpPercent'}) . '%)';
+		my $sp_string = $homunculus{'sp'}."/".$homunculus{'sp_max'}." (".$homunculus{'spPercent'}."%)";
+		my $exp_string = formatNumber($homunculus{'exp'})."/".formatNumber($homunculus{'exp_max'})." (".sprintf("%.2f",$homunculus{'expPercent'})."%)";
+		
+		$msg = swrite(
+		("----------------- Homunculus Status --------------------\n" .
+		"Name: \@<<<<<<<<<<<<<<<<<<<<<<<<< HP: \@>>>>>>>>>>>>>>>>>>\n" .
+		"                                 SP: \@>>>>>>>>>>>>>>>>>>\n" .
+		"Level: \@<<   \@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n" .
+		"---------------------------------------------------------\n" .
+		"Atk: \@>>>    Matk     \@>>>    Hunger   \@>>>\n" .
+		"Hit: \@>>>    Critical \@>>>    Intimacy \@>>>\n" .
+		"Def: \@>>>    Mdef     \@>>>    Accessory\@>>>\n" .
+		"Flee:\@>>>    Aspd     \@>>>\n" .
+		"--------------------------------------------------------",
+		[$homunculus{'name'}, $hp_string, $sp_string,
+		$homunculus{'level'}, $exp_string, $homunculus{'atk'}, $homunculus{'matk'}, $homunculus{'hunger'},
+		$homunculus{'hit'}, $homunculus{'critical'}, $homunculus{'intimacy'},
+		$homunculus{'def'}, $homunculus{'mdef'}, $homunculus{'accessory'},
+		$homunculus{'flee'}, $homunculus{'aspd'}]));
+			
+		message($msg, "info");
+
+ 	} elsif ($subcmd eq "") {
+		error T("Usage: homunculus <feed>\n");
 	}
 }
 

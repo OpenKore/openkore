@@ -263,6 +263,8 @@ sub new {
 		'0207' => ['friend_request', 'a4 a4 Z24', [qw(accountID charID name)]],
 		'0209' => ['friend_response', 'C1 Z24', [qw(type name)]],
 		'020A' => ['friend_removed', 'a4 a4', [qw(friendAccountID friendCharID)]],
+		'0230' => ['homunculus_info', 'x2 V V',[qw(homunculusActorID)]],
+		'022E' => ['homunculus_status', 'Z24 C S16 L2', [qw(name name_flag lvl hunger intimacy accessory atk matk hit critical def mdef flee aspd hp hp_max sp sp_max exp exp_max)]],
 		'023A' => ['storage_password_request', 'v1', [qw(flag)]],
 		'023C' => ['storage_password_result', 'v1 v1', [qw(type val)]],
 		'023E' => ['storage_password_request', 'v1', [qw(flag)]],
@@ -728,8 +730,9 @@ sub actor_display {
 
 	#### Step 1: create/get the correct actor object ####
 
-	if ($jobs_lut{$args->{type}}) {
-		# Actor is a player
+	#if ($jobs_lut{$args->{type}}) {
+	if ($jobs_lut{$args->{type}} || ($args->{type} >= 6000 && $pvp == 0)) {
+		# Actor is a player (homunculus are considered players for now)
 		$actor = $playersList->getByID($args->{ID});
 		if (!defined $actor) {
 			$actor = new Actor::Player();
@@ -758,14 +761,11 @@ sub actor_display {
 		}
 		$actor->{nameID} = $nameID;
 
-	} elsif ($args->{type} >= 1000 || ($args->{type} >= 6000 && $pvp == 0)) {
+	#} elsif ($args->{type} >= 1000 || ($args->{type} >= 6000 && $pvp == 0)) {
+	} elsif ($args->{type} >= 1000) {
 		# Actor might be a monster
 		if ($args->{hair_style} == 0x64) {
-			# Actor is a pet or a homunculus
-			# When not in PVP mode, the Homunculus are recognized as pet.
-			# Otherwise, Homunculus are recognized as monsters.
-			# Right now, i'm setting the name of the monster to their monster id number.
-			# and not the owner-given names.
+			# Actor is a pet
 
 			$actor = $petsList->getByID($args->{ID});
 			if (!defined $actor) {
@@ -2260,6 +2260,38 @@ sub friend_response {
 		$friends{$ID}{'online'} = 1;
 		message TF("%s is now your friend\n", $incomingFriend{'name'});
 	}	
+}
+
+sub homunculus_info {
+	my ($self, $args) = @_;
+	$homunculus{'ID'} = $args->{homunculusActorID};
+}
+
+sub homunculus_status {
+	my ($self, $args) = @_;
+	$homunculus{'name'} = $args->{name};
+	$homunculus{'name_flag'} = $args->{name_flag};
+	$homunculus{'level'} = $args->{lvl};
+	$homunculus{'hunger'} = $args->{hunger};
+	$homunculus{'intimacy'} = $args->{intimacy};
+	$homunculus{'accessory'} = $args->{accessory};
+	$homunculus{'atk'} = $args->{atk};
+	$homunculus{'matk'} = $args->{matk};
+	$homunculus{'hit'} = $args->{hit};
+	$homunculus{'critical'} = $args->{critical};
+	$homunculus{'def'} = $args->{def};
+	$homunculus{'mdef'} = $args->{mdef};
+	$homunculus{'flee'} = $args->{flee};
+	$homunculus{'aspd'} = $args->{aspd};
+	$homunculus{'hp'} = $args->{hp};
+	$homunculus{'hp_max'} = $args->{hp_max};
+	$homunculus{'sp'} = $args->{sp};
+	$homunculus{'sp_max'} = $args->{sp_max};
+	$homunculus{'exp'} = $args->{exp};
+	$homunculus{'exp_max'} = $args->{exp_max};
+	$homunculus{'hpPercent'} = ($homunculus{'hp'} / $homunculus{'hp_max'}) * 100;
+	$homunculus{'expPercent'} = ($homunculus{'exp'} / $homunculus{'exp_max'}) * 100;
+	$homunculus{'spPercent'} = ($homunculus{'sp'} / $homunculus{'sp_max'}) * 100;
 }
 
 sub gameguard_grant {
