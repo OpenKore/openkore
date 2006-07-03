@@ -1,0 +1,67 @@
+What is the media server?
+
+The media server is a way for openkore to play sounds. It uses the SDL_mixer libraries, thus making it cross-platform (it works with Linux as well as Windows) across systems which SDL supports.
+
+
+Why a client-server design?
+
+OpenKore is most often used on the local computer - that is, on the computer that is sitting right in front (or near) you. However, OpenKore can also be used in a remote terminal (e.g. on a remote computer a hundred miles away from you). In a local host stuation, the sounds will play through the same computer as the bot and the server are running on. In a remote host situation, the bot will run in the remote terminal, while sounds will play at the computer where the server is running on (usually at the local computer). Having a client-server design makes the program more flexible.
+
+
+How do I run the media server?
+
+There are two parts to the media server: the client (plugin) and the server(mediaserver.pl). You would need to configure both in order to have sounds playing.
+
+Installing the plugin
+Get the mediaClient folder from the plugins module in SVN and copy that to the bot's (remote or local) plugin folder. In the bot's config.txt, add this line:
+
+  mediaServer your.ip.goes.here
+
+if the bot is remotely hosted. And that's it.
+
+Configuring the media server
+Running the server itself takes a bit more work, especially if you are running your bot remotely. As of now, there isn't any easy way of configuring the server (support for ease-of-use will be done once the media server is practically complete). So you would have to hardcode most of the stuff here.
+
+Before you can run the media server, you would need to have ActivePerl as well as SDL_perl installed. Get ActivePerl from www.activestate.com and after installing it, type this at a command prompt:
+
+  ppm install http://www.bribes.org/perl/ppm/SDL_Perl.ppd
+
+and ppm should install the required libraries for you. Make sure you have an internet connection when you do this. In Linux, just install libsdl and libsdl_perl from your favorite package distributor.
+
+If you're running your bot remotely, find this line in mediaserver.pl:
+
+  use constant MEDIA_SERVER_HOST => '127.0.0.1';
+
+and modify it accordingly. If you're running your bot locally, you don't have to configure anything else right now.
+
+The sounds can either be in ogg format (preferred) or in wav format. Sound files in the mp3 format aren't supported in Windows. Create a folder under MediaServer called "sounds" and under it, make a folder named "SFX "ALERT" and "BGM" - it should look like this:
+
+  openkore
+     |---src
+          |---MediaServer
+                   |---sounds
+                   |---ALERT
+                   |---SFX
+                   |---BGM
+
+Save all alert-related stuff in the ALERT folder, sound-effects related stuff in the SFX folder (not yet complete) and background-music stuff in the BGM folder.
+
+Configuring alerts: Inside the openkore/src/MediaServer/sounds/ALERT folder, create sound files with filenames based on this hash:
+
+  %ALERT = (
+	  public_chat => 'public_chat.ogg',
+	  private_message => 'private_message.ogg',
+	  system_chat => 'system_chat.ogg',
+	  guild_chat => 'guild_chat.ogg',
+	  party_chat => 'party_chat.ogg',
+	  shop_sold => 'shop_sold.ogg',
+  );
+
+and the specified file will play on the events associated with them.
+
+Running the media server:
+You can run mediaserver.pl by typing
+
+  perl mediaserver.pl
+
+at a command prompt inside the MediaServer folder.
