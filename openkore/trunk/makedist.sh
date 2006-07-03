@@ -1,11 +1,8 @@
 #!/bin/bash
-# This script creates a source tarball.
+# This script creates a source tarball for OpenKore, confpack and tablepack.
 
 PACKAGE=openkore
 VERSION=1.9.1
-TYPE=bz2
-# Uncomment the next line if you want a tar.gz archive
-# TYPE=gz
 
 DIRS=(.
 	src
@@ -66,8 +63,19 @@ elif [[ "$1" == "--bin" ]]; then
 	fi
 fi
 
-ADDITIONAL=(SConstruct SConscript)
+if [[ "$BINDIST" == "1" ]]; then
+	for F in start.exe wxstart.exe NetRedirect.dll; do
+		if [[ ! -f "$F" ]]; then
+			echo "Please put $F in the current folder."
+			exit 1
+		fi
+	done
+fi
+
+ADDITIONAL=()
 if [[ "$BINDIST" != "1" ]]; then
+	ADDITIONAL[${#ADDITIONAL[@]}]=SConstruct
+	ADDITIONAL[${#ADDITIONAL[@]}]=SConscript
 	ADDITIONAL[${#ADDITIONAL[@]}]=Distfiles
 	ADDITIONAL[${#ADDITIONAL[@]}]=makedist.sh
 fi
@@ -118,6 +126,10 @@ for D in ${DIRS[@]}; do
 	process "$D"
 done
 
+
+#######################################
+
+
 # Copy the confpack and tablepack files to the distribution's folder
 function findConfpackDir() {
 	if [[ -d confpack ]]; then
@@ -127,8 +139,7 @@ function findConfpackDir() {
 	elif [[ -d ../confpack ]]; then
 		confpackDir=../confpack
 	else
-		echo "Cannot find the confpack folder. Please put it in the current directory."
-		exit 1;
+		err "Cannot find the confpack folder. Please put it in the current directory."
 	fi
 }
 
@@ -140,37 +151,37 @@ function findTablepackDir() {
 	elif [[ -d ../tablepack ]]; then
 		tablepackDir=../tablepack
 	else
-		echo "Cannot find the tablepack folder. Please put it in the current directory."
-		exit 1;
+		err "Cannot find the tablepack folder. Please put it in the current directory."
 	fi
 }
 
 dir=`cd "$PACKAGEDIR"; pwd`
 findConfpackDir
 findTablepackDir
-make -C "$confpackDir" distdir DISTDIR="$dir/control"
-make -C "$tablepackDir" distdir DISTDIR="$dir/tables"
+make -C "$confpackDir" distdir DISTDIR="$dir/control" || err
+make -C "$tablepackDir" distdir DISTDIR="$dir/tables" || err
 
 # Convert openkore.pl to Unix line format, otherwise Unix users can't
 # execute it directly.
-perl src/build/dos2unix.pl "$PACKAGEDIR/openkore.pl"
-perl "$confpackDir/unix2dos.pl" "$PACKAGEDIR/News.txt"
+perl src/build/dos2unix.pl "$PACKAGEDIR/openkore.pl" || err
+perl "$confpackDir/unix2dos.pl" "$PACKAGEDIR/News.txt" || err
 
-# Stop if this is going to be a binary distribution
 if [[ "$BINDIST" == "1" ]]; then
-	rm -f "$PACKAGEDIR/Makefile"
-	echo
-	echo "====================="
-	echo "Directory '$PACKAGEDIR' created. Please add (wx)start.exe and NetRedirect.dll."
-	exit
-fi
+	# Create binary zipfile
+	cp XSTools.dll NetRedirect.dll "$PACKAGEDIR/src/auto/XSTools/" || err
 
-# Create tarball
-echo "Creating distribution archive..."
-if [ "$TYPE" = "gz" ]; then
-	tar -czf "$PACKAGEDIR.tar.gz" "$PACKAGEDIR" || err
-	echo "$PACKAGEDIR.tar.gz"
+	# Win32 binary
+	cp start.exe "$PACKAGEDIR/" || err
+	zip -9r "$PACKAGE-$VERSION-win32.zip" "$PACKAGEDIR" || err
+
+	# Win32 Wx binary
+	cp wxstart.exe "$PACKAGEDIR/" || err
+	rm -f "$PACKAGEDIR/start.exe"
+	zip -9r "$PACKAGE-wx-$VERSION.zip" "$PACKAGEDIR" || err
+
 else
+	# Create tarball
+	echo "Creating distribution archive..."
 	tar --bzip2 -cf "$PACKAGEDIR.tar.bz2" "$PACKAGEDIR" || err
 	echo "$PACKAGEDIR.tar.bz2"
 fi
