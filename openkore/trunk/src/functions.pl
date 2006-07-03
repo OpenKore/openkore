@@ -437,7 +437,7 @@ sub processStatisticsReporting {
 		$url .= "server=" . urlencode($config{master});
 		$url .= "&product=" . urlencode($Settings::NAME);
 		$url .= "&version=" . urlencode($Settings::VERSION);
-		$url .= "&uid=" . urlencode(md5_hex($config{master} . $config{username}));
+		$url .= "&uid=" . urlencode(md5_hex($config{master} . $config{username} . $userSeed));
 		$statisticsReporting{http} = new StdHttpReader($url);
 		debug "Posting anonymous usage statistics to $url\n", "statisticsReporting";
 	}
