@@ -179,6 +179,9 @@ if [[ "$BINDIST" == "1" ]]; then
 	rm -f "$PACKAGEDIR/start.exe"
 	zip -9r "$PACKAGE-wx-$VERSION.zip" "$PACKAGEDIR" || err
 
+	echo "$PACKAGE-$VERSION-win32.zip created"
+	echo "$PACKAGE-wx-$VERSION.zip created"
+
 else
 	# Create tarball
 	echo "Creating distribution archive..."
