@@ -448,6 +448,7 @@ foreach my $list ($monstersList, $playersList, $petsList, $npcsList, $portalsLis
 StdHttpReader::init();
 initStatVars();
 initRandomRestart();
+initUserSeed();
 initConfChange();
 Log::initLogFiles();
 $timeout{'injectSync'}{'time'} = time;

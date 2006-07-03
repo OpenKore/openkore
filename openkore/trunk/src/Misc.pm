@@ -123,6 +123,7 @@ our @EXPORT = (
 	getResponse
 	getSpellName
 	headgearName
+	initUserSeed
 	itemLog_clear
 	look
 	lookAtPosition
@@ -1907,6 +1908,36 @@ sub headgearName {
 	}
 
 	return main::itemName({nameID => $itemID});
+}
+
+##
+# Generate a unique seed for the current user and save it to
+# a file, or load the seed from that file if it exists.
+sub initUserSeed {
+	my $seedFile = "$Settings::logs_folder/seed.txt";
+	my $f;
+
+	if (-f $seedFile) {
+		if (open($f, "<", $seedFile)) {
+			binmode $f;
+			$userSeed = <$f>;
+			$userSeed =~ s/\n.*//s;
+			close($f);
+		} else {
+			$userSeed = '0';
+		}
+	} else {
+		$userSeed = '';
+		for (0..10) {
+			$userSeed .= rand(2 ** 49);
+		}
+
+		if (open($f, ">", $seedFile)) {
+			binmode $f;
+			print $f $userSeed;
+			close($f);
+		}
+	}
 }
 
 sub itemLog_clear {
