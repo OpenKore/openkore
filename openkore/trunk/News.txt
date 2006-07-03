@@ -8,7 +8,7 @@
 - Format of skills.txt have changed.
 
 ** Major updates in this release:
-- Much improved server compatibility. (Note: pRO Sakray is NOT supported yet!)
+- Much improved server compatibility. (Note: pRO Lighthalzen is NOT supported yet!)
 - Support for more maps.
 - Support for multiple languages. OpenKore has currently been translated to:
     Simplified Chinese, Portuguese, Thai, Tagalog, Indonesian
