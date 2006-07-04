@@ -124,6 +124,20 @@ sub beep {
 	STDOUT->flush;
 }
 
+sub title {
+	my ($self, $title) = @_;
+
+	if ($title) {
+		$self->{title} = $title;
+		if ($ENV{TERM} eq 'xterm' || $ENV{TERM} eq 'screen') {
+			print "\e]2;$title\a";
+			STDOUT->flush;
+		}
+	} else {
+		return $self->{title};
+	}
+}
+
 
 #######################
 
