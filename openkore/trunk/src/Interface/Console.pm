@@ -22,8 +22,8 @@
 # MODULE DESCRIPTION: Console Interface dynamic loader
 #
 # Loads the apropriate Console Interface for each system at runtime.
-# Primarily used to load Interface::Console::Win32 for windows systems and
-# Interface::Console::Other for systems that support proper STDIN handles
+# Primarily used to load Interface::Console::Win32 for Windows systems and
+# Interface::Console::Unix for Unix systems.
 
 package Interface::Console;
 
@@ -48,12 +48,12 @@ sub new {
 		return new Interface::Console::Win32();
 	} else {
 		# Linux/Unix
-		my $mod = 'Interface::Console::Other';
+		my $mod = 'Interface::Console::Unix';
 		my $str = "use $mod;";
 		eval ${\$str};
 		die $@ if $@;
-		Modules::register("$mod");
-		return new Interface::Console::Other();
+		Modules::register($mod);
+		return new Interface::Console::Unix();
 	}
 }
 

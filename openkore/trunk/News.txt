@@ -1,4 +1,13 @@
 ==================
+### 1.9.2
+==================
+
+Internal:
+- The Console::Other interface has been removed in favor of the Console::Unix
+  interface. This only affects OpenKore when running on a Unix, such as Linux.
+
+
+==================
 ### 1.9.1
 ==================
 
