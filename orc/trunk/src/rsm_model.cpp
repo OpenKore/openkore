@@ -369,7 +369,8 @@ void CRSM_Mesh::Render( bounding_box_t *box, ro_transf_t *ptransf ) {
         */
     }
 
-    BoundingBox();
+    //BoundingBox();
+    glPopMatrix();
 }
 
 
@@ -479,10 +480,14 @@ bool CResource_Model_File::LoadFromMemory( void* pData, uint32_t nSize ) {
 
     father[ 0 ] = 0;
 
-    for ( int i = 0; i < m_nMeshes; i++ )
-        for ( int j = 0; j < m_nMeshes; j++ )
-            if ( ( j != i ) && ( !strcmp( m_Mesh[j]->szParentName, m_Mesh[i]->szMeshName ) ) )
+    for ( int i = 0; i < m_nMeshes; i++ ) {
+        for ( int j = 0; j < m_nMeshes; j++ ) {
+            if ( ( j != i ) && ( strcmp( m_Mesh[j]->szParentName, m_Mesh[i]->szMeshName ) == 0) ) {
                 father[ j ] = i;
+            }
+        }
+    }
+
 
     BoundingBox();
 } // LoadFromMemory
@@ -494,21 +499,22 @@ void CResource_Model_File::BoundingBox() {
     for ( int i = 1; i < m_nMeshes; i++ ) {
         if ( father[ i ] == 0 )
             m_Mesh[ i ] ->BoundingBox( ( &m_Mesh[ 0 ] ->m_Transf ) );
+    }
 
-        for ( int bi = 0; bi < 3; bi++ ) {
-            box.max[ bi ] = m_Mesh[ 0 ] ->max[ bi ];
-            box.min[ bi ] = m_Mesh[ 0 ] ->min[ bi ];
+        for ( int i = 0; i < 3; i++ ) {
+            box.max[ i ] = m_Mesh[ 0 ] ->max[ i ];
+            box.min[ i ] = m_Mesh[ 0 ] ->min[ i ];
 
             for ( int j = 1; j < m_nMeshes; j++ ) {
                 if ( father[ j ] == 0 ) {
-                    box.max[ bi ] = MAX( m_Mesh[ j ] ->max[ bi ], box.max[ bi ] );
-                    box.min[ bi ] = MIN( m_Mesh[ j ] ->min[ bi ], box.min[ bi ] );
+                    box.max[ i ] = MAX( m_Mesh[ j ] ->max[ i ], box.max[ i ] );
+                    box.min[ i ] = MIN( m_Mesh[ j ] ->min[ i ], box.min[ i ] );
                 }
             }
 
-            box.range[ bi ] = ( box.max[ bi ] + box.min[ bi ] ) / 2.0;
+            box.range[ i ] = ( box.max[ i ] + box.min[ i ] ) / 2.0;
         }
-    }
+//    }
 
 } //
 
@@ -529,10 +535,11 @@ void CResource_Model_File::DisplayMesh( bounding_box_t *b, int n, ro_transf_t *p
     glPushMatrix();
     m_Mesh[ n ] ->Render( b, ptransf );
 
-    for ( int i = 0; i < m_nMeshes; i++ )
+    for ( int i = 0; i < m_nMeshes; i++ ) {
         if ( ( i != n ) && ( father[ i ] == n ) ) {
-          //  DisplayMesh( ( n == 0 ) ? b : NULL, i, &m_Mesh[ n ] ->m_Transf );
+          DisplayMesh( ( n == 0 ) ? b : NULL, i, &m_Mesh[ n ] ->m_Transf );
         }
+    }
 
     glPopMatrix();
 }

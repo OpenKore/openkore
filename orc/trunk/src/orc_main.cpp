@@ -258,10 +258,10 @@ void Orc::OnPaint( CSDL_Surface* display, double dt ) {
             m_pWorld->m_RealModels[ m_pWorld->m_Models[ i ].iModelID ].Render( m_pWorld->m_Models[ i ].position );
 
             if(bShowBoxes) {
-                m_pWorld->m_RealModels[ m_pWorld->m_Models[ i ].iModelID ].m_Mesh[0]->BoundingBox();
+                m_pWorld->m_RealModels[ m_pWorld->m_Models[ i ].iModelID ].BoundingBox();
                 DisplayBoundingBox(
-                    &m_pWorld->m_RealModels[ m_pWorld->m_Models[ i ].iModelID ].m_Mesh[0]->max[0],
-                    &m_pWorld->m_RealModels[ m_pWorld->m_Models[ i ].iModelID ].m_Mesh[0]->min[0], 0, 0, 1
+                    &m_pWorld->m_RealModels[ m_pWorld->m_Models[ i ].iModelID ].box.max[0],
+                    &m_pWorld->m_RealModels[ m_pWorld->m_Models[ i ].iModelID ].box.min[0], 0, 0, 1
                 );
             }
         }

@@ -41,7 +41,7 @@ public:
     virtual ~CRSM_Mesh();
 
     int LoadFromMemory( void* pData, uint32_t nSize, bool bIsParent );
-    void Render( bounding_box_t *box, ro_transf_t *ptransf );
+    void Render( bounding_box_t *box, ro_transf_t *ptransf = NULL );
     void BoundingBox( ro_transf_t *ptransf = NULL );
 
     bool only;
