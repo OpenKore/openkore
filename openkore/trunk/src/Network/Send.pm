@@ -448,7 +448,7 @@ sub sendAttack {
 		pack("C*", 0x03, 0x04, 0x01, 0xb7, 0x39, 0x03, 0x00, $flag);
 
 	} elsif ($config{serverType} == 7) {
-		error "Mutating attack packet not yet implemented.\n";
+		error "Your server is not supported because it uses padded packets.\n";
 		if (AI::action() eq "NPC") {
 			error "Failed to talk to monster NPC.\n";
 			AI::dequeue();
@@ -1829,7 +1829,7 @@ sub sendSit {
 		pack("C*", 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02);
 
 	} elsif ($config{serverType} == 7) {
-		error "Mutating sit packet not yet implemented.\n";
+		error "Your server is not supported because it uses padded packets.\n";
 		if (AI::action() eq "sitting") {
 			error "Failed to sit.\n";
 			AI::dequeue();
@@ -1894,7 +1894,7 @@ sub sendSkillUse {
 			pack("v", 0x0060) . $targetID;
 
 	} elsif ($config{serverType} == 7) {
-		error "Mutating skill use packet not yet implemented.\n";
+		error "Your server is not supported because it uses padded packets.\n";
 		if (AI::action() eq 'teleport') {
 			error "Failed to use teleport skill.\n";
 			AI::dequeue();
@@ -2173,7 +2173,7 @@ sub sendStand {
 		pack("C*", 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x03);
 
 	} elsif ($config{serverType} == 7) {
-		error "Mutating stand packet not yet implemented.\n";
+		error "Your server is not supported because it uses padded packets.\n";
 		if (AI::action() eq "standing") {
 			error "Failed to stand.\n";
 			AI::dequeue();
