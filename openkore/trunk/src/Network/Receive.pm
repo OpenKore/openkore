@@ -2264,34 +2264,34 @@ sub friend_response {
 
 sub homunculus_info {
 	my ($self, $args) = @_;
-	$homunculus{'ID'} = $args->{homunculusActorID};
+	$char->{'homunculus'}{'ID'} = $args->{homunculusActorID};
 }
 
 sub homunculus_status {
 	my ($self, $args) = @_;
-	$homunculus{'name'} = $args->{name};
-	$homunculus{'name_flag'} = $args->{name_flag};
-	$homunculus{'level'} = $args->{lvl};
-	$homunculus{'hunger'} = $args->{hunger};
-	$homunculus{'intimacy'} = $args->{intimacy};
-	$homunculus{'accessory'} = $args->{accessory};
-	$homunculus{'atk'} = $args->{atk};
-	$homunculus{'matk'} = $args->{matk};
-	$homunculus{'hit'} = $args->{hit};
-	$homunculus{'critical'} = $args->{critical};
-	$homunculus{'def'} = $args->{def};
-	$homunculus{'mdef'} = $args->{mdef};
-	$homunculus{'flee'} = $args->{flee};
-	$homunculus{'aspd'} = $args->{aspd};
-	$homunculus{'hp'} = $args->{hp};
-	$homunculus{'hp_max'} = $args->{hp_max};
-	$homunculus{'sp'} = $args->{sp};
-	$homunculus{'sp_max'} = $args->{sp_max};
-	$homunculus{'exp'} = $args->{exp};
-	$homunculus{'exp_max'} = $args->{exp_max};
-	$homunculus{'hpPercent'} = ($homunculus{'hp'} / $homunculus{'hp_max'}) * 100;
-	$homunculus{'expPercent'} = ($homunculus{'exp'} / $homunculus{'exp_max'}) * 100;
-	$homunculus{'spPercent'} = ($homunculus{'sp'} / $homunculus{'sp_max'}) * 100;
+	$char->{'homunculus'}{'name'} = $args->{name};
+	$char->{'homunculus'}{'name_flag'} = $args->{name_flag};
+	$char->{'homunculus'}{'level'} = $args->{lvl};
+	$char->{'homunculus'}{'hunger'} = $args->{hunger};
+	$char->{'homunculus'}{'intimacy'} = $args->{intimacy};
+	$char->{'homunculus'}{'accessory'} = $args->{accessory};
+	$char->{'homunculus'}{'atk'} = $args->{atk};
+	$char->{'homunculus'}{'matk'} = $args->{matk};
+	$char->{'homunculus'}{'hit'} = $args->{hit};
+	$char->{'homunculus'}{'critical'} = $args->{critical};
+	$char->{'homunculus'}{'def'} = $args->{def};
+	$char->{'homunculus'}{'mdef'} = $args->{mdef};
+	$char->{'homunculus'}{'flee'} = $args->{flee};
+	$char->{'homunculus'}{'aspd'} = $args->{aspd};
+	$char->{'homunculus'}{'hp'} = $args->{hp};
+	$char->{'homunculus'}{'hp_max'} = $args->{hp_max};
+	$char->{'homunculus'}{'sp'} = $args->{sp};
+	$char->{'homunculus'}{'sp_max'} = $args->{sp_max};
+	$char->{'homunculus'}{'exp'} = $args->{exp};
+	$char->{'homunculus'}{'exp_max'} = $args->{exp_max};
+	$char->{'homunculus'}{'hpPercent'} = ($char->{'homunculus'}{'hp'} / $char->{'homunculus'}{'hp_max'}) * 100;
+	$char->{'homunculus'}{'expPercent'} = ($char->{'homunculus'}{'exp'} / $char->{'homunculus'}{'exp_max'}) * 100;
+	$char->{'homunculus'}{'spPercent'} = ($char->{'homunculus'}{'sp'} / $char->{'homunculus'}{'sp_max'}) * 100;
 }
 
 sub gameguard_grant {
