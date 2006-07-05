@@ -142,7 +142,7 @@ sub checkLevel {
 ##############################
 
 ##
-# $skill->id()
+# $Skill->id()
 #
 # Returns the ID number of the skill.
 sub id {
@@ -151,7 +151,7 @@ sub id {
 }
 
 ##
-# $skill->handle()
+# $Skill->handle()
 #
 # Returns the handle of the skill.
 sub handle {
@@ -160,7 +160,7 @@ sub handle {
 }
 
 ##
-# $skill->name()
+# String $Skill->name()
 #
 # Returns the name of the skill.
 sub name {
@@ -171,7 +171,7 @@ sub name {
 sub complete {
 	my $name = quotemeta(shift);
 	my @matches;
-	foreach my $skill (@{$skills{id}}) {
+	foreach my $skill (values %{$skills{id}}) {
 		if ($skill->{name} =~ /^$name/i) {
 			push @matches, $skill->{name};
 		}
@@ -180,11 +180,11 @@ sub complete {
 }
 
 ##
-# use([target] [lvl])
+# $Skill->use([target] [lvl])
 # target: skill target
 # lvl: level of the skill
 #
-# uses skill on target
+# Uses skill on target.
 sub use {
 	my ($self,$target,$lvl) = @_;
 	$target = $accountID unless $target;
@@ -193,7 +193,7 @@ sub use {
 }
 
 ##
-# level()
+# $Skill->level()
 # Return: SkillLvl
 #
 sub level {
@@ -203,7 +203,7 @@ sub level {
 }
 
 ##
-# sp([lvl])
+# $Skill->sp([lvl])
 # lvl: of the skill
 # Return: sp cost
 #
@@ -223,7 +223,7 @@ sub sp {
 }
 
 ##
-# checkSp([lvl])
+# $Skill->checkSp([lvl])
 # lvl: of the skill
 # Return: can use or not
 #
