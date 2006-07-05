@@ -3,7 +3,7 @@
 # http://sources.redhat.com/cygwin/
 
 PACKAGE=tablepack
-VERSION=1.9.1
+VERSION=1.9.2
 DIR=tables
 FILENAME=$(PACKAGE)-$(VERSION).zip
 VERSIONFILE=TablepackVersion.txt
