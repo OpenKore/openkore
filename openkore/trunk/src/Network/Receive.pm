@@ -5119,7 +5119,8 @@ sub unequip_item {
 
 	change_to_constate5();
 	my $invIndex = findIndex($char->{inventory}, "index", $args->{index});
-	$char->{inventory}[$invIndex]{equipped} = "";
+	delete $char->{inventory}[$invIndex]{equipped} if ($char->{inventory}[$invIndex]);
+
 	if ($args->{type} == 10) {
 		delete $char->{equipment}{arrow};
 	} else {
@@ -5130,7 +5131,11 @@ sub unequip_item {
 			}
 		}
 	}
-	message TF("You unequip %s (%s) - %s\n", $char->{inventory}[$invIndex]{name}, $invIndex, $equipTypes_lut{$char->{inventory}[$invIndex]{type_equip}}), 'inventory';
+
+	my $item = $char->{inventory}[$invIndex];
+	if ($item) {
+		message TF("You unequip %s (%s) - %s\n", $item->{name}, $invIndex, $equipTypes_lut{$item->{type_equip}}), 'inventory';
+	}
 }
 
 sub unit_levelup {
