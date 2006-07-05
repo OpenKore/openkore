@@ -1607,14 +1607,15 @@ sub cmdFriend {
  sub cmdHomunculus {
  	my (undef, $subcmd) = @_;
 	
-	if (!$homunculus{'ID'}) {
+	if (!$char->{'homunculus'}{'ID'}) {
 		error T("Error: No Homunculus detected.\n");
 	} elsif ($subcmd eq "feed") {
  		sendHomunculusFeed();
 	} elsif ($subcmd eq "s" || $subcmd eq "status") {
-		my $hp_string = $char->{'hp'}. '/' .$char->{'hp_max'} . ' (' . int($homunculus{'hpPercent'}) . '%)';
-		my $sp_string = $homunculus{'sp'}."/".$homunculus{'sp_max'}." (".$homunculus{'spPercent'}."%)";
-		my $exp_string = formatNumber($homunculus{'exp'})."/".formatNumber($homunculus{'exp_max'})." (".sprintf("%.2f",$homunculus{'expPercent'})."%)";
+	sendHomunculusGetStats();
+		my $hp_string = $char->{'homunculus'}{'hp'}. '/' .$char->{'homunculus'}{'hp_max'} . ' (' . sprintf("%.2f",$char->{'homunculus'}{'hpPercent'}) . '%)';
+		my $sp_string = $char->{'homunculus'}{'sp'}."/".$char->{'homunculus'}{'sp_max'}." (".sprintf("%.2f",$char->{'homunculus'}{'spPercent'})."%)";
+		my $exp_string = formatNumber($char->{'homunculus'}{'exp'})."/".formatNumber($char->{'homunculus'}{'exp_max'})." (".sprintf("%.2f",$char->{'homunculus'}{'expPercent'})."%)";
 		
 		$msg = swrite(
 		("----------------- Homunculus Status --------------------\n" .
@@ -1622,16 +1623,16 @@ sub cmdFriend {
 		"                                 SP: \@>>>>>>>>>>>>>>>>>>\n" .
 		"Level: \@<<   \@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n" .
 		"---------------------------------------------------------\n" .
-		"Atk: \@>>>    Matk     \@>>>    Hunger   \@>>>\n" .
-		"Hit: \@>>>    Critical \@>>>    Intimacy \@>>>\n" .
-		"Def: \@>>>    Mdef     \@>>>    Accessory\@>>>\n" .
-		"Flee:\@>>>    Aspd     \@>>>\n" .
+		"Atk: \@>>>    Matk:     \@>>>    Hunger:    \@>>>\n" .
+		"Hit: \@>>>    Critical: \@>>>    Intimacy:  \@>>>\n" .
+		"Def: \@>>>    Mdef:     \@>>>    Accessory: \@>>>\n" .
+		"Flee:\@>>>    Aspd:     \@>>>\n" .
 		"--------------------------------------------------------",
-		[$homunculus{'name'}, $hp_string, $sp_string,
-		$homunculus{'level'}, $exp_string, $homunculus{'atk'}, $homunculus{'matk'}, $homunculus{'hunger'},
-		$homunculus{'hit'}, $homunculus{'critical'}, $homunculus{'intimacy'},
-		$homunculus{'def'}, $homunculus{'mdef'}, $homunculus{'accessory'},
-		$homunculus{'flee'}, $homunculus{'aspd'}]));
+		[$char->{'homunculus'}{'name'}, $hp_string, $sp_string,
+		$char->{'homunculus'}{'level'}, $exp_string, $char->{'homunculus'}{'atk'}, $char->{'homunculus'}{'matk'}, $char->{'homunculus'}{'hunger'},
+		$char->{'homunculus'}{'hit'}, $char->{'homunculus'}{'critical'}, $char->{'homunculus'}{'intimacy'},
+		$char->{'homunculus'}{'def'}, $char->{'homunculus'}{'mdef'}, $char->{'homunculus'}{'accessory'},
+		$char->{'homunculus'}{'flee'}, $char->{'homunculus'}{'aspd'}]));
 			
 		message($msg, "info");
 
