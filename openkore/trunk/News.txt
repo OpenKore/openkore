@@ -3,7 +3,8 @@
 ==================
 
 Bug fixes:
-- Fixed a crash when unequipping items (bug #16).
+- Fixed a crash when unequipping items (bug #16)
+- Fixed an auto-completion crash bug (bug #24)
 
 Internal:
 - The Console::Other interface has been removed in favor of the Console::Unix
