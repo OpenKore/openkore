@@ -16,7 +16,6 @@ prt_fild05 270 212 prt_sewb1 135 248 0 c r0
 aldebaran 223 222 xmas_fild01 78 68 0 c r1 c c n
 moc_fild12 35 303 cmd_fild08 331 319 0 c r0 n
 ayothaya 152 68 alberta 247 42 0 c r0 n
-ayo_fild01 129 197 ayo_fild02 100 100 0 c c c c c r0 c c c
 
 # Uncomment these fields if you wish to use Kapra warps
 #yuno 142 183 prontera 116 72 1800 c c c c c r0
@@ -299,11 +298,16 @@ ayothaya 202 161 ayo_in01 31 108
 ayothaya 62 104 ayo_in01 191 183
 ayothaya 208 283 ayo_in02 100 152
 ayo_fild01 32 240 ayothaya 273 176
+ayo_fild01 129 197 ayo_fild02 100 100 0 c c c c c r0 c c c
+ayo_fild01 129 197 ayo_fild02 30 135 c w1 c w1 c1 w1 c1 w1 c1 r0 c w1 c w1 c n
 ayo_fild02 285 149 ayo_dun01 275 18
+ayo_fild02 25 154 ayo_fild01 115 200 c r0 c n
 ayo_in01 31 111 ayothaya 202 161
 ayo_in01 194 183 ayothaya 62 104
 ayo_in02 100 148 ayothaya 208 283
-ayo_dun01 274 14 ayo_fild02 285 149
+ayo_dun01 274 14 ayo_fild02 279 150
+ayo_dun01 24 283 ayo_dun02 23 26 c n
+ayo_dun02 24 22 ayo_dun01 24 279
 beach_dun 276 67 comodo 24 214
 beach_dun2 154 13 comodo 176 358
 beach_dun2 258 244 um_fild01 31 274
