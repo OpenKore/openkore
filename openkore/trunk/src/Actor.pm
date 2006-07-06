@@ -23,7 +23,9 @@
 #
 # An actor object is also a hash.
 #
-# Child classes: @MODULE(Actor::Monster), @MODULE(Actor::Player) and @MODULE(Actor::You)
+# Child classes: @MODULE(Actor::Monster), @MODULE(Actor::Player), @MODULE(Actor::You),
+# @MODULE(Actor::Item), @MODULE(Actor::Pet), @MODULE(Actor::Party), @MODULE(Actor::NPC),
+# @MODULE(Actor::Portal)
 
 package Actor;
 

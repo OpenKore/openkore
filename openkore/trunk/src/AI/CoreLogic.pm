@@ -1118,9 +1118,9 @@ sub processAttack {
 			}
 
 			if ($args->{attackMethod}{type} eq "weapon" && timeOut($timeout{ai_attack})) {
-				if (Item::scanConfigAndCheck("attackEquip")) {
+				if (Actor::Item::scanConfigAndCheck("attackEquip")) {
 					#check if item needs to be equipped
-					Item::scanConfigAndEquip("attackEquip");
+					Actor::Item::scanConfigAndEquip("attackEquip");
 				} else {
 					sendAttack($net, $ID,
 						($config{'tankMode'}) ? 0 : 7);
@@ -1255,9 +1255,9 @@ sub processSkillUse {
 			warning T("Timeout equiping for skill\n");
 			AI::dequeue;
 			${$args->{ret}} = 'equip timeout' if ($args->{ret});
-		} elsif (Item::scanConfigAndCheck("$args->{prefix}_equip")) {
+		} elsif (Actor::Item::scanConfigAndCheck("$args->{prefix}_equip")) {
 			#check if item needs to be equipped
-			Item::scanConfigAndEquip("$args->{prefix}_equip");
+			Actor::Item::scanConfigAndEquip("$args->{prefix}_equip");
 		} elsif (timeOut($args->{waitBeforeUse})) {
 			if (defined $args->{monsterID} && !defined $monsters{$args->{monsterID}}) {
 				# This skill is supposed to be used for attacking a monster, but that monster has died
@@ -3484,7 +3484,7 @@ sub processAutoEquip {
 			 && (!$config{"equipAuto_${i}_target"} || (defined $monster && existsInList($config{"equipAuto_$i" . "_target"}, $monster->{name})))
 			 && checkMonsterCondition("equipAuto_${i}_target", $monster)
 			 && checkSelfCondition("equipAuto_$i")
-			 && Item::scanConfigAndCheck("equipAuto_$i")
+			 && Actor::Item::scanConfigAndCheck("equipAuto_$i")
 			) {
 				foreach my $slot (values %equipSlot_lut) {
 					if (exists $config{"equipAuto_$i"."_$slot"}) {
@@ -3497,7 +3497,7 @@ sub processAutoEquip {
 
 		if (%eq_list) {
 			debug "Auto-equipping items\n", "equipAuto";
-			Item::bulkEquip(\%eq_list);
+			Actor::Item::bulkEquip(\%eq_list);
 		}
 		$timeout{ai_item_equip_auto}{time} = time;
 

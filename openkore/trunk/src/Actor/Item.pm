@@ -1,6 +1,6 @@
 #########################################################################
 #  OpenKore - Item object
-#  Copyright (c) 2005 OpenKore Team
+#  Copyright (c) 2005, 2006 OpenKore Team
 #
 #  This software is open source, licensed under the GNU General Public
 #  License, version 2.
@@ -16,11 +16,9 @@
 ##
 # MODULE DESCRIPTION: Inventory item object
 #
-# All members in $char->{inventory} are of the Item class.
-#
-# TODO: move the item functions from Misc.pm to Item.pm
+# All members in $char->{inventory} are of the Actor::Item class.
 
-package Item;
+package Actor::Item;
 
 use strict;
 use Carp::Assert;
@@ -28,6 +26,8 @@ use Scalar::Util;
 use Time::HiRes qw(time);
 
 use Globals;
+use Actor;
+use base qw(Actor);
 use Utils;
 use Log qw(message error warning debug);
 use Network::Send;
@@ -52,7 +52,7 @@ sub _not_is {
 }
 
 sub _eq {
-	return UNIVERSAL::isa($_[0], 'Item') && UNIVERSAL::isa($_[1], 'Item')
+	return UNIVERSAL::isa($_[0], 'Actor::Item') && UNIVERSAL::isa($_[1], 'Actor::Item')
 		&& $_[0]->{nameID} == $_[1]->{nameID};
 }
 
@@ -75,13 +75,14 @@ our @slots = qw(
 ##############################
 
 ##
-# Item Item->new()
+# Actor::Item Actor::Item->new()
 #
-# Creates a new Item object.
+# Creates a new Actor::Item object.
 sub new {
 	my $class = $_[0];
 	my %self = (
 		name => 'Uninitialized Item',
+		actorType => 'Item',
 		index => 0,
 		amount => 0,
 		type => 0,
@@ -99,26 +100,26 @@ sub new {
 ##############################
 
 ##
-# Item::get(name, skipIndex, notEquipped)
+# Actor::Item::get(name, skipIndex, notEquipped)
 # item: can be either an object itself, an ID or a name.
 # skipIndex: tells this function to not select a certain item (used for getting another item with the same name).
 # notEquipped: do not select unequipped items.
-# Returns: an Item object, or undef if not found.
+# Returns: an Actor::Item object, or undef if not found.
 #
 # Find an item in the inventory, based on the search criteria specified by the parameters.
 #
-# See also: Item::getMultiple()
+# See also: Actor::Item::getMultiple()
 sub get {
 	my ($name, $skipIndex, $notEquipped) = @_;
 
 	return undef if (!defined $name);
-	return $name if UNIVERSAL::isa($name, 'Item');
+	return $name if UNIVERSAL::isa($name, 'Actor::Item');
 
 	# user supplied an inventory index
 	if ($name =~ /^\d+$/) {
 		my $item = $char->{inventory}[$name];
 		return undef unless $item;
-		assert(UNIVERSAL::isa($item, 'Item')) if DEBUG;
+		assert(UNIVERSAL::isa($item, 'Actor::Item')) if DEBUG;
 		return $item;
 
 	# user supplied an item name
@@ -133,15 +134,15 @@ sub get {
 		my $item = $char->{inventory}[$index];
 		return undef unless $item;
 
-		assert(UNIVERSAL::isa($item, 'Item')) if DEBUG;
+		assert(UNIVERSAL::isa($item, 'Actor::Item')) if DEBUG;
 		return $item;
 	}
 }
 
 ##
-# Item::getMultiple(searchPattern)
+# Actor::Item::getMultiple(searchPattern)
 # searchString: a search pattern.
-# Returns: an array of Item objects.
+# Returns: an array of Actor::Item objects.
 #
 # Select one or more items in the inventory. $searchPattern has the following syntax:
 # <pre>index1,index2,...,indexN</pre>
@@ -154,11 +155,11 @@ sub getMultiple {
 	foreach my $index (@temp) {
 		if ($index =~ /(\d+)-(\d+)/) {
 			for ($1..$2) {
-				my $item = Item::get($_);
+				my $item = Actor::Item::get($_);
 				push(@items, $item) if ($item);
 			}
 		} else {
-			my $item = Item::get($index);
+			my $item = Actor::Item::get($index);
 			push @items, $item if ($item);
 		}
 	}
@@ -166,14 +167,14 @@ sub getMultiple {
 }
 
 ##
-# Item::bulkEquip(list)
-# list: a hash containing slot => item, where slot is "leftHand" or "rightHand", and item is an item identifier as recognized by Item::get().
+# Actor::Item::bulkEquip(list)
+# list: a hash containing slot => item, where slot is "leftHand" or "rightHand", and item is an item identifier as recognized by Actor::Item::get().
 #
 # Equip many items in one batch.
 #
 # Example:
 # %list = (leftHand => 'Katar', rightHand => 10);
-# Item::bulkEquip(\%list);
+# Actor::Item::bulkEquip(\%list);
 sub bulkEquip {
 	my $list = shift;
 
@@ -182,13 +183,13 @@ sub bulkEquip {
 	my ($item, $rightHand, $rightAccessory);
 	foreach (keys %{$list}) {
 		if (!exists $equipSlot_rlut{$_}) {
-			debug "Wrong Itemslot specified: $_\n",'Item';
+			debug "Wrong Itemslot specified: $_\n",'Actor::Item';
 		}
 
 		my $skipIndex;
 		$skipIndex = $rightHand if ($_ eq 'leftHand');
 		$skipIndex = $rightAccessory if ($_ eq 'leftAccessory');
-		$item = Item::get($list->{$_}, $skipIndex, 1);
+		$item = Actor::Item::get($list->{$_}, $skipIndex, 1);
 
 		next if !$item;
 
@@ -200,7 +201,7 @@ sub bulkEquip {
 }
 
 ##
-# Item::scanConfigAndEquip(prefix)
+# Actor::Item::scanConfigAndEquip(prefix)
 #
 # prefix: is used to scan for slots
 #
@@ -225,11 +226,11 @@ sub scanConfigAndEquip {
 }
 
 ##
-# Item::scanConfigAndCheck(prefix)
+# Actor::Item::scanConfigAndCheck(prefix)
 # prefix: is used to scan for slots.
 # Returns: whether there is a item that needs to be equipped.
 #
-# Similiar to Item::scanConfigAndEquip() but only checks if a Item needs to be equipped.
+# Similiar to Actor::Item::scanConfigAndEquip() but only checks if a Actor::Item needs to be equipped.
 sub scanConfigAndCheck {
 	my $prefix = $_[0];
 	return 0 unless $prefix;
@@ -248,7 +249,7 @@ sub scanConfigAndCheck {
 
 
 ##
-# Item::queueEquip(count)
+# Actor::Item::queueEquip(count)
 # count: how many items need to be equipped.
 #
 # Queues equip sequence.
@@ -283,13 +284,13 @@ sub UnEquipByType {
 ################################
 
 ##
-# String $Item->{name}
+# String $ActorItem->{name}
 # Invariant: defined(value)
 #
 # The name for this item.
 
 ##
-# int $Item->{index}
+# int $ActorItem->{index}
 # Invariant: value >= 0
 #
 # The index of this item in the inventory, as stored on the RO server. It is usually
@@ -297,44 +298,44 @@ sub UnEquipByType {
 # to the RO server.
 # This index does not necessarily equals the inventory index, as stored by OpenKore.
 #
-# Ssee also: $Item->{invIndex}
+# Ssee also: $ActorItem->{invIndex}
 
 ##
-# int $Item->{amount}
+# int $ActorItem->{amount}
 # Invariant: value >= 0
 #
 # The amount of this item in the inventory.
 
 ##
-# int $Item->{type}
+# int $ActorItem->{type}
 # Invariant: value >= 0
 #
 # The item type (usable, unusable, armor, etc.), as defined by itemtypes.txt.
 
 ##
-# boolean $Item->{equipped}
+# boolean $ActorItem->{equipped}
 #
 # Whether this item is currently equipped.
 
 ##
-# boolean $Item->{identified}
+# boolean $ActorItem->{identified}
 #
 # Whether this item is identified.
 
 ##
-# int $Item->{nameID}
+# int $ActorItem->{nameID}
 # Invariant: value >= 0
 #
 # The ID of this item. This ID is unique for each item class.
 # Use this in combination with %items_lut to retrieve the item name.
 
 ##
-# int $Item->{invIndex}
+# int $ActorItem->{invIndex}
 #
 # The index of this item in the inventory data structure, as stored by OpenKore.
 # This index does not necessarily correspond with the index as stored by the RO server.
 #
-# See also: $Item->{index}
+# See also: $ActorItem->{index}
 
 
 ################################
@@ -342,7 +343,7 @@ sub UnEquipByType {
 ################################
 
 ##
-# $item->nameString()
+# String $ActorItem->nameString()
 # Returns: the item name, in the form of "My Item [number of slots]".
 sub nameString {
 	my $self = shift;
@@ -350,11 +351,11 @@ sub nameString {
 }
 
 ##
-# $item->equippedInSlot(slot)
+# $ActorItem->equippedInSlot(slot)
 # slot: slot to check
 # Returns: wheter item is equipped in $slot
 sub equippedInSlot {
-	my ($self,$slot) = @_;
+	my ($self, $slot) = @_;
 	return ($self->{equipped} & $equipSlot_rlut{$slot});
 }
 
@@ -363,7 +364,7 @@ sub equippedInSlot {
 #}
 
 ##
-# $item->equip()
+# void $ActorItem->equip()
 #
 # Will simply equip the item. If you want more control, use $item->equipInSlot()
 sub equip {
@@ -375,7 +376,7 @@ sub equip {
 }
 
 ##
-# $item->unequip()
+# void $ActorItem->unequip()
 #
 # Unequips the item.
 sub unequip {
@@ -386,7 +387,7 @@ sub unequip {
 }
 
 ##
-# $item->use([target])
+# void $ActorItem->use([Bytes target])
 # target: ID of the target, if not set then $accountID will be used.
 #
 # Uses this item on yourself or on a target.
@@ -404,7 +405,7 @@ sub use {
 }
 
 ##
-# $item->equipInSlot(slot dontqueue)
+# void $ActorItem->equipInSlot(slot dontqueue)
 # slot: where item should be equipped.
 #
 # Equips item in $slot.
