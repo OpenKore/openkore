@@ -1134,6 +1134,34 @@ sub sendHomunculusGetStats {
 	debug "Sent Get Homunculus Stats\n", "sendPacket", 2;
 }
 
+sub sendHomunculusMove {
+	my $r_net = shift;
+	my $homunID = shift;
+	my $x = int scalar shift;
+	my $y = int scalar shift;
+	$msg = pack("C*", 0x32, 0x02) . $homunID . getCoordString($x, $y);
+	sendMsgToServer($r_net, $msg);
+	debug "Sent Homunculus move to: $x, $y\n", "sendPacket", 2;
+}
+
+sub sendHomunculusAttack {
+	my $r_net = shift;
+	my $homunID = shift;
+	my $targetID = shift;
+	my $flag = shift;
+	$msg = pack("C*", 0x33, 0x02) . $homunID . $targetID . pack("C1", $flag);
+	sendMsgToServer($r_net, $msg);
+	debug "Sent Homunculus attack: ".getHex($targetID)."\n", "sendPacket", 2;
+}
+
+sub sendHomunculusStandBy {
+	my $r_net = shift;
+	my $homunID = shift;
+	$msg = pack("C*", 0x34, 0x02) . $homunID;
+	sendMsgToServer($r_net, $msg);
+	debug "Sent Homunculus standby\n", "sendPacket", 2;
+}
+
 sub sendIdentify {
 	my $r_net = shift;
 	my $index = shift;
