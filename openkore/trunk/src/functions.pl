@@ -252,6 +252,9 @@ sub mainLoop {
 		return if $quit;
 	}
 
+	Benchmark::end("mainLoop_part2") if DEBUG;
+	Benchmark::begin("mainLoop_part3") if DEBUG;
+
 	# Process messages from the IPC network
 	if ($ipc && $ipc->connected) {
 		my @ipcMessages;
@@ -262,9 +265,6 @@ sub mainLoop {
 			}
 		}
 	}
-
-	Benchmark::end("mainLoop_part2") if DEBUG;
-	Benchmark::begin("mainLoop_part3") if DEBUG;
 
 
 	###### Other stuff that's run in the main loop #####

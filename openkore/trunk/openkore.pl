@@ -227,7 +227,7 @@ use Poseidon::Client;
 Modules::register(qw/Globals Modules Log Utils Settings Plugins FileParsers
 	Network::Receive Network::Send Commands Misc AI AI::CoreLogic Skills
 	Interface ChatQueue Actor Actor::Player Actor::Monster Actor::You
-	Actor::Party Actor::Unknown Item Match/);
+	Actor::Party Actor::Unknown Actor::Item Match Utils::Benchmark/);
 
 Log::message("$Settings::versionText\n");
 if (!Plugins::loadAll()) {
