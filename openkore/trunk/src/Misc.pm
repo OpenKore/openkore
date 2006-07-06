@@ -202,7 +202,6 @@ our @EXPORT = (
 
 # Checks whether the internal state of some variables are correct.
 sub checkValidity {
-return;
 	return unless DEBUG;
 	my ($name) = @_;
 	$name = "Validity check:" if (!defined $name);
@@ -1423,13 +1422,24 @@ sub checkFollowMode {
 # Checks whether a monster is "clean" (not being attacked by anyone).
 sub checkMonsterCleanness {
 	return 1 if (!$config{attackAuto});
-	my $ID = shift;
+	my $ID = $_[0];
 	return 1 if ($playersList->getByID($ID));
 	my $monster = $monstersList->getByID($ID);
 
 	# If party attacked monster, or if monster attacked/missed party
-	if ($monster->{'dmgFromParty'} > 0 || $monster->{'dmgToParty'} > 0 || $monster->{'missedToParty'} > 0) {
+	if ($monster->{dmgFromParty} > 0 || $monster->{dmgToParty} > 0 || $monster->{missedToParty} > 0) {
 		return 1;
+	}
+
+	# If monster attacked/missed you
+	return 1 if ($monster->{'dmgToYou'} || $monster->{'missedYou'});
+
+	if ($config{aggressiveAntiKS}) {
+		# Aggressive anti-KS mode, for people who are paranoid about not kill stealing.
+
+		# If others attacked the monster then always drop it.
+		return 0 if (($monster->{dmgFromPlayer} && %{$monster->{dmgFromPlayer}})
+			  || ($monster->{missedFromPlayer} && %{$monster->{missedFromPlayer}}));
 	}
 
 	# If we're in follow mode
@@ -1447,31 +1457,20 @@ sub checkMonsterCleanness {
 		}
 	}
 
-	# If monster attacked/missed you
-	return 1 if ($monster->{'dmgToYou'} || $monster->{'missedYou'});
-
-	if ($config{aggressiveAntiKS}) {
-		# Aggressive anti-KS mode, for people who are paranoid about not kill stealing.
-
-		# If others attacked the monster then always drop it.
-		return 0 if (($monster->{dmgFromPlayer} && %{$monster->{dmgFromPlayer}})
-			  || ($monster->{missedFromPlayer} && %{$monster->{missedFromPlayer}}));
-	}
-
 	# If monster hasn't been attacked by other players
-	if (!binSize([keys %{$monster->{'missedFromPlayer'}}])
-	 && !binSize([keys %{$monster->{'dmgFromPlayer'}}])
-	 && !binSize([keys %{$monster->{'castOnByPlayer'}}])
+	if (scalar(keys %{$monster->{missedFromPlayer}}) == 0
+	 && scalar(keys %{$monster->{dmgFromPlayer}})    == 0
+	 && scalar(keys %{$monster->{castOnByPlayer}})   == 0
 
 	 # and it hasn't attacked any other player
-	 && !binSize([keys %{$monster->{'missedToPlayer'}}])
-	 && !binSize([keys %{$monster->{'dmgToPlayer'}}])
-	 && !binSize([keys %{$monster->{'castOnToPlayer'}}])
+	 && scalar(keys %{$monster->{missedToPlayer}}) == 0
+	 && scalar(keys %{$monster->{dmgToPlayer}})    == 0
+	 && scalar(keys %{$monster->{castOnToPlayer}}) == 0
 	) {
 		# The monster might be getting lured by another player.
 		# So we check whether it's walking towards any other player, but only
 		# if we haven't already attacked the monster.
-		if ($monster->{'dmgFromYou'} || $monster->{'missedFromYou'}) {
+		if ($monster->{dmgFromYou} || $monster->{missedFromYou}) {
 			return 1;
 		} else {
 			return !objectIsMovingTowardsPlayer($monster);
@@ -1480,7 +1479,7 @@ sub checkMonsterCleanness {
 
 	# The monster didn't attack you.
 	# Other players attacked it, or it attacked other players.
-	if ($monster->{'dmgFromYou'} || $monster->{'missedFromYou'}) {
+	if ($monster->{dmgFromYou} || $monster->{missedFromYou}) {
 		# If you have already attacked the monster before, then consider it clean
 		return 1;
 	}

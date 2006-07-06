@@ -19,6 +19,7 @@ package AI::Attack;
 
 use strict;
 use Carp::Assert;
+use Time::HiRes qw(time);
 
 use Globals;
 use AI;
@@ -169,12 +170,16 @@ sub finishAttacking {
 }
 
 sub movingWhileAttacking {
-	if (AI::is("move", "route") && AI::args->{attackID} && AI::inQueue("attack")) {
+	my $args = AI::args;
+	my $result;
+	if (AI::is("move", "route") && $args->{attackID} && AI::inQueue("attack") && timeOut($args->{movingWhileAttackingTimeout}, 0.2)) {
 		my $ID = AI::args->{attackID};
-		return ($monsters{$ID} && !checkMonsterCleanness($ID));
+		$result = ($monsters{$ID} && !checkMonsterCleanness($ID));
 	} else {
-		return 0;
+		$result = 0;
 	}
+	$args->{movingWhileAttackingTimeout} = time;
+	return $result;
 }
 
 sub dropTargetWhileMoving {
@@ -200,6 +205,7 @@ sub main {
 	my $args = AI::args;
 
 	Benchmark::begin("ai_attack (part 1)") if DEBUG;
+	Benchmark::begin("ai_attack (part 1.1)") if DEBUG;
 	# The attack sequence hasn't timed out and the monster is on screen
 
 	# Update information about the monster and the current situation
@@ -246,6 +252,8 @@ sub main {
 	$args->{missedFromYou_last} = $target->{missedFromYou};
 	$args->{lastSkillTime} = $char->{last_skill_time};
 
+	Benchmark::end("ai_attack (part 1.1)") if DEBUG;
+	Benchmark::begin("ai_attack (part 1.2)") if DEBUG;
 
 	# Determine what combo skill to use
 	delete $args->{attackMethod};
@@ -335,7 +343,10 @@ sub main {
 		$args->{attackMethod}{maxDistance} = $args->{attackMethod}{distance};
 	}
 
+	Benchmark::end("ai_attack (part 1.2)") if DEBUG;
 	Benchmark::end("ai_attack (part 1)") if DEBUG;
+
+
 
 	if ($char->{sitting}) {
 		ai_setSuspend(0);
@@ -500,8 +511,6 @@ sub main {
 
 	} elsif ((!$config{'runFromTarget'} || $realMonsterDist >= $config{'runFromTarget_dist'})
 	 && (!$config{'tankMode'} || !$target->{dmgFromYou})) {
-		Benchmark::begin("ai_attack (part 2)") if DEBUG;
-
 		# Attack the target. In case of tanking, only attack if it hasn't been hit once.
 		if (!$args->{firstAttack}) {
 			$args->{firstAttack} = 1;
@@ -601,13 +610,11 @@ sub main {
 			$args->{monsterID} = $ID;
 		}
 
-		Benchmark::end("ai_attack (part 2)") if DEBUG;
-
-	} elsif ($config{'tankMode'}) {
-		if ($args->{'dmgTo_last'} != $target->{'dmgTo'}) {
-			$args->{'ai_attack_giveup'}{'time'} = time;
+	} elsif ($config{tankMode}) {
+		if ($args->{dmgTo_last} != $target->{dmgTo}) {
+			$args->{ai_attack_giveup}{time} = time;
 		}
-		$args->{'dmgTo_last'} = $target->{'dmgTo'};
+		$args->{dmgTo_last} = $target->{dmgTo};
 	}
 }
 
