@@ -6,10 +6,10 @@
 # See http://www.gnu.org/licenses/gpl.html
 
 package macro;
-my $Version = "1.2.0";
+my $Version = "1.3.0";
 my $Changed = sprintf("%s %s %s",
-   q$Date$
-   =~ /(\d{4}-\d{2}-\d{2}) (\d{2}:\d{2}:\d{2}) ([+-]\d{4})/);
+	q$Date$
+	=~ /(\d{4}-\d{2}-\d{2}) (\d{2}:\d{2}:\d{2}) ([+-]\d{4})/);
 
 use strict;
 use Plugins;
@@ -33,55 +33,74 @@ $cvs = new cvsdebug($Plugins::current_plugin, 0, []);
 Plugins::register('macro', 'allows usage of macros', \&Unload, \&Reload);
 
 my $hooks = Plugins::addHooks(
-            ['configModify', \&debuglevel, undef],
-            ['start3',       \&postsetDebug, undef],
-            ['start3',       \&checkConfig, undef],
-            ['mainLoop_pre', \&callMacro, undef]
+	['configModify', \&onconfigModify, undef],
+	['start3',       \&onstart3, undef],
+	['mainLoop_pre', \&callMacro, undef]
 );
 my $chooks = Commands::register(
-            ['macro', "Macro plugin", \&commandHandler]
+	['macro', "Macro plugin", \&commandHandler]
 );
 my $autohooks;
 my $loghook;
+my $cfID;
 
-my $file = "$Settings::control_folder/macros.txt";
-my $cfID = Settings::addConfigFile($file, \%macro, \&parseAndHook);
-undef $file;
-
-if (defined %config) {
-	Settings::parseReload("macros");
-	postsetDebug();
-	checkConfig();
+# onconfigModify
+sub onconfigModify {
+  my (undef, $args) = @_;
+  if ($args->{key} eq 'macro_debug') {
+    $cvs->setDebug(&parseDebug($args->{val}))
+  } elsif ($args->{key} eq 'macro_file') {
+    my $macrofile = "$Settings::control_folder/".$args->{val};
+    Settings::delConfigFile($cfID);
+    $cfID = Settings::addConfigFile($macrofile, \%macro, \&parseAndHook);
+    Settings::load($cfID)
+  }
 }
-#########
+
+# onstart3
+sub onstart3 {
+  $cvs->setDebug(&parseDebug($::config{macro_debug})) if defined $::config{macro_debug};
+  if (&checkConfig) {
+    $cfID = Settings::addConfigFile("$Settings::control_folder/".$::config{macro_file}, \%macro, \&parseAndHook);
+    Settings::load($cfID)
+  } else {
+    Plugins::unload("macro");
+  }
+}
 
 # onReload
 sub Reload {
-  &Unload;
-  message "macro reloading\m", "macro";
-  &checkConfig
+  message "macro plugin reloading, ", "macro";
+  &cleanup;
+  &onstart3
 }
 
 # onUnload
 sub Unload {
-  message "macro unloading, cleaning up.\n", "macro";
-  undef $cvs;
+  message "macro plugin unloading, ", "macro";
+  &cleanup;
+  Plugins::delHooks($hooks);
+  Commands::unregister($chooks);
+  undef $cvs
+}
+
+sub cleanup {
+  message "cleaning up\n", "macro";
   Settings::delConfigFile($cfID);
   Log::delHook($loghook);
-  Plugins::delHooks($hooks);
   Plugins::delHooks($autohooks);
-  Commands::unregister($chooks);
   undef $queue;
   undef %macro;
   undef %automacro;
-  undef %varStack;
+  undef %varStack
 }
 
 # onFile(Re)load
 sub parseAndHook {
-  if (parseMacroFile($_[0], 0)) {&hookOnDemand; return 1}
-  error "error loading macros.txt. Please check your macros.txt for unclosed blocks\n";
-  return 0;
+  my $file = shift;
+  if (parseMacroFile($file, 0)) {&hookOnDemand; return 1}
+  error "error loading $file.\n";
+  return 0
 }
 
 # only adds hooks that are needed
@@ -114,8 +133,13 @@ sub hookOnDemand {
   }
 }
 
-# onHook: start3
+# checks macro configuration
 sub checkConfig {
+  if ($::config{macro_readmanual} ne 'red/chili') {
+    warning "[macro] you should read the documentation before using this plugin: ".
+            "http://openkore.sourceforge.net/macro/\n";
+    return 0
+  }
   if (!defined $timeout{macro_delay}) {
     warning "[macro] you did not specify 'macro_delay' in timeouts.txt. Assuming 1s\n";
     $timeout{macro_delay}{timeout} = 1
@@ -127,13 +151,12 @@ sub checkConfig {
            $::config{macro_orphans} ne 'reregister' &&
            $::config{macro_orphans} ne 'reregister_safe') {
     warning "[macro] macro_orphans ".$::config{macro_orphans}." is not a valid option.\n";
-    configModify('macro_orphans', 'terminate');
+    configModify('macro_orphans', 'terminate')
   }
-  if ($::config{macro_readmanual} ne 'red/chili') {
-    warning "[macro] you should read the documentation before using this plugin: ".
-            "http://openkore.sourceforge.net/macro/\n";
-    Unload;
+  if (!defined $::config{macro_file}) {
+    configModify('macro_file', 'macros.txt')
   }
+  return 1
 }
 
 # parser for macro_debug config line
@@ -142,17 +165,6 @@ sub parseDebug {
   my $loglevel = 0;
   foreach my $l (@reqfac) {$loglevel = $loglevel | $logfac{$l}}
   return $loglevel;
-}
-
-# onHook: start3
-sub postsetDebug {
-  $cvs->setDebug(parseDebug($::config{macro_debug})) if defined $::config{macro_debug};
-}
-
-# onHook: configModify
-sub debuglevel {
-  my (undef, $args) = @_;
-  if ($args->{key} eq 'macro_debug') {$cvs->setDebug(parseDebug($args->{val}))}
 }
 
 # macro command handler
