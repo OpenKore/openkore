@@ -3562,7 +3562,7 @@ sub getNPCInfo {
 sub checkSelfCondition {
 	my $prefix = shift;
 
-	return 0 if ($config{$prefix . "_disabled"} > 0);
+	return 0 if ($config{$prefix . "_disabled"});
 
 	return 0 if $config{$prefix."_whenIdle"} && !AI::isIdle();
 
