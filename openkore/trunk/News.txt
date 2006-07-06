@@ -12,6 +12,7 @@ Internal:
 
 Credits:
 - Molag: Ayothaya portals contributions.
+- DarkShado: XileRO server information updates.
 
 
 ==================
