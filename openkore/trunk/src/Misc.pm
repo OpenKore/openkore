@@ -202,6 +202,7 @@ our @EXPORT = (
 
 # Checks whether the internal state of some variables are correct.
 sub checkValidity {
+return;
 	return unless DEBUG;
 	my ($name) = @_;
 	$name = "Validity check:" if (!defined $name);

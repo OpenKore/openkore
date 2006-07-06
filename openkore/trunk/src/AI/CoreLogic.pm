@@ -63,20 +63,27 @@ sub iterate {
 	##### MANUAL AI STARTS HERE #####
 
 	Plugins::callHook('AI_pre/manual');
+	Benchmark::begin("AI (part 1)") if DEBUG;
 	return if processClientSuspend();
+	Benchmark::begin("AI (part 1.1)") if DEBUG;
 	processLook();
 	processNPCTalk();
 	processDrop();
 	processEscapeUnknownMaps();
+	Benchmark::end("AI (part 1.1)") if DEBUG;
+	Benchmark::begin("AI (part 1.2)") if DEBUG;
 	processDelayedTeleport();
 	processSit();
 	processStand();
 	processAttack();
+	Benchmark::end("AI (part 1.2)") if DEBUG;
+	Benchmark::begin("AI (part 1.3)") if DEBUG;
 	processSkillUse();
 	processRouteAI();
 	processMapRouteAI();
 	processTake();
-	processMove();
+	Benchmark::end("AI (part 1.3)") if DEBUG;
+	Benchmark::end("AI (part 1)") if DEBUG;
 
 	Misc::checkValidity("AI part 1");
 	return if ($AI != 2);
@@ -85,7 +92,9 @@ sub iterate {
 	##### AUTOMATIC AI STARTS HERE #####
 
 	Plugins::callHook('AI_pre');
+	Benchmark::begin("AI (part 2)") if DEBUG;
 
+	processMove();
 	ChatQueue::processFirst;
 
 	processEquip();
@@ -101,9 +110,12 @@ sub iterate {
 	processCartAdd();
 	processCartGet();
 	processAutoMakeArrow();
-	processAutoStorage();
+	Benchmark::end("AI (part 2)") if DEBUG;
 	Misc::checkValidity("AI part 2");
 
+
+	Benchmark::begin("AI (part 3)") if DEBUG;
+	processAutoStorage();
 	processAutoSell();
 	Misc::checkValidity("AI (autosell)");
 	processAutoBuy();
@@ -116,17 +128,19 @@ sub iterate {
 	processAutoSkillsRaise();
 	processRandomWalk();
 	processFollow();
+
 	processSitAutoIdle();
 	processSitAuto();
 
 	Benchmark::begin("ai_autoItemUse") if DEBUG;
 	processAutoItemUse();
 	Benchmark::end("ai_autoItemUse") if DEBUG;
-
 	Benchmark::begin("ai_autoSkillUse") if DEBUG;
 	processAutoSkillUse();
 	Benchmark::end("ai_autoSkillUse") if DEBUG;
+	Benchmark::end("AI (part 3)") if DEBUG;
 
+	Benchmark::begin("AI (part 4)") if DEBUG;
 	processPartySkillUse();
 	processMonsterSkillUse();
 
@@ -142,6 +156,7 @@ sub iterate {
 	processAvoid();
 	processSendEmotion();
 	processAutoShopOpen();
+	Benchmark::end("AI (part 4)") if DEBUG;
 
 
 	##########
@@ -800,6 +815,7 @@ sub processAttack {
 		}
 
 	} elsif (AI::action eq "attack") {
+		Benchmark::begin("ai_attack (part 1)") if DEBUG;
 		# The attack sequence hasn't timed out and the monster is on screen
 
 		# Update information about the monster and the current situation
@@ -934,6 +950,8 @@ sub processAttack {
 		if ($args->{attackMethod}{maxDistance} < $args->{attackMethod}{distance}) {
 			$args->{attackMethod}{maxDistance} = $args->{attackMethod}{distance};
 		}
+
+		Benchmark::end("ai_attack (part 1)") if DEBUG;
 
 		if ($char->{sitting}) {
 			ai_setSuspend(0);
@@ -1098,6 +1116,8 @@ sub processAttack {
 
 		} elsif ((!$config{'runFromTarget'} || $realMonsterDist >= $config{'runFromTarget_dist'})
 		 && (!$config{'tankMode'} || !$target->{dmgFromYou})) {
+			Benchmark::begin("ai_attack (part 2)") if DEBUG;
+
 			# Attack the target. In case of tanking, only attack if it hasn't been hit once.
 			if (!AI::args->{firstAttack}) {
 				AI::args->{firstAttack} = 1;
@@ -1196,6 +1216,8 @@ sub processAttack {
 				}
 				$args->{monsterID} = $ID;
 			}
+
+			Benchmark::end("ai_attack (part 2)") if DEBUG;
 
 		} elsif ($config{'tankMode'}) {
 			if ($args->{'dmgTo_last'} != $target->{'dmgTo'}) {
