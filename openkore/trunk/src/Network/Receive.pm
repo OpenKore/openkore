@@ -11,8 +11,8 @@ use Actor::You;
 use Actor::Player;
 use Actor::Monster;
 use Actor::Party;
+use Actor::Item;
 use Actor::Unknown;
-use Item;
 use Settings;
 use Log qw(message warning error debug);
 use FileParsers;
@@ -2678,7 +2678,7 @@ sub inventory_item_added {
 		if (!defined $invIndex) {
 			# Add new item
 			$invIndex = findIndex($char->{inventory}, "nameID", "");
-			$item = $char->{inventory}[$invIndex] = new Item();
+			$item = $char->{inventory}[$invIndex] = new Actor::Item();
 			$item->{index} = $index;
 			$item->{nameID} = $args->{nameID};
 			$item->{type} = $args->{type};
@@ -2811,7 +2811,7 @@ sub inventory_items_nonstackable {
 		$invIndex = findIndex($char->{inventory}, "index", $index);
 		$invIndex = findIndex($char->{inventory}, "nameID", "") unless defined $invIndex;
 
-		my $item = $char->{inventory}[$invIndex] = new Item();
+		my $item = $char->{inventory}[$invIndex] = new Actor::Item();
 		$item->{index} = $index;
 		$item->{invIndex} = $invIndex;
 		$item->{nameID} = $ID;
@@ -2858,7 +2858,7 @@ sub inventory_items_stackable {
 			$invIndex = findIndex($char->{inventory}, "nameID", "");
 		}
 
-		my $item = $char->{inventory}[$invIndex] = new Item();
+		my $item = $char->{inventory}[$invIndex] = new Actor::Item();
 		$item->{invIndex} = $invIndex;
 		$item->{index} = $index;
 		$item->{nameID} = $ID;

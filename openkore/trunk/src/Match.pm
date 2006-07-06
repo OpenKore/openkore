@@ -69,18 +69,18 @@ sub player {
 }
 
 ##
-# Item Match::inventoryItem(name)
+# Actor::Item Match::inventoryItem(name)
 # name: either a number in the inventory list, or an item name.
 # Returns: the hash to the inventory item matching $name, or undef.
 #
-# Find an item in the inventory. Item::get() does the same thing, but allows more search criteria.
+# Find an item in the inventory. Actor::Item::get() does the same thing, but allows more search criteria.
 sub inventoryItem {
 	my ($name) = @_;
 
 	if ($name =~ /^\d+$/) {
 		# A number was provided
 		my $item = $char->{inventory}[$name];
-		return UNIVERSAL::isa($item, 'Item') ? $item : undef;
+		return UNIVERSAL::isa($item, 'Actor::Item') ? $item : undef;
 	}
 
 	# A name was provided; match it

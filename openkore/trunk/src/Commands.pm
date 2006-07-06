@@ -1312,9 +1312,8 @@ sub cmdEquip {
 	}
 
 	if ($arg1 eq "slots") {
-		 
 		# Translation Comment: List of equiped items on each slot
-		message T("Slots:\n") . join("\n", @Item::slots). "\n", "list";
+		message T("Slots:\n") . join("\n", @Actor::Item::slots). "\n", "list";
 		return;
 	}
 
@@ -1324,7 +1323,7 @@ sub cmdEquip {
 		$arg1 .= " $arg2" if $arg2;
 	}
 
-	$item = Item::get(defined $slot ? $arg2 : $arg1, undef, 1);
+	$item = Actor::Item::get(defined $slot ? $arg2 : $arg1, undef, 1);
 
 	if (!$item) {
 		error TF("You don't have %s.\n", $arg1);
@@ -1345,7 +1344,7 @@ sub cmdEquip {
 }
 
 sub cmdEquip_list {
-	for my $slot (@Item::slots) {
+	for my $slot (@Actor::Item::slots) {
 		my $item = $char->{equipment}{$slot};
 		my $name = $item ? $item->nameString : '-';
 		message sprintf("%-15s: %s\n", $slot, $name), "list";
@@ -2928,7 +2927,7 @@ sub cmdSell {
 			"       sell cancel\n");
 
 	} else {
-		my @items = Item::getMultiple($args[0]);
+		my @items = Actor::Item::getMultiple($args[0]);
 		if (@items > 0) {
 			foreach my $item (@items) {
 				my %obj;
@@ -3737,7 +3736,7 @@ sub cmdUseItemOnSelf {
 			"Usage: is <item>\n");
 		return;
 	}
-	my $item = Item::get($args);
+	my $item = Actor::Item::get($args);
 	if (!$item) {
 		error TF("Error in function 'is' (Use Item on Yourself)\n" .
 			"Inventory Item %s does not exist.\n", $args);

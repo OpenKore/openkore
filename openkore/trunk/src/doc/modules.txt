@@ -2,13 +2,13 @@ Actor
 Actor::Monster
 Actor::Player
 Actor::You
+Actor::Item
 ActorList
 Base::Server
 Base::Server::Client
 Base::WebServer
 Base::WebServer::Process
 I18N
-Item
 Interface
 Network
 ChatQueue

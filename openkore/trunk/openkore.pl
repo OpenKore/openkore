@@ -12,6 +12,7 @@
 use FindBin qw($RealBin);
 use lib "$RealBin";
 use lib "$RealBin/src";
+use lib "$RealBin/src/deps";
 use strict;
 
 srand;
@@ -434,6 +435,7 @@ $totalBaseExp = 0;
 $totalJobExp = 0;
 $startTime_EXP = time;
 
+$itemsList = new ActorList('Actor::Item');
 $monstersList = new ActorList('Actor::Monster');
 $playersList = new ActorList('Actor::Player');
 $petsList = new ActorList('Actor::Pet');

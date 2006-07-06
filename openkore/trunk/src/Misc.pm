@@ -208,7 +208,7 @@ sub checkValidity {
 
 	if ($char && $char->{inventory}) {
 		for (my $i = 0; $i < @{$char->{inventory}}; $i++) {
-			if ($char->{inventory}[$i] && !UNIVERSAL::isa($char->{inventory}[$i], "Item")) {
+			if ($char->{inventory}[$i] && !UNIVERSAL::isa($char->{inventory}[$i], "Actor::Item")) {
 				die "$name\n" .
 					"Inventory item $i is not an Item:\n" .
 					Dumper($char->{inventory});
@@ -2717,7 +2717,7 @@ sub useTeleport {
 
 	# No skill try to equip a Tele clip or something,
 	# if teleportAuto_equip_* is set
-	if (Item::scanConfigAndCheck('teleportAuto_equip')) {
+	if (Actor::Item::scanConfigAndCheck('teleportAuto_equip')) {
 		return if AI::inQueue('teleport');
 		debug "Equipping Accessory to teleport\n", "useTeleport";
 		AI::queue('teleport', {lv => $use_lvl});
@@ -2727,7 +2727,7 @@ sub useTeleport {
 		    $config{teleportAuto_useSkill} == 2 && !binSize(\@playersID)) {
 			$timeout{ai_teleport_delay}{time} = 1;
 		}
-		Item::scanConfigAndEquip('teleportAuto_equip');
+		Actor::Item::scanConfigAndEquip('teleportAuto_equip');
 		Commands::run('aiv');
 		return;
 	}
@@ -3710,12 +3710,12 @@ sub checkSelfCondition {
 	}
 
 	if ($config{$prefix."_whenEquipped"}) {
-		my $item = Item::get($config{$prefix."_whenEquipped"});
+		my $item = Actor::Item::get($config{$prefix."_whenEquipped"});
 		return 0 unless $item && $item->{equipped};
 	}
 
 	if ($config{$prefix."_whenNotEquipped"}) {
-		my $item = Item::get($config{$prefix."_whenNotEquipped"});
+		my $item = Actor::Item::get($config{$prefix."_whenNotEquipped"});
 		return 0 if $item && $item->{equipped};
 	}
 
