@@ -243,8 +243,8 @@ sub new {
 		'01E1' => ['monk_spirits', 'a4 v1', [qw(sourceID spirits)]],
 		#'01E2' => ['marriage_unknown'], clif_parse_ReqMarriage
 		#'01E4' => ['marriage_unknown'], clif_marriage_process
-##
-#01E6 26 Some Player Name.
+		##
+		#01E6 26 Some Player Name.
 		'01E9' => ['party_join', 'a4 x4 v1 v1 C1 Z24 Z24 Z16 v C2', [qw(ID x y type name user map lv item_pickup item_share)]],
 		'01EB' => ['guild_location', 'a4 v1 v1', [qw(ID x y)]],
 		'01EA' => ['married', 'a4', [qw(ID)]],
@@ -263,19 +263,20 @@ sub new {
 		'0207' => ['friend_request', 'a4 a4 Z24', [qw(accountID charID name)]],
 		'0209' => ['friend_response', 'C1 Z24', [qw(type name)]],
 		'020A' => ['friend_removed', 'a4 a4', [qw(friendAccountID friendCharID)]],
-		'0230' => ['homunculus_info', 'x2 V V',[qw(homunculusActorID)]],
-		'022E' => ['homunculus_status', 'Z24 C S16 L2', [qw(name name_flag lvl hunger intimacy accessory atk matk hit critical def mdef flee aspd hp hp_max sp sp_max exp exp_max)]],
-		'023A' => ['storage_password_request', 'v1', [qw(flag)]],
-		'023C' => ['storage_password_result', 'v1 v1', [qw(type val)]],
-		'023E' => ['storage_password_request', 'v1', [qw(flag)]],
-
-		'0259' => ['gameguard_grant', 'C1', [qw(server)]],
 		'0227' => ['gameguard_request'],
 		'0229' => ['character_status', 'a4 v1 v1 v1', [qw(ID param1 param2 param3)]],
-
 		'022A' => ['actor_display', 'a4 v4 x2 v8 x2 v a4 a4 v x2 C2 a3 x2 C v', [qw(ID walk_speed param1 param2 param3 type hair_style weapon shield lowhead tophead midhead hair_color head_dir guildID guildEmblem visual_effects stance sex coords act lv)]],
 		'022B' => ['actor_display', 'a4 v4 x2 v8 x2 v a4 a4 v x2 C2 a3 x2 v', [qw(ID walk_speed param1 param2 param3 type hair_style weapon shield lowhead tophead midhead hair_color head_dir guildID guildEmblem visual_effects stance sex coords lv)]],
 		'022C' => ['actor_display', 'a4 v4 x2 v5 V1 v3 x4 a4 a4 v x2 C2 a5 x3 v', [qw(ID walk_speed param1 param2 param3 type hair_style weapon shield lowhead timestamp tophead midhead hair_color guildID guildEmblem visual_effects stance sex coords lv)]],
+		'022E' => ['homunculus_status', 'Z24 C S16 L2', [qw(name name_flag lvl hunger intimacy accessory atk matk hit critical def mdef flee aspd hp hp_max sp sp_max exp exp_max)]],
+		'0230' => ['homunculus_info', 'x2 V V',[qw(homunculusActorID)]],
+		'0235' => ['homunculus_skills'],
+		# homunculus skill update
+		'0239' => ['skill_update', 'v1 v1 v1 v1 C1', [qw(skillID lv sp range up)]], # range = skill range, up = this skill can be leveled up further
+		'023A' => ['storage_password_request', 'v1', [qw(flag)]],
+		'023C' => ['storage_password_result', 'v1 v1', [qw(type val)]],
+		'023E' => ['storage_password_request', 'v1', [qw(flag)]],
+		'0259' => ['gameguard_grant', 'C1', [qw(server)]],
 		'0274' => ['account_server_info', 'x2 a4 a4 a4 x30 C1 x4 a*', [qw(sessionID accountID sessionID2 accountSex serverInfo)]],
 		};
 
@@ -2265,6 +2266,45 @@ sub friend_response {
 sub homunculus_info {
 	my ($self, $args) = @_;
 	$char->{'homunculus'}{'ID'} = $args->{homunculusActorID};
+}
+
+sub homunculus_skills {
+	my ($self, $args) = @_;
+
+	# Character skill list
+	change_to_constate5();
+	my $newmsg;
+	my $msg = $args->{RAW_MSG};
+	my $msg_size = $args->{RAW_MSG_SIZE};
+	
+	for (my $i = 4; $i < $msg_size; $i += 37) {
+		my $skillID = unpack("v1", substr($msg, $i, 2));
+		# target type is 0 for novice skill, 1 for enemy, 2 for place, 4 for immediate invoke, 16 for party member
+		my $targetType = unpack("v1", substr($msg, $i+2, 2)); # we don't use this yet
+		my $level = unpack("v1", substr($msg, $i + 6, 2));
+		my $sp = unpack("v1", substr($msg, $i + 8, 2));
+		my $range = unpack("v1", substr($msg, $i + 10, 2));
+		my ($skillName) = unpack("Z*", substr($msg, $i + 12, 24));
+		$skillName = Skills->new(id => $skillID)->handle if (!$skillName);
+		my $up = unpack("C1", substr($msg, $i+36, 1));
+
+		$char->{skills}{$skillName}{ID} = $skillID;
+		$char->{skills}{$skillName}{sp} = $sp;
+		$char->{skills}{$skillName}{range} = $range;
+		$char->{skills}{$skillName}{up} = $up;
+		$char->{skills}{$skillName}{targetType} = $targetType;
+		$char->{skills}{$skillName}{homunculus} = 1;
+		if (!$char->{skills}{$skillName}{lv}) {
+			$char->{skills}{$skillName}{lv} = $level;
+		}
+		binAdd(\@skillsID, $skillName);
+
+		Plugins::callHook('packet_charSkills', {
+			'ID' => $skillID,
+			'skillName' => $skillName,
+			'level' => $level,
+			});
+	}		
 }
 
 sub homunculus_status {
