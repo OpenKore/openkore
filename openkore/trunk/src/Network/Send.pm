@@ -84,6 +84,9 @@ our @EXPORT = qw(
 	sendGuildAlly
 	sendHomunculusFeed
 	sendHomunculusGetStats
+	sendHomunculusMove
+	sendHomunculusAttack
+	sendHomunculusStandBy
 	sendGuildBreak
 	sendGuildChat
 	sendGuildCreate
