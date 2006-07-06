@@ -447,11 +447,11 @@ sub cmdAIv {
 	# Display current AI sequences
 	my $on;
 	if (!$AI) {
-		message TF("ai_seq (off) = %s\n", @ai_seq), "list";
+		message TF("ai_seq (off) = %s\n", "@ai_seq"), "list";
 	} elsif ($AI == 1) {
-		message TF("ai_seq (manual) = %s\n", @ai_seq), "list";
+		message TF("ai_seq (manual) = %s\n", "@ai_seq"), "list";
 	} elsif ($AI == 2) {
-		message TF("ai_seq (auto) = %s\n", @ai_seq), "list";
+		message TF("ai_seq (auto) = %s\n", "@ai_seq"), "list";
 	}
 	message T("solution\n"), "list" if (AI::args->{'solution'});
 }
