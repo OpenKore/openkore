@@ -757,6 +757,14 @@ version 20
 serverType 4
 serverEncoding Western
 
+[AgonyRO]
+ip 72.29.77.223
+port 6901
+master_version 1
+version 20
+serverType 4
+serverEncoding Western
+
 ## http://www.ancientro.com/
 [AncientRO (Low Rate) Private Server]
 ip ancient-low.no-ip.info
@@ -1277,16 +1285,7 @@ serverType 5
 serverEncoding Western
 
 ## http://www.xilero.net/
-[XileRO Main Private Server]
-ip xilero.no-ip.info
-port 6901
-master_version 17
-version 20
-serverType 3
-serverEncoding Western
-
-## http://www.xilero.net/
-[XileRO EX Private Server]
+[XiLeRO EX Private Server]
 ip 66.197.156.53
 port 6901
 master_version 1
@@ -1295,8 +1294,17 @@ serverType 4
 serverEncoding Western
 
 ## http://www.xilero.net/
-[XileRO EZ Private Server]
-ip xilero3.no-ip.info
+[XiLeRO EZ Private Server]
+ip 66.197.215.245
+port 6901
+master_version 1
+version 20
+serverType 4
+serverEncoding Western
+
+## http://www.xilero.net/
+[XileRO Main Private Server]
+ip 208.101.22.20
 port 6901
 master_version 1
 version 20
@@ -1305,12 +1313,29 @@ serverEncoding Western
 
 ## http://www.xilero.net/
 [XileRO PK Private Server]
-ip xilero2.no-ip.info
+ip 208.101.22.18
 port 6901
-master_version 17
+master_version 1
 version 20
-serverType 3
-private 1
+serverType 4
+serverEncoding Western
+
+## http://www.xilero.net/
+[XileRO PKx Private Server]
+ip 208.101.22.19
+port 6901
+master_version 1
+version 20
+serverType 4
+serverEncoding Western
+
+## http://www.xilero.net/
+[XiLeRO TE Private Server]
+ip 72.29.77.223
+port 6901
+master_version 1
+version 20
+serverType 4
 serverEncoding Western
 
 
