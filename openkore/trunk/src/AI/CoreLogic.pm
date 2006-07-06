@@ -115,6 +115,7 @@ sub iterate {
 
 
 	Benchmark::begin("AI (part 3)") if DEBUG;
+	Benchmark::begin("AI (part 3.1)") if DEBUG;
 	processAutoStorage();
 	processAutoSell();
 	Misc::checkValidity("AI (autosell)");
@@ -122,13 +123,17 @@ sub iterate {
 	Misc::checkValidity("AI (autobuy)");
 	processAutoCart();
 	Misc::checkValidity("AI (autocart)");
+	Benchmark::end("AI (part 3.1)") if DEBUG;
 
+	Benchmark::begin("AI (part 3.2)") if DEBUG;
 	processLockMap();
 	processAutoStatsRaise();
 	processAutoSkillsRaise();
 	processRandomWalk();
 	processFollow();
+	Benchmark::end("AI (part 3.2)") if DEBUG;
 
+	Benchmark::begin("AI (part 3.3)") if DEBUG;
 	processSitAutoIdle();
 	processSitAuto();
 
@@ -138,6 +143,7 @@ sub iterate {
 	Benchmark::begin("ai_autoSkillUse") if DEBUG;
 	processAutoSkillUse();
 	Benchmark::end("ai_autoSkillUse") if DEBUG;
+	Benchmark::end("AI (part 3.3)") if DEBUG;
 	Benchmark::end("AI (part 3)") if DEBUG;
 
 	Benchmark::begin("AI (part 4)") if DEBUG;
