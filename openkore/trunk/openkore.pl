@@ -443,7 +443,7 @@ $playersList = new ActorList('Actor::Player');
 $petsList = new ActorList('Actor::Pet');
 $npcsList = new ActorList('Actor::NPC');
 $portalsList = new ActorList('Actor::Portal');
-foreach my $list ($monstersList, $playersList, $petsList, $npcsList, $portalsList) {
+foreach my $list ($itemsList, $monstersList, $playersList, $petsList, $npcsList, $portalsList) {
 	$list->onAdd()->add(undef, \&actorAdded);
 	$list->onRemove()->add(undef, \&actorRemoved);
 	$list->onClearBegin()->add(undef, \&actorListClearing);
