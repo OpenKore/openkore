@@ -228,8 +228,8 @@ sub processWipeOldActors {
 
 sub processGetPlayerInfo {
 	if (timeOut($timeout{ai_getInfo})) {
-		processNameRequestQueue(\@unknownPlayers, $playersList, 'a');
-		processNameRequestQueue(\@unknownNPCs, $npcsList, 'b');
+		processNameRequestQueue(\@unknownPlayers, $playersList);
+		processNameRequestQueue(\@unknownNPCs, $npcsList);
 
 		foreach (keys %monsters) {
 			if ($monsters{$_}{'name'} =~ /Unknown/) {
