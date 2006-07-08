@@ -739,7 +739,7 @@ sub objectIsMovingTowardsPlayer {
 		my %vec;
 		getVector(\%vec, $obj->{pos_to}, $obj->{pos});
 
-		my $players = $playersList->items();
+		my $players = $playersList->getItems();
 		foreach my $player (@{$players}) {
 			my $ID = $player->{ID};
 			next if (
