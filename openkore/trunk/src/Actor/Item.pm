@@ -80,18 +80,16 @@ our @slots = qw(
 # Creates a new Actor::Item object.
 sub new {
 	my $class = $_[0];
-	my %self = (
-		name => 'Uninitialized Item',
-		actorType => 'Item',
-		index => 0,
-		amount => 0,
-		type => 0,
-		equipped => 0,
-		identified => 0,
-		nameID => 0,
-		invIndex => 0
-	);
-	return bless \%self, $class;
+	my $self = $class->SUPER::new('Item');
+	$self->{name} = 'Uninitialized Item';
+	$self->{index} = 0;
+	$self->{amount} = 0;
+	$self->{type} = 0;
+	$self->{equipped} = 0;
+	$self->{identified} = 0;
+	$self->{nameID} = 0;
+	$self->{invIndex} = 0;
+	return $self;
 }
 
 

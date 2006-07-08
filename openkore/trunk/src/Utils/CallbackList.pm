@@ -51,7 +51,7 @@ use constant USERDATA => 3;
 
 ### CATEGORY: Class CallbackList
 
-# struct CallbackItem is_a Hash {
+# struct CallbackItem is_a Array {
 #     Function FUNCTION:
 #         Reference to a function.
 #         Invariant: defined(FUNCTION)
@@ -190,6 +190,25 @@ sub size {
 # the constructor.
 sub getName {
 	return $_[0]->{name};
+}
+
+##
+# CallbackList $CallbackList->deepCopy()
+# Ensures: defined(result)
+#
+# Create a deep copy of this CallbackList.
+sub deepCopy {
+	my ($self) = @_;
+	my $copy = new CallbackList($self->{name});
+	foreach my $callback (@{$self->{callbacks}}) {
+		my @cbCopy;
+		$cbCopy[FUNCTION] = $callback->[FUNCTION];
+		$cbCopy[ID]       = $callback->[ID];
+		$cbCopy[OBJECT]   = $callback->[OBJECT];
+		$cbCopy[USERDATA] = $callback->[USERDATA];
+		push @{$copy->{callbacks}}, \@cbCopy;
+	}
+	return $copy;
 }
 
 ##

@@ -28,7 +28,7 @@ use base qw(Actor);
 
 sub new {
 	my ($class) = @_;
-	return bless {actorType => 'Player'}, $class;
+	return $class->SUPER::new('Player');
 }
 
 sub selfString {
@@ -38,7 +38,7 @@ sub selfString {
 }
 
 ##
-# String $actor->job
+# String $ActorPlayer->job()
 #
 # Returns the job string (e.g. "Knight") of the actor.
 sub job {

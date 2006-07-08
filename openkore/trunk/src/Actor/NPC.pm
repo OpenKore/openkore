@@ -27,7 +27,7 @@ use base qw(Actor);
 
 sub new {
 	my ($class) = @_;
-	return bless {actorType => 'NPC'}, $class;
+	return $class->SUPER::new('NPC');
 }
 
 1;

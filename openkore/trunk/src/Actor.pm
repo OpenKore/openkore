@@ -35,6 +35,7 @@ use Scalar::Util;
 use Storable;
 use Globals;
 use Utils;
+use Utils::CallbackList;
 use Log qw(message error debug);
 use Misc;
 
@@ -76,6 +77,22 @@ sub _not_is {
 }
 
 ### CATEGORY: Class methods
+
+# protected Actor->new(String actorType)
+# actorType: A type name for this actor, like 'Player', 'Monster', etc.
+# Requires: defined($actorType)
+#
+# A default abstract constructor that subclasses should call. Must not
+# be directly used.
+sub new {
+	my ($class, $actorType) = @_;
+	my %self = (
+		actorType => $actorType,
+		onNameChange => new CallbackList('onNameChange'),
+		onUpdate => new CallbackList('onUpdate')
+	);
+	return bless \%self, $class;
+}
 
 ##
 # Actor Actor::get(Bytes ID)
@@ -201,6 +218,21 @@ sub name {
 }
 
 ##
+# void $Actor->setName(String name)
+# name: A few name for this actor. Can be undef to indicate that this actor has lost its previous name.
+#
+# Assign a name to this actor. An 'onNameChange' and 'onUpdate' event will
+# be triggered after the name is set.
+sub setName {
+	my ($self, $name) = @_;
+	assert(defined $name) if DEBUG;
+
+	$self->{name} = $name;
+	$self->{onNameChange}->call($self);
+	$self->{onUpdate}->call($self);
+}
+
+##
 # String $Actor->nameIdx()
 #
 # Returns the name and index of an actor, e.g. "pmak (0)" or "Unknown #300001 (1)".
@@ -273,7 +305,48 @@ sub snipable {
 #
 # Create a deep copy of this actor object.
 sub deepCopy {
-	return Storable::dclone($_[0]);
+	my ($self) = @_;
+
+	# Some fields cannot be deep copied by dclone() because they contain
+	# function references, so we'll do that manually.
+
+	# Delete fields that cannot be copied by dclone() and store
+	# them in a temporary place.
+	my %deepCopyFields;
+	foreach my $field ('onNameChange', 'onUpdate') {
+		$deepCopyFields{$field} = $self->{$field};
+		delete $self->{$field};
+	}
+
+	my $copy = Storable::dclone($_[0]);
+
+	# Restore the deleted fields in the original object,
+	# and assign manually-created deep copies to the clone.
+	foreach my $field (keys %deepCopyFields) {
+		$self->{$field} = $deepCopyFields{$field};
+		$copy->{$field} = $deepCopyFields{$field}->deepCopy;
+	}
+
+	return $copy;
+}
+
+##
+# CallbackList $Actor->onNameChange()
+# Ensures: defined(result)
+#
+# Returns the onNameChange event callback list.
+# This event is triggered when the name of this actor has changed.
+sub onNameChange {
+	return $_[0]->{onNameChange};
+}
+
+##
+# CallbackList $Actor->onUpdate()
+# Ensures: defined(result)
+#
+# Returns the onUpdate event callback list.
+sub onUpdate {
+	return $_[0]->{onUpdate};
 }
 
 1;

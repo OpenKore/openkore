@@ -1527,7 +1527,7 @@ sub cmdFriend {
 
 		if (!$player) {
 			error TF("Player %s does not exist\n", $arg2);
-		} elsif (!$player->{gotName}) {
+		} elsif (!defined $player->{name}) {
 			error T("Player name has not been received, please try again\n");
 		} else {
 			my $alreadyFriend = 0;
