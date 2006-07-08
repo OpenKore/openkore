@@ -948,19 +948,19 @@ sub actor_display {
 			Plugins::callHook('player', {player => $actor});
 
 		} elsif ($actor->isa('Actor::NPC')) {
-			message TF("NPC Exists: %s (%d, %d) (ID %d) - (%d)\n", $actor->{name}, $actor->{pos}{x}, $actor->{pos}{y}, $actor->{nameID}, $actor->{binID}), "parseMsg_presence", 1;
+			message TF("NPC Exists: %s (%d, %d) (ID %d) - (%d)\n", $actor->name, $actor->{pos}{x}, $actor->{pos}{y}, $actor->{nameID}, $actor->{binID}), "parseMsg_presence", 1;
 
 		} elsif ($actor->isa('Actor::Portal')) {
-			message TF("Portal Exists: %s (%s, %s) - (%s)\n", $actor->{name}, $coordsTo{x}, $coordsTo{y}, $actor->{binID}), "portals", 1;
+			message TF("Portal Exists: %s (%s, %s) - (%s)\n", $actor->name, $coordsTo{x}, $coordsTo{y}, $actor->{binID}), "portals", 1;
 
 		} elsif ($actor->isa('Actor::Monster')) {
-			debug sprintf("Monster Exists: %s (%d)\n", $actor->{name}, $actor->{binID}), "parseMsg_presence", 1;
+			debug sprintf("Monster Exists: %s (%d)\n", $actor->name, $actor->{binID}), "parseMsg_presence", 1;
 
 		} elsif ($actor->isa('Actor::Pet')) {
-			debug sprintf("Pet Exists: %s (%d)\n", $actor->{name}, $actor->{binID}), "parseMsg_presence", 1;
+			debug sprintf("Pet Exists: %s (%d)\n", $actor->name, $actor->{binID}), "parseMsg_presence", 1;
 
 		} else {
-			debug sprintf("Unknown Actor Exists: %s (%d)\n", $actor->{name}, $actor->{binID}), "parseMsg_presence", 1;
+			debug sprintf("Unknown Actor Exists: %s (%d)\n", $actor->name, $actor->{binID}), "parseMsg_presence", 1;
 		}
 
 	} elsif ($args->{switch} eq "0079" ||
@@ -996,33 +996,33 @@ sub actor_display {
 			debug "Player Moved: " . $actor->name . " ($actor->{binID}) Level $actor->{lv} $sex_lut{$actor->{sex}} $jobs_lut{$actor->{jobID}} - ($coordsFrom{x}, $coordsFrom{y}) -> ($coordsTo{x}, $coordsTo{y})\n", "parseMsg";
 
 		} elsif ($actor->isa('Actor::Monster')) {
-			debug "Monster Moved: $actor->{name} ($actor->{binID}) - ($coordsFrom{x}, $coordsFrom{y}) -> ($coordsTo{x}, $coordsTo{y})\n", "parseMsg";
+			debug "Monster Moved: " . $actor->nameIdx . " - ($coordsFrom{x}, $coordsFrom{y}) -> ($coordsTo{x}, $coordsTo{y})\n", "parseMsg";
 
 		} elsif ($actor->isa('Actor::Pet')) {
-			debug "Pet Moved: $actor->{name} ($actor->{binID}) - ($coordsFrom{x}, $coordsFrom{y}) -> ($coordsTo{x}, $coordsTo{y})\n", "parseMsg";
+			debug "Pet Moved: " . $actor->nameIdx . " - ($coordsFrom{x}, $coordsFrom{y}) -> ($coordsTo{x}, $coordsTo{y})\n", "parseMsg";
 
 		} elsif ($actor->isa('Actor::Portal')) {
 			# This can never happen of course.
-			debug "Portal Moved: $actor->{name} ($actor->{binID}) - ($coordsFrom{x}, $coordsFrom{y}) -> ($coordsTo{x}, $coordsTo{y})\n", "parseMsg";
+			debug "Portal Moved: " . $actor->nameIdx . " - ($coordsFrom{x}, $coordsFrom{y}) -> ($coordsTo{x}, $coordsTo{y})\n", "parseMsg";
 
 		} elsif ($actor->isa('Actor::NPC')) {
 			# Neither can this.
-			debug "Monster Moved: $actor->{name} ($actor->{binID}) - ($coordsFrom{x}, $coordsFrom{y}) -> ($coordsTo{x}, $coordsTo{y})\n", "parseMsg";
+			debug "Monster Moved: " . $actor->nameIdx . " - ($coordsFrom{x}, $coordsFrom{y}) -> ($coordsTo{x}, $coordsTo{y})\n", "parseMsg";
 
 		} else {
-			debug "Unknown Actor Moved: $actor->{name} ($actor->{binID}) - ($coordsFrom{x}, $coordsFrom{y}) -> ($coordsTo{x}, $coordsTo{y})\n", "parseMsg";
+			debug "Unknown Actor Moved: " . $actor->nameIdx . " - ($coordsFrom{x}, $coordsFrom{y}) -> ($coordsTo{x}, $coordsTo{y})\n", "parseMsg";
 		}
 
 	} elsif ($args->{switch} eq "007C") {
 		# Actor Spawned
 		if ($actor->isa('Actor::Player')) {
-			debug "Player Spawned: $actor->{name} ($actor->{binID}) $sex_lut{$actor->{sex}} $jobs_lut{$actor->{jobID}}\n", "parseMsg";
+			debug "Player Spawned: " . $actor->nameIdx . " $sex_lut{$actor->{sex}} $jobs_lut{$actor->{jobID}}\n", "parseMsg";
 		} elsif ($actor->isa('Actor::Monster')) {
-			debug "Monster Spawned: $actor->{name} ($actor->{binID})\n", "parseMsg";
+			debug "Monster Spawned: " . $actor->nameIdx . "\n", "parseMsg";
 		} elsif ($actor->isa('NPC')) {
-			debug "NPC Spawned: $actor->{name} ($actor->{binID})\n", "parseMsg";
+			debug "NPC Spawned: " . $actor->nameIdx . "\n", "parseMsg";
 		} else {
-			debug "Unknown Spawned: $actor->{name} ($actor->{binID})\n", "parseMsg";
+			debug "Unknown Spawned: " . $actor->nameIdx . "\n", "parseMsg";
 		}
 	}
 }

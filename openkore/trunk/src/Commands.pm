@@ -2201,29 +2201,29 @@ sub cmdMemo {
 }
 
 sub cmdMonsterList {
-	my ($dmgTo, $dmgFrom, $dist, $pos, $name);
+	my ($dmgTo, $dmgFrom, $dist, $pos, $name, $monsters);
 	message TF("-----------Monster List-----------\n" .
 		"#   Name                        ID      DmgTo DmgFrom  Distance    Coordinates\n"),	"list";
 
-	for (my $i = 0; $i < @monstersID; $i++) {
-		next if ($monstersID[$i] eq "");
-		$dmgTo = ($monsters{$monstersID[$i]}{'dmgTo'} ne "")
-			? $monsters{$monstersID[$i]}{'dmgTo'}
+	$monsters = $monstersList->getItems();
+	foreach my $monster (@{$monsters}) {
+		$dmgTo = ($monster->{dmgTo} ne "")
+			? $monster->{dmgTo}
 			: 0;
-		$dmgFrom = ($monsters{$monstersID[$i]}{'dmgFrom'} ne "")
-			? $monsters{$monstersID[$i]}{'dmgFrom'}
+		$dmgFrom = ($monster->{dmgFrom} ne "")
+			? $monster->{dmgFrom}
 			: 0;
-		$dist = distance(\%{$char->{'pos_to'}}, \%{$monsters{$monstersID[$i]}{'pos_to'}});
+		$dist = distance($char->{pos_to}, $monster->{pos_to});
 		$dist = sprintf("%.1f", $dist) if (index($dist, '.') > -1);
-		$pos = '(' . $monsters{$monstersID[$i]}{'pos_to'}{'x'} . ', ' . $monsters{$monstersID[$i]}{'pos_to'}{'y'} . ')';
-		$name = $monsters{$monstersID[$i]}{'name'};
-		if ($name ne $monsters{$monstersID[$i]}{'name_given'}) {
-			$name .= '['.$monsters{$monstersID[$i]}{'name_given'}.']';
+		$pos = '(' . $monster->{pos_to}{x} . ', ' . $monster->{pos_to}{y} . ')';
+		$name = $monster->name;
+		if ($name ne $monster->{name_given}) {
+			$name .= '[' . $monster->{name_given} . ']';
 		}
 
 		message(swrite(
 			"@<< @<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<< @<<<< @<<<<    @<<<<<      @<<<<<<<<<<",
-			[$i, $name, $monsters{$monstersID[$i]}{'binType'}, $dmgTo, $dmgFrom, $dist, $pos]),
+			[$monster->{binID}, $name, $monster->{binType}, $dmgTo, $dmgFrom, $dist, $pos]),
 			"list");
 	}
 	message("----------------------------------\n", "list");
@@ -2295,11 +2295,11 @@ sub cmdNPCList {
 
 	if ($arg[0] =~ /^\d+$/) {
 		my $i = $arg[0];
-		if ($npcsID[$i]) {
-			my $pos = "($npcs{$npcsID[$i]}{pos}{x}, $npcs{$npcsID[$i]}{pos}{y})";
+		if (my $npc = $npcsList->get($i)) {
+			my $pos = "($npc->{pos}{x}, $npc->{pos}{y})";
 			$msg .= swrite(
 				"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<   @<<<<<<<<",
-				[$i, $npcs{$npcsID[$i]}{name}, $pos, $npcs{$npcsID[$i]}{nameID}]);
+				[$i, $npc->name, $pos, $npc->{nameID}]);
 			$msg .= "---------------------------------\n";
 			message $msg, "info";
 
@@ -2310,12 +2310,12 @@ sub cmdNPCList {
 		return;
 	}
 
-	for (my $i = 0; $i < @npcsID; $i++) {
-		next if ($npcsID[$i] eq "");
-		my $pos = "($npcs{$npcsID[$i]}{pos}{x}, $npcs{$npcsID[$i]}{pos}{y})";
+	my $npcs = $npcsList->getItems();
+	foreach my $npc (@{$npcs}) {
+		my $pos = "($npc->{pos}{x}, $npc->{pos}{y})";
 		$msg .= swrite(
 			"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<   @<<<<<<<<",
-			[$i, $npcs{$npcsID[$i]}{name}, $pos, $npcs{$npcsID[$i]}{nameID}]);
+			[$npc->{binID}, $npc->name, $pos, $npc->{nameID}]);
 	}
 	$msg .= "---------------------------------\n";
 	message $msg, "list";
