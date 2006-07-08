@@ -200,9 +200,19 @@ our @EXPORT = (
 
 
 
+sub _checkActorHash($$$$) {
+	my ($name, $hash, $type, $hashName) = @_;
+	foreach my $actor (values %{$hash}) {
+		if (!UNIVERSAL::isa($actor, $type)) {
+			die "$name\nUnblessed item in $hashName list:\n" .
+				Dumper($hash);
+		}
+	}
+}
+
 # Checks whether the internal state of some variables are correct.
 sub checkValidity {
-	return unless DEBUG;
+	return unless DEBUG || $ENV{OPENKORE_NO_CHECKVALIDITY};
 	my ($name) = @_;
 	$name = "Validity check:" if (!defined $name);
 
@@ -216,21 +226,12 @@ sub checkValidity {
 		}
 	}
 
-	sub checkActorHash($$$$) {
-		my ($name, $hash, $type, $hashName) = @_;
-		foreach my $actor (values %{$hash}) {
-			if (!UNIVERSAL::isa($actor, $type)) {
-				die "$name\nUnblessed item in $hashName list:\n" .
-					Dumper($hash);
-			}
-		}
-	}
-
-	checkActorHash($name, \%monsters, 'Actor::Monster', 'monster');
-	checkActorHash($name, \%players, 'Actor::Player', 'player');
-	checkActorHash($name, \%pets, 'Actor::Pet', 'pet');
-	checkActorHash($name, \%npcs, 'Actor::NPC', 'NPC');
-	checkActorHash($name, \%portals, 'Actor::Portal', 'portals');
+	_checkActorHash($name, \%items, 'Actor::Item', 'item');
+	_checkActorHash($name, \%monsters, 'Actor::Monster', 'monster');
+	_checkActorHash($name, \%players, 'Actor::Player', 'player');
+	_checkActorHash($name, \%pets, 'Actor::Pet', 'pet');
+	_checkActorHash($name, \%npcs, 'Actor::NPC', 'NPC');
+	_checkActorHash($name, \%portals, 'Actor::Portal', 'portals');
 }
 
 
@@ -738,13 +739,14 @@ sub objectIsMovingTowardsPlayer {
 		my %vec;
 		getVector(\%vec, $obj->{pos_to}, $obj->{pos});
 
-		foreach (@playersID) {
-			next if (!$_ || ($ignore_party_members &&
-				($char->{party} && $char->{party}{users}{$_}) ||
-				(existsInList($config{tankersList}, $players{$_}{name}) &&
-					$players{$_}{name} ne 'Unknown')) ||
-				$players{$_}{statuses}{"GM Perfect Hide"});
-			if (checkMovementDirection($obj->{pos}, \%vec, $players{$_}{pos}, 15)) {
+		my $players = $playersList->items();
+		foreach my $player (@{$players}) {
+			my $ID = $player->{ID};
+			next if (
+			     ($ignore_party_members && $char->{party} && $char->{party}{users}{$ID})
+			  || (defined($player->{name}) && existsInList($config{tankersList}, $player->{name}))
+			  || $player->{statuses}{"GM Perfect Hide"});
+			if (checkMovementDirection($obj->{pos}, \%vec, $player->{pos}, 15)) {
 				return 1;
 			}
 		}
@@ -1077,7 +1079,11 @@ sub actorAdded {
 	$actor->{binID} = $index;
 
 	my ($type, $list, $hash);
-	if ($source == $playersList) {
+	if ($source == $itemsList) {
+		$type = "item";
+		$list = \@itemsID;
+		$hash = \%items;
+	} elsif ($source == $playersList) {
 		$type = "player";
 		$list = \@playersID;
 		$hash = \%players;
@@ -1100,8 +1106,8 @@ sub actorAdded {
 	}
 
 	if (defined $type) {
-		use Data::Dumper;
 		if (DEBUG && scalar(keys %{$hash}) + 1 != $source->size()) {
+			use Data::Dumper;
 			die scalar(keys %{$hash}) . " + 1 != " . $source->size() . "\n" . Dumper($hash);
 		}
 		assert(binSize($list) + 1 == $source->size()) if DEBUG;
@@ -1120,7 +1126,11 @@ sub actorRemoved {
 	my ($actor, $index) = @{$arg};
 
 	my ($type, $list, $hash);
-	if ($source == $playersList) {
+	if ($source == $itemsList) {
+		$type = "item";
+		$list = \@itemsID;
+		$hash = \%items;
+	} elsif ($source == $playersList) {
 		$type = "player";
 		$list = \@playersID;
 		$hash = \%players;
@@ -1143,8 +1153,8 @@ sub actorRemoved {
 	}
 
 	if (defined $type) {
-		use Data::Dumper;
 		if (DEBUG && scalar(keys %{$hash}) - 1 != $source->size()) {
+			use Data::Dumper;
 			die scalar(keys %{$hash}) . " - 1 != " . $source->size() . "\n" . Dumper($hash);
 		}
 		assert(binSize($list) - 1 == $source->size()) if DEBUG;
@@ -1164,11 +1174,13 @@ sub actorRemoved {
 }
 
 sub actorListClearing {
+	undef %items;
 	undef %players;
 	undef %monsters;
 	undef %portals;
 	undef %npcs;
 	undef %pets;
+	undef @itemsID;
 	undef @playersID;
 	undef @monstersID;
 	undef @portalsID;
@@ -2071,12 +2083,13 @@ sub positionNearPlayer {
 	my $r_hash = shift;
 	my $dist = shift;
 
-	foreach (@playersID) {
-		next unless defined $_;
-		next if $char->{party} && $char->{party}{users} &&
-			$char->{party}{users}{$_};
-		next if existsInList($config{tankersList}, $players{$_}{name});
-		return 1 if (distance($r_hash, $players{$_}{pos_to}) <= $dist);
+	my $players = $playersList->getItems();
+	foreach my $player (@{$players}) {
+		my $ID = $player->{ID};
+		next if ($char->{party} && $char->{party}{users} &&
+			$char->{party}{users}{$ID});
+		next if (defined($player->{name}) && existsInList($config{tankersList}, $player->{name}));
+		return 1 if (distance($r_hash, $player->{pos_to}) <= $dist);
 	}
 	return 0;
 }
@@ -2085,9 +2098,9 @@ sub positionNearPortal {
 	my $r_hash = shift;
 	my $dist = shift;
 
-	foreach (@portalsID) {
-		next unless defined $_;
-		return 1 if (distance($r_hash, $portals{$_}{pos}) <= $dist);
+	my $portals = $portalsList->getItems();
+	foreach my $portal (@{$portals}) {
+		return 1 if (distance($r_hash, $portal->{pos}) <= $dist);
 	}
 	return 0;
 }
@@ -3273,12 +3286,10 @@ sub percent_weight {
 #######################################
 
 sub avoidGM_near {
-	for (my $i = 0; $i < @playersID; $i++) {
-		next if ($playersID[$i] eq "");
-		my $player = $players{$playersID[$i]};
-
+	my $players = $playersList->getItems();
+	foreach my $player (@{$players}) {
 		# skip this person if we dont know the name
-		next if (!$player->{name});
+		next if (!defined $player->{name});
 
 		# Check whether this "GM" is on the ignore list
 		# in order to prevent false matches
@@ -3289,7 +3300,7 @@ sub avoidGM_near {
 
 		my %args = (
 			name => $player->{name},
-			ID => $playersID[$i]
+			ID => $player->{ID}
 		);
 		Plugins::callHook('avoidGM_near', \%args);
 		return 1 if ($args{return});
@@ -3333,10 +3344,9 @@ sub avoidGM_near {
 # Disconnects / teleports if a player is detected.
 sub avoidList_near {
 	return if ($config{avoidList_inLockOnly} && $field{name} ne $config{lockMap});
-	for (my $i = 0; $i < @playersID; $i++) {
-		my $player = $players{$playersID[$i]};
-		next if (!defined $player);
 
+	my $players = $playersList->getItems();
+	foreach my $player (@{$players}) {
 		my $avoidPlayer = $avoid{Players}{lc($player->{name})};
 		my $avoidID = $avoid{ID}{$player->{nameID}};
 		if (!$net->clientAlive() && ( ($avoidPlayer && $avoidPlayer->{disconnect_on_sight}) || ($avoidID && $avoidID->{disconnect_on_sight}) )) {
@@ -3494,8 +3504,6 @@ sub getActorName {
 
 	if (!$id) {
 		return 'Nothing';
-	} elsif (my $item = $items{$id}) {
-		return "Item $item->{name} ($item->{binID})";
 	} else {
 		my $hash = Actor::get($id);
 		return $hash->nameString;
@@ -3737,12 +3745,12 @@ sub checkSelfCondition {
 sub checkPlayerCondition {
 	my ($prefix, $id) = @_;
 
-	my $player = $players{$id};
+	my $player = $playersList->getByID($id);
 
 	if ($config{$prefix . "_timeout"}) { return 0 unless timeOut($ai_v{$prefix . "_time"}{$id}, $config{$prefix . "_timeout"}) }
 	if ($config{$prefix . "_whenStatusActive"}) { return 0 unless (whenStatusActivePL($id, $config{$prefix . "_whenStatusActive"})); }
 	if ($config{$prefix . "_whenStatusInactive"}) { return 0 if (whenStatusActivePL($id, $config{$prefix . "_whenStatusInactive"})); }
-	if ($config{$prefix . "_notWhileSitting"} > 0) { return 0 if ($players{$id}{sitting}); }
+	if ($config{$prefix . "_notWhileSitting"} > 0) { return 0 if ($player->{sitting}); }
 
 	# we will have player HP info (only) if we are in the same party
 	if ($chars[$config{char}]{party} && $chars[$config{char}]{party}{users}{$id}) {
@@ -3761,8 +3769,8 @@ sub checkPlayerCondition {
 	}
 
 	# check player job class
-	if ($config{$prefix . "_isJob"}) { return 0 unless (existsInList($config{$prefix . "_isJob"}, $jobs_lut{$players{$id}{jobID}})); }
-	if ($config{$prefix . "_isNotJob"}) { return 0 if (existsInList($config{$prefix . "_isNotJob"}, $jobs_lut{$players{$id}{jobID}})); }
+	if ($config{$prefix . "_isJob"}) { return 0 unless (existsInList($config{$prefix . "_isJob"}, $jobs_lut{$player->{jobID}})); }
+	if ($config{$prefix . "_isNotJob"}) { return 0 if (existsInList($config{$prefix . "_isNotJob"}, $jobs_lut{$player->{jobID}})); }
 
 	if ($config{$prefix . "_aggressives"}) {
 		return 0 unless (inRange(scalar ai_getPlayerAggressives($id), $config{$prefix . "_aggressives"}));
@@ -3791,15 +3799,15 @@ sub checkPlayerCondition {
 	}
 
 	if ($config{$prefix."_whenGround"}) {
-		return 0 unless whenGroundStatus(calcPosition($players{$id}), $config{$prefix."_whenGround"});
+		return 0 unless whenGroundStatus(calcPosition($player), $config{$prefix."_whenGround"});
 	}
 	if ($config{$prefix."_whenNotGround"}) {
-		return 0 if whenGroundStatus(calcPosition($players{$id}), $config{$prefix."_whenNotGround"});
+		return 0 if whenGroundStatus(calcPosition($player), $config{$prefix."_whenNotGround"});
 	}
 	if ($config{$prefix."_dead"}) {
-		return 0 if !$players{$id}{dead};
+		return 0 if !$player->{dead};
 	} else {
-		return 0 if $players{$id}{dead};
+		return 0 if $player->{dead};
 	}
 
 	if ($config{$prefix."_whenWeaponEquipped"}) {
@@ -3815,7 +3823,7 @@ sub checkPlayerCondition {
 	}
 
 	if ($config{$prefix."_dist"}) {
-		return 0 unless inRange(distance(calcPosition($char), calcPosition($players{$id})), $config{$prefix."_dist"});
+		return 0 unless inRange(distance(calcPosition($char), calcPosition($player)), $config{$prefix."_dist"});
 	}
 
 	my %args = (

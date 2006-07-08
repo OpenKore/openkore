@@ -490,10 +490,11 @@ sub actor_action {
 		# Take item
 		my $source = Actor::get($args->{sourceID});
 		my $verb = $source->verb('pick up', 'picks up');
-		#my $target = Actor::get($args->{targetID});
 		my $target = getActorName($args->{targetID});
 		debug "$source $verb $target\n", 'parseMsg_presence';
-		$items{$args->{targetID}}{takenBy} = $args->{sourceID} if ($items{$args->{targetID}});
+
+		my $item = $itemsList->getByID($args->{targetID});
+		$item->{takenBy} = $args->{sourceID} if ($item);
 
 	} elsif ($args->{type} == 2) {
 		# Sit
@@ -1726,8 +1727,19 @@ sub chat_newowner {
 		if ($user eq $char->{name}) {
 			$chatRooms{$currentChatRoom}{ownerID} = $accountID;
 		} else {
-			my $key = findKeyString(\%players, "name", $user);
-			$chatRooms{$currentChatRoom}{ownerID} = $key;
+			my $players = $playersList->getItems();
+			my $player;
+			foreach my $p (@{$players}) {
+				if ($p->{name} eq $user) {
+					$player = $p;
+					last;
+				}
+			}
+
+			if ($player) {
+				my $key = $player->{ID};
+				$chatRooms{$currentChatRoom}{ownerID} = $key;
+			}
 		}
 		$chatRooms{$currentChatRoom}{users}{$user} = 2;
 	} else {
@@ -2883,18 +2895,23 @@ sub inventory_items_stackable {
 sub item_appeared {
 	my ($self, $args) = @_;
 	change_to_constate5();
-	my $item = $items{$args->{ID}} ||= {};
-	if (!$item || !%{$item}) {
-		binAdd(\@itemsID, $args->{ID});
+
+	my $item = $itemsList->getByID($args->{ID});
+	my $mustAdd;
+	if (!$item) {
+		$item = new Actor::Item();
 		$item->{appear_time} = time;
 		$item->{amount} = $args->{amount};
 		$item->{nameID} = $args->{type};
-		$item->{binID} = binFind(\@itemsID, $args->{ID});
 		$item->{name} = itemName($item);
 		$item->{ID} = $args->{ID};
+		$mustAdd = 1;
 	}
 	$item->{pos}{x} = $args->{x};
 	$item->{pos}{y} = $args->{y};
+	$item->{pos_to}{x} = $args->{x};
+	$item->{pos_to}{y} = $args->{y};
+	$itemsList->add($item) if ($mustAdd);
 
 	# Take item as fast as possible
 	if ($AI == 2 && pickupitems(lc($item->{name})) == 2 && distance($item->{pos}, $char->{pos_to}) <= 5) {
@@ -2908,25 +2925,34 @@ sub item_appeared {
 sub item_exists {
 	my ($self, $args) = @_;
 	change_to_constate5();
-	if (!$items{$args->{ID}} || !%{$items{$args->{ID}}}) {
-		binAdd(\@itemsID, $args->{ID});
-		$items{$args->{ID}}{'appear_time'} = time;
-		$items{$args->{ID}}{'amount'} = $args->{amount};
-		$items{$args->{ID}}{'nameID'} = $args->{type};
-		$items{$args->{ID}}{'binID'} = binFind(\@itemsID, $args->{ID});
-		$items{$args->{ID}}{'name'} = itemName($items{$args->{ID}});
-		$items{$args->{ID}}{'ID'} = $args->{ID};
+
+	my $item = $itemsList->getByID($args->{ID});
+	my $mustAdd;
+	if (!$item) {
+		$item = new Actor::Item();
+		$item->{appear_time} = time;
+		$item->{amount} = $args->{amount};
+		$item->{nameID} = $args->{type};
+		$item->{ID} = $args->{ID};
+		$item->{name} = itemName($item);
+		$mustAdd = 1;
 	}
-	$items{$args->{ID}}{'pos'}{'x'} = $args->{x};
-	$items{$args->{ID}}{'pos'}{'y'} = $args->{y};
-	message TF("Item Exists: %s (%s) x %s\n", $items{$args->{ID}}{'name'}, $items{$args->{ID}}{'binID'}, $items{$args->{ID}}{'amount'}), "drop", 1;
+	$item->{pos}{x} = $args->{x};
+	$item->{pos}{y} = $args->{y};
+	$item->{pos_to}{x} = $args->{x};
+	$item->{pos_to}{y} = $args->{y};
+	$itemsList->add($item) if ($mustAdd);
+
+	message TF("Item Exists: %s (%s) x %s\n", $item->{name}, $item->{binID}, $item->{amount}), "drop", 1;
 }
 
 sub item_disappeared {
 	my ($self, $args) = @_;
 	change_to_constate5();
-	if ($items{$args->{ID}}) {
-		if ($config{attackLooters} && AI::action ne "sitAuto" && pickupitems(lc($items{$args->{ID}}{name})) > 0) {
+
+	my $item = $itemsList->getByID($args->{ID});
+	if ($item) {
+		if ($config{attackLooters} && AI::action ne "sitAuto" && pickupitems(lc($item->{name})) > 0) {
 			foreach my Actor::Monster $monster (@{$monstersList->getItems()}) { # attack looter code
 				if (my $control = mon_control($monster->name)) {
 					next if ( ($control->{attack_auto}  ne "" && $control->{attack_auto} == -1)
@@ -2936,20 +2962,20 @@ sub item_disappeared {
 						|| ($control->{attack_sp}   ne "" && $control->{attack_sp} > $char->{sp})
 						);
 				}
-				if (distance($items{$args->{ID}}{pos}, $monster->{pos}) == 0) {
+				if (distance($item->{pos}, $monster->{pos}) == 0) {
 					attack($monster->{ID});
-					message TF("Attack Looter: %s looted %s\n", $monster->nameIdx, $items{$args->{ID}}{name}), "looter";
+					message TF("Attack Looter: %s looted %s\n", $monster->nameIdx, $item->{name}), "looter";
 					last;
 				}
 			}
 		}
 
-		debug "Item Disappeared: $items{$args->{ID}}{'name'} ($items{$args->{ID}}{'binID'})\n", "parseMsg_presence";
-		$items_old{$args->{ID}} = {%{$items{$args->{ID}}}};
-		$items_old{$args->{ID}}{'disappeared'} = 1;
-		$items_old{$args->{ID}}{'gone_time'} = time;
-		delete $items{$args->{ID}};
-		binRemove(\@itemsID, $args->{ID});
+		debug "Item Disappeared: $item->{name} ($item->{binID})\n", "parseMsg_presence";
+		my $ID = $args->{ID};
+		$items_old{$ID} = $item->deepCopy();
+		$items_old{$ID}{disappeared} = 1;
+		$items_old{$ID}{gone_time} = time;
+		$itemsList->removeByID($ID);
 	}
 }
 

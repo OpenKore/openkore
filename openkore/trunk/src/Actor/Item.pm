@@ -337,6 +337,12 @@ sub UnEquipByType {
 #
 # See also: $ActorItem->{index}
 
+##
+# Bytes $ActorItem->{takenBy}
+#
+# The ID of the actor who has taken this item. This field is set when an
+# actor picks up an item.
+
 
 ################################
 ### CATEGORY: Public Methods
