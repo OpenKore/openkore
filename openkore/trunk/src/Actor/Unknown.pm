@@ -20,16 +20,18 @@
 #
 # Actor.pm is the base class for this class.
 package Actor::Unknown;
+
 use strict;
+use Actor;
+
 our @ISA = qw(Actor);
 
 sub new {
 	my ($class, $ID) = @_;
-	return bless {
-		actorType => 'Unknown',
-		ID => $ID,
-		nameID => unpack("V1", $ID)
-	}, $class;
+	my $self = $class->SUPER::new('Unknown');
+	$self->{ID} = $ID;
+	$self->{nameID} = unpack("V", $ID);
+	return $self;
 }
 
 sub nameString {

@@ -71,6 +71,7 @@ sub OnInit {
 		['loadfiles',               sub { $self->onLoadFiles(@_); }],
 		['postloadfiles',           sub { $self->onLoadFiles(@_); }],
 		['parseMsg/addPrivMsgUser', sub { $self->onAddPrivMsgUser(@_); }],
+		['initialized',             sub { $self->onInitialized(@_); }],
 		['ChatQueue::add',          $onChat],
 		['packet_selfChat',         $onChat],
 		['packet_privMsg',          $onChat],
@@ -700,8 +701,6 @@ sub updateMapViewer {
 sub updateItemList {
 	my $self = shift;
 	if ($conState == 5) {
-		$self->{itemList}->set(\@playersID, \%players, \@monstersID, \%monsters,
-			\@itemsID, \%items, \@npcsID, \%npcs);
 		$self->{hpBar}->SetValue($char->{hp} / $char->{hp_max} * 100) if ($char->{hp_max});
 		$self->{spBar}->SetValue($char->{sp} / $char->{sp_max} * 100) if ($char->{sp_max});
 		$self->{expBar}->SetValue($char->{exp} / $char->{exp_max} * 100) if ($char->{exp_max});
@@ -901,27 +900,24 @@ sub onManual {
 
 sub onForum {
 	my $self = shift;
-	launchURL('http://openkore.sourceforge.net/forum.php');
+	launchURL('http://forums.openkore.com/');
 }
 
 sub onItemListActivate {
-	my $self = shift;
-	my $ID = shift;
-	my $object = shift;
-	my $type = shift;
+	my ($self, $actor) = @_;
 
-	if ($type eq 'p' && $players{$ID}) {
-		Commands::run("pl " . $players{$ID}{binID});
+	if ($actor->isa('Actor::Player')) {
+		Commands::run("pl " . $actor->{binID});
 
-	} elsif ($type eq 'm' && $monsters{$ID}) {
-		main::attack($ID);
+	} elsif ($actor->isa('Actor::Monster')) {
+		main::attack($actor->{ID});
 
-	} elsif ($type eq 'i' && $items{$ID}) {
-		$self->{console}->add("message", "Taking item $items{$ID}{name} ($items{$ID}{binID})\n", "info");
-		main::take($ID);
+	} elsif ($actor->isa('Actor::Item')) {
+		$self->{console}->add("message", "Taking item " . $actor->nameIdx . "\n", "info");
+		main::take($actor->{ID});
 
-	} elsif ($type eq 'n' && $npcs{$ID}) {
-		Commands::run("nl " . $npcs{$ID}{binID});
+	} elsif ($actor->isa('Actor::NPC')) {
+		Commands::run("nl " . $actor->{binID});
 	}
 
 	$self->{inputBox}->SetFocus;
@@ -937,6 +933,14 @@ sub onTargetBoxKeyDown {
 	} else {
 		$event->Skip;
 	}
+}
+
+sub onInitialized {
+	my ($self) = @_;
+	$self->{itemList}->init($playersList, undef,
+			$monstersList, new Wx::Colour(200, 0, 0),
+			$itemsList, new Wx::Colour(0, 0, 200),
+			$npcsList, new Wx::Colour(103, 0, 162));
 }
 
 sub onAddPrivMsgUser {

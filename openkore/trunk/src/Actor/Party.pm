@@ -29,11 +29,11 @@ our @ISA = qw(Actor);
 
 sub new {
 	my ($class) = @_;
-	return bless {actorType => 'Party'}, $class;
+	return $class->SUPER::new('Party');
 }
 
 ##
-# $actor->position()
+# Hash* $ActorParty->position()
 #
 # Returns the position of the actor.
 sub position {

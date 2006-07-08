@@ -27,7 +27,7 @@ our @ISA = qw(Actor);
 
 sub new {
 	my ($class) = @_;
-	return bless {actorType => 'Homunculus'}, $class;
+	return $class->SUPER::new('Homunculus');
 }
 
 1;

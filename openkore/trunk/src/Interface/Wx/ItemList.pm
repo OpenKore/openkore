@@ -26,11 +26,7 @@ use Wx ':everything';
 use base qw(Wx::ListCtrl);
 use Wx::Event qw(EVT_LIST_ITEM_ACTIVATED EVT_LIST_ITEM_RIGHT_CLICK);
 use File::Spec;
-
-
-our $monsterColor;
-our $itemColor;
-our $npcColor;
+use Scalar::Util;
 
 
 sub new {
@@ -39,38 +35,138 @@ sub new {
 	my $self = $class->SUPER::new($parent, 622, wxDefaultPosition, wxDefaultSize,
 		wxLC_REPORT | wxLC_VIRTUAL | wxLC_SINGLE_SEL);
 
-	if (!$monsterColor) {
-		$monsterColor = new Wx::Colour(200, 0, 0);
-		$itemColor = new Wx::Colour(0, 0, 200);
-		$npcColor = new Wx::Colour(103, 0, 162);
-	}
-
-	$self->{objectsID} = [];
-	$self->{objects} = {};
 	$self->InsertColumn(0, "Players, Monsters & Items");
-	$self->SetColumnWidth(0, -2);# unless ($^O eq 'MSWin32');
+	$self->SetColumnWidth(0, -2);
 	EVT_LIST_ITEM_ACTIVATED($self, 622, \&_onActivate);
 	EVT_LIST_ITEM_RIGHT_CLICK($self, 622, \&_onRightClick);
 	return $self;
 }
 
-sub _onActivate {
+sub DESTROY {
+	my $lists = $_[0]->{lists};
+	foreach my $l (@{$lists}) {
+		my $actorList = $l->{actorList};
+		$actorList->onAdd()->remove($l->{addID});
+		$actorList->onRemove()->remove($l->{removeID});
+		$actorList->onClearBegin()->remove($l->{clearBeginID});
+		$actorList->onClearEnd()->remove($l->{clearEndID});
+	}
+}
+
+sub init {
 	my $self = shift;
-	my $event = shift;
+	my @lists;
+	for (my $i = 0; $i < @_; $i += 2) {
+		my $actorList = $_[$i];
+		my $color = $_[$i + 1];
+		my $addID = $actorList->onAdd()->add($self, \&_onAdd);
+		my $removeID = $actorList->onRemove()->add($self, \&_onRemove);
+		my $clearBeginID = $actorList->onClearBegin()->add($self, \&_onClearBegin);
+		my $clearEndID = $actorList->onClearEnd()->add($self, \&_onClearEnd);
+		push @lists, { actorList => $actorList, color => $color,
+			       addID => $addID, removeID => $removeID,
+			       clearBeginID => $clearBeginID, clearEndID => $clearEndID };
+	}
+	$self->{lists} = \@lists;
+	$self->{onNameChangeCallbacks} = {};
+}
+
+# Set the item count of this list to the total number of actors in the observed ActorLists.
+sub _setItemCount {
+	my ($self) = @_;
+	my $actorCount = 0;
+	my $lists = $_[0]->{lists};
+
+	foreach my $l (@{$lists}) {
+		$actorCount += $l->{actorList}->size();
+	}
+
+	$self->SetItemCount($actorCount) if ($actorCount != $self->GetItemCount);
+}
+
+# Return the Actor that is associated with index $index in this list.
+sub _getActorForIndex {
+	my ($self, $index) = @_;
+	my $minIndex = 0;
+	my $lists = $_[0]->{lists};
+
+	foreach my $l (@{$lists}) {
+		my $actorList = $l->{actorList};
+		if ($index >= $minIndex && $index < $minIndex + $actorList->size()) {
+			return $actorList->getItems()->[$index - $minIndex];
+		} else {
+			$minIndex += $actorList->size();
+		}
+	}
+	return undef;
+}
+
+
+sub _onAdd {
+	my ($self, undef, undef, $arg) = @_;
+	my ($actor, $index) = @{$arg};
+	my $addr = Scalar::Util::refaddr($actor);
+
+	my $ID = $actor->onNameChange->add($self, \&_onNameChange);
+	$self->{onNameChangeCallbacks}{$addr} = $ID;
+
+	$self->_setItemCount();
+	$self->RefreshItems(0, -1);
+}
+
+sub _onRemove {
+	my ($self, undef, undef, $arg) = @_;
+	my ($actor, $index) = @{$arg};
+	my $addr = Scalar::Util::refaddr($actor);
+
+	my $ID = $self->{onNameChangeCallbacks}{$addr};
+	$actor->onNameChange->remove($ID);
+	delete $self->{onNameChangeCallbacks}{$addr};
+
+	$self->_setItemCount();
+	$self->RefreshItems(0, -1);
+}
+
+sub _onClearBegin {
+	my ($self, $actorList) = @_;
+	my $actors = $actorList->getItems();
+
+	foreach my $actor (@{$actors}) {
+		my $addr = Scalar::Util::refaddr($actor);
+		my $ID = $self->{onNameChangeCallbacks}{$addr};
+		$actor->onNameChange->remove($ID);
+		delete $self->{onNameChangeCallbacks}{$addr};
+	}
+}
+
+sub _onClearEnd {
+	my ($self) = @_;
+	$self->_setItemCount();
+	$self->RefreshItems(0, -1);
+}
+
+sub _onNameChange {
+	my ($self) = @_;
+	$self->_setItemCount();
+	$self->RefreshItems(0, -1);
+}
+
+
+sub _onActivate {
+	my ($self, $event) = @_;
 	if ($self->{activate}) {
 		my $i = $event->GetIndex;
-		my $ID = $self->{objectsID}[$i];
-		$self->{activate}->($self->{class}, $ID, $self->{objects}{$ID}, $self->{objects}{$ID}{type});
+		my $actor = $self->_getActorForIndex($i);
+		$self->{activate}->($self->{class}, $actor);
 	}
 }
 
 sub _onRightClick {
 	my ($self, $event) = @_;
-	my $ID = $self->{objectsID}[$event->GetIndex];
+	my $actor = $self->_getActorForIndex($event->GetIndex);
 
-	if ($ID && $self->{rightClick}) {
-		my $obj = $self->{objects}{$ID};
-		$self->{rightClick}->($self->{rightClickClass}, $ID, $obj, $obj->{type}, $self, $event);
+	if ($actor && $self->{rightClick}) {
+		$self->{rightClick}->($self->{rightClickClass}, $actor, $self, $event);
 	}
 }
 
@@ -86,111 +182,33 @@ sub onRightClick {
 
 sub OnGetItemText {
 	my ($self, $item, $column) = @_;
-	my $ID = $self->{objectsID}[$item];
-	my $objects = $self->{objects};
-
-	# Some people get a weird "can't coerce array into hash" error
-	# for some reason, so check the reference type.
-	if ($ID) {
-		my $f;
-
-		if ($objects && ref($objects) eq 'HASH' && $objects->{$ID} && ref($objects->{$ID}) eq 'HASH') {
-			if (defined $objects->{$ID}{name}) {
-				return $objects->{$ID}{name};
-			} else {
-				return "Unknown";
-			}
-
-		} else {
-			my $file = File::Spec->catfile($Settings::logs_folder, "debug.txt");
-			if (open($f, ">> $file")) {
-				# Wrong type; why?? Write to debugging log.
-				require Data::Dumper;
-				print $f "index = $item\n";
-				print $f "ID = " . unpack("V", $ID) . "\n";
-				print $f "\n";
-				print $f Data::Dumper::Dumper($objects);
-				print $f Data::Dumper::Dumper($self->{objectsID});
-				print $f "\n--------------------------\n\n";
-				close $f;
-				Log::warning("Internal error detected. Please submit a bug report and attach the file $file.\n");
-				$::interface->{chatLog}->add("Internal error detected. Please submit a bug report and attach the file $file.\n", "warning");
-			}
-		}
+	my $actor = $self->_getActorForIndex($item);
+	if ($actor) {
+		return $actor->name;
+	} else {
+		return "";
 	}
-	return "";
 }
 
 sub OnGetItemAttr {
 	my ($self, $item) = @_;
-	my $ID = $self->{objectsID}[$item];
-	my $objects = $self->{objects};
-
 	my $attr = new Wx::ListItemAttr;
-	return $attr if (!$ID || !$objects || ref($objects) ne 'HASH');
-	return $attr if (!$objects->{$ID});
-	return $attr if (ref($objects->{$ID}) ne 'HASH');
+	my $actor = $self->_getActorForIndex($item);
 
-	if ($objects->{$ID}{type} eq 'm') {
-		$attr->SetTextColour($monsterColor);
-	} elsif ($objects->{$ID}{type} eq 'i') {
-		$attr->SetTextColour($itemColor);
-	} elsif ($objects->{$ID}{type} eq 'n') {
-		$attr->SetTextColour($npcColor);
+	if ($actor) {
+		foreach my $l (@{$self->{lists}}) {
+			my $actorList = $l->{actorList};
+			if ($actorList->getByID($actor->{ID})) {
+				$attr->SetTextColour($l->{color}) if ($l->{color});
+				last;
+			}
+		}
 	}
 	return $attr;
 }
 
 sub OnGetItemImage {
 	return 0;
-}
-
-sub set {
-	my $self = shift;
-
-	my @objectsID;
-	my %objects;
-
-	my $r_playersID = shift;
-	my $players = shift;
-	foreach (@{$r_playersID}) {
-		next if (!$_ || !$players->{$_});
-		push @objectsID, $_;
-		$objects{$_} = {%{$players->{$_}}};
-		$objects{$_}{type} = 'p';
-	}
-
-	my $r_monstersID = shift;
-	my $monsters = shift;
-	foreach (@{$r_monstersID}) {
-		next if (!$_ || !$monsters->{$_});
-		push @objectsID, $_;
-		$objects{$_} = {%{$monsters->{$_}}};
-		$objects{$_}{type} = 'm';
-	}
-
-	my $r_itemsID = shift;
-	my $items = shift;
-	foreach (@{$r_itemsID}) {
-		next if (!$_ || !$items->{$_});
-		push @objectsID, $_;
-		$objects{$_} = {%{$items->{$_}}};
-		$objects{$_}{type} = 'i';
-	}
-
-	my $r_npcsID = shift;
-	my $npcs = shift;
-	foreach (@{$r_npcsID}) {
-		next if (!$_ || !$npcs->{$_});
-		push @objectsID, $_;
-		$objects{$_} = {%{$npcs->{$_}}};
-		$objects{$_}{type} = 'n';
-	}
-
-	$self->{objectsID} = \@objectsID;
-	$self->{objects} = \%objects;
-	$self->SetItemCount(scalar(@objectsID)) if (scalar(@objectsID) != $self->GetItemCount);
-	$self->RefreshItems(0, -1);
 }
 
 1;

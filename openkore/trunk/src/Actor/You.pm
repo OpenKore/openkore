@@ -30,7 +30,7 @@ our @ISA = qw(Actor);
 
 sub new {
 	my ($class) = @_;
-	return bless {actorType => 'You'}, $class;
+	return $class->SUPER::new('You');
 }
 
 sub nameString {

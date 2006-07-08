@@ -1712,7 +1712,6 @@ sub getPlayerNameFromCache {
 
 	$player->{name} = $entry->{name};
 	$player->{guild} = $entry->{guild} if ($entry->{guild});
-	$player->{gotName} = 1;
 	return 1;
 }
 
@@ -2119,15 +2118,15 @@ sub printItemDesc {
 }
 
 sub processNameRequestQueue {
-	my ($queue, $objects, $isPlayer) = @_;
+	my ($queue, $actorList, $foo) = @_;
 
 	while (@{$queue}) {
 		my $ID = $queue->[0];
-		my $object = $objects->{$ID};
+		my $actor = $actorList->getByID($ID);
 
-		# some private servers ban you if you request info for an object with
+		# Some private servers ban you if you request info for an object with
 		# GM Perfect Hide status
-		if (!$object || $object->{gotName} || $object->{statuses}{"GM Perfect Hide"}) {
+		if (!$actor || defined($actor->{name}) || $actor->{statuses}{"GM Perfect Hide"}) {
 			shift @{$queue};
 			next;
 		}
@@ -2135,15 +2134,15 @@ sub processNameRequestQueue {
 		# Remove actors with a distance greater than clientSight. Some private servers (notably Freya) use
 		# a technique where they send actor_exists packets with ridiculous distances in order to automatically
 		# ban bots. By removingthose actors, we eliminate that possibility and emulate the client more closely.
-		if (defined $object->{pos_to} && (my $block_dist = blockDistance($char->{pos_to}, $object->{pos_to})) >= ($config{clientSight} || 16)) {
-			debug "Removed actor at $object->{pos_to}{x} $object->{pos_to}{y} (distance: $block_dist)\n";
+		if (defined $actor->{pos_to} && (my $block_dist = blockDistance($char->{pos_to}, $actor->{pos_to})) >= ($config{clientSight} || 16)) {
+			debug "Removed actor at $actor->{pos_to}{x} $actor->{pos_to}{y} (distance: $block_dist)\n";
 			shift @{$queue};
 			next;
 		}
 
 		$net->sendGetPlayerInfo($ID);
-		$object = shift @{$queue};
-		push @{$queue}, $object if ($object);
+		$actor = shift @{$queue};
+		push @{$queue}, $actor if ($actor);
 		last;
 	}
 }

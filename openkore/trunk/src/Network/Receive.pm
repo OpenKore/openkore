@@ -629,7 +629,7 @@ sub actor_died_or_disappeared {
 	} elsif (defined $playersList->getByID($ID)) {
 		my $player = $playersList->getByID($ID);
 		if ($args->{type} == 1) {
-			message TF("Player Died: %s (%s) %s %s\n", $player->name, $player->{binID}, $sex_lut{$player->{sex}}, $jobs_lut{$player->{jobID}});
+			message TF("Player Died: %s (%d) %s %s\n", $player->name, $player->{binID}, $sex_lut{$player->{sex}}, $jobs_lut{$player->{jobID}});
 			$player->{dead} = 1;
 		} else {
 			if ($args->{type} == 0) {
@@ -751,9 +751,9 @@ sub actor_display {
 			$actor->{appear_time} = time;
 			my $exists = portalExists($field{name}, \%coordsTo);
 			$actor->{source}{map} = $field{name};
-			$actor->{name} = ($exists ne "")
-				? "$portals_lut{$exists}{source}{map} -> " . getPortalDestName($exists)
-				: "Unknown $nameID";
+			if ($exists ne "") {
+				$actor->setName("$portals_lut{$exists}{source}{map} -> " . getPortalDestName($exists));
+			}
 			$mustAdd = 1;
 
 			# Strangely enough, portals (like all other actors) have names, too.
@@ -773,9 +773,9 @@ sub actor_display {
 			if (!defined $actor) {
 				$actor = new Actor::Pet();
 				$actor->{appear_time} = time;
-				$actor->{name} = ($monsters_lut{$args->{type}} ne "")
-						? $monsters_lut{$args->{type}}
-						: "Unknown $args->{type}";
+				if ($monsters_lut{$args->{type}}) {
+					$actor->setName($monsters_lut{$args->{type}});
+				}
 				$actor->{name_given} = "Unknown";
 				$mustAdd = 1;
 
@@ -791,9 +791,9 @@ sub actor_display {
 			if (!defined $actor) {
 				$actor = new Actor::Monster();
 				$actor->{appear_time} = time;
-				$actor->{name} = ($monsters_lut{$args->{type}} ne "")
-						? $monsters_lut{$args->{type}}
-						: "Unknown ".$args->{type};
+				if ($monsters_lut{$args->{type}}) {
+					$actor->setName($monsters_lut{$args->{type}});
+				}
 				$actor->{name_given} = "Unknown";
 				$actor->{binType} = $args->{type};
 				$mustAdd = 1;
@@ -927,10 +927,7 @@ sub actor_display {
 			my $ID = $args->{ID};
 			my $location = "$field{name} $actor->{pos}{x} $actor->{pos}{y}";
 			if ($npcs_lut{$location}) {
-				$actor->{name} = $npcs_lut{$location};
-				$actor->{gotName} = 1;
-			} else {
-				$actor->{name} = "Unknown $nameID";
+				$actor->setName($npcs_lut{$location});
 			}
 			$npcsList->add($actor);
 		}
@@ -951,19 +948,19 @@ sub actor_display {
 			Plugins::callHook('player', {player => $actor});
 
 		} elsif ($actor->isa('Actor::NPC')) {
-			message TF("NPC Exists: %s (%s, %s) (ID %s) - (%s)\n", $actor->{name}, $actor->{pos}{x}, $actor->{pos}{y}, $actor->{nameID}, $actor->{binID}), "parseMsg_presence", 1;
+			message TF("NPC Exists: %s (%d, %d) (ID %d) - (%d)\n", $actor->{name}, $actor->{pos}{x}, $actor->{pos}{y}, $actor->{nameID}, $actor->{binID}), "parseMsg_presence", 1;
 
 		} elsif ($actor->isa('Actor::Portal')) {
 			message TF("Portal Exists: %s (%s, %s) - (%s)\n", $actor->{name}, $coordsTo{x}, $coordsTo{y}, $actor->{binID}), "portals", 1;
 
 		} elsif ($actor->isa('Actor::Monster')) {
-			debug sprintf("Monster Exists: %s (%s)\n", $actor->{name}, $actor->{binID}), "parseMsg_presence", 1;
+			debug sprintf("Monster Exists: %s (%d)\n", $actor->{name}, $actor->{binID}), "parseMsg_presence", 1;
 
 		} elsif ($actor->isa('Actor::Pet')) {
-			debug sprintf("Pet Exists: %s (%s)\n", $actor->{name}, $actor->{binID}), "parseMsg_presence", 1;
+			debug sprintf("Pet Exists: %s (%d)\n", $actor->{name}, $actor->{binID}), "parseMsg_presence", 1;
 
 		} else {
-			debug sprintf("Unknown Actor Exists: %s (%s)\n", $actor->{name}, $actor->{binID}), "parseMsg_presence", 1;
+			debug sprintf("Unknown Actor Exists: %s (%d)\n", $actor->{name}, $actor->{binID}), "parseMsg_presence", 1;
 		}
 
 	} elsif ($args->{switch} eq "0079" ||
@@ -1037,12 +1034,10 @@ sub actor_info {
 	debug "Received object info: $args->{name}\n", "parseMsg_presence/name", 2;
 
 	my $player = $playersList->getByID($args->{ID});
-	if ($player && %{$player}) {
+	if ($player) {
 		# This packet tells us the names of players who aren't in a guild, as opposed to 0195.
-		$player->{name} = bytesToString($args->{name});
-		$player->{gotName} = 1;
-		my $binID = binFind(\@playersID, $args->{ID});
-		debug "Player Info: $player->{name} ($binID)\n", "parseMsg_presence", 2;
+		$player->setName(bytesToString($args->{name}));
+		debug "Player Info: " . $player->nameIdx . "\n", "parseMsg_presence", 2;
 		updatePlayerNameCache($player);
 		Plugins::callHook('charNameUpdate', $player);
 	}
@@ -1050,22 +1045,18 @@ sub actor_info {
 	my $monster = $monstersList->getByID($args->{ID});
 	if ($monster) {
 		my $name = bytesToString($args->{name});
-		if ($config{debug} >= 2) {
-			my $binID = binFind(\@monstersID, $args->{ID});
-			debug "Monster Info: $name ($binID)\n", "parseMsg", 2;
-		}
+		debug "Monster Info: $name ($monster->{binID})\n", "parseMsg", 2;
+		$monster->{name_given} = $name;
 		if ($monsters_lut{$monster->{nameID}} eq "") {
-			$monster->{name} = $name;
+			$monster->setName($name);
 			$monsters_lut{$monster->{nameID}} = $name;
 			updateMonsterLUT("$Settings::tables_folder/monsters.txt", $monster->{nameID}, $name);
 		}
-		$monster->{name_given} = $name;
 	}
 
 	my $npc = $npcs{$args->{ID}};
-	if ($npc && %{$npc}) {
-		$npc->{name} = bytesToString($args->{name});
-		$npc->{gotName} = 1;
+	if ($npc) {
+		$npc->setName(bytesToString($args->{name}));
 		if ($config{debug} >= 2) {
 			my $binID = binFind(\@npcsID, $args->{ID});
 			debug "NPC Info: $npc->{name} ($binID)\n", "parseMsg", 2;
@@ -1079,8 +1070,10 @@ sub actor_info {
 	}
 
 	my $pet = $pets{$args->{ID}};
-	if ($pet && %{$pet}) {
-		$pet->{name_given} = bytesToString($args->{name});
+	if ($pet) {
+		my $name = bytesToString($args->{name});
+		$pet->{name_given} = $name;
+		$pet->setName($name);
 		if ($config{debug} >= 2) {
 			my $binID = binFind(\@petsID, $args->{ID});
 			debug "Pet Info: $pet->{name_given} ($binID)\n", "parseMsg", 2;
@@ -1138,8 +1131,7 @@ sub actor_name_received {
 	my $player = $playersList->getByID($args->{ID});
 	if (defined $player) {
 		# Receive names of players who are in a guild.
-		$player->{name} = bytesToString($args->{name});
-		$player->{gotName} = 1;
+		$player->setName(bytesToString($args->{name}));
 		$player->{party}{name} = bytesToString($args->{partyName});
 		$player->{guild}{name} = bytesToString($args->{guildName});
 		$player->{guild}{title} = bytesToString($args->{guildTitle});
@@ -1246,7 +1238,7 @@ sub arrow_equipped {
 		$char->{equipment}{arrow} = $char->{inventory}[$invIndex];
 		$char->{inventory}[$invIndex]{equipped} = 32768;
 		$ai_v{temp}{waitForEquip}-- if $ai_v{temp}{waitForEquip};
-		message TF("Arrow equipped: %s (%s)\n", $char->{inventory}[$invIndex]{name}, $invIndex);
+		message TF("Arrow equipped: %s (%d)\n", $char->{inventory}[$invIndex]{name}, $invIndex);
 	}
 }
 
@@ -1466,7 +1458,7 @@ sub cart_item_added {
 		$item->{cards} = $args->{cards};
 		$item->{name} = itemName($item);
 	}
-	message TF("Cart Item Added: %s (%s) x %s\n", $item->{name}, $args->{index}, $args->{amount});
+	message TF("Cart Item Added: %s (%d) x %s\n", $item->{name}, $args->{index}, $args->{amount});
 	$itemChange{$item->{name}} += $args->{amount};
 	$args->{item} = $item;
 }
@@ -1527,7 +1519,7 @@ sub cart_item_removed {
 
 	my $item = $cart{inventory}[$index];
 	$item->{amount} -= $amount;
-	message TF("Cart Item Removed: %s (%s) x %s\n", $item->{name}, $index, $amount);
+	message TF("Cart Item Removed: %s (%d) x %s\n", $item->{name}, $index, $amount);
 	$itemChange{$item->{name}} -= $amount;
 	if ($item->{amount} <= 0) {
 		$cart{'inventory'}[$index] = undef;
@@ -1577,7 +1569,7 @@ sub character_creation_successful {
 	$chars[$slot] = $char;
 
 	$conState = 3;
-	message TF("Character %s (%s) created.\n", $char->{name}, $slot), "info";
+	message TF("Character %s (%d) created.\n", $char->{name}, $slot), "info";
 	if (charSelectScreen() == 1) {
 		$conState = 3;
 		$firstLoginMap = 1;
@@ -1588,7 +1580,7 @@ sub character_creation_successful {
 
 sub character_deletion_successful {
 	if (defined $AI::temp::delIndex) {
-		message TF("Character %s (%s) deleted.\n", $chars[$AI::temp::delIndex]{name}, $AI::temp::delIndex), "info";
+		message TF("Character %s (%d) deleted.\n", $chars[$AI::temp::delIndex]{name}, $AI::temp::delIndex), "info";
 		delete $chars[$AI::temp::delIndex];
 		undef $AI::temp::delIndex;
 		for (my $i = 0; $i < @chars; $i++) {
@@ -1982,14 +1974,14 @@ sub emoticon {
 		chatLog("e", "$char->{name}: $emotion\n") if (existsInList($config{'logEmoticons'}, $args->{type}) || $config{'logEmoticons'} eq "all");
 
 	} elsif ((my $player = $playersList->getByID($args->{ID}))) {
-		my $name = $player->{name} || "Unknown #".unpack("V", $args->{ID});
+		my $name = $player->name;
 
 		#my $dist = "unknown";
 		my $dist = distance($char->{pos_to}, $player->{pos_to});
 		$dist = sprintf("%.1f", $dist) if ($dist =~ /\./);
 
 		# Translation Comment: "[dist=$dist] $name ($player->{binID}): $emotion\n"
-		message TF("[dist=%s] %s (%s): %s\n", $dist, $name, $player->{binID}, $emotion), "emotion";
+		message TF("[dist=%s] %s (%d): %s\n", $dist, $name, $player->{binID}, $emotion), "emotion";
 		chatLog("e", "$name".": $emotion\n") if (existsInList($config{'logEmoticons'}, $args->{type}) || $config{'logEmoticons'} eq "all");
 
 		my $index = AI::findAction("follow");
@@ -2020,7 +2012,7 @@ sub equip_item {
 	my $invIndex = findIndex($char->{inventory}, "index", $args->{index});
 	my $item = $char->{inventory}[$invIndex];
 	if (!$args->{success}) {
-		message TF("You can't put on %s (%s)\n", $item->{name}, $invIndex);
+		message TF("You can't put on %s (%d)\n", $item->{name}, $invIndex);
 	} else {
 		$item->{equipped} = $args->{type};
 		if ($args->{type} == 10) {
@@ -2033,7 +2025,7 @@ sub equip_item {
 				}
 			}
 		}
-		message TF("You equip %s (%s) - %s (type %s)\n", $item->{name}, $invIndex, $equipTypes_lut{$item->{type_equip}}, $args->{type}), 'inventory';
+		message TF("You equip %s (%d) - %s (type %s)\n", $item->{name}, $invIndex, $equipTypes_lut{$item->{type_equip}}, $args->{type}), 'inventory';
 	}
 	$ai_v{temp}{waitForEquip}-- if $ai_v{temp}{waitForEquip};
 }
@@ -2631,7 +2623,7 @@ sub identify {
 	my $item = $char->{inventory}[$invIndex];
 	$item->{identified} = 1;
 	$item->{type_equip} = $itemSlots_lut{$item->{nameID}};
-	message TF("Item Identified: %s (%s)\n", $item->{name}, $invIndex), "info";
+	message TF("Item Identified: %s (%d)\n", $item->{name}, $invIndex), "info";
 	undef @identifyID;
 }
 
@@ -2709,7 +2701,7 @@ sub inventory_item_added {
 		$item->{invIndex} = $invIndex;
 
 		$itemChange{$item->{name}} += $amount;
-		my $disp = TF("Item added to inventory: %s (%s) x %s - %s", 
+		my $disp = TF("Item added to inventory: %s (%d) x %d - %s", 
 			$item->{name}, $invIndex, $amount, $itemTypes_lut{$item->{type}});
 		message "$disp\n", "drop";
 
@@ -2729,7 +2721,7 @@ sub inventory_item_added {
 			$item = $char->{inventory}[$invIndex];
 			if (pickupitems(lc($item->{name})) == -1 && !AI::inQueue('storageAuto', 'buyAuto')) {
 				sendDrop($net, $item->{index}, $amount);
-				message TF("Auto-dropping item: %s (%s) x %s\n", $item->{name}, $invIndex, $amount), "drop";
+				message TF("Auto-dropping item: %s (%d) x %d\n", $item->{name}, $invIndex, $amount), "drop";
 			}
 		}
 
@@ -2765,7 +2757,7 @@ sub item_used {
 		my $amount = $item->{amount} - $remaining;
 		$item->{amount} -= $amount;
 
-		message TF("You used Item: %s (%s) x %s - %s left\n", $item->{name}, $invIndex, $amount, $remaining), "useItem", 1;
+		message TF("You used Item: %s (%d) x %d - %d left\n", $item->{name}, $invIndex, $amount, $remaining), "useItem", 1;
 		$itemChange{$item->{name}}--;
 		if ($item->{amount} <= 0) {
 			delete $char->{inventory}[$invIndex];
@@ -2918,7 +2910,7 @@ sub item_appeared {
 		sendTake($net, $args->{ID});
 	}
 
-	message TF("Item Appeared: %s (%s) x %s (%s, %s)\n", $item->{name}, $item->{binID}, $item->{amount}, $args->{x}, $args->{y}), "drop", 1;
+	message TF("Item Appeared: %s (%d) x %d (%d, %d)\n", $item->{name}, $item->{binID}, $item->{amount}, $args->{x}, $args->{y}), "drop", 1;
 
 }
 
@@ -2943,7 +2935,7 @@ sub item_exists {
 	$item->{pos_to}{y} = $args->{y};
 	$itemsList->add($item) if ($mustAdd);
 
-	message TF("Item Exists: %s (%s) x %s\n", $item->{name}, $item->{binID}, $item->{amount}), "drop", 1;
+	message TF("Item Exists: %s (%d) x %d\n", $item->{name}, $item->{binID}, $item->{amount}), "drop", 1;
 }
 
 sub item_disappeared {
@@ -2989,7 +2981,7 @@ sub item_skill {
 	my $skillName = $args->{skillName};
 
 	my $skill = Skills->new(id => $skillID);
-	message TF("Permitted to use %s (%s), level %s\n", $skill->name, $skillID, $skillLv);
+	message TF("Permitted to use %s (%d), level %d\n", $skill->name, $skillID, $skillLv);
 
 	unless ($config{noAutoSkill}) {
 		sendSkillUse($net, $skillID, $skillLv, $accountID);
@@ -3307,11 +3299,11 @@ sub minimap_indicator {
 	my ($self, $args) = @_;
 	
 	if ($args->{clear}) {
-		message TF("Minimap indicator at location %s, %s " .
+		message TF("Minimap indicator at location %d, %d " .
 		"with the color %s cleared\n", $args->{x}, $args->{y}, $args->{color}),
 		"info";
 	} else {
-		message TF("Minimap indicator at location %s, %s " .
+		message TF("Minimap indicator at location %d, %d " .
 		"with the color %s shown\n", $args->{x}, $args->{y}, $args->{color}),
 		"info";
 	}
@@ -3326,13 +3318,17 @@ sub monster_typechange {
 	my $type = $args->{type};
 	my $monster = $monstersList->getByID($ID);
 	if ($monster) {
-		my $name = $monsters_lut{$type} || "Unknown $type";
-		message TF("Monster %s (%s) changed to %s\n", $monster->name, $monster->{binID}, $name);
+		my $oldName = $monster->name;
+		if ($monsters_lut{$type}) {
+			$monster->setName($monsters_lut{$type});
+		} else {
+			$monster->setName(undef);
+		}
 		$monster->{nameID} = $type;
-		$monster->{name} = $name;
 		$monster->{dmgToParty} = 0;
 		$monster->{dmgFromParty} = 0;
 		$monster->{missedToParty} = 0;
+		message TF("Monster %s (%d) changed to %s\n", $oldName, $monster->{binID}, $monster->name);
 	}
 }
 
@@ -3760,8 +3756,7 @@ sub pet_emotion {
 
 	my $emote = $emotions_lut{$type}{display} || "/e$type";
 	if ($pets{$ID}) {
-		my $name = $pets{$ID}{name} || TF("Unknown Pet #%s", unpack("V1", $ID));
-		message "$pets{$ID}{name} : $emote\n", "emotion";
+		message $pets{$ID}->name . " : $emote\n", "emotion";
 	}
 }
 
@@ -4373,7 +4368,7 @@ sub skill_cast {
 	$control = mon_control($monster->name) if ($monster);
 	if ($AI == 2 && $control->{skillcancel_auto}) {
 		if ($targetID eq $accountID || $dist > 0 || (AI::action eq "attack" && AI::args->{ID} ne $sourceID)) {
-			message TF("Monster Skill - switch Target to : %s (%s)\n", $monster->name, $monster->{binID});
+			message TF("Monster Skill - switch Target to : %s (%d)\n", $monster->name, $monster->{binID});
 			stopAttack();
 			AI::dequeue;
 			attack($sourceID);
@@ -4980,7 +4975,7 @@ sub storage_item_added {
 		$item->{name} = itemName($item);
 		$item->{binID} = binFind(\@storageID, $index);
 	}
-	message TF("Storage Item Added: %s (%s) x %s\n", $item->{name}, $item->{binID}, $amount), "storage", 1;
+	message TF("Storage Item Added: %s (%d) x %s\n", $item->{name}, $item->{binID}, $amount), "storage", 1;
 	$itemChange{$item->{name}} += $amount;
 	$args->{item} = $item;
 }
@@ -4992,7 +4987,7 @@ sub storage_item_removed {
 
 	my $item = $storage{$index};
 	$item->{amount} -= $amount;
-	message TF("Storage Item Removed: %s (%s) x %s\n", $item->{name}, $item->{binID}, $amount), "storage";
+	message TF("Storage Item Removed: %s (%d) x %s\n", $item->{name}, $item->{binID}, $amount), "storage";
 	$itemChange{$item->{name}} -= $amount;
 	$args->{item} = $item;
 	if ($item->{amount} <= 0) {
@@ -5200,7 +5195,7 @@ sub unequip_item {
 
 	my $item = $char->{inventory}[$invIndex];
 	if ($item) {
-		message TF("You unequip %s (%s) - %s\n", $item->{name}, $invIndex, $equipTypes_lut{$item->{type_equip}}), 'inventory';
+		message TF("You unequip %s (%d) - %s\n", $item->{name}, $invIndex, $equipTypes_lut{$item->{type_equip}}), 'inventory';
 	}
 }
 
@@ -5228,7 +5223,7 @@ sub use_item {
 	my $invIndex = findIndex($char->{inventory}, "index", $args->{index});
 	if (defined $invIndex) {
 		$char->{inventory}[$invIndex]{amount} -= $args->{amount};
-		message TF("You used Item: %s (%s) x %s\n", $char->{inventory}[$invIndex]{name}, $invIndex, $args->{amount}), "useItem";
+		message TF("You used Item: %s (%d) x %s\n", $char->{inventory}[$invIndex]{name}, $invIndex, $args->{amount}), "useItem";
 		if ($char->{inventory}[$invIndex]{amount} <= 0) {
 			delete $char->{inventory}[$invIndex];
 		}
