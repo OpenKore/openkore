@@ -136,6 +136,7 @@ sub initMapChangeVars {
 	undef @lastpm;
 	undef %incomingFriend;
 
+	$itemsList->clear();
 	$monstersList->clear();
 	$playersList->clear();
 	$petsList->clear();
