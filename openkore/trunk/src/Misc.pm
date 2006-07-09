@@ -1108,7 +1108,20 @@ sub actorAdded {
 	if (defined $type) {
 		if (DEBUG && scalar(keys %{$hash}) + 1 != $source->size()) {
 			use Data::Dumper;
-			die scalar(keys %{$hash}) . " + 1 != " . $source->size() . "\n" . Dumper($hash);
+
+			my $ol = '';
+			my $items = $source->getItems();
+			foreach my $item (@{$items}) {
+				$ol .= $item->nameIdx . "\n";
+			}
+
+			die "$type: " . scalar(keys %{$hash}) . " + 1 != " . $source->size() . "\n" .
+				"List:\n" .
+				Dumper($list) . "\n" .
+				"Hash:\n" .
+				Dumper($hash) . "\n" .
+				"ObjectList:\n" .
+				$ol;
 		}
 		assert(binSize($list) + 1 == $source->size()) if DEBUG;
 
@@ -1155,7 +1168,20 @@ sub actorRemoved {
 	if (defined $type) {
 		if (DEBUG && scalar(keys %{$hash}) - 1 != $source->size()) {
 			use Data::Dumper;
-			die scalar(keys %{$hash}) . " - 1 != " . $source->size() . "\n" . Dumper($hash);
+
+			my $ol = '';
+			my $items = $source->getItems();
+			foreach my $item (@{$items}) {
+				$ol .= $item->nameIdx . "\n";
+			}
+
+			die "$type:" . scalar(keys %{$hash}) . " - 1 != " . $source->size() . "\n" .
+				"List:\n" .
+				Dumper($list) . "\n" .
+				"Hash:\n" .
+				Dumper($hash) . "\n" .
+				"ObjectList:\n" .
+				$ol;
 		}
 		assert(binSize($list) - 1 == $source->size()) if DEBUG;
 
