@@ -30,6 +30,8 @@ New config options:
 - homunculus_attackDistance <distance>
 - homunculus_attackMaxDistance <distance>
 - homunculus_attackMaxRouteTime <seconds>
+- homunculus_attackMinPlayerDistance <distance>
+- homunculus_attackMinPortalDistance <distance>
 - homunculus_attackCanSnipe <boolean flag>
 - homunculus_attackCheckLOS <boolean flag>
 - homunculus_attackNoGiveup <boolean flag>
@@ -43,7 +45,8 @@ New config options:
     these will mostly be not needed but they are still included for posterity
 - homunculus_tankMode <boolean flag>
 - homunculus_tankModeTarget <player name>
-    same as the tankMode* counterparts.
+    same as the tankMode* counterparts. You can use this so that your
+	homunculus can tank you. Set homunculus_tankModeTarget to your character name
 - homunculus_teleportAuto_deadly <boolean flag>
 - homunculus_teleportAuto_dropTarget <boolean flag>
 - homunculus_teleportAuto_dropTargetKS <boolean flag>
