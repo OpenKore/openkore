@@ -1616,7 +1616,7 @@ sub cmdHomunculus {
 		my $exp_string = formatNumber($char->{'homunculus'}{'exp'})."/".formatNumber($char->{'homunculus'}{'exp_max'})." (".sprintf("%.2f",$char->{'homunculus'}{'expPercent'})."%)";
 		
 		my $msg = swrite(
-		("----------------- Homunculus Status --------------------\n" .
+		T("----------------- Homunculus Status --------------------\n" .
 		"Name: \@<<<<<<<<<<<<<<<<<<<<<<<<< HP: \@>>>>>>>>>>>>>>>>>>\n" .
 		"                                 SP: \@>>>>>>>>>>>>>>>>>>\n" .
 		"Level: \@<<   \@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n" .
@@ -1625,27 +1625,27 @@ sub cmdHomunculus {
 		"Hit: \@>>>    Critical: \@>>>    Intimacy:  \@>>>\n" .
 		"Def: \@>>>    Mdef:     \@>>>    Accessory: \@>>>\n" .
 		"Flee:\@>>>    Aspd:     \@>>>\n" .
-		"--------------------------------------------------------",
+		"--------------------------------------------------------"),
 		[$char->{'homunculus'}{'name'}, $hp_string, $sp_string,
 		$char->{'homunculus'}{'level'}, $exp_string, $char->{'homunculus'}{'atk'}, $char->{'homunculus'}{'matk'}, $char->{'homunculus'}{'hunger'},
 		$char->{'homunculus'}{'hit'}, $char->{'homunculus'}{'critical'}, $char->{'homunculus'}{'intimacy'},
 		$char->{'homunculus'}{'def'}, $char->{'homunculus'}{'mdef'}, $char->{'homunculus'}{'accessory'},
-		$char->{'homunculus'}{'flee'}, $char->{'homunculus'}{'aspdDisp'}]));
+		$char->{'homunculus'}{'flee'}, $char->{'homunculus'}{'aspdDisp'}]);
 			
 		message($msg, "info");
 
 	} elsif ($subcmd eq "feed") {
 		if ($char->{homunculus}{hunger} >= 76) {
-			message "Your homunculus is not yet hungry. Feeding it now will lower intimacy.\n", "homunculus";
+			message T("Your homunculus is not yet hungry. Feeding it now will lower intimacy.\n"), "homunculus";
 		} else {
 			$net->sendHomunculusFeed();
-			message "Feeding your homunculus.\n", "homunculus";
+			message T("Feeding your homunculus.\n"), "homunculus";
 		}
 
 	} elsif ($args[0] eq "move") {
 		if (!($args[1] =~ /^\d+$/) || !($args[2] =~ /^\d+$/)) {
-			error T("Error in function 'homun move' (Homunculus Move)\n" .
-				"Invalid coordinates ($args[1], $args[2]) specified.\n");
+			error TF("Error in function 'homun move' (Homunculus Move)\n" .
+				"Invalid coordinates (%s, %s) specified.\n", $args[1], $args[2]);
 			return;
 		} else {
 			# max distance that homunculus can follow: 17
@@ -1751,7 +1751,7 @@ sub cmdHomunculus {
 				error TF("Error in function 'homun skills add' (Add Skill Point)\n" .
 					"Skill %s does not exist.\n", $args[2]);
 			} elsif ($char->{homunculus}{points_skill} < 1) {
-				error TF("Error in function 'skills add' (Add Skill Point)\n" .
+				error TF("Error in function 'homun skills add' (Add Skill Point)\n" .
 					"Not enough skill points to increase %s\n", $skill->name);
 			} else {
 				$net->sendAddSkillPoint($skill->id);
