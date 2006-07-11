@@ -52,6 +52,7 @@ attackNoGiveup 0
 attackCanSnipe 0
 attackCheckLOS 0
 attackLooters 0
+attackChangeTarget 1
 aggressiveAntiKS 0
 
 attackEquip_topHead
@@ -251,6 +252,43 @@ adminPassword
 callSign
 
 removeActorWithDistance
+
+
+######## Homunculus Support ########
+
+homunculus_attackAuto 2
+homunculus_attackAuto_party 1
+homunculus_attackAuto_notInTown 1
+homunculus_attackAuto_onlyWhenSafe 0
+homunculus_attackDistance 1.5
+homunculus_attackMaxDistance 2.5
+homunculus_attackMaxRouteTime 4
+homunculus_attackMinPlayerDistance 3
+homunculus_attackMinPortalDistance 8
+homunculus_attackCanSnipe 0
+homunculus_attackCheckLOS 0
+homunculus_attackNoGiveup 0
+homunculus_attackChangeTarget 1
+
+homunculus_followDistanceMax 10
+homunculus_followDistanceMin 3
+
+homunculus_resurrectAuto 2
+
+homunculus_route_step 15
+
+homunculus_tankMode 0
+homunculus_tankModeTarget
+
+homunculus_teleportAuto_hp 10
+homunculus_teleportAuto_maxDmg 500
+homunculus_teleportAuto_maxDmgInLock 0
+homunculus_teleportAuto_deadly 1
+homunculus_teleportAuto_unstuck 0
+homunculus_teleportAuto_dropTarget 0
+homunculus_teleportAuto_dropTargetKS 0
+homunculus_teleportAuto_totalDmg 0
+homunculus_teleportAuto_totalDmgInLock 0
 
 
 ######## Block options ########
