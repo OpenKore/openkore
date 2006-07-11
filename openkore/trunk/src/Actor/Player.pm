@@ -27,14 +27,15 @@ use Globals;
 use base qw(Actor);
 
 sub new {
-	my ($class) = @_;
-	return $class->SUPER::new('Player');
+	my ($class, $type) = @_;
+	my $actorType = ($type >= 6001 && $type <= 6016) ? 'Homunculus' : 'Player';
+	return $class->SUPER::new($actorType);
 }
 
 sub selfString {
 	my ($self) = @_;
 
-	return $self->{sex} ? 'himself' : 'herself';
+	return ($self->{actorType} eq 'Homunculus') ? 'itself' : ($self->{sex} ? 'himself' : 'herself');
 }
 
 ##

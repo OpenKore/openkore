@@ -89,7 +89,7 @@ sub initHandlers {
 	falcon             => \&cmdFalcon,
 	follow             => \&cmdFollow,
 	friend             => \&cmdFriend,
-	homunculus         => \&cmdHomunculus,
+	homun              => \&cmdHomunculus,
 	g                  => \&cmdGuildChat,
 	getplayerinfo      => \&cmdGetPlayerInfo,
 	guild              => \&cmdGuild,
@@ -1603,25 +1603,24 @@ sub cmdFriend {
 
 }
 
- sub cmdHomunculus {
+sub cmdHomunculus {
  	my (undef, $subcmd) = @_;
-	
-	if (!$char->{'homunculus'}{'ID'}) {
+	my @args = parseArgs($subcmd);
+
+	if (!$char->{homunculus} || !$char->{homunculus}{ID} || ($char->{homunculus}{state} != 0)) {
 		error T("Error: No Homunculus detected.\n");
-	} elsif ($subcmd eq "feed") {
- 		sendHomunculusFeed();
+
 	} elsif ($subcmd eq "s" || $subcmd eq "status") {
-	sendHomunculusGetStats();
 		my $hp_string = $char->{'homunculus'}{'hp'}. '/' .$char->{'homunculus'}{'hp_max'} . ' (' . sprintf("%.2f",$char->{'homunculus'}{'hpPercent'}) . '%)';
 		my $sp_string = $char->{'homunculus'}{'sp'}."/".$char->{'homunculus'}{'sp_max'}." (".sprintf("%.2f",$char->{'homunculus'}{'spPercent'})."%)";
 		my $exp_string = formatNumber($char->{'homunculus'}{'exp'})."/".formatNumber($char->{'homunculus'}{'exp_max'})." (".sprintf("%.2f",$char->{'homunculus'}{'expPercent'})."%)";
 		
-		$msg = swrite(
+		my $msg = swrite(
 		("----------------- Homunculus Status --------------------\n" .
 		"Name: \@<<<<<<<<<<<<<<<<<<<<<<<<< HP: \@>>>>>>>>>>>>>>>>>>\n" .
 		"                                 SP: \@>>>>>>>>>>>>>>>>>>\n" .
 		"Level: \@<<   \@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n" .
-		"---------------------------------------------------------\n" .
+		"--------------------------------------------------------\n" .
 		"Atk: \@>>>    Matk:     \@>>>    Hunger:    \@>>>\n" .
 		"Hit: \@>>>    Critical: \@>>>    Intimacy:  \@>>>\n" .
 		"Def: \@>>>    Mdef:     \@>>>    Accessory: \@>>>\n" .
@@ -1631,12 +1630,153 @@ sub cmdFriend {
 		$char->{'homunculus'}{'level'}, $exp_string, $char->{'homunculus'}{'atk'}, $char->{'homunculus'}{'matk'}, $char->{'homunculus'}{'hunger'},
 		$char->{'homunculus'}{'hit'}, $char->{'homunculus'}{'critical'}, $char->{'homunculus'}{'intimacy'},
 		$char->{'homunculus'}{'def'}, $char->{'homunculus'}{'mdef'}, $char->{'homunculus'}{'accessory'},
-		$char->{'homunculus'}{'flee'}, $char->{'homunculus'}{'aspd'}]));
+		$char->{'homunculus'}{'flee'}, $char->{'homunculus'}{'aspdDisp'}]));
 			
 		message($msg, "info");
 
- 	} elsif ($subcmd eq "") {
-		error T("Usage: homunculus <feed>\n");
+	} elsif ($subcmd eq "feed") {
+		if ($char->{homunculus}{hunger} >= 76) {
+			message "Your homunculus is not yet hungry. Feeding it now will lower intimacy.\n", "homunculus";
+		} else {
+			$net->sendHomunculusFeed();
+			message "Feeding your homunculus.\n", "homunculus";
+		}
+
+	} elsif ($args[0] eq "move") {
+		if (!($args[1] =~ /^\d+$/) || !($args[2] =~ /^\d+$/)) {
+			error T("Error in function 'homun move' (Homunculus Move)\n" .
+				"Invalid coordinates ($args[1], $args[2]) specified.\n");
+			return;
+		} else {
+			# max distance that homunculus can follow: 17
+			$net->sendHomunculusMove($char->{homunculus}{ID}, $args[1], $args[2]);
+		}
+
+	} elsif ($subcmd eq "standby") {
+		$net->sendHomunculusStandBy($char->{homunculus}{ID});
+
+	} elsif ($args[0] eq 'ai') {
+		if ($args[1] eq 'clear') {
+			AI::Homunculus::clear();
+			message T("Homunculus AI sequences cleared\n"), "success";
+
+		} elsif ($args[1] eq 'print') {
+			# Display detailed info about current AI sequence
+			message T("------ Homunculus AI Sequence ----------\n"), "list";
+			my $index = 0;
+			foreach (@AI::Homunculus::homun_ai_seq) {
+				message("$index: $_ " . dumpHash(\%{$ai_seq_args[$index]}) . "\n\n", "list");
+				$index++;
+			}
+
+			message T("------ Homunculus AI Sequence ----------\n"), "list";
+
+		} elsif ($args[1] eq 'on' || $args[1] eq 'auto') {
+			# Set AI to auto mode
+			if ($AI::Homunculus::homun_AI == 2) {
+				message T("Homunculus AI is already set to auto mode\n"), "success";
+			} else {
+				$AI::Homunculus::homun_AI = 2;
+				undef $AI::Homunculus::homun_AI_forcedOff;
+				message T("Homunculus AI set to auto mode\n"), "success";
+			}
+		} elsif ($args[1] eq 'manual') {
+			# Set AI to manual mode
+			if ($AI::Homunculus::homun_AI == 1) {
+				message T("Homunculus AI is already set to manual mode\n"), "success";
+			} else {
+				$AI::Homunculus::homun_AI = 1;
+				$AI::Homunculus::homun_AI_forcedOff = 1;
+				message T("Homunculus AI set to manual mode\n"), "success";
+			}
+		} elsif ($args[1] eq 'off') {
+			# Turn AI off
+			if ($AI::Homunculus::homun_AI) {
+				undef $AI::Homunculus::homun_AI;
+				$AI::Homunculus::homun_AI_forcedOff = 1;
+				message T("Homunculus AI turned off\n"), "success";
+			} else {
+				message T("Homunculus AI is already off\n"), "success";
+			}
+
+		} elsif ($args[1] eq '') {
+			# Toggle AI
+			if ($AI::Homunculus::homun_AI == 2) {
+				undef $AI::Homunculus::homun_AI;
+				$AI::Homunculus::homun_AI_forcedOff = 1;
+				message T("Homunculus AI turned off\n"), "success";
+			} elsif (!$AI::Homunculus::homun_AI) {
+				$AI::Homunculus::homun_AI = 1;
+				$AI::Homunculus::homun_AI_forcedOff = 1;
+				message T("Homunculus AI set to manual mode\n"), "success";
+			} elsif ($AI::Homunculus::homun_AI == 1) {
+				$AI::Homunculus::homun_AI = 2;
+				undef $AI::Homunculus::homun_AI_forcedOff;
+				message T("Homunculus AI set to auto mode\n"), "success";
+			}
+
+		} else {
+			error T("Syntax Error in function 'homun ai' (Homunculus AI Commands)\n" .
+				"Usage: homun ai [ clear | print | auto | manual | off ]\n");
+		}
+
+	} elsif ($subcmd eq "aiv") {
+		if (!$AI::Homunculus::homun_AI) {
+			message TF("ai_seq (off) = %s\n", "@AI::Homunculus::homun_ai_seq"), "list";
+		} elsif ($AI::Homunculus::homun_AI == 1) {
+			message TF("ai_seq (manual) = %s\n", "@AI::Homunculus::homun_ai_seq"), "list";
+		} elsif ($AI::Homunculus::homun_AI == 2) {
+			message TF("ai_seq (auto) = %s\n", "@AI::Homunculus::homun_ai_seq"), "list";
+		}
+		message T("solution\n"), "list" if (AI::Homunculus::args()->{'solution'});
+
+	} elsif ($args[0] eq "skills") {
+		if ($args[1] eq '') {
+			my $msg = T("-----Homunculus Skill List-----\n" .
+				"   # Skill Name                     Lv      SP\n");
+			for my $handle (@AI::Homunculus::homun_skillsID) {
+				my $skill = Skills->new(handle => $handle);
+				my $sp = $char->{skills}{$handle}{sp} || '';
+				$msg .= swrite(
+					"@>>> @<<<<<<<<<<<<<<<<<<<<<<<<<<<< @>>    @>>>",
+					[$skill->id, $skill->name, $char->{skills}{$handle}{lv}, $sp]);
+			}
+			$msg .= TF("\nSkill Points: %d\n", $char->{homunculus}{points_skill});
+			$msg .= "-------------------------------\n";
+			message($msg, "list");
+
+		} elsif ($args[1] eq "add" && $args[2] =~ /\d+/) {
+			my $skill = Skills->new(id => $args[2]);
+			if (!$skill->id || !$char->{skills}{$skill->handle}) {
+				error TF("Error in function 'homun skills add' (Add Skill Point)\n" .
+					"Skill %s does not exist.\n", $args[2]);
+			} elsif ($char->{homunculus}{points_skill} < 1) {
+				error TF("Error in function 'skills add' (Add Skill Point)\n" .
+					"Not enough skill points to increase %s\n", $skill->name);
+			} else {
+				$net->sendAddSkillPoint($skill->id);
+			}
+
+		} elsif ($args[1] eq "desc" && $args[2] =~ /\d+/) {
+			my $skill = Skills->new(id => $args[2]);
+			if (!$skill->id) {
+				error TF("Error in function 'homun skills desc' (Skill Description)\n" .
+					"Skill %s does not exist.\n", $args[2]);
+			} else {
+				my $description = $skillsDesc_lut{$skill->handle} || T("Error: No description available.\n");
+				message TF("===============Skill Description===============\n" .
+					"Skill: %s\n\n", $skill->name), "info";
+				message $description, "info";
+				message "==============================================\n", "info";
+			}
+
+		} else {
+			error T("Syntax Error in function 'homun skills' (Homunculus Skills Functions)\n" .
+				"Usage: homun skills [(<add | desc>) [<skill #>]]\n");
+		}
+
+ 	} else {
+		error T("Usage: homun < feed | s | status | move | standby | ai | aiv | skills>\n");
 	}
 }
 

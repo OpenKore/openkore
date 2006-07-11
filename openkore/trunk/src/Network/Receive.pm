@@ -268,8 +268,9 @@ sub new {
 		'022A' => ['actor_display', 'a4 v4 x2 v8 x2 v a4 a4 v x2 C2 a3 x2 C v', [qw(ID walk_speed param1 param2 param3 type hair_style weapon shield lowhead tophead midhead hair_color head_dir guildID guildEmblem visual_effects stance sex coords act lv)]],
 		'022B' => ['actor_display', 'a4 v4 x2 v8 x2 v a4 a4 v x2 C2 a3 x2 v', [qw(ID walk_speed param1 param2 param3 type hair_style weapon shield lowhead tophead midhead hair_color head_dir guildID guildEmblem visual_effects stance sex coords lv)]],
 		'022C' => ['actor_display', 'a4 v4 x2 v5 V1 v3 x4 a4 a4 v x2 C2 a5 x3 v', [qw(ID walk_speed param1 param2 param3 type hair_style weapon shield lowhead timestamp tophead midhead hair_color guildID guildEmblem visual_effects stance sex coords lv)]],
-		'022E' => ['homunculus_status', 'Z24 C S16 L2', [qw(name name_flag lvl hunger intimacy accessory atk matk hit critical def mdef flee aspd hp hp_max sp sp_max exp exp_max)]],
-		'0230' => ['homunculus_info', 'x2 V V',[qw(homunculusActorID)]],
+		'022E' => ['homunculus_stats', 'Z24 C v16 V2 v2', [qw(name state lvl hunger intimacy accessory atk matk hit critical def mdef flee aspd hp hp_max sp sp_max exp exp_max points_skill unknown)]],
+		'022F' => ['homunculus_food', 'C1 v1', [qw(success foodID)]],
+		'0230' => ['homunculus_info', 'x1 C1 a4 V1',[qw(type ID val)]],
 		'0235' => ['homunculus_skills'],
 		# homunculus skill update
 		'0239' => ['skill_update', 'v1 v1 v1 v1 C1', [qw(skillID lv sp range up)]], # range = skill range, up = this skill can be leveled up further
@@ -575,6 +576,12 @@ sub actor_action {
 				$damageTaken{$source->{name}}{attack} += $args->{damage};
 			}
 
+		} elsif ($char->{homunculus} && $args->{sourceID} eq $char->{homunculus}{ID}) {
+			message(sprintf("[%3d/%3d]", $char->{homunculus}{hpPercent}, $char->{homunculus}{spPercent}) . " $msg", $totalDamage > 0 ? "attackMon" : "attackMonMiss");
+
+		} elsif ($char->{homunculus} && $args->{targetID} eq $char->{homunculus}{ID}) {
+			message(sprintf("[%3d/%3d]", $char->{homunculus}{hpPercent}, $char->{homunculus}{spPercent}) . " $msg", $args->{damage} > 0 ? "attacked" : "attackedMiss");
+
 		} else {
 			debug("$msg", 'parseMsg_damage');
 		}
@@ -733,11 +740,11 @@ sub actor_display {
 	#### Step 1: create/get the correct actor object ####
 
 	#if ($jobs_lut{$args->{type}}) {
-	if ($jobs_lut{$args->{type}} || ($args->{type} >= 6000 && $pvp == 0)) {
+	if ($jobs_lut{$args->{type}}) {
 		# Actor is a player (homunculus are considered players for now)
 		$actor = $playersList->getByID($args->{ID});
 		if (!defined $actor) {
-			$actor = new Actor::Player();
+			$actor = ($char->{homunculus} && $args->{ID} eq $char->{homunculus}{ID}) ? $char->{homunculus} : new Actor::Player($args->{type});
 			$actor->{appear_time} = time;
 			$mustAdd = 1;
 		}
@@ -2267,9 +2274,31 @@ sub friend_response {
 	}	
 }
 
+sub homunculus_food {
+	my ($self, $args) = @_;
+	if ($args->{success}) {
+		message TF("Fed homunculus with %s\n", itemNameSimple($args->{foodID})), "homunculus";
+	} else {
+		error TF("Failed to feed homunculus with %s: no food in inventory.\n", itemNameSimple($args->{foodID})), "homunculus";
+		# auto-vaporize
+		if ($char->{homunculus}{hunger} <= 11 && timeOut($char->{homunculus}{vaporize_time}, 5)) {
+			$net->sendSkillUse(244, 1, $accountID);
+			$char->{homunculus}{vaporize_time} = time;
+			error "Critical hunger level reached. Homunculus is put to rest.\n", "homunculus";
+		}
+	}
+}
+
 sub homunculus_info {
 	my ($self, $args) = @_;
-	$char->{'homunculus'}{'ID'} = $args->{homunculusActorID};
+	if ($args->{type} == 0) {
+		$char->{homunculus} = Actor::get($args->{ID});
+		$char->{homunculus}{map} = $field{name};
+	} elsif ($args->{type} == 1) {
+		$char->{homunculus}{intimacy} = $args->{val};
+	} elsif ($args->{type} == 2) {
+		$char->{homunculus}{hunger} = $args->{val};
+	}
 }
 
 sub homunculus_skills {
@@ -2281,6 +2310,7 @@ sub homunculus_skills {
 	my $msg = $args->{RAW_MSG};
 	my $msg_size = $args->{RAW_MSG_SIZE};
 	
+	undef @AI::Homunculus::homun_skillsID;
 	for (my $i = 4; $i < $msg_size; $i += 37) {
 		my $skillID = unpack("v1", substr($msg, $i, 2));
 		# target type is 0 for novice skill, 1 for enemy, 2 for place, 4 for immediate invoke, 16 for party member
@@ -2301,9 +2331,9 @@ sub homunculus_skills {
 		if (!$char->{skills}{$skillName}{lv}) {
 			$char->{skills}{$skillName}{lv} = $level;
 		}
-		binAdd(\@skillsID, $skillName);
+		binAdd(\@AI::Homunculus::homun_skillsID, $skillName) if (!binFind(\@AI::Homunculus::homun_skillsID, $skillName));
 
-		Plugins::callHook('packet_charSkills', {
+		Plugins::callHook('packet_homunSkills', {
 			'ID' => $skillID,
 			'skillName' => $skillName,
 			'level' => $level,
@@ -2311,31 +2341,46 @@ sub homunculus_skills {
 	}		
 }
 
-sub homunculus_status {
+sub homunculus_stats {
 	my ($self, $args) = @_;
-	$char->{'homunculus'}{'name'} = $args->{name};
-	$char->{'homunculus'}{'name_flag'} = $args->{name_flag};
-	$char->{'homunculus'}{'level'} = $args->{lvl};
-	$char->{'homunculus'}{'hunger'} = $args->{hunger};
-	$char->{'homunculus'}{'intimacy'} = $args->{intimacy};
-	$char->{'homunculus'}{'accessory'} = $args->{accessory};
-	$char->{'homunculus'}{'atk'} = $args->{atk};
-	$char->{'homunculus'}{'matk'} = $args->{matk};
-	$char->{'homunculus'}{'hit'} = $args->{hit};
-	$char->{'homunculus'}{'critical'} = $args->{critical};
-	$char->{'homunculus'}{'def'} = $args->{def};
-	$char->{'homunculus'}{'mdef'} = $args->{mdef};
-	$char->{'homunculus'}{'flee'} = $args->{flee};
-	$char->{'homunculus'}{'aspd'} = $args->{aspd};
-	$char->{'homunculus'}{'hp'} = $args->{hp};
-	$char->{'homunculus'}{'hp_max'} = $args->{hp_max};
-	$char->{'homunculus'}{'sp'} = $args->{sp};
-	$char->{'homunculus'}{'sp_max'} = $args->{sp_max};
-	$char->{'homunculus'}{'exp'} = $args->{exp};
-	$char->{'homunculus'}{'exp_max'} = $args->{exp_max};
-	$char->{'homunculus'}{'hpPercent'} = ($char->{'homunculus'}{'hp'} / $char->{'homunculus'}{'hp_max'}) * 100;
-	$char->{'homunculus'}{'expPercent'} = ($char->{'homunculus'}{'exp'} / $char->{'homunculus'}{'exp_max'}) * 100;
-	$char->{'homunculus'}{'spPercent'} = ($char->{'homunculus'}{'sp'} / $char->{'homunculus'}{'sp_max'}) * 100;
+	$char->{homunculus}{name} = $args->{name};
+	# 0 - alive
+	# 2 - rest
+	# 4 - dead
+	if ($args->{state} == 2 || $args->{state} == 4) {
+		foreach my $skillName (keys %{$char->{skills}}) {
+			if ($char->{skills}{$skillName}{homunculus} == 1) {
+				delete $char->{skills}{$skillName};
+				binRemove(\@AI::Homunculus::homun_skillsID, $skillName);
+			}
+		}
+		message T("Your Homunculus was vaporized!\n"), 'homunculus' if ($args->{state} == 2);
+		message T("Your Homunculus died!\n"), 'homunculus' if ($args->{state} == 4);
+	}
+	$char->{homunculus}{state} = $args->{state};
+	$char->{homunculus}{level} = $args->{lvl};
+	$char->{homunculus}{hunger} = $args->{hunger};
+	$char->{homunculus}{intimacy} = $args->{intimacy};
+	$char->{homunculus}{accessory} = $args->{accessory};
+	$char->{homunculus}{atk} = $args->{atk};
+	$char->{homunculus}{matk} = $args->{matk};
+	$char->{homunculus}{hit} = $args->{hit};
+	$char->{homunculus}{critical} = $args->{critical};
+	$char->{homunculus}{def} = $args->{def};
+	$char->{homunculus}{mdef} = $args->{mdef};
+	$char->{homunculus}{flee} = $args->{flee};
+	$char->{homunculus}{aspd} = $args->{aspd};
+	$char->{homunculus}{aspdDisp} = int (200 - (($args->{aspd} < 10) ? 10 : ($args->{aspd} / 10)));
+	$char->{homunculus}{hp} = $args->{hp};
+	$char->{homunculus}{hp_max} = $args->{hp_max};
+	$char->{homunculus}{sp} = $args->{sp};
+	$char->{homunculus}{sp_max} = $args->{sp_max};
+	$char->{homunculus}{exp} = $args->{exp};
+	$char->{homunculus}{exp_max} = $args->{exp_max};
+	$char->{homunculus}{hpPercent} = ($args->{hp} / $args->{hp_max}) * 100;
+	$char->{homunculus}{spPercent} = ($args->{sp} / $args->{sp_max}) * 100;
+	$char->{homunculus}{expPercent} = ($args->{exp} / $args->{exp_max}) * 100;
+	$char->{homunculus}{points_skill} = $args->{points_skill};
 }
 
 sub gameguard_grant {
@@ -4347,7 +4392,7 @@ sub skill_cast {
 
 	my $domain = ($sourceID eq $accountID) ? "selfSkill" : "skill";
 	my $disp = skillCast_string($source, $target, $skill->name, $wait);
-	message $disp, $domain, 1;	
+	message $disp, $domain, 1;
 
 	Plugins::callHook('is_casting', {
 		sourceID => $sourceID,
@@ -4465,17 +4510,21 @@ sub skill_use {
 	my $domain = ($args->{sourceID} eq $accountID) ? "selfSkill" : "skill";
 
 	if ($args->{damage} == 0) {
-		$domain = "attackMonMiss" if $args->{sourceID} eq $accountID && $args->{targetID} ne $accountID;
-		$domain = "attackedMiss" if $args->{sourceID} ne $accountID && $args->{targetID} eq $accountID;
+		$domain = "attackMonMiss" if (($args->{sourceID} eq $accountID && $args->{targetID} ne $accountID) || ($char->{homunculus} && $args->{sourceID} eq $char->{homunculus}{ID} && $args->{targetID} ne $char->{homunculus}{ID}));
+		$domain = "attackedMiss" if (($args->{sourceID} ne $accountID && $args->{targetID} eq $accountID) || ($char->{homunculus} && $args->{sourceID} ne $char->{homunculus}{ID} && $args->{targetID} eq $char->{homunculus}{ID}));
 
 	} elsif ($args->{damage} != -30000) {
-		$domain = "attackMon" if $args->{sourceID} eq $accountID && $args->{targetID} ne $accountID;
-		$domain = "attacked" if $args->{sourceID} ne $accountID && $args->{targetID} eq $accountID;
+		$domain = "attackMon" if (($args->{sourceID} eq $accountID && $args->{targetID} ne $accountID) || ($char->{homunculus} && $args->{sourceID} eq $char->{homunculus}{ID} && $args->{targetID} ne $char->{homunculus}{ID}));
+		$domain = "attacked" if (($args->{sourceID} ne $accountID && $args->{targetID} eq $accountID) || ($char->{homunculus} && $args->{sourceID} ne $char->{homunculus}{ID} && $args->{targetID} eq $char->{homunculus}{ID}));
 	}
 
 	if ((($args->{sourceID} eq $accountID) && ($args->{targetID} ne $accountID)) ||
 	    (($args->{sourceID} ne $accountID) && ($args->{targetID} eq $accountID))) {
 		my $status = sprintf("[%3d/%3d] ", $char->hp_percent, $char->sp_percent);
+		$disp = $status.$disp;
+	} elsif ($char->{homunculus} && ((($args->{sourceID} eq $char->{homunculus}{ID}) && ($args->{targetID} ne $char->{homunculus}{ID})) ||
+	    (($args->{sourceID} ne $char->{homunculus}{ID}) && ($args->{targetID} eq $char->{homunculus}{ID})))) {
+		my $status = sprintf("[%3d/%3d] ", $char->{homunculus}{hpPercent}, $char->{homunculus}{spPercent});
 		$disp = $status.$disp;
 	}
 	$target->{sitting} = 0 unless $args->{type} == 4 || $args->{type} == 9 || $args->{damage} == 0;

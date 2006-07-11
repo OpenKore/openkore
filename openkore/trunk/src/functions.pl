@@ -249,6 +249,9 @@ sub mainLoop {
 		Benchmark::begin("ai") if DEBUG;
 		AI::CoreLogic::iterate();
 		Benchmark::end("ai") if DEBUG;
+		Benchmark::begin("ai_homunculus") if DEBUG;
+		AI::Homunculus::iterate();
+		Benchmark::end("ai_homunculus") if DEBUG;
 		Misc::checkValidity("AI");
 		return if $quit;
 	}
