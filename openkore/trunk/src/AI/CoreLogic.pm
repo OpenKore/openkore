@@ -2424,7 +2424,7 @@ sub processAutoSkillsRaise {
 
 ##### RANDOM WALK #####
 sub processRandomWalk {
-	if (AI::isIdle && $config{route_randomWalk} && !$ai_v{sitAuto_forcedBySitCommand}
+	if (AI::isIdle && (!$char->{homunculus} || AI::Homunculus::isIdle()) && $config{route_randomWalk} && !$ai_v{sitAuto_forcedBySitCommand}
 		&& (!$cities_lut{$field{name}.'.rsw'} || $config{route_randomWalk_inTown})
 		&& length($field{rawMap}) ) {
 		my ($randX, $randY);
@@ -2825,7 +2825,7 @@ sub processPartySkillUse {
 			next if (!$config{"partySkill_$i"});
 			foreach my $ID (@playersID) {
 				next if ($ID eq "");
-				next if ((!$char->{party} || !$char->{party}{users}{$ID}) && !$config{"partySkill_$i"."_notPartyOnly"});
+				next if ((!$char->{party} || !$char->{party}{users}{$ID}) && (!$char->{homunculus} || $char->{homunculus}{ID} ne $ID) && !$config{"partySkill_$i"."_notPartyOnly"});
 				my $player = Actor::get($ID);
 				next unless UNIVERSAL::isa($player, 'Actor::Player');
 				if (inRange(distance($char->{pos_to}, $players{$ID}{pos}), $config{partySkillDistance} || "1..8")
@@ -3445,7 +3445,7 @@ sub processAutoTeleport {
 
 
 	##### TELEPORT IDLE / PORTAL #####
-	if ($config{teleportAuto_idle} && AI::action ne "") {
+	if ($config{teleportAuto_idle} && (AI::action ne "" || ($char->{homunculus} && AI::Homunculus::action() ne ""))) {
 		$timeout{ai_teleport_idle}{time} = time;
 	}
 

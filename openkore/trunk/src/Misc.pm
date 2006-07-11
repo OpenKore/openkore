@@ -2590,6 +2590,32 @@ sub updateDamageTables {
 					message TF("%s hit you when your HP is too low. Teleporting...\n", 
 						$monster->{name}), "teleport";
 					$teleport = 1;
+					
+				} elsif ($config{attackChangeTarget} && ((AI::action eq "route" && AI::action(1) eq "attack") || (AI::action eq "move" && AI::action(2) eq "attack"))
+				   && AI::args->{attackID} && AI::args()->{attackID} ne $ID1) {
+					my $attackTarget = Actor::get(AI::args->{attackID});
+					my $attackSeq = (AI::action eq "route") ? AI::args(1) : AI::args(2);
+					if (!$attackTarget->{dmgToYou} && !$attackTarget->{dmgFromYou} && distance($monster->{pos_to}, calcPosition($char)) <= $attackSeq->{attackMethod}{distance}) {
+						my $ignore = 0;
+						# Don't attack ignored monsters
+						if ((my $control = mon_control($monster->{name}))) {
+							$ignore = 1 if ( ($control->{attack_auto} == -1)
+								|| ($control->{attack_lvl} ne "" && $control->{attack_lvl} > $char->{lv})
+								|| ($control->{attack_jlvl} ne "" && $control->{attack_jlvl} > $char->{lv_job})
+								|| ($control->{attack_hp}  ne "" && $control->{attack_hp} > $char->{hp})
+								|| ($control->{attack_sp}  ne "" && $control->{attack_sp} > $char->{sp})
+								);
+						}
+						if (!$ignore) {
+							# Change target to closer aggressive monster
+							message TF("Change target to aggressive : %s (%s)\n", $monster->name, $monster->{binID});
+							stopAttack();
+							AI::dequeue;
+							AI::dequeue if (AI::action eq "route");
+							AI::dequeue;
+							attack($ID1);
+						}
+					}
 				}
 				useTeleport(1, undef, 1) if ($teleport);
 			}
@@ -2605,7 +2631,7 @@ sub updateDamageTables {
 				$monster->{missedToPlayer}{$ID2}++;
 				$player->{missedFromMonster}{$ID1}++;
 			}
-			if (existsInList($config{tankersList}, $player->{name}) ||
+			if (existsInList($config{tankersList}, $player->{name}) || ($char->{homunculus} && $ID2 eq $char->{homunculus}{ID}) ||
 			    ($char->{party} && %{$char->{party}} && $char->{party}{users}{$ID2} && %{$char->{party}{users}{$ID2}})) {
 				# Monster attacks party member
 				$monster->{dmgToParty} += $damage;
@@ -2613,6 +2639,82 @@ sub updateDamageTables {
 			}
 			$monster->{target} = $ID2;
 			OpenKoreMod::updateDamageTables($monster) if (defined &OpenKoreMod::updateDamageTables);
+
+			if ($AI == 2 && $char->{homunculus} && $ID2 eq $char->{homunculus}{ID}) {
+				my $teleport = 0;
+				if (mon_control($monster->{name})->{teleport_auto} == 2 && $damage){
+					message TF("Homunculus teleporting due to attack from %s\n", 
+						$monster->{name}), "teleport";
+					$teleport = 1;
+
+				} elsif ($config{homunculus_teleportAuto_deadly} && $damage >= $char->{homunculus}{hp}
+				      && !whenStatusActive("Hallucination")) {
+					message TF("Next %d dmg could kill your homunculus. Teleporting...\n", 
+						$damage), "teleport";
+					$teleport = 1;
+
+				} elsif ($config{homunculus_teleportAuto_maxDmg} && $damage >= $config{homunculus_teleportAuto_maxDmg}
+				      && !whenStatusActive("Hallucination")
+				      && !($config{homunculus_teleportAuto_maxDmgInLock} && $field{name} eq $config{lockMap})) {
+					message TF("%s hit your homunculus for more than %d dmg. Teleporting...\n",
+						$monster->{name}, $config{homunculus_teleportAuto_maxDmg}), "teleport";
+					$teleport = 1;
+
+				} elsif ($config{homunculus_teleportAuto_maxDmgInLock} && $field{name} eq $config{lockMap}
+				      && $damage >= $config{homunculus_teleportAuto_maxDmgInLock}
+				      && !whenStatusActive("Hallucination")) {
+					message TF("%s hit your homunculus for more than %d dmg in lockMap. Teleporting...\n", 
+						$monster->{name}, $config{homunculus_teleportAuto_maxDmgInLock}), "teleport";
+					$teleport = 1;
+
+				} elsif ($config{homunculus_teleportAuto_totalDmg}
+				      && $monster->{dmgToPlayer}{$char->{homunculus}{ID}} >= $config{homunculus_teleportAuto_totalDmg}
+				      && !whenStatusActive("Hallucination")
+				      && !($config{homunculus_teleportAuto_totalDmgInLock} && $field{name} eq $config{lockMap})) {
+					message TF("%s hit your homunculus for a total of more than %d dmg. Teleporting...\n", 
+						$monster->{name}, $config{homunculus_teleportAuto_totalDmg}), "teleport";
+					$teleport = 1;
+
+				} elsif ($config{homunculus_teleportAuto_totalDmgInLock} && $field{name} eq $config{lockMap}
+				      && $monster->{dmgToPlayer}{$char->{homunculus}{ID}} >= $config{homunculus_teleportAuto_totalDmgInLock}
+				      && !whenStatusActive("Hallucination")) {
+					message TF("%s hit your homunculus for a total of more than %d dmg in lockMap. Teleporting...\n", 
+						$monster->{name}, $config{homunculus_teleportAuto_totalDmgInLock}), "teleport";
+					$teleport = 1;
+
+				} elsif ($config{homunculus_teleportAuto_hp} && $char->{homunculus}{hpPercent} <= $config{homunculus_teleportAuto_hp}) {
+					message TF("%s hit your homunculus when your homunculus' HP is too low. Teleporting...\n", 
+						$monster->{name}), "teleport";
+					$teleport = 1;
+
+				} elsif ($config{homunculus_attackChangeTarget} && ((AI::Homunculus::action() eq "route" && AI::Homunculus::action(1) eq "attack") || (AI::Homunculus::action() eq "move" && AI::Homunculus::action(2) eq "attack"))
+				   && AI::Homunculus::args()->{attackID} && AI::Homunculus::args()->{attackID} ne $ID1) {
+					my $attackTarget = Actor::get(AI::Homunculus::args()->{attackID});
+					my $attackSeq = (AI::Homunculus::action() eq "route") ? AI::Homunculus::args(1) : AI::Homunculus::args(2);
+					if (!$attackTarget->{dmgToPlayer}{$char->{homunculus}{ID}} && !$attackTarget->{dmgFromPlayer}{$char->{homunculus}{ID}} && distance($monster->{pos_to}, calcPosition($char->{homunculus})) <= $attackSeq->{attackMethod}{distance}) {
+						my $ignore = 0;
+						# Don't attack ignored monsters
+						if ((my $control = mon_control($monster->{name}))) {
+							$ignore = 1 if ( ($control->{attack_auto} == -1)
+								|| ($control->{attack_lvl} ne "" && $control->{attack_lvl} > $char->{lv})
+								|| ($control->{attack_jlvl} ne "" && $control->{attack_jlvl} > $char->{lv_job})
+								|| ($control->{attack_hp}  ne "" && $control->{attack_hp} > $char->{hp})
+								|| ($control->{attack_sp}  ne "" && $control->{attack_sp} > $char->{sp})
+								);
+						}
+						if (!$ignore) {
+							# Change target to closer aggressive monster
+							message TF("Homunculus change target to aggressive : %s (%s)\n", $monster->name, $monster->{binID});
+							AI::Homunculus::homunculus_stopAttack();
+							AI::Homunculus::dequeue();
+							AI::Homunculus::dequeue() if (AI::Homunculus::action() eq "route");
+							AI::Homunculus::dequeue();
+							AI::Homunculus::homunculus_attack($ID1);
+						}
+					}
+				}
+				useTeleport(1, undef, 1) if ($teleport);
+			}
 		}
 
 	} elsif ((my $player = $playersList->getByID($ID1))) {
@@ -2628,7 +2730,7 @@ sub updateDamageTables {
 				$player->{missedToMonster}{$ID2}++;
 			}
 
-			if (existsInList($config{tankersList}, $player->{name}) ||
+			if (existsInList($config{tankersList}, $player->{name}) || ($char->{homunculus} && $ID1 eq $char->{homunculus}{ID}) ||
 			    ($char->{party} && %{$char->{party}} && $char->{party}{users}{$ID1} && %{$char->{party}{users}{$ID1}})) {
 				$monster->{dmgFromParty} += $damage;
 			}
@@ -3615,6 +3717,24 @@ sub checkSelfCondition {
 		}
 	}
 
+	if ($char->{homunculus}) {
+		if ($config{$prefix . "_homunculus_hp"}) {
+			if ($config{$prefix."_homunculus_hp"} =~ /^(.*)\%$/) {
+				return 0 if (!inRange($char->{homunculus}{hpPercent}, $1));
+			} else {
+				return 0 if (!inRange($char->{homunculus}{hp}, $config{$prefix."_homunculus_hp"}));
+			}
+		}
+
+		if ($config{$prefix."_homunculus_sp"}) {
+			if ($config{$prefix."_homunculus_sp"} =~ /^(.*)\%$/) {
+				return 0 if (!inRange($char->{homunculus}{spPercent}, $1));
+			} else {
+				return 0 if (!inRange($char->{homunculus}{sp}, $config{$prefix."_homunculus_sp"}));
+			}
+		}
+	}
+
 	# check skill use SP if this is a 'use skill' condition
 	if ($prefix =~ /skill/i) {
 		my $skill_handle = Skills->new(name => lc($config{$prefix}))->handle;
@@ -3785,7 +3905,14 @@ sub checkPlayerCondition {
 			} else {
 				return 0 if (!inRange($chars[$config{char}]{party}{users}{$id}{hp}, $config{$prefix . "_hp"}));
 			}
-
+		}
+	} elsif ($char->{homunculus} && $char->{homunculus}{ID} eq $id) {
+		if ($config{$prefix . "_hp"}) {
+			if ($config{$prefix."_hp"} =~ /^(.*)\%$/) {
+				return 0 if (!inRange(percent_hp($char->{homunculus}), $1));
+			} else {
+				return 0 if (!inRange($char->{homunculus}{hp}, $config{$prefix . "_hp"}));
+			}
 		}
 	}
 
