@@ -506,6 +506,15 @@
 1017 SA_ELEMENTGROUND Elemental Change Earth
 1018 SA_ELEMENTFIRE Elemental Change Fire
 1019 SA_ELEMENTWIND Elemental Change Wind
+8001 HLIF_HEAL Healing Hands
+8002 HLIF_AVOID Urgent Escape
+8003 HLIF_BRAIN Brain Surgery
+8005 HAMI_CASTLE Castling
+8006 HAMI_DEFENCE Amistr Bulwark
+8007 HAMI_SKIN Adamantium Skin
+8009 HFLI_MOON Moonlight
+8010 HFLI_FLEET Flitting
+8011 HFLI_SPEED Accelerated Flight
 8013 HVAN_CAPRICE Caprice
 8014 HVAN_CHAOTIC Chaotic Blessing
 8015 HVAN_INSTRUCT Instruction Change
