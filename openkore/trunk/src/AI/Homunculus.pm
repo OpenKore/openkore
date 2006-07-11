@@ -138,7 +138,7 @@ sub iterate {
 		my $homun_dist = $char->{homunculus}->blockDistance();
 
 		# auto-feed homunculus
-		} elsif ($char->{homunculus}{hunger} <= 25 && timeOut($char->{homunculus}{feed_time}, 30)) {
+		if ($char->{homunculus}{hunger} <= 25 && timeOut($char->{homunculus}{feed_time}, 30)) {
 	 		$net->sendHomunculusFeed();
 			$char->{homunculus}{feed_time} = time;
 			message T("Auto-feeding your Homunculus.\n"), 'homunculus';
