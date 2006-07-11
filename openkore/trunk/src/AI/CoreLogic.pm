@@ -31,6 +31,7 @@ use Log qw(message warning error debug);
 use Network::Send;
 use Settings;
 use AI;
+use AI::Homunculus;
 use ChatQueue;
 use Utils;
 use Misc;
