@@ -744,6 +744,7 @@ sub objectIsMovingTowardsPlayer {
 			my $ID = $player->{ID};
 			next if (
 			     ($ignore_party_members && $char->{party} && $char->{party}{users}{$ID})
+			  || ($ID eq $char->{homunculus}{ID})
 			  || (defined($player->{name}) && existsInList($config{tankersList}, $player->{name}))
 			  || $player->{statuses}{"GM Perfect Hide"});
 			if (checkMovementDirection($obj->{pos}, \%vec, $player->{pos}, 15)) {
@@ -2113,6 +2114,7 @@ sub positionNearPlayer {
 		my $ID = $player->{ID};
 		next if ($char->{party} && $char->{party}{users} &&
 			$char->{party}{users}{$ID});
+		next if ($ID eq $char->{homunculus}{ID});
 		next if (defined($player->{name}) && existsInList($config{tankersList}, $player->{name}));
 		return 1 if (distance($r_hash, $player->{pos_to}) <= $dist);
 	}

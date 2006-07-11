@@ -3372,9 +3372,9 @@ sub processAutoTeleport {
 	 && binSize(\@playersID) && timeOut($AI::Temp::Teleport_allPlayers, 0.75)) {
 
 		my $ok;
-		if ($config{teleportAuto_allPlayers} >= 2 && $char->{party}) {
+		if ($config{teleportAuto_allPlayers} >= 2) {
 			foreach my $ID (@playersID) {
-				if (!$char->{party}{users}{$ID}) {
+				if ((!$char->{party} || !$char->{party}{users}{$ID}) && (!$char->{homunculus} || $ID ne $char->{homunculus})) {
 					$ok = 1;
 					last;
 				}
