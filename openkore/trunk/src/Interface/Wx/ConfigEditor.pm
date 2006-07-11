@@ -5,6 +5,7 @@ use Wx ':everything';
 use Wx::Event qw(EVT_LISTBOX);
 use base qw(Wx::Panel);
 use Interface::Wx::ConfigEditor;
+use encoding 'utf8';
 
 
 sub new {
@@ -134,7 +135,7 @@ use Wx::Event qw(EVT_GRID_CELL_CHANGE EVT_GRID_CELL_LEFT_CLICK EVT_TIMER EVT_BUT
 use Wx::Html;
 use base qw(Wx::Panel);
 
-use Utils::Downloader;
+use Utils::HttpReader;
 
 our $manual;
 
@@ -190,7 +191,8 @@ sub downloadManual {
 	$time = (stat($file))[9];
 	# Download manual if it hasn't been downloaded yet,
 	# or if the local copy is more than 3 days old
-	if ($file && time - $time <= 60 * 60 * 24 * 3 && open($f, "< $file")) {
+	if ($file && time - $time <= 60 * 60 * 24 * 3 && open($f, "<", $file)) {
+		binmode F;
 		local($/);
 		$manual = <$f>;
 		close $f;
@@ -211,14 +213,29 @@ sub downloadManual {
 		$dialog->SetSizerAndFit($sizer);
 
 		my $timer = new Wx::Timer($dialog, 476);
-		my $downloader = new Utils::Downloader('openkore.sourceforge.net',
-			'http://openkore.sourceforge.net/manual/config/');
+		my $downloader = new StdHttpReader('http://openkore.sourceforge.net/manual/config/');
 		EVT_TIMER($dialog, 476, sub {
-			#print $downloader->progress();
-			$gauge->SetValue($downloader->progress * 100);
-			if ($downloader->iterate) {
+			if ($downloader->getStatus() != HttpReader::CONNECTING) {
+				my $size = $downloader->getSize();
+				my $progress = 0;
+				if ($size > 0) {
+					my $len = 0;
+					$size->getData($len);
+					$progress = $len / $size * 100;
+				}
+				$gauge->SetValue($progress);
+			}
+
+			if ($downloader->getStatus() == HttpReader::DONE) {
+				my $len;
+				$gauge->SetValue(100);
 				$dialog->Close;
-				$manual = $downloader->data;
+				$manual = $downloader->getData($len);
+				$timer->Destroy;
+				undef $timer;
+			} elsif ($downloader->getStatus() == HttpReader::ERROR) {
+				$gauge->SetValue(100);
+				$dialog->Close;
 				$timer->Destroy;
 				undef $timer;
 			}
@@ -226,7 +243,8 @@ sub downloadManual {
 		$timer->Start(100);
 		$dialog->ShowModal;
 
-		if ($manual && open($f, "> $file")) {
+		if ($manual && open($f, ">", $file)) {
+			binmode F;
 			print $f $manual;
 			close $f;
 		}
@@ -306,7 +324,6 @@ sub _help {
 	if ($manual eq '') {
 		return 'Unable to download the manual.';
 	} else {
-		#return 'Option disabled for the moment.';
 		my $tmp = quotemeta "<b class=\"item\">$name";
 		my ($found) = $manual =~ /<li>(${tmp}.*?)<\/li>/s;
 		$found =~ s/^<b .*?>(.*?)<\/b>/<b><font color="blue">$1<\/font><\/b>/s;

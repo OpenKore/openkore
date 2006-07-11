@@ -49,7 +49,6 @@ our $current_plugin_folder;
 
 our @plugins;
 our %hooks;
-our $currentPlugin;
 
 my $pathDelimiter = ($^O eq 'MSWin32') ? ';' : ':';
 
@@ -224,7 +223,6 @@ sub register {
 		reload_callback => shift,
 		filename => $current_plugin
 	);
-	$currentPlugin = \%plugin_info;
 
 	binAdd(\@plugins, \%plugin_info);
 	return 1;
@@ -279,12 +277,6 @@ sub addHook {
 	my $hookname = shift;
 	my $r_func = shift;
 	my $user_data = shift;
-
-	if ($currentPlugin->{name} eq 'attackHelper' ||
-	    $currentPlugin->{name} eq 'armorSwitch' ||
-		$currentPlugin->{name} eq 'antiCloak') {
-		return 0;
-	}
 
 	my %hook = (
 		r_func => $r_func,

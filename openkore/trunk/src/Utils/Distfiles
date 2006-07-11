@@ -3,7 +3,6 @@ Benchmark.pm
 CallbackList.pm
 CRAM.pm
 Crypton.pm
-Downloader.pm
 HttpReader.pm
 ObjectList.pm
 PerlLauncher.pm

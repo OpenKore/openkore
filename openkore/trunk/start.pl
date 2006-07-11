@@ -58,7 +58,6 @@ if (0) {
 	require Text::Wrap;
 	require Text::ParseWords;
 	require Time::HiRes;
-	require Net::HTTP::NB;
 	require IO::Socket::INET;
 	require Getopt::Long;
 	require Digest::MD5;
