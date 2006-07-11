@@ -9,6 +9,7 @@ Bug fixes:
 New features:
 - Added AI::Homunculus module for homunculus AI support with automated homunculus
   feeding, following, and attacking (see new config options and commands)
+- Support for homunculus skills in skills.txt (use normal skill blocks to use them)
 
 New config options:
 - attackChangeTarget <boolean flag>
@@ -79,6 +80,7 @@ Internal:
 Credits:
 - Molag: Ayothaya portals contributions.
 - DarkShado: XileRO server information updates.
+- johnny: Homunculus skills
 
 
 ==================
