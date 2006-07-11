@@ -146,17 +146,22 @@ sub iterate {
 		# auto-follow
 		} elsif (
 			AI::action eq "move"
+			&& !$char->{sitting}
+			&& !AI::args->{mapChanged}
+			&& !AI::args->{time_move} != $char->{time_move}
+			&& !timeOut(AI::args->{ai_move_giveup})
 			&& $homun_dist < MAX_DISTANCE
 			&& (AI::Homunculus::isIdle
 				|| blockDistance(AI::args->{move_to}, $char->{homunculus}{pos_to}) >= MAX_DISTANCE)
+			&& (!defined AI::Homunculus::findAction('route') || !AI::Homunculus::args(AI::Homunculus::findAction('route'))->{follow_route})
 		) {
-			if (
-				!$char->{sitting}
-				&& !AI::args->{mapChanged}
-				&& !AI::args->{time_move} != $char->{time_move}
-				&& !timeOut(AI::args->{ai_move_giveup})
-				&& timeOut($char->{homunculus}{move_retry}, 0.5)
-			) {
+			AI::Homunculus::clear('move', 'route');
+			if (!checkLineWalkable($char->{homunculus}{pos_to}, $char->{pos_to})) {
+				homunculus_route($char->{pos_to}{x}, $char->{pos_to}{y});
+				AI::Homunculus::args->{follow_route} = 1 if (AI::Homunculus::action eq 'route');
+				debug sprintf("Homunculus follow route (distance: %.2f)\n", $char->{homunculus}->distance()), 'homunculus';
+
+			} elsif (timeOut($char->{homunculus}{move_retry}, 0.5)) {
 				# No update yet, send move request again.
 				# We do this every 0.5 secs
 				$char->{homunculus}{move_retry} = time;
@@ -166,13 +171,19 @@ sub iterate {
 				# (e.g. can't route properly around obstacles and corners)
 				# so we make use of the sendHomunculusMove() to make up for a more efficient routing
 				$net->sendHomunculusMove($char->{homunculus}{ID}, $char->{pos_to}{x}, $char->{pos_to}{y});
-				debug sprintf("Homunculus follow (distance: %.2f)\n", $char->{homunculus}->distance()), 'homunculus';
+				debug sprintf("Homunculus follow move (distance: %.2f)\n", $char->{homunculus}->distance()), 'homunculus';
 			}
 
 		# homunculus is found
 		} elsif ($homun_dist < MAX_DISTANCE && $char->{homunculus}{lost}) {
 			delete $char->{homunculus}{lost};
 			delete $char->{homunculus}{lostRoute};
+			my $action = AI::Homunculus::findAction('route');
+			if (defined $action && AI::Homunculus::args($action)->{lost_route}) {
+				for (my $i = 0; $i <= $action; $i++) {
+					AI::Homunculus::dequeue
+				}
+			}
 			if (timeOut($char->{homunculus}{standby_time}, 1)) {
 				$net->sendHomunculusStandBy($char->{homunculus}{ID});
 				$char->{homunculus}{standby_time} = time;
@@ -188,9 +199,12 @@ sub iterate {
 		} elsif ($AI == 2 && $homun_dist >= MAX_DISTANCE && $char->{homunculus}{lost} && !$char->{homunculus}{lostRoute}) {
 			my $x = $char->{homunculus}{pos_to}{x};
 			my $y = $char->{homunculus}{pos_to}{y};
-			main::ai_route($field{name}, $x, $y, distFromGoal => ($config{homunculus_followDistanceMax} || 10), attackOnRoute => 1, noSitAuto => 1);
+			my $distFromGoal = $config{homunculus_followDistanceMax};
+			$distFromGoal = MAX_DISTANCE if ($distFromGoal > MAX_DISTANCE);
+			main::ai_route($field{name}, $x, $y, distFromGoal => $distFromGoal, attackOnRoute => 1, noSitAuto => 1);
+			AI::Homunculus::args->{lost_route} = 1 if (AI::Homunculus::action eq 'route');
 			$char->{homunculus}{lostRoute} = 1;
-			message TF("Trying to find your homuncukus at location %d, %d\n", $x, $y), 'homunculus';
+			message TF("Trying to find your homunculus at location %d, %d (you are currently at %d, %d)\n", $x, $y, $char->{pos_to}{x}, $char->{pos_to}{y}), 'homunculus';
 
 		# if your homunculus is idle, make it move near you
 		} elsif (
@@ -985,7 +999,7 @@ sub processAutoAttack {
 
 	#Benchmark::begin("ai_homunculus_autoAttack") if DEBUG;
 
-	if (((AI::Homunculus::isIdle) && (AI::isIdle || AI::is(qw(follow sitAuto take items_gather items_take attack skill_use))))
+	if (((AI::Homunculus::isIdle || AI::Homunculus::action eq 'route') && (AI::isIdle || AI::is(qw(follow sitAuto take items_gather items_take attack skill_use))))
 	     # Don't auto-attack monsters while taking loot, and itemsTake/GatherAuto >= 2
 	  && timeOut($timeout{ai_homunculus_attack_auto})
 	  && (!$config{homunculus_attackAuto_notInTown} || !$cities_lut{$field{name}.'.rsw'})) {
@@ -993,11 +1007,15 @@ sub processAutoAttack {
 		# If we're in tanking mode, only attack something if the person we're tanking for is on screen.
 		my $foundTankee;
 		if ($config{homunculus_tankMode}) {
-			foreach (@playersID) {
-				next if (!$_);
-				if ($config{homunculus_tankModeTarget} eq $players{$_}{'name'}) {
-					$foundTankee = 1;
-					last;
+			if ($config{homunculus_tankModeTarget} eq $char->{name}) {
+				$foundTankee = 1;
+			} else {
+				foreach (@playersID) {
+					next if (!$_);
+					if ($config{homunculus_tankModeTarget} eq $players{$_}{'name'}) {
+						$foundTankee = 1;
+						last;
+					}
 				}
 			}
 		}
@@ -1006,13 +1024,26 @@ sub processAutoAttack {
 		my $priorityAttack;
 
 		if (!$config{homunculus_tankMode} || $foundTankee) {
+			# This variable controls how far monsters must be away from portals and players.
+			my $portalDist = $config{'attackMinPortalDistance'} || 4;
+			my $playerDist = $config{'attackMinPlayerDistance'};
+			$playerDist = 1 if ($playerDist < 1);
+		
+			my $routeIndex = AI::Homunculus::findAction("route");
+			my $attackOnRoute;
+			if (defined $routeIndex) {
+				$attackOnRoute = AI::Homunculus::args($routeIndex)->{attackOnRoute};
+			} else {
+				$attackOnRoute = 2;
+			}
+
 			### Step 1: Generate a list of all monsters that we are allowed to attack. ###
 			my @aggressives;
 			my @partyMonsters;
 			my @cleanMonsters;
 
 			# List aggressive monsters
-			@aggressives = ai_getPlayerAggressives($char->{homunculus}{ID}) if ($config{homunculus_attackAuto});
+			@aggressives = ai_getPlayerAggressives($char->{homunculus}{ID}) if ($config{homunculus_attackAuto} && $attackOnRoute);
 
 			# There are two types of non-aggressive monsters. We generate two lists:
 			foreach (@monstersID) {
@@ -1031,7 +1062,7 @@ sub processAutoAttack {
 				my $pos = calcPosition($monster);
 
 				# List monsters that party members are attacking
-				if ($config{homunculus_attackAuto_party}
+				if ($config{homunculus_attackAuto_party} && $attackOnRoute
 				 && ((($monster->{dmgFromYou} || $monster->{dmgFromParty}) && $config{homunculus_attackAuto_party} != 2) ||
 				     $monster->{dmgToYou} || $monster->{dmgToParty} || $monster->{missedYou} || $monster->{missedToParty})
 				 && timeOut($monster->{homunculus_attack_failed}, $timeout{ai_attack_unfail}{timeout})) {
@@ -1068,7 +1099,8 @@ sub processAutoAttack {
 				}
 
 				if ($config{homunculus_attackAuto} >= 2
-				 && !$monster->{dmgFromYou} && $safe
+				 && $attackOnRoute >= 2 && !$monster->{dmgFromYou} && $safe
+				 && !positionNearPlayer($pos, $playerDist) && !positionNearPortal($pos, $portalDist)
 				 && timeOut($monster->{homunculus_attack_failed}, $timeout{ai_attack_unfail}{timeout})) {
 					push @cleanMonsters, $_;
 				}
@@ -1084,6 +1116,8 @@ sub processAutoAttack {
 			foreach (@aggressives) {
 				my $monster = $monsters{$_};
 				my $pos = calcPosition($monster);
+				# Don't attack monsters near portals
+				next if (positionNearPortal($pos, $portalDist));
 
 				# Don't attack ignored monsters
 				if ((my $control = mon_control($monster->{name}))) {
@@ -1108,6 +1142,8 @@ sub processAutoAttack {
 					my $monster = $monsters{$_};
 					next if !timeOut($monster->{homunculus_attack_failed}, $timeout{ai_attack_unfail}{timeout});
 					my $pos = calcPosition($monster);
+					# Don't attack monsters near portals
+					next if (positionNearPortal($pos, $portalDist));
 
 					# Don't attack ignored monsters
 					if ((my $control = mon_control($monster->{name}))) {
@@ -1129,6 +1165,8 @@ sub processAutoAttack {
 				foreach (@aggressives) {
 					my $monster = $monsters{$_};
 					my $pos = calcPosition($monster);
+					# Don't attack monsters near portals
+					next if (positionNearPortal($pos, $portalDist));
 
 					# Don't attack ignored monsters
 					if ((my $control = mon_control($monster->{name}))) {
