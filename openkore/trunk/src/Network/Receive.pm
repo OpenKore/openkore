@@ -3208,11 +3208,17 @@ sub map_change {
 		getField($ai_v{temp}{map}, \%field);
 	}
 
-	AI::clear if $ai_v{temp}{clear_aiQueue};
+	if ($ai_v{temp}{clear_aiQueue}) {
+		AI::clear;
+		AI::Homunculus::clear();
+	}
 
 	main::initMapChangeVars();
 	for (my $i = 0; $i < @ai_seq; $i++) {
 		ai_setMapChanged($i);
+	}
+	for (my $i = 0; $i < @AI::Homunculus::homun_ai_seq; $i++) {
+		AI::Homunculus::homunculus_setMapChanged($i);
 	}
 	if ($net->version == 0) {
 		$ai_v{portalTrace_mapChanged} = time;
@@ -3245,6 +3251,9 @@ sub map_changed {
 	undef $conState_tries;
 	for (my $i = 0; $i < @ai_seq; $i++) {
 		ai_setMapChanged($i);
+	}
+	for (my $i = 0; $i < @AI::Homunculus::homun_ai_seq; $i++) {
+		AI::Homunculus::homunculus_setMapChanged($i);
 	}
 	$ai_v{portalTrace_mapChanged} = time;
 

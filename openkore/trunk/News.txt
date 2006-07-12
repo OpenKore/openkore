@@ -61,6 +61,9 @@ New config options:
 - Shared Block Attributes: homunculus_hp <hp>[%] and homunculus_sp <sp>[%]
     same as the hp/sp block attributes. These are useful for using homunculus
 	skills on your skill blocks
+- teleportAuto_lostHomunculus <boolean flag>
+    instead of routing back to your lost homunculus (default), Kore will teleport
+	to get the homunculus back.
 
 New commands:
 - homun < s | status | feed | move | standby | ai | aiv | skills >
