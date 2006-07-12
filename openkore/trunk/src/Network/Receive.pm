@@ -2327,7 +2327,6 @@ sub homunculus_skills {
 		$char->{skills}{$skillName}{range} = $range;
 		$char->{skills}{$skillName}{up} = $up;
 		$char->{skills}{$skillName}{targetType} = $targetType;
-		$char->{skills}{$skillName}{homunculus} = 1;
 		if (!$char->{skills}{$skillName}{lv}) {
 			$char->{skills}{$skillName}{lv} = $level;
 		}
@@ -2347,15 +2346,18 @@ sub homunculus_stats {
 	# 0 - alive
 	# 2 - rest
 	# 4 - dead
-	if ($args->{state} == 2 || $args->{state} == 4) {
-		foreach my $skillName (keys %{$char->{skills}}) {
-			if ($char->{skills}{$skillName}{homunculus} == 1) {
-				delete $char->{skills}{$skillName};
-				binRemove(\@AI::Homunculus::homun_skillsID, $skillName);
+	if ($args->{state} > 1) {
+		foreach my $handle (@AI::Homunculus::homun_skillsID) {
+			delete $char->{skills}{$handle};
+		}
+		undef @AI::Homunculus::homun_skillsID;
+		if ($char->{homunculus}{state} <= 1) {
+			if ($args->{state} & 2) {
+				message T("Your Homunculus was vaporized!\n"), 'homunculus';
+			} elsif ($args->{state} & 4) {
+				message T("Your Homunculus died!\n"), 'homunculus';
 			}
 		}
-		message T("Your Homunculus was vaporized!\n"), 'homunculus' if ($args->{state} == 2);
-		message T("Your Homunculus died!\n"), 'homunculus' if ($args->{state} == 4);
 	}
 	$char->{homunculus}{state} = $args->{state};
 	$char->{homunculus}{level} = $args->{lvl};
