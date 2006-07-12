@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenKore Thai Edition\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-07-11 15:06+0700\n"
+"POT-Creation-Date: 2006-07-12 11:28+0700\n"
 "PO-Revision-Date: 2006-06-20 16:12+0700\n"
 "Last-Translator: abt123\n"
 "Language-Team: \n"
@@ -1188,7 +1188,7 @@ msgstr ""
 "พบข้อผิดพลาดในฟังก์ชั่น 'skills desc' (แสดงรายละเอียดสกิล)\n"
 "สกิล %s ไม่มีอยู่\n"
 
-#: ../Commands.pm:1766 ../Commands.pm:3180 ../Misc.pm:2140
+#: ../Commands.pm:1766 ../Commands.pm:3180 ../Misc.pm:2142
 msgid "Error: No description available.\n"
 msgstr "พบข้อผิดพลาด: ไม่มีรายละเอียด\n"
 
@@ -1449,7 +1449,7 @@ msgstr "ไอเท็มในตัวว่างเปล่า\n"
 
 #. Translation Comment: Mark to tell item not identified
 #. Translation Comment: Mark to show not identified items
-#: ../Commands.pm:2159 ../Commands.pm:3408 ../Misc.pm:2982
+#: ../Commands.pm:2159 ../Commands.pm:3408 ../Misc.pm:2984
 msgid "Not Identified"
 msgstr "ยังไม่ได้ตรวจสอบ"
 
@@ -2870,21 +2870,21 @@ msgstr "Config '%s' ถูกตั้งเป็น %s (ค่าเดิม 
 msgid "Timeout '%s' set to %s (was %s)\n"
 msgstr "Timeout '%s' ถูกตั้งเป็น %s (ค่าเดิม %s)\n"
 
-#: ../Misc.pm:788
+#: ../Misc.pm:789
 msgid "Unable to load field file: no field name specified.\n"
 msgstr "ไม่สามารถโหลด field ได้: ไม่มี field ที่ระบุ\n"
 
-#: ../Misc.pm:882
+#: ../Misc.pm:883
 #, perl-format
 msgid "Could not load field %s - you must install the kore-field pack!\n"
 msgstr "ไม่สามารถโหลด field %s - คุณจะต้องติดตั้ง kore-field pack!\n"
 
-#: ../Misc.pm:935
+#: ../Misc.pm:936
 #, perl-format
 msgid "Could not write dist cache file: %s\n"
 msgstr "Could not write dist cache file: %s\n"
 
-#: ../Misc.pm:1061
+#: ../Misc.pm:1062
 #, perl-format
 msgid ""
 "No suitable browser detected. Please launch your favorite browser and go "
@@ -2894,31 +2894,31 @@ msgstr ""
 "ไม่สามารถครวจพบ เบราซ์เซอร์ ได้ กรุณาเปิดเบราซ์เซอร์ แล้วไปที่:\n"
 "%s"
 
-#: ../Misc.pm:1232
+#: ../Misc.pm:1233
 msgid "Disconnecting to avoid GM!\n"
 msgstr "ยกเลิกการติดต่อเพื่อหนี GM!\n"
 
-#: ../Misc.pm:1233
+#: ../Misc.pm:1234
 #, perl-format
 msgid "*** The GM %s talked to you, auto disconnected ***\n"
 msgstr "*** GM %s พูดคุยกับคุณ ยุติการเชื่อมต่อโดยอัตโนมัติ ***\n"
 
-#: ../Misc.pm:1235 ../Misc.pm:1249 ../Misc.pm:3482 ../Network/Receive.pm:2069
+#: ../Misc.pm:1236 ../Misc.pm:1250 ../Misc.pm:3484 ../Network/Receive.pm:2069
 #, perl-format
 msgid "Disconnect for %s seconds...\n"
 msgstr "หยุดการเชื่อมต่อเป็นเวลา %s วินาที\n"
 
-#: ../Misc.pm:1247
+#: ../Misc.pm:1248
 #, perl-format
 msgid "Disconnecting to avoid %s!\n"
 msgstr "ยกเลิกการติดต่อเพื่อหนี %s!\n"
 
-#: ../Misc.pm:1248
+#: ../Misc.pm:1249
 #, perl-format
 msgid "*** %s talked to you, auto disconnected ***\n"
 msgstr "*** %s พูดคุยกับคุณ ยุติการเชื่อมต่อโดยอัตโนมัติ ***\n"
 
-#: ../Misc.pm:1296
+#: ../Misc.pm:1297
 msgid ""
 "-------  Character @< ---------\n"
 "Name: @<<<<<<<<<<<<<<<<<<<<<<<<\n"
@@ -2942,12 +2942,12 @@ msgstr ""
 "Zenny: @<<<<<<<<<<  Luk: @<<<<<<<<\n"
 "-------------------------------"
 
-#: ../Misc.pm:1312
+#: ../Misc.pm:1313
 #, perl-format
 msgid "Slot %d: %s (%s, level %d/%d)"
 msgstr "ช่องที่ %d: %s (%s, level %d/%d)"
 
-#: ../Misc.pm:1322
+#: ../Misc.pm:1323
 #, perl-format
 msgid ""
 "------------- Character List -------------\n"
@@ -2958,27 +2958,27 @@ msgstr ""
 "%s\n"
 "------------------------------------------\n"
 
-#: ../Misc.pm:1341
+#: ../Misc.pm:1342
 msgid "Create a new character"
 msgstr "สร้างตัวละครใหม่"
 
-#: ../Misc.pm:1341
+#: ../Misc.pm:1342
 msgid "Delete a character"
 msgstr "ลบตัวละคร"
 
-#: ../Misc.pm:1342
+#: ../Misc.pm:1343
 msgid "Character selection"
 msgstr "เลือกตัวละคร"
 
-#: ../Misc.pm:1343
+#: ../Misc.pm:1344
 msgid "Please chooce a character or an action: "
 msgstr "กรุณาเลือกตัวละคร หรือกระทำการอย่างหนึ่งอย่างใด: "
 
-#: ../Misc.pm:1365
+#: ../Misc.pm:1366
 msgid "There are no characters on this account.\n"
 msgstr "ยังไม่มีตัวละครใน ไอดี นี้\n"
 
-#: ../Misc.pm:1371
+#: ../Misc.pm:1372
 msgid ""
 "Please enter the desired properties for your characters, in this form:\n"
 "(slot) \"(name)\" [ (str) (agi) (vit) (int) (dex) (luk) [ (hairstyle) "
@@ -2987,28 +2987,28 @@ msgstr ""
 "กรุณาป้อนคุณสมบัติของตัวละครให้อยู่ในรูปแบบต่อไปนี้:\n"
 "(ช่องที่) \"(ชื่อ)\" [ (str) (agi) (vit) (int) (dex) (luk) [ (ทรงผม) [(สีผม)] ] ]\n"
 
-#: ../Misc.pm:1379
+#: ../Misc.pm:1380
 msgid "You didn't specify enough parameters."
 msgstr "คุณไม่ได้กำหนดตัวแปรให้อย่างเพียงพอ"
 
-#: ../Misc.pm:1383
+#: ../Misc.pm:1384
 #, perl-format
 msgid "Creating character \"%s\" in slot \"%s\"...\n"
 msgstr "สร้างตัวละคร \"%s\" ในช่องที่ \"%s\"...\n"
 
-#: ../Misc.pm:1390
+#: ../Misc.pm:1391
 msgid "Delete character"
 msgstr "ลบตัวละคร"
 
-#: ../Misc.pm:1390
+#: ../Misc.pm:1391
 msgid "Select the character you want to delete: "
 msgstr "เลือกตัวละครที่ต้องการลบ: "
 
-#: ../Misc.pm:1402
+#: ../Misc.pm:1403
 msgid "Confirm delete"
 msgstr "ยืนยันการลบ"
 
-#: ../Misc.pm:1403
+#: ../Misc.pm:1404
 #, perl-format
 msgid ""
 "Are you ABSOLUTELY SURE you want to delete:\n"
@@ -3017,73 +3017,73 @@ msgstr ""
 "คุณแน่ใจหรือไม่ว่าจะลบ:\n"
 "%s\n"
 
-#: ../Misc.pm:1404
+#: ../Misc.pm:1405
 msgid "No, don't delete"
 msgstr "ไม่ลบดีกว่า"
 
-#: ../Misc.pm:1404
+#: ../Misc.pm:1405
 msgid "Yes, delete"
 msgstr "ใช่ ลบเลย"
 
-#: ../Misc.pm:1410
+#: ../Misc.pm:1411
 #, perl-format
 msgid "Deleting character %s...\n"
 msgstr "กำลังลบตัวละคร %s...\n"
 
-#: ../Misc.pm:1436 ../AI/CoreLogic.pm:3488
+#: ../Misc.pm:1437 ../AI/CoreLogic.pm:3488
 #, perl-format
 msgid "The current map (%s) is not on the list of allowed maps.\n"
 msgstr "แผนที่ปัจจุบัน (%s) ไม่ได้อยู่ในรายการ allowed maps\n"
 
-#: ../Misc.pm:1437 ../AI/CoreLogic.pm:3489
+#: ../Misc.pm:1438 ../AI/CoreLogic.pm:3489
 #, perl-format
 msgid "** The current map (%s) is not on the list of allowed maps.\n"
 msgstr "** แผนที่ปัจจุบัน (%s) ไม่ได้อยู่ในรายการ allowed maps\n"
 
-#: ../Misc.pm:1438
+#: ../Misc.pm:1439
 msgid "** Exiting...\n"
 msgstr "** กำลังออกจากโปรแกรม...\n"
 
-#: ../Misc.pm:1547
+#: ../Misc.pm:1548
 msgid "We're not currently connected to the character login server."
 msgstr "ยังไม่ได้เชื่อมต่อไปยัง character login server"
 
-#: ../Misc.pm:1550
+#: ../Misc.pm:1551
 #, perl-format
 msgid "Slot \"%s\" is not a valid number."
 msgstr "ช่องตัวละคร \"%s\" ไม่สามารถเลือกได้"
 
-#: ../Misc.pm:1553
+#: ../Misc.pm:1554
 msgid "The slot must be comprised between 0 and 4."
 msgstr "ช่องตัวละครจะต้องอยู่ในช่วง 0 ถึง 4"
 
-#: ../Misc.pm:1556
+#: ../Misc.pm:1557
 #, perl-format
 msgid "Slot %s already contains a character (%s)."
 msgstr "ช่อง %s มีตัวละครอยู่แล้ว (%s)."
 
-#: ../Misc.pm:1559
+#: ../Misc.pm:1560
 msgid "Name must not be longer than 23 characters."
 msgstr "ชื่อต้องไม่ยาวเกินกว่า 23 ตัวอักษร"
 
-#: ../Misc.pm:1565
+#: ../Misc.pm:1566
 msgid "Stats must be comprised between 1 and 9."
 msgstr "Stats จะต้องอยู่ในช่วง 1 ถึง 9"
 
-#: ../Misc.pm:1571
+#: ../Misc.pm:1572
 msgid "The sums Str + Int, Agi + Luk and Vit + Dex must all be equal to 10."
 msgstr "พลรวมระหว่าง Str + Int, Agi + Luk และ Vit + Dex จะต้องเท่ากับ 10"
 
-#: ../Misc.pm:1663
+#: ../Misc.pm:1664
 msgid "Message Dumped into DUMP.txt!\n"
 msgstr "Message Dumped into DUMP.txt!\n"
 
-#: ../Misc.pm:1805
+#: ../Misc.pm:1806
 #, perl-format
 msgid "Inventory Item Removed: %s (%d) x %d\n"
 msgstr "ไอเท็มลงในตัวได้ถูกนำออกไป: %s (%d) x %d\n"
 
-#: ../Misc.pm:2141
+#: ../Misc.pm:2143
 #, perl-format
 msgid ""
 "===============Item Description===============\n"
@@ -3094,152 +3094,152 @@ msgstr ""
 "ไอเท็ม: %s\n"
 "\n"
 
-#: ../Misc.pm:2178
+#: ../Misc.pm:2180
 msgid "Exiting...\n"
 msgstr "กำลังออกจากโปรแกรม...\n"
 
-#: ../Misc.pm:2189
+#: ../Misc.pm:2191
 #, perl-format
 msgid "Relogging in %d seconds...\n"
 msgstr "กำลังจะล๊อกอินใหม่ภายใน %d วินาที...\n"
 
-#: ../Misc.pm:2391 ../Misc.pm:2395
+#: ../Misc.pm:2393 ../Misc.pm:2397
 #, perl-format
 msgid "Remove perfectly hidden %s\n"
 msgstr "Remove perfectly hidden %s\n"
 
-#: ../Misc.pm:2470
+#: ../Misc.pm:2472
 #, perl-format
 msgid "%s does not exist.\n"
 msgstr "%s ไม่มีอยู่\n"
 
-#: ../Misc.pm:2516
+#: ../Misc.pm:2518
 msgid "Teleporting because of attack miss\n"
 msgstr "เทเลพอทเนื่องจากโจมตี miss\n"
 
-#: ../Misc.pm:2520
+#: ../Misc.pm:2522
 #, perl-format
 msgid "Teleporting after attacking a monster %d times\n"
 msgstr "เทเลพอทหลังจากโจมตีมอนสเตอร์ไปแล้ว %d ครั้ง\n"
 
-#: ../Misc.pm:2544
+#: ../Misc.pm:2546
 #, perl-format
 msgid "Teleporting due to attack from %s\n"
 msgstr "เทเลพอทเนื่องจากถูกโจมตีจาก %s\n"
 
-#: ../Misc.pm:2550
+#: ../Misc.pm:2552
 #, perl-format
 msgid "Next %d dmg could kill you. Teleporting...\n"
 msgstr "ความเสียหาย %d ต่อไปจะทำให้คุณตาย กำลังเทเลพอท...\n"
 
-#: ../Misc.pm:2557
+#: ../Misc.pm:2559
 #, perl-format
 msgid "%s hit you for more than %d dmg. Teleporting...\n"
 msgstr "%s โจมตีคุณโดยเกิดความเสียหายมากกว่า %d กำลังเทเลพอท...\n"
 
-#: ../Misc.pm:2564
+#: ../Misc.pm:2566
 #, perl-format
 msgid "%s hit you for more than %d dmg in lockMap. Teleporting...\n"
 msgstr "%s โจมตีคุณความเสียหายเกิน %d ใน lockMap  กำลังเทเลพอท...\n"
 
-#: ../Misc.pm:2570
+#: ../Misc.pm:2572
 #, perl-format
 msgid "%s attacks you while you are sitting. Teleporting...\n"
 msgstr "%s โจมตีคุณขณะกำลังนั่งอยู่ กำลังเทเลพอท...\n"
 
-#: ../Misc.pm:2578
+#: ../Misc.pm:2580
 #, perl-format
 msgid "%s hit you for a total of more than %d dmg. Teleporting...\n"
 msgstr "%s โจมตีคุณรวมความเสียหายแล้วเกิน %d  กำลังเทเลพอท...\n"
 
-#: ../Misc.pm:2585
+#: ../Misc.pm:2587
 #, perl-format
 msgid "%s hit you for a total of more than %d dmg in lockMap. Teleporting...\n"
 msgstr "%s โจมตีคุณรวมความเสียหายแล้วเกิน %d ใน lockMap  กำลังเทเลพอท...\n"
 
-#: ../Misc.pm:2590
+#: ../Misc.pm:2592
 #, perl-format
 msgid "%s hit you when your HP is too low. Teleporting...\n"
 msgstr "%s โจมตีคุณเมื่อ HP ของคุณน้อยเกินไป กำลังเทเลพอท...\n"
 
-#: ../Misc.pm:2611
+#: ../Misc.pm:2613
 #, fuzzy, perl-format
 msgid "Change target to aggressive : %s (%s)\n"
 msgstr "%s เปลี่ยนสีผมเป็น: %s (%s)\n"
 
-#: ../Misc.pm:2646
+#: ../Misc.pm:2648
 #, fuzzy, perl-format
 msgid "Homunculus teleporting due to attack from %s\n"
 msgstr "เทเลพอทเนื่องจากถูกโจมตีจาก %s\n"
 
-#: ../Misc.pm:2652
+#: ../Misc.pm:2654
 #, fuzzy, perl-format
 msgid "Next %d dmg could kill your homunculus. Teleporting...\n"
 msgstr "ความเสียหาย %d ต่อไปจะทำให้คุณตาย กำลังเทเลพอท...\n"
 
-#: ../Misc.pm:2659
+#: ../Misc.pm:2661
 #, fuzzy, perl-format
 msgid "%s hit your homunculus for more than %d dmg. Teleporting...\n"
 msgstr "%s โจมตีคุณโดยเกิดความเสียหายมากกว่า %d กำลังเทเลพอท...\n"
 
-#: ../Misc.pm:2666
+#: ../Misc.pm:2668
 #, fuzzy, perl-format
 msgid ""
 "%s hit your homunculus for more than %d dmg in lockMap. Teleporting...\n"
 msgstr "%s โจมตีคุณความเสียหายเกิน %d ใน lockMap  กำลังเทเลพอท...\n"
 
-#: ../Misc.pm:2674
+#: ../Misc.pm:2676
 #, fuzzy, perl-format
 msgid ""
 "%s hit your homunculus for a total of more than %d dmg. Teleporting...\n"
 msgstr "%s โจมตีคุณรวมความเสียหายแล้วเกิน %d  กำลังเทเลพอท...\n"
 
-#: ../Misc.pm:2681
+#: ../Misc.pm:2683
 #, fuzzy, perl-format
 msgid ""
 "%s hit your homunculus for a total of more than %d dmg in lockMap. "
 "Teleporting...\n"
 msgstr "%s โจมตีคุณรวมความเสียหายแล้วเกิน %d ใน lockMap  กำลังเทเลพอท...\n"
 
-#: ../Misc.pm:2686
+#: ../Misc.pm:2688
 #, fuzzy, perl-format
 msgid ""
 "%s hit your homunculus when your homunculus' HP is too low. Teleporting...\n"
 msgstr "%s โจมตีคุณเมื่อ HP ของคุณน้อยเกินไป กำลังเทเลพอท...\n"
 
-#: ../Misc.pm:2707
+#: ../Misc.pm:2709
 #, fuzzy, perl-format
 msgid "Homunculus change target to aggressive : %s (%s)\n"
 msgstr "%s เปลี่ยนสีผมเป็น: %s (%s)\n"
 
-#: ../Misc.pm:2845
+#: ../Misc.pm:2847
 msgid "Using Teleport Skill Level 2 though we not have it!\n"
 msgstr "ใช้สกิล Teleport เลเวล 2 โดยที่คุณไม่มี!\n"
 
-#: ../Misc.pm:2900
+#: ../Misc.pm:2902
 msgid "No Fly Wing or Butterfly Wing, fallback to Teleport Skill\n"
 msgstr "ไม่มี Fly Wing หรือ Butterfly Wing กลับไปใช้ Teleport Skill\n"
 
-#: ../Misc.pm:2906
+#: ../Misc.pm:2908
 msgid "You don't have the Teleport skill or a Fly Wing\n"
 msgstr "คุณไม่มีสกิล Teleport หรือไม่มี Fly Wing\n"
 
-#: ../Misc.pm:2908
+#: ../Misc.pm:2910
 msgid "You don't have the Teleport skill or a Butterfly Wing\n"
 msgstr "คุณไม่มีสกิล Teleport หรือไม่มี Butterfly Wing\n"
 
-#: ../Misc.pm:2975
+#: ../Misc.pm:2977
 #, perl-format
 msgid "---------- Storage %s -----------\n"
 msgstr "----------คลังเก็บของ %s-----------\n"
 
 #. Translation Comment: Mark to show broken items
-#: ../Misc.pm:2984
+#: ../Misc.pm:2986
 msgid "Broken"
 msgstr "เสียหาย(พัง)"
 
 #. Translation Comment: Storage Capacity
-#: ../Misc.pm:2988
+#: ../Misc.pm:2990
 #, perl-format
 msgid ""
 "\n"
@@ -3248,462 +3248,462 @@ msgstr ""
 "\n"
 "ความจุ: %d/%d\n"
 
-#: ../Misc.pm:2992
+#: ../Misc.pm:2994
 msgid "Storage logged\n"
 msgstr "บันทึกคลังเก็บของแล้ว\n"
 
-#: ../Misc.pm:2995
+#: ../Misc.pm:2997
 #, perl-format
 msgid "Unable to write to %s\n"
 msgstr "ไม่สามารถเขียนไปที่ %s\n"
 
-#: ../Misc.pm:3014
+#: ../Misc.pm:3016
 #, fuzzy, perl-format
 msgid "%s %s %s - Dmg: %s (delay %s)\n"
 msgstr "มอนสเตอร์ %s (%d) โจมตีคุณ - ความเสียหาย: %s (ดีเลย์ %s)\n"
 
-#: ../Misc.pm:3029
+#: ../Misc.pm:3031
 #, perl-format
 msgid "You are casting %s on yourself (time %sms)\n"
 msgstr "คุณร่าย %s ใส่ตัวเอง (ระยะเวลา %sms)\n"
 
-#: ../Misc.pm:3031
+#: ../Misc.pm:3033
 #, perl-format
 msgid "You are casting %s on player %s (%d) (time %sms)\n"
 msgstr "คุณร่าย %s ใส่ผู้เล่น %s (%d) (ระยะเวลา %sms)\n"
 
-#: ../Misc.pm:3034
+#: ../Misc.pm:3036
 #, perl-format
 msgid "You are casting %s on monster %s (%d) (time %sms)\n"
 msgstr "คุณร่าย %s ใส่มอนสเตอร์ %s (%d) (ระยะเวลา %sms)\n"
 
-#: ../Misc.pm:3037
+#: ../Misc.pm:3039
 #, perl-format
 msgid "You are casting %s on Unknown #%s (%d) (time %sms)\n"
 msgstr "คุณร่าย %s ใส่ Unknown #%s (%d) (ระยะเวลา %sms)\n"
 
-#: ../Misc.pm:3043
+#: ../Misc.pm:3045
 #, perl-format
 msgid "Player %s (%d) is casting %s on you (time %sms)\n"
 msgstr "ผู้เล่น %s (%d) ร่าย %s ใส่คุณ (ระยะเวลา %sms)\n"
 
-#: ../Misc.pm:3048
+#: ../Misc.pm:3050
 #, perl-format
 msgid "Player %s (%d) is casting %s on player %s (%d) (time %sms)\n"
 msgstr "ผู้เล่น %s (%d) ร่าย %s ใส่ผู้เล่น %s (%d) (ระยะเวลา %sms)\n"
 
-#: ../Misc.pm:3051
+#: ../Misc.pm:3053
 #, perl-format
 msgid "Player %s (%d) is casting %s on himself (time %sms)\n"
 msgstr "ผู้เล่น %s (%d) ร่าย %s ใส่ตัวเอง (ระยะเวลา %sms)\n"
 
-#: ../Misc.pm:3054
+#: ../Misc.pm:3056
 #, perl-format
 msgid "Player %s (%d) is casting %s on herself (time %sms)\n"
 msgstr "ผู้เล่น %s (%d) ร่าย %s ใส่ตัวเอง (ระยะเวลา %sms)\n"
 
-#: ../Misc.pm:3058
+#: ../Misc.pm:3060
 #, perl-format
 msgid "Player %s (%d) is casting %s on monster %s (%d) (time %sms)\n"
 msgstr "ผู้เล่น %s (%d) ร่าย %s ใส่มอนสเตอร์ %s (%d) (ระยะเวลา %sms)\n"
 
-#: ../Misc.pm:3061
+#: ../Misc.pm:3063
 #, perl-format
 msgid "Player %s (%d) is casting %s on Unknown #%s (%d) (time %sms)\n"
 msgstr "ผู้เล่น %s (%d) ร่าย %s ใส่ Unknown #%s (%d) (ระยะเวลา %sms)\n"
 
-#: ../Misc.pm:3067
+#: ../Misc.pm:3069
 #, perl-format
 msgid "Monster %s (%d) is casting %s on you (time %sms)\n"
 msgstr "มอนสเตอร์ %s (%d) ร่าย %s ใส่คุณ (ระยะเวลา %sms)\n"
 
-#: ../Misc.pm:3070
+#: ../Misc.pm:3072
 #, perl-format
 msgid "Monster %s (%d) is casting %s on player %s (%d) (time %sms)\n"
 msgstr "มอนสเตอร์ %s (%d) ร่าย %s ใส่ผู้เล่น %s (%d) (ระยะเวลา %sms)\n"
 
-#: ../Misc.pm:3074
+#: ../Misc.pm:3076
 #, perl-format
 msgid "Monster %s (%d) is casting %s on monster %s (%d) (time %sms)\n"
 msgstr "มอนสเตอร์ %s (%d) ร่าย %s ใส่มอนสเตอร์ %s (%d) (ระยะเวลา %sms)\n"
 
-#: ../Misc.pm:3077
+#: ../Misc.pm:3079
 #, perl-format
 msgid "Monster %s (%d) is casting %s on itself (time %sms)\n"
 msgstr "มอนสเตอร์ %s (%d) ร่าย %s ใส่ตัวเอง (ระยะเวลา %sms)\n"
 
-#: ../Misc.pm:3081
+#: ../Misc.pm:3083
 #, perl-format
 msgid "Monster %s (%d) is casting %s on Unknown #%s (%d) (time %sms)\n"
 msgstr "มอนสเตอร์ %s (%d) ร่าย %s ใส่ Unknown #%s (%d) (ระยะเวลา %sms)\n"
 
-#: ../Misc.pm:3087
+#: ../Misc.pm:3089
 #, perl-format
 msgid "Unknown #%s (%d) is casting %s on you (time %sms)\n"
 msgstr "Unknown #%s (%d) ร่าย %s ใส่คุณ (ระยะเวลา %sms)\n"
 
-#: ../Misc.pm:3090
+#: ../Misc.pm:3092
 #, perl-format
 msgid "Unknown #%s (%d) is casting %s on player %s (%d) (time %sms)\n"
 msgstr "Unknown #%s (%d) ร่าย %s ใส่ผู้เล่น %s (%d) (ระยะเวลา %sms)\n"
 
-#: ../Misc.pm:3093
+#: ../Misc.pm:3095
 #, perl-format
 msgid "Unknown #%s (%d) is casting %s on monster %s (%d) (time %sms)\n"
 msgstr "Unknown #%s (%d) ร่าย %s ใส่มอนสเตอร์ %s (%d) (ระยะเวลา %sms)\n"
 
-#: ../Misc.pm:3097
+#: ../Misc.pm:3099
 #, perl-format
 msgid "Unknown #%s (%d) is casting %s on Unknown #%s (%d) (time %sms)\n"
 msgstr "Unknown #%s (%d) ร่าย %s ใส่ Unknown #%s (%d) (ระยะเวลา %sms)\n"
 
-#: ../Misc.pm:3100
+#: ../Misc.pm:3102
 #, perl-format
 msgid "Unknown #%s (%d) is casting %s on himself (time %sms)\n"
 msgstr "Unknown #%s (%d) ร่าย %s ใส่ตัวเอง (ระยะเวลา %sms)\n"
 
 #. Translation Comment: Ammount of Damage on Skill
-#: ../Misc.pm:3115
+#: ../Misc.pm:3117
 #, perl-format
 msgid "Dmg: %s"
 msgstr "ความเสียหาย: %s"
 
 #. Translation Comment: Skill name + level
-#: ../Misc.pm:3121 ../Misc.pm:3209
+#: ../Misc.pm:3123 ../Misc.pm:3211
 #, perl-format
 msgid "%s (lvl %s)"
 msgstr "%s (lvl %s)"
 
-#: ../Misc.pm:3126
+#: ../Misc.pm:3128
 #, perl-format
 msgid "You use %s on yourself %s(delay %s)\n"
 msgstr "คุณใช้ %s กับตัวเอง %s(ดีเลย์ %s)\n"
 
-#: ../Misc.pm:3128
+#: ../Misc.pm:3130
 #, perl-format
 msgid "You use %s on player %s (%d) %s(delay %s)\n"
 msgstr "คุณใช้ %s กับผู้เล่น %s (%d) %s(ดีเลย์ %s)\n"
 
-#: ../Misc.pm:3131
+#: ../Misc.pm:3133
 #, perl-format
 msgid "You use %s on monster %s (%d) %s(delay %s)\n"
 msgstr "คุณใช้ %s กับมอนสเตอร์ %s (%d) %s(ดีเลย์ %s)\n"
 
-#: ../Misc.pm:3134
+#: ../Misc.pm:3136
 #, perl-format
 msgid "You use %s on Unknown #%s (%d) %s(delay %s)\n"
 msgstr "คุณใช้ %s กับ Unknown #%s (%d) %s(ดีเลย์ %s)\n"
 
-#: ../Misc.pm:3140
+#: ../Misc.pm:3142
 #, perl-format
 msgid "Player %s (%d) uses %s on you %s(delay %s)\n"
 msgstr "ผู้เล่น %s (%d) ใช้ %s กับคุณ %s(ดีเลย์ %s)\n"
 
-#: ../Misc.pm:3145
+#: ../Misc.pm:3147
 #, perl-format
 msgid "Player %s (%d) uses %s on player %s (%d) %s(delay %s)\n"
 msgstr "ผู้เล่น %s (%d) ใช้ %s กับผู้เล่น %s (%d) %s(ดีเลย์ %s)\n"
 
-#: ../Misc.pm:3148
+#: ../Misc.pm:3150
 #, perl-format
 msgid "Player %s (%d) uses %s on himself %s(delay %s)\n"
 msgstr "ผู้เล่น %s (%d) ใช้ %s กับตัวเอง %s(ดีเลย์ %s)\n"
 
-#: ../Misc.pm:3151
+#: ../Misc.pm:3153
 #, perl-format
 msgid "Player %s (%d) uses %s on herself %s(delay %s)\n"
 msgstr "ผู้เล่น %s (%d) ใช้ %s กับตัวเอง %s(ดีเลย์ %s)\n"
 
-#: ../Misc.pm:3155
+#: ../Misc.pm:3157
 #, perl-format
 msgid "Player %s (%d) uses %s on monster %s (%d) %s(delay %s)\n"
 msgstr "ผู้เล่น %s (%d) ใช้ %s กับมอนสเตอร์ %s (%d) %s(ดีเลย์ %s)\n"
 
-#: ../Misc.pm:3158
+#: ../Misc.pm:3160
 #, perl-format
 msgid "Player %s (%d) uses %s on Unknown #%s (%d) %s(delay %s)\n"
 msgstr "ผู้เล่น %s (%d) ใช้ %s กับ Unknown #%s (%d) %s(ดีเลย์ %s)\n"
 
-#: ../Misc.pm:3164
+#: ../Misc.pm:3166
 #, perl-format
 msgid "Monster %s (%d) uses %s on you %s(delay %s)\n"
 msgstr "มอนสเตอร์ %s (%d) ใช้ %s กับคุณ %s(ดีเลย์ %s)\n"
 
-#: ../Misc.pm:3167
+#: ../Misc.pm:3169
 #, perl-format
 msgid "Monster %s (%d) uses %s on player %s (%d) %s(delay %s)\n"
 msgstr "มอนสเตอร์ %s (%d) ใช้ %s กับผู้เล่น %s (%d) %s(ดีเลย์ %s)\n"
 
-#: ../Misc.pm:3171
+#: ../Misc.pm:3173
 #, perl-format
 msgid "Monster %s (%d) uses %s on monster %s (%d) %s(delay %s)\n"
 msgstr "มอนสเตอร์ %s (%d) ใช้ %s กับมอนสเตอร์ %s (%d) %s(ดีเลย์ %s)\n"
 
-#: ../Misc.pm:3174
+#: ../Misc.pm:3176
 #, perl-format
 msgid "Monster %s (%d) uses %s on itself %s(delay %s)\n"
 msgstr "มอนสเตอร์ %s (%d) ใช้ %s กับตัวเอง %s(ดีเลย์ %s)\n"
 
-#: ../Misc.pm:3178
+#: ../Misc.pm:3180
 #, perl-format
 msgid "Monster %s (%d) uses %s on Unknown #%s (%d) %s(delay %s)\n"
 msgstr "มอนสเตอร์ %s (%d) ใช้ %s กับ Unknown #%s (%d) %s(ดีเลย์ %s)\n"
 
-#: ../Misc.pm:3184
+#: ../Misc.pm:3186
 #, perl-format
 msgid "Unknown #%s (%d) uses %s on you %s(delay %s)\n"
 msgstr "Unknown #%s (%d) ใช้ %s กับคุณ %s(ดีเลย์ %s)\n"
 
-#: ../Misc.pm:3187
+#: ../Misc.pm:3189
 #, perl-format
 msgid "Unknown #%s (%d) uses %s on player %s (%d) %s(delay %s)\n"
 msgstr "Unknown #%s (%d) ใช้ %s กับผู้เล่น %s (%d) %s(ดีเลย์ %s)\n"
 
-#: ../Misc.pm:3190
+#: ../Misc.pm:3192
 #, perl-format
 msgid "Unknown #%s (%d) uses %s on monster %s (%d) %s(delay %s)\n"
 msgstr "Unknown #%s (%d) ใช้ %s กับมอนสเตอร์ %s (%d) %s(ดีเลย์ %s)\n"
 
-#: ../Misc.pm:3194
+#: ../Misc.pm:3196
 #, perl-format
 msgid "Unknown #%s (%d) uses %s on Unknown #%s (%d) %s(delay %s)\n"
 msgstr "Unknown #%s (%d) ใช้ %s กับ Unknown #%s (%d) %s(ดีเลย์ %s)\n"
 
-#: ../Misc.pm:3197
+#: ../Misc.pm:3199
 #, perl-format
 msgid "Unknown #%s (%d) uses %s on himself %s(delay %s)\n"
 msgstr "Unknown #%s (%d) ใช้ %s กับตัวเอง %s(ดีเลย์ %s)\n"
 
-#: ../Misc.pm:3212
+#: ../Misc.pm:3214
 #, perl-format
 msgid "You use %s on location (%d, %d)\n"
 msgstr "คุณใช้ %s ที่ตำแหน่ง (%d, %d)\n"
 
 #. Translation Comment: used Healing skill
-#: ../Misc.pm:3232
+#: ../Misc.pm:3234
 #, perl-format
 msgid "%s hp gained"
 msgstr "ได้รับ %s hp"
 
 #. Translation Comment: used non-Healing skill - displays skill level
-#: ../Misc.pm:3236
+#: ../Misc.pm:3238
 #, perl-format
 msgid "Lv %s"
 msgstr "Lv %s"
 
-#: ../Misc.pm:3244
+#: ../Misc.pm:3246
 #, perl-format
 msgid "You use %s on yourself %s\n"
 msgstr "คุณใช้ %s กับตัวคุณเอง %s\n"
 
 #. Translation Comment: You use a certain skill on an actor.
-#: ../Misc.pm:3247
+#: ../Misc.pm:3249
 #, perl-format
 msgid "You use %s on %s %s\n"
 msgstr "คุณใช้ %s กับ %s %s\n"
 
-#: ../Misc.pm:3252
+#: ../Misc.pm:3254
 #, perl-format
 msgid "Player %s uses %s on you %s\n"
 msgstr "ผู้เล่น %s ใช้ %s กับตัวคุณ %s\n"
 
-#: ../Misc.pm:3257
+#: ../Misc.pm:3259
 #, perl-format
 msgid "Player %s (%d) uses %s on player %s (%d) %s\n"
 msgstr "ผู้เล่น %s (%d) ใช้ %s กับผู้เล่น %s (%d) %s\n"
 
-#: ../Misc.pm:3260
+#: ../Misc.pm:3262
 #, perl-format
 msgid "Player %s (%d) uses %s on himself %s\n"
 msgstr "ผู้เล่น %s (%d) ใช้ %s กับตัวเอง %s\n"
 
-#: ../Misc.pm:3263
+#: ../Misc.pm:3265
 #, perl-format
 msgid "Player %s (%d) uses %s on herself %s\n"
 msgstr "ผู้เล่น %s (%d) ใช้ %s กับตัวเอง %s\n"
 
-#: ../Misc.pm:3267
+#: ../Misc.pm:3269
 #, perl-format
 msgid "Player %s (%d) uses %s on monster %s (%d) %s\n"
 msgstr "ผู้เล่น %s (%d) ใช้ %s กับมอนสเตอร์ %s (%d) %s\n"
 
-#: ../Misc.pm:3270
+#: ../Misc.pm:3272
 #, perl-format
 msgid "Player %s (%d) uses %s on Unknown #%s (%d) %s\n"
 msgstr "ผู้เล่น %s (%d) ใช้ %s กับ Unknown #%s (%d) %s\n"
 
-#: ../Misc.pm:3276
+#: ../Misc.pm:3278
 #, perl-format
 msgid "Monster %s (%d) uses %s on you %s\n"
 msgstr "มอนสเตอร์ %s (%d) ใช้ %s กับตัวคุณ %s\n"
 
-#: ../Misc.pm:3279
+#: ../Misc.pm:3281
 #, perl-format
 msgid "Monster %s (%d) uses %s on player %s (%d) %s\n"
 msgstr "มอนสเตอร์ %s (%d) ใช้ %s กับผู้เล่น %s (%d) %s\n"
 
-#: ../Misc.pm:3283
+#: ../Misc.pm:3285
 #, perl-format
 msgid "Monster %s (%d) uses %s on monster %s (%d) %s\n"
 msgstr "มอนสเตอร์ %s (%d) ใช้ %s กับมอนสเตอร์ %s (%d) %s\n"
 
-#: ../Misc.pm:3286
+#: ../Misc.pm:3288
 #, perl-format
 msgid "Monster %s (%d) uses %s on itself %s\n"
 msgstr "มอนสเตอร์ %s (%d) ใช้ %s กับตัวเอง %s\n"
 
-#: ../Misc.pm:3290
+#: ../Misc.pm:3292
 #, perl-format
 msgid "Monster %s (%d) uses %s on Unknown #%s (%d) %s\n"
 msgstr "มอนสเตอร์ %s (%d) ใช้ %s กับ Unknown #%s (%d) %s\n"
 
-#: ../Misc.pm:3296
+#: ../Misc.pm:3298
 #, perl-format
 msgid "Unknown #%s (%d) uses %s on you %s\n"
 msgstr "Unknown #%s (%d) ใช้ %s กับคุณ %s\n"
 
-#: ../Misc.pm:3299
+#: ../Misc.pm:3301
 #, perl-format
 msgid "Unknown #%s (%d) uses %s on player %s (%d) %s\n"
 msgstr "Unknown #%s (%d) ใช้ %s กับผู้เล่น %s (%d) %s\n"
 
-#: ../Misc.pm:3302
+#: ../Misc.pm:3304
 #, perl-format
 msgid "Unknown #%s (%d) uses %s on monster %s (%d) %s\n"
 msgstr "Unknown #%s (%d) ใช้ %s กับมอนสเตอร์ %s (%d) %s\n"
 
-#: ../Misc.pm:3306
+#: ../Misc.pm:3308
 #, perl-format
 msgid "Unknown #%s (%d) uses %s on Unknown #%s (%d) %s\n"
 msgstr "Unknown #%s (%d) ใช้ %s กับ Unknown #%s (%d) %s\n"
 
-#: ../Misc.pm:3309
+#: ../Misc.pm:3311
 #, perl-format
 msgid "Unknown #%s (%d) uses %s on himself %s\n"
 msgstr "Unknown #%s (%d) ใช้ %s กับตัวเอง %s\n"
 
-#: ../Misc.pm:3322
+#: ../Misc.pm:3324
 #, perl-format
 msgid "You are now: %s\n"
 msgstr "ตอนนี้คุณได้อยู่ในสถานะ %s\n"
 
-#: ../Misc.pm:3324
+#: ../Misc.pm:3326
 #, perl-format
 msgid "Player %s (%d) is now: %s\n"
 msgstr "ผู้เล่น %s (%d) ได้อยู่ในสถานะ %s\n"
 
-#: ../Misc.pm:3326
+#: ../Misc.pm:3328
 #, perl-format
 msgid "Monster %s (%d) is now: %s\n"
 msgstr "มอนสเตอร์ %s (%d) ได้อยู่ในสถานะ %s\n"
 
-#: ../Misc.pm:3328
+#: ../Misc.pm:3330
 #, perl-format
 msgid "Unknown #%s (%d) is now: %s\n"
 msgstr "Unknown #%s (%d) ได้อยู่ในสถานะ %s\n"
 
-#: ../Misc.pm:3332
+#: ../Misc.pm:3334
 #, perl-format
 msgid "You are again: %s\n"
 msgstr "ตอนนี้คุณได้อยู่ในสถานะ %s อีกครั้ง\n"
 
-#: ../Misc.pm:3334
+#: ../Misc.pm:3336
 #, perl-format
 msgid "Player %s (%d) is again: %s\n"
 msgstr "ผู้เล่น %s (%d) ได้อยู่ในสถานะ %s อีกครั้ง\n"
 
-#: ../Misc.pm:3336
+#: ../Misc.pm:3338
 #, perl-format
 msgid "Monster %s (%d) is again: %s\n"
 msgstr "มอนสเตอร์ %s (%d) ได้อยู่ในสถานะ %s อีกครั้ง\n"
 
-#: ../Misc.pm:3338
+#: ../Misc.pm:3340
 #, perl-format
 msgid "Unknown #%s (%d) is again: %s\n"
 msgstr "Unknown #%s (%d) ได้อยู่ในสถานะ %s อีกครั้ง\n"
 
-#: ../Misc.pm:3342
+#: ../Misc.pm:3344
 #, perl-format
 msgid "You are no longer: %s\n"
 msgstr "ตอนนี้คุณไม่ได้อยู่ในสถานะ %s แล้ว\n"
 
-#: ../Misc.pm:3344
+#: ../Misc.pm:3346
 #, perl-format
 msgid "Player %s (%d) is no longer: %s\n"
 msgstr "ผู้เล่น %s (%d) ไม่ได้อยู่ในสถานะ %s แล้ว\n"
 
-#: ../Misc.pm:3346
+#: ../Misc.pm:3348
 #, perl-format
 msgid "Monster %s (%d) is no longer: %s\n"
 msgstr "มอนสเตอร์ %s (%d) ไม่ได้อยู่ในสถานะ %s แล้ว\n"
 
-#: ../Misc.pm:3348
+#: ../Misc.pm:3350
 #, perl-format
 msgid "Unknown #%s (%d) is no longer: %s\n"
 msgstr "Unknown #%s (%d) ไม่ได้อยู่ในสถานะ %s แล้ว\n"
 
-#: ../Misc.pm:3439
+#: ../Misc.pm:3441
 #, perl-format
 msgid "GM %s is nearby, teleport & disconnect for %d seconds"
 msgstr "GM %s ได้ใกล้เข้ามา ทำการเทเลพอท และยุตติการเชื่อมต่อเป็นเวลา %d วินาที"
 
-#: ../Misc.pm:3444
+#: ../Misc.pm:3446
 #, perl-format
 msgid "GM %s is nearby, disconnect for %s seconds"
 msgstr "GM %s ใกล้เข้ามา หยุดการเชื่อมต่อเป็นเวลา %s วินาที"
 
-#: ../Misc.pm:3450
+#: ../Misc.pm:3452
 #, perl-format
 msgid "GM %s is nearby, teleporting"
 msgstr "GM %s ได้ใกล้เข้ามา ทำการเทเลพอท"
 
-#: ../Misc.pm:3455
+#: ../Misc.pm:3457
 #, perl-format
 msgid "GM %s is nearby, respawning"
 msgstr "GM %s ได้ใกล้เข้ามา กลับจุดเซฟ"
 
-#: ../Misc.pm:3480
+#: ../Misc.pm:3482
 #, perl-format
 msgid "%s (%s) is nearby, disconnecting...\n"
 msgstr "%s (%s) ใกล้เข้ามา ยุตติการเชื่อมต่อ...\n"
 
-#: ../Misc.pm:3481
+#: ../Misc.pm:3483
 #, perl-format
 msgid "*** Found %s (%s) nearby and disconnected ***\n"
 msgstr "*** ตรวจพบ %s (%s) ใกล้เข้ามา ทำการยกเลิกการติดต่อ ***\n"
 
-#: ../Misc.pm:3487
+#: ../Misc.pm:3489
 #, perl-format
 msgid "Teleporting to avoid player %s (%s)\n"
 msgstr "กำลังเทเลพอทหนีผู้เล่น %s (%s)\n"
 
-#: ../Misc.pm:3488
+#: ../Misc.pm:3490
 #, perl-format
 msgid "*** Found %s (%s) nearby and teleported ***\n"
 msgstr "*** ตรวจพบ %s (%s) ใกล้เข้ามา ได้ทำการเทเลพอทหนีแล้ว ***\n"
 
-#: ../Misc.pm:3521
+#: ../Misc.pm:3523
 #, perl-format
 msgid "Processing map %s...\n"
 msgstr "ทำการประมวลผลแผนที่ %s...\n"
 
-#: ../Misc.pm:3551
+#: ../Misc.pm:3553
 #, perl-format
 msgid "Wrote portals Line of Sight table to '%s/portalsLOS.txt'\n"
 msgstr "เขียนตาราง LOS ไปยัง '%s/portalsLOS.txt'\n"
 
-#: ../Misc.pm:3555 ../Misc.pm:3559
+#: ../Misc.pm:3557 ../Misc.pm:3561
 msgid "----------------------------Error Summary----------------------------\n"
 msgstr ""
 "----------------------------"
 "รายงานสรุปข้อผิดพลาดที่พบ----------------------------\n"
 
-#: ../Misc.pm:3556
+#: ../Misc.pm:3558
 #, perl-format
 msgid "Missing: %s.fld\n"
 msgstr "ข้อมูลสูญหาย: %s.fld\n"
 
-#: ../Misc.pm:3557
+#: ../Misc.pm:3559
 msgid ""
 "Note: LOS information for the above listed map(s) will be inaccurate;\n"
 "      however it is safe to ignore if those map(s) are not used\n"
@@ -3711,36 +3711,36 @@ msgstr ""
 "หมายเหตุ: ข้อมูล LOS ในรายชื่อแผนที่ด้านบน อาจไม่เที่ยงตรงนัก\n"
 "      อย่างไรก็ตาม มันจะปลอดภัยกว่าที่จะไม่ใช้แผนที่ดังกล่าว\n"
 
-#: ../Misc.pm:3693
+#: ../Misc.pm:3695
 msgid "Incomplete NPC info found in npcs.txt\n"
 msgstr "ตรวจพบข้อมูล NPC ไม่ครบถ้วนใน npcs.txt\n"
 
-#: ../Misc.pm:4095
+#: ../Misc.pm:4097
 msgid "A shop has already been opened.\n"
 msgstr "ร้านได้เปิดอยู่แล้ว\n"
 
-#: ../Misc.pm:4100
+#: ../Misc.pm:4102
 msgid "You don't have the Vending skill.\n"
 msgstr "คุณไม่มีสกิลขายของ\n"
 
-#: ../Misc.pm:4105
+#: ../Misc.pm:4107
 msgid "Your shop does not have a title.\n"
 msgstr "ร้านของคุณไม่มีชื่อ\n"
 
-#: ../Misc.pm:4136
+#: ../Misc.pm:4138
 msgid "There are no items to sell.\n"
 msgstr "ไม่มีไอเท็มเหลือให้ขายแล้ว\n"
 
-#: ../Misc.pm:4148
+#: ../Misc.pm:4150
 #, perl-format
 msgid "Shop opened (%s) with %d selling items.\n"
 msgstr "ร้านเปิดแล้ว (%s) รายการขาย %d ไอเท็มสำหรับขาย\n"
 
-#: ../Misc.pm:4155
+#: ../Misc.pm:4157
 msgid "A shop has not been opened.\n"
 msgstr "ร้านยังไม่ได้เปิด\n"
 
-#: ../Misc.pm:4163
+#: ../Misc.pm:4165
 msgid "Shop closed.\n"
 msgstr "ร้านปิดลงแล้ว\n"
 
@@ -3904,21 +3904,21 @@ msgstr "กำลังออกจากโปรแกรม...\n"
 msgid "connecting to Account Server in %s seconds...\n"
 msgstr "ทำการเชื่อมต่อกับ Account Server ภายใน %s วินาที...\n"
 
-#: ../Plugins.pm:116
+#: ../Plugins.pm:115
 #, perl-format
 msgid "Loading plugin %s...\n"
 msgstr "กำลังโหลด plugin %s...\n"
 
-#: ../Plugins.pm:123
+#: ../Plugins.pm:122
 #, perl-format
 msgid "Unable to load plugin: %s does not exist\n"
 msgstr "ไม่สามารถโหลด plugin: %s ได้เนื่องจากมันไม่มีอยู่\n"
 
-#: ../Plugins.pm:129
+#: ../Plugins.pm:128
 msgid "cannot open file"
 msgstr "ไม่สามารถเปิดไฟล์"
 
-#: ../Plugins.pm:130
+#: ../Plugins.pm:129
 #, perl-format
 msgid "Unable to load plugin %s: %s\n"
 msgstr "ไม่สามารถโหลด plugin %s: %s\n"
@@ -5491,7 +5491,7 @@ msgstr "เป้าหมายหายไป\n"
 msgid "Dropping target - you will not kill steal others\n"
 msgstr "ยกเลิกเป้าหมาย - คุณจะไม่แจมผู้อื่น\n"
 
-#: ../AI/Attack.pm:409 ../AI/Homunculus.pm:542
+#: ../AI/Attack.pm:409 ../AI/Homunculus.pm:556
 #, perl-format
 msgid "%s; moving to (%s, %s)\n"
 msgstr "%s; เดินไปที่ (%s, %s)\n"
@@ -5877,66 +5877,68 @@ msgstr "** กลับไปเกิดยังจุดเซฟ\n"
 msgid "Auto-feeding your Homunculus.\n"
 msgstr ""
 
-#: ../AI/Homunculus.pm:180
+#: ../AI/Homunculus.pm:191
 #, fuzzy
 msgid "Found your Homunculus!\n"
 msgstr "เจอเจ้านายแล้ว!\n"
 
-#: ../AI/Homunculus.pm:185
+#: ../AI/Homunculus.pm:196
 msgid "You lost your Homunculus!\n"
 msgstr ""
 
-#: ../AI/Homunculus.pm:193
+#: ../AI/Homunculus.pm:207
 #, perl-format
-msgid "Trying to find your homuncukus at location %d, %d\n"
+msgid ""
+"Trying to find your homunculus at location %d, %d (you are currently at %d, %"
+"d)\n"
 msgstr ""
 
-#: ../AI/Homunculus.pm:271
+#: ../AI/Homunculus.pm:285
 #, fuzzy, perl-format
 msgid "Homunculus attacking: %s\n"
 msgstr "ทำการโจมตี: %s\n"
 
-#: ../AI/Homunculus.pm:403
+#: ../AI/Homunculus.pm:417
 #, fuzzy
 msgid "Homunculus can't reach or damage target, dropping target\n"
 msgstr "ไม่สามารถไปถึงหรือทำความเสียหายให้เป้าหมาย, ยกเลิกเป้าหมาย\n"
 
-#: ../AI/Homunculus.pm:405 ../AI/Homunculus.pm:640 ../AI/Homunculus.pm:698
+#: ../AI/Homunculus.pm:419 ../AI/Homunculus.pm:654 ../AI/Homunculus.pm:712
 #, fuzzy
 msgid "Teleport due to dropping homunculus attack target\n"
 msgstr "Teleport เนื่องจากได้ยกเลิกเป้าหมาย\n"
 
-#: ../AI/Homunculus.pm:416
+#: ../AI/Homunculus.pm:430
 #, fuzzy
 msgid "Homunculus target died\n"
 msgstr "เป้าหมายตายแล้ว\n"
 
-#: ../AI/Homunculus.pm:451
+#: ../AI/Homunculus.pm:465
 #, fuzzy
 msgid "Homunculus target lost\n"
 msgstr "เป้าหมายหายไป\n"
 
-#: ../AI/Homunculus.pm:501 ../AI/Homunculus.pm:686
+#: ../AI/Homunculus.pm:515 ../AI/Homunculus.pm:700
 #, fuzzy
 msgid "Dropping target - homunculus will not kill steal others\n"
 msgstr "ยกเลิกเป้าหมาย - คุณจะไม่แจมผู้อื่น\n"
 
-#: ../AI/Homunculus.pm:545
+#: ../AI/Homunculus.pm:559
 #, perl-format
 msgid "%s; no acceptable place for homunculus to stand\n"
 msgstr ""
 
-#: ../AI/Homunculus.pm:638
+#: ../AI/Homunculus.pm:652
 #, fuzzy
 msgid "Unable to calculate a route to homunculus target, dropping target\n"
 msgstr "ไม่สามารคำนวณหาเส้นทางไปถึงเป้าหมายได้, ยกเลิกเป้าหมาย\n"
 
-#: ../AI/Homunculus.pm:778 ../AI/Homunculus.pm:870
+#: ../AI/Homunculus.pm:792 ../AI/Homunculus.pm:884
 #, fuzzy
 msgid "Homunculus destination reached.\n"
 msgstr "ถึงปลายทางแล้ว\n"
 
-#: ../AI/Homunculus.pm:805
+#: ../AI/Homunculus.pm:819
 #, fuzzy, perl-format
 msgid ""
 "Homunculus is stuck at %s (%d,%d), while walking from (%d,%d) to (%d,%d)."
