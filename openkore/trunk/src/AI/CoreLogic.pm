@@ -83,6 +83,7 @@ sub iterate {
 	processRouteAI();
 	processMapRouteAI();
 	processTake();
+	processMove();
 	Benchmark::end("AI (part 1.3)") if DEBUG;
 	Benchmark::end("AI (part 1)") if DEBUG;
 
@@ -95,7 +96,6 @@ sub iterate {
 	Plugins::callHook('AI_pre');
 	Benchmark::begin("AI (part 2)") if DEBUG;
 
-	processMove();
 	ChatQueue::processFirst;
 
 	processEquip();
