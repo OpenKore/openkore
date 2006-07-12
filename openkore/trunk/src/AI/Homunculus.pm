@@ -175,36 +175,43 @@ sub iterate {
 			}
 
 		# homunculus is found
-		} elsif ($homun_dist < MAX_DISTANCE && $char->{homunculus}{lost}) {
-			delete $char->{homunculus}{lost};
-			delete $char->{homunculus}{lostRoute};
-			my $action = AI::Homunculus::findAction('route');
-			if (defined $action && AI::Homunculus::args($action)->{lost_route}) {
-				for (my $i = 0; $i <= $action; $i++) {
-					AI::Homunculus::dequeue
+		} elsif ($char->{homunculus}{lost}) {
+			if ($homun_dist < MAX_DISTANCE) {
+				delete $char->{homunculus}{lost};
+				delete $char->{homunculus}{lostRoute};
+				my $action = AI::Homunculus::findAction('route');
+				if (defined $action && AI::Homunculus::args($action)->{lost_route}) {
+					for (my $i = 0; $i <= $action; $i++) {
+						AI::Homunculus::dequeue
+					}
 				}
+				if (timeOut($char->{homunculus}{standby_time}, 1)) {
+					$net->sendHomunculusStandBy($char->{homunculus}{ID});
+					$char->{homunculus}{standby_time} = time;
+				}
+				message T("Found your Homunculus!\n"), 'homunculus';
+
+			# attempt to find homunculus on it's last known coordinates
+			} elsif ($AI == 2 && !$char->{homunculus}{lostRoute}) {
+				if ($config{teleportAuto_lostHomunculus}) {
+					message T("Teleporting to get homunculus back\n"), 'teleport';
+					useTeleport(1);
+				} else {
+					my $x = $char->{homunculus}{pos_to}{x};
+					my $y = $char->{homunculus}{pos_to}{y};
+					my $distFromGoal = $config{homunculus_followDistanceMax};
+					$distFromGoal = MAX_DISTANCE if ($distFromGoal > MAX_DISTANCE);
+					main::ai_route($field{name}, $x, $y, distFromGoal => $distFromGoal, attackOnRoute => 1, noSitAuto => 1);
+					AI::Homunculus::args->{lost_route} = 1 if (AI::Homunculus::action eq 'route');
+					message TF("Trying to find your homunculus at location %d, %d (you are currently at %d, %d)\n", $x, $y, $char->{pos_to}{x}, $char->{pos_to}{y}), 'homunculus';
+				}
+				$char->{homunculus}{lostRoute} = 1;
 			}
-			if (timeOut($char->{homunculus}{standby_time}, 1)) {
-				$net->sendHomunculusStandBy($char->{homunculus}{ID});
-				$char->{homunculus}{standby_time} = time;
-			}
-			message T("Found your Homunculus!\n"), 'homunculus';
 
 		# homunculus is lost
 		} elsif ($homun_dist >= MAX_DISTANCE && !$char->{homunculus}{lost}) {
 			$char->{homunculus}{lost} = 1;
 			message T("You lost your Homunculus!\n"), 'homunculus';
-
-		# attempt to find homunculus on it's last known coordinates
-		} elsif ($AI == 2 && $homun_dist >= MAX_DISTANCE && $char->{homunculus}{lost} && !$char->{homunculus}{lostRoute}) {
-			my $x = $char->{homunculus}{pos_to}{x};
-			my $y = $char->{homunculus}{pos_to}{y};
-			my $distFromGoal = $config{homunculus_followDistanceMax};
-			$distFromGoal = MAX_DISTANCE if ($distFromGoal > MAX_DISTANCE);
-			main::ai_route($field{name}, $x, $y, distFromGoal => $distFromGoal, attackOnRoute => 1, noSitAuto => 1);
-			AI::Homunculus::args->{lost_route} = 1 if (AI::Homunculus::action eq 'route');
-			$char->{homunculus}{lostRoute} = 1;
-			message TF("Trying to find your homunculus at location %d, %d (you are currently at %d, %d)\n", $x, $y, $char->{pos_to}{x}, $char->{pos_to}{y}), 'homunculus';
 
 		# if your homunculus is idle, make it move near you
 		} elsif (
@@ -261,6 +268,14 @@ sub homunculus_setSuspend {
 	$index = 0 if ($index eq "");
 	if ($index < @AI::Homunculus::homun_ai_seq_args) {
 		$AI::Homunculus::homun_ai_seq_args[$index]{'suspended'} = time;
+	}
+}
+
+sub homunculus_setMapChanged {
+	my $index = shift;
+	$index = 0 if ($index eq "");
+	if ($index < @AI::Homunculus::homun_seq_args) {
+		$AI::Homunculus::homun_seq_args[$index]{'mapChanged'} = time;
 	}
 }
 

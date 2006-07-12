@@ -96,6 +96,7 @@ sub initMapChangeVars {
 	delete $chars[$config{char}]{dead};
 	delete $chars[$config{char}]{warp};
 	delete $chars[$config{char}]{casting};
+	delete $chars[$config{char}]{homunculus}{ID};
 	$timeout{play}{time} = time;
 	$timeout{ai_sync}{time} = time;
 	$timeout{ai_sit_idle}{time} = time;
