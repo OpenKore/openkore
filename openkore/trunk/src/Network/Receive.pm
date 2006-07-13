@@ -1114,6 +1114,9 @@ sub actor_movement_interrupted {
 		debug "Movement interrupted, your coordinates: $coords{x}, $coords{y}\n", "parseMsg_move";
 		AI::clear("move");
 	}
+	if ($char->{homunculus} && $char->{homunculus}{ID} eq $actor->{ID}) {
+		AI::clear("move");
+	}
 }
 
 sub actor_muted {
@@ -2292,7 +2295,10 @@ sub homunculus_food {
 sub homunculus_info {
 	my ($self, $args) = @_;
 	if ($args->{type} == 0) {
+		my $state = $char->{homunculus}{state}
+			if ($char->{homunculus} && $char->{homunculus}{ID} && $char->{homunculus}{ID} ne $args->{ID});
 		$char->{homunculus} = Actor::get($args->{ID});
+		$char->{homunculus}{state} = $state if (defined $state);
 		$char->{homunculus}{map} = $field{name};
 	} elsif ($args->{type} == 1) {
 		$char->{homunculus}{intimacy} = $args->{val};
@@ -2337,7 +2343,7 @@ sub homunculus_skills {
 			'skillName' => $skillName,
 			'level' => $level,
 			});
-	}		
+	}
 }
 
 sub homunculus_stats {
@@ -2350,13 +2356,20 @@ sub homunculus_stats {
 		foreach my $handle (@AI::Homunculus::homun_skillsID) {
 			delete $char->{skills}{$handle};
 		}
+		AI::Homunculus::clear();
 		undef @AI::Homunculus::homun_skillsID;
-		if ($char->{homunculus}{state} <= 1) {
+		if ($char->{homunculus}{state} != $args->{state}) {
 			if ($args->{state} & 2) {
 				message T("Your Homunculus was vaporized!\n"), 'homunculus';
 			} elsif ($args->{state} & 4) {
 				message T("Your Homunculus died!\n"), 'homunculus';
 			}
+		}
+	} elsif ($char->{homunculus}{state} != $args->{state}) {
+		if ($char->{homunculus}{state} & 2) {
+			message T("Your Homunculus was recalled!\n"), 'homunculus';
+		} elsif ($char->{homunculus}{state} & 4) {
+			message T("Your Homunculus was resurrected!\n"), 'homunculus';
 		}
 	}
 	$char->{homunculus}{state} = $args->{state};

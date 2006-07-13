@@ -117,7 +117,7 @@ sub is {
 ##########################################
 
 sub iterate {
-	return if (!$char->{homunculus});
+	return if (!$char->{homunculus} || !$char->{homunculus}{appear_time});
 	
 	# homunculus is in rest
 	if ($char->{homunculus}{state} & 2) {
@@ -134,11 +134,11 @@ sub iterate {
 		}
 
 	# homunculus is alive
-	} elsif ($char->{homunculus}{ID} && $char->{homunculus}{state} <= 1 && $field{name} eq $char->{homunculus}{map}) {
+	} elsif ($char->{homunculus}{state} <= 1 && $field{name} eq $char->{homunculus}{map}) {
 		my $homun_dist = $char->{homunculus}->blockDistance();
 
 		# auto-feed homunculus
-		if ($char->{homunculus}{hunger} <= 25 && timeOut($char->{homunculus}{feed_time}, 30)) {
+		if ($char->{homunculus}{hunger} ne '' && $char->{homunculus}{hunger} <= 25 && timeOut($char->{homunculus}{feed_time}, 30)) {
 	 		$net->sendHomunculusFeed();
 			$char->{homunculus}{feed_time} = time;
 			message T("Auto-feeding your Homunculus.\n"), 'homunculus';

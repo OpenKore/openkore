@@ -96,7 +96,7 @@ sub initMapChangeVars {
 	delete $chars[$config{char}]{dead};
 	delete $chars[$config{char}]{warp};
 	delete $chars[$config{char}]{casting};
-	delete $chars[$config{char}]{homunculus}{ID};
+	delete $chars[$config{char}]{homunculus}{appear_time};
 	$timeout{play}{time} = time;
 	$timeout{ai_sync}{time} = time;
 	$timeout{ai_sit_idle}{time} = time;
@@ -154,6 +154,7 @@ sub initMapChangeVars {
 	$timeout{ai_buyAuto}{time} = time + 5;
 
 	AI::clear("attack", "route", "move");
+	AI::Homunculus::clear("attack", "route", "move");
 	ChatQueue::clear;
 
 	initOtherVars();
@@ -290,6 +291,7 @@ sub mainLoop {
 		$timeout_ex{'master'}{'time'} = time;
 		$KoreStartTime = time + $timeout_ex{'master'}{'timeout'};
 		AI::clear();
+		AI::Homunculus::clear();
 		undef %ai_v;
 		$net->serverDisconnect;
 		$conState = 1;
@@ -339,9 +341,11 @@ sub mainLoop {
 			 || $oldUsername ne $config{'username'}
 			 || $oldChar ne $config{'char'}) {
 				AI::clear;
+				AI::Homunculus::clear();
 				relog();
 			} else {
 				AI::clear("move", "route", "mapRoute");
+				AI::Homunculus::clear("move", "route", "mapRoute");
 			}
 
 			initConfChange();
