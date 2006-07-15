@@ -119,7 +119,7 @@ Orc::Orc() : CSDLGL_ApplicationBase(), fFogDepth(0.001), bUseFrustum(true), bUse
 
     sprintf(szTempPath, "%s/bgm/30.mp3", szRagnarokPath);
     m_pBGM = new CSDL_Music(szTempPath);
-    m_pBGM->Play(-1);
+    //m_pBGM->Play(-1);
 
     m_pCamera = new CCamera();
     m_pCamera->PositionCamera( 0, 0, 1, 0, 0, 0, 0, 1, 0 );
@@ -199,6 +199,10 @@ bool Orc::InitGL() {
 }
 
 
+// TODO: Timer Class
+// TODO: CIniFile
+// TODO:
+
 void Orc::OnPaint( CSDL_Surface* display, double dt ) {
 
     // Everybody wants to know...
@@ -233,7 +237,33 @@ void Orc::OnPaint( CSDL_Surface* display, double dt ) {
 
     // TODO: render landscape
     m_pGnd->Display(m_pFrustum);
-    m_pGnd->DisplayWater(0, m_pWorld->water_phase, m_pWorld->water_height, m_pFrustum);
+
+
+
+    static Uint32 tLast=0, tNow=0, tDur;
+    static Uint32 nFrame = 0;
+    tNow = ::SDL_GetTicks();
+    if(tLast == 0) tLast = tNow;
+
+    static bool bReverse = false;
+
+    tDur = tNow - tLast;
+    if(tDur > 100) {
+        tLast = tNow;
+
+        if(!bReverse) {
+            nFrame++;
+            if(nFrame > m_pWorld->water_cycles ) { bReverse = true; }
+        } else {
+            nFrame--;
+            if(nFrame == 0 ) { bReverse = false; }
+        }
+
+        m_pWorld->water_phase += 36;
+        if(m_pWorld->water_phase > 360) m_pWorld->water_phase = 0;
+    }
+
+    m_pGnd->DisplayWater(nFrame, m_pWorld->water_phase * M_PI / 180, m_pWorld->water_height, m_pFrustum);
 
     goPerspective();
     m_pFrustum->CalculateFrustum();

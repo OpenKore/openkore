@@ -74,7 +74,7 @@ public:
     ~CSDL_GL_Texture() { }
 
     GLuint m_iID;
-    GLfloat m_fRC[ 4 ];
+    float m_fRC[ 4 ];
 
 private:
     /* Quick utility function for texture creation */
@@ -86,7 +86,7 @@ private:
         return value;
     } // power_of_two
 
-    GLuint SDL_GL_LoadTexture( SDL_Surface *surface, GLfloat *texcoord, int alpha );
+    GLuint SDL_GL_LoadTexture( SDL_Surface *surface, float *texcoord, int alpha );
 };
 
 

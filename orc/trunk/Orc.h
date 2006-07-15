@@ -7,13 +7,13 @@
 
 /* VERSION DEFINITIONS */
 #define VER_MAJOR	0
-#define VER_MINOR	0
-#define VER_RELEASE	2
-#define VER_BUILD	STR(SVN_REV)
+#define VER_MINOR	1
+#define VER_RELEASE	0
+#define VER_BUILD	"$Revision$"
 #define VER_STRING  STR(VER_MAJOR) "." STR(VER_MINOR) "." STR(VER_RELEASE)
 
 /* VERSION INFORMATION */
-#define COMPANY_NAME        "Opencore community"
+#define COMPANY_NAME        "Openkore Community"
 #define FILE_VERSION        VER_STRING
 #define FILE_DESCRIPTION    "Open Ragnarok Client"
 #define INTERNAL_NAME       "Orc"

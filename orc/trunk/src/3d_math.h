@@ -73,7 +73,7 @@ public:
         return CVector3(x * num, y * num, z * num);
     }
 
-    CVector3 operator*(GLfloat matrix[16]) {
+    CVector3 operator*(float matrix[16]) {
         CVector3 tempvect;
         tempvect.x = x * matrix[0] + y * matrix[4] + z * matrix[8]  + 1.0 * matrix[12];
         tempvect.y = x * matrix[1] + y * matrix[5] + z * matrix[9]  + 1.0 * matrix[13];
@@ -109,8 +109,8 @@ CVector3 Normal(CVector3 vTriangle[]);
 
 
 
-void MatrixMultVect(const GLfloat *M, const GLfloat *Vin, GLfloat *Vout);
-CVector3 MatrixMultVect3f(const GLfloat *M, float x, float y, float z);
+void MatrixMultVect(const float *M, const float *Vin, float *Vout);
+CVector3 MatrixMultVect3f(const float *M, float x, float y, float z);
 
 
 

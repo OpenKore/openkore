@@ -25,14 +25,14 @@
 #include "3d_math.h"
 
 
-void MatrixMultVect(const GLfloat *M, const GLfloat *Vin, GLfloat *Vout) {
+void MatrixMultVect(const float *M, const float *Vin, float *Vout) {
     Vout[0] = Vin[0]*M[0] + Vin[1]*M[4] + Vin[2]*M[8] + 1.0*M[12];
     Vout[1] = Vin[0]*M[1] + Vin[1]*M[5] + Vin[2]*M[9] + 1.0*M[13];
     Vout[2] = Vin[0]*M[2] + Vin[1]*M[6] + Vin[2]*M[10] + 1.0*M[14];
 }
 
 
-CVector3 MatrixMultVect3f(const GLfloat *M, float x, float y, float z) {
+CVector3 MatrixMultVect3f(const float *M, float x, float y, float z) {
     CVector3 tempvect;
     tempvect.x = x * M[0] + y * M[4] + z * M[8]  + 1.0 * M[12];
     tempvect.y = x * M[1] + y * M[5] + z * M[9]  + 1.0 * M[13];

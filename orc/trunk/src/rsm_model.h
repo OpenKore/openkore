@@ -48,9 +48,9 @@ public:
     bool drawbounds;
     int nstep;
 
-    GLfloat range[ 3 ];
-    GLfloat min[ 3 ];
-    GLfloat max[ 3 ];
+    float range[ 3 ];
+    float min[ 3 ];
+    float max[ 3 ];
 
     GLuint* m_glTextures;
     bool* m_glTextureIsAlpha;
@@ -106,7 +106,7 @@ public:
 
     char m_szFilename[PATH_MAX];
 
-    CRSM_Mesh* m_Mesh[ 8 ];
+    CRSM_Mesh* m_Mesh[ 32 ];
     GLuint* m_glTextures;
     bounding_box_t box;
     Uint16 m_nMeshes;

@@ -54,7 +54,7 @@ void GND::LoadWater(int type) {
     glGenTextures(32, watertex);
 
     // 워터 isnt that the thing after szTextureName ?
-    for(int i=0; i<iNumTextures; i++) {
+    for(int i=0; i<iNumTextures-1; i++) {
         sprintf(grfpath,"워터\\water%d%02d.jpg", type, i);
         //LoadGRFTexture (grffile, textures_name[i], textures[i], NULL, extract);
         CSDL_GL_Texture* temp = new CSDL_GL_Texture( grfpath, 192 );
@@ -77,7 +77,7 @@ void GND::DisplayWater(int frameno, float wavephase, float waterlevel, CFrustum*
     float h1=0, h2=0, h3=0, h4=0, ph=0;
     int i=0, j=0;
 
-    GLfloat Rot[16] = { 1, 0, 0, 0,
+    float Rot[16] = { 1, 0, 0, 0,
                         0, 0, 1, 0,
                         0, -1, 0, 0,
                         0, 0, 0, 1 };
@@ -92,7 +92,7 @@ void GND::DisplayWater(int frameno, float wavephase, float waterlevel, CFrustum*
 
     pFrustum->CalculateFrustum();
 
-    GLfloat Mat[16];
+    float Mat[16];
     glGetFloatv(GL_MODELVIEW_MATRIX, &Mat[0]);
 
     glDisable(GL_LIGHTING);
@@ -253,10 +253,10 @@ void GND::Display(CFrustum* pFrustum) {
     CVector3 vTriangle[3];
     CVector3 vNormal;
 
-    GLfloat Mat[16];
+    float Mat[16];
 
     // TODO: make similar, static matrices global ...
-    GLfloat Rot[16] = {
+    float Rot[16] = {
                           1.0,  0.0, 0.0, 0.0,
                           0.0,  0.0, 1.0, 0.0,
                           0.0, -1.0, 0.0, 0.0,

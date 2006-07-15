@@ -55,6 +55,8 @@ CRSM_Mesh::~CRSM_Mesh() {
 int CRSM_Mesh::LoadFromMemory( void* pData, uint32_t nSize, bool bIsParent ) {
     BEGIN_READ(0);
 
+    dump(pData, nSize);
+
     AUTO_READ(szMeshName, 40);
 
     if ( bIsParent == true ) {
@@ -208,9 +210,9 @@ void CRSM_Mesh::Render( bounding_box_t *box, ro_transf_t *ptransf ) {
     if ( m_nFrames ) {
         int current = 0;
         int next;
-        GLfloat t;
-        GLfloat q[ 4 ], q1[ 4 ], q2[ 4 ];
-        GLfloat x, y, z, w;
+        float t;
+        float q[ 4 ], q1[ 4 ], q2[ 4 ];
+        float x, y, z, w;
         char buffer[ 1024 ];
 
         for ( int i = 0; i < m_nFrames; i++ ) {
@@ -225,8 +227,8 @@ void CRSM_Mesh::Render( bounding_box_t *box, ro_transf_t *ptransf ) {
         if ( next == m_nFrames )
             next = 0;
 
-        t = ( ( GLfloat ) ( nstep - m_Frames[ current ].time ) )
-            / ( ( GLfloat ) ( m_Frames[ next ].time - m_Frames[ current ].time ) );
+        t = ( ( float ) ( nstep - m_Frames[ current ].time ) )
+            / ( ( float ) ( m_Frames[ next ].time - m_Frames[ current ].time ) );
 
 
         x = m_Frames[ current ].orientation[ 0 ] * ( 1 - t ) + t * m_Frames[ next ].orientation[ 0 ];
@@ -234,7 +236,7 @@ void CRSM_Mesh::Render( bounding_box_t *box, ro_transf_t *ptransf ) {
         z = m_Frames[ current ].orientation[ 2 ] * ( 1 - t ) + t * m_Frames[ next ].orientation[ 2 ];
         w = m_Frames[ current ].orientation[ 3 ] * ( 1 - t ) + t * m_Frames[ next ].orientation[ 3 ];
 
-        GLfloat norm;
+        float norm;
 
         norm = sqrtf( x * x + y * y + z * z + w * w );
         x /= norm;
@@ -302,16 +304,14 @@ void CRSM_Mesh::Render( bounding_box_t *box, ro_transf_t *ptransf ) {
         glTranslatef( m_Transf.position.x, m_Transf.position.y, m_Transf.position.z );
 
 
-    glMultMatrixf( matRotation );
-
-    GLfloat Mat[ 16 ];
+   glMultMatrixf( matRotation );
 
     for ( int i = 0; i < m_nFaces; i++ ) {
         ro_vertex_t *v;
         ro_vertex_t *t;
         int texture;
 
-        if ( m_Faces[ i ].text > iNumTextures || m_Faces[ i ].text <= 0 ) {
+        if ( m_Faces[ i ].text > iNumTextures-1 || m_Faces[ i ].text < 1 ) {
             if ( i == 0 ) texture = 0;
         } else {
             texture = m_Faces[ i ].text;
@@ -330,7 +330,7 @@ void CRSM_Mesh::Render( bounding_box_t *box, ro_transf_t *ptransf ) {
           }
         */
 
-
+    float Mat[ 16 ];
         glGetFloatv( GL_MODELVIEW_MATRIX, &Mat[ 0 ] );
 
 
@@ -453,7 +453,8 @@ bool CResource_Model_File::LoadFromMemory( void* pData, uint32_t nSize ) {
 
     unsigned char* pEnd = ( unsigned char* ) pData + nSize;
 //        for(m_nMeshes=1; (meshdata < pEnd-8) && meshdata != NULL; m_nMeshes++) {
-    while ( meshsize > 8 ) {
+
+    while ( meshsize > 80 ) {
         m_Mesh[ m_nMeshes ] = new CRSM_Mesh( m_glTextures, NULL );
         bRead = m_Mesh[ m_nMeshes ] ->LoadFromMemory( meshdata, nSize - ( meshdata - ( unsigned char* ) pData ), false );
         printf( "(%i) read %i bytes...\n", meshsize, bRead );
@@ -465,6 +466,7 @@ bool CResource_Model_File::LoadFromMemory( void* pData, uint32_t nSize ) {
         meshdata += bRead;
         meshsize -= bRead;
     }
+
 
 
     //dump(uUnknown1, 25);
