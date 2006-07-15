@@ -43,6 +43,7 @@ my $chooks = Commands::register(
 my $autohooks;
 my $loghook;
 my $cfID;
+my $macro_file;
 
 # onconfigModify
 sub onconfigModify {
@@ -61,7 +62,7 @@ sub onconfigModify {
 sub onstart3 {
   $cvs->setDebug(&parseDebug($::config{macro_debug})) if defined $::config{macro_debug};
   if (&checkConfig) {
-    $cfID = Settings::addConfigFile("$Settings::control_folder/".$::config{macro_file}, \%macro, \&parseAndHook);
+    $cfID = Settings::addConfigFile("$Settings::control_folder/".$macro_file, \%macro, \&parseAndHook);
     Settings::load($cfID)
   } else {
     Plugins::unload("macro");
@@ -153,8 +154,10 @@ sub checkConfig {
     warning "[macro] macro_orphans ".$::config{macro_orphans}." is not a valid option.\n";
     configModify('macro_orphans', 'terminate')
   }
-  if (!defined $::config{macro_file}) {
-    configModify('macro_file', 'macros.txt')
+  if (defined $::config{macro_file}) {
+    $macro_file = $::config{macro_file}
+  } else {
+    $macro_file = "macros.txt"
   }
   return 1
 }

@@ -125,7 +125,7 @@ sub checkClass {
 sub checkPercent {
   $cvs->debug("checkPercent(@_)", $logfac{function_call_auto} | $logfac{automacro_checks});
   my ($arg, $what) = @_;
-  my ($cond, $amount) = $arg =~ /([<>=!]+)\s*(\d+[%])/;
+  my ($cond, $amount) = $arg =~ /([<>=!]+)\s*(\d+%?)/;
   if ($what =~ /^(hp|sp|weight)$/) {
     return 0 unless (defined $char->{$what} && defined $char->{$what."_max"});
     if ($amount =~ /\d+%$/ && $char->{$what."_max"}) {
