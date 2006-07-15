@@ -73,7 +73,7 @@ void CSDLGL_ApplicationBase::ResizeGL( GLsizei w, GLsizei h ) {
     glViewport ( 0, 0, ( GLsizei ) w, ( GLsizei ) h );
     glMatrixMode ( GL_PROJECTION );
     glLoadIdentity();
-    gluPerspective ( 40.0, ( GLfloat ) w / ( GLfloat ) h, 1.0, 1000.0 );
+    gluPerspective ( 40.0, ( float ) w / ( float ) h, 1.0, 1000.0 );
     glMatrixMode ( GL_MODELVIEW );
     glLoadIdentity();
 }
@@ -122,7 +122,7 @@ bool CSDLGL_ApplicationBase::InitGL() {
 }
 
 
-GLuint CSDL_GL_Texture::SDL_GL_LoadTexture( SDL_Surface *surface, GLfloat *texcoord, int alpha ) {
+GLuint CSDL_GL_Texture::SDL_GL_LoadTexture( SDL_Surface *surface, float *texcoord, int alpha ) {
     GLuint texture;
     int w, h;
     SDL_Surface *image;
@@ -139,8 +139,8 @@ GLuint CSDL_GL_Texture::SDL_GL_LoadTexture( SDL_Surface *surface, GLfloat *texco
 
     texcoord[ 0 ] = 0.0f;         /* Min X */
     texcoord[ 1 ] = 0.0f;         /* Min Y */
-    texcoord[ 2 ] = ( GLfloat ) surface->w / w;  /* Max X */
-    texcoord[ 3 ] = ( GLfloat ) surface->h / h;  /* Max Y */
+    texcoord[ 2 ] = ( float ) surface->w / w;  /* Max X */
+    texcoord[ 3 ] = ( float ) surface->h / h;  /* Max Y */
 
     image = SDL_CreateRGBSurface(
                 SDL_SWSURFACE,

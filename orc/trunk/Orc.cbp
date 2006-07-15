@@ -78,7 +78,6 @@
 		<Unit filename="src\csdl\csdl.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="Debug"/>
-			<Breakpoint line="259" enabled="1" pass="0" />
 		</Unit>
 		<Unit filename="src\csdl\csdl.h">
 			<Option compilerVar="CPP"/>

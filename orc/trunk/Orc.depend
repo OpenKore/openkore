@@ -1,12 +1,12 @@
 # depslib dependency file v1.0
-1151838347 d:\my projects\testit\src\csdl\csdl_gl.cpp
+1152969947 d:\my projects\testit\src\csdl\csdl_gl.cpp
 	"csdl_gl.h"
 
-1151775585 d:\my projects\testit\src\csdl\csdl_gl.h
+1152969947 d:\my projects\testit\src\csdl\csdl_gl.h
 	"csdl.h"
 	"../grf_interface.h"
 
-1151779293 d:\my projects\testit\src\csdl\csdl.h
+1151838875 d:\my projects\testit\src\csdl\csdl.h
 	<stdio.h>
 	<stdlib.h>
 	<stdarg.h>
@@ -48,7 +48,7 @@
 	"3d_camera.h"
 	<SDL.h>
 
-1150727413 d:\my projects\testit\src\3d_math.h
+1152969800 d:\my projects\testit\src\3d_math.h
 	"csdl/csdl.h"
 
 1150727413 d:\my projects\testit\src\3d_camera.h
@@ -59,10 +59,10 @@
 1150727413 d:\my projects\testit\src\3d_frustum.h
 	"3d_math.h"
 
-1150727413 d:\my projects\testit\src\3d_math.cpp
+1152969800 d:\my projects\testit\src\3d_math.cpp
 	"3d_math.h"
 
-1151776735 d:\my projects\testit\src\csdl\csdl.cpp
+1151838875 d:\my projects\testit\src\csdl\csdl.cpp
 	"csdl.h"
 
 1151018079 d:\my projects\testit\src\csdl\csdl_audio.cpp
@@ -71,7 +71,7 @@
 1151018079 d:\my projects\testit\src\csdl\csdl_event.cpp
 	"csdl_event.h"
 
-1150897460 d:\my projects\testit\src\rsw_world.cpp
+1152649342 d:\my projects\testit\src\rsw_world.cpp
 	"rsw_world.h"
 
 1150844707 d:\my projects\testit\src\rsw_world.h
@@ -83,7 +83,7 @@
 1151765087 d:\my projects\testit\src\ro_types.h
 	<pshpack1.h>
 
-1151771386 d:\my projects\testit\src\rsm_model.h
+1152970360 d:\my projects\testit\src\rsm_model.h
 	<limits.h>
 	"3d_math.h"
 	"3d_frustum.h"
@@ -96,7 +96,7 @@
 
 1151018005 d:\my projects\testit\src\csdl\textfont8x8.h
 
-1151838347 d:\my projects\testit\src\gnd_ground.cpp
+1152969947 d:\my projects\testit\src\gnd_ground.cpp
 	"gnd_ground.h"
 	"grf_interface.h"
 
@@ -108,7 +108,7 @@
 1150727413 d:\my projects\testit\src\grf_interface.cpp
 	"grf_interface.h"
 
-1151837421 d:\my projects\testit\src\rsm_model.cpp
+1152982017 d:\my projects\testit\src\rsm_model.cpp
 	"rsm_model.h"
 	"grf_interface.h"
 	"memory_manager.h"
@@ -119,9 +119,9 @@
 	<windows.h>
 	"Orc.h"
 
-1150681477 d:\my projects\testit\orc.h
+1152966461 d:\my projects\testit\orc.h
 
-1151838156 d:\my projects\testit\src\orc_main.cpp
+1152968208 d:\my projects\testit\src\orc_main.cpp
 	<limits.h>
 	"../Orc.h"
 	"csdl/csdl.h"
