@@ -10,6 +10,7 @@ New features:
 - Added AI::Homunculus module for homunculus AI support with automated homunculus
   feeding, following, and attacking (see new config options and commands)
 - Support for homunculus skills in skills.txt (use normal skill blocks to use them)
+- Add support for new vRO. Use serverType 10
 
 New config options:
 - attackChangeTarget <boolean flag>
