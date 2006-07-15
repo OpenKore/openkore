@@ -3735,6 +3735,10 @@ sub checkSelfCondition {
 				return 0 if (!inRange($char->{homunculus}{sp}, $config{$prefix."_homunculus_sp"}));
 			}
 		}
+
+		if ($config{$prefix."_homunculus_dead"}) {
+			return 0 unless ($char->{homunculus}{state} & 4);
+		}
 	}
 
 	# check skill use SP if this is a 'use skill' condition

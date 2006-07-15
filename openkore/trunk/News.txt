@@ -17,10 +17,6 @@ New config options:
     automatically change target to an aggressive monster if the target monster is
     not yet reached or damaged. This prevents you from continuously routing to your
     target while dragging a mob of aggressive monsters behind you
-- homunculus_resurrectAuto <flag>
-    automatically resurrects your homunculus when it dies.
-    1: use resurrection only when there are no aggressives
-    2: use resurrection even if there are aggressive monsters
 - homunculus_followDistanceMax <distance>
 - homunculus_followDistanceMin <distance>
     Kore and the homunculus will always try to keep within these distances
@@ -65,6 +61,8 @@ New config options:
 - teleportAuto_lostHomunculus <boolean flag>
     instead of routing back to your lost homunculus (default), Kore will teleport
 	to get the homunculus back.
+- Shared Block Attribute: homunculus_dead <boolean flag>
+    triggers the config block only if your homunculus died.
 
 New commands:
 - homun < s | status | feed | move | standby | ai | aiv | skills >
