@@ -117,7 +117,7 @@ sub is {
 ##########################################
 
 sub iterate {
-	return if (!$char->{homunculus} || !$char->{homunculus}{appear_time});
+	return if (!$char->{homunculus});
 	
 	# homunculus is in rest
 	if ($char->{homunculus}{state} & 2) {
@@ -128,13 +128,14 @@ sub iterate {
 	
 	# homunculus is dead
 	} elsif ($char->{homunculus}{state} & 4) {
-		if ($config{homunculus_resurrectAuto} && (!ai_getAggressives() || $config{homunculus_resurrectAuto} >= 2) && timeOut($char->{homunculus}{resurrect_time}, 4)) {
-			$net->sendSkillUse(247, $char->{skills}{'AM_RESURRECTHOMUN'}{lv}, $accountID);
-			$char->{homunculus}{resurrect_time} = time;
-		}
+#		if ($config{homunculus_resurrectAuto} && (!ai_getAggressives() || $config{homunculus_resurrectAuto} >= 2) && timeOut($char->{homunculus}{resurrect_time}, 4)) {
+#			ai_skillUse('AM_RESURRECTHOMUN', $char->{skills}{'AM_RESURRECTHOMUN'}{lv}, 0, 2, $accountID)
+#			$net->sendSkillUse(247, $char->{skills}{'AM_RESURRECTHOMUN'}{lv}, $accountID);
+#			$char->{homunculus}{resurrect_time} = time;
+#		}
 
 	# homunculus is alive
-	} elsif ($char->{homunculus}{state} <= 1 && $field{name} eq $char->{homunculus}{map}) {
+	} elsif ($char->{homunculus}{state} <= 1 && $char->{homunculus}{appear_time} && $field{name} eq $char->{homunculus}{map}) {
 		my $homun_dist = $char->{homunculus}->blockDistance();
 
 		# auto-feed homunculus
