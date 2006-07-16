@@ -59,6 +59,8 @@ import sys
 script_dir = sys.path[0]
 if script_dir != "":
     os.chdir(script_dir)
+else:
+    script_dir = "."
 
 if script_dir in sys.path:
     sys.path.remove(script_dir)

@@ -1,5 +1,6 @@
 #include <pthread.h>
 #include <sys/time.h>
+#include <unistd.h>
 
 #define Thread pthread_t *
 #define Mutex pthread_mutex_t *
