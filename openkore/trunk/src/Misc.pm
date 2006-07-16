@@ -2973,7 +2973,7 @@ sub writeStorageLog {
 	my ($show_error_on_fail) = @_;
 	my $f;
 
-	if (open($f, "> $Settings::storage_file")) {
+	if (open($f, ">:utf8", $Settings::storage_file)) {
 		print $f TF("---------- Storage %s -----------\n", getFormattedDate(int(time)));
 		for (my $i = 0; $i < @storageID; $i++) {
 			next if (!$storageID[$i]);
