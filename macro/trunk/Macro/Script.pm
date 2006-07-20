@@ -48,7 +48,6 @@ sub new {
 # destructor
 sub DESTROY {
   my $self = shift;
-#  message "[macro] deregistering macro from queue\n";
   AI::dequeue() if (AI::is('macro') && !$self->{submacro})
 }
 
