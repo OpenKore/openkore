@@ -2,6 +2,10 @@
 ### 1.9.2
 ==================
 
+*** INCOMPATIBLE CHANGES ***:
+- You need to download the latest responses.txt (in the config pack)
+	to use the new 'exp' chat command.
+
 Bug fixes:
 - Fixed a crash when unequipping items (bug #16)
 - Fixed an auto-completion crash bug (bug #24)
@@ -73,6 +77,11 @@ New commands:
     homun ai: homunculus AI management (similar to 'ai' command)
     homun aiv: display homunculus AI sequences
     homun skills: homunculus skills management (similar to 'skills' command)
+
+New chat commands:
+- exp
+	behaves like the 'exp' console command, but it is used as a chat
+	command.
 
 Internal:
 - The Console::Other interface has been removed in favor of the Console::Unix
