@@ -52,5 +52,4 @@ void
 DESTROY(wp)
 	WP_Struct *wp
 CODE:
-	printf("free\n");
 	WP_Free(wp);
