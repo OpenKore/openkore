@@ -1,17 +1,7 @@
 #See the documentation for how to add responses
 
-dateS Lay off the RO %$cmd_user.  It's %$date
-dateS What am I?  A clock?? (BTW it's %$date)
-
 authS You are now an admin %$cmd_user. Go nuts! ^^
 authF You're already an admin %$cmd_user!
-
-relogS brb
-relogS k, be back..
-
-reloadS *beep*
-reloadS *boop*
-reloadS All done.
 
 confS1 That variable %$key is...%$value
 confS2 *beep*
@@ -22,35 +12,10 @@ confF2 I don't see that config variable
 confF3 uhh, nice try %$cmd_user
 confF3 I don't think so
 
-timeoutS1 I think the timeout %$key is %$value
-timeoutS2 *beep*
-timeoutS2 *boop*
-timeoutS2 All done.
-timeoutF1 Huh?
-timeoutF2 I don't see that timeout
+dateS Lay off the RO %$cmd_user.  It's %$date
+dateS What am I?  A clock?? (BTW it's %$date)
 
-quitS Ciao
-quitS I'm outta here, lamers
-quitS Off I go!
-
-sitS *boof*
-sitS *plop*
-
-standS Okie ^^
-standS Right
-standS ok %$cmd_user, like this?
-
-tankS Leecher
-tankF huh?
-
-tankStopS That was fun...
-tankStopF Does it look like I'm tanking?
-
-moveS Right away!
-moveS For freedom!
-moveS Yes sah!
-moveF I have no idea what you're saying %$user
-moveF That makes no sense ><
+expS Botting time : %$time\nBaseExp      : %$bExp %$percentBExp\nJobExp       : %$jExp %$percentJExp\nBaseExp/Hour : %$bExpPerHour %$percentBExpPerHour\nJobExp/Hour  : %$jExpPerHour %$percentJExpPerHour\nBase Levelup Time Estimation : %$bLvlUp\nJob Levelup Time Estimation  : %$jLvlUp\nDied : %$numDeaths
 
 followS Right away!
 followS For freedom!
@@ -63,25 +28,25 @@ followStopS Am I that annoying?
 followStopF You're so paranoid
 followStopF Like I'd be stalking YOU
 
-statusS HP: %$char_hp / %$char_hp_max   SP: %$char_sp / %$char_sp_max\nBase: %$char_lv  |  %$char_exp / %$char_exp_max\nJob: %$char_lv_job  |  %$char_exp_job / %$char_exp_job_max\nWeight: %$char_weight / %$char_weight_max   Zenny: %$zenny
+moveS Right away!
+moveS For freedom!
+moveS Yes sah!
+moveF I have no idea what you're saying %$user
+moveF That makes no sense ><
 
-thankS np ^^
-thankS No problem
-thankS Always a pleasure, master %$cmd_user
-thankS ^^
+quitS Ciao
+quitS I'm outta here, lamers
+quitS Off I go!
 
-verboseOnS Ah, finally.
-verboseOnS *gasp* Oh thank you master...ass.
-verboseOnF Does it look like I can't talk?
-verboseOnF You twit, I can speak fine...
+reloadS *beep*
+reloadS *boop*
+reloadS All done.
 
-verboseOffS You ass...fine.
-verboseOffS OMG, whatever
-verboseOffF Screw off, im already staying quiet
-verboseOffF Ya ya..I get it already
+relogS brb
+relogS k, be back..
 
-whereS Lost me? I'm at %$map: %$x, %$y
-whereS Here I am! %$map: %$x, %$y
+sitS *boof*
+sitS *plop*
 
 skillgoodM Thank, you.
 skillgoodM You are too kind.
@@ -97,3 +62,40 @@ skillbadM ...
 skillbadM ...
 skillbadM  
 skillbadM  
+
+standS Okie ^^
+standS Right
+standS ok %$cmd_user, like this?
+
+statusS HP: %$char_hp / %$char_hp_max   SP: %$char_sp / %$char_sp_max\nBase: %$char_lv  |  %$char_exp / %$char_exp_max\nJob: %$char_lv_job  |  %$char_exp_job / %$char_exp_job_max\nWeight: %$char_weight / %$char_weight_max   Zenny: %$zenny
+
+tankS Leecher
+tankF huh?
+
+tankStopS That was fun...
+tankStopF Does it look like I'm tanking?
+
+thankS np ^^
+thankS No problem
+thankS Always a pleasure, master %$cmd_user
+thankS ^^
+
+timeoutS1 I think the timeout %$key is %$value
+timeoutS2 *beep*
+timeoutS2 *boop*
+timeoutS2 All done.
+timeoutF1 Huh?
+timeoutF2 I don't see that timeout
+
+verboseOnS Ah, finally.
+verboseOnS *gasp* Oh thank you master...ass.
+verboseOnF Does it look like I can't talk?
+verboseOnF You twit, I can speak fine...
+
+verboseOffS You ass...fine.
+verboseOffS OMG, whatever
+verboseOffF Screw off, im already staying quiet
+verboseOffF Ya ya..I get it already
+
+whereS Lost me? I'm at %$map: %$x, %$y
+whereS Here I am! %$map: %$x, %$y
