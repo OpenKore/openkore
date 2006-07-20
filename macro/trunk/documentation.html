@@ -15,7 +15,7 @@
 	a { text-decoration: none }
 	a:hover { text-decoration: underline }
 	.commands dt { font-family: Monospace, Bitstream Vera Sans Mono, Courier New, Courier }
-	.commands dd { margin-bottom: 0.2cm }
+	.commands dd { font-family: Bitstream Vera Sans, Arial; font-size: small; margin-bottom: 0.2cm }
 	.code { background: #ffffea; border: #d0d0d0 1px dotted; padding: 0.1cm; margin-left: 0.4cm; width: 75% }
 	.quote { color: #00f000; background: #000000; border: #d0d0d0 1px solid; padding: 0.1cm; margin-left: 0.4cm; width: 75% }
 	.contents { background: #f5efff; border: #bfa9e5 1px solid; padding: 0.17cm; width: 75% }
@@ -623,7 +623,7 @@ location not prontera</pre>
 
 	<dt><b>save<i>N</i></b> <i>&lt;hash key&gt;</i></dt>
 	<dd>(use in combination with <tt>hook</tt>)<br />
-	saves the value of <i>&lt;hash key&gt;</i> in a variable <a href="#.hooksafe"><tt>.hooksave1</tt></a> to <tt>.hooksafe<i>N</i></dd>
+	saves the value of <i>&lt;hash key&gt;</i> in a variable <a href="#.hooksave"><tt>.hooksave1</tt></a> to <tt>.hooksave<i>N</i></tt></dd>
 
 	<dt><b>run-once</b> <i>(</i><tt>0</tt>|<tt>1</tt><i>)</i></dt>
 	<dd>When set to <tt>1</tt> the automacro will be deactivated after being triggered.<br />
@@ -780,9 +780,9 @@ allowed, <tt>@random ("foo", "bar", ":-)", "yatta")</tt> is not.</li>
 
 <h2><a name="download"></a>Download</h2>
 <div class="p">
-	<a href="macro-1.2.0.zip">Download macro plugin version 1.2.0</a><br />
-	<a href="macro-0.9.3.zip">Download macro plugin version 0.9.3</a> (depreciated, <a href="index-0.9.html">documentation</a>)<br />
-	<a href="macro-0.8.1.zip">Download macro plugin version 0.8.1</a> (outdated)
+	<a href="macro-1.3.0.zip">Download macro plugin version 1.3.0</a><br />
+	Download macro plugin version 0.9.3 (depreciated, <a href="index-0.9.html">documentation</a>)<br />
+	Download macro plugin version 0.8.1 (outdated)
 
 	<p />
 	See also <a href="http://forums.openkore.com/viewtopic.php?t=3793">this forum post</a> for general information about how to install plugins.<br />
@@ -807,7 +807,7 @@ allowed, <tt>@random ("foo", "bar", ":-)", "yatta")</tt> is not.</li>
 <h2><a name="extras"></a>Extras</h2>
 <div class="p">
 	The SVN version includes two extra files:
-	<dl>
+	<dl class="commands">
 	<dt><tt>recorder.pl</tt></dt>
 	<dd>a standalone plugin for openkore that can be used to record macros (only commandline).</dd>
 	<dt><tt>mconv.pl</tt></dt>
