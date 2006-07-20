@@ -4,3 +4,7 @@ std-http-reader.h
 std-http-reader.cpp
 mirror-http-reader.h
 mirror-http-reader.cpp
+whirlpool-algorithm.c
+whirlpool-algorithm.h
+whirlpool-constants.h
+whirlpool-portability.h

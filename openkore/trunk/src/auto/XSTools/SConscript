@@ -53,9 +53,13 @@ sources += [
 	'utils/std-http-reader.cpp',
 	'utils/mirror-http-reader.cpp',
 	'utils/c-bindings/http-reader.cpp',
-	'utils/perl/HttpReader.cpp'
+	'utils/perl/HttpReader.cpp',
+
+	'utils/whirlpool-algorithm.c',
+	'utils/perl/Whirlpool.c'
 ]
 XS_sources['utils/perl/HttpReader.xs'] = 'utils/perl/HttpReader.cpp'
+XS_sources['utils/perl/Whirlpool.xs'] = 'utils/perl/Whirlpool.c'
 if not win32:
 	perlenv.ParseConfig('curl-config --cflags --libs')
 

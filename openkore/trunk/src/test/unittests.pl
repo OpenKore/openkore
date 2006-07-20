@@ -6,7 +6,7 @@ use lib "$RealBin";
 use lib "$RealBin/..";
 
 use Test::More qw(no_plan);
-my @tests = qw(CallbackListTest ObjectListTest ActorListTest);
+my @tests = qw(CallbackListTest ObjectListTest ActorListTest WhirlpoolTest);
 if ($^O eq 'MSWin32') {
 	push @tests, qw(HttpReaderTest);
 }
