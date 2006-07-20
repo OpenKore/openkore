@@ -435,7 +435,7 @@ sub processStatisticsReporting {
 
 	if (!$statisticsReporting{http}) {
 		use Utils qw(urlencode);
-		use Digest::MD5 qw(md5_hex);
+		import Utils::Whirlpool qw(whirlpool_hex);
 
 		# Note that ABSOLUTELY NO SENSITIVE INFORMATION about the
 		# user is sent. The username is filtered through an
@@ -446,7 +446,7 @@ sub processStatisticsReporting {
 		$url .= "server=" . urlencode($config{master});
 		$url .= "&product=" . urlencode($Settings::NAME);
 		$url .= "&version=" . urlencode($Settings::VERSION);
-		$url .= "&uid=" . urlencode(md5_hex($config{master} . $config{username} . $userSeed));
+		$url .= "&uid=" . urlencode(whirlpool_hex($config{master} . $config{username} . $userSeed));
 		$statisticsReporting{http} = new StdHttpReader($url);
 		debug "Posting anonymous usage statistics to $url\n", "statisticsReporting";
 	}
