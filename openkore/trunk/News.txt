@@ -15,6 +15,7 @@ New features:
   feeding, following, and attacking (see new config options and commands)
 - Support for homunculus skills in skills.txt (use normal skill blocks to use them)
 - Add support for new vRO. Use serverType 10
+- Added teleportAuto_lostTarget, teleport when target is lost.
 
 New config options:
 - attackChangeTarget <boolean flag>
@@ -67,7 +68,10 @@ New config options:
 	to get the homunculus back.
 - Shared Block Attribute: homunculus_dead <boolean flag>
     triggers the config block only if your homunculus died.
-
+- teleportAuto_lostTarget <boolean flag>
+	Makes the bot (attempt to) teleport after it lost its target, this to prevent
+	it from locking onto the same target over and over in some cases.
+	
 New commands:
 - homun < s | status | feed | move | standby | ai | aiv | skills >
     homun s: display homunculus status
