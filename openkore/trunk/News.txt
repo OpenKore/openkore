@@ -12,10 +12,13 @@ Bug fixes:
 
 New features:
 - Added AI::Homunculus module for homunculus AI support with automated homunculus
-  feeding, following, and attacking (see new config options and commands)
+	feeding, following, and attacking (see new config options and commands)
 - Support for homunculus skills in skills.txt (use normal skill blocks to use them)
 - Add support for new vRO. Use serverType 10
 - Added teleportAuto_lostTarget, teleport when target is lost.
+- Added an experimental mobbing control. Use attack flag 3 in mon_control.txt to
+	activate this. Please visit http://forums.openkore.com/viewtopic.php?p=134002
+	for the discussion.
 
 New config options:
 - attackChangeTarget <boolean flag>
