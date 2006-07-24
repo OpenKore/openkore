@@ -2522,6 +2522,15 @@ sub updateDamageTables {
 				message TF("Teleporting after attacking a monster %d times\n", $config{teleportAuto_atkCount}), "teleport";
 				useTeleport(1);
 			}
+
+			if (AI::action eq "attack" && mon_control($monster->{name})->{attack_auto} == 3 && $damage) {
+				# Mobbing mode, you only need to attack the monster once to provoke it
+				message TF("%s (%s) has been provoked, searching another monster\n", $monster->{name}, $monster->{binID});
+				stopAttack();
+				AI::dequeue();
+			}
+
+
 		}
 
 	} elsif ($ID2 eq $accountID) {
@@ -2618,7 +2627,16 @@ sub updateDamageTables {
 							attack($ID1);
 						}
 					}
+
+				} elsif (AI::action eq "attack" && mon_control($monster->{name})->{attack_auto} == 3
+					&& ($monster->{dmgToYou} || $monster->{missedYou} || $monster->{dmgFromYou})) {
+
+					# Mobbing mode, stop attacking the monster if it has been attacking you
+					message TF("%s (%s) has been provoked, searching another monster\n", $monster->{name}, $monster->{binID});
+					stopAttack();
+					AI::dequeue();
 				}
+				
 				useTeleport(1, undef, 1) if ($teleport);
 			}
 		}
