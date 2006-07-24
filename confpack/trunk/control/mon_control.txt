@@ -1,14 +1,16 @@
 # This file allows specific AI control for certain monsters
+#
 # Syntax:
 # <monster> <attack> <teleport> <search> <skillcancel> <lv> <joblv> <hp> <sp> <weight>
 #
 # <monster>:  Name of monster as found in monsters.txt (not case sensitive)
 #
 # <attack>:
-#  2 means always aggressive, auto-attack this monster when it appears, even if sitting.
-#  1 means to always auto-attack this monster.
-#  0 means to leave the monster alone, unless it attacks you.
 # -1 means to leave the monster alone, even if it attacks you.
+#  0 means to leave the monster alone, unless it attacks you.
+#  1 means to always auto-attack this monster.
+#  2 means always aggressive, auto-attack this monster when it appears, even if sitting.
+#  3 means to attack the monster once (provoke) then leave it, useful for mobbing.
 #
 # <teleport>: Put a 1 to teleport if the monster is on the screen,
 # or 2 to teleport if the monster attacks you.
@@ -51,28 +53,26 @@
 # Monsters not found in this file, or flags not specified will default to:
 # <attack> = 1
 
-# Don't attack ant eggs
+
+##### Eggs #####
 Ant's Egg 0 0 0
+PecoPeco's Egg 0 0 0
+Pupa 0 0 0
+Thief Bug's Egg 0 0 0
 
-# Teleport from MVP bosses
-Baphomet 0 1 0
-Dark Lord 0 1 0
-Doppelganger 0 1 0
-Drake 0 1 0
-Eddga 0 1 0
-Garm 0 1 0
-Golden Thief Bug 0 0 0
-Maya 0 1 0
-Mistress 0 1 0
-Moonlight 0 1 0
-Orc Hero 0 1 0
-Orc Lord 0 1 0
-Osiris 0 1 0
-Pharaoh 0 1 0
-Phreeoni 0 1 0
-Stormy Knight 0 1 0
 
-# Do not attack homunculus
+##### Plants #####
+Black Mushroom 0 0 0
+Blue Plant 0 0 0
+Green Plant 0 0 0
+Red Mushroom 0 0 0
+Red Plant 0 0 0
+Shining Plant 0 0 0
+White Plant 0 0 0
+Yellow Plant 0 0 0
+
+
+##### Homunculus #####
 6001 -1 0 0
 6002 -1 0 0
 6003 -1 0 0
@@ -89,3 +89,40 @@ Stormy Knight 0 1 0
 6014 -1 0 0
 6015 -1 0 0
 6016 -1 0 0
+
+
+##### MVPs and Dangerous Monsters #####
+Amon Ra 0 1 0
+Arc Angeling 0 1 0
+Baphomet 0 1 0
+Bacsojin 0 1 0
+Dark Illusion 0 1 0
+Dark Lord 0 1 0
+Detale 0 1 0
+Doppelganger 0 1 0
+Dracula 0 1 0
+Drake 0 1 0
+Eddga 0 1 0
+Evil Snake Lord 0 1 0
+Garm 0 1 0
+General Ygnizem 0 1 0
+Golden Thief Bug 0 2 0
+Incantation Samurai 0 1 0
+Lady Tany 0 1 0
+Lord of Death 0 1 0
+Maya 0 1 0
+Maya Purple 0 1 0
+Mistress 0 1 0
+Moonlight Flower 0 1 0
+Mutant Dragonoid 0 1 0
+Orc Hero 0 1 0
+Orc Lord 0 1 0
+Osiris 0 1 0
+Pharaoh 0 1 0
+Phreeoni 0 1 0
+RSX 0806 0 1 0
+Stormy Knight 0 1 0
+Tao Gunka 0 1 0
+Thanatos 0 1 0
+Turtle General 0 1 0
+Vesper 0 1 0
