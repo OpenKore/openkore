@@ -3117,7 +3117,8 @@ sub processAutoAttack {
 				 && $config{'attackAuto'} >= 2 && !$ai_v{sitAuto_forcedBySitCommand}
 				 && $attackOnRoute >= 2 && !$monster->{dmgFromYou} && $safe
 				 && !positionNearPlayer($pos, $playerDist) && !positionNearPortal($pos, $portalDist)
-				 && timeOut($monster->{attack_failed}, $timeout{ai_attack_unfail}{timeout})) {
+				 && timeOut($monster->{attack_failed}, $timeout{ai_attack_unfail}{timeout})
+				 && !($config{'attackAuto'} == 3 && ($monster->{dmgFromYou} || $monster->{dmgToYou} || $monster->{missedYou}))) {
 					push @cleanMonsters, $_;
 				}
 			}
@@ -3142,6 +3143,7 @@ sub processAutoAttack {
 						|| ($control->{attack_jlvl} ne "" && $control->{attack_jlvl} > $char->{lv_job})
 						|| ($control->{attack_hp}  ne "" && $control->{attack_hp} > $char->{hp})
 						|| ($control->{attack_sp}  ne "" && $control->{attack_sp} > $char->{sp})
+						|| ($control->{attack_auto} == 3 && ($monster->{dmgToYou} || $monster->{missedYou}))
 						);
 				}
 
@@ -3167,6 +3169,7 @@ sub processAutoAttack {
 							|| ($control->{attack_jlvl} ne "" && $control->{attack_jlvl} > $char->{lv_job})
 							|| ($control->{attack_hp}  ne "" && $control->{attack_hp} > $char->{hp})
 							|| ($control->{attack_sp}  ne "" && $control->{attack_sp} > $char->{sp})
+							|| ($control->{attack_auto} == 3 && ($monster->{dmgToYou} || $monster->{missedYou}))
 							);
 					}
 
@@ -3190,6 +3193,7 @@ sub processAutoAttack {
 							|| ($control->{attack_jlvl} ne "" && $control->{attack_jlvl} > $char->{lv_job})
 							|| ($control->{attack_hp}  ne "" && $control->{attack_hp} > $char->{hp})
 							|| ($control->{attack_sp}  ne "" && $control->{attack_sp} > $char->{sp})
+							|| ($control->{attack_auto} == 3 && ($monster->{dmgToYou} || $monster->{missedYou}))
 							);
 					}
 
