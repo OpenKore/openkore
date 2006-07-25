@@ -295,7 +295,7 @@ sub ai_getAggressives {
 			# but has not yet been damaged or attacked by party AND currently has no LOS
 			# if this is not done, Kore will keep trying infinitely attack targets set to aggro but who
 			# has no Line of Sight (ex.: GH Cemitery when on a higher position seeing an aggro monster in lower levels).
-			# The other parameters are re-checked along, so you can continue to attack a monster who has 
+			# The other parameters are re-checked along, so you can continue to attack a monster who has
 			# already been hit but lost the line for some reason.
 			# Also, check if the forced aggressive is a clean target when it has not marked as "yours".
 			my $pos = calcPosition($monster);
@@ -891,7 +891,7 @@ sub attack {
 
 		$Lequip = 0;
 		$Leq = "";
-		$Req = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{'autoSwitch_default_rightHand'}); 
+		$Req = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{'autoSwitch_default_rightHand'});
 		if ($config{'autoSwitch_default_leftHand'}) {
 			$Leq = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{'autoSwitch_default_leftHand'});
 			if ($Leq ne "" && !$chars[$config{'char'}]{'inventory'}[$Leq]{'equipped'}) {
@@ -919,7 +919,7 @@ sub attack {
 				$Rdef = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "equipped", 2) if ($Rdef eq "");
 				$net->sendUnequip($chars[$config{'char'}]{'inventory'}[$Rdef]{'index'}) if($Rdef ne "" && $chars[$config{'char'}]{'inventory'}[$Rdef]{'equipped'} && $Rdef ne $Ldef);
 
-				message TF("Auto equiping default [R]: %s (unequip %s)\n", 
+				message TF("Auto equiping default [R]: %s (unequip %s)\n",
 					$config{'autoSwitch_default_rightHand'}, $Rdef), "equip";
 				$chars[$config{'char'}]{'inventory'}[$Req]->equip();
 			}
