@@ -15,6 +15,7 @@ bindIp
 # 4 = new Freya, 5 = new eAthena, 6 = new oRO commercial (experimental)
 serverType 0
 
+# 1 = hook into RO client, 2 = Act as stand-alone proxy, proxy = act as true proxy
 XKore 0
 XKore_silent 1
 XKore_bypassBotDetection 0
@@ -54,6 +55,11 @@ attackCheckLOS 0
 attackLooters 0
 attackChangeTarget 1
 aggressiveAntiKS 0
+
+autoMoveOnDeath 0
+autoMoveOnDeath_x
+autoMoveOnDeath_y
+autoMoveOnDeath_map
 
 attackEquip_topHead
 attackEquip_midHead
@@ -321,6 +327,7 @@ attackSkillSlot {
 	maxUses 0
 	target_whenStatusActive
 	target_whenStatusInactive
+	target_deltaHp
 	inInventory
 	isSelfSkill 0
 	equip_topHead
@@ -341,6 +348,7 @@ attackComboSlot {
 	waitBeforeUse
 	dist 1.5
 	isSelfSkill 1
+	target_deltaHp
 }
 
 
@@ -399,6 +407,7 @@ partySkill {
 	target_aggressives
 	target_monsters
 	target_timeout 0
+	target_deltaHp
 	target_dead 0
 	inInventory
 	isSelfSkill 0
