@@ -93,9 +93,57 @@ sub process {
 		}
 	}
 
+	### Moved down ###
 	# Check for kill steal while moving
-	if (movingWhileAttacking()) {
-		dropTargetWhileMoving();
+	#if (movingWhileAttacking()) {
+	#	dropTargetWhileMoving();
+	#}
+
+	# Check for kill steal and mob-training while moving
+	if ((AI::is("move", "route") && $args->{attackID} && AI::inQueue("attack")
+		&& timeOut($args->{movingWhileAttackingTimeout}, 0.2))) {
+
+		my $ID = AI::args->{attackID};
+		my $monster = $monsters{$ID};
+
+		# Check for kill steal while moving
+		if ($monster && !checkMonsterCleanness($ID)) {
+			message T("Dropping target - you will not kill steal others\n");
+			stopAttack();
+			$monster->{ignore} = 1;
+
+			# Right now, the queue is either
+			#   move, route, attack
+			# -or-
+			#   route, attack
+			AI::dequeue;
+			AI::dequeue;
+			AI::dequeue if (AI::action eq "attack");
+			if ($config{teleportAuto_dropTargetKS}) {
+				message T("Teleport due to dropping attack target\n");
+				useTeleport(1);
+			}
+		}
+
+		# Mob-training, stop attacking the monster if it is already aggressive
+		if ((my $control = mon_control($monster->{name}))) {
+			if ($control->{attack_auto} == 3
+				&& ($monster->{dmgToYou} || $monster->{missedYou} || $monster->{dmgFromYou})) {
+
+				message TF("Dropping target - %s (%s) has been provoked\n", $monster->{name}, $monster->{binID});
+				stopAttack();
+				$monster->{ignore} = 1;
+				# Right now, the queue is either
+				#   move, route, attack
+				# -or-
+				#   route, attack
+				AI::dequeue;
+				AI::dequeue;
+				AI::dequeue if (AI::action eq "attack");
+			}
+		}
+
+		$args->{movingWhileAttackingTimeout} = time;
 	}
 
 	Benchmark::end("ai_attack") if DEBUG;
@@ -164,9 +212,6 @@ sub finishAttacking {
 		}
 		## kokal end
 
-	} elsif ($config{teleportAuto_lostTarget}) {
-		message T("Target lost, teleporting.\n"), "ai_attack";
-		useTeleport(1);
 	} else {
 		message T("Target lost\n"), "ai_attack";
 	}

@@ -630,7 +630,7 @@ sub processEscapeUnknownMaps {
 				}else{
 					error T("Escape failed no portal found.\n");;
 				}
-				
+
 			} else {
 				error T("Escape failed no portal found.\n");
 			}
@@ -916,7 +916,7 @@ sub processRouteAI {
 					}
 				} elsif (!$wasZero) {
 					# We're stuck
-					my $msg = TF("Stuck at %s (%d,%d), while walking from (%d,%d) to (%d,%d).", 
+					my $msg = TF("Stuck at %s (%d,%d), while walking from (%d,%d) to (%d,%d).",
 						$field{name}, $char->{pos_to}{x}, $char->{pos_to}{y}, $cur_x, $cur_y, $args->{dest}{pos}{x}, $args->{dest}{pos}{y});
 					$msg .= T(" Teleporting to unstuck.") if $config{teleportAuto_unstuck};
 					$msg .= "\n";
@@ -1464,7 +1464,7 @@ sub processWaypoint {
 				tags => "waypoint");
 			if (!$result) {
 				error TF("Unable to calculate how to walk to %s (%s, %s)\n", $point->{map}, $point->{x}, $point->{y});
-				AI::dequeue;            
+				AI::dequeue;
 			}
 
 		} else {
@@ -2553,7 +2553,7 @@ sub processFollow {
 			my $oldPos = $players_old{$args->{'ID'}}->{pos};
 			my (@blocks, $found);
 			my %vec;
-			
+
 			debug "Last time i saw, master was moving from ($oldPos->{x}, $oldPos->{y}) to ($pos->{x}, $pos->{y})\n", "follow";
 
 			# We must check the ground about 9x9 area of where we last saw our master. That's the only way
@@ -2576,7 +2576,7 @@ sub processFollow {
 				$args->{'ai_follow_lost_end'}{'time'} = time;
 				$args->{'ai_follow_lost_vec'} = {};
 				getVector($args->{'ai_follow_lost_vec'}, $players_old{$args->{'ID'}}{'pos_to'}, $chars[$config{'char'}]{'pos_to'});
-				
+
 			} else {
  				message T("My master teleported\n"), "follow", 1;
 			}
@@ -2628,14 +2628,14 @@ sub processFollow {
 		} elsif ($players_old{$args->{'ID'}}{'disconnected'}) {
 			delete AI::args->{'ai_follow_lost'};
  			message T("My master disconnected\n"), "follow";
-			
+
 		} elsif ($args->{'ai_follow_lost_warped'} && $ai_v{'temp'}{'warp_pos'} && %{$ai_v{'temp'}{'warp_pos'}}) {
 			my $pos = $ai_v{'temp'}{'warp_pos'};
-			
+
 			if ($config{followCheckLOS} && !checkLineWalkable($char->{pos_to}, $pos)) {
 				ai_route($field{name}, $pos->{x}, $pos->{y},
 					attackOnRoute => 0); #distFromGoal => 0);
-			} else { 
+			} else {
 				my (%vec, %pos_to);
 				my $dist = distance($char->{pos_to}, $pos);
 
@@ -2650,7 +2650,7 @@ sub processFollow {
 			}
 			delete $args->{'ai_follow_lost_warped'};
 			delete $ai_v{'temp'}{'warp_pos'};
-			
+
  			message TF("My master warped at (%s, %s) - moving to warp point\n", $pos->{x}, $pos->{y}), "follow";
 
 		} elsif ($players_old{$args->{'ID'}}{'teleported'}) {
@@ -3061,6 +3061,7 @@ sub processAutoAttack {
 						|| ($control->{attack_jlvl} ne "" && $control->{attack_jlvl} > $char->{lv_job})
 						|| ($control->{attack_hp}  ne "" && $control->{attack_hp} > $char->{hp})
 						|| ($control->{attack_sp}  ne "" && $control->{attack_sp} > $char->{sp})
+						|| ($control->{attack_auto} == 3 && ($monster->{dmgToYou} || $monster->{missedYou} || $monster->{dmgFromYou}))
 						);
 				}
 
@@ -3117,8 +3118,7 @@ sub processAutoAttack {
 				 && $config{'attackAuto'} >= 2 && !$ai_v{sitAuto_forcedBySitCommand}
 				 && $attackOnRoute >= 2 && !$monster->{dmgFromYou} && $safe
 				 && !positionNearPlayer($pos, $playerDist) && !positionNearPortal($pos, $portalDist)
-				 && timeOut($monster->{attack_failed}, $timeout{ai_attack_unfail}{timeout})
-				 && !($config{'attackAuto'} == 3 && ($monster->{dmgFromYou} || $monster->{dmgToYou} || $monster->{missedYou}))) {
+				 && timeOut($monster->{attack_failed}, $timeout{ai_attack_unfail}{timeout})) {
 					push @cleanMonsters, $_;
 				}
 			}
@@ -3143,7 +3143,7 @@ sub processAutoAttack {
 						|| ($control->{attack_jlvl} ne "" && $control->{attack_jlvl} > $char->{lv_job})
 						|| ($control->{attack_hp}  ne "" && $control->{attack_hp} > $char->{hp})
 						|| ($control->{attack_sp}  ne "" && $control->{attack_sp} > $char->{sp})
-						|| ($control->{attack_auto} == 3 && ($monster->{dmgToYou} || $monster->{missedYou}))
+						|| ($control->{attack_auto} == 3 && ($monster->{dmgToYou} || $monster->{missedYou} || $monster->{dmgFromYou}))
 						);
 				}
 
@@ -3169,7 +3169,7 @@ sub processAutoAttack {
 							|| ($control->{attack_jlvl} ne "" && $control->{attack_jlvl} > $char->{lv_job})
 							|| ($control->{attack_hp}  ne "" && $control->{attack_hp} > $char->{hp})
 							|| ($control->{attack_sp}  ne "" && $control->{attack_sp} > $char->{sp})
-							|| ($control->{attack_auto} == 3 && ($monster->{dmgToYou} || $monster->{missedYou}))
+							|| ($control->{attack_auto} == 3 && ($monster->{dmgToYou} || $monster->{missedYou} || $monster->{dmgFromYou}))
 							);
 					}
 
@@ -3193,7 +3193,7 @@ sub processAutoAttack {
 							|| ($control->{attack_jlvl} ne "" && $control->{attack_jlvl} > $char->{lv_job})
 							|| ($control->{attack_hp}  ne "" && $control->{attack_hp} > $char->{hp})
 							|| ($control->{attack_sp}  ne "" && $control->{attack_sp} > $char->{sp})
-							|| ($control->{attack_auto} == 3 && ($monster->{dmgToYou} || $monster->{missedYou}))
+							|| ($control->{attack_auto} == 3 && ($monster->{dmgToYou} || $monster->{missedYou} || $monster->{dmgFromYou}))
 							);
 					}
 
