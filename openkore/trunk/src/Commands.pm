@@ -190,21 +190,20 @@ sub initCompletions {
 # Commands::run("s");
 sub run {
 	my $input = shift;
-	# i think we should make this variable and configable in the config.txt later
-	# im just unsure howto do this for now...
-	my @commands = split(';', $input);
 	my $handler;
 	initHandlers() if (!%handlers);
 	
+	# Resolve command aliases
+	my ($switch, $args) = split(/ +/, $input, 2);
+	if (my $alias = $config{"alias_$switch"}) {
+		$input = $alias;
+		$input .= " $args" if defined $args;
+	}
+	
+	my @commands = split(';', $input);
 	# Loop through all of the commands...
 	foreach my $command (@commands) {
 		my ($switch, $args) = split(/ +/, $command, 2);
-		# Resolve command aliases
-		if (my $alias = $config{"alias_$switch"}) {
-			$command = $alias;
-			$command .= " $args" if defined $args;
-			($switch, $args) = split(/ +/, $command, 2);
-		}
 		$handler = $customCommands{$switch}{callback} if ($customCommands{$switch});
 		$handler = $handlers{$switch} if (!$handler && $handlers{$switch});
 
