@@ -19,6 +19,9 @@ New features:
 - Added an experimental mob-training control. Use attack flag 3 in mon_control.txt
 	to activate this. Please visit http://forums.openkore.com/viewtopic.php?p=134002
 	for the discussion.
+- Added command chaining, preform multiple commands in 1 line. the " ; " character is
+	used to delimit the command.s
+	Example: c watch out im using an item now;is 0;c see, i used it!
 
 New config options:
 - attackChangeTarget <boolean flag>

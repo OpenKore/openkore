@@ -190,40 +190,45 @@ sub initCompletions {
 # Commands::run("s");
 sub run {
 	my $input = shift;
-	my ($switch, $args) = split(/ +/, $input, 2);
+	# i think we should make this variable and configable in the config.txt later
+	# im just unsure howto do this for now...
+	my @commands = split(';', $input);
 	my $handler;
-
 	initHandlers() if (!%handlers);
+	
+	# Loop through all of the commands...
+	foreach my $command (@commands) {
+		my ($switch, $args) = split(/ +/, $command, 2);
+		# Resolve command aliases
+		if (my $alias = $config{"alias_$switch"}) {
+			$command = $alias;
+			$command .= " $args" if defined $args;
+			($switch, $args) = split(/ +/, $command, 2);
+		}
+		$handler = $customCommands{$switch}{callback} if ($customCommands{$switch});
+		$handler = $handlers{$switch} if (!$handler && $handlers{$switch});
 
-	# Resolve command aliases
-	if (my $alias = $config{"alias_$switch"}) {
-		$input = $alias;
-		$input .= " $args" if defined $args;
-		($switch, $args) = split(/ +/, $input, 2);
-	}
+		if ($handler) {
+			my %params;
+			$params{switch} = $switch;
+			$params{args} = $args;
+			Plugins::callHook("Commands::run/pre", \%params);
+			$handler->($switch, $args);
+			Plugins::callHook("Commands::run/post", \%params);
+			# undef the handler here, this is needed to make sure the other commands in the chain (if any) are run properly.
+			undef $handler;
 
-	$handler = $customCommands{$switch}{callback} if ($customCommands{$switch});
-	$handler = $handlers{$switch} if (!$handler && $handlers{$switch});
-
-	if ($handler) {
-		my %params;
-
-		$params{switch} = $switch;
-		$params{args} = $args;
-		Plugins::callHook("Commands::run/pre", \%params);
-		$handler->($switch, $args);
-		Plugins::callHook("Commands::run/post", \%params);
-		return 1;
-
-	} else {
-		my %params = ( switch => $switch, input => $input );
-		Plugins::callHook('Command_post', \%params);
-		if (!$params{return}) {
-			error TF("Unknown command '%s'. Please read the documentation for a list of commands.\n", $switch);
 		} else {
-			return $params{return}
+			my %params = ( switch => $switch, input => $command );
+			Plugins::callHook('Command_post', \%params);
+			if (!$params{return}) {
+				error TF("Unknown command '%s'. Please read the documentation for a list of commands.\n", $switch);
+			} else {
+				return $params{return}
+			}
 		}
 	}
+	return 1;
 }
 
 
