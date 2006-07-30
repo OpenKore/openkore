@@ -358,7 +358,6 @@ sub checkConsole {
 
 sub consoleCheckWrapper {
   return unless defined $conState;
-  return if $_[4] =~ /^\[macro\]/;
   # skip "macro" and "cvsdebug" domains to avoid loops
   return if $_[1] =~ /^(macro|cvsdebug)$/;
   my @args = @_;
@@ -418,7 +417,7 @@ sub automacroCheck {
     next CHKAM if $automacro{$am}->{disabled};
 
     if (defined $automacro{$am}->{call} && !defined $macro{$automacro{$am}->{call}}) {
-      error "[macro] automacro $am: macro ".$automacro{$am}->{call}." not found.\n";
+      error "[macro] automacro $am: macro ".$automacro{$am}->{call}." not found.\n", "macro";
       $automacro{$am}->{disabled} = 1; return
     }
     if (defined $automacro{$am}->{hook}) {
@@ -427,41 +426,34 @@ sub automacroCheck {
       my $s = 0;
       while (my $save = $automacro{$am}->{'save'.$s}) {
         if (defined $args->{$save}) {setVar(".hooksave$s", $args->{$save})}
-        else {error "[macro] \$args->{$save} does not exist\n"}
+        else {error "[macro] \$args->{$save} does not exist\n", "macro"}
         $s++
       }
-    }
-    if (defined $automacro{$am}->{console}) {
+    } elsif (defined $automacro{$am}->{console}) {
       if ($trigger eq 'log') {
         next CHKAM unless checkConsole($automacro{$am}->{console}, $args)
       } else {next CHKAM}
-    }
-    if (defined $automacro{$am}->{spell}) {
+    } elsif (defined $automacro{$am}->{spell}) {
       if ($trigger =~ /^(is_casting|packet_skilluse)$/) {
         next CHKAM unless checkCast($automacro{$am}->{spell}, $args)
       } else {next CHKAM}
-    }
-    if (defined $automacro{$am}->{pm}) {
+    } elsif (defined $automacro{$am}->{pm}) {
       if ($trigger eq 'packet_privMsg') {
         next CHKAM unless checkMsg(".lastpm", $automacro{$am}->{pm}, $args)
       } else {next CHKAM}
-    }
-    if (defined $automacro{$am}->{pubm}) {
+    } elsif (defined $automacro{$am}->{pubm}) {
       if ($trigger eq 'packet_pubMsg') {
         next CHKAM unless checkMsg(".lastpub", $automacro{$am}->{pubm}, $args)
       } else {next CHKAM}
-    }
-    if (defined $automacro{$am}->{party}) {
+    } elsif (defined $automacro{$am}->{party}) {
       if ($trigger eq 'packet_partyMsg') {
         next CHKAM unless checkMsg(".lastparty", $automacro{$am}->{party}, $args)
       } else {next CHKAM}
-    }
-    if (defined $automacro{$am}->{guild}) {
+    } elsif (defined $automacro{$am}->{guild}) {
       if ($trigger eq 'packet_guildMsg') {
         next CHKAM unless checkMsg(".lastguild", $automacro{$am}->{guild}, $args)
       } else {next CHKAM}
-    }
-    if (defined $automacro{$am}->{mapchange}) {
+    } elsif (defined $automacro{$am}->{mapchange}) {
       if ($trigger eq 'packet_mapChange') {
         next CHKAM unless checkMapChange($automacro{$am}->{mapchange})
       } else {next CHKAM}
@@ -500,7 +492,7 @@ sub automacroCheck {
     message "[macro] automacro $am triggered.\n", "macro";
 
     unless (defined $automacro{$am}->{call} || $::config{macro_nowarn}) {
-      warning "[macro] automacro $am: call not defined.\n"
+      warning "[macro] automacro $am: call not defined.\n", "macro"
     }
 
     $automacro{$am}->{disabled} = 1 if $automacro{$am}->{'run-once'};
@@ -522,7 +514,7 @@ sub automacroCheck {
         setVar(".caller", $am);
         $onHold = 0
       } else {
-        error "[macro] unable to create macro queue.\n"
+        error "[macro] unable to create macro queue.\n", "macro"
       }
     }
 
