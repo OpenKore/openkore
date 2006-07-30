@@ -13,60 +13,61 @@ use strict;
 use Log qw(message);
 
 sub new {
-  my ($class, $file, $debug, @ex) = @_;
-  my ($name) = $file =~ /^.*\/(.*)\.pl$/;
-  my $self = { name => $name,
-               file => $file,
-               debug => $debug,
-               examine => @ex
-             };
-  bless ($self, $class);
-  message "[$self->{name}] cvsdebug initialized\n", "cvsdebug";
-  return $self
+	my ($class, $file, $debug, @ex) = @_;
+	my ($name) = $file =~ /^.*\/(.*)\.pl$/;
+	my $self = {
+		name => $name,
+		file => $file,
+		debug => $debug,
+		examine => @ex
+	};
+	bless ($self, $class);
+	message "[$self->{name}] cvsdebug initialized\n", "cvsdebug";
+	return $self
 }
 
 sub DESTROY {
-  my $self = shift;
-  return unless $self->{debug};
-  message "[$self->{name}] unloading $self->{file} ".
-               "debug level was $self->{debug}, have a nice day.\n", "cvsdebug";
-  $self->dump()
+	my $self = shift;
+	return unless $self->{debug};
+	message "[$self->{name}] unloading $self->{file} ".
+		"debug level was $self->{debug}, have a nice day.\n", "cvsdebug";
+	$self->dump()
 }
 
 sub dump {
-  my $self = shift;
-  message "dumping ..\n", "cvsdebug";
-  foreach my $dmp (@{$self->{examine}}) {
-    message "parsing $dmp\n", "cvsdebug";
-    if (ref($dmp) eq 'ARRAY') {dumpArray(\@{$dmp})}
-    elsif (ref($dmp) eq 'HASH') {dumpHash(\%{$dmp})}
-    else {message "$$dmp\n", "cvsdebug"}
-    message "--\n", "cvsdebug"
-  }
+	my $self = shift;
+	message "dumping ..\n", "cvsdebug";
+	foreach my $dmp (@{$self->{examine}}) {
+		message "parsing $dmp\n", "cvsdebug";
+		if (ref($dmp) eq 'ARRAY') {dumpArray(\@{$dmp})}
+		elsif (ref($dmp) eq 'HASH') {dumpHash(\%{$dmp})}
+		else {message "$$dmp\n", "cvsdebug"}
+		message "--\n", "cvsdebug"
+	}
 }
 
 sub debug {
-  my ($self, $message, $level) = @_;
-  if ($self->{debug} & $level) {message "[$self->{name}] $message\n", "cvsdebug"}
+	my ($self, $message, $level) = @_;
+	if ($self->{debug} & $level) {message "[$self->{name}] $message\n", "cvsdebug"}
 }
 
 sub setDebug {
-  my $self = shift; $self->{debug} = shift if @_;
-  message "[$self->{name}] debug level: $self->{debug}\n", "cvsdebug"
+	my $self = shift; $self->{debug} = shift if @_;
+	message "[$self->{name}] debug level: $self->{debug}\n", "cvsdebug"
 }
 
 sub dumpHash {
-  my ($hash, $level) = @_; $level = 0 unless defined $level;
-  foreach my $h (keys %{$hash}) {
-    message "  "x$level."-> $h\n", "cvsdebug";
-    if (ref($$hash{$h}) eq 'ARRAY') {dumpArray(\@{$$hash{$h}}, $level+1)}
-    elsif (ref($$hash{$h}) eq 'HASH') {dumpHash(\%{$$hash{$h}}, $level+1)}
-    else {message "  "x($level+1)."  $$hash{$h}\n", "cvsdebug"}
-  }
+	my ($hash, $level) = @_; $level = 0 unless defined $level;
+	foreach my $h (keys %{$hash}) {
+		message "  "x$level."-> $h\n", "cvsdebug";
+		if (ref($$hash{$h}) eq 'ARRAY') {dumpArray(\@{$$hash{$h}}, $level+1)}
+		elsif (ref($$hash{$h}) eq 'HASH') {dumpHash(\%{$$hash{$h}}, $level+1)}
+		else {message "  "x($level+1)."  $$hash{$h}\n", "cvsdebug"}
+	}
 }
 
 sub dumpArray {
-  foreach my $a (@{$_[0]}) {message "  "x$_[1]." $a\n", "cvsdebug"}
+	foreach my $a (@{$_[0]}) {message "  "x$_[1]." $a\n", "cvsdebug"}
 }
 
 1;
