@@ -1,4 +1,4 @@
-==================
+﻿==================
 ### 1.9.2
 ==================
 
@@ -94,6 +94,7 @@ New chat commands:
 	command.
 
 Internal:
+- Updated $config{gameGuard} '2' behavior to adapt to bRO server
 - The Console::Other interface has been removed in favor of the Console::Unix
   interface. This only affects OpenKore when running on a Unix, such as Linux.
 - Item has been renamed to Actor::Item for consistency.
