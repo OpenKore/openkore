@@ -66,7 +66,7 @@ sub query {
 	my $socket = $self->_connect();
 	if (!$socket) {
 		error "Your Ragnarok Online server uses GameGuard. In order " .
-			"to support GameGuard, you must start the Poseidon " .
+			"to support GameGuard, you must use the Poseidon " .
 			"server. Please read " . POSEIDON_SUPPORT_URL .
 			" for more information.\n";
 		return;
@@ -104,7 +104,8 @@ sub getResult {
 	$self->{socket}->recv($buf, 1024 * 32);
 	if (!$buf) {
 		# This shouldn't have happened.
-		error "The Poseidon server closed the connection unexpectedly. Please report this bug.\n";
+		error "The Poseidon server closed the connection unexpectedly or could not respond " . 
+			"to your request due to a server bandwidth issue. Please report this bug.\n";
 		$self->{socket} = undef;
 		return undef;
 	}

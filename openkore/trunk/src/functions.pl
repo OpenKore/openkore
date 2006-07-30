@@ -234,7 +234,7 @@ sub mainLoop {
 	}
 
 	# GameGuard support
-	if ($config{gameGuard} && ($net->version != 1)) {
+	if ($config{gameGuard} && ($net->version != 1 || ($net->version == 1 && $config{gameGuard} eq '2'))) {
 		my $result = Poseidon::Client::getInstance()->getResult();
 		if (defined($result)) {
 			debug "Received Poseidon result.\n", "poseidon";
