@@ -325,9 +325,6 @@ if ($XKore_version eq "1" || $XKore_version eq "inject") {
 	require XKore;
 	Modules::register("XKore");
 	$net = new XKore;
-	Log::warning TF("If you are having problems with XKore 1 because of GameGuard,\n" .
-		"try changing the config to 'XKore proxy' (without quotes)\n" .
-		"Read more about it on %s.\n", "[to be defined]") if ($config{gameGuard} == 2);
 } elsif ($XKore_version eq "2") {
 	# Run as a proxy bot, allowing Ragnarok to connect while botting
 	require XKore2;

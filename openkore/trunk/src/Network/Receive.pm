@@ -2405,7 +2405,12 @@ sub homunculus_stats {
 sub gameguard_grant {
 	my ($self, $args) = @_;
 
-	if ($args->{server} == 1) {
+	if ($args->{server} == 0) {
+		error T("The server Denied the login because GameGuard packets where not replied " . 
+			"correctly or too many time has been spent to send the response.\n" .
+			"Please verify the version of your poseidon server and try again\n"), "poseidon";
+		return;
+	} elsif ($args->{server} == 1) {
 		message T("Server granted login request to account server\n"), "poseidon";
 	} else {
 		message T("Server granted login request to char/map server\n"), "poseidon";
@@ -2417,7 +2422,7 @@ sub gameguard_grant {
 sub gameguard_request {
 	my ($self, $args) = @_;
 
-	return if ($net->version == 1);
+	return if ($net->version == 1 && $config{gameGuard} ne '2');
 	Poseidon::Client::getInstance()->query(
 		substr($args->{RAW_MSG}, 0, $args->{RAW_MSG_SIZE})
 	);
@@ -5232,13 +5237,7 @@ sub storage_password_result {
 
 sub switch_character {
 	# 00B3 - user is switching characters in XKore
-	if ($config{'gameGuard'} ne '2') {
-		change_to_constate25;
-	} else {
-		# Reconect on Character Server
-		$conState = 3; 
-		$net->serverDisconnect();
-	}
+	change_to_constate25;
 }
 
 sub system_chat {
