@@ -32,6 +32,7 @@ our %amSingle = (
 	'class' => 1,        # job class check
 	'timeout' => 1,      # setting: re-check timeout
 	'delay' => 1,        # option: delay before the macro starts
+	'run-once' => 1,     # option: run automacro only once
 	'disabled' => 1,     # option: automacro disabled
 	'call' => 1,         # setting: macro to be called
 	'spell' => 1,        # check: cast sensor

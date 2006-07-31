@@ -6,7 +6,7 @@
 # See http://www.gnu.org/licenses/gpl.html
 
 package macro;
-my $Version = "1.3.0";
+my $Version = "1.3.1";
 my $Changed = sprintf("%s %s %s",
 	q$Date$
 	=~ /(\d{4}-\d{2}-\d{2}) (\d{2}:\d{2}:\d{2}) ([+-]\d{4})/);
