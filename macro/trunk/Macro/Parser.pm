@@ -46,6 +46,7 @@ sub parseMacroFile {
 			} elsif ($key eq 'automacro') {
 				%block = (name => $value, type => "auto")
 			} else {
+				%block = (type => "bogus");
 				warning "$file: ignoring line '$_' (munch, munch, strange block)\n"
 			}
 			next
@@ -89,6 +90,11 @@ sub parseMacroFile {
 					warning "$file: ignoring '$_' (munch, munch, unknown automacro keyword)\n"
 				}
 			}
+			next
+		}
+		
+		if (%block && $block{type} eq "bogus") {
+			if ($_ eq "}") {undef %block}
 			next
 		}
 
