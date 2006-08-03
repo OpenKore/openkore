@@ -8,3 +8,9 @@ whirlpool-algorithm.c
 whirlpool-algorithm.h
 whirlpool-constants.h
 whirlpool-portability.h
+aes-cfb.c
+aes-cfb.h
+rijndael-alg-fst.c
+rijndael-alg-fst.h
+rijndael-api-fst.c
+rijndael-api-fst.h
