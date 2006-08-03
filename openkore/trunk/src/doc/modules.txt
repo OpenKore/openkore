@@ -33,6 +33,7 @@ Utils::Core::Exception
 Utils::StartupNotification::Launcher
 Utils::StartupNotification::Launchee
 Utils::StartupNotification::CreateSocketException
+Utils::Whirlpool
 
 IPC
 IPC::Server

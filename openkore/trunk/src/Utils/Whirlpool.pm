@@ -15,9 +15,9 @@
 ##
 # MODULE DESCRIPTION: Whirlpool hashing algorithm
 #
-# This is an implementation of the
-# <a href="http://en.wikipedia.org/wiki/Whirlpool_%28hash%29">Whirlpool</a>
-# hashing algorithm.
+# This is an implementation of
+# <a href="http://en.wikipedia.org/wiki/Whirlpool_%28hash%29">Whirlpool</a>.
+# Whirlpool is a secure, 512-bit one-way hashing algorithm.
 package Utils::Whirlpool;
 
 use strict;

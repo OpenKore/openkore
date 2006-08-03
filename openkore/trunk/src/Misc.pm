@@ -1949,6 +1949,8 @@ sub headgearName {
 }
 
 ##
+# void initUserSeed()
+#
 # Generate a unique seed for the current user and save it to
 # a file, or load the seed from that file if it exists.
 sub initUserSeed {
