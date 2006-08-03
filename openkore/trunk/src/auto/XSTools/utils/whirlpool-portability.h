@@ -1,6 +1,9 @@
 /**
  * The Whirlpool hashing function.
  *
+ * Do not #include this header in your application, this is an internal header.
+ * You're probably looking for whirlpool-algorithm.h
+ *
  * The Whirlpool algorithm was developed by
  * Paulo S. L. M. Barreto and Vincent Rijmen.
  *
