@@ -77,8 +77,8 @@ void AES_SetKey(AES_Struct *aes,
 void AES_SetSalt(AES_Struct *aes, const unsigned char *salt);
 
 /**
- * Encrypt data. Before calling this function, you should set the key and the
- * CFB salt.
+ * Encrypt data in CFB mode. Before calling this function, you should set the
+ * key and the CFB salt.
  *
  * You may call this function more than once. You can decrypt the results
  * in the same order.
@@ -96,8 +96,8 @@ void AES_Encrypt(AES_Struct *aes,
                  unsigned char *result);
 
 /**
- * Decrypt encrypted data. Before calling this function, you must set the key
- * and the CFB salt to be the same as the ones used for encryption.
+ * Decrypt encrypted data in CFB mode. Before calling this function, you must
+ * set the key and the CFB salt to be the same as the ones used for encryption.
  *
  * @param aes     An AES_Struct handle, as returned by AES_Create()
  * @param data    The data to decrypt.
