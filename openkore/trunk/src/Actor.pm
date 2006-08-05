@@ -32,6 +32,7 @@ package Actor;
 use strict;
 use Carp::Assert;
 use Scalar::Util;
+use Data::Dumper;
 use Storable;
 use Globals;
 use Utils;
@@ -318,7 +319,16 @@ sub deepCopy {
 		delete $self->{$field};
 	}
 
-	my $copy = Storable::dclone($_[0]);
+	my $copy;
+	eval {
+		$copy = Storable::dclone($_[0]);
+	};
+	if ($@ =~ /Can't store CODE items/) {
+		die "Actor hash $self contains CODE items:\n" .
+			Dumper($self);
+	} elsif ($@) {
+		die $@;
+	}
 
 	# Restore the deleted fields in the original object,
 	# and assign manually-created deep copies to the clone.
