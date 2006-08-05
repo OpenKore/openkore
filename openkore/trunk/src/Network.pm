@@ -420,6 +420,10 @@ sub checkConnection {
 		message T("Connecting to Character Server...\n"), "connection";
 		$conState_tries++;
 
+		if ($master->{pauseCharServer}) {
+			sleep $master->{pauseCharServer};
+		}
+
 		if ($master->{charServer_ip}) {
 			$self->serverConnect($master->{charServer_ip}, $master->{charServer_port});
 		} elsif ($servers[$config{'server'}]) {
