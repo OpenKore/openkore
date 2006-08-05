@@ -706,6 +706,7 @@ port 6900
 master_version 25
 version 61
 serverEncoding Russian
+pauseCharServer 1
 
 ## http://www.rohispano.com/
 [Latin America - RO Hispano]
