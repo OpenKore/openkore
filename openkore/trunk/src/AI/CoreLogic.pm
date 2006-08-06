@@ -118,6 +118,7 @@ sub iterate {
 	Benchmark::begin("AI (part 3)") if DEBUG;
 	Benchmark::begin("AI (part 3.1)") if DEBUG;
 	processAutoStorage();
+	Misc::checkValidity("AI (autostorage)");
 	processAutoSell();
 	Misc::checkValidity("AI (autosell)");
 	processAutoBuy();
