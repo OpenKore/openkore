@@ -1,5 +1,5 @@
 <!-- BEGIN important_announcement -->
-<div style="margin: 0.5cm; background: #ffaaaa; padding: 0.25cm;">
+<div class="openkore_announcement">
     {IMPORTANT_ANNOUNCEMENT}
 </div>
 <!-- END important_announcement -->
