@@ -1388,3 +1388,12 @@ master_version 2
 version 0
 serverType 3
 serverEncoding Western
+
+## http://ro.gxzone.com/
+[GamersX Ragnarok Online Server]
+ip 200.43.229.37
+port 6900
+master_version 20
+version 2
+serverType 5
+serverEncoding Western
