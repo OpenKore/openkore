@@ -32,5 +32,11 @@ Powered by <a href="http://www.phpbb.com/" target="_phpbb" class="copyright">php
 
 </div><!-- openkore_forum_inner -->
 
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-540582-3";
+urchinTracker();
+</script>
 </body>
 </html>
