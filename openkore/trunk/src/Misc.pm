@@ -1785,7 +1785,7 @@ sub inInventory {
 	$quantity ||= 1;
 
 	my $index = findIndexString_lc($char->{inventory}, 'name', $item);
-	return if $index eq '';
+	return if !defined($index);
 	return unless $char->{inventory}[$index]{amount} >= $quantity;
 	return $index;
 }

@@ -1646,6 +1646,7 @@ sub processAutoStorage {
 		# Initiate autostorage when we're low on some item, and getAuto is set
 		my $found;
 		my $i;
+		Misc::checkValidity("AutoStorage part 1");
 		for ($i = 0; exists $config{"getAuto_$i"}; $i++) {
 			my $invIndex = findIndexString_lc($char->{inventory}, "name", $config{"getAuto_$i"});
 			if ($config{"getAuto_${i}_minAmount"} ne "" &&
@@ -1668,6 +1669,7 @@ sub processAutoStorage {
 				last;
 			}
 		}
+		Misc::checkValidity("AutoStorage part 2");
 
 		my $routeIndex = AI::findAction("route");
 		my $attackOnRoute;
@@ -1862,6 +1864,7 @@ sub processAutoStorage {
 			}
 
 			if (defined($args->{getStart}) && $args->{done} != 1) {
+				Misc::checkValidity("AutoStorage part 3");
 				while (exists $config{"getAuto_$args->{index}"}) {
 					if (!$config{"getAuto_$args->{index}"}) {
 						$args->{index}++;
@@ -1870,8 +1873,8 @@ sub processAutoStorage {
 
 					my %item;
 					$item{name} = $config{"getAuto_$args->{index}"};
-					$item{inventory}{index} = findIndexString_lc(\@{$chars[$config{char}]{inventory}}, "name", $item{name});
-					$item{inventory}{amount} = ($item{inventory}{index} ne "") ? $chars[$config{char}]{inventory}[$item{inventory}{index}]{amount} : 0;
+					$item{inventory}{index} = findIndexString_lc($char->{inventory}, "name", $item{name});
+					$item{inventory}{amount} = ($item{inventory}{index} ne "") ? $char->{inventory}[$item{inventory}{index}]{amount} : 0;
 					$item{storage}{index} = findKeyString(\%storage, "name", $item{name});
 					$item{storage}{amount} = ($item{storage}{index} ne "")? $storage{$item{storage}{index}}{amount} : 0;
 					$item{max_amount} = $config{"getAuto_$args->{index}"."_maxAmount"};
@@ -1914,6 +1917,7 @@ sub processAutoStorage {
 					$args->{index}++;
 					$args->{retry} = 0;
 				}
+				Misc::checkValidity("AutoStorage part 4");
 			}
 
 			sendStorageClose() unless $config{storageAuto_keepOpen};
