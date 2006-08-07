@@ -104,6 +104,7 @@ sub iterate {
 	processPartyAuto();
 	processGuildAutoDeny();
 
+	Misc::checkValidity("AI part 1.1");
 	processAutoBreakTime();
 	processWaypoint();
 	processDead();
