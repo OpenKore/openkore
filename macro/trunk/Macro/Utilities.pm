@@ -191,8 +191,15 @@ sub refreshGlobal {
 	}
 
 	if (!defined $var || $var eq '.datetime') {
-		my $val = localtime;
-		setVar(".datetime", $val)
+		setVar(".datetime", scalar localtime)
+	}
+	
+	if (!defined $var || $var eq '.status') {
+		my @statuses;
+		if ($char->{muted}) {push @statuses, "muted"}
+		if ($char->{dead}) {push @statuses, "dead"}
+		foreach (keys %{$char->{statuses}}) {push @statuses, $_}
+		setVar(".status", join ',', @statuses)
 	}
 }
 

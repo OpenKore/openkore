@@ -395,7 +395,7 @@ sub next {
 	##########################################
 	# set command
 	} elsif ($line =~ /^set\s+/) {
-		my ($var, $val) = $line =~ /^set\s+([\w]+)\s+(.*)$/;
+		my ($var, $val) = $line =~ /^set\s+(\w+)\s+(.*)$/;
 		if ($var eq 'macro_delay' && $val =~ /^[\d\.]*\d+$/) {
 			$self->{macro_delay} = $val
 		} elsif ($var eq 'repeat' && $val =~ /^\d+$/) {
@@ -404,7 +404,7 @@ sub next {
 			$self->{overrideAI} = $val
 		} elsif ($var eq 'exclusive' && $val =~ /^[01]$/) {
 			$self->{interruptible} = $val?0:1
-		} elsif ($var eq 'orphan' && $val =~ /^$/) {
+		} elsif ($var eq 'orphan' && $val =~ /^(terminate|reregister|reregister_safe)$/) {
 			$self->{orphan} = $val
 		} else {
 			$self->{error} = "$errtpl: unrecognized key or wrong value"
