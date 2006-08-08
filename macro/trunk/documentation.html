@@ -36,7 +36,7 @@
 <body>
 <h1><a name="top"></a>Version</h1>
 <div class="p">
-	This manual is for macro plugin version 1.3.0.<br />
+	This manual is for macro plugin version 1.3.1.<br />
 	$Date$
 </div>
 
@@ -182,7 +182,7 @@ macro registered to AI queue</dd>
 		<dd>Add <tt>macro_delay</tt> and set it to the number of seconds you want the plugin to pause between commands.</dd>
 
 		<dt>controls/config.txt</dt>
-		<dd>
+		<dd>(optional)
 <table>
 <tr class="head"><td><b>variable</b></td><td><b>values</b></td><td><b>description</b></td></tr>
 <tr class="one"><td>macro_nowarn</td><td>0<br />1</td><td>enable or disable the annoying warnings when not<br />using <tt>call</tt> in your automacro(s)</td></tr>
@@ -760,11 +760,11 @@ macro reopenshop {
 <div class="p">
 	<ul>
 	<li>automacro check <tt>console</tt> ignores the following domains: <tt>macro</tt> and <tt>cvsdebug</tt>.</li>
-	<li>automacro check <tt>console</tt> ignores everything that begins with "[macro]" to avoid infinite loops</li>
 	<li>do <b>not</b> use closing brackets ")" in keyword arguments unless
 it's the closing bracket for an argument.<br />
 for example: <tt>@random ("foo", "bar", "@eval (4 + 5)", "yatta")</tt> is
 allowed, <tt>@random ("foo", "bar", ":-)", "yatta")</tt> is not.</li>
+	<li>macro 1.3.0 requires openkore 1.9.x or later</li>
 	</ul>
 
 	<p />
@@ -834,7 +834,7 @@ allowed, <tt>@random ("foo", "bar", ":-)", "yatta")</tt> is not.</li>
 	
 	<dt><i>I have some macros that worked fine with macro 0.9.x, but now I only get syntax errors.</i></dt>
 	<dd>The syntax has changed with macro 1.0.0. Read the documentation to learn about the new syntax.
-	Most 0.8.x and 0.9.x macros can be convertedusing the <tt>mconv.pl</tt> utility.</dd>
+	Most 0.8.x and 0.9.x macros can be converted using the <tt>mconv.pl</tt> utility.</dd>
 	
 	<dt><i>Where can I get a macro that does [insert feature here]?</i></dt>
 	<dd>Search the <a href="http://forums.openkore.com/viewforum.php?f=18">forum</a>. If you
