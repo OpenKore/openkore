@@ -3222,6 +3222,10 @@ sub login_error_game_login_server {
 	$net->serverDisconnect();
 }
 
+# The difference between map_change and map_changed is that map_change
+# represents a map change event on the current map server, while
+# map_changed means that you've changed to a different map server.
+# map_change also represents teleport events.
 sub map_change {
 	my ($self, $args) = @_;
 	change_to_constate5();
