@@ -1,12 +1,12 @@
 <?php
 /***************************************************************************
- *                              page_tail.php
+ *                              archive_page_tail.php
  *                            -------------------
  *   begin                : Saturday, Feb 13, 2001
  *   copyright            : (C) 2001 The phpBB Group
  *   email                : support@phpbb.com
  *
- *   $Id: page_tail.php,v 1.27.2.4 2005/09/14 18:14:30 acydburn Exp $
+ *   $Id: page_tail.php,v 1.27.2.2 2002/11/26 11:42:12 psotfx Exp $
  *
  *
  ***************************************************************************/
@@ -25,19 +25,18 @@ if ( !defined('IN_PHPBB') )
 	die('Hacking attempt');
 }
 
-global $do_gzip_compress;
-
 //
 // Show the overall footer.
 //
-$admin_link = ( $userdata['user_level'] == ADMIN ) ? ' | <a href="admin/index.' . $phpEx . '?sid=' . $userdata['session_id'] . '">' . $lang['Admin_panel'] . '</a> | <a href="userlogs.php">User logs</a><br /><br />' : '';
+$admin_link = ( $userdata['user_level'] == ADMIN ) ? '<a href="'. SITE_URL .'admin/index.' . $phpEx . '?sid=' . $userdata['session_id'] . '">' . $lang['Admin_panel'] . '</a><br /><br />' : '';
 
 $template->set_filenames(array(
-	'overall_footer' => ( empty($gen_simple_header) ) ? 'overall_footer.tpl' : 'simple_footer.tpl')
+	'overall_footer' => ( empty($gen_simple_header) ) ? 'archive/overall_footer.tpl' : 'archive/simple_footer.tpl')
 );
 
 $template->assign_vars(array(
-	'TRANSLATION_INFO' => (isset($lang['TRANSLATION_INFO'])) ? $lang['TRANSLATION_INFO'] : ((isset($lang['TRANSLATION'])) ? $lang['TRANSLATION'] : ''),
+	'PHPBB_VERSION' => '2' . $board_config['version'],
+	'TRANSLATION_INFO' => ( isset($lang['TRANSLATION_INFO']) ) ? $lang['TRANSLATION_INFO'] : '', 
 	'ADMIN_LINK' => $admin_link)
 );
 
