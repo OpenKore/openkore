@@ -371,6 +371,15 @@ sub sendMsgToServer {
 	if ($config{serverType} != 2) {
 		encrypt(\$msg, $msg);
 	}
+	
+	my $switch = uc(unpack("H2", substr($msg, 1, 1))) . uc(unpack("H2", substr($msg, 0, 1)));
+	my $hookname = "packet_send/$switch";
+	my $hook = $Plugins::hooks{$hookname}->[0];
+	if ($hook && $hook->{r_func} &&
+	    $hook->{r_func}($hookname, {switch => $switch, data => $msg}, $hook->{user_data})) {
+		return;
+	}
+
 	$r_net->serverSend($msg);
 	$bytesSent += length($msg);
 

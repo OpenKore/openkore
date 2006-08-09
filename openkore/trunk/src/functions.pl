@@ -552,7 +552,7 @@ sub parseSendMsg {
 	my $hookname = "packet_outMangle/$switch";
 	my $hook = $Plugins::hooks{$hookname}->[0];
 	if ($hook && $hook->{r_func} &&
-	    $hook->{r_func}($hookname, {$switch => $switch, data => $sendMsg}, $hook->{user_data})) {
+	    $hook->{r_func}($hookname, {switch => $switch, data => $sendMsg}, $hook->{user_data})) {
 		undef $sendMsg;
 	}
 
