@@ -19,7 +19,7 @@ use strict;
 use Time::HiRes qw(time);
 
 use Globals qw($accountID $AI %ai_v $char @chatResponses %cities_lut
-		%config %field %maps_lut $net %overallAuth %players
+		%config %field %itemChange @monsters_Killed %maps_lut $net %overallAuth %players
 		%responseVars %skillsSP_lut $startTime_EXP %timeout
 		$totalBaseExp $totalJobExp
 		);
@@ -27,7 +27,7 @@ use AI;
 use Commands;
 use Plugins;
 use Log qw(message error);
-use Utils qw(formatNumber getFormattedDate parseArgs timeConvert timeOut);
+use Utils qw(formatNumber getFormattedDate parseArgs swrite timeConvert timeOut);
 use Misc qw(auth avoidGM_talk avoidList_talk configModify getIDFromChat getResponse quit relog sendMessage setTimeout);
 use Translation;
 
@@ -151,32 +151,63 @@ sub processChatCommand {
 		$timeout{ai_thanks_set}{time} = time;
 
 	} elsif ($switch eq "exp") {
-		my ($endTime_EXP, $w_sec);
-		$endTime_EXP = time;
-		$w_sec = int($endTime_EXP - $startTime_EXP);
 
-		if ($w_sec > 0) {
-			$vars->{bExpPerHour} = int($totalBaseExp / $w_sec * 3600);
-			$vars->{jExpPerHour} = int($totalJobExp / $w_sec * 3600);
-			if ($char->{exp_max} && $vars->{bExpPerHour}){
-				$vars->{percentBExp} = "(".sprintf("%.2f",$totalBaseExp * 100 / $char->{exp_max})."%)";
-				$vars->{percentBExpPerHour} = "(".sprintf("%.2f",$vars->{bExpPerHour} * 100 / $char->{exp_max})."%)";
-				$vars->{bLvlUp} = timeConvert(int(($char->{exp_max} - $char->{exp})/($vars->{bExpPerHour}/3600)));
+		if ($args[0] eq "") {
+			my ($endTime_EXP, $w_sec);
+			$endTime_EXP = time;
+			$w_sec = int($endTime_EXP - $startTime_EXP);
+
+			if ($w_sec > 0) {
+				$vars->{bExpPerHour} = int($totalBaseExp / $w_sec * 3600);
+				$vars->{jExpPerHour} = int($totalJobExp / $w_sec * 3600);
+				if ($char->{exp_max} && $vars->{bExpPerHour}){
+					$vars->{percentBExp} = "(".sprintf("%.2f",$totalBaseExp * 100 / $char->{exp_max})."%)";
+					$vars->{percentBExpPerHour} = "(".sprintf("%.2f",$vars->{bExpPerHour} * 100 / $char->{exp_max})."%)";
+					$vars->{bLvlUp} = timeConvert(int(($char->{exp_max} - $char->{exp})/($vars->{bExpPerHour}/3600)));
+				}
+				if ($char->{exp_job_max} && $vars->{jExpPerHour}){
+					$vars->{percentJExp}  = "(".sprintf("%.2f",$totalJobExp * 100 / $char->{exp_job_max})."%)";
+					$vars->{percentJExpPerHour} = "(".sprintf("%.2f",$vars->{jExpPerHour} * 100 / $char->{exp_job_max})."%)";
+					$vars->{jLvlUp} = timeConvert(int(($char->{'exp_job_max'} - $char->{exp_job})/($vars->{jExpPerHour}/3600)));
+				}
 			}
-			if ($char->{exp_job_max} && $vars->{jExpPerHour}){
-				$vars->{percentJExp}  = "(".sprintf("%.2f",$totalJobExp * 100 / $char->{exp_job_max})."%)";
-				$vars->{percentJExpPerHour} = "(".sprintf("%.2f",$vars->{jExpPerHour} * 100 / $char->{exp_job_max})."%)";
-				$vars->{jLvlUp} = timeConvert(int(($char->{'exp_job_max'} - $char->{exp_job})/($vars->{jExpPerHour}/3600)));
+
+			$vars->{time} = timeConvert($w_sec);
+			$vars->{bExp} = formatNumber($totalBaseExp);
+			$vars->{jExp} = formatNumber($totalJobExp);
+			$vars->{bExpPerHour} = formatNumber($vars->{bExpPerHour});
+			$vars->{jExpPerHour} = formatNumber($vars->{jExpPerHour});
+			$vars->{numDeaths} = (defined $char->{deathCount})? $char->{deathCount} : 0;
+			sendMessage($net, $type, getResponse("expS"), $user) if $config{verbose};
+
+		} elsif ($args[0] eq "monster") {
+			$vars->{numKilledMonsters} = 0;
+
+			sendMessage($net, $type, getResponse("expMonsterS1"), $user) if $config{verbose};
+
+			for (my $i = 0; $i < @monsters_Killed; $i++) {
+				next if ($monsters_Killed[$i] eq "");
+				$vars->{killedMonsters} = swrite(
+					"@<< @<<<<<<<<<<<<<<<<<<<<<<<< @<<<",
+					[$i, $monsters_Killed[$i]{name}, $monsters_Killed[$i]{count}]);
+				$vars->{killedMonsters} = substr($vars->{killedMonsters}, 0, length($vars->{killedMonsters}) - 1);
+				$vars->{numKilledMonsters} += $monsters_Killed[$i]{count};
+				sendMessage($net, $type, getResponse("expMonsterS2"), $user) if $config{verbose};
 			}
+
+			sendMessage($net, $type, getResponse("expMonsterS3"), $user) if $config{verbose};
+
+		} elsif ($args[0] eq "item") {
+			sendMessage($net, $type, getResponse("expItemS1"), $user) if $config{verbose};
+			for my $item (sort keys %itemChange) {
+				next unless $itemChange{$item};
+				$vars->{gotItems} = sprintf("%-40s %5d", $item, $itemChange{$item});
+				sendMessage($net, $type, getResponse("expItemS2"), $user) if $config{verbose};
+			}
+			
+		} else {
+			sendMessage($net, $type, getResponse("expF"), $user) if $config{verbose};
 		}
-		
-		$vars->{time} = timeConvert($w_sec);
-		$vars->{bExp} = formatNumber($totalBaseExp);
-		$vars->{jExp} = formatNumber($totalJobExp);
-		$vars->{bExpPerHour} = formatNumber($vars->{bExpPerHour});
-		$vars->{jExpPerHour} = formatNumber($vars->{jExpPerHour});
-		$vars->{numDeaths} = (defined $char->{deathCount})? $char->{deathCount} : 0;
-		sendMessage($net, $type, getResponse("expS"), $user) if $config{verbose};
 
 	} elsif ($switch eq "follow") {
 		if ($args[0] eq "stop") {
@@ -216,7 +247,7 @@ sub processChatCommand {
 			$timeout{ai_thanks_set}{time} = time;
 		} else {
 			sendMessage($net, $type, getResponse("lookF"), $user) if $config{verbose};
-		}	
+		}
 
 	} elsif (($switch eq "move" && $args[0] eq "stop") || $switch eq "stop") {
 		AI::clear("move", "route", "mapRoute");
@@ -367,7 +398,7 @@ sub processChatCommand {
 	} elsif ($switch eq "town") {
 		sendMessage($net, $type, getResponse("moveS"), $user);
 		main::useTeleport(2);
-		
+
 	} elsif ($switch eq "where") {
 		my $rsw = "$field{name}.rsw";
 		$vars->{x} = $char->{pos_to}{x};
