@@ -16,6 +16,12 @@ dateS Lay off the RO %$cmd_user.  It's %$date
 dateS What am I?  A clock?? (BTW it's %$date)
 
 expS Botting time : %$time\nBaseExp      : %$bExp %$percentBExp\nJobExp       : %$jExp %$percentJExp\nBaseExp/Hour : %$bExpPerHour %$percentBExpPerHour\nJobExp/Hour  : %$jExpPerHour %$percentJExpPerHour\nBase Levelup Time Estimation : %$bLvlUp\nJob Levelup Time Estimation  : %$jLvlUp\nDied : %$numDeaths
+expF Huh?
+expMonsterS1 No  Name                      Count
+expMonsterS2 %$killedMonsters
+expMonsterS3 Total number of killed monsters: %$numKilledMonsters
+expItemS1 Name                                    Count
+expItemS2 %$gotItems
 
 followS Right away!
 followS For freedom!
@@ -51,17 +57,17 @@ sitS *plop*
 skillgoodM Thank, you.
 skillgoodM You are too kind.
 skillgoodM Oh no. That's enough. =)
-skillgoodM  
-skillgoodM  
-skillgoodM  
+skillgoodM
+skillgoodM
+skillgoodM
 
 skillbadM What did you do that for?
 skillbadM Please stop!
 skillbadM I said stop it!
 skillbadM ...
 skillbadM ...
-skillbadM  
-skillbadM  
+skillbadM
+skillbadM
 
 standS Okie ^^
 standS Right
