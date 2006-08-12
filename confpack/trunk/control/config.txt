@@ -15,6 +15,12 @@ bindIp
 # 4 = new Freya, 5 = new eAthena, 6 = new oRO commercial (experimental)
 serverType 0
 
+# Set to 1 to ignore the 'Server shutting down' error wich sometimes occurs
+# while the server is not shutting down. (on iRO for example)
+# This will probally cause errors if the server is really shutting down
+# use at your own risk!
+ignoreServerShutdown 0
+
 # 1 = hook into RO client, 2 = Act as stand-alone proxy, proxy = act as true proxy
 XKore 0
 XKore_silent 1
