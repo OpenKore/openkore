@@ -80,6 +80,9 @@ New config options:
 - teleportAuto_lostTarget <boolean flag>
 	Makes the bot (attempt to) teleport after it lost its target, this to
 	prevent it from locking onto the same target over and over in some cases.
+- ignoreServerShutdown <boolean flag>
+	Ignores the "server shutting down" error wich some servers tend to send (iRO for example)
+	Don't use this unless you're 100% sure the errors are "fake".
 	
 New commands:
 - homun <s|status|feed|move|standby|ai|aiv|skills>
