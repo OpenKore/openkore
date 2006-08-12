@@ -2060,10 +2060,14 @@ sub errors {
 
 	$timeout_ex{'master'}{'time'} = time;
 	$timeout_ex{'master'}{'timeout'} = $timeout{'reconnect'}{'timeout'};
-	$net->serverDisconnect();
+	if (($args->{type} != 0) || (!$config{ignoreServerShutdown})) {
+		$net->serverDisconnect();
+	} 
 
-	if ($args->{type} == 0) {
+	if ($args->{type} == 0 && !$config{ignoreServerShutdown}) {
 		error T("Server shutting down\n"), "connection";
+	} elsif ($args->{type} == 0 && $config{ignoreServerShutdown}) {
+		error T("Server shutting down, ignoring due to configuration settings.\n"), "connection";
 	} elsif ($args->{type} == 1) {
 		error T("Error: Server is closed\n"), "connection";
 	} elsif ($args->{type} == 2) {
