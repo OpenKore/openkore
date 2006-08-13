@@ -2047,10 +2047,12 @@ sub equip_item {
 sub errors {
 	my ($self, $args) = @_;
 
-	if ($conState == 5 &&
-	    ($config{dcOnDisconnect} > 1 ||
+	if ($conState == 5 && 
+		($config{dcOnDisconnect} > 1 ||
 		($config{dcOnDisconnect} &&
-		 $args->{type} != 3 && $args->{type} != 10))) {
+		$args->{type} != 3 &&
+		$args->{type} != 10 &&
+		!$config{ignoreServerShutdown}))) {
 		message T("Lost connection; exiting\n");
 		$quit = 1;
 	}
@@ -2062,8 +2064,7 @@ sub errors {
 	$timeout_ex{'master'}{'timeout'} = $timeout{'reconnect'}{'timeout'};
 	if (($args->{type} != 0) || (!$config{ignoreServerShutdown})) {
 		$net->serverDisconnect();
-	} 
-
+	}
 	if ($args->{type} == 0 && !$config{ignoreServerShutdown}) {
 		error T("Server shutting down\n"), "connection";
 	} elsif ($args->{type} == 0 && $config{ignoreServerShutdown}) {
