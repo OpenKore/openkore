@@ -1397,3 +1397,12 @@ master_version 20
 version 2
 serverType 5
 serverEncoding Western
+
+## http://www.tsume-online.com/
+[Tsume Online Private Server]
+ip 213.251.152.27
+port 6900
+master_version 20
+version 21
+serverType 5
+serverEncoding Western
