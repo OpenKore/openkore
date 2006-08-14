@@ -64,7 +64,7 @@ sub new {
 	
 	message T("X-Kore mode intialized.\n"), "startup";
 	
-	if ($config{gameGuard} ne '2') {
+	if (defined($config{gameGuard}) && $config{gameGuard} ne '2') {
 		require Poseidon::EmbedServer;
 		Modules::register("Poseidon::EmbedServer");
 		$self{poseidon} = new Poseidon::EmbedServer;
@@ -298,7 +298,8 @@ sub checkConnection {
 	$self->checkServer();
 	
 	# Check the Poseidon Embed Server
-	$self->{poseidon}->iterate($self) if ($self->clientAlive() && $conState == 5 && $config{gameGuard} ne '2');
+	$self->{poseidon}->iterate($self) if ($self->clientAlive() && ($conState == 5) && defined($config{gameGuard})
+		&& $config{gameGuard} ne '2');
 }
 
 sub checkProxy {
