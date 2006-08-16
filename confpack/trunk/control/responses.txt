@@ -103,5 +103,7 @@ verboseOffS OMG, whatever
 verboseOffF Screw off, im already staying quiet
 verboseOffF Ya ya..I get it already
 
+versionS It's %$ver
+
 whereS Lost me? I'm at %$map: %$x, %$y
 whereS Here I am! %$map: %$x, %$y
