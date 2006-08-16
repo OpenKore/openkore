@@ -5,7 +5,7 @@ use warnings;
 
 require Exporter;
 our @ISA = qw(Exporter);
-our @EXPORT = qw(%macro %automacro %varStack $queue $cvs %logfac $onHold %amSingle %amMulti @slots);
+our @EXPORT = qw(%macro %automacro %varStack $queue $cvs %logfac $onHold %amSingle %amMulti @slots $macroKeywords);
 
 our %macro;
 our %automacro;
@@ -82,5 +82,24 @@ our @slots = qw(
 	leftAccessory rightAccessory
 	arrow
 );
+
+our $macroKeywords =
+	"npc"          . "|" .
+	"cart"         . "|" .
+	"inventory"    . "|" .
+	"store"        . "|" .
+	"storage"      . "|" .
+	"player"       . "|" .
+	"vender"       . "|" .
+	"random"       . "|" .
+	"rand"         . "|" .
+	"[Ii]nvamount" . "|" .
+	"[Cc]artamount". "|" .
+	"[Ss]hopamount". "|" .
+	"[Ss]toramount". "|" .
+	"config"       . "|" .
+	"eval"         . "|" .
+	"arg"
+;
 
 1;

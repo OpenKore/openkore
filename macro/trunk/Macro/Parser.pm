@@ -134,17 +134,15 @@ sub parseMacroFile {
 # should be an adequate workaround for the parser bug
 sub parseKw {
 	my $text = shift;
-	my $keywords = "npc|cart|inventory|store|storage|player|vender|random|rand|".
-		"invamount|cartamount|shopamount|storamount|config|eval|arg";
-	my @pair = $text =~ /\@($keywords)\s*\(\s*(.*?)\s*\)/i;
+	my @pair = $text =~ /\@($macroKeywords)\s*\(\s*(.*?)\s*\)/i;
 	return unless @pair;
 	if ($pair[0] eq 'arg') {
 		return $text =~ /\@(arg)\s*\(\s*(".*?",\s*\d+)\s*\)/
 	} elsif ($pair[0] eq 'random') {
 		return $text =~ /\@(random)\s*\(\s*(".*?")\s*\)/
 	}
-	while ($pair[1] =~ /^\@($keywords)\s*\(/) {
-		@pair = $pair[1] =~ /^\@($keywords)\s*\((.*)/
+	while ($pair[1] =~ /\@($macroKeywords)\s*\(/) {
+		@pair = $pair[1] =~ /\@($macroKeywords)\s*\((.*)/
 	}
 	return @pair
 }
@@ -179,17 +177,17 @@ sub parseCmd {
 		$cvs->debug("parsing '$command': '$kw', '$arg'", $logfac{parser_steps});
 		my $ret = "_%_";
 		if ($kw eq 'npc')           {$ret = getnpcID($arg)}
-		elsif ($kw eq 'cart')       {($ret, undef) = getItemIDs($arg, \@{$cart{inventory}})}
-		elsif ($kw eq 'Cart')       {my @ids = getItemIDs($arg, \@{$cart{inventory}}); $ret = join ',', @ids}
-		elsif ($kw eq 'inventory')  {($ret, undef) = getItemIDs($arg, \@{$char->{inventory}})}
-		elsif ($kw eq 'Inventory')  {my @ids = getItemIDs($arg, \@{$char->{inventory}}); $ret = join ',', @ids}
-		elsif ($kw eq 'store')      {($ret, undef) = getItemIDs($arg, \@::storeList)}
-		elsif ($kw eq 'storage')    {($ret, undef) = getStorageIDs($arg)}
-		elsif ($kw eq 'Storage')    {my @ids = getStorageIDs($arg); $ret = join ',', @ids}
+		elsif ($kw eq 'cart')       {($ret) = getItemIDs($arg, \@{$cart{inventory}})}
+		elsif ($kw eq 'Cart')       {$ret = join ',', getItemIDs($arg, \@{$cart{inventory}})}
+		elsif ($kw eq 'inventory')  {($ret) = getItemIDs($arg, \@{$char->{inventory}})}
+		elsif ($kw eq 'Inventory')  {$ret = join ',', getItemIDs($arg, \@{$char->{inventory}})}
+		elsif ($kw eq 'store')      {($ret) = getItemIDs($arg, \@::storeList)}
+		elsif ($kw eq 'storage')    {($ret) = getStorageIDs($arg)}
+		elsif ($kw eq 'Storage')    {$ret = join ',', getStorageIDs($arg)}
 		elsif ($kw eq 'player')     {$ret = getPlayerID($arg, \@::playersID)}
 		elsif ($kw eq 'vender')     {$ret = getPlayerID($arg, \@::venderListsID)}
 		elsif ($kw eq 'random')     {$ret = getRandom($arg)}
-		elsif ($kw eq 'rand')	{$ret = getRandomRange($arg)}
+		elsif ($kw eq 'rand')       {$ret = getRandomRange($arg)}
 		elsif ($kw eq 'invamount')  {$ret = getInventoryAmount($arg)}
 		elsif ($kw eq 'cartamount') {$ret = getCartAmount($arg)}
 		elsif ($kw eq 'shopamount') {$ret = getShopAmount($arg)}
