@@ -37,7 +37,7 @@ use Utils;
 use Log qw(warning error);
 use Translation;
 
-our @EXPORT_OK = qw(parseArguments addConfigFile delConfigFile %sys);
+our @EXPORT_OK = qw(parseArguments addConfigFile delConfigFile %sys $VERSION);
 
 
 # Constants

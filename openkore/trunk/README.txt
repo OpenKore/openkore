@@ -4,7 +4,7 @@
 
 *** INCOMPATIBLE CHANGES ***:
 - You need to download the latest responses.txt (in the config pack)
-	to use the new 'exp' chat command.
+	to use the new 'exp' and 'version' chat commands.
 
 Bug fixes:
 - Fixed a crash when unequipping items (bug #16)
@@ -108,6 +108,8 @@ New chat commands:
 	exp         : shows exp gain.
 	exp item    : shows items gain.
 	exp monster : shows killed monsters.
+- version
+	shows the OpenKore version.
 
 Internal:
 - Updated $config{gameGuard} '2' behavior to adapt to bRO server.

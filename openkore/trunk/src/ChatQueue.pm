@@ -18,18 +18,20 @@ package ChatQueue;
 use strict;
 use Time::HiRes qw(time);
 
-use Globals qw($accountID $AI %ai_v $char @chatResponses %cities_lut
-		%config %field %itemChange @monsters_Killed %maps_lut $net %overallAuth %players
-		%responseVars %skillsSP_lut $startTime_EXP %timeout
-		$totalBaseExp $totalJobExp
-		);
 use AI;
 use Commands;
-use Plugins;
+use Globals qw($accountID $AI %ai_v $char @chatResponses %cities_lut
+		%config %field %itemChange @monsters_Killed %maps_lut $net %overallAuth
+		%players %responseVars %skillsSP_lut $startTime_EXP %timeout
+		$totalBaseExp $totalJobExp
+		);
 use Log qw(message error);
-use Utils qw(formatNumber getFormattedDate parseArgs swrite timeConvert timeOut);
-use Misc qw(auth avoidGM_talk avoidList_talk configModify getIDFromChat getResponse quit relog sendMessage setTimeout);
+use Misc qw(auth avoidGM_talk avoidList_talk configModify getIDFromChat
+		getResponse quit relog sendMessage setTimeout);
+use Plugins;
+use Settings qw($VERSION);
 use Translation;
+use Utils qw(formatNumber getFormattedDate parseArgs swrite timeConvert timeOut);
 
 our @queue;
 our $wordSplitters = qr/(\b| |,|\.|\!)/;
@@ -188,7 +190,7 @@ sub processChatCommand {
 			for (my $i = 0; $i < @monsters_Killed; $i++) {
 				next if ($monsters_Killed[$i] eq "");
 				$vars->{killedMonsters} = swrite(
-					"@<< @<<<<<<<<<<<<<<<<<<<<<<<< @<<<",
+					"@<< @<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<",
 					[$i, $monsters_Killed[$i]{name}, $monsters_Killed[$i]{count}]);
 				$vars->{killedMonsters} = substr($vars->{killedMonsters}, 0, length($vars->{killedMonsters}) - 1);
 				$vars->{numKilledMonsters} += $monsters_Killed[$i]{count};
@@ -398,6 +400,10 @@ sub processChatCommand {
 	} elsif ($switch eq "town") {
 		sendMessage($net, $type, getResponse("moveS"), $user);
 		main::useTeleport(2);
+	
+	} elsif ($switch eq "version") {
+		$vars->{ver} = $VERSION;
+		sendMessage($net, $type, getResponse("versionS"), $user) if $config{verbose};
 
 	} elsif ($switch eq "where") {
 		my $rsw = "$field{name}.rsw";
