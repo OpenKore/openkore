@@ -352,6 +352,8 @@ sub consoleCheckWrapper {
 	return unless defined $conState;
 	# skip "macro" and "cvsdebug" domains to avoid loops
 	return if $_[1] =~ /^(macro|cvsdebug)$/;
+	# skip debug messages
+	return if $_[0] eq 'debug';
 	my @args = @_;
 	automacroCheck("log", \@args)
 }
