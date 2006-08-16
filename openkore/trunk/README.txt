@@ -9,6 +9,7 @@
 Bug fixes:
 - Fixed a crash when unequipping items (bug #16)
 - Fixed an auto-completion crash bug (bug #24)
+- Fixed the "Can't store CODE items" bug (bug #37)
 
 New features:
 - Added AI::Homunculus module for homunculus AI support with automated
