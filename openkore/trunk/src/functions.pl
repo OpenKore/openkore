@@ -354,7 +354,7 @@ sub mainLoop {
 		$AI::Timeouts::autoConfChangeTime = time;
 	}
 
-	processStatisticsReporting() unless $config{privacy};
+	processStatisticsReporting() unless ($sys{sendAnonymousStatisticReport} eq "0");
 
 	# Update walk.dat
 	if ($conState == 5 && timeOut($AI::Timeouts::mapdrt, $config{intervalMapDrt})) {

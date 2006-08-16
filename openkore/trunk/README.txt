@@ -81,9 +81,16 @@ New config options:
 	Makes the bot (attempt to) teleport after it lost its target, this to
 	prevent it from locking onto the same target over and over in some cases.
 - ignoreServerShutdown <boolean flag>
-	Ignores the "server shutting down" error wich some servers tend to send (iRO for example)
+	Ignores the "server shutting down" error wich some servers tend to send
+	(iRO for example).
 	Don't use this unless you're 100% sure the errors are "fake".
 	
+New sys.txt options:
+- sendAnonymousStatisticReport <boolean flag>
+    tells whether OpenKore will report an anonymous usage report. Note that
+	none of your sensitive information will be sent. More info is available at:
+	http://www.openkore.com/statistics.php
+
 New commands:
 - homun <s|status|feed|move|standby|ai|aiv|skills>
 	homun s       : displays homunculus status.
