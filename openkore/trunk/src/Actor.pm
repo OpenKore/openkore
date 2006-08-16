@@ -314,9 +314,18 @@ sub deepCopy {
 	# Delete fields that cannot be copied by dclone() and store
 	# them in a temporary place.
 	my %deepCopyFields;
+	my %hashCopies;
 	foreach my $field ('onNameChange', 'onUpdate') {
 		$deepCopyFields{$field} = $self->{$field};
 		delete $self->{$field};
+	}
+	# $actor->{casting} may be a hash which contains a reference to another
+	# Actor object.
+	foreach my $field ('casting') {
+		if ($self->{$field}) {
+			$hashCopies{$field} = $self->{$field};
+			delete $self->{$field};
+		}
 	}
 
 	my $copy;
@@ -335,6 +344,10 @@ sub deepCopy {
 	foreach my $field (keys %deepCopyFields) {
 		$self->{$field} = $deepCopyFields{$field};
 		$copy->{$field} = $deepCopyFields{$field}->deepCopy;
+	}
+	foreach my $field (keys %hashCopies) {
+		$self->{$field} = $hashCopies{$field};
+		$copy->{$field} = {%{$hashCopies{$field}}};
 	}
 
 	return $copy;

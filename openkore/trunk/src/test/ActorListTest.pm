@@ -1,5 +1,7 @@
 package ActorListTest;
 
+# TODO: write test for deepCopy()
+
 use strict;
 use Test::More;
 use ActorList;

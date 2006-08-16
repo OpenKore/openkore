@@ -4,6 +4,7 @@ use strict;
 use Time::HiRes qw(time usleep);
 use encoding 'utf8';
 use Carp::Assert;
+use Scalar::Util;
 
 use Globals;
 use Actor;
@@ -4409,6 +4410,9 @@ sub skill_cast {
 		startTime => time,
 		castTime => $wait
 	};
+	# Since we may have a circular reference, weaken this reference
+	# to prevent memory leaks.
+	Scalar::Util::weaken($source->{casting}{target});
 
 	my $targetString;
 	if ($x != 0 || $y != 0) {
