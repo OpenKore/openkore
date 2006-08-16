@@ -39,3 +39,7 @@ panelTwo_height 4
 panelTwo_width 40
 panelTwo_side bottom
 panelTwo_fontsize 8
+
+
+###### Miscellaneous ######
+sendAnonymousStatisticReport 1
