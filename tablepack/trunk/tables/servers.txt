@@ -1406,3 +1406,13 @@ master_version 20
 version 21
 serverType 5
 serverEncoding Western
+
+## http://www.kawaii-ro.net/
+[Kawaii-ro]
+ip 194.146.226.57
+port 5121
+master_version 14
+version 1
+serverType 5
+private 1
+serverEncoding Western
