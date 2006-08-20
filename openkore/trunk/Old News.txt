@@ -656,7 +656,7 @@ Credits:
 
 New features:
 - Updated server list with the latest mRO server information.
-- Support for new mRO 10.2 classes, such as Taekwon.
+- Support for new mRO 10.3 classes, such as Taekwon.
 
 
 ==================
