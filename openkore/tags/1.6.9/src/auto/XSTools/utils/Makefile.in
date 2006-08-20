@@ -1,0 +1,44 @@
+CC=gcc
+CFLAGS=-Wall -Wno-uninitialized -O2 -funroll-loops -finline-functions $(CYGWIN)
+CXX=g++
+CXXFLAGS=$(CFLAGS)
+@HEADER@
+#if unix
+IMPL=unix
+CFLAGS+=`curl-config --cflags`
+#endif
+#if win32
+IMPL=win32
+#endif
+
+OBJ=http-reader.o std-http-reader.o mirror-http-reader.o perl/HttpReader.o c-bindings/http-reader.o whirlpool-algorithm.o perl/Whirlpool.o
+.PHONY: all clean
+
+
+all: $(OBJ)
+
+perl/HttpReader.o: perl/HttpReader.xs http-reader.h std-http-reader.h mirror-http-reader.h
+	cd perl && $(XSUBPP) -C++ -typemap "$(TYPEMAP)" -typemap typemap HttpReader.xs > HttpReader.cpp
+	$(CXX) -I. $(CXXFLAGS) perl/HttpReader.cpp -c $(PERLCFLAGS) -o perl/HttpReader.o -I$(COREDIR)
+
+perl/Whirlpool.o: perl/Whirlpool.xs whirlpool-algorithm.h
+	cd perl && $(XSUBPP) -typemap "$(TYPEMAP)" -typemap typemap Whirlpool.xs > Whirlpool.c
+	$(CC) -I. $(CFLAGS) perl/Whirlpool.c -c $(PERLCFLAGS) -o perl/Whirlpool.o -I$(COREDIR)
+
+http-reader.o: http-reader.cpp http-reader.h
+	$(CXX) $(SOCFLAGS) $(CXXFLAGS) $< -c -o $@
+
+std-http-reader.o: std-http-reader.cpp std-http-reader.h $(IMPL)/http-reader.cpp
+	$(CXX) $(SOCFLAGS) $(CXXFLAGS) $< -c -o $@
+
+mirror-http-reader.o: mirror-http-reader.cpp mirror-http-reader.h $(IMPL)/platform.h
+	$(CXX) $(SOCFLAGS) $(CXXFLAGS) $< -c -o $@
+
+c-bindings/http-reader.o: c-bindings/http-reader.cpp http-reader.h std-http-reader.h mirror-http-reader.h
+	$(CXX) $(SOCFLAGS) $(CXXFLAGS) $< -c -o $@
+
+whirlpool-algorithm.o: whirlpool-algorithm.c whirlpool-algorithm.h whirlpool-constants.h whirlpool-portability.h
+	$(CC) $(SOCFLAGS) $(CFLAGS) $< -c -o $@
+
+clean:
+	rm -f $(OBJ) Makefile.real perl/HttpReader.cpp

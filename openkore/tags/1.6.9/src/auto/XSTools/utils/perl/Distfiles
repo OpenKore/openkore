@@ -1,0 +1,3 @@
+typemap
+HttpReader.xs
+Whirlpool.xs
