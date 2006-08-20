@@ -306,7 +306,8 @@ if( ( $total_categories = count($category_rows) ) )
 		'L_FORUM_LOCKED' => $lang['Forum_is_locked'],
 		'L_MARK_FORUMS_READ' => $lang['Mark_all_forums'], 
 
-		'U_MARK_READ' => append_sid("index.$phpEx?mark=forums"))
+		'U_MARK_READ' => append_sid("index.$phpEx?mark=forums"),
+		'IS_ADMIN' => $userdata['user_level'] == ADMIN)
 	);
 
 	//
