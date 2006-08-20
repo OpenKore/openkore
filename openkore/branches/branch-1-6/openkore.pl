@@ -406,6 +406,7 @@ our $startTime_EXP = time;
 
 initStatVars();
 initRandomRestart();
+initUserSeed();
 initConfChange();
 $timeout{'injectSync'}{'time'} = time;
 
