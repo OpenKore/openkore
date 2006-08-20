@@ -651,6 +651,15 @@ Credits:
 
 
 ==================
+### 1.6.9
+==================
+
+New features:
+- Updated server list with the latest mRO server information.
+- Support for new mRO 10.2 classes, such as Taekwon.
+
+
+==================
 ### 1.6.8
 ==================
 
