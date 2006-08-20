@@ -1416,3 +1416,13 @@ version 1
 serverType 5
 private 1
 serverEncoding Western
+
+## http://www.cakero.net/
+[CakeRO (HIGH RATE) - 2k/2k/1k]
+ip 72.232.3.66
+port 6901
+master_version 14
+version 1
+serverType 5
+private 1
+serverEncoding Western
