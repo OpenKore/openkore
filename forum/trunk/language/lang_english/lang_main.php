@@ -1052,6 +1052,8 @@ $lang['Global_Announcements'] = 'Global Announcements';
 $lang['Announcements'] = 'Announcements';
 $lang['Sticky_Topics'] = 'Read these topics first!';
 
+$lang['Subforums'] = 'Subforums';
+
 //
 // That's all, Folks!
 // -------------------------------------------------
