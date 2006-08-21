@@ -785,8 +785,8 @@ serverType 0
 serverEncoding Western
 
 ## http://www.andzro.org/
-[AndzRO Private Server]
-ip 64.92.173.26
+[ViciousRO Private Server]
+ip viciousro.no-ip.org
 port 6904
 master_version 1
 version 20
