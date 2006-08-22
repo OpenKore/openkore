@@ -52,6 +52,7 @@ our %amSingle = (
 );
 
 our %amMulti = (
+	'set' => 1,          # set: variable
 	'monster' => 1,      # check: monster on screen
 	'aggressives' => 1,  # check: aggressives
 	'location' => 1,     # check: player's location
