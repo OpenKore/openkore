@@ -155,7 +155,6 @@ sub getConfig {
 
 # adds variable and value to stack
 sub setVar {
-	$cvs->debug("setVar(@_)", $logfac{function_call_macro} | $logfac{function_call_auto});
 	my ($var, $val) = @_;
 	$cvs->debug("'$var' = '$val'", $logfac{variable_trace});
 	$varStack{$var} = $val;
@@ -164,7 +163,6 @@ sub setVar {
 
 # gets variable's value from stack
 sub getVar {
-	$cvs->debug("getVar(@_)", $logfac{function_call_macro});
 	my $var = shift;
 	refreshGlobal($var);
 	return unless defined $varStack{$var};
@@ -173,7 +171,6 @@ sub getVar {
 
 # sets and/or refreshes global variables
 sub refreshGlobal {
-	$cvs->debug("refreshGlobal(@_)", $logfac{function_call_macro} | $logfac{function_call_auto});
 	my $var = shift;
 
 	if (!defined $var || $var eq '.map') {
@@ -192,6 +189,15 @@ sub refreshGlobal {
 
 	if (!defined $var || $var eq '.datetime') {
 		setVar(".datetime", scalar localtime)
+	}
+	
+	# TODO..
+	if (!defined $var || $var eq '.hp') {
+		setVar(".hp", $char->{hp})
+	}
+	
+	if (!defined $var || $var eq '.sp') {
+		setVar(".sp", $char->{sp})
 	}
 	
 	if (!defined $var || $var eq '.status') {
@@ -257,7 +263,7 @@ sub getStorageIDs {
 # get amount of sold out slots
 sub getSoldOut {
 	$cvs->debug("getSoldOut(@_)", $logfac{function_call_auto});
-	if (!$shopstarted) {return 0}
+	return 0 unless $shopstarted;
 	my $soldout = 0;
 	foreach my $aitem (@::articles) {
 		next unless $aitem;
@@ -330,7 +336,7 @@ sub getRandom {
 		$arg =~ s/^[, ]*".*?"//g;
 	}
 	pop @items;
-	if (!@items) {
+	unless (@items) {
 		warning "[macro] wrong syntax in \@random\n", "macro";
 		return
 	}
@@ -349,7 +355,7 @@ sub callMacro {
 	return unless defined $queue;
 	return if $onHold;
 	my %tmptime = $queue->timeout;
-	if (!$queue->registered && !$queue->overrideAI) {
+	unless ($queue->registered || $queue->overrideAI) {
 		if (timeOut(\%tmptime)) {$queue->register}
 		else {return}
 	}
@@ -357,7 +363,7 @@ sub callMacro {
 		my $command = $queue->next;
 		if (defined $command) {
 			if ($command ne '') {
-				if (!Commands::run($command)) {
+				unless (Commands::run($command)) {
 					error(sprintf("[macro] %s failed with %s\n", $queue->name, $command), "macro");
 					undef $queue;
 					return
