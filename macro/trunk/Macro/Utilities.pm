@@ -191,7 +191,6 @@ sub refreshGlobal {
 		setVar(".datetime", scalar localtime)
 	}
 	
-	# TODO..
 	if (!defined $var || $var eq '.hp') {
 		setVar(".hp", $char->{hp})
 	}
@@ -200,6 +199,22 @@ sub refreshGlobal {
 		setVar(".sp", $char->{sp})
 	}
 	
+	if (!defined $var || $var eq '.lvl') {
+		setVar(".lvl", $char->{lv})
+	}
+
+	if (!defined $var || $var eq '.joblvl') {
+		setVar(".joblvl", $char->{lv_job})
+	}
+
+	if (!defined $var || $var eq '.spirits') {
+		setVar(".spirits", ($char->{spirits} or 0))
+	}
+
+	if (!defined $var || $var eq '.zeny') {
+		setVar(".zeny", $char->{zenny})
+	}
+
 	if (!defined $var || $var eq '.status') {
 		my @statuses;
 		if ($char->{muted}) {push @statuses, "muted"}
