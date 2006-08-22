@@ -255,7 +255,22 @@ sub next {
 		}
 		$self->{timeout} = 0
 	##########################################
-	 # set variable: $variable = value
+	# pop value from variable: $var = [$list]
+	} elsif ($line =~ /^\$[a-z][a-z\d]*\s+=\s+\[\s*\$[a-z][a-z\d]*\s*\]$/i) {
+		my ($var, $list) = $line =~ /^\$([a-z][a-z\d]*?)\s+=\s+\[\s*\$([a-z][a-z\d]*?)\s*\]$/i;
+		my $listitems = (getVar($list) or "");
+		my $val;
+		if (($val) = $listitems =~ /^(.*?)(,|$)/) {
+			$listitems =~ s/^(.*?)(,|$)//;
+			setVar($list, $listitems)
+		} else {
+			$val = $listitems
+		}
+		setVar($var, $val);
+		$self->{line}++;
+		$self->{timeout} = 0;
+	##########################################
+	# set variable: $variable = value
 	} elsif ($line =~ /^\$[a-z]/i) {
 		my ($var, $val);
 		if (($var, $val) = $line =~ /^\$([a-z][a-z\d]*?)\s+=\s+(.*)$/i) {
