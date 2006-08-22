@@ -261,6 +261,13 @@ macro registered to AI queue</dd>
 	You can define and work with own variables.<br />
 	To set a variable use <i>$variable = value</i>, to recall the value use <i>$variable</i>.<br />
 	It is possible to increment and to decrement a variable.<br />
+	To extract the first item of a comma-separated list use
+	<pre class="code">macro foo {
+   $list = element one,element two,foo,bar,baz
+   $var = [$list]
+   log var contains $var (element one)
+   log list contains $list (element two,foo,bar,baz)
+}</pre>
 	Note that variable names must begin with a letter and must not contain anything other than letters and digits.<br />
 	Examples:
 	<pre class="code">macro foo {
@@ -285,6 +292,9 @@ macro registered to AI queue</dd>
 		<li><tt>$.pos</tt> - your current position ("123 234")</li>
 		<li><tt>$.time</tt> - current time as unix timestamp ("1131116304")</li>
 		<li><tt>$.datetime</tt> - current date and time ("Fri Nov  4 15:59:36 2005")</li>
+		<li><tt>$.hp</tt> - current hp</li>
+		<li><tt>$.sp</tt> - current sp</li>
+		<li><tt>$.status</tt> - current statuses in a comma-separated list</li>
 		<li><a name=".lastLogMsg"></a><tt>$.lastLogMsg</tt> - the text that triggered the last automacro condition "console"</li>
 		<li><a name=".lastpub"></a><tt>$.lastpub</tt> - the name of the player who triggered the last automacro condition "pubm"</li>
 		<li><a name=".lastpubMsg"></a><tt>$.lastpubMsg</tt> - what he wrote</li>
