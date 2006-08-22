@@ -6,7 +6,7 @@
 # See http://www.gnu.org/licenses/gpl.html
 
 package macro;
-my $Version = "1.3.1";
+my $Version = "1.3.2";
 my $Changed = sprintf("%s %s %s",
 	q$Date$
 	=~ /(\d{4}-\d{2}-\d{2}) (\d{2}:\d{2}:\d{2}) ([+-]\d{4})/);
@@ -136,6 +136,12 @@ sub hookOnDemand {
 
 # checks macro configuration
 sub checkConfig {
+	if ($::config{macro_readmanual} ne 'red/chili') {
+		warning "[macro] you should read the documentation before using this plugin: ".
+			"http://openkore.sourceforge.net/macro/\n";
+		return 0
+	}
+
 	if (!defined $timeout{macro_delay}) {
 		warning "[macro] you did not specify 'macro_delay' in timeouts.txt. Assuming 1s\n";
 		$timeout{macro_delay}{timeout} = 1
