@@ -3395,7 +3395,7 @@ sub processAutoTeleport {
 
 		if ($ok) {
 			message T("Teleporting to avoid all players\n"), "teleport";
-			useTeleport(1, undef, 1);
+			useTeleport(1);
 			$ai_v{temp}{clear_aiQueue} = 1;
 			$AI::Temp::Teleport_allPlayers = time;
 		}
@@ -3435,7 +3435,7 @@ sub processAutoTeleport {
 	  && !$char->{dead}
 	) {
 		message T("Teleporting due to insufficient HP/SP or too many aggressives\n"), "teleport";
-		$ai_v{temp}{clear_aiQueue} = 1 if (useTeleport(1, undef, 1));
+		$ai_v{temp}{clear_aiQueue} = 1 if (useTeleport(1));
 		$timeout{ai_teleport_hp}{time} = time;
 		return;
 	}
@@ -3446,7 +3446,7 @@ sub processAutoTeleport {
 			next unless $_;
 			if (mon_control($monsters{$_}{name})->{teleport_auto} == 1) {
 				message TF("Teleporting to avoid %s\n", $monsters{$_}{name}), "teleport";
-				$ai_v{temp}{clear_aiQueue} = 1 if (useTeleport(1, undef, 1));
+				$ai_v{temp}{clear_aiQueue} = 1 if (useTeleport(1));
 				$timeout{ai_teleport_away}{time} = time;
 				return;
 			}
