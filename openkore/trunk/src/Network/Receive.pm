@@ -4437,7 +4437,7 @@ sub skill_cast {
 	Misc::checkValidity("skill_cast part 2");
 
 	my $domain = ($sourceID eq $accountID) ? "selfSkill" : "skill";
-	my $disp = skillCast_string($source, $target, $skill->name, $wait);
+	my $disp = skillCast_string($source, $target, $x, $y, $skill->name, $wait);
 	message $disp, $domain, 1;
 
 	Plugins::callHook('is_casting', {
