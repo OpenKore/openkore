@@ -804,6 +804,15 @@ serverEncoding Western
 
 ## http://animaro.com/
 [AnimaRO Private Server]
+ip d.animaro.com
+port 6900
+master_version 0
+version 20
+serverType 7
+serverEncoding Western
+
+## http://animaro.com/
+[AnimaRO Private Server (Beta)]
 ip c.animaro.com
 port 6900
 master_version 0
