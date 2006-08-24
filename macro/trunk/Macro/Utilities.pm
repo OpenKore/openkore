@@ -89,6 +89,10 @@ sub cmpr {
 	}
 	if (($cond eq "=" || $cond eq "==") && $a eq $b) {return 1}
 	if ($cond eq "!=" && $a ne $b) {return 1}
+	if ($cond eq "~") {
+		$a = lc($a);
+		foreach my $e (split(/,/, $b)) {return 1 if $a eq lc($e)}
+	}
 	return 0
 }
 

@@ -78,6 +78,7 @@ sub checkLoc {
 	if ($map eq $field{name}) {
 		if ($x1 && $y1) {
 			my $pos = calcPosition($char);
+			return 0 unless defined $pos->{x} && defined $pos->{y};
 			if ($x2 && $y2) {
 				if (between($x1, $pos->{x}, $x2) && between($y2, $pos->{y}, $y1)) {
 					return $not?0:1
