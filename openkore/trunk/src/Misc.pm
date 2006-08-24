@@ -3042,12 +3042,27 @@ sub attack_string {
 }
 
 sub skillCast_string {
-	my ($source, $target, $skillName, $delay) = @_;
+	my ($source, $target, $x, $y, $skillName, $delay) = @_;
 	assert(UNIVERSAL::isa($source, 'Actor')) if DEBUG;
 	assert(UNIVERSAL::isa($target, 'Actor')) if DEBUG;
 
+	# Location
+	if ($x != 0 || $y != 0) {
+		if ($source->isa('Actor::You')) {
+			return TF("You are casting %s on location (%d, %d) - (time %sms)\n", $skillName, $x, $y, $delay);
+		} elsif ($source->isa('Actor::Player')) {
+			return TF("Player %s (%d) is casting %s on location (%d, %d) - (time %sms)\n", $source->name, 
+				$source->{binID}, $skillName, $x, $y, $delay);
+		} elsif ($source->isa('Actor::Monster')) {
+			return TF("Monster %s (%d) is casting %s on location (%d, %d) - (time %sms)\n", $source->name, 
+				$source->{binID}, $skillName, $x, $y, $delay);
+		} elsif ($source->isa('Actor::Unknown')) {
+			return TF("Unknown #%s (%d) is casting %s on location (%d, %d) - (time %sms)\n", $source->{nameID},	
+				$source->{binID}, $skillName, $x, $y, $delay);
+		}
+
 	# You
-	if ($source->isa('Actor::You')) {
+	} elsif ($source->isa('Actor::You')) {
 		if ($target->isa('Actor::You')) {
 			return TF("You are casting %s on yourself (time %sms)\n", $skillName, $delay);
 		} elsif ($target->isa('Actor::Player')) {
