@@ -470,7 +470,7 @@ equipAuto {
 	inInventory
 }
 
-useSelf_item Meat,Apple,Banana,Sweet Potato,Carrot,Red Potion {
+useSelf_item {
 	hp <= 50%
 	sp
 	onAction
