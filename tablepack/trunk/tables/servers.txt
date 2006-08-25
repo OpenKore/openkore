@@ -817,7 +817,7 @@ ip c.animaro.com
 port 6900
 master_version 0
 version 20
-serverType 7
+serverType 0
 serverEncoding Western
 
 ## http://excalibur-ro.com/
