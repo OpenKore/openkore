@@ -471,7 +471,7 @@ equipAuto {
 }
 
 useSelf_item {
-	hp <= 50%
+	hp
 	sp
 	onAction
 	whenStatusActive
