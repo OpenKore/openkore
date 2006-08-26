@@ -4,7 +4,13 @@
 
 *** INCOMPATIBLE CHANGES ***:
 - You need to download the latest responses.txt (in the config pack)
-	to use the new 'exp' and 'version' chat commands.
+  to use the new 'exp' and 'version' chat commands.
+
+Credits:
+- Molag: Ayothaya portals contributions.
+- DarkShado: XileRO server information updates.
+- johnny: Homunculus skills.
+- FIrewall: various portal contributions.
 
 Bug fixes:
 - Fixed a crash when unequipping items (bug #16)
@@ -119,7 +125,8 @@ Internal:
 	Linux.
 - Item has been renamed to Actor::Item for consistency.
 
-Credits:
-- Molag: Ayothaya portals contributions.
-- DarkShado: XileRO server information updates.
-- johnny: Homunculus skills.
+
+
+--------------------------
+
+http://www.openkore.com/misc/OldNews.txt
