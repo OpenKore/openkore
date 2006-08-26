@@ -264,6 +264,8 @@ sub new {
 		'0207' => ['friend_request', 'a4 a4 Z24', [qw(accountID charID name)]],
 		'0209' => ['friend_response', 'C1 Z24', [qw(type name)]],
 		'020A' => ['friend_removed', 'a4 a4', [qw(friendAccountID friendCharID)]],
+		'020E' => ['taekwon_mission_receive', 'Z24 a4 c1', [qw(monName ID value)]],
+		'0224' => ['taekwon_rank', 'c1 x3 c1', [qw(type rank)]],
 		'0227' => ['gameguard_request'],
 		'0229' => ['character_status', 'a4 v1 v1 v1', [qw(ID param1 param2 param3)]],
 		'022A' => ['actor_display', 'a4 v4 x2 v8 x2 v a4 a4 v x2 C2 a3 x2 C v', [qw(ID walk_speed param1 param2 param3 type hair_style weapon shield lowhead tophead midhead hair_color head_dir guildID guildEmblem visual_effects stance sex coords act lv)]],
@@ -4264,7 +4266,18 @@ sub sync_request {
 		} else {
 			warning T("Sync packet requested for wrong ID\n");
 		}
-	}		
+	}
+}
+
+sub taekwon_rank {
+	my ($self, $args) = @_;
+     message T("TaeKwon Mission Rank : ".$args->{rank}."\n"), "info";
+}
+
+
+sub taekwon_mission_receive {
+	my ($self, $args) = @_;
+     message T("TaeKwon Mission : ".$args->{monName}."(".$args->{value}."\%)"."\n"), "info";
 }
 
 sub no_teleport {
