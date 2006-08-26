@@ -52,13 +52,26 @@ PACKAGEDIR=$PACKAGE-$VERSION
 
 
 if [[ "$1" == "--help" ]]; then
-	echo "makedist.sh [--bin]"
-	echo " --bin    Create a binary distribution."
+	echo "makedist.sh [--bin|--semibin DIR]"
+	echo " --bin      Create a binary distribution archive, including the binaries, confpack and"
+	echo "            tablepack."
+	echo " --semibin  Create a binary distribution, excluding binaries, confpack and tablepack."
+	echo "            Files will be copied to DIR."
 	exit 1
 elif [[ "$1" == "--bin" ]]; then
 	BINDIST=1
 	if [[ "$2" == "-o" ]]; then
 		PACKAGEDIR="$3"
+	fi
+elif [[ "$1" == "--semibin" ]]; then
+	SEMIBINDIST=1
+	PACKAGEDIR="$2"
+	if [[ "$PACKAGEDIR" = "" ]]; then
+		echo "No output folder given. See --help"
+		exit 1
+	elif [[ ! -d "$PACKAGEDIR" ]]; then
+		echo "The output folder does not exist. See --help"
+		exit 1
 	fi
 fi
 
@@ -129,7 +142,6 @@ done
 #######################################
 
 
-# Copy the confpack and tablepack files to the distribution's folder
 function findConfpackDir() {
 	if [[ -d confpack ]]; then
 		confpackDir=confpack
@@ -155,15 +167,19 @@ function findTablepackDir() {
 }
 
 dir=`cd "$PACKAGEDIR"; pwd`
-findConfpackDir
-findTablepackDir
-make -C "$confpackDir" distdir DISTDIR="$dir/control" || err
-make -C "$tablepackDir" distdir DISTDIR="$dir/tables" || err
+
+# Copy the confpack and tablepack files to the distribution's folder
+if [[ "$SEMIBINDIST" != "1" ]]; then
+	findConfpackDir
+	findTablepackDir
+	make -C "$confpackDir" distdir DISTDIR="$dir/control" || err
+	make -C "$tablepackDir" distdir DISTDIR="$dir/tables" || err
+fi
 
 # Convert openkore.pl to Unix line format, otherwise Unix users can't
 # execute it directly.
 perl src/build/dos2unix.pl "$PACKAGEDIR/openkore.pl" || err
-perl "$confpackDir/unix2dos.pl" "$PACKAGEDIR/News.txt" || err
+perl src/build/unix2dos.pl "$PACKAGEDIR/README.txt" || err
 
 if [[ "$BINDIST" == "1" ]]; then
 	# Create binary zipfile
@@ -181,11 +197,13 @@ if [[ "$BINDIST" == "1" ]]; then
 	echo "$PACKAGE-$VERSION-win32.zip created"
 	echo "$PACKAGE-wx-$VERSION.zip created"
 
-else
+elif [[ "$SEMIBINDIST" != "1" ]]; then
 	# Create tarball
 	echo "Creating distribution archive..."
 	tar --bzip2 -cf "$PACKAGEDIR.tar.bz2" "$PACKAGEDIR" || err
 	echo "$PACKAGEDIR.tar.bz2"
 fi
 
-rm -rf "$PACKAGEDIR"
+if [[ "$SEMIBINDIST" != "1" ]]; then
+	rm -rf "$PACKAGEDIR"
+fi
