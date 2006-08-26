@@ -31,6 +31,8 @@ New features:
 - Added command chaining, preform multiple commands in 1 line. the " ; "
 	character is used to delimit the command.s
 	Example: c watch out im using an item now;is 0;c see, i used it!
+- Added Aegis 10.4 new classes support.
+- Added Taekwon mission support
 
 New config options:
 - attackChangeTarget <boolean flag>
