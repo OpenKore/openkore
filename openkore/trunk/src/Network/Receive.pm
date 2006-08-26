@@ -346,7 +346,7 @@ sub reconstruct {
 sub create {
 	my ($self, $type) = @_;
 	$type = 0 if $type eq '';
-	my $class = "Network::Receive::ServerType$type";
+	my $class = "Network::Receive::ServerType" . int($type);
 
 	undef $@;
 	eval "use $class;";
