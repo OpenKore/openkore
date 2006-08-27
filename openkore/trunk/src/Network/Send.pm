@@ -1518,7 +1518,7 @@ sub sendMasterLogin {
 			$username . $password .
 			pack("C*", $master_version);
 
-	} elsif ($config{serverType} == 8) {
+	} elsif ($config{serverType} == 8 || $config{serverType} == 9) {
 		$msg = pack("v1 V", hex($masterServer->{masterLogin_packet}) || 0x277, $version) .
 			pack("a24", $username) .
 			pack("a24", $password) .
