@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-08-24 15:11-0300\n"
+"POT-Creation-Date: 2006-08-27 15:39+0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -267,7 +267,7 @@ msgid ""
 "You are not currently in a card merge session.\n"
 msgstr ""
 
-#: ../Commands.pm:619 ../Network/Receive.pm:1336
+#: ../Commands.pm:619 ../Network/Receive.pm:1338
 msgid "-----Card Merge Candidates-----\n"
 msgstr ""
 
@@ -1080,7 +1080,7 @@ msgstr ""
 msgid "Sending guild break: %s\n"
 msgstr ""
 
-#: ../Commands.pm:1865 ../Network/Receive.pm:2670 ../Network/Receive.pm:3354
+#: ../Commands.pm:1865 ../Network/Receive.pm:2672 ../Network/Receive.pm:3356
 #: ../Network/Receive/ServerType0.pm:40
 msgid "Requesting guild information...\n"
 msgstr ""
@@ -1788,7 +1788,7 @@ msgstr ""
 msgid "None"
 msgstr ""
 
-#: ../Commands.pm:3272 ../Network/Receive.pm:505
+#: ../Commands.pm:3272 ../Network/Receive.pm:507
 msgid "You are sitting.\n"
 msgstr ""
 
@@ -2203,7 +2203,7 @@ msgstr ""
 msgid "Attempting to open a warp portal to %s (%s)\n"
 msgstr ""
 
-#: ../Commands.pm:4058 ../Network/Receive.pm:5477
+#: ../Commands.pm:4058 ../Network/Receive.pm:5490
 msgid ""
 "----------------- Warp Portal --------------------\n"
 "#  Place                           Map\n"
@@ -2386,7 +2386,7 @@ msgstr ""
 msgid "*** The GM %s talked to you, auto disconnected ***\n"
 msgstr ""
 
-#: ../Misc.pm:1236 ../Misc.pm:1250 ../Misc.pm:3520 ../Network/Receive.pm:2082
+#: ../Misc.pm:1236 ../Misc.pm:1250 ../Misc.pm:3520 ../Network/Receive.pm:2084
 #, perl-format
 msgid "Disconnect for %s seconds...\n"
 msgstr ""
@@ -3334,7 +3334,7 @@ msgstr ""
 msgid "Invalid server specified, server %s does not exist...\n"
 msgstr ""
 
-#: ../Network.pm:433 ../Network/Receive.pm:475
+#: ../Network.pm:433 ../Network/Receive.pm:477
 msgid "Choose your server.  Enter the server number: "
 msgstr ""
 
@@ -3564,42 +3564,42 @@ msgstr ""
 msgid "Logon-grant packet received twice! Avoiding bug in client.\n"
 msgstr ""
 
-#: ../XKoreProxy.pm:489 ../Network/Receive.pm:472
+#: ../XKoreProxy.pm:489 ../Network/Receive.pm:474
 msgid "Closing connection to Account Server\n"
 msgstr ""
 
-#: ../XKoreProxy.pm:510 ../Network/Receive.pm:4135
+#: ../XKoreProxy.pm:510 ../Network/Receive.pm:4137
 msgid "Closing connection to Character Server\n"
 msgstr ""
 
-#: ../XKoreProxy.pm:512 ../Network/Receive.pm:3307
+#: ../XKoreProxy.pm:512 ../Network/Receive.pm:3309
 msgid "Closing connection to Map Server\n"
 msgstr ""
 
-#: ../Network/Receive.pm:354
+#: ../Network/Receive.pm:356
 #, perl-format
 msgid "Cannot load packet parser for ServerType '%s'.\n"
 msgstr ""
 
-#: ../Network/Receive.pm:417
+#: ../Network/Receive.pm:419
 msgid "============= Account payment information =============\n"
 msgstr ""
 
-#: ../Network/Receive.pm:418
+#: ../Network/Receive.pm:420
 #, perl-format
 msgid "Pay per day  : %s day(s) %s hour(s) and %s minute(s)\n"
 msgstr ""
 
-#: ../Network/Receive.pm:419
+#: ../Network/Receive.pm:421
 #, perl-format
 msgid "Pay per hour : %s day(s) %s hour(s) and %s minute(s)\n"
 msgstr ""
 
-#: ../Network/Receive.pm:420
+#: ../Network/Receive.pm:422
 msgid "-------------------------------------------------------\n"
 msgstr ""
 
-#: ../Network/Receive.pm:441
+#: ../Network/Receive.pm:443
 msgid ""
 "-----------Account Info------------\n"
 "Account ID: @<<<<<<<<< @<<<<<<<<<<\n"
@@ -3609,310 +3609,310 @@ msgid ""
 "-----------------------------------"
 msgstr ""
 
-#: ../Network/Receive.pm:461
+#: ../Network/Receive.pm:463
 msgid ""
 "--------- Servers ----------\n"
 "#   Name                  Users  IP              Port\n"
 msgstr ""
 
-#: ../Network/Receive.pm:479
+#: ../Network/Receive.pm:481
 #, perl-format
 msgid "Forcing connect to char server %s: %s\n"
 msgstr ""
 
-#: ../Network/Receive.pm:482
+#: ../Network/Receive.pm:484
 #, perl-format
 msgid "Server %s selected\n"
 msgstr ""
 
-#: ../Network/Receive.pm:509
+#: ../Network/Receive.pm:511
 #, perl-format
 msgid "%s is sitting.\n"
 msgstr ""
 
-#: ../Network/Receive.pm:519
+#: ../Network/Receive.pm:521
 msgid "You are standing.\n"
 msgstr ""
 
-#: ../Network/Receive.pm:525
+#: ../Network/Receive.pm:527
 #, perl-format
 msgid "%s is standing.\n"
 msgstr ""
 
-#: ../Network/Receive.pm:600
+#: ../Network/Receive.pm:602
 msgid "You have died\n"
 msgstr ""
 
-#: ../Network/Receive.pm:640
+#: ../Network/Receive.pm:642
 #, perl-format
 msgid "Player Died: %s (%d) %s %s\n"
 msgstr ""
 
-#: ../Network/Receive.pm:963
+#: ../Network/Receive.pm:965
 #, perl-format
 msgid "NPC Exists: %s (%d, %d) (ID %d) - (%d)\n"
 msgstr ""
 
-#: ../Network/Receive.pm:966
+#: ../Network/Receive.pm:968
 #, perl-format
 msgid "Portal Exists: %s (%s, %s) - (%s)\n"
 msgstr ""
 
-#: ../Network/Receive.pm:1134
+#: ../Network/Receive.pm:1136
 #, perl-format
 msgid "%s is muted for %d minutes\n"
 msgstr ""
 
-#: ../Network/Receive.pm:1136
+#: ../Network/Receive.pm:1138
 #, perl-format
 msgid "%s is no longer muted\n"
 msgstr ""
 
-#: ../Network/Receive.pm:1222
+#: ../Network/Receive.pm:1224
 #, perl-format
 msgid "%s opened Warp Portal on (%d, %d)\n"
 msgstr ""
 
-#: ../Network/Receive.pm:1256
+#: ../Network/Receive.pm:1258
 #, perl-format
 msgid "Arrow equipped: %s (%d)\n"
 msgstr ""
 
-#: ../Network/Receive.pm:1267
+#: ../Network/Receive.pm:1269
 msgid "Please equip arrow first."
 msgstr ""
 
-#: ../Network/Receive.pm:1270
+#: ../Network/Receive.pm:1272
 msgid "Please equip arrow first.\n"
 msgstr ""
 
-#: ../Network/Receive.pm:1293
+#: ../Network/Receive.pm:1295
 msgid "Received Possible Arrow Craft List - type 'arrowcraft'\n"
 msgstr ""
 
-#: ../Network/Receive.pm:1303
+#: ../Network/Receive.pm:1305
 #, perl-format
 msgid "Autodetected attackDistance = %s\n"
 msgstr ""
 
-#: ../Network/Receive.pm:1312
+#: ../Network/Receive.pm:1314
 msgid "Buy completed.\n"
 msgstr ""
 
-#: ../Network/Receive.pm:1314
+#: ../Network/Receive.pm:1316
 msgid "Buy failed (insufficient zeny).\n"
 msgstr ""
 
-#: ../Network/Receive.pm:1316
+#: ../Network/Receive.pm:1318
 msgid "Buy failed (insufficient weight capacity).\n"
 msgstr ""
 
-#: ../Network/Receive.pm:1318
+#: ../Network/Receive.pm:1320
 msgid "Buy failed (too many different inventory items).\n"
 msgstr ""
 
-#: ../Network/Receive.pm:1320
+#: ../Network/Receive.pm:1322
 #, perl-format
 msgid "Buy failed (failure code %s).\n"
 msgstr ""
 
-#: ../Network/Receive.pm:1360
+#: ../Network/Receive.pm:1362
 msgid "Card merging failed\n"
 msgstr ""
 
-#: ../Network/Receive.pm:1364
+#: ../Network/Receive.pm:1366
 #, perl-format
 msgid "%s has been successfully merged into %s\n"
 msgstr ""
 
-#: ../Network/Receive.pm:1423
+#: ../Network/Receive.pm:1425
 #, perl-format
 msgid "Can't Add Cart Item (%s)\n"
 msgstr ""
 
-#: ../Network/Receive.pm:1476
+#: ../Network/Receive.pm:1478
 #, perl-format
 msgid "Cart Item Added: %s (%d) x %s\n"
 msgstr ""
 
-#: ../Network/Receive.pm:1537
+#: ../Network/Receive.pm:1539
 #, perl-format
 msgid "Cart Item Removed: %s (%d) x %s\n"
 msgstr ""
 
-#: ../Network/Receive.pm:1555
+#: ../Network/Receive.pm:1557
 msgid ""
 "Character cannot be to created.If you didn't make any mistake, then the name "
 "you chose already exists.\n"
 msgstr ""
 
-#: ../Network/Receive.pm:1587
+#: ../Network/Receive.pm:1589
 #, perl-format
 msgid "Character %s (%d) created.\n"
 msgstr ""
 
-#: ../Network/Receive.pm:1598
+#: ../Network/Receive.pm:1600
 #, perl-format
 msgid "Character %s (%d) deleted.\n"
 msgstr ""
 
-#: ../Network/Receive.pm:1605
+#: ../Network/Receive.pm:1607
 msgid "Character deleted.\n"
 msgstr ""
 
-#: ../Network/Receive.pm:1617
+#: ../Network/Receive.pm:1619
 msgid "Character cannot be deleted. Your e-mail address was probably wrong.\n"
 msgstr ""
 
-#: ../Network/Receive.pm:1672
+#: ../Network/Receive.pm:1674
 msgid "Chat Room Created\n"
 msgstr ""
 
-#: ../Network/Receive.pm:1698
+#: ../Network/Receive.pm:1700
 msgid "Can't join Chat Room - Incorrect Password\n"
 msgstr ""
 
-#: ../Network/Receive.pm:1700
+#: ../Network/Receive.pm:1702
 msgid "Can't join Chat Room - You're banned\n"
 msgstr ""
 
-#: ../Network/Receive.pm:1726
+#: ../Network/Receive.pm:1728
 msgid "Chat Room Properties Modified\n"
 msgstr ""
 
-#: ../Network/Receive.pm:1765
+#: ../Network/Receive.pm:1767
 #, perl-format
 msgid "%s has joined the Chat Room\n"
 msgstr ""
 
-#: ../Network/Receive.pm:1781
+#: ../Network/Receive.pm:1783
 msgid "You left the Chat Room\n"
 msgstr ""
 
-#: ../Network/Receive.pm:1783
+#: ../Network/Receive.pm:1785
 #, perl-format
 msgid "%s has left the Chat Room\n"
 msgstr ""
 
-#: ../Network/Receive.pm:1816
+#: ../Network/Receive.pm:1818
 #, perl-format
 msgid "You have joined the Chat Room %s\n"
 msgstr ""
 
-#: ../Network/Receive.pm:1830
+#: ../Network/Receive.pm:1832
 #, perl-format
 msgid "%s failed to cast %s\n"
 msgstr ""
 
-#: ../Network/Receive.pm:1853
+#: ../Network/Receive.pm:1855
 #, perl-format
 msgid "%s added Item to Deal: %s x %s\n"
 msgstr ""
 
-#: ../Network/Receive.pm:1857
+#: ../Network/Receive.pm:1859
 #, perl-format
 msgid "%s added %s z to Deal\n"
 msgstr ""
 
-#: ../Network/Receive.pm:1865
+#: ../Network/Receive.pm:1867
 msgid "That person is overweight; you cannot trade.\n"
 msgstr ""
 
-#: ../Network/Receive.pm:1868
+#: ../Network/Receive.pm:1870
 msgid "This item cannot be traded.\n"
 msgstr ""
 
-#: ../Network/Receive.pm:1871
+#: ../Network/Receive.pm:1873
 #, perl-format
 msgid "You cannot trade (fail code %s).\n"
 msgstr ""
 
-#: ../Network/Receive.pm:1881
+#: ../Network/Receive.pm:1883
 #, perl-format
 msgid "You added Item to Deal: %s x %s\n"
 msgstr ""
 
-#: ../Network/Receive.pm:1892
+#: ../Network/Receive.pm:1894
 msgid "That person is too far from you to trade.\n"
 msgstr ""
 
-#: ../Network/Receive.pm:1894
+#: ../Network/Receive.pm:1896
 msgid "That person is in another deal.\n"
-msgstr ""
-
-#: ../Network/Receive.pm:1911
-#, perl-format
-msgid "Engaged Deal with %s\n"
 msgstr ""
 
 #: ../Network/Receive.pm:1913
 #, perl-format
+msgid "Engaged Deal with %s\n"
+msgstr ""
+
+#: ../Network/Receive.pm:1915
+#, perl-format
 msgid "Deal request failed (unknown error %s).\n"
 msgstr ""
 
-#: ../Network/Receive.pm:1921
+#: ../Network/Receive.pm:1923
 msgid "Deal Cancelled\n"
 msgstr ""
 
-#: ../Network/Receive.pm:1928
+#: ../Network/Receive.pm:1930
 msgid "Deal Complete\n"
 msgstr ""
 
-#: ../Network/Receive.pm:1935
+#: ../Network/Receive.pm:1937
 #, perl-format
 msgid "%s finalized the Deal\n"
 msgstr ""
 
-#: ../Network/Receive.pm:1941
+#: ../Network/Receive.pm:1943
 msgid "You finalized the Deal\n"
 msgstr ""
 
-#: ../Network/Receive.pm:1952
+#: ../Network/Receive.pm:1954
 #, perl-format
 msgid "%s (level %s) Requests a Deal\n"
 msgstr ""
 
-#: ../Network/Receive.pm:1953
+#: ../Network/Receive.pm:1955
 msgid "Type 'deal' to start dealing, or 'deal no' to deny the deal.\n"
 msgstr ""
 
-#: ../Network/Receive.pm:1975
+#: ../Network/Receive.pm:1977
 msgid "-----Egg Hatch Candidates-----\n"
 msgstr ""
 
 #. Translation Comment: "[dist=$dist] $name ($player->{binID}): $emotion\n"
-#: ../Network/Receive.pm:1999
+#: ../Network/Receive.pm:2001
 #, perl-format
 msgid "[dist=%s] %s (%d): %s\n"
 msgstr ""
 
-#: ../Network/Receive.pm:2030
+#: ../Network/Receive.pm:2032
 #, perl-format
 msgid "You can't put on %s (%d)\n"
 msgstr ""
 
-#: ../Network/Receive.pm:2043
+#: ../Network/Receive.pm:2045
 #, perl-format
 msgid "You equip %s (%d) - %s (type %s)\n"
 msgstr ""
 
-#: ../Network/Receive.pm:2057
+#: ../Network/Receive.pm:2059
 msgid "Lost connection; exiting\n"
 msgstr ""
 
-#: ../Network/Receive.pm:2070
+#: ../Network/Receive.pm:2072
 msgid "Server shutting down\n"
 msgstr ""
 
-#: ../Network/Receive.pm:2072
+#: ../Network/Receive.pm:2074
 msgid "Server shutting down, ignoring due to configuration settings.\n"
 msgstr ""
 
-#: ../Network/Receive.pm:2074
+#: ../Network/Receive.pm:2076
 msgid "Error: Server is closed\n"
 msgstr ""
 
-#: ../Network/Receive.pm:2077
+#: ../Network/Receive.pm:2079
 #, perl-format
 msgid ""
 "Critical Error: Dual login prohibited - Someone trying to login!\n"
@@ -3920,213 +3920,213 @@ msgid ""
 "%s will now immediately disconnect."
 msgstr ""
 
-#: ../Network/Receive.pm:2081 ../Network/Receive.pm:2085
+#: ../Network/Receive.pm:2083 ../Network/Receive.pm:2087
 msgid "Critical Error: Dual login prohibited - Someone trying to login!\n"
 msgstr ""
 
-#: ../Network/Receive.pm:2089
+#: ../Network/Receive.pm:2091
 msgid "Error: Out of sync with server\n"
 msgstr ""
 
-#: ../Network/Receive.pm:2091
+#: ../Network/Receive.pm:2093
 msgid "Error: Server is jammed due to over-population.\n"
 msgstr ""
 
-#: ../Network/Receive.pm:2093
+#: ../Network/Receive.pm:2095
 msgid "Error: You are underaged and cannot join this server.\n"
 msgstr ""
 
-#: ../Network/Receive.pm:2095
+#: ../Network/Receive.pm:2097
 msgid "Critical Error: You must pay to play this account!\n"
 msgstr ""
 
-#: ../Network/Receive.pm:2098
+#: ../Network/Receive.pm:2100
 msgid "Error: The server still recognizes your last connection\n"
 msgstr ""
 
-#: ../Network/Receive.pm:2100
+#: ../Network/Receive.pm:2102
 msgid ""
 "Error: IP capacity of this Internet Cafe is full. Would you like to pay the "
 "personal base?\n"
 msgstr ""
 
-#: ../Network/Receive.pm:2102
+#: ../Network/Receive.pm:2104
 msgid "Error: You are out of available time paid for\n"
 msgstr ""
 
-#: ../Network/Receive.pm:2104
+#: ../Network/Receive.pm:2106
 msgid "Error: You have been forced to disconnect by a GM\n"
 msgstr ""
 
-#: ../Network/Receive.pm:2106
+#: ../Network/Receive.pm:2108
 #, perl-format
 msgid "Unknown error %s\n"
 msgstr ""
 
-#: ../Network/Receive.pm:2157
+#: ../Network/Receive.pm:2159
 #, perl-format
 msgid "Exp gained: %d/%d (%.2f%%/%.2f%%)\n"
 msgstr ""
 
-#: ../Network/Receive.pm:2162
+#: ../Network/Receive.pm:2164
 #, perl-format
 msgid "You gained %s zeny.\n"
 msgstr ""
 
-#: ../Network/Receive.pm:2164
+#: ../Network/Receive.pm:2166
 #, perl-format
 msgid "You lost %s zeny.\n"
 msgstr ""
 
-#: ../Network/Receive.pm:2166
+#: ../Network/Receive.pm:2168
 #, perl-format
 msgid "Disconnecting due to zeny lower than %s."
 msgstr ""
 
-#: ../Network/Receive.pm:2175
+#: ../Network/Receive.pm:2177
 #, perl-format
 msgid "Required Exp: %s\n"
 msgstr ""
 
-#: ../Network/Receive.pm:2184
+#: ../Network/Receive.pm:2186
 #, perl-format
 msgid "BaseExp: %s | JobExp: %s\n"
 msgstr ""
 
-#: ../Network/Receive.pm:2191
+#: ../Network/Receive.pm:2193
 msgid "========Forge List========\n"
-msgstr ""
-
-#: ../Network/Receive.pm:2235
-#, perl-format
-msgid "Friend %s has disconnected\n"
 msgstr ""
 
 #: ../Network/Receive.pm:2237
 #, perl-format
+msgid "Friend %s has disconnected\n"
+msgstr ""
+
+#: ../Network/Receive.pm:2239
+#, perl-format
 msgid "Friend %s has connected\n"
 msgstr ""
 
-#: ../Network/Receive.pm:2251
+#: ../Network/Receive.pm:2253
 #, perl-format
 msgid "%s wants to be your friend\n"
 msgstr ""
 
-#: ../Network/Receive.pm:2252
+#: ../Network/Receive.pm:2254
 #, perl-format
 msgid ""
 "Type 'friend accept' to be friend with %s, otherwise type 'friend reject'\n"
 msgstr ""
 
-#: ../Network/Receive.pm:2263
+#: ../Network/Receive.pm:2265
 #, perl-format
 msgid "%s is no longer your friend\n"
 msgstr ""
 
-#: ../Network/Receive.pm:2278
+#: ../Network/Receive.pm:2280
 #, perl-format
 msgid "%s rejected to be your friend\n"
 msgstr ""
 
-#: ../Network/Receive.pm:2286
+#: ../Network/Receive.pm:2288
 #, perl-format
 msgid "%s is now your friend\n"
 msgstr ""
 
-#: ../Network/Receive.pm:2293
+#: ../Network/Receive.pm:2295
 #, perl-format
 msgid "Fed homunculus with %s\n"
 msgstr ""
 
-#: ../Network/Receive.pm:2295
+#: ../Network/Receive.pm:2297
 #, perl-format
 msgid "Failed to feed homunculus with %s: no food in inventory.\n"
 msgstr ""
 
-#: ../Network/Receive.pm:2373
+#: ../Network/Receive.pm:2375
 msgid "Your Homunculus was vaporized!\n"
 msgstr ""
 
-#: ../Network/Receive.pm:2375
+#: ../Network/Receive.pm:2377
 msgid "Your Homunculus died!\n"
 msgstr ""
 
-#: ../Network/Receive.pm:2380
+#: ../Network/Receive.pm:2382
 msgid "Your Homunculus was recalled!\n"
 msgstr ""
 
-#: ../Network/Receive.pm:2382
+#: ../Network/Receive.pm:2384
 msgid "Your Homunculus was resurrected!\n"
 msgstr ""
 
-#: ../Network/Receive.pm:2415
+#: ../Network/Receive.pm:2417
 msgid ""
 "The server Denied the login because GameGuard packets where not replied "
 "correctly or too many time has been spent to send the response.\n"
 "Please verify the version of your poseidon server and try again\n"
 msgstr ""
 
-#: ../Network/Receive.pm:2420
+#: ../Network/Receive.pm:2422
 msgid "Server granted login request to account server\n"
 msgstr ""
 
-#: ../Network/Receive.pm:2422
+#: ../Network/Receive.pm:2424
 msgid "Server granted login request to char/map server\n"
 msgstr ""
 
-#: ../Network/Receive.pm:2473
+#: ../Network/Receive.pm:2475
 #, perl-format
 msgid "Incoming Request to Ally Guild '%s'\n"
 msgstr ""
 
-#: ../Network/Receive.pm:2483
+#: ../Network/Receive.pm:2485
 msgid "Guild broken.\n"
 msgstr ""
 
 #. Translation Comment: Guild Chat
-#: ../Network/Receive.pm:2503
+#: ../Network/Receive.pm:2505
 #, perl-format
 msgid "[Guild] %s\n"
 msgstr ""
 
-#: ../Network/Receive.pm:2518
+#: ../Network/Receive.pm:2520
 msgid "Guild create successful.\n"
 msgstr ""
 
-#: ../Network/Receive.pm:2519
+#: ../Network/Receive.pm:2521
 msgid "Guild create failed: Guild name already exists.\n"
 msgstr ""
 
-#: ../Network/Receive.pm:2520
+#: ../Network/Receive.pm:2522
 msgid "Guild create failed: Emperium is needed.\n"
 msgstr ""
 
-#: ../Network/Receive.pm:2525
+#: ../Network/Receive.pm:2527
 #, perl-format
 msgid "Guild create: Unknown error %s\n"
 msgstr ""
 
-#: ../Network/Receive.pm:2558
+#: ../Network/Receive.pm:2560
 #, perl-format
 msgid "Guild join request: %s\n"
 msgstr ""
 
-#: ../Network/Receive.pm:2560
+#: ../Network/Receive.pm:2562
 #, perl-format
 msgid "Guild join request: Unknown %s\n"
 msgstr ""
 
-#: ../Network/Receive.pm:2607
+#: ../Network/Receive.pm:2609
 #, perl-format
 msgid "Guild member %s logged in.\n"
 msgstr ""
 
-#: ../Network/Receive.pm:2609
+#: ../Network/Receive.pm:2611
 #, perl-format
 msgid "Guild member %s logged out.\n"
 msgstr ""
 
-#: ../Network/Receive.pm:2663
+#: ../Network/Receive.pm:2665
 #, perl-format
 msgid ""
 "---Guild Notice---\n"
@@ -4136,159 +4136,159 @@ msgid ""
 "------------------\n"
 msgstr ""
 
-#: ../Network/Receive.pm:2687
+#: ../Network/Receive.pm:2689
 #, perl-format
 msgid "Incoming Request to join Guild '%s'\n"
 msgstr ""
 
-#: ../Network/Receive.pm:2701
+#: ../Network/Receive.pm:2703
 #, perl-format
 msgid "Item Identified: %s (%d)\n"
 msgstr ""
 
-#: ../Network/Receive.pm:2722
+#: ../Network/Receive.pm:2724
 #, perl-format
 msgid "Received Possible Identify List (%s item(s)) - type 'identify'\n"
 msgstr ""
 
-#: ../Network/Receive.pm:2728
+#: ../Network/Receive.pm:2730
 msgid "All Players ignored\n"
 msgstr ""
 
-#: ../Network/Receive.pm:2731
+#: ../Network/Receive.pm:2733
 msgid "All players unignored\n"
 msgstr ""
 
-#: ../Network/Receive.pm:2739
+#: ../Network/Receive.pm:2741
 msgid "Player ignored\n"
 msgstr ""
 
-#: ../Network/Receive.pm:2742
+#: ../Network/Receive.pm:2744
 msgid "Player unignored\n"
 msgstr ""
 
-#: ../Network/Receive.pm:2779
+#: ../Network/Receive.pm:2781
 #, perl-format
 msgid "Item added to inventory: %s (%d) x %d - %s"
 msgstr ""
 
-#: ../Network/Receive.pm:2799
+#: ../Network/Receive.pm:2801
 #, perl-format
 msgid "Auto-dropping item: %s (%d) x %d\n"
 msgstr ""
 
-#: ../Network/Receive.pm:2804
+#: ../Network/Receive.pm:2806
 msgid "Can't loot item...wait...\n"
 msgstr ""
 
-#: ../Network/Receive.pm:2806
+#: ../Network/Receive.pm:2808
 msgid "Cannot pickup item (inventory full)\n"
 msgstr ""
 
-#: ../Network/Receive.pm:2808
+#: ../Network/Receive.pm:2810
 msgid "Cannot pickup item (you're Frozen?)\n"
 msgstr ""
 
-#: ../Network/Receive.pm:2810
+#: ../Network/Receive.pm:2812
 #, perl-format
 msgid "Cannot pickup item (failure code %s)\n"
 msgstr ""
 
-#: ../Network/Receive.pm:2835
+#: ../Network/Receive.pm:2837
 #, perl-format
 msgid "You used Item: %s (%d) x %d - %d left\n"
 msgstr ""
 
-#: ../Network/Receive.pm:2852
+#: ../Network/Receive.pm:2854
 #, perl-format
 msgid "%s used Item: %s - %s left\n"
 msgstr ""
 
-#: ../Network/Receive.pm:2860
+#: ../Network/Receive.pm:2862
 #, perl-format
 msgid "%s got married!\n"
 msgstr ""
 
-#: ../Network/Receive.pm:2871
+#: ../Network/Receive.pm:2873
 #, perl-format
 msgid "You have %s spirit(s) now\n"
 msgstr ""
 
-#: ../Network/Receive.pm:2875
+#: ../Network/Receive.pm:2877
 #, perl-format
 msgid "%s has %s spirit(s) now\n"
 msgstr ""
 
-#: ../Network/Receive.pm:2988
+#: ../Network/Receive.pm:2990
 #, perl-format
 msgid "Item Appeared: %s (%d) x %d (%d, %d)\n"
 msgstr ""
 
-#: ../Network/Receive.pm:3034
+#: ../Network/Receive.pm:3036
 #, perl-format
 msgid "Attack Looter: %s looted %s\n"
 msgstr ""
 
-#: ../Network/Receive.pm:3059
+#: ../Network/Receive.pm:3061
 #, perl-format
 msgid "Permitted to use %s (%d), level %d\n"
 msgstr ""
 
-#: ../Network/Receive.pm:3084
+#: ../Network/Receive.pm:3086
 #, perl-format
 msgid "Item %s has been upgraded to +%s\n"
 msgstr ""
 
-#: ../Network/Receive.pm:3099
+#: ../Network/Receive.pm:3101
 #, perl-format
 msgid "%s changed job to: %s\n"
 msgstr ""
 
-#: ../Network/Receive.pm:3103
+#: ../Network/Receive.pm:3105
 #, perl-format
 msgid "%s changed bottom headgear to: %s\n"
 msgstr ""
 
-#: ../Network/Receive.pm:3108
+#: ../Network/Receive.pm:3110
 #, perl-format
 msgid "%s changed top headgear to: %s\n"
 msgstr ""
 
-#: ../Network/Receive.pm:3113
+#: ../Network/Receive.pm:3115
 #, perl-format
 msgid "%s changed middle headgear to: %s\n"
 msgstr ""
 
-#: ../Network/Receive.pm:3119
+#: ../Network/Receive.pm:3121
 #, perl-format
 msgid "%s changed hair color to: %s (%s)\n"
 msgstr ""
 
-#: ../Network/Receive.pm:3176
+#: ../Network/Receive.pm:3178
 msgid "Account name doesn't exist\n"
 msgstr ""
 
-#: ../Network/Receive.pm:3178
+#: ../Network/Receive.pm:3180
 msgid "Enter username again: "
 msgstr ""
 
-#: ../Network/Receive.pm:3189
+#: ../Network/Receive.pm:3191
 msgid "Password Error\n"
 msgstr ""
 
-#: ../Network/Receive.pm:3191
+#: ../Network/Receive.pm:3193
 msgid "Enter password again: "
 msgstr ""
 
-#: ../Network/Receive.pm:3202
+#: ../Network/Receive.pm:3204
 msgid "Server connection has been denied\n"
 msgstr ""
 
-#: ../Network/Receive.pm:3204
+#: ../Network/Receive.pm:3206
 msgid "Critical Error: Your account has been blocked."
 msgstr ""
 
-#: ../Network/Receive.pm:3208
+#: ../Network/Receive.pm:3210
 #, perl-format
 msgid ""
 "Connect failed, something is wrong with the login settings:\n"
@@ -4297,270 +4297,270 @@ msgid ""
 "serverType: %s\n"
 msgstr ""
 
-#: ../Network/Receive.pm:3214
+#: ../Network/Receive.pm:3216
 msgid "The server is temporarily blocking your connection\n"
 msgstr ""
 
-#: ../Network/Receive.pm:3223
+#: ../Network/Receive.pm:3225
 msgid "Error logging into Character Server (invalid character specified)...\n"
 msgstr ""
 
-#: ../Network/Receive.pm:3266
+#: ../Network/Receive.pm:3268
 #, perl-format
 msgid "Map Change: %s (%s, %s)\n"
 msgstr ""
 
-#: ../Network/Receive.pm:3350 ../Network/Receive/ServerType0.pm:36
+#: ../Network/Receive.pm:3352 ../Network/Receive/ServerType0.pm:36
 msgid "Waiting for map to load...\n"
 msgstr ""
 
-#: ../Network/Receive.pm:3362 ../Network/Receive/ServerType0.pm:48
+#: ../Network/Receive.pm:3364 ../Network/Receive/ServerType0.pm:48
 msgid "You are now in the game\n"
 msgstr ""
 
-#: ../Network/Receive.pm:3372 ../Network/Receive/ServerType0.pm:56
+#: ../Network/Receive.pm:3374 ../Network/Receive/ServerType0.pm:56
 #, perl-format
 msgid "Your Coordinates: %s, %s\n"
 msgstr ""
 
-#: ../Network/Receive.pm:3380
+#: ../Network/Receive.pm:3382
 msgid "Memo Failed\n"
 msgstr ""
 
-#: ../Network/Receive.pm:3382
+#: ../Network/Receive.pm:3384
 msgid "Memo Succeeded\n"
 msgstr ""
 
-#: ../Network/Receive.pm:3390
+#: ../Network/Receive.pm:3392
 #, perl-format
 msgid "Minimap indicator at location %d, %d with the color %s cleared\n"
 msgstr ""
 
-#: ../Network/Receive.pm:3394
+#: ../Network/Receive.pm:3396
 #, perl-format
 msgid "Minimap indicator at location %d, %d with the color %s shown\n"
 msgstr ""
 
-#: ../Network/Receive.pm:3419
+#: ../Network/Receive.pm:3421
 #, perl-format
 msgid "Monster %s (%d) changed to %s\n"
 msgstr ""
 
-#: ../Network/Receive.pm:3447 ../Network/Receive.pm:3448
+#: ../Network/Receive.pm:3449 ../Network/Receive.pm:3450
 #, perl-format
 msgid "Get MVP item %s\n"
 msgstr ""
 
-#: ../Network/Receive.pm:3454
+#: ../Network/Receive.pm:3456
 #, perl-format
 msgid "%s become MVP!\n"
 msgstr ""
 
-#: ../Network/Receive.pm:3455
+#: ../Network/Receive.pm:3457
 #, perl-format
 msgid "%s became MVP!\n"
 msgstr ""
 
-#: ../Network/Receive.pm:3460
+#: ../Network/Receive.pm:3462
 #, perl-format
 msgid "Congratulations, you are the MVP! Your reward is %s exp!\n"
 msgstr ""
 
-#: ../Network/Receive.pm:3486
+#: ../Network/Receive.pm:3488
 msgid "Ready to start selling items\n"
 msgstr ""
 
-#: ../Network/Receive.pm:3502
+#: ../Network/Receive.pm:3504
 #, perl-format
 msgid "%s: Type 'store' to start buying, or type 'sell' to start selling\n"
 msgstr ""
 
-#: ../Network/Receive.pm:3536
+#: ../Network/Receive.pm:3538
 #, perl-format
 msgid ""
 "----------%s's Store List-----------\n"
 "#  Name                    Type               Price\n"
 msgstr ""
 
-#: ../Network/Receive.pm:3578
+#: ../Network/Receive.pm:3580
 #, perl-format
 msgid "%s: Done talking\n"
 msgstr ""
 
-#: ../Network/Receive.pm:3598
+#: ../Network/Receive.pm:3600
 #, perl-format
 msgid "%s: Auto-continuing talking\n"
 msgstr ""
 
-#: ../Network/Receive.pm:3603
+#: ../Network/Receive.pm:3605
 #, perl-format
 msgid "%s: Type 'talk cont' to continue talking\n"
 msgstr ""
 
-#: ../Network/Receive.pm:3614
+#: ../Network/Receive.pm:3616
 #, perl-format
 msgid "%s: Type 'talk num <number #>' to input a number.\n"
 msgstr ""
 
-#: ../Network/Receive.pm:3648
+#: ../Network/Receive.pm:3650
 msgid ""
 "----------Responses-----------\n"
 "#  Response\n"
 msgstr ""
 
-#: ../Network/Receive.pm:3661
+#: ../Network/Receive.pm:3663
 #, perl-format
 msgid "%s: Type 'talk resp #' to choose a response.\n"
 msgstr ""
 
-#: ../Network/Receive.pm:3670
+#: ../Network/Receive.pm:3672
 #, perl-format
 msgid "%s: Type 'talk text' (Respond to NPC)\n"
 msgstr ""
 
-#: ../Network/Receive.pm:3689
+#: ../Network/Receive.pm:3691
 #, perl-format
 msgid "[Party] %s\n"
 msgstr ""
 
-#: ../Network/Receive.pm:3704
+#: ../Network/Receive.pm:3706
 msgid "Party EXP set to Individual Take\n"
 msgstr ""
 
-#: ../Network/Receive.pm:3706
+#: ../Network/Receive.pm:3708
 msgid "Party EXP set to Even Share\n"
 msgstr ""
 
-#: ../Network/Receive.pm:3708
+#: ../Network/Receive.pm:3710
 msgid "Error setting party option\n"
 msgstr ""
 
-#: ../Network/Receive.pm:3721
+#: ../Network/Receive.pm:3723
 #, perl-format
 msgid "Incoming Request to join party '%s'\n"
 msgstr ""
 
-#: ../Network/Receive.pm:3729
+#: ../Network/Receive.pm:3731
 #, perl-format
 msgid "Join request failed: %s is already in a party\n"
 msgstr ""
 
-#: ../Network/Receive.pm:3731
+#: ../Network/Receive.pm:3733
 #, perl-format
 msgid "Join request failed: %s denied request\n"
 msgstr ""
 
-#: ../Network/Receive.pm:3733
+#: ../Network/Receive.pm:3735
 #, perl-format
 msgid "%s accepted your request\n"
 msgstr ""
 
-#: ../Network/Receive.pm:3747
+#: ../Network/Receive.pm:3749
 #, perl-format
 msgid "You joined party '%s'\n"
 msgstr ""
 
-#: ../Network/Receive.pm:3750
+#: ../Network/Receive.pm:3752
 #, perl-format
 msgid "%s joined your party '%s'\n"
 msgstr ""
 
-#: ../Network/Receive.pm:3777
+#: ../Network/Receive.pm:3779
 msgid "You left the party\n"
 msgstr ""
 
-#: ../Network/Receive.pm:3781
+#: ../Network/Receive.pm:3783
 #, perl-format
 msgid "%s left the party\n"
 msgstr ""
 
-#: ../Network/Receive.pm:3798
+#: ../Network/Receive.pm:3800
 msgid "Can't organize party - party name exists\n"
 msgstr ""
 
-#: ../Network/Receive.pm:3820
+#: ../Network/Receive.pm:3822
 #, perl-format
 msgid "Party Member: %s\n"
 msgstr ""
 
-#: ../Network/Receive.pm:3834
+#: ../Network/Receive.pm:3836
 msgid "Pet capture success\n"
 msgstr ""
 
-#: ../Network/Receive.pm:3836
+#: ../Network/Receive.pm:3838
 msgid "Pet capture failed\n"
-msgstr ""
-
-#: ../Network/Receive.pm:3854
-#, perl-format
-msgid "Fed pet with %s\n"
 msgstr ""
 
 #: ../Network/Receive.pm:3856
 #, perl-format
+msgid "Fed pet with %s\n"
+msgstr ""
+
+#: ../Network/Receive.pm:3858
+#, perl-format
 msgid "Failed to feed pet with %s: no food in inventory.\n"
 msgstr ""
 
-#: ../Network/Receive.pm:3937
+#: ../Network/Receive.pm:3939
 #, perl-format
 msgid "%s changed Weapon to %s\n"
 msgstr ""
 
-#: ../Network/Receive.pm:3941
+#: ../Network/Receive.pm:3943
 #, perl-format
 msgid "%s changed Shield to %s\n"
 msgstr ""
 
-#: ../Network/Receive.pm:3946
+#: ../Network/Receive.pm:3948
 #, perl-format
 msgid "%s changed Shoes to: %s\n"
 msgstr ""
 
-#: ../Network/Receive.pm:3975
+#: ../Network/Receive.pm:3977
 #, perl-format
 msgid "[dist=%s] %s\n"
 msgstr ""
 
-#: ../Network/Receive.pm:4008 ../Network/Receive.pm:4009
+#: ../Network/Receive.pm:4010 ../Network/Receive.pm:4011
 #, perl-format
 msgid "(From: %s) : %s\n"
 msgstr ""
 
-#: ../Network/Receive.pm:4020
+#: ../Network/Receive.pm:4022
 msgid "*** You were PM'd, auto disconnect! ***\n"
 msgstr ""
 
-#: ../Network/Receive.pm:4021
+#: ../Network/Receive.pm:4023
 msgid "Disconnecting on PM!\n"
 msgstr ""
 
-#: ../Network/Receive.pm:4029
+#: ../Network/Receive.pm:4031
 #, perl-format
 msgid "(To %s) : %s\n"
 msgstr ""
 
-#: ../Network/Receive.pm:4038
+#: ../Network/Receive.pm:4040
 #, perl-format
 msgid "%s is not online\n"
 msgstr ""
 
-#: ../Network/Receive.pm:4040
+#: ../Network/Receive.pm:4042
 msgid "Player ignored your message\n"
 msgstr ""
 
-#: ../Network/Receive.pm:4042
+#: ../Network/Receive.pm:4044
 msgid "Player doesn't want to receive messages\n"
 msgstr ""
 
-#: ../Network/Receive.pm:4050
+#: ../Network/Receive.pm:4052
 msgid "Received characters from Character Server\n"
 msgstr ""
 
-#: ../Network/Receive.pm:4108
+#: ../Network/Receive.pm:4110
 msgid "Received character ID and Map IP from Character Server\n"
 msgstr ""
 
-#: ../Network/Receive.pm:4126
+#: ../Network/Receive.pm:4128
 #, perl-format
 msgid ""
 "----------Game Info----------\n"
@@ -4571,85 +4571,93 @@ msgid ""
 "-----------------------------\n"
 msgstr ""
 
-#: ../Network/Receive.pm:4149
+#: ../Network/Receive.pm:4151
 #, perl-format
 msgid "You successfully refined a weapon (ID %s)!\n"
 msgstr ""
 
-#: ../Network/Receive.pm:4151
+#: ../Network/Receive.pm:4153
 #, perl-format
 msgid "You failed to refine a weapon (ID %s)!\n"
 msgstr ""
 
-#: ../Network/Receive.pm:4153
+#: ../Network/Receive.pm:4155
 #, perl-format
 msgid "You successfully made a potion (ID %s)!\n"
 msgstr ""
 
-#: ../Network/Receive.pm:4155
+#: ../Network/Receive.pm:4157
 #, perl-format
 msgid "You failed to make a potion (ID %s)!\n"
 msgstr ""
 
-#: ../Network/Receive.pm:4157
+#: ../Network/Receive.pm:4159
 #, perl-format
 msgid "You tried to refine a weapon (ID %s); result: unknown %s\n"
 msgstr ""
 
-#: ../Network/Receive.pm:4164
+#: ../Network/Receive.pm:4166
 msgid "--------Repair List--------\n"
-msgstr ""
-
-#: ../Network/Receive.pm:4185
-#, perl-format
-msgid "Repair of %s failed.\n"
 msgstr ""
 
 #: ../Network/Receive.pm:4187
 #, perl-format
+msgid "Repair of %s failed.\n"
+msgstr ""
+
+#: ../Network/Receive.pm:4189
+#, perl-format
 msgid "Successfully repaired %s.\n"
 msgstr ""
 
-#: ../Network/Receive.pm:4199
+#: ../Network/Receive.pm:4201
 msgid "You have been resurrected\n"
 msgstr ""
 
-#: ../Network/Receive.pm:4209
+#: ../Network/Receive.pm:4211
 #, perl-format
 msgid "%s has been resurrected\n"
 msgstr ""
 
-#: ../Network/Receive.pm:4265
+#: ../Network/Receive.pm:4267
 msgid "Sync packet requested for wrong ID\n"
 msgstr ""
 
-#: ../Network/Receive.pm:4275
-msgid "Unavailable Area To Teleport\n"
-msgstr ""
-
-#: ../Network/Receive.pm:4278
-msgid "Unavailable Area To Memo\n"
+#: ../Network/Receive.pm:4274
+msgid "TaeKwon Mission Rank : "
 msgstr ""
 
 #: ../Network/Receive.pm:4280
+msgid "TaeKwon Mission : "
+msgstr ""
+
+#: ../Network/Receive.pm:4288
+msgid "Unavailable Area To Teleport\n"
+msgstr ""
+
+#: ../Network/Receive.pm:4291
+msgid "Unavailable Area To Memo\n"
+msgstr ""
+
+#: ../Network/Receive.pm:4293
 #, perl-format
 msgid "Unavailable Area To Teleport (fail code %s)\n"
 msgstr ""
 
-#: ../Network/Receive.pm:4291 ../Network/Receive.pm:4306
+#: ../Network/Receive.pm:4304 ../Network/Receive.pm:4319
 msgid "PvP Display Mode\n"
 msgstr ""
 
-#: ../Network/Receive.pm:4294 ../Network/Receive.pm:4309
+#: ../Network/Receive.pm:4307 ../Network/Receive.pm:4322
 msgid "GvG Display Mode\n"
 msgstr ""
 
-#: ../Network/Receive.pm:4326
+#: ../Network/Receive.pm:4339
 #, perl-format
 msgid "Your PvP rank is: %s/%s\n"
 msgstr ""
 
-#: ../Network/Receive.pm:4336
+#: ../Network/Receive.pm:4349
 #, perl-format
 msgid ""
 "=====================Sense========================\n"
@@ -4664,197 +4672,197 @@ msgid ""
 "==================================================\n"
 msgstr ""
 
-#: ../Network/Receive.pm:4363
+#: ../Network/Receive.pm:4376
 #, perl-format
 msgid "sold: %s - %s %sz\n"
 msgstr ""
 
-#: ../Network/Receive.pm:4367
+#: ../Network/Receive.pm:4380
 #, perl-format
 msgid "sold out: %s\n"
 msgstr ""
 
-#: ../Network/Receive.pm:4370
+#: ../Network/Receive.pm:4383
 msgid "Items have been sold out.\n"
 msgstr ""
 
-#: ../Network/Receive.pm:4381
+#: ../Network/Receive.pm:4394
 #, perl-format
 msgid "You can sell %s items!\n"
 msgstr ""
 
-#: ../Network/Receive.pm:4462
+#: ../Network/Receive.pm:4475
 #, perl-format
 msgid "Monster Skill - switch Target to : %s (%d)\n"
 msgstr ""
 
-#: ../Network/Receive.pm:4491
+#: ../Network/Receive.pm:4504
 #, perl-format
 msgid "Avoid casting Skill - switch position to : %s,%s\n"
 msgstr ""
 
-#: ../Network/Receive.pm:4618
+#: ../Network/Receive.pm:4631
 #, perl-format
 msgid "Skill %s failed (%s)\n"
 msgstr ""
 
-#: ../Network/Receive.pm:4782
+#: ../Network/Receive.pm:4795
 msgid "Not enough stat points to add\n"
 msgstr ""
 
-#: ../Network/Receive.pm:4885
+#: ../Network/Receive.pm:4898
 msgid "Mute period expired.\n"
 msgstr ""
 
-#: ../Network/Receive.pm:4891
+#: ../Network/Receive.pm:4904
 #, perl-format
 msgid "You've been muted for %s minutes, auto disconnect!\n"
 msgstr ""
 
-#: ../Network/Receive.pm:4892
+#: ../Network/Receive.pm:4905
 #, perl-format
 msgid "*** You have been muted for %s minutes, auto disconnect! ***\n"
 msgstr ""
 
-#: ../Network/Receive.pm:4895
+#: ../Network/Receive.pm:4908
 #, perl-format
 msgid "You've been muted for %s minutes\n"
 msgstr ""
 
-#: ../Network/Receive.pm:4915
+#: ../Network/Receive.pm:4928
 #, perl-format
 msgid "You are now level %s\n"
 msgstr ""
 
-#: ../Network/Receive.pm:4917 ../Network/Receive.pm:4918
+#: ../Network/Receive.pm:4930 ../Network/Receive.pm:4931
 #, perl-format
 msgid "Disconnecting on level %s!\n"
 msgstr ""
 
-#: ../Network/Receive.pm:4976
+#: ../Network/Receive.pm:4989
 #, perl-format
 msgid "You are now job level %s\n"
 msgstr ""
 
-#: ../Network/Receive.pm:4978 ../Network/Receive.pm:4979
+#: ../Network/Receive.pm:4991 ../Network/Receive.pm:4992
 #, perl-format
 msgid "Disconnecting on job level %s!\n"
 msgstr ""
 
-#: ../Network/Receive.pm:5043
+#: ../Network/Receive.pm:5056
 msgid "Storage closed.\n"
 msgstr ""
 
-#: ../Network/Receive.pm:5073
+#: ../Network/Receive.pm:5086
 #, perl-format
 msgid "Storage Item Added: %s (%d) x %s\n"
 msgstr ""
 
-#: ../Network/Receive.pm:5085
+#: ../Network/Receive.pm:5098
 #, perl-format
 msgid "Storage Item Removed: %s (%d) x %s\n"
 msgstr ""
 
-#: ../Network/Receive.pm:5157
+#: ../Network/Receive.pm:5170
 msgid "Storage opened.\n"
 msgstr ""
 
-#: ../Network/Receive.pm:5167
+#: ../Network/Receive.pm:5180
 msgid "Please enter a new character password:\n"
 msgstr ""
 
-#: ../Network/Receive.pm:5168
+#: ../Network/Receive.pm:5181
 msgid "Please enter a new storage password:\n"
 msgstr ""
 
-#: ../Network/Receive.pm:5173
+#: ../Network/Receive.pm:5186
 msgid "Please enter your character password:\n"
 msgstr ""
 
-#: ../Network/Receive.pm:5178
+#: ../Network/Receive.pm:5191
 #, perl-format
 msgid "Character password set to: %s\n"
 msgstr ""
 
-#: ../Network/Receive.pm:5182
+#: ../Network/Receive.pm:5195
 msgid "Please enter your storage password:\n"
 msgstr ""
 
-#: ../Network/Receive.pm:5187
+#: ../Network/Receive.pm:5200
 #, perl-format
 msgid "Storage password set to: %s\n"
 msgstr ""
 
-#: ../Network/Receive.pm:5194
+#: ../Network/Receive.pm:5207
 msgid ""
 "Unable to send character password. You must set the 'storageEncryptKey' "
 "option in config.txt or servers.txt.\n"
 msgstr ""
 
-#: ../Network/Receive.pm:5195
+#: ../Network/Receive.pm:5208
 msgid ""
 "Unable to send storage password. You must set the 'storageEncryptKey' option "
 "in config.txt or servers.txt.\n"
 msgstr ""
 
-#: ../Network/Receive.pm:5206
+#: ../Network/Receive.pm:5219
 msgid "You have entered the wrong password 5 times. Please try again later.\n"
 msgstr ""
 
-#: ../Network/Receive.pm:5227
+#: ../Network/Receive.pm:5240
 msgid "Successfully changed storage password.\n"
 msgstr ""
 
-#: ../Network/Receive.pm:5229 ../Network/Receive.pm:5233
+#: ../Network/Receive.pm:5242 ../Network/Receive.pm:5246
 msgid "Error: Incorrect storage password.\n"
 msgstr ""
 
-#: ../Network/Receive.pm:5231
+#: ../Network/Receive.pm:5244
 msgid "Successfully entered storage password.\n"
 msgstr ""
 
 #. Translation Comment: System/GM chat
-#: ../Network/Receive.pm:5263
+#: ../Network/Receive.pm:5276
 #, perl-format
 msgid "[GM] %s\n"
 msgstr ""
 
-#: ../Network/Receive.pm:5287
+#: ../Network/Receive.pm:5300
 #, perl-format
 msgid "You unequip %s (%d) - %s\n"
 msgstr ""
 
-#: ../Network/Receive.pm:5298
+#: ../Network/Receive.pm:5311
 #, perl-format
 msgid "%s gained a level!\n"
 msgstr ""
 
-#: ../Network/Receive.pm:5300
+#: ../Network/Receive.pm:5313
 #, perl-format
 msgid "%s gained a job level!\n"
 msgstr ""
 
-#: ../Network/Receive.pm:5302
+#: ../Network/Receive.pm:5315
 #, perl-format
 msgid "%s failed to refine a weapon!\n"
 msgstr ""
 
-#: ../Network/Receive.pm:5304
+#: ../Network/Receive.pm:5317
 #, perl-format
 msgid "%s successfully refined a weapon!\n"
 msgstr ""
 
-#: ../Network/Receive.pm:5315
+#: ../Network/Receive.pm:5328
 #, perl-format
 msgid "You used Item: %s (%d) x %s\n"
 msgstr ""
 
-#: ../Network/Receive.pm:5325
+#: ../Network/Receive.pm:5338
 #, perl-format
 msgid "There are currently %s users online\n"
 msgstr ""
 
-#: ../Network/Receive.pm:5353
+#: ../Network/Receive.pm:5366
 #, perl-format
 msgid ""
 "%s\n"
@@ -4862,22 +4870,22 @@ msgid ""
 "Price\n"
 msgstr ""
 
-#: ../Network/Receive.pm:5406
+#: ../Network/Receive.pm:5419
 #, perl-format
 msgid "Failed to buy %s of item #%s from vender (insufficient zeny).\n"
 msgstr ""
 
-#: ../Network/Receive.pm:5408
+#: ../Network/Receive.pm:5421
 #, perl-format
 msgid "Failed to buy %s of item #%s from vender (overweight).\n"
 msgstr ""
 
-#: ../Network/Receive.pm:5410
+#: ../Network/Receive.pm:5423
 #, perl-format
 msgid "Failed to buy %s of item #%s from vender (unknown code %s).\n"
 msgstr ""
 
-#: ../Network/Receive.pm:5427
+#: ../Network/Receive.pm:5440
 #, perl-format
 msgid ""
 "%s\n"
