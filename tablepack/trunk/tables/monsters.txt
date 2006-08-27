@@ -495,18 +495,20 @@
 1587 Kraben
 1606 Garm Baby
 1607 Gobline Xmas
-1614 Metaling
-1615 Mineral
-1617 Pitman
-1618 Waste Stove
-1619 Ungoliant
-1620 Percellio
-1621 Noxious
-1622 Venomus
-1623 Teddy Bear
-1624 RSX 0806
-1625 Waste Stove
-1626 Porcellio
+1613 Metaling
+1614 Mineral
+1615 Obsidian
+1616 Pitman
+1617 Waste Stove
+1618 Ungoliant
+1619 Porcellio
+1620 Noxious
+1621 Venomous
+1622 Teddy Bear
+1623 RSX 0806
+1624 Waste Stove
+1625 Porcellio
+1626 DarkPriest
 1627 Anopheles
 1628 Holden
 1629 Hill Wind
