@@ -1518,7 +1518,7 @@ sub sendMasterLogin {
 			$username . $password .
 			pack("C*", $master_version);
 
-	} elsif ($config{serverType} == 8 || $config{serverType} == 9) {
+	} elsif ($config{serverType} == 8) {
 		$msg = pack("v1 V", hex($masterServer->{masterLogin_packet}) || 0x277, $version) .
 			pack("a24", $username) .
 			pack("a24", $password) .
@@ -1979,7 +1979,8 @@ sub sendSkillUse {
 		return;
 
 	} elsif ($config{serverType} == 8) {
-		$msg = pack("v1 x4 v1 x2 v1 x9 V1", 0x72, $lv, $ID, $targetID);
+		# Kali fails are packet debugging...
+		$msg = pack("v1 x4 v1 x2 v1 x9", 0x72, $lv, $ID) . $targetID
 
 	} elsif ($config{serverType} == 9) {
 		$msg = pack("C*", 0x72, 0x00) . pack("x9") .
