@@ -1648,6 +1648,7 @@ sub processAutoStorage {
 		my $i;
 		Misc::checkValidity("AutoStorage part 1");
 		for ($i = 0; exists $config{"getAuto_$i"}; $i++) {
+			next unless ($config{"getAuto_$i"});
 			my $invIndex = findIndexString_lc($char->{inventory}, "name", $config{"getAuto_$i"});
 			if ($config{"getAuto_${i}_minAmount"} ne "" &&
 			    $config{"getAuto_${i}_maxAmount"} ne "" &&
