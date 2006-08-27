@@ -11,6 +11,7 @@ Credits:
 - DarkShado: XileRO server information updates.
 - johnny: Homunculus skills.
 - FIrewall: various portal contributions.
+- piroJOKE: field file contributions.
 
 Bug fixes:
 - Fixed a crash when unequipping items (bug #16)
