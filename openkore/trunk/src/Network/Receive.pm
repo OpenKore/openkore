@@ -2406,7 +2406,7 @@ sub homunculus_stats {
 	$char->{homunculus}{exp_max} = $args->{exp_max};
 	$char->{homunculus}{hpPercent} = ($args->{hp} / $args->{hp_max}) * 100;
 	$char->{homunculus}{spPercent} = ($args->{sp} / $args->{sp_max}) * 100;
-	$char->{homunculus}{expPercent} = ($args->{exp} / $args->{exp_max}) * 100;
+	$char->{homunculus}{expPercent} = ($args->{exp_max}) ? ($args->{exp} / $args->{exp_max}) * 100 : 0;
 	$char->{homunculus}{points_skill} = $args->{points_skill};
 }
 
