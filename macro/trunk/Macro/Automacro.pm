@@ -19,7 +19,7 @@ use Log qw(message error warning);
 use Macro::Data;
 use Macro::Utilities qw(between cmpr match getArgs setVar getVar refreshGlobal
 	getPlayerID getSoldOut getInventoryAmount getCartAmount getShopAmount
-	getStorageAmount);
+	getStorageAmount callMacro);
 
 our $Changed = sprintf("%s %s %s",
 	q$Date$
@@ -399,7 +399,7 @@ sub lockAM {
 # parses automacros and checks conditions #################
 sub automacroCheck {
 	my ($trigger, $args) = @_;
-	return unless $conState == 5 || $trigger =~ /^Network/;
+	return unless $conState == 5 || $trigger =~ /^(charSelectScreen|Network)/;
 
 	# do not run an automacro if there's already a macro running and the running
 	# macro is non-interruptible
@@ -510,7 +510,8 @@ sub automacroCheck {
 				$queue->timeout($automacro{$am}->{delay}) if $automacro{$am}->{delay};
 				$queue->setMacro_delay($automacro{$am}->{macro_delay}) if $automacro{$am}->{macro_delay};
 				setVar(".caller", $am);
-				$onHold = 0
+				$onHold = 0;
+				callMacro
 			} else {
 				error "unable to create macro queue.\n"
 			}

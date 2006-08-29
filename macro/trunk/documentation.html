@@ -260,7 +260,8 @@ macro registered to AI queue</dd>
 	<h3><a name="macro_1"></a>Variable declaration and usage</h3>
 	You can define and work with own variables.<br />
 	To set a variable use <i>$variable = value</i>, to recall the value use <i>$variable</i>.<br />
-	It is possible to increment and to decrement a variable.<br />
+	It is possible to increment and to decrement a variable using <i>$variable++</i> or <i>$variable--</i>.<br />
+	For calculation use <a href="#macro_5"><tt>@eval</tt></a>.
 	To extract the first item of a comma-separated list use
 	<pre class="code">macro foo {
    $list = element one,element two,foo,bar,baz
@@ -815,6 +816,20 @@ allowed, <tt>@random ("foo", "bar", ":-)", "yatta")</tt> is not.</li>
 	<p />
 	Linux users can run the following commands to get the development version from SVN:
 	<pre class="linux">svn co https://svn.sourceforge.net/svnroot/openkore/macro/trunk/</pre>
+
+	<p />
+	Use https://svn.sourceforge.net/svnroot/openkore/macro/tags/ to checkout older releases.<br />
+	Currently available:
+	<ul>
+	<li><a href="https://svn.sourceforge.net/svnroot/openkore/macro/tags/release-0.9">release-0.9</a></li>
+	<li><a href="https://svn.sourceforge.net/svnroot/openkore/macro/tags/release-1.0">release-1.0</a></li>
+	<li><a href="https://svn.sourceforge.net/svnroot/openkore/macro/tags/release-1.0.1">release-1.0.1</a></li>
+	<li><a href="https://svn.sourceforge.net/svnroot/openkore/macro/tags/release-1.1.0">release-1.1.0</a></li>
+	<li><a href="https://svn.sourceforge.net/svnroot/openkore/macro/tags/release-1.2.0">release-1.2.0</a></li>
+	<li><a href="https://svn.sourceforge.net/svnroot/openkore/macro/tags/release-1.3.0">release-1.3.0</a></li>
+	<li><a href="https://svn.sourceforge.net/svnroot/openkore/macro/tags/release-1.3.2">release-1.3.2</a></li>
+	<li><a href="https://svn.sourceforge.net/svnroot/openkore/macro/tags/script_capa">script_capa</a></li>
+	</ul>
 
 <a href="#top"><small>back to top</small></a>
 </div>
