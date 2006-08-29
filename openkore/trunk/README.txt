@@ -128,7 +128,7 @@ Internal:
 	Linux.
 - Item has been renamed to Actor::Item for consistency.
 - Receive.pm : monk_spirits is now known as revolving_entity
-
+- Added Bullet support
 
 --------------------------
 
