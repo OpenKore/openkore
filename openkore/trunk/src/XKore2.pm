@@ -741,9 +741,12 @@ sub checkClient {
 
 		debug "Packet 021D.\n", "connection";
 
+	} elsif ($$c_state == 4 && ($switch eq "014D" ||$switch eq "0181") ) {
+		$msg = "";
+		debug "Guild Info.\n", "connection";
 	} elsif ($$c_state == 4 && ($switch eq "007D" || $switch eq "01C0")) {
 		# Client sent MapLoaded
-
+          debug "Client Finished Loaded.\n", "connection";
 		# Save the original incoming message
 		my $msgIn = $msg;
 
@@ -1021,6 +1024,7 @@ sub checkClient {
 		$msg .= pack('C2 a4 C1 x1 C1', 0x9C, 0x00, $accountID, $char->{look}{head}, $char->{look}{body});
 
 		$self->clientSend($msg,1);
+          $self->clientSend($msgIn,1); #send the original one too, this is to prevent the client from crashing fix me!
 
 		debug "Map Loaded.\n", "connection";
 
@@ -1236,7 +1240,7 @@ sub modifyPacketOut {
 	my $switch = uc(unpack("H2", substr($msg, 1, 1))) . uc(unpack("H2", substr($msg, 0, 1)));
 
 	if ($switch eq "007D") {
-		#
+		#client is loaded
 		$msg = "";
 
 	} elsif (($switch eq "007E" && (
