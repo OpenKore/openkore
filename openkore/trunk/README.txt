@@ -127,7 +127,7 @@ Internal:
 	interface. This only affects OpenKore when running on a Unix, such as
 	Linux.
 - Item has been renamed to Actor::Item for consistency.
-
+- Receive.pm : monk_spirits is now known as revolving_entity
 
 
 --------------------------
