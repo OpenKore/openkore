@@ -2709,8 +2709,6 @@ sub cmdPlayerList {
 		itemName({nameID => $player->{shoes}}), $headTop, $headMid, 
 			  $headLow, "$haircolors{$player->{hair_color}} ($player->{hair_color})",
 			  $player->{walk_speed});
-		
-		
 		if ($player->{dead}) {
 			$msg .= T("Player is dead.\n");
 		} elsif ($player->{sitting}) {
@@ -3336,7 +3334,7 @@ sub cmdStatus {
 		"Job : \@<<    \@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n" .
 		"Zeny: \@<<<<<<<<<<<<<<<<<     Weight: \@>>>>>>>>>>>>>>>>>>\n" .
 		"Statuses: %s\n" .
-		"Spirits: %s\n" .
+		"Spirits/Coins: %s\n" .
 		"--------------------------------------------------------\n" .
 		"Total Damage: \@>>>>>>>>>>>>> Dmg/sec: \@<<<<<<<<<<<<<<\n" .
 		"Total Time spent (sec): \@>>>>>>>>\n" .
