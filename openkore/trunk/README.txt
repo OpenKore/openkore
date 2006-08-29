@@ -130,6 +130,9 @@ Internal:
 - Receive.pm : monk_spirits is now known as revolving_entity
 - Added Bullet support
 
+To Fix:
+- XKore2 is not acting like a real server, it doesn't send complete informations
+	to the client. Connecting to XKore2 from another kore would fail. 
 --------------------------
 
 http://www.openkore.com/misc/OldNews.txt
