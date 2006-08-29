@@ -369,6 +369,26 @@ sub getRandomRange {
 	return int(rand($high-$low+1))+$low if (defined $high && defined $low)
 }
 
+sub processCmd {
+	$cvs->debug("processCmd (@_)", $logfac{developers});
+	my $command = shift;
+	if (defined $command) {
+		if ($command ne '') {
+			unless (Commands::run($command)) {
+				error(sprintf("[macro] %s failed with %s\n", $queue->name, $command), "macro");
+				undef $queue;
+				return
+			}
+		}
+		$queue->ok;
+		if (defined $queue && $queue->finished) {undef $queue}
+	} else {
+		error(sprintf("[macro] %s error: %s\n", $queue->name, $queue->error), "macro");
+		warning "the line number may be incorrect if you called a sub-macro.\n", "macro";
+		undef $queue
+	}
+}
+
 # macro/script
 sub callMacro {
 	return unless defined $queue;
@@ -380,20 +400,13 @@ sub callMacro {
 	}
 	if (timeOut(\%tmptime) && ai_isIdle()) {
 		my $command = $queue->next;
-		if (defined $command) {
-			if ($command ne '') {
-				unless (Commands::run($command)) {
-					error(sprintf("[macro] %s failed with %s\n", $queue->name, $command), "macro");
-					undef $queue;
-					return
-				}
+		if ($queue->macro_block) {
+			while ($queue->macro_block) {
+				$command = $queue->next;
+				processCmd($command)
 			}
-			$queue->ok;
-			if (defined $queue && $queue->finished) {undef $queue}
 		} else {
-			error(sprintf("[macro] %s error: %s\n", $queue->name, $queue->error), "macro");
-			warning "the line number may be incorrect if you called a sub-macro.\n", "macro";
-			undef $queue
+			processCmd($command)
 		}
 	}
 }

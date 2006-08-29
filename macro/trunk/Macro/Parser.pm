@@ -31,15 +31,14 @@ sub parseMacroFile {
 	my $tempmacro = 0;
 	open FILE, "<:utf8", $file or return 0;
 	foreach (<FILE>) {
-		next if (/^\s*#/); # skip comments
-		s/^\s*//g;         # remove leading whitespaces
+		s/\s*#.*$//;       # remove comments
+		s/^\s*//;          # remove leading whitespaces
 		s/\s*[\r\n]?$//g;  # remove trailing whitespaces and eol
 		s/  +/ /g;         # trim down spaces
 		next unless ($_);
 
 		if (!%block && /{$/) {
-			s/\s*{$//;
-			my ($key, $value) = $_ =~ /^(.*?)\s+(.*)/;
+			my ($key, $value) = $_ =~ /^(.*?)\s+(.*?)\s*{$/;
 			if ($key eq 'macro') {
 				%block = (name => $value, type => "macro");
 				$macro{$value} = []

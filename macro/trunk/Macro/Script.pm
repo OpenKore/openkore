@@ -39,7 +39,8 @@ sub new {
 		subcall => undef,
 		error => undef,
 		orphan => $::config{macro_orphans},
-		interruptible => 1
+		interruptible => 1,
+		macro_block =>
 	};
 	bless ($self, $class);
 	return $self
@@ -70,7 +71,7 @@ sub registered {
 	return $self->{registered}
 }
 
-# sets and gets method for orphaned macros
+# sets or gets method for orphaned macros
 sub orphan {
 	my ($self, $method) = @_;
 	if (defined $method) {$self->{orphan} = $method}
@@ -89,25 +90,32 @@ sub setMacro_delay {
 	$self->{macro_delay} = shift
 }
 
-# gets timeout for next command
+# sets or gets timeout for next command
 sub timeout {
 	my ($self, $timeout) = @_;
 	if (defined $timeout) {$self->{timeout} = $timeout}
 	return (time => $self->{time}, timeout => $self->{timeout})
 }
 
-# gets override AI value
+# sets or gets override AI value
 sub overrideAI {
 	my ($self, $flag) = @_;
 	if (defined $flag) {$self->{overrideAI} = $flag}
 	return $self->{overrideAI}
 }
 
-# sets interruptible flag
+# sets or get interruptible flag
 sub interruptible {
 	my ($self, $flag) = @_;
 	if (defined $flag) {$self->{interruptible} = $flag}
 	return $self->{interruptible}
+}
+
+# sets or gets macro block flag
+sub macro_block {
+	my ($self, $flag) = @_;
+	if (defined $flag) {$self->{macro_block} = $flag}
+	return $self->{macro_block}
 }
 
 # returns whether or not the macro finished
@@ -212,6 +220,17 @@ sub next {
 			$self->{error} = "$errtpl: cannot find block start for $tmp"
 		}
 		$self->{timeout} = 0
+	##########################################
+	# macro block: begin
+	} elsif ($line eq '[') {
+		$self->{macro_block} = 1;
+		$self->{line}++
+	##########################################
+	# macro block: end
+	} elsif ($line eq ']') {
+		$self->{macro_block} = 0;
+		$self->{timeout} = 0;
+		$self->{line}++
 	##########################################
 	# if statement: if (foo = bar) goto label?
 	} elsif ($line =~ /^if\s/) {
