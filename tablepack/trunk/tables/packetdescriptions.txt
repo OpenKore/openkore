@@ -189,7 +189,7 @@
 01C8 Inventory Used
 01C9 Skill Area : 011F
 01CD Available Autocast Spells
-01D0 Vigor condensation
+01D0 Spirit or Coin Count (revolving entities)
 01D2 Combo Attack
 01D7 Weapon / Shield Display
 01D8 actor_display (actor exists)
@@ -198,7 +198,7 @@
 01DB actor_display (actor connected)
 01DC Login Code
 01DE Skill Damage : 0114
-01E1 Vigor condensation : 01D0
+01E1 Spirit or Coin Count : 01D0
 01E6 Some Player Name.
 01EE Inventory Items List : 00A3
 01EF Cart Items List : 0123
