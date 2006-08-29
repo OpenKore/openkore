@@ -231,7 +231,7 @@ sub new {
 		'01C9' => ['area_spell', 'a4 a4 v2 C2 C Z80', [qw(ID sourceID x y type fail scribbleLen scribbleMsg)]],
 		'01CD' => ['sage_autospell'],
 		'01CF' => ['devotion', 'a4 a20', [qw(sourceID data)]],
-		'01D0' => ['monk_spirits', 'a4 v', [qw(sourceID spirits)]],
+		'01D0' => ['revolving_entity', 'a4 v', [qw(sourceID entity)]],
 		'01D2' => ['combo_delay', 'a4 V1', [qw(ID delay)]],
 		'01D4' => ['npc_talk_text', 'a4', [qw(ID)]],
 		'01D7' => ['player_equipment', 'a4 C1 v2', [qw(sourceID type ID1 ID2)]],
@@ -241,7 +241,7 @@ sub new {
 		'01DC' => ['secure_login_key', 'x2 a*', [qw(secure_key)]],
 		'01D6' => ['pvp_mode2', 'v1', [qw(type)]],
 		'01DE' => ['skill_use', 'v1 a4 a4 V1 V1 V1 l1 v1 v1 C1', [qw(skillID sourceID targetID tick src_speed dst_speed damage level param3 type)]],
-		'01E1' => ['monk_spirits', 'a4 v1', [qw(sourceID spirits)]],
+		'01E1' => ['revolving_entity', 'a4 v1', [qw(sourceID entity)]],
 		#'01E2' => ['marriage_unknown'], clif_parse_ReqMarriage
 		#'01E4' => ['marriage_unknown'], clif_marriage_process
 		##
@@ -2862,19 +2862,21 @@ sub married {
 	message TF("%s got married!\n", $actor);
 }
 
-sub monk_spirits {
+sub revolving_entity {
 	my ($self, $args) = @_;
 	
-	# Monk Spirits
+	# Monk Spirits or Gunslingers' coins
 	my $sourceID = $args->{sourceID};
-	my $spirits = $args->{spirits};
-	
+	my $entities = $args->{entity};
+	my $entityType = "spirit";
+	$entityType = "coin" if ($char->{'jobID'} == 24);
+
 	if ($sourceID eq $accountID) {
-		message TF("You have %s spirit(s) now\n", $spirits), "parseMsg_statuslook", 1 if $spirits != $char->{spirits};
-		$char->{spirits} = $spirits;
+		message TF("You have %s ".$entityType."(s) now\n", $entities), "parseMsg_statuslook", 1 if $entities != $char->{spirits};
+		$char->{spirits} = $entities;
 	} elsif (my $actor = Actor::get($sourceID)) {
-		$actor->{spirits} = $spirits;
-		message TF("%s has %s spirit(s) now\n", $actor, $spirits), "parseMsg_statuslook", 2 if $spirits != $actor->{spirits};
+		$actor->{spirits} = $entities;
+		message TF("%s has %s ".$entityType."(s) now\n", $actor, $entities), "parseMsg_statuslook", 2 if $entities != $actor->{spirits};
 	}
 	
 }
