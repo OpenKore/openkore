@@ -861,6 +861,7 @@ sub checkClient {
 		# Send equipped arrow information
 		$msg .= pack('C2 v', 0x3C, 0x01, $char->{arrow}) if ($char->{arrow});
 
+
 		# Clear old variables
 		#@stackable = ();
 		#@nonstackable = ();
@@ -1023,8 +1024,8 @@ sub checkClient {
 		# Make the character face the correct direction
 		$msg .= pack('C2 a4 C1 x1 C1', 0x9C, 0x00, $accountID, $char->{look}{head}, $char->{look}{body});
 
-		$self->clientSend($msg,1);
-          $self->clientSend($msgIn,1); #send the original one too, this is to prevent the client from crashing fix me!
+
+          $self->clientSend($msg,1);
 
 		debug "Map Loaded.\n", "connection";
 
@@ -1200,9 +1201,10 @@ sub modifyPacketIn {
 
 		# Allow plugins to change the map information
 		Plugins::callHook('XKore/map', {r_map => \$map, r_x => \$x, r_y => \$y});
-
+		#simple hack to make client not crash by gm hiding the character before moving to the next map
+          $msg = pack("C2",0x29,0x02).$accountID.pack("C9",0x00,0x00,0x00,0x00,0x40,0x00,0x00,0x00,0x00);
 		# Generate the new map-change packet
-		$msg = pack('C2 Z16 v2', 0x91, 0, $map,
+		$msg .= pack('C2 Z16 v2', 0x91, 0, $map,
 			$x, $y);
 
 		# Don't send this packet to the plugin
@@ -1242,7 +1244,7 @@ sub modifyPacketOut {
 	if ($switch eq "007D") {
 		#client is loaded
 		$msg = "";
-
+		
 	} elsif (($switch eq "007E" && (
 			$config{serverType} == 0 ||
 			$config{serverType} == 1 ||
