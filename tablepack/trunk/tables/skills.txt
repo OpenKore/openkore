@@ -487,6 +487,51 @@
 497 AM_TWILIGHT2 Twilight Alchemy 2
 498 AM_TWILIGHT3 Twilight Alchemy 3
 499 HT_POWER Beast Strafing
+500 GS_GLITTERING Flip Coin
+501 GS_FLING Fling Coin
+502 GS_TRIPLEACTION Triple Action
+503 GS_BULLSEYE Bull's Eye
+504 GS_MADNESSCANCEL Madness Canceller
+505 GS_ADJUSTMENT Adjustment
+506 GS_INCREASING Increase Accuracy
+507 GS_MAGICALBULLET Magic Bullet
+508 GS_CRACKER Cracker
+509 GS_SINGLEACTION Single Action
+510 GS_SNAKEEYE Snake's Eye
+511 GS_CHAINACTION Chain Action
+512 GS_TRACKING Aiming
+513 GS_DISARM Disarm
+514 GS_PIERCINGSHOT Piercing Shot
+515 GS_RAPIDSHOWER Bullet Shower
+516 GS_DESPERADO Desperado
+517 GS_GATLINGFEVER Gatling Fever
+518 GS_DUST Choke
+519 GS_FULLBUSTER Shotgun Frenzy
+520 GS_SPREADATTACK Spread Attack
+521 GS_GROUNDDRIFT Scatter Mines
+522 NJ_TOBIDOUGU Shuriken Training
+523 NJ_SYURIKEN Throw Shuriken
+524 NJ_KUNAI Throw Kunai
+525 NJ_HUUMA Throw Wind_Shuriken
+526 NJ_ZENYNAGE Waste Money
+527 NJ_TATAMIGAESHI Improvised Defense
+528 NJ_KASUMIKIRI Vanishing Slash
+529 NJ_SHADOWJUMP Shadow Jump
+530 NJ_KIRIKAGE Shadow Slash
+531 NJ_UTSUSEMI Cicada Skin Shedding
+532 NJ_BUNSINJYUTSU Illusionary Shadow
+533 NJ_NINPOU Spirit of the Blade
+534 NJ_KOUENKA Crimson Fire Petal
+535 NJ_KAENSIN Crimson Fire Formation
+536 NJ_BAKUENRYU Raging Fire Dragon
+537 NJ_HYOUSENSOU Spear of Ice
+538 NJ_SUITON Hidden Water
+539 NJ_HYOUSYOURAKU Ice Meteor
+540 NJ_HUUJIN Wind Blade
+541 NJ_RAIGEKISAI Lightning Strike of Destruction
+542 NJ_KAMAITACHI Kamaitachi
+543 NJ_NEN Soul
+544 NJ_ISSEN Final Strike
 1001 KN_CHARGEATK Charge Attack
 1002 CR_SHRINK Shrink
 1003 AS_SONICACCEL Sonic Acceleration
