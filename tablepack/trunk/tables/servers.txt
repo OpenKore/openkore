@@ -1272,9 +1272,9 @@ serverEncoding Western
 [VanRO: High Rate Private Server]
 ip 70.84.205.242
 port 6800
-master_version 18
-version 20
-serverType 4
+master_version 20
+version 18
+serverType 5
 serverEncoding Western
 
 ## http://vendetta-online.net/
