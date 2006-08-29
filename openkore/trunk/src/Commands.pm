@@ -1334,7 +1334,7 @@ sub cmdEquip {
 		return;
 	}
 
-	if (!$item->{type_equip} && $item->{type} != 10) {
+	if (!$item->{type_equip} && $item->{type} != 10 && $item->{type} != 16) {
 		error TF("Inventory Item %s (%s) can't be equipped.\n", 
 			$item->{name}, $item->{invIndex});
 		return;
@@ -2147,7 +2147,8 @@ sub cmdInventory {
 
 			if (($item->{type} == 3 ||
 			     $item->{type} == 6 ||
-				 $item->{type} == 10) && !$item->{equipped}) {
+				 $item->{type} == 10 ||
+				 $item->{type} == 16) && !$item->{equipped}) {
 				push @non_useable, $i;
 			} elsif ($item->{type} <= 2) {
 				push @useable, $i;
@@ -2157,7 +2158,7 @@ sub cmdInventory {
 				$eqp{binID} = $i;
 				$eqp{name} = $item->{name};
 				$eqp{type} = $itemTypes_lut{$item->{type}};
-				$eqp{equipped} = ($item->{type} == 10) ? $item->{amount} . " left" : $equipTypes_lut{$item->{equipped}};
+				$eqp{equipped} = ($item->{type} == 10 || $item->{type} == 16) ? $item->{amount} . " left" : $equipTypes_lut{$item->{equipped}};
 				$eqp{equipped} .= " ($item->{equipped})";
 				# Translation Comment: Mark to tell item not identified
 				$eqp{identified} = " -- " . T("Not Identified") if !$item->{identified};
@@ -3398,7 +3399,8 @@ sub cmdStorage_list {
 		my $item = $storage{$storageID[$i]};
 		if ($item->{type} == 3 ||
 		    $item->{type} == 6 ||
-		    $item->{type} == 10) {
+		    $item->{type} == 10 ||
+		    $item->{type} == 16) {
 			push @non_useable, $item;
 		} elsif ($item->{type} <= 2) {
 			push @useable, $item;
@@ -3820,7 +3822,7 @@ sub cmdUnequip {
 		return;
 	}
 
-	if (!$item->{equipped} && $item->{type} != 10) {
+	if (!$item->{equipped} && $item->{type} != 10 && $item->{type} != 16) {
 		error TF("Error in function 'unequip' (Unequip Inventory Item)\n" .
 			"Inventory Item %s is not equipped.\n", $arg1);
 		return;

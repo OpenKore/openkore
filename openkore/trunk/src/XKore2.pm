@@ -827,7 +827,7 @@ sub checkClient {
 			my $item = $char->{inventory}[$i];
 			next unless $item && %{$item};
 
-			if ($item->{type} <= 3 || $item->{type} == 6 || $item->{type} == 10) {
+			if ($item->{type} <= 3 || $item->{type} == 6 || $item->{type} == 10 || $item->{type} == 16) {
 				push @stackable, $i;
 			} else {
 				push @nonstackable, $i;

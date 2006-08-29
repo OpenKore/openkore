@@ -1255,7 +1255,7 @@ sub arrow_equipped {
 		$char->{equipment}{arrow} = $char->{inventory}[$invIndex];
 		$char->{inventory}[$invIndex]{equipped} = 32768;
 		$ai_v{temp}{waitForEquip}-- if $ai_v{temp}{waitForEquip};
-		message TF("Arrow equipped: %s (%d)\n", $char->{inventory}[$invIndex]{name}, $invIndex);
+		message TF("Arrow/Bullet equipped: %s (%d)\n", $char->{inventory}[$invIndex]{name}, $invIndex);
 	}
 }
 
