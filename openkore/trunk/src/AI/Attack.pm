@@ -93,12 +93,6 @@ sub process {
 		}
 	}
 
-	### Moved down ###
-	# Check for kill steal while moving
-	#if (movingWhileAttacking()) {
-	#	dropTargetWhileMoving();
-	#}
-
 	# Check for kill steal and mob-training while moving
 	if ((AI::is("move", "route") && $args->{attackID} && AI::inQueue("attack")
 		&& timeOut($args->{movingWhileAttackingTimeout}, 0.2))) {
@@ -215,19 +209,6 @@ sub finishAttacking {
 	} else {
 		message T("Target lost\n"), "ai_attack";
 	}
-}
-
-sub movingWhileAttacking {
-	my $args = AI::args;
-	my $result;
-	if (AI::is("move", "route") && $args->{attackID} && AI::inQueue("attack") && timeOut($args->{movingWhileAttackingTimeout}, 0.2)) {
-		my $ID = AI::args->{attackID};
-		$result = ($monsters{$ID} && !checkMonsterCleanness($ID));
-	} else {
-		$result = 0;
-	}
-	$args->{movingWhileAttackingTimeout} = time;
-	return $result;
 }
 
 sub dropTargetWhileMoving {
