@@ -40,7 +40,7 @@ sub new {
 		error => undef,
 		orphan => $::config{macro_orphans},
 		interruptible => 1,
-		macro_block =>
+		macro_block => 0
 	};
 	bless ($self, $class);
 	return $self
