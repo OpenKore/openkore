@@ -142,7 +142,7 @@ guild_vs1.rsw#Guild Arena #
 guild_vs2.rsw#Guild Arena #
 guild_vs3.rsw#Guild Arena #
 himinn.rsw#Valkyrie Hall (Himinn) #
-hu_fild01.rsw#hu_fild01#
+hu_fild01.rsw#Hugel Field 1#
 hunter_1-1.rsw#Hunter Guild #
 hunter_2-1.rsw#Hunter Guild #
 hunter_3-1.rsw#Hunter Guild #
@@ -453,8 +453,8 @@ sword_1-1.rsw#Swordman Test Hall #
 sword_2-1.rsw#Swordman Test Hall #
 sword_3-1.rsw#Swordman Test Hall #
 tha_scene01.rsw#tha_scene01#
-tha_t01.rsw#tha_t01.rsw#
-tha_t02.rsw#tha_t02.rsw#
+tha_t01.rsw#tha_t01#
+tha_t02.rsw#tha_t02#
 treasure01.rsw#Sunken Ship #
 treasure02.rsw#Sunken Ship #
 turbo_e_16.rsw#Turbo Track Stadium#
