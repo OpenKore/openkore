@@ -85,7 +85,19 @@ sub iterate {
 	processTake();
 	processMove();
 	Benchmark::end("AI (part 1.3)") if DEBUG;
+
+     Benchmark::begin("AI (part 1.4)") if DEBUG;
+	Benchmark::begin("ai_autoItemUse") if DEBUG;
+	processAutoItemUse();
+	Benchmark::end("ai_autoItemUse") if DEBUG;
+	Benchmark::begin("ai_autoSkillUse") if DEBUG;
+	processAutoSkillUse();
+	Benchmark::end("ai_autoSkillUse") if DEBUG;
+	Benchmark::end("AI (part 1.4)") if DEBUG;
+
 	Benchmark::end("AI (part 1)") if DEBUG;
+
+
 
 	Misc::checkValidity("AI part 1");
 	return if ($AI != 2);
@@ -140,12 +152,7 @@ sub iterate {
 	processSitAutoIdle();
 	processSitAuto();
 
-	Benchmark::begin("ai_autoItemUse") if DEBUG;
-	processAutoItemUse();
-	Benchmark::end("ai_autoItemUse") if DEBUG;
-	Benchmark::begin("ai_autoSkillUse") if DEBUG;
-	processAutoSkillUse();
-	Benchmark::end("ai_autoSkillUse") if DEBUG;
+
 	Benchmark::end("AI (part 3.3)") if DEBUG;
 	Benchmark::end("AI (part 3)") if DEBUG;
 

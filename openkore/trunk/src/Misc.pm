@@ -3739,6 +3739,17 @@ sub checkSelfCondition {
 
 	return 0 if $config{$prefix."_whenIdle"} && !AI::isIdle();
 
+	# *_manualAI 0 = auto only
+	# *_manualAI 1 = manual only
+	# *_manualAI 2 = auto or manual
+     if ($config{$prefix . "_manualAI"} == 0 || !(defined $config{$prefix . "_manualAI"})) {
+		return 0 if ($AI != 2);
+	}elsif ($config{$prefix . "_manualAI"} == 1){
+          return 0 if ($AI != 1);
+ 	}else {
+          return 0 if ($AI == 0);
+	}
+
 	if ($config{$prefix . "_hp"}) {
 		if ($config{$prefix."_hp"} =~ /^(.*)\%$/) {
 			return 0 if (!inRange($char->hp_percent, $1));
