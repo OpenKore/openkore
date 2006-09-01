@@ -33,7 +33,9 @@ New features:
 	character is used to delimit the command.s
 	Example: c watch out im using an item now;is 0;c see, i used it!
 - Added Aegis 10.4 new classes support.
-- Added Taekwon mission support
+- Added Taekwon mission support.
+- Added manualAI Where autoskills could be executed in ai manual mode.
+	for more information : http://forums.openkore.com/viewtopic.php?t=24513
 
 New config options:
 - attackChangeTarget <boolean flag>
@@ -94,7 +96,11 @@ New config options:
 	Ignores the "server shutting down" error wich some servers tend to send
 	(iRO for example).
 	Don't use this unless you're 100% sure the errors are "fake".
-	
+- Shared Block Attribute: manualAI <flag>
+	flag 0    auto only
+	flag 1    manual only
+	flag 2    auto or manual
+
 New sys.txt options:
 - sendAnonymousStatisticReport <boolean flag>
     tells whether OpenKore will report an anonymous usage report. Note that
