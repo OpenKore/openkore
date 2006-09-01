@@ -1,4 +1,6 @@
-abyss_03.rsw#Glast Heim Abyss#
+﻿abyss_01.rsw#Abyss Lake Underground Caves#
+abyss_02.rsw#Abyss Lake Underground Caves#
+abyss_03.rsw#Abyss Lake Underground Caves#
 airplane_01.rsw#Airship#
 airplane.rsw#Airship#
 airport.rsw#Airport#
@@ -175,6 +177,8 @@ job_prist.rsw#Priest Realm #
 job_sage.rsw#Sage Realm #
 job_thief1.rsw#Mushroom Farm #
 job_wiz.rsw#Wizard Realm #
+job_soul.rsw#Your Heart#
+job_star.rsw#The Sun and Moon and Stars#
 jupe_area1.rsw#Juperos, Restricted Zone#
 jupe_area2.rsw#Juperos, Restricted Zone#
 jupe_cave.rsw#Juperos Dungeon Entrance#
@@ -441,6 +445,7 @@ pvp_y_8-3.rsw#PvP : Room Payon #
 pvp_y_8-4.rsw#PvP : Room Alberta #
 pvp_y_8-5.rsw#PvP : Room Morroc #
 pvp_y_room.rsw#PvP : Waiting Room #
+que_job01.rsw#Secret Hotel#
 que_god01.rsw#Quest Map #
 que_god02.rsw#Quest Map #
 quiz_00.rsw#Quiz Revolrution #
@@ -452,9 +457,21 @@ sec_pri.rsw#Room of Meditation (Valhalla Prison) #
 sword_1-1.rsw#Swordman Test Hall #
 sword_2-1.rsw#Swordman Test Hall #
 sword_3-1.rsw#Swordman Test Hall #
-tha_scene01.rsw#tha_scene01#
-tha_t01.rsw#tha_t01#
-tha_t02.rsw#tha_t02#
+thana_boss.rsw#Thanatos Tower Platform (Unknown Place)#
+thana_scene01.rsw#Thanatos Tower Platform Front#
+thana_step.rsw#Thanatos Tower Platform Upper Level#
+tha_t01.rsw#Thanatos Tower Platform Lower Level#
+tha_t02.rsw#Thanatos Tower Platform Lower Level#
+tha_t03.rsw#Thanatos Tower Platform Lower Level#
+tha_t04.rsw#Thanatos Tower Platform Lower Level#
+tha_t05.rsw#Thanatos Tower Platform Upper Level#
+tha_t06.rsw#Thanatos Tower Platform Upper Level#
+tha_t07.rsw#Thanatos Tower Platform Upper Level#
+tha_t08.rsw#Thanatos Tower Platform Upper Level#
+tha_t09.rsw#Thanatos Tower Platform Upper Level#
+tha_t10.rsw#Thanatos Tower Platform Upper Level#
+tha_t11.rsw#Thanatos Tower Platform Upper Level#
+tha_t12.rsw#Thanatos Tower Platform Upper Level#
 treasure01.rsw#Sunken Ship #
 treasure02.rsw#Sunken Ship #
 turbo_e_16.rsw#Turbo Track Stadium#
