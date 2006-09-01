@@ -349,6 +349,7 @@ attackSkillSlot {
 	equip_armor
 	equip_shoes
 	equip_arrow
+	manualAI 0
 }
 
 attackComboSlot {
@@ -381,6 +382,7 @@ useSelf_skill {
 	timeout 0
 	disabled 0
 	inInventory
+	manualAI 0
 }
 
 useSelf_skill_smartHeal 1
@@ -406,6 +408,7 @@ partySkill {
 	notInTown 0
 	timeout 0
 	disabled 0
+	manualAI 0
 	target
 	target_hp
 	target_isJob
@@ -450,7 +453,6 @@ equipAuto {
 	armor
 	shoes
 	arrow
-
 	monsters
 	weight 0
 	whileSitting 0
@@ -469,6 +471,7 @@ equipAuto {
 	timeout 0
 	disabled 0
 	inInventory
+	manualAI 0
 }
 
 useSelf_item {
@@ -489,6 +492,7 @@ useSelf_item {
 	timeout
 	disabled 0
 	inInventory
+	manualAI 0
 }
 
 
