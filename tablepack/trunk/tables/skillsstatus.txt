@@ -38,6 +38,7 @@
 37 Concentration Potion
 38 Awakening Potion
 39 Berserk Potion
+41 Walking Speed Up
 42 Speed Up
 49 Barrier
 50 Strip Weapon
@@ -53,6 +54,7 @@
 60 Devotion
 61 Providence
 62 Defender
+64 Water Enchanted
 65 Auto Spell
 68 Spear Quicken
 77 Sleeping
@@ -97,11 +99,15 @@
 146 Dark Weapon
 148 Ghost Weapon
 149 Night
+150 Increase Str
+151 Increase Atk/Matk
 152 Devil
 153 Kaite
 156 Kaizel
 158 Kaupe
 181 Preserve
+184 Invisible Detect
+185 Walking Speed Down
 188 Maximum Power Thrust
 203 Madness Canceller
 204 Gatling Fever
