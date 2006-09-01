@@ -509,29 +509,29 @@
 519 GS_FULLBUSTER Shotgun Frenzy
 520 GS_SPREADATTACK Spread Attack
 521 GS_GROUNDDRIFT Scatter Mines
-522 NJ_TOBIDOUGU Shuriken Training
+522 NJ_TOBIDOUGU Tobidougu
 523 NJ_SYURIKEN Throw Shuriken
-524 NJ_KUNAI Throw Kunai
-525 NJ_HUUMA Throw Wind_Shuriken
-526 NJ_ZENYNAGE Waste Money
-527 NJ_TATAMIGAESHI Improvised Defense
-528 NJ_KASUMIKIRI Vanishing Slash
+524 NJ_KUNAI Kunai
+525 NJ_HUUMA Huuma
+526 NJ_ZENYNAGE Zeny Nage
+527 NJ_TATAMIGAESHI Tatamigaeshi
+528 NJ_KASUMIKIRI Kasumikiri
 529 NJ_SHADOWJUMP Shadow Jump
-530 NJ_KIRIKAGE Shadow Slash
-531 NJ_UTSUSEMI Cicada Skin Shedding
-532 NJ_BUNSINJYUTSU Illusionary Shadow
-533 NJ_NINPOU Spirit of the Blade
-534 NJ_KOUENKA Crimson Fire Petal
-535 NJ_KAENSIN Crimson Fire Formation
-536 NJ_BAKUENRYU Raging Fire Dragon
-537 NJ_HYOUSENSOU Spear of Ice
-538 NJ_SUITON Hidden Water
-539 NJ_HYOUSYOURAKU Ice Meteor
-540 NJ_HUUJIN Wind Blade
-541 NJ_RAIGEKISAI Lightning Strike of Destruction
+530 NJ_KIRIKAGE Kirikage
+531 NJ_UTSUSEMI Utsusemi
+532 NJ_BUNSINJYUTSU Bunshin No Jutsu
+533 NJ_NINPOU Ninpou
+534 NJ_KOUENKA Kouenka
+535 NJ_KAENSIN Kaensin
+536 NJ_BAKUENRYU Bakuenryu
+537 NJ_HYOUSENSOU Hyousensou
+538 NJ_SUITON Suiton
+539 NJ_HYOUSYOURAKU Hyousyouraku
+540 NJ_HUUJIN Huujin
+541 NJ_RAIGEKISAI Raigekisai
 542 NJ_KAMAITACHI Kamaitachi
-543 NJ_NEN Soul
-544 NJ_ISSEN Final Strike
+543 NJ_NEN Nen
+544 NJ_ISSEN Issen
 1001 KN_CHARGEATK Charge Attack
 1002 CR_SHRINK Shrink
 1003 AS_SONICACCEL Sonic Acceleration
