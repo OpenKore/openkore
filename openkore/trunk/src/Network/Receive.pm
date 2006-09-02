@@ -2054,8 +2054,7 @@ sub errors {
 		($config{dcOnDisconnect} > 1 ||
 		($config{dcOnDisconnect} &&
 		$args->{type} != 3 &&
-		$args->{type} != 10 &&
-		!$config{ignoreServerShutdown}))) {
+		$args->{type} != 10 && ))) {
 		message T("Lost connection; exiting\n");
 		$quit = 1;
 	}
@@ -2065,13 +2064,11 @@ sub errors {
 
 	$timeout_ex{'master'}{'time'} = time;
 	$timeout_ex{'master'}{'timeout'} = $timeout{'reconnect'}{'timeout'};
-	if (($args->{type} != 0) || (!$config{ignoreServerShutdown})) {
+	if (($args->{type} != 0)) {
 		$net->serverDisconnect();
 	}
-	if ($args->{type} == 0 && !$config{ignoreServerShutdown}) {
+	if ($args->{type} == 0) {
 		error T("Server shutting down\n"), "connection";
-	} elsif ($args->{type} == 0 && $config{ignoreServerShutdown}) {
-		error T("Server shutting down, ignoring due to configuration settings.\n"), "connection";
 	} elsif ($args->{type} == 1) {
 		error T("Error: Server is closed\n"), "connection";
 	} elsif ($args->{type} == 2) {
