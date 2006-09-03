@@ -2054,7 +2054,7 @@ sub errors {
 		($config{dcOnDisconnect} > 1 ||
 		($config{dcOnDisconnect} &&
 		$args->{type} != 3 &&
-		$args->{type} != 10 && ))) {
+		$args->{type} != 10))) {
 		message T("Lost connection; exiting\n");
 		$quit = 1;
 	}
