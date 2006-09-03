@@ -933,7 +933,7 @@ sub getField {
 	# The .dist file is not available; create it
 	unless ($r_hash->{dstMap}) {
 		$r_hash->{dstMap} = makeDistMap($r_hash->{rawMap}, $r_hash->{width}, $r_hash->{height});
-		open FILE, "> $dist_file" or die TF("Could not write dist cache file: %s\n", $!);
+		open FILE, "> $dist_file" or die TF("Could not write dist cache file $dist_file: %s\n", $!);
 		binmode(FILE);
 		print FILE pack("a2 v1", 'V#', 3);
 		print FILE pack("v1 v1", @$r_hash{'width', 'height'});
