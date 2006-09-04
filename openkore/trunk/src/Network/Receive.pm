@@ -2050,6 +2050,7 @@ sub equip_item {
 sub errors {
 	my ($self, $args) = @_;
 
+	Plugins::callHook('disconnected') if $conState == 5;
 	if ($conState == 5 && 
 		($config{dcOnDisconnect} > 1 ||
 		($config{dcOnDisconnect} &&
