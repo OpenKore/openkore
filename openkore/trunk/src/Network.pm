@@ -508,6 +508,7 @@ sub checkConnection {
 		undef $conState_tries;
 
 	} elsif ($conState == 5 && !$self->serverAlive()) {
+		Plugins::callHook('disconnected');
 		if ($config{dcOnDisconnect}) {
 			chatLog("k", T("*** You disconnected, auto quit! ***\n"));
 			error T("Disconnected from Map Server, exiting...\n"), "connection";
@@ -522,6 +523,7 @@ sub checkConnection {
 
 	} elsif ($conState == 5 && timeOut($timeout{play})) {
 		error T("Timeout on Map Server, "), "connection";
+		Plugins::callHook('disconnected');
 		if ($config{dcOnDisconnect}) {
 			error T("exiting...\n"), "connection";
 			$quit = 1;

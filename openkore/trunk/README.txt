@@ -135,6 +135,8 @@ Internal:
 - Item has been renamed to Actor::Item for consistency.
 - Receive.pm : monk_spirits is now known as revolving_entity
 - Added Bullet support
+- New 'disconnected' plugin hook, called when you get disconnected
+  from the map server
 
 To Fix:
 - XKore2 is not acting like a real server, it doesn't send complete informations
