@@ -20,10 +20,14 @@ ai_move_giveup 1.5
 
 # Send the attack packet every x seconds, if it hasn't been send already
 ai_attack 1
+ai_homunculus_attack 1
+
 # Check for monsters to attack every x seconds
 ai_attack_auto 0.5
+
 # Give up attacking a monster if it can't be reached within x seconds
 ai_attack_giveup 12
+
 # If you've just killed a monster, and there are no aggressives,
 # and you're not picking up any items, wait x seconds before doing
 # anything else.
@@ -33,17 +37,21 @@ ai_attack_unfail 5
 
 # When your monster died, start checking for loot after x seconds
 ai_items_take_start 0.4
+
 # Stop checking for loot x seconds after it has begun checking.
 ai_items_take_end 1.2
 
 # When standing near an item, send the 'take' packet every x seconds until
 # the item has been taken.
 ai_take .4
+
 # Give up if unable to pickup item after x seconds
 ai_take_giveup 3
 ai_items_gather_giveup 3
+
 # Every x seconds, check items for gathering
 ai_items_gather_auto .3
+
 # Only gather items that have been more than x seconds on screen
 ai_items_gather_start .3
 
@@ -98,6 +106,7 @@ ai_storageAuto 2
 ai_storageAuto_giveup 15
 # delay between sending cart item add/get packets
 ai_cartAuto 0.15
+
 # delay between checking if we need to do any cartAuto functions
 ai_cartAutoCheck 2
 ai_avoidcheck 0.5
