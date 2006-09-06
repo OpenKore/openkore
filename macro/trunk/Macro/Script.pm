@@ -49,7 +49,7 @@ sub new {
 # destructor
 sub DESTROY {
 	my $self = shift;
-	AI::dequeue() if (AI::is('macro') && !$self->{submacro})
+	AI::clear('macro') if (AI::inQueue('macro') && !$self->{submacro})
 }
 
 # declares current macro to be a submacro
