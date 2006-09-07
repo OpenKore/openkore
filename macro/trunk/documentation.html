@@ -51,6 +51,7 @@
 		<li><a href="#installation">Installation</a></li>
 		<li><a href="#commands">Commands</a></li>
 		<li><a href="#files">Configuration files</a></li>
+		<li><a href="#before">Before writing macros</a></li>
 		<li><a href="#macro">Macro syntax</a>
 			<ul>
 			<li><a href="#macro_1">Variable declaration and usage</a></li>
@@ -195,6 +196,15 @@ macro registered to AI queue</dd>
 <a href="#top"><small>back to top</small></a>
 </div>
 
+<h2><a name="before"></a>Before writing macros</h2>
+<div class="p">
+	<strong>Make sure to read this manual entirely.</strong><br />
+	If you want to use openkore commands in your macro read about <a href="http://openkore.sourceforge.net/manual/view.php?p=Console%20Commands">console
+	commands</a>. Note that few commands like manipulating the ai queue are not allowed.<br />
+	Finally, read the <a href="http://forums.openkore.com/viewtopic.php?t=8063">announcements</a>. They might contain useful examples of use.<br />
+	<br />
+<a href="#top"><small>back to top</small></a>
+</div>
 
 <h2><a name="macro"></a>Macro syntax</h2>
 <div class="p">
@@ -731,7 +741,7 @@ macro reopenshop {
 
 <h2><a name="debugging"></a>Debugging</h2>
 <div class="p">
-	Debugging is done by the <b>cvsdebug.pm</b> package (included).<br />
+	Debugging is done by the <strong>cvsdebug.pm</strong> package (included).<br />
 	<br />
 	Add <tt><b>macro_debug</b> <i>&lt;level(s)&gt;</i></tt> to your <tt>config.txt</tt>.<br />
 	Debug levels are:
@@ -762,6 +772,9 @@ macro reopenshop {
 
 	<dt><b>full</b></dt>
 	<dd>full debug, all levels.</dd>
+	
+	<dt><b>none</b></dt>
+	<dd>no debug messages at all.</dd>
 	</dl>
 
 	Debug levels are separated by pipes <tt>|</tt><br />
@@ -776,7 +789,7 @@ macro reopenshop {
 <div class="p">
 	<ul>
 	<li>automacro check <tt>console</tt> ignores the following domains: <tt>macro</tt> and <tt>cvsdebug</tt>.</li>
-	<li>do <b>not</b> use closing brackets ")" in keyword arguments unless
+	<li>do <strong>not</strong> use closing brackets ")" in keyword arguments unless
 it's the closing bracket for an argument.<br />
 for example: <tt>@random ("foo", "bar", "@eval (4 + 5)", "yatta")</tt> is
 allowed, <tt>@random ("foo", "bar", ":-)", "yatta")</tt> is not.</li>
@@ -856,10 +869,10 @@ allowed, <tt>@random ("foo", "bar", ":-)", "yatta")</tt> is not.</li>
 	<dt><i>Help! I installed the macro plugin but my macros won't show up!</i></dt>
 	<dd>Make sure you saved your macros to <tt>macros.txt</tt> in your <tt>control</tt> folder. The Windows
 	Explorer sometimes hides well-known extensions like <tt>txt</tt> so check you haven't named that file
-	<tt>macros.txt<b>.txt</b></tt> accidentally.</dd>
+	<tt>macros.txt<strong>.txt</strong></tt> accidentally.</dd>
 
 	<dt><i>Help! Openkore gives me some weird perl errors and tells me "a plugin failed to load"!</i></dt>
-	<dd><b>Never</b> save your macros/automacros to a .pl file in your <tt>plugins</tt> folder. Put them
+	<dd><strong>Never</strong> save your macros/automacros to a .pl file in your <tt>plugins</tt> folder. Put them
 	in a file called <tt>macros.txt</tt> in your <tt>control</tt> folder.</dd>
 	
 	<dt><i>I have some macros that worked fine with macro 0.9.x, but now I only get syntax errors.</i></dt>
@@ -875,7 +888,7 @@ allowed, <tt>@random ("foo", "bar", ":-)", "yatta")</tt> is not.</li>
 
 	<dt><i>I have an automacro that checks for the amount of an item in my
 inventory / cart to be less than a given value or equal to zero (e.g. <tt>inventory
-"red potion" <= 30</tt>) but that automacro triggers also on map change. Why
+"red potion" &lt;= 30</tt>) but that automacro triggers also on map change. Why
 is that so and what should I do?</i></dt>
 	<dd>When you're changing the map all items vanish from your
 inventory for a short time. That happens with the official client, too. To
@@ -911,11 +924,10 @@ you, like <tt>inventory "Jellopy" > 0</tt></dd>
 <a href="#top"><small>back to top</small></a>
 </div>
 
-
 <p>
 <a href="http://validator.w3.org/check?uri=referer"><img
           src="http://www.w3.org/Icons/valid-xhtml10"
-          alt="Valid XHTML 1.0!" height="31" width="88" border="0" /></a>
+          alt="Valid XHTML 1.0!" height="31" width="88" /></a>
 </p>
 
 
