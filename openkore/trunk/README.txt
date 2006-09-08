@@ -127,6 +127,10 @@ New chat commands:
 - version
 	shows the OpenKore version.
 
+Incompatible Changes:
+- ; command separator replaced with ;;, so you can now use semicolons
+  in chat (as long as they're not two in a row).
+
 Internal:
 - Updated $config{gameGuard} '2' behavior to adapt to bRO server.
 - The Console::Other interface has been removed in favor of the Console::Unix

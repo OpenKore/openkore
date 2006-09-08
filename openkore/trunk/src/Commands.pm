@@ -200,7 +200,7 @@ sub run {
 		$input .= " $args" if defined $args;
 	}
 	
-	my @commands = split(';', $input);
+	my @commands = split(';;', $input);
 	# Loop through all of the commands...
 	foreach my $command (@commands) {
 		my ($switch, $args) = split(/ +/, $command, 2);
