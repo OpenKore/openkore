@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: openkore 1.9.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-09-05 09:44+0700\n"
-"PO-Revision-Date: 2006-09-05 09:49+0700\n"
+"POT-Creation-Date: 2006-09-09 21:57+0700\n"
+"PO-Revision-Date: 2006-09-09 22:01+0700\n"
 "Last-Translator: Richard <dewa5227@yahoo.com>\n"
 "Language-Team: Indonesian <dewa5227@yahoo.com>\n"
 "MIME-Version: 1.0\n"
@@ -1195,7 +1195,7 @@ msgstr ""
 
 #: ../Commands.pm:1770
 #: ../Commands.pm:3183
-#: ../Misc.pm:2144
+#: ../Misc.pm:2172
 msgid "Error: No description available.\n"
 msgstr "Error: Tidak ada deskripsi yang tersedia.\n"
 
@@ -1463,7 +1463,7 @@ msgstr "Inventory kosong\n"
 #. Translation Comment: Mark to show not identified items
 #: ../Commands.pm:2164
 #: ../Commands.pm:3412
-#: ../Misc.pm:3005
+#: ../Misc.pm:3033
 msgid "Not Identified"
 msgstr "Belum Di-identifikasi"
 
@@ -2864,48 +2864,48 @@ msgstr "Tekan ENTER untuk mengakhiri program ini.\n"
 msgid "Press ENTER to continue...\n"
 msgstr "Tekan ENTER untuk melanjutkan...\n"
 
-#: ../Misc.pm:248
+#: ../Misc.pm:249
 #, perl-format
 msgid "Authorized user '%s' for admin\n"
 msgstr "Pengguna '%s' telah diakui menjadi admin\n"
 
-#: ../Misc.pm:250
+#: ../Misc.pm:251
 #, perl-format
 msgid "Revoked admin privilages for user '%s'\n"
 msgstr "Membatalkan kemampuan admin untuk user '%s'\n"
 
-#: ../Misc.pm:277
-#: ../Misc.pm:309
+#: ../Misc.pm:278
+#: ../Misc.pm:310
 #, perl-format
 msgid "Config '%s' set to %s (was *not-displayed*)\n"
 msgstr "Config '%s' di-set kei %s (sebelumnya *tidak-ditampilkan*)\n"
 
-#: ../Misc.pm:279
-#: ../Misc.pm:311
+#: ../Misc.pm:280
+#: ../Misc.pm:312
 #, perl-format
 msgid "Config '%s' set to %s (was %s)\n"
 msgstr "Config '%s' di-set ke %s (sebelumnya %s)\n"
 
-#: ../Misc.pm:328
+#: ../Misc.pm:329
 #, perl-format
 msgid "Timeout '%s' set to %s (was %s)\n"
 msgstr "Timeout '%s' di-set ke %s (sebelumnya %s)\n"
 
-#: ../Misc.pm:789
+#: ../Misc.pm:794
 msgid "Unable to load field file: no field name specified.\n"
 msgstr "Tidak dapat me-load file field: tidak ada nama field yang dispesifikasikan.\n"
 
-#: ../Misc.pm:883
+#: ../Misc.pm:896
 #, perl-format
-msgid "Could not load field %s - you must install the kore-field pack!\n"
-msgstr "Tidak dapat me-load field %s - anda harus menginstall kore-field pack!\n"
+msgid "Could not load field %s - this map is not supported, please do not bot here.\n"
+msgstr "Tidak dapat meload field %s - map ini belum disupport, diharapkan tidak bot di tempat ini.\n"
 
-#: ../Misc.pm:936
+#: ../Misc.pm:964
 #, perl-format
 msgid "Could not write dist cache file %s: %s\n"
 msgstr "Tidak dapat menulis cache dist dari file %s: %s\n"
 
-#: ../Misc.pm:1062
+#: ../Misc.pm:1090
 #, perl-format
 msgid ""
 "No suitable browser detected. Please launch your favorite browser and go to:\n"
@@ -2914,34 +2914,34 @@ msgstr ""
 "Tidak ditemukan browser yang cocok. Silahkan menyalakan browser favorit anda anda pergi ke:\n"
 "%s"
 
-#: ../Misc.pm:1233
+#: ../Misc.pm:1261
 msgid "Disconnecting to avoid GM!\n"
 msgstr "Disconnecting untuk menghindari GM!\n"
 
-#: ../Misc.pm:1234
+#: ../Misc.pm:1262
 #, perl-format
 msgid "*** The GM %s talked to you, auto disconnected ***\n"
 msgstr "*** GM %s berbicara pada anda, disconnect secara otomatis ***\n"
 
-#: ../Misc.pm:1236
-#: ../Misc.pm:1250
-#: ../Misc.pm:3520
+#: ../Misc.pm:1264
+#: ../Misc.pm:1278
+#: ../Misc.pm:3548
 #: ../Network/Receive.pm:2082
 #, perl-format
 msgid "Disconnect for %s seconds...\n"
 msgstr "Disconnect dalam %s detik...\n"
 
-#: ../Misc.pm:1248
+#: ../Misc.pm:1276
 #, perl-format
 msgid "Disconnecting to avoid %s!\n"
 msgstr "Disconnecting untuk menghindari %s!\n"
 
-#: ../Misc.pm:1249
+#: ../Misc.pm:1277
 #, perl-format
 msgid "*** %s talked to you, auto disconnected ***\n"
 msgstr "*** %s berbicara pada anda, disconnect secara otomatis ***\n"
 
-#: ../Misc.pm:1297
+#: ../Misc.pm:1325
 msgid ""
 "-------  Character @< ---------\n"
 "Name: @<<<<<<<<<<<<<<<<<<<<<<<<\n"
@@ -2965,12 +2965,12 @@ msgstr ""
 "Zenny: @<<<<<<<<<<  Luk: @<<<<<<<<\n"
 "-------------------------------"
 
-#: ../Misc.pm:1313
+#: ../Misc.pm:1341
 #, perl-format
 msgid "Slot %d: %s (%s, level %d/%d)"
 msgstr "Slot %d: %s (%s, level %d/%d)"
 
-#: ../Misc.pm:1323
+#: ../Misc.pm:1351
 #, perl-format
 msgid ""
 "------------- Character List -------------\n"
@@ -2981,27 +2981,27 @@ msgstr ""
 "%s\n"
 "------------------------------------------\n"
 
-#: ../Misc.pm:1342
+#: ../Misc.pm:1370
 msgid "Create a new character"
 msgstr "Membuat character baru"
 
-#: ../Misc.pm:1342
+#: ../Misc.pm:1370
 msgid "Delete a character"
 msgstr "Menghapus sebuah character"
 
-#: ../Misc.pm:1343
+#: ../Misc.pm:1371
 msgid "Character selection"
 msgstr "Pilihan character"
 
-#: ../Misc.pm:1344
+#: ../Misc.pm:1372
 msgid "Please chooce a character or an action: "
 msgstr "Silahkan memilih sebuah character atau sebuah tindakan: "
 
-#: ../Misc.pm:1366
+#: ../Misc.pm:1394
 msgid "There are no characters on this account.\n"
 msgstr "Tidak ada character pada account ini.\n"
 
-#: ../Misc.pm:1372
+#: ../Misc.pm:1400
 msgid ""
 "Please enter the desired properties for your characters, in this form:\n"
 "(slot) \"(name)\" [ (str) (agi) (vit) (int) (dex) (luk) [ (hairstyle) [(haircolor)] ] ]\n"
@@ -3009,28 +3009,28 @@ msgstr ""
 "Silahkan memilih property yang diinginkan untuk character anda, pada form ini:\n"
 "(slot) \"(nama)\" [ (str) (agi) (vit) (int) (dex) (luk) [ (stylerambut) [(warnarambut)] ] ]\n"
 
-#: ../Misc.pm:1380
+#: ../Misc.pm:1408
 msgid "You didn't specify enough parameters."
 msgstr "Anda tidak menspesifikasikan parameter yang cukup."
 
-#: ../Misc.pm:1384
+#: ../Misc.pm:1412
 #, perl-format
 msgid "Creating character \"%s\" in slot \"%s\"...\n"
 msgstr "Membuat character \"%s\" pada slot \"%s\"...\n"
 
-#: ../Misc.pm:1391
+#: ../Misc.pm:1419
 msgid "Delete character"
 msgstr "Menghapus character"
 
-#: ../Misc.pm:1391
+#: ../Misc.pm:1419
 msgid "Select the character you want to delete: "
 msgstr "Pilih character yang anda inginkan untuk dihapus: "
 
-#: ../Misc.pm:1403
+#: ../Misc.pm:1431
 msgid "Confirm delete"
 msgstr "konfirmasi penghapusan"
 
-#: ../Misc.pm:1404
+#: ../Misc.pm:1432
 #, perl-format
 msgid ""
 "Are you ABSOLUTELY SURE you want to delete:\n"
@@ -3039,75 +3039,75 @@ msgstr ""
 "Apakah anda BENAR-BENAR YAKIN ingin menghapus:\n"
 "%s\n"
 
-#: ../Misc.pm:1405
+#: ../Misc.pm:1433
 msgid "No, don't delete"
 msgstr "Tidak, jangan dihapus"
 
-#: ../Misc.pm:1405
+#: ../Misc.pm:1433
 msgid "Yes, delete"
 msgstr "Ya, hapus"
 
-#: ../Misc.pm:1411
+#: ../Misc.pm:1439
 #, perl-format
 msgid "Deleting character %s...\n"
 msgstr "Menghapus character %s...\n"
 
-#: ../Misc.pm:1437
+#: ../Misc.pm:1465
 #: ../AI/CoreLogic.pm:3506
 #, perl-format
 msgid "The current map (%s) is not on the list of allowed maps.\n"
 msgstr "Map sekarang (%s) tidak ada pada list map yang diperbolehkan.\n"
 
-#: ../Misc.pm:1438
+#: ../Misc.pm:1466
 #: ../AI/CoreLogic.pm:3507
 #, perl-format
 msgid "** The current map (%s) is not on the list of allowed maps.\n"
 msgstr "** Map saat ini (%s) tidak terdapat dalam list map yang diperbolehkan.\n"
 
-#: ../Misc.pm:1439
+#: ../Misc.pm:1467
 msgid "** Exiting...\n"
 msgstr "** Keluar...\n"
 
-#: ../Misc.pm:1548
+#: ../Misc.pm:1576
 msgid "We're not currently connected to the character login server."
 msgstr "Saat ini tidak sedang terhubung dengan character login server."
 
-#: ../Misc.pm:1551
+#: ../Misc.pm:1579
 #, perl-format
 msgid "Slot \"%s\" is not a valid number."
 msgstr "Slot \"%s\" bukan merupakan nomor yang benar."
 
-#: ../Misc.pm:1554
+#: ../Misc.pm:1582
 msgid "The slot must be comprised between 0 and 4."
 msgstr "slot harus berada diantara 0 dan 4."
 
-#: ../Misc.pm:1557
+#: ../Misc.pm:1585
 #, perl-format
 msgid "Slot %s already contains a character (%s)."
 msgstr "Slot %s sudah terdapat character (%s)."
 
-#: ../Misc.pm:1560
+#: ../Misc.pm:1588
 msgid "Name must not be longer than 23 characters."
 msgstr "Nama tidak boleh lebih dari 23 karakter."
 
-#: ../Misc.pm:1566
+#: ../Misc.pm:1594
 msgid "Stats must be comprised between 1 and 9."
 msgstr "Stat harus berada diantara 1 dan 9."
 
-#: ../Misc.pm:1572
+#: ../Misc.pm:1600
 msgid "The sums Str + Int, Agi + Luk and Vit + Dex must all be equal to 10."
 msgstr "Total dari Str + Int, Agi + Luk dan Vit + Dex semua harus sama dengan 10."
 
-#: ../Misc.pm:1664
+#: ../Misc.pm:1692
 msgid "Message Dumped into DUMP.txt!\n"
 msgstr "Message di-Dump ke DUMP.txt!\n"
 
-#: ../Misc.pm:1806
+#: ../Misc.pm:1834
 #, perl-format
 msgid "Inventory Item Removed: %s (%d) x %d\n"
 msgstr "Item Inventory Dipindahkan: %s (%d) x %d\n"
 
-#: ../Misc.pm:2145
+#: ../Misc.pm:2173
 #, perl-format
 msgid ""
 "===============Item Description===============\n"
@@ -3118,154 +3118,154 @@ msgstr ""
 "Item: %s\n"
 "\n"
 
-#: ../Misc.pm:2182
+#: ../Misc.pm:2210
 msgid "Exiting...\n"
 msgstr "Keluar...\n"
 
-#: ../Misc.pm:2193
+#: ../Misc.pm:2221
 #, perl-format
 msgid "Relogging in %d seconds...\n"
 msgstr "Login ulang dalam %d detik...\n"
 
-#: ../Misc.pm:2395
-#: ../Misc.pm:2399
+#: ../Misc.pm:2423
+#: ../Misc.pm:2427
 #, perl-format
 msgid "Remove perfectly hidden %s\n"
 msgstr "Menghilangkan %s yang sembunyi dengan sempurna\n"
 
-#: ../Misc.pm:2474
+#: ../Misc.pm:2502
 #, perl-format
 msgid "%s does not exist.\n"
 msgstr "%s tidak ada.\n"
 
-#: ../Misc.pm:2520
+#: ../Misc.pm:2548
 msgid "Teleporting because of attack miss\n"
 msgstr "Melakukan Teleport dikarenakan gagal menyerang (luput)\n"
 
-#: ../Misc.pm:2524
+#: ../Misc.pm:2552
 #, perl-format
 msgid "Teleporting after attacking a monster %d times\n"
 msgstr "Melakukan Teleport setelah menyerang monster %d kali\n"
 
-#: ../Misc.pm:2530
-#: ../Misc.pm:2638
+#: ../Misc.pm:2558
+#: ../Misc.pm:2666
 #, perl-format
 msgid "%s (%s) has been provoked, searching another monster\n"
 msgstr "%s (%s) telah di-provoke, mencari monster lainnya.\n"
 
-#: ../Misc.pm:2557
+#: ../Misc.pm:2585
 #, perl-format
 msgid "Teleporting due to attack from %s\n"
 msgstr "Melakukan Teleport dikarenakan serangan dari %s\n"
 
-#: ../Misc.pm:2563
+#: ../Misc.pm:2591
 #, perl-format
 msgid "Next %d dmg could kill you. Teleporting...\n"
 msgstr "Serangan %d dmg berikutnya dapat membunuh anda. Melakukan Teleport...\n"
 
-#: ../Misc.pm:2570
+#: ../Misc.pm:2598
 #, perl-format
 msgid "%s hit you for more than %d dmg. Teleporting...\n"
 msgstr "%s menyerang anda lebih dari %d dmg. Melakukan Teleport...\n"
 
-#: ../Misc.pm:2577
+#: ../Misc.pm:2605
 #, perl-format
 msgid "%s hit you for more than %d dmg in lockMap. Teleporting...\n"
 msgstr "%s menyerang anda lebih dari %d dmg di lockMap. Melakukan Teleport...\n"
 
-#: ../Misc.pm:2583
+#: ../Misc.pm:2611
 #, perl-format
 msgid "%s attacks you while you are sitting. Teleporting...\n"
 msgstr "%s menyerang anda saat sedang duduk. Melakukan Teleport...\n"
 
-#: ../Misc.pm:2591
+#: ../Misc.pm:2619
 #, perl-format
 msgid "%s hit you for a total of more than %d dmg. Teleporting...\n"
 msgstr "%s menyerang anda total lebih dari %d dmg. Melakukan Teleport...\n"
 
-#: ../Misc.pm:2598
+#: ../Misc.pm:2626
 #, perl-format
 msgid "%s hit you for a total of more than %d dmg in lockMap. Teleporting...\n"
 msgstr "%s menyerang anda total lebih dari %d dmg di lockMap. Melakukan Teleport...\n"
 
-#: ../Misc.pm:2603
+#: ../Misc.pm:2631
 #, perl-format
 msgid "%s hit you when your HP is too low. Teleporting...\n"
 msgstr "%s menyerang anda ketika HP anda sedang sangat rendah. Melakukan Teleport...\n"
 
-#: ../Misc.pm:2625
+#: ../Misc.pm:2653
 #, perl-format
 msgid "Change target to aggressive : %s (%s)\n"
 msgstr "Merubah target menjadi agresif : %s (%s)\n"
 
-#: ../Misc.pm:2669
+#: ../Misc.pm:2697
 #, perl-format
 msgid "Homunculus teleporting due to attack from %s\n"
 msgstr "Homunculus melakukan teleport dikarenakan serangan dari %s\n"
 
-#: ../Misc.pm:2675
+#: ../Misc.pm:2703
 #, perl-format
 msgid "Next %d dmg could kill your homunculus. Teleporting...\n"
 msgstr "Serangan %d dmg berikutnya dapat membunuh homunculus anda. Melakukan Teleport...\n"
 
-#: ../Misc.pm:2682
+#: ../Misc.pm:2710
 #, perl-format
 msgid "%s hit your homunculus for more than %d dmg. Teleporting...\n"
 msgstr "%s menyerang homunculus anda lebih dari %d dmg. Melakukan Teleport...\n"
 
-#: ../Misc.pm:2689
+#: ../Misc.pm:2717
 #, perl-format
 msgid "%s hit your homunculus for more than %d dmg in lockMap. Teleporting...\n"
 msgstr "%s menyerang homunculus anda lebih dari %d dmg di lockMap. Melakukan Teleport...\n"
 
-#: ../Misc.pm:2697
+#: ../Misc.pm:2725
 #, perl-format
 msgid "%s hit your homunculus for a total of more than %d dmg. Teleporting...\n"
 msgstr "%s menyerang homunculus anda total lebih dari %d dmg. Melakukan Teleport...\n"
 
-#: ../Misc.pm:2704
+#: ../Misc.pm:2732
 #, perl-format
 msgid "%s hit your homunculus for a total of more than %d dmg in lockMap. Teleporting...\n"
 msgstr "%s menyerang homunculus anda total lebih dari %d dmg di lockMap. Melakukan Teleport...\n"
 
-#: ../Misc.pm:2709
+#: ../Misc.pm:2737
 #, perl-format
 msgid "%s hit your homunculus when your homunculus' HP is too low. Teleporting...\n"
 msgstr "%s menyerang homunculus anda ketika HP homunculus anda sedang sangat rendah. Melakukan Teleport...\n"
 
-#: ../Misc.pm:2730
+#: ../Misc.pm:2758
 #, perl-format
 msgid "Homunculus change target to aggressive : %s (%s)\n"
 msgstr "Homunculus merubah target menjadi agresif : %s (%s)\n"
 
-#: ../Misc.pm:2868
+#: ../Misc.pm:2896
 msgid "Using Teleport Skill Level 2 though we not have it!\n"
 msgstr "Menggunakan Skill Teleportl Level 2 meskipun tidak mempunyainya!\n"
 
-#: ../Misc.pm:2923
+#: ../Misc.pm:2951
 msgid "No Fly Wing or Butterfly Wing, fallback to Teleport Skill\n"
 msgstr "Tidak ada Fly Wing atau Butterfly Wing, kembali ke Skill Teleport\n"
 
-#: ../Misc.pm:2929
+#: ../Misc.pm:2957
 msgid "You don't have the Teleport skill or a Fly Wing\n"
 msgstr "Anda tidak memiliki Skill Teleport atau Fly Wing\n"
 
-#: ../Misc.pm:2931
+#: ../Misc.pm:2959
 msgid "You don't have the Teleport skill or a Butterfly Wing\n"
 msgstr "Anda tidak memiliki Skill Teleport atau Butterfly Wing\n"
 
-#: ../Misc.pm:2998
+#: ../Misc.pm:3026
 #, perl-format
 msgid "---------- Storage %s -----------\n"
 msgstr "---------- Storage %s -----------\n"
 
 #. Translation Comment: Mark to show broken items
-#: ../Misc.pm:3007
+#: ../Misc.pm:3035
 msgid "Broken"
 msgstr "Rusak"
 
 #. Translation Comment: Storage Capacity
-#: ../Misc.pm:3011
+#: ../Misc.pm:3039
 #, perl-format
 msgid ""
 "\n"
@@ -3274,482 +3274,482 @@ msgstr ""
 "\n"
 "Kapasitas: %d/%d\n"
 
-#: ../Misc.pm:3015
+#: ../Misc.pm:3043
 msgid "Storage logged\n"
 msgstr "Storage telah di-log\n"
 
-#: ../Misc.pm:3018
+#: ../Misc.pm:3046
 #, perl-format
 msgid "Unable to write to %s\n"
 msgstr "tidak dapat menulis di %s\n"
 
-#: ../Misc.pm:3037
+#: ../Misc.pm:3065
 #, perl-format
 msgid "%s %s %s - Dmg: %s (delay %s)\n"
 msgstr "%s %s %s - Dmg: %s (delay %s)\n"
 
-#: ../Misc.pm:3052
+#: ../Misc.pm:3080
 #, perl-format
 msgid "You are casting %s on location (%d, %d) - (time %sms)\n"
 msgstr "Anda melakukan cast %s pada lokasi (%d, %d) - (waktu %sms)\n"
 
-#: ../Misc.pm:3054
+#: ../Misc.pm:3082
 #, perl-format
 msgid "Player %s (%d) is casting %s on location (%d, %d) - (time %sms)\n"
 msgstr "Player %s (%d) melakukan cast %s pada lokasi  (%d, %d) - (waktu %sms)\n"
 
-#: ../Misc.pm:3057
+#: ../Misc.pm:3085
 #, perl-format
 msgid "Monster %s (%d) is casting %s on location (%d, %d) - (time %sms)\n"
 msgstr "Monster %s (%d) melakukan cast %s pada lokasi (%d, %d) - (waktu %sms)\n"
 
-#: ../Misc.pm:3060
+#: ../Misc.pm:3088
 #, perl-format
 msgid "Unknown #%s (%d) is casting %s on location (%d, %d) - (time %sms)\n"
 msgstr "Unknown #%s (%d) melakukan cast %s pada lokasi (%d, %d) - (waktu %sms)\n"
 
-#: ../Misc.pm:3067
+#: ../Misc.pm:3095
 #, perl-format
 msgid "You are casting %s on yourself (time %sms)\n"
 msgstr "Anda melakukan cast %s pada diri sendiri (waktu %sms)\n"
 
-#: ../Misc.pm:3069
+#: ../Misc.pm:3097
 #, perl-format
 msgid "You are casting %s on player %s (%d) (time %sms)\n"
 msgstr "Anda melakukan cast %s pada player %s (%d) (waktu %sms)\n"
 
-#: ../Misc.pm:3072
+#: ../Misc.pm:3100
 #, perl-format
 msgid "You are casting %s on monster %s (%d) (time %sms)\n"
 msgstr "Anda melakukan cast %s pada monster %s (%d) (waktu %sms)\n"
 
-#: ../Misc.pm:3075
+#: ../Misc.pm:3103
 #, perl-format
 msgid "You are casting %s on Unknown #%s (%d) (time %sms)\n"
 msgstr "Anda melakukan cast %s pada Unknown #%s (%d) (waktu %sms)\n"
 
-#: ../Misc.pm:3081
+#: ../Misc.pm:3109
 #, perl-format
 msgid "Player %s (%d) is casting %s on you (time %sms)\n"
 msgstr "Player %s (%d) melakukan cast %s pada anda (waktu %sms)\n"
 
-#: ../Misc.pm:3086
+#: ../Misc.pm:3114
 #, perl-format
 msgid "Player %s (%d) is casting %s on player %s (%d) (time %sms)\n"
 msgstr "Player %s (%d) melakukan cast %s pada player %s (%d) (waktu %sms)\n"
 
-#: ../Misc.pm:3089
+#: ../Misc.pm:3117
 #, perl-format
 msgid "Player %s (%d) is casting %s on himself (time %sms)\n"
 msgstr "Player %s (%d) melakukan cast %s pada dirinya (waktu %sms)\n"
 
-#: ../Misc.pm:3092
+#: ../Misc.pm:3120
 #, perl-format
 msgid "Player %s (%d) is casting %s on herself (time %sms)\n"
 msgstr "Player %s (%d) melakukan cast %s pada dirinya (waktu %sms)\n"
 
-#: ../Misc.pm:3096
+#: ../Misc.pm:3124
 #, perl-format
 msgid "Player %s (%d) is casting %s on monster %s (%d) (time %sms)\n"
 msgstr "Player %s (%d) melakukan cast %s pada monster %s (%d) (waktu %sms)\n"
 
-#: ../Misc.pm:3099
+#: ../Misc.pm:3127
 #, perl-format
 msgid "Player %s (%d) is casting %s on Unknown #%s (%d) (time %sms)\n"
 msgstr "Player %s (%d) melakukan cast %s pada Unknown #%s (%d) (waktu %sms)\n"
 
-#: ../Misc.pm:3105
+#: ../Misc.pm:3133
 #, perl-format
 msgid "Monster %s (%d) is casting %s on you (time %sms)\n"
 msgstr "Monster %s (%d) melakukan cast %s pada anda (waktu %sms)\n"
 
-#: ../Misc.pm:3108
+#: ../Misc.pm:3136
 #, perl-format
 msgid "Monster %s (%d) is casting %s on player %s (%d) (time %sms)\n"
 msgstr "Monster %s (%d) melakukan cast %s pada player %s (%d) (waktu %sms)\n"
 
-#: ../Misc.pm:3112
+#: ../Misc.pm:3140
 #, perl-format
 msgid "Monster %s (%d) is casting %s on monster %s (%d) (time %sms)\n"
 msgstr "Monster %s (%d) melakukan cast %s pada monster %s (%d) (waktu %sms)\n"
 
-#: ../Misc.pm:3115
+#: ../Misc.pm:3143
 #, perl-format
 msgid "Monster %s (%d) is casting %s on itself (time %sms)\n"
 msgstr "Monster %s (%d) melakukan cast %s pada dirinya (waktu %sms)\n"
 
-#: ../Misc.pm:3119
+#: ../Misc.pm:3147
 #, perl-format
 msgid "Monster %s (%d) is casting %s on Unknown #%s (%d) (time %sms)\n"
 msgstr "Monster %s (%d) melakukan cast %s pada Unknown #%s (%d) (waktu %sms)\n"
 
-#: ../Misc.pm:3125
+#: ../Misc.pm:3153
 #, perl-format
 msgid "Unknown #%s (%d) is casting %s on you (time %sms)\n"
 msgstr "Unknown #%s (%d) melakukan cast %s pada anda (waktu %sms)\n"
 
-#: ../Misc.pm:3128
+#: ../Misc.pm:3156
 #, perl-format
 msgid "Unknown #%s (%d) is casting %s on player %s (%d) (time %sms)\n"
 msgstr "Unknown #%s (%d) melakukan cast %s pada player %s (%d) (waktu %sms)\n"
 
-#: ../Misc.pm:3131
+#: ../Misc.pm:3159
 #, perl-format
 msgid "Unknown #%s (%d) is casting %s on monster %s (%d) (time %sms)\n"
 msgstr "Unknown #%s (%d) melakukan cast %s pada monster %s (%d) (waktu %sms)\n"
 
-#: ../Misc.pm:3135
+#: ../Misc.pm:3163
 #, perl-format
 msgid "Unknown #%s (%d) is casting %s on Unknown #%s (%d) (time %sms)\n"
 msgstr "Unknown #%s (%d) melakukan cast %s pada Unknown #%s (%d) (waktu %sms)\n"
 
-#: ../Misc.pm:3138
+#: ../Misc.pm:3166
 #, perl-format
 msgid "Unknown #%s (%d) is casting %s on himself (time %sms)\n"
 msgstr "Unknown #%s (%d) melakukan cast %s pada dirinya (waktu %sms)\n"
 
 #. Translation Comment: Ammount of Damage on Skill
-#: ../Misc.pm:3153
+#: ../Misc.pm:3181
 #, perl-format
 msgid "Dmg: %s"
 msgstr "Dmg: %s"
 
 #. Translation Comment: Skill name + level
-#: ../Misc.pm:3159
-#: ../Misc.pm:3247
+#: ../Misc.pm:3187
+#: ../Misc.pm:3275
 #, perl-format
 msgid "%s (lvl %s)"
 msgstr "%s (lvl %s)"
 
-#: ../Misc.pm:3164
+#: ../Misc.pm:3192
 #, perl-format
 msgid "You use %s on yourself %s(delay %s)\n"
 msgstr "Anda menggunakan %s pada diri sendiri %s(delay %s)\n"
 
-#: ../Misc.pm:3166
+#: ../Misc.pm:3194
 #, perl-format
 msgid "You use %s on player %s (%d) %s(delay %s)\n"
 msgstr "Anda menggunakan %s pada player %s (%d) %s(delay %s)\n"
 
-#: ../Misc.pm:3169
+#: ../Misc.pm:3197
 #, perl-format
 msgid "You use %s on monster %s (%d) %s(delay %s)\n"
 msgstr "Anda menggunakan %s pada monster %s (%d) %s(delay %s)\n"
 
-#: ../Misc.pm:3172
+#: ../Misc.pm:3200
 #, perl-format
 msgid "You use %s on Unknown #%s (%d) %s(delay %s)\n"
 msgstr "Anda menggunakan %s pada Unknown #%s (%d) %s(delay %s)\n"
 
-#: ../Misc.pm:3178
+#: ../Misc.pm:3206
 #, perl-format
 msgid "Player %s (%d) uses %s on you %s(delay %s)\n"
 msgstr "Player %s (%d) menggunakan %s pada anda %s(delay %s)\n"
 
-#: ../Misc.pm:3183
+#: ../Misc.pm:3211
 #, perl-format
 msgid "Player %s (%d) uses %s on player %s (%d) %s(delay %s)\n"
 msgstr "Player %s (%d) menggunakan %s pada player %s (%d) %s(delay %s)\n"
 
-#: ../Misc.pm:3186
+#: ../Misc.pm:3214
 #, perl-format
 msgid "Player %s (%d) uses %s on himself %s(delay %s)\n"
 msgstr "Player %s (%d) menggunakan %s pada dirinya %s(delay %s)\n"
 
-#: ../Misc.pm:3189
+#: ../Misc.pm:3217
 #, perl-format
 msgid "Player %s (%d) uses %s on herself %s(delay %s)\n"
 msgstr "Player %s (%d) menggunakan %s pada dirinya %s(delay %s)\n"
 
-#: ../Misc.pm:3193
+#: ../Misc.pm:3221
 #, perl-format
 msgid "Player %s (%d) uses %s on monster %s (%d) %s(delay %s)\n"
 msgstr "Player %s (%d) menggunakan %s pada monster %s (%d) %s(delay %s)\n"
 
-#: ../Misc.pm:3196
+#: ../Misc.pm:3224
 #, perl-format
 msgid "Player %s (%d) uses %s on Unknown #%s (%d) %s(delay %s)\n"
 msgstr "Player %s (%d) menggunakan %s pada Unknown #%s (%d) %s(delay %s)\n"
 
-#: ../Misc.pm:3202
+#: ../Misc.pm:3230
 #, perl-format
 msgid "Monster %s (%d) uses %s on you %s(delay %s)\n"
 msgstr "Monster %s (%d) menggunakan %s pada anda %s(delay %s)\n"
 
-#: ../Misc.pm:3205
+#: ../Misc.pm:3233
 #, perl-format
 msgid "Monster %s (%d) uses %s on player %s (%d) %s(delay %s)\n"
 msgstr "Monster %s (%d) menggunakan %s pada player %s (%d) %s(delay %s)\n"
 
-#: ../Misc.pm:3209
+#: ../Misc.pm:3237
 #, perl-format
 msgid "Monster %s (%d) uses %s on monster %s (%d) %s(delay %s)\n"
 msgstr "Monster %s (%d) menggunakan %s pada monster %s (%d) %s(delay %s)\n"
 
-#: ../Misc.pm:3212
+#: ../Misc.pm:3240
 #, perl-format
 msgid "Monster %s (%d) uses %s on itself %s(delay %s)\n"
 msgstr "Monster %s (%d) menggunakan %s pada dirinya %s(delay %s)\n"
 
-#: ../Misc.pm:3216
+#: ../Misc.pm:3244
 #, perl-format
 msgid "Monster %s (%d) uses %s on Unknown #%s (%d) %s(delay %s)\n"
 msgstr "Monster %s (%d) menggunakan %s pada Unknown #%s (%d) %s(delay %s)\n"
 
-#: ../Misc.pm:3222
+#: ../Misc.pm:3250
 #, perl-format
 msgid "Unknown #%s (%d) uses %s on you %s(delay %s)\n"
 msgstr "Unknown #%s (%d) menggunakan %s pada anda %s(delay %s)\n"
 
-#: ../Misc.pm:3225
+#: ../Misc.pm:3253
 #, perl-format
 msgid "Unknown #%s (%d) uses %s on player %s (%d) %s(delay %s)\n"
 msgstr "Unknown #%s (%d) menggunakan %s pada player %s (%d) %s(delay %s)\n"
 
-#: ../Misc.pm:3228
+#: ../Misc.pm:3256
 #, perl-format
 msgid "Unknown #%s (%d) uses %s on monster %s (%d) %s(delay %s)\n"
 msgstr "Unknown #%s (%d) menggunakan %s pada monster %s (%d) %s(delay %s)\n"
 
-#: ../Misc.pm:3232
+#: ../Misc.pm:3260
 #, perl-format
 msgid "Unknown #%s (%d) uses %s on Unknown #%s (%d) %s(delay %s)\n"
 msgstr "Unknown #%s (%d) menggunakan %s pada Unknown #%s (%d) %s(delay %s)\n"
 
-#: ../Misc.pm:3235
+#: ../Misc.pm:3263
 #, perl-format
 msgid "Unknown #%s (%d) uses %s on himself %s(delay %s)\n"
 msgstr "Unknown #%s (%d) menggunakan %s pada dirinya %s(delay %s)\n"
 
-#: ../Misc.pm:3250
+#: ../Misc.pm:3278
 #, perl-format
 msgid "You use %s on location (%d, %d)\n"
 msgstr "Anda menggunakan %s pada lokasi (%d, %d)\n"
 
 #. Translation Comment: used Healing skill
-#: ../Misc.pm:3270
+#: ../Misc.pm:3298
 #, perl-format
 msgid "%s hp gained"
 msgstr "Memperoleh hp sebesar %s"
 
 #. Translation Comment: used non-Healing skill - displays skill level
-#: ../Misc.pm:3274
+#: ../Misc.pm:3302
 #, perl-format
 msgid "Lv %s"
 msgstr "Lv %s"
 
-#: ../Misc.pm:3282
+#: ../Misc.pm:3310
 #, perl-format
 msgid "You use %s on yourself %s\n"
 msgstr "Anda menggunakan %s pada diri sendiri %s\n"
 
 #. Translation Comment: You use a certain skill on an actor.
-#: ../Misc.pm:3285
+#: ../Misc.pm:3313
 #, perl-format
 msgid "You use %s on %s %s\n"
 msgstr "Anda menggunakan %s pada %s %s\n"
 
-#: ../Misc.pm:3290
+#: ../Misc.pm:3318
 #, perl-format
 msgid "Player %s uses %s on you %s\n"
 msgstr "Player %s menggunakan %s pada anda %s\n"
 
-#: ../Misc.pm:3295
+#: ../Misc.pm:3323
 #, perl-format
 msgid "Player %s (%d) uses %s on player %s (%d) %s\n"
 msgstr "Player %s (%d) menggunakan %s pada player %s (%d) %s\n"
 
-#: ../Misc.pm:3298
+#: ../Misc.pm:3326
 #, perl-format
 msgid "Player %s (%d) uses %s on himself %s\n"
 msgstr "Player %s (%d) menggunakan %s pada dirinya %s\n"
 
-#: ../Misc.pm:3301
+#: ../Misc.pm:3329
 #, perl-format
 msgid "Player %s (%d) uses %s on herself %s\n"
 msgstr "Player %s (%d) menggunakan %s pada dirinya %s\n"
 
-#: ../Misc.pm:3305
+#: ../Misc.pm:3333
 #, perl-format
 msgid "Player %s (%d) uses %s on monster %s (%d) %s\n"
 msgstr "Player %s (%d) menggunakan %s pada monster %s (%d) %s\n"
 
-#: ../Misc.pm:3308
+#: ../Misc.pm:3336
 #, perl-format
 msgid "Player %s (%d) uses %s on Unknown #%s (%d) %s\n"
 msgstr "Player %s (%d) menggunakan %s pada Unknown #%s (%d) %s\n"
 
-#: ../Misc.pm:3314
+#: ../Misc.pm:3342
 #, perl-format
 msgid "Monster %s (%d) uses %s on you %s\n"
 msgstr "Monster %s (%d) menggunakan %s pada anda %s\n"
 
-#: ../Misc.pm:3317
+#: ../Misc.pm:3345
 #, perl-format
 msgid "Monster %s (%d) uses %s on player %s (%d) %s\n"
 msgstr "Monster %s (%d) menggunakan %s pada player %s (%d) %s\n"
 
-#: ../Misc.pm:3321
+#: ../Misc.pm:3349
 #, perl-format
 msgid "Monster %s (%d) uses %s on monster %s (%d) %s\n"
 msgstr "Monster %s (%d) menggunakan %s pada monster %s (%d) %s\n"
 
-#: ../Misc.pm:3324
+#: ../Misc.pm:3352
 #, perl-format
 msgid "Monster %s (%d) uses %s on itself %s\n"
 msgstr "Monster %s (%d) menggunakan %s pada dirinya %s\n"
 
-#: ../Misc.pm:3328
+#: ../Misc.pm:3356
 #, perl-format
 msgid "Monster %s (%d) uses %s on Unknown #%s (%d) %s\n"
 msgstr "Monster %s (%d) menggunakan %s pada Unknown #%s (%d) %s\n"
 
-#: ../Misc.pm:3334
+#: ../Misc.pm:3362
 #, perl-format
 msgid "Unknown #%s (%d) uses %s on you %s\n"
 msgstr "Unknown #%s (%d) menggunakan %s pada anda %s\n"
 
-#: ../Misc.pm:3337
+#: ../Misc.pm:3365
 #, perl-format
 msgid "Unknown #%s (%d) uses %s on player %s (%d) %s\n"
 msgstr "Unknown #%s (%d) menggunakan %s pada player %s (%d) %s\n"
 
-#: ../Misc.pm:3340
+#: ../Misc.pm:3368
 #, perl-format
 msgid "Unknown #%s (%d) uses %s on monster %s (%d) %s\n"
 msgstr "Unknown #%s (%d) menggunakan %s pada monster %s (%d) %s\n"
 
-#: ../Misc.pm:3344
+#: ../Misc.pm:3372
 #, perl-format
 msgid "Unknown #%s (%d) uses %s on Unknown #%s (%d) %s\n"
 msgstr "Unknown #%s (%d) menggunakan %s pada Unknown #%s (%d) %s\n"
 
-#: ../Misc.pm:3347
+#: ../Misc.pm:3375
 #, perl-format
 msgid "Unknown #%s (%d) uses %s on himself %s\n"
 msgstr "Unknown #%s (%d) menggunakan %s pada dirinya %s\n"
 
-#: ../Misc.pm:3360
+#: ../Misc.pm:3388
 #, perl-format
 msgid "You are now: %s\n"
 msgstr "Anda sekarang: %s\n"
 
-#: ../Misc.pm:3362
+#: ../Misc.pm:3390
 #, perl-format
 msgid "Player %s (%d) is now: %s\n"
 msgstr "Player %s (%d) sekarang: %s\n"
 
-#: ../Misc.pm:3364
+#: ../Misc.pm:3392
 #, perl-format
 msgid "Monster %s (%d) is now: %s\n"
 msgstr "Monster %s (%d) sekarang: %s\n"
 
-#: ../Misc.pm:3366
+#: ../Misc.pm:3394
 #, perl-format
 msgid "Unknown #%s (%d) is now: %s\n"
 msgstr "Unknown #%s (%d) sekarang: %s\n"
 
-#: ../Misc.pm:3370
+#: ../Misc.pm:3398
 #, perl-format
 msgid "You are again: %s\n"
 msgstr "Anda sedang: %s\n"
 
-#: ../Misc.pm:3372
+#: ../Misc.pm:3400
 #, perl-format
 msgid "Player %s (%d) is again: %s\n"
 msgstr "Player %s (%d) sedang: %s\n"
 
-#: ../Misc.pm:3374
+#: ../Misc.pm:3402
 #, perl-format
 msgid "Monster %s (%d) is again: %s\n"
 msgstr "Monster %s (%d) sedang: %s\n"
 
-#: ../Misc.pm:3376
+#: ../Misc.pm:3404
 #, perl-format
 msgid "Unknown #%s (%d) is again: %s\n"
 msgstr "Unknown #%s (%d) sedang: %s\n"
 
-#: ../Misc.pm:3380
+#: ../Misc.pm:3408
 #, perl-format
 msgid "You are no longer: %s\n"
 msgstr "Anda tidak lagi: %s\n"
 
-#: ../Misc.pm:3382
+#: ../Misc.pm:3410
 #, perl-format
 msgid "Player %s (%d) is no longer: %s\n"
 msgstr "Player %s (%d) tidak lagi: %s\n"
 
-#: ../Misc.pm:3384
+#: ../Misc.pm:3412
 #, perl-format
 msgid "Monster %s (%d) is no longer: %s\n"
 msgstr "Monster %s (%d) tidak lagi: %s\n"
 
-#: ../Misc.pm:3386
+#: ../Misc.pm:3414
 #, perl-format
 msgid "Unknown #%s (%d) is no longer: %s\n"
 msgstr "Unknown #%s (%d) tidak lagi: %s\n"
 
-#: ../Misc.pm:3477
+#: ../Misc.pm:3505
 #, perl-format
 msgid "GM %s is nearby, teleport & disconnect for %d seconds"
 msgstr "GM %s berada disekitar, teleport & disconnect selama %d detik"
 
-#: ../Misc.pm:3482
+#: ../Misc.pm:3510
 #, perl-format
 msgid "GM %s is nearby, disconnect for %s seconds"
 msgstr "GM %s berada di sekitar, disconnect selama %s detik"
 
-#: ../Misc.pm:3488
+#: ../Misc.pm:3516
 #, perl-format
 msgid "GM %s is nearby, teleporting"
 msgstr "GM %s berada disekitar, teleport"
 
-#: ../Misc.pm:3493
+#: ../Misc.pm:3521
 #, perl-format
 msgid "GM %s is nearby, respawning"
 msgstr "GM %s berada disekitar, spawn ulang"
 
-#: ../Misc.pm:3518
+#: ../Misc.pm:3546
 #, perl-format
 msgid "%s (%s) is nearby, disconnecting...\n"
 msgstr "%s (%s) berada disekitar, melakukan disconnect...\n"
 
-#: ../Misc.pm:3519
+#: ../Misc.pm:3547
 #, perl-format
 msgid "*** Found %s (%s) nearby and disconnected ***\n"
 msgstr "*** Menemukan %s (%s) di sekitar dan melakukan disconnect ***\n"
 
-#: ../Misc.pm:3525
+#: ../Misc.pm:3553
 #, perl-format
 msgid "Teleporting to avoid player %s (%s)\n"
 msgstr "Melakukan Teleport untuk menghindari player %s (%s)\n"
 
-#: ../Misc.pm:3526
+#: ../Misc.pm:3554
 #, perl-format
 msgid "*** Found %s (%s) nearby and teleported ***\n"
 msgstr "*** Menemukan %s (%s) disekitar dan teleport ***\n"
 
-#: ../Misc.pm:3559
+#: ../Misc.pm:3587
 #, perl-format
 msgid "Processing map %s...\n"
 msgstr "Memproses map %s...\n"
 
-#: ../Misc.pm:3589
+#: ../Misc.pm:3617
 #, perl-format
 msgid "Wrote portals Line of Sight table to '%s/portalsLOS.txt'\n"
 msgstr "Menulis tabel portal Line of Sight ke '%s/portalsLOS.txt'\n"
 
-#: ../Misc.pm:3593
-#: ../Misc.pm:3597
+#: ../Misc.pm:3621
+#: ../Misc.pm:3625
 msgid "----------------------------Error Summary----------------------------\n"
 msgstr "----------------------------Keseluruhan Error----------------------------\n"
 
-#: ../Misc.pm:3594
+#: ../Misc.pm:3622
 #, perl-format
 msgid "Missing: %s.fld\n"
 msgstr "Hilang: %s.fld\n"
 
-#: ../Misc.pm:3595
+#: ../Misc.pm:3623
 msgid ""
 "Note: LOS information for the above listed map(s) will be inaccurate;\n"
 "      however it is safe to ignore if those map(s) are not used\n"
@@ -3757,36 +3757,36 @@ msgstr ""
 "Note: Informasi LOS untuk list map diatas akan menjadi tidak akurat;\n"
 "      walapun begitu tetap aman untuk diacuhkan jika map tersebut tidak digunakan\n"
 
-#: ../Misc.pm:3731
+#: ../Misc.pm:3759
 msgid "Incomplete NPC info found in npcs.txt\n"
 msgstr "Info NPC tidak lengkap ditemukan pada npcs.txt\n"
 
-#: ../Misc.pm:4148
+#: ../Misc.pm:4176
 msgid "A shop has already been opened.\n"
 msgstr "Sebuah toko telah dibuka.\n"
 
-#: ../Misc.pm:4153
+#: ../Misc.pm:4181
 msgid "You don't have the Vending skill.\n"
 msgstr "Anda tidak memiliki skill Vending.\n"
 
-#: ../Misc.pm:4158
+#: ../Misc.pm:4186
 msgid "Your shop does not have a title.\n"
 msgstr "Toko anda tidak memiliki judul.\n"
 
-#: ../Misc.pm:4189
+#: ../Misc.pm:4217
 msgid "There are no items to sell.\n"
 msgstr "Tidak ada item utnuk dijual.\n"
 
-#: ../Misc.pm:4201
+#: ../Misc.pm:4229
 #, perl-format
 msgid "Shop opened (%s) with %d selling items.\n"
 msgstr "Toko dibuka (%s) dengan %d barang yang akan dijual.\n"
 
-#: ../Misc.pm:4208
+#: ../Misc.pm:4236
 msgid "A shop has not been opened.\n"
 msgstr "Sebuah toko belum dibuka.\n"
 
-#: ../Misc.pm:4216
+#: ../Misc.pm:4244
 msgid "Shop closed.\n"
 msgstr "Toko tutup.\n"
 
@@ -3971,8 +3971,8 @@ msgstr "Tidak dapat me-load plugin %s: %s\n"
 
 #. Translation Comment: Version String
 #: ../Settings.pm:48
-msgid " (SVN version)"
-msgstr " (Versi SVN)"
+msgid " (beta)"
+msgstr " (beta)"
 
 #. Translation Comment: Version String
 #: ../Settings.pm:51
@@ -6236,6 +6236,11 @@ msgstr "Map telah di-load\n"
 msgid "Unknown packet - %s\n"
 msgstr "Packet tidak diketahui - %s\n"
 
+#~ msgid "Could not load field %s - you must install the kore-field pack!\n"
+#~ msgstr ""
+#~ "Tidak dapat me-load field %s - anda harus menginstall kore-field pack!\n"
+#~ msgid " (SVN version)"
+#~ msgstr " (Versi SVN)"
 #~ msgid "Server shutting down, ignoring due to configuration settings.\n"
 #~ msgstr "Server dimatikan, abaikan sesuai dengan konfigurasi setting.\n"
 #~ msgid "You have %s spirit(s) now\n"
