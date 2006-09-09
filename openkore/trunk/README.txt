@@ -10,7 +10,6 @@ Credits:
 - Molag: Ayothaya portals contributions.
 - DarkShado: XileRO server information updates.
 - johnny: Homunculus skills.
-- FIrewall: various portal contributions.
 - piroJOKE: field file contributions.
 - cloud2squall: server information contributions.
 - n0rd: support for compressed field files.
