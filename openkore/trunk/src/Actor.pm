@@ -226,7 +226,6 @@ sub name {
 # be triggered after the name is set.
 sub setName {
 	my ($self, $name) = @_;
-	assert(defined $name) if DEBUG;
 
 	$self->{name} = $name;
 	$self->{onNameChange}->call($self);
