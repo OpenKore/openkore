@@ -1,0 +1,109 @@
+#See the documentation for how to add responses
+
+authS You are now an admin %$cmd_user. Go nuts! ^^
+authF You're already an admin %$cmd_user!
+
+confS1 That variable %$key is...%$value
+confS2 *beep*
+confS2 *boop*
+confS2 All done.
+confF1 Huh?
+confF2 I don't see that config variable
+confF3 uhh, nice try %$cmd_user
+confF3 I don't think so
+
+dateS Lay off the RO %$cmd_user.  It's %$date
+dateS What am I?  A clock?? (BTW it's %$date)
+
+expS Botting time : %$time\nBaseExp      : %$bExp %$percentBExp\nJobExp       : %$jExp %$percentJExp\nBaseExp/Hour : %$bExpPerHour %$percentBExpPerHour\nJobExp/Hour  : %$jExpPerHour %$percentJExpPerHour\nBase Levelup Time Estimation : %$bLvlUp\nJob Levelup Time Estimation  : %$jLvlUp\nDied : %$numDeaths
+expF Huh?
+expMonsterS1 No  Name                      Count
+expMonsterS2 %$killedMonsters
+expMonsterS3 Total number of killed monsters: %$numKilledMonsters
+expItemS1 Name                                    Count
+expItemS2 %$gotItems
+
+followS Right away!
+followS For freedom!
+followS Yes sah!
+followF I have no idea what you're saying %$user
+followF That makes no sense ><
+
+followStopS I get the idea...
+followStopS Am I that annoying?
+followStopF You're so paranoid
+followStopF Like I'd be stalking YOU
+
+moveS Right away!
+moveS For freedom!
+moveS Yes sah!
+moveF I have no idea what you're saying %$user
+moveF That makes no sense ><
+
+quitS Ciao
+quitS I'm outta here, lamers
+quitS Off I go!
+
+reloadS *beep*
+reloadS *boop*
+reloadS All done.
+
+relogS brb
+relogS k, be back..
+
+sitS *boof*
+sitS *plop*
+
+skillgoodM Thank, you.
+skillgoodM You are too kind.
+skillgoodM Oh no. That's enough. =)
+skillgoodM
+skillgoodM
+skillgoodM
+
+skillbadM What did you do that for?
+skillbadM Please stop!
+skillbadM I said stop it!
+skillbadM ...
+skillbadM ...
+skillbadM
+skillbadM
+
+standS Okie ^^
+standS Right
+standS ok %$cmd_user, like this?
+
+statusS HP: %$char_hp / %$char_hp_max   SP: %$char_sp / %$char_sp_max\nBase: %$char_lv  |  %$char_exp / %$char_exp_max\nJob: %$char_lv_job  |  %$char_exp_job / %$char_exp_job_max\nWeight: %$char_weight / %$char_weight_max   Zenny: %$zenny
+
+tankS Leecher
+tankF huh?
+
+tankStopS That was fun...
+tankStopF Does it look like I'm tanking?
+
+thankS np ^^
+thankS No problem
+thankS Always a pleasure, master %$cmd_user
+thankS ^^
+
+timeoutS1 I think the timeout %$key is %$value
+timeoutS2 *beep*
+timeoutS2 *boop*
+timeoutS2 All done.
+timeoutF1 Huh?
+timeoutF2 I don't see that timeout
+
+verboseOnS Ah, finally.
+verboseOnS *gasp* Oh thank you master...ass.
+verboseOnF Does it look like I can't talk?
+verboseOnF You twit, I can speak fine...
+
+verboseOffS You ass...fine.
+verboseOffS OMG, whatever
+verboseOffF Screw off, im already staying quiet
+verboseOffF Ya ya..I get it already
+
+versionS It's %$ver
+
+whereS Lost me? I'm at %$map: %$x, %$y
+whereS Here I am! %$map: %$x, %$y
