@@ -25,6 +25,7 @@ use strict;
 use Exporter;
 use Carp::Assert;
 use Data::Dumper;
+use Compress::Zlib;
 use base qw(Exporter);
 
 use Globals;
@@ -763,13 +764,17 @@ sub objectIsMovingTowardsPlayer {
 
 ##
 # getField(name, r_field)
-# name: the name of the field you want to load.
+# name: the name of the field you want to load. For example: "prontera"
 # r_field: reference to a hash, in which information about the field is stored.
 # Returns: 1 on success, 0 on failure.
 #
 # Load a field (.fld) file. This function also loads an associated .dist file
 # (the distance map file), which is used by pathfinding (for wall avoidance support).
 # If the associated .dist file does not exist, it will be created.
+#
+# This function also supports gzip-compressed field files (.fld.gz). If the .fld file cannot
+# be found, but the corresponding .fld.gz file can be found, this function will load that
+# instead and decompress its data on-the-fly.
 #
 # The r_field hash will contain the following keys:
 # ~l
@@ -802,7 +807,11 @@ sub getField {
 	$file =~ s/\//\\/g if ($^O eq 'MSWin32');
 	$dist_file = $file;
 
-	unless (-e $file) {
+	if (! -f $file) {
+		# Some fields have multiple names, but are the same
+		# field nevertheless. For example, new_1-1, new_2-1,
+		# etc are all the same field. Check whether this
+		# is such a field.
 		my %aliases = (
 			'new_1-1.fld' => 'new_zone01.fld',
 			'new_2-1.fld' => 'new_zone01.fld',
@@ -879,9 +888,14 @@ sub getField {
 			$dist_file = $file;
 		}
 
-		if (! -e $file) {
-			warning TF("Could not load field %s - you must install the kore-field pack!\n", $file);
-			return 0;
+		if (! -f $file) {
+			# See if a compressed version of the field file exists.
+			if (-f "$file.gz") {
+				$file .= ".gz";
+			} else {
+				warning TF("Could not load field %s - this map is not supported, please do not bot here.\n", $file);
+				return 0;
+			}
 		}
 	}
 
@@ -891,16 +905,30 @@ sub getField {
 	$r_hash->{baseName} =~ s/(.*)\..*/$1/;
 
 	# Load the .fld file
-	open FILE, "< $file";
+	open FILE, "<", $file;
 	binmode(FILE);
 	my $data;
-	{
+	if ($file =~ /\.gz$/) {
+		# This is a compressed field file. Decompress the data first.
+		my $gz = gzopen($file, 'rb');
+		$data = '';
+		while (!$gz->gzeof()) {
+			my $buf;
+			if ( $gz->gzread($buf) >= 0 ) {
+				$data .= $buf;
+			} else {
+				error "Unable to read $file\n";
+				return 0;
+			}
+		}
+		$gz->gzclose();
+	} else {
 		local($/);
 		$data = <FILE>;
-		close FILE;
-		@$r_hash{'width', 'height'} = unpack("v1 v1", substr($data, 0, 4, ''));
-		$r_hash->{rawMap} = $data;
 	}
+	close FILE;
+	@$r_hash{'width', 'height'} = unpack("v1 v1", substr($data, 0, 4, ''));
+	$r_hash->{rawMap} = $data;
 
 	# Load the associated .dist file (distance map)
 	if (-e $dist_file) {
