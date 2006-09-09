@@ -19,7 +19,7 @@ use encoding 'utf8';
 
 use Globals;
 use Modules;
-use Settings;
+use Settings qw(%sys);
 use Log qw(message warning error debug);
 use Interface;
 use Network::Receive;
