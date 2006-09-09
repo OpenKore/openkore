@@ -1,0 +1,17 @@
+TYPEMAP
+PathFinding	T_PTROBJ_SPECIAL
+
+INPUT
+T_PTROBJ_SPECIAL
+	if (sv_derived_from($arg, \"${(my $ntt=$ntype)=~s/_/::/g;\$ntt}\")) {
+		IV tmp = SvIV((SV*)SvRV($arg));
+	$var = ($type) tmp;
+	}
+	else
+		croak(\"$var is not of type ${(my $ntt=$ntype)=~s/_/::/g;\$ntt}\")
+
+OUTPUT
+T_PTROBJ_SPECIAL
+	sv_setref_pv($arg, \"${(my $ntt=$ntype)=~s/_/::/g;\$ntt}\",
+	(void*)$var);
+
