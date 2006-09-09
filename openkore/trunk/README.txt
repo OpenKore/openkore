@@ -1,3 +1,12 @@
+=========================
+### OpenKore 1.9.3 (beta)
+=========================
+
+To Fix:
+- XKore2 is not acting like a real server, it doesn't send complete informations
+	to the client. Connecting to XKore2 from another kore would fail. 
+
+
 ﻿=========================
 ### OpenKore 1.9.2 (beta)
 =========================
@@ -142,10 +151,6 @@ Internal:
 - Added Bullet support
 - New 'disconnected' plugin hook, called when you get disconnected
   from the map server
-
-To Fix:
-- XKore2 is not acting like a real server, it doesn't send complete informations
-	to the client. Connecting to XKore2 from another kore would fail. 
 
 --------------------------
 
