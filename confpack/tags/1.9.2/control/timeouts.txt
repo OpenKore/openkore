@@ -1,0 +1,125 @@
+# You shouldn't need to modify these variables
+# If you want to really mess up the bot, go ahead :)
+#
+# The value of each variable is reffered as "x".
+
+# Server connection timeouts
+master 12
+gamelogin 12
+charlogin 12
+maplogin 12
+play 40
+# When disconnected, wait x seconds before reconnecting again
+reconnect 30
+
+# Activate AI after x seconds after the map's loaded
+ai 2
+
+ai_move_retry 0.25
+ai_move_giveup 1.5
+
+# Send the attack packet every x seconds, if it hasn't been send already
+ai_attack 1
+ai_homunculus_attack 1
+
+# Check for monsters to attack every x seconds
+ai_attack_auto 0.5
+
+# Give up attacking a monster if it can't be reached within x seconds
+ai_attack_giveup 12
+
+# If you've just killed a monster, and there are no aggressives,
+# and you're not picking up any items, wait x seconds before doing
+# anything else.
+ai_attack_waitAfterKill 0.7
+ai_attack_unstuck 2.75
+ai_attack_unfail 5
+
+# When your monster died, start checking for loot after x seconds
+ai_items_take_start 0.4
+
+# Stop checking for loot x seconds after it has begun checking.
+ai_items_take_end 1.2
+
+# When standing near an item, send the 'take' packet every x seconds until
+# the item has been taken.
+ai_take .4
+
+# Give up if unable to pickup item after x seconds
+ai_take_giveup 3
+ai_items_gather_giveup 3
+
+# Every x seconds, check items for gathering
+ai_items_gather_auto .3
+
+# Only gather items that have been more than x seconds on screen
+ai_items_gather_start .3
+
+ai_follow_lost_end 10
+ai_getInfo 1
+ai_thanks_set 8
+ai_dealAuto 3
+ai_dealAutoCancel 5
+ai_partyAutoDeny 3
+ai_guildAutoDeny 3
+ai_dead_respawn 4
+ai_wipe_old 200
+ai_wipe_check 30
+
+# Send the sit/stand packet at most every x second
+ai_sit 1
+# Sit after having idled for x seconds
+ai_sit_idle 10
+# Stand after x seconds, after having typed the 'stand' command
+ai_stand_wait 0
+# Sit after x seconds, after having typed the "sit" command
+ai_sit_wait 0
+
+ai_skill_use_giveup 1
+ai_item_use_auto 0.5
+ai_item_equip_auto 0.75
+ai_equipAuto_skilluse_giveup 5
+ai_equip_giveup 2
+
+ai_teleport 1
+ai_teleport_away 3
+ai_teleport_idle 4
+ai_teleport_portal 2
+ai_teleport_hp 3
+ai_teleport_safe_force 120
+
+ai_teleport_retry 0.5
+ai_teleport_delay 0.5
+
+# You probably don't ever have to change the following timeouts.
+ai_route_calcRoute 1
+ai_route_npcTalk 10
+
+ai_buyAuto 5
+ai_buyAuto_giveup 15
+ai_buyAuto_wait 2
+ai_buyAuto_wait_buy 5
+
+ai_sellAuto 2
+ai_sellAuto_giveup 15
+ai_storageAuto 2
+ai_storageAuto_giveup 15
+# delay between sending cart item add/get packets
+ai_cartAuto 0.15
+
+# delay between checking if we need to do any cartAuto functions
+ai_cartAutoCheck 2
+ai_avoidcheck 0.5
+ai_shop 4
+ai_npcTalk 8
+
+# delay before starting escape sequence
+ai_route_escape 8
+
+# Don't change the following timeouts!
+ai_sync 12
+
+injectSync 5
+injectKeepAlive 12
+welcomeText 4
+patchserver 120
