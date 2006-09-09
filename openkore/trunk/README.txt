@@ -1,6 +1,6 @@
-﻿==================
-### 1.9.2
-==================
+﻿=========================
+### OpenKore 1.9.2 (beta)
+=========================
 
 *** INCOMPATIBLE CHANGES ***:
 - You need to download the latest responses.txt (in the config pack)
