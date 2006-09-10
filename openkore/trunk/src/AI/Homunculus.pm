@@ -687,7 +687,7 @@ sub processAttack {
 			}
 
 		} elsif ((!$config{homunculus_runFromTarget} || $realMonsterDist >= $config{homunculus_runFromTarget_dist})
-		 && (!$config{homunculus_tankMode} || !$target->{dmgFromYou})) {
+		 && (!$config{homunculus_tankMode} || !$target->{dmgFromPlayer}{$char->{homunculus}{ID}})) {
 			# Attack the target. In case of tanking, only attack if it hasn't been hit once.
 			if (!AI::Homunculus::args->{firstAttack}) {
 				AI::Homunculus::args->{firstAttack} = 1;
