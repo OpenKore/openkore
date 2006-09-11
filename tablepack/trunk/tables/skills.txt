@@ -554,6 +554,7 @@
 8001 HLIF_HEAL Healing Hands
 8002 HLIF_AVOID Urgent Escape
 8003 HLIF_BRAIN Brain Surgery
+8004 HLIF_CHANGE Mental Change
 8005 HAMI_CASTLE Castling
 8006 HAMI_DEFENCE Amistr Bulwark
 8007 HAMI_SKIN Adamantium Skin
