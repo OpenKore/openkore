@@ -2946,7 +2946,8 @@ sub processMonsterSkillUse {
 					my $maxCastTime = $config{"${prefix}_maxCastTime"};
 					my $minCastTime = $config{"${prefix}_minCastTime"};
 					debug "Auto-monsterSkill on $monster->{name} ($monster->{binID}): ".$skill->name." (lvl $lvl)\n", "monsterSkill";
-					ai_skillUse2($skill, $lvl, $maxCastTime, $minCastTime, $monster, $prefix);
+					my $target = $config{"${prefix}_isSelfSkill"} ? $char : $monster;
+					ai_skillUse2($skill, $lvl, $maxCastTime, $minCastTime, $target, $prefix);
 					$ai_v{$prefix . "_time"}{$monsterID} = time;
 					last;
 				}
