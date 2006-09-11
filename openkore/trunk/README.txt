@@ -7,8 +7,13 @@ To Fix:
   informations to the client. Connecting to XKore2 from another kore would
   fail. 
 
-Bugs:
+Bug fixes:
 - isSelfSkill now works in monsterSkill blocks.
+
+New config options:
+- dealAuto_names <list of player names>
+    If non-empty and dealAuto is set to 2 or 3, then bot will only deal with
+    players on the list. (Other players will be treated as dealAuto 0.)
 
 =========================
 ### OpenKore 1.9.2 (beta)

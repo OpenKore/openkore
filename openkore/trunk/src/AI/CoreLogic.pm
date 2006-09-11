@@ -1359,12 +1359,14 @@ sub processDeal {
 	} elsif (AI::action eq "deal") {
 		if (%currentDeal) {
 			if (!$currentDeal{you_finalize} && timeOut($timeout{ai_dealAuto}) &&
+				(!$config{dealAuto_names} || existsInList($config{dealAuto_names}, $currentDeal{name})) &&
 			    ($config{dealAuto} == 2 ||
 				 $config{dealAuto} == 3 && $currentDeal{other_finalize})) {
 				sendDealAddItem(0, $currentDeal{'you_zenny'});
 				sendDealFinalize();
 				$timeout{ai_dealAuto}{time} = time;
-			} elsif ($currentDeal{other_finalize} && $currentDeal{you_finalize} &&timeOut($timeout{ai_dealAuto}) && $config{dealAuto} >= 2) {
+			} elsif ($currentDeal{other_finalize} && $currentDeal{you_finalize} &&timeOut($timeout{ai_dealAuto}) && $config{dealAuto} >= 2 &&
+				(!$config{dealAuto_names} || existsInList($config{dealAuto_names}, $currentDeal{name}))) {
 				sendDealTrade($net);
 				$timeout{ai_dealAuto}{time} = time;
 			}
@@ -1380,7 +1382,9 @@ sub processDealAuto {
 		if ($config{'dealAuto'} == 1 && timeOut($timeout{ai_dealAutoCancel})) {
 			sendDealCancel($net);
 			$timeout{'ai_dealAuto'}{'time'} = time;
-		} elsif ($config{'dealAuto'} >= 2 && timeOut($timeout{ai_dealAuto})) {
+		} elsif ($config{'dealAuto'} >= 2 &&
+			(!$config{dealAuto_names} || existsInList($config{dealAuto_names}, $incomingDeal{name})) &&
+			timeOut($timeout{ai_dealAuto})) {
 			sendDealAccept($net);
 			$timeout{'ai_dealAuto'}{'time'} = time;
 		}
