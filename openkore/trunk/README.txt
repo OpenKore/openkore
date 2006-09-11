@@ -3,11 +3,14 @@
 =========================
 
 To Fix:
-- XKore2 is not acting like a real server, it doesn't send complete informations
-	to the client. Connecting to XKore2 from another kore would fail. 
+- XKore2 is not acting like a real server, it doesn't send complete
+  informations to the client. Connecting to XKore2 from another kore would
+  fail. 
 
+Bugs:
+- isSelfSkill now works in monsterSkill blocks.
 
-﻿=========================
+=========================
 ### OpenKore 1.9.2 (beta)
 =========================
 
