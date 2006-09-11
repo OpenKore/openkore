@@ -62,7 +62,7 @@ sub incomingDeal {
 	$self->{other} = $other;
 	$ai_v{temp}{deal} = $self;
 	$self->{state} = 'incomingDeal';
-	if ($cofig{dealAuto}) {
+	if ($config{dealAuto}) {
 		$self->accept();
 		$self->{state} = 'accepted';
 	}
