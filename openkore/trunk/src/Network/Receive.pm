@@ -475,7 +475,19 @@ sub account_server_info {
 		$net->serverDisconnect();
 		if (!$masterServer->{charServer_ip} && $config{server} eq "") {
 			message T("Choose your server.  Enter the server number: "), "input";
-			$waitingForInput = 1;
+
+			my @serverList;
+			foreach my $server (@servers) {
+				push @serverList, $server->{name};
+			}
+			my $ret = $interface->showMenu(T("Select Login Server"),
+						       T("Please select your login server."),
+						       \@serverList);
+			if ($ret == -1) {
+				quit();
+			} else {
+				main::configModify('server', $ret, 1);
+			}
 
 		} elsif ($masterServer->{charServer_ip}) {
 			message TF("Forcing connect to char server %s: %s\n", $masterServer->{charServer_ip}, $masterServer->{charServer_port}), 'connection';	
