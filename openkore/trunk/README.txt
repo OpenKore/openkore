@@ -11,6 +11,7 @@ Bug fixes:
 - isSelfSkill now works in monsterSkill blocks.
 - Fixed homunculus_tankMode.
 - Fixed inability to detect evolved homunculus state.
+- Add Slim Pitcher to location skills list
 
 New config options:
 - dealAuto_names <list of player names>
