@@ -3812,7 +3812,7 @@ sub checkSelfCondition {
 		}
 
 		if ($config{$prefix."_homunculus_dead"}) {
-			return 0 unless ($char->{homunculus}{state} and 4);
+			return 0 unless ($char->{homunculus}{state} & 4);
 		}
 	}
 
