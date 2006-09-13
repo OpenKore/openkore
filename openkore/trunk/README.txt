@@ -9,6 +9,8 @@ To Fix:
 
 Bug fixes:
 - isSelfSkill now works in monsterSkill blocks.
+- Fixed homunculus_tankMode.
+- Fixed inability to detect evolved homunculus state.
 
 New config options:
 - dealAuto_names <list of player names>
