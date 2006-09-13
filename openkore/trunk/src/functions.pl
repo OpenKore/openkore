@@ -580,7 +580,9 @@ sub parseSendMsg {
 		$timeout{'welcomeText'}{'time'} = time;
 		$ai_v{portalTrace_mapChanged} = time;
  		message T("Map loaded\n"), "connection";
-
+		
+		Plugins::callHook('map_loaded');
+		
 	} elsif ($switch eq "0085") {
 		#if ($config{serverType} == 0 || $config{serverType} == 1 || $config{serverType} == 2) {
 		#	#Move
