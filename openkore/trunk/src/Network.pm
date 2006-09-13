@@ -430,10 +430,20 @@ sub checkConnection {
 			$self->serverConnect($servers[$config{'server'}]{'ip'}, $servers[$config{'server'}]{'port'});
 		} else {
 			error TF("Invalid server specified, server %s does not exist...\n", $config{server}), "connection";
-			message T("Choose your server.  Enter the server number: "), "input";
-			$waitingForInput = 1;
-			main::configModify('server', '', 1);
-			undef $conState_tries;
+
+			my @serverList;
+			foreach my $server (@servers) {
+				push @serverList, $server->{name};
+			}
+			my $ret = $interface->showMenu(T("Select Login Server"),
+						       T("Please select your login server."),
+						       \@serverList);
+			if ($ret == -1) {
+				quit();
+			} else {
+				main::configModify('server', $ret, 1);
+				undef $conState_tries;
+			}
 			return;
 		}
 
