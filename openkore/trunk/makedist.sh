@@ -53,10 +53,10 @@ PACKAGEDIR=$PACKAGE-$VERSION
 
 if [[ "$1" == "--help" ]]; then
 	echo "makedist.sh [--bin|--semibin DIR]"
-	echo " --bin      Create a binary distribution archive, including the binaries, confpack and"
-	echo "            tablepack."
-	echo " --semibin  Create a binary distribution, excluding binaries, confpack and tablepack."
-	echo "            Files will be copied to DIR."
+	echo " --bin      Create a binary distribution archive, including the binaries,"
+	echo "            confpack and tablepack."
+	echo " --semibin  Create a binary distribution, excluding binaries, confpack and"
+	echo "            tablepack. Files will be copied to DIR."
 	exit 1
 elif [[ "$1" == "--bin" ]]; then
 	BINDIST=1
