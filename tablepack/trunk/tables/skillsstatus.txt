@@ -54,7 +54,7 @@
 60 Devotion
 61 Providence
 62 Defender
-64 Water Enchanted
+64 Element Enchanted
 65 Auto Spell
 68 Spear Quicken
 77 Sleeping
@@ -99,8 +99,8 @@
 146 Dark Weapon
 148 Ghost Weapon
 149 Night
-150 Increase Str
-151 Increase Atk/Matk
+150 Increase Atk
+151 Increase Matk
 152 Devil
 153 Kaite
 156 Kaizel
