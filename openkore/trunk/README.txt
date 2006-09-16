@@ -17,6 +17,9 @@ New config options:
 - dealAuto_names <list of player names>
     If non-empty and dealAuto is set to 2 or 3, then bot will only deal with
     players on the list. (Other players will be treated as dealAuto 0.)
+    
+New features:
+- Basic support for euRO (serverType 11) (Without attack, sit, stand and skill use)
 
 =========================
 ### OpenKore 1.9.2 (beta)
