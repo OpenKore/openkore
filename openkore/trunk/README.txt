@@ -21,6 +21,9 @@ New config options:
 New features:
 - Basic support for euRO (serverType 11) (Without attack, sit, stand and skill use)
 
+Credits:
+- Darkfate: partial servertype 11 suppport & whining for credits =)
+
 =========================
 ### OpenKore 1.9.2 (beta)
 =========================
