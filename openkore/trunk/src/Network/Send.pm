@@ -482,6 +482,16 @@ sub sendAttack {
 		$msg = pack("C2 x3", 0x89, 0x00, 0x00, 0x00, 0x00) .
 		$monID .
 		pack("x9 C1", $flag);
+	
+	} elsif ($config{serverType} == 11) {
+		error "Your server is not supported because it uses padded packets.\n";
+		if (AI::action() eq "NPC") {
+			error "Failed to talk to monster NPC.\n";
+			AI::dequeue();
+		} elsif (AI::action() eq "attack") {
+			error "Failed to attack target.\n";
+			AI::dequeue();
+		}
 	}
 
 	sendMsgToServer($r_net, $msg);
@@ -823,7 +833,15 @@ sub sendDrop {
 
 	} elsif ($config{serverType} == 10) {
 		$msg = pack("C2 x3 v1 x1 v1", 0xA2, 0x00, $index, $amount);
-	}
+	
+	} elsif ($config{serverType} == 11) {
+		$msg = pack("C*", 0xA2, 0x00) .
+			pack("C*", 0x00, 0x00, 0x08, 0xA2) .
+			pack("v*", $index) .
+			pack("C*", 0x02, 0x97) .
+			pack("v*", $amount);
+		}
+		
 	sendMsgToServer($r_net, $msg);
 	debug "Sent drop: $index x $amount\n", "sendPacket", 2;
 }
@@ -973,6 +991,9 @@ sub sendGetPlayerInfo {
 
 	} elsif ($config{serverType} == 10) {
 		$msg = pack("C*", 0x94, 0x00) . pack("x5") . $ID;
+	
+	} elsif ($config{serverType} == 11) {
+		$msg = pack("C*", 0x94, 0x00) . pack("C*", 0x30, 0x03, 0x44, 0xA1) . $ID;
 	}
 
 	sendMsgToServer($r_net, $msg);
@@ -1274,7 +1295,14 @@ sub sendItemUse {
 
 	} elsif ($config{serverType} == 10) {
 		$msg = pack("C2 x2 v1 x4", 0xA7, 0x00, $ID) . $targetID;
+	
+	} elsif ($config{serverType} == 11) {
+		$msg = pack("C*", 0xA7, 0x00, 0x32, 0x06, 0x1C) . 
+			pack("v*", $ID) .
+			pack("C*", 0x00, 0xD8) .
+			$targetID;
 	}
+	
 	sendMsgToServer($r_net, $msg);
 	debug "Item Use: $ID\n", "sendPacket", 2;
 }
@@ -1319,7 +1347,12 @@ sub sendLook {
 
 	} elsif ($config{serverType} == 10) {
 		$msg = pack("C2 x5 C1 x2 C1", 0x9B, 0x00, $head, 0x00, $body);
+		
+	} elsif ($config{serverType} == 11) { 
+		$msg = pack("C*", 0x9B, 0x00, 0x33, 0x06, 0x00, 0x00, $head,
+			0x00, 0x08, 0xA0, 0x30, 0x03, 0x00, 0x00, $body);
 	}
+	
 	sendMsgToServer($r_net, $msg);
 	debug "Sent look: $body $head\n", "sendPacket", 2;
 	$char->{look}{head} = $head;
@@ -1432,6 +1465,16 @@ sub sendMapLogin {
 			$sessionID .
 			pack("V", getTickCount()) .
 			pack("C*", $sex);
+			
+	} elsif ($config{serverType} == 11) {
+		$msg = pack("C*", 0x72,0, 0, 0, 0xE8) .
+			$accountID .
+			pack("C*", 0xC3, 0x66, 0x00, 0xFF, 0xFF) .
+			$charID .
+			pack("C*", 0x12, 0x00) .
+			$sessionID .
+			pack("V", getTickCount()) .
+			pack("C*",$sex);
 
 	} else { #oRO and pRO and idRO
 		# $config{serverType} == 1 || $config{serverType} == 2
@@ -1607,6 +1650,9 @@ sub sendMove {
 
 	} elsif ($config{serverType} == 10) {
 		$msg = pack("C2 x3", 0x85, 0x00) . getCoordString($x, $y, 1);
+		
+	} elsif ($config{serverType} == 11) {
+		$msg = pack("C*", 0x85, 0x00) . getCoordString($x, $y);
 
 	} else {
 		$msg = pack("C*", 0x85, 0x00) . getCoordString($x, $y);
@@ -1915,7 +1961,16 @@ sub sendSit {
 
 	} elsif ($config{serverType} == 10) {
 		$msg = pack("C2 x16 C1", 0x89, 0x00, 0x02);
+		
+	} elsif ($config{serverType} == 11) {
+		error "Your server is not supported because it uses padded packets.\n";
+		if (AI::action() eq "sitting") {
+			error "Failed to sit.\n";
+			AI::dequeue();
+		}
+		return;
 	}
+
 	sendMsgToServer($r_net, $msg);
 	debug "Sitting\n", "sendPacket", 2;
 }
@@ -1990,7 +2045,19 @@ sub sendSkillUse {
 
 	} elsif ($config{serverType} == 10) {
 		$msg = pack("C2 x4 v1 x2 v1 x9", 0x13, 0x01, $lv, $ID) . $targetID;
+		
+	} elsif ($config{serverType} == 11) {
+		error "Your server is not supported because it uses padded packets.\n";
+		if (AI::action() eq 'teleport') {
+			error "Failed to use teleport skill.\n";
+			AI::dequeue();
+		} elsif (AI::action() ne "skill_use") {
+			error "Failed to use skill.\n";
+			AI::dequeue();
+		}
+		return;
 	}
+	
 	sendMsgToServer($r_net, $msg);
 	debug "Skill Use: $ID\n", "sendPacket", 2;
 }
@@ -2075,7 +2142,19 @@ sub sendSkillUseLoc {
 
 	} elsif ($config{serverType} == 10) {
 		$msg = pack("C2 x3 v1 x2 v1 x1 v1 x6 v1", 0x16, 0x01, $lv, $ID, $x, $y);
+		
+	} elsif ($config{serverType} == 11) {
+		$msg = pack("C*", 0x16, 0x01, 0x7F, 0x00, 0x04, 0xFA) .
+			pack("v", $lv) .
+			pack("C*", 0xBF) .
+			pack("v*", $ID) .
+			pack("C*", 0x00, 0x38, 0xB8, 0x94, 0x02, 0x28, 0xC1, 0x97,
+			0x02, 0xC0, 0x44, 0xAA) .
+			pack("v*", $x) . 
+			pack("C*", 0x00) .
+			pack("v*", $y);
 	}
+	
 	sendMsgToServer($r_net, $msg);
 	debug "Skill Use on Location: $ID, ($x, $y)\n", "sendPacket", 2;
 }
@@ -2132,7 +2211,15 @@ sub sendStorageAdd {
 
 	} elsif ($config{serverType} == 10) {
 		$msg = pack("C2 x5 v1 x1 V1", 0xF3, 0x00, $index, $amount);
+		
+	} elsif ($config{serverType} == 11) {
+		$msg = pack("C*", 0xF3, 0x00, 0xEA, 0x73, 0x50, 0xF8) .
+			pack("v", $index) .
+			pack("C*", 0x50) .
+			pack("V", $amount) .
+			pack("C*", 0x00, 0x00);
 	}
+	
 	sendMsgToServer($net, $msg);
 	debug "Sent Storage Add: $index x $amount\n", "sendPacket", 2;
 }
@@ -2208,7 +2295,15 @@ sub sendStorageGet {
 
 	} elsif ($config{serverType} == 10) {
 		$msg = pack("C2 x12 v1 x2 V1", 0xF5, 0x00, $index, $amount);
+		
+	} elsif ($config{serverType} == 11) {
+		$msg = pack("C*", 0xF5, 0x00, 0xCC, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00) .
+			pack("v*", $index) .
+			pack("C*", 0x00, 0x00, 0x00, 0x00) .
+			pack("V*", $amount) .
+			pack("C*", 0x00, 0x00);
 	}
+	
 	sendMsgToServer($net, $msg);
 	debug "Sent Storage Get: $index x $amount\n", "sendPacket", 2;
 }
@@ -2275,7 +2370,16 @@ sub sendStand {
 
 	} elsif ($config{serverType} == 10) {
 		$msg = pack("C2 x16 C1", 0x89, 0x00, 0x03);
+		
+	} elsif ($config{serverType} == 11) {
+		error "Your server is not supported because it uses padded packets.\n";
+		if (AI::action() eq "standing") {
+			error "Failed to stand.\n";
+			AI::dequeue();
+		}
+		return;
 	}
+	
 	sendMsgToServer($r_net, $msg);
 	debug "Standing\n", "sendPacket", 2;
 }
@@ -2351,6 +2455,12 @@ sub sendSync {
 	} elsif ($config{serverType} == 10) { #vRO
 		$msg = pack("C*", 0x7E, 0x00, 0x5F, 0x04);
 		$msg .= pack("V", getTickCount());
+		
+	} elsif ($config{serverType} == 11) {
+		$msg = pack("C*", 0x7E, 0x00);
+		$msg .= pack("C*", 0x30, 0x00, 0x80,) if ($initialSync);
+		$msg .= pack("C*", 0x00, 0x00, 0x80) if (!$initialSync);
+		$msg .= pack("V", getTickCount());
 	}
 	
 	sendMsgToServer($r_net, $msg);
@@ -2393,6 +2503,9 @@ sub sendTake {
 
 	} elsif ($config{serverType} == 10) {
 		$msg = pack("C2 x2", 0x9F, 0x00) . $itemID;
+		
+	} elsif ($config{serverType} == 11) {
+		$msg = pack("C*", 0x9F, 0x00, 0x00, 0x00, 0x08) . $itemID;
 	}
 
 	sendMsgToServer($r_net, $msg);
