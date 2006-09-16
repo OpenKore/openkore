@@ -338,7 +338,7 @@ sub checkProxy {
 		$self->{packetPending} = '';
 		
 		# (Re)start listening...
-		my $ip = $config{XKore_listenIp} || '0.0.0.0';
+		my $ip = $config{XKore_listenIp} || '127.0.0.1';
 		my $port = $config{XKore_listenPort} || 6901;
 		$self->{proxy_listen} = new IO::Socket::INET(
 			LocalAddr	=> $ip,
@@ -353,7 +353,7 @@ sub checkProxy {
 		# setup master server if necessary
 		getMainServer();
 
-		message TF("Waiting Ragnarok Client to connect on (%s:%s)\n", ($ip eq '0.0.0.0' ? 'localhost' : $ip), $port), "startup" if ($self->{waitingClient} == 1);
+		message TF("Waiting Ragnarok Client to connect on (%s:%s)\n", ($ip eq '127.0.0.1' ? 'localhost' : $ip), $port), "startup" if ($self->{waitingClient} == 1);
 		$self->{waitingClient} = 0;
 		return;
 	}
