@@ -25,7 +25,7 @@ XKore_exeName ragexe.exe
 
 # XKore 2 / Proxy configuration
 XKore_ID
-Xkore_listenIp 127.0.0.1
+XKore_listenIp 127.0.0.1
 XKore_listenPort 6901
 XKore_publicIp 127.0.0.1
 
