@@ -28,6 +28,7 @@ XKore_ID
 XKore_listenIp 127.0.0.1
 XKore_listenPort 6901
 XKore_publicIp 127.0.0.1
+XKore_proxyAllowed_IP
 
 # It is not advised to set secureAdminPassword if you're using Xkore 2
 secureAdminPassword 1
