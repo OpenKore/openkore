@@ -22,6 +22,17 @@ XKore 0
 XKore_silent 1
 XKore_bypassBotDetection 0
 XKore_exeName ragexe.exe
+
+# XKore 2 / Proxy configuration
+XKore_ID
+Xkore_listenIp 127.0.0.1
+XKore_listenPort 6901
+XKore_publicIp 127.0.0.1
+
+# It is not advised to set secureAdminPassword if you're using Xkore 2
+secureAdminPassword 1
+adminPassword
+callSign
 commandPrefix ;
 
 pauseMapServer 0
@@ -255,10 +266,6 @@ portalRecord 2
 missDamage 0
 
 tankersList
-
-secureAdminPassword 0
-adminPassword
-callSign
 
 removeActorWithDistance
 
