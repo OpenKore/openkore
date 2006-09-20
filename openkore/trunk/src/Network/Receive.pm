@@ -2580,9 +2580,11 @@ sub guild_expulsionlist {
 	my ($self, $args) = @_;
 
 	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 88) {
-		my $name = unpack("Z24", substr($args->{RAW_MSG}, $i*88 + 4, 24));
-		my $acc = unpack("Z24", substr($args->{RAW_MSG}, $i*88 + 28, 24));
-		my $mes = unpack("Z44", substr($args->{RAW_MSG}, $i*88 + 52, 44));
+		my ($name) = unpack("Z24", substr($args->{'RAW_MSG'}, $i, 24));
+		my $acc = unpack("Z24", substr($args->{'RAW_MSG'}, $i + 24, 24));
+		my ($cause) = unpack("Z44", substr($args->{'RAW_MSG'}, $i + 48, 44));
+		$guild{expulsion}{$acc}{name} = $name;
+		$guild{expulsion}{$acc}{cause} = $cause;
 	}
 }
 
