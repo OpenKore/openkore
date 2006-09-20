@@ -4,7 +4,7 @@
 
 To Fix:
 - XKore2 is not acting like a real server, it doesn't send complete
-  informations to the client. Connecting to XKore2 from another kore would
+  information to the client. Connecting to XKore2 from another kore would
   fail. 
 
 Bug fixes:
@@ -21,9 +21,6 @@ New config options:
 New features:
 - Basic support for euRO (serverType 11) (Without attack, sit, stand and skill use)
 
-Credits:
-- Darkfate: partial servertype 11 suppport & whining for credits =)
-
 =========================
 ### OpenKore 1.9.2 (beta)
 =========================
@@ -39,6 +36,8 @@ Credits:
 - piroJOKE: field file contributions.
 - cloud2squall: server information contributions.
 - n0rd: support for compressed field files.
+- Darkfate: partial serverType 11 (euRO) support
+- natz: updated Receive.pm guild info
 
 Bug fixes:
 - Fixed a crash when unequipping items (bug #16)
