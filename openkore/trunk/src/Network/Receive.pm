@@ -1566,7 +1566,7 @@ sub change_to_constate5 {
 }
 
 sub character_creation_failed {
-	message T("Character cannot be to created." . 
+	message T("Character creation failed. " . 
 		"If you didn't make any mistake, then the name you chose already exists.\n"), "info";
 	if (charSelectScreen() == 1) {
 		$conState = 3;
