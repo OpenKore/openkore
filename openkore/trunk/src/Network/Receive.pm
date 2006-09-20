@@ -179,7 +179,7 @@ sub new {
 		#'015C' => ['guild_expulsion', 'Z24 Z40 Z24', [qw(name message unknown)]],
 		'015E' => ['guild_broken', 'V1', [qw(flag)]], # clif_guild_broken
 		'0160' => ['guild_member_setting_list'],
-		#'0162' => ['guild_skills_list'],
+		'0162' => ['guild_skills_list'],
 		'0163' => ['guild_expulsionlist'],
 		'0166' => ['guild_members_title_list'],
 		'0167' => ['guild_create_result', 'C1', [qw(type)]],
@@ -2499,21 +2499,43 @@ sub guild_broken {
 }
 
 sub guild_member_setting_list {
-         my ($self, $args) = @_;
-         my $newmsg;
-         my $msg = $args->{RAW_MSG};
-         my $msg_size = $args->{RAW_MSG_SIZE};
-         decrypt(\$newmsg, substr($msg, 4, length($msg)-4));
-         $msg = substr($msg, 0, 4).$newmsg;
-         my $gtIndex;
-         for (my $i = 4; $i < $msg_size; $i += 16) {
-                 $gtIndex = unpack("V1", substr($msg, $i, 4));
-                 $guild{positions}[$gtIndex]{invite} = (unpack("C1", substr($msg, $i + 4, 1)) & 0x01) ? 1 : '';
-                 $guild{positions}[$gtIndex]{punish} = (unpack("C1", substr($msg, $i + 4, 1)) & 0x10) ? 1 : '';
-                 $guild{positions}[$gtIndex]{feeEXP} = unpack("V1", substr($msg, $i + 12, 4));
-         }
- }
+	my ($self, $args) = @_;
+	my $newmsg;
+	my $msg = $args->{RAW_MSG};
+	my $msg_size = $args->{RAW_MSG_SIZE};
+	decrypt(\$newmsg, substr($msg, 4, length($msg)-4));
+	$msg = substr($msg, 0, 4).$newmsg;
+	my $gtIndex;
+	for (my $i = 4; $i < $msg_size; $i += 16) {
+		$gtIndex = unpack("V1", substr($msg, $i, 4));
+		$guild{positions}[$gtIndex]{invite} = (unpack("C1", substr($msg, $i + 4, 1)) & 0x01) ? 1 : '';
+		$guild{positions}[$gtIndex]{punish} = (unpack("C1", substr($msg, $i + 4, 1)) & 0x10) ? 1 : '';
+		$guild{positions}[$gtIndex]{feeEXP} = unpack("V1", substr($msg, $i + 12, 4));
+	}
+}
 
+sub guild_skills_list {
+	my ($self, $args) = @_;
+	my $msg = $args->{RAW_MSG};
+	my $msg_size = $args->{RAW_MSG_SIZE};
+	for (my $i = 6; $i < $msg_size; $i += 37) {
+		my $skillID = unpack("v1", substr($msg, $i, 2));
+		my $targetType = unpack("v1", substr($msg, $i+2, 2));
+		my $level = unpack("v1", substr($msg, $i + 6, 2));
+		my $sp = unpack("v1", substr($msg, $i + 8, 2));
+		my ($skillName) = unpack("Z*", substr($msg, $i + 12, 24));
+ 
+		my $up = unpack("C1", substr($msg, $i+36, 1));
+		$guild{skills}{$skillName}{ID} = $skillID;
+		$guild{skills}{$skillName}{sp} = $sp;
+		$guild{skills}{$skillName}{up} = $up;
+		$guild{skills}{$skillName}{targetType} = $targetType;
+		if (!$guild{skills}{$skillName}{lv}) {
+			$guild{skills}{$skillName}{lv} = $level;
+		}
+	}
+}
+ 
 sub guild_chat {
 	my ($self, $args) = @_;
 	my ($chatMsgUser, $chatMsg); # Type: String
