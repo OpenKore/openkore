@@ -707,6 +707,8 @@ master_version 25
 version 61
 serverEncoding Russian
 pauseCharServer 1
+patchserver web.raggame.ru
+patchpath /patch02
 
 ## http://www.rohispano.com/
 [Latin America - RO Hispano]
@@ -1261,7 +1263,7 @@ serverEncoding Western
 
 ## http://www.vanserver.com/
 [VanRO: High Rate Private Server]
-ip 70.84.205.242
+ip 70.84.205.243
 port 6800
 master_version 20
 version 18
