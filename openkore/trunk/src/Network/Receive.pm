@@ -474,8 +474,6 @@ sub account_server_info {
 		message T("Closing connection to Account Server\n"), 'connection';
 		$net->serverDisconnect();
 		if (!$masterServer->{charServer_ip} && $config{server} eq "") {
-			message T("Choose your server.  Enter the server number: "), "input";
-
 			my @serverList;
 			foreach my $server (@servers) {
 				push @serverList, $server->{name};
