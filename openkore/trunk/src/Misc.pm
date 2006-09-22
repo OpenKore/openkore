@@ -1498,9 +1498,6 @@ sub checkMonsterCleanness {
 		return 1;
 	}
 
-	# If monster attacked/missed you
-	return 1 if ($monster->{'dmgToYou'} || $monster->{'missedYou'});
-
 	if ($config{aggressiveAntiKS}) {
 		# Aggressive anti-KS mode, for people who are paranoid about not kill stealing.
 
@@ -1508,6 +1505,9 @@ sub checkMonsterCleanness {
 		return 0 if (($monster->{dmgFromPlayer} && %{$monster->{dmgFromPlayer}})
 			  || ($monster->{missedFromPlayer} && %{$monster->{missedFromPlayer}}));
 	}
+	
+	# If monster attacked/missed you
+	return 1 if ($monster->{'dmgToYou'} || $monster->{'missedYou'});
 
 	# If we're in follow mode
 	if (defined(my $followIndex = AI::findAction("follow"))) {
