@@ -1501,9 +1501,13 @@ sub checkMonsterCleanness {
 	if ($config{aggressiveAntiKS}) {
 		# Aggressive anti-KS mode, for people who are paranoid about not kill stealing.
 
-		# If others attacked the monster then always drop it.
+		#If we attacked the monster first, do not drop it... Cause WE are being ks'd
+		return 1 if ($monster->{dmgFromYou} || $monster->{missedFromYou});
+		
+		# If others attacked the monster then always drop it, wether it attacked us or not!
 		return 0 if (($monster->{dmgFromPlayer} && %{$monster->{dmgFromPlayer}})
-			  || ($monster->{missedFromPlayer} && %{$monster->{missedFromPlayer}}));
+			  || ($monster->{missedFromPlayer} && %{$monster->{missedFromPlayer}})
+			  || (($monster->{castOnByPlayer}) || %{$monster->{castOnToPlayer}}));
 	}
 	
 	# If monster attacked/missed you
