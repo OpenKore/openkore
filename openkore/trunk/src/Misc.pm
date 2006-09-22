@@ -1507,7 +1507,8 @@ sub checkMonsterCleanness {
 		# If others attacked the monster then always drop it, wether it attacked us or not!
 		return 0 if (($monster->{dmgFromPlayer} && %{$monster->{dmgFromPlayer}})
 			  || ($monster->{missedFromPlayer} && %{$monster->{missedFromPlayer}})
-			  || (($monster->{castOnByPlayer}) || {$monster->{castOnToPlayer}}));
+			  || (($monster->{castOnByPlayer}) && %{$monster->{castOnByPlayer}})
+			  || (($monster->{castOnToPlayer}) && %{$monster->{castOnToPlayer}}));
 	}
 	
 	# If monster attacked/missed you
