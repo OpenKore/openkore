@@ -27,7 +27,6 @@ sub new {
 		name => $name,
 		registered => 0,
 		submacro => 0,
-		script => [@{$macro{$name}}],
 		macro_delay => $timeout{macro_delay}{timeout},
 		timeout => 0,
 		time => time,
@@ -188,7 +187,7 @@ sub next {
 		return
 	}
 
-	my $line = ${$self->{script}}[$self->{line}];
+	my $line = ${$macro{$self->{name}}}[$self->{line}];
 	if (!defined $line) {
 		if ($self->{repeat} > 1) {
 			$self->{repeat}--;
