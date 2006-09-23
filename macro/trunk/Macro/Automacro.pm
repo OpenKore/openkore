@@ -419,8 +419,7 @@ sub automacroCheck {
 		if (defined $automacro{$am}->{timeout}) {
 			$automacro{$am}->{time} = 0 unless $automacro{$am}->{time};
 			my %tmptimer = (timeout => $automacro{$am}->{timeout}, time => $automacro{$am}->{time});
-			next CHKAM unless timeOut(\%tmptimer);
-			$automacro{$am}->{time} = time
+			next CHKAM unless timeOut(\%tmptimer)
 		}
 
 		if (defined $automacro{$am}->{hook}) {
@@ -493,6 +492,7 @@ sub automacroCheck {
 			warning "[macro] automacro $am: call not defined.\n", "macro"
 		}
 
+		$automacro{$am}->{time} = time  if $automacro{$am}->{timeout};
 		$automacro{$am}->{disabled} = 1 if $automacro{$am}->{'run-once'};
 
 		foreach my $i (@{$automacro{$am}->{set}}) {
