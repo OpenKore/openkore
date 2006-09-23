@@ -46,13 +46,13 @@ our %amSingle = (
 	'orphan' => 1,       # option: orphan handling
 	'macro_delay' => 1,  # option: default macro delay
 	'hook' => 1,         # check: openkore hook
-	'save' => 1,         # setting: save hook arguments
 	'priority' => 1,     # option: automacro priority
 	'exclusive' => 1     # option: is macro interruptible
 );
 
 our %amMulti = (
 	'set' => 1,          # set: variable
+	'save' => 1,         # setting: save hook arguments
 	'monster' => 1,      # check: monster on screen
 	'aggressives' => 1,  # check: aggressives
 	'location' => 1,     # check: player's location

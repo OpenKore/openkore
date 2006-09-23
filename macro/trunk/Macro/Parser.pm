@@ -83,7 +83,7 @@ sub parseMacroFile {
 				}
 				if ($amSingle{$key}) {
 					$automacro{$block{name}}->{$key} = $value
-				} elsif ($amMulti{$key}) {
+				} elsif ($amMulti{$key} || $key =~ /^save\d+$/) {
 					push(@{$automacro{$block{name}}->{$key}}, $value)
 				} else {
 					warning "$file: ignoring '$_' (munch, munch, unknown automacro keyword)\n"
