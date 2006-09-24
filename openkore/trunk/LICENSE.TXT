@@ -384,3 +384,8 @@ Mandatory attribution clauses:
    This software includes MD5 routines copyrighted by RSA Data Security,
        Inc.
 ##########################################################################
+
+-------------------------------
+
+Contains IPEMD-160 software written by Antoon Bosselaers, 
+available at http://www.esat.kuleuven.be/~cosicart/ps/AB-9601/

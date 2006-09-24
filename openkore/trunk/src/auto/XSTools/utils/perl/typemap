@@ -3,6 +3,7 @@ HttpReader *		O_OBJECT
 StdHttpReader *		O_OBJECT
 MirrorHttpReader *	O_OBJECT
 WP_Struct *		O_OBJECT
+RMD_Struct *		O_OBJECT
 HttpReaderStatus	T_IV
 
 
