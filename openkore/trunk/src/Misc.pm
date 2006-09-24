@@ -192,7 +192,8 @@ our @EXPORT = (
 	findCartItem
 	makeShop
 	openShop
-	closeShop/
+	closeShop
+	inLockMap/
 	);
 
 
@@ -4249,6 +4250,13 @@ sub closeShop {
 	message T("Shop closed.\n");
 }
 
+sub inLockMap {
+	if ($field{'name'} eq $config{'lockMap'}) {
+		return 1;
+	} else {
+		return 0;
+	}
+}
 
 sub MODINIT {
 	OpenKoreMod::initMisc() if (defined(&OpenKoreMod::initMisc));
