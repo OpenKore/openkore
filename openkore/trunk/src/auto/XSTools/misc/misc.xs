@@ -29,7 +29,7 @@ CODE:
 	   If this number is increased, then that means new functions
 	   have been added. The library is still compatible with the
 	   previous interface. */
-	RETVAL = 5;
+	RETVAL = 6;
 OUTPUT:
 	RETVAL
 

@@ -6,4 +6,5 @@ Crypton.pm
 HttpReader.pm
 ObjectList.pm
 PerlLauncher.pm
+RMD160.pm
 Whirlpool.pm

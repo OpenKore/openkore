@@ -14,3 +14,5 @@ rijndael-alg-fst.c
 rijndael-alg-fst.h
 rijndael-api-fst.c
 rijndael-api-fst.h
+rmd160.h
+rmd160.c
