@@ -184,17 +184,17 @@ if (!defined &XSTools::majorVersion) {
 	$interface->errorDialog(TF("Your version of the XSTools library is too old.\n" .
 		"Please read %s", ""));
 	exit 1;
-} elsif (XSTools::majorVersion() != 3) {
+} elsif (XSTools::majorVersion() != 4) {
 	$interface->errorDialog(TF("Your version of XSTools library is incompatible.\n" .
 		"Please read %s", "http://www.openkore.com/aliases/xstools.php"));
 	exit 1;
-} elsif (XSTools::minorVersion() < 6) {
+} elsif (XSTools::minorVersion() < 0) {
 	$interface->errorDialog(TF("Your version of the XSTools library is too old. Please upgrade it.\n" .
 		"Please read %s", "http://www.openkore.com/aliases/xstools.php"));
 	exit 1;
 }
-require PathFinding;
-require WinUtils if ($^O eq 'MSWin32');
+require Utils::PathFinding;
+require Utils::Win32 if ($^O eq 'MSWin32');
 
 require 'functions.pl';
 use Modules;

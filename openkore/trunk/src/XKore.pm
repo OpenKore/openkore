@@ -24,7 +24,7 @@ use Translation;
 
 use Globals;
 use Log qw(message error);
-use WinUtils;
+use Utils::Win32;
 use Network::Send;
 use Utils qw(dataWaiting timeOut);
 
@@ -246,7 +246,7 @@ sub checkConnection {
 	my $printed;
 	my $pid;
 	# Wait until the RO client has started
-	while (!($pid = WinUtils::GetProcByName($config{XKore_exeName}))) {
+	while (!($pid = Utils::Win32::GetProcByName($config{XKore_exeName}))) {
 		message TF("Please start the Ragnarok Online client (%s)\n", $config{XKore_exeName}), "startup" unless $printed;
 		$printed = 1;
 		$interface->iterate;
@@ -307,7 +307,7 @@ sub inject {
 		return 0;
 	}
 
-	if (WinUtils::InjectDLL($pid, $dll)) {
+	if (Utils::Win32::InjectDLL($pid, $dll)) {
 		return 1;
 	} else {
 		$@ = T("Unable to inject NetRedirect.dll");
@@ -402,9 +402,9 @@ sub hackClient {
 	my $pid = shift;
 	my $handle;
 
-	my $pageSize = WinUtils::SystemInfo_PageSize();
-	my $minAddr = WinUtils::SystemInfo_MinAppAddress();
-	my $maxAddr = WinUtils::SystemInfo_MaxAppAddress();
+	my $pageSize = Utils::Win32::SystemInfo_PageSize();
+	my $minAddr = Utils::Win32::SystemInfo_MinAppAddress();
+	my $maxAddr = Utils::Win32::SystemInfo_MaxAppAddress();
 
 	my $patchFind = pack('C*', 0x66, 0xA3) . '....'	# mov word ptr [xxxx], ax
 		. pack('C*', 0xA0) . '....'		# mov al, byte ptr [xxxx]
@@ -425,7 +425,7 @@ sub hackClient {
 	message T("Patching client to remove bot detection:\n"), "startup";
 
 	# Open Ragnarok's process
-	my $hnd = WinUtils::OpenProcess(0x638, $pid);
+	my $hnd = Utils::Win32::OpenProcess(0x638, $pid);
 
 	# Loop through Ragnarok's memory
 	my ($nextUpdate, $updateChar, $patchCount) = (0, '.', 0);
@@ -448,11 +448,11 @@ sub hackClient {
 		}
 
 		# Ensure we can read/write the memory
-		my $oldprot = WinUtils::VirtualProtectEx($hnd, $i, $pageSize, 0x40);
+		my $oldprot = Utils::Win32::VirtualProtectEx($hnd, $i, $pageSize, 0x40);
 		
 		if ($oldprot) {
 			# Read the page
-			my $data = WinUtils::ReadProcessMemory($hnd, $i, $pageSize);
+			my $data = Utils::Win32::ReadProcessMemory($hnd, $i, $pageSize);
 			
 			# Is the patched code in there?
 			if ($data =~ m/($original)/) {
@@ -467,7 +467,7 @@ sub hackClient {
 				$data =~ s/$original/$patched/;
 				
 				# Write the new code
-				if (WinUtils::WriteProcessMemory($hnd, $i, $data)) {
+				if (Utils::Win32::WriteProcessMemory($hnd, $i, $data)) {
 					$updateChar = '*';
 					$patchCount++;
 				} else {
@@ -476,13 +476,13 @@ sub hackClient {
 			}
 			
 		# Undo the protection change
-		WinUtils::VirtualProtectEx($hnd, $i, $pageSize, $oldprot);
+		Utils::Win32::VirtualProtectEx($hnd, $i, $pageSize, $oldprot);
 		}
 	}
 	message "\n";
 
 	# Close Ragnarok's process
-	WinUtils::CloseProcess($hnd);
+	Utils::Win32::CloseProcess($hnd);
 
 	message TF("Client modified in %d places.\n", $patchCount), "startup";
 }

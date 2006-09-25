@@ -7,25 +7,23 @@
 #  this software. However, if you distribute modified versions, you MUST
 #  also distribute the source code.
 #  See http://www.gnu.org/licenses/gpl.html for the full license.
-#
-#  $Revision$
-#  $Id$
-#
 #########################################################################
 ##
-# MODULE DESCRIPTION: Pathfinding algorithm
+# MODULE DESCRIPTION: Pathfinding algorithm.
 #
-# This module provides a pathfinding algorithm, which you can use to
-# calculate how to walk to a certain spot on the map. This module is
-# only for <i>calculation</i> of a route, not for telling OpenKore to walk
-# to a certain place. That's what ai_route() is for.
+# This module implements the
+# <a href="http://en.wikipedia.org/wiki/A-star_search_algorithm">A*</a>
+# (A-Star) pathfinding algorithm, which you can use to calculate how to
+# walk to a certain spot on the map.
+#
+# This module is only for <i>calculation</i> of a route, not for
+# telling OpenKore to walk to a certain place. That's what ai_route() is for.
 
 # The actual algorithm itself is implemented in auto/XSTools/pathfinding/algorithm.{cpp|h}.
 # This module is a Perl XS wrapper API for that algorithm. Most functions in this module
 # are implemented in auto/XSTools/pathfinding/wrapper.xs.
 package PathFinding;
 
-use 5.006;
 use strict;
 use warnings;
 use Carp;
@@ -37,11 +35,11 @@ XSTools::bootModule("PathFinding");
 
 ##
 # PathFinding->new([args])
-# args: Arguments to pass to $pathfinding->reset().
+# args: Arguments to pass to $PathFinding->reset().
 #
 # Create a new PathFinding object. If args are given, the object will
-# be initialized for you. If you, you must initialize it yourself
-# by calling $pathfinding->reset().
+# be initialized for you. If not, you must initialize it yourself
+# by calling $PathFinding->reset().
 sub new {
 	my $class = shift;
 	my $self = create();
@@ -51,25 +49,33 @@ sub new {
 
 
 ##
-# PathFinding->reset(key => value)
+# $PathFinding->reset(args...)
+# Returns: a PathFinding object
+#
 # Required arguments:
-#   start: a hash containing x and y values where the path should start
-#   dest: a hash as above, but for the path's destination
+# `l
+# - start: a hash containing x and y values where the path should start.<br>
+# - dest: a hash as above, but for the path's destination.
+# `l`
 #
 # Semi-required arguments:
-#   field: a hash with the keys dstMap, width, and height
+# `l
+# - field: a hash with the keys <tt>dstMap</tt>, <tt>width</tt>, and <tt>height</tt>
+# `l`
 # OR all of:
-#   distance_map: a reference to a field map with precomuted distances from walls
-#   width: the width of the field
-#   height: the height of the field
+# `l
+# - distance_map: a reference to a field map with precomuted distances from walls
+# - width: the width of the field
+# - height: the height of the field
+# `l`
 #
 # Optional arguments:
-#   timeout: the number of milliseconds to run each step for, defaults to 1500
-#   weights: a reference to a string of 256 characters, used as the weights to give
+# `l
+# - timeout: the number of milliseconds to run each step for, defaults to 1500
+# - weights: a reference to a string of 256 characters, used as the weights to give
 #            squares from 0 to 255 squares away from the closest wall. The first
 #            character must be chr(255).
-#
-# Returns: a PathFinding object
+# `l`
 sub reset {
 	my $class = shift;
 	my %args = @_;
@@ -93,31 +99,28 @@ sub reset {
 }
 
 
-1;
-__END__
-
-# Docs for XS functions:
-
 ##
-# $path_obj->run(r_array)
+# $PathFinding->run(r_array)
 # r_array: Reference to an array in which the solution is stored. It will contain
 #     hashes of x and y coordinates from the start to the end of the path.
 # Returns: -1 on failure, 0 when pathfinding is not yet complete, or the number
 #     of steps required to walk from source to destination.
 
 ##
-# $path_obj->runref()
+# $PathFinding->runref()
 # Returns: undef on failure, 0 when pathfinding is not yet complete, or an array
 #     reference when a path is found. The array reference contains hashes of x
 #     and y coordinates from the start to the end of the path.
 
 ##
-# $path_obj->runstr()
+# $PathFinding->runstr()
 # Returns: undef on failure, 0 when pathfinding is not yet complete, or a string
 #     of packed shorts. The shorts are pairs of X and Y coordinates running
 #     from the end to the start of the path. (note that the order is reversed)
 
 ##
-# $path_obj->runcount()
+# $PathFinding->runcount()
 # Returns: -1 on failure, 0 when pathfinding is not yet complete, or the
 #     number of steps required to walk from source to destination.
+
+1;

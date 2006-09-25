@@ -12,22 +12,22 @@
 #  $Id$
 #
 #########################################################################
+##
+# MODULE DESCRIPTION: Unix-specific utility functions.
 
 # Functions in this module are implemented in auto/XSTools/unix/unix.xs
-package UnixUtils;
+package Utils::Unix;
 
-use 5.006;
 use strict;
 use warnings;
-use Carp;
 
 use XSTools;
-XSTools::bootModule("UnixUtils");
-
-1;
+XSTools::bootModule("Utils::Unix");
 
 ##
-# UnixUtils::getTerminalSize()
-# Returns: an array with 2 elements.
+# Utils::Unix::getTerminalSize()
+# Returns: an array with 2 elements: the width and height.
 #
 # Get the size of the active terminal.
+
+1;

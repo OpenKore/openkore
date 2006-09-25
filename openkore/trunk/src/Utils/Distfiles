@@ -7,4 +7,6 @@ HttpReader.pm
 ObjectList.pm
 PerlLauncher.pm
 RMD160.pm
+Unix.pm
 Whirlpool.pm
+Win32.pm

@@ -32,7 +32,7 @@ use Interface;
 use base qw(Interface);
 use Utils qw(timeOut);
 use I18N qw(UTF8ToString);
-use UnixUtils;
+use Utils::Unix;
 
 our (%fgcolors, %bgcolors);
 
@@ -45,7 +45,7 @@ sub new {
 		# Only initialize readline if we have a controlling
 		# terminal to read input from.
 		$self{readline} = 1;
-		UnixUtils::ConsoleUI::start();
+		Utils::Unix::ConsoleUI::start();
 	}
 
 	bless \%self, $class;
@@ -54,7 +54,7 @@ sub new {
 
 sub DESTROY {
 	my $self = shift;
-	UnixUtils::ConsoleUI::stop() if ($self->{readline});
+	Utils::Unix::ConsoleUI::stop() if ($self->{readline});
 	print getColor('default');
 	STDOUT->flush;
 }
@@ -67,17 +67,17 @@ sub getInput {
 
 	if ($timeout < 0) {
 		do {
-			$line = UnixUtils::ConsoleUI::getInput();
+			$line = Utils::Unix::ConsoleUI::getInput();
 			sleep 0.01;
 		} while (!defined $line);
 
 	} elsif ($timeout == 0) {
-		$line = UnixUtils::ConsoleUI::getInput();
+		$line = Utils::Unix::ConsoleUI::getInput();
 
 	} else {
 		my $time = time;
 		do {
-			$line = UnixUtils::ConsoleUI::getInput();
+			$line = Utils::Unix::ConsoleUI::getInput();
 			sleep 0.01;
 		} while (!defined($line) && !timeOut($time, $timeout));
 	}
@@ -92,7 +92,7 @@ sub errorDialog {
 	# so don't block execution
 	my ($self, $message) = @_;
 	$self->writeOutput("error", "$message\n");
-	UnixUtils::ConsoleUI::waitUntilPrinted() if ($self->{readline});
+	Utils::Unix::ConsoleUI::waitUntilPrinted() if ($self->{readline});
 }
 
 sub writeOutput {
@@ -113,7 +113,7 @@ sub writeOutput {
 			$message = $3;
 			{
 				use bytes;
-				UnixUtils::ConsoleUI::print($code . $line);
+				Utils::Unix::ConsoleUI::print($code . $line);
 			}
 		}
 	}

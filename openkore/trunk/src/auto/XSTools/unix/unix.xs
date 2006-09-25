@@ -16,7 +16,7 @@
 	#define ioctl(a, b, c) 0
 #endif
 
-MODULE = UnixUtils		PACKAGE = UnixUtils		PREFIX = UnixUtils_
+MODULE = Utils::Unix		PACKAGE = Utils::Unix
 PROTOTYPES: ENABLE
 
 
