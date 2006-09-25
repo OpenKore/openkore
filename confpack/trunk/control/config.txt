@@ -13,7 +13,8 @@ sex
 bindIp
 # 0 = normal server, 1 = oRO, 2 = pRO, 3 = eAthena/Freya,
 # 4 = new Freya, 5 = new eAthena, 6 = new oRO
-# 7 = Aegis 10.x with padded packets, 8 = kRO, 9 = eAthena, 10 = vRO
+# 7 = Aegis 10.x with padded packets, 8 = kRO
+# 9 = eAthena, 10 = vRO, 11 = euRO
 # If Skills, Moving, Sitting or whatever doesnt work, try all other servertypes before you complain!
 serverType 0
 
