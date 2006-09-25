@@ -5390,16 +5390,14 @@ sub users_online {
 
 sub vender_found {
 	my ($self, $args) = @_;
-
 	my $ID = $args->{ID};
-	my $title = $args->{title};
-	
+
 	if (!$venderLists{$ID} || !%{$venderLists{$ID}}) {
 		binAdd(\@venderListsID, $ID);
 		Plugins::callHook('packet_vender', {ID => $ID});
 	}
-	$venderLists{$ID}{'title'} = $title;
-	$venderLists{$ID}{'id'} = $ID;	
+	$venderLists{$ID}{title} = bytesToString($args->{title});
+	$venderLists{$ID}{id} = $ID;
 }
 
 sub vender_items_list {
