@@ -7,10 +7,6 @@
 #  this software. However, if you distribute modified versions, you MUST
 #  also distribute the source code.
 #  See http://www.gnu.org/licenses/gpl.html for the full license.
-#
-#  $Revision: 4169 $
-#  $Id: WinUtils.pm 4169 2006-04-07 19:39:53Z hongli $
-#
 #########################################################################
 ##
 # MODULE DESCRIPTION: RMD-160 hashing algorithm
