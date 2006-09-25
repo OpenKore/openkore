@@ -35,7 +35,7 @@ use Carp;
 use Time::HiRes qw/time sleep/;
 use Text::Wrap;
 use Win32::Console;
-use WinUtils;
+use Utils::Win32;
 use encoding 'utf8';
 use I18N qw(stringToBytes);
 
@@ -294,7 +294,7 @@ sub writeOutput {
 	$self->{out_con}->Cursor($self->{out_col}, $self->{out_line} - $lines);
 	$self->setColor($type, $domain);
 	#$self->{out_con}->Write($message);
-	WinUtils::printConsole($message);
+	Utils::Win32::printConsole($message);
 	$self->color('reset');
 	($self->{out_col}, $self->{out_line}) = $self->{out_con}->Cursor();
 	$self->{out_line} -= $self->{last_line_end} - 1;
@@ -328,7 +328,7 @@ sub title {
 
 	if (defined $title) {
 		if (!defined $self->{currentTitle} || $self->{currentTitle} ne $title) {
-			WinUtils::setConsoleTitle($title);
+			Utils::Win32::setConsoleTitle($title);
 			$self->{currentTitle} = $title;
 		}
 	} else {
