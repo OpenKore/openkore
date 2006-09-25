@@ -4,30 +4,6 @@ package doCommand;
 # This plugin is licensed under the GNU GPL
 # Copyright 2005 by kaliwanagan
 # --------------------------------------------------
-#
-# How to install this thing..:
-#
-# in control\config.txt add:
-#  
-#doCommand cart get meat 10 {
-#	hp <= 50%
-#	sp
-#	onAction
-#	whenStatusActive
-#	whenStatusInactive
-#	whenFollowing
-#	spirit
-#	aggressives
-#	monsters
-#	notMonsters
-#	stopWhenHit 0
-#	inLockOnly 0
-#	notWhileSitting 0
-#	notInTown 0
-#	timeout 3
-#	disabled 0
-#	inInventory meat <= 5
-#}
 
 use strict;
 use Plugins;
@@ -36,6 +12,7 @@ use Log qw(message warning error);
 use Misc;
 use Utils;
 use Commands;
+use Time::HiRes qw(time);
 
 Plugins::register('doCommand', 'do a command on certain conditions', \&Unload);
 my $hook = Plugins::addHook('AI_post', \&doCommand);
