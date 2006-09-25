@@ -433,6 +433,17 @@ sub sendAttack {
 	my $monID = shift;
 	my $flag = shift;
 	my $msg;
+
+	my %args;
+	$args{monID} = $monID;
+	$args{flag} = $flag;
+	Plugins::callHook('packet_pre/sendAttack', \%args);
+	if ($args{return}) {
+		sendMsgToServer($r_net, $args{msg});
+		message "Sent attack: ".getHex($monID)."\n", "sendPacket";
+		return;
+	}
+	
 	if ($config{serverType} == 0) {
 		$msg = pack("C*", 0x89, 0x00) . $monID . pack("C*", $flag);
 
@@ -1919,6 +1930,16 @@ sub sendSellBulk {
 sub sendSit {
 	my $r_net = shift;
 	my $msg;
+
+	my %args;
+	$args{flag} = 2;
+	Plugins::callHook('packet_pre/sendSit', \%args);
+	if ($args{return}) {
+		sendMsgToServer($r_net, $args{msg});
+		message "Sitting\n", "sendPacket";
+		return;
+	}
+
 	if ($config{serverType} == 0) {
 		$msg = pack("C*", 0x89, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02);
 
@@ -2330,6 +2351,16 @@ sub sendStoragePassword {
 sub sendStand {
 	my $r_net = shift;
 	my $msg;
+
+	my %args;
+	$args{flag} = 3;
+	Plugins::callHook('packet_pre/sendStand', \%args);
+	if ($args{return}) {
+		sendMsgToServer($r_net, $args{msg});
+		message "Standing\n", "sendPacket";
+		return;
+	}
+
 	if ($config{serverType} == 0) {
 		$msg = pack("C*", 0x89, 0x00, 0x00, 0x00, 0x00, 0x00, 0x03);
 

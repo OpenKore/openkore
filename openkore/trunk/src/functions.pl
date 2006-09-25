@@ -601,6 +601,7 @@ sub parseSendMsg {
 				undef $sendMsg;
 			}
 		}
+		undef $sendMsg;
 
 	} elsif (($switch eq "008C" && $config{serverType} == 0) ||	# Public chat
 		($switch eq "008C" && $config{serverType} == 1) ||
