@@ -14,6 +14,7 @@
 #########################################################################
 ##
 # MODULE DESCRIPTION: Windows-specific utility functions.
+
 # Functions in this module are implemented in auto/XSTools/win32/wrapper.xs
 package Utils::Win32;
 
