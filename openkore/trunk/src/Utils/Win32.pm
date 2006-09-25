@@ -12,9 +12,10 @@
 #  $Id$
 #
 #########################################################################
-
+##
+# MODULE DESCRIPTION: Windows-specific utility functions.
 # Functions in this module are implemented in auto/XSTools/win32/wrapper.xs
-package WinUtils;
+package Utils::Win32;
 
 use 5.006;
 use strict;
@@ -22,22 +23,22 @@ use warnings;
 use Carp;
 
 use XSTools;
-XSTools::bootModule('WinUtils');
+XSTools::bootModule('Utils::Win32');
 
 ##
-# void playSound(String file)
+# void Utils::Win32::playSound(String file)
 # Requires: defined($file)
 #
 # Play a .wav file.
 
 ##
-# void WinUtils::printConsole(String message)
+# void Utils::Win32::printConsole(String message)
 # Requires: defined($message)
 #
 # Print a message to the console. This function supports Unicode.
 
 ##
-# void WinUtils::setConsoleTitle(String title)
+# void Utils::Win32::setConsoleTitle(String title)
 # Requires: defined($title)
 #
 # Sets the current console's title. This function supports Unicode.

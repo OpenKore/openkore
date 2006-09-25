@@ -8,7 +8,7 @@
 #include "locale.c"
 #include "utils.h"
 
-MODULE = WinUtils		PACKAGE = WinUtils		PREFIX = WinUtils_
+MODULE = Utils::Win32		PACKAGE = Utils::Win32
 PROTOTYPES: ENABLE
 
 

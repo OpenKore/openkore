@@ -48,14 +48,10 @@ sub writeContentTable {
 	close($f);
 
 	sub writeModulesList {
-		my $showWx = shift;
-		my $list;
+		my ($pattern, $negative) = @_;
+		my $list = '';
 		foreach my $package (@modules) {
-			if ($showWx) {
-				next if ($package !~ /^Interface::Wx/);
-			} else {
-				next if ($package =~ /^Interface::Wx/);
-			}
+			next unless (defined $pattern && ( (!$negative && $package =~ /$pattern/) || ($negative && $package !~ /$pattern/) ));
 
 			my $file = $Extractor::modules{$package}{htmlFile};
 			$list .= "<tr onclick=\"location.href='$file';\">\n" .
@@ -67,8 +63,9 @@ sub writeContentTable {
 	}
 
 	$html =~ s/\@MODIFIED\@/gmtime/ge;
-	$html =~ s/\@MODULES\@/&writeModulesList(0)/ge;
-	$html =~ s/\@WXMODULES\@/&writeModulesList(1)/ge;
+	$html =~ s/\@MODULES\@/&writeModulesList('^(Base|Utils::|Interface::Wx)', 1)/ge;
+	$html =~ s/\@UTILS_MODULES\@/&writeModulesList('^(Base|Utils::)')/ge;
+	$html =~ s/\@WXMODULES\@/&writeModulesList('^Interface::Wx')/ge;
 	if (!open($f, "> srcdoc/index.html")) {
 		error "Unable to write to srcdoc/index.html\n";
 		exit 1;

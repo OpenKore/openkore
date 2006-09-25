@@ -1,4 +1,4 @@
-MODULE = UnixUtils   PACKAGE = UnixUtils::ConsoleUI
+MODULE = Utils::Unix   PACKAGE = Utils::Unix::ConsoleUI
 
 void
 start()

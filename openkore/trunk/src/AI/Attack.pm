@@ -27,10 +27,10 @@ use Actor;
 use Log qw(message debug warning);
 use Translation qw(T TF);
 use Network::Send;
-use PathFinding;
 use Misc;
 use Utils;
 use Utils::Benchmark;
+use Utils::PathFinding;
 
 
 sub process {

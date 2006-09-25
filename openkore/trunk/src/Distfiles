@@ -16,14 +16,11 @@ Match.pm
 Misc.pm
 Modules.pm
 Network.pm
-PathFinding.pm
 Plugins.pm
 Settings.pm
 Skills.pm
 Translation.pm
-UnixUtils.pm
 Utils.pm
-WinUtils.pm
 XKore.pm
 XKore2.pm
 XSTools.pm

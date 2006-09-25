@@ -1027,8 +1027,8 @@ sub launchURL {
 	my $url = shift;
 
 	if ($^O eq 'MSWin32') {
-		require WinUtils;
-		WinUtils::ShellExecute(0, undef, $url);
+		require Utils::Win32;
+		Utils::Win32::ShellExecute(0, undef, $url);
 
 	} else {
 		my $mod = 'use POSIX;';

@@ -109,8 +109,8 @@ sub _autodetect {
 		}
 
 		if (!defined($locale) && $^O eq 'MSWin32') {
-			require WinUtils;
-			$locale = WinUtils::getLanguageName();
+			require Utils::Win32;
+			$locale = Utils::Win32::getLanguageName();
 			return undef if ($locale eq 'C');
 		}
 		return undef if (!defined $locale);

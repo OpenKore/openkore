@@ -33,8 +33,11 @@ Utils::Core::Exception
 Utils::StartupNotification::Launcher
 Utils::StartupNotification::Launchee
 Utils::StartupNotification::CreateSocketException
+Utils::PathFinding
 Utils::RMD160
+Utils::Unix
 Utils::Whirlpool
+Utils::Win32
 
 IPC
 IPC::Server
