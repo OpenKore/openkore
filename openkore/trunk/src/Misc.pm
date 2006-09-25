@@ -4250,6 +4250,11 @@ sub closeShop {
 	message T("Shop closed.\n");
 }
 
+##
+# inLockMap()
+#
+# Returns 1 (true) if character is located in its lockmap.
+# Returns 0 (false) if character is not located in lockmap.
 sub inLockMap {
 	if ($field{'name'} eq $config{'lockMap'}) {
 		return 1;
