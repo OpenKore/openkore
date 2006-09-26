@@ -1653,8 +1653,8 @@
 4265#Li_Me_Mang_Ryang_Card#
 4266#Eclipse_Card#
 4267#Explosion_Card#
-4268#Incubus_Card#
-4269#Injustice_Card#
+4268#Injustice_Card#
+4269#Incubus_Card#
 4270#Giant_Spider_Card#
 4271#Giant_Hornet_Card#
 4272#Dancing_Dragon_Card#
