@@ -220,7 +220,7 @@ gameGuard 1
 [Philippines - pRO: Thor]
 ip 202.57.118.231
 port 6900
-master_version 15
+master_version 18
 version 1
 secureLogin 1
 secureLogin_type 0
