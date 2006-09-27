@@ -160,7 +160,8 @@ sub iterate {
 
 		# auto-follow
 		} elsif (
-			AI::action eq "move"
+			$AI::Homunculus::homun_AI == 2
+			&& AI::action eq "move"
 			&& !$char->{sitting}
 			&& !AI::args->{mapChanged}
 			&& !AI::args->{time_move} != $char->{time_move}
@@ -230,7 +231,8 @@ sub iterate {
 
 		# if your homunculus is idle, make it move near you
 		} elsif (
-			AI::Homunculus::isIdle
+			$AI::Homunculus::homun_AI == 2
+			&& AI::Homunculus::isIdle
 			&& $homun_dist > ($config{homunculus_followDistanceMin} || 3)
 			&& $homun_dist < MAX_DISTANCE
 			&& timeOut($char->{homunculus}{standby_time}, 2)
