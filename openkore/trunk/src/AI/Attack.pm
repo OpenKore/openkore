@@ -499,7 +499,7 @@ sub main {
 		$args->{avoiding} = 1;
 		move($bestBlock->{x}, $bestBlock->{y}, $ID);
 
-	} elsif (!$config{'runFromTarget'} && $monsterDist > $args->{attackMethod}{maxDistance}
+	} elsif ($monsterDist > $args->{attackMethod}{maxDistance}
 	  && timeOut($args->{ai_attack_giveup}, 0.5)) {
 		# The target monster moved; move to target
 		$args->{move_start} = time;
