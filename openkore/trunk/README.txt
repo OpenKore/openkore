@@ -12,6 +12,7 @@ Bug fixes:
 - Fixed homunculus_tankMode.
 - Fixed inability to detect evolved homunculus state.
 - Add Slim Pitcher to location skills list
+- skill timeout when runFromTarget is enabled fixed
 
 New config options:
 - dealAuto_names <list of player names>
@@ -24,6 +25,7 @@ New features:
 Credits:
 - Darkfate: partial servertype 11 suppport.
 - piroJOKE: server information updates and table files updates.
+- Stalker: runFromTarget fix
 
 
 =========================
