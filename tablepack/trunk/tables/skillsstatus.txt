@@ -111,8 +111,8 @@
 188 Maximum Power Thrust
 203 Madness Canceller
 204 Gatling Fever
-206 Cicada Skin Shedding
-207 Illusionary Shadow
-208 Soul
+206 Utsusemi
+207 Bunshin No Jutsu
+208 Nen
 209 Adjustment
 210 Increase Accuracy
