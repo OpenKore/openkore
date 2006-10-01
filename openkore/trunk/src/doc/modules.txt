@@ -4,10 +4,6 @@ Actor::Player
 Actor::You
 Actor::Item
 ActorList
-Base::Server
-Base::Server::Client
-Base::WebServer
-Base::WebServer::Process
 I18N
 Interface
 Network
@@ -22,6 +18,11 @@ Skills
 Match
 Misc
 
+Base::Server
+Base::Server::Client
+Base::WebServer
+Base::WebServer::Process
+
 Utils
 Utils::AppLauncher
 Utils::Benchmark
@@ -34,6 +35,7 @@ Utils::StartupNotification::Launcher
 Utils::StartupNotification::Launchee
 Utils::StartupNotification::CreateSocketException
 Utils::PathFinding
+Utils::RMD128
 Utils::RMD160
 Utils::Unix
 Utils::Whirlpool
