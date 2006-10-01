@@ -1,4 +1,4 @@
-#include "../rmd160.h"
+#include "../rmd128.h"
 
 #define CLASS klass
 
@@ -7,20 +7,20 @@
 #include "XSUB.h"
 
 
-MODULE = Utils::RMD160	PACKAGE = Utils::RMD160
+MODULE = Utils::RMD128	PACKAGE = Utils::RMD128
 PROTOTYPES: ENABLED
 
-RMD_Struct *
+RMD128_Struct *
 new(klass)
 	char *klass
 CODE:
-	RETVAL = RMD_Create();
+	RETVAL = RMD128_Create();
 OUTPUT:
 	RETVAL
 
 void
 add(rmd, data)
-	RMD_Struct *rmd
+	RMD128_Struct *rmd
 	SV *data
 CODE:
 	if (data != NULL && SvOK(data)) {
@@ -35,7 +35,7 @@ CODE:
 			for (unsigned int j = 0; j < 16; j++) {
 				X[j] = BYTES_TO_DWORD(bytes + 64 * i + 4 * j);
 			}
-			RMD_Compress(rmd, X);
+			RMD128_Compress(rmd, X);
 		}
 
 		/* Update length[] */
@@ -56,13 +56,13 @@ CODE:
 
 SV *
 finalize(rmd)
-	RMD_Struct *rmd
+	RMD128_Struct *rmd
 INIT:
 	dword offset;
 	byte hashcode[RMDsize / 8];
 CODE:
 	offset = rmd->length[0] & 0x3C0;   /* extract bytes 6 to 10 inclusive */
-	RMD_Finish(rmd, rmd->last_data + offset, rmd->length[0], rmd->length[1]);
+	RMD128_Finish(rmd, rmd->last_data + offset, rmd->length[0], rmd->length[1]);
 
 	for (unsigned int i = 0; i < RMDsize / 8; i += 4) {
 		hashcode[i]   =  rmd->buf[i>>2];
@@ -77,6 +77,6 @@ OUTPUT:
 
 void
 DESTROY(rmd)
-	RMD_Struct *rmd
+	RMD128_Struct *rmd
 CODE:
-	RMD_Free(rmd);
+	RMD128_Free(rmd);
