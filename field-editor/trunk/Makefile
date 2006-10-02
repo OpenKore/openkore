@@ -6,7 +6,7 @@ SOURCES=*.cs
 .PHONY: clean
 
 $(OUTPUT): $(SOURCES)
-	gmcs $(PKGS) $(SOURCES) -out:$(OUTPUT) $(FLAGS)
+	mcs $(PKGS) $(SOURCES) -out:$(OUTPUT) $(FLAGS)
 
 clean:
 	rm -f $(OUTPUT)
