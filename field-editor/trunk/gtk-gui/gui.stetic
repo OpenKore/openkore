@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<stetic-interface>
+  <widget class="Gtk.Bin" id="FieldEditor.FieldView" design-size="300 300">
+    <property name="Events">ButtonPressMask</property>
+    <property name="MemberName" />
+    <child>
+      <placeholder />
+    </child>
+  </widget>
+</stetic-interface>
