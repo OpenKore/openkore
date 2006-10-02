@@ -1,5 +1,5 @@
 using System;
-using System.Collections.Generic;
+using System.Collections;
 using Gtk;
 using Gdk;
 
@@ -493,6 +493,23 @@ public class FieldView: DrawingArea {
 			}
 		}  
 	}
+	
+	#else
+	
+	/**
+	 * Convert an IList to an array of Point objects.
+	 */
+	private Point[] ListToPointArray(IList list) {
+		Point[] result = new Point[list.Count];
+		uint i = 0;
+
+		foreach (object o in list) {
+			result[i] = (Point) o;
+			i++;
+		}
+		return result;
+	}
+	
 	#endif
 
 	/**
@@ -509,8 +526,8 @@ public class FieldView: DrawingArea {
 		 * normalPoints contains the points that should be rendered normally.
 		 * selectedPoints contains the points that are to be rendered with the selection color.
 		 */
-		List<Point>[] normalPoints   = new List<Point>[blockTypeLen];
-		List<Point>[] selectedPoints = new List<Point>[blockTypeLen];
+		IList[] normalPoints   = new ArrayList[blockTypeLen];
+		IList[] selectedPoints = new ArrayList[blockTypeLen];
 
 		/*
 		 * Look at every block in the field and update blockTypePoints
@@ -520,8 +537,8 @@ public class FieldView: DrawingArea {
 		for (uint y = region.Bottom; y <= region.Top; y++) {
 			for (uint x = region.Left; x <= region.Right; x++) {
 				BlockType type;
-				List<Point>[] pointsArray;
-				List<Point> points;
+				IList[] pointsArray;
+				IList points;
 				Point point;
 
 				type = field.GetBlock(x, y);
@@ -536,7 +553,7 @@ public class FieldView: DrawingArea {
 				}
 				points = pointsArray[(int) type];
 				if (points == null) {
-					points = new List<Point>();
+					points = new ArrayList(1024);
 					pointsArray[(int) type] = points;
 				}
 
@@ -552,27 +569,29 @@ public class FieldView: DrawingArea {
 			for (int i = 0; i < blockTypeLen; i++) {
 				if (normalPoints[i] != null) {
 					Gdk.GC gc = colors.GetGC(i);
-					drawable.DrawPoints(gc, normalPoints[i].ToArray());
+					drawable.DrawPoints(gc, ListToPointArray(normalPoints[i]));
 				}
 				if (selectedPoints[i] != null) {
 					Gdk.GC gc = colors.GetSelectionGC(i);
-					drawable.DrawPoints(gc, selectedPoints[i].ToArray());
+					drawable.DrawPoints(gc, ListToPointArray(selectedPoints[i]));
 				}
 			}
 		} else {
 			for (int i = 0; i < blockTypeLen; i++) {
 				if (normalPoints[i] != null) {
 					Gdk.GC gc = colors.GetGC(i);
-					List<Point> points = normalPoints[i];
-					foreach (Point p in points) {
+					IList points = normalPoints[i];
+					foreach (object o in points) {
+						Point p = (Point) o;
 						drawable.DrawRectangle(gc, true,
 							p.X, p.Y, (int) zoomLevel, (int) zoomLevel);
 					}
 				}
 				if (selectedPoints[i] != null) {
 					Gdk.GC gc = colors.GetSelectionGC(i);
-					List<Point> points = selectedPoints[i];
-					foreach (Point p in points) {
+					IList points = selectedPoints[i];
+					foreach (object o in points) {
+						Point p = (Point) o;
 						drawable.DrawRectangle(gc, true,
 							p.X, p.Y, (int) zoomLevel, (int) zoomLevel);
 					}
