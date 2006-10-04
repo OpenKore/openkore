@@ -47,15 +47,28 @@
 		<li><a href="http://www.d-bests.com/" title="Indonesian forum"><img src="images/indonesia.png" width="48" height="48" alt=""><br>Indonesia</a></li>
 		<li><a href="http://ro.yyro.com/" title="中文"><img src="images/chinese.png" width="48" height="48" alt=""><br>中文</a></li>
 		<li><a href="http://www.openkore-hispano.uni.cc/" title="Hispano"><img src="images/spain.png" width="48" height="48" alt=""><br>Hispano</a></li>
+		<li><a href="http://www.openkore.de.vu/" title="Deutsch"><img src="images/germany.png" width="48" height="48" alt=""><br>Deutsch</a></li>
 		</ul>
 	</div>
 
 	<div id="openkore_donation">
 		<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
-		<input type="hidden" name="cmd" value="_s-xclick">
-		<input type="image" src="https://www.paypal.com/en_US/i/btn/x-click-but21.gif" name="submit" alt="Make payments with PayPal - it's fast, free and secure!">
-		<input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----
-">
+		<div>
+		Support OpenKore:<br>
+		<input type="hidden" name="cmd" value="_xclick">
+		<input type="hidden" name="business" value="rbvkinfo@gmail.com">
+		<input type="hidden" name="item_name" value="OpenKore Donation">
+		<input type="hidden" name="item_number" value="1">
+		<input type="hidden" name="page_style" value="PayPal">
+		<input type="hidden" name="no_shipping" value="1">
+		<input type="hidden" name="return" value="http://www.openkore.com/donation-ok.php">
+		<input type="hidden" name="cancel_return" value="http://www.openkore.com/">
+		<input type="hidden" name="cn" value="Comments">
+		<input type="hidden" name="currency_code" value="USD">
+		<input type="hidden" name="tax" value="0">
+		<input type="hidden" name="bn" value="PP-DonationsBF">
+		<input type="image" src="https://www.paypal.com/en_US/i/btn/x-click-but21.gif" name="submit" alt="Make payments with PayPal - it's fast, free and secure!" style="vertical-align: middle;">
+		</div>
 		</form>
 	</div>
 </div>
