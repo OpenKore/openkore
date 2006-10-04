@@ -1150,7 +1150,7 @@ private 1
 
 ## http://q-ro.net/qro/web/
 [qRO (Low Rate) Private Server]
-ip 64.71.161.251
+ip 74.52.102.34
 port 6828
 version 20
 master_version 18
@@ -1160,7 +1160,7 @@ serverEncoding Western
 
 ## http://q-ro.net/qro/web/
 [qRO (High Rate) Private Server]
-ip 64.71.161.252
+ip 74.52.102.146
 port 6828
 version 20
 master_version 18
