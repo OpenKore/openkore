@@ -32,6 +32,7 @@
     <File name="./glade/MainWindow.glade" subtype="Code" buildaction="EmbedAsResource" />
     <File name="./glade/OpenDialog.glade" subtype="Code" buildaction="EmbedAsResource" />
     <File name="./glade/SaveDialog.glade" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="./FieldColors.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="gtk-sharp, Version=2.4.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
