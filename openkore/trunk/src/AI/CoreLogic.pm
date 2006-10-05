@@ -2469,6 +2469,7 @@ sub processRandomWalk {
 
 ##### FOLLOW #####
 sub processFollow {
+	# FIXME: Should use actors list to determine who and where is the master
 	# TODO: follow should be a 'mode' rather then a sequence, hence all
 	# var/flag about follow should be moved to %ai_v
 
@@ -2478,18 +2479,20 @@ sub processFollow {
 	if (($followIndex = AI::findAction("follow")) eq "") {
 		# ai_follow will determine if the Target is 'follow-able'
 		return if (!ai_follow($config{followTarget}));
+		$followIndex = AI::findAction("follow");
 	}
 	my $args = AI::args($followIndex);
 
 	# if we are not following now but master is in the screen...
 	if (!defined $args->{'ID'}) {
-		foreach (keys %players) {
-			if ($players{$_}{'name'} eq $args->{'name'} && !$players{$_}{'dead'}) {
-				$args->{'ID'} = $_;
+		foreach my Actor::Player $player (@{$playersList->getItems()}) {
+			if (($player->name eq $config{followTarget}) && !$player->{'dead'}) {
+				$args->{'ID'} = $player->{ID};
 				$args->{'following'} = 1;
- 				message TF("Found my master - %s\n", $ai_seq_args[$followIndex]{'name'}), "follow";
+				$args->{'name'} = $player->name;
+ 				message TF("Found my master - %s\n", $player->name), "follow";
 				last;
-			}
+			}			
 		}
 	} elsif (!$args->{'following'} && $players{$args->{'ID'}} && %{$players{$args->{'ID'}}}) {
 		$args->{'following'} = 1;

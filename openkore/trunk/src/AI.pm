@@ -202,6 +202,8 @@ sub ai_drop {
 sub ai_follow {
 	my $name = shift;
 
+	return 0 if (!$name);
+	
 	if (binFind(\@ai_seq, "follow") eq "") {
 		my %args;
 		$args{name} = $name;
