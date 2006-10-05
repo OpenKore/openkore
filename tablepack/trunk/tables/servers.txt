@@ -871,8 +871,8 @@ serverEncoding Western
 
 ## http://www.ceres-ro.net/
 [CeresRO (Low Rate Server Mahoro) Private Server]
-ip 72.36.221.82
-port 9501
+ip 72.232.216.90
+port 9601
 master_version 18
 version 20
 serverType 9
@@ -880,8 +880,8 @@ serverEncoding Western
 
 ## http://www.ceres-ro.net/
 [CeresRO (High Rate Server Minawa) Private Server]
-ip 72.36.221.82
-port 8501
+ip 72.232.216.90
+port 8601
 master_version 18
 version 20
 serverType 9
