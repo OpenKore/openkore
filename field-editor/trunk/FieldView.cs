@@ -421,7 +421,8 @@ public class FieldView: DrawingArea {
 		}
 
 		//RenderFieldBlocks(drawable, normalPoints, selectedPoints);
-		RenderFieldBlocksWithPixbuf(drawable, region, normalPoints, selectedPoints);
+		RenderFieldBlocksWithPixbuf(drawable, region, field, zoomLevel,
+			normalPoints, selectedPoints);
 
 		// Render selection.
 		if (selection != null) {
@@ -502,21 +503,33 @@ public class FieldView: DrawingArea {
 				pixels[(j * imgwidth + i) * CHANNELS + 2] = green;
 				pixels[(j * imgwidth + i) * CHANNELS + 3] = 0xFF;
 			}
-		}  
+		}
 	}
 
 	private void RenderFieldBlocksWithPixbuf(Drawable drawable, FieldSelection region,
+	                                         Field field, uint zoomLevel,
 	                                         IList[] normalPoints, IList[] selectedPoints) {
-		uint width = field.Width * zoomLevel;
-		uint height = field.Height * zoomLevel;
-		byte[] pixels = new byte[width * height * CHANNELS];
-		int blockTypeLen = Enum.GetValues(((Enum) BlockType.Walkable).GetType()).Length;
+		Point screenLeftTop;
+		uint width, height;
+		byte[] pixels;
+		int blockTypeLen;
+
+		screenLeftTop.X = (int) region.Left;
+		screenLeftTop.Y = (int) region.Top;
+		Calc.FieldPosToScreenPos(ref screenLeftTop, field, zoomLevel);
+		width = region.Width * zoomLevel;
+		height = region.Height * zoomLevel;
+		pixels = new byte[width * height * CHANNELS];
+		blockTypeLen = Enum.GetValues(((Enum) BlockType.Walkable).GetType()).Length;
 
 		for (int i = 0; i < blockTypeLen; i++) {
 			if (normalPoints[i] != null) {
 				foreach (Point p in normalPoints[i]) {
 					Color color = colors.GetColor(i);
-					RenderRect(pixels, (uint) p.X, (uint) p.Y, zoomLevel, zoomLevel, width,
+					RenderRect(pixels,
+						(uint) (p.X - screenLeftTop.X),
+						(uint) (p.Y - screenLeftTop.Y),
+						zoomLevel, zoomLevel, width,
 						(byte) (color.Red / 256),
 						(byte) (color.Green / 256),
 						(byte) (color.Blue / 256));
@@ -525,18 +538,21 @@ public class FieldView: DrawingArea {
 			if (selectedPoints[i] != null) {
 				foreach (Point p in selectedPoints[i]) {
 					Color color = colors.GetSelectionColor(i);
-					RenderRect(pixels, (uint) p.X, (uint) p.Y, zoomLevel, zoomLevel, width,
+					RenderRect(pixels,
+						(uint) (p.X - screenLeftTop.X),
+						(uint) (p.Y - screenLeftTop.Y),
+						zoomLevel, zoomLevel, width,
 						(byte) (color.Red / 256),
 						(byte) (color.Green / 256),
 						(byte) (color.Blue / 256));
 				}
 			}
 		}
-
+		
 		Pixbuf pixbuf = new Pixbuf(pixels, Colorspace.Rgb, true, 8,
 			(int) width, (int) height, (int) width * CHANNELS, null);
 		pixbuf.RenderToDrawable(drawable, Style.BlackGC,
-			0, 0, 0, 0,
+			0, 0, screenLeftTop.X, screenLeftTop.Y,
 			(int) width, (int) height,
 			RgbDither.Normal, 0, 0);
 	}
