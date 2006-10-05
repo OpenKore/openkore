@@ -151,6 +151,7 @@ our @EXPORT = (
 	updateDamageTables
 	updatePlayerNameCache
 	useTeleport
+	top10Listing
 	whenGroundStatus
 	whenStatusActive
 	whenStatusActiveMon
@@ -387,7 +388,7 @@ sub debug_showSpots {
 sub visualDump {
 	my ($msg, $label) = @_;
 	my $dump;
-	my $puncations = quotemeta '~!@#$%^&*()_+|\"\'';
+	my $puncations = quotemeta '~!@#$%^&*()_-+=|\"\'';
 
 	my $labelStr = $label ? " ($label)" : '';
 	$dump = "================================================\n" .
@@ -2968,6 +2969,33 @@ sub useTeleport {
 	return 0;
 }
 
+##
+# top10Listing(args)
+# args: a 282 bytes packet representing 10 names followed by 10 ranks
+#
+# Returns a formatted list of [# ], Name and points
+sub top10Listing {
+	my ($args) = @_;
+	
+	my $msg = $args->{RAW_MSG};
+
+	my @list;
+	my @points;
+	my $i;
+	my $textList = "";
+	for ($i = 0; $i < 10; $i++) {
+		$list[$i] = unpack("Z24", substr($msg, 2 + (24*$i), 24));
+	}	
+	for ($i = 0; $i < 10; $i++) {
+		$points[$i] = unpack("V1", substr($msg, 242 + ($i*4), 4));
+	}	
+	for ($i = 0; $i < 10; $i++) {
+		$textList .= swrite("[@<] @<<<<<<<<<<<<<<<<<<<<<<<<        @>>>>>>",
+			[$i+1, $list[$i], $points[$i]]);
+	}
+	
+	return $textList;	
+}
 
 ##
 # whenGroundStatus(target, statuses, mine)

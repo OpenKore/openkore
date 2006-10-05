@@ -175,8 +175,8 @@ sub new {
 		'0148' => ['resurrection', 'a4 v1', [qw(targetID type)]],
 		'014C' => ['guild_allies_enemy_list'],
 		'0154' => ['guild_members_list'],
-		#'015A' => ['guild_leave', 'Z24 Z40', [qw(name message)]],
-		#'015C' => ['guild_expulsion', 'Z24 Z40 Z24', [qw(name message unknown)]],
+		'015A' => ['guild_leave', 'Z24 Z40', [qw(name message)]],
+		'015C' => ['guild_expulsion', 'Z24 Z40 Z24', [qw(name message unknown)]],
 		'015E' => ['guild_broken', 'V1', [qw(flag)]], # clif_guild_broken
 		'0160' => ['guild_member_setting_list'],
 		'0162' => ['guild_skills_list'],
@@ -265,7 +265,12 @@ sub new {
 		'0209' => ['friend_response', 'C1 Z24', [qw(type name)]],
 		'020A' => ['friend_removed', 'a4 a4', [qw(friendAccountID friendCharID)]],
 		'020E' => ['taekwon_mission_receive', 'Z24 a4 c1', [qw(monName ID value)]],
+		'0219' => ['top10_blacksmith_rank'],
+		'021A' => ['top10_alchemist_rank'],
+		'021B' => ['blacksmith_points', 'V1 V1', [qw(points total)]],
+		'021C' => ['alchemist_point', 'V1 V1', [qw(points total)]],
 		'0224' => ['taekwon_rank', 'c1 x3 c1', [qw(type rank)]],
+		'0226' => ['top10_taekwon_rank'],
 		'0227' => ['gameguard_request'],
 		'0229' => ['character_status', 'a4 v1 v1 v1', [qw(ID param1 param2 param3)]],
 		'022A' => ['actor_display', 'a4 v4 x2 v8 x2 v a4 a4 v x2 C2 a3 x2 C v', [qw(ID walk_speed param1 param2 param3 type hair_style weapon shield lowhead tophead midhead hair_color head_dir guildID guildEmblem visual_effects stance sex coords act lv)]],
@@ -275,6 +280,7 @@ sub new {
 		'022F' => ['homunculus_food', 'C1 v1', [qw(success foodID)]],
 		'0230' => ['homunculus_info', 'x1 C1 a4 V1',[qw(type ID val)]],
 		'0235' => ['homunculus_skills'],
+		'0238' => ['top10_pk_rank'],
 		# homunculus skill update
 		'0239' => ['skill_update', 'v1 v1 v1 v1 C1', [qw(skillID lv sp range up)]], # range = skill range, up = this skill can be leveled up further
 		'023A' => ['storage_password_request', 'v1', [qw(flag)]],
@@ -2614,6 +2620,20 @@ sub guild_invite_result {
 sub guild_location {
 	# FIXME: not implemented
 	my ($self, $args) = @_;
+}
+
+sub guild_leave {
+	my ($self, $args) = @_;
+	
+	message TF("%s has left the guild.\n" .
+		"Reason: %s\n", $args->{name}, $args->{message}), "schat";	
+}
+
+sub guild_expulsion {
+	my ($self, $args) = @_;
+	
+	message TF("%s has been removed from the guild.\n" .
+		"Reason: %s\n", $args->{name}, $args->{message}), "schat";
 }
 
 sub guild_members_list {
@@ -5325,6 +5345,46 @@ sub system_chat {
 	# Translation Comment: System/GM chat
 	message TF("[GM] %s\n", $message), "schat";
 	ChatQueue::add('gm', undef, undef, $message);
+}
+
+sub top10_alchemist_rank {
+	my ($self, $args) = @_;
+
+	my $textList = top10Listing($args);
+	message TF("============= ALCHEMIST RANK ================\n" .
+		"#    Name                             Points\n".
+		"%s" .
+		"=============================================\n", $textList), "list";	
+}
+
+sub top10_blacksmith_rank {
+	my ($self, $args) = @_;
+
+	my $textList = top10Listing($args);
+	message TF("============= BLACKSMITH RANK ===============\n" .
+		"#    Name                             Points\n".
+		"%s" .
+		"=============================================\n", $textList), "list";
+}
+
+sub top10_pk_rank {
+	my ($self, $args) = @_;
+
+	my $textList = top10Listing($args);
+	message TF("================ PVP RANK ===================\n" .
+		"#    Name                             Points\n".
+		"%s" .
+		"=============================================\n", $textList), "list";
+}
+
+sub top10_taekwon_rank {
+	my ($self, $args) = @_;
+
+	my $textList = top10Listing($args);
+	message TF("=============== TAEKWON RANK ================\n" .
+		"#    Name                             Points\n".
+		"%s" .
+		"=============================================\n", $textList), "list";
 }
 
 sub unequip_item {

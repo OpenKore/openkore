@@ -161,6 +161,10 @@ our @EXPORT = qw(
 	sendTalkNumber
 	sendTalkText
 	sendTeleport
+	sendTop10Alchemist
+	sendTop10Blacksmith
+	sendTop10PK
+	sendTop10Taekwon
 	sendUnequip
 	sendWho
 	);
@@ -2603,6 +2607,34 @@ sub sendTeleport {
 	my $msg = pack("C*", 0x1B, 0x01, 0x1A, 0x00) . $location;
 	sendMsgToServer($r_net, $msg);
 	debug "Sent Teleport: $location\n", "sendPacket", 2;
+}
+
+sub sendTop10Alchemist {
+	my $r_net = shift;
+	my $msg = pack("C*", 0x18, 0x02);
+	sendMsgToServer($r_net, $msg);
+	debug "Sent Top 10 Alchemist request\n", "sendPacket", 2;
+}
+
+sub sendTop10Blacksmith {
+	my $r_net = shift;
+	my $msg = pack("C*", 0x17, 0x02);
+	sendMsgToServer($r_net, $msg);
+	debug "Sent Top 10 Blacksmith request\n", "sendPacket", 2;
+}	
+
+sub sendTop10PK {
+	my $r_net = shift;
+	my $msg = pack("C*", 0x37, 0x02);
+	sendMsgToServer($r_net, $msg);
+	debug "Sent Top 10 PK request\n", "sendPacket", 2;	
+}
+
+sub sendTop10Taekwon {
+	my $r_net = shift;
+	my $msg = pack("C*", 0x25, 0x02);
+	sendMsgToServer($r_net, $msg);
+	debug "Sent Top 10 Taekwon request\n", "sendPacket", 2;
 }
 
 sub sendUnequip {

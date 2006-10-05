@@ -150,6 +150,7 @@ sub initHandlers {
 	tele               => \&cmdTeleport,
 	testshop           => \&cmdTestShop,
 	timeout            => \&cmdTimeout,
+	top10              => \&cmdTop10,
 	uneq               => \&cmdUnequip,
 	vender             => \&cmdVender,
 	verbose            => \&cmdVerbose,
@@ -3804,6 +3805,29 @@ sub cmdTimeout {
 	} else {
 		setTimeout($arg1, $arg2);
 	}
+}
+
+sub cmdTop10 {
+	my (undef, $args) = @_;
+	my ($arg1) = $args;
+	
+	if ($arg1 eq "") {
+		message T("Function 'top10' (Show Top 10 Lists)\n" .
+			"Usage: top10 <b|a|t|p> | <black|alche|tk|pk> | <blacksmith|alchemist|taekwon|pvp>\n");
+	} elsif ($arg1 eq "a" || $arg1 eq "alche" || $arg1 eq "alchemist") {
+		sendTop10Alchemist($net);
+	} elsif ($arg1 eq "b" || $arg1 eq "black" || $arg1 eq "blacksmith") {
+		sendTop10Blacksmith($net);
+	} elsif ($arg1 eq "p" || $arg1 eq "pk" || $arg1 eq "pvp") {
+		sendTop10PK($net);
+	} elsif ($arg1 eq "t" || $arg1 eq "tk" || $arg1 eq "taekwon") {
+		sendTop10Taekwon($net);		
+	} else {
+		error T("Syntax Error in function 'top10' (Show Top 10 Lists)\n" .
+			"Usage: top10 <b|a|t|p> |\n" .
+			"             <black|alche|tk|pk> |\n".
+			"             <blacksmith|alchemist|taekwon|pvp>\n");
+	}	
 }
 
 sub cmdUnequip {

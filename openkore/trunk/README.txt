@@ -8,6 +8,8 @@ To Fix:
   fail. 
 
 Bug fixes:
+- Fixed Party bug where the bot would follow any random player 
+     instead of the master
 - isSelfSkill now works in monsterSkill blocks.
 - Fixed homunculus_tankMode.
 - Fixed inability to detect evolved homunculus state.
@@ -22,10 +24,20 @@ New config options:
 New features:
 - Basic support for euRO (serverType 11) (Without attack, sit, stand and skill use)
 
+New Commands
+- top10 <b|a|t|p> | <black|alche|tk|pk> | <blacksmith|alchemist|taekwon|pvp>
+	Displays the top 10 Blacksmiths, Alchemists, Taekwon and PVP ranks
+
+Internal:
+- Changed bRO server to use Secure Login
+- Implemented Guild Kick / Guild Leave messages
+
 Credits:
 - Darkfate: partial servertype 11 suppport.
 - piroJOKE: server information updates and table files updates.
 - Stalker: runFromTarget fix
+- raizend: Top 10 packet parsers
+- illusionist: Party fix, Guild Messages, top10 command, bRO support
 
 
 =========================
