@@ -151,8 +151,10 @@ public class FieldView: DrawingArea {
 			} else if (zoomLevel != value) {
 				zoomLevel = value;
 				pixmap = null;
-				SetSizeRequest((int) (field.Width * zoomLevel),
-					(int) (field.Height * zoomLevel));
+				if (field != null) {
+					SetSizeRequest((int) (field.Width * zoomLevel),
+						(int) (field.Height * zoomLevel));
+				}
 				QueueDraw();
 			}
 		}
@@ -345,22 +347,6 @@ public class FieldView: DrawingArea {
 			(int) (end.Y - begin.Y));
 	}
 
-	/**
-	 * Convert an IList to an array of Point objects.
-	 */
-	private Point[] ListToPointArray(IList list)
-	{
-		Point[] result = new Point[list.Count];
-		uint i = 0;
-
-		foreach (object o in list)
-		{
-			result[i] = (Point)o;
-			i++;
-		}
-		return result;
-	}
-
 
 	/********************** Renderers **********************/
 	
@@ -420,7 +406,12 @@ public class FieldView: DrawingArea {
 			}
 		}
 
-		//RenderFieldBlocks(drawable, normalPoints, selectedPoints);
+		/* Note: we used to use Gdk.DrawPoints() and Gdk.DrawRectangle()
+		 * to render the field, but performance was abysmal on Windows,
+		 * and Gtk-Sharp for Windows has a different parameter definition
+		 * for DrawPoints() than the Linux version! The GdkPixbuf renderer
+		 * is the most cross-platform with decent performance.
+		 */
 		RenderFieldBlocksWithPixbuf(drawable, region, field, zoomLevel,
 			normalPoints, selectedPoints);
 
@@ -437,47 +428,6 @@ public class FieldView: DrawingArea {
 				p1.X, p1.Y,
 				(int) (p2.X - p1.X + zoomLevel - 1),
 				(int) (p2.Y - p1.Y + zoomLevel - 1));
-		}
-	}
-
-	private void RenderFieldBlocks(Drawable drawable, IList[] normalPoints, IList[] selectedPoints) {
-		int blockTypeLen = Enum.GetValues(((Enum) BlockType.Walkable).GetType()).Length;
-
-		if (zoomLevel == 1) {
-			for (int i = 0; i < blockTypeLen; i++) {
-				if (normalPoints[i] != null) {
-					Gdk.GC gc = colors.GetGC(i);
-					Point[] points = ListToPointArray(normalPoints[i]);
-					drawable.DrawPoints(gc, points[0], points.Length - 1);
-				}
-				if (selectedPoints[i] != null) {
-					Gdk.GC gc = colors.GetSelectionGC(i);
-					Point[] points = ListToPointArray(selectedPoints[i]);
-					drawable.DrawPoints(gc, points[0], points.Length - 1);
-				}
-			}
-
-		} else {
-			for (int i = 0; i < blockTypeLen; i++) {
-				if (normalPoints[i] != null) {
-					Gdk.GC gc = colors.GetGC(i);
-					IList points = normalPoints[i];
-					foreach (object o in points) {
-						Point p = (Point) o;
-						drawable.DrawRectangle(gc, true,
-							p.X, p.Y, (int) zoomLevel, (int) zoomLevel);
-					}
-				}
-				if (selectedPoints[i] != null) {
-					Gdk.GC gc = colors.GetSelectionGC(i);
-					IList points = selectedPoints[i];
-					foreach (object o in points) {
-						Point p = (Point) o;
-						drawable.DrawRectangle(gc, true,
-							p.X, p.Y, (int) zoomLevel, (int) zoomLevel);
-					}
-				}
-			}
 		}
 	}
 
