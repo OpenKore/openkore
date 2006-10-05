@@ -3,6 +3,7 @@ using System.Collections;
 using Gtk;
 using Gdk;
 
+
 namespace FieldEditor {
 
 /**
@@ -68,135 +69,6 @@ class Calc {
 		FieldPosToScreenPos(ref fp, field, zoomLevel);
 		p.X = (int) fp.X;
 		p.Y = (int) fp.Y;
-	}
-}
-
-/**
- * A convenience class for managing the colors and GCs used to
- * render a field.
- */
-class FieldColors {
-	/**
-	 * An array which maps a BlockType to a Color.
-	 *
-	 * @invariant
-	 *   colors.Length == number of items in BlockType
-	 */
-	private Color[] colors;
-
-	/**
-	 * An array which maps a BlockType to a Color. Unlike
-	 * the _colors_ array, this is for colors that are to be used
-	 * for selected blocks.
-	 *
-	 * @invariant
-	 *   selection_colors.Length == number of items in BlockType
-	 */
-	private Color[] selection_colors;
-
-	/**
-	 * The color used to draw the selection's border.
-	 *
-	 * @invariant
-	 *   selectionBorderColor != null
-	 */
-	private Color selectionBorderColor;
-
-	/**
-	 * An array which maps a BlockType to a Gdk.GC.
-	 *
-	 * @invariant
-	 *   gcs.Length == number of items in BlockType
-	 */
-	private Gdk.GC[] gcs;
-
-	private Gdk.GC[] selection_gcs;
-
-	private Gdk.GC selectionBorderGC;
-
-
-	public Color SelectionBorderColor {
-		get { return selectionBorderColor; }
-	}
-
-	public Gdk.GC SelectionBorderGC {
-		get { return selectionBorderGC; }
-	}
-
-	public Color GetColor(BlockType type) {
-		return colors[(int) type];
-	}
-
-	public Color GetColor(int type) {
-		return colors[type];
-	}
-
-	/**
-	 * Return the GC that is associated with a given BlockType.
-	 *
-	 * @ensure result != null
-	 */
-	public Gdk.GC GetGC(BlockType type) {
-		return gcs[(int) type];
-	}
-
-	/**
-	 * Return the GC that is associated with a given BlockType's integer value.
-	 *
-	 * @param type  A BlockType casted to int.
-	 * @ensure result != null
-	 */
-	public Gdk.GC GetGC(int type) {
-		return gcs[type];
-	}
-
-	public Gdk.GC GetSelectionGC(int type) {
-		return selection_gcs[type];
-	}
-
-	public FieldColors(Drawable drawable) {
-		int len = Enum.GetValues(((Enum) BlockType.Walkable).GetType()).Length;
-
-		colors = new Color[len];
-		selection_colors = new Color[len];
-		gcs = new Gdk.GC[len];
-		selection_gcs = new Gdk.GC[len];
-
-		SetColor(BlockType.Walkable,                    0xFF, 0xFF, 0xFF);
-		SetColor(BlockType.NonWalkable,                 0, 0, 0);
-		SetColor(BlockType.NonWalkableNonSnipableWater, 0x66, 0x66, 0xFF);
-		SetColor(BlockType.WalkableWater,               0, 0, 0xFF);
-		SetColor(BlockType.NonWalkableSnipableWater,    0xAA, 0xAA, 0xFF);
-		SetColor(BlockType.SnipableCliff,               0, 0xBB, 0);
-		SetColor(BlockType.NonSnipableCliff,            0, 0x88, 0);
-		SetColor(BlockType.Unknown,                     0xFF, 0, 0);
-
-		selectionBorderColor = new Color(0x90, 0x47, 0xBF);
-		Colormap.System.AllocColor(ref selectionBorderColor, false, true);
-		selectionBorderGC = new Gdk.GC(drawable);
-		selectionBorderGC.Foreground = selectionBorderColor;
-
-		for (int i = 0; i < len; i++) {
-			// Blend color with 50% 90 47 BF (purple)
-			Color color = colors[i];
-			color.Red   = (ushort) Math.Min(0xFFFF, ((int) color.Red   + 0x90 * 256) / 2);
-			color.Green = (ushort) Math.Min(0xFFFF, ((int) color.Green + 0x47 * 256) / 2);
-			color.Blue  = (ushort) Math.Min(0xFFFF, ((int) color.Blue  + 0xBF * 256) / 2);
-			Colormap.System.AllocColor(ref color, false, true);
-			selection_colors[i] = color;
-
-			gcs[i] = new Gdk.GC(drawable);
-			gcs[i].Foreground = colors[i];
-
-			selection_gcs[i] = new Gdk.GC(drawable);
-			selection_gcs[i].Foreground = selection_colors[i];
-		}
-	}
-	
-	private void SetColor(BlockType type, byte red, byte green, byte blue) {
-		Color c = new Color(red, green, blue);
-		Colormap.System.AllocColor(ref c, false, true);
-		colors[(int) type] = c;
 	}
 }
 
@@ -354,6 +226,7 @@ public class FieldView: DrawingArea {
 				region.Top = field.Height - 1;
 				RenderToDrawable(field, region, null, zoomLevel, pixmap);
 			}
+
 			GdkWindow.DrawDrawable(Style.BlackGC, pixmap,
 				area.X, area.Y, area.X, area.Y,
 				area.Width, area.Height);
@@ -472,50 +345,33 @@ public class FieldView: DrawingArea {
 			(int) (end.Y - begin.Y));
 	}
 
-	#if USE_GDK_PIXBUF_RENDERER
-	/**
-	 * Render a rectangle on a pixel buffer.
-	 *
-	 * @param pixels    A buffer with raw pixel data.
-	 * @param x, y      The coordinates to render the rectangle on.
-	 * @param width     The width of the rectangle to render.
-	 * @param height    The height of the rectangle to render.
-	 * @param imgwidth  The width of the image represented by the pixel buffer.
-	 * @param red, green, blue  An RGB value to use as color for the rectangle. 
-	 */
-	private void RenderRect(byte[] pixels, uint x, uint y, uint width, uint height,
-				uint imgwidth, byte red, byte blue, byte green) {
-		for (uint j = y; j < y + height; j++) {
-			for (uint i = x; i < x + width; i++) {
-				pixels[(j * imgwidth + i) * 3] = red;
-				pixels[(j * imgwidth + i) * 3 + 1] = blue;
-				pixels[(j * imgwidth + i) * 3 + 2] = green;
-			}
-		}  
-	}
-	
-	#else
-	
 	/**
 	 * Convert an IList to an array of Point objects.
 	 */
-	private Point[] ListToPointArray(IList list) {
+	private Point[] ListToPointArray(IList list)
+	{
 		Point[] result = new Point[list.Count];
 		uint i = 0;
 
-		foreach (object o in list) {
-			result[i] = (Point) o;
+		foreach (object o in list)
+		{
+			result[i] = (Point)o;
 			i++;
 		}
 		return result;
 	}
+
+
+	/********************** Renderers **********************/
 	
-	#endif
 
 	/**
 	 * Render a part of a field to a Drawable.
 	 *
-	 * @param region  The region to render.
+	 * @param region     The region to render.
+	 * @param selection  The region of the field that is selected, or null.
+	 *                   This region will be rendered with a different color.
+	 * @param drawable   The Drawable to render to.
 	 */
 	private void RenderToDrawable(Field field, FieldSelection region, FieldSelection selection,
 		uint zoomLevel, Drawable drawable)
@@ -564,18 +420,42 @@ public class FieldView: DrawingArea {
 			}
 		}
 
-		#if !USE_GDK_PIXBUF_RENDERER
+		//RenderFieldBlocks(drawable, normalPoints, selectedPoints);
+		RenderFieldBlocksWithPixbuf(drawable, region, normalPoints, selectedPoints);
+
+		// Render selection.
+		if (selection != null) {
+			Point p1, p2;
+			p1.X = (int) selection.Left;
+			p1.Y = (int) selection.Top;
+			p2.X = (int) selection.Right;
+			p2.Y = (int) selection.Bottom;
+			Calc.FieldPosToScreenPos(ref p1, field, zoomLevel);
+			Calc.FieldPosToScreenPos(ref p2, field, zoomLevel);
+			drawable.DrawRectangle(colors.SelectionBorderGC, false,
+				p1.X, p1.Y,
+				(int) (p2.X - p1.X + zoomLevel - 1),
+				(int) (p2.Y - p1.Y + zoomLevel - 1));
+		}
+	}
+
+	private void RenderFieldBlocks(Drawable drawable, IList[] normalPoints, IList[] selectedPoints) {
+		int blockTypeLen = Enum.GetValues(((Enum) BlockType.Walkable).GetType()).Length;
+
 		if (zoomLevel == 1) {
 			for (int i = 0; i < blockTypeLen; i++) {
 				if (normalPoints[i] != null) {
 					Gdk.GC gc = colors.GetGC(i);
-					drawable.DrawPoints(gc, ListToPointArray(normalPoints[i]));
+					Point[] points = ListToPointArray(normalPoints[i]);
+					drawable.DrawPoints(gc, points[0], points.Length - 1);
 				}
 				if (selectedPoints[i] != null) {
 					Gdk.GC gc = colors.GetSelectionGC(i);
-					drawable.DrawPoints(gc, ListToPointArray(selectedPoints[i]));
+					Point[] points = ListToPointArray(selectedPoints[i]);
+					drawable.DrawPoints(gc, points[0], points.Length - 1);
 				}
 			}
+
 		} else {
 			for (int i = 0; i < blockTypeLen; i++) {
 				if (normalPoints[i] != null) {
@@ -598,26 +478,39 @@ public class FieldView: DrawingArea {
 				}
 			}
 		}
+	}
 
-		if (selection != null) {
-			Point p1, p2;
-			p1.X = (int) selection.Left;
-			p1.Y = (int) selection.Top;
-			p2.X = (int) selection.Right;
-			p2.Y = (int) selection.Bottom;
-			Calc.FieldPosToScreenPos(ref p1, field, zoomLevel);
-			Calc.FieldPosToScreenPos(ref p2, field, zoomLevel);
-			drawable.DrawRectangle(colors.SelectionBorderGC, false,
-				p1.X, p1.Y,
-				(int) (p2.X - p1.X + zoomLevel - 1),
-				(int) (p2.Y - p1.Y + zoomLevel - 1));
-		}
+	/** The number of channels in the GdkPixbuf used to render the field. */
+	const int CHANNELS = 4;
 
-		#else
+	/**
+	 * Render a rectangle on a pixel buffer.
+	 *
+	 * @param pixels    A buffer with raw pixel data.
+	 * @param x, y      The coordinates to render the rectangle on.
+	 * @param width     The width of the rectangle to render.
+	 * @param height    The height of the rectangle to render.
+	 * @param imgwidth  The width of the image represented by the pixel buffer.
+	 * @param red, green, blue  An RGB value to use as color for the rectangle. 
+	 */
+	private void RenderRect(byte[] pixels, uint x, uint y, uint width, uint height,
+				uint imgwidth, byte red, byte blue, byte green) {
+		for (uint j = y; j < y + height; j++) {
+			for (uint i = x; i < x + width; i++) {
+				pixels[(j * imgwidth + i) * CHANNELS] = red;
+				pixels[(j * imgwidth + i) * CHANNELS + 1] = blue;
+				pixels[(j * imgwidth + i) * CHANNELS + 2] = green;
+				pixels[(j * imgwidth + i) * CHANNELS + 3] = 0xFF;
+			}
+		}  
+	}
 
+	private void RenderFieldBlocksWithPixbuf(Drawable drawable, FieldSelection region,
+	                                         IList[] normalPoints, IList[] selectedPoints) {
 		uint width = field.Width * zoomLevel;
 		uint height = field.Height * zoomLevel;
-		byte[] pixels = new byte[width * height * 3];
+		byte[] pixels = new byte[width * height * CHANNELS];
+		int blockTypeLen = Enum.GetValues(((Enum) BlockType.Walkable).GetType()).Length;
 
 		for (int i = 0; i < blockTypeLen; i++) {
 			if (normalPoints[i] != null) {
@@ -629,16 +522,23 @@ public class FieldView: DrawingArea {
 						(byte) (color.Blue / 256));
 				}
 			}
+			if (selectedPoints[i] != null) {
+				foreach (Point p in selectedPoints[i]) {
+					Color color = colors.GetSelectionColor(i);
+					RenderRect(pixels, (uint) p.X, (uint) p.Y, zoomLevel, zoomLevel, width,
+						(byte) (color.Red / 256),
+						(byte) (color.Green / 256),
+						(byte) (color.Blue / 256));
+				}
+			}
 		}
 
-		Pixbuf pixbuf = new Pixbuf(pixels, Colorspace.Rgb, false, 8,
-			(int) width, (int) height, (int) width * 3, null);
+		Pixbuf pixbuf = new Pixbuf(pixels, Colorspace.Rgb, true, 8,
+			(int) width, (int) height, (int) width * CHANNELS, null);
 		pixbuf.RenderToDrawable(drawable, Style.BlackGC,
 			0, 0, 0, 0,
 			(int) width, (int) height,
 			RgbDither.Normal, 0, 0);
-
-		#endif
 	}
 }
 

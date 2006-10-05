@@ -33,6 +33,14 @@ public class FieldSelection {
 
 	private uint beginX, beginY;
 
+	public uint Width {
+		get { return Right - Left + 1; }
+	}
+
+	public uint Height {
+		get { return Top - Bottom + 1; }
+	}
+
 	public void SetBeginPoint(uint x, uint y) {
 		Left = Right = beginX = x;
 		Top = Bottom = beginY = y;
