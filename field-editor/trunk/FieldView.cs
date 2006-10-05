@@ -499,12 +499,14 @@ public class FieldView: DrawingArea {
 			}
 		}
 		
-		Pixbuf pixbuf = new Pixbuf(pixels, Colorspace.Rgb, true, 8,
-			(int) width, (int) height, (int) width * CHANNELS, null);
-		pixbuf.RenderToDrawable(drawable, Style.BlackGC,
-			0, 0, screenLeftTop.X, screenLeftTop.Y,
-			(int) width, (int) height,
-			RgbDither.Normal, 0, 0);
+		using (Pixbuf pixbuf = new Pixbuf(pixels, Colorspace.Rgb, true, 8,
+						(int) width, (int) height,
+						(int) width * CHANNELS, null)) {
+			pixbuf.RenderToDrawable(drawable, Style.BlackGC,
+				0, 0, screenLeftTop.X, screenLeftTop.Y,
+				(int) width, (int) height,
+				RgbDither.Normal, 0, 0);
+		}
 	}
 }
 
