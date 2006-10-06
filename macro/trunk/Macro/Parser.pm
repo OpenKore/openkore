@@ -31,7 +31,7 @@ sub parseMacroFile {
 	my $tempmacro = 0;
 	open FILE, "<:utf8", $file or return 0;
 	foreach (<FILE>) {
-		s/\s*#.*$//;       # remove comments
+		s/^\s*#.*$//;      # remove comments
 		s/^\s*//;          # remove leading whitespaces
 		s/\s*[\r\n]?$//g;  # remove trailing whitespaces and eol
 		s/  +/ /g;         # trim down spaces
