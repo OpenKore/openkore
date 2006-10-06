@@ -2010,6 +2010,7 @@ sub sendSkillUse {
 	my %args;
 	$args{ID} = $ID;
 	$args{lv} = $lv;
+	$args{targetID} = $targetID;
 	Plugins::callHook('packet_pre/sendSkillUse', \%args);
 	if ($args{return}) {
 		sendMsgToServer($r_net, $args{msg});
