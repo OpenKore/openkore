@@ -2006,6 +2006,16 @@ sub sendSkillUse {
 	my $lv = shift;
 	my $targetID = shift;
 	my $msg;
+	
+	my %args;
+	$args{ID} = $ID;
+	$args{lv} = $lv;
+	Plugins::callHook('packet_pre/sendSkillUse', \%args);
+	if ($args{return}) {
+		sendMsgToServer($r_net, $args{msg});
+		return;
+	}
+	
 	if ($config{serverType} == 0) {
 		$msg = pack("C*", 0x13, 0x01).pack("v*",$lv,$ID).$targetID;
 
