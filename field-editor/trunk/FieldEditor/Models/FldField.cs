@@ -31,6 +31,15 @@ public class FldField: Field {
 	}
 
 	/**
+	 * Construct an FldField object and load it from the specified stream.
+	 *
+	 * @throws IOException, InvalidFieldException
+	 */
+	public FldField(Stream s) {
+		LoadStream(s);
+	}
+
+	/**
 	 * Load a .fld file from the specified stream.
 	 *
 	 * @throws IOException, InvalidFieldFileException
@@ -48,14 +57,18 @@ public class FldField: Field {
 	}
 
 	override public void Save(string filename) {
-		BinaryWriter writer = new BinaryWriter(new FileStream(filename, FileMode.Create));
+		Save(new FileStream(filename, FileMode.Create));
+	}
+
+	override public void Save(Stream stream) {
+		BinaryWriter writer = new BinaryWriter(stream);
 		writer.Write((ushort) width);
 		writer.Write((ushort) height);
 		writer.Write(data);
 		writer.Close();
 	}
 
-	override protected void Resize(uint newwidth, uint newheight) {
+	override public void Resize(uint newwidth, uint newheight) {
 		if (newwidth == 0 && newheight == 0) {
 			data = null;
 		} else {

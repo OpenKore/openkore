@@ -110,8 +110,12 @@ public class GatField: Field {
 	override public void Save(string filename) {
 		throw new SaveNotSupportedException("Saving .GAT files is not supported.");
 	}
+	
+	override public void Save(Stream stream) {
+		Save("");
+	}
 
-	override protected void Resize(uint newwidth, uint newheight) {
+	override public void Resize(uint newwidth, uint newheight) {
 		if (newwidth == 0 && newheight == 0) {
 			blocks = null;
 		} else {

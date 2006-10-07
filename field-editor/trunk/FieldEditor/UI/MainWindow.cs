@@ -49,14 +49,16 @@ public class MainWindow {
 		xml.Autoconnect(this);
 
 		filter = new FileFilter();
-		filter.Name = "All support files (*.fld, *.gat)";
+		filter.Name = "All support files (*.fld, *.fld.gz, *.gat)";
 		filter.AddPattern("*.fld");
+		filter.AddPattern("*.fld.gz");
 		filter.AddPattern("*.gat");
 		openFileDialog.AddFilter(filter);
 
 		filter = new FileFilter();
-		filter.Name = "OpenKore Field Files (*.fld)";
+		filter.Name = "OpenKore Field Files (*.fld, *.fld.gz)";
 		filter.AddPattern("*.fld");
+		filter.AddPattern("*.fld.gz");
 		openFileDialog.AddFilter(filter);
 
 		filter = new FileFilter();
@@ -97,36 +99,32 @@ public class MainWindow {
 	 * Open a field file.
 	 */
 	private void Open(string filename) {
-		Field field = null;
-		string extension;
+		string warning;
+		Field field;
+		Exception e = null;
 
-		extension = Path.GetExtension(filename.ToLower());
-		switch (extension) {
-		case ".fld":
-			field = new FldField(filename);
-			break;
-		case ".gat":
-			string rswFile = Path.ChangeExtension(filename, ".rsw");
-			if (File.Exists(rswFile)) {
-				field = new GatField(filename, rswFile);
+		try {
+			field = FieldLoader.LoadFromFile(filename, out warning);
+			if (field == null) {
+				ShowError("Unknown field file format.");
 			} else {
-				field = new GatField(filename, null);
-				ShowWarning("You are loading a .gat file. For optimal results, OpenKore Field " +
-					"Editor needs the file " + Path.GetFileName(rswFile) +
-					", which doesn't exist.\n\n" +
-					"Please put " + Path.GetFileName(rswFile) + " in the same folder as " +
-					Path.GetFileName(filename) + " if you know how to do that.");
+				if (warning != null) {
+					ShowWarning(warning);
+				}
+				fieldView.Field = field;
+				this.filename = filename;
+				Update();
 			}
-			break;
-		default:
-			ShowError("Unknown field file format.");
-			break;
+		} catch (ApplicationException e2) {
+			e = e2;
+		} catch (IOException e2) {
+			e = e2;
+		} catch (InvalidFieldFileException e2) {
+			e = e2;
 		}
-
-		if (field != null) {
-			fieldView.Field = field;
-			this.filename = filename;
-			Update();
+		
+		if (e != null) {
+			ShowError("Unable to load the specified file:\n" + e.Message);
 		}
 	}
 

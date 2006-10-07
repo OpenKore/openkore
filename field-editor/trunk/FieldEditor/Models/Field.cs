@@ -103,7 +103,7 @@ public abstract class Field {
 	 * If you set the value to a larger value, then new field
 	 * blocks are automatically set to DEFAULT_BLOCK_FILL. 
 	 */
-	public uint Width {
+	public virtual uint Width {
 		get { return width; }
 		set {
 			if (width != value) {
@@ -118,7 +118,7 @@ public abstract class Field {
 	 * If you set the value to a larger value, then new field
 	 * blocks are automatically set to BlockType.NonWalkable.
 	 */
-	public uint Height {
+	public virtual uint Height {
 		get { return height; }
 		set {
 			if (height != value) {
@@ -174,6 +174,15 @@ public abstract class Field {
 	abstract public void Save(string filename);
 
 	/**
+	 * Save this field to a stream. The file format depends on the concrete class,
+	 * and can only be loaded by that same class.
+	 *
+	 * @param stream  The stream to save to.
+	 * @throws IOException, SaveNotSupportedException
+	 */
+	abstract public void Save(Stream stream);
+
+	/**
 	 * Resize the field to the specified dimensions.
 	 * New field blocks are to be set to DEFAULT_BLOCK_FILL.
 	 *
@@ -181,7 +190,7 @@ public abstract class Field {
 	 *
 	 * @ensure Width == newwidth && Height == newheight 
 	 */
-	abstract protected void Resize(uint newwidth, uint newheight);
+	abstract public void Resize(uint newwidth, uint newheight);
 
 	protected void SetBlockChanged() {
 		if (OnBlockChanged != null) {
