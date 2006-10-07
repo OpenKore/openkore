@@ -27,7 +27,7 @@ public class MainWindow {
 	}
 
 	private void initUI() {
-		Glade.XML xml = new Glade.XML(DataFiles.Glade("MainWindow.glade"), null, null);
+		Glade.XML xml = new Glade.XML("MainWindow.glade", null);
 		xml.Autoconnect(this);
 		setupSelectedBlockType();
 
@@ -44,7 +44,7 @@ public class MainWindow {
 
 	private void setupOpenDialog() {
 		FileFilter filter;
-		Glade.XML xml = new Glade.XML(DataFiles.Glade("OpenDialog.glade"), null, null);
+		Glade.XML xml = new Glade.XML("OpenDialog.glade", null);
 
 		xml.Autoconnect(this);
 
@@ -72,7 +72,7 @@ public class MainWindow {
 
 	private void setupSaveDialog() {
 		FileFilter filter;
-		Glade.XML xml = new Glade.XML(DataFiles.Glade("SaveDialog.glade"), null, null);
+		Glade.XML xml = new Glade.XML("SaveDialog.glade", null, null);
 
 		xml.Autoconnect(this);
 
