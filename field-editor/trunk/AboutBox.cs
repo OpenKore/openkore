@@ -9,7 +9,7 @@ public class AboutBox {
 	[Widget] private Dialog aboutBox;
 
 	private AboutBox() {
-		Glade.XML xml = new Glade.XML(DataFiles.Glade("AboutBox.glade"), null, null);
+		Glade.XML xml = new Glade.XML("AboutBox.glade", null);
 		xml.Autoconnect(this);
 	}
 
