@@ -27,7 +27,8 @@ public class FldField: Field {
 	/**
 	 * Construct an FldField object from another Field object.
 	 */
-	public FldField(Field field): base(field) {
+	public FldField(Field field) {
+		ConstructFromField(field);
 	}
 
 	/**
@@ -57,14 +58,18 @@ public class FldField: Field {
 	}
 
 	override public void Save(string filename) {
-		Save(new FileStream(filename, FileMode.Create));
+		Stream stream = new FileStream(filename, FileMode.Create);
+		Save(stream);
+		stream.Close();
 	}
 
 	override public void Save(Stream stream) {
 		BinaryWriter writer = new BinaryWriter(stream);
 		writer.Write((ushort) width);
 		writer.Write((ushort) height);
-		writer.Write(data);
+		if (data != null) {
+			writer.Write(data);
+		}
 		writer.Close();
 	}
 

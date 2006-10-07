@@ -74,13 +74,18 @@ public class MainWindow {
 
 	private void setupSaveDialog() {
 		FileFilter filter;
-		Glade.XML xml = new Glade.XML("SaveDialog.glade", null, null);
+		Glade.XML xml = new Glade.XML("SaveDialog.glade", null);
 
 		xml.Autoconnect(this);
 
 		filter = new FileFilter();
 		filter.Name = "OpenKore Field Files (*.fld)";
 		filter.AddPattern("*.fld");
+		saveFileDialog.AddFilter(filter);
+
+		filter = new FileFilter();
+		filter.Name = "Compressed OpenKore Field Files (*.fld.gz)";
+		filter.AddPattern("*.fld.gz");
 		saveFileDialog.AddFilter(filter);
 	}
 
@@ -135,14 +140,18 @@ public class MainWindow {
 	 */
 	private void Save(string filename) {
 		Field field;
-		string extension;
+		string extension, fn;
 
-		extension = Path.GetExtension(filename).ToLower();
+		fn = filename.ToLower();
+		extension = Path.GetExtension(fn);
 		if ((extension == ".fld" && fieldView.Field is FldField)
-		 || (extension == ".gat" && fieldView.Field is GatField)) {
-			field = fieldView.Field; 
-		} else {
+		 || (extension == ".gat" && fieldView.Field is GatField)
+		 || (fn.EndsWith(".fld.gz") && fieldView.Field is GZipFldField)) {
+			field = fieldView.Field;
+		} else if (fn.EndsWith(".fld")) {
 			field = new FldField(fieldView.Field);
+		} else {
+			field = new GZipFldField(fieldView.Field);
 		}
 
 		try {
@@ -150,6 +159,8 @@ public class MainWindow {
 			fieldView.Field = field;
 			this.filename = filename;
 			Update();
+		} catch (IOException e) {
+			ShowError("Cannot save file:\n" + e.Message);
 		} catch (SaveNotSupportedException e) {
 			ShowError(e.Message);
 		}
