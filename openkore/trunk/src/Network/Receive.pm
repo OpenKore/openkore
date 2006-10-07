@@ -2037,7 +2037,10 @@ sub emoticon {
 				AI::queue("sendEmotion", \%args);
 			}
 		}
-	} else {		
+	} elsif ((my $monster = $monstersList->getByID($args->{ID}))) {
+		# Do nothing yet
+		
+	} else {
 		my $actor = Actor::get($args->{ID});
 		my $name = $actor->name;
 
