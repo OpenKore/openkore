@@ -31,28 +31,18 @@ public class GZipFldField: Field {
 			Stream file = new FileStream(filename, FileMode.Open);
 			Stream gzipStream = new GZipStream(file, CompressionMode.Decompress);
 			field = new FldField(gzipStream);
+			gzipStream.Close();
 		} catch (OutOfMemoryException) {
-			// Bug in Mono.
 			throw new ApplicationException("Because of a bug in Mono, " +
 				"GZip-compressed .FLD files cannot be loaded.");
 		}
 	}
 
 	/**
-	 * Construct a new GZipFldField object and load a field file
-	 * from the specified stream.
-	 *
-	 * @throws IOException, InvalidFieldException, ApplicationException
+	 * Construct an FldField object from another Field object.
 	 */
-	public GZipFldField(Stream s) {
-		try {
-			Stream gzipStream = new GZipStream(s, CompressionMode.Decompress);
-			field = new FldField(gzipStream);
-		} catch (OutOfMemoryException) {
-			// Bug in Mono.
-			throw new ApplicationException("Because of a bug in Mono, " +
-				"GZip-compressed .FLD files cannot be loaded.");
-		}
+	public GZipFldField(Field field) {
+		this.field = new FldField(field);
 	}
 
 	public override BlockType GetBlock(uint x, uint y) {
@@ -64,11 +54,13 @@ public class GZipFldField: Field {
 	}
 
 	public override void Save(string filename) {
-		Save(new FileStream(filename, FileMode.Create));
+		Stream stream = new FileStream(filename, FileMode.Create);
+		Save(stream);
+		stream.Close();
 	}
 
 	public override void Save(Stream stream) {
-		field.Save(new GZipStream(stream, CompressionMode.Compress));
+		field.Save(new GZipStream(stream, CompressionMode.Compress, true));
 	}
 
 	public override void Resize(uint newwidth, uint newheight) {

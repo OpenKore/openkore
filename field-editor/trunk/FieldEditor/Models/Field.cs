@@ -128,18 +128,10 @@ public abstract class Field {
 	}
 
 	/**
-	 * Construct a new Field object.
-	 *
-	 * @ensure Width == 0 && Height == 0
+	 * Construct this Field object from another Field object.
 	 */
-	protected Field() {
-	}
-
-	/**
-	 * Construct a Field object from another Field object.
-	 */
-	protected Field(Field field) {
-		Resize(field.width, field.height);
+	protected void ConstructFromField(Field field) {
+		Resize(field.Width, field.Height);
 		for (uint x = 0; x < width; x++) {
 			for (uint y = 0; y < height; y++) {
 				SetBlock(x, y, field.GetBlock(x, y));

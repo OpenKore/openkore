@@ -1,5 +1,5 @@
 using System;
-using System.Collections;
+using System.Collections.Generic;
 using Gtk;
 using Gdk;
 
@@ -368,8 +368,8 @@ public class FieldView: DrawingArea {
 		 * normalPoints contains the points that should be rendered normally.
 		 * selectedPoints contains the points that are to be rendered with the selection color.
 		 */
-		IList[] normalPoints   = new ArrayList[blockTypeLen];
-		IList[] selectedPoints = new ArrayList[blockTypeLen];
+		IList<Point>[] normalPoints   = new List<Point>[blockTypeLen];
+		IList<Point>[] selectedPoints = new List<Point>[blockTypeLen];
 
 		/*
 		 * Look at every block in the field and update blockTypePoints
@@ -379,8 +379,8 @@ public class FieldView: DrawingArea {
 		for (uint y = region.Bottom; y <= region.Top; y++) {
 			for (uint x = region.Left; x <= region.Right; x++) {
 				BlockType type;
-				IList[] pointsArray;
-				IList points;
+				IList<Point>[] pointsArray;
+				IList<Point> points;
 				Point point;
 
 				type = field.GetBlock(x, y);
@@ -395,7 +395,7 @@ public class FieldView: DrawingArea {
 				}
 				points = pointsArray[(int) type];
 				if (points == null) {
-					points = new ArrayList(1024);
+					points = new List<Point>(1024);
 					pointsArray[(int) type] = points;
 				}
 
@@ -457,8 +457,9 @@ public class FieldView: DrawingArea {
 	}
 
 	private void RenderFieldBlocksWithPixbuf(Drawable drawable, FieldSelection region,
-	                                         Field field, uint zoomLevel,
-	                                         IList[] normalPoints, IList[] selectedPoints) {
+	                    Field field, uint zoomLevel,
+	                    IList<Point>[] normalPoints,
+	                    IList<Point>[] selectedPoints) {
 		Point screenLeftTop;
 		uint width, height;
 		byte[] pixels;
