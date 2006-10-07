@@ -12,6 +12,6 @@
     <Execute type="None" entry="FieldEditor" />
   </StartMode>
   <Entries>
-    <Entry filename="./FieldEditor.mdp" />
+    <Entry filename="./FieldEditor/FieldEditor.mdp" />
   </Entries>
 </Combine>
