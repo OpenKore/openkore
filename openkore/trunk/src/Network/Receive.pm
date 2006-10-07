@@ -2037,6 +2037,18 @@ sub emoticon {
 				AI::queue("sendEmotion", \%args);
 			}
 		}
+	} else {		
+		my $actor = Actor::get($args->{ID});
+		my $name = $actor->name;
+
+		my $dist = "unknown";
+		if (!$actor->isa('Actor::Unknown')) {
+			$dist = distance($char->{pos_to}, $actor->{pos_to});
+			$dist = sprintf("%.1f", $dist) if ($dist =~ /\./);
+		}
+		
+		message TF("[dist=%s] %s: %s\n", $dist, $actor->{nameIdx}, $emotion), "emotion";
+		chatLog("e", "$name".": $emotion\n") if (existsInList($config{'logEmoticons'}, $args->{type}) || $config{'logEmoticons'} eq "all");
 	}
 }
 
