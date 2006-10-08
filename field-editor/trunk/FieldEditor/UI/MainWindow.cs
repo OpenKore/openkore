@@ -27,7 +27,7 @@ public class MainWindow {
 	}
 
 	private void initUI() {
-		Glade.XML xml = new Glade.XML("FieldEditor.glade.MainWindow.glade", null);
+		Glade.XML xml = getGlade("MainWindow.glade");
 		xml.Autoconnect(this);
 		setupSelectedBlockType();
 
@@ -44,7 +44,7 @@ public class MainWindow {
 
 	private void setupOpenDialog() {
 		FileFilter filter;
-		Glade.XML xml = new Glade.XML("FieldEditor.glade.OpenDialog.glade", null);
+		Glade.XML xml = getGlade("OpenDialog.glade");
 
 		xml.Autoconnect(this);
 
@@ -74,7 +74,7 @@ public class MainWindow {
 
 	private void setupSaveDialog() {
 		FileFilter filter;
-		Glade.XML xml = new Glade.XML("FieldEditor.glade.SaveDialog.glade", null);
+		Glade.XML xml = getGlade("SaveDialog.glade");
 
 		xml.Autoconnect(this);
 
@@ -87,6 +87,19 @@ public class MainWindow {
 		filter.Name = "Compressed OpenKore Field Files (*.fld.gz)";
 		filter.AddPattern("*.fld.gz");
 		saveFileDialog.AddFilter(filter);
+	}
+
+	/**
+	 * Load an embedded Glade resource. This function handles
+	 * the differences in resource names between Visual Studio
+	 * and MonoDevelop.
+	 */
+	public static Glade.XML getGlade(string gladeName) {
+		try {
+			return new Glade.XML("FieldEditor.glade." + gladeName, null); 
+		} catch (ArgumentException) {
+			return new Glade.XML(gladeName, null);
+		}
 	}
 
 	private void setupSelectedBlockType() {
