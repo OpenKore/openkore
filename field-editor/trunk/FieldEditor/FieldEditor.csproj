@@ -48,6 +48,8 @@
     <Compile Include="Main.cs" />
     <Compile Include="Models\Field.cs" />
     <Compile Include="Models\FieldLoader.cs" />
+    <Compile Include="Models\FieldPoint.cs" />
+    <Compile Include="Models\FieldRegion.cs" />
     <Compile Include="Models\FldField.cs" />
     <Compile Include="Models\GatField.cs" />
     <Compile Include="Models\GZipFldField.cs" />
@@ -76,6 +78,7 @@
     <Compile Include="SharpZipLib\ZipException.cs" />
     <Compile Include="UI\AboutBox.cs" />
     <Compile Include="UI\FieldColors.cs" />
+    <Compile Include="UI\FieldRenderer.cs" />
     <Compile Include="UI\FieldView.cs" />
     <Compile Include="UI\MainWindow.cs" />
   </ItemGroup>
