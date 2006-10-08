@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 9.00
 # Visual Studio 2005
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FieldEditor", "FieldEditor.csproj", "{C162CFDA-FA8E-4881-82D6-1D1DD4895230}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FieldEditor", "FieldEditor\FieldEditor.csproj", "{C162CFDA-FA8E-4881-82D6-1D1DD4895230}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
