@@ -7,12 +7,12 @@ namespace FieldEditor {
 class MainClass	{
 	public static void Main(string[] args) {
 		Application.Init();
-		#if !DEBUG || BETA
+		#if !DEBUG
 		try {
 		#endif
 			new MainWindow();
 			Application.Run();
-		#if !DEBUG || BETA
+		#if !DEBUG
 		} catch (Exception e) {
 			string msg = "An unexpected occured:\n{0}";
 
