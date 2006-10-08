@@ -58,6 +58,9 @@
     <File name="./SharpZipLib/InflaterHuffmanTree.cs" subtype="Code" buildaction="Compile" />
     <File name="./SharpZipLib/DeflaterHuffman.cs" subtype="Code" buildaction="Compile" />
     <File name="./SharpZipLib/ZipException.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Models/FieldPoint.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Models/FieldRegion.cs" subtype="Code" buildaction="Compile" />
+    <File name="./UI/FieldRenderer.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="gtk-sharp, Version=2.4.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
