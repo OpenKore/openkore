@@ -20,49 +20,6 @@ public class SaveNotSupportedException: Exception {
 }
 
 /**
- * A convenience structure for representing a point on the field.
- */
-public struct FieldPoint {
-	public uint X;
-	public uint Y;
-}
-
-public class FieldSelection {
-	public uint Left, Right;
-	public uint Top,  Bottom;
-
-	private uint beginX, beginY;
-
-	public uint Width {
-		get { return Right - Left + 1; }
-	}
-
-	public uint Height {
-		get { return Top - Bottom + 1; }
-	}
-
-	public void SetBeginPoint(uint x, uint y) {
-		Left = Right = beginX = x;
-		Top = Bottom = beginY = y;
-	}
-
-	public void SetEndPoint(uint x, uint y) {
-		if (x > beginX) {
-			Right = x;
-		} else {
-			Right = beginX;
-			Left = x;
-		}
-		if (y < beginY) {
-			Bottom = y;
-		} else {
-			Bottom = beginY;
-			Top = y;
-		}
-	}
-}
-
-/**
  * Describes the type of a block on a field. 
  */
 public enum BlockType {

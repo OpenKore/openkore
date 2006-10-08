@@ -3,17 +3,16 @@ using System.Collections;
 using Gtk;
 using Gdk;
 
-
 namespace FieldEditor {
 
 /**
  * Various functions for calculating coordinates.
  */
-class Calc {
-	public static FieldSelection ScreenSelectionToFieldSelection(
+internal class Calc {
+	public static FieldRegion ScreenSelectionToFieldRegion(
 		Field field, uint zoomLevel, int x, int y, int width, int height
 	) {
-		FieldSelection s = new FieldSelection();
+		FieldRegion s = new FieldRegion();
 		s.Left   = (uint) Math.Max(0,            x / zoomLevel);
 		s.Right  = (uint) Math.Min(field.Width,  (x + width) / zoomLevel);
 		s.Top    = (uint) Math.Max(0,            field.Height - (y / zoomLevel) - 1);
@@ -94,7 +93,8 @@ public delegate void MouseMoveEvent(FieldView source, int x, int y);
  * @param selection  The selected region, or null if nothing is selected.
  * @invariant        source != null
  */
-public delegate void SelectionChangedEvent(FieldView source, FieldSelection selection);
+public delegate void SelectionChangedEvent(FieldView source, FieldRegion selection);
+
 
 /**
  * A widget for displaying a Field model.
@@ -111,12 +111,12 @@ public class FieldView: DrawingArea {
 	private uint zoomLevel = 1;
 
 	/**
-	 * Contains color information for rendering the field.
+	 * The field renderer to use.
 	 *
 	 * @invariant
-	 *   if widget is realized: colors != null
+	 *     if field != null: renderer != null
 	 */
-	private FieldColors colors;
+	private FieldRenderer renderer;
 
 	/**
 	 * An off-screen pixmap which contains the rendered field.
@@ -129,7 +129,7 @@ public class FieldView: DrawingArea {
 	 * @invariant
 	 *     if selection != null: field != null
 	 */
-	private FieldSelection selection;
+	private FieldRegion selection;
 	/**
 	 * Whether a mouse button is pressed down (thus, whether we're
 	 * in the process of creating a selection).
@@ -154,26 +154,18 @@ public class FieldView: DrawingArea {
 				if (field != null) {
 					SetSizeRequest((int) (field.Width * zoomLevel),
 						(int) (field.Height * zoomLevel));
+					if (renderer == null) {
+						renderer = new FieldRenderer(field, null);
+					}
+					renderer.ZoomLevel = zoomLevel;
 				}
 				QueueDraw();
 			}
 		}
 	}
 	
-	public FieldSelection Selection {
+	public FieldRegion Selection {
 		get { return selection; }
-	}
-
-	/**
-	 * Construct a new FieldView widget.
-	 */
-	public FieldView() {
-		Realized += OnRealized;
-		ExposeEvent += OnExposed;
-		MotionNotifyEvent += OnMotionNotify;
-		ButtonPressEvent += OnButtonPress;
-		ButtonReleaseEvent += OnButtonRelease;
-		Events |= EventMask.PointerMotionMask | EventMask.ButtonPressMask | EventMask.ButtonReleaseMask;
 	}
 
 	/**
@@ -197,16 +189,31 @@ public class FieldView: DrawingArea {
 					field.OnDimensionChanged += OnFieldDimensionChanged;
 					SetSizeRequest((int) (field.Width * zoomLevel),
 						(int) (field.Height * zoomLevel));
+
+					if (renderer != null) {
+						renderer.Field = field;
+					} else {
+						renderer = new FieldRenderer(field, null);
+					}
+
 				} else {
 					SetSizeRequest(0, 0);
+					renderer = null;
 				}
 				QueueDraw();
 			}
 		}
 	}
 
-	private void OnRealized(object o, EventArgs args) {
-		colors = new FieldColors(GdkWindow);
+	/**
+	 * Construct a new FieldView widget.
+	 */
+	public FieldView() {
+		ExposeEvent += OnExposed;
+		MotionNotifyEvent += OnMotionNotify;
+		ButtonPressEvent += OnButtonPress;
+		ButtonReleaseEvent += OnButtonRelease;
+		Events |= EventMask.PointerMotionMask | EventMask.ButtonPressMask | EventMask.ButtonReleaseMask;
 	}
 
 	private void OnExposed(object o, ExposeEventArgs args) {
@@ -216,17 +223,17 @@ public class FieldView: DrawingArea {
 			area.X, area.Y, area.Width, area.Height);
 		if (field != null) {
 			if (pixmap == null) {
-				FieldSelection region;
+				FieldRegion region;
 
 				pixmap = new Pixmap(GdkWindow,
 					(int) (field.Width * zoomLevel),
 					(int) (field.Height * zoomLevel),
 					-1);
-				region = new FieldSelection();
+				region = new FieldRegion();
 				region.Left = region.Bottom = 0;
 				region.Right = field.Width - 1;
 				region.Top = field.Height - 1;
-				RenderToDrawable(field, region, null, zoomLevel, pixmap);
+				renderer.RenderToDrawable(pixmap, Style.BlackGC, region, null);
 			}
 
 			GdkWindow.DrawDrawable(Style.BlackGC, pixmap,
@@ -234,7 +241,8 @@ public class FieldView: DrawingArea {
 				area.Width, area.Height);
 
 			if (selection != null) {
-				RenderToDrawable(field, selection, selection, zoomLevel, GdkWindow);
+				renderer.RenderToDrawable(GdkWindow, Style.BlackGC,
+					selection, selection);
 			}
 		}
 	}
@@ -297,7 +305,7 @@ public class FieldView: DrawingArea {
 			p.Y = (uint) Math.Max(0, args.Event.Y);
 			Calc.ScreenPosToFieldPos(ref p, field, zoomLevel);
 
-			selection = new FieldSelection();
+			selection = new FieldRegion();
 			selection.SetBeginPoint(p.X, p.Y);
 			RedrawFieldRegion(selection);
 
@@ -331,7 +339,7 @@ public class FieldView: DrawingArea {
 	 *
 	 * @require field != null && region != null
 	 */
-	private void RedrawFieldRegion(FieldSelection region) {
+	private void RedrawFieldRegion(FieldRegion region) {
 		FieldPoint begin;
 		begin.X = region.Left;
 		begin.Y = region.Top;
@@ -345,169 +353,6 @@ public class FieldView: DrawingArea {
 		QueueDrawArea((int) begin.X, (int) begin.Y,
 			(int) (end.X - begin.X),
 			(int) (end.Y - begin.Y));
-	}
-
-
-	/********************** Renderers **********************/
-	
-
-	/**
-	 * Render a part of a field to a Drawable.
-	 *
-	 * @param region     The region to render.
-	 * @param selection  The region of the field that is selected, or null.
-	 *                   This region will be rendered with a different color.
-	 * @param drawable   The Drawable to render to.
-	 */
-	private void RenderToDrawable(Field field, FieldSelection region, FieldSelection selection,
-		uint zoomLevel, Drawable drawable)
-	{
-		int blockTypeLen = Enum.GetValues(((Enum) BlockType.Walkable).GetType()).Length;
-		/*
-		 * These variables map a BlockType to a list of points on screen.
-		 * normalPoints contains the points that should be rendered normally.
-		 * selectedPoints contains the points that are to be rendered with the selection color.
-		 */
-		IList[] normalPoints   = new ArrayList[blockTypeLen];
-		IList[] selectedPoints = new ArrayList[blockTypeLen];
-
-		/*
-		 * Look at every block in the field and update blockTypePoints
-		 * with a corresponding list of points per block type. Then
-		 * render those list of points.
-		 */
-		for (uint y = region.Bottom; y <= region.Top; y++) {
-			for (uint x = region.Left; x <= region.Right; x++) {
-				BlockType type;
-				IList[] pointsArray;
-				IList points;
-				Point point;
-
-				type = field.GetBlock(x, y);
-
-				// Check whether this block is within the selection, and determine
-				// which array to use.
-				if (selection != null && x >= selection.Left && x <= selection.Right
-				 && y >= selection.Bottom && y <= selection.Top) {
-					pointsArray = selectedPoints;
-				} else {
-					pointsArray = normalPoints;
-				}
-				points = pointsArray[(int) type];
-				if (points == null) {
-					points = new ArrayList(1024);
-					pointsArray[(int) type] = points;
-				}
-
-				point.X = (int) x;
-				point.Y = (int) y;
-				Calc.FieldPosToScreenPos(ref point, field, zoomLevel);
-				points.Add(point);
-			}
-		}
-
-		/* Note: we used to use Gdk.DrawPoints() and Gdk.DrawRectangle()
-		 * to render the field, but performance was abysmal on Windows,
-		 * and Gtk-Sharp for Windows has a different parameter definition
-		 * for DrawPoints() than the Linux version! The GdkPixbuf renderer
-		 * is the most cross-platform with decent performance.
-		 */
-		RenderFieldBlocksWithPixbuf(drawable, region, field, zoomLevel,
-			normalPoints, selectedPoints);
-
-		// Render selection.
-		if (selection != null) {
-			Point p1, p2;
-			p1.X = (int) selection.Left;
-			p1.Y = (int) selection.Top;
-			p2.X = (int) selection.Right;
-			p2.Y = (int) selection.Bottom;
-			Calc.FieldPosToScreenPos(ref p1, field, zoomLevel);
-			Calc.FieldPosToScreenPos(ref p2, field, zoomLevel);
-			drawable.DrawRectangle(colors.SelectionBorderGC, false,
-				p1.X, p1.Y,
-				(int) (p2.X - p1.X + zoomLevel - 1),
-				(int) (p2.Y - p1.Y + zoomLevel - 1));
-		}
-	}
-
-	/** The number of channels in the GdkPixbuf used to render the field. */
-	const int CHANNELS = 4;
-
-	/**
-	 * Render a rectangle on a pixel buffer.
-	 *
-	 * @param pixels    A buffer with raw pixel data.
-	 * @param x, y      The coordinates to render the rectangle on.
-	 * @param width     The width of the rectangle to render.
-	 * @param height    The height of the rectangle to render.
-	 * @param imgwidth  The width of the image represented by the pixel buffer.
-	 * @param red, green, blue  An RGB value to use as color for the rectangle. 
-	 */
-	private void RenderRect(byte[] pixels, uint x, uint y, uint width, uint height,
-				uint imgwidth, byte red, byte blue, byte green) {
-		for (uint j = y; j < y + height; j++) {
-			for (uint i = x; i < x + width; i++) {
-				pixels[(j * imgwidth + i) * CHANNELS] = red;
-				pixels[(j * imgwidth + i) * CHANNELS + 1] = blue;
-				pixels[(j * imgwidth + i) * CHANNELS + 2] = green;
-				pixels[(j * imgwidth + i) * CHANNELS + 3] = 0xFF;
-			}
-		}
-	}
-
-	private void RenderFieldBlocksWithPixbuf(Drawable drawable, FieldSelection region,
-	                    Field field, uint zoomLevel,
-	                    IList[] normalPoints,
-	                    IList[] selectedPoints) {
-		Point screenLeftTop;
-		uint width, height;
-		byte[] pixels;
-		int blockTypeLen;
-
-		screenLeftTop.X = (int) region.Left;
-		screenLeftTop.Y = (int) region.Top;
-		Calc.FieldPosToScreenPos(ref screenLeftTop, field, zoomLevel);
-		width = region.Width * zoomLevel;
-		height = region.Height * zoomLevel;
-		pixels = new byte[width * height * CHANNELS];
-		blockTypeLen = Enum.GetValues(((Enum) BlockType.Walkable).GetType()).Length;
-
-		for (int i = 0; i < blockTypeLen; i++) {
-			if (normalPoints[i] != null) {
-				foreach (Point p in normalPoints[i]) {
-					Color color = colors.GetColor(i);
-					RenderRect(pixels,
-						(uint) (p.X - screenLeftTop.X),
-						(uint) (p.Y - screenLeftTop.Y),
-						zoomLevel, zoomLevel, width,
-						(byte) (color.Red / 256),
-						(byte) (color.Green / 256),
-						(byte) (color.Blue / 256));
-				}
-			}
-			if (selectedPoints[i] != null) {
-				foreach (Point p in selectedPoints[i]) {
-					Color color = colors.GetSelectionColor(i);
-					RenderRect(pixels,
-						(uint) (p.X - screenLeftTop.X),
-						(uint) (p.Y - screenLeftTop.Y),
-						zoomLevel, zoomLevel, width,
-						(byte) (color.Red / 256),
-						(byte) (color.Green / 256),
-						(byte) (color.Blue / 256));
-				}
-			}
-		}
-		
-		using (Pixbuf pixbuf = new Pixbuf(pixels, Colorspace.Rgb, true, 8,
-						(int) width, (int) height,
-						(int) width * CHANNELS, null)) {
-			pixbuf.RenderToDrawable(drawable, Style.BlackGC,
-				0, 0, screenLeftTop.X, screenLeftTop.Y,
-				(int) width, (int) height,
-				RgbDither.Normal, 0, 0);
-		}
 	}
 }
 

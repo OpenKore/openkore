@@ -314,7 +314,7 @@ public class MainWindow {
 		}
 	}
 
-	private void OnFieldSelectionChanged(FieldView sender, FieldSelection selection) {
+	private void OnFieldSelectionChanged(FieldView sender, FieldRegion selection) {
 		if (selection != null) {
 			selectedBlockType.Sensitive = true;
 
@@ -375,7 +375,7 @@ public class MainWindow {
 		// or when the combo boxed is being automaticallychanged.
 		if (selectedBlockType.Active < len && !selectedBlockTypeChanging) {
 			BlockType type = (BlockType) selectedBlockType.Active;
-			FieldSelection selection = fieldView.Selection;
+			FieldRegion selection = fieldView.Selection;
 
 			for (uint x = selection.Left; x <= selection.Right; x++) {
 				for (uint y = selection.Bottom; y <= selection.Top; y++) {
