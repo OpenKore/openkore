@@ -1,6 +1,6 @@
 using System;
 using System.IO;
-using System.IO.Compression;
+using ICSharpCode.SharpZipLib.GZip;
 
 namespace FieldEditor {
 
@@ -27,15 +27,11 @@ public class GZipFldField: Field {
 	 * @throws IOException, InvalidFieldException, ApplicationException
 	 */
 	public GZipFldField(string filename) {
-		try {
-			Stream file = new FileStream(filename, FileMode.Open);
-			Stream gzipStream = new GZipStream(file, CompressionMode.Decompress);
-			field = new FldField(gzipStream);
-			gzipStream.Close();
-		} catch (OutOfMemoryException) {
-			throw new ApplicationException("Because of a bug in Mono, " +
-				"GZip-compressed .FLD files cannot be loaded.");
-		}
+		Stream file = new FileStream(filename, FileMode.Open);
+		Stream gzipStream = new GZipInputStream(file);
+		field = new FldField(gzipStream);
+		gzipStream.Close();
+		file.Close();
 	}
 
 	/**
@@ -60,7 +56,10 @@ public class GZipFldField: Field {
 	}
 
 	public override void Save(Stream stream) {
-		field.Save(new GZipStream(stream, CompressionMode.Compress, true));
+		GZipOutputStream gzipStream = new GZipOutputStream(stream);
+		gzipStream.IsStreamOwner = true;
+		gzipStream.SetLevel(9);
+		field.Save(gzipStream);
 	}
 
 	public override void Resize(uint newwidth, uint newheight) {
