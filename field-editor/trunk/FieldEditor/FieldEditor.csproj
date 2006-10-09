@@ -78,6 +78,7 @@
     <Compile Include="SharpZipLib\ZipException.cs" />
     <Compile Include="UI\AboutBox.cs" />
     <Compile Include="UI\FieldColors.cs" />
+    <Compile Include="UI\FieldPreview.cs" />
     <Compile Include="UI\FieldRenderer.cs" />
     <Compile Include="UI\FieldView.cs" />
     <Compile Include="UI\MainWindow.cs" />
