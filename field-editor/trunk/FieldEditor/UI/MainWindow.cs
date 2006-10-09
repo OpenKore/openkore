@@ -70,6 +70,9 @@ public class MainWindow {
 		filter.Name = "All Files (*)";
 		filter.AddPattern("*");
 		openFileDialog.AddFilter(filter);
+
+		openFileDialog.PreviewWidget = new FieldPreview();
+		openFileDialog.UpdatePreview += OnUpdatePreview;
 	}
 
 	private void setupSaveDialog() {
@@ -368,7 +371,7 @@ public class MainWindow {
 		zoomOutButton.Sensitive = fieldView.ZoomLevel > 1;
 		zoomLevelLabel.Text = String.Format("{0:d}x", fieldView.ZoomLevel);
 	}
-	
+
 	protected void OnSelectedBlockTypeChanged(object o, EventArgs args) {
 		int len = Enum.GetValues(((Enum) BlockType.Walkable).GetType()).Length;
 		// Make sure we do nothing when user selected "(Mixed)",
@@ -377,13 +380,26 @@ public class MainWindow {
 			BlockType type = (BlockType) selectedBlockType.Active;
 			FieldRegion selection = fieldView.Selection;
 
+			fieldView.Field.BeginUpdate();
 			for (uint x = selection.Left; x <= selection.Right; x++) {
 				for (uint y = selection.Bottom; y <= selection.Top; y++) {
 					fieldView.Field.SetBlock(x, y, type);
 				}
 			}
-			OnFieldSelectionChanged(fieldView, selection);
+			fieldView.Field.EndUpdate();
+			//OnFieldSelectionChanged(fieldView, selection);
 		}
+	}
+
+	protected void OnUpdatePreview(object o, EventArgs args) {
+		FileChooser chooser = (FileChooser) o;
+		FieldPreview preview = (FieldPreview) chooser.PreviewWidget;
+
+		if (File.Exists(chooser.Filename)) {
+			preview.Filename = chooser.Filename;
+		} else {
+			preview.Filename = null;
+		} 
 	}
 }
 
