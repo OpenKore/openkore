@@ -47,6 +47,8 @@ public abstract class Field {
 	protected uint width = 0;
 	/** The height of this field. */
 	protected uint height = 0;
+	protected uint updateLevel = 0;
+	protected bool blockChanged = false, dimensionChanged = false;
 
 	/** Invoked when a block in this field has been changed. */
 	public event FieldBlockChangedEvent OnBlockChanged;
@@ -141,14 +143,52 @@ public abstract class Field {
 	 */
 	abstract public void Resize(uint newwidth, uint newheight);
 
+	/**
+	 * Specify that you're about to change the field. This field will be marked
+	 * as "updating". While the "updating" mark is enabled, field update events
+	 * will not be sent.
+	 *
+	 * When you're done changing the field, you must call EndUpdate(). If the field
+	 * has changed between your last BeginUpdate() call and this EndUpdate() call,
+	 * a field update event will be sent (but only once).
+	 *
+	 * This function can be stacked. That is: if you call BeginUpdate() twice, then
+	 * field update events will only be sent when EndUpdate() has been called twice.
+	 * You must not call EndUpdate() more often than BeginUpdate().
+	 *
+	 * Usage of this function may significantly improve performance if you're
+	 * modifying many parts of the field.
+	 */
+	public virtual void BeginUpdate() {
+		updateLevel++;
+	}
+
+	public virtual void EndUpdate() {
+		updateLevel--;
+		if (updateLevel == 0) {
+			if (blockChanged && OnBlockChanged != null) {
+				blockChanged = false;
+				OnBlockChanged(this);
+			}
+			if (dimensionChanged && OnDimensionChanged != null) {
+				dimensionChanged = false;
+				OnDimensionChanged(this);
+			}
+		}
+	}
+
 	protected void SetBlockChanged() {
-		if (OnBlockChanged != null) {
+		blockChanged = true;
+		if (updateLevel > 0 && OnBlockChanged != null) {
+			blockChanged = false;
 			OnBlockChanged(this);
 		}
 	}
 
 	protected void SetDimensionChanged() {
-		if (OnDimensionChanged != null) {
+		dimensionChanged = true;
+		if (updateLevel > 0 && OnDimensionChanged != null) {
+			dimensionChanged = false;
 			OnDimensionChanged(this);
 		}
 	}

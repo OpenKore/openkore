@@ -11,6 +11,9 @@ namespace FieldEditor {
  * is the most cross-platform with decent performance.
  */
 
+/**
+ * This class is responsible for rendering a Field.
+ */
 public class FieldRenderer {
 	/** The number of channels in the GdkPixbuf used to render the field. */
 	protected const uint CHANNELS = 3;
@@ -66,7 +69,15 @@ public class FieldRenderer {
 	}
 
 	/**
-	 * Render to a drawable.
+	 * Render a part of a field to a drawable.
+	 *
+	 * @param drawable  The drawable to render to.
+	 * @param gc        The GC to use when rendering. This GC is not
+	 *                  actually used for anything visible, so any GC will do.
+	 * @param region    The region of the field to render.
+	 * @param selection  The region of the field that is selected, or null.
+	 *                   This region will be rendered with a different color.
+	 * @require  Both region and selection must be within the current field's bounds.
 	 */
 	public void RenderToDrawable(Drawable drawable, Gdk.GC gc, FieldRegion region, FieldRegion selection) {
 		using (Pixbuf pixbuf = RenderToPixbuf(region, selection)) {
@@ -87,9 +98,10 @@ public class FieldRenderer {
 	/**
 	 * Render a part of a field to a Gdk.Pixbuf.
 	 *
-	 * @param region     The region to render.
+	 * @param region     The region of the field to render.
 	 * @param selection  The region of the field that is selected, or null.
 	 *                   This region will be rendered with a different color.
+	 * @require  Both region and selection must be within the current field's bounds.
 	 */
 	public Pixbuf RenderToPixbuf(FieldRegion region, FieldRegion selection) {
 		Point screenLeftTop;
