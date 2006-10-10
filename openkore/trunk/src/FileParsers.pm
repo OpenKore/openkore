@@ -84,7 +84,7 @@ sub parseArrayFile {
 	@{$r_array} = scalar(@lines) + 1;
 	my $i = 1;
 	foreach (@lines) {
-		s/[\r\n]//g;
+		s/[\r\n\x{FEFF}]//g;
 		$r_array->[$i] = $_;
 		$i++;
 	}
@@ -101,6 +101,7 @@ sub parseAvoidControl {
 
 	my $section = "";
 	foreach (<FILE>) {
+		s/\x{FEFF}//g;
 		next if (/^#/);
 		s/[\r\n]//g;
 		s/\s+$//g;
@@ -131,7 +132,7 @@ sub parseChatResp {
 
 	open FILE, "<:utf8", $file;
 	foreach (<FILE>) {
-		s/[\r\n]//g;
+		s/[\r\n\x{FEFF}]//g;
 		next if ($_ eq "" || /^#/);
 		if (/^first_resp_/) {
 			Log::error(Translation::T("The chat_resp.txt format has changed. Please read News.txt and upgrade to the new format.\n"));
@@ -165,6 +166,7 @@ sub parseCommandsDescription {
 
 	open FILE, "<:utf8", $file;
 	foreach (<FILE>) {
+		s/\x{FEFF}//g;
 		next if (/^[\s\t]*#/);
 		s/[\r\n]//g;	# Remove line endings
 		s/^[\t\s]*//;	# Remove leading tabs and whitespace
@@ -209,6 +211,7 @@ sub parseConfigFile {
 
 	open FILE, "<:utf8", $file;
 	foreach (<FILE>) {
+		s/\x{FEFF}//g;
 		next if (/^[\s\t]*#/);
 		s/[\r\n]//g;	# Remove line endings
 		s/^[\t\s]*//;	# Remove leading tabs and whitespace
@@ -296,6 +299,7 @@ sub parseEmotionsFile {
 	my ($line, $key, $word, $name);
 	open FILE, "<:utf8", $file;
 	foreach (<FILE>) {
+		s/\x{FEFF}//g;
 		next if (/^#/);
 		s/[\r\n]//g;
 		s/\s+$//g;
@@ -320,6 +324,7 @@ sub parseDataFile {
 	my ($key,$value);
 	open FILE, "<:utf8", $file;
 	foreach (<FILE>) {
+		s/\x{FEFF}//g;
 		next if (/^#/);
 		s/[\r\n]//g;
 		s/\s+$//g;
@@ -339,6 +344,7 @@ sub parseDataFile_lc {
 	my ($key,$value);
 	open FILE, "<:utf8", $file;
 	foreach (<FILE>) {
+		s/\x{FEFF}//g;
 		next if (/^#/);
 		s/[\r\n]//g;
 		s/\s+$//g;
@@ -357,6 +363,7 @@ sub parseDataFile2 {
 	%{$r_hash} = ();
 	open FILE, "<:utf8", $file;
 	foreach (<FILE>) {
+		s/\x{FEFF}//g;
 		next if (/^#/);
 		s/[\r\n]//g;
 		next if (length($_) == 0);
@@ -414,7 +421,7 @@ sub parseShopControl {
 	foreach (<SHOP>) {
 		$linenum++;
 		chomp;
-		s/[\r\n]//g;
+		s/[\r\n\x{FEFF}]//g;
 		next if /^$/ || /^#/;
 
 		if (!$shop->{title}) {
@@ -464,6 +471,7 @@ sub parseItemsControl {
 
 	open FILE, "<:utf8", $file;
 	foreach (<FILE>) {
+		s/\x{FEFF}//g;
 		next if (/^#/);
 		s/[\r\n]//g;
 		s/\s+$//g;
@@ -517,6 +525,7 @@ sub parseMonControl {
 
 	open FILE, "<:utf8", $file;
 	foreach (<FILE>) {
+		s/\x{FEFF}//g;
 		next if (/^#/);
 		s/[\r\n]//g;
 		s/\s+$//g;
@@ -579,6 +588,7 @@ sub parsePortalsLOS {
 	my $key;
 	open FILE, "<", $file;
 	foreach (<FILE>) {
+		s/\x{FEFF}//g;
 		next if (/^#/);
 		s/[\r\n]//g;
 		s/\s+/ /g;
@@ -605,6 +615,7 @@ sub parsePriority {
 	my @lines = <FILE>;
 	my $pri = $#lines;
 	foreach (@lines) {
+		s/\x{FEFF}//g;
 		next if (/^#/);
 		s/[\r\n]//g;
 		$$r_hash{lc($_)} = $pri + 1;
@@ -622,6 +633,7 @@ sub parseResponses {
 	my $i;
 	open FILE, "<:utf8", $file;
 	foreach (<FILE>) {
+		s/\x{FEFF}//g;
 		next if (/^#/);
 		s/[\r\n]//g;
 		($key, $value) = $_ =~ /([\s\S]*?) ([\s\S]*)$/;
@@ -650,7 +662,7 @@ sub parseROLUT {
 	undef %{$r_hash};
 	open FILE, "<:utf8", $file;
 	foreach (<FILE>) {
-		s/[\r\n]//g;
+		s/[\r\n\x{FEFF}]//g;
 		next if (length($_) == 0 || /^\/\//);
 
 		my ($id, $name) = split /#/, $_, 3;
@@ -721,6 +733,7 @@ sub parseSectionedFile {
 
 	my $section = "";
 	foreach (<FILE>) {
+		s/\x{FEFF}//g;
 		next if (/^#/);
 		s/[\r\n]//g;
 		s/\s+$//g;
@@ -749,6 +762,7 @@ sub parseSkills {
 
 	open(FILE, "<$file");
 	foreach (<FILE>) {
+		s/\x{FEFF}//g;
 		next if (/^\/\//);
 		s/[\r\n]//g;
 		s/\s+$//g;
@@ -792,6 +806,7 @@ sub parseTimeouts {
 	my $r_hash = shift;
 	open(FILE, "<:utf8", $file);
 	foreach (<FILE>) {
+		s/\x{FEFF}//g;
 		next if (/^#/);
 		s/[\r\n]//g;
 
@@ -812,6 +827,7 @@ sub parseWaypoint {
 
 	open FILE, "< $file";
 	foreach (<FILE>) {
+		s/\x{FEFF}//g;
 		next if (/^#/ || /^$/);
 		s/[\r\n]//g;
 
@@ -872,6 +888,7 @@ sub processUltimate {
 	if (open($f, "<:utf8", $file)) {
 
 	foreach (<$f>) {
+		s/\x{FEFF}//g;
 		s/[\r\n]//g;
 
 		if ($_ eq '' || /^[ \t]*#/) {
@@ -1031,6 +1048,7 @@ sub writeDataFileIntact {
 	my (@lines, $key, $value, $inBlock, $commentBlock, %blocks);
 	open FILE, "<:utf8", $file;
 	foreach (<FILE>) {
+		s/\x{FEFF}//g;
 		s/[\r\n]//g;	# Remove line endings
 		if (/^[\s\t]*#/ || /^[\s\t]*$/ || /^\!include( |$)/) {
 			push @lines, $_;
@@ -1109,6 +1127,7 @@ sub writeDataFileIntact2 {
 
 	open(FILE, "<:utf8", $file);
 	foreach (<FILE>) {
+		s/\x{FEFF}//g;
 		if (/^#/ || $_ =~ /^\n/ || $_ =~ /^\r/) {
 			$data .= $_;
 			next;
