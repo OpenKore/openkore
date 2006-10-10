@@ -92,6 +92,25 @@ sub initHandlers {
 	homun              => \&cmdHomunculus,
 	g                  => \&cmdGuildChat,
 	getplayerinfo      => \&cmdGetPlayerInfo,
+	#GM Commands - Start
+     gmb			    => \&cmdGmb,
+     gmbb			    => \&cmdGmbb,
+     gmnb			    => \&cmdGmnb,
+     gmlb			    => \&cmdGmlb,
+     gmlbb		    => \&cmdGmlbb,
+     gmnlb		    => \&cmdGmnlb,
+     gmmapmove		    => \&cmdGmmapmove,
+     gmcreate		    => \&cmdGmcreate,
+     gmhide		    => \&cmdGmhide,
+     gmwarpto		    => \&cmdGmwarpto,
+     gmsummon		    => \&cmdGmsummon,
+     gmdc			    => \&cmdGmdc,
+     gmresetskill	    => \&cmdGmresetskill,
+     gmresetstate	    => \&cmdGmresetstate,
+	gmmute             => \&cmdGmmute,
+	gmunmute           => \&cmdGmunmute,
+	gmkillall          => \&cmdGmkillall,
+	#GM Commands - End
 	guild              => \&cmdGuild,
 	help               => \&cmdHelp,
 	i                  => \&cmdInventory,
@@ -1788,6 +1807,204 @@ sub cmdHomunculus {
 sub cmdGetPlayerInfo {
 	my (undef, $args) = @_;
 	sendGetPlayerInfo($net, pack("V", $args));
+}
+
+sub cmdGmb {
+	my (undef, $args) = @_;
+	return unless ($char);
+
+	if ($args eq '') {
+		error "Usage: gmb <MESSAGE>\n";
+		return;
+	}
+
+	my $msg = "$char->{name}: $args" . chr(0);
+	my $packet = pack("C*", 0x99, 0x00) . pack("v", length($msg) + 4) . $msg;
+	sendMsgToServer(\$remote_socket, $packet);
+}
+
+sub cmdGmbb {
+	my (undef, $args) = @_;
+	return unless ($char);
+
+	if ($args eq '') {
+		error "Usage: gmbb <MESSAGE>\n";
+		return;
+	}
+
+	my $msg = "blue$args" . chr(0);
+	my $packet = pack("C*", 0x99, 0x00) . pack("v", length($msg) + 4) . $msg;
+	sendMsgToServer(\$remote_socket, $packet);
+}
+
+sub cmdGmnb {
+	my (undef, $args) = @_;
+	return unless ($char);
+
+	if ($args eq '') {
+		error "Usage: gmnb <MESSAGE>\n";
+		return;
+	}
+
+	my $msg = $args . chr(0);
+	my $packet = pack("C*", 0x99, 0x00) . pack("v", length($msg) + 4) . $msg;
+	sendMsgToServer(\$remote_socket, $packet);
+}
+
+sub cmdGmlb {
+	my (undef, $args) = @_;
+	return unless ($char);
+
+	if ($args eq '') {
+		error "Usage: gmlb <MESSAGE>\n";
+		return;
+	}
+
+	my $msg = "$char->{name}: $args" . chr(0);
+	my $packet = pack("C*", 0x9c, 0x01) . pack("v", length($msg) + 4) . $msg;
+	sendMsgToServer(\$remote_socket, $packet);
+}
+
+sub cmdGmlbb {
+	my (undef, $args) = @_;
+	return unless ($char);
+
+	if ($args eq '') {
+		error "Usage: gmlbb <MESSAGE>\n";
+		return;
+	}
+
+	my $msg = "blue$args" . chr(0);
+	my $packet = pack("C*", 0x9c, 0x01) . pack("v", length($msg) + 4) . $msg;
+	sendMsgToServer(\$remote_socket, $packet);
+}
+
+sub cmdGmnlb {
+	my (undef, $args) = @_;
+	return unless ($char);
+
+	if ($args eq '') {
+		error "Usage: gmnlb <MESSAGE>\n";
+		return;
+	}
+
+	my $msg = $args . chr(0);
+	my $packet = pack("C*", 0x9c, 0x01) . pack("v", length($msg) + 4) . $msg;
+	sendMsgToServer(\$remote_socket, $packet);
+}
+
+sub cmdGmmapmove {
+	my (undef, $args) = @_;
+	return unless ($conState == 5);
+
+	my ($map_name) = $args =~ /(\S+)/;
+	# this will pack as 0 if it fails to match
+	my ($x, $y) = $args =~ /\w+ (\d+) (\d+)/;
+
+	if ($map_name eq '') {
+		error "Usage: gmmapmove <FIELD>\n";
+		error "FIELD is a field name including .gat extension, like: gef_fild01.gat\n";
+		return;
+	}
+
+	my $packet = pack("C*", 0x40, 0x01) . pack("a16", $map_name) . pack("v1 v1", $x, $y);
+	sendMsgToServer(\$remote_socket, $packet);
+}
+
+sub cmdGmsummon {
+	my (undef, $args) = @_;
+	return unless ($conState == 5);
+
+	if ($args eq '') {
+		error "Usage: gmsummon <player_name>\n";
+		return;
+	}
+
+	my $packet = pack("C*", 0xBD, 0x01).pack("a24", $args);
+	sendMsgToServer(\$remote_socket, $packet);
+}
+
+sub cmdGmdc {
+	my (undef, $args) = @_;
+	return unless ($conState == 5);
+
+	if ($args !~ /^\d+$/) {
+		error "Usage: gmdc <player_AID>\n";
+		return;
+	}
+
+	my $packet = pack("C*", 0xCC, 0x00).pack("V1", $args);
+	sendMsgToServer(\$remote_socket, $packet);
+}
+
+sub cmdGmkillall {
+	return unless ($conState == 5);
+	my $packet = pack("C*", 0xCE, 0x00);
+	sendMsgToServer(\$remote_socket, $packet);
+}
+
+sub cmdGmcreate {
+	my (undef, $args) = @_;
+	return unless ($conState == 5);
+
+	if ($args eq '') {
+		error "Usage: gmcreate (<MONSTER_NAME> || <Item_Name>) \n";
+		return;
+	}
+
+	my $packet = pack("C*", 0x3F, 0x01).pack("a24", $args);
+	sendMsgToServer(\$remote_socket, $packet);
+}
+
+sub cmdGmhide {
+	return unless ($conState == 5);
+	my $packet = pack("C*", 0x9D, 0x01, 0x40, 0x00, 0x00, 0x00);
+	sendMsgToServer(\$remote_socket, $packet);
+}
+
+sub cmdGmresetstate {
+	my $packet = pack("C1 C1 v1", 0x97, 0x01, 0);
+	sendMsgToServer(\$remote_socket, $packet);
+}
+
+sub cmdGmresetskill {
+	my $packet = pack("C1 C1 v1", 0x97, 0x01, 1);
+	sendMsgToServer(\$remote_socket, $packet);
+}
+
+sub cmdGmmute {
+	my (undef, $args) = @_;
+	my ($ID, $time) = $args =~ /^(\d+) (\d+)/;
+	if (!$ID) {
+		error "Usage: gmmute <ID> <minutes>\n";
+		return;
+	}
+	my $packet = pack("C1 C1 V1 C1 v1", 0x49, 0x01, $ID, 1, $time);
+	sendMsgToServer(\$remote_socket, $packet);
+}
+
+sub cmdGmunmute {
+	my (undef, $args) = @_;
+	my ($ID, $time) = $args =~ /^(\d+) (\d+)/;
+	if (!$ID) {
+		error "Usage: gmunmute <ID> <minutes>\n";
+		return;
+	}
+	my $packet = pack("C1 C1 V1 C1 v1", 0x49, 0x01, $ID, 0, $time);
+	sendMsgToServer(\$remote_socket, $packet);
+}
+
+sub cmdGmwarpto {
+	my (undef, $args) = @_;
+	return unless ($conState == 5);
+
+	if ($args eq '') {
+		error "Usage: gmwarpto <Player Name>\n";
+		return;
+	}
+
+	my $packet = pack("C*", 0xBB, 0x01).pack("a24", $args);
+	sendMsgToServer(\$remote_socket, $packet);
 }
 
 sub cmdGuild {
