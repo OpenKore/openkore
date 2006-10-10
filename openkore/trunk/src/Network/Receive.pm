@@ -2002,11 +2002,12 @@ sub egg_list {
 sub emoticon {
 	my ($self, $args) = @_;
 	my $emotion = $emotions_lut{$args->{type}}{display} || "<emotion #$args->{type}>";
+	
 	if ($args->{ID} eq $accountID) {
 		message "$char->{name}: $emotion\n", "emotion";
 		chatLog("e", "$char->{name}: $emotion\n") if (existsInList($config{'logEmoticons'}, $args->{type}) || $config{'logEmoticons'} eq "all");
-
-	} elsif ((my $player = $playersList->getByID($args->{ID}))) {
+		
+	} elsif (my $player = $playersList->getByID($args->{ID})) {
 		my $name = $player->name;
 
 		#my $dist = "unknown";
@@ -2037,8 +2038,12 @@ sub emoticon {
 				AI::queue("sendEmotion", \%args);
 			}
 		}
-	} elsif ((my $monster = $monstersList->getByID($args->{ID}))) {
-		# Do nothing yet
+	} elsif (my $monster = $monstersList->getByID($args->{ID})) {
+		my $dist = distance($char->{pos_to}, $monster->{pos_to});
+		$dist = sprintf("%.1f", $dist) if ($dist =~ /\./);
+
+		# Translation Comment: "[dist=$dist] $monster->name ($monster->{binID}): $emotion\n"
+		message TF("[dist=%s] Monster %s (%d): %s\n", $dist, $monster->name, $monster->{binID}, $emotion), "emotion";
 		
 	} else {
 		my $actor = Actor::get($args->{ID});
@@ -2050,7 +2055,7 @@ sub emoticon {
 			$dist = sprintf("%.1f", $dist) if ($dist =~ /\./);
 		}
 		
-		message TF("[dist=%s] %s: %s\n", $dist, $actor->{nameIdx}, $emotion), "emotion";
+		message TF("[dist=%s] %s: %s\n", $dist, $actor->nameIdx, $emotion), "emotion";
 		chatLog("e", "$name".": $emotion\n") if (existsInList($config{'logEmoticons'}, $args->{type}) || $config{'logEmoticons'} eq "all");
 	}
 }
