@@ -620,7 +620,7 @@ sub processEscapeUnknownMaps {
 	# Todo: Make kore do a random walk searching for portal if there's no portal arround.
 
 	if (AI::action eq "escape" && $AI == 2) {
-		my $skip = 0;
+		my $skip = 0;                   
 		if (timeOut($timeout{ai_route_escape}) && $timeout{ai_route_escape}{time}){
 			AI::dequeue;
 			if ($portalsID[0]) {
@@ -661,7 +661,7 @@ sub processEscapeUnknownMaps {
 				}
 			} while (--$i && !checkFieldWalkable(\%field, $randX, $randY));
 			if (!$i) {
-				error T("Invalid coordinates specified for randomWalk (coordinates are unwalkable); randomWalk disabled\n");
+				error T("Invalid coordinates specified for randomWalk\n Retrying...");
 			} else {
 				message TF("Calculating random route to: %s(%s): %s, %s\n", $maps_lut{$field{name}.'.rsw'}, $field{name}, $randX, $randY), "route";
 				ai_route($field{name}, $randX, $randY,
