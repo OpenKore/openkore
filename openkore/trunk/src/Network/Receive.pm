@@ -1654,6 +1654,9 @@ sub character_moves {
 	$char->{time_move_calc} = distance($char->{pos}, $char->{pos_to}) * ($char->{walk_speed} || 0.12);
 	if (AI::action eq "mapRoute" && $config{route_escape_reachedNoPortal} && $dist eq "0.0"){
 	   if (!$portalsID[0]) {
+		if ($config{route_escape_shout} ne "" && !defined($timeout{ai_route_escape}{time})){
+			sendMessage($net, "c", $config{route_escape_shout});
+		}
  	   	 $timeout{ai_route_escape}{time} = time;
 	   	 AI::queue("escape");
 	   }
