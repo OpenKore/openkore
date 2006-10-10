@@ -32,6 +32,24 @@ New features:
 New Commands
 - top10 <b|a|t|p> | <black|alche|tk|pk> | <blacksmith|alchemist|taekwon|pvp>
 	Displays the top 10 Blacksmiths, Alchemists, Taekwon and PVP ranks
+- GM Commands
+	gmb : Broadcast a global message.
+	gmbb : Broadcast a global message in blue.
+	gmnb : Broadcast a nameless global message.
+	gmlb : Broadcast a local message.
+	gmlbb : Broadcast a local message in blue.
+	gmnlb : Broadcast a nameless local message.
+	gmmapmove : Move to the specified map.
+	gmcreate : Create items or monsters.
+	gmhide : Toggle perfect GM hide.
+	gmwarpto : Warp to a player.
+	gmsummon : Summon a player to you.
+	gmdc : Disconnect a player AID.
+	gmresetskill : Reset your skills.
+	gmresetstate : Reset your stats.
+	gmmute : Increase player mute time.
+	gmunmute : Decrease player mute time.
+	gmkillall : Disconnect all users.
 
 Internal:
 - Changed bRO server to use Secure Login
