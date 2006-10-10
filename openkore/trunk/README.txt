@@ -21,9 +21,13 @@ New config options:
 - dealAuto_names <list of player names>
     If non-empty and dealAuto is set to 2 or 3, then bot will only deal with
     players on the list. (Other players will be treated as dealAuto 0.)
-    
+- route_escape_shout <Message>
+	Makes kore look "human like" during bot checks which involves warping people to
+	portaless maps.
+
 New features:
 - Basic support for euRO (serverType 11) (Without attack, sit, stand and skill use)
+- Added route_escape_shout <Message> to somewhat avoid gm bot check.
 
 New Commands
 - top10 <b|a|t|p> | <black|alche|tk|pk> | <blacksmith|alchemist|taekwon|pvp>
