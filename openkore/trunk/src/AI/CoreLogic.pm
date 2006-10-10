@@ -1057,6 +1057,9 @@ sub processMapRouteAI {
 					"to [%s%s] (no map solution).\n", $field{name}, $char->{pos_to}{x}, $char->{pos_to}{y}, $args->{dest}{map}, ${destpos}), "route";
 				AI::dequeue;
                     if ($config{route_escape_unknownMap}) {
+					if ($config{route_escape_shout} ne "" && !defined($timeout{ai_route_escape}{time})){
+						sendMessage($net, "c", $config{route_escape_shout});
+					}
 				   $timeout{ai_route_escape}{time} = time;
 				   AI::queue("escape");
        			}
