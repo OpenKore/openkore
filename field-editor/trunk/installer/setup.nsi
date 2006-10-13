@@ -16,14 +16,11 @@ XPStyle on
 ReserveFile "dotnet.ini"
 !insertmacro MUI_RESERVEFILE_INSTALLOPTIONS
 
-Function .onInit
-	!insertmacro MUI_INSTALLOPTIONS_EXTRACT "dotnet.ini"
-FunctionEnd
-
 
 ; ---- Global variables ----
 
 var StartMenuName
+var AddRemoveKey
 
 
 ; ---- Pages ----
@@ -53,6 +50,9 @@ page custom CheckDependencies CheckErrors
 
 Section "Field Editor"
 	SetOutPath $INSTDIR
+
+	call IsGtkSharpInstalled
+
 	File ..\bin\Release\FieldEditor.exe
 
 	!insertmacro MUI_STARTMENU_WRITE_BEGIN OpenKore
@@ -61,18 +61,34 @@ Section "Field Editor"
 	!insertmacro MUI_STARTMENU_WRITE_END
 
 	WriteUninstaller "$INSTDIR\UninstallFieldEditor.exe"
+
+	StrCpy $AddRemoveKey "Software\Microsoft\Windows\CurrentVersion\Uninstall\OpenKore Field Editor"
+	WriteRegStr HKLM $AddRemoveKey "DisplayName" "OpenKore Field Editor"
+	WriteRegStr HKLM $AddRemoveKey "UninstallString" "$INSTDIR\UninstallFieldEditor.exe"
 SectionEnd
 
 Section "Uninstall"
 	!insertmacro MUI_STARTMENU_GETFOLDER OpenKore $R0
-	Delete "$SMPROGRAMS\$R0\FieldEditor.lnk"
+	Delete "$SMPROGRAMS\$R0\Field Editor.lnk"
+	RMDir "$SMPROGRAMS\$R0"
+
 	Delete "$INSTDIR\FieldEditor.exe"
 	Delete "$INSTDIR\UninstallFieldEditor.exe"
+
+	StrCpy $AddRemoveKey "Software\Microsoft\Windows\CurrentVersion\Uninstall\OpenKore Field Editor"
+	DeleteRegValue HKLM $AddRemoveKey "DisplayName"
+	DeleteRegValue HKLM $AddRemoveKey "UninstallString"
+	DeleteRegKey HKLM $AddRemoveKey
 	RMDir "$INSTDIR"
 SectionEnd
 
 
 ; ---- Functions ----
+
+Function .onInit
+	call IsGtkSharpInstalled
+	!insertmacro MUI_INSTALLOPTIONS_EXTRACT "dotnet.ini"
+FunctionEnd
 
 Function CheckDependencies
 	Banner::show /NOUNLOAD "Checking for .NET Framework..."
@@ -113,4 +129,8 @@ Function IsDotNETInstalled
 	done:
 	Pop $1
 	Exch $0
+FunctionEnd
+
+Function IsGtkSharpInstalled
+	
 FunctionEnd
