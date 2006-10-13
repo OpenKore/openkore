@@ -2,8 +2,9 @@
 
 Name "OpenKore Field Editor"
 SetCompressor /SOLID zlib
-OutFile test.exe
+OutFile InstallFieldEditor.exe
 SetPluginUnload alwaysoff
+InstallDir "$PROGRAMFILES\OpenKore"
 XPStyle on
 
 
@@ -33,10 +34,11 @@ var StartMenuName
 page custom CheckDependencies CheckErrors
 !insertmacro MUI_PAGE_DIRECTORY
 
+!define MUI_STARTMENUPAGE_DEFAULTFOLDER "OpenKore"
 !define MUI_STARTMENUPAGE_REGISTRY_ROOT "HKCU" 
 !define MUI_STARTMENUPAGE_REGISTRY_KEY "Software\OpenKore Field Editor"
 !define MUI_STARTMENUPAGE_REGISTRY_VALUENAME "Start Menu Folder"
-!insertmacro MUI_PAGE_STARTMENU OpenKore $StartMenuFolder
+!insertmacro MUI_PAGE_STARTMENU OpenKore $StartMenuName
 
 !insertmacro MUI_PAGE_INSTFILES
 !insertmacro MUI_PAGE_FINISH
@@ -52,7 +54,21 @@ page custom CheckDependencies CheckErrors
 Section "Field Editor"
 	SetOutPath $INSTDIR
 	File ..\bin\Release\FieldEditor.exe
-	WriteUninstaller $INSTDIR\uninstaller.exe
+
+	!insertmacro MUI_STARTMENU_WRITE_BEGIN OpenKore
+	CreateDirectory "$SMPROGRAMS\$StartMenuName"
+	CreateShortCut "$SMPROGRAMS\$StartMenuName\Field Editor.lnk" "$INSTDIR\FieldEditor.exe"
+	!insertmacro MUI_STARTMENU_WRITE_END
+
+	WriteUninstaller "$INSTDIR\UninstallFieldEditor.exe"
+SectionEnd
+
+Section "Uninstall"
+	!insertmacro MUI_STARTMENU_GETFOLDER OpenKore $R0
+	Delete "$SMPROGRAMS\$R0\FieldEditor.lnk"
+	Delete "$INSTDIR\FieldEditor.exe"
+	Delete "$INSTDIR\UninstallFieldEditor.exe"
+	RMDir "$INSTDIR"
 SectionEnd
 
 
