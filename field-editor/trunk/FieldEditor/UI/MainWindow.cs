@@ -39,6 +39,11 @@ public class MainWindow {
 
 		splitPane.Position = 320;
 
+		try {
+			window.Icon = Gdk.Pixbuf.LoadFromResource("FieldEditor.ico");
+		} catch (ArgumentException) {
+			// Do nothing, this error is not fatal.
+		} 
 		window.Show();
 	}
 

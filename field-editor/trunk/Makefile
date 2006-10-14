@@ -13,8 +13,8 @@ SOURCES2=GtkSharpCheck/*.cs
 
 all: $(OUTPUT) $(OUTPUT2)
 
-$(OUTPUT): $(SOURCES) FieldEditor/glade/*.glade
-	mcs $(PKGS) $(SOURCES) -out:$(OUTPUT) $(FLAGS) $(RESOURCES)
+$(OUTPUT): $(SOURCES) FieldEditor/glade/*.glade FieldEditor/FieldEditor.ico
+	mcs $(PKGS) $(SOURCES) -out:$(OUTPUT) $(FLAGS) $(RESOURCES) -win32icon:FieldEditor/FieldEditor.ico
 
 $(OUTPUT2): $(SOURCES2)
 	mcs $(SOURCES2) -out:$(OUTPUT2) $(FLAGS)
