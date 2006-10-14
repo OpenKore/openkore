@@ -4,7 +4,8 @@ Name "OpenKore Field Editor"
 SetCompressor /SOLID zlib
 OutFile InstallFieldEditor.exe
 SetPluginUnload alwaysoff
-InstallDir "$PROGRAMFILES\OpenKore FieldEditor"
+ShowInstDetails show
+InstallDir "$PROGRAMFILES\OpenKore Field Editor"
 XPStyle on
 
 
@@ -12,11 +13,14 @@ XPStyle on
 
 !include "MUI.nsh"
 !include "WinMessages.nsh"
+!include "DotNet.nsh"
+!include "GtkSharp.nsh"
 
 
-ReserveFile "dotnet.ini"
-ReserveFile "..\bin\Release\GtkSharpCheck.exe"
+!insertmacro DOT_NET_RESERVE_FILE
+!insertmacro GTK_SHARP_RESERVE_FILE
 !insertmacro MUI_RESERVEFILE_INSTALLOPTIONS
+!insertmacro MUI_RESERVEFILE_LANGDLL
 
 
 ; ---- Global variables ----
@@ -30,7 +34,7 @@ var AddRemoveKey
 !define MUI_ABORTWARNING
 
 !insertmacro MUI_PAGE_WELCOME
-page custom CheckDependencies CheckErrors
+!insertmacro DOT_NET_CHECK_PAGE
 !insertmacro MUI_PAGE_LICENSE "..\LICENSE.TXT"
 !insertmacro MUI_PAGE_DIRECTORY
 
@@ -52,24 +56,10 @@ page custom CheckDependencies CheckErrors
 ; ---- Sections ----
 
 Section "Field Editor"
+	call GtkSharp_Install
+
 	SetOutPath $INSTDIR
 
-	call IsGtkSharpInstalled
-	pop $0
-	StrCmp $0 0 gtkSharpInstalled
-
-	; Download and install Gtk-Sharp.
-	DetailPrint "Gtk-Sharp is not installed. Download it from Internet..."
-	NSISdl::download "http://forge.novell.com/modules/xfcontent/private.php/gtks-inst4win/Win32%20Runtime%20Installer/v2.7.1/gtksharp-runtime-2.7.1-win32-0.4.exe" "$PLUGINSDIR\gtksharp-runtime.exe"
-	ExecWait "$PLUGINSDIR\gtksharp-runtime.exe" $0
-	StrCmp $0 0 gtkSharpInstalled
-
-	; Gtk-Sharp failed to install.
-	SetErrors
-	SetErrorLevel 2
-	Abort "Unable to install required dependency Gtk-Sharp."
-
-	gtkSharpInstalled:
 	File ..\bin\Release\FieldEditor.exe
 
 	!insertmacro MUI_STARTMENU_WRITE_BEGIN OpenKore
@@ -103,58 +93,6 @@ SectionEnd
 ; ---- Functions ----
 
 Function .onInit
-	!insertmacro MUI_INSTALLOPTIONS_EXTRACT "dotnet.ini"
-FunctionEnd
-
-Function CheckDependencies
-	Banner::show /NOUNLOAD "Checking for .NET Framework..."
-	call IsDotNETInstalled
-	Banner::destroy
-	pop $0
-	StrCmp $0 1 done noDotNet
-
-	noDotNet:
-	SetErrors
-	!insertmacro MUI_HEADER_TEXT "Microsoft .NET Framework not found" ""
-	!insertmacro MUI_INSTALLOPTIONS_DISPLAY "dotnet.ini"
-	goto done
-
-	done:
-FunctionEnd
-
-Function CheckErrors
-	IfErrors +1 done
-	quit
-	done:
-FunctionEnd
-
-Function IsDotNETInstalled
-	Push $0
-	Push $1
-
-	System::Call "mscoree::GetCORVersion(w .r0, i ${NSIS_MAX_STRLEN}, *i) i .r1"
-	StrCmp $1 0 foundDotNet noDotNet
-
-	noDotNET:
-	StrCpy $0 0
-	Goto done
-
-	foundDotNET:
-	StrCpy $0 1
-
-	done:
-	Pop $1
-	Exch $0
-FunctionEnd
-
-; Check whether Gtk-Sharp is installed.
-; Usage:
-;   call IsGtkSharpInstalled
-;   pop $0
-;   StrCmp $0 0 is_installed not_installed
-Function IsGtkSharpInstalled
-	Push $0
-	File "/oname=$PLUGINSDIR\GtkSharpCheck.exe" ..\bin\Release\GtkSharpCheck.exe
-	ExecWait '"$PLUGINSDIR\GtkSharpCheck.exe"' $0
-	Exch $0
+	!insertmacro DOT_NET_INIT
+	!insertmacro GTK_SHARP_INIT
 FunctionEnd
