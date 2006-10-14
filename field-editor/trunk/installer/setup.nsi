@@ -4,7 +4,7 @@ Name "OpenKore Field Editor"
 SetCompressor /SOLID zlib
 OutFile InstallFieldEditor.exe
 SetPluginUnload alwaysoff
-InstallDir "$PROGRAMFILES\OpenKore"
+InstallDir "$PROGRAMFILES\OpenKore FieldEditor"
 XPStyle on
 
 
@@ -13,7 +13,9 @@ XPStyle on
 !include "MUI.nsh"
 !include "WinMessages.nsh"
 
+
 ReserveFile "dotnet.ini"
+ReserveFile "..\bin\Release\GtkSharpCheck.exe"
 !insertmacro MUI_RESERVEFILE_INSTALLOPTIONS
 
 
@@ -29,6 +31,7 @@ var AddRemoveKey
 
 !insertmacro MUI_PAGE_WELCOME
 page custom CheckDependencies CheckErrors
+!insertmacro MUI_PAGE_LICENSE "..\LICENSE.TXT"
 !insertmacro MUI_PAGE_DIRECTORY
 
 !define MUI_STARTMENUPAGE_DEFAULTFOLDER "OpenKore"
@@ -52,7 +55,21 @@ Section "Field Editor"
 	SetOutPath $INSTDIR
 
 	call IsGtkSharpInstalled
+	pop $0
+	StrCmp $0 0 gtkSharpInstalled
 
+	; Download and install Gtk-Sharp.
+	DetailPrint "Gtk-Sharp is not installed. Download it from Internet..."
+	NSISdl::download "http://forge.novell.com/modules/xfcontent/private.php/gtks-inst4win/Win32%20Runtime%20Installer/v2.7.1/gtksharp-runtime-2.7.1-win32-0.4.exe" "$PLUGINSDIR\gtksharp-runtime.exe"
+	ExecWait "$PLUGINSDIR\gtksharp-runtime.exe" $0
+	StrCmp $0 0 gtkSharpInstalled
+
+	; Gtk-Sharp failed to install.
+	SetErrors
+	SetErrorLevel 2
+	Abort "Unable to install required dependency Gtk-Sharp."
+
+	gtkSharpInstalled:
 	File ..\bin\Release\FieldEditor.exe
 
 	!insertmacro MUI_STARTMENU_WRITE_BEGIN OpenKore
@@ -86,7 +103,6 @@ SectionEnd
 ; ---- Functions ----
 
 Function .onInit
-	call IsGtkSharpInstalled
 	!insertmacro MUI_INSTALLOPTIONS_EXTRACT "dotnet.ini"
 FunctionEnd
 
@@ -100,7 +116,7 @@ Function CheckDependencies
 	noDotNet:
 	SetErrors
 	!insertmacro MUI_HEADER_TEXT "Microsoft .NET Framework not found" ""
-	!insertmacro MUI_INSTALLOPTIONS_DISPLAY "ui.ini"
+	!insertmacro MUI_INSTALLOPTIONS_DISPLAY "dotnet.ini"
 	goto done
 
 	done:
@@ -131,6 +147,14 @@ Function IsDotNETInstalled
 	Exch $0
 FunctionEnd
 
+; Check whether Gtk-Sharp is installed.
+; Usage:
+;   call IsGtkSharpInstalled
+;   pop $0
+;   StrCmp $0 0 is_installed not_installed
 Function IsGtkSharpInstalled
-	
+	Push $0
+	File "/oname=$PLUGINSDIR\GtkSharpCheck.exe" ..\bin\Release\GtkSharpCheck.exe
+	ExecWait '"$PLUGINSDIR\GtkSharpCheck.exe"' $0
+	Exch $0
 FunctionEnd
