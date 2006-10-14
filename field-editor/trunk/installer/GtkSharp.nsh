@@ -11,7 +11,7 @@ Function GtkSharp_Install
 	DetailPrint "Checking whether Gtk-Sharp Runtime Environment is installed..."
 	call GtkSharp_IsInstalled
 	pop $0
-	StrCmp $0 1 done noGtkSharp
+	StrCmp $0 0 done noGtkSharp
 
 	; Download and install Gtk-Sharp.
 	noGtkSharp:
