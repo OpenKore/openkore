@@ -98,7 +98,8 @@ namespace OSL {
 	 * }
 	 * @endcode
 	 *
-	 * <h2>Usage</h2>
+	 *
+	 * @section Usage
 	 * Smart pointers behave just like normal pointers. Instead of <tt>Foo *</tt>
 	 * you write <tt>Pointer<Foo></tt>.
 	 *
@@ -121,7 +122,8 @@ namespace OSL {
 	 * bar = NULL;   // The Foo instance is now deleted.
 	 * @endcode
 	 *
-	 * <h2>Caveats</h2>
+	 *
+	 * @section Caveats
 	 * Don't create two smart pointers to the same data. Newly instantiated
 	 * smart pointers don't know about other smart pointers that reference
 	 * the same data. You may only copy existing smart pointers.
