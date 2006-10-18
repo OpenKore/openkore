@@ -81,6 +81,7 @@ public:
 };
 
 /**
+ * @internal
  * An internal class which implements WinSocket's output stream.
  */
 class OutStream: public OutputStream {

@@ -35,6 +35,49 @@ namespace OSL {
 	 * in the OpenKore Standard Library.
 	 *
 	 * This object class provides thread-safe reference counting abilities.
+	 * Reference counting is very useful if two classes reference the same
+	 * Object, but the Object should only be destroyed if both referer classes
+	 * are destroyed. (But see also Pointer for an alternative approach, using
+	 * smart pointers.)
+	 *
+	 * Reference counting example:
+	 * @code
+	 * class Foo {
+	 * private:
+	 *     Object *o;
+	 * public:
+	 *     Foo(Object *o) {
+	 *         this->o = o;
+	 *         // Increase the reference count since
+	 *         // we're holding a reference to o.
+	 *         o->ref();
+	 *     }
+	 *
+	 *     ~Foo() {
+	 *         o->unref();
+	 *     }
+	 * };
+	 *
+	 * void some_function() {
+	 *     Object *o = new Object();
+	 *     // o's reference count is now 1.
+	 *
+	 *     Foo *foo = new Foo(o);  // o's reference count is now 2.
+	 *     Foo *bar = new Foo(o);  // o's reference count is now 3.
+	 *
+	 *     // We only want to pass o to the two Foo instances,
+	 *     // we don't do anything else with o. So we lower o's
+	 *     // reference count. It won't be deleted now because
+	 *     // both Foo instances have increased o's reference
+	 *     // count.
+	 *     o->unref();
+	 *     // o's reference count is now 2.
+	 *
+	 *     delete foo;   // o's reference count is now 1.
+	 *     delete bar;   // o's reference count is now 0.
+	 *     // now o is deleted.
+	 * }
+	 * @endcode
 	 *
 	 * @ingroup Base
 	 */
