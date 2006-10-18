@@ -10,6 +10,22 @@ sources = []
 # XS source files (input : output)
 XS_sources = {}
 
+### OpenKore Standard Library
+env.StaticObject(Split('''
+	OSL/Object.cpp
+	OSL/Exception.cpp
+	OSL/Pointer.cpp
+	OSL/Net/Socket.cpp
+	OSL/Net/ServerSocket.cpp
+	OSL/Threading/Runnable.cpp
+	OSL/Threading/MutexLocker.cpp
+	OSL/Threading/Atomic.cpp
+	OSL/Threading/Mutex.cpp
+	OSL/Threading/Thread.cpp
+	OSL/IO/OutputStream.cpp
+	OSL/IO/IOException.cpp
+	OSL/IO/BufferedOutputStream.cpp
+'''))
 
 ### Pathfinding
 sources += [
