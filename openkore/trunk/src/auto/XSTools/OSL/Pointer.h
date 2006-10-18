@@ -59,6 +59,8 @@ namespace OSL {
 	 *
 	 * Smart pointers allow you to create multiple references to shared
 	 * data structures, and can perform automatic memory management.
+	 * See <a href="http://www.google.com/search?q=C%2B%2B+smart+pointer">Google
+	 * search results on C++ smart pointers</a> for more information and tutorials.
 	 *
 	 * Normal pointers have to be managed manually:
 	 * @code
@@ -70,8 +72,7 @@ namespace OSL {
 	 *     return new string("hello world");
 	 * }
 	 *
-	 * void some_function_2()
-	 * {
+	 * void some_function_2() {
 	 *     some_function();  // Memory leak!
 	 * }
 	 * @endcode
@@ -79,8 +80,7 @@ namespace OSL {
 	 * With smart pointers, the referenced data only deleted automatically
 	 * when the last smart pointer is deleted:
 	 * @code
-	 * Pointer<string> some_function()
-	 * {
+	 * Pointer<string> some_function() {
 	 *     Pointer<string> bar;
 	 *     do {
 	 *         Pointer<string> foo(string("hello world"));
@@ -91,8 +91,7 @@ namespace OSL {
 	 *     return bar;
 	 * }
 	 *
-	 * void some_function2()
-	 * {
+	 * void some_function2() {
 	 *     some_function();
 	 *     // bar is now automatically deleted. No memory leak!
 	 * }

@@ -24,6 +24,10 @@
 
 #define DEFAULT_BACKLOG_SIZE 5
 
+/**
+ * @internal
+ * An internal class which implements ServerSocket on Windows.
+ */
 class WinServerSocket: public ServerSocket {
 private:
 	/** The server socket. */
