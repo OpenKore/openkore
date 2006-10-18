@@ -28,7 +28,7 @@
  * The OpenKore Standard Library (OSL) is a portability and utility library for
  * C++. Highlights:
  * - Usage of modern C++ features such as templates and namespaces.
- * - Small and statically linkable.
+ * - Small and statically linkable. No need for external DLLs.
  * - Easy to integrate with your project. You can just copy the source files to
  *   your project, and it should compile out-of-the-box without configuring macros
  *   or anything like that.
@@ -37,6 +37,14 @@
  * - Unit tested to maximize stability and to prevent regressions.
  *
  * Read the <a href="modules.html">Modules</a> page to get started.
+ *
+ * @section Namespaces
+ * All classes in the OpenKore Standard Library are in the <tt>OSL</tt> namespace.
+ * So be sure to include the namespace in your source code:
+ * @code
+ * #include <OSL/Whatever.h>
+ * using namespace OSL;
+ * @endcode
  */
 
 #ifndef _OSL_OBJECT_H_
