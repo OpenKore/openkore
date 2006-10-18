@@ -29,6 +29,7 @@ namespace OSL {
 	 * This abstract class does not guarantee thread-safety.
 	 * Thread-safety is implementation-dependent.
 	 *
+	 * @class InputStream OSL/IO/InputStream.h
 	 * @ingroup IO
 	 */
 	class InputStream: public Object {

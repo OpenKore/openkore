@@ -58,6 +58,7 @@ namespace OSL {
 	 * thus the mutex is automatically unlocked, even in the event of an
 	 * unhandled exception.
 	 *
+	 * @class MutexLocker OSL/Threading/MutexLocker.h
 	 * @ingroup Threading
 	 */
 	class MutexLocker {

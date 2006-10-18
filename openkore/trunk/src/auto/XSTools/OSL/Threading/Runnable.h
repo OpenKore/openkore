@@ -27,6 +27,7 @@ namespace OSL {
 	 * An interface for a class which contains a function.
 	 * This is usually used in combination with Thread.
 	 *
+	 * @interface Runnable OSL/Threading/Runnable.h
 	 * @ingroup Threading
 	 */
 	class Runnable {

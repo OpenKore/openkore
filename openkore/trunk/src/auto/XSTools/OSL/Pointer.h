@@ -29,6 +29,7 @@ namespace OSL {
 	/**
 	 * Thrown when a NULL Pointer class is unable to dereference itself.
 	 *
+	 * @class PointerException OSL/Pointer.h
 	 * @ingroup Base
 	 */
 	class PointerException: public Exception {
@@ -141,6 +142,7 @@ namespace OSL {
 	 * // Memory corruption!
 	 * @endcode
 	 *
+	 * @class Pointer OSL/Pointer.h
 	 * @ingroup Base
 	 */
 	template <class T>
