@@ -29,8 +29,12 @@
 namespace OSL {
 
 	/**
-	 * An exception object.
+	 * An exception object. Unlike std::exception, this class allows
+	 * the creator to specify an error message and an error code.
 	 *
+	 * This class guarantees thread-safety.
+	 *
+	 * @class Exception OSL/Exception.h
 	 * @ingroup Base
 	 */
 	class Exception: public Object, public std::exception {

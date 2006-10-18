@@ -28,6 +28,7 @@ namespace OSL {
 	/**
 	 * An input/output exception.
 	 *
+	 * @class IOException OSL/IO/IOException.h
 	 * @ingroup IO
 	 */
 	class IOException: public Exception {

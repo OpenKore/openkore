@@ -30,6 +30,7 @@ namespace OSL {
 	/**
 	 * Thrown when a socket exception occurs.
 	 *
+	 * @class SocketException OSL/Net/Socket.h
 	 * @ingroup Net
 	 */
 	class SocketException: public Exception {
@@ -40,6 +41,7 @@ namespace OSL {
 	/**
 	 * Thrown when a hostname cannot be resolved.
 	 *
+	 * @class HostNotFoundException OSL/Net/Socket.h
 	 * @ingroup Net
 	 */
 	class HostNotFoundException: public Exception {
@@ -53,6 +55,7 @@ namespace OSL {
 	 * When this class is destroyed, its input and out streams are closed
 	 * and dereferenced.
 	 *
+	 * @class Socket OSL/Net/Socket.h
 	 * @ingroup Net
 	 */
 	class Socket: public Object {
@@ -83,10 +86,12 @@ namespace OSL {
 		 * Returns the input stream for this socket. This stream can be
 		 * used to receive data from the socket.
 		 *
-		 * Note that when read() returns -1, it means that the peer
-		 * has closed the connection. read() will never return 0.
+		 * @note
+		 *    When read() returns -1, it means that the peer
+		 *    has closed the connection. read() will never return 0.
 		 *
-		 * This stream is thread-safe.
+		 * @note
+		 *    This stream is thread-safe.
 		 *
 		 * @post result != NULL
 		 */
@@ -96,13 +101,14 @@ namespace OSL {
 		 * Returns the output stream for this socket.
 		 * This stream can be used to send data through the socket.
 		 *
-		 * You may want to wrap a BufferedOutputStream() arround this
+		 * You may want to wrap a BufferedOutputStream arround this
 		 * for performance gains, unless you're writing large chunks of
 		 * data at a time.
 		 *
-		 * This stream is thread-safe.
+		 * @note
+		 *    This stream is thread-safe.
 		 *
-		 * @post result != NULL;
+		 * @post result != NULL
 		 */
 		virtual OutputStream *getOutputStream() const = 0;
 	};

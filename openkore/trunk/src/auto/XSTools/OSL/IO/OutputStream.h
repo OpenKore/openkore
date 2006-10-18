@@ -33,6 +33,7 @@ namespace OSL {
 	 * dependent on the concrete subclass. Though you can use createThreadSafe()
 	 * to create a thread-safe wrapper around the current class.
 	 *
+	 * @class OutputStream OSL/IO/OutputStream.h
 	 * @ingroup IO
 	 */
 	class OutputStream: public Object {

@@ -30,6 +30,7 @@ namespace OSL {
 	/**
 	 * Thrown when unable to start a Thread.
 	 *
+	 * @class ThreadException OSL/Threading/Thread.h
 	 * @ingroup Threading
 	 */
 	class ThreadException: public Exception {
@@ -40,6 +41,7 @@ namespace OSL {
 	/**
 	 * A thread object.
 	 *
+	 * @class Thread OSL/Threading/Thread.h
 	 * @ingroup Threading
 	 */
 	class Thread: public Runnable {

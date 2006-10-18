@@ -34,6 +34,7 @@ namespace OSL {
 	 * This is a lock which can be used to ensure that no two
 	 * threads can access the same resource simultaneously.
 	 *
+	 * @class Mutex OSL/Threading/Mutex.h
 	 * @ingroup Threading
 	 */
 	class Mutex {

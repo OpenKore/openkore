@@ -29,6 +29,7 @@ namespace OSL {
 	/**
 	 * A TCP/IP server socket.
 	 *
+	 * @class ServerSocket OSL/Net/ServerSocket.h
 	 * @ingroup Net
 	 */
 	class ServerSocket: public Object {

@@ -36,6 +36,7 @@ namespace OSL {
 	 *
 	 * This implementation is NOT thread-safe!
 	 *
+	 * @class BufferedOutputStream OSL/IO/BufferedOutputStream.h
 	 * @ingroup IO
 	 */
 	class BufferedOutputStream: public OutputStream {
@@ -59,6 +60,7 @@ namespace OSL {
 		unsigned int count;
 
 	public:
+		/** The default buffer size. */
 		static const unsigned int DEFAULT_BUFFER_SIZE = 512;
 
 		/**
