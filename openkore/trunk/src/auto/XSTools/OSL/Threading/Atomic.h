@@ -40,6 +40,7 @@ namespace OSL {
 	 *
 	 * @class Atomic OSL/Threading/Atomic.h
 	 * @ingroup Threading
+	 * @see OSL::Mutex
 	 */
 	class Atomic {
 	public:

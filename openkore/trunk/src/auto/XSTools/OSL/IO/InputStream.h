@@ -22,12 +22,19 @@
 #define _OSL_INPUT_STREAM_H_
 
 #include "../Object.h"
+#include "IOException.h"
 
 namespace OSL {
 	/**
 	 * An abstract class for all input stream classes.
-	 * This abstract class does not guarantee thread-safety.
-	 * Thread-safety is implementation-dependent.
+	 *
+	 * An input stream is a stream from which data can be read. Where
+	 * the data originally came from depends on the concrete subclass.
+	 *
+	 * @note
+	 *    This abstract class does not guarantee thread-safety. Thread-safety
+	 *    depends on the concrete subclass. Though you can use
+	 *    createThreadSafe() to create a thread-safe wrapper around this class.
 	 *
 	 * @class InputStream OSL/IO/InputStream.h
 	 * @ingroup IO
@@ -42,8 +49,10 @@ namespace OSL {
 
 		/**
 		 * Check whether the end of the stream has been reached.
+		 *
+		 * @throws IOException
 		 */
-		virtual bool eof() const = 0;
+		virtual bool eof() const throw(IOException) = 0;
 
 		/**
 		 * Read up to size bytes of data from this stream.
@@ -57,7 +66,26 @@ namespace OSL {
 		 * @post if eof(): result == -1
 		 * @throws IOException
 		 */
-		virtual int read(char *buffer, unsigned int size) = 0;
+		virtual int read(char *buffer, unsigned int size) throw(IOException) = 0;
+
+		/**
+		 * Create a thread-safe wrapper around this InputStream.
+		 *
+		 * @post
+		 *     The current InputStream's reference will be increased by 1,
+		 *     and the return value will have a reference count of 1.
+		 * @post
+		 *     result != NULL
+		 *
+		 * @note
+		 *     The return value holds a reference to the current InputStream.
+		 *     When the return value is deleted, the current InputStream will be
+		 *     dereferenced. So make sure the current InputStream is not deleted
+		 *     manually before the return value is deleted. It's recommended that
+		 *     you use Object::ref() and Object::unref() instead of @c new and
+		 *     @c delete.
+		 */
+		virtual InputStream *createThreadSafe() throw();
 	};
 }
 

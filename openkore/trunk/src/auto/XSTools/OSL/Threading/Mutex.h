@@ -30,12 +30,13 @@
 namespace OSL {
 
 	/**
-	 * A mutex (also known as critical section on Windows) object.
+	 * A mutex object (Mutual Exclusion, also known as critical section on Windows).
 	 * This is a lock which can be used to ensure that no two
 	 * threads can access the same resource simultaneously.
 	 *
 	 * @class Mutex OSL/Threading/Mutex.h
 	 * @ingroup Threading
+	 * @see Atomic, Thread
 	 */
 	class Mutex {
 	private:

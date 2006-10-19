@@ -29,9 +29,14 @@ namespace OSL {
 	/**
 	 * An abstract base class for all output stream classes.
 	 *
-	 * This abstract class does not guarantee thread-safety. Thread-safety
-	 * dependent on the concrete subclass. Though you can use createThreadSafe()
-	 * to create a thread-safe wrapper around the current class.
+	 * An output stream is a stream to which data can be written. Where
+	 * the data will eventually end up depends on the concrete subclass.
+	 *
+	 * @note
+	 *    This abstract class does not guarantee thread-safety. Thread-safety
+	 *    dependent on the concrete subclass. Though you can use
+	 *    createThreadSafe() to create a thread-safe wrapper around the
+	 *    current class.
 	 *
 	 * @class OutputStream OSL/IO/OutputStream.h
 	 * @ingroup IO
@@ -69,20 +74,23 @@ namespace OSL {
 		virtual unsigned int write(const char *data, unsigned int size) throw(IOException) = 0;
 
 		/**
-		 * Create a thread-safe wrapper of this OutputStream.
+		 * Create a thread-safe wrapper around this OutputStream.
 		 *
 		 * @post
 		 *     The current OutputStream's reference will be increased by 1,
-		 *     and the returned OutputStream will have a reference count of 1.
+		 *     and the return value will have a reference count of 1.
+		 * @post
+		 *     result != NULL
 		 *
-		 *     The returned OutputStream holds a reference to the current OutputStream.
-		 *     When the returned OutputStream is freed, the current OutputStream will be
+		 * @note
+		 *     The return value holds a reference to the current OutputStream.
+		 *     When the return value is deleted, the current OutputStream will be
 		 *     dereferenced. So make sure the current OutputStream is not deleted
-		 *     manually before the returned OutputStream is deleted.
-		 *
-		 * @post result != NULL
+		 *     manually before the return value is deleted. It's recommended that
+		 *     you use Object::ref() and Object::unref() instead of @c new and
+		 *     @c delete.
 		 */
-		OutputStream *createThreadSafe() throw();
+		virtual OutputStream *createThreadSafe() throw();
 	};
 
 }

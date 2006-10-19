@@ -18,43 +18,54 @@
  *  MA  02110-1301  USA
  */
 
-class InStream;
-class OutStream;
+#ifndef _OSL_UNIX_SOCKET_H_
+#define _OSL_UNIX_SOCKET_H_
 
-/**
- * @internal
- * An implementation of Socket for Unix.
- */
-class UnixSocket: public Socket {
-private:
-	int fd;
-	InStream *in;
-	OutStream *out;
+namespace OSL {
+namespace _Intern {
 
-	void construct(int fd);
-
-public:
+	class InStream;
+	class OutStream;
+	
 	/**
-	 * Create a new UnixSocket.
-	 *
-	 * @param address The address of the server to connect to.
-	 * @param port    The port of the server.
-	 * @pre address != NULL
-	 * @pre port > 0
-	 * @throws SocketException
-	 */
-	UnixSocket(const char *address, unsigned short port);
+	* @internal
+	* An implementation of Socket for Unix.
+	*/
+	class UnixSocket: public Socket {
+	private:
+		int fd;
+		InStream *in;
+		OutStream *out;
+	
+		void construct(int fd);
+	
+	public:
+		/**
+		* Create a new UnixSocket.
+		*
+		* @param address The address of the server to connect to.
+		* @param port    The port of the server.
+		* @pre address != NULL
+		* @pre port > 0
+		* @throws SocketException
+		*/
+		UnixSocket(const char *address, unsigned short port);
 
-	/**
-	 * Create a new UnixSocket with the specified file descriptor.
-	 *
-	 * @param fd  A valid file descriptor.
-	 * @pre fd >= 0
-	 * @throws SocketException
-	 */
-	UnixSocket(int fd);
+		/**
+		* Create a new UnixSocket with the specified file descriptor.
+		*
+		* @param fd  A valid file descriptor.
+		* @pre fd >= 0
+		* @throws SocketException
+		*/
+		UnixSocket(int fd);
+	
+		virtual ~UnixSocket();
+		virtual InputStream *getInputStream() const;
+		virtual OutputStream *getOutputStream() const;
+	};
 
-	virtual ~UnixSocket();
-	virtual InputStream *getInputStream() const;
-	virtual OutputStream *getOutputStream() const;
-};
+} // namespace _Intern
+} // namespace OSL
+
+#endif /* _OSL_UNIX_SOCKET_H_ */

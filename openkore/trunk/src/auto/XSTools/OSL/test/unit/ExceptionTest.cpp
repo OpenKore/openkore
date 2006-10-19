@@ -2,6 +2,8 @@
  *  OpenKore C++ Standard Library
  *  Copyright (C) 2006  VCL
  *
+ *  Unit tests
+ *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
  *  License as published by the Free Software Foundation; either
@@ -18,40 +20,37 @@
  *  MA  02110-1301  USA
  */
 
+#include <string.h>
+#include "tut.h"
+#include "../../Exception.h"
 
-#include "../IO/IOException.h"
-#include "ServerSocket.h"
-#ifdef WIN32
-	#define WIN32_LEAN_AND_MEAN
-	#include <windows.h>
-	#include <winsock2.h>
-	#include "Win32/Socket.h"
-#else
-	#include <sys/types.h>
-	#include <sys/socket.h>
-	#include <unistd.h>
-	#include "Unix/Socket.h"
-#endif
+/*
+ * Test case for OSL::Exception
+ */
+namespace tut {
+	struct ExceptionTest {
+	};
 
-namespace OSL {
+	DEFINE_TEST_GROUP(ExceptionTest);
 
-	namespace _Intern {
-		#ifdef WIN32
-			#include "Win32/ServerSocket.cpp"
-		#else
-			#include "Unix/ServerSocket.cpp"
-		#endif
+	TEST_METHOD(1) {
+		try {
+			throw Exception("Foo");
+		} catch(Exception &e) {
+			ensure("Exception message is correct.",
+				strcmp("Foo", e.getMessage()) == 0);
+			ensure("getMessage() and what() return the same thing.",
+				e.getMessage() == e.what());
+		}
 	}
 
-	using namespace _Intern;
-
-	ServerSocket *
-	ServerSocket::create(const char *ip, unsigned short port) {
-		#ifdef WIN32
-			return new WinServerSocket(ip, port);
-		#else
-			return new UnixServerSocket(ip, port);
-		#endif
+	TEST_METHOD(2) {
+		try {
+			throw Exception(NULL, 123);
+		} catch(Exception &e) {
+			ensure_equals("Error code is correct.", e.getCode(), 123);
+			ensure("Message is not NULL.", e.getMessage() != NULL);
+			ensure("Message is not NULL (2).", e.what() != NULL);
+		}
 	}
-
 }

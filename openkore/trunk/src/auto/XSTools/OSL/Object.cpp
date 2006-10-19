@@ -38,7 +38,7 @@ namespace OSL {
 
 	void
 	Object::unref() throw() {
-		if (Atomic::decrement(refcount) && m_isStackObject) {
+		if (Atomic::decrement(refcount) && !m_isStackObject) {
 			delete this;
 		}
 	}

@@ -18,8 +18,6 @@
  *  MA  02110-1301  USA
  */
 
-#include "Socket.h"
-
 static void
 initWinSock() {
 	WORD version;
@@ -55,12 +53,12 @@ public:
 	}
 
 	virtual bool
-	eof() const {
+	eof() const throw(IOException) {
 		return m_eof;
 	}
 
 	virtual int
-	read(char *buffer, unsigned int size) {
+	read(char *buffer, unsigned int size) throw(IOException) {
 		assert(buffer != NULL);
 		assert(size > 0);
 
