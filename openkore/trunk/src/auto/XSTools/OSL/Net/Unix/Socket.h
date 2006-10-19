@@ -21,6 +21,9 @@
 #ifndef _OSL_UNIX_SOCKET_H_
 #define _OSL_UNIX_SOCKET_H_
 
+#include <sys/types.h>
+#include <sys/socket.h>
+
 namespace OSL {
 namespace _Intern {
 

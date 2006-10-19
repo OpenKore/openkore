@@ -18,170 +18,178 @@
  *  MA  02110-1301  USA
  */
 
-static void
-initWinSock() {
-	WORD version;
-	WSADATA data;
+#include "Socket.h"
 
-	version = MAKEWORD(2, 2);
-	WSAStartup(version, &data);
-}
+namespace OSL {
+namespace _Intern {
 
+	static void
+	initWinSock() {
+		WORD version;
+		WSADATA data;
 
-/**
- * @internal
- * An internal class which implements WinSocket's input stream.
- */
-class InStream: public InputStream {
-private:
-	SOCKET fd;
-	bool closed;
-	bool m_eof;
-public:
-	InStream(SOCKET fd) {
-		this->fd = fd;
-		m_eof = false;
-		closed = false;
+		version = MAKEWORD(2, 2);
+		WSAStartup(version, &data);
 	}
 
-	virtual void
-	close() {
-		if (!closed) {
-			shutdown(fd, SD_RECEIVE);
-			closed = true;
-		}
-	}
 
-	virtual bool
-	eof() const throw(IOException) {
-		return m_eof;
-	}
-
-	virtual int
-	read(char *buffer, unsigned int size) throw(IOException) {
-		assert(buffer != NULL);
-		assert(size > 0);
-
-		if (m_eof) {
-			return -1;
+	/**
+	* @internal
+	* An internal class which implements WinSocket's input stream.
+	*/
+	class InStream: public InputStream {
+	private:
+		SOCKET fd;
+		bool closed;
+		bool m_eof;
+	public:
+		InStream(SOCKET fd) {
+			this->fd = fd;
+			m_eof = false;
+			closed = false;
 		}
 
-		ssize_t result = ::recv(fd, buffer, size, 0);
-		if (result == SOCKET_ERROR) {
-			throw IOException("Unable to receive data.", WSAGetLastError());
-		} else if (result == 0) {
-			m_eof = true;
-			return -1;
-		} else {
+		virtual void
+		close() {
+			if (!closed) {
+				shutdown(fd, SD_RECEIVE);
+				closed = true;
+			}
+		}
+
+		virtual bool
+		eof() const throw(IOException) {
+			return m_eof;
+		}
+
+		virtual int
+		read(char *buffer, unsigned int size) throw(IOException) {
+			assert(buffer != NULL);
+			assert(size > 0);
+
+			if (m_eof) {
+				return -1;
+			}
+
+			ssize_t result = ::recv(fd, buffer, size, 0);
+			if (result == SOCKET_ERROR) {
+				throw IOException("Unable to receive data.", WSAGetLastError());
+			} else if (result == 0) {
+				m_eof = true;
+				return -1;
+			} else {
+				return result;
+			}
+		}
+	};
+
+	/**
+	* @internal
+	* An internal class which implements WinSocket's output stream.
+	*/
+	class OutStream: public OutputStream {
+	private:
+		SOCKET fd;
+		bool closed;
+	public:
+		OutStream(SOCKET fd) {
+			this->fd = fd;
+			closed = false;
+		}
+
+		virtual void
+		close() {
+			if (!closed) {
+				shutdown(fd, SD_RECEIVE);
+				closed = true;
+			}
+		}
+
+		virtual void
+		flush() throw(IOException) {
+		}
+
+		virtual unsigned int
+		write(const char *data, unsigned int size) throw(IOException) {
+			assert(data != NULL);
+			assert(size > 0);
+
+			ssize_t result = ::send(fd, data, size, 0);
+			if (result == SOCKET_ERROR) {
+				throw IOException("Unable to send data.", WSAGetLastError());
+			}
 			return result;
 		}
-	}
-};
+	};
 
-/**
- * @internal
- * An internal class which implements WinSocket's output stream.
- */
-class OutStream: public OutputStream {
-private:
-	SOCKET fd;
-	bool closed;
-public:
-	OutStream(SOCKET fd) {
-		this->fd = fd;
-		closed = false;
-	}
 
-	virtual void
-	close() {
-		if (!closed) {
-			shutdown(fd, SD_RECEIVE);
-			closed = true;
+	WinSocket::WinSocket(const char *address, unsigned short port) {
+		fd = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);
+		if (fd == INVALID_SOCKET) {
+			char message[100];
+			int error = WSAGetLastError();
+			snprintf(message, sizeof(message),
+				"Cannot create socket. (error %d)",
+				error);
+			throw SocketException(message, error);
 		}
-	}
 
-	virtual void
-	flush() throw(IOException) {
-	}
-
-	virtual unsigned int
-	write(const char *data, unsigned int size) throw(IOException) {
-		assert(data != NULL);
-		assert(size > 0);
-
-		ssize_t result = ::send(fd, data, size, 0);
-		if (result == SOCKET_ERROR) {
-			throw IOException("Unable to send data.", WSAGetLastError());
+		struct hostent *ent;
+		char *ip;
+		ent = gethostbyname(address);
+		if (ent == NULL) {
+			char message[200];
+			int error = WSAGetLastError();
+			snprintf(message, sizeof(message),
+				"Host %s not found.",
+				address);
+			closesocket(fd);
+			throw HostNotFoundException(message, error);
 		}
-		return result;
+		ip = inet_ntoa(*(struct in_addr *)*ent->h_addr_list);
+
+		sockaddr_in addr;
+		addr.sin_family = AF_INET;
+		addr.sin_port = htons(port);
+		addr.sin_addr.s_addr = inet_addr(ip);
+		if (connect(fd, (const struct sockaddr *) &addr, sizeof(addr)) == SOCKET_ERROR) {
+			char message[300];
+			int error = WSAGetLastError();
+			snprintf(message, sizeof(message),
+				"Cannot connect to %s:%d: error %d",
+				address, port, error);
+			closesocket(fd);
+			throw SocketException(message, error);
+		}
+
+		in = new InStream(fd);
+		out = new OutStream(fd);
 	}
-};
 
-
-WinSocket::WinSocket(const char *address, unsigned short port) {
-	fd = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);
-	if (fd == INVALID_SOCKET) {
-		char message[100];
-		int error = WSAGetLastError();
-		snprintf(message, sizeof(message),
-			"Cannot create socket. (error %d)",
-			error);
-		throw SocketException(message, error);
+	WinSocket::WinSocket(SOCKET sock) {
+		assert(sock != INVALID_SOCKET);
+		fd = sock;
+		in = new InStream(fd);
+		out = new OutStream(fd);
 	}
 
-	struct hostent *ent;
-	char *ip;
-	ent = gethostbyname(address);
-	if (ent == NULL) {
-		char message[200];
-		int error = WSAGetLastError();
-		snprintf(message, sizeof(message),
-			"Host %s not found.",
-			address);
+	WinSocket::~WinSocket() {
+		in->close();
+		in->unref();
+		out->close();
+		out->unref();
 		closesocket(fd);
-		throw HostNotFoundException(message, error);
-	}
-	ip = inet_ntoa(*(struct in_addr *)*ent->h_addr_list);
-
-	sockaddr_in addr;
-	addr.sin_family = AF_INET;
-	addr.sin_port = htons(port);
-	addr.sin_addr.s_addr = inet_addr(ip);
-	if (connect(fd, (const struct sockaddr *) &addr, sizeof(addr)) == SOCKET_ERROR) {
-		char message[300];
-		int error = WSAGetLastError();
-		snprintf(message, sizeof(message),
-			"Cannot connect to %s:%d: error %d",
-			address, port, error);
-		closesocket(fd);
-		throw SocketException(message, error);
 	}
 
-	in = new InStream(fd);
-	out = new OutStream(fd);
-}
+	InputStream *
+	WinSocket::getInputStream() const {
+		return in;
+	}
 
-WinSocket::WinSocket(SOCKET sock) {
-	assert(sock != INVALID_SOCKET);
-	fd = sock;
-	in = new InStream(fd);
-	out = new OutStream(fd);
-}
+	OutputStream *
+	WinSocket::getOutputStream() const {
+		return out;
+	}
 
-WinSocket::~WinSocket() {
-	in->close();
-	in->unref();
-	out->close();
-	out->unref();
-	closesocket(fd);
-}
-
-InputStream *
-WinSocket::getInputStream() const {
-	return in;
-}
-
-OutputStream *
-WinSocket::getOutputStream() const {
-	return out;
-}
+} // namespace _Intern
+} // namespace OSL
