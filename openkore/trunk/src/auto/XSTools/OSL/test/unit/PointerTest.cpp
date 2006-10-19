@@ -30,7 +30,7 @@ namespace tut {
 	using namespace OSL;
 
 	namespace {
-		int deleteCount;
+		static int deleteCount;
 
 		class Foo {
 		public:
@@ -40,6 +40,9 @@ namespace tut {
 
 			void test() {
 			}
+		};
+
+		class Bar: public Object, public Foo {
 		};
 	}
 
@@ -168,5 +171,35 @@ namespace tut {
 		ensure("Evaluate as boolean.", !p1);
 		ensure("Compare with NULL.", p1 == NULL);
 		ensure("Negative compare with NULL.", !(p1 != NULL));
+	}
+
+	// Test createForObject()
+	TEST_METHOD(10) {
+		Bar *o = new Bar();
+		do {
+			Pointer<Bar> p1 = Pointer<Bar>::createForObject(o);
+		} while (0);
+		ensure_equals(deleteCount, 0);
+		o->unref();
+		ensure_equals(deleteCount, 1);
+	}
+
+	// Test assignment in combination with Object smart pointers.
+	TEST_METHOD(11) {
+		Object *o = new Bar();
+		Pointer<Object> p1 = Pointer<Object>::createForObject(o);
+		Pointer<Object> p2 = p1;
+		// o now has reference count of 3
+		p1 = NULL;
+		p2 = NULL;
+		// o now has reference count of 1
+		ensure_equals(deleteCount, 0);
+
+		Pointer<Object> p3;
+		p3 = o;
+		p3 = NULL;
+		// p3 doesn't know it's assigned an Object,
+		// so it will delete o.
+		ensure_equals(deleteCount, 1);
 	}
 }

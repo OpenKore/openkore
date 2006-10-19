@@ -21,6 +21,9 @@
 #ifndef _OSL_POINTER_H_
 #define _OSL_POINTER_H_
 
+#include <typeinfo>
+#include <stdio.h>
+#include "Object.h"
 #include "Exception.h"
 #include "Threading/Atomic.h"
 
@@ -40,16 +43,30 @@ namespace OSL {
 	template <class T> class Pointer;
 
 	namespace _Intern {
+		/**
+		 * Class which contains metadata about a referee, such as
+		 * the reference count.
+		 */
 		template <class T>
 		class PointerSharedData {
 		private:
 			friend class Pointer<T>;
 
+			/**
+			 * The reference count.
+			 * @invariant refcount >= 0
+			 */
 			int refcount;
+
+			/** Whether referee is an OSL::Object */
+			bool isObject;
+
+			/** The referee. */
 			T *data;
 		public:
 			PointerSharedData() {
 				refcount = 1;
+				isObject = false;
 				data = NULL;
 			}
 		};
@@ -136,7 +153,26 @@ namespace OSL {
 	 * empty->test();        // Crash!
 	 * @endcode
 	 *
+	 * @warning
+	 * Do NOT create an empty smart pointer by passing an empty parameter list to its
+	 * constructor! The following will not work:
+	 * @code
+	 * Pointer<Foo> p();
+	 * @endcode
+	 * while the following will:
+	 * @code
+	 * Pointer<Foo> p;
+	 * @endcode
 	 *
+	 *
+	 * @section object Special support for Object reference counting
+	 * Since Object provides manual reference counting support, Pointer provides
+	 * a way to automatically make use of that. Use createForObject() to create
+	 * a smart pointer to an Object. See createForObject() for more information,
+	 * examples and caveats.
+	 *
+	 *
+	 * @anchor Pointer-Caveats
 	 * @section Caveats
 	 * Don't create two smart pointers to the same data. Newly instantiated
 	 * smart pointers don't know about other smart pointers that reference
@@ -158,27 +194,41 @@ namespace OSL {
 	 * // Memory corruption!
 	 * @endcode
 	 *
+	 * The only exception is when you use smart pointers in combination with
+	 * Object reference counting. See createForObject() for more information.
+	 *
 	 * @class Pointer OSL/Pointer.h
 	 * @ingroup Base
 	 */
 	template <class T>
 	class Pointer {
 	private:
-		int id;
 		_Intern::PointerSharedData<T> *shared;
+
+		Pointer(T *data, bool isObject) throw() {
+			createReference(data, isObject);
+		}
 
 		void
 		dereferenceCurrent() throw() {
 			if (shared != NULL && Atomic::decrement(shared->refcount)) {
-				delete shared->data;
+				if (shared->isObject) {
+					reinterpret_cast<Object *>(shared->data)->unref();
+				} else {
+					delete shared->data;
+				}
 				delete shared;
 			}
 		}
 
 		void
-		createReference(T *data = NULL) throw() {
+		createReference(T *data = NULL, bool isObject) throw() {
 			if (data != NULL) {
 				shared = new _Intern::PointerSharedData<T>();
+				shared->isObject = isObject;
+				if (isObject) {
+					reinterpret_cast<Object *>(data)->ref();
+				}
 				shared->data = data;
 			} else {
 				shared = NULL;
@@ -192,14 +242,74 @@ namespace OSL {
 		}
 	public:
 		Pointer(T *data = NULL) throw() {
-			createReference(data);
+			createReference(data, false);
+		}
+
+		/**
+		 * Creates a smart pointer for the given Object. Unlike a normal
+		 * smart pointer, smart pointers created using this method use
+		 * the Object's own reference counting support.
+		 *
+		 * Each instance of a smart pointer created by this function will
+		 * increment the Obejct's reference count by 1, and will decrement
+		 * it by 1 when the smart pointer is deleted. This also means that
+		 * if the last smart pointer to this Object is deleted, the Object
+		 * won't be deleted - you have to unreference it one more time.
+		 *
+		 * This is best illustrated by an example. Normal smart pointers
+		 * work like this:
+		 * @code
+		 * Object *foo = new Object();
+		 * foo->ref();
+		 * do {
+		 *     Pointer<Object> p(foo);
+		 * } while (0);
+		 * // foo is now deleted. The ref() call didn't prevent it from
+		 * // being deleted since the smart pointer calls 'delete foo'
+		 * @endcode
+		 *
+		 * A smart pointer created with this method works like this:
+		 * @code
+		 * Object *foo = new Object();
+		 * // foo has a reference count of 1.
+		 * do {
+		 *     Pointer<Object> p = Pointer<Object>::createForObject(foo);
+		 *     // foo now has a reference count of 2.
+		 * } while (0);
+		 * // p is deleted, so foo now has a reference count of 1.
+		 * // We unreference it 1 more time to really delete it:
+		 * foo->unref();
+		 * @endcode
+		 *
+		 * Thus, using this method also gives you the advantage of being able
+		 * to create multiple Pointer instances for Object objects without
+		 * problems (as documented by the @ref Pointer-Caveats "Caveats"
+		 * section).
+		 *
+		 * @section Caveats
+		 * There is only one caveat. The = operator doesn't know whether it's
+		 * been assigned an Object (due to limitations in C++).
+		 * For example:
+		 * @code
+		 * Object *foo = new Object();
+		 * do {
+		 *     Pointer<Object> p;
+		 *     p = foo; // <----------
+		 * } while (0);
+		 * // p doesn't know that foo is an Object. So it won't increase
+		 * // p's reference count. Therefore, foo is now deleted.
+		 * @endcode
+		 */
+		static Pointer<T>
+		createForObject(Object *data) throw() {
+			return Pointer<T>(static_cast<T *>(data), true);
 		}
 
 		Pointer(const Pointer<T> &pointer) throw() {
 			createReference(pointer);
 		}
 
-		~Pointer() throw() {
+		virtual ~Pointer() throw() {
 			dereferenceCurrent();
 		}
 
@@ -207,7 +317,7 @@ namespace OSL {
 		operator=(T *data) throw() {
 			if (shared == NULL || data != shared->data) {
 				dereferenceCurrent();
-				createReference(data);
+				createReference(data, false);
 			}
 			return *this;
 		}
