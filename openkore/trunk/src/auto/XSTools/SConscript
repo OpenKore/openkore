@@ -1,17 +1,10 @@
 # -*-python-*-
 Import('*')
-import os.path;
+import os.path
 
 
-############### Define sources ###############
-
-# C/C++ source files
-sources = []
-# XS source files (input : output)
-XS_sources = {}
-
-### OpenKore Standard Library
-env.StaticObject(Split('''
+############### OpenKore Standard Library ###############
+osl_objects = env.StaticObject(Split('''
 	OSL/Object.cpp
 	OSL/Exception.cpp
 	OSL/Pointer.cpp
@@ -23,9 +16,30 @@ env.StaticObject(Split('''
 	OSL/Threading/Mutex.cpp
 	OSL/Threading/Thread.cpp
 	OSL/IO/OutputStream.cpp
+	OSL/IO/InputStream.cpp
 	OSL/IO/IOException.cpp
 	OSL/IO/BufferedOutputStream.cpp
 '''))
+
+if not win32:
+	osl_libs = ['pthread']
+
+	env.Program('OSL/test/unit/run-tests', Split('''
+		OSL/test/unit/main.cpp
+		OSL/test/unit/AtomicTest.cpp
+		OSL/test/unit/ObjectTest.cpp
+		OSL/test/unit/ExceptionTest.cpp
+		OSL/test/unit/PointerTest.cpp
+		''') + osl_objects,
+		LIBS = osl_libs)
+
+
+############### Define sources ###############
+
+# C/C++ source files
+sources = []
+# XS source files (input : output)
+XS_sources = {}
 
 ### Pathfinding
 sources += [

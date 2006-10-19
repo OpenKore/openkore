@@ -22,19 +22,24 @@
 #include <assert.h>
 #include "../IO/IOException.h"
 #include "Socket.h"
-#ifndef WIN32
+#ifdef WIN32
+	#include "Win32/Socket.h"
+#else
 	#include <sys/types.h>
 	#include <sys/socket.h>
+	#include "Unix/Socket.h"
 #endif
 
 namespace OSL {
-	namespace {
+	namespace _Intern {
 		#ifdef WIN32
 			#include "Win32/Socket.cpp"
 		#else
 			#include "Unix/Socket.cpp"
 		#endif
 	}
+
+	using namespace _Intern;
 
 	SocketException::SocketException(const char *message, int code)
 		: Exception(message, code)

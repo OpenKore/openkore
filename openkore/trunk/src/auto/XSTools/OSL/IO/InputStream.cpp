@@ -18,28 +18,29 @@
  *  MA  02110-1301  USA
  */
 
+#include "InputStream.h"
 #include "../Threading/MutexLocker.h"
-#include "OutputStream.h"
 
 namespace OSL {
 
 	namespace {
+
 		/**
 		 * @internal
-		 * A thread-safe wrapper class around an OutputStream,
-		 * used to implement OutputStream::createThreadSafe()
+		 * A thread-safe wrapper class around an InputStream,
+		 * used to implement InputStream::createThreadSafe()
 		 */
-		class ThreadSafeOutputStream: public OutputStream {
+		class ThreadSafeInputStream: public InputStream {
 		private:
-			Mutex mutex;
-			OutputStream *wrapped;
+			mutable Mutex mutex;
+			InputStream *wrapped;
 		public:
-			ThreadSafeOutputStream(OutputStream *wrapped) {
+			ThreadSafeInputStream(InputStream *wrapped) {
 				this->wrapped = wrapped;
 				wrapped->ref();
 			}
 
-			~ThreadSafeOutputStream() {
+			~ThreadSafeInputStream() {
 				wrapped->unref();
 			}
 
@@ -49,23 +50,24 @@ namespace OSL {
 				wrapped->close();
 			}
 
-			virtual void
-			flush() throw(IOException) {
+			virtual bool
+			eof() const throw(IOException) {
 				MutexLocker lock(mutex);
-				wrapped->flush();
+				return wrapped->eof();
 			}
 
-			virtual unsigned int
-			write(const char *data, unsigned int size) throw(IOException) {
+			virtual int
+			read(char *buffer, unsigned int size) throw(IOException) {
 				MutexLocker lock(mutex);
-				return wrapped->write(data, size);
+				return wrapped->read(buffer, size);
 			}
 		};
+
 	}
 
-	OutputStream *
-	OutputStream::createThreadSafe() throw() {
-		return new ThreadSafeOutputStream(this);
+	InputStream *
+	InputStream::createThreadSafe() throw() {
+		return new ThreadSafeInputStream(this);
 	}
 
 }

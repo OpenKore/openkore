@@ -2,6 +2,8 @@
  *  OpenKore C++ Standard Library
  *  Copyright (C) 2006  VCL
  *
+ *  Unit tests
+ *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
  *  License as published by the Free Software Foundation; either
@@ -18,40 +20,33 @@
  *  MA  02110-1301  USA
  */
 
+#include "tut.h"
+#include "../../Threading/Atomic.h"
 
-#include "../IO/IOException.h"
-#include "ServerSocket.h"
-#ifdef WIN32
-	#define WIN32_LEAN_AND_MEAN
-	#include <windows.h>
-	#include <winsock2.h>
-	#include "Win32/Socket.h"
-#else
-	#include <sys/types.h>
-	#include <sys/socket.h>
-	#include <unistd.h>
-	#include "Unix/Socket.h"
-#endif
+/*
+ * Test case for OSL::Atomic
+ */
+namespace tut {
+	struct AtomicTest {
+	};
 
-namespace OSL {
+	DEFINE_TEST_GROUP(AtomicTest);
 
-	namespace _Intern {
-		#ifdef WIN32
-			#include "Win32/ServerSocket.cpp"
-		#else
-			#include "Unix/ServerSocket.cpp"
-		#endif
+	TEST_METHOD(1) {
+		int i = 0;
+
+		Atomic::increment(i);
+		ensure(Atomic::decrement(i));
 	}
 
-	using namespace _Intern;
+	TEST_METHOD(2) {
+		int i = 0;
 
-	ServerSocket *
-	ServerSocket::create(const char *ip, unsigned short port) {
-		#ifdef WIN32
-			return new WinServerSocket(ip, port);
-		#else
-			return new UnixServerSocket(ip, port);
-		#endif
+		Atomic::increment(i);
+		Atomic::increment(i);
+		Atomic::increment(i);
+		ensure(!Atomic::decrement(i));
+		ensure(!Atomic::decrement(i));
+		ensure(Atomic::decrement(i));
 	}
-
 }

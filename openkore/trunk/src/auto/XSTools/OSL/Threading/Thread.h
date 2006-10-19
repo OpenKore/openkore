@@ -54,7 +54,7 @@ namespace OSL {
 	public:
 		/**
 		 * Create a new thread. The run() function of this Thread object will be run in the thread.
-		 * See the other Thread constructor for general information.
+		 * See the Thread(Runnable *, bool) for general information.
 		 *
 		 * The thread is not actually started until you call start().
 		 *

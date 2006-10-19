@@ -65,8 +65,7 @@ namespace OSL {
 	 *
 	 * Normal pointers have to be managed manually:
 	 * @code
-	 * string *some_function()
-	 * {
+	 * string *some_function() {
 	 *     string *foo = new string("hello world");
 	 *     string *bar = foo;
 	 *     delete foo;  // bar is now an invalid pointer!
@@ -120,6 +119,21 @@ namespace OSL {
 	 * @code
 	 * Pointer<Foo> bar(new Foo());
 	 * bar = NULL;   // The Foo instance is now deleted.
+	 * @endcode
+	 *
+	 * If you try to dereference an empty smart pointer, it will throw PointerException:
+	 * @code
+	 * Pointer<Foo> empty;
+	 * *empty; // PointerException thrown!
+	 * @endcode
+	 *
+	 * On the other hand, the -> operator will return NULL if the smart pointer
+	 * is empty:
+	 * @code
+	 * Pointer<Foo> empty;
+	 * empty.operator->();   // NULL
+	 * (void *) empty;       // NULL
+	 * empty->test();        // Crash!
 	 * @endcode
 	 *
 	 *
@@ -208,7 +222,7 @@ namespace OSL {
 		}
 
 		T& operator*() throw(PointerException) {
-			if (shared != NULL) {
+			if (shared != NULL && shared->data != NULL) {
 				return *shared->data;
 			} else {
 				throw PointerException("Cannot dereference a NULL Pointer.");

@@ -24,7 +24,6 @@
 #include <string.h>
 #include <unistd.h>
 #include <assert.h>
-#include "Socket.h"
 
 #ifndef MSG_NOSIGNAL
 	// FreeBSD doesn't support MSG_NOSIGNAL
@@ -57,12 +56,12 @@ public:
 	}
 
 	virtual bool
-	eof() const {
+	eof() const throw(IOException) {
 		return m_eof;
 	}
 
 	virtual int
-	read(char *buffer, unsigned int size) {
+	read(char *buffer, unsigned int size) throw(IOException) {
 		assert(buffer != NULL);
 		assert(size > 0);
 

@@ -103,6 +103,7 @@ namespace OSL {
 	 *
 	 * @class Object OSL/Object.h
 	 * @ingroup Base
+	 * @see Pointer
 	 */
 	class Object {
 	private:
