@@ -222,7 +222,7 @@ namespace OSL {
 		}
 
 		void
-		createReference(T *data = NULL, bool isObject) throw() {
+		createReference(T *data, bool isObject) throw() {
 			if (data != NULL) {
 				shared = new _Intern::PointerSharedData<T>();
 				shared->isObject = isObject;
