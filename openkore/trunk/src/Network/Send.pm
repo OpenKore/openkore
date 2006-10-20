@@ -21,7 +21,7 @@ use Digest::MD5;
 use Exporter;
 use base qw(Exporter);
 
-use Globals qw($accountID $char $charID %config $conState $encryptVal %guild $net @chars %packetDescriptions $bytesSent $masterServer);
+use Globals qw($accountID $sessionID $sessionID2 $accountSex $char $charID %config $conState $encryptVal %guild $net @chars %packetDescriptions $bytesSent $masterServer);
 use Log qw(message warning error debug);
 use Utils;
 use I18N qw(stringToBytes);
@@ -950,6 +950,7 @@ sub sendGameLogin {
 		$msg .= pack("x16 C1 x3", $serv);
 	}
 	sendMsgToServer($r_net, $msg);
+	debug "Sent sendGameLogin\n", "sendPacket", 2;
 }
 
 sub sendGetCharacterName {
@@ -1871,7 +1872,9 @@ sub sendQuit {
 sub sendQuitToCharSelect {
 	my $msg = pack("C*", 0xB2, 0x00, 0x01);
 	sendMsgToServer($net, $msg);
+	close($net->{remote_socket});
 	debug "Sent Quit To Char Selection\n", "sendPacket", 2;
+	$conState = 2;
 }
 
 sub sendRaw {
