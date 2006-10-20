@@ -416,13 +416,11 @@ sub checkConnection {
 	} elsif ($conState == 2 && !$self->serverAlive()
 	  && ($config{'server'} ne "" || $masterServer->{charServer_ip})
 	  && !$conState_tries) {
+		message "Pausing for $config{pauseCharServer} second(s)...\n", "system";
+		sleep $config{pauseCharServer} if ($config{pauseCharServer});
 		my $master = $masterServer;
 		message T("Connecting to Character Server...\n"), "connection";
 		$conState_tries++;
-
-		if ($master->{pauseCharServer}) {
-			sleep $master->{pauseCharServer};
-		}
 
 		if ($master->{charServer_ip}) {
 			$self->serverConnect($master->{charServer_ip}, $master->{charServer_port});
@@ -488,6 +486,7 @@ sub checkConnection {
 		undef $conState_tries;
 
 	} elsif ($conState == 4 && !$self->serverAlive() && !$conState_tries) {
+		message "Pausing for $config{pauseMapServer} second(s)...\n", "system";
 		sleep($config{pauseMapServer}) if ($config{pauseMapServer});
 		message T("Connecting to Map Server...\n"), "connection";
 		$conState_tries++;

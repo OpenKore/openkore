@@ -9,21 +9,26 @@ To Fix:
 
 Bug fixes:
 - Fixed Party bug where the bot would follow any random player 
-     instead of the master
+  instead of the master
 - isSelfSkill now works in monsterSkill blocks.
 - Fixed homunculus_tankMode.
 - Fixed inability to detect evolved homunculus state.
 - Add Slim Pitcher to location skills list
 - Skill timeout when runFromTarget is enabled fixed.
 - Correctly support UTF-8 BOM characters.
+- Fix sendQuitToCharSelect
 
 New config options:
 - dealAuto_names <list of player names>
-    If non-empty and dealAuto is set to 2 or 3, then bot will only deal with
-    players on the list. (Other players will be treated as dealAuto 0.)
+	If non-empty and dealAuto is set to 2 or 3, then bot will only deal with
+	players on the list. (Other players will be treated as dealAuto 0.)
 - route_escape_shout <Message>
 	Makes kore look "human like" during bot checks which involves warping people to
-	portaless maps.
+	maps without portals.
+- pauseCharServer <seconds>
+	similar to pauseMapServer, pause for a number of seconds before connecting to
+	the char server
+  
 
 New features:
 - Basic support for euRO (serverType 11) (Without attack, sit, stand and skill use)
@@ -35,7 +40,7 @@ New Commands
 - GM Commands
 	gmb : Broadcast a global message.
 	gmbb : Broadcast a global message in blue.
-	gmnb : Broadcast a nameless global message.
+ 	gmnb : Broadcast a nameless global message.
 	gmlb : Broadcast a local message.
 	gmlbb : Broadcast a local message in blue.
 	gmnlb : Broadcast a nameless local message.
@@ -56,6 +61,7 @@ Internal:
 - Implemented Guild Kick / Guild Leave messages
 
 Credits:
+- All developers with SVN write access (http://cia.navi.cx/stats/project/openkore)
 - Darkfate: partial servertype 11 suppport.
 - piroJOKE: server information updates and table files updates.
 - Stalker: runFromTarget fix
@@ -107,12 +113,12 @@ New features:
 
 New config options:
 - attackChangeTarget <boolean flag>
-    automatically change target to an aggressive monster if the target monster
+	automatically change target to an aggressive monster if the target monster
 	is not yet reached or damaged. This prevents you from continuously routing
 	to your target while dragging a mob of aggressive monsters behind you.
 - homunculus_followDistanceMax <distance>
 - homunculus_followDistanceMin <distance>
-    Kore and the homunculus will always try to keep within these distances from
+	Kore and the homunculus will always try to keep within these distances from
 	each other.
 - homunculus_attackAuto <flag>
 - homunculus_attackAuto_party <flag>
@@ -126,17 +132,17 @@ New config options:
 - homunculus_attackCanSnipe <boolean flag>
 - homunculus_attackCheckLOS <boolean flag>
 - homunculus_attackNoGiveup <boolean flag>
-    same as the attackAuto* counterparts.
+	same as the attackAuto* counterparts.
 - homunculus_attackChangeTarget <boolean flag>
-    same as attackChangeTarget.
+	same as attackChangeTarget.
 - homunculus_route_step <number>
-    this option is required or your homunculus will not be able to move.
+	this option is required or your homunculus will not be able to move.
 - homunculus_runFromTarget <boolean flag>
 - homunculus_runFromTarget_dist <distance>
-    these will mostly be not needed but they are still included for posterity.
+	these will mostly be not needed but they are still included for posterity.
 - homunculus_tankMode <boolean flag>
 - homunculus_tankModeTarget <player name>
-    same as the tankMode* counterparts. You can use this so that your
+	same as the tankMode* counterparts. You can use this so that your
 	homunculus can tank you. Set homunculus_tankModeTarget to your character
 	name.
 - homunculus_teleportAuto_deadly <boolean flag>
@@ -148,15 +154,15 @@ New config options:
 - homunculus_teleportAuto_totalDmg <damage>
 - homunculus_teleportAuto_totalDmgInLock <damage>
 - homunculus_teleportAuto_unstuck <boolean flag>
-    same as the teleportAuto* counterparts.
+	same as the teleportAuto* counterparts.
 - Shared Block Attributes: homunculus_hp <hp>[%] and homunculus_sp <sp>[%]
-    same as the hp/sp block attributes. These are useful for using homunculus
+	same as the hp/sp block attributes. These are useful for using homunculus
 	skills on your skill blocks.
 - teleportAuto_lostHomunculus <boolean flag>
     instead of routing back to your lost homunculus (default), Kore will
 	teleport to get the homunculus back.
 - Shared Block Attribute: homunculus_dead <boolean flag>
-    triggers the config block only if your homunculus died.
+	triggers the config block only if your homunculus died.
 - teleportAuto_lostTarget <boolean flag>
 	Makes the bot (attempt to) teleport after it lost its target, this to
 	prevent it from locking onto the same target over and over in some cases.
@@ -197,7 +203,7 @@ New chat commands:
 
 Incompatible Changes:
 - ; command separator replaced with ;;, so you can now use semicolons
-  in chat (as long as they're not two in a row).
+	in chat (as long as they're not two in a row).
 
 Internal:
 - Updated $config{gameGuard} '2' behavior to adapt to bRO server.
@@ -208,7 +214,7 @@ Internal:
 - Receive.pm : monk_spirits is now known as revolving_entity
 - Added Bullet support
 - New 'disconnected' plugin hook, called when you get disconnected
-  from the map server
+	from the map server
 
 --------------------------
 
