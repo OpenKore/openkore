@@ -1872,9 +1872,7 @@ sub sendQuit {
 sub sendQuitToCharSelect {
 	my $msg = pack("C*", 0xB2, 0x00, 0x01);
 	sendMsgToServer($net, $msg);
-	close($net->{remote_socket});
 	debug "Sent Quit To Char Selection\n", "sendPacket", 2;
-	$conState = 2;
 }
 
 sub sendRaw {

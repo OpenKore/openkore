@@ -5356,7 +5356,8 @@ sub storage_password_result {
 
 sub switch_character {
 	# 00B3 - user is switching characters in XKore
-	change_to_constate25;
+	$conState = 2;
+	$net->serverDisconnect();
 }
 
 sub system_chat {
