@@ -10,6 +10,7 @@
     <RootNamespace>FieldEditor</RootNamespace>
     <AssemblyName>FieldEditor</AssemblyName>
     <StartupObject>FieldEditor.MainClass</StartupObject>
+    <ApplicationIcon>FieldEditor.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -88,6 +89,9 @@
     <EmbeddedResource Include="glade\MainWindow.glade" />
     <EmbeddedResource Include="glade\OpenDialog.glade" />
     <EmbeddedResource Include="glade\SaveDialog.glade" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="FieldEditor.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

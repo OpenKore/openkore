@@ -41,8 +41,8 @@ public class MainWindow {
 
 		try {
 			window.Icon = Gdk.Pixbuf.LoadFromResource("FieldEditor.ico");
-		} catch (ArgumentException) {
-			// Do nothing, this error is not fatal.
+		} catch (GLib.GException) {
+			window.Icon = Gdk.Pixbuf.LoadFromResource("FieldEditor.FieldEditor.ico");
 		} 
 		window.Show();
 	}
