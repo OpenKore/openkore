@@ -22,7 +22,8 @@
 #define _OSL_MUTEX_H_
 
 #ifdef WIN32
-	#include <winbase.h>
+	#define WIN32_MEAN_AND_LEAN
+	#include <windows.h>
 #else
 	#include <pthread.h>
 #endif

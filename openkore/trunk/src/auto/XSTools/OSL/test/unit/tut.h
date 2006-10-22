@@ -38,10 +38,6 @@
 #include <stdexcept>
 #include <typeinfo>
 
-#ifdef WIN32
-	#define TUT_USE_SEH
-#endif
-
 #if defined(TUT_USE_SEH)
 #include <windows.h>
 #include <winbase.h>
