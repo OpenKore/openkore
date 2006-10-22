@@ -251,6 +251,7 @@ sub new {
 		'01EA' => ['married', 'a4', [qw(ID)]],
 		'01EE' => ['inventory_items_stackable'],
 		'01EF' => ['cart_items_list'],
+		'01F2' => ['guild_member_online_status', 'a4 a4 V1 v3', [qw(ID charID online sex hair_style hair_color)]],
 		'01F4' => ['deal_request', 'Z24 x4 v1', [qw(user level)]],
 		'01F5' => ['deal_begin', 'C1 a4 v1', [qw(type targetID level)]],
 		#'01F6' => ['adopt_unknown'], # clif_parse_ReqAdopt
