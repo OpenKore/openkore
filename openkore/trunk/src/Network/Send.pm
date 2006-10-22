@@ -2585,7 +2585,7 @@ sub sendSync {
 		$msg .= pack("V", getTickCount());
 
 	} elsif ($config{serverType} == 12) { #pRO Thor
-		$msg = pack("C2 x9 V1 x5", getTickCount());
+		$msg = pack("C2 x9 V1 x5", 0xA7, 0x00, getTickCount());
 	}
 	
 	sendMsgToServer($r_net, $msg);
