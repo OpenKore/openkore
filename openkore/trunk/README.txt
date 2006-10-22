@@ -31,6 +31,7 @@ New config options:
   
 
 New features:
+- Basic support for pRO Thor (serverType 12) (Without attack, sit, stand and skill use)
 - Basic support for euRO (serverType 11) (Without attack, sit, stand and skill use)
 - Added route_escape_shout <Message> to somewhat avoid gm bot check.
 
