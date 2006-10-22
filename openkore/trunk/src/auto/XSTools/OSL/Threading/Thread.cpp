@@ -18,9 +18,14 @@
  *  MA  02110-1301  USA
  */
 
-#include <stdio.h>
-#include <pthread.h>
 #include "Thread.h"
+
+#ifdef WIN32
+	#define WIN32_LEAN_AND_MEAN
+	#include <windows.h>
+#else
+	#include <pthread.h>
+#endif
 
 namespace OSL {
 
@@ -62,7 +67,11 @@ namespace OSL {
 			virtual void join() = 0;
 		};
 
-		#include "Unix/Thread.cpp"
+		#ifdef WIN32
+			#include "Win32/Thread.cpp"
+		#else
+			#include "Unix/Thread.cpp"
+		#endif
 	}
 
 
@@ -86,7 +95,11 @@ namespace OSL {
 	void
 	Thread::init(bool detached) {
 		this->detached = detached;
-		impl = new PosixThread();
+		#ifdef WIN32
+			impl = new Win32Thread();
+		#else
+			impl = new PosixThread();
+		#endif
 	}
 
 	void

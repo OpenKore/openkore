@@ -21,17 +21,19 @@ osl_objects = env.StaticObject(Split('''
 	OSL/IO/BufferedOutputStream.cpp
 '''))
 
-if not win32:
+if win32:
+	osl_libs = ['ws2_32']
+else:
 	osl_libs = ['pthread']
 
-	env.Program('OSL/test/unit/run-tests', Split('''
-		OSL/test/unit/main.cpp
-		OSL/test/unit/AtomicTest.cpp
-		OSL/test/unit/ObjectTest.cpp
-		OSL/test/unit/ExceptionTest.cpp
-		OSL/test/unit/PointerTest.cpp
-		''') + osl_objects,
-		LIBS = osl_libs)
+env.Program('OSL/test/unit/run-tests', Split('''
+	OSL/test/unit/main.cpp
+	OSL/test/unit/AtomicTest.cpp
+	OSL/test/unit/ObjectTest.cpp
+	OSL/test/unit/ExceptionTest.cpp
+	OSL/test/unit/PointerTest.cpp
+	''') + osl_objects,
+	LIBS = osl_libs)
 
 
 ############### Define sources ###############
