@@ -1406,6 +1406,7 @@ sub sendMapLoaded {
 	my $msg = pack("C*", 0x7D,0x00);
 	debug "Sending Map Loaded\n", "sendPacket";
 	sendMsgToServer($r_net, $msg);
+	Plugins::callHook('packet/sendMapLoaded');
 }
 
 sub sendMapLogin {
