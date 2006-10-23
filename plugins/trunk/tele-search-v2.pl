@@ -1,7 +1,19 @@
+#########################################################################
+#  OpenKore - Telesearch Plugin v2
+#  Copyright (c) 2005 OpenKore Team
+#
+#  This software is open source, licensed under the GNU General Public
+#  License, version 2.
+#  Basically, this means that you're allowed to modify and distribute
+#  this software. However, if you distribute modified versions, you MUST
+#  also distribute the source code.
+#  See http://www.gnu.org/licenses/gpl.html for the full license.
+#
+#  $Revision: $
+#  $Id: $
+#
+#########################################################################
 package telesearchV2;
-# Made by Bibian
-# Version 1.0.4
-# OpenKore 1.9.3 or higher required
 
 use strict;
 use Plugins;
