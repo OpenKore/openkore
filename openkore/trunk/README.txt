@@ -28,7 +28,13 @@ New config options:
 - pauseCharServer <seconds>
 	similar to pauseMapServer, pause for a number of seconds before connecting to
 	the char server
-  
+- shop_random <flag>
+	<flag> may now be 1 (for the old behavior) or 2 (for improved shop
+	list randomization). When set to 2, the shop list will first be mixed,
+	then the list of items to sell will be generated. When set to 1, the
+	the list of items to sell will first be generated, and then that
+	list will be mixed.
+
 
 New features:
 - Basic support for pRO Thor (serverType 12) (Without attack, sit, stand and skill use)
@@ -64,7 +70,8 @@ Internal:
 Credits:
 - All developers with SVN write access (http://cia.navi.cx/stats/project/openkore)
 - Darkfate: partial servertype 11 suppport.
-- piroJOKE: server information updates and table files updates.
+- piroJOKE: server information updates and table files updates,
+  improved shop list randomization.
 - Stalker: runFromTarget fix
 - raizend: Top 10 packet parsers
 - illusionist: Party fix, Guild Messages, top10 command, bRO support

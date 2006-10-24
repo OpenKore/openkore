@@ -4226,6 +4226,7 @@ sub makeShop {
 
 	# Iterate through items to be sold
 	findCartItemInit();
+	shuffleArray(\@{$shop{items}}) if ($config{'shop_random'} eq "2");
 	for my $sale (@{$shop{items}}) {
 		my $index = findCartItem($sale->{name}, 1, 1);
 		next unless defined($index);
@@ -4251,7 +4252,7 @@ sub makeShop {
 		error T("There are no items to sell.\n");
 		return;
 	}
-	shuffleArray(\@items) if ($config{shop_random});
+	shuffleArray(\@items) if ($config{'shop_random'} eq "1");
 	return @items;
 }
 
