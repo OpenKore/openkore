@@ -760,7 +760,7 @@ sub parseSectionedFile {
 sub parseSkills {
 	my ($file, $r_hash) = @_;
 
-	open(FILE, "<$file");
+	open(FILE, "<:utf8", $file);
 	foreach (<FILE>) {
 		s/\x{FEFF}//g;
 		next if (/^\/\//);
