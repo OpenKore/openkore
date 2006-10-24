@@ -16,6 +16,7 @@ Bug fixes:
 - Add Slim Pitcher to location skills list
 - Skill timeout when runFromTarget is enabled fixed.
 - Correctly support UTF-8 BOM characters.
+- Correctly load skills.txt as UTF-8.
 - Fix sendQuitToCharSelect
 
 New config options:
