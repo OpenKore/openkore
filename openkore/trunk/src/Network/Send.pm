@@ -2250,6 +2250,9 @@ sub sendSkillUseLoc {
 			pack("v*", $x) . 
 			pack("C*", 0x00) .
 			pack("v*", $y);
+
+	} elsif ($config{serverType} == 12) {
+		$msg = pack("v1 v1 x8 v1 v1 v1", 0xF3, $lv, $ID, $x, $y);
 	}
 	
 	sendMsgToServer($r_net, $msg);
