@@ -1,5 +1,5 @@
-##################################################################################
-#  Copyright (C) 2006  Kaliwanagan and Darkfate
+#########################################################################################################
+#  Copyright (C) 2006  Kaliwanagan and Darkfate (darkfate@openkore.com)
 #
 #  This program is free software; you can redistribute it and/or
 #  modify it under the terms of the GNU General Public License
@@ -15,11 +15,18 @@
 #  along with this program; if not, write to the Free Software
 #  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #
+#--------------------------------------------------------------------------------------------------------
+#
+#	1. Set a self skill (something like First Aid or Ruwach) on F1 in your shortcut bar
+#	2. Add the skill to your config like this: (the one you have on F1)
 #	 packetPadding {
 #		 selfSkill <Skillname>
 #		 selfSkill_lvl <Skill level>
 #	 }
-##################################################################################
+#	4. Now you can configure the skills you want to use like always (with attackSkillSlot or whatever)
+#
+# This plugin only works on serverType 11 (remember to set that in your config) and with XKore 1
+#########################################################################################################
 
 package PP_Workaround;
 
