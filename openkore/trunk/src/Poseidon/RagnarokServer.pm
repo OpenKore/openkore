@@ -173,21 +173,7 @@ sub onClientData {
 			$clientdata{$index}{secureLogin_requestCode} = getHex($code);
 		}
 
-	} elsif (($switch eq '01DD') || ($switch eq '01FA') || ($switch eq '0064') || ($switch eq '0060')) { # 0064 packet thanks to abt123
-
-		# Many users don't need the packet dumping or server detail detection features of Poseidon
-		my ($username) = substr($msg, 6, 24) =~ /([\s\S]*?)\000/;
-		print "username (" . length($username) . "): $username\n";
-		# Users who want to use server detail detection should login with the username "serverinfo"
-		if ($username eq 'serverinfo') {
-			$clientdata{$index}{mode} = 1;
-		# Developers who need to work on client packets should login with the username "servertest"
-		} elsif ($username eq 'servertest') {
-			$clientdata{$index}{mode} = 2;
-		} else {
-			undef $clientdata{$index}{mode};
-		}
-		print "mode: $clientdata{$index}{mode}\n";
+	} elsif (($switch eq '01DD') || ($switch eq '01FA') || ($switch eq '0064') || ($switch eq '0060') || ($switch eq '0277')) { # 0064 packet thanks to abt123
 
 		my $sex = 1;
 		my $serverName = pack("a20", "Poseidon server"); # server name should be less than or equal to 20 characters
@@ -233,24 +219,35 @@ sub onClientData {
 		my $hp_max = $hp;
 		my $sp = pack("v", 0x0fff);
 		my $sp_max = $sp;
-		my $job_id = pack("v", 23);
-		my $hairStyle = pack("v", 1);
+		my $job_id1 = pack("v", 0);
+		my $job_id2 = pack("v", 23);
+		my $hairStyle = pack("v", 16);
 		my $level = pack("v", 99);
 		my $head_low = pack("v", 0);
 		my $head_top = pack("v", 5016);
 		my $head_mid = pack("v", 0);
 		my $hairColor = pack("v", 6);
-		my $charName = pack("a24", "Poseidon");
+		my $charName1 = pack("a24", "Poseidon");
+		my $charName2 = pack("a24", "Poseidon Dev");
 		my ($str, $agi, $vit, $int, $dex, $luk) = (99, 99, 99, 99, 99, 99);
 		my $charStats = pack("C*", $str, $agi, $vit, $int, $dex, $luk);
 		my $data = $accountID .
-			pack("v2 x20", 0x6b, 0x82) . $charID . $exp . $zeny . $exp_job . $lvl_job .
+			pack("v2 x20", 0x6b, 0xEC) .
+			$charID . $exp . $zeny . $exp_job . $lvl_job .
 			pack("x24") . $hp . $hp_max . $sp . $sp_max .
-			pack("x2") . $job_id . $hairStyle .
+			pack("x2") . $job_id1 . $hairStyle .
 			pack("x2") . $level .
 			#pack("x2") . $head_low . pack("x2") . $head_top . $head_mid . $hairColor .
-			pack("C*", 0x01, 0x00, 0x38, 0x00, 0x00, 0x00, 0x66, 0x00, 0x0C, 0x00, 0x06, 0x00) .
-			pack("x2") . $charName . $charStats . pack("x2");
+			pack("C*", 0x01, 0x00, 0x38, 0x00, 0x00, 0x00, 0xA0, 0x00, 0x9E, 0x00, 0x06, 0x00) .
+			#pack("C*", 0x01, 0x00, 0x38, 0x00, 0x00, 0x00, 0x46, 0x00, 0x03, 0x00, 0x06, 0x00) .
+			pack("x2") . $charName1 . $charStats . pack("v1", 0) .
+			$charID . $exp . $zeny . $exp_job . $lvl_job .
+			pack("x24") . $hp . $hp_max . $sp . $sp_max .
+			pack("x2") . $job_id2 . $hairStyle .
+			pack("x2") . $level .
+			#pack("x2") . $head_low . pack("x2") . $head_top . $head_mid . $hairColor .
+			pack("C*", 0x01, 0x00, 0x39, 0x00, 0x00, 0x00, 0x9F, 0x00, 0x98, 0x00, 0x06, 0x00) .
+			pack("x2") . $charName2 . $charStats . pack("v1", 1);
 		# NOTE: ideally, all character slots are filled with the same character, for idiot-proofing
 		# NOTE: also, the character's appearance may be made to be modifiable
 		$client->send($data);
@@ -263,6 +260,8 @@ sub onClientData {
 		}
 
 	} elsif ($switch eq '0066') { # client sends character choice packet
+
+		$clientdata{$index}{mode} = unpack('C1', substr($msg, 2, 1));
 
 		# '0071' => ['received_character_ID_and_Map', 'a4 Z16 a4 v1', [qw(charID mapName mapIP mapPort)]],
 		my $mapName = pack("a16", "new_1-1.gat");
@@ -359,6 +358,39 @@ sub onClientData {
 		$clientdata{$index}{serverType} = 9;
 
 	} elsif ($switch eq '0072' &&
+		(length($msg) == 26) &&
+		(substr($msg, 4, 4) eq $accountID) &&
+		(substr($msg, 9, 4) eq $charID) &&
+		(substr($msg, 17, 4) eq $sessionID)
+		) { # client sends the maplogin packet
+
+		mapLogin($self, $client, $msg, $index);
+		# save servers.txt info
+		$clientdata{$index}{serverType} = 10;
+
+	} elsif ($switch eq '0072' &&
+		(length($msg) == 29) &&
+		(substr($msg, 5, 4) eq $accountID) &&
+		(substr($msg, 14, 4) eq $charID) &&
+		(substr($msg, 20, 4) eq $sessionID)
+		) { # client sends the maplogin packet
+
+		mapLogin($self, $client, $msg, $index);
+		# save servers.txt info
+		$clientdata{$index}{serverType} = 11;
+
+	} elsif ($switch eq '0094' &&
+		(length($msg) == 30) &&
+		(substr($msg, 12, 4) eq $accountID) &&
+		(substr($msg, 2, 4) eq $charID) &&
+		(substr($msg, 6, 4) eq $sessionID)
+		) { # client sends the maplogin packet
+
+		mapLogin($self, $client, $msg, $index);
+		# save servers.txt info
+		$clientdata{$index}{serverType} = 12;
+
+	} elsif ($switch eq '0072' &&
 		(length($msg) == 29) &&
 		(substr($msg, 5, 4) eq $accountID) &&
 		(substr($msg, 14, 4) eq $charID) &&
@@ -369,7 +401,10 @@ sub onClientData {
 		# save servers.txt info
 		$clientdata{$index}{serverType} = "1 or 2";
 
-	} elsif ($msg =~ /^$packed_switch.*?$accountID.*?$charID.*?$sessionID/) { # client sends the maplogin packet (unknown)
+	} elsif ($msg =~ /^$packed_switch/
+		&& $msg =~ /$accountID/
+		&& $msg =~ /$charID/
+		&& $msg =~ /$sessionID/) { # client sends the maplogin packet (unknown)
 
 		print "Received unsupported map login packet $switch.\n";
 		visualDump($msg, "$switch");
@@ -387,23 +422,21 @@ sub onClientData {
 		
 		# Let's not wait for the client to ask for the unit info
 		# '0095' => ['actor_info', 'a4 Z24', [qw(ID name)]],
-		$data .= pack("v1 a4 a24", 0x95, $accountID, "Poseidon");
+		$data .= pack("v1 a4 a24", 0x95, $accountID, 'Poseidon' . (($clientdata{$index}{mode} ? ' Dev' : '')));
 
 		# '009A' => ['system_chat', 'x2 Z*', [qw(message)]],
 		$data .= pack("v2 a32", 0x9A, 36, "Welcome to the Poseidon Server!");
 
+		# Show an NPC
+		# '0078' => ['actor_display', 'a4 v14 a4 x7 C1 a3 x2 C1 v1', [qw(ID walk_speed param1 param2 param3 type hair_style weapon lowhead shield tophead midhead hair_color clothes_color head_dir guildID sex coords act lv)]],	
+		$data .= pack("v1 a4 v1 x6 v1 x30", 0x78, $npcID0, 300, 86) . getCoordString($posX + 3, $posY + 4, 1) . pack("C2 x3", 0x05, 0x05);
+		$data .= pack('v1 a4 C1 x1 C1', 0x9C, $npcID0, 0, 3);
+
+		# Let's not wait for the client to ask for the unit info
+		# '0095' => ['actor_info', 'a4 Z24', [qw(ID name)]],
+		$data .= pack("v1 a4 a24", 0x95, $npcID0, "Server Details Guide");
+
 		if ($clientdata{$index}{mode}) {
-			# Show an NPC
-			# '0078' => ['actor_display', 'a4 v14 a4 x7 C1 a3 x2 C1 v1', [qw(ID walk_speed param1 param2 param3 type hair_style weapon lowhead shield tophead midhead hair_color clothes_color head_dir guildID sex coords act lv)]],	
-			$data .= pack("v1 a4 v1 x6 v1 x30", 0x78, $npcID0, 300, 86) . getCoordString($posX + 3, $posY + 4, 1) . pack("C2 x3", 0x05, 0x05);
-			$data .= pack('v1 a4 C1 x1 C1', 0x9C, $npcID0, 0, 3);
-
-			# Let's not wait for the client to ask for the unit info
-			# '0095' => ['actor_info', 'a4 Z24', [qw(ID name)]],
-			$data .= pack("v1 a4 a24", 0x95, $npcID0, "Server Details Guide");
-		}
-
-		if ($clientdata{$index}{mode} == 2) {
 			# Show some items in inventory
 			# '01EE' => ['item_inventory_stackable', 'v4', [qw(index ID type amount)]]
 			$data .= pack("C2 v1", 0xEE, 0x01, 40) .
@@ -432,9 +465,10 @@ sub onClientData {
 		$client->send($data);
 
 	} elsif (
-		(($switch eq '007E') && (($clientdata{$index}{serverType} == 0) || ($clientdata{$index}{serverType} == 1) || ($clientdata{$index}{serverType} == 2) || ($clientdata{$index}{serverType} == 6) || ($clientdata{$index}{serverType} == 7))) ||
+		(($switch eq '007E') && (($clientdata{$index}{serverType} == 0) || ($clientdata{$index}{serverType} == 1) || ($clientdata{$index}{serverType} == 2) || ($clientdata{$index}{serverType} == 6) || ($clientdata{$index}{serverType} == 7) || ($clientdata{$index}{serverType} == 10) || ($clientdata{$index}{serverType} == 11))) ||
 		(($switch eq '0089') && (($clientdata{$index}{serverType} == 3) || ($clientdata{$index}{serverType} == 5) || ($clientdata{$index}{serverType} == 8) || ($clientdata{$index}{serverType} == 9))) ||
-		(($switch eq '0116') && ($clientdata{$index}{serverType} == 4))
+		(($switch eq '0116') && ($clientdata{$index}{serverType} == 4)) ||
+		(($switch eq '00A7') && ($clientdata{$index}{serverType} == 12))
 		) { # client sends sync packet
 		my $data = pack("C*", 0x7F, 0x00, 0x00, 0x00, 0x00, 0x00);
 		$client->send($data);
@@ -493,7 +527,7 @@ sub onClientData {
 	#} elsif ($switch eq '0094') { # getPlayerInfo
 	#	print "Received packet $switch: getPlayerInfo.\n";
 
-	} elsif ($clientdata{$index}{mode}) {
+	} else {
 		if ($switch eq '0090' || ($msg =~ /\x90\x0($npcID1|$npcID0)/)) { # npc talk
 			undef $clientdata{$index}{npc_talk_code};
 			if ($msg =~ /\x90\x0$npcID1/) {
@@ -508,7 +542,7 @@ sub onClientData {
 				$client->send($data);
 			} else {
 				my $data = pack("v2 a4 a9", 0xB4, 17, $npcID0, "[Hakore]");
-				$data .= pack("v2 a4 a92", 0xB4, 100, $npcID0, "Hello! I was examining your RO client's login packets while you are connecting to Poseidon.");
+				$data .= pack("v2 a4 a93", 0xB4, 101, $npcID0, "Hello! I was examining your RO client's login packets while you were connecting to Poseidon.");
 				$data .= pack("v1 a4", 0xB5, $npcID0);
 				$client->send($data);
 			}
@@ -596,7 +630,7 @@ sub onClientData {
 					if (!$clientdata{$index}{npc_talk_code}) {
 						if (!defined $clientdata{$index}{serverType}) {
 							$data .= pack("v2 a4 a71", 0xB4, 79, $npcID, "However, I regret that Openkore may not currently support your server.");
-						} elsif ($clientdata{$index}{serverType} == 7) {
+						} elsif ($clientdata{$index}{serverType} == 7 || $clientdata{$index}{serverType} == 12) {
 							$data .= pack("v2 a4 a82", 0xB4, 90, $npcID, "However, I regret that Openkore does not yet fully support your server this time.");
 						} else {
 							$data .= pack("v2 a4 a64", 0xB4, 72, $npcID, "Based on my examination, I think Openkore supports your server.");
@@ -618,7 +652,7 @@ sub onClientData {
 						if (!defined $clientdata{$index}{serverType}) {
 							$data .= pack("v2 a4 a68", 0xB4, 76, $npcID, "As you can see, I can't find a matching serverType for your server.");
 							$data .= pack("v2 a4 a119", 0xB4, 127, $npcID, "Please make a trial-and-error using all available serverTypes, one of them might be able to work.");
-						} elsif ($clientdata{$index}{serverType} == 7) {
+						} elsif ($clientdata{$index}{serverType} == 7 || $clientdata{$index}{serverType} == 12) {
 							$data .= pack("v2 a4 a65", 0xB4, 73, $npcID, "Like I said, your server is not yet fully supported by Openkore.");
 							$data .= pack("v2 a4 a105", 0xB4, 113, $npcID, "You can login to the server and do most basic tasks, but you cannot attack, sit or stand, or use skills.");
 						}
@@ -639,6 +673,9 @@ sub onClientData {
 							if (($clientdata{$index}{serverType} == 7)
 								|| ($clientdata{$index}{serverType} == 8)
 								|| ($clientdata{$index}{serverType} == 9)
+								|| ($clientdata{$index}{serverType} == 10)
+								|| ($clientdata{$index}{serverType} == 11)
+								|| ($clientdata{$index}{serverType} == 12)
 								|| ($clientdata{$index}{masterLogin_packet})
 								|| ($clientdata{$index}{gameLogin_packet})
 							) {
@@ -667,7 +704,7 @@ sub onClientData {
 				$client->send($data);
 			}
 
-		} elsif ($clientdata{$index}{mode} == 2) {
+		} elsif ($clientdata{$index}{mode}) {
 
 			if (($switch eq '00F7' || $switch eq '0193') && (length($msg) == 2)) { # storage close
 				my $data = pack("v1", 0xF8);
@@ -728,7 +765,7 @@ sub mapLogin {
 		getCoordString($posX, $posY, 1) .
 		pack("C*", 0x05, 0x05);
 		
-	if ($clientdata{$index}{mode} == 2) {
+	if ($clientdata{$index}{mode}) {
 		$data .= pack("C2 v1", 0x0F, 0x01, 226) .
 			# skillID targetType level sp range skillName
 			pack("v2 x2 v3 a24 C1", 1, 0, 9, 0, 1, "NV_BASIC" . chr(0) . "GetMapInfo" . chr(0x0A), 0) .
