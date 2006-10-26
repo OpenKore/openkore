@@ -441,7 +441,7 @@ sub sendAttack {
 	my %args;
 	$args{monID} = $monID;
 	$args{flag} = $flag;
-	Plugins::callHook('packet_pre/sendAttack', \%args);
+	#Plugins::callHook('packet_pre/sendAttack', \%args);
 	if ($args{return}) {
 		sendMsgToServer($r_net, $args{msg});
 		message "Sent attack: ".getHex($monID)."\n", "sendPacket";
