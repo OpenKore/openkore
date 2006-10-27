@@ -2316,8 +2316,7 @@ sub sendStorageAdd {
 		$msg = pack("C*", 0xF3, 0x00, 0xEA, 0x73, 0x50, 0xF8) .
 			pack("v", $index) .
 			pack("C*", 0x50) .
-			pack("V", $amount) .
-			pack("C*", 0x00, 0x00);
+			pack("V", $amount);
 
 	} elsif ($config{serverType} == 12) {
 		$msg = pack("C2 x1 V1 v1", 0x13, 0x01, $amount, $index);
