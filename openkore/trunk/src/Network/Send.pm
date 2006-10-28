@@ -444,7 +444,6 @@ sub sendAttack {
 	Plugins::callHook('packet_pre/sendAttack', \%args);
 	if ($args{return}) {
 		sendMsgToServer($r_net, $args{msg});
-		message "Sent attack: ".getHex($monID)."\n", "sendPacket";
 		return;
 	}
 	
@@ -1982,7 +1981,6 @@ sub sendSit {
 	Plugins::callHook('packet_pre/sendSit', \%args);
 	if ($args{return}) {
 		sendMsgToServer($r_net, $args{msg});
-		message "Sitting\n", "sendPacket";
 		return;
 	}
 
@@ -2442,7 +2440,6 @@ sub sendStand {
 	Plugins::callHook('packet_pre/sendStand', \%args);
 	if ($args{return}) {
 		sendMsgToServer($r_net, $args{msg});
-		message "Standing\n", "sendPacket";
 		return;
 	}
 
