@@ -153,11 +153,25 @@ sub iterate {
 		my $homun_dist = $char->{homunculus}->blockDistance();
 
 		# auto-feed homunculus
-		if ($char->{homunculus}{hunger} ne '' && $char->{homunculus}{hunger} <= 25 && timeOut($char->{homunculus}{feed_time}, 30)) {
-	 		$net->sendHomunculusFeed();
+		if ($char->{homunculus}{hungerThreshold} 
+			&& $char->{homunculus}{hunger} ne '' 
+			&& $char->{homunculus}{hunger} <= $char->{homunculus}{hungerThreshold} 
+			&& timeOut($char->{homunculus}{feed_time},$char->{homunculus}{feed_timeout})) {
+			
+			# Minimum value to feed homunculus 20 hunger, maximum would be 40.
+			# Homun loses intimacy if you let hunger fall lower than 11 and if you feed it above 80 (?)
+			$char->{homunculus}{feed_timeout} = int(rand(30))+1;
+			# Make a random timeout, to appear more humanlike when we have to feed our homun more than once in a row.
+			$char->{homunculus}{hungerThreshold} = int(rand(20))+20;
+			message T("Auto-feeding your Homunculus (".$char->{homunculus}{hunger}." hunger).\n"), 'homunculus';
+			message ("Next feeding at: ".$char->{homunculus}{hungerThreshold}." hunger.\n"), 'homunculus';
+			$net->sendHomunculusFeed();
 			$char->{homunculus}{feed_time} = time;
-			message T("Auto-feeding your Homunculus.\n"), 'homunculus';
-
+		
+		# No random value at initial start of Kore, lets make one =)
+		} elsif (!$char->{homunculus}{hungerThreshold}) {
+		$char->{homunculus}{hungerThreshold} = int(rand(20))+20;
+		
 		# auto-follow
 		} elsif (
 			$AI::Homunculus::homun_AI == 2
