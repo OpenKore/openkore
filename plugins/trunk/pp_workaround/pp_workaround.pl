@@ -78,6 +78,7 @@ sub main {
 	
 	if ($switch eq '007E') {
 		#message "SYNC by RO client\n";
+		$timeout{'ai_attack'}{timeout} = 0;
 		undef $packSize0089;
 		undef $packet0113;
 		
