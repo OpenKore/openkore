@@ -9,8 +9,8 @@
 #  also distribute the source code.
 #  See http://www.gnu.org/licenses/gpl.html for the full license.
 #
-#  $Revision: $
-#  $Id: $
+#  $Revision:$
+#  $Id:$
 #
 #########################################################################
 package telesearchV2;
@@ -26,7 +26,7 @@ use Globals;
 Plugins::register('Tele-Search v2', 'Alternative tele-search v2.', \&unload);
 my $hooks = Plugins::addHooks(
 	['AI_pre',\&search, undef],
-	['map_loaded', \&MapLoaded, undef]
+	['map_loaded', \&MapLoaded, undef],
 	['packet/sendMapLoaded', \&MapLoaded, undef]    
 );
 
