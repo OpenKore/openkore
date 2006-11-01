@@ -38,6 +38,7 @@ New config options:
 
 
 New features:
+- Basic support for rRO (serverType 13) (Without attack, sit, stand and skill use)
 - Basic support for pRO Thor (serverType 12) (Without attack, sit, stand and skill use)
 - Basic support for euRO (serverType 11) (Without attack, sit, stand and skill use)
 - Added route_escape_shout <Message> to somewhat avoid gm bot check.
@@ -70,12 +71,13 @@ Internal:
 
 Credits:
 - All developers with SVN write access (http://cia.navi.cx/stats/project/openkore)
-- Darkfate: partial servertype 11 suppport.
+- Darkfate: partial servertype 11 support.
 - piroJOKE: server information updates and table files updates,
   improved shop list randomization.
 - Stalker: runFromTarget fix
 - raizend: Top 10 packet parsers
 - illusionist: Party fix, Guild Messages, top10 command, bRO support
+- piroJOKE: partial servertype 13 support.
 
 
 =========================
