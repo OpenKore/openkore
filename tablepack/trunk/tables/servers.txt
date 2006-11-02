@@ -719,7 +719,8 @@ serverEncoding Western
 ip 81.177.13.7
 port 6900
 master_version 25
-version 61
+version 90
+serverType 13
 serverEncoding Russian
 pauseCharServer 1
 patchserver web.raggame.ru
