@@ -12,11 +12,6 @@
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #  GNU General Public License for more details.
-#
-#
-#  $Revision$
-#  $Id$
-#
 #########################################################################
 ##
 # MODULE DESCRIPTION: User interface system
@@ -31,8 +26,6 @@ package Interface;
 use strict;
 use warnings;
 no warnings 'redefine';
-use Exporter;
-use base qw(Exporter);
 use Time::HiRes qw(usleep);
 use encoding 'utf8';
 
@@ -260,11 +253,11 @@ sub errorDialog {
 	my $fatal = shift;
 	$fatal = 1 unless defined $fatal;
 
-	$self->writeOutput("error", "$message\n");
+	$self->writeOutput("error", "$message\n", "error");
 	if ($fatal) {
-		$self->writeOutput("message", Translation::T("Press ENTER to exit this program.\n"))
+		$self->writeOutput("message", Translation::T("Press ENTER to exit this program.\n"), "console")
 	} else {
-		$self->writeOutput("message", Translation::T("Press ENTER to continue...\n"))
+		$self->writeOutput("message", Translation::T("Press ENTER to continue...\n"), "console")
 	}
 	$self->getInput(-1);
 }
