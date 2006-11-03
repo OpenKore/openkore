@@ -97,7 +97,7 @@ sub parseAvoidControl {
 	my $r_hash = shift;
 	undef %{$r_hash};
 	my ($key,@args,$args);
-	open FILE, "< $file";
+	open FILE, "<:utf8", $file;
 
 	my $section = "";
 	foreach (<FILE>) {

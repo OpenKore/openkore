@@ -16,8 +16,11 @@ Bug fixes:
 - Add Slim Pitcher to location skills list
 - Skill timeout when runFromTarget is enabled fixed.
 - Correctly support UTF-8 BOM characters.
-- Correctly load skills.txt as UTF-8.
+- Correctly load skills.txt and avoid.txt as UTF-8.
 - Fix sendQuitToCharSelect
+- Fix Korean character encoding support.
+- Fix FreeBSD and other Unix support. MacOS X *might* also be supported now,
+  but it's untested.
 
 New config options:
 - dealAuto_names <list of player names>
@@ -72,8 +75,8 @@ Internal:
 Credits:
 - All developers with SVN write access (http://cia.navi.cx/stats/project/openkore)
 - Darkfate: partial servertype 11 support.
-- piroJOKE: server information updates and table files updates,
-  improved shop list randomization.
+- piroJOKE: server information updates and table files updates.
+- Click: improved shop list randomization.
 - Stalker: runFromTarget fix
 - raizend: Top 10 packet parsers
 - illusionist: Party fix, Guild Messages, top10 command, bRO support
