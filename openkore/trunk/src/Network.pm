@@ -416,8 +416,10 @@ sub checkConnection {
 	} elsif ($conState == 2 && !$self->serverAlive()
 	  && ($config{'server'} ne "" || $masterServer->{charServer_ip})
 	  && !$conState_tries) {
-		message "Pausing for $config{pauseCharServer} second(s)...\n", "system";
-		sleep $config{pauseCharServer} if ($config{pauseCharServer});
+		if ($config{pauseCharServer}) {
+			message "Pausing for $config{pauseCharServer} second(s)...\n", "system";
+			sleep $config{pauseCharServer};
+		}
 		my $master = $masterServer;
 		message T("Connecting to Character Server...\n"), "connection";
 		$conState_tries++;
@@ -434,7 +436,7 @@ sub checkConnection {
 				push @serverList, $server->{name};
 			}
 			my $ret = $interface->showMenu(T("Select Login Server"),
-						       T("Please select your login server."),
+						       T("Please select your login server: "),
 						       \@serverList);
 			if ($ret == -1) {
 				quit();
@@ -486,8 +488,10 @@ sub checkConnection {
 		undef $conState_tries;
 
 	} elsif ($conState == 4 && !$self->serverAlive() && !$conState_tries) {
-		message "Pausing for $config{pauseMapServer} second(s)...\n", "system";
-		sleep($config{pauseMapServer}) if ($config{pauseMapServer});
+		if ($config{pauseMapServer}) {
+			message "Pausing for $config{pauseMapServer} second(s)...\n", "system";
+			sleep($config{pauseMapServer});
+		}
 		message T("Connecting to Map Server...\n"), "connection";
 		$conState_tries++;
 		main::initConnectVars();

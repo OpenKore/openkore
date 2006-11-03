@@ -19,6 +19,7 @@ Bug fixes:
 - Correctly load skills.txt and avoid.txt as UTF-8.
 - Fix sendQuitToCharSelect
 - Fix Korean character encoding support.
+- Fix kRO support.
 - Fix FreeBSD and other Unix support. MacOS X *might* also be supported now,
   but it's untested.
 
@@ -81,6 +82,7 @@ Credits:
 - raizend: Top 10 packet parsers
 - illusionist: Party fix, Guild Messages, top10 command, bRO support
 - piroJOKE: partial servertype 13 support.
+- edeline: help with kRO server fixes.
 
 
 =========================
