@@ -486,7 +486,7 @@ sub account_server_info {
 				push @serverList, $server->{name};
 			}
 			my $ret = $interface->showMenu(T("Select Login Server"),
-						       T("Please select your login server."),
+						       T("Please select your login server: "),
 						       \@serverList);
 			if ($ret == -1) {
 				quit();
@@ -4140,6 +4140,13 @@ sub private_message_sent {
 	shift @lastpm;
 }
 
+# The block size in the received_characters packet varies from server to server.
+# This method may be overrided in other ServerType handlers to return
+# the correct block size.
+sub received_characters_blockSize {
+	return 106;
+}
+
 sub received_characters {
 	return if $conState == 5;
 	my ($self, $args) = @_;
@@ -4156,7 +4163,8 @@ sub received_characters {
 	}
 
 	my $num;
-	for (my $i = $args->{RAW_MSG_SIZE} % 106; $i < $args->{RAW_MSG_SIZE}; $i += 106) {
+	my $blockSize = $self->received_characters_blockSize();
+	for (my $i = $args->{RAW_MSG_SIZE} % $blockSize; $i < $args->{RAW_MSG_SIZE}; $i += $blockSize) {
 		#exp display bugfix - chobit andy 20030129
 		$num = unpack("C1", substr($args->{RAW_MSG}, $i + 104, 1));
 		$chars[$num] = new Actor::You;
