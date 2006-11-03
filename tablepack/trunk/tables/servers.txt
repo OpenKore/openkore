@@ -9,6 +9,10 @@ port 6900
 master_version 22
 version 1
 serverType 0
+secureLogin 1
+secureLogin_type 0
+secureLogin_requestCode
+secureLogin_account 0
 serverEncoding Western
 gameGuard 2
 
@@ -742,7 +746,6 @@ secureLogin_type 0
 # Private RO Servers
 
 [Localhost]
-#ip 207.210.106.207
 ip 127.0.0.1
 port 6900
 master_version 1
