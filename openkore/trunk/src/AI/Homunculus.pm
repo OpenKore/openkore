@@ -159,7 +159,7 @@ sub iterate {
 			&& timeOut($char->{homunculus}{feed_time},$char->{homunculus}{feed_timeout})) {
 			
 			# Minimum value to feed homunculus 20 hunger, maximum would be 40.
-			# Homun loses intimacy if you let hunger fall lower than 11 and if you feed it above 80 (?)
+			# Homun loses intimacy if you let hunger fall lower than 11 and if you feed it above 75 (?)
 			$char->{homunculus}{feed_timeout} = int(rand(30))+1;
 			# Make a random timeout, to appear more humanlike when we have to feed our homun more than once in a row.
 			$char->{homunculus}{hungerThreshold} = int(rand(20))+20;
@@ -170,8 +170,10 @@ sub iterate {
 		
 		# No random value at initial start of Kore, lets make one =)
 		} elsif (!$char->{homunculus}{hungerThreshold}) {
-		$char->{homunculus}{hungerThreshold} = int(rand(20))+20;
-		
+			$char->{homunculus}{hungerThreshold} = int(rand(20))+20;
+			$char->{homunculus}{feed_timeout} = int(rand(60))+10;
+			$char->{homunculus}{feed_time} = time;
+
 		# auto-follow
 		} elsif (
 			$AI::Homunculus::homun_AI == 2
