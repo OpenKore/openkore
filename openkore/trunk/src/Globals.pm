@@ -31,6 +31,7 @@ our %EXPORT_TAGS = (
 	network => [qw($remote_socket $net $charServer $conState $conState_tries $encryptVal $ipc $lastPacketTime $masterServer $msg $msgOut $lastswitch $packetParser $bytesSent $bytesReceived)],
 	interface => [qw($interface)],
 	misc    => [qw($quit @lastpm %lastpm @privMsgUsers %timeout_ex $shopstarted $dmgpsec $totalelasped $elasped $totaldmg %overallAuth %responseVars %talk $startTime_EXP $startingZenny @monsters_Killed $bExpSwitch $jExpSwitch $totalBaseExp $totalJobExp $shopEarned %itemChange $XKore_dontRedirect $monkilltime $monstarttime $startedattack $firstLoginMap $sentWelcomeMessage $versionSearch $monsterBaseExp $monsterJobExp %descriptions %flags %damageTaken $logAppend @sellList $userSeed)],
+	syncs => [qw($syncSync $syncMapSync)],
 );
 
 our @EXPORT = (
@@ -40,6 +41,7 @@ our @EXPORT = (
 	@{$EXPORT_TAGS{network}},
 	@{$EXPORT_TAGS{interface}},
 	@{$EXPORT_TAGS{misc}},
+	@{$EXPORT_TAGS{syncs}},
 );
 
 
@@ -383,6 +385,9 @@ our $userSeed;
 
 our $bytesSent = 0;
 our $bytesReceived = 0;
+
+our $syncSync;
+our $syncMapSync;
 
 END {
 	undef $interface if defined $interface;
