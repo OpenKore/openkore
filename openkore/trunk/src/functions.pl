@@ -579,10 +579,19 @@ sub parseSendMsg {
 		}
 		$timeout{'welcomeText'}{'time'} = time;
 		$ai_v{portalTrace_mapChanged} = time;
- 		message T("Map loaded\n"), "connection";
+		#syncSync support for XKore 1 mode
+		if($config{serverType} == 13)
+		{
+			$syncSync = substr($msg, 8, 4);
+		} 
+		message T("Map loaded\n"), "connection";
 		
 		Plugins::callHook('map_loaded');
-		
+
+	} elsif ($switch eq "007E" && $config{serverType} == 13) {
+		#syncSync support for XKore 1 mode
+		$syncSync = substr($msg, length($msg) - 4, 4); 
+
 	} elsif ($switch eq "0085") {
 		#if ($config{serverType} == 0 || $config{serverType} == 1 || $config{serverType} == 2) {
 		#	#Move

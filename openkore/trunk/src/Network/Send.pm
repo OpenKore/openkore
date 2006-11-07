@@ -21,7 +21,7 @@ use Digest::MD5;
 use Exporter;
 use base qw(Exporter);
 
-use Globals qw($accountID $sessionID $sessionID2 $accountSex $char $charID %config $conState $encryptVal %guild $net @chars %packetDescriptions $bytesSent $masterServer);
+use Globals qw($accountID $sessionID $sessionID2 $accountSex $char $charID %config $conState $encryptVal %guild $net @chars %packetDescriptions $bytesSent $masterServer $syncSync);
 use Log qw(message warning error debug);
 use Utils;
 use I18N qw(stringToBytes);
@@ -1431,7 +1431,16 @@ sub sendLook {
 
 sub sendMapLoaded {
 	my $r_net = shift;
-	my $msg = pack("C*", 0x7D,0x00);
+	my $msg;
+	$syncSync = pack("V", getTickCount());
+	if ($config{serverType} == 13) {
+		$msg =pack("C*", 0x7D, 0x00, 0x7E, 0x00, 0x33, 0x2E, 0x31, 0x34) . $syncSync .
+			pack("C*", 0x4D, 0x01, 0x4F, 0x01, 0x00, 0x00, 0x00, 0x00, 0x4F, 0x01, 0x00, 0x00,
+			0x00, 0x00, 0x4F, 0x01 ,0x01, 0x00, 0x00, 0x00);
+	} else
+	{
+		$msg = pack("C*", 0x7D,0x00);
+	}
 	debug "Sending Map Loaded\n", "sendPacket";
 	sendMsgToServer($r_net, $msg);
 	Plugins::callHook('packet/sendMapLoaded');
@@ -2615,24 +2624,25 @@ sub sendSync {
 	my $r_net = shift;
 	my $initialSync = shift;
 	my $msg;
-
 	# XKore mode 1 lets the client take care of syncing.
 	return if ($r_net->version == 1);
 
+	$syncSync = pack("V", getTickCount());
+
 	if ($config{serverType} == 0) {
-		$msg = pack("C*", 0x7E, 0x00) . pack("V1", getTickCount());
+		$msg = pack("C*", 0x7E, 0x00) . $syncSync;
 
 	} elsif (($config{serverType} == 1) || ($config{serverType} == 2)) {
 		$msg = pack("C*", 0x7E, 0x00);
 		$msg .= pack("C*", 0x30, 0x00, 0x40) if ($initialSync);
 		$msg .= pack("C*", 0x00, 0x00, 0x1F) if (!$initialSync);
-		$msg .= pack("V", getTickCount());
+		$msg .= $syncSync;
 
 	} elsif ($config{serverType} == 3) {
 		$msg = pack("C*", 0x89, 0x00);
 		$msg .= pack("C*", 0x30, 0x00, 0x40) if ($initialSync);
 		$msg .= pack("C*", 0x00, 0x00, 0x1F) if (!$initialSync);
-		$msg .= pack("V", getTickCount());
+		$msg .= $syncSync;
 
 	} elsif ($config{serverType} == 4) {
 		# this is for Freya servers like VanRO
@@ -2640,7 +2650,7 @@ sub sendSync {
 		$msg = pack("C*", 0x16, 0x01);
 		$msg .= pack("C*", 0x61, 0x3A) if ($initialSync);
 		$msg .= pack("C*", 0x61, 0x62) if (!$initialSync);
-		$msg .= pack("V", getTickCount());
+		$msg .= $syncSync;
 		$msg .= pack("C*", 0x0B);
 
 	} elsif ($config{serverType} == 5 || $config{serverType} == 9) {
@@ -2648,43 +2658,40 @@ sub sendSync {
 		$msg .= pack("C*", 0x00, 0x00, 0x40) if ($initialSync);
 		$msg .= pack("C*", 0x00, 0x00, 0x1F) if (!$initialSync);
 		$msg .= pack("C*", 0x00, 0x00, 0x00, 0x90);
-		$msg .= pack("V", getTickCount());
+		$msg .= $syncSync;
 
 	} elsif ($config{serverType} == 6) {
 		$msg = pack("C*", 0x7E, 0x00);
 		$msg .= pack("C*", 0x30) if ($initialSync);
 		$msg .= pack("C*", 0x94) if (!$initialSync);
-		$msg .= pack("V", getTickCount());
+		$msg .= $syncSync;
 
 	} elsif ($config{serverType} == 7) {
 		$msg = pack("C*", 0x7E, 0x00);
 		$msg .= pack("C*", 0x30, 0x00, 0x80, 0x02, 0x00) if ($initialSync);
 		$msg .= pack("C*", 0x00, 0x00, 0xD0, 0x4F, 0x74) if (!$initialSync);
-		$msg .= pack("V", getTickCount());
+		$msg .= $syncSync;
 
 	} elsif ($config{serverType} == 8) { #kRO 28 march 2006
 		# 89 00 61 30 08 b0 a6 0a
 		$msg = pack("C*", 0x89, 0x00, 0x00, 0x00);
-		$msg .= pack("V", getTickCount());
+		$msg .= $syncSync;
 
 	} elsif ($config{serverType} == 10) { #vRO
 		$msg = pack("C*", 0x7E, 0x00, 0x5F, 0x04);
-		$msg .= pack("V", getTickCount());
+		$msg .= $syncSync;
 		
 	} elsif ($config{serverType} == 11) {
 		$msg = pack("C*", 0x7E, 0x00);
 		$msg .= pack("C*", 0x30, 0x00, 0x80,) if ($initialSync);
 		$msg .= pack("C*", 0x00, 0x00, 0x80) if (!$initialSync);
-		$msg .= pack("V", getTickCount());
+		$msg .= $syncSync;
 
 	} elsif ($config{serverType} == 12) { #pRO Thor
-		$msg = pack("C2 x9 V1 x5", 0xA7, 0x00, getTickCount());
+		$msg = pack("C2 x9 V1 x5", 0xA7, 0x00) . $syncSync;
 
 	} elsif ($config{serverType} == 13) {
-		$msg = pack("C*", 0x7E, 0x00);
-		$msg .= pack("C*", 0x2E, 0x38, 0x2E, 0x31) if ($initialSync);
-		$msg .= pack("C*", 0x00, 0x00, 0xE8, 0x6F) if (!$initialSync);
-		$msg .= pack("V", getTickCount());
+		$msg = pack("C*", 0x7E, 0x00, 0x00, 0x00, 0xE8, 0x6F) . $syncSync;
 	}
 	
 	sendMsgToServer($r_net, $msg);
