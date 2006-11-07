@@ -1,17 +1,26 @@
 #########################################################################
 #  OpenKore - Telesearch Plugin v2
-#  Copyright (c) 2005 OpenKore Team
+#  Copyright (c) 2006 ViVi
 #
-#  This software is open source, licensed under the GNU General Public
-#  License, version 2.
-#  Basically, this means that you're allowed to modify and distribute
-#  this software. However, if you distribute modified versions, you MUST
-#  also distribute the source code.
-#  See http://www.gnu.org/licenses/gpl.html for the full license.
+# This plugin is licensed under Creative Commons "Attribution-NonCommercial-ShareAlike 2.5"
 #
-#  $Revision:$
-#  $Id:$
+# You are free:
+#    * to copy, distribute, display, and perform the work
+#    * to make derivative works
+# 
+# Under the following conditions:
+#    * by Attribution: You must attribute the work in the manner specified by the author or licensor.
+#    * Noncommercial: You may not use this work for commercial purposes.
+#    * Share Alike: If you alter, transform, or build upon this work, you may distribute the resulting work only under a license identical to this one.
 #
+#    * For any reuse or distribution, you must make clear to others the license terms of this work.
+#    * Any of these conditions can be waived if you get permission from the copyright holder.
+#
+# Your fair use and other rights are in no way affected by the above.
+#
+# This is a human-readable summary of the Legal Code ( Full License: http://creativecommons.org/licenses/by-nc-sa/2.5/legalcode ). 
+# Disclaimer: http://creativecommons.org/licenses/disclaimer-popup?lang=en
+# 
 #########################################################################
 package telesearchV2;
 
@@ -30,7 +39,7 @@ my $hooks = Plugins::addHooks(
 	['packet/sendMapLoaded', \&MapLoaded, undef]    
 );
 
-my ($maploaded,$allow_tele,$disallow);
+my ($maploaded,$allow_tele);
 
 sub unload {
     Plugins::delHooks($hooks);
