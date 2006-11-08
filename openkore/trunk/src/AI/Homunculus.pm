@@ -128,6 +128,14 @@ sub is {
 	return 0;
 }
 
+sub processFeeding {
+	# Minimum value to feed homunculus 20 hunger, maximum would be 40.	
+	# Homun loses intimacy if you let hunger fall lower than 11 and if you feed it above 75 (?)
+	$char->{homunculus}{hungerThreshold} = int(rand(30))+11;
+	# Make a random timeout, to appear more humanlike when we have to feed our homun more than once in a row.
+	$char->{homunculus}{feed_timeout} = int(rand(($config{homunculus_hungerTimeoutMax})-$config{homunculus_hungerTimeoutMin}))+$config{homunculus_hungerTimeoutMin};
+	$char->{homunculus}{feed_time} = time;
+}
 ##########################################
 
 sub iterate {
@@ -173,21 +181,14 @@ sub iterate {
 			&& timeOut($char->{homunculus}{feed_time},$char->{homunculus}{feed_timeout})
 			&& !$disallow_feeding) {
 			
-			# Minimum value to feed homunculus 20 hunger, maximum would be 40.
-			# Homun loses intimacy if you let hunger fall lower than 11 and if you feed it above 75 (?)
-			$char->{homunculus}{feed_timeout} = int(rand(($config{homunculus_hungerTimeoutMax})-$config{homunculus_hungerTimeoutMin}))+$config{homunculus_hungerTimeoutMin};
-			# Make a random timeout, to appear more humanlike when we have to feed our homun more than once in a row.
-			$char->{homunculus}{hungerThreshold} = int(rand(30))+11;
+			processFeeding();
 			message T("Auto-feeding your Homunculus (".$char->{homunculus}{hunger}." hunger).\n"), 'homunculus';
-			message ("Next feeding at: ".$char->{homunculus}{hungerThreshold}." hunger.\n"), 'homunculus';
 			$net->sendHomunculusFeed();
-			$char->{homunculus}{feed_time} = time;
+			message ("Next feeding at: ".$char->{homunculus}{hungerThreshold}." hunger.\n"), 'homunculus';
 		
 		# No random value at initial start of Kore, lets make one =)
 		} elsif (!$char->{homunculus}{hungerThreshold}) {
-			$char->{homunculus}{hungerThreshold} = int(rand(30))+11;
-			$char->{homunculus}{feed_timeout} = int(rand(($config{homunculus_hungerTimeoutMax})-$config{homunculus_hungerTimeoutMin}))+$config{homunculus_hungerTimeoutMin};
-			$char->{homunculus}{feed_time} = time;
+			processFeeding();
 
 		# auto-follow
 		} elsif (
