@@ -2688,7 +2688,8 @@ sub sendSync {
 		$msg .= $syncSync;
 
 	} elsif ($config{serverType} == 12) { #pRO Thor
-		$msg = pack("C2 x9 V1 x5", 0xA7, 0x00) . $syncSync;
+		$msg = pack("C2 x9", 0xA7, 0x00);
+		$msg .= $syncSync . pack("x5");
 
 	} elsif ($config{serverType} == 13) {
 		$msg = pack("C*", 0x7E, 0x00, 0x00, 0x00, 0xE8, 0x6F) . $syncSync;
