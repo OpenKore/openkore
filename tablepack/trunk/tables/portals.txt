@@ -1864,3 +1864,20 @@ xmas_in 179 109 xmas 181 169
 
 
 jupe_cave 147 52 yuno_fild07 202 175
+new_5-2 100 6 new_5-1 148 112
+new_5-1 148 112 new_5-2 100 9
+new_3-2 100 6 new_3-1 148 112
+new_3-1 148 112 new_3-2 100 9
+new_4-2 100 6 new_4-1 148 112
+new_4-1 148 112 new_4-2 100 9
+new_1-2 100 6 new_1-1 148 112
+new_1-1 148 112 new_1-2 100 9
+new_2-2 100 6 new_2-1 148 112
+new_2-1 148 112 new_2-2 100 9
+yuno_fild07 179 354 yuno_fild03 178 15
+juperos_01 51 249 jupe_cave 29 52
+jupe_cave 29 52 juperos_01 54 246
+hu_fild04 122 27 yuno_fild02 117 375
+yuno_fild02 117 375 hu_fild04 122 35
+new_4-2 46 172 new_4-2 73 106
+new_4-2 73 106 new_4-2 41 172
