@@ -179,14 +179,14 @@ sub iterate {
 			&& $char->{homunculus}{hunger} ne '' 
 			&& $char->{homunculus}{hunger} <= $char->{homunculus}{hungerThreshold} 
 			&& timeOut($char->{homunculus}{feed_time},$char->{homunculus}{feed_timeout})
-			&& !$disallow_feeding) {
+			&& (!$disallow_feeding)) {
 			
 			processFeeding();
 			message T("Auto-feeding your Homunculus (".$char->{homunculus}{hunger}." hunger).\n"), 'homunculus';
 			$net->sendHomunculusFeed();
 			message ("Next feeding at: ".$char->{homunculus}{hungerThreshold}." hunger.\n"), 'homunculus';
 		
-		# No random value at initial start of Kore, lets make one =)
+		# No random value at initial start of Kore, lets make a few =)
 		} elsif (!$char->{homunculus}{hungerThreshold}) {
 			processFeeding();
 
