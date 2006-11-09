@@ -1433,16 +1433,10 @@ sub sendMapLoaded {
 	my $r_net = shift;
 	my $msg;
 	$syncSync = pack("V", getTickCount());
-	if ($config{serverType} == 13) {
-		$msg =pack("C*", 0x7D, 0x00, 0x7E, 0x00, 0x33, 0x2E, 0x31, 0x34) . $syncSync .
-			pack("C*", 0x4D, 0x01, 0x4F, 0x01, 0x00, 0x00, 0x00, 0x00, 0x4F, 0x01, 0x00, 0x00,
-			0x00, 0x00, 0x4F, 0x01 ,0x01, 0x00, 0x00, 0x00);
-	} else
-	{
-		$msg = pack("C*", 0x7D,0x00);
-	}
+	$msg = pack("C*", 0x7D,0x00);
 	debug "Sending Map Loaded\n", "sendPacket";
 	sendMsgToServer($r_net, $msg);
+	#sendSync($net, 1);
 	Plugins::callHook('packet/sendMapLoaded');
 }
 
@@ -2688,10 +2682,9 @@ sub sendSync {
 		$msg .= $syncSync;
 
 	} elsif ($config{serverType} == 12) { #pRO Thor
-		$msg = pack("C2 x9", 0xA7, 0x00);
-		$msg .= $syncSync . pack("x5");
+		$msg = pack("C2 x9", 0xA7, 0x00) . $syncSync . pack("x5");
 
-	} elsif ($config{serverType} == 13) {
+	} elsif ($config{serverType} == 13) { # rRO
 		$msg = pack("C*", 0x7E, 0x00, 0x00, 0x00, 0xE8, 0x6F) . $syncSync;
 	}
 	

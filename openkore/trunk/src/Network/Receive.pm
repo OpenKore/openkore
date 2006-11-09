@@ -50,7 +50,7 @@ sub new {
 		'006F' => ['character_deletion_successful'],
 		'0070' => ['character_deletion_failed'],
 		'0071' => ['received_character_ID_and_Map', 'a4 Z16 a4 v1', [qw(charID mapName mapIP mapPort)]],
-		'0073' => ['map_loaded','x4 a3',[qw(coords)]],
+		'0073' => ['map_loaded','V a3',[qw(syncMapSync coords)]],
 		'0075' => ['change_to_constate5'],
 		'0077' => ['change_to_constate5'],
 		'0078' => ['actor_display', 'a4 v14 a4 x7 C1 a3 x2 C1 v1', [qw(ID walk_speed param1 param2 param3 type hair_style weapon lowhead shield tophead midhead hair_color clothes_color head_dir guildID sex coords act lv)]],
@@ -3440,6 +3440,7 @@ sub map_loaded {
 	$conState = 5;
 	undef $conState_tries;
 	$char = $chars[$config{'char'}];
+	$syncMapSync = $args->{syncMapSync};
 
 	if ($net->version == 1) {
 		$conState = 4;
