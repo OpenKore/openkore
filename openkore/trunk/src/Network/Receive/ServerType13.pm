@@ -51,8 +51,8 @@ sub map_loaded {
 		message T("You are now in the game\n"), "connection";
 		sendMapLoaded($net);
 		#for rRO server initial sync is not sending
-		#sendSync($net, 1);
-		#debug "Sent initial sync\n", "connection";
+		sendSync($net, 1);
+		debug "Sent initial sync\n", "connection";
 		$timeout{'ai'}{'time'} = time;
 	}
 
