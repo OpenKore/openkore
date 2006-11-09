@@ -2492,7 +2492,7 @@ sub sendStorageGet {
 			pack("C*", 0x00, 0x00, 0x00, 0x00) .
 			pack("V*", $amount);
 
-	} elsif ($config{serverType} == 10) {
+	} elsif ($config{serverType} == 12) {
 		$msg = pack("C2 v1 V1", 0xF6, 0x00, $index, $amount);
 
 	} elsif ($config{serverType} == 13) {
