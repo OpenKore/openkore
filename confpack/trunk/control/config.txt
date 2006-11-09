@@ -43,7 +43,6 @@ secureLogin_requestCode
 
 message_length_max 80
 
-
 ######## Main configuration ########
 
 alias_heal sp 28
@@ -151,6 +150,8 @@ followLostStep 12
 followSitAuto 0
 followBot 0
 
+ignoreServerShutdown
+
 itemsTakeAuto 2
 itemsTakeAuto_party 0
 itemsGatherAuto 2
@@ -232,9 +233,11 @@ teleportAuto_totalDmg 0
 teleportAuto_totalDmgInLock 0
 teleportAuto_equip_leftAccessory
 teleportAuto_equip_rightAccessory
+teleportAuto_lostHomunculus
 teleportAuto_lostTarget
 
 dealAuto 1
+dealAuto_names
 partyAuto 1
 partyAutoShare 0
 guildAutoDeny 1
@@ -309,7 +312,6 @@ homunculus_teleportAuto_dropTargetKS 0
 homunculus_teleportAuto_totalDmg 0
 homunculus_teleportAuto_totalDmgInLock 0
 
-
 ######## Block options ########
 # You can copy & paste any block multiple times. So if you want to
 # configure two attack skills, just duplicate the attackSkillSlot block.
@@ -321,6 +323,9 @@ attackSkillSlot {
 	minCastTime 0
 	hp
 	sp > 10
+	homunculus_hp
+	homunculus_sp
+	homunculus_dead
 	onAction
 	whenStatusActive
 	whenStatusInactive
@@ -371,6 +376,9 @@ useSelf_skill {
 	minCastTime 0
 	hp
 	sp
+	homunculus_hp
+	homunculus_sp
+	homunculus_dead
 	onAction
 	whenStatusActive
 	whenStatusInactive
@@ -398,6 +406,9 @@ partySkill {
 	minCastTime 0
 	hp
 	sp
+	homunculus_hp
+	homunculus_sp
+	homunculus_dead
 	onAction
 	whenStatusActive
 	whenStatusInactive
@@ -462,6 +473,9 @@ equipAuto {
 	whileSitting 0
 	hp
 	sp
+	homunculus_hp
+	homunculus_sp
+	homunculus_dead
 	onAction
 	whenStatusActive
 	whenStatusInactive
@@ -481,6 +495,9 @@ equipAuto {
 useSelf_item {
 	hp
 	sp
+	homunculus_hp
+	homunculus_sp
+	homunculus_dead
 	onAction
 	whenStatusActive
 	whenStatusInactive
@@ -498,7 +515,6 @@ useSelf_item {
 	inInventory
 	manualAI 0
 }
-
 
 ######## Autostorage/autosell ########
 
@@ -530,7 +546,6 @@ getAuto {
 	maxAmount
 	passive
 }
-
 
 ######## Debugging options; only useful for developers ########
 
