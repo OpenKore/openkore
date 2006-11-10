@@ -2927,7 +2927,7 @@ sub useTeleport {
 		}
 		Actor::Item::scanConfigAndEquip('teleportAuto_equip');
 		Commands::run('aiv');
-		return;
+		return 1;
 	}
 
 	# else if $internal == 0 or $sk_lvl == 0
