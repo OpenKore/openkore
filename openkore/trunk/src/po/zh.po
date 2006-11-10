@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenKore 1.9.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-11-08 08:00+0700\n"
-"PO-Revision-Date: 2006-10-13 15:35+0800\n"
+"POT-Creation-Date: 2006-11-10 20:50+0700\n"
+"PO-Revision-Date: 2006-11-09 07:13+0800\n"
 "Last-Translator: lkm <lj88kc@yahoo.com.cn>\n"
 "Language-Team: Lkm <lj88kc@yhaoo.com.cn>\n"
 "MIME-Version: 1.0\n"
@@ -3890,9 +3890,8 @@ msgid "Select Login Server"
 msgstr "选择登陆服务器"
 
 #: ../Network.pm:439 ../Network/Receive.pm:489
-#, fuzzy
 msgid "Please select your login server: "
-msgstr "请选择登陆服务器."
+msgstr "请选择登陆服务器: "
 
 #: ../Network.pm:461
 msgid "Timeout on Character Server, reconnecting...\n"
@@ -6019,9 +6018,8 @@ msgid "** Respawning to save point.\n"
 msgstr "** 回到记录点.\n"
 
 #: ../AI/Homunculus.pm:166
-#, fuzzy
 msgid "Auto-feeding your Homunculus ("
-msgstr "自动饲养生命体.\n"
+msgstr "自动饲养生命体 ("
 
 #: ../AI/Homunculus.pm:224
 msgid "Found your Homunculus!\n"
