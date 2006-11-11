@@ -60,6 +60,21 @@ PecoPeco's Egg 0 0 0
 Pupa 0 0 0
 Thief Bug's Egg 0 0 0
 
+##### Alchemist Summons ####
+# Summoned Parasite
+1555 0 0 0 
+
+# Summoned Flora
+1575 0 0 0 
+
+# Summoned Hydra
+1579 0 0 0 
+
+# Summoned Mandragora
+1589 0 0 0 
+
+# Summoned Geographer
+1590 0 0 0 
 
 ##### Plants #####
 Black Mushroom 0 0 0
