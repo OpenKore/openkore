@@ -3080,7 +3080,7 @@ sub processAutoAttack {
 				next if (!$_ || !checkMonsterCleanness($_));
 				my $monster = $monsters{$_};
 				# Ignore ignored monsters in mon_control.txt
-				if ((my $control = mon_control($monster->{name}))) {
+				if ((my $control = mon_control($monster->{name})) || (my $control = mon_control($_)) ) {
 					next if ( ($control->{attack_auto} ne "" && $control->{attack_auto} <= 0)
 						|| ($control->{attack_lvl} ne "" && $control->{attack_lvl} > $char->{lv})
 						|| ($control->{attack_jlvl} ne "" && $control->{attack_jlvl} > $char->{lv_job})
