@@ -11,7 +11,7 @@ _func2:
     lea ecx, [ebp-10h]
     mov dword [ebp-0Ch], eax
     push ecx
-    mov dword [ebp-9], eax
+    mov dword [ebp-0Ch+3], eax ; *
     mov dword [ebp-10h], 0
     mov dword [ebp-4], eax
     call .Ragexe_e_00503CD0
@@ -1706,12 +1706,12 @@ _func2:
 .loc_504DEE:
     mov edx, [ebp+14h]
     ; Not shure about teese string
-    lea ecx, [esi*8]
+    lea ecx, [esi*8+0]
     mov [ebp-8], ecx
     lea ecx, [ebp-40h]
     shr esi, 1Dh
     ; Not shure about teese string
-    lea eax, [edx*8]
+    lea eax, [edx*8+0]
     push ecx
     or esi, eax
     push ebx

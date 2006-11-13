@@ -144,7 +144,7 @@ _func4:
     LEA     EDI,[EBP-054h]
     MOV     dword [EBP-058h],0
     LEA     EDX,[EBP-058h]
-    REP STOSB
+    REP STOSD
     MOV     EAX,dword [EBP+8]
     LEA     ECX,[EBP-018h]
     PUSH    ECX
@@ -1630,7 +1630,7 @@ _func4:
     REP     STOSD
     MOV     ECX,EDX
     AND     ECX,3
-    REP     STOSD
+    REP     STOSB
 .L5093ED:
     LEA     EAX,[EBP-044h]
     PUSH    ESI
@@ -1651,7 +1651,7 @@ _func4:
     REP     STOSD
     MOV     ECX,EDX
     AND     ECX,3
-    REP     STOSD
+    REP     STOSB
 .L50941B:
     MOV     EAX,dword [EBP+0Ch]
     LEA     EDX,[EBP-044h]

@@ -605,6 +605,7 @@ _func3:
     CMP     ECX, d069E4C4h + 4020h ;06A24E4h
     JL      .L5021DF
     ADD     ESI,0800h
+; Can be bug here. Must check
     CMP     ESI, d069E4C4h + 4400h ;06A28C4h
     JL      .L5021D3
     MOV     ECX,dword [EBP-048h]
