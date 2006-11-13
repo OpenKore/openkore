@@ -1,7 +1,17 @@
-// -- use tabs, not spaces
-// -- tab spacing is 4 characters
-// -- no /* */ comments
-//
+/*
+ OpenKore - Padded Packet Emulator.
+
+ This program is free software; you can redistribute it and/or
+ modify it under the terms of the GNU General Public License
+ as published by the Free Software Foundation; either version 2
+ of the License, or (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ See http://www.gnu.org/licenses/gpl.html for the full license.
+*/
+
 #include <memory.h>
 #include <stdlib.h>
 
