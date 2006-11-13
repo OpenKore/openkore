@@ -1,3 +1,15 @@
+; OpenKore - Padded Packet Emulator.
+;
+; This program is free software; you can redistribute it and/or
+; modify it under the terms of the GNU General Public License
+; as published by the Free Software Foundation; either version 2
+; of the License, or (at your option) any later version.
+;
+; This program is distributed in the hope that it will be useful,
+; but WITHOUT ANY WARRANTY; without even the implied warranty of
+; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+; See http://www.gnu.org/licenses/gpl.html for the full license.
+
 section .data use32 CLASS=data
   d06A253Ch dd 0E1A833ADh
   d06A2540h dd 0FC74C963h, 097F47AE2h, 0DA204122h, 0BF32463Ch, 05E22924Ah, 0D10B3E43h, 020E43242h, 054D7B96Fh, 097FCAAB3h, 0D23D4038h, 04DB37205h, 0D1976B25h, 0A8C112B0h, 0BA7BA2CFh, 031AE125Ch

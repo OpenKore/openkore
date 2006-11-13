@@ -1,4 +1,15 @@
-; Need serious recheck of asm code
+; OpenKore - Padded Packet Emulator.
+;
+; This program is free software; you can redistribute it and/or
+; modify it under the terms of the GNU General Public License
+; as published by the Free Software Foundation; either version 2
+; of the License, or (at your option) any later version.
+;
+; This program is distributed in the hope that it will be useful,
+; but WITHOUT ANY WARRANTY; without even the implied warranty of
+; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+; See http://www.gnu.org/licenses/gpl.html for the full license.
+
  section .data use32 CLASS=data
   d069E4C4h dd 07D8EA231h, 08BB72ABAh, 0D30A00E9h, 08D9F4CD6h, 0927FF9ACh, 01CB42E53h, 03366E403h, 0EF8F46A6h, 03C485B76h, 040982C5Ah, 0259BC47Dh, 0D5575AD6h, 078D7C88Fh, 0174447A1h, 0AB96CF35h, 06EE67A44h
             dd 0484E50F7h, 062C77C47h, 0C569E55Dh, 08A5DB512h, 0AA8DF4BFh, 05F11BC4Dh, 0711206B5h, 0399A0B3Fh, 0A192A3D6h, 0C0421881h, 0B193437Bh, 08CAF6CBCh, 03A8F7E3Ch, 0E44B8F25h, 094EC9B91h, 0628CD977h
