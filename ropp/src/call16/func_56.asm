@@ -15,6 +15,7 @@ _func5:
     PUSH EBP
     MOV EBP,ESP
     SUB ESP,018h
+; May be bug
     MOV AL,byte [d068AAD6h]
     TEST AL,AL
     JZ .Ragexe004206B4
@@ -36,6 +37,7 @@ _func5:
     MOV byte [EBP-1],037h
     CALL Ragexe00503690
     ADD ESP,014h
+; May be bug
     MOV byte [d068AAD6h],0
 .Ragexe004206B4:
     XOR EDX,EDX
@@ -62,6 +64,7 @@ _func6:
     PUSH EBP
     MOV EBP,ESP
     SUB ESP,018h
+; May be bug
     MOV AL,byte [d068AAD7h]
     TEST AL,AL
     JZ .Ragexe00420744
@@ -83,6 +86,7 @@ _func6:
     MOV byte [EBP-1],037h
     CALL Ragexe00503690
     ADD ESP,014h
+; May be bug
     MOV byte [d068AAD7h],0
 .Ragexe00420744:
     XOR EDX,EDX
@@ -760,9 +764,11 @@ Ragexe00503650:
     XOR ECX,ECX
 .Ragexe00503658:
     MOV EAX,EDX
+; May be bug
     MOV byte [ECX+d0723528h],DL
     AND EAX,0FFh
     MOV ESI,0101h
+; May be bug
     MOV byte [EAX+d0723628h],CL
     LEA EAX,[EDX+EDX*4]
     XOR EDX,EDX
