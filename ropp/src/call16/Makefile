@@ -31,7 +31,7 @@ func_bc.o: func_bc.asm
 func_f.o: func_f.asm
 	$(NASM) $< -o $@
 
-call16.o: call16.cpp
+call16.o: call16.cpp call16.h
 	$(CXX) -c $(CXXFLAGS) $< -o $@
 
 func012DE.o: func012DE.c
