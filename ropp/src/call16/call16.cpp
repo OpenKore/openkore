@@ -14,7 +14,9 @@
 
 #include "call16.h"
 
-dword (*funcs[])(dword)={
+typedef CDECL dword (*ProcessorFunction)(dword);
+
+ProcessorFunction funcs[] ={
 	func0, func1, func2, func3, func4, func5, func6, func7,
 	func8, func9, funcA, funcB, funcC, funcD, funcE, funcF
 };
