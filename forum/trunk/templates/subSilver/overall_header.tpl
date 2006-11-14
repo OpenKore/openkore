@@ -48,6 +48,7 @@
 		<li><a href="http://ro.yyro.com/" title="中文"><img src="images/chinese.png" width="48" height="48" alt=""><br>中文</a></li>
 		<li><a href="http://www.openkore-hispano.uni.cc/" title="Hispano"><img src="images/spain.png" width="48" height="48" alt=""><br>Hispano</a></li>
 		<li><a href="http://www.openkore.de/" title="Deutsch"><img src="images/germany.png" width="48" height="48" alt=""><br>Deutsch</a></li>
+		<li><a href="http://cafe.naver.com/openkore" title="Korea"><img src="/images/korea.png" width="48" height="48" alt=""><br>Korea</a></li>
 		</ul>
 	</div>
 
