@@ -31,6 +31,7 @@ Utils::Crypton
 Utils::PerlLauncher
 Utils::ObjectList
 Utils::Core::Exception
+Utils::Set
 Utils::StartupNotification::Launcher
 Utils::StartupNotification::Launchee
 Utils::StartupNotification::CreateSocketException
