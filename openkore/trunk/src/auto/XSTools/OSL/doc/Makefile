@@ -7,4 +7,4 @@ clean:
 	rm -rf html
 
 upload:
-	tar -c api | gzip --best | ssh openkore@www.openkore.com tar -C web/osl -xzvm --no-same-owner --no-same-permissions
+	tar -c api | gzip --best | ssh openkore@www.openkore.com gtar -C web/osl -xzvm --no-same-owner --no-same-permissions -f -
