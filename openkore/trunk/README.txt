@@ -83,6 +83,7 @@ Credits:
 - illusionist: Party fix, Guild Messages, top10 command, bRO support
 - piroJOKE: partial servertype 13 support.
 - edeline: help with kRO server fixes.
+- skseo: Korean translations.
 
 
 =========================
