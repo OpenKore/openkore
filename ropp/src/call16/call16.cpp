@@ -12,13 +12,7 @@
  See http://www.gnu.org/licenses/gpl.html for the full license.
 */
 
-//---------------------------------------------------------------------------
-
-#pragma hdrstop
-
 #include "call16.h"
-//---------------------------------------------------------------------------
-#pragma package(smart_init)
 
 dword (*funcs[])(dword)={
 	func0, func1, func2, func3, func4, func5, func6, func7,
