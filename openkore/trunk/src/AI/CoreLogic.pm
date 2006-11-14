@@ -1056,13 +1056,13 @@ sub processMapRouteAI {
 				warning TF("Unable to calculate how to walk from [%s(%s,%s)] " .
 					"to [%s%s] (no map solution).\n", $field{name}, $char->{pos_to}{x}, $char->{pos_to}{y}, $args->{dest}{map}, ${destpos}), "route";
 				AI::dequeue;
-                    if ($config{route_escape_unknownMap}) {
+				if ($config{route_escape_unknownMap}) {
 					if ($config{route_escape_shout} ne "" && !defined($timeout{ai_route_escape}{time})){
 						sendMessage($net, "c", $config{route_escape_shout});
 					}
-				   $timeout{ai_route_escape}{time} = time;
-				   AI::queue("escape");
-       			}
+					$timeout{ai_route_escape}{time} = time;
+					AI::queue("escape");
+				}
 			}
 
 		} elsif ( $args->{stage} eq 'Traverse the Map Solution' ) {
@@ -3079,7 +3079,7 @@ sub processAutoAttack {
 			foreach (@monstersID) {
 				next if (!$_ || !checkMonsterCleanness($_));
 				my $monster = $monsters{$_};
-				//message ("Monster ID: ". $monster->{binType});
+
 				# Ignore ignored monsters in mon_control.txt
 				if (my $control = mon_control($monster->{name})) {
 					next if ( ($control->{attack_auto} ne "" && $control->{attack_auto} <= 0)
