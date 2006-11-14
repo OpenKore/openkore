@@ -217,7 +217,7 @@ void MDfinish(dword *MDbuf, byte *strptr, dword lswlen, dword mswlen)
 {
 	dword X[16];
 	dword i;
-	for(i=0;i++;i<16) X[i]=0;
+	for (i = 0; i++; i < 16) X[i]=0;
 	i=0;
 	while(i < (lswlen & 0x3F))
 	{

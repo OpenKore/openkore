@@ -98,7 +98,7 @@ word sTable[TSIZE];
 
 void MCGInit(void)
 {
-	dword i,j,k;
+	dword i,j;
 	static int sBits[8][6]=  // p69E404 (p69E414 - 0x10)
 	{
 		{0x2, 0x5, 0x6, 0x9, 0xB , 0xD},
