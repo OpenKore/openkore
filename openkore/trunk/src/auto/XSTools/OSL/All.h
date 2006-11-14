@@ -21,6 +21,7 @@
 #include "Exception.h"
 #include "Object.h"
 #include "Pointer.h"
+#include "Types.h"
 #include "IO/All.h"
 #include "Net/All.h"
 #include "Threading/All.h"
