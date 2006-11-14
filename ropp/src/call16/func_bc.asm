@@ -333,6 +333,7 @@ sub_50A080:
     MOV     DL,byte [EBP+0Ch]
     ADD     AL,DL
     AND     EAX,0FFh
+    ; May-be a bug hete
     MOV     AL,byte [EAX+d074491Ch]
     POP     EBP
     RET
@@ -353,6 +354,7 @@ sub_50A0E0:
     ADD     BL,AL
     ADD     EAX,4
     CMP     EAX,0FFh
+    ; May-be a bug hete
     MOV     byte [ECX+d074491Ch],BL
     JLE     .L50A10A
     XOR     EAX,EAX
@@ -369,6 +371,7 @@ sub_50A0E0:
     POP     EBX
     INC     AL
     AND     EAX,0FFh
+    ; May-be a bug hete
     MOV     AL,byte [EAX+d074491Ch]
     POP     EBP
     RET
