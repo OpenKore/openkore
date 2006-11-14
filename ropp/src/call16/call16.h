@@ -18,21 +18,21 @@
 #define get_keyH
 #include "../typedefs.h"
 
-extern "C" dword func0(dword key);
-extern "C" dword func1(dword key);
-extern "C" CDECL dword func2(dword key);
-extern "C" CDECL dword func3(dword key);
-extern "C" CDECL dword func4(dword key);
-extern "C" CDECL dword func5(dword key);
-extern "C" CDECL dword func6(dword key);
-extern "C" CDECL dword func7(dword key);
-extern "C" CDECL dword func8(dword key);
-extern "C" CDECL dword func9(dword key);
-extern "C" CDECL dword funcA(dword key);
-extern "C" CDECL dword funcB(dword key);
-extern "C" CDECL dword funcC(dword key);
-extern "C" dword funcD(dword key);
-extern "C" dword funcE(dword key);
-extern "C" CDECL dword funcF(dword key);
-extern "C" dword Call16(int map_sync, int sync, int acc_id, short packet);
+CEXTERN CDECL dword func0(dword key);
+CEXTERN CDECL dword func1(dword key);
+CEXTERN CDECL dword func2(dword key);
+CEXTERN CDECL dword func3(dword key);
+CEXTERN CDECL dword func4(dword key);
+CEXTERN CDECL dword func5(dword key);
+CEXTERN CDECL dword func6(dword key);
+CEXTERN CDECL dword func7(dword key);
+CEXTERN CDECL dword func8(dword key);
+CEXTERN CDECL dword func9(dword key);
+CEXTERN CDECL dword funcA(dword key);
+CEXTERN CDECL dword funcB(dword key);
+CEXTERN CDECL dword funcC(dword key);
+CEXTERN CDECL dword funcD(dword key);
+CEXTERN CDECL dword funcE(dword key);
+CEXTERN CDECL dword funcF(dword key);
+CEXTERN dword Call16(int map_sync, int sync, int acc_id, short packet);
 #endif

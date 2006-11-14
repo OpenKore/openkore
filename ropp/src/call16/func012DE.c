@@ -4,6 +4,7 @@
 * Updated: 11.10.2006
 */
 #include "../typedefs.h"
+#include "call16.h"
 #include "mcg_cipher.h"
 #include "rmd128.h"
 #include "misty1.h"
