@@ -3079,8 +3079,9 @@ sub processAutoAttack {
 			foreach (@monstersID) {
 				next if (!$_ || !checkMonsterCleanness($_));
 				my $monster = $monsters{$_};
+				//message ("Monster ID: ". $monster->{binType});
 				# Ignore ignored monsters in mon_control.txt
-				if ((my $control = mon_control($monster->{name})) || (my $control = mon_control($monster->{binType})) ) {
+				if (my $control = mon_control($monster->{name})) {
 					next if ( ($control->{attack_auto} ne "" && $control->{attack_auto} <= 0)
 						|| ($control->{attack_lvl} ne "" && $control->{attack_lvl} > $char->{lv})
 						|| ($control->{attack_jlvl} ne "" && $control->{attack_jlvl} > $char->{lv_job})
