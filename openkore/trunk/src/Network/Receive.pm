@@ -1835,7 +1835,7 @@ sub chat_users {
 		}
 	}
 
-	message TF("You have joined the Chat Room %s\n", bytesToString($chat->{title}));
+	message TF("You have joined the Chat Room %s\n", $chat->{title});
 }
 
 sub cast_cancelled {
