@@ -23,6 +23,12 @@ typedef unsigned long	dword;		// unsigned 32-bit type
 	#define CDECL __attribute__((cdecl))
 #endif
 
+#ifdef __cplusplus
+	#define CEXTERN extern "C"
+#else
+	#define CEXTERN
+#endif
+
 #define NULL 0
 
 #endif
