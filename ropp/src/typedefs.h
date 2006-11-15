@@ -21,6 +21,10 @@ typedef unsigned long	dword;		// unsigned 32-bit type
 
 #ifdef __GNUC__
 	#define CDECL __attribute__((cdecl))
+	#define STDCALL __attribute__((stdcall))
+#else
+	#define CDECL __cdecl
+	#define STDCALL __stdcall
 #endif
 
 #ifdef __cplusplus

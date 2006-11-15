@@ -10,17 +10,17 @@
 #include "misty1.h"
 
 // CEXTERN __stdcall dword _func2(dword key);
-CEXTERN __stdcall dword _func3(dword key);
-CEXTERN __stdcall dword _func4(dword key);
-CEXTERN __stdcall dword _func5(dword key);
-CEXTERN __stdcall dword _func6(dword key);
-CEXTERN __stdcall dword _func7(dword key);
-CEXTERN __stdcall dword _func8(dword key);
-CEXTERN __stdcall dword _func9(dword key);
-CEXTERN __stdcall dword _funcA(dword key);
-CEXTERN __stdcall dword _funcB(dword key);
-CEXTERN __stdcall dword _funcC(dword key);
-CEXTERN __stdcall dword _funcF(dword key);
+CEXTERN STDCALL dword _func3(dword key);
+CEXTERN STDCALL dword _func4(dword key);
+CEXTERN STDCALL dword _func5(dword key);
+CEXTERN STDCALL dword _func6(dword key);
+CEXTERN STDCALL dword _func7(dword key);
+CEXTERN STDCALL dword _func8(dword key);
+CEXTERN STDCALL dword _func9(dword key);
+CEXTERN STDCALL dword _funcA(dword key);
+CEXTERN STDCALL dword _funcB(dword key);
+CEXTERN STDCALL dword _funcC(dword key);
+CEXTERN STDCALL dword _funcF(dword key);
 
 dword func0(dword aKey)	//sub_420460
 {
