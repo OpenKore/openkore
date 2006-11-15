@@ -285,8 +285,8 @@
             dd 02E558A66h, 0A71B10A8h, 0C2A7E3C5h, 0B812EDD5h, 0618557D0h, 006E81AE1h, 081555E01h, 0FAF51E57h, 08BB072DEh, 03CC163BEh, 0062E19D0h, 013D39F6Dh, 07C07ED7Fh, 039B41B0Dh, 063F33432h, 004DC6F16h
 section .code use32 CLASS=code
 ;############################### sub_420950 ####################################
-global _func3
-_func3:
+global __func3
+__func3:
     PUSH    EBP
     MOV     EBP,ESP
     SUB     ESP,050h

@@ -22,8 +22,8 @@ section .bss use32 CLASS=bss
     d0723628h RESB 100h
 section .code use32 CLASS=code
 ;############################### sub_420660 ####################################
-global _func5
-_func5:
+global __func5
+__func5:
     PUSH EBP
     MOV EBP,ESP
     SUB ESP,018h
@@ -71,8 +71,8 @@ _func5:
     RET
 
 ;############################### sub_4206F0 ####################################
-global _func6
-_func6:
+global __func6
+__func6:
     PUSH EBP
     MOV EBP,ESP
     SUB ESP,018h

@@ -14,8 +14,8 @@
 section .data use32 CLASS=data
 section .code use32 CLASS=code
 ;############################### sub_420BA0 ####################################
-global _funcF
-_funcF:
+global __funcF
+__funcF:
     PUSH    EBP
     MOV     EBP,ESP
     MOV     EAX,01CB8h

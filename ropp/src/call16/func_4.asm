@@ -145,8 +145,8 @@ section .data use32 CLASS=data
             dd 0C18A0E57h, 07EB3CC03h, 0C9AF9766h, 0AD48979Bh, 043C7C49Ah, 09225398Ch, 0A66A0D7Ah, 0A6B03A6Eh, 09B1FDA70h, 07F9104B9h, 06A4FC212h, 075322ED4h, 0BA724FE9h, 032292F69h, 0F530D75Dh, 02CCF70DEh
 section .code use32 CLASS=code
 ;############################### sub_420620 ####################################
-global _func4
-_func4:
+global __func4
+__func4:
     PUSH    EBP
     MOV     EBP,ESP
     SUB     ESP,058h
