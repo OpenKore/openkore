@@ -14,8 +14,8 @@ section .data use32 CLASS=data
 section .code use32 CLASS=code
 ;############################### sub_420EB0 ####################################
 ; func2_
-global _func2
-_func2:
+global __func2
+__func2:
     push ebp
     mov ebp, esp
     sub esp, 10h

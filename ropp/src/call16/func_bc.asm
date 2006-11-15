@@ -30,8 +30,8 @@ section .bss use32 CLASS=bss
     d074491Ch RESB 100h
 section .code use32 CLASS=code
 ;############################### sub_4209E0 ####################################
-global _funcB
-_funcB:
+global __funcB
+__funcB:
     PUSH    EBP
     MOV     EBP,ESP
     SUB     ESP,018h
@@ -64,8 +64,8 @@ _funcB:
     RET
 
 ;############################### sub_420A40 ####################################
-global _funcC
-_funcC:
+global __funcC
+__funcC:
     PUSH    EBP
     MOV     EBP,ESP
     SUB     ESP,018h
