@@ -9,7 +9,7 @@
 #include "rmd128.h"
 #include "misty1.h"
 
-CEXTERN __stdcall dword _func2(dword key);
+// CEXTERN __stdcall dword _func2(dword key);
 CEXTERN __stdcall dword _func3(dword key);
 CEXTERN __stdcall dword _func4(dword key);
 CEXTERN __stdcall dword _func5(dword key);
@@ -53,7 +53,7 @@ dword func1(dword aKey)	//sub_420500
 	MCGBlockEncrypt1((byte*)Blk,&ExpKey); //sub_501C50
 	return Blk[0];
 }
-/*
+
 dword func2(dword aKey)	// sub_4205A0
 {
 	dword MDbuf[4]={0,0,0,0};
@@ -61,12 +61,12 @@ dword func2(dword aKey)	// sub_4205A0
 	MDfinish(MDbuf,(byte*)&aKey,4,1);	//sub_503590
 	return MDbuf[3];
 }
-*/
+/*
 dword func2(dword aKey)
 {
 	return _func2(aKey);
 }
-
+*/
 dword func3(dword aKey)
 {
 	return _func3(aKey);
