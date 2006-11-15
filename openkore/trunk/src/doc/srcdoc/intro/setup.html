@@ -38,11 +38,22 @@ You can skip the rest of this page.
 
 <h2>Setting up the development environment</h2>
 
+<p>
 This section teaches Windows developers how to setup the development environment.
 If you're a Linux developer you should already have Perl and GCC.
 All tools listed here are free. You don't necessarily have to use these 
 tools if you prefer other alternative tools, but this guide will only 
 teach you how to setup and use these tools.
+</p>
+
+<p>
+This is the recommended toolchain:
+<ul>
+<li>Cygwin as build system to generate <i>native</i> Windows binaries.</li>
+<li>Only for OpenKore 1.9.1 and later: Cygwin Python to run <a href="http://www.scons.org/">SCons</a>, the build system we use to compile OpenKore. There is no need to install Win32 Python, or to install SCons seperately.</li>
+<li>ActivePerl as Perl interpreter. We do <i>not</i> use Cygwin Perl.</li>
+</ul>
+</p>
 
 
 <a name="perl"></a>
