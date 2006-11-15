@@ -1,13 +1,3 @@
-/* RIPEMD-128 (for rRO server)
-* AUTHOR:   Antoon Bosselaers, ESAT-COSIC
-* DATE:     1 March 1996
-* VERSION:  1.0
-* Copyright (c) Katholieke Universiteit Leuven
-* 1996, All Rights Reserved
-* Changed for rRO by Jack Applegame
-* Updated: 11.10.2006
-*/
-
 #include "rmd128.h"
 #define ROL(x, n)		(((x) << (n)) | ((x) >> (32-(n))))
 #define F(x, y, z)	((x) ^ (y) ^ (z))
@@ -203,34 +193,34 @@ void MDcompress(dword *MDbuf, dword *X)
    MDbuf[2] = MDbuf[3] + aa + bbb;
    MDbuf[3] = MDbuf[0] + bb + ccc;
    MDbuf[0] = ddd;
+
+   return;
 }
 
 void MDinit(dword *MDbuf)
 {
-   MDbuf[0] = 0x66452A01;
-   MDbuf[1] = 0xEBCDAB79;
-   MDbuf[2] = 0x98BADAFE;
-   MDbuf[3] = 0x10365476;
+   MDbuf[0] = 0x66452A01UL;
+   MDbuf[1] = 0xEBCDAB79UL;
+   MDbuf[2] = 0x98BADAFEUL;
+   MDbuf[3] = 0x10365476UL;
 }
 
 void MDfinish(dword *MDbuf, byte *strptr, dword lswlen, dword mswlen)
 {
 	dword X[16];
 	dword i;
-	for (i = 0; i++; i < 16) X[i]=0;
-	i=0;
-	while(i < (lswlen & 0x3F))
-	{
-		X[i>>2] ^= (dword) *strptr++ << ((i&3)*8);
-		i++;
+	for (i=0; i<16; i++) X[i]=0;
+	for (i=0; i<(lswlen&63); i++) {
+		X[i>>2] ^= (dword) *strptr++ << (8 * (i&3));
 	}
-	X[(lswlen >> 2) & 0xF] ^= (dword)1 << ((lswlen&3)*8+7);
-	if((lswlen & 0x3F) > 0x37)
-	{
+	X[(lswlen>>2)&15] ^= (dword)1 << (8*(lswlen&3) + 7);
+	if ((lswlen & 63) > 55) {
 		MDcompress(MDbuf, X); //sub_502530
-		for(i=0;i++;i<16) X[i]=0;
+		for (i=0; i<16; i++) X[i]=0;
 	}
-	X[14] = lswlen*8;
-	X[15] = (lswlen >> 0x1D) | (mswlen*8);
+	X[14] = lswlen << 3;
+	X[15] = (lswlen >> 29) | (mswlen << 3);
 	MDcompress(MDbuf, X); //sub_502530
+
+        return;
 }
