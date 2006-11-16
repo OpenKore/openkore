@@ -13,7 +13,7 @@
 # ====================================================================================
 #
 # Author: Jack Aplegame
-# Library development: Jerry, KLabMouse, Jack Applegame
+# Library development: Jerry, kLabMouse, Jack Applegame
 #
 # To switch to test mode add debugPPEngine = 1 to config.txt 
 # Test mode available only in XKore 1 mode.
