@@ -1,7 +1,6 @@
 package Macro::Script;
 
 use strict;
-use warnings;
 
 require Exporter;
 our @ISA = qw(Exporter);
