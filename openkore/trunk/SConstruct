@@ -159,7 +159,7 @@ env.Replace(CXXFLAGS = env['CCFLAGS'])
 
 
 # Environment for libraries
-libenv = env.Copy()
+libenv = env.Clone()
 if win32:
 	if cygwin:
 		libenv['CCFLAGS'] += ['-mdll']
@@ -238,7 +238,7 @@ libenv['BUILDERS']['NativeDLL'] = NativeDLLBuilder
 
 
 # Environment for Perl libraries
-perlenv = libenv.Copy()
+perlenv = libenv.Clone()
 if win32:
 	perlenv['CCFLAGS'] += Split('-Wno-comments')
 	perlenv['CPPDEFINES'] += Split('__MINGW32__ WIN32IO_IS_STDIO ' +

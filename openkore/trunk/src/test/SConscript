@@ -7,7 +7,7 @@ XSTools_dir = '../auto/XSTools'
 if not win32:
 	dir = XSTools_dir + '/unix'
 
-	e = env.Copy()
+	e = env.Clone()
 	e.Append(CPPPATH = dir)
 	e.Append(LIBS = [READLINE_LIB, 'pthread'])
 	if have_ncurses:
@@ -22,7 +22,7 @@ if not win32:
 
 ### http-reader-test ###
 dir = XSTools_dir + '/utils'
-e = env.Copy()
+e = env.Clone()
 e.Append(CPPPATH = dir)
 if win32:
 	e.Append(LIBS = ['wininet'])
