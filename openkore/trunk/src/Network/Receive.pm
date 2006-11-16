@@ -3364,6 +3364,10 @@ sub map_change {
 		ai_clientSuspend(0, 10);
 	} else {
 		sendMapLoaded($net);
+		# Sending sync packet. Perhaps not only for server types 13 and 11
+		if($config{serverType} == 13 || $config{serverType} == 11) {
+			sendSync($net, 1);
+		}
 		$timeout{'ai'}{'time'} = time;
 	}
 }
@@ -3440,7 +3444,7 @@ sub map_loaded {
 	$conState = 5;
 	undef $conState_tries;
 	$char = $chars[$config{'char'}];
-	$syncMapSync = $args->{syncMapSync};
+	$syncMapSync = pack('V1',$args->{syncMapSync});
 
 	if ($net->version == 1) {
 		$conState = 4;
