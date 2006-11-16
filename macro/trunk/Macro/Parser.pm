@@ -1,7 +1,6 @@
 package Macro::Parser;
 
 use strict;
-use warnings;
 use encoding 'utf8';
 
 require Exporter;
