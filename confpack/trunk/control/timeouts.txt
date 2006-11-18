@@ -93,7 +93,7 @@ ai_teleport_delay 0.5
 
 # You probably don't ever have to change the following timeouts.
 ai_route_calcRoute 1
-ai_route_npcTalk 10
+ai_route_npcTalk 30
 
 ai_buyAuto 5
 ai_buyAuto_giveup 15
@@ -123,3 +123,5 @@ injectSync 5
 injectKeepAlive 12
 welcomeText 4
 patchserver 120
+
+macro_delay 0.5
