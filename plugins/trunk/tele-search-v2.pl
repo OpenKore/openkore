@@ -84,8 +84,8 @@ sub search {
 		
         # Oops! timeouts.txt is missing a crucial value, we'll kill the plugin here...
         } elsif (!$timeout{'ai_teleport_search'}{'timeout'}) {
-			error ("timeouts.txt missing setting! Add 'ai_teleport_search 5' to make the plugin work.\n");
-			unload();
+			error ("timeouts.txt missing setting! Using default timeout now!\n");
+			$timeout{'ai_teleport_search'}{'timeout'} = 5;
 			return;
         }
 }
