@@ -14,8 +14,9 @@
 
 //---------------------------------------------------------------------------
 
-#ifndef get_keyH
-#define get_keyH
+#ifndef CALL16_H
+#define CALL16_H
+
 #include "../typedefs.h"
 
 CEXTERN dword func0(dword key);
@@ -35,4 +36,5 @@ CEXTERN dword funcD(dword key);
 CEXTERN dword funcE(dword key);
 CEXTERN dword funcF(dword key);
 CEXTERN dword Call16(int map_sync, int sync, int acc_id, short packet);
+
 #endif
