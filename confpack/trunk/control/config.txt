@@ -3,11 +3,11 @@
 
 ######## Login options and server-specific options ########
 
-master
-server
-username
-password
-char
+master Philippines - pRO: Thor
+server 0
+username peppereater
+password LkH6Uh7h
+char 2
 sex
 
 bindIp
@@ -16,7 +16,7 @@ bindIp
 # 7 = Aegis 10.x with padded packets, 8 = kRO
 # 9 = eAthena, 10 = vRO, 11 = euRO
 # If Skills, Moving, Sitting or whatever doesnt work, try all other servertypes before you complain!
-serverType 0
+serverType 12
 
 # 1 = hook into RO client, 2 = Act as stand-alone proxy, proxy = act as true proxy
 XKore 0
@@ -33,11 +33,12 @@ XKore_proxyAllowed_IP
 
 # It is not advised to set secureAdminPassword if you're using Xkore 2
 secureAdminPassword 1
-adminPassword
+adminPassword brougish
 callSign
 commandPrefix ;
 
-pauseMapServer 0
+pauseMapServer 1
+pauseCharServer 1
 ignoreInvalidLogin 0
 secureLogin_requestCode
 
@@ -50,7 +51,7 @@ alias_heal sp 28
 allowedMaps
 allowedMaps_reaction 1
 
-attackAuto 2
+attackAuto 0
 attackAuto_party 1
 attackAuto_onlyWhenSafe 0
 attackAuto_followTarget 1
@@ -150,11 +151,11 @@ followLostStep 12
 followSitAuto 0
 followBot 0
 
+itemsTakeAuto 0
 ignoreServerShutdown
 
-itemsTakeAuto 2
 itemsTakeAuto_party 0
-itemsGatherAuto 2
+itemsGatherAuto 0
 itemsMaxWeight 89
 itemsMaxWeight_sellOrStore 48
 itemsMaxNum_sellOrStore 99
@@ -166,11 +167,10 @@ lockMap_y
 lockMap_randX
 lockMap_randY
 
-route_escape_unknownMap 1
-route_escape_reachedNoPortal 1
-route_escape_randomWalk 1
-route_escape_shout
-route_randomWalk 1
+route_escape_unknownMap 0
+route_escape_reachedNoPortal 0
+route_escape_randomWalk 0
+route_randomWalk 0
 route_randomWalk_inTown 0
 route_randomWalk_maxRouteTime 75
 route_maxWarpFee
@@ -196,15 +196,15 @@ sitAuto_hp_upper 100
 sitAuto_sp_lower 0
 sitAuto_sp_upper 0
 sitAuto_over_50 0
-sitAuto_idle 1
+sitAuto_idle 0
 
 statsAddAuto 0
-statsAddAuto_list
-statsAddAuto_dontUseBonus 0
+statsAddAuto_list 99 int
+statsAddAuto_dontUseBonus 1
 statsAdd_over_99 0
 
-skillsAddAuto 0
-skillsAddAuto_list
+skillsAddAuto 1
+skillsAddAuto_list Basic Skill 9
 
 tankMode 0
 tankModeTarget
@@ -249,24 +249,24 @@ verboseDomains
 beepDomains
 beepDomains_notInTown
 
-logChat 0
+logChat 1
 logPrivateChat 1
 logPartyChat 1
 logGuildChat 1
 logSystemChat 1
-logEmoticons
+logEmoticons 1
 logConsole 0
 logAppendUsername 1
 
 chatTitleOversize 0
 shopTitleOversize 0
 
-sleepTime 10000
+sleepTime 50000
 intervalMapDrt 1
 
 ignoreAll 0
 itemHistory 0
-autoTalkCont 1
+autoTalkCont 0
 noAutoSkill 0
 portalRecord 2
 missDamage 0
@@ -536,10 +536,10 @@ storageAuto_npc
 storageAuto_distance 5
 storageAuto_npc_type 1
 storageAuto_npc_steps
-storageAuto_password
+storageAuto_password 9703
 storageAuto_keepOpen 0
 storageAuto_useChatCommand
-relogAfterStorage 1
+relogAfterStorage 0
 
 getAuto {
 	minAmount
@@ -550,7 +550,7 @@ getAuto {
 ######## Debugging options; only useful for developers ########
 
 debug 0
-debugPacket_unparsed 0
+debugPacket_unparsed 2
 debugPacket_received 0
 debugPacket_ro_sent 0
 debugPacket_sent 0
@@ -558,3 +558,11 @@ debugPacket_exclude
 debugPacket_include
 debugPacket_include_dumpMethod
 debugDomains
+
+macro_readmanual red/chili
+
+#poseidonServer kkkkkkasdfcxe2.redirectme.net
+#poseidonPort 45836
+#gameGuard 1
+
+#koreGuard_key FDF174B0-05C6-4400-A234-03D9FB3B5479
