@@ -1,9 +1,13 @@
-/* MacGuffin Cipher (for rRO server)
+/* MacGuffin Cipher
 * 10/3/94 Matt Blaze
 * (fast, unrolled version)
-* Changed for rRO by Jack Applegame
-* Updated 11.10.2006
 */
+
+//
+// Changed to conform to padded packets emulator by Jack Applegame
+// $Id$
+// 
+
 #include "mcg_cipher.h"
 
 #define TSIZE (1<<16)

@@ -1,5 +1,5 @@
 NASM=nasm -f elf
-NASMOBJ=func_2.o func_3.o func_4.o func_56.o func_78.o func_9a.o func_bc.o func_f.o
+NASMOBJ=func_2.o func_3.o func_4.o func_56.o func_9a.o func_bc.o func_f.o
 
 CC=gcc
 CFLAGS= -Wall -fPIC
@@ -21,8 +21,6 @@ func_3.o: func_3.asm
 func_4.o: func_4.asm
 	$(NASM) $< -o $@
 func_56.o: func_56.asm
-	$(NASM) $< -o $@
-func_78.o: func_78.asm
 	$(NASM) $< -o $@
 func_9a.o: func_9a.asm
 	$(NASM) $< -o $@
