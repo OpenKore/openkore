@@ -58,6 +58,17 @@ sub checkIdle {
 	}
 }
 
+sub checkSp {
+	if ($config{'teleport_search_minSp'} && $config{'teleport_search_minSp'} >= $char->{sp}) {
+		return 1;
+	} elsif (!$config{'teleport_search_minSp'} && $char->{sp} >= 9) {
+		error ("teleport_search_minSp is missing ! Using default value (9 sp)!\n");
+		$config{'teleport_search_minSp'} = 9;
+		return 1;
+	} else {
+		return 0;
+	}
+}
 sub search {
 	if ($config{'teleport_search'} && Misc::inLockMap() && $timeout{'ai_teleport_search'}{'timeout'}) {
 	
@@ -66,7 +77,7 @@ sub search {
 			$allow_tele = 1;
                         
 		# Check if we're allowed to teleport, if map is loaded, timeout has passed and we're just looking for targets.
-		} elsif ($maploaded && $allow_tele && timeOut($timeout{'ai_teleport_search'}) && checkIdle()) {
+		} elsif ($maploaded && $allow_tele && timeOut($timeout{'ai_teleport_search'}) && checkIdle() && checkSp()) {
 			message("Attemping to tele-search.\n","info");
 			$allow_tele = 0;
 			$maploaded = 0;
@@ -82,7 +93,7 @@ sub search {
 			$timeout{'ai_teleport_search'}{'time'} = time;
 		}
 		
-        # Oops! timeouts.txt is missing a crucial value, we'll kill the plugin here...
+        # Oops! timeouts.txt is missing a crucial value, lets use the default value ;)
         } elsif (!$timeout{'ai_teleport_search'}{'timeout'}) {
 			error ("timeouts.txt missing setting! Using default timeout now!\n");
 			$timeout{'ai_teleport_search'}{'timeout'} = 5;
