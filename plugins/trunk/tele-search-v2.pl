@@ -59,7 +59,7 @@ sub checkIdle {
 }
 
 sub checkSp {
-	if ($config{'teleport_search_minSp'} && $config{'teleport_search_minSp'} >= $char->{sp}) {
+	if ($config{'teleport_search_minSp'} && $config{'teleport_search_minSp'} <= $char->{sp}) {
 		return 1;
 	} elsif (!$config{'teleport_search_minSp'} && $char->{sp} >= 10) {
 		error ("teleport_search_minSp is missing ! Using default value (10 sp)!\n");
