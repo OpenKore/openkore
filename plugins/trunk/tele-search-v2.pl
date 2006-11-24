@@ -59,14 +59,18 @@ sub checkIdle {
 }
 
 sub checkSp {
-	if ($config{'teleport_search_minSp'} && $config{'teleport_search_minSp'} <= $char->{sp}) {
+	if ($config{'teleportAuto_useSkill'} == 1) {
+		if ($config{'teleport_search_minSp'} && $config{'teleport_search_minSp'} <= $char->{sp}) {
+			return 1;
+		} elsif (!$config{'teleport_search_minSp'} && $char->{sp} >= 10) {
+			error ("teleport_search_minSp is missing ! Using default value (10 sp)!\n");
+			$config{'teleport_search_minSp'} = 10;
+			return 1;
+		} else {
+			return 0;
+		}
+	} elsif ($config{'teleportAuto_useSkill'} > 1) {
 		return 1;
-	} elsif (!$config{'teleport_search_minSp'} && $char->{sp} >= 10) {
-		error ("teleport_search_minSp is missing ! Using default value (10 sp)!\n");
-		$config{'teleport_search_minSp'} = 10;
-		return 1;
-	} else {
-		return 0;
 	}
 }
 sub search {
