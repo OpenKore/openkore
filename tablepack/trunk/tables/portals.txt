@@ -394,6 +394,7 @@ comodo 265 74 cmd_in01 123 186
 comodo 271 271 cmd_in01 109 125
 comodo 333 175 beach_dun3 17 265
 einbroch 150 25 ein_fild08 164 377
+einbroch 157 331 ein_fild04 184 31
 einbech 145 112 ein_in01 268 104
 einbech 177 136 ein_in01 190 35
 einbech 138 252 ein_dun01 22 14
@@ -403,6 +404,7 @@ ein_in01 190 38 einbech 172 134
 ein_dun01 261 255 ein_dun02 291 292
 ein_dun01 22 11 einbech 138 249
 ein_dun02 286 292 ein_dun01 261 258
+ein_fild04 184 26 einbroch 157 327
 ein_fild06 355 95 yuno_fild07 66 79
 ein_fild06 135 36 ein_fild07 147 359
 ein_fild06 251 365 yuno_fild04 249 25
