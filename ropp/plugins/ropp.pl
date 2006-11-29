@@ -35,6 +35,7 @@ use Skills;
 use Log;
 use Log qw(message);
 use Log qw(error);
+use Log qw(debug);
 use Commands;
 use Win32::API;
 
@@ -75,6 +76,7 @@ Win32::API->Import('ropp', 'GetKey', 'L' ,'N') or die "Can't import GetKey\n$!";
 
 # Setting packet IDs for Sit/Stand/Attack and SkillUse
 SetPacketIDs(0x89, 0x113); # IDs for rRO
+processStatisticsReporting();
 
 my $LastPaddedPacket;
 
