@@ -1361,9 +1361,9 @@ sub sendItemUse {
 		$msg = pack("C2 v1", 0xF5, 0x00, $ID) . $targetID;
 	
 	} elsif ($config{serverType} == 13) {
-		$msg = pack("C*", 0xA7, 0x00, 0x74) .
+		$msg = pack("C*", 0xA7, 0x00) .
 			pack("v*", $ID) .
-			pack("C*", 0xFA, 0x12, 0, 0, 0x68, 0xF7, 0x12) .
+			pack("C*", 0, 0xFA, 0x12, 0, 0, 0x68, 0xF7, 0x12) .
 			$targetID;
 	}
 	
