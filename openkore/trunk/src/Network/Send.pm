@@ -884,9 +884,9 @@ sub sendDrop {
 
 	} elsif ($config{serverType} == 13) {
 		$msg = pack("C*", 0xA2, 0x00) .
-			pack("C*", 0x00, 0x00, 0x68) .
+			pack("C*", 0x12, 0x00) .
 			pack("v*", $index) .
-			pack("C*", 0x06, 0xDB, 0, 0, 0) .
+			pack("C*", 0x6C, 0x01, 0x52, 0x80) .
 			pack("v*", $amount);
 	}
 		
@@ -1048,7 +1048,7 @@ sub sendGetPlayerInfo {
 		$msg = pack("C*", 0x8C, 0x00) . pack("x2") . $ID;
 	
 	} elsif ($config{serverType} == 13) {
-		$msg = pack("C*", 0x94, 0x00) . pack("C*", 0xEE, 0x01, 0x0C, 0xF9, 0x12, 0x00, 0x76, 0xC6, 0x54) . $ID;
+		$msg = pack("C*", 0x94, 0, 0x5C, 0x01, 0x10, 0xF9, 0x12, 0x00, 0xF6) . $ID;
 	}
 
 	sendMsgToServer($r_net, $msg);
@@ -1361,9 +1361,9 @@ sub sendItemUse {
 		$msg = pack("C2 v1", 0xF5, 0x00, $ID) . $targetID;
 	
 	} elsif ($config{serverType} == 13) {
-		$msg = pack("C*", 0xA7, 0x00, 0x12, 0x00, 0xE0, 0x5E) . 
+		$msg = pack("C*", 0xA7, 0x00, 0x74) .
 			pack("v*", $ID) .
-			pack("C*", 0x1C, 0xFA, 0x12, 0, 0xD8) .
+			pack("C*", 0xFA, 0x12, 0, 0, 0x68, 0xF7, 0x12) .
 			$targetID;
 	}
 	
@@ -1420,7 +1420,7 @@ sub sendLook {
 		$msg = pack("C2 C1 x1 C1", 0x16, 0x01, $head, $body);
 
 	} elsif ($config{serverType} == 13) { 
-		$msg = pack("C*", 0x9B, 0x00, 0xBF, 0x05, 0x00, $head, 0x00, 0x00, 0xC8, 0x71, 0xC8, 0x01, $body);
+		$msg = pack("C*", 0x9B, 0x00, 0x6C, $head, 0x00, 0x80, 0x55, $body);
 	}
 	
 	sendMsgToServer($r_net, $msg);
@@ -1562,13 +1562,13 @@ sub sendMapLogin {
 			pack("C*", $sex);
 
 	} elsif ($config{serverType} == 13) {
-		$msg = pack("C*", 0x72,0, 0, 0, 0x40, 0x60, 0, 0x10, 0, 0, 0, 0) .
+		$msg = pack("C*", 0x72,0, 0, 0) .
 			$accountID .
-			pack("C*", 0xE8, 0xFA) .
+			pack("C*", 0, 0, 0) .
 			$charID .
-			pack("C*", 0x66, 0x00) .
+			pack("C*", 0x12, 0, 0xB0, 0xA3, 0x66, 0) .
 			$sessionID .
-			pack("V", getTickCount()) .
+ 			pack("V", getTickCount()) .
 			pack("C*",$sex);
 
 	} else { #oRO and pRO and idRO
@@ -1753,7 +1753,7 @@ sub sendMove {
 		$msg = pack("C2 x9", 0xA2, 0x00) . getCoordString($x, $y, 1);
 
 	} elsif ($config{serverType} == 13) {
-		$msg = pack("C*", 0x85, 0x00) . getCoordString($x, $y);
+		$msg = pack("C*", 0x85, 0x00, 0x5C) . getCoordString($x, $y);
 
 	} else {
 		$msg = pack("C*", 0x85, 0x00) . getCoordString($x, $y);
@@ -2318,14 +2318,13 @@ sub sendSkillUseLoc {
 		$msg = pack("v1 v1 x8 v1 v1 v1", 0xF3, $lv, $ID, $x, $y);
 
 	} elsif ($config{serverType} == 13) {
-		# The block has not been checked up!
-		$msg = pack("C*", 0x16, 0x01, 0x12) .
+		$msg = pack("C*", 0x16, 0x01, 0, 0) .
 			pack("v", $lv) .
-			pack("C*", 0x5E) .
+			pack("C*", 0x7F, 0, 0x08) .
 			pack("v*", $ID) .
-			pack("C*", 0x68, 0xD1, 0x2F, 0x02, 0x38, 0xD9, 0x5D, 0x0F, 0x5B) .
-			pack("v*", $x) . 
-			pack("C*", 0x76, 0) .
+			pack("C*", 0, 0xEF, 0x8A, 0x54, 0, 0xE0, 0x2A, 0x6C, 0x01, 0xF0, 0x4B) .
+			pack("v*", $x) .
+			pack("C*", 0xBC, 0x7B, 0x57, 0x77) .
 			pack("v*", $y);
 	}
 	
@@ -2396,9 +2395,9 @@ sub sendStorageAdd {
 		$msg = pack("C2 x1 V1 v1", 0x13, 0x01, $amount, $index);
 
 	} elsif ($config{serverType} == 13) {
-		$msg = pack("C*", 0xF3, 0x00, 0x00, 0x00, 0x58) .
+		$msg = pack("C*", 0xF3, 0x00, 0x00, 0x00) .
 			pack("v", $index) .
-			pack("C*", 0x04, 0x4E, 0x09, 0x91, 0x7C) .
+			pack("C*", 0, 0, 0xFC, 0xF7) .
 			pack("V", $amount);
 	}
 	
@@ -2490,9 +2489,9 @@ sub sendStorageGet {
 		$msg = pack("C2 v1 V1", 0xF6, 0x00, $index, $amount);
 
 	} elsif ($config{serverType} == 13) {
-                $msg = pack("C*", 0xF5, 0x00, 0x64, 0x00, 0x21, 0x00, 0x00, 0x00, 0xB6, 0xA6, ) .
+                $msg = pack("C*", 0xF5, 0x00, 0x16, 0x00) .
                         pack("v*", $index) .
-                        pack("C*", 0x21, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x11, 0x83) .
+                        pack("C*", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0) .
                         pack("V*", $amount);
 	}
 	
@@ -2685,7 +2684,7 @@ sub sendSync {
 		$msg = pack("C2 x9", 0xA7, 0x00) . $syncSync . pack("x5");
 
 	} elsif ($config{serverType} == 13) { # rRO
-		$msg = pack("C*", 0x7E, 0x00, 0x00, 0x00, 0xE8, 0x6F) . $syncSync;
+		$msg = pack("C*", 0x7E, 0x00, 0x12) . $syncSync;
 	}
 	
 	sendMsgToServer($r_net, $msg);
@@ -2736,7 +2735,7 @@ sub sendTake {
 		$msg = pack("C2", 0x9F, 0x00) . $itemID;
 
 	} elsif ($config{serverType} == 13) {
-		$msg = pack("C*", 0x9F, 0x00, 0x00, 0x00, 0x00, 0x00) . $itemID;
+		$msg = pack("C*", 0x9F, 0x00, 0x6C) . $itemID;
 	}
 
 	sendMsgToServer($r_net, $msg);
