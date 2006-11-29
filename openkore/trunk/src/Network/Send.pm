@@ -1562,7 +1562,7 @@ sub sendMapLogin {
 			pack("C*", $sex);
 
 	} elsif ($config{serverType} == 13) {
-		$msg = pack("C*", 0x72,0, 0, 0) .
+		$msg = pack("C*", 0x72, 0, 0) .
 			$accountID .
 			pack("C*", 0, 0, 0) .
 			$charID .
