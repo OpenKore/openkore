@@ -28,7 +28,7 @@
 
 #if !defined(GCC_X86_32_OR_64) && !defined(WIN32_X86)
 	#include "Mutex.h"
-	static Mutex lock;
+	static OSL::Mutex lock;
 #endif
 
 namespace OSL {
@@ -44,9 +44,9 @@ namespace OSL {
 		#elif defined(WIN32_X86)
 			InterlockedExchangeAdd(i, 1);
 		#else
-			lock->lock();
+			lock.lock();
 			i++;
-			lock->unlock();
+			lock.unlock();
 		#endif
 	}
 
@@ -64,10 +64,10 @@ namespace OSL {
 			return InterlockedExchangeAdd(i, -1) == 1;
 		#else
 			bool result;
-			lock->lock();
+			lock.lock();
 			i--;
 			result = i == 0;
-			lock->unlock();
+			lock.unlock();
 			return result;
 		#endif
 	}
