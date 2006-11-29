@@ -222,7 +222,7 @@ serverEncoding Tagalog
 gameGuard 1
 
 [Philippines - pRO: Thor]
-ip 202.57.118.231
+ip 202.57.118.234
 port 6900
 master_version 18
 version 1
