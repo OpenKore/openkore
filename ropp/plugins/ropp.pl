@@ -39,13 +39,15 @@ use Log qw(debug);
 use Commands;
 use Win32::API;
 
+my %statisticsReporting;
 Plugins::register("ppengine", "RO Padded Packet Engine", \&on_unload, \&on_reload);
 my $hooks = Plugins::addHooks(
             ['packet_pre/sendSit',	\&doSit, undef],
             ['packet_pre/sendStand', \&doStand, undef],
             ['packet_pre/sendAttack', \&doAttack, undef],
             ['packet_pre/sendSkillUse', \&doSkillUse, undef],
-            ['RO_sendMsg_pre',\&onRO_sendMsg_pre, undef]
+            ['RO_sendMsg_pre',\&onRO_sendMsg_pre, undef],
+            ['mainLoop_post',\&doStatistics, undef],
 );
 my $commands = Commands::register(
      ["syncs", "Prints MapSync, Sync and AccId", \&doSyncs],
@@ -76,7 +78,6 @@ Win32::API->Import('ropp', 'GetKey', 'L' ,'N') or die "Can't import GetKey\n$!";
 
 # Setting packet IDs for Sit/Stand/Attack and SkillUse
 SetPacketIDs(0x89, 0x113); # IDs for rRO
-processStatisticsReporting();
 
 my $LastPaddedPacket;
 
@@ -239,27 +240,32 @@ sub onRO_sendMsg_pre {
 	}
 }
 
+sub doStatistics {
+	processStatisticsReporting();
+}
+
 # Anonymous statistics reporting. This gives us insight about
 # server our users play.
 sub processStatisticsReporting {
-	our %statisticsReporting;
 	return if ($statisticsReporting{done} || !$config{master} || !$config{username});
 
-	use Utils qw(urlencode);
-	import Utils::Whirlpool qw(whirlpool_hex);
+	if (!$statisticsReporting{http}) {
+		use Utils qw(urlencode);
+		import Utils::Whirlpool qw(whirlpool_hex);
 
-	# Note that ABSOLUTELY NO SENSITIVE INFORMATION about the
-	# user is sent. The username is filtered through an
-	# irreversible hashing algorithm before it is sent to the
-	# server. It is impossible to deduce the user's username
-	# from the data sent to the server.
-	my $url = "http://www.openkore.com/ropp_statistics.php?";
-	$url .= "server=" . urlencode($config{master});
-	$url .= "&product=" . urlencode($Settings::NAME);
-	$url .= "&version=" . urlencode($Settings::VERSION);
-	$url .= "&uid=" . urlencode(whirlpool_hex($config{master} . $config{username} . $userSeed));
-	$statisticsReporting{http} = new StdHttpReader($url);
-	debug "Posting anonymous usage statistics to $url\n", "statisticsReporting";
+		# Note that ABSOLUTELY NO SENSITIVE INFORMATION about the
+		# user is sent. The username is filtered through an
+		# irreversible hashing algorithm before it is sent to the
+		# server. It is impossible to deduce the user's username
+		# from the data sent to the server.
+		my $url = "http://www.openkore.com/ropp_statistics.php?";
+		$url .= "server=" . urlencode($config{master});
+		$url .= "&product=" . urlencode($Settings::NAME);
+		$url .= "&version=" . urlencode($Settings::VERSION);
+		$url .= "&uid=" . urlencode(whirlpool_hex($config{master} . $config{username} . $userSeed));
+		$statisticsReporting{http} = new StdHttpReader($url);
+		debug "Posting anonymous usage statistics to $url\n", "statisticsReporting";
+	}
 
 	my $http = $statisticsReporting{http};
 	if ($http->getStatus() == HttpReader::DONE) {
