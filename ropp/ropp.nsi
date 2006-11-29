@@ -106,7 +106,7 @@ Section "Uninstall"
 
   ; Delete files  
   Delete "$INSTDIR\auto\win32\api\API.dll"
-  Delete "$INSTDIR\plugin\ropp.pl"
+  Delete "$INSTDIR\plugins\ropp.pl"
   Delete "$INSTDIR\Win32\API.pm"
   Delete "$INSTDIR\Win32\API\Callback.pm"
   Delete "$INSTDIR\Win32\API\Struct.pm"
