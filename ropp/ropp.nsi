@@ -105,12 +105,13 @@ SectionEnd
 Section "Uninstall"
 
   ; Delete files  
-  Delete "$INSTDIR\auto\win32\api\API.dll"
   Delete "$INSTDIR\plugins\ropp.pl"
-  Delete "$INSTDIR\Win32\API.pm"
-  Delete "$INSTDIR\Win32\API\Callback.pm"
-  Delete "$INSTDIR\Win32\API\Struct.pm"
-  Delete "$INSTDIR\Win32\API\Type.pm"
+  Delete "$INSTDIR\ropp.dll"
+  Delete "$INSTDIR\ROpp Uninstall.exe"
+
+  ; Delete directories
+  RMDir /r "$INSTDIR\Win32"
+  RMDir /r "$INSTDIR\auto"
   
   DeleteRegKey HKCU "Software\OpenKore"
 
