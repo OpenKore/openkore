@@ -580,10 +580,16 @@ sub parseSendMsg {
 		$timeout{'welcomeText'}{'time'} = time;
 		$ai_v{portalTrace_mapChanged} = time;
 		#syncSync support for XKore 1 mode
-		if($config{serverType} == 11 || $config{serverType} == 12 || $config{serverType} == 13)
+		if($config{serverType} == 11)
+		{
+			$syncSync = substr($msg, 8, 4);
+		} elsif ($config{serverType} == 12)
+		{
+			$syncSync = substr($msg, 8, 4);
+		} elsif ($config{serverType} == 13)
 		{
 			$syncSync = substr($msg, 5, 4);
-		} 
+		}
 		message T("Map loaded\n"), "connection";
 		
 		Plugins::callHook('map_loaded');
