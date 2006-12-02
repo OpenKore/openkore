@@ -53,6 +53,7 @@ int CSDL_SubSurface::Blit(int nFrame, CSDL_Surface *dst, SDL_Rect *dstrect) {
                   };
 
     CSDL_Surface::Blit(&rc, dst, dstrect);
+    return 0;
 }
 CSDL_Surface::CSDL_Surface() : surface(NULL) {
     CreateSurface(32, 32, 32, SDL_HWSURFACE);   // TODO: flags for constructor
@@ -290,7 +291,7 @@ int CSDL_Surface::RenderGlyph8x8(Uint8* data, int x, int y, char n, Uint8 R, Uin
 void CSDL_Surface::RenderText(int x, int y, char* str, Uint8 R, Uint8 G, Uint8 B) {
     int px = x, py = y, flag;
     Lock();
-    for(int i=0; i<strlen(str); i++) {
+    for(unsigned int i=0; i<strlen(str); i++) {
         if(str[i] < 32) { // Control code
             switch(str[i]) {
                 case 9:

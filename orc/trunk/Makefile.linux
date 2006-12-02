@@ -1,0 +1,10 @@
+CC=gcc
+CFLAGS=-Wall -g
+CXX=g++
+CXXFLAGS=$(CFLAGS)
+
+bin/orc: src/*.cpp src/*.h src/csdl/*.cpp src/csdl/*.h src/libgrf/*.c src/libgrf/*.h
+	cd src/libgrf && $(CC) $(CFLAGS) -c *.c
+	cd src/csdl && $(CXX) $(CXXFLAGS) -I.. -c *.cpp `sdl-config --cflags`
+	cd src && $(CXX) $(CXXFLAGS) -I. -c *.cpp `sdl-config --cflags`
+	$(CXX) src/*.o src/csdl/*.o src/libgrf/*.o -o src/orc `sdl-config --libs` -lGL -lGLU -lz -lSDL_mixer -lSDL_image

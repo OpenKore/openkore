@@ -96,6 +96,7 @@ bool CSDL_ApplicationBase::InitVideo() {
         MsgBox("Couldn't initialise Video: %s", ::SDL_GetError());
         ::exit(EXIT_VIDEO);
     }
+    return true;
 }
 
 int CSDL_ApplicationBase::InitAudio() {
@@ -110,6 +111,7 @@ int CSDL_ApplicationBase::InitAudio() {
         MsgBox("Mix_OpenAudio: %s\n", ::Mix_GetError());
         ::exit(EXIT_AUDIO);
     }
+    return 0;
 }
 
 int CSDL_ApplicationBase::SetVideoMode(int width, int height, int bpp, int flags) {
@@ -128,6 +130,7 @@ int CSDL_ApplicationBase::SetVideoMode(int width, int height, int bpp, int flags
     m_nScreenHeight = height;
     m_nScreenBPP = bpp;
     m_nScreenFlags = flags;
+    return 0;
 }
 
 void CSDL_ApplicationBase::SetCaption(char* str) {

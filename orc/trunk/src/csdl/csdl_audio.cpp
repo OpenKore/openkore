@@ -75,7 +75,7 @@ CSDL_Music::CSDL_Music(SDL_RWops* rw) {
     // load filename to play as music
     music = ::Mix_LoadMUS_RW(rw);
     if(music == NULL) {
-        fprintf(stderr, "Mix_LoadMUS_RW(\"%08X\"): %s\n", rw, ::Mix_GetError());
+        fprintf(stderr, "Mix_LoadMUS_RW(\"%p\"): %s\n", rw, Mix_GetError());
     }
     //    type = GetType();
     //    position = 0.0f;
@@ -232,4 +232,5 @@ double CSDL_Music::GetLength() {
         return info.total_time * 1000;
     }
 */
+	return 0;
 }
