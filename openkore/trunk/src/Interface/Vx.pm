@@ -52,6 +52,7 @@ foreach (@array) {
 	$panelTwo_domains{$_} = 1;
 }
 
+my $buildType = 1;
 # main interface functions
 
 sub new {
@@ -65,7 +66,7 @@ sub new {
 		input_pm => undef,
 		total_lines => {"panelOne" => 0, "panelTwo" => 0},
 		last_line_end => {"panelOne" => 0, "panelTwo" => 0},
-		lineLimit => {"panelOne" => $sys{panelOne_lineLimit} || 900, "panelTwo" => $sys{panelTwo_lineLimit} || 100},
+		line_limit => {"panelOne" => $sys{panelOne_lineLimit} || 900, "panelTwo" => $sys{panelTwo_lineLimit} || 100},
 		mapDir => 'map'
 	};
 
