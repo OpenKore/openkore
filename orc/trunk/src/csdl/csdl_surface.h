@@ -49,7 +49,7 @@ class CSDL_Surface {
 
         // TODO: CSDL_Surface(CSDL_Surface &tmp); // Copy constructor
         CSDL_Surface(Uint16 width, Uint16 height, Uint8 bpp, Uint32 flags);
-        ~CSDL_Surface();
+        virtual ~CSDL_Surface();
 
         CSDL_Surface(Uint16 width, Uint16 height, Uint8 bpp, void* ptr, long pitch);
 

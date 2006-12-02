@@ -30,7 +30,7 @@
 class CSDL_EventHandler {
     public:
         CSDL_EventHandler();
-        ~CSDL_EventHandler();
+        virtual ~CSDL_EventHandler();
 
         void HandleEvents();
 

@@ -43,7 +43,7 @@ virtual ~CGRF_Interface() { }
         grf = ::grf_open( filename, "rb", &error );
 
         if ( !grf ) {
-            printf ( "Cannot open %s: error code %d\n", filename, error );
+            printf ( "Cannot open %s: error code %d\n", filename, error.type );
             printf ( "Error message: %s\n", ::grf_strerror ( error ) );
             return false;
         }
@@ -69,12 +69,12 @@ virtual ~CGRF_Interface() { }
             because some RSM files have uppercased
             texture names, but they are lowercase in the GRF
         */
-        for ( int i = 0; i < strlen( filename ); i++ ) filename[ i ] = tolower( filename[ i ] );
+        for ( unsigned int i = 0; i < strlen( filename ); i++ ) filename[ i ] = tolower( filename[ i ] );
 
         void *data = ::grf_get( grf, filename, size, &error );
 
         if ( !data ) {
-            printf ( "Unable to extract %s. Error code: %d\n", filename, error );
+            printf ( "Unable to extract %s. Error code: %d\n", filename, error.type );
             printf ( "Error message: %s\n", ::grf_strerror ( error ) );
             return NULL;
         }
@@ -88,7 +88,7 @@ virtual ~CGRF_Interface() { }
         void *data = ::grf_get( grf, grfpath, size, &error );
 
         if ( !data ) {
-            printf ( "Unable to extract \"%s\". Error code: %d\n", filename, error );
+            printf ( "Unable to extract \"%s\". Error code: %d\n", filename, error.type );
             printf ( "Error message: %s\n", ::grf_strerror ( error ) );
             return NULL;
         }
@@ -102,7 +102,7 @@ virtual ~CGRF_Interface() { }
         void *data = ::grf_get( grf, grfpath, size, &error );
 
         if ( !data ) {
-            printf ( "Unable to extract \"%s\". Error code: %d\n", filename, error );
+            printf ( "Unable to extract \"%s\". Error code: %d\n", filename, error.type );
             printf ( "Error message: %s\n", ::grf_strerror ( error ) );
             return NULL;
         }
@@ -116,7 +116,7 @@ virtual ~CGRF_Interface() { }
         void *data = ::grf_get( grf, grfpath, size, &error );
 
         if ( !data ) {
-            printf ( "Unable to extract \"%s\". Error code: %d\n", filename, error );
+            printf ( "Unable to extract \"%s\". Error code: %d\n", filename, error.type );
             printf ( "Error message: %s\n", ::grf_strerror ( error ) );
             return NULL;
         }

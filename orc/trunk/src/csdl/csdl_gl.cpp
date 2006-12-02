@@ -44,6 +44,7 @@ CSDLGL_ApplicationBase::~CSDLGL_ApplicationBase() {
 
 bool CSDLGL_ApplicationBase::InitVideoMode(int width, int height, int bpp) {
     SetVideoMode(width, height, bpp, ((m_bIsFullscreen) ? SDL_FULLSCREEN : 0) | ((m_bIsOpenGL) ? SDL_OPENGL : SDL_HWSURFACE|SDL_DOUBLEBUF));
+    return true;
 }
 
 void CSDLGL_ApplicationBase::ToggleFullscreen() {
