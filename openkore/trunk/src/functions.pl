@@ -582,7 +582,7 @@ sub parseSendMsg {
 		#syncSync support for XKore 1 mode
 		if($config{serverType} == 11 || $config{serverType} == 12 || $config{serverType} == 13)
 		{
-			$syncSync = substr($msg, 8, 4);
+			$syncSync = substr($msg, 5, 4);
 		} 
 		message T("Map loaded\n"), "connection";
 		
