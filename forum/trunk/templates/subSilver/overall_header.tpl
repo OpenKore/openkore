@@ -37,19 +37,37 @@
 
 <div id="openkore_topbar">
 	<div id="openkore_navigation" style="margin-left: 0.2cm;">
+		<table id="openkore_navigation_table" cellspacing="0" cellpadding="0">
+		<tr>
+		<td>
+
 		<ul>
 		<li><a href="http://www.openkore.com/"><img src="http://www.openkore.com/images/home.png" width="48" height="48" alt=""><br>Home</a></li>
 		<li><a href="http://www.openkore.com/wiki/index.php/Support"><img src="http://www.openkore.com/images/help.png" width="48" height="48" alt=""><br>Help!</a></li>
-		<li style="margin-left: 0.5cm;">&nbsp;</li>
-		<li><a href="http://forums.openkore.com/" title="International forum"><img src="images/international.png" width="48" height="48" alt=""><br>International</a></li>
-		<li><a href="http://www.openkore-brasil.com/" title="Brazilian forum"><img src="images/brazil.png" width="48" height="48" alt=""><br>Brazil</a></li>
-		<li><a href="http://darkmoon.ath.cx/" title="Filipino forum"><img src="images/philippines.png" width="48" height="48" alt=""><br>Philippines</a></li>
-		<li><a href="http://www.d-bests.com/" title="Indonesian forum"><img src="images/indonesia.png" width="48" height="48" alt=""><br>Indonesia</a></li>
-		<li><a href="http://ro.yyro.com/" title="中文"><img src="images/chinese.png" width="48" height="48" alt=""><br>中文</a></li>
-		<li><a href="http://www.openkore-hispano.uni.cc/" title="Hispano"><img src="images/spain.png" width="48" height="48" alt=""><br>Hispano</a></li>
-		<li><a href="http://www.openkore.de/" title="Deutsch"><img src="images/germany.png" width="48" height="48" alt=""><br>Deutsch</a></li>
-		<li><a href="http://cafe.naver.com/openkore" title="Korea"><img src="/images/korea.png" width="48" height="48" alt=""><br>Korea</a></li>
 		</ul>
+
+		</td>
+		<td>
+
+		<table id="openkore_navigation_language_bar" cellspacing="0" cellpadding="0">
+		<tr>
+			<td><a href="http://forums.openkore.com/" title="International forum"><img src="images/international.png" width="24" height="24" alt="">International</a></td>
+			<td><a href="http://www.openkore-brasil.com/" title="Brazilian forum"><img src="images/brazil.png" width="24" height="24" alt="">Brazil</a></td>
+			<td><a href="http://www.d-bests.com/" title="Indonesian forum"><img src="images/indonesia.png" width="24" height="24" alt="">Indonesia</a></td>
+			<td><a href="http://www.openkore-thailand.com/" title="ภาษาไทย"><img src="/images/thailand.png" width="24" height="24" alt="">ภาษาไทย</a></td><!-- abt123 -->
+			<td><a href="http://ro.yyro.com/" title="中文"><img src="images/chinese.png" width="24" height="24" alt="">中文</a></td><!-- lkm -->
+		</tr>
+		<tr>
+			<td><a href="http://darkmoon.ath.cx/" title="Filipino forum"><img src="images/philippines.png" width="24" height="24" alt="">Philippines</a></td>
+			<td><a href="http://www.openkore-hispano.uni.cc/" title="Hispano"><img src="images/spain.png" width="24" height="24" alt="">Hispano</a></td>
+			<td><a href="http://www.openkore.de/" title="Deutsch"><img src="images/germany.png" width="24" height="24" alt="">Deutsch</a></td>
+			<td><a href="http://cafe.naver.com/openkore" title="한국"><img src="/images/korea.png" width="24" height="24" alt="">한국</a></td>
+		</tr>
+		</table>
+
+		</td>
+		</tr>
+		</table>
 	</div>
 
 	<div id="openkore_donation">
