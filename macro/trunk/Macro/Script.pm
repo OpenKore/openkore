@@ -380,9 +380,18 @@ sub next {
 	##########################################
 	# pause command
 	} elsif ($line =~ /^pause/) {
-		my ($tmp) = $line =~ /^pause\s+(\d+)/;
-		if (defined $tmp) {$self->{timeout} = $tmp}
-		$self->{line}++;
+		my ($tmp) = $line =~ /^pause\s*(.*)/;
+		if (defined $tmp) {
+			my $result = parseCmd($tmp);
+			unless (defined $result) {
+				$self->{error} = "$errtpl: $tmp failed"
+			} else {
+				$self->{timeout} = $result
+			}
+		} else {
+			$self->{timeout} = $self->{macro_delay}
+		}
+		$self->{line}++
 	##########################################
 	# stop command
 	} elsif ($line =~ /^stop$/) {
