@@ -290,7 +290,7 @@ sub checkMsg {
 
 	$arg->{Msg} =~ s/[\r\n]*$//g;
 	if (match($arg->{Msg},$msg)){
-		setVar($var, $arg->{MsgUser});
+		setVar($var, quotemeta $arg->{MsgUser});
 		setVar($var."Msg", $arg->{Msg});
 		return 1
 	}
