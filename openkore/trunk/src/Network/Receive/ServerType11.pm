@@ -1,3 +1,4 @@
+# euRO (Europe)
 package Network::Receive::ServerType11;
 
 use strict;
