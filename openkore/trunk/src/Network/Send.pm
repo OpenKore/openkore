@@ -1634,9 +1634,8 @@ sub sendMapLogin {
 			$charID .
 			pack("x13") .
 			$sessionID .
-			pack("x9") .
 			pack("C*", $sex) .
-			pack ("x2");
+			pack("x11");
 
 	} else { #oRO and pRO and idRO
 		# $config{serverType} == 1 || $config{serverType} == 2
