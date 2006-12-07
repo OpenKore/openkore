@@ -61,7 +61,7 @@
 			<td><a href="http://darkmoon.ath.cx/" title="Filipino forum"><img src="images/philippines.png" width="24" height="24" alt="">Philippines</a></td>
 			<td><a href="http://www.openkore-hispano.uni.cc/" title="Hispano"><img src="images/spain.png" width="24" height="24" alt="">Hispano</a></td>
 			<td><a href="http://www.openkore.de/" title="Deutsch"><img src="images/germany.png" width="24" height="24" alt="">Deutsch</a></td>
-			<td><a href="http://cafe.naver.com/openkore" title="한국"><img src="/images/korea.png" width="24" height="24" alt="">한국</a></td>
+			<td><a href="http://openkore.dnip.net" title="한국"><img src="/images/korea.png" width="24" height="24" alt="">한국</a></td>
 		</tr>
 		</table>
 
