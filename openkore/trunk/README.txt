@@ -46,6 +46,7 @@ New features:
 - Basic support for pRO Thor (serverType 12) (Without attack, sit, stand and skill use)
 - Basic support for euRO (serverType 11) (Without attack, sit, stand and skill use)
 - Added route_escape_shout <Message> to somewhat avoid gm bot check.
+- It is now possible to enter special characters into the OpenKore console on Windows.
 
 New Commands
 - top10 <b|a|t|p> | <black|alche|tk|pk> | <blacksmith|alchemist|taekwon|pvp>
@@ -84,6 +85,7 @@ Credits:
 - piroJOKE: partial servertype 13 support.
 - edeline: help with kRO server fixes.
 - skseo: Korean translations.
+- Tatka: help with special character support in the Win32 console.
 
 
 =========================
