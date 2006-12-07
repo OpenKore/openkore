@@ -37,6 +37,7 @@ use Text::Wrap;
 use Win32::Console;
 use Utils::Win32;
 use encoding 'utf8';
+use Encode;
 use I18N qw(stringToBytes);
 
 
@@ -133,7 +134,20 @@ sub readEvents {
 #	local($|) = 1;
 	while ($self->{in_con}->GetEvents()) {
 		my @event = $self->{in_con}->Input();
-		if (defined($event[0]) && $event[0] == 1 && $event[1]) {
+
+		if (@event && $event[5] < 0) {
+			# Special characters are returned as unsigned integer
+			# (dunno why). Fix this.
+			$event[5] = 256 + $event[5];
+		}
+		if (@event && $event[0] == 1 && $event[1] == 0 && $event[3] == 18) {
+			# Alt was released and there's an ASCII code. This is
+			# a special character. Change @events as if a normal key
+			# was pressed.
+			$event[1] = 1;
+		}
+
+		if (@event && $event[0] == 1 && $event[1] == 1) {
 			##Ctrl+U (erases entire line)
 			if ($event[6] == 40 && $event[5] == 21) {
 				$self->{in_pos} = 0;
@@ -176,6 +190,7 @@ sub readEvents {
 #				print "\n";
 			#Other ASCII (+ ISO Latin-*)
 			} elsif ($event[5] >= 32 && $event[5] != 127 && $event[5] <= 255) {
+				my $char = Encode::decode("cp" . $self->{codepage}, chr($event[5]));
 				if ($self->{in_pos} < length($self->{input_part})) {
 					$self->{out_con}->Scroll(
 						$self->{in_pos}, $self->{in_line}, $self->{right}, $self->{in_line},
@@ -186,8 +201,8 @@ sub readEvents {
 					$self->{in_pos} = length($self->{input_part});
 				}
 				$self->{out_con}->Cursor($self->{in_pos}, $self->{in_line});
-				$self->{out_con}->Write(chr($event[5]));
-				substr($self->{input_part}, $self->{in_pos}, 0, chr($event[5])) if ($self->{in_pos} <= length($self->{input_part}));
+				Utils::Win32::printConsole($char);
+				substr($self->{input_part}, $self->{in_pos}, 0, $char) if ($self->{in_pos} <= length($self->{input_part}));
 				$self->{in_pos}++;
 #			} elsif ($event[3] == 33) {
 #				__PACKAGE__->writeOutput("pgup\n");
