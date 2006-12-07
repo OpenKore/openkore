@@ -1,3 +1,4 @@
+# pRO Thor as of October 22 2006
 package Network::Receive::ServerType12;
 
 use strict;
