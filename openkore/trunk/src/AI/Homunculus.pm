@@ -157,7 +157,7 @@ sub iterate {
 #		}
 
 	# homunculus is alive
-	} elsif ((($char->{homunculus}{state} & ~8) <= 1) && $char->{homunculus}{appear_time} && $field{name} eq $char->{homunculus}{map}) {
+	} elsif ($char->{homunculus}{appear_time} && $field{name} eq $char->{homunculus}{map}) {
 		my $homun_dist = $char->{homunculus}->blockDistance();
 		
 		# auto-feed homunculus
