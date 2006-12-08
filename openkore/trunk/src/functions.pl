@@ -618,13 +618,11 @@ sub parseSendMsg {
 		}
 		#undef $sendMsg;
 
-	} elsif (($switch eq "008C" && $config{serverType} == 0) ||	# Public chat
-		($switch eq "008C" && $config{serverType} == 1) ||
-		($switch eq "008C" && $config{serverType} == 2) ||
-		($switch eq "00F3" && $config{serverType} == 3) ||
+	} elsif (($switch eq "008C" && ($config{serverType} == 0 || $config{serverType} == 1 || $config{serverType} == 2 || $config{serverType} == 6 || $config{serverType} == 7 || $config{serverType} == 10 || $config{serverType} == 11 || $config{serverType} == 13)) ||
+		($switch eq "00F3" && ($config{serverType} == 3 || $config{serverType} == 5 || $config{serverType} == 8 || $config{serverType} == 9 || $config{serverType} == 15)) ||
 		($switch eq "009F" && $config{serverType} == 4) ||
-		($switch eq "00F3" && $config{serverType} == 5) ||
-		($switch eq "008C" && $config{serverType} == 6) ||
+		($switch eq "007E" && $config{serverType} == 12) ||
+		($switch eq "0085" && $config{serverType} == 14) ||	# Public chat
 
 		$switch eq "0108" ||	# Party chat
 
