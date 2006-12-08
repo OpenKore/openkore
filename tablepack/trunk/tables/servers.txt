@@ -795,7 +795,7 @@ ip ancient-low.no-ip.info
 port 6900
 master_version 18
 version 20
-serverType 0
+serverType 9
 serverEncoding Western
 
 ## http://www.ancientro.com/
@@ -804,7 +804,7 @@ ip ancientro.no-ip.info
 port 6900
 master_version 18
 version 20
-serverType 0
+serverType 9
 serverEncoding Western
 
 ## http://www.andzro.org/
