@@ -47,6 +47,7 @@ New features:
 - Basic support for euRO (serverType 11) (Without attack, sit, stand and skill use)
 - Added route_escape_shout <Message> to somewhat avoid gm bot check.
 - It is now possible to enter special characters into the OpenKore console on Windows.
+- It is now possible to use simple block labels in "conf" command.
 
 New Commands
 - top10 <b|a|t|p> | <black|alche|tk|pk> | <blacksmith|alchemist|taekwon|pvp>
@@ -86,6 +87,7 @@ Credits:
 - edeline: help with kRO server fixes.
 - skseo: Korean translations.
 - Tatka: help with special character support in the Win32 console.
+- piroJOKE: lables Idea.
 
 
 =========================

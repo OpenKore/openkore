@@ -1031,8 +1031,27 @@ sub cmdCloseShop {
 
 sub cmdConf {
 	my (undef, $args) = @_;
-	my ($arg1) = $args =~ /^(\w+)/;
-	my ($arg2) = $args =~ /^\w+\s+([\s\S]+)\s*$/;
+	my ($arg1) = $args =~ /^(\w*\.*\w+)/;
+	my ($arg2) = $args =~ /^\w*\.*\w+\s+([\s\S]+)\s*$/;
+
+	# Basic Support for "label" in blocks. Thanks to piroJOKE
+	if ($arg1 =~ /\./) {
+		$arg1 =~ s/\.+/\./; # Filter Out Unnececary dot's
+		my ($label, $param) = split /\./, $arg1, 2; # Split the label form parameter
+		# This line is used for debug
+		# message TF("Params label '%s' param '%s' arg1 '%s' arg2 '%s'\n", $label, $param, $arg1, $arg2), "info";
+		foreach (%config) {
+			if ($_ =~ /_\d+_label/){ # we only need those blocks witch have labels
+				if ($config{$_} eq $label) {
+					my ($real_key, undef) = split /_label/, $_, 2;
+					$real_key .= "_";
+					$real_key .= $param;
+					$arg1 = $real_key;
+					last;
+				};
+			};
+		};
+	};
 
 	if ($arg1 eq "") {
 		error T("Syntax Error in function 'conf' (Change a Configuration Key)\n" .
