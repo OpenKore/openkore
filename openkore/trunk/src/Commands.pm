@@ -1631,7 +1631,7 @@ sub cmdHomunculus {
  	my (undef, $subcmd) = @_;
 	my @args = parseArgs($subcmd);
 
-	if (!$char->{homunculus} || !$char->{homunculus}{appear_time} || (($char->{homunculus}{state} & ~8) > 1)) {
+	if (!$char->{homunculus} || !$char->{homunculus}{appear_time} || ($char->{homunculus}{state} & 2) || ($char->{homunculus}{state} & 4)) {
 		error T("Error: No Homunculus detected.\n");
 
 	} elsif ($subcmd eq "s" || $subcmd eq "status") {
