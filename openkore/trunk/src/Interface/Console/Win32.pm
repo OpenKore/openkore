@@ -231,7 +231,7 @@ sub readEvents {
 				$self->{out_con}->Write(' ' x length($self->{input_part}));
 				$self->{out_con}->Cursor(0, $self->{in_line});
 				$self->{input_part} = $self->{input_list}[$self->{input_offset}];
-				$self->{out_con}->Write($self->{input_part});
+				Utils::Win32::printConsole($self->{input_part});
 				$self->{in_pos} = length($self->{input_part});
 			##Right Arrow
 			} elsif ($event[3] == 39) {
@@ -252,7 +252,7 @@ sub readEvents {
 				$self->{out_con}->Write(' ' x length($self->{input_part}));
 				$self->{out_con}->Cursor(0, $self->{in_line});
 				$self->{input_part} = $self->{input_list}[$self->{input_offset}];
-				$self->{out_con}->Write($self->{input_part});
+				Utils::Win32::printConsole($self->{input_part});
 				$self->{in_pos} = length($self->{input_part});
 			##Insert
 #			} elsif ($event[3] == 45) {
