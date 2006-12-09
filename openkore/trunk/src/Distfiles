@@ -5,6 +5,7 @@ AI.pm
 ChatQueue.pm
 Commands.pm
 Deal.pm
+ErrorHandler.pm
 FastUtils.pm
 FileParsers.pm
 Globals.pm

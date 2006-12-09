@@ -17,6 +17,11 @@ DIRS=(.
 	src/scons-local-0.96.93/SCons/Script
 	src/scons-local-0.96.93/SCons/Sig
 	src/scons-local-0.96.93/SCons/Tool
+	src/deps
+	src/deps/Carp
+	src/deps/Class/Data
+	src/deps/Devel
+	src/deps/Exception
 	src/po
 	src/test
 	src/Actor

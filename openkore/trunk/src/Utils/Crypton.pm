@@ -44,7 +44,7 @@ sub encrypt {
 	my ($self, $block) = @_;
 	my (@b0, @b1);
 
-	@b1 = unpack("L4", $block);
+	@b1 = unpack("V4", $block);
 
 	$b0[0] = $b1[0] ^ $self->{e_key}[0];
 	$b0[1] = $b1[1] ^ $self->{e_key}[1];
@@ -68,7 +68,7 @@ sub encrypt {
 	$b0[2] = gamma_tau(\@b1, 2, 1, 0) ^ $self->{e_key}[50]; 
 	$b0[3] = gamma_tau(\@b1, 3, 0, 1) ^ $self->{e_key}[51];
 
-	return pack("L4", @b0);
+	return pack("V4", @b0);
 }
 
 ################################################################################
@@ -169,7 +169,7 @@ sub set_key {
 	my @kp = (0xbb67ae85, 0x3c6ef372, 0xa54ff53a, 0x510e527f);
 	my @kq = (0x9b05688c, 0x1f83d9ab, 0x5be0cd19, 0xcbbb9d5d);
 	my ($i, $t0, $t1, @tmp, @key);
-	@key = unpack("L*", $in_key);
+	@key = unpack("V*", $in_key);
 
 	$r_e_key->[2] = 0;
 	$r_e_key->[3] = 0;

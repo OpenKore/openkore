@@ -1,6 +1,7 @@
 AppLauncher.pm
 Benchmark.pm
 CallbackList.pm
+CommonExceptions.pm
 CRAM.pm
 Crypton.pm
 HttpReader.pm
@@ -8,6 +9,7 @@ ObjectList.pm
 PerlLauncher.pm
 RDM128.pm
 RMD160.pm
+TextReader.pm
 Unix.pm
 Whirlpool.pm
 Win32.pm
