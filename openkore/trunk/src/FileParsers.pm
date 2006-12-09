@@ -7,6 +7,10 @@
 #  this software. However, if you distribute modified versions, you MUST
 #  also distribute the source code.
 #  See http://www.gnu.org/licenses/gpl.html for the full license.
+#
+#  $Revision$
+#  $Id$
+#
 #########################################################################
 ##
 # MODULE DESCRIPTION: Configuration file parsers
@@ -24,8 +28,6 @@ use encoding 'utf8';
 use Carp;
 
 use Utils;
-use Utils::CommonExceptions;
-use Utils::TextReader;
 use Plugins;
 use Log qw(warning error);
 
@@ -552,12 +554,11 @@ sub parseMonControl {
 }
 
 sub parsePortals {
-	my ($file, $r_hash) = @_;
-	my $reader = new Utils::TextReader($file);
-
-	%{$r_hash} = ();
-	while (!$reader->eof()) {
-		my $line = $reader->readLine();
+	my $file = shift;
+	my $r_hash = shift;
+	undef %{$r_hash};
+	open FILE, "<", $file;
+	while (my $line = <FILE>) {
 		next if $line =~ /^#/;
 		$line =~ s/\cM|\cJ//g;
 		$line =~ s/\s+/ /g;
@@ -576,21 +577,17 @@ sub parsePortals {
 			$$r_hash{$portal}{'dest'}{$dest}{'steps'} = $args[7];
 		}
 	}
+	close FILE;
 	return 1;
 }
 
 sub parsePortalsLOS {
-	my ($file, $r_hash) = @_;
-	my $reader = new Utils::TextReader($file);
-	my ($key, $f);
-
-	%{$r_hash} = ();
-	if (!open($f, "<", $file)) {
-		IOException->throw(error => "Cannot open file for reading.");
-	}
-
-	while (!eof($f)) {
-		<$f>;
+	my $file = shift;
+	my $r_hash = shift;
+	undef %{$r_hash};
+	my $key;
+	open FILE, "<", $file;
+	foreach (<FILE>) {
 		s/\x{FEFF}//g;
 		next if (/^#/);
 		s/[\r\n]//g;
@@ -606,7 +603,7 @@ sub parsePortalsLOS {
 			}
 		}
 	}
-	close $f;
+	close FILE;
 	return 1;
 }
 
@@ -658,15 +655,14 @@ sub parseROLUT {
 	my %ret = (
 		file => $file,
 		hash => $r_hash
-	);
+	    );
 	Plugins::callHook("FileParsers::ROLUT", \%ret);
 	return if ($ret{return});
 
-	%{$r_hash} = ();
-	my $reader = new Utils::TextReader($file);
-	while (!$reader->eof()) {
-		$_ = $reader->readLine();
-		s/[\r\n]//g;
+	undef %{$r_hash};
+	open FILE, "<:utf8", $file;
+	foreach (<FILE>) {
+		s/[\r\n\x{FEFF}]//g;
 		next if (length($_) == 0 || /^\/\//);
 
 		my ($id, $name) = split /#/, $_, 3;
@@ -675,6 +671,7 @@ sub parseROLUT {
 			$r_hash->{$id} = $name;
 		}
 	}
+	close FILE;
 	return 1;
 }
 
@@ -688,11 +685,11 @@ sub parseRODescLUT {
 	Plugins::callHook("FileParsers::RODescLUT", \%ret);
 	return if ($ret{return});
 
-	%{$r_hash} = ();
-	my ($ID, $IDdesc);
-	my $reader = new Utils::TextReader($file);
-	while (!$reader->eof()) {
-		$_ = $reader->readLine();
+	undef %{$r_hash};
+	my $ID;
+	my $IDdesc;
+	open FILE, "< $file";
+	foreach (<FILE>) {
 		s/\r//g;
 		if (/^#/) {
 			$$r_hash{$ID} = $IDdesc;
@@ -706,6 +703,7 @@ sub parseRODescLUT {
 			$IDdesc =~ s/_/--------------/g;
 		}
 	}
+	close FILE;
 	return 1;
 }
 
