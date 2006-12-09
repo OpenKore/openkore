@@ -186,14 +186,10 @@ addConfigFile("$Settings::tables_folder/skillsarea.txt", \%skillsArea, \&parseDa
 addConfigFile("$Settings::tables_folder/skillsencore.txt", \%skillsEncore, \&parseList);
 
 Plugins::callHook('start2');
-my $begin = time;
 if (!Settings::load()) {
 	$interface->errorDialog(T("A configuration file failed to load. Did you download the latest configuration files?"));
 	exit 1;
 }
-Log::message(sprintf("Time taken: %.2f seconds\n", time - $begin));
-# 1.11  1.11  1.12
-exit;
 Plugins::callHook('start3');
 
 
