@@ -42,6 +42,7 @@ sub getColorForMessage {
 	return if (!$consoleColors->{''} || !$consoleColors->{''}{useColors});
 	my $color;
 	if ($consoleColors->{$type}) {
+		$domain = 'default' if (!defined $domain);
 		$color = $consoleColors->{$type}{$domain};
 		$color = $consoleColors->{$type}{default} if (!defined $color);
 	}

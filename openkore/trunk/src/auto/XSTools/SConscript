@@ -134,6 +134,8 @@ if not win32:
 	else:
 		deps += ['termcap']
 		deps_path += ['/usr/lib/termcap']
+	if platform == "sunos":
+		deps += ['socket']
 else:
 	deps += ['winmm', 'wininet']
 

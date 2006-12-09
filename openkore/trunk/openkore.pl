@@ -9,130 +9,24 @@
 #
 #########################################################################
 
+use strict;
 use FindBin qw($RealBin);
 use lib "$RealBin";
 use lib "$RealBin/src";
 use lib "$RealBin/src/deps";
-use strict;
-
-srand;
-
 
 sub __start {
-
-BEGIN {
-	##### CHECK FOR THE XSTOOL LIBRARY #####
-
-	if ($^O eq 'MSWin32') {
-		eval "use XSTools;";
-		if ($@) {
-			print "$@\n";
-			print STDERR "Error: XSTools.dll is not found. Please check your installation.\n";
-			<STDIN>;
-			exit 1;
-		}
-
-	} else {
-		# We're on Unix
-		my $libName = ($^O eq 'darwin') ? 'XSTools.bundle' : 'XSTools.so';
-		my $libFound = 0;
-		foreach (@INC) {
-			if (-f "$_/$libName" || -f "$_/auto/XSTools/$libName") {
-				$libFound = 1;
-				last;
-			}
-		}
-		if (!$libFound) {
-			# Attempt to compile XSTools.so if it isn't available
-			my $ret = system('python', "$RealBin/scons.py");
-			if ($ret != 0) {
-				if (($ret & 127) == 2) {
-					# Ctrl+C pressed
-					exit 1;
-				} else {
-					print STDERR "Unable to compile $libName. Please report this error at our forums.\n";
-					exit 1;
-				}
-			}
-		}
-	}
-}
-
-
-##### SETUP WARNING AND ERROR HANDLER #####
-
-$SIG{__DIE__} = sub {
-	return unless (defined $^S && $^S == 0);
-
-	# Determine what function to use to print the error
-	my $err;
-	if (!$Globals::interface || UNIVERSAL::isa($Globals::interface, "Interface::Startup")) {
-		$err = sub { print TF("%s\nPress ENTER to exit this program.\n", $_[0]); <STDIN>; }
-	} else {
-		$err = sub { $Globals::interface->errorDialog($_[0]); };
-	}
-
-	# Extract file and line number from the die message
-	my ($file, $line) = $_[0] =~ / at (.+?) line (\d+)\.$/;
-
-	# Get rid of the annoying "@INC contains:"
-	my $dieMsg = $_[0];
-	$dieMsg =~ s/ \(\@INC contains: .*\)//;
-
-	# Create error message and display it
-	my $msg = TF("Program terminated unexpectedly. Error message:\n" .
-		"%s\nA more detailed error report is saved to errors.txt", $dieMsg);
-
-	# Create the errors.txt error log
-	my $log = '';
-	$log .= "$Settings::NAME version $Settings::VERSION\n" if (defined $Settings::VERSION);
-	$log .= "\@ai_seq = @Globals::ai_seq\n" if (defined @Globals::ai_seq);
-	if (defined @Plugins::plugins) {
-		$log .= "Loaded plugins:\n";
-		foreach my $plugin (@Plugins::plugins) {
-			next if (!defined $plugin);
-			$log .= "  $plugin->{filename} ($plugin->{name})\n";
-		}
-	} else {
-		$log .= "No loaded plugins.\n";
-	}
-	$log .= "\n";
-
-	# Add stack trace
-	if (defined &Carp::longmess) {
-		$log .= Carp::longmess(@_);
-	} else {
-		$log .= $dieMsg;
-	}
-	# Find out which line died
-	if (-f $file && open(F, "< $file")) {
-		my @lines = <F>;
-		close F;
-
-		my $msg;
-		$msg .=  "  $lines[$line-2]" if ($line - 2 >= 0);
-		$msg .= "* $lines[$line-1]";
-		$msg .= "  $lines[$line]" if (@lines > $line);
-		$msg .= "\n" unless $msg =~ /\n$/s;
-		$log .= TF("\n\nDied at this line:\n%s\n", $msg);
-	}
-
-	if (open(F, "> errors.txt")) {
-		print F $log;
-		close F;
-	}
-	$err->($msg);
-	exit 9;
-};
-
-
-#### INITIALIZE STARTUP INTERFACE ####
 
 use Time::HiRes qw(time usleep);
 use IO::Socket;
 use Digest::MD5;
 use Carp;
 use Carp::Assert;
+
+use ErrorHandler;
+use XSTools;
+
+srand();
 
 
 ##### PARSE ARGUMENTS, FURTHER INITIALIZE INTERFACE & LOAD PLUGINS #####
@@ -164,7 +58,7 @@ if ($^O eq 'MSWin32' && !defined(getprotobyname("tcp"))) {
 		"Your Windows TCP/IP stack is broken. Please read\n" .
 		"  %s\n" .
 		"to learn how to solve this.",
-		"http://visualkore.aaanime.net/faq.php#tcp"));
+		"http://www.visualkore-bot.com/faq.php#tcp"));
 	exit 1;
 }
 
@@ -179,7 +73,6 @@ if (-f "$RealBin/Misc.pm") {
 
 
 # Use 'require' here because XSTools.so might not be compiled yet at startup
-require XSTools;
 if (!defined &XSTools::majorVersion) {
 	$interface->errorDialog(TF("Your version of the XSTools library is too old.\n" .
 		"Please read %s", ""));
@@ -293,10 +186,14 @@ addConfigFile("$Settings::tables_folder/skillsarea.txt", \%skillsArea, \&parseDa
 addConfigFile("$Settings::tables_folder/skillsencore.txt", \%skillsEncore, \&parseList);
 
 Plugins::callHook('start2');
+my $begin = time;
 if (!Settings::load()) {
 	$interface->errorDialog(T("A configuration file failed to load. Did you download the latest configuration files?"));
 	exit 1;
 }
+Log::message(sprintf("Time taken: %.2f seconds\n", time - $begin));
+# 1.11  1.11  1.12
+exit;
 Plugins::callHook('start3');
 
 

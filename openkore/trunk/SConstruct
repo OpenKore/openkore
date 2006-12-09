@@ -294,7 +294,7 @@ perlenv['BUILDERS']['XS'] = Builder(action = buildXS)
 
 ### Invoke SConscripts ###
 
-Export('env libenv perlenv win32 cygwin darwin have_ncurses READLINE_LIB')
+Export('env libenv perlenv platform win32 cygwin darwin have_ncurses READLINE_LIB')
 sconscripts = []
 if not int(ARGUMENTS.get('TESTS_ONLY', 0)):
 	sconscripts += ['src/auto/XSTools/SConscript']
