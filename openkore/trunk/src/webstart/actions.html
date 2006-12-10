@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>OpenKore Actions Panel</title>
+	<script type="text/javascript" src="http://www.openkore.com/include/prototype-1.4.0.js"></script>
+	<!-- Fix broken PNG transparency and CSS support for IE/Win5-6+ -->
+	<!--[if gte IE 5.5000]>
+	<script type="text/javascript" src="http://www.openkore.com/include/pngfix.js"></script>
+	<![endif]-->
+
+	<link rel="stylesheet" href="actions.css" type="text/css">
+
+	<script type="text/javascript">
+	<!--
+	function touch(url) {
+		new Ajax.Request(url, { method: 'get' });
+	}
+
+	function switchLanguage(lang) {
+		location.href = 'actions.html?lang=' + lang;
+		parent.main.location.href = 'http://www.openkore.com/webstart/?product={$product}&version={$version}&lang={$lang}';
+	}
+
+	function start() {
+		touch("/start");
+		$('start').style.display = 'none';
+		$('starting').style.display = 'inline';
+		setTimeout("restoreStartButton()", 5000);
+	}
+	
+	function configure() {
+		touch("/configure");
+	}
+
+	function restoreStartButton() {
+		$('start').style.display = 'inline';
+		$('starting').style.display = 'none';
+	}
+
+	function ping() {
+		touch("/ping");
+		setTimeout("ping()", 20000);
+	}
+	//-->
+	</script>
+</head>
+
+<body onload="ping()">
+
+<table cellspacing="0" cellpadding="0">
+<tr>
+<td style="width: 100%">
+	<ul id="languages">
+	<li><a href="javascript:void(switchLanguage('en'))">English</a></li>
+	<li><a href="javascript:void(switchLanguage('tl'))">Tagalog</a></li>
+	<li><a href="javascript:void(switchLanguage('zh'))">简体中文</a></li>
+	</ul>
+
+	<ul id="menu">
+	<li id="start">
+		<a href="javascript:void(start())">
+		<img src="start.png" alt="" width="48" height="48">
+		<b>{$startMessage}</b>
+		</a>
+	</li>
+	<li id="starting" style="display: none">
+		<a href="javascript:void()">
+		<img src="starting.gif" alt="" width="48" height="48">
+		<b id="start">{$startingMessage}</b>
+		</a>
+	</li>
+	<li id="start">
+		<a href="javascript:void(configure())">
+		<img src="configure.png" alt="" width="48" height="48">
+		<b>{$configureMessage}</b>
+		</a>
+	</li>
+	<li>
+		<a href="http://www.openkore.com/webstart/help.php?product={$product}&amp;version={$version}&amp;lang={$lang}" target="main">
+		<img src="http://www.openkore.com/images/help.png" alt="" width="48" height="48">
+		{$helpMessage}
+		</a>
+	</li>
+	<li>
+		<a href="http://www.openkore.com/webstart/?product={$product}&amp;version={$version}&amp;lang={$lang}" target="main">
+		<img src="news.png" alt="" width="48" height="48">
+		{$newsMessage}
+		</a>
+	</li>
+	</ul>
+</td>
+</tr>
+</table>
+
+</body>
+</html>

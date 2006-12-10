@@ -6312,3 +6312,6 @@ msgstr "读取地图\n"
 #, perl-format
 msgid "Unknown packet - %s\n"
 msgstr "未知封包 - %s\n"
+
+msgid "OpenKore News"
+msgstr "OpenKore 新文"

@@ -7,10 +7,6 @@
 #  this software. However, if you distribute modified versions, you MUST
 #  also distribute the source code.
 #  See http://www.gnu.org/licenses/gpl.html for the full license.
-#
-#  $Revision$
-#  $Id$
-#
 #########################################################################
 ##
 # MODULE DESCRIPTION: Message translation framework

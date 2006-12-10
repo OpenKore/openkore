@@ -23,6 +23,7 @@ package Base::WebServer::Process;
 
 use strict;
 use IO::Socket::INET;
+use Encode;
 use Utils qw(urldecode);
 
 # Internal function; do not use directly!
@@ -197,11 +198,16 @@ sub print {
 		$self->_sendHeaders;
 	}
 
+	my $data = $_[0];
+	if (Encode::is_utf8($data)) {
+		Encode::_utf8_off($data);
+	}
+
 	eval {
 		if ($self->{chunkedEncoding}) {
-			$self->{socket}->send(_encodeChunk($_[0]));
+			$self->{socket}->send(_encodeChunk($data));
 		} else {
-			$self->{socket}->send($_[0]);
+			$self->{socket}->send($data);
 		}
 		$self->{socket}->flush;
 	};

@@ -77,6 +77,7 @@ if (0) {
 	require "unicore/lib/gc_sc/Digit.pl";
 	require "unicore/lib/gc_sc/Cntrl.pl";
 	require "unicore/lib/gc_sc/ASCII.pl";
+	require CGI;
 }
 
 $0 = PerlApp::exe() if ($PerlApp::TOOL eq "PerlApp");
@@ -87,7 +88,7 @@ if ($0 =~ /wxstart\.exe$/i) {
 	$ENV{OPENKORE_DEFAULT_INTERFACE} = 'Wx';
 }
 
-my $file = 'openkore.pl';
+my $file = "src\\webstart\\webstart.pl";
 
 if ($ARGV[0] eq '!') {
 	shift;
