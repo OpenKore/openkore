@@ -44,6 +44,7 @@ push @INC, "." if (!$hasCurrentDir);
 
 if (0) {
 	# Force PerlApp to include the following modules
+	use FindBin;
 	require base;
 	require bytes;
 	require lib;
@@ -53,7 +54,6 @@ if (0) {
 	require Exporter;
 	require Fcntl;
 	require Carp;
-	require FindBin;
 	require Math::Trig;
 	require Text::Wrap;
 	require Text::ParseWords;
@@ -77,7 +77,7 @@ if (0) {
 	require "unicore/lib/gc_sc/Digit.pl";
 	require "unicore/lib/gc_sc/Cntrl.pl";
 	require "unicore/lib/gc_sc/ASCII.pl";
-	require CGI;
+	require HTML::Entities;
 }
 
 $0 = PerlApp::exe() if ($PerlApp::TOOL eq "PerlApp");
@@ -104,6 +104,7 @@ if ($ARGV[0] eq '!') {
 }
 
 $0 = $file;
+FindBin::again();
 do $file;
 if ($@) {
 	print $@;

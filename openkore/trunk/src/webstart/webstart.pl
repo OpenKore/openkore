@@ -16,17 +16,29 @@ use lib "$RealBin/..";
 use lib "$RealBin/../deps";
 use Time::HiRes qw(time sleep);
 
-use constant DEBUG => 1;
+use constant DEBUG => 0;
+
+BEGIN {
+	print "Starting OpenKore, please wait...\n";
+}
 
 my $server;
 our $timeout = time;
-if (DEBUG) {
+chdir(File::Spec->catfile($RealBin, "..", ".."));
+if (DEBUG || $^O ne 'MSWin32') {
 	$server = new WebstartServer(2894);
 	print "http://localhost:" . $server->getPort() . "\n";
 } else {
-	$server = new WebstartServer();
 	require Utils::Win32;
-	Utils::Win32::ShellExecute(0, undef, "http://localhost:" . $server->getPort());
+	Utils::Win32::setConsoleTitle("OpenKore");
+	$server = new WebstartServer();
+	my $url = "http://localhost:" . $server->getPort();
+	if (!Utils::Win32::ShellExecute(0, undef, $url)) {
+		print STDERR "Unable to launch a web browser.\n";
+		print STDERR "Please open your web browser and go to: $url\n";
+	} else {
+		print "Launching web browser...\n";
+	}
 }
 
 while (1) {
@@ -49,8 +61,11 @@ use FindBin qw($RealBin);
 use Translation qw(T);
 use Settings;
 use Utils qw(urlencode);
-use CGI qw(escapeHTML);
+use HTML::Entities;
 use File::Spec;
+use Utils::PerlLauncher;
+
+my $consoleHidden;
 
 sub printFile {
 	my ($process, $file) = @_;
@@ -95,11 +110,17 @@ sub printTemplate {
 sub request {
 	my ($self, $process) = @_;
 
+	if (!$consoleHidden && $^O eq 'MSWin32') {
+		# Hide console upon first HTTP request.
+		eval 'use Win32::Console; Win32::Console->new(STD_OUTPUT_HANDLE)->Free();';
+		$consoleHidden = 1;
+	}
+	
 	$process->header("Cache-Control", "no-cache, no-store");
 	if ($process->file eq '/') {
 		printTemplate($process, "$RealBin/frame.html", {
-			product => escapeHTML(urlencode($Settings::NAME)),
-			version => escapeHTML(urlencode($Settings::VERSION))
+			product => encode_entities(urlencode($Settings::NAME)),
+			version => encode_entities(urlencode($Settings::VERSION))
 		});
 
 	} elsif ($process->file eq '/actions.html') {
@@ -116,9 +137,9 @@ sub request {
 			configureMessage => T("Configure"),
 			helpMessage      => T("Help! It doesn't work!"),
 			newsMessage      => T("OpenKore News"),
-			product          => escapeHTML(urlencode($Settings::NAME)),
-			version          => escapeHTML(urlencode($Settings::VERSION)),
-			lang             => escapeHTML(urlencode($lang))
+			product          => encode_entities(urlencode($Settings::NAME)),
+			version          => encode_entities(urlencode($Settings::VERSION)),
+			lang             => encode_entities(urlencode($lang))
 		});
 
 	} elsif ($process->file eq '/jscheck.html') {
@@ -128,7 +149,8 @@ sub request {
 		printFile($process, "$RealBin/$1");
 
 	} elsif ($process->file eq '/start') {
-		system('xterm &');
+		my $launcher = new PerlLauncher(undef, "openkore.pl");
+		$launcher->launch(1);
 		$process->shortResponse('');
 
 	} elsif ($process->file eq '/configure') {
