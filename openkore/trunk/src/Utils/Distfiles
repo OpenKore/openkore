@@ -1,9 +1,9 @@
 AppLauncher.pm
 Benchmark.pm
 CallbackList.pm
-CommonExceptions.pm
 CRAM.pm
 Crypton.pm
+Exceptions.pm
 HttpReader.pm
 ObjectList.pm
 PerlLauncher.pm
