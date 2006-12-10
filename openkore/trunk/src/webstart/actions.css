@@ -38,7 +38,7 @@ a:hover {
 	margin-right: 16px;
 }
 
-#menu li img {
+#menu li img, #menu li .img {
 	vertical-align: middle;
 	margin-right: 6px;
 	border: 0;
