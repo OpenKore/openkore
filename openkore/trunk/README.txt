@@ -22,6 +22,7 @@ Bug fixes:
 - Fix kRO support.
 - Fix FreeBSD and other Unix support. MacOS X *might* also be supported now,
   but it's untested.
+- Fix Sun Sparc support.
 
 New config options:
 - dealAuto_names <list of player names>
