@@ -7,10 +7,6 @@
 #  this software. However, if you distribute modified versions, you MUST
 #  also distribute the source code.
 #  See http://www.gnu.org/licenses/gpl.html for the full license.
-#
-#  $Revision$
-#  $Id$
-#
 #########################################################################
 ##
 # MODULE DESCRIPTION: Windows-specific utility functions.
@@ -43,5 +39,10 @@ XSTools::bootModule('Utils::Win32');
 # Requires: defined($title)
 #
 # Sets the current console's title. This function supports Unicode.
+
+##
+# boolean Utils::Win32::ShellExecute(int windowHandle, String operation, String file)
+#
+# Open a file.
 
 1;
