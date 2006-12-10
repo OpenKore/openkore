@@ -1983,7 +1983,7 @@ sub devotion {
 
 	for (my $i = 0; $i < 5; $i++) {
 		my $ID = substr($args->{data}, $i*4, 4);
-		last if unpack("L1", $ID) == 0;
+		last if unpack("V", $ID) == 0;
 
 		my $actor = Actor::get($ID);
 		$msg .= skillUseNoDamage_string($source, $actor, 0, 'devotion');
