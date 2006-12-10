@@ -1,6 +1,7 @@
 # -*-python-*-
 Import('*')
 import os.path
+import copy
 
 
 ############### OpenKore Standard Library ###############
@@ -25,6 +26,8 @@ if win32:
 	osl_libs = ['ws2_32']
 else:
 	osl_libs = ['pthread']
+	if platform == "sunos":
+		osl_libs += ['socket', 'nsl']
 
 env.Program('OSL/test/unit/run-tests', Split('''
 	OSL/test/unit/main.cpp
@@ -124,18 +127,16 @@ for input, output in XS_sources.iteritems():
 ############### XSTools ###############
 
 # External library dependencies
-deps = []
+deps = copy.copy(osl_libs)
 deps_path = []
 
 if not win32:
-	deps += [READLINE_LIB, 'pthread']
+	deps += [READLINE_LIB]
 	if have_ncurses:
 		deps += ['ncurses']
 	else:
 		deps += ['termcap']
 		deps_path += ['/usr/lib/termcap']
-	if platform == "sunos":
-		deps += ['socket']
 else:
 	deps += ['winmm', 'wininet']
 
