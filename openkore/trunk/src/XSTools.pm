@@ -19,9 +19,8 @@ use Cwd 'abs_path';
 use DynaLoader;
 use XSLoader;
 
-my $class = 'Exception::Class';
-eval "use $class;";
-die $@ if ($@);
+my $class = 'Exception::Class'; eval "use $class;"; die $@ if ($@);
+$class = 'Utils::Exceptions'; eval "use $class;"; die $@ if ($@);
 import Exception::Class (
 	'XSTools::LoadException' => { fields => 'wrappedError' },
 	'XSTools::CompileException',

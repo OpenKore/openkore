@@ -1,5 +1,4 @@
 # This is Exception::Class from http://cpan.uwinnipeg.ca/htdocs/Exception-Class/Exception/Class.html
-# Slightly modified to export the 'caught' method by default.
 package Exception::Class;
 
 use 5.005;
@@ -69,8 +68,6 @@ sub import
 	my %seen;
 	$class->_make_parents( \%needs_parent, $subclass, \%seen );
     }
-
-    $class->export_to_level(1, $class, 'caught');
 }
 
 sub _make_parents
