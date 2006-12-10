@@ -40,14 +40,14 @@ sub getColorForMessage {
 	my ($consoleColors, $type, $domain) = @_;
 
 	return if (!$consoleColors->{''} || !$consoleColors->{''}{useColors});
-	my $color;
+	my $colorName;
 	if ($consoleColors->{$type}) {
 		$domain = 'default' if (!defined $domain);
-		$color = $consoleColors->{$type}{$domain};
-		$color = $consoleColors->{$type}{default} if (!defined $color);
+		$colorName = $consoleColors->{$type}{$domain};
+		$colorName = $consoleColors->{$type}{default} if (!defined $colorName);
 	}
-	$color = 'default' if (!defined $color);
-	return getColor($color);
+	$colorName = 'default' if (!defined $colorName);
+	return getColor($colorName);
 }
 
 ##
@@ -55,14 +55,15 @@ sub getColorForMessage {
 #
 # Return the ANSI color code for the given color name.
 sub getColor {
-	my $color = shift;
+	my $colorName = $_[0];
 	my $code = '';
 
-	$color =~ s/\/(.*)//;
+	$colorName =~ s/\/(.*)//;
 	my $bgcolor = $1;
 
-	$code = $fgcolors{$color} if (defined($color) && defined($fgcolors{$color}));
+	$code = $fgcolors{$colorName} if (defined($colorName) && defined($fgcolors{$colorName}));
 	$code .= $bgcolors{$bgcolor} if (defined($bgcolor) && defined($bgcolors{$bgcolor}));
+	$code = '' if (!defined $code);
 	return $code;
 }
 
