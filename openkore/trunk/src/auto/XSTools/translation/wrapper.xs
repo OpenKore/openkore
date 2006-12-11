@@ -5,6 +5,7 @@
 #include "XSUB.h"
 
 #include "translator.h"
+#include "utils.h"
 
 
 MODULE = Translation     PACKAGE = Translation
@@ -50,3 +51,13 @@ CODE:
 		sv_setpvn (msg, translation, len);
 		SvUTF8_on (msg);
 	}
+
+char *
+getLocaleCharset()
+CODE:
+	// Casting const char to char will work because the value will
+	// internally be copied by Perl anyway. Perl will not touch the
+	// original string.
+	RETVAL = (char *) get_locale_charset();
+OUTPUT:
+	RETVAL
