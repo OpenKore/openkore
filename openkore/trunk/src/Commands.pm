@@ -943,25 +943,27 @@ sub cmdChatRoom {
 			}
 			$title = ($config{chatTitleOversize}) ? $title : substr($title,0,36);
 			sendChatRoomCreate($net, $title, $users, $public, $password);
-			$createdChatRoom{'title'} = $title;
-			$createdChatRoom{'ownerID'} = $accountID;
-			$createdChatRoom{'limit'} = $users;
-			$createdChatRoom{'public'} = $public;
-			$createdChatRoom{'num_users'} = 1;
-			$createdChatRoom{'users'}{$char->{name}} = 2;
+			%createdChatRoom = ();
+			$createdChatRoom{title} = $title;
+			$createdChatRoom{ownerID} = $accountID;
+			$createdChatRoom{limit} = $users;
+			$createdChatRoom{public} = $public;
+			$createdChatRoom{num_users} = 1;
+			$createdChatRoom{users}{$char->{name}} = 2;
 		}
 
 	} elsif ($arg1 eq "list") {
 		message T("------------------------------- Chat Room List --------------------------------\n" .
 			"#   Title                                  Owner                Users   Type\n"), "list";
 		for (my $i = 0; $i < @chatRoomsID; $i++) {
-			next if ($chatRoomsID[$i] eq "");
-			my $owner_string = Actor::get($chatRooms{$chatRoomsID[$i]}{'ownerID'})->name;
-			my $public_string = ($chatRooms{$chatRoomsID[$i]}{'public'}) ? "Public" : "Private";
-			my $limit_string = $chatRooms{$chatRoomsID[$i]}{'num_users'}."/".$chatRooms{$chatRoomsID[$i]}{'limit'};
+			next if (!defined $chatRoomsID[$i]);
+			my $room = $chatRooms{$chatRoomsID[$i]};
+			my $owner_string = Actor::get($room->{ownerID})->name;
+			my $public_string = ($room->{public}) ? "Public" : "Private";
+			my $limit_string = $room->{num_users} . "/" . $room->{limit};
 			message(swrite(
 				"@<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<<<<<<<< @<<<<<< @<<<<<<",
-				[$i, $chatRooms{$chatRoomsID[$i]}{'title'}, $owner_string, $limit_string, $public_string]),
+				[$i, $room->{title}, $owner_string, $limit_string, $public_string]),
 				"list");
 		}
 		message("-------------------------------------------------------------------------------\n", "list");

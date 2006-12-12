@@ -134,6 +134,7 @@ sub initMapChangeVars {
 	undef %incomingGuild;
 	undef @chatRoomsID;
 	undef %chatRooms;
+	undef %createdChatRoom;
 	undef @lastpm;
 	undef %incomingFriend;
 
