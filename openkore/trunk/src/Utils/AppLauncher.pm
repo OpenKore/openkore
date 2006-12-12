@@ -257,8 +257,8 @@ sub _launchUnix {
 			# This prevents some lockups.
 			open(STDOUT, "> /dev/null");
 			open(STDERR, "> /dev/null");
+			POSIX::setsid();
 		}
-		POSIX::setsid();
 
 		if ($detach) {
 			# This creates a zombie process when the child exits.

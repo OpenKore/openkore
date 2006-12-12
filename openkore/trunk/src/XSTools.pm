@@ -60,7 +60,7 @@ sub boot {
 #
 # Throws XSTools::LoadException when this module cannot be loaded.
 sub bootModule {
-	my $module = shift;
+	my ($module) = @_;
 	my $symbolName = $module;
 	$symbolName =~ s/::/__/;
 	$symbolName = "boot_$symbolName";
