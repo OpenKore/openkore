@@ -24,6 +24,7 @@
 #
 # __start() unless defined $ENV{INTERPRETER};
 use strict;
+use Config;
 
 if ($^O ne 'MSWin32') {
 	# We are not on Windows, so tell the user about it
@@ -49,7 +50,6 @@ if (0) {
 	require bytes;
 	require lib;
 	require integer;
-	require Config;
 	require warnings;
 	require Exporter;
 	require Fcntl;
@@ -83,6 +83,8 @@ if (0) {
 $0 = PerlApp::exe() if ($PerlApp::TOOL eq "PerlApp");
 if ($0 =~ /\.exe$/i) {
 	$ENV{INTERPRETER} = $0;
+} else {
+	$ENV{INTERPRETER} = $Config{perlpath};
 }
 if ($0 =~ /wxstart\.exe$/i) {
 	$ENV{OPENKORE_DEFAULT_INTERFACE} = 'Wx';

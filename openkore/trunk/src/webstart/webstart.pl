@@ -59,11 +59,16 @@ sub __start {
 	} else {
 		require Utils::PerlLauncher;
 		my $launcher = new PerlLauncher(undef, "openkore.pl", @ARGV);
-		$launcher->launch(0);
-		while ($launcher->check()) {
-			sleep 0.5;
+		if ($^O eq 'MSWin32') {
+			eval 'use Win32::Console; Win32::Console->new(STD_OUTPUT_HANDLE)->Free();';
+			$launcher->launch(1);
+		} else {
+			$launcher->launch(0);
+			while ($launcher->check()) {
+				sleep 0.5;
+			}
+			exit $launcher->getExitCode();
 		}
-		exit $launcher->getExitCode();
 	}
 }
 
