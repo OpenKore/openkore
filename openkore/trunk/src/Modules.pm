@@ -155,7 +155,8 @@ sub reloadFile {
 
 	$msg->(Translation::TF("Checking %s for errors...\n", $filename), "info");
 
-	system($Config{perlpath}, '-I', "$FindBin::RealBin/src", '-c', "$path/$filename");
+	system($Config{perlpath}, '-I', "$FindBin::RealBin/src",,
+		'-I', "$FindBin::RealBin/src/deps", '-c', "$path/$filename");
 	if ($? == -1) {
 		$err->(Translation::TF("Failed to execute %s\n", $Config{'perlpath'}));
 		return;

@@ -1686,10 +1686,10 @@ sub character_status {
 
 sub chat_created {
 	my ($self, $args) = @_;
-	
-	$currentChatRoom = "new";
-	$chatRooms{new} = {%createdChatRoom};
-	binAdd(\@chatRoomsID, "new");
+
+	$currentChatRoom = $accountID;
+	$chatRooms{$accountID} = {%createdChatRoom};
+	binAdd(\@chatRoomsID, $accountID);
 	binAdd(\@currentChatRoomUsers, $char->{name});
 	message T("Chat Room Created\n");
 }
