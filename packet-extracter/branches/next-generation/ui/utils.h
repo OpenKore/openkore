@@ -27,12 +27,15 @@
 /**
  * Create a recvpackets.txt.
  *
- * @param file   The file to write the contents to.
- * @param length The PacketLengthMap which contains the packet lengths.
+ * @param file       The file to write the contents to.
+ * @param length     The PacketLengthMap which contains the packet lengths.
+ * @param alphaSort  Whether the packets in the text file should be sorted alphabetically
+ *                   according to packet identifier, or sorted according to the order they
+ *                   appear in the disassembled source.
  * @require file.IsOpened()
  * @ensure  file.IsOpened()
  */
-void createRecvpackets(wxFFile &file, PacketLengthMap &lengths);
+void createRecvpackets(wxFFile &file, PacketLengthMap &lengths, bool alphaSort = true);
 
 /**
  * Find the location of our objdump program.
