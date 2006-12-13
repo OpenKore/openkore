@@ -220,7 +220,7 @@ View::saveRecvpackets(PacketLengthAnalyzer &analyzer) {
 			return;
 		}
 
-		createRecvpackets(file, analyzer.getPacketLengths());
+		createRecvpackets(file, analyzer.getPacketLengths(), alphaSort->GetValue());
 		file.Close();
 	}
 }

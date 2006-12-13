@@ -23,6 +23,11 @@
 #include "packet-length-analyzer.h"
 #include "utils.h"
 
+PacketInfo::PacketInfo(unsigned int length, unsigned int index) {
+	this->length = length;
+	this->index = index;	
+}
+
 PacketLengthAnalyzer::PacketLengthAnalyzer()
 	: packetLengthFunctionStart(wxS("push   ebp"), wxRE_NOSUB),
 	  packetLengthFunctionEnd  (wxS("ret "), wxRE_NOSUB),
@@ -33,9 +38,14 @@ PacketLengthAnalyzer::PacketLengthAnalyzer()
 	state = FINDING_PACKET_LENGTH_FUNCTION;
 	ebx = 0;
 	progress = 0;
+	counter = 0;
 }
 
 PacketLengthAnalyzer::~PacketLengthAnalyzer() {
+	PacketLengthMap::iterator it;
+	for (it = lengths.begin(); it != lengths.end(); it++) {
+		delete it->second;
+	}
 }
 
 void
@@ -209,7 +219,15 @@ PacketLengthAnalyzer::analyzeLine(const wxString &line) {
 				setFailed(wxS("Packet length instruction encountered "
 					  "but no packet switch instruction encountered."));
 			} else {
-				lengths[packetSwitch] = len;
+				PacketLengthMap::iterator it;
+				
+				it = lengths.find(packetSwitch);
+				if (it == lengths.end()) {
+					lengths[packetSwitch] = new PacketInfo(len, counter);
+					counter++;
+				} else {
+					it->second->length = len;
+				}
 			}
 		}
 

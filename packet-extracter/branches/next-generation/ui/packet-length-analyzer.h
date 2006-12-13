@@ -26,7 +26,21 @@
 #include <wx/hashmap.h>
 #include "linehandler.h"
 
-WX_DECLARE_STRING_HASH_MAP(unsigned int, PacketLengthMap);
+/**
+ * Class which contains the length for a packet. Also contains an index of the
+ * packet, in the order as it appears in the assembly source.
+ */
+class PacketInfo {
+public:
+	unsigned int length;
+	/**
+	 * @invariant index < PacketLengthAnalyzer.lengths.size()
+	 */
+	unsigned int index;
+	PacketInfo(unsigned int length, unsigned int index);
+};
+
+WX_DECLARE_STRING_HASH_MAP(PacketInfo *, PacketLengthMap);
 
 /**
  * This class extracts packet lengths by analyzing the RO client's
@@ -86,6 +100,7 @@ private:
 	State state;
 	wxString error;
 	double progress;
+	unsigned int counter;
 
 	// Regular expressions
 	wxRegEx packetLengthFunctionStart;

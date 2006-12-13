@@ -18,7 +18,9 @@
  */
 
 #include <wx/filename.h>
+#include <stdlib.h>
 #include <limits.h>
+#include <algorithm>
 #include "utils.h"
 #ifdef WIN32
 	#include <windows.h>
@@ -28,20 +30,24 @@
 #endif
 
 void
-createRecvpackets(wxFFile &file, PacketLengthMap &lengths) {
+createRecvpackets(wxFFile &file, PacketLengthMap &lengths, bool alphaSort) {
 	PacketLengthMap::iterator it;
 	wxArrayString packets;
 
+	packets.Add(wxT(""), lengths.size());
 	for (it = lengths.begin(); it != lengths.end(); it++) {
 		wxString packet = it->first;
-		packets.Add(packet);
+		PacketInfo *info = it->second;
+		packets[info->index] = packet;
 	}
-	packets.Sort();
+	if (alphaSort) {
+		packets.Sort();
+	}
 
 	for (size_t i = 0; i < packets.GetCount(); i++) {
 		wxString &packet = packets[i];
 		wxString line = wxString::Format(
-			wxT("%s %d\n"), packet.c_str(), lengths[packet]);
+			wxT("%s %d\n"), packet.c_str(), lengths[packet]->length);
 		file.Write(line);
 	}
 }
