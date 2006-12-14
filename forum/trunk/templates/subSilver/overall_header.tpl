@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Style-Type" content="text/css">
 {META}
 {NAV_LINKS}
-<title>{SITENAME} :: {PAGE_TITLE}</title>
+<title>{PAGE_TITLE} :: {SITENAME}</title>
 <link rel="stylesheet" href="templates/subSilver/{T_HEAD_STYLESHEET}" type="text/css">
 <link href="http://www.openkore.com/include/openkore-topbar.css" media="screen" rel="stylesheet" type="text/css">
 <link href="http://www.openkore.com/include/statcounter.css" media="screen" rel="stylesheet" type="text/css">
