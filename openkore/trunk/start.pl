@@ -90,14 +90,19 @@ if ($PerlApp::TOOL eq "PerlApp") {
 	}
 }
 
-my (%sys, $file);
-parseSysConfig("control\\sys.txt");
-if ($sys{enableWebstart} eq '' || $sys{enableWebstart}) {
+my ($runWebstart, $file);
+if (@ARGV == 0) {
+	my %sys;
+	parseSysConfig("control\\sys.txt", \%sys);
+	if ($sys{enableWebstart} eq '' || $sys{enableWebstart}) {
+		$runWebstart = 1;
+	}
+}
+if ($runWebstart) {
 	$file = "src\\webstart\\webstart.pl";
 } else {
 	$file = "openkore.pl";
 }
-undef %sys;
 
 if ($ARGV[0] eq '!') {
 	shift;
@@ -130,7 +135,7 @@ if ($@) {
 
 
 sub parseSysConfig {
-	my ($file) = @_;
+	my ($file, $sys) = @_;
 	my $f;
 	return if (!open($f, "<:utf8", $file));
 
@@ -142,7 +147,7 @@ sub parseSysConfig {
 		next if ($line eq '' || $line =~ /^#/);
 
 		($key, $val) = split / /, $line, 2;
-		$sys{$key} = $val;
+		$sys->{$key} = $val;
 	}
 	close $f;
 }
