@@ -79,8 +79,8 @@ sub request {
 				Settings::writeSysConfig();
 			}
 		} else {
-			$lang = "en";
-			Translation::initDefault("$RealBin/../po");
+			$lang = $sys{locale} || "en";
+			Translation::initDefault("$RealBin/../po", $lang);
 		}
 		printTemplate($process, "$RealBin/actions.html", {
 			startMessage     => T("Start OpenKore"),
