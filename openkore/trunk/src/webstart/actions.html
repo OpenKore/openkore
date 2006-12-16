@@ -42,15 +42,25 @@
 		touch("/ping");
 		setTimeout("ping()", 20000);
 	}
+	
+	function changeWebstartEnable() {
+		var enabled;
+		if ($('enable-box').checked) {
+			enabled = 0;
+		} else {
+			enabled = 1;
+		}
+		touch("/enable?e=" + enabled);
+	}
 	//-->
 	</script>
 </head>
 
 <body onload="ping()">
 
-<table cellspacing="0" cellpadding="0">
+<table cellspacing="0" cellpadding="0" id="table">
 <tr>
-<td style="width: 100%">
+<td>
 	<ul id="languages">
 	<li><a href="javascript:void(switchLanguage('en'))">English</a></li>
 	<li><a href="javascript:void(switchLanguage('tl'))">Tagalog</a></li>
@@ -68,10 +78,10 @@
 	<li id="starting" style="display: none">
 		<a href="javascript:void()">
 		<img src="starting.gif" alt="" width="48" height="48">
-		<b id="start">{$startingMessage}</b>
+		<b>{$startingMessage}</b>
 		</a>
 	</li>
-	<li id="start">
+	<li>
 		<a href="javascript:void(configure())">
 		<img src="configure.png" alt="" width="48" height="48">
 		<b>{$configureMessage}</b>
@@ -90,6 +100,15 @@
 		</a>
 	</li>
 	</ul>
+
+	<div id="enable-div">
+	<form action="javascript:void()" method="get">
+	<div>
+		<input type="checkbox" id="enable-box" onclick="changeWebstartEnable()">
+		<label for="enable-box">Do not display this web page again.</label>
+	</div>
+	</form>
+	</div>
 </td>
 </tr>
 </table>

@@ -195,19 +195,58 @@ sub parseArguments {
 }
 
 sub parseSysConfig {
-	my $f;
-	return if (!open($f, "< $control_folder/sys.txt"));
+	_processSysConfig(0);
+}
 
-	foreach (<$f>) {
-		my ($key, $val);
-		s/[\r\n]//g;
+sub writeSysConfig {
+	_processSysConfig(1);
+}
 
-		next if ($_ eq '' || /^#/);
+sub _processSysConfig {
+	my ($writeMode) = @_;
+	my ($f, @lines, %keysNotWritten);
+	return if (!open($f, "<:utf8", "$control_folder/sys.txt"));
+	
+	if ($writeMode) {
+		foreach my $key (keys %sys) {
+			$keysNotWritten{$key} = 1;
+		}
+	}
 
-		($key, $val) = split / /, $_, 2;
-		$sys{$key} = $val;
+	while (!eof($f)) {
+		my ($line, $key, $val);
+		$line = <$f>;
+		$line =~ s/[\r\n]//g;
+
+		if ($line eq '' || $line =~ /^#/) {
+			if ($writeMode) {
+				push @lines, $line;
+			} else {
+				next;
+			}
+		}
+
+		($key, $val) = split / /, $line, 2;
+		if ($writeMode) {
+			if (exists $sys{$key}) {
+				push @lines, "$key $sys{$key}";
+				delete $keysNotWritten{$key};
+			}
+		} else {
+			$sys{$key} = $val;
+		}
 	}
 	close $f;
+
+	if ($writeMode && open($f, ">:utf8", "$control_folder/sys.txt")) {
+		foreach my $line (@lines) {
+			print $f "$line\n";
+		}
+		foreach my $key (keys %keysNotWritten) {
+			print $f "$key $sys{$key}\n";
+		}
+		close $f;
+	}
 }
 
 
