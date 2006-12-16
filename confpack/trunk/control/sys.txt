@@ -43,3 +43,6 @@ panelTwo_fontsize 8
 
 ###### Miscellaneous ######
 sendAnonymousStatisticReport 1
+
+# It is recommended that you leave enableWebstart to 1!
+enableWebstart 1
