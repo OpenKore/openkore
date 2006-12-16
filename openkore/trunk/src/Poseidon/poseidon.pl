@@ -19,7 +19,7 @@
 use strict;
 use FindBin qw($RealBin);
 use lib "$RealBin/..";
-use lib "$RealBin/src";
+use lib "$RealBin/../deps";
 use Time::HiRes qw(time sleep);
 use Poseidon::RagnarokServer;
 use Poseidon::QueryServer;
