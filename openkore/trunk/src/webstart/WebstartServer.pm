@@ -88,6 +88,7 @@ sub request {
 			configureMessage => T("Configure"),
 			helpMessage      => T("Help! It doesn't work!"),
 			newsMessage      => T("OpenKore News"),
+			enableMessage    => T("Do not display this web page again."),
 			product          => encode_entities(urlencode($Settings::NAME)),
 			version          => encode_entities(urlencode($Settings::VERSION)),
 			lang             => encode_entities(urlencode($lang))
