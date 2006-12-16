@@ -25,8 +25,12 @@ sub __start {
 	chdir(File::Spec->catfile($RealBin, "..", ".."));
 
 	if (@ARGV == 0) {
+		require Settings;
 		require WebstartServer;
 		use Time::HiRes qw(time sleep);
+
+		Settings::parseArguments();
+		Settings::parseSysConfig();
 
 		my $server;
 		our $timeout = time;

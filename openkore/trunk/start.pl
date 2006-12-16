@@ -23,6 +23,8 @@
 # }
 #
 # __start() unless defined $ENV{INTERPRETER};
+package StarterScript;
+
 use strict;
 use Config;
 
@@ -80,17 +82,22 @@ if (0) {
 	require HTML::Entities;
 }
 
-$0 = PerlApp::exe() if ($PerlApp::TOOL eq "PerlApp");
-if ($0 =~ /\.exe$/i) {
-	$ENV{INTERPRETER} = $0;
-} else {
-	$ENV{INTERPRETER} = $Config{perlpath};
-}
-if ($0 =~ /wxstart\.exe$/i) {
-	$ENV{OPENKORE_DEFAULT_INTERFACE} = 'Wx';
+
+if ($PerlApp::TOOL eq "PerlApp") {
+	$ENV{INTERPRETER} = PerlApp::exe();
+	if (PerlApp::exe() =~ /wxstart\.exe$/i) {
+		$ENV{OPENKORE_DEFAULT_INTERFACE} = 'Wx';
+	}
 }
 
-my $file = "src\\webstart\\webstart.pl";
+my (%sys, $file);
+parseSysConfig("control\\sys.txt");
+if ($sys{enableWebstart} eq '' || $sys{enableWebstart}) {
+	$file = "src\\webstart\\webstart.pl";
+} else {
+	$file = "openkore.pl";
+}
+undef %sys;
 
 if ($ARGV[0] eq '!') {
 	shift;
@@ -107,12 +114,35 @@ if ($ARGV[0] eq '!') {
 
 $0 = $file;
 FindBin::again();
-do $file;
+
+{
+	package main;
+	do $file;
+}
 if ($@) {
 	print $@;
 	print "\nPress ENTER to exit.\n";
 	<STDIN>;
 	exit 1;
-} else {
+} elsif (defined $ENV{INTERPRETER}) {
 	main::__start() if defined(&main::__start);
+}
+
+
+sub parseSysConfig {
+	my ($file) = @_;
+	my $f;
+	return if (!open($f, "<:utf8", $file));
+
+	while (!eof($f)) {
+		my ($line, $key, $val);
+		$line = <$f>;
+		$line =~ s/[\r\n]//g;
+
+		next if ($line eq '' || $line =~ /^#/);
+
+		($key, $val) = split / /, $line, 2;
+		$sys{$key} = $val;
+	}
+	close $f;
 }

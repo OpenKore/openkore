@@ -1,12 +1,13 @@
 package WebstartServer;
 
+use strict;
 use Base::WebServer;
 use base qw(Base::WebServer);
 use Utils::PerlLauncher;
 use Time::HiRes qw(time);
 use FindBin qw($RealBin);
 use Translation qw(T);
-use Settings;
+use Settings qw(%sys);
 use Utils qw(urlencode);
 use HTML::Entities;
 use File::Spec;
@@ -57,12 +58,12 @@ sub printTemplate {
 sub request {
 	my ($self, $process) = @_;
 
-	if (!$consoleHidden && $^O eq 'MSWin32') {
+	if (!main::DEBUG && !$consoleHidden && $^O eq 'MSWin32') {
 		# Hide console upon first HTTP request.
 		eval 'use Win32::Console; Win32::Console->new(STD_OUTPUT_HANDLE)->Free();';
 		$consoleHidden = 1;
 	}
-	
+
 	$process->header("Cache-Control", "no-cache, no-store");
 	if ($process->file eq '/') {
 		printTemplate($process, "$RealBin/frame.html", {
@@ -73,7 +74,10 @@ sub request {
 	} elsif ($process->file eq '/actions.html') {
 		my $lang = $process->GET->{lang};
 		if ($lang =~ /^[a-z]+$/) {
-			Translation::initDefault("$RealBin/../po", $lang);
+			if (Translation::initDefault("$RealBin/../po", $lang)) {
+				$sys{locale} = $lang;
+				Settings::writeSysConfig();
+			}
 		} else {
 			$lang = "en";
 			Translation::initDefault("$RealBin/../po");
@@ -102,6 +106,11 @@ sub request {
 
 	} elsif ($process->file eq '/configure') {
 		Utils::Win32::ShellExecute(0, undef, File::Spec->catfile($RealBin, "..", "..", "control"));
+		$process->shortResponse('');
+
+	} elsif ($process->file eq '/enable') {
+		$sys{enableWebstart} = $process->GET->{e};
+		Settings::writeSysConfig();
 		$process->shortResponse('');
 
 	} else {

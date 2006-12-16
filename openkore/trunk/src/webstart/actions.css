@@ -6,13 +6,15 @@ body {
 	font-size: 14px;
 }
 
-table {
+#table {
 	width: 100%;
 	padding: 16px;
+	padding-bottom: 0;
 }
 
-table td {
+#table > tr > td {
 	vertical-align: middle;
+	width: 100%;
 }
 
 a {
@@ -36,6 +38,7 @@ a:hover {
 	margin: 0;
 	padding: 0;
 	margin-right: 16px;
+	margin-bottom: 16px;
 }
 
 #menu li img, #menu li .img {
@@ -63,4 +66,17 @@ a:hover {
 #languages li {
 	display: inline;
 	margin-right: 1em;
+}
+
+#enable-div {
+	margin-bottom: 16px;
+	clear: left;
+	font-size: 12px;
+	color: #777777;
+	vertical-align: middle;
+}
+
+#enable-div form {
+	margin: 0;
+	padding: 0;
 }

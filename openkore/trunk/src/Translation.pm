@@ -44,8 +44,11 @@ use constant DEFAULT_PODIR => "$RealBin/src/po";
 # src/auto/XSTools/translation/wrapper.xs
 
 ##
-# void Translation::initDefault([String podir, String locale])
+# boolean Translation::initDefault([String podir, String locale])
 # Ensures: Translation::T() and Translation::TF() will be usable.
+# Returns: Whether initialization succeeded. It is not fatal if
+#          initialization failed: this module will automatically
+#          fallback to using the original (English) strings.
 #
 # Initialize the default translation object. Translation::T() and
 # Translation::TF() will only be usable after calling this function once.
@@ -53,6 +56,7 @@ sub initDefault {
 	my ($podir, $locale) = @_;
 	$podir = DEFAULT_PODIR if (!defined $podir);
 	$_translation = _load(_autodetect($podir, $locale));
+	return defined $_translation;
 }
 
 ##
