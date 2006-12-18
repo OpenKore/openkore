@@ -54,7 +54,7 @@
 			<td><a href="http://forums.openkore.com/" title="International forum"><img src="images/international.png" width="24" height="24" alt="">International</a></td>
 			<td><a href="http://www.openkore.de/" title="Deutsche forum"><img src="images/germany.png" width="24" height="24" alt="">Deutsch</a></td>
 			<td><a href="http://www.openkore-brasil.com/" title="Brazilian forum"><img src="images/brazil.png" width="24" height="24" alt="">Brazil</a></td>
-			<td><a href="http://www.rofan.ru/" title="Росия"><img src="/images/russia.png" width="24" height="24" alt="">Росия</a></td><!-- kLabMouse -->
+			<td><a href="http://www.rofan.ru/" title="Россия"><img src="/images/russia.png" width="24" height="24" alt="">Россия</a></td><!-- kLabMouse -->
 			<td><a href="http://ro.yyro.com/" title="中文"><img src="images/chinese.png" width="24" height="24" alt="">中文</a></td><!-- lkm -->
 		</tr>
 		<tr>
