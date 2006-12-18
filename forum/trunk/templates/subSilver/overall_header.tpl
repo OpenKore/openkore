@@ -12,7 +12,7 @@
 <link href="http://www.openkore.com/include/independent.css" media="screen" rel="stylesheet" type="text/css">
 <!-- Fix broken PNG transparency and CSS support for IE/Win5-6+ -->
 <!--[if gte IE 5.5000]>
-<script type="text/javascript" src="/include/pngfix.js"></script>
+<script type="text/javascript" src="http://www.openkore.com/include/pngfix.js"></script>
 <link href="http://www.openkore.com/include/iefixes.css" media="screen" rel="stylesheet" type="text/css">
 <![endif]-->
 
@@ -52,16 +52,17 @@
 		<table id="openkore_navigation_language_bar" cellspacing="0" cellpadding="0">
 		<tr>
 			<td><a href="http://forums.openkore.com/" title="International forum"><img src="images/international.png" width="24" height="24" alt="">International</a></td>
+			<td><a href="http://www.openkore.de/" title="Deutsche forum"><img src="images/germany.png" width="24" height="24" alt="">Deutsch</a></td>
 			<td><a href="http://www.openkore-brasil.com/" title="Brazilian forum"><img src="images/brazil.png" width="24" height="24" alt="">Brazil</a></td>
-			<td><a href="http://www.d-bests.com/" title="Indonesian forum"><img src="images/indonesia.png" width="24" height="24" alt="">Indonesia</a></td>
-			<td><a href="http://www.openkore-thailand.com/" title="ภาษาไทย"><img src="/images/thailand.png" width="24" height="24" alt="">ภาษาไทย</a></td><!-- abt123 -->
+			<td><a href="http://www.rofan.ru/" title="Росия"><img src="/images/russia.png" width="24" height="24" alt="">Росия</a></td><!-- abt123 -->
 			<td><a href="http://ro.yyro.com/" title="中文"><img src="images/chinese.png" width="24" height="24" alt="">中文</a></td><!-- lkm -->
 		</tr>
 		<tr>
 			<td><a href="http://darkmoon.ath.cx/" title="Filipino forum"><img src="images/philippines.png" width="24" height="24" alt="">Philippines</a></td>
+			<td><a href="http://openkore-fr.ath.cx/" title="Forum Français"><img src="images/france.png" width="24" height="24" alt="">Français</a></td> <!-- Tic Or Tac -->
 			<td><a href="http://www.openkore-hispano.uni.cc/" title="Hispano"><img src="images/spain.png" width="24" height="24" alt="">Hispano</a></td>
-			<td><a href="http://www.openkore.de/" title="Deutsch"><img src="images/germany.png" width="24" height="24" alt="">Deutsch</a></td>
 			<td><a href="http://openkore.dnip.net" title="한국"><img src="/images/korea.png" width="24" height="24" alt="">한국</a></td>
+			<td><a href="http://www.openkore-thailand.com/" title="ภาษาไทย"><img src="/images/thailand.png" width="24" height="24" alt="">ภาษาไทย</a></td><!-- abt123 -->
 		</tr>
 		</table>
 
