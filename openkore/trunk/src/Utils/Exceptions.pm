@@ -38,12 +38,12 @@ use Exception::Class (
 our @EXPORT = qw(caught);
 
 ##
-# Object caught(class)
-# exception: The class name of an exception object.
+# Object caught(class1, [class2, class3, ...])
+# classN: The class name of an exception object.
 #
-# Checks whether the currently caught exception ($@) is of type $class.
-# Returns $@ if it is, undef otherwise. This function is allows you to
-# write in try-catch-style syntax.
+# Checks whether the currently caught exception ($@) is one of the types
+# specified in the parameters. Returns $@ if it is, undef otherwise. This
+# function is allows you to write in try-catch-style syntax.
 #
 # This symbol is exported by default.
 #
@@ -55,14 +55,20 @@ our @EXPORT = qw(caught);
 #     print "SomeException caught: " . $e->error . "\n";
 # } elsif (my $e = caught("OtherException")) {
 #     print "OtherException caught: " . $e->error . "\n";
+# } elsif (my $e = caught("YetAnotherException1", "YetAnotherException2")) {
+#     print "Caught YetAnotherException1 or YetAnotherException1.\n";
 # } elsif ($@) {
 #     # Rethrow exception.
 #     die $@;
 # }
 sub caught {
-    my $e = $@;
-    return unless Scalar::Util::blessed($e) && $e->isa( $_[0] );
-    return $e;
+	my $e = $@;
+	foreach my $class (@_) {
+		if (UNIVERSAL::isa($e, $class)) {
+			return $e;
+		}
+	}
+	return undef;
 }
 
 1;

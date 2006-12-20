@@ -26,7 +26,7 @@ use AI;
 use Actor;
 use Log qw(message debug warning);
 use Translation qw(T TF);
-use Network::Send;
+use Network::Send ();
 use Misc;
 use Utils;
 use Utils::Benchmark;
@@ -384,7 +384,7 @@ sub main {
 	} elsif (!$cleanMonster) {
 		# Drop target if it's already attacked by someone else
 		message T("Dropping target - you will not kill steal others\n"), "ai_attack";
-		sendMove($realMyPos->{x}, $realMyPos->{y});
+		$messageSender->sendMove($realMyPos->{x}, $realMyPos->{y});
 		AI::dequeue;
 		if ($config{teleportAuto_dropTargetKS}) {
 			message T("Teleporting due to dropping attack target\n"), "teleport";
@@ -564,7 +564,7 @@ sub main {
 				#check if item needs to be equipped
 				Actor::Item::scanConfigAndEquip("attackEquip");
 			} else {
-				sendAttack($net, $ID,
+				$messageSender->sendAttack($ID,
 					($config{'tankMode'}) ? 0 : 7);
 				$timeout{ai_attack}{time} = time;
 				delete $args->{attackMethod};

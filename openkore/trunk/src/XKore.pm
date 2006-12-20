@@ -20,48 +20,47 @@ use Exporter;
 use IO::Socket::INET;
 use Time::HiRes qw(time usleep);
 use Win32;
-use Translation;
+use Class::Exception ('XKore::CannotStart');
 
 use Globals;
 use Log qw(message error);
 use Utils::Win32;
-use Network::Send;
+use Network::Send ();
 use Utils qw(dataWaiting timeOut);
+use Translation;
 
 
 ##
 # XKore->new()
 #
-# Initialize X-Kore mode. If an error occurs, this function will return undef,
-# and set the error message in $@.
+# Initialize X-Kore mode. Throws XKore::CannotStart on error.
 sub new {
 	my $class = shift;
 	my $port = 2350;
-	my %self;
+	my $self = bless {}, $class;
 
 	undef $@;
-	$self{server} = new IO::Socket::INET->new(
+	$self->{server} = new IO::Socket::INET->new(
 		Listen		=> 5,
 		LocalAddr	=> 'localhost',
 		LocalPort	=> $port,
 		Proto		=> 'tcp');
 	if (!$self{server}) {
-		$@ = TF("Unable to start the X-Kore server.\n" . 
+		XKore::CannotStart->throw(error => TF("Unable to start the X-Kore server.\n" . 
 			"You can only run one X-Kore session at the same time.\n" . 
-			"And make sure no other servers are running on port %s.\n", $port);
-		return undef;
+			"And make sure no other servers are running on port %s.\n", $port));
 	}
 
-	$self{incomingPackets} = "";
-	$self{serverPackets} = "";
-	$self{clientPackets} = "";
+	$self->{incomingPackets} = "";
+	$self->{serverPackets} = "";
+	$self->{clientPackets} = "";
 
 	$packetParser = Network::Receive->create($config{serverType});
+	$messageSender = Network::Send->create($self, $config{serverType});
 
 	message T("X-Kore mode intialized.\n"), "startup";
 
-	bless \%self, $class;
-	return \%self;
+	return $self;
 }
 
 ##

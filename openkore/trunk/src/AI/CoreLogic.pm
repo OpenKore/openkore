@@ -28,7 +28,7 @@ use encoding 'utf8';
 
 use Globals;
 use Log qw(message warning error debug);
-use Network::Send;
+use Network::Send ();
 use Settings;
 use AI;
 use AI::Homunculus;
@@ -243,17 +243,17 @@ sub processGetPlayerInfo {
 
 		foreach (keys %monsters) {
 			if ($monsters{$_}{'name'} =~ /Unknown/) {
-				sendGetPlayerInfo($net, $_);
+				$messageSender->sendGetPlayerInfo($_);
 				last;
 			}
 			if ($monsters{$_}{'name_given'} =~ /Unknown/) {
-				sendGetPlayerInfo($net, $_);
+				$messageSender->sendGetPlayerInfo($_);
 				last;
 			}
 		}
 		foreach (keys %pets) {
 			if ($pets{$_}{'name_given'} =~ /Unknown/) {
-				sendGetPlayerInfo($net, $_);
+				$messageSender->sendGetPlayerInfo($_);
 				last;
 			}
 		}
@@ -264,7 +264,7 @@ sub processGetPlayerInfo {
 sub processMisc {
 	if (timeOut($timeout{ai_sync})) {
 		$timeout{ai_sync}{time} = time;
-		sendSync($net);
+		$messageSender->sendSync();
 	}
 
 	if (timeOut($char->{muted}, $char->{mute_period})) {
@@ -342,7 +342,7 @@ sub processClientSuspend {
 sub processLook {
 	if (AI::action eq "look" && timeOut($timeout{'ai_look'})) {
 		$timeout{'ai_look'}{'time'} = time;
-		sendLook($net, AI::args->{'look_body'}, AI::args->{'look_head'});
+		$messageSender->sendLook(AI::args->{'look_body'}, AI::args->{'look_head'});
 		AI::dequeue;
 	}
 }
@@ -407,14 +407,14 @@ sub processNPCTalk {
 
 		# Cancel conversation only if NPC is still around; otherwise
 		# we could get disconnected.
-		sendTalkCancel($net, $args->{ID}) if $npcs{$args->{ID}};;
+		$messageSender->sendTalkCancel($args->{ID}) if $npcs{$args->{ID}};;
 		AI::dequeue;
 
 	} elsif (timeOut($args->{time}, $timeout{'ai_npcTalk'}{'timeout'})) {
 		# If NPC does not respond before timing out, then by default, it's
 		# a failure
 		error T("NPC did not respond.\n"), "ai_npcTalk";
-		sendTalkCancel($net, $args->{ID});
+		$messageSender->sendTalkCancel($args->{ID});
 		AI::dequeue;
 
 	} elsif (timeOut($ai_v{'npc_talk'}{'time'}, 0.25)) {
@@ -436,35 +436,35 @@ sub processNPCTalk {
 			$ai_v{'npc_talk'}{'time'} = time + $time;
 			$args->{time} = time + $time;
 		} elsif ( $args->{steps}[0] =~ /^t=(.*)/i ) {
-			sendTalkText($net, $args->{ID}, $1);
+			$messageSender->sendTalkText($args->{ID}, $1);
 		} elsif ( $args->{steps}[0] =~ /^a=(.*)/i ) {
 			$ai_v{'npc_talk'}{'time'} = time + 1;
 			$args->{time} = time + 1;
 			Commands::run("$1");
 		} elsif ($args->{steps}[0] =~ /d(\d+)/i) {
-			sendTalkNumber($net, $args->{ID}, $1);
+			$messageSender->sendTalkNumber($args->{ID}, $1);
 		} elsif ( $args->{steps}[0] =~ /x/i ) {
 			if (!$args->{monster}) {
-				sendTalk($net, $args->{ID});
+				$messageSender->sendTalk($args->{ID});
 			} else {
-				sendAttack($net, $args->{ID}, 0);
+				$messageSender->sendAttack($args->{ID}, 0);
 			}
 		} elsif ( $args->{steps}[0] =~ /c/i ) {
-			sendTalkContinue($net, $args->{ID});
+			$messageSender->sendTalkContinue($args->{ID});
 		} elsif ( $args->{steps}[0] =~ /r(\d+)/i ) {
-			sendTalkResponse($net, $args->{ID}, $1+1);
+			$messageSender->sendTalkResponse($args->{ID}, $1+1);
 		} elsif ( $args->{steps}[0] =~ /n/i ) {
-			sendTalkCancel($net, $args->{ID});
+			$messageSender->sendTalkCancel($args->{ID});
 			$ai_v{'npc_talk'}{'time'} = time;
 			$args->{time}	= time;
 		} elsif ( $args->{steps}[0] =~ /^b(\d+),(\d+)/i ) {
 			my $itemID = $storeList[$1]{nameID};
 			$ai_v{npc_talk}{itemID} = $itemID;
-			sendBuy($net, $itemID, $2);
+			$messageSender->sendBuy($itemID, $2);
 		} elsif ( $args->{steps}[0] =~ /b/i ) {
-			sendGetStoreList($net, $args->{ID});
+			$messageSender->sendGetStoreList($args->{ID});
 		} elsif ( $args->{steps}[0] =~ /s/i ) {
-			sendGetSellList($net, $args->{ID});
+			$messageSender->sendGetSellList($args->{ID});
 		} elsif ( $args->{steps}[0] =~ /e/i ) {
 			$ai_v{npc_talk}{talk} = 'close';
 		}
@@ -683,7 +683,7 @@ sub processSit {
 
 		} elsif (!$char->{sitting} && timeOut($timeout{ai_sit}) && timeOut($timeout{ai_sit_wait})) {
 			# Send the 'sit' packet every x seconds until we're sitting
-			sendSit($net);
+			$messageSender->sendSit();
 			$timeout{ai_sit}{time} = time;
 
 			look($config{sitAuto_look}) if (defined $config{sitAuto_look});
@@ -697,11 +697,11 @@ sub processDelayedTeleport {
 		if ($timeout{ai_teleport_delay}{time} && timeOut($timeout{ai_teleport_delay})) {
 			# We have already successfully used the Teleport skill,
 			# and the ai_teleport_delay timeout has elapsed
-			sendTeleport($net, AI::args->{lv} == 2 ? "$config{saveMap}.gat" : "Random");
+			$messageSender->sendTeleport(AI::args->{lv} == 2 ? "$config{saveMap}.gat" : "Random");
 			AI::dequeue;
 		} elsif (!$timeout{ai_teleport_delay}{time} && timeOut($timeout{ai_teleport_retry})) {
 			# We are still trying to use the Teleport skill
-			sendSkillUse($net, 26, $char->{skills}{AL_TELEPORT}{lv}, $accountID);
+			$messageSender->sendSkillUse(26, $char->{skills}{AL_TELEPORT}{lv}, $accountID);
 			$timeout{ai_teleport_retry}{time} = time;
 		}
 	}
@@ -715,7 +715,7 @@ sub processStand {
 			AI::dequeue;
 
 		} elsif (timeOut($timeout{ai_sit}) && timeOut($timeout{ai_stand_wait})) {
-			sendStand($net);
+			$messageSender->sendStand();
 			$timeout{ai_sit}{time} = time;
 		}
 	}
@@ -795,11 +795,11 @@ sub processSkillUse {
 
 				$args->{maxCastTime}{time} = time;
 				if ($skillsArea{$handle} == 2) {
-					sendSkillUse($net, $skillID, $args->{lv}, $accountID);
+					$messageSender->sendSkillUse($skillID, $args->{lv}, $accountID);
 				} elsif ($args->{x} ne "") {
-					sendSkillUseLoc($net, $skillID, $args->{lv}, $args->{x}, $args->{y});
+					$messageSender->sendSkillUseLoc($skillID, $args->{lv}, $args->{x}, $args->{y});
 				} else {
-					sendSkillUse($net, $skillID, $args->{lv}, $args->{target});
+					$messageSender->sendSkillUse($skillID, $args->{lv}, $args->{target});
 				}
 				undef $char->{permitSkill};
 				$args->{skill_use_last} = $char->{skills}{$handle}{time_used};
@@ -1058,7 +1058,7 @@ sub processMapRouteAI {
 				AI::dequeue;
 				if ($config{route_escape_unknownMap}) {
 					if ($config{route_escape_shout} ne "" && !defined($timeout{ai_route_escape}{time})){
-						sendMessage($net, "c", $config{route_escape_shout});
+						sendMessage("c", $config{route_escape_shout});
 					}
 					$timeout{ai_route_escape}{time} = time;
 					AI::queue("escape");
@@ -1175,7 +1175,7 @@ sub processMapRouteAI {
 					# Portal is within 'Enter Distance'
 					$timeout{'ai_portal_wait'}{'timeout'} = $timeout{'ai_portal_wait'}{'timeout'} || 0.5;
 					if ( timeOut($timeout{'ai_portal_wait'}) ) {
-						sendMove(int($args->{'mapSolution'}[0]{'pos'}{'x'}), int($args->{'mapSolution'}[0]{'pos'}{'y'}) );
+						$messageSender->sendMove(int($args->{'mapSolution'}[0]{'pos'}{'x'}), int($args->{'mapSolution'}[0]{'pos'}{'y'}) );
 						$timeout{'ai_portal_wait'}{'time'} = time;
 					}
 
@@ -1305,8 +1305,8 @@ sub processTake {
 			my $direction;
 			getVector(\%vec, $item->{pos}, $myPos);
 			$direction = int(sprintf("%.0f", (360 - vectorToDegree(\%vec)) / 45)) % 8;
-			sendLook($net, $direction, 0) if ($direction != $char->{look}{body});
-			sendTake($net, $ID);
+			$messageSender->sendLook($direction, 0) if ($direction != $char->{look}{body});
+			$messageSender->sendTake($ID);
 			$timeout{ai_take}{time} = time;
 		}
 	}
@@ -1341,7 +1341,7 @@ sub processMove {
 			# No update yet, send move request again.
 			# We do this every 0.5 secs
 			$AI::Timeouts::move_retry = time;
-			sendMove(AI::args->{move_to}{x}, AI::args->{move_to}{y});
+			$messageSender->sendMove(AI::args->{move_to}{x}, AI::args->{move_to}{y});
 		}
 	}
 }
@@ -1365,12 +1365,12 @@ sub processDeal {
 				(!$config{dealAuto_names} || existsInList($config{dealAuto_names}, $currentDeal{name})) &&
 			    ($config{dealAuto} == 2 ||
 				 $config{dealAuto} == 3 && $currentDeal{other_finalize})) {
-				sendDealAddItem(0, $currentDeal{'you_zenny'});
-				sendDealFinalize();
+				$messageSender->sendDealAddItem(0, $currentDeal{'you_zenny'});
+				$messageSender->sendDealFinalize();
 				$timeout{ai_dealAuto}{time} = time;
 			} elsif ($currentDeal{other_finalize} && $currentDeal{you_finalize} &&timeOut($timeout{ai_dealAuto}) && $config{dealAuto} >= 2 &&
 				(!$config{dealAuto_names} || existsInList($config{dealAuto_names}, $currentDeal{name}))) {
-				sendDealTrade($net);
+				$messageSender->sendDealTrade();
 				$timeout{ai_dealAuto}{time} = time;
 			}
 		} else {
@@ -1383,12 +1383,12 @@ sub processDealAuto {
 	# dealAuto 1=refuse 2,3=accept
 	if ($config{'dealAuto'} && %incomingDeal) {
 		if ($config{'dealAuto'} == 1 && timeOut($timeout{ai_dealAutoCancel})) {
-			sendDealCancel($net);
+			$messageSender->sendDealCancel();
 			$timeout{'ai_dealAuto'}{'time'} = time;
 		} elsif ($config{'dealAuto'} >= 2 &&
 			(!$config{dealAuto_names} || existsInList($config{dealAuto_names}, $incomingDeal{name})) &&
 			timeOut($timeout{ai_dealAuto})) {
-			sendDealAccept($net);
+			$messageSender->sendDealAccept();
 			$timeout{'ai_dealAuto'}{'time'} = time;
 		}
 	}
@@ -1402,7 +1402,7 @@ sub processPartyAuto {
 		} else {
 			message T("Auto-accepting party request\n");
 		}
-		sendPartyJoin($net, $incomingParty{'ID'}, $config{'partyAuto'} - 1);
+		$messageSender->sendPartyJoin($incomingParty{'ID'}, $config{'partyAuto'} - 1);
 		$timeout{'ai_partyAuto'}{'time'} = time;
 		undef %incomingParty;
 	}
@@ -1410,8 +1410,8 @@ sub processPartyAuto {
 
 sub processGuildAutoDeny {
 	if ($config{'guildAutoDeny'} && %incomingGuild && timeOut($timeout{'ai_guildAutoDeny'})) {
-		sendGuildJoin($net, $incomingGuild{'ID'}, 0) if ($incomingGuild{'Type'} == 1);
-		sendGuildAlly($net, $incomingGuild{'ID'}, 0) if ($incomingGuild{'Type'} == 2);
+		$messageSender->sendGuildJoin($incomingGuild{'ID'}, 0) if ($incomingGuild{'Type'} == 1);
+		$messageSender->sendGuildAlly($incomingGuild{'ID'}, 0) if ($incomingGuild{'Type'} == 2);
 		$timeout{'ai_guildAutoDeny'}{'time'} = time;
 		undef %incomingGuild;
 	}
@@ -1537,7 +1537,7 @@ sub processDead {
 	}
 
 	if (AI::action eq "dead" && $config{dcOnDeath} != -1 && time - $char->{dead_time} >= $timeout{ai_dead_respawn}{timeout}) {
-		sendRespawn($net);
+		$messageSender->sendRespawn();
 		$char->{'dead_time'} = time;
 	}
 
@@ -1558,7 +1558,7 @@ sub processStorageGet {
 		if (!$amount || $amount > $item->{amount}) {
 			$amount = $item->{amount};
 		}
-		sendStorageGet($item->{index}, $amount) if $storage{opened};
+		$messageSender->sendStorageGet($item->{index}, $amount) if $storage{opened};
 		AI::args->{time} = time;
 		AI::dequeue if !@{AI::args->{items}};
 	}
@@ -1577,7 +1577,7 @@ sub processCartAdd {
 			if (!$amount || $amount > $char->{inventory}[$i]{amount}) {
 				$amount = $char->{inventory}[$i]{amount};
 			}
-			sendCartAdd($char->{inventory}[$i]{index}, $amount);
+			$messageSender->sendCartAdd($char->{inventory}[$i]{index}, $amount);
 		}
 		shift @{AI::args->{items}};
 		AI::args->{time} = time;
@@ -1597,7 +1597,7 @@ sub processCartGet {
 			if (!$amount || $amount > $cart{inventory}[$i]{amount}) {
 				$amount = $cart{inventory}[$i]{amount};
 			}
-			sendCartGet($i, $amount);
+			$messageSender->sendCartGet($i, $amount);
 		}
 		shift @{AI::args->{items}};
 		AI::args->{time} = time;
@@ -1614,7 +1614,7 @@ sub processAutoMakeArrow {
 			my $item = $char->{inventory}[$arrowCraftID[$i]];
 			next if (!$item);
 			if ($arrowcraft_items{lc($item->{name})}) {
-				sendArrowCraft($net, $item->{nameID});
+				$messageSender->sendArrowCraft($item->{nameID});
 				debug "Making item\n", "ai_makeItem";
 				last;
 			}
@@ -1824,7 +1824,7 @@ sub processAutoStorage {
 						}
 						undef $args->{done};
 						$args->{lastIndex} = $item->{index};
-						sendStorageAdd($item->{index}, $item->{amount} - $control->{keep});
+						$messageSender->sendStorageAdd($item->{index}, $item->{amount} - $control->{keep});
 						$timeout{ai_storageAuto}{time} = time;
 						$args->{nextItem} = $i + 1;
 						return;
@@ -1852,7 +1852,7 @@ sub processAutoStorage {
 						}
 						undef $args->{done};
 						$args->{cartLastIndex} = $item->{index};
-						sendStorageAddFromCart($item->{index}, $item->{amount} - $control->{keep});
+						$messageSender->sendStorageAddFromCart($item->{index}, $item->{amount} - $control->{keep});
 						$timeout{ai_storageAuto}{time} = time;
 						$args->{cartNextItem} = $i + 1;
 						return;
@@ -1903,7 +1903,7 @@ sub processAutoStorage {
 					# Try at most 3 times to get the item
 					if (($item{amount_get} > 0) && ($args->{retry} < 3)) {
 						message TF("Attempt to get %s x %s from storage, retry: %s\n", $item{amount_get}, $item{name}, $ai_seq_args[0]{retry}), "storage", 1;
-						sendStorageGet($item{storage}{index}, $item{amount_get});
+						$messageSender->sendStorageGet($item{storage}{index}, $item{amount_get});
 						$timeout{ai_storageAuto}{time} = time;
 						$args->{retry}++;
 						return;
@@ -1935,7 +1935,7 @@ sub processAutoStorage {
 				Misc::checkValidity("AutoStorage part 4");
 			}
 
-			sendStorageClose() unless $config{storageAuto_keepOpen};
+			$messageSender->sendStorageClose() unless $config{storageAuto_keepOpen};
 			if (percent_weight($char) >= $config{'itemsMaxWeight_sellOrStore'} && ai_storageAutoCheck()) {
 				error T("Character is still overweight after storageAuto (storage is full?)\n");
 				if ($config{dcOnStorageFull}) {
@@ -2063,7 +2063,7 @@ sub processAutoSell {
 					$timeout{ai_sellAuto}{time} = time;
 				}
 			}
-			sendSellBulk($net, \@sellItems) if (@sellItems);
+			$messageSender->sendSellBulk(\@sellItems) if (@sellItems);
 
 			if ($args->{done}) {
 				# plugins can hook here and decide to keep sell going longer
@@ -2224,10 +2224,10 @@ sub processAutoBuy {
 			}
 			if ($args->{invIndex} ne "") {
 				# this item is in the inventory already, get what we need
-				sendBuy($net, $args->{'itemID'}, $config{"buyAuto_$args->{index}"."_maxAmount"} - $char->{inventory}[$args->{invIndex}]{amount});
+				$messageSender->sendBuy($args->{'itemID'}, $config{"buyAuto_$args->{index}"."_maxAmount"} - $char->{inventory}[$args->{invIndex}]{amount});
 			} else {
 				# get the full amount
-				sendBuy($net, $args->{itemID}, $config{"buyAuto_$args->{index}"."_maxAmount"});
+				$messageSender->sendBuy($args->{itemID}, $config{"buyAuto_$args->{index}"."_maxAmount"});
 			}
 			$timeout{ai_buyAuto_wait_buy}{time} = time;
 		}
@@ -2385,7 +2385,7 @@ sub processAutoStatsRaise {
 					$char->{$st} += 1;
 					# Raise stat
 					message TF("Auto-adding stat %s\n", $st);
-					sendAddStatusPoint($net, $ID);
+					$messageSender->sendAddStatusPoint($ID);
 					# Save which stat was raised, so that when we received the
 					# "stat changed" packet (00BC?) we can changed $statChanged
 					# back to 0 so that kore will start checking again if stats
@@ -2428,7 +2428,7 @@ sub processAutoSkillsRaise {
 			# If skill needs to be raised to match desired amount && skill points are available
 			if ($skill->id && $char->{points_skill} > 0 && $char->{skills}{$handle}{lv} < $num) {
 				# raise skill
-				sendAddSkillPoint($net, $skill->id);
+				$messageSender->sendAddSkillPoint($skill->id);
 				message TF("Auto-adding skill %s\n", $skill->name);
 
 				# save which skill was raised, so that when we received the
@@ -2532,7 +2532,7 @@ sub processFollow {
 						getVector(\%vec, $player->{pos_to}, $char->{pos_to});
 						moveAlongVector(\%pos, $char->{pos_to}, \%vec, $dist - $config{followDistanceMin});
 						$timeout{ai_sit_idle}{time} = time;
-						sendMove($pos{x}, $pos{y});
+						$messageSender->sendMove($pos{x}, $pos{y});
 					}
 				}
 			}
@@ -2560,7 +2560,7 @@ sub processFollow {
  		message T("I lost my master\n"), "follow";
 		if ($config{'followBot'}) {
  			message T("Trying to get him back\n"), "follow";
-			sendMessage($net, "pm", "move $chars[$config{'char'}]{'pos_to'}{'x'} $chars[$config{'char'}]{'pos_to'}{'y'}", $config{followTarget});
+			sendMessage("pm", "move $chars[$config{'char'}]{'pos_to'}{'x'} $chars[$config{'char'}]{'pos_to'}{'y'}", $config{followTarget});
 		}
 
 		delete $args->{'following'};
@@ -2769,7 +2769,7 @@ sub processAutoItemUse {
 			if ($config{"useSelf_item_$i"} && checkSelfCondition("useSelf_item_$i")) {
 				my $index = findIndexStringList_lc($char->{inventory}, "name", $config{"useSelf_item_$i"});
 				if (defined $index) {
-					sendItemUse($net, $char->{inventory}[$index]{index}, $accountID);
+					$messageSender->sendItemUse($char->{inventory}[$index]{index}, $accountID);
 					$ai_v{"useSelf_item_$i"."_time"} = time;
 					$timeout{ai_item_use_auto}{time} = time;
 					debug qq~Auto-item use: $char->{inventory}[$index]{name}\n~, "ai";
@@ -3551,9 +3551,9 @@ sub processAutoResponse {
 			AI::dequeue;
 		} elsif (timeOut($args)) {
 			if ($args->{type} eq "c") {
-				sendMessage($net, "c", $args->{reply});
+				sendMessage("c", $args->{reply});
 			} elsif ($args->{type} eq "pm") {
-				sendMessage($net, "pm", $args->{reply}, $args->{from});
+				sendMessage("pm", $args->{reply}, $args->{from});
 			}
 			AI::dequeue;
 		}
@@ -3573,7 +3573,7 @@ sub processAvoid {
 sub processSendEmotion {
 	my $ai_sendemotion_index = AI::findAction("sendEmotion");
 	return if (!defined $ai_sendemotion_index || time < AI::args->{timeout});
-	sendEmotion($net, AI::args->{emotion});
+	$messageSender->sendEmotion(AI::args->{emotion});
 	AI::clear("sendEmotion");
 }
 

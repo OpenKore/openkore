@@ -1,23 +1,9 @@
-# euRO (Europe)
+# euRO (Europe) as of December 20 2006
 package Network::Receive::ServerType16;
 
 use strict;
-use base qw(Network::Receive);
-
-use Globals;
-use Actor;
-use Actor::You;
-use Time::HiRes qw(time usleep);
-use Settings;
-use Log qw(message warning error debug);
-use FileParsers;
-use Interface;
-use Network::Send;
-use Misc;
-use Plugins;
-use Utils;
-use Skills;
-
+use Network::Receive::ServerType11;
+use base qw(Network::Receive::ServerType11);
 
 sub new {
 	my ($class) = @_;

@@ -28,7 +28,7 @@ use Translation;
 
 use Globals;
 use Log qw(message debug error warning);
-use Network::Send;
+use Network::Send ();
 use Settings;
 use Plugins;
 use Skills;
@@ -510,14 +510,14 @@ sub cmdArrowCraft {
 		}
 	} elsif ($arg1 eq "forceuse") {
 		if ($char->{inventory}[$arg2] && %{$char->{inventory}[$arg2]}) {
-			sendArrowCraft($net, $char->{inventory}[$arg2]{nameID});
+			$messageSender->sendArrowCraft($char->{inventory}[$arg2]{nameID});
 		} else {
 			error TF("Error in function 'arrowcraft forceuse #' (Create Arrows)\n" . 
 				"You don't have item %s in your inventory.\n", $arg2);
 		}
 	} else {
 		if ($arrowCraftID[$arg1] ne "") {
-			sendArrowCraft($net, $char->{inventory}[$arrowCraftID[$arg1]]{nameID});
+			$messageSender->sendArrowCraft($char->{inventory}[$arrowCraftID[$arg1]]{nameID});
 		} else {
 			error T("Error in function 'arrowcraft' (Create Arrows)\n" .
 				"Usage: arrowcraft [<identify #>]\n" .
@@ -591,12 +591,12 @@ sub cmdAutoStorage {
 sub cmdBangBang {
 	my $bodydir = $char->{look}{body} - 1;
 	$bodydir = 7 if ($bodydir == -1);
-	sendLook($net, $bodydir, $char->{look}{head});
+	$messageSender->sendLook($bodydir, $char->{look}{head});
 }
 
 sub cmdBingBing {
 	my $bodydir = ($char->{look}{body} + 1) % 8;
-	sendLook($net, $bodydir, $char->{look}{head});
+	$messageSender->sendLook($bodydir, $char->{look}{head});
 }
 
 sub cmdBuy {
@@ -613,7 +613,7 @@ sub cmdBuy {
 		if ($arg2 <= 0) {
 			$arg2 = 1;
 		}
-		sendBuy($net, $storeList[$arg1]{'nameID'}, $arg2);
+		$messageSender->sendBuy($storeList[$arg1]{'nameID'}, $arg2);
 	}
 }
 
@@ -626,7 +626,7 @@ sub cmdCard {
 	if ($arg1 eq "mergecancel") {
 		if ($cardMergeIndex ne "") {
 			undef $cardMergeIndex;
-			sendCardMerge($net, -1, -1);
+			$messageSender->sendCardMerge(-1, -1);
 			message T("Cancelling card merge.\n");
 		} else {
 			error T("Error in function 'card mergecancel' (Cancel a card merge request)\n" . 
@@ -654,7 +654,7 @@ sub cmdCard {
 		if ($arg2 =~ /^\d+$/) {
 			my $found = binFind(\@cardMergeItemsID, $arg2);
 			if (defined $found) {
-				sendCardMerge($net, $char->{inventory}[$cardMergeIndex]{index}, $char->{inventory}[$arg2]{index});
+				$messageSender->sendCardMerge($char->{inventory}[$cardMergeIndex]{index}, $char->{inventory}[$arg2]{index});
 			} else {
 				if ($cardMergeIndex ne "") {
 					error TF("Error in function 'card merge' (Finalize card merging onto item)\n" . 
@@ -673,7 +673,7 @@ sub cmdCard {
 		if ($arg2 =~ /^\d+$/) {
 			if ($char->{inventory}[$arg2] && %{$char->{inventory}[$arg2]}) {
 				$cardMergeIndex = $arg2;
-				sendCardMergeRequest($net, $char->{inventory}[$cardMergeIndex]{index});
+				$messageSender->sendCardMergeRequest($char->{inventory}[$cardMergeIndex]{index});
 				message TF("Sending merge list request for %s...\n", 
 					$char->{inventory}[$cardMergeIndex]{name});
 			} else {
@@ -704,7 +704,7 @@ sub cmdCard {
 			error TF("Error in function 'arrowcraft forceuse #' (Create Arrows)\n" .
 				"You don't have item %s in your inventory.\n"), $arg3;
 		} else {
-			sendCardMerge($net, $char->{inventory}[$arg2]{index}, $char->{inventory}[$arg3]{index});
+			$messageSender->sendCardMerge($char->{inventory}[$arg2]{index}, $char->{inventory}[$arg3]{index});
 		}
 	} else {
 		error T("Syntax Error in function 'card' (Card Compounding)\n" .
@@ -757,7 +757,7 @@ sub cmdCart {
 		}
 		
 	} elsif ($arg1 eq "release") {
-		sendCompanionRelease();
+		$messageSender->sendCompanionRelease();
 		if ($conState == 5) {
 			message T("Cart released.\n"), "success";
 			$cart{exists} = 0;
@@ -795,7 +795,7 @@ sub cmdCart_add {
 	if (!$amount || $amount > $item->{amount}) {
 		$amount = $item->{amount};
 	}
-	sendCartAdd($item->{index}, $amount);
+	$messageSender->sendCartAdd($item->{index}, $amount);
 }
 
 sub cmdCart_get {
@@ -823,7 +823,7 @@ sub cmdCart_get {
 	if (!$amount || $amount > $item->{amount}) {
 		$amount = $item->{amount};
 	}
-	sendCartGet($item->{index}, $amount);
+	$messageSender->sendCartGet($item->{index}, $amount);
 }
 
 
@@ -833,7 +833,7 @@ sub cmdChat {
 		error T("Syntax Error in function 'c' (Chat)\n" .
 			"Usage: c <message>\n");
 	} else {
-		sendMessage($net, "c", $arg1);
+		sendMessage($messageSender, "c", $arg1);
 	}
 }
 
@@ -859,7 +859,7 @@ sub cmdChatRoom {
 			error TF("Error in function 'chat bestow' (Bestow Admin in Chat)\n" .
 				"Chat Room User %s doesn't exist; type 'chat info' to see the list of users\n", $arg2);
 		} else {
-			sendChatRoomBestow($net, $currentChatRoomUsers[$arg2]);
+			$messageSender->sendChatRoomBestow($currentChatRoomUsers[$arg2]);
 		}
 
 	} elsif ($arg1 eq "modify") {
@@ -878,7 +878,7 @@ sub cmdChatRoom {
 			if ($public eq "") {
 				$public = 1;
 			}
-			sendChatRoomChange($net, $title, $users, $public, $password);
+			$messageSender->sendChatRoomChange($title, $users, $public, $password);
 		}
 
 	} elsif ($arg1 eq "kick") {
@@ -894,7 +894,7 @@ sub cmdChatRoom {
 			error TF("Error in function 'chat kick' (Kick from Chat)\n" .
 				"Chat Room User %s doesn't exist\n", $arg2);
 		} else {
-			sendChatRoomKick($net, $currentChatRoomUsers[$arg2]);
+			$messageSender->sendChatRoomKick($currentChatRoomUsers[$arg2]);
 		}
 
 	} elsif ($arg1 eq "join") {
@@ -911,7 +911,7 @@ sub cmdChatRoom {
 			error TF("Error in function 'chat join' (Join Chat Room)\n" .
 				"Chat Room %s does not exist.\n", $arg2);
 		} else {
-			sendChatRoomJoin($net, $chatRoomsID[$arg2], $arg3);
+			$messageSender->sendChatRoomJoin($chatRoomsID[$arg2], $arg3);
 		}
 
 	} elsif ($arg1 eq "leave") {
@@ -919,7 +919,7 @@ sub cmdChatRoom {
 			error T("Error in function 'chat leave' (Leave Chat Room)\n" .
 				"You are not in a Chat Room.\n");
 		} else {
-			sendChatRoomLeave($net);
+			$messageSender->sendChatRoomLeave();
 		}
 
 	} elsif ($arg1 eq "create") {
@@ -942,7 +942,7 @@ sub cmdChatRoom {
 				$public = 1;
 			}
 			$title = ($config{chatTitleOversize}) ? $title : substr($title,0,36);
-			sendChatRoomCreate($net, $title, $users, $public, $password);
+			$messageSender->sendChatRoomCreate($title, $users, $public, $password);
 			%createdChatRoom = ();
 			$createdChatRoom{title} = $title;
 			$createdChatRoom{ownerID} = $accountID;
@@ -1130,9 +1130,9 @@ sub cmdDeal {
 		error T("Error in function 'deal' (Deal a Player)\n" .
 			"There is no incoming/current deal to cancel\n");
 	} elsif ($arg[0] eq "no" && (%incomingDeal || %outgoingDeal)) {
-		sendDealCancel();
+		$messageSender->sendDealCancel();
 	} elsif ($arg[0] eq "no" && %currentDeal) {
-		sendCurrentDealCancel();
+		$messageSender->sendCurrentDealCancel();
 
 	} elsif ($arg[0] eq "" && !%incomingDeal && !%currentDeal) {
 		error T("Error in function 'deal' (Deal a Player)\n" .
@@ -1144,14 +1144,14 @@ sub cmdDeal {
 		error T("Error in function 'deal' (Deal a Player)\n" .
 			"You already accepted the final deal\n");
 	} elsif ($arg[0] eq "" && %incomingDeal) {
-		sendDealAccept();
+		$messageSender->sendDealAccept();
 	} elsif ($arg[0] eq "" && $currentDeal{'you_finalize'} && $currentDeal{'other_finalize'}) {
-		sendDealTrade();
+		$messageSender->sendDealTrade();
 		$currentDeal{'final'} = 1;
 		message T("You accepted the final Deal\n"), "deal";
 	} elsif ($arg[0] eq "" && %currentDeal) {
-		sendDealAddItem(0, $currentDeal{'you_zenny'});
-		sendDealFinalize();
+		$messageSender->sendDealAddItem(0, $currentDeal{'you_zenny'});
+		$messageSender->sendDealFinalize();
 
 	} elsif ($arg[0] eq "add" && !%currentDeal) {
 		error T("Error in function 'deal_add' (Add Item to Deal)\n" .
@@ -1170,7 +1170,7 @@ sub cmdDeal {
 			if (!$arg[2] || $arg[2] > $char->{'inventory'}[$arg[1]]{'amount'}) {
 				$arg[2] = $char->{'inventory'}[$arg[1]]{'amount'};
 			}
-			dealAddItem($char->{inventory}[$arg[1]], $arg[2]);
+			$messageSender->dealAddItem($char->{inventory}[$arg[1]], $arg[2]);
 		} else {
 			error T("You can't add any more items to the deal\n"), "deal";
 		}
@@ -1289,7 +1289,7 @@ sub cmdDoriDori {
 	} else {
 		$headdir = 2;
 	}
-	sendLook($net, $char->{look}{body}, $headdir);
+	$messageSender->sendLook($char->{look}{body}, $headdir);
 }
 
 sub cmdDrop {
@@ -1340,7 +1340,7 @@ sub cmdEmotion {
 		error T("Syntax Error in function 'e' (Emotion)\n" .
 			"Usage: e <command>\n");
 	} else {
-		sendEmotion($net, $num);
+		$messageSender->sendEmotion($num);
 	}
 }
 
@@ -1531,7 +1531,7 @@ sub cmdFalcon {
 		error T("Error in function 'falcon release' (Remove Falcon Status)\n" .
 			"You don't possess a falcon.\n");
 		} else {
-			sendCompanionRelease();
+			$messageSender->sendCompanionRelease();
 		}
 	}
 }
@@ -1586,7 +1586,7 @@ sub cmdFriend {
 				error TF("%s is already your friend\n", $player->{name});
 			} else {
 				message TF("Requesting %s to be your friend\n", $player->{name});
-				sendFriendRequest($net, $players{$playersID[$arg2]}{name});
+				$messageSender->sendFriendRequest($players{$playersID[$arg2]}{name});
 			}
 		}
 
@@ -1596,7 +1596,7 @@ sub cmdFriend {
 		} else {
 			$arg2--;
 			message TF("Attempting to remove %s from your friend list\n", $friends{$arg2}{'name'});
-			sendFriendRemove($net, $friends{$arg2}{'accountID'}, $friends{$arg2}{'charID'});
+			$messageSender->sendFriendRemove($friends{$arg2}{'accountID'}, $friends{$arg2}{'charID'});
 		}
 
 	} elsif ($arg1 eq "accept") {
@@ -1604,7 +1604,7 @@ sub cmdFriend {
 			error T("Can't accept the friend request, no incoming request\n");
 		} else {
 			message TF("Accepting the friend request from %s\n", $incomingFriend{'name'});
-			sendFriendAccept($net, $incomingFriend{'accountID'}, $incomingFriend{'charID'});
+			$messageSender->sendFriendAccept($incomingFriend{'accountID'}, $incomingFriend{'charID'});
 			undef %incomingFriend;
 		}
 
@@ -1613,7 +1613,7 @@ sub cmdFriend {
 			error T("Can't reject the friend request - no incoming request\n");
 		} else {
 			message TF("Rejecting the friend request from %s\n", $incomingFriend{'name'});
-			sendFriendReject($net, $incomingFriend{'accountID'}, $incomingFriend{'charID'});
+			$messageSender->sendFriendReject($incomingFriend{'accountID'}, $incomingFriend{'charID'});
 			undef %incomingFriend;
 		}
 
@@ -1683,7 +1683,7 @@ sub cmdHomunculus {
 		if ($char->{homunculus}{hunger} >= 76) {
 			message T("Your homunculus is not yet hungry. Feeding it now will lower intimacy.\n"), "homunculus";
 		} else {
-			$net->sendHomunculusFeed();
+			$messageSender->sendHomunculusFeed();
 			message T("Feeding your homunculus.\n"), "homunculus";
 		}
 
@@ -1694,11 +1694,11 @@ sub cmdHomunculus {
 			return;
 		} else {
 			# max distance that homunculus can follow: 17
-			$net->sendHomunculusMove($char->{homunculus}{ID}, $args[1], $args[2]);
+			$messageSender->sendHomunculusMove($char->{homunculus}{ID}, $args[1], $args[2]);
 		}
 
 	} elsif ($subcmd eq "standby") {
-		$net->sendHomunculusStandBy($char->{homunculus}{ID});
+		$messageSender->sendHomunculusStandBy($char->{homunculus}{ID});
 
 	} elsif ($args[0] eq 'ai') {
 		if ($args[1] eq 'clear') {
@@ -1779,7 +1779,7 @@ sub cmdHomunculus {
 		if ($args[1] eq '') {
 			my $msg = T("-----Homunculus Skill List-----\n" .
 				"   # Skill Name                     Lv      SP\n");
-			for my $handle (@AI::Homunculus::homun_skillsID) {
+			foreach my $handle (@AI::Homunculus::homun_skillsID) {
 				my $skill = Skills->new(handle => $handle);
 				my $sp = $char->{skills}{$handle}{sp} || '';
 				$msg .= swrite(
@@ -1799,7 +1799,7 @@ sub cmdHomunculus {
 				error TF("Error in function 'homun skills add' (Add Skill Point)\n" .
 					"Not enough skill points to increase %s\n", $skill->name);
 			} else {
-				$net->sendAddSkillPoint($skill->id);
+				$messageSender->sendAddSkillPoint($skill->id);
 			}
 
 		} elsif ($args[1] eq "desc" && $args[2] =~ /\d+/) {
@@ -1827,7 +1827,7 @@ sub cmdHomunculus {
 
 sub cmdGetPlayerInfo {
 	my (undef, $args) = @_;
-	sendGetPlayerInfo($net, pack("V", $args));
+	$messageSender->sendGetPlayerInfo(pack("V", $args));
 }
 
 sub cmdGmb {
@@ -1841,7 +1841,7 @@ sub cmdGmb {
 
 	my $msg = "$char->{name}: $args" . chr(0);
 	my $packet = pack("C*", 0x99, 0x00) . pack("v", length($msg) + 4) . $msg;
-	sendMsgToServer(\$remote_socket, $packet);
+	$messageSender->sendToServer($packet);
 }
 
 sub cmdGmbb {
@@ -1855,7 +1855,7 @@ sub cmdGmbb {
 
 	my $msg = "blue$args" . chr(0);
 	my $packet = pack("C*", 0x99, 0x00) . pack("v", length($msg) + 4) . $msg;
-	sendMsgToServer(\$remote_socket, $packet);
+	$messageSender->sendToServer($packet);
 }
 
 sub cmdGmnb {
@@ -1869,7 +1869,7 @@ sub cmdGmnb {
 
 	my $msg = $args . chr(0);
 	my $packet = pack("C*", 0x99, 0x00) . pack("v", length($msg) + 4) . $msg;
-	sendMsgToServer(\$remote_socket, $packet);
+	$messageSender->sendToServer($packet);
 }
 
 sub cmdGmlb {
@@ -1883,7 +1883,7 @@ sub cmdGmlb {
 
 	my $msg = "$char->{name}: $args" . chr(0);
 	my $packet = pack("C*", 0x9c, 0x01) . pack("v", length($msg) + 4) . $msg;
-	sendMsgToServer(\$remote_socket, $packet);
+	$messageSender->sendToServer($packet);
 }
 
 sub cmdGmlbb {
@@ -1897,7 +1897,7 @@ sub cmdGmlbb {
 
 	my $msg = "blue$args" . chr(0);
 	my $packet = pack("C*", 0x9c, 0x01) . pack("v", length($msg) + 4) . $msg;
-	sendMsgToServer(\$remote_socket, $packet);
+	$messageSender->sendToServer($packet);
 }
 
 sub cmdGmnlb {
@@ -1911,7 +1911,7 @@ sub cmdGmnlb {
 
 	my $msg = $args . chr(0);
 	my $packet = pack("C*", 0x9c, 0x01) . pack("v", length($msg) + 4) . $msg;
-	sendMsgToServer(\$remote_socket, $packet);
+	$messageSender->sendToServer($packet);
 }
 
 sub cmdGmmapmove {
@@ -1929,7 +1929,7 @@ sub cmdGmmapmove {
 	}
 
 	my $packet = pack("C*", 0x40, 0x01) . pack("a16", $map_name) . pack("v1 v1", $x, $y);
-	sendMsgToServer(\$remote_socket, $packet);
+	$messageSender->sendToServer($packet);
 }
 
 sub cmdGmsummon {
@@ -1942,7 +1942,7 @@ sub cmdGmsummon {
 	}
 
 	my $packet = pack("C*", 0xBD, 0x01).pack("a24", $args);
-	sendMsgToServer(\$remote_socket, $packet);
+	$messageSender->sendToServer($packet);
 }
 
 sub cmdGmdc {
@@ -1955,13 +1955,13 @@ sub cmdGmdc {
 	}
 
 	my $packet = pack("C*", 0xCC, 0x00).pack("V1", $args);
-	sendMsgToServer(\$remote_socket, $packet);
+	$messageSender->sendToServer($packet);
 }
 
 sub cmdGmkillall {
 	return unless ($conState == 5);
 	my $packet = pack("C*", 0xCE, 0x00);
-	sendMsgToServer(\$remote_socket, $packet);
+	$messageSender->sendToServer($packet);
 }
 
 sub cmdGmcreate {
@@ -1974,23 +1974,23 @@ sub cmdGmcreate {
 	}
 
 	my $packet = pack("C*", 0x3F, 0x01).pack("a24", $args);
-	sendMsgToServer(\$remote_socket, $packet);
+	$messageSender->sendToServer($packet);
 }
 
 sub cmdGmhide {
 	return unless ($conState == 5);
 	my $packet = pack("C*", 0x9D, 0x01, 0x40, 0x00, 0x00, 0x00);
-	sendMsgToServer(\$remote_socket, $packet);
+	$messageSender->sendToServer($packet);
 }
 
 sub cmdGmresetstate {
 	my $packet = pack("C1 C1 v1", 0x97, 0x01, 0);
-	sendMsgToServer(\$remote_socket, $packet);
+	$messageSender->sendToServer($packet);
 }
 
 sub cmdGmresetskill {
 	my $packet = pack("C1 C1 v1", 0x97, 0x01, 1);
-	sendMsgToServer(\$remote_socket, $packet);
+	$messageSender->sendToServer($packet);
 }
 
 sub cmdGmmute {
@@ -2001,7 +2001,7 @@ sub cmdGmmute {
 		return;
 	}
 	my $packet = pack("C1 C1 V1 C1 v1", 0x49, 0x01, $ID, 1, $time);
-	sendMsgToServer(\$remote_socket, $packet);
+	$messageSender->sendToServer($packet);
 }
 
 sub cmdGmunmute {
@@ -2012,7 +2012,7 @@ sub cmdGmunmute {
 		return;
 	}
 	my $packet = pack("C1 C1 V1 C1 v1", 0x49, 0x01, $ID, 0, $time);
-	sendMsgToServer(\$remote_socket, $packet);
+	$messageSender->sendToServer($packet);
 }
 
 sub cmdGmwarpto {
@@ -2025,7 +2025,7 @@ sub cmdGmwarpto {
 	}
 
 	my $packet = pack("C*", 0xBB, 0x01).pack("a24", $args);
-	sendMsgToServer(\$remote_socket, $packet);
+	$messageSender->sendToServer($packet);
 }
 
 sub cmdGuild {
@@ -2043,7 +2043,7 @@ sub cmdGuild {
 			return;
 		}
 
-		sendGuildJoin($net, $incomingGuild{ID}, $arg2);
+		$messageSender->sendGuildJoin($incomingGuild{ID}, $arg2);
 		undef %incomingGuild;
 		if ($arg2) {
 			message T("You accepted the guild join request.\n"), "success";
@@ -2056,7 +2056,7 @@ sub cmdGuild {
 			error T("Syntax Error in function 'guild create' (Create Guild)\n" .
 				"Usage: guild create <name>\n");
 		} else {
-			sendGuildCreate($arg2);
+			$messageSender->sendGuildCreate($arg2);
 		}
 
 	} elsif (!defined $char->{guild}) {
@@ -2067,7 +2067,7 @@ sub cmdGuild {
 		if (!$player) {
 			error TF("Player %s does not exist.\n", $arg2);
 		} else {
-			sendGuildJoinRequest($player->{ID});
+			$messageSender->sendGuildJoinRequest($player->{ID});
 			message TF("Sent guild join request to %s\n", $player->{name});
 		}
 
@@ -2083,12 +2083,12 @@ sub cmdGuild {
 			error T("You must be guildmaster to set an alliance\n");
 			return;
 		} else {
-			sendGuildSetAlly($net,$player->{ID},$accountID,$charID);
+			$messageSender->sendGuildSetAlly($net,$player->{ID},$accountID,$charID);
 			message TF("Sent guild alliance request to %s\n", $player->{name});
 		}
 
 	} elsif ($arg1 eq "leave") {
-		sendGuildLeave($arg2);
+		$messageSender->sendGuildLeave($arg2);
 		message TF("Sending guild leave: %s\n", $arg2);
 
 	} elsif ($arg1 eq "break") {
@@ -2096,19 +2096,19 @@ sub cmdGuild {
 			error T("Syntax Error in function 'guild break' (Break Guild)\n" .
 				"Usage: guild break <guild name>\n");
 		} else {
-			sendGuildBreak($arg2);
+			$messageSender->sendGuildBreak($arg2);
 			message TF("Sending guild break: %s\n", $arg2);
 		}
 
 	} elsif ($arg1 eq "" || !%guild) {
 		message	T("Requesting guild information...\n"), "info";
-		sendGuildInfoRequest($net);
+		$messageSender->sendGuildInfoRequest();
 
 		# Replies 01B6 (Guild Info) and 014C (Guild Ally/Enemy List)
-		sendGuildRequest($net, 0);
+		$messageSender->sendGuildRequest(0);
 
 		# Replies 0166 (Guild Member Titles List) and 0154 (Guild Members List)
-		sendGuildRequest($net, 1);
+		$messageSender->sendGuildRequest(1);
 
 		if ($arg1 eq "") {
 			message T("Enter command to view guild information: guild <info | member>\n"), "info";
@@ -2139,7 +2139,7 @@ sub cmdGuild {
 		my @params = split(' ', $arg2, 2);
 		if ($params[0] =~ /^\d+$/) {
 			if ($guild{'member'}[$params[0]]) {
-				sendGuildMemberKick($char->{guildID},
+				$messageSender->sendGuildMemberKick($char->{guildID},
 					$guild{member}[$params[0]]{ID},
 					$guild{member}[$params[0]]{charID},
 					$params[1]);
@@ -2190,7 +2190,7 @@ sub cmdGuildChat {
 		error T("Syntax Error in function 'g' (Guild Chat)\n" .
 			"Usage: g <message>\n");
 	} else {
-		sendMessage($net, "g", $arg1);
+		sendMessage($messageSender, "g", $arg1);
 	}
 }
 
@@ -2313,7 +2313,7 @@ sub cmdIdentify {
 			error TF("Error in function 'identify' (Identify Item)\n" .
 				"Identify Item %s does not exist\n", $arg1);
 		} else {
-			sendIdentify($net, $char->{'inventory'}[$identifyID[$arg1]]{'index'});
+			$messageSender->sendIdentify($char->{'inventory'}[$identifyID[$arg1]]{'index'});
 		}
 
 	} else {
@@ -2330,9 +2330,9 @@ sub cmdIgnore {
 			"Usage: ignore <flag> <name | all>\n");
 	} else {
 		if ($arg2 eq "all") {
-			sendIgnoreAll($net, !$arg1);
+			$messageSender->sendIgnoreAll(!$arg1);
 		} else {
-			sendIgnore($net, $arg2, !$arg1);
+			$messageSender->sendIgnore($arg2, !$arg1);
 		}
 	}
 }
@@ -2511,7 +2511,7 @@ sub cmdItemLogClear {
 #			"Player $arg1 does not exist.\n";
 #	} else {
 #		$arg2 = ($arg2 >= 1);
-#		sendAlignment($net, $playersID[$arg1], $arg2);
+#		$messageSender->sendAlignment($playersID[$arg1], $arg2);
 #	}
 #}
 
@@ -2581,7 +2581,7 @@ sub cmdManualMove {
 }
 
 sub cmdMemo {
-	sendMemo($net);
+	$messageSender->sendMemo();
 }
 
 sub cmdMonsterList {
@@ -2763,7 +2763,7 @@ sub cmdParty {
 			error T("Syntax Error in function 'party create' (Organize Party)\n" .
 				"Usage: party create <party name>\n");
 		} else {
-			sendPartyOrganize($net, $arg2);
+			$messageSender->sendPartyOrganize($arg2);
 		}
 
 	} elsif ($arg1 eq "join" && $arg2 ne "1" && $arg2 ne "0") {
@@ -2773,7 +2773,7 @@ sub cmdParty {
 		error T("Error in function 'party join' (Join/Request to Join Party)\n" .
 			"Can't accept/deny party request - no incoming request.\n");
 	} elsif ($arg1 eq "join") {
-		sendPartyJoin($net, $incomingParty{'ID'}, $arg2);
+		$messageSender->sendPartyJoin($incomingParty{'ID'}, $arg2);
 		undef %incomingParty;
 
 	} elsif ($arg1 eq "request" && ( !$char->{'party'} || !%{$char->{'party'}} )) {
@@ -2783,13 +2783,13 @@ sub cmdParty {
 		error TF("Error in function 'party request' (Request to Join Party)\n" .
 			"Can't request to join party - player %s does not exist.\n", $arg2);
 	} elsif ($arg1 eq "request") {
-		sendPartyJoinRequest($net, $playersID[$arg2]);
+		$messageSender->sendPartyJoinRequest($playersID[$arg2]);
 
 	} elsif ($arg1 eq "leave" && (!$char->{'party'} || !%{$char->{'party'}} ) ) {
 		error T("Error in function 'party leave' (Leave Party)\n" .
 			"Can't leave party - you're not in a party.\n");
 	} elsif ($arg1 eq "leave") {
-		sendPartyLeave($net);
+		$messageSender->sendPartyLeave();
 
 
 	} elsif ($arg1 eq "share" && ( !$char->{'party'} || !%{$char->{'party'}} )) {
@@ -2799,7 +2799,7 @@ sub cmdParty {
 		error T("Syntax Error in function 'party share' (Set Party Share EXP)\n" .
 			"Usage: party share <flag>\n");
 	} elsif ($arg1 eq "share") {
-		sendPartyShareEXP($net, $arg2);
+		$messageSender->sendPartyShareEXP($arg2);
 
 
 	} elsif ($arg1 eq "kick" && ( !$char->{'party'} || !%{$char->{'party'}} )) {
@@ -2812,7 +2812,7 @@ sub cmdParty {
 		error TF("Error in function 'party kick' (Kick Party Member)\n" .
 			"Can't kick member - member %s doesn't exist.\n", $arg2);
 	} elsif ($arg1 eq "kick") {
-		sendPartyKick($net, $partyUsersID[$arg2]
+		$messageSender->sendPartyKick($partyUsersID[$arg2]
 				,$char->{'party'}{'users'}{$partyUsersID[$arg2]}{'name'});
 	} else {
 		error T("Syntax Error in function 'party' (Party Management)\n" .
@@ -2826,7 +2826,7 @@ sub cmdPartyChat {
 		error T("Syntax Error in function 'p' (Party Chat)\n" .
 			"Usage: p <message>\n");
 	} else {
-		sendMessage($net, "p", $arg1);
+		sendMessage($messageSender, "p", $arg1);
 	}
 }
 
@@ -2844,7 +2844,7 @@ sub cmdPecopeco {
 		error T("Error in function 'pecopeco release' (Remove Pecopeco Status)\n" .
 			"You don't possess a Pecopeco.\n");
 		} else {
-			sendCompanionRelease();
+			$messageSender->sendCompanionRelease();
 		}
 	}
 }
@@ -2859,13 +2859,13 @@ sub cmdPet {
 		message TF("-----------Pet Status-----------\nName: %-23s Accessory: %s", $pet{name}, itemNameSimple($pet{accessory})), "list";
 
 	} elsif ($subcmd eq "p" || $subcmd eq "performance") {
-		sendPetPerformance($net);
+		$messageSender->sendPetPerformance();
 
 	} elsif ($subcmd eq "r" || $subcmd eq "return") {
-		sendPetReturnToEgg($net);
+		$messageSender->sendPetReturnToEgg();
 
 	} elsif ($subcmd eq "u" || $subcmd eq "unequip") {
-		sendPetUnequipItem($net);
+		$messageSender->sendPetUnequipItem();
 	}
 }
 
@@ -3203,7 +3203,7 @@ sub cmdPrivateMessage {
 			error T("Error in function 'pm' (Private Message)\n" .
 				"You have not pm-ed anyone before\n");
 		} else {
-			sendMessage($net, "pm", $msg, $privMsgUsers[$user - 1]);
+			sendMessage($messageSender, "pm", $msg, $privMsgUsers[$user - 1]);
 			$lastpm{msg} = $msg;
 			$lastpm{user} = $privMsgUsers[$user - 1];
 		}
@@ -3212,7 +3212,7 @@ sub cmdPrivateMessage {
 		if (!defined binFind(\@privMsgUsers, $user)) {
 			push @privMsgUsers, $user;
 		}
-		sendMessage($net, "pm", $msg, $user);
+		sendMessage($messageSender, "pm", $msg, $user);
 		$lastpm{msg} = $msg;
 		$lastpm{user} = $user;
 	}
@@ -3257,7 +3257,7 @@ sub cmdRelog {
 sub cmdRepair {
 	my (undef, $args) = @_;
 	if ($args =~ /^\d+$/) {
-		sendRepairItem($args);
+		$messageSender->sendRepairItem($args);
 	} else {
 		error T("Syntax Error in function 'repair' (Repair player's items.)\n" .
 			"Usage: repair [item number]\n");
@@ -3266,7 +3266,7 @@ sub cmdRepair {
 
 sub cmdRespawn {
 	if ($char->{dead}) {
-		sendRespawn($net);
+		$messageSender->sendRespawn();
 	} else {
 		main::useTeleport(2);
 	}
@@ -3276,7 +3276,7 @@ sub cmdSell {
 	my @args = parseArgs($_[1]);
 
 	if ($args[0] eq "" && $talk{buyOrSell}) {
-		sendGetSellList($net, $talk{ID});
+		$messageSender->sendGetSellList($talk{ID});
 
 	} elsif ($args[0] eq "list") {
 		if (@sellList == 0) {
@@ -3293,7 +3293,7 @@ sub cmdSell {
 		}
 
 	} elsif ($args[0] eq "done") {
-		sendSellBulk($net, \@sellList);
+		$messageSender->sendSellBulk(\@sellList);
 		message TF("Sold %s items.\n", @sellList.""), "success";
 		@sellList = ();
 
@@ -3342,7 +3342,7 @@ sub cmdSell {
 
 sub cmdSendRaw {
 	my (undef, $args) = @_;
-	sendRaw($net, $args);
+	$messageSender->sendRaw($args);
 }
 
 sub cmdShopInfoSelf {
@@ -3410,7 +3410,7 @@ sub cmdSkills {
 			error TF("Error in function 'skills add' (Add Skill Point)\n" .
 				"Not enough skill points to increase %s\n", $skill->name);
 		} else {
-			sendAddSkillPoint($net, $skill->id);
+			$messageSender->sendAddSkillPoint($skill->id);
 		}
 
 	} elsif ($arg1 eq "desc" && $arg2 =~ /\d+/) {
@@ -3482,7 +3482,7 @@ sub cmdStatAdd {
 		}
 
 		$char->{$arg} += 1;
-		sendAddStatusPoint($net, $ID);
+		$messageSender->sendAddStatusPoint($ID);
 	}
 }
 
@@ -3712,7 +3712,7 @@ sub cmdStorage_add {
 	if (!defined($amount) || $amount > $item->{amount}) {
 		$amount = $item->{amount};
 	}
-	sendStorageAdd($item->{index}, $amount);
+	$messageSender->sendStorageAdd($item->{index}, $amount);
 }
 
 sub cmdStorage_addfromcart {
@@ -3728,7 +3728,7 @@ sub cmdStorage_addfromcart {
 	if (!defined($amount) || $amount > $item->{amount}) {
 		$amount = $item->{amount};
 	}
-	sendStorageAddFromCart($item->{index}, $amount);
+	$messageSender->sendStorageAddFromCart($item->{index}, $amount);
 }
 
 sub cmdStorage_get {
@@ -3780,11 +3780,11 @@ sub cmdStorage_gettocart {
 		}
 	}
 
-	sendStorageGetToCart(\@items, $amount) if @items;
+	$messageSender->sendStorageGetToCart(\@items, $amount) if @items;
 }
 
 sub cmdStorage_close {
-	sendStorageClose();
+	$messageSender->sendStorageClose();
 }
 
 sub cmdStorage_log {
@@ -3819,7 +3819,7 @@ sub cmdStore {
 		}
 		message("-------------------------------\n", "list");
 	} elsif ($arg1 eq "" && $talk{'buyOrSell'}) {
-		sendGetStoreList($net, $talk{'ID'});
+		$messageSender->sendGetStoreList($talk{'ID'});
 
 	} elsif ($arg1 eq "desc" && $arg2 =~ /\d+/ && !$storeList[$arg2]) {
 		error TF("Error in function 'store desc' (Store Item Description)\n" .
@@ -3875,7 +3875,7 @@ sub cmdTalk {
 		error TF("Error in function 'talk' (Talk to NPC)\n" .
 			"NPC %s does not exist\n", $arg1);
 	} elsif ($arg1 =~ /^\d+$/) {
-		sendTalk($net, $npcsID[$arg1]);
+		$messageSender->sendTalk($npcsID[$arg1]);
 
 	} elsif (($arg1 eq "resp" || $arg1 eq "num" || $arg1 eq "text") && !%talk) {
 		error TF("Error in function 'talk %s' (Respond to NPC)\n" .
@@ -3909,7 +3909,7 @@ sub cmdTalk {
 		} else {
 			$arg2 += 1;
 		}
-		sendTalkResponse($net, $talk{'ID'}, $arg2);
+		$messageSender->sendTalkResponse($talk{'ID'}, $arg2);
 
 	} elsif ($arg1 eq "num" && $arg2 eq "") {
 		error T("Error in function 'talk num' (Respond to NPC)\n" .
@@ -3920,7 +3920,7 @@ sub cmdTalk {
 			"%s is not a valid number.\n", $arg2);
 
 	} elsif ($arg1 eq "num" && $arg2 =~ /^\d+$/) {
-		sendTalkNumber($net, $talk{'ID'}, $arg2);
+		$messageSender->sendTalkNumber($talk{'ID'}, $arg2);
 
 	} elsif ($arg1 eq "text") {
 		my ($arg2) = $args =~ /^\w+ (.*)/;
@@ -3928,7 +3928,7 @@ sub cmdTalk {
 			error T("Error in function 'talk text' (Respond to NPC)\n" .
 				"You must specify a string.\n");
 		} else {
-			sendTalkText($net, $talk{'ID'}, $arg2);
+			$messageSender->sendTalkText($talk{'ID'}, $arg2);
 		}
 
 	} elsif ($arg1 eq "cont" && !%talk) {
@@ -3936,13 +3936,13 @@ sub cmdTalk {
 			"You are not talking to any NPC.\n");
 
 	} elsif ($arg1 eq "cont") {
-		sendTalkContinue($net, $talk{'ID'});
+		$messageSender->sendTalkContinue($talk{'ID'});
 
 	} elsif ($arg1 eq "no") {
 		if (!%talk) {
 			error T("You are not talking to any NPC.\n");
 		} else {
-			sendTalkCancel($net, $talk{'ID'});
+			$messageSender->sendTalkCancel($talk{'ID'});
 		}
 
 	} else {
@@ -4089,7 +4089,7 @@ sub cmdUnequip {
 			"Inventory Item %s is not equipped.\n", $arg1);
 		return;
 	}
-	sendUnequip($net, $item->{index});
+	$messageSender->sendUnequip($item->{index});
 }
 
 sub cmdUseItemOnMonster {
@@ -4248,7 +4248,7 @@ sub cmdVender {
 		error TF("Error in function 'vender' (Vender Shop)\n" .
 			"Vender %s does not exist.\n", $arg1);
 	} elsif ($arg2 eq "") {
-		sendEnteringVender($net, $venderListsID[$arg1]);
+		$messageSender->sendEnteringVender($venderListsID[$arg1]);
 	} elsif ($venderListsID[$arg1] ne $venderID) {
 		error T("Error in function 'vender' (Vender Shop)\n" .
 			"Vender ID is wrong.\n");
@@ -4256,7 +4256,7 @@ sub cmdVender {
 		if ($arg3 <= 0) {
 			$arg3 = 1;
 		}
-		sendBuyVender($net, $venderID, $arg2, $arg3);
+		$messageSender->sendBuyVender($venderID, $arg2, $arg3);
 	}
 }
 
@@ -4308,7 +4308,7 @@ sub cmdWarp {
 			my $rsw = "$name.rsw";
 			message TF("Attempting to open a warp portal to %s (%s)\n", 
 				$maps_lut{$rsw}, $name), "info";
-			sendOpenWarp($net, "$name.gat");
+			$messageSender->sendOpenWarp("$name.gat");
 		}
 
 	} elsif ($map eq 'list') {
@@ -4335,7 +4335,7 @@ sub cmdWarp {
 		my $rsw = "$map.rsw";
 		message TF("Attempting to open a warp portal to %s (%s)\n", 
 			$maps_lut{$rsw}, $map), "info";
-		sendOpenWarp($net, "$map.gat");
+		$messageSender->sendOpenWarp("$map.gat");
 	}
 }
 
@@ -4375,7 +4375,7 @@ sub cmdWhere {
 }
 
 sub cmdWho {
-	sendWho($net);
+	$messageSender->sendWho();
 }
 
 sub cmdWhoAmI {

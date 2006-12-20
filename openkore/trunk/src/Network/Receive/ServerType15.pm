@@ -1,23 +1,9 @@
-#pRO Thor as of December 6 2006
+# pRO Thor as of December 6 2006
 package Network::Receive::ServerType15;
 
 use strict;
-use base qw(Network::Receive);
-
-use Globals;
-use Actor;
-use Actor::You;
-use Time::HiRes qw(time usleep);
-use Settings;
-use Log qw(message warning error debug);
-use FileParsers;
-use Interface;
-use Network::Send;
-use Misc;
-use Plugins;
-use Utils;
-use Skills;
-
+use Network::Receive::ServerType14;
+use base qw(Network::Receive::ServerType14);
 
 sub new {
 	my ($class) = @_;
