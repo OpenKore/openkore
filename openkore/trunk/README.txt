@@ -23,6 +23,7 @@ Bug fixes:
 - Fix FreeBSD and other Unix support. MacOS X *might* also be supported now,
   but it's untested.
 - Fix Sun Sparc support.
+- Fix chat room creation.
 
 New config options:
 - dealAuto_names <list of player names>
