@@ -51,10 +51,10 @@ New features:
 - It is now possible to enter special characters into the OpenKore console on Windows.
 - It is now possible to use simple block labels in "conf" command.
 
-New Commands
+New commands:
 - top10 <b|a|t|p> | <black|alche|tk|pk> | <blacksmith|alchemist|taekwon|pvp>
 	Displays the top 10 Blacksmiths, Alchemists, Taekwon and PVP ranks
-- GM Commands
+- GM commands:
 	gmb : Broadcast a global message.
 	gmbb : Broadcast a global message in blue.
  	gmnb : Broadcast a nameless global message.
@@ -78,7 +78,6 @@ Internal:
 - Implemented Guild Kick / Guild Leave messages
 
 Credits:
-- All developers with SVN write access (http://cia.navi.cx/stats/project/openkore)
 - Darkfate: partial servertype 11 support.
 - piroJOKE: server information updates and table files updates.
 - Click: improved shop list randomization.
@@ -89,7 +88,9 @@ Credits:
 - edeline: help with kRO server fixes.
 - skseo: Korean translations.
 - Tatka: help with special character support in the Win32 console.
-- piroJOKE: lables Idea.
+- piroJOKE: labels idea.
+- And of course, all developers with SVN write access :)
+  See http://cia.navi.cx/stats/project/openkore
 
 
 =========================
