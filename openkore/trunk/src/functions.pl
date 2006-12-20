@@ -587,12 +587,14 @@ sub parseSendMsg {
 			$syncSync = substr($msg, 8, 4);
 		} elsif ($config{serverType} == 13) { # rRO
 			$syncSync = substr($msg, 5, 4);
+		} elsif ($config{serverType} == 16) {
+			$syncSync = substr($msg, 8, 4);
 		}
 		message T("Map loaded\n"), "connection";
 		
 		Plugins::callHook('map_loaded');
 
-	} elsif (($switch eq "007E" && ($config{serverType} == 11 || $config{serverType} == 12)) ||
+	} elsif (($switch eq "007E" && ($config{serverType} == 11 || $config{serverType} == 12 || $config{serverType} == 16)) ||
 		 ($switch eq "00F3" && $config{serverType} == 13)) { # rRO
 		#syncSync support for XKore 1 mode
 		if ($config{serverType} == 13) { # rRO

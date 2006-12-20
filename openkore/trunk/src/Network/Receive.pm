@@ -3365,7 +3365,7 @@ sub map_change {
 	} else {
 		sendMapLoaded($net);
 		# Sending sync packet. Perhaps not only for server types 13 and 11
-		if($config{serverType} == 11 || $config{serverType} == 12 || $config{serverType} == 13) {
+		if($config{serverType} == 11 || $config{serverType} == 12 || $config{serverType} == 13 || $config{serverType} == 16) {
 			sendSync($net, 1);
 		}
 		$timeout{'ai'}{'time'} = time;
