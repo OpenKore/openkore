@@ -19,7 +19,6 @@ use base qw(Exporter);
 use Exporter;
 use IO::Socket::INET;
 use Time::HiRes qw(time usleep);
-use Network::Send;
 use encoding 'utf8';
 
 use Globals;
@@ -28,6 +27,7 @@ use Utils qw(dataWaiting timeOut makeIP encodeIP swrite existsInList);
 use Misc qw(configModify visualDump);
 use Translation;
 use I18N qw(bytesToString);
+use Network::Send ();
 
 my $clientBuffer;
 my %flushTimer;
@@ -35,23 +35,18 @@ my %flushTimer;
 ##
 # XKoreProxy->new()
 #
-# Initialize X-Kore mode. If an error occurs, this function will return undef,
-# and set the error message in $@.
+# Initialize X-Kore-Proxy mode.
 sub new {
 	my $class = shift;
 	my $ip = $config{XKore_listenIp} || '0.0.0.0';
 	my $port = $config{XKore_listenPort} || 6901;
 	my %self;
 
-	undef $@;
-
 	# Reuse code from Network to connect to the server
 	require Network;
 	Modules::register("Network");
 	$self{server} = new Network;
 
-	return undef unless $self{server};
-	
 	$self{client_state} = 0;
 	$self{nextIp} = undef;
 	$self{nextPort} = undef;
@@ -61,17 +56,16 @@ sub new {
 	$self{packetPending} = '';
 	$self{waitingClient} = 1;
 	$clientBuffer = '';
-	
+
 	message T("X-Kore mode intialized.\n"), "startup";
-	
+
 	if (defined($config{gameGuard}) && $config{gameGuard} ne '2') {
 		require Poseidon::EmbedServer;
 		Modules::register("Poseidon::EmbedServer");
 		$self{poseidon} = new Poseidon::EmbedServer;
 	}
 
-	bless \%self, $class;
-	return \%self;
+	return bless \%self, $class;
 }
 
 ##
@@ -88,7 +82,7 @@ sub version {
 # Shutdown function. Turn everything off.
 sub DESTROY {
 	my $self = shift;
-	
+
 	close($self->{server});
 	close($self->{proxy_listen});	
 	close($self->{proxy});
@@ -381,6 +375,7 @@ sub checkServer {
 			$self->{nextPort} = $master->{port};
 			message TF("Proxying to [%s]\n", $config{master}), "connection" unless ($self->{gotError});
 			$packetParser = Network::Receive->create($config{serverType}) if (!$packetParser);
+			$messageSender = Network::Send->create($self, $config{serverType}) if (!$messageSender);
 		}
 		
 		$self->serverConnect($self->{nextIp}, $self->{nextPort}) unless ($self->{gotError});

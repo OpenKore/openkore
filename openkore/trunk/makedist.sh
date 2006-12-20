@@ -38,6 +38,7 @@ DIRS=(.
 	src/Interface/Wx/DockNotebook
 	src/Network
 	src/Network/Receive
+	src/Network/Send
 	src/Poseidon
 	src/Utils
 	src/Utils/Core

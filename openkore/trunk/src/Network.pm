@@ -21,8 +21,8 @@
 # packets to the RO server.
 #
 # This module only handles connection issues, and nothing else. It doesn't do
-# anything with the actual data. Network data is handled by another module.
-
+# anything with the actual data. Network data handling is performed by
+# the Network::Receive and Network::Receive::ServerTypeX classes.
 package Network;
 
 use strict;
@@ -35,7 +35,7 @@ use encoding 'utf8';
 
 use Globals;
 use Log qw(message error);
-use Network::Send;
+use Network::Send ();
 use Plugins;
 use Settings;
 use Utils qw(dataWaiting timeOut);
@@ -50,11 +50,10 @@ use Translation;
 sub new {
 	my $class = shift;
 	my %self;
-	
+
 	$self{remote_socket} = new IO::Socket::INET;
 
-	bless \%self, $class;
-	return \%self;
+	return bless \%self, $class;
 }
 
 ##
@@ -176,7 +175,7 @@ sub serverDisconnect {
 	my $self = shift;
 	
 	if ($self->serverAlive) {
-		$self->sendQuit() if ($conState == 5);
+		$messageSender->sendQuit() if ($conState == 5);
 
 		message TF("Disconnecting (%s:%s)...", $self->{remote_socket}->peerhost(), 
 			$self->{remote_socket}->peerport()), "connection";
@@ -310,8 +309,9 @@ sub checkConnection {
 		$initSync = 1;
 		undef $msg;
 		$packetParser = Network::Receive->create($config{serverType});
+		$messageSender = Network::Send->create($self, $config{serverType});
 		$self->serverConnect($master->{ip}, $master->{port});
-		
+
 		# call plugin's hook to determine if we can continue the work
 		if ($self->serverAlive) {
 			Plugins::callHook("Network::serverConnect/master");
@@ -340,14 +340,14 @@ sub checkConnection {
 			}
 
 			if ($code ne '') {
-				$self->sendMasterCodeRequest('code', $code);
+				$messageSender->sendMasterCodeRequest('code', $code);
 			} else {
-				$self->sendMasterCodeRequest('type', $master->{secureLogin_type});
+				$messageSender->sendMasterCodeRequest('type', $master->{secureLogin_type});
 			}
 
 		} elsif ($self->serverAlive) {
-			$self->sendPreLoginCode($master->{preLoginCode}) if ($master->{preLoginCode});
-			$self->sendMasterLogin($config{'username'}, $config{'password'},
+			$messageSender->sendPreLoginCode($master->{preLoginCode}) if ($master->{preLoginCode});
+			$messageSender->sendMasterLogin($config{'username'}, $config{'password'},
 				$master->{master_version}, $master->{version});
 		}
 
@@ -372,14 +372,14 @@ sub checkConnection {
 			}
 
 			if ($code ne '') {
-				sendMasterCodeRequest(\$remote_socket, 'code', $code);
+				$messageSender->sendMasterCodeRequest('code', $code);
 			} else {
-				sendMasterCodeRequest(\$remote_socket, 'type', $master->{secureLogin_type});
+				$messageSender->sendMasterCodeRequest('type', $master->{secureLogin_type});
 			}
 
 		} else {
-			sendPreLoginCode(\$remote_socket, $master->{preLoginCode}) if ($master->{preLoginCode});
-			sendMasterLogin(\$remote_socket, $config{'username'}, $config{'password'},
+			$messageSender->sendPreLoginCode($master->{preLoginCode}) if ($master->{preLoginCode});
+			$messageSender->sendMasterLogin($config{'username'}, $config{'password'},
 				$master->{master_version}, $master->{version});
 		}
 
@@ -390,7 +390,7 @@ sub checkConnection {
 
 		my $master = $masterServer;
 		message T("Sending encoded password...\n"), "connection";
-		$self->sendMasterSecureLogin($config{'username'}, $config{'password'}, $secureLoginKey,
+		$messageSender->sendMasterSecureLogin($config{'username'}, $config{'password'}, $secureLoginKey,
 				$master->{version}, $master->{master_version},
 				$master->{secureLogin}, $master->{secureLogin_account});
 		undef $secureLoginKey;
@@ -453,7 +453,7 @@ sub checkConnection {
 			return if ($conState == 1.5);
 		}
 		
-		$self->sendGameLogin($accountID, $sessionID, $sessionID2, $accountSex);
+		$messageSender->sendGameLogin($accountID, $sessionID, $sessionID2, $accountSex);
 		$timeout{'gamelogin'}{'time'} = time;
 
 	} elsif ($conState == 2 && timeOut($timeout{'gamelogin'})
@@ -476,7 +476,7 @@ sub checkConnection {
 			return if ($conState == 1.5);
 		}
 				
-		$self->sendCharLogin($config{'char'});
+		$messageSender->sendCharLogin($config{'char'});
 		$timeout{'charlogin'}{'time'} = time;
 
 	} elsif ($conState == 3 && timeOut($timeout{'charlogin'}) && $config{'char'} ne "") {
@@ -508,7 +508,7 @@ sub checkConnection {
 			return if ($conState == 1.5);
 		}
 
-		$self->sendMapLogin($accountID, $charID, $sessionID, $accountSex2);
+		$messageSender->sendMapLogin($accountID, $charID, $sessionID, $accountSex2);
 		$timeout_ex{master}{time} = time;
 		$timeout_ex{master}{timeout} = $timeout{reconnect}{timeout};
 		$timeout{maplogin}{time} = time;

@@ -38,8 +38,7 @@
 package Skills;
 
 use strict;
-use Globals qw($accountID $net $char %skillsSP_lut);
-use Network::Send qw(sendSkillUse);
+use Globals qw($accountID $net $char %skillsSP_lut $messageSender);
 use vars qw(%skills);
 use Log qw(warning);
 
@@ -189,7 +188,7 @@ sub use {
 	my ($self,$target,$lvl) = @_;
 	$target = $accountID unless $target;
 	$lvl = 10 unless $lvl;
-	sendSkillUse($net, $self->id, $lvl, $target);
+	$messageSender->sendSkillUse($self->id, $lvl, $target);
 }
 
 ##

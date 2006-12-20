@@ -1,23 +1,14 @@
 package Network::Receive::ServerType0;
 
 use strict;
+use Network::Receive ();
 use base qw(Network::Receive);
-
-use Globals;
-use Actor;
-use Actor::You;
 use Time::HiRes qw(time usleep);
-use Settings;
+
+use Globals qw($char %timeout $net %config @chars $conState $conState_tries $messageSender);
 use Log qw(message warning error debug);
-use FileParsers;
-use Interface;
-use Network::Send;
-use Misc;
-use Plugins;
-use Utils;
-use Skills;
-use AI;
 use Translation;
+use Utils qw(makeCoords);
 
 sub new {
 	my ($class) = @_;
@@ -26,7 +17,7 @@ sub new {
 }
 
 sub map_loaded {
-	my ($self,$args) = @_;
+	my ($self, $args) = @_;
 	$conState = 5;
 	undef $conState_tries;
 	$char = $chars[$config{'char'}];
@@ -38,15 +29,15 @@ sub map_loaded {
 		main::initMapChangeVars();
 	} else {
 		message	T("Requesting guild information...\n"), "info";
-		sendGuildInfoRequest($net);
+		$messageSender->sendGuildInfoRequest($net);
 
 		# Replies 01B6 (Guild Info) and 014C (Guild Ally/Enemy List)
-		sendGuildRequest($net, 0);
+		$messageSender->sendGuildRequest($net, 0);
 
 		# Replies 0166 (Guild Member Titles List) and 0154 (Guild Members List)
-		sendGuildRequest($net, 1);
+		$messageSender->sendGuildRequest($net, 1);
 		message(T("You are now in the game\n"), "connection");
-		$net->sendMapLoaded();
+		$messageSender->sendMapLoaded();
 		$timeout{'ai'}{'time'} = time;
 	}
 

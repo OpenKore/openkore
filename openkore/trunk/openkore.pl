@@ -96,7 +96,7 @@ use Utils;
 use Plugins;
 use FileParsers;
 use Network::Receive;
-use Network::Send;
+use Network::Send ();
 use Commands;
 use Misc;
 use AI;
@@ -213,29 +213,31 @@ Log::message("\n");
 
 our $XKore_dontRedirect = 0;
 my $XKore_version = $config{XKore}? $config{XKore} : $sys{XKore};
-if ($XKore_version eq "1" || $XKore_version eq "inject") {
-	# Inject DLL to running Ragnarok process
-	require XKore;
-	Modules::register("XKore");
-	$net = new XKore;
-} elsif ($XKore_version eq "2") {
-	# Run as a proxy bot, allowing Ragnarok to connect while botting
-	require XKore2;
-	Modules::register("XKore2");
-	$net = new XKore2;
-} elsif ($XKore_version eq "3" || $XKore_version eq "proxy") {
-	# Proxy Ragnarok client connection
-	require XKoreProxy;
-	Modules::register("XKoreProxy");
-	$net = new XKoreProxy;
-} else {
-	# Run as a standalone bot, with no interface to the official RO client
-	require Network;
-	Modules::register("Network");
-	$net = new Network;
-}
-if (!$net) {
-	# Problem with networking
+eval {
+	if ($XKore_version eq "1" || $XKore_version eq "inject") {
+		# Inject DLL to running Ragnarok process
+		require XKore;
+		Modules::register("XKore");
+		$net = new XKore;
+	} elsif ($XKore_version eq "2") {
+		# Run as a proxy bot, allowing Ragnarok to connect while botting
+		require XKore2;
+		Modules::register("XKore2");
+		$net = new XKore2;
+	} elsif ($XKore_version eq "3" || $XKore_version eq "proxy") {
+		# Proxy Ragnarok client connection
+		require XKoreProxy;
+		Modules::register("XKoreProxy");
+		$net = new XKoreProxy;
+	} else {
+		# Run as a standalone bot, with no interface to the official RO client
+		require Network;
+		Modules::register("Network");
+		$net = new Network;
+	}
+};
+if ($@) {
+	# Problem with networking.
 	$interface->errorDialog($@);
 	exit 1;
 }

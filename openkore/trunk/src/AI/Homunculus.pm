@@ -144,7 +144,7 @@ sub iterate {
 	# homunculus is in rest
 	if ($char->{homunculus}{state} & 2) {
 		#if (!ai_getAggressives() && timeOut($char->{homunculus}{recall_time}, 2)) {
-		#	$net->sendSkillUse(243, 1, $accountID);
+		#	$messageSender->sendSkillUse(243, 1, $accountID);
 		#	$char->{homunculus}{recall_time} = time;
 		#}
 	
@@ -152,7 +152,7 @@ sub iterate {
 	} elsif ($char->{homunculus}{state} & 4) {
 #		if ($config{homunculus_resurrectAuto} && (!ai_getAggressives() || $config{homunculus_resurrectAuto} >= 2) && timeOut($char->{homunculus}{resurrect_time}, 4)) {
 #			ai_skillUse('AM_RESURRECTHOMUN', $char->{skills}{'AM_RESURRECTHOMUN'}{lv}, 0, 2, $accountID)
-#			$net->sendSkillUse(247, $char->{skills}{'AM_RESURRECTHOMUN'}{lv}, $accountID);
+#			$messageSender->sendSkillUse(247, $char->{skills}{'AM_RESURRECTHOMUN'}{lv}, $accountID);
 #			$char->{homunculus}{resurrect_time} = time;
 #		}
 
@@ -183,7 +183,7 @@ sub iterate {
 			
 			processFeeding();
 			message T("Auto-feeding your Homunculus (".$char->{homunculus}{hunger}." hunger).\n"), 'homunculus';
-			$net->sendHomunculusFeed();
+			$messageSender->sendHomunculusFeed();
 			message ("Next feeding at: ".$char->{homunculus}{hungerThreshold}." hunger.\n"), 'homunculus';
 		
 		# No random value at initial start of Kore, lets make a few =)
@@ -218,7 +218,7 @@ sub iterate {
 				# however, the server-side routing is very inefficient
 				# (e.g. can't route properly around obstacles and corners)
 				# so we make use of the sendHomunculusMove() to make up for a more efficient routing
-				$net->sendHomunculusMove($char->{homunculus}{ID}, $char->{pos_to}{x}, $char->{pos_to}{y});
+				$messageSender->sendHomunculusMove($char->{homunculus}{ID}, $char->{pos_to}{x}, $char->{pos_to}{y});
 				debug sprintf("Homunculus follow move (distance: %.2f)\n", $char->{homunculus}->distance()), 'homunculus';
 			}
 
@@ -234,7 +234,7 @@ sub iterate {
 					}
 				}
 				if (timeOut($char->{homunculus}{standby_time}, 1)) {
-					$net->sendHomunculusStandBy($char->{homunculus}{ID});
+					$messageSender->sendHomunculusStandBy($char->{homunculus}{ID});
 					$char->{homunculus}{standby_time} = time;
 				}
 				message T("Found your Homunculus!\n"), 'homunculus';
@@ -269,7 +269,7 @@ sub iterate {
 			&& $homun_dist < MAX_DISTANCE
 			&& timeOut($char->{homunculus}{standby_time}, 2)
 		) {
-			$net->sendHomunculusStandBy($char->{homunculus}{ID});
+			$messageSender->sendHomunculusStandBy($char->{homunculus}{ID});
 			$char->{homunculus}{standby_time} = time;
 			debug sprintf("Homunculus standby (distance: %.2f)\n", $char->{homunculus}->distance());
 
@@ -415,9 +415,9 @@ sub homunculus_route {
 }
 
 sub homunculus_stopAttack {
-	#$net->sendHomunculusStandBy($char->{homunculus}{ID});
+	#$messageSender->sendHomunculusStandBy($char->{homunculus}{ID});
 	my $pos = calcPosition($char->{homunculus});
-	$net->sendHomunculusMove($char->{homunculus}{ID}, $pos->{x}, $pos->{y});
+	$messageSender->sendHomunculusMove($char->{homunculus}{ID}, $pos->{x}, $pos->{y});
 }
 
 ##### ATTACK #####
@@ -577,7 +577,7 @@ sub processAttack {
 			# Drop target if it's already attacked by someone else
 			$target->{homunculus_attack_failed} = time if ($monsters{$ID});
 			message T("Dropping target - homunculus will not kill steal others\n"), 'homunculus_attack';
-			$net->sendHomunculusMove($char->{homunculus}{ID}, $realMyPos->{x}, $realMyPos->{y});
+			$messageSender->sendHomunculusMove($char->{homunculus}{ID}, $realMyPos->{x}, $realMyPos->{y});
 			AI::Homunculus::dequeue;
 			if ($config{homunculus_teleportAuto_dropTargetKS}) {
 				message T("Teleporting due to dropping homunculus attack target\n"), 'teleport';
@@ -742,7 +742,7 @@ sub processAttack {
 			}
 
 			if ($args->{attackMethod}{type} eq "weapon" && timeOut($timeout{ai_homunculus_attack})) {
-				$net->sendHomunculusAttack($char->{homunculus}{ID}, $ID);#,
+				$messageSender->sendHomunculusAttack($char->{homunculus}{ID}, $ID);#,
 					#($config{homunculus_tankMode}) ? 0 : 7);
 				$timeout{ai_homunculus_attack}{time} = time;
 				delete $args->{attackMethod};
@@ -985,7 +985,7 @@ sub processMove {
 			# No update yet, send move request again.
 			# We do this every 0.5 secs
 			$char->{homunculus}{move_retry} = time;
-			$net->sendHomunculusMove($char->{homunculus}{ID}, $args->{move_to}{x}, $args->{move_to}{y});
+			$messageSender->sendHomunculusMove($char->{homunculus}{ID}, $args->{move_to}{x}, $args->{move_to}{y});
 		}
 	}
 }

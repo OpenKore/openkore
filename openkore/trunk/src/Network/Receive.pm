@@ -1,3 +1,22 @@
+#########################################################################
+#  OpenKore - Server message parsing
+#
+#  This software is open source, licensed under the GNU General Public
+#  License, version 2.
+#  Basically, this means that you're allowed to modify and distribute
+#  this software. However, if you distribute modified versions, you MUST
+#  also distribute the source code.
+#  See http://www.gnu.org/licenses/gpl.html for the full license.
+#########################################################################
+##
+# MODULE DESCRIPTION: Server message parsing
+#
+# This class is responsible for parsing messages that are sent by the RO
+# server to Kore. Information in the messages are stored in global variables
+# (in the module Globals).
+#
+# Please also read <a href="http://www.openkore.com/wiki/index.php/Network_subsystem">the
+# network subsystem overview.</a>
 package Network::Receive;
 
 use strict;
@@ -18,7 +37,7 @@ use Settings;
 use Log qw(message warning error debug);
 use FileParsers;
 use Interface;
-use Network::Send;
+use Network::Send ();
 use Misc;
 use Plugins;
 use Utils;
@@ -402,6 +421,98 @@ sub parse {
 
 	Plugins::callHook("packet/$handler->[0]", \%args);
 	return \%args;
+}
+
+##
+# Network::Receive->decrypt(r_msg, themsg)
+# r_msg: a reference to a scalar.
+# themsg: the message to decrypt.
+#
+# Decrypts the packets in $themsg and put the result in the scalar
+# referenced by $r_msg.
+#
+# This is an old method used back in the iRO beta 2 days when iRO had encrypted packets.
+# At the moment (December 20 2006) there are no servers that still use encrypted packets.
+#
+# Example:
+# } elsif ($switch eq "ABCD") {
+# 	my $level;
+# 	decrypt(\$level, substr($msg, 0, 2));
+sub decrypt {
+	use bytes;
+	my ($self, $r_msg, $themsg) = @_;
+	my @mask;
+	my $i;
+	my ($temp, $msg_temp, $len_add, $len_total, $loopin, $len, $val);
+	if ($config{'encrypt'} == 1) {
+		undef $$r_msg;
+		undef $len_add;
+		undef $msg_temp;
+		for ($i = 0; $i < 13;$i++) {
+			$mask[$i] = 0;
+		}
+		$len = unpack("v1",substr($themsg,0,2));
+		$val = unpack("v1",substr($themsg,2,2));
+		{
+			use integer;
+			$temp = ($val * $val * 1391);
+		}
+		$temp = ~(~($temp));
+		$temp = $temp % 13;
+		$mask[$temp] = 1;
+		{
+			use integer;
+			$temp = $val * 1397;
+		}
+		$temp = ~(~($temp));
+		$temp = $temp % 13;
+		$mask[$temp] = 1;
+		for($loopin = 0; ($loopin + 4) < $len; $loopin++) {
+ 			if (!($mask[$loopin % 13])) {
+  				$msg_temp .= substr($themsg,$loopin + 4,1);
+			}
+		}
+		if (($len - 4) % 8 != 0) {
+			$len_add = 8 - (($len - 4) % 8);
+		}
+		$len_total = $len + $len_add;
+		$$r_msg = $msg_temp.substr($themsg, $len_total, length($themsg) - $len_total);
+	} elsif ($config{'encrypt'} >= 2) {
+		undef $$r_msg;
+		undef $len_add;
+		undef $msg_temp;
+		for ($i = 0; $i < 17;$i++) {
+			$mask[$i] = 0;
+		}
+		$len = unpack("v1",substr($themsg,0,2));
+		$val = unpack("v1",substr($themsg,2,2));
+		{
+			use integer;
+			$temp = ($val * $val * 34953);
+		}
+		$temp = ~(~($temp));
+		$temp = $temp % 17;
+		$mask[$temp] = 1;
+		{
+			use integer;
+			$temp = $val * 2341;
+		}
+		$temp = ~(~($temp));
+		$temp = $temp % 17;
+		$mask[$temp] = 1;
+		for($loopin = 0; ($loopin + 4) < $len; $loopin++) {
+ 			if (!($mask[$loopin % 17])) {
+  				$msg_temp .= substr($themsg,$loopin + 4,1);
+			}
+		}
+		if (($len - 4) % 8 != 0) {
+			$len_add = 8 - (($len - 4) % 8);
+		}
+		$len_total = $len + $len_add;
+		$$r_msg = $msg_temp.substr($themsg, $len_total, length($themsg) - $len_total);
+	} else {
+		$$r_msg = $themsg;
+	}
 }
 
 
@@ -1299,7 +1410,7 @@ sub arrowcraft_list {
 	my $newmsg;
 	my $msg = $args->{RAW_MSG};
 	my $msg_size = $args->{RAW_MSG_SIZE};
-	decrypt(\$newmsg, substr($msg, 4));
+	$self->decrypt(\$newmsg, substr($msg, 4));
 	$msg = substr($msg, 0, 4).$newmsg;
 	
 	undef @arrowCraftID;
@@ -1347,7 +1458,7 @@ sub card_merge_list {
 	# The RO client does this when you double click a card
 	my $newmsg;
 	my $msg = $args->{RAW_MSG};
-	decrypt(\$newmsg, substr($msg, 4));
+	$self->decrypt(\$newmsg, substr($msg, 4));
 	$msg = substr($msg, 0, 4).$newmsg;
 	my ($len) = unpack("x2 v1", $msg);
 
@@ -1450,7 +1561,7 @@ sub cart_equip_list {
 	my $newmsg;
 	my $msg = $args->{RAW_MSG};
 	my $msg_size = $args->{RAW_MSG_SIZE};
-	decrypt(\$newmsg, substr($msg, 4));
+	$self->decrypt(\$newmsg, substr($msg, 4));
 	$msg = substr($msg, 0, 4).$newmsg;
 
 	for (my $i = 4; $i < $msg_size; $i += 20) {
@@ -1505,7 +1616,7 @@ sub cart_items_list {
 	my $msg_size = $args->{RAW_MSG_SIZE};
 	my $switch = $args->{switch};
 	
-	decrypt(\$newmsg, substr($msg, 4));
+	$self->decrypt(\$newmsg, substr($msg, 4));
 	$msg = substr($msg, 0, 4).$newmsg;
 	my $psize = ($switch eq "0123") ? 10 : 18;
 
@@ -1656,7 +1767,7 @@ sub character_moves {
 	if (AI::action eq "mapRoute" && $config{route_escape_reachedNoPortal} && $dist eq "0.0"){
 	   if (!$portalsID[0]) {
 		if ($config{route_escape_shout} ne "" && !defined($timeout{ai_route_escape}{time})){
-			sendMessage($net, "c", $config{route_escape_shout});
+			sendMessage("c", $config{route_escape_shout});
 		}
  	   	 $timeout{ai_route_escape}{time} = time;
 	   	 AI::queue("escape");
@@ -1698,7 +1809,7 @@ sub chat_info {
 	my ($self, $args) = @_;
 
 	my $title;
-	decrypt(\$title, $args->{title});
+	$self->decrypt(\$title, $args->{title});
 	$title = bytesToString($title);
 
 	my $chat = $chatRooms{$args->{ID}};
@@ -1727,7 +1838,7 @@ sub chat_modified {
 	my ($self, $args) = @_;
 	
 	my $title;
-	decrypt(\$title, $args->{title});
+	$self->decrypt(\$title, $args->{title});
 	$title = bytesToString($title);
 
 	my ($ownerID, $ID, $limit, $public, $num_users) = @{$args}{qw(ownerID ID limit public num_users)};
@@ -1810,7 +1921,7 @@ sub chat_users {
 	my ($self, $args) = @_;
 
 	my $newmsg;
-	decrypt(\$newmsg, substr($args->{RAW_MSG}, 8));
+	$self->decrypt(\$newmsg, substr($args->{RAW_MSG}, 8));
 	my $msg = substr($args->{RAW_MSG}, 0, 8).$newmsg;
 
 	my $ID = substr($args->{RAW_MSG},4,4);
@@ -2214,7 +2325,7 @@ sub exp_zeny_info {
 		$char->{exp_max} = $args->{val};
 		debug(TF("Required Exp: %s\n", $args->{val}), "parseMsg");
 		if (!$net->clientAlive() && $initSync && $config{serverType} == 2) {
-			sendSync($net, 1);
+			$messageSender->sendSync(1);
 			$initSync = 0;
 		}
 	} elsif ($args->{type} == 23) {
@@ -2531,7 +2642,7 @@ sub guild_member_setting_list {
 	my $newmsg;
 	my $msg = $args->{RAW_MSG};
 	my $msg_size = $args->{RAW_MSG_SIZE};
-	decrypt(\$newmsg, substr($msg, 4, length($msg)-4));
+	$self->decrypt(\$newmsg, substr($msg, 4, length($msg)-4));
 	$msg = substr($msg, 0, 4).$newmsg;
 	my $gtIndex;
 	for (my $i = 4; $i < $msg_size; $i += 16) {
@@ -2667,7 +2778,7 @@ sub guild_members_list {
 	my $jobID;
 	my $msg = $args->{RAW_MSG};
 	my $msg_size = $args->{RAW_MSG_SIZE};
-	decrypt(\$newmsg, substr($msg, 4, length($msg) - 4));
+	$self->decrypt(\$newmsg, substr($msg, 4, length($msg) - 4));
 	$msg = substr($msg, 0, 4) . $newmsg;
 	
 	my $c = 0;
@@ -2714,7 +2825,7 @@ sub guild_members_title_list {
 	my $msg = $args->{RAW_MSG};
 	my $msg_size = $args->{RAW_MSG_SIZE};
 	
-	decrypt(\$newmsg, substr($msg, 4, length($msg) - 4));
+	$self->decrypt(\$newmsg, substr($msg, 4, length($msg) - 4));
 	$msg = substr($msg, 0, 4) . $newmsg;
 	my $gtIndex;
 	for (my $i = 4; $i < $msg_size; $i+=28) {
@@ -2734,10 +2845,10 @@ sub guild_name {
 	$char->{guildID} = $guildID;
 	$char->{guild}{emblem} = $emblemID;
 	
-	sendGuildInfoRequest($net);	# Is this necessary?? (requests for guild info packet 014E)
+	$messageSender->sendGuildInfoRequest();	# Is this necessary?? (requests for guild info packet 014E)
 	
-	sendGuildRequest($net, 0);	#requests for guild info packet 01B6 and 014C
-	sendGuildRequest($net, 1);	#requests for guild member packet 0166 and 0154
+	$messageSender->sendGuildRequest(0);	#requests for guild info packet 01B6 and 014C
+	$messageSender->sendGuildRequest(1);	#requests for guild member packet 0166 and 0154
 }
 
 sub guild_notice {
@@ -2762,13 +2873,13 @@ sub guild_notice {
 	}
 
 	message	T("Requesting guild information...\n"), "info";
-	sendGuildInfoRequest($net);
+	$messageSender->sendGuildInfoRequest();
 
 	# Replies 01B6 (Guild Info) and 014C (Guild Ally/Enemy List)
-	sendGuildRequest($net, 0);
+	$messageSender->sendGuildRequest(0);
 
 	# Replies 0166 (Guild Member Titles List) and 0154 (Guild Members List)
-	sendGuildRequest($net, 1);
+	$messageSender->sendGuildRequest(1);
 
 }
 
@@ -2802,7 +2913,7 @@ sub identify_list {
 	my $newmsg;
 	my $msg = $args->{RAW_MSG};
 	my $msg_size = $args->{RAW_MSG_SIZE};
-	decrypt(\$newmsg, substr($msg, 4));
+	$self->decrypt(\$newmsg, substr($msg, 4));
 	$msg = substr($msg, 0, 4).$newmsg;
 	
 	undef @identifyID;
@@ -2889,7 +3000,7 @@ sub inventory_item_added {
 			# Auto-drop item
 			$item = $char->{inventory}[$invIndex];
 			if (pickupitems(lc($item->{name})) == -1 && !AI::inQueue('storageAuto', 'buyAuto')) {
-				sendDrop($net, $item->{index}, $amount);
+				$messageSender->sendDrop($item->{index}, $amount);
 				message TF("Auto-dropping item: %s (%d) x %d\n", $item->{name}, $invIndex, $amount), "drop";
 			}
 		}
@@ -2977,7 +3088,7 @@ sub inventory_items_nonstackable {
 	my ($self, $args) = @_;
 	change_to_constate5();
 	my $newmsg;
-	decrypt(\$newmsg, substr($args->{RAW_MSG}, 4));
+	$self->decrypt(\$newmsg, substr($args->{RAW_MSG}, 4));
 	my $msg = substr($args->{RAW_MSG}, 0, 4) . $newmsg;
 	my $invIndex;
 	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 20) {
@@ -3021,7 +3132,7 @@ sub inventory_items_stackable {
 	my ($self, $args) = @_;
 	change_to_constate5();
 	my $newmsg;
-	decrypt(\$newmsg, substr($msg, 4));
+	$self->decrypt(\$newmsg, substr($msg, 4));
 	my $msg = substr($args->{RAW_MSG}, 0, 4).$newmsg;
 	my $psize = ($args->{switch} eq "00A3") ? 10 : 18;
 
@@ -3078,7 +3189,7 @@ sub item_appeared {
 
 	# Take item as fast as possible
 	if ($AI == 2 && pickupitems(lc($item->{name})) == 2 && distance($item->{pos}, $char->{pos_to}) <= 5) {
-		sendTake($net, $args->{ID});
+		$messageSender->sendTake($args->{ID});
 	}
 
 	message TF("Item Appeared: %s (%d) x %d (%d, %d)\n", $item->{name}, $item->{binID}, $item->{amount}, $args->{x}, $args->{y}), "drop", 1;
@@ -3155,7 +3266,7 @@ sub item_skill {
 	message TF("Permitted to use %s (%d), level %d\n", $skill->name, $skillID, $skillLv);
 
 	unless ($config{noAutoSkill}) {
-		sendSkillUse($net, $skillID, $skillLv, $accountID);
+		$messageSender->sendSkillUse($skillID, $skillLv, $accountID);
 		undef $char->{permitSkill};
 	} else {
 		$char->{permitSkill} = $skill;
@@ -3363,10 +3474,10 @@ sub map_change {
 	if ($net->version == 1) {
 		ai_clientSuspend(0, 10);
 	} else {
-		sendMapLoaded($net);
+		$messageSender->sendMapLoaded();
 		# Sending sync packet. Perhaps not only for server types 13 and 11
 		if($config{serverType} == 11 || $config{serverType} == 12 || $config{serverType} == 13 || $config{serverType} == 16) {
-			sendSync($net, 1);
+			$messageSender->sendSync(1);
 		}
 		$timeout{'ai'}{'time'} = time;
 	}
@@ -3453,16 +3564,16 @@ sub map_loaded {
 		main::initMapChangeVars();
 	} else {
 		message	T("Requesting guild information...\n"), "info";
-		sendGuildInfoRequest($net);
+		$messageSender->sendGuildInfoRequest();
 
 		# Replies 01B6 (Guild Info) and 014C (Guild Ally/Enemy List)
-		sendGuildRequest($net, 0);
+		$messageSender->sendGuildRequest(0);
 
 		# Replies 0166 (Guild Member Titles List) and 0154 (Guild Members List)
-		sendGuildRequest($net, 1);
+		$messageSender->sendGuildRequest(1);
 		message T("You are now in the game\n"), "connection";
-		sendMapLoaded($net);
-		sendSync($net, 1);
+		$messageSender->sendMapLoaded();
+		$messageSender->sendSync(1);
 		debug "Sent initial sync\n", "connection";
 		$timeout{'ai'}{'time'} = time;
 	}
@@ -3472,7 +3583,7 @@ sub map_loaded {
 	$char->{pos_to} = {%{$char->{pos}}};
 	message TF("Your Coordinates: %s, %s\n", $char->{pos}{x}, $char->{pos}{y}), undef, 1;
 
-	sendIgnoreAll($net, "all") if ($config{'ignoreAll'});
+	$messageSender->sendIgnoreAll("all") if ($config{'ignoreAll'});
 }
 
 sub memo_success {
@@ -3580,7 +3691,7 @@ sub npc_sell_list {
 	#sell list, similar to buy list
 	if (length($args->{RAW_MSG}) > 4) {
 		my $newmsg;
-		decrypt(\$newmsg, substr($args->{RAW_MSG}, 4));
+		$self->decrypt(\$newmsg, substr($args->{RAW_MSG}, 4));
 		my $msg = substr($args->{RAW_MSG}, 0, 4).$newmsg;
 	}
 	undef $talk{buyOrSell};
@@ -3606,7 +3717,7 @@ sub npc_store_begin {
 sub npc_store_info {
 	my ($self, $args) = @_;
 	my $newmsg;
-	decrypt(\$newmsg, substr($args->{RAW_MSG}, 4));
+	$self->decrypt(\$newmsg, substr($args->{RAW_MSG}, 4));
 	my $msg = substr($args->{RAW_MSG}, 0, 4).$newmsg;
 	undef @storeList;
 	my $storeList = 0;
@@ -3651,7 +3762,7 @@ sub npc_store_info {
 sub npc_talk {
 	my ($self, $args) = @_;
 	my $newmsg;
-	decrypt(\$newmsg, substr($args->{RAW_MSG}, 8));
+	$self->decrypt(\$newmsg, substr($args->{RAW_MSG}, 8));
 
 	my $msg = substr($args->{RAW_MSG}, 0, 8) . $newmsg;
 	my $ID = substr($msg, 4, 4);
@@ -3679,7 +3790,7 @@ sub npc_talk_close {
 	message TF("%s: Done talking\n", $name), "npc";
 	$ai_v{'npc_talk'}{'talk'} = 'close';
 	$ai_v{'npc_talk'}{'time'} = time;
-	sendTalkCancel($net, $ID);
+	$messageSender->sendTalkCancel($ID);
 
 	Plugins::callHook('npc_talk_done', {ID => $ID});
 }
@@ -3697,7 +3808,7 @@ sub npc_talk_continue {
 
 	if ($config{autoTalkCont}) {
 		message TF("%s: Auto-continuing talking\n", $name), "npc";
-		sendTalkContinue($net, $ID);
+		$messageSender->sendTalkContinue($ID);
 		# this time will be reset once the NPC responds
 		$ai_v{'npc_talk'}{'time'} = time + $timeout{'ai_npcTalk'}{'timeout'} + 5;
 	} else {
@@ -3723,7 +3834,7 @@ sub npc_talk_responses {
 	# A list of selections appeared on the NPC message dialog.
 	# Each item is divided with ':'
 	my $newmsg;
-	decrypt(\$newmsg, substr($args->{RAW_MSG}, 8));
+	$self->decrypt(\$newmsg, substr($args->{RAW_MSG}, 8));
 	my $msg = substr($msg, 0, 8).$newmsg;
 
 	my $ID = substr($msg, 4, 4);
@@ -3777,7 +3888,7 @@ sub party_chat {
 	my ($self, $args) = @_;
 	my $msg;
 
-	decrypt(\$msg, $args->{message});
+	$self->decrypt(\$msg, $args->{message});
 	$msg = bytesToString($msg);
 
 	# Type: String
@@ -3864,7 +3975,7 @@ sub party_join {
 	$chars[$config{char}]{party}{users}{$ID}{name} = $user;
 
 	if ($config{partyAutoShare} && $char->{party} && $char->{party}{users}{$accountID}{admin}) {
-		sendPartyShareEXP($net, 1);
+		$messageSender->sendPartyShareEXP(1);
 	}
 }
 
@@ -3906,7 +4017,7 @@ sub party_users_info {
 	my ($self, $args) = @_;
 
 	my $msg;
-	decrypt(\$msg, substr($args->{RAW_MSG}, 28));
+	$self->decrypt(\$msg, substr($args->{RAW_MSG}, 28));
 	$msg = substr($args->{RAW_MSG}, 0, 28).$msg;
 	$char->{party}{name} = bytesToString($args->{party_name});
 
@@ -3924,7 +4035,7 @@ sub party_users_info {
 		$chars[$config{char}]{party}{users}{$ID}{admin} = 1 if ($num == 0);
 	}
 
-	sendPartyShareEXP($net, 1) if ($config{partyAutoShare} && $chars[$config{char}]{party} && %{$chars[$config{char}]{party}});
+	$messageSender->sendPartyShareEXP(1) if ($config{partyAutoShare} && $chars[$config{char}]{party} && %{$chars[$config{char}]{party}});
 
 }
 
@@ -4280,7 +4391,7 @@ sub repair_list {
 		my $listID = unpack("C1", substr($args->{RAW_MSG}, $i+12, 1));
 		my $name = itemNameSimple($nameID);
 		$msg .= "$index $name\n";
-		sendRepairItem($index) if ($config{repairAuto} && $i == 4);
+		$messageSender->sendRepairItem($index) if ($config{repairAuto} && $i == 4);
 	}
 	$msg .= "---------------------------\n";
 	message $msg, "list";
@@ -4323,7 +4434,7 @@ sub sage_autospell {
 	# Sage Autospell - list of spells availible sent from server
 	if ($config{autoSpell}) {
 		my $skill = Skills->new(name => $config{autoSpell});
-		sendAutoSpell($net, $skill->id);
+		$messageSender->sendAutoSpell($skill->id);
 	}	
 }
 
@@ -4368,7 +4479,7 @@ sub sync_request {
 		my $ID = $args->{ID};
 		if ($ID == $accountID) {
 			$timeout{ai_sync}{time} = time;
-			sendSync($net) unless ($net->clientAlive);
+			$messageSender->sendSync() unless ($net->clientAlive);
 			debug "Sync packet requested\n", "connection";
 		} else {
 			warning T("Sync packet requested for wrong ID\n");
@@ -4826,10 +4937,10 @@ sub skill_used_no_damage {
 		if ($player && ($args->{skillID} == 28 || $args->{skillID} == 29 || $args->{skillID} == 34)) {
 			if ($args->{targetID} eq $accountID) {
 				chatLog("k", "***$source ".$skill->name." on $target$extra***\n");
-				sendMessage($net, "pm", getResponse("skillgoodM"), $player->name);
+				sendMessage("pm", getResponse("skillgoodM"), $player->name);
 			} elsif ($monstersList->getByID($args->{targetID})) {
 				chatLog("k", "***$source ".$skill->name." on $target$extra***\n");
-				sendMessage($net, "pm", getResponse("skillbadM"), $player->name);
+				sendMessage("pm", getResponse("skillbadM"), $player->name);
 			}
 		}
 	}
@@ -4853,7 +4964,7 @@ sub skills_list {
 	my $msg = $args->{RAW_MSG};
 	my $msg_size = $args->{RAW_MSG_SIZE};
 	
-	decrypt(\$newmsg, substr($msg, 4));
+	$self->decrypt(\$newmsg, substr($msg, 4));
 	$msg = substr($msg, 0, 4).$newmsg;
 
 	undef @skillsID;
@@ -5216,7 +5327,7 @@ sub storage_items_nonstackable {
 	# Retrieve list of non-stackable (weapons & armor) storage items.
 	# This packet is sent immediately after 00A5/01F0.
 	my $newmsg;
-	decrypt(\$newmsg, substr($args->{RAW_MSG}, 4));
+	$self->decrypt(\$newmsg, substr($args->{RAW_MSG}, 4));
 	my $msg = substr($args->{RAW_MSG}, 0, 4).$newmsg;
 
 	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 20) {
@@ -5243,7 +5354,7 @@ sub storage_items_stackable {
 	my ($self, $args) = @_;
 	# Retrieve list of stackable storage items
 	my $newmsg;
-	decrypt(\$newmsg, substr($args->{RAW_MSG}, 4));
+	$self->decrypt(\$newmsg, substr($args->{RAW_MSG}, 4));
 	my $msg = substr($args->{RAW_MSG}, 0, 4).$newmsg;
 	undef %storage;
 	undef @storageID;
@@ -5319,7 +5430,7 @@ sub storage_password_request {
 		my $num = ($args->{switch} eq '023E') ? $config{charSelect_password} : $config{storageAuto_password};
 		$num = sprintf("%d%08d", length($num), $num);
 		my $ciphertextBlock = $crypton->encrypt(pack("V*", $num, 0, 0, 0));
-		sendStoragePassword($ciphertextBlock, 3);
+		$messageSender->sendStoragePassword($ciphertextBlock, 3);
 
 	} elsif ($args->{flag} == 8) {	# apparently this flag means that you have entered the wrong password
 									# too many times, and now the server is blocking you from using storage

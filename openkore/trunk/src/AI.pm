@@ -837,14 +837,14 @@ sub attack {
 					if ($Ldef eq "") {
 						$Ldef = findLastIndex(\@{$chars[$config{'char'}]{'inventory'}}, "equipped",2);
 						$Ldef = findLastIndex(\@{$chars[$config{'char'}]{'inventory'}}, "equipped",34) if ($Ldef eq "");
-						$net->sendUnequip($chars[$config{'char'}]{'inventory'}[$Ldef]{'index'}) if ($Ldef ne "");
+						$messageSender->sendUnequip($chars[$config{'char'}]{'inventory'}[$Ldef]{'index'}) if ($Ldef ne "");
 					}
 
 					$Rdef = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "equipped",34);
 					$Rdef = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "equipped",2) if($Rdef eq "");
 					#Debug for 2hand Quicken and Bare Hand attack with 2hand weapon
 					if((!Misc::whenStatusActive("Twohand Quicken, Adrenaline, Spear Quicken") || $config{"autoSwitch_$i"."_rightHand"} eq "[NONE]") && $Rdef ne "" && $Rdef ne $Ldef) {
-						$net->sendUnequip($chars[$config{'char'}]{'inventory'}[$Rdef]{'index'});
+						$messageSender->sendUnequip($chars[$config{'char'}]{'inventory'}[$Rdef]{'index'});
 					}
 					if ($Req eq $Leq) {
 						for ($j=0; $j < @{$chars[$config{'char'}]{'inventory'}};$j++) {
@@ -901,21 +901,21 @@ sub attack {
 			#$Req = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{'autoSwitch_default_rightHand'});
 			if($Req ne "" && !$chars[$config{'char'}]{'inventory'}[$Req]{'equipped'}) {
 				$Rdef = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "equipped",2);
-				$net->sendUnequip($chars[$config{'char'}]{'inventory'}[$Rdef]{'index'}) if($Rdef ne "" && $chars[$config{'char'}]{'inventory'}[$Rdef]{'equipped'});
+				$messageSender->sendUnequip($chars[$config{'char'}]{'inventory'}[$Rdef]{'index'}) if($Rdef ne "" && $chars[$config{'char'}]{'inventory'}[$Rdef]{'equipped'});
 
 				$Ldef = findLastIndex(\@{$chars[$config{'char'}]{'inventory'}}, "equipped", 32);
 				if ($Ldef eq "") {
 					$Ldef = findLastIndex(\@{$chars[$config{'char'}]{'inventory'}}, "equipped",2);
 					$Ldef = findLastIndex(\@{$chars[$config{'char'}]{'inventory'}}, "equipped",34) if ($Ldef eq "");
 					if ($Ldef ne "" && $chars[$config{'char'}]{'inventory'}[$Ldef]{'equipped'}) {
-						$net->sendUnequip($chars[$config{'char'}]{'inventory'}[$Ldef]{'index'});
+						$messageSender->sendUnequip($chars[$config{'char'}]{'inventory'}[$Ldef]{'index'});
 						$Lequip = 1;
 					}
 				}
 
 				$Rdef = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "equipped", 34);
 				$Rdef = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "equipped", 2) if ($Rdef eq "");
-				$net->sendUnequip($chars[$config{'char'}]{'inventory'}[$Rdef]{'index'}) if($Rdef ne "" && $chars[$config{'char'}]{'inventory'}[$Rdef]{'equipped'} && $Rdef ne $Ldef);
+				$messageSender->sendUnequip($chars[$config{'char'}]{'inventory'}[$Rdef]{'index'}) if($Rdef ne "" && $chars[$config{'char'}]{'inventory'}[$Rdef]{'equipped'} && $Rdef ne $Ldef);
 
 				message TF("Auto equiping default [R]: %s (unequip %s)\n",
 					$config{'autoSwitch_default_rightHand'}, $Rdef), "equip";
@@ -981,7 +981,7 @@ sub sit {
 	AI::clear("sitting", "standing");
 	if ($char->{skills}{NV_BASIC}{lv} >= 3) {
 		AI::queue("sitting");
-		$net->sendSit();
+		$messageSender->sendSit();
 		Misc::look($config{sitAuto_look}) if (defined $config{sitAuto_look});
 	}
 }
@@ -992,7 +992,7 @@ sub stand {
 
 	AI::clear("sitting", "standing");
 	if ($char->{skills}{NV_BASIC}{lv} >= 3) {
-		$net->sendStand();
+		$messageSender->sendStand();
 		AI::queue("standing");
 	}
 }

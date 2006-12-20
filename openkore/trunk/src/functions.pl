@@ -23,7 +23,7 @@ use Settings qw(%sys);
 use Log qw(message warning error debug);
 use Interface;
 use Network::Receive;
-use Network::Send;
+use Network::Send ();
 use Commands;
 use Misc;
 use Plugins;
@@ -523,7 +523,7 @@ sub parseSendMsg {
 
 	my $sendMsg = $msg;
 	if (length($msg) >= 4 && $conState >= 4 && length($msg) >= unpack("v1", substr($msg, 0, 2))) {
-		decrypt(\$msg, $msg);
+		Network::Receive->decrypt(\$msg, $msg);
 	}
 	my $switch = uc(unpack("H2", substr($msg, 1, 1))) . uc(unpack("H2", substr($msg, 0, 1)));
 	if ($config{'debugPacket_ro_sent'} && !existsInList($config{'debugPacket_exclude'}, $switch)
@@ -775,7 +775,7 @@ sub parseMsg {
 	 && length($msg) >= unpack("v1", substr($msg, 0, 2))) {
 		# The decrypt below casued annoying unparsed errors (at least in serverType  2)
 		if ($config{serverType} != 2) {
-			decrypt(\$msg, $msg)
+			Network::Receive->decrypt(\$msg, $msg)
 		}
 	}
 	$switch = uc(unpack("H2", substr($msg, 1, 1))) . uc(unpack("H2", substr($msg, 0, 1)));

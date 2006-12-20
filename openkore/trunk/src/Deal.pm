@@ -33,7 +33,7 @@ use Globals;
 use Utils;
 use Log qw(message error warning debug);
 use Time::HiRes qw(time);
-use Network::Send;
+use Network::Send ();
 
 
 sub new {
@@ -51,7 +51,7 @@ sub dealPlayer {
 	my ($other) = @_;
 	my $self = new Deal;
 	$self->{other} = $other;
-	sendDeal($other->{ID});
+	$messageSender->sendDeal($other->{ID});
 	$self->{state} = 'request';
 	$ai_v{temp}{deal} = $self;
 }
@@ -80,17 +80,17 @@ sub AI {
 
 sub add {
 	my ($self,$item,$ammount) = @_;
-	sendDealAddItem($item->{index},$ammount);
+	$messageSender->sendDealAddItem($item->{index},$ammount);
 }
 
 sub accept {
 	my ($self,$args) = @_;
-	sendDealAccept();
+	$messageSender->sendDealAccept();
 }
 
 sub cancel {
 	my ($self,$args) = @_;	
-	sendDealCancel();
+	$messageSender->sendDealCancel();
 }
 
 sub finalize {

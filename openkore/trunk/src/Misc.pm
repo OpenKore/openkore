@@ -34,7 +34,7 @@ use Plugins;
 use FileParsers;
 use Settings;
 use Utils;
-use Network::Send;
+use Network::Send ();
 use AI;
 use Actor;
 use Actor::You;
@@ -1037,7 +1037,7 @@ sub launchURL {
 
 		# This is a script I wrote for the autopackage project
 		# It autodetects the current desktop environment
-		my $detectionScript = <<"		EOF";
+		my $detectionScript = <<EOF;
 			function detectDesktop() {
 				if [[ "\$DISPLAY" = "" ]]; then
                 			return 1
@@ -1059,7 +1059,7 @@ sub launchURL {
 				return 0
 			}
 			detectDesktop
-		EOF
+EOF
 
 		my ($r, $w, $desktop);
 		my $pid = IPC::Open2::open2($r, $w, '/bin/bash');
@@ -1362,7 +1362,7 @@ sub charSelectScreen {
 	return $plugin_args{return} if ($plugin_args{return});
 
 	if ($plugin_args{autoLogin} && @chars && $config{char} ne "" && $chars[$config{char}]) {
-		$net->sendCharLogin($config{char});
+		$messageSender->sendCharLogin($config{char});
 		$timeout{charlogin}{time} = time;
 		return 1;
 	}
@@ -1380,7 +1380,7 @@ sub charSelectScreen {
 		} elsif ($choice < @charNames) {
 			# Character chosen
 			configModify('char', $charNameIndices[$choice], 1);
-			$net->sendCharLogin($config{char});
+			$messageSender->sendCharLogin($config{char});
 			$timeout{charlogin}{time} = time;
 			return 1;
 
@@ -1437,7 +1437,7 @@ sub charSelectScreen {
 			goto TOP;
 		}
 
-		$net->sendCharDelete($chars[$charIndex]{ID}, $email);
+		$messageSender->sendCharDelete($chars[$charIndex]{ID}, $email);
 		message TF("Deleting character %s...\n", $chars[$charIndex]{name}), "connection";
 		$AI::temp::delIndex = $charIndex;
 		$timeout{charlogin}{time} = time;
@@ -1609,7 +1609,7 @@ sub createCharacter {
 			}
 		}
 
-		$net->sendCharCreate($slot, $name,
+		$messageSender->sendCharCreate($slot, $name,
 			$str, $agi, $vit, $int, $dex, $luk,
 			$hair_style, $hair_color);
 		return 1;
@@ -1628,7 +1628,7 @@ sub deal {
 	assert(UNIVERSAL::isa($player, 'Actor::Player')) if DEBUG;
 
 	$outgoingDeal{ID} = $player->{ID};
-	sendDeal($player->{ID});
+	$messageSender->sendDeal($player->{ID});
 }
 
 ##
@@ -1638,7 +1638,7 @@ sub deal {
 sub dealAddItem {
 	my ($item, $amount) = @_;
 
-	sendDealAddItem($item->{index}, $amount);
+	$messageSender->sendDealAddItem($item->{index}, $amount);
 	$currentDeal{lastItemAmount} = $amount;
 }
 
@@ -1653,7 +1653,7 @@ sub drop {
 	if (!$amount || $amount > $char->{inventory}[$item]{amount}) {
 		$amount = $char->{inventory}[$item]{amount};
 	}
-	$net->sendDrop($char->{inventory}[$item]{index}, $amount);
+	$messageSender->sendDrop($char->{inventory}[$item]{index}, $amount);
 }
 
 sub dumpData {
@@ -1951,7 +1951,7 @@ sub storageGet {
 		if (!defined($max) || $max > $item->{amount}) {
 			$max = $item->{amount};
 		}
-		sendStorageGet($item->{index}, $max);
+		$messageSender->sendStorageGet($item->{index}, $max);
 
 	} else {
 		my %args;
@@ -2205,7 +2205,7 @@ sub processNameRequestQueue {
 			next;
 		}
 
-		$net->sendGetPlayerInfo($ID);
+		$messageSender->sendGetPlayerInfo($ID);
 		$actor = shift @{$queue};
 		push @{$queue}, $actor if ($actor);
 		last;
@@ -2228,19 +2228,23 @@ sub relog {
 	message TF("Relogging in %d seconds...\n", $timeout), "connection" unless $silent;
 }
 
+##
+# sendMessage(String type, String msg, String user)
+# type: Specifies what kind of message this is. "c" for public chat, "g" for guild chat,
+#       "p" for party chat, "pm" for private message, "k" for messages that only the RO
+#       client will see (in X-Kore mode.)
+# msg: The message to send.
+# user: 
+#
+# Send a chat message to a user.
 sub sendMessage {
-	my $r_net = shift;
-	my $type = shift;
-	my $msg = shift;
-	my $user = shift;
-	my ($i, $j);
-	my @msg;
-	my @msgs;
-	my $oldmsg;
-	my $amount;
-	my $space;
-	@msgs = split /\\n/,$msg;
+	my ($sender, $type, $msg, $user) = @_;
+	my ($j, @msgs, $oldmsg, $amount, $space);
+
+	@msgs = split /\\n/, $msg;
 	for ($j = 0; $j < @msgs; $j++) {
+		my (@msg, $i);
+
 		@msg = split / /, $msgs[$j];
 		undef $msg;
 		for ($i = 0; $i < @msg; $i++) {
@@ -2262,19 +2266,20 @@ sub sendMessage {
 						$msg .= substr($msg[$i], 0, $amount);
 					}
 					if ($type eq "c") {
-						sendChat($r_net, $msg);
+						$sender->sendChat($msg);
 					} elsif ($type eq "g") {
-						sendGuildChat($r_net, $msg);
+						$sender->sendGuildChat($msg);
 					} elsif ($type eq "p") {
-						sendPartyChat($r_net, $msg);
+						$sender->sendPartyChat($msg);
 					} elsif ($type eq "pm") {
-						sendPrivateMsg($r_net, $user, $msg);
-						undef %lastpm;
-						$lastpm{'msg'} = $msg;
-						$lastpm{'user'} = $user;
+						$sender->sendPrivateMsg($user, $msg);
+						%lastpm = (
+							msg => $msg,
+							user => $user
+						);
 						push @lastpm, {%lastpm};
 					} elsif ($type eq "k") {
-						injectMessage($msg);
+						$sender->injectMessage($msg);
 	 				}
 					$msg[$i] = substr($msg[$i], $amount - length($oldmsg), length($msg[$i]) - $amount - length($oldmsg));
 					undef $msg;
@@ -2293,37 +2298,39 @@ sub sendMessage {
 				}
 			} else {
 				if ($type eq "c") {
-					sendChat($r_net, $msg);
+					$sender->sendChat($msg);
 				} elsif ($type eq "g") {
-					sendGuildChat($r_net, $msg);
+					$sender->sendGuildChat($msg);
 				} elsif ($type eq "p") {
-					sendPartyChat($r_net, $msg);
+					$sender->sendPartyChat($msg);
 				} elsif ($type eq "pm") {
-					sendPrivateMsg($r_net, $user, $msg);
-					undef %lastpm;
-					$lastpm{'msg'} = $msg;
-					$lastpm{'user'} = $user;
+					$sender->sendPrivateMsg($user, $msg);
+					%lastpm = (
+						msg => $msg,
+						user => $user
+					);
 					push @lastpm, {%lastpm};
 				} elsif ($type eq "k") {
-					injectMessage($msg);
+					$sender->injectMessage($msg);
 				}
 				$msg = $msg[$i];
 			}
 			if (length($msg) && $i == @msg - 1) {
 				if ($type eq "c") {
-					sendChat($r_net, $msg);
+					$sender->sendChat($msg);
 				} elsif ($type eq "g") {
-					sendGuildChat($r_net, $msg);
+					$sender->sendGuildChat($msg);
 				} elsif ($type eq "p") {
-					sendPartyChat($r_net, $msg);
+					$sender->sendPartyChat($msg);
 				} elsif ($type eq "pm") {
-					sendPrivateMsg($r_net, $user, $msg);
-					undef %lastpm;
-					$lastpm{'msg'} = $msg;
-					$lastpm{'user'} = $user;
+					$sender->sendPrivateMsg($user, $msg);
+					%lastpm = (
+						msg => $msg,
+						user => $user
+					);
 					push @lastpm, {%lastpm};
 				} elsif ($type eq "k") {
-					injectMessage($msg);
+					$sender->injectMessage($msg);
 				}
 			}
 		}
@@ -2475,7 +2482,7 @@ sub countCastOn {
 
 sub stopAttack {
 	my $pos = calcPosition($char);
-	sendMove($pos->{x}, $pos->{y});
+	$messageSender->sendMove($pos->{x}, $pos->{y});
 }
 
 ##
@@ -2882,7 +2889,7 @@ sub useTeleport {
 				main::ai_skillUse($skill->handle, $sk_lvl, 0, 0, $accountID);
 				return 1;
 			} else {
-				sendSkillUse($net, $skill->id, $sk_lvl, $accountID);
+				$messageSender->sendSkillUse($skill->id, $sk_lvl, $accountID);
 				undef $char->{permitSkill};
 			}
 
@@ -2896,7 +2903,7 @@ sub useTeleport {
 		delete $ai_v{temp}{teleport};
 		debug "Sending Teleport using Level $use_lvl\n", "useTeleport";
 		if ($use_lvl == 1) {
-			sendTeleport($net, "Random");
+			$messageSender->sendTeleport("Random");
 			return 1;
 		} elsif ($use_lvl == 2) {
 			# check for possible skill level abuse
@@ -2908,7 +2915,7 @@ sub useTeleport {
 			my $telemap = "prontera.gat";
 			$telemap = "$config{saveMap}.gat" if ($config{saveMap} ne "");
 
-			sendTeleport($net, $telemap);
+			$messageSender->sendTeleport($telemap);
 			return 1;
 		}
 	}
@@ -2947,7 +2954,7 @@ sub useTeleport {
 		# We have Fly Wing/Butterfly Wing.
 		# Don't spam the "use fly wing" packet, or we'll end up using too many wings.
 		if (timeOut($timeout{ai_teleport})) {
-			sendItemUse($net, $char->{inventory}[$invIndex]{index}, $accountID);
+			$messageSender->sendItemUse($char->{inventory}[$invIndex]{index}, $accountID);
 			$timeout{ai_teleport}{time} = time;
 		}
 		return 1;
@@ -4260,7 +4267,7 @@ sub openShop {
 	my @items = makeShop();
 	return unless @items;
 	$shop{title} = ($config{shopTitleOversize}) ? $shop{title} : substr($shop{title},0,36);
-	sendOpenShop($shop{title}, \@items);
+	$messageSender->sendOpenShop($shop{title}, \@items);
 	message TF("Shop opened (%s) with %d selling items.\n", $shop{title}, @items.""), "success";
 	$shopstarted = 1;
 	$shopEarned = 0;
@@ -4272,7 +4279,7 @@ sub closeShop {
 		return;
 	}
 
-	sendCloseShop($net);
+	$messageSender->sendCloseShop();
 
 	$shopstarted = 0;
 	$timeout{'ai_shop'}{'time'} = time;

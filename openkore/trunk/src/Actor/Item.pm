@@ -30,7 +30,7 @@ use Actor;
 use base qw(Actor);
 use Utils;
 use Log qw(message error warning debug);
-use Network::Send;
+use Network::Send ();
 use AI;
 
 use overload '""' => \&_toString;
@@ -374,7 +374,7 @@ sub equippedInSlot {
 sub equip {
 	my $self = shift;
 	return 1 if $self->{equipped};
-	sendEquip($net, $self->{index}, $self->{type_equip});
+	$messageSender->sendEquip($self->{index}, $self->{type_equip});
 	queueEquip(1);
 	return 0;
 }
@@ -386,7 +386,7 @@ sub equip {
 sub unequip {
 	my $self = shift;
 	return 1 unless $self->{equipped};
-	sendUnequip($net, $self->{index});
+	$messageSender->sendUnequip($self->{index});
 	return 0;
 }
 
@@ -400,10 +400,10 @@ sub use {
 	my $target = shift;
 	return 0 unless $self->{type} <= 2;
 	if (!$target || $target == $accountID) {
-		sendItemUse($net, $self->{index}, $accountID);
+		$messageSender->sendItemUse($self->{index}, $accountID);
 	}
 	else {
-		sendItemUse($net, $self->{index}, $target);
+		$messageSender->sendItemUse($self->{index}, $target);
 	}
 	return 1;
 }
@@ -423,10 +423,10 @@ sub equipInSlot {
 	# this is not needed, it screws up clips (can be equipped in multiple (two) slots)
 	#if ($equipSlot_rlut{$slot} ^ $self->{type_equip}) {
 		#checks whether item uses multiple slots
-	#	sendEquip($net, $self->{index}, $self->{type_equip});
+	#	$messageSender->sendEquip($self->{index}, $self->{type_equip});
 	#}
 	#else {
-		sendEquip($net, $self->{index}, $equipSlot_rlut{$slot});
+		$messageSender->sendEquip($self->{index}, $equipSlot_rlut{$slot});
 	#}
 	queueEquip(1);
 	return 0;
