@@ -6,13 +6,15 @@ Actor::Item
 ActorList
 I18N
 Interface
-Network
 ChatQueue
 Commands
 Log
 Settings
 Translation
 Modules
+Network
+Network::Receive
+Network::Send
 Plugins
 Skills
 Match
@@ -28,9 +30,9 @@ Utils::AppLauncher
 Utils::Benchmark
 Utils::CallbackList
 Utils::Crypton
+Utils::Exceptions
 Utils::PerlLauncher
 Utils::ObjectList
-Utils::Core::Exception
 Utils::Set
 Utils::StartupNotification::Launcher
 Utils::StartupNotification::Launchee
