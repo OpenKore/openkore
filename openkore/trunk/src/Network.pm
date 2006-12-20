@@ -17,12 +17,16 @@
 # MODULE DESCRIPTION: Connection handling
 #
 # The Network module handles connections to the Ragnarok Online server.
-# The submodule Network::Send contains functions for sending all kinds of
-# packets to the RO server.
-#
 # This module only handles connection issues, and nothing else. It doesn't do
 # anything with the actual data. Network data handling is performed by
-# the Network::Receive and Network::Receive::ServerTypeX classes.
+# the @MODULE(Network::Receive) and Network::Receive::ServerTypeX classes.
+#
+# The submodule @MODULE(Network::Send) contains functions for sending all
+# kinds of messages to the RO server.
+#
+# Please also read <a href="http://www.openkore.com/wiki/index.php/Network_subsystem">the
+# network subsystem overview.</a>
+
 package Network;
 
 use strict;

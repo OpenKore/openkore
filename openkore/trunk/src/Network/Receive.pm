@@ -314,8 +314,7 @@ sub new {
 	return \%self;
 }
 
-##
-# ->willMangle($switch)
+# $NetworkReceive->willMangle($switch)
 #
 # Return 1 if a packet with the given switch would be mangled.
 # Return 0 otherwise.
@@ -331,8 +330,7 @@ sub willMangle {
 	return 0;
 }
 
-##
-# ->mangle($args)
+# $NetworkReceive->mangle($args)
 #
 # Calls the appropriate plugin function to mangle the packet, which
 # destructively modifies $args.
@@ -352,8 +350,7 @@ sub mangle {
 	return $hook->{r_func}($hookname, $args, $hook->{user_data});
 }
 
-##
-# ->reconstruct($args)
+# $NetworkReceive->reconstruct($args)
 #
 # Reconstructs a raw packet from $args using $self->{packet_list}.
 sub reconstruct {
@@ -371,6 +368,8 @@ sub reconstruct {
 	return $packet;
 }
 
+##
+# Network::Receive->create(serverType)
 sub create {
 	my ($self, $type) = @_;
 	$type = 0 if $type eq '';
@@ -437,7 +436,7 @@ sub parse {
 # Example:
 # } elsif ($switch eq "ABCD") {
 # 	my $level;
-# 	decrypt(\$level, substr($msg, 0, 2));
+# 	Network::Receive->decrypt(\$level, substr($msg, 0, 2));
 sub decrypt {
 	use bytes;
 	my ($self, $r_msg, $themsg) = @_;

@@ -81,7 +81,7 @@ sub new {
 
 ##
 # Network::Send->create(net, int serverType)
-# net: An object compatible with the 'Network' class.
+# net: An object compatible with the '@MODULE(Network)' class.
 # serverType: A server type.
 #
 # Create a new message sender object for the specified server type.

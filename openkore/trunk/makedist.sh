@@ -41,7 +41,6 @@ DIRS=(.
 	src/Network/Send
 	src/Poseidon
 	src/Utils
-	src/Utils/Core
 	src/Utils/StartupNotification
 	src/auto/XSTools
 	src/auto/XSTools/misc
