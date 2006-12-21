@@ -45,4 +45,14 @@ XSTools::bootModule('Utils::Win32');
 #
 # Open a file.
 
+##
+# String Utils::Win32::codepageToUTF8(int codepage, Bytes str)
+#
+# Convert a multibyte string, encoded in the specified codepage, into a UTF-8 string.
+
+##
+# Bytes Utils::Win32::utf8ToCodepage(int codepage, String str)
+#
+# Convert a UTF-8 string into a multibyte string, encoded in the specified codepage.
+
 1;
