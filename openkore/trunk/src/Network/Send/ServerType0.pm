@@ -1958,7 +1958,7 @@ sub sendSkillUseLoc {
 }
 
 sub sendStorageAdd {
-	my $self;
+	my $self = shift;
 	my $index = shift;
 	my $amount = shift;
 	my $msg;
@@ -2038,7 +2038,7 @@ sub sendStorageAdd {
 }
 
 sub sendStorageAddFromCart {
-	my $self;
+	my $self = shift;
 	my $index = shift;
 	my $amount = shift;
 	my $msg;
