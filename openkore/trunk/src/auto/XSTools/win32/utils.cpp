@@ -298,7 +298,7 @@ utf8ToCodepage(unsigned int codepage, const char *str, unsigned int len, unsigne
 	char *result;
 	int result_len;
 
-	unicode = utf8ToWideChar(str, len, &unicode_len);
+	unicode = utf8ToWidechar(str, len, &unicode_len);
 	if (unicode == NULL) {
 		return NULL;
 	}

@@ -206,3 +206,52 @@ CODE:
 		if (str != NULL)
 			setConsoleTitle(str, len);
 	}
+
+SV *
+codepageToUTF8(codepage, str)
+	unsigned int codepage
+	SV *str
+CODE:
+	if (str && SvOK(str)) {
+		char *s, *result;
+		STRLEN len;
+		unsigned int result_len;
+
+		s = SvPV(str, len);
+		result = codepageToUTF8(codepage, s, len, &result_len);
+		if (result == NULL) {
+			XSRETURN_UNDEF;
+		}
+
+		RETVAL = newSVpvn(result, result_len);
+		SvUTF8_on(RETVAL);
+		free(result);
+	} else {
+		XSRETURN_UNDEF;
+	}
+OUTPUT:
+	RETVAL
+
+SV *
+utf8ToCodepage(codepage, str)
+	unsigned int codepage
+	SV *str
+CODE:
+	if (str && SvOK(str)) {
+		char *s, *result;
+		STRLEN len;
+		unsigned int result_len;
+
+		s = SvPV(str, len);
+		result = utf8ToCodepage(codepage, s, len, &result_len);
+		if (result == NULL) {
+			XSRETURN_UNDEF;
+		}
+
+		RETVAL = newSVpvn(result, result_len);
+		free(result);
+	} else {
+		XSRETURN_UNDEF;
+	}
+OUTPUT:
+	RETVAL
