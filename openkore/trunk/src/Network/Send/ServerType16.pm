@@ -85,25 +85,6 @@ sub sendMove {
 	debug "Sent move to: $x, $y\n", "sendPacket", 2;
 }
 
-sub sendSit {
-	error "Your server is not supported because it uses padded packets.\n";
-	if (AI::action() eq "sitting") {
-		error "Failed to sit.\n";
-		AI::dequeue();
-	}
-}
-
-sub sendSkillUse {
-	error "Your server is not supported because it uses padded packets.\n";
-	if (AI::action() eq 'teleport') {
-		error "Failed to use teleport skill.\n";
-		AI::dequeue();
-	} elsif (AI::action() ne "skill_use") {
-		error "Failed to use skill.\n";
-		AI::dequeue();
-	}
-}
-
 sub sendSkillUseLoc {
 	my ($self, $ID, $lv, $x, $y) = @_;
 	my $msg = pack("C*", 0x16, 0x01, 0x2C, 0x00, 0x1F) .
@@ -116,14 +97,6 @@ sub sendSkillUseLoc {
 			pack("v*", $y);
 	$self->sendToServer($msg);
 	debug "Skill Use on Location: $ID, ($x, $y)\n", "sendPacket", 2;
-}
-
-sub sendStand {
-	error "Your server is not supported because it uses padded packets.\n";
-	if (AI::action() eq "standing") {
-		error "Failed to stand.\n";
-		AI::dequeue();
-	}
 }
 
 sub sendStorageAdd {
