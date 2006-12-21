@@ -23,6 +23,17 @@ sub new {
 }
 
 sub sendAttack {
+	my ($self, $monID, $flag) = @_;
+
+	my %args;
+	$args{monID} = $monID;
+	$args{flag} = $flag;
+	Plugins::callHook('packet_pre/sendAttack', \%args);
+	if ($args{return}) {
+		$self->sendToServer($args{msg});
+		return;
+	}
+
 	error "Your server is not supported because it uses padded packets.\n";
 	if (AI::action() eq "NPC") {
 		error "Failed to talk to monster NPC.\n";

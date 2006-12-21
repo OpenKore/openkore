@@ -44,9 +44,9 @@ sub import {
 	return if ($package =~ /^Network::Send/);
 
 	package Network::Send::Compatibility;
-	use Exporter;
-	use base qw(Exporter);
-	use Network::Send::ServerType0;
+	require Exporter;
+	our @ISA = qw(Exporter);
+	require Network::Send::ServerType0;
 	no strict 'refs';
 
 	our @EXPORT_OK;
