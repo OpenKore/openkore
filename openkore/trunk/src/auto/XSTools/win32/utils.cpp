@@ -39,7 +39,8 @@ basename (const char *filename)
  * @param len The length of str, in bytes.
  * @param resultLength A pointer to an int. If not NULL, the length of the result
  *                     (in characters) will be stored here.
- * @return A Unicode wide string, or NULL of the conversion failed.
+ * @return A Unicode wide string, or NULL of the conversion failed. This
+ *         must be freed whe no longer necessary.
  * @requires str != NULL && len >= 0
  * @ensure if result != NULL && resultLength != NULL: *resultLength >= 0
  */
@@ -241,4 +242,84 @@ setConsoleTitle (const char *title, int len) {
 	} else {
 		SetConsoleTitleA (title);
 	}
+}
+
+char *
+codepageToUTF8(unsigned int codepage, const char *str, unsigned int len, unsigned int *resultLength) {
+	WCHAR *unicode;
+	int unicode_len;
+	char *result;
+	int result_len;
+
+	/*** Convert the multibyte string to unicode. ***/
+
+	// Query the necessary space for the unicode string.
+	unicode_len = MultiByteToWideChar(codepage, 0, str, len, NULL, 0);
+	if (unicode_len == 0) {
+		return NULL;
+	}
+
+	// Allocate the unicode string and convert multibyte to unicode.
+	unicode = (WCHAR *) malloc(sizeof(WCHAR) * unicode_len);
+	if (MultiByteToWideChar(codepage, 0, str, len, unicode, unicode_len) == 0) {
+		free(unicode);
+		return NULL;
+	}
+
+	/*** Convert the unicode string to UTF-8. ***/
+	
+	// Query the necessary space for the UTF-8 string.
+	result_len = WideCharToMultiByte(CP_UTF8, 0, unicode, unicode_len, NULL, 0, NULL, NULL);
+	if (result_len == 0) {
+		free(unicode);
+		return NULL;
+	}
+
+	// Allocate the UTF-8 string and convert unicode to UTF-8.
+	result = (char *) malloc(result_len + 1);
+	if (WideCharToMultiByte(CP_UTF8, 0, unicode, unicode_len, result, result_len, NULL, NULL) == 0) {
+		free(unicode);
+		free(result);
+		return NULL;
+	}
+
+	result[result_len] = '\0';
+	free(unicode);
+	if (resultLength != NULL) {
+		*resultLength = result_len;
+	}
+	return result;
+}
+
+char *
+utf8ToCodepage(unsigned int codepage, const char *str, unsigned int len, unsigned int *resultLength) {
+	WCHAR *unicode;
+	int unicode_len;
+	char *result;
+	int result_len;
+
+	unicode = utf8ToWideChar(str, len, &unicode_len);
+	if (unicode == NULL) {
+		return NULL;
+	}
+
+	result_len = WideCharToMultiByte(codepage, 0, unicode, unicode_len, NULL, 0, NULL, NULL);
+	if (result_len == 0) {
+		free(unicode);
+		return NULL;
+	}
+	
+	result = (char *) malloc(result_len + 1);
+	if (WideCharToMultiByte(codepage, 0, unicode, unicode_len, result, result_len, NULL, NULL) == 0) {
+		free(unicode);
+		free(result);
+		return NULL;
+	}
+
+	result[result_len] = '\0';
+	free(unicode);
+	if (resultLength != NULL) {
+		*resultLength = result_len;
+	}
+	return result;
 }
