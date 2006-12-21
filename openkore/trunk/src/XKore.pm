@@ -20,7 +20,7 @@ use Exporter;
 use IO::Socket::INET;
 use Time::HiRes qw(time usleep);
 use Win32;
-use Class::Exception ('XKore::CannotStart');
+use Exception::Class ('XKore::CannotStart');
 
 use Globals;
 use Log qw(message error);
