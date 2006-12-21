@@ -17,7 +17,7 @@ use Globals qw($char $syncSync $net);
 use Network::Send::ServerType11;
 use base qw(Network::Send::ServerType11);
 use Log qw(error debug);
-use Utils qw(getTickCount getCoordString);
+use Utils qw(getTickCount getHex getCoordString);
 
 sub new {
 	my ($class) = @_;
