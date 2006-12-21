@@ -38,8 +38,10 @@ sub import {
 	# This code is for backward compatibility reasons, so that you can still
 	# write:
 	#  sendFoo(\$remote_socket, args);
-	#
-	# Don't try to understand it.
+
+	my ($package) = caller;
+	# This is necessary for some weird reason.
+	return if ($package =~ /^Network::Send/);
 
 	package Network::Send::Compatibility;
 	use Exporter;
