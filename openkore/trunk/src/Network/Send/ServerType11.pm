@@ -46,7 +46,6 @@ sub sendAttack {
 
 sub sendSit {
 	my $self = shift;
-	my $msg;
 
 	my %args;
 	$args{flag} = 2;
@@ -65,7 +64,6 @@ sub sendSit {
 
 sub sendStand {
 	my $self = shift;
-	my $msg;
 
 	my %args;
 	$args{flag} = 3;
@@ -87,7 +85,6 @@ sub sendSkillUse {
 	my $ID = shift;
 	my $lv = shift;
 	my $targetID = shift;
-	my $msg;
 	
 	my %args;
 	$args{ID} = $ID;
