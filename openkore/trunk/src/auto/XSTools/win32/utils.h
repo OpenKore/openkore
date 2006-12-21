@@ -35,4 +35,28 @@ void printConsole (const char *message, int len);
  */
 void setConsoleTitle (const char *title, int len);
 
+/**
+ * Convert a string, encoded in the specified code page, to UTF-8.
+ *
+ * @param codepage      The codepage of str.
+ * @param str           The string to convert.
+ * @param len           The size, in bytes, of str.
+ * @param resultLength  The length of the resulting UTF-8 string will be stored here.
+ *                      Set to NULL if you're not interested in the length.
+ * @return A null-terminated UTF-8 string, which must be freed when no longer necessary.
+ */
+char *codepageToUTF8(unsigned int codepage, const char *str, unsigned int len, unsigned int *resultLength = NULL);
+
+/**
+ * Convert a UTF-8 string to a string encoded in the specified code page.
+ *
+ * @param codepage      The codepage you want to convert to.
+ * @param str           The UTF-8 string to convert.
+ * @param len           The size, in bytes, of str.
+ * @param resultLength  The length of the resulting multibyte string will be stored here.
+ *                      Set to NULL if you're not interested in the length.
+ * @return A null-terminated multibyte string, which must be freed when no longer necessary.
+ */
+char *utf8ToCodepage(unsigned int codepage, const char *str, unsigned int len, unsigned int *resultLength = NULL);
+
 #endif /* _UTILS_H_ */
