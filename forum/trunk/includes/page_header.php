@@ -387,7 +387,7 @@ $template->assign_vars(array(
 	'U_PROFILE' => append_sid('profile.'.$phpEx.'?mode=editprofile'),
 	'U_PRIVATEMSGS' => append_sid('privmsg.'.$phpEx.'?folder=inbox'),
 	'U_PRIVATEMSGS_POPUP' => append_sid('privmsg.'.$phpEx.'?mode=newpm'),
-	'U_SEARCH' => append_sid('search.'.$phpEx),
+	'U_SEARCH' => append_sid('newsearch.'.$phpEx),
 	'U_MEMBERLIST' => append_sid('memberlist.'.$phpEx),
 	'U_MODCP' => append_sid('modcp.'.$phpEx),
 	'U_FAQ' => append_sid('faq.'.$phpEx),
