@@ -100,7 +100,7 @@ sub sendSkillUseLoc {
 }
 
 sub sendStorageAdd {
-	my $self;
+	my $self= shift;
 	my $index = shift;
 	my $amount = shift;
 	my $msg = pack("C*", 0xF3, 0x00, 0x6E, 0x05, 0x78, 0xD1, 0x00) .
