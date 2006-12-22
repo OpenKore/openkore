@@ -408,7 +408,7 @@ $nav_links['up'] = array(
 // Dump out the page header and load viewforum template
 //
 define('SHOW_ONLINE', true);
-$page_title = $lang['View_forum'] . ' - ' . $forum_row['forum_name'];
+$page_title = $forum_row['forum_name'] . ' - ' . $lang['View_forum'];
 include($phpbb_root_path . 'includes/page_header.'.$phpEx);
 
 $template->set_filenames(array(
