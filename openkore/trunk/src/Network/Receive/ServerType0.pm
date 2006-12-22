@@ -5,6 +5,7 @@ use Network::Receive ();
 use base qw(Network::Receive);
 use Time::HiRes qw(time usleep);
 
+use AI;
 use Globals qw($char %timeout $net %config @chars $conState $conState_tries $messageSender);
 use Log qw(message warning error debug);
 use Translation;
@@ -46,7 +47,7 @@ sub map_loaded {
 	$char->{pos_to} = {%{$char->{pos}}};
 	message(TF("Your Coordinates: %s, %s\n", $char->{pos}{x}, $char->{pos}{y}), undef, 1);
 
-	$net->sendIgnoreAll("all") if ($config{'ignoreAll'});
+	$messageSender->sendIgnoreAll("all") if ($config{'ignoreAll'});
 }
 
 1;
