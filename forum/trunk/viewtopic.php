@@ -609,7 +609,7 @@ if( $parent_id )
 //
 // Output page header
 //
-$page_title = $lang['View_topic'] .' - ' . $topic_title;
+$page_title = $topic_title . ' - ' . $lang['View_topic'];
 include($phpbb_root_path . 'includes/page_header.'.$phpEx);
 
 //
