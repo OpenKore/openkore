@@ -17,7 +17,7 @@
 #
 # This module:
 # `l
-# - Handles argument parsing.
+# - Handles commandline argument parsing.
 # - Keeps a list of configuration files.
 # - Contains functions which are used for loading configuration.
 # `l`
@@ -41,6 +41,17 @@ our @EXPORT_OK = qw(parseArguments addConfigFile delConfigFile %sys $VERSION);
 
 
 # Constants
+
+##
+# String $Settings::NAME
+#
+# The name of this program, usually "OpenKore".
+
+##
+# String $Settings::VERSION
+#
+# The version number of this program.
+
 # Translation Comment: Strings for the name and version of the application
 our $NAME = 'OpenKore';
 our $VERSION = '1.9.3';
@@ -164,7 +175,7 @@ sub parseArguments {
 
 		'no-connect',	\$no_connect
 	);
-	
+
 	# This is where variables depending on other userconfigable variables should be set..
 	# after we see what the user is changing...
 	$config_file = "$control_folder/config.txt" if (!defined $config_file);
@@ -251,7 +262,7 @@ sub _processSysConfig {
 
 
 ##
-# Settings::addConfigFile(file, r_store, parser_func)
+# Settings::addConfigFile(String file, r_store, parser_func)
 # file: The configuration file to add.
 # r_store: A reference to a variable (of any type) that's used to store the configuration data.
 # parser_func: A function which parses $file and put the result into r_store.

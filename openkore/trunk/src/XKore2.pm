@@ -24,32 +24,25 @@ use Log qw(message debug error);
 use Utils qw(dataWaiting timeOut shiftPack unShiftPack);
 use Misc;
 use Translation;
+use Network;
 use Network::Send ();
 
-##
-# XKore2->new()
-#
-# Initialize XKore Mode 2. If an error occurs, this function will return undef,
-# and set the error message in $@.
 sub new {
 	my $class = shift;
-	my %self;
-
-	#$@ = "Kore Mode 2 not implemented yet.";
-	#return undef;
+	my $self = bless {}, $class;
 
 	# Reuse code from Network to keep the connection to the server
 	require Network;
 	Modules::register("Network");
-	$self{server} = new Network;
+	$self->{server} = new Network($self);
 
-	return undef unless $self{server};
+	return undef unless $self->{server};
 
-	$self{tracker_state} = 0;
-	$self{tracker_name} = $config{XKore_ID} || "XKore2";
+	$self->{tracker_state} = 0;
+	$self->{tracker_name} = $config{XKore_ID} || "XKore2";
 
-	$self{client_state} = 0;
-	$self{client_listenPort} = $config{XKore_listenPort} ||
+	$self->{client_state} = 0;
+	$self->{client_listenPort} = $config{XKore_listenPort} ||
 		($config{XKore_tracker}?6902+int(rand(98)) : 6900);
 
 	# int challengeNum
@@ -60,24 +53,15 @@ sub new {
 	#
 	# Invariant: challengeNum >= 0
 
-	$self{challengeNum} = 0;
+	$self->{challengeNum} = 0;
 
-	bless \%self, $class;
-	return \%self;
+	return $self;
 }
 
-##
-# $net->version
-# Returns: XKore mode
-#
 sub version {
 	return 2;
 }
 
-##
-# $net->DESTROY()
-#
-# Shutdown function. Turn everything off.
 sub DESTROY {
 	my $self = shift;
 
@@ -96,125 +80,68 @@ sub DESTROY {
 ## Server Functions ##
 ######################
 
-##
-# $net->serverAlive()
-# Returns: a boolean.
-#
-#
 sub serverAlive {
-	my $self = shift;
+	my ($self) = @_;
 	return $self->{server}->serverAlive;
 }
 
-##
-# $net->serverConnect(host,port)
-#
-#
 sub serverConnect {
-	my $self = shift;
-	my $host = shift;
-	my $port = shift;
-
+	my ($self, $host, $port) = @_;
 	return $self->{server}->serverConnect($host, $port);
 }
 
-##
-# $net->serverPeerHost
-#
 sub serverPeerHost {
-	my $self = shift;
-	return $self->{server}->serverPeerPort if ($self->serverAlive);
-	return undef;
+	my ($self) = @_;
+	return $self->{server}->serverPeerHost();
 }
 
-##
-# $net->serverPeerPort
-#
 sub serverPeerPort {
-	my $self = shift;
-	return $self->{server}->serverPeerPort if ($self->serverAlive);
-	return undef;
+	my ($self) = @_;
+	return $self->{server}->serverPeerPort();
 }
 
-##
-# $net->serverRecv()
-# Returns: the messages sent from the server, or undef if there are no pending messages.
-#
-# This just uses KoreNet.pm
 sub serverRecv {
-	my $self = shift;
-
+	my ($self) = @_;
 	return $self->{server}->serverRecv();
 }
 
-##
-# $net->serverSend(msg)
-# msg: A scalar to send to the RO server
-#
-# This just reuses KoreNet.pm's code
 sub serverSend {
-	my $self = shift;
-	my $msg = shift;
-	$self->{server}->serverSend($msg);
+	my ($self, $msg) = @_;
+	return $self->{server}->serverSend($msg);
 }
 
-##
-# $net->serverDisconnect
-#
-# Just reuses KoreNet's code.
 sub serverDisconnect {
-	my $self = shift;
+	my ($self) = @_;
 	return $self->{server}->serverDisconnect();
 }
+
 
 ######################
 ## Client Functions ##
 ######################
 
-##
-# $net->clientAlive
-# Returns: a boolean.
-#
-# Check to see if the client is fully connected and logged in.
 sub clientAlive {
 	return $_[0]->clientAlmostAlive && $_[0]->{client_state} == 5;
 }
 
-##
-# $net->clientAlmostAlive
-# Returns: a boolean
-#
-# Checks to see if the client is connected. Used internally only.
 sub clientAlmostAlive {
 	return $_[0]->{client} && $_[0]->{client}->connected;
 }
 
-##
-# $net->clientPeerHost
-#
 sub clientPeerHost {
 	return $_[0]->{client}->peerhost if ($_[0]->clientAlmostAlive);
 	return undef;
 }
 
-##
-# $net->clientPeerPort
-#
 sub clientPeerPort {
 	return $_[0]->{client}->peerport if ($_[0]->clientAlmostAlive);
 	return undef;
 }
 
-##
-# $net->clientConnect
-#
 sub clientConnect {
 	return undef;
 }
 
-##
-# $net->clientSend
-#
 sub clientSend {
 	use bytes;
 	no encoding 'utf8';
@@ -229,11 +156,6 @@ sub clientSend {
 	$self->{client}->send($msg) if (($self->clientAlmostAlive && $dontMod) || $self->clientAlive);
 }
 
-##
-# $net->clientRecv
-# Returns: A scalar.
-#
-# Returns undef unless the client is fully logged in.
 sub clientRecv {
 	use bytes;
 	no encoding 'utf8';
@@ -246,8 +168,7 @@ sub clientRecv {
 }
 
 ##
-# $net->realClientRecv
-# Returns: A scalar.
+# Bytes $net->realClientRecv
 #
 # Returns data coming from the client. Used internally until client is fully
 # logged in. Should only be used internally.
@@ -268,10 +189,6 @@ sub realClientRecv {
 	return $msg;
 }
 
-##
-# $net->clientDisconnect
-#
-#
 sub clientDisconnect {
 	my $self = shift;
 	if ($self->clientAlmostAlive) {
@@ -288,16 +205,10 @@ sub clientDisconnect {
 ## Utility Functions ##
 #######################
 
-##
-# $net->trackerAlive
-#
 sub trackerAlive {
 	return $_[0]->{tracker} && $_[0]->{tracker}->connected;
 }
 
-##
-# $net->checkConnection()
-#
 sub checkConnection {
 	my $self = shift;
 
@@ -311,10 +222,6 @@ sub checkConnection {
 	$self->checkTracker() if ($config{XKore_tracker});
 }
 
-##
-# $net->checkTracker()
-#
-# This should be used internally only
 sub checkTracker {
 	my $self = shift;
 	my $t_state = \$self->{tracker_state};

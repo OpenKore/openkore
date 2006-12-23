@@ -40,21 +40,21 @@ sub new {
 	my $class = shift;
 	my $ip = $config{XKore_listenIp} || '0.0.0.0';
 	my $port = $config{XKore_listenPort} || 6901;
-	my %self;
+	my $self = bless {}, $class;
 
 	# Reuse code from Network to connect to the server
 	require Network;
 	Modules::register("Network");
-	$self{server} = new Network;
+	$self->{server} = new Network($self);
 
-	$self{client_state} = 0;
-	$self{nextIp} = undef;
-	$self{nextPort} = undef;
-	$self{charServerIp} = undef;
-	$self{charServerPort} = undef;
-	$self{gotError} = 0;
-	$self{packetPending} = '';
-	$self{waitingClient} = 1;
+	$self->{client_state} = 0;
+	$self->{nextIp} = undef;
+	$self->{nextPort} = undef;
+	$self->{charServerIp} = undef;
+	$self->{charServerPort} = undef;
+	$self->{gotError} = 0;
+	$self->{packetPending} = '';
+	$self->{waitingClient} = 1;
 	$clientBuffer = '';
 
 	message T("X-Kore mode intialized.\n"), "startup";
@@ -62,10 +62,10 @@ sub new {
 	if (defined($config{gameGuard}) && $config{gameGuard} ne '2') {
 		require Poseidon::EmbedServer;
 		Modules::register("Poseidon::EmbedServer");
-		$self{poseidon} = new Poseidon::EmbedServer;
+		$self->{poseidon} = new Poseidon::EmbedServer;
 	}
 
-	return bless \%self, $class;
+	return $self;
 }
 
 ##

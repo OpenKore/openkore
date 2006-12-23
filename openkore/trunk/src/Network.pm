@@ -26,6 +26,10 @@
 #
 # Please also read <a href="http://www.openkore.com/wiki/index.php/Network_subsystem">the
 # network subsystem overview.</a>
+#
+# This implementation establishes a direct connection to the RO server.
+# Note that there are alternative implementations for this interface: @MODULE(XKore),
+# @MODULE(XKore2) and @MODULE(XKoreProxy)
 
 package Network;
 
@@ -36,6 +40,7 @@ use Exporter;
 use Time::HiRes qw(time);
 use IO::Socket::INET;
 use encoding 'utf8';
+use Scalar::Util;
 
 use Globals;
 use Log qw(message error);
@@ -47,73 +52,80 @@ use Misc qw(chatLog);
 use Translation;
 
 ##
-# Network->new()
+# Network->new([wrapper])
+# wrapper: If this Network object is to be wrapped by another object which is interface-compatible
+#          with the Network class, then specify the wrapper object here. The message sender will
+#          use this wrapper to send socket data. Internally, the reference to the wrapper will be
+#          stored as a weak reference.
 #
-# Create a new network object to send and receive data from both the RO
-# server and RO client.
+# Create a new Network object. The connection is not yet established.
 sub new {
-	my $class = shift;
+	my ($class, $wrapper) = @_;
 	my %self;
 
 	$self{remote_socket} = new IO::Socket::INET;
+	if ($wrapper) {
+		$self{wrapper} = $wrapper;
+		Scalar::Util::weaken($self{wrapper});
+	}
 
 	return bless \%self, $class;
 }
 
 ##
-# $net->version()
-# Returns: XKore mode
+# int $net->version()
 #
+# Returns the implementation number this object.
 sub version {
 	return 0;
 }
 
-##
-# $net->DESTROY()
-#
-# Shutdown function. Turn everything off.
 sub DESTROY {
 	my $self = shift;
 	
 	$self->serverDisconnect();
 }
 
+
 ######################
 ## Server Functions ##
 ######################
 
 ##
-# $net->serverAliveServer()
+# boolean $net->serverAliveServer()
 #
 sub serverAlive {
 	return $_[0]->{remote_socket} && $_[0]->{remote_socket}->connected();
 }
 
 ##
-# $net->serverPeerHost()
+# String $net->serverPeerHost()
 #
+# If the connection to the server is alive, returns the host name of the server.
+# Otherwise, returns undef.
 sub serverPeerHost {
 	return $_[0]->{remote_socket}->peerhost if ($_[0]->serverAlive);
 	return undef;
 }
 
 ##
-# $net->serverPeerPort()
+# int $net->serverPeerPort()
 #
+# If the connection to the server is alive, returns the port number of the server.
+# Otherwise, returns undef.
 sub serverPeerPort {
 	return $_[0]->{remote_socket}->peerport if ($_[0]->serverAlive);
 	return undef;
 }
 
 ##
-# $net->serverConnect(host, port)
+# $net->serverConnect(String host, int port)
 # host: the host name/IP of the RO server to connect to.
 # port: the port number of the RO server to connect to.
 #
 # Establish a connection to a Ragnarok Online server.
 #
 # This function is used internally by $net->checkConnection() and should not be used directly.
-
 sub serverConnect {
 	my $self = shift;
 	my $host = shift;
@@ -141,9 +153,10 @@ sub serverConnect {
 }
 
 ##
-# $net->serverSend()
+# void $net->serverSend(Bytes data)
 #
-#
+# If the connection to the server is alive, send data to the server.
+# Otherwise, this method does nothing.
 sub serverSend {
 	my $self = shift;
 	my $msg = shift;
@@ -152,7 +165,6 @@ sub serverSend {
 
 ##
 # $net->serverRecv()
-# Returns: 
 #
 sub serverRecv {
 	my $self = shift;
@@ -313,7 +325,8 @@ sub checkConnection {
 		$initSync = 1;
 		undef $msg;
 		$packetParser = Network::Receive->create($config{serverType});
-		$messageSender = Network::Send->create($self, $config{serverType});
+		my $wrapper = ($self->{wrapper}) ? $self->{wrapper} : $self;
+		$messageSender = Network::Send->create($wrapper, $config{serverType});
 		$self->serverConnect($master->{ip}, $master->{port});
 
 		# call plugin's hook to determine if we can continue the work
