@@ -23,7 +23,7 @@ use Commands;
 use Globals qw($accountID $AI %ai_v $char @chatResponses %cities_lut
 		%config %field %itemChange @monsters_Killed %maps_lut $net %overallAuth
 		%players %responseVars %skillsSP_lut $startTime_EXP %timeout
-		$totalBaseExp $totalJobExp
+		$totalBaseExp $totalJobExp $messageSender
 		);
 use Log qw(message error);
 use Misc qw(auth avoidGM_talk avoidList_talk configModify getIDFromChat
@@ -94,7 +94,7 @@ sub processFirst {
 	if (( $type eq "pm" || $type eq "p" || $type eq "g" ) && !$overallAuth{$user} && $config{adminPassword}) {
 		if ($msg eq $config{adminPassword}) {
 			auth($user, 1);
-			sendMessage($net, "pm", getResponse("authS"), $user);
+			sendMessage($messageSender, "pm", getResponse("authS"), $user);
 		}
 		# We don't notify the user if login failed; people use it
 		# to check whether you're a bot.
@@ -125,31 +125,31 @@ sub processChatCommand {
 
 	if ($switch eq "conf") {
 		if ($args[0] eq "") {
-			sendMessage($net, $type, getResponse("confF1"), $user) if $config{verbose};
+			sendMessage($messageSender, $type, getResponse("confF1"), $user) if $config{verbose};
 
 		} elsif (!exists $config{$args[0]}) {
-			sendMessage($net, $type, getResponse("confF2"), $user) if $config{verbose};
+			sendMessage($messageSender, $type, getResponse("confF2"), $user) if $config{verbose};
 
 		} elsif ($args[1] eq "") {
 			if (lc($args[0]) eq "username" || lc($args[0] eq "password")) {
-				sendMessage($net, $type, getResponse("confF3"), $user) if $config{verbose};
+				sendMessage($messageSender, $type, getResponse("confF3"), $user) if $config{verbose};
 			} else {
 				$vars->{key} = $args[0];
 				$vars->{value} = $config{$args[0]};
-				sendMessage($net, $type, getResponse("confS1"), $user) if $config{verbose};
+				sendMessage($messageSender, $type, getResponse("confS1"), $user) if $config{verbose};
 				$timeout{ai_thanks_set}{time} = time;
 			}
 
 		} else {
 			$args[1] = "" if ($args[1] eq "none");
 			configModify($args[0], $args[1]);
-			sendMessage($net, $type, getResponse("confS2"), $user) if $config{verbose};
+			sendMessage($messageSender, $type, getResponse("confS2"), $user) if $config{verbose};
 			$timeout{ai_thanks_set}{time} = time;
 		}
 
 	} elsif ($switch eq "date") {
 		$vars->{date} = getFormattedDate(int(time));
-		sendMessage($net, $type, getResponse("dateS"), $user) if $config{verbose};
+		sendMessage($messageSender, $type, getResponse("dateS"), $user) if $config{verbose};
 		$timeout{ai_thanks_set}{time} = time;
 
 	} elsif ($switch eq "exp") {
@@ -180,12 +180,12 @@ sub processChatCommand {
 			$vars->{bExpPerHour} = formatNumber($vars->{bExpPerHour});
 			$vars->{jExpPerHour} = formatNumber($vars->{jExpPerHour});
 			$vars->{numDeaths} = (defined $char->{deathCount})? $char->{deathCount} : 0;
-			sendMessage($net, $type, getResponse("expS"), $user) if $config{verbose};
+			sendMessage($messageSender, $type, getResponse("expS"), $user) if $config{verbose};
 
 		} elsif ($args[0] eq "monster") {
 			$vars->{numKilledMonsters} = 0;
 
-			sendMessage($net, $type, getResponse("expMonsterS1"), $user) if $config{verbose};
+			sendMessage($messageSender, $type, getResponse("expMonsterS1"), $user) if $config{verbose};
 
 			for (my $i = 0; $i < @monsters_Killed; $i++) {
 				next if ($monsters_Killed[$i] eq "");
@@ -194,21 +194,21 @@ sub processChatCommand {
 					[$i, $monsters_Killed[$i]{name}, $monsters_Killed[$i]{count}]);
 				$vars->{killedMonsters} = substr($vars->{killedMonsters}, 0, length($vars->{killedMonsters}) - 1);
 				$vars->{numKilledMonsters} += $monsters_Killed[$i]{count};
-				sendMessage($net, $type, getResponse("expMonsterS2"), $user) if $config{verbose};
+				sendMessage($messageSender, $type, getResponse("expMonsterS2"), $user) if $config{verbose};
 			}
 
-			sendMessage($net, $type, getResponse("expMonsterS3"), $user) if $config{verbose};
+			sendMessage($messageSender, $type, getResponse("expMonsterS3"), $user) if $config{verbose};
 
 		} elsif ($args[0] eq "item") {
-			sendMessage($net, $type, getResponse("expItemS1"), $user) if $config{verbose};
+			sendMessage($messageSender, $type, getResponse("expItemS1"), $user) if $config{verbose};
 			for my $item (sort keys %itemChange) {
 				next unless $itemChange{$item};
 				$vars->{gotItems} = sprintf("%-40s %5d", $item, $itemChange{$item});
-				sendMessage($net, $type, getResponse("expItemS2"), $user) if $config{verbose};
+				sendMessage($messageSender, $type, getResponse("expItemS2"), $user) if $config{verbose};
 			}
 			
 		} else {
-			sendMessage($net, $type, getResponse("expF"), $user) if $config{verbose};
+			sendMessage($messageSender, $type, getResponse("expF"), $user) if $config{verbose};
 		}
 
 	} elsif ($switch eq "follow") {
@@ -216,10 +216,10 @@ sub processChatCommand {
 			if ($config{follow}) {
 				AI::clear("follow");
 				configModify("follow", 0);
-				sendMessage($net, $type, getResponse("followStopS"), $user) if $config{verbose};
+				sendMessage($messageSender, $type, getResponse("followStopS"), $user) if $config{verbose};
 				$timeout{ai_thanks_set}{time} = time;
 			} else {
-				sendMessage($net, $type, getResponse("followStopF"), $user) if $config{verbose};
+				sendMessage($messageSender, $type, getResponse("followStopF"), $user) if $config{verbose};
 			}
 
 		} else {
@@ -229,15 +229,15 @@ sub processChatCommand {
 				main::ai_follow($players{$targetID}{name});
 				configModify("follow", 1);
 				configModify("followTarget", $players{$targetID}{name});
-				sendMessage($net, $type, getResponse("followS"), $user) if $config{verbose};
+				sendMessage($messageSender, $type, getResponse("followS"), $user) if $config{verbose};
 				$timeout{ai_thanks_set}{time} = time;
 			} else {
-				sendMessage($net, $type, getResponse("followF"), $user) if $config{verbose};
+				sendMessage($messageSender, $type, getResponse("followF"), $user) if $config{verbose};
 			}
 		}
 
 	} elsif ($switch eq "logout") {
-		sendMessage($net, $type, getResponse("quitS"), $user) if $config{verbose};
+		sendMessage($messageSender, $type, getResponse("quitS"), $user) if $config{verbose};
 		quit();
 		$timeout{ai_thanks_set}{time} = time;
 
@@ -245,15 +245,15 @@ sub processChatCommand {
 		my ($body, $head) = @args;
 		if ($body ne "") {
 			look($body, $head);
-			sendMessage($net, $type, getResponse("lookS"), $user) if $config{verbose};
+			sendMessage($messageSender, $type, getResponse("lookS"), $user) if $config{verbose};
 			$timeout{ai_thanks_set}{time} = time;
 		} else {
-			sendMessage($net, $type, getResponse("lookF"), $user) if $config{verbose};
+			sendMessage($messageSender, $type, getResponse("lookF"), $user) if $config{verbose};
 		}
 
 	} elsif (($switch eq "move" && $args[0] eq "stop") || $switch eq "stop") {
 		AI::clear("move", "route", "mapRoute");
-		sendMessage($net, $type, getResponse("moveS"), $user) if $config{verbose};
+		sendMessage($messageSender, $type, getResponse("moveS"), $user) if $config{verbose};
 		$timeout{ai_thanks_set}{time} = time;
 
 	} elsif ($switch eq "move") {
@@ -282,55 +282,55 @@ sub processChatCommand {
 				} else {
 					message TF("Calculating route to: %s(%s)\n", $maps_lut{$rsw}, $map), "route";
 				}
-				sendMessage($net, $type, getResponse("moveS"), $user) if $config{verbose};
+				sendMessage($messageSender, $type, getResponse("moveS"), $user) if $config{verbose};
 				main::ai_route($map, $x, $y, attackOnRoute => 1);
 				$timeout{ai_thanks_set}{time} = time;
 
 			} else {
 				error TF("Map %s does not exist\n", $map);
-				sendMessage($net, $type, getResponse("moveF"), $user) if $config{verbose};
+				sendMessage($messageSender, $type, getResponse("moveF"), $user) if $config{verbose};
 			}
 
 		} else {
-			sendMessage($net, $type, getResponse("moveF"), $user) if $config{verbose};
+			sendMessage($messageSender, $type, getResponse("moveF"), $user) if $config{verbose};
 		}
 
 	} elsif ($switch eq "reload") {
 		Settings::parseReload($after);
-		sendMessage($net, $type, getResponse("reloadS"), $user) if $config{verbose};
+		sendMessage($messageSender, $type, getResponse("reloadS"), $user) if $config{verbose};
 		$timeout{ai_thanks_set}{time} = time;
 
 	} elsif ($switch eq "relog") {
-		sendMessage($net, $type, getResponse("relogS"), $user) if $config{verbose};
+		sendMessage($messageSender, $type, getResponse("relogS"), $user) if $config{verbose};
 		relog($args[0]);
 		$timeout{ai_thanks_set}{time} = time;
 
 	} elsif ($msg =~ /\bshut[\s\S]*up\b/) {
 		if ($config{verbose}) {
 			configModify("verbose", 0);
-			sendMessage($net, $type, getResponse("verboseOffS"), $user);
+			sendMessage($messageSender, $type, getResponse("verboseOffS"), $user);
 			$timeout{ai_thanks_set}{time} = time;
 		} else {
-			sendMessage($net, $type, getResponse("verboseOffF"), $user);
+			sendMessage($messageSender, $type, getResponse("verboseOffF"), $user);
 		}
 
 	} elsif ($switch eq "speak") {
 		if (!$config{verbose}) {
 			configModify("verbose", 1);
-			sendMessage($net, $type, getResponse("verboseOnS"), $user);
+			sendMessage($messageSender, $type, getResponse("verboseOnS"), $user);
 			$timeout{ai_thanks_set}{time} = time;
 		} else {
-			sendMessage($net, $type, getResponse("verboseOnF"), $user);
+			sendMessage($messageSender, $type, getResponse("verboseOnF"), $user);
 		}
 
 	} elsif ($switch eq "sit") {
 		Commands::run("sit");
-		sendMessage($net, $type, getResponse("sitS"), $user) if $config{verbose};
+		sendMessage($messageSender, $type, getResponse("sitS"), $user) if $config{verbose};
 		$timeout{ai_thanks_set}{time} = time;
 
 	} elsif ($switch eq "stand") {
 		Commands::run("stand");
-		sendMessage($net, $type, getResponse("standS"), $user) if $config{verbose};
+		sendMessage($messageSender, $type, getResponse("standS"), $user) if $config{verbose};
 		$timeout{ai_thanks_set}{time} = time;
 
 	} elsif ($switch eq "status") {
@@ -347,14 +347,14 @@ sub processChatCommand {
 		$vars->{char_weight} = $char->{weight};
 		$vars->{char_weight_max} = $char->{weight_max};
 		$vars->{zenny} = formatNumber($char->{zenny});
-		sendMessage($net, $type, getResponse("statusS"), $user) if $config{verbose};
+		sendMessage($messageSender, $type, getResponse("statusS"), $user) if $config{verbose};
 
 	} elsif ($switch eq "tank") {
 		if ($args[0] eq "stop") {
 			if (!$config{tankMode}) {
-				sendMessage($net, $type, getResponse("tankStopF"), $user) if $config{verbose};
+				sendMessage($messageSender, $type, getResponse("tankStopF"), $user) if $config{verbose};
 			} else {
-				sendMessage($net, $type, getResponse("tankStopS"), $user) if $config{verbose};
+				sendMessage($messageSender, $type, getResponse("tankStopS"), $user) if $config{verbose};
 				configModify("tankMode", 0);
 				$timeout{ai_thanks_set}{time} = time;
 			}
@@ -362,48 +362,48 @@ sub processChatCommand {
 		} else {
 			my $targetID = getIDFromChat(\%players, $user, $after);
 			if ($targetID ne "") {
-				sendMessage($net, $type, getResponse("tankS"), $user) if $config{verbose};
+				sendMessage($messageSender, $type, getResponse("tankS"), $user) if $config{verbose};
 				configModify("tankMode", 1);
 				configModify("tankModeTarget", $players{$targetID}{name});
 				$timeout{ai_thanks_set}{time} = time;
 			} else {
-				sendMessage($net, $type, getResponse("tankF"), $user) if $config{verbose};
+				sendMessage($messageSender, $type, getResponse("tankF"), $user) if $config{verbose};
 			}
 		}
 
 	} elsif ($switch eq "thank" || $switch eq "thn" || $switch eq "thx") {
 		if (!timeOut($timeout{ai_thanks_set})) {
 			$timeout{ai_thanks_set}{time} -= $timeout{ai_thanks_set}{timeout};
-			sendMessage($net, $type, getResponse("thankS"), $user) if $config{verbose};
+			sendMessage($messageSender, $type, getResponse("thankS"), $user) if $config{verbose};
 		}
 
 	} elsif ($switch eq "timeout") {
 		if ($args[0] eq "") {
-			sendMessage($net, $type, getResponse("timeoutF1"), $user) if $config{verbose};
+			sendMessage($messageSender, $type, getResponse("timeoutF1"), $user) if $config{verbose};
 
 		} elsif (!exists $timeout{$args[0]}{timeout}) {
-			sendMessage($net, $type, getResponse("timeoutF2"), $user) if $config{verbose};
+			sendMessage($messageSender, $type, getResponse("timeoutF2"), $user) if $config{verbose};
 
 		} elsif ($args[1] eq "") {
 			$vars->{key} = $args[0];
 			$vars->{value} = $timeout{$args[0]}{timeout};
-			sendMessage($net, $type, getResponse("timeoutS1"), $user) if $config{verbose};
+			sendMessage($messageSender, $type, getResponse("timeoutS1"), $user) if $config{verbose};
 			$timeout{ai_thanks_set}{time} = time;
 
 		} else {
 			$args[1] = "" if ($args[1] eq "none");
 			setTimeout($args[0], $args[1]);
-			sendMessage($net, $type, getResponse("timeoutS2"), $user) if $config{verbose};
+			sendMessage($messageSender, $type, getResponse("timeoutS2"), $user) if $config{verbose};
 			$timeout{ai_thanks_set}{time} = time;
 		}
 
 	} elsif ($switch eq "town") {
-		sendMessage($net, $type, getResponse("moveS"), $user);
+		sendMessage($messageSender, $type, getResponse("moveS"), $user);
 		main::useTeleport(2);
 	
 	} elsif ($switch eq "version") {
 		$vars->{ver} = $VERSION;
-		sendMessage($net, $type, getResponse("versionS"), $user) if $config{verbose};
+		sendMessage($messageSender, $type, getResponse("versionS"), $user) if $config{verbose};
 
 	} elsif ($switch eq "where") {
 		my $rsw = "$field{name}.rsw";
@@ -411,7 +411,7 @@ sub processChatCommand {
 		$vars->{y} = $char->{pos_to}{y};
 		$vars->{map} = "$maps_lut{$rsw} ($field{name})";
 		$timeout{ai_thanks_set}{time} = time;
-		sendMessage($net, $type, getResponse("whereS"), $user) if $config{verbose};
+		sendMessage($messageSender, $type, getResponse("whereS"), $user) if $config{verbose};
 
 
 	# Support Skills
@@ -419,7 +419,7 @@ sub processChatCommand {
 	} elsif ($switch eq "agi"){
 		my $targetID = getIDFromChat(\%players, $user, $after);
 		if ($targetID eq "") {
-			sendMessage($net, $type, getResponse("healF1"), $user) if $config{verbose};
+			sendMessage($messageSender, $type, getResponse("healF1"), $user) if $config{verbose};
 
 		} elsif ($char->{skills}{AL_INCAGI}{lv} > 0) {
 			my $failed = 1;
@@ -431,20 +431,20 @@ sub processChatCommand {
 				}
 			}
 			if (!$failed) {
-				sendMessage($net, $type, getResponse("healS"), $user) if $config{verbose};
+				sendMessage($messageSender, $type, getResponse("healS"), $user) if $config{verbose};
 			}else{
-				sendMessage($net, $type, getResponse("healF2"), $user) if $config{verbose};
+				sendMessage($messageSender, $type, getResponse("healF2"), $user) if $config{verbose};
 			}
 
 		} else {
-			sendMessage($net, $type, getResponse("healF3"), $user) if $config{'verbose'};
+			sendMessage($messageSender, $type, getResponse("healF3"), $user) if $config{'verbose'};
 		}
 		$timeout{ai_thanks_set}{time} = time;
 
 	} elsif ($switch eq "bless" || $switch eq "blessing"){
 		my $targetID = getIDFromChat(\%players, $user, $after);
 		if ($targetID eq "") {
-			sendMessage($net, $type, getResponse("healF1"), $user) if $config{verbose};
+			sendMessage($messageSender, $type, getResponse("healF1"), $user) if $config{verbose};
 
 		} elsif ($char->{skills}{AL_BLESSING}{lv} > 0) {
 			my $failed = 1;
@@ -456,13 +456,13 @@ sub processChatCommand {
 				}
 			}
 			if (!$failed) {
-				sendMessage($net, $type, getResponse("healS"), $user) if $config{verbose};
+				sendMessage($messageSender, $type, getResponse("healS"), $user) if $config{verbose};
 			}else{
-				sendMessage($net, $type, getResponse("healF2"), $user) if $config{verbose};
+				sendMessage($messageSender, $type, getResponse("healF2"), $user) if $config{verbose};
 			}
 
 		} else {
-			sendMessage($net, $type, getResponse("healF3"), $user) if $config{verbose};
+			sendMessage($messageSender, $type, getResponse("healF3"), $user) if $config{verbose};
 		}
 		$timeout{ai_thanks_set}{time} = time;
 
@@ -478,7 +478,7 @@ sub processChatCommand {
 		}
 
 		if ($targetID eq "") {
-			sendMessage($net, $type, getResponse("healF1"), $user) if $config{verbose};
+			sendMessage($messageSender, $type, getResponse("healF1"), $user) if $config{verbose};
 
 		} elsif ($char->{skills}{AL_HEAL}{lv} > 0) {
 			my $amount_healed;
@@ -524,26 +524,26 @@ sub processChatCommand {
 					unshift @skillCasts, \%skill;
 				} else {
 					$vars->{char_sp} = $char->{sp} - $sp_used;
-					sendMessage($net, $type, getResponse("healF2"), $user) if $config{verbose};
+					sendMessage($messageSender, $type, getResponse("healF2"), $user) if $config{verbose};
 					$failed = 1;
 				}
 			}
 
 			if (!$failed) {
-				sendMessage($net, $type, getResponse("healS"), $user) if $config{verbose};
+				sendMessage($messageSender, $type, getResponse("healS"), $user) if $config{verbose};
 			}
 			foreach (@skillCasts) {
 				main::ai_skillUse($_->{skill}, $_->{lv}, $_->{maxCastTime}, $_->{minCastTime}, $_->{ID});
 			}
 
 		} else {
-			sendMessage($net, $type, getResponse("healF3"), $user) if $config{verbose};
+			sendMessage($messageSender, $type, getResponse("healF3"), $user) if $config{verbose};
 		}
 
 	} elsif ($switch eq "kyrie"){
 		my $targetID = getIDFromChat(\%players, $user, $after);
 		if ($targetID eq "") {
-			sendMessage($net, $type, getResponse("healF1"), $user) if $config{verbose};
+			sendMessage($messageSender, $type, getResponse("healF1"), $user) if $config{verbose};
 
 		} elsif ($char->{skills}{PR_KYRIE}{lv} > 0) {
 			my $failed = 1;
@@ -556,13 +556,13 @@ sub processChatCommand {
 			}
 
 			if (!$failed) {
-				sendMessage($net, $type, getResponse("healS"), $user) if $config{verbose};
+				sendMessage($messageSender, $type, getResponse("healS"), $user) if $config{verbose};
 			}else{
-				sendMessage($net, $type, getResponse("healF2"), $user) if $config{verbose};
+				sendMessage($messageSender, $type, getResponse("healF2"), $user) if $config{verbose};
 			}
 
 		} else {
-			sendMessage($net, $type, getResponse("healF3"), $user) if $config{verbose};
+			sendMessage($messageSender, $type, getResponse("healF3"), $user) if $config{verbose};
 		}
 		$timeout{ai_thanks_set}{time} = time;
 
@@ -579,13 +579,13 @@ sub processChatCommand {
 			}
 
 			if (!$failed) {
-				sendMessage($net, $type, getResponse("healS"), $user) if $config{verbose};
+				sendMessage($messageSender, $type, getResponse("healS"), $user) if $config{verbose};
 			}else{
-				sendMessage($net, $type, getResponse("healF2"), $user) if $config{verbose};
+				sendMessage($messageSender, $type, getResponse("healF2"), $user) if $config{verbose};
 			}
 
 		} else {
-			sendMessage($net, $type, getResponse("healF3"), $user) if $config{verbose};
+			sendMessage($messageSender, $type, getResponse("healF3"), $user) if $config{verbose};
 		}
 		$timeout{ai_thanks_set}{time} = time;
 

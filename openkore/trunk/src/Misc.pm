@@ -2854,12 +2854,12 @@ sub useTeleport {
 	my ($use_lvl, $internal, $emergency) = @_;
 
 	if ($use_lvl == 2 && $config{saveMap_warpChatCommand}) {
-		sendMessage($net, "c", $config{saveMap_warpChatCommand});
+		sendMessage($messageSender, "c", $config{saveMap_warpChatCommand});
 		return 1;
 	}
 
 	if ($use_lvl == 1 && $config{teleportAuto_useChatCommand}) {
-		sendMessage($net, "c", $config{teleportAuto_useChatCommand});
+		sendMessage($messageSender, "c", $config{teleportAuto_useChatCommand});
 		return 1;
 	}
 
@@ -3712,7 +3712,7 @@ sub redirectXKoreMessages {
 
 	$message =~ s/\n*$//s;
 	$message =~ s/\n/\\n/g;
-	sendMessage($net, "k", $message);
+	sendMessage($messageSender, "k", $message);
 }
 
 sub monKilled {

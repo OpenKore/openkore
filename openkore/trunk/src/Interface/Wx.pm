@@ -737,13 +737,13 @@ sub onInputEnter {
 	}
 
 	if ($self->{targetBox}->GetValue ne "") {
-		sendMessage($net, "pm", $text, $self->{targetBox}->GetValue);
+		sendMessage($messageSender, "pm", $text, $self->{targetBox}->GetValue);
 	} elsif ($n == 1) { # Public chat
-		sendMessage($net, "c", $text);
+		sendMessage($messageSender, "c", $text);
 	} elsif ($n == 2) { # Party chat
-		sendMessage($net, "p", $text);
+		sendMessage($messageSender, "p", $text);
 	} else { # Guild chat
-		sendMessage($net, "g", $text);
+		sendMessage($messageSender, "g", $text);
 	}
 }
 

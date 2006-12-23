@@ -1763,7 +1763,7 @@ sub processAutoStorage {
 			# Talk to NPC if we haven't done so
 			if (!defined($args->{sentStore})) {
 				if ($config{storageAuto_useChatCommand}) {
-					sendMessage($net, "c", $config{storageAuto_useChatCommand});
+					sendMessage($messageSender, "c", $config{storageAuto_useChatCommand});
 				} else {
 					if ($config{'storageAuto_npc_type'} eq "" || $config{'storageAuto_npc_type'} eq "1") {
 						warning T("Warning storageAuto has changed. Please read News.txt\n") if ($config{'storageAuto_npc_type'} eq "");

@@ -503,7 +503,7 @@ sub parseInput {
 		if (defined $msg && $conState == 5 && $config{XKore_silent}) {
 			$msg =~ s/\n*$//s;
 			$msg =~ s/\n/\\n/g;
-			sendMessage($net, "k", $msg);
+			sendMessage($messageSender, "k", $msg);
 		}
 	}
 	$XKore_dontRedirect = 0;

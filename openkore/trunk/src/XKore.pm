@@ -510,7 +510,7 @@ sub hackClient {
 #
 #	$message =~ s/\n*$//s;
 #	$message =~ s/\n/\\n/g;
-#	main::sendMessage($net, "k", $message);
+#	main::sendMessage($messageSender, "k", $message);
 #}
 
 return 1;
