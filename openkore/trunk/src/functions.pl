@@ -588,7 +588,7 @@ sub parseSendMsg {
 		} elsif ($config{serverType} == 13) { # rRO
 			$syncSync = substr($msg, 5, 4);
 		} elsif ($config{serverType} == 16) {
-			$syncSync = substr($msg, 8, 4);
+			$syncSync = substr($msg, 6, 4);
 		}
 		message T("Map loaded\n"), "connection";
 		
