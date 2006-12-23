@@ -204,7 +204,7 @@ sub injectMessage {
 	my $name = stringToBytes("|");
 	my $msg .= $name . stringToBytes(" : $message") . chr(0);
 	encrypt(\$msg, $msg);
-	$msg = pack("C*",0x09, 0x01) . pack("v*", length($name) + length($message) + 12) . pack("C*",0,0,0,0) . $msg;
+	$msg = pack("C*", 0x09, 0x01) . pack("v*", length($name) + length($message) + 12) . pack("C*",0,0,0,0) . $msg;
 	encrypt(\$msg, $msg);
 	$self->{net}->clientSend($msg);
 }
