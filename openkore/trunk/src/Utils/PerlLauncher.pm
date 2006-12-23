@@ -45,13 +45,12 @@ sub new {
 	my ($self, @interp);
 
 	# Find a Perl interpreter
-	if (-f $Config{perlpath}) {
-		@interp = ($Config{perlpath});
-		# Delete the INTERPRETER env variable, we want to use
-		# the Perl interpreter whenever possible.
-		delete $ENV{INTERPRETER};
-	} else {
+	if ($ENV{INTERPRETER}) {
+		# Prefer (wx)start.exe. Because if a user uses wxstart.exe *and*
+		# has ActivePerl installed, but not WxPerl, then things will go wrong.
 		@interp = ($ENV{INTERPRETER}, '!');
+	} else {
+		@interp = ($Config{perlpath});
 	}
 
 	# Append Perl module search paths
