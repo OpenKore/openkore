@@ -3843,12 +3843,15 @@ sub npc_talk_responses {
 	$talk = bytesToString($talk);
 
 	my @preTalkResponses = split /:/, $talk;
-	undef @{$talk{responses}};
-	foreach (@preTalkResponses) {
+	$talk{responses} = [];
+	foreach my $response (@preTalkResponses) {
 		# Remove RO color codes
-		s/\^[a-fA-F0-9]{6}//g;
+		$response =~ s/\^[a-fA-F0-9]{6}//g;
+		if ($response =~ /^\^nItemID\^(\d+)$/) {
+			$response = itemNameSimple($1);
+		}
 
-		push @{$talk{responses}}, $_ if $_ ne "";
+		push @{$talk{responses}}, $response if ($response ne "");
 	}
 
 	$talk{responses}[@{$talk{responses}}] = "Cancel Chat";
@@ -3858,11 +3861,10 @@ sub npc_talk_responses {
 
 	my $list = T("----------Responses-----------\n" .
 		"#  Response\n");
-	for (my $i = 0; $i < @{$talk{'responses'}}; $i++) {
-		my $responseMsg = ($talk{'responses'}[$i] =~ /^\^nItemID\^(\d+)$/) ? itemNameSimple($1) : $talk{'responses'}[$i];
+	for (my $i = 0; $i < @{$talk{responses}}; $i++) {
 		$list .= swrite(
 			"@< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
-			[$i, $responseMsg]);
+			[$i, $talk{responses}[$i]]);
 	}
 	$list .= "-------------------------------\n";
 	message($list, "list");

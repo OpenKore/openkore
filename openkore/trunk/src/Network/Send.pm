@@ -33,6 +33,9 @@ use Exception::Class (
 
 use Globals qw(%config $encryptVal $bytesSent $conState %packetDescriptions);
 use I18N qw(stringToBytes);
+use Utils qw(existsInList);
+use Misc;
+use Log qw(debug);
 
 sub import {
 	# This code is for backward compatibility reasons, so that you can still
@@ -63,7 +66,11 @@ sub import {
 		*{$symbol} = sub {
 			my $remote_socket = shift;
 			my $func = $Globals::messageSender->can($symbol);
-			return $func->($Globals::messageSender, @_);
+			if (!$func) {
+				die "No such function: $symbol";
+			} else {
+				return $func->($Globals::messageSender, @_);
+			}
 		};
 	}
 	Network::Send::Compatibility->export_to_level(1, undef, @EXPORT_OK);
