@@ -160,7 +160,10 @@ sub serverConnect {
 sub serverSend {
 	my $self = shift;
 	my $msg = shift;
-	$self->{remote_socket}->send($msg) if ($self->serverAlive);
+	if ($self->serverAlive) {
+		$self->{remote_socket}->send($msg);
+		Plugins::callHook("Network::serverSend", { msg => $msg });
+	}
 }
 
 ##
