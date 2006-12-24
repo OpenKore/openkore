@@ -123,6 +123,7 @@ define('PAGE_POSTING', -9);
 define('PAGE_PRIVMSGS', -10);
 define('PAGE_GROUPCP', -11);
 define('PAGE_QUIZ', -30);
+define('PAGE_MODERATING', -31);
 define('PAGE_TOPIC_OFFSET', 5000);
 
 

@@ -623,7 +623,6 @@ $s_auth_can .= ( ( $is_auth['auth_vote'] ) ? $lang['Rules_vote_can'] : $lang['Ru
 attach_build_auth_levels($is_auth, $s_auth_can);
 
 $topic_mod = '';
-
 if ( $is_auth['auth_mod'] )
 {
 	$s_auth_can .= sprintf($lang['Rules_moderate'], "<a href=\"modcp.$phpEx?" . POST_FORUM_URL . "=$forum_id&amp;sid=" . $userdata['session_id'] . '">', '</a>');
@@ -1342,6 +1341,13 @@ for($i = 0; $i < $total_posts; $i++)
 		'U_POST_ID' => $postrow[$i]['post_id'])
 	);
 	display_post_attachments($postrow[$i]['post_id'], $postrow[$i]['post_attachment']);
+}
+
+if (OUtils::isForumContributor()) {
+	$template->assign_block_vars('is_forum_contributor', array());
+	$template->assign_vars(array(
+		'SID' => $userdata['session_id']
+	));
 }
 
 include($phpbb_root_path . 'quick_reply.'.$phpEx);
