@@ -20,6 +20,8 @@ Network.pm
 Plugins.pm
 Settings.pm
 Skills.pm
+Task.pm
+TaskManager.pm
 Translation.pm
 Utils.pm
 XKore.pm
