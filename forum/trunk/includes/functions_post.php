@@ -46,26 +46,58 @@ function prepare_message($message, $html_on, $bbcode_on, $smile_on, $bbcode_uid 
 
 	if ($html_on)
 	{
-		// If HTML is on, we try to make it safe
-		// This approach is quite agressive and anything that does not look like a valid tag
-		// is going to get converted to HTML entities
-		$message = stripslashes($message);
-		$html_match = '#<[^\w<]*(\w+)((?:"[^"]*"|\'[^\']*\'|[^<>\'"])+)?>#';
-		$matches = array();
+		// This is the old phpBB 2.0.19 code, because the 2.0.20 code is way too aggressive.
+		$allowed_html_tags = split(',', $board_config['allow_html_tags']);
 
-		$message_split = preg_split($html_match, $message);
-		preg_match_all($html_match, $message, $matches);
+		$end_html = 0;
+		$start_html = 1;
+		$tmp_message = '';
+		$message = ' ' . $message . ' ';
 
-		$message = '';
-
-		foreach ($message_split as $part)
+		while ($start_html = strpos($message, '<', $start_html))
 		{
-			$tag = array(array_shift($matches[0]), array_shift($matches[1]), array_shift($matches[2]));
-			$message .= preg_replace($html_entities_match, $html_entities_replace, $part) . clean_html($tag);
+			$tmp_message .= preg_replace($html_entities_match, $html_entities_replace, substr($message, $end_html + 1, ($start_html - $end_html - 1)));
+
+			if ($end_html = strpos($message, '>', $start_html))
+			{
+				$length = $end_html - $start_html + 1;
+				$hold_string = substr($message, $start_html, $length);
+
+				if (($unclosed_open = strrpos(' ' . $hold_string, '<')) != 1)
+				{
+					$tmp_message .= preg_replace($html_entities_match, $html_entities_replace, substr($hold_string, 0, $unclosed_open - 1));
+					$hold_string = substr($hold_string, $unclosed_open - 1);
+				}
+
+				$tagallowed = false;
+				for ($i = 0; $i < sizeof($allowed_html_tags); $i++)
+				{
+					$match_tag = trim($allowed_html_tags[$i]);
+					if (preg_match('#^<\/?' . $match_tag . '[> ]#i', $hold_string))
+					{
+						$tagallowed = (preg_match('#^<\/?' . $match_tag . ' .*?(style[\t ]*?=|on[\w]+[\t ]*?=)#i', $hold_string)) ? false : true;
+					}
+				}
+
+				$tmp_message .= ($length && !$tagallowed) ? preg_replace($html_entities_match, $html_entities_replace, $hold_string) : $hold_string;
+
+				$start_html += $length;
+			}
+			else
+			{
+				$tmp_message .= preg_replace($html_entities_match, $html_entities_replace, substr($message, $start_html, strlen($message)));
+
+				$start_html = strlen($message);
+				$end_html = $start_html;
+			}
 		}
 
-		$message = addslashes($message);
-		$message = str_replace('&quot;', '\&quot;', $message);
+		if (!$end_html || ($end_html != strlen($message) && $tmp_message != ''))
+		{
+			$tmp_message .= preg_replace($html_entities_match, $html_entities_replace, substr($message, $end_html + 1));
+		}
+
+		$message = ($tmp_message != '') ? trim($tmp_message) : trim($message);
 	}
 	else
 	{
