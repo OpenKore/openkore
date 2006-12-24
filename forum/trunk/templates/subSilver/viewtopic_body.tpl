@@ -96,6 +96,18 @@
 <table width="100%" cellspacing="2" border="0" align="center">
   <tr> 
 	<td width="40%" valign="top" nowrap="nowrap" align="left"><span class="gensmall">{S_WATCH_TOPIC}</span><br />
+	  <!-- BEGIN is_forum_contributor -->
+	  <script type="text/javascript" src="/contributors.js"></script>
+	  <script type="text/javascript">setParams({TOPIC_ID}, "{SID}");</script>
+	  <div style="margin-top: 1em; font-size: 10pt;">
+	  	<b>Forum contributors actions:</b>
+	  	<ul style="margin: 0; padding: 0; margin-left: 2em;">
+	  	<li><a href="javascript:void( contribute('to_support') )">Move to support forum</a></li>
+	  	<li><a href="javascript:void( contribute('rtfm', 'Please give a hint, or leave empty.') )">"Read the documentation / FAQ!"</a></li>
+	  	<li><a href="javascript:void( contribute('violation', 'Please state the rule that was violated, or leave empty.') )">"You violated the rules."</a></li>
+	  	</ul>
+	  </div>
+	  <!-- END is_forum_contributor -->
 	  &nbsp;<br />
 	  {S_TOPIC_ADMIN}
 	  <!-- BEGIN is_moderator -->

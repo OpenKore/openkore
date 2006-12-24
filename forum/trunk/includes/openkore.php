@@ -4,7 +4,7 @@ if (!defined('IN_PHPBB')) {
 }
 require_once($phpbb_root_path . 'extension.inc');
 require_once($phpbb_root_path . 'common.' . $phpEx);
-
+require_once($phpbb_root_path . '/includes/constants.' . $phpEx);
 
 /**
  * SQL utility functions.
@@ -217,6 +217,12 @@ class OConstants {
 	const MIN_USER_POSTS = 40;
 	const SVN_GUIDE_URL = "http://www.openkore.com/wiki/index.php/What_is_SVN%3F";
 	const TRASH_FORUM_NAME = "Trashcan";
+	const SUPPORT_FORUM_NAME = "Other OpenKore & VisualKore Support";
+	/* The 'Forum Contributors' group consists of people who are authorized to help
+	 * keeping the forums clean by using the 'forum contributors' control panel,
+	 * but have less privileges than sub-moderators.
+	 */
+	const FORUM_CONTRIBUTORS_GROUP_NAME = "Forum Contributors";
 
 	/**
 	 * Get the advertisement content.
@@ -323,6 +329,37 @@ class OUtils {
 			return (isset($_GET[$name])) ? intval($_GET[$name]) : intval($_POST[$name]);
 		} else {
 			return '';
+		}
+	}
+
+	/**
+	 * Check whether the current user is a forum contributor.
+	 *
+	 * @require $userdata and $is_auth must already have been initialized.
+	 */
+	public static function isForumContributor() {
+		global $is_auth;
+		if ($is_auth['auth_mod']) {
+			return true;
+		} else if (!$is_auth['auth_view'] || !$is_auth['auth_read']) {
+			return false;
+		} else {
+			global $userdata;
+			global $db;
+			$dbu = new OSQLUtils($db);
+			$sql = sprintf("SELECT u.user_id FROM " . USERS_TABLE . " u, " . USER_GROUP_TABLE . " ug, " . GROUPS_TABLE . " g " .
+				"WHERE u.user_id = ug.user_id AND ug.group_id = g.group_id " .
+				"AND u.user_id = %d AND g.group_name = '%s'",
+				$dbu->escape($userdata['user_id']),
+				$dbu->escape(OConstants::FORUM_CONTRIBUTORS_GROUP_NAME));
+			$result = $db->sql_query($sql);
+			if (!$result) {
+				message_die(GENERAL_ERROR, 'A database error occured.',
+					'Error', __LINE__, __FILE__, $sql);
+			}
+
+			$row = $db->sql_fetchrow($result);
+			return $row != FALSE;
 		}
 	}
 }

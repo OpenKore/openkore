@@ -430,6 +430,14 @@ elseif( isset($HTTP_GET_VARS['pane']) && $HTTP_GET_VARS['pane'] == 'right' )
 							$location = $lang['Viewing_FAQ'];
 							$location_url = "index.$phpEx?pane=right";
 							break;
+						case PAGE_QUIZ:
+							$location = 'Doing quiz';
+							$location_url = "index.$phpEx?pane=right";
+							break;
+						case PAGE_MODERATING:
+							$location = 'Moderating';
+							$location_url = "index.$phpEx?pane=right";
+							break;
 						default:
 							$location = $lang['Forum_index'];
 							$location_url = "index.$phpEx?pane=right";
@@ -520,6 +528,14 @@ elseif( isset($HTTP_GET_VARS['pane']) && $HTTP_GET_VARS['pane'] == 'right' )
 						break;
 					case PAGE_FAQ:
 						$location = $lang['Viewing_FAQ'];
+						$location_url = "index.$phpEx?pane=right";
+						break;
+					case PAGE_QUIZ:
+						$location = 'Doing quiz';
+						$location_url = "index.$phpEx?pane=right";
+						break;
+					case PAGE_MODERATING:
+						$location = 'Moderating';
 						$location_url = "index.$phpEx?pane=right";
 						break;
 					default:
