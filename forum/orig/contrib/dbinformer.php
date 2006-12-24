@@ -170,7 +170,7 @@ h3 {font-size:12pt;color:blue}
 <tr> 
 <td class="row1" align="right"><span class="gen">Database type: </span></td> 
 <td class="row2"> 
-<form action="<?php echo $HTTP_SERVER_VARS['PHP_SELF']; ?>" method="post"> 
+<form action="<?php echo htmlspecialchars($HTTP_SERVER_VARS['PHP_SELF']); ?>" method="post"> 
 <select name="dbms"> 
 <?php 
 /* loop through the dbms, with the correct one selected (hopefully!) */ 
@@ -385,7 +385,7 @@ else
             if (!$db['select']) 
             { 
                 echo 'Your database was not found.<br />'; 
-                echo '<b>ERROR:</b> <i>' . $db['error'] . '</i><br />'; 
+                echo '<b>ERROR:</b> <i>' . htmlspecialchars($db['error']) . '</i><br />'; 
             } 
             else 
             { 
@@ -406,11 +406,11 @@ else
                     /* Highlight tables with the table_prefix specified */ 
                     if (preg_match("/^$HTTP_POST_VARS[table_prefix]/i", $table[0])) 
                     { 
-                        echo '<li><b>' . $table[0] . '</b></li><br />'; 
+                        echo '<li><b>' . htmlspecialchars($table[0]) . '</b></li><br />'; 
                     } 
                     else 
                     { 
-                        echo '<li>' . $table[0] . '</li><br />'; 
+                        echo '<li>' . htmlspecialchars($table[0]) . '</li><br />'; 
                     } 
                 } 
                 echo '</ul>'; 
@@ -437,7 +437,7 @@ else
                 echo 'Either copy the <b>19</b> lines below and save them as <u>config.php</u> or click on the <u>Download</u> button below. Then upload the file to your phpBB2 root directory (phpBB2/ by default). Make sure that there is nothing (this includes blank spaces) after the <u>?></u>.<br /><br />'; 
 
                 /* Create our config file */ 
-                echo '<form action="' . $HTTP_SERVER_VARS['PHP_SELF'] . '" method="post"><table cellspacing="1" cellpadding="3" border="0"><tr><td class="code">'; 
+                echo '<form action="' . htmlspecialchars($HTTP_SERVER_VARS['PHP_SELF']) . '" method="post"><table cellspacing="1" cellpadding="3" border="0"><tr><td class="code">'; 
                 echo make_config($dbms, $dbhost, $dbname, $dbuser, $dbpasswd, $table_prefix); 
                 echo '</td></tr></table>'; 
                 echo '<input type="hidden" name="dbms" value="' . $dbms . '" />'; 

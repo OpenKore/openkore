@@ -6,7 +6,7 @@
  *   copyright            : (C) 2001 The phpBB Group
  *   email                : support@phpbb.com
  *
- *   $Id: memberlist.php,v 1.36.2.12 2006/02/07 20:42:51 grahamje Exp $
+ *   $Id: memberlist.php,v 1.36.2.13 2006/12/16 13:11:24 acydburn Exp $
  *
  ***************************************************************************/
 
@@ -34,6 +34,7 @@ init_userprefs($userdata);
 //
 
 $start = ( isset($HTTP_GET_VARS['start']) ) ? intval($HTTP_GET_VARS['start']) : 0;
+$start = ($start < 0) ? 0 : $start;
 
 if ( isset($HTTP_GET_VARS['mode']) || isset($HTTP_POST_VARS['mode']) )
 {

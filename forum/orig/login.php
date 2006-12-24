@@ -6,7 +6,7 @@
  *   copyright            : (C) 2001 The phpBB Group
  *   email                : support@phpbb.com
  *
- *   $Id: login.php,v 1.47.2.24 2006/04/22 20:28:42 grahamje Exp $
+ *   $Id: login.php,v 1.47.2.25 2006/12/16 13:11:24 acydburn Exp $
  *
  *
  ***************************************************************************/
@@ -123,7 +123,7 @@ if( isset($HTTP_POST_VARS['login']) || isset($HTTP_GET_VARS['login']) || isset($
 				$redirect = ( !empty($HTTP_POST_VARS['redirect']) ) ? str_replace('&amp;', '&', htmlspecialchars($HTTP_POST_VARS['redirect'])) : '';
 				$redirect = str_replace('?', '&', $redirect);
 
-				if (strstr(urldecode($redirect), "\n") || strstr(urldecode($redirect), "\r"))
+				if (strstr(urldecode($redirect), "\n") || strstr(urldecode($redirect), "\r") || strstr(urldecode($redirect), ';url'))
 				{
 					message_die(GENERAL_ERROR, 'Tried to redirect to potentially insecure url.');
 				}
@@ -142,7 +142,7 @@ if( isset($HTTP_POST_VARS['login']) || isset($HTTP_GET_VARS['login']) || isset($
 			$redirect = ( !empty($HTTP_POST_VARS['redirect']) ) ? str_replace('&amp;', '&', htmlspecialchars($HTTP_POST_VARS['redirect'])) : "";
 			$redirect = str_replace("?", "&", $redirect);
 
-			if (strstr(urldecode($redirect), "\n") || strstr(urldecode($redirect), "\r"))
+			if (strstr(urldecode($redirect), "\n") || strstr(urldecode($redirect), "\r") || strstr(urldecode($redirect), ';url'))
 			{
 				message_die(GENERAL_ERROR, 'Tried to redirect to potentially insecure url.');
 			}

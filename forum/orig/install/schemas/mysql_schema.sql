@@ -1,7 +1,7 @@
 #
 # phpBB2 - MySQL schema
 #
-# $Id: mysql_schema.sql,v 1.35.2.12 2006/02/06 21:32:42 grahamje Exp $
+# $Id: mysql_schema.sql,v 1.35.2.13 2006/12/11 23:30:11 naderman Exp $
 #
 
 #
@@ -257,7 +257,7 @@ CREATE TABLE phpbb_search_results (
   search_id int(11) UNSIGNED NOT NULL default '0',
   session_id char(32) NOT NULL default '',
   search_time int(11) DEFAULT '0' NOT NULL,
-  search_array text NOT NULL,
+  search_array mediumtext NOT NULL,
   PRIMARY KEY  (search_id),
   KEY session_id (session_id)
 );
