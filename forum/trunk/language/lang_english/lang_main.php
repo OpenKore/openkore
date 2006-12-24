@@ -6,7 +6,7 @@
  *     copyright            : (C) 2001 The phpBB Group
  *     email                : support@phpbb.com
  *
- *     $Id: lang_main.php,v 1.85.2.21 2006/02/05 15:59:48 grahamje Exp $
+ *     $Id: lang_main.php,v 1.85.2.22 2006/12/16 13:11:28 acydburn Exp $
  *
  ****************************************************************************/
 
@@ -1040,6 +1040,8 @@ $lang['A_critical_error'] = 'A Critical Error Occurred';
 $lang['Admin_reauthenticate'] = 'To administer the board you must re-authenticate yourself.';
 $lang['Login_attempts_exceeded'] = 'The maximum number of %s login attempts has been exceeded. You are not allowed to login for the next %s minutes.';
 $lang['Please_remove_install_contrib'] = 'Please ensure both the install/ and contrib/ directories are deleted';
+
+$lang['Session_invalid'] = 'Invalid Session. Please resubmit the form.';
 
 // Advanced Quick Reply Mod
 $lang['Quick_Reply'] = 'Quick Reply';
