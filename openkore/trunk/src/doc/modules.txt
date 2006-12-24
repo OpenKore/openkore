@@ -11,6 +11,8 @@ Commands
 Log
 Settings
 Translation
+Task
+TaskManager
 Modules
 Network
 Network::Receive
