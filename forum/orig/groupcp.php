@@ -6,7 +6,7 @@
  *   copyright            : (C) 2001 The phpBB Group
  *   email                : support@phpbb.com
  *
- *   $Id: groupcp.php,v 1.58.2.25 2005/09/17 18:36:48 grahamje Exp $
+ *   $Id: groupcp.php,v 1.58.2.27 2006/12/16 13:11:24 acydburn Exp $
  *
  *
  ***************************************************************************/
@@ -148,6 +148,7 @@ $confirm = ( isset($HTTP_POST_VARS['confirm']) ) ? TRUE : 0;
 $cancel = ( isset($HTTP_POST_VARS['cancel']) ) ? TRUE : 0;
 
 $start = ( isset($HTTP_GET_VARS['start']) ) ? intval($HTTP_GET_VARS['start']) : 0;
+$start = ($start < 0) ? 0 : $start;
 
 //
 // Default var values
@@ -418,21 +419,24 @@ else if ( $group_id )
 							FROM " . AUTH_ACCESS_TABLE . " aa 
 							WHERE aa.group_id = g.group_id  
 						)
-					)";
+					)
+				ORDER BY aa.auth_mod DESC";
 			break;
 
 		case 'oracle':
 			$sql = "SELECT g.group_moderator, g.group_type, aa.auth_mod 
 				FROM " . GROUPS_TABLE . " g, " . AUTH_ACCESS_TABLE . " aa 
 				WHERE g.group_id = $group_id
-					AND aa.group_id (+) = g.group_id";
+					AND aa.group_id (+) = g.group_id
+				ORDER BY aa.auth_mod DESC";
 			break;
 
 		default:
 			$sql = "SELECT g.group_moderator, g.group_type, aa.auth_mod 
 				FROM ( " . GROUPS_TABLE . " g 
 				LEFT JOIN " . AUTH_ACCESS_TABLE . " aa ON aa.group_id = g.group_id )
-				WHERE g.group_id = $group_id";
+				WHERE g.group_id = $group_id
+				ORDER BY aa.auth_mod DESC";
 			break;
 	}
 	if ( !($result = $db->sql_query($sql)) )
