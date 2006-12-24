@@ -6,7 +6,7 @@
  *   copyright            : (C) 2001 The phpBB Group
  *   email                : support@phpbb.com
  *
- *   $Id: viewtopic.php,v 1.186.2.46 2006/04/21 19:07:46 grahamje Exp $
+ *   $Id: viewtopic.php,v 1.186.2.47 2006/12/16 13:11:25 acydburn Exp $
  *
  *
  ***************************************************************************/
@@ -48,6 +48,7 @@ if ( isset($HTTP_GET_VARS[POST_POST_URL]))
 
 
 $start = ( isset($HTTP_GET_VARS['start']) ) ? intval($HTTP_GET_VARS['start']) : 0;
+$start = ($start < 0) ? 0 : $start;
 
 if (!$topic_id && !$post_id)
 {

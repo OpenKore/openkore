@@ -6,7 +6,7 @@
  *   copyright            : (C) 2001 The phpBB Group
  *   email                : support@phpbb.com
  *
- *   $Id: posting.php,v 1.159.2.28 2006/01/28 14:56:51 grahamje Exp $
+ *   $Id: posting.php,v 1.159.2.30 2006/12/16 13:11:24 acydburn Exp $
  *
  *
  ***************************************************************************/
@@ -44,6 +44,7 @@ while( list($var, $param) = @each($params) )
 }
 
 $confirm = isset($HTTP_POST_VARS['confirm']) ? true : false;
+$sid = (isset($HTTP_POST_VARS['sid'])) ? $HTTP_POST_VARS['sid'] : 0;
 
 $params = array('forum_id' => POST_FORUM_URL, 'topic_id' => POST_TOPIC_URL, 'post_id' => POST_POST_URL);
 while( list($var, $param) = @each($params) )
@@ -250,9 +251,8 @@ switch ( $mode )
 		message_die(GENERAL_MESSAGE, $lang['No_valid_mode']);
 }
 
-if ( $result = $db->sql_query($sql) )
+if ( ($result = $db->sql_query($sql)) && ($post_info = $db->sql_fetchrow($result)) )
 {
-	$post_info = $db->sql_fetchrow($result);
 	$db->sql_freeresult($result);
 
 	$forum_id = $post_info['forum_id'];
@@ -470,6 +470,7 @@ if ( ( $delete || $poll_delete || $mode == 'delete' ) && !$confirm )
 	//
 	$s_hidden_fields = '<input type="hidden" name="' . POST_POST_URL . '" value="' . $post_id . '" />';
 	$s_hidden_fields .= ( $delete || $mode == "delete" ) ? '<input type="hidden" name="mode" value="delete" />' : '<input type="hidden" name="mode" value="poll_delete" />';
+	$s_hidden_fields .= '<input type="hidden" name="sid" value="' . $userdata['session_id'] . '" />';
 
 	$l_confirm = ( $delete || $mode == 'delete' ) ? $lang['Confirm_delete'] : $lang['Confirm_delete_poll'];
 
@@ -619,6 +620,12 @@ else if ( $submit || $confirm )
 	$return_message = '';
 	$return_meta = '';
 
+	// session id check
+	if ($sid == '' || $sid != $userdata['session_id'])
+	{
+		$error_msg .= (!empty($error_msg)) ? '<br />' . $lang['Session_invalid'] : $lang['Session_invalid'];
+	}
+
 	switch ( $mode )
 	{
 		case 'editpost':
@@ -651,6 +658,11 @@ else if ( $submit || $confirm )
 
 		case 'delete':
 		case 'poll_delete':
+			if ($error_msg != '')
+			{
+				message_die(GENERAL_MESSAGE, $error_msg);
+			}
+
 			delete_post($mode, $post_data, $return_message, $return_meta, $forum_id, $topic_id, $post_id, $poll_id);
 			break;
 	}
@@ -1025,6 +1037,7 @@ if ( $mode == 'newtopic' || ( $mode == 'editpost' && $post_data['first_post'] ) 
 }
 
 $hidden_form_fields = '<input type="hidden" name="mode" value="' . $mode . '" />';
+$hidden_form_fields .= '<input type="hidden" name="sid" value="' . $userdata['session_id'] . '" />';
 
 switch( $mode )
 {

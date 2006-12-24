@@ -1,0 +1,30 @@
+body {
+	text-align: center;
+	font-family: 'Times New Roman', Times, Serif;
+	padding-top: 4em;
+	padding-bottom: 2em;
+	color: #777777;
+	background: white;
+}
+
+h1 {
+	font-size: 20pt;
+}
+
+h2 {
+	font-size: 16pt;
+}
+
+#image {
+	margin-top: 3em;
+	margin-bottom: 5em;
+}
+
+#fear {
+	font-size: 16pt;
+	line-height: 23pt;
+}
+
+#explanation {
+	margin-top: 35em;
+}
