@@ -9,6 +9,7 @@ ObjectList.pm
 PerlLauncher.pm
 RDM128.pm
 RMD160.pm
+Set.pm
 TextReader.pm
 Unix.pm
 Whirlpool.pm

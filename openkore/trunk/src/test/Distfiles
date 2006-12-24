@@ -2,6 +2,8 @@ ActorListTest.pm
 CallbackListTest.pm
 ObjectListTest.pm
 HttpReaderTest.pm
+SetTest.pm
+TaskManagerTest.pm
 WhirlpoolTest.pm
 unittests.pl
 consoleui-test.cpp
