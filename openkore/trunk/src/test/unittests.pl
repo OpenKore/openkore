@@ -4,9 +4,11 @@ no strict 'refs';
 use FindBin qw($RealBin);
 use lib "$RealBin";
 use lib "$RealBin/..";
+use lib "$RealBin/../deps";
 
 use Test::More qw(no_plan);
-my @tests = qw(CallbackListTest ObjectListTest ActorListTest WhirlpoolTest);
+my @tests = qw(CallbackListTest ObjectListTest ActorListTest WhirlpoolTest
+	SetTest TaskManagerTest);
 if ($^O eq 'MSWin32') {
 	push @tests, qw(HttpReaderTest);
 }
