@@ -115,6 +115,11 @@ sub serverDisconnect {
 	return $self->{server}->serverDisconnect();
 }
 
+sub getState {
+	my ($self) = @_;
+	return $self->{server}->getState();
+}
+
 
 ######################
 ## Client Functions ##

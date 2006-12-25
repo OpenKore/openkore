@@ -188,7 +188,7 @@ sub initHandlers {
 	northeast          => \&cmdManualMove,
 	northwest          => \&cmdManualMove,
 	southeast          => \&cmdManualMove,
-	southwest          => \&cmdManualMove,
+	southwest          => \&cmdManualMove
 	);
 }
 

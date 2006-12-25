@@ -115,6 +115,7 @@ use Actor::Unknown;
 use ActorList;
 use Interface;
 use ChatQueue;
+use Task::TalkNPC;
 use Utils::Benchmark;
 use Utils::HttpReader;
 use Utils::Whirlpool;
@@ -123,7 +124,8 @@ Modules::register(qw/Globals Modules Log Utils Settings Plugins FileParsers
 	Network::Receive Network::Send Commands Misc AI AI::CoreLogic
 	AI::Attack AI::Homunculus Skills
 	Interface ChatQueue Actor Actor::Player Actor::Monster Actor::You
-	Actor::Party Actor::Unknown Actor::Item Match Utils::Benchmark/);
+	Actor::Party Actor::Unknown Actor::Item Match Utils::Benchmark
+	Task::TalkNPC/);
 
 Log::message("$Settings::versionText\n");
 if (!Plugins::loadAll()) {
