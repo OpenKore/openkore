@@ -16,7 +16,7 @@
 0087 You Move
 0088 Unit Position
 008A Item take / attack damage / sit / stand
-008D Public essage
+008D Public message
 008E Public message by yourself
 0091 Map Changed
 0092 Map Server Changed
@@ -42,7 +42,7 @@
 00B3 Character Select Result
 00B4 NPC Talk
 00B5 NPC Continue
-00B6 NPC Don't Talk
+00B6 NPC Cancel
 00B7 NPC Response
 00BC Your Status Added (Str, Agi, Vit, Int, Dex, Luk)
 00BD Your Status Info (Calculated)
