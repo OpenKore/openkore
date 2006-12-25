@@ -258,6 +258,7 @@ sub mainLoop {
 		Misc::checkValidity("AI");
 		return if $quit;
 	}
+	$taskManager->iterate();
 
 	Benchmark::end("mainLoop_part2") if DEBUG;
 	Benchmark::begin("mainLoop_part3") if DEBUG;

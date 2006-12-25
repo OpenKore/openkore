@@ -115,6 +115,8 @@ use Actor::Unknown;
 use ActorList;
 use Interface;
 use ChatQueue;
+use TaskManager;
+use Task;
 use Task::TalkNPC;
 use Utils::Benchmark;
 use Utils::HttpReader;
@@ -125,7 +127,7 @@ Modules::register(qw/Globals Modules Log Utils Settings Plugins FileParsers
 	AI::Attack AI::Homunculus Skills
 	Interface ChatQueue Actor Actor::Player Actor::Monster Actor::You
 	Actor::Party Actor::Unknown Actor::Item Match Utils::Benchmark
-	Task::TalkNPC/);
+	TaskManager Task Task::TalkNPC/);
 
 Log::message("$Settings::versionText\n");
 if (!Plugins::loadAll()) {
@@ -331,6 +333,7 @@ $jExpSwitch = 2;
 $totalBaseExp = 0;
 $totalJobExp = 0;
 $startTime_EXP = time;
+$taskManager = new TaskManager();
 
 $itemsList = new ActorList('Actor::Item');
 $monstersList = new ActorList('Actor::Monster');
