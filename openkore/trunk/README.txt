@@ -79,16 +79,16 @@ Internal:
 
 Credits:
 - Darkfate: partial servertype 11 support.
-- piroJOKE: server information updates and table files updates.
+- piroJOKE: server information updates and table files updates,
+  labels idea, partial servertype 13 support.
 - Click: improved shop list randomization.
 - Stalker: runFromTarget fix
 - raizend: Top 10 packet parsers
 - illusionist: Party fix, Guild Messages, top10 command, bRO support
-- piroJOKE: partial servertype 13 support.
 - edeline: help with kRO server fixes.
 - skseo: Korean translations.
 - Tatka: help with special character support in the Win32 console.
-- piroJOKE: labels idea.
+- heero: servertype 15 (pRO Thor) support.
 - And of course, all developers with SVN write access :)
   See http://cia.navi.cx/stats/project/openkore
 
