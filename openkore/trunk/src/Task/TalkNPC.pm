@@ -61,7 +61,7 @@ use constant WRONG_INSTRUCTIONS => 4;
 sub new {
 	my $class = shift;
 	my %args = @_;
-	my $self = $class->SUPER::new(@_, name => "TalkNPC");
+	my $self = $class->SUPER::new(@_, mutexes => ['npc']);
 
 	$self->{x} = $args{x};
 	$self->{y} = $args{y};
@@ -89,11 +89,6 @@ sub activate {
 	$self->{time} = time;
 	$self->{stage} = 'Not Started';
 	$self->{mapChanged} = 0;
-}
-
-# Overrided method.
-sub getMutexes {
-	return ['npc', 'movement'];
 }
 
 # Overrided method.

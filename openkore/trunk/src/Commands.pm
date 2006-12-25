@@ -478,6 +478,8 @@ sub cmdAIv {
 		message TF("ai_seq (auto) = %s\n", "@ai_seq"), "list";
 	}
 	message T("solution\n"), "list" if (AI::args->{'solution'});
+	message TF("Active tasks: %s\n", $taskManager->activeTasksString()), "info";
+	message TF("Inactive tasks: %s\n", $taskManager->inactiveTasksString()), "info";
 }
 
 sub cmdArrowCraft {

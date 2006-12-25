@@ -23,6 +23,7 @@ use strict;
 use Carp::Assert;
 use Task;
 use Utils::Set;
+use Utils::CallbackList;
 
 ##
 # TaskManager->new()
@@ -74,7 +75,9 @@ sub new {
 
 		# Whether tasks should be rescheduled on the
 		# next iteration.
-		shouldReschedule => 0
+		shouldReschedule => 0,
+
+		onTaskDone => new CallbackList('onTaskDone')
 	);
 	return bless \%self, $class;
 }
@@ -261,9 +264,54 @@ sub iterate {
 			$task->onMutexesChanged->remove($ID);
 			$i--;
 			$self->{shouldReschedule} = 1;
+
+			$self->{onTaskDone}->call($self, { task => $task });
 		}
 	}
 	$self->checkValidity() if DEBUG;
+}
+
+##
+# String $TaskManager->activeTasksString()
+#
+# Returns a string which describes the current active tasks.
+sub activeTasksString {
+	my ($self) = @_;
+	return getTaskSetString($self->{activeTasks});
+}
+
+##
+# String $TaskManager->activeTasksString()
+#
+# Returns a string which describes the current inactive tasks.
+sub inactiveTasksString {
+	my ($self) = @_;
+	return getTaskSetString($self->{inactiveTasks});
+}
+
+sub getTaskSetString {
+	my ($set) = @_;
+	if (@{$set}) {
+		my @names;
+		foreach my $task (@{$set}) {
+			push @names, $task->getName();
+		}
+		return join(', ', @names);
+	} else {
+		return '-';
+	}
+}
+
+##
+# CallbackList $TaskManager->onTaskDone()
+#
+# This event is triggered when a task is completed, either successfully
+# or with an error.
+#
+# The event argument a hash containing this item:<br>
+# <tt>task</tt> - The task that was completed.
+sub onTaskDone {
+	return $_[0]->{onTaskDone};
 }
 
 sub onMutexesChanged {

@@ -31,6 +31,7 @@ use Scalar::Util;
 
 use Exception::Class (
 	'IOException',
+	'ArgumentException',
 	'FileNotFoundException'  => { isa => 'IOException' },
 	'UTF8MalformedException' => { fields => 'line' }
 );
