@@ -59,7 +59,7 @@ use constant WAIT_FOR_TASK => 2;
 #                         then this task will give up and complete with an error.
 # `l`
 #
-# x and y may not be 0. Otherwise, an ArgumentException will be thrown.
+# x and y may not be 0 or undef. Otherwise, an ArgumentException will be thrown.
 sub new {
 	my $class = shift;
 	my %args = @_;
@@ -112,6 +112,13 @@ sub resume {
 	$self->{giveup}{time} += time - $self->{interruptionTime};
 	$self->{retry}{time} += time - $self->{interruptionTime};
 	$self->{task}->resume() if ($self->{task});
+}
+
+# Overrided method.
+sub stop {
+	my ($self) = @_;
+	$self->SUPER::stop();
+	$self->{task}->stop() if ($self->{task});
 }
 
 # Overrided method.
