@@ -529,7 +529,7 @@ sub parseSendMsg {
 	if ($config{'debugPacket_ro_sent'} && !existsInList($config{'debugPacket_exclude'}, $switch)
 	   || $config{debugPacket_include_dumpMethod} && existsInList($config{'debugPacket_include'}, $switch)) {
 		my $label = $packetDescriptions{Send}{$switch} ?
-			" - $packetDescriptions{Send}{$switch})" : '';
+			" - $packetDescriptions{Send}{$switch}" : '';
 		
 		if ($config{debugPacket_ro_sent} == 1) {
 			debug "Packet SENT_BY_CLIENT: $switch$label\n", "parseSendMsg", 0;

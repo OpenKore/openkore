@@ -3442,6 +3442,8 @@ sub map_change {
 	my ($self, $args) = @_;
 	change_to_constate5();
 
+	my $oldMap = $field{name};
+
 	($ai_v{temp}{map}) = $args->{map} =~ /([\s\S]*)\./;
 	checkAllowedMap($ai_v{temp}{map});
 	if ($ai_v{temp}{map} ne $field{name}) {
@@ -3464,9 +3466,10 @@ sub map_change {
 		$ai_v{portalTrace_mapChanged} = time;
 	}
 
-	my %coords;
-	$coords{'x'} = $args->{x};
-	$coords{'y'} = $args->{y};
+	my %coords = (
+		x => $args->{x},
+		y => $args->{y}
+	);
 	$chars[$config{char}]{pos} = {%coords};
 	$chars[$config{char}]{pos_to} = {%coords};
 	message TF("Map Change: %s (%s, %s)\n", $args->{map}, $chars[$config{'char'}]{'pos'}{'x'}, $chars[$config{'char'}]{'pos'}{'y'}), "connection";
@@ -3475,16 +3478,21 @@ sub map_change {
 	} else {
 		$messageSender->sendMapLoaded();
 		# Sending sync packet. Perhaps not only for server types 13 and 11
-		if($config{serverType} == 11 || $config{serverType} == 12 || $config{serverType} == 13 || $config{serverType} == 16) {
+		if ($config{serverType} == 11 || $config{serverType} == 12 || $config{serverType} == 13 || $config{serverType} == 16) {
 			$messageSender->sendSync(1);
 		}
 		$timeout{'ai'}{'time'} = time;
 	}
+
+	my %hookArgs = (oldMap => $oldMap);
+	Plugins::callHook('Network::Receive::map_changed', \%hookArgs);
 }
 
 sub map_changed {
 	my ($self, $args) = @_;
 	$conState = 4;
+
+	my $oldMap = $field{name};
 
 	($ai_v{temp}{map}) = $args->{map} =~ /([\s\S]*)\./;
 	checkAllowedMap($ai_v{temp}{map});
@@ -3546,6 +3554,9 @@ sub map_changed {
 	undef $char->{encoreSkill};
 	$cart{exists} = 0;
 	undef %guild;
+
+	my %hookArgs = (oldMap => $oldMap);
+	Plugins::callHook('Network::Receive::map_changed', \%hookArgs);
 }
 
 sub map_loaded {

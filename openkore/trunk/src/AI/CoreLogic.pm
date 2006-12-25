@@ -38,6 +38,7 @@ use Misc;
 use Commands;
 use FileParsers;
 use Translation;
+use Task::TalkNPC;
 
 # This is the main function from which the rest of the AI
 # will be invoked.
@@ -351,124 +352,21 @@ sub processLook {
 sub processNPCTalk {
 	return if (AI::action ne "NPC");
 	my $args = AI::args;
-	$args->{time} = time unless $args->{time};
-
-	if ($args->{stage} eq '') {
-		unless (timeOut($char->{time_move}, $char->{time_move_calc} + 0.2)) {
-			# Wait for us to stop moving before talking
-		} elsif (timeOut($args->{time}, $timeout{ai_npcTalk}{timeout})) {
-			error T("Could not find the NPC at the designated location.\n"), "ai_npcTalk";
+	if (!$args->{task}) {
+		$args->{task} = new Task::TalkNPC(x => $args->{pos}{x},
+						y => $args->{pos}{y},
+						sequence => $args->{sequence});
+		$args->{task}->activate();
+	} else {
+		my $task = $args->{task};
+		$task->iterate();
+		if ($task->getStatus() == Task::DONE) {
 			AI::dequeue;
-
-		} else {
-			# An x,y position has been passed
-			foreach my $npc (@npcsID) {
-				next if !$npc || $npcs{$npc}{'name'} eq '' || $npcs{$npc}{'name'} =~ /Unknown/i;
-				if ( $npcs{$npc}{'pos'}{'x'} eq $args->{pos}{'x'} &&
-					     $npcs{$npc}{'pos'}{'y'} eq $args->{pos}{'y'} ) {
-					debug "Target NPC $npcs{$npc}{'name'} at ($args->{pos}{x},$args->{pos}{y}) found.\n", "ai_npcTalk";
-					$args->{'nameID'} = $npcs{$npc}{'nameID'};
-					$args->{'ID'} = $npc;
-					$args->{'name'} = $npcs{$npc}{'name'};
-					$args->{'stage'} = 'Talking to NPC';
-					$args->{steps} = [];
-					@{$args->{steps}} = parseArgs("x $args->{sequence}");
-					undef $args->{time};
-					undef $ai_v{npc_talk}{time};
-					undef $ai_v{npc_talk}{talk};
-					lookAtPosition($args->{pos});
-					return;
-				}
-			}
-			foreach my $ID (@monstersID) {
-				next if !$ID;
-				if ( $monsters{$ID}{'pos'}{'x'} eq $args->{pos}{'x'} &&
-					     $monsters{$ID}{'pos'}{'y'} eq $args->{pos}{'y'} ) {
-					debug "Target Monster-NPC $monsters{$ID}{name} at ($args->{pos}{x},$args->{pos}{y}) found.\n", "ai_npcTalk";
-					$args->{'nameID'} = $monsters{$ID}{'nameID'};
-					$args->{'ID'} = $ID;
-					$args->{monster} = 1;
-					$args->{'name'} = $monsters{$ID}{'name'};
-					$args->{'stage'} = 'Talking to NPC';
-					$args->{steps} = [];
-					@{$args->{steps}} = parseArgs("x $args->{sequence}");
-					undef $args->{time};
-					undef $ai_v{npc_talk}{time};
-					undef $ai_v{npc_talk}{talk};
-					lookAtPosition($args->{pos});
-					return;
-				}
+			my $error = $task->getError();
+			if ($error) {
+				error("$error->{message}\n", "ai_npcTalk");
 			}
 		}
-
-
-	} elsif ($args->{mapChanged} || ($ai_v{npc_talk}{talk} eq 'close' && $args->{steps}[0] !~ /x/i)) {
-		message TF("Done talking with %s.\n",$args->{name}), "ai_npcTalk";
-
-		# Cancel conversation only if NPC is still around; otherwise
-		# we could get disconnected.
-		$messageSender->sendTalkCancel($args->{ID}) if $npcs{$args->{ID}};;
-		AI::dequeue;
-
-	} elsif (timeOut($args->{time}, $timeout{'ai_npcTalk'}{'timeout'})) {
-		# If NPC does not respond before timing out, then by default, it's
-		# a failure
-		error T("NPC did not respond.\n"), "ai_npcTalk";
-		$messageSender->sendTalkCancel($args->{ID});
-		AI::dequeue;
-
-	} elsif (timeOut($ai_v{'npc_talk'}{'time'}, 0.25)) {
-		if ($ai_v{npc_talk}{talk} eq 'close' && $args->{steps}[0] =~ /x/i) {
-			undef $ai_v{npc_talk}{talk};
-		}
-		$args->{time} = time;
-		# this time will be reset once the NPC responds
-		$ai_v{'npc_talk'}{'time'} = time + $timeout{'ai_npcTalk'}{'timeout'} + 5;
-
-		if ($config{autoTalkCont}) {
-			while ($args->{steps}[0] =~ /c/i) {
-				shift @{$args->{steps}};
-			}
-		}
-
-		if ($args->{steps}[0] =~ /w(\d+)/i) {
-			my $time = $1;
-			$ai_v{'npc_talk'}{'time'} = time + $time;
-			$args->{time} = time + $time;
-		} elsif ( $args->{steps}[0] =~ /^t=(.*)/i ) {
-			$messageSender->sendTalkText($args->{ID}, $1);
-		} elsif ( $args->{steps}[0] =~ /^a=(.*)/i ) {
-			$ai_v{'npc_talk'}{'time'} = time + 1;
-			$args->{time} = time + 1;
-			Commands::run("$1");
-		} elsif ($args->{steps}[0] =~ /d(\d+)/i) {
-			$messageSender->sendTalkNumber($args->{ID}, $1);
-		} elsif ( $args->{steps}[0] =~ /x/i ) {
-			if (!$args->{monster}) {
-				$messageSender->sendTalk($args->{ID});
-			} else {
-				$messageSender->sendAttack($args->{ID}, 0);
-			}
-		} elsif ( $args->{steps}[0] =~ /c/i ) {
-			$messageSender->sendTalkContinue($args->{ID});
-		} elsif ( $args->{steps}[0] =~ /r(\d+)/i ) {
-			$messageSender->sendTalkResponse($args->{ID}, $1+1);
-		} elsif ( $args->{steps}[0] =~ /n/i ) {
-			$messageSender->sendTalkCancel($args->{ID});
-			$ai_v{'npc_talk'}{'time'} = time;
-			$args->{time}	= time;
-		} elsif ( $args->{steps}[0] =~ /^b(\d+),(\d+)/i ) {
-			my $itemID = $storeList[$1]{nameID};
-			$ai_v{npc_talk}{itemID} = $itemID;
-			$messageSender->sendBuy($itemID, $2);
-		} elsif ( $args->{steps}[0] =~ /b/i ) {
-			$messageSender->sendGetStoreList($args->{ID});
-		} elsif ( $args->{steps}[0] =~ /s/i ) {
-			$messageSender->sendGetSellList($args->{ID});
-		} elsif ( $args->{steps}[0] =~ /e/i ) {
-			$ai_v{npc_talk}{talk} = 'close';
-		}
-		shift @{$args->{steps}};
 	}
 }
 

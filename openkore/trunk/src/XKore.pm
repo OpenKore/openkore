@@ -149,6 +149,11 @@ sub serverDisconnect {
 	return undef;
 }
 
+sub getState {
+	return $conState;
+}
+
+
 ######################
 ## Client Functions ##
 ######################

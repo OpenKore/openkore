@@ -94,6 +94,7 @@ sub DESTROY {
 ##
 # boolean $net->serverAliveServer()
 #
+# Check whether the connection to the server is alive.
 sub serverAlive {
 	return $_[0]->{remote_socket} && $_[0]->{remote_socket}->connected();
 }
@@ -205,6 +206,11 @@ sub serverDisconnect {
 	}
 }
 
+sub getState {
+	return $conState;
+}
+
+
 ######################
 ## Client Functions ##
 ######################
@@ -271,6 +277,12 @@ sub clientDisconnect {
 #Check Connection
 #######################################
 #######################################
+
+use constant NOT_CONNECTED => 1;
+use constant CONNECTED_TO_MASTER_SERVER => 2;
+use constant CONNECTED_TO_LOGIN_SERVER => 3;
+use constant CONNECTED_TO_CHAR_SERVER => 4;
+use constant IN_GAME => 5;
 
 # $conState contains the connection state:
 # 1: Not connected to anything		(next step -> connect to master server).

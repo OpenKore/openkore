@@ -39,6 +39,7 @@ DIRS=(.
 	src/Network
 	src/Network/Receive
 	src/Network/Send
+	src/Task
 	src/Poseidon
 	src/Utils
 	src/Utils/StartupNotification
