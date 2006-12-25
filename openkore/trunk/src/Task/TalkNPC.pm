@@ -1,5 +1,6 @@
 #########################################################################
 #  OpenKore - NPC talking task
+#  Copyright (c) 2004-2006 OpenKore Developers
 #
 #  This software is open source, licensed under the GNU General Public
 #  License, version 2.
@@ -19,7 +20,7 @@ use encoding 'utf8';
 
 use Task;
 use base qw(Task);
-use Globals qw($char %timeout $npcsList $monstersList %ai_v $messageSender %config @storeList $net);
+use Globals qw($char %timeout $npcsList $monstersList %ai_v $messageSender %config @storeList $net %talk);
 use Log qw(debug);
 use Utils;
 use Commands;
@@ -32,6 +33,7 @@ use Translation qw(T TF);
 use constant NPC_NOT_FOUND => 1;
 use constant NPC_NO_RESPONSE => 2;
 use constant NO_SHOP_ITEM => 3;
+use constant WRONG_INSTRUCTIONS => 4;
 
 
 ##
@@ -46,7 +48,7 @@ use constant NO_SHOP_ITEM => 3;
 # `l`
 # Note that the NPC is assumed to be on the same map as where the character currently is.
 #
-# <tt>sequence</tt> is a string of whitespace-separated commands:
+# <tt>sequence</tt> is a string of whitespace-separated instructions:
 # ~l
 # - c       : Continue
 # - r#      : Select option # from menu.
@@ -152,7 +154,7 @@ sub iterate {
 		}
 		$self->{time} = time;
 
-		# We give the NPC 5 seconds to respond. This time will be reset once
+		# We give the NPC some time to respond. This time will be reset once
 		# the NPC responds.
 		$ai_v{npc_talk}{time} = time + $timeout{ai_npcTalk}{timeout} + 5;
 
@@ -162,42 +164,77 @@ sub iterate {
 			}
 		}
 
-		if ($self->{steps}[0] =~ /w(\d+)/i) {
+		my $step = $self->{steps}[0];
+		my $npcTalkType = $ai_v{npc_talk}{talk};
+
+		if ($step =~ /w(\d+)/i) {
+			# Wait x seconds.
 			my $time = $1;
 			$ai_v{npc_talk}{time} = time + $time;
 			$self->{time} = time + $time;
 
-		} elsif ( $self->{steps}[0] =~ /^t=(.*)/i ) {
+		} elsif ( $step =~ /^t=(.*)/i ) {
+			# Send NPC talk text.
 			$messageSender->sendTalkText($self->{ID}, $1);
 
-		} elsif ( $self->{steps}[0] =~ /^a=(.*)/i ) {
+		} elsif ( $step =~ /^a=(.*)/i ) {
+			# Run a command.
 			my $command = $1;
 			$ai_v{npc_talk}{time} = time + 1;
 			$self->{time} = time + 1;
 			Commands::run($command);
 
-		} elsif ($self->{steps}[0] =~ /d(\d+)/i) {
+		} elsif ( $step =~ /d(\d+)/i ) {
+			# Send NPC talk number.
 			$messageSender->sendTalkNumber($self->{ID}, $1);
 
-		} elsif ( $self->{steps}[0] =~ /x/i ) {
+		} elsif ( $step =~ /x/i ) {
+			# Initiate NPC conversation.
 			if (!$self->{target}->isa('Actor::Monster')) {
 				$messageSender->sendTalk($self->{ID});
 			} else {
 				$messageSender->sendAttack($self->{ID}, 0);
 			}
 
-		} elsif ( $self->{steps}[0] =~ /c/i ) {
-			$messageSender->sendTalkContinue($self->{ID});
+		} elsif ( $step =~ /c/i ) {
+			# Click Next.
+			if ($npcTalkType eq 'next') {
+				$messageSender->sendTalkContinue($self->{ID});
+			} else {
+				$self->setError(WRONG_INSTRUCTIONS,
+					"According to the instructions, the Next button " .
+					"must now be clicked on, but that's not possible.");
+				$self->cancelTalk();
+			}
 
-		} elsif ( $self->{steps}[0] =~ /r(\d+)/i ) {
-			$messageSender->sendTalkResponse($self->{ID}, $1+1);
+		} elsif ( $step =~ /r(\d+)/i ) {
+			# Choose a menu item.
+			my $choice = $1;
+			if ($npcTalkType eq 'select') {
+				if ($choice < @{$talk{responses}} - 1) {
+					$messageSender->sendTalkResponse($self->{ID}, $choice + 1);
+				} else {
+					$self->setError(WRONG_INSTRUCTIONS,
+						"According to the instructions, menu item $choice must " .
+						"now be selected, but there are only " .
+						(@{$talk{responses}} - 1) . " menu items.");
+					$self->cancelTalk();
+				}
+			} else {
+				$self->setError(WRONG_INSTRUCTIONS,
+					"According to the instructions, a menu item " .
+					"must now be selected, but that's not possible.");
+				$self->cancelTalk();
+			}
 
-		} elsif ( $self->{steps}[0] =~ /n/i ) {
-			$messageSender->sendTalkCancel($self->{ID});
+		} elsif ( $step =~ /n/i ) {
+			# Click Close or Cancel.
+			$self->cancelTalk();
 			$ai_v{npc_talk}{time} = time;
 			$self->{time} = time;
 
-		} elsif ( $self->{steps}[0] =~ /^b(\d+),(\d+)/i ) {
+		} elsif ( $step =~ /^b(\d+),(\d+)/i ) {
+			# Buy an shop item.
 			my $index = $1;
 			my $amount = $2;
 			if ($storeList[$index]) {
@@ -208,13 +245,16 @@ sub iterate {
 				$self->setError(NO_SHOP_ITEM, TF("Shop item %d not found.", $index));
 			}
 
-		} elsif ( $self->{steps}[0] =~ /b/i ) {
+		} elsif ( $step =~ /b/i ) {
+			# Get the shop's item list.
 			$messageSender->sendGetStoreList($self->{ID});
 
-		} elsif ( $self->{steps}[0] =~ /s/i ) {
+		} elsif ( $step =~ /s/i ) {
+			# Get the sell list in a shop.
 			$messageSender->sendGetSellList($self->{ID});
 
-		} elsif ( $self->{steps}[0] =~ /e/i ) {
+		} elsif ( $step =~ /e/i ) {
+			# ? Pretend like the conversation was stopped by the NPC?
 			$ai_v{npc_talk}{talk} = 'close';
 		}
 
@@ -231,6 +271,16 @@ sub iterate {
 sub target {
 	my ($self) = @_;
 	return $self->{target};
+}
+
+sub cancelTalk {
+	my ($self) = @_;
+	if ($ai_v{npc_talk}{talk} eq 'select') {
+		$messageSender->sendTalkResponse($self->{ID}, 255);
+	} elsif ($ai_v{npc_talk}{talk} ne 'close' && !$talk{canceled}) {
+		$messageSender->sendTalkCancel($self->{ID});
+		$talk{canceled} = 1;
+	}
 }
 
 sub mapChanged {

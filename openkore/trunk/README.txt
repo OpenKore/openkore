@@ -76,6 +76,9 @@ New commands:
 Internal:
 - Changed bRO server to use Secure Login
 - Implemented Guild Kick / Guild Leave messages
+- A new, object-oriented framework for message sending has been implemented.
+- The beginning of a new, object-oriented task framework has been implemented.
+  This will eventually replace the old AI framework.
 
 Credits:
 - Darkfate: partial servertype 11 support.

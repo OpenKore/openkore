@@ -3941,8 +3941,11 @@ sub cmdTalk {
 	} elsif ($arg1 eq "no") {
 		if (!%talk) {
 			error T("You are not talking to any NPC.\n");
-		} else {
-			$messageSender->sendTalkCancel($talk{'ID'});
+		} elsif ($ai_v{npc_talk}{talk} eq 'select') {
+			$messageSender->sendTalkResponse($talk{ID}, 255);
+		} elsif (!$talk{canceled}) {
+			$messageSender->sendTalkCancel($talk{ID});
+			$talk{canceled} = 1;
 		}
 
 	} else {
