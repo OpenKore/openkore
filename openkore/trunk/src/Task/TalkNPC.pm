@@ -20,7 +20,7 @@ use encoding 'utf8';
 use Task;
 use base qw(Task);
 use Globals qw($char %timeout $npcsList $monstersList %ai_v $messageSender %config @storeList $net);
-use Log qw(message debug);
+use Log qw(debug);
 use Utils;
 use Commands;
 use Network;
@@ -133,11 +133,9 @@ sub iterate {
 		}
 
 	} elsif ($self->{mapChanged} || ($ai_v{npc_talk}{talk} eq 'close' && $self->{steps}[0] !~ /x/i)) {
-		message TF("Done talking with %s.\n", $self->{name}), "ai_npcTalk";
-
 		# Cancel conversation only if NPC is still around; otherwise
 		# we could get disconnected.
-		$messageSender->sendTalkCancel($self->{ID}) if ($npcsList->getByID($self->{ID}));
+		#$messageSender->sendTalkCancel($self->{ID}) if ($npcsList->getByID($self->{ID}));
 		$self->setDone();
 
 	} elsif (timeOut($self->{time}, $timeout{ai_npcTalk}{timeout})) {
@@ -222,6 +220,17 @@ sub iterate {
 
 		shift @{$self->{steps}};
 	}
+}
+
+##
+# Actor $Task_TalkNPC->target()
+# Requires: $self->getStatus() == Task::DONE && !defined($self->getError())
+# Ensures: defined(result)
+#
+# Returns the target Actor object.
+sub target {
+	my ($self) = @_;
+	return $self->{target};
 }
 
 sub mapChanged {

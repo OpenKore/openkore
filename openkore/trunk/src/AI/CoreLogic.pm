@@ -352,19 +352,22 @@ sub processLook {
 sub processNPCTalk {
 	return if (AI::action ne "NPC");
 	my $args = AI::args;
-	if (!$args->{task}) {
-		$args->{task} = new Task::TalkNPC(x => $args->{pos}{x},
-						y => $args->{pos}{y},
-						sequence => $args->{sequence});
-		$args->{task}->activate();
+	my $task = $args->{task};
+	if (!$task) {
+		$task = new Task::TalkNPC(x => $args->{pos}{x},
+					y => $args->{pos}{y},
+					sequence => $args->{sequence});
+		$task->activate();
+		$args->{task} = $task;
 	} else {
-		my $task = $args->{task};
 		$task->iterate();
 		if ($task->getStatus() == Task::DONE) {
 			AI::dequeue;
 			my $error = $task->getError();
 			if ($error) {
 				error("$error->{message}\n", "ai_npcTalk");
+			} else {
+				message TF("Done talking with %s.\n", $task->target()->name), "ai_npcTalk";
 			}
 		}
 	}
