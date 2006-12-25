@@ -36,7 +36,7 @@ sub new {
 		# Indexed set of currently active tasks.
 		# Invariant:
 		#     for all $task in activeTasks:
-		#         $task->getStatus() == Task::RUNNING
+		#         $task->getStatus() == Task::RUNNING or Task::STOPPED
 		#         !$inactiveTasks->has($task)
 		#         if $task is not in $grayTasks:
 		#             $task owns all its mutexes.
@@ -210,7 +210,7 @@ sub checkValidity {
 	my $activeMutexes = $self->{activeMutexes};
 
 	foreach my $task (@{$activeTasks}) {
-		die unless ($task->getStatus() == Task::RUNNING);
+		die unless ($task->getStatus() == Task::RUNNING || $task->getStatus() == Task::STOPPED);
 		die unless (!$inactiveTasks->has($task));
 		if (!$grayTasks->has($task)) {
 	 		foreach my $mutex (@{$task->getMutexes()}) {
