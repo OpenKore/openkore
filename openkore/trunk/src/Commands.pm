@@ -213,21 +213,21 @@ sub run {
 	my $input = shift;
 	my $handler;
 	initHandlers() if (!%handlers);
-	
+
 	# Resolve command aliases
 	my ($switch, $args) = split(/ +/, $input, 2);
 	if (my $alias = $config{"alias_$switch"}) {
 		$input = $alias;
 		$input .= " $args" if defined $args;
 	}
-	
+
 	my @commands = split(';;', $input);
 	# Loop through all of the commands...
 	foreach my $command (@commands) {
 		my ($switch, $args) = split(/ +/, $command, 2);
 		$handler = $customCommands{$switch}{callback} if ($customCommands{$switch});
 		$handler = $handlers{$switch} if (!$handler && $handlers{$switch});
-
+		
 		if ($handler) {
 			my %params;
 			$params{switch} = $switch;
@@ -1409,7 +1409,10 @@ sub cmdEval {
 		no strict;
 		undef $@;
 		eval $_[1];
-		Log::error("$@") if ($@);
+		if (defined $@ && $@ ne '') {
+			$@ .= "\n" if ($@ !~ /\n$/s);
+			Log::error($@);
+		}
 	}
 }
 
