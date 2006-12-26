@@ -1174,7 +1174,7 @@ sub cmdDeal {
 			if (!$arg[2] || $arg[2] > $char->{'inventory'}[$arg[1]]{'amount'}) {
 				$arg[2] = $char->{'inventory'}[$arg[1]]{'amount'};
 			}
-			$messageSender->dealAddItem($char->{inventory}[$arg[1]], $arg[2]);
+			dealAddItem($char->{inventory}[$arg[1]], $arg[2]);
 		} else {
 			error T("You can't add any more items to the deal\n"), "deal";
 		}
