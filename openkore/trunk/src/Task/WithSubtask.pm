@@ -1,3 +1,14 @@
+#########################################################################
+#  OpenKore - NPC talking task
+#  Copyright (c) 2004-2006 OpenKore Developers
+#
+#  This software is open source, licensed under the GNU General Public
+#  License, version 2.
+#  Basically, this means that you're allowed to modify and distribute
+#  this software. However, if you distribute modified versions, you MUST
+#  also distribute the source code.
+#  See http://www.gnu.org/licenses/gpl.html for the full license.
+#########################################################################
 # This is an abstract class for tasks which have at most one active subtask
 # at any time. It provides convenience methods for making the usage of subtasks
 # easy.
@@ -20,6 +31,7 @@ use Modules 'register';
 use Task;
 use base qw(Task);
 
+# TODO: handle mutex changes in subtasks
 
 ##
 # Task::WithSubtask->new(options...)

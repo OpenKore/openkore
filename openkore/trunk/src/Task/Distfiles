@@ -2,3 +2,4 @@ Move.pm
 Route.pm
 SitStand.pm
 TalkNPC.pm
+Wait.pm
