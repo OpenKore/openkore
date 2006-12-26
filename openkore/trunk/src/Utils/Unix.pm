@@ -39,7 +39,7 @@ my (%fgcolors, %bgcolors);
 sub getColorForMessage {
 	my ($consoleColors, $type, $domain) = @_;
 
-	return if (!$consoleColors->{''} || !$consoleColors->{''}{useColors});
+	return '' if (!$consoleColors->{''} || !$consoleColors->{''}{useColors});
 	my $colorName;
 	if ($consoleColors->{$type}) {
 		$domain = 'default' if (!defined $domain);
