@@ -3800,9 +3800,13 @@ sub npc_talk_close {
 	message TF("%s: Done talking\n", $name), "npc";
 
 	# I noticed that the RO client doesn't send a 'talk cancel' packet
-	# when it receives a 'npc_talk_closed' packet from the server',
-	# so I'm commenting this out.
-	#$messageSender->sendTalkCancel($ID) if (!$talk{canceled});
+	# when it receives a 'npc_talk_closed' packet from the server'.
+	# But on pRO Thor (with Kapra password) this is required in order to
+	# open the storage.
+	if ($config{serverType} != 0 && !$talk{canceled}) {
+		$messageSender->sendTalkCancel($ID);
+	}
+
 	$ai_v{npc_talk}{talk} = 'close';
 	$ai_v{npc_talk}{time} = time;
 	undef %talk;
