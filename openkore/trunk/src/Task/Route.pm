@@ -307,7 +307,7 @@ sub subtaskDone {
 }
 
 ##
-# Task::Walk->getRoute(returnArray, r_field, r_start, r_dest, [noAvoidWalls])
+# Task::Route->getRoute(returnArray, r_field, r_start, r_dest, [avoidWalls = 1])
 # returnArray: reference to an array. The solution will be stored in here.
 # r_field: reference to a field hash (usually \%field).
 # r_start: reference to a hash. This is the start coordinate.

@@ -67,7 +67,7 @@ sub new {
 	my $self = $class->SUPER::new(@_, autostop => 1, mutexes => ['movement']);
 
 	if ($args{x} == 0 || $args{y} == 0) {
-		ArgumentException->throw();
+		ArgumentException->throw(error => "Invalid arguments.");
 	}
 
 	$self->{x} = $args{x};
