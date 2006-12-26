@@ -29,8 +29,9 @@ use strict;
 use Time::HiRes qw(time);
 use Scalar::Util;
 
-use Task;
-use base qw(Task);
+use Modules 'register';
+use Task::WithSubtask;
+use base qw(Task::WithSubtask);
 use Task::SitStand;
 use Globals qw(%timeout $char $net $messageSender);
 use Plugins;
@@ -49,7 +50,7 @@ use constant WAIT_FOR_TASK => 2;
 #
 # Create a new Task::Move object. The following options are allowed:
 # `l
-# - All options allowed by Task->new(), except 'movement'.
+# - All options allowed by Task->new(), except 'movement' and 'autostop'.
 # - <tt>x</tt> (required) - The X-coordinate that you want to move to.
 # - <tt>y</tt> (required) - The Y-coordinate that you want to move to.
 # - <tt>retryTime</tt> - After a 'move' message has been sent, if the character does not
@@ -63,7 +64,7 @@ use constant WAIT_FOR_TASK => 2;
 sub new {
 	my $class = shift;
 	my %args = @_;
-	my $self = $class->SUPER::new(@_, mutexes => ['movement']);
+	my $self = $class->SUPER::new(@_, autostop => 1, mutexes => ['movement']);
 
 	if ($args{x} == 0 || $args{y} == 0) {
 		ArgumentException->throw();
@@ -102,7 +103,6 @@ sub interrupt {
 	my ($self) = @_;
 	$self->SUPER::interrupt();
 	$self->{interruptionTime} = time;
-	$self->{task}->interrupt() if ($self->{task});
 }
 
 # Overrided method.
@@ -111,64 +111,50 @@ sub resume {
 	$self->SUPER::resume();
 	$self->{giveup}{time} += time - $self->{interruptionTime};
 	$self->{retry}{time} += time - $self->{interruptionTime};
-	$self->{task}->resume() if ($self->{task});
-}
-
-# Overrided method.
-sub stop {
-	my ($self) = @_;
-	$self->SUPER::stop();
-	$self->{task}->stop() if ($self->{task});
 }
 
 # Overrided method.
 sub iterate {
 	my ($self) = @_;
-	$self->SUPER::iterate();
-	return unless ($net->getState() == Network::IN_GAME);
+	return if (!$self->SUPER::iterate());
+	return if ($net->getState() != Network::IN_GAME);
 
-	if ($self->{state} == WORKING) {
-		# If we're sitting, wait until we've stood up.
-		if ($char->{sitting}) {
-			$self->{task} = new Task::SitStand(mode => 'stand');
-			$self->{task}->activate();
-			$self->{state} = WAIT_FOR_TASK;
+	# If we're sitting, wait until we've stood up.
+	if ($char->{sitting}) {
+		my $task = new Task::SitStand(mode => 'stand');
+		$self->setSubtask($task);
 
-		# Stop if the map changed.
-		} elsif ($self->{mapChanged}) {
-			debug "Move - map change detected\n", "ai_move";
-			$self->setDone();
+	# Stop if the map changed.
+	} elsif ($self->{mapChanged}) {
+		debug "Move - map change detected\n", "ai_move";
+		$self->setDone();
 
-		# Stop if we've moved.
-		} elsif ($char->{time_move} > $self->{start_time}) {
-			debug "Move - done\n", "ai_move";
-			$self->setDone();
+	# Stop if we've moved.
+	} elsif ($char->{time_move} > $self->{start_time}) {
+		debug "Move - done\n", "ai_move";
+		$self->setDone();
 
-		# Stop if we've timed out.
-		} elsif (timeOut($self->{giveup})) {
-			debug "Move - timeout\n", "ai_move";
-			$self->setError(1, "Tried too long to move");
+	# Stop if we've timed out.
+	} elsif (timeOut($self->{giveup})) {
+		debug "Move - timeout\n", "ai_move";
+		$self->setError(1, "Tried too long to move");
 
-		} elsif (timeOut($self->{retry})) {
-			debug "Move - retrying\n", "ai_move";
-			$messageSender->sendMove($self->{x}, $self->{y});
-			$self->{retry}{time} = time;
-		}
+	} elsif (timeOut($self->{retry})) {
+		debug "Move - retrying\n", "ai_move";
+		$messageSender->sendMove($self->{x}, $self->{y});
+		$self->{retry}{time} = time;
+	}
+}
 
-	} elsif ($self->{state} == WAIT_FOR_TASK) {
-		my $task = $self->{task};
-		$task->iterate();
-		if ($task->getStatus() == Task::DONE) {
-			my $error = $task->getError();
-			if ($error) {
-				$self->setError($error->{code}, $error->{message});
-			} else {
-				$self->{state} = WORKING;
-				$self->{start_time} = time;
-				$self->{giveup}{time} = time;
-			}
-			delete $self->{task};
-		}
+# Overrided method.
+sub subtaskDone {
+	my ($self, $task) = @_;
+	my $error = $task->getError();
+	if ($error) {
+		$self->setError($error->{code}, $error->{message});
+	} else {
+		$self->{start_time} = time;
+		$self->{giveup}{time} = time;
 	}
 }
 

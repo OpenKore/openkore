@@ -24,8 +24,8 @@ use warnings;
 no warnings qw(redefine uninitialized);
 use Time::HiRes qw(time);
 use encoding 'utf8';
-use Translation;
 
+use Modules 'register';
 use Globals;
 use Log qw(message debug error warning);
 use Network::Send ();
@@ -36,6 +36,7 @@ use Utils;
 use Misc;
 use AI;
 use Match;
+use Translation;
 
 
 our %handlers;
@@ -399,6 +400,7 @@ sub cmdAI {
 	# Clear AI
 	if ($args eq 'clear') {
 		AI::clear;
+		$taskManager->stopAll();
 		delete $ai_v{temp};
 		undef $char->{dead};
 		message T("AI sequences cleared\n"), "success";
@@ -3239,10 +3241,9 @@ sub cmdReload {
 sub cmdReloadCode {
 	my (undef, $args) = @_;
 	if ($args ne "") {
-		Modules::reload($args, 1);
-
+		Modules::addToReloadQueue(parseArgs($args));
 	} else {
-		Modules::reloadFile('functions.pl');
+		Modules::reloadFile("$FindBin::RealBin/src/functions.pl");
 	}
 }
 

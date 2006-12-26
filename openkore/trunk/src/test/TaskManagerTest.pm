@@ -10,6 +10,7 @@ sub start {
 	print "### Starting TaskManagerTest\n";
 	testStaticMutexes();
 	testDynamicMutexes();
+	testImmediateStop();
 }
 
 # Test a case in which task mutexes are static (do not change during the task's life time).
@@ -108,6 +109,44 @@ sub testDynamicMutexes {
 	assertInactiveTasks($tm, "A,B");
 }
 
+# Test stopping of tasks that can stop immediately.
+sub testImmediateStop {
+	print "Testing immediate stopping of tasks...\n";
+	my $tm = new TaskManager();
+	my $taskA = createTask(name => "A");
+	my $taskB = createTask(name => "B");
+	my $taskC = createTask(name => "C");
+	$tm->add($taskA);
+	$tm->add($taskB);
+	$tm->add($taskC);
+	$tm->iterate();
+
+	$taskB->stop();
+	$tm->iterate();
+	assertActiveTasks($tm, "A,C", "Stopping task B works.");
+	assertInactiveTasks($tm, "");
+
+	$taskA->stop();
+	$taskC->stop();
+	$tm->iterate();
+	assertActiveTasks($tm, "", "Stopping task A and C works.");
+	assertInactiveTasks($tm, "");
+
+
+	$taskA = createTask(name => "A", mutexes => ['1', '2']);
+	$taskB = createTask(name => "B", mutexes => ['2']);
+	$tm->add($taskA);
+	$tm->add($taskB);
+	$tm->iterate();
+	assertActiveTasks($tm, "A", "A is active.");
+	assertInactiveTasks($tm, "B", "B is inactive.");
+
+	$tm->stopAll();
+	$tm->iterate();
+	assertActiveTasks($tm, "", "Stopping active A and inactive B works.");
+	assertInactiveTasks($tm, "");
+}
+
 sub createTask {
 	return new TaskManagerTest::Task(@_);
 }
@@ -142,7 +181,13 @@ sub new {
 	return $class->SUPER::new(@_);
 }
 
+sub stop {
+	my ($self) = @_;
+	$self->SUPER::stop();
+}
+
 sub iterate {
+	$_[0]->SUPER::iterate();
 	if ($_[0]->{done}) {
 		$_[0]->setDone();
 	}

@@ -4,6 +4,7 @@ ObjectListTest.pm
 HttpReaderTest.pm
 SetTest.pm
 TaskManagerTest.pm
+TaskWithSubtaskTest.pm
 WhirlpoolTest.pm
 unittests.pl
 consoleui-test.cpp

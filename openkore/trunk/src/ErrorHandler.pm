@@ -19,6 +19,8 @@
 # To use this feature, simply type 'use ErrorHandler'.
 package ErrorHandler;
 
+use strict;
+
 sub T {
 	if (defined &Translation::T && defined &Translation::_translate) {
 		return &Translation::T;

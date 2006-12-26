@@ -21,8 +21,9 @@ use strict;
 use Time::HiRes qw(time);
 use Scalar::Util;
 
-use Task;
-use base qw(Task);
+use Modules 'register';
+use Task::WithSubtask;
+use base qw(Task::WithSubtask);
 use Task::Move;
 use Globals qw($char %field $net %config);
 use Log qw(message debug);
@@ -30,13 +31,10 @@ use Network;
 use Translation qw(T TF);
 use Misc;
 use Utils qw(timeOut distance calcPosition);
+use Utils::Exceptions;
 use Utils::Set;
 use Utils::PathFinding;
 
-
-# State constants.
-use constant WORKING => 1;
-use constant WAIT_FOR_TASK => 2;
 
 # Error code constants.
 use constant TOO_MUCH_TIME => 1;
@@ -48,7 +46,7 @@ use constant CANNOT_CALCULATE_ROUTE => 2;
 #
 # Create a new Task::Route object. The following options are allowed:
 # `l
-# - All options allowed by Task->new(), except 'movement'.
+# - All options allowed by Task::WithSubtask->new(), except 'mutexes' and 'autostop'.
 # - x (required) - The X-coordinate that you want to move to.
 # - y (required) - The Y-coordinate that you want to move to.
 # - maxDistance - The maximum distance (in blocks) that the route may be. If
@@ -69,7 +67,7 @@ use constant CANNOT_CALCULATE_ROUTE => 2;
 sub new {
 	my $class = shift;
 	my %args = @_;
-	my $self = $class->SUPER::new(@_, mutexes => ['movement']);
+	my $self = $class->SUPER::new(@_, autostop => 1, mutexes => ['movement']);
 
 	if ($args{x} == 0 || $args{y} == 0) {
 		ArgumentException->throw();
@@ -89,7 +87,6 @@ sub new {
 	$self->{avoidWalls} = 1 if (!defined $self->{avoidWalls});
 	$self->{solution} = [];
 	$self->{stage} = '';
-	$self->{state} = WORKING;
 
 	# Watch for map change events. Pass a weak reference to ourselves in order
 	# to avoid circular references (memory leaks).
@@ -105,7 +102,6 @@ sub interrupt {
 	my ($self) = @_;
 	$self->SUPER::interrupt();
 	$self->{interruptionTime} = time;
-	$self->{task}->interrupt() if ($self->{task});
 }
 
 # Overrided method.
@@ -114,44 +110,13 @@ sub resume {
 	$self->SUPER::resume();
 	$self->{time_start} += time - $self->{interruptionTime};
 	$self->{time_step} += time - $self->{interruptionTime};
-	$self->{task}->resume() if ($self->{task});
-}
-
-# Overrided method.
-sub stop {
-	my ($self) = @_;
-	$self->SUPER::stop();
-	$self->{task}->stop() if ($self->{task});
 }
 
 # Overrided method.
 sub iterate {
 	my ($self) = @_;
-	$self->SUPER::iterate();
-	return unless ($net->getState() == Network::IN_GAME);
+	return unless ($self->SUPER::iterate() && $net->getState() == Network::IN_GAME);
 	return unless ($field{name} && defined($char->{pos_to}{x}) && defined($char->{pos_to}{y}));
-
-	if ($self->{state} == WORKING) {
-		$self->processRoute();
-	} elsif ($self->{state} == WAIT_FOR_TASK) {
-		my $task = $self->{task};
-		$task->iterate();
-		if ($task->getStatus() == Task::DONE) {
-			my $error = $task->getError();
-			if ($error) {
-				$self->setError($error->{code}, $error->{message});
-			} else {
-				$self->{state} = WORKING;
-				$self->{start_time} = time;
-				$self->{giveup}{time} = time;
-			}
-			delete $self->{task};
-		}
-	}
-}
-
-sub processRoute {
-	my ($self) = @_;
 
 	if ( $self->{maxTime} && timeOut($self->{time_start}, $self->{maxTime})) {
 		# We spent too much time
@@ -237,11 +202,10 @@ sub processRoute {
 					$self->{new_x} = $self->{solution}[$self->{index}]{x};
 					$self->{new_y} = $self->{solution}[$self->{index}]{y};
 					$self->{time_step} = time;
-					$self->{task} = new Task::Move(
+					my $task = new Task::Move(
 						x => $self->{new_x},
 						y => $self->{new_y});
-					$self->{task}->activate();
-					$self->{state} = WAIT_FOR_TASK;
+					$self->setSubtask($task);
 				}
 
 			} elsif (!$wasZero) {
@@ -308,11 +272,10 @@ sub processRoute {
 					$self->{old_y} = $cur_y;
 					$self->{time_step} = time if ($cur_x != $self->{old_x} || $cur_y != $self->{old_y});
 					debug "Route - next step moving to ($self->{new_x}, $self->{new_y}), index $self->{index}, $stepsleft steps left\n", "route";
-					$self->{task} = new Task::Move(
+					my $task = new Task::Move(
 						x => $self->{new_x},
 						y => $self->{new_y});
-					$self->{task}->activate();
-					$self->{state} = WAIT_FOR_TASK;
+					$self->setSubtask($task);
 				}
 			} else {
 				# No more points to cover
@@ -329,6 +292,17 @@ sub processRoute {
 		# This statement should never be reached.
 		debug "Unexpected route stage [$self->{stage}] occured.\n", "route";
 		$self->setError(1234, "Unexpected route stage [$self->{stage}] occured.\n");
+	}
+}
+
+sub subtaskDone {
+	my ($self, $task) = @_;
+	my $error = $task->getError();
+	if ($error) {
+		$self->setError($error->{code}, $error->{message});
+	} else {
+		$self->{start_time} = time;
+		$self->{giveup}{time} = time;
 	}
 }
 

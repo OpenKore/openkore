@@ -426,7 +426,7 @@ sub mainLoop {
 	Benchmark::end("mainLoop") if DEBUG;
 
 	# Reload any modules that requested to be reloaded
-	Modules::doReload();
+	Modules::reloadAllInQueue();
 }
 
 # Anonymous statistics reporting. This gives us insight about

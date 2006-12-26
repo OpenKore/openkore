@@ -29,6 +29,7 @@ package Task;
 
 use strict;
 use Carp::Assert;
+use Modules 'register';
 use Utils::CallbackList;
 use Utils::Set;
 
@@ -320,7 +321,6 @@ sub resume {
 
 ##
 # void $Task->stop()
-# Requires: $self->getStatus() == Task::RUNNING
 #
 # Notify a task that it must completely stop. When the task is actually stopped,
 # the status must be set to Task::STOPPED.
@@ -331,7 +331,6 @@ sub resume {
 #
 # This method may be called by anybody, not just the task manager.
 sub stop {
-	assert($_[0]->getStatus() == Task::RUNNING) if DEBUG;
 	$_[0]->{T_status} = STOPPED;
 }
 
