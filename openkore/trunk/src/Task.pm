@@ -136,6 +136,7 @@ sub new {
 	$self{T_mutexes} = [] if (!defined $self{T_mutexes});
 
 	$self{T_onMutexesChanged} = new CallbackList("onMutexesChanged");
+	$self{T_onStop} = new CallbackList("onStop");
 
 	return bless \%self, $class;
 }
@@ -176,7 +177,7 @@ sub getStatus {
 # - message - The error message.
 # `l`
 sub getError {
-	assert($_[0]->getStatus() == Task::DONE) if DEBUG;
+	assert($_[0]->getStatus() == DONE) if DEBUG;
 	return $_[0]->{T_error};
 }
 
@@ -215,6 +216,14 @@ sub onMutexesChanged {
 	return $_[0]->{T_onMutexesChanged};
 }
 
+##
+# CallbackList $Task->onStop()
+#
+# This event is triggered when the task's status has been set to Task::STOPPED.
+sub onStop {
+	return $_[0]->{T_onStop};
+}
+
 
 #####################################
 ### CATEGORY: Protected commands
@@ -233,7 +242,7 @@ sub onMutexesChanged {
 # Do not call this method outside $Task->iterate(), or bad things will happen!
 sub setError {
 	my ($self, $code, $message) = @_;
-	assert($self->getStatus() == Task::INACTIVE || $self->getStatus() == Task::RUNNING) if DEBUG;
+	assert($self->getStatus() == INACTIVE || $self->getStatus() == RUNNING) if DEBUG;
 	$self->{T_error} = {
 		code => $code,
 		message => $message
@@ -251,8 +260,26 @@ sub setError {
 # Do not call this method outside $Task->iterate(), or bad things will happen!
 sub setDone {
 	my ($self) = @_;
-	assert($self->getStatus() == Task::INACTIVE || $self->getStatus() == Task::RUNNING) if DEBUG;
+	assert($self->getStatus() == INACTIVE || $self->getStatus() == RUNNING) if DEBUG;
 	$self->{T_status} = DONE;
+}
+
+##
+# void $Task->setStopped()
+# Requires: $self->getStatus() == Task::RUNNING, Task::INACTIVE or Task::INTERRUPTED
+# Ensures: $self->getStatus() == Task::STOPPED
+#
+# Set the task's status to Task::STOPPED and trigger an onStop event.
+# This is useful for tasks that cannot stop immediately
+# when stop() is called: they can mark the task as stopped when appropriate.
+sub setStopped {
+	my ($self) = @_;
+	if (DEBUG) {
+		my $status = $self->getStatus();
+		assert($status == RUNNING || $status == INACTIVE || $status == INTERRUPTED);
+	}
+	$self->{T_status} = STOPPED;
+	$self->{T_onStop}->call($self);
 }
 
 ##
@@ -281,7 +308,7 @@ sub setMutexes {
 #
 # This method will be called by the task manager.
 sub activate {
-	assert($_[0]->getStatus() == Task::INACTIVE) if DEBUG;
+	assert($_[0]->getStatus() == INACTIVE) if DEBUG;
 	$_[0]->{T_status} = RUNNING;
 }
 
@@ -298,7 +325,7 @@ sub activate {
 #
 # Task implementors may override this method to implement code for interruption handling.
 sub interrupt {
-	assert($_[0]->getStatus() == Task::RUNNING) if DEBUG;
+	assert($_[0]->getStatus() == RUNNING) if DEBUG;
 	$_[0]->{T_status} = INTERRUPTED;
 }
 
@@ -315,23 +342,25 @@ sub interrupt {
 #
 # Task implementors may override this method to implement code for resume handling.
 sub resume {
-	assert($_[0]->getStatus() == Task::INTERRUPTED) if DEBUG;
+	assert($_[0]->getStatus() == INTERRUPTED) if DEBUG;
 	$_[0]->{T_status} = RUNNING;
 }
 
 ##
 # void $Task->stop()
+# Requires: $self->getStatus() == Task::RUNNING, Task::INACTIVE or Task::INTERRUPTED
 #
 # Notify a task that it must completely stop. When the task is actually stopped,
 # the status must be set to Task::STOPPED.
 #
-# The default behavior is to immediate set the status to Task::STOPPED. Task implementors
-# may override this method to implement custom stop handling. You may choose to stop the task
-# after a period of time, instead of immediately.
+# The default behavior is to immediate set the status to Task::STOPPED
+# by calling $Task->setStopped(), thereby triggering an onStop event.
+# Task implementors may override this method to implement custom stop handling.
+# You may choose to stop the task after a period of time, instead of immediately.
 #
 # This method may be called by anybody, not just the task manager.
 sub stop {
-	$_[0]->{T_status} = STOPPED;
+	$_[0]->setStopped();
 }
 
 ##
@@ -341,7 +370,7 @@ sub stop {
 # Run one iteration of this task. Task implementors must override this method to
 # implement task code.
 sub iterate {
-	assert($_[0]->getStatus() == Task::RUNNING) if DEBUG;
+	assert($_[0]->getStatus() == RUNNING) if DEBUG;
 }
 
 1;

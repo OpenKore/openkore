@@ -70,9 +70,9 @@ sub new {
 		#         !$inactiveTasks->has($task)
 		grayTasks => new Set(),
 
-		# Maps a Task to an onMutexChanged callback ID. Used to unregister callbacks.
-		# Invariant: Every task in $activeTasks and $inactiveTasks is in $mutexesChangedEvents.
-		mutexesChangedEvents => {},
+		# Maps a Task to an array of callback IDs. Used to unregister callbacks.
+		# Invariant: Every task in $activeTasks and $inactiveTasks is in $events.
+		events => {},
 
 		# Whether tasks should be rescheduled on the
 		# next iteration.
@@ -95,8 +95,9 @@ sub add {
 	$self->{inactiveTasks}->add($task);
 	$self->{shouldReschedule} = 1;
 
-	my $ID = $task->onMutexesChanged->add($self, \&onMutexesChanged);
-	$self->{mutexChangedEvents}{$task} = $ID;
+	my $ID1 = $task->onMutexesChanged->add($self, \&onMutexesChanged);
+	my $ID2 = $task->onStop->add($self, \&onStop);
+	$self->{events}{$task} = [$ID1, $ID2];
 }
 
 # Reschedule tasks. Do not call this method directly!
@@ -271,8 +272,11 @@ sub iterate {
 		if ($status == Task::DONE || $status == Task::STOPPED) {
 			deactivateTask($activeTasks, $self->{inactiveTasks},
 				$self->{grayTasks}, $activeMutexes, $task);
-			my $ID = $self->{mutexChangedEvents}{$task};
-			$task->onMutexesChanged->remove($ID);
+
+			my $IDs = $self->{events}{$task};
+			$task->onMutexesChanged->remove($IDs->[0]);
+			$task->onStop->remove($IDs->[1]);
+
 			$i--;
 			$self->{shouldReschedule} = 1;
 
@@ -295,9 +299,9 @@ sub stopAll {
 		$task->stop();
 		if ($task->getStatus() == Task::STOPPED) {
 			$self->{shouldReschedule} = 1;
-		} else {
-			die "We do not yet support tasks that cannot stop immediately.";
 		}
+		# If the task does not stop immediately, then we'll
+		# be notified by the onStop event once it's stopped.
 	}
 }
 
@@ -350,6 +354,13 @@ sub onMutexesChanged {
 		$self->{grayTasks}->add($task);
 	}
 	$self->{shouldReschedule} = 1;
+}
+
+sub onStop {
+	my ($self, $task) = @_;
+	if ($self->{inactiveTasks}->has($task)) {
+		$self->{shouldReschedule} = 1;
+	}
 }
 
 # Return the intersection of the given sets.
