@@ -20,6 +20,7 @@
 package ErrorHandler;
 
 use strict;
+use encoding 'utf8';
 
 sub T {
 	if (defined &Translation::T && defined &Translation::_translate) {
@@ -100,7 +101,7 @@ sub errorHandler {
 		$log .= TF("\n\nDied at this line:\n%s\n", $msg);
 	}
 
-	if (open(F, "> errors.txt")) {
+	if (open(F, ">:utf8", "errors.txt")) {
 		print F $log;
 		close F;
 	}

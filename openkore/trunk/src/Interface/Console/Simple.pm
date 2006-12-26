@@ -23,7 +23,8 @@ use warnings;
 no warnings 'redefine';
 use Time::HiRes qw(usleep);
 use IO::Socket;
-use encoding 'utf8';
+use bytes;
+no encoding 'utf8';
 
 use Globals qw(%consoleColors);
 use Interface;
@@ -34,9 +35,7 @@ use Utils::Unix;
 
 sub new {
 	my $class = shift;
-	my %self;
-
-	return bless \%self, $class;
+	return bless {}, $class;
 }
 
 sub getInput {
@@ -69,9 +68,8 @@ sub getInput {
 
 sub writeOutput {
 	my ($self, $type, $message, $domain) = @_;
-	use bytes;
 	my $code = Utils::Unix::getColorForMessage(\%consoleColors, $type, $domain);
-	print $code . $message . Utils::Unix::getColor('reset');
+	print STDOUT $code . $message . Utils::Unix::getColor('reset');
 	STDOUT->flush;
 }
 
@@ -81,7 +79,7 @@ sub title {
 	if ($title) {
 		$self->{title} = $title;
 		if ($ENV{TERM} eq 'xterm' || $ENV{TERM} eq 'screen') {
-			print "\e]2;$title\a";
+			print STDOUT "\e]2;" . $title . "\a";
 			STDOUT->flush;
 		}
 	} else {

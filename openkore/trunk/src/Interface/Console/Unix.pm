@@ -21,6 +21,8 @@ use strict;
 use IO::Socket;
 use Time::HiRes qw(time sleep);
 use POSIX;
+use bytes;
+no encoding 'utf8';
 
 use Globals qw(%consoleColors);
 use Interface;
@@ -83,7 +85,7 @@ sub errorDialog {
 	# UNIX consoles don't close when the program exits,
 	# so don't block execution
 	my ($self, $message) = @_;
-	$self->writeOutput("error", "$message\n");
+	$self->writeOutput("error", $message . "\n");
 	Utils::Unix::ConsoleUI::waitUntilPrinted() if ($self->{readline});
 }
 
@@ -95,18 +97,14 @@ sub writeOutput {
 	$code = Utils::Unix::getColorForMessage(\%consoleColors, $type, $domain);
 
 	if (!$self->{readline}) {
-		use bytes;
-		print $code . $message . Utils::Unix::getColor('reset');
+		print STDOUT $code . $message . Utils::Unix::getColor('reset');
 		STDOUT->flush;
 	} else {
 		while (length($message) > 0) {
 			$message =~ /^(.*?)(\n|$)(.*)/s;
 			my $line = $1 . $2;
 			$message = $3;
-			{
-				use bytes;
-				Utils::Unix::ConsoleUI::print($code . $line);
-			}
+			Utils::Unix::ConsoleUI::print($code . $line);
 		}
 	}
 }
@@ -117,7 +115,7 @@ sub title {
 	if ($title) {
 		$self->{title} = $title;
 		if ($ENV{TERM} eq 'xterm' || $ENV{TERM} eq 'screen') {
-			print "\e]2;$title\a";
+			print STDOUT "\e]2;" . $title . "\a";
 			STDOUT->flush;
 		}
 	} else {
