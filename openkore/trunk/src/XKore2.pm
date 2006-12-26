@@ -335,7 +335,7 @@ sub checkClient {
 
 	# Nothing to do if the client is working.
 	return if ($self->clientAlive);
-
+	
 	if (defined $self->{client_listen}) {
 		# Listening for a client
 		if (dataWaiting($self->{client_listen})) {
@@ -373,14 +373,18 @@ sub checkClient {
 
 		undef $self->{client};
 		# Begin listening...
-		my $ip = $config{XKore_listenIp} || '0.0.0.0';
-		$self->{client_listen} = new IO::Socket::INET(
-			LocalAddr	=> $ip,
-			LocalPort	=> $self->{client_listenPort},
-			Listen		=> 1,
-			Proto		=> 'tcp',
-			ReuseAddr   => 1);
-		die TF("Unable to listen on XKore2 port (%s:%s): %s", $ip, $self->{client_listenPort}, $@) unless $self->{client_listen};
+		if (!$self->{client_listen}) {
+			my $ip = $config{XKore_listenIp} || '0.0.0.0';
+			$self->{client_listen} = new IO::Socket::INET(
+				LocalAddr	=> $ip,
+				LocalPort	=> $self->{client_listenPort},
+				Listen		=> 1,
+				Proto		=> 'tcp',
+				ReuseAddr   => 1);
+			die TF("Unable to listen on XKore2 port (%s:%s): %s", $ip, $self->{client_listenPort}, $@) unless $self->{client_listen};
+		}
+
+		debug "Client disconnected.\n", "connection";
 
 		return;
 	}
@@ -536,14 +540,26 @@ sub checkClient {
 		my $map = $self->{client_saved}{map};
 		Plugins::callHook('XKore/map', {r_map => \$map});
 
+		# VCL: I think a race condition occurs here. It tries to create the socket
+		# for the map server after the client has selected the character, but if
+		# the client connects to the port faster than we can create it, then the
+		# client will freeze. So I create it here.
+		my $ip = $config{XKore_listenIp} || '0.0.0.0';
+		$self->{client_listen} = new IO::Socket::INET(
+			LocalAddr	=> $ip,
+			LocalPort	=> $self->{client_listenPort},
+			Listen		=> 1,
+			Proto		=> 'tcp',
+			ReuseAddr   => 1);
+		die TF("Unable to listen on XKore2 port (%s:%s): %s", $ip, $self->{client_listenPort}, $@) unless $self->{client_listen};
+
 		# Send character and map info packet
 		$msg = pack('C2 a4 Z16 a4 v1', 0x71, 0, $charID, $map,
 				$host, $self->{client_listenPort});
-		$self->clientSend($msg,1);
+		$self->clientSend($msg, 1);
 
 		debug "Selected character.\n", "connection";
 		$$c_state = 3;
-
 
 	} elsif ($$c_state == 2 && $switch eq "0067") {
 		# Character Create
@@ -647,6 +663,8 @@ sub checkClient {
 		# Set to a special client_state
 		$$c_state = -1;
 
+		debug "Map Login for wrong server type.\n", "connection";
+
 	} elsif ($$c_state == 4 && $switch eq "021D") {
 		# This does what?
 
@@ -657,7 +675,7 @@ sub checkClient {
 		debug "Guild Info.\n", "connection";
 	} elsif ($$c_state == 4 && ($switch eq "007D" || $switch eq "01C0")) {
 		# Client sent MapLoaded
-          debug "Client Finished Loaded.\n", "connection";
+		debug "Client Finished Loaded.\n", "connection";
 		# Save the original incoming message
 		my $msgIn = $msg;
 
