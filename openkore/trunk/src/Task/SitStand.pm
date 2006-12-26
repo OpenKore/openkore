@@ -19,6 +19,8 @@ package Task::SitStand;
 
 use strict;
 use Time::HiRes qw(time);
+
+use Modules 'register';
 use Task;
 use base qw(Task);
 use Globals qw(%timeout $char $messageSender $net);

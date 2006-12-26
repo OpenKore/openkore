@@ -18,6 +18,7 @@ use Time::HiRes qw(time);
 use Scalar::Util;
 use encoding 'utf8';
 
+use Modules 'register';
 use Task;
 use base qw(Task);
 use Globals qw($char %timeout $npcsList $monstersList %ai_v $messageSender %config @storeList $net %talk);

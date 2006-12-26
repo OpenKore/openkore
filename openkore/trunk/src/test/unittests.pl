@@ -8,7 +8,7 @@ use lib "$RealBin/../deps";
 
 use Test::More qw(no_plan);
 my @tests = qw(CallbackListTest ObjectListTest ActorListTest WhirlpoolTest
-	SetTest TaskManagerTest);
+	SetTest TaskManagerTest TaskWithSubtaskTest);
 if ($^O eq 'MSWin32') {
 	push @tests, qw(HttpReaderTest);
 }

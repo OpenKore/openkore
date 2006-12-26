@@ -21,6 +21,7 @@ package TaskManager;
 
 use strict;
 use Carp::Assert;
+use Modules 'register';
 use Task;
 use Utils::Set;
 use Utils::CallbackList;
@@ -46,7 +47,7 @@ sub new {
 		# Indexed set of currently inactive tasks.
 		# Invariant:
 		#     for all $task in inactiveTasks:
-		#         $task->getStatus() == Task::INTERRUPTED or Task::INACTIVE
+		#         $task->getStatus() == Task::INTERRUPTED, Task::INACTIVE, or Task::STOPPED
 		#         !$activeTasks->has($task)
 		#         $task owns none of its mutexes.
 		inactiveTasks => new Set(),
@@ -142,10 +143,15 @@ sub reschedule {
 	# Activate inactive tasks such that active tasks don't conflict with each other.
 	for (my $i = 0; $i < @{$inactiveTasks}; $i++) {
 		my $task = $inactiveTasks->get($i);
-		# Check whether this task conflicts with the currently locked mutexes.
-		my @conflictingMutexes = intersect($activeMutexes, $task->getMutexes());
+		my @conflictingMutexes;
 
-		if (@conflictingMutexes == 0) {
+		# If this task is stopped then we just throw it away.
+		if ($task->getStatus() == Task::STOPPED) {
+			$inactiveTasks->remove($task);
+			$i--;
+
+		# Check whether this task conflicts with the currently locked mutexes.
+		} elsif ((@conflictingMutexes = intersect($activeMutexes, $task->getMutexes())) == 0) {
 			# No conflicts, we can activate this task.
 			$activeTasks->add($task);
 			$inactiveTasks->remove($task);
@@ -180,9 +186,10 @@ sub reschedule {
 	# Resume/activate newly activated tasks.
 	foreach my $task (@{$activeTasks}) {
 		if (!$oldActiveTasks->has($task)) {
-			if ($task->getStatus() == Task::INACTIVE) {
+			my $status = $task->getStatus();
+			if ($status == Task::INACTIVE) {
 				$task->activate();
-			} else {
+			} elsif ($status == Task::INTERRUPTED) {
 				$task->resume();
 			}
 		}
@@ -220,7 +227,7 @@ sub checkValidity {
 	}
 	foreach my $task (@{$inactiveTasks}) {
 		my $status = $task->getStatus();
-		die unless ($status = Task::INTERRUPTED || $status == Task::INACTIVE);
+		die unless ($status = Task::INTERRUPTED || $status == Task::INACTIVE || $status == Task::STOPPED);
 		die unless (!$activeTasks->has($task));
 		foreach my $mutex (@{$task->getMutexes()}) {
 			die unless ($activeMutexes->{$mutex} != $task);
@@ -253,7 +260,11 @@ sub iterate {
 	my $activeMutexes = $self->{activeMutexes};
 	for (my $i = 0; $i < @{$activeTasks}; $i++) {
 		my $task = $activeTasks->get($i);
-		$task->iterate();
+		my $status = $task->getStatus();
+		if ($status != Task::STOPPED) {
+			$task->iterate();
+			$status = $task->getStatus();
+		}
 
 		# Remove tasks that are stopped or completed.
 		my $status = $task->getStatus();
@@ -269,6 +280,25 @@ sub iterate {
 		}
 	}
 	$self->checkValidity() if DEBUG;
+}
+
+##
+# void $Taskmanager->stopAll()
+#
+# Tell all tasks (whether active or inactive) to stop.
+sub stopAll {
+	my ($self) = @_;
+	foreach my $task (@{$self->{activeTasks}}) {
+		$task->stop();
+	}
+	foreach my $task (@{$self->{inactiveTasks}}) {
+		$task->stop();
+		if ($task->getStatus() == Task::STOPPED) {
+			$self->{shouldReschedule} = 1;
+		} else {
+			die "We do not yet support tasks that cannot stop immediately.";
+		}
+	}
 }
 
 ##
