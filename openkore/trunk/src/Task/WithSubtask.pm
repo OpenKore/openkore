@@ -100,7 +100,7 @@ sub iterate {
 			delete $self->{ST_subtask};
 			$self->subtaskDone($task);
 		} elsif ($task->getStatus() == Task::STOPPED) {
-			$self->{T_status} = Task::STOPPED if ($self->{ST_autostop});
+			$self->setStopped() if ($self->{ST_autostop});
 			delete $self->{ST_subtask};
 			$self->subtaskStopped($task);
 		}

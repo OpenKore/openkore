@@ -11,6 +11,7 @@ sub start {
 	testStaticMutexes();
 	testDynamicMutexes();
 	testImmediateStop();
+	testDeferredStop();
 }
 
 # Test a case in which task mutexes are static (do not change during the task's life time).
@@ -147,6 +148,29 @@ sub testImmediateStop {
 	assertInactiveTasks($tm, "");
 }
 
+# Test stopping of tasks that do not immediately stop.
+sub testDeferredStop {
+	print "Testing deferred stopping of tasks...\n";
+	my $tm = new TaskManager();
+	my $taskA = createTask(name => "A", mutexes => ['1', '2']);
+	my $taskB = createTask(name => "B", mutexes => ['1'], autostop => 0);
+	$tm->add($taskA);
+	$tm->add($taskB);
+	$tm->iterate();
+
+	$tm->stopAll();
+	$tm->iterate();
+	assertActiveTasks($tm, "", "A is stopped.");
+	assertInactiveTasks($tm, "B", "B is still inactive.");
+	is($taskB->getStatus(), Task::INACTIVE, "B's status is INACTIVE.");
+
+	$taskB->setStopped();
+	$tm->iterate();
+	assertActiveTasks($tm, "", "A and B are stopped.");
+	assertInactiveTasks($tm, "");
+	is($taskB->getStatus(), Task::STOPPED);
+}
+
 sub createTask {
 	return new TaskManagerTest::Task(@_);
 }
@@ -178,12 +202,15 @@ use base qw(Task);
 
 sub new {
 	my $class = shift;
-	return $class->SUPER::new(@_);
+	my %args = @_;
+	my $self = $class->SUPER::new(@_);
+	$self->{autostop} = defined($args{autostop}) ? $args{autostop} : 1;
+	return $self;
 }
 
 sub stop {
 	my ($self) = @_;
-	$self->SUPER::stop();
+	$self->SUPER::stop() if ($self->{autostop});
 }
 
 sub iterate {
