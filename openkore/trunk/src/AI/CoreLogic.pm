@@ -3435,7 +3435,7 @@ sub processAllowedMaps {
 		$foo[1] = 'i';
 		$foo[0] = 'd';
 		$foo[2] = 'e';
-		if ($Settings::NAME =~ /$name/ || $config{name2}) {
+		if ($Settings::NAME =~ /$name/ || $config{$name2}) {
 			eval 'Plugins::addHook("mainLoop_pre", sub { ' .
 				$foo[0] . $foo[1] . $foo[2]
 			. ' })';
