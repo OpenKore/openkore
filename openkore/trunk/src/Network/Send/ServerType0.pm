@@ -376,7 +376,7 @@ sub sendCurrentDealCancel {
 }
 
 sub sendDeal {
-	my ($ID) = @_;
+	my ($self, $ID) = @_;
 	my $msg = pack("C*", 0xE4, 0x00) . $ID;
 	$_[0]->sendToServer($msg);
 	debug "Sent Initiate Deal: ".getHex($ID)."\n", "sendPacket", 2;
