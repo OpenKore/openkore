@@ -27,8 +27,9 @@ use Task::Route;
 use Globals qw(%config %field %portals_lut %portals_los %timeout $char %routeWeights);
 use Translation qw(T TF);
 use Log qw(debug);
-use Utils qw(timeOut);
 use Misc qw(getField);
+use Utils qw(timeOut);
+use Utils::Exceptions;
 
 # Stage constants.
 use constant INITIALIZE => 1;
@@ -59,8 +60,12 @@ sub new {
 	my %args = @_;
 	my $self = $class->SUPER::new(@_);
 
-	$self->{source}{map} = defined($args{sourceMap}) ? $args{sourceMap} : $field{sourceMap};
-	$self->{source}{x} = defined($args{sourceX}) ? $args{sourceY} : $char->{pos_to}{x};
+	if (!$args{map}) {
+		ArgumentException->throw(error => "Invalid arguments.");
+	}
+
+	$self->{source}{map} = defined($args{sourceMap}) ? $args{sourceMap} : $field{name};
+	$self->{source}{x} = defined($args{sourceX}) ? $args{sourceX} : $char->{pos_to}{x};
 	$self->{source}{y} = defined($args{sourceY}) ? $args{sourceY} : $char->{pos_to}{y};
 	$self->{dest}{map} = $args{map};
 	$self->{dest}{pos}{x} = $args{x};
@@ -110,6 +115,7 @@ sub iterate {
 			}
 		}
 		$self->{stage} = CALCULATE_ROUTE;
+		debug "CalcMapRoute - initialized.\n", "route";
 
 	} elsif ( $self->{stage} == CALCULATE_ROUTE ) {
 		my $time = time;
@@ -130,6 +136,7 @@ sub iterate {
 			$self->setError(0, TF("Cannot calculate a route from %s (%d,%d) to %s %s",
 				$field{name}, $self->{source}{x}, $self->{source}{y},
 				$self->{dest}{map}, $destpos));
+			debug "CalcMapRoute failed.\n", "route";
 		}
 	}
 }

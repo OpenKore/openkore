@@ -40,9 +40,8 @@ use Log qw(warning debug);
 use Utils qw(timeOut);
 use Utils::Exceptions;
 
-# State constants.
-use constant WORKING => 1;
-use constant WAIT_FOR_TASK => 2;
+# Error constants.
+use constant TOO_LONG => 1;
 
 
 ##
@@ -93,7 +92,6 @@ sub DESTROY {
 sub activate {
 	my ($self) = @_;
 	$self->SUPER::activate();
-	$self->{state} = WORKING;
 	$self->{giveup}{time} = time;
 	$self->{start_time} = time;
 }
@@ -121,26 +119,27 @@ sub iterate {
 
 	# If we're sitting, wait until we've stood up.
 	if ($char->{sitting}) {
+		debug "Move - trying to stand\n", "move";
 		my $task = new Task::SitStand(mode => 'stand');
 		$self->setSubtask($task);
 
 	# Stop if the map changed.
 	} elsif ($self->{mapChanged}) {
-		debug "Move - map change detected\n", "ai_move";
+		debug "Move - map change detected\n", "move";
 		$self->setDone();
 
 	# Stop if we've moved.
 	} elsif ($char->{time_move} > $self->{start_time}) {
-		debug "Move - done\n", "ai_move";
+		debug "Move - done\n", "move";
 		$self->setDone();
 
 	# Stop if we've timed out.
 	} elsif (timeOut($self->{giveup})) {
-		debug "Move - timeout\n", "ai_move";
-		$self->setError(1, "Tried too long to move");
+		debug "Move - timeout\n", "move";
+		$self->setError(TOO_LONG, "Tried too long to move");
 
 	} elsif (timeOut($self->{retry})) {
-		debug "Move - retrying\n", "ai_move";
+		debug "Move - retrying\n", "move";
 		$messageSender->sendMove($self->{x}, $self->{y});
 		$self->{retry}{time} = time;
 	}
