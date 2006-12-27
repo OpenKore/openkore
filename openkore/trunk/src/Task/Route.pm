@@ -70,7 +70,7 @@ sub new {
 	my $self = $class->SUPER::new(@_, autostop => 1, mutexes => ['movement']);
 
 	if ($args{x} == 0 || $args{y} == 0) {
-		ArgumentException->throw();
+		ArgumentException->throw(error => "Invalid arguments.");
 	}
 
 	my $allowed = new Set('maxDistance', 'maxTime', 'distFromGoal', 'pyDistFromGoal',
@@ -95,6 +95,12 @@ sub new {
 	$self->{mapChangedHook} = Plugins::addHook('Network::Receive::map_changed', \&mapChanged, $weak_self);
 
 	return $self;
+}
+
+sub activate {
+	my ($self) = @_;
+	$self->SUPER::activate();
+	$self->{time_start} = time;
 }
 
 # Overrided method.
@@ -295,16 +301,15 @@ sub iterate {
 	}
 }
 
-sub subtaskDone {
-	my ($self, $task) = @_;
-	my $error = $task->getError();
-	if ($error) {
-		$self->setError($error->{code}, $error->{message});
-	} else {
-		$self->{start_time} = time;
-		$self->{giveup}{time} = time;
-	}
-}
+# No need to watch the subtask as our only subtask is Task::Move.
+# sub subtaskDone {
+# 	my ($self, $task) = @_;
+# 	my $error;
+# 	if (!$task->isa('Task::Move') && ($error = $task->getError())) {
+# 		debug "Subtask " . $task->getName() . " returned error: $error->{message}\n", "route";
+# 		$self->setError($error->{code}, $error->{message});
+# 	}
+# }
 
 ##
 # Task::Route->getRoute(returnArray, r_field, r_start, r_dest, [avoidWalls = 1])

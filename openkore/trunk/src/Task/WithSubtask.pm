@@ -105,10 +105,6 @@ sub iterate {
 		my $task = $self->{ST_subtask};
 		$task->iterate();
 		if ($task->getStatus() == Task::DONE) {
-			my $error = $task->getError();
-			if ($error) {
-				$self->setError($error->{code}, $error->{message});
-			}
 			delete $self->{ST_subtask};
 			$self->subtaskDone($task);
 		} elsif ($task->getStatus() == Task::STOPPED) {

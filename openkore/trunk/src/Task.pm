@@ -141,6 +141,37 @@ sub new {
 	return bless \%self, $class;
 }
 
+sub _getStatusName {
+	my ($status) = @_;
+	if ($status == INACTIVE) {
+		return 'INACTIVE';
+	} elsif ($status == RUNNING) {
+		return 'RUNNING';
+	} elsif ($status == INTERRUPTED) {
+		return 'INTERRUPTED';
+	} elsif ($status == STOPPED) {
+		return 'STOPPED';
+	} elsif ($status == DONE) {
+		return 'DONE';
+	} else {
+		return $status;
+	}
+}
+
+sub _assertStatus {
+	my $self = shift;
+	my $currentStatus = $self->{T_status};
+	foreach my $status (@_) {
+		if ($status == $currentStatus) {
+			return;
+		}
+	}
+
+	my @expectedStatuses = map { _getStatusName($_) } @_;
+	die "The current task's status should be one of: (" . join(',',@expectedStatuses) . ")\n" .
+		"But it's actually: " . _getStatusName($currentStatus);
+}
+
 
 ############################
 ### CATEGORY: Queries
@@ -177,7 +208,7 @@ sub getStatus {
 # - message - The error message.
 # `l`
 sub getError {
-	assert($_[0]->getStatus() == DONE) if DEBUG;
+	$_[0]->_assertStatus(DONE) if DEBUG;
 	return $_[0]->{T_error};
 }
 
@@ -242,7 +273,7 @@ sub onStop {
 # Do not call this method outside $Task->iterate(), or bad things will happen!
 sub setError {
 	my ($self, $code, $message) = @_;
-	assert($self->getStatus() == INACTIVE || $self->getStatus() == RUNNING) if DEBUG;
+	$self->_assertStatus(INACTIVE, RUNNING) if DEBUG;
 	$self->{T_error} = {
 		code => $code,
 		message => $message
@@ -260,7 +291,7 @@ sub setError {
 # Do not call this method outside $Task->iterate(), or bad things will happen!
 sub setDone {
 	my ($self) = @_;
-	assert($self->getStatus() == INACTIVE || $self->getStatus() == RUNNING) if DEBUG;
+	$self->_assertStatus(INACTIVE, RUNNING) if DEBUG;
 	$self->{T_status} = DONE;
 }
 
@@ -274,10 +305,7 @@ sub setDone {
 # when stop() is called: they can mark the task as stopped when appropriate.
 sub setStopped {
 	my ($self) = @_;
-	if (DEBUG) {
-		my $status = $self->getStatus();
-		assert($status == RUNNING || $status == INACTIVE || $status == INTERRUPTED);
-	}
+	$self->_assertStatus(INACTIVE, RUNNING, INTERRUPTED) if DEBUG;
 	$self->{T_status} = STOPPED;
 	$self->{T_onStop}->call($self);
 }
@@ -308,7 +336,7 @@ sub setMutexes {
 #
 # This method will be called by the task manager.
 sub activate {
-	assert($_[0]->getStatus() == INACTIVE) if DEBUG;
+	$_[0]->_assertStatus(INACTIVE) if DEBUG;
 	$_[0]->{T_status} = RUNNING;
 }
 
@@ -325,7 +353,7 @@ sub activate {
 #
 # Task implementors may override this method to implement code for interruption handling.
 sub interrupt {
-	assert($_[0]->getStatus() == RUNNING) if DEBUG;
+	$_[0]->_assertStatus(RUNNING) if DEBUG;
 	$_[0]->{T_status} = INTERRUPTED;
 }
 
@@ -342,7 +370,7 @@ sub interrupt {
 #
 # Task implementors may override this method to implement code for resume handling.
 sub resume {
-	assert($_[0]->getStatus() == INTERRUPTED) if DEBUG;
+	$_[0]->_assertStatus(INTERRUPTED) if DEBUG;
 	$_[0]->{T_status} = RUNNING;
 }
 
@@ -370,7 +398,7 @@ sub stop {
 # Run one iteration of this task. Task implementors must override this method to
 # implement task code.
 sub iterate {
-	assert($_[0]->getStatus() == RUNNING) if DEBUG;
+	$_[0]->_assertStatus(RUNNING) if DEBUG;
 }
 
 1;
