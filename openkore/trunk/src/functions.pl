@@ -587,7 +587,7 @@ sub parseSendMsg {
 		} elsif ($config{serverType} == 12) {
 			$syncSync = substr($msg, 8, 4);
 		} elsif ($config{serverType} == 13) { # rRO
-			$syncSync = substr($msg, 5, 4);
+			$syncSync = substr($msg, 11, 4); # formula: MapLoaded_len + Sync_len - 4 - Sync_packet_last_junk
 		} elsif ($config{serverType} == 16) {
 			$syncSync = substr($msg, 6, 4);
 		}
@@ -599,7 +599,7 @@ sub parseSendMsg {
 		 ($switch eq "00F3" && $config{serverType} == 13)) { # rRO
 		#syncSync support for XKore 1 mode
 		if ($config{serverType} == 13) { # rRO
-			$syncSync = substr($msg, length($msg) - 8, 4);
+			$syncSync = substr($msg, length($msg) - 4, 4); # formula: Sync_len - 4 - Sync_packet_last_junk
 		} else {
 			$syncSync = substr($msg, length($msg) - 4, 4);
 		}
@@ -685,7 +685,7 @@ sub parseSendMsg {
 		($switch eq "0085" && $config{serverType} == 5) ||
 		#($switch eq "009B" && $config{serverType} == 6) || serverType 6 uses what?
 		($switch eq "009B" && $config{serverType} == 7) ||
-		($switch eq "0190" && $config{serverType} == 13)) { # rRO
+		($switch eq "009B" && $config{serverType} == 13)) { # rRO
 		# Look
 		
 		if ($config{serverType} == 0) {
@@ -704,8 +704,8 @@ sub parseSendMsg {
 			$char->{look}{head} = unpack("C", substr($msg, 8, 1));
 			$char->{look}{body} = unpack("C", substr($msg, 16, 1));
 		} elsif ($config{serverType} == 13) { # rRO
-			$char->{look}{head} = unpack("C", substr($msg, 3, 1));
-			$char->{look}{body} = unpack("C", substr($msg, 2, 1));
+			$char->{look}{head} = unpack("C", substr($msg, 11, 1));
+			$char->{look}{body} = unpack("C", substr($msg, 7, 1));
 		}	
 
 	} elsif ($switch eq "009F") {
