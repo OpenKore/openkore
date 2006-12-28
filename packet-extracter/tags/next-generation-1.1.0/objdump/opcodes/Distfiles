@@ -1,0 +1,6 @@
+dis-buf.c
+dis-init.c
+disassemble.c
+i386-dis.c
+opintl.h
+sysdep.h

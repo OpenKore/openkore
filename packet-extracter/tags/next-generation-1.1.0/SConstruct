@@ -1,0 +1,78 @@
+import os
+
+######## Platform configuration ########
+
+platform = str(ARGUMENTS.get('OS', Platform()))
+cygwin = platform == "cygwin"
+darwin = platform == "darwin"
+win32 = cygwin or platform == "windows"
+
+######## Dependency checks ########
+
+def CheckWx(context, minVersion):
+	context.Message('Checking for WxWidgets... ')
+	f = os.popen('wx-config --version')
+	line = f.readline()
+	f.close()
+	line = line.rstrip("\r\n")
+	context.Result(line)
+	return line >= minVersion
+
+def CheckVisibilityHidden(context):
+	context.Message('Checking whether -fvisibility=hidden is supported... ')
+	context.env['CCFLAGS'] = ['-fvisibility=hidden', '-Werror']
+	ret = context.TryCompile('', '.c')
+	context.env['CCFLAGS'] = []
+	if ret:
+		context.Result('yes')
+	else:
+		context.Result('no')
+	return ret
+
+conf = Configure(Environment(), custom_tests = {
+	'CheckWx' : CheckWx,
+	'CheckVisibilityHidden': CheckVisibilityHidden
+})
+if not conf.CheckWx('2.6.0'):
+	print "WxWidgets 2.6.0 or higher is required. You can get it from:"
+	print "http://www.wxwidgets.org/"
+	Exit(1)
+have_visibilityHidden = conf.CheckVisibilityHidden()
+conf.Finish()
+
+######## Setup environment ########
+env = Environment()
+env['CCFLAGS'] = ['-Wall']
+env['LINKFLAGS'] = []
+env['LIBPATH'] = []
+env['LIBS'] = []
+env['CPPDEFINES'] = []
+env['CPPPATH'] = []
+if have_visibilityHidden:
+	env['CCFLAGS'] += ['-fvisibility=hidden']
+if cygwin:
+	env['CCFLAGS'] += ['-mno-cygwin', '-ffunction-sections', '-fdata-sections']
+	env['LINKFLAGS'] += ['-mno-cygwin', '-Wl,--gc-sections']
+else:
+	env['CCFLAGS'] += ['-g']
+
+wxenv = env.Copy()
+wxenv.ParseConfig('wx-config --cflags base core')
+wxenv.Append(CXXFLAGS = wxenv['CCFLAGS'])
+if have_visibilityHidden:
+	wxenv['CXXFLAGS'] += ['-fvisibility-inlines-hidden']
+
+# ParseConfig can't handle absolute filenames for static libraries
+f = os.popen('wx-config --libs base core', 'r')
+wxenv.Append(LINKFLAGS = Split(' '.join(f.readlines())))
+f.close()
+if win32:
+	wxenv.Append(LINKFLAGS = ['-lws2_32'])
+
+# Linking will mess up if the libraries come before the object files
+# (as scons does by default), so we specify a custom linking command.
+wxenv['LINKCOM'] = '$LINK $_LIBDIRFLAGS -o $TARGET $SOURCES $_LIBFLAGS $LINKFLAGS'
+
+
+Export('env wxenv win32 cygwin')
+SConscript(['wz/SConscript', 'objdump/SConscript', 'ui/SConscript'])

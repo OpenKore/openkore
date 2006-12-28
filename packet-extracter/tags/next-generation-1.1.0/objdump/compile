@@ -1,0 +1,31 @@
+#!/bin/sh
+CFLAGS='-pipe'
+if [[ "`uname`" == "Cygwin" ]]; then
+    CFLAGS="$CFLAGS -mno-cygwin"
+fi
+
+cd bfd
+echo BFD
+gcc $CFLAGS -I../include -I../libiberty -DHAVE_CONFIG_H -c *.c
+ar cru libbfd.a *.o
+ranlib libbfd.a
+cd ..
+
+cd opcodes
+echo opcodes
+gcc $CFLAGS -c *.c -DHAVE_CONFIG_H -I../include -I../bfd
+ar cru libopcodes.a *.o
+ranlib libopcodes.a
+cd ..
+
+cd libiberty
+echo libibert
+gcc $CFLAGS -DHAVE_CONFIG_H -I../include -c *.c
+ar cru libiberty.a *.o
+ranlib libiberty.a
+cd ..
+
+echo final
+gcc $CFLAGS -Ibfd -Iinclude -DHAVE_CONFIG_H -DTARGET=\"i386-win32-pe\" -Dbin_dummy_emulation=bin_vanilla_emulation -DLOCALEDIR=\".\" -c *.c
+
+gcc $CFLAGS *.o -o objdump opcodes/libopcodes.a bfd/libbfd.a libiberty/libiberty.a
