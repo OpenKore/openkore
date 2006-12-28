@@ -966,7 +966,9 @@ sub move {
 	$args{ai_move_giveup}{timeout} = $timeout{ai_move_giveup}{timeout};
 
 	if ($x == 0 && $y == 0) {
-		die "BUG: move(0, 0) called!\n";
+		# die "BUG: move(0, 0) called!\n";
+		error "BUG: move(0, 0) called!\n";
+		return;
 	}
 	debug sprintf("Sending move from (%d,%d) to (%d,%d) - distance %.2f\n",
 		$char->{pos}{x}, $char->{pos}{y}, $x, $y, $dist), "ai_move";
