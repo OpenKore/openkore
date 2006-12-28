@@ -99,7 +99,7 @@ sub add {
 	my $ID2 = $task->onStop->add($self, \&onStop);
 	$self->{events}{$task} = [$ID1, $ID2];
 }
-
+use Log;
 # Reschedule tasks. Do not call this method directly!
 sub reschedule {
 	my ($self) = @_;
@@ -242,7 +242,10 @@ sub checkValidity {
 	my $activeMutexes = $self->{activeMutexes};
 	foreach my $mutex (keys %{$activeMutexes}) {
 		my $owner = $activeMutexes->{$mutex};
-		die unless $self->{activeTasks}->has($owner);
+		if (!$self->{activeTasks}->has($owner)) {
+			printActiveMutexes($self->{activeMutexes});
+			die;
+		}
 	}
 }
 
@@ -292,10 +295,7 @@ sub iterate {
 # Tell all tasks (whether active or inactive) to stop.
 sub stopAll {
 	my ($self) = @_;
-	foreach my $task (@{$self->{activeTasks}}) {
-		$task->stop();
-	}
-	foreach my $task (@{$self->{inactiveTasks}}) {
+	foreach my $task (@{$self->{activeTasks}}, @{$self->{inactiveTasks}}) {
 		$task->stop();
 		if ($task->getStatus() == Task::STOPPED) {
 			$self->{shouldReschedule} = 1;
@@ -321,6 +321,16 @@ sub activeTasksString {
 sub inactiveTasksString {
 	my ($self) = @_;
 	return getTaskSetString($self->{inactiveTasks});
+}
+
+sub activeMutexesString {
+	my ($self) = @_;
+	my $activeMutexes = $self->{activeMutexes};
+	my @entries;
+	foreach my $mutex (keys %{$activeMutexes}) {
+		push @entries, "$mutex (<- " . $activeMutexes->{$mutex}->getName . ")";
+	}
+	return join(', ', sort @entries);
 }
 
 sub getTaskSetString {
@@ -352,6 +362,14 @@ sub onMutexesChanged {
 	my ($self, $task) = @_;
 	if ($task->getStatus() == Task::RUNNING) {
 		$self->{grayTasks}->add($task);
+
+		# Release its mutex ownerships.
+		my $activeMutexes = $self->{activeMutexes};
+		foreach my $mutex (keys %{$activeMutexes}) {
+			if ($activeMutexes->{$mutex} == $task) {
+				delete $activeMutexes->{$mutex};
+			}
+		}
 	}
 	$self->{shouldReschedule} = 1;
 }
@@ -425,12 +443,13 @@ sub deactivateTask {
 # 	print "$name = " . join(',', @names) . "\n";
 # }
 # 
-# sub printActiveMutexes {
-# 	my ($activeMutexes) = @_;
-# 	print "Active mutexes:\n";
-# 	foreach my $mutex (keys %{$activeMutexes}) {
-# 		print "$mutex -> owner = " . $activeMutexes->{$mutex}->getName . "\n";
-# 	}
-# }
+sub printActiveMutexes {
+	my ($activeMutexes) = @_;
+	my @entries;
+	foreach my $mutex (keys %{$activeMutexes}) {
+		push @entries, "$mutex (owned by " . $activeMutexes->{$mutex}->getName . ")";
+	}
+	print "Active mutexes: " . join(', ', @entries) . "\n";
+}
 
 1;

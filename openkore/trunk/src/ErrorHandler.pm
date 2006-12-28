@@ -20,6 +20,7 @@
 package ErrorHandler;
 
 use strict;
+use Carp;
 use encoding 'utf8';
 
 sub T {
@@ -50,6 +51,7 @@ sub showError {
 
 sub errorHandler {
 	return unless (defined $^S && $^S == 0);
+	my $e = $@;
 
 	# Extract file and line number from the die message
 	my ($file, $line) = $_[0] =~ / at (.+?) line (\d+)\.$/;
@@ -84,7 +86,7 @@ sub errorHandler {
 
 	# Add stack trace
 	if (defined &Carp::longmess) {
-		$log .= Carp::longmess(@_);
+		$log .= Carp::longmess($e);
 	} else {
 		$log .= $dieMsg;
 	}

@@ -12,7 +12,7 @@
 #  $Id$
 #
 #########################################################################
-package XKore;
+package Network::XKore;
 
 use strict;
 use base qw(Exporter);
@@ -20,20 +20,22 @@ use Exporter;
 use IO::Socket::INET;
 use Time::HiRes qw(time usleep);
 use Win32;
-use Exception::Class ('XKore::CannotStart');
+use Exception::Class ('Network::XKore::CannotStart');
 
+use Modules 'register';
 use Globals;
 use Log qw(message error);
 use Utils::Win32;
+use Network;
 use Network::Send ();
 use Utils qw(dataWaiting timeOut);
 use Translation;
 
 
 ##
-# XKore->new()
+# Network::XKore->new()
 #
-# Initialize X-Kore mode. Throws XKore::CannotStart on error.
+# Initialize X-Kore mode. Throws Network::XKore::CannotStart on error.
 sub new {
 	my $class = shift;
 	my $port = 2350;
@@ -151,6 +153,12 @@ sub serverDisconnect {
 
 sub getState {
 	return $conState;
+}
+
+sub setState {
+	my ($self, $state) = @_;
+	$conState = $state;
+	Plugins::callHook('Network::stateChanged');
 }
 
 

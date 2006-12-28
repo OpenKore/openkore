@@ -12,6 +12,7 @@ sub start {
 	testDynamicMutexes();
 	testImmediateStop();
 	testDeferredStop();
+	testMisc();
 }
 
 # Test a case in which task mutexes are static (do not change during the task's life time).
@@ -108,6 +109,12 @@ sub testDynamicMutexes {
 	$tm->iterate();
 	assertActiveTasks($tm, "C,D");
 	assertInactiveTasks($tm, "A,B");
+
+	$taskC->setMutexes('3');
+	$taskC->setMutexes();
+	$tm->iterate();
+	assertActiveTasks($tm, "C,D");
+	assertInactiveTasks($tm, "A,B");
 }
 
 # Test stopping of tasks that can stop immediately.
@@ -169,6 +176,26 @@ sub testDeferredStop {
 	assertActiveTasks($tm, "", "A and B are stopped.");
 	assertInactiveTasks($tm, "");
 	is($taskB->getStatus(), Task::STOPPED);
+}
+
+sub testMisc {
+	my $tm = new TaskManager();
+	my $taskA = createTask(name => "A");
+	$tm->add($taskA);
+	$tm->iterate();
+	is($tm->activeMutexesString(), "", "No mutexes are active.");
+	$taskA->setMutexes("movement");
+	$tm->iterate();
+	is($tm->activeMutexesString(), "movement (<- A)", "The 'movement' mutex is active.");
+	$taskA->setMutexes();
+	$tm->iterate();
+	is($tm->activeMutexesString(), "", "No mutexes are active.");
+	$tm->stopAll();
+	$tm->iterate();
+	is($tm->activeMutexesString(), "", "No mutexes are active.");
+
+	$taskA = createTask(name => "A");
+	my $taskB = createTask(name => "B");
 }
 
 sub createTask {

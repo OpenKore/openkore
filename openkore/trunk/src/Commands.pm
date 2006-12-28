@@ -189,7 +189,22 @@ sub initHandlers {
 	northeast          => \&cmdManualMove,
 	northwest          => \&cmdManualMove,
 	southeast          => \&cmdManualMove,
-	southwest          => \&cmdManualMove
+	southwest          => \&cmdManualMove,
+	test => sub {
+		my (undef, $i) = @_;
+		use Task::FollowActor;
+		my $actorList = $monstersList;
+		my $actor = $actorList->get($i);
+		if ($actor) {
+			$taskManager->add(new Task::FollowActor(
+				actor => $actor,
+				actorList => $actorList,
+				maxDistance => 5
+			));
+		} else {
+			error "No such monster.\n";
+		}
+	}
 	);
 }
 
@@ -2687,7 +2702,7 @@ sub cmdNPCList {
 	if ($arg[0] =~ /^\d+$/) {
 		my $i = $arg[0];
 		if (my $npc = $npcsList->get($i)) {
-			my $pos = "($npc->{pos}{x}, $npc->{pos}{y})";
+			my $pos = "($npc->{pos_to}{x}, $npc->{pos_to}{y})";
 			$msg .= swrite(
 				"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<   @<<<<<<<<",
 				[$i, $npc->name, $pos, $npc->{nameID}]);

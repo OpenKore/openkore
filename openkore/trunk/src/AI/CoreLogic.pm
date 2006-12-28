@@ -36,6 +36,7 @@ use ChatQueue;
 use Utils;
 use Misc;
 use Commands;
+use Network;
 use FileParsers;
 use Translation;
 use Task::TalkNPC;
@@ -1346,7 +1347,7 @@ sub processAutoBreakTime {
 					$net->serverDisconnect();
 					AI::clear();
 					undef %ai_v;
-					$conState = 1;
+					$net->setState(Network::NOT_CONNECTED);
 					undef $conState_tries;
 					last;
 				}

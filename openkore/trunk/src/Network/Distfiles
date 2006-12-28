@@ -1,2 +1,6 @@
+DirectConnection.pm
 Receive.pm
 Send.pm
+XKore.pm
+XKore2.pm
+XKoreProxy.pm

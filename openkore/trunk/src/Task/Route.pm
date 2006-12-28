@@ -35,6 +35,7 @@ use Utils::Exceptions;
 use Utils::Set;
 use Utils::PathFinding;
 
+# TODO: this task should lock the 'npc' mutex when talking to NPCs!
 
 # Error code constants.
 use constant TOO_MUCH_TIME => 1;
@@ -102,6 +103,15 @@ sub DESTROY {
 	Plugins::delHook($self->{mapChangedHook});
 }
 
+##
+# Hash* $Task_Route->destCoords()
+#
+# Returns the destination coordinates. The result is a hash with the items 'x' and 'y'.
+sub destCoords {
+	return $_[0]->{dest}{pos};
+}
+
+# Overrided method.
 sub activate {
 	my ($self) = @_;
 	$self->SUPER::activate();
@@ -140,15 +150,24 @@ sub iterate {
 
 	} elsif ($self->{stage} eq '') {
 		my $pos = calcPosition($char);
+		my $begin = time;
 		if ($self->getRoute($self->{solution}, \%field, $pos, $self->{dest}{pos}, $self->{avoidWalls})) {
 			$self->{stage} = 'Route Solution Ready';
 			debug "Route Solution Ready!\n", "route";
+
+			if (time - $begin < 0.01) {
+				# Optimization: immediately go to the next stage if we
+				# spent neglible time in this step.
+				$self->iterate();
+			}
+
 		} else {
 			debug "Something's wrong; there is no path to $field{name}($self->{dest}{pos}{x},$self->{dest}{pos}{y}).\n", "debug";
 			$self->setError(CANNOT_CALCULATE_ROUTE, "Unable to calculate a route.");
 		}
 
 	} elsif ($self->{stage} eq 'Route Solution Ready') {
+		my $begin = time;
 		my $solution = $self->{solution};
 		if ($self->{maxDistance} > 0 && $self->{maxDistance} < 1) {
 			# Fractional route motion
@@ -182,6 +201,12 @@ sub iterate {
 		undef $self->{new_y};
 		$self->{time_step} = time;
 		$self->{stage} = 'Walk the Route Solution';
+
+		if (time - $begin < 0.01) {
+			# Optimization: immediately go to the next stage if we
+			# spent neglible time in this step.
+			$self->iterate();
+		}
 
 	} elsif ($self->{stage} eq 'Walk the Route Solution') {
 		my $pos = calcPosition($char);
@@ -237,6 +262,7 @@ sub iterate {
 		} else {
 			# We're either starting to move or already moving, so send out more
 			# move commands periodically to keep moving and updating our position
+			my $begin = time;
 			my $solution = $self->{solution};
 			$self->{index} = $config{route_step} unless $self->{index};
 			$self->{index}++ if ($self->{index} < $config{route_step});
@@ -287,6 +313,12 @@ sub iterate {
 						x => $self->{new_x},
 						y => $self->{new_y});
 					$self->setSubtask($task);
+
+					if (time - $begin < 0.01) {
+						# Optimization: immediately begin moving, if we spent neglible
+						# time in this step.
+						$self->iterate();
+					}
 				}
 			} else {
 				# No more points to cover
