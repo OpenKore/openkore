@@ -12,13 +12,14 @@
 #  $Id$
 #
 #########################################################################
-package XKore2;
+package Network::XKore2;
 
 use strict;
 use Exporter;
 use base qw(Exporter);
 use IO::Socket::INET;
 
+use Modules 'register';
 use Globals;
 use Log qw(message debug error);
 use Utils qw(dataWaiting timeOut shiftPack unShiftPack);
@@ -31,10 +32,9 @@ sub new {
 	my $class = shift;
 	my $self = bless {}, $class;
 
-	# Reuse code from Network to keep the connection to the server
-	require Network;
-	Modules::register("Network");
-	$self->{server} = new Network($self);
+	# Reuse code from Network::DirectConnection to keep the connection to the server
+	require Network::DirectConnection;
+	$self->{server} = new Network::DirectConnection($self);
 
 	return undef unless $self->{server};
 
@@ -118,6 +118,11 @@ sub serverDisconnect {
 sub getState {
 	my ($self) = @_;
 	return $self->{server}->getState();
+}
+
+sub setState {
+	my ($self, $state) = @_;
+	$self->{server}->setState($state);
 }
 
 

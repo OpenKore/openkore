@@ -219,24 +219,20 @@ my $XKore_version = $config{XKore}? $config{XKore} : $sys{XKore};
 eval {
 	if ($XKore_version eq "1" || $XKore_version eq "inject") {
 		# Inject DLL to running Ragnarok process
-		require XKore;
-		Modules::register("XKore");
-		$net = new XKore;
+		require Network::XKore;
+		$net = new Network::XKore;
 	} elsif ($XKore_version eq "2") {
 		# Run as a proxy bot, allowing Ragnarok to connect while botting
-		require XKore2;
-		Modules::register("XKore2");
-		$net = new XKore2;
+		require Network::XKore2;
+		$net = new Network::XKore2;
 	} elsif ($XKore_version eq "3" || $XKore_version eq "proxy") {
 		# Proxy Ragnarok client connection
-		require XKoreProxy;
-		Modules::register("XKoreProxy");
-		$net = new XKoreProxy;
+		require Network::XKoreProxy;
+		$net = new Network::XKoreProxy;
 	} else {
 		# Run as a standalone bot, with no interface to the official RO client
-		require Network;
-		Modules::register("Network");
-		$net = new Network;
+		require Network::DirectConnection;
+		$net = new Network::DirectConnection;
 	}
 };
 if ($@) {

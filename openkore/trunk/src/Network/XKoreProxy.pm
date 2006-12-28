@@ -12,7 +12,7 @@
 #  $Id$
 #
 #########################################################################
-package XKoreProxy;
+package Network::XKoreProxy;
 
 use strict;
 use base qw(Exporter);
@@ -21,19 +21,21 @@ use IO::Socket::INET;
 use Time::HiRes qw(time usleep);
 use encoding 'utf8';
 
+use Modules 'register';
 use Globals;
 use Log qw(message warning error debug);
 use Utils qw(dataWaiting timeOut makeIP encodeIP swrite existsInList);
 use Misc qw(configModify visualDump);
 use Translation;
 use I18N qw(bytesToString);
+use Network;
 use Network::Send ();
 
 my $clientBuffer;
 my %flushTimer;
 
 ##
-# XKoreProxy->new()
+# Network::XKoreProxy->new()
 #
 # Initialize X-Kore-Proxy mode.
 sub new {
@@ -42,10 +44,9 @@ sub new {
 	my $port = $config{XKore_listenPort} || 6901;
 	my $self = bless {}, $class;
 
-	# Reuse code from Network to connect to the server
-	require Network;
-	Modules::register("Network");
-	$self->{server} = new Network($self);
+	# Reuse code from Network::DirectConnection to connect to the server
+	require Network::DirectConnection;
+	$self->{server} = new Network::DirectConnection($self);
 
 	$self->{client_state} = 0;
 	$self->{nextIp} = undef;
@@ -68,18 +69,10 @@ sub new {
 	return $self;
 }
 
-##
-# $net->version
-# Returns: XKore mode
-#
 sub version {
 	return 1;
 }
 
-##
-# $net->DESTROY()
-#
-# Shutdown function. Turn everything off.
 sub DESTROY {
 	my $self = shift;
 
@@ -92,19 +85,11 @@ sub DESTROY {
 ## Server Functions ##
 ######################
 
-##
-# $net->serverAlive()
-# Returns: a boolean.
-#
-# Check whether the connection with the server is still alive.
 sub serverAlive {
 	my $self = shift;
 	return $self->{server}->serverAlive;
 }
 
-##
-# $net->serverConnect
-#
 sub serverConnect {
 	my $self = shift;
 	my $host = shift;
@@ -113,40 +98,24 @@ sub serverConnect {
 	return $self->{server}->serverConnect($host, $port);
 }
 
-##
-# $net->serverPeerHost
-#
 sub serverPeerHost {
 	my $self = shift;
 	return $self->{server}->serverPeerHost if ($self->serverAlive);
 	return undef;
 }
 
-##
-# $net->serverPeerPort
-#
 sub serverPeerPort {
 	my $self = shift;
 	return $self->{server}->serverPeerPort if ($self->serverAlive);
 	return undef;
 }
 
-##
-# $net->serverRecv()
-# Returns: the messages sent from the server, or undef if there are no pending messages.
-#
-# This just uses KoreNet.pm
 sub serverRecv {
 	my $self = shift;
 	
 	return $self->{server}->serverRecv();
 }
 
-##
-# $net->serverSend(msg)
-# msg: A scalar to send to the RO server
-#
-# This just reuses KoreNet.pm's code
 sub serverSend {
 	my $self = shift;
 	my $msg = shift;
@@ -154,11 +123,6 @@ sub serverSend {
 	$self->{server}->serverSend($msg);
 }
 
-##
-# $net->serverDisconnect
-#
-# Disconnects the server and client if necessary. 
-# preserveClient should never be used outside XKoreProxy
 sub serverDisconnect {
 	my $self = shift;
 	my $preserveClient = shift;
@@ -181,52 +145,38 @@ sub getState {
 	return $self->{server}->getState();
 }
 
+sub setState {
+	my ($self, $state) = @_;
+	$self->{server}->setState($state);
+}
+
 
 ######################
 ## Client Functions ##
 ######################
 
-##
-# $net->clientAlive
-# Returns: a boolean.
-#
-# Check to see if the client is fully connected and logged in.
 sub clientAlive {
 	my $self = shift;
 	return $self->proxyAlive();
 }
 
-##
-# $net->proxyAlive
-# Returns: a boolean
-#
-# Checks to see if the client is connected. Used internally only.
 sub proxyAlive {
 	my $self = shift;
 	return $self->{proxy} && $self->{proxy}->connected;
 }
 
-##
-# $net->clientPeerHost
-#
 sub clientPeerHost {
 	my $self = shift;
 	return $self->{proxy}->peerhost if ($self->proxyAlive);
 	return undef;
 }
 
-##
-# $net->clientPeePort
-#
 sub clientPeerPort {
 	my $self = shift;
 	return $self->{proxy}->peerport if ($self->proxyAlive);
 	return undef;
 }
 
-##
-# $net->clientSend
-#
 sub clientSend {
 	my $self = shift;
 	my $msg = shift;
@@ -244,9 +194,6 @@ sub clientSend {
 	$clientBuffer .= $msg;
 }
 
-##
-# $net->clientFlush
-#
 sub clientFlush {
 	my $self = shift;
 	
@@ -257,12 +204,6 @@ sub clientFlush {
 	$clientBuffer = '';
 }
 
-
-##
-# $net->clientRecv
-# Returns: A scalar.
-#
-# Returns undef unless the client is logged in.
 sub clientRecv {
 	my $self = shift;
 	my $msg;
@@ -282,11 +223,6 @@ sub clientRecv {
 
 
 
-
-
-##
-# $net->checkConnection()
-#
 sub checkConnection {
 	my $self = shift;
 

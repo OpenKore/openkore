@@ -139,7 +139,7 @@ sub iterate {
 		$self->setError(TOO_LONG, "Tried too long to move");
 
 	} elsif (timeOut($self->{retry})) {
-		debug "Move - retrying\n", "move";
+		debug "Move - (re)trying\n", "move";
 		$messageSender->sendMove($self->{x}, $self->{y});
 		$self->{retry}{time} = time;
 	}

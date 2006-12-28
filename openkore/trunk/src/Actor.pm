@@ -178,6 +178,33 @@ sub get {
 # so generally you use use $Actor->name() instead, which automatically
 # takes care of actor objects that don't have a name yet.
 
+##
+# Hash* $Actor->{pos}
+#
+# The position where this actor was, before its last movement.
+# This is a reference to a hash, containing the items 'x' and 'y'.
+
+##
+# Hash* $Actor->{pos_to}
+#
+# The position where this actor is moving to, or (if the actor has finished moving),
+# where it currently is. This is a reference to a hash, containing the items 'x' and 'y'.
+
+##
+# float $Actor->{walk_speed}
+#
+# The actor's walking speed, in blocks per second.
+
+##
+# float $Actor->{time_move}
+#
+# The time (as timestamp) at which the actor last moved.
+
+##
+# float $Actor->{time_move_calc}
+#
+# The time (in seconds) that the actor needs to move from $Actor->{pos} to $Actor->{pos_to}.
+
 
 ### CATEGORY: Methods
 

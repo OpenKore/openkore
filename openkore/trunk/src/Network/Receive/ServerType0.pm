@@ -9,6 +9,7 @@ use AI;
 use Globals qw($char %timeout $net %config @chars $conState $conState_tries $messageSender);
 use Log qw(message warning error debug);
 use Translation;
+use Network;
 use Utils qw(makeCoords);
 
 sub new {
@@ -19,12 +20,12 @@ sub new {
 
 sub map_loaded {
 	my ($self, $args) = @_;
-	$conState = 5;
+	$net->setState(Network::IN_GAME);
 	undef $conState_tries;
-	$char = $chars[$config{'char'}];
+	$char = $chars[$config{char}];
 
 	if ($net->version == 1) {
-		$conState = 4;
+		$net->setState(4);
 		message(T("Waiting for map to load...\n"), "connection");
 		ai_clientSuspend(0, 10);
 		main::initMapChangeVars();
@@ -47,7 +48,7 @@ sub map_loaded {
 	$char->{pos_to} = {%{$char->{pos}}};
 	message(TF("Your Coordinates: %s, %s\n", $char->{pos}{x}, $char->{pos}{y}), undef, 1);
 
-	$messageSender->sendIgnoreAll("all") if ($config{'ignoreAll'});
+	$messageSender->sendIgnoreAll("all") if ($config{ignoreAll});
 }
 
 1;

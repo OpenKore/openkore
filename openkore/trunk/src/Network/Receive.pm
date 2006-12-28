@@ -37,6 +37,7 @@ use Settings;
 use Log qw(message warning error debug);
 use FileParsers;
 use Interface;
+use Network;
 use Network::Send ();
 use Misc;
 use Plugins;
@@ -70,11 +71,11 @@ sub new {
 		'0070' => ['character_deletion_failed'],
 		'0071' => ['received_character_ID_and_Map', 'a4 Z16 a4 v1', [qw(charID mapName mapIP mapPort)]],
 		'0073' => ['map_loaded','V a3',[qw(syncMapSync coords)]],
-		'0075' => ['change_to_constate5'],
-		'0077' => ['change_to_constate5'],
+		'0075' => ['changeToInGameState'],
+		'0077' => ['changeToInGameState'],
 		'0078' => ['actor_display', 'a4 v14 a4 x7 C1 a3 x2 C1 v1', [qw(ID walk_speed param1 param2 param3 type hair_style weapon lowhead shield tophead midhead hair_color clothes_color head_dir guildID sex coords act lv)]],
 		'0079' => ['actor_display', 'a4 v14 a4 x7 C1 a3 x2 v1',    [qw(ID walk_speed param1 param2 param3 type hair_style weapon lowhead shield tophead midhead hair_color clothes_color head_dir guildID sex coords lv)]],
-		'007A' => ['change_to_constate5'],
+		'007A' => ['changeToInGameState'],
 		'007B' => ['actor_display', 'a4 v8 x4 v6 a4 x7 C1 a5 x3 v1',     [qw(ID walk_speed param1 param2 param3 type hair_style weapon lowhead shield tophead midhead hair_color clothes_color head_dir guildID sex coords lv)]],
 		'007C' => ['actor_display', 'a4 v1 v1 v1 v1 x6 v1 C1 x12 C1 a3', [qw(ID walk_speed param1 param2 param3 type pet sex coords)]],
 		'007F' => ['received_sync', 'V1', [qw(time)]],
@@ -544,7 +545,7 @@ sub account_server_info {
 	my $msg = $args->{serverInfo};
 	my $msg_size = length($msg);
 
-	$conState = 2;
+	$net->setState(2);
 	undef $conState_tries;
 	$sessionID = $args->{sessionID};
 	$accountID = $args->{accountID};
@@ -615,7 +616,7 @@ sub account_server_info {
 
 sub actor_action {
 	my ($self,$args) = @_;
-	change_to_constate5();
+	changeToInGameState();
 
 	if ($args->{type} == 1) {
 		# Take item
@@ -722,7 +723,7 @@ sub actor_action {
 
 sub actor_died_or_disappeared {
 	my ($self,$args) = @_;
-	change_to_constate5();
+	changeToInGameState();
 	my $ID = $args->{ID};
 
 	if ($ID eq $accountID) {
@@ -734,15 +735,13 @@ sub actor_died_or_disappeared {
 
 	} elsif (defined $monstersList->getByID($ID)) {
 		my $monster = $monstersList->getByID($ID);
-		$monsters_old{$ID} = $monster->deepCopy();
-		$monsters_old{$ID}{gone_time} = time;
 		if ($args->{type} == 0) {
 			debug "Monster Disappeared: " . $monster->name . " ($monster->{binID})\n", "parseMsg_presence";
-			$monsters_old{$ID}{disappeared} = 1;
+			$monster->{disappeared} = 1;
 
 		} elsif ($args->{type} == 1) {
 			debug "Monster Died: " . $monster->name . " ($monster->{binID})\n", "parseMsg_damage";
-			$monsters_old{$ID}{dead} = 1;
+			$monster->{dead} = 1;
 
 			if ($config{itemsTakeAuto_party} &&
 			    ($monster->{dmgFromParty} > 0 ||
@@ -754,13 +753,15 @@ sub actor_died_or_disappeared {
 
 		} elsif ($args->{type} == 2) { # What's this?
 			debug "Monster Disappeared: " . $monster->name . " ($monster->{binID})\n", "parseMsg_presence";
-			$monsters_old{$ID}{disappeared} = 1;
+			$monster->{disappeared} = 1;
 
 		} elsif ($args->{type} == 3) {
 			debug "Monster Teleported: " . $monster->name . " ($monster->{binID})\n", "parseMsg_presence";
-			$monsters_old{$ID}{teleported} = 1;
+			$monster->{teleported} = 1;
 		}
 
+		$monster->{gone_time} = time;
+		$monsters_old{$ID} = $monster->deepCopy();
 		$monstersList->remove($monster);
 
 	} elsif (defined $playersList->getByID($ID)) {
@@ -771,6 +772,7 @@ sub actor_died_or_disappeared {
 				$playersList->remove($player);
 			} else {
 				$player->{dead} = 1;
+				$player->{dead_time} = time;
 			}
 		} else {
 			if ($args->{type} == 0) {
@@ -787,8 +789,8 @@ sub actor_died_or_disappeared {
 				$player->{disappeared} = 1;
 			}
 
+			$player->{gone_time} = time;
 			$players_old{$ID} = $player->deepCopy();
-			$players_old{$ID}{gone_time} = time;
 			$playersList->remove($player);
 		}
 
@@ -804,22 +806,24 @@ sub actor_died_or_disappeared {
 	} elsif (defined $portalsList->getByID($ID)) {
 		my $portal = $portalsList->getByID($ID);
 		debug "Portal Disappeared: " . $portal->name . " ($portal->{binID})\n", "parseMsg";
+		$portal->{disappeared} = 1;
+		$portal->{gone_time} = time;
 		$portals_old{$ID} = $portal->deepCopy();
-		$portals_old{$ID}{disappeared} = 1;
-		$portals_old{$ID}{gone_time} = time;
 		$portalsList->remove($portal);
 
 	} elsif (defined $npcsList->getByID($ID)) {
 		my $npc = $npcsList->getByID($ID);
 		debug "NPC Disappeared: " . $npc->name . " ($npc->{nameID})\n", "parseMsg";
+		$npc->{disappeared} = 1;
+		$npc->{gone_time} = time;
 		$npcs_old{$ID} = $npc->deepCopy();
-		$npcs_old{$ID}{disappeared} = 1;
-		$npcs_old{$ID}{gone_time} = time;
 		$npcsList->remove($npc);
 
 	} elsif (defined $petsList->getByID($ID)) {
 		my $pet = $petsList->getByID($ID);
 		debug "Pet Disappeared: " . $pet->name . " ($pet->{binID})\n", "parseMsg";
+		$pet->{disappeared} = 1;
+		$pet->{gone_time} = time;
 		$petsList->remove($pet);
 
 	} else {
@@ -830,7 +834,7 @@ sub actor_died_or_disappeared {
 # This function is a merge of actor_exists, actor_connected, actor_moved, etc...
 sub actor_display {
 	my ($self, $args) = @_;
-	change_to_constate5();
+	changeToInGameState();
 	my ($actor, $mustAdd);
 
 
@@ -962,20 +966,11 @@ sub actor_display {
 	$actor->{jobID} = $args->{type};
 	$actor->{type} = $args->{type};
 	$actor->{lv} = $args->{lv};
+	$actor->{pos} = {%coordsFrom};
 	$actor->{pos_to} = {%coordsTo};
 	$actor->{walk_speed} = $args->{walk_speed} / 1000 if (exists $args->{walk_speed});
 	$actor->{time_move} = time;
 	$actor->{time_move_calc} = distance(\%coordsFrom, \%coordsTo) * $actor->{walk_speed};
-
-	if (length($args->{coords}) >= 5) {
-		if (!$actor->isa('Player::NPC')) {
-			$actor->{pos} = {%coordsFrom};
-		} else {
-			$actor->{pos} = {%coordsTo};
-		}
-	} else {
-		$actor->{pos} = {%coordsTo};
-	}
 
 	if (UNIVERSAL::isa($actor, "Actor::Player")) {
 		# None of this stuff should matter if the actor isn't a player...
@@ -1089,10 +1084,10 @@ sub actor_display {
 			Plugins::callHook('player', {player => $actor});
 
 		} elsif ($actor->isa('Actor::NPC')) {
-			message TF("NPC Exists: %s (%d, %d) (ID %d) - (%d)\n", $actor->name, $actor->{pos}{x}, $actor->{pos}{y}, $actor->{nameID}, $actor->{binID}), "parseMsg_presence", 1;
+			message TF("NPC Exists: %s (%d, %d) (ID %d) - (%d)\n", $actor->name, $actor->{pos_to}{x}, $actor->{pos_to}{y}, $actor->{nameID}, $actor->{binID}), "parseMsg_presence", 1;
 
 		} elsif ($actor->isa('Actor::Portal')) {
-			message TF("Portal Exists: %s (%s, %s) - (%s)\n", $actor->name, $coordsTo{x}, $coordsTo{y}, $actor->{binID}), "portals", 1;
+			message TF("Portal Exists: %s (%s, %s) - (%s)\n", $actor->name, $actor->{pos_to}{x}, $actor->{pos_to}{y}, $actor->{binID}), "portals", 1;
 
 		} elsif ($actor->isa('Actor::Monster')) {
 			debug sprintf("Monster Exists: %s (%d)\n", $actor->name, $actor->{binID}), "parseMsg_presence", 1;
@@ -1170,7 +1165,7 @@ sub actor_display {
 
 sub actor_info {
 	my ($self, $args) = @_;
-	change_to_constate5();
+	changeToInGameState();
 
 	debug "Received object info: $args->{name}\n", "parseMsg_presence/name", 2;
 
@@ -1224,7 +1219,7 @@ sub actor_info {
 
 sub actor_look_at {
 	my ($self, $args) = @_;
-	change_to_constate5();
+	changeToInGameState();
 
 	my $actor = Actor::get($args->{ID});
 	$actor->{look}{head} = $args->{head};
@@ -1672,19 +1667,19 @@ sub cart_item_removed {
 }
 
 sub change_to_constate25 {
-	$conState = 2.5;
+	$net->setState(2.5);
 	undef $accountID;
 }
 
-sub change_to_constate5 {
-	$conState = 5 if ($conState != 4 && $net->version == 1);
+sub changeToInGameState {
+	$net->setState(Network::IN_GAME) if ($net->getState() != 4 && $net->version == 1);
 }
 
 sub character_creation_failed {
 	message T("Character creation failed. " . 
 		"If you didn't make any mistake, then the name you chose already exists.\n"), "info";
 	if (charSelectScreen() == 1) {
-		$conState = 3;
+		$net->setState(3);
 		$firstLoginMap = 1;
 		$startingZenny = $chars[$config{'char'}]{'zenny'} unless defined $startingZenny;
 		$sentWelcomeMessage = 1;
@@ -1712,10 +1707,9 @@ sub character_creation_successful {
 	$char->{sex} = $accountSex2;
 	$chars[$slot] = $char;
 
-	$conState = 3;
+	$net->setState(3);
 	message TF("Character %s (%d) created.\n", $char->{name}, $slot), "info";
 	if (charSelectScreen() == 1) {
-		$conState = 3;
 		$firstLoginMap = 1;
 		$startingZenny = $chars[$config{'char'}]{'zenny'} unless defined $startingZenny;
 		$sentWelcomeMessage = 1;
@@ -1735,7 +1729,7 @@ sub character_deletion_successful {
 	}
 
 	if (charSelectScreen() == 1) {
-		$conState = 3;
+		$net->setState(3);
 		$firstLoginMap = 1;
 		$startingZenny = $chars[$config{'char'}]{'zenny'} unless defined $startingZenny;
 		$sentWelcomeMessage = 1;
@@ -1746,7 +1740,7 @@ sub character_deletion_failed {
 	error T("Character cannot be deleted. Your e-mail address was probably wrong.\n");
 	undef $AI::temp::delIndex;
 	if (charSelectScreen() == 1) {
-		$conState = 3;
+		$net->setState(3);
 		$firstLoginMap = 1;
 		$startingZenny = $chars[$config{'char'}]{'zenny'} unless defined $startingZenny;
 		$sentWelcomeMessage = 1;
@@ -1756,7 +1750,7 @@ sub character_deletion_failed {
 sub character_moves {
 	my ($self, $args) = @_;
 	
-	change_to_constate5();
+	changeToInGameState();
 	makeCoords($char->{pos}, substr($args->{RAW_MSG}, 6, 3));
 	makeCoords2($char->{pos_to}, substr($args->{RAW_MSG}, 8, 3));
 	my $dist = sprintf("%.1f", distance($char->{pos}, $char->{pos_to}));
@@ -2200,8 +2194,8 @@ sub equip_item {
 sub errors {
 	my ($self, $args) = @_;
 
-	Plugins::callHook('disconnected') if $conState == 5;
-	if ($conState == 5 && 
+	Plugins::callHook('disconnected') if ($net->getState() == Network::IN_GAME);
+	if ($net->getState() == Network::IN_GAME &&
 		($config{dcOnDisconnect} > 1 ||
 		($config{dcOnDisconnect} &&
 		$args->{type} != 3 &&
@@ -2210,7 +2204,7 @@ sub errors {
 		$quit = 1;
 	}
 
-	$conState = 1;
+	$net->setState(1);
 	undef $conState_tries;
 
 	$timeout_ex{'master'}{'time'} = time;
@@ -2259,7 +2253,7 @@ sub errors {
 
 sub exp_zeny_info {
 	my ($self, $args) = @_;
-	change_to_constate5();
+	changeToInGameState();
 
 	if ($args->{type} == 1) {
 		$char->{exp_last} = $char->{exp};
@@ -2471,7 +2465,7 @@ sub homunculus_skills {
 	my ($self, $args) = @_;
 
 	# Character skill list
-	change_to_constate5();
+	changeToInGameState();
 	my $newmsg;
 	my $msg = $args->{RAW_MSG};
 	my $msg_size = $args->{RAW_MSG_SIZE};
@@ -2572,7 +2566,7 @@ sub gameguard_grant {
 		message T("Server granted login request to char/map server\n"), "poseidon";
 		change_to_constate25 if ($config{'gameGuard'} eq "2");
 	}
-	$conState = 1.3 if ($conState == 1.2);
+	$net->setState(1.3) if ($net->getState() == 1.2);
 }
 
 sub gameguard_request {
@@ -2951,7 +2945,7 @@ sub ignore_player_result {
 sub inventory_item_added {
 	my ($self, $args) = @_;
 
-	change_to_constate5();
+	changeToInGameState();
 
 	my ($index, $amount, $fail) = ($args->{index}, $args->{amount}, $args->{fail});
 
@@ -3017,7 +3011,7 @@ sub inventory_item_added {
 
 sub inventory_item_removed {
 	my ($self, $args) = @_;
-	change_to_constate5();
+	changeToInGameState();
 	my $invIndex = findIndex($char->{inventory}, "index", $args->{index});
 	$args->{item} = $char->{inventory}[$invIndex];
 	inventoryItemRemoved($invIndex, $args->{amount});
@@ -3085,7 +3079,7 @@ sub revolving_entity {
 
 sub inventory_items_nonstackable {
 	my ($self, $args) = @_;
-	change_to_constate5();
+	changeToInGameState();
 	my $newmsg;
 	$self->decrypt(\$newmsg, substr($args->{RAW_MSG}, 4));
 	my $msg = substr($args->{RAW_MSG}, 0, 4) . $newmsg;
@@ -3129,7 +3123,7 @@ sub inventory_items_nonstackable {
 
 sub inventory_items_stackable {
 	my ($self, $args) = @_;
-	change_to_constate5();
+	changeToInGameState();
 	my $newmsg;
 	$self->decrypt(\$newmsg, substr($msg, 4));
 	my $msg = substr($args->{RAW_MSG}, 0, 4).$newmsg;
@@ -3167,7 +3161,7 @@ sub inventory_items_stackable {
 
 sub item_appeared {
 	my ($self, $args) = @_;
-	change_to_constate5();
+	changeToInGameState();
 
 	my $item = $itemsList->getByID($args->{ID});
 	my $mustAdd;
@@ -3197,7 +3191,7 @@ sub item_appeared {
 
 sub item_exists {
 	my ($self, $args) = @_;
-	change_to_constate5();
+	changeToInGameState();
 
 	my $item = $itemsList->getByID($args->{ID});
 	my $mustAdd;
@@ -3221,7 +3215,7 @@ sub item_exists {
 
 sub item_disappeared {
 	my ($self, $args) = @_;
-	change_to_constate5();
+	changeToInGameState();
 
 	my $item = $itemsList->getByID($args->{ID});
 	if ($item) {
@@ -3294,7 +3288,7 @@ sub item_upgrade {
 
 sub job_equipment_hair_change {
 	my ($self, $args) = @_;
-	change_to_constate5();
+	changeToInGameState();
 
 	my $actor = Actor::get($args->{ID});
 	assert(UNIVERSAL::isa($actor, "Actor")) if DEBUG;
@@ -3427,7 +3421,7 @@ sub login_error {
 
 sub login_error_game_login_server {
 	error T("Error logging into Character Server (invalid character specified)...\n"), 'connection';
-	$conState = 1;
+	$net->setState(1);
 	undef $conState_tries;
 	$timeout_ex{master}{time} = time;
 	$timeout_ex{master}{timeout} = $timeout{'reconnect'}{'timeout'};
@@ -3440,7 +3434,7 @@ sub login_error_game_login_server {
 # map_change also represents teleport events.
 sub map_change {
 	my ($self, $args) = @_;
-	change_to_constate5();
+	changeToInGameState();
 
 	my $oldMap = $field{name};
 
@@ -3490,7 +3484,7 @@ sub map_change {
 
 sub map_changed {
 	my ($self, $args) = @_;
-	$conState = 4;
+	$net->setState(4);
 
 	my $oldMap = $field{name};
 
@@ -3562,13 +3556,13 @@ sub map_changed {
 sub map_loaded {
 	#Note: ServerType0 overrides this function
 	my ($self, $args) = @_;
-	$conState = 5;
+	$net->setState(Network::IN_GAME);
 	undef $conState_tries;
 	$char = $chars[$config{'char'}];
 	$syncMapSync = pack('V1',$args->{syncMapSync});
 
 	if ($net->version == 1) {
-		$conState = 4;
+		$net->setState(4);
 		message T("Waiting for map to load...\n"), "connection";
 		ai_clientSuspend(0, 10);
 		main::initMapChangeVars();
@@ -4221,7 +4215,7 @@ sub private_message {
 	my ($newmsg, $msg); # Type: Bytes
 
 	# Private message
-	change_to_constate5();
+	changeToInGameState();
 
 	# Type: String
 	my $privMsgUser = bytesToString($args->{privMsgUser});
@@ -4284,10 +4278,10 @@ sub received_characters_blockSize {
 }
 
 sub received_characters {
-	return if $conState == 5;
+	return if ($net->getState() == Network::IN_GAME);
 	my ($self, $args) = @_;
 	message T("Received characters from Character Server\n"), "connection";
-	$conState = 3;
+	$net->setState(3);
 	undef $conState_tries;
 	undef @chars;
 
@@ -4346,7 +4340,7 @@ sub received_characters {
 sub received_character_ID_and_Map {
 	my ($self, $args) = @_;
 	message T("Received character ID and Map IP from Character Server\n"), "connection";
-	$conState = 4;
+	$net->setState(4);
 	undef $conState_tries;
 	$charID = $args->{charID};
 
@@ -4378,7 +4372,7 @@ sub received_character_ID_and_Map {
 }
 
 sub received_sync {
-    change_to_constate5();
+    changeToInGameState();
     debug "Received Sync\n", 'parseMsg', 2;
     $timeout{'play'}{'time'} = time;
 }
@@ -4635,7 +4629,7 @@ sub shop_skill {
 sub skill_cast {
 	my ($self, $args) = @_;
 
-	change_to_constate5();
+	changeToInGameState();
 	my $sourceID = $args->{sourceID};
 	my $targetID = $args->{targetID};
 	my $x = $args->{x};
@@ -4785,7 +4779,7 @@ sub skill_use {
 	delete $source->{casting};
 
 	# Perform trigger actions
-	change_to_constate5();
+	changeToInGameState();
 	updateDamageTables($args->{sourceID}, $args->{targetID}, $args->{damage}) if ($args->{damage} != -30000);
 	setSkillUseTimer($args->{skillID}, $args->{targetID}) if ($args->{sourceID} eq $accountID);
 	setPartySkillTimer($args->{skillID}, $args->{targetID}) if
@@ -4912,7 +4906,7 @@ sub skill_used_no_damage {
 	}
 
 	# Perform trigger actions
-	change_to_constate5();
+	changeToInGameState();
 	setSkillUseTimer($args->{skillID}, $args->{targetID}) if ($args->{sourceID} eq $accountID
 		&& $skillsArea{$args->{skillHandle}} != 2); # ignore these skills because they screw up monk comboing
 	setPartySkillTimer($args->{skillID}, $args->{targetID}) if
@@ -4979,7 +4973,7 @@ sub skills_list {
 	my ($self, $args) = @_;
 
 	# Character skill list
-	change_to_constate5();
+	changeToInGameState();
 	my $newmsg;
 	my $msg = $args->{RAW_MSG};
 	my $msg_size = $args->{RAW_MSG_SIZE};
@@ -5123,7 +5117,7 @@ sub stats_info {
 
 sub stat_info {
 	my ($self,$args) = @_;
-	change_to_constate5();
+	changeToInGameState();
 	if ($args->{type} == 0) {
 		$char->{walk_speed} = $args->{val} / 1000;
 		debug "Walk speed: $args->{val}\n", "parseMsg", 2;
@@ -5501,7 +5495,7 @@ sub storage_password_result {
 
 sub switch_character {
 	# 00B3 - user is switching characters in XKore
-	$conState = 2;
+	$net->setState(2);
 	$net->serverDisconnect();
 }
 
@@ -5559,7 +5553,7 @@ sub top10_taekwon_rank {
 sub unequip_item {
 	my ($self, $args) = @_;
 
-	change_to_constate5();
+	changeToInGameState();
 	my $invIndex = findIndex($char->{inventory}, "index", $args->{index});
 	delete $char->{inventory}[$invIndex]{equipped} if ($char->{inventory}[$invIndex]);
 
@@ -5600,7 +5594,7 @@ sub unit_levelup {
 sub use_item {
 	my ($self, $args) = @_;
 	
-	change_to_constate5();
+	changeToInGameState();
 	my $invIndex = findIndex($char->{inventory}, "index", $args->{index});
 	if (defined $invIndex) {
 		$char->{inventory}[$invIndex]{amount} -= $args->{amount};

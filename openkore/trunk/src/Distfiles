@@ -24,6 +24,4 @@ Task.pm
 TaskManager.pm
 Translation.pm
 Utils.pm
-XKore.pm
-XKore2.pm
 XSTools.pm

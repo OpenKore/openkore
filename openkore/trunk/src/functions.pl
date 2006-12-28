@@ -247,7 +247,7 @@ sub mainLoop {
 	Benchmark::begin("mainLoop_part2") if DEBUG;
 
 	# Process AI
-	if ($conState == 5 && timeOut($timeout{ai}) && $net->serverAlive()) {
+	if ($net->getState() == Network::IN_GAME && timeOut($timeout{ai}) && $net->serverAlive()) {
 		Misc::checkValidity("AI (pre)");
 		Benchmark::begin("ai") if DEBUG;
 		AI::CoreLogic::iterate();
@@ -278,7 +278,7 @@ sub mainLoop {
 	###### Other stuff that's run in the main loop #####
 
 	if ($config{'autoRestart'} && time - $KoreStartTime > $config{'autoRestart'}
-	 && $conState == 5 && !AI::inQueue(qw/attack take items_take/)) {
+	 && $net->getState() == Network::IN_GAME && !AI::inQueue(qw/attack take items_take/)) {
 		message T("\nAuto-restarting!!\n"), "system";
 
 		if ($config{'autoRestartSleep'}) {
@@ -296,14 +296,14 @@ sub mainLoop {
 		AI::Homunculus::clear();
 		undef %ai_v;
 		$net->serverDisconnect;
-		$conState = 1;
+		$net->setState(Network::NOT_CONNECTED);
 		undef $conState_tries;
 		initRandomRestart();
 	}
 
 	# Automatically switch to a different config file
 	# based on certain conditions
-	if ($conState == 5 && timeOut($AI::Timeouts::autoConfChangeTime, 0.5)
+	if ($net->getState() == Network::IN_GAME && timeOut($AI::Timeouts::autoConfChangeTime, 0.5)
 	 && !AI::inQueue(qw/attack take items_take/)) {
 		my $selected;
 		my $i = 0;
@@ -359,7 +359,7 @@ sub mainLoop {
 	processStatisticsReporting() unless ($sys{sendAnonymousStatisticReport} eq "0");
 
 	# Update walk.dat
-	if ($conState == 5 && timeOut($AI::Timeouts::mapdrt, $config{intervalMapDrt})) {
+	if ($net->getState() == Network::IN_GAME && timeOut($AI::Timeouts::mapdrt, $config{intervalMapDrt})) {
 		$AI::Timeouts::mapdrt = time;
 		if ($field{name}) {
 			Misc::checkValidity("walk.dat (pre)");
@@ -395,7 +395,7 @@ sub mainLoop {
 	my $charName = $chars[$config{'char'}]{'name'};
 	my $title;
 	$charName .= ': ' if defined $charName;
-	if ($conState == 5) {
+	if ($net->getState() == Network::IN_GAME) {
 		my ($basePercent, $jobPercent, $weight, $pos);
 
 		$basePercent = sprintf("%.2f", $chars[$config{'char'}]{'exp'} / $chars[$config{'char'}]{'exp_max'} * 100) if $chars[$config{'char'}]{'exp_max'};
@@ -409,7 +409,7 @@ sub mainLoop {
 			$chars[$config{'char'}]{'lv_job'}, $jobPercent.'%',
 			$weight, ${pos}, $Settings::NAME);
 
-	} elsif ($conState == 1) {
+	} elsif ($net->getState() == Network::NOT_CONNECTED) {
 		# Translation Comment: Interface Title
 		$title = TF("%sNot connected - %s", ${charName}, $Settings::NAME);
 	} else {
@@ -491,7 +491,7 @@ sub parseInput {
 	$XKore_dontRedirect = 1;
 
 	# Check if in special state
-	if ($net->version != 1 && $conState == 2 && $waitingForInput) {
+	if ($net->version != 1 && $net->getState() == Network::CONNECTED_TO_MASTER_SERVER && $waitingForInput) {
 		configModify('server', $input, 1);
 		$waitingForInput = 0;
 
@@ -501,7 +501,7 @@ sub parseInput {
 
 	if ($printType) {
 		Log::delHook($hook);
-		if (defined $msg && $conState == 5 && $config{XKore_silent}) {
+		if (defined $msg && $net->getState() == Network::IN_GAME && $config{XKore_silent}) {
 			$msg =~ s/\n*$//s;
 			$msg =~ s/\n/\\n/g;
 			sendMessage($messageSender, "k", $msg);
@@ -523,7 +523,7 @@ sub parseSendMsg {
 	my $msg = shift;
 
 	my $sendMsg = $msg;
-	if (length($msg) >= 4 && $conState >= 4 && length($msg) >= unpack("v1", substr($msg, 0, 2))) {
+	if (length($msg) >= 4 && $net->getState() >= 4 && length($msg) >= unpack("v1", substr($msg, 0, 2))) {
 		Network::Receive->decrypt(\$msg, $msg);
 	}
 	my $switch = uc(unpack("H2", substr($msg, 1, 1))) . uc(unpack("H2", substr($msg, 0, 1)));
@@ -572,7 +572,7 @@ sub parseSendMsg {
 
 	} elsif ($switch eq "007D") {
 		# Map loaded
-		$conState = 5;
+		$net->setState(Network::IN_GAME);
 		AI::clear("clientSuspend");
 		$timeout{'ai'}{'time'} = time;
 		if ($firstLoginMap) {
@@ -772,7 +772,7 @@ sub parseMsg {
 
 	# Determine packet switch
 	my $switch = uc(unpack("H2", substr($msg, 1, 1))) . uc(unpack("H2", substr($msg, 0, 1)));
-	if (length($msg) >= 4 && substr($msg,0,4) ne $accountID && $conState >= 4 && $lastswitch ne $switch
+	if (length($msg) >= 4 && substr($msg,0,4) ne $accountID && $net->getState() >= 4 && $lastswitch ne $switch
 	 && length($msg) >= unpack("v1", substr($msg, 0, 2))) {
 		# The decrypt below casued annoying unparsed errors (at least in serverType  2)
 		if ($config{serverType} != 2) {
@@ -783,9 +783,9 @@ sub parseMsg {
 
 	# The user is running in X-Kore mode and wants to switch character or gameGuard type 2 after 0259 tag 02.
 	# We're now expecting an accountID, unless the server has replicated packet 0259 (server-side bug).
-	if ($conState == 2.5 && (!$config{gameGuard} || ($switch ne '0259' && $config{gameGuard} eq "2"))) {
+	if ($net->getState() == 2.5 && (!$config{gameGuard} || ($switch ne '0259' && $config{gameGuard} eq "2"))) {
 		if (length($msg) >= 4) {
-			$conState = 2;
+			$net->setState(Network::CONNECTED_TO_MASTER_SERVER);
 			$accountID = substr($msg, 0, 4);
 			debug "Selecting character, new accountID: ".unpack("V", $accountID)."\n";
 			$net->clientSend($accountID);
@@ -797,7 +797,7 @@ sub parseMsg {
 
 	$lastswitch = $switch;
 	# Determine packet length using recvpackets.txt.
-	if (substr($msg,0,4) ne $accountID || ($conState != 2 && $conState != 4)) {
+	if (substr($msg,0,4) ne $accountID || ($net->getState() != 2 && $net->getState() != 4)) {
 		if ($rpackets{$switch} eq "-" || $switch eq "0070") {
 			# Complete packet; the size of this packet is equal
 			# to the size of the entire data
@@ -865,11 +865,11 @@ sub parseMsg {
 	}
 
 	$lastPacketTime = time;
-	if ((substr($msg,0,4) eq $accountID && ($conState == 2 || $conState == 4))
+	if ((substr($msg,0,4) eq $accountID && ($net->getState() == 2 || $net->getState() == 4))
 	 || ($net->version == 1 && !$accountID && length($msg) == 4)) {
 		$accountID = substr($msg, 0, 4);
 		$AI = 2 if (!$AI_forcedOff);
-		if ($config{'encrypt'} && $conState == 4) {
+		if ($config{'encrypt'} && $net->getState() == 4) {
 			my $encryptKey1 = unpack("V1", substr($msg, 6, 4));
 			my $encryptKey2 = unpack("V1", substr($msg, 10, 4));
 			my ($imult, $imult2);

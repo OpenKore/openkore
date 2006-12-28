@@ -34,6 +34,7 @@ use Plugins;
 use FileParsers;
 use Settings;
 use Utils;
+use Network;
 use Network::Send ();
 use AI;
 use Actor;
@@ -1579,7 +1580,7 @@ sub createCharacter {
 		($str,$agi,$vit,$int,$dex,$luk) = (5,5,5,5,5,5);
 	}
 
-	if ($conState != 3) {
+	if ($net->getState() != 3) {
 		$interface->errorDialog(T("We're not currently connected to the character login server."), 0);
 		return 0;
 	} elsif ($slot !~ /^\d+$/) {
@@ -2220,7 +2221,7 @@ sub quit {
 sub relog {
 	my $timeout = (shift || 5);
 	my $silent = shift;
-	$conState = 1;
+	$net->setState(1);
 	undef $conState_tries;
 	$timeout_ex{'master'}{'time'} = time;
 	$timeout_ex{'master'}{'timeout'} = $timeout;
@@ -3706,7 +3707,7 @@ sub portalExists2 {
 sub redirectXKoreMessages {
 	my ($type, $domain, $level, $globalVerbosity, $message, $user_data) = @_;
 
-	return if ($config{'XKore_silent'} || $type eq "debug" || $level > 0 || $conState != 5 || $XKore_dontRedirect);
+	return if ($config{'XKore_silent'} || $type eq "debug" || $level > 0 || $net->getState() != Network::IN_GAME || $XKore_dontRedirect);
 	return if ($domain =~ /^(connection|startup|pm|publicchat|guildchat|guildnotice|selfchat|emotion|drop|inventory|deal|storage|input)$/);
 	return if ($domain =~ /^(attack|skill|list|info|partychat|npc|route)/);
 

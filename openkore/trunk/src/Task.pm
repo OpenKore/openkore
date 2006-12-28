@@ -316,7 +316,7 @@ sub setStopped {
 # Set the currently active mutexes. This will trigger an onMutexesChanged event.
 sub setMutexes {
 	my $self = shift;
-	$self->{T_mutexes} = [@_];
+	$self->{T_mutexes} = \@_;
 	$self->{T_onMutexesChanged}->call($self);
 }
 
