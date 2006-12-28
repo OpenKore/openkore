@@ -49,7 +49,7 @@ use Network;
 #
 # Create a new Task::Wait object. The following options are allowed:
 # `l`
-# - All options allowed for Task::WithSubtask->new(), except autostop.
+# - All options allowed for Task::WithSubtask->new(), except autostop and autofail.
 # - seconds - The number of seconds to wait before marking this task as done or running a subtask.
 # - inGame - Whether this task should only do things when we're logged into the game.
 #            If not specified, 0 is assumed.
@@ -62,7 +62,7 @@ use Network;
 sub new {
 	my $class = shift;
 	my %args = @_;
-	my $self = $class->SUPER::new(@_, autostop => 1);
+	my $self = $class->SUPER::new(@_, autostop => 1, autofail => 1);
 
 	$self->{wait}{timeout} = $args{seconds};
 	$self->{inGame} = defined($args{inGame}) ? $args{inGame} : 1;
