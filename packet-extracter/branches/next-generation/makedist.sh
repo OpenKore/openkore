@@ -2,7 +2,7 @@
 # This script creates a source distribution.
 
 PACKAGE=openkore-packet-extractor
-VERSION=1.0.0
+VERSION=1.1.0
 
 DIRS=(.
 	objdump

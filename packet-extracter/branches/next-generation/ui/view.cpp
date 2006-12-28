@@ -143,7 +143,7 @@ View::onCancelClick(wxCommandEvent &event) {
 void
 View::onAboutClick(wxCommandEvent &event) {
 	wxMessageBox(wxS("OpenKore Packet Length Extractor\n"
-		     "Version 1.0.0\n"
+		     "Version 1.1.0\n"
 		     "http://www.openkore.com/aliases/ple.php\n\n"
 		     "Copyright (c) 2006 - written by VCL\n"
 		     "Licensed under the GNU General Public License.\n"
