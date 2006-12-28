@@ -132,16 +132,6 @@ sub sendAttack {
 			AI::dequeue();
 		}
 
-	} elsif ($self->{serverType} == 13) {
-		error "Your server is not supported because it uses padded packets.\n";
-		if (AI::action() eq "NPC") {
-			error "Failed to talk to monster NPC.\n";
-			AI::dequeue();
-		} elsif (AI::action() eq "attack") {
-			error "Failed to attack target.\n";
-			AI::dequeue();
-		}
-
 	} elsif (($self->{serverType} == 14) || ($self->{serverType} == 15)) { # pRO Thor (12/1/2006): packet 008C
 		error "Your server is not supported because it uses padded packets.\n";
 		if (AI::action() eq "NPC") {
@@ -491,9 +481,6 @@ sub sendDrop {
 	} elsif ($self->{serverType} == 12) {
 		$msg = pack("C2 v1 v1", 0x93, 0x01, $index, $amount);
 
-	} elsif ($self->{serverType} == 13) {
-		$msg = pack("C2 v1 v1", 0x89, 0x00, $index, $amount);
-
 	} elsif ($self->{serverType} == 14) {
 		$msg = pack("C2 v1 v1", 0xA7, 0x00, $index, $amount);
 
@@ -624,9 +611,6 @@ sub sendGetPlayerInfo {
 	} elsif ($self->{serverType} == 12) {
 		$msg = pack("C*", 0x8C, 0x00) . pack("x2") . $ID;
 	
-	} elsif ($self->{serverType} == 13) {
-		$msg = pack("C*", 0xF5, 0x00) . $ID . pack("C*", 0x00, 0x00, 0x00);
-
 	} elsif ($self->{serverType} == 14) {
 		$msg = pack("C*", 0xA2, 0x00) . pack("x1") . $ID;
 
@@ -922,11 +906,6 @@ sub sendItemUse {
 	} elsif ($self->{serverType} == 12) {
 		$msg = pack("C2 v1", 0xF5, 0x00, $ID) . $targetID;
 	
-	} elsif ($self->{serverType} == 13) {
-		$msg = pack("C*", 0x9F, 0x00) .
-			$targetID .
-			pack("v",$ID);
-
 	} elsif ($self->{serverType} == 14) {
 		$msg = pack("C2 v1", 0xF5, 0x00, $ID) . $targetID;
 
@@ -983,9 +962,6 @@ sub sendLook {
 
 	} elsif ($self->{serverType} == 12) {
 		$msg = pack("C*", 0x16, 0x01, $head, 0x00, $body);
-
-	} elsif ($self->{serverType} == 13) { 
-		$msg = pack("C*", 0x90, 0x01, $body, $head, 0x00);
 
 	} elsif ($self->{serverType} == 14) {
 		$msg = pack("C4 x1", 0x93, 0x01, $body, $head);
@@ -1131,17 +1107,6 @@ sub sendMapLogin {
 			pack("V", getTickCount()) .
 			pack ("x3") .
 			pack("C*", $sex);
-
-	} elsif ($self->{serverType} == 13) {
-		$msg = pack("C*", 0x9B, 0, 0) .
-			$accountID .
-			$charID .
-			$sessionID .
-			pack("x4") .
-			pack("V", getTickCount()) .
-			pack("x2") .
-			pack("C*",$sex) .
-			pack("x3");
 
 	} elsif ($self->{serverType} == 14) { #pRO Thor (12/1/2006): 34 bytes
 		$msg = pack("C*", 0x9F, 0x00) .
@@ -1346,12 +1311,6 @@ sub sendMove {
 
 	} elsif ($self->{serverType} == 12) {
 		$msg = pack("C2 x9", 0xA2, 0x00) . getCoordString($x, $y, 1);
-
-	} elsif ($self->{serverType} == 13) {
-		$msg = pack("C*", 0x13, 0x01) .
-		pack("x5") .
-		getCoordString($x, $y, 1) .
-		pack("x3");
 
 	} elsif ($self->{serverType} == 14) {
 		$msg = pack("C2 x3", 0x94, 0x00) . getCoordString($x, $y, 1);
@@ -1695,14 +1654,6 @@ sub sendSit {
 		}
 		return;
 
-	} elsif ($self->{serverType} == 13) {
-		error "Your server is not supported because it uses padded packets.\n";
-		if (AI::action() eq "sitting") {
-			error "Failed to sit.\n";
-			AI::dequeue();
-		}
-		return;
-		
 	} elsif (($self->{serverType} == 14) || ($self->{serverType} == 15)) {
 		error "Your server is not supported because it uses padded packets.\n";
 		if (AI::action() eq "sitting") {
@@ -1820,17 +1771,6 @@ sub sendSkillUse {
 		}
 		return;
 
-	} elsif ($self->{serverType} == 13) {
-		error "Your server is not supported because it uses padded packets.\n";
-		if (AI::action() eq 'teleport') {
-			error "Failed to use teleport skill.\n";
-			AI::dequeue();
-		} elsif (AI::action() ne "skill_use") {
-			error "Failed to use skill.\n";
-			AI::dequeue();
-		}
-		return;
-		
 	} elsif (($self->{serverType} == 14) || ($self->{serverType} == 15)) { #pRO Thor
 		error "Your server is not supported because it uses padded packets.\n";
 		if (AI::action() eq 'teleport') {
@@ -1938,14 +1878,6 @@ sub sendSkillUseLoc {
 	} elsif ($self->{serverType} == 12) {
 		$msg = pack("v1 v1 x8 v1 v1 v1", 0xF3, $lv, $ID, $x, $y);
 
-	} elsif ($self->{serverType} == 13) {
-		$msg = pack("C*", 0xA7, 0x00) .
-			pack("v", $lv) .
-			pack("v*", $ID) .
-			pack("v*", $x) .
-			pack("x4") .
-			pack("v*", $y);
-
 	} elsif ($self->{serverType} == 14) {
 		$msg = pack("v1 v1 x5 v1 v1 v1", 0xF7, $lv, $ID, $x, $y);
 
@@ -2020,12 +1952,6 @@ sub sendStorageAdd {
 	} elsif ($self->{serverType} == 12) {
 		$msg = pack("C2 x1 V1 v1", 0x13, 0x01, $amount, $index);
 
-	} elsif ($self->{serverType} == 13) {
-		$msg = pack("C*", 0x7E, 0x00) .
-			pack("v", $index) .
-			pack("C*", 0x00) .
-			pack("V", $amount);
-
 	} elsif ($self->{serverType} == 14) {
 		$msg = pack("C2 x2 v1 V1", 0x13, 0x01, $index, $amount);
 
@@ -2054,8 +1980,6 @@ sub sendStorageClose {
 		$msg = pack("C*", 0x93, 0x01);
 	} elsif ($self->{serverType} == 12) {
 		$msg = pack("C*", 0x72, 0x00);
-	} elsif ($self->{serverType} == 13) {
-		$msg = pack("C*", 0x93, 0x01);
 	} elsif ($self->{serverType} == 14) {
 		$msg = pack("C*", 0x16, 0x01);
 	} else {
@@ -2126,12 +2050,6 @@ sub sendStorageGet {
 
 	} elsif ($self->{serverType} == 12) {
 		$msg = pack("C2 v1 V1 C1", 0xF7, 0x00, $index, $amount, 0x00);
-
-	} elsif ($self->{serverType} == 13) {
-		$msg = pack("C*", 0xF7, 0x00) .
-			pack("v", $index) .
-			pack("x12") .
-			pack("V*", $amount);
 
 	} elsif ($self->{serverType} == 14) {
 		$msg = pack("C2 V1 v1 x2", 0x9B, 0x00, $amount, $index);
@@ -2234,14 +2152,6 @@ sub sendStand {
 		}
 		return;
 
-	} elsif ($self->{serverType} == 13) {
-		error "Your server is not supported because it uses padded packets.\n";
-		if (AI::action() eq "standing") {
-			error "Failed to stand.\n";
-			AI::dequeue();
-		}
-		return;
-		
 	} elsif (($self->{serverType} == 14) || ($self->{serverType} == 15)) {
 		error "Your server is not supported because it uses padded packets.\n";
 		if (AI::action() eq "standing") {
@@ -2336,12 +2246,6 @@ sub sendSync {
 	} elsif ($self->{serverType} == 12) { #pRO Thor
 		$msg = pack("C2 x9", 0xA7, 0x00) . $syncSync . pack("x5");
 
-	} elsif ($self->{serverType} == 13) { # rRO
-		$msg = pack("C*", 0xF3, 0x00) .
-			pack("x1") .
-			$syncSync .
-			pack("x4");
-
 	} elsif ($self->{serverType} == 14) { #pRO Thor (12/1/2006)
 		$msg = pack("C2 x3", 0x90, 0x01) . $syncSync . pack("x5");
 
@@ -2395,9 +2299,6 @@ sub sendTake {
 
 	} elsif ($self->{serverType} == 12) {
 		$msg = pack("C2", 0x9F, 0x00) . $itemID;
-
-	} elsif ($self->{serverType} == 13) {
-		$msg = pack("C*", 0x16, 0x01) . $itemID;
 
 	} elsif ($self->{serverType} == 14) {
 		$msg = pack("C2", 0x72, 0x00) . $itemID;
