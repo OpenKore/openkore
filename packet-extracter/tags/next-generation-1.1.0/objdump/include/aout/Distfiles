@@ -1,0 +1,5 @@
+aout64.h
+ar.h
+ranlib.h
+stab_gnu.h
+stab.def

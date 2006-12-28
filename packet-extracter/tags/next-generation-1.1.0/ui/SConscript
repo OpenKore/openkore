@@ -1,0 +1,24 @@
+import os
+
+Import('*')
+
+sources = Split('''
+	linehandler.cpp
+	lineparser.cpp
+	main.cpp
+	mainframe.cpp
+	packet-length-analyzer.cpp
+	utils.cpp
+	view.cpp
+	worker-thread.cpp
+''')
+
+e = wxenv.Copy()
+e.Append(CPPPATH = ['..'])
+e.Append(LIBPATH = ['../wz'])
+e.Prepend(LIBS = ['wz'])
+if win32:
+	target = e.Command('ui.o', 'ui.rc',
+		'windres -i $SOURCE -o $TARGET --include-dir=ui')
+	sources += [target]
+e.Program('openkore-packet-length-extractor', sources)
