@@ -27,6 +27,7 @@ use base qw(Task::WithSubtask);
 use Translation qw(T TF);
 use Log qw(message debug warning error);
 use Network;
+use Plugins;
 use Misc qw(useTeleport);
 use Utils qw(timeOut distance);
 use Utils::PathFinding;
@@ -42,7 +43,7 @@ use constant TOO_MUCH_TIME => 1;
 #
 # Create a new Task::Route object. The following options are allowed:
 # `l
-# - All options allowed by Task::WithSubtask->new(), except 'mutexes' and 'autostop'.
+# - All options allowed by Task::WithSubtask->new(), except 'mutexes', 'autostop' and 'autofail'.
 # - map (required) - The map you want to go to, for example "prontera".
 # - x, y - The coordinate on the destination map you want to walk to. On some maps this is
 #          important because they're split by a river. Depending on which side of the river
@@ -65,7 +66,7 @@ use constant TOO_MUCH_TIME => 1;
 sub new {
 	my $class = shift;
 	my %args = @_;
-	my $self = $class->SUPER::new(@_, autostop => 1, mutexes => ['movement']);
+	my $self = $class->SUPER::new(@_, autostop => 1, autofail => 0, mutexes => ['movement']);
 
 	if (!$args{map}) {
 		ArgumentException->throw(error => "Invalid arguments.");
@@ -93,6 +94,10 @@ sub new {
 	return $self;
 }
 
+sub DESTROY {
+	my ($self) = @_;
+	Plugins::delHook($self->{mapChangedHook});
+}
 
 sub activate {
 	my ($self) = @_;
@@ -329,7 +334,7 @@ sub initMapCalculator {
 
 sub subtaskDone {
 	my ($self, $task) = @_;
-	if ($task->isa('Task::CalcMapRoute')) {
+	if ($task->isa('Task::CalcMapRoute') && !$task->getError()) {
 		$self->{mapSolution} = $task->getRoute();
 	}
 }

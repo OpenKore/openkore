@@ -46,7 +46,7 @@ use constant CANNOT_CALCULATE_ROUTE => 2;
 #
 # Create a new Task::Route object. The following options are allowed:
 # `l
-# - All options allowed by Task::WithSubtask->new(), except 'mutexes' and 'autostop'.
+# - All options allowed by Task::WithSubtask->new(), except 'mutexes', 'autostop' and 'autofail'.
 # - x (required) - The X-coordinate that you want to move to.
 # - y (required) - The Y-coordinate that you want to move to.
 # - maxDistance - The maximum distance (in blocks) that the route may be. If
@@ -67,7 +67,7 @@ use constant CANNOT_CALCULATE_ROUTE => 2;
 sub new {
 	my $class = shift;
 	my %args = @_;
-	my $self = $class->SUPER::new(@_, autostop => 1, mutexes => ['movement']);
+	my $self = $class->SUPER::new(@_, autostop => 1, autofail => 0, mutexes => ['movement']);
 
 	if ($args{x} == 0 || $args{y} == 0) {
 		ArgumentException->throw(error => "Invalid arguments.");
@@ -95,6 +95,11 @@ sub new {
 	$self->{mapChangedHook} = Plugins::addHook('Network::Receive::map_changed', \&mapChanged, $weak_self);
 
 	return $self;
+}
+
+sub DESTROY {
+	my ($self) = @_;
+	Plugins::delHook($self->{mapChangedHook});
 }
 
 sub activate {

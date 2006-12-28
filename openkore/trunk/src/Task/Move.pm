@@ -49,7 +49,7 @@ use constant TOO_LONG => 1;
 #
 # Create a new Task::Move object. The following options are allowed:
 # `l
-# - All options allowed by Task->new(), except 'movement' and 'autostop'.
+# - All options allowed by Task->new(), except 'movement', 'autostop' and 'autofail'.
 # - <tt>x</tt> (required) - The X-coordinate that you want to move to.
 # - <tt>y</tt> (required) - The Y-coordinate that you want to move to.
 # - <tt>retryTime</tt> - After a 'move' message has been sent, if the character does not
@@ -63,7 +63,7 @@ use constant TOO_LONG => 1;
 sub new {
 	my $class = shift;
 	my %args = @_;
-	my $self = $class->SUPER::new(@_, autostop => 1, mutexes => ['movement']);
+	my $self = $class->SUPER::new(@_, autostop => 1, autofail => 1, mutexes => ['movement']);
 
 	if ($args{x} == 0 || $args{y} == 0) {
 		ArgumentException->throw(error => "Invalid arguments.");
@@ -148,10 +148,7 @@ sub iterate {
 # Overrided method.
 sub subtaskDone {
 	my ($self, $task) = @_;
-	my $error = $task->getError();
-	if ($error) {
-		$self->setError($error->{code}, $error->{message});
-	} else {
+	if (!$task->getError()) {
 		$self->{start_time} = time;
 		$self->{giveup}{time} = time;
 	}
