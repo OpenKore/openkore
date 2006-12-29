@@ -1,0 +1,17 @@
+// This code if for reading data:
+
+// Include theese in your source:
+#include <io.h>
+#include <fcntl.h>
+dword Data[16][16384][2];
+
+
+// Do this to read the data for data file:
+int hndl = open("call_16_test.dat", O_BINARY | O_RDONLY);
+read(hndl, Data, 16*16384*2);
+close(hndl);
+
+
+// Do this to campare returned data (N=0 to 16383): 
+Data[F][N][1] == funcF(Data[F][N][0])
+
