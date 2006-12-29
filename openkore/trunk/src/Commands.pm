@@ -189,22 +189,7 @@ sub initHandlers {
 	northeast          => \&cmdManualMove,
 	northwest          => \&cmdManualMove,
 	southeast          => \&cmdManualMove,
-	southwest          => \&cmdManualMove,
-	test => sub {
-		my (undef, $i) = @_;
-		use Task::FollowActor;
-		my $actorList = $monstersList;
-		my $actor = $actorList->get($i);
-		if ($actor) {
-			$taskManager->add(new Task::FollowActor(
-				actor => $actor,
-				actorList => $actorList,
-				maxDistance => 5
-			));
-		} else {
-			error "No such monster.\n";
-		}
-	}
+	southwest          => \&cmdManualMove
 	);
 }
 
