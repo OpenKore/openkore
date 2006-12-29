@@ -242,10 +242,7 @@ sub checkValidity {
 	my $activeMutexes = $self->{activeMutexes};
 	foreach my $mutex (keys %{$activeMutexes}) {
 		my $owner = $activeMutexes->{$mutex};
-		if (!$self->{activeTasks}->has($owner)) {
-			printActiveMutexes($self->{activeMutexes});
-			die;
-		}
+		die unless ($self->{activeTasks}->has($owner));
 	}
 }
 
@@ -443,13 +440,13 @@ sub deactivateTask {
 # 	print "$name = " . join(',', @names) . "\n";
 # }
 # 
-sub printActiveMutexes {
-	my ($activeMutexes) = @_;
-	my @entries;
-	foreach my $mutex (keys %{$activeMutexes}) {
-		push @entries, "$mutex (owned by " . $activeMutexes->{$mutex}->getName . ")";
-	}
-	print "Active mutexes: " . join(', ', @entries) . "\n";
-}
+# sub printActiveMutexes {
+# 	my ($activeMutexes) = @_;
+# 	my @entries;
+# 	foreach my $mutex (keys %{$activeMutexes}) {
+# 		push @entries, "$mutex (owned by " . $activeMutexes->{$mutex}->getName . ")";
+# 	}
+# 	print "Active mutexes: " . join(', ', @entries) . "\n";
+# }
 
 1;

@@ -152,7 +152,11 @@ sub processFollow {
 
 sub networkStateChanged {
 	my (undef, undef, $self) = @_;
-	$self->{wait_after_login}{time} = time;
+	if ($net->getState() == Network::IN_GAME) {
+		# After logging into the game, wait some time for
+		# actors to appear on screen.
+		$self->{wait_after_login}{time} = time;
+	}
 }
 
 ##
