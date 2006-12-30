@@ -3797,7 +3797,10 @@ sub npc_talk_close {
 	# when it receives a 'npc_talk_closed' packet from the server'.
 	# But on pRO Thor (with Kapra password) this is required in order to
 	# open the storage.
-	if ($config{serverType} != 0 && !$talk{canceled}) {
+	#
+	# UPDATE: not sending 'talk cancel' breaks autostorage on iRO.
+	# This needs more investigation.
+	if (!$talk{canceled}) {
 		$messageSender->sendTalkCancel($ID);
 	}
 

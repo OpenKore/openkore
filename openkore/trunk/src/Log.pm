@@ -197,7 +197,7 @@ sub processMsg {
 		$tmpdate[5] += 1900;
 		for (my $i = 0; $i < @tmpdate; $i++) {
 			if ($tmpdate[$i] < 10) {$tmpdate[$i] = "0".$tmpdate[$i]};
-		};
+		}
 		if (defined (my $format = $config{showTimeDomainsFormat})) {
 			$format =~ s/H/$tmpdate[2]/g;
 			$format =~ s/M/$tmpdate[1]/g;
@@ -208,7 +208,7 @@ sub processMsg {
 			$message = "$format $message";
 		} else {
 			$message = "[$tmpdate[2]:$tmpdate[1]:$tmpdate[0]] $message";
-		};
+		}
 	};
 
 	# Print to console if the current verbosity is high enough
