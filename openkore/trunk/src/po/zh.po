@@ -1,9 +1,9 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: OpenKore 1.9.3\n"
+"Project-Id-Version: OpenKore 1.9.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-12-27 08:58+0700\n"
-"PO-Revision-Date: 2006-12-13 19:00+0800\n"
+"POT-Creation-Date: 2006-11-10 20:50+0700\n"
+"PO-Revision-Date: 2006-12-31 18:10+0800\n"
 "Last-Translator: lkm <lj88kc@yahoo.com.cn>\n"
 "Language-Team: Lkm <lj88kc@yhaoo.com.cn>\n"
 "MIME-Version: 1.0\n"
@@ -97,20 +97,21 @@ msgstr "改变攻击 useWeapon 到默认的 : %s\n"
 msgid "Calculating route to: %s(%s): %d, %d\n"
 msgstr "计算路径: %s(%s): %d, %d\n"
 
-#: ../ChatQueue.pm:283 ../Commands.pm:2660
+#: ../ChatQueue.pm:283
+#: ../Commands.pm:2660
 #, perl-format
 msgid "Calculating route to: %s(%s)\n"
 msgstr "计算路径: %s(%s)\n"
 
-#: ../ChatQueue.pm:290 ../Commands.pm:2676
+#: ../ChatQueue.pm:290
+#: ../Commands.pm:2676
 #, perl-format
 msgid "Map %s does not exist\n"
 msgstr "地图 %s 不存在\n"
 
 #: ../Commands.pm:245
 #, perl-format
-msgid ""
-"Unknown command '%s'. Please read the documentation for a list of commands.\n"
+msgid "Unknown command '%s'. Please read the documentation for a list of commands.\n"
 msgstr "未知的命令 '%s'. 请仔细阅读命令文档.\n"
 
 #: ../Commands.pm:406
@@ -129,7 +130,8 @@ msgstr "------ AI 列表 --------------------\n"
 msgid "AI is already set to auto mode\n"
 msgstr "AI 已经被设定为自动模式\n"
 
-#: ../Commands.pm:429 ../Commands.pm:463
+#: ../Commands.pm:429
+#: ../Commands.pm:463
 msgid "AI set to auto mode\n"
 msgstr "AI 设置为自动模式\n"
 
@@ -137,11 +139,13 @@ msgstr "AI 设置为自动模式\n"
 msgid "AI is already set to manual mode\n"
 msgstr "AI 已经被设置为人工模式\n"
 
-#: ../Commands.pm:438 ../Commands.pm:459
+#: ../Commands.pm:438
+#: ../Commands.pm:459
 msgid "AI set to manual mode\n"
 msgstr "AI 设置为人工模式\n"
 
-#: ../Commands.pm:445 ../Commands.pm:455
+#: ../Commands.pm:445
+#: ../Commands.pm:455
 msgid "AI turned off\n"
 msgstr "AI 关闭\n"
 
@@ -157,34 +161,38 @@ msgstr ""
 "查询错误在 'ai' (AI 命令)\n"
 "用法: ai [ clear | print | ai_v | auto | manual | off ]\n"
 
-#: ../Commands.pm:476 ../Commands.pm:1777
+#: ../Commands.pm:476
+#: ../Commands.pm:1777
 #, perl-format
 msgid "ai_seq (off) = %s\n"
 msgstr "ai_seq (关闭) = %s\n"
 
-#: ../Commands.pm:478 ../Commands.pm:1779
+#: ../Commands.pm:478
+#: ../Commands.pm:1779
 #, perl-format
 msgid "ai_seq (manual) = %s\n"
 msgstr "ai_seq (人工) = %s\n"
 
-#: ../Commands.pm:480 ../Commands.pm:1781
+#: ../Commands.pm:480
+#: ../Commands.pm:1781
 #, perl-format
 msgid "ai_seq (auto) = %s\n"
 msgstr "ai_seq (自动) = %s\n"
 
-#: ../Commands.pm:482 ../Commands.pm:1783
+#: ../Commands.pm:482
+#: ../Commands.pm:1783
 msgid "solution\n"
 msgstr "解决\n"
 
 #: ../Commands.pm:483
-#, fuzzy, perl-format
+#, perl-format
 msgid "Active tasks: %s\n"
-msgstr "攻击: %s\n"
+msgstr "正常的工作: %s\n"
 
 #: ../Commands.pm:484
 #, perl-format
 msgid "Inactive tasks: %s\n"
-msgstr ""
+msgstr "错误的工作: %s\n"
 
 #: ../Commands.pm:495
 msgid "----------------- Item To Craft -----------------\n"
@@ -206,7 +214,9 @@ msgstr ""
 "功能错误 'arrowcraft' (创造箭)\n"
 "你没有这个技能.\n"
 
-#: ../Commands.pm:519 ../Commands.pm:705 ../Commands.pm:708
+#: ../Commands.pm:519
+#: ../Commands.pm:705
+#: ../Commands.pm:708
 #, perl-format
 msgid ""
 "Error in function 'arrowcraft forceuse #' (Create Arrows)\n"
@@ -296,7 +306,8 @@ msgstr ""
 "功能错误 'card mergecancel' (取消卡片组合)\n"
 "你没有开始组合卡片.\n"
 
-#: ../Commands.pm:643 ../Network/Receive.pm:1465
+#: ../Commands.pm:643
+#: ../Network/Receive.pm:1465
 msgid "-----Card Merge Candidates-----\n"
 msgstr "-----可用的卡片-----\n"
 
@@ -351,8 +362,7 @@ msgstr ""
 
 #: ../Commands.pm:688
 msgid ""
-"Syntax Error in function 'card use' (Request list of items for merging with "
-"card)\n"
+"Syntax Error in function 'card use' (Request list of items for merging with card)\n"
 "Usage: card use <item number>\n"
 "<item number> - Card inventory number. Type 'i' to get number.\n"
 msgstr ""
@@ -591,10 +601,8 @@ msgstr ""
 
 #: ../Commands.pm:960
 msgid ""
-"------------------------------- Chat Room List "
-"--------------------------------\n"
-"#   Title                                  Owner                Users   "
-"Type\n"
+"------------------------------- Chat Room List --------------------------------\n"
+"#   Title                                  Owner                Users   Type\n"
 msgstr ""
 "------------------------------- 聊天室列表 --------------------------------\n"
 "#   标题                                  拥有者                玩家   类型\n"
@@ -636,7 +644,8 @@ msgstr ""
 msgid "------ Chat History --------------------\n"
 msgstr "------ 对话历史 --------------------\n"
 
-#: ../Commands.pm:1030 ../Commands.pm:2368
+#: ../Commands.pm:1030
+#: ../Commands.pm:2368
 #, perl-format
 msgid "Unable to open %s\n"
 msgstr "不能打开 %s\n"
@@ -864,7 +873,8 @@ msgstr ""
 msgid "Slots:\n"
 msgstr "Slots:\n"
 
-#: ../Commands.pm:1378 ../Commands.pm:4092
+#: ../Commands.pm:1378
+#: ../Commands.pm:4092
 #, perl-format
 msgid "You don't have %s.\n"
 msgstr "你没有 %s.\n"
@@ -998,7 +1008,8 @@ msgstr "%s 现在是你的好友了\n"
 msgid "Requesting %s to be your friend\n"
 msgstr "%s 希望加你为好友\n"
 
-#: ../Commands.pm:1602 ../Commands.pm:1629
+#: ../Commands.pm:1602
+#: ../Commands.pm:1629
 #, perl-format
 msgid "Friend #%s does not exist\n"
 msgstr "朋友 #%s 不存在\n"
@@ -1081,8 +1092,7 @@ msgstr ""
 "--------------------------------------------------------"
 
 #: ../Commands.pm:1691
-msgid ""
-"Your homunculus is not yet hungry. Feeding it now will lower intimacy.\n"
+msgid "Your homunculus is not yet hungry. Feeding it now will lower intimacy.\n"
 msgstr "你的生命体不饥饿. 喂食的话减低亲密度.\n"
 
 #: ../Commands.pm:1694
@@ -1102,7 +1112,8 @@ msgstr ""
 msgid "Homunculus AI sequences cleared\n"
 msgstr "生命体 AI 列表被清除\n"
 
-#: ../Commands.pm:1717 ../Commands.pm:1724
+#: ../Commands.pm:1717
+#: ../Commands.pm:1724
 msgid "------ Homunculus AI Sequence ----------\n"
 msgstr "------生命体  AI 序列 ---------------------\n"
 
@@ -1110,7 +1121,8 @@ msgstr "------生命体  AI 序列 ---------------------\n"
 msgid "Homunculus AI is already set to auto mode\n"
 msgstr "生命体 AI 已经被设定为自动模式\n"
 
-#: ../Commands.pm:1733 ../Commands.pm:1767
+#: ../Commands.pm:1733
+#: ../Commands.pm:1767
 msgid "Homunculus AI set to auto mode\n"
 msgstr "生命体 AI 设置为自动模式\n"
 
@@ -1118,11 +1130,13 @@ msgstr "生命体 AI 设置为自动模式\n"
 msgid "Homunculus AI is already set to manual mode\n"
 msgstr "生命体 AI 已经被设置为人工模式\n"
 
-#: ../Commands.pm:1742 ../Commands.pm:1763
+#: ../Commands.pm:1742
+#: ../Commands.pm:1763
 msgid "Homunculus AI set to manual mode\n"
 msgstr "生命体 AI 设置为人工模式\n"
 
-#: ../Commands.pm:1749 ../Commands.pm:1759
+#: ../Commands.pm:1749
+#: ../Commands.pm:1759
 msgid "Homunculus AI turned off\n"
 msgstr "生命体 AI 关闭\n"
 
@@ -1146,7 +1160,8 @@ msgstr ""
 "----------homun 技能列表-----------\n"
 "   # 技能名                     Lv      SP\n"
 
-#: ../Commands.pm:1796 ../Commands.pm:3406
+#: ../Commands.pm:1796
+#: ../Commands.pm:3406
 #, perl-format
 msgid ""
 "\n"
@@ -1182,11 +1197,14 @@ msgstr ""
 "功能错误 'homun skills desc' (技能说明)\n"
 "技能 %s 不存在.\n"
 
-#: ../Commands.pm:1818 ../Commands.pm:3428 ../Misc.pm:2179
+#: ../Commands.pm:1818
+#: ../Commands.pm:3428
+#: ../Misc.pm:2179
 msgid "Error: No description available.\n"
 msgstr "错误: 没有说明内容.\n"
 
-#: ../Commands.pm:1819 ../Commands.pm:3429
+#: ../Commands.pm:1819
+#: ../Commands.pm:3429
 #, perl-format
 msgid ""
 "===============Skill Description===============\n"
@@ -1206,10 +1224,8 @@ msgstr ""
 "用法: homun skills [<add | desc>] [<skill #>]\n"
 
 #: ../Commands.pm:1831
-msgid ""
-"Usage: homun < feed | s | status | move | standby | ai | aiv | skills>\n"
-msgstr ""
-"用法: homun < feed | s | status | move | standby | ai | aiv | skills>\n"
+msgid "Usage: homun < feed | s | status | move | standby | ai | aiv | skills>\n"
+msgstr "用法: homun < feed | s | status | move | standby | ai | aiv | skills>\n"
 
 #: ../Commands.pm:2044
 msgid ""
@@ -1247,7 +1263,9 @@ msgstr ""
 msgid "You are not in a guild.\n"
 msgstr "你没有公会.\n"
 
-#: ../Commands.pm:2075 ../Commands.pm:2088 ../Commands.pm:2530
+#: ../Commands.pm:2075
+#: ../Commands.pm:2088
+#: ../Commands.pm:2530
 #, perl-format
 msgid "Player %s does not exist.\n"
 msgstr "玩家 %s 不存在.\n"
@@ -1258,8 +1276,7 @@ msgid "Sent guild join request to %s\n"
 msgstr "邀请加入工会 '%s'\n"
 
 #: ../Commands.pm:2083
-msgid ""
-"No guild information available. Type guild to refresh and then try again.\n"
+msgid "No guild information available. Type guild to refresh and then try again.\n"
 msgstr "无法得到公会数据. 请再尝试.\n"
 
 #: ../Commands.pm:2090
@@ -1289,7 +1306,9 @@ msgstr ""
 msgid "Sending guild break: %s\n"
 msgstr "发送 guild break: %s\n"
 
-#: ../Commands.pm:2111 ../Network/Receive.pm:2874 ../Network/Receive.pm:3576
+#: ../Commands.pm:2111
+#: ../Network/Receive.pm:2874
+#: ../Network/Receive.pm:3576
 #: ../Network/Receive/ServerType0.pm:32
 msgid "Requesting guild information...\n"
 msgstr "请求公会数据...\n"
@@ -1325,7 +1344,8 @@ msgstr ""
 msgid "Ally    : %s (%s)\n"
 msgstr "联盟    : %s (%s)\n"
 
-#: ../Commands.pm:2143 ../Commands.pm:2164
+#: ../Commands.pm:2143
+#: ../Commands.pm:2164
 msgid "No guild member information available.\n"
 msgstr "没有公会成员数据.\n"
 
@@ -1349,19 +1369,21 @@ msgstr ""
 #: ../Commands.pm:2168
 msgid ""
 "------------ Guild  Member ------------\n"
-"#  Name                       Job        Lv  Title                    "
-"Online\n"
+"#  Name                       Job        Lv  Title                    Online\n"
 msgstr ""
 "------------ 工会成员 ------------\n"
 "#  名字                       Job        Lv  标题                    在线\n"
 
 #. Translation Comment: Guild member online
 #. Translation Comment: Is the party user on list online?
-#: ../Commands.pm:2181 ../Commands.pm:2743 ../Commands.pm:2750
+#: ../Commands.pm:2181
+#: ../Commands.pm:2743
+#: ../Commands.pm:2750
 msgid "Yes"
 msgstr "是的"
 
-#: ../Commands.pm:2181 ../Commands.pm:2750
+#: ../Commands.pm:2181
+#: ../Commands.pm:2750
 msgid "No"
 msgstr "不是"
 
@@ -1443,7 +1465,9 @@ msgstr "没有携带\n"
 
 #. Translation Comment: Mark to tell item not identified
 #. Translation Comment: Mark to show not identified items
-#: ../Commands.pm:2410 ../Commands.pm:3657 ../Misc.pm:3074
+#: ../Commands.pm:2410
+#: ../Commands.pm:3657
+#: ../Misc.pm:3074
 msgid "Not Identified"
 msgstr "没识别"
 
@@ -1456,8 +1480,10 @@ msgstr "-----------携带-----------\n"
 msgid "-- Equipment (Equipped) --\n"
 msgstr "-- 装备 (已装备) --\n"
 
-#. Translation Comment: Tell if the item is marked to be sold 				
-#: ../Commands.pm:2424 ../Commands.pm:2433 ../Commands.pm:2446
+#. Translation Comment: Tell if the item is marked to be sold
+#: ../Commands.pm:2424
+#: ../Commands.pm:2433
+#: ../Commands.pm:2446
 #: ../Commands.pm:2459
 msgid "Will be sold"
 msgstr "将会被出售"
@@ -1468,12 +1494,14 @@ msgid "-- Equipment (Not Equipped) --\n"
 msgstr "-- 装备 (没装备) --\n"
 
 #. Translation Comment: List of non-usable items
-#: ../Commands.pm:2440 ../Commands.pm:3672
+#: ../Commands.pm:2440
+#: ../Commands.pm:3672
 msgid "-- Non-Usable --\n"
 msgstr "-- 不能使用的 --\n"
 
 #. Translation Comment: List of usable items
-#: ../Commands.pm:2454 ../Commands.pm:3685
+#: ../Commands.pm:2454
+#: ../Commands.pm:3685
 msgid "-- Usable --\n"
 msgstr "-- 能使用的 --\n"
 
@@ -1543,8 +1571,7 @@ msgstr ""
 #: ../Commands.pm:2596
 msgid ""
 "-----------Monster List-----------\n"
-"#   Name                        ID      DmgTo DmgFrom  Distance    "
-"Coordinates\n"
+"#   Name                        ID      DmgTo DmgFrom  Distance    Coordinates\n"
 msgstr ""
 "-----------怪物列表-----------\n"
 "#    名字                          ID 伤害到    受到伤害    距离    坐标\n"
@@ -1554,7 +1581,8 @@ msgstr ""
 msgid "Move into portal number 0 (%s,%s)\n"
 msgstr "移动到入口 0 (%s,%s)\n"
 
-#: ../Commands.pm:2641 ../Commands.pm:2673
+#: ../Commands.pm:2641
+#: ../Commands.pm:2673
 msgid "No portals exist.\n"
 msgstr "没有传送点.\n"
 
@@ -1882,7 +1910,8 @@ msgstr ""
 "语法错误 'plugin load' (读取插件)\n"
 "用法: plugin load <filename|\"all\">\n"
 
-#: ../Commands.pm:3122 ../Commands.pm:3140
+#: ../Commands.pm:3122
+#: ../Commands.pm:3140
 #, perl-format
 msgid "Plugin %s unloaded.\n"
 msgstr "插件 %s 卸载.\n"
@@ -1906,10 +1935,8 @@ msgid ""
 "Command:                                              Description:\n"
 " plugin                                                List loaded plugins\n"
 " plugin load <filename>                                Load a plugin\n"
-" plugin unload <plugin name|plugin number#|\"all\">      Unload a loaded "
-"plugin\n"
-" plugin reload <plugin name|plugin number#|\"all\">      Reload a loaded "
-"plugin\n"
+" plugin unload <plugin name|plugin number#|\"all\">      Unload a loaded plugin\n"
+" plugin reload <plugin name|plugin number#|\"all\">      Reload a loaded plugin\n"
 "-----------------------------------------------------\n"
 msgstr ""
 "--------------- 插件命令语法 ---------------\n"
@@ -2053,12 +2080,10 @@ msgstr "你还没有开店.\n"
 #, perl-format
 msgid ""
 "%s\n"
-"#  Name                                     Type         Qty       Price   "
-"Sold\n"
+"#  Name                                     Type         Qty       Price   Sold\n"
 msgstr ""
 "%s\n"
-"#  名字                                     类型         数量       价格   "
-"卖\n"
+"#  名字                                     类型         数量       价格   卖\n"
 
 #: ../Commands.pm:3375
 #, perl-format
@@ -2182,7 +2207,8 @@ msgstr ""
 msgid "None"
 msgstr "无"
 
-#: ../Commands.pm:3516 ../Network/Receive.pm:634
+#: ../Commands.pm:3516
+#: ../Network/Receive.pm:634
 msgid "You are sitting.\n"
 msgstr "你已经坐下.\n"
 
@@ -2240,8 +2266,7 @@ msgstr ""
 "       storage log"
 
 #: ../Commands.pm:3630
-msgid ""
-"No information about storage; it has not been opened before in this session\n"
+msgid "No information about storage; it has not been opened before in this session\n"
 msgstr "没有仓库信息; 还没有打开\n"
 
 #: ../Commands.pm:3662
@@ -2272,7 +2297,8 @@ msgstr "携带道具 '%s' 装备完成.\n"
 msgid "Cart Item '%s' does not exist.\n"
 msgstr "手推车道具 '%s' 不存在.\n"
 
-#: ../Commands.pm:3756 ../Commands.pm:3782
+#: ../Commands.pm:3756
+#: ../Commands.pm:3782
 #, perl-format
 msgid "Storage Item '%s' does not exist.\n"
 msgstr "仓库道具 '%s' 不存在.\n"
@@ -2470,7 +2496,8 @@ msgstr ""
 "语法错误 'tank' (Tank for a Player)\n"
 "用法: tank <player #|player name>\n"
 
-#: ../Commands.pm:3990 ../Commands.pm:4011
+#: ../Commands.pm:3990
+#: ../Commands.pm:4011
 #, perl-format
 msgid ""
 "Error in function 'tank' (Tank for a Player)\n"
@@ -2518,12 +2545,10 @@ msgstr "Timeout '%s' 为 %s\n"
 #: ../Commands.pm:4062
 msgid ""
 "Function 'top10' (Show Top 10 Lists)\n"
-"Usage: top10 <b|a|t|p> | <black|alche|tk|pk> | <blacksmith|alchemist|taekwon|"
-"pvp>\n"
+"Usage: top10 <b|a|t|p> | <black|alche|tk|pk> | <blacksmith|alchemist|taekwon|pvp>\n"
 msgstr ""
 "'top10' 功能(显示 Top 10 列表)\n"
-"用法: top10 <b|a|t|p> | <black|alche|tk|pk> | <blacksmith|alchemist|taekwon|"
-"pvp>\n"
+"用法: top10 <b|a|t|p> | <black|alche|tk|pk> | <blacksmith|alchemist|taekwon|pvp>\n"
 
 #: ../Commands.pm:4073
 msgid ""
@@ -2712,7 +2737,8 @@ msgstr ""
 "功能错误 'warp' (打开/列出入口)\n"
 "语法: warp <map name | map number# | list>\n"
 
-#: ../Commands.pm:4309 ../Commands.pm:4325
+#: ../Commands.pm:4309
+#: ../Commands.pm:4325
 msgid "You didn't cast warp portal.\n"
 msgstr "你没有制造路点.\n"
 
@@ -2721,12 +2747,14 @@ msgstr "你没有制造路点.\n"
 msgid "Invalid map number %s.\n"
 msgstr "错误的地图编号 %s.\n"
 
-#: ../Commands.pm:4318 ../Commands.pm:4345
+#: ../Commands.pm:4318
+#: ../Commands.pm:4345
 #, perl-format
 msgid "Attempting to open a warp portal to %s (%s)\n"
 msgstr "常识对入口 %s (%s)\n"
 
-#: ../Commands.pm:4329 ../Network/Receive.pm:5767
+#: ../Commands.pm:4329
+#: ../Network/Receive.pm:5767
 msgid ""
 "----------------- Warp Portal --------------------\n"
 "#  Place                           Map\n"
@@ -2751,12 +2779,14 @@ msgstr ""
 msgid "Weight: %s/%s (%s%)\n"
 msgstr "负重: %s/%s (%s%)\n"
 
-#: ../Commands.pm:4367 ../Commands.pm:4373
+#: ../Commands.pm:4367
+#: ../Commands.pm:4373
 #, perl-format
 msgid "You can carry %s%s before %s overweight.\n"
 msgstr "你能携带 %s%s 在 %s 超重.\n"
 
-#: ../Commands.pm:4370 ../Commands.pm:4376
+#: ../Commands.pm:4370
+#: ../Commands.pm:4376
 #, perl-format
 msgid "You are %s overweight.\n"
 msgstr "你是 %s 超重.\n"
@@ -2789,8 +2819,7 @@ msgstr ""
 #: ../ErrorHandler.pm:62
 #, perl-format
 msgid ""
-"This program has encountered an unexpected problem. This is probably "
-"because\n"
+"This program has encountered an unexpected problem. This is probably because\n"
 "of a bug in this program. Please tell us about this problem.\n"
 "\n"
 "The error message is:\n"
@@ -2822,9 +2851,7 @@ msgstr ""
 "%s\n"
 
 #: ../FileParsers.pm:138
-msgid ""
-"The chat_resp.txt format has changed. Please read News.txt and upgrade to "
-"the new format.\n"
+msgid "The chat_resp.txt format has changed. Please read News.txt and upgrade to the new format.\n"
 msgstr "chat_resp.txt 格式已经改变。 请读 News.txt 并升级。\n"
 
 #: ../FileParsers.pm:276
@@ -2914,12 +2941,14 @@ msgstr "授权用户 '%s' 为 admin\n"
 msgid "Revoked admin privilages for user '%s'\n"
 msgstr "取消 admin 权限为用户 '%s'\n"
 
-#: ../Misc.pm:280 ../Misc.pm:312
+#: ../Misc.pm:280
+#: ../Misc.pm:312
 #, perl-format
 msgid "Config '%s' set to %s (was *not-displayed*)\n"
 msgstr "Config '%s' 设置为 %s (原来是 *无显示*)\n"
 
-#: ../Misc.pm:282 ../Misc.pm:314
+#: ../Misc.pm:282
+#: ../Misc.pm:314
 #, perl-format
 msgid "Config '%s' set to %s (was %s)\n"
 msgstr "Config '%s' 设置为 %s (原来是 %s)\n"
@@ -2935,9 +2964,7 @@ msgstr "不能读取 field 文件: 没有指定 field 名字.\n"
 
 #: ../Misc.pm:898
 #, perl-format
-msgid ""
-"Could not load field %s - this map is not supported, please do not bot "
-"here.\n"
+msgid "Could not load field %s - this map is not supported, please do not bot here.\n"
 msgstr "无法读取 %s - 这张地图还没有被支持, 请不要使用.\n"
 
 #: ../Misc.pm:966
@@ -2948,8 +2975,7 @@ msgstr "无法写入 dist 缓存文件 %s: %s\n"
 #: ../Misc.pm:1092
 #, perl-format
 msgid ""
-"No suitable browser detected. Please launch your favorite browser and go "
-"to:\n"
+"No suitable browser detected. Please launch your favorite browser and go to:\n"
 "%s"
 msgstr ""
 "没有发现浏览器. 请选择一个你喜欢浏览器:\n"
@@ -2964,7 +2990,10 @@ msgstr "断开连接，因为发现 GM!\n"
 msgid "*** The GM %s talked to you, auto disconnected ***\n"
 msgstr "***  GM %s 和你对话, 自动下线 ***\n"
 
-#: ../Misc.pm:1266 ../Misc.pm:1280 ../Misc.pm:3589 ../Network/Receive.pm:2232
+#: ../Misc.pm:1266
+#: ../Misc.pm:1280
+#: ../Misc.pm:3589
+#: ../Network/Receive.pm:2232
 #, perl-format
 msgid "Disconnect for %s seconds...\n"
 msgstr "%s 秒后断开连接...\n"
@@ -3042,12 +3071,10 @@ msgstr "此帐号上没有角色.\n"
 #: ../Misc.pm:1402
 msgid ""
 "Please enter the desired properties for your characters, in this form:\n"
-"(slot) \"(name)\" [ (str) (agi) (vit) (int) (dex) (luk) [ (hairstyle) "
-"[(haircolor)] ] ]\n"
+"(slot) \"(name)\" [ (str) (agi) (vit) (int) (dex) (luk) [ (hairstyle) [(haircolor)] ] ]\n"
 msgstr ""
 "请输入你的角色的各项数据:\n"
-"(slot) \"(名字)\" [ (str) (agi) (vit) (int) (dex) (luk) [ (发型) [(发"
-"色)] ] ]\n"
+"(slot) \"(名字)\" [ (str) (agi) (vit) (int) (dex) (luk) [ (发型) [(发色)] ] ]\n"
 
 #: ../Misc.pm:1410
 msgid "You didn't specify enough parameters."
@@ -3092,12 +3119,14 @@ msgstr "是的, 删除"
 msgid "Deleting character %s...\n"
 msgstr "删除人物 %s...\n"
 
-#: ../Misc.pm:1467 ../AI/CoreLogic.pm:3419
+#: ../Misc.pm:1467
+#: ../AI/CoreLogic.pm:3419
 #, perl-format
 msgid "The current map (%s) is not on the list of allowed maps.\n"
 msgstr "当前的地图 (%s) 是不在运行列表里的地图.\n"
 
-#: ../Misc.pm:1468 ../AI/CoreLogic.pm:3420
+#: ../Misc.pm:1468
+#: ../AI/CoreLogic.pm:3420
 #, perl-format
 msgid "** The current map (%s) is not on the list of allowed maps.\n"
 msgstr "** 当前的地图 (%s) 是不在运行列表里的地图.\n"
@@ -3165,7 +3194,8 @@ msgstr "退出中...\n"
 msgid "Relogging in %d seconds...\n"
 msgstr "重新记录在 %d 秒后...\n"
 
-#: ../Misc.pm:2437 ../Misc.pm:2441
+#: ../Misc.pm:2437
+#: ../Misc.pm:2441
 #, perl-format
 msgid "Remove perfectly hidden %s\n"
 msgstr "去除完全暗藏的 %s\n"
@@ -3184,7 +3214,8 @@ msgstr "错过攻击了，飞\n"
 msgid "Teleporting after attacking a monster %d times\n"
 msgstr "攻击 %d 后就飞\n"
 
-#: ../Misc.pm:2572 ../Misc.pm:2680
+#: ../Misc.pm:2572
+#: ../Misc.pm:2680
 #, perl-format
 msgid "%s (%s) has been provoked, searching another monster\n"
 msgstr "%s (%s) 已经被挑拨, 查找其他怪物\n"
@@ -3251,27 +3282,22 @@ msgstr "%s 打击生命体的伤害超过 %d .飞...\n"
 
 #: ../Misc.pm:2731
 #, perl-format
-msgid ""
-"%s hit your homunculus for more than %d dmg in lockMap. Teleporting...\n"
+msgid "%s hit your homunculus for more than %d dmg in lockMap. Teleporting...\n"
 msgstr "%s 攻击生命体超过 %d 伤害在 lockMap. 飞g...\n"
 
 #: ../Misc.pm:2739
 #, perl-format
-msgid ""
-"%s hit your homunculus for a total of more than %d dmg. Teleporting...\n"
+msgid "%s hit your homunculus for a total of more than %d dmg. Teleporting...\n"
 msgstr "%s 攻击生命体的伤害总数超过 %d . 飞...\n"
 
 #: ../Misc.pm:2746
 #, perl-format
-msgid ""
-"%s hit your homunculus for a total of more than %d dmg in lockMap. "
-"Teleporting...\n"
+msgid "%s hit your homunculus for a total of more than %d dmg in lockMap. Teleporting...\n"
 msgstr "%s 攻击生命体的伤害总数超过 %d 在 lockMap.飞...\n"
 
 #: ../Misc.pm:2751
 #, perl-format
-msgid ""
-"%s hit your homunculus when your homunculus' HP is too low. Teleporting...\n"
+msgid "%s hit your homunculus when your homunculus' HP is too low. Teleporting...\n"
 msgstr "%s 生命体的 HP 太低了. 飞...\n"
 
 #: ../Misc.pm:2772
@@ -3456,7 +3482,8 @@ msgid "Dmg: %s"
 msgstr "伤害: %s"
 
 #. Translation Comment: Skill name + level
-#: ../Misc.pm:3228 ../Misc.pm:3316
+#: ../Misc.pm:3228
+#: ../Misc.pm:3316
 #, perl-format
 msgid "%s (lvl %s)"
 msgstr "%s (lvl %s)"
@@ -3779,7 +3806,8 @@ msgstr "处理地图 %s...\n"
 msgid "Wrote portals Line of Sight table to '%s/portalsLOS.txt'\n"
 msgstr "写入入口到 '%s/portalsLOS.txt'\n"
 
-#: ../Misc.pm:3662 ../Misc.pm:3666
+#: ../Misc.pm:3662
+#: ../Misc.pm:3666
 msgid "----------------------------Error Summary----------------------------\n"
 msgstr "----------------------------错误摘要----------------------------\n"
 
@@ -3918,7 +3946,8 @@ msgstr "连接到帐号服务器...\n"
 msgid "Requesting permission to logon on account server...\n"
 msgstr "请求允许登录在帐号服务器...\n"
 
-#: ../Network.pm:365 ../Network.pm:397
+#: ../Network.pm:365
+#: ../Network.pm:397
 msgid "Secure Login...\n"
 msgstr "保护登陆...\n"
 
@@ -3939,11 +3968,13 @@ msgstr "连接到人物服务器...\n"
 msgid "Invalid server specified, server %s does not exist...\n"
 msgstr "服务器指定错误, 服务器 %s 无法解析...\n"
 
-#: ../Network.pm:470 ../Network/Receive.pm:598
+#: ../Network.pm:470
+#: ../Network/Receive.pm:598
 msgid "Select Login Server"
 msgstr "选择登陆服务器"
 
-#: ../Network.pm:471 ../Network/Receive.pm:599
+#: ../Network.pm:471
+#: ../Network/Receive.pm:599
 msgid "Please select your login server: "
 msgstr "请选择登陆服务器: "
 
@@ -3977,8 +4008,7 @@ msgstr "断开与地图服务器的连接, 退出中...\n"
 
 #: ../Network.pm:562
 #, perl-format
-msgid ""
-"Disconnected from Map Server, connecting to Account Server in %s seconds...\n"
+msgid "Disconnected from Map Server, connecting to Account Server in %s seconds...\n"
 msgstr "断开与地图服务器的连接, 重新连接帐号服务器在 %s 秒后...\n"
 
 #: ../Network.pm:570
@@ -4049,7 +4079,8 @@ msgstr ""
 "你只能运行一个 X-Kore .\n"
 "和端口被占用 %s.\n"
 
-#: ../XKore.pm:61 ../XKoreProxy.pm:60
+#: ../XKore.pm:61
+#: ../XKoreProxy.pm:60
 msgid "X-Kore mode intialized.\n"
 msgstr "内挂模式开启.\n"
 
@@ -4101,7 +4132,8 @@ msgstr "客户被修改在 %d.\n"
 msgid "couldn't connect: %s\n"
 msgstr "无法连接: %s\n"
 
-#: ../XKore2.pm:384 ../XKore2.pm:554
+#: ../XKore2.pm:384
+#: ../XKore2.pm:554
 #, perl-format
 msgid "Unable to listen on XKore2 port (%s:%s): %s"
 msgstr "不能监听 XKore2 端口 (%s:%s): %s"
@@ -4111,19 +4143,15 @@ msgid "XKore 2 failed login: Invalid Username and/or Password.\n"
 msgstr "XKore 2 登陆失败: 错误的用户名或密码.\n"
 
 #: ../XKore2.pm:480
-msgid ""
-"Received GameGuard sync request. Client allowed to login account server.\n"
+msgid "Received GameGuard sync request. Client allowed to login account server.\n"
 msgstr "返回 GameGuard 同步请求. 允许登录帐号伺候器.\n"
 
 #: ../XKore2.pm:483
-msgid ""
-"Received GameGuard sync request. Client allowed to login char/map server.\n"
+msgid "Received GameGuard sync request. Client allowed to login char/map server.\n"
 msgstr "GameGuard 同步请求确认. 客户端允许登陆 login char/map 服务器.\n"
 
 #: ../XKore2.pm:997
-msgid ""
-"blueConnection to server lost. Please wait while the connection is "
-"reestablished."
+msgid "blueConnection to server lost. Please wait while the connection is reestablished."
 msgstr "blueConnection 丢失. 请等待重新连接."
 
 #: ../XKore2.pm:1000
@@ -4178,15 +4206,18 @@ msgstr "客户端没有及时回应. 强制断开连接\n"
 msgid "Logon-grant packet received twice! Avoiding bug in client.\n"
 msgstr "登陆或注册封包已经收到2次！ 避免发生错误.\n"
 
-#: ../XKoreProxy.pm:489 ../Network/Receive.pm:591
+#: ../XKoreProxy.pm:489
+#: ../Network/Receive.pm:591
 msgid "Closing connection to Account Server\n"
 msgstr "断开和帐号服务器的连接\n"
 
-#: ../XKoreProxy.pm:510 ../Network/Receive.pm:4375
+#: ../XKoreProxy.pm:510
+#: ../Network/Receive.pm:4375
 msgid "Closing connection to Character Server\n"
 msgstr "断开和人物服务器的连接\n"
 
-#: ../XKoreProxy.pm:512 ../Network/Receive.pm:3525
+#: ../XKoreProxy.pm:512
+#: ../Network/Receive.pm:3525
 msgid "Closing connection to Map Server\n"
 msgstr "断开和地图服务器的连接\n"
 
@@ -4363,9 +4394,7 @@ msgid "Cart Item Removed: %s (%d) x %s\n"
 msgstr "手推车物品移除 : %s (%d) x %s\n"
 
 #: ../Network/Receive.pm:1684
-msgid ""
-"Character creation failed. If you didn't make any mistake, then the name you "
-"chose already exists.\n"
+msgid "Character creation failed. If you didn't make any mistake, then the name you chose already exists.\n"
 msgstr "人物创建失败.如果你确信操作是正确的话，那就是这个名字已经被占用了.\n"
 
 #: ../Network/Receive.pm:1716
@@ -4552,7 +4581,8 @@ msgstr ""
 "\n"
 "%s 断开连接."
 
-#: ../Network/Receive.pm:2231 ../Network/Receive.pm:2235
+#: ../Network/Receive.pm:2231
+#: ../Network/Receive.pm:2235
 msgid "Critical Error: Dual login prohibited - Someone trying to login!\n"
 msgstr "错误:  相同的帐号已经登陆!\n"
 
@@ -4577,9 +4607,7 @@ msgid "Error: The server still recognizes your last connection\n"
 msgstr "错误 : 服务器保留有你最后一次连接的信息，请等待\n"
 
 #: ../Network/Receive.pm:2250
-msgid ""
-"Error: IP capacity of this Internet Cafe is full. Would you like to pay the "
-"personal base?\n"
+msgid "Error: IP capacity of this Internet Cafe is full. Would you like to pay the personal base?\n"
 msgstr "错误 : 同一 IP 地址的连接数量已满.您可能需要付费以便继续使用?\n"
 
 #: ../Network/Receive.pm:2252
@@ -4646,8 +4674,7 @@ msgstr "%s 希望加你为好友\n"
 
 #: ../Network/Receive.pm:2402
 #, perl-format
-msgid ""
-"Type 'friend accept' to be friend with %s, otherwise type 'friend reject'\n"
+msgid "Type 'friend accept' to be friend with %s, otherwise type 'friend reject'\n"
 msgstr "输入 'friend accept' 加入好友 %s, 或者输入 'friend reject'拒绝\n"
 
 #: ../Network/Receive.pm:2413
@@ -4693,8 +4720,7 @@ msgstr "你的生命体被回复!\n"
 
 #: ../Network/Receive.pm:2565
 msgid ""
-"The server Denied the login because GameGuard packets where not replied "
-"correctly or too many time has been spent to send the response.\n"
+"The server Denied the login because GameGuard packets where not replied correctly or too many time has been spent to send the response.\n"
 "Please verify the version of your poseidon server and try again\n"
 msgstr ""
 "服务器 GameGuard 错误而拒绝你的操作.\n"
@@ -4971,15 +4997,18 @@ msgstr "登陆人物服务器错误...\n"
 msgid "Map Change: %s (%s, %s)\n"
 msgstr "改变地图 : %s (%s, %s)\n"
 
-#: ../Network/Receive.pm:3572 ../Network/Receive/ServerType0.pm:28
+#: ../Network/Receive.pm:3572
+#: ../Network/Receive/ServerType0.pm:28
 msgid "Waiting for map to load...\n"
 msgstr "等待加载地图...\n"
 
-#: ../Network/Receive.pm:3584 ../Network/Receive/ServerType0.pm:40
+#: ../Network/Receive.pm:3584
+#: ../Network/Receive/ServerType0.pm:40
 msgid "You are now in the game\n"
 msgstr "您已经进入游戏\n"
 
-#: ../Network/Receive.pm:3594 ../Network/Receive/ServerType0.pm:48
+#: ../Network/Receive.pm:3594
+#: ../Network/Receive/ServerType0.pm:48
 #, perl-format
 msgid "Your Coordinates: %s, %s\n"
 msgstr "您的座标 : %s, %s\n"
@@ -5007,7 +5036,8 @@ msgstr "在 %d 的迷你地图上, %d 的颜色 %s 显示\n"
 msgid "Monster %s (%d) changed to %s\n"
 msgstr "怪物 %s (%d) 改变到 %s\n"
 
-#: ../Network/Receive.pm:3669 ../Network/Receive.pm:3670
+#: ../Network/Receive.pm:3669
+#: ../Network/Receive.pm:3670
 #, perl-format
 msgid "Get MVP item %s\n"
 msgstr "得到 MVP 物品 %s\n"
@@ -5186,7 +5216,8 @@ msgstr "%s 改变鞋子为: %s\n"
 msgid "[dist=%s] %s\n"
 msgstr "[存在=%s] %s\n"
 
-#: ../Network/Receive.pm:4240 ../Network/Receive.pm:4241
+#: ../Network/Receive.pm:4240
+#: ../Network/Receive.pm:4241
 #, perl-format
 msgid "(From: %s) : %s\n"
 msgstr "(来自: %s) : %s\n"
@@ -5315,11 +5346,13 @@ msgstr "无法记录\n"
 msgid "Unavailable Area To Teleport (fail code %s)\n"
 msgstr "无法传送 (错误代码 %s)\n"
 
-#: ../Network/Receive.pm:4542 ../Network/Receive.pm:4557
+#: ../Network/Receive.pm:4542
+#: ../Network/Receive.pm:4557
 msgid "PvP Display Mode\n"
 msgstr "PVP显示模式\n"
 
-#: ../Network/Receive.pm:4545 ../Network/Receive.pm:4560
+#: ../Network/Receive.pm:4545
+#: ../Network/Receive.pm:4560
 msgid "GvG Display Mode\n"
 msgstr "GVG显示模式\n"
 
@@ -5415,7 +5448,8 @@ msgstr "您被禁言 %s 分钟\n"
 msgid "You are now level %s\n"
 msgstr "您现在的等级为 %s\n"
 
-#: ../Network/Receive.pm:5168 ../Network/Receive.pm:5169
+#: ../Network/Receive.pm:5168
+#: ../Network/Receive.pm:5169
 #, perl-format
 msgid "Disconnecting on level %s!\n"
 msgstr "断开连接.等级达到 %s!\n"
@@ -5425,7 +5459,8 @@ msgstr "断开连接.等级达到 %s!\n"
 msgid "You are now job level %s\n"
 msgstr "您的职业等级为 %s\n"
 
-#: ../Network/Receive.pm:5229 ../Network/Receive.pm:5230
+#: ../Network/Receive.pm:5229
+#: ../Network/Receive.pm:5230
 #, perl-format
 msgid "Disconnecting on job level %s!\n"
 msgstr "断开连接.职业等级达到 %s!\n"
@@ -5475,20 +5510,12 @@ msgid "Storage password set to: %s\n"
 msgstr "仓库密码设置为 : %s\n"
 
 #: ../Network/Receive.pm:5445
-msgid ""
-"Unable to send character password. You must set the 'storageEncryptKey' "
-"option in config.txt or servers.txt.\n"
-msgstr ""
-"无法发送角色密码. 您必须在config.txt中或者servers.txt中设置 "
-"'storageEncryptKey'  项目.\n"
+msgid "Unable to send character password. You must set the 'storageEncryptKey' option in config.txt or servers.txt.\n"
+msgstr "无法发送角色密码. 您必须在config.txt中或者servers.txt中设置 'storageEncryptKey'  项目.\n"
 
 #: ../Network/Receive.pm:5446
-msgid ""
-"Unable to send storage password. You must set the 'storageEncryptKey' option "
-"in config.txt or servers.txt.\n"
-msgstr ""
-"无法发送仓库密码. 您必须在config.txt中或者servers.txt中设置 "
-"'storageEncryptKey'  项目.\n"
+msgid "Unable to send storage password. You must set the 'storageEncryptKey' option in config.txt or servers.txt.\n"
+msgstr "无法发送仓库密码. 您必须在config.txt中或者servers.txt中设置 'storageEncryptKey'  项目.\n"
 
 #: ../Network/Receive.pm:5457
 msgid "You have entered the wrong password 5 times. Please try again later.\n"
@@ -5498,7 +5525,8 @@ msgstr "你已经输入错误的密码 5 次。请稍后再尝试。\n"
 msgid "Successfully changed storage password.\n"
 msgstr "仓库密码更改成功.\n"
 
-#: ../Network/Receive.pm:5480 ../Network/Receive.pm:5484
+#: ../Network/Receive.pm:5480
+#: ../Network/Receive.pm:5484
 msgid "Error: Incorrect storage password.\n"
 msgstr "错误:仓库密码错误.\n"
 
@@ -5595,12 +5623,10 @@ msgstr "现在的在线玩家为 %s 名\n"
 #, perl-format
 msgid ""
 "%s\n"
-"#  Name                                       Type           Amount       "
-"Price\n"
+"#  Name                                       Type           Amount       Price\n"
 msgstr ""
 "%s\n"
-"#  名字                                       类型           数量       价"
-"格\n"
+"#  名字                                       类型           数量       价格\n"
 
 #: ../Network/Receive.pm:5696
 #, perl-format
@@ -5621,12 +5647,10 @@ msgstr "没有购买 %s 道具 #%s 在商店 (未知代码 %s).\n"
 #, perl-format
 msgid ""
 "%s\n"
-"#  Name                                          Type        Amount       "
-"Price\n"
+"#  Name                                          Type        Amount       Price\n"
 msgstr ""
 "%s\n"
-"#  名字                                          类型        数量       价"
-"格\n"
+"#  名字                                          类型        数量       价格\n"
 
 #: ../Poseidon/EmbedServer.pm:47
 #, perl-format
@@ -5653,11 +5677,15 @@ msgstr "Poseidon: 把结果返回给客户端 %s\n"
 msgid "Poseidon: Querying Ragnarok Online client.\n"
 msgstr "Poseidon: 查找仙境客户端.\n"
 
-#: ../AI/Attack.pm:105 ../AI/Attack.pm:216 ../AI/Attack.pm:386
+#: ../AI/Attack.pm:105
+#: ../AI/Attack.pm:216
+#: ../AI/Attack.pm:386
 msgid "Dropping target - you will not kill steal others\n"
 msgstr "放弃目标 - 你将不能偷或杀死目标\n"
 
-#: ../AI/Attack.pm:117 ../AI/Attack.pm:158 ../AI/Attack.pm:228
+#: ../AI/Attack.pm:117
+#: ../AI/Attack.pm:158
+#: ../AI/Attack.pm:228
 #: ../AI/Attack.pm:536
 msgid "Teleport due to dropping attack target\n"
 msgstr "由于放弃目标，随机移动\n"
@@ -5679,7 +5707,8 @@ msgstr "目标死亡\n"
 msgid "Target lost\n"
 msgstr "目标消失\n"
 
-#: ../AI/Attack.pm:438 ../AI/Homunculus.pm:620
+#: ../AI/Attack.pm:438
+#: ../AI/Homunculus.pm:620
 #, perl-format
 msgid "%s; moving to (%s, %s)\n"
 msgstr "%s; 移动到 (%s, %s)\n"
@@ -5714,7 +5743,8 @@ msgstr ""
 "randomWalk 指定了错误的坐标\n"
 " 重新尝试..."
 
-#: ../AI/CoreLogic.pm:567 ../AI/CoreLogic.pm:2365
+#: ../AI/CoreLogic.pm:567
+#: ../AI/CoreLogic.pm:2365
 #, perl-format
 msgid "Calculating random route to: %s(%s): %s, %s\n"
 msgstr "计算随机行走路线: %s(%s): %s, %s\n"
@@ -5723,7 +5753,8 @@ msgstr "计算随机行走路线: %s(%s): %s, %s\n"
 msgid "Timeout equiping for skill\n"
 msgstr "装备技能超时\n"
 
-#: ../AI/CoreLogic.pm:802 ../AI/CoreLogic.pm:894
+#: ../AI/CoreLogic.pm:802
+#: ../AI/CoreLogic.pm:894
 msgid "Destination reached.\n"
 msgstr "目的地到达.\n"
 
@@ -5734,9 +5765,7 @@ msgstr "附着在 %s (%d,%d), 当步行的时候从 (%d,%d) 到 (%d,%d)."
 
 #: ../AI/CoreLogic.pm:957
 #, perl-format
-msgid ""
-"Unable to calculate how to walk from [%s(%s,%s)] to [%s%s] (no map "
-"solution).\n"
+msgid "Unable to calculate how to walk from [%s(%s,%s)] to [%s%s] (no map solution).\n"
 msgstr "不能计算行走路径从 [%s(%s,%s)] 到 [%s%s] (没有地图).\n"
 
 #: ../AI/CoreLogic.pm:999
@@ -5783,7 +5812,8 @@ msgstr "从当前的位置不能到达路点\n"
 msgid "Failed to take %s (%s) from (%s, %s) to (%s, %s)\n"
 msgstr "拿取失败 %s (%s) 在 (%s, %s) 到 (%s, %s)\n"
 
-#: ../AI/CoreLogic.pm:1200 ../AI/CoreLogic.pm:3285
+#: ../AI/CoreLogic.pm:1200
+#: ../AI/CoreLogic.pm:3285
 #, perl-format
 msgid "Routing to (%s, %s) to take %s (%s), distance %s\n"
 msgstr "走到 (%s, %s) 拿 %s (%s),的距离 %s\n"
@@ -5843,7 +5873,9 @@ msgstr "*** 你挂了, 自动断开连接! ***\n"
 msgid "Auto-storaging due to excess weight\n"
 msgstr "超过负重.自动存仓\n"
 
-#: ../AI/CoreLogic.pm:1578 ../AI/CoreLogic.pm:1579 ../AI/CoreLogic.pm:2679
+#: ../AI/CoreLogic.pm:1578
+#: ../AI/CoreLogic.pm:1579
+#: ../AI/CoreLogic.pm:2679
 #: ../AI/CoreLogic.pm:2680
 #, perl-format
 msgid "Disconnecting on empty %s!\n"
@@ -5899,7 +5931,8 @@ msgstr ""
 msgid "Character is still overweight after storageAuto (storage is full?)\n"
 msgstr "人物超重 (仓库已经满了?)\n"
 
-#: ../AI/CoreLogic.pm:1843 ../AI/CoreLogic.pm:1844
+#: ../AI/CoreLogic.pm:1843
+#: ../AI/CoreLogic.pm:1844
 msgid "Disconnecting on storage full!\n"
 msgstr "仓库满了，断开连接!\n"
 
@@ -5960,9 +5993,7 @@ msgid "Auto-adding skill %s\n"
 msgstr "自动增加技能 %s\n"
 
 #: ../AI/CoreLogic.pm:2362
-msgid ""
-"Invalid coordinates specified for randomWalk (coordinates are unwalkable); "
-"randomWalk disabled\n"
+msgid "Invalid coordinates specified for randomWalk (coordinates are unwalkable); randomWalk disabled\n"
 msgstr "randomWalk 指定了错误的坐标 (无法走到); randomWalk 关闭\n"
 
 #: ../AI/CoreLogic.pm:2397
@@ -5986,11 +6017,13 @@ msgstr "失去主人\n"
 msgid "Trying to get him back\n"
 msgstr "等待主人回来\n"
 
-#: ../AI/CoreLogic.pm:2470 ../AI/CoreLogic.pm:2555
+#: ../AI/CoreLogic.pm:2470
+#: ../AI/CoreLogic.pm:2555
 msgid "My master disconnected\n"
 msgstr "主人已经下线\n"
 
-#: ../AI/CoreLogic.pm:2506 ../AI/CoreLogic.pm:2583
+#: ../AI/CoreLogic.pm:2506
+#: ../AI/CoreLogic.pm:2583
 msgid "My master teleported\n"
 msgstr "主人已经飞了\n"
 
@@ -6074,9 +6107,7 @@ msgstr "将生命体传回\n"
 
 #: ../AI/Homunculus.pm:254
 #, perl-format
-msgid ""
-"Trying to find your homunculus at location %d, %d (you are currently at %d, %"
-"d)\n"
+msgid "Trying to find your homunculus at location %d, %d (you are currently at %d, %d)\n"
 msgstr "尝试查找你的生命体在 %d, %d (你在 %d, %d)\n"
 
 #: ../AI/Homunculus.pm:262
@@ -6092,7 +6123,9 @@ msgstr "生命体攻击: %s\n"
 msgid "Homunculus can't reach or damage target, dropping target\n"
 msgstr "生命体无法到达或伤害目标, 放弃目标\n"
 
-#: ../AI/Homunculus.pm:483 ../AI/Homunculus.pm:718 ../AI/Homunculus.pm:776
+#: ../AI/Homunculus.pm:483
+#: ../AI/Homunculus.pm:718
+#: ../AI/Homunculus.pm:776
 msgid "Teleport due to dropping homunculus attack target\n"
 msgstr "由于放弃生命体目标，随机移动\n"
 
@@ -6104,7 +6137,8 @@ msgstr "生命体死亡.\n"
 msgid "Homunculus target lost\n"
 msgstr "生命体消失\n"
 
-#: ../AI/Homunculus.pm:579 ../AI/Homunculus.pm:764
+#: ../AI/Homunculus.pm:579
+#: ../AI/Homunculus.pm:764
 msgid "Dropping target - homunculus will not kill steal others\n"
 msgstr "放弃目标 - 生命体将不能偷或杀死目标\n"
 
@@ -6117,14 +6151,14 @@ msgstr "%s; 没有生命体的位置\n"
 msgid "Unable to calculate a route to homunculus target, dropping target\n"
 msgstr "不能计算到生命体目标的路径, 放弃目标\n"
 
-#: ../AI/Homunculus.pm:856 ../AI/Homunculus.pm:948
+#: ../AI/Homunculus.pm:856
+#: ../AI/Homunculus.pm:948
 msgid "Homunculus destination reached.\n"
 msgstr "生命体到达目的地.\n"
 
 #: ../AI/Homunculus.pm:883
 #, perl-format
-msgid ""
-"Homunculus is stuck at %s (%d,%d), while walking from (%d,%d) to (%d,%d)."
+msgid "Homunculus is stuck at %s (%d,%d), while walking from (%d,%d) to (%d,%d)."
 msgstr "生命体附着在 %s (%d,%d), 当步行的时候从 (%d,%d) 到 (%d,%d)."
 
 #: ../../openkore.pl:58
@@ -6178,9 +6212,7 @@ msgid "One or more plugins failed to load."
 msgstr "一个或多个插件加载失败."
 
 #: ../../openkore.pl:193
-msgid ""
-"A configuration file failed to load. Did you download the latest "
-"configuration files?"
+msgid "A configuration file failed to load. Did you download the latest configuration files?"
 msgstr "设置文件读取失败. 你需要下载一个新的文件吗?"
 
 #: ../../openkore.pl:200
@@ -6217,12 +6249,8 @@ msgid "Compile portals?"
 msgstr "是否立即编译路点?"
 
 #: ../../openkore.pl:274
-msgid ""
-"New portals have been added to the portals database. The portals database "
-"must be compiled before the new portals can be used. Would you like to "
-"compile portals now?\n"
-msgstr ""
-"新的入口已经被加入到数据库. 在使用之前你必须编译数据库. 你想现在就编译吗?\n"
+msgid "New portals have been added to the portals database. The portals database must be compiled before the new portals can be used. Would you like to compile portals now?\n"
+msgstr "新的入口已经被加入到数据库. 在使用之前你必须编译数据库. 你想现在就编译吗?\n"
 
 #: ../../openkore.pl:277
 msgid "Yes, compile now."
@@ -6345,10 +6373,5 @@ msgstr "OpenKore 新的"
 
 #: ../webstart/WebstartServer.pm:91
 msgid "Do not display this web page again."
-msgstr ""
+msgstr "不要再显示这个页面."
 
-#~ msgid "Could not find the NPC at the designated location.\n"
-#~ msgstr "无法在指定的位置找到 NPC.\n"
-
-#~ msgid "NPC did not respond.\n"
-#~ msgstr "NPC 没有回应.\n"
