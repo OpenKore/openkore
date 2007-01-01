@@ -131,7 +131,7 @@ sub get {
 ### CATEGORY: Hash members
 
 ##
-# String $Actor->{type}
+# String $Actor->{actorType}
 # Invariant: defined(value)
 #
 # An identifier for this actor's type. The meaning for this field

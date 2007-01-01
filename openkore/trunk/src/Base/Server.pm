@@ -74,6 +74,7 @@ use warnings;
 no warnings 'redefine';
 use IO::Socket::INET;
 use Base::Server::Client;
+use Utils::ObjectList;
 
 
 ################################
@@ -92,30 +93,23 @@ sub new {
 	my $bind = (shift || 'localhost');
 	my %self;
 
-	$self{server} = IO::Socket::INET->new(
+	$self{BS_server} = IO::Socket::INET->new(
 		Listen		=> 5,
 		LocalAddr	=> $bind,
 		LocalPort	=> $port,
 		Proto		=> 'tcp',
 		ReuseAddr	=> 1);
-	return undef if (!$self{server});
+	return undef if (!$self{BS_server});
 
-	$self{host} = $self{server}->sockhost;
-	$self{port} = $self{server}->sockport;
-	$self{clients} = [];
-	bless \%self, $class;
-	return \%self;
+	$self{BS_host} = $self{BS_server}->sockhost;
+	$self{BS_port} = $self{BS_server}->sockport;
+	$self{BS_clients} = new ObjectList();
+	return bless \%self, $class;
 }
 
 sub DESTROY {
-	my $self = shift;
-
-	# Disconnect all clients and close the server
-	foreach my $client (@{$self->{clientsID}}) {
-		$client->{sock}->close if ($client && $client->{sock}
-					   && $client->{sock}->connected);
-	}
-	$self->{server}->close if ($self->{server});
+	my ($self) = @_;
+	$self->{BS_server}->close if ($self->{BS_server});
 }
 
 
@@ -124,7 +118,7 @@ sub DESTROY {
 ################################
 
 sub clients {
-	return $_[0]->{clients};
+	return $_[0]->{BS_clients}->getItems();
 }
 
 ##
@@ -134,7 +128,7 @@ sub clients {
 #
 # Get the IP address on which the server is started.
 sub getHost {
-	return $_[0]->{host};
+	return $_[0]->{BS_host};
 }
 
 ##
@@ -144,7 +138,7 @@ sub getHost {
 #
 # Get the port on which the server is started.
 sub getPort {
-	return $_[0]->{port};
+	return $_[0]->{BS_port};
 }
 
 ##
@@ -153,38 +147,49 @@ sub getPort {
 # Handle connection issues. You should call this function in your
 # program's main loop.
 sub iterate {
-	my $self = shift;
+	my ($self, $timeout) = @_;
+	my $serverFD = fileno($self->{BS_server});
 
-	# Checks whether a new client wants to connect
-	my $bits = '';
-        vec($bits, fileno($self->{server}), 1) = 1;
-	if (select($bits, undef, undef, 0) > 0) {
-		$self->_newClient();
+	# Generate the bit field for select();
+	my $rbits = '';
+	vec($rbits, $serverFD, 1) = 1;
+
+	my $clients = $self->{BS_clients}->getItems();
+	foreach my $client (@{$clients}) {
+		if (!$client->getSocket()->connected) {
+			$self->_exitClient($client, $client->getIndex());
+		} else {
+			my $fd = $client->getFD();
+			vec($rbits, $fd, 1) = 1;
+		}
 	}
 
-	foreach my $client (@{$self->{clients}}) {
-		next if (!$client);
-		if (!$client->{sock} || !$client->{sock}->connected) {
-			# A client disconnected
-			$self->_exitClient($client, $client->{index});
-			next;
+
+	if (@_ == 1) {
+		$timeout = 0;
+	} elsif ($timeout == -1) {
+		$timeout = undef;
+	}
+	if (select($rbits, undef, undef, $timeout) > 0) {
+		# Checks whether new clients want to connect.
+		if (vec($rbits, $serverFD, 1)) {
+			$self->_newClient();
 		}
 
-		$bits = '';
-		vec($bits, $client->{fd}, 1) = 1;
-		if (select($bits, undef, undef, 0) > 0) {
-			# Incoming data from client
-			my $data;
+		# Check for connection changes in clients.
+		foreach my $client (@{$clients}) {
+			my $fd = $client->getFD();
+			if (vec($rbits, $fd, 1)) {
+				# Incoming data from client.
+				my $data;
 
-			eval {
-				$client->{sock}->recv($data, 32 * 1024, 0);
-			};
-			if (!defined($data) || length($data) == 0) {
-				# Client disconnected
-				$self->_exitClient($client, $client->{index});
-
-			} else {
-				$self->onClientData($client, $data, $client->{index});
+				$client->getSocket()->recv($data, 32 * 1024, 0);
+				if (!defined($data) || length($data) == 0) {
+					# Client disconnected.
+					$self->_exitClient($client, $client->getIndex());
+				} else {
+					$self->onClientData($client, $data, $client->getIndex());
+				}
 			}
 		}
 	}
@@ -242,33 +247,24 @@ sub onClientData {
 
 # Accept connection from new client
 sub _newClient {
-	my $self = shift;
-	my ($sock, $client, $index);
+	my ($self) = @_;
 
-	$sock = $self->{server}->accept;
+	my $sock = $self->{BS_server}->accept();
 	$sock->autoflush(0);
 
-	# Find an empty slot in the client list
-	$index = @{$self->{clients}};
-	for (my $i = 0; $i < @{$self->{clients}}; $i++) {
-		if (!$self->{clients}[$i]) {
-			$index = $i;
-			last;
-		}
-	}
-
-	$client = new Base::Server::Client($sock, $sock->peerhost, fileno($sock), $index);
-	$self->{clients}[$index] = $client;
+	my $fd = fileno($sock);
+	my $client = new Base::Server::Client($sock, $sock->peerhost, $fd);
+	my $index = $self->{BS_clients}->add($client);
+	$client->setIndex($index);
 	$self->onClientNew($client, $index);
 }
 
 # A client disconnected
 sub _exitClient {
-	my ($self, $client, $i) = @_;
+	my ($self, $client, $index) = @_;
 
-	$self->onClientExit($client, $i);
-	delete $self->{clients}[$i];
+	$self->onClientExit($client, $index);
+	$self->{BS_clients}->remove($client);
 }
 
-
-return 1;
+1;

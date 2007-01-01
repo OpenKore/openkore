@@ -268,6 +268,7 @@ sub size {
 #         defined($k)
 #
 # Returns a reference to an array, which contains all items in this list.
+# It is safe to remove items during iteration.
 sub getItems {
 	return $_[0]->{OL_cItems};
 }

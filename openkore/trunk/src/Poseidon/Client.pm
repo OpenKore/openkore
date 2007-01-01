@@ -18,7 +18,8 @@ use strict;
 use IO::Socket::INET;
 use Globals qw(%config);
 use Log qw(error debug);
-use IPC::Messages qw(encode decode);
+use Bus::MessageParser;
+use Bus::Messages qw(serialize);
 use Utils qw(dataWaiting);
 use Plugins;
 
@@ -79,11 +80,11 @@ sub query {
 		args => \%args,
 	});
 	$args{packet} = $packet;
-	$data = encode("Poseidon Query", \%args);
+	$data = serialize("Poseidon Query", \%args);
 	$socket->send($data);
 	$socket->flush();
 	$self->{socket} = $socket;
-	$self->{buf} = '';
+	$self->{parser} = new Bus::MessageParser();
 }
 
 ##
@@ -100,7 +101,7 @@ sub getResult {
 		return undef;
 	}
 
-	my ($buf, $ID, %args, $rest);
+	my ($buf, $ID, $args, $rest);
 	$self->{socket}->recv($buf, 1024 * 32);
 	if (!$buf) {
 		# This shouldn't have happened.
@@ -110,18 +111,18 @@ sub getResult {
 		return undef;
 	}
 
-	$self->{buf} .= $buf;
-	$ID = decode($self->{buf}, \%args, \$rest);
-	if (!defined($ID)) {
-		# We haven't gotten a full message yet.
-		return undef;
-	} elsif ($ID ne "Poseidon Reply") {
-		error "The Poseidon server sent a wrong reply ID ($ID). Please report this bug.\n";
-		$self->{socket} = undef;
-		return undef;
+	$self->{parser}->add($buf);
+	if ($args = $self->{parser}->readNext(\$ID)) {
+		if ($ID ne "Poseidon Reply") {
+			error "The Poseidon server sent a wrong reply ID ($ID). Please report this bug.\n";
+			$self->{socket} = undef;
+			return undef;
+		} else {
+			$self->{socket} = undef;
+			return $args->{packet};
+		}
 	} else {
-		$self->{socket} = undef;
-		return $args{packet};
+		return undef;
 	}
 }
 

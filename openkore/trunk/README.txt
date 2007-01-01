@@ -79,6 +79,7 @@ Internal:
 - A new, object-oriented framework for message sending has been implemented.
 - The beginning of a new, object-oriented task framework has been implemented.
   This will eventually replace the old AI framework.
+- The IPC framework has been entirely replaced by the OpenKore bus system.
 
 Credits:
 - Darkfate: partial servertype 11 support.

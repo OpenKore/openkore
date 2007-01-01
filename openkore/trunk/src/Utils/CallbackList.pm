@@ -44,10 +44,12 @@ use Carp::Assert;
 use Scalar::Util;
 
 # Field identifiers for items inside $CallbackList->{callbacks}
-use constant FUNCTION => 0;
-use constant ID       => 1;
-use constant OBJECT   => 2;
-use constant USERDATA => 3;
+use constant {
+	FUNCTION => 0,
+	ID       => 1,
+	OBJECT   => 2,
+	USERDATA => 3
+};
 
 ### CATEGORY: Class CallbackList
 
@@ -132,6 +134,14 @@ sub add {
 	my $ID = \$index;
 	$item[ID] = $ID;
 	return $ID;
+}
+
+##
+# boolean $CallbackList->empty()
+#
+# Check whether there are any callbacks in this CallbackList.
+sub empty {
+	return @{$_[0]->{callbacks}} == 0;
 }
 
 ##

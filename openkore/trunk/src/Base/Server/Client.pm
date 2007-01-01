@@ -25,55 +25,58 @@ use strict;
 use IO::Socket::INET;
 
 sub new {
-	my ($class, $socket, $host, $fd, $index) = @_;
+	my ($class, $socket, $host, $fd) = @_;
 	my %self = (
-		sock => $socket,
-		host => $host,
-		fd => $fd,
-		index => $index
+		BSC_sock  => $socket,
+		BSC_host  => $host,
+		BSC_fd    => $fd
 	);
-	bless \%self, $class;
-	return \%self;
+	return bless \%self, $class;
 }
 
 sub DESTROY {
-	$_[0]->{sock}->close;
+	$_[0]->{BSC_sock}->close if ($_[0]->{BSC_sock}->connected);
 }
 
 ##
 # IO::Socket::INET $BaseServerClient->getSocket()
-# Ensure: defined(result)
+# Ensures: defined(result)
 #
 # Return the client's socket.
 sub getSocket {
-	return $_[0]->{sock};
+	return $_[0]->{BSC_sock};
 }
 
 ##
 # String $BaseServerClient->getIP()
-# Ensure: result ne ''
+# Ensures: result ne ''
 #
 # Returns the client's IP address in text form.
 sub getIP {
-	return $_[0]->{host};
+	return $_[0]->{BSC_host};
 }
 
 ##
 # int $BaseServerClient->getFD()
-# Ensure: defined(result)
+# Ensures: defined(result)
 #
 # Returns the client's file descriptor.
 sub getFD {
-	return $_[0]->{fd};
+	return $_[0]->{BSC_fd};
 }
 
 ##
 # int $BaseServerClient->getIndex()
-# Ensure: defined(result)
+# Ensures: defined(result)
 #
 # Returns the index of this object in the @MODULE(Base::Server) object's internal list.
 sub getIndex {
-	return $_[0]->{index};
+	return $_[0]->{BSC_index};
+}
+
+sub setIndex {
+	my ($self, $index) = @_;
+	$self->{BSC_index} = $index;
 }
 
 ##
@@ -86,14 +89,13 @@ sub getIndex {
 sub send {
 	my ($self) = @_;
 
-	undef $@;
 	eval {
-		$self->{sock}->send($_[1], 0);
-		$self->{sock}->flush;
+		$self->{BSC_sock}->send($_[1], 0);
+		$self->{BSC_sock}->flush;
 	};
 	if ($@) {
 		# Client disconnected
-		$self->{sock}->close;
+		$self->{BSC_sock}->close;
 		return 0;
 	}
 	return 1;
@@ -102,12 +104,12 @@ sub send {
 ##
 # void $BaseServerClient->close()
 #
-# Disconnect this client. In the next main loop iteration, this Base::Server::Client
+# Disconnect this client. In the next $BaseServer->iterate() call, this Base::Server::Client
 # object will be removed from the @MODULE(Base::Server) object's internal list.
 #
 # You must not call $BaseServerClient->send() anymore after having called this function.
 sub close {
-	$_[0]->{sock}->close;
+	$_[0]->{BSC_sock}->close;
 }
 
 1;

@@ -18,8 +18,12 @@
 #
 # It also defines the following commonly-used exception objects:
 # `l
+# - ArgumentException - An invalid argument is passed to a function.
 # - IOException - Input/output exception occured.
 # - FileNotFoundException - A file is not found.
+# - SocketException - An error occured during a socket operating, such as connecting to a server.
+# - BusNotRunningException - The OpenKore bus system is not running.
+# - DataFormatException - The data format is invalid.
 # - UTF8MalformedException - Invalid UTF-8 data encountered.
 # `l`
 package Utils::Exceptions;
@@ -30,10 +34,15 @@ use base qw(Exporter);
 use Scalar::Util;
 
 use Exception::Class (
-	'IOException',
 	'ArgumentException',
+
+	'IOException',
 	'FileNotFoundException'  => { isa => 'IOException' },
-	'UTF8MalformedException' => { fields => 'line' }
+	'SocketException'        => { isa => 'IOException' },
+	'BusNotRunningException' => { isa => 'IOException' },
+
+	'DataFormatException',
+	'UTF8MalformedException' => { isa => 'DataFormatException', fields => 'line' },
 );
 
 our @EXPORT = qw(caught);
