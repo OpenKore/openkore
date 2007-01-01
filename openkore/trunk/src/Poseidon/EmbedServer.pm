@@ -14,7 +14,8 @@ package Poseidon::EmbedServer;
 use strict;
 use Scalar::Util;
 use Base::Server;
-use IPC::Messages qw(encode decode);
+use Bus::MessageParser;
+use Bus::Messages qw(serialize);
 use Log qw(message);
 use Translation qw(T TF);
 use base qw(Base::Server);
@@ -74,17 +75,17 @@ sub process {
 
 sub onClientNew {
 	my ($self, $client) = @_;
-	$client->{"$CLASS data"} = '';
+	$client->{"$CLASS parser"} = new Bus::MessageParser();
 }
 
 sub onClientData {
 	my ($self, $client, $msg) = @_;
-	my ($ID, %args, $rest);
+	my ($ID, $args, $rest);
 
-	$client->{"$CLASS data"} .= $msg;
-	$ID = decode($client->{"$CLASS data"}, \%args, \$rest);
-	if (defined($ID)) {
-		$self->process($client, $ID, \%args);
+	my $parser = $client->{"$CLASS parser"};
+	$parser->add($msg);
+	while ($args = $parser->readNext(\$ID)) {
+		$self->process($client, $ID, $args);
 	}
 }
 
@@ -103,7 +104,7 @@ sub iterate {
 			my ($data, %args);
 
 			$args{packet} = shift @{$response};
-			$data = encode("Poseidon Reply", \%args);
+			$data = serialize("Poseidon Reply", \%args);
 			$queue->[0]{client}->send($data);
 			$queue->[0]{client}->close();
 			message TF("Poseidon: Sent result to client %s\n", $queue->[0]{client}->getIndex()), "poseidon";

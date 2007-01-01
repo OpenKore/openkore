@@ -46,9 +46,7 @@ Utils::Unix
 Utils::Whirlpool
 Utils::Win32
 
-IPC
-IPC::Server
-IPC::Messages
+Bus::Messages
 
 Interface::Wx::DockNotebook
 Interface::Wx::DockNotebook::Page

@@ -3,7 +3,9 @@ Benchmark.pm
 CallbackList.pm
 CRAM.pm
 Crypton.pm
+Daemon.pm
 Exceptions.pm
+LockFile.pm
 HttpReader.pm
 ObjectList.pm
 PerlLauncher.pm

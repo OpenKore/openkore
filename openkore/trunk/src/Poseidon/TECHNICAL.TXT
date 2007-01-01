@@ -21,8 +21,8 @@ Poseidon works like this:
 
 Protocol
 --------
-The Poseidon server uses the same message format as the IPC subsystem.
-See the IPC::Messages module for information.
+The Poseidon server uses the same message format as the bus system.
+See the Bus::Messages module for information.
 
 A request to the Poseidon server is as follows:
 Message ID: "Poseidon Query"

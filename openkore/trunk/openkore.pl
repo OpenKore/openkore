@@ -241,23 +241,15 @@ if ($@) {
 	exit 1;
 }
 
-if ($sys{ipc}) {
-	require IPC;
-	require IPC::Processors;
-	Modules::register("IPC", "IPC::Processors");
-
-	my $host = $sys{ipc_manager_host};
-	my $port = $sys{ipc_manager_port};
+if ($sys{bus}) {
+	require Bus::Client;
+	require Bus::Handlers;
+	my $host = $sys{bus_server_host};
+	my $port = $sys{bus_server_port};
 	$host = undef if ($host eq '');
 	$port = undef if ($port eq '');
-	$ipc = new IPC(undef, $host, $port, 1,
-		       $sys{ipc_manager_bind}, $sys{ipc_manager_startAtPort});
-	if (!$ipc && $@) {
-		Log::error(TF("Unable to initialize the IPC subsystem: %s\n", $@));
-		undef $@;
-	}
-
-	$ipc->send("new bot", userName => $config{username});
+	$bus = new Bus::Client(undef, $host, $port);
+	our $busMessageHandler = new Bus::Handlers($bus);
 }
 
 

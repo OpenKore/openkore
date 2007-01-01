@@ -30,8 +30,8 @@ DIRS=(.
 	src/Base
 	src/Base/Server
 	src/Base/WebServer
-	src/IPC
-	src/IPC/Manager
+	src/Bus
+	src/Bus/Server
 	src/Interface
 	src/Interface/Console
 	src/Interface/Wx

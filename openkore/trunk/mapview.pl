@@ -27,14 +27,14 @@ GetOptions(
 );
 
 if ($options{help}) {
-	my $msg = <<"	EOF";
+	my $msg = <<EOF;
 		mapview.pl [OPTIONS]
 
 		Options:
 		 --fields=path        Path to the folder containing .fld files.
 		 --maps=path          Path to the folder containing map images.
 		 --logs=path          Path to the folder containing log files.
-	EOF
+EOF
 	$msg =~ s/^\t*//gm;
 	print $msg;
 	exit 1;
@@ -51,15 +51,15 @@ use Wx::Event qw(EVT_TIMER);
 use base qw(Wx::App);
 
 use Interface::Wx::MapViewer;
-use IPC;
 
 my $frame;
 my $sizer;
 my $mapview;
 my $status;
+
 my %field;
-my %ipcInfo;
-my $ipc;
+my $bus;
+my %state;
 
 sub OnInit {
 	my $self = shift;
@@ -92,6 +92,10 @@ sub OnInit {
 		$timer->Start(500);
 		onTimer();
 
+		$timer = new Wx::Timer($self, 6);
+		EVT_TIMER($self, 6, \&onBusTimer);
+		$timer->Start(50);
+
 	} else {
 		getField("$options{fields}/$ARGV[0].fld", \%field);
 		$field{realName} = $ARGV[0];
@@ -112,18 +116,22 @@ sub onMouseMove {
 sub onClick {
 	my (undef, $x, $y) = @_;
 
-	if ($ipcInfo{host} && (!$ipc || $ipc->host ne $ipcInfo{host})) {
-		$ipc = new IPC("Map Viewer", $ipcInfo{host}, $ipcInfo{port});
-		while ($ipc && $ipc->connected && !$ipc->ready) {
-			$ipc->iterate;
-		}
+	if ($state{busHost} && (!$bus || $bus->serverHost() ne $state{busHost} || $bus->serverPort() ne $state{busPort})) {
+		require Bus::Client;
+		$bus = new Bus::Client(
+			host => $state{busHost},
+			port => $state{busPort},
+			privateOnly => 1,
+			userAgent => "Map Viewer"
+		);
 	}
-	if ($ipc && $ipc->ready && $ipc->connected) {
-		$ipc->send("move to",
-			TO => $ipcInfo{ID},
+	if ($bus) {
+		$bus->send("MoveTo", {
+			TO => $state{busClientID},
 			field => $field{realName},
 			x => $x,
-			y => $y);
+			y => $y
+		});
 	}
 }
 
@@ -133,35 +141,38 @@ sub onMapChange {
 }
 
 sub onTimer {
-	return unless open(F, "< $options{logs}/walk.dat");
-	my @lines = <F>;
-	close F;
-	s/[\r\n]//g foreach (@lines);
+	my $f;
+	return unless open($f, "<:utf8", "$options{logs}/state.txt");
 
-	my ($fieldName, $fieldBaseName) = split / /, $lines[0];
-	if ($fieldName ne $field{name}) {
-		return unless getField("$options{fields}/$fieldBaseName.fld", \%field);
-		$field{realName} = $fieldName;
+	%state = (NPC => [], Monster => [], Player => []);
+	while (!eof($f)) {
+		my $line = <$f>;
+		$line =~ s/[\r\n]//g;
+		my ($key, $value) = split /=/, $line, 2;
+		if ($key eq 'NPC' || $key eq 'Monster' || $key eq 'Player') {
+			my ($x, $y) = split / /, $value;
+			push @{$state{$key}}, { type => $key, x => $x, y => $y };
+		} else {
+			$state{$key} = $value;
+		}
 	}
-	$mapview->set($fieldBaseName, $lines[1], $lines[2], \%field);
+	close $f;
 
-	($ipcInfo{host}, $ipcInfo{port}, $ipcInfo{ID}) = split / /, $lines[3];
+	if ($state{fieldName} ne $field{name}) {
+		return unless getField("$options{fields}/$state{fieldBaseName}.fld", \%field);
+		$field{realName} = $state{fieldName};
+	}
+	$mapview->set($state{fieldBaseName}, $state{x}, $state{y}, \%field);
 
-	my (@monsters, @players, @npcs);
-	for (my $i = 4; $i < @lines; $i++) {
-		my ($type, $x, $y) = split / /, $lines[$i];
-		if ($type eq "ML") {
-			my %monster;
-			$monster{pos_to} = {x => $x, y => $y};
-			push @monsters, \%monster;
-		} elsif ($type eq "PL") {
-			my %player;
-			$player{pos_to} = {x => $x, y => $y};
-			push @players, \%player;
-		} elsif ($type eq "NL" ) {
-			my %npc;
-			$npc{pos} = {x => $x, y => $y};
-			push @npcs, \%npc;
+	my (@npcs, @monsters, @players);
+	foreach my $entry (@{$state{NPC}}) {
+		my %actor = (pos_to => $entry);
+		if ($entry->{type} eq 'NPC') {
+			push @npcs, \%actor;
+		} elsif ($entry->{type} eq 'Monster') {
+			push @monsters, \%actor;
+		} elsif ($entry->{type} eq 'Player') {
+			push @players, \%actor;
 		}
 	}
 	$mapview->setMonsters(\@monsters);
@@ -169,7 +180,11 @@ sub onTimer {
 	$mapview->setNPCs(\@npcs);
 
 	$mapview->update;
-	$status->SetStatusText("$lines[1], $lines[2]", 0);
+	$status->SetStatusText("$state{x}, $state{y}", 0);
+}
+
+sub onBusTimer {
+	$bus->iterate() if ($bus);
 }
 
 

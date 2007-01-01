@@ -263,16 +263,8 @@ sub mainLoop {
 	Benchmark::end("mainLoop_part2") if DEBUG;
 	Benchmark::begin("mainLoop_part3") if DEBUG;
 
-	# Process messages from the IPC network
-	if ($ipc && $ipc->connected) {
-		my @ipcMessages;
-		$ipc->iterate;
-		if ($ipc->ready && $ipc->recv(\@ipcMessages) > 0) {
-			foreach (@ipcMessages) {
-				IPC::Processors::process($ipc, $_);
-			}
-		}
-	}
+	# Process bus events.
+	$bus->iterate() if ($bus);
 
 
 	###### Other stuff that's run in the main loop #####
@@ -358,36 +350,26 @@ sub mainLoop {
 
 	processStatisticsReporting() unless ($sys{sendAnonymousStatisticReport} eq "0");
 
-	# Update walk.dat
-	if ($net->getState() == Network::IN_GAME && timeOut($AI::Timeouts::mapdrt, $config{intervalMapDrt})) {
+	# Update state.txt
+	if ($field{name} && $net->getState() == Network::IN_GAME && timeOut($AI::Timeouts::mapdrt, $config{intervalMapDrt})) {
 		$AI::Timeouts::mapdrt = time;
-		if ($field{name}) {
-			Misc::checkValidity("walk.dat (pre)");
-			my $pos = calcPosition($char);
-			open(DATA, ">$Settings::logs_folder/walk.dat");
-			print DATA "$field{name} $field{baseName}\n";
-			print DATA "$pos->{x}\n$pos->{y}\n";
-			if ($ipc && $ipc->connected && $ipc->ready) {
-				print DATA $ipc->host . " " . $ipc->port . " " . $ipc->ID . "\n";
-			} else {
-				print DATA "\n";
-			}
 
-			for (my $i = 0; $i < @npcsID; $i++) {
-				next if ($npcsID[$i] eq "");
-				print DATA "NL " . $npcs{$npcsID[$i]}{pos}{x} . " " . $npcs{$npcsID[$i]}{pos}{y} . "\n";
+		my $pos = calcPosition($char);
+		my $f;
+		if (open($f, ">:utf8", "$Settings::logs_folder/state.txt")) {
+			print $f "fieldName=$field{name}\n";
+			print $f "fieldBaseName=$field{baseName}\n";
+			print $f "x=$pos->{x}\n";
+			print $f "y=$pos->{y}\n";
+			if ($bus && $bus->getState() == Bus::Client::CONNECTED()) {
+				print $f "busHost=" . $bus->serverHost() . "\n";
+				print $f "busPort=" . $bus->serverPort() . "\n";
+				print $f "busClientID=" . $bus->ID() . "\n";
 			}
-			for (my $i = 0; $i < @playersID; $i++) {
-				next if ($playersID[$i] eq "");
-				print DATA "PL " . $players{$playersID[$i]}{pos_to}{x} . " " . $players{$playersID[$i]}{pos_to}{y} . "\n";
+			foreach my $actor (@{$npcsList->getItems()}, @{$playersList->getItems()}, @{$monstersList->getItems()}) {
+				print $f "$actor->{actorType}=$actor->{pos_to}{x} $actor->{pos_to}{y}\n";
 			}
-			for (my $i = 0; $i < @monstersID; $i++) {
-				next if ($monstersID[$i] eq "");
-				print DATA "ML " . $monsters{$monstersID[$i]}{pos_to}{x} . " " . $monsters{$monstersID[$i]}{pos_to}{y} . "\n";
-			}
-
-			close(DATA);
-			Misc::checkValidity("walk.dat");
+			close($f);
 		}
 	}
 
