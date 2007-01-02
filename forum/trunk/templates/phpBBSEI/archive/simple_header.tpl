@@ -16,7 +16,7 @@
 <META NAME="audience" CONTENT="all" />
 <META NAME="generator" CONTENT="phpBB + phpBB Search Engine Indexer" />
 {META}
-<title>{SITENAME} :: {PAGE_TITLE}</title>
+<title>{PAGE_TITLE} :: {SITENAME}</title>
 <script language="Javascript" type="text/javascript">
 function phpRebelLink ( link ) {
 	window.location = link;
