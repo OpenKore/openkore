@@ -83,7 +83,7 @@ sub getReply {
 
 sub messageReceived {
 	my ($self, undef, undef, $message) = @_;
-	if ($message->{args}{SEQ} == $self->{seq} && $self->{state} == WAITING) {
+	if ($self->{state} == WAITING && $message->{args}{SEQ} == $self->{seq} && $message->{args}{IRY}) {
 		# A reply has been received.
 		push @{$self->{replies}}, [$message->{messageID}, $message->{args}];
 

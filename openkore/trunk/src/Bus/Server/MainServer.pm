@@ -22,6 +22,7 @@ use constant IDENTIFIED => 2;
 #        broadcasted to all clients.
 # - SEQ - A sequence number, used to map reply messages to the original
 #         query message. Reply messages MUST have the same SEQ.
+# - IRY - Specifies that this message is a reply to a query.
 
 
 sub new {
@@ -85,6 +86,7 @@ sub messageReceived {
 				# Delivery failed for some reason. Notify the client.
 				my %args2 = ( clientID => $args->{TO} );
 				$args2{SEQ} = $args->{SEQ} if (exists $args->{SEQ});
+				$args2{IRY} = 1;
 				$self->send($client->{ID}, 'DELIVERY_FAILED', \%args2);
 			}
 
@@ -93,6 +95,7 @@ sub messageReceived {
 			# Notify the sender.
 			my %args2 = ( clientID => $args->{TO} );
 			$args2{SEQ} = $args->{SEQ} if (exists $args->{SEQ});
+			$args2{IRY} = 1;
 			$self->send($client->{ID}, 'CLIENT_NOT_FOUND', \%args2);
 		}
 
@@ -179,6 +182,7 @@ sub processLIST_CLIENTS {
 		}
 		$args2{count} = $i;
 		$args2{SEQ} = $args->{SEQ} if (exists $args->{SEQ});
+		$args2{IRY} = 1;
 		$self->send($client->{ID}, "LIST_CLIENTS", \%args2);
 	}
 }
