@@ -565,9 +565,15 @@ function session_reset_keys($user_id, $user_ip)
 //
 function append_sid($url, $non_html_amp = false)
 {
-	global $SID;
+	global $SID, $HTTP_SERVER_VARS;
 
-	if ( !empty($SID) && !preg_match('#sid=#', $url) )
+	if ( !empty($SID) && !preg_match('#sid=#', $url)
+	&& !strstr($HTTP_SERVER_VARS['HTTP_USER_AGENT'], 'Googlebot')
+	&& !strstr($HTTP_SERVER_VARS['HTTP_USER_AGENT'] ,'slurp@inktomi.com;')
+	&& !strstr($HTTP_SERVER_VARS['HTTP_USER_AGENT'] ,'Yahoo! Slurp')
+	&& !strstr($HTTP_SERVER_VARS['HTTP_USER_AGENT'] ,'Yahoo!-MMCrawler')
+	&& !strstr($HTTP_SERVER_VARS['HTTP_USER_AGENT'] ,'msnbot')
+	&& !strstr($HTTP_SERVER_VARS['HTTP_USER_AGENT'] ,'Baiduspider'))
 	{
 		$url .= ( ( strpos($url, '?') !== false ) ?  ( ( $non_html_amp ) ? '&' : '&amp;' ) : '?' ) . $SID;
 	}
