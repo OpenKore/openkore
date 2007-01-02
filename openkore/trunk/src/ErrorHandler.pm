@@ -51,31 +51,32 @@ sub showError {
 
 sub errorHandler {
 	return unless (defined $^S && $^S == 0);
-	my $e = $@;
+	my $e = $_[0];
 
-	# Extract file and line number from the die message
-	my ($file, $line);
+	# Get the error message, and extract file and line number.
+	my ($file, $line, $errorMessage);
 	if (UNIVERSAL::isa($e, 'Exception::Class::Base')) {
 		$file = $e->file;
 		$line = $e->line;
+		$errorMessage = $e->message;
 	} else {
-		($file, $line) = $_[0] =~ / at (.+?) line (\d+)\.$/;
+		($file, $line) = $e =~ / at (.+?) line (\d+)\.$/;
+		# Get rid of the annoying "@INC contains:"
+		$errorMessage = $e;
+		$errorMessage =~ s/ \(\@INC contains: .*\)//;
 	}
+	$errorMessage =~ s/[\r\n]+$//s;
 
-	# Get rid of the annoying "@INC contains:"
-	my $dieMsg = $_[0];
-	$dieMsg =~ s/ \(\@INC contains: .*\)//;
-
-	# Create error message and display it
-	my $msg = TF("This program has encountered an unexpected problem. This is probably because\n" .
+	# Create the message to be displayed to the user.
+	my $display = TF("This program has encountered an unexpected problem. This is probably because\n" .
 	             "of a bug in this program. Please tell us about this problem.\n\n" .
 	             "The error message is:\n" .
 	             "%s\n\n" .
 	             "A more detailed error report is saved to errors.txt. Please include the\n" .
 	             "contents of this file in your report, or we may not be able to help you!",
-	             $dieMsg);
+	             $errorMessage);
 
-	# Create the errors.txt error log
+	# Create the errors.txt error log.
 	my $log = '';
 	$log .= "$Settings::NAME version $Settings::VERSION\n" if (defined $Settings::VERSION);
 	$log .= "\@ai_seq = @Globals::ai_seq\n" if (defined @Globals::ai_seq);
@@ -88,19 +89,22 @@ sub errorHandler {
 	} else {
 		$log .= "No loaded plugins.\n";
 	}
-	$log .= "\n";
+	$log .= "\nError message:\n$errorMessage\n\n";
 
-	# Add stack trace
-	$log .= "Stack trace:\n";
+	# Add stack trace to errors.txt.
 	if (UNIVERSAL::isa($e, 'Exception::Class::Base')) {
+		$log .= "Stack trace:\n";
 		$log .= $e->trace();
 	} elsif (defined &Carp::longmess) {
+		$log .= "Stack trace:\n";
+		my $e = $errorMessage;
+		$e =~ s/ at .*? line \d+\.$//s;
 		$log .= Carp::longmess($e);
-	} else {
-		$log .= $dieMsg;
 	}
-	# Find out which line died
-	if (-f $file && open(F, "< $file")) {
+	$log =~ s/\n+$//s;
+
+	# Find out which line died.
+	if (defined $file && defined $line && -f $file && open(F, "<", $file)) {
 		my @lines = <F>;
 		close F;
 
@@ -116,11 +120,9 @@ sub errorHandler {
 		print F $log;
 		close F;
 	}
-	showError($msg);
-	print "-------\n";
-	system('cat errors.txt');
+	showError($display);
 	exit 9;
-};
+}
 
 $SIG{__DIE__} = \&errorHandler;
 
