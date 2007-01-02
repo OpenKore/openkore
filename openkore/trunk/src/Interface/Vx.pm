@@ -29,6 +29,7 @@ use Interface;
 use base qw/Interface/;
 use Plugins;
 use Globals;
+use Field;
 use Settings qw(%sys);
 use Misc;
 use Utils;
@@ -1013,13 +1014,18 @@ sub packet {
 		my ($map_name) = substr($msg, 2, 16) =~ /([\s\S]*?)\000/;
 		($map_name) = $map_name =~ /([\s\S]*)\./;
 		if ($map_name ne $field{name}) {
-			main::getField($map_name, \%field);
-			if (!$config{lockMap} || $map_name eq $config{lockMap}) {
-				$self->status_update("On Map : $map_name");
-			} else {
-				$self->status_update("On Map : $map_name | LockMap : $config{lockMap}");
+			eval {
+				$field = new Field(name => $map_name);
+				if (!$config{lockMap} || $map_name eq $config{lockMap}) {
+					$self->status_update("On Map : $map_name");
+				} else {
+					$self->status_update("On Map : $map_name | LockMap : $config{lockMap}");
+				}
+				$self->loadMap() if ($self->mapIsShown());
+			};
+			if ($@) {
+				undef $field;
 			}
-			$self->loadMap() if ($self->mapIsShown());
 		}
 		#my %coords;
 		#$coords{x} = unpack("v1", substr($msg, 18, 2));
@@ -1033,13 +1039,18 @@ sub packet {
 		my ($map_name) = substr($msg, 2, 16) =~ /([\s\S]*?)\000/;
 		($map_name) = $map_name =~ /([\s\S]*)\./;
 		if ($map_name ne $field{'name'}) {
-			main::getField($map_name, \%field);
-			$self->loadMap() if ($self->mapIsShown());
-			$self->removeAllObj();
-			if (!$config{lockMap} || $map_name eq $config{lockMap}) {
-				$self->status_update("On Map : $map_name");
-			} else {
-				$self->status_update("On Map : $map_name | LockMap : $config{lockMap}");
+			eval {
+				$field = new Field(name => $map_name);
+				$self->loadMap() if ($self->mapIsShown());
+				$self->removeAllObj();
+				if (!$config{lockMap} || $map_name eq $config{lockMap}) {
+					$self->status_update("On Map : $map_name");
+				} else {
+					$self->status_update("On Map : $map_name | LockMap : $config{lockMap}");
+				}
+			};
+			if ($@) {
+				undef $field;
 			}
 		}
 

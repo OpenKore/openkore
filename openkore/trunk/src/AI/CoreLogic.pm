@@ -39,7 +39,9 @@ use Commands;
 use Network;
 use FileParsers;
 use Translation;
+use Field;
 use Task::TalkNPC;
+use Utils::Exceptions;
 
 # This is the main function from which the rest of the AI
 # will be invoked.
@@ -561,7 +563,7 @@ sub processEscapeUnknownMaps {
 				} else {
 					$randY = $pos->{y} - int(rand(9) + 1);
 				}
-			} while (--$i && !checkFieldWalkable(\%field, $randX, $randY));
+			} while (--$i && !$field->isWalkable($randX, $randY));
 			if (!$i) {
 				error T("Invalid coordinates specified for randomWalk\n Retrying...");
 			} else {
@@ -752,7 +754,7 @@ sub processRouteAI {
 		} elsif ($args->{stage} eq '') {
 			my $pos = calcPosition($char);
 			$args->{solution} = [];
-			if (ai_route_getRoute($args->{solution}, \%field, $pos, $args->{dest}{pos})) {
+			if (ai_route_getRoute($args->{solution}, $field, $pos, $args->{dest}{pos})) {
 				$args->{stage} = 'Route Solution Ready';
 				debug "Route Solution Ready\n", "route";
 			} else {
@@ -925,12 +927,18 @@ sub processMapRouteAI {
 			delete $args->{'closelist'};
 			undef @{$args->{'mapSolution'}};
 			$args->{'dest'}{'field'} = {};
-			getField($args->{dest}{map}, $args->{dest}{field});
+			eval {
+				$args->{dest}{field} = new Field($args->{dest}{map});
+			};
+			if ($@) {
+				error TF("Cannot load field %s", $args->{dest}{map});
+				AI::dequeue;
+			}
 
 			# Initializes the openlist with portals walkable from the starting point
 			foreach my $portal (keys %portals_lut) {
 				next if $portals_lut{$portal}{'source'}{'map'} ne $field{'name'};
-				if ( ai_route_getRoute(\@{$args->{solution}}, \%field, $char->{pos_to}, \%{$portals_lut{$portal}{'source'}}) ) {
+				if ( ai_route_getRoute(\@{$args->{solution}}, $field, $char->{pos_to}, \%{$portals_lut{$portal}{'source'}}) ) {
 					foreach my $dest (keys %{$portals_lut{$portal}{'dest'}}) {
 						my $penalty = int(($portals_lut{$portal}{'dest'}{$dest}{'steps'} ne '') ? $routeWeights{'NPC'} : $routeWeights{'PORTAL'});
 						$args->{'openlist'}{"$portal=$dest"}{'walk'} = $penalty + scalar @{$args->{'solution'}};
@@ -1021,7 +1029,7 @@ sub processMapRouteAI {
 					debug "We spent too much time; bailing out.\n", "route";
 					AI::dequeue;
 
-				} elsif ( ai_route_getRoute( \@solution, \%field, $char->{pos_to}, $args->{mapSolution}[0]{pos} ) ) {
+				} elsif ( ai_route_getRoute( \@solution, $field, $char->{pos_to}, $args->{mapSolution}[0]{pos} ) ) {
 					# NPC is reachable from current position
 					# >> Then "route" to it
 					debug "Walking towards the NPC\n", "route";
@@ -1052,7 +1060,7 @@ sub processMapRouteAI {
 					debug "We spent too much time; bailing out.\n", "route";
 					AI::dequeue;
 
-				} elsif ( ai_route_getRoute( \@solution, \%field, $chars[$config{'char'}]{'pos_to'}, $args->{'mapSolution'}[0]{'pos'} ) ) {
+				} elsif ( ai_route_getRoute( \@solution, $field, $chars[$config{'char'}]{'pos_to'}, $args->{'mapSolution'}[0]{'pos'} ) ) {
 					# X,Y is reachable from current position
 					# >> Then "route" to it
 					ai_route($args->{'mapSolution'}[0]{'map'}, $args->{'mapSolution'}[0]{'pos'}{'x'}, $args->{'mapSolution'}[0]{'pos'}{'y'},
@@ -1137,7 +1145,7 @@ sub processMapRouteAI {
 					}
 
 					if ($walk) {
-						if ( ai_route_getRoute( \@solution, \%field, $char->{pos_to}, $args->{mapSolution}[0]{pos} ) ) {
+						if ( ai_route_getRoute( \@solution, $field, $char->{pos_to}, $args->{mapSolution}[0]{pos} ) ) {
 							debug "portal within same map\n", "route";
 							# Portal is reachable from current position
 							# >> Then "route" to it
@@ -2215,22 +2223,22 @@ sub processLockMap {
 			my %args;
 			Plugins::callHook("AI/lockMap", \%args);
 			if (!$args{return}) {
-				my %lockField;
-				getField($config{lockMap}, \%lockField);
-
-				my ($lockX, $lockY);
-				my $i = 500;
-				if ($config{lockMap_x} ne '' || $config{lockMap_y} ne '') {
-					do {
-						$lockX = int($config{lockMap_x}) if ($config{lockMap_x} ne '');
-						$lockX = int(rand($field{width}) + 1) if (!$config{lockMap_x} && $config{lockMap_y});
-						$lockX += (int(rand($config{lockMap_randX}))+1) if ($config{lockMap_randX} ne '');
-						$lockY = int($config{lockMap_y}) if ($config{lockMap_y} ne '');
-						$lockY = int(rand($field{width}) + 1) if (!$config{lockMap_y} && $config{lockMap_x});
-						$lockY += (int(rand($config{lockMap_randY}))+1) if ($config{lockMap_randY} ne '');
-					} while (--$i && !checkFieldWalkable(\%lockField, $lockX, $lockY));
-				}
-				if (!$i) {
+				my ($lockX, $lockY, $i);
+				eval {
+					my $lockField = new Field(name => $config{lockMap}, loadDistanceMap => 0);
+					$i = 500;
+					if ($config{lockMap_x} ne '' || $config{lockMap_y} ne '') {
+						do {
+							$lockX = int($config{lockMap_x}) if ($config{lockMap_x} ne '');
+							$lockX = int(rand($field{width}) + 1) if (!$config{lockMap_x} && $config{lockMap_y});
+							$lockX += (int(rand($config{lockMap_randX}))+1) if ($config{lockMap_randX} ne '');
+							$lockY = int($config{lockMap_y}) if ($config{lockMap_y} ne '');
+							$lockY = int(rand($field{width}) + 1) if (!$config{lockMap_y} && $config{lockMap_x});
+							$lockY += (int(rand($config{lockMap_randY}))+1) if ($config{lockMap_randY} ne '');
+						} while (--$i && !$lockField->isWalkable($lockX, $lockY));
+					}
+				};
+				if (caught('FileNotFoundException') || !$i) {
 					error T("Invalid coordinates specified for lockMap, coordinates are unwalkable\n");
 					$config{lockMap} = '';
 				} else {
@@ -2358,7 +2366,7 @@ sub processRandomWalk {
 			$randX = int($config{'lockMap_x'} - $config{'lockMap_randX'} + rand(2*$config{'lockMap_randX'}+1)) if ($config{'lockMap_x'} ne '' && $config{'lockMap_randX'} ne '');
 			$randY = int(rand($field{height}) + 1);
 			$randY = int($config{'lockMap_y'} - $config{'lockMap_randY'} + rand(2*$config{'lockMap_randY'}+1)) if ($config{'lockMap_y'} ne '' && $config{'lockMap_randY'} ne '');
-		} while (--$i && !checkFieldWalkable(\%field, $randX, $randY));
+		} while (--$i && !$field->isWalkable($randX, $randY));
 		if (!$i) {
 			error T("Invalid coordinates specified for randomWalk (coordinates are unwalkable); randomWalk disabled\n");
 			$config{route_randomWalk} = 0;

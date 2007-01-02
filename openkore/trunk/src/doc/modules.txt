@@ -9,6 +9,7 @@ Interface
 ChatQueue
 Commands
 Log
+Field
 Settings
 Translation
 Task

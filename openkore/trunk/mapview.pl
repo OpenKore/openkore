@@ -51,13 +51,14 @@ use Wx::Event qw(EVT_TIMER);
 use base qw(Wx::App);
 
 use Interface::Wx::MapViewer;
+use Field;
 
 my $frame;
 my $sizer;
 my $mapview;
 my $status;
 
-my %field;
+my $field;
 my $bus;
 my %state;
 
@@ -97,9 +98,8 @@ sub OnInit {
 		$timer->Start(50);
 
 	} else {
-		getField("$options{fields}/$ARGV[0].fld", \%field);
-		$field{realName} = $ARGV[0];
-		$mapview->set($ARGV[0], $ARGV[1], $ARGV[2], \%field);
+		$field = new Field(file => "$options{fields}/$ARGV[0].fld");
+		$mapview->set($ARGV[0], $ARGV[1], $ARGV[2], $field);
 		$mapview->update;
 	}
 
@@ -128,7 +128,7 @@ sub onClick {
 	if ($bus) {
 		$bus->send("MoveTo", {
 			TO => $state{busClientID},
-			field => $field{realName},
+			field => $field->name(),
 			x => $x,
 			y => $y
 		});
@@ -136,7 +136,7 @@ sub onClick {
 }
 
 sub onMapChange {
-	$frame->SetTitle("$field{realName}");
+	$frame->SetTitle($field->name());
 	$frame->Fit;
 }
 
@@ -158,11 +158,14 @@ sub onTimer {
 	}
 	close $f;
 
-	if ($state{fieldName} ne $field{name}) {
-		return unless getField("$options{fields}/$state{fieldBaseName}.fld", \%field);
-		$field{realName} = $state{fieldName};
+	if (!$field || $state{fieldName} ne $field->name()) {
+		eval {
+			$field = new Field(file => "$options{fields}/$state{fieldBaseName}.fld",
+				loadDistanceMap => 0);
+			$field->{name} = $state{fieldName};
+		};
 	}
-	$mapview->set($state{fieldBaseName}, $state{x}, $state{y}, \%field);
+	$mapview->set($state{fieldBaseName}, $state{x}, $state{y}, $field);
 
 	my (@npcs, @monsters, @players);
 	foreach my $entry (@{$state{NPC}}) {
@@ -185,66 +188,4 @@ sub onTimer {
 
 sub onBusTimer {
 	$bus->iterate() if ($bus);
-}
-
-
-sub getField {
-	my $file = shift;
-	my $r_hash = shift;
-
-	undef %{$r_hash};
-	unless (-e $file) {
-		my %aliases = (
-			'new_1-1.fld' => 'new_zone01.fld',
-			'new_2-1.fld' => 'new_zone01.fld',
-			'new_3-1.fld' => 'new_zone01.fld',
-			'new_4-1.fld' => 'new_zone01.fld',
-			'new_5-1.fld' => 'new_zone01.fld',
-
-			'new_1-2.fld' => 'new_zone02.fld',
-			'new_2-2.fld' => 'new_zone02.fld',
-			'new_3-2.fld' => 'new_zone02.fld',
-			'new_4-2.fld' => 'new_zone02.fld',
-			'new_5-2.fld' => 'new_zone02.fld',
-
-			'new_1-3.fld' => 'new_zone03.fld',
-			'new_2-3.fld' => 'new_zone03.fld',
-			'new_3-3.fld' => 'new_zone03.fld',
-			'new_4-3.fld' => 'new_zone03.fld',
-			'new_5-3.fld' => 'new_zone03.fld',
-
-			'new_1-4.fld' => 'new_zone04.fld',
-			'new_2-4.fld' => 'new_zone04.fld',
-			'new_3-4.fld' => 'new_zone04.fld',
-			'new_4-4.fld' => 'new_zone04.fld',
-			'new_5-4.fld' => 'new_zone04.fld',
-		);
-
-		my ($dir, $base) = $file =~ /^(.*[\\\/])?(.*)$/;
-		if (exists $aliases{$base}) {
-			$file = "${dir}$aliases{$base}";
-		}
-
-		if (! -e $file) {
-			return 0;
-		}
-	}
-
-	# Load the .fld file
-	$r_hash->{name} = $file;
-	$r_hash->{name} =~ s/.*[\\\/]//;
-	$r_hash->{name} =~ s/(.*)\..*/$1/;
-	$r_hash->{baseName} = $r_hash->{name};
-
-	open FILE, "< $file";
-	binmode(FILE);
-	my $data;
-	{
-		local($/);
-		$data = <FILE>;
-		close FILE;
-		@$r_hash{'width', 'height'} = unpack("S1 S1", substr($data, 0, 4, ''));
-		$r_hash->{rawMap} = $data;
-	}
-	return 1;
 }

@@ -25,7 +25,7 @@ use Modules 'register';
 use Task::WithSubtask;
 use base qw(Task::WithSubtask);
 use Task::Move;
-use Globals qw($char %field $net %config);
+use Globals qw($char $field $net %config);
 use Log qw(message debug);
 use Network;
 use Translation qw(T TF);
@@ -82,7 +82,7 @@ sub new {
 		}
 	}
 
-	$self->{dest}{map} = $field{name};
+	$self->{dest}{map} = $field->name();
 	$self->{dest}{pos}{x} = $args{x};
 	$self->{dest}{pos}{y} = $args{y};
 	$self->{avoidWalls} = 1 if (!defined $self->{avoidWalls});
@@ -137,21 +137,21 @@ sub resume {
 sub iterate {
 	my ($self) = @_;
 	return unless ($self->SUPER::iterate() && $net->getState() == Network::IN_GAME);
-	return unless ($field{name} && defined($char->{pos_to}{x}) && defined($char->{pos_to}{y}));
+	return unless ($field && defined($char->{pos_to}{x}) && defined($char->{pos_to}{y}));
 
 	if ( $self->{maxTime} && timeOut($self->{time_start}, $self->{maxTime})) {
 		# We spent too much time
 		debug "Route - we spent too much time; bailing out.\n", "route";
 		$self->setError(TOO_MUCH_TIME, "Too much time spent on walking.");
 
-	} elsif ($field{name} ne $self->{dest}{map} || $self->{mapChanged}) {
-		debug "Map changed: $field{name} $self->{dest}{map}\n", "route";
+	} elsif ($field->name() ne $self->{dest}{map} || $self->{mapChanged}) {
+		debug "Map changed: " . $field->name() . " $self->{dest}{map}\n", "route";
 		$self->setDone();
 
 	} elsif ($self->{stage} eq '') {
 		my $pos = calcPosition($char);
 		my $begin = time;
-		if ($self->getRoute($self->{solution}, \%field, $pos, $self->{dest}{pos}, $self->{avoidWalls})) {
+		if ($self->getRoute($self->{solution}, $field, $pos, $self->{dest}{pos}, $self->{avoidWalls})) {
 			$self->{stage} = 'Route Solution Ready';
 			debug "Route Solution Ready!\n", "route";
 
@@ -162,7 +162,7 @@ sub iterate {
 			}
 
 		} else {
-			debug "Something's wrong; there is no path to $field{name}($self->{dest}{pos}{x},$self->{dest}{pos}{y}).\n", "debug";
+			debug "Something's wrong; there is no path to " . $field->name() . "($self->{dest}{pos}{x},$self->{dest}{pos}{y}).\n", "debug";
 			$self->setError(CANNOT_CALCULATE_ROUTE, "Unable to calculate a route.");
 		}
 
@@ -248,7 +248,7 @@ sub iterate {
 				# FIXME: this looks ugly!
 				# We're stuck
 				my $msg = TF("Stuck at %s (%d,%d), while walking from (%d,%d) to (%d,%d).",
-					$field{name}, $char->{pos_to}{x}, $char->{pos_to}{y},
+					$field->name(), $char->{pos_to}{x}, $char->{pos_to}{y},
 					$cur_x, $cur_y, $self->{dest}{pos}{x}, $self->{dest}{pos}{y});
 				$msg .= T(" Teleporting to unstuck.") if ($config{teleportAuto_unstuck});
 				$msg .= "\n";
@@ -362,7 +362,7 @@ sub iterate {
 # $returnArray. This function is a convenience wrapper function for the stuff
 # in Utils/PathFinding.pm
 sub getRoute {
-	my ($class, $returnArray, $r_field, $r_start, $r_dest, $avoidWalls) = @_;
+	my ($class, $returnArray, $field, $r_start, $r_dest, $avoidWalls) = @_;
 	@{$returnArray} = ();
 	return 1 if (!defined $r_dest->{x} || $r_dest->{y} eq '');
 
@@ -370,8 +370,8 @@ sub getRoute {
 	# So we find a nearby spot that is walkable.
 	my %start = %{$r_start};
 	my %dest = %{$r_dest};
-	Misc::closestWalkableSpot($r_field, \%start);
-	Misc::closestWalkableSpot($r_field, \%dest);
+	Misc::closestWalkableSpot($field, \%start);
+	Misc::closestWalkableSpot($field, \%dest);
 
 	# Generate map weights (for wall avoidance)
 	my $weights;
@@ -386,8 +386,8 @@ sub getRoute {
 	# Calculate path
 	my $pathfinding = new PathFinding(
 		start => \%start,
-		dest => \%dest,
-		field => $r_field,
+		dest  => \%dest,
+		field => $field,
 		weights => $weights
 	);
 	return undef if !$pathfinding;

@@ -27,6 +27,7 @@ use Interface;
 use base qw/Interface/;
 use Plugins;
 use Globals;
+use Field;
 use Settings;
 use Misc;
 
@@ -177,7 +178,7 @@ sub updatePos {
 	$self->{status_posx}->configure( -text =>$x);
 	$self->{status_posy}->configure( -text =>$y);
 	if ($self->mapIsShown()) {
-		if ($self->{map}{field} ne $field{'name'}) {
+		if ($self->{map}{field} ne $field->name()) {
 			$self->loadMap();
 		}
 		$self->{map}{canvas}->coords($self->{map}{ind}{player},
@@ -680,7 +681,7 @@ sub mapToggle {
 	} else {
 		die "wrong number of args to mapToggle\n";
 	}
-	if (!defined($self->{map}) && $chars[$config{'char'}] && %field) {
+	if (!defined($self->{map}) && $chars[$config{'char'}] && $field) {
 		$self->{map}{window} = $self->{mw}->Toplevel();
 		$self->{map}{window}->protocol('WM_DELETE_WINDOW', 
 			sub {
@@ -737,7 +738,7 @@ sub pointchk {
 	}
 	$mvcpy = $self->{map}{height} - $mvcpy;
 	my ($x,$y) = @{$char->{'pos_to'}}{'x', 'y'};
-	$self->{map}{window}->title(sprintf "Map View: %8s p:(%3d, %3d) m:(%3d, %3d)", $field{'name'}, $x, $y, $mvcpx, $mvcpy);
+	$self->{map}{window}->title(sprintf "Map View: %8s p:(%3d, %3d) m:(%3d, %3d)", $field->name(), $x, $y, $mvcpx, $mvcpy);
 	$self->{map}{window}->update; 
 }
 
@@ -754,7 +755,7 @@ sub mapMove {
 	main::aiRemove("move");
 	main::aiRemove("route");
 	main::aiRemove("mapRoute");
-	main::ai_route($field{'name'}, $mvcpx, $mvcpy,
+	main::ai_route($field->name(), $mvcpx, $mvcpy,
 		attackOnRoute => $moveAttack,
 		noSitAuto => 1);
 }
@@ -767,11 +768,11 @@ sub mapIsShown {
 sub loadMap {
 	my $self = shift;
 	return if (!$self->mapIsShown());
-	$self->{map}{field} = $field{'name'};
+	$self->{map}{field} = $field->name();
 	$self->{map}{canvas}->delete('map');
 	$self->{map}{canvas}->createText(50,20,-text =>'Processing..',-tags=>'loading');
 	$self->{map_bitmap} = $self->{map}{canvas}->Bitmap(
-		-data => ${&xbmmake(\%field)}
+		-data => ${xbmmake($field)}
 	);
 	$self->{map}{canvas}->createImage(2,2,
 		-image => $self->{map_bitmap},
@@ -779,25 +780,25 @@ sub loadMap {
 		-tags=>'map'
 	);
 	$self->{map}{canvas}->configure(
-			-width => $field{'width'},
-			-height => $field{'height'}
+			-width => $field->width(),
+			-height => $field->height()
 	);
-	$self->{map}{width} = $field{'width'};
-	$self->{map}{height} = $field{'height'};
+	$self->{map}{width} = $field->width();
+	$self->{map}{height} = $field->height();
 	$self->{map}{canvas}->delete('loading');
 	my ($x,$y) = @{$char->{'pos_to'}}{'x', 'y'};
-	$self->{map}{window}->title(sprintf "Map View: %8s p:(%3d, %3d)", $field{'name'}, $x, $y);
+	$self->{map}{window}->title(sprintf "Map View: %8s p:(%3d, %3d)", $field->name(), $x, $y);
 }
 
 # should this cache xbm files?
 
 sub xbmmake {
-	my $r_field = shift;
+	my $field = shift;
 	my ($hx,$hy,$mvw_x,$mvw_y);
 	my $line = 0;
 	my $dump = 0;
-	$mvw_x = $r_field->{width};
-	$mvw_y = $r_field->{height};
+	$mvw_x = $field->width();
+	$mvw_y = $field->height();
 	if (($mvw_x % 8) == 0) {
 		$hx = $mvw_x;
 	} else {
@@ -806,7 +807,7 @@ sub xbmmake {
 	for (my $j = 0; $j < $mvw_y; $j++) {
 		$hy = ($mvw_x*($mvw_y-$j-1));
 		for (my $k = 0; $k < $hx; $k++) {
-			$dump += 256 if (!checkFieldWalkable($r_field, $k, $r_field->{height}-$j));
+			$dump += 256 if (!$field->isWalkable($k, $field->height()-$j));
 			$dump = $dump/2;
 			if (($k % 8) == 7) {
 				$line .= sprintf("0x%02x\,",$dump);

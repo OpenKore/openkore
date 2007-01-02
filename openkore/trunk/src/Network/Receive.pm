@@ -44,6 +44,7 @@ use Plugins;
 use Utils;
 use Skills;
 use AI;
+use Utils::Exceptions;
 use Utils::Crypton;
 use Translation;
 use I18N qw(bytesToString);
@@ -3436,12 +3437,22 @@ sub map_change {
 	my ($self, $args) = @_;
 	changeToInGameState();
 
-	my $oldMap = $field{name};
+	my $oldMap = $field ? $field->name() : undef;
+	my ($map) = $args->{map} =~ /([\s\S]*)\./;
 
-	($ai_v{temp}{map}) = $args->{map} =~ /([\s\S]*)\./;
-	checkAllowedMap($ai_v{temp}{map});
-	if ($ai_v{temp}{map} ne $field{name}) {
-		getField($ai_v{temp}{map}, \%field);
+	checkAllowedMap($map);
+	if (!$field || $map ne $field->name()) {
+		eval {
+			$field = new Field(name => $map);
+			# Temporary backwards compatibility code.
+			%field = %{$field};
+		};
+		if (my $e = caught('FileNotFoundException', 'IOException')) {
+			error TF("Cannot load field %s: %s\n", $map, $e);
+			undef $field;
+		} elsif ($@) {
+			die $@;
+		}
 	}
 
 	if ($ai_v{temp}{clear_aiQueue}) {
@@ -3486,12 +3497,21 @@ sub map_changed {
 	my ($self, $args) = @_;
 	$net->setState(4);
 
-	my $oldMap = $field{name};
-
-	($ai_v{temp}{map}) = $args->{map} =~ /([\s\S]*)\./;
-	checkAllowedMap($ai_v{temp}{map});
-	if ($ai_v{temp}{map} ne $field{name}) {
-		getField($ai_v{temp}{map}, \%field);
+	my $oldMap = $field ? $field->name() : undef;
+	my ($map) = $args->{map} =~ /([\s\S]*)\./;
+	checkAllowedMap($map);
+	if (!$field || $map ne $field->name()) {
+		eval {
+			$field = new Field(name => $map);
+			# Temporary backwards compatibility code.
+			%field = %{$field};
+		};
+		if (my $e = caught('FileNotFoundException', 'IOException')) {
+			error TF("Cannot load field %s: %s\n", $map, $e);
+			undef $field;
+		} elsif ($@) {
+			die $@;
+		}
 	}
 
 	undef $conState_tries;
@@ -4352,9 +4372,19 @@ sub received_character_ID_and_Map {
 		$masterServer = $masterServers{$config{master}} if ($config{master} ne "");
 	}
 
-	($ai_v{temp}{map}) = $args->{mapName} =~ /([\s\S]*)\./;
-	if ($ai_v{temp}{map} ne $field{name}) {
-		getField($ai_v{temp}{map}, \%field);
+	my ($map) = $args->{mapName} =~ /([\s\S]*)\./;
+	if (!$field || $map ne $field->name()) {
+		eval {
+			$field = new Field(name => $map);
+			# Temporary backwards compatibility code.
+			%field = %{$field};
+		};
+		if (my $e = caught('FileNotFoundException', 'IOException')) {
+			error TF("Cannot load field %s: %s\n", $map, $e);
+			undef $field;
+		} elsif ($@) {
+			die $@;
+		}
 	}
 
 	$map_ip = makeIP($args->{mapIP});
@@ -4367,8 +4397,8 @@ sub received_character_ID_and_Map {
 		"MAP Port: %s\n" .
 		"-----------------------------\n", getHex($charID), unpack("V1", $charID),
 		$args->{mapName}, $map_ip, $map_port), "connection";
-	($ai_v{temp}{map}) = $args->{mapName} =~ /([\s\S]*)\./;
-	checkAllowedMap($ai_v{temp}{map});
+	($map) = $args->{mapName} =~ /([\s\S]*)\./;
+	checkAllowedMap($map);
 	message(T("Closing connection to Character Server\n"), "connection") unless ($net->version == 1);
 	$net->serverDisconnect();
 	main::initStatVars();

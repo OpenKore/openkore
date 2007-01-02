@@ -81,8 +81,8 @@ sub onMapChange {
 sub set {
 	my ($self, $map, $x, $y, $field) = @_;
 
-	$self->{field}{width} = $field->{width} if ($field && $field->{width});
-	$self->{field}{height} = $field->{height} if ($field && $field->{height});
+	$self->{field}{width} = $field->width() if ($field && $field->width());
+	$self->{field}{height} = $field->height() if ($field && $field->height());
 
 	if ($map && $map ne $self->{field}{name}) {
 		# Map changed
@@ -333,7 +333,7 @@ sub _loadMapImage {
 		my $file = _f(File::Spec->tmpdir(), "map.xpm");
 		return unless (open(F, ">", $file));
 		binmode F;
-		print F Utils::xpmmake($field->{width}, $field->{height}, $field->{rawMap});
+		print F Utils::xpmmake($field->width(), $field->height(), $field->{rawMap});
 		close F;
 		my $bitmap = _loadImage($file);
 		unlink $file;

@@ -7,6 +7,7 @@ Commands.pm
 Deal.pm
 ErrorHandler.pm
 FastUtils.pm
+Field.pm
 FileParsers.pm
 Globals.pm
 I18N.pm

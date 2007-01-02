@@ -24,10 +24,10 @@ use Modules 'register';
 use Task;
 use base qw(Task);
 use Task::Route;
+use Field;
 use Globals qw(%config %field %portals_lut %portals_los %timeout $char %routeWeights);
 use Translation qw(T TF);
 use Log qw(debug);
-use Misc qw(getField);
 use Utils qw(timeOut);
 use Utils::Exceptions;
 
@@ -99,7 +99,12 @@ sub iterate {
 	if ($self->{stage} == INITIALIZE) {
 		my $openlist = $self->{openlist};
 		my $closelist = $self->{closelist};
-		getField($self->{dest}{map}, $self->{dest}{field});
+		eval {
+			$self->{dest}{field} = new Field($self->{dest}{map});
+		};
+		if ($@) {
+			$self->setError(1234, "Cannot load field $self->{dest}{map}.");
+		}
 
 		# Initializes the openlist with portals walkable from the starting point.
 		foreach my $portal (keys %portals_lut) {
