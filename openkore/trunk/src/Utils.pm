@@ -1251,113 +1251,111 @@ sub unShiftPack {
 #
 # Create a distance map from raw field data. This distance map data is used by pathfinding
 # for wall avoidance support.
-#
-# This function is used internally by getField(). You shouldn't have to use this directly.
-sub old_makeDistMap {
-	# makeDistMap() is now written in C++ (src/auto/XSTools/misc/fastutils.xs)
-	# The old Perl function is still here in case anyone wants to read it
-	my $data = shift;
-	my $width = shift;
-	my $height = shift;
-
-	# Simplify the raw map data. Each byte in the raw map data
-	# represents a block on the field, but only some bytes are
-	# interesting to pathfinding.
-	for (my $i = 0; $i < length($data); $i++) {
-		my $v = ord(substr($data, $i, 1));
-		# 0 is open, 3 is walkable water
-		if ($v == 0 || $v == 3) {
-			$v = 255;
-		} else {
-			$v = 0;
-		}
-		substr($data, $i, 1, chr($v));
-	}
-
-	my $done = 0;
-	until ($done) {
-		$done = 1;
-		#'push' wall distance right and up
-		for (my $y = 0; $y < $height; $y++) {
-			for (my $x = 0; $x < $width; $x++) {
-				my $i = $y * $width + $x;
-				my $dist = ord(substr($data, $i, 1));
-				if ($x != $width - 1) {
-					my $ir = $y * $width + $x + 1;
-					my $distr = ord(substr($data, $ir, 1));
-					my $comp = $dist - $distr;
-					if ($comp > 1) {
-						my $val = $distr + 1;
-						$val = 255 if $val > 255;
-						substr($data, $i, 1, chr($val));
-						$done = 0;
-					} elsif ($comp < -1) {
-						my $val = $dist + 1;
-						$val = 255 if $val > 255;
-						substr($data, $ir, 1, chr($val));
-						$done = 0;
-					}
-				}
-				if ($y != $height - 1) {
-					my $iu = ($y + 1) * $width + $x;
-					my $distu = ord(substr($data, $iu, 1));
-					my $comp = $dist - $distu;
-					if ($comp > 1) {
-						my $val = $distu + 1;
-						$val = 255 if $val > 255;
-						substr($data, $i, 1, chr($val));
-						$done = 0;
-					} elsif ($comp < -1) {
-						my $val = $dist + 1;
-						$val = 255 if $val > 255;
-						substr($data, $iu, 1, chr($val));
-						$done = 0;
-					}
-				}
-			}
-		}
-		#'push' wall distance left and down
-		for (my $y = $height - 1; $y >= 0; $y--) {
-			for (my $x = $width - 1; $x >= 0 ; $x--) {
-				my $i = $y * $width + $x;
-				my $dist = ord(substr($data, $i, 1));
-				if ($x != 0) {
-					my $il = $y * $width + $x - 1;
-					my $distl = ord(substr($data, $il, 1));
-					my $comp = $dist - $distl;
-					if ($comp > 1) {
-						my $val = $distl + 1;
-						$val = 255 if $val > 255;
-						substr($data, $i, 1, chr($val));
-						$done = 0;
-					} elsif ($comp < -1) {
-						my $val = $dist + 1;
-						$val = 255 if $val > 255;
-						substr($data, $il, 1, chr($val));
-						$done = 0;
-					}
-				}
-				if ($y != 0) {
-					my $id = ($y - 1) * $width + $x;
-					my $distd = ord(substr($data, $id, 1));
-					my $comp = $dist - $distd;
-					if ($comp > 1) {
-						my $val = $distd + 1;
-						$val = 255 if $val > 255;
-						substr($data, $i, 1, chr($val));
-						$done = 0;
-					} elsif ($comp < -1) {
-						my $val = $dist + 1;
-						$val = 255 if $val > 255;
-						substr($data, $id, 1, chr($val));
-						$done = 0;
-					}
-				}
-			}
-		}
-	}
-	return $data;
-}
+# sub old_makeDistMap {
+# 	# makeDistMap() is now written in C++ (src/auto/XSTools/misc/fastutils.xs)
+# 	# The old Perl function is still here in case anyone wants to read it
+# 	my $data = shift;
+# 	my $width = shift;
+# 	my $height = shift;
+# 
+# 	# Simplify the raw map data. Each byte in the raw map data
+# 	# represents a block on the field, but only some bytes are
+# 	# interesting to pathfinding.
+# 	for (my $i = 0; $i < length($data); $i++) {
+# 		my $v = ord(substr($data, $i, 1));
+# 		# 0 is open, 3 is walkable water
+# 		if ($v == 0 || $v == 3) {
+# 			$v = 255;
+# 		} else {
+# 			$v = 0;
+# 		}
+# 		substr($data, $i, 1, chr($v));
+# 	}
+# 
+# 	my $done = 0;
+# 	until ($done) {
+# 		$done = 1;
+# 		#'push' wall distance right and up
+# 		for (my $y = 0; $y < $height; $y++) {
+# 			for (my $x = 0; $x < $width; $x++) {
+# 				my $i = $y * $width + $x;
+# 				my $dist = ord(substr($data, $i, 1));
+# 				if ($x != $width - 1) {
+# 					my $ir = $y * $width + $x + 1;
+# 					my $distr = ord(substr($data, $ir, 1));
+# 					my $comp = $dist - $distr;
+# 					if ($comp > 1) {
+# 						my $val = $distr + 1;
+# 						$val = 255 if $val > 255;
+# 						substr($data, $i, 1, chr($val));
+# 						$done = 0;
+# 					} elsif ($comp < -1) {
+# 						my $val = $dist + 1;
+# 						$val = 255 if $val > 255;
+# 						substr($data, $ir, 1, chr($val));
+# 						$done = 0;
+# 					}
+# 				}
+# 				if ($y != $height - 1) {
+# 					my $iu = ($y + 1) * $width + $x;
+# 					my $distu = ord(substr($data, $iu, 1));
+# 					my $comp = $dist - $distu;
+# 					if ($comp > 1) {
+# 						my $val = $distu + 1;
+# 						$val = 255 if $val > 255;
+# 						substr($data, $i, 1, chr($val));
+# 						$done = 0;
+# 					} elsif ($comp < -1) {
+# 						my $val = $dist + 1;
+# 						$val = 255 if $val > 255;
+# 						substr($data, $iu, 1, chr($val));
+# 						$done = 0;
+# 					}
+# 				}
+# 			}
+# 		}
+# 		#'push' wall distance left and down
+# 		for (my $y = $height - 1; $y >= 0; $y--) {
+# 			for (my $x = $width - 1; $x >= 0 ; $x--) {
+# 				my $i = $y * $width + $x;
+# 				my $dist = ord(substr($data, $i, 1));
+# 				if ($x != 0) {
+# 					my $il = $y * $width + $x - 1;
+# 					my $distl = ord(substr($data, $il, 1));
+# 					my $comp = $dist - $distl;
+# 					if ($comp > 1) {
+# 						my $val = $distl + 1;
+# 						$val = 255 if $val > 255;
+# 						substr($data, $i, 1, chr($val));
+# 						$done = 0;
+# 					} elsif ($comp < -1) {
+# 						my $val = $dist + 1;
+# 						$val = 255 if $val > 255;
+# 						substr($data, $il, 1, chr($val));
+# 						$done = 0;
+# 					}
+# 				}
+# 				if ($y != 0) {
+# 					my $id = ($y - 1) * $width + $x;
+# 					my $distd = ord(substr($data, $id, 1));
+# 					my $comp = $dist - $distd;
+# 					if ($comp > 1) {
+# 						my $val = $distd + 1;
+# 						$val = 255 if $val > 255;
+# 						substr($data, $i, 1, chr($val));
+# 						$done = 0;
+# 					} elsif ($comp < -1) {
+# 						my $val = $dist + 1;
+# 						$val = 255 if $val > 255;
+# 						substr($data, $id, 1, chr($val));
+# 						$done = 0;
+# 					}
+# 				}
+# 			}
+# 		}
+# 	}
+# 	return $data;
+# }
 
 sub makeIP {
 	my $raw = shift;

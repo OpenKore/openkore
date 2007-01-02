@@ -9,6 +9,7 @@ package Interface::Win32::Map;
 use strict;
 use Win32::GUI;
 use Globals;
+use Field;
 use Misc;
 
 my ($r_field,$W,$H,$DC,$bit,$DC2);
@@ -56,10 +57,10 @@ sub initMapGUI {
 sub paintMap {
 	my $self = shift;
 	
-	$r_field = \%field;
-	$map_name = $field{'name'};
+	$map_name = $field->name();
+	$r_field = $field;
 	
-	$self->{mw}->Resize($r_field->{width},$r_field->{height}+30);	
+	$self->{mw}->Resize($field->width(),$field->height()+30);
     $W = $self->{mw}->ScaleWidth;
     $H = $self->{mw}->ScaleHeight;
     $DC = $self->{mw}->GetDC;
@@ -68,18 +69,19 @@ sub paintMap {
     $DC2->SelectObject($bit);
     
 	my ($mvw_x,$mvw_y);
-	$mvw_x = $r_field->{width};
-	$mvw_y = $r_field->{height};
+	$mvw_x = $field->width();
+	$mvw_y = $field->height();
     
 	for (my $j = 0; $j < $mvw_x; $j++) {
 		for (my $k = 0; $k < $mvw_y; $k++) {
-			if (getFieldPoint(\%field, $j, $mvw_y-$k) == 0) { #walkable
+			my $block = $field->getBlock($j, $mvw_y-$k);
+			if ($block == Field::WALKABLE) {
 				$DC2->SetPixel($j, $k, [202,255,228],);
-			} elsif (getFieldPoint(\%field, $j, $mvw_y-$k) == 1) { #non-walkable
+			} elsif ($block == Field::NON_WALKABLE) {
 				$DC2->SetPixel($j, $k, [181,182,181],);
-			} elsif (getFieldPoint(\%field, $j, $mvw_y-$k) == 3) { #walkable water ?
+			} elsif ($block == Field::WALKABLE_WATER) {
 				$DC2->SetPixel($j, $k, [255,0,0],);
-			} elsif (getFieldPoint(\%field, $j, $mvw_y-$k) == 5) { #cliff
+			} elsif ($block == Field::SNIPABLE_CLIFF) {
 				$DC2->SetPixel($j, $k, [194,135,135],);
 			}
 		}
@@ -116,11 +118,11 @@ sub paintPos {
 	my ($C,$left,$top,$right,$bottom);
 	
 	if ($self->mapIsShown()) {
-		if ($map_name ne $field{'name'}) {
+		if ($map_name ne $r_field->name()) {
 			$self->paintMap();
 		}
 
-		$self->{mw}->Caption("Map View: $r_field->{name} ($x,$y)");
+		$self->{mw}->Caption("Map View: " . $field->name() . " ($x,$y)");
 		#$DC = $self->{mw}->GetDC;
 		$C = new Win32::GUI::Pen(
             -color => [0,0,255], 
@@ -130,7 +132,7 @@ sub paintPos {
         $DC->SelectObject($C);
         
         $left   = $x;
-        $top    = $r_field->{height}-$y;
+        $top    = $r_field->height()-$y;
         $right  = $left+3;
         $bottom = $top+3;
         $DC->Ellipse($left, $top, $right, $bottom);
@@ -166,7 +168,7 @@ sub paintMiscPos {
 		for (my $i = 0; $i < @monstersID; $i++) {
 			next if ($monstersID[$i] eq "");
 	        $left   = $monsters{$monstersID[$i]}{'pos'}{'x'};
-	        $top    = $r_field->{height}-$monsters{$monstersID[$i]}{'pos'}{'y'};
+	        $top    = $r_field->height()-$monsters{$monstersID[$i]}{'pos'}{'y'};
 	        $right  = $left+3;
 	        $bottom = $top+3;
 	        $DC->Ellipse($left, $top, $right, $bottom);
@@ -177,7 +179,7 @@ sub paintMiscPos {
 		for (my $i = 0; $i < @playersID; $i++) {
 			next if ($playersID[$i] eq "");
 	        $left   = $players{$playersID[$i]}{'pos'}{'x'};
-	        $top    = $r_field->{height}-$players{$playersID[$i]}{'pos'}{'y'};
+	        $top    = $r_field->height()-$players{$playersID[$i]}{'pos'}{'y'};
 	        $right  = $left+3;
 	        $bottom = $top+3;
 	        $DC->Ellipse($left, $top, $right, $bottom);
@@ -188,7 +190,7 @@ sub paintMiscPos {
 		for (my $i = 0; $i < @npcsID; $i++) {
 			next if ($npcsID[$i] eq "");
 	        $left   = $npcs{$npcsID[$i]}{'pos'}{'x'};
-	        $top    = $r_field->{height}-$npcs{$npcsID[$i]}{'pos'}{'y'};
+	        $top    = $r_field->height()-$npcs{$npcsID[$i]}{'pos'}{'y'};
 	        $right  = $left+3;
 	        $bottom = $top+3;
 	        $DC->Ellipse($left, $top, $right, $bottom);

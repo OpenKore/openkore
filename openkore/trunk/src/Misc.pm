@@ -34,6 +34,7 @@ use Plugins;
 use FileParsers;
 use Settings;
 use Utils;
+use Field;
 use Network;
 use Network::Send ();
 use AI;
@@ -64,14 +65,10 @@ our @EXPORT = (
 	# Field math
 	qw/calcRectArea
 	calcRectArea2
-	checkFieldSnipable
-	checkFieldWalkable
-	checkFieldWater
 	checkLineSnipable
 	checkLineWalkable
 	checkWallLength
 	closestWalkableSpot
-	getFieldPoint
 	objectInsideSpell
 	objectIsMovingTowards
 	objectIsMovingTowardsPlayer/,
@@ -87,10 +84,7 @@ our @EXPORT = (
 	# File Parsing and Writing
 	qw/chatLog
 	shopLog
-	monsterLog
-	convertGatField
-	getField
-	getGatField/,
+	monsterLog/,
 
 	# Logging
 	qw/itemLog/,
@@ -465,22 +459,22 @@ sub calcRectArea {
 	# Record the blocks that are walkable
 	my @walkableBlocks;
 	for (my $x = $topLeft{x}; $x <= $topRight{x}; $x++) {
-		if (checkFieldWalkable(\%field, $x, $topLeft{y})) {
+		if ($field->isWalkable($x, $topLeft{y})) {
 			push @walkableBlocks, {x => $x, y => $topLeft{y}};
 		}
 	}
 	for (my $x = $bottomLeft{x}; $x <= $bottomRight{x}; $x++) {
-		if (checkFieldWalkable(\%field, $x, $bottomLeft{y})) {
+		if ($field->isWalkable($x, $bottomLeft{y})) {
 			push @walkableBlocks, {x => $x, y => $bottomLeft{y}};
 		}
 	}
 	for (my $y = $bottomLeft{y} + 1; $y < $topLeft{y}; $y++) {
-		if (checkFieldWalkable(\%field, $topLeft{x}, $y)) {
+		if ($field->isWalkable($topLeft{x}, $y)) {
 			push @walkableBlocks, {x => $topLeft{x}, y => $y};
 		}
 	}
 	for (my $y = $bottomRight{y} + 1; $y < $topRight{y}; $y++) {
-		if (checkFieldWalkable(\%field, $topLeft{x}, $y)) {
+		if ($field->isWalkable($topLeft{x}, $y)) {
 			push @walkableBlocks, {x => $topRight{x}, y => $y};
 		}
 	}
@@ -509,42 +503,6 @@ sub calcRectArea2 {
 }
 
 ##
-# checkFieldSnipable(r_field, x, y)
-# r_field: a reference to a field hash.
-# x, y: the coordinate to check.
-# Returns: 1 (true) or 0 (false).
-#
-# Check whether you can snipe through ($x,$y) on field $r_field.
-sub checkFieldSnipable {
-	my $p = getFieldPoint(@_);
-	return ($p == 0 || $p == 3 || $p == 4 || $p == 5);
-}
-
-##
-# checkFieldWalkable(r_field, x, y)
-# r_field: a reference to a field hash.
-# x, y: the coordinate to check.
-# Returns: 1 (true) or 0 (false).
-#
-# Check whether ($x, $y) on field $r_field is walkable.
-sub checkFieldWalkable {
-	my $p = getFieldPoint(@_);
-	return ($p == 0 || $p == 3);
-}
-
-##
-# checkFieldWater(r_field, x, y)
-# r_field: a reference to a field hash.
-# x, y: the coordinate to check.
-# Returns: 1 (true) or 0 (false).
-#
-# Check whether ($x, $y) on field $r_field is (walkable) water.
-sub checkFieldWater {
-	my $p = getFieldPoint(@_);
-	return ($p == 3);
-}
-
-##
 # checkLineSnipable(from, to)
 # from, to: references to position hashes.
 #
@@ -554,9 +512,6 @@ sub checkFieldWater {
 sub checkLineSnipable {
 	my $from = shift;
 	my $to = shift;
-	# FIXME: This is not being used anywhere. Is it really necessary?
-	my $min_obstacle_size = shift;
-	$min_obstacle_size = 5 if (!defined $min_obstacle_size);
 
 	# Simulate tracing a line to the location (Bresenham's algorithm)
 	my ($x0, $y0, $x1, $y1) = ($from->{x}, $from->{y}, $to->{x}, $to->{y});
@@ -577,7 +532,7 @@ sub checkLineSnipable {
 			}
 			$x0 += $stepx;
 			$fraction += $dy;
-			return 0 if (!checkFieldSnipable(\%field, $x0, $y0));
+			return 0 if (!$field->isSnipable($x0, $y0));
 		}
 	} else {
 		my $fraction = $dx - ($dy >> 1);
@@ -588,7 +543,7 @@ sub checkLineSnipable {
 			}
 			$y0 += $stepy;
 			$fraction += $dx;
-			return 0 if (!checkFieldSnipable(\%field, $x0, $y0));
+			return 0 if (!$field->isSnipable($x0, $y0));
 		}
 	}
 	return 1;
@@ -620,7 +575,7 @@ sub checkLineWalkable {
 		$p{x} = int $p{x};
 		$p{y} = int $p{y};
 
-		if ( !checkFieldWalkable(\%field, $p{x}, $p{y}) ) {
+		if ( !$field->isWalkable($p{x}, $p{y}) ) {
 			# The current spot is not walkable. Check whether
 			# this the obstacle is small enough.
 			if (checkWallLength(\%p, -1,  0, $min_obstacle_size) || checkWallLength(\%p,  1, 0, $min_obstacle_size)
@@ -648,7 +603,7 @@ sub checkWallLength {
 		$x += $dx;
 		$y += $dy;
 		$len++;
-	} while (!checkFieldWalkable(\%field, $x, $y) && $len < $length);
+	} while (!$field->isWalkable($x, $y) && $len < $length);
 	return $len >= $length;
 }
 
@@ -662,35 +617,16 @@ sub checkWallLength {
 # If it's not walkable, this function will find the closest position that is walkable (up to 2 blocks away),
 # and modify the x and y values in $pos.
 sub closestWalkableSpot {
-	my $r_field = shift;
+	my $field = shift;
 	my $pos = shift;
 
 	foreach my $z ( [0,0], [0,1],[1,0],[0,-1],[-1,0], [-1,1],[1,1],[1,-1],[-1,-1],[0,2],[2,0],[0,-2],[-2,0] ) {
-		next if !checkFieldWalkable($r_field, $pos->{'x'} + $z->[0], $pos->{'y'} + $z->[1]);
+		next if !$field->isWalkable($pos->{x} + $z->[0], $pos->{y} + $z->[1]);
 		$pos->{x} += $z->[0];
 		$pos->{y} += $z->[1];
 		return 1;
 	}
 	return 0;
-}
-
-##
-# getFieldPoint(r_field, x, y)
-# r_field: a reference to a field hash.
-# x, y: the coordinate on the field to check.
-# Returns: An integer: 0 = walkable, 1 = not walkable, 3 = water (walkable), 5 = cliff (not walkable, but you can snipe)
-#
-# Get the raw value of the specified coordinate on the map. If you want to check whether
-# ($x, $y) is walkable, use checkFieldWalkable instead.
-sub getFieldPoint {
-	my $r_field = shift;
-	my $x = shift;
-	my $y = shift;
-
-	if ($x < 0 || $x >= $r_field->{width} || $y < 0 || $y >= $r_field->{height}) {
-		return 1;
-	}
-	return ord(substr($r_field->{rawMap}, ($y * $r_field->{width}) + $x, 1));
 }
 
 ##
@@ -757,222 +693,6 @@ sub objectIsMovingTowardsPlayer {
 		}
 	}
 	return 0;
-}
-
-#######################################
-#######################################
-### CATEGORY: File Parsing and Writing
-#######################################
-#######################################
-
-##
-# getField(name, r_field)
-# name: the name of the field you want to load. For example: "prontera"
-# r_field: reference to a hash, in which information about the field is stored.
-# Returns: 1 on success, 0 on failure.
-#
-# Load a field (.fld) file. This function also loads an associated .dist file
-# (the distance map file), which is used by pathfinding (for wall avoidance support).
-# If the associated .dist file does not exist, it will be created.
-#
-# This function also supports gzip-compressed field files (.fld.gz). If the .fld file cannot
-# be found, but the corresponding .fld.gz file can be found, this function will load that
-# instead and decompress its data on-the-fly.
-#
-# The r_field hash will contain the following keys:
-# ~l
-# - name: The name of the field. This is not always the same as baseName.
-# - baseName: The name of the field, which is the base name of the file without the extension.
-# - width: The field's width.
-# - height: The field's height.
-# - rawMap: The raw map data. Contains information about which blocks you can walk on (byte 0),
-#    and which not (byte 1).
-# - dstMap: The distance map data. Used by pathfinding.
-# ~l~
-sub getField {
-	my ($name, $r_hash) = @_;
-	my ($file, $dist_file);
-
-	if ($name eq '') {
-		error T("Unable to load field file: no field name specified.\n");
-		return 0;
-	}
-
-	undef %{$r_hash};
-	$r_hash->{name} = $name;
-
-	if ($masterServer && $masterServer->{"field_$name"}) {
-		# Handle server-specific versions of the field.
-		$file = "$Settings::def_field/" . $masterServer->{"field_$name"};
-	} else {
-		$file = "$Settings::def_field/$name.fld";
-	}
-	$file =~ s/\//\\/g if ($^O eq 'MSWin32');
-	$dist_file = $file;
-
-	if (! -f $file) {
-		# Some fields have multiple names, but are the same
-		# field nevertheless. For example, new_1-1, new_2-1,
-		# etc are all the same field. Check whether this
-		# is such a field.
-		my %aliases = (
-			'new_1-1.fld' => 'new_zone01.fld',
-			'new_2-1.fld' => 'new_zone01.fld',
-			'new_3-1.fld' => 'new_zone01.fld',
-			'new_4-1.fld' => 'new_zone01.fld',
-			'new_5-1.fld' => 'new_zone01.fld',
-
-			'new_1-2.fld' => 'new_zone02.fld',
-			'new_2-2.fld' => 'new_zone02.fld',
-			'new_3-2.fld' => 'new_zone02.fld',
-			'new_4-2.fld' => 'new_zone02.fld',
-			'new_5-2.fld' => 'new_zone02.fld',
-
-			'new_1-3.fld' => 'new_zone03.fld',
-			'new_2-3.fld' => 'new_zone03.fld',
-			'new_3-3.fld' => 'new_zone03.fld',
-			'new_4-3.fld' => 'new_zone03.fld',
-			'new_5-3.fld' => 'new_zone03.fld',
-
-			'new_1-4.fld' => 'new_zone04.fld',
-			'new_2-4.fld' => 'new_zone04.fld',
-			'new_3-4.fld' => 'new_zone04.fld',
-			'new_4-4.fld' => 'new_zone04.fld',
-			'new_5-4.fld' => 'new_zone04.fld',
-
-			'force_1-1.fld' => 'force_map1.fld',
-			'force_2-1.fld' => 'force_map1.fld',
-			'force_3-1.fld' => 'force_map1.fld',
-
-			'force_1-2.fld' => 'force_map2.fld',
-			'force_2-2.fld' => 'force_map2.fld',
-			'force_3-2.fld' => 'force_map2.fld',
-
-			'force_1-3.fld' => 'force_map3.fld',
-			'force_2-3.fld' => 'force_map3.fld',
-			'force_3-3.fld' => 'force_map3.fld',
-
-			'pvp_n_1-2.fld' => 'job_hunter.fld',
-			'pvp_n_1-3.fld' => 'job_wizard.fld',
-			'pvp_n_1-5.fld' => 'job_knight.fld',
-
-			'pvp_n_2-2.fld' => 'job_hunter.fld',
-			'pvp_n_2-3.fld' => 'job_wizard.fld',
-			'pvp_n_2-5.fld' => 'job_knight.fld',
-
-			'pvp_n_3-2.fld' => 'job_hunter.fld',
-			'pvp_n_3-3.fld' => 'job_wizard.fld',
-			'pvp_n_3-5.fld' => 'job_knight.fld',
-
-			'pvp_n_4-2.fld' => 'job_hunter.fld',
-			'pvp_n_4-3.fld' => 'job_wizard.fld',
-			'pvp_n_4-5.fld' => 'job_knight.fld',
-
-			'pvp_n_5-2.fld' => 'job_hunter.fld',
-			'pvp_n_5-3.fld' => 'job_wizard.fld',
-			'pvp_n_5-5.fld' => 'job_knight.fld',
-
-			'pvp_n_6-2.fld' => 'job_hunter.fld',
-			'pvp_n_6-3.fld' => 'job_wizard.fld',
-			'pvp_n_6-5.fld' => 'job_knight.fld',
-
-			'pvp_n_7-2.fld' => 'job_hunter.fld',
-			'pvp_n_7-3.fld' => 'job_wizard.fld',
-			'pvp_n_7-5.fld' => 'job_knight.fld',
-
-			'pvp_n_8-2.fld' => 'job_hunter.fld',
-			'pvp_n_8-3.fld' => 'job_wizard.fld',
-			'pvp_n_8-5.fld' => 'job_knight.fld',
-		);
-
-		my ($dir, $base) = $file =~ /^(.*[\\\/])?(.*)$/;
-		if (exists $aliases{$base}) {
-			$file = "${dir}$aliases{$base}";
-			$dist_file = $file;
-		}
-
-		if (! -f $file) {
-			# See if a compressed version of the field file exists.
-			if (-f "$file.gz") {
-				$file .= ".gz";
-			} else {
-				warning TF("Could not load field %s - this map is not supported, please do not bot here.\n", $file);
-				return 0;
-			}
-		}
-	}
-
-	$dist_file =~ s/\.fld$/.dist/i;
-	$r_hash->{baseName} = $file;
-	$r_hash->{baseName} =~ s/.*[\\\/]//;
-	$r_hash->{baseName} =~ s/(.*)\..*/$1/;
-
-	# Load the .fld file
-	open FILE, "<", $file;
-	binmode(FILE);
-	my $data;
-	if ($file =~ /\.gz$/) {
-		# This is a compressed field file. Decompress the data first.
-		my $gz = gzopen($file, 'rb');
-		$data = '';
-		while (!$gz->gzeof()) {
-			my $buf;
-			if ( $gz->gzread($buf) >= 0 ) {
-				$data .= $buf;
-			} else {
-				error "Unable to read $file\n";
-				return 0;
-			}
-		}
-		$gz->gzclose();
-	} else {
-		local($/);
-		$data = <FILE>;
-	}
-	close FILE;
-	@$r_hash{'width', 'height'} = unpack("v1 v1", substr($data, 0, 4, ''));
-	$r_hash->{rawMap} = $data;
-
-	# Load the associated .dist file (distance map)
-	if (-e $dist_file) {
-		open FILE, "< $dist_file";
-		binmode(FILE);
-		my $dist_data;
-
-		{
-			local($/);
-			$dist_data = <FILE>;
-		}
-		close FILE;
-		my $dversion = 0;
-		if (substr($dist_data, 0, 2) eq "V#") {
-			$dversion = unpack("xx v1", substr($dist_data, 0, 4, ''));
-		}
-
-		my ($dw, $dh) = unpack("v1 v1", substr($dist_data, 0, 4, ''));
-		if (
-			#version 0 files had a bug when height != width
-			#version 1 files did not treat walkable water as walkable, all version 0 and 1 maps need to be rebuilt
-			#version 2 and greater have no know bugs, so just do a minimum validity check.
-			#version 3 adds better support for walkable water blocks
-			$dversion >= 3 && $$r_hash{'width'} == $dw && $$r_hash{'height'} == $dh
-		) {
-			$r_hash->{dstMap} = $dist_data;
-		}
-	}
-
-	# The .dist file is not available; create it
-	unless ($r_hash->{dstMap}) {
-		$r_hash->{dstMap} = makeDistMap($r_hash->{rawMap}, $r_hash->{width}, $r_hash->{height});
-		open FILE, "> $dist_file" or die TF("Could not write dist cache file %s: %s\n", $dist_file, $!);
-		binmode(FILE);
-		print FILE pack("a2 v1", 'V#', 3);
-		print FILE pack("v1 v1", @$r_hash{'width', 'height'});
-		print FILE $r_hash->{dstMap};
-		close FILE;
-	}
-
-	return 1;
 }
 
 
@@ -3609,7 +3329,7 @@ sub compilePortals {
 	my %missingMap;
 	my $pathfinding;
 	my @solution;
-	my %field;
+	my $field;
 
 	# Collect portal source and destination coordinates per map
 	foreach my $portal (keys %portals_lut) {
@@ -3633,7 +3353,12 @@ sub compilePortals {
 				next if $portals_los{$spawn}{$portal} ne '';
 				return 1 if $checkOnly;
 				if ($field{name} ne $map && !$missingMap{$map}) {
-					$missingMap{$map} = 1 if (!getField($map, \%field));
+					eval {
+						$field = new Field(name => $map, loadDistanceMap => 0);
+					};
+					if ($@) {
+						$missingMap{$map} = 1
+					}
 				}
 
 				my %start = %{$mapSpawns{$map}{$spawn}};
@@ -3643,8 +3368,8 @@ sub compilePortals {
 
 				$pathfinding->reset(
 					start => \%start,
-					dest => \%dest,
-					field => \%field
+					dest  => \%dest,
+					field => $field
 					);
 				my $count = $pathfinding->runcount;
 				$portals_los{$spawn}{$portal} = ($count >= 0) ? $count : 0;
@@ -3998,7 +3723,7 @@ sub checkSelfCondition {
 	# not working yet
 	if ($config{$prefix."_whenWater"}) {
 		my $pos = calcPosition($char);
-		return 0 if !checkFieldWater(\%field, $pos->{x}, $pos->{y});
+		return 0 if ($field->getBlock($pos->{x}, $pos->{y}) != Field::WALKABLE_WATER);
 	}
 
 	my %hookArgs;

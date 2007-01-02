@@ -21,6 +21,7 @@ use Globals;
 use Utils qw(binFind);
 use Log qw(message warning error debug);
 use Utils;
+use Field;
 use Exporter;
 use base qw(Exporter);
 use Translation;
@@ -512,7 +513,7 @@ sub ai_route {
 
 	# Destination is same map and isn't blocked by walls/water/whatever
 	my $pos = calcPosition($char);
-	if ($param{'_internal'} || ($field{'name'} eq $args{'dest'}{'map'} && ai_route_getRoute(\@{$args{solution}}, \%field, $pos, $args{dest}{pos}, $args{noAvoidWalls}))) {
+	if ($param{'_internal'} || ($field{'name'} eq $args{'dest'}{'map'} && ai_route_getRoute(\@{$args{solution}}, $field, $pos, $args{dest}{pos}, $args{noAvoidWalls}))) {
 		# Since the solution array is here, we can start in "Route Solution Ready"
 		$args{'stage'} = 'Route Solution Ready';
 		debug "Route Solution Ready\n", "route";
@@ -529,7 +530,7 @@ sub ai_route {
 ##
 # ai_route_getRoute(returnArray, r_field, r_start, r_dest, [noAvoidWalls])
 # returnArray: reference to an array. The solution will be stored in here.
-# r_field: reference to a field hash (usually \%field).
+# r_field: reference to a field hash (usually $field).
 # r_start: reference to a hash. This is the start coordinate.
 # r_dest: reference to a hash. This is the destination coordinate.
 # noAvoidWalls: 1 if you don't want to avoid walls on route.
@@ -540,7 +541,7 @@ sub ai_route {
 # $returnArray. This function is a convenience wrapper function for the stuff
 # in PathFinding.pm
 sub ai_route_getRoute {
-	my ($returnArray, $r_field, $r_start, $r_dest, $noAvoidWalls) = @_;
+	my ($returnArray, $field, $r_start, $r_dest, $noAvoidWalls) = @_;
 	undef @{$returnArray};
 	return 1 if ($r_dest->{x} eq '' || $r_dest->{y} eq '');
 
@@ -548,8 +549,8 @@ sub ai_route_getRoute {
 	# So we find a nearby spot that is walkable.
 	my %start = %{$r_start};
 	my %dest = %{$r_dest};
-	Misc::closestWalkableSpot($r_field, \%start);
-	Misc::closestWalkableSpot($r_field, \%dest);
+	Misc::closestWalkableSpot($field, \%start);
+	Misc::closestWalkableSpot($field, \%dest);
 
 	# Generate map weights (for wall avoidance)
 	my $weights;
@@ -565,7 +566,7 @@ sub ai_route_getRoute {
 	my $pathfinding = new PathFinding(
 		start => \%start,
 		dest => \%dest,
-		field => $r_field,
+		field => $field,
 		weights => $weights
 	);
 	return undef if !$pathfinding;

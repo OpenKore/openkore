@@ -39,6 +39,7 @@ use Globals;
 use Interface;
 use base qw(Wx::App Interface);
 use Modules;
+use Field;
 use Interface::Wx::Dock;
 use Interface::Wx::MapViewer;
 use Interface::Wx::LogView;
@@ -562,8 +563,8 @@ sub createSplitterContent {
 	$mapView->onClick(\&onMapClick, $self);
 	$mapView->onMapChange(\&onMap_MapChange, $mapDock);
 	$mapView->parsePortals("$Settings::tables_folder/portals.txt");
-	if (%field && $char) {
-		$mapView->set($field{name}, $char->{pos_to}{x}, $char->{pos_to}{y}, \%field);
+	if ($field && $char) {
+		$mapView->set($field->name(), $char->{pos_to}{x}, $char->{pos_to}{y}, $field);
 	}
 
 	my $position;
@@ -673,12 +674,12 @@ sub updateStatusBar {
 sub updateMapViewer {
 	my $self = shift;
 	my $map = $self->{mapViewer};
-	return unless ($map && %field && $char);
+	return unless ($map && $field && $char);
 
 	my $myPos;
 	$myPos = calcPosition($char);
 
-	$map->set($field{name}, $myPos->{x}, $myPos->{y}, \%field);
+	$map->set($field->name(), $myPos->{x}, $myPos->{y}, $field);
 	my $i = AI::findAction("route");
 	my $args;
 	if (defined $i && ($args = AI::args($i)) && $args->{dest} && $args->{dest}{pos}) {
@@ -976,7 +977,7 @@ sub onMapMouseMove {
 	my ($self, $x, $y) = @_;
 	my $walkable;
 
-	$walkable = checkFieldWalkable(\%field, $x, $y);
+	$walkable = $field->isWalkable($x, $y);
 	if ($x >= 0 && $y >= 0 && $walkable) {
 		$self->{mouseMapText} = "Mouse over: $x, $y";
 	} else {
@@ -991,10 +992,10 @@ sub onMapClick {
 	my $checkPortal = 0;
 	delete $self->{mouseMapText};
 	if ($self->{mapViewer} && $self->{mapViewer}->{portals}
-		&& $self->{mapViewer}->{portals}->{$field{'name'}}
-		&& @{$self->{mapViewer}->{portals}->{$field{'name'}}}){
+		&& $self->{mapViewer}->{portals}->{$field->name()}
+		&& @{$self->{mapViewer}->{portals}->{$field->name()}}){
 
-		foreach my $portal (@{$self->{mapViewer}->{portals}->{$field{'name'}}}){
+		foreach my $portal (@{$self->{mapViewer}->{portals}->{$field->name()}}){
 			if (distance($portal,{x=>$x,y=>$y}) <= 5) {
 				$x = $portal->{x};
 				$y = $portal->{y};
@@ -1007,13 +1008,13 @@ sub onMapClick {
 
 	$self->writeOutput("message", "Moving to $x, $y\n", "info") unless $checkPortal;
 	AI::clear("mapRoute", "route", "move");
-	main::ai_route($field{name}, $x, $y, attackOnRoute => 1);
+	main::ai_route($field->name(), $x, $y, attackOnRoute => 1);
 	$self->{inputBox}->SetFocus;
 }
 
 sub onMap_MapChange {
 	my ($mapDock) = @_;
-	$mapDock->title($field{name});
+	$mapDock->title($field->name());
 	$mapDock->Fit;
 }
 
