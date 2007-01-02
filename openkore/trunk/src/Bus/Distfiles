@@ -5,3 +5,5 @@ Handlers.pm
 Messages.pm
 MessageParser.pm
 Query.pm
+DialogMaster.pm
+DialogSlave.pm

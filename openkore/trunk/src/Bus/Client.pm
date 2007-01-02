@@ -23,6 +23,8 @@ use Bus::SimpleClient;
 use base qw(Bus::SimpleClient);
 use Bus::Server::Starter;
 use Bus::Query;
+use Bus::DialogMaster;
+use Bus::DialogSlave;
 use Utils::Exceptions;
 use Utils::CallbackList;
 
@@ -58,6 +60,7 @@ sub new {
 	$self{sendQueue} = [];
 	$self{seq} = 0;
 	$self{onMessageReceived} = new CallbackList("onMessageReceived");
+	$self{onDialogRequested} = new CallbackList("onDialogRequested");
 
 	if (!$args{host} && !$args{port}) {
 		$self{starter} = new Bus::Server::Starter();
@@ -123,14 +126,33 @@ sub iterate {
 
 		if ($self->{state} == CONNECTED) {
 			my $onMessageReceived = $self->{onMessageReceived};
-			my $empty = $onMessageReceived->empty();
+			my $onDialogRequested = $self->{onDialogRequested};
+			my $mrEmpty = $onMessageReceived->empty();
+			my $drEmpty = $onDialogRequested->empty();
 			my $MID;
 			while (my $args = $self->readNext(\$MID)) {
-				if (!$empty) {
+				if (!$mrEmpty) {
 					$onMessageReceived->call($self, {
 						messageID => $MID,
 						args => $args
 					});
+				}
+				if ($MID eq 'REQUEST_DIALOG') {
+					my $slave = new Bus::DialogSlave({
+						bus          => $self,
+						peerID       => $args->{FROM},
+						peerDialogID => $args->{dialogID},
+						seq          => $args->{SEQ}
+					});
+					$onDialogRequested->call($self, {
+						reason => $args->{reason},
+						args   => $args,
+						dialog => $slave
+					}) if (!$drEmpty);
+					# If there are no callbacks registered for the
+					# onDialogRequested event, then the DialogSlave
+					# object will reply with a REFUSED message because
+					# it's destroyed outside of this scope.
 				}
 			}
 		}
@@ -319,12 +341,25 @@ sub query {
 		}
 	}
 
-	my %params2 = (%{$args});
+	my %params2 = ($args) ? (%{$args}) : ();
 	$params2{SEQ} = $self->{seq};
 	$self->send($MID, \%params2);
 
 	$self->{seq} = ($self->{seq} + 1) % 4294967295;
 	return new Bus::Query(\%params);
+}
+
+# requestDialog(Bytes clientID, String reason, args, Hash options)
+sub requestDialog {
+	my ($self, $clientID, $reason, $args, $options) = @_;
+	$options ||= {};
+	return new Bus::DialogMaster({
+		bus => $self,
+		peerID => $clientID,
+		reason => $reason,
+		args   => $args || {},
+		timeout => $options->{timeout}
+	});
 }
 
 ##
@@ -338,6 +373,10 @@ sub query {
 # `l`
 sub onMessageReceived {
 	return $_[0]->{onMessageReceived};
+}
+
+sub onDialogRequested {
+	return $_[0]->{onDialogRequested};
 }
 
 1;
