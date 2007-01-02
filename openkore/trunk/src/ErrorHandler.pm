@@ -54,7 +54,13 @@ sub errorHandler {
 	my $e = $@;
 
 	# Extract file and line number from the die message
-	my ($file, $line) = $_[0] =~ / at (.+?) line (\d+)\.$/;
+	my ($file, $line);
+	if (UNIVERSAL::isa($e, 'Exception::Class::Base')) {
+		$file = $e->file;
+		$line = $e->line;
+	} else {
+		($file, $line) = $_[0] =~ / at (.+?) line (\d+)\.$/;
+	}
 
 	# Get rid of the annoying "@INC contains:"
 	my $dieMsg = $_[0];
@@ -85,7 +91,10 @@ sub errorHandler {
 	$log .= "\n";
 
 	# Add stack trace
-	if (defined &Carp::longmess) {
+	$log .= "Stack trace:\n";
+	if (UNIVERSAL::isa($e, 'Exception::Class::Base')) {
+		$log .= $e->trace();
+	} elsif (defined &Carp::longmess) {
 		$log .= Carp::longmess($e);
 	} else {
 		$log .= $dieMsg;
@@ -108,6 +117,8 @@ sub errorHandler {
 		close F;
 	}
 	showError($msg);
+	print "-------\n";
+	system('cat errors.txt');
 	exit 9;
 };
 
