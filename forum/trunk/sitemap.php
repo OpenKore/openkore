@@ -44,6 +44,8 @@ include($phpbb_root_path . 'common.'.$phpEx);
 
 if ($_GET['fid']) { $fid = $_GET['fid']; }
 
+header("Content-Type: application/xml; charset=utf8");
+
 // Sitemap File    <sitemapindex xmlns="http://www.google.com/schemas/sitemap/0.84">
 // URL Index File  <urlset xmlns="http://www.google.com/schemas/sitemap/0.84">';
 if (isset($fid)) {
@@ -89,16 +91,16 @@ if (isset($fid)) {
     // Let's create a link to the main forum index sitemap
   echo '    <sitemap>
       <loc>'.FORUM_DOMAIN_ROOT.'forum-65535.xml</loc>
-      <changefreq>monthly</changefreq>
-   </sitemap>';
+   </sitemap>
+';
     // Let's do a loop here and list all the forums!
     $sql = 'SELECT forum_id FROM '.PHPBB_PREFIX.'forums WHERE auth_view = "0" and auth_read = "0" and forum_id not like "%-%"';
     $result = mysql_query($sql);
     while ($data = mysql_fetch_assoc($result)) {
       echo '    <sitemap>
       <loc>'.FORUM_DOMAIN_ROOT.'forum-'.$data['forum_id'].'.xml</loc>
-      <changefreq>daily</changefreq>
-   </sitemap>';
+    </sitemap>
+';
     }
   echo "\n".'  </sitemapindex>';
 }
