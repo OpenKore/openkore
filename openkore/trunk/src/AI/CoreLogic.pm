@@ -931,7 +931,7 @@ sub processMapRouteAI {
 				$args->{dest}{field} = new Field(name => $args->{dest}{map});
 			};
 			if ($@) {
-				error TF("Cannot load field %s", $args->{dest}{map});
+				error TF("Cannot load field %s\n", $args->{dest}{map});
 				AI::dequeue;
 			}
 
