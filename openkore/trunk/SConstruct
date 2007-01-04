@@ -1,4 +1,25 @@
 # -*-python-*-
+# This is the main SCons script which defines compilation rules.
+# See http://www.scons.org/ for more information.
+#
+# If you wish to tweak the build system but aren't familiar with SCons,
+# then simply edit these variables:
+
+# Extra directories in which the C(++) compiler should look for
+# header files.
+# Example: EXTRA_INCLUDE_DIRECTORIES = ['/foo', '/bar']
+EXTRA_INCLUDE_DIRECTORIES = []
+
+# Extra directories in which the linker should search for libraries.
+# Example: EXTRA_LIBRARY_DIRECTORIES = ['/opt/foo/lib', '/tmp/bar/lib']
+EXTRA_LIBRARY_DIRECTORIES = []
+
+# Extra arguments to be passed to the compiler during the compilation
+# stage (not during the linking stage).
+EXTRA_COMPILER_FLAGS = ['-Wall', '-g', '-O2', '-pipe']
+
+####################
+
 import os
 import sys
 
@@ -146,12 +167,12 @@ conf.Finish()
 ### Environment setup ###
 
 # Standard environment for programs
-env['CCFLAGS'] = ['-Wall', '-g', '-O2', '-pipe']
+env['CCFLAGS'] = [] + EXTRA_COMPILER_FLAGS
 env['LINKFLAGS'] = []
-env['LIBPATH'] = []
+env['LIBPATH'] = [] + EXTRA_LIBRARY_DIRECTORIES
 env['LIBS'] = []
 env['CPPDEFINES'] = []
-env['CPPPATH'] = []
+env['CPPPATH'] = [] + EXTRA_INCLUDE_DIRECTORIES
 if cygwin:
 	env['CCFLAGS'] += ['-mno-cygwin']
 	env['LINKFLAGS'] += ['-mno-cygwin']
@@ -254,8 +275,8 @@ else:
 	perlenv['LIBS'] += ['perl']
 	perlenv['LIBPATH'] += [perlconfig['coredir']]
 
-perlenv['CCFLAGS'] += ["-I" + perlconfig['coredir'],
-		'-DVERSION=\\"1.0\\"', '-DXS_VERSION=\\"1.0\\"']
+perlenv['CPPPATH'] += [perlconfig['coredir']]
+perlenv['CCFLAGS'] += ['-DVERSION=\\"1.0\\"', '-DXS_VERSION=\\"1.0\\"']
 perlenv.Replace(CXXFLAGS = perlenv['CCFLAGS'])
 
 
