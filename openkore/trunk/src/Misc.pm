@@ -3363,8 +3363,8 @@ sub compilePortals {
 
 				my %start = %{$mapSpawns{$map}{$spawn}};
 				my %dest = %{$mapPortals{$map}{$portal}};
-				closestWalkableSpot(\%field, \%start);
-				closestWalkableSpot(\%field, \%dest);
+				closestWalkableSpot($field, \%start);
+				closestWalkableSpot($field, \%dest);
 
 				$pathfinding->reset(
 					start => \%start,
