@@ -261,19 +261,24 @@ libenv['BUILDERS']['NativeDLL'] = NativeDLLBuilder
 # Environment for Perl libraries
 perlenv = libenv.Clone()
 if win32:
+	# Windows
 	perlenv['CCFLAGS'] += Split('-Wno-comments')
 	perlenv['CPPDEFINES'] += Split('__MINGW32__ WIN32IO_IS_STDIO ' +
 		'_INTPTR_T_DEFINED _UINTPTR_T_DEFINED CHECK_FORMAT')
 	perlenv['LIBS'] += ['perl58']
 	perlenv['LIBPATH'] += [perlconfig['coredir']]
 elif not darwin:
+	# Unix (except MacOS X)
 	perlenv['CCFLAGS'] += Split('-D_REENTRANT -D_GNU_SOURCE' +
 		' -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64')
 else:
+	# MacOS X
 	perlenv['CCFLAGS'] += ['-no-cpp-precomp', '-DPERL_DARWIN',
 			      '-fno-strict-aliasing']
 	perlenv['LIBS'] += ['perl']
 	perlenv['LIBPATH'] += [perlconfig['coredir']]
+	# Add default Fink header directory to header search path.
+	perlenv['CPPPATH'] += ['/sw/include']
 
 perlenv['CPPPATH'] += [perlconfig['coredir']]
 perlenv['CCFLAGS'] += ['-DVERSION=\\"1.0\\"', '-DXS_VERSION=\\"1.0\\"']
