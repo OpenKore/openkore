@@ -928,7 +928,7 @@ sub processMapRouteAI {
 			undef @{$args->{'mapSolution'}};
 			$args->{'dest'}{'field'} = {};
 			eval {
-				$args->{dest}{field} = new Field($args->{dest}{map});
+				$args->{dest}{field} = new Field(name => $args->{dest}{map});
 			};
 			if ($@) {
 				error TF("Cannot load field %s", $args->{dest}{map});
