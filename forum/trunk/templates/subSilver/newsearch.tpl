@@ -9,7 +9,7 @@
 	</div>
 	<div style="margin-top: 1em">
 		<a href="/index.php" class="mainmenu">« Back to forum index</a> |
-		<a href="http://search.yahoo.com/" class="mainmenu">Powered by Yahoo Search</a> |
+		<a href="http://www.google.com/" class="mainmenu">Powered by Google</a> |
 		<a href="/search.php" class="mainmenu">Traditional forum search</a>
 	</div>
 	</form>
