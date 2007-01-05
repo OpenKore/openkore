@@ -56,11 +56,11 @@ sub iterate {
 	return if (!$AI);
 	if (!$accountID) {
 		$AI = 0;
-		injectAdminMessage("Please relogin to enable X-${Settings::NAME}.") if ($config{verbose});
+		$messageSender->injectAdminMessage("Please relogin to enable X-${Settings::NAME}.") if ($config{verbose});
 		return;
 	}
 	if ($net->clientAlive() && !$sentWelcomeMessage && timeOut($timeout{'welcomeText'})) {
-		injectAdminMessage($Settings::welcomeText) if ($config{'verbose'} && !$config{'XKore_silent'});
+		$messageSender->injectAdminMessage($Settings::welcomeText) if ($config{'verbose'} && !$config{'XKore_silent'});
 		$sentWelcomeMessage = 1;
 	}
 

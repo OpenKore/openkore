@@ -94,8 +94,18 @@ def CheckPerl(context):
 
 		if cygwin:
 			# Convert paths to Cygwin-compatible paths
-			perlconfig['perl'] = perlconfig['perl'].replace('\\', '/')
-			perlconfig['coredir'] = perlconfig['coredir'].replace('\\', '/')
+			def cygpath(path):
+				f = os.popen('cygpath --unix "' + path + '"', 'r')
+				if f == None:
+					return path
+				else:
+					line = f.readline()
+					line = line.rstrip("\n")
+					line = line.rstrip("\r")
+					f.close()
+					return line
+			perlconfig['perl'] = cygpath(perlconfig['perl'])
+			perlconfig['coredir'] = cygpath(perlconfig['coredir'])
 	return ret == 0
 
 def CheckReadline(context, conf):
