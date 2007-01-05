@@ -22,10 +22,22 @@
 package Utils::LockFile;
 
 use strict;
-use Cwd qw(realpath);
 use Fcntl ':flock';
 use Exception::Class ('Utils::LockFile::AlreadyLocked', 'Utils::LockFile::NotLocked');
 use Utils::Exceptions;
+
+# Cwd::realpath() dies on Windows if the file doesn't exist.
+# We don't want that.
+sub realpath {
+	my ($file) = @_;
+	if ($^O ne 'MSWin32' || -f $file) {
+		require Cwd;
+		return Cwd::realpath($file);
+	} else {
+		require File::Spec;
+		return File::Spec->rel2abs($file);
+	}
+}
 
 ##
 # Utils::LockFile->new(String file)
