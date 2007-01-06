@@ -29,7 +29,7 @@ class DeadendPagesPage extends PageQueryPage {
 	function isExpensive( ) {
 		return 1;
 	}
-	
+
 	function isSyndicated() { return false; }
 
 	/**
@@ -38,14 +38,14 @@ class DeadendPagesPage extends PageQueryPage {
 	function sortDescending() {
 		return false;
 	}
-	
+
     /**
 	 * @return string an sqlquery
 	 */
 	function getSQL() {
 		$dbr =& wfGetDB( DB_SLAVE );
 		extract( $dbr->tableNames( 'page', 'pagelinks' ) );
-		return "SELECT 'Deadendpages' as type, page_namespace AS namespace, page_title as title, page_title AS value " . 
+		return "SELECT 'Deadendpages' as type, page_namespace AS namespace, page_title as title, page_title AS value " .
 	"FROM $page LEFT JOIN $pagelinks ON page_id = pl_from " .
 	"WHERE pl_from IS NULL " .
 	"AND page_namespace = 0 " .
@@ -57,11 +57,11 @@ class DeadendPagesPage extends PageQueryPage {
  * Constructor
  */
 function wfSpecialDeadendpages() {
-    
+
     list( $limit, $offset ) = wfCheckLimits();
 
     $depp = new DeadendPagesPage();
-    
+
     return $depp->doQuery( $offset, $limit );
 }
 

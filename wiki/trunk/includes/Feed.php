@@ -1,22 +1,22 @@
 <?php
 # Basic support for outputting syndication feeds in RSS, other formats
-# 
+#
 # Copyright (C) 2004 Brion Vibber <brion@pobox.com>
 # http://www.mediawiki.org/
-# 
+#
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2 of the License, or 
+# the Free Software Foundation; either version 2 of the License, or
 # (at your option) any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License along
 # with this program; if not, write to the Free Software Foundation, Inc.,
-# 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+# 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 # http://www.gnu.org/copyleft/gpl.html
 
 /**
@@ -41,7 +41,7 @@ class FeedItem {
 	var $Date = '';
 	var $Author = '';
 	/**#@-*/
-	
+
 	/**#@+
 	 * @todo document
 	 */
@@ -53,7 +53,7 @@ class FeedItem {
 		$this->Author = $Author;
 		$this->Comments = $Comments;
 	}
-	
+
 	/**
 	 * @static
 	 */
@@ -62,7 +62,7 @@ class FeedItem {
 		$string = preg_replace( '/[\x00-\x08\x0b\x0c\x0e-\x1f]/', '', $string );
 		return htmlspecialchars( $string );
 	}
-	
+
 	function getTitle() { return $this->xmlEncode( $this->Title ); }
 	function getUrl() { return $this->xmlEncode( $this->Url ); }
 	function getDescription() { return $this->xmlEncode( $this->Description ); }
@@ -85,14 +85,14 @@ class ChannelFeed extends FeedItem {
 	 * Abstract function, override!
 	 * @abstract
 	 */
-	 
+
 	/**
 	 * Generate Header of the feed
 	 */
 	function outHeader() {
 		# print "<feed>";
 	}
-	
+
 	/**
 	 * Generate an item
 	 * @param $item
@@ -100,7 +100,7 @@ class ChannelFeed extends FeedItem {
 	function outItem( $item ) {
 		# print "<item>...</item>";
 	}
-	
+
 	/**
 	 * Generate Footer of the feed
 	 */
@@ -108,7 +108,7 @@ class ChannelFeed extends FeedItem {
 		# print "</feed>";
 	}
 	/**#@-*/
-	
+
 	/**
 	 * Setup and send HTTP headers. Don't send any content;
 	 * content might end up being cached and re-sent with
@@ -121,15 +121,15 @@ class ChannelFeed extends FeedItem {
 	 */
 	function httpHeaders() {
 		global $wgOut;
-		
+
 		# We take over from $wgOut, excepting its cache header info
 		$wgOut->disable();
 		$mimetype = $this->contentType();
 		header( "Content-type: $mimetype; charset=UTF-8" );
 		$wgOut->sendCacheControl();
-		
+
 	}
-	
+
 	/**
 	 * Return an internet media type to be sent in the headers.
 	 *
@@ -142,7 +142,7 @@ class ChannelFeed extends FeedItem {
 		$allowedctypes = array('application/xml','text/xml','application/rss+xml','application/atom+xml');
 		return (in_array($ctype, $allowedctypes) ? $ctype : 'application/xml');
 	}
-	
+
 	/**
 	 * Output the initial XML headers with a stylesheet for legibility
 	 * if someone finds it in a browser.
@@ -150,9 +150,9 @@ class ChannelFeed extends FeedItem {
 	 */
 	function outXmlHeader() {
 		global $wgServer, $wgStylePath;
-		
+
 		$this->httpHeaders();
-		echo '<?xml version="1.0" encoding="utf-8"?' . ">\n";
+		echo '<?xml version="1.0" encoding="utf-8"?>' . "\n";
 		echo '<?xml-stylesheet type="text/css" href="' .
 			htmlspecialchars( "$wgServer$wgStylePath/common/feed.css" ) . '"?' . ">\n";
 	}
@@ -173,13 +173,13 @@ class RSSFeed extends ChannelFeed {
 	function formatTime( $ts ) {
 		return gmdate( 'D, d M Y H:i:s \G\M\T', wfTimestamp( TS_UNIX, $ts ) );
 	}
-	
+
 	/**
 	 * Ouput an RSS 2.0 header
 	 */
 	function outHeader() {
 		global $wgVersion;
-		
+
 		$this->outXmlHeader();
 		?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
 	<channel>
@@ -191,7 +191,7 @@ class RSSFeed extends ChannelFeed {
 		<lastBuildDate><?php print $this->formatTime( wfTimestampNow() ) ?></lastBuildDate>
 <?php
 	}
-	
+
 	/**
 	 * Output an RSS 2.0 item
 	 * @param FeedItem item to be output
@@ -237,19 +237,44 @@ class AtomFeed extends ChannelFeed {
 	 * @todo document
 	 */
 	function outHeader() {
-		global $wgVersion, $wgOut;
-		
+		global $wgVersion;
+
 		$this->outXmlHeader();
-		?><feed version="0.3" xmlns="http://purl.org/atom/ns#" xml:lang="<?php print $this->getLanguage() ?>">	
+		?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="<?php print $this->getLanguage() ?>">
+		<id><?php print $this->getFeedId() ?></id>
 		<title><?php print $this->getTitle() ?></title>
+		<link rel="self" type="application/atom+xml" href="<?php print $this->getSelfUrl() ?>"/>
 		<link rel="alternate" type="text/html" href="<?php print $this->getUrl() ?>"/>
-		<modified><?php print $this->formatTime( wfTimestampNow() ) ?>Z</modified>
-		<tagline><?php print $this->getDescription() ?></tagline>
+		<updated><?php print $this->formatTime( wfTimestampNow() ) ?>Z</updated>
+		<subtitle><?php print $this->getDescription() ?></subtitle>
 		<generator>MediaWiki <?php print $wgVersion ?></generator>
-		
+
 <?php
 	}
-	
+
+	/**
+	 * Atom 1.0 requires a unique, opaque IRI as a unique indentifier
+	 * for every feed we create. For now just use the URL, but who
+	 * can tell if that's right? If we put options on the feed, do we
+	 * have to change the id? Maybe? Maybe not.
+	 *
+	 * @return string
+	 * @access private
+	 */
+	function getFeedId() {
+		return $this->getSelfUrl();
+	}
+
+	/**
+	 * Atom 1.0 requests a self-reference to the feed.
+	 * @return string
+	 * @access private
+	 */
+	function getSelfUrl() {
+		global $wgRequest;
+		return htmlspecialchars( $wgRequest->getFullRequestURL() );
+	}
+
 	/**
 	 * @todo document
 	 */
@@ -257,23 +282,22 @@ class AtomFeed extends ChannelFeed {
 		global $wgMimeType;
 	?>
 	<entry>
+		<id><?php print $item->getUrl() ?></id>
 		<title><?php print $item->getTitle() ?></title>
 		<link rel="alternate" type="<?php print $wgMimeType ?>" href="<?php print $item->getUrl() ?>"/>
 		<?php if( $item->getDate() ) { ?>
-		<modified><?php print $this->formatTime( $item->getDate() ) ?>Z</modified>
-		<issued><?php print $this->formatTime( $item->getDate() ) ?></issued>
-		<created><?php print $this->formatTime( $item->getDate() ) ?>Z</created><?php } ?>
-	
-		<summary type="text/plain"><?php print $item->getDescription() ?></summary>
-		<?php if( $item->getAuthor() ) { ?><author><name><?php print $item->getAuthor() ?></name><!-- <url></url><email></email> --></author><?php }?>
-		<comment>foobar</comment>
+		<updated><?php print $this->formatTime( $item->getDate() ) ?>Z</updated>
+		<?php } ?>
+
+		<summary type="html"><?php print $item->getDescription() ?></summary>
+		<?php if( $item->getAuthor() ) { ?><author><name><?php print $item->getAuthor() ?></name></author><?php }?>
 	</entry>
 
 <?php /* FIXME need to add comments
 	<?php if( $item->getComments() ) { ?><dc:comment><?php print $item->getComments() ?></dc:comment><?php }?>
       */
 	}
-	
+
 	/**
 	 * @todo document
 	 */

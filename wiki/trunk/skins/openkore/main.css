@@ -279,3 +279,19 @@ table.colored td {
 	padding: 3px 10px;
 	text-align: left;
 }
+
+
+/********** Support page *************/
+.support-page-table tr.left {
+	vertical-align: top;
+}
+
+.support-page-table td.faq {
+	width: 55%;
+	background: url('/images/help-background.png') no-repeat bottom left;
+}
+
+.support-page-table td.featured-links {
+	padding-left: 2em;
+	background: url('/images/office-background.png') no-repeat bottom left;
+}

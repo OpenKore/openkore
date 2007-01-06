@@ -1,20 +1,18 @@
 <?php
 
 if( php_sapi_name() != 'cli' ) {
-	die( 'Must be run from the command line.' );
+	echo 'Must be run from the command line.';
+	die( -1 );
 }
 
 error_reporting( E_ALL );
 define( "MEDIAWIKI", true );
 
+set_include_path( get_include_path() . PATH_SEPARATOR . 'PHPUnit' );
+set_include_path( get_include_path() . PATH_SEPARATOR . '..' );
 require_once( 'PHPUnit.php' );
 
 $testOptions = array(
-	'mysql3' => array(
-		'server' => null,
-		'user' => null,
-		'password' => null,
-		'database' => null ),
 	'mysql4' => array(
 		'server' => null,
 		'user' => null,
@@ -34,11 +32,17 @@ if( file_exists( 'LocalTestSettings.php' ) ) {
 $tests = array(
 	'GlobalTest',
 	'DatabaseTest',
-	'SearchMySQL3Test',
 	'SearchMySQL4Test',
 	'ArticleTest',
 	'SanitizerTest',
+	'ImageTest'
 	);
+
+if( isset( $_SERVER['argv'][1] ) ) {
+	// to override...
+	$tests = array( $_SERVER['argv'][1] );
+}
+
 foreach( $tests as $test ) {
 	require_once( $test . '.php' );
 	$suite = new PHPUnit_TestSuite( $test );
@@ -80,7 +84,7 @@ function &buildTestDatabase( $serverType, $tables ) {
 					. $wgDBprefix . '\\1`', $create);
 				if ($create === $create_tmp) {
 					# Couldn't do replacement
-					die("could not create temporary table $tbl");
+					wfDie( "could not create temporary table $tbl" );
 				}
 				$db->query($create_tmp);
 			}

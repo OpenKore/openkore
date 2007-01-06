@@ -1,7 +1,7 @@
 <?php
 /**
  * Compress the text of a wiki
- * 
+ *
  * @package MediaWiki
  * @subpackage Maintenance
  */
@@ -9,7 +9,7 @@
 /** */
 
 /**
- * Usage: 
+ * Usage:
  *
  * Non-wikimedia
  * php compressOld.php [options...]
@@ -31,25 +31,26 @@
  *
  */
 
-$optionsWithArgs = array( 't', 'c', 's', 'f', 'h', 'extdb' );
+$optionsWithArgs = array( 't', 'c', 's', 'f', 'h', 'extdb', 'endid' );
 require_once( "../commandLine.inc" );
 require_once( "compressOld.inc" );
 
 if( !function_exists( "gzdeflate" ) ) {
 	print "You must enable zlib support in PHP to compress old revisions!\n";
 	print "Please see http://www.php.net/manual/en/ref.zlib.php\n\n";
-	die();
+	wfDie();
 }
 
-$defaults = array( 
+$defaults = array(
 	't' => 'concat',
 	'c' => 20,
 	's' => 0,
-	'f' => 3,
+	'f' => 5,
 	'h' => 100,
 	'b' => '',
     'e' => '',
     'extdb' => '',
+    'endid' => false,
 );
 
 $options = $options + $defaults;
@@ -58,19 +59,19 @@ if ( $options['t'] != 'concat' && $options['t'] != 'gzip' ) {
 	print "Type \"{$options['t']}\" not supported\n";
 }
 
-print "Depending on the size of your database this may take a while!\n";
-print "If you abort the script while it's running it shouldn't harm anything,\n";
-print "but if you haven't backed up your data, you SHOULD abort now!\n\n";
-print "Press control-c to abort first (will proceed automatically in 5 seconds)\n";
-#sleep(5);
+if ( $options['extdb'] != '' ) {
+	print "Compressing database $wgDBname to external cluster {$options['extdb']}\n" . str_repeat('-', 76) . "\n\n";
+} else {
+	print "Compressing database $wgDBname\n" . str_repeat('-', 76) . "\n\n";
+}
 
 $success = true;
 if ( $options['t'] == 'concat' ) {
-    $success = compressWithConcat( $options['s'], $options['c'], $options['f'], $options['h'], $options['b'], 
-        $options['e'], $options['extdb'] );
+    $success = compressWithConcat( $options['s'], $options['c'], $options['f'], $options['h'], $options['b'],
+        $options['e'], $options['extdb'], $options['endid'] );
 } else {
 	compressOldPages( $options['s'], $options['extdb'] );
-} 
+}
 
 if ( $success ) {
 	print "Done.\n";

@@ -10,11 +10,11 @@
  */
 function wfSpecialIpblocklist() {
 	global $wgUser, $wgOut, $wgRequest;
-	
+
 	$ip = $wgRequest->getVal( 'wpUnblockAddress', $wgRequest->getVal( 'ip' ) );
 	$reason = $wgRequest->getText( 'wpUnblockReason' );
 	$action = $wgRequest->getText( 'action' );
-	
+
 	$ipu = new IPUnblockForm( $ip, $reason );
 
 	if ( "success" == $action ) {
@@ -35,24 +35,23 @@ function wfSpecialIpblocklist() {
 }
 
 /**
- * 
+ *
  * @package MediaWiki
  * @subpackage SpecialPage
  */
 class IPUnblockForm {
 	var $ip, $reason;
-	
+
 	function IPUnblockForm( $ip, $reason ) {
 		$this->ip = $ip;
 		$this->reason = $reason;
 	}
-	
-	function showForm( $err )
-	{
-		global $wgOut, $wgUser, $wgLang, $wgSysopUserBans;
 
-		$wgOut->setPagetitle( wfMsg( "unblockip" ) );
-		$wgOut->addWikiText( wfMsg( "unblockiptext" ) );
+	function showForm( $err ) {
+		global $wgOut, $wgUser, $wgSysopUserBans;
+
+		$wgOut->setPagetitle( wfMsg( 'unblockip' ) );
+		$wgOut->addWikiText( wfMsg( 'unblockiptext' ) );
 
 		$ipa = wfMsgHtml( $wgSysopUserBans ? 'ipadressorusername' : 'ipaddress' );
 		$ipr = wfMsgHtml( 'ipbreason' );
@@ -65,7 +64,7 @@ class IPUnblockForm {
 			$wgOut->addWikitext( "<span class='error'>{$err}</span>\n" );
 		}
 		$token = htmlspecialchars( $wgUser->editToken() );
-		
+
 		$wgOut->addHTML( "
 <form id=\"unblockip\" method=\"post\" action=\"{$action}\">
 	<table border='0'>
@@ -92,9 +91,9 @@ class IPUnblockForm {
 </form>\n" );
 
 	}
-	
+
 	function doSubmit() {
-		global $wgOut, $wgUser, $wgLang;
+		global $wgOut;
 
 		$block = new Block();
 		$this->ip = trim( $this->ip );
@@ -121,56 +120,137 @@ class IPUnblockForm {
 
 	function showList( $msg ) {
 		global $wgOut;
-		
+
 		$wgOut->setPagetitle( wfMsg( "ipblocklist" ) );
 		if ( "" != $msg ) {
 			$wgOut->setSubtitle( $msg );
 		}
+		global $wgRequest;
+		list( $this->limit, $this->offset ) = $wgRequest->getLimitOffset();
+		$this->counter = 0;
+
+		$paging = '<p>' . wfViewPrevNext( $this->offset, $this->limit,
+			Title::makeTitle( NS_SPECIAL, 'Ipblocklist' ),
+			'ip=' . urlencode( $this->ip ) ) . "</p>\n";
+		$wgOut->addHTML( $paging );
+
+		$search = $this->searchForm();
+		$wgOut->addHTML( $search );
+		
 		$wgOut->addHTML( "<ul>" );
-		// FIXME hack to solve #bug 1487
-		if(!Block::enumBlocks( "wfAddRow", 0 ))
-			$wgOut->addHTML( '<li>'.wfMsg( 'ipblocklistempty' ).'</li>' );
+		if( !Block::enumBlocks( array( &$this, "addRow" ), 0 ) ) {
+			// FIXME hack to solve #bug 1487
+			$wgOut->addHTML( '<li>'.wfMsgHtml( 'ipblocklistempty' ).'</li>' );
+		}
 		$wgOut->addHTML( "</ul>\n" );
+		$wgOut->addHTML( $paging );
+	}
+
+	function searchForm() {
+		global $wgTitle;
+		return
+			wfElement( 'form', array(
+				'action' => $wgTitle->getLocalUrl() ),
+				null ) .
+			wfElement( 'input', array(
+				'type' => 'hidden',
+				'name' => 'action',
+				'value' => 'search' ) ).
+			wfElement( 'input', array(
+				'type' => 'hidden',
+				'name' => 'limit',
+				'value' => $this->limit ) ).
+			wfElement( 'input', array(
+				'name' => 'ip',
+				'value' => $this->ip ) ) .
+			wfElement( 'input', array(
+				'type' => 'submit',
+				'value' => wfMsg( 'search' ) ) ) .
+			'</form>';
+	}
+
+	/**
+	 * Callback function to output a block
+	 */
+	function addRow( $block, $tag ) {
+		global $wgOut, $wgUser, $wgLang;
+
+		if( $this->ip != '' ) {
+			if( $block->mAuto ) {
+				if( stristr( $block->mId, $this->ip ) == false ) {
+					return;
+				}
+			} else {
+				if( stristr( $block->mAddress, $this->ip ) == false ) {
+					return;
+				}
+			}
+		}
+
+		// Loading blocks is fast; displaying them is slow.
+		// Quick hack for paging.
+		$this->counter++;
+		if( $this->counter <= $this->offset ) {
+			return;
+		}
+		if( $this->counter - $this->offset > $this->limit ) {
+			return;
+		}
+
+		$fname = 'IPUnblockForm-addRow';
+		wfProfileIn( $fname );
+
+		static $sk=null, $msg=null;
+
+		if( is_null( $sk ) )
+			$sk = $wgUser->getSkin();
+		if( is_null( $msg ) ) {
+			$msg = array();
+			foreach( array( 'infiniteblock', 'expiringblock', 'contribslink', 'unblocklink' ) as $key ) {
+				$msg[$key] = wfMsgHtml( $key );
+			}
+			$msg['blocklistline'] = wfMsg( 'blocklistline' );
+			$msg['contribslink'] = wfMsg( 'contribslink' );
+		}
+
+
+		# Prepare links to the blocker's user and talk pages
+		$blocker_name = $block->getByName();
+		$blocker = $sk->MakeLinkObj( Title::makeTitle( NS_USER, $blocker_name ), $blocker_name );
+		$blocker .= ' (' . $sk->makeLinkObj( Title::makeTitle( NS_USER_TALK, $blocker_name ), $wgLang->getNsText( NS_TALK ) ) . ')';
+
+		# Prepare links to the block target's user and contribs. pages (as applicable, don't do it for autoblocks)
+		if( $block->mAuto ) {
+			$target = '#' . $block->mId; # Hide the IP addresses of auto-blocks; privacy
+		} else {
+			$target = $sk->makeLinkObj( Title::makeTitle( NS_USER, $block->mAddress ), $block->mAddress );
+			$target .= ' (' . $sk->makeKnownLinkObj( Title::makeTitle( NS_SPECIAL, 'Contributions' ), $msg['contribslink'], 'target=' . $block->mAddress ) . ')';
+		}
+		
+		# Prep the address for the unblock link, masking autoblocks as before
+		$addr = $block->mAuto ? '#' . $block->mId : $block->mAddress;
+		
+		$formattedTime = $wgLang->timeanddate( $block->mTimestamp, true );
+
+		if ( $block->mExpiry === "" ) {
+			$formattedExpiry = $msg['infiniteblock'];
+		} else {
+			$formattedExpiry = wfMsgReplaceArgs( $msg['expiringblock'],
+				array( $wgLang->timeanddate( $block->mExpiry, true ) ) );
+		}
+
+		$line = wfMsgReplaceArgs( $msg['blocklistline'], array( $formattedTime, $blocker, $target, $formattedExpiry ) );
+
+		$wgOut->addHTML( "<li>{$line}" );
+
+		if ( $wgUser->isAllowed('block') ) {
+			$titleObj = Title::makeTitle( NS_SPECIAL, "Ipblocklist" );
+			$wgOut->addHTML( ' (' . $sk->makeKnownLinkObj($titleObj, $msg['unblocklink'], 'action=unblock&ip=' . urlencode( $addr ) ) . ')' );
+		}
+		$wgOut->addHTML( $sk->commentBlock( $block->mReason ) );
+		$wgOut->addHTML( "</li>\n" );
+		wfProfileOut( $fname );
 	}
 }
-
-/**
- * Callback function to output a block
- */
-function wfAddRow( $block, $tag ) {
-	global $wgOut, $wgUser, $wgLang, $wgContLang;
-
-	$sk = $wgUser->getSkin();
-
-	# Hide addresses blocked by User::spreadBlocks, for privacy
-	$addr = $block->mAuto ? "#{$block->mId}" : $block->mAddress;
-
-	$name = User::whoIs( $block->mBy );
-	$ulink = $sk->makeKnownLinkObj( Title::makeTitle( NS_USER, $name ), $name );
-	$formattedTime = $wgLang->timeanddate( $block->mTimestamp, true );
-	
-	if ( $block->mExpiry === "" ) {
-		$formattedExpiry = wfMsgHtml('infiniteblock');
-	} else {
-		$formattedExpiry = wfMsgHtml('expiringblock', $wgLang->timeanddate( $block->mExpiry, true ) );
-	}
-	
-	$line = wfMsg( "blocklistline", $formattedTime, $ulink, $addr, $formattedExpiry );
-	
-	$wgOut->addHTML( "<li>{$line}" );
-
-	if ( !$block->mAuto ) {
-		$titleObj = Title::makeTitle( NS_SPECIAL, "Contributions" );
-		$wgOut->addHTML( ' (' . $sk->makeKnownLinkObj($titleObj, wfMsgHtml( 'contribslink' ), "target={$block->mAddress}") . ')' );
-	}
-
-	if ( $wgUser->isAllowed('block') ) {
-		$titleObj = Title::makeTitle( NS_SPECIAL, "Ipblocklist" );
-		$wgOut->addHTML( ' (' . $sk->makeKnownLinkObj($titleObj, wfMsgHtml( 'unblocklink' ), 'action=unblock&ip=' . urlencode( $addr ) ) . ')' );
-	}
-	$wgOut->addHTML( $sk->commentBlock( $block->mReason ) );
-	$wgOut->addHTML( "</li>\n" );
-}
-
 
 ?>

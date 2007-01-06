@@ -26,9 +26,9 @@ class ShortPagesPage extends QueryPage {
 	 * This query is indexed as of 1.5
 	 */
 	function isExpensive() {
-		return false;
+		return true;
 	}
-	
+
 	function isSyndicated() {
 		return false;
 	}
@@ -37,26 +37,27 @@ class ShortPagesPage extends QueryPage {
 		$dbr =& wfGetDB( DB_SLAVE );
 		$page = $dbr->tableName( 'page' );
 		$name = $dbr->addQuotes( $this->getName() );
-		
+
 		return
 			"SELECT $name as type,
-					page_namespace as namespace,
+				page_namespace as namespace,
 			        page_title as title,
 			        page_len AS value
-			FROM $page
+			FROM $page FORCE INDEX (page_len)
 			WHERE page_namespace=".NS_MAIN." AND page_is_redirect=0";
 	}
-	
+
 	function sortDescending() {
 		return false;
 	}
 
 	function formatResult( $skin, $result ) {
 		global $wgLang, $wgContLang;
-		$nb = htmlspecialchars( wfMsg( "nbytes", $wgLang->formatNum( $result->value ) ) );
+		$nb = htmlspecialchars( wfMsg( 'nbytes', $wgLang->formatNum( $result->value ) ) );
 		$title = Title::makeTitle( $result->namespace, $result->title );
-		$link = $skin->makeKnownLinkObj( $title, $wgContLang->convert( $title->getPrefixedText() ) );
-		return "{$link} ({$nb})";
+		$link = $skin->makeKnownLinkObj( $title, htmlspecialchars( $wgContLang->convert( $title->getPrefixedText() ) ) );
+		$histlink = $skin->makeKnownLinkObj( $title, wfMsgHtml('hist'), 'action=history' );
+		return "({$histlink}) $link ({$nb})";
 	}
 }
 

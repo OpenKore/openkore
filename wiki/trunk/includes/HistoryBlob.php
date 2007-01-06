@@ -31,14 +31,14 @@ class HistoryBlob
 	 */
 	function addItem() {}
 
-	/** 
+	/**
 	 * Get item by hash
 	 */
 	function getItem( $hash ) {}
-	
+
 	# Set the "default text"
 	# This concept is an odd property of the current DB schema, whereby each text item has a revision
-	# associated with it. The default text is the text of the associated revision. There may, however, 
+	# associated with it. The default text is the text of the associated revision. There may, however,
 	# be other revisions in the same object
 	function setText() {}
 
@@ -59,7 +59,7 @@ class ConcatenatedGzipHistoryBlob extends HistoryBlob
 
 	function ConcatenatedGzipHistoryBlob() {
 		if ( !function_exists( 'gzdeflate' ) ) {
-			die( "Need zlib support to read or write this kind of history object (ConcatenatedGzipHistoryBlob)\n" );
+			wfDie( "Need zlib support to read or write this kind of history object (ConcatenatedGzipHistoryBlob)\n" );
 		}
 	}
 
@@ -111,7 +111,7 @@ class ConcatenatedGzipHistoryBlob extends HistoryBlob
 	}
 
 	/** @todo document */
-	function uncompress() { 
+	function uncompress() {
 		if ( $this->mCompressed ) {
 			$this->mItems = unserialize( gzinflate( $this->mItems ) );
 			$this->mCompressed = false;
@@ -182,13 +182,13 @@ $wgBlobCache = array();
  * @package MediaWiki
  */
 class HistoryBlobStub {
-	var $mOldId, $mHash,$mRef;
+	var $mOldId, $mHash, $mRef;
 
 	/** @todo document */
 	function HistoryBlobStub( $hash = '', $oldid = 0 ) {
 		$this->mHash = $hash;
 	}
-	
+
 	/**
 	 * Sets the location (old_id) of the main object to which this object
 	 * points
@@ -197,22 +197,23 @@ class HistoryBlobStub {
 		$this->mOldId = $id;
 	}
 
-	/**
-	 * Sets the location (old_id) of the referring object
-	 */
+      /**
+       * Sets the location (old_id) of the referring object
+       */
 	function setReferrer( $id ) {
 		$this->mRef = $id;
 	}
 
-	/**
-	 * Gets the location of the referring object
-	 */
+      /**
+       * Gets the location of the referring object
+       */
 	function getReferrer() {
 		return $this->mRef;
 	}
 
 	/** @todo document */
 	function getText() {
+		$fname = 'HistoryBlob::getText';
 		global $wgBlobCache;
 		if( isset( $wgBlobCache[$this->mOldId] ) ) {
 			$obj = $wgBlobCache[$this->mOldId];
@@ -224,20 +225,20 @@ class HistoryBlobStub {
 			}
 			$flags = explode( ',', $row->old_flags );
 			if( in_array( 'external', $flags ) ) {
-                        	$url=$row->old_text;
-                        	@list($proto,$path)=explode('://',$url,2);
-                        	if ($path=="") {
-                                	wfProfileOut( $fname );
-                                	return false;
-                        	}
-                        	require_once('ExternalStore.php');
-                        	$row->old_text=ExternalStore::fetchFromUrl($url);
+				$url=$row->old_text;
+				@list($proto,$path)=explode('://',$url,2);
+				if ($path=="") {
+					wfProfileOut( $fname );
+					return false;
+				}
+				require_once('ExternalStore.php');
+				$row->old_text=ExternalStore::fetchFromUrl($url);
 
 			}
 			if( !in_array( 'object', $flags ) ) {
 				return false;
 			}
-			
+
 			if( in_array( 'gzip', $flags ) ) {
 				// This shouldn't happen, but a bug in the compress script
 				// may at times gzip-compress a HistoryBlob object row.
@@ -245,12 +246,12 @@ class HistoryBlobStub {
 			} else {
 				$obj = unserialize( $row->old_text );
 			}
-			
+
 			if( !is_object( $obj ) ) {
 				// Correct for old double-serialization bug.
 				$obj = unserialize( $obj );
 			}
-			
+
 			// Save this item for reference; if pulling many
 			// items in a row we'll likely use it again.
 			$obj->uncompress();
@@ -283,7 +284,7 @@ class HistoryBlobCurStub {
 	function HistoryBlobCurStub( $curid = 0 ) {
 		$this->mCurId = $curid;
 	}
-	
+
 	/**
 	 * Sets the location (cur_id) of the main object to which this object
 	 * points

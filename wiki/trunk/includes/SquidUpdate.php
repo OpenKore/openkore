@@ -32,9 +32,6 @@ class SquidUpdate {
 		$id = $title->getArticleID();
 
 		$dbr =& wfGetDB( DB_SLAVE );
-		$links = $dbr->tableName( 'links' );
-		$page = $dbr->tableName( 'page' );
-
 		$res = $dbr->select( array( 'links', 'page' ),
 			array( 'page_namespace', 'page_title' ),
 			array(
@@ -46,7 +43,7 @@ class SquidUpdate {
 		if ( $dbr->numRows( $res ) <= $this->mMaxTitles ) {
 			while ( $BL = $dbr->fetchObject ( $res ) )
 			{
-				$tobj = Title::makeTitle( $BL->page_namespace, $BL->page_title ) ; 
+				$tobj = Title::makeTitle( $BL->page_namespace, $BL->page_title ) ;
 				$blurlArr[] = $tobj->getInternalURL();
 			}
 		}
@@ -65,7 +62,7 @@ class SquidUpdate {
 
 	/* static */ function newSimplePurge( &$title ) {
 		$urlArr = $title->getSquidURLs();
-		return new SquidUpdate( $blurlArr );
+		return new SquidUpdate( $urlArr );
 	}
 
 	function doUpdate() {
@@ -73,7 +70,7 @@ class SquidUpdate {
 	}
 
 	/* Purges a list of Squids defined in $wgSquidServers.
-	$urlArr should contain the full URLs to purge as values 
+	$urlArr should contain the full URLs to purge as values
 	(example: $urlArr[] = 'http://my.host/something')
 	XXX report broken Squids per mail or log */
 
@@ -90,7 +87,7 @@ class SquidUpdate {
 
 		$fname = 'SquidUpdate::purge';
 		wfProfileIn( $fname );
-		
+
 		$maxsocketspersquid = 8; //  socket cap per Squid
 		$urlspersocket = 400; // 400 seems to be a good tradeoff, opening a socket takes a while
 		$firsturl = $urlArr[0];
@@ -117,6 +114,7 @@ class SquidUpdate {
 					@list($server, $port) = explode(':', $wgSquidServers[$ss]);
 					if(!isset($port)) $port = 80;
 					#$this->debug("Opening socket to $server:$port");
+					$error = $errstr = false;
 					$socket = @fsockopen($server, $port, $error, $errstr, 3);
 					#$this->debug("\n");
 					if (!$socket) {
@@ -130,7 +128,7 @@ class SquidUpdate {
 						#$this->debug("...");
 						$res = @fread($socket,512);
 						#$this->debug("\n");
-						/* Squid only returns http headers with 200 or 404 status, 
+						/* Squid only returns http headers with 200 or 404 status,
 						if there's more returned something's wrong */
 						if (strlen($res) > 250) {
 							fclose($socket);
@@ -140,7 +138,7 @@ class SquidUpdate {
 							@stream_set_blocking($socket,false);
 							$sockets[] = $socket;
 						}
-					} 
+					}
 				} else {
 					/* open the remaining sockets for this server */
 					list($server, $port) = explode(':', $wgSquidServers[$ss]);

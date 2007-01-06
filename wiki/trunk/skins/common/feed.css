@@ -12,7 +12,7 @@ Compatibility:
 */
 
 /* RSS: */ rss, channel, title, link, description, language, generator, lastBuildDate, item, pubDate, author, comments, creator,
-/* Atom: */ feed, modified, tagline, entry, issued, created, summary, comment {
+/* Atom: */ feed, id, modified, tagline, entry, issued, created, updated, summary, comment {
 	display: block;
 }
 
@@ -22,6 +22,7 @@ rss, feed {
 	margin: 1em;
 	font-family: "Verdana", "Tahoma", "Arial", "Helvetica", sans-serif;
 	line-height: 1.5em;
+	font-size: 76%;
 }
 
 rss:before {
@@ -66,6 +67,7 @@ pubDate:before { content: "Date: " }
 link:before { content: "Link: " }
 author:before, creator:before { content: "Author: " }
 description:before { content: "Description: " }
+id:before { content: "Id: " }
 
 generator:before { content: "Generator: " }
 language:before { content: "Language: " }
@@ -76,13 +78,14 @@ tagline:before { content: "Tagline: " }
 issued:before { content: "Issued: " }
 created:before { content: "Created: " }
 modified:before { content: "Modified: " }
+updated:before { content: "Updated: " }
 summary:before { content: "Summary: " }
 comment:before { content: "Comment: " }
 
 pubDate:before, link:before, author:before, description:before,
 language:before, generator:before, lastBuildDate:before, comments:before,
 tagline:before, issued:before, created:before, modified:before,
-summary:before, comment:before, creator:before {
+summary:before, comment:before, creator:before, id:before, updated:before {
 	color: #224;
 	font-weight: bold;
 }

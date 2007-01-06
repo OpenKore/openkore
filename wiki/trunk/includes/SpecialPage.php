@@ -32,7 +32,7 @@ $wgSpecialPages = array(
 	'Recentchanges'     => new IncludableSpecialPage( 'Recentchanges' ),
 	'Upload'            => new SpecialPage( 'Upload' ),
 	'Imagelist'         => new SpecialPage( 'Imagelist' ),
-	'Newimages'         => new SpecialPage( 'Newimages' ),
+	'Newimages'         => new IncludableSpecialPage( 'Newimages' ),
 	'Listusers'         => new SpecialPage( 'Listusers' ),
 	'Statistics'        => new SpecialPage( 'Statistics' ),
 	'Random'        => new SpecialPage( 'Randompage' ),
@@ -41,14 +41,20 @@ $wgSpecialPages = array(
 	'Uncategorizedcategories'=> new SpecialPage( 'Uncategorizedcategories' ),
 	'Unusedcategories'	=> new SpecialPage( 'Unusedcategories' ),
 	'Unusedimages'      => new SpecialPage( 'Unusedimages' ),
-	'Wantedpages'	=> new SpecialPage( 'Wantedpages' ),
+	'Wantedpages'	=> new IncludableSpecialPage( 'Wantedpages' ),
+	'Wantedcategories' => new SpecialPage( 'Wantedcategories' ),
 	'Mostlinked'	=> new SpecialPage( 'Mostlinked' ),
+	'Mostlinkedcategories' => new SpecialPage( 'Mostlinkedcategories' ),
+	'Mostcategories' => new SpecialPage( 'Mostcategories' ),
+	'Mostimages' => new SpecialPage( 'Mostimages' ),
+	'Mostrevisions' => new SpecialPage( 'Mostrevisions' ),
 	'Shortpages'	=> new SpecialPage( 'Shortpages' ),
 	'Longpages'		=> new SpecialPage( 'Longpages' ),
 	'Newpages'		=> new IncludableSpecialPage( 'Newpages' ),
 	'Ancientpages'	=> new SpecialPage( 'Ancientpages' ),
 	'Deadendpages'  => new SpecialPage( 'Deadendpages' ),
 	'Allpages'		=> new IncludableSpecialPage( 'Allpages' ),
+	'Prefixindex'	=> new IncludableSpecialPage( 'Prefixindex' ) ,
 	'Ipblocklist'	=> new SpecialPage( 'Ipblocklist' ),
 	'Specialpages'  => new UnlistedSpecialPage( 'Specialpages' ),
 	'Contributions' => new UnlistedSpecialPage( 'Contributions' ),
@@ -64,22 +70,23 @@ $wgSpecialPages = array(
 	'Allmessages'	=> new SpecialPage( 'Allmessages' ),
 	'Log'           => new SpecialPage( 'Log' ),
 	'Blockip'		=> new SpecialPage( 'Blockip', 'block' ),
-	'Undelete'		=> new SpecialPage( 'Undelete', 'delete' ),
+	'Undelete'		=> new SpecialPage( 'Undelete', 'deletedhistory' ),
 	"Import"		=> new SpecialPage( "Import", 'import' ),
 	'Lockdb'		=> new SpecialPage( 'Lockdb', 'siteadmin' ),
 	'Unlockdb'		=> new SpecialPage( 'Unlockdb', 'siteadmin' ),
 	'Userrights'	=> new SpecialPage( 'Userrights', 'userrights' ),
+	'MIMEsearch'    => new SpecialPage( 'MIMEsearch' ),
+	'Unwatchedpages' => new SpecialPage( 'Unwatchedpages', 'unwatchedpages' ),
+	'Listredirects' => new SpecialPage( 'Listredirects' ),
+	'Revisiondelete' => new SpecialPage( 'Revisiondelete', 'deleterevision' ),
 );
-
-if ( $wgUseValidation )
-	$wgSpecialPages['Validate'] = new SpecialPage( 'Validate' );
 
 if( !$wgDisableCounters ) {
 	$wgSpecialPages['Popularpages'] = new SpecialPage( 'Popularpages' );
 }
 
 if( !$wgDisableInternalSearch ) {
-	$wgSpecialPages['Search'] = new UnlistedSpecialPage( 'Search' );
+	$wgSpecialPages['Search'] = new SpecialPage( 'Search' );
 }
 
 if( $wgEmailAuthentication ) {
@@ -173,20 +180,17 @@ class SpecialPage
 	 */
 	function getRedirect( $name ) {
 		global $wgUser;
-		switch ( $name ) {
-			case 'Mypage':
-				return Title::makeTitle( NS_USER, $wgUser->getName() );
-			case 'Mytalk':
-				return Title::makeTitle( NS_USER_TALK, $wgUser->getName() );
-			case 'Mycontributions':
-				return Title::makeTitle( NS_SPECIAL, 'Contributions/' . $wgUser->getName() );
-			case 'Listadmins':
-				return Title::makeTitle( NS_SPECIAL, 'Listusers/sysop' ); # @bug 2832
-			case 'Randompage':
-				return Title::makeTitle( NS_SPECIAL, 'Random' );
-			default:
-				return NULL;
-		}
+
+		$redirects = array(
+			'Mypage' => Title::makeTitle( NS_USER, $wgUser->getName() ),
+			'Mytalk' => Title::makeTitle( NS_USER_TALK, $wgUser->getName() ),
+			'Mycontributions' => Title::makeTitle( NS_SPECIAL, 'Contributions/' . $wgUser->getName() ),
+			'Listadmins' => Title::makeTitle( NS_SPECIAL, 'Listusers/sysop' ), # @bug 2832
+			'Randompage' => Title::makeTitle( NS_SPECIAL, 'Random' )
+		);
+		wfRunHooks( 'SpecialPageGetRedirect', array( &$redirects ) );
+
+		return isset( $redirects[$name] ) ? $redirects[$name] : null;
 	}
 
 	/**
@@ -222,7 +226,9 @@ class SpecialPage
 	 * @param $including      output is being captured for use in {{special:whatever}}
 	 */
 	function executePath( &$title, $including = false ) {
-		global $wgSpecialPages, $wgOut, $wgTitle;
+		global $wgOut, $wgTitle;
+		$fname = 'SpecialPage::executePath';
+		wfProfileIn( $fname );
 
 		$bits = split( "/", $title->getDBkey(), 2 );
 		$name = $bits[0];
@@ -235,6 +241,7 @@ class SpecialPage
 		$page = SpecialPage::getPage( $name );
 		if ( is_null( $page ) ) {
 			if ( $including ) {
+				wfProfileOut( $fname );
 				return false;
 			} else {
 				$redir = SpecialPage::getRedirect( $name );
@@ -246,13 +253,15 @@ class SpecialPage
 					$retVal = $redir;
 				} else {
 					$wgOut->setArticleRelated( false );
-					$wgOut->setRobotpolicy( "noindex,follow" );
-					$wgOut->errorpage( "nosuchspecialpage", "nospecialpagetext" );
+					$wgOut->setRobotpolicy( 'noindex,follow' );
+					$wgOut->setStatusCode( 404 );
+					$wgOut->errorpage( 'nosuchspecialpage', 'nospecialpagetext' );
 					$retVal = false;
 				}
 			}
 		} else {
 			if ( $including && !$page->includable() ) {
+				wfProfileOut( $fname );
 				return false;
 			}
 			if($par !== NULL) {
@@ -262,9 +271,13 @@ class SpecialPage
 			}
 			$page->including( $including );
 
+			$profName = 'Special:' . $page->getName();
+			wfProfileIn( $profName );
 			$page->execute( $par );
+			wfProfileOut( $profName );
 			$retVal = true;
 		}
+		wfProfileOut( $fname );
 		return $retVal;
 	}
 
@@ -323,13 +336,28 @@ class SpecialPage
 		}
 	}
 
-	# Accessor functions, see the descriptions of the associated variables above
+	/**#@+
+	  * Accessor
+	  *
+	  * @deprecated
+	  */
 	function getName() { return $this->mName; }
 	function getRestriction() { return $this->mRestriction; }
-	function isListed() { return $this->mListed; }
 	function getFile() { return $this->mFile; }
-	function including( $x = NULL ) { return wfSetVar( $this->mIncluding, $x ); }
+	function isListed() { return $this->mListed; }
+	/**#@-*/
+
+	/**#@+
+	  * Accessor and mutator
+	  */
+	function name( $x = NULL ) { return wfSetVar( $this->mName, $x ); }
+	function restrictions( $x = NULL) { return wfSetVar( $this->mRestrictions, $x ); }
+	function listed( $x = NULL) { return wfSetVar( $this->mListed, $x ); }
+	function func( $x = NULL) { return wfSetVar( $this->mFunction, $x ); }
+	function file( $x = NULL) { return wfSetVar( $this->mFile, $x ); }
 	function includable( $x = NULL ) { return wfSetVar( $this->mIncludable, $x ); }
+	function including( $x = NULL ) { return wfSetVar( $this->mIncluding, $x ); }
+	/**#@-*/
 
 	/**
 	 * Checks if the given user (identified by an object) can execute this
@@ -370,19 +398,36 @@ class SpecialPage
 	 * Checks user permissions, calls the function given in mFunction
 	 */
 	function execute( $par ) {
-		global $wgUser, $wgOut, $wgTitle;
+		global $wgUser;
 
 		$this->setHeaders();
 
 		if ( $this->userCanExecute( $wgUser ) ) {
-			if ( $this->mFile ) {
+			$func = $this->mFunction;
+			// only load file if the function does not exist
+			if(!function_exists($func) and $this->mFile) {
 				require_once( $this->mFile );
 			}
-			$func = $this->mFunction;
+			if ( wfRunHooks( 'SpecialPageExecuteBeforeHeader', array( &$this, &$par, &$func ) ) )
+				$this->outputHeader();
+			if ( ! wfRunHooks( 'SpecialPageExecuteBeforePage', array( &$this, &$par, &$func ) ) )
+				return;
 			$func( $par, $this );
+			if ( ! wfRunHooks( 'SpecialPageExecuteAfterPage', array( &$this, &$par, &$func ) ) )
+				return;
 		} else {
 			$this->displayRestrictionError();
 		}
+	}
+
+	function outputHeader() {
+		global $wgOut, $wgContLang;
+
+		$msg = $wgContLang->lc( $this->name() ) . '-summary';
+		$out = wfMsg( $msg );
+		if ( ! wfEmptyMsg( $msg, $out ) and  $out !== '' and ! $this->including() )
+			$wgOut->addWikiText( $out );
+
 	}
 
 	# Returns the name that goes in the <h1> in the special page itself, and also the name that

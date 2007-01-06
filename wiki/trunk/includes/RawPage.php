@@ -1,12 +1,12 @@
 <?php
 /**
- * Copyright (C) 2004 Gabriel Wicke <gw@wikidev.net>
- * http://www.aulinx.de/
+ * Copyright (C) 2004 Gabriel Wicke <wicke@wikidev.net>
+ * http://wikidev.net/
  * Based on PageHistory and SpecialExport
- * 
+ *
  * License: GPL (http://www.gnu.org/copyleft/gpl.html)
  *
- * @author Gabriel Wicke <gw@wikidev.net>
+ * @author Gabriel Wicke <wicke@wikidev.net>
  * @package MediaWiki
  */
 
@@ -18,42 +18,80 @@ require_once( 'Revision.php' );
  * @package MediaWiki
  */
 class RawPage {
+	var $mArticle, $mTitle, $mRequest;
+	var $mOldId, $mGen, $mCharset;
+	var $mSmaxage, $mMaxage;
+	var $mContentType, $mExpandTemplates;
 
-	function RawPage( $article ) {
+	function RawPage( &$article, $request = false ) {
 		global $wgRequest, $wgInputEncoding, $wgSquidMaxage, $wgJsMimeType;
+
 		$allowedCTypes = array('text/x-wiki', $wgJsMimeType, 'text/css', 'application/x-zope-edit');
 		$this->mArticle =& $article;
 		$this->mTitle =& $article->mTitle;
-			
-		$ctype = $wgRequest->getText( 'ctype' );
-		$smaxage = $wgRequest->getInt( 'smaxage', $wgSquidMaxage );
-		$maxage = $wgRequest->getInt( 'maxage', $wgSquidMaxage );
-		$this->mOldId = $wgRequest->getInt( 'oldid' );
+
+		if ( $request === false ) {
+			$this->mRequest =& $wgRequest;
+		} else {
+			$this->mRequest = $request;
+		}
+
+		$ctype = $this->mRequest->getVal( 'ctype' );
+		$smaxage = $this->mRequest->getIntOrNull( 'smaxage', $wgSquidMaxage );
+		$maxage = $this->mRequest->getInt( 'maxage', $wgSquidMaxage );
+		$this->mExpandTemplates = $this->mRequest->getVal( 'templates' ) === 'expand';
+		
+		$oldid = $this->mRequest->getInt( 'oldid' );
+		switch ( $wgRequest->getText( 'direction' ) ) {
+			case 'next':
+				# output next revision, or nothing if there isn't one
+				if ( $oldid ) {
+					$oldid = $this->mTitle->getNextRevisionId( $oldid );
+				}
+				$oldid = $oldid ? $oldid : -1;
+				break;
+			case 'prev':
+				# output previous revision, or nothing if there isn't one
+				if ( ! $oldid ) {
+					# get the current revision so we can get the penultimate one
+					$this->mArticle->getTouched();
+					$oldid = $this->mArticle->mLatest;
+				}
+				$prev = $this->mTitle->getPreviousRevisionId( $oldid );
+				$oldid = $prev ? $prev : -1 ;
+				break;
+			case 'cur':
+				$oldid = 0;
+				break;
+		}
+		$this->mOldId = $oldid;
+		
 		# special case for 'generated' raw things: user css/js
-		$gen = $wgRequest->getText( 'gen' );
+		$gen = $this->mRequest->getVal( 'gen' );
+
 		if($gen == 'css') {
 			$this->mGen = $gen;
-			if($smaxage == '') $smaxage = $wgSquidMaxage;
+			if( is_null( $smaxage ) ) $smaxage = $wgSquidMaxage;
 			if($ctype == '') $ctype = 'text/css';
-		} else if ($gen == 'js') {
+		} elseif ($gen == 'js') {
 			$this->mGen = $gen;
-			if($smaxage == '') $smaxage = $wgSquidMaxage;
+			if( is_null( $smaxage ) ) $smaxage = $wgSquidMaxage;
 			if($ctype == '') $ctype = $wgJsMimeType;
 		} else {
 			$this->mGen = false;
 		}
 		$this->mCharset = $wgInputEncoding;
-		$this->mSmaxage = $smaxage;
+		$this->mSmaxage = intval( $smaxage );
 		$this->mMaxage = $maxage;
-		if(empty($ctype) or !in_array($ctype, $allowedCTypes)) {
+		if ( $ctype == '' or ! in_array( $ctype, $allowedCTypes ) ) {
 			$this->mContentType = 'text/x-wiki';
 		} else {
 			$this->mContentType = $ctype;
 		}
 	}
-	
+
 	function view() {
-		global $wgUser, $wgOut, $wgScript;
+		global $wgOut, $wgScript;
 
 		if( isset( $_SERVER['SCRIPT_URL'] ) ) {
 			# Normally we use PHP_SELF to get the URL to the script
@@ -70,7 +108,9 @@ class RawPage {
 		} else {
 			$url = $_SERVER['PHP_SELF'];
 		}
-		if( strcmp( $wgScript, $url ) ) {
+		
+		$ua = @$_SERVER['HTTP_USER_AGENT'];
+		if( strcmp( $wgScript, $url ) && strpos( $ua, 'MSIE' ) !== false ) {
 			# Internet Explorer will ignore the Content-Type header if it
 			# thinks it sees a file extension it recognizes. Make sure that
 			# all raw requests are done through the script node, which will
@@ -87,53 +127,76 @@ class RawPage {
 				'Raw pages must be accessed through the primary script entry point.' );
 			return;
 		}
-		
+
 		header( "Content-type: ".$this->mContentType.'; charset='.$this->mCharset );
 		# allow the client to cache this for 24 hours
 		header( 'Cache-Control: s-maxage='.$this->mSmaxage.', max-age='.$this->mMaxage );
+		echo $this->getRawText();
+		$wgOut->disable();
+	}
+
+	function getRawText() {
+		global $wgUser, $wgOut;
 		if($this->mGen) {
 			$sk = $wgUser->getSkin();
 			$sk->initPage($wgOut);
 			if($this->mGen == 'css') {
-				echo $sk->getUserStylesheet();
+				return $sk->getUserStylesheet();
 			} else if($this->mGen == 'js') {
-				echo $sk->getUserJs();
+				return $sk->getUserJs();
 			}
 		} else {
-			echo $this->getrawtext();
+			return $this->getArticleText();
 		}
-		$wgOut->disable();
 	}
-	
-	function getrawtext () {
-		global $wgInputEncoding, $wgContLang;
-		$fname = 'RawPage::getrawtext';
-		
+
+	function getArticleText() {
+		$found = false;
+		$text = '';
 		if( $this->mTitle ) {
-			# Special case for MediaWiki: messages; we can hit the message cache.
-			if( $this->mTitle->getNamespace() == NS_MEDIAWIKI) {
-				$rawtext = wfMsgForContent( $this->mTitle->getDbkey() );
-				return $rawtext;
-			}
-			
-			# else get it from the DB
-			$rev = Revision::newFromTitle( $this->mTitle, $this->mOldId );
-			if( $rev ) {
-				$lastmod = wfTimestamp( TS_RFC2822, $rev->getTimestamp() );
-				header( 'Last-modified: ' . $lastmod );
-				return $rev->getText();
+			// If it's a MediaWiki message we can just hit the message cache
+			if ( $this->mTitle->getNamespace() == NS_MEDIAWIKI ) {
+				$text = wfMsgForContentNoTrans( $this->mTitle->getDbkey() );
+				$found = true;
+			} else {
+				// Get it from the DB
+				$rev = Revision::newFromTitle( $this->mTitle, $this->mOldId );
+				if ( $rev ) {
+					$lastmod = wfTimestamp( TS_RFC2822, $rev->getTimestamp() );
+					header( "Last-modified: $lastmod" );
+					$text = $rev->getText();
+					$found = true;
+				}
 			}
 		}
-		
+
 		# Bad title or page does not exist
-		if( $this->mContentType == 'text/x-wiki' ) {
+		if( !$found && $this->mContentType == 'text/x-wiki' ) {
 			# Don't return a 404 response for CSS or JavaScript;
 			# 404s aren't generally cached and it would create
 			# extra hits when user CSS/JS are on and the user doesn't
 			# have the pages.
 			header( "HTTP/1.0 404 Not Found" );
 		}
-		return '';
+		
+		return $this->parseArticleText( $text );
+	}
+
+	function parseArticleText( $text ) {
+		if ( $text === '' )
+			return '';
+		else
+			if ( $this->mExpandTemplates ) {
+				global $wgTitle;
+
+				$parser = new Parser();
+				$parser->Options( new ParserOptions() ); // We don't want this to be user-specific
+				$parser->Title( $wgTitle );
+				$parser->OutputType( OT_HTML );
+
+				return $parser->replaceVariables( $text );
+			} else
+				return $text;
 	}
 }
 ?>

@@ -1,17 +1,14 @@
 <?php
+if ( ! defined( 'MEDIAWIKI' ) )
+	die( -1 );
+
 /**
  * @package MediaWiki
  */
 
 /**
- * This is not a valid entry point, perform no further processing unless MEDIAWIKI is defined
- */
-if( defined( 'MEDIAWIKI' ) ) {
-
-
-/**
  * Image gallery
- * 
+ *
  * Add images to the gallery using add(), then render that list to HTML using toHTML().
  *
  * @package MediaWiki
@@ -20,7 +17,7 @@ class ImageGallery
 {
 	var $mImages, $mShowBytes, $mShowFilename;
 
-	/** 
+	/**
 	 * Create a new image gallery object.
 	 */
 	function ImageGallery( ) {
@@ -60,7 +57,7 @@ class ImageGallery
 	/**
 	 * Enable/Disable showing of the file size of an image in the gallery.
 	 * Enabled by default.
-	 * 
+	 *
 	 * @param boolean $f	set to false to disable
 	 */
 	function setShowBytes( $f ) {
@@ -70,7 +67,7 @@ class ImageGallery
 	/**
 	 * Enable/Disable showing of the filename of an image in the gallery.
 	 * Enabled by default.
-	 * 
+	 *
 	 * @param boolean $f	set to false to disable
 	 */
 	function setShowFilename( $f ) {
@@ -79,7 +76,7 @@ class ImageGallery
 
 	/**
 	 * Return a HTML representation of the image gallery
-	 * 
+	 *
 	 * For each image in the gallery, display
 	 * - a thumbnail
 	 * - the image name
@@ -88,7 +85,7 @@ class ImageGallery
 	 *
 	 */
 	function toHTML() {
-		global $wgLang, $wgContLang, $wgUser;
+		global $wgLang, $wgUser;
 
 		$sk = $wgUser->getSkin();
 
@@ -103,8 +100,11 @@ class ImageGallery
 
 			// Not an image. Just print the name and skip.
 			if ( $nt->getNamespace() != NS_IMAGE ) {
-				$s .= '<td><div class="gallerybox" style="height: 152px;">' .
-					htmlspecialchars( $nt->getText() ) . '</div></td>' .  (($i%4==3) ? "</tr>\n" : '');
+				$s .=
+					(($i%4==0) ? "<tr>\n" : '') .
+					'<td><div class="gallerybox" style="height: 152px;">' .
+					htmlspecialchars( $nt->getText() ) . '</div></td>' .  
+					(($i%4==3) ? "</tr>\n" : '');
 				$i++;
 
 				continue;
@@ -115,15 +115,15 @@ class ImageGallery
 
 			if( $this->mShowBytes ) {
 				if( $img->exists() ) {
-					$nb = wfMsg( 'nbytes', $wgLang->formatNum( $img->getSize() ) );
+					$nb = wfMsgHtml( 'nbytes', $wgLang->formatNum( $img->getSize() ) );
 				} else {
-					$nb = wfMsg( 'filemissing' );
+					$nb = wfMsgHtml( 'filemissing' );
 				}
-				$nb = htmlspecialchars( $nb ) . "<br />\n";
+				$nb = "$nb<br />\n";
 			} else {
 				$nb = '';
 			}
-				
+
 			$textlink = $this->mShowFilename ?
 				$sk->makeKnownLinkObj( $nt, htmlspecialchars( $wgLang->truncate( $nt->getText(), 20, '...' ) ) ) . "<br />\n" :
 				'' ;
@@ -132,10 +132,10 @@ class ImageGallery
 			$thumb = $img->getThumbnail( 120, 120 );
 			$vpad = floor( ( 150 - $thumb->height ) /2 ) - 2;
 			$s .= '<td><div class="gallerybox">' . '<div class="thumb" style="padding: ' . $vpad . 'px 0;">';
-			
+
 			# ATTENTION: The newline after <div class="gallerytext"> is needed to accommodate htmltidy which
 			# in version 4.8.6 generated crackpot html in its absence, see:
-			# http://bugzilla.wikimedia.org/show_bug.cgi?id=1765
+			# http://bugzilla.wikimedia.org/show_bug.cgi?id=1765 -Ævar
 			$s .= $sk->makeKnownLinkObj( $nt, $thumb->toHtml() ) . '</div><div class="gallerytext">' . "\n" .
 				$textlink . $text . $nb .
 				'</div>';
@@ -152,9 +152,4 @@ class ImageGallery
 	}
 
 } //class
-
-
-
-
-} // defined( 'MEDIAWIKI' )
 ?>

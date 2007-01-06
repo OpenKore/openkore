@@ -54,14 +54,16 @@ CREATE TABLE /*$wgDBprefix*/user (
   -- Usernames must be unique, must not be in the form of
   -- an IP address. _Shouldn't_ allow slashes or case
   -- conflicts. Spaces are allowed, and are _not_ converted
-  -- to underscores like titles. (Conflicts?)
+  -- to underscores like titles. See the User::newFromName() for
+  -- the specific tests that usernames have to pass.
   user_name varchar(255) binary NOT NULL default '',
   
   -- Optional 'real name' to be displayed in credit listings
   user_real_name varchar(255) binary NOT NULL default '',
   
   -- Password hashes, normally hashed like so:
-  -- MD5(CONCAT(user_id,'-',MD5(plaintext_password)))
+  -- MD5(CONCAT(user_id,'-',MD5(plaintext_password))), see
+  -- wfEncryptPassword() in GlobalFunctions.php
   user_password tinyblob NOT NULL default '',
   
   -- When using 'mail me a new password', a random
@@ -76,7 +78,8 @@ CREATE TABLE /*$wgDBprefix*/user (
   -- Same with passwords.
   user_email tinytext NOT NULL default '',
   
-  -- Newline-separated list of name=value pairs.
+  -- Newline-separated list of name=value defining the user
+  -- preferences
   user_options blob NOT NULL default '',
   
   -- This is a timestamp which is updated when a user
@@ -100,8 +103,12 @@ CREATE TABLE /*$wgDBprefix*/user (
   -- is set and a confirmation test mail sent.
   user_email_token CHAR(32) BINARY,
   
-  -- Expiration date for the 
+  -- Expiration date for the user_email_token
   user_email_token_expires CHAR(14) BINARY,
+  
+  -- Timestamp of account registration.
+  -- Accounts predating this schema addition may contain NULL.
+  user_registration CHAR(14) BINARY,
 
   PRIMARY KEY user_id (user_id),
   UNIQUE INDEX user_name (user_name),
@@ -138,10 +145,13 @@ CREATE TABLE /*$wgDBprefix*/user_groups (
 -- Stores notifications of user talk page changes, for the display
 -- of the "you have new messages" box
 CREATE TABLE /*$wgDBprefix*/user_newtalk (
- user_id int(5) NOT NULL default '0',
- user_ip varchar(40) NOT NULL default '',
- INDEX user_id (user_id),
- INDEX user_ip (user_ip)
+  -- Key to user.user_id
+  user_id int(5) NOT NULL default '0',
+  -- If the user is an anonymous user hir IP address is stored here
+  -- since the user_id of 0 is ambiguous
+  user_ip varchar(40) NOT NULL default '',
+  INDEX user_id (user_id),
+  INDEX user_ip (user_ip)
 );
 
 
@@ -156,7 +166,7 @@ CREATE TABLE /*$wgDBprefix*/page (
   
   -- A page name is broken into a namespace and a title.
   -- The namespace keys are UI-language-independent constants,
-  -- defined in Namespace.php.
+  -- defined in includes/Defines.php
   page_namespace int NOT NULL,
   
   -- The rest of the title, as text.
@@ -223,10 +233,10 @@ CREATE TABLE /*$wgDBprefix*/revision (
   
   -- Text comment summarizing the change.
   -- This text is shown in the history and other changes lists,
-  -- rendered in a subset of wiki markup.
+  -- rendered in a subset of wiki markup by Linker::formatComment()
   rev_comment tinyblob NOT NULL default '',
   
-  -- Key to user_id of the user who made this edit.
+  -- Key to user.user_id of the user who made this edit.
   -- Stores 0 for anonymous edits and for some mass imports.
   rev_user int(5) unsigned NOT NULL default '0',
   
@@ -265,6 +275,8 @@ CREATE TABLE /*$wgDBprefix*/text (
   -- Unique text storage key number.
   -- Note that the 'oldid' parameter used in URLs does *not*
   -- refer to this number anymore, but to rev_id.
+  --
+  -- revision.rev_text_id is a key to this column
   old_id int(8) unsigned NOT NULL auto_increment,
   
   -- Depending on the contents of the old_flags field, the text
@@ -360,6 +372,25 @@ CREATE TABLE /*$wgDBprefix*/pagelinks (
 
 
 --
+-- Track template inclusions.
+--
+CREATE TABLE /*$wgDBprefix*/templatelinks (
+  -- Key to the page_id of the page containing the link.
+  tl_from int(8) unsigned NOT NULL default '0',
+  
+  -- Key to page_namespace/page_title of the target page.
+  -- The target page may or may not exist, and due to renames
+  -- and deletions may refer to different page records as time
+  -- goes by.
+  tl_namespace int NOT NULL default '0',
+  tl_title varchar(255) binary NOT NULL default '',
+  
+  UNIQUE KEY tl_from(tl_from,tl_namespace,tl_title),
+  KEY (tl_namespace,tl_title)
+
+) TYPE=InnoDB;
+
+--
 -- Track links to images *used inline*
 -- We don't distinguish live from broken links here, so
 -- they do not need to be changed on upload/removal.
@@ -395,7 +426,8 @@ CREATE TABLE /*$wgDBprefix*/categorylinks (
   -- The title of the linking page, or an optional override
   -- to determine sort order. Sorting is by binary order, which
   -- isn't always ideal, but collations seem to be an exciting
-  -- and dangerous new world in MySQL...
+  -- and dangerous new world in MySQL... The sortkey is updated
+  -- if no override exists and cl_from is renamed.
   --
   -- For MySQL 4.1+ with charset set to utf8, the sort key *index*
   -- needs cut to be smaller than 1024 bytes (at 3 bytes per char).
@@ -418,6 +450,34 @@ CREATE TABLE /*$wgDBprefix*/categorylinks (
 ) TYPE=InnoDB;
 
 --
+-- Track links to external URLs
+--
+CREATE TABLE /*$wgDBprefix*/externallinks (
+  -- page_id of the referring page
+  el_from int(8) unsigned NOT NULL default '0',
+
+  -- The URL
+  el_to blob NOT NULL default '',
+
+  -- In the case of HTTP URLs, this is the URL with any username or password
+  -- removed, and with the labels in the hostname reversed and converted to 
+  -- lower case. An extra dot is added to allow for matching of either
+  -- example.com or *.example.com in a single scan.
+  -- Example: 
+  --      http://user:password@sub.example.com/page.html
+  --   becomes
+  --      http://com.example.sub./page.html
+  -- which allows for fast searching for all pages under example.com with the
+  -- clause: 
+  --      WHERE el_index LIKE 'http://com.example.%'
+  el_index blob NOT NULL default '',
+  
+  KEY (el_from, el_to(40)),
+  KEY (el_to(60), el_from),
+  KEY (el_index(60))
+) TYPE=InnoDB;
+
+--
 -- Contains a single row with some aggregate info
 -- on the state of the site.
 --
@@ -435,17 +495,20 @@ CREATE TABLE /*$wgDBprefix*/site_stats (
   -- * in namespace 0
   -- * not a redirect
   -- * contains the text '[['
-  -- See isCountable() in includes/Article.php
+  -- See Article::isCountable() in includes/Article.php
   ss_good_articles bigint(20) unsigned default '0',
   
   -- Total pages, theoretically equal to SELECT COUNT(*) FROM page; except faster
-  ss_total_pages bigint(20) default -1,
+  ss_total_pages bigint(20) default '-1',
 
   -- Number of users, theoretically equal to SELECT COUNT(*) FROM user;
-  ss_users bigint(20) default -1,
+  ss_users bigint(20) default '-1',
 
   -- Deprecated, no longer updated as of 1.5
-  ss_admins int(10) default -1,
+  ss_admins int(10) default '-1',
+
+  -- Number of images, equivalent to SELECT COUNT(*) FROM image
+  ss_images int(10) default '0',
 
   UNIQUE KEY ss_row_id (ss_row_id)
 
@@ -494,10 +557,16 @@ CREATE TABLE /*$wgDBprefix*/ipblocks (
   
   -- Time at which the block will expire.
   ipb_expiry char(14) binary NOT NULL default '',
-
+  
+  -- Start and end of an address range, in hexadecimal
+  -- Size chosen to allow IPv6
+  ipb_range_start varchar(32) NOT NULL default '',
+  ipb_range_end varchar(32) NOT NULL default '',
+  
   PRIMARY KEY ipb_id (ipb_id),
   INDEX ipb_address (ipb_address),
-  INDEX ipb_user (ipb_user)
+  INDEX ipb_user (ipb_user),
+  INDEX ipb_range (ipb_range_start(8), ipb_range_end(8))
 
 ) TYPE=InnoDB;
 
@@ -552,7 +621,7 @@ CREATE TABLE /*$wgDBprefix*/image (
   
   -- Used by Special:Imagelist for sort-by-size
   INDEX img_size (img_size),
-  
+
   -- Used by Special:Newimages and Special:Imagelist
   INDEX img_timestamp (img_timestamp)
 
@@ -589,7 +658,7 @@ CREATE TABLE /*$wgDBprefix*/oldimage (
 --
 -- Primarily a summary table for Special:Recentchanges,
 -- this table contains some additional info on edits from
--- the last few days.
+-- the last few days, see Article::editUpdates()
 --
 CREATE TABLE /*$wgDBprefix*/recentchanges (
   rc_id int(8) NOT NULL auto_increment,
@@ -651,19 +720,18 @@ CREATE TABLE /*$wgDBprefix*/recentchanges (
 ) TYPE=InnoDB;
 
 CREATE TABLE /*$wgDBprefix*/watchlist (
-  -- Key to user_id
+  -- Key to user.user_id
   wl_user int(5) unsigned NOT NULL,
   
   -- Key to page_namespace/page_title
-  -- Note that users may watch patches which do not exist yet,
+  -- Note that users may watch pages which do not exist yet,
   -- or existed in the past but have been deleted.
   wl_namespace int NOT NULL default '0',
   wl_title varchar(255) binary NOT NULL default '',
   
   -- Timestamp when user was last sent a notification e-mail;
   -- cleared when the user visits the page.
-  -- FIXME: add proper null support etc
-  wl_notificationtimestamp varchar(14) binary NOT NULL default '0',
+  wl_notificationtimestamp varchar(14) binary,
   
   UNIQUE KEY (wl_user, wl_namespace, wl_title),
   KEY namespace_title (wl_namespace,wl_title)
@@ -672,7 +740,7 @@ CREATE TABLE /*$wgDBprefix*/watchlist (
 
 
 --
--- Used by texvc math-rendering extension to keep track
+-- Used by the math module to keep track
 -- of previously-rendered items.
 --
 CREATE TABLE /*$wgDBprefix*/math (
@@ -773,6 +841,16 @@ CREATE TABLE /*$wgDBprefix*/objectcache (
 
 ) TYPE=InnoDB;
 
+--
+-- Cache of interwiki transclusion
+--
+CREATE TABLE /*$wgDBprefix*/transcache (
+	tc_url		VARCHAR(255) NOT NULL,
+	tc_contents	TEXT,
+	tc_time		INT NOT NULL,
+	UNIQUE INDEX tc_url_idx(tc_url)
+) TYPE=InnoDB;
+
 -- For article validation
 CREATE TABLE /*$wgDBprefix*/validate (
   val_user int(11) NOT NULL default '0',
@@ -812,39 +890,39 @@ CREATE TABLE /*$wgDBprefix*/logging (
 
   KEY type_time (log_type, log_timestamp),
   KEY user_time (log_user, log_timestamp),
-  KEY page_time (log_namespace, log_title, log_timestamp)
+  KEY page_time (log_namespace, log_title, log_timestamp),
+  KEY times (log_timestamp)
 
 ) TYPE=InnoDB;
 
-
-
-
-
--- Hold group name and description
---CREATE TABLE /*$wgDBprefix*/groups (
---  gr_id int(5) unsigned NOT NULL auto_increment,
---  gr_name varchar(50) NOT NULL default '',
---  gr_description varchar(255) NOT NULL default '',
---  gr_rights tinyblob,
---  PRIMARY KEY  (gr_id)
---
---) TYPE=InnoDB;
-
 CREATE TABLE /*$wgDBprefix*/trackbacks (
-	tb_id		INTEGER AUTO_INCREMENT PRIMARY KEY,
-	tb_page		INTEGER REFERENCES page(page_id) ON DELETE CASCADE,
-	tb_title	VARCHAR(255) NOT NULL,
-	tb_url		VARCHAR(255) NOT NULL,
-	tb_ex		TEXT,
-	tb_name		VARCHAR(255),
+	tb_id integer AUTO_INCREMENT PRIMARY KEY,
+	tb_page	integer REFERENCES page(page_id) ON DELETE CASCADE,
+	tb_title varchar(255) NOT NULL,
+	tb_url	varchar(255) NOT NULL,
+	tb_ex text,
+	tb_name varchar(255),
 
 	INDEX (tb_page)
 ) TYPE=InnoDB;
 
-CREATE TABLE /*$wgDBprefix*/transcache (
-	tc_url		VARCHAR(255) NOT NULL,
-	tc_contents	TEXT,
-	tc_time		INT NOT NULL,
-	UNIQUE INDEX tc_url_idx(tc_url)
-) TYPE=InnoDB;
 
+-- Jobs performed by parallel apache threads or a command-line daemon
+CREATE TABLE /*$wgDBprefix*/job (
+  job_id int(9) unsigned NOT NULL auto_increment,
+  
+  -- Command name, currently only refreshLinks is defined
+  job_cmd varchar(255) NOT NULL default '',
+
+  -- Namespace and title to act on
+  -- Should be 0 and '' if the command does not operate on a title
+  job_namespace int NOT NULL,
+  job_title varchar(255) binary NOT NULL,
+
+  -- Any other parameters to the command
+  -- Presently unused, format undefined
+  job_params blob NOT NULL default '',
+
+  PRIMARY KEY job_id (job_id),
+  KEY (job_cmd, job_namespace, job_title)
+) TYPE=InnoDB;
