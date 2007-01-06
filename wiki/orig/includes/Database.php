@@ -298,17 +298,6 @@ class Database {
 	 */
 	function query( $sql, $fname = '', $tempIgnore = false ) {
 		global $wgProfiling, $wgCommandLineMode;
-		
-		if ( wfReadOnly() ) {
-			# This is a quick check for the most common kinds of write query used 
-			# in MediaWiki, to provide extra safety in addition to UI-level checks. 
-			# It is not intended to prevent every conceivable write query, or even 
-			# to handle such queries gracefully.
-			if ( preg_match( '/^(update|insert|replace|delete)/i', $sql ) ) {
-				wfDebug( "Write query from $fname blocked\n" );
-				return false;
-			}
-		}
 
 		if ( $wgProfiling ) {
 			# generalizeSQL will probably cut down the query to reasonable
@@ -639,7 +628,7 @@ class Database {
 		$table = $this->tableName( $table );
 		$sql = "UPDATE $table SET $var = '" .
 		  $this->strencode( $value ) . "' WHERE ($cond)";
-		return (bool)$this->query( $sql, DB_MASTER, $fname );
+		return (bool)$this->query( $sql, $fname );
 	}
 	
 	/**
@@ -794,7 +783,7 @@ class Database {
 	 */
 	function fieldExists( $table, $field, $fname = 'Database::fieldExists' ) {
 		$table = $this->tableName( $table );
-		$res = $this->query( 'DESCRIBE '.$table, DB_SLAVE, $fname );
+		$res = $this->query( 'DESCRIBE '.$table, $fname );
 		if ( !$res ) {
 			return NULL;
 		}
@@ -1258,14 +1247,19 @@ class Database {
 	 * $conds may be "*" to copy the whole table
 	 * srcTable may be an array of tables.
 	 */
-	function insertSelect( $destTable, $srcTable, $varMap, $conds, $fname = 'Database::insertSelect' ) {
+	function insertSelect( $destTable, $srcTable, $varMap, $conds, $fname = 'Database::insertSelect', 
+		$options = array() ) 
+	{
 		$destTable = $this->tableName( $destTable );
-                if( is_array( $srcTable ) ) {
-                        $srcTable =  implode( ',', array_map( array( &$this, 'tableName' ), $srcTable ) );
+		if ( is_array( $options ) ) {
+			$options = implode( ' ', $options );
+		}
+		if( is_array( $srcTable ) ) {
+			$srcTable =  implode( ',', array_map( array( &$this, 'tableName' ), $srcTable ) );
 		} else { 
 			$srcTable = $this->tableName( $srcTable );
 		}
-		$sql = "INSERT INTO $destTable (" . implode( ',', array_keys( $varMap ) ) . ')' .
+		$sql = "INSERT $options INTO $destTable (" . implode( ',', array_keys( $varMap ) ) . ')' .
 			' SELECT ' . implode( ',', $varMap ) . 
 			" FROM $srcTable";
 		if ( $conds != '*' ) {
