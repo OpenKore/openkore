@@ -5,6 +5,7 @@
   * @subpackage Language
   */
 
+/** */
 require_once( 'LanguageUtf8.php' );
 
 /* private */ $wgNamespaceNamesKa = array(
@@ -14,8 +15,8 @@ require_once( 'LanguageUtf8.php' );
 	NS_TALK             => 'განხილვა',
 	NS_USER             => 'მომხმარებელი',
 	NS_USER_TALK        => 'მომხმარებელი_განხილვა',
-	NS_PROJECT          => 'ვიკიპედია',
-	NS_PROJECT_TALK     => 'ვიკიპედია_განხილვა',
+	NS_PROJECT          => $wgMetaNamespace,
+	NS_PROJECT_TALK     => $wgMetaNamespace . '_განხილვა',
 	NS_IMAGE            => 'სურათი',
 	NS_IMAGE_TALK       => 'სურათი_განხილვა',
 	NS_MEDIAWIKI        => 'მედიავიკი',

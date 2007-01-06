@@ -29,30 +29,23 @@ class DateFormatter
 {
 	var $mSource, $mTarget;
 	var $monthNames = '', $rxDM, $rxMD, $rxDMY, $rxYDM, $rxMDY, $rxYMD;
-	
+
 	var $regexes, $pDays, $pMonths, $pYears;
 	var $rules, $xMonths;
-	
+
 	/**
 	 * @todo document
 	 */
 	function DateFormatter() {
-		global $wgContLang, $wgInputEncoding;
-		
+		global $wgContLang;
+
 		$this->monthNames = $this->getMonthRegex();
 		for ( $i=1; $i<=12; $i++ ) {
-			$this->xMonths[strtolower( $wgContLang->getMonthName( $i ) )] = $i;
+			$this->xMonths[$wgContLang->lc( $wgContLang->getMonthName( $i ) )] = $i;
+			$this->xMonths[$wgContLang->lc( $wgContLang->getMonthAbbreviation( $i ) )] = $i;
 		}
-		for ( $i=1; $i<=12; $i++ ) {
-			$this->xMonths[strtolower( $wgContLang->getMonthAbbreviation( $i ) )] = $i;
-		}
-		
-		# Attempt at UTF-8 support, untested at the moment
-		if ( $wgInputEncoding == 'UTF-8' ) {
-			$this->regexTrail = '(?![a-z])/iu';
-		} else {
-			$this->regexTrail = '(?![a-z])/i';
-		}
+
+		$this->regexTrail = '(?![a-z])/iu';
 
 		# Partial regular expressions
 		$this->prxDM = '\[\[(\d{1,2})[ _](' . $this->monthNames . ')]]';
@@ -60,9 +53,9 @@ class DateFormatter
 		$this->prxY = '\[\[(\d{1,4}([ _]BC|))]]';
 		$this->prxISO1 = '\[\[(-?\d{4})]]-\[\[(\d{2})-(\d{2})]]';
 		$this->prxISO2 = '\[\[(-?\d{4})-(\d{2})-(\d{2})]]';
-		
+
 		# Real regular expressions
-		$this->regexes[DF_DMY] = "/{$this->prxDM} *,? *{$this->prxY}{$this->regexTrail}";	
+		$this->regexes[DF_DMY] = "/{$this->prxDM} *,? *{$this->prxY}{$this->regexTrail}";
 		$this->regexes[DF_YDM] = "/{$this->prxY} *,? *{$this->prxDM}{$this->regexTrail}";
 		$this->regexes[DF_MDY] = "/{$this->prxMD} *,? *{$this->prxY}{$this->regexTrail}";
 		$this->regexes[DF_YMD] = "/{$this->prxY} *,? *{$this->prxMD}{$this->regexTrail}";
@@ -70,7 +63,7 @@ class DateFormatter
 		$this->regexes[DF_MD] = "/{$this->prxMD}{$this->regexTrail}";
 		$this->regexes[DF_ISO1] = "/{$this->prxISO1}{$this->regexTrail}";
 		$this->regexes[DF_ISO2] = "/{$this->prxISO2}{$this->regexTrail}";
-		
+
 		# Extraction keys
 		# See the comments in replace() for the meaning of the letters
 		$this->keys[DF_DMY] = 'jFY';
@@ -100,7 +93,7 @@ class DateFormatter
 		$this->rules[DF_ALL][DF_DM] 	= DF_DM;
 		$this->rules[DF_NONE][DF_ISO2] 	= DF_ISO1;
 	}
-	
+
 	/**
 	 * @static
 	 */
@@ -115,8 +108,8 @@ class DateFormatter
 			}
 		}
 		return $dateFormatter;
-	}	
-	
+	}
+
 	/**
 	 * @param $preference
 	 * @param $text
@@ -157,11 +150,11 @@ class DateFormatter
 		}
 
 		$format = $this->targets[$this->mTarget];
-		
+
 		# Construct new date
 		$text = '';
 		$fail = false;
-		
+
 		for ( $p=0; $p < strlen( $format ); $p++ ) {
 			$char = $format{$p};
 			switch ( $char ) {
@@ -193,14 +186,14 @@ class DateFormatter
 					break;
 				case 'j': # ordinary day of month
 					if ( !isset($bits['j']) ) {
-						$text .= IntVal( $bits['d'] );
+						$text .= intval( $bits['d'] );
 					} else {
 						$text .= $bits['j'];
 					}
 					break;
 				case 'F': # long month
 					if ( !isset( $bits['F'] ) ) {
-						$m = IntVal($bits['m']);
+						$m = intval($bits['m']);
 						if ( $m > 12 || $m < 1 ) {
 							$fail = true;
 						} else {
@@ -227,7 +220,7 @@ class DateFormatter
 		}
 		return $text;
 	}
-	
+
 	/**
 	 * @todo document
 	 */
@@ -247,7 +240,9 @@ class DateFormatter
 	 * @return string ISO month name
 	 */
 	function makeIsoMonth( $monthName ) {
-		$n = $this->xMonths[strtolower( $monthName )];
+		global $wgContLang;
+
+		$n = $this->xMonths[$wgContLang->lc( $monthName )];
 		return sprintf( '%02d', $n );
 	}
 
@@ -259,7 +254,7 @@ class DateFormatter
 	function makeIsoYear( $year ) {
 		# Assumes the year is in a nice format, as enforced by the regex
 		if ( substr( $year, -2 ) == 'BC' ) {
-			$num = IntVal(substr( $year, 0, -3 )) - 1;
+			$num = intval(substr( $year, 0, -3 )) - 1;
 			# PHP bug note: sprintf( "%04d", -1 ) fails poorly
 			$text = sprintf( '-%04d', $num );
 
@@ -274,9 +269,9 @@ class DateFormatter
 	 */
 	function makeNormalYear( $iso ) {
 		if ( $iso{0} == '-' ) {
-			$text = (IntVal( substr( $iso, 1 ) ) + 1) . ' BC';
+			$text = (intval( substr( $iso, 1 ) ) + 1) . ' BC';
 		} else {
-			$text = IntVal( $iso );
+			$text = intval( $iso );
 		}
 		return $text;
 	}

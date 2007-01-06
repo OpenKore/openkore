@@ -11,50 +11,73 @@
 $wgMagicFound = false;
 
 /** Actual keyword to be used is set in Language.php */
-define('MAG_REDIRECT',			0);
-define('MAG_NOTOC',			1);
-define('MAG_START',			2);
-define('MAG_CURRENTMONTH',		3);
-define('MAG_CURRENTMONTHNAME',		4);
-define('MAG_CURRENTMONTHNAMEGEN',	5);
-define('MAG_CURRENTMONTHABBREV',	6);
-define('MAG_CURRENTDAY',		7);
-define('MAG_CURRENTDAYNAME',		8);
-define('MAG_CURRENTYEAR',		9);
-define('MAG_CURRENTTIME',		10);
-define('MAG_NUMBEROFARTICLES',		11);
-define('MAG_SUBST',			12);
-define('MAG_MSG',			13);
-define('MAG_MSGNW',			14);
-define('MAG_NOEDITSECTION',		15);
-define('MAG_END',			16);
-define('MAG_IMG_THUMBNAIL',		17);
-define('MAG_IMG_RIGHT',			18);
-define('MAG_IMG_LEFT',			19);
-define('MAG_IMG_NONE',			20);
-define('MAG_IMG_WIDTH',			21);
-define('MAG_IMG_CENTER',		22);
-define('MAG_INT',			23);
-define('MAG_FORCETOC',			24);
-define('MAG_SITENAME',			25);
-define('MAG_NS',			26);
-define('MAG_LOCALURL',			27);
-define('MAG_LOCALURLE',			28);
-define('MAG_SERVER',			29);
-define('MAG_IMG_FRAMED',		30);
-define('MAG_PAGENAME',			31);
-define('MAG_PAGENAMEE',			32);
-define('MAG_NAMESPACE',			33);
-define('MAG_TOC',			34);
-define('MAG_GRAMMAR',			35);
-define('MAG_NOTITLECONVERT',		36);
-define('MAG_NOCONTENTCONVERT',		37);
-define('MAG_CURRENTWEEK',		38);
-define('MAG_CURRENTDOW',		39);
-define('MAG_REVISIONID',		40);
-define('MAG_SCRIPTPATH',		41);
-define('MAG_SERVERNAME',		42);
-define('MAG_NUMBEROFFILES',		43);
+
+$magicWords = array(
+	'MAG_REDIRECT',
+	'MAG_NOTOC',
+	'MAG_START',
+	'MAG_CURRENTMONTH',
+	'MAG_CURRENTMONTHNAME',
+	'MAG_CURRENTMONTHNAMEGEN',
+	'MAG_CURRENTMONTHABBREV',
+	'MAG_CURRENTDAY',
+	'MAG_CURRENTDAY2',
+	'MAG_CURRENTDAYNAME',
+	'MAG_CURRENTYEAR',
+	'MAG_CURRENTTIME',
+	'MAG_NUMBEROFARTICLES',
+	'MAG_SUBST',
+	'MAG_MSG',
+	'MAG_MSGNW',
+	'MAG_NOEDITSECTION',
+	'MAG_END',
+	'MAG_IMG_THUMBNAIL',
+	'MAG_IMG_RIGHT',
+	'MAG_IMG_LEFT',
+	'MAG_IMG_NONE',
+	'MAG_IMG_WIDTH',
+	'MAG_IMG_CENTER',
+	'MAG_INT',
+	'MAG_FORCETOC',
+	'MAG_SITENAME',
+	'MAG_NS',
+	'MAG_LOCALURL',
+	'MAG_LOCALURLE',
+	'MAG_SERVER',
+	'MAG_IMG_FRAMED',
+	'MAG_PAGENAME',
+	'MAG_PAGENAMEE',
+	'MAG_NAMESPACE',
+	'MAG_NAMESPACEE',
+	'MAG_TOC',
+	'MAG_GRAMMAR',
+	'MAG_NOTITLECONVERT',
+	'MAG_NOCONTENTCONVERT',
+	'MAG_CURRENTWEEK',
+	'MAG_CURRENTDOW',
+	'MAG_REVISIONID',
+	'MAG_SCRIPTPATH',
+	'MAG_SERVERNAME',
+	'MAG_NUMBEROFFILES',
+	'MAG_IMG_MANUALTHUMB',
+	'MAG_PLURAL',
+	'MAG_FULLURL',
+	'MAG_FULLURLE',
+	'MAG_LCFIRST',
+	'MAG_UCFIRST',
+	'MAG_LC',
+	'MAG_UC',
+	'MAG_FULLPAGENAME',
+	'MAG_FULLPAGENAMEE',
+	'MAG_RAW',
+	'MAG_SUBPAGENAME',
+	'MAG_SUBPAGENAMEE',
+);
+if ( ! defined( 'MEDIAWIKI_INSTALL' ) )
+	wfRunHooks( 'MagicWordMagicWords', array( &$magicWords ) );
+
+for ( $i = 0; $i < count( $magicWords ); ++$i )
+	define( $magicWords[$i], $i );
 
 $wgVariableIDs = array(
 	MAG_CURRENTMONTH,
@@ -62,6 +85,7 @@ $wgVariableIDs = array(
 	MAG_CURRENTMONTHNAMEGEN,
 	MAG_CURRENTMONTHABBREV,
 	MAG_CURRENTDAY,
+	MAG_CURRENTDAY2,
 	MAG_CURRENTDAYNAME,
 	MAG_CURRENTYEAR,
 	MAG_CURRENTTIME,
@@ -73,22 +97,29 @@ $wgVariableIDs = array(
 	MAG_SCRIPTPATH,
 	MAG_PAGENAME,
 	MAG_PAGENAMEE,
+	MAG_FULLPAGENAME,
+	MAG_FULLPAGENAMEE,
 	MAG_NAMESPACE,
+	MAG_NAMESPACEE,
 	MAG_CURRENTWEEK,
 	MAG_CURRENTDOW,
 	MAG_REVISIONID,
+	MAG_SUBPAGENAME,
+	MAG_SUBPAGENAMEE
 );
+if ( ! defined( 'MEDIAWIKI_INSTALL' ) )
+	wfRunHooks( 'MagicWordwgVariableIDs', array( &$wgVariableIDs ) );
 
 /**
  * This class encapsulates "magic words" such as #redirect, __NOTOC__, etc.
  * Usage:
  *     if (MagicWord::get( MAG_REDIRECT )->match( $text ) )
- * 
- * Possible future improvements: 
+ *
+ * Possible future improvements:
  *   * Simultaneous searching for a number of magic words
  *   * $wgMagicWords in shared memory
  *
- * Please avoid reading the data out of one of these objects and then writing 
+ * Please avoid reading the data out of one of these objects and then writing
  * special case code. If possible, add another match()-like function here.
  *
  * @package MediaWiki
@@ -99,7 +130,7 @@ class MagicWord {
 	 */
 	var $mId, $mSynonyms, $mCaseSensitive, $mRegex;
 	var $mRegexStart, $mBaseRegex, $mVariableRegex;
-	var $mModified;	
+	var $mModified;
 	/**#@-*/
 
 	function MagicWord($id = 0, $syn = '', $cs = false) {
@@ -119,7 +150,7 @@ class MagicWord {
 	 */
 	function &get( $id ) {
 		global $wgMagicWords;
-		
+
 		if ( !is_array( $wgMagicWords ) ) {
 			wfDebugDieBacktrace( "Incorrect initialisation order, \$wgMagicWords does not exist\n" );
 		}
@@ -130,33 +161,38 @@ class MagicWord {
 		}
 		return $wgMagicWords[$id];
 	}
-	
+
 	# Initialises this object with an ID
 	function load( $id ) {
-		global $wgContLang;		
+		global $wgContLang;
 		$this->mId = $id;
 		$wgContLang->getMagic( $this );
 	}
-	
+
 	/**
 	 * Preliminary initialisation
-	 * @private
+	 * @access private
 	 */
 	function initRegex() {
 		#$variableClass = Title::legalChars();
 		# This was used for matching "$1" variables, but different uses of the feature will have
 		# different restrictions, which should be checked *after* the MagicWord has been matched,
 		# not here. - IMSoP
-		$escSyn = array_map( 'preg_quote', $this->mSynonyms );
+		
+		$escSyn = array();
+		foreach ( $this->mSynonyms as $synonym )
+			// In case a magic word contains /, like that's going to happen;)
+			$escSyn[] = preg_quote( $synonym, '/' );
 		$this->mBaseRegex = implode( '|', $escSyn );
+		
 		$case = $this->mCaseSensitive ? '' : 'i';
 		$this->mRegex = "/{$this->mBaseRegex}/{$case}";
 		$this->mRegexStart = "/^(?:{$this->mBaseRegex})/{$case}";
 		$this->mVariableRegex = str_replace( "\\$1", "(.*?)", $this->mRegex );
-		$this->mVariableStartToEndRegex = str_replace( "\\$1", "(.*?)", 
+		$this->mVariableStartToEndRegex = str_replace( "\\$1", "(.*?)",
 			"/^(?:{$this->mBaseRegex})$/{$case}" );
 	}
-	
+
 	/**
 	 * Gets a regex representing matching the word
 	 */
@@ -165,6 +201,18 @@ class MagicWord {
 			$this->initRegex();
 		}
 		return $this->mRegex;
+	}
+
+	/**
+	 * Gets the regexp case modifier to use, i.e. i or nothing, to be used if
+	 * one is using MagicWord::getBaseRegex(), otherwise it'll be included in
+	 * the complete expression
+	 */
+	function getRegexCase() {
+		if ( $this->mRegex === '' )
+			$this->initRegex();
+
+		return $this->mCaseSensitive ? '' : 'i';
 	}
 
 	/**
@@ -186,7 +234,7 @@ class MagicWord {
 		}
 		return $this->mBaseRegex;
 	}
-		
+
 	/**
 	 * Returns true if the text contains the word
 	 * @return bool
@@ -210,6 +258,7 @@ class MagicWord {
 	 * is one.
 	 */
 	function matchVariableStartToEnd( $text ) {
+		$matches = array();
 		$matchcount = preg_match( $this->getVariableStartToEndRegex(), $text, $matches );
 		if ( $matchcount == 0 ) {
 			return NULL;
@@ -240,14 +289,14 @@ class MagicWord {
 		$wgMagicFound = false;
 		$text = preg_replace_callback( $this->getRegexStart(), 'pregRemoveAndRecord', $text );
 		return $wgMagicFound;
-	}		
+	}
 
 
 	/**
 	 * Replaces the word with something else
 	 */
-	function replace( $replacement, $subject ) {
-		$res = preg_replace( $this->getRegex(), $replacement, $subject );
+	function replace( $replacement, $subject, $limit=-1 ) {
+		$res = preg_replace( $this->getRegex(), wfRegexReplacement( $replacement ), $subject, $limit );
 		$this->mModified = !($res === $subject);
 		return $res;
 	}
@@ -258,7 +307,6 @@ class MagicWord {
 	 * Input word must contain $1
 	 */
 	function substituteCallback( $text, $callback ) {
-		$regex = $this->getVariableRegex();
 		$res = preg_replace_callback( $this->getVariableRegex(), $callback, $text );
 		$this->mModified = !($res === $text);
 		return $res;
@@ -270,7 +318,7 @@ class MagicWord {
 	function getVariableRegex()	{
 		if ( $this->mVariableRegex == '' ) {
 			$this->initRegex();
-		} 
+		}
 		return $this->mVariableRegex;
 	}
 
@@ -280,7 +328,7 @@ class MagicWord {
 	function getVariableStartToEndRegex() {
 		if ( $this->mVariableStartToEndRegex == '' ) {
 			$this->initRegex();
-		} 
+		}
 		return $this->mVariableStartToEndRegex;
 	}
 
@@ -292,7 +340,7 @@ class MagicWord {
 	}
 
 	/**
-	 * Returns true if the last call to replace() or substituteCallback() 
+	 * Returns true if the last call to replace() or substituteCallback()
 	 * returned a modified text, otherwise false.
 	 */
 	function getWasModified(){
@@ -304,7 +352,7 @@ class MagicWord {
 	 * This method uses the php feature to do several replacements at the same time,
 	 * thereby gaining some efficiency. The result is placed in the out variable
 	 * $result. The return value is true if something was replaced.
-	 * @static 
+	 * @static
 	 **/
 	function replaceMultiple( $magicarr, $subject, &$result ){
 		$search = array();
@@ -332,7 +380,7 @@ class MagicWord {
 
 /**
  * Used in matchAndRemove()
- * @private
+ * @access private
  **/
 function pregRemoveAndRecord( $match ) {
 	global $wgMagicFound;

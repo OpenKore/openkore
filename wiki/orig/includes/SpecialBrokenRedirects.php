@@ -21,12 +21,12 @@ class BrokenRedirectsPage extends PageQueryPage {
 	function getName() {
 		return 'BrokenRedirects';
 	}
-	
+
 	function isExpensive( ) { return true; }
 	function isSyndicated() { return false; }
 
 	function getPageHeader( ) {
-		return '<p>'.wfMsg('brokenredirectstext')."</p><br />\n";
+		return wfMsgWikiHtml('brokenredirectstext')."<br />\n";
 	}
 
 	function getSQL() {
@@ -72,7 +72,7 @@ class BrokenRedirectsPage extends PageQueryPage {
 		$from = $skin->makeKnownLinkObj( $fromObj ,'', 'redirect=no' );
 		$edit = $skin->makeBrokenLinkObj( $fromObj , "(".wfMsg("qbedit").")" , 'redirect=no');
 		$to   = $skin->makeBrokenLinkObj( $toObj );
-				
+
 		return "$from $edit &rarr; $to";
 	}
 }
@@ -82,9 +82,9 @@ class BrokenRedirectsPage extends PageQueryPage {
  */
 function wfSpecialBrokenRedirects() {
 	list( $limit, $offset ) = wfCheckLimits();
-	
+
 	$sbr = new BrokenRedirectsPage();
-	
+
 	return $sbr->doQuery( $offset, $limit );
 
 }

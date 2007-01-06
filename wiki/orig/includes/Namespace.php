@@ -3,16 +3,10 @@
  * Provide things related to namespaces
  * @package MediaWiki
  */
- 
-/**
- * This is not a valid entry point, perform no further processing unless MEDIAWIKI is defined
- */
-if( defined( 'MEDIAWIKI' ) ) {
 
- 
 /**
  * Definitions of the NS_ constants are in Defines.php
- * @private
+ * @access private
  */
 $wgCanonicalNamespaceNames = array(
 	NS_MEDIA            => 'Media',
@@ -30,7 +24,7 @@ $wgCanonicalNamespaceNames = array(
 	NS_TEMPLATE_TALK    => 'Template_talk',
 	NS_HELP             => 'Help',
 	NS_HELP_TALK        => 'Help_talk',
-	NS_CATEGORY	    => 'Category',
+	NS_CATEGORY	        => 'Category',
 	NS_CATEGORY_TALK    => 'Category_talk',
 );
 
@@ -56,10 +50,15 @@ class Namespace {
 	 * @return bool
 	 */
 	function isMovable( $index ) {
-		if ( $index < NS_MAIN || $index == NS_IMAGE  || $index == NS_CATEGORY ) { 
-			return false; 
-		}
-		return true;
+		return !( $index < NS_MAIN || $index == NS_IMAGE  || $index == NS_CATEGORY );
+	}
+
+	/**
+	 * Check if the given namespace is not a talk page
+	 * @return bool
+	 */
+	function isMain( $index ) {
+		return ! Namespace::isTalk( $index );
 	}
 
 	/**
@@ -67,14 +66,8 @@ class Namespace {
 	 * @return bool
 	 */
 	function isTalk( $index ) {
-		global $wgExtraNamespaces;
-		return ( $index == NS_TALK           || $index == NS_USER_TALK     ||
-				 $index == NS_PROJECT_TALK   || $index == NS_IMAGE_TALK    ||
-				 $index == NS_MEDIAWIKI_TALK || $index == NS_TEMPLATE_TALK ||
-				 $index == NS_HELP_TALK      || $index == NS_CATEGORY_TALK 
-				 ||  ( (isset($wgExtraNamespaces) && $index % 2) )
-				 );
-		
+		return ($index > NS_MAIN)  // Special namespaces are negative
+			&& ($index % 2); // Talk namespaces are odd-numbered
 	}
 
 	/**
@@ -124,7 +117,5 @@ class Namespace {
 			return NULL;
 		}
 	}
-}
-
 }
 ?>

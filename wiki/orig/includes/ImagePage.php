@@ -7,7 +7,7 @@
  *
  */
 if( !defined( 'MEDIAWIKI' ) )
-	die();
+	die( -1 );
 
 require_once( 'Image.php' );
 
@@ -20,14 +20,18 @@ class ImagePage extends Article {
 	/* private */ var $img;  // Image object this page is shown for
 	var $mExtraDescription = false;
 
+	/**
+	 * Handler for action=render
+	 * Include body text only; none of the image extras
+	 */
 	function render() {
 		global $wgOut;
-		$wgOut->setArticleBodyOnly(true);
-		$wgOut->addWikitext($this->getContent(true));
+		$wgOut->setArticleBodyOnly( true );
+		$wgOut->addSecondaryWikitext( $this->getContent() );
 	}
 
 	function view() {
-		global $wgUseExternalEditor, $wgOut, $wgShowEXIF;
+		global $wgOut, $wgShowEXIF;
 
 		$this->img = new Image( $this->mTitle );
 
@@ -44,8 +48,6 @@ class ImagePage extends Article {
 				$wgOut->addHTML($this->showTOC($showmeta));
 
 			$this->openShowImage();
-			if ($exif)
-				$wgOut->addWikiText($this->makeMetadataTable($exif));
 
 			# No need to display noarticletext, we use our own message, output in openShowImage()
 			if( $this->getID() ) {
@@ -55,20 +57,31 @@ class ImagePage extends Article {
 				$wgOut->setArticleFlag( true );
 				$wgOut->setRobotpolicy( 'index,follow' );
 				$wgOut->setPageTitle( $this->mTitle->getPrefixedText() );
-				$wgOut->addMetaTags();
 				$this->viewUpdates();
 			}
 
-			if ($this->mExtraDescription) {
-				$fol = wfMsg('shareddescriptionfollows');
-				if ($fol != '-')
-					$wgOut->addWikiText(wfMsg('shareddescriptionfollows'));
-				$wgOut->addHTML($this->mExtraDescription);
+			# Show shared description, if needed
+			if( $this->mExtraDescription ) {
+				$fol = wfMsg( 'shareddescriptionfollows' );
+				if( $fol != '-' ) {
+					$wgOut->addWikiText( $fol );
+				}
+				$wgOut->addHTML( '<div id="shared-image-desc">' . $this->mExtraDescription . '</div>' );
 			}
 
 			$this->closeShowImage();
 			$this->imageHistory();
 			$this->imageLinks();
+			if( $exif ) {
+				global $wgStylePath;
+				$expand = htmlspecialchars( wfEscapeJsString( wfMsg( 'metadata-expand' ) ) );
+				$collapse = htmlspecialchars( wfEscapeJsString( wfMsg( 'metadata-collapse' ) ) );
+				$wgOut->addHTML( "<h2 id=\"metadata\">" . wfMsgHtml( 'metadata' ) . "</h2>\n" );
+				$wgOut->addWikiText( $this->makeMetadataTable( $exif ) );
+				$wgOut->addHTML(
+					"<script type=\"text/javascript\" src=\"$wgStylePath/common/metadata.js\"></script>\n" .
+					"<script type=\"text/javascript\">attachMetadataToggle('mw_metadata', '$expand', '$collapse');</script>\n" );
+			}
 		} else {
 			Article::view();
 		}
@@ -85,10 +98,10 @@ class ImagePage extends Article {
 	function showTOC( $metadata ) {
 		global $wgLang;
 		$r = '<ul id="filetoc">
-			<li><a href="#file">' . $wgLang->getNsText( NS_IMAGE ) . '</a></li>' .
-			($metadata ? '<li><a href="#metadata">' . wfMsg( 'metadata' ) . '</a></li>' : '') . '
-			<li><a href="#filehistory">' . wfMsg( 'imghistory' ) . '</a></li>
-			<li><a href="#filelinks">' . wfMsg( 'imagelinks' ) . '</a></li>
+			<li><a href="#file">' . $wgLang->getNsText( NS_IMAGE ) . '</a></li>
+			<li><a href="#filehistory">' . wfMsgHtml( 'imghistory' ) . '</a></li>
+			<li><a href="#filelinks">' . wfMsgHtml( 'imagelinks' ) . '</a></li>' .
+			($metadata ? '<li><a href="#metadata">' . wfMsgHtml( 'metadata' ) . '</a></li>' : '') . '
 		</ul>';
 		return $r;
 	}
@@ -102,36 +115,58 @@ class ImagePage extends Article {
 	 * @return string
 	 */
 	function makeMetadataTable( $exif ) {
-		$r = "{| class=metadata align=right width=250px\n";
-		$r .= '|+ id=metadata | '. htmlspecialchars( wfMsg( 'metadata' ) ) . "\n";
+		$r = wfMsg( 'metadata-help' ) . "\n\n";
+		$r .= "{| id=mw_metadata class=mw_metadata\n";
+		$visibleFields = $this->visibleMetadataFields();
 		foreach( $exif as $k => $v ) {
 			$tag = strtolower( $k );
-			$r .= "! class=$tag |" . wfMsg( "exif-$tag" ) . "\n";
-			$r .= "| class=$tag |" . htmlspecialchars( $v ) . "\n";
-			$r .= "|-\n";
+			$msg = wfMsg( "exif-$tag" );
+			$class = "exif-$tag";
+			if( !in_array( $tag, $visibleFields ) ) {
+				$class .= ' collapsable';
+			}
+			$r .= "|- class=\"$class\"\n";
+			$r .= "!| $msg\n";
+			$r .= "|| $v\n";
 		}
-		return substr($r, 0, -3) . '|}';
+		$r .= '|}';
+		return $r;
+	}
+
+	/**
+	 * Get a list of EXIF metadata items which should be displayed when
+	 * the metadata table is collapsed.
+	 *
+	 * @return array of strings
+	 * @access private
+	 */
+	function visibleMetadataFields() {
+		$fields = array();
+		$lines = explode( "\n", wfMsgForContent( 'metadata-fields' ) );
+		foreach( $lines as $line ) {
+			if( preg_match( '/^\\*\s*(.*?)\s*$/', $line, $matches ) ) {
+				$fields[] = $matches[1];
+			}
+		}
+		return $fields;
 	}
 
 	/**
 	 * Overloading Article's getContent method.
-	 * Omit noarticletext if sharedupload
-	 *
-	 * @param $noredir If true, do not follow redirects
+	 * 
+	 * Omit noarticletext if sharedupload; text will be fetched from the
+	 * shared upload server if possible.
 	 */
-	function getContent( $noredir )
-	{
-		if ( $this->img && $this->img->fromSharedDirectory && 0 == $this->getID() ) {
+	function getContent() {
+		if( $this->img && $this->img->fromSharedDirectory && 0 == $this->getID() ) {
 			return '';
 		}
-		return Article::getContent( $noredir );
+		return Article::getContent();
 	}
 
-	function openShowImage()
-	{
-		global $wgOut, $wgUser, $wgImageLimits, $wgRequest,
-		       $wgUseImageResize, $wgRepositoryBaseUrl,
-		       $wgUseExternalEditor, $wgServer, $wgFetchCommonsDescriptions;
+	function openShowImage() {
+		global $wgOut, $wgUser, $wgImageLimits, $wgRequest, $wgUseImageResize;
+
 		$full_url  = $this->img->getURL();
 		$anchoropen = '';
 		$anchorclose = '';
@@ -139,7 +174,7 @@ class ImagePage extends Article {
 		if( $wgUser->getOption( 'imagesize' ) == '' ) {
 			$sizeSel = User::getDefaultOption( 'imagesize' );
 		} else {
-			$sizeSel = IntVal( $wgUser->getOption( 'imagesize' ) );
+			$sizeSel = intval( $wgUser->getOption( 'imagesize' ) );
 		}
 		if( !isset( $wgImageLimits[$sizeSel] ) ) {
 			$sizeSel = User::getDefaultOption( 'imagesize' );
@@ -159,16 +194,24 @@ class ImagePage extends Article {
 				# image
 
 				# "Download high res version" link below the image
-				$msg = wfMsg('showbigimage', $width, $height, intval( $this->img->getSize()/1024 ) );
-				if ( $width > $maxWidth ) {
-					$height = floor( $height * $maxWidth / $width );
-					$width  = $maxWidth;
-				}
-				if ( $height > $maxHeight ) {
-					$width = floor( $width * $maxHeight / $height );
-					$height = $maxHeight;
-				}
-				if ( $width != $this->img->getWidth() || $height != $this->img->getHeight() ) {
+				$msg = wfMsgHtml('showbigimage', $width, $height, intval( $this->img->getSize()/1024 ) );
+
+				# We'll show a thumbnail of this image
+				if ( $width > $maxWidth || $height > $maxHeight ) {
+					# Calculate the thumbnail size.
+					# First case, the limiting factor is the width, not the height.
+					if ( $width / $height >= $maxWidth / $maxHeight ) {
+						$height = round( $height * $maxWidth / $width);
+						$width = $maxWidth;
+						# Note that $height <= $maxHeight now.
+					} else {
+						$newwidth = floor( $width * $maxHeight / $height);
+						$height = round( $height * $newwidth / $width );
+						$width = $newwidth;
+						# Note that $height <= $maxHeight now, but might not be identical
+						# because of rounding.
+					}
+
 					if( $wgUseImageResize ) {
 						$thumbnail = $this->img->getThumbnail( $width );
 						if ( $thumbnail == null ) {
@@ -204,7 +247,7 @@ class ImagePage extends Article {
 					$icon->toHtml() .
 					'</a></div>' );
 				}
-				
+
 				$showLink = true;
 			}
 
@@ -214,7 +257,7 @@ class ImagePage extends Article {
 				$info = wfMsg( 'fileinfo',
 					ceil($this->img->getSize()/1024.0),
 					$this->img->getMimeType() );
-	
+
 				if (!$this->img->isSafeFile()) {
 					$warning = wfMsg( 'mediawarning' );
 					$wgOut->addWikiText( <<<END
@@ -241,20 +284,29 @@ END
 			}
 		} else {
 			# Image does not exist
-			$wgOut->addWikiText( wfMsg( 'noimage', $this->getUploadUrl() ) );
+
+			$title = Title::makeTitle( NS_SPECIAL, 'Upload' );
+			$link = $sk->makeKnownLinkObj($title, wfMsgHtml('noimage-linktext'),
+				'wpDestFile=' . urlencode( $this->img->getName() ) );
+			$wgOut->addHTML( wfMsgWikiHtml( 'noimage', $link ) );
 		}
 	}
 
 	function printSharedImageText() {
-		global $wgRepositoryBaseUrl, $wgFetchCommonsDescriptions, $wgOut;
+		global $wgRepositoryBaseUrl, $wgFetchCommonsDescriptions, $wgOut, $wgUser;
 
 		$url = $wgRepositoryBaseUrl . urlencode($this->mTitle->getDBkey());
-		$sharedtext = "<div class='sharedUploadNotice'>" . wfMsg("sharedupload");
+		$sharedtext = "<div class='sharedUploadNotice'>" . wfMsgWikiHtml("sharedupload");
 		if ($wgRepositoryBaseUrl && !$wgFetchCommonsDescriptions) {
-			$sharedtext .= " " . wfMsg("shareduploadwiki", $url);
+
+			$sk = $wgUser->getSkin();
+			$title = Title::makeTitle( NS_SPECIAL, 'Upload' );
+			$link = $sk->makeKnownLinkObj($title, wfMsgHtml('shareduploadwiki-linktext'),
+			array( 'wpDestFile' => urlencode( $this->img->getName() )));
+			$sharedtext .= " " . wfMsgWikiHtml('shareduploadwiki', $link);
 		}
 		$sharedtext .= "</div>";
-		$wgOut->addWikiText($sharedtext);
+		$wgOut->addHTML($sharedtext);
 
 		if ($wgRepositoryBaseUrl && $wgFetchCommonsDescriptions) {
 			require_once("HttpFunctions.php");
@@ -281,9 +333,11 @@ END
 			return;
 
 		$sk = $wgUser->getSkin();
-		$wgOut->addHTML( '<br /><ul><li>' );
-		$wgOut->addWikiText( '<div>'. wfMsg( 'uploadnewversion', $this->getUploadUrl() ) .'</div>' );
-		$wgOut->addHTML( '</li><li>' );
+		$wgOut->addHTML( '<br /><ul>' );
+		if( $wgUser->isAllowed( 'reupload' ) ) {
+			$wgOut->addWikiText( "<li>\n<div>". wfMsg( 'uploadnewversion', $this->getUploadUrl() ) ."</div>\n</li>\n" );
+		}
+		$wgOut->addHTML( '<li>' );
 		$wgOut->addHTML( $sk->makeKnownLinkObj( $this->mTitle,
 			wfMsg( 'edit-externally' ), "action=edit&externaledit=true&mode=file" ) );
 		$wgOut->addWikiText( '<div>' .  wfMsg('edit-externally-help') . '</div>' );
@@ -311,14 +365,18 @@ END
 		if ( $line ) {
 			$list =& new ImageHistoryList( $sk );
 			$s = $list->beginImageHistoryList() .
-				$list->imageHistoryLine( true, $line->img_timestamp,
+				$list->imageHistoryLine( true, wfTimestamp(TS_MW, $line->img_timestamp),
 					$this->mTitle->getDBkey(),  $line->img_user,
-					$line->img_user_text, $line->img_size, $line->img_description );
+					$line->img_user_text, $line->img_size, $line->img_description,
+					$line->img_width, $line->img_height
+				);
 
 			while ( $line = $this->img->nextHistoryLine() ) {
 				$s .= $list->imageHistoryLine( false, $line->img_timestamp,
-			  	$line->oi_archive_name, $line->img_user,
-			  	$line->img_user_text, $line->img_size, $line->img_description );
+			  		$line->oi_archive_name, $line->img_user,
+			  		$line->img_user_text, $line->img_size, $line->img_description,
+					$line->img_width, $line->img_height
+				);
 			}
 			$s .= $list->endImageHistoryList();
 		} else { $s=''; }
@@ -343,8 +401,8 @@ END
 		$imagelinks = $dbr->tableName( 'imagelinks' );
 
 		$sql = "SELECT page_namespace,page_title FROM $imagelinks,$page WHERE il_to=" .
-		  $dbr->addQuotes( $this->mTitle->getDBkey() ) . " AND il_from=page_id"
-		  . " LIMIT 500"; # quickie emergency brake
+		  $dbr->addQuotes( $this->mTitle->getDBkey() ) . " AND il_from=page_id";
+		$sql = $dbr->limitResult($sql, 500, 0);
 		$res = $dbr->query( $sql, "ImagePage::imageLinks" );
 
 		if ( 0 == $dbr->numRows( $res ) ) {
@@ -414,10 +472,10 @@ END
 		return $this->confirmDelete( $q, $wgRequest->getText( 'wpReason' ) );
 	}
 
-	function doDelete()
-	{
-		global $wgOut, $wgUser, $wgContLang, $wgRequest;
-		global $wgUseSquid, $wgInternalServer, $wgPostCommitUpdateList;
+	function doDelete()	{
+		global $wgOut, $wgRequest, $wgUseSquid, $wgInternalServer;
+		global $wgPostCommitUpdateList;
+
 		$fname = 'ImagePage::doDelete';
 
 		$reason = $wgRequest->getVal( 'wpReason' );
@@ -440,9 +498,9 @@ END
 
 			# Squid purging
 			if ( $wgUseSquid ) {
-				$urlArr = Array(
+				$urlArr = array(
 					$wgInternalServer.wfImageArchiveUrl( $oldimage ),
-					$wgInternalServer.$this->mTitle->getFullURL()
+					$this->mTitle->getInternalURL()
 				);
 				wfPurgeSquidServers($urlArr);
 			}
@@ -463,6 +521,14 @@ END
 				return;
 			}
 			$dbw->delete( 'image', array( 'img_name' => $image ) );
+
+			if ( $dbw->affectedRows() ) {
+				# Update site_stats
+				$site_stats = $dbw->tableName( 'site_stats' );
+				$dbw->query( "UPDATE $site_stats SET ss_images=ss_images-1", $fname );
+			}
+			
+
 			$res = $dbw->select( 'oldimage', array( 'oi_archive_name' ), array( 'oi_name' => $image ) );
 
 			# Purge archive URLs from the squid
@@ -493,7 +559,6 @@ END
 
 			/* Delete thumbnails and refresh image metadata cache */
 			$this->img->purgeCache();
-
 
 			$deleted = $image;
 		}
@@ -534,10 +599,8 @@ END
 		}
 	}
 
-	function revert()
-	{
+	function revert() {
 		global $wgOut, $wgRequest, $wgUser;
-		global $wgUseSquid, $wgInternalServer, $wgDeferredUpdateList;
 
 		$oldimage = $wgRequest->getText( 'oldimage' );
 		if ( strlen( $oldimage ) < 16 ) {
@@ -608,6 +671,22 @@ END
 		$edit = new EditPage( $this );
 		return $edit->blockedIPpage();
 	}
+	
+	/**
+	 * Override handling of action=purge
+	 */
+	function doPurge() {
+		$this->img = new Image( $this->mTitle );
+		if( $this->img->exists() ) {
+			wfDebug( "ImagePage::doPurge purging " . $this->img->getName() . "\n" );
+			$linksTo = $this->img->getLinksTo();
+			Title::touchArray( $linksTo );
+			$this->img->purgeCache();
+		} else {
+			wfDebug( "ImagePage::doPurge no image\n" );
+		}
+		parent::doPurge();
+	}
 
 }
 
@@ -631,8 +710,8 @@ class ImageHistoryList {
 		return $s;
 	}
 
-	function imageHistoryLine( $iscur, $timestamp, $img, $user, $usertext, $size, $description ) {
-		global $wgUser, $wgLang, $wgContLang, $wgTitle;
+	function imageHistoryLine( $iscur, $timestamp, $img, $user, $usertext, $size, $description, $width, $height ) {
+		global $wgUser, $wgLang, $wgTitle, $wgContLang;
 
 		$datetime = $wgLang->timeanddate( $timestamp, true );
 		$del = wfMsg( 'deleteimg' );
@@ -672,15 +751,15 @@ class ImageHistoryList {
 		if ( 0 == $user ) {
 			$userlink = $usertext;
 		} else {
-			$userlink = $this->skin->makeLinkObj(
-				Title::makeTitle( NS_USER, $usertext ),
-				$usertext );
+			$userlink = $this->skin->makeLinkObj( Title::makeTitle( NS_USER, $usertext ), $usertext );
+			$usertalk = $this->skin->makeLinkObj( Title::makeTitle( NS_USER_TALK, $usertext), $wgContLang->getNsText( NS_TALK ) );
+			$userdata = $userlink . ' (' . $usertalk . ')';
 		}
 		$nbytes = wfMsg( 'nbytes', $size );
+		$widthheight = wfMsg( 'widthheight', $width, $height );
 		$style = $this->skin->getInternalLinkAttributes( $url, $datetime );
 
-		$s = "<li> ({$dlink}) ({$rlink}) <a href=\"{$url}\"{$style}>{$datetime}</a>"
-		  . " . . {$userlink} ({$nbytes})";
+		$s = "<li> ({$dlink}) ({$rlink}) <a href=\"{$url}\"{$style}>{$datetime}</a> . . {$userdata} . . {$widthheight} ({$nbytes})";
 
 		$s .= $this->skin->commentBlock( $description, $wgTitle );
 		$s .= "</li>\n";

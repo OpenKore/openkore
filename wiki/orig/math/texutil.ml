@@ -36,10 +36,12 @@ type encoding_t = LATIN1 | LATIN2 | UTF8
 let modules_ams = ref false
 let modules_nonascii = ref false
 let modules_encoding = ref UTF8
+let modules_color = ref false
 
 let tex_use_ams ()     = modules_ams := true
 let tex_use_nonascii () = modules_nonascii := true
-let tex_mod_reset ()   = (modules_ams := false; modules_nonascii := false; modules_encoding := UTF8)
+let tex_use_color ()  = modules_color := true
+let tex_mod_reset ()   = (modules_ams := false; modules_nonascii := false; modules_encoding := UTF8; modules_color := false)
 
 let get_encoding = function
     UTF8 -> "\\usepackage{ucs}\n\\usepackage[utf8]{inputenc}\n"
@@ -49,6 +51,7 @@ let get_encoding = function
 let get_preface ()  = "\\nonstopmode\n\\documentclass[12pt]{article}\n" ^
               (if !modules_nonascii then get_encoding !modules_encoding else "") ^
               (if !modules_ams then "\\usepackage{amsmath}\n\\usepackage{amsfonts}\n\\usepackage{amssymb}\n" else "") ^
+              (if !modules_color then "\\usepackage[dvips,usenames]{color}\n" else "") ^
               "\\pagestyle{empty}\n\\begin{document}\n$$\n"
 let get_footer  ()  = "\n$$\n\\end{document}\n"
 
@@ -186,6 +189,7 @@ let find = function
     | "\\models"           -> LITERAL (TEX_ONLY "\\models ")
     | "\\vdash"            -> LITERAL (TEX_ONLY "\\vdash ")
     | "\\triangle"         -> LITERAL (TEX_ONLY "\\triangle ")
+	| "\\bowtie"           -> LITERAL (TEX_ONLY "\\bowtie ")
     | "\\wr"               -> LITERAL (TEX_ONLY "\\wr ")
     | "\\triangleleft"     -> LITERAL (TEX_ONLY "\\triangleleft ")
     | "\\triangleright"    -> LITERAL (TEX_ONLY "\\triangleright ")
@@ -431,7 +435,7 @@ let find = function
     | "\\ddot"             -> FUN_AR1 "\\ddot "
     | "\\breve"            -> FUN_AR1 "\\breve "
     | "\\tilde"            -> FUN_AR1 "\\tilde "
-    | "\\not"              -> FUN_AR1 "\\not "
+    | "\\not"              -> LITERAL (TEX_ONLY "\\not ")
     | "\\choose"           -> FUN_INFIX "\\choose "
     | "\\atop"             -> FUN_INFIX "\\atop "
     | "\\binom"            -> FUN_AR2 "\\binom "
@@ -449,6 +453,10 @@ let find = function
     | "\\rm"               -> DECLh ("\\rm ", FONTFORCE_RM)
     | "\\it"               -> DECLh ("\\it ", FONTFORCE_IT)
     | "\\cal"              -> DECL "\\cal "
+    | "\\displaystyle"     -> LITERAL (TEX_ONLY  "\\displaystyle ")
+    | "\\scriptstyle"      -> LITERAL (TEX_ONLY "\\scriptstyle ")
+    | "\\textstyle"        -> LITERAL (TEX_ONLY "\\textstyle ")
+    | "\\scriptscriptstyle"-> LITERAL (TEX_ONLY "\\scriptscriptstyle ")
     | "\\bf"               -> DECL "\\bf "
     | "\\big"              -> BIG "\\big "
     | "\\Big"              -> BIG "\\Big "
@@ -469,4 +477,5 @@ let find = function
     | "\\mbox"             -> raise (Failure "malformatted \\mbox")
     | "\\vbox"             -> raise (Failure "malformatted \\vbox")
     | "\\hbox"             -> raise (Failure "malformatted \\hbox")
+    | "\\color"            -> (tex_use_color (); LITERAL (TEX_ONLY "\\color"))
     | s                    -> raise (Illegal_tex_function s)

@@ -17,7 +17,7 @@ function rebuildRecentChangesTablePass1()
 	$dbw->delete( 'recentchanges', '*' );
 
 	print( "Loading from page and revision tables...\n" );
-	
+
 	global $wgRCMaxAge;
 	$cutoff = time() - $wgRCMaxAge;
 	$dbw->insertSelect( 'recentchanges', array( 'page', 'revision' ),
@@ -37,9 +37,11 @@ function rebuildRecentChangesTablePass1()
 			'rc_last_oldid' => 0, // is this ok?
 			'rc_type'       => $dbw->conditional( 'page_is_new != 0', RC_NEW, RC_EDIT ),
 		), array(
-			'rev_timestamp > ' . $dbw->timestamp( $cutoff ),
+			'rev_timestamp > ' . $dbw->addQuotes( $dbw->timestamp( $cutoff ) ),
 			'rev_page=page_id'
-		), $fname, array( 'ORDER BY' => 'rev_timestamp', 'LIMIT' => 5000 )
+		), $fname,
+		array(), // INSERT options
+		array( 'ORDER BY' => 'rev_timestamp', 'LIMIT' => 5000 ) // SELECT options
 	);
 }
 
@@ -65,7 +67,7 @@ function rebuildRecentChangesTablePass2()
 		$new = 0;
 		if( $obj->rc_cur_id != $lastCurId ) {
 			# Switch! Look up the previous last edit, if any
-			$lastCurId = IntVal( $obj->rc_cur_id );
+			$lastCurId = intval( $obj->rc_cur_id );
 			$emit = $obj->rc_timestamp;
 			$sql2 = "SELECT rev_id FROM $revision " .
 				"WHERE rev_page={$lastCurId} ".
@@ -86,7 +88,7 @@ function rebuildRecentChangesTablePass2()
 			$sql3 = "UPDATE $recentchanges SET rc_last_oldid=$lastOldId,rc_new=$new,rc_type=$new " .
 				"WHERE rc_cur_id={$lastCurId} AND rc_this_oldid={$obj->rc_this_oldid}";
 			$dbw->query( $sql3 );
-			$lastOldId = IntVal( $obj->rc_this_oldid );
+			$lastOldId = intval( $obj->rc_this_oldid );
 		}
 	}
 	$dbw->freeResult( $res );

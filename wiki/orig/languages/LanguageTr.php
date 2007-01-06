@@ -22,6 +22,22 @@ require_once( "LanguageUtf8.php" );
 	NS_CATEGORY_TALK    => 'Kategori_tartışma',
 ) + $wgNamespaceNamesEn;
 
+# Whether to use user or default setting in Language::date()
+
+/* private */ $wgDateFormatsTr = array(
+	MW_DATE_DEFAULT => 'Tercih yok',
+	MW_DATE_MDY => '16:12, Ocak 15, 2001',
+	MW_DATE_DMY => '16:12, 15 Ocak 2001',
+	MW_DATE_YMD => '16:12, 2001 Ocak 15',
+	MW_DATE_ISO => '2001-01-15 16:12:34'
+);
+
+if (!$wgCachedMessageArrays) {
+	require_once('MessagesTr.php');
+}
+
+
+
 class LanguageTr extends LanguageUtf8 {
 	function getNamespaces() {
 		global $wgNamespaceNamesTr;
@@ -39,5 +55,22 @@ class LanguageTr extends LanguageUtf8 {
 			return parent::ucfirst( $string );
 		}
 	}
+
+	function getMessage( $key ) {
+		global $wgAllMessagesTr;
+		if( isset( $wgAllMessagesTr[$key] ) ) {
+			return $wgAllMessagesTr[$key];
+		} else {
+			return parent::getMessage( $key );
+		}
+	}
+
+	function getDateFormats() {
+		global $wgDateFormatsTr;
+		return $wgDateFormatsTr;
+	}
+
 }
+
+
 ?>

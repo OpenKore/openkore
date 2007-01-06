@@ -18,30 +18,27 @@ if( defined( 'MEDIAWIKI' ) ) {
 
 // Check to see if we are at the file scope
 if ( !isset( $wgVersion ) ) {
-	die( "Error, Setup.php must be included from the file scope, after DefaultSettings.php\n" );
+	echo "Error, Setup.php must be included from the file scope, after DefaultSettings.php\n";
+	die( -1 );
 }
 
 if( !isset( $wgProfiling ) )
 	$wgProfiling = false;
 
-if ( $wgProfiling and (0 == rand() % $wgProfileSampleRate ) ) {
-        require_once( 'Profiling.php' );
+if ( function_exists( 'wfProfileIn' ) ) {
+	/* nada, everything should be done already */
+} elseif ( $wgProfiling and (0 == rand() % $wgProfileSampleRate ) ) {
+	require_once( 'Profiling.php' );
+	$wgProfiling = true;
+	if ($wgProfilerType == "") {
+		$wgProfiler = new Profiler();
+	} else {
+		$prclass="Profiler{$wgProfilerType}";
+		require_once( $prclass.".php" );
+		$wgProfiler = new $prclass();
+	}
 } else {
-        function wfProfileIn( $fn = '' ) {
-                global $hackwhere, $wgDBname;
-                $hackwhere[] = $fn;
-                if (function_exists("setproctitle"))
-                        setproctitle($fn . " [$wgDBname]");
-        }
-        function wfProfileOut( $fn = '' ) {
-                global $hackwhere, $wgDBname;
-                if (count($hackwhere))
-                        array_pop($hackwhere);
-                if (function_exists("setproctitle") && count($hackwhere))
-                        setproctitle($hackwhere[count($hackwhere)-1] . " [$wgDBname]");
-        }
-        function wfGetProfilingOutput( $s, $e ) {}
-        function wfProfileClose() {}
+	require_once( 'ProfilerStub.php' );
 }
 
 $fname = 'Setup.php';
@@ -51,17 +48,16 @@ wfProfileIn( $fname.'-includes' );
 require_once( 'GlobalFunctions.php' );
 require_once( 'Hooks.php' );
 require_once( 'Namespace.php' );
-require_once( 'RecentChange.php' );
 require_once( 'User.php' );
 require_once( 'Skin.php' );
 require_once( 'OutputPage.php' );
 require_once( 'LinkCache.php' );
+require_once( 'LinkBatch.php' );
 require_once( 'Title.php' );
 require_once( 'Article.php' );
 require_once( 'MagicWord.php' );
 require_once( 'Block.php' );
 require_once( 'MessageCache.php' );
-require_once( 'BlockCache.php' );
 require_once( 'Parser.php' );
 require_once( 'ParserCache.php' );
 require_once( 'WebRequest.php' );
@@ -79,8 +75,14 @@ if ( $wgUseDynamicDates ) {
 wfProfileOut( $fname.'-includes' );
 wfProfileIn( $fname.'-misc1' );
 
-$wgIP = wfGetIP();
+$wgIP = false; # Load on demand
 $wgRequest = new WebRequest();
+if ( function_exists( 'posix_uname' ) ) {
+	$wguname = posix_uname();
+	$wgNodeName = $wguname['nodename'];
+} else {
+	$wgNodeName = '';
+}
 
 # Useful debug output
 if ( $wgCommandLineMode ) {
@@ -125,12 +127,18 @@ if ( $wgDBprefix ) {
 	$wgCookiePrefix = $wgDBname;
 }
 
-session_name( $wgCookiePrefix . '_session' );
+# If session.auto_start is there, we can't touch session name
+#
+if (!ini_get('session.auto_start')) {
+	session_name( $wgCookiePrefix . '_session' );
+}
 
 if( !$wgCommandLineMode && ( isset( $_COOKIE[session_name()] ) || isset( $_COOKIE[$wgCookiePrefix.'Token'] ) ) ) {
+	wfIncrStats( 'request_with_session' );
 	User::SetupSession();
 	$wgSessionStarted = true;
 } else {
+	wfIncrStats( 'request_without_session' );
 	$wgSessionStarted = false;
 }
 
@@ -194,8 +202,13 @@ wfProfileIn( $fname.'-User' );
 # Skin setup functions
 # Entries can be added to this variable during the inclusion
 # of the extension file. Skins can then perform any necessary initialisation.
+# 
+# require_once is slow even on the second call, so this needs to be outside the loop
+if ( count( $wgSkinExtensionFunctions ) ) {
+	require_once( 'PersistentObject.php' );
+}
 foreach ( $wgSkinExtensionFunctions as $func ) {
-	$func();
+	call_user_func( $func );
 }
 
 if( !is_object( $wgAuth ) ) {
@@ -210,7 +223,7 @@ if( $wgCommandLineMode ) {
 	# Prevent loading User settings from the DB.
 	$wgUser->setLoaded( true );
 } else {
-        $wgUser = null;
+	$wgUser = null;
 	wfRunHooks('AutoAuthenticate',array(&$wgUser));
 	if ($wgUser === null) {
 		$wgUser = User::loadFromSession();
@@ -235,6 +248,8 @@ if( $wgLangClass == $wgContLangClass ) {
 	$wgLang = &$wgContLang;
 } else {
 	wfSuppressWarnings();
+	// Preload base classes to work around APC/PHP5 bug
+	include_once("$IP/languages/$wgLangClass.deps.php");
 	include_once("$IP/languages/$wgLangClass.php");
 	wfRestoreWarnings();
 
@@ -276,20 +291,13 @@ wfProfileIn( $fname.'-OutputPage' );
 $wgOut = new OutputPage();
 
 wfProfileOut( $fname.'-OutputPage' );
-wfProfileIn( $fname.'-BlockCache' );
-
-$wgBlockCache = new BlockCache( true );
-
-wfProfileOut( $fname.'-BlockCache' );
 wfProfileIn( $fname.'-misc2' );
 
 $wgDeferredUpdateList = array();
 $wgPostCommitUpdateList = array();
 
-$wgLinkCache = new LinkCache();
 $wgMagicWords = array();
 $wgMwRedir =& MagicWord::get( MAG_REDIRECT );
-$wgParserCache = new ParserCache( $messageMemc );
 
 if ( $wgUseXMLparser ) {
 	require_once( 'ParserXML.php' );
@@ -312,8 +320,11 @@ wfProfileIn( $fname.'-extensions' );
 # Entries should be added to this variable during the inclusion
 # of the extension file. This allows the extension to perform
 # any necessary initialisation in the fully initialised environment
+if ( count( $wgExtensionFunctions ) ) {
+	require_once( 'PersistentObject.php' );
+}
 foreach ( $wgExtensionFunctions as $func ) {
-	$func();
+	call_user_func( $func );
 }
 
 wfDebug( "\n" );

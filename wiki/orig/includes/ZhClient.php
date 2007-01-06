@@ -96,12 +96,12 @@ class ZhClient {
 	}
 
 	/**
-	 * Convert the input to all possible variants 
+	 * Convert the input to all possible variants
 	 *
 	 * @param string $text input text
 	 * @return array langcode => converted_string
 	 * @access public
-	 */	
+	 */
 	function convertToAllVariants($text) {
 		$len = strlen($text);
 		$q = "CONV ALL $len\n$text";
@@ -119,7 +119,7 @@ class ZhClient {
 			$i+=$len;
 		}
 		return $ret;
-    }
+	}
 	/**
 	 * Perform word segmentation
 	 *
