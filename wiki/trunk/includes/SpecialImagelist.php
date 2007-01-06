@@ -9,8 +9,8 @@
  *
  */
 function wfSpecialImagelist() {
-	global $wgUser, $wgOut, $wgLang, $wgContLang, $wgRequest, $wgMiserMode;
-	
+	global $wgUser, $wgOut, $wgLang, $wgRequest, $wgMiserMode;
+
 	$sort = $wgRequest->getVal( 'sort' );
 	$wpIlMatch = $wgRequest->getText( 'wpIlMatch' );
 	$dbr =& wfGetDB( DB_SLAVE );

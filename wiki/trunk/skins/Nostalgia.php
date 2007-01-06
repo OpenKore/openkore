@@ -8,7 +8,7 @@
  */
 
 if( !defined( 'MEDIAWIKI' ) )
-	die();
+	die( -1 );
 
 /**
  * @todo document
@@ -17,12 +17,8 @@ if( !defined( 'MEDIAWIKI' ) )
  */
 class SkinNostalgia extends Skin {
 
-	function initPage() {
-		# ...
-	}
-
 	function getStylesheet() {
-		return 'common/nostalgia.css';
+		return 'common/nostalgia.css?1';
 	}
 	function getSkinName() {
 		return "nostalgia";
@@ -47,7 +43,7 @@ class SkinNostalgia extends Skin {
 
 		$ol = $this->otherLanguages();
 		if($ol) $s .= "<br />" . $ol;
-		
+
 		$cat = $this->getCategoryLinks();
 		if($cat) $s .= "<br />" . $cat;
 

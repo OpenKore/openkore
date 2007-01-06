@@ -5,16 +5,6 @@
  */
 
 /**
- * Various globals
- */
-define( 'RC_EDIT', 0);
-define( 'RC_NEW', 1);
-define( 'RC_MOVE', 2);
-define( 'RC_LOG', 3);
-define( 'RC_MOVE_OVER_REDIRECT', 4);
-
-
-/**
  * Utility class for creating new RC entries
  * mAttribs:
  * 	rc_id           id of the row in the recentchanges table
@@ -53,6 +43,7 @@ class RecentChange
 {
 	var $mAttribs = array(), $mExtra = array();
 	var $mTitle = false, $mMovedToTitle = false;
+	var $numberofWatchingusers = 0 ; # Dummy to prevent error message in SpecialRecentchangeslinked
 
 	# Factory methods
 
@@ -104,7 +95,7 @@ class RecentChange
 	# Writes the data in this object to the database
 	function save()
 	{
-		global $wgLocalInterwiki, $wgPutIPinRC, $wgRC2UDPAddress, $wgRC2UDPPort, $wgRC2UDPPrefix;
+		global $wgLocalInterwiki, $wgPutIPinRC, $wgRC2UDPAddress, $wgRC2UDPPort, $wgRC2UDPPrefix, $wgUseRCPatrol;
 		$fname = 'RecentChange::save';
 
 		$dbw =& wfGetDB( DB_MASTER );
@@ -118,28 +109,34 @@ class RecentChange
 		}
 
 		# Fixup database timestamps
-		$this->mAttribs['rc_timestamp']=$dbw->timestamp($this->mAttribs['rc_timestamp']);
-		$this->mAttribs['rc_cur_time']=$dbw->timestamp($this->mAttribs['rc_cur_time']);
+		$this->mAttribs['rc_timestamp'] = $dbw->timestamp($this->mAttribs['rc_timestamp']);
+		$this->mAttribs['rc_cur_time'] = $dbw->timestamp($this->mAttribs['rc_cur_time']);
+		$this->mAttribs['rc_id'] = $dbw->nextSequenceValue( 'rc_rc_id_seq' );
 
 		# Insert new row
 		$dbw->insert( 'recentchanges', $this->mAttribs, $fname );
 
+		# Set the ID
+		$this->mAttribs['rc_id'] = $dbw->insertId();
+
 		# Update old rows, if necessary
 		if ( $this->mAttribs['rc_type'] == RC_EDIT ) {
-			$oldid = $this->mAttribs['rc_last_oldid'];
-			$ns = $this->mAttribs['rc_namespace'];
-			$title = $this->mAttribs['rc_title'];
 			$lastTime = $this->mExtra['lastTimestamp'];
-			$now = $this->mAttribs['rc_timestamp'];
-			$curId = $this->mAttribs['rc_cur_id'];
+			#$now = $this->mAttribs['rc_timestamp'];
+			#$curId = $this->mAttribs['rc_cur_id'];
 
 			# Don't bother looking for entries that have probably
 			# been purged, it just locks up the indexes needlessly.
 			global $wgRCMaxAge;
 			$age = time() - wfTimestamp( TS_UNIX, $lastTime );
 			if( $age < $wgRCMaxAge ) {
-                                # live hack, will commit once tested - kate
+				# live hack, will commit once tested - kate
 				# Update rc_this_oldid for the entries which were current
+				#
+				#$oldid = $this->mAttribs['rc_last_oldid'];
+				#$ns = $this->mAttribs['rc_namespace'];
+				#$title = $this->mAttribs['rc_title'];
+				#
 				#$dbw->update( 'recentchanges',
 				#	array( /* SET */
 				#		'rc_this_oldid' => $oldid
@@ -152,8 +149,8 @@ class RecentChange
 			}
 
 			# Update rc_cur_time
-			$dbw->update( 'recentchanges', array( 'rc_cur_time' => $now ),
-				array( 'rc_cur_id' => $curId ), $fname );
+			#$dbw->update( 'recentchanges', array( 'rc_cur_time' => $now ),
+			#	array( 'rc_cur_id' => $curId ), $fname );
 		}
 
 		# Notify external application via UDP
@@ -165,6 +162,21 @@ class RecentChange
 				socket_close( $conn );
 			}
 		}
+
+		// E-mail notifications
+		global $wgUseEnotif;
+		if( $wgUseEnotif ) {
+			# this would be better as an extension hook
+			include_once( "UserMailer.php" );
+			$enotif = new EmailNotification();
+			$title = Title::makeTitle( $this->mAttribs['rc_namespace'], $this->mAttribs['rc_title'] );
+			$enotif->notifyOnPageChange( $title,
+				$this->mAttribs['rc_timestamp'],
+				$this->mAttribs['rc_comment'],
+				$this->mAttribs['rc_minor'],
+				$this->mAttribs['rc_last_oldid'] );
+		}
+
 	}
 
 	# Marks a certain row as patrolled
@@ -193,8 +205,10 @@ class RecentChange
 		}
 
 		if ( !$ip ) {
-			global $wgIP;
-			$ip = empty( $wgIP ) ? '' : $wgIP;
+			$ip = wfGetIP();
+			if ( !$ip ) {
+				$ip = '';
+			}
 		}
 
 		$rc = new RecentChange;
@@ -226,6 +240,7 @@ class RecentChange
 			'newSize'       => $newSize,
 		);
 		$rc->save();
+		return( $rc->mAttribs['rc_id'] );
 	}
 
 	# Makes an entry in the database corresponding to page creation
@@ -234,8 +249,10 @@ class RecentChange
 	  $ip='', $size = 0, $newId = 0 )
 	{
 		if ( !$ip ) {
-			global $wgIP;
-			$ip = empty( $wgIP ) ? '' : $wgIP;
+			$ip = wfGetIP();
+			if ( !$ip ) {
+				$ip = '';
+			}
 		}
 		if ( $bot == 'default' ) {
 			$bot = $user->isBot();
@@ -270,15 +287,19 @@ class RecentChange
 			'newSize' => $size
 		);
 		$rc->save();
+		return( $rc->mAttribs['rc_id'] );
 	}
 
 	# Makes an entry in the database corresponding to a rename
 	/*static*/ function notifyMove( $timestamp, &$oldTitle, &$newTitle, &$user, $comment, $ip='', $overRedir = false )
 	{
 		if ( !$ip ) {
-			global $wgIP;
-			$ip = empty( $wgIP ) ? '' : $wgIP;
+			$ip = wfGetIP();
+			if ( !$ip ) {
+				$ip = '';
+			}
 		}
+
 		$rc = new RecentChange;
 		$rc->mAttribs = array(
 			'rc_timestamp'	=> $timestamp,
@@ -314,17 +335,21 @@ class RecentChange
 	}
 
 	/* static */ function notifyMoveOverRedirect( $timestamp, &$oldTitle, &$newTitle, &$user, $comment, $ip='' ) {
-		RecentChange::notifyMove( $timestamp, $oldTitle, $newTitle, $user, $comment, $ip='', true );
+		RecentChange::notifyMove( $timestamp, $oldTitle, $newTitle, $user, $comment, $ip, true );
 	}
 
 	# A log entry is different to an edit in that previous revisions are
 	# not kept
-	/*static*/ function notifyLog( $timestamp, &$title, &$user, $comment, $ip='' )
+	/*static*/ function notifyLog( $timestamp, &$title, &$user, $comment, $ip='',
+	   $type, $action, $target, $logComment, $params )
 	{
 		if ( !$ip ) {
-			global $wgIP;
-			$ip = empty( $wgIP ) ? '' : $wgIP;
+			$ip = wfGetIP();
+			if ( !$ip ) {
+				$ip = '';
+			}
 		}
+
 		$rc = new RecentChange;
 		$rc->mAttribs = array(
 			'rc_timestamp'	=> $timestamp,
@@ -339,7 +364,7 @@ class RecentChange
 			'rc_comment'	=> $comment,
 			'rc_this_oldid'	=> 0,
 			'rc_last_oldid'	=> 0,
-			'rc_bot'	=> 0,
+			'rc_bot'	=> $user->isBot() ? 1 : 0,
 			'rc_moved_to_ns'	=> 0,
 			'rc_moved_to_title'	=> '',
 			'rc_ip'	=> $ip,
@@ -348,7 +373,12 @@ class RecentChange
 		);
 		$rc->mExtra =  array(
 			'prefixedDBkey'	=> $title->getPrefixedDBkey(),
-			'lastTimestamp' => 0
+			'lastTimestamp' => 0,
+			'logType' => $type,
+			'logAction' => $action,
+			'logComment' => $logComment,
+			'logTarget' => $target,
+			'logParams' => $params
 		);
 		$rc->save();
 	}
@@ -357,6 +387,7 @@ class RecentChange
 	function loadFromRow( $row )
 	{
 		$this->mAttribs = get_object_vars( $row );
+		$this->mAttribs["rc_timestamp"] = wfTimestamp(TS_MW, $this->mAttribs["rc_timestamp"]);
 		$this->mExtra = array();
 	}
 
@@ -364,7 +395,7 @@ class RecentChange
 	function loadFromCurRow( $row )
 	{
 		$this->mAttribs = array(
-			'rc_timestamp' => $row->rev_timestamp,
+			'rc_timestamp' => wfTimestamp(TS_MW, $row->rev_timestamp),
 			'rc_cur_time' => $row->rev_timestamp,
 			'rc_user' => $row->rev_user,
 			'rc_user_text' => $row->rev_user_text,
@@ -409,44 +440,70 @@ class RecentChange
 		return $trail;
 	}
 
+	function cleanupForIRC( $text ) {
+		return str_replace(array("\n", "\r"), array("", ""), $text);
+	}
+
 	function getIRCLine() {
+		global $wgUseRCPatrol;
+
 		extract($this->mAttribs);
 		extract($this->mExtra);
 
 		$titleObj =& $this->getTitle();
+		if ( $rc_type == RC_LOG ) {
+			$title = Namespace::getCanonicalName( $titleObj->getNamespace() ) . $titleObj->getText();
+		} else {
+			$title = $titleObj->getPrefixedText();
+		}
+		$title = $this->cleanupForIRC( $title );
 
 		$bad = array("\n", "\r");
 		$empty = array("", "");
 		$title = $titleObj->getPrefixedText();
 		$title = str_replace($bad, $empty, $title);
 
-		if ( $rc_new ) {
-			$url = $titleObj->getFullURL();
+		// FIXME: *HACK* these should be getFullURL(), hacked for SSL madness --brion 2005-12-26
+		if ( $rc_type == RC_LOG ) {
+			$url = '';
+		} elseif ( $rc_new && $wgUseRCPatrol ) {
+			$url = $titleObj->getInternalURL("rcid=$rc_id");
+		} else if ( $rc_new ) {
+			$url = $titleObj->getInternalURL();
+		} else if ( $wgUseRCPatrol ) {
+			$url = $titleObj->getInternalURL("diff=$rc_this_oldid&oldid=$rc_last_oldid&rcid=$rc_id");
 		} else {
-			$url = $titleObj->getFullURL("diff=0&oldid=$rc_last_oldid");
+			$url = $titleObj->getInternalURL("diff=$rc_this_oldid&oldid=$rc_last_oldid");
 		}
 
 		if ( isset( $oldSize ) && isset( $newSize ) ) {
 			$szdiff = $newSize - $oldSize;
-			if ($szdiff < -500)
+			if ($szdiff < -500) {
 				$szdiff = "\002$szdiff\002";
-			else if ($szdiff >= 0)
-				$szdiff = "+$szdiff";
-			$szdiff = "($szdiff)";
+			} elseif ($szdiff >= 0) {
+				$szdiff = '+' . $szdiff ;
+			}
+			$szdiff = '(' . $szdiff . ')' ;
 		} else {
 			$szdiff = '';
 		}
 
-		$comment = str_replace($bad, $empty, $rc_comment);
-		$user = str_replace($bad, $empty, $rc_user_text);
-		$flag = ($rc_minor ? "M" : "") . ($rc_new ? "N" : "");
-		# see http://www.irssi.org/?page=docs&doc=formats for some colour codes. prefix is \003,
+		$user = $this->cleanupForIRC( $rc_user_text );
+
+		if ( $rc_type == RC_LOG ) {
+			$logTargetText = $logTarget->getPrefixedText();
+			$comment = $this->cleanupForIRC( str_replace( $logTargetText, "\00302$logTargetText\00310", $rc_comment ) );
+			$flag = $logAction;
+		} else {
+			$comment = $this->cleanupForIRC( $rc_comment );
+			$flag = ($rc_minor ? "M" : "") . ($rc_new ? "N" : "");
+		}
+		# see http://www.irssi.org/documentation/formats for some colour codes. prefix is \003,
 		# no colour (\003) switches back to the term default
-		$comment = preg_replace("/\/\* (.*) \*\/(.*)/", "\00315\$1\003 - \00310\$2\003", $comment);
 		$fullString = "\00314[[\00307$title\00314]]\0034 $flag\00310 " .
 		              "\00302$url\003 \0035*\003 \00303$user\003 \0035*\003 $szdiff \00310$comment\003\n";
-
 		return $fullString;
 	}
+
 }
 ?>

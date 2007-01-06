@@ -35,15 +35,14 @@ function wfSpecialLockdb() {
  */
 class DBLockForm {
 	var $reason = '';
-	
+
 	function DBLockForm() {
 		global $wgRequest;
 		$this->reason = $wgRequest->getText( 'wpLockReason' );
 	}
-	
-	function showForm( $err )
-	{
-		global $wgOut, $wgUser, $wgLang;
+
+	function showForm( $err ) {
+		global $wgOut, $wgUser;
 
 		$wgOut->setPagetitle( wfMsg( 'lockdb' ) );
 		$wgOut->addWikiText( wfMsg( 'lockdbtext' ) );
@@ -108,7 +107,7 @@ END
 	}
 
 	function showSuccess() {
-		global $wgOut, $wgUser;
+		global $wgOut;
 
 		$wgOut->setPagetitle( wfMsg( 'lockdb' ) );
 		$wgOut->setSubtitle( wfMsg( 'lockdbsuccesssub' ) );

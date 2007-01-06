@@ -1,7 +1,31 @@
 <?php
 /**
  * @package MediaWiki
+ * Contain class to show various lists of change:
+ * - what's link here
+ * - related changes
+ * - recent changes
  */
+
+require_once("RecentChange.php");
+/**
+ * @todo document
+ * @package MediaWiki
+ */
+class RCCacheEntry extends RecentChange
+{
+	var $secureName, $link;
+	var $curlink , $difflink, $lastlink , $usertalklink , $versionlink ;
+	var $userlink, $timestamp, $watched;
+
+	function newFromParent( $rc )
+	{
+		$rc2 = new RCCacheEntry;
+		$rc2->mAttribs = $rc->mAttribs;
+		$rc2->mExtra = $rc->mExtra;
+		return $rc2;
+	}
+} ;
 
 /**
  * @package MediaWiki
@@ -13,28 +37,51 @@ class ChangesList {
 	/** @todo document */
 	function ChangesList( &$skin ) {
 		$this->skin =& $skin;
+		$this->preCacheMessages();
 	}
+
+	function newFromUser( &$user ) {
+		$sk =& $user->getSkin();
+		if( $user->getOption('usenewrc') ) {
+			return new EnhancedChangesList( $sk );
+		} else {
+			return new OldChangesList( $sk );
+		}
+	}
+
+	/**
+	 * As we use the same small set of messages in various methods and that
+	 * they are called often, we call them once and save them in $this->message
+	 */
+	function preCacheMessages() {
+		// Precache various messages
+		if( !isset( $this->message ) ) {
+			foreach( explode(' ', 'cur diff hist minoreditletter newpageletter last blocklink' ) as $msg ) {
+				$this->message[$msg] = wfMsg( $msg );
+			}
+		}
+	}
+
 
 	/**
 	 * Returns the appropiate flags for new page, minor change and patrolling
 	 */
 	function recentChangesFlags( $new, $minor, $patrolled, $nothing = '&nbsp;' ) {
-		$f = $new ? '<span class="newpage">' . htmlspecialchars( wfMsg( 'newpageletter' ) ) . '</span>'
+		$f = $new ? '<span class="newpage">' . wfMsgHtml( 'newpageletter' ) . '</span>'
 				: $nothing;
-		$f .= $minor ? '<span class="minor">' . htmlspecialchars( wfMsg( 'minoreditletter' ) ) . '</span>'
+		$f .= $minor ? '<span class="minor">' . wfMsgHtml( 'minoreditletter' ) . '</span>'
 				: $nothing;
 		$f .= $patrolled ? '<span class="unpatrolled">!</span>' : $nothing;
 		return $f;
-
 	}
 
 	/**
 	 * Returns text for the start of the tabular part of RC
 	 */
 	function beginRecentChangesList() {
-		$this->rc_cache = array() ;
+		$this->rc_cache = array();
 		$this->rcMoveIndex = 0;
-		$this->rcCacheIndex = 0 ;
+		$this->rcCacheIndex = 0;
 		$this->lastdate = '';
 		$this->rclistOpen = false;
 		return '';
@@ -42,385 +89,199 @@ class ChangesList {
 
 	/**
  	 * Returns text for the end of RC
-	 * If enhanced RC is in use, returns pretty much all the text
 	 */
 	function endRecentChangesList() {
-		$s = $this->recentChangesBlock() ;
 		if( $this->rclistOpen ) {
-			$s .= "</ul>\n";
-		}
-		return $s;
-	}
-
-	/**
-	 * Enhanced RC ungrouped line
-	 */
-	function recentChangesBlockLine ( $rcObj ) {
-		global $wgStylePath, $wgContLang ;
-
-		# Get rc_xxxx variables
-		extract( $rcObj->mAttribs ) ;
-		$curIdEq = 'curid='.$rc_cur_id;
-
-		# Spacer image
-		$r = '' ;
-
-		$r .= '<img src="'.$wgStylePath.'/common/images/Arr_.png" width="12" height="12" border="0" />' ;
-		$r .= '<tt>' ;
-
-		if ( $rc_type == RC_MOVE || $rc_type == RC_MOVE_OVER_REDIRECT ) {
-			$r .= '&nbsp;&nbsp;&nbsp;';
+			return "</ul>\n";
 		} else {
-			$r .= $this->recentChangesFlags( $rc_type == RC_NEW, $rc_minor, $rcObj->unpatrolled );
+			return '';
 		}
+	}
 
-		# Timestamp
-		$r .= ' '.$rcObj->timestamp.' ' ;
-		$r .= '</tt>' ;
 
-		# Article link
-		$link = $rcObj->link ;
-		if ( $rcObj->watched ) $link = '<strong>'.$link.'</strong>' ;
-		$r .= $link ;
-
+	function insertMove( &$s, $rc ) {
 		# Diff
-		$r .= ' (' ;
-		$r .= $rcObj->difflink ;
-		$r .= '; ' ;
-
+		$s .= '(' . $this->message['diff'] . ') (';
 		# Hist
-		$r .= $this->skin->makeKnownLinkObj( $rcObj->getTitle(), wfMsg( 'hist' ), $curIdEq.'&action=history' );
+		$s .= $this->skin->makeKnownLinkObj( $rc->getMovedToTitle(), $this->message['hist'], 'action=history' ) .
+			') . . ';
 
-		# User/talk
-		$r .= ') . . '.$rcObj->userlink ;
-		$r .= $rcObj->usertalklink ;
-
-		# Comment
-		 if ( $rc_type != RC_MOVE && $rc_type != RC_MOVE_OVER_REDIRECT ) {
-			$r .= $this->skin->commentBlock( $rc_comment, $rcObj->getTitle() );
-		}
-
-		if ($rcObj->numberofWatchingusers > 0) {
-			$r .= wfMsg('number_of_watching_users_RCview',  $wgContLang->formatNum($rcObj->numberofWatchingusers));
-		}
-
-		$r .= "<br />\n" ;
-		return $r ;
+		# "[[x]] moved to [[y]]"
+		$msg = ( $rc->mAttribs['rc_type'] == RC_MOVE ) ? '1movedto2' : '1movedto2_redir';
+		$s .= wfMsg( $msg, $this->skin->makeKnownLinkObj( $rc->getTitle(), '', 'redirect=no' ),
+			$this->skin->makeKnownLinkObj( $rc->getMovedToTitle(), '' ) );
 	}
 
-	/**
-	 * Enhanced RC group
-	 */
-	function recentChangesBlockGroup ( $block ) {
-		global $wgStylePath, $wgContLang ;
+	function insertDateHeader(&$s, $rc_timestamp) {
+		global $wgLang;
 
-		$r = '';
-
-		# Collate list of users
-		$isnew = false ;
-		$unpatrolled = false;
-		$userlinks = array () ;
-		foreach ( $block AS $rcObj ) {
-			$oldid = $rcObj->mAttribs['rc_last_oldid'];
-			$newid = $rcObj->mAttribs['rc_this_oldid'];
-			if ( $rcObj->mAttribs['rc_new'] ) {
-				$isnew = true ;
+		# Make date header if necessary
+		$date = $wgLang->date( $rc_timestamp, true, true );
+		$s = '';
+		if( $date != $this->lastdate ) {
+			if( '' != $this->lastdate ) {
+				$s .= "</ul>\n";
 			}
-			$u = $rcObj->userlink ;
-			if ( !isset ( $userlinks[$u] ) ) {
-				$userlinks[$u] = 0 ;
-			}
-			if ( $rcObj->unpatrolled ) {
-				$unpatrolled = true;
-			}
-			$userlinks[$u]++ ;
+			$s .= '<h4>'.$date."</h4>\n<ul class=\"special\">";
+			$this->lastdate = $date;
+			$this->rclistOpen = true;
 		}
+	}
 
-		# Sort the list and convert to text
-		krsort ( $userlinks ) ;
-		asort ( $userlinks ) ;
-		$users = array () ;
-		foreach ( $userlinks as $userlink => $count) {
-			$text = $userlink ;
-			if ( $count > 1 ) $text .= " ({$count}&times;)" ;
-			array_push ( $users , $text ) ;
+	function insertLog(&$s, $title, $logtype) {
+		$logname = LogPage::logName( $logtype );
+		$s .= '(' . $this->skin->makeKnownLinkObj($title, $logname ) . ')';
+	}
+
+
+	function insertDiffHist(&$s, &$rc, $unpatrolled) {
+		# Diff link
+		if( $rc->mAttribs['rc_type'] == RC_NEW || $rc->mAttribs['rc_type'] == RC_LOG ) {
+			$diffLink = $this->message['diff'];
+		} else {
+			$rcidparam = $unpatrolled
+				? array( 'rcid' => $rc->mAttribs['rc_id'] )
+				: array();
+			$diffLink = $this->skin->makeKnownLinkObj( $rc->getTitle(), $this->message['diff'],
+				wfArrayToCGI( array(
+					'curid' => $rc->mAttribs['rc_cur_id'],
+					'diff'  => $rc->mAttribs['rc_this_oldid'],
+					'oldid' => $rc->mAttribs['rc_last_oldid'] ),
+					$rcidparam ),
+				'', '', ' tabindex="'.$rc->counter.'"');
 		}
-		$users = ' <span class="changedby">['.implode('; ',$users).']</span>';
+		$s .= '('.$diffLink.') (';
 
-		# Arrow
-		$rci = 'RCI'.$this->rcCacheIndex ;
-		$rcl = 'RCL'.$this->rcCacheIndex ;
-		$rcm = 'RCM'.$this->rcCacheIndex ;
-		$toggleLink = "javascript:toggleVisibility('$rci','$rcm','$rcl')" ;
-		$arrowdir = $wgContLang->isRTL() ? 'l' : 'r';
-		$tl  = '<span id="'.$rcm.'"><a href="'.$toggleLink.'"><img src="'.$wgStylePath.'/common/images/Arr_'.$arrowdir.'.png" width="12" height="12" alt="+" /></a></span>' ;
-		$tl .= '<span id="'.$rcl.'" style="display:none"><a href="'.$toggleLink.'"><img src="'.$wgStylePath.'/common/images/Arr_d.png" width="12" height="12" alt="-" /></a></span>' ;
-		$r .= $tl ;
+		# History link
+		$s .= $this->skin->makeKnownLinkObj( $rc->getTitle(), $this->message['hist'],
+			wfArrayToCGI( array(
+				'curid' => $rc->mAttribs['rc_cur_id'],
+				'action' => 'history' ) ) );
+		$s .= ') . . ';
+	}
 
-		# Main line
-
-		$r .= '<tt>' ;
-		$r .= $this->recentChangesFlags( $isnew, false, $unpatrolled );
-
-		# Timestamp
-		$r .= ' '.$block[0]->timestamp.' ' ;
-		$r .= '</tt>' ;
-
+	function insertArticleLink(&$s, &$rc, $unpatrolled, $watched) {
 		# Article link
-		$link = $block[0]->link ;
-		if ( $block[0]->watched ) $link = '<strong>'.$link.'</strong>' ;
-		$r .= $link ;
+		# If it's a new article, there is no diff link, but if it hasn't been
+		# patrolled yet, we need to give users a way to do so
+		$params = ( $unpatrolled && $rc->mAttribs['rc_type'] == RC_NEW )
+			? 'rcid='.$rc->mAttribs['rc_id']
+			: '';
+		$articlelink = ' '. $this->skin->makeKnownLinkObj( $rc->getTitle(), '', $params );
+		if($watched) $articlelink = '<strong>'.$articlelink.'</strong>';
 
-		$curIdEq = 'curid=' . $block[0]->mAttribs['rc_cur_id'];
-		$currentRevision = $block[0]->mAttribs['rc_this_oldid'];
-		if ( $block[0]->mAttribs['rc_type'] != RC_LOG ) {
-			# Changes
-			$r .= ' ('.count($block).' ' ;
-			if ( $isnew ) $r .= wfMsg('changes');
-			else $r .= $this->skin->makeKnownLinkObj( $block[0]->getTitle() , wfMsg('changes') ,
-				$curIdEq."&diff=$currentRevision&oldid=$oldid" ) ;
-			$r .= '; ' ;
+		$s .= ' '.$articlelink;
+	}
 
-			# History
-			$r .= $this->skin->makeKnownLinkObj( $block[0]->getTitle(), wfMsg( 'history' ), $curIdEq.'&action=history' );
-			$r .= ')' ;
+	function insertTimestamp(&$s, &$rc) {
+		global $wgLang;
+		# Timestamp
+		$s .= '; ' . $wgLang->time( $rc->mAttribs['rc_timestamp'], true, true ) . ' . . ';
+	}
+
+	/** Insert links to user page, user talk page and eventually a blocking link */
+	function insertUserRelatedLinks(&$s, &$rc) {
+		$s .= $this->skin->userLink( $rc->mAttribs['rc_user'], $rc->mAttribs['rc_user_text'] );
+		$s .= $this->skin->userToolLinks( $rc->mAttribs['rc_user'], $rc->mAttribs['rc_user_text'] );
+	}
+
+	/** insert a formatted comment */
+	function insertComment(&$s, &$rc) {
+		# Add comment
+		if( $rc->mAttribs['rc_type'] != RC_MOVE && $rc->mAttribs['rc_type'] != RC_MOVE_OVER_REDIRECT ) {
+			$s .= $this->skin->commentBlock( $rc->mAttribs['rc_comment'], $rc->getTitle() );
 		}
-
-		$r .= $users ;
-
-		if ($block[0]->numberofWatchingusers > 0) {
-			$r .= wfMsg('number_of_watching_users_RCview',  $wgContLang->formatNum($block[0]->numberofWatchingusers));
-		}
-		$r .= "<br />\n" ;
-
-		# Sub-entries
-		$r .= '<div id="'.$rci.'" style="display:none">' ;
-		foreach ( $block AS $rcObj ) {
-			# Get rc_xxxx variables
-			extract( $rcObj->mAttribs );
-
-			$r .= '<img src="'.$wgStylePath.'/common/images/Arr_.png" width="12" height="12" />';
-			$r .= '<tt>&nbsp; &nbsp; &nbsp; &nbsp;' ;
-			$r .= $this->recentChangesFlags( $rc_new, $rc_minor, $rcObj->unpatrolled );
-			$r .= '&nbsp;</tt>' ;
-
-			$o = '' ;
-			if ( $rc_this_oldid != 0 ) {
-				$o = 'oldid='.$rc_this_oldid ;
-			}
-			if ( $rc_type == RC_LOG ) {
-				$link = $rcObj->timestamp ;
-			} else {
-				$link = $this->skin->makeKnownLinkObj( $rcObj->getTitle(), $rcObj->timestamp , "{$curIdEq}&$o" ) ;
-			}
-			$link = '<tt>'.$link.'</tt>' ;
-
-			$r .= $link ;
-			$r .= ' (' ;
-			$r .= $rcObj->curlink ;
-			$r .= '; ' ;
-			$r .= $rcObj->lastlink ;
-			$r .= ') . . '.$rcObj->userlink ;
-			$r .= $rcObj->usertalklink ;
-			$r .= $this->skin->commentBlock( $rc_comment, $rcObj->getTitle() );
-			$r .= "<br />\n" ;
-		}
-		$r .= "</div>\n" ;
-
-		$this->rcCacheIndex++ ;
-		return $r ;
 	}
 
 	/**
-	 * If enhanced RC is in use, this function takes the previously cached
-	 * RC lines, arranges them, and outputs the HTML
+	 * Check whether to enable recent changes patrol features
+	 * @return bool
 	 */
-	function recentChangesBlock () {
-		global $wgStylePath ;
-		if ( count ( $this->rc_cache ) == 0 ) return '' ;
-		$blockOut = '';
-		foreach ( $this->rc_cache AS $secureName => $block ) {
-			if ( count ( $block ) < 2 ) {
-				$blockOut .= $this->recentChangesBlockLine ( array_shift ( $block ) ) ;
-			} else {
-				$blockOut .= $this->recentChangesBlockGroup ( $block ) ;
-			}
-		}
-
-		return '<div>'.$blockOut.'</div>' ;
+	function usePatrol() {
+		global $wgUseRCPatrol, $wgUser;
+		return( $wgUseRCPatrol && $wgUser->isAllowed( 'patrol' ) );
 	}
 
+
+}
+
+
+/**
+ * Generate a list of changes using the good old system (no javascript)
+ */
+class OldChangesList extends ChangesList {
 	/**
-	 * Called in a loop over all displayed RC entries
-	 * Either returns the line, or caches it for later use
+	 * Format a line using the old system (aka without any javascript).
 	 */
 	function recentChangesLine( &$rc, $watched = false ) {
-		global $wgUser;
-		$usenew = $wgUser->getOption( 'usenewrc' );
-		if ( $usenew )
-			$line = $this->recentChangesLineNew ( $rc, $watched ) ;
-		else
-			$line = $this->recentChangesLineOld ( $rc, $watched ) ;
-		return $line ;
-	}
+		global $wgContLang;
 
-
-	function recentChangesLineOld( &$rc, $watched = false ) {
-		global $wgTitle, $wgLang, $wgContLang, $wgUser, $wgUseRCPatrol,
-			$wgOnlySysopsCanPatrol, $wgSysopUserBans;
-
-		$fname = 'Skin::recentChangesLineOld';
+		$fname = 'ChangesList::recentChangesLineOld';
 		wfProfileIn( $fname );
 
-		static $message;
-		if( !isset( $message ) ) {
-			foreach( explode(' ', 'diff hist minoreditletter newpageletter blocklink' ) as $msg ) {
-				$message[$msg] = wfMsg( $msg );
-			}
-		}
 
 		# Extract DB fields into local scope
 		extract( $rc->mAttribs );
 		$curIdEq = 'curid=' . $rc_cur_id;
 
 		# Should patrol-related stuff be shown?
-		$unpatrolled = $wgUseRCPatrol && $wgUser->isLoggedIn() &&
-		  ( !$wgOnlySysopsCanPatrol || $wgUser->isAllowed('patrol') ) && $rc_patrolled == 0;
+		$unpatrolled = $this->usePatrol() && $rc_patrolled == 0;
 
-		# Make date header if necessary
-		$date = $wgLang->date( $rc_timestamp, true, true );
-		$s = '';
-		if ( $date != $this->lastdate ) {
-			if ( '' != $this->lastdate ) { $s .= "</ul>\n"; }
-			$s .= "<h4>{$date}</h4>\n<ul class=\"special\">";
-			$this->lastdate = $date;
-			$this->rclistOpen = true;
-		}
+		$this->insertDateHeader($s,$rc_timestamp);
 
 		$s .= '<li>';
 
-		if ( $rc_type == RC_MOVE || $rc_type == RC_MOVE_OVER_REDIRECT ) {
-			# Diff
-			$s .= '(' . $message['diff'] . ') (';
-			# Hist
-			$s .= $this->skin->makeKnownLinkObj( $rc->getMovedToTitle(), $message['hist'], 'action=history' ) .
-				') . . ';
-
-			# "[[x]] moved to [[y]]"
-			$msg = ( $rc_type == RC_MOVE ) ? '1movedto2' : '1movedto2_redir';
-			$s .= wfMsg( $msg, $this->skin->makeKnownLinkObj( $rc->getTitle(), '', 'redirect=no' ),
-				$this->skin->makeKnownLinkObj( $rc->getMovedToTitle(), '' ) );
+		// moved pages
+		if( $rc_type == RC_MOVE || $rc_type == RC_MOVE_OVER_REDIRECT ) {
+			$this->insertMove( $s, $rc );
+		// log entries
 		} elseif( $rc_namespace == NS_SPECIAL && preg_match( '!^Log/(.*)$!', $rc_title, $matches ) ) {
-			# Log updates, etc
-			$logtype = $matches[1];
-			$logname = LogPage::logName( $logtype );
-			$s .= '(' . $this->skin->makeKnownLinkObj( $rc->getTitle(), $logname ) . ')';
+			$this->insertLog($s, $rc->getTitle(), $matches[1]);
+		// all other stuff
 		} else {
-			wfProfileIn("$fname-page");
-			# Diff link
-			if ( $rc_type == RC_NEW || $rc_type == RC_LOG ) {
-				$diffLink = $message['diff'];
-			} else {
-				if ( $unpatrolled )
-					$rcidparam = "&rcid={$rc_id}";
-				else
-					$rcidparam = "";
-				$diffLink = $this->skin->makeKnownLinkObj( $rc->getTitle(), $message['diff'],
-				  "{$curIdEq}&diff={$rc_this_oldid}&oldid={$rc_last_oldid}{$rcidparam}",
-				  '', '', ' tabindex="'.$rc->counter.'"');
-			}
-			$s .= '('.$diffLink.') (';
+			wfProfileIn($fname.'-page');
 
-			# History link
-			$s .= $this->skin->makeKnownLinkObj( $rc->getTitle(), $message['hist'], $curIdEq.'&action=history' );
-			$s .= ') . . ';
+			$this->insertDiffHist($s, $rc, $unpatrolled);
 
 			# M, N and ! (minor, new and unpatrolled)
 			$s .= ' ' . $this->recentChangesFlags( $rc_type == RC_NEW, $rc_minor, $unpatrolled, '' );
+			$this->insertArticleLink($s, $rc, $unpatrolled, $watched);
 
-			# Article link
-			# If it's a new article, there is no diff link, but if it hasn't been
-			# patrolled yet, we need to give users a way to do so
-			if ( $unpatrolled && $rc_type == RC_NEW )
-				$articleLink = $this->skin->makeKnownLinkObj( $rc->getTitle(), '', "rcid={$rc_id}" );
-			else
-				$articleLink = $this->skin->makeKnownLinkObj( $rc->getTitle(), '' );
-
-			if ( $watched ) {
-				$articleLink = '<strong>'.$articleLink.'</strong>';
-			}
-
-			$s .= ' '.$articleLink;
-			wfProfileOut("$fname-page");
+			wfProfileOut($fname.'-page');
 		}
 
-		wfProfileIn( "$fname-rest" );
-		# Timestamp
-		$s .= '; ' . $wgLang->time( $rc_timestamp, true, true ) . ' . . ';
+		wfProfileIn( $fname.'-rest' );
 
-		# User link (or contributions for unregistered users)
-		if ( 0 == $rc_user ) {
-			$contribsPage =& Title::makeTitle( NS_SPECIAL, 'Contributions' );
-			$userLink = $this->skin->makeKnownLinkObj( $contribsPage,
-				$rc_user_text, 'target=' . $rc_user_text );
-		} else {
-			$userPage =& Title::makeTitle( NS_USER, $rc_user_text );
-			$userLink = $this->skin->makeLinkObj( $userPage, htmlspecialchars( $rc_user_text ) );
-		}
-		$s .= $userLink;
+		$this->insertTimestamp($s,$rc);
+		$this->insertUserRelatedLinks($s,$rc);
+		$this->insertComment($s, $rc);
 
-		# User talk link
-		$talkname = $wgContLang->getNsText(NS_TALK); # use the shorter name
-		global $wgDisableAnonTalk;
-		if( 0 == $rc_user && $wgDisableAnonTalk ) {
-			$userTalkLink = '';
-		} else {
-			$userTalkPage =& Title::makeTitle( NS_USER_TALK, $rc_user_text );
-			$userTalkLink= $this->skin->makeLinkObj( $userTalkPage, htmlspecialchars( $talkname ) );
-		}
-		# Block link
-		$blockLink='';
-		if ( ( $wgSysopUserBans || 0 == $rc_user ) && $wgUser->isAllowed('block') ) {
-			$blockLinkPage = Title::makeTitle( NS_SPECIAL, 'Blockip' );
-			$blockLink = $this->skin->makeKnownLinkObj( $blockLinkPage,
-				htmlspecialchars( $message['blocklink'] ), 'ip=' . urlencode( $rc_user_text ) );
-
-		}
-		if($blockLink) {
-			if($userTalkLink) $userTalkLink .= ' | ';
-			$userTalkLink .= $blockLink;
-		}
-		if($userTalkLink) $s.=' ('.$userTalkLink.')';
-
-		# Add comment
-		if ( $rc_type != RC_MOVE && $rc_type != RC_MOVE_OVER_REDIRECT ) {
-			$s .= $this->skin->commentBlock( $rc_comment, $rc->getTitle() );
-		}
-
-		if ($rc->numberofWatchingusers > 0) {
+		if($rc->numberofWatchingusers > 0) {
 			$s .= ' ' . wfMsg('number_of_watching_users_RCview',  $wgContLang->formatNum($rc->numberofWatchingusers));
 		}
 
 		$s .= "</li>\n";
 
-		wfProfileOut( "$fname-rest" );
+		wfProfileOut( $fname.'-rest' );
+
 		wfProfileOut( $fname );
 		return $s;
 	}
+}
 
-	function recentChangesLineNew( &$baseRC, $watched = false ) {
-		global $wgTitle, $wgLang, $wgContLang, $wgUser,
-			$wgUseRCPatrol, $wgOnlySysopsCanPatrol, $wgSysopUserBans;
 
-		static $message;
-		if( !isset( $message ) ) {
-			foreach( explode(' ', 'cur diff hist minoreditletter newpageletter last blocklink' ) as $msg ) {
-				$message[$msg] = wfMsg( $msg );
-			}
-		}
+/**
+ * Generate a list of changes using an Enhanced system (use javascript).
+ */
+class EnhancedChangesList extends ChangesList {
+	/**
+	 * Format a line for enhanced recentchange (aka with javascript and block of lines).
+	 */
+	function recentChangesLine( &$baseRC, $watched = false ) {
+		global $wgLang, $wgContLang;
 
 		# Create a specialised object
-		$rc = RCCacheEntry::newFromParent( $baseRC ) ;
+		$rc = RCCacheEntry::newFromParent( $baseRC );
 
 		# Extract fields from DB into the function scope (rc_xxxx variables)
 		extract( $rc->mAttribs );
@@ -429,24 +290,23 @@ class ChangesList {
 		# If it's a new day, add the headline and flush the cache
 		$date = $wgLang->date( $rc_timestamp, true);
 		$ret = '';
-		if ( $date != $this->lastdate ) {
+		if( $date != $this->lastdate ) {
 			# Process current cache
-			$ret = $this->recentChangesBlock () ;
-			$this->rc_cache = array() ;
+			$ret = $this->recentChangesBlock();
+			$this->rc_cache = array();
 			$ret .= "<h4>{$date}</h4>\n";
 			$this->lastdate = $date;
 		}
 
 		# Should patrol-related stuff be shown?
-		if ( $wgUseRCPatrol && $wgUser->isLoggedIn() &&
-		  ( !$wgOnlySysopsCanPatrol || $wgUser->isAllowed('patrol') )) {
+		if( $this->usePatrol() ) {
 		  	$rc->unpatrolled = !$rc_patrolled;
 		} else {
 			$rc->unpatrolled = false;
 		}
 
 		# Make article link
-		if ( $rc_type == RC_MOVE || $rc_type == RC_MOVE_OVER_REDIRECT ) {
+		if( $rc_type == RC_MOVE || $rc_type == RC_MOVE_OVER_REDIRECT ) {
 			$msg = ( $rc_type == RC_MOVE ) ? "1movedto2" : "1movedto2_redir";
 			$clink = wfMsg( $msg, $this->skin->makeKnownLinkObj( $rc->getTitle(), '', 'redirect=no' ),
 			  $this->skin->makeKnownLinkObj( $rc->getMovedToTitle(), '' ) );
@@ -455,95 +315,326 @@ class ChangesList {
 			$logtype = $matches[1];
 			$logname = LogPage::logName( $logtype );
 			$clink = '(' . $this->skin->makeKnownLinkObj( $rc->getTitle(), $logname ) . ')';
-		} elseif ( $rc->unpatrolled && $rc_type == RC_NEW ) {
+		} elseif( $rc->unpatrolled && $rc_type == RC_NEW ) {
 			# Unpatrolled new page, give rc_id in query
 			$clink = $this->skin->makeKnownLinkObj( $rc->getTitle(), '', "rcid={$rc_id}" );
 		} else {
-			$clink = $this->skin->makeKnownLinkObj( $rc->getTitle(), '' ) ;
+			$clink = $this->skin->makeKnownLinkObj( $rc->getTitle(), '' );
 		}
 
 		$time = $wgContLang->time( $rc_timestamp, true, true );
-		$rc->watched = $watched ;
-		$rc->link = $clink ;
+		$rc->watched = $watched;
+		$rc->link = $clink;
 		$rc->timestamp = $time;
 		$rc->numberofWatchingusers = $baseRC->numberofWatchingusers;
 
 		# Make "cur" and "diff" links
 		$titleObj = $rc->getTitle();
-		if ( $rc->unpatrolled ) {
+		if( $rc->unpatrolled ) {
 			$rcIdQuery = "&rcid={$rc_id}";
 		} else {
 			$rcIdQuery = '';
 		}
 		$querycur = $curIdEq."&diff=0&oldid=$rc_this_oldid";
-		$querydiff = $curIdEq."&diff=$rc_this_oldid&oldid=$rc_last_oldid";
+		$querydiff = $curIdEq."&diff=$rc_this_oldid&oldid=$rc_last_oldid$rcIdQuery";
 		$aprops = ' tabindex="'.$baseRC->counter.'"';
-		$curLink = $this->skin->makeKnownLinkObj( $rc->getTitle(), $message['cur'], $querycur, '' ,'' , $aprops );
+		$curLink = $this->skin->makeKnownLinkObj( $rc->getTitle(), $this->message['cur'], $querycur, '' ,'', $aprops );
 		if( $rc_type == RC_NEW || $rc_type == RC_LOG || $rc_type == RC_MOVE || $rc_type == RC_MOVE_OVER_REDIRECT ) {
 			if( $rc_type != RC_NEW ) {
-				$curLink = $message['cur'];
+				$curLink = $this->message['cur'];
 			}
-			$diffLink = $message['diff'];
+			$diffLink = $this->message['diff'];
 		} else {
-			$diffLink = $this->skin->makeKnownLinkObj( $rc->getTitle(), $message['diff'], $querydiff . $rcIdQuery, '' ,'' , $aprops );
+			$diffLink = $this->skin->makeKnownLinkObj( $rc->getTitle(), $this->message['diff'], $querydiff, '' ,'', $aprops );
 		}
 
 		# Make "last" link
-		if ( $rc_last_oldid == 0 || $rc_type == RC_LOG || $rc_type == RC_MOVE || $rc_type == RC_MOVE_OVER_REDIRECT ) {
-			$lastLink = $message['last'];
+		if( $rc_last_oldid == 0 || $rc_type == RC_LOG || $rc_type == RC_MOVE || $rc_type == RC_MOVE_OVER_REDIRECT ) {
+			$lastLink = $this->message['last'];
 		} else {
-			$lastLink = $this->skin->makeKnownLinkObj( $rc->getTitle(), $message['last'],
+			$lastLink = $this->skin->makeKnownLinkObj( $rc->getTitle(), $this->message['last'],
 			  $curIdEq.'&diff='.$rc_this_oldid.'&oldid='.$rc_last_oldid . $rcIdQuery );
 		}
 
-		# Make user link (or user contributions for unregistered users)
-		if ( $rc_user == 0 ) {
-			$contribsPage =& Title::makeTitle( NS_SPECIAL, 'Contributions' );
-			$userLink = $this->skin->makeKnownLinkObj( $contribsPage,
-				$rc_user_text, 'target=' . $rc_user_text );
-		} else {
-			$userPage =& Title::makeTitle( NS_USER, $rc_user_text );
-			$userLink = $this->skin->makeLinkObj( $userPage, $rc_user_text );
-		}
+		$rc->userlink = $this->skin->userLink( $rc_user, $rc_user_text );
 
-		$rc->userlink = $userLink;
 		$rc->lastlink = $lastLink;
 		$rc->curlink  = $curLink;
 		$rc->difflink = $diffLink;
 
-		# Make user talk link
-		$talkname = $wgContLang->getNsText( NS_TALK ); # use the shorter name
-		$userTalkPage =& Title::makeTitle( NS_USER_TALK, $rc_user_text );
-		$userTalkLink = $this->skin->makeLinkObj( $userTalkPage, $talkname );
-
-		global $wgDisableAnonTalk;
-		if ( ( $wgSysopUserBans || 0 == $rc_user ) && $wgUser->isAllowed('block') ) {
-			$blockPage =& Title::makeTitle( NS_SPECIAL, 'Blockip' );
-			$blockLink = $this->skin->makeKnownLinkObj( $blockPage,
-				$message['blocklink'], 'ip='.$rc_user_text );
-			if( $wgDisableAnonTalk )
-				$rc->usertalklink = ' ('.$blockLink.')';
-			else
-				$rc->usertalklink = ' ('.$userTalkLink.' | '.$blockLink.')';
-		} else {
-			if( $wgDisableAnonTalk && ($rc_user == 0) )
-				$rc->usertalklink = '';
-			else
-				$rc->usertalklink = ' ('.$userTalkLink.')';
-		}
+		$rc->usertalklink = $this->skin->userToolLinks( $rc_user, $rc_user_text );
 
 		# Put accumulated information into the cache, for later display
 		# Page moves go on their own line
 		$title = $rc->getTitle();
 		$secureName = $title->getPrefixedDBkey();
-		if ( $rc_type == RC_MOVE || $rc_type == RC_MOVE_OVER_REDIRECT ) {
+		if( $rc_type == RC_MOVE || $rc_type == RC_MOVE_OVER_REDIRECT ) {
 			# Use an @ character to prevent collision with page names
 			$this->rc_cache['@@' . ($this->rcMoveIndex++)] = array($rc);
 		} else {
-			if ( !isset ( $this->rc_cache[$secureName] ) ) $this->rc_cache[$secureName] = array() ;
-			array_push ( $this->rc_cache[$secureName] , $rc ) ;
+			if( !isset ( $this->rc_cache[$secureName] ) ) {
+				$this->rc_cache[$secureName] = array();
+			}
+			array_push( $this->rc_cache[$secureName], $rc );
 		}
 		return $ret;
+	}
+
+	/**
+	 * Enhanced RC group
+	 */
+	function recentChangesBlockGroup( $block ) {
+		$r = '';
+
+		# Collate list of users
+		$isnew = false;
+		$unpatrolled = false;
+		$userlinks = array();
+		foreach( $block as $rcObj ) {
+			$oldid = $rcObj->mAttribs['rc_last_oldid'];
+			$newid = $rcObj->mAttribs['rc_this_oldid'];
+			if( $rcObj->mAttribs['rc_new'] ) {
+				$isnew = true;
+			}
+			$u = $rcObj->userlink;
+			if( !isset( $userlinks[$u] ) ) {
+				$userlinks[$u] = 0;
+			}
+			if( $rcObj->unpatrolled ) {
+				$unpatrolled = true;
+			}
+			$userlinks[$u]++;
+		}
+
+		# Sort the list and convert to text
+		krsort( $userlinks );
+		asort( $userlinks );
+		$users = array();
+		foreach( $userlinks as $userlink => $count) {
+			$text = $userlink;
+			if( $count > 1 ) {
+				$text .= ' ('.$count.'&times;)';
+			}
+			array_push( $users, $text );
+		}
+
+		$users = ' <span class="changedby">['.implode('; ',$users).']</span>';
+
+		# Arrow
+		$rci = 'RCI'.$this->rcCacheIndex;
+		$rcl = 'RCL'.$this->rcCacheIndex;
+		$rcm = 'RCM'.$this->rcCacheIndex;
+		$toggleLink = "javascript:toggleVisibility('$rci','$rcm','$rcl')";
+		$tl  = '<span id="'.$rcm.'"><a href="'.$toggleLink.'">' . $this->sideArrow() . '</a></span>';
+		$tl .= '<span id="'.$rcl.'" style="display:none"><a href="'.$toggleLink.'">' . $this->downArrow() . '</a></span>';
+		$r .= $tl;
+
+		# Main line
+		$r .= '<tt>';
+		$r .= $this->recentChangesFlags( $isnew, false, $unpatrolled );
+
+		# Timestamp
+		$r .= ' '.$block[0]->timestamp.' ';
+		$r .= '</tt>';
+
+		# Article link
+		$r .= $this->maybeWatchedLink( $block[0]->link, $block[0]->watched );
+
+		$curIdEq = 'curid=' . $block[0]->mAttribs['rc_cur_id'];
+		$currentRevision = $block[0]->mAttribs['rc_this_oldid'];
+		if( $block[0]->mAttribs['rc_type'] != RC_LOG ) {
+			# Changes
+			$r .= ' ('.count($block).' ';
+			if( $isnew ) {
+				$r .= wfMsg('changes');
+			} else {
+				$r .= $this->skin->makeKnownLinkObj( $block[0]->getTitle(), wfMsg('changes'),
+					$curIdEq."&diff=$currentRevision&oldid=$oldid" );
+			}
+			$r .= '; ';
+
+			# History
+			$r .= $this->skin->makeKnownLinkObj( $block[0]->getTitle(), wfMsg( 'history' ), $curIdEq.'&action=history' );
+			$r .= ')';
+		}
+
+		$r .= $users;
+
+		if($block[0]->numberofWatchingusers > 0) {
+			global $wgContLang;
+			$r .= wfMsg('number_of_watching_users_RCview',  $wgContLang->formatNum($block[0]->numberofWatchingusers));
+		}
+		$r .= "<br />\n";
+
+		# Sub-entries
+		$r .= '<div id="'.$rci.'" style="display:none">';
+		foreach( $block as $rcObj ) {
+			# Get rc_xxxx variables
+			extract( $rcObj->mAttribs );
+
+			$r .= $this->spacerArrow();
+			$r .= '<tt>&nbsp; &nbsp; &nbsp; &nbsp;';
+			$r .= $this->recentChangesFlags( $rc_new, $rc_minor, $rcObj->unpatrolled );
+			$r .= '&nbsp;</tt>';
+
+			$o = '';
+			if( $rc_this_oldid != 0 ) {
+				$o = 'oldid='.$rc_this_oldid;
+			}
+			if( $rc_type == RC_LOG ) {
+				$link = $rcObj->timestamp;
+			} else {
+				$link = $this->skin->makeKnownLinkObj( $rcObj->getTitle(), $rcObj->timestamp, $curIdEq.'&'.$o );
+			}
+			$link = '<tt>'.$link.'</tt>';
+
+			$r .= $link;
+			$r .= ' (';
+			$r .= $rcObj->curlink;
+			$r .= '; ';
+			$r .= $rcObj->lastlink;
+			$r .= ') . . '.$rcObj->userlink;
+			$r .= $rcObj->usertalklink;
+			$r .= $this->skin->commentBlock( $rc_comment, $rcObj->getTitle() );
+			$r .= "<br />\n";
+		}
+		$r .= "</div>\n";
+
+		$this->rcCacheIndex++;
+		return $r;
+	}
+
+	function maybeWatchedLink( $link, $watched=false ) {
+		if( $watched ) {
+			// FIXME: css style might be more appropriate
+			return '<strong>' . $link . '</strong>';
+		} else {
+			return $link;
+		}
+	}
+
+	/**
+	 * Generate HTML for an arrow or placeholder graphic
+	 * @param string $dir one of '', 'd', 'l', 'r'
+	 * @param string $alt text
+	 * @return string HTML <img> tag
+	 * @access private
+	 */
+	function arrow( $dir, $alt='' ) {
+		global $wgStylePath;
+		$encUrl = htmlspecialchars( $wgStylePath . '/common/images/Arr_' . $dir . '.png' );
+		$encAlt = htmlspecialchars( $alt );
+		return "<img src=\"$encUrl\" width=\"12\" height=\"12\" alt=\"$encAlt\" />";
+	}
+
+	/**
+	 * Generate HTML for a right- or left-facing arrow,
+	 * depending on language direction.
+	 * @return string HTML <img> tag
+	 * @access private
+	 */
+	function sideArrow() {
+		global $wgContLang;
+		$dir = $wgContLang->isRTL() ? 'l' : 'r';
+		return $this->arrow( $dir, '+' );
+	}
+
+	/**
+	 * Generate HTML for a down-facing arrow
+	 * depending on language direction.
+	 * @return string HTML <img> tag
+	 * @access private
+	 */
+	function downArrow() {
+		return $this->arrow( 'd', '-' );
+	}
+
+	/**
+	 * Generate HTML for a spacer image
+	 * @return string HTML <img> tag
+	 * @access private
+	 */
+	function spacerArrow() {
+		return $this->arrow( '', ' ' );
+	}
+
+	/**
+	 * Enhanced RC ungrouped line.
+	 * @return string a HTML formated line (generated using $r)
+	 */
+	function recentChangesBlockLine( $rcObj ) {
+		global $wgContLang;
+
+		# Get rc_xxxx variables
+		extract( $rcObj->mAttribs );
+		$curIdEq = 'curid='.$rc_cur_id;
+
+		$r = '';
+
+		# Spacer image
+		$r .= $this->spacerArrow();
+
+		# Flag and Timestamp
+		$r .= '<tt>';
+
+		if( $rc_type == RC_MOVE || $rc_type == RC_MOVE_OVER_REDIRECT ) {
+			$r .= '&nbsp;&nbsp;&nbsp;';
+		} else {
+			$r .= $this->recentChangesFlags( $rc_type == RC_NEW, $rc_minor, $rcObj->unpatrolled );
+		}
+		$r .= ' '.$rcObj->timestamp.' </tt>';
+
+		# Article link
+		$r .= $this->maybeWatchedLink( $rcObj->link, $rcObj->watched );
+
+		# Diff
+		$r .= ' ('. $rcObj->difflink .'; ';
+
+		# Hist
+		$r .= $this->skin->makeKnownLinkObj( $rcObj->getTitle(), wfMsg( 'hist' ), $curIdEq.'&action=history' );
+
+		# User/talk
+		$r .= ') . . '.$rcObj->userlink . $rcObj->usertalklink;
+
+		# Comment
+		if( $rc_type != RC_MOVE && $rc_type != RC_MOVE_OVER_REDIRECT ) {
+			$r .= $this->skin->commentBlock( $rc_comment, $rcObj->getTitle() );
+		}
+
+		if( $rcObj->numberofWatchingusers > 0 ) {
+			$r .= wfMsg('number_of_watching_users_RCview', $wgContLang->formatNum($rcObj->numberofWatchingusers));
+		}
+
+		$r .= "<br />\n";
+		return $r;
+	}
+
+	/**
+	 * If enhanced RC is in use, this function takes the previously cached
+	 * RC lines, arranges them, and outputs the HTML
+	 */
+	function recentChangesBlock() {
+		if( count ( $this->rc_cache ) == 0 ) {
+			return '';
+		}
+		$blockOut = '';
+		foreach( $this->rc_cache as $secureName => $block ) {
+			if( count( $block ) < 2 ) {
+				$blockOut .= $this->recentChangesBlockLine( array_shift( $block ) );
+			} else {
+				$blockOut .= $this->recentChangesBlockGroup( $block );
+			}
+		}
+
+		return '<div>'.$blockOut.'</div>';
+	}
+
+	/**
+ 	 * Returns text for the end of RC
+	 * If enhanced RC is in use, returns pretty much all the text
+	 */
+	function endRecentChangesList() {
+		return $this->recentChangesBlock() . parent::endRecentChangesList();
 	}
 
 }

@@ -395,3 +395,10 @@ div.prefsectiontip {
 	padding: 0.2em;
 }
 
+#jump-to-nav {
+  display: none;
+}
+
+table.collapsed tr.collapsable {
+	display: none;
+}

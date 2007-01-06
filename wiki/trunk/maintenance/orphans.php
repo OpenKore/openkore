@@ -1,20 +1,20 @@
 <?php
 # Copyright (C) 2005 Brion Vibber <brion@pobox.com>
 # http://www.mediawiki.org/
-# 
+#
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2 of the License, or 
+# the Free Software Foundation; either version 2 of the License, or
 # (at your option) any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License along
 # with this program; if not, write to the Free Software Foundation, Inc.,
-# 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+# 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 # http://www.gnu.org/copyleft/gpl.html
 
 /**
@@ -44,11 +44,11 @@ function checkOrphans( $fix ) {
 	$dbw =& wfGetDB( DB_MASTER );
 	$page = $dbw->tableName( 'page' );
 	$revision = $dbw->tableName( 'revision' );
-	
+
 	if( $fix ) {
 		$dbw->query( "LOCK TABLES $page WRITE, $revision WRITE" );
 	}
-	
+
 	echo "Checking for orphan revision table entries... (this may take a while on a large wiki)\n";
 	$result = $dbw->query( "
 		SELECT *
@@ -80,7 +80,7 @@ function checkOrphans( $fix ) {
 	} else {
 		echo "No orphans! Yay!\n";
 	}
-	
+
 	if( $fix ) {
 		$dbw->query( "UNLOCK TABLES" );
 	}
@@ -95,11 +95,11 @@ function checkWidows( $fix ) {
 	$dbw =& wfGetDB( DB_MASTER );
 	$page = $dbw->tableName( 'page' );
 	$revision = $dbw->tableName( 'revision' );
-	
+
 	if( $fix ) {
 		$dbw->query( "LOCK TABLES $page WRITE, $revision WRITE" );
 	}
-	
+
 	echo "\nChecking for childless page table entries... (this may take a while on a large wiki)\n";
 	$result = $dbw->query( "
 		SELECT *
@@ -127,7 +127,7 @@ function checkWidows( $fix ) {
 	} else {
 		echo "No childless pages! Yay!\n";
 	}
-	
+
 	if( $fix ) {
 		$dbw->query( "UNLOCK TABLES" );
 	}
@@ -139,11 +139,11 @@ function checkSeparation( $fix ) {
 	$page     = $dbw->tableName( 'page' );
 	$revision = $dbw->tableName( 'revision' );
 	$text     = $dbw->tableName( 'text' );
-	
+
 	if( $fix ) {
 		$dbw->query( "LOCK TABLES $page WRITE, $revision WRITE, $text WRITE" );
 	}
-	
+
 	echo "\nChecking for pages whose page_latest links are incorrect... (this may take a while on a large wiki)\n";
 	$result = $dbw->query( "
 		SELECT *
@@ -153,7 +153,7 @@ function checkSeparation( $fix ) {
 	while( $row = $dbw->fetchObject( $result ) ) {
 		$result2 = $dbw->query( "
 			SELECT MAX(rev_timestamp) as max_timestamp
-			FROM $revision 
+			FROM $revision
 			WHERE rev_page=$row->page_id
 		" );
 		$row2 = $dbw->fetchObject( $result2 );
@@ -189,7 +189,7 @@ function checkSeparation( $fix ) {
 			echo "wtf\n";
 		}
 	}
-	
+
 	if( $found ) {
 		echo "Found $found pages with incorrect latest revision.\n";
 	} else {
@@ -198,7 +198,7 @@ function checkSeparation( $fix ) {
 	if( !$fix && $found > 0 ) {
 		echo "Run again with --fix to remove these entries automatically.\n";
 	}
-	
+
 	if( $fix ) {
 		$dbw->query( "UNLOCK TABLES" );
 	}

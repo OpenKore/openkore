@@ -6,7 +6,7 @@
  */
 
 /**
- * 
+ *
  */
 require_once('QueryPage.php');
 
@@ -20,7 +20,7 @@ class DoubleRedirectsPage extends PageQueryPage {
 	function getName() {
 		return 'DoubleRedirects';
 	}
-	
+
 	function isExpensive( ) { return true; }
 	function isSyndicated() { return false; }
 
@@ -51,8 +51,10 @@ class DoubleRedirectsPage extends PageQueryPage {
 	function getOrder() {
 		return '';
 	}
-	
+
 	function formatResult( $skin, $result ) {
+		global $wgContLang;
+	
 		$fname = 'DoubleRedirectsPage::formatResult';
 		$titleA = Title::makeTitle( $result->namespace, $result->title );
 
@@ -82,7 +84,7 @@ class DoubleRedirectsPage extends PageQueryPage {
 		if ( !$result ) {
 			return '';
 		}
-		
+
 		$titleB = Title::makeTitle( $result->nsb, $result->tb );
 		$titleC = Title::makeTitle( $result->nsc, $result->tc );
 
@@ -90,8 +92,9 @@ class DoubleRedirectsPage extends PageQueryPage {
 		$edit = $skin->makeBrokenLinkObj( $titleA, "(".wfMsg("qbedit").")" , 'redirect=no');
 		$linkB = $skin->makeKnownLinkObj( $titleB, '', 'redirect=no' );
 		$linkC = $skin->makeKnownLinkObj( $titleC );
-		
-		return "$linkA $edit &rarr; $linkB &rarr; $linkC";
+		$arr = $wgContLang->isRTL() ? '&larr;' : '&rarr;';
+
+		return( "{$linkA} {$edit} {$arr} {$linkB} {$arr} {$linkC}" );
 	}
 }
 
@@ -100,9 +103,9 @@ class DoubleRedirectsPage extends PageQueryPage {
  */
 function wfSpecialDoubleRedirects() {
 	list( $limit, $offset ) = wfCheckLimits();
-	
+
 	$sdr = new DoubleRedirectsPage();
-	
+
 	return $sdr->doQuery( $offset, $limit );
 
 }

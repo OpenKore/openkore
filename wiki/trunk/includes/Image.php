@@ -22,7 +22,7 @@ define( 'MW_IMAGE_VERSION', 1 );
 
 /**
  * Class to represent an image
- * 
+ *
  * Provides methods to retrieve paths (physical, logical, URL),
  * to generate thumbnails or for uploading.
  * @package MediaWiki
@@ -47,8 +47,9 @@ class Image
 		$type,          # MEDIATYPE_xxx (bitmap, drawing, audio...)
 		$mime,          # MIME type, determined by MimeMagic::guessMimeType
 		$size,          # Size in bytes (loadFromXxx)
-		$metadata,	# Metadata
-		$dataLoaded;    # Whether or not all this has been loaded from the database (loadFromXxx)
+		$metadata,      # Metadata
+		$dataLoaded,    # Whether or not all this has been loaded from the database (loadFromXxx)
+		$lastError;     # Error string associated with a thumbnail display error
 
 
 	/**#@-*/
@@ -61,19 +62,21 @@ class Image
 	 */
 	function newFromName( $name ) {
 		$title = Title::makeTitleSafe( NS_IMAGE, $name );
-		return new Image( $title );
+		if ( is_object( $title ) ) {
+			return new Image( $title );
+		} else {
+			return NULL;
+		}
 	}
 
-	/** 
+	/**
 	 * Obsolete factory function, use constructor
 	 */
 	function newFromTitle( $title ) {
 		return new Image( $title );
 	}
-	
+
 	function Image( $title ) {
-		global $wgShowEXIF;
-		
 		if( !is_object( $title ) ) {
 			wfDebugDieBacktrace( 'Image constructor given bogus title.' );
 		}
@@ -94,7 +97,7 @@ class Image
 	 */
 	function getCacheKeys( $shared = false ) {
 		global $wgDBname, $wgUseSharedUploads, $wgSharedUploadDBname, $wgCacheSharedUploads;
-		
+
 		$foundCached = false;
 		$hashedName = md5($this->name);
 		$keys = array( "$wgDBname:Image:$hashedName" );
@@ -103,8 +106,8 @@ class Image
 		}
 		return $keys;
 	}
-	
-	/** 
+
+	/**
 	 * Try to load image metadata from memcached. Returns true on success.
 	 */
 	function loadFromCache() {
@@ -118,7 +121,7 @@ class Image
 		// Check if the key existed and belongs to this version of MediaWiki
 		if (!empty($cachedValues) && is_array($cachedValues)
 		  && isset($cachedValues['version']) && ( $cachedValues['version'] == MW_IMAGE_VERSION )
-		  && $cachedValues['fileExists'] && isset( $cachedValues['mime'] ) && isset( $cachedValues['metadata'] ) ) 
+		  && $cachedValues['fileExists'] && isset( $cachedValues['mime'] ) && isset( $cachedValues['metadata'] ) )
 		{
 			if ( $wgUseSharedUploads && $cachedValues['fromShared']) {
 				# if this is shared file, we need to check if image
@@ -172,7 +175,7 @@ class Image
 		return $this->dataLoaded;
 	}
 
-	/** 
+	/**
 	 * Save the image metadata to memcached
 	 */
 	function saveToCache() {
@@ -197,36 +200,35 @@ class Image
 				'metadata'   => $this->metadata,
 				'size'       => $this->size );
 
-			$wgMemc->set( $keys[0], $cachedValues );
+			$wgMemc->set( $keys[0], $cachedValues, 60 * 60 * 24 * 7 ); // A week
 		} else {
 			// However we should clear them, so they aren't leftover
 			// if we've deleted the file.
 			$wgMemc->delete( $keys[0] );
 		}
 	}
-	
-	/** 
+
+	/**
 	 * Load metadata from the file itself
 	 */
 	function loadFromFile() {
-		global $wgUseSharedUploads, $wgSharedUploadDirectory, $wgLang,
-		       $wgShowEXIF;
+		global $wgUseSharedUploads, $wgSharedUploadDirectory, $wgContLang, $wgShowEXIF;
 		$fname = 'Image::loadFromFile';
 		wfProfileIn( $fname );
 		$this->imagePath = $this->getFullPath();
 		$this->fileExists = file_exists( $this->imagePath );
 		$this->fromSharedDirectory = false;
 		$gis = array();
-		
-		if (!$this->fileExists) wfDebug("$fname: ".$this->imagePath." not found locally!\n"); 
+
+		if (!$this->fileExists) wfDebug("$fname: ".$this->imagePath." not found locally!\n");
 
 		# If the file is not found, and a shared upload directory is used, look for it there.
-		if (!$this->fileExists && $wgUseSharedUploads && $wgSharedUploadDirectory) {			
-			# In case we're on a wgCapitalLinks=false wiki, we 
-			# capitalize the first letter of the filename before 
+		if (!$this->fileExists && $wgUseSharedUploads && $wgSharedUploadDirectory) {
+			# In case we're on a wgCapitalLinks=false wiki, we
+			# capitalize the first letter of the filename before
 			# looking it up in the shared repository.
-			$sharedImage = Image::newFromName( $wgLang->ucfirst($this->name) );
-			$this->fileExists = file_exists( $sharedImage->getFullPath(true) );
+			$sharedImage = Image::newFromName( $wgContLang->ucfirst($this->name) );
+			$this->fileExists = $sharedImage && file_exists( $sharedImage->getFullPath(true) );
 			if ( $this->fileExists ) {
 				$this->name = $sharedImage->name;
 				$this->imagePath = $this->getFullPath(true);
@@ -237,15 +239,15 @@ class Image
 
 		if ( $this->fileExists ) {
 			$magic=& wfGetMimeMagic();
-		
+
 			$this->mime = $magic->guessMimeType($this->imagePath,true);
 			$this->type = $magic->getMediaType($this->imagePath,$this->mime);
-			
+
 			# Get size in bytes
 			$this->size = filesize( $this->imagePath );
 
 			$magic=& wfGetMimeMagic();
-			
+
 			# Height and width
 			if( $this->mime == 'image/svg' ) {
 				wfSuppressWarnings();
@@ -264,54 +266,54 @@ class Image
 				$gis = getimagesize( $this->imagePath );
 				wfRestoreWarnings();
 			}
-			
-			wfDebug("$fname: ".$this->imagePath." loaded, ".$this->size." bytes, ".$this->mime.".\n"); 
+
+			wfDebug("$fname: ".$this->imagePath." loaded, ".$this->size." bytes, ".$this->mime.".\n");
 		}
 		else {
 			$gis[0]= 0; //width
 			$gis[1]= 0; //height
 			$gis[2]= 0; //unknown
 			$gis[3]= ""; //width height string
-			
+
 			$this->mime = NULL;
 			$this->type = MEDIATYPE_UNKNOWN;
-			wfDebug("$fname: ".$this->imagePath." NOT FOUND!\n"); 
+			wfDebug("$fname: ".$this->imagePath." NOT FOUND!\n");
 		}
-		
+
 		$this->width = $gis[0];
 		$this->height = $gis[1];
-		
+
 		#NOTE: $gis[2] contains a code for the image type. This is no longer used.
-		
-		#NOTE: we have to set this flag early to avoid load() to be called 
+
+		#NOTE: we have to set this flag early to avoid load() to be called
 		# be some of the functions below. This may lead to recursion or other bad things!
 		# as ther's only one thread of execution, this should be safe anyway.
 		$this->dataLoaded = true;
-		
-		
+
+
 		if ($this->fileExists && $wgShowEXIF) $this->metadata = serialize ( $this->retrieveExifData() ) ;
 		else $this->metadata = serialize ( array() ) ;
-		
+
 		if ( isset( $gis['bits'] ) )  $this->bits = $gis['bits'];
 		else $this->bits = 0;
-		
+
 		wfProfileOut( $fname );
 	}
 
-	/** 
+	/**
 	 * Load image metadata from the DB
 	 */
 	function loadFromDB() {
-		global $wgUseSharedUploads, $wgSharedUploadDBname, $wgSharedUploadDBprefix, $wgLang;
+		global $wgUseSharedUploads, $wgSharedUploadDBname, $wgSharedUploadDBprefix, $wgContLang;
 		$fname = 'Image::loadFromDB';
 		wfProfileIn( $fname );
-		
+
 		$dbr =& wfGetDB( DB_SLAVE );
-		
+
 		$this->checkDBSchema($dbr);
-		
-		$row = $dbr->selectRow( 'image', 
-			array( 'img_size', 'img_width', 'img_height', 'img_bits', 
+
+		$row = $dbr->selectRow( 'image',
+			array( 'img_size', 'img_width', 'img_height', 'img_bits',
 			       'img_media_type', 'img_major_mime', 'img_minor_mime', 'img_metadata' ),
 			array( 'img_name' => $this->name ), $fname );
 		if ( $row ) {
@@ -324,14 +326,14 @@ class Image
 				$this->upgradeRow();
 			}
 		} elseif ( $wgUseSharedUploads && $wgSharedUploadDBname ) {
-			# In case we're on a wgCapitalLinks=false wiki, we 
-			# capitalize the first letter of the filename before 
+			# In case we're on a wgCapitalLinks=false wiki, we
+			# capitalize the first letter of the filename before
 			# looking it up in the shared repository.
-			$name = $wgLang->ucfirst($this->name);
+			$name = $wgContLang->ucfirst($this->name);
 
 			$row = $dbr->selectRow( "`$wgSharedUploadDBname`.{$wgSharedUploadDBprefix}image",
-				array( 
-					'img_size', 'img_width', 'img_height', 'img_bits', 
+				array(
+					'img_size', 'img_width', 'img_height', 'img_bits',
 					'img_media_type', 'img_major_mime', 'img_minor_mime', 'img_metadata' ),
 				array( 'img_name' => $name ), $fname );
 			if ( $row ) {
@@ -340,14 +342,14 @@ class Image
 				$this->imagePath = $this->getFullPath(true);
 				$this->name = $name;
 				$this->loadFromRow( $row );
-				
+
 				// Check for rows from a previous schema, quietly upgrade them
 				if ( is_null($this->type) ) {
 					$this->upgradeRow();
 				}
 			}
 		}
-		
+
 		if ( !$row ) {
 			$this->size = 0;
 			$this->width = 0;
@@ -373,19 +375,19 @@ class Image
 		$this->height = $row->img_height;
 		$this->bits = $row->img_bits;
 		$this->type = $row->img_media_type;
-		
+
 		$major= $row->img_major_mime;
 		$minor= $row->img_minor_mime;
-		
+
 		if (!$major) $this->mime = "unknown/unknown";
 		else {
 			if (!$minor) $minor= "unknown";
 			$this->mime = $major.'/'.$minor;
 		}
-		
+
 		$this->metadata = $row->img_metadata;
 		if ( $this->metadata == "" ) $this->metadata = serialize ( array() ) ;
-		
+
 		$this->dataLoaded = true;
 	}
 
@@ -407,8 +409,8 @@ class Image
 		}
 	}
 
-	/** 
-	 * Metadata was loaded from the database, but the row had a marker indicating it needs to be 
+	/**
+	 * Metadata was loaded from the database, but the row had a marker indicating it needs to be
 	 * upgraded from the 1.4 schema, which had no width, height, bits or type. Upgrade the row.
 	 */
 	function upgradeRow() {
@@ -429,9 +431,9 @@ class Image
 			// This avoids breaking replication in MySQL
 			$dbw->selectDB( $wgSharedUploadDBname );
 		}
-		
+
 		$this->checkDBSchema($dbw);
-		
+
 		if (strpos($this->mime,'/')!==false) {
 			list($major,$minor)= explode('/',$this->mime,2);
 		}
@@ -439,11 +441,11 @@ class Image
 			$major= $this->mime;
 			$minor= "unknown";
 		}
-		
+
 		wfDebug("$fname: upgrading ".$this->name." to 1.5 schema\n");
-		
-		$dbw->update( 'image', 
-			array( 
+
+		$dbw->update( 'image',
+			array(
 				'img_width' => $this->width,
 				'img_height' => $this->height,
 				'img_bits' => $this->bits,
@@ -458,7 +460,7 @@ class Image
 		}
 		wfProfileOut( $fname );
 	}
-				
+
 	/**
 	 * Return the name of this image
 	 * @access public
@@ -482,7 +484,7 @@ class Image
 	function getURL() {
 		if ( !$this->url ) {
 			$this->load();
-			if($this->fileExists) {			
+			if($this->fileExists) {
 				$this->url = Image::imageUrl( $this->name, $this->fromSharedDirectory );
 			} else {
 				$this->url = '';
@@ -490,7 +492,7 @@ class Image
 		}
 		return $this->url;
 	}
-	
+
 	function getViewURL() {
 		if( $this->mustRender()) {
 			if( $this->canRender() ) {
@@ -553,9 +555,9 @@ class Image
 		$this->load();
 		return $this->mime;
 	}
-	
+
 	/**
-	 * Return the type of the media in the file. 
+	 * Return the type of the media in the file.
 	 * Use the value returned by this function with the MEDIATYPE_xxx constants.
 	 */
 	function getMediaType() {
@@ -565,43 +567,46 @@ class Image
 
 	/**
 	 * Checks if the file can be presented to the browser as a bitmap.
-	 * 
-	 * Currently, this checks if the file is an image format 
+	 *
+	 * Currently, this checks if the file is an image format
 	 * that can be converted to a format
-	 * supported by all browsers (namely GIF, PNG and JPEG), 
+	 * supported by all browsers (namely GIF, PNG and JPEG),
 	 * or if it is an SVG image and SVG conversion is enabled.
 	 *
 	 * @todo remember the result of this check.
 	 */
 	function canRender() {
 		global $wgUseImageMagick;
-		
+
 		if( $this->getWidth()<=0 || $this->getHeight()<=0 ) return false;
-	
+
 		$mime= $this->getMimeType();
-		
+
 		if (!$mime || $mime==='unknown' || $mime==='unknown/unknown') return false;
-		
-		#if it's SVG, check if there's a converter enabled    
+
+		#if it's SVG, check if there's a converter enabled
 		if ($mime === 'image/svg') {
 			global $wgSVGConverters, $wgSVGConverter;
-			
+
 			if ($wgSVGConverter && isset( $wgSVGConverters[$wgSVGConverter])) {
+				wfDebug( "Image::canRender: SVG is ready!\n" );
 				return true;
+			} else {
+				wfDebug( "Image::canRender: SVG renderer missing\n" );
 			}
 		}
-		
+
 		#image formats available on ALL browsers
 		if (  $mime === 'image/gif'
 		   || $mime === 'image/png'
 		   || $mime === 'image/jpeg' ) return true;
-		    
+
 		#image formats that can be converted to the above formats
 		if ($wgUseImageMagick) {
 			#convertable by ImageMagick (there are more...)
 			if ( $mime === 'image/vnd.wap.wbmp'
-			  || $mime === 'image/x-xbitmap' 
-			  || $mime === 'image/x-xpixmap' 
+			  || $mime === 'image/x-xbitmap'
+			  || $mime === 'image/x-xpixmap'
 			  #|| $mime === 'image/x-icon'   #file may be split into multiple parts
 			  || $mime === 'image/x-portable-anymap'
 			  || $mime === 'image/x-portable-bitmap'
@@ -617,16 +622,16 @@ class Image
 			if ( $mime === 'image/vnd.wap.wbmp'
 			  || $mime === 'image/x-xbitmap' ) return true;
 		}
-		   
+
 		return false;
 	}
-	
+
 
 	/**
 	 * Return true if the file is of a type that can't be directly
 	 * rendered by typical browsers and needs to be re-rasterized.
-	 * 
-	 * This returns true for everything but the bitmap types 
+	 *
+	 * This returns true for everything but the bitmap types
 	 * supported by all browsers, i.e. JPEG; GIF and PNG. It will
 	 * also return true for any non-image formats.
 	 *
@@ -634,70 +639,70 @@ class Image
 	 */
 	function mustRender() {
 		$mime= $this->getMimeType();
-		
+
 		if (  $mime === "image/gif"
 		   || $mime === "image/png"
 		   || $mime === "image/jpeg" ) return false;
-		   
+
 		return true;
 	}
-	
+
 	/**
 	 * Determines if this media file may be shown inline on a page.
-	 * 
-	 * This is currently synonymous to canRender(), but this could be 
+	 *
+	 * This is currently synonymous to canRender(), but this could be
 	 * extended to also allow inline display of other media,
-	 * like flash animations or videos. If you do so, please keep in mind that 
+	 * like flash animations or videos. If you do so, please keep in mind that
 	 * that could be a security risk.
 	 */
 	function allowInlineDisplay() {
 		return $this->canRender();
 	}
-	
+
 	/**
 	 * Determines if this media file is in a format that is unlikely to
 	 * contain viruses or malicious content. It uses the global
 	 * $wgTrustedMediaFormats list to determine if the file is safe.
-	 * 
+	 *
 	 * This is used to show a warning on the description page of non-safe files.
 	 * It may also be used to disallow direct [[media:...]] links to such files.
 	 *
-	 * Note that this function will always return ture if allowInlineDisplay() 
+	 * Note that this function will always return true if allowInlineDisplay()
 	 * or isTrustedFile() is true for this file.
 	 */
 	function isSafeFile() {
 		if ($this->allowInlineDisplay()) return true;
 		if ($this->isTrustedFile()) return true;
-		
+
 		global $wgTrustedMediaFormats;
-		
+
 		$type= $this->getMediaType();
 		$mime= $this->getMimeType();
 		#wfDebug("Image::isSafeFile: type= $type, mime= $mime\n");
-		
+
 		if (!$type || $type===MEDIATYPE_UNKNOWN) return false; #unknown type, not trusted
 		if ( in_array( $type, $wgTrustedMediaFormats) ) return true;
-		
+
 		if ($mime==="unknown/unknown") return false; #unknown type, not trusted
 		if ( in_array( $mime, $wgTrustedMediaFormats) ) return true;
-		
+
 		return false;
 	}
-	
-	/** Returns true if the file is flagegd as trusted. Files flagged that way
+
+	/** Returns true if the file is flagged as trusted. Files flagged that way
 	* can be linked to directly, even if that is not allowed for this type of
 	* file normally.
 	*
 	* This is a dummy function right now and always returns false. It could be
 	* implemented to extract a flag from the database. The trusted flag could be
 	* set on upload, if the user has sufficient privileges, to bypass script-
-	* and html-filters. It may even be coupeled with cryptographics signatures
+	* and html-filters. It may even be coupled with cryptographics signatures
 	* or such.
 	*/
 	function isTrustedFile() {
 		#this could be implemented to check a flag in the databas,
 		#look for signatures, etc
-		return false; 
+		return false;
 	}
 
 	/**
@@ -722,7 +727,7 @@ class Image
 	 * Return the URL of an image, provided its name.
 	 *
 	 * @param string $name	Name of the image, without the leading "Image:"
-	 * @param boolean $fromSharedDirectory	Should this be in $wgSharedUploadPath?	 
+	 * @param boolean $fromSharedDirectory	Should this be in $wgSharedUploadPath?
 	 * @return string URL of $name image
 	 * @access public
 	 * @static
@@ -735,9 +740,9 @@ class Image
 		} else {
 			$base = $wgUploadBaseUrl;
 			$path = $wgUploadPath;
-		}			
-        	$url = "{$base}{$path}" .  wfGetHashPath($name, $fromSharedDirectory) . "{$name}";
-        	return wfUrlencode( $url );
+		}
+		$url = "{$base}{$path}" .  wfGetHashPath($name, $fromSharedDirectory) . "{$name}";
+		return wfUrlencode( $url );
 	}
 
 	/**
@@ -755,9 +760,8 @@ class Image
 	 * @access private
 	 */
 	function thumbUrl( $width, $subdir='thumb') {
-		global $wgUploadPath, $wgUploadBaseUrl,
-		       $wgSharedUploadPath,$wgSharedUploadDirectory,
-			   $wgSharedThumbnailScriptPath, $wgThumbnailScriptPath;
+		global $wgUploadPath, $wgUploadBaseUrl, $wgSharedUploadPath;
+		global $wgSharedThumbnailScriptPath, $wgThumbnailScriptPath;
 
 		// Generate thumb.php URL if possible
 		$script = false;
@@ -777,8 +781,8 @@ class Image
 			if( $this->mustRender() ) {
 				$url.= '&r=1';
 			}
-		} else {  
-			$name = $this->thumbName( $width );		
+		} else {
+			$name = $this->thumbName( $width );
 			if($this->fromSharedDirectory) {
 				$base = '';
 				$path = $wgSharedUploadPath;
@@ -787,7 +791,7 @@ class Image
 				$path = $wgUploadPath;
 			}
 			if ( Image::isHashed( $this->fromSharedDirectory ) ) {
-				$url = "{$base}{$path}/{$subdir}" . 
+				$url = "{$base}{$path}/{$subdir}" .
 				wfGetHashPath($this->name, $this->fromSharedDirectory)
 				. $this->name.'/'.$name;
 				$url = wfUrlencode( $url );
@@ -807,7 +811,7 @@ class Image
 	 */
 	function thumbName( $width ) {
 		$thumb = $width."px-".$this->name;
-		
+
 		if( $this->mustRender() ) {
 			if( $this->canRender() ) {
 				# Rasterize to PNG (for SVG vector images, etc)
@@ -829,7 +833,7 @@ class Image
 	 * The thumbnail is stored on disk and is only computed if the thumbnail
 	 * file does not exist OR if it is older than the image.
 	 * Returns the URL.
-	 * 
+	 *
 	 * Keeps aspect ratio of original image. If both width and height are
 	 * specified, the generated image will be no bigger than width x height,
 	 * and will also have correct aspect ratio.
@@ -843,7 +847,7 @@ class Image
 		if( is_null( $thumb ) ) return '';
 		return $thumb->getUrl();
 	}
-	
+
 	/**
 	 * As createThumb, but returns a ThumbnailImage object. This can
 	 * provide access to the actual file, the real size of the thumb,
@@ -855,40 +859,30 @@ class Image
 	 * @access public
 	 */
 	function getThumbnail( $width, $height=-1 ) {
-		if ( $height == -1 ) {
+		if ( $height <= 0 ) {
 			return $this->renderThumb( $width );
 		}
 		$this->load();
-		
+
 		if ($this->canRender()) {
-			if ( $width < $this->width ) {
-				$thumbheight = $this->height * $width / $this->width;
-				$thumbwidth = $width;
-			} else {
-				$thumbheight = $this->height;
-				$thumbwidth = $this->width;
-			}
-			if ( $thumbheight > $height ) {
-				$thumbwidth = $thumbwidth * $height / $thumbheight;
-				$thumbheight = $height;
-			}
-			
-			$thumb = $this->renderThumb( $thumbwidth );
+			if ( $width > $this->width * $height / $this->height )
+				$width = wfFitBoxWidth( $this->width, $this->height, $height );
+			$thumb = $this->renderThumb( $width );
 		}
 		else $thumb= NULL; #not a bitmap or renderable image, don't try.
-		
+
 		if( is_null( $thumb ) ) {
 			$thumb = $this->iconThumb();
 		}
 		return $thumb;
 	}
-	
+
 	/**
 	 * @return ThumbnailImage
 	 */
 	function iconThumb() {
 		global $wgStylePath, $wgStyleDirectory;
-		
+
 		$try = array( 'fileicon-' . $this->extension . '.png', 'fileicon.png' );
 		foreach( $try as $icon ) {
 			$path = '/common/images/icons/' . $icon;
@@ -899,7 +893,7 @@ class Image
 		}
 		return null;
 	}
-		
+
 	/**
 	 * Create a thumbnail of the image having the specified width.
 	 * The thumbnail will not be created if the width is larger than the
@@ -914,12 +908,12 @@ class Image
 	 */
 	function renderThumb( $width, $useScript = true ) {
 		global $wgUseSquid, $wgInternalServer;
-		global $wgThumbnailScriptPath, $wgSharedThumbnailScriptPath;
+		global $wgSVGMaxSize, $wgMaxImageArea, $wgThumbnailEpoch;
 
 		$fname = 'Image::renderThumb';
 		wfProfileIn( $fname );
-		
-		$width = IntVal( $width );
+
+		$width = intval( $width );
 
 		$this->load();
 		if ( ! $this->exists() )
@@ -928,7 +922,7 @@ class Image
 			wfProfileOut( $fname );
 			return null;
 		}
-		
+
 		# Sanity check $width
 		if( $width <= 0 || $this->width <= 0) {
 			# BZZZT
@@ -936,19 +930,28 @@ class Image
 			return null;
 		}
 
-		global $wgSVGMaxSize;
-		$maxsize = $this->mustRender()
-			? max( $this->width, $wgSVGMaxSize )
-			: $this->width - 1;
-		if( $width > $maxsize ) {
-			# Don't make an image bigger than the source
-			$thumb = new ThumbnailImage( $this->getViewURL(), $this->getWidth(), $this->getHeight() );
+		# Don't thumbnail an image so big that it will fill hard drives and send servers into swap
+		# JPEG has the handy property of allowing thumbnailing without full decompression, so we make
+		# an exception for it.
+		if ( $this->getMediaType() == MEDIATYPE_BITMAP &&
+			$this->getMimeType() !== 'image/jpeg' &&
+			$this->width * $this->height > $wgMaxImageArea )
+		{
+			wfProfileOut( $fname );
+			return null;
+		}
+
+		# Don't make an image bigger than the source, or wgMaxSVGSize for SVGs
+		if ( $this->mustRender() ) {
+			$width = min( $width, $wgSVGMaxSize );
+		} elseif ( $width > $this->width - 1 ) {
+			$thumb = new ThumbnailImage( $this->getURL(), $this->getWidth(), $this->getHeight() );
 			wfProfileOut( $fname );
 			return $thumb;
 		}
-		
-		$height = floor( $this->height * ( $width/$this->width ) );
-		
+
+		$height = round( $this->height * $width / $this->width );
+
 		list( $isScriptUrl, $url ) = $this->thumbUrl( $width );
 		if ( $isScriptUrl && $useScript ) {
 			// Use thumb.php to render the image
@@ -976,7 +979,9 @@ class Image
 			clearstatcache();
 		}
 
-		if ( !file_exists( $thumbPath ) ) {
+		$done = true;
+		if ( !file_exists( $thumbPath ) ||
+			filemtime( $thumbPath ) < wfTimestamp( TS_UNIX, $wgThumbnailEpoch ) ) {
 			$oldThumbPath = wfDeprecatedThumbDir( $thumbName, 'thumb', $this->fromSharedDirectory ).
 				'/'.$thumbName;
 			$done = false;
@@ -1001,10 +1006,13 @@ class Image
 				}
 			}
 			if ( !$done ) {
-				$this->reallyRenderThumb( $thumbPath, $width, $height );
+				$this->lastError = $this->reallyRenderThumb( $thumbPath, $width, $height );
+				if ( $this->lastError === true ) {
+					$done = true;
+				}
 
 				# Purge squid
-				# This has to be done after the image is updated and present for all machines on NFS, 
+				# This has to be done after the image is updated and present for all machines on NFS,
 				# or else the old version might be stored into the squid again
 				if ( $wgUseSquid ) {
 					if ( substr( $url, 0, 4 ) == 'http' ) {
@@ -1016,8 +1024,12 @@ class Image
 				}
 			}
 		}
-		
-		$thumb = new ThumbnailImage( $url, $width, $height, $thumbPath );
+
+		if ( $done ) {
+			$thumb = new ThumbnailImage( $url, $width, $height, $thumbPath );
+		} else {
+			$thumb = null;
+		}
 		wfProfileOut( $fname );
 		return $thumb;
 	} // END OF function renderThumb
@@ -1026,17 +1038,23 @@ class Image
 	 * Really render a thumbnail
 	 * Call this only for images for which canRender() returns true.
 	 *
+	 * @param string $thumbPath Path to thumbnail
+	 * @param int $width Desired width in pixels
+	 * @param int $height Desired height in pixels
+	 * @return bool True on error, false or error string on failure.
 	 * @access private
 	 */
 	function reallyRenderThumb( $thumbPath, $width, $height ) {
-		global $wgSVGConverters, $wgSVGConverter,
-			$wgUseImageMagick, $wgImageMagickConvertCommand;
-		
+		global $wgSVGConverters, $wgSVGConverter;
+		global $wgUseImageMagick, $wgImageMagickConvertCommand;
+		global $wgCustomConvertCommand;
+
 		$this->load();
-		
+
+		$err = false;
 		if( $this->mime === "image/svg" ) {
 			#Right now we have only SVG
-			
+
 			global $wgSVGConverters, $wgSVGConverter;
 			if( isset( $wgSVGConverters[$wgSVGConverter] ) ) {
 				global $wgSVGConverterPath;
@@ -1048,21 +1066,54 @@ class Image
 						   wfEscapeShellArg( $this->imagePath ),
 						   wfEscapeShellArg( $thumbPath ) ),
 					$wgSVGConverters[$wgSVGConverter] );
+				wfProfileIn( 'rsvg' );
 				wfDebug( "reallyRenderThumb SVG: $cmd\n" );
-				$conv = shell_exec( $cmd );
-			} else {
-				$conv = false;
+				$err = wfShellExec( $cmd );
+				wfProfileOut( 'rsvg' );
 			}
 		} elseif ( $wgUseImageMagick ) {
 			# use ImageMagick
+			
+			if ( $this->mime == 'image/jpeg' ) {
+				$quality = "-quality 80"; // 80%
+			} elseif ( $this->mime == 'image/png' ) {
+				$quality = "-quality 95"; // zlib 9, adaptive filtering
+			} else {
+				$quality = ''; // default
+			}
+
 			# Specify white background color, will be used for transparent images
 			# in Internet Explorer/Windows instead of default black.
-			$cmd  =  $wgImageMagickConvertCommand .
-				" -quality 85 -background white -geometry {$width} ".
-				wfEscapeShellArg($this->imagePath) . " " .
-				wfEscapeShellArg($thumbPath);				
+
+			# Note, we specify "-size {$width}" and NOT "-size {$width}x{$height}".
+			# It seems that ImageMagick has a bug wherein it produces thumbnails of
+			# the wrong size in the second case.
+			
+			$cmd  =  wfEscapeShellArg($wgImageMagickConvertCommand) .
+				" {$quality} -background white -size {$width} ".
+				wfEscapeShellArg($this->imagePath) .
+				// For the -resize option a "!" is needed to force exact size,
+				// or ImageMagick may decide your ratio is wrong and slice off
+				// a pixel.
+				" -resize " . wfEscapeShellArg( "{$width}x{$height}!" ) .
+				" -depth 8 " .
+				wfEscapeShellArg($thumbPath) . " 2>&1";
 			wfDebug("reallyRenderThumb: running ImageMagick: $cmd\n");
-			$conv = shell_exec( $cmd );
+			wfProfileIn( 'convert' );
+			$err = wfShellExec( $cmd );
+			wfProfileOut( 'convert' );
+		} elseif( $wgCustomConvertCommand ) {
+			# Use a custom convert command
+			# Variables: %s %d %w %h
+			$src = wfEscapeShellArg( $this->imagePath );
+			$dst = wfEscapeShellArg( $thumbPath );
+			$cmd = $wgCustomConvertCommand;
+			$cmd = str_replace( '%s', $src, str_replace( '%d', $dst, $cmd ) ); # Filenames
+			$cmd = str_replace( '%h', $height, str_replace( '%w', $width, $cmd ) ); # Size
+			wfDebug( "reallyRenderThumb: Running custom convert command $cmd\n" );
+			wfProfileIn( 'convert' );
+			$err = wfShellExec( $cmd );
+			wfProfileOut( 'convert' );
 		} else {
 			# Use PHP's builtin GD library functions.
 			#
@@ -1082,7 +1133,7 @@ class Image
 				return $err;
 			}
 			list( $loader, $colorStyle, $saveType ) = $typemap[$this->mime];
-			
+
 			if( !function_exists( $loader ) ) {
 				$err = "Incomplete GD library configuration: missing function $loader";
 				wfDebug( "$err\n" );
@@ -1095,39 +1146,51 @@ class Image
 			} elseif( $colorStyle == 'bits' ) {
 				$truecolor = ( $this->bits > 8 );
 			}
-			
+
 			$src_image = call_user_func( $loader, $this->imagePath );
 			if ( $truecolor ) {
 				$dst_image = imagecreatetruecolor( $width, $height );
 			} else {
 				$dst_image = imagecreate( $width, $height );
 			}
-			imagecopyresampled( $dst_image, $src_image, 
+			imagecopyresampled( $dst_image, $src_image,
 						0,0,0,0,
 						$width, $height, $this->width, $this->height );
 			call_user_func( $saveType, $dst_image, $thumbPath );
 			imagedestroy( $dst_image );
 			imagedestroy( $src_image );
 		}
-		
+
 		#
-		# Check for zero-sized thumbnails. Those can be generated when 
+		# Check for zero-sized thumbnails. Those can be generated when
 		# no disk space is available or some other error occurs
 		#
 		if( file_exists( $thumbPath ) ) {
 			$thumbstat = stat( $thumbPath );
 			if( $thumbstat['size'] == 0 ) {
 				unlink( $thumbPath );
+			} else {
+				// All good
+				$err = true;
 			}
 		}
+		if ( $err !== true ) {
+			return wfMsg( 'thumbnail_error', $err );
+		} else {
+			return true;
+		}
+	}
+
+	function getLastError() {
+		return $this->lastError;
 	}
 
 	function imageJpegWrapper( $dst_image, $thumbPath ) {
 		imageinterlace( $dst_image );
 		imagejpeg( $dst_image, $thumbPath, 95 );
 	}
-		
-	/** 
+
+	/**
 	 * Get all thumbnail names previously generated for this image
 	 */
 	function getThumbnails( $shared = false ) {
@@ -1138,9 +1201,9 @@ class Image
 
 			// This generates an error on failure, hence the @
 			$handle = @opendir( $dir );
-			
+
 			if ( $handle ) {
-				while ( false !== ( $file = readdir($handle) ) ) { 
+				while ( false !== ( $file = readdir($handle) ) ) {
 					if ( $file{0} != '.' ) {
 						$files[] = $file;
 					}
@@ -1150,8 +1213,17 @@ class Image
 		} else {
 			$files = array();
 		}
-		
+
 		return $files;
+	}
+
+	/**
+	 * Refresh metadata in memcached, but don't touch thumbnails or squid
+	 */
+	function purgeMetadataCache() {
+		clearstatcache();
+		$this->loadFromFile();
+		$this->saveToCache();
 	}
 
 	/**
@@ -1161,9 +1233,7 @@ class Image
 		global $wgInternalServer, $wgUseSquid;
 
 		// Refresh metadata cache
-		clearstatcache();
-		$this->loadFromFile();
-		$this->saveToCache();
+		$this->purgeMetadataCache();
 
 		// Delete thumbnails
 		$files = $this->getThumbnails( $shared );
@@ -1185,18 +1255,22 @@ class Image
 			wfPurgeSquidServers( $urls );
 		}
 	}
-	
+
 	function checkDBSchema(&$db) {
+		global $wgCheckDBSchema;
+		if (!$wgCheckDBSchema) {
+			return;
+		}
 		# img_name must be unique
 		if ( !$db->indexUnique( 'image', 'img_name' ) && !$db->indexExists('image','PRIMARY') ) {
 			wfDebugDieBacktrace( 'Database schema not up to date, please run maintenance/archives/patch-image_name_unique.sql' );
 		}
-		
+
 		#new fields must exist
-		if ( !$db->fieldExists( 'image', 'img_media_type' ) 
+		if ( !$db->fieldExists( 'image', 'img_media_type' )
 		  || !$db->fieldExists( 'image', 'img_metadata' )
 		  || !$db->fieldExists( 'image', 'img_width' ) ) {
-		  
+
 			wfDebugDieBacktrace( 'Database schema not up to date, please run maintenance/update.php' );
 		}
 	}
@@ -1214,23 +1288,41 @@ class Image
 	function nextHistoryLine() {
 		$fname = 'Image::nextHistoryLine()';
 		$dbr =& wfGetDB( DB_SLAVE );
-		
+
 		$this->checkDBSchema($dbr);
-		
-		if ( $this->historyLine == 0 ) {// called for the first time, return line from cur 
-			$this->historyRes = $dbr->select( 'image', 
-				array( 'img_size','img_description','img_user','img_user_text','img_timestamp', "'' AS oi_archive_name" ), 
+
+		if ( $this->historyLine == 0 ) {// called for the first time, return line from cur
+			$this->historyRes = $dbr->select( 'image',
+				array(
+					'img_size',
+					'img_description',
+					'img_user','img_user_text',
+					'img_timestamp',
+					'img_width',
+					'img_height',
+					"'' AS oi_archive_name"
+				),
 				array( 'img_name' => $this->title->getDBkey() ),
 				$fname
 			);
-			if ( 0 == wfNumRows( $this->historyRes ) ) { 
-				return FALSE; 
+			if ( 0 == wfNumRows( $this->historyRes ) ) {
+				return FALSE;
 			}
 		} else if ( $this->historyLine == 1 ) {
-			$this->historyRes = $dbr->select( 'oldimage', 
-				array( 'oi_size AS img_size', 'oi_description AS img_description', 'oi_user AS img_user',
-					'oi_user_text AS img_user_text', 'oi_timestamp AS img_timestamp', 'oi_archive_name'
-				), array( 'oi_name' => $this->title->getDBkey() ), $fname, array( 'ORDER BY' => 'oi_timestamp DESC' ) 
+			$this->historyRes = $dbr->select( 'oldimage',
+				array(
+					'oi_size AS img_size',
+					'oi_description AS img_description',
+					'oi_user AS img_user',
+					'oi_user_text AS img_user_text',
+					'oi_timestamp AS img_timestamp',
+					'oi_width as img_width',
+					'oi_height as img_height',
+					'oi_archive_name'
+				),
+				array( 'oi_name' => $this->title->getDBkey() ),
+				$fname,
+				array( 'ORDER BY' => 'oi_timestamp DESC' )
 			);
 		}
 		$this->historyLine ++;
@@ -1245,7 +1337,7 @@ class Image
 	function resetHistory() {
 		$this->historyLine = 0;
 	}
-	
+
 	/**
 	* Return the full filesystem path to the file. Note that this does
 	* not mean that a file actually exists under that location.
@@ -1258,18 +1350,17 @@ class Image
 	* @param boolean $fromSharedDirectory Return the path to the file
 	*   in a shared repository (see $wgUseSharedRepository and related
 	*   options in DefaultSettings.php) instead of a local one.
-	* 
+	*
 	*/
 	function getFullPath( $fromSharedRepository = false ) {
 		global $wgUploadDirectory, $wgSharedUploadDirectory;
-		global $wgHashedUploadDirectory, $wgHashedSharedUploadDirectory;
-		
+
 		$dir      = $fromSharedRepository ? $wgSharedUploadDirectory :
 		                                    $wgUploadDirectory;
-		
+
 		// $wgSharedUploadDirectory may be false, if thumb.php is used
 		if ( $dir ) {
-			$fullpath = $dir . wfGetHashPath($this->name, $fromSharedRepository) . $this->name;		
+			$fullpath = $dir . wfGetHashPath($this->name, $fromSharedRepository) . $this->name;
 		} else {
 			$fullpath = false;
 		}
@@ -1285,13 +1376,12 @@ class Image
 		global $wgHashedUploadDirectory, $wgHashedSharedUploadDirectory;
 		return $shared ? $wgHashedSharedUploadDirectory : $wgHashedUploadDirectory;
 	}
-	
+
 	/**
 	 * Record an image upload in the upload log and the image table
 	 */
-	function recordUpload( $oldver, $desc, $copyStatus = '', $source = '', $watch = false ) {
-		global $wgUser, $wgLang, $wgTitle, $wgDeferredUpdateList;
-		global $wgUseCopyrightUpload, $wgUseSquid, $wgPostCommitUpdateList;
+	function recordUpload( $oldver, $desc, $license = '', $copyStatus = '', $source = '', $watch = false ) {
+		global $wgUser, $wgUseCopyrightUpload, $wgUseSquid, $wgPostCommitUpdateList;
 
 		$fname = 'Image::recordUpload';
 		$dbw =& wfGetDB( DB_MASTER );
@@ -1308,11 +1398,21 @@ class Image
 		}
 
 		if ( $wgUseCopyrightUpload ) {
+			if ( $license != '' ) {
+				$licensetxt = '== ' . wfMsgForContent( 'license' ) . " ==\n" . '{{' . $license . '}}' . "\n";
+			}
 			$textdesc = '== ' . wfMsg ( 'filedesc' ) . " ==\n" . $desc . "\n" .
-			  '== ' . wfMsg ( 'filestatus' ) . " ==\n" . $copyStatus . "\n" .
-			  '== ' . wfMsg ( 'filesource' ) . " ==\n" . $source ;
+			  '== ' . wfMsgForContent ( 'filestatus' ) . " ==\n" . $copyStatus . "\n" .
+			  "$licensetxt" .
+			  '== ' . wfMsgForContent ( 'filesource' ) . " ==\n" . $source ;
 		} else {
-			$textdesc = $desc;
+			if ( $license != '' ) {
+				$filedesc = $desc == '' ? '' : '== ' . wfMsg ( 'filedesc' ) . " ==\n" . $desc . "\n";
+				 $textdesc = $filedesc .
+					 '== ' . wfMsgForContent ( 'license' ) . " ==\n" . '{{' . $license . '}}' . "\n";
+			} else {
+				$textdesc = $desc;
+			}
 		}
 
 		$now = $dbw->timestamp();
@@ -1325,7 +1425,7 @@ class Image
 			$major= $this->mime;
 			$minor= "unknown";
 		}
-		
+
 		# Test to see if the row exists using INSERT IGNORE
 		# This avoids race conditions by locking the row until the commit, and also
 		# doesn't deadlock. SELECT FOR UPDATE causes a deadlock for every race condition.
@@ -1333,8 +1433,8 @@ class Image
 			array(
 				'img_name' => $this->name,
 				'img_size'=> $this->size,
-				'img_width' => IntVal( $this->width ),
-				'img_height' => IntVal( $this->height ),
+				'img_width' => intval( $this->width ),
+				'img_height' => intval( $this->height ),
 				'img_bits' => $this->bits,
 				'img_media_type' => $this->type,
 				'img_major_mime' => $major,
@@ -1344,7 +1444,9 @@ class Image
 				'img_user' => $wgUser->getID(),
 				'img_user_text' => $wgUser->getName(),
 				'img_metadata' => $this->metadata,
-			), $fname, 'IGNORE' 
+			),
+			$fname,
+			'IGNORE'
 		);
 		$descTitle = $this->getTitle();
 		$purgeURLs = array();
@@ -1352,7 +1454,7 @@ class Image
 		if( $dbw->affectedRows() == 0 ) {
 			# Collision, this is an update of an image
 			# Insert previous contents into oldimage
-			$dbw->insertSelect( 'oldimage', 'image', 
+			$dbw->insertSelect( 'oldimage', 'image',
 				array(
 					'oi_name' => 'img_name',
 					'oi_archive_name' => $dbw->addQuotes( $oldver ),
@@ -1366,7 +1468,7 @@ class Image
 					'oi_user_text' => 'img_user_text',
 				), array( 'img_name' => $this->name ), $fname
 			);
-			
+
 			# Update the current image row
 			$dbw->update( 'image',
 				array( /* SET */
@@ -1386,19 +1488,24 @@ class Image
 					'img_name' => $this->name
 				), $fname
 			);
+		} else {
+			# This is a new image
+			# Update the image count
+			$site_stats = $dbw->tableName( 'site_stats' );
+			$dbw->query( "UPDATE $site_stats SET ss_images=ss_images+1", $fname );
 		}
 
 		$article = new Article( $descTitle );
 		$minor = false;
 		$watch = $watch || $wgUser->isWatched( $descTitle );
 		$suppressRC = true; // There's already a log entry, so don't double the RC load
-		
+
 		if( $descTitle->exists() ) {
 			// TODO: insert a null revision into the page history for this update.
 			if( $watch ) {
 				$wgUser->addWatch( $descTitle );
 			}
-			
+
 			# Invalidate the cache for the description page
 			$descTitle->invalidateCache();
 			$purgeURLs[] = $descTitle->getInternalURL();
@@ -1406,16 +1513,16 @@ class Image
 			// New image; create the description page.
 			$article->insertNewArticle( $textdesc, $desc, $minor, $watch, $suppressRC );
 		}
-		
+
 		# Invalidate cache for all pages using this image
 		$linksTo = $this->getLinksTo();
-		
+
 		if ( $wgUseSquid ) {
 			$u = SquidUpdate::newFromTitles( $linksTo, $purgeURLs );
 			array_push( $wgPostCommitUpdateList, $u );
 		}
 		Title::touchArray( $linksTo );
-		
+
 		$log = new LogPage( 'upload' );
 		$log->addEntry( 'upload', $descTitle, $desc );
 
@@ -1425,35 +1532,36 @@ class Image
 	/**
 	 * Get an array of Title objects which are articles which use this image
 	 * Also adds their IDs to the link cache
-	 * 
+	 *
 	 * This is mostly copied from Title::getLinksTo()
 	 */
 	function getLinksTo( $options = '' ) {
-		global $wgLinkCache;
 		$fname = 'Image::getLinksTo';
 		wfProfileIn( $fname );
-		
+
 		if ( $options ) {
 			$db =& wfGetDB( DB_MASTER );
 		} else {
 			$db =& wfGetDB( DB_SLAVE );
 		}
+		$linkCache =& LinkCache::singleton();
 
 		extract( $db->tableNames( 'page', 'imagelinks' ) );
 		$encName = $db->addQuotes( $this->name );
 		$sql = "SELECT page_namespace,page_title,page_id FROM $page,$imagelinks WHERE page_id=il_from AND il_to=$encName $options";
 		$res = $db->query( $sql, $fname );
-		
+
 		$retVal = array();
 		if ( $db->numRows( $res ) ) {
 			while ( $row = $db->fetchObject( $res ) ) {
 				if ( $titleObj = Title::makeTitle( $row->page_namespace, $row->page_title ) ) {
-					$wgLinkCache->addGoodLinkObj( $row->page_id, $titleObj );
+					$linkCache->addGoodLinkObj( $row->page_id, $titleObj );
 					$retVal[] = $titleObj;
 				}
 			}
 		}
 		$db->freeResult( $res );
+		wfProfileOut( $fname );
 		return $retVal;
 	}
 	/**
@@ -1464,39 +1572,42 @@ class Image
 	 *
 	 * @return array
 	 */
-	function retrieveExifData () {
-		if ( $this->getMimeType() !== "image/jpeg" ) return array ();
+	function retrieveExifData() {
+		if ( $this->getMimeType() !== "image/jpeg" )
+			return array();
 
 		$exif = new Exif( $this->imagePath );
 		return $exif->getFilteredData();
 	}
-		
-	function getExifData () {
+
+	function getExifData() {
 		global $wgRequest;
 		if ( $this->metadata === '0' )
 			return array();
-		
+
 		$purge = $wgRequest->getVal( 'action' ) == 'purge';
-		$ret = unserialize ( $this->metadata );
+		$ret = unserialize( $this->metadata );
 
 		$oldver = isset( $ret['MEDIAWIKI_EXIF_VERSION'] ) ? $ret['MEDIAWIKI_EXIF_VERSION'] : 0;
 		$newver = Exif::version();
-		
+
 		if ( !count( $ret ) || $purge || $oldver != $newver ) {
+			$this->purgeMetadataCache();
 			$this->updateExifData( $newver );
 		}
 		if ( isset( $ret['MEDIAWIKI_EXIF_VERSION'] ) )
 			unset( $ret['MEDIAWIKI_EXIF_VERSION'] );
 		$format = new FormatExif( $ret );
+
 		return $format->getFormattedData();
 	}
 
 	function updateExifData( $version ) {
 		$fname = 'Image:updateExifData';
-		
+
 		if ( $this->getImagePath() === false ) # Not a local image
 			return;
-		
+
 		# Get EXIF data from image
 		$exif = $this->retrieveExifData();
 		if ( count( $exif ) ) {
@@ -1505,17 +1616,27 @@ class Image
 		} else {
 			$this->metadata = '0';
 		}
-		
+
 		# Update EXIF data in database
 		$dbw =& wfGetDB( DB_MASTER );
-		
+
 		$this->checkDBSchema($dbw);
-		
-		$dbw->update( 'image', 
+
+		$dbw->update( 'image',
 			array( 'img_metadata' => $this->metadata ),
 			array( 'img_name' => $this->name ),
 			$fname
 		);
+	}
+
+	/**
+	 * Returns true if the image does not come from the shared
+	 * image repository.
+	 *
+	 * @return bool
+	 */
+	function isLocal() {
+		return !$this->fromSharedDirectory;
 	}
 
 } //class
@@ -1527,13 +1648,13 @@ class Image
  * The result is an absolute path.
  *
  * This function is called from thumb.php before Setup.php is included
- * 
+ *
  * @param string $fname		file name of the image file
  * @access public
  */
 function wfImageDir( $fname ) {
 	global $wgUploadDirectory, $wgHashedUploadDirectory;
-	
+
 	if (!$wgHashedUploadDirectory) { return $wgUploadDirectory; }
 
 	$hash = md5( $fname );
@@ -1553,7 +1674,7 @@ function wfImageDir( $fname ) {
  * The result is an absolute path.
  *
  * This function is called from thumb.php before Setup.php is included
- * 
+ *
  * @param string $fname		file name of the original image file
  * @param string $subdir	(optional) subdirectory of the image upload directory that should be used for storing the thumbnail. Default is 'thumb'
  * @param boolean $shared	(optional) use the shared upload directory
@@ -1566,7 +1687,7 @@ function wfImageThumbDir( $fname, $shared = false ) {
 
 		if ( !is_dir( $base ) ) {
 			$oldumask = umask(0);
-			@mkdir( $base, 0777 ); 
+			@mkdir( $base, 0777 );
 			umask( $oldumask );
 		}
 
@@ -1576,7 +1697,7 @@ function wfImageThumbDir( $fname, $shared = false ) {
 				unlink( $dir );
 			}
 			$oldumask = umask(0);
-			@mkdir( $dir, 0777 ); 
+			@mkdir( $dir, 0777 );
 			umask( $oldumask );
 		}
 	} else {
@@ -1599,25 +1720,25 @@ function wfDeprecatedThumbDir( $thumbName , $subdir='thumb', $shared=false) {
  * The result is an absolute path.
  *
  * This function is called from thumb.php before Setup.php is included
- * 
+ *
  * @param string $fname		file name of the thumbnail file, including file size prefix
  * @param string $subdir	(optional) subdirectory of the image upload directory that should be used for storing the old version. Default is 'archive'
  * @param boolean $shared	(optional) use the shared upload directory (only relevant for other functions which call this one)
  * @access public
  */
 function wfImageArchiveDir( $fname , $subdir='archive', $shared=false ) {
-	global $wgUploadDirectory, $wgHashedUploadDirectory,
-	       $wgSharedUploadDirectory, $wgHashedSharedUploadDirectory;
+	global $wgUploadDirectory, $wgHashedUploadDirectory;
+	global $wgSharedUploadDirectory, $wgHashedSharedUploadDirectory;
 	$dir = $shared ? $wgSharedUploadDirectory : $wgUploadDirectory;
-	$hashdir = $shared ? $wgHashedSharedUploadDirectory : $wgHashedUploadDirectory;	
+	$hashdir = $shared ? $wgHashedSharedUploadDirectory : $wgHashedUploadDirectory;
 	if (!$hashdir) { return $dir.'/'.$subdir; }
 	$hash = md5( $fname );
 	$oldumask = umask(0);
-	
+
 	# Suppress warning messages here; if the file itself can't
 	# be written we'll worry about it then.
 	wfSuppressWarnings();
-	
+
 	$archive = $dir.'/'.$subdir;
 	if ( ! is_dir( $archive ) ) { mkdir( $archive, 0777 ); }
 	$archive .= '/' . $hash{0};
@@ -1640,9 +1761,6 @@ function wfImageArchiveDir( $fname , $subdir='archive', $shared=false ) {
  *   use different hash settings from the local one.
  */
 function wfGetHashPath ( $dbkey, $fromSharedDirectory = false ) {
-	global $wgHashedSharedUploadDirectory, $wgSharedUploadDirectory;
-	global $wgHashedUploadDirectory;
-	
 	if( Image::isHashed( $fromSharedDirectory ) ) {
 		$hash = md5($dbkey);
 		return '/' . $hash{0} . '/' . substr( $hash, 0, 2 ) . '/';
@@ -1653,7 +1771,7 @@ function wfGetHashPath ( $dbkey, $fromSharedDirectory = false ) {
 
 /**
  * Returns the image URL of an image's old version
- * 
+ *
  * @param string $fname		file name of the image file
  * @param string $subdir	(optional) subdirectory of the image upload directory that is used by the old version. Default is 'archive'
  * @access public
@@ -1689,13 +1807,13 @@ function wfScaleSVGUnit( $length ) {
 		''   => 1.0, // "User units" pixels by default
 		'%'  => 2.0, // Fake it!
 		);
-	if( preg_match( '/^(\d+)(em|ex|px|pt|pc|cm|mm|in|%|)$/', $length, $matches ) ) {
-		$length = FloatVal( $matches[1] );
+	if( preg_match( '/^(\d+(?:\.\d+)?)(em|ex|px|pt|pc|cm|mm|in|%|)$/', $length, $matches ) ) {
+		$length = floatval( $matches[1] );
 		$unit = $matches[2];
 		return round( $length * $unitLength[$unit] );
 	} else {
 		// Assume pixels
-		return round( FloatVal( $length ) );
+		return round( floatval( $length ) );
 	}
 }
 
@@ -1711,13 +1829,13 @@ function wfScaleSVGUnit( $length ) {
 function wfGetSVGsize( $filename ) {
 	$width = 256;
 	$height = 256;
-	
+
 	// Read a chunk of the file
 	$f = fopen( $filename, "rt" );
 	if( !$f ) return false;
 	$chunk = fread( $f, 4096 );
 	fclose( $f );
-	
+
 	// Uber-crappy hack! Run through a real XML parser.
 	if( !preg_match( '/<svg\s*([^>]*)\s*>/s', $chunk, $matches ) ) {
 		return false;
@@ -1729,7 +1847,7 @@ function wfGetSVGsize( $filename ) {
 	if( preg_match( '/\bheight\s*=\s*("[^"]+"|\'[^\']+\')/s', $tag, $matches ) ) {
 		$height = wfScaleSVGUnit( trim( substr( $matches[1], 1, -1 ) ) );
 	}
-	
+
 	return array( $width, $height, 'SVG',
 		"width=\"$width\" height=\"$height\"" );
 }
@@ -1772,18 +1890,21 @@ class ThumbnailImage {
 	 */
 	function ThumbnailImage( $url, $width, $height, $path = false ) {
 		$this->url = $url;
-		$this->width = $width;
-		$this->height = $height;
+		$this->width = round( $width );
+		$this->height = round( $height );
+			# These should be integers when they get here.
+			# If not, there's a bug somewhere.  But let's at
+			# least produce valid HTML code regardless.
 		$this->path = $path;
 	}
 
 	/**
 	 * @return string The thumbnail URL
-	 */	
+	 */
 	function getUrl() {
 		return $this->url;
 	}
-	
+
 	/**
 	 * Return HTML <img ... /> tag for the thumbnail, will include
 	 * width and height attributes and a blank alt text (as required).
@@ -1811,4 +1932,22 @@ class ThumbnailImage {
 	}
 
 }
+
+/**
+ * Calculate the largest thumbnail width for a given original file size
+ * such that the thumbnail's height is at most $maxHeight.
+ * @param int $boxWidth
+ * @param int $boxHeight
+ * @param int $maxHeight
+ * @return int
+ */
+function wfFitBoxWidth( $boxWidth, $boxHeight, $maxHeight ) {
+	$idealWidth = $boxWidth * $maxHeight / $boxHeight;
+	$roundedUp = ceil( $idealWidth );
+	if( round( $roundedUp * $boxHeight / $boxWidth ) > $maxHeight )
+		return floor( $idealWidth );
+	else
+		return $roundedUp;
+}
+
 ?>

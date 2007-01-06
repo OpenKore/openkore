@@ -2,20 +2,20 @@
 #
 # Copyright (C) 2002, 2004 Brion Vibber <brion@pobox.com>
 # http://www.mediawiki.org/
-# 
+#
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2 of the License, or 
+# the Free Software Foundation; either version 2 of the License, or
 # (at your option) any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License along
 # with this program; if not, write to the Free Software Foundation, Inc.,
-# 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+# 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 # http://www.gnu.org/copyleft/gpl.html
 
 /**
@@ -32,17 +32,21 @@
  * @package MediaWiki
  */
 class LogPage {
-	/* private */ var $type, $action, $comment, $params, $target;
-	var $updateRecentChanges = true;
+	/* @access private */
+	var $type, $action, $comment, $params, $target;
+	/* @acess public */
+	var $updateRecentChanges;
 
 	/**
 	  * Constructor
 	  *
 	  * @param string $type One of '', 'block', 'protect', 'rights', 'delete',
 	  *               'upload', 'move'
+	  * @param bool $rc Whether to update recent changes as well as the logging table
 	  */
-	function LogPage( $type ) {
+	function LogPage( $type, $rc = true ) {
 		$this->type = $type;
+		$this->updateRecentChanges = $rc;
 	}
 
 	function saveContent() {
@@ -67,7 +71,7 @@ class LogPage {
 				'log_params' => $this->params
 			), $fname
 		);
-		
+
 		# And update recentchanges
 		if ( $this->updateRecentChanges ) {
 			$titleObj = Title::makeTitle( NS_SPECIAL, 'Log/' . $this->type );
@@ -78,8 +82,10 @@ class LogPage {
 				else
 					$rcComment .= ': ' . $this->comment;
 			}
-			
-			RecentChange::notifyLog( $now, $titleObj, $wgUser, $rcComment );
+
+			require_once( 'RecentChange.php' );
+			RecentChange::notifyLog( $now, $titleObj, $wgUser, $rcComment, '',
+				$this->type, $this->action, $this->target, $this->comment, $this->params );
 		}
 		return true;
 	}
@@ -89,33 +95,17 @@ class LogPage {
 	 */
 	function validTypes() {
 		static $types = array( '', 'block', 'protect', 'rights', 'delete', 'upload', 'move' );
-		wfRunHooks( 'LogPageValidTypes', array( &$types) );
+		wfRunHooks( 'LogPageValidTypes', array( &$types ) );
 		return $types;
 	}
-	
-	/**
-	 * @static
-	 */
-	function validActions( $type ) {
-		static $actions = array(
-			'' => NULL,
-			'block' => array( 'block', 'unblock' ),
-			'protect' => array( 'protect', 'unprotect' ),
-			'rights' => array( 'rights' ),
-			'delete' => array( 'delete', 'restore' ),
-			'upload' => array( 'upload' ),
-			'move' => array( 'move' )
-		);
-		return $actions[$type];
-	}
-	
+
 	/**
 	 * @static
 	 */
 	function isLogType( $type ) {
 		return in_array( $type, LogPage::validTypes() );
 	}
-	
+
 	/**
 	 * @static
 	 */
@@ -129,11 +119,16 @@ class LogPage {
 			'upload'  => 'uploadlogpage',
 			'move'    => 'movelogpage'
 		);
-		wfRunHooks( 'LogPageLogName', array( &$typeText) );
-		
-		return str_replace( '_', ' ', wfMsg( $typeText[$type] ) );
+		wfRunHooks( 'LogPageLogName', array( &$typeText ) );
+
+		if( isset( $typeText[$type] ) ) {
+			return str_replace( '_', ' ', wfMsg( $typeText[$type] ) );
+		} else {
+			// Bogus log types? Perhaps an extension was removed.
+			return $type;
+		}
 	}
-	
+
 	/**
 	 * @static
 	 */
@@ -148,52 +143,76 @@ class LogPage {
 			'move'    => 'movelogpagetext'
 		);
 		wfRunHooks( 'LogPageLogHeader', array( &$headerText ) );
-		
+
 		return wfMsg( $headerText[$type] );
 	}
-	
+
 	/**
 	 * @static
 	 */
-	function actionText( $type, $action, $title = NULL, $skin = NULL, $params = array(), $filterWikilinks=false ) {
+	function actionText( $type, $action, $title = NULL, $skin = NULL, $params = array(), $filterWikilinks=false, $translate=false ) {
+		global $wgLang;
 		static $actions = array(
 			'block/block'       => 'blocklogentry',
 			'block/unblock'     => 'unblocklogentry',
 			'protect/protect'   => 'protectedarticle',
 			'protect/unprotect' => 'unprotectedarticle',
+
+			// TODO: This whole section should be moved to extensions/Makesysop/SpecialMakesysop.php
 			'rights/rights'     => 'bureaucratlogentry',
 			'rights/addgroup'   => 'addgrouplogentry',
 			'rights/rngroup'    => 'renamegrouplogentry',
 			'rights/chgroup'    => 'changegrouplogentry',
+
 			'delete/delete'     => 'deletedarticle',
 			'delete/restore'    => 'undeletedarticle',
+			'delete/revision'   => 'revdelete-logentry',
 			'upload/upload'     => 'uploadedimage',
 			'upload/revert'     => 'uploadedimage',
 			'move/move'         => '1movedto2',
 			'move/move_redir'   => '1movedto2_redir'
 		);
+		wfRunHooks( 'LogPageActionText', array( &$actions ) );
+
 		$key = "$type/$action";
 		if( isset( $actions[$key] ) ) {
 			if( is_null( $title ) ) {
-				$rv=wfMsgForContent( $actions[$key] );
+				$rv=wfMsg( $actions[$key] );
 			} else {
 				if( $skin ) {
-					if ( $type == 'move' ) {
-						$titleLink = $skin->makeLinkObj( $title, $title->getPrefixedText(), 'redirect=no' );
-						// Change $param[0] into a link to the title specified in $param[0]
-						$movedTo = Title::newFromText( $params[0] );
-						$params[0] = $skin->makeLinkObj( $movedTo, $params[0] );
-					} else {
-						$titleLink = $skin->makeLinkObj( $title );
+
+					switch( $type ) {
+						case 'move':
+							$titleLink = $skin->makeLinkObj( $title, $title->getPrefixedText(), 'redirect=no' );
+							$params[0] = $skin->makeLinkObj( Title::newFromText( $params[0] ), $params[0] );
+							break;
+						case 'block':
+							if( substr( $title->getText(), 0, 1 ) == '#' ) {
+								$titleLink = $title->getText();
+							} else {
+								$titleLink = $skin->makeLinkObj( $title, $title->getText() );
+								$titleLink .= ' (' . $skin->makeKnownLinkObj( Title::makeTitle( NS_SPECIAL, 'Contributions/' . $title->getDBkey() ), wfMsg( 'contribslink' ) ) . ')';
+							}
+							break;
+						default:
+							$titleLink = $skin->makeLinkObj( $title );
 					}
+
 				} else {
 					$titleLink = $title->getPrefixedText();
 				}
 				if( count( $params ) == 0 ) {
-					$rv = wfMsgForContent( $actions[$key], $titleLink );
+					if ( $skin ) {
+						$rv = wfMsg( $actions[$key], $titleLink );
+					} else {
+						$rv = wfMsgForContent( $actions[$key], $titleLink );
+					}
 				} else {
 					array_unshift( $params, $titleLink );
-					$rv = wfMsgReal( $actions[$key], $params, true, true );
+					if ( $translate && $key == 'block/block' ) {
+						$params[1] = $wgLang->translateBlockExpiry($params[1]);
+					}
+					$rv = wfMsgReal( $actions[$key], $params, true, !$skin );
 				}
 			}
 		} else {
@@ -218,18 +237,18 @@ class LogPage {
 		if ( !is_array( $params ) ) {
 			$params = array( $params );
 		}
-		
+
 		$this->action = $action;
 		$this->target =& $target;
 		$this->comment = $comment;
 		$this->params = LogPage::makeParamBlob( $params );
-		
+
 		$this->actionText = LogPage::actionText( $this->type, $action, $target, NULL, $params );
 
 		return $this->saveContent();
 	}
 
-	/** 
+	/**
 	 * Create a blob from a parameter array
 	 * @static
 	 */

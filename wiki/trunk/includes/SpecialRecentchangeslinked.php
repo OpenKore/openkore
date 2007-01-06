@@ -15,13 +15,13 @@ require_once( 'SpecialRecentchanges.php' );
  * @param string $par parent page we will look at
  */
 function wfSpecialRecentchangeslinked( $par = NULL ) {
-	global $wgUser, $wgOut, $wgLang, $wgContLang, $wgTitle, $wgRequest;
+	global $wgUser, $wgOut, $wgContLang, $wgRequest;
 	$fname = 'wfSpecialRecentchangeslinked';
 
 	$days = $wgRequest->getInt( 'days' );
 	$target = isset($par) ? $par : $wgRequest->getText( 'target' );
 	$hideminor = $wgRequest->getBool( 'hideminor' ) ? 1 : 0;
-	
+
 	$wgOut->setPagetitle( wfMsg( 'recentchangeslinked' ) );
 	$sk = $wgUser->getSkin();
 
@@ -35,7 +35,7 @@ function wfSpecialRecentchangeslinked( $par = NULL ) {
 		return;
 	}
 	$id = $nt->getArticleId();
-	
+
 	$wgOut->setSubtitle( htmlspecialchars( wfMsg( 'rclsub', $nt->getPrefixedText() ) ) );
 
 	if ( ! $days ) {
@@ -51,53 +51,81 @@ function wfSpecialRecentchangeslinked( $par = NULL ) {
 	$hideminor = ($hideminor ? 1 : 0);
 	if ( $hideminor ) {
 		$mlink = $sk->makeKnownLink( $wgContLang->specialPage( 'Recentchangeslinked' ),
-	  	  WfMsg( 'show' ), 'target=' . htmlspecialchars( $nt->getPrefixedURL() ) .
+	  	  wfMsg( 'show' ), 'target=' . htmlspecialchars( $nt->getPrefixedURL() ) .
 		  "&days={$days}&limit={$limit}&hideminor=0" );
 	} else {
 		$mlink = $sk->makeKnownLink( $wgContLang->specialPage( "Recentchangeslinked" ),
-	  	  WfMsg( "hide" ), "target=" . htmlspecialchars( $nt->getPrefixedURL() ) .
+	  	  wfMsg( "hide" ), "target=" . htmlspecialchars( $nt->getPrefixedURL() ) .
 		  "&days={$days}&limit={$limit}&hideminor=1" );
 	}
 	if ( $hideminor ) {
-		$cmq = 'AND rev_minor_edit=0';
+		$cmq = 'AND rc_minor=0';
 	} else { $cmq = ''; }
 
-	extract( $dbr->tableNames( 'categorylinks', 'pagelinks', 'revision', 'page' ) );
-	
+	extract( $dbr->tableNames( 'recentchanges', 'categorylinks', 'pagelinks', 'revision', 'page' , "watchlist" ) );
+
+	$uid = $wgUser->getID();
+
 	// If target is a Category, use categorylinks and invert from and to
 	if( $nt->getNamespace() == NS_CATEGORY ) {
 		$catkey = $dbr->addQuotes( $nt->getDBKey() );
-		$sql =
- "SELECT page_id,page_namespace,page_title,rev_id,rev_user,rev_comment,
-         rev_user_text,rev_timestamp,rev_minor_edit,
-         page_is_new
-    FROM $categorylinks, $revision, $page
-   WHERE rev_timestamp > '{$cutoff}'
-         {$cmq}
-     AND rev_page=page_id
-     AND cl_from=page_id
-     AND cl_to=$catkey
-GROUP BY page_id,page_namespace,page_title,
-         rev_user,rev_comment,rev_user_text,rev_timestamp,rev_minor_edit,
-         page_is_new
-ORDER BY rev_timestamp DESC
-   LIMIT {$limit}";
+		$sql = "SELECT /* wfSpecialRecentchangeslinked */
+				rc_id,
+				rc_cur_id,
+				rc_namespace,
+				rc_title,
+				rc_this_oldid,
+				rc_last_oldid,
+				rc_user,
+				rc_comment,
+				rc_user_text,
+				rc_timestamp,
+				rc_minor,
+				rc_new,
+				rc_patrolled,
+				rc_type
+" . ($uid ? ",wl_user" : "") . "
+	    FROM $categorylinks, $recentchanges
+" . ($uid ? "LEFT OUTER JOIN $watchlist ON wl_user={$uid} AND wl_title=rc_title AND wl_namespace=rc_namespace " : "") . "
+	   WHERE rc_timestamp > '{$cutoff}'
+	     {$cmq}
+	     AND cl_from=rc_cur_id
+	     AND cl_to=$catkey
+	GROUP BY rc_cur_id,rc_namespace,rc_title,
+	 	rc_user,rc_comment,rc_user_text,rc_timestamp,rc_minor,
+	 	rc_new
+		ORDER BY rc_timestamp DESC
+	LIMIT {$limit};
+ ";
 	} else {
 		$sql =
- "SELECT page_id,page_namespace,page_title,
-         rev_user,rev_comment,rev_user_text,rev_id,rev_timestamp,rev_minor_edit,
-         page_is_new
-    FROM $pagelinks, $revision, $page
-   WHERE rev_timestamp > '{$cutoff}'
-         {$cmq}
-     AND rev_page=page_id
-     AND pl_namespace=page_namespace
-     AND pl_title=page_title
+"SELECT /* wfSpecialRecentchangeslinked */
+			rc_id,
+			rc_cur_id,
+			rc_namespace,
+			rc_title,
+			rc_user,
+			rc_comment,
+			rc_user_text,
+			rc_this_oldid,
+			rc_last_oldid,
+			rc_timestamp,
+			rc_minor,
+			rc_new,
+			rc_patrolled,
+			rc_type
+" . ($uid ? ",wl_user" : "") . "
+   FROM $pagelinks, $recentchanges
+" . ($uid ? " LEFT OUTER JOIN $watchlist ON wl_user={$uid} AND wl_title=rc_title AND wl_namespace=rc_namespace " : "") . "
+   WHERE rc_timestamp > '{$cutoff}'
+	{$cmq}
+     AND pl_namespace=rc_namespace
+     AND pl_title=rc_title
      AND pl_from=$id
-GROUP BY page_id,page_namespace,page_title,
-         rev_user,rev_comment,rev_user_text,rev_timestamp,rev_minor_edit,
-         page_is_new
-ORDER BY rev_timestamp DESC
+GROUP BY rc_cur_id,rc_namespace,rc_title,
+	 rc_user,rc_comment,rc_user_text,rc_timestamp,rc_minor,
+	 rc_new
+ORDER BY rc_timestamp DESC
    LIMIT {$limit}";
 	}
 	$res = $dbr->query( $sql, $fname );
@@ -107,24 +135,26 @@ ORDER BY rev_timestamp DESC
 	$wgOut->addHTML( "<hr />\n{$note}\n<br />" );
 
 	$note = rcDayLimitlinks( $days, $limit, "Recentchangeslinked",
-                                 "target=" . $nt->getPrefixedURL() . "&hideminor={$hideminor}",
-                                 false, $mlink );
+				 "target=" . $nt->getPrefixedURL() . "&hideminor={$hideminor}",
+				 false, $mlink );
 
 	$wgOut->addHTML( $note."\n" );
 
-	$list =& new ChangesList( $sk );
+	$list = ChangesList::newFromUser( $wgUser );
 	$s = $list->beginRecentChangesList();
 	$count = $dbr->numRows( $res );
-	
+
 	$counter = 1;
 	while ( $limit ) {
 		if ( 0 == $count ) { break; }
 		$obj = $dbr->fetchObject( $res );
 		--$count;
+#		print_r ( $obj ) ;
+#		print "<br/>\n" ;
 
-		$rc = RecentChange::newFromCurRow( $obj );
+		$rc = RecentChange::newFromRow( $obj );
 		$rc->counter = $counter++;
-		$s .= $list->recentChangesLine( $rc );
+		$s .= $list->recentChangesLine( $rc , !empty( $obj->wl_user) );
 		--$limit;
 	}
 	$s .= $list->endRecentChangesList();

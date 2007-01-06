@@ -5,15 +5,17 @@ require_once( 'PHPUnit.php' );
 require_once( '../includes/Defines.php' );
 require_once( '../includes/DefaultSettings.php' );
 require_once( '../includes/Profiling.php' );
+require_once( '../includes/Hooks.php' );
 require_once( '../includes/MagicWord.php' );
 require_once( '../languages/Language.php' );
 require_once( '../languages/LanguageUtf8.php' );
 
 require_once( '../includes/SearchEngine.php' );
 
+/** @todo document */
 class SearchEngine_TestCase extends PHPUnit_TestCase {
 	var $db, $search;
-	
+
 	function insertSearchData() {
 		$this->db->safeQuery( <<<END
 		INSERT INTO ! (page_id,page_namespace,page_title,page_latest)
@@ -72,11 +74,11 @@ END
 END
 			, $this->db->tableName( 'searchindex' ) );
 	}
-	
+
 	function fetchIds( &$results ) {
 		$matches = array();
 		while( $row = $results->fetchObject() ) {
-			$matches[] = IntVal( $row->page_id );
+			$matches[] = intval( $row->page_id );
 		}
 		$results->free();
 		# Search is not guaranteed to return results in a certain order;
@@ -85,7 +87,7 @@ END
 		sort( $matches );
 		return $matches;
 	}
-	
+
 	function testTextSearch() {
 		$this->assertFalse( is_null( $this->db ), "Can't find a database to test with." );
 		if( !is_null( $this->db ) ) {
@@ -95,7 +97,7 @@ END
 				"Plain search failed" );
 		}
 	}
-	
+
 	function testTextPowerSearch() {
 		$this->assertFalse( is_null( $this->db ), "Can't find a database to test with." );
 		if( !is_null( $this->db ) ) {
@@ -106,7 +108,7 @@ END
 				"Power search failed" );
 		}
 	}
-	
+
 	function testTitleSearch() {
 		$this->assertFalse( is_null( $this->db ), "Can't find a database to test with." );
 		if( !is_null( $this->db ) ) {
@@ -116,7 +118,7 @@ END
 				"Title search failed" );
 		}
 	}
-	
+
 	function testTextTitlePowerSearch() {
 		$this->assertFalse( is_null( $this->db ), "Can't find a database to test with." );
 		if( !is_null( $this->db ) ) {
@@ -127,7 +129,7 @@ END
 				"Title power search failed" );
 		}
 	}
-	
+
 }
 
 

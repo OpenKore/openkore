@@ -2,7 +2,7 @@
 /**
  * Provide an administration interface
  * DO NOT USE: INSECURE.
- * 
+ *
  * TODO : remove everything related to group editing (SpecialGrouplevels.php)
  * @package MediaWiki
  * @subpackage SpecialPage
@@ -33,7 +33,7 @@ class UserrightsForm extends HTMLForm {
 		$this->mPosted = $request->wasPosted();
 		$this->mRequest =& $request;
 		$this->mName = 'userrights';
-		
+
 		$titleObj = Title::makeTitle( NS_SPECIAL, 'Userrights' );
 		$this->action = $titleObj->escapeLocalURL();
 	}
@@ -74,6 +74,7 @@ class UserrightsForm extends HTMLForm {
 	 *
 	 */
 	function saveUserGroups( $username, $removegroup, $addgroup) {
+		global $wgOut;
 		$u = User::newFromName($username);
 
 		if(is_null($u)) {
@@ -84,12 +85,12 @@ class UserrightsForm extends HTMLForm {
 		if($u->getID() == 0) {
 			$wgOut->addWikiText( wfMsg( 'nosuchusershort', htmlspecialchars( $username ) ) );
 			return;
-		}		
+		}
 
 		$oldGroups = $u->getGroups();
 		$newGroups = $oldGroups;
 		$logcomment = ' ';
-		// remove then add groups		
+		// remove then add groups
 		if(isset($removegroup)) {
 			$newGroups = array_diff($newGroups, $removegroup);
 			foreach( $removegroup as $group ) {
@@ -103,10 +104,11 @@ class UserrightsForm extends HTMLForm {
 			}
 		}
 		$newGroups = array_unique( $newGroups );
-		
+
 		wfDebug( 'oldGroups: ' . print_r( $oldGroups, true ) );
 		wfDebug( 'newGroups: ' . print_r( $newGroups, true ) );
 
+		wfRunHooks( 'UserRights', array( &$u, $addgroup, $removegroup ) );	
 		$log = new LogPage( 'rights' );
 		$log->addEntry( 'rights', Title::makeTitle( NS_USER, $u->getName() ), '', array( $this->makeGroupNameList( $oldGroups ),
 			$this->makeGroupNameList( $newGroups ) ) );
@@ -122,7 +124,7 @@ class UserrightsForm extends HTMLForm {
 	 */
 	function switchForm() {
 		global $wgOut;
-		
+
 		// user selection
 		$wgOut->addHTML( "<form name=\"uluser\" action=\"$this->action\" method=\"post\">\n" );
 		$wgOut->addHTML( $this->fieldset( 'lookup-user',
@@ -141,13 +143,16 @@ class UserrightsForm extends HTMLForm {
 	 */
 	function editUserGroupsForm($username) {
 		global $wgOut, $wgUser;
-		
+
 		$user = User::newFromName($username);
-		if( is_null( $user ) || $user->getID() == 0 ) {
+		if( is_null( $user ) ) {
+			$wgOut->addWikiText( wfMsg( 'nouserspecified' ) );
+			return;
+		} elseif( $user->getID() == 0 ) {
 			$wgOut->addWikiText( wfMsg( 'nosuchusershort', wfEscapeWikiText( $username ) ) );
 			return;
 		}
-		
+
 		$groups = $user->getGroups();
 
 		$wgOut->addHTML( "<form name=\"editGroup\" action=\"$this->action\" method=\"post\">\n".

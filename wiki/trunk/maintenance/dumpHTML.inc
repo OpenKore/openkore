@@ -8,6 +8,7 @@ define( 'REPORTING_INTERVAL', 10 );
 
 require_once( 'includes/ImagePage.php' );
 require_once( 'includes/CategoryPage.php' );
+require_once( 'includes/RawPage.php' );
 
 class DumpHTML {
 	# Destination directory
@@ -15,22 +16,31 @@ class DumpHTML {
 
 	# Show interlanguage links?
 	var $interwiki = true;
-	
+
 	# Depth of HTML directory tree
 	var $depth = 3;
 
 	# Directory that commons images are copied into
 	var $sharedStaticPath;
-	
+
 	# Relative path to image directory
 	var $imageRel = 'upload';
 
 	# Copy commons images instead of symlinking
 	var $forceCopy = false;
 
-	# Make links assuming the script path is in the same directory as 
+	# Make links assuming the script path is in the same directory as
 	# the destination
 	var $alternateScriptPath = false;
+
+	# Original values of various globals
+	var $oldArticlePath = false, $oldCopyrightIcon = false;
+
+	# Has setupGlobals been called?
+	var $setupDone = false;
+
+	# List of raw pages used in the current article
+	var $rawPages;
 
 	function DumpHTML( $settings ) {
 		foreach ( $settings as $var => $value ) {
@@ -38,35 +48,42 @@ class DumpHTML {
 		}
 	}
 
-	/** 
-	 * Write a set of articles specified by start and end page_id 
+	/**
+	 * Write a set of articles specified by start and end page_id
 	 * Skip categories and images, they will be done separately
 	 */
 	function doArticles( $start, $end = false ) {
 		$fname = 'DumpHTML::doArticles';
-		
+
 		$this->setupGlobals();
-		
+
 		if ( $end === false ) {
 			$dbr =& wfGetDB( DB_SLAVE );
 			$end = $dbr->selectField( 'page', 'max(page_id)', false, $fname );
 		}
 
-		
+		$mainPageObj = Title::newMainPage();
+		$mainPage = $mainPageObj->getPrefixedDBkey();
+
+
 		for ($id = $start; $id <= $end; $id++) {
+			wfWaitForSlaves( 20 );
 			if ( !($id % REPORTING_INTERVAL) ) {
 				print "Processing ID: $id\r";
+			}
+			if ( !($id % (REPORTING_INTERVAL*10) ) ) {
+				print "\n";
 			}
 			$title = Title::newFromID( $id );
 			if ( $title ) {
 				$ns = $title->getNamespace() ;
-				if ( $ns != NS_CATEGORY ) { 
+				if ( $ns != NS_CATEGORY && $title->getPrefixedDBkey() != $mainPage ) {
 					$this->doArticle( $title );
 				}
 			}
 		}
 		print "\n";
-	}	
+	}
 
 	function doSpecials() {
 		$this->doMainPage();
@@ -79,16 +96,12 @@ class DumpHTML {
 
 	/** Write the main page as index.html */
 	function doMainPage() {
-		global $wgMakeDumpLinks;
 
 		print "Making index.html  ";
 
 		// Set up globals with no ../../.. in the link URLs
 		$this->setupGlobals( 0 );
 
-		// But still use that directory style
-		$wgMakeDumpLinks = 3;
-		
 		$title = Title::newMainPage();
 		$text = $this->getArticleHTML( $title );
 		$file = fopen( "{$this->dest}/index.html", "w" );
@@ -103,13 +116,13 @@ class DumpHTML {
 
 	function doImageDescriptions() {
 		global $wgSharedUploadDirectory;
-		
-		$fname = 'DumpHTML::doImageDescriptions';
-		
-		$this->setupGlobals( 3 );
 
-		/** 
-		 * Dump image description pages that don't have an associated article, but do 
+		$fname = 'DumpHTML::doImageDescriptions';
+
+		$this->setupGlobals();
+
+		/**
+		 * Dump image description pages that don't have an associated article, but do
 		 * have a local image
 		 */
 		$dbr =& wfGetDB( DB_SLAVE );
@@ -120,11 +133,12 @@ class DumpHTML {
 		print "Writing image description pages for local images\n";
 		$num = $dbr->numRows( $res );
 		while ( $row = $dbr->fetchObject( $res ) ) {
+			wfWaitForSlaves( 10 );
 			if ( !( ++$i % REPORTING_INTERVAL ) ) {
 				print "Done $i of $num\r";
 			}
 			$title = Title::makeTitle( NS_IMAGE, $row->img_name );
-			if ( $title->getArticleID() ) { 
+			if ( $title->getArticleID() ) {
 				// Already done by dumpHTML
 				continue;
 			}
@@ -137,10 +151,10 @@ class DumpHTML {
 		 */
 		print "Writing description pages for commons images\n";
 		$i = 0;
-		for ( $hash = 0; $hash < 256; $hash++ ) {				
+		for ( $hash = 0; $hash < 256; $hash++ ) {
 			$dir = sprintf( "%01x/%02x", intval( $hash / 16 ), $hash );
-			$paths = glob( "{$this->sharedStaticPath}/$dir/*" );
-			$paths += glob( "{$this->sharedStaticPath}/thumb/$dir/*" );
+			$paths = array_merge( glob( "{$this->sharedStaticPath}/$dir/*" ),
+				glob( "{$this->sharedStaticPath}/thumb/$dir/*" ) );
 
 			foreach ( $paths as $path ) {
 				$file = basename( $path );
@@ -167,6 +181,7 @@ class DumpHTML {
 		print "\nWriting " . $dbr->numRows( $res ).  " category pages\n";
 		$i = 0;
 		while ( $row = $dbr->fetchObject( $res ) ) {
+			wfWaitForSlaves( 10 );
 			if ( !(++$i % REPORTING_INTERVAL ) ) {
 				print "$i\r";
 			}
@@ -176,13 +191,34 @@ class DumpHTML {
 		print "\n";
 	}
 
+	function doRedirects() {
+		print "Doing redirects...\n";
+		$fname = 'DumpHTML::doRedirects';
+		$this->setupGlobals();
+		$dbr =& wfGetDB( DB_SLAVE );
+
+		$res = $dbr->select( 'page', array( 'page_namespace', 'page_title' ),
+			array( 'page_is_redirect' => 1 ), $fname );
+		$num = $dbr->numRows( $res );
+		print "$num redirects to do...\n";
+		$i = 0;
+		while ( $row = $dbr->fetchObject( $res ) ) {
+			$title = Title::makeTitle( $row->page_namespace, $row->page_title );
+                        if ( !(++$i % (REPORTING_INTERVAL*10) ) ) {
+                                print "Done $i of $num\n";
+                        }
+			$this->doArticle( $title );
+		}
+	}
 
 	/** Write an article specified by title */
 	function doArticle( $title ) {
 		global $wgTitle, $wgSharedUploadPath, $wgSharedUploadDirectory;
 		global $wgUploadDirectory;
-		
+
+		$this->rawPages = array();
 		$text = $this->getArticleHTML( $title );
+
 		if ( $text === false ) {
 			return;
 		}
@@ -193,11 +229,34 @@ class DumpHTML {
 
 		# Write to file
 		$this->writeArticle( $title, $text );
+
+		# Do raw pages
+		wfMkdirParents( "{$this->dest}/raw", 0755 );
+		foreach( $this->rawPages as $record ) {
+			list( $file, $title, $params ) = $record;
+
+			$path = "{$this->dest}/raw/$file";
+			if ( !file_exists( $path ) ) {
+				$article = new Article( $title );
+				$request = new FauxRequest( $params );
+				$rp = new RawPage( $article, $request );
+				$text = $rp->getRawText();
+
+				print "Writing $file\n";
+				$file = fopen( $path, 'w' );
+				if ( !$file ) {
+					print("Can't open file $fullName for writing\n");
+					continue;
+				}
+				fwrite( $file, $text );
+				fclose( $file );
+			}
+		}
 	}
 
 	/** Write the given text to the file identified by the given title object */
 	function writeArticle( &$title, $text ) {
-		$filename = $title->getHashedFilename();
+		$filename = $this->getHashedFilename( $title );
 		$fullName = "{$this->dest}/$filename";
 		$fullDir = dirname( $fullName );
 
@@ -208,37 +267,42 @@ class DumpHTML {
 			print("Can't open file $fullName for writing\n");
 			return;
 		}
-		
+
 		fwrite( $file, $text );
 		fclose( $file );
 	}
 
 	/** Set up globals required for parsing */
-	function setupGlobals( $depth = NULL ) {
-		global $wgUser, $wgTitle, $wgMakeDumpLinks, $wgStylePath, $wgArticlePath;
+	function setupGlobals( $currentDepth = NULL ) {
+		global $wgUser, $wgTitle, $wgStylePath, $wgArticlePath;
 		global $wgUploadPath, $wgLogo, $wgMaxCredits, $wgSharedUploadPath;
 		global $wgHideInterlanguageLinks, $wgUploadDirectory, $wgThumbnailScriptPath;
-		global $wgSharedThumbnailScriptPath, $wgEnableParserCache;
+		global $wgSharedThumbnailScriptPath, $wgEnableParserCache, $wgHooks, $wgServer;
+		global $wgRightsUrl, $wgRightsText, $wgCopyrightIcon;
 
 		static $oldLogo = NULL;
-		
-		if ( is_null( $depth ) ) {
-			$wgMakeDumpLinks = $this->depth;
-		} else {
-			$wgMakeDumpLinks = $depth;
-		}
-		
-		if ( $this->alternateScriptPath ) {
-			if ( $wgMakeDumpLinks == 0 ) {
-				$wgScriptPath = '.';
-			} else {
-				$wgScriptPath = '..' . str_repeat( '/..', $wgMakeDumpLinks - 1 );
-			}
-		} else {
-			$wgScriptPath = '..' . str_repeat( '/..', $wgMakeDumpLinks );
+
+		if ( !$this->setupDone ) {
+			$wgHooks['GetLocalURL'][] =& $this;
+			$wgHooks['GetFullURL'][] =& $this;
+			$this->oldArticlePath = $wgServer . $wgArticlePath;
 		}
 
-		$wgArticlePath = str_repeat( '../', $wgMakeDumpLinks ) . '$1';
+		if ( is_null( $currentDepth ) ) {
+			$currentDepth = $this->depth;
+		}
+
+		if ( $this->alternateScriptPath ) {
+			if ( $currentDepth == 0 ) {
+				$wgScriptPath = '.';
+			} else {
+				$wgScriptPath = '..' . str_repeat( '/..', $currentDepth - 1 );
+			}
+		} else {
+			$wgScriptPath = '..' . str_repeat( '/..', $currentDepth );
+		}
+
+		$wgArticlePath = str_repeat( '../', $currentDepth ) . '$1';
 
 		# Logo image
 		# Allow for repeated setup
@@ -257,6 +321,15 @@ class DumpHTML {
 			$wgLogo = $wgScriptPath . $wgLogo;
 		}
 
+		# Another ugly hack
+		if ( !$this->setupDone ) {
+			$this->oldCopyrightIcon = $wgCopyrightIcon;
+		}
+		$wgCopyrightIcon = str_replace( 'src="/images',
+			'src="' . htmlspecialchars( $wgScriptPath ) . '/images', $this->oldCopyrightIcon );
+
+
+
 		$wgStylePath = "$wgScriptPath/skins";
 		$wgUploadPath = "$wgScriptPath/{$this->imageRel}";
 		$wgSharedUploadPath = "$wgUploadPath/shared";
@@ -264,6 +337,11 @@ class DumpHTML {
 		$wgHideInterlangageLinks = !$this->interwiki;
 		$wgThumbnailScriptPath = $wgSharedThumbnailScriptPath = false;
 		$wgEnableParserCache = false;
+		$wgMathPath = "$wgScriptPath/math";
+
+		if ( !empty( $wgRightsText ) ) {
+			$wgRightsUrl = "$wgScriptPath/COPYING.html";
+		}
 
 		$wgUser = new User;
 		$wgUser->setOption( 'skin', 'htmldump' );
@@ -271,32 +349,43 @@ class DumpHTML {
 
 		$this->sharedStaticPath = "$wgUploadDirectory/shared";
 
+		$this->setupDone = true;
 	}
 
 	/** Reads the content of a title object, executes the skin and captures the result */
 	function getArticleHTML( &$title ) {
-		global $wgOut, $wgTitle, $wgArticle, $wgUser, $wgUseCategoryMagic;
-		
-		$wgOut = new OutputPage;
-		$wgOut->setParserOptions( new ParserOptions );
-		
+		global $wgOut, $wgTitle, $wgArticle, $wgUser;
+
+		$linkCache =& LinkCache::singleton();
+		$linkCache->clear();
 		$wgTitle = $title;
 		if ( is_null( $wgTitle ) ) {
 			return false;
 		}
-		
+
 		$ns = $wgTitle->getNamespace();
 		if ( $ns == NS_SPECIAL ) {
+			$wgOut = new OutputPage;
+			$wgOut->setParserOptions( new ParserOptions );
 			SpecialPage::executePath( $wgTitle );
 		} else {
+			/** @todo merge with Wiki.php code */
 			if ( $ns == NS_IMAGE ) {
 				$wgArticle = new ImagePage( $wgTitle );
-			} elseif ( $wgUseCategoryMagic && $ns == NS_CATEGORY ) {
+			} elseif ( $ns == NS_CATEGORY ) {
 				$wgArticle = new CategoryPage( $wgTitle );
 			} else {
 				$wgArticle = new Article( $wgTitle );
 			}
-			$wgArticle->view();
+			$rt = Title::newFromRedirect( $wgArticle->fetchContent() );
+			if ( $rt != NULL ) {
+				return $this->getRedirect( $rt );
+			} else {
+				$wgOut = new OutputPage;
+				$wgOut->setParserOptions( new ParserOptions );
+
+				$wgArticle->view();
+			}
 		}
 
 		$sk =& $wgUser->getSkin();
@@ -308,12 +397,29 @@ class DumpHTML {
 		return $text;
 	}
 
+	function getRedirect( $rt ) {
+		$url = $rt->escapeLocalURL();
+		$text = $rt->getPrefixedText();
+		return <<<ENDTEXT
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta http-equiv="Refresh" content="0;url=$url" />
+</head>
+<body>
+  <p>Redirecting to <a href="$url">$text</a></p>
+</body>
+</html>
+ENDTEXT;
+	}
+
 	/** Returns image paths used in an XHTML document */
 	function findImages( $text ) {
 		global $wgOutputEncoding, $wgDumpImages;
 		$parser = xml_parser_create( $wgOutputEncoding );
 		xml_set_element_handler( $parser, 'wfDumpStartTagHandler', 'wfDumpEndTagHandler' );
-		
+
 		$wgDumpImages = array();
 		xml_parse( $parser, $text );
 		xml_parser_free( $parser );
@@ -326,12 +432,18 @@ class DumpHTML {
 	 * This is necessary even if you intend to distribute all of commons, because
 	 * the directory contents is used to work out which image description pages
 	 * are needed.
+	 *
+	 * Also copies math images
+	 *
 	 */
 	function copyImages( $images ) {
-		global $wgSharedUploadPath, $wgSharedUploadDirectory;
+		global $wgSharedUploadPath, $wgSharedUploadDirectory, $wgMathPath, $wgMathDirectory;
 		# Find shared uploads and copy them into the static directory
-		$sharedPathLength = strlen( $wgSharedUploadPath ); 
-		foreach ( $images as $image => $dummy ) {
+		$sharedPathLength = strlen( $wgSharedUploadPath );
+		$mathPathLength = strlen( $wgMathPath );
+		foreach ( $images as $escapedImage => $dummy ) {
+			$image = urldecode( $escapedImage );
+
 			# Is it shared?
 			if ( substr( $image, 0, $sharedPathLength ) == $wgSharedUploadPath ) {
 				# Reconstruct full filename
@@ -366,9 +478,157 @@ class DumpHTML {
 						}
 					}
 				}
+			} else
+			# Is it math?
+			if ( substr( $image, 0, $mathPathLength ) == $wgMathPath ) {
+				$rel = substr( $image, $mathPathLength + 1 ); // +1 for slash
+				$source = "$wgMathDirectory/$rel";
+				$dest = "{$this->dest}/math/$rel";
+				@mkdir( "{$this->dest}/math", 0755 );
+				if ( !file_exists( $dest ) ) {
+					copy( $source, $dest );
+				}
 			}
 		}
 	}
+
+	function onGetFullURL( &$title, &$url, $query ) {
+		global $wgContLang, $wgArticlePath;
+
+		$iw = $title->getInterwiki();
+		if ( $title->isExternal() && $wgContLang->getLanguageName( $iw ) ) {
+			if ( $title->getDBkey() == '' ) {
+				$url = str_replace( '$1', "../$iw/index.html", $wgArticlePath );
+			} else {
+				$url = str_replace( '$1', "../$iw/" . wfUrlencode( $this->getHashedFilename( $title ) ),
+					$wgArticlePath );
+			}
+			return false;
+		} else {
+			return true;
+		}
+	}
+
+	function onGetLocalURL( &$title, &$url, $query ) {
+		global $wgArticlePath;
+
+		if ( $title->isExternal() ) {
+			# Default is fine for interwiki
+			return true;
+		}
+
+		$url = false;
+		if ( $query != '' ) {
+			parse_str( $query, $params );
+			if ( isset($params['action']) && $params['action'] == 'raw' ) {
+				if ( $params['gen'] == 'css' || $params['gen'] == 'js' ) {
+					$file = 'gen.' . $params['gen'];
+				} else {
+					$file = $this->getFriendlyName( $title->getPrefixedDBkey() );
+					// Clean up Monobook.css etc.
+					if ( preg_match( '/^(.*)\.(css|js)_[0-9a-f]{4}$/', $file, $matches ) ) {
+						$file = $matches[1] . '.' . $matches[2];
+					}
+				}
+				$this->rawPages[$file] = array( $file, $title, $params );
+				$url = str_replace( '$1', "raw/" . wfUrlencode( $file ), $wgArticlePath );
+			}
+		}
+		if ( $url === false ) {
+			$url = str_replace( '$1', wfUrlencode( $this->getHashedFilename( $title ) ), $wgArticlePath );
+		}
+
+		return false;
+	}
+
+	function getHashedFilename( &$title ) {
+		if ( '' != $title->mInterwiki ) {
+			$dbkey = $title->getDBkey();
+		} else {
+			$dbkey = $title->getPrefixedDBkey();
+		}
+
+		$mainPage = Title::newMainPage();
+		if ( $mainPage->getPrefixedDBkey() == $dbkey ) {
+			return 'index.html';
+		}
+
+		return $this->getHashedDirectory( $title ) . '/' .
+			$this->getFriendlyName( $dbkey ) . '.html';
+	}
+
+	function getFriendlyName( $name ) {
+		global $wgLang;
+		# Replace illegal characters for Windows paths with underscores
+		$friendlyName = strtr( $name, '/\\*?"<>|~', '_________' );
+
+		# Work out lower case form. We assume we're on a system with case-insensitive
+		# filenames, so unless the case is of a special form, we have to disambiguate
+		if ( function_exists( 'mb_strtolower' ) ) {
+			$lowerCase = $wgLang->ucfirst( mb_strtolower( $name ) );
+		} else {
+			$lowerCase = ucfirst( strtolower( $name ) );
+		}
+
+		# Make it mostly unique
+		if ( $lowerCase != $friendlyName  ) {
+			$friendlyName .= '_' . substr(md5( $name ), 0, 4);
+		}
+		# Handle colon specially by replacing it with tilde
+		# Thus we reduce the number of paths with hashes appended
+		$friendlyName = str_replace( ':', '~', $friendlyName );
+
+		return $friendlyName;
+	}
+
+	/**
+	 * Get a relative directory for putting a title into
+	 */
+	function getHashedDirectory( &$title ) {
+		if ( '' != $title->getInterwiki() ) {
+			$pdbk = $title->getDBkey();
+		} else {
+			$pdbk = $title->getPrefixedDBkey();
+		}
+
+		# Find the first colon if there is one, use characters after it
+		$p = strpos( $pdbk, ':' );
+		if ( $p !== false ) {
+			$dbk = substr( $pdbk, $p + 1 );
+			$dbk = substr( $dbk, strspn( $dbk, '_' ) );
+		} else {
+			$dbk = $pdbk;
+		}
+
+		# Split into characters
+		preg_match_all( '/./us', $dbk, $m );
+
+		$chars = $m[0];
+		$length = count( $chars );
+		$dir = '';
+
+		for ( $i = 0; $i < $this->depth; $i++ ) {
+			if ( $i ) {
+				$dir .= '/';
+			}
+			if ( $i >= $length ) {
+				$dir .= '_';
+			} else {
+				$c = $chars[$i];
+				if ( ord( $c ) >= 128 || preg_match( '/[a-zA-Z0-9!#$%&()+,[\]^_`{}-]/', $c ) ) {
+					if ( function_exists( 'mb_strtolower' ) ) {
+						$dir .= mb_strtolower( $c );
+					} else {
+						$dir .= strtolower( $c );
+					}
+				} else {
+					$dir .= sprintf( "%02X", ord( $c ) );
+				}
+			}
+		}
+		return $dir;
+	}
+
 }
 
 /** XML parser callback */

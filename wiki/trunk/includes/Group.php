@@ -22,7 +22,7 @@ class Group {
 	/** string $rights Contain rights values : "foo,bar,bla" */
 	var $rights;
 	/**#@-*/
-	
+
 	/** Constructor */
 	function Group() {
 		$this->clear();
@@ -47,8 +47,8 @@ class Group {
 		}
 
 		// be sure it's an integer
-		$this->id = IntVal($this->id);
-		
+		$this->id = intval($this->id);
+
 		if($this->id) {
 			// By ID
 			$dbr =& wfGetDB( DB_SLAVE );
@@ -85,8 +85,8 @@ class Group {
 		$this->description = $row->gr_description;
 		$this->rights = $row->gr_rights;
 		$this->dataLoaded = true;
-	}		
-	
+	}
+
 	/** Initialise a new row in the database */
 	function addToDatabase() {
 		if ( Group::getStaticGroups() ) {
@@ -113,10 +113,10 @@ class Group {
 			wfDebugDieBacktrace( "Can't modify groups in static mode" );
 		}
 		if($this->id == 0) { return; }
-		
+
 		$fname = 'Group::save';
 		$dbw =& wfGetDB( DB_MASTER );
-		
+
 		$dbw->update( 'groups',
 			array( /* SET */
 				'gr_name' => $this->name,
@@ -126,7 +126,7 @@ class Group {
 				'gr_id' => $this->id
 			), $fname
 		);
-	
+
 		$wgMemc->set( Group::getCacheKey( $this->id ), $this, 3600 );
 	}
 
@@ -139,7 +139,7 @@ class Group {
 			wfDebugDieBacktrace( "Can't modify groups in static mode" );
 		}
 		if($this->id == 0) { return; }
-		
+
 		$fname = 'Group::delete';
 		$dbw =& wfGetDB( DB_MASTER );
 
@@ -151,9 +151,9 @@ class Group {
 
 		$wgMemc->delete( Group::getCacheKey( $this->id ) );
 	}
-	
-	/** 
-	 * Get memcached key 
+
+	/**
+	 * Get memcached key
 	 * @static
 	 */
 	function getCacheKey( $id ) {
@@ -167,9 +167,9 @@ class Group {
 	 * @param integer $id Group database id
 	 */
 	function newFromId($id) {
-		global $wgMemc, $wgDBname;
+		global $wgMemc;
 		$fname = 'Group::newFromId';
-		
+
 		$staticGroups =& Group::getStaticGroups();
 		if ( $staticGroups ) {
 			if ( array_key_exists( $id, $staticGroups ) ) {
@@ -185,7 +185,7 @@ class Group {
 			wfDebug( "$fname loaded group $id from cache\n" );
 			return $group;
 		}
-		
+
 		$group = new Group();
 		$group->id = $id;
 		$group->loadFromDatabase();
@@ -204,7 +204,7 @@ class Group {
 	/** @param string $name Group database name */
 	function newFromName($name) {
 		$fname = 'Group::newFromName';
-		
+
 		$staticGroups =& Group::getStaticGroups();
 		if ( $staticGroups ) {
 			$id = Group::idFromName( $name );
@@ -214,21 +214,21 @@ class Group {
 				return null;
 			}
 		}
-		
+
 		$g = new Group();
 		$g->name = $name;
 		$g->loadFromDatabase();
 
 		if( $g->getId() != 0 ) {
 			return $g;
-		} else { 
+		} else {
 		 	return null;
 		}
 	}
 
 	/**
 	 * Get an array of Group objects, one for each valid group
-	 * 
+	 *
 	 * @static
 	 */
 	function &getAllGroups() {
@@ -257,9 +257,9 @@ class Group {
 		return $groups;
 	}
 
-	/** 
+	/**
 	 * Get static groups, if they have been defined in LocalSettings.php
-	 * 
+	 *
 	 * @static
 	 */
 	function &getStaticGroups() {
@@ -291,7 +291,7 @@ class Group {
 	}
 
 	/**
-	 * @param string $name Group database name 
+	 * @param string $name Group database name
 	 * @return integer Group database id
 	 */
 	function idFromName($name) {
@@ -324,11 +324,11 @@ class Group {
 		return $this->name;
 	}
 
-	function getExpandedName() { 
+	function getExpandedName() {
 		$this->loadFromDatabase();
 		return $this->getMessage( $this->name );
 	}
-	
+
 	function getNameForContent() {
 		$this->loadFromDatabase();
 		return $this->getMessageForContent( $this->name );
@@ -338,14 +338,14 @@ class Group {
 		$this->loadFromDatabase();
 		$this->name = $name;
 	}
-	
+
 	function getId() { return $this->id; }
 	function setId($id) {
-		$this->id = IntVal($id);
+		$this->id = intval($id);
 		$this->dataLoaded = false;
 	}
-	
-	function getDescription() { 
+
+	function getDescription() {
 		return $this->description;
 	}
 
@@ -364,7 +364,7 @@ class Group {
 		$this->rights = $rights;
 	}
 
-	/** 
+	/**
 	 * Gets a message if the text starts with a colon, otherwise returns the text itself
 	 */
 	function getMessage( $text ) {

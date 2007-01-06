@@ -24,7 +24,7 @@ class AncientPagesPage extends QueryPage {
 	function isExpensive() {
 		return true;
 	}
-	
+
 	function isSyndicated() { return false; }
 
 	function getSQL() {
@@ -41,7 +41,7 @@ class AncientPagesPage extends QueryPage {
 			WHERE page_namespace=".NS_MAIN." AND page_is_redirect=0
 			  AND page_latest=rev_id";
 	}
-	
+
 	function sortDescending() {
 		return false;
 	}
@@ -51,7 +51,7 @@ class AncientPagesPage extends QueryPage {
 
 		$d = $wgLang->timeanddate( wfTimestamp( TS_MW, $result->value ), true );
 		$title = Title::makeTitle( $result->namespace, $result->title );
-		$link = $skin->makeKnownLinkObj( $title, $wgContLang->convert( $title->getPrefixedText() ) );
+		$link = $skin->makeKnownLinkObj( $title, htmlspecialchars( $wgContLang->convert( $title->getPrefixedText() ) ) );
 		return "{$link} ({$d})";
 	}
 }

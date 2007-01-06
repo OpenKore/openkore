@@ -4,20 +4,20 @@
  */
 # Copyright (C) 2004 Brion Vibber <brion@pobox.com>
 # http://www.mediawiki.org/
-# 
+#
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2 of the License, or 
+# the Free Software Foundation; either version 2 of the License, or
 # (at your option) any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License along
 # with this program; if not, write to the Free Software Foundation, Inc.,
-# 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+# 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 # http://www.gnu.org/copyleft/gpl.html
 
 /**
@@ -50,7 +50,7 @@ class AuthPlugin {
 		# Override this!
 		return false;
 	}
-	
+
 	/**
 	 * Check if a username+password pair is a valid login.
 	 * The name will be normalized to MediaWiki's requirements, so
@@ -66,7 +66,7 @@ class AuthPlugin {
 		# Override this!
 		return false;
 	}
-	
+
 	/**
 	 * Modify options in the login template.
 	 *
@@ -134,7 +134,7 @@ class AuthPlugin {
 	function autoCreate() {
 		return false;
 	}
-	
+
 	/**
 	 * Set the given password in the authentication database.
 	 * Return true if successful.
@@ -195,7 +195,7 @@ class AuthPlugin {
 	function strict() {
 		return false;
 	}
-	
+
 	/**
 	 * When creating a user account, optionally fill in preferences and such.
 	 * For instance, you might pull the email address or real name from the
@@ -210,7 +210,7 @@ class AuthPlugin {
 	function initUser( &$user ) {
 		# Override this to do something.
 	}
-	
+
 	/**
 	 * If you want to munge the case of an account name before the final
 	 * check, now is your chance.

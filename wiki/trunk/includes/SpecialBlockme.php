@@ -10,12 +10,14 @@
  */
 function wfSpecialBlockme()
 {
-	global $wgIP, $wgBlockOpenProxies, $wgOut, $wgProxyKey;
+	global $wgBlockOpenProxies, $wgOut, $wgProxyKey;
 
-	if ( !$wgBlockOpenProxies || $_REQUEST['ip'] != md5( $wgIP . $wgProxyKey ) ) {
+	$ip = wfGetIP();
+
+	if ( !$wgBlockOpenProxies || $_REQUEST['ip'] != md5( $ip . $wgProxyKey ) ) {
 		$wgOut->addWikiText( wfMsg( "disabled" ) );
 		return;
-	}       
+	}
 
 	$blockerName = wfMsg( "proxyblocker" );
 	$reason = wfMsg( "proxyblockreason" );
@@ -31,7 +33,7 @@ function wfSpecialBlockme()
 		$id = $u->getID();
 	}
 
-	$block = new Block( $wgIP, 0, $id, $reason, wfTimestampNow() );
+	$block = new Block( $ip, 0, $id, $reason, wfTimestampNow() );
 	$block->insert();
 
 	$wgOut->addWikiText( $success );

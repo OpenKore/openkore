@@ -4,15 +4,17 @@ function install_version_checks() {
 	# We dare not turn output buffer _off_ since this will break completely
 	# if PHP is globally configured to run through a gzip filter.
 	@ob_implicit_flush( true );
-	
+
 	if( !function_exists( 'version_compare' ) ) {
 		# version_compare was introduced in 4.1.0
-		die( "Your PHP version is much too old; 4.0.x will _not_ work. 4.3.2 or higher is recommended. ABORTING.\n" );
+		echo "Your PHP version is much too old; 4.0.x will _not_ work. 4.3.2 or higher is required. ABORTING.\n";
+		die( -1 );
 	}
 	if( version_compare( phpversion(), '4.3.2' ) < 0 ) {
-		echo "WARNING: PHP 4.3.2 or higher is recommended. Older versions from 4.1.x up may work but are not actively supported.\n\n";
+		echo "PHP 4.3.2 or higher is required. ABORTING.\n";
+		die( -1 );
 	}
-	
+
 	if (!extension_loaded('mysql')) {
 		if (!dl('mysql.so')) {
 			print 'Could not load MySQL driver! Please compile '.
@@ -20,7 +22,7 @@ function install_version_checks() {
 		exit;
 		}
 	}
-	
+
 	global $wgCommandLineMode;
 	$wgCommandLineMode = true;
 	umask( 000 );
@@ -57,83 +59,53 @@ function copydirectory( $source, $dest ) {
 }
 
 function readconsole( $prompt = '' ) {
-	if ( function_exists( 'readline' ) ) {
+	static $isatty = null, $fp = null;
+	if ( is_null( $fp ) ) {
+		$fp = fopen( 'php://stdin', 'r' );
+	}
+	if ( is_null( $isatty ) ) {
+		if ( !function_exists( 'posix_isatty' ) || posix_isatty( $fp ) ) {
+			$isatty = true;
+		} else {
+			$isatty = false;
+		}
+	}
+
+	if ( $isatty && function_exists( 'readline' ) ) {
 		return readline( $prompt );
 	} else {
-		print $prompt;
-		$fp = fopen( 'php://stdin', 'r' );
+		if ( $isatty ) {
+			print $prompt;
+		}
+		if ( feof( $fp ) ) {
+			return false;
+		}
 		$st = fgets($fp, 1024);
 		if ($st === false) return false;
 		$resp = trim( $st );
-		fclose( $fp );
 		return $resp;
 	}
-}
-
-function replacevars( $ins ) {
-	$varnames = array(
-		'wgDBserver', 'wgDBname', 'wgDBintlname', 'wgDBuser',
-		'wgDBpassword', 'wgDBsqluser', 'wgDBsqlpassword',
-		'wgDBadminuser', 'wgDBadminpassword', 'wgDBprefix'
-	);
-
-	foreach ( $varnames as $var ) {
-		if( isset( $GLOBALS[$var] ) ) {
-			$val = addslashes( $GLOBALS[$var] );
-			$ins = str_replace( '{$' . $var . '}', $val, $ins );
-			$ins = str_replace( '/*$' . $var . '*/`', '`' . $val, $ins );
-			$ins = str_replace( '/*$' . $var . '*/', $val, $ins );
-		}
-	}
-	return $ins;
 }
 
 #
 # Read and execute SQL commands from a file
 #
-function dbsource( $fname, $database = false ) {
-	$fp = fopen( $fname, 'r' );
-	if ( false === $fp ) {
-		print "Could not open \"{$fname}\".\n";
-		exit();
-	}
-
-	$cmd = "";
-	$done = false;
-
-	while ( ! feof( $fp ) ) {
-		$line = trim( fgets( $fp, 1024 ) );
-		$sl = strlen( $line ) - 1;
-
-		if ( $sl < 0 ) { continue; }
-		if ( '-' == $line{0} && '-' == $line{1} ) { continue; }
-
-		if ( ';' == $line{$sl} ) {
-			$done = true;
-			$line = substr( $line, 0, $sl );
-		}
-
-		if ( '' != $cmd ) { $cmd .= ' '; }
-		$cmd .= $line;
-
-		if ( $done ) {
-			$cmd = replacevars( $cmd );
-			if( $database )
-				$res = $database->query( $cmd );
-			else
-				$res = mysql_query( $cmd );
-
-			if ( false === $res ) {
-				$err = mysql_error();
-				print "Query \"{$cmd}\" failed with error code \"$err\".\n";
-				exit();
-			}
-
-			$cmd = '';
-			$done = false;
+function dbsource( $fname, $db = false ) {
+	if ( !$db ) {
+		// Try $wgDatabase, which is used in the install and update scripts
+		global $wgDatabase;
+		if ( isset( $wgDatabase ) ) {
+			$db =& $wgDatabase;
+		} else {
+			// No? Well, we must be outside of those scripts, so use the standard method
+			$db =& wfGetDB( DB_MASTER );
 		}
 	}
-	fclose( $fp );
+	$error = $db->sourceFile( $fname );
+	if ( $error !== true ) {
+		print $error;
+		exit(1);
+	}
 }
 
 # Obsolete, use Database::fieldExists()
@@ -142,7 +114,7 @@ function field_exists( $table, $field ) {
 	$db =& wfGetDB( DB_SLAVE );
 	$res = $db->query( "DESCRIBE $table", $fname );
 	$found = false;
-	
+
 	while ( $row = $db->fetchObject( $res ) ) {
 		if ( $row->Field == $field ) {
 			$found = true;

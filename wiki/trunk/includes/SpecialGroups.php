@@ -12,7 +12,7 @@ require_once('Group.php');
 /** Entry point */
 function wfSpecialGroups() {
 	global $wgRequest;
-	
+
 	$form = new GroupsForm($wgRequest);
 	$form->execute();
 }
@@ -26,14 +26,14 @@ class GroupsForm extends HTMLForm {
 	var $mPosted, $mRequest, $mSaveprefs, $mChangeAllowed;
 	var $mNewName, $mDescription, $mOldName, $mRights, $mId;
 	var $mAdd, $mEdit;
-	
+
 	/** Escaped local url name*/
 	var $action, $location;
 
 	/** Constructor*/
 	function GroupsForm ( &$request ) {
 		global $wgUser;
-		
+
 		$this->mPosted = $request->wasPosted();
 		$this->mRequest =& $request;
 		$this->mName = 'groups';
@@ -75,16 +75,16 @@ class GroupsForm extends HTMLForm {
 		} elseif ( $this->mEdit ) {
 			if ( $this->mPosted ) {
 				$wgOut->redirect( $this->location );
-			} else {			
+			} else {
 				$this->switchForm();
-				$this->editGroupForm( $this->mId ); 
+				$this->editGroupForm( $this->mId );
 			}
 		} elseif ( $this->mAdd ) {
 			if ( $this->mPosted ) {
 				$wgOut->redirect( $this->location );
 			} else {
 				$this->switchForm();
-				$this->editGroupForm( ); 
+				$this->editGroupForm( );
 			}
 		} else {
 			$this->showAllGroups();
@@ -101,7 +101,7 @@ class GroupsForm extends HTMLForm {
 		global $wgOut;
 
 		$this->mNewName = trim($this->mNewName);
-	
+
 		if ( $this->mNewName == '' ) {
 			$this->editGroupForm( $this->mGroupID, 'groups-noname' );
 			return false;
@@ -127,16 +127,16 @@ class GroupsForm extends HTMLForm {
 				return;
 			}
 		}
-		
+
 		// save stuff
 		$g->setName($this->mNewName);
 		$g->setDescription($this->mDescription);
-		if( is_array( $this->mRights ) ) { 
-			$g->setRights( implode(',',$this->mRights) ); 
+		if( is_array( $this->mRights ) ) {
+			$g->setRights( implode(',',$this->mRights) );
 		}
-		
+
 		$g->save();
-		
+
 		// Make the log entry
 		$log = new LogPage( 'rights' );
 		$dummyTitle = Title::makeTitle( 0, '' );
@@ -145,7 +145,7 @@ class GroupsForm extends HTMLForm {
 		} else {
 			if ( $this->mOldName != $this->mNewName ) {
 				// Abbreviated action name, must be less than 10 bytes
-				$log->addEntry( 'rngroup', $dummyTitle, '', array( Group::getMessageForContent( $this->mOldName ), 
+				$log->addEntry( 'rngroup', $dummyTitle, '', array( Group::getMessageForContent( $this->mOldName ),
 				$g->getNameForContent() ) );
 			} else {
 				$log->addEntry( 'chgroup', $dummyTitle, '', array( $g->getNameForContent() ) );
@@ -165,8 +165,8 @@ class GroupsForm extends HTMLForm {
 	 */
 	function switchForm() {
 		global $wgOut;
-		
-		// group selection		
+
+		// group selection
 		$wgOut->addHTML( "<form name=\"ulgroup\" action=\"$this->action\" method=\"post\">\n" );
 		$wgOut->addHTML( $this->fieldset( 'lookup-group',
 				HTMLSelectGroups('id', $this->mName.'-group-edit', array(0 => $this->mRequest->getVal('id')) ) .
@@ -234,17 +234,17 @@ class GroupsForm extends HTMLForm {
 		foreach ( $groups as $group ) {
 			$s .= "|-\n| " . $group->getId() . ' || ' .
 				$group->getExpandedName() . ' || ' .
-				$group->getExpandedDescription() . ' || '. 
+				$group->getExpandedDescription() . ' || '.
 				// Insert spaces to make it wrap
 				str_replace( ',', ', ', $group->getRights() ) . "\n";
 		}
 		$s .= "|}\n";
 		$wgOut->addWikiText( $s );
 	}
-		
+
 	function showRecord() {
 		global $wgOut;
-		
+
 		$groups =& Group::getAllGroups();
 		$rec = serialize( $groups );
 		// Split it into lines

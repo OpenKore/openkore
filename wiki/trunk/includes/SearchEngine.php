@@ -12,9 +12,9 @@ class SearchEngine {
 	var $limit = 10;
 	var $offset = 0;
 	var $searchTerms = array();
-	var $namespaces = array( 0 );
+	var $namespaces = array( NS_MAIN );
 	var $showRedirects = false;
-	
+
 	/**
 	 * Perform a full text search query and return a result set.
 	 * If title searches are not supported or disabled, return null.
@@ -40,7 +40,7 @@ class SearchEngine {
 	function searchTitle( $term ) {
 		return null;
 	}
-	
+
 	/**
 	 * If an exact title match can be find, or a very slightly close match,
 	 * return the title. If no match, returns NULL.
@@ -80,7 +80,19 @@ class SearchEngine {
 		if ( $title->exists() ) {
 			return $title;
 		}
-		
+
+		# Now try Word-Caps-Breaking-At-Word-Breaks, for hyphenated names etc
+		$title = Title::newFromText( preg_replace_callback(
+			'/\b([\w\x80-\xff]+)\b/',
+			create_function( '$matches', '
+				global $wgContLang;
+				return $wgContLang->ucfirst($matches[1]);
+				' ),
+			$term ) );
+		if ( $title->exists() ) {
+			return $title;
+		}
+
 		global $wgCapitalLinks, $wgContLang;
 		if( !$wgCapitalLinks ) {
 			// Catch differs-by-first-letter-case-only
@@ -107,15 +119,15 @@ class SearchEngine {
 		if ( $title->getNamespace() == NS_USER ) {
 			return $title;
 		}
-		
+
 		# Quoted term? Try without the quotes...
 		if( preg_match( '/^"([^"]+)"$/', $term, $matches ) ) {
 			return SearchEngine::getNearMatch( $matches[1] );
 		}
-		
+
 		return NULL;
 	}
-	
+
 	function legalSearchChars() {
 		return "A-Za-z_'0-9\\x80-\\xFF\\-";
 	}
@@ -129,10 +141,10 @@ class SearchEngine {
 	 * @access public
 	 */
 	function setLimitOffset( $limit, $offset = 0 ) {
-		$this->limit = IntVal( $limit );
-		$this->offset = IntVal( $offset );
+		$this->limit = intval( $limit );
+		$this->offset = intval( $offset );
 	}
-	
+
 	/**
 	 * Set which namespaces the search should include.
 	 * Give an array of namespace index numbers.
@@ -143,7 +155,7 @@ class SearchEngine {
 	function setNamespaces( $namespaces ) {
 		$this->namespaces = $namespaces;
 	}
-	
+
 	/**
 	 * Make a list of searchable namespaces and their canonical names.
 	 * @return array
@@ -159,7 +171,7 @@ class SearchEngine {
 		}
 		return $arr;
 	}
-	
+
 	/**
 	 * Return a 'cleaned up' search string
 	 *
@@ -178,17 +190,12 @@ class SearchEngine {
 	 * @access private
 	 */
 	function create() {
-		global $wgDBtype, $wgDBmysql4, $wgSearchType;
+		global $wgDBtype, $wgSearchType;
 		if( $wgSearchType ) {
 			$class = $wgSearchType;
 		} elseif( $wgDBtype == 'mysql' ) {
-			if( $wgDBmysql4 ) {
-				$class = 'SearchMySQL4';
-				require_once( 'SearchMySQL4.php' );
-			} else {
-				$class = 'SearchMysql3';
-				require_once( 'SearchMySQL3.php' );
-			}
+			$class = 'SearchMySQL4';
+			require_once( 'SearchMySQL4.php' );
 		} else if ( $wgDBtype == 'PostgreSQL' ) {
 			$class = 'SearchTsearch2';
 			require_once( 'SearchTsearch2.php' );
@@ -199,7 +206,7 @@ class SearchEngine {
 		$search->setLimitOffset(0,0);
 		return $search;
 	}
-	
+
 	/**
 	 * Create or update the search index record for the given page.
 	 * Title and text should be pre-processed.
@@ -239,11 +246,11 @@ class SearchResultSet {
 	function termMatches() {
 		return array();
 	}
-	
+
 	function numRows() {
 		return 0;
 	}
-	
+
 	/**
 	 * Return true if results are included in this result set.
 	 * @return bool
@@ -252,7 +259,7 @@ class SearchResultSet {
 	function hasResults() {
 		return false;
 	}
-	
+
 	/**
 	 * Some search modes return a total hit count for the query
 	 * in the entire article database. This may include pages
@@ -267,7 +274,7 @@ class SearchResultSet {
 	function getTotalHits() {
 		return null;
 	}
-	
+
 	/**
 	 * Some search modes return a suggested alternate term if there are
 	 * no exact hits. Returns true if there is one on this set.
@@ -278,7 +285,7 @@ class SearchResultSet {
 	function hasSuggestion() {
 		return false;
 	}
-	
+
 	/**
 	 * Some search modes return a suggested alternate term if there are
 	 * no exact hits. Check hasSuggestion() first.
@@ -289,7 +296,7 @@ class SearchResultSet {
 	function getSuggestion() {
 		return '';
 	}
-	
+
 	/**
 	 * Fetches next search result, or false.
 	 * @return SearchResult
@@ -306,7 +313,7 @@ class SearchResult {
 	function SearchResult( $row ) {
 		$this->mTitle = Title::makeTitle( $row->page_namespace, $row->page_title );
 	}
-	
+
 	/**
 	 * @return Title
 	 * @access public
@@ -314,7 +321,7 @@ class SearchResult {
 	function getTitle() {
 		return $this->mTitle;
 	}
-	
+
 	/**
 	 * @return double or null if not supported
 	 */
@@ -330,5 +337,11 @@ class SearchEngineDummy {
 	function search( $term ) {
 		return null;
 	}
+	function setLimitOffset($l, $o) {}
+	function legalSearchChars() {}
+	function update() {}
+	function setnamespaces() {}
+	function searchtitle() {}
+	function searchtext() {}
 }
-
+?>
