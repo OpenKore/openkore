@@ -3,6 +3,57 @@
 Security reminder: MediaWiki does not require PHP's register_globals
 setting since version 1.2.0. If you have it on, turn it *off* if you can.
 
+== MediaWiki 1.5.8 ==
+
+March 26, 2006
+
+MediaWiki 1.5.8 is a security and bugfix maintenance release.
+
+A bug in decoding of certain encoded links could allow injection of raw
+HTML into page output; this could potentially lead to XSS attacks.
+
+Some minor UI fixes were also made, see the change log at the bottom of
+this file.
+
+
+== MediaWiki 1.5.7 ==
+
+March 2, 2006
+
+MediaWiki 1.5.7 is a bugfix maintenance release.
+
+Most importantly, a security issue in the installer has been fixed. The bug 
+affects new installations of 1.5.6 only. If the user specified the MySQL root 
+password, to allow the installer to create an unprivileged account, the 
+installer would not only create the new account but also change the root 
+password to be equal to the password of the new account. 
+
+Anyone affected by this bug will need to change the root password back 
+manually. For information about how to change passwords in MySQL please see:
+http://dev.mysql.com/doc/refman/5.1/en/passwords.html
+
+This version includes fixes for compatibility with Internet Explorer 7
+beta 2, and various other bugs; see the full changelog at the end of
+the release notes.
+
+
+== MediaWiki 1.5.6 ==
+
+January 19, 2006
+
+MediaWiki 1.5.6 is a security and bugfix maintenance release.
+
+A bug in edit comment formatting could send PHP into an infinite loop
+if certain malformed links were included. In most installations, this
+would cause the script to fail after PHP's 30-second failsafe timeout.
+
+Some improvements have been made to the installer which should make
+installation possible on a system with a broken MySQL "root" account.
+
+For several other minor fixes, see the complete changelog at the end
+of this file.
+
+
 == MediaWiki 1.5.5 ==
 
 January 5, 2006
@@ -1004,6 +1055,60 @@ of MediaWiki:Newpagetext) to &action=edit, if page is new.
   MIME type to the default blacklist. Prevented inline display of images
   which are not of known image types. This is in response to
   http://en.wikipedia.org/wiki/Windows_Metafile_vulnerability
+
+=== Changes since 1.5.5 ===
+
+* (bug 4258) When installing under IIS, $wgArticlePath = "$wgScript?title=$1" 
+  should be set
+* (bug 4510) Correct Barnes & Noble bookstore URLs
+* (bug 4504) Use site language for namespace name resolution
+* Installer fixes from HEAD backported; now uses a more sensible method of 
+  establishing which mySQL user to use, which clears up bug 921 et al. Minor 
+  changes to installer.
+* Fix problem reported on mailing list where re-initialising stats didn't work 
+  (can't insert duplicate rows with the same id field)
+* (bug 1122) gray out 'older revision' when viewing first article revision.
+* Respect database prefix in dumpHTML.inc
+* Minor improvements to removeUnusedAccounts.php maintenance script
+* Fix for single-digit week numbers from {{CURRENTWEEK}}, broken by PHP 4.4.1
+* Removed read-only check from Database::query()
+* Added --conf option to command line scripts, allowing the user to specify a 
+  different LocalSettings.php.
+
+=== Changes since 1.5.6 ===
+
+* Default main page content improved per bug 4690
+* Fix dependence on hardcoded UNIQ_PREFIX in LanguageConverter.php 
+* Fixed Special:Unlockdb
+* Maintenance script to delete unused text records
+* Maintenance script to delete non-current revisions
+* Maintenance script to wipe a page and all revisions from the database
+* (bug 4768) Wrong Russian translation (typo)
+* Performance bugfix: propagate equality manually for Revision fetches
+* (bug 4773) PHP fatal error when invalid title passed to Special:Export
+* Added missing table defs. for transcache to installer schemas
+* (bug 4824) IE7 beta 2 broke compatibility with PNG logo workarounds,
+  and seems to work ok with other bits. No longer including the IE
+  workarounds JavaScript for IE 7 and above.
+* (bug 2532) Image directory structure migration bug
+* (bug 4881) Correction to the fix for 1487; Ipblocklist showed 'no blocks'
+  message at the end of the list even if there were blocks.
+* (bug 4805) Removed more wikipedia-references from LanguageUk.php
+* Introduce $wgWantedPagesThreshold per bug 5011; Special:Wantedpages will not
+  list pages with less than this number of links. Defaults to 1.
+* Allow customisation of paging limits for items in categories using the
+  $wgCategoryPagingLimit global, per bug 4970.
+* Improve "nogomatch" text to make it more obvious that a page can be created.
+* (bug 5113) Spelling error in French language file
+* Don't change the password of the MySQL root user.
+
+=== Changes since 1.5.7 ===
+
+* (bug 5180) User login page shows inappropriate email blurb
+* Add the "AbortNewAccount" hook on account creation; see hooks.txt for more info.
+* Update default "exporttext" to reflect that Special:Import exists
+* Add links to useful material to the default main page content
+* Fix fragment HTML injection
 
 
 === Caveats ===
