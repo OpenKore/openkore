@@ -1,9 +1,21 @@
+#ifdef __APPLE__
+	/* MacOS X has a kernel bug: poll() blocks when used on
+	 * stdin, even when timeout is set to 0! So we use
+	 * select() instead.
+	 */
+	#define USE_SELECT
+#endif
+
 #include <stdio.h>
 #include <readline/readline.h>
 #include <readline/history.h>
 #include <stdlib.h>
+#ifdef USE_SELECT
+	#include <sys/select.h>
+#else
+	#include <sys/poll.h>
+#endif
 #include <unistd.h>
-#include <sys/poll.h>
 #include <string.h>
 #include <assert.h>
 #include "consoleui.h"
@@ -69,10 +81,20 @@ ConsoleUI::lineRead(char *line) {
 
 bool
 ConsoleUI::canRead() {
+#ifdef USE_SELECT
+	fd_set f;
+	struct timeval t;
+	t.tv_sec = 0;
+	t.tv_usec = 0;
+	FD_ZERO(&f);
+	FD_SET(STDIN_FILENO, &f);
+	return select(STDIN_FILENO + 1, &f, NULL, NULL, &t) == 1;
+#else
 	struct pollfd ufds;
 	ufds.fd = STDIN_FILENO;
 	ufds.events = POLLIN;
 	return poll(&ufds, 1, 0) == 1;
+#endif
 }
 
 void *
