@@ -154,6 +154,15 @@ class Parser
 	}
 
 	/**
+	 * Accessor for mUniqPrefix.
+	 *
+	 * @access public
+	 */
+	function UniqPrefix() {
+		return $this->mUniqPrefix;
+	}
+
+	/**
 	 * First pass--just handle <nowiki> sections, pass the rest off
 	 * to internalParse() which does all the real work.
 	 *
@@ -435,7 +444,7 @@ class Parser
 				$full_tag = $ext_tags[$tag][$marker];
 				$params = $ext_params[$tag][$marker];
 				if ( $render ) {
-					$ext_content[$tag][$marker] = $callback( $content, $params );
+					$ext_content[$tag][$marker] = call_user_func_array( $callback, array( $content, $params, &$this ) );;
 				} else {
 					$ext_content[$tag][$marker] = "$full_tag$content</$tag>";
 				}
@@ -1298,12 +1307,17 @@ class Parser
 					$m[3] = $n[1];
 				}
 				# fix up urlencoded title texts
-				if(preg_match('/%/', $m[1] )) $m[1] = urldecode($m[1]);
+				//if(preg_match('/%/', $m[1] )) $m[1] = urldecode($m[1]);
+				if(preg_match('/%/', $m[1] )) 
+					# Should anchors '#' also be rejected?
+					$m[1] = str_replace( array('<', '>'), array('&lt;', '&gt;'), urldecode($m[1]) );
 				$trail = $m[3];
 			} elseif( preg_match($e1_img, $line, $m) ) { # Invalid, but might be an image with a link in its caption
 				$might_be_img = true;
 				$text = $m[2];
-				if(preg_match('/%/', $m[1] )) $m[1] = urldecode($m[1]);
+				if(preg_match('/%/', $m[1] )) 
+					# Should anchors '#' also be rejected?
+					$m[1] = str_replace( array('<', '>'), array('&lt;', '&gt;'), urldecode($m[1]) );
 				$trail = "";
 			} else { # Invalid form; output directly
 				$s .= $prefix . '[[' . $line ;
@@ -1927,7 +1941,7 @@ class Parser
 			case MAG_CURRENTTIME:
 				return $varCache[$index] = $wgContLang->time( wfTimestampNow(), false );
 			case MAG_CURRENTWEEK:
-				return $varCache[$index] = $wgContLang->formatNum( date('W') );
+				return $varCache[$index] = $wgContLang->formatNum( intval( date('W') ) );
 			case MAG_CURRENTDOW:
 				return $varCache[$index] = $wgContLang->formatNum( date('w') );
 			case MAG_NUMBEROFARTICLES:

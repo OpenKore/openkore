@@ -2070,21 +2070,27 @@ class Article {
 		# Update newtalk status if user is reading their own
 		# talk page
 
-		global $wgUser;
-		if ($this->mTitle->getNamespace() == NS_USER_TALK &&
-			$this->mTitle->getText() == $wgUser->getName())
-		{
-			if ( $wgUseEnotif ) {
-				require_once( 'UserTalkUpdate.php' );
-				$u = new UserTalkUpdate( 0, $this->mTitle->getNamespace(), $this->mTitle->getDBkey(), false, false, false );
-			} else {
-				$wgUser->setNewtalk(0);
-				$wgUser->saveNewtalk();
-			}
-		} elseif ( $wgUseEnotif ) {
-			$wgUser->clearNotification( $this->mTitle );
-		}
+		if (!wfRunHooks('UserClearNewTalkNotification', array(&$this)))
+			return;
 
+		global $wgUser;
+		if (wfRunHooks('ArticleEditUpdateNewTalk', array(&$this)) ) {
+			if ($this->mTitle->getNamespace() == NS_USER_TALK &&
+				$this->mTitle->getText() == $wgUser->getName())
+			{
+
+				if ( $wgUseEnotif ) {
+					require_once( 'UserTalkUpdate.php' );
+					$u = new UserTalkUpdate( 0, $this->mTitle->getNamespace(),
+						$this->mTitle->getDBkey(), false, false, false );
+				} else {
+					$wgUser->setNewtalk(0);
+					$wgUser->saveNewtalk();
+				}
+			} elseif ( $wgUseEnotif ) {
+				$wgUser->clearNotification( $this->mTitle );
+			}
+		}
 	}
 
 	/**
@@ -2150,8 +2156,12 @@ class Article {
 	}
 
 	/**
-	 * @todo document this function
-	 * @private
+	 * Generate the navigation links when browsing through an article revisions
+	 * It shows the information as:
+	 *   Revision as of <date>; view current revision
+	 *   <- Previous version | Next Version ->
+	 *
+	 * @access private
 	 * @param string $oldid		Revision ID of this article revision
 	 */
 	function setOldSubtitle( $oldid=0 ) {
@@ -2163,7 +2173,10 @@ class Article {
 		$lnk = $current
 			? wfMsg( 'currentrevisionlink' )
 			: $lnk = $sk->makeKnownLinkObj( $this->mTitle, wfMsg( 'currentrevisionlink' ) );
-		$prevlink = $sk->makeKnownLinkObj( $this->mTitle, wfMsg( 'previousrevision' ), 'direction=prev&oldid='.$oldid );
+		$prev = $this->mTitle->getPreviousRevisionID( $oldid ) ;
+		$prevlink = $prev
+			? $sk->makeKnownLinkObj( $this->mTitle, wfMsg( 'previousrevision' ), 'direction=prev&oldid='.$oldid )
+			: wfMsg( 'previousrevision' );
 		$nextlink = $current
 			? wfMsg( 'nextrevision' )
 			: $sk->makeKnownLinkObj( $this->mTitle, wfMsg( 'nextrevision' ), 'direction=next&oldid='.$oldid );
