@@ -1,7 +1,7 @@
 #########################################################################
 #  OpenKore - Console Interface Dynamic Loader
 #
-#  Copyright (c) 2004 OpenKore development team 
+#  Copyright (c) 2004,2005,2006,2007 OpenKore development team 
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -40,7 +40,7 @@ sub new {
 		Modules::register("Interface::Console::Win32");
 		return new Interface::Console::Win32();
 
-	} elsif ($^O eq 'linux') {
+	} elsif ($^O eq 'linux' || $^O eq 'darwin') {
 		my $mod = 'Interface::Console::Unix';
 		my $str = "use $mod;";
 		eval ${\$str};
