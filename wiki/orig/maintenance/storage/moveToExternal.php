@@ -1,7 +1,6 @@
 <?php
 
 define( 'REPORTING_INTERVAL', 100 );
-define( 'STUB_HEADER', 'O:15:"historyblobstub"' );
 
 if ( !defined( 'MEDIAWIKI' ) ) {
 	$optionsWithArgs = array( 'm' );
@@ -43,7 +42,7 @@ function moveToExternal( $cluster, $maxID ) {
 			wfWaitForSlaves( 5 );
 		}
 		$row = $dbw->selectRow( 'text', array( 'old_flags', 'old_text' ),
-			array( 
+			array(
 				'old_id' => $id,
 				"old_flags NOT LIKE '%external%'",
 			), $fname );
@@ -53,25 +52,43 @@ function moveToExternal( $cluster, $maxID ) {
 		}
 
 		# Resolve stubs
-		$flags = explode( ',', $row->old_flags );
-		if ( in_array( 'object', $flags ) 
-			&& substr( $row->old_text, 0, strlen( STUB_HEADER ) ) === STUB_HEADER ) 
-		{
-			resolveStub( $id, $row->old_text, $row->old_flags );
-			continue;
-		}
-
-		$url = $ext->store( $cluster, $row->old_text );
-		if ( !$url ) {
-			print "Error writing to external storage\n";
-			exit;
-		}
+		$text = $row->old_text;
 		if ( $row->old_flags === '' ) {
 			$flags = 'external';
 		} else {
 			$flags = "{$row->old_flags},external";
 		}
-		$dbw->update( 'text', 
+		
+		if ( strpos( $flags, 'object' ) !== false ) {
+			$obj = unserialize( $text );
+			$className = strtolower( get_class( $obj ) );
+			if ( $className == 'historyblobstub' ) {
+				resolveStub( $id, $row->old_text, $row->old_flags );
+				continue;
+			} elseif ( $className == 'historyblobcurstub' ) {
+				$text = gzdeflate( $obj->getText() );
+				$flags = 'utf-8,gzip,external';
+			} elseif ( $className == 'concatenatedgziphistoryblob' ) {
+				// Do nothing
+			} else {
+				print "Warning: unrecognised object class \"$className\"\n";
+				continue;
+			}
+		}
+
+		if ( strlen( $text ) < 100 ) {
+			// Don't move tiny revisions
+			continue;
+		}
+
+		#print "Storing "  . strlen( $text ) . " bytes to $url\n";
+
+		$url = $ext->store( $cluster, $text );
+		if ( !$url ) {
+			print "Error writing to external storage\n";
+			exit;
+		}
+		$dbw->update( 'text',
 			array( 'old_flags' => $flags, 'old_text' => $url ),
 			array( 'old_id' => $id ), $fname );
 	}

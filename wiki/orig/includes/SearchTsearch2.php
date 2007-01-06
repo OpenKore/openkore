@@ -1,20 +1,20 @@
 <?php
 # Copyright (C) 2004 Brion Vibber <brion@pobox.com>, Domas Mituzas <domas.mituzas@gmail.com>
 # http://www.mediawiki.org/
-# 
+#
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2 of the License, or 
+# the Free Software Foundation; either version 2 of the License, or
 # (at your option) any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License along
 # with this program; if not, write to the Free Software Foundation, Inc.,
-# 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+# 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 # http://www.gnu.org/copyleft/gpl.html
 
 /**
@@ -33,13 +33,13 @@ require_once( 'SearchEngine.php' );
  */
 class SearchTsearch2 extends SearchEngine {
 	var $strictMatching = false;
-	
+
 	function SearchTsearch2( &$db ) {
 		$this->db =& $db;
 		$this->db->setSchema('tsearch');
 		$this->mRanking = true;
 	}
-	
+
 	function getIndexField( $fulltext ) {
 		return $fulltext ? 'si_text' : 'si_title';
 	}
@@ -72,7 +72,7 @@ class SearchTsearch2 extends SearchEngine {
 		} else {
 			wfDebug( "Can't understand search query '{$this->filteredText}'\n" );
 		}
-		
+
 		$searchon = preg_replace('/(\s+)/','&',$searchon);
 		$searchon = $this->db->strencode( $searchon );
 		return $searchon;
@@ -86,7 +86,7 @@ class SearchTsearch2 extends SearchEngine {
 		else
 			return "";
 	}
-		
+
 
 	function queryMain( $filteredTerm, $fulltext ) {
 		$match = $this->parseQuery( $filteredTerm, $fulltext );
@@ -95,12 +95,12 @@ class SearchTsearch2 extends SearchEngine {
 		$searchindex = $this->db->tableName( 'searchindex' );
 		return 'SELECT cur_id, cur_namespace, cur_title, cur_text ' .
 			"FROM $cur,$searchindex " .
-			'WHERE cur_id=si_page AND ' . 
+			'WHERE cur_id=si_page AND ' .
 			" $field @@ to_tsquery ('$match') " ;
 	}
 
-        function update( $id, $title, $text ) {
-                $dbw=& wfGetDB(DB_MASTER);
+	function update( $id, $title, $text ) {
+	        $dbw=& wfGetDB(DB_MASTER);
 		$searchindex = $dbw->tableName( 'searchindex' );
 		$sql = "DELETE FROM $searchindex WHERE si_page={$id}";
 		$dbw->query($sql,"SearchTsearch2:update");
@@ -110,17 +110,17 @@ class SearchTsearch2 extends SearchEngine {
 				"'),to_tsvector('".
 				$dbw->strencode( $text)."')) ";
 		$dbw->query($sql,"SearchTsearch2:update");
-        }
+	}
 
-        function updateTitle($id,$title) {
-                $dbw=& wfGetDB(DB_MASTER);
-                $searchindex = $dbw->tableName( 'searchindex' );
-                $sql = "UPDATE $searchindex SET si_title=to_tsvector('" .
-                          $db->strencode( $title ) .
-                          "') WHERE si_page={$id}";
+	function updateTitle($id,$title) {
+	        $dbw=& wfGetDB(DB_MASTER);
+	        $searchindex = $dbw->tableName( 'searchindex' );
+	        $sql = "UPDATE $searchindex SET si_title=to_tsvector('" .
+	                  $db->strencode( $title ) .
+	                  "') WHERE si_page={$id}";
 
-                $dbw->query( $sql, "SearchMySQL4::updateTitle" );
-        }
+	        $dbw->query( $sql, "SearchMySQL4::updateTitle" );
+	}
 
 }
 

@@ -1,27 +1,27 @@
 <?php
 # Copyright (C) 2004 Brion Vibber <brion@pobox.com>
 # http://www.mediawiki.org/
-# 
+#
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2 of the License, or 
+# the Free Software Foundation; either version 2 of the License, or
 # (at your option) any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License along
 # with this program; if not, write to the Free Software Foundation, Inc.,
-# 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+# 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 # http://www.gnu.org/copyleft/gpl.html
 
 /**
  * Test feeds random 16-byte strings to both the pure PHP and ICU-based
  * UtfNormal::cleanUp() code paths, and checks to see if there's a
  * difference. Will run forever until it finds one or you kill it.
- * 
+ *
  * @package UtfNormal
  * @access private
  */
@@ -51,7 +51,7 @@ function donorm( $str ) {
 	$str = preg_replace( '/[\x00-\x08\x0b\x0c\x0e-\x1f]/', UTF8_REPLACEMENT, $str );
 	$str = str_replace( UTF8_FFFE, UTF8_REPLACEMENT, $str );
 	$str = str_replace( UTF8_FFFF, UTF8_REPLACEMENT, $str );
-	
+
 	# UnicodeString constructor fails if the string ends with a head byte.
 	# Add a junk char at the end, we'll strip it off
 	return rtrim( utf8_normalize( $str . "\x01", UNORM_NFC ), "\x01" );
@@ -64,7 +64,7 @@ function wfMsg($x) {
 function showDiffs( $a, $b ) {
 	$ota = explode( "\n", str_replace( "\r\n", "\n", $a ) );
 	$nta = explode( "\n", str_replace( "\r\n", "\n", $b ) );
-	
+
 	$diffs =& new Diff( $ota, $nta );
 	$formatter =& new TableDiffFormatter();
 	$funky = $formatter->format( $diffs );
@@ -80,7 +80,7 @@ $n = 0;
 while( true ) {
 	$n++;
 	echo "$n\n";
-	
+
 	$str = randomString( $size, true);
 	$clean = UtfNormal::cleanUp( $str );
 	$norm = donorm( $str );
@@ -97,8 +97,8 @@ while( true ) {
 		showDiffs( $clean, $norm );
 		die();
 	}
-	
-	
+
+
 	$str = '';
 	$clean = '';
 	$norm = '';

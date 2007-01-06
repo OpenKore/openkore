@@ -14,7 +14,7 @@ function wfSpecialUserlogin() {
 	if( !$wgCommandLineMode && !isset( $_COOKIE[session_name()] )  ) {
 		User::SetupSession();
 	}
-	
+
 	$form = new LoginForm( $wgRequest );
 	$form->execute();
 }
@@ -28,7 +28,7 @@ class LoginForm {
 	var $mName, $mPassword, $mRetype, $mReturnto, $mCookieCheck, $mPosted;
 	var $mAction, $mCreateaccount, $mCreateaccountMail, $mMailmypassword;
 	var $mLoginattempt, $mRemember, $mEmail, $mDomain;
-	
+
 	/**
 	 * Constructor
 	 * @param webrequest $request A webrequest object passed by reference
@@ -37,6 +37,7 @@ class LoginForm {
 		global $wgLang, $wgAllowRealName, $wgEnableEmail;
 		global $wgAuth;
 
+		$this->mType = $request->getText( 'type' );
 		$this->mName = $request->getText( 'wpName' );
 		$this->mPassword = $request->getText( 'wpPassword' );
 		$this->mRetype = $request->getText( 'wpRetype' );
@@ -52,7 +53,7 @@ class LoginForm {
 		$this->mLoginattempt = $request->getCheck( 'wpLoginattempt' );
 		$this->mAction = $request->getVal( 'action' );
 		$this->mRemember = $request->getCheck( 'wpRemember' );
-		
+
 		if( $wgEnableEmail ) {
 			$this->mEmail = $request->getText( 'wpEmail' );
 		} else {
@@ -63,12 +64,12 @@ class LoginForm {
 		} else {
 		    $this->mRealName = '';
 		}
-		
+
 		if( !$wgAuth->validDomain( $this->mDomain ) ) {
 			$this->mDomain = 'invaliddomain';
 		}
 		$wgAuth->setDomain( $this->mDomain );
- 
+
 		# When switching accounts, it sucks to get automatically logged out
 		if( $this->mReturnto == $wgLang->specialPage( 'Userlogout' ) ) {
 			$this->mReturnto = '';
@@ -98,7 +99,7 @@ class LoginForm {
 	 */
 	function addNewAccountMailPassword() {
 		global $wgOut;
-		
+
 		if ('' == $this->mEmail) {
 			$this->mainLoginForm( wfMsg( 'noemail', htmlspecialchars( $this->mName ) ) );
 			return;
@@ -112,11 +113,11 @@ class LoginForm {
 
 		$u->saveSettings();
 		$result = $this->mailPasswordInternal($u);
-		
+
 		$wgOut->setPageTitle( wfMsg( 'accmailtitle' ) );
 		$wgOut->setRobotpolicy( 'noindex,nofollow' );
 		$wgOut->setArticleRelated( false );
-	
+
 		if( WikiError::isError( $result ) ) {
 			$this->mainLoginForm( wfMsg( 'mailerror', $result->getMessage() ) );
 		} else {
@@ -131,7 +132,7 @@ class LoginForm {
 	 * @access private
 	 */
 	function addNewAccount() {
-		global $wgUser, $wgOut, $wgEmailAuthentication;
+		global $wgUser, $wgEmailAuthentication;
 
 		$u = $this->addNewAccountInternal();
 
@@ -146,11 +147,11 @@ class LoginForm {
 		if( $wgEmailAuthentication && $wgUser->isValidEmailAddr( $wgUser->getEmail() ) ) {
 			$wgUser->sendConfirmationMail();
 		}
-		
+
 		wfRunHooks( 'AddNewAccount' );
 
 		if( $this->hasSessionCookie() ) {
-			return $this->successfulLogin( wfMsg( 'welcomecreation', $wgUser->getName() ) );
+			return $this->successfulLogin( wfMsg( 'welcomecreation', $wgUser->getName() ), false );
 		} else {
 			return $this->cookieRedirectCheck( 'new' );
 		}
@@ -161,9 +162,9 @@ class LoginForm {
 	 */
 	function addNewAccountInternal() {
 		global $wgUser, $wgOut;
-		global $wgUseLatin1, $wgEnableSorbs, $wgProxyWhitelist;
-		global $wgMemc, $wgAccountCreationThrottle, $wgDBname, $wgIP;
-		global $wgAuth;
+		global $wgEnableSorbs, $wgProxyWhitelist;
+		global $wgMemc, $wgAccountCreationThrottle, $wgDBname;
+		global $wgAuth, $wgMinimalPasswordLength, $wgReservedUsernames;
 
 		// If the user passes an invalid domain, something is fishy
 		if( !$wgAuth->validDomain( $this->mDomain ) ) {
@@ -184,38 +185,38 @@ class LoginForm {
 			}
 		}
 
+		if ( wfReadOnly() ) {
+			$wgOut->readOnlyPage();
+			return false;
+		}
+
 		if (!$wgUser->isAllowedToCreateAccount()) {
 			$this->userNotPrivilegedMessage();
 			return false;
 		}
 
-		if ( $wgEnableSorbs && !in_array( $wgIP, $wgProxyWhitelist ) && 
-		  $wgUser->inSorbsBlacklist( $wgIP ) ) 
+		$ip = wfGetIP();
+		if ( $wgEnableSorbs && !in_array( $ip, $wgProxyWhitelist ) &&
+		  $wgUser->inSorbsBlacklist( $ip ) )
 		{
-			$this->mainLoginForm( wfMsg( 'sorbs_create_account_reason' ) . ' (' . htmlspecialchars( $wgIP ) . ')' );
+			$this->mainLoginForm( wfMsg( 'sorbs_create_account_reason' ) . ' (' . htmlspecialchars( $ip ) . ')' );
 			return;
 		}
 
-
-		if ( 0 != strcmp( $this->mPassword, $this->mRetype ) ) {
-			$this->mainLoginForm( wfMsg( 'badretype' ) );
-			return false;
-		}
-		
 		$name = trim( $this->mName );
 		$u = User::newFromName( $name );
-		if ( is_null( $u ) ) {
+		if ( is_null( $u ) || in_array( $u->getName(), $wgReservedUsernames ) ) {
 			$this->mainLoginForm( wfMsg( 'noname' ) );
 			return false;
 		}
-		
-		if ( wfReadOnly() ) {
-			$wgOut->readOnlyPage();
-			return false;
-		}
-		
+
 		if ( 0 != $u->idForName() ) {
 			$this->mainLoginForm( wfMsg( 'userexists' ) );
+			return false;
+		}
+
+		if ( 0 != strcmp( $this->mPassword, $this->mRetype ) ) {
+			$this->mainLoginForm( wfMsg( 'badretype' ) );
 			return false;
 		}
 
@@ -225,7 +226,7 @@ class LoginForm {
 		}
 
 		if ( $wgAccountCreationThrottle ) {
-			$key = $wgDBname.':acctcreate:ip:'.$wgIP;
+			$key = $wgDBname.':acctcreate:ip:'.$ip;
 			$value = $wgMemc->incr( $key );
 			if ( !$value ) {
 				$wgMemc->set( $key, 1, 86400 );
@@ -238,6 +239,7 @@ class LoginForm {
 
 		$abortError = '';
 		if( !wfRunHooks( 'AbortNewAccount', array( $u, &$abortError ) ) ) {
+			// Hook point to add extra creation throttles and blocks
 			wfDebug( "LoginForm::addNewAccountInternal: a hook blocked creation\n" );
 			$this->mainLoginForm( $abortError );
 			return false;
@@ -254,7 +256,7 @@ class LoginForm {
 
 		return $this->initUser( $u );
 	}
-	
+
 	/**
 	 * Actually add a user to the database.
 	 * Give it a User object that has been initialised with a name.
@@ -269,14 +271,12 @@ class LoginForm {
 		$u->setEmail( $this->mEmail );
 		$u->setRealName( $this->mRealName );
 		$u->setToken();
-		
+
 		global $wgAuth;
 		$wgAuth->initUser( $u );
 
-		if ( $this->mRemember ) { $r = 1; }
-		else { $r = 0; }
-		$u->setOption( 'rememberpassword', $r );
-		
+		$u->setOption( 'rememberpassword', $this->mRemember ? 1 : 0 );
+
 		return $u;
 	}
 
@@ -284,15 +284,14 @@ class LoginForm {
 	 * @access private
 	 */
 	function processLogin() {
-		global $wgUser;
-		global $wgAuth;
+		global $wgUser, $wgAuth, $wgReservedUsernames;
 
 		if ( '' == $this->mName ) {
 			$this->mainLoginForm( wfMsg( 'noname' ) );
 			return;
 		}
 		$u = User::newFromName( $this->mName );
-		if( is_null( $u ) ) {
+		if( is_null( $u ) || in_array( $u->getName(), $wgReservedUsernames ) ) {
 			$this->mainLoginForm( wfMsg( 'noname' ) );
 			return;
 		}
@@ -319,7 +318,7 @@ class LoginForm {
 		}
 
 		if (!$u->checkPassword( $this->mPassword )) {
-			$this->mainLoginForm( wfMsg( 'wrongpassword' ) );
+			$this->mainLoginForm( wfMsg( $this->mPassword == '' ? 'wrongpasswordempty' : 'wrongpassword' ) );
 			return;
 		}
 
@@ -338,7 +337,7 @@ class LoginForm {
 		$wgUser->setCookies();
 
 		$wgUser->saveSettings();
-		
+
 		if( $this->hasSessionCookie() ) {
 			return $this->successfulLogin( wfMsg( 'loginsuccess', $wgUser->getName() ) );
 		} else {
@@ -350,9 +349,6 @@ class LoginForm {
 	 * @access private
 	 */
 	function mailPassword() {
-		global $wgUser, $wgDeferredUpdateList, $wgOutputEncoding;
-		global $wgCookiePath, $wgCookieDomain, $wgDBname;
-
 		if ( '' == $this->mName ) {
 			$this->mainLoginForm( wfMsg( 'noname' ) );
 			return;
@@ -373,7 +369,7 @@ class LoginForm {
 		if( WikiError::isError( $result ) ) {
 			$this->mainLoginForm( wfMsg( 'mailerror', $result->getMessage() ) );
 		} else {
-			$this->mainLoginForm( wfMsg( 'passwordsent', $u->getName() ) );
+			$this->mainLoginForm( wfMsg( 'passwordsent', $u->getName() ), 'success' );
 		}
 	}
 
@@ -383,8 +379,7 @@ class LoginForm {
 	 * @access private
 	 */
 	function mailPasswordInternal( $u ) {
-		global $wgPasswordSender, $wgIP;
-		global $wgCookiePath, $wgCookieDomain, $wgCookiePrefix;
+		global $wgCookiePath, $wgCookieDomain, $wgCookiePrefix, $wgCookieSecure;
 
 		if ( '' == $u->getEmail() ) {
 			return wfMsg( 'noemail', $u->getName() );
@@ -393,11 +388,11 @@ class LoginForm {
 		$np = $u->randomPassword();
 		$u->setNewpassword( $np );
 
-		setcookie( "{$wgCookiePrefix}Token", '', time() - 3600, $wgCookiePath, $wgCookieDomain );
+		setcookie( "{$wgCookiePrefix}Token", '', time() - 3600, $wgCookiePath, $wgCookieDomain, $wgCookieSecure );
 
 		$u->saveSettings();
 
-		$ip = $wgIP;
+		$ip = wfGetIP();
 		if ( '' == $ip ) { $ip = '(Unknown)'; }
 
 		$m = wfMsg( 'passwordremindertext', $ip, $u->getName(), $np );
@@ -408,42 +403,43 @@ class LoginForm {
 
 
 	/**
-	 * @param string $msg Message that will be shown on success.
+	 * @param string $msg Message that will be shown on success
+	 * @param bool $auto Toggle auto-redirect to main page; default true
 	 * @access private
 	 */
-	function successfulLogin( $msg ) {
+	function successfulLogin( $msg, $auto = true ) {
 		global $wgUser;
 		global $wgOut;
 
 		# Run any hooks; ignore results
-		
+
 		wfRunHooks('UserLoginComplete', array(&$wgUser));
-		
+
 		$wgOut->setPageTitle( wfMsg( 'loginsuccesstitle' ) );
 		$wgOut->setRobotpolicy( 'noindex,nofollow' );
 		$wgOut->setArticleRelated( false );
 		$wgOut->addWikiText( $msg );
-		$wgOut->returnToMain();
+		$wgOut->returnToMain( $auto );
 	}
 
 	/** */
 	function userNotPrivilegedMessage() {
 		global $wgOut;
-		
+
 		$wgOut->setPageTitle( wfMsg( 'whitelistacctitle' ) );
 		$wgOut->setRobotpolicy( 'noindex,nofollow' );
 		$wgOut->setArticleRelated( false );
 
 		$wgOut->addWikiText( wfMsg( 'whitelistacctext' ) );
-		
+
 		$wgOut->returnToMain( false );
 	}
 
 	/**
 	 * @access private
 	 */
-	function mainLoginForm( $err ) {
-		global $wgUser, $wgOut, $wgLang;
+	function mainLoginForm( $msg, $msgtype = 'error' ) {
+		global $wgUser, $wgOut;
 		global $wgAllowRealName, $wgEnableEmail;
 		global $wgCookiePrefix;
 		global $wgAuth;
@@ -456,15 +452,40 @@ class LoginForm {
 			}
 		}
 
-		$q = 'action=submitlogin';
-		if ( !empty( $this->mReturnto ) ) {
-			$q .= '&returnto=' . wfUrlencode( $this->mReturnto );
-		}
 		$titleObj = Title::makeTitle( NS_SPECIAL, 'Userlogin' );
 
+		require_once( 'SkinTemplate.php' );
 		require_once( 'templates/Userlogin.php' );
-		$template =& new UserloginTemplate();
+
+		if ( $this->mType == 'signup' ) {
+			$template =& new UsercreateTemplate();
+			$q = 'action=submitlogin&type=signup';
+			$linkq = 'type=login';
+			$linkmsg = 'gotaccount';
+		} else {
+			$template =& new UserloginTemplate();
+			$q = 'action=submitlogin&type=login';
+			$linkq = 'type=signup';
+			$linkmsg = 'nologin';
+		}
+
+		if ( !empty( $this->mReturnto ) ) {
+			$returnto = '&returnto=' . wfUrlencode( $this->mReturnto );
+			$q .= $returnto;
+			$linkq .= $returnto;
+		}
+
+		$link = '<a href="' . htmlspecialchars ( $titleObj->getLocalUrl( $linkq ) ) . '">';
+		$link .= wfMsgHtml( $linkmsg . 'link' );
+		$link .= '</a>';
+
+		# Don't show a "create account" link if the user can't
+		if( $this->showCreateOrLoginLink( $wgUser ) )
+			$template->set( 'link', wfMsgHtml( $linkmsg, $link ) );
+		else
+			$template->set( 'link', '' );
 		
+		$template->set( 'header', '' );
 		$template->set( 'name', $this->mName );
 		$template->set( 'password', $this->mPassword );
 		$template->set( 'retype', $this->mRetype );
@@ -473,18 +494,39 @@ class LoginForm {
 		$template->set( 'domain', $this->mDomain );
 
 		$template->set( 'action', $titleObj->getLocalUrl( $q ) );
-		$template->set( 'error', $err );
+		$template->set( 'message', $msg );
+		$template->set( 'messagetype', $msgtype );
 		$template->set( 'create', $wgUser->isAllowedToCreateAccount() );
 		$template->set( 'createemail', $wgEnableEmail && $wgUser->isLoggedIn() );
 		$template->set( 'userealname', $wgAllowRealName );
 		$template->set( 'useemail', $wgEnableEmail );
 		$template->set( 'remember', $wgUser->getOption( 'rememberpassword' ) or $this->mRemember  );
-		$wgAuth->modifyUITemplate( $template );
 		
+		// Give authentication and captcha plugins a chance to modify the form
+		$wgAuth->modifyUITemplate( $template );
+		if ( $this->mType == 'signup' ) {
+			wfRunHooks( 'UserCreateForm', array( &$template ) );
+		} else {
+			wfRunHooks( 'UserLoginForm', array( &$template ) );
+		}
+
 		$wgOut->setPageTitle( wfMsg( 'userlogin' ) );
 		$wgOut->setRobotpolicy( 'noindex,nofollow' );
 		$wgOut->setArticleRelated( false );
 		$wgOut->addTemplate( $template );
+	}
+	
+	/**
+	 * @access private
+	 */
+	function showCreateOrLoginLink( &$user ) {
+		if( $this->mType == 'signup' ) {
+			return( true );
+		} elseif( $user->isAllowedToCreateAccount() ) {
+			return( true );
+		} else {
+			return( false );
+		}
 	}
 
 	/**
@@ -494,12 +536,12 @@ class LoginForm {
 		global $wgDisableCookieCheck;
 		return ( $wgDisableCookieCheck ) ? true : ( isset( $_COOKIE[session_name()] ) );
 	}
-	  
+
 	/**
 	 * @access private
 	 */
 	function cookieRedirectCheck( $type ) {
-		global $wgOut, $wgLang;
+		global $wgOut;
 
 		$titleObj = Title::makeTitle( NS_SPECIAL, 'Userlogin' );
 		$check = $titleObj->getFullURL( 'wpCookieCheck='.$type );

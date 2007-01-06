@@ -15,7 +15,7 @@
 #
 # You should have received a copy of the GNU General Public License along
 # with this program; if not, write to the Free Software Foundation, Inc.,
-# 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+# 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 # http://www.gnu.org/copyleft/gpl.html
 
 /**
@@ -30,11 +30,11 @@
  *
  * The goal is to get a list of messages not yet localised in a languageXX.php
  * file using the language.php file as reference.
- * 
+ *
  * The script then print a list of wgAllMessagesXX keys that aren't localised, a
  * percentage of messages correctly localised and the number of messages to be
  * translated.
- * 
+ *
  * @package MediaWiki
  * @subpackage Maintenance
  */
@@ -43,14 +43,14 @@
 require_once( 'parserTests.inc' );
 require_once( 'commandLine.inc' );
 
-if( isset($options['help']) ) { usage(); die(); }
+if( isset($options['help']) ) { usage(); wfDie(); }
 
 $wgLanguageCode = ucfirstlcrest($wgLanguageCode);
 /** Language messages we will use as reference. By default 'en' */
 $referenceMessages = $wgAllMessagesEn;
 $referenceLanguage = 'En';
 $referenceFilename = 'Language'.$referenceLanguage.'.php';
-/** Language messages we will test. */ 
+/** Language messages we will test. */
 $testMessages = array();
 $testLanguage = '';
 /** whereas we use an external language file */
@@ -75,7 +75,7 @@ function ucfirstlcrest($string) {
 function getMediawikiMessages($languageCode = 'En') {
 
 	$foo = "wgAllMessages$languageCode";
-	global $$foo;
+	global $$foo, $wgSkinNamesEn;
 
 	// it might already be loaded in LocalSettings.php
 	if(!isset($$foo)) {
@@ -85,7 +85,7 @@ function getMediawikiMessages($languageCode = 'En') {
 			print "Including $langFile\n";
 			global $wgNamespaceNamesEn;
 			include($langFile);
-		} else die("ERROR: The file $langFile does not exist !\n");
+		} else wfDie("ERROR: The file $langFile does not exist !\n");
 	}
 	return $$foo;
 }
@@ -121,10 +121,10 @@ if ( isset($args[0]) ) {
 
 	// Load datas from MediaWiki
 	$testMessages = getMediawikiMessages($lang);
-	$testLanguage = $lang;		
+	$testLanguage = $lang;
 } else {
 	usage();
-	die();
+	wfDie();
 }
 
 /** parsertest is used to do differences */
@@ -148,7 +148,7 @@ foreach($referenceMessages as $index => $ref)
 		print "'$index' => \"$ref\",\n";
 	// Messages in the same language differs
 	} elseif( ($lang == $referenceLanguage) AND ($testMessages[$index] != $ref)) {
-		print "$index differs:\n";
+		print "\n$index differs:\n";
 		print $myParserTest->quickDiff($testMessages[$index],$ref,'tested','reference');
 	}
 }

@@ -2,8 +2,8 @@
 
 /**
  * This is PostgreSQL database abstraction layer.
- * 
- * As it includes more generic version for DB functions, 
+ *
+ * As it includes more generic version for DB functions,
  * than MySQL ones, some of them should be moved to parent
  * Database class.
  *
@@ -26,13 +26,13 @@ class DatabasePgsql extends Database {
 	var $mInsertId = NULL;
 	var $mLastResult = NULL;
 
-	function DatabasePgsql($server = false, $user = false, $password = false, $dbName = false, 
+	function DatabasePgsql($server = false, $user = false, $password = false, $dbName = false,
 		$failFunction = false, $flags = 0, $tablePrefix = 'get from global' )
 	{
 		Database::Database( $server, $user, $password, $dbName, $failFunction, $flags, $tablePrefix );
 	}
 
-	/* static */ function newFromParams( $server = false, $user = false, $password = false, $dbName = false, 
+	/* static */ function newFromParams( $server = false, $user = false, $password = false, $dbName = false,
 		$failFunction = false, $flags = 0, $tablePrefix = 'get from global' )
 	{
 		return new DatabasePgsql( $server, $user, $password, $dbName, $failFunction, $flags, $tablePrefix );
@@ -45,7 +45,7 @@ class DatabasePgsql extends Database {
 	function open( $server, $user, $password, $dbName ) {
 		# Test for PostgreSQL support, to avoid suppressed fatal error
 		if ( !function_exists( 'pg_connect' ) ) {
-			die( "PostgreSQL functions missing, have you compiled PHP with the --with-pgsql option?\n" );
+			wfDie( "PostgreSQL functions missing, have you compiled PHP with the --with-pgsql option?\n" );
 		}
 
 		global $wgDBschema;
@@ -56,9 +56,9 @@ class DatabasePgsql extends Database {
 		$this->mPassword = $password;
 		$this->mDBname = $dbName;
 		$this->mSchemas = array($wgDBschema,'public');
-		
+
 		$success = false;
-		
+
 		if ( '' != $dbName ) {
 			# start a database connection
 			$hstring="";
@@ -70,14 +70,14 @@ class DatabasePgsql extends Database {
 				wfDebug( "DB connection error\n" );
 				wfDebug( "Server: $server, Database: $dbName, User: $user, Password: " . substr( $password, 0, 3 ) . "...\n" );
 				wfDebug( $this->lastError()."\n" );
-			} else { 
+			} else {
 				$this->setSchema();
 				$this->mOpened = true;
 			}
 		}
 		return $this->mConn;
 	}
-	
+
 	/**
 	 * Closes a database connection, if it is open
 	 * Returns success, true if already closed
@@ -90,25 +90,25 @@ class DatabasePgsql extends Database {
 			return true;
 		}
 	}
-	
+
 	function doQuery( $sql ) {
 		return $this->mLastResult=pg_query( $this->mConn , $sql);
 	}
-		
+
 	function queryIgnore( $sql, $fname = '' ) {
 		return $this->query( $sql, $fname, true );
 	}
-	
+
 	function freeResult( $res ) {
 		if ( !@pg_free_result( $res ) ) {
 			wfDebugDieBacktrace( "Unable to free PostgreSQL result\n" );
 		}
 	}
-	
+
 	function fetchObject( $res ) {
 		@$row = pg_fetch_object( $res );
 		# FIXME: HACK HACK HACK HACK debug
-		
+
 		# TODO:
 		# hashar : not sure if the following test really trigger if the object
 		#          fetching failled.
@@ -120,14 +120,14 @@ class DatabasePgsql extends Database {
 
 	function fetchRow( $res ) {
 		@$row = pg_fetch_array( $res );
-                if( pg_last_error($this->mConn) ) {
-                        wfDebugDieBacktrace( 'SQL error: ' . htmlspecialchars( pg_last_error($this->mConn) ) );
-                }
+		if( pg_last_error($this->mConn) ) {
+			wfDebugDieBacktrace( 'SQL error: ' . htmlspecialchars( pg_last_error($this->mConn) ) );
+		}
 		return $row;
 	}
 
 	function numRows( $res ) {
-		@$n = pg_num_rows( $res ); 
+		@$n = pg_num_rows( $res );
 		if( pg_last_error($this->mConn) ) {
 			wfDebugDieBacktrace( 'SQL error: ' . htmlspecialchars( pg_last_error($this->mConn) ) );
 		}
@@ -135,11 +135,11 @@ class DatabasePgsql extends Database {
 	}
 	function numFields( $res ) { return pg_num_fields( $res ); }
 	function fieldName( $res, $n ) { return pg_field_name( $res, $n ); }
-	
+
 	/**
 	 * This must be called after nextSequenceVal
 	 */
-	function insertId() { 
+	function insertId() {
 		return $this->mInsertId;
 	}
 
@@ -147,10 +147,10 @@ class DatabasePgsql extends Database {
 	function lastError() { return pg_last_error(); }
 	function lastErrno() { return 1; }
 
-	function affectedRows() { 
-		return pg_affected_rows( $this->mLastResult ); 
+	function affectedRows() {
+		return pg_affected_rows( $this->mLastResult );
 	}
-	
+
 	/**
 	 * Returns information about an index
 	 * If errors are explicitly ignored, returns NULL on failure
@@ -161,7 +161,7 @@ class DatabasePgsql extends Database {
 		if ( !$res ) {
 			return NULL;
 		}
-		
+
 		while ( $row = $this->fetchObject( $res ) ) {
 			if ( $row->Key_name == $index ) {
 				return $row;
@@ -176,10 +176,10 @@ class DatabasePgsql extends Database {
 		$res = $this->query( $sql, $fname );
 		if ( !$res )
 			return NULL;
-		while ($row = $this->fetchObject( $res )) 
+		while ($row = $this->fetchObject( $res ))
 			return true;
 		return false;
-		
+
 	}
 
 	function fieldInfo( $table, $field ) {
@@ -201,12 +201,12 @@ class DatabasePgsql extends Database {
 	function insert( $table, $a, $fname = 'Database::insert', $options = array() ) {
 		# PostgreSQL doesn't support options
 		# We have a go at faking one of them
-		# TODO: DELAYED, LOW_PRIORITY 
+		# TODO: DELAYED, LOW_PRIORITY
 
 		if ( !is_array($options))
 			$options = array($options);
 
-		if ( in_array( 'IGNORE', $options ) ) 
+		if ( in_array( 'IGNORE', $options ) )
 			$oldIgnore = $this->ignoreErrors( true );
 
 		# IGNORE is performed using single-row inserts, ignoring errors in each
@@ -221,18 +221,10 @@ class DatabasePgsql extends Database {
 		$this->ignoreErrors( $oldIgnore );
 		$retVal = true;
 
-		if ( in_array( 'IGNORE', $options ) ) 
+		if ( in_array( 'IGNORE', $options ) )
 			$this->ignoreErrors( $oldIgnore );
 
 		return $retVal;
-	}
-	
-	function startTimer( $timeout )
-	{
-		global $IP;
-		wfDebugDieBacktrace( 'Database::startTimer() error : mysql_thread_id() not implemented for postgre' );
-		/*$tid = mysql_thread_id( $this->mConn );
-		exec( "php $IP/killthread.php $timeout $tid &>/dev/null &" );*/
 	}
 
 	function tableName( $name ) {
@@ -248,7 +240,7 @@ class DatabasePgsql extends Database {
 			case 'old':
 			case 'group':
 				return '"' . $name . '"';
-			
+
 			default:
 				return $name;
 		}
@@ -278,15 +270,15 @@ class DatabasePgsql extends Database {
 	# REPLACE query wrapper
 	# PostgreSQL simulates this with a DELETE followed by INSERT
 	# $row is the row to insert, an associative array
-	# $uniqueIndexes is an array of indexes. Each element may be either a 
+	# $uniqueIndexes is an array of indexes. Each element may be either a
 	# field name or an array of field names
 	#
-	# It may be more efficient to leave off unique indexes which are unlikely to collide. 
-	# However if you do this, you run the risk of encountering errors which wouldn't have 
+	# It may be more efficient to leave off unique indexes which are unlikely to collide.
+	# However if you do this, you run the risk of encountering errors which wouldn't have
 	# occurred in MySQL
 	function replace( $table, $uniqueIndexes, $rows, $fname = 'Database::replace' ) {
 		$table = $this->tableName( $table );
-	
+
 		if (count($rows)==0) {
 			return;
 		}
@@ -311,7 +303,7 @@ class DatabasePgsql extends Database {
 					if ( is_array( $index ) ) {
 						$first2 = true;
 						foreach ( $index as $col ) {
-							if ( $first2 ) { 
+							if ( $first2 ) {
 								$first2 = false;
 							} else {
 								$sql .= ' AND ';
@@ -354,28 +346,28 @@ class DatabasePgsql extends Database {
 	function textFieldSize( $table, $field ) {
 		$table = $this->tableName( $table );
 		$sql = "SELECT t.typname as ftype,a.atttypmod as size
-			FROM pg_class c, pg_attribute a, pg_type t 
-			WHERE relname='$table' AND a.attrelid=c.oid AND 
+			FROM pg_class c, pg_attribute a, pg_type t
+			WHERE relname='$table' AND a.attrelid=c.oid AND
 				a.atttypid=t.oid and a.attname='$field'";
 		$res =$this->query($sql);
 		$row=$this->fetchObject($res);
 		if ($row->ftype=="varchar") {
-			$size=$row->size-4;	
+			$size=$row->size-4;
 		} else {
 			$size=$row->size;
 		}
 		$this->freeResult( $res );
 		return $size;
 	}
-	
+
 	function lowPriorityOption() {
 		return '';
 	}
 
-	function limitResult($limit,$offset) {
-        	return " LIMIT $limit ".(is_numeric($offset)?" OFFSET {$offset} ":"");
+	function limitResult($sql, $limit,$offset) {
+		return "$sql LIMIT $limit ".(is_numeric($offset)?" OFFSET {$offset} ":"");
 	}
-	
+
 	/**
 	 * Returns an SQL expression for a simple conditional.
 	 * Uses CASE on PostgreSQL.
@@ -399,12 +391,12 @@ class DatabasePgsql extends Database {
 		return wfTimestamp(TS_DB,$ts);
 	}
 
-        /**
-         * Return aggregated value function call
-         */
-        function aggregateValue ($valuedata,$valuename='value') {
-                return $valuedata;
-        }
+	/**
+	 * Return aggregated value function call
+	 */
+	function aggregateValue ($valuedata,$valuename='value') {
+		return $valuedata;
+	}
 
 
 	function reportQueryError( $error, $errno, $sql, $fname, $tempIgnore = false ) {
@@ -421,7 +413,7 @@ class DatabasePgsql extends Database {
 	function getSoftwareLink() {
 		return "[http://www.postgresql.org/ PostgreSQL]";
 	}
-	
+
 	/**
 	 * @return string Version information from the database
 	 */

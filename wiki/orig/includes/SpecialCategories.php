@@ -28,27 +28,32 @@ class CategoriesPage extends QueryPage {
 	function isSyndicated() { return false; }
 
 	function getPageHeader() {
-		return '<p>'.wfMsg('categoriespagetext')."</p><br />\n";
+		return wfMsgWikiHtml( 'categoriespagetext' );
 	}
+	
 	function getSQL() {
 		$NScat = NS_CATEGORY;
 		$dbr =& wfGetDB( DB_SLAVE );
 		$categorylinks = $dbr->tableName( 'categorylinks' );
-		return "SELECT DISTINCT 'Categories' as type, 
+		$s= "SELECT 'Categories' as type,
 				{$NScat} as namespace,
 				cl_to as title,
-				1 as value
-			   FROM $categorylinks";
+				1 as value,
+				COUNT(*) as count
+			   FROM $categorylinks
+			   GROUP BY cl_to";
+		return $s;
 	}
-	
+
 	function sortDescending() {
 		return false;
 	}
 
 	function formatResult( $skin, $result ) {
-		global $wgLang;
 		$title = Title::makeTitle( NS_CATEGORY, $result->title );
-		return $skin->makeLinkObj( $title, $title->getText() );
+		$plink = $skin->makeLinkObj( $title, $title->getText() );
+		$nlinks = wfMsg( 'nlinks', $result->count );
+		return "$plink ($nlinks)";
 	}
 }
 

@@ -2,7 +2,7 @@
 /**
  * Script to initialise the MediaWiki namespace
  *
- * This script is included from update.php and install.php. Do not run it 
+ * This script is included from update.php and install.php. Do not run it
  * by itself.
  *
  * @deprecated
@@ -19,7 +19,7 @@ function initialiseMessages( $overwrite = false, $messageArray = false ) {
 	global $wgLanguageNames;
 	global $IP;
 
-	# overwrite language conversion	option so that all variants 
+	# overwrite language conversion	option so that all variants
 	# of the messages are initialised
 	$wgDisableLangConversion = false;
 
@@ -28,7 +28,7 @@ function initialiseMessages( $overwrite = false, $messageArray = false ) {
 	} else {
 		$sortedArray = $wgAllMessagesEn;
 	}
-	
+
 	ksort( $sortedArray );
 	$messages=array();
 
@@ -39,7 +39,7 @@ function initialiseMessages( $overwrite = false, $messageArray = false ) {
 	foreach ($variants as $v) {
 		$langclass = 'Language'. str_replace( '-', '_', ucfirst( $v ) );
 		if( !class_exists($langclass) ) {
-			die ("class $langclass not defined. perhaps you need to include the file $langclass.php in $wgContLangClass.php?");
+			wfDie( "class $langclass not defined. perhaps you need to include the file $langclass.php in $wgContLangClass.php?" );
 		}
 		$lang = new $langclass;
 
@@ -84,7 +84,7 @@ function initialiseMessagesReal( $overwrite = false, $messageArray = false ) {
 	$wgUser = new User;
 	$wgUser->setLoaded( true ); # Don't load from DB
 	$wgUser->setName( 'MediaWiki default' );
-	
+
 	# Don't try to draw messages from the database we're initialising
 	$wgMessageCache->disable();
 	$wgMessageCache->disableTransform();
@@ -92,14 +92,14 @@ function initialiseMessagesReal( $overwrite = false, $messageArray = false ) {
 	$fname = 'initialiseMessages';
 	$ns = NS_MEDIAWIKI;
 	# cur_user_text responsible for the modifications
-	# Don't change it unless you're prepared to update the DBs accordingly, otherwise the 
+	# Don't change it unless you're prepared to update the DBs accordingly, otherwise the
 	# default messages won't be overwritte
 	$username = 'MediaWiki default';
 
-	
+
 	print "Initialising \"MediaWiki\" namespace...\n";
 
-	
+
 	$dbr =& wfGetDB( DB_SLAVE );
 	$dbw =& wfGetDB( DB_MASTER );
 	$page = $dbr->tableName( 'page' );
@@ -108,9 +108,6 @@ function initialiseMessagesReal( $overwrite = false, $messageArray = false ) {
 	$timestamp = wfTimestampNow();
 
 	#$sql = "SELECT cur_title,cur_is_new,cur_user_text FROM $cur WHERE cur_namespace=$ns AND cur_title IN(";
-	$sql = "SELECT page_title,page_is_new,rev_user_text FROM $page, $revision WHERE
-		page_namespace=$ns AND rev_page=page_id AND page_title IN(";
-
 	# Get keys from $wgAllMessagesEn, which is more complete than the local language
 	$first = true;
 	if ( $messageArray ) {
@@ -118,39 +115,54 @@ function initialiseMessagesReal( $overwrite = false, $messageArray = false ) {
 	} else {
 		$sortedArray = $wgAllMessagesEn;
 	}
-	
+
 	ksort( $sortedArray );
 
 	# SELECT all existing messages
 	# Can't afford to be locking all rows for update, this script can take quite a long time to complete
-	foreach ( $sortedArray as $key => $enMsg ) {
-		if ( $key == '' ) {
-			continue; // Skip odd members
+	$rows = array();
+	$nitems = count($sortedArray);
+	$maxitems = $dbr->maxListLen();
+	$pos = 0;
+	if ($maxitems)
+		$chunks = array_chunk($sortedArray, $maxitems);
+	else
+		$chunks = array($sortedArray);
+
+	foreach ($chunks as $chunk) {
+		$first = true;
+		$sql = "SELECT page_title,page_is_new,rev_user_text FROM $page, $revision WHERE
+			page_namespace=$ns AND rev_page=page_id AND page_title IN(";
+
+		foreach ( $chunk as $key => $enMsg ) {
+			if ( $key == '' ) {
+				continue; // Skip odd members
+			}
+			if ( $first ) {
+				$first = false;
+			} else {
+				$sql .= ',';
+			}
+			$titleObj = Title::newFromText( $wgContLang->ucfirst( $key ) );
+			$enctitle = $dbr->strencode($titleObj->getDBkey());
+			$sql .= "'$enctitle'";
 		}
-		if ( $first ) {
-			$first = false;
-		} else {
-			$sql .= ',';
-		}
-		$titleObj = Title::newFromText( $wgContLang->ucfirst( $key ) );
-		$enctitle = $dbr->strencode($titleObj->getDBkey());
-		$sql .= "'$enctitle'";
+
+		$sql .= ')';
+		$res = $dbr->query( $sql );
+		while ($row = $dbr->fetchObject($res))
+			$rows[] = $row;
 	}
-	$sql .= ')';
-	$res = $dbr->query( $sql );
-	$row = $dbr->fetchObject( $res );
 
 	# Read the results into an array
 	# Decide whether or not each one needs to be overwritten
 	$existingTitles = array();
-	while ( $row ) {
+	foreach ($rows as $row) {
 		if ( $row->rev_user_text != $username  && $row->rev_user_text != 'Template namespace initialisation script' ) {
 			$existingTitles[$row->page_title] = 'keep';
 		} else {
 			$existingTitles[$row->page_title] = 'chuck';
 		}
-
-		$row = $dbr->fetchObject( $res );
 	}
 
 	# Insert queries are done in one multi-row insert
@@ -158,7 +170,7 @@ function initialiseMessagesReal( $overwrite = false, $messageArray = false ) {
 	$arr = array();
 	$talk = $wgContLang->getNsText( NS_TALK );
 	$mwtalk = $wgContLang->getNsText( NS_MEDIAWIKI_TALK );
-	
+
 	# Merge these into a single transaction for speed
 	$dbw->begin();
 

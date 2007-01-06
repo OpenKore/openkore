@@ -1,11 +1,11 @@
 <?php
 
-/** 
+/**
  * Default skin for HTML dumps, based on MonoBook.php
  */
 
 if( !defined( 'MEDIAWIKI' ) )
-	die();
+	die( -1 );
 
 /** */
 require_once( 'includes/SkinTemplate.php' );
@@ -42,19 +42,30 @@ class SkinHTMLDump extends SkinTemplate {
 	}
 
 	function buildContentActionUrls() {
+		global $wgHTMLDump;
+
 		$content_actions = array();
 		$nskey = $this->getNameSpaceKey();
 		$content_actions[$nskey] = $this->tabAction(
 			$this->mTitle->getSubjectPage(),
 			$nskey,
 			!$this->mTitle->isTalkPage() );
-		
+
 		$content_actions['talk'] = $this->tabAction(
 			$this->mTitle->getTalkPage(),
 			'talk',
 			$this->mTitle->isTalkPage(),
 			'',
 			true);
+
+		if ( isset( $wgHTMLDump ) ) {
+			$content_actions['current'] = array(
+				'text' => wfMsg( 'currentrev' ),
+				'href' => str_replace( '$1', wfUrlencode( $this->mTitle->getPrefixedDBkey() ),
+					$wgHTMLDump->oldArticlePath ),
+				'class' => false
+			);
+		}
 		return $content_actions;
 	}
 
@@ -62,11 +73,11 @@ class SkinHTMLDump extends SkinTemplate {
 		if ( !isset( $nt ) ) {
 			return "<!-- ERROR -->{$prefix}{$text}{$trail}";
 		}
-		
+
 		if ( $nt->getNamespace() == NS_CATEGORY ) {
 			return $this->makeKnownLinkObj( $nt, $text, $query, $trail, $prefix );
 		}
-		
+
 		if ( $text == '' ) {
 			$text = $nt->getPrefixedText();
 		}
@@ -89,20 +100,6 @@ class HTMLDumpTemplate extends QuickTemplate {
 	 * @access private
 	 */
 	function execute() {
-		$this->modifySetup();
-		$this->reallyExecute();
-	}
-
-
-	function modifySetup() {
-		/*
-		foreach ( $this->data['navigation_urls'] as $index => $link ) {
-			if ( $link['text'] == 'recentchanges' ) {
-				unset( $this->data['navigation_urls'][$index] );
-			} elseif ( $link['text'] */
-	}
-	
-	function reallyExecute() {
 		wfSuppressWarnings();
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php $this->text('lang') ?>" lang="<?php $this->text('lang') ?>" dir="<?php $this->text('dir') ?>">
@@ -110,17 +107,24 @@ class HTMLDumpTemplate extends QuickTemplate {
     <meta http-equiv="Content-Type" content="<?php $this->text('mimetype') ?>; charset=<?php $this->text('charset') ?>" />
     <?php $this->html('headlinks') ?>
     <title><?php $this->text('pagetitle') ?></title>
-    <style type="text/css" media="screen,projection">/*<![CDATA[*/ @import "<?php $this->text('stylepath') ?>/<?php $this->text('stylename') ?>/main.css"; /*]]>*/</style>
+    <style type="text/css">/*<![CDATA[*/ @import "<?php $this->text('stylepath') ?>/htmldump/main.css"; /*]]>*/</style>
     <link rel="stylesheet" type="text/css" media="print" href="<?php $this->text('stylepath') ?>/common/commonPrint.css" />
     <!--[if lt IE 5.5000]><style type="text/css">@import "<?php $this->text('stylepath') ?>/<?php $this->text('stylename') ?>/IE50Fixes.css";</style><![endif]-->
     <!--[if IE 5.5000]><style type="text/css">@import "<?php $this->text('stylepath') ?>/<?php $this->text('stylename') ?>/IE55Fixes.css";</style><![endif]-->
-    <!--[if gte IE 6]><style type="text/css">@import "<?php $this->text('stylepath') ?>/<?php $this->text('stylename') ?>/IE60Fixes.css";</style><![endif]-->
+    <!--[if IE 6]><style type="text/css">@import "<?php $this->text('stylepath') ?>/<?php $this->text('stylename') ?>/IE60Fixes.css";</style><![endif]-->
     <!--[if IE]><script type="<?php $this->text('jsmimetype') ?>" src="<?php $this->text('stylepath') ?>/common/IEFixes.js"></script>
     <meta http-equiv="imagetoolbar" content="no" /><![endif]-->
-    <?php if($this->data['jsvarurl'  ]) { ?><script type="<?php $this->text('jsmimetype') ?>" src="<?php $this->text('jsvarurl'  ) ?>"></script><?php } ?>
     <script type="<?php $this->text('jsmimetype') ?>" src="<?php $this->text('stylepath' ) ?>/common/wikibits.js"></script>
+    <script type="<?php $this->text('jsmimetype') ?>" src="<?php $this->text('stylepath' ) ?>/htmldump/md5.js"></script>
+    <script type="<?php $this->text('jsmimetype') ?>" src="<?php $this->text('stylepath' ) ?>/htmldump/utf8.js"></script>
+    <script type="<?php $this->text('jsmimetype') ?>" src="<?php $this->text('stylepath' ) ?>/htmldump/lookup.js"></script>
+    <?php if($this->data['jsvarurl'  ]) { ?><script type="<?php $this->text('jsmimetype') ?>" src="<?php $this->text('jsvarurl'  ) ?>"></script><?php } ?>
+    <?php if($this->data['pagecss'   ]) { ?><style type="text/css"><?php              $this->html('pagecss'   ) ?></style><?php    } ?>
+    <?php if($this->data['usercss'   ]) { ?><style type="text/css"><?php              $this->html('usercss'   ) ?></style><?php    } ?>
+    <?php if($this->data['userjs'    ]) { ?><script type="<?php $this->text('jsmimetype') ?>" src="<?php $this->text('userjs'    ) ?>"></script><?php } ?>
+    <?php if($this->data['userjsprev']) { ?><script type="<?php $this->text('jsmimetype') ?>"><?php      $this->html('userjsprev') ?></script><?php   } ?>
   </head>
-  <body 
+  <body
     <?php if($this->data['nsclass'        ]) { ?>class="<?php      $this->text('nsclass')         ?>"<?php } ?>>
     <div id="globalWrapper">
       <div id="column-content">
@@ -171,6 +175,20 @@ class HTMLDumpTemplate extends QuickTemplate {
 	  </div>
 	</div>
 	<?php } ?>
+	<div id="p-search" class="portlet">
+	  <h5><label for="searchInput"><?php $this->msg('search') ?></label></h5>
+	  <div class="pBody">
+	    <form action="javascript:goToStatic(3)" id="searchform"><div>
+	      <input id="searchInput" name="search" type="text"
+	        <?php if($this->haveMsg('accesskey-search')) {
+	          ?>accesskey="<?php $this->msg('accesskey-search') ?>"<?php }
+	        if( isset( $this->data['search'] ) ) {
+	          ?> value="<?php $this->text('search') ?>"<?php } ?> />
+	      <input type='submit' name="go" class="searchButton" id="searchGoButton"
+	        value="<?php $this->msg('go') ?>" />
+	    </div></form>
+	  </div>
+	</div>
 	<?php if( $this->data['language_urls'] ) { ?><div id="p-lang" class="portlet">
 	  <h5><?php $this->msg('otherlanguages') ?></h5>
 	  <div class="pBody">
@@ -201,7 +219,6 @@ class HTMLDumpTemplate extends QuickTemplate {
 	</ul>
       </div>
     </div>
-    <?php $this->html('reporttime') ?>
   </body>
 </html>
 <?php

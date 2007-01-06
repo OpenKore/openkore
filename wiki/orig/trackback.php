@@ -7,6 +7,11 @@
 
 unset($IP);
 define('MEDIAWIKI', true);
+if ( isset( $_REQUEST['GLOBALS'] ) ) {
+	echo '<a href="http://www.hardened-php.net/index.76.html">$GLOBALS overwrite vulnerability</a>';
+	die( -1 );
+}
+
 require_once('./includes/Defines.php');
 
 if (!file_exists('LocalSettings.php'))
@@ -73,3 +78,4 @@ $dbw->insert('trackbacks', array(
 
 XMLsuccess();
 exit;
+?>

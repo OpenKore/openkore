@@ -37,42 +37,65 @@ if( function_exists( 'mb_strtoupper' ) ) {
  */
 class LanguageUtf8 extends Language {
 
-	# These two functions use mbstring library, if it is loaded
+	# These functions use mbstring library, if it is loaded
 	# or compiled and character mapping arrays otherwise.
 	# In case of language-specific character mismatch
 	# it should be dealt with in Language classes.
 
-	function ucfirst( $string ) {
-		/**
-		 * On pages with many links we can get called a lot.
-		 * The multibyte uppercase functions are relatively
-		 * slow, so check first if we can use a faster ASCII
-		 * version instead; it saves a few milliseconds.
-		 */
-		if( preg_match( '/^[\x80-\xff]/', $string ) ) {
-			if (function_exists('mb_strtoupper')) {
-				return mb_strtoupper(mb_substr($string,0,1)).mb_substr($string,1);
-			} else {
-				global $wikiUpperChars;
-				return preg_replace (
-					"/^([a-z]|[\\xc0-\\xff][\\x80-\\xbf]*)/e",
-					"strtr ( \"\$1\" , \$wikiUpperChars )",
-					$string );
-			}
-		}
-		return ucfirst( $string );
+	function ucfirst( $str ) {
+		return LanguageUtf8::uc( $str, true );
 	}
 
-	function lcfirst( $string ) {
-		if (function_exists('mb_strtolower')) {
-			return mb_strtolower(mb_substr($string,0,1)).mb_substr($string,1);
-		} else {
-		    global $wikiLowerChars;
-		    return preg_replace (
-        	    "/^([A-Z]|[\\xc0-\\xff][\\x80-\\xbf]*)/e",
-        	    "strtr ( \"\$1\" , \$wikiLowerChars )",
-        	    $string );
-		}
+	function uc( $str, $first = false ) {
+		if ( function_exists( 'mb_strtoupper' ) )
+			if ( $first )
+				if ( LanguageUtf8::isMultibyte( $str ) )
+					return mb_strtoupper( mb_substr( $str, 0, 1 ) ) . mb_substr( $str, 1 );
+				else
+					return ucfirst( $str );
+			else
+				return LanguageUtf8::isMultibyte( $str ) ? mb_strtoupper( $str ) : strtoupper( $str );
+		else
+			if ( LanguageUtf8::isMultibyte( $str ) ) {
+				global $wikiUpperChars;
+				$x = $first ? '^' : '';
+				return preg_replace(
+					"/$x([a-z]|[\\xc0-\\xff][\\x80-\\xbf]*)/e",
+					"strtr( \"\$1\" , \$wikiUpperChars )",
+					$str
+				);
+			} else
+				return $first ? ucfirst( $str ) : strtoupper( $str );
+	}
+
+	function lcfirst( $str ) {
+		return LanguageUtf8::lc( $str, true );
+	}
+
+	function lc( $str, $first = false ) {
+		if ( function_exists( 'mb_strtolower' ) )
+			if ( $first )
+				if ( LanguageUtf8::isMultibyte( $str ) )
+					return mb_strtolower( mb_substr( $str, 0, 1 ) ) . mb_substr( $str, 1 );
+				else
+					return strtolower( substr( $str, 0, 1 ) ) . substr( $str, 1 );
+			else
+				return LanguageUtf8::isMultibyte( $str ) ? mb_strtolower( $str ) : strtolower( $str );
+		else
+			if ( LanguageUtf8::isMultibyte( $str ) ) {
+				global $wikiLowerChars;
+				$x = $first ? '^' : '';
+				return preg_replace(
+					"/$x([A-Z]|[\\xc0-\\xff][\\x80-\\xbf]*)/e",
+					"strtr( \"\$1\" , \$wikiLowerChars )",
+					$str
+				);
+			} else
+				return $first ? strtolower( substr( $str, 0, 1 ) ) . substr( $str, 1 ) : strtolower( $str );
+	}
+
+	function isMultibyte( $str ) {
+		return (bool)preg_match( '/^[\x80-\xff]/', $str );
 	}
 
 	function stripForSearch( $string ) {

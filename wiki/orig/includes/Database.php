@@ -1,6 +1,6 @@
 <?php
 /**
- * This file deals with MySQL interface functions 
+ * This file deals with MySQL interface functions
  * and query specifics/optimisations
  * @package MediaWiki
  */
@@ -15,6 +15,7 @@ define( 'LIST_COMMA', 0 );
 define( 'LIST_AND', 1 );
 define( 'LIST_SET', 2 );
 define( 'LIST_NAMES', 3);
+define( 'LIST_OR', 4);
 
 /** Number of times to re-try an operation in case of deadlock */
 define( 'DEADLOCK_TRIES', 4 );
@@ -22,6 +23,22 @@ define( 'DEADLOCK_TRIES', 4 );
 define( 'DEADLOCK_DELAY_MIN', 500000 );
 /** Maximum time to wait before retry */
 define( 'DEADLOCK_DELAY_MAX', 1500000 );
+
+class DBObject {
+	var $mData;
+
+	function DBObject($data) {
+		$this->mData = $data;
+	}
+
+	function isLOB() {
+		return false;
+	}
+
+	function data() {
+		return $this->mData;
+	}
+};
 
 /**
  * Database abstraction object
@@ -36,45 +53,46 @@ class Database {
 	 * @access private
 	 */
 	var $mLastQuery = '';
-	
+
 	var $mServer, $mUser, $mPassword, $mConn = null, $mDBname;
 	var $mOut, $mOpened = false;
-	
-	var $mFailFunction; 
+
+	var $mFailFunction;
 	var $mTablePrefix;
 	var $mFlags;
 	var $mTrxLevel = 0;
 	var $mErrorCount = 0;
+	var $mLBInfo = array();
 	/**#@-*/
 
 #------------------------------------------------------------------------------
 # Accessors
 #------------------------------------------------------------------------------
 	# These optionally set a variable and return the previous state
-	
+
 	/**
 	 * Fail function, takes a Database as a parameter
 	 * Set to false for default, 1 for ignore errors
 	 */
-	function failFunction( $function = NULL ) { 
-		return wfSetVar( $this->mFailFunction, $function ); 
+	function failFunction( $function = NULL ) {
+		return wfSetVar( $this->mFailFunction, $function );
 	}
-	
+
 	/**
 	 * Output page, used for reporting errors
 	 * FALSE means discard output
 	 */
-	function &setOutputPage( &$out ) { 
-		$this->mOut =& $out; 
+	function &setOutputPage( &$out ) {
+		$this->mOut =& $out;
 	}
-	
+
 	/**
 	 * Boolean, controls output of large amounts of debug information
 	 */
-	function debug( $debug = NULL ) { 
-		return wfSetBit( $this->mFlags, DBO_DEBUG, $debug ); 
+	function debug( $debug = NULL ) {
+		return wfSetBit( $this->mFlags, DBO_DEBUG, $debug );
 	}
-	
+
 	/**
 	 * Turns buffering of SQL result sets on (true) or off (false).
 	 * Default is "on" and it should not be changed without good reasons.
@@ -83,7 +101,7 @@ class Database {
 		if ( is_null( $buffer ) ) {
 			return !(bool)( $this->mFlags & DBO_NOBUFFER );
 		} else {
-			return !wfSetBit( $this->mFlags, DBO_NOBUFFER, !$buffer ); 
+			return !wfSetBit( $this->mFlags, DBO_NOBUFFER, !$buffer );
 		}
 	}
 
@@ -94,10 +112,10 @@ class Database {
 	 * code should use wfLastErrno() and wfLastError() to handle the
 	 * situation as appropriate.
 	 */
-	function ignoreErrors( $ignoreErrors = NULL ) { 
-		return wfSetBit( $this->mFlags, DBO_IGNORE, $ignoreErrors ); 
+	function ignoreErrors( $ignoreErrors = NULL ) {
+		return wfSetBit( $this->mFlags, DBO_IGNORE, $ignoreErrors );
 	}
-	
+
 	/**
 	 * The current depth of nested transactions
 	 * @param integer $level
@@ -106,11 +124,34 @@ class Database {
 		return wfSetVar( $this->mTrxLevel, $level );
 	}
 
-	/** 
+	/**
 	 * Number of errors logged, only useful when errors are ignored
 	 */
 	function errorCount( $count = NULL ) {
 		return wfSetVar( $this->mErrorCount, $count );
+	}
+
+	/**
+	 * Properties passed down from the server info array of the load balancer
+	 */
+	function getLBInfo( $name = NULL ) {
+		if ( is_null( $name ) ) {
+			return $this->mLBInfo;
+		} else {
+			if ( array_key_exists( $name, $this->mLBInfo ) ) {
+				return $this->mLBInfo[$name];
+			} else {
+				return NULL;
+			}
+		}
+	}
+
+	function setLBInfo( $name, $value = NULL ) {
+		if ( is_null( $value ) ) {
+			$this->mLBInfo = $name;
+		} else {
+			$this->mLBInfo[$name] = $value;
+		}
 	}
 
 	/**#@+
@@ -119,6 +160,18 @@ class Database {
 	function lastQuery() { return $this->mLastQuery; }
 	function isOpen() { return $this->mOpened; }
 	/**#@-*/
+
+	function setFlag( $flag ) {
+		$this->mFlags |= $flag;
+	}
+
+	function clearFlag( $flag ) {
+		$this->mFlags &= ~$flag;
+	}
+
+	function getFlag( $flag ) {
+		return !!($this->mFlags & $flag);
+	}
 
 #------------------------------------------------------------------------------
 # Other functions
@@ -130,15 +183,15 @@ class Database {
 	 * @param string $password database user password
 	 * @param string $dbname database name
 	 */
-	 
+
 	/**
 	 * @param failFunction
 	 * @param $flags
 	 * @param string $tablePrefix Database table prefixes. By default use the prefix gave in LocalSettings.php
 	 */
-	function Database( $server = false, $user = false, $password = false, $dbName = false, 
+	function Database( $server = false, $user = false, $password = false, $dbName = false,
 		$failFunction = false, $flags = 0, $tablePrefix = 'get from global' ) {
-		
+
 		global $wgOut, $wgDBprefix, $wgCommandLineMode;
 		# Can't get a reference if it hasn't been set yet
 		if ( !isset( $wgOut ) ) {
@@ -148,7 +201,7 @@ class Database {
 
 		$this->mFailFunction = $failFunction;
 		$this->mFlags = $flags;
-		
+
 		if ( $this->mFlags & DBO_DEFAULT ) {
 			if ( $wgCommandLineMode ) {
 				$this->mFlags &= ~DBO_TRX;
@@ -163,7 +216,7 @@ class Database {
 			$this->mFlags |= DBO_PERSISTENT;
 			$this->mFlags &= ~DBO_TRX;
 		}*/
-		
+
 		/** Get the default table prefix*/
 		if ( $tablePrefix == 'get from global' ) {
 			$this->mTablePrefix = $wgDBprefix;
@@ -175,23 +228,25 @@ class Database {
 			$this->open( $server, $user, $password, $dbName );
 		}
 	}
-	
+
 	/**
 	 * @static
 	 * @param failFunction
 	 * @param $flags
 	 */
-	function newFromParams( $server, $user, $password, $dbName, 
+	function newFromParams( $server, $user, $password, $dbName,
 		$failFunction = false, $flags = 0 )
 	{
 		return new Database( $server, $user, $password, $dbName, $failFunction, $flags );
 	}
-	
+
 	/**
 	 * Usually aborts on failure
 	 * If the failFunction is set to a non-zero integer, returns success
 	 */
 	function open( $server, $user, $password, $dbName ) {
+		global $wguname;
+
 		# Test for missing mysql.so
 		# First try to load it
 		if (!@extension_loaded('mysql')) {
@@ -200,17 +255,17 @@ class Database {
 
 		# Otherwise we get a suppressed fatal error, which is very hard to track down
 		if ( !function_exists( 'mysql_connect' ) ) {
-			die( "MySQL functions missing, have you compiled PHP with the --with-mysql option?\n" );
+			wfDie( "MySQL functions missing, have you compiled PHP with the --with-mysql option?\n" );
 		}
-		
+
 		$this->close();
 		$this->mServer = $server;
 		$this->mUser = $user;
 		$this->mPassword = $password;
 		$this->mDBname = $dbName;
-		
+
 		$success = false;
-		
+
 		if ( $this->mFlags & DBO_PERSISTENT ) {
 			@/**/$this->mConn = mysql_pconnect( $server, $user, $password );
 		} else {
@@ -229,11 +284,13 @@ class Database {
 			if ( $this->mConn !== false ) {
 				$success = @/**/mysql_select_db( $dbName, $this->mConn );
 				if ( !$success ) {
-					wfDebug( "Error selecting database \"$dbName\": " . $this->lastError() . "\n" );
+					$error = "Error selecting database $dbName on server {$this->mServer} " .
+						"from client host {$wguname['nodename']}\n";
+					wfDebug( $error );
 				}
 			} else {
 				wfDebug( "DB connection error\n" );
-				wfDebug( "Server: $server, User: $user, Password: " . 
+				wfDebug( "Server: $server, User: $user, Password: " .
 					substr( $password, 0, 3 ) . "..., error: " . mysql_error() . "\n" );
 				$success = false;
 			}
@@ -241,23 +298,23 @@ class Database {
 			# Delay USE query
 			$success = (bool)$this->mConn;
 		}
-		
+
 		if ( !$success ) {
 			$this->reportConnectionError();
 		}
-		
+
 		global $wgDBmysql5;
 		if( $wgDBmysql5 ) {
 			// Tell the server we're communicating with it in UTF-8.
 			// This may engage various charset conversions.
 			$this->query( 'SET NAMES utf8' );
 		}
-		
+
 		$this->mOpened = $success;
 		return $success;
 	}
 	/**#@-*/
-	
+
 	/**
 	 * Closes a database connection.
 	 * if it is open : commits any open transactions
@@ -276,42 +333,57 @@ class Database {
 			return true;
 		}
 	}
-	
+
 	/**
 	 * @access private
-	 * @param string $msg error message ?
+	 * @param string $error fallback error message, used if none is given by MySQL
 	 */
-	function reportConnectionError() {
+	function reportConnectionError( $error = 'Unknown error' ) {
+		$myError = $this->lastError();
+		if ( $myError ) {
+			$error = $myError;
+		}
+
 		if ( $this->mFailFunction ) {
 			if ( !is_int( $this->mFailFunction ) ) {
 				$ff = $this->mFailFunction;
-				$ff( $this, mysql_error() );
+				$ff( $this, $error );
 			}
 		} else {
-			wfEmergencyAbort( $this, $this->lastError() );
+			wfEmergencyAbort( $this, $error );
 		}
 	}
-	
+
 	/**
 	 * Usually aborts on failure
 	 * If errors are explicitly ignored, returns success
 	 */
 	function query( $sql, $fname = '', $tempIgnore = false ) {
-		global $wgProfiling, $wgCommandLineMode;
+		global $wgProfiling;
 
 		if ( $wgProfiling ) {
 			# generalizeSQL will probably cut down the query to reasonable
 			# logging size most of the time. The substr is really just a sanity check.
-			$profName = 'query: ' . $fname . ' ' . substr( Database::generalizeSQL( $sql ), 0, 255 ); 
-			wfProfileIn( 'Database::query' );
-			wfProfileIn( $profName );
+
+			# Who's been wasting my precious column space? -- TS
+			#$profName = 'query: ' . $fname . ' ' . substr( Database::generalizeSQL( $sql ), 0, 255 );
+
+			if ( is_null( $this->getLBInfo( 'master' ) ) ) {
+				$queryProf = 'query: ' . substr( Database::generalizeSQL( $sql ), 0, 255 );
+				$totalProf = 'Database::query';
+			} else {
+				$queryProf = 'query-m: ' . substr( Database::generalizeSQL( $sql ), 0, 255 );
+				$totalProf = 'Database::query-master';
+			}
+			wfProfileIn( $totalProf );
+			wfProfileIn( $queryProf );
 		}
-		
+
 		$this->mLastQuery = $sql;
-		
+
 		# Add a comment for easy SHOW PROCESSLIST interpretation
 		if ( $fname ) {
-			$commentedSql = "/* $fname */ $sql";
+			$commentedSql = preg_replace("/\s/", " /* $fname */ ", $sql, 1);
 		} else {
 			$commentedSql = $sql;
 		}
@@ -326,7 +398,7 @@ class Database {
 			$sqlx = strtr( $sqlx, "\t\n", '  ' );
 			wfDebug( "SQL: $sqlx\n" );
 		}
-		
+
 		# Do the query and handle errors
 		$ret = $this->doQuery( $commentedSql );
 
@@ -346,14 +418,14 @@ class Database {
 		if ( false === $ret ) {
 			$this->reportQueryError( $this->lastError(), $this->lastErrno(), $sql, $fname, $tempIgnore );
 		}
-				
+
 		if ( $wgProfiling ) {
-			wfProfileOut( $profName );
-			wfProfileOut( 'Database::query' );
+			wfProfileOut( $queryProf );
+			wfProfileOut( $totalProf );
 		}
 		return $ret;
 	}
-	
+
 	/**
 	 * The DBMS-dependent part of query()
 	 * @param string $sql SQL query.
@@ -363,7 +435,7 @@ class Database {
 			$ret = mysql_query( $sql, $this->mConn );
 		} else {
 			$ret = mysql_unbuffered_query( $sql, $this->mConn );
-		}	
+		}
 		return $ret;
 	}
 
@@ -375,13 +447,13 @@ class Database {
 	 * @param bool $tempIgnore
 	 */
 	function reportQueryError( $error, $errno, $sql, $fname, $tempIgnore = false ) {
-		global $wgCommandLineMode, $wgFullyInitialised;
+		global $wgCommandLineMode, $wgFullyInitialised, $wgColorErrors;
 		# Ignore errors during error handling to avoid infinite recursion
 		$ignore = $this->ignoreErrors( true );
-		$this->mErrorCount ++;
+		++$this->mErrorCount;
 
 		if( $ignore || $tempIgnore ) {
-			wfDebug("SQL ERROR (ignored): " . $error . "\n");
+			wfDebug("SQL ERROR (ignored): $error\n");
 		} else {
 			$sql1line = str_replace( "\n", "\\n", $sql );
 			wfLogDBError("$fname\t{$this->mServer}\t$errno\t$error\t$sql1line\n");
@@ -391,13 +463,17 @@ class Database {
 				  "Query: $sql\n" .
 				  "Function: $fname\n" .
 				  "Error: $errno $error\n";
-				if ( !$wgCommandLineMode ) {	
+				if ( !$wgCommandLineMode ) {
 					$message = nl2br( $message );
+				}
+				if( $wgCommandLineMode && $wgColorErrors && !wfIsWindows() && posix_isatty(1) ) {
+					$color = 31; // bright red!
+					$message = "\x1b[1;{$color}m{$message}\x1b[0m";
 				}
 				wfDebugDieBacktrace( $message );
 			} else {
 				// this calls wfAbruptExit()
-				$this->mOut->databaseError( $fname, $sql, $error, $errno ); 				
+				$this->mOut->databaseError( $fname, $sql, $error, $errno );
 			}
 		}
 		$this->ignoreErrors( $ignore );
@@ -419,11 +495,11 @@ class Database {
 		   the bits later. */
 		return array( 'query' => $sql, 'func' => $func );
 	}
-	
+
 	function freePrepared( $prepared ) {
 		/* No-op for MySQL */
 	}
-	
+
 	/**
 	 * Execute a prepared query with the various arguments
 	 * @param string $prepared the prepared sql
@@ -438,7 +514,7 @@ class Database {
 		$sql = $this->fillPrepared( $prepared['query'], $args );
 		return $this->query( $sql, $prepared['func'] );
 	}
-	
+
 	/**
 	 * Prepare & execute an SQL statement, quoting and inserting arguments
 	 * in the appropriate places.
@@ -456,7 +532,7 @@ class Database {
 		$this->freePrepared( $prepared );
 		return $retval;
 	}
-	
+
 	/**
 	 * For faking prepared SQL statements on DBs that don't support
 	 * it directly.
@@ -471,12 +547,12 @@ class Database {
 		return preg_replace_callback( '/(\\\\[?!&]|[?!&])/',
 			array( &$this, 'fillPreparedArg' ), $preparedQuery );
 	}
-	
+
 	/**
 	 * preg_callback func for fillPrepared()
 	 * The arguments should be in $this->preparedArgs and must not be touched
 	 * while we're doing this.
-	 * 
+	 *
 	 * @param array $matches
 	 * @return string
 	 * @access private
@@ -498,7 +574,7 @@ class Database {
 				wfDebugDieBacktrace( 'Received invalid match. This should never happen!' );
 		}
 	}
-	
+
 	/**#@+
 	 * @param mixed $res A SQL result
 	 */
@@ -510,7 +586,7 @@ class Database {
 			wfDebugDieBacktrace( "Unable to free MySQL result\n" );
 		}
 	}
-	
+
 	/**
 	 * Fetch the next row from the given result object, in object form
 	 */
@@ -532,19 +608,19 @@ class Database {
 			wfDebugDieBacktrace( 'Error in fetchRow(): ' . htmlspecialchars( mysql_error() ) );
 		}
 		return $row;
-	}	
+	}
 
 	/**
 	 * Get the number of rows in a result object
 	 */
 	function numRows( $res ) {
-		@/**/$n = mysql_num_rows( $res ); 
+		@/**/$n = mysql_num_rows( $res );
 		if( mysql_errno() ) {
 			wfDebugDieBacktrace( 'Error in numRows(): ' . htmlspecialchars( mysql_error() ) );
 		}
 		return $n;
 	}
-	
+
 	/**
 	 * Get the number of fields in a result object
 	 * See documentation for mysql_num_fields()
@@ -568,30 +644,30 @@ class Database {
 	 * $id = $dbw->insertId();
 	 */
 	function insertId() { return mysql_insert_id( $this->mConn ); }
-	
+
 	/**
 	 * Change the position of the cursor in a result object
 	 * See mysql_data_seek()
 	 */
 	function dataSeek( $res, $row ) { return mysql_data_seek( $res, $row ); }
-	
+
 	/**
 	 * Get the last error number
 	 * See mysql_errno()
 	 */
-	function lastErrno() { 
+	function lastErrno() {
 		if ( $this->mConn ) {
-			return mysql_errno( $this->mConn ); 
+			return mysql_errno( $this->mConn );
 		} else {
 			return mysql_errno();
 		}
 	}
-	
+
 	/**
 	 * Get a description of the last error
 	 * See mysql_error() for more details
 	 */
-	function lastError() { 
+	function lastError() {
 		if ( $this->mConn ) {
 			# Even if it's non-zero, it can still be invalid
 			wfSuppressWarnings();
@@ -607,7 +683,7 @@ class Database {
 			$error .= ' (' . $this->mServer . ')';
 		}
 		return $error;
-	}	
+	}
 	/**
 	 * Get the number of rows affected by the last write query
 	 * See mysql_affected_rows() for more details
@@ -620,7 +696,7 @@ class Database {
 	 * Usually aborts on failure
 	 * If errors are explicitly ignored, returns success
 	 *
-	 * This function exists for historical reasons, Database::update() has a more standard 
+	 * This function exists for historical reasons, Database::update() has a more standard
 	 * calling convention and feature set
 	 */
 	function set( $table, $var, $value, $cond, $fname = 'Database::set' )
@@ -630,7 +706,7 @@ class Database {
 		  $this->strencode( $value ) . "' WHERE ($cond)";
 		return (bool)$this->query( $sql, $fname );
 	}
-	
+
 	/**
 	 * Simple SELECT wrapper, returns a single field, input must be encoded
 	 * Usually aborts on failure
@@ -654,7 +730,7 @@ class Database {
 			return false;
 		}
 	}
-	
+
 	/**
 	 * Returns an optional USE INDEX clause to go after the table, and a
 	 * string to go at the end of the query
@@ -673,20 +749,20 @@ class Database {
 		}
 		if ( isset( $options['ORDER BY'] ) ) {
 			$tailOpts .= " ORDER BY {$options['ORDER BY']}";
-		} 
-		if ( isset( $options['LIMIT'] ) ) {
-			$tailOpts .= " LIMIT {$options['LIMIT']}";
 		}
-
+		if (isset($options['LIMIT'])) {
+			$tailOpts .= $this->limitResult('', $options['LIMIT'],
+				isset($options['OFFSET']) ? $options['OFFSET'] : false);
+		}
 		if ( is_numeric( array_search( 'FOR UPDATE', $options ) ) ) {
 			$tailOpts .= ' FOR UPDATE';
 		}
-		
+
 		if ( is_numeric( array_search( 'LOCK IN SHARE MODE', $options ) ) ) {
 			$tailOpts .= ' LOCK IN SHARE MODE';
 		}
 
-		if ( isset( $options['USE INDEX'] ) ) {
+		if ( isset( $options['USE INDEX'] ) && ! is_array( $options['USE INDEX'] ) ) {
 			$useIndex = $this->useIndexClause( $options['USE INDEX'] );
 		} else {
 			$useIndex = '';
@@ -702,16 +778,22 @@ class Database {
 		if( is_array( $vars ) ) {
 			$vars = implode( ',', $vars );
 		}
+		if( !is_array( $options ) ) {
+			$options = array( $options );
+		}
 		if( is_array( $table ) ) {
-			$from = ' FROM ' . implode( ',', array_map( array( &$this, 'tableName' ), $table ) );
+			if ( @is_array( $options['USE INDEX'] ) )
+				$from = ' FROM ' . $this->tableNamesWithUseIndex( $table, $options['USE INDEX'] );
+			else
+				$from = ' FROM ' . implode( ',', array_map( array( &$this, 'tableName' ), $table ) );
 		} elseif ($table!='') {
-			$from = ' FROM ' .$this->tableName( $table );
+			$from = ' FROM ' . $this->tableName( $table );
 		} else {
 			$from = '';
 		}
 
-		list( $useIndex, $tailOpts ) = $this->makeSelectOptions( (array)$options );
-		
+		list( $useIndex, $tailOpts ) = $this->makeSelectOptions( $options );
+
 		if( !empty( $conds ) ) {
 			if ( is_array( $conds ) ) {
 				$conds = $this->makeList( $conds, LIST_AND );
@@ -720,15 +802,16 @@ class Database {
 		} else {
 			$sql = "SELECT $vars $from $useIndex $tailOpts";
 		}
+
 		return $this->query( $sql, $fname );
 	}
 
 	/**
 	 * Single row SELECT wrapper
 	 * Aborts or returns FALSE on error
-	 * 
+	 *
 	 * $vars: the selected variables
-	 * $conds: a condition map, terms are ANDed together. 
+	 * $conds: a condition map, terms are ANDed together.
 	 *   Items with numeric keys are taken to be literal conditions
 	 * Takes an array of selected variables, and a condition map, which is ANDed
 	 * e.g: selectRow( "page", array( "page_id" ), array( "page_namespace" =>
@@ -740,15 +823,18 @@ class Database {
 	function selectRow( $table, $vars, $conds, $fname = 'Database::selectRow', $options = array() ) {
 		$options['LIMIT'] = 1;
 		$res = $this->select( $table, $vars, $conds, $fname, $options );
-		if ( $res === false || !$this->numRows( $res ) ) {
+		if ( $res === false )
+			return false;
+		if ( !$this->numRows($res) ) {
+			$this->freeResult($res);
 			return false;
 		}
 		$obj = $this->fetchObject( $res );
 		$this->freeResult( $res );
 		return $obj;
-		
+
 	}
-	
+
 	/**
 	 * Removes most variables from an SQL query and replaces them with X or N for numbers.
 	 * It's only slightly flawed. Don't use for anything important.
@@ -756,26 +842,26 @@ class Database {
 	 * @param string $sql A SQL Query
 	 * @static
 	 */
-	function generalizeSQL( $sql ) {	
+	function generalizeSQL( $sql ) {
 		# This does the same as the regexp below would do, but in such a way
 		# as to avoid crashing php on some large strings.
 		# $sql = preg_replace ( "/'([^\\\\']|\\\\.)*'|\"([^\\\\\"]|\\\\.)*\"/", "'X'", $sql);
-	
+
 		$sql = str_replace ( "\\\\", '', $sql);
 		$sql = str_replace ( "\\'", '', $sql);
 		$sql = str_replace ( "\\\"", '', $sql);
 		$sql = preg_replace ("/'.*'/s", "'X'", $sql);
 		$sql = preg_replace ('/".*"/s', "'X'", $sql);
-	
+
 		# All newlines, tabs, etc replaced by single space
 		$sql = preg_replace ( "/\s+/", ' ', $sql);
-	
-		# All numbers => N	
+
+		# All numbers => N
 		$sql = preg_replace ('/-?[0-9]+/s', 'N', $sql);
-	
+
 		return $sql;
 	}
-	
+
 	/**
 	 * Determines whether a field exists in a table
 	 * Usually aborts on failure
@@ -787,9 +873,9 @@ class Database {
 		if ( !$res ) {
 			return NULL;
 		}
-		
+
 		$found = false;
-		
+
 		while ( $row = $this->fetchObject( $res ) ) {
 			if ( $row->Field == $field ) {
 				$found = true;
@@ -798,7 +884,7 @@ class Database {
 		}
 		return $found;
 	}
-	
+
 	/**
 	 * Determines whether an index exists
 	 * Usually aborts on failure
@@ -812,8 +898,8 @@ class Database {
 			return $info !== false;
 		}
 	}
-	
-	
+
+
 	/**
 	 * Get information about an index into an object
 	 * Returns false if the index does not exist
@@ -828,7 +914,7 @@ class Database {
 		if ( !$res ) {
 			return NULL;
 		}
-		
+
 		while ( $row = $this->fetchObject( $res ) ) {
 			if ( $row->Key_name == $index ) {
 				return $row;
@@ -836,7 +922,7 @@ class Database {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Query whether a given table exists
 	 */
@@ -872,7 +958,7 @@ class Database {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * mysql_field_type() wrapper
 	 */
@@ -894,7 +980,7 @@ class Database {
 	/**
 	 * INSERT wrapper, inserts an array into a table
 	 *
-	 * $a may be a single associative array, or an array of these with numeric keys, for 
+	 * $a may be a single associative array, or an array of these with numeric keys, for
 	 * multi-row insert.
 	 *
 	 * Usually aborts on failure
@@ -918,7 +1004,7 @@ class Database {
 			$keys = array_keys( $a );
 		}
 
-		$sql = 'INSERT ' . implode( ' ', $options ) . 
+		$sql = 'INSERT ' . implode( ' ', $options ) .
 			" INTO $table (" . implode( ',', $keys ) . ') VALUES ';
 
 		if ( $multi ) {
@@ -946,22 +1032,22 @@ class Database {
 	 */
 	function makeUpdateOptions( $options ) {
 		if( !is_array( $options ) ) {
-			wfDebugDieBacktrace( 'makeUpdateOptions given non-array' );
+			$options = array( $options );
 		}
 		$opts = array();
 		if ( in_array( 'LOW_PRIORITY', $options ) )
 			$opts[] = $this->lowPriorityOption();
-		if ( in_array( 'IGNORE', $options ) ) 
+		if ( in_array( 'IGNORE', $options ) )
 			$opts[] = 'IGNORE';
 		return implode(' ', $opts);
 	}
-	
+
 	/**
 	 * UPDATE wrapper, takes a condition array and a SET array
 	 *
 	 * @param string $table  The table to UPDATE
 	 * @param array  $values An array of values to SET
-	 * @param array  $conds  An array of conditions (WHERE)
+	 * @param array  $conds  An array of conditions (WHERE). Use '*' to update all rows.
 	 * @param string $fname  The Class::Function calling this function
 	 *                       (for the log)
 	 * @param array  $options An array of UPDATE options, can be one or
@@ -976,13 +1062,13 @@ class Database {
 		}
 		$this->query( $sql, $fname );
 	}
-	
+
 	/**
 	 * Makes a wfStrencoded list from an array
 	 * $mode: LIST_COMMA         - comma separated, no field names
 	 *        LIST_AND           - ANDed WHERE clause (without the WHERE)
 	 *        LIST_SET           - comma separated with field names, like a SET clause
-	 *	  LIST_NAMES	     - comma separated field names
+	 *        LIST_NAMES         - comma separated field names
 	 */
 	function makeList( $a, $mode = LIST_COMMA ) {
 		if ( !is_array( $a ) ) {
@@ -995,18 +1081,20 @@ class Database {
 			if ( !$first ) {
 				if ( $mode == LIST_AND ) {
 					$list .= ' AND ';
+				} elseif($mode == LIST_OR) {
+					$list .= ' OR ';
 				} else {
 					$list .= ',';
 				}
 			} else {
 				$first = false;
 			}
-			if ( $mode == LIST_AND && is_numeric( $field ) ) {
+			if ( ($mode == LIST_AND || $mode == LIST_OR) && is_numeric( $field ) ) {
 				$list .= "($value)";
 			} elseif ( $mode == LIST_AND && is_array ($value) ) {
 				$list .= $field." IN (".$this->makeList($value).") ";
 			} else {
-				if ( $mode == LIST_AND || $mode == LIST_SET ) {
+				if ( $mode == LIST_AND || $mode == LIST_OR || $mode == LIST_SET ) {
 					$list .= "$field = ";
 				}
 				$list .= $mode == LIST_NAMES ? $value : $this->addQuotes( $value );
@@ -1014,7 +1102,7 @@ class Database {
 		}
 		return $list;
 	}
-	
+
 	/**
 	 * Change the current database
 	 */
@@ -1024,33 +1112,14 @@ class Database {
 	}
 
 	/**
-	 * Starts a timer which will kill the DB thread after $timeout seconds
-	 */
-	function startTimer( $timeout ) {
-		global $IP;
-		if( function_exists( 'mysql_thread_id' ) ) {
-			# This will kill the query if it's still running after $timeout seconds.
-			$tid = mysql_thread_id( $this->mConn );
-			exec( "php $IP/includes/killthread.php $timeout $tid &>/dev/null &" );
-		}
-	}
-
-	/**
-	 * Stop a timer started by startTimer()
-	 * Currently unimplemented.
-	 *
-	 */
-	function stopTimer() { }
-
-	/**
 	 * Format a table name ready for use in constructing an SQL query
-	 * 
-	 * This does two important things: it quotes table names which as necessary, 
+	 *
+	 * This does two important things: it quotes table names which as necessary,
 	 * and it adds a table prefix if there is one.
-	 * 
-	 * All functions of this object which require a table name call this function 
+	 *
+	 * All functions of this object which require a table name call this function
 	 * themselves. Pass the canonical name to such functions. This is only needed
-	 * when calling query() directly. 
+	 * when calling query() directly.
 	 *
 	 * @param string $name database table name
 	 */
@@ -1067,7 +1136,7 @@ class Database {
 				# Standard quoting
 				$name = "`$name`";
 			}
-		}		
+		}
 		return $name;
 	}
 
@@ -1077,7 +1146,7 @@ class Database {
 	 *
 	 * Example:
 	 * extract($dbr->tableNames('user','watchlist'));
-	 * $sql = "SELECT wl_namespace,wl_title FROM $watchlist,$user 
+	 * $sql = "SELECT wl_namespace,wl_title FROM $watchlist,$user
 	 *         WHERE wl_user=user_id AND wl_user=$nameWithQuotes";
 	 */
 	function tableNames() {
@@ -1088,7 +1157,22 @@ class Database {
 		}
 		return $retVal;
 	}
-	
+
+	/**
+	 * @access private
+	 */
+	function tableNamesWithUseIndex( $tables, $use_index ) {
+		$ret = array();
+
+		foreach ( $tables as $table )
+			if ( @$use_index[$table] !== null )
+				$ret[] = $this->tableName( $table ) . ' ' . $this->useIndexClause( implode( ',', (array)$use_index[$table] ) );
+			else
+				$ret[] = $this->tableName( $table );
+
+		return implode( ',', $ret );
+	}
+
 	/**
 	 * Wrapper for addslashes()
 	 * @param string $s String to be slashed.
@@ -1111,9 +1195,18 @@ class Database {
 			# _are_ strings such as article titles and string->number->string
 			# conversion is not 1:1.
 			return "'" . $this->strencode( $s ) . "'";
-		} 
+		}
 	}
-		
+
+	/**
+	 * Escape string for safe LIKE usage
+	 */
+	function escapeLike( $s ) {
+		$s=$this->strencode( $s );
+		$s=str_replace(array('%','_'),array('\%','\_'),$s);
+		return $s;
+	}
+
 	/**
 	 * Returns an appropriately quoted sequence value for inserting a new row.
 	 * MySQL has autoincrement fields, so this is just NULL. But the PostgreSQL
@@ -1128,21 +1221,18 @@ class Database {
 	 * PostgreSQL doesn't have them and returns ""
 	 */
 	function useIndexClause( $index ) {
-		global $wgDBmysql4;
-		return $wgDBmysql4
-			? "FORCE INDEX ($index)"
-			: "USE INDEX ($index)";
+		return "FORCE INDEX ($index)";
 	}
 
 	/**
 	 * REPLACE query wrapper
 	 * PostgreSQL simulates this with a DELETE followed by INSERT
 	 * $row is the row to insert, an associative array
-	 * $uniqueIndexes is an array of indexes. Each element may be either a 
+	 * $uniqueIndexes is an array of indexes. Each element may be either a
 	 * field name or an array of field names
-	 * 
-	 * It may be more efficient to leave off unique indexes which are unlikely to collide. 
-	 * However if you do this, you run the risk of encountering errors which wouldn't have 
+	 *
+	 * It may be more efficient to leave off unique indexes which are unlikely to collide.
+	 * However if you do this, you run the risk of encountering errors which wouldn't have
 	 * occurred in MySQL
 	 *
 	 * @todo migrate comment to phodocumentor format
@@ -1172,7 +1262,7 @@ class Database {
 	 * DELETE where the condition is a join
 	 * MySQL does this with a multi-table DELETE syntax, PostgreSQL does it with sub-selects
 	 *
-	 * For safety, an empty $conds will not delete everything. If you want to delete all rows where the 
+	 * For safety, an empty $conds will not delete everything. If you want to delete all rows where the
 	 * join condition matches, set $conds='*'
 	 *
 	 * DO NOT put the join condition in $conds
@@ -1194,7 +1284,7 @@ class Database {
 		if ( $conds != '*' ) {
 			$sql .= ' AND ' . $this->makeList( $conds, LIST_AND );
 		}
-		
+
 		return $this->query( $sql, $fname );
 	}
 
@@ -1247,33 +1337,44 @@ class Database {
 	 * $conds may be "*" to copy the whole table
 	 * srcTable may be an array of tables.
 	 */
-	function insertSelect( $destTable, $srcTable, $varMap, $conds, $fname = 'Database::insertSelect', 
-		$options = array() ) 
+	function insertSelect( $destTable, $srcTable, $varMap, $conds, $fname = 'Database::insertSelect',
+		$insertOptions = array(), $selectOptions = array() )
 	{
 		$destTable = $this->tableName( $destTable );
-		if ( is_array( $options ) ) {
-			$options = implode( ' ', $options );
+		if ( is_array( $insertOptions ) ) {
+			$insertOptions = implode( ' ', $insertOptions );
 		}
+		if( !is_array( $selectOptions ) ) {
+			$selectOptions = array( $selectOptions );
+		}
+		list( $useIndex, $tailOpts ) = $this->makeSelectOptions( $selectOptions );
 		if( is_array( $srcTable ) ) {
 			$srcTable =  implode( ',', array_map( array( &$this, 'tableName' ), $srcTable ) );
-		} else { 
+		} else {
 			$srcTable = $this->tableName( $srcTable );
 		}
-		$sql = "INSERT $options INTO $destTable (" . implode( ',', array_keys( $varMap ) ) . ')' .
-			' SELECT ' . implode( ',', $varMap ) . 
-			" FROM $srcTable";
+		$sql = "INSERT $insertOptions INTO $destTable (" . implode( ',', array_keys( $varMap ) ) . ')' .
+			' SELECT ' . implode( ',', $varMap ) .
+			" FROM $srcTable $useIndex ";
 		if ( $conds != '*' ) {
 			$sql .= ' WHERE ' . $this->makeList( $conds, LIST_AND );
 		}
+		$sql .= " $tailOpts";
 		return $this->query( $sql, $fname );
 	}
 
 	/**
 	 * Construct a LIMIT query with optional offset
 	 * This is used for query pages
+	 * $sql string SQL query we will append the limit too
+	 * $limit integer the SQL limit
+	 * $offset integer the SQL offset (default false)
 	 */
-	function limitResult($limit,$offset) {
-		return ' LIMIT '.(is_numeric($offset)?"{$offset},":"")."{$limit} ";
+	function limitResult($sql, $limit, $offset=false) {
+		return " $sql LIMIT ".((is_numeric($offset) && $offset != 0)?"{$offset},":"")."{$limit} ";
+	}
+	function limitResultForUpdate($sql, $num) {
+		return $this->limitResult($sql, $num, 0);
 	}
 
 	/**
@@ -1299,23 +1400,23 @@ class Database {
 	/**
 	 * Perform a deadlock-prone transaction.
 	 *
-	 * This function invokes a callback function to perform a set of write 
-	 * queries. If a deadlock occurs during the processing, the transaction 
+	 * This function invokes a callback function to perform a set of write
+	 * queries. If a deadlock occurs during the processing, the transaction
 	 * will be rolled back and the callback function will be called again.
 	 *
-	 * Usage: 
+	 * Usage:
 	 *   $dbw->deadlockLoop( callback, ... );
 	 *
-	 * Extra arguments are passed through to the specified callback function. 
-	 * 
-	 * Returns whatever the callback function returned on its successful, 
-	 * iteration, or false on error, for example if the retry limit was 
+	 * Extra arguments are passed through to the specified callback function.
+	 *
+	 * Returns whatever the callback function returned on its successful,
+	 * iteration, or false on error, for example if the retry limit was
 	 * reached.
 	 */
 	function deadlockLoop() {
 		$myFname = 'Database::deadlockLoop';
-		
-		$this->query( 'BEGIN', $myFname );
+
+		$this->begin();
 		$args = func_get_args();
 		$function = array_shift( $args );
 		$oldIgnore = $this->ignoreErrors( true );
@@ -1330,7 +1431,7 @@ class Database {
 			$error = $this->lastError();
 			$errno = $this->lastErrno();
 			$sql = $this->lastQuery();
-			
+
 			if ( $errno ) {
 				if ( $this->wasDeadlock() ) {
 					# Retry
@@ -1361,11 +1462,11 @@ class Database {
 	function masterPosWait( $file, $pos, $timeout ) {
 		$fname = 'Database::masterPosWait';
 		wfProfileIn( $fname );
-		
-		
+
+
 		# Commit any open transactions
 		$this->immediateCommit();
-		
+
 		# Call doQuery() directly, to avoid opening a transaction if DBO_TRX is set
 		$encFile = $this->strencode( $file );
 		$sql = "SELECT MASTER_POS_WAIT('$encFile', $pos, $timeout)";
@@ -1392,7 +1493,7 @@ class Database {
 			return array( false, false );
 		}
 	}
-	
+
 	/**
 	 * Get the position of the master from SHOW MASTER STATUS
 	 */
@@ -1444,7 +1545,7 @@ class Database {
 		$this->query( 'BEGIN', $fname );
 		$this->mTrxLevel = 1;
 	}
-	
+
 	/**
 	 * Commit transaction, if one is open
 	 */
@@ -1459,7 +1560,7 @@ class Database {
 	function timestamp( $ts=0 ) {
 		return wfTimestamp(TS_MW,$ts);
 	}
-	
+
 	/**
 	 * Local database timestamp format or null
 	 */
@@ -1470,7 +1571,7 @@ class Database {
 			return $this->timestamp( $ts );
 		}
 	}
-	
+
 	/**
 	 * @todo document
 	 */
@@ -1488,14 +1589,14 @@ class Database {
 	function aggregateValue ($valuedata,$valuename='value') {
 		return $valuename;
 	}
-	
+
 	/**
 	 * @return string wikitext of a link to the server software's web site
 	 */
 	function getSoftwareLink() {
 		return "[http://www.mysql.com/ MySQL]";
 	}
-	
+
 	/**
 	 * @return string Version information from the database
 	 */
@@ -1514,21 +1615,25 @@ class Database {
 			return true;
 		}
 	}
-	
+
 	/**
 	 * Get slave lag.
 	 * At the moment, this will only work if the DB user has the PROCESS privilege
 	 */
 	function getLag() {
 		$res = $this->query( 'SHOW PROCESSLIST' );
-		# Find slave SQL thread. Assumed to be the second one running, which is a bit 
+		# Find slave SQL thread. Assumed to be the second one running, which is a bit
 		# dubious, but unfortunately there's no easy rigorous way
 		$slaveThreads = 0;
 		while ( $row = $this->fetchObject( $res ) ) {
 			if ( $row->User == 'system user' ) {
 				if ( ++$slaveThreads == 2 ) {
-					# This is it, return the time
-					return $row->Time;
+					# This is it, return the time (except -ve)
+					if ( $row->Time > 1<<31 ) {
+						return 0;
+					} else {
+						return $row->Time;
+					}
 				}
 			}
 		}
@@ -1538,15 +1643,107 @@ class Database {
 	/**
 	 * Get status information from SHOW STATUS in an associative array
 	 */
-	function getStatus() {
-		$res = $this->query( 'SHOW STATUS' );
+	function getStatus($which="%") {
+		$res = $this->query( "SHOW STATUS LIKE '{$which}'" );
 		$status = array();
 		while ( $row = $this->fetchObject( $res ) ) {
 			$status[$row->Variable_name] = $row->Value;
 		}
 		return $status;
 	}
-} 
+
+	/**
+	 * Return the maximum number of items allowed in a list, or 0 for unlimited.
+	 */
+	function maxListLen() {
+		return 0;
+	}
+
+	function encodeBlob($b) {
+		return $b;
+	}
+
+	/**
+	 * Read and execute SQL commands from a file.
+	 * Returns true on success, error string on failure
+	 */
+	function sourceFile( $filename ) {
+		$fp = fopen( $filename, 'r' );
+		if ( false === $fp ) {
+			return "Could not open \"{$fname}\".\n";
+		}
+
+		$cmd = "";
+		$done = false;
+
+		while ( ! feof( $fp ) ) {
+			$line = trim( fgets( $fp, 1024 ) );
+			$sl = strlen( $line ) - 1;
+
+			if ( $sl < 0 ) { continue; }
+			if ( '-' == $line{0} && '-' == $line{1} ) { continue; }
+
+			if ( ';' == $line{$sl} && ($sl < 2 || ';' != $line{$sl - 1})) {
+				$done = true;
+				$line = substr( $line, 0, $sl );
+			}
+
+			if ( '' != $cmd ) { $cmd .= ' '; }
+			$cmd .= "$line\n";
+
+			if ( $done ) {
+				$cmd = str_replace(';;', ";", $cmd);
+				$cmd = $this->replaceVars( $cmd );
+				$res = $this->query( $cmd, 'dbsource', true );
+
+				if ( false === $res ) {
+					$err = $this->lastError();
+					return "Query \"{$cmd}\" failed with error code \"$err\".\n";
+				}
+
+				$cmd = '';
+				$done = false;
+			}
+		}
+		fclose( $fp );
+		return true;
+	}
+
+	/**
+	 * Replace variables in sourced SQL
+	 */
+	function replaceVars( $ins ) {
+		$varnames = array(
+			'wgDBserver', 'wgDBname', 'wgDBintlname', 'wgDBuser',
+			'wgDBpassword', 'wgDBsqluser', 'wgDBsqlpassword',
+			'wgDBadminuser', 'wgDBadminpassword',
+		);
+
+		// Ordinary variables
+		foreach ( $varnames as $var ) {
+			if( isset( $GLOBALS[$var] ) ) {
+				$val = addslashes( $GLOBALS[$var] );
+				$ins = str_replace( '{$' . $var . '}', $val, $ins );
+				$ins = str_replace( '/*$' . $var . '*/`', '`' . $val, $ins );
+				$ins = str_replace( '/*$' . $var . '*/', $val, $ins );
+			}
+		}
+
+		// Table prefixes
+		$ins = preg_replace_callback( '/\/\*(?:\$wgDBprefix|_)\*\/([a-z_]*)/',
+			array( &$this, 'tableNameCallback' ), $ins );
+		return $ins;
+	}
+
+	/**
+	 * Table name callback
+	 * @access private
+	 */
+	function tableNameCallback( $matches ) {
+		return $this->tableName( $matches[1] );
+	}
+
+}
 
 /**
  * Database abstraction object for mySQL
@@ -1567,11 +1764,11 @@ class DatabaseMysql extends Database {
  */
 class ResultWrapper {
 	var $db, $result;
-	
+
 	/**
 	 * @todo document
 	 */
-	function ResultWrapper( $database, $result ) {
+	function ResultWrapper( &$database, $result ) {
 		$this->db =& $database;
 		$this->result =& $result;
 	}
@@ -1582,21 +1779,21 @@ class ResultWrapper {
 	function numRows() {
 		return $this->db->numRows( $this->result );
 	}
-	
+
 	/**
 	 * @todo document
 	 */
 	function fetchObject() {
 		return $this->db->fetchObject( $this->result );
 	}
-	
+
 	/**
 	 * @todo document
 	 */
 	function &fetchRow() {
 		return $this->db->fetchRow( $this->result );
 	}
-	
+
 	/**
 	 * @todo document
 	 */
@@ -1609,7 +1806,9 @@ class ResultWrapper {
 	function seek( $row ) {
 		$this->db->dataSeek( $this->result, $row );
 	}
+
 }
+
 
 #------------------------------------------------------------------------------
 # Global functions
@@ -1668,12 +1867,15 @@ border=\"0\" ALT=\"Google\"></A>
 	if ( is_object( $wgMessageCache ) ) {
 		$wgMessageCache->disable();
 	}
-	
-	$msg = wfGetSiteNotice();
-	if($msg == '') {
-		$msg = str_replace( '$1', htmlspecialchars( $error ), $noconnect );
+
+	if ( trim( $error ) == '' ) {
+		$error = $this->mServer;
 	}
-	$text = $msg;
+
+	wfLogDBError( "Connection error: $error\n" );
+
+	$text = str_replace( '$1', $error, $noconnect );
+	$text .= wfGetSiteNotice();
 
 	if($wgUseFileCache) {
 		if($wgTitle) {
@@ -1684,7 +1886,7 @@ border=\"0\" ALT=\"Google\"></A>
 			} elseif (@/**/$_REQUEST['search']) {
 				$search = $_REQUEST['search'];
 				echo $searchdisabled;
-				echo str_replace( array( '$1', '$2' ), array( htmlspecialchars( $search ), 
+				echo str_replace( array( '$1', '$2' ), array( htmlspecialchars( $search ),
 				  $wgInputEncoding ), $googlesearch );
 				wfErrorExit();
 			} else {
@@ -1696,7 +1898,7 @@ border=\"0\" ALT=\"Google\"></A>
 		if( $cache->isFileCached() ) {
 			$msg = '<p style="color: red"><b>'.$msg."<br />\n" .
 				$cachederror . "</b></p>\n";
-			
+
 			$tag = '<div id="article">';
 			$text = str_replace(
 				$tag,
@@ -1704,7 +1906,7 @@ border=\"0\" ALT=\"Google\"></A>
 				$cache->fetchPageText() );
 		}
 	}
-	
+
 	echo $text;
 	wfErrorExit();
 }

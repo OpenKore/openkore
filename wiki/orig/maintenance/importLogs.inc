@@ -1,20 +1,20 @@
 <?php
 # Copyright (C) 2004 Brion Vibber <brion@pobox.com>
 # http://www.mediawiki.org/
-# 
+#
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2 of the License, or 
+# the Free Software Foundation; either version 2 of the License, or
 # (at your option) any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License along
 # with this program; if not, write to the Free Software Foundation, Inc.,
-# 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+# 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 # http://www.gnu.org/copyleft/gpl.html
 
 /**
@@ -41,13 +41,13 @@ require_once( 'LogPage.php' );
  */
 class LogImporter {
 	var $dummy = false;
-	
+
 	function LogImporter( $type ) {
 		$this->type = $type;
 		$this->db =& wfGetDB( DB_MASTER );
 		$this->actions = $this->setupActions();
 	}
-	
+
 	function setupActions() {
 		$actions = array();
 		foreach( LogPage::validActions( $this->type ) as $action ) {
@@ -56,11 +56,11 @@ class LogImporter {
 		}
 		return $actions;
 	}
-	
+
 	function makeLineRegexp( $type, $action ) {
 		$linkRegexp = '(?:\[\[)?([^|\]]+?)(?:\|[^\]]+?)?(?:\]\])?';
 		$linkRegexp2 = '\[\[([^|\]]+?)(?:\|[^\]]+?)?\]\]';
-		
+
 		$text = LogPage::actionText( $type, $action );
 		$text = preg_quote( $text, '/' );
 		$text = str_replace( '\$1', $linkRegexp, $text );
@@ -69,7 +69,7 @@ class LogImporter {
 		$text = "/$text/";
 		return $text;
 	}
-	
+
 	function importText( $text ) {
 		if( $this->dummy ) {
 			print $text;
@@ -82,7 +82,7 @@ class LogImporter {
 			}
 		}
 	}
-	
+
 	function fixDate( $date ) {
 		# Yuck! Parsing multilingual date formats??!!!!???!!??!
 		# 01:55, 23 Aug 2004 - won't take in strtotimr
@@ -96,7 +96,7 @@ class LogImporter {
 		$timestamp = wfTimestamp( TS_MW, $n );
 		return $timestamp;
 	}
-	
+
 	function importLine( $line ) {
 		foreach( $this->actions as $action => $regexp ) {
 			if( preg_match( $regexp, $line, $matches ) ) {
@@ -111,12 +111,12 @@ class LogImporter {
 				} else {
 					$comment = '';
 				}
-				
+
 				$insert = array(
 					'log_type' => $this->type,
 					'log_action' => preg_replace( '!^.*/!', '', $action ),
 					'log_timestamp' => $date,
-					'log_user' => IntVal( User::idFromName( $user->getText() ) ),
+					'log_user' => intval( User::idFromName( $user->getText() ) ),
 					'log_namespace' => $target->getNamespace(),
 					'log_title' => $target->getDBkey(),
 					'log_comment' => wfUnescapeWikiText( $comment ),
@@ -134,7 +134,7 @@ class LogImporter {
 }
 
 function wfUnescapeWikiText( $text ) {
-	$text = str_replace( 
+	$text = str_replace(
 		array( '&#91;', '&#124;', '&#39;', 'ISBN&#32;', '&#58;//' , "\n&#61;", '&#123;&#123;' ),
 		array( '[',		'|',	  "'",	   'ISBN '	  , '://'	  , "\n=", '{{' ),
 		$text );

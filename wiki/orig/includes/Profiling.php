@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * This file is only included if profiling is enabled
  * @package MediaWiki
@@ -44,14 +44,19 @@ if (!function_exists('memory_get_usage')) {
 class Profiler {
 	var $mStack = array (), $mWorkStack = array (), $mCollated = array ();
 	var $mCalls = array (), $mTotals = array ();
-	/*
+
 	function Profiler()
 	{
-		$this->mProfileStack = array();
-		$this->mWorkStack = array();
-		$this->mCollated = array();
+		// Push an entry for the pre-profile setup time onto the stack
+		global $wgRequestTime;
+		if ( !empty( $wgRequestTime ) ) {
+			$this->mWorkStack[] = array( '-total', 0, $wgRequestTime, 0 );
+			$this->mStack[] = array( '-setup', 1, $wgRequestTime, 0, microtime(), 0 );
+		} else {
+			$this->profileIn( '-total' );
+		}
+
 	}
-	*/
 
 	function profileIn($functionname) {
 		global $wgDebugFunctionEntry;
@@ -65,7 +70,7 @@ class Profiler {
 		$memory = memory_get_usage();
 		$time = $this->getTime();
 
-		global $wgDebugProfiling, $wgDebugFunctionEntry;
+		global $wgDebugFunctionEntry;
 
 		if ($wgDebugFunctionEntry && function_exists('wfDebug')) {
 			wfDebug(str_repeat(' ', count($this->mWorkStack) - 1).'Exiting '.$functionname."\n");
@@ -78,14 +83,14 @@ class Profiler {
 		} else {
 			//if ($wgDebugProfiling) {
 				if ($functionname == 'close') {
-					$message = "Profile section ended by close(): {$bit[0]}\n";
-					wfDebug( $message );
-					$this->mStack[] = array( $message, 0, 0, 0 );
+					$message = "Profile section ended by close(): {$bit[0]}";
+					wfDebug( "$message\n" );
+					$this->mStack[] = array( $message, 0, '0 0', 0, '0 0', 0 );
 				}
 				elseif ($bit[0] != $functionname) {
-					$message = "Profiling error: in({$bit[0]}), out($functionname)\n";
-					wfDebug( $message );
-					$this->mStack[] = array( $message, 0, 0, 0 );
+					$message = "Profiling error: in({$bit[0]}), out($functionname)";
+					wfDebug( "$message\n" );
+					$this->mStack[] = array( $message, 0, '0 0', 0, '0 0', 0 );
 				}
 			//}
 			$bit[] = $time;
@@ -104,7 +109,7 @@ class Profiler {
 		global $wgDebugFunctionEntry;
 		$wgDebugFunctionEntry = false;
 
-		if (!count($this->mStack)) {
+		if (!count($this->mStack) && !count($this->mCollated)) {
 			return "No profiling output\n";
 		}
 		$this->close();
@@ -167,12 +172,12 @@ class Profiler {
 			trim( sprintf( "%7.3f", $delta * 1000.0 ) ),
 			$space, $fname );
 	}
-	
+
 	function micro2Float( $micro ) {
 		list( $whole, $fractional ) = explode( ' ', $micro );
 		return (float)$whole + (float)$fractional;
 	}
-	
+
 	function microDelta( $start, $end ) {
 		return $this->micro2Float( $end ) -
 		       $this->micro2Float( $start );
@@ -188,7 +193,7 @@ class Profiler {
 		return $ru['ru_utime.tv_sec'].' '.$ru['ru_utime.tv_usec'] / 1e6;
 	}
 
-	function getFunctionReport() {		
+	function getFunctionReport() {
 		$width = 140;
 		$nameWidth = $width - 65;
 		$format =      "%-{$nameWidth}s %6d %13.3f %13.3f %13.3f%% %9d  (%13.3f -%13.3f) [%d]\n";
@@ -279,7 +284,7 @@ class Profiler {
 			$calls = $this->mCalls[$fname];
 			$percent = $total ? 100. * $elapsed / $total : 0;
 			$memory = $this->mMemory[$fname];
-			$prof .= sprintf($format, $fname, $calls, (float) ($elapsed * 1000), (float) ($elapsed * 1000) / $calls, $percent, $memory, ($this->mMin[$fname] * 1000.0), ($this->mMax[$fname] * 1000.0), $this->mOverhead[$fname]);
+			$prof .= sprintf($format, substr($fname, 0, $nameWidth), $calls, (float) ($elapsed * 1000), (float) ($elapsed * 1000) / $calls, $percent, $memory, ($this->mMin[$fname] * 1000.0), ($this->mMax[$fname] * 1000.0), $this->mOverhead[$fname]);
 
 			global $wgProfileToDatabase;
 			if ($wgProfileToDatabase) {
@@ -313,28 +318,41 @@ class Profiler {
 	 * @static
 	 */
 	function logToDB($name, $timeSum, $eventCount) {
+		# Warning: $wguname is a live patch, it should be moved to Setup.php
+		global $wguname;
+
 		$fname = 'Profiler::logToDB';
 		$dbw = & wfGetDB(DB_MASTER);
+		if (!is_object($dbw))
+			return false;
 		$profiling = $dbw->tableName('profiling');
 
 		$name = substr($name, 0, 255);
 		$encname = $dbw->strencode($name);
-		$sql = "UPDATE $profiling "."SET pf_count=pf_count+{$eventCount}, "."pf_time=pf_time + {$timeSum} "."WHERE pf_name='{$encname}'";
+		$sql = "UPDATE $profiling "."SET pf_count=pf_count+{$eventCount}, "."pf_time=pf_time + {$timeSum} ".
+			"WHERE pf_name='{$encname}' AND pf_server='{$wguname['nodename']}'";
 		$dbw->query($sql);
 
 		$rc = $dbw->affectedRows();
 		if ($rc == 0) {
-			$dbw->insert('profiling', array ('pf_name' => $name, 'pf_count' => $eventCount, 'pf_time' => $timeSum), $fname, array ('IGNORE'));
+			$dbw->insert('profiling', array ('pf_name' => $name, 'pf_count' => $eventCount,
+				'pf_time' => $timeSum, 'pf_server' => $wguname['nodename'] ), $fname, array ('IGNORE'));
 		}
 		// When we upgrade to mysql 4.1, the insert+update
 		// can be merged into just a insert with this construct added:
 		//     "ON DUPLICATE KEY UPDATE ".
 		//     "pf_count=pf_count + VALUES(pf_count), ".
-		//     "pf_time=pf_time + VALUES(pf_time)"; 
+		//     "pf_time=pf_time + VALUES(pf_time)";
+	}
+
+	/**
+	 * Get the function name of the current profiling section
+	 */
+	function getCurrentSection() {
+		$elt = end($this->mWorkStack);
+		return $elt[0];
 	}
 
 }
 
-$wgProfiler = new Profiler();
-$wgProfiler->profileIn('-total');
 ?>

@@ -3,6 +3,10 @@ unset( $DP );
 unset( $IP );
 $wgCommandLineMode = false;
 define( 'MEDIAWIKI', true );
+if ( isset( $_REQUEST['GLOBALS'] ) ) {
+	echo '<a href="http://www.hardened-php.net/index.76.html">$GLOBALS overwrite vulnerability</a>';
+	die( -1 );
+}
 
 require_once( './includes/Defines.php' );
 require_once( './LocalSettings.php' );

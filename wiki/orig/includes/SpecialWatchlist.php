@@ -15,10 +15,10 @@ require_once( 'WatchedItem.php' );
  * constructor
  */
 function wfSpecialWatchlist( $par ) {
-	global $wgUser, $wgOut, $wgLang, $wgTitle, $wgMemc, $wgRequest, $wgContLang;
+	global $wgUser, $wgOut, $wgLang, $wgMemc, $wgRequest, $wgContLang;
 	global $wgUseWatchlistCache, $wgWLCacheTimeout, $wgDBname;
 	global $wgRCShowWatchingUsers, $wgEnotifWatchlist, $wgShowUpdatedMarker;
-	global $wgEnotifWatchlist;
+	global $wgEnotifWatchlist, $wgFilterRobotsWL;
 	$fname = 'wfSpecialWatchlist';
 
 	$wgOut->setPagetitle( wfMsg( 'watchlist' ) );
@@ -36,6 +36,8 @@ function wfSpecialWatchlist( $par ) {
 	$defaults = array(
 	/* float */ 'days' => 3.0, /* or 0.5, watch further below */
 	/* bool  */ 'hideOwn' => false,
+	/* bool  */ 'hideBots' => false,
+				'namespace' => 'all',
 	);
 
 	extract($defaults);
@@ -43,6 +45,17 @@ function wfSpecialWatchlist( $par ) {
 	# Get query variables
 	$days = $wgRequest->getVal( 'days' );
 	$hideOwn = $wgRequest->getBool( 'hideOwn' );
+	$hideBots = $wgRequest->getBool( 'hideBots' );
+	
+	# Get namespace value, if supplied, and prepare a WHERE fragment
+	$nameSpace = $wgRequest->getIntOrNull( 'namespace' );
+	if( !is_null( $nameSpace ) ) {
+		$nameSpace = intval( $nameSpace );
+		$nameSpaceClause = " AND rc_namespace = $nameSpace";
+	} else {
+		$nameSpace = '';
+		$nameSpaceClause = '';
+	}
 
 	# Watchlist editing
 	$action = $wgRequest->getVal( 'action' );
@@ -87,11 +100,11 @@ function wfSpecialWatchlist( $par ) {
 	$dbr =& wfGetDB( DB_SLAVE );
 	extract( $dbr->tableNames( 'page', 'revision', 'watchlist', 'recentchanges' ) );
 
-               	$sql = "SELECT COUNT(*) AS n FROM $watchlist WHERE wl_user=$uid";
-        	$res = $dbr->query( $sql, $fname );
-        	$s = $dbr->fetchObject( $res );
-
-        #	Patch *** A1 *** (see A2 below)
+	$sql = "SELECT COUNT(*) AS n FROM $watchlist WHERE wl_user=$uid";
+	$res = $dbr->query( $sql, $fname );
+	$s = $dbr->fetchObject( $res );
+	
+#	Patch *** A1 *** (see A2 below)
 #	adjust for page X, talk:page X, which are both stored separately, but treated together
 	$nitems = floor($s->n / 2);
 #	$nitems = $s->n;
@@ -118,6 +131,8 @@ function wfSpecialWatchlist( $par ) {
 
 	wfAppendToArrayIfNotDefault( 'days', $days, $defaults, $nondefaults);
 	wfAppendToArrayIfNotDefault( 'hideOwn', $hideOwn, $defaults, $nondefaults);
+	wfAppendToArrayIfNotDefault( 'hideBots', $hideBots, $defaults, $nondefaults);
+	wfAppendToArrayIfNotDefault( 'namespace', $nameSpace, $defaults, $nondefaults );
 
 	if ( $days <= 0 ) {
 		$docutoff = '';
@@ -127,13 +142,13 @@ function wfSpecialWatchlist( $par ) {
 	        $docutoff = "AND rev_timestamp > '" .
 		  ( $cutoff = $dbr->timestamp( time() - intval( $days * 86400 ) ) )
 		  . "'";
-                  /* 
-                  $sql = "SELECT COUNT(*) AS n FROM $page, $revision  WHERE rev_timestamp>'$cutoff' AND page_id=rev_page";
-                  $res = $dbr->query( $sql, $fname );
-                  $s = $dbr->fetchObject( $res );
-                  $npages = $s->n;
-                  */
-                  $npages = 40000 * $days;
+	          /*
+	          $sql = "SELECT COUNT(*) AS n FROM $page, $revision  WHERE rev_timestamp>'$cutoff' AND page_id=rev_page";
+	          $res = $dbr->query( $sql, $fname );
+	          $s = $dbr->fetchObject( $res );
+	          $npages = $s->n;
+	          */
+	          $npages = 40000 * $days;
 
 	}
 
@@ -149,14 +164,23 @@ function wfSpecialWatchlist( $par ) {
 #		Patch A2
 #		The following was proposed by KTurner 07.11.2004 to T.Gries
 #		$sql = "SELECT distinct (wl_namespace & ~1),wl_title FROM $watchlist WHERE wl_user=$uid";
-		$sql = "SELECT wl_namespace,wl_title FROM $watchlist WHERE wl_user=$uid";
+		$sql = "SELECT wl_namespace, wl_title, page_is_redirect FROM $watchlist LEFT JOIN $page ON wl_namespace = page_namespace AND wl_title = page_title WHERE wl_user=$uid";
 
 		$res = $dbr->query( $sql, $fname );
+		
+		# Batch existence check
+		$linkBatch = new LinkBatch();
+		while( $row = $dbr->fetchObject( $res ) )
+			$linkBatch->addObj( Title::makeTitleSafe( $row->wl_namespace, $row->wl_title ) );
+		$linkBatch->execute();
+		if( $dbr->numRows( $res ) > 0 )
+			$dbr->dataSeek( $res, 0 ); # Let's do the time warp again!
+		
 		$sk = $wgUser->getSkin();
 
 		$list = array();
 		while( $s = $dbr->fetchObject( $res ) ) {
-			$list[$s->wl_namespace][] = $s->wl_title;
+			$list[$s->wl_namespace][$s->wl_title] = $s->page_is_redirect;
 		}
 
 		// TODO: Display a TOC
@@ -166,20 +190,27 @@ function wfSpecialWatchlist( $par ) {
 			if ($ns != NS_MAIN)
 				$wgOut->addHTML( '<h2>' . $wgContLang->getFormattedNsText( $ns ) . '</h2>' );
 			$wgOut->addHTML( '<ul>' );
-			foreach($titles as $title) {
-				$t = Title::makeTitle( $ns, $title );
-				if( is_null( $t ) ) {
+			foreach( $titles as $title => $redir ) {
+				$titleObj = Title::makeTitle( $ns, $title );
+				if( is_null( $titleObj ) ) {
 					$wgOut->addHTML(
 						'<!-- bad title "' .
 						htmlspecialchars( $s->wl_title ) . '" in namespace ' . $s->wl_namespace . " -->\n"
 					);
 				} else {
-					$t = $t->getPrefixedText();
-					$wgOut->addHTML(
-						'<li><input type="checkbox" name="id[]" value="' . htmlspecialchars($t) . '" />' .
-						$sk->makeLink( $t, $t ) .
-						"</li>\n"
-					);
+					global $wgContLang;
+					$titleText = $titleObj->getPrefixedText();
+					$pageLink = $sk->makeLinkObj( $titleObj );
+					$talkLink = $sk->makeLinkObj( $titleObj->getTalkPage(), $wgLang->getNsText( NS_TALK ) );
+					$checkbox = '<input type="checkbox" name="id[]" value="' . htmlspecialchars( $titleObj->getPrefixedText() ) . '" /> ' . ( $wgContLang->isRTL() ? '&rlm;' : '&lrm;' );
+					if( $redir ) {
+						$spanopen = '<span class="watchlistredir">';
+						$spanclosed = '</span>';
+					} else {
+						$spanopen = $spanclosed = '';
+					}
+					
+					$wgOut->addHTML( "<li>{$checkbox}{$spanopen}{$pageLink}{$spanclosed} ({$talkLink})</li>\n" );
 				}
 			}
 			$wgOut->addHTML( '</ul>' );
@@ -202,6 +233,12 @@ function wfSpecialWatchlist( $par ) {
 	# Up estimate of watched items by 15% to compensate for talk pages...
 
 	$andHideOwn = $hideOwn ? "AND (rc_user <> $uid)" : '';
+	if( $wgFilterRobotsWL ) {
+		$andHideBotsOptional = $hideBots ? "AND (rc_bot = 0)" : '';
+	} else {
+		$andHideBotsOptional = "AND rc_this_oldid=page_latest";
+	}
+
 
 	# Show watchlist header
 	$header = '';
@@ -213,11 +250,11 @@ function wfSpecialWatchlist( $par ) {
 	}
 
 	# TODO: Consider removing the third parameter
-	$header .= wfMsg( 'watchdetails', $wgLang->formatNum( $nitems ), 
+	$header .= wfMsg( 'watchdetails', $wgLang->formatNum( $nitems ),
 		$wgLang->formatNum( $npages ), '',
 		$specialTitle->getFullUrl( 'edit=yes' ) );
 	$wgOut->addWikiText( $header );
-	
+
 	if ( $wgEnotifWatchlist && $wgShowUpdatedMarker ) {
 		$wgOut->addHTML( '<form action="' .
 			$specialTitle->escapeLocalUrl() .
@@ -227,23 +264,24 @@ function wfSpecialWatchlist( $par ) {
 			"\n\n" );
 	}
 
-        $sql = "SELECT
-          rc_namespace page_namespace,rc_title page_title,
-          rc_comment rev_comment, rc_cur_id page_id,
-          rc_user rev_user,rc_user_text rev_user_text,
-          rc_timestamp rev_timestamp,rc_minor rev_minor_edit,
-          rc_this_oldid rev_id,
-          rc_last_oldid,
-          rc_new page_is_new,wl_notificationtimestamp
-          FROM $watchlist,$recentchanges,$page
-          WHERE wl_user=$uid
-          AND wl_namespace=rc_namespace
-          AND wl_title=rc_title
-          AND rc_timestamp > '$cutoff'
-          AND rc_cur_id=page_id
-          AND rc_this_oldid=page_latest
-          $andHideOwn
-          ORDER BY rc_timestamp DESC";
+	$sql = "SELECT
+	  rc_namespace page_namespace,rc_title page_title,
+	  rc_comment rev_comment, rc_cur_id page_id,
+	  rc_user rev_user,rc_user_text rev_user_text,
+	  rc_timestamp rev_timestamp,rc_minor rev_minor_edit,
+	  rc_this_oldid rev_id,
+	  rc_last_oldid,
+	  rc_new page_is_new,wl_notificationtimestamp
+	  FROM $watchlist,$recentchanges,$page
+	  WHERE wl_user=$uid
+	  AND wl_namespace=rc_namespace
+	  AND wl_title=rc_title
+	  AND rc_timestamp > '$cutoff'
+	  AND rc_cur_id=page_id
+	  $andHideOwn
+	  $andHideBotsOptional
+	  $nameSpaceClause
+	  ORDER BY rc_timestamp DESC";
 
 	$res = $dbr->query( $sql, $fname );
 	$numRows = $dbr->numRows( $res );
@@ -259,15 +297,35 @@ function wfSpecialWatchlist( $par ) {
 			$wgLang->formatNum( round($days*24) ) ) . '<br />' , false );
 
 	$wgOut->addHTML( "\n" . wlCutoffLinks( $days, 'Watchlist', $nondefaults ) . "<br />\n" );
-	
+
 	$sk = $wgUser->getSkin();
 	$s = $sk->makeKnownLink(
 		$wgContLang->specialPage( 'Watchlist' ),
 		(0 == $hideOwn) ? wfMsgHtml( 'wlhide' ) : wfMsgHtml( 'wlshow' ),
 		wfArrayToCGI( array('hideOwn' => 1-$hideOwn ), $nondefaults ) );
-
 	$wgOut->addHTML( wfMsgHtml( "wlhideshowown", $s ) );
-	
+
+	if( $wgFilterRobotsWL ) {
+		$s = $sk->makeKnownLink(
+      $wgContLang->specialPage( 'Watchlist' ),
+		  (0 == $hideBots) ? wfMsgHtml( 'wlhide' ) : wfMsgHtml( 'wlshow' ),
+		  wfArrayToCGI( array('hideBots' => 1-$hideBots ), $nondefaults ) );
+	  $wgOut->addHTML( wfMsgHtml( "wlhideshowbots", "  $s" ) );
+	}
+
+	# Form for namespace filtering
+	$thisTitle = Title::makeTitle( NS_SPECIAL, 'Watchlist' );
+	$thisAction = $thisTitle->escapeLocalUrl();
+	$nsForm  = "<form method=\"post\" action=\"{$thisAction}\">\n";
+	$nsForm .= "<label for=\"namespace\">" . wfMsg( 'namespace' ) . "</label> ";
+	$nsForm .= HTMLnamespaceselector( $nameSpace, '' ) . "\n";
+	$nsForm .= ( $hideOwn ? "<input type=\"hidden\" name=\"hideown\" value=\"1\" />\n" : "" );
+	$nsForm .= ( $hideBots ? "<input type=\"hidden\" name=\"hidebots\" value=\"1\" />\n" : "" );
+	$nsForm .= "<input type=\"hidden\" name=\"days\" value=\"" . $days . "\" />\n";
+	$nsForm .= "<input type=\"submit\" name=\"submit\" value=\"" . wfMsgHtml( 'allpagessubmit' ) . "\" />\n";
+	$nsForm .= "</form>\n";
+	$wgOut->addHTML( $nsForm );
+
 	if ( $numRows == 0 ) {
 		$wgOut->addWikitext( "<br />" . wfMsg( 'watchnochange' ), false );
 		$wgOut->addHTML( "</p>\n" );
@@ -277,8 +335,8 @@ function wfSpecialWatchlist( $par ) {
 	$wgOut->addHTML( "</p>\n" );
 	/* End bottom header */
 
-	$sk = $wgUser->getSkin();
-	$list =& new ChangesList( $sk );
+	$list = ChangesList::newFromUser( $wgUser );
+
 	$s = $list->beginRecentChangesList();
 	$counter = 1;
 	while ( $obj = $dbr->fetchObject( $res ) ) {

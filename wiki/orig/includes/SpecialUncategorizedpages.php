@@ -17,7 +17,7 @@ require_once( "QueryPage.php" );
  */
 class UncategorizedPagesPage extends PageQueryPage {
 	var $requestedNamespace = NS_MAIN;
-	
+
 	function getName() {
 		return "Uncategorizedpages";
 	}
@@ -30,15 +30,23 @@ class UncategorizedPagesPage extends PageQueryPage {
 		return true;
 	}
 	function isSyndicated() { return false; }
-	
+
 	function getSQL() {
 		$dbr =& wfGetDB( DB_SLAVE );
 		extract( $dbr->tableNames( 'page', 'categorylinks' ) );
 		$name = $dbr->addQuotes( $this->getName() );
 
-		return "SELECT $name as type, page_namespace AS namespace, page_title AS title, page_title AS value " .
-			"FROM $page LEFT JOIN $categorylinks ON page_id=cl_from ".
-			"WHERE cl_from IS NULL AND page_namespace=$this->requestedNamespace AND page_is_redirect=0";
+		return
+			"
+			SELECT
+				$name as type,
+				page_namespace AS namespace,
+				page_title AS title,
+				page_title AS value
+			FROM $page
+			LEFT JOIN $categorylinks ON page_id=cl_from
+			WHERE cl_from IS NULL AND page_namespace={$this->requestedNamespace} AND page_is_redirect=0
+			";
 	}
 }
 

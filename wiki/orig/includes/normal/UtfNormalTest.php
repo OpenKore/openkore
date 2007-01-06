@@ -1,20 +1,20 @@
 <?php
 # Copyright (C) 2004 Brion Vibber <brion@pobox.com>
 # http://www.mediawiki.org/
-# 
+#
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2 of the License, or 
+# the Free Software Foundation; either version 2 of the License, or
 # (at your option) any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License along
 # with this program; if not, write to the Free Software Foundation, Inc.,
-# 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+# 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 # http://www.gnu.org/copyleft/gpl.html
 
 /**
@@ -32,7 +32,7 @@ if( defined( 'PRETTY_UTF8' ) ) {
 		return preg_replace( '/([\x00-\xff])/e',
 			'sprintf("%02X", ord("$1"))',
 			$string );
-	}	
+	}
 } else {
 	/**
 	 * @ignore
@@ -41,7 +41,7 @@ if( defined( 'PRETTY_UTF8' ) ) {
 		return trim( preg_replace( '/(.)/use',
 			'sprintf("%04X ", utf8ToCodepoint("$1"))',
 			$string ) );
-	}	
+	}
 }
 
 if( isset( $_SERVER['argv'] ) && in_array( '--icu', $_SERVER['argv'] ) ) {
@@ -80,10 +80,10 @@ while( false !== ( $line = fgets( $in ) ) ) {
 		print "Part {$matches[1]}: $comment";
 		continue;
 	}
-	
+
 	$columns = array_map( "hexSequenceToUtf8", explode( ";", $data ) );
 	array_unshift( $columns, '' );
-	
+
 	$testedChars[$columns[1]] = true;
 	$total++;
 	if( testNormals( $normalizer, $columns, $comment ) ) {
@@ -141,8 +141,8 @@ if( $ok ) {
 ## ------
 
 function reportResults( &$total, &$success, &$failure ) {
-	$percSucc = IntVal( $success * 100 / $total );
-	$percFail = IntVal( $failure * 100 / $total );
+	$percSucc = intval( $success * 100 / $total );
+	$percFail = intval( $failure * 100 / $total );
 	print "\n";
 	print "$success tests successful ($percSucc%)\n";
 	print "$failure tests failed ($percFail%)\n\n";
@@ -159,7 +159,7 @@ function testNormals( &$u, $c, $comment, $reportFailure = false ) {
 	$result = testNFKC( $u, $c, $comment, $reportFailure ) && $result;
 	$result = testNFKD( $u, $c, $comment, $reportFailure ) && $result;
 	$result = testCleanUp( $u, $c, $comment, $reportFailure ) && $result;
-	
+
 	global $verbose;
 	if( $verbose && !$result && !$reportFailure ) {
 		print $comment;
