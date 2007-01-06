@@ -1,0 +1,281 @@
+.printfooter {
+	display: none;
+}
+
+h2 {
+	border-bottom: #dddddd 1px solid;
+	padding-bottom: 0.2ex;
+}
+
+h4 {
+	color: #117a65;
+}
+
+fieldset {
+	border: 1px solid #2f6fab;
+	margin: 1em 0 1em 0;
+	padding: 0 1em 1em;
+	line-height: 1.5em;
+	font-size: small;
+}
+
+fieldset table tr td {
+	font-size: small;
+}
+
+textarea {
+	width: 100%;
+	padding: .1em;
+}
+
+pre {
+	background-color: #ffffe8;
+	border: solid 1px #fff4c0;
+	margin: 0.2cm;
+	margin-left: 0.5cm;
+	padding: 0.2cm;
+	overflow: auto;
+	font-size: medium;
+}
+
+
+/************* js pref toc *************/
+
+#preftoc {
+	float: left;
+	margin: 0;
+	margin-top: 0.2cm;
+	margin-left: 0.5cm;
+	margin-right: 0.5cm;
+	padding: 0;
+	width: 13em;
+	font-size: small;
+}
+
+#preftoc li {
+	border: 1px solid white;
+}
+
+#preftoc li.selected {
+	background-color: #f9f9f9;
+	border: 1px dashed #aaa;
+}
+
+#preftoc a, #preftoc a:active {
+	display: block;
+	color: #0014a6;
+}
+
+#prefcontrol {
+    clear: both;
+    float: left;
+    margin-top: 1em;
+}
+
+div.prefsectiontip {
+    font-size: 95%;
+    margin-top: 1em;
+}
+
+fieldset.operaprefsection {
+    margin-left: 15em;
+}
+
+#prefsubmit {
+	margin: 2cm;
+}
+
+
+/*************************/
+
+#openkore_sidelinks ul li {
+	text-align: left;
+	font-size: small;
+}
+
+#openkore_sidelinks ul li.selected a {
+	text-decoration: none;
+}
+
+#openkore_sidelinks .new {
+	margin-bottom: 0.2cm;
+}
+
+
+/******** Footer *********/
+
+#wikifooter ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+#wikifooter ul li {
+	margin: 0;
+	margin-right: 0.4cm;
+	padding: 0;
+	display: inline;
+	font-size: small;
+	color: #aaaaaa;
+}
+
+#wikifooter ul li a {
+	color: #9999ff;
+}
+
+
+/********** Wiki Actions *********/
+
+#wikiactions {
+	margin-top: 1em;
+	font-size: small;
+	color: #aaaaaa;
+}
+
+#wikiactions ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	margin-top: 0.5em;
+}
+
+#wikiactions ul li {
+	display: inline;
+	margin: 0;
+}
+
+#wikiactions ul li a {
+	color: #aaaaff;
+}
+
+#wikiactions ul li a:visited {
+	color: #ddb1f6;
+}
+
+#wikiactions ul li.selected a {
+	text-decoration: none;
+}
+
+
+/******* content styles *******/
+
+#toc,
+.toc {
+	border: 1px solid #aaa;
+	background-color: #f9f9f9;
+	padding: 5px;
+	font-size: small;
+}
+
+#toc a, .toc a {
+	text-decoration: none;
+}
+#toc a:hover, .toc a:hover {
+	text-decoration: underline;
+}
+
+#toc h2,
+.toc h2 {
+	display: inline;
+	border: none;
+	padding: 0;
+	font-size: 100%;
+	font-weight: bold;
+}
+#toc ul,
+.toc ul {
+	list-style-type: none;
+	list-style-image: none;
+	margin: 0;
+	margin-top: 0.7em;
+	padding: 0;
+	text-align: left;
+}
+#toc ul ul,
+.toc ul ul {
+	margin: 0 0 0 2em;
+}
+#toc .toctoggle,
+.toc .toctoggle {
+	font-size: 94%;
+}
+
+
+/********* Search form ************/
+
+#searchform {
+	margin-top: 0.2cm;
+}
+
+#searchform #searchGoButton {
+	font-weight: bold;
+}
+
+#searchform input {
+	border: #dddddd 1px solid;
+}
+
+#searchform input:hover {
+	border: #999999 1px solid;
+}
+
+
+/************************/
+
+.body .para a.external {
+	padding-right: 13px;
+	background: url('external.png') center right no-repeat;
+}
+
+.editsection {
+	font-size: small;
+}
+
+.editsection a {
+	text-decoration: none;
+}
+
+.editsection a:hover {
+	text-decoration: underline;
+}
+
+#toolbar img[title="Internal link"] { margin-left: 0.1cm; }
+#toolbar img[title="Embedded image"] { margin-left: 0.1cm; }
+#toolbar img[title="Your signature with timestamp"] { margin-left: 0.1cm; }
+#toolbar { clear: both; }
+
+/*********** Definition lists ************/
+
+dl.wikidl dt {
+	font-weight: bold;
+}
+
+dl.wikidl dd {
+	margin-top: 0.6em;
+	margin-bottom: 1.4em;
+}
+
+
+/*********** Colored tables ************/
+
+table.colored {
+	border: 1px solid #cdd3d7;
+	width: 100%;
+	font-size: 10pt;
+}
+
+table.colored th, table.colored td {
+	border: solid 1px white;
+}
+
+table.colored th {
+	background-color: #e9ecef;
+	padding: 3px 10px;
+	text-align: left;
+}
+
+table.colored td {
+	background-color: #f1f4f7;
+	padding: 3px 10px;
+	text-align: left;
+}
