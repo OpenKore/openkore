@@ -288,7 +288,8 @@ else:
 	perlenv['LIBS'] += ['perl']
 	perlenv['LIBPATH'] += [perlconfig['coredir']]
 	# Add default Fink header directory to header search path.
-	perlenv['CPPPATH'] += ['/sw/include']
+	# But give system's default include paths higher priority.
+	perlenv['CPPPATH'] += ['/usr/include', '/usr/local/include', '/sw/include']
 
 perlenv['CPPPATH'] += [perlconfig['coredir']]
 perlenv['CCFLAGS'] += ['-DVERSION=\\"1.0\\"', '-DXS_VERSION=\\"1.0\\"']
