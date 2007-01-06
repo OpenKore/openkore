@@ -56,14 +56,14 @@ class OpenKoreTemplate extends QuickTemplate {
 	function myPrintManualLayout() {
 		// Suppress warnings to prevent notices about missing indexes in $this->data
 		wfSuppressWarnings();
-		include('/home/openkore/web/wiki/skins/openkore/manual.php');
+		include(dirname(__FILE__) . '/openkore/manual.php');
 		wfRestoreWarnings();
 	}
 
 	function myPrintNormalLayout() {
 		// Suppress warnings to prevent notices about missing indexes in $this->data
 		wfSuppressWarnings();
-		include('/home/openkore/web/wiki/skins/openkore/normal.php');
+		include(dirname(__FILE__) . '/openkore/normal.php');
 		wfRestoreWarnings();
 	}
 }

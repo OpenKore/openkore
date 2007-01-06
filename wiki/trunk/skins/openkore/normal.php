@@ -35,7 +35,9 @@
 
 	<div id="openkore_navigation">
 		<ul>
-		<?php include('../include/navigation.php'); ?>
+		<?php
+			include('/home/openkore/web/include/navigation.php');
+		?>
 		</ul>
 	</div>
 
