@@ -1,0 +1,76 @@
+2005-06-12
+
+MediaWiki
+---------
+
+MediaWiki is the software used for Wikipedia (http://www.wikipedia.org) and the
+other Wikimedia Foundation websites. Compared to other wikis, it has an
+excellent range of features and support for high-traffic websites using
+multiple servers (Wikipedia peaks in the 2500+ requests per second range
+as of June 2005).
+
+While quite usable on smaller sites, you may find you have to "roll your own"
+local documentation, and some aspects of configuration may seem overcomplicated
+because MediaWiki is primarily targeted as an in-house tool.
+
+See the files RELEASE-NOTES, INSTALL, and UPGRADE for details on system
+requirements and installation procedure.
+
+
+The MediaWiki software was written by:
+ * Lee Daniel Crocker
+ * Magnus Manske
+ * Jan Hidders
+ * Brion Vibber
+ * Axel Boldt
+ * Geoffrey T. Dairiki
+ * Tomasz Wegrzanowski
+ * Erik Moeller
+ * Tim Starling
+ * Gabriel Wicke
+ * Ashar Voultoiz
+ * Evan Prodromou
+ * Several others
+
+These developers hold the copyright to this work, and it is licensed under the
+terms of the GNU General Public License, version 2 (see
+http://www.fsf.org/licenses/gpl.html). Derivative works and later versions of
+the code will also be considered free software licensed under the same terms.
+
+The newly-founded Wikimedia Foundation currently has no legal rights to the
+software, although copyright may be assigned to it at a later date. Wikimedia
+has not funded any of the development work.
+
+Sections of code written exclusively by Lee Crocker or Erik Moeller are also
+released into the public domain, which does not impair the obligations of users
+under the GPL for use of the whole code or other sections thereof.
+
+Many thanks to the Wikipedia regulars for testing and suggestions.
+
+The code is currently maintained at SourceForge under the project "wikipedia",
+module name "phase3". You can view the code in CVS there:
+
+  http://www.mediawiki.org/
+
+Please report bugs and make feature requests in our Bugzilla system:
+
+  http://bugzilla.wikimedia.org
+
+Documentation and discussion on new features may be found at:
+
+  http://meta.wikimedia.org/wiki/MediaWiki_FAQ
+  http://meta.wikimedia.org/wiki/MediaWiki_User%27s_Guide
+  http://meta.wikimedia.org/wiki/MediaWiki_development
+  
+
+If you are setting up your own wiki based on this software, it is highly
+recommended that you subscribe to mediawiki-announce:
+
+  http://mail.wikipedia.org/mailman/listinfo/mediawiki-announce
+
+The mailing list is very low volume, and is intended primarily for
+announcements of new versions, bug fixes, and security issues.
+
+
+For installation and upgrade details, see the files RELEASE-NOTES, INSTALL,
+and UPGRADE.
