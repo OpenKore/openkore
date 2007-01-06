@@ -148,7 +148,7 @@ if(isset($wgExtraNamespaces)) {
 /* private */ $wgBookstoreListEn = array(
 	'AddALL' => 'http://www.addall.com/New/Partner.cgi?query=$1&type=ISBN',
 	'PriceSCAN' => 'http://www.pricescan.com/books/bookDetail.asp?isbn=$1',
-	'Barnes & Noble' => 'http://shop.barnesandnoble.com/bookSearch/isbnInquiry.asp?isbn=$1',
+	'Barnes & Noble' => 'http://search.barnesandnoble.com/bookSearch/isbnInquiry.asp?isbn=$1',
 	'Amazon.com' => 'http://www.amazon.com/exec/obidos/ISBN=$1'
 );
 
@@ -349,9 +349,14 @@ parent class in order maintain consistency across languages.
 'linktrail'		=> '/^([a-z]+)(.*)$/sD',
 'linkprefix'		=> '/^(.*?)([a-zA-Z\x80-\xff]+)$/sD',
 'mainpage'		=> 'Main Page',
-'mainpagetext'	=> 'Wiki software successfully installed.',
-"mainpagedocfooter" => "Please see [http://meta.wikipedia.org/wiki/MediaWiki_i18n documentation on customizing the interface]
-and the [http://meta.wikipedia.org/wiki/MediaWiki_User%27s_Guide User's Guide] for usage and configuration help.",
+'mainpagetext'	=> "<big>'''MediaWiki has been successfully installed.'''</big>",
+'mainpagedocfooter' => "Consult the [http://meta.wikipedia.org/wiki/MediaWiki_User%27s_Guide User's Guide] for information on using the wiki software.
+
+== Getting started ==
+
+* [http://www.mediawiki.org/wiki/Help:Configuration_settings Configuration settings list]
+* [http://www.mediawiki.org/wiki/Help:FAQ MediaWiki FAQ]
+* [http://mail.wikipedia.org/mailman/listinfo/mediawiki-announce MediaWiki release mailing list]",
 
 'portal'		=> 'Community portal',
 'portal-url'	=> 'Project:Community Portal',
@@ -803,7 +808,7 @@ example "fish and and scales".
 Please try another query.',
 'matchtotals'	=> "The query \"$1\" matched $2 page titles
 and the text of $3 pages.",
-'nogomatch' => 'No page with [[$1|this exact title]] exists, trying full text search.',
+'nogomatch' => "'''There is no page titled \"$1\".''' You can [[$1|create this page]].",
 'titlematches'	=> 'Article title matches',
 'notitlematches' => 'No page title matches',
 'textmatches'	=> 'Page text matches',
@@ -1030,7 +1035,7 @@ created and by whom, and anything else you may know about it. If this is an imag
 'savefile'		=> 'Save file',
 'uploadedimage' => "uploaded \"[[$1]]\"",
 'uploaddisabled' => 'Sorry, uploading is disabled.',
-'uploadscripted' => 'This file contains HTML or script code that my be erroneously be interpreted by a web browser.',
+'uploadscripted' => 'This file contains HTML or script code that may be erroneously be interpreted by a web browser.',
 'uploadcorrupt' => 'The file is corrupt or has an incorrect extension. Please check the file and upload again.',
 'uploadvirus' => 'The file contains a virus! Details: $1',
 'sourcefilename' => 'Source filename',
@@ -1582,9 +1587,8 @@ The destination article "[[$1]]" already exists. Do you want to delete it to mak
 
 'export'		=> 'Export pages',
 'exporttext'	=> 'You can export the text and editing history of a particular page or
-set of pages wrapped in some XML. In the future, this may then be imported into another
-wiki running MediaWiki software, although there is no support for this feature in the
-current version.
+set of pages wrapped in some XML. This can be imported into another wiki using MediaWiki
+via the Special:Import page.
 
 To export article pages, enter the titles in the text box below, one title per line, and
 select whether you want the current version as well as all old versions, with the page
@@ -2128,6 +2132,8 @@ $1
 
 'unit-pixel' => 'px',
 
+'youhavenewmessagesmulti' => "You have new messages on $1",
+'newtalkseperator' => ',_',
 );
 
 /* a fake language converter */

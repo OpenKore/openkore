@@ -13,7 +13,7 @@
  * depends on it.
  *
  * Documentation is in the source and on:
- * http://meta.wikimedia.org/wiki/Help:Configuration_settings_index
+ * http://www.mediawiki.org/wiki/Help:Configuration_settings
  *
  * @package MediaWiki
  */
@@ -31,7 +31,7 @@ require_once( 'includes/SiteConfiguration.php' );
 $wgConf = new SiteConfiguration;
 
 /** MediaWiki version number */
-$wgVersion			= '1.5.5';
+$wgVersion			= '1.5.8';
 
 /** Name of the site. It must be changed in LocalSettings.php */
 $wgSitename         = 'MediaWiki';
@@ -632,7 +632,7 @@ $wgDebugRedirects		= false;
 $wgDebugRawPage         = false; # Avoid overlapping debug entries by leaving out CSS
 
 $wgDebugComments        = false;
-$wgReadOnly             = false;
+$wgReadOnly             = null;
 $wgLogQueries           = false;
 $wgDebugDumpSql         = false;
 
@@ -920,6 +920,8 @@ $wgDisableQueryPages = false;
 $wgUseWatchlistCache = false;
 /** The hour or so mentioned above */
 $wgWLCacheTimeout = 3600;
+/** Minimum number of links to a page required before it appears on Special:Wantedpages */
+$wgWantedPagesThreshold = 1;
 
 /**
  * To use inline TeX, you need to compile 'texvc' (in the 'math' subdirectory of
@@ -1386,6 +1388,11 @@ $wgThumbLimits = array(
  * category instead of listing them as articles.
  */
 $wgCategoryMagicGallery = true;
+
+/**
+ * Paging limit for items in categories
+ */
+$wgCategoryPagingLimit = 200;
 
 /**
  * Browser Blacklist for unicode non compliant browsers

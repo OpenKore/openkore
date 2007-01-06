@@ -115,7 +115,6 @@ class UserloginTemplate extends QuickTemplate {
 				<?php } ?>
 			</td>
 		</tr>
-	<?php } ?>
 	<?php if( $this->data['useemail'] ) { ?>
 		<tr>
 			<td colspan='3'>&nbsp;</td>
@@ -129,7 +128,7 @@ class UserloginTemplate extends QuickTemplate {
 				</p>
 			</td>
 		</tr>
-	<?php } ?>
+	<?php } } ?>
 	</table>
 </form>
 <?php
