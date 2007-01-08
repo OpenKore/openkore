@@ -93,7 +93,7 @@ function user_avatar_gallery($mode, &$error, &$error_msg, $avatar_filename, $ava
 
 function user_avatar_url($mode, &$error, &$error_msg, $avatar_filename)
 {
-	global $lang;
+	global $lang, $board_config;
 
 	if ( !preg_match('#^(http)|(ftp):\/\/#i', $avatar_filename) )
 	{
@@ -109,6 +109,11 @@ function user_avatar_url($mode, &$error, &$error_msg, $avatar_filename)
 		return;
 	}
 
+	$image_data = getimagesize($avatar_filename);
+	if ($image_data[0] > $board_config['avatar_max_width']  || $image_data[1] > $board_config['avatar_max_height']) {
+		$error = true;
+		$error_msg = "Your avatar may not be bigger than ".$board_config['avatar_max_width']." x ".$board_config['avatar_max_height']." pixels.";
+	}
 	return ( $mode == 'editprofile' ) ? ", user_avatar = '" . str_replace("\'", "''", $avatar_filename) . "', user_avatar_type = " . USER_AVATAR_REMOTE : '';
 
 }
