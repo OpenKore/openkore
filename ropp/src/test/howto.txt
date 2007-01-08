@@ -1,10 +1,12 @@
-// This code if for reading data:
+/*
+ call_16_test.dat is used to check custom Call16 functions with original ones
+ (from .exe).  File contains 16384 samples of random input data for each of
+ 16 functions and output result for this sample.
+*/
 
-// Include theese in your source:
-#include <io.h>
-#include <fcntl.h>
+// This is pieces of useful code:
+
 dword Data[16][16384][2];
-
 
 // Do this to read the data for data file:
 int hndl = open("call_16_test.dat", O_BINARY | O_RDONLY);
@@ -12,6 +14,10 @@ read(hndl, Data, 16*16384*2);
 close(hndl);
 
 
-// Do this to campare returned data (N=0 to 16383): 
-Data[F][N][1] == funcF(Data[F][N][0])
+// Do this to compare returned data (N=0 to 16383): 
+if ( Data[F][N][1] == funcF(Data[F][N][0]) ) {
+	// correct
+} else {
+	// wrong!
+}
 
