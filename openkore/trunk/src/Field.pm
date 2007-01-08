@@ -240,7 +240,7 @@ sub loadFile {
 			if (open($f, ">", $distFile)) {
 				binmode $f;
 				print $f pack("a2 v1", 'V#', 3);
-				print $f pack("v v", $self->{width}, $self->{height});
+				print $f pack("v v", $width, $height);
 				print $f $self->{dstMap};
 				close $f;
 			}
