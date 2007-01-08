@@ -30,7 +30,7 @@ use Encode::Alias;
 our @EXPORT_OK = qw(bytesToString stringToBytes stringToUTF8 UTF8ToString isUTF8);
 
 define_alias('Western'             => 'ISO-8859-1');
-define_alias('Tagalog'             => 'ISO-8859-1');
+define_alias('Tagalog'             => 'CP1252');
 define_alias('Simplified Chinese'  => 'GBK');
 define_alias('Traditional Chinese' => 'Big5');
 define_alias('Korean'              => 'CP949');
