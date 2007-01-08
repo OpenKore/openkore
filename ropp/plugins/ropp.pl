@@ -77,7 +77,11 @@ Win32::API->Import('ropp', 'DecodePacket', 'PL') or die "Can't import DecodePack
 Win32::API->Import('ropp', 'GetKey', 'L' ,'N') or die "Can't import GetKey\n$!";
 
 # Setting packet IDs for Sit/Stand/Attack and SkillUse
-SetPacketIDs(0x89, 0x113); # IDs for rRO
+my $attackID = 0x89;		#  IDs for rRO
+my $skillUseID = 0x113;
+SetPacketIDs($attackID, $skillUseID);
+$attackID = sprintf('%04x', $attackID);
+$skillUseID = sprintf('%04x', $skillUseID);
 
 my $LastPaddedPacket;
 
@@ -153,7 +157,7 @@ sub onRO_sendMsg_pre {
 	my ($Packet, $orig, $lib);
 	my $Parsed = 0;
 
-	if($switch eq "0089" || $switch eq "0113")
+	if($switch eq $attackID || $switch eq $skillUseID)
 	{
 		if(length($LastPaddedPacket) <= length($msg)) {
 			$LastPaddedPacket = $msg;
@@ -167,7 +171,7 @@ sub onRO_sendMsg_pre {
 		return;
 	} 
 	
-	if ($switch eq "0089")
+	if ($switch eq $attackID)
 	{
 		SetHashData();
 		DecodePacket($msg, 2);
@@ -205,7 +209,7 @@ sub onRO_sendMsg_pre {
 			message "======================= Attack ======================\n";
 			message "Target: [". getHex($TargetId). "] Flag: $Flag\n";
 		}
-	} elsif ($switch eq "0113")
+	} elsif ($switch eq $skillUseID)
 	{
 		SetHashData();
 		DecodePacket($msg, 3);
@@ -223,14 +227,11 @@ sub onRO_sendMsg_pre {
 		message "====================== SkillUse ======================\n";
 		message "Skill: $SkillId (" . $Skill->name . ")   Level: $SkillLv   Target: [". getHex($TargetId). "]\n";
 	}
-	if($Parsed)
-	{
-		if($orig eq $lib)
-		{
+	if($Parsed)	{
+		if($orig eq $lib) {
 			message "Packets are identical\n";
 		}
-		else
-		{
+		else {
 			doSyncs();
 			message "Packet by RO client:\n";
 			message "$orig\n";
