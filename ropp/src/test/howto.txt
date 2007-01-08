@@ -10,7 +10,7 @@ dword Data[16][16384][2];
 
 // Do this to read the data for data file:
 int hndl = open("call_16_test.dat", O_BINARY | O_RDONLY);
-read(hndl, Data, 16*16384*2);
+read(hndl, Data, 16*16384*8);
 close(hndl);
 
 
