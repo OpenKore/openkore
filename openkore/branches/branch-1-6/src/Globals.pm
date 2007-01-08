@@ -115,6 +115,8 @@ our %jobs_lut = (
 	21 => 'Peco Crusader',
 	22 => 'Wedding Suit',
 	23 => 'Super Novice',
+	24 => 'Gunslinger',
+        25 => 'Ninja',
 
 	161 => 'High Novice',
 	162 => 'High Swordsman',
