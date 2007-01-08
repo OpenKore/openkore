@@ -1969,7 +1969,7 @@ sub deal_add_other {
 	my ($self, $args) = @_;
 	
 	if ($args->{nameID} > 0) {
-		my $item = $currentDeal{other}{ $args->{ID} } ||= {};
+		my $item = $currentDeal{other}{ $args->{nameID} } ||= {};
 		$item->{amount} += $args->{amount};
 		$item->{nameID} = $args->{nameID};
 		$item->{identified} = $args->{identified};
