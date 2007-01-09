@@ -26,15 +26,16 @@ use IO::Socket;
 use bytes;
 no encoding 'utf8';
 
+use Modules 'register';
 use Globals qw(%consoleColors);
 use Interface;
 use base qw(Interface);
-use Utils qw(dataWaiting);
 use I18N qw(UTF8ToString);
 use Utils::Unix;
 
 sub new {
 	my $class = shift;
+	STDOUT->autoflush(0);
 	return bless {}, $class;
 }
 
@@ -44,11 +45,6 @@ sub getInput {
 
 	if ($timeout < 0) {
 		$line = <STDIN>;
-
-	} elsif ($timeout == 0) {
-		if (dataWaiting(\*STDIN)) {
-			$line = <STDIN>;
-		}
 
 	} else {
 		my $bits = '';
@@ -77,10 +73,12 @@ sub title {
 	my ($self, $title) = @_;
 
 	if ($title) {
-		$self->{title} = $title;
-		if ($ENV{TERM} eq 'xterm' || $ENV{TERM} eq 'screen') {
-			print STDOUT "\e]2;" . $title . "\a";
-			STDOUT->flush;
+		if (defined($self->{title}) && $self->{title} ne $title) {
+			$self->{title} = $title;
+			if ($ENV{TERM} eq 'xterm' || $ENV{TERM} eq 'screen') {
+				print STDOUT "\e]2;" . $title . "\a";
+				STDOUT->flush;
+			}
 		}
 	} else {
 		return $self->{title};
