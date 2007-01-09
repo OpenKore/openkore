@@ -1,6 +1,7 @@
 <?php
 define('ANNOUNCEMENTS_FORUM_NAME', "Announcements");
 define('WEBSITE_BASE_URL', "http://forums.openkore.com/");
+define('FORUM_DATABASE_ENCODING', 'UTF-8');
 
 require_once('includes/phpbb.php');
 PhpBB::init(array('template' => false));
@@ -10,7 +11,7 @@ printNewsFeed(getNews());
 
 PhpBB::finalize();
 
-function getNews($announcementsForum = ANNOUNCEMENTS_FORUM_NAME, $limit = 8) {
+function getNews($limit = 8) {
 	global $db;
 	$sql = sprintf("SELECT topic_id, topic_title, topic_time " .
 		"FROM %s WHERE forum_id = " .
@@ -18,7 +19,7 @@ function getNews($announcementsForum = ANNOUNCEMENTS_FORUM_NAME, $limit = 8) {
 		"ORDER BY topic_time DESC " .
 		"LIMIT %d",
 		TOPICS_TABLE, FORUMS_TABLE,
-		addslashes($announcementsForum), $limit);
+		addslashes(ANNOUNCEMENTS_FORUM_NAME), $limit);
 	$result = $db->sql_query($sql);
 	if (!result) {
 		die("Cannot query database.");
@@ -26,6 +27,10 @@ function getNews($announcementsForum = ANNOUNCEMENTS_FORUM_NAME, $limit = 8) {
 
 	$rows = $db->sql_fetchrowset($result);
 	$db->sql_freeresult($result);
+	for ($i = 0; $i < count($rows); $i++) {
+		$rows[$i]['topic_title'] = html_entity_decode($rows[$i]['topic_title'],
+			ENT_QUOTES, FORUM_DATABASE_ENCODING);
+	}
 	return $rows;
 }
 
@@ -36,10 +41,10 @@ function printNewsFeed($news) {
 	foreach ($news as $item) {
 		$url = WEBSITE_BASE_URL . "viewtopic." . $phpEx . "?t=" . $item['topic_id'];
 		echo "	<item>\n";
-		echo "		<title>" . htmlspecialchars($item['topic_title']) . "</title>\n";
+		echo "		<title>" . htmlspecialchars($item['topic_title'], ENT_NOQUOTES) . "</title>\n";
 		echo "		<timestamp>" . $item['topic_time'] . "</timestamp>\n";
 		echo "		<id>" . $item['topic_id'] . "</id>\n";
-		echo "		<url>" . htmlspecialchars($url) . "</url>\n";
+		echo "		<url>" . $url . "</url>\n";
 		echo "	</item>\n";
 	}
 	echo "</announcements>\n";
