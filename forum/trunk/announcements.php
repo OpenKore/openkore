@@ -1,11 +1,11 @@
 <?php
 define('ANNOUNCEMENTS_FORUM_NAME', "Announcements");
-define('WEBSITE_BASE_URL', "http://" . $_SERVER['HTTP_HOST'] . dirname($_SERVER['REQUEST_URI']));
+define('WEBSITE_BASE_URL', "http://forums.openkore.com/");
 
 require_once('includes/phpbb.php');
 PhpBB::init(array('template' => false));
 
-header("Content-Type: text/plain");
+header("Content-Type: application/xml");
 printNewsFeed(getNews());
 
 PhpBB::finalize();
@@ -36,10 +36,10 @@ function printNewsFeed($news) {
 	foreach ($news as $item) {
 		$url = WEBSITE_BASE_URL . "viewtopic." . $phpEx . "?t=" . $item['topic_id'];
 		echo "	<item>\n";
-		echo "		<title>" . htmlentities($item['topic_title']) . "</title>\n";
+		echo "		<title>" . htmlspecialchars($item['topic_title']) . "</title>\n";
 		echo "		<timestamp>" . $item['topic_time'] . "</timestamp>\n";
 		echo "		<id>" . $item['topic_id'] . "</id>\n";
-		echo "		<url>" . htmlentities($url) . "</url>\n";
+		echo "		<url>" . htmlspecialchars($url) . "</url>\n";
 		echo "	</item>\n";
 	}
 	echo "</announcements>\n";
