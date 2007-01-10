@@ -73,6 +73,11 @@ def CheckPerl(context):
 	f.close()
 
 	if win32:
+		if cygwin:
+			# Maybe the user just installed ActivePerl and wperl isn't
+			# in PATH yet. So add the default Perl installation folder
+			# to PATH.
+			os.environ['PATH'] += os.path.pathsep + "/cygdrive/c/Perl/bin"
 		ret = os.spawnlp(os.P_WAIT, "wperl", "wperl", ".perltest.pl")
 	else:
 		ret = os.spawnlp(os.P_WAIT, "perl", "perl", ".perltest.pl")
