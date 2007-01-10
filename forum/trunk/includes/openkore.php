@@ -263,7 +263,7 @@ class OWordLinker {
 	public function process($message) {
 		foreach ($this->links as $word => $link) {
 			// Replace words with pseudo-HTML
-			$regexp = '/( |\n|^|\.)(' . preg_quote($word) . ')([ \?\.]|$)/i';
+			$regexp = '/( |\n|^|\.|&quot;)(' . preg_quote($word) . ')([ \?\.,]|&quot;|$)/i';
 			$message = preg_replace($regexp,
 				'$1<{a href="' . $link . '"}>$2<{/a}>$3',
 				$message);
