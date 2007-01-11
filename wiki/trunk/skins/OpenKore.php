@@ -32,7 +32,11 @@ class OpenKoreTemplate extends QuickTemplate {
 	function gethtml($str) {
 		$html = parent::gethtml($str);
 		// We want HTML, not XHTML
-		return preg_replace('/<(.*?) \/>/', '<${1}>', $html);
+		$html = preg_replace('/<(.*?) \/>/', '<${1}>', $html);
+		// Get rid of <p> tags that Mediawiki puts before and after <html>
+		$html = preg_replace('/<p>(\n)*<(div|dl)/', '<${2}', $html);
+		$html = preg_replace('/<\/(div|dl)>(\n)*<\/p>/', '</${1}>', $html);
+		return $html;
 	}
 
 	function html($str) {

@@ -281,6 +281,18 @@ table.colored td {
 }
 
 
+/********** Console ***********/
+
+.console > pre {
+	color: #00f000;
+	background: #000000;
+	border: #d0d0d0 1px solid;
+	padding: 0.1cm;
+	margin-left: 0.4cm;
+	width: 75%;
+}
+
+
 /********** Support page *************/
 .support-page-table tr.left {
 	vertical-align: top;
