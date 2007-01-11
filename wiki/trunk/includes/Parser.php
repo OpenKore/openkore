@@ -1754,9 +1754,9 @@ class Parser
 
 		if ( '*' == $char ) { $result .= '<ul><li>'; }
 		else if ( '#' == $char ) { $result .= '<ol><li>'; }
-		else if ( ':' == $char ) { $result .= '<dl><dd>'; }
+		else if ( ':' == $char ) { $result .= '<dl class="wikidl"><dd>'; }
 		else if ( ';' == $char ) {
-			$result .= '<dl><dt>';
+			$result .= '<dl class="wikidl"><dt>';
 			$this->mDTopen = true;
 		}
 		else { $result = '<!-- ERR 1 -->'; }

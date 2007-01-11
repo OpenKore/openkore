@@ -55,9 +55,11 @@
 
 </div>
 
+<?php if ( !isset($_SERVER['HTTP_USER_AGENT']) || !preg_match('/W3C_Validator/', $_SERVER['HTTP_USER_AGENT']) ) { ?>
 <div align="center">
 	<?php include($_SERVER['DOCUMENT_ROOT']."/include/banner.html") ?>
 </div>
+<?php } ?>
 
 <div class="body">
 
