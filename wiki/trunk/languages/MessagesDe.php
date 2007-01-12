@@ -356,6 +356,9 @@ Für den Fall, dass Sie Ihr Passwort vergessen haben, kann Ihnen so ein temporä
 "noemail"		=> "Benutzer \"$1\" hat keine E-Mail-Adresse angegeben.",
 "passwordsent"	=> "Ein temporäres Passwort wurde an die E-Mail-Adresse von Benutzer \"$1\" gesendet.
 Bitte melden Sie sich damit an, sobald Sie es erhalten.",
+'eauthentsent'		=>  'Eine Bestätigungsmail wurde an die angegebene E-Mail-Adresse verschickt.
+
+Bevor eine E-Mail von anderen Benutzern über die {{SITENAME}}-Mailfunktion empfangen werden kann, muss die Adresse und ihre tatsächliche Zugehörigkeit zu diesem Benutzerkonto erst bestätigt werden. Bitte befolgen Sie die Hinweise in der Bestätigungsmail.',
 "loginend"		=> "&nbsp;",
 "mailerror" => "Fehler beim Senden von Mail: $1",
 'acct_creation_throttle_hit' => 'Sie haben schon $1 Benutzerkonten und können jetzt keine weiteren mehr anlegen.',
@@ -480,7 +483,7 @@ Versionen markieren und 'Enter' drücken oder den Button unten klicken/alt-v.<br
 Legende:
 (Aktuell) = Unterschied zur aktuellen Version,
 (Letzte) = Unterschied zur vorherigen Version,
-M = Kleine Änderung",
+K = Kleine Änderung",
 'revdelete-legend'		=> 'Einschränkungen für die Versionen festlegen:',
 'revdelete-hide-text'		=> 'Verstecke den Text der Version',
 'revdelete-hide-comment'	=> 'Bearbeitungskommentar verstecken',
@@ -522,8 +525,8 @@ Bitte versuchen Sie eine anders formulierte Anfrage.",
 und dem Text von $3 Artikeln überein.",
 "nogomatch" => "Es existiert kein Artikel [[$1|$1]]. Bitte versuchen
 Sie die Volltextsuche oder [[$1|legen Sie den Artikel neu an]].",
-"titlematches"	=> "Übereinstimmungen mit Überschriften",
-"notitlematches" => "Keine Übereinstimmungen",
+"titlematches"	=> "Übereinstimmungen mit Seitentiteln",
+"notitlematches" => "Keine Übereinstimmungen mit Seitentiteln",
 "textmatches"	=> "Übereinstimmungen mit Texten",
 "notextmatches"	=> "Keine Übereinstimmungen",
 "prevn"			=> "vorherige $1",
@@ -596,7 +599,7 @@ $2 Zeige auch REDIRECTs &nbsp; Suche nach $3 $9",
 Diese Seite wird beim Laden automatisch aktualisiert. Angezeigt werden Seiten, die zuletzt bearbeitet wurden, sowie die Zeit und der Name des Autors.<br />
 Falls Sie neu bei {{SITENAME}} sind, lesen Sie bitte die [[Project:Willkommen|Willkommensseite]] und [[Project:Erste Schritte|Erste Schritte]].<br />
 Wenn Sie möchten, dass {{SITENAME}} zu einem Erfolg wird, dann fügen Sie bitte keine Texte hinzu, die dem [[Project:Urheberrechte beachten|Urheberrecht]] anderer unterliegen. Dies könnte dem Projekt sonst schweren Schaden zufügen.",
-"rcnote"		=> "Hier sind die letzten <b>$1</b> Änderungen der letzten <b>$2</b> Tage. (<b>N</b> - Neuer Artikel; <b>M</b> - kleine Änderung)",
+"rcnote"		=> "Hier sind die letzten <b>$1</b> Änderungen der letzten <b>$2</b> Tage. (<b>N</b> - Neuer Artikel; <b>K</b> - kleine Änderung)",
 "rcnotefrom"	=> "Dies sind die Änderungen seit <b>$2</b> (bis zu <b>$1</b> gezeigt).",
 "rclistfrom"	=> "Zeige neue Änderungen seit $1",
 "rclinks"		=> "Zeige die letzten $1 Änderungen; zeige die letzten $2 Tage.",

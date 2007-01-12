@@ -3,6 +3,50 @@
 Security reminder: MediaWiki does not require PHP's register_globals
 setting since version 1.2.0. If you have it on, turn it *off* if you can.
 
+== Mediawiki 1.6.9 ==
+
+January 9, 2007
+
+* (bug 6621) Backported German translation for 'eauthentsent'
+* (bug 6680) Added localisation for Dutch bookstore list (nl)
+* (bug 6730) Clearer usage of message 'titlematch' in German translation (de)
+* XSS fix in AJAX module
+
+An XSS injection vulnerability was located in the AJAX support module,
+affecting MediaWiki 1.6.x and up when the optional setting $wgUseAjax
+is enabled.
+
+There is no danger in the default configuration, with $wgUseAjax off.
+
+If you are using an extension based on the optional AJAX module,
+either disable it or upgrade to a version containing the fix:
+
+* 1.9: fixed in 1.9.0rc2
+* 1.8: fixed in 1.8.3
+* 1.7: fixed in 1.7.2
+* 1.6: fixed in 1.6.9
+
+
+== Mediawiki 1.6.8 ==
+
+July 8, 2006
+
+MediaWiki 1.6.8 is a security and bugfix maintenance release of the
+Spring 2006 snapshot:
+
+A potential HTML/JavaScript-injection vulnerability in a debugging script
+has been fixed. Only versions and configurations of PHP vulnerable to the
+$GLOBALS overwrite vulnerability are affected.
+
+As a workaround for existing installs, profileinfo.php may simply be deleted
+if it's not being used.
+
+* (bug 5957) Updates to Hebrew translation (he)
+* Respect language directionality when displaying arrow in Special:Brokenredirects
+* (bug 6415) Typo in Parser.php
+* Fixed potential XSS in profileinfo.php
+
+
 == Mediawiki 1.6.7 ==
 
 June 6, 2006
