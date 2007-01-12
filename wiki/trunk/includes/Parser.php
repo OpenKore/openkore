@@ -1524,6 +1524,7 @@ class Parser
 						$sortkey = $text;
 					}
 					$sortkey = Sanitizer::decodeCharReferences( $sortkey );
+					$sortkey = str_replace( "\n", '', $sortkey );					
 					$sortkey = $wgContLang->convertCategoryKey( $sortkey );
 					$this->mOutput->addCategory( $nt->getDBkey(), $sortkey );
 
@@ -2224,7 +2225,7 @@ class Parser
 										 'text' => substr($text, $pieceStart, $pieceEnd - $pieceStart),
 										 'title' => trim($openingBraceStack[$lastOpeningBrace]['title']),
 										 'parts' => $openingBraceStack[$lastOpeningBrace]['parts'],
-										 'lineStart' => (($pieceStart > 0) && ($text[$pieceStart-1] == '\n')),
+										 'lineStart' => (($pieceStart > 0) && ($text[$pieceStart-1] == "\n")),
 										 );
 						# finally we can call a user callback and replace piece of text
 						$replaceWith = call_user_func( $matchingCallback, $cbArgs );
