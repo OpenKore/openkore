@@ -4,7 +4,10 @@
  * @subpackage Language
  */
 
-if( defined( 'MEDIAWIKI' ) ) {
+if( !defined( 'MEDIAWIKI' ) ) {
+	echo "This file is part of MediaWiki, it is not a valid entry point.\n";
+	exit( 1 );
+}
 
 #
 # In general you should not make customizations in these language files
@@ -18,263 +21,26 @@ if( defined( 'MEDIAWIKI' ) ) {
 # files for examples.
 #
 
-#--------------------------------------------------------------------------
-# Language-specific text
-#--------------------------------------------------------------------------
-
-if($wgMetaNamespace === FALSE)
-	$wgMetaNamespace = str_replace( ' ', '_', $wgSitename );
-
-/* private */ $wgNamespaceNamesEn = array(
-	NS_MEDIA            => 'Media',
-	NS_SPECIAL          => 'Special',
-	NS_MAIN	            => '',
-	NS_TALK	            => 'Talk',
-	NS_USER             => 'User',
-	NS_USER_TALK        => 'User_talk',
-	NS_PROJECT          => $wgMetaNamespace,
-	NS_PROJECT_TALK     => $wgMetaNamespace . '_talk',
-	NS_IMAGE            => 'Image',
-	NS_IMAGE_TALK       => 'Image_talk',
-	NS_MEDIAWIKI        => 'MediaWiki',
-	NS_MEDIAWIKI_TALK   => 'MediaWiki_talk',
-	NS_TEMPLATE         => 'Template',
-	NS_TEMPLATE_TALK    => 'Template_talk',
-	NS_HELP             => 'Help',
-	NS_HELP_TALK        => 'Help_talk',
-	NS_CATEGORY         => 'Category',
-	NS_CATEGORY_TALK    => 'Category_talk',
-);
-
-if(isset($wgExtraNamespaces)) {
-	$wgNamespaceNamesEn=$wgNamespaceNamesEn+$wgExtraNamespaces;
-}
-
-/* private */ $wgDefaultUserOptionsEn = array(
-	'quickbar' 		=> 1,
-	'underline' 		=> 2,
-	'cols'			=> 80,
-	'rows' 			=> 25,
-	'searchlimit' 		=> 20,
-	'contextlines' 		=> 5,
-	'contextchars' 		=> 50,
-	'skin' 			=> $wgDefaultSkin,
-	'math' 			=> 1,
-	'rcdays' 		=> 7,
-	'rclimit' 		=> 50,
-	'highlightbroken'	=> 1,
-	'stubthreshold' 	=> 0,
-	'previewontop' 		=> 1,
-	'editsection'		=> 1,
-	'editsectiononrightclick'=> 0,
-	'showtoc'		=> 1,
- 	'showtoolbar' 		=> 1,
-	'date' 			=> 0,
-	'imagesize' 		=> 2,
-	'thumbsize'		=> 2,
-	'rememberpassword' 	=> 0,
-	'enotifwatchlistpages' 	=> 0,
-	'enotifusertalkpages' 	=> 1,
-	'enotifminoredits' 	=> 0,
-	'enotifrevealaddr' 	=> 0,
-	'shownumberswatching' 	=> 1,
-	'fancysig' 		=> 0,
-	'externaleditor' 	=> 0,
-	'externaldiff' 		=> 0,
-	'showjumplinks'		=> 1,
-	'numberheadings'	=> 0,
-	'uselivepreview'	=> 0,
-);
-
-/* private */ $wgQuickbarSettingsEn = array(
-	'None', 'Fixed left', 'Fixed right', 'Floating left', 'Floating right'
-);
-
-/* private */ $wgSkinNamesEn = array(
-	'standard' => 'Classic',
-	'nostalgia' => 'Nostalgia',
-	'cologneblue' => 'Cologne Blue',
-	'davinci' => 'DaVinci',
-	'mono' => 'Mono',
-	'monobook' => 'MonoBook',
-	'myskin' => 'MySkin',
-	'chick' => 'Chick'
-);
-
-/* private */ $wgMathNamesEn = array(
-	MW_MATH_PNG => 'mw_math_png',
-	MW_MATH_SIMPLE => 'mw_math_simple',
-	MW_MATH_HTML => 'mw_math_html',
-	MW_MATH_SOURCE => 'mw_math_source',
-	MW_MATH_MODERN => 'mw_math_modern',
-	MW_MATH_MATHML => 'mw_math_mathml'
-);
-
-/**
- * Whether to use user or default setting in Language::date()
- *
- * NOTE: the array string values are no longer important!
- * The actual date format functions are now called for the selection in
- * Special:Preferences, and the 'datedefault' message for MW_DATE_DEFAULT.
- *
- * The array keys make up the set of formats which this language allows
- * the user to select. It's exposed via Language::getDateFormats().
- *
- * @access private
- */
-$wgDateFormatsEn = array(
-	MW_DATE_DEFAULT => 'No preference',
-	MW_DATE_DMY => '16:12, 15 January 2001',
-	MW_DATE_MDY => '16:12, January 15, 2001',
-	MW_DATE_YMD => '16:12, 2001 January 15',
-	MW_DATE_ISO => '2001-01-15 16:12:34'
-);
-
-/* private */ $wgUserTogglesEn = array(
-	'highlightbroken',
-	'justify',
-	'hideminor',
-	'usenewrc',
-	'numberheadings',
-	'showtoolbar',
-	'editondblclick',
-	'editsection',
-	'editsectiononrightclick',
-	'showtoc',
-	'rememberpassword',
-	'editwidth',
-	'watchcreations',
-	'watchdefault',
-	'minordefault',
-	'previewontop',
-	'previewonfirst',
-	'nocache',
-	'enotifwatchlistpages',
-	'enotifusertalkpages',
-	'enotifminoredits',
-	'enotifrevealaddr',
-	'shownumberswatching',
-	'fancysig',
-	'externaleditor',
-	'externaldiff',
-	'showjumplinks',
-	'uselivepreview',
-	'autopatrol',
-	'forceeditsummary',
-);
-
-/* private */ $wgBookstoreListEn = array(
-	'AddALL' => 'http://www.addall.com/New/Partner.cgi?query=$1&type=ISBN',
-	'PriceSCAN' => 'http://www.pricescan.com/books/bookDetail.asp?isbn=$1',
-	'Barnes & Noble' => 'http://search.barnesandnoble.com/bookSearch/isbnInquiry.asp?isbn=$1',
-	'Amazon.com' => 'http://www.amazon.com/exec/obidos/ISBN=$1'
-);
-
 # Read language names
 global $wgLanguageNames;
-/** */
 require_once( 'Names.php' );
 
-$wgLanguageNamesEn =& $wgLanguageNames;
+global $wgInputEncoding, $wgOutputEncoding;
 
+/**
+ * These are always UTF-8, they exist only for backwards compatibility
+ */
+$wgInputEncoding    = "UTF-8";
+$wgOutputEncoding	= "UTF-8";
 
-/* private */ $wgWeekdayNamesEn = array(
-	'sunday', 'monday', 'tuesday', 'wednesday', 'thursday',
-	'friday', 'saturday'
-);
-
-
-/* private */ $wgMonthNamesEn = array(
-	'january', 'february', 'march', 'april', 'may_long', 'june',
-	'july', 'august', 'september', 'october', 'november',
-	'december'
-);
-/* private */ $wgMonthNamesGenEn = array(
-	'january-gen', 'february-gen', 'march-gen', 'april-gen', 'may-gen', 'june-gen',
-	'july-gen', 'august-gen', 'september-gen', 'october-gen', 'november-gen',
-	'december-gen'
-);
-
-/* private */ $wgMonthAbbreviationsEn = array(
-	'jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug',
-	'sep', 'oct', 'nov', 'dec'
-);
-
-# Note to translators:
-#   Please include the English words as synonyms.  This allows people
-#   from other wikis to contribute more easily.
-#
-/* private */ $wgMagicWordsEn = array(
-#   ID                                 CASE  SYNONYMS
-	MAG_REDIRECT             => array( 0,    '#REDIRECT'              ),
-	MAG_NOTOC                => array( 0,    '__NOTOC__'              ),
-	MAG_FORCETOC             => array( 0,    '__FORCETOC__'           ),
-	MAG_TOC                  => array( 0,    '__TOC__'                ),
-	MAG_NOEDITSECTION        => array( 0,    '__NOEDITSECTION__'      ),
-	MAG_START                => array( 0,    '__START__'              ),
-	MAG_CURRENTMONTH         => array( 1,    'CURRENTMONTH'           ),
-	MAG_CURRENTMONTHNAME     => array( 1,    'CURRENTMONTHNAME'       ),
-	MAG_CURRENTMONTHNAMEGEN  => array( 1,    'CURRENTMONTHNAMEGEN'    ),
-	MAG_CURRENTMONTHABBREV   => array( 1,    'CURRENTMONTHABBREV'     ),
-	MAG_CURRENTDAY           => array( 1,    'CURRENTDAY'             ),
-	MAG_CURRENTDAY2          => array( 1,    'CURRENTDAY2'            ),
-	MAG_CURRENTDAYNAME       => array( 1,    'CURRENTDAYNAME'         ),
-	MAG_CURRENTYEAR          => array( 1,    'CURRENTYEAR'            ),
-	MAG_CURRENTTIME          => array( 1,    'CURRENTTIME'            ),
-	MAG_NUMBEROFARTICLES     => array( 1,    'NUMBEROFARTICLES'       ),
-	MAG_NUMBEROFFILES        => array( 1,    'NUMBEROFFILES'          ),
-	MAG_PAGENAME             => array( 1,    'PAGENAME'               ),
-	MAG_PAGENAMEE            => array( 1,    'PAGENAMEE'              ),
-	MAG_NAMESPACE            => array( 1,    'NAMESPACE'              ),
-	MAG_NAMESPACEE           => array( 1,    'NAMESPACEE'             ),
-	MAG_FULLPAGENAME         => array( 1,    'FULLPAGENAME'           ),
-	MAG_FULLPAGENAMEE        => array( 1,    'FULLPAGENAMEE'          ),
-	MAG_SUBPAGENAME	         => array( 0,	 'SUBPAGENAME'		  	  ),
-	MAG_SUBPAGENAMEE		 => array( 0, 	 'SUBPAGENAMEE'			  ),
-	MAG_MSG                  => array( 0,    'MSG:'                   ),
-	MAG_SUBST                => array( 0,    'SUBST:'                 ),
-	MAG_MSGNW                => array( 0,    'MSGNW:'                 ),
-	MAG_END                  => array( 0,    '__END__'                ),
-	MAG_IMG_THUMBNAIL        => array( 1,    'thumbnail', 'thumb'     ),
-	MAG_IMG_MANUALTHUMB      => array( 1,    'thumbnail=$1', 'thumb=$1'),
-	MAG_IMG_RIGHT            => array( 1,    'right'                  ),
-	MAG_IMG_LEFT             => array( 1,    'left'                   ),
-	MAG_IMG_NONE             => array( 1,    'none'                   ),
-	MAG_IMG_WIDTH            => array( 1,    '$1px'                   ),
-	MAG_IMG_CENTER           => array( 1,    'center', 'centre'       ),
-	MAG_IMG_FRAMED           => array( 1,    'framed', 'enframed', 'frame' ),
-	MAG_INT                  => array( 0,    'INT:'                   ),
-	MAG_SITENAME             => array( 1,    'SITENAME'               ),
-	MAG_NS                   => array( 0,    'NS:'                    ),
-	MAG_LOCALURL             => array( 0,    'LOCALURL:'              ),
-	MAG_LOCALURLE            => array( 0,    'LOCALURLE:'             ),
-	MAG_SERVER               => array( 0,    'SERVER'                 ),
-	MAG_SERVERNAME           => array( 0,    'SERVERNAME'             ),
-	MAG_SCRIPTPATH           => array( 0,    'SCRIPTPATH'             ),
-	MAG_GRAMMAR              => array( 0,    'GRAMMAR:'               ),
-	MAG_NOTITLECONVERT       => array( 0,    '__NOTITLECONVERT__', '__NOTC__'),
-	MAG_NOCONTENTCONVERT     => array( 0,    '__NOCONTENTCONVERT__', '__NOCC__'),
-	MAG_CURRENTWEEK          => array( 1,    'CURRENTWEEK'            ),
-	MAG_CURRENTDOW           => array( 1,    'CURRENTDOW'             ),
-	MAG_REVISIONID           => array( 1,    'REVISIONID'             ),
-	MAG_PLURAL               => array( 0,    'PLURAL:'                ),
-	MAG_FULLURL              => array( 0,    'FULLURL:'               ),
-	MAG_FULLURLE             => array( 0,    'FULLURLE:'              ),
-	MAG_LCFIRST              => array( 0,    'LCFIRST:'               ),
-	MAG_UCFIRST              => array( 0,    'UCFIRST:'               ),
-	MAG_LC                   => array( 0,    'LC:'                    ),
-	MAG_UC                   => array( 0,    'UC:'                    ),
-	MAG_RAW                  => array( 0,    'RAW:'                   ),
-);
-
-if (!$wgCachedMessageArrays) {
-	require_once('Messages.php');
+if( function_exists( 'mb_strtoupper' ) ) {
+	mb_internal_encoding('UTF-8');
 }
 
 /* a fake language converter */
-class fakeConverter {
+class FakeConverter {
 	var $mLang;
-	function fakeConverter($langobj) {$this->mLang = $langobj;}
+	function FakeConverter($langobj) {$this->mLang = $langobj;}
 	function convert($t, $i) {return $t;}
 	function parserConvert($t, $p) {return $t;}
 	function getVariants() { return array( $this->mLang->getCode() ); }
@@ -282,9 +48,10 @@ class fakeConverter {
 	function findVariantLink(&$l, &$n) {}
 	function getExtraHashOptions() {return '';}
 	function getParsedTitle() {return '';}
-	function markNoConversion($text) {return $text;}
+	function markNoConversion($text, $noParse=false) {return $text;}
 	function convertCategoryKey( $key ) {return $key; }
-
+	function convertLinkToAllVariants($text){ return array( $this->mLang->getCode() => $text); }
+	function setNoTitleConvert(){}
 }
 
 #--------------------------------------------------------------------------
@@ -292,39 +59,106 @@ class fakeConverter {
 #--------------------------------------------------------------------------
 
 class Language {
-	var $mConverter;
-	function Language() {
+	var $mConverter, $mVariants, $mCode, $mLoaded = false;
 
-		# Copies any missing values in the specified arrays from En to the current language
-		$fillin = array( 'wgSysopSpecialPages', 'wgValidSpecialPages', 'wgDeveloperSpecialPages' );
-		$name = get_class( $this );
+	static public $mLocalisationKeys = array( 'fallback', 'namespaceNames',
+		'quickbarSettings', 'skinNames', 'mathNames', 
+		'bookstoreList', 'magicWords', 'messages', 'rtl', 'digitTransformTable', 
+		'separatorTransformTable', 'fallback8bitEncoding', 'linkPrefixExtension',
+		'defaultUserOptionOverrides', 'linkTrail', 'namespaceAliases', 
+		'dateFormats', 'datePreferences', 'datePreferenceMigrationMap', 
+		'defaultDateFormat', 'extraUserToggles' );
 
-		if( strpos( $name, 'language' ) == 0){
-			$lang = ucfirst( substr( $name, 8 ) );
-			foreach( $fillin as $arrname ){
-				$langver = "{$arrname}{$lang}";
-				$enver = "{$arrname}En";
-				if( ! isset( $GLOBALS[$langver] ) || ! isset( $GLOBALS[$enver] ))
-					continue;
-				foreach($GLOBALS[$enver] as $spage => $text){
-					if( ! isset( $GLOBALS[$langver][$spage] ) )
-						$GLOBALS[$langver][$spage] = $text;
-				}
+	static public $mMergeableMapKeys = array( 'messages', 'namespaceNames', 'mathNames', 
+		'dateFormats', 'defaultUserOptionOverrides', 'magicWords' );
+
+	static public $mMergeableListKeys = array( 'extraUserToggles' );
+
+	static public $mLocalisationCache = array();
+
+	static public $mWeekdayMsgs = array(
+		'sunday', 'monday', 'tuesday', 'wednesday', 'thursday',
+		'friday', 'saturday'
+	);
+
+	static public $mWeekdayAbbrevMsgs = array(
+		'sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'
+	);
+
+	static public $mMonthMsgs = array(
+		'january', 'february', 'march', 'april', 'may_long', 'june',
+		'july', 'august', 'september', 'october', 'november',
+		'december'
+	);
+	static public $mMonthGenMsgs = array(
+		'january-gen', 'february-gen', 'march-gen', 'april-gen', 'may-gen', 'june-gen',
+		'july-gen', 'august-gen', 'september-gen', 'october-gen', 'november-gen',
+		'december-gen'
+	);
+	static public $mMonthAbbrevMsgs = array(
+		'jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug',
+		'sep', 'oct', 'nov', 'dec'
+	);
+
+	/**
+	 * Create a language object for a given language code
+	 */
+	static function factory( $code ) {
+		global $IP;
+		static $recursionLevel = 0;
+
+		if ( $code == 'en' ) {
+			$class = 'Language';
+		} else {
+			$class = 'Language' . str_replace( '-', '_', ucfirst( $code ) );
+			// Preload base classes to work around APC/PHP5 bug
+			if ( file_exists( "$IP/languages/classes/$class.deps.php" ) ) {
+				include_once("$IP/languages/classes/$class.deps.php");
+			}
+			if ( file_exists( "$IP/languages/classes/$class.php" ) ) {
+				include_once("$IP/languages/classes/$class.php");
 			}
 		}
-		$this->mConverter = new fakeConverter($this);
+
+		if ( $recursionLevel > 5 ) {
+			throw new MWException( "Language fallback loop detected when creating class $class\n" );
+		}	
+
+		if( ! class_exists( $class ) ) {
+			$fallback = Language::getFallbackFor( $code );
+			++$recursionLevel;
+			$lang = Language::factory( $fallback );
+			--$recursionLevel;
+			$lang->setCode( $code );
+		} else {
+			$lang = new $class;
+		}
+
+		return $lang;
+	}
+
+	function __construct() {
+		$this->mConverter = new FakeConverter($this);
+		// Set the code to the name of the descendant
+		if ( get_class( $this ) == 'Language' ) {
+			$this->mCode = 'en';
+		} else {
+			$this->mCode = str_replace( '_', '-', strtolower( substr( get_class( $this ), 8 ) ) );
+		}
 	}
 
 	/**
-	 * Exports the default user options as defined in
-	 * $wgDefaultUserOptionsEn, user preferences can override some of these
-	 * depending on what's in (Local|Default)Settings.php and some defines.
-	 *
+	 * Hook which will be called if this is the content language.
+	 * Descendants can use this to register hook functions or modify globals
+	 */
+	function initContLang() {}
+
+	/**
+	 * @deprecated
 	 * @return array
 	 */
 	function getDefaultUserOptions() {
-		global $wgDefaultUserOptionsEn ;
-		return $wgDefaultUserOptionsEn ;
+		return User::getDefaultOptions();
 	}
 
 	/**
@@ -332,16 +166,16 @@ class Language {
 	 * @return array
 	 */
 	function getBookstoreList() {
-		global $wgBookstoreListEn ;
-		return $wgBookstoreListEn ;
+		$this->load();
+		return $this->bookstoreList;
 	}
 
 	/**
 	 * @return array
 	 */
 	function getNamespaces() {
-		global $wgNamespaceNamesEn;
-		return $wgNamespaceNamesEn;
+		$this->load();
+		return $this->namespaceNames;
 	}
 
 	/**
@@ -394,13 +228,13 @@ class Language {
 	 * @return mixed An integer if $text is a valid value otherwise false
 	 */
 	function getNsIndex( $text ) {
-		$ns = $this->getNamespaces();
-
-		foreach ( $ns as $i => $n ) {
-			if ( strcasecmp( $n, $text ) == 0)
-				return $i;
+		$this->load();
+		$index = @$this->mNamespaceIds[$this->lc($text)];
+		if ( is_null( $index ) ) {
+			return false;
+		} else {
+			return $index;
 		}
-		return false;
 	}
 
 	/**
@@ -410,7 +244,7 @@ class Language {
 	 * @return string
 	 */
 	function getVariantname( $code ) {
-		return wfMsg( "variantname-$code" );
+		return $this->getMessageFromDB( "variantname-$code" );
 	}
 
 	function specialPage( $name ) {
@@ -418,86 +252,131 @@ class Language {
 	}
 
 	function getQuickbarSettings() {
-		global $wgQuickbarSettingsEn;
-		return $wgQuickbarSettingsEn;
+		$this->load();
+		return $this->quickbarSettings;
 	}
 
 	function getSkinNames() {
-		global $wgSkinNamesEn;
-		return $wgSkinNamesEn;
+		$this->load();
+		return $this->skinNames;
 	}
 
 	function getMathNames() {
-		global $wgMathNamesEn;
-		return $wgMathNamesEn;
+		$this->load();
+		return $this->mathNames;
 	}
 
+	function getDatePreferences() {
+		$this->load();
+		return $this->datePreferences;
+	}
+	
 	function getDateFormats() {
-		global $wgDateFormatsEn;
-		return $wgDateFormatsEn;
+		$this->load();
+		return $this->dateFormats;
 	}
 
-	function getUserToggles() {
-		global $wgUserTogglesEn;
-		return $wgUserTogglesEn;
+	function getDefaultDateFormat() {
+		$this->load();
+		return $this->defaultDateFormat;
+	}
+
+	function getDatePreferenceMigrationMap() {
+		$this->load();
+		return $this->datePreferenceMigrationMap;
+	}
+
+	function getDefaultUserOptionOverrides() {
+		$this->load();
+		return $this->defaultUserOptionOverrides;
+	}
+
+	function getExtraUserToggles() {
+		$this->load();
+		return $this->extraUserToggles;
 	}
 
 	function getUserToggle( $tog ) {
-		return wfMsg( "tog-$tog" );
+		return $this->getMessageFromDB( "tog-$tog" );
 	}
 
-	function getLanguageNames() {
-		global $wgLanguageNamesEn;
-		return $wgLanguageNamesEn;
+	/**
+	 * Get language names, indexed by code.
+	 * If $customisedOnly is true, only returns codes with a messages file
+	 */
+	function getLanguageNames( $customisedOnly = false ) {
+		global $wgLanguageNames;
+		if ( !$customisedOnly ) {
+			return $wgLanguageNames;
+		}
+		
+		global $IP;
+		$messageFiles = glob( "$IP/languages/messages/Messages*.php" );
+		$names = array();
+		foreach ( $messageFiles as $file ) {
+			if( preg_match( '/Messages([A-Z][a-z_]+)\.php$/', $file, $m ) ) {
+				$code = str_replace( '_', '-', strtolower( $m[1] ) );
+				if ( isset( $wgLanguageNames[$code] ) ) {
+					$names[$code] = $wgLanguageNames[$code];
+				}
+			}
+		}
+		return $names;
+	}
+
+	/**
+	 * Ugly hack to get a message maybe from the MediaWiki namespace, if this
+	 * language object is the content or user language.
+	 */
+	function getMessageFromDB( $msg ) {
+		global $wgContLang, $wgLang;
+		if ( $wgContLang->getCode() == $this->getCode() ) {
+			# Content language
+			return wfMsgForContent( $msg );
+		} elseif ( $wgLang->getCode() == $this->getCode() ) {
+			# User language
+			return wfMsg( $msg );
+		} else {
+			# Neither, get from localisation
+			return $this->getMessage( $msg );
+		}
 	}
 
 	function getLanguageName( $code ) {
-		global $wgLanguageNamesEn;
-		if ( ! array_key_exists( $code, $wgLanguageNamesEn ) ) {
+		global $wgLanguageNames;
+		if ( ! array_key_exists( $code, $wgLanguageNames ) ) {
 			return '';
 		}
-		return $wgLanguageNamesEn[$code];
+		return $wgLanguageNames[$code];
 	}
 
 	function getMonthName( $key ) {
-		global $wgMonthNamesEn, $wgContLang;
-		// see who called us and use the correct message function
-		if( get_class( $wgContLang->getLangObj() ) == get_class( $this ) )
-			return wfMsgForContent($wgMonthNamesEn[$key-1]);
-		else
-			return wfMsg($wgMonthNamesEn[$key-1]);
+		return $this->getMessageFromDB( self::$mMonthMsgs[$key-1] );
 	}
 
-	/* by default we just return base form */
 	function getMonthNameGen( $key ) {
-		return $this->getMonthName( $key );
+		return $this->getMessageFromDB( self::$mMonthGenMsgs[$key-1] );
 	}
 
 	function getMonthAbbreviation( $key ) {
-		global $wgMonthAbbreviationsEn, $wgContLang;
-		// see who called us and use the correct message function
-		if( get_class( $wgContLang->getLangObj() ) == get_class( $this ) )
-			return wfMsgForContent(@$wgMonthAbbreviationsEn[$key-1]);
-		else
-			return wfMsg(@$wgMonthAbbreviationsEn[$key-1]);
+		return $this->getMessageFromDB( self::$mMonthAbbrevMsgs[$key-1] );
 	}
 
 	function getWeekdayName( $key ) {
-		global $wgWeekdayNamesEn, $wgContLang;
-		// see who called us and use the correct message function
-		if( get_class( $wgContLang->getLangObj() ) == get_class( $this ) )
-			return wfMsgForContent($wgWeekdayNamesEn[$key-1]);
-		else
-			return wfMsg($wgWeekdayNamesEn[$key-1]);
+		return $this->getMessageFromDB( self::$mWeekdayMsgs[$key-1] );
+	}
+
+	function getWeekdayAbbreviation( $key ) {
+		return $this->getMessageFromDB( self::$mWeekdayAbbrevMsgs[$key-1] );
 	}
 
 	/**
 	 * Used by date() and time() to adjust the time output.
-	 * @access public
+	 * @public
 	 * @param int   $ts the time in date('YmdHis') format
-	 * @param mixed $tz adjust the time by this amount (default false)
+	 * @param mixed $tz adjust the time by this amount (default false,
+	 *                  mean we get user timecorrection setting)
 	 * @return int
-
 	 */
 	function userAdjust( $ts, $tz = false )	{
 		global $wgUser, $wgLocalTZoffset;
@@ -506,9 +385,16 @@ class Language {
 			$tz = $wgUser->getOption( 'timecorrection' );
 		}
 
+		# minutes and hours differences:
+		$minDiff = 0;
+		$hrDiff  = 0;
+
 		if ( $tz === '' ) {
-			$hrDiff = isset( $wgLocalTZoffset ) ? $wgLocalTZoffset : 0;
-			$minDiff = 0;
+			# Global offset in minutes.
+			if( isset($wgLocalTZoffset) ) {
+				$hrDiff = $wgLocalTZoffset % 60;
+				$minDiff = $wgLocalTZoffset - ($hrDiff * 60);
+			}
 		} elseif ( strpos( $tz, ':' ) !== false ) {
 			$tzArray = explode( ':', $tz );
 			$hrDiff = intval($tzArray[0]);
@@ -516,8 +402,11 @@ class Language {
 		} else {
 			$hrDiff = intval( $tz );
 		}
+
+		# No difference ? Return time unchanged
 		if ( 0 == $hrDiff && 0 == $minDiff ) { return $ts; }
 
+		# Generate an adjusted date
 		$t = mktime( (
 		  (int)substr( $ts, 8, 2) ) + $hrDiff, # Hours
 		  (int)substr( $ts, 10, 2 ) + $minDiff, # Minutes
@@ -529,6 +418,228 @@ class Language {
 	}
 
 	/**
+	 * This is a workalike of PHP's date() function, but with better
+	 * internationalisation, a reduced set of format characters, and a better 
+	 * escaping format.
+	 *
+	 * Supported format characters are dDjlNwzWFmMntLYyaAgGhHiscrU. See the 
+	 * PHP manual for definitions. There are a number of extensions, which 
+	 * start with "x":
+	 *
+	 *    xn   Do not translate digits of the next numeric format character
+	 *    xN   Toggle raw digit (xn) flag, stays set until explicitly unset
+	 *    xr   Use roman numerals for the next numeric format character
+	 *    xx   Literal x
+	 *    xg   Genitive month name
+	 *
+	 * Characters enclosed in double quotes will be considered literal (with
+	 * the quotes themselves removed). Unmatched quotes will be considered
+	 * literal quotes. Example:
+	 *
+	 * "The month is" F       => The month is January
+	 * i's"                   => 20'11"
+	 *
+	 * Backslash escaping is also supported.
+	 * 
+	 * @param string $format
+	 * @param string $ts 14-character timestamp
+	 *      YYYYMMDDHHMMSS
+	 *      01234567890123
+	 */
+	function sprintfDate( $format, $ts ) {
+		$s = '';
+		$raw = false;
+		$roman = false;
+		$unix = false;
+		$rawToggle = false;
+		for ( $p = 0; $p < strlen( $format ); $p++ ) {
+			$num = false;
+			$code = $format[$p];
+			if ( $code == 'x' && $p < strlen( $format ) - 1 ) {
+				$code .= $format[++$p];
+			}
+			
+			switch ( $code ) {
+				case 'xx':
+					$s .= 'x';
+					break;
+				case 'xn':
+					$raw = true;
+					break;
+				case 'xN':
+					$rawToggle = !$rawToggle;
+					break;
+				case 'xr':
+					$roman = true;
+					break;
+				case 'xg':
+					$s .= $this->getMonthNameGen( substr( $ts, 4, 2 ) );
+					break;
+				case 'd':
+					$num = substr( $ts, 6, 2 );
+					break;
+				case 'D':
+					if ( !$unix ) $unix = wfTimestamp( TS_UNIX, $ts );
+					$s .= $this->getWeekdayAbbreviation( date( 'w', $unix ) + 1 );
+					break;
+				case 'j':
+					$num = intval( substr( $ts, 6, 2 ) );
+					break;
+				case 'l':
+					if ( !$unix ) $unix = wfTimestamp( TS_UNIX, $ts );
+					$s .= $this->getWeekdayName( date( 'w', $unix ) + 1 );
+					break;
+				case 'N':
+					if ( !$unix ) $unix = wfTimestamp( TS_UNIX, $ts );
+					$w = date( 'w', $unix );
+					$num = $w ? $w : 7;
+					break;
+				case 'w':
+					if ( !$unix ) $unix = wfTimestamp( TS_UNIX, $ts );
+					$num = date( 'w', $unix );
+					break;
+				case 'z':
+					if ( !$unix ) $unix = wfTimestamp( TS_UNIX, $ts );
+					$num = date( 'z', $unix );
+					break;
+				case 'W':
+					if ( !$unix ) $unix = wfTimestamp( TS_UNIX, $ts );
+					$num = date( 'W', $unix );
+					break;					
+				case 'F':
+					$s .= $this->getMonthName( substr( $ts, 4, 2 ) );
+					break;
+				case 'm':
+					$num = substr( $ts, 4, 2 );
+					break;
+				case 'M':
+					$s .= $this->getMonthAbbreviation( substr( $ts, 4, 2 ) );
+					break;
+				case 'n':
+					$num = intval( substr( $ts, 4, 2 ) );
+					break;
+				case 't':
+					if ( !$unix ) $unix = wfTimestamp( TS_UNIX, $ts );
+					$num = date( 't', $unix );
+					break;
+				case 'L':
+					if ( !$unix ) $unix = wfTimestamp( TS_UNIX, $ts );
+					$num = date( 'L', $unix );
+					break;					
+				case 'Y':
+					$num = substr( $ts, 0, 4 );
+					break;
+				case 'y':
+					$num = substr( $ts, 2, 2 );
+					break;
+				case 'a':
+					$s .= intval( substr( $ts, 8, 2 ) ) < 12 ? 'am' : 'pm';
+					break;
+				case 'A':
+					$s .= intval( substr( $ts, 8, 2 ) ) < 12 ? 'AM' : 'PM';
+					break;
+				case 'g':
+					$h = substr( $ts, 8, 2 );
+					$num = $h % 12 ? $h % 12 : 12;
+					break;
+				case 'G':
+					$num = intval( substr( $ts, 8, 2 ) );
+					break;
+				case 'h':
+					$h = substr( $ts, 8, 2 );
+					$num = sprintf( '%02d', $h % 12 ? $h % 12 : 12 );
+					break;					
+				case 'H':
+					$num = substr( $ts, 8, 2 );
+					break;
+				case 'i':
+					$num = substr( $ts, 10, 2 );
+					break;
+				case 's':
+					$num = substr( $ts, 12, 2 );
+					break;
+				case 'c':
+					if ( !$unix ) $unix = wfTimestamp( TS_UNIX, $ts );
+					$s .= date( 'c', $unix );
+					break;
+				case 'r':
+					if ( !$unix ) $unix = wfTimestamp( TS_UNIX, $ts );
+					$s .= date( 'r', $unix );
+					break;
+				case 'U':
+					if ( !$unix ) $unix = wfTimestamp( TS_UNIX, $ts );
+					$num = $unix;
+					break;
+				case '\\':
+					# Backslash escaping
+					if ( $p < strlen( $format ) - 1 ) {
+						$s .= $format[++$p];
+					} else {
+						$s .= '\\';
+					}
+					break;
+				case '"':
+					# Quoted literal
+					if ( $p < strlen( $format ) - 1 ) {
+						$endQuote = strpos( $format, '"', $p + 1 );
+						if ( $endQuote === false ) {
+							# No terminating quote, assume literal "
+							$s .= '"';
+						} else {
+							$s .= substr( $format, $p + 1, $endQuote - $p - 1 );
+							$p = $endQuote;
+						}
+					} else {
+						# Quote at end of string, assume literal "
+						$s .= '"';
+					}
+					break;
+				default:
+					$s .= $format[$p];
+			}
+			if ( $num !== false ) {
+				if ( $rawToggle || $raw ) {
+					$s .= $num;
+					$raw = false;
+				} elseif ( $roman ) {
+					$s .= self::romanNumeral( $num );
+					$roman = false;
+				} else {
+					$s .= $this->formatNum( $num, true );
+				}
+				$num = false;
+			}
+		}
+		return $s;
+	}
+
+	/**
+	 * Roman number formatting up to 3000
+	 */
+	static function romanNumeral( $num ) {
+		static $table = array(
+			array( '', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X' ),
+			array( '', 'X', 'XX', 'XXX', 'XL', 'L', 'LX', 'LXX', 'LXXX', 'XC', 'C' ),
+			array( '', 'C', 'CC', 'CCC', 'CD', 'D', 'DC', 'DCC', 'DCCC', 'CM', 'M' ),
+			array( '', 'M', 'MM', 'MMM' )
+		);
+			
+		$num = intval( $num );
+		if ( $num > 3000 || $num <= 0 ) {
+			return $num;
+		}
+
+		$s = '';
+		for ( $pow10 = 1000, $i = 3; $i >= 0; $pow10 /= 10, $i-- ) {
+			if ( $num >= $pow10 ) {
+				$s .= $table[$i][floor($num / $pow10)];
+			}
+			$num = $num % $pow10;
+		}
+		return $s;
+	}
+
+	/**
 	 * This is meant to be used by time(), date(), and timeanddate() to get
 	 * the date preference they're supposed to use, it should be used in
 	 * all children.
@@ -537,6 +648,7 @@ class Language {
 	 * function timeanddate([...], $format = true) {
 	 * 	$datePreference = $this->dateFormat($format);
 	 * [...]
+	 * }
 	 *</code>
 	 *
 	 * @param mixed $usePrefs: if true, the user's preference is used
@@ -549,9 +661,9 @@ class Language {
 
 		if( is_bool( $usePrefs ) ) {
 			if( $usePrefs ) {
-				$datePreference = $wgUser->getOption( 'date' );
+				$datePreference = $wgUser->getDatePreference();
 			} else {
-				$options = $this->getDefaultUserOptions();
+				$options = User::getDefaultOptions();
 				$datePreference = (string)$options['date'];
 			}
 		} else {
@@ -560,14 +672,14 @@ class Language {
 
 		// return int
 		if( $datePreference == '' ) {
-			return MW_DATE_DEFAULT;
+			return 'default';
 		}
 		
 		return $datePreference;
 	}
 
 	/**
-	 * @access public
+	 * @public
 	 * @param mixed  $ts the time format which needs to be turned into a
 	 *               date('YmdHis') format with wfTimestamp(TS_MW,$ts)
 	 * @param bool   $adj whether to adjust the time output according to the
@@ -578,29 +690,20 @@ class Language {
 	 * @return string
 	 */
 	function date( $ts, $adj = false, $format = true, $timecorrection = false ) {
-		global $wgUser, $wgAmericanDates;
-
-		if ( $adj ) { $ts = $this->userAdjust( $ts, $timecorrection ); }
-
-		$datePreference = $this->dateFormat( $format );
-		if( $datePreference == MW_DATE_DEFAULT ) {
-			$datePreference = $wgAmericanDates ? MW_DATE_MDY : MW_DATE_DMY;
+		$this->load();
+		if ( $adj ) { 
+			$ts = $this->userAdjust( $ts, $timecorrection ); 
 		}
 
-		$month = $this->formatMonth( substr( $ts, 4, 2 ), $datePreference );
-		$day = $this->formatDay( substr( $ts, 6, 2 ), $datePreference );
-		$year = $this->formatNum( substr( $ts, 0, 4 ), true );
-
-		switch( $datePreference ) {
-			case MW_DATE_DMY: return "$day $month $year";
-			case MW_DATE_YMD: return "$year $month $day";
-			case MW_DATE_ISO: return substr($ts, 0, 4). '-' . substr($ts, 4, 2). '-' .substr($ts, 6, 2);
-			default: return "$month $day, $year";
+		$pref = $this->dateFormat( $format );
+		if( $pref == 'default' || !isset( $this->dateFormats["$pref date"] ) ) {
+			$pref = $this->defaultDateFormat;
 		}
+		return $this->sprintfDate( $this->dateFormats["$pref date"], $ts );
 	}
 
 	/**
-	* @access public
+	* @public
 	* @param mixed  $ts the time format which needs to be turned into a
 	*               date('YmdHis') format with wfTimestamp(TS_MW,$ts)
 	* @param bool   $adj whether to adjust the time output according to the
@@ -611,61 +714,20 @@ class Language {
 	* @return string
 	*/
 	function time( $ts, $adj = false, $format = true, $timecorrection = false ) {
-		global $wgUser;
-
-		if ( $adj ) { $ts = $this->userAdjust( $ts, $timecorrection ); }
-		$datePreference = $this->dateFormat( $format );
-
-		$sep = ($datePreference == MW_DATE_ISO)
-			? ':'
-			: $this->timeSeparator( $format );
-
-		$t = substr( $ts, 8, 2 ) . $sep . substr( $ts, 10, 2 );
-
-		if ( $datePreference == MW_DATE_ISO ) {
-			$t .= $sep . substr( $ts, 12, 2 );
+		$this->load();
+		if ( $adj ) { 
+			$ts = $this->userAdjust( $ts, $timecorrection ); 
 		}
-		return $t;
+
+		$pref = $this->dateFormat( $format );
+		if( $pref == 'default' || !isset( $this->dateFormats["$pref time"] ) ) {
+			$pref = $this->defaultDateFormat;
+		}
+		return $this->sprintfDate( $this->dateFormats["$pref time"], $ts );
 	}
 
 	/**
-	 * Default separator character between hours, minutes, and seconds.
-	 * Will be used by Language::time() for non-ISO formats.
-	 * (ISO will always use a colon.)
-	 * @return string
-	 */
-	function timeSeparator( $format ) {
-		return ':';
-	}
-
-	/**
-	 * String to insert between the time and the date in a combined
-	 * string. Should include any relevant whitespace.
-	 * @return string
-	 */
-	function timeDateSeparator( $format ) {
-		return ', ';
-	}
-
-	/**
-	 * Return true if the time should display before the date.
-	 * @return bool
-	 * @access private
-	 */
-	function timeBeforeDate() {
-		return true;
-	}
-
-	function formatMonth( $month, $format ) {
-		return $this->getMonthName( $month );
-	}
-
-	function formatDay( $day, $format ) {
-		return $this->formatNum( 0 + $day );
-	}
-
-	/**
-	* @access public
+	* @public
 	* @param mixed  $ts the time format which needs to be turned into a
 	*               date('YmdHis') format with wfTimestamp(TS_MW,$ts)
 	* @param bool   $adj whether to adjust the time output according to the
@@ -678,30 +740,27 @@ class Language {
 	* @return string
 	*/
 	function timeanddate( $ts, $adj = false, $format = true, $timecorrection = false) {
-		global $wgUser;
-
-		$datePreference = $this->dateFormat($format);
-		switch ( $datePreference ) {
-			case MW_DATE_ISO: return $this->date( $ts, $adj, $format, $timecorrection ) . ' ' .
-				$this->time( $ts, $adj, $format, $timecorrection );
-			default:
-				$time = $this->time( $ts, $adj, $format, $timecorrection );
-				$sep = $this->timeDateSeparator( $datePreference );
-				$date = $this->date( $ts, $adj, $format, $timecorrection );
-				return $this->timeBeforeDate( $datePreference )
-					? $time . $sep . $date
-					: $date . $sep . $time;
+		$this->load();
+		if ( $adj ) { 
+			$ts = $this->userAdjust( $ts, $timecorrection ); 
 		}
+
+		$pref = $this->dateFormat( $format );
+		if( $pref == 'default' || !isset( $this->dateFormats["$pref both"] ) ) {
+			$pref = $this->defaultDateFormat;
+		}
+
+		return $this->sprintfDate( $this->dateFormats["$pref both"], $ts );
 	}
 
 	function getMessage( $key ) {
-		global $wgAllMessagesEn;
-		return @$wgAllMessagesEn[$key];
+		$this->load();
+		return @$this->messages[$key];
 	}
 
 	function getAllMessages() {
-		global $wgAllMessagesEn;
-		return $wgAllMessagesEn;
+		$this->load();
+		return $this->messages;
 	}
 
 	function iconv( $in, $out, $string ) {
@@ -709,43 +768,166 @@ class Language {
 		return iconv( $in, $out, $string );
 	}
 
-	function ucfirst( $string ) {
-		# For most languages, this is a wrapper for ucfirst()
-		return ucfirst( $string );
+	// callback functions for uc(), lc(), ucwords(), ucwordbreaks()
+	function ucwordbreaksCallbackAscii($matches){
+		return $this->ucfirst($matches[1]);
+	}
+	
+	function ucwordbreaksCallbackMB($matches){
+		return mb_strtoupper($matches[0]);
+	}
+	
+	function ucCallback($matches){
+		list( $wikiUpperChars ) = self::getCaseMaps();
+		return strtr( $matches[1], $wikiUpperChars );
+	}
+	
+	function lcCallback($matches){
+		list( , $wikiLowerChars ) = self::getCaseMaps();
+		return strtr( $matches[1], $wikiLowerChars );
+	}
+	
+	function ucwordsCallbackMB($matches){
+		return mb_strtoupper($matches[0]);
+	}
+	
+	function ucwordsCallbackWiki($matches){
+		list( $wikiUpperChars ) = self::getCaseMaps();
+		return strtr( $matches[0], $wikiUpperChars );
 	}
 
-	function uc( $str ) {
-		return strtoupper( $str );
+	function ucfirst( $str ) {
+		return self::uc( $str, true );
 	}
 
-	function lcfirst( $s ) {
-		return strtolower( $s{0} ). substr( $s, 1 );
+	function uc( $str, $first = false ) {
+		if ( function_exists( 'mb_strtoupper' ) )
+			if ( $first )
+				if ( self::isMultibyte( $str ) )
+					return mb_strtoupper( mb_substr( $str, 0, 1 ) ) . mb_substr( $str, 1 );
+				else
+					return ucfirst( $str );
+			else
+				return self::isMultibyte( $str ) ? mb_strtoupper( $str ) : strtoupper( $str );
+		else
+			if ( self::isMultibyte( $str ) ) {
+				list( $wikiUpperChars ) = $this->getCaseMaps();
+				$x = $first ? '^' : '';
+				return preg_replace_callback(
+					"/$x([a-z]|[\\xc0-\\xff][\\x80-\\xbf]*)/",
+					array($this,"ucCallback"),
+					$str
+				);
+			} else
+				return $first ? ucfirst( $str ) : strtoupper( $str );
+	}
+	
+	function lcfirst( $str ) {
+		return self::lc( $str, true );
 	}
 
-	function lc( $str ) {
-		return strtolower( $str );
+	function lc( $str, $first = false ) {
+		if ( function_exists( 'mb_strtolower' ) )
+			if ( $first )
+				if ( self::isMultibyte( $str ) )
+					return mb_strtolower( mb_substr( $str, 0, 1 ) ) . mb_substr( $str, 1 );
+				else
+					return strtolower( substr( $str, 0, 1 ) ) . substr( $str, 1 );
+			else
+				return self::isMultibyte( $str ) ? mb_strtolower( $str ) : strtolower( $str );
+		else
+			if ( self::isMultibyte( $str ) ) {
+				list( , $wikiLowerChars ) = self::getCaseMaps();
+				$x = $first ? '^' : '';
+				return preg_replace_callback(
+					"/$x([A-Z]|[\\xc0-\\xff][\\x80-\\xbf]*)/",
+					array($this,"lcCallback"),
+					$str
+				);
+			} else
+				return $first ? strtolower( substr( $str, 0, 1 ) ) . substr( $str, 1 ) : strtolower( $str );
+	}
+
+	function isMultibyte( $str ) {
+		return (bool)preg_match( '/[\x80-\xff]/', $str );
+	}
+
+	function ucwords($str) {
+		if ( self::isMultibyte( $str ) ) {
+			$str = self::lc($str);
+
+			// regexp to find first letter in each word (i.e. after each space)
+			$replaceRegexp = "/^([a-z]|[\\xc0-\\xff][\\x80-\\xbf]*)| ([a-z]|[\\xc0-\\xff][\\x80-\\xbf]*)/";
+
+			// function to use to capitalize a single char
+			if ( function_exists( 'mb_strtoupper' ) )
+				return preg_replace_callback(
+					$replaceRegexp,
+					array($this,"ucwordsCallbackMB"),
+					$str
+				);
+			else 
+				return preg_replace_callback(
+					$replaceRegexp,
+					array($this,"ucwordsCallbackWiki"),
+					$str
+				);
+		}
+		else
+			return ucwords( strtolower( $str ) );
+	}
+
+  # capitalize words at word breaks
+	function ucwordbreaks($str){
+		if (self::isMultibyte( $str ) ) {
+			$str = self::lc($str);
+
+			// since \b doesn't work for UTF-8, we explicitely define word break chars
+			$breaks= "[ \-\(\)\}\{\.,\?!]";
+
+			// find first letter after word break
+			$replaceRegexp = "/^([a-z]|[\\xc0-\\xff][\\x80-\\xbf]*)|$breaks([a-z]|[\\xc0-\\xff][\\x80-\\xbf]*)/";
+
+			if ( function_exists( 'mb_strtoupper' ) )
+				return preg_replace_callback(
+					$replaceRegexp,
+					array($this,"ucwordbreaksCallbackMB"),
+					$str
+				);
+			else 
+				return preg_replace_callback(
+					$replaceRegexp,
+					array($this,"ucwordsCallbackWiki"),
+					$str
+				);
+		}
+		else
+			return preg_replace_callback(
+			'/\b([\w\x80-\xff]+)\b/',
+			array($this,"ucwordbreaksCallbackAscii"),
+			$str );
 	}
 
 	function checkTitleEncoding( $s ) {
-		global $wgInputEncoding;
-
-		# Check for UTF-8 URLs; Internet Explorer produces these if you
-		# type non-ASCII chars in the URL bar or follow unescaped links.
+		if( is_array( $s ) ) {
+			wfDebugDieBacktrace( 'Given array to checkTitleEncoding.' );
+		}
+		# Check for non-UTF-8 URLs
 		$ishigh = preg_match( '/[\x80-\xff]/', $s);
-		$isutf = ($ishigh ? preg_match( '/^([\x00-\x7f]|[\xc0-\xdf][\x80-\xbf]|' .
-		         '[\xe0-\xef][\x80-\xbf]{2}|[\xf0-\xf7][\x80-\xbf]{3})+$/', $s ) : true );
+		if(!$ishigh) return $s;
 
-		if( ($wgInputEncoding != 'utf-8') and $ishigh and $isutf )
-			return @iconv( 'UTF-8', $wgInputEncoding, $s );
+		$isutf8 = preg_match( '/^([\x00-\x7f]|[\xc0-\xdf][\x80-\xbf]|' .
+                '[\xe0-\xef][\x80-\xbf]{2}|[\xf0-\xf7][\x80-\xbf]{3})+$/', $s );
+		if( $isutf8 ) return $s;
 
-		if( ($wgInputEncoding == 'utf-8') and $ishigh and !$isutf )
-			return utf8_encode( $s );
-
-		# Other languages can safely leave this function, or replace
-		# it with one to detect and convert another legacy encoding.
-		return $s;
+		return $this->iconv( $this->fallback8bitEncoding(), "utf-8", $s );
 	}
 
+	function fallback8bitEncoding() {
+		$this->load();
+		return $this->fallback8bitEncoding;
+	}
+	
 	/**
 	 * Some languages have special punctuation to strip out
 	 * or characters which need to be converted for MySQL's
@@ -754,8 +936,25 @@ class Language {
 	 * @param string $in
 	 * @return string
 	 */
-	function stripForSearch( $in ) {
-		return strtolower( $in );
+	function stripForSearch( $string ) {
+		# MySQL fulltext index doesn't grok utf-8, so we
+		# need to fold cases and convert to hex
+
+		wfProfileIn( __METHOD__ );
+		if( function_exists( 'mb_strtolower' ) ) {
+			$out = preg_replace(
+				"/([\\xc0-\\xff][\\x80-\\xbf]*)/e",
+				"'U8' . bin2hex( \"$1\" )",
+				mb_strtolower( $string ) );
+		} else {
+			list( , $wikiLowerChars ) = self::getCaseMaps();
+			$out = preg_replace(
+				"/([\\xc0-\\xff][\\x80-\\xbf]*)/e",
+				"'U8' . bin2hex( strtr( \"\$1\", \$wikiLowerChars ) )",
+				$string );
+		}
+		wfProfileOut( __METHOD__ );
+		return $out;
 	}
 
 	function convertForSearchResult( $termsArray ) {
@@ -765,15 +964,16 @@ class Language {
 	}
 
 	/**
-	 * Get the first character of a string. In ASCII, return
-	 * first byte of the string. UTF8 and others have to
-	 * overload this.
+	 * Get the first character of a string. 
 	 *
 	 * @param string $s
 	 * @return string
 	 */
 	function firstChar( $s ) {
-		return $s[0];
+		preg_match( '/^([\x00-\x7f]|[\xc0-\xdf][\x80-\xbf]|' .
+		'[\xe0-\xef][\x80-\xbf]{2}|[\xf0-\xf7][\x80-\xbf]{3})/', $s, $matches);
+
+		return isset( $matches[1] ) ? $matches[1] : "";
 	}
 
 	function initEncoding() {
@@ -781,15 +981,6 @@ class Language {
 		# (Esperanto X-coding, Japanese furigana conversion, etc)
 		# If this language is used as the primary content language,
 		# an override to the defaults can be set here on startup.
-		#global $wgInputEncoding, $wgOutputEncoding, $wgEditEncoding;
-	}
-
-	function setAltEncoding() {
-		# Some languages may have an alternate char encoding option
-		# (Esperanto X-coding, Japanese furigana conversion, etc)
-		# If 'altencoding' is checked in user prefs, this gives a
-		# chance to swap out the default encoding settings.
-		#global $wgInputEncoding, $wgOutputEncoding, $wgEditEncoding;
 	}
 
 	function recodeForEdit( $s ) {
@@ -799,27 +990,27 @@ class Language {
 		# Note that if wgOutputEncoding is different from
 		# wgInputEncoding, this text will be further converted
 		# to wgOutputEncoding.
-		global $wgInputEncoding, $wgEditEncoding;
+		global $wgEditEncoding;
 		if( $wgEditEncoding == '' or
-		  $wgEditEncoding == $wgInputEncoding ) {
+		  $wgEditEncoding == 'UTF-8' ) {
 			return $s;
 		} else {
-			return $this->iconv( $wgInputEncoding, $wgEditEncoding, $s );
+			return $this->iconv( 'UTF-8', $wgEditEncoding, $s );
 		}
 	}
 
 	function recodeInput( $s ) {
 		# Take the previous into account.
-		global $wgInputEncoding, $wgOutputEncoding, $wgEditEncoding;
+		global $wgEditEncoding;
 		if($wgEditEncoding != "") {
 			$enc = $wgEditEncoding;
 		} else {
-			$enc = $wgOutputEncoding;
+			$enc = 'UTF-8';
 		}
-		if( $enc == $wgInputEncoding ) {
+		if( $enc == 'UTF-8' ) {
 			return $s;
 		} else {
-			return $this->iconv( $enc, $wgInputEncoding, $s );
+			return $this->iconv( $enc, 'UTF-8', $s );
 		}
 	}
 
@@ -828,32 +1019,66 @@ class Language {
 	 *
 	 * @return bool
 	 */
-	function isRTL() { return false; }
+	function isRTL() { 
+		$this->load();
+		return $this->rtl;
+	}
+
+	/**
+	 * A hidden direction mark (LRM or RLM), depending on the language direction
+	 *
+	 * @return string
+	 */
+	function getDirMark() {
+		return $this->isRTL() ? "\xE2\x80\x8F" : "\xE2\x80\x8E";
+	}
+
+	/**
+	 * An arrow, depending on the language direction
+	 *
+	 * @return string
+	 */
+	function getArrow() {
+		return $this->isRTL() ? '←' : '→';
+	}
 
 	/**
 	 * To allow "foo[[bar]]" to extend the link over the whole word "foobar"
 	 *
 	 * @return bool
 	 */
-	function linkPrefixExtension() { return false; }
-
+	function linkPrefixExtension() {
+		$this->load();
+		return $this->linkPrefixExtension;
+	}
 
 	function &getMagicWords() {
-		global $wgMagicWordsEn;
-		return $wgMagicWordsEn;
+		$this->load();
+		return $this->magicWords;
 	}
 
 	# Fill a MagicWord object with data from here
 	function getMagic( &$mw ) {
-		$raw = $this->getMagicWords();
-
-		wfRunHooks( 'LanguageGetMagic', array( &$raw ) );
-
-		if( !isset( $raw[$mw->mId] ) ) {
-			# Fall back to English if local list is incomplete
-			$raw =& Language::getMagicWords();
+		if ( !isset( $this->mMagicExtensions ) ) {
+			$this->mMagicExtensions = array();
+			wfRunHooks( 'LanguageGetMagic', array( &$this->mMagicExtensions, $this->getCode() ) );
 		}
-		$rawEntry = $raw[$mw->mId];
+		if ( isset( $this->mMagicExtensions[$mw->mId] ) ) {
+			$rawEntry = $this->mMagicExtensions[$mw->mId];
+		} else {
+			$magicWords =& $this->getMagicWords();
+			if ( isset( $magicWords[$mw->mId] ) ) {
+				$rawEntry = $magicWords[$mw->mId];
+			} else {
+				# Fall back to English if local list is incomplete
+				$magicWords =& Language::getMagicWords();
+				$rawEntry = $magicWords[$mw->mId];
+			}
+		}
+
+		if( !is_array( $rawEntry ) ) {
+			error_log( "\"$rawEntry\" is not a valid magic thingie for \"$mw->mId\"" );
+		}
 		$mw->mCaseSensitive = $rawEntry[0];
 		$mw->mSynonyms = array_slice( $rawEntry, 1 );
 	}
@@ -861,7 +1086,7 @@ class Language {
 	/**
 	 * Italic is unsuitable for some languages
 	 *
-	 * @access public
+	 * @public
 	 *
 	 * @param string $text The text to be emphasized.
 	 * @return string
@@ -870,10 +1095,7 @@ class Language {
 		return "<em>$text</em>";
 	}
 
-	/**
-	 * This function enables formatting of numbers, it should only come
-	 * into effect when the $wgTranslateNumerals variable is TRUE.
-	 *
+	 /**
 	 * Normally we output all numbers in plain en_US style, that is
 	 * 293,291.235 for twohundredninetythreethousand-twohundredninetyone
 	 * point twohundredthirtyfive. However this is not sutable for all
@@ -891,14 +1113,26 @@ class Language {
 	 *
 	 * @todo check if it's viable to use localeconv() for the decimal
 	 *       seperator thing.
-	 * @access public
+	 * @public
 	 * @param mixed $number the string to be formatted, should be an integer or
 	 *        a floating point number.
-	 * @param bool $year are we being passed a year? (turns off commafication)
-	 * @return mixed whatever we're fed if it's a year, a string otherwise.
+	 * @param bool $nocommafy Set to true for special numbers like dates
+	 * @return string
 	 */
-	function formatNum( $number, $year = false ) {
-		return $year ? $number : $this->commafy($number);
+	function formatNum( $number, $nocommafy = false ) {
+		global $wgTranslateNumerals;
+		if (!$nocommafy) {
+			$number = $this->commafy($number);
+			$s = $this->separatorTransformTable();
+			if (!is_null($s)) { $number = strtr($number, $s); }
+		}
+
+		if ($wgTranslateNumerals) {
+			$s = $this->digitTransformTable();
+			if (!is_null($s)) { $number = strtr($number, $s); }
+		}
+
+		return $number;
 	}
 
 	/**
@@ -910,6 +1144,17 @@ class Language {
 	function commafy($_) {
 		return strrev((string)preg_replace('/(\d{3})(?=\d)(?!\d*\.)/','$1,',strrev($_)));
 	}
+
+	function digitTransformTable() {
+		$this->load();
+		return $this->digitTransformTable;
+	}
+
+	function separatorTransformTable() {
+		$this->load();
+		return $this->separatorTransformTable;
+	}
+
 
 	/**
 	 * For the credit list in includes/Credits.php (action=credits)
@@ -924,7 +1169,7 @@ class Language {
 			if ($i == $m) {
 				$s = $l[$i];
 			} else if ($i == $m - 1) {
-				$s = $l[$i] . ' ' . wfMsg('and') . ' ' . $s;
+				$s = $l[$i] . ' ' . $this->getMessageFromDB( 'and' ) . ' ' . $s;
 			} else {
 				$s = $l[$i] . ', ' . $s;
 			}
@@ -939,7 +1184,7 @@ class Language {
 	#
 	# $length does not include the optional ellipsis.
 	# If $length is negative, snip from the beginning
-	function truncate( $string, $length, $ellipsis = '' ) {
+	function truncate( $string, $length, $ellipsis = "" ) {
 		if( $length == 0 ) {
 			return $ellipsis;
 		}
@@ -948,9 +1193,24 @@ class Language {
 		}
 		if( $length > 0 ) {
 			$string = substr( $string, 0, $length );
+			$char = ord( $string[strlen( $string ) - 1] );
+			if ($char >= 0xc0) {
+				# We got the first byte only of a multibyte char; remove it.
+				$string = substr( $string, 0, -1 );
+			} elseif( $char >= 0x80 &&
+			          preg_match( '/^(.*)(?:[\xe0-\xef][\x80-\xbf]|' .
+			                      '[\xf0-\xf7][\x80-\xbf]{1,2})$/', $string, $m ) ) {
+			    # We chopped in the middle of a character; remove it
+				$string = $m[1];
+			}
 			return $string . $ellipsis;
 		} else {
 			$string = substr( $string, $length );
+			$char = ord( $string[0] );
+			if( $char >= 0x80 && $char < 0xc0 ) {
+				# We chopped in the middle of a character; remove the whole thing
+				$string = preg_replace( '/^[\x80-\xbf]+/', '', $string );
+			}
 			return $ellipsis . $string;
 		}
 	}
@@ -964,6 +1224,10 @@ class Language {
 	 * @return string
 	 */
 	function convertGrammar( $word, $case ) {
+		global $wgGrammarForms;
+		if ( isset($wgGrammarForms['en'][$case][$word]) ) {
+			return $wgGrammarForms['en'][$case][$word];
+		}
 		return $word;
 	}
 
@@ -984,8 +1248,8 @@ class Language {
 	 * @param string $wordform3 (optional)
 	 * @return string
 	 */
-	function convertPlural( $count, $wordform1, $wordform2, $wordform3) {
-		return $count == '1' ? $wordform1 : $wordform2;
+	function convertPlural( $count, $w1, $w2, $w3) {
+		return $count == '1' ? $w1 : $w2;
 	}
 
 	/**
@@ -996,7 +1260,7 @@ class Language {
 	 */
 	function translateBlockExpiry( $str ) {
 
-		$scBlockExpiryOptions = wfMsg( 'ipboptions' );
+		$scBlockExpiryOptions = $this->getMessageFromDB( 'ipboptions' );
 
 		if ( $scBlockExpiryOptions == '-') {
 			return $str;
@@ -1045,6 +1309,17 @@ class Language {
 		return $this->mConverter->parserConvert( $text, $parser );
 	}
 
+	# Tell the converter that it shouldn't convert titles
+	function setNoTitleConvert(){
+		$this->mConverter->setNotitleConvert();
+	}
+
+	# Check if this is a language with variants
+	function hasVariants(){
+		return sizeof($this->getVariants())>1;
+	}
+
+
 	/**
 	 * Perform output conversion on a string, and encode for safe HTML output.
 	 * @param string $text
@@ -1071,8 +1346,8 @@ class Language {
 	}
 
 
-	function getPreferredVariant() {
-		return $this->mConverter->getPreferredVariant();
+	function getPreferredVariant( $fromUser = true ) {
+		return $this->mConverter->getPreferredVariant( $fromUser );
 	}
 
 	/**
@@ -1090,11 +1365,22 @@ class Language {
 	}
 
 	/**
+	 * If a language supports multiple variants, converts text
+	 * into an array of all possible variants of the text:
+	 *  'variant' => text in that variant
+	 */
+
+	function convertLinkToAllVariants($text){
+		return $this->mConverter->convertLinkToAllVariants($text);
+	}
+
+
+	/**
 	 * returns language specific options used by User::getPageRenderHash()
 	 * for example, the preferred language variant
 	 *
 	 * @return string
-	 * @access public
+	 * @public
 	 */
 	function getExtraHashOptions() {
 		return $this->mConverter->getExtraHashOptions();
@@ -1118,8 +1404,8 @@ class Language {
 	 * @param string $text text to be tagged for no conversion
 	 * @return string the tagged text
 	*/
-	function markNoConversion( $text ) {
-		return $this->mConverter->markNoConversion( $text );
+	function markNoConversion( $text, $noParse=false ) {
+		return $this->mConverter->markNoConversion( $text, $noParse );
 	}
 
 	/**
@@ -1127,10 +1413,11 @@ class Language {
 	 * which should be merged onto a link of the form [[foo]]bar.
 	 *
 	 * @return string
-	 * @access public
+	 * @public
 	 */
 	function linkTrail() {
-		return $this->getMessage( 'linktrail' );
+		$this->load();
+		return $this->linkTrail;
 	}
 
 	function getLangObj() {
@@ -1141,22 +1428,300 @@ class Language {
 	 * Get the RFC 3066 code for this language object
 	 */
 	function getCode() {
-		return str_replace( '_', '-', strtolower( substr( get_class( $this ), 8 ) ) );
+		return $this->mCode;
 	}
 
+	function setCode( $code ) {
+		$this->mCode = $code;
+	}
 
+	static function getFileName( $prefix = 'Language', $code, $suffix = '.php' ) {
+		return $prefix . str_replace( '-', '_', ucfirst( $code ) ) . $suffix;
+	}
+
+	static function getMessagesFileName( $code ) {
+		global $IP;
+		return self::getFileName( "$IP/languages/messages/Messages", $code, '.php' );
+	}
+
+	static function getClassFileName( $code ) {
+		global $IP;
+		return self::getFileName( "$IP/languages/classes/Language", $code, '.php' );
+	}
+	
+	static function getLocalisationArray( $code, $disableCache = false ) {
+		self::loadLocalisation( $code, $disableCache );
+		return self::$mLocalisationCache[$code];
+	}
+
+	/**
+	 * Load localisation data for a given code into the static cache
+	 *
+	 * @return array Dependencies, map of filenames to mtimes
+	 */
+	static function loadLocalisation( $code, $disableCache = false ) {
+		static $recursionGuard = array();
+		global $wgMemc;
+
+		if ( !$code ) {
+			throw new MWException( "Invalid language code requested" );
+		}
+
+		if ( !$disableCache ) {
+			# Try the per-process cache
+			if ( isset( self::$mLocalisationCache[$code] ) ) {
+				return self::$mLocalisationCache[$code]['deps'];
+			}
+
+			wfProfileIn( __METHOD__ );
+
+			# Try the serialized directory
+			$cache = wfGetPrecompiledData( self::getFileName( "Messages", $code, '.ser' ) );
+			if ( $cache ) {
+				self::$mLocalisationCache[$code] = $cache;
+				wfDebug( "Got localisation for $code from precompiled data file\n" );
+				wfProfileOut( __METHOD__ );
+				return self::$mLocalisationCache[$code]['deps'];
+			}
+
+			# Try the global cache
+			$memcKey = wfMemcKey('localisation', $code );
+			$cache = $wgMemc->get( $memcKey );
+			if ( $cache ) {
+				$expired = false;
+				# Check file modification times
+				foreach ( $cache['deps'] as $file => $mtime ) {
+					if ( !file_exists( $file ) || filemtime( $file ) > $mtime ) {
+						$expired = true;
+						break;
+					}
+				}
+				if ( self::isLocalisationOutOfDate( $cache ) ) {
+					$wgMemc->delete( $memcKey );
+					$cache = false;
+					wfDebug( "Localisation cache for $code had expired due to update of $file\n" );
+				} else {
+					self::$mLocalisationCache[$code] = $cache;
+					wfDebug( "Got localisation for $code from cache\n" );
+					wfProfileOut( __METHOD__ );
+					return $cache['deps'];
+				}
+			}
+		} else {
+			wfProfileIn( __METHOD__ );
+		}
+
+		if ( $code != 'en' ) {
+			$fallback = 'en';
+		} else {
+			$fallback = false;
+		}
+		
+		# Load the primary localisation from the source file
+		$filename = self::getMessagesFileName( $code );
+		if ( !file_exists( $filename ) ) {
+			wfDebug( "No localisation file for $code, using implicit fallback to en\n" );
+			$cache = array();
+			$deps = array();
+		} else {
+			$deps = array( $filename => filemtime( $filename ) );
+			require( $filename );
+			$cache = compact( self::$mLocalisationKeys );	
+			wfDebug( "Got localisation for $code from source\n" );
+		}
+		
+		if ( !empty( $fallback ) ) {
+			# Load the fallback localisation, with a circular reference guard
+			if ( isset( $recursionGuard[$code] ) ) {
+				throw new MWException( "Error: Circular fallback reference in language code $code" );
+			}
+			$recursionGuard[$code] = true;
+			$newDeps = self::loadLocalisation( $fallback, $disableCache );
+			unset( $recursionGuard[$code] );
+
+			$secondary = self::$mLocalisationCache[$fallback];
+			$deps = array_merge( $deps, $newDeps );
+
+			# Merge the fallback localisation with the current localisation
+			foreach ( self::$mLocalisationKeys as $key ) {
+				if ( isset( $cache[$key] ) ) {
+					if ( isset( $secondary[$key] ) ) {
+						if ( in_array( $key, self::$mMergeableMapKeys ) ) {
+							$cache[$key] = $cache[$key] + $secondary[$key];
+						} elseif ( in_array( $key, self::$mMergeableListKeys ) ) {
+							$cache[$key] = array_merge( $secondary[$key], $cache[$key] );
+						}
+					}
+				} else {
+					$cache[$key] = $secondary[$key];
+				}
+			}
+
+			# Merge bookstore lists if requested
+			if ( !empty( $cache['bookstoreList']['inherit'] ) ) {
+				$cache['bookstoreList'] = array_merge( $cache['bookstoreList'], $secondary['bookstoreList'] );
+			}
+			if ( isset( $cache['bookstoreList']['inherit'] ) ) {
+				unset( $cache['bookstoreList']['inherit'] );
+			}
+		}
+		
+		# Add dependencies to the cache entry
+		$cache['deps'] = $deps;
+
+		# Replace spaces with underscores in namespace names
+		$cache['namespaceNames'] = str_replace( ' ', '_', $cache['namespaceNames'] );
+		
+		# Save to both caches
+		self::$mLocalisationCache[$code] = $cache;
+		if ( !$disableCache ) {
+			$wgMemc->set( $memcKey, $cache );
+		}
+
+		wfProfileOut( __METHOD__ );
+		return $deps;
+	}
+
+	/**
+	 * Test if a given localisation cache is out of date with respect to the 
+	 * source Messages files. This is done automatically for the global cache
+	 * in $wgMemc, but is only done on certain occasions for the serialized 
+	 * data file.
+	 *
+	 * @param $cache mixed Either a language code or a cache array
+	 */
+	static function isLocalisationOutOfDate( $cache ) {
+		if ( !is_array( $cache ) ) {
+			self::loadLocalisation( $cache );
+			$cache = self::$mLocalisationCache[$cache];
+		}
+		$expired = false;
+		foreach ( $cache['deps'] as $file => $mtime ) {
+			if ( !file_exists( $file ) || filemtime( $file ) > $mtime ) {
+				$expired = true;
+				break;
+			}
+		}
+		return $expired;
+	}
+	
+	/**
+	 * Get the fallback for a given language
+	 */
+	static function getFallbackFor( $code ) {
+		self::loadLocalisation( $code );
+		return self::$mLocalisationCache[$code]['fallback'];
+	}
+
+	/** 
+	 * Get all messages for a given language
+	 */
+	static function getMessagesFor( $code ) {
+		self::loadLocalisation( $code );
+		return self::$mLocalisationCache[$code]['messages'];
+	}
+
+	/** 
+	 * Get a message for a given language
+	 */
+	static function getMessageFor( $key, $code ) {
+		self::loadLocalisation( $code );
+		return @self::$mLocalisationCache[$code]['messages'][$key];
+	}
+
+	/**
+	 * Load localisation data for this object
+	 */
+	function load() {
+		if ( !$this->mLoaded ) {
+			self::loadLocalisation( $this->getCode() );
+			$cache =& self::$mLocalisationCache[$this->getCode()];
+			foreach ( self::$mLocalisationKeys as $key ) {
+				$this->$key = $cache[$key];
+			}
+			$this->mLoaded = true;
+
+			$this->fixUpSettings();
+		}
+	}
+
+	/**
+	 * Do any necessary post-cache-load settings adjustment
+	 */
+	function fixUpSettings() {
+		global $wgExtraNamespaces, $wgMetaNamespace, $wgMetaNamespaceTalk, $wgMessageCache, 
+			$wgNamespaceAliases, $wgAmericanDates;
+		wfProfileIn( __METHOD__ );
+		if ( $wgExtraNamespaces ) {
+			$this->namespaceNames = $wgExtraNamespaces + $this->namespaceNames;
+		}
+
+		$this->namespaceNames[NS_PROJECT] = $wgMetaNamespace;
+		if ( $wgMetaNamespaceTalk ) {
+			$this->namespaceNames[NS_PROJECT_TALK] = $wgMetaNamespaceTalk;
+		} else {
+			$talk = $this->namespaceNames[NS_PROJECT_TALK];
+			$talk = str_replace( '$1', $wgMetaNamespace, $talk );
+
+			# Allow grammar transformations
+			# Allowing full message-style parsing would make simple requests 
+			# such as action=raw much more expensive than they need to be. 
+			# This will hopefully cover most cases.
+			$talk = preg_replace_callback( '/{{grammar:(.*?)\|(.*?)}}/i', 
+				array( &$this, 'replaceGrammarInNamespace' ), $talk );
+			$talk = str_replace( ' ', '_', $talk );
+			$this->namespaceNames[NS_PROJECT_TALK] = $talk;
+		}
+		
+		# The above mixing may leave namespaces out of canonical order.
+		# Re-order by namespace ID number...
+		ksort( $this->namespaceNames );
+
+		# Put namespace names and aliases into a hashtable.
+		# If this is too slow, then we should arrange it so that it is done 
+		# before caching. The catch is that at pre-cache time, the above
+		# class-specific fixup hasn't been done.
+		$this->mNamespaceIds = array();
+		foreach ( $this->namespaceNames as $index => $name ) {
+			$this->mNamespaceIds[$this->lc($name)] = $index;
+		}
+		if ( $this->namespaceAliases ) {
+			foreach ( $this->namespaceAliases as $name => $index ) {
+				$this->mNamespaceIds[$this->lc($name)] = $index;
+			}
+		}
+		if ( $wgNamespaceAliases ) {
+			foreach ( $wgNamespaceAliases as $name => $index ) {
+				$this->mNamespaceIds[$this->lc($name)] = $index;
+			}
+		}
+
+		if ( $this->defaultDateFormat == 'dmy or mdy' ) {
+			$this->defaultDateFormat = $wgAmericanDates ? 'mdy' : 'dmy';
+		}
+		wfProfileOut( __METHOD__ );
+	}
+
+	function replaceGrammarInNamespace( $m ) {
+		return $this->convertGrammar( trim( $m[2] ), trim( $m[1] ) );
+	}
+
+	static function getCaseMaps() {
+		static $wikiUpperChars, $wikiLowerChars;
+		if ( isset( $wikiUpperChars ) ) {
+			return array( $wikiUpperChars, $wikiLowerChars );
+		}
+
+		wfProfileIn( __METHOD__ );
+		$arr = wfGetPrecompiledData( 'Utf8Case.ser' );
+		if ( $arr === false ) {
+			throw new MWException( 
+				"Utf8Case.ser is missing, please run \"make\" in the serialized directory\n" );
+		}
+		extract( $arr );
+		wfProfileOut( __METHOD__ );
+		return array( $wikiUpperChars, $wikiLowerChars );
+	}
 }
 
-# FIXME: Merge all UTF-8 support code into Language base class.
-# We no longer support Latin-1 charset.
-require_once( 'LanguageUtf8.php' );
-
-# This should fail gracefully if there's not a localization available
-wfSuppressWarnings();
-// Preload base classes to work around APC/PHP5 bug
-include_once( 'Language' . str_replace( '-', '_', ucfirst( $wgLanguageCode ) ) . '.deps.php' );
-include_once( 'Language' . str_replace( '-', '_', ucfirst( $wgLanguageCode ) ) . '.php' );
-wfRestoreWarnings();
-
-}
 ?>

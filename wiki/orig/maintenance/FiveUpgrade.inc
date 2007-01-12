@@ -64,7 +64,7 @@ class FiveUpgrade {
 	function &newConnection() {
 		global $wgDBadminuser, $wgDBadminpassword;
 		global $wgDBserver, $wgDBname;
-		$db =& new Database( $wgDBserver, $wgDBadminuser, $wgDBadminpassword, $wgDBname );
+		$db = new Database( $wgDBserver, $wgDBadminuser, $wgDBadminpassword, $wgDBname );
 		return $db;
 	}
 
@@ -159,8 +159,7 @@ class FiveUpgrade {
 	 * @access private
 	 */
 	function log( $message ) {
-		global $wgDBname;
-		echo $wgDBname . ' ' . wfTimestamp( TS_DB ) . ': ' . $message . "\n";
+		echo wfWikiID() . ' ' . wfTimestamp( TS_DB ) . ': ' . $message . "\n";
 		flush();
 	}
 
@@ -716,7 +715,7 @@ END;
 		# Height and width
 		$gis = false;
 		if( $mime == 'image/svg' ) {
-			$gis = wfGetSVGsize( $this->imagePath );
+			$gis = wfGetSVGsize( $filename );
 		} elseif( $magic->isPHPImageType( $mime ) ) {
 			$gis = getimagesize( $filename );
 		} else {
@@ -804,7 +803,7 @@ END;
 			array_shift( $against );
 		}
 
-		array_push( $pieces, basename( $path ) );
+		array_push( $pieces, wfBaseName( $path ) );
 
 		return implode( '/', $pieces );
 	}

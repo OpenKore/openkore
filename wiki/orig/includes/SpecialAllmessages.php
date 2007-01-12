@@ -9,11 +9,12 @@
  *
  */
 function wfSpecialAllmessages() {
-	global $wgOut, $wgAllMessagesEn, $wgRequest, $wgMessageCache, $wgTitle;
+	global $wgOut, $wgRequest, $wgMessageCache, $wgTitle;
 	global $wgUseDatabaseMessages;
 
-	if(!$wgUseDatabaseMessages) {
-		$wgOut->addHTML(wfMsg('allmessagesnotsupportedDB'));
+	# The page isn't much use if the MediaWiki namespace is not being used
+	if( !$wgUseDatabaseMessages ) {
+		$wgOut->addWikiText( wfMsg( 'allmessagesnotsupportedDB' ) );
 		return;
 	}
 
@@ -25,15 +26,17 @@ function wfSpecialAllmessages() {
 
 	$navText = wfMsg( 'allmessagestext' );
 
+	# Make sure all extension messages are available
+	MessageCache::loadAllMessages();
 
 	$first = true;
-	$sortedArray = array_merge( $wgAllMessagesEn, $wgMessageCache->mExtensionMessages );
+	$sortedArray = array_merge( Language::getMessagesFor( 'en' ), $wgMessageCache->getExtensionMessagesFor( 'en' ) );
 	ksort( $sortedArray );
 	$messages = array();
 	$wgMessageCache->disableTransform();
 
-	foreach ( $sortedArray as $key => $enMsg ) {
-		$messages[$key]['enmsg'] = $enMsg;
+	foreach ( $sortedArray as $key => $value ) {
+		$messages[$key]['enmsg'] = $value;
 		$messages[$key]['statmsg'] = wfMsgNoDb( $key );
 		$messages[$key]['msg'] = wfMsg ( $key );
 	}
@@ -59,10 +62,10 @@ function wfSpecialAllmessages() {
  *
  */
 function makePhp($messages) {
-	global $wgLanguageCode;
-	$txt = "\n\n".'$wgAllMessages'.ucfirst($wgLanguageCode).' = array('."\n";
+	global $wgLang;
+	$txt = "\n\n\$messages = array(\n";
 	foreach( $messages as $key => $m ) {
-		if(strtolower($wgLanguageCode) != 'en' and $m['msg'] == $m['enmsg'] ) {
+		if($wgLang->getCode() != 'en' and $m['msg'] == $m['enmsg'] ) {
 			//if (strstr($m['msg'],"\n")) {
 			//	$txt.='/* ';
 			//	$comment=' */';
@@ -71,7 +74,7 @@ function makePhp($messages) {
 			//	$comment = '';
 			//}
 			continue;
-		} elseif ($m['msg'] == '&lt;'.$key.'&gt;'){
+		} elseif ( wfEmptyMsg( $key, $m['msg'] ) ) {
 			$m['msg'] = '';
 			$comment = ' #empty';
 		} else {
@@ -87,7 +90,7 @@ function makePhp($messages) {
  *
  */
 function makeHTMLText( $messages ) {
-	global $wgLang, $wgUser, $wgLanguageCode, $wgContLanguageCode;
+	global $wgLang, $wgContLang, $wgUser;
 	$fname = "makeHTMLText";
 	wfProfileIn( $fname );
 
@@ -145,8 +148,8 @@ function makeHTMLText( $messages ) {
 	foreach( $messages as $key => $m ) {
 
 		$title = $wgLang->ucfirst( $key );
-		if($wgLanguageCode != $wgContLanguageCode)
-			$title.="/$wgLanguageCode";
+		if($wgLang->getCode() != $wgContLang->getCode())
+			$title.= '/' . $wgLang->getCode();
 
 		$titleObj =& Title::makeTitle( NS_MEDIAWIKI, $title );
 		$talkPage =& Title::makeTitle( NS_MEDIAWIKI_TALK, $title );

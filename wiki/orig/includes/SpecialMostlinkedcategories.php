@@ -10,9 +10,6 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
 
-/* */
-require_once 'QueryPage.php';
-
 /**
  * @package MediaWiki
  * @subpackage SpecialPage
@@ -35,7 +32,7 @@ class MostlinkedCategoriesPage extends QueryPage {
 				cl_to as title,
 				COUNT(*) as value
 			FROM $categorylinks
-			GROUP BY cl_to
+			GROUP BY 1,2,3
 			";
 	}
 
@@ -57,15 +54,16 @@ class MostlinkedCategoriesPage extends QueryPage {
 	}
 
 	function formatResult( $skin, $result ) {
-		global $wgContLang;
+		global $wgLang, $wgContLang;
 
 		$nt = Title::makeTitle( $result->namespace, $result->title );
 		$text = $wgContLang->convert( $nt->getText() );
 
 		$plink = $skin->makeLinkObj( $nt, htmlspecialchars( $text ) );
 
-		$nlinks = wfMsg( 'nlinks', $result->value );
-		return "$plink ($nlinks)";
+		$nlinks = wfMsgExt( 'nmembers', array( 'parsemag', 'escape'),
+			$wgLang->formatNum( $result->value ) );
+		return wfSpecialList($plink, $nlinks);
 	}
 }
 

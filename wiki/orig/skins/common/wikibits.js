@@ -1,9 +1,9 @@
-// Wikipedia JavaScript support functions
+// MediaWiki JavaScript support functions
 
 var clientPC = navigator.userAgent.toLowerCase(); // Get client info
 var is_gecko = ((clientPC.indexOf('gecko')!=-1) && (clientPC.indexOf('spoofer')==-1)
                 && (clientPC.indexOf('khtml') == -1) && (clientPC.indexOf('netscape/7.0')==-1));
-var is_safari = ((clientPC.indexOf('AppleWebKit')!=-1) && (clientPC.indexOf('spoofer')==-1));
+var is_safari = ((clientPC.indexOf('applewebkit')!=-1) && (clientPC.indexOf('spoofer')==-1));
 var is_khtml = (navigator.vendor == 'KDE' || ( document.childNodes && !document.all && !navigator.taintEnabled ));
 if (clientPC.indexOf('opera') != -1) {
 	var is_opera = true;
@@ -49,6 +49,8 @@ function hookEvent(hookName, hookFunct) {
 		attachEvent("on" + hookName, hookFunct);
 }
 
+//note: all skins shoud call runOnloadHook() at the end of html output,
+//      so the below should be redundant. It's there just in case.
 hookEvent("load", runOnloadHook);
 
 // document.write special stylesheet links
@@ -88,7 +90,7 @@ function histrowinit() {
 	if (!hf)
 		return;
 	var lis = hf.getElementsByTagName('li');
-	for (i = 0; i < lis.length; i++) {
+	for (var i = 0; i < lis.length; i++) {
 		var inputs = historyRadios(lis[i]);
 		if (inputs[0] && inputs[1]) {
 			inputs[0].onclick = diffcheck;
@@ -114,7 +116,7 @@ function diffcheck() {
 	var oli = false; // the li where the oldid radio is checked
 	var hf = document.getElementById('pagehistory');
 	if (!hf)
-		return;
+		return true;
 	var lis = hf.getElementsByTagName('li');
 	for (i=0;i<lis.length;i++) {
 		var inputs = historyRadios(lis[i]);
@@ -125,7 +127,7 @@ function diffcheck() {
 				if (oli) { // it's the second checked radio
 					if (inputs[1].checked) {
 						oli.className = "selected";
-						return false
+						return false;
 					}
 				} else if (inputs[0].checked) {
 					return false;
@@ -151,6 +153,7 @@ function diffcheck() {
 			}
 		}
 	}
+	return true;
 }
 
 // generate toc from prefs form, fold sections
@@ -164,15 +167,15 @@ function tabbedprefs() {
 		return; // Occasional IE problem
 	prefform.className = prefform.className + 'jsprefs';
 	var sections = new Array();
-	children = prefform.childNodes;
+	var children = prefform.childNodes;
 	var seci = 0;
-	for (i = 0; i < children.length; i++) {
+	for (var i = 0; i < children.length; i++) {
 		if (children[i].nodeName.toLowerCase() == 'fieldset') {
 			children[i].id = 'prefsection-' + seci;
 			children[i].className = 'prefsection';
 			if (is_opera || is_khtml)
 				children[i].className = 'prefsection operaprefsection';
-			legends = children[i].getElementsByTagName('legend');
+			var legends = children[i].getElementsByTagName('legend');
 			sections[seci] = new Object();
 			legends[0].className = 'mainLegend';
 			if (legends[0] && legends[0].firstChild.nodeValue)
@@ -207,15 +210,15 @@ function tabbedprefs() {
 }
 
 function uncoversection() {
-	oldsecid = this.parentNode.parentNode.selectedid;
-	newsec = document.getElementById(this.secid);
+	var oldsecid = this.parentNode.parentNode.selectedid;
+	var newsec = document.getElementById(this.secid);
 	if (oldsecid != this.secid) {
-		ul = document.getElementById('preftoc');
+		var ul = document.getElementById('preftoc');
 		document.getElementById(oldsecid).style.display = 'none';
 		newsec.style.display = 'block';
 		ul.selectedid = this.secid;
-		lis = ul.getElementsByTagName('li');
-		for (i = 0; i< lis.length; i++) {
+		var lis = ul.getElementsByTagName('li');
+		for (var i = 0; i< lis.length; i++) {
 			lis[i].className = '';
 		}
 		this.parentNode.className = 'selected';
@@ -239,7 +242,7 @@ function checkTimezone(tz, msg) {
 }
 
 function unhidetzbutton() {
-	tzb = document.getElementById('guesstimezonebutton')
+	var tzb = document.getElementById('guesstimezonebutton');
 	if (tzb)
 		tzb.style.display = 'inline';
 }
@@ -315,26 +318,61 @@ function toggleToc() {
 	}
 }
 
+var mwEditButtons = [];
+var mwCustomEditButtons = []; // eg to add in MediaWiki:Common.js
+
 // this function generates the actual toolbar buttons with localized text
 // we use it to avoid creating the toolbar where javascript is not enabled
 function addButton(imageFile, speedTip, tagOpen, tagClose, sampleText) {
 	// Don't generate buttons for browsers which don't fully
 	// support it.
-	if (!document.selection && !is_gecko) {
+	mwEditButtons[mwEditButtons.length] =
+		{"imageFile": imageFile,
+		 "speedTip": speedTip,
+		 "tagOpen": tagOpen,
+		 "tagClose": tagClose,
+		 "sampleText": sampleText};
+}
+
+// this function generates the actual toolbar buttons with localized text
+// we use it to avoid creating the toolbar where javascript is not enabled
+function mwInsertEditButton(parent, item) {
+	var image = document.createElement("img");
+	image.width = 23;
+	image.height = 22;
+	image.src = item.imageFile;
+	image.border = 0;
+	image.alt = item.speedTip;
+	image.title = item.speedTip;
+	image.style.cursor = "pointer";
+	image.onclick = function() {
+		insertTags(item.tagOpen, item.tagClose, item.sampleText);
 		return false;
 	}
-	imageFile = escapeQuotesHTML(imageFile);
-	speedTip = escapeQuotesHTML(speedTip);
-	tagOpen = escapeQuotes(tagOpen);
-	tagClose = escapeQuotes(tagClose);
-	sampleText = escapeQuotes(sampleText);
-	var mouseOver = "";
+	
+	parent.appendChild(image);
+	return true;
+}
 
-	document.write("<a href=\"javascript:insertTags");
-	document.write("('"+tagOpen+"','"+tagClose+"','"+sampleText+"');\">");
-	document.write("<img width=\"23\" height=\"22\" src=\""+imageFile+"\" border=\"0\" alt=\""+speedTip+"\" title=\""+speedTip+"\""+mouseOver+">");
-	document.write("</a>");
-	return;
+function mwSetupToolbar() {
+	var toolbar = document.getElementById('toolbar');
+	if (!toolbar) return false;
+
+	var textbox = document.getElementById('wpTextbox1');
+	if (!textbox) return false;
+	
+	// Don't generate buttons for browsers which don't fully
+	// support it.
+	if (!document.selection && textbox.selectionStart == null)
+		return false;
+	
+	for (var i in mwEditButtons) {
+		mwInsertEditButton(toolbar, mwEditButtons[i]);
+	}
+	for (var i in mwCustomEditButtons) {
+		mwInsertEditButton(toolbar, mwCustomEditButtons[i]);
+	}
+	return true;
 }
 
 function escapeQuotes(text) {
@@ -574,10 +612,24 @@ function checkboxMouseupHandler(e) {
 	return true;
 }
 
-function fillDestFilename() {
+function toggle_element_activation(ida,idb) {
 	if (!document.getElementById)
 		return;
-	var path = document.getElementById('wpUploadFile').value;
+	document.getElementById(ida).disabled=true;
+	document.getElementById(idb).disabled=false;
+}
+
+function toggle_element_check(ida,idb) {
+	if (!document.getElementById)
+		return;
+	document.getElementById(ida).checked=true;
+	document.getElementById(idb).checked=false;
+}
+
+function fillDestFilename(id) {
+	if (!document.getElementById)
+		return;
+	var path = document.getElementById(id).value;
 	// Find trailing part
 	var slash = path.lastIndexOf('/');
 	var backslash = path.lastIndexOf('\\');
@@ -709,3 +761,4 @@ function allmessagesshow() {
 }
 
 hookEvent("load", allmessagesshow);
+hookEvent("load", mwSetupToolbar);

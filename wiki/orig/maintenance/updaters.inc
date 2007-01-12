@@ -22,12 +22,14 @@ $wgNewTables = array(
 	array( 'objectcache',   'patch-objectcache.sql' ),
 	array( 'categorylinks', 'patch-categorylinks.sql' ),
 	array( 'logging',       'patch-logging.sql' ),
-	array( 'validate',      'patch-validate.sql' ),
 	array( 'user_newtalk',  'patch-usernewtalk2.sql' ),
 	array( 'transcache',	'patch-transcache.sql' ),
 	array( 'trackbacks',	'patch-trackbacks.sql' ),
 	array( 'externallinks', 'patch-externallinks.sql' ),
 	array( 'job',           'patch-job.sql' ),
+	array( 'langlinks',     'patch-langlinks.sql' ),
+	array( 'querycache_info', 'patch-querycacheinfo.sql' ),
+	array( 'filearchive',   'patch-filearchive.sql' ),
 );
 
 $wgNewFields = array(
@@ -50,11 +52,11 @@ $wgNewFields = array(
 	array( 'image',         'img_width',        'patch-img_width.sql' ),
 	array( 'image',         'img_metadata',     'patch-img_metadata.sql' ),
 	array( 'image',         'img_media_type',   'patch-img_media_type.sql' ),
-	array( 'validate',      'val_ip',           'patch-val_ip.sql' ),
 	array( 'site_stats',    'ss_total_pages',   'patch-ss_total_articles.sql' ),
 	array( 'interwiki',     'iw_trans',         'patch-interwiki-trans.sql' ),
 	array( 'ipblocks',      'ipb_range_start',  'patch-ipb_range_start.sql' ),
 	array( 'site_stats',    'ss_images',        'patch-ss_images.sql' ),
+	array( 'ipblocks',      'ipb_anon_only',    'patch-ipb_anon_only.sql' ),
 );
 
 function rename_table( $from, $to, $patch ) {
@@ -760,10 +762,32 @@ function do_templatelinks_update() {
 	echo "Done. Please run maintenance/refreshLinks.php for a more thorough templatelinks update.\n";
 }
 
+# July 2006
+# Add ( rc_namespace, rc_user_text ) index [R. Church]
+function do_rc_indices_update() {
+	global $wgDatabase;
+	echo( "Checking for additional recent changes indices...\n" );
+	# See if we can find the index we want
+	$info = $wgDatabase->indexInfo( 'recentchanges', 'rc_ns_usertext', __METHOD__ );
+	if( !$info ) {
+		# None, so create
+		echo( "...index on ( rc_namespace, rc_user_text ) not found; creating\n" );
+		dbsource( archive( 'patch-recentchanges-utindex.sql' ) );
+	} else {
+		# Index seems to exist
+		echo( "...seems to be ok\n" );
+	}
+}
+
 function do_all_updates( $doShared = false ) {
-	global $wgNewTables, $wgNewFields, $wgRenamedTables, $wgSharedDB, $wgDatabase;
+	global $wgNewTables, $wgNewFields, $wgRenamedTables, $wgSharedDB, $wgDatabase, $wgDBtype;
 
 	$doUser = !$wgSharedDB || $doShared;
+
+	if ($wgDBtype === 'postgres') {
+		do_postgres_updates();
+		return;
+	}
 
 	# Rename tables
 	foreach ( $wgRenamedTables as $tableRecord ) {
@@ -818,6 +842,8 @@ function do_all_updates( $doShared = false ) {
 	do_logging_timestamp_index(); flush();
 
 	do_page_random_update(); flush();
+	
+	do_rc_indices_update(); flush();
 
 	initialiseMessages(); flush();
 }
@@ -831,4 +857,121 @@ function archive($name) {
 		return "$IP/maintenance/archives/$name";
 	}
 }
+
+function do_postgres_updates() {
+	global $wgDatabase, $wgVersion, $wgDBmwschema;
+
+	$version = "1.7.1";
+
+	# Just in case their LocalSetings.php does not have this:
+	if ( !isset( $wgDBmwschema ))
+		$wgDBmwschema = 'mediawiki';
+
+	if ($wgDatabase->tableExists("mediawiki_version")) {
+		$version = "1.8";
+	}
+
+	if ($version == '1.7.1') {
+		$upgrade = <<<PGEND
+
+BEGIN;
+
+-- Type tweaking:
+ALTER TABLE oldimage ALTER oi_size TYPE INTEGER;
+ALTER TABLE oldimage ALTER oi_width TYPE INTEGER;
+ALTER TABLE oldimage ALTER oi_height TYPE INTEGER;
+
+ALTER TABLE image ALTER img_size TYPE INTEGER;
+ALTER TABLE image ALTER img_width TYPE INTEGER;
+ALTER TABLE image ALTER img_height TYPE INTEGER;
+
+-- Constraint tweaking:
+ALTER TABLE recentchanges ALTER rc_cur_id DROP NOT NULL;
+
+-- New columns:
+ALTER TABLE ipblocks ADD ipb_anon_only CHAR NOT NULL DEFAULT '0';
+ALTER TABLE ipblocks ADD ipb_create_account CHAR NOT NULL DEFAULT '1';
+
+-- Index order rearrangements:
+DROP INDEX pagelink_unique;
+CREATE UNIQUE INDEX pagelink_unique ON pagelinks (pl_from,pl_namespace,pl_title);
+
+-- Rename tables
+ALTER TABLE "user" RENAME TO mwuser;
+ALTER TABLE "text" RENAME to pagecontent;
+
+-- New tables:
+CREATE TABLE profiling (
+  pf_count   INTEGER         NOT NULL DEFAULT 0,
+  pf_time    NUMERIC(18,10)  NOT NULL DEFAULT 0,
+  pf_name    TEXT            NOT NULL,
+  pf_server  TEXT            NULL
+);
+CREATE UNIQUE INDEX pf_name_server ON profiling (pf_name, pf_server);
+
+CREATE TABLE mediawiki_version (
+  type         TEXT         NOT NULL,
+  mw_version   TEXT         NOT NULL,
+  notes        TEXT             NULL,
+
+  pg_version   TEXT             NULL,
+  pg_dbname    TEXT             NULL,
+  pg_user      TEXT             NULL,
+  pg_port      TEXT             NULL,
+  mw_schema    TEXT             NULL,
+  ts2_schema   TEXT             NULL,
+  ctype        TEXT             NULL,
+
+  sql_version  TEXT             NULL,
+  sql_date     TEXT             NULL,
+  cdate        TIMESTAMPTZ  NOT NULL DEFAULT now()
+);
+
+INSERT INTO mediawiki_version (type,mw_version,notes)
+VALUES ('Upgrade','MWVERSION','Upgrade from older version 1.7.1');
+
+-- Special modifications
+ALTER TABLE archive RENAME to archive2;
+CREATE VIEW archive AS 
+SELECT 
+  ar_namespace, ar_title, ar_text, ar_comment, ar_user, ar_user_text, 
+  ar_minor_edit, ar_flags, ar_rev_id, ar_text_id,
+       TO_CHAR(ar_timestamp, 'YYYYMMDDHH24MISS') AS ar_timestamp
+FROM archive2;
+
+CREATE RULE archive_insert AS ON INSERT TO archive
+DO INSTEAD INSERT INTO archive2 VALUES (
+  NEW.ar_namespace, NEW.ar_title, NEW.ar_text, NEW.ar_comment, NEW.ar_user, NEW.ar_user_text, 
+  TO_DATE(NEW.ar_timestamp, 'YYYYMMDDHH24MISS'),
+  NEW.ar_minor_edit, NEW.ar_flags, NEW.ar_rev_id, NEW.ar_text_id
+);
+
+CREATE FUNCTION page_deleted() RETURNS TRIGGER LANGUAGE plpgsql AS
+\$mw\$
+BEGIN
+DELETE FROM recentchanges WHERE rc_namespace = OLD.page_namespace AND rc_title = OLD.page_title;
+RETURN NULL;
+END;
+\$mw\$;
+
+CREATE TRIGGER page_deleted AFTER DELETE ON page
+  FOR EACH ROW EXECUTE PROCEDURE page_deleted();
+
+COMMIT;
+
+PGEND;
+
+		$upgrade = str_replace( 'MWVERSION', $wgVersion, $upgrade );
+
+		$res = $wgDatabase->query($upgrade);
+
+	} ## end version 1.7.1 upgrade
+
+	else {
+		print "No updates needed\n";
+	}
+
+	return;
+}
+
 ?>

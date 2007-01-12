@@ -7,11 +7,6 @@
 
 /**
  *
- */
-require_once('QueryPage.php');
-
-/**
- *
  * @package MediaWiki
  * @subpackage SpecialPage
  */
@@ -26,7 +21,8 @@ class BrokenRedirectsPage extends PageQueryPage {
 	function isSyndicated() { return false; }
 
 	function getPageHeader( ) {
-		return wfMsgWikiHtml('brokenredirectstext')."<br />\n";
+		global $wgOut;
+		return $wgOut->parse( wfMsg( 'brokenredirectstext' ) );
 	}
 
 	function getSQL() {
@@ -38,12 +34,10 @@ class BrokenRedirectsPage extends PageQueryPage {
 		                p1.page_title     AS title,
 		                pl_namespace,
 		                pl_title
-		           FROM ($pagelinks, $page AS p1)
-		      LEFT JOIN $page AS p2
-		             ON pl_namespace=p2.page_namespace AND pl_title=p2.page_title
-		          WHERE p1.page_is_redirect=1
-		            AND pl_from=p1.page_id
-		            AND p2.page_namespace IS NULL";
+		           FROM $pagelinks AS pl
+                   JOIN $page p1 ON (p1.page_is_redirect=1 AND pl.pl_from=p1.page_id)
+		      LEFT JOIN $page AS p2 ON (pl_namespace=p2.page_namespace AND pl_title=p2.page_title )
+    		                WHERE p2.page_namespace IS NULL";
 		return $sql;
 	}
 
@@ -74,7 +68,7 @@ class BrokenRedirectsPage extends PageQueryPage {
 		$from = $skin->makeKnownLinkObj( $fromObj ,'', 'redirect=no' );
 		$edit = $skin->makeBrokenLinkObj( $fromObj , "(".wfMsg("qbedit").")" , 'redirect=no');
 		$to   = $skin->makeBrokenLinkObj( $toObj );
-		$arr = $wgContLang->isRTL() ? '&larr;' : '&rarr;';
+		$arr = $wgContLang->getArrow();
 
 		return "$from $edit $arr $to";
 	}

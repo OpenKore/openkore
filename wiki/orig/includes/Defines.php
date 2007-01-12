@@ -4,6 +4,11 @@
  * @package MediaWiki
  */
 
+/**
+ * Version constants for the benefit of extensions
+ */
+define( 'MW_SPECIALPAGE_VERSION', 2 );
+
 /**#@+
  * Database related constants
  */
@@ -14,6 +19,17 @@ define( 'DBO_TRX', 8 );
 define( 'DBO_DEFAULT', 16 );
 define( 'DBO_PERSISTENT', 32 );
 /**#@-*/
+
+# Valid database indexes
+# Operation-based indexes
+define( 'DB_SLAVE', -1 );     # Read from the slave (or only server)
+define( 'DB_MASTER', -2 );    # Write to master (or only server)
+define( 'DB_LAST', -3 );     # Whatever database was used last
+
+# Obsolete aliases
+define( 'DB_READ', -1 );
+define( 'DB_WRITE', -2 );
+
 
 /**#@+
  * Virtual namespaces; don't appear in the page database
@@ -70,10 +86,8 @@ define( 'MW_MATH_MATHML', 5 );
 /**#@-*/
 
 /**
- * User rights management
- * a big array of string defining a right, that's how they are saved in the
- * database.
- * @todo Is this necessary?
+ * User rights list
+ * @deprecated
  */
 $wgAvailableRights = array(
 	'block',
@@ -103,6 +117,7 @@ define( 'CACHE_NONE', 0 );       // Do not cache
 define( 'CACHE_DB', 1 );         // Store cache objects in the DB
 define( 'CACHE_MEMCACHED', 2 );  // MemCached, must specify servers in $wgMemCacheServers
 define( 'CACHE_ACCEL', 3 );      // eAccelerator or Turck, whichever is available
+define( 'CACHE_DBA', 4 );        // Use PHP's DBA extension to store in a DBM-style database
 /**#@-*/
 
 
@@ -146,10 +161,15 @@ define( 'ALF_NO_BLOCK_LOCK', 8 );
  * Date format selectors; used in user preference storage and by
  * Language::date() and co.
  */
-define( 'MW_DATE_DEFAULT', '0' );
+/*define( 'MW_DATE_DEFAULT', '0' );
 define( 'MW_DATE_MDY', '1' );
 define( 'MW_DATE_DMY', '2' );
 define( 'MW_DATE_YMD', '3' );
+define( 'MW_DATE_ISO', 'ISO 8601' );*/
+define( 'MW_DATE_DEFAULT', 'default' );
+define( 'MW_DATE_MDY', 'mdy' );
+define( 'MW_DATE_DMY', 'dmy' );
+define( 'MW_DATE_YMD', 'ymd' );
 define( 'MW_DATE_ISO', 'ISO 8601' );
 /**#@-*/
 
@@ -163,6 +183,27 @@ define( 'RC_MOVE', 2);
 define( 'RC_LOG', 3);
 define( 'RC_MOVE_OVER_REDIRECT', 4);
 /**#@-*/
+
+/**#@+
+ * Article edit flags
+ */
+define( 'EDIT_NEW', 1 );
+define( 'EDIT_UPDATE', 2 );
+define( 'EDIT_MINOR', 4 ); 
+define( 'EDIT_SUPPRESS_RC', 8 );
+define( 'EDIT_FORCE_BOT', 16 );
+define( 'EDIT_DEFER_UPDATES', 32 );
+/**#@-*/
+
+/** 
+ * Flags for Database::makeList() 
+ * These are also available as Database class constants
+ */
+define( 'LIST_COMMA', 0 );
+define( 'LIST_AND', 1 );
+define( 'LIST_SET', 2 );
+define( 'LIST_NAMES', 3);
+define( 'LIST_OR', 4);
 
 
 ?>

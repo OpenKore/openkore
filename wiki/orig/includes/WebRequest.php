@@ -34,6 +34,15 @@
  *
  * @package MediaWiki
  */
+
+/**
+ * Some entry points may use this file without first enabling the 
+ * autoloader.
+ */
+if ( !function_exists( '__autoload' ) ) {
+	require_once( dirname(__FILE__) . '/normal/UtfNormal.php' );
+}
+
 class WebRequest {
 	function WebRequest() {
 		$this->checkMagicQuotes();
@@ -44,13 +53,15 @@ class WebRequest {
 				substr( $_SERVER['PATH_INFO'], 1 );
 		}
 	}
+	
+	private $_response;
 
 	/**
 	 * Recursively strips slashes from the given array;
 	 * used for undoing the evil that is magic_quotes_gpc.
 	 * @param array &$arr will be modified
 	 * @return array the original array
-	 * @access private
+	 * @private
 	 */
 	function &fix_magic_quotes( &$arr ) {
 		foreach( $arr as $key => $val ) {
@@ -68,7 +79,7 @@ class WebRequest {
 	 * through fix_magic_quotes to strip out the stupid slashes.
 	 * WARNING: This should only be done once! Running a second
 	 * time could damage the values.
-	 * @access private
+	 * @private
 	 */
 	function checkMagicQuotes() {
 		if ( get_magic_quotes_gpc() ) {
@@ -85,7 +96,7 @@ class WebRequest {
 	 * Recursively normalizes UTF-8 strings in the given array.
 	 * @param array $data string or array
 	 * @return cleaned-up version of the given
-	 * @access private
+	 * @private
 	 */
 	function normalizeUnicode( $data ) {
 		if( is_array( $data ) ) {
@@ -105,7 +116,7 @@ class WebRequest {
 	 * @param string $name
 	 * @param mixed $default
 	 * @return mixed
-	 * @access private
+	 * @private
 	 */
 	function getGPCVal( $arr, $name, $default ) {
 		if( isset( $arr[$name] ) ) {
@@ -117,7 +128,6 @@ class WebRequest {
 					$data = $wgContLang->checkTitleEncoding( $data );
 				}
 			}
-			require_once( 'normal/UtfNormal.php' );
 			$data = $this->normalizeUnicode( $data );
 			return $data;
 		} else {
@@ -319,14 +329,20 @@ class WebRequest {
 
 	/**
 	 * Take an arbitrary query and rewrite the present URL to include it
-	 * @param string $query Query string fragment; do not include initial '?'
+	 * @param $query String: query string fragment; do not include initial '?'
 	 * @return string
 	 */
 	function appendQuery( $query ) {
 		global $wgTitle;
 		$basequery = '';
 		foreach( $_GET as $var => $val ) {
-			if( $var == 'title' ) continue;
+			if ( $var == 'title' )
+				continue;
+			if ( is_array( $val ) )
+				/* This will happen given a request like
+				 * http://en.wikipedia.org/w/index.php?title[]=Special:Userlogin&returnto[]=Main_Page
+				 */
+				continue;
 			$basequery .= '&' . urlencode( $var ) . '=' . urlencode( $val );
 		}
 		$basequery .= '&' . $query;
@@ -338,7 +354,7 @@ class WebRequest {
 
 	/**
 	 * HTML-safe version of appendQuery().
-	 * @param string $query Query string fragment; do not include initial '?'
+	 * @param $query String: query string fragment; do not include initial '?'
 	 * @return string
 	 */
 	function escapeAppendQuery( $query ) {
@@ -350,8 +366,8 @@ class WebRequest {
 	 * defaults if not given. The limit must be positive and is capped at 5000.
 	 * Offset must be positive but is not capped.
 	 *
-	 * @param int $deflimit Limit to use if no input and the user hasn't set the option.
-	 * @param string $optionname To specify an option other than rclimit to pull from.
+	 * @param $deflimit Integer: limit to use if no input and the user hasn't set the option.
+	 * @param $optionname String: to specify an option other than rclimit to pull from.
 	 * @return array first element is limit, second is offset
 	 */
 	function getLimitOffset( $deflimit = 50, $optionname = 'rclimit' ) {
@@ -373,7 +389,7 @@ class WebRequest {
 
 	/**
 	 * Return the path to the temporary file where PHP has stored the upload.
-	 * @param string $key
+	 * @param $key String:
 	 * @return string or NULL if no such file.
 	 */
 	function getFileTempname( $key ) {
@@ -385,7 +401,7 @@ class WebRequest {
 
 	/**
 	 * Return the size of the upload, or 0.
-	 * @param string $key
+	 * @param $key String:
 	 * @return integer
 	 */
 	function getFileSize( $key ) {
@@ -397,7 +413,7 @@ class WebRequest {
 
 	/**
 	 * Return the upload error or 0
-	 * @param string $key
+	 * @param $key String:
 	 * @return integer
 	 */
 	function getUploadError( $key ) {
@@ -415,7 +431,7 @@ class WebRequest {
 	 *
 	 * Other than this the name is not verified for being a safe filename.
 	 *
-	 * @param string $key
+	 * @param $key String: 
 	 * @return string or NULL if no such file.
 	 */
 	function getFileName( $key ) {
@@ -431,6 +447,19 @@ class WebRequest {
 		wfDebug( "WebRequest::getFileName() '" . $_FILES[$key]['name'] . "' normalized to '$name'\n" );
 		return $name;
 	}
+	
+	/**
+	 * Return a handle to WebResponse style object, for setting cookies, 
+	 * headers and other stuff, for Request being worked on.
+	 */
+	function response() {
+		/* Lazy initialization of response object for this request */
+		if (!is_object($this->_response)) {
+			$this->_response = new WebResponse;
+		} 
+		return $this->_response;
+	}
+	
 }
 
 /**
@@ -446,7 +475,7 @@ class FauxRequest extends WebRequest {
 		if( is_array( $data ) ) {
 			$this->data = $data;
 		} else {
-			wfDebugDieBacktrace( "FauxRequest() got bogus data" );
+			throw new MWException( "FauxRequest() got bogus data" );
 		}
 		$this->wasPosted = $wasPosted;
 	}
@@ -473,11 +502,11 @@ class FauxRequest extends WebRequest {
 	}
 
 	function getRequestURL() {
-		wfDebugDieBacktrace( 'FauxRequest::getRequestURL() not implemented' );
+		throw new MWException( 'FauxRequest::getRequestURL() not implemented' );
 	}
 
 	function appendQuery( $query ) {
-		wfDebugDieBacktrace( 'FauxRequest::appendQuery() not implemented' );
+		throw new MWException( 'FauxRequest::appendQuery() not implemented' );
 	}
 
 }

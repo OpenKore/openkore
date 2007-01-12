@@ -38,15 +38,14 @@ class SpecialVersion {
 	}
 
 	/**#@+
-	 * @access private
+	 * @private
 	 */
 
 	/**
 	 * @static
 	 */
 	function MediaWikiCredits() {
-		global $wgVersion;
-
+		$version = self::getVersion();
 		$dbr =& wfGetDB( DB_SLAVE );
 
 		$ret =
@@ -54,7 +53,7 @@ class SpecialVersion {
 		This wiki is powered by '''[http://www.mediawiki.org/ MediaWiki]''',
 		copyright (C) 2001-2006 Magnus Manske, Brion Vibber, Lee Daniel Crocker,
 		Tim Starling, Erik Möller, Gabriel Wicke, Ævar Arnfjörð Bjarmason,
-		Niklas Laxström and others.
+		Niklas Laxström, Domas Mituzas, Rob Church and others.
 
 		MediaWiki is free software; you can redistribute it and/or modify
 		it under the terms of the GNU General Public License as published by
@@ -71,11 +70,17 @@ class SpecialVersion {
 		Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 		or [http://www.gnu.org/copyleft/gpl.html read it online]
 
-		* [http://www.mediawiki.org/ MediaWiki]: $wgVersion
+		* [http://www.mediawiki.org/ MediaWiki]: $version
 		* [http://www.php.net/ PHP]: " . phpversion() . " (" . php_sapi_name() . ")
 		* " . $dbr->getSoftwareLink() . ": " . $dbr->getServerVersion();
 
 		return str_replace( "\t\t", '', $ret );
+	}
+	
+	public static function getVersion() {
+		global $wgVersion, $IP;
+		$svn = self::getSvnRevision( $IP );
+		return $svn ? "$wgVersion (r$svn)" : $wgVersion;
 	}
 
 	function extensionCredits() {
@@ -124,6 +129,11 @@ class SpecialVersion {
 			$out .= "** Parser extension tags:\n";
 			$out .= '***' . $this->listToText( $tags ). "\n";
 		}
+		
+		if( $cnt = count( $fhooks = $wgParser->getFunctionHooks() ) ) {
+			$out .= "** Parser function hooks:\n";
+			$out .= '***' . $this->listToText( $fhooks ) . "\n";
+		}
 
 		if ( count( $wgSkinExtensionFunction ) ) {
 			$out .= "** Skin extension functions:\n";
@@ -137,7 +147,7 @@ class SpecialVersion {
 		if ( $a['name'] === $b['name'] )
 			return 0;
 		else
-			return LanguageUtf8::lc( $a['name'] ) > LanguageUtf8::lc( $b['name'] ) ? 1 : -1;
+			return Language::lc( $a['name'] ) > Language::lc( $b['name'] ) ? 1 : -1;
 	}
 
 	function formatCredits( $name, $version = null, $author = null, $url = null, $description = null) {
@@ -223,6 +233,56 @@ class SpecialVersion {
 			$class = get_class( $list[0] );
 			return "($class, {$list[1]})";
 		}
+	}
+
+	/**
+	 * Retrieve the revision number of a Subversion working directory.
+	 * 
+	 * @bug 7335
+	 *
+	 * @param string $dir
+	 * @return mixed revision number as int, or false if not a SVN checkout
+	 */
+	public static function getSvnRevision( $dir ) {
+		// http://svnbook.red-bean.com/nightly/en/svn.developer.insidewc.html
+		$entries = $dir . '/.svn/entries';
+
+		if( !file_exists( $entries ) ) {
+			return false;
+		}
+
+		$content = file( $entries );
+
+		// check if file is xml (subversion release <= 1.3) or not (subversion release = 1.4)
+		if( preg_match( '/^<\?xml/', $content[0] ) ) {
+			// subversion is release <= 1.3
+			if( !function_exists( 'simplexml_load_file' ) ) {
+				// We could fall back to expat... YUCK
+				return false;
+			}
+
+			// SimpleXml whines about the xmlns...
+			wfSuppressWarnings();
+			$xml = simplexml_load_file( $entries );
+			wfRestoreWarnings();
+
+			if( $xml ) {
+				foreach( $xml->entry as $entry ) {
+					if( $xml->entry[0]['name'] == '' ) {
+						// The directory entry should always have a revision marker.
+						if( $entry['revision'] ) {
+							return intval( $entry['revision'] );
+						}
+					}
+				}
+			}
+			return false;
+		} else {
+			// subversion is release 1.4
+			return intval( $content[3] );
+		}
+
+		return false;
 	}
 
 	/**#@-*/
