@@ -27,6 +27,7 @@ use Carp::Assert;
 use Data::Dumper;
 use Compress::Zlib;
 use base qw(Exporter);
+use encoding 'utf8';
 
 use Globals;
 use Log qw(message warning error debug);
@@ -510,6 +511,7 @@ sub calcRectArea2 {
 # from the position $from, without being blocked by any
 # obstacles.
 sub checkLineSnipable {
+	return 0 if (!$field);
 	my $from = shift;
 	my $to = shift;
 
@@ -559,6 +561,7 @@ sub checkLineSnipable {
 # Obstacles are considered too large, if they are at least
 # the size of a rectangle with "radius" $min_obstacle_size.
 sub checkLineWalkable {
+	return 0 if (!$field);
 	my $from = shift;
 	my $to = shift;
 	my $min_obstacle_size = shift;
