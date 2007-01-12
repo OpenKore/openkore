@@ -52,7 +52,7 @@ class SkinStandard extends Skin {
 	 *
 	 */
 	function doGetUserStyles() {
-		global $wgUser, $wgOut, $wgStylePath;
+		global $wgStylePath;
 
 		$s = parent::doGetUserStyles();
 		$qb = $this->qbSetting();
@@ -90,7 +90,7 @@ class SkinStandard extends Skin {
 	}
 
 	function doAfterContent() {
-		global $wgUser, $wgOut, $wgContLang;
+		global $wgContLang;
 		$fname =  'SkinStandard::doAfterContent';
 		wfProfileIn( $fname );
 		wfProfileIn( $fname.'-1' );
@@ -177,32 +177,42 @@ class SkinStandard extends Skin {
 			} else { # backlink to the article in edit or history mode
 				if($articleExists){ # no backlink if no article
 					switch($tns) {
-						case 0:
-						$text = wfMsg('articlepage');
-						break;
-						case 1:
-						$text = wfMsg('viewtalkpage');
-						break;
-						case 2:
-						$text = wfMsg('userpage');
-						break;
-						case 3:
-						$text = wfMsg('viewtalkpage');
-						break;
-						case 4:
-						$text = wfMsg('wikipediapage');
-						break;
-						case 5:
-						$text = wfMsg('viewtalkpage');
-						break;
-						case 6:
-						$text = wfMsg('imagepage');
-						break;
-						case 7:
-						$text = wfMsg('viewtalkpage');
-						break;
+						case NS_TALK:
+						case NS_USER_TALK:
+						case NS_PROJECT_TALK:
+						case NS_IMAGE_TALK:
+						case NS_MEDIAWIKI_TALK:
+						case NS_TEMPLATE_TALK:
+						case NS_HELP_TALK:
+						case NS_CATEGORY_TALK:
+							$text = wfMsg('viewtalkpage');
+							break;
+						case NS_MAIN:
+							$text = wfMsg( 'articlepage' );
+							break;
+						case NS_USER:
+							$text = wfMsg( 'userpage' );
+							break;
+						case NS_PROJECT:
+							$text = wfMsg( 'projectpage' );
+							break;
+						case NS_IMAGE:
+							$text = wfMsg( 'imagepage' );
+							break;
+						case NS_MEDIAWIKI:
+							$text = wfMsg( 'mediawikipage' );
+							break;
+						case NS_TEMPLATE:
+							$text = wfMsg( 'templatepage' );
+							break;
+						case NS_HELP:
+							$text = wfMsg( 'viewhelppage' );
+							break;
+						case NS_CATEGORY:
+							$text = wfMsg( 'categorypage' );
+							break;
 						default:
-						$text= wfMsg('articlepage');
+							$text= wfMsg( 'articlepage' );
 					}
 
 					$link = $wgTitle->getText();
@@ -219,10 +229,13 @@ class SkinStandard extends Skin {
 
 			}
 
-
-			if( $tns%2 && $action!='edit' && !$wpPreview) {
-				$s.= '<br />'.$this->makeKnownLink($wgTitle->getPrefixedText(),wfMsg('postcomment'),'action=edit&section=new');
-			}
+			# "Post a comment" link
+			if( ( $wgTitle->isTalkPage() || $wgOut->showNewSectionLink() ) && $action != 'edit' && !$wpPreview )
+				$s .= '<br />' . $this->makeKnownLinkObj( $wgTitle, wfMsg( 'postcomment' ), 'action=edit&section=new' );
+			
+			#if( $tns%2 && $action!='edit' && !$wpPreview) {
+				#$s.= '<br />'.$this->makeKnownLink($wgTitle->getPrefixedText(),wfMsg('postcomment'),'action=edit&section=new');
+			#}
 
 			/*
 			watching could cause problems in edit mode:

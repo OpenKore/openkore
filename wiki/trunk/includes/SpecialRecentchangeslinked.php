@@ -15,7 +15,7 @@ require_once( 'SpecialRecentchanges.php' );
  * @param string $par parent page we will look at
  */
 function wfSpecialRecentchangeslinked( $par = NULL ) {
-	global $wgUser, $wgOut, $wgContLang, $wgRequest;
+	global $wgUser, $wgOut, $wgLang, $wgContLang, $wgRequest;
 	$fname = 'wfSpecialRecentchangeslinked';
 
 	$days = $wgRequest->getInt( 'days' );
@@ -25,15 +25,20 @@ function wfSpecialRecentchangeslinked( $par = NULL ) {
 	$wgOut->setPagetitle( wfMsg( 'recentchangeslinked' ) );
 	$sk = $wgUser->getSkin();
 
-	if (is_null($target)) {
-		$wgOut->errorpage( 'notargettitle', 'notargettext' );
-		return;
-	}
+	# Validate the title
 	$nt = Title::newFromURL( $target );
-	if( !$nt ) {
-		$wgOut->errorpage( 'notargettitle', 'notargettext' );
+	if( !is_object( $nt ) ) {
+		$wgOut->errorPage( 'notargettitle', 'notargettext' );
 		return;
 	}
+	
+	# Check for existence
+	# Do a quiet redirect back to the page itself if it doesn't
+	if( !$nt->exists() ) {
+		$wgOut->redirect( $nt->getLocalUrl() );
+		return;
+	}
+
 	$id = $nt->getArticleId();
 
 	$wgOut->setSubtitle( htmlspecialchars( wfMsg( 'rclsub', $nt->getPrefixedText() ) ) );
@@ -66,6 +71,14 @@ function wfSpecialRecentchangeslinked( $par = NULL ) {
 
 	$uid = $wgUser->getID();
 
+	$GROUPBY = "
+	GROUP BY rc_cur_id,rc_namespace,rc_title,
+		rc_user,rc_comment,rc_user_text,rc_timestamp,rc_minor,
+		rc_new, rc_id, rc_this_oldid, rc_last_oldid, rc_bot, rc_patrolled, rc_type
+" . ($uid ? ",wl_user" : "") . "
+		ORDER BY rc_timestamp DESC
+	LIMIT {$limit}";
+
 	// If target is a Category, use categorylinks and invert from and to
 	if( $nt->getNamespace() == NS_CATEGORY ) {
 		$catkey = $dbr->addQuotes( $nt->getDBKey() );
@@ -81,6 +94,7 @@ function wfSpecialRecentchangeslinked( $par = NULL ) {
 				rc_user_text,
 				rc_timestamp,
 				rc_minor,
+				rc_bot,
 				rc_new,
 				rc_patrolled,
 				rc_type
@@ -91,11 +105,7 @@ function wfSpecialRecentchangeslinked( $par = NULL ) {
 	     {$cmq}
 	     AND cl_from=rc_cur_id
 	     AND cl_to=$catkey
-	GROUP BY rc_cur_id,rc_namespace,rc_title,
-	 	rc_user,rc_comment,rc_user_text,rc_timestamp,rc_minor,
-	 	rc_new
-		ORDER BY rc_timestamp DESC
-	LIMIT {$limit};
+$GROUPBY
  ";
 	} else {
 		$sql =
@@ -111,6 +121,7 @@ function wfSpecialRecentchangeslinked( $par = NULL ) {
 			rc_last_oldid,
 			rc_timestamp,
 			rc_minor,
+			rc_bot,
 			rc_new,
 			rc_patrolled,
 			rc_type
@@ -122,16 +133,13 @@ function wfSpecialRecentchangeslinked( $par = NULL ) {
      AND pl_namespace=rc_namespace
      AND pl_title=rc_title
      AND pl_from=$id
-GROUP BY rc_cur_id,rc_namespace,rc_title,
-	 rc_user,rc_comment,rc_user_text,rc_timestamp,rc_minor,
-	 rc_new
-ORDER BY rc_timestamp DESC
-   LIMIT {$limit}";
+$GROUPBY
+";
 	}
 	$res = $dbr->query( $sql, $fname );
 
 	$wgOut->addHTML("&lt; ".$sk->makeKnownLinkObj($nt, "", "redirect=no" )."<br />\n");
-	$note = wfMsg( "rcnote", $limit, $days );
+	$note = wfMsg( "rcnote", $limit, $days, $wgLang->timeAndDate( wfTimestampNow(), true ) );
 	$wgOut->addHTML( "<hr />\n{$note}\n<br />" );
 
 	$note = rcDayLimitlinks( $days, $limit, "Recentchangeslinked",
@@ -149,9 +157,6 @@ ORDER BY rc_timestamp DESC
 		if ( 0 == $count ) { break; }
 		$obj = $dbr->fetchObject( $res );
 		--$count;
-#		print_r ( $obj ) ;
-#		print "<br/>\n" ;
-
 		$rc = RecentChange::newFromRow( $obj );
 		$rc->counter = $counter++;
 		$s .= $list->recentChangesLine( $rc , !empty( $obj->wl_user) );

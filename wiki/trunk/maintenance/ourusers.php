@@ -39,50 +39,22 @@ if ( @$argv[1] == 'yaseo' ) {
 } else {
 	$hosts = array(
 		'localhost',
-		'207.142.131.194',
-		'207.142.131.195',
-		'207.142.131.196',
-		'207.142.131.197',
-		'207.142.131.198',
-		'207.142.131.199',
-		'207.142.131.221',
-		'207.142.131.226',
-		'207.142.131.227',
-		'207.142.131.228',
-		'207.142.131.229',
-		'207.142.131.230',
-		'207.142.131.231',
-		'207.142.131.232',
-		'207.142.131.233',
-		'207.142.131.234',
-		'207.142.131.237',
-		'207.142.131.238',
-		'207.142.131.239',
-		'207.142.131.243',
-		'207.142.131.244',
-		'207.142.131.249',
-		'207.142.131.250',
-		'207.142.131.216',
 		'10.0.%',
+		'66.230.200.%',
 	);
 }
 
 $databases = array(
-	'%wikibooks',
-	'%wiki',
-	'%wikiquote',
-	'%wiktionary',
-	'%wikisource',
-	'%wikinews',
-	'%wikiversity',
-	'%wikimedia',
+	'%wik%',
 );
+
+print "/*!40100 set old_passwords=1 */;";
+print "/*!40100 set global old_passwords=1 */;";
 
 foreach( $hosts as $host ) {
 	print "--\n-- $host\n--\n\n-- wikiuser\n\n";
 	print "GRANT REPLICATION CLIENT,PROCESS ON *.* TO 'wikiuser'@'$host' IDENTIFIED BY '$wikiuser_pass';\n";
-	print "GRANT ALL PRIVILEGES ON `boardvote`.* TO 'wikiuser'@'$host' IDENTIFIED BY '$wikiuser_pass';\n";
-	print "GRANT ALL PRIVILEGES ON `boardvote2005`.* TO 'wikiuser'@'$host' IDENTIFIED BY '$wikiuser_pass';\n";
+	print "GRANT ALL PRIVILEGES ON `boardvote%`.* TO 'wikiuser'@'$host' IDENTIFIED BY '$wikiuser_pass';\n";
 	foreach( $databases as $db ) {
 		print "GRANT SELECT, INSERT, UPDATE, DELETE ON `$db`.* TO 'wikiuser'@'$host' IDENTIFIED BY '$wikiuser_pass';\n";
 	}
@@ -111,8 +83,7 @@ EOS;
 
 	print "\n-- wikiadmin\n\n";
 	print "GRANT PROCESS, REPLICATION CLIENT ON *.* TO 'wikiadmin'@'$host' IDENTIFIED BY '$wikiadmin_pass';\n";
-	print "GRANT ALL PRIVILEGES ON `boardvote`.* TO wikiadmin@'$host' IDENTIFIED BY '$wikiadmin_pass';\n";
-	print "GRANT ALL PRIVILEGES ON `boardvote2005`.* TO wikiadmin@'$host' IDENTIFIED BY '$wikiadmin_pass';\n";
+	print "GRANT ALL PRIVILEGES ON `boardvote%`.* TO wikiadmin@'$host' IDENTIFIED BY '$wikiadmin_pass';\n";
 	foreach ( $databases as $db ) {
 		print "GRANT ALL PRIVILEGES ON `$db`.* TO wikiadmin@'$host' IDENTIFIED BY '$wikiadmin_pass';\n";
 	}

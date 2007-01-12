@@ -6,7 +6,8 @@
 
 /**
  * Entry point : initialise variables and call subfunctions.
- * @param string $par Becomes "FOO" when called like Special:Allpages/FOO (default NULL)
+ * @param $par String: becomes "FOO" when called like Special:Allpages/FOO (default NULL)
+ * @param $specialPage @see SpecialPage object.
  */
 function wfSpecialAllpages( $par=NULL, $specialPage ) {
 	global $wgRequest, $wgOut, $wgContLang;
@@ -90,15 +91,11 @@ function showToplevel ( $namespace = NS_MAIN, $including = false ) {
 	# in the querycache table.
 
 	$dbr =& wfGetDB( DB_SLAVE );
-	$page = $dbr->tableName( 'page' );
-	$fromwhere = "FROM $page WHERE page_namespace=$namespace";
-	$order_arr = array ( 'ORDER BY' => 'page_title' );
-	$order_str = 'ORDER BY page_title';
 	$out = "";
 	$where = array( 'page_namespace' => $namespace );
 
-	global $wgMemc, $wgDBname;
-	$key = "$wgDBname:allpages:ns:$namespace";
+	global $wgMemc;
+	$key = wfMemcKey( 'allpages', 'ns', $namespace );
 	$lines = $wgMemc->get( $key );
 
 	if( !is_array( $lines ) ) {
@@ -155,7 +152,7 @@ function showToplevel ( $namespace = NS_MAIN, $including = false ) {
 	}
 
 	# At this point, $lines should contain an even number of elements.
-	$out .= "<table style='background: inherit;'>";
+	$out .= "<table class='allpageslist' style='background: inherit;'>";
 	while ( count ( $lines ) > 0 ) {
 		$inpoint = array_shift ( $lines );
 		$outpoint = array_shift ( $lines );
@@ -217,62 +214,57 @@ function showChunk( $namespace = NS_MAIN, $from, $including = false ) {
 
 	$sk = $wgUser->getSkin();
 
-	$fromTitle = null;
-	if ($from!="") {
-		$fromTitle = Title::newFromURL( $from );
-		if (!$fromTitle) {
-			return;
+	$fromList = $this->getNamespaceKeyAndText($namespace, $from);
+
+	if ( !$fromList ) {
+		$out = wfMsgWikiHtml( 'allpagesbadtitle' );
+	} else {
+		list( $namespace, $fromKey, $from ) = $fromList;
+
+		$dbr =& wfGetDB( DB_SLAVE );
+		$res = $dbr->select( 'page',
+			array( 'page_namespace', 'page_title', 'page_is_redirect' ),
+			array(
+				'page_namespace' => $namespace,
+				'page_title >= ' . $dbr->addQuotes( $fromKey )
+			),
+			$fname,
+			array(
+				'ORDER BY'  => 'page_title',
+				'LIMIT'     => $this->maxPerPage + 1,
+				'USE INDEX' => 'name_title',
+			)
+		);
+
+		### FIXME: side link to previous
+
+		$n = 0;
+		$out = '<table style="background: inherit;" border="0" width="100%">';
+
+		$namespaces = $wgContLang->getFormattedNamespaces();
+		while( ($n < $this->maxPerPage) && ($s = $dbr->fetchObject( $res )) ) {
+			$t = Title::makeTitle( $s->page_namespace, $s->page_title );
+			if( $t ) {
+				$link = ($s->page_is_redirect ? '<div class="allpagesredirect">' : '' ) .
+					$sk->makeKnownLinkObj( $t, htmlspecialchars( $t->getText() ), false, false ) .
+					($s->page_is_redirect ? '</div>' : '' );
+			} else {
+				$link = '[[' . htmlspecialchars( $s->page_title ) . ']]';
+			}
+			if( $n % 3 == 0 ) {
+				$out .= '<tr>';
+			}
+			$out .= "<td>$link</td>";
+			$n++;
+			if( $n % 3 == 0 ) {
+				$out .= '</tr>';
+			}
 		}
-		$fromNS = $fromTitle->getNamespace();
-		if ($namespace == NS_MAIN)
-			$namespace = $fromNS;
-	}
-	$fromKey = is_null( $fromTitle ) ? '' : $fromTitle->getDBkey();
-
-	$dbr =& wfGetDB( DB_SLAVE );
-	$res = $dbr->select( 'page',
-		array( 'page_namespace', 'page_title', 'page_is_redirect' ),
-		array(
-			'page_namespace' => $namespace,
-			'page_title >= ' . $dbr->addQuotes( $fromKey )
-		),
-		$fname,
-		array(
-			'ORDER BY'  => 'page_title',
-			'LIMIT'     => $this->maxPerPage + 1,
-			'USE INDEX' => 'name_title',
-		)
-	);
-
-	### FIXME: side link to previous
-
-	$n = 0;
-	$out = '<table style="background: inherit;" border="0" width="100%">';
-
-	$namespaces = $wgContLang->getFormattedNamespaces();
-	while( ($n < $this->maxPerPage) && ($s = $dbr->fetchObject( $res )) ) {
-		$t = Title::makeTitle( $s->page_namespace, $s->page_title );
-		if( $t ) {
-			$link = ($s->page_is_redirect ? '<div class="allpagesredirect">' : '' ) .
-				$sk->makeKnownLinkObj( $t, htmlspecialchars( $t->getText() ), false, false ) .
-				($s->page_is_redirect ? '</div>' : '' );
-		} else {
-			$link = '[[' . htmlspecialchars( $s->page_title ) . ']]';
-		}
-		if( $n % 3 == 0 ) {
-			$out .= '<tr>';
-		}
-		$out .= "<td>$link</td>";
-		$n++;
-		if( $n % 3 == 0 ) {
+		if( ($n % 3) != 0 ) {
 			$out .= '</tr>';
 		}
+		$out .= '</table>';
 	}
-	if( ($n % 3) != 0 ) {
-		$out .= '</tr>';
-	}
-	$out .= '</table>';
-
 
 	if ( $including ) {
 		$out2 = '';
@@ -283,17 +275,41 @@ function showChunk( $namespace = NS_MAIN, $from, $including = false ) {
 		$out2 .= '</td><td align="right" style="font-size: smaller; margin-bottom: 1em;">' .
 				$sk->makeKnownLink( $wgContLang->specialPage( "Allpages" ),
 					wfMsgHtml ( 'allpages' ) );
-		if ( ($n == $this->maxPerPage) && ($s = $dbr->fetchObject( $res )) ) {
-			$namespaceparam = $namespace ? "&namespace=$namespace" : "";
-			$out2 .= " | " . $sk->makeKnownLink(
-				$wgContLang->specialPage( "Allpages" ),
-				wfMsgHtml ( 'nextpage', $s->page_title ),
-				"from=" . wfUrlEncode ( $s->page_title ) . $namespaceparam );
+		if ( isset($dbr) && $dbr && ($n == $this->maxPerPage) && ($s = $dbr->fetchObject( $res )) ) {
+			$self = Title::makeTitle( NS_SPECIAL, 'Allpages' );
+			$q = 'from=' . $t->getPartialUrl() . ( $namespace ? '&namespace=' . $namespace : '' );
+			$out2 .= ' | ' . $sk->makeKnownLinkObj( $self, wfMsgHtml( 'nextpage', $t->getText() ), $q );
 		}
 		$out2 .= "</td></tr></table><hr />";
 	}
 
 	$wgOut->addHtml( $out2 . $out );
+}
+	
+/**
+ * @param int $ns the namespace of the article
+ * @param string $text the name of the article
+ * @return array( int namespace, string dbkey, string pagename ) or NULL on error
+ * @static (sort of)
+ * @access private
+ */
+function getNamespaceKeyAndText ($ns, $text) {
+	if ( $text == '' )
+		return array( $ns, '', '' ); # shortcut for common case
+
+	$t = Title::makeTitleSafe($ns, $text);
+	if ( $t && $t->isLocal() )
+		return array( $t->getNamespace(), $t->getDBkey(), $t->getText() );
+	else if ( $t )
+		return NULL;
+
+	# try again, in case the problem was an empty pagename
+	$text = preg_replace('/(#|$)/', 'X$1', $text);
+	$t = Title::makeTitleSafe($ns, $text);
+	if ( $t && $t->isLocal() )
+		return array( $t->getNamespace(), '', '' );
+	else
+		return NULL;
 }
 }
 

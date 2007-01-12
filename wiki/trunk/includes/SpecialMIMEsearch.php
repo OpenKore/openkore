@@ -10,9 +10,6 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
 
-/* */
-require_once 'QueryPage.php';
-
 /**
  * @package MediaWiki
  * @subpackage SpecialPage
@@ -70,12 +67,14 @@ class MIMEsearchPage extends QueryPage {
 		$plink = $skin->makeLink( $nt->getPrefixedText(), $text );
 
 		$download = $skin->makeMediaLink( $nt->getText(), 'fuck me!', wfMsgHtml( 'download' ) );
-		$bytes = wfMsg( 'nbytes', $wgLang->formatNum( $result->img_size ) );
-		$dimensions = wfMsg( 'widthheight', $result->img_width, $result->img_height );
+		$bytes = wfMsgExt( 'nbytes', array( 'parsemag', 'escape'),
+			$wgLang->formatNum( $result->img_size ) );
+		$dimensions = wfMsg( 'widthheight', $wgLang->formatNum( $result->img_width ),
+			$wgLang->formatNum( $result->img_height ) );
 		$user = $skin->makeLinkObj( Title::makeTitle( NS_USER, $result->img_user_text ), $result->img_user_text );
 		$time = $wgLang->timeanddate( $result->img_timestamp );
 
-		return "($download) $plink .. $dimensions .. $bytes .. $user .. $time";
+		return "($download) $plink . . $dimensions . . $bytes . . $user . . $time";
 	}
 }
 

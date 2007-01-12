@@ -7,11 +7,6 @@
 
 /**
  *
- */
-require_once( "QueryPage.php" );
-
-/**
- *
  * @package MediaWiki
  * @subpackage SpecialPage
  */
@@ -19,6 +14,9 @@ class LonelyPagesPage extends PageQueryPage {
 
 	function getName() {
 		return "Lonelypages";
+	}
+	function getPageHeader() {
+		return '<p>' . wfMsg('lonelypagestext') . '</p>';
 	}
 
 	function sortDescending() {

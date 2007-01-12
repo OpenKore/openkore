@@ -108,10 +108,20 @@ class RecentChange
 			$this->mAttribs['rc_ip'] = '';
 		}
 
+		## If our database is strict about IP addresses, use NULL instead of an empty string
+		if ( $dbw->strictIPs() and $this->mAttribs['rc_ip'] == '' ) {
+			unset( $this->mAttribs['rc_ip'] );
+		}
+
 		# Fixup database timestamps
 		$this->mAttribs['rc_timestamp'] = $dbw->timestamp($this->mAttribs['rc_timestamp']);
 		$this->mAttribs['rc_cur_time'] = $dbw->timestamp($this->mAttribs['rc_cur_time']);
 		$this->mAttribs['rc_id'] = $dbw->nextSequenceValue( 'rc_rc_id_seq' );
+
+		## If we are using foreign keys, an entry of 0 for the page_id will fail, so use NULL
+		if ( $dbw->cascadingDeletes() and $this->mAttribs['rc_cur_id']==0 ) {
+			unset ( $this->mAttribs['rc_cur_id'] );
+		}
 
 		# Insert new row
 		$dbw->insert( 'recentchanges', $this->mAttribs, $fname );
@@ -163,7 +173,7 @@ class RecentChange
 			}
 		}
 
-		// E-mail notifications
+		# E-mail notifications
 		global $wgUseEnotif;
 		if( $wgUseEnotif ) {
 			# this would be better as an extension hook
@@ -177,6 +187,8 @@ class RecentChange
 				$this->mAttribs['rc_last_oldid'] );
 		}
 
+		# Notify extensions
+		wfRunHooks( 'RecentChange_save', array( &$this ) );
 	}
 
 	# Marks a certain row as patrolled
@@ -200,8 +212,8 @@ class RecentChange
 		$oldId, $lastTimestamp, $bot = "default", $ip = '', $oldSize = 0, $newSize = 0,
 		$newId = 0)
 	{
-		if ( $bot == 'default ' ) {
-			$bot = $user->isBot();
+		if ( $bot === 'default' ) {
+			$bot = $user->isAllowed( 'bot' );
 		}
 
 		if ( !$ip ) {
@@ -243,9 +255,14 @@ class RecentChange
 		return( $rc->mAttribs['rc_id'] );
 	}
 
-	# Makes an entry in the database corresponding to page creation
-	# Note: the title object must be loaded with the new id using resetArticleID()
-	/*static*/ function notifyNew( $timestamp, &$title, $minor, &$user, $comment, $bot = "default",
+	/**
+	 * Makes an entry in the database corresponding to page creation
+	 * Note: the title object must be loaded with the new id using resetArticleID()
+	 * @todo Document parameters and return
+	 * @public
+	 * @static
+	 */
+	public static function notifyNew( $timestamp, &$title, $minor, &$user, $comment, $bot = "default",
 	  $ip='', $size = 0, $newId = 0 )
 	{
 		if ( !$ip ) {
@@ -255,7 +272,7 @@ class RecentChange
 			}
 		}
 		if ( $bot == 'default' ) {
-			$bot = $user->isBot();
+			$bot = $user->isAllowed( 'bot' );
 		}
 
 		$rc = new RecentChange;
@@ -314,7 +331,7 @@ class RecentChange
 			'rc_comment'	=> $comment,
 			'rc_this_oldid'	=> 0,
 			'rc_last_oldid'	=> 0,
-			'rc_bot'	=> $user->isBot() ? 1 : 0,
+			'rc_bot'	=> $user->isAllowed( 'bot' ) ? 1 : 0,
 			'rc_moved_to_ns'	=> $newTitle->getNamespace(),
 			'rc_moved_to_title'	=> $newTitle->getDBkey(),
 			'rc_ip'		=> $ip,
@@ -364,7 +381,7 @@ class RecentChange
 			'rc_comment'	=> $comment,
 			'rc_this_oldid'	=> 0,
 			'rc_last_oldid'	=> 0,
-			'rc_bot'	=> $user->isBot() ? 1 : 0,
+			'rc_bot'	=> $user->isAllowed( 'bot' ) ? 1 : 0,
 			'rc_moved_to_ns'	=> 0,
 			'rc_moved_to_title'	=> '',
 			'rc_ip'	=> $ip,
@@ -411,8 +428,8 @@ class RecentChange
 			'rc_moved_to_ns'	=> 0,
 			'rc_moved_to_title'	=> '',
 			'rc_ip' => '',
-			'rc_patrolled' => '1',  # we can't support patrolling on the Watchlist
-			                        # currently because it uses cur, not recentchanges
+			'rc_id' => $row->rc_id,
+			'rc_patrolled' => $row->rc_patrolled,
 			'rc_new' => $row->page_is_new # obsolete
 		);
 

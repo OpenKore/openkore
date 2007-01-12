@@ -25,8 +25,6 @@
  * @package MediaWiki
  */
 
-require_once( 'WikiError.php' );
-
 /**
  * Converts a string into a valid RFC 822 "phrase", such as is used for the sender name
  */
@@ -55,8 +53,15 @@ class MailAddress {
 	 * @return string
 	 */
 	function toString() {
-		if( $this->name != '' ) {
-			return wfQuotedPrintable( $this->name ) . " <" . $this->address . ">";
+		# PHP's mail() implementation under Windows is somewhat shite, and
+		# can't handle "Joe Bloggs <joe@bloggs.com>" format email addresses,
+		# so don't bother generating them
+		if( $this->name != '' && !wfIsWindows() ) {
+			$quoted = wfQuotedPrintable( $this->name );
+			if( strpos( $quoted, '.' ) !== false ) {
+				$quoted = '"' . $quoted . '"';
+			}
+			return "$quoted <{$this->address}>";
 		} else {
 			return $this->address;
 		}
@@ -69,11 +74,11 @@ class MailAddress {
  * array of parameters. It requires PEAR:Mail to do that.
  * Otherwise it just uses the standard PHP 'mail' function.
  *
- * @param MailAddress $to recipient's email
- * @param MailAddress $from sender's email
- * @param string $subject email's subject
- * @param string $body email's text
- * @param string $replyto optional reply-to email (default : false)
+ * @param $to MailAddress: recipient's email
+ * @param $from MailAddress: sender's email
+ * @param $subject String: email's subject.
+ * @param $body String: email's text.
+ * @param $replyto String: optional reply-to email (default: false).
  */
 function userMailer( $to, $from, $subject, $body, $replyto=false ) {
 	global $wgUser, $wgSMTP, $wgOutputEncoding, $wgErrorString;
@@ -82,10 +87,10 @@ function userMailer( $to, $from, $subject, $body, $replyto=false ) {
 		require_once( 'Mail.php' );
 
 		$timestamp = time();
-		$dest = $to->toString();
+		$dest = $to->address;
 
 		$headers['From'] = $from->toString();
-		$headers['To'] = $dest;
+		$headers['To'] = $to->toString();
 		if ( $replyto ) {
 			$headers['Reply-To'] = $replyto;
 		}
@@ -99,7 +104,12 @@ function userMailer( $to, $from, $subject, $body, $replyto=false ) {
 
 		// Create the mail object using the Mail::factory method
 		$mail_object =& Mail::factory('smtp', $wgSMTP);
-		wfDebug( "Sending mail via PEAR::Mail to $dest" );
+		if( PEAR::isError( $mail_object ) ) {
+			wfDebug( "PEAR::Mail factory failed: " . $mail_object->getMessage() . "\n" );
+			return $mail_object->getMessage();
+		}
+
+		wfDebug( "Sending mail via PEAR::Mail to $dest\n" );
 		$mailResult =& $mail_object->send($dest, $headers, $body);
 
 		# Based on the result return an error string,
@@ -143,8 +153,8 @@ function userMailer( $to, $from, $subject, $body, $replyto=false ) {
 /**
  * Get the mail error message in global $wgErrorString
  *
- * @parameter $code error number
- * @parameter $string error message
+ * @param $code Integer: error number
+ * @param $string String: error message
  */
 function mailErrorHandler( $code, $string ) {
 	global $wgErrorString;
@@ -174,21 +184,20 @@ function mailErrorHandler( $code, $string ) {
  *
  */
 class EmailNotification {
-	/**#@+
-	 * @access private
+	/**@{{
+	 * @private
 	 */
 	var $to, $subject, $body, $replyto, $from;
 	var $user, $title, $timestamp, $summary, $minorEdit, $oldid;
 
-	/**#@-*/
+	/**@}}*/
 
 	/**
 	 * @todo document
-	 * @param $currentPage
-	 * @param $currentNs
+	 * @param $title Title object
 	 * @param $timestamp
-	 * @param $currentSummary
-	 * @param $currentMinorEdit
+	 * @param $summary
+	 * @param $minorEdit
 	 * @param $oldid (default: false)
 	 */
 	function notifyOnPageChange(&$title, $timestamp, $summary, $minorEdit, $oldid=false) {
@@ -257,8 +266,11 @@ class EmailNotification {
 
 						$wuser = $dbr->fetchObject( $res );
 						$watchingUser->setID($wuser->wl_user);
+						
 						if ( ( $enotifwatchlistpage && $watchingUser->getOption('enotifwatchlistpages') ) ||
-							( $enotifusertalkpage && $watchingUser->getOption('enotifusertalkpages') )
+							( $enotifusertalkpage
+								&& $watchingUser->getOption('enotifusertalkpages')
+								&& $title->equals( $watchingUser->getTalkPage() ) )
 						&& (!$minorEdit || ($wgEnotifMinorEdits && $watchingUser->getOption('enotifminoredits') ) )
 						&& ($watchingUser->isEmailConfirmed() ) ) {
 							# ... adjust remaining text and page edit time placeholders
@@ -285,11 +297,11 @@ class EmailNotification {
 			);
 			# FIXME what do we do on failure ?
 		}
-
+		wfProfileOut( $fname );
 	} # function NotifyOnChange
 
 	/**
-	 * @access private
+	 * @private
 	 */
 	function composeCommonMailtext() {
 		global $wgUser, $wgEmergencyContact, $wgNoReplyAddress;
@@ -386,7 +398,7 @@ class EmailNotification {
 	 * @param User $watchingUser
 	 * @param object $mail
 	 * @return bool
-	 * @access private
+	 * @private
 	 */
 	function composeAndSendPersonalisedMail( $watchingUser ) {
 		global $wgLang;

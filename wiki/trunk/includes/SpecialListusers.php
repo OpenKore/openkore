@@ -1,6 +1,9 @@
 <?php
+
 # Copyright (C) 2004 Brion Vibber, lcrocker, Tim Starling,
 # Domas Mituzas, Ashar Voultoiz, Jens Frank, Zhengzhu.
+#
+# © 2006 Rob Church <robchur@gmail.com>
 #
 # http://www.mediawiki.org/
 #
@@ -23,11 +26,6 @@
  * @package MediaWiki
  * @subpackage SpecialPage
  */
-
-/**
- *
- */
-require_once('QueryPage.php');
 
 /**
  * This class is used to get a list of user. The ones with specials
@@ -76,44 +74,44 @@ class ListUsersPage extends QueryPage {
 	 * @todo localize
 	 */
 	function getPageHeader( ) {
-		global $wgScript;
+		$self = $this->getTitle();
 
-		// Various variables used for the form
-		$action = htmlspecialchars( $wgScript );
-		$title = Title::makeTitle( NS_SPECIAL, 'Listusers' );
-		$special = htmlspecialchars( $title->getPrefixedDBkey() );
-
-		// form header
-		$out = '<form method="get" action="'.$action.'">' .
-				'<input type="hidden" name="title" value="'.$special.'" />' .
-				wfMsgHtml( 'groups-editgroup-name' ) . '<select name="group">';
-
-		// get group names
+		# Form tag
+		$out = wfOpenElement( 'form', array( 'method' => 'post', 'action' => $self->getLocalUrl() ) );
+		
+		# Group drop-down list
+		$out .= wfElement( 'label', array( 'for' => 'group' ), wfMsg( 'group' ) ) . ' ';
+		$out .= wfOpenElement( 'select', array( 'name' => 'group' ) );
+		$out .= wfElement( 'option', array( 'value' => '' ), wfMsg( 'group-all' ) ); # Item for "all groups"
 		$groups = User::getAllGroups();
-
-		// we want a default empty group
-		$out.= '<option value=""></option>';
-
-		// build the dropdown list menu using datas from the database
-		foreach ( $groups as $group ) {
-			$selected = ($group == $this->requestedGroup);
-			$out .= wfElement( 'option',
-				array_merge(
-					array( 'value' => $group ),
-					$selected ? array( 'selected' => 'selected' ) : array() ),
-				User::getGroupName( $group ) );
+		foreach( $groups as $group ) {
+			$attribs = array( 'value' => $group );
+			if( $group == $this->requestedGroup )
+				$attribs['selected'] = 'selected';
+			$out .= wfElement( 'option', $attribs, User::getGroupName( $group ) );
 		}
-		$out .= '</select> ';
+		$out .= wfCloseElement( 'select' ) . ' ';;# . wfElement( 'br' );
 
-		$out .= wfMsgHtml( 'specialloguserlabel' ) . '<input type="text" name="username" /> ';
+		# Username field
+		$out .= wfElement( 'label', array( 'for' => 'username' ), wfMsg( 'listusersfrom' ) ) . ' ';
+		$out .= wfElement( 'input', array( 'type' => 'text', 'id' => 'username', 'name' => 'username',
+							'value' => $this->requestedUser ) ) . ' ';
 
-		// OK button, end of form.
-		$out .= '<input type="submit" value="' . wfMsgHtml( 'allpagessubmit' ) . '" /></form>';
-		// congratulations the form is now build
+		# Preserve offset and limit
+		if( $this->offset )
+			$out .= wfElement( 'input', array( 'type' => 'hidden', 'name' => 'offset', 'value' => $this->offset ) );
+		if( $this->limit )
+			$out .= wfElement( 'input', array( 'type' => 'hidden', 'name' => 'limit', 'value' => $this->limit ) );
+
+		# Submit button and form bottom
+		$out .= wfElement( 'input', array( 'type' => 'submit', 'value' => wfMsg( 'allpagessubmit' ) ) );
+		$out .= wfCloseElement( 'form' );
+
 		return $out;
 	}
 
 	function getSQL() {
+		global $wgDBtype;
 		$dbr =& wfGetDB( DB_SLAVE );
 		$user = $dbr->tableName( 'user' );
 		$user_groups = $dbr->tableName( 'user_groups' );
@@ -136,24 +134,26 @@ class ListUsersPage extends QueryPage {
 			"LEFT JOIN $user_groups ON user_id=ug_user " .
 			$this->userQueryWhere( $dbr ) .
 			" GROUP BY user_name";
-
+		if ( $wgDBtype != 'mysql' ) {
+			$sql .= ",user_id";
+		}
 		return $sql;
 	}
 
 	function userQueryWhere( &$dbr ) {
-		$conds = $this->userQueryConditions();
+		$conds = $this->userQueryConditions( $dbr );
 		return empty( $conds )
 			? ""
 			: "WHERE " . $dbr->makeList( $conds, LIST_AND );
 	}
 
-	function userQueryConditions() {
+	function userQueryConditions( $dbr ) {
 		$conds = array();
 		if( $this->requestedGroup != '' ) {
 			$conds['ug_group'] = $this->requestedGroup;
 		}
 		if( $this->requestedUser != '' ) {
-			$conds['user_name'] = $this->requestedUser;
+			$conds[] = 'user_name >= ' . $dbr->addQuotes( $this->requestedUser );
 		}
 		return $conds;
 	}
@@ -176,6 +176,7 @@ class ListUsersPage extends QueryPage {
 	function formatResult( $skin, $result ) {
 		$userPage = Title::makeTitle( $result->namespace, $result->title );
 		$name = $skin->makeLinkObj( $userPage, htmlspecialchars( $userPage->getText() ) );
+		$groups = null;
 
 		if( !isset( $result->numgroups ) || $result->numgroups > 0 ) {
 			$dbr =& wfGetDB( DB_SLAVE );
@@ -185,19 +186,22 @@ class ListUsersPage extends QueryPage {
 				'ListUsersPage::formatResult' );
 			$groups = array();
 			while( $row = $dbr->fetchObject( $result ) ) {
-				$groups[] = User::getGroupName( $row->ug_group );
+				$groups[$row->ug_group] = User::getGroupMember( $row->ug_group );
 			}
 			$dbr->freeResult( $result );
 
 			if( count( $groups ) > 0 ) {
-				$name .= ' (' .
-					$skin->makeLink( wfMsgForContent( 'administrators' ),
-						htmlspecialchars( implode( ', ', $groups ) ) ) .
-					')';
+				foreach( $groups as $group => $desc ) {
+					$list[] = User::makeGroupLinkHTML( $group, $desc );
+				}
+				$groups = implode( ', ', $list );
+			} else {
+				$groups = '';
 			}
+
 		}
 
-		return $name;
+		return wfSpecialList( $name, $groups );
 	}
 }
 
@@ -218,7 +222,11 @@ function wfSpecialListusers( $par = null ) {
 	 */
 	$groupTarget = isset($par) ? $par : $wgRequest->getVal( 'group' );
 	$slu->requestedGroup = $groupTarget;
-	$slu->requestedUser = $wgContLang->ucfirst( $wgRequest->getVal('username') );
+
+	# 'Validate' the username first
+	$username = $wgRequest->getText( 'username', '' );
+	$user = User::newFromName( $username );
+	$slu->requestedUser = is_object( $user ) ? $user->getName() : '';
 
 	return $slu->doQuery( $offset, $limit );
 }

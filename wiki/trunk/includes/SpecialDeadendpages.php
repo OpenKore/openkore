@@ -7,11 +7,6 @@
 
 /**
  *
- */
-require_once( "QueryPage.php" );
-
-/**
- *
  * @package MediaWiki
  * @subpackage SpecialPage
  */
@@ -19,6 +14,10 @@ class DeadendPagesPage extends PageQueryPage {
 
 	function getName( ) {
 		return "Deadendpages";
+	}
+
+	function getPageHeader() {
+		return '<p>' . wfMsg('deadendpagestext') . '</p>';
 	}
 
 	/**

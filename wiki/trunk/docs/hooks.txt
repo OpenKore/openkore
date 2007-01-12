@@ -242,7 +242,7 @@ $user: the User object about to be created (read-only, incomplete)
 $message: out parameter: error message to display on abort
 
 'AddNewAccount': after a user account is created
-null: This hook passes null as an argument
+$user: the User object that was created. (Parameter added in 1.7)
 
 'ArticleDelete': before an article is deleted
 $article: the article (object) being deleted
@@ -289,6 +289,13 @@ $section: section #
 'AutoAuthenticate': called to authenticate users on external/environmental means
 $user: writes user object to this parameter
 
+'BadImage': When checking against the bad image list
+$name: Image name being checked
+&$bad: Whether or not the image is "bad"
+
+Change $bad and return false to override. If an image is "bad", it is not
+rendered inline in wiki pages or galleries in category pages.
+
 'BlockIp': before an IP address or user is blocked
 $block: the Block object about to be saved
 $user: the user _doing_ the block (not the one being blocked)
@@ -296,6 +303,32 @@ $user: the user _doing_ the block (not the one being blocked)
 'BlockIpComplete': after an IP address or user is blocked
 $block: the Block object that was saved
 $user: the user who did the block (not the one being blocked)
+
+'DiffViewHeader': called before diff display
+$diff: DifferenceEngine object that's calling
+$oldRev: Revision object of the "old" revision (may be null/invalid)
+$newRev: Revision object of the "new" revision
+
+'EditFormPreloadText': Allows population of the edit form when creating new pages
+&$text: Text to preload with
+&$title: Title object representing the page being created
+
+'EditFilter': Perform checks on an edit
+$editor: Edit form (see includes/EditPage.php)
+$text: Contents of the edit box
+$section: Section being edited
+&$error: Error message to return
+
+Return false to halt editing; you'll need to handle error messages, etc. yourself.
+Alternatively, modifying $error and returning true will cause the contents of $error
+to be echoed at the top of the edit form as wikitext. Return true without altering
+$error to allow the edit to proceed.
+
+'EmailConfirmed': When checking that the user's email address is "confirmed"
+$user: User being checked
+$confirmed: Whether or not the email address is confirmed
+This runs before the other checks, such as anonymity and the real check; return
+true to allow those checks to occur, and false if checking is done.
 
 'EmailUser': before sending email from one user to another
 $to: address of receiving user
@@ -308,6 +341,12 @@ $to: address of receiving user
 $from: address of sending user
 $subject: subject of the mail
 $text: text of the mail
+
+'FetchChangesList': When fetching the ChangesList derivative for a particular user
+&$user: User the list is being fetched for
+&$skin: Skin object to be used with the list
+&$list: List object (defaults to NULL, change it to an object instance and return
+false override the list derivative used)
 
 'GetInternalURL': modify fully-qualified URLs used for squid cache purging
 $title: Title object of page
@@ -324,14 +363,17 @@ $title: Title object of page
 $url: string value as output (out parameter, can modify)
 $query: query options passed to Title::getFullURL()
 
-'LogPageValidTypes': action being logged.
-$type: array of strings
+'LogPageValidTypes': action being logged. DEPRECATED: Use $wgLogTypes
+&$type: array of strings
 
-'LogPageLogName': name of the logging page(s).
-$typeText: array of strings
+'LogPageLogName': name of the logging page(s). DEPRECATED: Use $wgLogNames
+&$typeText: array of strings
 
-'LogPageLogHeader': strings used by wfMsg as a header.
-$headerText: array of strings
+'LogPageLogHeader': strings used by wfMsg as a header. DEPRECATED: Use $wgLogHeaders
+&$headerText: array of strings
+
+'LogPageActionText': strings used by wfMsg as a header. DEPRECATED: Use $wgLogActions
+&$actionText: array of strings
 
 'MarkPatrolled': before an edit is marked patrolled
 $rcid: ID of the revision to be marked patrolled
@@ -345,6 +387,11 @@ $user: user (object) who marked the edit patrolled
 $wcOnlySysopsCanPatrol: config setting indicating whether the user
  must be a sysop to patrol the edit
 
+'MathAfterTexvc': after texvc is executed when rendering mathematics
+$mathRenderer: instance of MathRenderer
+$errmsg: error message, in HTML (string). Nonempty indicates failure
+ of rendering the formula
+
 'OutputPageBeforeHTML': a page has been processed by the parser and
 the resulting HTML is about to be displayed.  
 $parserOutput: the parserOutput (object) that corresponds to the page 
@@ -354,6 +401,21 @@ $text: the text that will be displayed, in HTML (string)
   A parser extension which depends on user options should install
   this hook and append its values to the key.
 $hash: reference to a hash key string which can be modified
+
+'PersonalUrls': Alter the user-specific navigation links (e.g. "my page,
+my talk page, my contributions" etc).
+
+&$personal_urls: Array of link specifiers (see SkinTemplate.php)
+&$title: Title object representing the current page
+
+'SiteNoticeBefore': Before the sitenotice/anonnotice is composed
+&$siteNotice: HTML returned as the sitenotice
+Return true to allow the normal method of notice selection/rendering to work,
+or change the value of $siteNotice and return false to alter it.
+
+'SiteNoticeAfter': After the sitenotice/anonnotice is composed
+&$siteNotice: HTML sitenotice
+Alter the contents of $siteNotice to add to/alter the sitenotice/anonnotice.
 
 'TitleMoveComplete': after moving an article (title)
 $old: old title
@@ -418,6 +480,10 @@ $article: article object to be watched
 $user: user that watched
 $article: article object watched
 
+'UnwatchArticleComplete': after a watch is removed from an article
+$user: user that watched
+$article: article object that was watched
+
 'CategoryPageView': before viewing a categorypage in CategoryPage::view
 $catpage: CategoryPage instance
 
@@ -427,5 +493,10 @@ $catpage: CategoryPage instance
 			      to use this hook.
 $content_actions: The array of content actions
 
+'BeforePageDisplay': Called just before outputting a page (all kinds of,
+		     articles, special, history, preview, diff, edit, ...)
+		     Can be used to set custom CSS/JS
+$out: OutputPage object
 
-More hooks might be available but undocumented.
+More hooks might be available but undocumented, you can execute
+./maintenance/findhooks.php to find hidden one.

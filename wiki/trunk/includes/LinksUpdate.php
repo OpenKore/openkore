@@ -10,26 +10,28 @@
  */
 class LinksUpdate {
 
-	/**#@+
-	 * @access private
+	/**@{{
+	 * @private
 	 */
-	var $mId,            # Page ID of the article linked from
-		$mTitle,         # Title object of the article linked from
-		$mLinks,         # Map of title strings to IDs for the links in the document
-		$mImages,        # DB keys of the images used, in the array key only
-		$mTemplates,     # Map of title strings to IDs for the template references, including broken ones
-		$mExternals,     # URLs of external links, array key only
-		$mCategories,    # Map of category names to sort keys
-		$mDb,            # Database connection reference
-		$mOptions,       # SELECT options to be used (array)
-		$mRecursive;     # Whether to queue jobs for recursive updates
-	/**#@-*/
+	var $mId,            //!< Page ID of the article linked from
+		$mTitle,         //!< Title object of the article linked from
+		$mLinks,         //!< Map of title strings to IDs for the links in the document
+		$mImages,        //!< DB keys of the images used, in the array key only
+		$mTemplates,     //!< Map of title strings to IDs for the template references, including broken ones
+		$mExternals,     //!< URLs of external links, array key only
+		$mCategories,    //!< Map of category names to sort keys
+		$mInterlangs,    //!< Map of language codes to titles
+		$mDb,            //!< Database connection reference
+		$mOptions,       //!< SELECT options to be used (array)
+		$mRecursive;     //!< Whether to queue jobs for recursive updates
+	/**@}}*/
 
 	/**
 	 * Constructor
 	 * Initialize private variables
-	 * @param integer $id
-	 * @param string $title
+	 * @param $title Integer: FIXME
+	 * @param $parserOutput FIXME
+	 * @param $recursive Boolean: FIXME, default 'true'.
 	 */
 	function LinksUpdate( $title, $parserOutput, $recursive = true ) {
 		global $wgAntiLockFlags;
@@ -42,7 +44,7 @@ class LinksUpdate {
 		$this->mDb =& wfGetDB( DB_MASTER );
 
 		if ( !is_object( $title ) ) {
-			wfDebugDieBacktrace( "The calling convention to LinksUpdate::LinksUpdate() has changed. " .
+			throw new MWException( "The calling convention to LinksUpdate::LinksUpdate() has changed. " .
 				"Please see Article::editUpdates() for an invocation example.\n" );
 		}
 		$this->mTitle = $title;
@@ -53,8 +55,19 @@ class LinksUpdate {
 		$this->mTemplates = $parserOutput->getTemplates();
 		$this->mExternals = $parserOutput->getExternalLinks();
 		$this->mCategories = $parserOutput->getCategories();
-		$this->mRecursive = $recursive;
 
+		# Convert the format of the interlanguage links
+		# I didn't want to change it in the ParserOutput, because that array is passed all 
+		# the way back to the skin, so either a skin API break would be required, or an 
+		# inefficient back-conversion.
+		$ill = $parserOutput->getLanguageLinks();
+		$this->mInterlangs = array();
+		foreach ( $ill as $link ) {
+			list( $key, $title ) = explode( ':', $link, 2 );
+			$this->mInterlangs[$key] = $title;
+		}
+
+		$this->mRecursive = $recursive;
 	}
 
 	/**
@@ -72,7 +85,7 @@ class LinksUpdate {
 	function doIncrementalUpdate() {
 		$fname = 'LinksUpdate::doIncrementalUpdate';
 		wfProfileIn( $fname );
-
+		
 		# Page links
 		$existing = $this->getExistingLinks();
 		$this->incrTableUpdate( 'pagelinks', 'pl', $this->getLinkDeletions( $existing ),
@@ -90,21 +103,17 @@ class LinksUpdate {
 		# External links
 		$existing = $this->getExistingExternals();
 		$this->incrTableUpdate( 'externallinks', 'el', $this->getExternalDeletions( $existing ),
-			$this->getExternalInsertions( $existing ) );
+	        $this->getExternalInsertions( $existing ) );
+
+		# Language links
+		$existing = $this->getExistingInterlangs();
+		$this->incrTableUpdate( 'langlinks', 'll', $this->getInterlangDeletions( $existing ),
+			$this->getInterlangInsertions( $existing ) );
 
 		# Template links
 		$existing = $this->getExistingTemplates();
 		$this->incrTableUpdate( 'templatelinks', 'tl', $this->getTemplateDeletions( $existing ),
 			$this->getTemplateInsertions( $existing ) );
-
-		# Refresh links of all pages including this page
-		if ( $this->mRecursive ) {
-			$tlto = $this->mTitle->getTemplateLinksTo();
-			if ( count( $tlto ) ) {
-				require_once( 'JobQueue.php' );
-				Job::queueLinksJobs( $tlto );
-			}
-		}
 
 		# Category links
 		$existing = $this->getExistingCategories();
@@ -115,13 +124,19 @@ class LinksUpdate {
 		$categoryUpdates = array_diff_assoc( $existing, $this->mCategories ) + array_diff_assoc( $this->mCategories, $existing );
 		$this->invalidateCategories( $categoryUpdates );
 
+		# Refresh links of all pages including this page
+		# This will be in a separate transaction
+		if ( $this->mRecursive ) {
+			$this->queueRecursiveJobs();
+		}
+		
 		wfProfileOut( $fname );
 	}
 
 	/**
-	  * Link update which clears the previous entries and inserts new ones
-	  * May be slower or faster depending on level of lock contention and write speed of DB
-	  * Also useful where link table corruption needs to be repaired, e.g. in refreshLinks.php
+	 * Link update which clears the previous entries and inserts new ones
+	 * May be slower or faster depending on level of lock contention and write speed of DB
+	 * Also useful where link table corruption needs to be repaired, e.g. in refreshLinks.php
 	 */
 	function doDumbUpdate() {
 		$fname = 'LinksUpdate::doDumbUpdate';
@@ -133,28 +148,58 @@ class LinksUpdate {
 		$existing = $this->getExistingImages();
 		$imageUpdates = array_diff_key( $existing, $this->mImages ) + array_diff_key( $this->mImages, $existing );
 
-		# Refresh links of all pages including this page
-		if ( $this->mRecursive ) {
-			$tlto = $this->mTitle->getTemplateLinksTo();
-			if ( count( $tlto ) ) {
-				require_once( 'JobQueue.php' );
-				Job::queueLinksJobs( $tlto );
-			}
-		}
-
 		$this->dumbTableUpdate( 'pagelinks',     $this->getLinkInsertions(),     'pl_from' );
 		$this->dumbTableUpdate( 'imagelinks',    $this->getImageInsertions(),    'il_from' );
 		$this->dumbTableUpdate( 'categorylinks', $this->getCategoryInsertions(), 'cl_from' );
 		$this->dumbTableUpdate( 'templatelinks', $this->getTemplateInsertions(), 'tl_from' );
 		$this->dumbTableUpdate( 'externallinks', $this->getExternalInsertions(), 'el_from' );
+		$this->dumbTableUpdate( 'langlinks',     $this->getInterlangInsertions(), 'll_from' );
 
 		# Update the cache of all the category pages and image description pages which were changed
 		$this->invalidateCategories( $categoryUpdates );
 		$this->invalidateImageDescriptions( $imageUpdates );
 
+		# Refresh links of all pages including this page
+		# This will be in a separate transaction
+		if ( $this->mRecursive ) {
+			$this->queueRecursiveJobs();
+		}
+
 		wfProfileOut( $fname );
 	}
 
+	function queueRecursiveJobs() {
+		wfProfileIn( __METHOD__ );
+		
+		$batchSize = 100;
+		$dbr =& wfGetDB( DB_SLAVE );
+		$res = $dbr->select( array( 'templatelinks', 'page' ), 
+			array( 'page_namespace', 'page_title' ),
+			array( 
+				'page_id=tl_from', 
+				'tl_namespace' => $this->mTitle->getNamespace(),
+				'tl_title' => $this->mTitle->getDBkey()
+			), __METHOD__
+		);
+
+		$done = false;
+		while ( !$done ) {
+			$jobs = array();
+			for ( $i = 0; $i < $batchSize; $i++ ) {
+				$row = $dbr->fetchObject( $res );
+				if ( !$row ) {
+					$done = true;
+					break;
+				}
+				$title = Title::makeTitle( $row->page_namespace, $row->page_title );
+				$jobs[] = Job::factory( 'refreshLinks', $title );
+			}
+			Job::batchInsert( $jobs );
+		}
+		$dbr->freeResult( $res );
+		wfProfileOut( __METHOD__ );
+	}
+	
 	/**
 	 * Invalidate the cache of a list of pages from a single namespace
 	 *
@@ -235,7 +280,7 @@ class LinksUpdate {
 
 	/**
 	 * Update a table by doing a delete query then an insert query
-	 * @access private
+	 * @private
 	 */
 	function incrTableUpdate( $table, $prefix, $deletions, $insertions ) {
 		$fname = 'LinksUpdate::incrTableUpdate';
@@ -248,8 +293,13 @@ class LinksUpdate {
 				$where = false;
 			}
 		} else {
+			if ( $table == 'langlinks' ) {
+				$toField = 'll_lang';
+			} else {
+				$toField = $prefix . '_to';
+			}
 			if ( count( $deletions ) ) {
-				$where[] = "{$prefix}_to IN (" . $this->mDb->makeList( array_keys( $deletions ) ) . ')';
+				$where[] = "$toField IN (" . $this->mDb->makeList( array_keys( $deletions ) ) . ')';
 			} else {
 				$where = false;
 			}
@@ -266,7 +316,7 @@ class LinksUpdate {
 	/**
 	 * Get an array of pagelinks insertions for passing to the DB
 	 * Skips the titles specified by the 2-D array $existing
-	 * @access private
+	 * @private
 	 */
 	function getLinkInsertions( $existing = array() ) {
 		$arr = array();
@@ -287,7 +337,7 @@ class LinksUpdate {
 
 	/**
 	 * Get an array of template insertions. Like getLinkInsertions()
-	 * @access private
+	 * @private
 	 */
 	function getTemplateInsertions( $existing = array() ) {
 		$arr = array();
@@ -307,7 +357,7 @@ class LinksUpdate {
 	/**
 	 * Get an array of image insertions
 	 * Skips the names specified in $existing
-	 * @access private
+	 * @private
 	 */
 	function getImageInsertions( $existing = array() ) {
 		$arr = array();
@@ -323,7 +373,7 @@ class LinksUpdate {
 
 	/**
 	 * Get an array of externallinks insertions. Skips the names specified in $existing
-	 * @access private
+	 * @private
 	 */
 	function getExternalInsertions( $existing = array() ) {
 		$arr = array();
@@ -342,7 +392,7 @@ class LinksUpdate {
 	 * Get an array of category insertions
 	 * @param array $existing Array mapping existing category names to sort keys. If both
 	 * match a link in $this, the link will be omitted from the output
-	 * @access private
+	 * @private
 	 */
 	function getCategoryInsertions( $existing = array() ) {
 		$diffs = array_diff_assoc( $this->mCategories, $existing );
@@ -359,9 +409,27 @@ class LinksUpdate {
 	}
 
 	/**
+	 * Get an array of interlanguage link insertions
+	 * @param array $existing Array mapping existing language codes to titles	 
+	 * @private
+	 */
+	function getInterlangInsertions( $existing = array() ) {
+	    $diffs = array_diff_assoc( $this->mInterlangs, $existing );
+	    $arr = array();
+	    foreach( $diffs as $lang => $title ) {
+	        $arr[] = array(
+	            'll_from'  => $this->mId,
+	            'll_lang'  => $lang,
+	            'll_title' => $title
+	        );
+	    }
+	    return $arr;
+	}
+
+	/**
 	 * Given an array of existing links, returns those links which are not in $this
 	 * and thus should be deleted.
-	 * @access private
+	 * @private
 	 */
 	function getLinkDeletions( $existing ) {
 		$del = array();
@@ -378,7 +446,7 @@ class LinksUpdate {
 	/**
 	 * Given an array of existing templates, returns those templates which are not in $this
 	 * and thus should be deleted.
-	 * @access private
+	 * @private
 	 */
 	function getTemplateDeletions( $existing ) {
 		$del = array();
@@ -395,7 +463,7 @@ class LinksUpdate {
 	/**
 	 * Given an array of existing images, returns those images which are not in $this
 	 * and thus should be deleted.
-	 * @access private
+	 * @private
 	 */
 	function getImageDeletions( $existing ) {
 		return array_diff_key( $existing, $this->mImages );
@@ -404,7 +472,7 @@ class LinksUpdate {
 	/** 
 	 * Given an array of existing external links, returns those links which are not
 	 * in $this and thus should be deleted.
-	 * @access private
+	 * @private
 	 */
 	function getExternalDeletions( $existing ) {
 		return array_diff_key( $existing, $this->mExternals );
@@ -413,15 +481,24 @@ class LinksUpdate {
 	/**
 	 * Given an array of existing categories, returns those categories which are not in $this
 	 * and thus should be deleted.
-	 * @access private
+	 * @private
 	 */
 	function getCategoryDeletions( $existing ) {
 		return array_diff_assoc( $existing, $this->mCategories );
 	}
 
+	/** 
+	 * Given an array of existing interlanguage links, returns those links which are not
+	 * in $this and thus should be deleted.
+	 * @private
+	 */
+	function getInterlangDeletions( $existing ) {
+	    return array_diff_assoc( $existing, $this->mInterlangs );
+	}
+
 	/**
 	 * Get an array of existing links, as a 2-D array
-	 * @access private
+	 * @private
 	 */
 	function getExistingLinks() {
 		$fname = 'LinksUpdate::getExistingLinks';
@@ -440,7 +517,7 @@ class LinksUpdate {
 
 	/**
 	 * Get an array of existing templates, as a 2-D array
-	 * @access private
+	 * @private
 	 */
 	function getExistingTemplates() {
 		$fname = 'LinksUpdate::getExistingTemplates';
@@ -459,7 +536,7 @@ class LinksUpdate {
 
 	/**
 	 * Get an array of existing images, image names in the keys
-	 * @access private
+	 * @private
 	 */
 	function getExistingImages() {
 		$fname = 'LinksUpdate::getExistingImages';
@@ -475,7 +552,7 @@ class LinksUpdate {
 
 	/**
 	 * Get an array of existing external links, URLs in the keys
-	 * @access private
+	 * @private
 	 */
 	function getExistingExternals() {
 		$fname = 'LinksUpdate::getExistingExternals';
@@ -491,7 +568,7 @@ class LinksUpdate {
 
 	/**
 	 * Get an array of existing categories, with the name in the key and sort key in the value.
-	 * @access private
+	 * @private
 	 */
 	function getExistingCategories() {
 		$fname = 'LinksUpdate::getExistingCategories';
@@ -502,6 +579,22 @@ class LinksUpdate {
 			$arr[$row->cl_to] = $row->cl_sortkey;
 		}
 		$this->mDb->freeResult( $res );
+		return $arr;
+	}
+
+	/**
+	 * Get an array of existing interlanguage links, with the language code in the key and the 
+	 * title in the value.
+	 * @private
+	 */
+	function getExistingInterlangs() {
+		$fname = 'LinksUpdate::getExistingInterlangs';
+		$res = $this->mDb->select( 'langlinks', array( 'll_lang', 'll_title' ), 
+			array( 'll_from' => $this->mId ), $fname, $this->mOptions );
+		$arr = array();
+		while ( $row = $this->mDb->fetchObject( $res ) ) {
+			$arr[$row->ll_lang] = $row->ll_title;
+		}
 		return $arr;
 	}
 }

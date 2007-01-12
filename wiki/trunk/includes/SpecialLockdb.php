@@ -11,10 +11,18 @@
 function wfSpecialLockdb() {
 	global $wgUser, $wgOut, $wgRequest;
 
-	if ( ! $wgUser->isAllowed('siteadmin') ) {
-		$wgOut->developerRequired();
+	if( !$wgUser->isAllowed( 'siteadmin' ) ) {
+		$wgOut->permissionRequired( 'siteadmin' );
 		return;
 	}
+	
+	# If the lock file isn't writable, we can do sweet bugger all
+	global $wgReadOnlyFile;
+	if( !is_writable( dirname( $wgReadOnlyFile ) ) ) {
+		DBLockForm::notWritable();
+		return;
+	}
+
 	$action = $wgRequest->getVal( 'action' );
 	$f = new DBLockForm();
 
@@ -56,12 +64,13 @@ class DBLockForm {
 		$elr = htmlspecialchars( wfMsg( 'enterlockreason' ) );
 		$titleObj = Title::makeTitle( NS_SPECIAL, 'Lockdb' );
 		$action = $titleObj->escapeLocalURL( 'action=submit' );
+		$reason = htmlspecialchars( $this->reason );
 		$token = htmlspecialchars( $wgUser->editToken() );
 
 		$wgOut->addHTML( <<<END
 <form id="lockdb" method="post" action="{$action}">
 {$elr}:
-<textarea name="wpLockReason" rows="10" cols="60" wrap="virtual"></textarea>
+<textarea name="wpLockReason" rows="10" cols="60" wrap="virtual">{$reason}</textarea>
 <table border="0">
 	<tr>
 		<td align="right">
@@ -91,10 +100,13 @@ END
 			$this->showForm( wfMsg( 'locknoconfirm' ) );
 			return;
 		}
-		$fp = fopen( $wgReadOnlyFile, 'w' );
+		$fp = @fopen( $wgReadOnlyFile, 'w' );
 
 		if ( false === $fp ) {
-			$wgOut->fileNotFoundError( $wgReadOnlyFile );
+			# This used to show a file not found error, but the likeliest reason for fopen()
+			# to fail at this point is insufficient permission to write to the file...good old
+			# is_writable() is plain wrong in some cases, it seems...
+			$this->notWritable();
 			return;
 		}
 		fwrite( $fp, $this->reason );
@@ -113,6 +125,12 @@ END
 		$wgOut->setSubtitle( wfMsg( 'lockdbsuccesssub' ) );
 		$wgOut->addWikiText( wfMsg( 'lockdbsuccesstext' ) );
 	}
+	
+	function notWritable() {
+		global $wgOut;
+		$wgOut->errorPage( 'lockdb', 'lockfilenotwritable' );
+	}
+	
 }
 
 ?>

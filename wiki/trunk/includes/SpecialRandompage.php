@@ -7,18 +7,16 @@
 /**
  * Constructor
  *
- * @param string $par the namespace to get a random page from (default NS_MAIN),
+ * @param $par The namespace to get a random page from (default NS_MAIN),
  *               used as e.g. Special:Randompage/Category
  */
 function wfSpecialRandompage( $par = NS_MAIN ) {
-	global $wgOut, $wgExtraRandompageSQL, $wgContLang;
+	global $wgOut, $wgExtraRandompageSQL, $wgContLang, $wgLang;
 	$fname = 'wfSpecialRandompage';
 
-	# Determine the namespace to get a random page from.
-	$namespace = $wgContLang->getNsIndex($par);
-	if ($namespace === false || $namespace < NS_MAIN) {
-		$namespace = NS_MAIN;
-	}
+	# Determine namespace
+	$t = Title::newFromText ( $par . ":Dummy" ) ;
+	$namespace = $t->getNamespace () ;
 
 	# NOTE! We use a literal constant in the SQL instead of the RAND()
 	# function because RAND() will return a different value for every row

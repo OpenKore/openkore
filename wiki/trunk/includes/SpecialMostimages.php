@@ -8,9 +8,6 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
 
-/* */
-require_once 'QueryPage.php';
-
 /**
  * @package MediaWiki
  * @subpackage SpecialPage
@@ -32,23 +29,24 @@ class MostimagesPage extends QueryPage {
 				il_to as title,
 				COUNT(*) as value
 			FROM $imagelinks
-			GROUP BY il_to
+			GROUP BY 1,2,3
 			HAVING COUNT(*) > 1
 			";
 	}
 
 	function formatResult( $skin, $result ) {
-		global $wgContLang;
+		global $wgLang, $wgContLang;
 
 		$nt = Title::makeTitle( $result->namespace, $result->title );
 		$text = $wgContLang->convert( $nt->getPrefixedText() );
 
 		$plink = $skin->makeKnownLink( $nt->getPrefixedText(), $text );
 
-		$nl = wfMsg( 'nlinks', $result->value );
+		$nl = wfMsgExt( 'nlinks', array( 'parsemag', 'escape'),
+			$wgLang->formatNum ( $result->value ) );
 		$nlink = $skin->makeKnownLink( $nt->getPrefixedText() . '#filelinks', $nl );
 
-		return "$plink ($nlink)";
+		return wfSpecialList($plink, $nlink);
 	}
 }
 

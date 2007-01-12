@@ -5,11 +5,6 @@
  */
 
 /**
- *
- */
-require_once 'Feed.php';
-
-/**
  * List of query page classes and their associated special pages, for periodic update purposes
  */
 global $wgQueryPages; // not redundant
@@ -35,11 +30,13 @@ $wgQueryPages = array(
 	array( 'ShortPagesPage',		'Shortpages'			),
 	array( 'UncategorizedCategoriesPage',	'Uncategorizedcategories'	),
 	array( 'UncategorizedPagesPage',	'Uncategorizedpages'		),
+	array( 'UncategorizedImagesPage', 'Uncategorizedimages' ),
 	array( 'UnusedCategoriesPage',		'Unusedcategories'		),
 	array( 'UnusedimagesPage',		'Unusedimages'			),
 	array( 'WantedCategoriesPage',		'Wantedcategories'		),
 	array( 'WantedPagesPage',		'Wantedpages'			),
 	array( 'UnwatchedPagesPage',		'Unwatchedpages'		),
+	array( 'UnusedtemplatesPage', 'Unusedtemplates' ),
 );
 wfRunHooks( 'wgQueryPages', array( &$wgQueryPages ) );
 
@@ -62,6 +59,14 @@ class QueryPage {
 	 * @var bool
 	 */
 	var $listoutput = false;
+	
+	/**
+	 * The offset and limit in use, as passed to the query() function
+	 *
+	 * @var integer
+	 */
+	var $offset = 0;
+	var $limit = 0;
 
 	/**
 	 * A mutator for $this->listoutput;
@@ -79,6 +84,15 @@ class QueryPage {
 	 */
 	function getName() {
 		return '';
+	}
+
+	/**
+	 * Return title object representing this page
+	 *
+	 * @return Title
+	 */
+	function getTitle() {
+		return Title::makeTitle( NS_SPECIAL, $this->getName() );
 	}
 
 	/**
@@ -243,6 +257,11 @@ class QueryPage {
 				$dbw->ignoreErrors( $ignoreW );
 				$dbr->ignoreErrors( $ignoreR );
 			}
+
+			# Update the querycache_info record for the page
+			$dbw->delete( 'querycache_info', array( 'qci_type' => $this->getName() ), $fname );
+			$dbw->insert( 'querycache_info', array( 'qci_type' => $this->getName(), 'qci_timestamp' => $dbw->timestamp() ), $fname );
+
 		}
 		return $num;
 	}
@@ -256,7 +275,10 @@ class QueryPage {
 	 * @param $shownavigation show navigation like "next 200"?
 	 */
 	function doQuery( $offset, $limit, $shownavigation=true ) {
-		global $wgUser, $wgOut, $wgContLang;
+		global $wgUser, $wgOut, $wgLang, $wgContLang;
+
+		$this->offset = $offset;
+		$this->limit = $limit;
 
 		$sname = $this->getName();
 		$fname = get_class($this) . '::doQuery';
@@ -271,8 +293,25 @@ class QueryPage {
 			$sql =
 				"SELECT qc_type as type, qc_namespace as namespace,qc_title as title, qc_value as value
 				 FROM $querycache WHERE qc_type='$type'";
-			if ( ! $this->listoutput )
-				$wgOut->addWikiText( wfMsg( 'perfcached' ) );
+
+			if( !$this->listoutput ) {
+
+				# Fetch the timestamp of this update
+				$tRes = $dbr->select( 'querycache_info', array( 'qci_timestamp' ), array( 'qci_type' => $type ), $fname );
+				$tRow = $dbr->fetchObject( $tRes );
+				
+				if( $tRow ) {
+					$updated = $wgLang->timeAndDate( $tRow->qci_timestamp, true, true );
+					$cacheNotice = wfMsg( 'perfcachedts', $updated );
+					$wgOut->addMeta( 'Data-Cache-Time', $tRow->qci_timestamp );
+					$wgOut->addScript( '<script language="JavaScript">var dataCacheTime = \'' . $tRow->qci_timestamp . '\';</script>' );
+				} else {
+					$cacheNotice = wfMsg( 'perfcached' );
+				}
+	
+				$wgOut->addWikiText( $cacheNotice );
+			}
+
 		}
 
 		$sql .= $this->getOrder();
@@ -344,7 +383,7 @@ class QueryPage {
 	/**
 	 * Similar to above, but packaging in a syndicated feed instead of a web page
 	 */
-	function doFeed( $class = '' ) {
+	function doFeed( $class = '', $limit = 50 ) {
 		global $wgFeedClasses;
 
 		if( isset($wgFeedClasses[$class]) ) {
@@ -356,7 +395,7 @@ class QueryPage {
 
 			$dbr =& wfGetDB( DB_SLAVE );
 			$sql = $this->getSQL() . $this->getOrder();
-			$sql = $dbr->limitResult( $sql, 50, 0 );
+			$sql = $dbr->limitResult( $sql, $limit, 0 );
 			$res = $dbr->query( $sql, 'QueryPage::doFeed' );
 			while( $obj = $dbr->fetchObject( $res ) ) {
 				$item = $this->feedResult( $obj );
@@ -409,10 +448,10 @@ class QueryPage {
 	}
 
 	function feedTitle() {
-		global $wgLanguageCode, $wgSitename;
+		global $wgContLanguageCode, $wgSitename;
 		$page = SpecialPage::getPage( $this->getName() );
 		$desc = $page->getDescription();
-		return "$wgSitename - $desc [$wgLanguageCode]";
+		return "$wgSitename - $desc [$wgContLanguageCode]";
 	}
 
 	function feedDesc() {

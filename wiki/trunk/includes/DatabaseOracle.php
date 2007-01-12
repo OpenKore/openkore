@@ -6,11 +6,6 @@
  * @package MediaWiki
  */
 
-/**
- * Depends on database
- */
-require_once( 'Database.php' );
-
 class OracleBlob extends DBObject {
 	function isLOB() {
 		return true;
@@ -52,7 +47,7 @@ class DatabaseOracle extends Database {
 	 */
 	function open( $server, $user, $password, $dbName ) {
 		if ( !function_exists( 'oci_connect' ) ) {
-			wfDie( "Oracle functions missing, have you compiled PHP with the --with-oci8 option?\n" );
+			throw new DBConnectionError( $this, "Oracle functions missing, have you compiled PHP with the --with-oci8 option?\n" );
 		}
 		$this->close();
 		$this->mServer = $server;
@@ -137,7 +132,7 @@ class DatabaseOracle extends Database {
 
 	function freeResult( $res ) {
 		if (!oci_free_statement($res)) {
-			wfDebugDieBacktrace( "Unable to free Oracle result\n" );
+			throw new DBUnexpectedError( $this, "Unable to free Oracle result\n" );
 		}
 		unset($this->mFetchID[$res]);
 		unset($this->mFetchCache[$res]);
@@ -385,7 +380,7 @@ class DatabaseOracle extends Database {
 	# DELETE where the condition is a join
 	function deleteJoin( $delTable, $joinTable, $delVar, $joinVar, $conds, $fname = "Database::deleteJoin" ) {
 		if ( !$conds ) {
-			wfDebugDieBacktrace( 'Database::deleteJoin() called with empty $conds' );
+			throw new DBUnexpectedError( $this, 'Database::deleteJoin() called with empty $conds' );
 		}
 
 		$delTable = $this->tableName( $delTable );
@@ -467,7 +462,7 @@ class DatabaseOracle extends Database {
 			"Query: $sql\n" .
 			"Function: $fname\n" .
 			"Error: $errno $error\n";
-		wfDebugDieBacktrace($message);
+		throw new DBUnexpectedError($this, $message);
 	}
 
 	/**
@@ -658,7 +653,7 @@ class DatabaseOracle extends Database {
 				if (is_object($value) && $value->isLOB()) {
 					$blob = oci_new_descriptor($this->mConn, OCI_D_LOB);
 					$bdata = $value->data();
-					oci_bind_by_name($stmt, ":bobj", &$blob, -1, OCI_B_BLOB);
+					oci_bind_by_name($stmt, ":bobj", $blob, -1, OCI_B_BLOB);
 				} else
 					oci_bind_by_name($stmt, ":$k", $a[$key][$k], -1);
 				if ($this->debug())

@@ -10,9 +10,6 @@
  * @package MediaWiki
  */
 
-/** */
-require_once( 'Revision.php' );
-
 /**
  * @todo document
  * @package MediaWiki
@@ -25,6 +22,7 @@ class RawPage {
 
 	function RawPage( &$article, $request = false ) {
 		global $wgRequest, $wgInputEncoding, $wgSquidMaxage, $wgJsMimeType;
+		global $wgUser;
 
 		$allowedCTypes = array('text/x-wiki', $wgJsMimeType, 'text/css', 'application/x-zope-edit');
 		$this->mArticle =& $article;
@@ -40,6 +38,7 @@ class RawPage {
 		$smaxage = $this->mRequest->getIntOrNull( 'smaxage', $wgSquidMaxage );
 		$maxage = $this->mRequest->getInt( 'maxage', $wgSquidMaxage );
 		$this->mExpandTemplates = $this->mRequest->getVal( 'templates' ) === 'expand';
+		$this->mUseMessageCache = $this->mRequest->getBool( 'usemsgcache' );
 		
 		$oldid = $this->mRequest->getInt( 'oldid' );
 		switch ( $wgRequest->getText( 'direction' ) ) {
@@ -83,6 +82,12 @@ class RawPage {
 		$this->mCharset = $wgInputEncoding;
 		$this->mSmaxage = intval( $smaxage );
 		$this->mMaxage = $maxage;
+		
+		// Output may contain user-specific data; vary for open sessions
+		$this->mPrivateCache = ( $this->mSmaxage == 0 ) ||
+			( isset( $_COOKIE[ini_get( 'session.name' )] ) ||
+			$wgUser->isLoggedIn() );
+		
 		if ( $ctype == '' or ! in_array( $ctype, $allowedCTypes ) ) {
 			$this->mContentType = 'text/x-wiki';
 		} else {
@@ -130,13 +135,14 @@ class RawPage {
 
 		header( "Content-type: ".$this->mContentType.'; charset='.$this->mCharset );
 		# allow the client to cache this for 24 hours
-		header( 'Cache-Control: s-maxage='.$this->mSmaxage.', max-age='.$this->mMaxage );
+		$mode = $this->mPrivateCache ? 'private' : 'public';
+		header( 'Cache-Control: '.$mode.', s-maxage='.$this->mSmaxage.', max-age='.$this->mMaxage );
 		echo $this->getRawText();
 		$wgOut->disable();
 	}
 
 	function getRawText() {
-		global $wgUser, $wgOut;
+		global $wgUser, $wgOut, $wgRequest;
 		if($this->mGen) {
 			$sk = $wgUser->getSkin();
 			$sk->initPage($wgOut);
@@ -155,8 +161,12 @@ class RawPage {
 		$text = '';
 		if( $this->mTitle ) {
 			// If it's a MediaWiki message we can just hit the message cache
-			if ( $this->mTitle->getNamespace() == NS_MEDIAWIKI ) {
-				$text = wfMsgForContentNoTrans( $this->mTitle->getDbkey() );
+			if ( $this->mUseMessageCache && $this->mTitle->getNamespace() == NS_MEDIAWIKI ) {
+				$key = $this->mTitle->getDBkey();
+				$text = wfMsgForContentNoTrans( $key );
+				# If the message doesn't exist, return a blank
+				if( wfEmptyMsg( $key, $text ) )
+					$text = '';
 				$found = true;
 			} else {
 				// Get it from the DB
@@ -187,14 +197,8 @@ class RawPage {
 			return '';
 		else
 			if ( $this->mExpandTemplates ) {
-				global $wgTitle;
-
-				$parser = new Parser();
-				$parser->Options( new ParserOptions() ); // We don't want this to be user-specific
-				$parser->Title( $wgTitle );
-				$parser->OutputType( OT_HTML );
-
-				return $parser->replaceVariables( $text );
+				global $wgParser;
+				return $wgParser->preprocess( $text, $this->mTitle, new ParserOptions() );
 			} else
 				return $text;
 	}

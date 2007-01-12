@@ -18,14 +18,13 @@ if( !defined( 'MEDIAWIKI' ) )
 class SkinCologneBlue extends Skin {
 
 	function getStylesheet() {
-		return "common/cologneblue.css?1";
+		return "common/cologneblue.css?2";
 	}
 	function getSkinName() {
 		return "cologneblue";
 	}
 
 	function doBeforeContent() {
-		global $wgOut, $wgTitle;
 
 		$s = "";
 		$qb = $this->qbSetting();
@@ -99,7 +98,7 @@ class SkinCologneBlue extends Skin {
 	}
 
 	function doGetUserStyles() {
-		global $wgOut, $wgStyleSheetPath;
+		global $wgOut;
 		$s = parent::doGetUserStyles();
 		$qb = $this->qbSetting();
 
@@ -164,8 +163,6 @@ class SkinCologneBlue extends Skin {
 				$s .= ' | <a href="' . $wgTitle->getLocalUrl( 'variant=' . $code ) . '">' . $varname . '</a>';
 			}
 		}
-
-
 
 		return $s;
 	}
@@ -309,7 +306,7 @@ class SkinCologneBlue extends Skin {
 
 		$s .= "<input type='text' name=\"search\" size='14' value=\""
 		  . htmlspecialchars(substr($search,0,256)) . "\" />"
-		  . "<br /><input type='submit' name=\"go\" value=\"" . htmlspecialchars( wfMsg( "go" ) ) . "\" /> <input type='submit' name=\"fulltext\" value=\"" . htmlspecialchars( wfMsg( "search" ) ) . "\" /></form>";
+		  . "<br /><input type='submit' name=\"go\" value=\"" . htmlspecialchars( wfMsg( "searcharticle" ) ) . "\" /> <input type='submit' name=\"fulltext\" value=\"" . htmlspecialchars( wfMsg( "search" ) ) . "\" /></form>";
 
 		return $s;
 	}

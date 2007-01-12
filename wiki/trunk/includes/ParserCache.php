@@ -13,7 +13,7 @@ class ParserCache {
 	/**
 	 * Get an instance of this object
 	 */
-	function &singleton() {
+	public static function &singleton() {
 		static $instance;
 		if ( !isset( $instance ) ) {
 			global $parserMemc;
@@ -33,7 +33,7 @@ class ParserCache {
 	}
 
 	function getKey( &$article, &$user ) {
-		global $wgDBname, $action;
+		global $action;
 		$hash = $user->getPageRenderingHash();
 		if( !$article->mTitle->userCanEdit() ) {
 			// section edit links are suppressed even if the user has them on
@@ -43,7 +43,7 @@ class ParserCache {
 		}
 		$pageid = intval( $article->getID() );
 		$renderkey = (int)($action == 'render');
-		$key = "$wgDBname:pcache:idhash:$pageid-$renderkey!$hash$edit";
+		$key = wfMemcKey( 'pcache', 'idhash', "$pageid-$renderkey!$hash$edit" );
 		return $key;
 	}
 
@@ -97,23 +97,31 @@ class ParserCache {
 	function save( $parserOutput, &$article, &$user ){
 		global $wgParserCacheExpireTime;
 		$key = $this->getKey( $article, $user );
-		$now = wfTimestampNow();
-		$parserOutput->setCacheTime( $now );
-
-		// Save the timestamp so that we don't have to load the revision row on view
-		$parserOutput->mTimestamp = $article->getTimestamp();
 		
-		$parserOutput->mText .= "\n<!-- Saved in parser cache with key $key and timestamp $now -->\n";
-		wfDebug( "Saved in parser cache with key $key and timestamp $now\n" );
-
-		if( $parserOutput->containsOldMagic() ){
-			$expire = 3600; # 1 hour
+		if( $parserOutput->getCacheTime() != -1 ) {
+		
+			$now = wfTimestampNow();
+			$parserOutput->setCacheTime( $now );
+	
+			// Save the timestamp so that we don't have to load the revision row on view
+			$parserOutput->mTimestamp = $article->getTimestamp();
+			
+			$parserOutput->mText .= "\n<!-- Saved in parser cache with key $key and timestamp $now -->\n";
+			wfDebug( "Saved in parser cache with key $key and timestamp $now\n" );
+	
+			if( $parserOutput->containsOldMagic() ){
+				$expire = 3600; # 1 hour
+			} else {
+				$expire = $wgParserCacheExpireTime;
+			}
+			$this->mMemc->set( $key, $parserOutput, $expire );
+		
 		} else {
-			$expire = $wgParserCacheExpireTime;
+			wfDebug( "Parser output was marked as uncacheable and has not been saved.\n" );
 		}
-		$this->mMemc->set( $key, $parserOutput, $expire );
+		
 	}
+	
 }
-
 
 ?>

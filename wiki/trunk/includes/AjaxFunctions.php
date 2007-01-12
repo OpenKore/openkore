@@ -1,16 +1,15 @@
 <?php
 
 if( !defined( 'MEDIAWIKI' ) )
-        die( -1 );
-
-require_once('WebRequest.php');
+        die( 1 );
 
 /**
- * Function converts an Javascript escaped string back into a string with specified charset (default is UTF-8).
+ * Function converts an Javascript escaped string back into a string with
+ * specified charset (default is UTF-8).
  * Modified function from http://pure-essence.net/stuff/code/utf8RawUrlDecode.phps
  *
- * @param string $source escaped with Javascript's escape() function
- * @param string $iconv_to destination character set will be used as second paramether in the iconv function. Default is UTF-8.
+ * @param $source String escaped with Javascript's escape() function
+ * @param $iconv_to String destination character set will be used as second paramether in the iconv function. Default is UTF-8.
  * @return string
  */
 function js_unescape($source, $iconv_to = 'UTF-8') {
@@ -54,7 +53,7 @@ function js_unescape($source, $iconv_to = 'UTF-8') {
  * Function coverts number of utf char into that character.
  * Function taken from: http://sk2.php.net/manual/en/function.utf8-encode.php#49336
  *
- * @param int $num
+ * @param $num Integer
  * @return utf8char
  */
 function code2utf($num){
@@ -69,35 +68,8 @@ function code2utf($num){
    return '';
 }
 
-class AjaxCachePolicy {
-	var $policy;
-
-	function AjaxCachePolicy( $policy = null ) {
-		$this->policy = $policy;
-	}
-
-	function setPolicy( $policy ) {
-		$this->policy = $policy;
-	}
-
-	function writeHeader() {
-		header ("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
-		if ( is_null( $this->policy ) ) {
-			// Bust cache in the head
-			header ("Expires: Mon, 26 Jul 1997 05:00:00 GMT");    // Date in the past
-			// always modified
-			header ("Cache-Control: no-cache, must-revalidate");  // HTTP/1.1
-			header ("Pragma: no-cache");                          // HTTP/1.0
-		} else {
-			header ("Expires: " . gmdate( "D, d M Y H:i:s", time() + $this->policy ) . " GMT");
-			header ("Cache-Control: s-max-age={$this->policy},public,max-age={$this->policy}");
-		}
-	}
-}
-			
-
 function wfSajaxSearch( $term ) {
-	global $wgContLang, $wgUser, $wgRequest, $wgAjaxCachePolicy;
+	global $wgContLang, $wgOut;
 	$limit = 16;
 	
 	$l = new Linker;
@@ -108,8 +80,6 @@ function wfSajaxSearch( $term ) {
 
 	if ( strlen( str_replace( '_', '', $term ) )<3 )
 		return;
-
-	$wgAjaxCachePolicy->setPolicy( 30*60 );
 
 	$db =& wfGetDB( DB_SLAVE );
 	$res = $db->select( 'page', 'page_title',
@@ -135,11 +105,14 @@ function wfSajaxSearch( $term ) {
 		$more = '';
 	}
 
+	$subtitlemsg = ( Title::newFromText($term) ? 'searchsubtitle' : 'searchsubtitleinvalid' );
+	$subtitle = $wgOut->parse( wfMsg( $subtitlemsg, wfEscapeWikiText($term) ) ); #FIXME: parser is missing mTitle !
+
 	$term = htmlspecialchars( $term );
-	return '<div style="float:right; border:solid 1px black;background:gainsboro;padding:2px;"><a onclick="Searching_Hide_Results();">' 
+	$html = '<div style="float:right; border:solid 1px black;background:gainsboro;padding:2px;"><a onclick="Searching_Hide_Results();">' 
 		. wfMsg( 'hideresults' ) . '</a></div>'
 		. '<h1 class="firstHeading">'.wfMsg('search')
-		. '</h1><div id="contentSub">'.wfMsg('searchquery', $term) . '</div><ul><li>'
+		. '</h1><div id="contentSub">'. $subtitle . '</div><ul><li>'
 		. $l->makeKnownLink( $wgContLang->specialPage( 'Search' ),
 					wfMsg( 'searchcontaining', $term ),
 					"search=$term&fulltext=Search" )
@@ -148,6 +121,12 @@ function wfSajaxSearch( $term ) {
 					"search=$term&go=Go" )
 		. "</li></ul><h2>" . wfMsg( 'articletitles', $term ) . "</h2>"
 		. '<ul>' .$r .'</ul>'.$more;
+		
+	$response = new AjaxResponse( $html );
+	
+	$response->setCacheDuration( 30*60 );
+		
+	return $response;
 }
 
 ?>
