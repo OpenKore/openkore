@@ -26,29 +26,27 @@
  * @bug 1555, 1947
  */
 
-/**#@+
- * Exif tag type definition
- */
-define('MW_EXIF_BYTE', 1);		# An 8-bit (1-byte) unsigned integer.
-define('MW_EXIF_ASCII', 2);		# An 8-bit byte containing one 7-bit ASCII code. The final byte is terminated with NULL.
-define('MW_EXIF_SHORT', 3);		# A 16-bit (2-byte) unsigned integer.
-define('MW_EXIF_LONG', 4);		# A 32-bit (4-byte) unsigned integer.
-define('MW_EXIF_RATIONAL', 5);		# Two LONGs. The first LONG is the numerator and the second LONG expresses the denominator
-define('MW_EXIF_UNDEFINED', 7);		# An 8-bit byte that can take any value depending on the field definition
-define('MW_EXIF_SLONG', 9);		# A 32-bit (4-byte) signed integer (2's complement notation),
-define('MW_EXIF_SRATIONAL', 10);	# Two SLONGs. The first SLONG is the numerator and the second SLONG is the denominator.
-/**#@-*/
-
-
 /**
  * @package MediaWiki
  * @subpackage Metadata
  */
 class Exif {
-	/**#@+
-	 * @var array
-	 * @access private
+	//@{
+	/* @var array
+	 * @private
 	 */
+
+	/**#@+
+	 * Exif tag type definition
+	 */
+	const BYTE      = 1;    # An 8-bit (1-byte) unsigned integer.
+	const ASCII     = 2;    # An 8-bit byte containing one 7-bit ASCII code. The final byte is terminated with NULL.
+	const SHORT     = 3;    # A 16-bit (2-byte) unsigned integer.
+	const LONG      = 4;    # A 32-bit (4-byte) unsigned integer.
+	const RATIONAL  = 5;    # Two LONGs. The first LONG is the numerator and the second LONG expresses the denominator
+	const UNDEFINED = 7;    # An 8-bit byte that can take any value depending on the field definition
+	const SLONG     = 9;    # A 32-bit (4-byte) signed integer (2's complement notation),
+	const SRATIONAL = 10;   # Two SLONGs. The first SLONG is the numerator and the second SLONG is the denominator.
 
 	/**
 	 * Exif tags grouped by category, the tagname itself is the key and the type
@@ -79,11 +77,11 @@ class Exif {
 	 */
 	var $mFormattedExifData;
 
-	/**#@-*/
+	//@}
 
-	/**#@+
-	 * @var string
-	 * @access private
+	//@{
+	/* @var string
+	 * @private
 	 */
 
 	/**
@@ -101,12 +99,12 @@ class Exif {
 	 */
 	var $log = 'exif';
 
-	/**#@-*/
+	//@}
 
 	/**
 	 * Constructor
 	 *
-	 * @param string $file
+	 * @param $file String: filename.
 	 */
 	function Exif( $file ) {
 		/**
@@ -119,50 +117,50 @@ class Exif {
 			'tiff' => array(
 				# Tags relating to image structure
 				'structure' => array(
-					'ImageWidth' => MW_EXIF_SHORT.','.MW_EXIF_LONG,		# Image width
-					'ImageLength' => MW_EXIF_SHORT.','.MW_EXIF_LONG,	# Image height
-					'BitsPerSample' => MW_EXIF_SHORT,			# Number of bits per component
+					'ImageWidth' => Exif::SHORT.','.Exif::LONG,		# Image width
+					'ImageLength' => Exif::SHORT.','.Exif::LONG,	# Image height
+					'BitsPerSample' => Exif::SHORT,			# Number of bits per component
 					# "When a primary image is JPEG compressed, this designation is not"
 					# "necessary and is omitted." (p23)
-					'Compression' => MW_EXIF_SHORT,				# Compression scheme #p23
-					'PhotometricInterpretation' => MW_EXIF_SHORT,		# Pixel composition #p23
-					'Orientation' => MW_EXIF_SHORT,				# Orientation of image #p24
-					'SamplesPerPixel' => MW_EXIF_SHORT,			# Number of components
-					'PlanarConfiguration' => MW_EXIF_SHORT,			# Image data arrangement #p24
-					'YCbCrSubSampling' => MW_EXIF_SHORT,			# Subsampling ratio of Y to C #p24
-					'YCbCrPositioning' => MW_EXIF_SHORT,			# Y and C positioning #p24-25
-					'XResolution' => MW_EXIF_RATIONAL,			# Image resolution in width direction
-					'YResolution' => MW_EXIF_RATIONAL,			# Image resolution in height direction
-					'ResolutionUnit' => MW_EXIF_SHORT,			# Unit of X and Y resolution #(p26)
+					'Compression' => Exif::SHORT,				# Compression scheme #p23
+					'PhotometricInterpretation' => Exif::SHORT,		# Pixel composition #p23
+					'Orientation' => Exif::SHORT,				# Orientation of image #p24
+					'SamplesPerPixel' => Exif::SHORT,			# Number of components
+					'PlanarConfiguration' => Exif::SHORT,			# Image data arrangement #p24
+					'YCbCrSubSampling' => Exif::SHORT,			# Subsampling ratio of Y to C #p24
+					'YCbCrPositioning' => Exif::SHORT,			# Y and C positioning #p24-25
+					'XResolution' => Exif::RATIONAL,			# Image resolution in width direction
+					'YResolution' => Exif::RATIONAL,			# Image resolution in height direction
+					'ResolutionUnit' => Exif::SHORT,			# Unit of X and Y resolution #(p26)
 				),
 
 				# Tags relating to recording offset
 				'offset' => array(
-					'StripOffsets' => MW_EXIF_SHORT.','.MW_EXIF_LONG,			# Image data location
-					'RowsPerStrip' => MW_EXIF_SHORT.','.MW_EXIF_LONG,			# Number of rows per strip
-					'StripByteCounts' => MW_EXIF_SHORT.','.MW_EXIF_LONG,			# Bytes per compressed strip
-					'JPEGInterchangeFormat' => MW_EXIF_SHORT.','.MW_EXIF_LONG,		# Offset to JPEG SOI
-					'JPEGInterchangeFormatLength' => MW_EXIF_SHORT.','.MW_EXIF_LONG,	# Bytes of JPEG data
+					'StripOffsets' => Exif::SHORT.','.Exif::LONG,			# Image data location
+					'RowsPerStrip' => Exif::SHORT.','.Exif::LONG,			# Number of rows per strip
+					'StripByteCounts' => Exif::SHORT.','.Exif::LONG,			# Bytes per compressed strip
+					'JPEGInterchangeFormat' => Exif::SHORT.','.Exif::LONG,		# Offset to JPEG SOI
+					'JPEGInterchangeFormatLength' => Exif::SHORT.','.Exif::LONG,	# Bytes of JPEG data
 				),
 
 				# Tags relating to image data characteristics
 				'characteristics' => array(
-					'TransferFunction' => MW_EXIF_SHORT,		# Transfer function
-					'WhitePoint' => MW_EXIF_RATIONAL,		# White point chromaticity
-					'PrimaryChromaticities' => MW_EXIF_RATIONAL,	# Chromaticities of primarities
-					'YCbCrCoefficients' => MW_EXIF_RATIONAL,	# Color space transformation matrix coefficients #p27
-					'ReferenceBlackWhite' => MW_EXIF_RATIONAL	# Pair of black and white reference values
+					'TransferFunction' => Exif::SHORT,		# Transfer function
+					'WhitePoint' => Exif::RATIONAL,		# White point chromaticity
+					'PrimaryChromaticities' => Exif::RATIONAL,	# Chromaticities of primarities
+					'YCbCrCoefficients' => Exif::RATIONAL,	# Color space transformation matrix coefficients #p27
+					'ReferenceBlackWhite' => Exif::RATIONAL	# Pair of black and white reference values
 				),
 
 				# Other tags
 				'other' => array(
-					'DateTime' => MW_EXIF_ASCII,            # File change date and time
-					'ImageDescription' => MW_EXIF_ASCII,    # Image title
-					'Make' => MW_EXIF_ASCII,                # Image input equipment manufacturer
-					'Model' => MW_EXIF_ASCII,               # Image input equipment model
-					'Software' => MW_EXIF_ASCII,            # Software used
-					'Artist' => MW_EXIF_ASCII,              # Person who created the image
-					'Copyright' => MW_EXIF_ASCII,           # Copyright holder
+					'DateTime' => Exif::ASCII,            # File change date and time
+					'ImageDescription' => Exif::ASCII,    # Image title
+					'Make' => Exif::ASCII,                # Image input equipment manufacturer
+					'Model' => Exif::ASCII,               # Image input equipment model
+					'Software' => Exif::ASCII,            # Software used
+					'Artist' => Exif::ASCII,              # Person who created the image
+					'Copyright' => Exif::ASCII,           # Copyright holder
 				),
 			),
 
@@ -172,130 +170,130 @@ class Exif {
 				'version' => array(
 					# TODO: NOTE: Nonexistence of this field is taken to mean nonconformance
 					# to the EXIF 2.1 AND 2.2 standards
-					'ExifVersion' => MW_EXIF_UNDEFINED,	# Exif version
-					'FlashpixVersion' => MW_EXIF_UNDEFINED, # Supported Flashpix version #p32
+					'ExifVersion' => Exif::UNDEFINED,	# Exif version
+					'FlashpixVersion' => Exif::UNDEFINED, # Supported Flashpix version #p32
 				),
 
 				# Tags relating to Image Data Characteristics
 				'characteristics' => array(
-					'ColorSpace' => MW_EXIF_SHORT,		# Color space information #p32
+					'ColorSpace' => Exif::SHORT,		# Color space information #p32
 				),
 
 				# Tags relating to image configuration
 				'configuration' => array(
-					'ComponentsConfiguration' => MW_EXIF_UNDEFINED,		# Meaning of each component #p33
-					'CompressedBitsPerPixel' => MW_EXIF_RATIONAL,		# Image compression mode
-					'PixelYDimension' => MW_EXIF_SHORT.','.MW_EXIF_LONG,	# Valid image width
-					'PixelXDimension' => MW_EXIF_SHORT.','.MW_EXIF_LONG,	# Valind image height
+					'ComponentsConfiguration' => Exif::UNDEFINED,		# Meaning of each component #p33
+					'CompressedBitsPerPixel' => Exif::RATIONAL,		# Image compression mode
+					'PixelYDimension' => Exif::SHORT.','.Exif::LONG,	# Valid image width
+					'PixelXDimension' => Exif::SHORT.','.Exif::LONG,	# Valind image height
 				),
 
 				# Tags relating to related user information
 				'user' => array(
-					'MakerNote' => MW_EXIF_UNDEFINED,			# Manufacturer notes
-					'UserComment' => MW_EXIF_UNDEFINED,			# User comments #p34
+					'MakerNote' => Exif::UNDEFINED,			# Manufacturer notes
+					'UserComment' => Exif::UNDEFINED,			# User comments #p34
 				),
 
 				# Tags relating to related file information
 				'related' => array(
-					'RelatedSoundFile' => MW_EXIF_ASCII,			# Related audio file
+					'RelatedSoundFile' => Exif::ASCII,			# Related audio file
 				),
 
 				# Tags relating to date and time
 				'dateandtime' => array(
-					'DateTimeOriginal' => MW_EXIF_ASCII,			# Date and time of original data generation #p36
-					'DateTimeDigitized' => MW_EXIF_ASCII,			# Date and time of original data generation
-					'SubSecTime' => MW_EXIF_ASCII,				# DateTime subseconds
-					'SubSecTimeOriginal' => MW_EXIF_ASCII,			# DateTimeOriginal subseconds
-					'SubSecTimeDigitized' => MW_EXIF_ASCII,			# DateTimeDigitized subseconds
+					'DateTimeOriginal' => Exif::ASCII,			# Date and time of original data generation #p36
+					'DateTimeDigitized' => Exif::ASCII,			# Date and time of original data generation
+					'SubSecTime' => Exif::ASCII,				# DateTime subseconds
+					'SubSecTimeOriginal' => Exif::ASCII,			# DateTimeOriginal subseconds
+					'SubSecTimeDigitized' => Exif::ASCII,			# DateTimeDigitized subseconds
 				),
 
 				# Tags relating to picture-taking conditions (p31)
 				'conditions' => array(
-					'ExposureTime' => MW_EXIF_RATIONAL,			# Exposure time
-					'FNumber' => MW_EXIF_RATIONAL,				# F Number
-					'ExposureProgram' => MW_EXIF_SHORT,			# Exposure Program #p38
-					'SpectralSensitivity' => MW_EXIF_ASCII,			# Spectral sensitivity
-					'ISOSpeedRatings' => MW_EXIF_SHORT,			# ISO speed rating
-					'OECF' => MW_EXIF_UNDEFINED,				# Optoelectronic conversion factor
-					'ShutterSpeedValue' => MW_EXIF_SRATIONAL,		# Shutter speed
-					'ApertureValue' => MW_EXIF_RATIONAL,			# Aperture
-					'BrightnessValue' => MW_EXIF_SRATIONAL,			# Brightness
-					'ExposureBiasValue' => MW_EXIF_SRATIONAL,		# Exposure bias
-					'MaxApertureValue' => MW_EXIF_RATIONAL,			# Maximum land aperture
-					'SubjectDistance' => MW_EXIF_RATIONAL,			# Subject distance
-					'MeteringMode' => MW_EXIF_SHORT,			# Metering mode #p40
-					'LightSource' => MW_EXIF_SHORT,				# Light source #p40-41
-					'Flash' => MW_EXIF_SHORT,				# Flash #p41-42
-					'FocalLength' => MW_EXIF_RATIONAL,			# Lens focal length
-					'SubjectArea' => MW_EXIF_SHORT,				# Subject area
-					'FlashEnergy' => MW_EXIF_RATIONAL,			# Flash energy
-					'SpatialFrequencyResponse' => MW_EXIF_UNDEFINED,	# Spatial frequency response
-					'FocalPlaneXResolution' => MW_EXIF_RATIONAL,		# Focal plane X resolution
-					'FocalPlaneYResolution' => MW_EXIF_RATIONAL,		# Focal plane Y resolution
-					'FocalPlaneResolutionUnit' => MW_EXIF_SHORT,		# Focal plane resolution unit #p46
-					'SubjectLocation' => MW_EXIF_SHORT,			# Subject location
-					'ExposureIndex' => MW_EXIF_RATIONAL,			# Exposure index
-					'SensingMethod' => MW_EXIF_SHORT,			# Sensing method #p46
-					'FileSource' => MW_EXIF_UNDEFINED,			# File source #p47
-					'SceneType' => MW_EXIF_UNDEFINED,			# Scene type #p47
-					'CFAPattern' => MW_EXIF_UNDEFINED,			# CFA pattern
-					'CustomRendered' => MW_EXIF_SHORT,			# Custom image processing #p48
-					'ExposureMode' => MW_EXIF_SHORT,			# Exposure mode #p48
-					'WhiteBalance' => MW_EXIF_SHORT,			# White Balance #p49
-					'DigitalZoomRatio' => MW_EXIF_RATIONAL,			# Digital zoom ration
-					'FocalLengthIn35mmFilm' => MW_EXIF_SHORT,		# Focal length in 35 mm film
-					'SceneCaptureType' => MW_EXIF_SHORT,			# Scene capture type #p49
-					'GainControl' => MW_EXIF_RATIONAL,			# Scene control #p49-50
-					'Contrast' => MW_EXIF_SHORT,				# Contrast #p50
-					'Saturation' => MW_EXIF_SHORT,				# Saturation #p50
-					'Sharpness' => MW_EXIF_SHORT,				# Sharpness #p50
-					'DeviceSettingDescription' => MW_EXIF_UNDEFINED,	# Desice settings description
-					'SubjectDistanceRange' => MW_EXIF_SHORT,		# Subject distance range #p51
+					'ExposureTime' => Exif::RATIONAL,			# Exposure time
+					'FNumber' => Exif::RATIONAL,				# F Number
+					'ExposureProgram' => Exif::SHORT,			# Exposure Program #p38
+					'SpectralSensitivity' => Exif::ASCII,			# Spectral sensitivity
+					'ISOSpeedRatings' => Exif::SHORT,			# ISO speed rating
+					'OECF' => Exif::UNDEFINED,				# Optoelectronic conversion factor
+					'ShutterSpeedValue' => Exif::SRATIONAL,		# Shutter speed
+					'ApertureValue' => Exif::RATIONAL,			# Aperture
+					'BrightnessValue' => Exif::SRATIONAL,			# Brightness
+					'ExposureBiasValue' => Exif::SRATIONAL,		# Exposure bias
+					'MaxApertureValue' => Exif::RATIONAL,			# Maximum land aperture
+					'SubjectDistance' => Exif::RATIONAL,			# Subject distance
+					'MeteringMode' => Exif::SHORT,			# Metering mode #p40
+					'LightSource' => Exif::SHORT,				# Light source #p40-41
+					'Flash' => Exif::SHORT,				# Flash #p41-42
+					'FocalLength' => Exif::RATIONAL,			# Lens focal length
+					'SubjectArea' => Exif::SHORT,				# Subject area
+					'FlashEnergy' => Exif::RATIONAL,			# Flash energy
+					'SpatialFrequencyResponse' => Exif::UNDEFINED,	# Spatial frequency response
+					'FocalPlaneXResolution' => Exif::RATIONAL,		# Focal plane X resolution
+					'FocalPlaneYResolution' => Exif::RATIONAL,		# Focal plane Y resolution
+					'FocalPlaneResolutionUnit' => Exif::SHORT,		# Focal plane resolution unit #p46
+					'SubjectLocation' => Exif::SHORT,			# Subject location
+					'ExposureIndex' => Exif::RATIONAL,			# Exposure index
+					'SensingMethod' => Exif::SHORT,			# Sensing method #p46
+					'FileSource' => Exif::UNDEFINED,			# File source #p47
+					'SceneType' => Exif::UNDEFINED,			# Scene type #p47
+					'CFAPattern' => Exif::UNDEFINED,			# CFA pattern
+					'CustomRendered' => Exif::SHORT,			# Custom image processing #p48
+					'ExposureMode' => Exif::SHORT,			# Exposure mode #p48
+					'WhiteBalance' => Exif::SHORT,			# White Balance #p49
+					'DigitalZoomRatio' => Exif::RATIONAL,			# Digital zoom ration
+					'FocalLengthIn35mmFilm' => Exif::SHORT,		# Focal length in 35 mm film
+					'SceneCaptureType' => Exif::SHORT,			# Scene capture type #p49
+					'GainControl' => Exif::RATIONAL,			# Scene control #p49-50
+					'Contrast' => Exif::SHORT,				# Contrast #p50
+					'Saturation' => Exif::SHORT,				# Saturation #p50
+					'Sharpness' => Exif::SHORT,				# Sharpness #p50
+					'DeviceSettingDescription' => Exif::UNDEFINED,	# Desice settings description
+					'SubjectDistanceRange' => Exif::SHORT,		# Subject distance range #p51
 				),
 
 				'other' => array(
-					'ImageUniqueID' => MW_EXIF_ASCII,	# Unique image ID
+					'ImageUniqueID' => Exif::ASCII,	# Unique image ID
 				),
 			),
 
 			# GPS Attribute Information (p52)
 			'gps' => array(
-				'GPSVersionID' => MW_EXIF_BYTE,			# GPS tag version
-				'GPSLatitudeRef' => MW_EXIF_ASCII,		# North or South Latitude #p52-53
-				'GPSLatitude' => MW_EXIF_RATIONAL,		# Latitude
-				'GPSLongitudeRef' => MW_EXIF_ASCII,		# East or West Longitude #p53
-				'GPSLongitude' => MW_EXIF_RATIONAL,		# Longitude
-				'GPSAltitudeRef' => MW_EXIF_BYTE,		# Altitude reference
-				'GPSAltitude' => MW_EXIF_RATIONAL,		# Altitude
-				'GPSTimeStamp' => MW_EXIF_RATIONAL,		# GPS time (atomic clock)
-				'GPSSatellites' => MW_EXIF_ASCII,		# Satellites used for measurement
-				'GPSStatus' => MW_EXIF_ASCII,			# Receiver status #p54
-				'GPSMeasureMode' => MW_EXIF_ASCII,		# Measurement mode #p54-55
-				'GPSDOP' => MW_EXIF_RATIONAL,			# Measurement precision
-				'GPSSpeedRef' => MW_EXIF_ASCII,			# Speed unit #p55
-				'GPSSpeed' => MW_EXIF_RATIONAL,			# Speed of GPS receiver
-				'GPSTrackRef' => MW_EXIF_ASCII,			# Reference for direction of movement #p55
-				'GPSTrack' => MW_EXIF_RATIONAL,			# Direction of movement
-				'GPSImgDirectionRef' => MW_EXIF_ASCII,		# Reference for direction of image #p56
-				'GPSImgDirection' => MW_EXIF_RATIONAL,		# Direction of image
-				'GPSMapDatum' => MW_EXIF_ASCII,			# Geodetic survey data used
-				'GPSDestLatitudeRef' => MW_EXIF_ASCII,		# Reference for latitude of destination #p56
-				'GPSDestLatitude' => MW_EXIF_RATIONAL,		# Latitude destination
-				'GPSDestLongitudeRef' => MW_EXIF_ASCII,		# Reference for longitude of destination #p57
-				'GPSDestLongitude' => MW_EXIF_RATIONAL,		# Longitude of destination
-				'GPSDestBearingRef' => MW_EXIF_ASCII,		# Reference for bearing of destination #p57
-				'GPSDestBearing' => MW_EXIF_RATIONAL,		# Bearing of destination
-				'GPSDestDistanceRef' => MW_EXIF_ASCII,		# Reference for distance to destination #p57-58
-				'GPSDestDistance' => MW_EXIF_RATIONAL,		# Distance to destination
-				'GPSProcessingMethod' => MW_EXIF_UNDEFINED,	# Name of GPS processing method
-				'GPSAreaInformation' => MW_EXIF_UNDEFINED,	# Name of GPS area
-				'GPSDateStamp' => MW_EXIF_ASCII,		# GPS date
-				'GPSDifferential' => MW_EXIF_SHORT,		# GPS differential correction
+				'GPSVersionID' => Exif::BYTE,			# GPS tag version
+				'GPSLatitudeRef' => Exif::ASCII,		# North or South Latitude #p52-53
+				'GPSLatitude' => Exif::RATIONAL,		# Latitude
+				'GPSLongitudeRef' => Exif::ASCII,		# East or West Longitude #p53
+				'GPSLongitude' => Exif::RATIONAL,		# Longitude
+				'GPSAltitudeRef' => Exif::BYTE,		# Altitude reference
+				'GPSAltitude' => Exif::RATIONAL,		# Altitude
+				'GPSTimeStamp' => Exif::RATIONAL,		# GPS time (atomic clock)
+				'GPSSatellites' => Exif::ASCII,		# Satellites used for measurement
+				'GPSStatus' => Exif::ASCII,			# Receiver status #p54
+				'GPSMeasureMode' => Exif::ASCII,		# Measurement mode #p54-55
+				'GPSDOP' => Exif::RATIONAL,			# Measurement precision
+				'GPSSpeedRef' => Exif::ASCII,			# Speed unit #p55
+				'GPSSpeed' => Exif::RATIONAL,			# Speed of GPS receiver
+				'GPSTrackRef' => Exif::ASCII,			# Reference for direction of movement #p55
+				'GPSTrack' => Exif::RATIONAL,			# Direction of movement
+				'GPSImgDirectionRef' => Exif::ASCII,		# Reference for direction of image #p56
+				'GPSImgDirection' => Exif::RATIONAL,		# Direction of image
+				'GPSMapDatum' => Exif::ASCII,			# Geodetic survey data used
+				'GPSDestLatitudeRef' => Exif::ASCII,		# Reference for latitude of destination #p56
+				'GPSDestLatitude' => Exif::RATIONAL,		# Latitude destination
+				'GPSDestLongitudeRef' => Exif::ASCII,		# Reference for longitude of destination #p57
+				'GPSDestLongitude' => Exif::RATIONAL,		# Longitude of destination
+				'GPSDestBearingRef' => Exif::ASCII,		# Reference for bearing of destination #p57
+				'GPSDestBearing' => Exif::RATIONAL,		# Bearing of destination
+				'GPSDestDistanceRef' => Exif::ASCII,		# Reference for distance to destination #p57-58
+				'GPSDestDistance' => Exif::RATIONAL,		# Distance to destination
+				'GPSProcessingMethod' => Exif::UNDEFINED,	# Name of GPS processing method
+				'GPSAreaInformation' => Exif::UNDEFINED,	# Name of GPS area
+				'GPSDateStamp' => Exif::ASCII,		# GPS date
+				'GPSDifferential' => Exif::SHORT,		# GPS differential correction
 			),
 		);
 
 		$this->file = $file;
-		$this->basename = basename( $this->file );
+		$this->basename = wfBaseName( $this->file );
 
 		$this->makeFlatExifTags();
 
@@ -317,7 +315,7 @@ class Exif {
 	}
 
 	/**#@+
-	 * @access private
+	 * @private
 	 */
 	/**
 	 * Generate a flat list of the exif tags
@@ -363,7 +361,10 @@ class Exif {
 		}
 	}
 
-	function makeFormattedData( $data = null ) {
+	/**
+	 * @todo document
+	 */
+	function makeFormattedData( ) {
 		$format = new FormatExif( $this->getFilteredData() );
 		$this->mFormattedExifData = $format->getFormattedData();
 	}
@@ -413,13 +414,13 @@ class Exif {
 	/**#@+
 	 * Validates if a tag value is of the type it should be according to the Exif spec
 	 *
-	 * @access private
+	 * @private
 	 *
-	 * @param mixed $in The input value to check
+	 * @param $in Mixed: the input value to check
 	 * @return bool
 	 */
 	function isByte( $in ) {
-		if ( sprintf('%d', $in) == $in && $in >= 0 && $in <= 255 ) {
+		if ( !is_array( $in ) && sprintf('%d', $in) == $in && $in >= 0 && $in <= 255 ) {
 			$this->debug( $in, __FUNCTION__, true );
 			return true;
 		} else {
@@ -429,6 +430,10 @@ class Exif {
 	}
 
 	function isASCII( $in ) {
+		if ( is_array( $in ) ) {
+			return false;
+		}
+		
 		if ( preg_match( "/[^\x0a\x20-\x7e]/", $in ) ) {
 			$this->debug( $in, __FUNCTION__, 'found a character not in our whitelist' );
 			return false;
@@ -443,7 +448,7 @@ class Exif {
 	}
 
 	function isShort( $in ) {
-		if ( sprintf('%d', $in) == $in && $in >= 0 && $in <= 65536 ) {
+		if ( !is_array( $in ) && sprintf('%d', $in) == $in && $in >= 0 && $in <= 65536 ) {
 			$this->debug( $in, __FUNCTION__, true );
 			return true;
 		} else {
@@ -453,7 +458,7 @@ class Exif {
 	}
 
 	function isLong( $in ) {
-		if ( sprintf('%d', $in) == $in && $in >= 0 && $in <= 4294967296 ) {
+		if ( !is_array( $in ) && sprintf('%d', $in) == $in && $in >= 0 && $in <= 4294967296 ) {
 			$this->debug( $in, __FUNCTION__, true );
 			return true;
 		} else {
@@ -463,7 +468,7 @@ class Exif {
 	}
 
 	function isRational( $in ) {
-		if ( @preg_match( "/^(\d+)\/(\d+[1-9]|[1-9]\d*)$/", $in, $m ) ) { # Avoid division by zero
+		if ( !is_array( $in ) && @preg_match( "/^(\d+)\/(\d+[1-9]|[1-9]\d*)$/", $in, $m ) ) { # Avoid division by zero
 			return $this->isLong( $m[1] ) && $this->isLong( $m[2] );
 		} else {
 			$this->debug( $in, __FUNCTION__, 'fed a non-fraction value' );
@@ -472,7 +477,7 @@ class Exif {
 	}
 
 	function isUndefined( $in ) {
-		if ( preg_match( "/^\d{4}$/", $in ) ) { // Allow ExifVersion and FlashpixVersion
+		if ( !is_array( $in ) && preg_match( "/^\d{4}$/", $in ) ) { // Allow ExifVersion and FlashpixVersion
 			$this->debug( $in, __FUNCTION__, true );
 			return true;
 		} else {
@@ -492,7 +497,7 @@ class Exif {
 	}
 
 	function isSrational( $in ) {
-		if ( preg_match( "/^(\d+)\/(\d+[1-9]|[1-9]\d*)$/", $in, $m ) ) { # Avoid division by zero
+		if ( !is_array( $in ) && preg_match( "/^(\d+)\/(\d+[1-9]|[1-9]\d*)$/", $in, $m ) ) { # Avoid division by zero
 			return $this->isSlong( $m[0] ) && $this->isSlong( $m[1] );
 		} else {
 			$this->debug( $in, __FUNCTION__, 'fed a non-fraction value' );
@@ -504,41 +509,41 @@ class Exif {
 	/**
 	 * Validates if a tag has a legal value according to the Exif spec
 	 *
-	 * @access private
+	 * @private
 	 *
-	 * @param string $tag The tag to check
-	 * @param mixed  $val The value of the tag
+	 * @param $tag String: the tag to check.
+	 * @param $val Mixed: the value of the tag.
 	 * @return bool
 	 */
 	function validate( $tag, $val ) {
 		$debug = "tag is '$tag'";
-		// Fucks up if not typecast
+		// Does not work if not typecast
 		switch( (string)$this->mFlatExifTags[$tag] ) {
-			case (string)MW_EXIF_BYTE:
+			case (string)Exif::BYTE:
 				$this->debug( $val, __FUNCTION__, $debug );
 				return $this->isByte( $val );
-			case (string)MW_EXIF_ASCII:
+			case (string)Exif::ASCII:
 				$this->debug( $val, __FUNCTION__, $debug );
 				return $this->isASCII( $val );
-			case (string)MW_EXIF_SHORT:
+			case (string)Exif::SHORT:
 				$this->debug( $val, __FUNCTION__, $debug );
 				return $this->isShort( $val );
-			case (string)MW_EXIF_LONG:
+			case (string)Exif::LONG:
 				$this->debug( $val, __FUNCTION__, $debug );
 				return $this->isLong( $val );
-			case (string)MW_EXIF_RATIONAL:
+			case (string)Exif::RATIONAL:
 				$this->debug( $val, __FUNCTION__, $debug );
 				return $this->isRational( $val );
-			case (string)MW_EXIF_UNDEFINED:
+			case (string)Exif::UNDEFINED:
 				$this->debug( $val, __FUNCTION__, $debug );
 				return $this->isUndefined( $val );
-			case (string)MW_EXIF_SLONG:
+			case (string)Exif::SLONG:
 				$this->debug( $val, __FUNCTION__, $debug );
 				return $this->isSlong( $val );
-			case (string)MW_EXIF_SRATIONAL:
+			case (string)Exif::SRATIONAL:
 				$this->debug( $val, __FUNCTION__, $debug );
 				return $this->isSrational( $val );
-			case (string)MW_EXIF_SHORT.','.MW_EXIF_LONG:
+			case (string)Exif::SHORT.','.Exif::LONG:
 				$this->debug( $val, __FUNCTION__, $debug );
 				return $this->isShort( $val ) || $this->isLong( $val );
 			default:
@@ -548,15 +553,15 @@ class Exif {
 	}
 
 	/**
-	 * Conviniance function for debugging output
+	 * Convenience function for debugging output
 	 *
-	 * @access private
+	 * @private
 	 *
-	 * @param mixed $in
-	 * @param string $fname
-	 * @param mixed $action
+	 * @param $in Mixed: 
+	 * @param $fname String: 
+	 * @param $action Mixed: , default NULL.
 	 */
-	 function debug( $in, $fname, $action = null ) {
+	 function debug( $in, $fname, $action = NULL ) {
 		$type = gettype( $in );
 		$class = ucfirst( __CLASS__ );
 		if ( $type === 'array' )
@@ -573,20 +578,20 @@ class Exif {
 	}
 
 	/**
-	 * Conviniance function for debugging output
+	 * Convenience function for debugging output
 	 *
-	 * @access private
+	 * @private
 	 *
-	 * @param string $basename The name of the file being processed
-	 * @paran string $fname The name of the function calling this function
-	 * @param bool $bool $io Specify whether we're beginning or ending
+	 * @param $fname String: the name of the function calling this function
+	 * @param $io Boolean: Specify whether we're beginning or ending
 	 */
 	function debugFile( $fname, $io ) {
 		$class = ucfirst( __CLASS__ );
-		if ( $io )
+		if ( $io ) {
 			wfDebugLog( $this->log, "$class::$fname: begin processing: '{$this->basename}'\n" );
-		else
+		} else {
 			wfDebugLog( $this->log, "$class::$fname: end processing: '{$this->basename}'\n" );
+		}
 	}
 
 }
@@ -600,14 +605,14 @@ class FormatExif {
 	 * The Exif data to format
 	 *
 	 * @var array
-	 * @access private
+	 * @private
 	 */
 	var $mExif;
 
 	/**
 	 * Constructor
 	 *
-	 * @param array $exif The Exif data to format ( as returned by
+	 * @param $exif Array: the Exif data to format ( as returned by
 	 *                    Exif::getFilteredData() )
 	 */
 	function FormatExif( $exif ) {
@@ -1022,13 +1027,13 @@ class FormatExif {
 	}
 
 	/**
-	 * Conviniance function for getFormattedData()
+	 * Convenience function for getFormattedData()
 	 *
-	 * @access private
+	 * @private
 	 *
-	 * @param string $tag The tag name to pass on
-	 * @param string $val The value of the tag
-	 * @param string $arg An argument to pass ($1)
+	 * @param $tag String: the tag name to pass on
+	 * @param $val String: the value of the tag
+	 * @param $arg String: an argument to pass ($1)
 	 * @return string A wfMsg of "exif-$tag-$val" in lower case
 	 */
 	function msg( $tag, $val, $arg = null ) {
@@ -1043,9 +1048,9 @@ class FormatExif {
 	 * Format a number, convert numbers from fractions into floating point
 	 * numbers
 	 *
-	 * @access private
+	 * @private
 	 *
-	 * @param mixed $num The value to format
+	 * @param $num Mixed: the value to format
 	 * @return mixed A floating point number or whatever we were fed
 	 */
 	function formatNum( $num ) {
@@ -1058,9 +1063,9 @@ class FormatExif {
 	/**
 	 * Format a rational number, reducing fractions
 	 *
-	 * @access private
+	 * @private
 	 *
-	 * @param mixed $num The value to format
+	 * @param $num Mixed: the value to format
 	 * @return mixed A floating point number or whatever we were fed
 	 */
 	function formatFraction( $num ) {
@@ -1079,10 +1084,10 @@ class FormatExif {
 	/**
 	 * Calculate the greatest common divisor of two integers.
 	 *
-	 * @param int $a
-	 * @param int $b
+	 * @param $a Integer: FIXME
+	 * @param $b Integer: FIXME
 	 * @return int
-	 * @access private
+	 * @private
 	 */
 	function gcd( $a, $b ) {
 		/*
@@ -1103,4 +1108,17 @@ class FormatExif {
 		return $a;
 	}
 }
+
+/**
+ * MW 1.6 compatibility
+ */
+define( 'MW_EXIF_BYTE', Exif::BYTE );
+define( 'MW_EXIF_ASCII', Exif::ASCII );
+define( 'MW_EXIF_SHORT', Exif::SHORT );
+define( 'MW_EXIF_LONG', Exif::LONG );
+define( 'MW_EXIF_RATIONAL', Exif::RATIONAL );
+define( 'MW_EXIF_UNDEFINED', Exif::UNDEFINED );
+define( 'MW_EXIF_SLONG', Exif::SLONG );
+define( 'MW_EXIF_SRATIONAL', Exif::SRATIONAL );
+
 ?>

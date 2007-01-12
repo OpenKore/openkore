@@ -3,18 +3,38 @@
 var sajax_debug_mode = false;
 var sajax_request_type = "GET";
 
-var started;
-var typing;
-var memory=null;
-var body=null;
-var oldbody=null;
-
+/**
+* if sajax_debug_mode is true, this function outputs given the message into 
+* the element with id = sajax_debug; if no such element exists in the document, 
+* it is injected.
+*/
 function sajax_debug(text) {
-	if (sajax_debug_mode)
-		alert("RSD: " + text)
+	if (!sajax_debug_mode) return false;
+	
+	var e= document.getElementById('sajax_debug');
+	
+	if (!e) {
+		e= document.createElement("p");
+		e.className= 'sajax_debug';
+		e.id= 'sajax_debug';
+		
+		var b= document.getElementsByTagName("body")[0];
+		
+		if (b.firstChild) b.insertBefore(e, b.firstChild);
+		else b.appendChild(e);
+	}
+	
+	var m= document.createElement("div");
+	m.appendChild( document.createTextNode( text ) );
+	
+	e.appendChild( m );
+	
+	return true;
 }
 
-
+/**
+* compatibility wrapper for creating a new XMLHttpRequest object. 
+*/
 function sajax_init_object() {
 	sajax_debug("sajax_init_object() called..")
 	var A;
@@ -31,30 +51,51 @@ function sajax_init_object() {
 		A = new XMLHttpRequest();
 	if (!A)
 		sajax_debug("Could not create connection object.");
+	
 	return A;
 }
 
-
-function sajax_do_call(func_name, args) {
+/**
+* Perform an ajax call to mediawiki. Calls are handeled by AjaxDispatcher.php
+*   func_name - the name of the function to call. Must be registered in $wgAjaxExportList
+*   args - an array of arguments to that function
+*   target - the target that will handle the result of the call. If this is a function,
+*            if will be called with the XMLHttpRequest as a parameter; if it's an input
+*            element, its value will be set to the resultText; if it's another type of
+*            element, its innerHTML will be set to the resultText.
+*
+* Example:
+*    sajax_do_call('doFoo', [1, 2, 3], document.getElementById("showFoo"));
+*
+* This will call the doFoo function via MediaWiki's AjaxDispatcher, with
+* (1, 2, 3) as the parameter list, and will show the result in the element
+* with id = showFoo
+*/
+function sajax_do_call(func_name, args, target) {
 	var i, x, n;
 	var uri;
 	var post_data;
 	uri = wgServer + "/" + wgScriptPath + "/index.php?action=ajax";
 	if (sajax_request_type == "GET") {
 		if (uri.indexOf("?") == -1)
-			uri = uri + "?rs=" + escape(func_name);
+			uri = uri + "?rs=" + encodeURIComponent(func_name);
 		else
-			uri = uri + "&rs=" + escape(func_name);
-		for (i = 0; i < args.length-1; i++)
-			uri = uri + "&rsargs[]=" + escape(args[i]);
+			uri = uri + "&rs=" + encodeURIComponent(func_name);
+		for (i = 0; i < args.length; i++)
+			uri = uri + "&rsargs[]=" + encodeURIComponent(args[i]);
 		//uri = uri + "&rsrnd=" + new Date().getTime();
 		post_data = null;
 	} else {
-		post_data = "rs=" + escape(func_name);
-		for (i = 0; i < args.length-1; i++)
-			post_data = post_data + "&rsargs[]=" + escape(args[i]);
+		post_data = "rs=" + encodeURIComponent(func_name);
+		for (i = 0; i < args.length; i++)
+			post_data = post_data + "&rsargs[]=" + encodeURIComponent(args[i]);
 	}
 	x = sajax_init_object();
+	if (!x) {
+		alert("AJAX not supported");
+		return false;
+	}
+	
 	x.open(sajax_request_type, uri, true);
 	if (sajax_request_type == "POST") {
 		x.setRequestHeader("Method", "POST " + uri + " HTTP/1.1");
@@ -65,113 +106,37 @@ function sajax_do_call(func_name, args) {
 	x.onreadystatechange = function() {
 		if (x.readyState != 4)
 			return;
-		sajax_debug("received " + x.responseText);
-		var status;
-		var data;
-		status = x.responseText.charAt(0);
-		data = x.responseText.substring(2);
-		if (status == "-")
-			alert("Error: " + data);
-		else
-			args[args.length-1](data);
+			
+		sajax_debug("received (" + x.status + " " + x.statusText + ") " + x.responseText);
+		
+		//if (x.status != 200)
+		//	alert("Error: " + x.status + " " + x.statusText + ": " + x.responseText);
+		//else
+		
+		if ( typeof( target ) == 'function' ) {
+			target( x );
+		}
+		else if ( typeof( target ) == 'object' ) {
+			if ( target.tagName == 'INPUT' ) {
+				if (x.status == 200) target.value= x.responseText;
+				//else alert("Error: " + x.status + " " + x.statusText + " (" + x.responseText + ")");
+			}
+			else {
+				if (x.status == 200) target.innerHTML = x.responseText;
+				else target.innerHTML= "<div class='error'>Error: " + x.status + " " + x.statusText + " (" + x.responseText + ")</div>";
+			}
+		}
+		else {
+			alert("bad target for sajax_do_call: not a function or object: " + target);
+		}
+		
+		return;
 	}
+	
+	sajax_debug(func_name + " uri = " + uri + " / post = " + post_data);
 	x.send(post_data);
-	sajax_debug(func_name + " uri = " + uri + "/post = " + post_data);
 	sajax_debug(func_name + " waiting..");
 	delete x;
-}
-
-// Remove the typing barrier to allow call() to complete
-function Search_doneTyping()
-{
-	typing=false;
-}
-
-// Wait 500ms to run call()
-function Searching_Go()
-{
-        setTimeout("Searching_Call()", 500);
-}
-
-// If the user is typing wait until they are done.
-function Search_Typing() {
-	started=true;
-	typing=true;
-	window.status = "Waiting until you're done typing...";
-	setTimeout("Search_doneTyping()", 500);
-
-	// I believe these are needed by IE for when the users press return?
-	if (window.event)
-	{
-		if (event.keyCode == 13)
-		{
-			event.cancelBubble = true;
-			event.returnValue = false;
-		}
-	}
-}
-
-// Set the body div to the results
-function Searching_SetResult(result)
-{
-        //body.innerHTML = result;
-	t = document.getElementById("searchTarget");
-	if ( t == null ) {
-		oldbody=body.innerHTML;
-		body.innerHTML= '<div id="searchTargetContainer"><div id="searchTarget" ></div></div>' ;
-		t = document.getElementById("searchTarget");
-	}
-	t.innerHTML = result;
-	t.style.display='block';
-}
-
-function Searching_Hide_Results()
-{
-	t = document.getElementById("searchTarget");
-	t.style.display='none';
-	body.innerHTML = oldbody;
-}
-
-
-// This will call the php function that will eventually
-// return a results table
-function Searching_Call()
-{
-	var x;
-	Searching_Go();
-
-	//Don't proceed if user is typing
-	if (typing)
-		return;
-
-	x = document.getElementById("searchInput").value;
-
-	// Don't search again if the query is the same
-	if (x==memory)
-		return;
-
-	memory=x;
-	if (started) {
-		// Don't search for blank or < 3 chars.
-		if ((x=="") || (x.length < 3))
-		{
-			return;
-		}
-		x_wfSajaxSearch(x, Searching_SetResult);
-	}
-}
-
-function x_wfSajaxSearch() {
-	sajax_do_call( "wfSajaxSearch", x_wfSajaxSearch.arguments );
-}
-
 	
-//Initialize
-function sajax_onload() {
-	x = document.getElementById( 'searchInput' );
-	x.onkeypress= function() { Search_Typing(); };
-	Searching_Go();
-	body = document.getElementById("content");
+	return true;
 }
-
-hookEvent("load", sajax_onload);

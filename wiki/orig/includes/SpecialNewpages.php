@@ -7,19 +7,17 @@
 
 /**
  *
- */
-require_once( 'QueryPage.php' );
-
-/**
- *
  * @package MediaWiki
  * @subpackage SpecialPage
  */
 class NewPagesPage extends QueryPage {
-	var $namespace;
 
-	function NewPagesPage( $namespace = NS_MAIN ) {
+	var $namespace;
+	var $username = '';
+
+	function NewPagesPage( $namespace = NS_MAIN, $username = '' ) {
 		$this->namespace = $namespace;
+		$this->username = $username;
 	}
 
 	function getName() {
@@ -31,11 +29,22 @@ class NewPagesPage extends QueryPage {
 		return false;
 	}
 
+	function makeUserWhere( &$dbo ) {
+		$title = Title::makeTitleSafe( NS_USER, $this->username );
+		if( $title ) {
+			return ' AND rc_user_text = ' . $dbo->addQuotes( $title->getText() );
+		} else {
+			return '';
+		}
+	}
+
 	function getSQL() {
 		global $wgUser, $wgUseRCPatrol;
 		$usepatrol = ( $wgUseRCPatrol && $wgUser->isAllowed( 'patrol' ) ) ? 1 : 0;
 		$dbr =& wfGetDB( DB_SLAVE );
 		extract( $dbr->tableNames( 'recentchanges', 'page', 'text' ) );
+
+		$uwhere = $this->makeUserWhere( $dbr );
 
 		# FIXME: text will break with compression
 		return
@@ -55,7 +64,8 @@ class NewPagesPage extends QueryPage {
 				page_latest as rev_id
 			FROM $recentchanges,$page
 			WHERE rc_cur_id=page_id AND rc_new=1
-			AND rc_namespace=" . $this->namespace . " AND page_is_redirect=0";
+			AND rc_namespace=" . $this->namespace . " AND page_is_redirect=0
+			{$uwhere}";
 	}
 	
 	function preprocessResults( &$dbo, &$res ) {
@@ -71,28 +81,37 @@ class NewPagesPage extends QueryPage {
 			$dbo->dataSeek( $res, 0 );
 	}
 
+	/**
+	 * Format a row, providing the timestamp, links to the page/history, size, user links, and a comment
+	 *
+	 * @param $skin Skin to use
+	 * @param $result Result row
+	 * @return string
+	 */
 	function formatResult( $skin, $result ) {
-		global $wgLang, $wgContLang, $wgUser, $wgUseRCPatrol;
-		$u = $result->user;
-		$ut = $result->user_text;
+		global $wgLang, $wgContLang;
+		$dm = $wgContLang->getDirMark();
 
-		$length = wfMsgHtml( 'nbytes', htmlspecialchars( $wgLang->formatNum( $result->length ) ) );
-		$d = $wgLang->timeanddate( $result->timestamp, true );
+		$title = Title::makeTitleSafe( $result->namespace, $result->title );
+		$time = $wgLang->timeAndDate( $result->timestamp, true );
+		$plink = $skin->makeKnownLinkObj( $title, '', $this->patrollable( $result ) ? 'rcid=' . $result->rcid : '' );
+		$hist = $skin->makeKnownLinkObj( $title, wfMsgHtml( 'hist' ), 'action=history' );
+		$length = wfMsgHtml( 'nbytes', $wgLang->formatNum( htmlspecialchars( $result->length ) ) );
+		$ulink = $skin->userLink( $result->user, $result->user_text ) . $skin->userToolLinks( $result->user, $result->user_text );
+		$comment = $skin->commentBlock( $result->comment );
 
-		# Since there is no diff link, we need to give users a way to
-		# mark the article as patrolled if it isn't already
-		$ns = $wgContLang->getNsText( $result->namespace );
-		if( $wgUseRCPatrol && !is_null( $result->usepatrol ) && $result->usepatrol && $result->patrolled == 0 && $wgUser->isAllowed( 'patrol' ) ) {
-			$link = $skin->makeKnownLink( $ns . ':' . $result->title, '', "rcid={$result->rcid}" );
-		} else {
-			$link = $skin->makeKnownLink( $ns . ':' . $result->title, '' );
-		}
+		return "{$time} {$dm}{$plink} ({$hist}) {$dm}[{$length}] {$dm}{$ulink} {$comment}";
+	}
 
-		$userTools = $skin->userLink( $u, $ut ) . $skin->userToolLinks( $u, $ut );
-
-		$s = "{$d} {$link} ({$length}) . . {$userTools}";
-		$s .= $skin->commentBlock( $result->comment );
-		return $s;
+	/**
+	 * Should a specific result row provide "patrollable" links?
+	 *
+	 * @param $result Result row
+	 * @return bool
+	 */
+	function patrollable( $result ) {
+		global $wgUser, $wgUseRCPatrol;
+		return $wgUseRCPatrol && $wgUser->isAllowed( 'patrol' ) && !$result->patrolled;
 	}
 
 	function feedItemDesc( $row ) {
@@ -106,6 +125,33 @@ class NewPagesPage extends QueryPage {
 		}
 		return parent::feedItemDesc( $row );
 	}
+	
+	/**
+	 * Show a form for filtering namespace and username
+	 *
+	 * @return string
+	 */	
+	function getPageHeader() {
+		$self = Title::makeTitle( NS_SPECIAL, $this->getName() );
+		$form = wfOpenElement( 'form', array( 'method' => 'post', 'action' => $self->getLocalUrl() ) );
+		$form .= '<table><tr><td align="right">' . wfMsgHtml( 'namespace' ) . '</td>';
+		$form .= '<td>' . HtmlNamespaceSelector( $this->namespace ) . '</td><tr>';
+		$form .= '<tr><td align="right">' . wfMsgHtml( 'newpages-username' ) . '</td>';
+		$form .= '<td>' . wfInput( 'username', 30, $this->username ) . '</td></tr>';
+		$form .= '<tr><td></td><td>' . wfSubmitButton( wfMsg( 'allpagessubmit' ) ) . '</td></tr></table>';
+		$form .= wfHidden( 'offset', $this->offset ) . wfHidden( 'limit', $this->limit ) . '</form>';
+		return $form;
+	}
+	
+	/**
+	 * Link parameters
+	 *
+	 * @return array
+	 */
+	function linkParameters() {
+		return( array( 'namespace' => $this->namespace, 'username' => $this->username ) );
+	}
+	
 }
 
 /**
@@ -116,6 +162,7 @@ function wfSpecialNewpages($par, $specialPage) {
 
 	list( $limit, $offset ) = wfCheckLimits();
 	$namespace = NS_MAIN;
+	$username = '';
 
 	if ( $par ) {
 		$bits = preg_split( '/\s*,\s*/', trim( $par ) );
@@ -136,13 +183,19 @@ function wfSpecialNewpages($par, $specialPage) {
 				}
 			}
 		}
+	} else {
+		if( $ns = $wgRequest->getInt( 'namespace', 0 ) )
+			$namespace = $ns;
+		if( $un = $wgRequest->getText( 'username' ) )
+			$username = $un;
 	}
+	
 	if ( ! isset( $shownavigation ) )
 		$shownavigation = ! $specialPage->including();
 
-	$npp = new NewPagesPage( $namespace );
+	$npp = new NewPagesPage( $namespace, $username );
 
-	if ( ! $npp->doFeed( $wgRequest->getVal( 'feed' ) ) )
+	if ( ! $npp->doFeed( $wgRequest->getVal( 'feed' ), $limit ) )
 		$npp->doQuery( $offset, $limit, $shownavigation );
 }
 

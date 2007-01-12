@@ -1,9 +1,16 @@
 <?php
-/* $Id: mctest.php 12896 2006-01-28 08:22:24Z timstarling $ */
+/* $Id: mctest.php 16738 2006-10-02 17:04:13Z brion $ */
 
 $optionsWithArgs = array( 'i' );
 
 require_once('commandLine.inc');
+
+function microtime_float()
+{
+   list($usec, $sec) = explode(" ", microtime());
+   return ((float)$usec + (float)$sec);
+}
+
 
 #$wgDebugLogFile = '/dev/stdout';
 
@@ -47,12 +54,6 @@ foreach ( $wgMemCachedServers as $server ) {
         $exectime=microtime_float()-$time_start;
 
 	print "set: $set   incr: $incr   get: $get time: $exectime\n";
-}
-
-function microtime_float()
-{
-   list($usec, $sec) = explode(" ", microtime());
-   return ((float)$usec + (float)$sec);
 }
 
 

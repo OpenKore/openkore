@@ -4,31 +4,25 @@
  * @todo document
  */
 
-/** */
-require_once( 'Database.php' );
-require_once( 'Article.php' );
-
-/** @+ */
-define( 'MW_REV_DELETED_TEXT',       1 );
-define( 'MW_REV_DELETED_COMMENT',    2 );
-define( 'MW_REV_DELETED_USER',       4 );
-define( 'MW_REV_DELETED_RESTRICTED', 8 );
-/** @- */
-
 /**
  * @package MediaWiki
  * @todo document
  */
 class Revision {
+	const DELETED_TEXT 	= 1;
+	const DELETED_COMMENT 	= 2;
+	const DELETED_USER 	= 4;
+	const DELETED_RESTRICTED = 8;
+	
 	/**
 	 * Load a page revision from a given revision ID number.
 	 * Returns null if no such revision can be found.
 	 *
 	 * @param int $id
-	 * @static
 	 * @access public
+	 * @static
 	 */
-	function newFromId( $id ) {
+	public static function newFromId( $id ) {
 		return Revision::newFromConds(
 			array( 'page_id=rev_page',
 			       'rev_id' => intval( $id ) ) );
@@ -45,7 +39,7 @@ class Revision {
 	 * @access public
 	 * @static
 	 */
-	function newFromTitle( &$title, $id = 0 ) {
+	public static function newFromTitle( &$title, $id = 0 ) {
 		if( $id ) {
 			$matchId = intval( $id );
 		} else {
@@ -59,6 +53,21 @@ class Revision {
 	}
 
 	/**
+	 * Load a page revision from a given revision ID number.
+	 * Returns null if no such revision can be found.
+	 *
+	 * @param Database $db
+	 * @param int $id
+	 * @access public
+	 * @static
+	 */
+	public static function loadFromId( &$db, $id ) {
+		return Revision::loadFromConds( $db,
+			array( 'page_id=rev_page',
+			       'rev_id' => intval( $id ) ) );
+	}
+
+	/**
 	 * Load either the current, or a specified, revision
 	 * that's attached to a given page. If not attached
 	 * to that page, will return null.
@@ -68,8 +77,9 @@ class Revision {
 	 * @param int $id
 	 * @return Revision
 	 * @access public
+	 * @static
 	 */
-	function loadFromPageId( &$db, $pageid, $id = 0 ) {
+	public static function loadFromPageId( &$db, $pageid, $id = 0 ) {
 		$conds=array('page_id=rev_page','rev_page'=>intval( $pageid ), 'page_id'=>intval( $pageid ));
 		if( $id ) {
 			$conds['rev_id']=intval($id);
@@ -89,8 +99,9 @@ class Revision {
 	 * @param int $id
 	 * @return Revision
 	 * @access public
+	 * @static
 	 */
-	function loadFromTitle( &$db, $title, $id = 0 ) {
+	public static function loadFromTitle( &$db, $title, $id = 0 ) {
 		if( $id ) {
 			$matchId = intval( $id );
 		} else {
@@ -116,7 +127,7 @@ class Revision {
 	 * @access public
 	 * @static
 	 */
-	function loadFromTimestamp( &$db, &$title, $timestamp ) {
+	public static function loadFromTimestamp( &$db, &$title, $timestamp ) {
 		return Revision::loadFromConds(
 			$db,
 			array( 'rev_timestamp'  => $db->timestamp( $timestamp ),
@@ -130,10 +141,10 @@ class Revision {
 	 *
 	 * @param array $conditions
 	 * @return Revision
-	 * @static
 	 * @access private
+	 * @static
 	 */
-	function newFromConds( $conditions ) {
+	private static function newFromConds( $conditions ) {
 		$db =& wfGetDB( DB_SLAVE );
 		$row = Revision::loadFromConds( $db, $conditions );
 		if( is_null( $row ) ) {
@@ -150,10 +161,10 @@ class Revision {
 	 * @param Database $db
 	 * @param array $conditions
 	 * @return Revision
-	 * @static
 	 * @access private
+	 * @static
 	 */
-	function loadFromConds( &$db, $conditions ) {
+	private static function loadFromConds( &$db, $conditions ) {
 		$res = Revision::fetchFromConds( $db, $conditions );
 		if( $res ) {
 			$row = $res->fetchObject();
@@ -174,10 +185,10 @@ class Revision {
 	 *
 	 * @param Title $title
 	 * @return ResultWrapper
-	 * @static
 	 * @access public
+	 * @static
 	 */
-	function fetchAllRevisions( &$title ) {
+	public static function fetchAllRevisions( &$title ) {
 		return Revision::fetchFromConds(
 			wfGetDB( DB_SLAVE ),
 			array( 'page_namespace' => $title->getNamespace(),
@@ -192,10 +203,10 @@ class Revision {
 	 *
 	 * @param Title $title
 	 * @return ResultWrapper
-	 * @static
 	 * @access public
+	 * @static
 	 */
-	function fetchRevision( &$title ) {
+	public static function fetchRevision( &$title ) {
 		return Revision::fetchFromConds(
 			wfGetDB( DB_SLAVE ),
 			array( 'rev_id=page_latest',
@@ -212,10 +223,10 @@ class Revision {
 	 * @param Database $db
 	 * @param array $conditions
 	 * @return ResultWrapper
-	 * @static
 	 * @access private
+	 * @static
 	 */
-	function fetchFromConds( &$db, $conditions ) {
+	private static function fetchFromConds( &$db, $conditions ) {
 		$res = $db->select(
 			array( 'page', 'revision' ),
 			array( 'page_namespace',
@@ -262,10 +273,13 @@ class Revision {
 				$this->mTitle = null;
 			}
 
+			// Lazy extraction...
+			$this->mText      = null;
 			if( isset( $row->old_text ) ) {
-				$this->mText  = $this->getRevisionText( $row );
+				$this->mTextRow = $row;
 			} else {
-				$this->mText  = null;
+				// 'text' table row entry will be lazy-loaded
+				$this->mTextRow = null;
 			}
 		} elseif( is_array( $row ) ) {
 			// Build a new revision to be saved...
@@ -287,7 +301,7 @@ class Revision {
 			$this->mTitle     = null; # Load on demand if needed
 			$this->mCurrent   = false;
 		} else {
-			wfDebugDieBacktrace( 'Revision constructor passed invalid row format.' );
+			throw new MWException( 'Revision constructor passed invalid row format.' );
 		}
 	}
 
@@ -323,12 +337,20 @@ class Revision {
 			array( 'page_namespace', 'page_title' ),
 			array( 'page_id=rev_page',
 			       'rev_id' => $this->mId ),
-			'Revision::getTItle' );
+			'Revision::getTitle' );
 		if( $row ) {
 			$this->mTitle = Title::makeTitle( $row->page_namespace,
 			                                   $row->page_title );
 		}
 		return $this->mTitle;
+	}
+
+	/**
+	 * Set the title of the revision
+	 * @param Title $title
+	 */
+	function setTitle( $title ) {
+		$this->mTitle = $title;
 	}
 
 	/**
@@ -343,7 +365,7 @@ class Revision {
 	 * @return int
 	 */
 	function getUser() {
-		if( $this->isDeleted( MW_REV_DELETED_USER ) ) {
+		if( $this->isDeleted( self::DELETED_USER ) ) {
 			return 0;
 		} else {
 			return $this->mUser;
@@ -363,7 +385,7 @@ class Revision {
 	 * @return string
 	 */
 	function getUserText() {
-		if( $this->isDeleted( MW_REV_DELETED_USER ) ) {
+		if( $this->isDeleted( self::DELETED_USER ) ) {
 			return "";
 		} else {
 			return $this->mUserText;
@@ -383,7 +405,7 @@ class Revision {
 	 * @return string
 	 */
 	function getComment() {
-		if( $this->isDeleted( MW_REV_DELETED_COMMENT ) ) {
+		if( $this->isDeleted( self::DELETED_COMMENT ) ) {
 			return "";
 		} else {
 			return $this->mComment;
@@ -406,7 +428,7 @@ class Revision {
 	}
 
 	/**
-	 * int $field one of MW_REV_DELETED_* bitfield constants
+	 * int $field one of DELETED_* bitfield constants
 	 * @return bool
 	 */
 	function isDeleted( $field ) {
@@ -418,7 +440,7 @@ class Revision {
 	 * @return string
 	 */
 	function getText() {
-		if( $this->isDeleted( MW_REV_DELETED_TEXT ) ) {
+		if( $this->isDeleted( self::DELETED_TEXT ) ) {
 			return "";
 		} else {
 			return $this->getRawText();
@@ -514,7 +536,6 @@ class Revision {
 				wfProfileOut( $fname );
 				return false;
 			}
-			require_once('ExternalStore.php');
 			$text=ExternalStore::fetchFromURL($url);
 		}
 
@@ -530,6 +551,11 @@ class Revision {
 			if( in_array( 'object', $flags ) ) {
 				# Generic compressed storage
 				$obj = unserialize( $text );
+				if ( !is_object( $obj ) ) {
+					// Invalid object
+					wfProfileOut( $fname );
+					return false;
+				}
 				$text = $obj->getText();
 			}
 
@@ -599,12 +625,11 @@ class Revision {
 			} else {
 				$store = $wgDefaultExternalStore;
 			}
-			require_once('ExternalStore.php');
 			// Store and get the URL
 			$data = ExternalStore::insert( $store, $data );
 			if ( !$data ) {
 				# This should only happen in the case of a configuration error, where the external store is not valid
-				wfDebugDieBacktrace( "Unable to store text to external storage $store" );
+				throw new MWException( "Unable to store text to external storage $store" );
 			}
 			if ( $flags ) {
 				$flags .= ',';
@@ -644,7 +669,6 @@ class Revision {
 		);
 
 		$this->mId = !is_null($rev_id) ? $rev_id : $dbw->insertId();
-
 		wfProfileOut( $fname );
 		return $this->mId;
 	}
@@ -659,14 +683,37 @@ class Revision {
 	function loadText() {
 		$fname = 'Revision::loadText';
 		wfProfileIn( $fname );
-
-		$dbr =& wfGetDB( DB_SLAVE );
-		$row = $dbr->selectRow( 'text',
-			array( 'old_text', 'old_flags' ),
-			array( 'old_id' => $this->getTextId() ),
-			$fname);
+		
+		// Caching may be beneficial for massive use of external storage
+		global $wgRevisionCacheExpiry, $wgMemc;
+		$key = wfMemcKey( 'revisiontext', 'textid', $this->getTextId() );
+		if( $wgRevisionCacheExpiry ) {
+			$text = $wgMemc->get( $key );
+			if( is_string( $text ) ) {
+				wfProfileOut( $fname );
+				return $text;
+			}
+		}
+		
+		// If we kept data for lazy extraction, use it now...
+		if ( isset( $this->mTextRow ) ) {
+			$row = $this->mTextRow;
+			$this->mTextRow = null;
+		} else {
+			$row = null;
+		}
+		
+		if( !$row ) {
+			// Text data is immutable; check slaves first.
+			$dbr =& wfGetDB( DB_SLAVE );
+			$row = $dbr->selectRow( 'text',
+				array( 'old_text', 'old_flags' ),
+				array( 'old_id' => $this->getTextId() ),
+				$fname);
+		}
 
 		if( !$row ) {
+			// Possible slave lag!
 			$dbw =& wfGetDB( DB_MASTER );
 			$row = $dbw->selectRow( 'text',
 				array( 'old_text', 'old_flags' ),
@@ -675,6 +722,11 @@ class Revision {
 		}
 
 		$text = Revision::getRevisionText( $row );
+		
+		if( $wgRevisionCacheExpiry ) {
+			$wgMemc->set( $key, $text, $wgRevisionCacheExpiry );
+		}
+		
 		wfProfileOut( $fname );
 
 		return $text;
@@ -725,15 +777,15 @@ class Revision {
 	/**
 	 * Determine if the current user is allowed to view a particular
 	 * field of this revision, if it's marked as deleted.
-	 * @param int $field one of MW_REV_DELETED_TEXT,
-	 *                          MW_REV_DELETED_COMMENT,
-	 *                          MW_REV_DELETED_USER
+	 * @param int $field one of self::DELETED_TEXT,
+	 *                          self::DELETED_COMMENT,
+	 *                          self::DELETED_USER
 	 * @return bool
 	 */
 	function userCan( $field ) {
 		if( ( $this->mDeleted & $field ) == $field ) {
 			global $wgUser;
-			$permission = ( $this->mDeleted & MW_REV_DELETED_RESTRICTED ) == MW_REV_DELETED_RESTRICTED
+			$permission = ( $this->mDeleted & self::DELETED_RESTRICTED ) == self::DELETED_RESTRICTED
 				? 'hiderevision'
 				: 'deleterevision';
 			wfDebug( "Checking for $permission due to $field match on $this->mDeleted\n" );
@@ -743,6 +795,48 @@ class Revision {
 		}
 	}
 
+
+	/**
+	 * Get rev_timestamp from rev_id, without loading the rest of the row
+	 * @param integer $id
+	 */
+	static function getTimestampFromID( $id ) {
+		$timestamp = $dbr->selectField( 'revision', 'rev_timestamp', 
+			array( 'rev_id' => $id ), __METHOD__ );
+		if ( $timestamp === false ) {
+			# Not in slave, try master
+			$dbw =& wfGetDB( DB_MASTER );
+			$timestamp = $dbw->selectField( 'revision', 'rev_timestamp', 
+				array( 'rev_id' => $id ), __METHOD__ );
+		}
+		return $timestamp;
+	}
+	
+	static function countByPageId( $db, $id ) {
+		$row = $db->selectRow( 'revision', 'COUNT(*) AS revCount',
+			array( 'rev_page' => $id ), __METHOD__ );
+		if( $row ) {
+			return $row->revCount;
+		}
+		return 0;
+	}
+	
+	static function countByTitle( $db, $title ) {
+		$id = $title->getArticleId();
+		if( $id ) {
+			return Revision::countByPageId( $db, $id );
+		}
+		return 0;
+	}
 }
+
+/**
+ * Aliases for backwards compatibility with 1.6
+ */
+define( 'MW_REV_DELETED_TEXT', Revision::DELETED_TEXT );
+define( 'MW_REV_DELETED_COMMENT', Revision::DELETED_COMMENT );
+define( 'MW_REV_DELETED_USER', Revision::DELETED_USER );
+define( 'MW_REV_DELETED_RESTRICTED', Revision::DELETED_RESTRICTED );
+
 
 ?>

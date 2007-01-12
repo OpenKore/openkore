@@ -23,14 +23,10 @@
  * @subpackage SpecialPage
  */
 
-/** */
-require_once( 'SearchEngine.php' );
-require_once( 'Revision.php' );
-
 /**
  * Entry point
  *
- * @param string $par (default '')
+ * @param $par String: (default '')
  */
 function wfSpecialSearch( $par = '' ) {
 	global $wgRequest, $wgUser;
@@ -59,7 +55,7 @@ class SpecialSearch {
 	 *
 	 * @param WebRequest $request
 	 * @param User $user
-	 * @access public
+	 * @public
 	 */
 	function SpecialSearch( &$request, &$user ) {
 		list( $this->limit, $this->offset ) = $request->getLimitOffset( 20, 'searchlimit' );
@@ -76,11 +72,12 @@ class SpecialSearch {
 	/**
 	 * If an exact title match can be found, jump straight ahead to
 	 * @param string $term
-	 * @access public
+	 * @public
 	 */
 	function goResult( $term ) {
 		global $wgOut;
 		global $wgGoToEdit;
+		global $wgContLang;
 
 		$this->setupPage( $term );
 
@@ -114,14 +111,14 @@ class SpecialSearch {
 				$editurl = $t->escapeLocalURL( 'action=edit' );
 			}
 		}
-		$wgOut->addWikiText( wfMsg('nogomatch', ":$term" ) );
+		$wgOut->addWikiText( wfMsg( 'noexactmatch', wfEscapeWikiText( $term ) ) );
 
 		return $this->showResults( $term );
 	}
 
 	/**
 	 * @param string $term
-	 * @access public
+	 * @public
 	 */
 	function showResults( $term ) {
 		$fname = 'SpecialSearch::showResults';
@@ -155,7 +152,7 @@ class SpecialSearch {
 				wfMsg( 'googlesearch',
 					htmlspecialchars( $term ),
 					htmlspecialchars( $wgInputEncoding ),
-					htmlspecialchars( wfMsg( 'search' ) )
+					htmlspecialchars( wfMsg( 'searchbutton' ) )
 				)
 			);
 			wfProfileOut( $fname );
@@ -225,7 +222,8 @@ class SpecialSearch {
 	function setupPage( $term ) {
 		global $wgOut;
 		$wgOut->setPageTitle( wfMsg( 'searchresults' ) );
-		$wgOut->setSubtitle( htmlspecialchars( wfMsg( 'searchquery', $term ) ) );
+		$subtitlemsg = ( Title::newFromText($term) ? 'searchsubtitle' : 'searchsubtitleinvalid' );
+		$wgOut->setSubtitle( $wgOut->parse( wfMsg( $subtitlemsg, wfEscapeWikiText($term) ) ) );
 		$wgOut->setArticleRelated( false );
 		$wgOut->setRobotpolicy( 'noindex,nofollow' );
 	}
@@ -236,7 +234,7 @@ class SpecialSearch {
 	 *
 	 * @param User $user
 	 * @return array
-	 * @access private
+	 * @private
 	 */
 	function userNamespaces( &$user ) {
 		$arr = array();
@@ -254,7 +252,7 @@ class SpecialSearch {
 	 *
 	 * @param WebRequest $request
 	 * @return array
-	 * @access private
+	 * @private
 	 */
 	function powerSearch( &$request ) {
 		$arr = array();
@@ -269,7 +267,7 @@ class SpecialSearch {
 	/**
 	 * Reconstruct the 'power search' options for links
 	 * @return array
-	 * @access private
+	 * @private
 	 */
 	function powerSearchOptions() {
 		$opt = array();
@@ -316,7 +314,7 @@ class SpecialSearch {
 	function showHit( $result, $terms ) {
 		$fname = 'SpecialSearch::showHit';
 		wfProfileIn( $fname );
-		global $wgUser, $wgContLang;
+		global $wgUser, $wgContLang, $wgLang;
 
 		$t = $result->getTitle();
 		if( is_null( $t ) ) {
@@ -333,7 +331,8 @@ class SpecialSearch {
 		$link = $sk->makeKnownLinkObj( $t );
 		$revision = Revision::newFromTitle( $t );
 		$text = $revision->getText();
-		$size = wfMsg( 'nbytes', strlen( $text ) );
+		$size = wfMsgExt( 'nbytes', array( 'parsemag', 'escape'),
+			$wgLang->formatNum( strlen( $text ) ) );
 
 		$lines = explode( "\n", $text );
 

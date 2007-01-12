@@ -8,18 +8,25 @@
  * @todo document
  * @package MediaWiki
  */
-require_once(dirname(__FILE__).'/Profiling.php');
+require_once(dirname(__FILE__).'/Profiler.php');
 
 class ProfilerSimple extends Profiler {
+	var $mMinimumTime = 0;
+
 	function ProfilerSimple() {
 		global $wgRequestTime,$wgRUstart;
 		if (!empty($wgRequestTime) && !empty($wgRUstart)) {
-			$this->mWorkStack[] = array( '-total', 0, $this->getTime($wgRequestTime),$this->getCpuTime($wgRUstart));
+			$this->mWorkStack[] = array( '-total', 0, $wgRequestTime,$this->getCpuTime($wgRUstart));
 
 			$elapsedcpu = $this->getCpuTime() - $this->getCpuTime($wgRUstart);
-			$elapsedreal = $this->getTime() - $this->getTime($wgRequestTime);
+			$elapsedreal = microtime(true) - $wgRequestTime;
 
 			$entry =& $this->mCollated["-setup"];
+			if (!is_array($entry)) {
+				$entry = array('cpu'=> 0.0, 'cpu_sq' => 0.0, 'real' => 0.0, 'real_sq' => 0.0, 'count' => 0);
+				$this->mCollated[$functionname] =& $entry;
+				
+			}
 			$entry['cpu'] += $elapsedcpu;
 			$entry['cpu_sq'] += $elapsedcpu*$elapsedcpu;
 			$entry['real'] += $elapsedreal;
@@ -28,12 +35,16 @@ class ProfilerSimple extends Profiler {
 		}
 	}
 
+	function setMinimum( $min ) {
+		$this->mMinimumTime = $min;
+	}
+
 	function profileIn($functionname) {
 		global $wgDebugFunctionEntry;
 		if ($wgDebugFunctionEntry) {
 			$this->debug(str_repeat(' ', count($this->mWorkStack)).'Entering '.$functionname."\n");
 		}
-		$this->mWorkStack[] = array($functionname, count( $this->mWorkStack ), $this->getTime(), $this->getCpuTime());
+		$this->mWorkStack[] = array($functionname, count( $this->mWorkStack ), microtime(true), $this->getCpuTime());		
 	}
 
 	function profileOut($functionname) {
@@ -60,10 +71,13 @@ class ProfilerSimple extends Profiler {
 				$this->debug( "$message\n" );
 			}
 			$entry =& $this->mCollated[$functionname];
-
 			$elapsedcpu = $this->getCpuTime() - $octime;
-			$elapsedreal = $this->getTime() - $ortime;
-
+			$elapsedreal = microtime(true) - $ortime;
+			if (!is_array($entry)) {
+				$entry = array('cpu'=> 0.0, 'cpu_sq' => 0.0, 'real' => 0.0, 'real_sq' => 0.0, 'count' => 0);
+				$this->mCollated[$functionname] =& $entry;
+				
+			}
 			$entry['cpu'] += $elapsedcpu;
 			$entry['cpu_sq'] += $elapsedcpu*$elapsedcpu;
 			$entry['real'] += $elapsedreal;
@@ -78,14 +92,20 @@ class ProfilerSimple extends Profiler {
 	}
 
 	function getCpuTime($ru=null) {
-		if ($ru==null)
-			$ru=getrusage();
-		return ($ru['ru_utime.tv_sec']+$ru['ru_stime.tv_sec']+($ru['ru_utime.tv_usec']+$ru['ru_stime.tv_usec'])*1e-6);
+		if ( function_exists( 'getrusage' ) ) {
+			if ( $ru == null )
+				$ru = getrusage();
+			return ($ru['ru_utime.tv_sec'] + $ru['ru_stime.tv_sec'] + ($ru['ru_utime.tv_usec'] + 
+				$ru['ru_stime.tv_usec']) * 1e-6);
+		} else {
+			return 0;
+		}
 	}
 
+	/* If argument is passed, it assumes that it is dual-format time string, returns proper float time value */
 	function getTime($time=null) {
 		if ($time==null)
-			$time=microtime();
+			return microtime(true);
 		list($a,$b)=explode(" ",$time);
 		return (float)($a+$b);
 	}

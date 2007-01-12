@@ -10,9 +10,6 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
 
-/* */
-require_once 'QueryPage.php';
-
 /**
  * @package MediaWiki
  * @subpackage SpecialPage
@@ -37,7 +34,7 @@ class WantedCategoriesPage extends QueryPage {
 			FROM $categorylinks
 			LEFT JOIN $page ON cl_to = page_title AND page_namespace = ". NS_CATEGORY ."
 			WHERE page_title IS NULL
-			GROUP BY cl_to
+			GROUP BY 1,2,3
 			";
 	}
 
@@ -59,7 +56,7 @@ class WantedCategoriesPage extends QueryPage {
 	}
 
 	function formatResult( $skin, $result ) {
-		global $wgContLang;
+		global $wgLang, $wgContLang;
 
 		$nt = Title::makeTitle( $result->namespace, $result->title );
 		$text = $wgContLang->convert( $nt->getText() );
@@ -68,8 +65,9 @@ class WantedCategoriesPage extends QueryPage {
 			$skin->makeLinkObj( $nt, htmlspecialchars( $text ) ) :
 			$skin->makeBrokenLinkObj( $nt, htmlspecialchars( $text ) );
 
-		$nlinks = wfMsg( 'nlinks', $result->value );
-		return "$plink ($nlinks)";
+		$nlinks = wfMsgExt( 'nmembers', array( 'parsemag', 'escape'),
+			$wgLang->formatNum( $result->value ) );
+		return wfSpecialList($plink, $nlinks);
 	}
 }
 

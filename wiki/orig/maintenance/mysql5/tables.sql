@@ -490,6 +490,23 @@ CREATE TABLE /*$wgDBprefix*/externallinks (
   KEY (el_index(60))
 ) TYPE=InnoDB, DEFAULT CHARSET=utf8;
 
+-- 
+-- Track interlanguage links
+--
+CREATE TABLE /*$wgDBprefix*/langlinks (
+  -- page_id of the referring page
+  ll_from int(8) unsigned NOT NULL default '0',
+  
+  -- Language code of the target
+  ll_lang varchar(10) binary NOT NULL default '',
+
+  -- Title of the target, including namespace
+  ll_title varchar(255) binary NOT NULL default '',
+
+  UNIQUE KEY (ll_from, ll_lang),
+  KEY (ll_lang, ll_title)
+) ENGINE=InnoDB, DEFAULT CHARSET=utf8;
+
 --
 -- Contains a single row with some aggregate info
 -- on the state of the site.
@@ -566,8 +583,14 @@ CREATE TABLE /*$wgDBprefix*/ipblocks (
   -- Indicates that the IP address was banned because a banned
   -- user accessed a page through it. If this is 1, ipb_address
   -- will be hidden, and the block identified by block ID number.
-  ipb_auto tinyint(1) NOT NULL default '0',
+  ipb_auto bool NOT NULL default '0',
   
+  -- If set to 1, block applies only to logged-out users
+  ipb_anon_only bool NOT NULL default 0,
+
+  -- Block prevents account creation from matching IP addresses
+  ipb_create_account bool NOT NULL default 1,
+    
   -- Time at which the block will expire.
   ipb_expiry char(14) binary NOT NULL default '',
   
@@ -577,9 +600,15 @@ CREATE TABLE /*$wgDBprefix*/ipblocks (
   ipb_range_end varchar(32) NOT NULL default '',
 
   PRIMARY KEY ipb_id (ipb_id),
-  INDEX ipb_address (ipb_address),
+
+  -- Unique index to support "user already blocked" messages
+  -- Any new options which prevent collisions should be included
+  UNIQUE INDEX ipb_address (ipb_address(255), ipb_user, ipb_auto, ipb_anon_only),
+
   INDEX ipb_user (ipb_user),
-  INDEX ipb_range (ipb_range_start(8), ipb_range_end(8))
+  INDEX ipb_range (ipb_range_start(8), ipb_range_end(8)),
+  INDEX ipb_timestamp (ipb_timestamp),
+  INDEX ipb_expiry (ipb_expiry)
 
 ) TYPE=InnoDB, DEFAULT CHARSET=utf8;
 
@@ -669,6 +698,58 @@ CREATE TABLE /*$wgDBprefix*/oldimage (
 
 
 --
+-- Record of deleted file data
+--
+CREATE TABLE /*$wgDBprefix*/filearchive (
+  -- Unique row id
+  fa_id int not null auto_increment,
+  
+  -- Original base filename; key to image.img_name, page.page_title, etc
+  fa_name varchar(255) binary NOT NULL default '',
+  
+  -- Filename of archived file, if an old revision
+  fa_archive_name varchar(255) binary default '',
+  
+  -- Which storage bin (directory tree or object store) the file data
+  -- is stored in. Should be 'deleted' for files that have been deleted;
+  -- any other bin is not yet in use.
+  fa_storage_group varchar(16),
+  
+  -- SHA-1 of the file contents plus extension, used as a key for storage.
+  -- eg 8f8a562add37052a1848ff7771a2c515db94baa9.jpg
+  --
+  -- If NULL, the file was missing at deletion time or has been purged
+  -- from the archival storage.
+  fa_storage_key varchar(64) binary default '',
+  
+  -- Deletion information, if this file is deleted.
+  fa_deleted_user int,
+  fa_deleted_timestamp char(14) binary default '',
+  fa_deleted_reason text,
+  
+  -- Duped fields from image
+  fa_size int(8) unsigned default '0',
+  fa_width int(5)  default '0',
+  fa_height int(5)  default '0',
+  fa_metadata mediumblob,
+  fa_bits int(3)  default '0',
+  fa_media_type ENUM("UNKNOWN", "BITMAP", "DRAWING", "AUDIO", "VIDEO", "MULTIMEDIA", "OFFICE", "TEXT", "EXECUTABLE", "ARCHIVE") default NULL,
+  fa_major_mime ENUM("unknown", "application", "audio", "image", "text", "video", "message", "model", "multipart") default "unknown",
+  fa_minor_mime varchar(32) default "unknown",
+  fa_description tinyblob default '',
+  fa_user int(5) unsigned default '0',
+  fa_user_text varchar(255) binary default '',
+  fa_timestamp char(14) binary default '',
+  
+  PRIMARY KEY (fa_id),
+  INDEX (fa_name, fa_timestamp),             -- pick out by image name
+  INDEX (fa_storage_group, fa_storage_key),  -- pick out dupe files
+  INDEX (fa_deleted_timestamp),              -- sort by deletion time
+  INDEX (fa_deleted_user)                    -- sort by deleter
+
+) TYPE=InnoDB, DEFAULT CHARSET=utf8;
+
+--
 -- Primarily a summary table for Special:Recentchanges,
 -- this table contains some additional info on edits from
 -- the last few days, see Article::editUpdates()
@@ -728,7 +809,8 @@ CREATE TABLE /*$wgDBprefix*/recentchanges (
   INDEX rc_namespace_title (rc_namespace, rc_title),
   INDEX rc_cur_id (rc_cur_id),
   INDEX new_name_timestamp(rc_new,rc_namespace,rc_timestamp),
-  INDEX rc_ip (rc_ip)
+  INDEX rc_ip (rc_ip),
+  INDEX rc_ns_usertext ( rc_namespace, rc_user_text )
 
 ) TYPE=InnoDB, DEFAULT CHARSET=utf8;
 
@@ -864,19 +946,6 @@ CREATE TABLE /*$wgDBprefix*/transcache (
 	UNIQUE INDEX tc_url_idx(tc_url)
 ) TYPE=InnoDB, DEFAULT CHARSET=utf8;
 
--- For article validation
-CREATE TABLE /*$wgDBprefix*/validate (
-  val_user int(11) NOT NULL default '0',
-  val_page int(11) unsigned NOT NULL default '0',
-  val_revision int(11) unsigned NOT NULL default '0',
-  val_type int(11) unsigned NOT NULL default '0',
-  val_value int(11) default '0',
-  val_comment varchar(255) NOT NULL default '',
-  val_ip varchar(20) NOT NULL default '',
-  KEY val_user (val_user,val_revision)
-) TYPE=InnoDB, DEFAULT CHARSET=utf8;
-
-
 CREATE TABLE /*$wgDBprefix*/logging (
   -- Symbolic keys for the general log type and the action type
   -- within the log. The output format will be controlled by the
@@ -937,3 +1006,17 @@ CREATE TABLE /*$wgDBprefix*/job (
   PRIMARY KEY job_id (job_id),
   KEY (job_cmd, job_namespace, job_title)
 ) TYPE=InnoDB, DEFAULT CHARSET=utf8;
+
+-- Details of updates to cached special pages
+CREATE TABLE /*$wgDBprefix*/querycache_info (
+
+	-- Special page name
+	-- Corresponds to a qc_type value
+	qci_type varchar(32) NOT NULL default '',
+
+	-- Timestamp of last update
+	qci_timestamp char(14) NOT NULL default '19700101000000',
+
+	UNIQUE KEY ( qci_type )
+
+) TYPE=InnoDB;

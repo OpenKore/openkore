@@ -8,9 +8,6 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
  */
 
-/* */
-require_once 'QueryPage.php';
-
 /**
  * @package MediaWiki
  * @subpackage SpecialPage
@@ -34,23 +31,26 @@ class MostcategoriesPage extends QueryPage {
 			FROM $categorylinks
 			LEFT JOIN $page ON cl_from = page_id
 			WHERE page_namespace = " . NS_MAIN . "
-			GROUP BY cl_from
+			GROUP BY 1,2,3
 			HAVING COUNT(*) > 1
 			";
 	}
 
 	function formatResult( $skin, $result ) {
-		global $wgContLang;
+		global $wgContLang, $wgLang;
 
 		$nt = Title::makeTitle( $result->namespace, $result->title );
 		$text = $wgContLang->convert( $nt->getPrefixedText() );
 
 		$plink = $skin->makeKnownLink( $nt->getPrefixedText(), $text );
 
-		$nl = wfMsg( 'ncategories', $result->value );
-		$nlink = $skin->makeKnownLink( $wgContLang->specialPage( 'Categories' ), $nl, 'article=' . $nt->getPrefixedURL() );
+		$nl = wfMsgExt( 'ncategories', array( 'parsemag', 'escape' ),
+			$wgLang->formatNum( $result->value ) );
 
-		return "{$plink} ({$nlink})";
+		$nlink = $skin->makeKnownLink( $wgContLang->specialPage( 'Categories' ),
+			$nl, 'article=' . $nt->getPrefixedURL() );
+
+		return wfSpecialList($plink, $nlink);
 	}
 }
 

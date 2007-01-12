@@ -14,6 +14,9 @@ class DumpHTML {
 	# Destination directory
 	var $dest;
 
+	# Skip existing files
+	var $noOverwrite = false;
+
 	# Show interlanguage links?
 	var $interwiki = true;
 
@@ -21,13 +24,19 @@ class DumpHTML {
 	var $depth = 3;
 
 	# Directory that commons images are copied into
-	var $sharedStaticPath;
+	var $sharedStaticDirectory;
+
+	# Directory that the images are in, after copying
+	var $destUploadDirectory;
 
 	# Relative path to image directory
 	var $imageRel = 'upload';
 
 	# Copy commons images instead of symlinking
 	var $forceCopy = false;
+
+	# Make a copy of all images encountered
+	var $makeSnapshot = false;
 
 	# Make links assuming the script path is in the same directory as
 	# the destination
@@ -39,39 +48,132 @@ class DumpHTML {
 	# Has setupGlobals been called?
 	var $setupDone = false;
 
+	# Has to compress html pages
+	var $compress = false;
+
 	# List of raw pages used in the current article
 	var $rawPages;
 
-	function DumpHTML( $settings ) {
+	# Skin to use
+	var $skin = 'htmldump';
+
+	# Checkpoint stuff
+	var $checkpointFile = false, $checkpoints = false;
+
+	var $startID = 1, $endID = false;
+
+	var $sliceNumerator = 1, $sliceDenominator = 1;
+
+	# Max page ID, lazy initialised
+	var $maxPageID = false;
+
+	function DumpHTML( $settings = array() ) {
 		foreach ( $settings as $var => $value ) {
 			$this->$var = $value;
 		}
+	}
+
+	function loadCheckpoints() {
+		if ( $this->checkpoints !== false ) {
+			return true;
+		} elseif ( !$this->checkpointFile ) {
+			return false;
+		} else {
+			$lines = @file( $this->checkpointFile );
+			if ( $lines === false ) {
+				print "Starting new checkpoint file \"{$this->checkpointFile}\"\n";
+				$this->checkpoints = array();
+			} else {
+				$lines = array_map( 'trim', $lines );
+				$this->checkpoints = array();
+				foreach ( $lines as $line ) {
+					list( $name, $value ) = explode( '=', $line, 2 );
+					$this->checkpoints[$name] = $value;
+				}
+			}
+			return true;
+		}
+	}
+
+	function getCheckpoint( $type, $defValue = false ) {
+		if ( !$this->loadCheckpoints() ) {
+			return false;
+		}
+		if ( !isset( $this->checkpoints[$type] ) ) {
+			return false;
+		} else {
+			return $this->checkpoints[$type];
+		}
+	}
+
+	function setCheckpoint( $type, $value ) {
+		if ( !$this->checkpointFile ) {
+			return;
+		}
+		$this->checkpoints[$type] = $value;
+		$blob = '';
+		foreach ( $this->checkpoints as $type => $value ) {
+			$blob .= "$type=$value\n";
+		}
+		file_put_contents( $this->checkpointFile, $blob );
+	}
+
+	function doEverything() {
+		if ( $this->getCheckpoint( 'everything' ) == 'done' ) {
+			print "Checkpoint says everything is already done\n";
+			return;
+		}
+		$this->doArticles();
+		$this->doLocalImageDescriptions();
+		$this->doSharedImageDescriptions();
+		$this->doCategories();
+		$this->doRedirects();
+		if ( $this->sliceNumerator == 1 ) {
+			$this->doSpecials();
+		}
+
+		$this->setCheckpoint( 'everything', 'done' );
 	}
 
 	/**
 	 * Write a set of articles specified by start and end page_id
 	 * Skip categories and images, they will be done separately
 	 */
-	function doArticles( $start, $end = false ) {
-		$fname = 'DumpHTML::doArticles';
+	function doArticles() {
+		if ( $this->endID === false ) {
+			$end = $this->getMaxPageID();
+		} else {
+			$end = $this->endID;
+		}
+		$start = $this->startID;
+		
+		# Start from the checkpoint
+		$cp = $this->getCheckpoint( 'article' );
+		if ( $cp == 'done' ) {
+			print "Articles already done\n";
+			return;
+		} elseif ( $cp !== false ) {
+			$start = $cp;
+			print "Resuming article dump from checkpoint at page_id $start of $end\n";
+		} else {
+			print "Starting from page_id $start of $end\n";
+		}
+
+		# Move the start point to the correct slice if it isn't there already
+		$start = $this->modSliceStart( $start );
 
 		$this->setupGlobals();
-
-		if ( $end === false ) {
-			$dbr =& wfGetDB( DB_SLAVE );
-			$end = $dbr->selectField( 'page', 'max(page_id)', false, $fname );
-		}
 
 		$mainPageObj = Title::newMainPage();
 		$mainPage = $mainPageObj->getPrefixedDBkey();
 
-
-		for ($id = $start; $id <= $end; $id++) {
+		for ( $id = $start, $i = 0; $id <= $end; $id += $this->sliceDenominator, $i++ ) {
 			wfWaitForSlaves( 20 );
-			if ( !($id % REPORTING_INTERVAL) ) {
+			if ( !( $i % REPORTING_INTERVAL) ) {
 				print "Processing ID: $id\r";
+				$this->setCheckpoint( 'article', $id );
 			}
-			if ( !($id % (REPORTING_INTERVAL*10) ) ) {
+			if ( !($i % (REPORTING_INTERVAL*10) ) ) {
 				print "\n";
 			}
 			$title = Title::newFromID( $id );
@@ -82,6 +184,7 @@ class DumpHTML {
 				}
 			}
 		}
+		$this->setCheckpoint( 'article', 'done' );
 		print "\n";
 	}
 
@@ -104,6 +207,11 @@ class DumpHTML {
 
 		$title = Title::newMainPage();
 		$text = $this->getArticleHTML( $title );
+		
+		# Parse the XHTML to find the images
+		$images = $this->findImages( $text );
+		$this->copyImages( $images );
+		
 		$file = fopen( "{$this->dest}/index.html", "w" );
 		if ( !$file ) {
 			print "\nCan't open index.html for writing\n";
@@ -115,49 +223,98 @@ class DumpHTML {
 	}
 
 	function doImageDescriptions() {
-		global $wgSharedUploadDirectory;
+		$this->doLocalImageDescriptions();
+		$this->doSharedImageDescriptions();
+	}
 
-		$fname = 'DumpHTML::doImageDescriptions';
+	/**
+	 * Dump image description pages that don't have an associated article, but do
+	 * have a local image
+	 */
+	function doLocalImageDescriptions() {
+		global $wgSharedUploadDirectory;
+		$chunkSize = 1000;
+
+		$dbr =& wfGetDB( DB_SLAVE );
+		
+		$cp = $this->getCheckpoint( 'local image' );
+		if ( $cp == 'done' ) {
+			print "Local image descriptions already done\n";
+			return;
+		} elseif ( $cp !== false ) {
+			print "Writing image description pages starting from $cp\n";
+			$conds = array(	'img_name >= ' . $dbr->addQuotes( $cp ) );
+		} else {
+			print "Writing image description pages for local images\n";		
+			$conds = false;
+		}
 
 		$this->setupGlobals();
-
-		/**
-		 * Dump image description pages that don't have an associated article, but do
-		 * have a local image
-		 */
-		$dbr =& wfGetDB( DB_SLAVE );
-		extract( $dbr->tableNames( 'image', 'page' ) );
-		$res = $dbr->select( 'image', array( 'img_name' ), false, $fname );
-
 		$i = 0;
-		print "Writing image description pages for local images\n";
-		$num = $dbr->numRows( $res );
-		while ( $row = $dbr->fetchObject( $res ) ) {
-			wfWaitForSlaves( 10 );
-			if ( !( ++$i % REPORTING_INTERVAL ) ) {
-				print "Done $i of $num\r";
+
+		do {
+			$res = $dbr->select( 'image', array( 'img_name' ), $conds, __METHOD__, 
+				array( 'ORDER BY' => 'img_name', 'LIMIT' => $chunkSize ) );
+			$numRows = $dbr->numRows( $res );
+
+			while ( $row = $dbr->fetchObject( $res ) ) {
+				# Update conds for the next chunk query
+				$conds = array( 'img_name > ' . $dbr->addQuotes( $row->img_name ) );
+				
+				// Slice the result set with a filter
+				if ( !$this->sliceFilter( $row->img_name ) ) {
+					continue;
+				}
+
+				wfWaitForSlaves( 10 );
+				if ( !( ++$i % REPORTING_INTERVAL ) ) {
+					print "{$row->img_name}\n";
+					if ( $row->img_name !== 'done' ) {
+						$this->setCheckpoint( 'local image', $row->img_name );
+					}
+				}
+				$title = Title::makeTitle( NS_IMAGE, $row->img_name );
+				if ( $title->getArticleID() ) {
+					// Already done by dumpHTML
+					continue;
+				}
+				$this->doArticle( $title );
 			}
-			$title = Title::makeTitle( NS_IMAGE, $row->img_name );
-			if ( $title->getArticleID() ) {
-				// Already done by dumpHTML
-				continue;
-			}
-			$this->doArticle( $title );
-		}
+			$dbr->freeResult( $res );
+		} while ( $numRows );
+		
+		$this->setCheckpoint( 'local image', 'done' );
 		print "\n";
+	}
 
-		/**
-		 * Dump images which only have a real description page on commons
-		 */
-		print "Writing description pages for commons images\n";
+	/**
+	 * Dump images which only have a real description page on commons
+	 */
+	function doSharedImageDescriptions() {
+		list( $start, $end ) = $this->sliceRange( 0, 255 );
+
+		$cp = $this->getCheckpoint( 'shared image' );
+		if ( $cp == 'done' ) {
+			print "Shared description pages already done\n";
+			return;
+		} elseif ( $cp !== false ) {
+			print "Writing description pages for commons images starting from directory $cp/255\n";
+			$start = $cp;
+		} else {
+			print "Writing description pages for commons images\n";
+		}
+
+		$this->setupGlobals();
 		$i = 0;
-		for ( $hash = 0; $hash < 256; $hash++ ) {
+		for ( $hash = $start; $hash <= $end; $hash++ ) {
+			$this->setCheckpoint( 'shared image', $hash );
+
 			$dir = sprintf( "%01x/%02x", intval( $hash / 16 ), $hash );
-			$paths = array_merge( glob( "{$this->sharedStaticPath}/$dir/*" ),
-				glob( "{$this->sharedStaticPath}/thumb/$dir/*" ) );
+			$paths = array_merge( glob( "{$this->sharedStaticDirectory}/$dir/*" ),
+				glob( "{$this->sharedStaticDirectory}/thumb/$dir/*" ) );
 
 			foreach ( $paths as $path ) {
-				$file = basename( $path );
+				$file = wfBaseName( $path );
 				if ( !(++$i % REPORTING_INTERVAL ) ) {
 					print "$i\r";
 				}
@@ -166,55 +323,119 @@ class DumpHTML {
 				$this->doArticle( $title );
 			}
 		}
+		$this->setCheckpoint( 'shared image', 'done' );
 		print "\n";
 	}
 
 	function doCategories() {
-		$fname = 'DumpHTML::doCategories';
+		$chunkSize = 1000;
+		
 		$this->setupGlobals();
-
 		$dbr =& wfGetDB( DB_SLAVE );
-		print "Selecting categories...";
-		$sql = 'SELECT DISTINCT cl_to FROM ' . $dbr->tableName( 'categorylinks' );
-		$res = $dbr->query( $sql, $fname );
-
-		print "\nWriting " . $dbr->numRows( $res ).  " category pages\n";
-		$i = 0;
-		while ( $row = $dbr->fetchObject( $res ) ) {
-			wfWaitForSlaves( 10 );
-			if ( !(++$i % REPORTING_INTERVAL ) ) {
-				print "$i\r";
-			}
-			$title = Title::makeTitle( NS_CATEGORY, $row->cl_to );
-			$this->doArticle( $title );
+		
+		$cp = $this->getCheckpoint( 'category' );
+		if ( $cp == 'done' ) {
+			print "Category pages already done\n";
+			return;
+		} elseif ( $cp !== false ) {
+			print "Resuming category page dump from $cp\n";
+			$conds = array( 'cl_to >= ' . $dbr->addQuotes( $cp ) );
+		} else {
+			print "Starting category pages\n";
+			$conds = false;
 		}
+
+		$i = 0;
+		do {
+			$res = $dbr->select( 'categorylinks', 'DISTINCT cl_to', $conds, __METHOD__, 
+				array( 'ORDER BY' => 'cl_to', 'LIMIT' => $chunkSize ) );
+			$numRows = $dbr->numRows( $res );
+			
+			while ( $row = $dbr->fetchObject( $res ) ) {
+				// Set conditions for next chunk
+				$conds = array( 'cl_to > ' . $dbr->addQuotes( $row->cl_to ) );
+				
+				// Filter pages from other slices
+				if ( !$this->sliceFilter( $row->cl_to ) ) {
+					continue;
+				}
+
+				wfWaitForSlaves( 10 );
+				if ( !(++$i % REPORTING_INTERVAL ) ) {
+					print "{$row->cl_to}\n";
+					if ( $row->cl_to != 'done' ) {
+						$this->setCheckpoint( 'category', $row->cl_to );
+					}
+				}
+				$title = Title::makeTitle( NS_CATEGORY, $row->cl_to );
+				$this->doArticle( $title );
+			}
+			$dbr->freeResult( $res );
+		} while ( $numRows );
+		
+		$this->setCheckpoint( 'category', 'done' );
 		print "\n";
 	}
 
 	function doRedirects() {
 		print "Doing redirects...\n";
-		$fname = 'DumpHTML::doRedirects';
+
+		$chunkSize = 10000;
+		$end = $this->getMaxPageID();
+		$cp = $this->getCheckpoint( 'redirect' );
+		if ( $cp == 'done' )  {
+			print "Redirects already done\n";
+			return;
+		} elseif ( $cp !== false ) {
+			print "Resuming redirect generation from page_id $cp\n";
+			$start = intval( $cp );
+		} else {
+			$start = 1;
+		}
+
 		$this->setupGlobals();
 		$dbr =& wfGetDB( DB_SLAVE );
-
-		$res = $dbr->select( 'page', array( 'page_namespace', 'page_title' ),
-			array( 'page_is_redirect' => 1 ), $fname );
-		$num = $dbr->numRows( $res );
-		print "$num redirects to do...\n";
 		$i = 0;
-		while ( $row = $dbr->fetchObject( $res ) ) {
-			$title = Title::makeTitle( $row->page_namespace, $row->page_title );
-                        if ( !(++$i % (REPORTING_INTERVAL*10) ) ) {
-                                print "Done $i of $num\n";
-                        }
-			$this->doArticle( $title );
+
+		for ( $chunkStart = $start; $chunkStart <= $end; $chunkStart += $chunkSize ) {
+			$chunkEnd = min( $end, $chunkStart + $chunkSize - 1 );
+			$conds = array( 
+				'page_is_redirect' => 1,
+				"page_id BETWEEN $chunkStart AND $chunkEnd"
+			);
+			# Modulo slicing in SQL
+			if ( $this->sliceDenominator != 1 ) {
+				$n = intval( $this->sliceNumerator );
+				$m = intval( $this->sliceDenominator );
+				$conds[] = "page_id % $m = $n";
+			}
+			$res = $dbr->select( 'page', array( 'page_id', 'page_namespace', 'page_title' ),
+				$conds, __METHOD__ );
+			
+			while ( $row = $dbr->fetchObject( $res ) ) {
+				$title = Title::makeTitle( $row->page_namespace, $row->page_title );
+				if ( !(++$i % (REPORTING_INTERVAL*10) ) ) {
+					printf( "Done %d redirects (%2.3f%%)\n", $i, $row->page_id / $end * 100 );
+					$this->setCheckpoint( 'redirect', $row->page_id );
+				}
+				$this->doArticle( $title );
+			}
+			$dbr->freeResult( $res );
 		}
+		$this->setCheckpoint( 'redirect', 'done' );
 	}
 
 	/** Write an article specified by title */
 	function doArticle( $title ) {
 		global $wgTitle, $wgSharedUploadPath, $wgSharedUploadDirectory;
 		global $wgUploadDirectory;
+
+		if ( $this->noOverwrite ) {
+			$fileName = $this->dest.'/'.$this->getHashedFilename( $title );
+			if ( file_exists( $fileName ) ) {
+				return;
+			}
+		}
 
 		$this->rawPages = array();
 		$text = $this->getArticleHTML( $title );
@@ -260,11 +481,19 @@ class DumpHTML {
 		$fullName = "{$this->dest}/$filename";
 		$fullDir = dirname( $fullName );
 
+		if ( $this->compress ) {
+			$fullName .= ".gz";
+			$text = gzencode( $text, 9 );				
+		}
+
 		wfMkdirParents( $fullDir, 0755 );
 
+		wfSuppressWarnings();
 		$file = fopen( $fullName, 'w' );
+		wfRestoreWarnings();
+
 		if ( !$file ) {
-			print("Can't open file $fullName for writing\n");
+			die("Can't open file '$fullName' for writing.\nCheck permissions or use another destination (-d).\n");
 			return;
 		}
 
@@ -274,17 +503,20 @@ class DumpHTML {
 
 	/** Set up globals required for parsing */
 	function setupGlobals( $currentDepth = NULL ) {
-		global $wgUser, $wgTitle, $wgStylePath, $wgArticlePath;
+		global $wgUser, $wgTitle, $wgStylePath, $wgArticlePath, $wgMathPath;
 		global $wgUploadPath, $wgLogo, $wgMaxCredits, $wgSharedUploadPath;
 		global $wgHideInterlanguageLinks, $wgUploadDirectory, $wgThumbnailScriptPath;
 		global $wgSharedThumbnailScriptPath, $wgEnableParserCache, $wgHooks, $wgServer;
-		global $wgRightsUrl, $wgRightsText, $wgCopyrightIcon;
+		global $wgRightsUrl, $wgRightsText, $wgCopyrightIcon, $wgEnableSidebarCache;
+		global $wgGenerateThumbnailOnParse;
 
 		static $oldLogo = NULL;
 
 		if ( !$this->setupDone ) {
 			$wgHooks['GetLocalURL'][] =& $this;
 			$wgHooks['GetFullURL'][] =& $this;
+			$wgHooks['SiteNoticeBefore'][] =& $this;
+			$wgHooks['SiteNoticeAfter'][] =& $this;
 			$this->oldArticlePath = $wgServer . $wgArticlePath;
 		}
 
@@ -328,26 +560,33 @@ class DumpHTML {
 		$wgCopyrightIcon = str_replace( 'src="/images',
 			'src="' . htmlspecialchars( $wgScriptPath ) . '/images', $this->oldCopyrightIcon );
 
-
-
 		$wgStylePath = "$wgScriptPath/skins";
 		$wgUploadPath = "$wgScriptPath/{$this->imageRel}";
 		$wgSharedUploadPath = "$wgUploadPath/shared";
 		$wgMaxCredits = -1;
-		$wgHideInterlangageLinks = !$this->interwiki;
+		$wgHideInterlanguageLinks = !$this->interwiki;
 		$wgThumbnailScriptPath = $wgSharedThumbnailScriptPath = false;
 		$wgEnableParserCache = false;
 		$wgMathPath = "$wgScriptPath/math";
+		$wgEnableSidebarCache = false;
+		$wgGenerateThumbnailOnParse = true;
 
 		if ( !empty( $wgRightsText ) ) {
 			$wgRightsUrl = "$wgScriptPath/COPYING.html";
 		}
 
 		$wgUser = new User;
-		$wgUser->setOption( 'skin', 'htmldump' );
+		$wgUser->setOption( 'skin', $this->skin );
 		$wgUser->setOption( 'editsection', 0 );
 
-		$this->sharedStaticPath = "$wgUploadDirectory/shared";
+		if ( $this->makeSnapshot ) {
+			$this->destUploadDirectory = "{$this->dest}/{$this->imageRel}";
+			if ( realpath( $this->destUploadDirectory == $wgUploadDirectory ) ) {
+				$this->makeSnapshot = false;
+			}
+		}
+
+		$this->sharedStaticDirectory = "{$this->destUploadDirectory}/shared";
 
 		$this->setupDone = true;
 	}
@@ -388,6 +627,7 @@ class DumpHTML {
 			}
 		}
 
+	
 		$sk =& $wgUser->getSkin();
 		ob_start();
 		$sk->outputPage( $wgOut );
@@ -428,66 +668,71 @@ ENDTEXT;
 	}
 
 	/**
+	 * Copy a file specified by a URL to a given directory
+	 * 
+	 * @param string $srcPath The source URL
+	 * @param string $srcPathBase The base directory of the source URL
+	 * @param string $srcDirBase The base filesystem directory of the source URL
+	 * @param string $destDirBase The base filesystem directory of the destination URL
+	 */
+	function relativeCopy( $srcPath, $srcPathBase, $srcDirBase, $destDirBase ) {
+		$rel = substr( $srcPath, strlen( $srcPathBase ) + 1 ); // +1 for slash
+		$sourceLoc = "$srcDirBase/$rel";
+		$destLoc = "$destDirBase/$rel";
+		#print "Copying $sourceLoc to $destLoc\n";
+		if ( !file_exists( $destLoc ) ) {
+			wfMkdirParents( dirname( $destLoc ), 0755 );
+			if ( function_exists( 'symlink' ) && !$this->forceCopy ) {
+				symlink( $sourceLoc, $destLoc );
+			} else {
+				copy( $sourceLoc, $destLoc );
+			}
+		}
+	}
+
+	/**
+	 * Copy an image, and if it is a thumbnail, copy its parent image too
+	 */
+	function copyImage( $srcPath, $srcPathBase, $srcDirBase, $destDirBase ) {
+		global $wgUploadPath, $wgUploadDirectory, $wgSharedUploadPath;
+		$this->relativeCopy( $srcPath, $srcPathBase, $srcDirBase, $destDirBase );
+		if ( substr( $srcPath, strlen( $srcPathBase ) + 1, 6 ) == 'thumb/' ) {
+			# The image was a thumbnail
+			# Copy the source image as well
+			$rel = substr( $srcPath, strlen( $srcPathBase ) + 1 );
+			$parts = explode( '/', $rel );
+			$rel = "{$parts[1]}/{$parts[2]}/{$parts[3]}";
+			$newSrc = "$srcPathBase/$rel";
+			$this->relativeCopy( $newSrc, $srcPathBase, $srcDirBase, $destDirBase );
+		}
+	}
+	
+	/**
 	 * Copy images (or create symlinks) from commons to a static directory.
 	 * This is necessary even if you intend to distribute all of commons, because
 	 * the directory contents is used to work out which image description pages
 	 * are needed.
 	 *
-	 * Also copies math images
+	 * Also copies math images, and full-sized images if the makeSnapshot option 
+	 * is specified.
 	 *
 	 */
 	function copyImages( $images ) {
-		global $wgSharedUploadPath, $wgSharedUploadDirectory, $wgMathPath, $wgMathDirectory;
+		global $wgUploadPath, $wgUploadDirectory, $wgSharedUploadPath, $wgSharedUploadDirectory, 
+			$wgMathPath, $wgMathDirectory;
 		# Find shared uploads and copy them into the static directory
 		$sharedPathLength = strlen( $wgSharedUploadPath );
 		$mathPathLength = strlen( $wgMathPath );
+		$uploadPathLength = strlen( $wgUploadPath );
 		foreach ( $images as $escapedImage => $dummy ) {
 			$image = urldecode( $escapedImage );
 
-			# Is it shared?
 			if ( substr( $image, 0, $sharedPathLength ) == $wgSharedUploadPath ) {
-				# Reconstruct full filename
-				$rel = substr( $image, $sharedPathLength + 1 ); // +1 for slash
-				$sourceLoc = "$wgSharedUploadDirectory/$rel";
-				$staticLoc = "{$this->sharedStaticPath}/$rel";
-				#print "Copying $sourceLoc to $staticLoc\n";
-				# Copy to static directory
-				if ( !file_exists( $staticLoc ) ) {
-					wfMkdirParents( dirname( $staticLoc ), 0755 );
-					if ( function_exists( 'symlink' ) && !$this->forceCopy ) {
-						symlink( $sourceLoc, $staticLoc );
-					} else {
-						copy( $sourceLoc, $staticLoc );
-					}
-				}
-
-				if ( substr( $rel, 0, 6 ) == 'thumb/' ) {
-					# That was a thumbnail
-					# We will also copy the real image
-					$parts = explode( '/', $rel );
-					$rel = "{$parts[1]}/{$parts[2]}/{$parts[3]}";
-					$sourceLoc = "$wgSharedUploadDirectory/$rel";
-					$staticLoc = "{$this->sharedStaticPath}/$rel";
-					#print "Copying $sourceLoc to $staticLoc\n";
-					if ( !file_exists( $staticLoc ) ) {
-						wfMkdirParents( dirname( $staticLoc ), 0755 );
-						if ( function_exists( 'symlink' ) && !$this->forceCopy ) {
-							symlink( $sourceLoc, $staticLoc );
-						} else {
-							copy( $sourceLoc, $staticLoc );
-						}
-					}
-				}
-			} else
-			# Is it math?
-			if ( substr( $image, 0, $mathPathLength ) == $wgMathPath ) {
-				$rel = substr( $image, $mathPathLength + 1 ); // +1 for slash
-				$source = "$wgMathDirectory/$rel";
-				$dest = "{$this->dest}/math/$rel";
-				@mkdir( "{$this->dest}/math", 0755 );
-				if ( !file_exists( $dest ) ) {
-					copy( $source, $dest );
-				}
+				$this->copyImage( $image, $wgSharedUploadPath, $wgSharedUploadDirectory, $this->sharedStaticDirectory );
+			} elseif ( substr( $image, 0, $mathPathLength ) == $wgMathPath ) {
+				$this->relativeCopy( $image, $wgMathPath, $wgMathDirectory, "{$this->dest}/math" );
+			} elseif ( $this->makeSnapshot && substr( $image, 0, $uploadPathLength ) == $wgUploadPath ) {
+				$this->copyImage( $image, $wgUploadPath, $wgUploadDirectory, $this->destUploadDirectory );
 			}
 		}
 	}
@@ -503,6 +748,7 @@ ENDTEXT;
 				$url = str_replace( '$1', "../$iw/" . wfUrlencode( $this->getHashedFilename( $title ) ),
 					$wgArticlePath );
 			}
+			$url .= $this->compress ? ".gz" : "";
 			return false;
 		} else {
 			return true;
@@ -537,7 +783,7 @@ ENDTEXT;
 		if ( $url === false ) {
 			$url = str_replace( '$1', wfUrlencode( $this->getHashedFilename( $title ) ), $wgArticlePath );
 		}
-
+		$url .= $this->compress ? ".gz" : "";
 		return false;
 	}
 
@@ -629,6 +875,60 @@ ENDTEXT;
 		return $dir;
 	}
 
+	/**
+	 * Calculate the start end end of a job based on the current slice
+	 * @param integer $start
+	 * @param integer $end
+	 * @return array of integers
+	 */
+	function sliceRange( $start, $end ) {
+		$count = $end - $start + 1;
+		$each = $count / $this->sliceDenominator;
+		$sliceStart = $start + intval( $each * ( $this->sliceNumerator - 1 ) );
+		if ( $this->sliceNumerator == $this->sliceDenominator ) {
+			$sliceEnd = $end;
+		} else {
+			$sliceEnd = $start + intval( $each * $this->sliceNumerator ) - 1;
+		}
+		return array( $sliceStart, $sliceEnd );
+	}
+
+	/**
+	 * Adjust a start point so that it belongs to the current slice, where slices are defined by integer modulo
+	 * @param integer $start
+	 * @param integer $base The true start of the range; the minimum start
+	 */
+	function modSliceStart( $start, $base = 1 ) {
+		return $start - ( $start % $this->sliceDenominator ) + $this->sliceNumerator - 1 + $base;
+	}
+
+	/**
+	 * Determine whether a string belongs to the current slice, based on hash
+	 */
+	function sliceFilter( $s ) {
+		return crc32( $s ) % $this->sliceDenominator == $this->sliceNumerator - 1;
+	}
+
+	/**
+	 * No site notice
+	 */
+	function onSiteNoticeBefore( &$text ) {
+		$text = '';
+		return false;
+	}
+	function onSiteNoticeAfter( &$text ) {
+		$text = '';
+		return false;
+	}
+
+	function getMaxPageID() {
+		if ( $this->maxPageID === false ) {
+			$dbr =& wfGetDB( DB_SLAVE );
+			$this->maxPageID = $dbr->selectField( 'page', 'max(page_id)', false, __METHOD__ );
+		}
+		return $this->maxPageID;
+	}
+			
 }
 
 /** XML parser callback */

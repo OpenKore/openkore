@@ -8,15 +8,13 @@
 /**
  *
  */
-require_once( 'Feed.php' );
 require_once( 'ChangesList.php' );
-require_once( 'Revision.php' );
 
 /**
  * Constructor
  */
 function wfSpecialRecentchanges( $par, $specialPage ) {
-	global $wgUser, $wgOut, $wgRequest, $wgUseRCPatrol;
+	global $wgUser, $wgOut, $wgRequest, $wgUseRCPatrol, $wgDBtype;
 	global $wgRCShowWatchingUsers, $wgShowUpdatedMarker;
 	global $wgAllowCategorizedRecentChanges ;
 	$fname = 'wfSpecialRecentchanges';
@@ -162,7 +160,8 @@ function wfSpecialRecentchanges( $par, $specialPage ) {
 	$uid = $wgUser->getID();
 
 	// Perform query
-	$sql2 = "SELECT * FROM $recentchanges FORCE INDEX (rc_timestamp) " .
+	$forceclause = $dbr->useIndexClause("rc_timestamp");
+	$sql2 = "SELECT * FROM $recentchanges $forceclause".
 	  ($uid ? "LEFT OUTER JOIN $watchlist ON wl_user={$uid} AND wl_title=rc_title AND wl_namespace=rc_namespace " : "") .
 	  "WHERE rc_timestamp >= '{$cutoff}' {$hidem} " .
 	  "ORDER BY rc_timestamp DESC";
@@ -320,7 +319,7 @@ function rcFilterByCategories ( &$rows , $categories , $any ) {
 }
 
 function rcOutputFeed( $rows, $feedFormat, $limit, $hideminor, $lastmod ) {
-	global $messageMemc, $wgDBname, $wgFeedCacheTimeout;
+	global $messageMemc, $wgFeedCacheTimeout;
 	global $wgFeedClasses, $wgTitle, $wgSitename, $wgContLanguageCode;
 
 	if( !isset( $wgFeedClasses[$feedFormat] ) ) {
@@ -328,8 +327,8 @@ function rcOutputFeed( $rows, $feedFormat, $limit, $hideminor, $lastmod ) {
 		return false;
 	}
 
-	$timekey = "$wgDBname:rcfeed:$feedFormat:timestamp";
-	$key = "$wgDBname:rcfeed:$feedFormat:limit:$limit:minor:$hideminor";
+	$timekey = wfMemcKey( 'rcfeed', $feedFormat, 'timestamp' );
+	$key = wfMemcKey( 'rcfeed', $feedFormat, 'limit', $limit, 'minor', $hideminor );
 
 	$feedTitle = $wgSitename . ' - ' . wfMsgForContent( 'recentchanges' ) .
 		' [' . $wgContLanguageCode . ']';
@@ -459,13 +458,13 @@ function rcDayLimitLinks( $days, $limit, $page='Recentchanges', $more='', $doall
 	  rcDaysLink( $limit, 14, $page, $more  ) . ' | ' .
 	  rcDaysLink( $limit, 30, $page, $more  ) .
 	  ( $doall ? ( ' | ' . rcDaysLink( $limit, 0, $page, $more ) ) : '' );
-	  
+	
 	$linkParts = array( 'minorLink' => 'minor', 'botLink' => 'bots', 'liuLink' => 'liu', 'patrLink' => 'patr', 'myselfLink' => 'mine' );
 	foreach( $linkParts as $linkVar => $linkMsg ) {
 		if( $$linkVar != '' )
 			$links[] = wfMsgHtml( 'rcshowhide' . $linkMsg, $$linkVar );
 	}
-	  
+	
 	$shm = implode( ' | ', $links );
 	$note = wfMsg( 'rclinks', $cl, $dl, $shm );
 	return $note;
@@ -474,16 +473,21 @@ function rcDayLimitLinks( $days, $limit, $page='Recentchanges', $more='', $doall
 
 /**
  * Makes change an option link which carries all the other options
+ * @param $title @see Title
+ * @param $override
+ * @param $options
  */
 function makeOptionsLink( $title, $override, $options ) {
 	global $wgUser, $wgContLang;
 	$sk = $wgUser->getSkin();
 	return $sk->makeKnownLink( $wgContLang->specialPage( 'Recentchanges' ),
-		$title, wfArrayToCGI( $override, $options ) );
+		htmlspecialchars( $title ), wfArrayToCGI( $override, $options ) );
 }
 
 /**
- * Creates the options panel
+ * Creates the options panel.
+ * @param $defaults
+ * @param $nondefaults
  */
 function rcOptionsPanel( $defaults, $nondefaults ) {
 	global $wgLang, $wgUseRCPatrol;
@@ -491,29 +495,31 @@ function rcOptionsPanel( $defaults, $nondefaults ) {
 	$options = $nondefaults + $defaults;
 
 	if( $options['from'] )
-		$note = wfMsg( 'rcnotefrom', $wgLang->formatNum( $options['limit'] ), $wgLang->timeanddate( $options['from'], true ) );
+		$note = wfMsgExt( 'rcnotefrom', array( 'parseinline' ),
+			$wgLang->formatNum( $options['limit'] ),
+			$wgLang->timeanddate( $options['from'], true ) );
 	else
-		$note = wfMsg( 'rcnote', $wgLang->formatNum( $options['limit'] ), $wgLang->formatNum( $options['days'] ) );
+		$note = wfMsgExt( 'rcnote', array( 'parseinline' ),
+			$wgLang->formatNum( $options['limit'] ),
+			$wgLang->formatNum( $options['days'] ),
+			$wgLang->timeAndDate( wfTimestampNow(), true ) );
 
 	// limit links
-	$cl = '';
 	$options_limit = array(50, 100, 250, 500);
-	$i = 0;
-	while ( $i+1 < count($options_limit) ) {
-		$cl .=  makeOptionsLink( $options_limit[$i], array( 'limit' => $options_limit[$i] ), $nondefaults) . ' | ' ;
-		$i++;
+	foreach( $options_limit as $value ) {
+		$cl[] = makeOptionsLink( $wgLang->formatNum( $value ),
+			array( 'limit' => $value ), $nondefaults) ;
 	}
-	$cl .=  makeOptionsLink( $options_limit[$i], array( 'limit' => $options_limit[$i] ), $nondefaults) ;
+	$cl = implode( ' | ', $cl);
 
 	// day links, reset 'from' to none
-	$dl = '';
 	$options_days = array(1, 3, 7, 14, 30);
-	$i = 0;
-	while ( $i+1 < count($options_days) ) {
-		$dl .=  makeOptionsLink( $options_days[$i], array( 'days' => $options_days[$i], 'from' => '' ), $nondefaults) . ' | ' ;
-		$i++;
+	foreach( $options_days as $value ) {
+		$dl[] = makeOptionsLink( $wgLang->formatNum( $value ),
+			array( 'days' => $value, 'from' => ''  ), $nondefaults) ;
 	}
-	$dl .=  makeOptionsLink( $options_days[$i], array( 'days' => $options_days[$i], 'from' => '' ), $nondefaults) ;
+	$dl = implode( ' | ', $dl);
+
 
 	// show/hide links
 	$showhide = array( wfMsg( 'show' ), wfMsg( 'hide' ));
@@ -543,22 +549,23 @@ function rcOptionsPanel( $defaults, $nondefaults ) {
 	$now = $wgLang->timeanddate( wfTimestampNow(), true );
 	$tl =  makeOptionsLink( $now, array( 'from' => wfTimestampNow()), $nondefaults );
 
-	$rclinks = wfMsg( 'rclinks', $cl, $dl, $hl );
-	$rclistfrom = wfMsg( 'rclistfrom', $tl );
+	$rclinks = wfMsgExt( 'rclinks', array( 'parseinline', 'replaceafter'),
+		$cl, $dl, $hl );
+	$rclistfrom = wfMsgExt( 'rclistfrom', array( 'parseinline', 'replaceafter'), $tl );
 	return "$note<br />$rclinks<br />$rclistfrom";
 
 }
 
-/**<F2>
+/**
  * Creates the choose namespace selection
  *
- * @access private
+ * @private
  *
- * @param mixed $namespace The key of the currently selected namespace, empty string
+ * @param $namespace Mixed: the key of the currently selected namespace, empty string
  *              if there is none
- * @param bool $invert Whether to invert the namespace selection
- * @param array $nondefaults An array of non default options to be remembered
- * @param bool $categories_any Default value for the checkbox
+ * @param $invert Bool: whether to invert the namespace selection
+ * @param $nondefaults Array: an array of non default options to be remembered
+ * @param $categories_any Bool: Default value for the checkbox
  *
  * @return string
  */
@@ -574,12 +581,12 @@ function rcNamespaceForm( $namespace, $invert, $nondefaults, $categories_any ) {
 		$categories = trim ( $wgRequest->getVal ( 'categories' , "" ) ) ;
 		$cb_arr = array( 'type' => 'checkbox', 'name' => 'categories_any', 'value' => "1" ) ;
 		if ( $categories_any ) $cb_arr['checked'] = "checked" ;
-		$catbox = "<br/>" ;
-		$catbox .= wfMsg('rc_categories') . " ";
+		$catbox = "<br />" ;
+		$catbox .= wfMsgExt('rc_categories', array('parseinline')) . " ";
 		$catbox .= wfElement('input', array( 'type' => 'text', 'name' => 'categories', 'value' => $categories));
 		$catbox .= " &nbsp;" ;
 		$catbox .= wfElement('input', $cb_arr );
-		$catbox .= wfMsg('rc_categories_any');
+		$catbox .= wfMsgExt('rc_categories_any', array('parseinline'));
 	} else {
 		$catbox = "" ;
 	}
@@ -605,27 +612,40 @@ function rcNamespaceForm( $namespace, $invert, $nondefaults, $categories_any ) {
  * Format a diff for the newsfeed
  */
 function rcFormatDiff( $row ) {
-	global $wgFeedDiffCutoff, $wgContLang;
+	$titleObj = Title::makeTitle( $row->rc_namespace, $row->rc_title );
+	return rcFormatDiffRow( $titleObj,
+		$row->rc_last_oldid, $row->rc_this_oldid,
+		$row->rc_timestamp,
+		$row->rc_comment );
+}
+
+function rcFormatDiffRow( $title, $oldid, $newid, $timestamp, $comment ) {
+	global $wgFeedDiffCutoff, $wgContLang, $wgUser;
 	$fname = 'rcFormatDiff';
 	wfProfileIn( $fname );
 
-	require_once( 'DifferenceEngine.php' );
-	$completeText = '<p>' . htmlspecialchars( $row->rc_comment ) . "</p>\n";
+	$skin = $wgUser->getSkin();
+	$completeText = '<p>' . $skin->formatComment( $comment ) . "</p>\n";
 
-	if( $row->rc_namespace >= 0 ) {
-		if( $row->rc_last_oldid ) {
+	if( $title->getNamespace() >= 0 ) {
+		if( $oldid ) {
 			wfProfileIn( "$fname-dodiff" );
 
-			$titleObj = Title::makeTitle( $row->rc_namespace, $row->rc_title );
-			$de = new DifferenceEngine( $titleObj, $row->rc_last_oldid, $row->rc_this_oldid );
-			$diffText = $de->getDiff( wfMsg( 'revisionasof', $wgContLang->timeanddate( $row->rc_timestamp ) ),
-				wfMsg( 'currentrev' ) );
+			$de = new DifferenceEngine( $title, $oldid, $newid );
+			#$diffText = $de->getDiff( wfMsg( 'revisionasof',
+			#	$wgContLang->timeanddate( $timestamp ) ),
+			#	wfMsg( 'currentrev' ) );
+			$diffText = $de->getDiff(
+				wfMsg( 'previousrevision' ), // hack
+				wfMsg( 'revisionasof',
+					$wgContLang->timeanddate( $timestamp ) ) );
+				
 
 			if ( strlen( $diffText ) > $wgFeedDiffCutoff ) {
 				// Omit large diffs
-				$diffLink = $titleObj->escapeFullUrl(
-					'diff=' . $row->rc_this_oldid .
-					'&oldid=' . $row->rc_last_oldid );
+				$diffLink = $title->escapeFullUrl(
+					'diff=' . $newid .
+					'&oldid=' . $oldid );
 				$diffText = '<a href="' .
 					$diffLink .
 					'">' .
@@ -633,7 +653,7 @@ function rcFormatDiff( $row ) {
 					'</a>';
 			} elseif ( $diffText === false ) {
 				// Error in diff engine, probably a missing revision
-				$diffText = "<p>Can't load revision $row->rc_this_oldid</p>";
+				$diffText = "<p>Can't load revision $newid</p>";
 			} else {
 				// Diff output fine, clean up any illegal UTF-8
 				$diffText = UtfNormal::cleanUp( $diffText );
@@ -641,7 +661,7 @@ function rcFormatDiff( $row ) {
 			}
 			wfProfileOut( "$fname-dodiff" );
 		} else {
-			$rev = Revision::newFromId( $row->rc_this_oldid );
+			$rev = Revision::newFromId( $newid );
 			if( is_null( $rev ) ) {
 				$newtext = '';
 			} else {
@@ -662,9 +682,9 @@ function rcFormatDiff( $row ) {
  * Might be 'cleaner' to use DOM or XSLT or something,
  * but *gack* it's a pain in the ass.
  *
- * @param string $text
+ * @param $text String:
  * @return string
- * @access private
+ * @private
  */
 function rcApplyDiffStyle( $text ) {
 	$styles = array(

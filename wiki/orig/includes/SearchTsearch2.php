@@ -23,9 +23,6 @@
  * @subpackage Search
  */
 
-/** */
-require_once( 'SearchEngine.php' );
-
 /**
  * @todo document
  * @package MediaWiki
@@ -36,7 +33,6 @@ class SearchTsearch2 extends SearchEngine {
 
 	function SearchTsearch2( &$db ) {
 		$this->db =& $db;
-		$this->db->setSchema('tsearch');
 		$this->mRanking = true;
 	}
 
