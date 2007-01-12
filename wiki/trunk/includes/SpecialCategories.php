@@ -7,11 +7,6 @@
 
 /**
  *
- */
-require_once("QueryPage.php");
-
-/**
- *
  * @package MediaWiki
  * @subpackage SpecialPage
  */
@@ -41,7 +36,7 @@ class CategoriesPage extends QueryPage {
 				1 as value,
 				COUNT(*) as count
 			   FROM $categorylinks
-			   GROUP BY cl_to";
+			   GROUP BY 1,2,3,4";
 		return $s;
 	}
 
@@ -50,10 +45,12 @@ class CategoriesPage extends QueryPage {
 	}
 
 	function formatResult( $skin, $result ) {
+		global $wgLang;
 		$title = Title::makeTitle( NS_CATEGORY, $result->title );
 		$plink = $skin->makeLinkObj( $title, $title->getText() );
-		$nlinks = wfMsg( 'nlinks', $result->count );
-		return "$plink ($nlinks)";
+		$nlinks = wfMsgExt( 'nmembers', array( 'parsemag', 'escape'),
+			$wgLang->formatNum( $result->count ) );
+		return wfSpecialList($plink, $nlinks);
 	}
 }
 

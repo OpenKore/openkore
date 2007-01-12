@@ -7,11 +7,6 @@
 
 /**
  *
- */
-require_once 'QueryPage.php';
-
-/**
- *
  * @package MediaWiki
  * @subpackage SpecialPage
  */
@@ -49,13 +44,14 @@ class WantedPagesPage extends QueryPage {
 			 LEFT JOIN $page AS pg2
 			 ON pl_from = pg2.page_id
 			 WHERE pg1.page_namespace IS NULL
+			 AND pl_namespace NOT IN ( 2, 3 )
 			 AND pg2.page_namespace != 8
-			 GROUP BY pl_namespace, pl_title
+			 GROUP BY 1,2,3
 			 HAVING COUNT(*) > $count";
 	}
 
 	/**
-	 * Fetch user page links and cache their existence
+	 * Cache page existence for performance
 	 */
 	function preprocessResults( &$db, &$res ) {
 		$batch = new LinkBatch;
@@ -71,19 +67,46 @@ class WantedPagesPage extends QueryPage {
 
 
 	function formatResult( $skin, $result ) {
-		global $wgContLang;
+		global $wgLang;
 
-		$nt = Title::makeTitle( $result->namespace, $result->title );
-		$text = $wgContLang->convert( $nt->getPrefixedText() );
-		$plink = $this->isCached() ?
-			$skin->makeLinkObj( $nt, $text ) :
-			$skin->makeBrokenLink( $nt->getPrefixedText(), $text );
+		$title = Title::makeTitleSafe( $result->namespace, $result->title );
 
-		$nl = wfMsg( 'nlinks', $result->value );
-		$nlink = $skin->makeKnownLink( $wgContLang->specialPage( 'Whatlinkshere' ), $nl, 'target=' . $nt->getPrefixedURL() );
-
-		return $this->nlinks ? "$plink ($nlink)" : $plink;
+		if( $this->isCached() ) {
+			# Check existence; which is stored in the link cache
+			if( !$title->exists() ) {
+				# Make a redlink
+				$pageLink = $skin->makeBrokenLinkObj( $title );
+			} else {
+				# Make a a struck-out normal link
+				$pageLink = "<s>" . $skin->makeLinkObj( $title ) . "</s>";
+			}		
+		} else {
+			# Not cached? Don't bother checking existence; it can't
+			$pageLink = $skin->makeBrokenLinkObj( $title );
+		}
+		
+		# Make a link to "what links here" if it's required
+		$wlhLink = $this->nlinks
+					? $this->makeWlhLink( $title, $skin,
+							wfMsgExt( 'nlinks', array( 'parsemag', 'escape'),
+								$wgLang->formatNum( $result->value ) ) )
+					: null;
+					
+		return wfSpecialList($pageLink, $wlhLink);
 	}
+	
+	/**
+	 * Make a "what links here" link for a specified title
+	 * @param $title Title to make the link for
+	 * @param $skin Skin to use
+	 * @param $text Link text
+	 * @return string
+	 */
+	function makeWlhLink( &$title, &$skin, $text ) {
+		$wlhTitle = Title::makeTitle( NS_SPECIAL, 'Whatlinkshere' );
+		return $skin->makeKnownLinkObj( $wlhTitle, $text, 'target=' . $title->getPrefixedUrl() );
+	}
+	
 }
 
 /**

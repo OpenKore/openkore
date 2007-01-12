@@ -25,6 +25,7 @@ image/jpeg jpeg jpg jpe
 image/png png
 image/svg+xml svg
 image/tiff tiff tif
+image/vnd.djvu djvu
 text/plain txt
 text/html html htm
 video/ogg ogm ogg
@@ -52,6 +53,7 @@ image/jpeg [BITMAP]
 image/png [BITMAP]
 image/svg image/svg+xml [DRAWING]
 image/tiff [BITMAP]
+image/vnd.djvu [BITMAP]
 text/plain [TEXT]
 text/html [TEXT]
 video/ogg [VIDEO]
@@ -72,7 +74,7 @@ if ($wgLoadFileinfoExtension) {
 * file extension,
 *
 * Instances of this class are stateles, there only needs to be one global instance
-* of MimeMagic. Please use wfGetMimeMagic to get that instance.
+* of MimeMagic. Please use MimeMagic::singleton() to get that instance.
 * @package MediaWiki
 */
 class MimeMagic {
@@ -95,8 +97,11 @@ class MimeMagic {
 	*/
 	var $mExtToMime= NULL;
 
-	/** Initializes the MimeMagic object. This is called by wfGetMimeMagic when instantiation
-	* the global MimeMagic singleton object.
+	/** The singleton instance
+	 */
+	private static $instance;
+
+	/** Initializes the MimeMagic object. This is called by MimeMagic::singleton().
 	*
 	* This constructor parses the mime.types and mime.info files and build internal mappings.
 	*/
@@ -225,6 +230,16 @@ class MimeMagic {
 
 	}
 
+	/**
+	 * Get an instance of this class
+	 */
+	static function &singleton() {
+		if ( !isset( self::$instance ) ) {
+			self::$instance = new MimeMagic;
+		}
+		return self::$instance;
+	}
+
 	/** returns a list of file extensions for a given mime type
 	* as a space separated string.
 	*/
@@ -320,7 +335,7 @@ class MimeMagic {
 			'gif', 'jpeg', 'jpg', 'png', 'swf', 'psd',
 			'bmp', 'tiff', 'tif', 'jpc', 'jp2',
 			'jpx', 'jb2', 'swc', 'iff', 'wbmp',
-			'xbm'
+			'xbm', 'djvu'
 		);
 		return in_array( strtolower( $extension ), $types );
 	}
@@ -495,13 +510,22 @@ class MimeMagic {
 			# NOTE: this function is available since PHP 4.3.0, but only if
 			# PHP was compiled with --with-mime-magic or, before 4.3.2, with --enable-mime-magic.
 			#
-			# On Winodws, you must set mime_magic.magicfile in php.ini to point to the mime.magic file bundeled with PHP;
+			# On Windows, you must set mime_magic.magicfile in php.ini to point to the mime.magic file bundeled with PHP;
 			# sometimes, this may even be needed under linus/unix.
 			#
 			# Also note that this has been DEPRECATED in favor of the fileinfo extension by PECL, see above.
 			# see http://www.php.net/manual/en/ref.mime-magic.php for details.
 
 			$m= mime_content_type($file);
+
+			if ( $m == 'text/plain' ) {
+				// mime_content_type sometimes considers DJVU files to be text/plain.
+				$deja = new DjVuImage( $file );
+				if( $deja->isValid() ) {
+					wfDebug("$fname: (re)detected $file as image/vnd.djvu\n");
+					$m = 'image/vnd.djvu';
+				}
+			}
 		}
 		else wfDebug("$fname: no magic mime detector found!\n");
 
@@ -551,6 +575,13 @@ class MimeMagic {
 				return $m;
 			}
 			else $notAnImage= true;
+		} else {
+			// Also test DjVu
+			$deja = new DjVuImage( $file );
+			if( $deja->isValid() ) {
+				wfDebug("$fname: detected $file as image/vnd.djvu\n");
+				return 'image/vnd.djvu';
+			}
 		}
 
 		#if desired, look at extension as a fallback.

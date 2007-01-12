@@ -11,10 +11,11 @@
 function wfSpecialUnlockdb() {
 	global $wgUser, $wgOut, $wgRequest;
 
-	if ( ! $wgUser->isAllowed('siteadmin') ) {
-		$wgOut->developerRequired();
+	if( !$wgUser->isAllowed( 'siteadmin' ) ) {
+		$wgOut->permissionRequired( 'siteadmin' );
 		return;
 	}
+
 	$action = $wgRequest->getVal( 'action' );
 	$f = new DBUnlockForm();
 
@@ -37,6 +38,12 @@ class DBUnlockForm {
 	function showForm( $err )
 	{
 		global $wgOut, $wgUser;
+
+		global $wgReadOnlyFile;
+		if( !file_exists( $wgReadOnlyFile ) ) {
+			$wgOut->addWikiText( wfMsg( 'databasenotlocked' ) );
+			return;
+		}
 
 		$wgOut->setPagetitle( wfMsg( "unlockdb" ) );
 		$wgOut->addWikiText( wfMsg( "unlockdbtext" ) );
@@ -84,7 +91,7 @@ END
 			return;
 		}
 		if ( @! unlink( $wgReadOnlyFile ) ) {
-			$wgOut->fileDeleteError( $wgReadOnlyFile );
+			$wgOut->showFileDeleteError( $wgReadOnlyFile );
 			return;
 		}
 		$titleObj = Title::makeTitle( NS_SPECIAL, "Unlockdb" );

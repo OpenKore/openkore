@@ -4,23 +4,8 @@
  * @package MediaWiki
  * @subpackage SpecialPage
  */
+require_once( './includes/WebStart.php' );
 
-unset($IP);
-define('MEDIAWIKI', true);
-if ( isset( $_REQUEST['GLOBALS'] ) ) {
-	echo '<a href="http://www.hardened-php.net/index.76.html">$GLOBALS overwrite vulnerability</a>';
-	die( -1 );
-}
-
-require_once('./includes/Defines.php');
-
-if (!file_exists('LocalSettings.php'))
-	exit;
-
-require_once('./LocalSettings.php');
-require_once('includes/Setup.php');
-
-require_once('Title.php');
 require_once('DatabaseFunctions.php');
 
 /**
@@ -65,7 +50,7 @@ $tbname = $_POST['blog_name'];
 $tbarticle = $_REQUEST['article'];
 
 $title = Title::newFromText($tbarticle);
-if (!$title->exists())
+if (!isset($title) || !$title->exists())
 	XMLerror("Specified article does not exist.");
 
 $dbw->insert('trackbacks', array(

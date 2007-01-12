@@ -7,9 +7,7 @@
  *
  */
 if( !defined( 'MEDIAWIKI' ) )
-	die( -1 );
-
-require_once( 'Image.php' );
+	die( 1 );
 
 /**
  * Special handling for image description pages
@@ -165,7 +163,8 @@ class ImagePage extends Article {
 	}
 
 	function openShowImage() {
-		global $wgOut, $wgUser, $wgImageLimits, $wgRequest, $wgUseImageResize;
+		global $wgOut, $wgUser, $wgImageLimits, $wgRequest, $wgLang;
+		global $wgUseImageResize, $wgGenerateThumbnailOnParse;
 
 		$full_url  = $this->img->getURL();
 		$anchoropen = '';
@@ -186,6 +185,12 @@ class ImagePage extends Article {
 
 		if ( $this->img->exists() ) {
 			# image
+			$page = $wgRequest->getIntOrNull( 'page' );
+			if ( ! is_null( $page ) ) {
+				$this->img->selectPage( $page );
+			} else {
+				$page = 1;
+			}
 			$width = $this->img->getWidth();
 			$height = $this->img->getHeight();
 			$showLink = false;
@@ -213,7 +218,7 @@ class ImagePage extends Article {
 					}
 
 					if( $wgUseImageResize ) {
-						$thumbnail = $this->img->getThumbnail( $width );
+						$thumbnail = $this->img->getThumbnail( $width, -1, $wgGenerateThumbnailOnParse );
 						if ( $thumbnail == null ) {
 							$url = $this->img->getViewURL();
 						} else {
@@ -235,9 +240,50 @@ class ImagePage extends Article {
 					$url = $this->img->getViewURL();
 					$showLink = true;
 				}
+
+				if ( $this->img->isMultipage() ) {
+					$wgOut->addHTML( '<table class="multipageimage"><tr><td>' );
+				}
+
 				$wgOut->addHTML( '<div class="fullImageLink" id="file">' . $anchoropen .
 				     "<img border=\"0\" src=\"{$url}\" width=\"{$width}\" height=\"{$height}\" alt=\"" .
 				     htmlspecialchars( $wgRequest->getVal( 'image' ) ).'" />' . $anchorclose . '</div>' );
+
+				if ( $this->img->isMultipage() ) {
+					$count = $this->img->pageCount();
+
+					if ( $page > 1 ) {
+						$label = $wgOut->parse( wfMsg( 'imgmultipageprev' ), false );
+						$link = $sk->makeLinkObj( $this->mTitle, $label, 'page='. ($page-1) );
+						$this->img->selectPage( $page - 1 );
+						$thumb1 = $sk->makeThumbLinkObj( $this->img, $link, $label, 'none' );
+					} else {
+						$thumb1 = '';
+					}
+
+					if ( $page < $count ) {
+						$label = wfMsg( 'imgmultipagenext' );
+						$this->img->selectPage( $page + 1 );
+						$link = $sk->makeLinkObj( $this->mTitle, $label, 'page='. ($page+1) );
+						$thumb2 = $sk->makeThumbLinkObj( $this->img, $link, $label, 'none' );
+					} else {
+						$thumb2 = '';
+					}
+
+					$select = '<form name="pageselector" action="' . $this->img->getEscapeLocalUrl( '' ) . '" method="GET" onchange="document.pageselector.submit();">' ;
+					$select .= $wgOut->parse( wfMsg( 'imgmultigotopre' ), false ) .
+						' <select id="pageselector" name="page">';
+					for ( $i=1; $i <= $count; $i++ ) {
+						$select .= Xml::option( $wgLang->formatNum( $i ), $i,
+							$i == $page );
+					}
+					$select .= '</select>' . $wgOut->parse( wfMsg( 'imgmultigotopost' ), false ) .
+						'<input type="submit" value="' .
+						htmlspecialchars( wfMsg( 'imgmultigo' ) ) . '"></form>';
+
+					$wgOut->addHTML( '</td><td><div class="multipageimagenavbox">' .
+					   "$select<hr />$thumb1\n$thumb2<br clear=\"all\" /></div></td></tr></table>" );
+				}
 			} else {
 				#if direct link is allowed but it's not a renderable image, show an icon.
 				if ($this->img->isSafeFile()) {
@@ -258,11 +304,13 @@ class ImagePage extends Article {
 					ceil($this->img->getSize()/1024.0),
 					$this->img->getMimeType() );
 
+				global $wgContLang;
+				$dirmark = $wgContLang->getDirMark();
 				if (!$this->img->isSafeFile()) {
 					$warning = wfMsg( 'mediawarning' );
 					$wgOut->addWikiText( <<<END
 <div class="fullMedia">
-<span class="dangerousLink">[[Media:$filename|$filename]]</span>
+<span class="dangerousLink">[[Media:$filename|$filename]]</span>$dirmark
 <span class="fileInfo"> ($info)</span>
 </div>
 
@@ -272,7 +320,7 @@ END
 				} else {
 					$wgOut->addWikiText( <<<END
 <div class="fullMedia">
-[[Media:$filename|$filename]] <span class="fileInfo"> ($info)</span>
+[[Media:$filename|$filename]]$dirmark <span class="fileInfo"> ($info)</span>
 </div>
 END
 						);
@@ -309,10 +357,7 @@ END
 		$wgOut->addHTML($sharedtext);
 
 		if ($wgRepositoryBaseUrl && $wgFetchCommonsDescriptions) {
-			require_once("HttpFunctions.php");
-			$ur = ini_set('allow_url_fopen', true);
-			$text = wfGetHTTP($url . '?action=render');
-			ini_set('allow_url_fopen', $ur);
+			$text = Http::get($url . '?action=render');
 			if ($text)
 				$this->mExtraDescription = $text;
 		}
@@ -324,24 +369,31 @@ END
 		return $wgServer . $uploadTitle->getLocalUrl( 'wpDestFile=' . urlencode( $this->img->getName() ) );
 	}
 
-
-	function uploadLinksBox()
-	{
+	/**
+	 * Print out the various links at the bottom of the image page, e.g. reupload,
+	 * external editing (and instructions link) etc.
+	 */
+	function uploadLinksBox() {
 		global $wgUser, $wgOut;
 
-		if ($this->img->fromSharedDirectory)
+		if( $this->img->fromSharedDirectory )
 			return;
 
 		$sk = $wgUser->getSkin();
-		$wgOut->addHTML( '<br /><ul>' );
+		
+		$wgOut->addHtml( '<br /><ul>' );
+		
+		# "Upload a new version of this file" link
 		if( $wgUser->isAllowed( 'reupload' ) ) {
-			$wgOut->addWikiText( "<li>\n<div>". wfMsg( 'uploadnewversion', $this->getUploadUrl() ) ."</div>\n</li>\n" );
+			$ulink = $sk->makeExternalLink( $this->getUploadUrl(), wfMsg( 'uploadnewversion-linktext' ) );
+			$wgOut->addHtml( "<li><div>{$ulink}</div></li>" );
 		}
-		$wgOut->addHTML( '<li>' );
-		$wgOut->addHTML( $sk->makeKnownLinkObj( $this->mTitle,
-			wfMsg( 'edit-externally' ), "action=edit&externaledit=true&mode=file" ) );
-		$wgOut->addWikiText( '<div>' .  wfMsg('edit-externally-help') . '</div>' );
-		$wgOut->addHTML( '</li></ul>' );
+		
+		# External editing link
+		$elink = $sk->makeKnownLinkObj( $this->mTitle, wfMsg( 'edit-externally' ), 'action=edit&externaledit=true&mode=file' );
+		$wgOut->addHtml( '<li>' . $elink . '<div>' . wfMsgWikiHtml( 'edit-externally-help' ) . '</div></li>' );
+		
+		$wgOut->addHtml( '</ul>' );
 	}
 
 	function closeShowImage()
@@ -363,7 +415,7 @@ END
 		$line = $this->img->nextHistoryLine();
 
 		if ( $line ) {
-			$list =& new ImageHistoryList( $sk );
+			$list = new ImageHistoryList( $sk );
 			$s = $list->beginImageHistoryList() .
 				$list->imageHistoryLine( true, wfTimestamp(TS_MW, $line->img_timestamp),
 					$this->mTitle->getDBkey(),  $line->img_user,
@@ -425,13 +477,14 @@ END
 		global $wgUser, $wgOut, $wgRequest;
 
 		$confirm = $wgRequest->wasPosted();
+		$reason = $wgRequest->getVal( 'wpReason' );
 		$image = $wgRequest->getVal( 'image' );
 		$oldimage = $wgRequest->getVal( 'oldimage' );
 
 		# Only sysops can delete images. Previously ordinary users could delete
 		# old revisions, but this is no longer the case.
 		if ( !$wgUser->isAllowed('delete') ) {
-			$wgOut->sysopRequired();
+			$wgOut->permissionRequired( 'delete' );
 			return;
 		}
 		if ( $wgUser->isBlocked() ) {
@@ -446,7 +499,7 @@ END
 		$wgOut->setPagetitle( wfMsg( 'confirmdelete' ) );
 		if ( ( !is_null( $image ) )
 		  && ( '' == trim( $image ) ) ) {
-			$wgOut->fatalError( wfMsg( 'cannotdelete' ) );
+			$wgOut->showFatalError( wfMsg( 'cannotdelete' ) );
 			return;
 		}
 
@@ -455,9 +508,9 @@ END
 		# Deleting old images doesn't require confirmation
 		if ( !is_null( $oldimage ) || $confirm ) {
 			if( $wgUser->matchEditToken( $wgRequest->getVal( 'wpEditToken' ), $oldimage ) ) {
-				$this->doDelete();
+				$this->doDelete( $reason );
 			} else {
-				$wgOut->fatalError( wfMsg( 'sessionfailure' ) );
+				$wgOut->showFatalError( wfMsg( 'sessionfailure' ) );
 			}
 			return;
 		}
@@ -472,95 +525,48 @@ END
 		return $this->confirmDelete( $q, $wgRequest->getText( 'wpReason' ) );
 	}
 
-	function doDelete()	{
-		global $wgOut, $wgRequest, $wgUseSquid, $wgInternalServer;
+	/*
+	 * Delete an image.
+	 * @param $reason User provided reason for deletion.
+	 */
+	function doDelete( $reason ) {
+		global $wgOut, $wgRequest, $wgUseSquid;
 		global $wgPostCommitUpdateList;
 
 		$fname = 'ImagePage::doDelete';
 
-		$reason = $wgRequest->getVal( 'wpReason' );
 		$oldimage = $wgRequest->getVal( 'oldimage' );
 
 		$dbw =& wfGetDB( DB_MASTER );
 
 		if ( !is_null( $oldimage ) ) {
 			if ( strlen( $oldimage ) < 16 ) {
-				$wgOut->unexpectedValueError( 'oldimage', htmlspecialchars($oldimage) );
+				$wgOut->showUnexpectedValueError( 'oldimage', htmlspecialchars($oldimage) );
 				return;
 			}
 			if ( strstr( $oldimage, "/" ) || strstr( $oldimage, "\\" ) ) {
-				$wgOut->unexpectedValueError( 'oldimage', htmlspecialchars($oldimage) );
+				$wgOut->showUnexpectedValueError( 'oldimage', htmlspecialchars($oldimage) );
 				return;
 			}
-
-			# Invalidate description page cache
-			$this->mTitle->invalidateCache();
-
-			# Squid purging
-			if ( $wgUseSquid ) {
-				$urlArr = array(
-					$wgInternalServer.wfImageArchiveUrl( $oldimage ),
-					$this->mTitle->getInternalURL()
-				);
-				wfPurgeSquidServers($urlArr);
+			if ( !$this->doDeleteOldImage( $oldimage ) ) {
+				return;
 			}
-			$this->doDeleteOldImage( $oldimage );
-			$dbw->delete( 'oldimage', array( 'oi_archive_name' => $oldimage ) );
 			$deleted = $oldimage;
 		} else {
-			$image = $this->mTitle->getDBkey();
-			$dest = wfImageDir( $image );
-			$archive = wfImageDir( $image );
-
-			# Delete the image file if it exists; due to sync problems
-			# or manual trimming sometimes the file will be missing.
-			$targetFile = "{$dest}/{$image}";
-			if( file_exists( $targetFile ) && ! @unlink( $targetFile ) ) {
+			$ok = $this->img->delete( $reason );
+			if( !$ok ) {
 				# If the deletion operation actually failed, bug out:
-				$wgOut->fileDeleteError( $targetFile );
+				$wgOut->showFileDeleteError( $this->img->getName() );
 				return;
 			}
-			$dbw->delete( 'image', array( 'img_name' => $image ) );
-
-			if ( $dbw->affectedRows() ) {
-				# Update site_stats
-				$site_stats = $dbw->tableName( 'site_stats' );
-				$dbw->query( "UPDATE $site_stats SET ss_images=ss_images-1", $fname );
-			}
 			
-
-			$res = $dbw->select( 'oldimage', array( 'oi_archive_name' ), array( 'oi_name' => $image ) );
-
-			# Purge archive URLs from the squid
-			$urlArr = Array();
-			while ( $s = $dbw->fetchObject( $res ) ) {
-				$this->doDeleteOldImage( $s->oi_archive_name );
-				$urlArr[] = $wgInternalServer.wfImageArchiveUrl( $s->oi_archive_name );
-			}
-
-			# And also the HTML of all pages using this image
-			$linksTo = $this->img->getLinksTo();
-			if ( $wgUseSquid ) {
-				$u = SquidUpdate::newFromTitles( $linksTo, $urlArr );
-				array_push( $wgPostCommitUpdateList, $u );
-			}
-
-			$dbw->delete( 'oldimage', array( 'oi_name' => $image ) );
-
 			# Image itself is now gone, and database is cleaned.
 			# Now we remove the image description page.
-
+	
 			$article = new Article( $this->mTitle );
 			$article->doDeleteArticle( $reason ); # ignore errors
 
-			# Invalidate parser cache and client cache for pages using this image
-			# This is left until relatively late to reduce lock time
-			Title::touchArray( $linksTo );
-
-			/* Delete thumbnails and refresh image metadata cache */
-			$this->img->purgeCache();
-
-			$deleted = $image;
+			$deleted = $this->img->getName();
 		}
 
 		$wgOut->setPagetitle( wfMsg( 'actioncomplete' ) );
@@ -574,29 +580,24 @@ END
 		$wgOut->returnToMain( false, $this->mTitle->getPrefixedText() );
 	}
 
+	/**
+	 * @return success
+	 */
 	function doDeleteOldImage( $oldimage )
 	{
 		global $wgOut;
 
-		$name = substr( $oldimage, 15 );
-		$archive = wfImageArchiveDir( $name );
-
-		# Delete the image if it exists. Sometimes the file will be missing
-		# due to manual intervention or weird sync problems; treat that
-		# condition gracefully and continue to delete the database entry.
-		# Also some records may end up with an empty oi_archive_name field
-		# if the original file was missing when a new upload was made;
-		# don't try to delete the directory then!
-		#
-		$targetFile = "{$archive}/{$oldimage}";
-		if( $oldimage != '' && file_exists( $targetFile ) && !@unlink( $targetFile ) ) {
+		$ok = $this->img->deleteOld( $oldimage, '' );
+		if( !$ok ) {
 			# If we actually have a file and can't delete it, throw an error.
-			$wgOut->fileDeleteError( "{$archive}/{$oldimage}" );
+			# Something went awry...
+			$wgOut->showFileDeleteError( "$oldimage" );
 		} else {
 			# Log the deletion
 			$log = new LogPage( 'delete' );
 			$log->addEntry( 'delete', $this->mTitle, wfMsg('deletedrevision',$oldimage) );
 		}
+		return $ok;
 	}
 
 	function revert() {
@@ -604,11 +605,11 @@ END
 
 		$oldimage = $wgRequest->getText( 'oldimage' );
 		if ( strlen( $oldimage ) < 16 ) {
-			$wgOut->unexpectedValueError( 'oldimage', htmlspecialchars($oldimage) );
+			$wgOut->showUnexpectedValueError( 'oldimage', htmlspecialchars($oldimage) );
 			return;
 		}
 		if ( strstr( $oldimage, "/" ) || strstr( $oldimage, "\\" ) ) {
-			$wgOut->unexpectedValueError( 'oldimage', htmlspecialchars($oldimage) );
+			$wgOut->showUnexpectedValueError( 'oldimage', htmlspecialchars($oldimage) );
 			return;
 		}
 
@@ -617,18 +618,18 @@ END
 			return;
 		}
 		if( $wgUser->isAnon() ) {
-			$wgOut->errorpage( 'uploadnologin', 'uploadnologintext' );
+			$wgOut->showErrorPage( 'uploadnologin', 'uploadnologintext' );
 			return;
 		}
 		if ( ! $this->mTitle->userCanEdit() ) {
-			$wgOut->sysopRequired();
+			$wgOut->readOnlyPage( $this->getContent(), true );
 			return;
 		}
 		if ( $wgUser->isBlocked() ) {
 			return $this->blockedIPpage();
 		}
 		if( !$wgUser->matchEditToken( $wgRequest->getVal( 'wpEditToken' ), $oldimage ) ) {
-			$wgOut->errorpage( 'internalerror', 'sessionfailure' );
+			$wgOut->showErrorPage( 'internalerror', 'sessionfailure' );
 			return;
 		}
 		$name = substr( $oldimage, 15 );
@@ -637,8 +638,11 @@ END
 		$archive = wfImageArchiveDir( $name );
 		$curfile = "{$dest}/{$name}";
 
+		if ( !is_dir( $dest ) ) wfMkdirParents( $dest );
+		if ( !is_dir( $archive ) ) wfMkdirParents( $archive );
+
 		if ( ! is_file( $curfile ) ) {
-			$wgOut->fileNotFoundError( htmlspecialchars( $curfile ) );
+			$wgOut->showFileNotFoundError( htmlspecialchars( $curfile ) );
 			return;
 		}
 		$oldver = wfTimestampNow() . "!{$name}";
@@ -647,11 +651,12 @@ END
 		$size = $dbr->selectField( 'oldimage', 'oi_size', array( 'oi_archive_name' => $oldimage )  );
 
 		if ( ! rename( $curfile, "${archive}/{$oldver}" ) ) {
-			$wgOut->fileRenameError( $curfile, "${archive}/{$oldver}" );
+			$wgOut->showFileRenameError( $curfile, "${archive}/{$oldver}" );
 			return;
 		}
 		if ( ! copy( "{$archive}/{$oldimage}", $curfile ) ) {
-			$wgOut->fileCopyError( "${archive}/{$oldimage}", $curfile );
+			$wgOut->showFileCopyError( "${archive}/{$oldimage}", $curfile );
+			return;
 		}
 
 		# Record upload and update metadata cache
@@ -667,7 +672,6 @@ END
 	}
 
 	function blockedIPpage() {
-		require_once( 'EditPage.php' );
 		$edit = new EditPage( $this );
 		return $edit->blockedIPpage();
 	}
@@ -679,8 +683,8 @@ END
 		$this->img = new Image( $this->mTitle );
 		if( $this->img->exists() ) {
 			wfDebug( "ImagePage::doPurge purging " . $this->img->getName() . "\n" );
-			$linksTo = $this->img->getLinksTo();
-			Title::touchArray( $linksTo );
+			$update = new HTMLCacheUpdate( $this->mTitle, 'imagelinks' );
+			$update->doUpdate();
 			$this->img->purgeCache();
 		} else {
 			wfDebug( "ImagePage::doPurge no image\n" );
@@ -748,18 +752,14 @@ class ImageHistoryList {
 				$dlink = $del;
 			}
 		}
-		if ( 0 == $user ) {
-			$userlink = $usertext;
-		} else {
-			$userlink = $this->skin->makeLinkObj( Title::makeTitle( NS_USER, $usertext ), $usertext );
-			$usertalk = $this->skin->makeLinkObj( Title::makeTitle( NS_USER_TALK, $usertext), $wgContLang->getNsText( NS_TALK ) );
-			$userdata = $userlink . ' (' . $usertalk . ')';
-		}
-		$nbytes = wfMsg( 'nbytes', $size );
+		
+		$userlink = $this->skin->userLink( $user, $usertext ) . $this->skin->userToolLinks( $user, $usertext );
+		$nbytes = wfMsgExt( 'nbytes', array( 'parsemag', 'escape' ),
+			$wgLang->formatNum( $size ) );
 		$widthheight = wfMsg( 'widthheight', $width, $height );
 		$style = $this->skin->getInternalLinkAttributes( $url, $datetime );
 
-		$s = "<li> ({$dlink}) ({$rlink}) <a href=\"{$url}\"{$style}>{$datetime}</a> . . {$userdata} . . {$widthheight} ({$nbytes})";
+		$s = "<li> ({$dlink}) ({$rlink}) <a href=\"{$url}\"{$style}>{$datetime}</a> . . {$userlink} . . {$widthheight} ({$nbytes})";
 
 		$s .= $this->skin->commentBlock( $description, $wgTitle );
 		$s .= "</li>\n";

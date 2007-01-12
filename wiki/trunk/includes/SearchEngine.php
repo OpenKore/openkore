@@ -48,69 +48,74 @@ class SearchEngine {
 	 * @static
 	 * @param string $term
 	 * @return Title
-	 * @access private
+	 * @private
 	 */
-	function getNearMatch( $term ) {
-		# Exact match? No need to look further.
-		$title = Title::newFromText( $term );
-		if (is_null($title))
-			return NULL;
+	function getNearMatch( $searchterm ) {
+		global $wgContLang;
 
-		if ( $title->getNamespace() == NS_SPECIAL || $title->exists() ) {
-			return $title;
+		$allSearchTerms = array($searchterm);
+
+		if($wgContLang->hasVariants()){
+			$allSearchTerms = array_merge($allSearchTerms,$wgContLang->convertLinkToAllVariants($searchterm));
 		}
 
-		# Now try all lower case (i.e. first letter capitalized)
-		#
-		$title = Title::newFromText( strtolower( $term ) );
-		if ( $title->exists() ) {
-			return $title;
-		}
+		foreach($allSearchTerms as $term){
 
-		# Now try capitalized string
-		#
-		$title = Title::newFromText( ucwords( strtolower( $term ) ) );
-		if ( $title->exists() ) {
-			return $title;
-		}
+			# Exact match? No need to look further.
+			$title = Title::newFromText( $term );
+			if (is_null($title))
+				return NULL;
 
-		# Now try all upper case
-		#
-		$title = Title::newFromText( strtoupper( $term ) );
-		if ( $title->exists() ) {
-			return $title;
-		}
+			if ( $title->getNamespace() == NS_SPECIAL || $title->exists() ) {
+				return $title;
+			}
 
-		# Now try Word-Caps-Breaking-At-Word-Breaks, for hyphenated names etc
-		$title = Title::newFromText( preg_replace_callback(
-			'/\b([\w\x80-\xff]+)\b/',
-			create_function( '$matches', '
-				global $wgContLang;
-				return $wgContLang->ucfirst($matches[1]);
-				' ),
-			$term ) );
-		if ( $title->exists() ) {
-			return $title;
-		}
-
-		global $wgCapitalLinks, $wgContLang;
-		if( !$wgCapitalLinks ) {
-			// Catch differs-by-first-letter-case-only
-			$title = Title::newFromText( $wgContLang->ucfirst( $term ) );
+			# Now try all lower case (i.e. first letter capitalized)
+			#
+			$title = Title::newFromText( $wgContLang->lc( $term ) );
 			if ( $title->exists() ) {
 				return $title;
 			}
-			$title = Title::newFromText( $wgContLang->lcfirst( $term ) );
+
+			# Now try capitalized string
+			#
+			$title = Title::newFromText( $wgContLang->ucwords( $term ) );
 			if ( $title->exists() ) {
 				return $title;
 			}
+
+			# Now try all upper case
+			#
+			$title = Title::newFromText( $wgContLang->uc( $term ) );
+			if ( $title->exists() ) {
+				return $title;
+			}
+
+			# Now try Word-Caps-Breaking-At-Word-Breaks, for hyphenated names etc
+			$title = Title::newFromText( $wgContLang->ucwordbreaks($term) );
+			if ( $title->exists() ) {
+				return $title;
+			}
+
+			global $wgCapitalLinks, $wgContLang;
+			if( !$wgCapitalLinks ) {
+				// Catch differs-by-first-letter-case-only
+				$title = Title::newFromText( $wgContLang->ucfirst( $term ) );
+				if ( $title->exists() ) {
+					return $title;
+				}
+				$title = Title::newFromText( $wgContLang->lcfirst( $term ) );
+				if ( $title->exists() ) {
+					return $title;
+				}
+			}
 		}
 
-		$title = Title::newFromText( $term );
+		$title = Title::newFromText( $searchterm );
 
 		# Entering an IP address goes to the contributions page
 		if ( ( $title->getNamespace() == NS_USER && User::isIP($title->getText() ) )
-			|| User::isIP( trim( $term ) ) ) {
+			|| User::isIP( trim( $searchterm ) ) ) {
 			return Title::makeTitle( NS_SPECIAL, "Contributions/" . $title->getDbkey() );
 		}
 
@@ -121,7 +126,7 @@ class SearchEngine {
 		}
 
 		# Quoted term? Try without the quotes...
-		if( preg_match( '/^"([^"]+)"$/', $term, $matches ) ) {
+		if( preg_match( '/^"([^"]+)"$/', $searchterm, $matches ) ) {
 			return SearchEngine::getNearMatch( $matches[1] );
 		}
 
@@ -187,7 +192,7 @@ class SearchEngine {
 	 * active database backend, and return a configured instance.
 	 *
 	 * @return SearchEngine
-	 * @access private
+	 * @private
 	 */
 	function create() {
 		global $wgDBtype, $wgSearchType;
@@ -195,10 +200,8 @@ class SearchEngine {
 			$class = $wgSearchType;
 		} elseif( $wgDBtype == 'mysql' ) {
 			$class = 'SearchMySQL4';
-			require_once( 'SearchMySQL4.php' );
-		} else if ( $wgDBtype == 'PostgreSQL' ) {
-			$class = 'SearchTsearch2';
-			require_once( 'SearchTsearch2.php' );
+		} else if ( $wgDBtype == 'postgres' ) {
+			$class = 'SearchPostgres';
 		} else {
 			$class = 'SearchEngineDummy';
 		}

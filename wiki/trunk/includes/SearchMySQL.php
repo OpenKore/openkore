@@ -24,9 +24,6 @@
  * @subpackage Search
  */
 
-/** */
-require_once( 'SearchEngine.php' );
-
 /** @package MediaWiki */
 class SearchMySQL extends SearchEngine {
 	/**
@@ -57,7 +54,7 @@ class SearchMySQL extends SearchEngine {
 	/**
 	 * Return a partial WHERE clause to exclude redirects, if so set
 	 * @return string
-	 * @access private
+	 * @private
 	 */
 	function queryRedirect() {
 		if( $this->showRedirects ) {
@@ -70,7 +67,7 @@ class SearchMySQL extends SearchEngine {
 	/**
 	 * Return a partial WHERE clause to limit the search to the given namespaces
 	 * @return string
-	 * @access private
+	 * @private
 	 */
 	function queryNamespaces() {
 		$namespaces = implode( ',', $this->namespaces );
@@ -83,7 +80,7 @@ class SearchMySQL extends SearchEngine {
 	/**
 	 * Return a LIMIT clause to limit results on the query.
 	 * @return string
-	 * @access private
+	 * @private
 	 */
 	function queryLimit() {
 		return $this->db->limitResult( '', $this->limit, $this->offset );
@@ -93,7 +90,7 @@ class SearchMySQL extends SearchEngine {
 	 * Does not do anything for generic search engine
 	 * subclasses may define this though
 	 * @return string
-	 * @access private
+	 * @private
 	 */
 	function queryRanking( $filteredTerm, $fulltext ) {
 		return '';
@@ -104,7 +101,7 @@ class SearchMySQL extends SearchEngine {
 	 * The guts shoulds be constructed in queryMain()
 	 * @param string $filteredTerm
 	 * @param bool $fulltext
-	 * @access private
+	 * @private
 	 */
 	function getQuery( $filteredTerm, $fulltext ) {
 		return $this->queryMain( $filteredTerm, $fulltext ) . ' ' .
@@ -133,7 +130,7 @@ class SearchMySQL extends SearchEngine {
 	 * @param string $filteredTerm
 	 * @param bool $fulltext
 	 * @return string
-	 * @access private
+	 * @private
 	 */
 	function queryMain( $filteredTerm, $fulltext ) {
 		$match = $this->parseQuery( $filteredTerm, $fulltext );

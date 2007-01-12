@@ -28,7 +28,7 @@ class SkinHTMLDump extends SkinTemplate {
 		$badMessages = array( 'recentchanges-url', 'randompage-url' );
 		$badUrls = array();
 		foreach ( $badMessages as $msg ) {
-			$badUrls[] = $this->makeInternalOrExternalUrl( wfMsgForContent( $msg ) );
+			$badUrls[] = self::makeInternalOrExternalUrl( wfMsgForContent( $msg ) );
 		}
 
 		foreach ( $sections as $heading => $section ) {
@@ -75,7 +75,13 @@ class SkinHTMLDump extends SkinTemplate {
 		}
 
 		if ( $nt->getNamespace() == NS_CATEGORY ) {
-			return $this->makeKnownLinkObj( $nt, $text, $query, $trail, $prefix );
+			# Determine if the category has any articles in it
+			$dbr =& wfGetDB( DB_SLAVE );
+			$hasMembers = $dbr->selectField( 'categorylinks', '1', 
+				array( 'cl_to' => $nt->getDBkey() ), __METHOD__ );
+			if ( $hasMembers ) {
+				return $this->makeKnownLinkObj( $nt, $text, $query, $trail, $prefix );
+			}
 		}
 
 		if ( $text == '' ) {
@@ -131,7 +137,7 @@ class HTMLDumpTemplate extends QuickTemplate {
 	<div id="content">
 	  <a name="top" id="contentTop"></a>
 	  <?php if($this->data['sitenotice']) { ?><div id="siteNotice"><?php $this->html('sitenotice') ?></div><?php } ?>
-	  <h1 class="firstHeading"><?php $this->text('title') ?></h1>
+      <h1 class="firstHeading"><?php $this->data['displaytitle']!=""?$this->html('title'):$this->text('title') ?></h1>
 	  <div id="bodyContent">
 	    <h3 id="siteSub"><?php $this->msg('tagline') ?></h3>
 	    <div id="contentSub"><?php $this->html('subtitle') ?></div>
@@ -165,7 +171,7 @@ class HTMLDumpTemplate extends QuickTemplate {
 	<script type="<?php $this->text('jsmimetype') ?>"> if (window.isMSIE55) fixalpha(); </script>
 	<?php foreach ($this->data['sidebar'] as $bar => $cont) { ?>
 	<div class='portlet' id='p-<?php echo htmlspecialchars($bar) ?>'>
-	  <h5><?php $this->msg( $bar ) ?></h5>
+	  <h5><?php $out = wfMsg( $bar ); if (wfEmptyMsg($bar, $out)) echo $bar; else echo $out; ?></h5>
 	  <div class='pBody'>
 	    <ul>
 	    <?php foreach($cont as $key => $val) { ?>
@@ -177,7 +183,7 @@ class HTMLDumpTemplate extends QuickTemplate {
 	<?php } ?>
 	<div id="p-search" class="portlet">
 	  <h5><label for="searchInput"><?php $this->msg('search') ?></label></h5>
-	  <div class="pBody">
+	  <div id="searchBody" class="pBody">
 	    <form action="javascript:goToStatic(3)" id="searchform"><div>
 	      <input id="searchInput" name="search" type="text"
 	        <?php if($this->haveMsg('accesskey-search')) {

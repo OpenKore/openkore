@@ -28,10 +28,84 @@ require_once( 'commandLine.inc' );
 require_once( 'SpecialExport.php' );
 require_once( 'maintenance/backup.inc' );
 
+/**
+ * Stream wrapper around 7za filter program.
+ * Required since we can't pass an open file resource to XMLReader->open()
+ * which is used for the text prefetch.
+ */
+class SevenZipStream {
+	var $stream;
+	
+	private function stripPath( $path ) {
+		$prefix = 'mediawiki.compress.7z://';
+		return substr( $path, strlen( $prefix ) );
+	}
+	
+	function stream_open( $path, $mode, $options, &$opened_path ) {
+		if( $mode{0} == 'r' ) {
+			$options = 'e -bd -so';
+		} elseif( $mode{0} == 'w' ) {
+			$options = 'a -bd -si';
+		} else {
+			return false;
+		}
+		$arg = wfEscapeShellArg( $this->stripPath( $path ) );
+		$command = "7za $options $arg";
+		if( !wfIsWindows() ) {
+			// Suppress the stupid messages on stderr
+			$command .= ' 2>/dev/null';
+		}
+		$this->stream = popen( $command, $mode );
+		return ($this->stream !== false);
+	}
+	
+	function url_stat( $path, $flags ) {
+		return stat( $this->stripPath( $path ) );
+	}
+	
+	// This is all so lame; there should be a default class we can extend
+	
+	function stream_close() {
+		return fclose( $this->stream );
+	}
+	
+	function stream_flush() {
+		return fflush( $this->stream );
+	}
+	
+	function stream_read( $count ) {
+		return fread( $this->stream, $count );
+	}
+	
+	function stream_write( $data ) {
+		return fwrite( $this->stream, $data );
+	}
+	
+	function stream_tell() {
+		return ftell( $this->stream );
+	}
+	
+	function stream_eof() {
+		return feof( $this->stream );
+	}
+	
+	function stream_seek( $offset, $whence ) {
+		return fseek( $this->stream, $offset, $whence );
+	}
+}
+stream_wrapper_register( 'mediawiki.compress.7z', 'SevenZipStream' );
+
+
 class TextPassDumper extends BackupDumper {
 	var $prefetch = null;
 	var $input = "php://stdin";
-	var $history = MW_EXPORT_FULL;
+	var $history = WikiExporter::FULL;
+	var $fetchCount = 0;
+	var $prefetchCount = 0;
+	
+	var $failures = 0;
+	var $maxFailures = 200;
+	var $failureTimeout = 5; // Seconds to sleep after db failure
 
 	function dump() {
 		# This shouldn't happen if on console... ;)
@@ -69,10 +143,10 @@ class TextPassDumper extends BackupDumper {
 			$this->input = $url;
 			break;
 		case 'current':
-			$this->history = MW_EXPORT_CURRENT;
+			$this->history = WikiExporter::CURRENT;
 			break;
 		case 'full':
-			$this->history = MW_EXPORT_FULL;
+			$this->history = WikiExporter::FULL;
 			break;
 		}
 	}
@@ -85,8 +159,39 @@ class TextPassDumper extends BackupDumper {
 			return "compress.zlib://$param";
 		case "bzip2":
 			return "compress.bzip2://$param";
+		case "7zip":
+			return "mediawiki.compress.7z://$param";
 		default:
 			return $val;
+		}
+	}
+
+	/**
+	 * Overridden to include prefetch ratio if enabled.
+	 */
+	function showReport() {
+		if( !$this->prefetch ) {
+			return parent::showReport();
+		}
+		
+		if( $this->reporting ) {
+			$delta = wfTime() - $this->startTime;
+			$now = wfTimestamp( TS_DB );
+			if( $delta ) {
+				$rate = $this->pageCount / $delta;
+				$revrate = $this->revCount / $delta;
+				$portion = $this->revCount / $this->maxCount;
+				$eta = $this->startTime + $delta / $portion;
+				$etats = wfTimestamp( TS_DB, intval( $eta ) );
+				$fetchrate = 100.0 * $this->prefetchCount / $this->fetchCount;
+			} else {
+				$rate = '-';
+				$revrate = '-';
+				$etats = '-';
+				$fetchrate = '-';
+			}
+			$this->progress( sprintf( "%s: %s %d pages (%0.3f/sec), %d revs (%0.3f/sec), %0.1f%% prefetched, ETA %s [max %d]",
+				$now, wfWikiID(), $this->pageCount, $rate, $this->revCount, $revrate, $fetchrate, $etats, $this->maxCount ) );
 		}
 	}
 
@@ -121,11 +226,40 @@ class TextPassDumper extends BackupDumper {
 	}
 
 	function getText( $id ) {
+		$this->fetchCount++;
 		if( isset( $this->prefetch ) ) {
 			$text = $this->prefetch->prefetch( $this->thisPage, $this->thisRev );
-			if( !is_null( $text ) )
+			if( $text === null ) {
+				// Entry missing from prefetch dump
+			} elseif( $text === "" ) {
+				// Blank entries may indicate that the prior dump was broken.
+				// To be safe, reload it.
+			} else {
+				$this->prefetchCount++;
 				return $text;
+			}
 		}
+		while( true ) {
+			try {
+				return $this->doGetText( $id );
+			} catch (DBQueryError $ex) {
+				$this->failures++;
+				if( $this->failures > $this->maxFailures ) {
+					throw $ex;
+				} else {
+					$this->progress( "Database failure $this->failures " .
+						"of allowed $this->maxFailures! " .
+						"Pausing $this->failureTimeout seconds..." );
+					sleep( $this->failureTimeout );
+				}
+			}
+		}
+	}
+	
+	/**
+	 * May throw a database error if, say, the server dies during query.
+	 */
+	private function doGetText( $id ) {
 		$id = intval( $id );
 		$row = $this->db->selectRow( 'text',
 			array( 'old_text', 'old_flags' ),

@@ -13,13 +13,18 @@ function wfSpecialRevisiondelete( $par = null ) {
 	global $wgOut, $wgRequest, $wgUser;
 	
 	$target = $wgRequest->getVal( 'target' );
-	$oldid = $wgRequest->getInt( 'oldid' );
+	$oldid = $wgRequest->getIntArray( 'oldid' );
 	
 	$sk = $wgUser->getSkin();
 	$page = Title::newFromUrl( $target );
 	
 	if( is_null( $page ) ) {
-		$wgOut->errorpage( 'notargettitle', 'notargettext' );
+		$wgOut->showErrorPage( 'notargettitle', 'notargettext' );
+		return;
+	}
+	
+	if( is_null( $oldid ) ) {
+		$wgOut->showErrorPage( 'revdelete-nooldid-title', 'revdelete-nooldid-text' );
 		return;
 	}
 	
@@ -46,10 +51,10 @@ class RevisionDeleteForm {
 		
 		$this->skin = $wgUser->getSkin();
 		$this->checks = array(
-			array( 'revdelete-hide-text', 'wpHideText', MW_REV_DELETED_TEXT ),
-			array( 'revdelete-hide-comment', 'wpHideComment', MW_REV_DELETED_COMMENT ),
-			array( 'revdelete-hide-user', 'wpHideUser', MW_REV_DELETED_USER ),
-			array( 'revdelete-hide-restricted', 'wpHideRestricted', MW_REV_DELETED_RESTRICTED ) );
+			array( 'revdelete-hide-text', 'wpHideText', Revision::DELETED_TEXT ),
+			array( 'revdelete-hide-comment', 'wpHideComment', Revision::DELETED_COMMENT ),
+			array( 'revdelete-hide-user', 'wpHideUser', Revision::DELETED_USER ),
+			array( 'revdelete-hide-restricted', 'wpHideRestricted', Revision::DELETED_RESTRICTED ) );
 	}
 	
 	/**
@@ -58,13 +63,15 @@ class RevisionDeleteForm {
 	function show( $request ) {
 		global $wgOut, $wgUser;
 
-		$first = $this->revisions[0];
-		
 		$wgOut->addWikiText( wfMsg( 'revdelete-selected', $this->page->getPrefixedText() ) );
 		
 		$wgOut->addHtml( "<ul>" );
 		foreach( $this->revisions as $revid ) {
 			$rev = Revision::newFromTitle( $this->page, $revid );
+			if( !isset( $rev ) ) {
+				$wgOut->showErrorPage( 'revdelete-nooldid-title', 'revdelete-nooldid-text' );
+				return;
+			}
 			$wgOut->addHtml( $this->historyLine( $rev ) );
 			$bitfields[] = $rev->mDeleted; // FIXME
 		}
@@ -85,7 +92,8 @@ class RevisionDeleteForm {
 		$special = Title::makeTitle( NS_SPECIAL, 'Revisiondelete' );
 		$wgOut->addHtml( wfElement( 'form', array(
 			'method' => 'post',
-			'action' => $special->getLocalUrl( 'action=submit' ) ) ) );
+			'action' => $special->getLocalUrl( 'action=submit' ) ),
+			null ) );
 		
 		$wgOut->addHtml( '<fieldset><legend>' . wfMsgHtml( 'revdelete-legend' ) . '</legend>' );
 		foreach( $this->checks as $item ) {
@@ -180,6 +188,9 @@ class RevisionDeleter {
 		// To work!
 		foreach( $items as $revid ) {
 			$rev = Revision::newFromId( $revid );
+			if( !isset( $rev ) ) {
+				return false;
+			}
 			$this->updateRevision( $rev, $bitfield );
 			$this->updateRecentChanges( $rev, $bitfield );
 			
@@ -222,9 +233,9 @@ class RevisionDeleter {
 	function updateRecentChanges( $rev, $bitfield ) {
 		$this->db->update( 'recentchanges',
 			array(
-				'rc_user' => ($bitfield & MW_REV_DELETED_USER) ? 0 : $rev->getUser(),
-				'rc_user_text' => ($bitfield & MW_REV_DELETED_USER) ? wfMsg( 'rev-deleted-user' ) : $rev->getUserText(),
-				'rc_comment' => ($bitfield & MW_REV_DELETED_COMMENT) ? wfMsg( 'rev-deleted-comment' ) : $rev->getComment() ),
+				'rc_user' => ($bitfield & Revision::DELETED_USER) ? 0 : $rev->getUser(),
+				'rc_user_text' => ($bitfield & Revision::DELETED_USER) ? wfMsg( 'rev-deleted-user' ) : $rev->getUserText(),
+				'rc_comment' => ($bitfield & Revision::DELETED_COMMENT) ? wfMsg( 'rev-deleted-comment' ) : $rev->getComment() ),
 			array(
 				'rc_this_oldid' => $rev->getId() ),
 			'RevisionDeleter::updateRecentChanges' );

@@ -33,8 +33,8 @@ foreach ( $wgQueryPages as $page ) {
 		print "No such special page: $special\n";
 		exit;
 	}
-	$file = $specialObj->getFile();
-	if ( $file ) {
+	if ( !class_exists( $class ) ) {
+		$file = $specialObj->getFile();
 		require_once( $file );
 	}
 	$queryPage = new $class;

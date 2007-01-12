@@ -59,7 +59,6 @@ body {
 /* general styles */
 
 table {
-	background: white;
 	font-size: 100%;
 	color: black;
 }
@@ -164,7 +163,6 @@ fieldset {
 	line-height: 1.5em;
 }
 legend {
-	background: white;
 	padding: .5em;
 	font-size: 95%;
 }
@@ -1098,11 +1096,11 @@ div#userlogin .captcha {
 }
 
 
-#userloginprompt {
+#userloginprompt, #languagelinks {
 	font-size: 85%;
 }
 
-#login-emailforlost {
+#login-sectiontip {
 	font-size: 85%;
 	line-height: 1.2;
 	padding-top: 2em;
@@ -1176,7 +1174,7 @@ div.patrollink {
 	font-size: 75%;
 	text-align: right;
 }
-span.newpage, span.minor, span.searchmatch {
+span.newpage, span.minor, span.searchmatch, span.bot {
 	font-weight: bold;
 }
 span.unpatrolled {
@@ -1220,6 +1218,11 @@ table.gallery td {
 	vertical-align: top;
 	background-color: #f9f9f9;
 	border: solid 2px white;
+}
+
+table.gallery td.galleryheader {
+	text-align: center;
+	font-weight: bold;
 }
 
 div.gallerybox {
@@ -1441,3 +1444,47 @@ div#searchTarget ul li:before {
 	content: "\00BB \0020";
 }
 
+div.multipageimagenavbox {
+   border: solid 1px silver;
+   padding: 4px;
+   margin: 1em;
+   -moz-border-radius: 6px;
+   background: #f0f0f0;
+}
+
+div.multipageimagenavbox div.thumb {
+   border: none;
+   margin-left: 2em;
+   margin-right: 2em;
+}
+
+div.multipageimagenavbox hr {
+   margin: 6px;
+}
+
+table.multipageimage td {
+   text-align: center;
+}
+
+/*
+  Table pager (e.g. Special:Imagelist)
+  - remove underlines from the navigation link
+  - collapse borders
+  - set the borders to outsets (similar to Special:Allmessages)
+  - remove line wrapping for all td and th, set background color
+  - restore line wrapping for the last two table cells (description and size)
+*/
+.TablePager_nav a { text-decoration: none; }
+.TablePager { border-collapse: collapse; }
+.TablePager, .TablePager td, .TablePager th { 
+	border: 0.15em solid #777777;
+	padding: 0 0.15em 0 0.15em;
+}
+.TablePager th { background-color: #eeeeff }
+.TablePager td { background-color: #ffffff }
+.TablePager tr:hover td { background-color: #eeeeff }
+
+.imagelist td, .imagelist th { white-space: nowrap }
+.imagelist .TablePager_col_links { background-color: #eeeeff }
+.imagelist .TablePager_col_img_description { white-space: normal }
+.imagelist th.TablePager_sort { background-color: #ccccff }

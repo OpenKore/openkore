@@ -11,14 +11,14 @@ class SearchMySQL4Test extends SearchEngine_TestCase {
 	}
 
 	function setUp() {
-		$GLOBALS['wgContLang'] = new LanguageUtf8;
+		$GLOBALS['wgContLang'] = new Language;
 		$this->db =& buildTestDatabase(
 			'mysql4',
 			array( 'page', 'revision', 'text', 'searchindex' ) );
 		if( $this->db ) {
 			$this->insertSearchData();
 		}
-		$this->search =& new SearchMySQL4( $this->db );
+		$this->search = new SearchMySQL4( $this->db );
 	}
 
 	function tearDown() {

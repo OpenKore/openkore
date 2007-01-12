@@ -7,7 +7,6 @@
  * - recent changes
  */
 
-require_once("RecentChange.php");
 /**
  * @todo document
  * @package MediaWiki
@@ -40,12 +39,20 @@ class ChangesList {
 		$this->preCacheMessages();
 	}
 
+	/**
+	 * Fetch an appropriate changes list class for the specified user
+	 * Some users might want to use an enhanced list format, for instance
+	 *
+	 * @param $user User to fetch the list class for
+	 * @return ChangesList derivative
+	 */
 	function newFromUser( &$user ) {
 		$sk =& $user->getSkin();
-		if( $user->getOption('usenewrc') ) {
-			return new EnhancedChangesList( $sk );
+		$list = NULL;
+		if( wfRunHooks( 'FetchChangesList', array( &$user, &$skin, &$list ) ) ) {
+			return $user->getOption( 'usenewrc' ) ? new EnhancedChangesList( $sk ) : new OldChangesList( $sk );
 		} else {
-			return new OldChangesList( $sk );
+			return $list;
 		}
 	}
 
@@ -56,21 +63,23 @@ class ChangesList {
 	function preCacheMessages() {
 		// Precache various messages
 		if( !isset( $this->message ) ) {
-			foreach( explode(' ', 'cur diff hist minoreditletter newpageletter last blocklink' ) as $msg ) {
-				$this->message[$msg] = wfMsg( $msg );
+			foreach( explode(' ', 'cur diff hist minoreditletter newpageletter last '.
+				'blocklink changes history boteditletter' ) as $msg ) {
+				$this->message[$msg] = wfMsgExt( $msg, array( 'escape') );
 			}
 		}
 	}
 
 
 	/**
-	 * Returns the appropiate flags for new page, minor change and patrolling
+	 * Returns the appropriate flags for new page, minor change and patrolling
 	 */
-	function recentChangesFlags( $new, $minor, $patrolled, $nothing = '&nbsp;' ) {
-		$f = $new ? '<span class="newpage">' . wfMsgHtml( 'newpageletter' ) . '</span>'
+	function recentChangesFlags( $new, $minor, $patrolled, $nothing = '&nbsp;', $bot = false ) {
+		$f = $new ? '<span class="newpage">' . $this->message['newpageletter'] . '</span>'
 				: $nothing;
-		$f .= $minor ? '<span class="minor">' . wfMsgHtml( 'minoreditletter' ) . '</span>'
+		$f .= $minor ? '<span class="minor">' . $this->message['minoreditletter'] . '</span>'
 				: $nothing;
+		$f .= $bot ? '<span class="bot">' . $this->message['boteditletter'] . '</span>' : $nothing;
 		$f .= $patrolled ? '<span class="unpatrolled">!</span>' : $nothing;
 		return $f;
 	}
@@ -169,6 +178,8 @@ class ChangesList {
 			: '';
 		$articlelink = ' '. $this->skin->makeKnownLinkObj( $rc->getTitle(), '', $params );
 		if($watched) $articlelink = '<strong>'.$articlelink.'</strong>';
+		global $wgContLang;
+		$articlelink .= $wgContLang->getDirMark();
 
 		$s .= ' '.$articlelink;
 	}
@@ -243,8 +254,8 @@ class OldChangesList extends ChangesList {
 
 			$this->insertDiffHist($s, $rc, $unpatrolled);
 
-			# M, N and ! (minor, new and unpatrolled)
-			$s .= ' ' . $this->recentChangesFlags( $rc_type == RC_NEW, $rc_minor, $unpatrolled, '' );
+			# M, N, b and ! (minor, new, bot and unpatrolled)
+			$s .= ' ' . $this->recentChangesFlags( $rc_type == RC_NEW, $rc_minor, $unpatrolled, '', $rc_bot );
 			$this->insertArticleLink($s, $rc, $unpatrolled, $watched);
 
 			wfProfileOut($fname.'-page');
@@ -329,7 +340,6 @@ class EnhancedChangesList extends ChangesList {
 		$rc->numberofWatchingusers = $baseRC->numberofWatchingusers;
 
 		# Make "cur" and "diff" links
-		$titleObj = $rc->getTitle();
 		if( $rc->unpatrolled ) {
 			$rcIdQuery = "&rcid={$rc_id}";
 		} else {
@@ -384,6 +394,7 @@ class EnhancedChangesList extends ChangesList {
 	 * Enhanced RC group
 	 */
 	function recentChangesBlockGroup( $block ) {
+		global $wgContLang;
 		$r = '';
 
 		# Collate list of users
@@ -403,6 +414,7 @@ class EnhancedChangesList extends ChangesList {
 			if( $rcObj->unpatrolled ) {
 				$unpatrolled = true;
 			}
+			$bot = $rcObj->mAttribs['rc_bot'];
 			$userlinks[$u]++;
 		}
 
@@ -412,6 +424,7 @@ class EnhancedChangesList extends ChangesList {
 		$users = array();
 		foreach( $userlinks as $userlink => $count) {
 			$text = $userlink;
+			$text .= $wgContLang->getDirMark();
 			if( $count > 1 ) {
 				$text .= ' ('.$count.'&times;)';
 			}
@@ -431,7 +444,7 @@ class EnhancedChangesList extends ChangesList {
 
 		# Main line
 		$r .= '<tt>';
-		$r .= $this->recentChangesFlags( $isnew, false, $unpatrolled );
+		$r .= $this->recentChangesFlags( $isnew, false, $unpatrolled, '&nbsp;', $bot );
 
 		# Timestamp
 		$r .= ' '.$block[0]->timestamp.' ';
@@ -439,6 +452,7 @@ class EnhancedChangesList extends ChangesList {
 
 		# Article link
 		$r .= $this->maybeWatchedLink( $block[0]->link, $block[0]->watched );
+		$r .= $wgContLang->getDirMark();
 
 		$curIdEq = 'curid=' . $block[0]->mAttribs['rc_cur_id'];
 		$currentRevision = $block[0]->mAttribs['rc_this_oldid'];
@@ -446,15 +460,16 @@ class EnhancedChangesList extends ChangesList {
 			# Changes
 			$r .= ' ('.count($block).' ';
 			if( $isnew ) {
-				$r .= wfMsg('changes');
+				$r .= $this->message['changes'];
 			} else {
-				$r .= $this->skin->makeKnownLinkObj( $block[0]->getTitle(), wfMsg('changes'),
-					$curIdEq."&diff=$currentRevision&oldid=$oldid" );
+				$r .= $this->skin->makeKnownLinkObj( $block[0]->getTitle(),
+					$this->message['changes'], $curIdEq."&diff=$currentRevision&oldid=$oldid" );
 			}
 			$r .= '; ';
 
 			# History
-			$r .= $this->skin->makeKnownLinkObj( $block[0]->getTitle(), wfMsg( 'history' ), $curIdEq.'&action=history' );
+			$r .= $this->skin->makeKnownLinkObj( $block[0]->getTitle(),
+				$this->message['history'], $curIdEq.'&action=history' );
 			$r .= ')';
 		}
 
@@ -474,7 +489,7 @@ class EnhancedChangesList extends ChangesList {
 
 			$r .= $this->spacerArrow();
 			$r .= '<tt>&nbsp; &nbsp; &nbsp; &nbsp;';
-			$r .= $this->recentChangesFlags( $rc_new, $rc_minor, $rcObj->unpatrolled );
+			$r .= $this->recentChangesFlags( $rc_new, $rc_minor, $rcObj->unpatrolled, '&nbsp;', $rc_bot );
 			$r .= '&nbsp;</tt>';
 
 			$o = '';
@@ -580,7 +595,7 @@ class EnhancedChangesList extends ChangesList {
 		if( $rc_type == RC_MOVE || $rc_type == RC_MOVE_OVER_REDIRECT ) {
 			$r .= '&nbsp;&nbsp;&nbsp;';
 		} else {
-			$r .= $this->recentChangesFlags( $rc_type == RC_NEW, $rc_minor, $rcObj->unpatrolled );
+			$r .= $this->recentChangesFlags( $rc_type == RC_NEW, $rc_minor, $rcObj->unpatrolled, '&nbsp;', $rc_bot );
 		}
 		$r .= ' '.$rcObj->timestamp.' </tt>';
 

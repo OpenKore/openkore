@@ -65,7 +65,7 @@ class ProtectionForm {
 		if( is_null( $this->mTitle ) ||
 			!$this->mTitle->exists() ||
 			$this->mTitle->getNamespace() == NS_MEDIAWIKI ) {
-			$wgOut->fatalError( wfMsg( 'badarticleerror' ) );
+			$wgOut->showFatalError( wfMsg( 'badarticleerror' ) );
 			return;
 		}
 
@@ -79,7 +79,7 @@ class ProtectionForm {
 
 		$wgOut->addWikiText(
 			wfMsg( $this->disabled ? "protect-viewtext" : "protect-text",
-				$this->mTitle->getPrefixedText() ) );
+				wfEscapeWikiText( $this->mTitle->getPrefixedText() ) ) );
 
 		$wgOut->addHTML( $this->buildForm() );
 
@@ -98,13 +98,12 @@ class ProtectionForm {
 
 		$token = $wgRequest->getVal( 'wpEditToken' );
 		if( !$wgUser->matchEditToken( $token ) ) {
-			$wgOut->fatalError( wfMsg( 'sessionfailure' ) );
-			return false;
+			throw new FatalError( wfMsg( 'sessionfailure' ) );
 		}
 
 		$ok = $this->mArticle->updateRestrictions( $this->mRestrictions, $this->mReason );
 		if( !$ok ) {
-			$wgOut->fatalError( "Unknown error at restriction save time." );
+			throw new FatalError( "Unknown error at restriction save time." );
 		}
 		return $ok;
 	}
@@ -231,7 +230,6 @@ class ProtectionForm {
 	function showLogExtract( &$out ) {
 		# Show relevant lines from the deletion log:
 		$out->addHTML( "<h2>" . htmlspecialchars( LogPage::logName( 'protect' ) ) . "</h2>\n" );
-		require_once( 'SpecialLog.php' );
 		$logViewer = new LogViewer(
 			new LogReader(
 				new FauxRequest(
