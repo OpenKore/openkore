@@ -451,6 +451,29 @@ que_god02.rsw#Quest Map #
 quiz_00.rsw#Quiz Revolrution #
 quiz_01.rsw#Quiz Revolrutiona #
 quiz_test.rsw#Quiz Hall #
+ra_temple.rsw#Rachel Temple#
+ra_temin#Inside Rachel Temple#
+ra_temsky#Rachel Temple#
+ra_in01.rsw#Inside Rachel#
+ra_fild01.rsw#Rachel Field 1#
+ra_fild02.rsw#Rachel Field 2#
+ra_fild03.rsw#Rachel Field 3#
+ra_fild04.rsw#Rachel Field 4#
+ra_fild05.rsw#Rachel Field 5#
+ra_fild06.rsw#Rachel Field 6#
+ra_fild07.rsw#Rachel Field 7#
+ra_fild08.rsw#Rachel Field 8#
+ra_fild09.rsw#Rachel Field 9#
+ra_fild10.rsw#Rachel Field 10#
+ra_fild11.rsw#Rachel Field 11#
+ra_fild12.rsw#Rachel Field 12#
+ra_fild13.rsw#Rachel Field 13#
+ra_san01.rsw#Rachel Sactuary 1#
+ra_san02.rsw#Rachel Sactuary 2#
+ra_san03.rsw#Rachel Sactuary 3#
+ra_san04.rsw#Rachel Sactuary 4#
+ra_san05.rsw#Rachel Sactuary 5#
+rachel.rsw#Rachel#
 sec_in01.rsw#Inside Valhalla #
 sec_in02.rsw#Inside Valhalla #
 sec_pri.rsw#Room of Meditation (Valhalla Prison) #
