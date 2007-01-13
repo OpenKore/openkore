@@ -184,7 +184,7 @@ dword funcC(dword aKey)
 //-----------------------------------------------------------------------------
 // MISTY1 block
 //
-word MSTKey1[16], MSTKey2[16];
+word MSTKey1[32], MSTKey2[32];
 char MSTInited1 = 0;
 char MSTInited2 = 0;
 
