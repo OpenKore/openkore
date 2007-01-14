@@ -1,0 +1,5 @@
+#/bin/bash
+# Update working tree.
+# Remove missing files and add new files.
+svn status | grep '^!' | awk '/^!/ {print $2}' | xargs svn remove
+svn status | grep '^\?' | awk '/^\?/ {print $2}' | xargs svn add
