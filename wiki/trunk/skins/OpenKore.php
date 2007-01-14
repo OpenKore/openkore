@@ -30,13 +30,32 @@ class SkinOpenKore extends SkinTemplate {
 
 class OpenKoreTemplate extends QuickTemplate {
 	function gethtml($str) {
-		$html = parent::gethtml($str);
-		// We want HTML, not XHTML
-		$html = preg_replace('/<(.*?) \/>/', '<${1}>', $html);
-		// Get rid of <p> tags that Mediawiki puts before and after <html>
-		$html = preg_replace('/<p>(\n)*<(div|dl)/', '<${2}', $html);
-		$html = preg_replace('/<\/(div|dl)>(\n)*<\/p>/', '</${1}>', $html);
-		return $html;
+		if ($str == 'pagetitle') {
+			$html = parent::gethtml('bodytext');
+			preg_match('/@@TITLE@@(.*?)@@TITLE@@/', $html, $matches);
+			if (isset($matches[1])) {
+				return $matches[1];
+			} else {
+				return parent::gethtml($str);
+			}
+
+		} else if ($str == 'bodytext') {
+			$html = parent::gethtml($str);
+
+			// We want HTML, not XHTML
+			$html = preg_replace('/<(.*?) \/>/', '<${1}>', $html);
+
+			// Get rid of <p> tags that Mediawiki puts before and after <html>
+			$html = preg_replace('/<p>(\n)*<(div|dl|table)/', '<${2}', $html);
+			$html = preg_replace('/<\/(div|dl|table)>(\n)*<\/p>/', '</${1}>', $html);
+
+			$html = preg_replace('/(@@TITLE@@.*?@@TITLE@@)/', '<!-- ${1} -->', $html);
+
+			return $html;
+
+		} else {
+			return parent::gethtml($str);
+		}
 	}
 
 	function html($str) {

@@ -280,6 +280,10 @@ table.colored td {
 	text-align: left;
 }
 
+table.colored tr.odd, table.colored tr.odd td {
+	background-color: #f6f9fc;
+}
+
 
 /********** Console ***********/
 
