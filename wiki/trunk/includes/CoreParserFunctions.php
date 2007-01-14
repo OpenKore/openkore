@@ -109,7 +109,7 @@ class CoreParserFunctions {
 		# Add subtitle
 		$t = $parser->mTitle->getPrefixedText();
 		$parser->mOutput->mSubtitle .= wfMsg('displaytitle', $t);
-		return '';
+		return "@@TITLE@@$param@@TITLE@@";
 	}
 
 	function isRaw( $param ) {

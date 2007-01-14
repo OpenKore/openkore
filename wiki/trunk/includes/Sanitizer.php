@@ -342,10 +342,10 @@ class Sanitizer {
 					'h2', 'h3', 'h4', 'h5', 'h6', 'cite', 'code', 'em', 's',
 					'strike', 'strong', 'tt', 'var', 'div', 'center',
 					'blockquote', 'ol', 'ul', 'dl', 'table', 'caption', 'pre',
-					'ruby', 'rt' , 'rb' , 'rp', 'p', 'span', 'u'
+					'ruby', 'rt' , 'rb' , 'rp', 'p', 'span', 'u', 'dt', 'dd'
 				);
 				$htmlsingle = array(
-					'br', 'hr', 'li', 'dt', 'dd', 'img', 'p'
+					'br', 'hr', 'li', 'img'
 				);
 				$htmlsingleonly = array( # Elements that cannot have close tags
 					'br', 'hr'
