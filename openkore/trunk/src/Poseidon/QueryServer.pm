@@ -95,7 +95,7 @@ sub onClientNew {
 
 sub onClientData {
 	my ($self, $client, $msg) = @_;
-	my ($ID, $args, $rest);
+	my ($ID, $args);
 
 	my $parser = $client->{"$CLASS parser"};
 	$parser->add($msg);

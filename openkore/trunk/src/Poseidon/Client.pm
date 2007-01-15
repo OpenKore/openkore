@@ -101,7 +101,7 @@ sub getResult {
 		return undef;
 	}
 
-	my ($buf, $ID, $args, $rest);
+	my ($buf, $ID, $args);
 	$self->{socket}->recv($buf, 1024 * 32);
 	if (!$buf) {
 		# This shouldn't have happened.
@@ -122,6 +122,7 @@ sub getResult {
 			return $args->{packet};
 		}
 	} else {
+		# We haven't gotten a full message yet.
 		return undef;
 	}
 }
