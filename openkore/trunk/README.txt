@@ -89,7 +89,7 @@ Credits:
 - raizend: Top 10 packet parsers
 - illusionist: Party fix, Guild Messages, top10 command, bRO support
 - edeline: help with kRO server fixes.
-- skseo: Korean translations.
+- skseo: Korean translations and kRO fixes.
 - Tatka: help with special character support in the Win32 console.
 - heero: servertype 15 (pRO Thor) support.
 - And of course, all developers with SVN write access :)
