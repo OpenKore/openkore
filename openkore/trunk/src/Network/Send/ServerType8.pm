@@ -11,12 +11,17 @@
 #
 #  $Revision$
 #  $Id$
+#  Modified by skseo, Jan-16-2007, Fixed bugs.
 ########################################################################
 package Network::Send::ServerType8;
 
 use strict;
+use Globals qw($char $syncSync $net %config);
 use Network::Send::ServerType0;
 use base qw(Network::Send::ServerType0);
+use Log qw(error debug);
+use Utils qw(getTickCount getHex getCoordString);
+
 
 sub new {
 	my ($class) = @_;
@@ -25,7 +30,7 @@ sub new {
 
 sub sendAttack {
 	my ($self, $monID, $flag) = @_;
-
+	
 	my %args;
 	$args{monID} = $monID;
 	$args{flag} = $flag;
@@ -35,10 +40,7 @@ sub sendAttack {
 		return;
 	}
 
-	error "Your server is not supported because it uses padded packets.\n";
-	my $msg = pack("C*", 0x90, 0x01, 0x00) . 
-		$monID . 
-		pack("C*",0x00, $flag); 
+	my $msg = pack("C*", 0x90, 0x01, 0x00) . $monID . pack("C*",0x00, $flag); 
 	$self->sendToServer($msg);
 	debug "Sent attack: ".getHex($monID)."\n", "sendPacket", 2;
 }
@@ -124,7 +126,7 @@ sub sendMove {
 
 sub sendSit {
 	my $self = shift;
-
+	
 	my %args;
 	$args{flag} = 2;
 	Plugins::callHook('packet_pre/sendSit', \%args);
@@ -133,7 +135,6 @@ sub sendSit {
 		return;
 	}
 	
-	error "Your server is not supported because it uses padded packets.\n";
 	my $msg = pack("C2 x6 C1", 0x90, 0x01, 0x02);
 	$self->sendToServer($msg);
 	debug "Sitting\n", "sendPacket", 2;
@@ -157,8 +158,7 @@ sub sendSkillUse {
 		return;
 	}
 
-	error "Your server is not supported because it uses padded packets.\n";
-	$msg = pack("v1 x2 v1 x1 v1 x1", 0x72, $lv, $ID) . $targetID;
+	my $msg = pack("v1 x2 v1 x1 v1 x1", 0x72, $lv, $ID) . $targetID;
 	$self->sendToServer($msg);
 	debug "Skill Use: $ID\n", "sendPacket", 2;
 }
@@ -212,7 +212,6 @@ sub sendStand {
 		return;
 	}	
 	
-	error "Your server is not supported because it uses padded packets.\n";
 	my $msg = pack("C2 x6 C1", 0x90, 0x01, 0x03);
 	$self->sendToServer($msg);
 	debug "Standing\n", "sendPacket", 2;
@@ -229,7 +228,7 @@ sub sendSync {
 		$msg .= pack("C*", 0x00, 0x00, 0x00) if ($initialSync);
 		$msg .= pack("C*", 0x00, 0x00, 0x00) if (!$initialSync);
 		$msg .= pack("C*", 0x00, 0x00, 0x00, 0x00, 0x00);
-		$msg .= pack("V", $syncSync); 
+		$msg .= $syncSync; 
 	$self->sendToServer($msg);
 	debug "Sent Sync\n", "sendPacket", 2;
 }
