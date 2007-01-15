@@ -165,7 +165,15 @@ sub sendSkillUse {
 
 sub sendSkillUseLoc {
 	my ($self, $ID, $lv, $x, $y) = @_;
-	my $$msg = pack("C2 x3 v1 x2 v1 x1 v1 x6 v1", 0x13, 0x01, $lv, $ID, $x, $y);
+	my $msg = pack("C*", 0x13, 0x01) .
+		pack("x4") .
+		pack("v", $lv) .
+		pack("x12") .
+		pack("v*", $ID) .
+		pack("C*", 0x00) .
+		pack("v*", $x) . 
+		pack("C*", 0xaf, 0x4e) .
+		pack("v*", $y);
 	$self->sendToServer($msg);
 	debug "Skill Use on Location: $ID, ($x, $y)\n", "sendPacket", 2;
 }
