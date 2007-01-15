@@ -578,7 +578,7 @@ sub parseSendMsg {
 		Plugins::callHook('map_loaded');
 
 	} elsif (($switch eq "007E" && ($config{serverType} == 11 || $config{serverType} == 12 || $config{serverType} == 16)) ||
-		 ($switch eq "00F3" && $config{serverType} == 13)) { # rRO
+		 ($switch eq "007E" && $config{serverType} == 13)) { # rRO
 		#syncSync support for XKore 1 mode
 		if ($config{serverType} == 13) { # rRO
 			$syncSync = substr($msg, length($msg) - 4, 4); # formula: Sync_len - 4 - Sync_packet_last_junk
