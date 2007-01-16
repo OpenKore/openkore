@@ -53,15 +53,16 @@
 		<tr>
 			<td><a href="http://forums.openkore.com/" title="International forum"><img src="images/international.png" width="24" height="24" alt="">International</a></td>
 			<td><a href="http://www.openkore.de/" title="Deutsche forum"><img src="images/germany.png" width="24" height="24" alt="">Deutsch</a></td>
-			<td><a href="http://www.openkore-brasil.com/" title="Brazilian forum"><img src="images/brazil.png" width="24" height="24" alt="">Brazil</a></td>
+			<td><a href="http://www.openkore.com.br/" title="Fórum Brasileiro"><img src="images/brazil.png" width="24" height="24" alt="">Brazil</a></td> <!-- --Roger-- -->
 			<td><a href="http://www.rofan.ru/" title="Россия"><img src="/images/russia.png" width="24" height="24" alt="">Россия</a></td><!-- kLabMouse -->
 			<td><a href="http://ro.yyro.com/" title="中文"><img src="images/chinese.png" width="24" height="24" alt="">中文</a></td><!-- lkm -->
+			<td><a href="http://openkore.dnip.net" title="한국"><img src="/images/korea.png" width="24" height="24" alt="">한국</a></td> <!-- skseo -->
 		</tr>
 		<tr>
 			<td><a href="http://darkmoon.ath.cx/" title="Filipino forum"><img src="images/philippines.png" width="24" height="24" alt="">Philippines</a></td>
 			<td><a href="http://openkore-fr.ath.cx/" title="Forum Français"><img src="images/france.png" width="24" height="24" alt="">Français</a></td> <!-- Tic Or Tac -->
-			<td><a href="http://www.openkore-hispano.uni.cc/" title="Hispano"><img src="images/spain.png" width="24" height="24" alt="">Hispano</a></td>
-			<td><a href="http://openkore.dnip.net" title="한국"><img src="/images/korea.png" width="24" height="24" alt="">한국</a></td>
+			<td><a href="http://www.openkore-hispano.uni.cc/" title="Hispano"><img src="images/spain.png" width="24" height="24" alt="">Hispano</a></td> <!-- Rodrigo01 -->
+			<td><a href="http://www.d-bests.com" title="Bahasa Indonesia"><img src="/images/indonesia.png" width="24" height="24" alt="">Indonesia</a></td> <!-- h4rry84 -->
 			<td><a href="http://www.openkore-thailand.com/" title="ภาษาไทย"><img src="/images/thailand.png" width="24" height="24" alt="">ภาษาไทย</a></td><!-- abt123 -->
 		</tr>
 		</table>
