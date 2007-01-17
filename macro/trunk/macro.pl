@@ -138,7 +138,7 @@ sub hookOnDemand {
 sub checkConfig {
 	if ($::config{macro_readmanual} ne 'red/chili') {
 		warning "[macro] you should read the documentation before using this plugin: ".
-			"http://openkore.sourceforge.net/macro/\n";
+			"http://www.openkore.com/macro.php\n";
 		return 0
 	}
 
