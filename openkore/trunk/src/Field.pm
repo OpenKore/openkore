@@ -90,7 +90,8 @@ use constant {
 # new Field(); # Error: an ArgumentException will be thrown
 # </pre>
 #
-# Throws FileNotFoundException if the field file does not exist.
+# Throws FileNotFoundException if the field file does not exist (if the 'file' parameter is used),
+# or if a field file cannot be found for the specified field name (if the 'name' parameter is used).<br>
 # Throws IOException if an error occured while reading the field file.
 sub new {
 	my $class = shift;
@@ -174,8 +175,8 @@ sub isSnipable {
 # filename: The filename of the field file to load.
 # loadDistanceMap: Whether to also load the associated distance map file.
 #
-# Load the specified field file (.fld file). This is like the constructor,
-# but allows you to load a field inside this Field object.
+# Load the specified field file (.fld file). This is like calling the constructor
+# with the 'file' argument, but allows you to load a field inside this Field object.
 #
 # If $loadDistanceMap is set to false, then $self->{dstMap} will be undef.
 #
@@ -266,7 +267,6 @@ sub loadFile {
 # Returns: Whether the distance map file is valid. If it's invalid, then it should be regenerated.
 #
 # Load a distance map (.dst file). $self->{dstMap} will contain the distance map data.
-# This is like the constructor, but allows you to load a field inside this Field object.
 #
 # Throws IOException if a read error occured.
 sub loadDistanceMap {
@@ -305,22 +305,52 @@ sub loadDistanceMap {
 	}
 }
 
+##
+# void $Field->loadByName(String name, [boolean loadDistanceMap = true])
+# name: The name of the field to load. E.g. "prontera".
+# loadDistanceMap: Whether to also load the associated distance map file.
+#
+# Load a field file based on it's name. The actual field file to load is automatically
+# determined based on the field name, the field files folder, whether the field file
+# is compressed, etc.
+#
+# This method is like calling the constructor with the 'name' argument,
+# but allows you to load a field inside this Field object.
+#
+# If $loadDistanceMap is set to false, then $self->{dstMap} will be undef.
+#
+# Throws FileNotFoundException if a field file cannot be found for the specified
+# field name.
+# Throws IOException if a read error occured while reading the field file
+# and/or the distance map file.
 sub loadByName {
-	my ($self, $name) = @_;
-	my $file = $self->nameToFilename($name);
-	$self->loadFile($file);
-	$self->{name} = $name;
+	my ($self, $name, $loadDistanceMap) = @_;
+	my $file = $self->nameToBaseName($name);
+
+	if ($Settings::def_field) {
+		$file = File::Spec->catfile($Settings::def_field, $file);
+	}
+	if (! -f $file) {
+		$file .= ".gz";
+	}
+
+	if (-f $file) {
+		$self->loadFile($file, $loadDistanceMap);
+		$self->{name} = $name;
+	} else {
+		FileNotFoundException->throw("No corresponding field file found for field '$name'.");
+	}
 }
 
 # Map a field name to its field file's base name.
-sub nameToFilename {
+sub nameToBaseName {
 	my ($self, $name) = @_;
-	my ($fieldFolder, $file);
+	my ($fieldFolder, $baseName);
 
 	$fieldFolder = $Settings::def_field || ".";
 	if ($masterServer && $masterServer->{"field_$name"}) {
 		# Handle server-specific versions of the field.
-		$file = "$fieldFolder/" . $masterServer->{"field_$name"};
+		$baseName = $masterServer->{"field_$name"};
 
 	} else {
 		# Some fields have multiple names, but have the same field data nevertheless.
@@ -338,9 +368,10 @@ sub nameToFilename {
 		} elsif ($name =~ /^pvp_n_\d-5$/) {
 			$name = "job_knight";
 		}
-		$file = "$fieldFolder/$name.fld";
+		$baseName = "$name.fld";
 	}
-	return $file;
+
+	return $baseName;
 }
 
 1;
