@@ -257,34 +257,3 @@ void seal_resynch(seal_ctx *c, unsigned long synch_word){
 	c->counter = synch_word;
 	c->ks_pos = WORDS_PER_SEAL_CALL;
 }
-
-void main(void){
-seal_ctx sc;
-unsigned long buf[1000],t;
-int i,flag;
-unsigned char key[] = { 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19 };
-         
-	printf("1\n");
-	seal_key(&sc,key);
-         
-	printf("2\n");
-	for(i=0;i<1000;i++) buf[i]=0;
-
-	printf("3\n");
-	seal_encrypt(&sc,buf,1000);
-
-	printf("4\n");
-	t = 0;
-
-	for(i=0;i<1000;i++) t = t ^ buf[i];
-	printf("XOR of buf is %08lx.\n",t);
-
-	seal_key(&sc,key);
-	seal_decrypt(&sc,buf,1);
-	seal_decrypt(&sc,buf+1,999);
-
-	flag = 0;
-	for(i=0;i<1000;i++) if(buf[i]!=0)flag=1;
-	if(flag) printf("Decrypt failed.\n");
-	 else printf("Decrypt succeeded.\n");
-}

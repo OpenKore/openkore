@@ -2,13 +2,9 @@
 #include "mhash_tiger.h"
 
 /*
-   The following macro denotes that an optimization    
- */
-/*
-   for Alpha is required. It is used only for          
- */
-/*
-   optimization of time. Otherwise it does nothing.    
+   The following macro denotes that an optimization
+   for Alpha is required. It is used only for
+   optimization of time. Otherwise it does nothing.
  */
 #ifdef TIGER_64BIT
 #ifdef __alpha
@@ -16,29 +12,17 @@
 #endif
 
 /*
-   NOTE that this code is NOT FULLY OPTIMIZED for any  
- */
-/*
-   machine. Assembly code might be much faster on some 
- */
-/*
-   machines, especially if the code is compiled with   
- */
-/*
-   gcc.                                                
+*   NOTE that this code is NOT FULLY OPTIMIZED for any
+*   machine. Assembly code might be much faster on some
+*   machines, especially if the code is compiled with
+*   gcc.
  */
 
 /*
-   The number of passes of the hash function.          
- */
-/*
-   Three passes are recommended.                       
- */
-/*
-   Use four passes when you need extra security.       
- */
-/*
-   Must be at least three.                             
+*   The number of passes of the hash function.
+*   Three passes are recommended.
+*   Use four passes when you need extra security.
+*   Must be at least three.
  */
 #define PASSES 3
 
@@ -56,7 +40,7 @@ extern word64 table[4 * 256];
 
 #ifdef OPTIMIZE_FOR_ALPHA
 /*
-   This is the official definition of round 
+   This is the official definition of round
  */
 #define round(a,b,c,x,mul) \
       c ^= x; \
@@ -67,11 +51,9 @@ extern word64 table[4 * 256];
       b *= mul;
 #else
 /*
-   This code works faster when compiled on 32-bit machines 
- */
-/*
-   (but works slower on Alpha) 
- */
+* This code works faster when compiled on 32-bit machines
+* (but works slower on Alpha)
+*/
 #define round(a,b,c,x,mul) \
       c ^= x; \
       a -= t1[(byte)(c)] ^ \
@@ -120,7 +102,7 @@ extern word64 table[4 * 256];
 
 #ifdef OPTIMIZE_FOR_ALPHA
 /*
-   The loop is unrolled: works better on Alpha 
+   The loop is unrolled: works better on Alpha
  */
 #define compress \
       save_abc \
@@ -136,8 +118,8 @@ extern word64 table[4 * 256];
       feedforward
 #else
 /*
-   loop: works better on PC and Sun (smaller cache?) 
- */
+loop: works better on PC and Sun (smaller cache?)
+*/
 #define compress \
       save_abc \
       for(pass_no=0; pass_no<PASSES; pass_no++) { \
@@ -169,23 +151,19 @@ extern word64 table[4 * 256];
 }
 
 /*
-   The compress function is a function. Requires smaller cache?    
+   The compress function is a function. Requires smaller cache?
  */
 static void
 tiger_compress(const word64 * str, word64 state[3])
 {
-	tiger_compress_macro(((word64 *) str), ((word64 *) state));
+    tiger_compress_macro(((word64 *) str), ((word64 *) state));
 }
 
 #ifdef OPTIMIZE_FOR_ALPHA
 /*
-   The compress function is inlined: works better on Alpha.        
- */
-/*
-   Still leaves the function above in the code, in case some other 
- */
-/*
-   module calls it directly.                                       
+*   The compress function is inlined: works better on Alpha.
+*   Still leaves the function above in the code, in case some other
+*   module calls it directly.
  */
 #define tiger_compress(str, state) \
   tiger_compress_macro(((word64*)str), ((word64*)state))
@@ -194,57 +172,65 @@ tiger_compress(const word64 * str, word64 state[3])
 void
 tiger(const word64 * str, word64 length, word64 res[3])
 {
-	register word64 i, j;
-	unsigned char temp[64];
+    register word64 i, j;
+    unsigned char temp[64];
 
-	res[0] = 0x0123456789ABCDEFLL;
-	res[1] = 0xFEDCBA9876543210LL;
-	res[2] = 0xF096A5B4C3B2E187LL;
+    res[0] = 0x0123456789ABCDEFLL;
+    res[1] = 0xFEDCBA9876543210LL;
+    res[2] = 0xF096A5B4C3B2E187LL;
 
-	for (i = length; i >= 64; i -= 64) {
+    for (i = length; i >= 64; i -= 64)
+    {
 #ifdef WORDS_BIGENDIAN
-		for (j = 0; j < 64; j++)
-			temp[j ^ 7] = ((byte *) str)[j];
-		tiger_compress(((word64 *) temp), res);
+        for (j = 0; j < 64; j++)
+            temp[j ^ 7] = ((byte *) str)[j];
+        tiger_compress(((word64 *) temp), res);
 #else
-		tiger_compress(str, res);
+
+        tiger_compress(str, res);
 #endif
-		str += 8;
-	}
+
+        str += 8;
+    }
 
 #ifdef WORDS_BIGENDIAN
-	for (j = 0; j < i; j++)
-		temp[j ^ 7] = ((byte *) str)[j];
+    for (j = 0; j < i; j++)
+        temp[j ^ 7] = ((byte *) str)[j];
 
-	temp[j ^ 7] = 0x01;
-	j++;
-	for (; j & 7; j++)
-		temp[j ^ 7] = 0;
+    temp[j ^ 7] = 0x01;
+    j++;
+    for (; j & 7; j++)
+        temp[j ^ 7] = 0;
 #else
-	for (j = 0; j < i; j++)
-		temp[j] = ((byte *) str)[j];
 
-	temp[j++] = 0x01;
-	for (; j & 7; j++)
-		temp[j] = 0;
+    for (j = 0; j < i; j++)
+        temp[j] = ((byte *) str)[j];
+
+    temp[j++] = 0x01;
+    for (; j & 7; j++)
+        temp[j] = 0;
 #endif
-	if (j > 56) {
-		for (; j < 64; j++)
-			temp[j] = 0;
-		tiger_compress(((word64 *) temp), res);
-		j = 0;
-	}
 
-	for (; j < 56; j++)
-		temp[j] = 0;
-	((word64 *) (&(temp[56])))[0] = ((word64) length) << 3;
-	tiger_compress(((word64 *) temp), res);
+    if (j > 56)
+    {
+        for (; j < 64; j++)
+            temp[j] = 0;
+        tiger_compress(((word64 *) temp), res);
+        j = 0;
+    }
+
+    for (; j < 56; j++)
+        temp[j] = 0;
+    ((word64 *) (&(temp[56])))[0] = ((word64) length) << 3;
+    tiger_compress(((word64 *) temp), res);
 }
 
 #else
 
-/* this is the 32bit version, the 64bit version above doesn't work
-   for me on Sparc/Solaris with gcc */
+/*
+*	this is the 32bit version, the 64bit version above doesn't work
+*	for me on Sparc/Solaris with gcc
+*/
 
 #define PASSES 3
 
@@ -422,64 +408,68 @@ extern word32 table[4*256][2];
 /* The compress function is a function */
 tiger_compress(const word32 *str, word32 state[6])
 {
-  tiger_compress_macro(((word32*)str), ((word32*)state));
+    tiger_compress_macro(((word32*)str), ((word32*)state));
 }
 #endif
 
 void
 tiger(const word32 *str, word32 length, word32 *res)
 {
-  register word32 i, j;
-  byte temp[64];
+    register word32 i, j;
+    byte temp[64];
 
-  res[0]=0x89ABCDEF;
-  res[1]=0x01234567;
-  res[2]=0x76543210;
-  res[3]=0xFEDCBA98;
-  res[4]=0xC3B2E187;
-  res[5]=0xF096A5B4;
+    res[0]=0x89ABCDEF;
+    res[1]=0x01234567;
+    res[2]=0x76543210;
+    res[3]=0xFEDCBA98;
+    res[4]=0xC3B2E187;
+    res[5]=0xF096A5B4;
 
-  for(i=length; i>=64; i-=64)
+    for(i=length; i>=64; i-=64)
     {
 #ifdef WORDS_BIGENDIAN
-      for(j=0; j<64; j++)
-	temp[j^3] = ((byte*)str)[j];
-      tiger_compress(((word32*)temp), res);
+        for(j=0; j<64; j++)
+            temp[j^3] = ((byte*)str)[j];
+        tiger_compress(((word32*)temp), res);
 #else
-      tiger_compress(str, res);
+
+tiger_compress(str, res);
 #endif
-      str += 16;
+
+        str += 16;
     }
 
 #ifdef WORDS_BIGENDIAN
-  for(j=0; j<i; j++)
-    temp[j^3] = ((byte*)str)[j];
+    for(j=0; j<i; j++)
+        temp[j^3] = ((byte*)str)[j];
 
-  temp[j^3] = 0x01;
-  j++;
-  for(; j&7; j++)
-    temp[j^3] = 0;
+    temp[j^3] = 0x01;
+    j++;
+    for(; j&7; j++)
+        temp[j^3] = 0;
 #else
-  for(j=0; j<i; j++)
+
+for(j=0; j<i; j++)
     temp[j] = ((byte*)str)[j];
 
-  temp[j++] = 0x01;
-  for(; j&7; j++)
+temp[j++] = 0x01;
+for(; j&7; j++)
     temp[j] = 0;
 #endif
-  if(j>56)
+
+    if(j>56)
     {
-      for(; j<64; j++)
-	temp[j] = 0;
-      tiger_compress(((word32*)temp), res);
-      j=0;
+        for(; j<64; j++)
+            temp[j] = 0;
+        tiger_compress(((word32*)temp), res);
+        j=0;
     }
 
-  for(; j<56; j++)
-    temp[j] = 0;
-  ((word32*)(&(temp[56])))[0] = ((word32)length)<<3;
-  ((word32*)(&(temp[56])))[1] = 0;
-  tiger_compress(((word32*)temp), res);
+    for(; j<56; j++)
+        temp[j] = 0;
+    ((word32*)(&(temp[56])))[0] = ((word32)length)<<3;
+    ((word32*)(&(temp[56])))[1] = 0;
+    tiger_compress(((word32*)temp), res);
 }
 
 #endif

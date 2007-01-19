@@ -93,6 +93,9 @@
 *   post: 'block_out' contains the plain-text block.
 *
 *******************************************************************************/
+typedef unsigned char	byte;		// unsigned 8-bit type
+typedef unsigned short	word;		// unsigned 16-bit type
+typedef unsigned long	word32;		// unsigned 32-bit type
 
 static void _mcrypt_Safer_Init_Module();
 

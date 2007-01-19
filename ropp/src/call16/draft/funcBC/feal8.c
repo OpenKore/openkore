@@ -1,10 +1,8 @@
 /* FEAL8 */
 
 /*
-Version of 20 September 1989.
-*/
-/* FEAL8 - Implementation of NTT's FEAL-8 cipher. ---------------------------
-Version of 11 September 1989.
+* FEAL8 - Implementation of NTT's FEAL-8 cipher.
+* Version of 11 September 1989.
 */
 
 typedef unsigned char ByteType ;
@@ -13,7 +11,6 @@ void SetKey( ByteType * ) ;
 void Encrypt( ByteType *Plain, ByteType *Cipher ) ;
 void Decrypt( ByteType *Cipher, ByteType *Plain ) ;
 
-#include "feal8.h"
 #ifdef DEBUG
 #include <stdio.h>
 #endif

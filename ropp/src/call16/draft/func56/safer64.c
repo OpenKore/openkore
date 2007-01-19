@@ -26,9 +26,6 @@
 /******************* External Headers *****************************************/
 
 /******************* Local Headers ********************************************/
-#include <libdefs.h>
-
-#include <mcrypt_modules.h>
 #include "safer.h"
 
 
@@ -81,8 +78,7 @@ static void _mcrypt_Safer_Init_Module(void)
 
 /******************************************************************************/
 
-WIN32DLL_DEFINE
-    int _mcrypt_set_key(safer_key_t * key, safer_block_t * userkey,
+int _mcrypt_set_key(safer_key_t * key, safer_block_t * userkey,
 			int len)
 {
 	unsigned int i, j;
@@ -142,10 +138,7 @@ WIN32DLL_DEFINE
 }				/* Safer_Expand_Userkey */
 
 /******************************************************************************/
-
-
-WIN32DLL_DEFINE
-    void _mcrypt_encrypt(const safer_key_t * key, safer_block_t * block_in)
+void _mcrypt_encrypt(const safer_key_t * key, safer_block_t * block_in)
 {
 	unsigned char a, b, c, d, e, f, g, h, t;
 	unsigned int round;
@@ -218,8 +211,7 @@ WIN32DLL_DEFINE
 
 /******************************************************************************/
 
-WIN32DLL_DEFINE
-    void _mcrypt_decrypt(const safer_key_t * key, safer_block_t * block_in)
+void _mcrypt_decrypt(const safer_key_t * key, safer_block_t * block_in)
 {
 	safer_block_t a, b, c, d, e, f, g, h, t;
 	unsigned int round;
@@ -293,100 +285,45 @@ WIN32DLL_DEFINE
 /******************************************************************************/
 
 
-WIN32DLL_DEFINE int _mcrypt_get_size()
+int _mcrypt_get_size()
 {
 	return (1 + SAFER_BLOCK_LEN * (1 + 2 * SAFER_MAX_NOF_ROUNDS));
 }
-WIN32DLL_DEFINE int _mcrypt_get_block_size()
+int _mcrypt_get_block_size()
 {
 	return 8;
 }
-WIN32DLL_DEFINE int _is_block_algorithm()
+int _is_block_algorithm()
 {
 	return 1;
 }
-WIN32DLL_DEFINE int _mcrypt_get_key_size()
+int _mcrypt_get_key_size()
 {
 	return 8;
 }
 
 static const int key_sizes[] = { 8 };
-WIN32DLL_DEFINE const int *_mcrypt_get_supported_key_sizes(int *len)
+const int *_mcrypt_get_supported_key_sizes(int *len)
 {
 	*len = sizeof(key_sizes)/sizeof(int);
 	return key_sizes;
 
 }
-WIN32DLL_DEFINE char *_mcrypt_get_algorithms_name()
+char *_mcrypt_get_algorithms_name()
 {
 return "SAFER-SK64";
 }
 
 #define CIPHER "e490eebffd908f34"
 
-WIN32DLL_DEFINE int _mcrypt_self_test()
-{
-	char *keyword;
-	unsigned char plaintext[16];
-	unsigned char ciphertext[16];
-	int blocksize = _mcrypt_get_block_size(), j;
-	void *key;
-	unsigned char cipher_tmp[200];
-
-	keyword = calloc(1, _mcrypt_get_key_size());
-	if (keyword == NULL)
-		return -1;
-
-	for (j = 0; j < _mcrypt_get_key_size(); j++) {
-		keyword[j] = ((j * 2 + 10) % 256);
-	}
-
-	for (j = 0; j < blocksize; j++) {
-		plaintext[j] = j % 256;
-	}
-	key = malloc(_mcrypt_get_size());
-	if (key == NULL) {
-		free(keyword);
-		return -1;
-	}
-	memcpy(ciphertext, plaintext, blocksize);
-
-	_mcrypt_set_key(key, (void *) keyword, _mcrypt_get_key_size());
-	free(keyword);
-
-	_mcrypt_encrypt(key, (void *) ciphertext);
-
-	for (j = 0; j < blocksize; j++) {
-		sprintf(&((char *) cipher_tmp)[2 * j], "%.2x",
-			ciphertext[j]);
-	}
-
-	if (strcmp((char *) cipher_tmp, CIPHER) != 0) {
-		printf("failed compatibility\n");
-		printf("Expected: %s\nGot: %s\n", CIPHER,
-		       (char *) cipher_tmp);
-		free(key);
-		return -1;
-	}
-	_mcrypt_decrypt(key, (void *) ciphertext);
-	free(key);
-
-	if (strcmp(ciphertext, plaintext) != 0) {
-		printf("failed internally\n");
-		return -1;
-	}
-
-	return 0;
-}
-
-WIN32DLL_DEFINE word32 _mcrypt_algorithm_version()
+word32 _mcrypt_algorithm_version()
 {
 	return 20010801;
 }
 
 #ifdef WIN32
 # ifdef USE_LTDL
-WIN32DLL_DEFINE int main (void)
+int main (void)
 {
        /* empty main function to avoid linker error (see cygwin FAQ) */
 }
