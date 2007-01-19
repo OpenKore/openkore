@@ -13,30 +13,63 @@
 ##
 # MODULE DESCRIPTION: Callback functions holder
 #
-# CallbackList is responsible for holding a list of callback functions.
-# You can use the call() method to call all callback functions in this
-# list. CallbackList is used to implement OpenKore's event model.
+# <h3>What is an event?</h3>
+# An event in is a way for a class to provide notifications to clients of
+# that class when some interesting thing happens to an object. The most
+# familiar use for events is in graphical user interfaces; typically, the
+# classes that represent controls in the interface have events that are
+# notified when the user does something to the control (for example, click
+# a button).
 #
-# Here is an example which shows you how to respond on an onAdd() event
-# in ObjectList:
+# An event is the outcome of an action. There are two important
+# terms with respect to events. The <i>event source</i> and the <i>event
+# receiver</i>. The object that raises the event is called event source and
+# the object or callback function that responds to the event is called event receiver.
+# The communication channel between an event source and an event receiver is
+# this class, CallbackList.<br>
+# <small>(Explanation taken from
+# <a href="http://www.c-sharpcorner.com/UploadFile/sksaha/EventsinNet11152005043514AM/EventsinNet.aspx">CSharpCorner</a>
+# and slightly modified.</small>
+#
+# A CallbackList is used to implement OpenKore's event model.
+#
+# <h3>Example 1: How it works</h3>
+# Here's a simple example, which demonstrates how CallbackList actually works.
 # <pre class="example">
-# use strict;
-# use Utils::Crypton;
-# use Utils::ObjectList;
+# my $cl = new CallbackList("my l33t event name");
+# $cl->add(undef, \&myCallback);
+# $cl->call();  # myCallback() will now be called.
 #
-# my $list = new ObjectList();
-# # $list->onAdd() returns a CallbackList object.
-# # We add a callback function to the onAdd event callback list.
-# $list->onAdd()->add(undef, \&addCalled);
-#
-# # This is just a random object used to demonstrate how to use CallbackList.
-# my $object = new Utils::Crypton("", 0);
-# $list->add($object); # addCalled() will now be called.
-#
-# sub addCalled {
-#     print "An item has been added to the list.\n";
+# sub myCallback {
+#     print "I have been called!\n";
 # }
 # </pre>
+#
+# <h3>Example 2: Simple usage</h3>
+# The @MODULE(ActorList) class is a well-known class which supports events.
+# Whenever you add an Actor to an ActorList, an onAdd event is triggered.
+# This example shows you how to respond to an onAdd event.
+#
+# This also demonstrates how $CallbackList->add() and $CallbackList->remove()
+# work.
+# <pre class="example">
+# my $monstersList = new ActorList("Actor::Monster");
+# my $callbackID = $monstersList->onAdd->add(undef, \&monsterAdded);
+#
+# # monsterAdded() will now be called.
+# $monstersList->add(new Actor::Monster());
+#
+# # Unregister the previously registred callback.
+# $monstersList->onAdd->remove($callbackID);
+# # monsterAdded() will NOT be called.
+# $monstersList->add(new Actor::Monster());
+#
+# sub monsterAdded {
+#     print "A monster has been added to the monsters list!\n";
+# }
+# </pre>
+#
+# <h3>Object oriented</h3>
 package CallbackList;
 
 use strict;

@@ -3355,12 +3355,12 @@ sub compilePortals {
 				next if $spawn eq $portal;
 				next if $portals_los{$spawn}{$portal} ne '';
 				return 1 if $checkOnly;
-				if ($field{name} ne $map && !$missingMap{$map}) {
+				if ((!$field || $field->{name} ne $map) && !$missingMap{$map}) {
 					eval {
-						$field = new Field(name => $map, loadDistanceMap => 0);
+						$field = new Field(name => $map);
 					};
 					if ($@) {
-						$missingMap{$map} = 1
+						$missingMap{$map} = 1;
 					}
 				}
 
