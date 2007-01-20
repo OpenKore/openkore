@@ -654,7 +654,7 @@ sub processAttack {
 				}
 
 				$pathfinding->reset(
-					field => \%field,
+					field => $field,
 					start => $myPos,
 					dest => $blocks[$i]);
 				my $ret = $pathfinding->runcount;
@@ -805,7 +805,7 @@ sub processRouteAI {
 		} elsif ($args->{stage} eq '') {
 			my $pos = calcPosition($char->{homunculus});
 			$args->{solution} = [];
-			if (ai_route_getRoute($args->{solution}, \%field, $pos, $args->{dest}{pos})) {
+			if (ai_route_getRoute($args->{solution}, $field, $pos, $args->{dest}{pos})) {
 				$args->{stage} = 'Route Solution Ready';
 				debug "Homunculus route Solution Ready\n", "route";
 			} else {
