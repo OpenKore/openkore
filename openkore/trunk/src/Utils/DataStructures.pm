@@ -198,12 +198,11 @@ sub binSize {
 # Resize an array by removing undefined items.
 sub compactArray {
 	my ($array) = @_;
-	my @new;
-
-	foreach my $item (@{$array}) {
-		push @new, $item if (defined $item);
+	for (my $i = $#{$array}; $i >= 0; $i--) {
+		if (!defined $array->[$i]) {
+			splice @{$array}, $i, 1;
+		}
 	}
-	@{$array} = @new;
 }
 
 ##
