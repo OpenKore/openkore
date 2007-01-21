@@ -4,6 +4,7 @@ CallbackList.pm
 CRAM.pm
 Crypton.pm
 Daemon.pm
+DataStructures.pm
 Exceptions.pm
 LockFile.pm
 HttpReader.pm

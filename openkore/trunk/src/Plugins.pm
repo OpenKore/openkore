@@ -32,7 +32,7 @@ use Exception::Class ('Plugin::LoadException');
 
 use Modules 'register';
 use Globals;
-use Utils;
+use Utils::DataStructures qw(binAdd);
 use Log qw(message);
 use Translation qw(T TF);
 
@@ -56,8 +56,6 @@ our $current_plugin_folder;
 our @plugins;
 our %hooks;
 
-my $pathDelimiter = ($^O eq 'MSWin32') ? ';' : ':';
-
 
 #############################
 ### CATEGORY: Functions
@@ -72,8 +70,9 @@ my $pathDelimiter = ($^O eq 'MSWin32') ? ';' : ':';
 # Throws Plugin::LoadException if a plugin failed to load.
 sub loadAll {
 	my (@plugins, @subdirs);
+	my $pathDelimiter = ($^O eq 'MSWin32') ? ';' : ':';
 
-	foreach my $dir (split /($pathDelimiter)+/, $Settings::plugins_folder) {
+	foreach my $dir (split /($pathDelimiter)+/, $Settings::plugins_folder || ".") {
 		my @items;
 
 		next if (!opendir(DIR, $dir));
@@ -129,7 +128,6 @@ sub load {
 		if ($@) {
 			Plugin::LoadException->throw(TF("Plugin contains syntax errors:\n%s", $@));
 		} else {
-			message "aaaa\n";
 			Plugin::LoadException->throw("$!");
 		}
 	}
@@ -158,7 +156,7 @@ sub unload {
 
 
 ##
-# Plugins::unloadAll()
+# void Plugins::unloadAll()
 #
 # Unloads all registered plugins.
 sub unloadAll {
@@ -174,7 +172,7 @@ sub unloadAll {
 
 
 ##
-# Plugins::reload(name)
+# boolean Plugins::reload(String name)
 # name: The name of the plugin to reload.
 # Returns: 1 on success, 0 if the plugin isn't registered.
 #
@@ -236,7 +234,7 @@ sub register {
 
 
 ##
-# void Plugins::registered(String name)
+# boolean Plugins::registered(String name)
 # name: The plugin's name.
 # Returns: 1 if the plugin's registered, 0 if it isn't.
 #
@@ -244,14 +242,14 @@ sub register {
 sub registered {
 	my $name = shift;
 	foreach (@plugins) {
-		return 1 if ($_ && $_->{'name'} eq $name);
+		return 1 if ($_ && $_->{name} eq $name);
 	}
 	return 0;
 }
 
 
 ##
-# Plugins::addHook(hookname, r_func, [user_data])
+# Plugins::addHook(String hookname, r_func, [user_data])
 # hookname: Name of a hook.
 # r_func: Reference to the function to call.
 # user_data: Additional data to pass to r_func.
@@ -348,8 +346,8 @@ sub delHook {
 }
 
 ##
-# Plugins::delHooks($hooks)
-# $hooks: the return value Plugins::addHooks()
+# Plugins::delHooks(hooks)
+# hooks: The return value Plugins::addHooks()
 #
 # Removes all hooks that are registered by Plugins::addHook().
 #
@@ -361,7 +359,7 @@ sub delHooks {
 
 
 ##
-# void Plugins::callHook(hookname, [r_param])
+# void Plugins::callHook(String hookname, [r_param])
 # hookname: Name of the hook.
 # r_param: A reference to a hash that will be passed to the hook functions.
 #
@@ -381,5 +379,4 @@ sub callHook {
 	}
 }
 
-
-return 1;
+1;

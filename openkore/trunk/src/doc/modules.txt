@@ -33,7 +33,9 @@ Utils::AppLauncher
 Utils::Benchmark
 Utils::CallbackList
 Utils::Crypton
+Utils::DataStructures
 Utils::Exceptions
+Utils::LockFile
 Utils::PerlLauncher
 Utils::ObjectList
 Utils::Set
