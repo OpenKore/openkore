@@ -89,7 +89,7 @@ sub cleanup {
 	message "cleaning up\n";
 	Settings::delConfigFile($cfID);
 	Log::delHook($loghook);
-	Plugins::delHooks($autohooks);
+	foreach (@{$autohooks}) {Plugins::delHook($_)}
 	undef $queue;
 	undef %macro;
 	undef %automacro;
@@ -106,7 +106,7 @@ sub parseAndHook {
 
 # only adds hooks that are needed
 sub hookOnDemand {
-	Plugins::delHooks($autohooks) if defined $autohooks;
+	foreach (@{$autohooks}) {Plugins::delHook($_)}
 	Log::delHook($loghook) if defined $loghook;
 	my %load = ('AI_pre' => 1);
 	my $hookToLog;
