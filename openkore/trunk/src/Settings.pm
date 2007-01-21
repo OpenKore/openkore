@@ -31,16 +31,20 @@ use strict;
 use Exporter;
 use base qw(Exporter);
 use Getopt::Long;
+
 use Globals;
 use Plugins;
 use Utils;
+use Utils::Exceptions;
 use Log qw(warning error);
 use Translation;
 
 our @EXPORT_OK = qw(parseArguments addConfigFile delConfigFile %sys $VERSION);
 
 
-# Constants
+###################################
+### CATEGORY: Constants
+###################################
 
 ##
 # String $Settings::NAME
@@ -118,17 +122,19 @@ Developer options:
 EOF
 
 
-# use SelfLoader; 1;
-# __DATA__
-
 
 ##
 # Settings::parseArguments()
-# Returns: 1 on success, 2 if a 'usage' text should be displayed.
-#          If an error occured, the return value is an error message string.
+# Returns: 1 on success, 0 if a 'usage' text should be displayed.
 #
-# Parse commandline arguments. Various variables within the Settings.pm
+# Parse commandline arguments. Various variables within the Settings
 # module will be filled with values.
+#
+# This function will also attempt to create necessary folders. If
+# one of the folders cannot be created, then an IOException is thrown,
+# although the variables are already filled.
+#
+# If the arguments are not correct, then an ArgumentException is thrown.
 sub parseArguments {
 	$control_folder = "control";
 	$tables_folder = "tables";
@@ -153,41 +159,45 @@ sub parseArguments {
 	undef $no_connect;
 
 	my $help_option;
+	my $warnText;
+	local $SIG{__WARN__} = sub {
+		ArgumentException->throw($_[0]);
+	};
 	GetOptions(
-		'help',		\$help_option,
-		'control=s',	\$control_folder,
-		'tables=s',	\$tables_folder,
-		'logs=s',	\$logs_folder,
-		'plugins=s',	\$plugins_folder,
-		'fields=s',	\$def_field,
+		'help',	              \$help_option,
+		'control=s',          \$control_folder,
+		'tables=s',           \$tables_folder,
+		'logs=s',             \$logs_folder,
+		'plugins=s',          \$plugins_folder,
+		'fields=s',           \$def_field,
 
-		'config=s',		\$config_file,
-		'mon_control=s',	\$mon_control_file,
-		'items_control=s',	\$items_control_file,
-		'pickupitems=s',	\$pickupitems_file,
-		'chat=s',		\$chat_file,
-		'shop=s',		\$shop_file,
-		'storage=s',	\$storage_file,
-		'monsters=s',		\$monster_log,
-		'items=s',		\$item_log_file,
+		'config=s',           \$config_file,
+		'mon_control=s',      \$mon_control_file,
+		'items_control=s',    \$items_control_file,
+		'pickupitems=s',      \$pickupitems_file,
+		'chat=s',             \$chat_file,
+		'shop=s',             \$shop_file,
+		'storage=s',          \$storage_file,
+		'monsters=s',         \$monster_log,
+		'items=s',            \$item_log_file,
 
-		'interface=s',		\$default_interface,
+		'interface=s',        \$default_interface,
 
-		'no-connect',	\$no_connect
+		'no-connect',         \$no_connect
 	);
 
 	# This is where variables depending on other userconfigable variables should be set..
 	# after we see what the user is changing...
-	$config_file = "$control_folder/config.txt" if (!defined $config_file);
-	$mon_control_file = "$control_folder/mon_control.txt" if (!defined $mon_control_file);
+	$config_file        = "$control_folder/config.txt" if (!defined $config_file);
+	$mon_control_file   = "$control_folder/mon_control.txt" if (!defined $mon_control_file);
 	$items_control_file = "$control_folder/items_control.txt" if (!defined $items_control_file);
-	$pickupitems_file = "$control_folder/pickupitems.txt" if (!defined $pickupitems_file);
-	$chat_file = "$logs_folder/chat.txt" if (!defined $chat_file);
-	$shop_file = "$control_folder/shop.txt" if (!defined $shop_file);
-	$monster_log = "$logs_folder/monsters.txt" if (!defined $monster_log);
-	$item_log_file = "$logs_folder/items.txt" if (!defined $item_log_file);
-	$storage_file = "$logs_folder/storage.txt" if (!defined $storage_file);
-	$shop_log_file ||= "$logs_folder/shop.txt";
+	$pickupitems_file   = "$control_folder/pickupitems.txt" if (!defined $pickupitems_file);
+	$chat_file          = "$logs_folder/chat.txt" if (!defined $chat_file);
+	$shop_file          = "$control_folder/shop.txt" if (!defined $shop_file);
+	$monster_log        = "$logs_folder/monsters.txt" if (!defined $monster_log);
+	$item_log_file      = "$logs_folder/items.txt" if (!defined $item_log_file);
+	$storage_file       = "$logs_folder/storage.txt" if (!defined $storage_file);
+	$shop_log_file    ||= "$logs_folder/shop.txt";
 	if (!defined $default_interface) {
 		if ($ENV{OPENKORE_DEFAULT_INTERFACE} && $ENV{OPENKORE_DEFAULT_INTERFACE} ne "") {
 			$default_interface = $ENV{OPENKORE_DEFAULT_INTERFACE};
@@ -196,16 +206,16 @@ sub parseArguments {
 		}
 	}
 
-	return 2 if ($help_option);
+	return 0 if ($help_option);
 	if (! -d $logs_folder) {
 		if (!mkdir($logs_folder)) {
-			return "Unable to create folder $logs_folder ($!)";
+			IOException->throw("Unable to create folder $logs_folder ($!)");
 		}
 	}
 	return 1;
 }
 
-sub parseSysConfig {
+sub loadSysConfig {
 	_processSysConfig(0);
 }
 

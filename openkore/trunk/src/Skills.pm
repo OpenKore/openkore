@@ -114,8 +114,7 @@ sub new {
 	} elsif ($key eq 'name' || $key eq 'auto') {
 		$self{id} = $skills{name}{lc($value)};
 	}
-	bless \%self, $class;
-	return \%self;
+	return bless \%self, $class;
 }
 
 ##############################
