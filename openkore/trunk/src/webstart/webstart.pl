@@ -21,35 +21,16 @@ BEGIN {
 	print "Starting OpenKore, please wait...\n";
 }
 
-sub parseArguments {
-	import Utils::Exceptions;
-	eval {
-		if (!Settings::parseArguments()) {
-			print $Settings::usageText;
-			exit 1;
-		}
-	};
-	if (my $e = caught('IOException', 'ArgumentException')) {
-		print "Error: $e\n";
-		if ($e->isa('ArgumentException')) {
-			print $Settings::usageText;
-		}
-		exit 1;
-	} elsif ($@) {
-		die $@;
-	}
-}
-
 sub __start {
 	chdir(File::Spec->catfile($RealBin, "..", ".."));
 
 	if (@ARGV == 0) {
 		require Settings;
-		parseArguments();
-		Settings::loadSysConfig();
-
 		require WebstartServer;
 		use Time::HiRes qw(time sleep);
+
+		Settings::parseArguments();
+		Settings::loadSysConfig();
 
 		my $server;
 		our $timeout = time;
