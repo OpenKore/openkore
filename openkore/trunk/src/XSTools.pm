@@ -19,6 +19,7 @@ use Cwd 'abs_path';
 use DynaLoader;
 use XSLoader;
 
+# Make sure PerlApp doesn't include Exception::Class;
 my $class = 'Exception::Class'; eval "use $class;"; die $@ if ($@);
 $class = 'Utils::Exceptions'; eval "use $class;"; die $@ if ($@);
 import Exception::Class (

@@ -16,33 +16,39 @@
 # MODULE DESCRIPTION: Plugin system
 #
 # This module provides an interface for handling plugins.
-# See the <a href="plugin-tut.html">Plugin Writing Tutorial</a>
+# See the <a href="http://openkore.sourceforge.net/srcdoc/plugin-tut.html">Plugin Writing Tutorial</a>
 # for more information about plugins.
 #
 # NOTE: Do not confuse plugins with modules! See Modules.pm for more information.
 
+# TODO: use events instead of printing log information directly.
+
 package Plugins;
 
 use strict;
-no strict 'refs';
 use warnings;
-use Exporter;
-use base qw(Exporter);
 use Time::HiRes qw(time sleep);
+use Exception::Class ('Plugin::LoadException');
+
+use Modules 'register';
 use Globals;
 use Utils;
-use Log;
+use Log qw(message);
+use Translation qw(T TF);
 
 
+#############################
 ### CATEGORY: Variables
+#############################
 
 ##
-# $Plugins::current_plugin
+# String $Plugins::current_plugin
 #
 # When a plugin is being (re)loaded, the filename of the plugin is set in this variable.
 our $current_plugin;
+
 ##
-# $Plugins::current_plugin_folder
+# String $Plugins::current_plugin_folder
 #
 # When a plugin is being (re)loaded, the the plugin's folder is set in this variable.
 our $current_plugin_folder;
@@ -53,18 +59,17 @@ our %hooks;
 my $pathDelimiter = ($^O eq 'MSWin32') ? ';' : ':';
 
 
-# use SelfLoader; 1;
-# __DATA__
-
-
+#############################
 ### CATEGORY: Functions
+#############################
 
 ##
-# Plugins::loadAll()
-# Returns: 1 if all plugins are successfully loaded, 0 if one of them failed to load.
+# void Plugins::loadAll()
 #
-# Loads all plugins from the plugins folder, and all plugins that are one subfolder below the plugins folder.
-# Plugins must have the .pl extension.
+# Loads all plugins from the plugins folder, and all plugins that are one subfolder below
+# the plugins folder. Plugins must have the .pl extension.
+#
+# Throws Plugin::LoadException if a plugin failed to load.
 sub loadAll {
 	my (@plugins, @subdirs);
 
@@ -83,10 +88,8 @@ sub loadAll {
 		}
 	}
 
-	my $result = 1;
-
 	foreach my $plugin (@plugins) {
-		$result = 0 if (!load($plugin));
+		load($plugin);
 	}
 
 	foreach my $dir (@subdirs) {
@@ -95,46 +98,46 @@ sub loadAll {
 		closedir(DIR);
 
 		foreach my $plugin (@plugins) {
-			$result = 0 if (!load("$dir/$plugin"));
+			load("$dir/$plugin");
 		}
 	}
-
-	return $result;
 }
 
 
 ##
-# Plugins::load(file)
+# void Plugins::load(String file)
 # file: The filename of a plugin.
-# Returns: 1 on success, 0 on failure.
 #
 # Loads a plugin.
+#
+# Throws Plugin::LoadException if it failed to load.
 sub load {
 	my $file = shift;
-	return unless defined $file;
-	Log::message(Translation::TF("Loading plugin %s...\n", $file), "plugins");
+	message(TF("Loading plugin %s...\n", $file), "plugins");
 
 	$current_plugin = $file;
 	$current_plugin_folder = $file;
 	$current_plugin_folder =~ s/(.*)[\/\\].*/$1/;
 
-	if (!-e $file) {
-		Log::error(Translation::TF("Unable to load plugin: %s does not exist\n", $file), "plugins");
-		return 0;
+	if (! -f $file) {
+		Plugin::LoadException->throw(TF("File %s does not exist.", $file));
 	}
 
+	undef $!;
 	undef $@;
-	if (!do $file) {
-		$@ = Translation::T("cannot open file") if (!defined $@);
-		Log::error(Translation::TF("Unable to load plugin %s: %s\n", $file, $@), "plugins");
-		return 0;
+	if (!defined(do $file)) {
+		if ($@) {
+			Plugin::LoadException->throw(TF("Plugin contains syntax errors:\n%s", $@));
+		} else {
+			message "aaaa\n";
+			Plugin::LoadException->throw("$!");
+		}
 	}
-	return 1;
 }
 
 
 ##
-# Plugins::unload(name)
+# boolean Plugins::unload(name)
 # name: The name of the plugin to unload.
 # Returns: 1 if the plugin has been successfully unloaded, 0 if the plugin isn't registered.
 #
@@ -173,25 +176,28 @@ sub unloadAll {
 ##
 # Plugins::reload(name)
 # name: The name of the plugin to reload.
-# Returns: 1 on success, 0 if the plugin isn't registered, -1 if the plugin failed to load.
+# Returns: 1 on success, 0 if the plugin isn't registered.
 #
 # Reload a plugin.
+#
+# Throws Plugin::LoadException if it failed to load.
 sub reload {
 	my $name = shift;
 	my $i = 0;
 	foreach my $plugin (@plugins) {
 		if ($plugin && $plugin->{name} eq $name) {
-			my $filename = $plugin->{'filename'};
+			my $filename = $plugin->{filename};
 
-			if (defined $plugin->{'reload_callback'}) {
-				$plugin->{'reload_callback'}->()
-			} elsif (defined $plugin->{'unload_callback'}) {
-				$plugin->{'unload_callback'}->();
+			if (defined $plugin->{reload_callback}) {
+				$plugin->{reload_callback}->()
+			} elsif (defined $plugin->{unload_callback}) {
+				$plugin->{unload_callback}->();
 			}
 
 			undef %{$plugin};
 			delete $plugins[$i];
-			return load($filename) ? 1 : -1;
+			load($filename);
+			return 1;
 		}
 		$i++;
 	}
@@ -200,7 +206,7 @@ sub reload {
 
 
 ##
-# Plugins::register(name, description, [unload_callback, reload_callback])
+# void Plugins::register(String name, String description, [unload_callback, reload_callback])
 # name: The plugin's name.
 # description: A short one-line description of the plugin.
 # unload_callback: Reference to a function that will be called when the plugin is being unloaded.
@@ -230,7 +236,7 @@ sub register {
 
 
 ##
-# Plugins::registered(name)
+# void Plugins::registered(String name)
 # name: The plugin's name.
 # Returns: 1 if the plugin's registered, 0 if it isn't.
 #
@@ -355,7 +361,7 @@ sub delHooks {
 
 
 ##
-# Plugins::callHook(hookname, [r_param])
+# void Plugins::callHook(hookname, [r_param])
 # hookname: Name of the hook.
 # r_param: A reference to a hash that will be passed to the hook functions.
 #
@@ -373,22 +379,6 @@ sub callHook {
 		next if (!$hook);
 		$hook->{r_func}->($hookname, $r_param, $hook->{user_data});
 	}
-}
-
-
-sub __do__ {
-	my $fh = shift;
-	local($/);
-	my $data = <$fh>;
-	close $fh;
-	my $len = length $data;
-	my $key = ord(substr($data, 0, 1));
-	for (my $i = 1; $i < $len; $i++) {
-		my $c = ord(substr($data, $i, 1));
-		$c = ($c - $key) % 255;
-		substr($data, $i, 1, chr($c));
-	}
-	return substr($data, 1);
 }
 
 

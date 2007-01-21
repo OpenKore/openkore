@@ -222,19 +222,6 @@ sub title {
 }
 
 ##
-# void $interface->displayUsage(String text)
-# text: The 'usage' text to display.
-# Requires: defined($text)
-#
-# Display a 'usage' text. This method is only used for displaying the usage text
-# when the user runs the "openkore --help" command in the operating system's commandline.
-sub displayUsage {
-	my $self = shift;
-	my $text = shift;
-	$self->writeOutput("message", $text, "usage");
-}
-
-##
 # void $interface->errorDialog(String message, [boolean fatal = true])
 # message: The error message to display.
 # fatal: Indicate that this is a fatal error (meaning that the application will

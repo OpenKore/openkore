@@ -140,6 +140,10 @@ sub addToReloadQueue {
 	}
 }
 
+##
+# boolean Modules::checkSyntax(String file)
+#
+# Check whether the file's syntax is correct.
 sub checkSyntax {
 	my ($file) = @_;
 	my (undef, undef, $baseName) = File::Spec->splitpath($file);
