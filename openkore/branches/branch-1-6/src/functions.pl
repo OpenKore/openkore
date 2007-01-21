@@ -686,6 +686,12 @@ sub processStatisticsReporting {
 		# irreversible hashing algorithm before it is sent to the
 		# server. It is impossible to deduce the user's username
 		# from the data sent to the server.
+		#
+		# If you're still not convinced about the security of this,
+		# please read the following web pages for more details and explanation:
+		#   http://www.openkore.com/statistics.php
+		# -and-
+		#   http://forums.openkore.com/viewtopic.php?t=28044
 		my $url = "http://www.openkore.com/statistics.php?";
 		$url .= "server=" . urlencode($config{master});
 		$url .= "&product=" . urlencode($Settings::NAME);
