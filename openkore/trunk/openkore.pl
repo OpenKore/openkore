@@ -139,7 +139,7 @@ sub __start {
 	use Utils::HttpReader;
 	use Utils::Whirlpool;
 	use Poseidon::Client;
-	Modules::register(qw/Log Utils Settings FileParsers
+	Modules::register(qw/Utils FileParsers
 		Network::Receive Network::Send Misc AI AI::CoreLogic
 		AI::Attack AI::Homunculus Skills
 		Interface ChatQueue Actor Actor::Player Actor::Monster Actor::You

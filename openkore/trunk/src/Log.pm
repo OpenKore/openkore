@@ -111,8 +111,9 @@ use Exporter;
 use Time::HiRes;
 use base qw(Exporter);
 
+use Modules 'register';
 use Globals qw(%config $interface %consoleColors %field %cities_lut);
-use Interface;
+use Utils::DataStructures qw(binAdd existsInList);
 use Utils qw(binAdd existsInList getFormattedDate);
 
 our @EXPORT_OK = qw(message warning error debug);
