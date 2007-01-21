@@ -2440,7 +2440,7 @@ sub homunculus_food {
 		error TF("Failed to feed homunculus with %s: no food in inventory.\n", itemNameSimple($args->{foodID})), "homunculus";
 		# auto-vaporize
 		if ($char->{homunculus}{hunger} <= 11 && timeOut($char->{homunculus}{vaporize_time}, 5)) {
-			$net->sendSkillUse(244, 1, $accountID);
+			$messageSender->sendSkillUse(244, 1, $accountID);
 			$char->{homunculus}{vaporize_time} = time;
 			error "Critical hunger level reached. Homunculus is put to rest.\n", "homunculus";
 		}
@@ -4352,7 +4352,7 @@ sub received_characters {
 	# gradeA says it's supposed to send this packet here, but
 	# it doesn't work...
 	# 30 Dec 2005: it didn't work before because it wasn't sending the accountiD -> fixed (kaliwanagan)
-	$net->sendBanCheck($accountID) if (!$net->clientAlive && $config{serverType} == 2);
+	$messageSender->sendBanCheck($accountID) if (!$net->clientAlive && $config{serverType} == 2);
 	if (charSelectScreen(1) == 1) {
 		$firstLoginMap = 1;
 		$startingZenny = $chars[$config{'char'}]{'zenny'} unless defined $startingZenny;
