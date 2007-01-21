@@ -1,4 +1,4 @@
 .PHONY: upload
 
 upload:
-	scp -C *.html *.css *.png *.js $(USER)@shell.sf.net:/home/groups/o/op/openkore/htdocs/srcdoc
+	tar zcf - *.html *.css *.png *.js | ssh $(USER)@shell.sf.net tar -C /home/groups/o/op/openkore/htdocs/srcdoc -xzvf -

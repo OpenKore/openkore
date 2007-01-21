@@ -15,7 +15,7 @@ Translation
 Task
 TaskManager
 Modules
-Network
+Network::DirectConnection
 Network::Receive
 Network::Send
 Plugins
