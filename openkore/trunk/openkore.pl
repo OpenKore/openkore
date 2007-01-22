@@ -40,8 +40,6 @@ sub __start {
 	use Globals;
 	use Interface;
 	$interface = Interface->loadInterface($Settings::default_interface);
-	my $a = $interface->query("Please enter your Ragnarok Online password.", isPassword => 1);
-	exit;
 	selfCheck();
 
 
