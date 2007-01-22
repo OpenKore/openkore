@@ -298,7 +298,7 @@ sub checkConnection {
 	return if ($Settings::no_connect);
 
 	if ($conState == 1 && (!$self->{remote_socket} || !$self->{remote_socket}->connected) && timeOut($timeout_ex{'master'}) && !$conState_tries) {
-		my $master = $masterServer = $masterServers{$config{'master'}};
+		my $master = $masterServer = $masterServers{$config{master}};
 
 		if ($master->{serverType} ne '' && $config{serverType} != $master->{serverType}) {
 			main::configModify('serverType', $master->{serverType});
@@ -316,6 +316,9 @@ sub checkConnection {
 		}
 		if ($master->{gameGuard} ne '' && $config{gameGuard} != $master->{gameGuard}) {
 			main::configModify('gameGuard', $master->{gameGuard});
+		}
+		if ($master->{charBlockSize} ne '' && $config{charBlockSize} != $master->{charBlockSize}) {
+			main::configModify('charBlockSize', $master->{charBlockSize});
 		}
 
 		message T("Connecting to Account Server...\n", "connection");

@@ -4297,7 +4297,11 @@ sub private_message_sent {
 # This method may be overrided in other ServerType handlers to return
 # the correct block size.
 sub received_characters_blockSize {
-	return 106;
+	if ($masterServer && $masterServer->{charBlockSize}) {
+		return $masterServer->{charBlockSize};
+	} else {
+		return 106;
+	}
 }
 
 sub received_characters {
