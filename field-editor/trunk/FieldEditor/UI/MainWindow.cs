@@ -43,7 +43,9 @@ public class MainWindow {
 			window.Icon = Gdk.Pixbuf.LoadFromResource("FieldEditor.ico");
 		} catch (GLib.GException) {
 			window.Icon = Gdk.Pixbuf.LoadFromResource("FieldEditor.FieldEditor.ico");
-		} 
+		} catch (ArgumentException) {
+			window.Icon = Gdk.Pixbuf.LoadFromResource("FieldEditor.FieldEditor.ico");
+		}
 		window.Show();
 	}
 
