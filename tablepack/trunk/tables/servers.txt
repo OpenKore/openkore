@@ -990,6 +990,15 @@ version 14
 serverType 5
 serverEncoding Western
 
+# http://www.equilibriumro.com/
+[EquilibriumRO Private Server]
+ip equilibriumro.game-server.cc
+port 6908
+master_version 1
+version 18
+serverType 0
+charBlockSize 108
+
 ## http://excalibur-ro.com/
 [ExcaliburRO Private Server]
 ip 206.222.28.58
