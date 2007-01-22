@@ -575,7 +575,7 @@ sub parseSendMsg {
 		} elsif ($config{serverType} == 12) {
 			$syncSync = substr($msg, 8, 4);
 		} elsif ($config{serverType} == 13) { # rRO
-			$syncSync = substr($msg, 4, 4); # formula: MapLoaded_len + Sync_len - 4 - Sync_packet_last_junk
+			$syncSync = substr($msg, 5, 4); # formula: MapLoaded_len + Sync_len - 4 - Sync_packet_last_junk
 		} elsif ($config{serverType} == 16) {
 			$syncSync = substr($msg, 6, 4);
 		}
