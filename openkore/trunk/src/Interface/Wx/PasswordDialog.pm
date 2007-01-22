@@ -15,8 +15,8 @@
 #  GNU General Public License for more details.
 #
 #
-#  $Revision: 2795 $
-#  $Id: MapViewer.pm 2795 2005-07-07 14:59:03Z hongli $
+#  $Revision$
+#  $Id$
 #
 #########################################################################
 package Interface::Wx::PasswordDialog;
