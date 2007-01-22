@@ -14,12 +14,11 @@
 #  GNU General Public License for more details.
 #########################################################################
 ##
-# MODULE DESCRIPTION: User interface system
+# MODULE DESCRIPTION: User interface system.
 #
-# This module provides functions for controlling Kore's user interface.
-#
-# The interface system has several implementations for different platforms.
-# This module glues them all together under one interface.
+# In OpenKore, the user interface code is seperated from the core code.
+# Each user interface is implemented in a class. The Interface class is an
+# abstract base class for all OpenKore user interface classes.
 
 package Interface;
 
@@ -29,42 +28,38 @@ no warnings 'redefine';
 use Time::HiRes qw(usleep);
 use encoding 'utf8';
 
+use Modules 'register';
 use Globals qw(%config $quit);
-use Modules;
 use Translation qw(T TF);
+use Utils::Exceptions;
 
 
 ##
-# $interface->switchInterface(new_interface, die)
-# new_interface: The name of the interface to be swiched to.
-# die: Whether to die if we fail to load the new interface.
-# Returns: The newly created interface object on success, or the previous
-#          interface object on failure.
+# Interface->loadInterface(String name)
+# name: The class name of the interface to load, excluding the 'Interface::' prefix.
+# Returns: The newly created interface object.
 #
-# Changes the interface being used by Kore.
-# The default method may be overridden by an Interface that needs to do special
-# work when changing to another interface.
-sub switchInterface {
-	my $self = shift;
-	my $new_if_name = shift;
-	my $die = shift;
+# Create a new interface of the specified class.
+#
+# Throws ModuleLoadException if the interface's Perl module cannot be loaded.
+# Throws ClassCreateException if the interface class cannot be created.
+sub loadInterface {
+	my ($self, $name) = @_;
 
-	eval "use Interface::$new_if_name;";
+	my $module = "Interface::$name";
+	eval "use $module;";
 	if ($@) {
-		die $@ if ($die);
-		Log::error(Translation::TF("Failed to load %s: %s\n", $new_if_name, $@));
-		return $self;
+		ModuleLoadException->throw(error => "Cannot load module $module.", module => $module);
 	}
 
-	my $new_interface = eval "new Interface::$new_if_name;";
-	if (!defined($new_interface) || $@) {
-		die $@ if ($die);
-		Log::error(Translation::TF("Failed to create %s: %s\n", $new_if_name, $@));
-		return $self;
+	my $constructor = UNIVERSAL::can($module, 'new');
+	if (!$constructor) {
+		ClassCreateException->throw(error => "Class $module has no constructor.", class => $module);
 	}
-	Modules::register("Interface::$new_if_name");
-	undef $self if ($self);
-	return $new_interface;
+
+	my $interface = $constructor->($module);
+	Modules::register($module);
+	return $interface;
 }
 
 ##
@@ -84,10 +79,9 @@ sub mainLoop {
 # void $interface->iterate()
 #
 # Process messages in the user interface message queue.
-# In other words: make sure the user interface updates itself
-# (redraw controls when necessary, etc.).
+# In other words: make sure the user interface updates itself.
+# (redraw controls when necessary, etc.)
 sub iterate {
-	# Do nothing; this is a dummy parent class
 }
 
 ##
@@ -98,26 +92,42 @@ sub iterate {
 #          keyboard data available.
 #
 # Reads keyboard data.
-sub getInput {
-	# Do nothing; this is a dummy parent class
-}
 
 ##
-# String $interface->askInput(String message, boolean cancelable = true)
-# message: The message to display when asking for input.
-# cancelable: Whether the user is allowed to enter nothing.
+# String $interface->query(String message, options...)
+# message: A message to display when asking for input.
 # Returns: The user input, or undef if the user cancelled.
 # Requires: defined($message)
 #
 # Ask the user to enter a one-line input text.
-# In GUIs this will be displayed as a dialog.
-sub askInput {
-	my ($self, $message, $cancelable) = @_;
+# The following options are allowed:
+# `l
+# - cancelable - Whether the user is allowed to enter nothing. If this is set to true,
+#       then the user will be asked the same thing over and over until he
+#       replies with a non-empty input. The default is true.
+# - title - A title to display in the query dialog. The default is "Query".
+# - isPassword - Whether this query is a password query. The default is false.
+# `l`
+sub query {
+	my $self = shift;
+	my $message = shift;
+	my %args = @_;
+
+	$args{title} = "Query" if (!defined $args{title});
+	$args{cancelable} = 1 if (!exists $args{cancelable});
+
+	my $title = "------------ $args{title} ------------";
+	my $footer = '-' x length($title);
+	$message =~ s/\n+$//s;
+	$message = "$title\n$message\n$footer\n";
+	$message .= T("Enter your answer: ");
+
 	while (1) {
 		$self->writeOutput("message", $message, "input");
-		my $result = $self->getInput(-1);
+		my $mode = $args{isPassword} ? -9 : -1;
+		my $result = $self->getInput($mode);
 		if (!defined($result) || $result eq '') {
-			if ($cancelable || !exists($_[2])) {
+			if ($args{cancelable}) {
 				return undef;
 			}
 		} else {
@@ -127,63 +137,50 @@ sub askInput {
 }
 
 ##
-# String $interface->askPassword(String message, boolean cancelable = true)
-# message: The message to display when asking for a password.
-# cancelable: Whether the user is allowed to enter nothing.
-# Returns: The password, or undef if the user cancelled.
-# Requires: defined($message)
-#
-# Ask the user to enter a password.
-# In GUIs this will be displayed as a dialog.
-sub askPassword {
-	my ($self, $message) = @_;
-	my $cancelable = !exists($_[2]) || $_[2];
-	while (1) {
-		$self->writeOutput("message", $message, "input");
-		my $result = $self->getInput(-9);
-		if (!defined($result) || $result eq '') {
-			if ($cancelable) {
-				return undef;
-			}
-		} else {
-			return $result;
-		}
-	}
-}
-
-##
-# int $interface->showMenu(String title, String message, Array<String>* choices, boolean cancelable = true)
-# title: The title to display when presenting the choices to the user.
+# int $interface->showMenu(String message, Array<String>* choices, options...)
 # message: The message to display while asking the user to make a choice.
 # choices: The possible choices.
-# cancelable: Whether the user is allowed to not choose.
 # Returns: The index of the chosen item, or -1 if the user cancelled.
 # Requires:
-#     defined($title)
 #     defined($message)
 #     defined($choices)
 #     for all $k in @{$choices}: defined($k)
 # Ensures: -1 <= result < @{$choices}
 #
 # Ask the user to choose an item from a menu of choices.
+#
+# The following options are allowed:
+# `l
+# - title - The title to display when presenting the choices to the user.
+#           The default is 'Menu'.
+# - cancelable - Whether the user is allowed to not choose.
+#                The default is true.
+# `l`
 sub showMenu {
-	my ($self, $title, $message, $choices) = @_;
-	my $cancelable = !exists($_[3]) || $_[3];
+	my $self = shift;
+	my $message = shift;
+	my $choices = shift;
+	my %args = @_;
 
+	$args{title} = "Menu" if (!defined $args{title});
+	$args{cancelable} = 1 if (!exists $args{cancelable});
+
+	# Create a nicely formatted choice list.
 	my $maxNumberLength = length(@{$choices} + 1);
 	my $format = "%-" . $maxNumberLength . "s   %-s\n";
 	my $output = sprintf($format, "#", T("Choice"));
-
 	my $i = 0;
 	foreach my $item (@{$choices}) {
 		$output .= sprintf($format, $i, $item);
 		$i++;
 	}
-	$self->writeOutput("message", "-------- $title --------\n", "menu");
-	$self->writeOutput("message", $output, "menu");
+
+	$message = "${output}------------------------\n$message";
 
 	while (1) {
-		my $choice = $self->askInput($message, $cancelable);
+		my $choice = $self->query($message,
+			cancelable => $args{cancelable},
+			title => $args{title});
 		if (!defined($choice)) {
 			return -1;
 		} elsif ($choice !~ /^\d+$/ || $choice < 0 || $choice >= @{$choices}) {
@@ -249,5 +246,4 @@ sub errorDialog {
 	$self->getInput(-1);
 }
 
-
-1 #end of module
+1;

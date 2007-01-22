@@ -2,7 +2,7 @@
 #  OpenKore - WxWidgets Interface
 #  Password input dialog
 #
-#  Copyright (c) 2006 OpenKore development team
+#  Copyright (c) 2006,2007 OpenKore development team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -42,6 +42,10 @@ sub getValue {
 	return $self->{text}->GetValue;
 }
 
+sub GetValue {
+	&getValue;
+}
+
 sub _buildGUI {
 	my ($self, $message) = @_;
 	my ($sizer, $label, $text, $buttonSizer, $ok, $cancel);
@@ -52,7 +56,7 @@ sub _buildGUI {
 
 	$text = new Wx::TextCtrl($self, -1, '', wxDefaultPosition,
 		[DEFAULT_WIDTH, -1], wxTE_PASSWORD | wxTE_PROCESS_ENTER);
-	$sizer->Add($text, 0, wxLEFT | wxRIGHT, 8);
+	$sizer->Add($text, 0, wxLEFT | wxRIGHT | wxGROW, 8);
 	EVT_TEXT_ENTER($self, $text->GetId, \&_onTextEnter);
 
 	$sizer->AddSpacer(12);

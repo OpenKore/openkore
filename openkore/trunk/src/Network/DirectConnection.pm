@@ -454,9 +454,10 @@ sub checkConnection {
 			foreach my $server (@servers) {
 				push @serverList, $server->{name};
 			}
-			my $ret = $interface->showMenu(T("Select Login Server"),
-						       T("Please select your login server: "),
-						       \@serverList);
+			my $ret = $interface->showMenu(
+					T("Please select your login server."),
+					\@serverList,
+					title => T("Select Login Server"));
 			if ($ret == -1) {
 				quit();
 			} else {

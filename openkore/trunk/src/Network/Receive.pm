@@ -597,9 +597,10 @@ sub account_server_info {
 			foreach my $server (@servers) {
 				push @serverList, $server->{name};
 			}
-			my $ret = $interface->showMenu(T("Select Login Server"),
-						       T("Please select your login server: "),
-						       \@serverList);
+			my $ret = $interface->showMenu(
+					T("Please select your login server."),
+					\@serverList,
+					title => T("Select Login Server"));
 			if ($ret == -1) {
 				quit();
 			} else {
@@ -3376,7 +3377,7 @@ sub login_error {
 	if ($args->{type} == 0) {
 		error T("Account name doesn't exist\n"), "connection";
 		if (!$net->clientAlive() && !$config{'ignoreInvalidLogin'} && !UNIVERSAL::isa($net, 'XKoreProxy')) {
-			my $username = $interface->askInput(T("Enter username again: "));
+			my $username = $interface->query(T("Enter your Ragnarok Online username again."));
 			if (defined($username)) {
 				configModify('username', $username, 1);
 				$timeout_ex{master}{time} = 0;
@@ -3389,7 +3390,7 @@ sub login_error {
 	} elsif ($args->{type} == 1) {
 		error T("Password Error\n"), "connection";
 		if (!$net->clientAlive() && !$config{'ignoreInvalidLogin'} && !UNIVERSAL::isa($net, 'XKoreProxy')) {
-			my $password = $interface->askPassword(T("Enter password again: "));
+			my $password = $interface->query(T("Enter your Ragnarok Online password again."), isPassword => 1);
 			if (defined($password)) {
 				configModify('password', $password, 1);
 				$timeout_ex{master}{time} = 0;
@@ -5452,7 +5453,7 @@ sub storage_password_request {
 	} elsif ($args->{flag} == 1) {
 		if ($args->{switch} eq '023E') {
 			if ($config{charSelect_password} eq '') {
-				my $input = $interface->askPassword(T("Please enter your character password:\n"));
+				my $input = $interface->query(T("Please enter your character password."), isPassword => 1);
 				if (!defined($input)) {
 					return;
 				}
@@ -5461,7 +5462,7 @@ sub storage_password_request {
 			}
 		} else {
 			if ($config{storageAuto_password} eq '') {
-				my $input = $interface->askPassword(T("Please enter your storage password:\n"));
+				my $input = $interface->query(T("Please enter your storage password."), isPassword => 1);
 				if (!defined($input)) {
 					return;
 				}

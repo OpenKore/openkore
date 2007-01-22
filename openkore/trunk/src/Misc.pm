@@ -1094,8 +1094,9 @@ sub charSelectScreen {
 	if (@chars) {
 		my @choices = @charNames;
 		push @choices, (T('Create a new character'), T('Delete a character'));
-		my $choice = $interface->showMenu(T("Character selection"),
-			T("Please chooce a character or an action: "), \@choices);
+		my $choice = $interface->showMenu(
+			T("Please chooce a character or an action."), \@choices,
+			title => T("Character selection"));
 		if ($choice == -1) {
 			# User cancelled
 			quit();
@@ -1124,8 +1125,8 @@ sub charSelectScreen {
 	if ($mode eq "create") {
 		while (1) {
 			my $message = T("Please enter the desired properties for your characters, in this form:\n" .
-				"(slot) \"(name)\" [ (str) (agi) (vit) (int) (dex) (luk) [ (hairstyle) [(haircolor)] ] ]\n");
-			my $input = $interface->askInput($message);
+				"(slot) \"(name)\" [ (str) (agi) (vit) (int) (dex) (luk) [ (hairstyle) [(haircolor)] ] ]");
+			my $input = $interface->query($message);
 			if (!defined($input)) {
 				goto TOP;
 			} else {
@@ -1142,21 +1143,24 @@ sub charSelectScreen {
 		}
 
 	} elsif ($mode eq "delete") {
-		my $choice = $interface->showMenu(T("Delete character"), T("Select the character you want to delete: "),
-			\@charNames);
+		my $choice = $interface->showMenu(
+			T("Select the character you want to delete."),
+			\@charNames,
+			title => T("Delete character"));
 		if ($choice == -1) {
 			goto TOP;
 		}
 		my $charIndex = @charNameIndices[$choice];
 
-		my $email = $interface->askInput("Enter your email address: ");
+		my $email = $interface->query("Enter your email address.");
 		if (!defined($email)) {
 			goto TOP;
 		}
 
-		my $confirmation = $interface->showMenu(T("Confirm delete"),
-			TF("Are you ABSOLUTELY SURE you want to delete:\n%s\n", $charNames[$choice]),
-			[T("No, don't delete"), T("Yes, delete")]);
+		my $confirmation = $interface->showMenu(
+			TF("Are you ABSOLUTELY SURE you want to delete:\n%s", $charNames[$choice]),
+			[T("No, don't delete"), T("Yes, delete")],
+			title => T("Confirm delete"));
 		if ($confirmation != 1) {
 			goto TOP;
 		}

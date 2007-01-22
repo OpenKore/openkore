@@ -235,11 +235,12 @@ sub initPortalsDatabase {
 	Log::message(T("Checking for new portals... "));
 	if (compilePortals_check()) {
 		Log::message(T("found new portals!\n"));
-		my $choice = $interface->showMenu(T("Compile portals?"),
+		my $choice = $interface->showMenu(
 			T("New portals have been added to the portals database. " .
 			"The portals database must be compiled before the new portals can be used. " .
 			"Would you like to compile portals now?\n"),
-			[T("Yes, compile now."), T("No, don't compile it.")]);
+			[T("Yes, compile now."), T("No, don't compile it.")],
+			title => T("Compile portals?"));
 		if ($choice == 0) {
 			Log::message(T("compiling portals") . "\n\n");
 			compilePortals();
@@ -255,25 +256,26 @@ sub promptFirstTimeInformation {
 	if ($net->version != 1) {
 		my $msg;
 		if (!$config{username}) {
-			$msg = $interface->askInput(T("Enter Username: "));
+			$msg = $interface->query(T("Please enter your Ragnarok Online username."));
 			if (!defined($msg)) {
 				exit;
 			}
 			configModify('username', $msg, 1);
 		}
 		if (!$config{password}) {
-			$msg = $interface->askPassword(T("Enter Password: "));
+			$msg = $interface->query(T("Please enter your Ragnarok Online password."), isPassword => 1);
 			if (!defined($msg)) {
 				exit;
 			}
 			configModify('password', $msg, 1);
 		}
-	
+
 		if ($config{'master'} eq "" || $config{'master'} =~ /^\d+$/ || !exists $masterServers{$config{'master'}}) {
 			my @servers = sort { lc($a) cmp lc($b) } keys(%masterServers);
-			my $choice = $interface->showMenu(T("Master servers"),
-				T("Please choose a master server to connect to: "),
-				\@servers);
+			my $choice = $interface->showMenu(
+				T("Please choose a master server to connect to."),
+				\@servers,
+				title => T("Master servers"));
 			if ($choice == -1) {
 				exit;
 			} else {
