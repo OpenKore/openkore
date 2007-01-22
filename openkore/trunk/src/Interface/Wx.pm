@@ -5,7 +5,7 @@
 #
 #  More information about WxWidgets here: http://www.wxwidgets.org/
 #
-#  Copyright (c) 2004 OpenKore development team
+#  Copyright (c) 2004,2005,2006,2007 OpenKore development team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
