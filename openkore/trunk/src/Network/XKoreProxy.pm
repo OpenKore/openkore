@@ -26,7 +26,7 @@ use Globals;
 use Log qw(message warning error debug);
 use Utils qw(dataWaiting timeOut makeIP encodeIP swrite existsInList);
 use Misc qw(configModify visualDump);
-use Translation;
+use Translation qw(T TF);
 use I18N qw(bytesToString);
 use Network;
 use Network::Send ();
@@ -510,9 +510,10 @@ sub modifyPacketOut {
 sub getMainServer {
 	if ($config{'master'} eq "" || $config{'master'} =~ /^\d+$/ || !exists $masterServers{$config{'master'}}) {
 		my @servers = sort { lc($a) cmp lc($b) } keys(%masterServers);
-		my $choice = $interface->showMenu("Master servers",
-			"Please choose a master server to connect to: ",
-			\@servers);
+		my $choice = $interface->showMenu(
+			T("Please choose a master server to connect to."),
+			\@servers,
+			title => T("Master servers"));
 		if ($choice == -1) {
 			exit;
 		} else {

@@ -39,7 +39,9 @@ sub __start {
 
 	use Globals;
 	use Interface;
-	$interface = Interface->switchInterface($Settings::default_interface, 1);
+	$interface = Interface->loadInterface($Settings::default_interface);
+	my $a = $interface->query("Please enter your Ragnarok Online password.", isPassword => 1);
+	exit;
 	selfCheck();
 
 
@@ -85,7 +87,7 @@ sub __start {
 	Modules::register(qw/Utils FileParsers
 		Network::Receive Network::Send Misc AI AI::CoreLogic
 		AI::Attack AI::Homunculus Skills
-		Interface ChatQueue Actor Actor::Player Actor::Monster Actor::You
+		ChatQueue Actor Actor::Player Actor::Monster Actor::You
 		Actor::Party Actor::Unknown Actor::Item Match Utils::Benchmark/);
 
 

@@ -19,6 +19,8 @@
 # It also defines the following commonly-used exception objects:
 # `l
 # - ArgumentException - An invalid argument is passed to a function.
+# - ModuleLoadException - A Perl module cannot be loaded.
+# - ClassLoadException - A class cannot be created.
 # - IOException - Input/output exception occured.
 # - FileNotFoundException - A file is not found.
 # - SocketException - An error occured during a socket operating, such as connecting to a server.
@@ -35,6 +37,8 @@ use Scalar::Util;
 
 use Exception::Class (
 	'ArgumentException',
+	'ModuleLoadException'    => { fields => 'module' },
+	'ClassCreateException'     => { fields => 'class' },
 
 	'IOException',
 	'FileNotFoundException'  => { isa => 'IOException' },
@@ -42,7 +46,7 @@ use Exception::Class (
 	'BusNotRunningException' => { isa => 'IOException' },
 
 	'DataFormatException',
-	'UTF8MalformedException' => { isa => 'DataFormatException', fields => 'line' },
+	'UTF8MalformedException' => { isa => 'DataFormatException', fields => 'line' }
 );
 
 our @EXPORT = qw(caught);

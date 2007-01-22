@@ -176,46 +176,30 @@ sub getInput {
 	return $msg;
 }
 
-sub askInput {
-	my ($self, $message) = @_;
-	my $cancelable = !exists($_[2]) || $_[2];
+sub query {
+	my $self = shift;
+	my $message = shift;
+	my %args = @_;
+
+	$args{title} = "Query" if (!defined $args{title});
+	$args{cancelable} = 1 if (!exists $args{cancelable});
 
 	$message = wrapText($message, 70);
 	$message =~ s/\n$//s;
-	my $dialog = new Wx::TextEntryDialog($self->{frame}, $message, "Input");
+	my $dialog;
+	if ($args{isPassword}) {
+		# WxPerl doesn't support wxPasswordEntryDialog :(
+		$dialog = new Interface::Wx::PasswordDialog($self->{frame}, $message, $args{title});
+	} else {
+		$dialog = new Wx::TextEntryDialog($self->{frame}, $message, $args{title});
+	}
 	while (1) {
 		my $result;
 		if ($dialog->ShowModal == wxID_OK) {
 			$result = $dialog->GetValue;
 		}
 		if (!defined($result) || $result eq '') {
-			if ($cancelable) {
-				$dialog->Destroy;
-				return undef;
-			}
-		} else {
-			$dialog->Destroy;
-			return $result;
-		}
-	}
-}
-
-sub askPassword {
-	# WxPerl doesn't support wxPasswordEntryDialog :(
-	my ($self, $message) = @_;
-	my $cancelable = !exists($_[2]) || $_[2];
-
-	$message = wrapText($message, 70);
-	$message =~ s/\n$//s;
-	my $dialog = new Interface::Wx::PasswordDialog($self->{frame}, $message,
-		"Password Input");
-	while (1) {
-		my $result;
-		if ($dialog->ShowModal == wxID_OK) {
-			$result = $dialog->getValue;
-		}
-		if (!defined($result) || $result eq '') {
-			if ($cancelable) {
+			if ($args{cancelable}) {
 				$dialog->Destroy;
 				return undef;
 			}
@@ -227,20 +211,25 @@ sub askPassword {
 }
 
 sub showMenu {
-	my ($self, $title, $message, $choices) = @_;
-	my $cancelable = !exists($_[3]) || $_[3];
+	my $self = shift;
+	my $message = shift;
+	my $choices = shift;
+	my %args = @_;
+
+	$args{title} = "Menu" if (!defined $args{title});
+	$args{cancelable} = 1 if (!exists $args{cancelable});
 
 	$message = wrapText($message, 70);
 	$message =~ s/\n$//s;
 	my $dialog = new Wx::SingleChoiceDialog($self->{frame},
-		$message, $title, $choices);
+		$message, $args{title}, $choices);
 	while (1) {
 		my $result;
 		if ($dialog->ShowModal == wxID_OK) {
 			$result = $dialog->GetSelection;
 		}
 		if (!defined($result)) {
-			if ($cancelable) {
+			if ($args{cancelable}) {
 				$dialog->Destroy;
 				return -1;
 			}
