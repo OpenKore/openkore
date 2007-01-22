@@ -1,5 +1,3 @@
-# To run kore, execute openkore.pl instead.
-
 #########################################################################
 # This software is open source, licensed under the GNU General Public
 # License, version 2.
@@ -34,12 +32,303 @@ use Utils::Benchmark;
 use Utils::HttpReader;
 
 
-# use SelfLoader; 1;
-# __DATA__
+#######################################
+# PROGRAM INITIALIZATION
+#######################################
+
+use constant {
+	STATE_LOAD_PLUGINS          => 0,
+	STATE_LOAD_DATA_FILES       => 1,
+	STATE_INIT_NETWORKING       => 2,
+	STATE_INIT_PORTALS_DATABASE => 3,
+	STATE_PROMPT                => 4,
+	STATE_FINAL_INIT            => 5,
+	STATE_INITIALIZED           => 6
+};
+
+my $state;
+
+sub mainLoop {
+	$state = STATE_LOAD_PLUGINS if (!defined $state);
+
+	# Parse command input
+	my $input;
+	if (defined($input = $interface->getInput(0))) {
+		Misc::checkValidity("parseInput (pre)");
+		parseInput($input);
+		Misc::checkValidity("parseInput");
+	}
+
+
+	if ($state == STATE_INITIALIZED) {
+		Plugins::callHook('mainLoop_pre');
+		mainLoop_initialized();
+		Plugins::callHook('mainLoop_post');
+
+	} elsif ($state == STATE_LOAD_PLUGINS) {
+		Log::message("$Settings::versionText\n");
+		loadPlugins();
+		Log::message("\n");
+		Plugins::callHook('start');
+		$state = STATE_LOAD_DATA_FILES;
+
+	} elsif ($state == STATE_LOAD_DATA_FILES) {
+		loadDataFiles();
+		$state = STATE_INIT_NETWORKING;
+
+	} elsif ($state == STATE_INIT_NETWORKING) {
+		initNetworking();
+		$state = STATE_INIT_PORTALS_DATABASE;
+
+	} elsif ($state == STATE_INIT_PORTALS_DATABASE) {
+		initPortalsDatabase();
+		$state = STATE_PROMPT;
+
+	} elsif ($state == STATE_PROMPT) {
+		promptFirstTimeInformation();
+		$state = STATE_FINAL_INIT;
+
+	} elsif ($state == STATE_FINAL_INIT) {
+		finalInitialization();
+		$state = STATE_INITIALIZED;
+
+	} else {
+		die "Unknown state $state.";
+	}
+
+	# Reload any modules that requested to be reloaded
+	Modules::reloadAllInQueue();
+}
+
+sub loadPlugins {
+	eval {
+		Plugins::loadAll();
+	};
+	if (my $e = caught('Plugin::LoadException')) {
+		$interface->errorDialog(TF("This plugin cannot be loaded. Please notify the plugin's author, " .
+			"or remove the plugin.\n\n" .
+			"The error message is:\n" .
+			"%s",
+			$e->message));
+		exit 1;
+	} elsif ($@) {
+		die $@;
+	}
+}
+
+sub loadDataFiles {
+	import Settings qw(addConfigFile);
+
+	addConfigFile($Settings::config_file, \%config,\&parseConfigFile);
+	addConfigFile($Settings::items_control_file, \%items_control,\&parseItemsControl);
+	addConfigFile($Settings::mon_control_file, \%mon_control, \&parseMonControl);
+	addConfigFile("$Settings::control_folder/overallAuth.txt", \%overallAuth, \&parseDataFile);
+	addConfigFile($Settings::pickupitems_file, \%pickupitems, \&parseDataFile_lc);
+	addConfigFile("$Settings::control_folder/responses.txt", \%responses, \&parseResponses);
+	addConfigFile("$Settings::control_folder/timeouts.txt", \%timeout, \&parseTimeouts);
+	addConfigFile($Settings::shop_file, \%shop, \&parseShopControl);
+	addConfigFile("$Settings::control_folder/chat_resp.txt", \@chatResponses, \&parseChatResp);
+	addConfigFile("$Settings::control_folder/avoid.txt", \%avoid, \&parseAvoidControl);
+	addConfigFile("$Settings::control_folder/priority.txt", \%priority, \&parsePriority);
+	addConfigFile("$Settings::control_folder/consolecolors.txt", \%consoleColors, \&parseSectionedFile);
+	addConfigFile("$Settings::control_folder/routeweights.txt", \%routeWeights, \&parseDataFile);
+	addConfigFile("$Settings::control_folder/arrowcraft.txt", \%arrowcraft_items, \&parseDataFile_lc);
+
+	addConfigFile("$Settings::tables_folder/cities.txt", \%cities_lut, \&parseROLUT);
+	addConfigFile("$Settings::tables_folder/commanddescriptions.txt", \%descriptions, \&parseCommandsDescription);
+	addConfigFile("$Settings::tables_folder/directions.txt", \%directions_lut, \&parseDataFile2);
+	addConfigFile("$Settings::tables_folder/elements.txt", \%elements_lut, \&parseROLUT);
+	addConfigFile("$Settings::tables_folder/emotions.txt", \%emotions_lut, \&parseEmotionsFile);
+	addConfigFile("$Settings::tables_folder/equiptypes.txt", \%equipTypes_lut, \&parseDataFile2);
+	addConfigFile("$Settings::tables_folder/haircolors.txt", \%haircolors, \&parseDataFile2);
+	addConfigFile("$Settings::tables_folder/headgears.txt", \@headgears_lut, \&parseArrayFile);
+	addConfigFile("$Settings::tables_folder/items.txt", \%items_lut, \&parseROLUT);
+	addConfigFile("$Settings::tables_folder/itemsdescriptions.txt", \%itemsDesc_lut, \&parseRODescLUT);
+	addConfigFile("$Settings::tables_folder/itemslots.txt", \%itemSlots_lut, \&parseROSlotsLUT);
+	addConfigFile("$Settings::tables_folder/itemslotcounttable.txt", \%itemSlotCount_lut, \&parseROLUT);
+	addConfigFile("$Settings::tables_folder/itemtypes.txt", \%itemTypes_lut, \&parseDataFile2);
+	addConfigFile("$Settings::tables_folder/maps.txt", \%maps_lut, \&parseROLUT);
+	addConfigFile("$Settings::tables_folder/monsters.txt", \%monsters_lut, \&parseDataFile2);
+	addConfigFile("$Settings::tables_folder/npcs.txt", \%npcs_lut, \&parseNPCs);
+	addConfigFile("$Settings::tables_folder/packetdescriptions.txt", \%packetDescriptions, \&parseSectionedFile);
+	addConfigFile("$Settings::tables_folder/portals.txt", \%portals_lut, \&parsePortals);
+	addConfigFile("$Settings::tables_folder/portalsLOS.txt", \%portals_los, \&parsePortalsLOS);
+	addConfigFile("$Settings::tables_folder/recvpackets.txt", \%rpackets, \&parseDataFile2);
+	addConfigFile("$Settings::tables_folder/servers.txt", \%masterServers, \&parseSectionedFile);
+	addConfigFile("$Settings::tables_folder/sex.txt", \%sex_lut, \&parseDataFile2);
+	addConfigFile("$Settings::tables_folder/skills.txt", \%Skills::skills, \&parseSkills);
+	addConfigFile("$Settings::tables_folder/spells.txt", \%spells_lut, \&parseDataFile2);
+	addConfigFile("$Settings::tables_folder/skillsdescriptions.txt", \%skillsDesc_lut, \&parseRODescLUT);
+	addConfigFile("$Settings::tables_folder/skillssp.txt", \%skillsSP_lut, \&parseSkillsSPLUT);
+	addConfigFile("$Settings::tables_folder/skillsstatus.txt", \%skillsStatus, \&parseDataFile2);
+	addConfigFile("$Settings::tables_folder/skillsailments.txt", \%skillsAilments, \&parseDataFile2);
+	addConfigFile("$Settings::tables_folder/skillsstate.txt", \%skillsState, \&parseDataFile2);
+	addConfigFile("$Settings::tables_folder/skillslooks.txt", \%skillsLooks, \&parseDataFile2);
+	addConfigFile("$Settings::tables_folder/skillsarea.txt", \%skillsArea, \&parseDataFile2);
+	addConfigFile("$Settings::tables_folder/skillsencore.txt", \%skillsEncore, \&parseList);
+
+	Plugins::callHook('start2');
+	if (!Settings::load()) {
+		$interface->errorDialog(T("A configuration file failed to load. Did you download the latest configuration files?"));
+		exit 1;
+	}
+	Plugins::callHook('start3');
+
+
+	if ($config{'adminPassword'} eq 'x' x 10) {
+		Log::message(T("\nAuto-generating Admin Password due to default...\n"));
+		configModify("adminPassword", vocalString(8));
+	#} elsif ($config{'adminPassword'} eq '') {
+	#	# This is where we protect the stupid from having a blank admin password
+	#	Log::message(T("\nAuto-generating Admin Password due to blank...\n"));
+	#	configModify("adminPassword", vocalString(8));
+	} elsif ($config{'secureAdminPassword'} eq '1') {
+		# This is where we induldge the paranoid and let them have session generated admin passwords
+		Log::message(T("\nGenerating session Admin Password...\n"));
+		configModify("adminPassword", vocalString(8));
+	}
+
+	Log::message("\n");
+}
+
+sub initNetworking {
+	our $XKore_dontRedirect = 0;
+	my $XKore_version = $config{XKore} ? $config{XKore} : $sys{XKore};
+	eval {
+		if ($XKore_version eq "1" || $XKore_version eq "inject") {
+			# Inject DLL to running Ragnarok process
+			require Network::XKore;
+			$net = new Network::XKore;
+		} elsif ($XKore_version eq "2") {
+			# Run as a proxy bot, allowing Ragnarok to connect while botting
+			require Network::XKore2;
+			$net = new Network::XKore2;
+		} elsif ($XKore_version eq "3" || $XKore_version eq "proxy") {
+			# Proxy Ragnarok client connection
+			require Network::XKoreProxy;
+			$net = new Network::XKoreProxy;
+		} else {
+			# Run as a standalone bot, with no interface to the official RO client
+			require Network::DirectConnection;
+			$net = new Network::DirectConnection;
+		}
+	};
+	if ($@) {
+		# Problem with networking.
+		$interface->errorDialog($@);
+		exit 1;
+	}
+
+	if ($sys{bus}) {
+		require Bus::Client;
+		require Bus::Handlers;
+		my $host = $sys{bus_server_host};
+		my $port = $sys{bus_server_port};
+		$host = undef if ($host eq '');
+		$port = undef if ($port eq '');
+		$bus = new Bus::Client(undef, $host, $port);
+		our $busMessageHandler = new Bus::Handlers($bus);
+	}
+}
+
+sub initPortalsDatabase {
+	Log::message(T("Checking for new portals... "));
+	if (compilePortals_check()) {
+		Log::message(T("found new portals!\n"));
+		my $choice = $interface->showMenu(T("Compile portals?"),
+			T("New portals have been added to the portals database. " .
+			"The portals database must be compiled before the new portals can be used. " .
+			"Would you like to compile portals now?\n"),
+			[T("Yes, compile now."), T("No, don't compile it.")]);
+		if ($choice == 0) {
+			Log::message(T("compiling portals") . "\n\n");
+			compilePortals();
+		} else {
+			Log::message(T("skipping compile") . "\n\n");
+		}
+	} else {
+		Log::message(T("none found\n\n"));
+	}
+}
+
+sub promptFirstTimeInformation {
+	if ($net->version != 1) {
+		my $msg;
+		if (!$config{username}) {
+			$msg = $interface->askInput(T("Enter Username: "));
+			if (!defined($msg)) {
+				exit;
+			}
+			configModify('username', $msg, 1);
+		}
+		if (!$config{password}) {
+			$msg = $interface->askPassword(T("Enter Password: "));
+			if (!defined($msg)) {
+				exit;
+			}
+			configModify('password', $msg, 1);
+		}
+	
+		if ($config{'master'} eq "" || $config{'master'} =~ /^\d+$/ || !exists $masterServers{$config{'master'}}) {
+			my @servers = sort { lc($a) cmp lc($b) } keys(%masterServers);
+			my $choice = $interface->showMenu(T("Master servers"),
+				T("Please choose a master server to connect to: "),
+				\@servers);
+			if ($choice == -1) {
+				exit;
+			} else {
+				configModify('master', $servers[$choice], 1);
+			}
+		}
+
+	} elsif ($net->version != 1 && (!$config{'username'} || !$config{'password'})) {
+		$interface->errorDialog(T("No username or password set."));
+		exit 1;
+	}
+}
+
+sub finalInitialization {
+	undef $msg;
+	undef $msgOut;
+	$KoreStartTime = time;
+	$conState = 1;
+	our $nextConfChangeTime;
+	$bExpSwitch = 2;
+	$jExpSwitch = 2;
+	$totalBaseExp = 0;
+	$totalJobExp = 0;
+	$startTime_EXP = time;
+	$taskManager = new TaskManager();
+
+	$itemsList = new ActorList('Actor::Item');
+	$monstersList = new ActorList('Actor::Monster');
+	$playersList = new ActorList('Actor::Player');
+	$petsList = new ActorList('Actor::Pet');
+	$npcsList = new ActorList('Actor::NPC');
+	$portalsList = new ActorList('Actor::Portal');
+	foreach my $list ($itemsList, $monstersList, $playersList, $petsList, $npcsList, $portalsList) {
+		$list->onAdd()->add(undef, \&actorAdded);
+		$list->onRemove()->add(undef, \&actorRemoved);
+		$list->onClearBegin()->add(undef, \&actorListClearing);
+	}
+
+	StdHttpReader::init();
+	initStatVars();
+	initRandomRestart();
+	initUserSeed();
+	initConfChange();
+	Log::initLogFiles();
+	$timeout{'injectSync'}{'time'} = time;
+
+	Log::message("\n");
+
+	Plugins::callHook('initialized');
+	XSTools::initVersion();
+}
 
 
 #######################################
-#INITIALIZE VARIABLES
+# VARIABLE INITIALIZATION FUNCTIONS
 #######################################
 
 # Calculate next random restart time.
@@ -188,19 +477,16 @@ sub initOtherVars {
 	$timeout{ai_shop}{time} = time;
 }
 
-sub mainLoop {
-	Benchmark::begin("mainLoop") if DEBUG;
-	Plugins::callHook('mainLoop_pre');
 
+#####################################################
+# MISC. MAIN LOOP FUNCTIONS
+#####################################################
+
+
+# This function is called every time in the main loop, when OpenKore has been
+# fully initialized.
+sub mainLoop_initialized {
 	Benchmark::begin("mainLoop_part1") if DEBUG;
-
-	# Parse command input
-	my $input;
-	if (defined($input = $interface->getInput(0))) {
-		Misc::checkValidity("parseInput (pre)");
-		parseInput($input);
-		Misc::checkValidity("parseInput");
-	}
 
 	# Handle connection states
 	$net->checkConnection();
@@ -386,8 +672,8 @@ sub mainLoop {
 		$pos = " : $char->{pos_to}{x},$char->{pos_to}{y} $field{'name'}" if ($char->{pos_to} && $field{'name'});
 
 		# Translation Comment: Interface Title with character status
-		$title = TF("%s B%s (%s), J%s (%s) : w%s%s - %s", 
-			${charName}, $chars[$config{'char'}]{'lv'}, $basePercent.'%', 
+		$title = TF("%s B%s (%s), J%s (%s) : w%s%s - %s",
+			${charName}, $chars[$config{'char'}]{'lv'}, $basePercent.'%',
 			$chars[$config{'char'}]{'lv_job'}, $jobPercent.'%',
 			$weight, ${pos}, $Settings::NAME);
 
@@ -402,13 +688,8 @@ sub mainLoop {
 	Plugins::callHook('mainLoop::setTitle',\%args);
 	$interface->title($args{return});
 
+
 	Benchmark::end("mainLoop_part3") if DEBUG;
-
-	Plugins::callHook('mainLoop_post');
-	Benchmark::end("mainLoop") if DEBUG;
-
-	# Reload any modules that requested to be reloaded
-	Modules::reloadAllInQueue();
 }
 
 # Anonymous statistics reporting. This gives us insight about
@@ -454,17 +735,11 @@ sub processStatisticsReporting {
 	}
 }
 
-
-#######################################
-#PARSE INPUT
-#######################################
-
-
 sub parseInput {
 	my $input = shift;
 	my $printType;
 	my ($hook, $msg);
-	$printType = shift if ($net->clientAlive);
+	$printType = shift if ($net && $net->clientAlive);
 
 	debug("Input: $input\n", "parseInput", 2);
 
@@ -478,14 +753,7 @@ sub parseInput {
 	}
 	$XKore_dontRedirect = 1;
 
-	# Check if in special state
-	if ($net->version != 1 && $net->getState() == Network::CONNECTED_TO_MASTER_SERVER && $waitingForInput) {
-		configModify('server', $input, 1);
-		$waitingForInput = 0;
-
-	} else {
-		Commands::run($input);
-	}
+	Commands::run($input);
 
 	if ($printType) {
 		Log::delHook($hook);
