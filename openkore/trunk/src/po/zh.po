@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenKore 1.9.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-22 15:28+0700\n"
+"POT-Creation-Date: 2007-01-23 08:12+0700\n"
 "PO-Revision-Date: 2007-01-09 19:28+0800\n"
 "Last-Translator: lkm <lj88kc@yahoo.com.cn>\n"
 "Language-Team: Lkm <lj88kc@yhaoo.com.cn>\n"
@@ -296,7 +296,7 @@ msgstr ""
 "功能错误 'card mergecancel' (取消卡片组合)\n"
 "你没有开始组合卡片.\n"
 
-#: ../Commands.pm:643 ../Network/Receive.pm:1461
+#: ../Commands.pm:643 ../Network/Receive.pm:1462
 msgid "-----Card Merge Candidates-----\n"
 msgstr "-----可用的卡片-----\n"
 
@@ -1182,7 +1182,7 @@ msgstr ""
 "功能错误 'homun skills desc' (技能说明)\n"
 "技能 %s 不存在.\n"
 
-#: ../Commands.pm:1818 ../Commands.pm:3428 ../Misc.pm:1903
+#: ../Commands.pm:1818 ../Commands.pm:3428 ../Misc.pm:1907
 msgid "Error: No description available.\n"
 msgstr "错误: 没有说明内容.\n"
 
@@ -1289,7 +1289,7 @@ msgstr ""
 msgid "Sending guild break: %s\n"
 msgstr "发送 guild break: %s\n"
 
-#: ../Commands.pm:2111 ../Network/Receive.pm:2869 ../Network/Receive.pm:3590
+#: ../Commands.pm:2111 ../Network/Receive.pm:2870 ../Network/Receive.pm:3591
 #: ../Network/Receive/ServerType0.pm:33
 msgid "Requesting guild information...\n"
 msgstr "请求公会数据...\n"
@@ -1443,7 +1443,7 @@ msgstr "没有携带\n"
 
 #. Translation Comment: Mark to tell item not identified
 #. Translation Comment: Mark to show not identified items
-#: ../Commands.pm:2410 ../Commands.pm:3657 ../Misc.pm:2798
+#: ../Commands.pm:2410 ../Commands.pm:3657 ../Misc.pm:2802
 msgid "Not Identified"
 msgstr "没识别"
 
@@ -2182,7 +2182,7 @@ msgstr ""
 msgid "None"
 msgstr "无"
 
-#: ../Commands.pm:3516 ../Network/Receive.pm:636
+#: ../Commands.pm:3516 ../Network/Receive.pm:637
 msgid "You are sitting.\n"
 msgstr "你已经坐下.\n"
 
@@ -2726,7 +2726,7 @@ msgstr "错误的地图编号 %s.\n"
 msgid "Attempting to open a warp portal to %s (%s)\n"
 msgstr "常识对入口 %s (%s)\n"
 
-#: ../Commands.pm:4329 ../Network/Receive.pm:5794
+#: ../Commands.pm:4329 ../Network/Receive.pm:5799
 msgid ""
 "----------------- Warp Portal --------------------\n"
 "#  Place                           Map\n"
@@ -2877,30 +2877,25 @@ msgstr "发现错误在 %s:\n"
 msgid "Please correct the above errors and type 'reload %s'.\n"
 msgstr "请修正上述错误，然后输入 'reload %s'.\n"
 
-#: ../Interface.pm:55
-#, perl-format
-msgid "Failed to load %s: %s\n"
-msgstr "读取失败 %s: %s\n"
+#: ../Interface.pm:123
+#, fuzzy
+msgid "Enter your answer: "
+msgstr "输入密码:"
 
-#: ../Interface.pm:62
-#, perl-format
-msgid "Failed to create %s: %s\n"
-msgstr "创建失败 %s: %s\n"
-
-#: ../Interface.pm:175
+#: ../Interface.pm:171
 msgid "Choice"
 msgstr "选择"
 
-#: ../Interface.pm:190
+#: ../Interface.pm:187
 #, perl-format
 msgid "'%s' is not a valid choice number.\n"
 msgstr "'%s' 不是已经有效的数字.\n"
 
-#: ../Interface.pm:245
+#: ../Interface.pm:242
 msgid "Press ENTER to exit this program.\n"
 msgstr "输入 回车 退出.\n"
 
-#: ../Interface.pm:247
+#: ../Interface.pm:244
 msgid "Press ENTER to continue...\n"
 msgstr "请输入 回车 继续...\n"
 
@@ -2948,7 +2943,7 @@ msgstr "断开连接，因为发现 GM!\n"
 msgid "*** The GM %s talked to you, auto disconnected ***\n"
 msgstr "***  GM %s 和你对话, 自动下线 ***\n"
 
-#: ../Misc.pm:990 ../Misc.pm:1004 ../Misc.pm:3313 ../Network/Receive.pm:2227
+#: ../Misc.pm:990 ../Misc.pm:1004 ../Misc.pm:3317 ../Network/Receive.pm:2228
 #, perl-format
 msgid "Disconnect for %s seconds...\n"
 msgstr "%s 秒后断开连接...\n"
@@ -3011,125 +3006,128 @@ msgstr "创建一个人物"
 msgid "Delete a character"
 msgstr "删除人物"
 
-#: ../Misc.pm:1097
+#: ../Misc.pm:1098
+#, fuzzy
+msgid "Please chooce a character or an action."
+msgstr "请选择一个人物或动作: "
+
+#: ../Misc.pm:1099
 msgid "Character selection"
 msgstr "选择人物"
 
-#: ../Misc.pm:1098
-msgid "Please chooce a character or an action: "
-msgstr "请选择一个人物或动作: "
-
-#: ../Misc.pm:1120
+#: ../Misc.pm:1121
 msgid "There are no characters on this account.\n"
 msgstr "此帐号上没有角色.\n"
 
-#: ../Misc.pm:1126
+#: ../Misc.pm:1127
+#, fuzzy
 msgid ""
 "Please enter the desired properties for your characters, in this form:\n"
 "(slot) \"(name)\" [ (str) (agi) (vit) (int) (dex) (luk) [ (hairstyle) "
-"[(haircolor)] ] ]\n"
+"[(haircolor)] ] ]"
 msgstr ""
 "请输入你的角色的各项数据:\n"
 "(slot) \"(名字)\" [ (str) (agi) (vit) (int) (dex) (luk) [ (发型) [(发"
 "色)] ] ]\n"
 
-#: ../Misc.pm:1134
+#: ../Misc.pm:1135
 msgid "You didn't specify enough parameters."
 msgstr "你没有表达足够的参数."
 
-#: ../Misc.pm:1138
+#: ../Misc.pm:1139
 #, perl-format
 msgid "Creating character \"%s\" in slot \"%s\"...\n"
 msgstr "创建角色 \"%s\" 在 slot \"%s\"...\n"
 
-#: ../Misc.pm:1145
+#: ../Misc.pm:1147
+#, fuzzy
+msgid "Select the character you want to delete."
+msgstr "选择你要删除的人物: "
+
+#: ../Misc.pm:1149
 msgid "Delete character"
 msgstr "删除人物"
 
-#: ../Misc.pm:1145
-msgid "Select the character you want to delete: "
-msgstr "选择你要删除的人物: "
-
-#: ../Misc.pm:1157
-msgid "Confirm delete"
-msgstr "确定删除"
-
-#: ../Misc.pm:1158
-#, perl-format
+#: ../Misc.pm:1161
+#, fuzzy, perl-format
 msgid ""
 "Are you ABSOLUTELY SURE you want to delete:\n"
-"%s\n"
+"%s"
 msgstr ""
 "你确定要删除:\n"
 "%s\n"
 
-#: ../Misc.pm:1159
+#: ../Misc.pm:1162
 msgid "No, don't delete"
 msgstr "不, 不要删除"
 
-#: ../Misc.pm:1159
+#: ../Misc.pm:1162
 msgid "Yes, delete"
 msgstr "是的, 删除"
 
-#: ../Misc.pm:1165
+#: ../Misc.pm:1163
+msgid "Confirm delete"
+msgstr "确定删除"
+
+#: ../Misc.pm:1169
 #, perl-format
 msgid "Deleting character %s...\n"
 msgstr "删除人物 %s...\n"
 
-#: ../Misc.pm:1191 ../AI/CoreLogic.pm:3428
+#: ../Misc.pm:1195 ../AI/CoreLogic.pm:3428
 #, perl-format
 msgid "The current map (%s) is not on the list of allowed maps.\n"
 msgstr "当前的地图 (%s) 是不在运行列表里的地图.\n"
 
-#: ../Misc.pm:1192 ../AI/CoreLogic.pm:3429
+#: ../Misc.pm:1196 ../AI/CoreLogic.pm:3429
 #, perl-format
 msgid "** The current map (%s) is not on the list of allowed maps.\n"
 msgstr "** 当前的地图 (%s) 是不在运行列表里的地图.\n"
 
-#: ../Misc.pm:1193
+#: ../Misc.pm:1197
 msgid "** Exiting...\n"
 msgstr "** 退出中...\n"
 
-#: ../Misc.pm:1307
+#: ../Misc.pm:1311
 msgid "We're not currently connected to the character login server."
 msgstr "我们现在无法连接到角色服务器."
 
-#: ../Misc.pm:1310
+#: ../Misc.pm:1314
 #, perl-format
 msgid "Slot \"%s\" is not a valid number."
 msgstr "Slot \"%s\" 不是已经有效的数字."
 
-#: ../Misc.pm:1313
+#: ../Misc.pm:1317
 msgid "The slot must be comprised between 0 and 4."
 msgstr "slot 必须在 0 和 4 之间."
 
-#: ../Misc.pm:1316
+#: ../Misc.pm:1320
 #, perl-format
 msgid "Slot %s already contains a character (%s)."
 msgstr "Slot %s 已经有一个人物了 (%s)."
 
-#: ../Misc.pm:1319
+#: ../Misc.pm:1323
 msgid "Name must not be longer than 23 characters."
 msgstr "名字不能超过 23 个字符."
 
-#: ../Misc.pm:1325
+#: ../Misc.pm:1329
 msgid "Stats must be comprised between 1 and 9."
 msgstr "状态需在 1 到 9 之间."
 
-#: ../Misc.pm:1331
+#: ../Misc.pm:1335
 msgid "The sums Str + Int, Agi + Luk and Vit + Dex must all be equal to 10."
 msgstr "状态点数 Str + Int, Agi + Luk 和 Vit + Dex 不能超过 10."
 
-#: ../Misc.pm:1423
+#: ../Misc.pm:1427
 msgid "Message Dumped into DUMP.txt!\n"
 msgstr "信息 Dumped 到了 DUMP.txt!\n"
 
-#: ../Misc.pm:1565
+#: ../Misc.pm:1569
 #, perl-format
 msgid "Inventory Item Removed: %s (%d) x %d\n"
 msgstr "携带物品移除: %s (%d) x %d\n"
 
-#: ../Misc.pm:1904
+#: ../Misc.pm:1908
 #, perl-format
 msgid ""
 "===============Item Description===============\n"
@@ -3140,157 +3138,157 @@ msgstr ""
 "道具: %s\n"
 "\n"
 
-#: ../Misc.pm:1941
+#: ../Misc.pm:1945
 msgid "Exiting...\n"
 msgstr "退出中...\n"
 
-#: ../Misc.pm:1952
+#: ../Misc.pm:1956
 #, perl-format
 msgid "Relogging in %d seconds...\n"
 msgstr "重新记录在 %d 秒后...\n"
 
-#: ../Misc.pm:2161 ../Misc.pm:2165
+#: ../Misc.pm:2165 ../Misc.pm:2169
 #, perl-format
 msgid "Remove perfectly hidden %s\n"
 msgstr "去除完全暗藏的 %s\n"
 
-#: ../Misc.pm:2240
+#: ../Misc.pm:2244
 #, perl-format
 msgid "%s does not exist.\n"
 msgstr "%s 不存在\n"
 
-#: ../Misc.pm:2286
+#: ../Misc.pm:2290
 msgid "Teleporting because of attack miss\n"
 msgstr "错过攻击了，飞\n"
 
-#: ../Misc.pm:2290
+#: ../Misc.pm:2294
 #, perl-format
 msgid "Teleporting after attacking a monster %d times\n"
 msgstr "攻击 %d 后就飞\n"
 
-#: ../Misc.pm:2296 ../Misc.pm:2404
+#: ../Misc.pm:2300 ../Misc.pm:2408
 #, perl-format
 msgid "%s (%s) has been provoked, searching another monster\n"
 msgstr "%s (%s) 已经被挑拨, 查找其他怪物\n"
 
-#: ../Misc.pm:2323
+#: ../Misc.pm:2327
 #, perl-format
 msgid "Teleporting due to attack from %s\n"
 msgstr "好像 %s 打你了，闪\n"
 
-#: ../Misc.pm:2329
+#: ../Misc.pm:2333
 #, perl-format
 msgid "Next %d dmg could kill you. Teleporting...\n"
 msgstr "下个伤害 %d 可能会杀了你. 闪先...\n"
 
-#: ../Misc.pm:2336
+#: ../Misc.pm:2340
 #, perl-format
 msgid "%s hit you for more than %d dmg. Teleporting...\n"
 msgstr "%s 打击你的伤害超过 %d .飞...\n"
 
-#: ../Misc.pm:2343
+#: ../Misc.pm:2347
 #, perl-format
 msgid "%s hit you for more than %d dmg in lockMap. Teleporting...\n"
 msgstr "%s 攻击你超过 %d 伤害在 lockMap. 飞g...\n"
 
-#: ../Misc.pm:2349
+#: ../Misc.pm:2353
 #, perl-format
 msgid "%s attacks you while you are sitting. Teleporting...\n"
 msgstr "%s 在你座着的时候攻击你. 瞬移...\n"
 
-#: ../Misc.pm:2357
+#: ../Misc.pm:2361
 #, perl-format
 msgid "%s hit you for a total of more than %d dmg. Teleporting...\n"
 msgstr "%s 攻击你的伤害总数超过 %d . 飞...\n"
 
-#: ../Misc.pm:2364
+#: ../Misc.pm:2368
 #, perl-format
 msgid "%s hit you for a total of more than %d dmg in lockMap. Teleporting...\n"
 msgstr "%s 攻击你的伤害总数超过 %d 在 lockMap.飞...\n"
 
-#: ../Misc.pm:2369
+#: ../Misc.pm:2373
 #, perl-format
 msgid "%s hit you when your HP is too low. Teleporting...\n"
 msgstr "%s 你的 HP 太低了. 飞...\n"
 
-#: ../Misc.pm:2391
+#: ../Misc.pm:2395
 #, perl-format
 msgid "Change target to aggressive : %s (%s)\n"
 msgstr "改变目标为 : %s (%s)\n"
 
-#: ../Misc.pm:2435
+#: ../Misc.pm:2439
 #, perl-format
 msgid "Homunculus teleporting due to attack from %s\n"
 msgstr "好像 %s 打生命体了，闪\n"
 
-#: ../Misc.pm:2441
+#: ../Misc.pm:2445
 #, perl-format
 msgid "Next %d dmg could kill your homunculus. Teleporting...\n"
 msgstr "下个伤害 %d 可能会杀了生命体. 闪先...\n"
 
-#: ../Misc.pm:2448
+#: ../Misc.pm:2452
 #, perl-format
 msgid "%s hit your homunculus for more than %d dmg. Teleporting...\n"
 msgstr "%s 打击生命体的伤害超过 %d .飞...\n"
 
-#: ../Misc.pm:2455
+#: ../Misc.pm:2459
 #, perl-format
 msgid ""
 "%s hit your homunculus for more than %d dmg in lockMap. Teleporting...\n"
 msgstr "%s 攻击生命体超过 %d 伤害在 lockMap. 飞g...\n"
 
-#: ../Misc.pm:2463
+#: ../Misc.pm:2467
 #, perl-format
 msgid ""
 "%s hit your homunculus for a total of more than %d dmg. Teleporting...\n"
 msgstr "%s 攻击生命体的伤害总数超过 %d . 飞...\n"
 
-#: ../Misc.pm:2470
+#: ../Misc.pm:2474
 #, perl-format
 msgid ""
 "%s hit your homunculus for a total of more than %d dmg in lockMap. "
 "Teleporting...\n"
 msgstr "%s 攻击生命体的伤害总数超过 %d 在 lockMap.飞...\n"
 
-#: ../Misc.pm:2475
+#: ../Misc.pm:2479
 #, perl-format
 msgid ""
 "%s hit your homunculus when your homunculus' HP is too low. Teleporting...\n"
 msgstr "%s 生命体的 HP 太低了. 飞...\n"
 
-#: ../Misc.pm:2496
+#: ../Misc.pm:2500
 #, perl-format
 msgid "Homunculus change target to aggressive : %s (%s)\n"
 msgstr "生命体改变目标为 : %s (%s)\n"
 
-#: ../Misc.pm:2634
+#: ../Misc.pm:2638
 msgid "Using Teleport Skill Level 2 though we not have it!\n"
 msgstr "使用2级飞技能!\n"
 
-#: ../Misc.pm:2689
+#: ../Misc.pm:2693
 msgid "No Fly Wing or Butterfly Wing, fallback to Teleport Skill\n"
 msgstr "没有道具, 使用飞技能\n"
 
-#: ../Misc.pm:2695
+#: ../Misc.pm:2699
 msgid "You don't have the Teleport skill or a Fly Wing\n"
 msgstr "你没有飞技能和道具\n"
 
-#: ../Misc.pm:2697
+#: ../Misc.pm:2701
 msgid "You don't have the Teleport skill or a Butterfly Wing\n"
 msgstr "你没有飞技能和道具\n"
 
-#: ../Misc.pm:2791
+#: ../Misc.pm:2795
 #, perl-format
 msgid "---------- Storage %s -----------\n"
 msgstr "---------- 仓库 %s -----------\n"
 
 #. Translation Comment: Mark to show broken items
-#: ../Misc.pm:2800
+#: ../Misc.pm:2804
 msgid "Broken"
 msgstr "打破"
 
 #. Translation Comment: Storage Capacity
-#: ../Misc.pm:2804
+#: ../Misc.pm:2808
 #, perl-format
 msgid ""
 "\n"
@@ -3299,480 +3297,480 @@ msgstr ""
 "\n"
 "容量: %d/%d\n"
 
-#: ../Misc.pm:2808
+#: ../Misc.pm:2812
 msgid "Storage logged\n"
 msgstr "仓库记录\n"
 
-#: ../Misc.pm:2811
+#: ../Misc.pm:2815
 #, perl-format
 msgid "Unable to write to %s\n"
 msgstr "不能写到 %s\n"
 
-#: ../Misc.pm:2830
+#: ../Misc.pm:2834
 #, perl-format
 msgid "%s %s %s - Dmg: %s (delay %s)\n"
 msgstr "%s %s %s - 伤害: %s (delay %s)\n"
 
-#: ../Misc.pm:2845
+#: ../Misc.pm:2849
 #, perl-format
 msgid "You are casting %s on location (%d, %d) - (time %sms)\n"
 msgstr "你正在念 %s 对自己 (%d, %d) - (time %sms)\n"
 
-#: ../Misc.pm:2847
+#: ../Misc.pm:2851
 #, perl-format
 msgid "Player %s (%d) is casting %s on location (%d, %d) - (time %sms)\n"
 msgstr "玩家 %s (%d) 正在念 %s 在 (%d, %d) - (time %sms)\n"
 
-#: ../Misc.pm:2850
+#: ../Misc.pm:2854
 #, perl-format
 msgid "Monster %s (%d) is casting %s on location (%d, %d) - (time %sms)\n"
 msgstr "玩家 %s (%d) 正在念 %s 在 (%d, %d) - (time %sms)\n"
 
-#: ../Misc.pm:2853
+#: ../Misc.pm:2857
 #, perl-format
 msgid "Unknown #%s (%d) is casting %s on location (%d, %d) - (time %sms)\n"
 msgstr "未知的 #%s (%d) 正在念 %s 在 (%d, %d) - (time %sms)\n"
 
-#: ../Misc.pm:2860
+#: ../Misc.pm:2864
 #, perl-format
 msgid "You are casting %s on yourself (time %sms)\n"
 msgstr "你正在念 %s 对自己 (time %sms)\n"
 
-#: ../Misc.pm:2862
+#: ../Misc.pm:2866
 #, perl-format
 msgid "You are casting %s on player %s (%d) (time %sms)\n"
 msgstr "你正在念 %s 对玩家 %s (%d) (time %sms)\n"
 
-#: ../Misc.pm:2865
+#: ../Misc.pm:2869
 #, perl-format
 msgid "You are casting %s on monster %s (%d) (time %sms)\n"
 msgstr "你正在念 %s 对怪物 %s (%d) (time %sms)\n"
 
-#: ../Misc.pm:2868
+#: ../Misc.pm:2872
 #, perl-format
 msgid "You are casting %s on Unknown #%s (%d) (time %sms)\n"
 msgstr "你正在念 %s 对未知的 #%s (%d) (time %sms)\n"
 
-#: ../Misc.pm:2874
+#: ../Misc.pm:2878
 #, perl-format
 msgid "Player %s (%d) is casting %s on you (time %sms)\n"
 msgstr "玩家 %s (%d) 正在念 %s 对你 (time %sms)\n"
 
-#: ../Misc.pm:2879
+#: ../Misc.pm:2883
 #, perl-format
 msgid "Player %s (%d) is casting %s on player %s (%d) (time %sms)\n"
 msgstr "玩家 %s (%d) 正在念 %s 对玩家 %s (%d) (time %sms)\n"
 
-#: ../Misc.pm:2882
+#: ../Misc.pm:2886
 #, perl-format
 msgid "Player %s (%d) is casting %s on himself (time %sms)\n"
 msgstr "玩家 %s (%d) 正在念 %s 对自己 (time %sms)\n"
 
-#: ../Misc.pm:2885
+#: ../Misc.pm:2889
 #, perl-format
 msgid "Player %s (%d) is casting %s on herself (time %sms)\n"
 msgstr "玩家 %s (%d) 正在念 %s 对自己 (time %sms)\n"
 
-#: ../Misc.pm:2889
+#: ../Misc.pm:2893
 #, perl-format
 msgid "Player %s (%d) is casting %s on monster %s (%d) (time %sms)\n"
 msgstr "玩家 %s (%d) 正在念 %s 对怪物 %s (%d) (time %sms)\n"
 
-#: ../Misc.pm:2892
+#: ../Misc.pm:2896
 #, perl-format
 msgid "Player %s (%d) is casting %s on Unknown #%s (%d) (time %sms)\n"
 msgstr "玩家 %s (%d) 正在念 %s 对未知的 #%s (%d) (time %sms)\n"
 
-#: ../Misc.pm:2898
+#: ../Misc.pm:2902
 #, perl-format
 msgid "Monster %s (%d) is casting %s on you (time %sms)\n"
 msgstr "怪物 %s (%d) 正在念 %s 对你 (time %sms)\n"
 
-#: ../Misc.pm:2901
+#: ../Misc.pm:2905
 #, perl-format
 msgid "Monster %s (%d) is casting %s on player %s (%d) (time %sms)\n"
 msgstr "怪物 %s (%d) 正在念 %s 对玩家 %s (%d) (time %sms)\n"
 
-#: ../Misc.pm:2905
+#: ../Misc.pm:2909
 #, perl-format
 msgid "Monster %s (%d) is casting %s on monster %s (%d) (time %sms)\n"
 msgstr "怪物 %s (%d) 正在念 %s 对怪物 %s (%d) (time %sms)\n"
 
-#: ../Misc.pm:2908
+#: ../Misc.pm:2912
 #, perl-format
 msgid "Monster %s (%d) is casting %s on itself (time %sms)\n"
 msgstr "怪物 %s (%d) 正在念 %s 对自己 (time %sms)\n"
 
-#: ../Misc.pm:2912
+#: ../Misc.pm:2916
 #, perl-format
 msgid "Monster %s (%d) is casting %s on Unknown #%s (%d) (time %sms)\n"
 msgstr "怪物 %s (%d) 正在念 %s 对未知的 #%s (%d) (time %sms)\n"
 
-#: ../Misc.pm:2918
+#: ../Misc.pm:2922
 #, perl-format
 msgid "Unknown #%s (%d) is casting %s on you (time %sms)\n"
 msgstr "未知 #%s (%d) 正在念 %s 对你 (time %sms)\n"
 
-#: ../Misc.pm:2921
+#: ../Misc.pm:2925
 #, perl-format
 msgid "Unknown #%s (%d) is casting %s on player %s (%d) (time %sms)\n"
 msgstr "未知 #%s (%d) 正在念 %s 对玩家 %s (%d) (time %sms)\n"
 
-#: ../Misc.pm:2924
+#: ../Misc.pm:2928
 #, perl-format
 msgid "Unknown #%s (%d) is casting %s on monster %s (%d) (time %sms)\n"
 msgstr "未知 #%s (%d) 正在念 %s 对怪物 %s (%d) (time %sms)\n"
 
-#: ../Misc.pm:2928
+#: ../Misc.pm:2932
 #, perl-format
 msgid "Unknown #%s (%d) is casting %s on Unknown #%s (%d) (time %sms)\n"
 msgstr "未知 #%s (%d) 正在念 %s 对未知的 #%s (%d) (time %sms)\n"
 
-#: ../Misc.pm:2931
+#: ../Misc.pm:2935
 #, perl-format
 msgid "Unknown #%s (%d) is casting %s on himself (time %sms)\n"
 msgstr "未知 #%s (%d) 正在念 %s 对自己 (time %sms)\n"
 
 #. Translation Comment: Ammount of Damage on Skill
-#: ../Misc.pm:2946
+#: ../Misc.pm:2950
 #, perl-format
 msgid "Dmg: %s"
 msgstr "伤害: %s"
 
 #. Translation Comment: Skill name + level
-#: ../Misc.pm:2952 ../Misc.pm:3040
+#: ../Misc.pm:2956 ../Misc.pm:3044
 #, perl-format
 msgid "%s (lvl %s)"
 msgstr "%s (lvl %s)"
 
-#: ../Misc.pm:2957
+#: ../Misc.pm:2961
 #, perl-format
 msgid "You use %s on yourself %s(delay %s)\n"
 msgstr "你使用 %s 对自己 %s(delay %s)\n"
 
-#: ../Misc.pm:2959
+#: ../Misc.pm:2963
 #, perl-format
 msgid "You use %s on player %s (%d) %s(delay %s)\n"
 msgstr "你使用 %s 对玩家 %s (%d) %s(delay %s)\n"
 
-#: ../Misc.pm:2962
+#: ../Misc.pm:2966
 #, perl-format
 msgid "You use %s on monster %s (%d) %s(delay %s)\n"
 msgstr "你使用 %s 对怪物 %s (%d) %s(delay %s)\n"
 
-#: ../Misc.pm:2965
+#: ../Misc.pm:2969
 #, perl-format
 msgid "You use %s on Unknown #%s (%d) %s(delay %s)\n"
 msgstr "你使用 %s 对未知的 #%s (%d) %s(delay %s)\n"
 
-#: ../Misc.pm:2971
+#: ../Misc.pm:2975
 #, perl-format
 msgid "Player %s (%d) uses %s on you %s(delay %s)\n"
 msgstr "玩家 %s (%d) 使用 %s 对你 %s(delay %s)\n"
 
-#: ../Misc.pm:2976
+#: ../Misc.pm:2980
 #, perl-format
 msgid "Player %s (%d) uses %s on player %s (%d) %s(delay %s)\n"
 msgstr "玩家 %s (%d) 使用 %s 对玩家 %s (%d) %s(delay %s)\n"
 
-#: ../Misc.pm:2979
+#: ../Misc.pm:2983
 #, perl-format
 msgid "Player %s (%d) uses %s on himself %s(delay %s)\n"
 msgstr "玩家 %s (%d) 使用 %s 对自己 %s(delay %s)\n"
 
-#: ../Misc.pm:2982
+#: ../Misc.pm:2986
 #, perl-format
 msgid "Player %s (%d) uses %s on herself %s(delay %s)\n"
 msgstr "玩家 %s (%d) 使用 %s 对自己 %s(delay %s)\n"
 
-#: ../Misc.pm:2986
+#: ../Misc.pm:2990
 #, perl-format
 msgid "Player %s (%d) uses %s on monster %s (%d) %s(delay %s)\n"
 msgstr "玩家 %s (%d) 使用 %s 对怪物 %s (%d) %s(delay %s)\n"
 
-#: ../Misc.pm:2989
+#: ../Misc.pm:2993
 #, perl-format
 msgid "Player %s (%d) uses %s on Unknown #%s (%d) %s(delay %s)\n"
 msgstr "玩家 %s (%d) 使用 %s 对未知的 #%s (%d) %s(delay %s)\n"
 
-#: ../Misc.pm:2995
+#: ../Misc.pm:2999
 #, perl-format
 msgid "Monster %s (%d) uses %s on you %s(delay %s)\n"
 msgstr "怪物 %s (%d) 使用 %s 对你 %s(delay %s)\n"
 
-#: ../Misc.pm:2998
+#: ../Misc.pm:3002
 #, perl-format
 msgid "Monster %s (%d) uses %s on player %s (%d) %s(delay %s)\n"
 msgstr "怪物 %s (%d) 使用 %s 对玩家 %s (%d) %s(delay %s)\n"
 
-#: ../Misc.pm:3002
+#: ../Misc.pm:3006
 #, perl-format
 msgid "Monster %s (%d) uses %s on monster %s (%d) %s(delay %s)\n"
 msgstr "怪物 %s (%d) 使用 %s 对怪物 %s (%d) %s(delay %s)\n"
 
-#: ../Misc.pm:3005
+#: ../Misc.pm:3009
 #, perl-format
 msgid "Monster %s (%d) uses %s on itself %s(delay %s)\n"
 msgstr "怪物 %s (%d) 使用 %s 对自己 %s(delay %s)\n"
 
-#: ../Misc.pm:3009
+#: ../Misc.pm:3013
 #, perl-format
 msgid "Monster %s (%d) uses %s on Unknown #%s (%d) %s(delay %s)\n"
 msgstr "怪物 %s (%d) 使用 %s 对未知的 #%s (%d) %s(delay %s)\n"
 
-#: ../Misc.pm:3015
+#: ../Misc.pm:3019
 #, perl-format
 msgid "Unknown #%s (%d) uses %s on you %s(delay %s)\n"
 msgstr "未知 #%s (%d) 使用 %s 对你 %s(delay %s)\n"
 
-#: ../Misc.pm:3018
+#: ../Misc.pm:3022
 #, perl-format
 msgid "Unknown #%s (%d) uses %s on player %s (%d) %s(delay %s)\n"
 msgstr "未知 #%s (%d) 使用 %s 对玩家 %s (%d) %s(delay %s)\n"
 
-#: ../Misc.pm:3021
+#: ../Misc.pm:3025
 #, perl-format
 msgid "Unknown #%s (%d) uses %s on monster %s (%d) %s(delay %s)\n"
 msgstr "未知 #%s (%d) 使用 %s 对怪物 %s (%d) %s(delay %s)\n"
 
-#: ../Misc.pm:3025
+#: ../Misc.pm:3029
 #, perl-format
 msgid "Unknown #%s (%d) uses %s on Unknown #%s (%d) %s(delay %s)\n"
 msgstr "未知 #%s (%d) 使用 %s 对未知的 #%s (%d) %s(delay %s)\n"
 
-#: ../Misc.pm:3028
+#: ../Misc.pm:3032
 #, perl-format
 msgid "Unknown #%s (%d) uses %s on himself %s(delay %s)\n"
 msgstr "未知 #%s (%d) 使用 %s 对自己 %s(delay %s)\n"
 
-#: ../Misc.pm:3043
+#: ../Misc.pm:3047
 #, perl-format
 msgid "You use %s on location (%d, %d)\n"
 msgstr "你使用 %s 在位置 (%d, %d)\n"
 
 #. Translation Comment: used Healing skill
-#: ../Misc.pm:3063
+#: ../Misc.pm:3067
 #, perl-format
 msgid "%s hp gained"
 msgstr "得到 %s hp"
 
 #. Translation Comment: used non-Healing skill - displays skill level
-#: ../Misc.pm:3067
+#: ../Misc.pm:3071
 #, perl-format
 msgid "Lv %s"
 msgstr "等级 %s"
 
-#: ../Misc.pm:3075
+#: ../Misc.pm:3079
 #, perl-format
 msgid "You use %s on yourself %s\n"
 msgstr "你使用 %s 对自己 %s\n"
 
 #. Translation Comment: You use a certain skill on an actor.
-#: ../Misc.pm:3078
+#: ../Misc.pm:3082
 #, perl-format
 msgid "You use %s on %s %s\n"
 msgstr "你使用 %s 在位置 %s %s\n"
 
-#: ../Misc.pm:3083
+#: ../Misc.pm:3087
 #, perl-format
 msgid "Player %s uses %s on you %s\n"
 msgstr "玩家 %s 使用 %s 对你 %s\n"
 
-#: ../Misc.pm:3088
+#: ../Misc.pm:3092
 #, perl-format
 msgid "Player %s (%d) uses %s on player %s (%d) %s\n"
 msgstr "玩家 %s (%d) 使用 %s 对玩家 %s (%d) %s\n"
 
-#: ../Misc.pm:3091
+#: ../Misc.pm:3095
 #, perl-format
 msgid "Player %s (%d) uses %s on himself %s\n"
 msgstr "玩家 %s (%d) 使用 %s 对自己 %s\n"
 
-#: ../Misc.pm:3094
+#: ../Misc.pm:3098
 #, perl-format
 msgid "Player %s (%d) uses %s on herself %s\n"
 msgstr "玩家 %s (%d) 使用 %s 对自己 %s\n"
 
-#: ../Misc.pm:3098
+#: ../Misc.pm:3102
 #, perl-format
 msgid "Player %s (%d) uses %s on monster %s (%d) %s\n"
 msgstr "玩家 %s (%d) 使用 %s 对怪物 %s (%d) %s\n"
 
-#: ../Misc.pm:3101
+#: ../Misc.pm:3105
 #, perl-format
 msgid "Player %s (%d) uses %s on Unknown #%s (%d) %s\n"
 msgstr "玩家 %s (%d) 使用 %s 对未知的 #%s (%d) %s\n"
 
-#: ../Misc.pm:3107
+#: ../Misc.pm:3111
 #, perl-format
 msgid "Monster %s (%d) uses %s on you %s\n"
 msgstr "怪物 %s (%d) 使用 %s 对你 %s\n"
 
-#: ../Misc.pm:3110
+#: ../Misc.pm:3114
 #, perl-format
 msgid "Monster %s (%d) uses %s on player %s (%d) %s\n"
 msgstr "怪物 %s (%d) 使用 %s 对玩家 %s (%d) %s\n"
 
-#: ../Misc.pm:3114
+#: ../Misc.pm:3118
 #, perl-format
 msgid "Monster %s (%d) uses %s on monster %s (%d) %s\n"
 msgstr "怪物 %s (%d) 使用 %s 对怪物 %s (%d) %s\n"
 
-#: ../Misc.pm:3117
+#: ../Misc.pm:3121
 #, perl-format
 msgid "Monster %s (%d) uses %s on itself %s\n"
 msgstr "怪物 %s (%d) 使用 %s 对自己 %s\n"
 
-#: ../Misc.pm:3121
+#: ../Misc.pm:3125
 #, perl-format
 msgid "Monster %s (%d) uses %s on Unknown #%s (%d) %s\n"
 msgstr "怪物 %s (%d) 使用 %s 对未知的 #%s (%d) %s\n"
 
-#: ../Misc.pm:3127
+#: ../Misc.pm:3131
 #, perl-format
 msgid "Unknown #%s (%d) uses %s on you %s\n"
 msgstr "未知 #%s (%d) 使用 %s 对你 %s\n"
 
-#: ../Misc.pm:3130
+#: ../Misc.pm:3134
 #, perl-format
 msgid "Unknown #%s (%d) uses %s on player %s (%d) %s\n"
 msgstr "未知 #%s (%d) 使用 %s 对玩家 %s (%d) %s\n"
 
-#: ../Misc.pm:3133
+#: ../Misc.pm:3137
 #, perl-format
 msgid "Unknown #%s (%d) uses %s on monster %s (%d) %s\n"
 msgstr "未知 #%s (%d) 使用 %s 对怪物 %s (%d) %s\n"
 
-#: ../Misc.pm:3137
+#: ../Misc.pm:3141
 #, perl-format
 msgid "Unknown #%s (%d) uses %s on Unknown #%s (%d) %s\n"
 msgstr "未知 #%s (%d) 使用 %s 未知 #%s (%d) %s\n"
 
-#: ../Misc.pm:3140
+#: ../Misc.pm:3144
 #, perl-format
 msgid "Unknown #%s (%d) uses %s on himself %s\n"
 msgstr "未知 #%s (%d) 使用 %s 对自己 %s\n"
 
-#: ../Misc.pm:3153
+#: ../Misc.pm:3157
 #, perl-format
 msgid "You are now: %s\n"
 msgstr "你现在: %s\n"
 
-#: ../Misc.pm:3155
+#: ../Misc.pm:3159
 #, perl-format
 msgid "Player %s (%d) is now: %s\n"
 msgstr "玩家 %s (%d) 现在: %s\n"
 
-#: ../Misc.pm:3157
+#: ../Misc.pm:3161
 #, perl-format
 msgid "Monster %s (%d) is now: %s\n"
 msgstr "怪物 %s (%d) 现在: %s\n"
 
-#: ../Misc.pm:3159
+#: ../Misc.pm:3163
 #, perl-format
 msgid "Unknown #%s (%d) is now: %s\n"
 msgstr "未知 #%s (%d) 现在: %s\n"
 
-#: ../Misc.pm:3163
+#: ../Misc.pm:3167
 #, perl-format
 msgid "You are again: %s\n"
 msgstr "你再次: %s\n"
 
-#: ../Misc.pm:3165
+#: ../Misc.pm:3169
 #, perl-format
 msgid "Player %s (%d) is again: %s\n"
 msgstr "玩家 %s (%d) 再次: %s\n"
 
-#: ../Misc.pm:3167
+#: ../Misc.pm:3171
 #, perl-format
 msgid "Monster %s (%d) is again: %s\n"
 msgstr "怪物 %s (%d) 再次: %s\n"
 
-#: ../Misc.pm:3169
+#: ../Misc.pm:3173
 #, perl-format
 msgid "Unknown #%s (%d) is again: %s\n"
 msgstr "未知 #%s (%d) 再次: %s\n"
 
-#: ../Misc.pm:3173
+#: ../Misc.pm:3177
 #, perl-format
 msgid "You are no longer: %s\n"
 msgstr "你不再是: %s\n"
 
-#: ../Misc.pm:3175
+#: ../Misc.pm:3179
 #, perl-format
 msgid "Player %s (%d) is no longer: %s\n"
 msgstr "玩家 %s (%d) 不再是: %s\n"
 
-#: ../Misc.pm:3177
+#: ../Misc.pm:3181
 #, perl-format
 msgid "Monster %s (%d) is no longer: %s\n"
 msgstr "怪物 %s (%d) 不再是: %s\n"
 
-#: ../Misc.pm:3179
+#: ../Misc.pm:3183
 #, perl-format
 msgid "Unknown #%s (%d) is no longer: %s\n"
 msgstr "未知 #%s (%d) 不再是: %s\n"
 
-#: ../Misc.pm:3270
+#: ../Misc.pm:3274
 #, perl-format
 msgid "GM %s is nearby, teleport & disconnect for %d seconds"
 msgstr "GM %s 在附近, 飞或断线在 %d 秒后"
 
-#: ../Misc.pm:3275
+#: ../Misc.pm:3279
 #, perl-format
 msgid "GM %s is nearby, disconnect for %s seconds"
 msgstr "发现个小样 %s (GM), 强龙不压地头蛇,等 %s 秒后就闪！"
 
-#: ../Misc.pm:3281
+#: ../Misc.pm:3285
 #, perl-format
 msgid "GM %s is nearby, teleporting"
 msgstr "GM %s 在附近, 飞"
 
-#: ../Misc.pm:3286
+#: ../Misc.pm:3290
 #, perl-format
 msgid "GM %s is nearby, respawning"
 msgstr "GM %s 在附近, 回城"
 
-#: ../Misc.pm:3311
+#: ../Misc.pm:3315
 #, perl-format
 msgid "%s (%s) is nearby, disconnecting...\n"
 msgstr "%s (%s) 在附近, 断开连接...\n"
 
-#: ../Misc.pm:3312
+#: ../Misc.pm:3316
 #, perl-format
 msgid "*** Found %s (%s) nearby and disconnected ***\n"
 msgstr "*** 发现 %s (%s) 在附近，断开连接 ***\n"
 
-#: ../Misc.pm:3318
+#: ../Misc.pm:3322
 #, perl-format
 msgid "Teleporting to avoid player %s (%s)\n"
 msgstr "发现垃圾 %s (%s) 我飞啊～\n"
 
-#: ../Misc.pm:3319
+#: ../Misc.pm:3323
 #, perl-format
 msgid "*** Found %s (%s) nearby and teleported ***\n"
 msgstr "*** 发现 %s (%s)在附近，飞 ***\n"
 
-#: ../Misc.pm:3352
+#: ../Misc.pm:3356
 #, perl-format
 msgid "Processing map %s...\n"
 msgstr "处理地图 %s...\n"
 
-#: ../Misc.pm:3387
+#: ../Misc.pm:3391
 #, perl-format
 msgid "Wrote portals Line of Sight table to '%s/portalsLOS.txt'\n"
 msgstr "写入入口到 '%s/portalsLOS.txt'\n"
 
-#: ../Misc.pm:3391 ../Misc.pm:3395
+#: ../Misc.pm:3395 ../Misc.pm:3399
 msgid "----------------------------Error Summary----------------------------\n"
 msgstr "----------------------------错误摘要----------------------------\n"
 
-#: ../Misc.pm:3392
+#: ../Misc.pm:3396
 #, perl-format
 msgid "Missing: %s.fld\n"
 msgstr "找不到: %s.fld\n"
 
-#: ../Misc.pm:3393
+#: ../Misc.pm:3397
 msgid ""
 "Note: LOS information for the above listed map(s) will be inaccurate;\n"
 "      however it is safe to ignore if those map(s) are not used\n"
@@ -3782,36 +3780,36 @@ msgstr ""
 "注意: 部分地图的路点是不精确的;\n"
 "      忽略那些地图不被使用\n"
 
-#: ../Misc.pm:3529
+#: ../Misc.pm:3533
 msgid "Incomplete NPC info found in npcs.txt\n"
 msgstr "不完整的 NPC 信息在 npcs.txt 里发现\n"
 
-#: ../Misc.pm:3946
+#: ../Misc.pm:3950
 msgid "A shop has already been opened.\n"
 msgstr "开了一家商店.\n"
 
-#: ../Misc.pm:3951
+#: ../Misc.pm:3955
 msgid "You don't have the Vending skill.\n"
 msgstr "你没有开店技能.\n"
 
-#: ../Misc.pm:3956
+#: ../Misc.pm:3960
 msgid "Your shop does not have a title.\n"
 msgstr "你的商店没有名字.\n"
 
-#: ../Misc.pm:3988
+#: ../Misc.pm:3992
 msgid "There are no items to sell.\n"
 msgstr "没有出售的道具.\n"
 
-#: ../Misc.pm:4000
+#: ../Misc.pm:4004
 #, perl-format
 msgid "Shop opened (%s) with %d selling items.\n"
 msgstr "商店打开 (%s) 出售 %d 道具.\n"
 
-#: ../Misc.pm:4007
+#: ../Misc.pm:4011
 msgid "A shop has not been opened.\n"
 msgstr "开店失败.\n"
 
-#: ../Misc.pm:4015
+#: ../Misc.pm:4019
 msgid "Shop closed.\n"
 msgstr "停止关闭.\n"
 
@@ -3867,17 +3865,17 @@ msgstr "无法重新读取 %s\n"
 msgid "Reloaded.\n"
 msgstr "重新读取.\n"
 
-#: ../Plugins.pm:116
+#: ../Plugins.pm:115
 #, perl-format
 msgid "Loading plugin %s...\n"
 msgstr "读取插件 %s...\n"
 
-#: ../Plugins.pm:123
+#: ../Plugins.pm:122
 #, fuzzy, perl-format
 msgid "File %s does not exist."
 msgstr "技能 %s 不存在.\n"
 
-#: ../Plugins.pm:130
+#: ../Plugins.pm:129
 #, fuzzy, perl-format
 msgid ""
 "Plugin contains syntax errors:\n"
@@ -3885,26 +3883,26 @@ msgid ""
 msgstr "%s 语法错误.\n"
 
 #. Translation Comment: Version String
-#: ../Settings.pm:63
+#: ../Settings.pm:64
 msgid " (SVN version)"
 msgstr " (SVN 版本)"
 
 #. Translation Comment: Version String
-#: ../Settings.pm:66
+#: ../Settings.pm:67
 msgid "Custom Ragnarok Online client"
 msgstr "自定义仙境客户端"
 
-#: ../Settings.pm:67
+#: ../Settings.pm:68
 #, perl-format
 msgid "Welcome to %s."
 msgstr "欢迎来到 %s."
 
-#: ../Settings.pm:347
+#: ../Settings.pm:348
 #, perl-format
 msgid "Loading %s...\n"
 msgstr "读取 %s...\n"
 
-#: ../Settings.pm:349
+#: ../Settings.pm:350
 #, perl-format
 msgid "Error: Couldn't load %s\n"
 msgstr "错误: 无法读取 %s\n"
@@ -3936,86 +3934,87 @@ msgstr "中断\n"
 msgid "couldn't disconnect\n"
 msgstr "无法断开连接\n"
 
-#: ../Network/DirectConnection.pm:321
+#: ../Network/DirectConnection.pm:324
 msgid "Connecting to Account Server...\n"
 msgstr "连接到帐号服务器...\n"
 
-#: ../Network/DirectConnection.pm:341
+#: ../Network/DirectConnection.pm:344
 msgid "Requesting permission to logon on account server...\n"
 msgstr "请求允许登录在帐号服务器...\n"
 
-#: ../Network/DirectConnection.pm:349 ../Network/DirectConnection.pm:381
+#: ../Network/DirectConnection.pm:352 ../Network/DirectConnection.pm:384
 msgid "Secure Login...\n"
 msgstr "保护登陆...\n"
 
-#: ../Network/DirectConnection.pm:408
+#: ../Network/DirectConnection.pm:411
 msgid "Sending encoded password...\n"
 msgstr "发送编码密码...\n"
 
-#: ../Network/DirectConnection.pm:415
+#: ../Network/DirectConnection.pm:418
 msgid "Timeout on Account Server, reconnecting...\n"
 msgstr "帐号服务器连接超时, 重新连接中...\n"
 
-#: ../Network/DirectConnection.pm:440
+#: ../Network/DirectConnection.pm:443
 msgid "Connecting to Character Server...\n"
 msgstr "连接到人物服务器...\n"
 
-#: ../Network/DirectConnection.pm:448
+#: ../Network/DirectConnection.pm:451
 #, perl-format
 msgid "Invalid server specified, server %s does not exist...\n"
 msgstr "服务器指定错误, 服务器 %s 无法解析...\n"
 
-#: ../Network/DirectConnection.pm:454 ../Network/Receive.pm:600
+#: ../Network/DirectConnection.pm:458 ../Network/Receive.pm:601
+#, fuzzy
+msgid "Please select your login server."
+msgstr "请选择登陆服务器: "
+
+#: ../Network/DirectConnection.pm:460 ../Network/Receive.pm:603
 msgid "Select Login Server"
 msgstr "选择登陆服务器"
 
-#: ../Network/DirectConnection.pm:455 ../Network/Receive.pm:601
-msgid "Please select your login server: "
-msgstr "请选择登陆服务器: "
-
-#: ../Network/DirectConnection.pm:477
+#: ../Network/DirectConnection.pm:481
 msgid "Timeout on Character Server, reconnecting...\n"
 msgstr "人物服务器连接超时, 重新连接中...\n"
 
-#: ../Network/DirectConnection.pm:485
+#: ../Network/DirectConnection.pm:489
 msgid "Connecting to Character Select Server...\n"
 msgstr "连接到人物选择服务器...\n"
 
-#: ../Network/DirectConnection.pm:499
+#: ../Network/DirectConnection.pm:503
 msgid "Timeout on Character Select Server, reconnecting...\n"
 msgstr "人物服务器列表失败, 重新连接中...\n"
 
-#: ../Network/DirectConnection.pm:511
+#: ../Network/DirectConnection.pm:515
 msgid "Connecting to Map Server...\n"
 msgstr "连接到地图服务器...\n"
 
-#: ../Network/DirectConnection.pm:533
+#: ../Network/DirectConnection.pm:537
 msgid "Timeout on Map Server, connecting to Account Server...\n"
 msgstr "连接地图服务器超时, 重新连接到人物服务器...\n"
 
-#: ../Network/DirectConnection.pm:542
+#: ../Network/DirectConnection.pm:546
 msgid "*** You disconnected, auto quit! ***\n"
 msgstr "*** 你断开连接, 自动退出! ***\n"
 
-#: ../Network/DirectConnection.pm:543
+#: ../Network/DirectConnection.pm:547
 msgid "Disconnected from Map Server, exiting...\n"
 msgstr "断开与地图服务器的连接, 退出中...\n"
 
-#: ../Network/DirectConnection.pm:546
+#: ../Network/DirectConnection.pm:550
 #, perl-format
 msgid ""
 "Disconnected from Map Server, connecting to Account Server in %s seconds...\n"
 msgstr "断开与地图服务器的连接, 重新连接帐号服务器在 %s 秒后...\n"
 
-#: ../Network/DirectConnection.pm:554
+#: ../Network/DirectConnection.pm:558
 msgid "Timeout on Map Server, "
 msgstr "地图服务器连接超时, "
 
-#: ../Network/DirectConnection.pm:557
+#: ../Network/DirectConnection.pm:561
 msgid "exiting...\n"
 msgstr "退出中...\n"
 
-#: ../Network/DirectConnection.pm:560
+#: ../Network/DirectConnection.pm:564
 #, perl-format
 msgid "connecting to Account Server in %s seconds...\n"
 msgstr "连接帐号服务器在 %s 秒后...\n"
@@ -4071,311 +4070,311 @@ msgstr ""
 msgid "Closing connection to Account Server\n"
 msgstr "断开和帐号服务器的连接\n"
 
-#: ../Network/Receive.pm:610
+#: ../Network/Receive.pm:611
 #, perl-format
 msgid "Forcing connect to char server %s: %s\n"
 msgstr "强制连接到角色信息服务器 %s: %s\n"
 
-#: ../Network/Receive.pm:613
+#: ../Network/Receive.pm:614
 #, perl-format
 msgid "Server %s selected\n"
 msgstr "服务器 %s 已经选择\n"
 
-#: ../Network/Receive.pm:640
+#: ../Network/Receive.pm:641
 #, perl-format
 msgid "%s is sitting.\n"
 msgstr "%s 已经坐下.\n"
 
-#: ../Network/Receive.pm:650
+#: ../Network/Receive.pm:651
 msgid "You are standing.\n"
 msgstr "你已经站起来了.\n"
 
-#: ../Network/Receive.pm:656
+#: ../Network/Receive.pm:657
 #, perl-format
 msgid "%s is standing.\n"
 msgstr "%s 已经站起来了.\n"
 
-#: ../Network/Receive.pm:731
+#: ../Network/Receive.pm:732
 msgid "You have died\n"
 msgstr "你挂了.\n"
 
-#: ../Network/Receive.pm:771
+#: ../Network/Receive.pm:772
 #, perl-format
 msgid "Player Died: %s (%d) %s %s\n"
 msgstr "玩家死亡: %s (%d) %s %s\n"
 
-#: ../Network/Receive.pm:1088
+#: ../Network/Receive.pm:1089
 #, perl-format
 msgid "NPC Exists: %s (%d, %d) (ID %d) - (%d)\n"
 msgstr "存在 NPC : %s (%d, %d) (ID %d) - (%d)\n"
 
-#: ../Network/Receive.pm:1091
+#: ../Network/Receive.pm:1092
 #, perl-format
 msgid "Portal Exists: %s (%s, %s) - (%s)\n"
 msgstr "存在入口 : %s (%s, %s) - (%s)\n"
 
-#: ../Network/Receive.pm:1259
+#: ../Network/Receive.pm:1260
 #, perl-format
 msgid "%s is muted for %d minutes\n"
 msgstr "%s 被禁言 %d 分钟\n"
 
-#: ../Network/Receive.pm:1261
+#: ../Network/Receive.pm:1262
 #, perl-format
 msgid "%s is no longer muted\n"
 msgstr "%s 不再禁言\n"
 
-#: ../Network/Receive.pm:1347
+#: ../Network/Receive.pm:1348
 #, perl-format
 msgid "%s opened Warp Portal on (%d, %d)\n"
 msgstr "%s 打开入口在 (%d, %d)\n"
 
-#: ../Network/Receive.pm:1381
+#: ../Network/Receive.pm:1382
 #, perl-format
 msgid "Arrow/Bullet equipped: %s (%d)\n"
 msgstr "箭/子弹 装备: %s (%d)\n"
 
-#: ../Network/Receive.pm:1392
+#: ../Network/Receive.pm:1393
 msgid "Please equip arrow first."
 msgstr "请先装备箭矢."
 
-#: ../Network/Receive.pm:1395
+#: ../Network/Receive.pm:1396
 msgid "Please equip arrow first.\n"
 msgstr "请先装备箭矢.\n"
 
-#: ../Network/Receive.pm:1418
+#: ../Network/Receive.pm:1419
 msgid "Received Possible Arrow Craft List - type 'arrowcraft'\n"
 msgstr "已得到箭列表 - 类型 'arrowcraft'\n"
 
-#: ../Network/Receive.pm:1428
+#: ../Network/Receive.pm:1429
 #, perl-format
 msgid "Autodetected attackDistance = %s\n"
 msgstr "自动检测攻击距离 = %s\n"
 
-#: ../Network/Receive.pm:1437
+#: ../Network/Receive.pm:1438
 msgid "Buy completed.\n"
 msgstr "购买完成.\n"
 
-#: ../Network/Receive.pm:1439
+#: ../Network/Receive.pm:1440
 msgid "Buy failed (insufficient zeny).\n"
 msgstr "购买失败 (没钱啦).\n"
 
-#: ../Network/Receive.pm:1441
+#: ../Network/Receive.pm:1442
 msgid "Buy failed (insufficient weight capacity).\n"
 msgstr "购买失败 (负重不足).\n"
 
-#: ../Network/Receive.pm:1443
+#: ../Network/Receive.pm:1444
 msgid "Buy failed (too many different inventory items).\n"
 msgstr "购买失败 (所携带的物品种类过多).\n"
 
-#: ../Network/Receive.pm:1445
+#: ../Network/Receive.pm:1446
 #, perl-format
 msgid "Buy failed (failure code %s).\n"
 msgstr "购买失败 (代码错误 %s).\n"
 
-#: ../Network/Receive.pm:1485
+#: ../Network/Receive.pm:1486
 msgid "Card merging failed\n"
 msgstr "卡片装配失败\n"
 
-#: ../Network/Receive.pm:1489
+#: ../Network/Receive.pm:1490
 #, perl-format
 msgid "%s has been successfully merged into %s\n"
 msgstr "%s 已经装配到 %s\n"
 
-#: ../Network/Receive.pm:1548
+#: ../Network/Receive.pm:1549
 #, perl-format
 msgid "Can't Add Cart Item (%s)\n"
 msgstr "无法添加手推车物品  (%s)\n"
 
-#: ../Network/Receive.pm:1601
+#: ../Network/Receive.pm:1602
 #, perl-format
 msgid "Cart Item Added: %s (%d) x %s\n"
 msgstr "手推车物品添加 : %s (%d) x %s\n"
 
-#: ../Network/Receive.pm:1662
+#: ../Network/Receive.pm:1663
 #, perl-format
 msgid "Cart Item Removed: %s (%d) x %s\n"
 msgstr "手推车物品移除 : %s (%d) x %s\n"
 
-#: ../Network/Receive.pm:1680
+#: ../Network/Receive.pm:1681
 msgid ""
 "Character creation failed. If you didn't make any mistake, then the name you "
 "chose already exists.\n"
 msgstr "人物创建失败.如果你确信操作是正确的话，那就是这个名字已经被占用了.\n"
 
-#: ../Network/Receive.pm:1712
+#: ../Network/Receive.pm:1713
 #, perl-format
 msgid "Character %s (%d) created.\n"
 msgstr "人物 %s (%d) 已建立.\n"
 
-#: ../Network/Receive.pm:1722
+#: ../Network/Receive.pm:1723
 #, perl-format
 msgid "Character %s (%d) deleted.\n"
 msgstr "人物 %s (%d) 已经删除.\n"
 
-#: ../Network/Receive.pm:1729
+#: ../Network/Receive.pm:1730
 msgid "Character deleted.\n"
 msgstr "人物已经删除.\n"
 
-#: ../Network/Receive.pm:1741
+#: ../Network/Receive.pm:1742
 msgid "Character cannot be deleted. Your e-mail address was probably wrong.\n"
 msgstr "输入的e-mail地址错误.无法删除人物.\n"
 
-#: ../Network/Receive.pm:1799
+#: ../Network/Receive.pm:1800
 msgid "Chat Room Created\n"
 msgstr "聊天室已经开启\n"
 
-#: ../Network/Receive.pm:1825
+#: ../Network/Receive.pm:1826
 msgid "Can't join Chat Room - Incorrect Password\n"
 msgstr "密码错误.无法进入聊天室\n"
 
-#: ../Network/Receive.pm:1827
+#: ../Network/Receive.pm:1828
 msgid "Can't join Chat Room - You're banned\n"
 msgstr "聊天室拒绝您的进入\n"
 
-#: ../Network/Receive.pm:1853
+#: ../Network/Receive.pm:1854
 msgid "Chat Room Properties Modified\n"
 msgstr "聊天室属性变更\n"
 
-#: ../Network/Receive.pm:1892
+#: ../Network/Receive.pm:1893
 #, perl-format
 msgid "%s has joined the Chat Room\n"
 msgstr "%s 已经进入聊天室\n"
 
-#: ../Network/Receive.pm:1908
+#: ../Network/Receive.pm:1909
 msgid "You left the Chat Room\n"
 msgstr "退出聊天室\n"
 
-#: ../Network/Receive.pm:1910
+#: ../Network/Receive.pm:1911
 #, perl-format
 msgid "%s has left the Chat Room\n"
 msgstr "%s 已经退出聊天室\n"
 
-#: ../Network/Receive.pm:1943
+#: ../Network/Receive.pm:1944
 #, perl-format
 msgid "You have joined the Chat Room %s\n"
 msgstr "您已经加入聊天室 %s\n"
 
-#: ../Network/Receive.pm:1957
+#: ../Network/Receive.pm:1958
 #, perl-format
 msgid "%s failed to cast %s\n"
 msgstr "%s 错误的手推车编号 %s\n"
 
-#: ../Network/Receive.pm:1980
+#: ../Network/Receive.pm:1981
 #, perl-format
 msgid "%s added Item to Deal: %s x %s\n"
 msgstr "%s 添加交易物品: %s x %s\n"
 
-#: ../Network/Receive.pm:1984
+#: ../Network/Receive.pm:1985
 #, perl-format
 msgid "%s added %s z to Deal\n"
 msgstr "%s 添加金钱 %s z\n"
 
-#: ../Network/Receive.pm:1992
+#: ../Network/Receive.pm:1993
 msgid "That person is overweight; you cannot trade.\n"
 msgstr "对方负重不足.\n"
 
-#: ../Network/Receive.pm:1995
+#: ../Network/Receive.pm:1996
 msgid "This item cannot be traded.\n"
 msgstr "这个物品无法添加.\n"
 
-#: ../Network/Receive.pm:1998
+#: ../Network/Receive.pm:1999
 #, perl-format
 msgid "You cannot trade (fail code %s).\n"
 msgstr "您无法交易 (失败代码 %s)\n"
 
-#: ../Network/Receive.pm:2008
+#: ../Network/Receive.pm:2009
 #, perl-format
 msgid "You added Item to Deal: %s x %s\n"
 msgstr "您添加交易物品: %s x %s\n"
 
-#: ../Network/Receive.pm:2019
+#: ../Network/Receive.pm:2020
 msgid "That person is too far from you to trade.\n"
 msgstr "交易距离过远.\n"
 
-#: ../Network/Receive.pm:2021
+#: ../Network/Receive.pm:2022
 msgid "That person is in another deal.\n"
 msgstr "对方正在交易.\n"
 
-#: ../Network/Receive.pm:2038
+#: ../Network/Receive.pm:2039
 #, perl-format
 msgid "Engaged Deal with %s\n"
 msgstr "交易忙 %s.\n"
 
-#: ../Network/Receive.pm:2040
+#: ../Network/Receive.pm:2041
 #, perl-format
 msgid "Deal request failed (unknown error %s).\n"
 msgstr "交易请求失败 (未知错误 %s).\n"
 
-#: ../Network/Receive.pm:2048
+#: ../Network/Receive.pm:2049
 msgid "Deal Cancelled\n"
 msgstr "交易取消\n"
 
-#: ../Network/Receive.pm:2055
+#: ../Network/Receive.pm:2056
 msgid "Deal Complete\n"
 msgstr "交易完成.\n"
 
-#: ../Network/Receive.pm:2062
+#: ../Network/Receive.pm:2063
 #, perl-format
 msgid "%s finalized the Deal\n"
 msgstr "%s 确定交易\n"
 
-#: ../Network/Receive.pm:2068
+#: ../Network/Receive.pm:2069
 msgid "You finalized the Deal\n"
 msgstr "您已确定交易\n"
 
-#: ../Network/Receive.pm:2079
+#: ../Network/Receive.pm:2080
 #, perl-format
 msgid "%s (level %s) Requests a Deal\n"
 msgstr "%s (等级 %s) 邀请交易\n"
 
-#: ../Network/Receive.pm:2080
+#: ../Network/Receive.pm:2081
 msgid "Type 'deal' to start dealing, or 'deal no' to deny the deal.\n"
 msgstr "输入 'deal' 开始交易, 或 'deal no' 拒绝交易.\n"
 
-#: ../Network/Receive.pm:2102
+#: ../Network/Receive.pm:2103
 msgid "-----Egg Hatch Candidates-----\n"
 msgstr "-----选择孵化宠物蛋-----\n"
 
 #. Translation Comment: "[dist=$dist] $name ($player->{binID}): $emotion\n"
-#: ../Network/Receive.pm:2127
+#: ../Network/Receive.pm:2128
 #, perl-format
 msgid "[dist=%s] %s (%d): %s\n"
 msgstr "[存在=%s] %s (%d): %s\n"
 
 #. Translation Comment: "[dist=$dist] $monster->name ($monster->{binID}): $emotion\n"
-#: ../Network/Receive.pm:2155
+#: ../Network/Receive.pm:2156
 #, perl-format
 msgid "[dist=%s] Monster %s (%d): %s\n"
 msgstr "[dist=%s] 怪物 %s (%d): %s\n"
 
-#: ../Network/Receive.pm:2167
+#: ../Network/Receive.pm:2168
 #, perl-format
 msgid "[dist=%s] %s: %s\n"
 msgstr "[存在=%s] %s: %s\n"
 
-#: ../Network/Receive.pm:2177
+#: ../Network/Receive.pm:2178
 #, perl-format
 msgid "You can't put on %s (%d)\n"
 msgstr "无法装备 %s (%d)\n"
 
-#: ../Network/Receive.pm:2190
+#: ../Network/Receive.pm:2191
 #, perl-format
 msgid "You equip %s (%d) - %s (type %s)\n"
 msgstr "你装备 %s (%d) - %s (类型 %s)\n"
 
-#: ../Network/Receive.pm:2204
+#: ../Network/Receive.pm:2205
 msgid "Lost connection; exiting\n"
 msgstr "失去连接.退出!\n"
 
-#: ../Network/Receive.pm:2217
+#: ../Network/Receive.pm:2218
 msgid "Server shutting down\n"
 msgstr "服务器关闭\n"
 
-#: ../Network/Receive.pm:2219
+#: ../Network/Receive.pm:2220
 msgid "Error: Server is closed\n"
 msgstr "错误: 服务器已经关闭\n"
 
-#: ../Network/Receive.pm:2222
+#: ../Network/Receive.pm:2223
 #, perl-format
 msgid ""
 "Critical Error: Dual login prohibited - Someone trying to login!\n"
@@ -4386,146 +4385,146 @@ msgstr ""
 "\n"
 "%s 断开连接."
 
-#: ../Network/Receive.pm:2226 ../Network/Receive.pm:2230
+#: ../Network/Receive.pm:2227 ../Network/Receive.pm:2231
 msgid "Critical Error: Dual login prohibited - Someone trying to login!\n"
 msgstr "错误:  相同的帐号已经登陆!\n"
 
-#: ../Network/Receive.pm:2234
+#: ../Network/Receive.pm:2235
 msgid "Error: Out of sync with server\n"
 msgstr "错误 : 服务器同步失败\n"
 
-#: ../Network/Receive.pm:2236
+#: ../Network/Receive.pm:2237
 msgid "Error: Server is jammed due to over-population.\n"
 msgstr "错误 : 服务器登陆人数已到达限定.\n"
 
-#: ../Network/Receive.pm:2238
+#: ../Network/Receive.pm:2239
 msgid "Error: You are underaged and cannot join this server.\n"
 msgstr "错误 : 您没有加入过这个服务器.\n"
 
-#: ../Network/Receive.pm:2240
+#: ../Network/Receive.pm:2241
 msgid "Critical Error: You must pay to play this account!\n"
 msgstr "错误: 你必须付费才能继续使用这个帐号!\n"
 
-#: ../Network/Receive.pm:2243
+#: ../Network/Receive.pm:2244
 msgid "Error: The server still recognizes your last connection\n"
 msgstr "错误 : 服务器保留有你最后一次连接的信息，请等待\n"
 
-#: ../Network/Receive.pm:2245
+#: ../Network/Receive.pm:2246
 msgid ""
 "Error: IP capacity of this Internet Cafe is full. Would you like to pay the "
 "personal base?\n"
 msgstr "错误 : 同一 IP 地址的连接数量已满.您可能需要付费以便继续使用?\n"
 
-#: ../Network/Receive.pm:2247
+#: ../Network/Receive.pm:2248
 msgid "Error: You are out of available time paid for\n"
 msgstr "错误 : 没有剩余的点数\n"
 
-#: ../Network/Receive.pm:2249
+#: ../Network/Receive.pm:2250
 msgid "Error: You have been forced to disconnect by a GM\n"
 msgstr "错误 : 您被 GM 强制踢下线了\n"
 
-#: ../Network/Receive.pm:2251
+#: ../Network/Receive.pm:2252
 #, perl-format
 msgid "Unknown error %s\n"
 msgstr "未知错误 %s\n"
 
-#: ../Network/Receive.pm:2302
+#: ../Network/Receive.pm:2303
 #, perl-format
 msgid "Exp gained: %d/%d (%.2f%%/%.2f%%)\n"
 msgstr "得到经验: %d/%d (%.2f%%/%.2f%%)\n"
 
-#: ../Network/Receive.pm:2307
+#: ../Network/Receive.pm:2308
 #, perl-format
 msgid "You gained %s zeny.\n"
 msgstr "你得到 %s zeny.\n"
 
-#: ../Network/Receive.pm:2309
+#: ../Network/Receive.pm:2310
 #, perl-format
 msgid "You lost %s zeny.\n"
 msgstr "你损失 %s zeny.\n"
 
-#: ../Network/Receive.pm:2311
+#: ../Network/Receive.pm:2312
 #, perl-format
 msgid "Disconnecting due to zeny lower than %s."
 msgstr "金钱数量不足.断开连接 %s."
 
-#: ../Network/Receive.pm:2320
+#: ../Network/Receive.pm:2321
 #, perl-format
 msgid "Required Exp: %s\n"
 msgstr "升级所需经验 : %s\n"
 
-#: ../Network/Receive.pm:2329
+#: ../Network/Receive.pm:2330
 #, perl-format
 msgid "BaseExp: %s | JobExp: %s\n"
 msgstr "基本经验: %s | 职业经验: %s\n"
 
-#: ../Network/Receive.pm:2336
+#: ../Network/Receive.pm:2337
 msgid "========Forge List========\n"
 msgstr "========制造列表========\n"
 
-#: ../Network/Receive.pm:2380
+#: ../Network/Receive.pm:2381
 #, perl-format
 msgid "Friend %s has disconnected\n"
 msgstr "好友 %s 已经下线\n"
 
-#: ../Network/Receive.pm:2382
+#: ../Network/Receive.pm:2383
 #, perl-format
 msgid "Friend %s has connected\n"
 msgstr "好友 %s 已经上线\n"
 
-#: ../Network/Receive.pm:2396
+#: ../Network/Receive.pm:2397
 #, perl-format
 msgid "%s wants to be your friend\n"
 msgstr "%s 希望加你为好友\n"
 
-#: ../Network/Receive.pm:2397
+#: ../Network/Receive.pm:2398
 #, perl-format
 msgid ""
 "Type 'friend accept' to be friend with %s, otherwise type 'friend reject'\n"
 msgstr "输入 'friend accept' 加入好友 %s, 或者输入 'friend reject'拒绝\n"
 
-#: ../Network/Receive.pm:2408
+#: ../Network/Receive.pm:2409
 #, perl-format
 msgid "%s is no longer your friend\n"
 msgstr "%s 不再是你的朋友\n"
 
-#: ../Network/Receive.pm:2423
+#: ../Network/Receive.pm:2424
 #, perl-format
 msgid "%s rejected to be your friend\n"
 msgstr "%s 拒绝你的好友请求\n"
 
-#: ../Network/Receive.pm:2431
+#: ../Network/Receive.pm:2432
 #, perl-format
 msgid "%s is now your friend\n"
 msgstr "%s 现在是你的好友了\n"
 
-#: ../Network/Receive.pm:2438
+#: ../Network/Receive.pm:2439
 #, perl-format
 msgid "Fed homunculus with %s\n"
 msgstr "喂养生命体 %s\n"
 
-#: ../Network/Receive.pm:2440
+#: ../Network/Receive.pm:2441
 #, perl-format
 msgid "Failed to feed homunculus with %s: no food in inventory.\n"
 msgstr "生命体喂养失败  %s: 没有食物了.\n"
 
-#: ../Network/Receive.pm:2518
+#: ../Network/Receive.pm:2519
 msgid "Your Homunculus was vaporized!\n"
 msgstr "生命体被蒸发!\n"
 
-#: ../Network/Receive.pm:2520
+#: ../Network/Receive.pm:2521
 msgid "Your Homunculus died!\n"
 msgstr "你的生命体死亡.\n"
 
-#: ../Network/Receive.pm:2525
+#: ../Network/Receive.pm:2526
 msgid "Your Homunculus was recalled!\n"
 msgstr "你的生命体被取消!\n"
 
-#: ../Network/Receive.pm:2527
+#: ../Network/Receive.pm:2528
 msgid "Your Homunculus was resurrected!\n"
 msgstr "你的生命体被回复!\n"
 
-#: ../Network/Receive.pm:2560
+#: ../Network/Receive.pm:2561
 msgid ""
 "The server Denied the login because GameGuard packets where not replied "
 "correctly or too many time has been spent to send the response.\n"
@@ -4534,57 +4533,57 @@ msgstr ""
 "服务器 GameGuard 错误而拒绝你的操作.\n"
 "请再尝试\n"
 
-#: ../Network/Receive.pm:2565
+#: ../Network/Receive.pm:2566
 msgid "Server granted login request to account server\n"
 msgstr "服务器允许登陆请求在帐号服务器\n"
 
-#: ../Network/Receive.pm:2567
+#: ../Network/Receive.pm:2568
 msgid "Server granted login request to char/map server\n"
 msgstr "服务器允许登陆请求在人物或地图服务器\n"
 
-#: ../Network/Receive.pm:2618
+#: ../Network/Receive.pm:2619
 #, perl-format
 msgid "Incoming Request to Ally Guild '%s'\n"
 msgstr "邀请加入同盟 '%s'\n"
 
-#: ../Network/Receive.pm:2628
+#: ../Network/Receive.pm:2629
 msgid "Guild broken.\n"
 msgstr "解散公会.\n"
 
 #. Translation Comment: Guild Chat
-#: ../Network/Receive.pm:2686
+#: ../Network/Receive.pm:2687
 #, perl-format
 msgid "[Guild] %s\n"
 msgstr "[公会] %s\n"
 
-#: ../Network/Receive.pm:2701
+#: ../Network/Receive.pm:2702
 msgid "Guild create successful.\n"
 msgstr "创建公会完成.\n"
 
-#: ../Network/Receive.pm:2702
+#: ../Network/Receive.pm:2703
 msgid "Guild create failed: Guild name already exists.\n"
 msgstr "公会创建失败: 名字已经被使用.\n"
 
-#: ../Network/Receive.pm:2703
+#: ../Network/Receive.pm:2704
 msgid "Guild create failed: Emperium is needed.\n"
 msgstr "公会创建失败: 没有公会石.\n"
 
-#: ../Network/Receive.pm:2708
+#: ../Network/Receive.pm:2709
 #, perl-format
 msgid "Guild create: Unknown error %s\n"
 msgstr "创建公会: 未知错误 %s\n"
 
-#: ../Network/Receive.pm:2743
+#: ../Network/Receive.pm:2744
 #, perl-format
 msgid "Guild join request: %s\n"
 msgstr "公会加入请求: %s\n"
 
-#: ../Network/Receive.pm:2745
+#: ../Network/Receive.pm:2746
 #, perl-format
 msgid "Guild join request: Unknown %s\n"
 msgstr "公会加入请求: 未知 %s\n"
 
-#: ../Network/Receive.pm:2757
+#: ../Network/Receive.pm:2758
 #, perl-format
 msgid ""
 "%s has left the guild.\n"
@@ -4593,7 +4592,7 @@ msgstr ""
 "%s 已经退出公会.\n"
 "理由: %s\n"
 
-#: ../Network/Receive.pm:2764
+#: ../Network/Receive.pm:2765
 #, perl-format
 msgid ""
 "%s has been removed from the guild.\n"
@@ -4602,17 +4601,17 @@ msgstr ""
 "%s 已经被清理出公会.\n"
 "理由: %s\n"
 
-#: ../Network/Receive.pm:2806
+#: ../Network/Receive.pm:2807
 #, perl-format
 msgid "Guild member %s logged in.\n"
 msgstr "公会成员 %s 已经登陆.\n"
 
-#: ../Network/Receive.pm:2808
+#: ../Network/Receive.pm:2809
 #, perl-format
 msgid "Guild member %s logged out.\n"
 msgstr "公会成员 %s 已经离开游戏.\n"
 
-#: ../Network/Receive.pm:2862
+#: ../Network/Receive.pm:2863
 #, perl-format
 msgid ""
 "---Guild Notice---\n"
@@ -4627,159 +4626,161 @@ msgstr ""
 "%s\n"
 "------------------\n"
 
-#: ../Network/Receive.pm:2886
+#: ../Network/Receive.pm:2887
 #, perl-format
 msgid "Incoming Request to join Guild '%s'\n"
 msgstr "邀请加入工会 '%s'\n"
 
-#: ../Network/Receive.pm:2900
+#: ../Network/Receive.pm:2901
 #, perl-format
 msgid "Item Identified: %s (%d)\n"
 msgstr "物品辨识 : %s (%d)\n"
 
-#: ../Network/Receive.pm:2921
+#: ../Network/Receive.pm:2922
 #, perl-format
 msgid "Received Possible Identify List (%s item(s)) - type 'identify'\n"
 msgstr "收到可辨识的列表 (%s item) - 输入 'identify'\n"
 
-#: ../Network/Receive.pm:2927
+#: ../Network/Receive.pm:2928
 msgid "All Players ignored\n"
 msgstr "接受所有玩家密语\n"
 
-#: ../Network/Receive.pm:2930
+#: ../Network/Receive.pm:2931
 msgid "All players unignored\n"
 msgstr "拒绝所有玩家密语\n"
 
-#: ../Network/Receive.pm:2938
+#: ../Network/Receive.pm:2939
 msgid "Player ignored\n"
 msgstr "接受玩家密语\n"
 
-#: ../Network/Receive.pm:2941
+#: ../Network/Receive.pm:2942
 msgid "Player unignored\n"
 msgstr "拒绝玩家密语\n"
 
-#: ../Network/Receive.pm:2978
+#: ../Network/Receive.pm:2979
 #, perl-format
 msgid "Item added to inventory: %s (%d) x %d - %s"
 msgstr "添加物品到携带列表: %s (%d) x %d - %s"
 
-#: ../Network/Receive.pm:2998
+#: ../Network/Receive.pm:2999
 #, perl-format
 msgid "Auto-dropping item: %s (%d) x %d\n"
 msgstr "自动丢弃物品: %s (%d) x %d\n"
 
-#: ../Network/Receive.pm:3003
+#: ../Network/Receive.pm:3004
 msgid "Can't loot item...wait...\n"
 msgstr "抢夺失败...等待ing...\n"
 
-#: ../Network/Receive.pm:3005
+#: ../Network/Receive.pm:3006
 msgid "Cannot pickup item (inventory full)\n"
 msgstr "无法捡取物品 (携带已满)\n"
 
-#: ../Network/Receive.pm:3007
+#: ../Network/Receive.pm:3008
 msgid "Cannot pickup item (you're Frozen?)\n"
 msgstr "无法捡取物品 (您在冰冻状态?)\n"
 
-#: ../Network/Receive.pm:3009
+#: ../Network/Receive.pm:3010
 #, perl-format
 msgid "Cannot pickup item (failure code %s)\n"
 msgstr "无法捡取物品 (失败代码 %s)\n"
 
-#: ../Network/Receive.pm:3034
+#: ../Network/Receive.pm:3035
 #, perl-format
 msgid "You used Item: %s (%d) x %d - %d left\n"
 msgstr "您使用物品: %s (%d) x %d - 剩余 %d  \n"
 
-#: ../Network/Receive.pm:3051
+#: ../Network/Receive.pm:3052
 #, perl-format
 msgid "%s used Item: %s - %s left\n"
 msgstr "%s 使用物品: %s - 剩余 %s\n"
 
-#: ../Network/Receive.pm:3059
+#: ../Network/Receive.pm:3060
 #, perl-format
 msgid "%s got married!\n"
 msgstr "%s 结婚了!\n"
 
-#: ../Network/Receive.pm:3072
+#: ../Network/Receive.pm:3073
 #, perl-format
 msgid "You have %s "
 msgstr "你有 %s "
 
-#: ../Network/Receive.pm:3076
+#: ../Network/Receive.pm:3077
 #, perl-format
 msgid "%s has %s "
 msgstr "%s 有 %s "
 
-#: ../Network/Receive.pm:3189
+#: ../Network/Receive.pm:3190
 #, perl-format
 msgid "Item Appeared: %s (%d) x %d (%d, %d)\n"
 msgstr "出现物品 : %s (%d) x %d (%d, %d)\n"
 
-#: ../Network/Receive.pm:3235
+#: ../Network/Receive.pm:3236
 #, perl-format
 msgid "Attack Looter: %s looted %s\n"
 msgstr "抢夺: %s 得手 %s\n"
 
-#: ../Network/Receive.pm:3260
+#: ../Network/Receive.pm:3261
 #, perl-format
 msgid "Permitted to use %s (%d), level %d\n"
 msgstr "允许使用 %s (%d), 等级 %d\n"
 
-#: ../Network/Receive.pm:3285
+#: ../Network/Receive.pm:3286
 #, perl-format
 msgid "Item %s has been upgraded to +%s\n"
 msgstr "物品 %s 精练到 +%s\n"
 
-#: ../Network/Receive.pm:3300
+#: ../Network/Receive.pm:3301
 #, perl-format
 msgid "%s changed job to: %s\n"
 msgstr "%s 改变职业为: %s\n"
 
-#: ../Network/Receive.pm:3304
+#: ../Network/Receive.pm:3305
 #, perl-format
 msgid "%s changed bottom headgear to: %s\n"
 msgstr "%s 改变头下部装备为: %s\n"
 
-#: ../Network/Receive.pm:3309
+#: ../Network/Receive.pm:3310
 #, perl-format
 msgid "%s changed top headgear to: %s\n"
 msgstr "%s 改变头上部装备为: %s\n"
 
-#: ../Network/Receive.pm:3314
+#: ../Network/Receive.pm:3315
 #, perl-format
 msgid "%s changed middle headgear to: %s\n"
 msgstr "%s 改变头中部装备为: %s\n"
 
-#: ../Network/Receive.pm:3320
+#: ../Network/Receive.pm:3321
 #, perl-format
 msgid "%s changed hair color to: %s (%s)\n"
 msgstr "%s 改变发色为: %s (%s)\n"
 
-#: ../Network/Receive.pm:3377
+#: ../Network/Receive.pm:3378
 msgid "Account name doesn't exist\n"
 msgstr "用户名不存在\n"
 
-#: ../Network/Receive.pm:3379
-msgid "Enter username again: "
+#: ../Network/Receive.pm:3380
+#, fuzzy
+msgid "Enter your Ragnarok Online username again."
 msgstr "请再次输入用户名: "
 
-#: ../Network/Receive.pm:3390
+#: ../Network/Receive.pm:3391
 msgid "Password Error\n"
 msgstr "密码错误\n"
 
-#: ../Network/Receive.pm:3392
-msgid "Enter password again: "
+#: ../Network/Receive.pm:3393
+#, fuzzy
+msgid "Enter your Ragnarok Online password again."
 msgstr "请再次输入密码:"
 
-#: ../Network/Receive.pm:3403
+#: ../Network/Receive.pm:3404
 msgid "Server connection has been denied\n"
 msgstr "无法连接服务器\n"
 
-#: ../Network/Receive.pm:3405
+#: ../Network/Receive.pm:3406
 msgid "Critical Error: Your account has been blocked."
 msgstr "错误:您的帐号已冻结."
 
-#: ../Network/Receive.pm:3409
+#: ../Network/Receive.pm:3410
 #, perl-format
 msgid ""
 "Connect failed, something is wrong with the login settings:\n"
@@ -4792,95 +4793,95 @@ msgstr ""
 "master_version: %s\n"
 "serverType: %s\n"
 
-#: ../Network/Receive.pm:3415
+#: ../Network/Receive.pm:3416
 msgid "The server is temporarily blocking your connection\n"
 msgstr "服务器暂时屏蔽了您的连接\n"
 
-#: ../Network/Receive.pm:3424
+#: ../Network/Receive.pm:3425
 msgid "Error logging into Character Server (invalid character specified)...\n"
 msgstr "登陆人物服务器错误...\n"
 
-#: ../Network/Receive.pm:3451 ../Network/Receive.pm:3510
-#: ../Network/Receive.pm:4383
+#: ../Network/Receive.pm:3452 ../Network/Receive.pm:3511
+#: ../Network/Receive.pm:4388
 #, perl-format
 msgid "Cannot load field %s: %s\n"
 msgstr "不能读取 field %s: %s\n"
 
-#: ../Network/Receive.pm:3480
+#: ../Network/Receive.pm:3481
 #, perl-format
 msgid "Map Change: %s (%s, %s)\n"
 msgstr "改变地图 : %s (%s, %s)\n"
 
-#: ../Network/Receive.pm:3539 ../Network/XKoreProxy.pm:448
+#: ../Network/Receive.pm:3540 ../Network/XKoreProxy.pm:448
 msgid "Closing connection to Map Server\n"
 msgstr "断开和地图服务器的连接\n"
 
-#: ../Network/Receive.pm:3586 ../Network/Receive/ServerType0.pm:29
+#: ../Network/Receive.pm:3587 ../Network/Receive/ServerType0.pm:29
 msgid "Waiting for map to load...\n"
 msgstr "等待加载地图...\n"
 
-#: ../Network/Receive.pm:3598 ../Network/Receive/ServerType0.pm:41
+#: ../Network/Receive.pm:3599 ../Network/Receive/ServerType0.pm:41
 msgid "You are now in the game\n"
 msgstr "您已经进入游戏\n"
 
-#: ../Network/Receive.pm:3608 ../Network/Receive/ServerType0.pm:49
+#: ../Network/Receive.pm:3609 ../Network/Receive/ServerType0.pm:49
 #, perl-format
 msgid "Your Coordinates: %s, %s\n"
 msgstr "您的座标 : %s, %s\n"
 
-#: ../Network/Receive.pm:3616
+#: ../Network/Receive.pm:3617
 msgid "Memo Failed\n"
 msgstr "记录失败\n"
 
-#: ../Network/Receive.pm:3618
+#: ../Network/Receive.pm:3619
 msgid "Memo Succeeded\n"
 msgstr "记录成功\n"
 
-#: ../Network/Receive.pm:3626
+#: ../Network/Receive.pm:3627
 #, perl-format
 msgid "Minimap indicator at location %d, %d with the color %s cleared\n"
 msgstr "在 %d 的迷你地图上, %d 的颜色 %s 清除\n"
 
-#: ../Network/Receive.pm:3630
+#: ../Network/Receive.pm:3631
 #, perl-format
 msgid "Minimap indicator at location %d, %d with the color %s shown\n"
 msgstr "在 %d 的迷你地图上, %d 的颜色 %s 显示\n"
 
-#: ../Network/Receive.pm:3655
+#: ../Network/Receive.pm:3656
 #, perl-format
 msgid "Monster %s (%d) changed to %s\n"
 msgstr "怪物 %s (%d) 改变到 %s\n"
 
-#: ../Network/Receive.pm:3683 ../Network/Receive.pm:3684
+#: ../Network/Receive.pm:3684 ../Network/Receive.pm:3685
 #, perl-format
 msgid "Get MVP item %s\n"
 msgstr "得到 MVP 物品 %s\n"
 
-#: ../Network/Receive.pm:3690
+#: ../Network/Receive.pm:3691
 #, perl-format
 msgid "%s become MVP!\n"
 msgstr "%s 变成 MVP!\n"
 
-#: ../Network/Receive.pm:3691
+#: ../Network/Receive.pm:3692
 #, perl-format
 msgid "%s became MVP!\n"
 msgstr "%s 变成 MVP!\n"
 
-#: ../Network/Receive.pm:3696
+#: ../Network/Receive.pm:3697
 #, perl-format
 msgid "Congratulations, you are the MVP! Your reward is %s exp!\n"
 msgstr "恭喜, 你成为 MVP 了! 特别经验值 %s !\n"
 
-#: ../Network/Receive.pm:3722
+#: ../Network/Receive.pm:3723
 msgid "Ready to start selling items\n"
 msgstr "准备开始出售物品\n"
 
-#: ../Network/Receive.pm:3738
+#: ../Network/Receive.pm:3739
 #, perl-format
 msgid "%s: Type 'store' to start buying, or type 'sell' to start selling\n"
 msgstr "%s: 输入 'store' 开始购买, 或者输入 'sell' 开始出售\n"
 
-#: ../Network/Receive.pm:3772
+#: ../Network/Receive.pm:3773
 #, perl-format
 msgid ""
 "----------%s's Store List-----------\n"
@@ -4889,27 +4890,27 @@ msgstr ""
 "----------%s's 储存列表-----------\n"
 "#  名字                    类型               价格\n"
 
-#: ../Network/Receive.pm:3814
+#: ../Network/Receive.pm:3815
 #, perl-format
 msgid "%s: Done talking\n"
 msgstr "%s: 完成对话\n"
 
-#: ../Network/Receive.pm:3843
+#: ../Network/Receive.pm:3844
 #, perl-format
 msgid "%s: Auto-continuing talking\n"
 msgstr "%s: 自动回复说话\n"
 
-#: ../Network/Receive.pm:3848
+#: ../Network/Receive.pm:3849
 #, perl-format
 msgid "%s: Type 'talk cont' to continue talking\n"
 msgstr "%s: 输入 'talk cont' 继续对话\n"
 
-#: ../Network/Receive.pm:3861
+#: ../Network/Receive.pm:3862
 #, perl-format
 msgid "%s: Type 'talk num <number #>' to input a number.\n"
 msgstr "%s: 输入 'talk num <nomer #>' 指定对话内容.\n"
 
-#: ../Network/Receive.pm:3898
+#: ../Network/Receive.pm:3899
 msgid ""
 "----------Responses-----------\n"
 "#  Response\n"
@@ -4917,159 +4918,159 @@ msgstr ""
 "----------回应-----------\n"
 "#  回应\n"
 
-#: ../Network/Receive.pm:3910
+#: ../Network/Receive.pm:3911
 #, perl-format
 msgid "%s: Type 'talk resp #' to choose a response.\n"
 msgstr "%s: 输入 'talk resp #' 选择对话内容.\n"
 
-#: ../Network/Receive.pm:3919
+#: ../Network/Receive.pm:3920
 #, perl-format
 msgid "%s: Type 'talk text' (Respond to NPC)\n"
 msgstr "%s:输入 'talk text' (响应 NPC 对话)\n"
 
-#: ../Network/Receive.pm:3938
+#: ../Network/Receive.pm:3939
 #, perl-format
 msgid "[Party] %s\n"
 msgstr "[组队] %s\n"
 
-#: ../Network/Receive.pm:3953
+#: ../Network/Receive.pm:3954
 msgid "Party EXP set to Individual Take\n"
 msgstr "组队经验各自取得\n"
 
-#: ../Network/Receive.pm:3955
+#: ../Network/Receive.pm:3956
 msgid "Party EXP set to Even Share\n"
 msgstr "组队经验均等分配\n"
 
-#: ../Network/Receive.pm:3957
+#: ../Network/Receive.pm:3958
 msgid "Error setting party option\n"
 msgstr "组队设置错误\n"
 
-#: ../Network/Receive.pm:3970
+#: ../Network/Receive.pm:3971
 #, perl-format
 msgid "Incoming Request to join party '%s'\n"
 msgstr "邀请加入组队 '%s'\n"
 
-#: ../Network/Receive.pm:3978
+#: ../Network/Receive.pm:3979
 #, perl-format
 msgid "Join request failed: %s is already in a party\n"
 msgstr "邀请加入失败: %s 已经加入队伍\n"
 
-#: ../Network/Receive.pm:3980
+#: ../Network/Receive.pm:3981
 #, perl-format
 msgid "Join request failed: %s denied request\n"
 msgstr "邀请加入组队失败: %s 拒绝请求\n"
 
-#: ../Network/Receive.pm:3982
+#: ../Network/Receive.pm:3983
 #, perl-format
 msgid "%s accepted your request\n"
 msgstr "%s 已经接受您的邀请\n"
 
-#: ../Network/Receive.pm:3996
+#: ../Network/Receive.pm:3997
 #, perl-format
 msgid "You joined party '%s'\n"
 msgstr "你已经加入组队 '%s'\n"
 
-#: ../Network/Receive.pm:3999
+#: ../Network/Receive.pm:4000
 #, perl-format
 msgid "%s joined your party '%s'\n"
 msgstr "%s 加入您的组队 '%s'\n"
 
-#: ../Network/Receive.pm:4026
+#: ../Network/Receive.pm:4027
 msgid "You left the party\n"
 msgstr "你退出队伍\n"
 
-#: ../Network/Receive.pm:4030
+#: ../Network/Receive.pm:4031
 #, perl-format
 msgid "%s left the party\n"
 msgstr "%s 退出退伍\n"
 
-#: ../Network/Receive.pm:4047
+#: ../Network/Receive.pm:4048
 msgid "Can't organize party - party name exists\n"
 msgstr "无法建立组队 - 组队名称已存在\n"
 
-#: ../Network/Receive.pm:4069
+#: ../Network/Receive.pm:4070
 #, perl-format
 msgid "Party Member: %s\n"
 msgstr "队伍成员: %s\n"
 
-#: ../Network/Receive.pm:4083
+#: ../Network/Receive.pm:4084
 msgid "Pet capture success\n"
 msgstr "宠物捕捉成功\n"
 
-#: ../Network/Receive.pm:4085
+#: ../Network/Receive.pm:4086
 msgid "Pet capture failed\n"
 msgstr "宠物捕捉失败\n"
 
-#: ../Network/Receive.pm:4103
+#: ../Network/Receive.pm:4104
 #, perl-format
 msgid "Fed pet with %s\n"
 msgstr "喂养宠物 %s\n"
 
-#: ../Network/Receive.pm:4105
+#: ../Network/Receive.pm:4106
 #, perl-format
 msgid "Failed to feed pet with %s: no food in inventory.\n"
 msgstr "宠物喂养失败  %s: 没有食物了.\n"
 
-#: ../Network/Receive.pm:4186
+#: ../Network/Receive.pm:4187
 #, perl-format
 msgid "%s changed Weapon to %s\n"
 msgstr "%s 改变武器为 %s\n"
 
-#: ../Network/Receive.pm:4190
+#: ../Network/Receive.pm:4191
 #, perl-format
 msgid "%s changed Shield to %s\n"
 msgstr "%s 改变盾为 %s\n"
 
-#: ../Network/Receive.pm:4195
+#: ../Network/Receive.pm:4196
 #, perl-format
 msgid "%s changed Shoes to: %s\n"
 msgstr "%s 改变鞋子为: %s\n"
 
-#: ../Network/Receive.pm:4224
+#: ../Network/Receive.pm:4225
 #, perl-format
 msgid "[dist=%s] %s\n"
 msgstr "[存在=%s] %s\n"
 
-#: ../Network/Receive.pm:4257 ../Network/Receive.pm:4258
+#: ../Network/Receive.pm:4258 ../Network/Receive.pm:4259
 #, perl-format
 msgid "(From: %s) : %s\n"
 msgstr "(来自: %s) : %s\n"
 
-#: ../Network/Receive.pm:4269
+#: ../Network/Receive.pm:4270
 msgid "*** You were PM'd, auto disconnect! ***\n"
 msgstr "*** 你收到 PM'd, 自动断线! ***\n"
 
-#: ../Network/Receive.pm:4270
+#: ../Network/Receive.pm:4271
 msgid "Disconnecting on PM!\n"
 msgstr "断开连接.接受到密语!\n"
 
-#: ../Network/Receive.pm:4278
+#: ../Network/Receive.pm:4279
 #, perl-format
 msgid "(To %s) : %s\n"
 msgstr "(到 %s) : %s\n"
 
-#: ../Network/Receive.pm:4287
+#: ../Network/Receive.pm:4288
 #, perl-format
 msgid "%s is not online\n"
 msgstr "%s 没在线\n"
 
-#: ../Network/Receive.pm:4289
+#: ../Network/Receive.pm:4290
 msgid "Player ignored your message\n"
 msgstr "玩家已经收到您的消息\n"
 
-#: ../Network/Receive.pm:4291
+#: ../Network/Receive.pm:4292
 msgid "Player doesn't want to receive messages\n"
 msgstr "玩家不接受任何消息\n"
 
-#: ../Network/Receive.pm:4306
+#: ../Network/Receive.pm:4311
 msgid "Received characters from Character Server\n"
 msgstr "已经从人物服务器收到人物信息\n"
 
-#: ../Network/Receive.pm:4365
+#: ../Network/Receive.pm:4370
 msgid "Received character ID and Map IP from Character Server\n"
 msgstr "从角色服务器接收人物ID与地图IP\n"
 
-#: ../Network/Receive.pm:4393
+#: ../Network/Receive.pm:4398
 #, perl-format
 msgid ""
 "----------Game Info----------\n"
@@ -5086,97 +5087,97 @@ msgstr ""
 "MAP 端口: %s\n"
 "-----------------------------\n"
 
-#: ../Network/Receive.pm:4402 ../Network/XKoreProxy.pm:446
+#: ../Network/Receive.pm:4407 ../Network/XKoreProxy.pm:446
 msgid "Closing connection to Character Server\n"
 msgstr "断开和人物服务器的连接\n"
 
-#: ../Network/Receive.pm:4416
+#: ../Network/Receive.pm:4421
 #, perl-format
 msgid "You successfully refined a weapon (ID %s)!\n"
 msgstr "你已经成功的精炼了一个武器 (ID %s)!\n"
 
-#: ../Network/Receive.pm:4418
+#: ../Network/Receive.pm:4423
 #, perl-format
 msgid "You failed to refine a weapon (ID %s)!\n"
 msgstr "你精炼武器失败 (ID %s)!\n"
 
-#: ../Network/Receive.pm:4420
+#: ../Network/Receive.pm:4425
 #, perl-format
 msgid "You successfully made a potion (ID %s)!\n"
 msgstr "你成功制造了药水 (ID %s)!\n"
 
-#: ../Network/Receive.pm:4422
+#: ../Network/Receive.pm:4427
 #, perl-format
 msgid "You failed to make a potion (ID %s)!\n"
 msgstr "制造药水失败 (ID %s)!\n"
 
-#: ../Network/Receive.pm:4424
+#: ../Network/Receive.pm:4429
 #, perl-format
 msgid "You tried to refine a weapon (ID %s); result: unknown %s\n"
 msgstr "尝试精炼武器 (ID %s); 结果: 未知 %s\n"
 
-#: ../Network/Receive.pm:4431
+#: ../Network/Receive.pm:4436
 msgid "--------Repair List--------\n"
 msgstr "--------修理列表--------\n"
 
-#: ../Network/Receive.pm:4452
+#: ../Network/Receive.pm:4457
 #, perl-format
 msgid "Repair of %s failed.\n"
 msgstr "修理 %s 失败.\n"
 
-#: ../Network/Receive.pm:4454
+#: ../Network/Receive.pm:4459
 #, perl-format
 msgid "Successfully repaired %s.\n"
 msgstr "修理成功 %s.\n"
 
-#: ../Network/Receive.pm:4466
+#: ../Network/Receive.pm:4471
 msgid "You have been resurrected\n"
 msgstr "您已经复活了\n"
 
-#: ../Network/Receive.pm:4476
+#: ../Network/Receive.pm:4481
 #, perl-format
 msgid "%s has been resurrected\n"
 msgstr "%s 已经复活了\n"
 
-#: ../Network/Receive.pm:4532
+#: ../Network/Receive.pm:4537
 msgid "Sync packet requested for wrong ID\n"
 msgstr "错误的封包ID同步请求\n"
 
-#: ../Network/Receive.pm:4539
+#: ../Network/Receive.pm:4544
 msgid "TaeKwon Mission Rank : "
 msgstr "TaeKwon 任务等级 : "
 
-#: ../Network/Receive.pm:4545
+#: ../Network/Receive.pm:4550
 msgid "TaeKwon Mission : "
 msgstr "TaeKwon 任务 : "
 
-#: ../Network/Receive.pm:4553
+#: ../Network/Receive.pm:4558
 msgid "Unavailable Area To Teleport\n"
 msgstr "无法传送\n"
 
-#: ../Network/Receive.pm:4556
+#: ../Network/Receive.pm:4561
 msgid "Unavailable Area To Memo\n"
 msgstr "无法记录\n"
 
-#: ../Network/Receive.pm:4558
+#: ../Network/Receive.pm:4563
 #, perl-format
 msgid "Unavailable Area To Teleport (fail code %s)\n"
 msgstr "无法传送 (错误代码 %s)\n"
 
-#: ../Network/Receive.pm:4569 ../Network/Receive.pm:4584
+#: ../Network/Receive.pm:4574 ../Network/Receive.pm:4589
 msgid "PvP Display Mode\n"
 msgstr "PVP显示模式\n"
 
-#: ../Network/Receive.pm:4572 ../Network/Receive.pm:4587
+#: ../Network/Receive.pm:4577 ../Network/Receive.pm:4592
 msgid "GvG Display Mode\n"
 msgstr "GVG显示模式\n"
 
-#: ../Network/Receive.pm:4604
+#: ../Network/Receive.pm:4609
 #, perl-format
 msgid "Your PvP rank is: %s/%s\n"
 msgstr "你的 PvP 等级是: %s/%s\n"
 
-#: ../Network/Receive.pm:4614
+#: ../Network/Receive.pm:4619
 #, perl-format
 msgid ""
 "=====================Sense========================\n"
@@ -5201,128 +5202,130 @@ msgstr ""
 "不死: %-3s\n"
 "==================================================\n"
 
-#: ../Network/Receive.pm:4641
+#: ../Network/Receive.pm:4646
 #, perl-format
 msgid "sold: %s - %s %sz\n"
 msgstr "已出售: %s - %s %sz\n"
 
-#: ../Network/Receive.pm:4645
+#: ../Network/Receive.pm:4650
 #, perl-format
 msgid "sold out: %s\n"
 msgstr "已出售 : %s\n"
 
-#: ../Network/Receive.pm:4648
+#: ../Network/Receive.pm:4653
 msgid "Items have been sold out.\n"
 msgstr "物品出售.\n"
 
-#: ../Network/Receive.pm:4659
+#: ../Network/Receive.pm:4664
 #, perl-format
 msgid "You can sell %s items!\n"
 msgstr "你可以出售 %s 物品!\n"
 
-#: ../Network/Receive.pm:4740
+#: ../Network/Receive.pm:4745
 #, perl-format
 msgid "Monster Skill - switch Target to : %s (%d)\n"
 msgstr "怪物技能 - 目标为 : %s (%d)\n"
 
-#: ../Network/Receive.pm:4769
+#: ../Network/Receive.pm:4774
 #, perl-format
 msgid "Avoid casting Skill - switch position to : %s,%s\n"
 msgstr "避免技能 - 目标为 : %s,%s\n"
 
-#: ../Network/Receive.pm:4896
+#: ../Network/Receive.pm:4901
 #, perl-format
 msgid "Skill %s failed (%s)\n"
 msgstr "技能 %s 使用失败 (%s)\n"
 
-#: ../Network/Receive.pm:5060
+#: ../Network/Receive.pm:5065
 msgid "Not enough stat points to add\n"
 msgstr "没有足够的属性点\n"
 
-#: ../Network/Receive.pm:5163
+#: ../Network/Receive.pm:5168
 msgid "Mute period expired.\n"
 msgstr "禁言时间已满.\n"
 
-#: ../Network/Receive.pm:5169
+#: ../Network/Receive.pm:5174
 #, perl-format
 msgid "You've been muted for %s minutes, auto disconnect!\n"
 msgstr "您被禁言 %s 分钟, 断开连接!\n"
 
-#: ../Network/Receive.pm:5170
+#: ../Network/Receive.pm:5175
 #, perl-format
 msgid "*** You have been muted for %s minutes, auto disconnect! ***\n"
 msgstr "*** 您被禁言 %s 分钟,  断开连接! ***\n"
 
-#: ../Network/Receive.pm:5173
+#: ../Network/Receive.pm:5178
 #, perl-format
 msgid "You've been muted for %s minutes\n"
 msgstr "您被禁言 %s 分钟\n"
 
-#: ../Network/Receive.pm:5193
+#: ../Network/Receive.pm:5198
 #, perl-format
 msgid "You are now level %s\n"
 msgstr "您现在的等级为 %s\n"
 
-#: ../Network/Receive.pm:5195 ../Network/Receive.pm:5196
+#: ../Network/Receive.pm:5200 ../Network/Receive.pm:5201
 #, perl-format
 msgid "Disconnecting on level %s!\n"
 msgstr "断开连接.等级达到 %s!\n"
 
-#: ../Network/Receive.pm:5254
+#: ../Network/Receive.pm:5259
 #, perl-format
 msgid "You are now job level %s\n"
 msgstr "您的职业等级为 %s\n"
 
-#: ../Network/Receive.pm:5256 ../Network/Receive.pm:5257
+#: ../Network/Receive.pm:5261 ../Network/Receive.pm:5262
 #, perl-format
 msgid "Disconnecting on job level %s!\n"
 msgstr "断开连接.职业等级达到 %s!\n"
 
-#: ../Network/Receive.pm:5321
+#: ../Network/Receive.pm:5326
 msgid "Storage closed.\n"
 msgstr "仓库关闭.\n"
 
-#: ../Network/Receive.pm:5351
+#: ../Network/Receive.pm:5356
 #, perl-format
 msgid "Storage Item Added: %s (%d) x %s\n"
 msgstr "仓库物品添加 :%s (%d) x %s\n"
 
-#: ../Network/Receive.pm:5363
+#: ../Network/Receive.pm:5368
 #, perl-format
 msgid "Storage Item Removed: %s (%d) x %s\n"
 msgstr "移除仓库道具: %s (%d) x %s\n"
 
-#: ../Network/Receive.pm:5435
+#: ../Network/Receive.pm:5440
 msgid "Storage opened.\n"
 msgstr "仓库已经打开.\n"
 
-#: ../Network/Receive.pm:5445
+#: ../Network/Receive.pm:5450
 msgid "Please enter a new character password:\n"
 msgstr "请输入一个新的角色密码:\n"
 
-#: ../Network/Receive.pm:5446
+#: ../Network/Receive.pm:5451
 msgid "Please enter a new storage password:\n"
 msgstr "请输入一个新的仓库密码:\n"
 
-#: ../Network/Receive.pm:5451
-msgid "Please enter your character password:\n"
+#: ../Network/Receive.pm:5456
+#, fuzzy
+msgid "Please enter your character password."
 msgstr "请输入您的角色密码:\n"
 
-#: ../Network/Receive.pm:5456
+#: ../Network/Receive.pm:5461
 #, perl-format
 msgid "Character password set to: %s\n"
 msgstr "角色密码设置为 : %s\n"
 
-#: ../Network/Receive.pm:5460
-msgid "Please enter your storage password:\n"
+#: ../Network/Receive.pm:5465
+#, fuzzy
+msgid "Please enter your storage password."
 msgstr "请输入您的仓库密码:\n"
 
-#: ../Network/Receive.pm:5465
+#: ../Network/Receive.pm:5470
 #, perl-format
 msgid "Storage password set to: %s\n"
 msgstr "仓库密码设置为 : %s\n"
 
-#: ../Network/Receive.pm:5472
+#: ../Network/Receive.pm:5477
 msgid ""
 "Unable to send character password. You must set the 'storageEncryptKey' "
 "option in config.txt or servers.txt.\n"
@@ -5330,7 +5333,7 @@ msgstr ""
 "无法发送角色密码. 您必须在config.txt中或者servers.txt中设置 "
 "'storageEncryptKey'  项目.\n"
 
-#: ../Network/Receive.pm:5473
+#: ../Network/Receive.pm:5478
 msgid ""
 "Unable to send storage password. You must set the 'storageEncryptKey' option "
 "in config.txt or servers.txt.\n"
@@ -5338,29 +5341,29 @@ msgstr ""
 "无法发送仓库密码. 您必须在config.txt中或者servers.txt中设置 "
 "'storageEncryptKey'  项目.\n"
 
-#: ../Network/Receive.pm:5484
+#: ../Network/Receive.pm:5489
 msgid "You have entered the wrong password 5 times. Please try again later.\n"
 msgstr "你已经输入错误的密码 5 次。请稍后再尝试。\n"
 
-#: ../Network/Receive.pm:5505
+#: ../Network/Receive.pm:5510
 msgid "Successfully changed storage password.\n"
 msgstr "仓库密码更改成功.\n"
 
-#: ../Network/Receive.pm:5507 ../Network/Receive.pm:5511
+#: ../Network/Receive.pm:5512 ../Network/Receive.pm:5516
 msgid "Error: Incorrect storage password.\n"
 msgstr "错误:仓库密码错误.\n"
 
-#: ../Network/Receive.pm:5509
+#: ../Network/Receive.pm:5514
 msgid "Successfully entered storage password.\n"
 msgstr "成功输入仓库密码.\n"
 
 #. Translation Comment: System/GM chat
-#: ../Network/Receive.pm:5542
+#: ../Network/Receive.pm:5547
 #, perl-format
 msgid "[GM] %s\n"
 msgstr "[GM] %s\n"
 
-#: ../Network/Receive.pm:5550
+#: ../Network/Receive.pm:5555
 #, perl-format
 msgid ""
 "============= ALCHEMIST RANK ================\n"
@@ -5371,7 +5374,7 @@ msgstr ""
 "#    名字                             点数\n"
 "%s=============================================\n"
 
-#: ../Network/Receive.pm:5560
+#: ../Network/Receive.pm:5565
 #, perl-format
 msgid ""
 "============= BLACKSMITH RANK ===============\n"
@@ -5382,7 +5385,7 @@ msgstr ""
 "#    名字                             点数\n"
 "%s=============================================\n"
 
-#: ../Network/Receive.pm:5570
+#: ../Network/Receive.pm:5575
 #, perl-format
 msgid ""
 "================ PVP RANK ===================\n"
@@ -5393,7 +5396,7 @@ msgstr ""
 "#    名字                             等级\n"
 "%s=============================================\n"
 
-#: ../Network/Receive.pm:5580
+#: ../Network/Receive.pm:5585
 #, perl-format
 msgid ""
 "=============== TAEKWON RANK ================\n"
@@ -5404,42 +5407,42 @@ msgstr ""
 "#    名字                             等级\n"
 "%s=============================================\n"
 
-#: ../Network/Receive.pm:5606
+#: ../Network/Receive.pm:5611
 #, perl-format
 msgid "You unequip %s (%d) - %s\n"
 msgstr "你没有装备 %s (%d) - %s\n"
 
-#: ../Network/Receive.pm:5617
+#: ../Network/Receive.pm:5622
 #, perl-format
 msgid "%s gained a level!\n"
 msgstr "%s 等级上升!\n"
 
-#: ../Network/Receive.pm:5619
+#: ../Network/Receive.pm:5624
 #, perl-format
 msgid "%s gained a job level!\n"
 msgstr "%s 职业等级上升!\n"
 
-#: ../Network/Receive.pm:5621
+#: ../Network/Receive.pm:5626
 #, perl-format
 msgid "%s failed to refine a weapon!\n"
 msgstr "%s 武器精练失败!\n"
 
-#: ../Network/Receive.pm:5623
+#: ../Network/Receive.pm:5628
 #, perl-format
 msgid "%s successfully refined a weapon!\n"
 msgstr "%s 武器精练成功!\n"
 
-#: ../Network/Receive.pm:5634
+#: ../Network/Receive.pm:5639
 #, perl-format
 msgid "You used Item: %s (%d) x %s\n"
 msgstr "你使用了道具: %s (%d) x %s\n"
 
-#: ../Network/Receive.pm:5644
+#: ../Network/Receive.pm:5649
 #, perl-format
 msgid "There are currently %s users online\n"
 msgstr "现在的在线玩家为 %s 名\n"
 
-#: ../Network/Receive.pm:5670
+#: ../Network/Receive.pm:5675
 #, perl-format
 msgid ""
 "%s\n"
@@ -5450,22 +5453,22 @@ msgstr ""
 "#  名字                                       类型           数量       价"
 "格\n"
 
-#: ../Network/Receive.pm:5723
+#: ../Network/Receive.pm:5728
 #, perl-format
 msgid "Failed to buy %s of item #%s from vender (insufficient zeny).\n"
 msgstr "购买失败 %s 道具 #%s 在出售 (没钱啦).\n"
 
-#: ../Network/Receive.pm:5725
+#: ../Network/Receive.pm:5730
 #, perl-format
 msgid "Failed to buy %s of item #%s from vender (overweight).\n"
 msgstr "没有购买 %s 道具 #%s 在商店 (超重).\n"
 
-#: ../Network/Receive.pm:5727
+#: ../Network/Receive.pm:5732
 #, perl-format
 msgid "Failed to buy %s of item #%s from vender (unknown code %s).\n"
 msgstr "没有购买 %s 道具 #%s 在商店 (未知代码 %s).\n"
 
-#: ../Network/Receive.pm:5744
+#: ../Network/Receive.pm:5749
 #, perl-format
 msgid ""
 "%s\n"
@@ -5615,6 +5618,15 @@ msgstr "客户端没有及时回应. 强制断开连接\n"
 #: ../Network/XKoreProxy.pm:386
 msgid "Logon-grant packet received twice! Avoiding bug in client.\n"
 msgstr "登陆或注册封包已经收到2次！ 避免发生错误.\n"
+
+#: ../Network/XKoreProxy.pm:514 ../functions.pl:276
+#, fuzzy
+msgid "Please choose a master server to connect to."
+msgstr "请选择一个主服务器: "
+
+#: ../Network/XKoreProxy.pm:516 ../functions.pl:278
+msgid "Master servers"
+msgstr "主服务器"
 
 #: ../Poseidon/EmbedServer.pm:48
 #, perl-format
@@ -6120,7 +6132,12 @@ msgid ""
 "Homunculus is stuck at %s (%d,%d), while walking from (%d,%d) to (%d,%d)."
 msgstr "生命体附着在 %s (%d,%d), 当步行的时候从 (%d,%d) 到 (%d,%d)."
 
-#: ../../openkore.pl:48
+#. Translation Comment: Kore's exit message
+#: ../../openkore.pl:104
+msgid "Bye!\n"
+msgstr "再见!\n"
+
+#: ../../openkore.pl:140
 #, perl-format
 msgid ""
 "Your Windows TCP/IP stack is broken. Please read\n"
@@ -6131,7 +6148,7 @@ msgstr ""
 "  %s\n"
 "学习如何解决."
 
-#: ../../openkore.pl:59
+#: ../../openkore.pl:151
 msgid ""
 "You have old files in the OpenKore folder, which may cause conflicts.\n"
 "Please delete your entire OpenKore source folder, and redownload everything."
@@ -6139,7 +6156,7 @@ msgstr ""
 "在 Openkore 文件夹内有已经不能使用的旧文件.可能会引起问题.\n"
 "请删除您的 Openkore 代码文件夹,并且重新下载."
 
-#: ../../openkore.pl:65
+#: ../../openkore.pl:157
 #, perl-format
 msgid ""
 "Your version of the XSTools library is too old.\n"
@@ -6148,7 +6165,7 @@ msgstr ""
 "你的 XSTools库 已过期.请升级.\n"
 "请查看 %s"
 
-#: ../../openkore.pl:69
+#: ../../openkore.pl:161
 #, perl-format
 msgid ""
 "Your version of XSTools library is incompatible.\n"
@@ -6157,7 +6174,7 @@ msgstr ""
 "你的 XSTools库 不是正确的版本.\n"
 "请查看 %s"
 
-#: ../../openkore.pl:73
+#: ../../openkore.pl:165
 #, perl-format
 msgid ""
 "Your version of the XSTools library is too old. Please upgrade it.\n"
@@ -6166,7 +6183,7 @@ msgstr ""
 "你的 XSTools库 太旧了.请升级.\n"
 "请查看 %s"
 
-#: ../../openkore.pl:156
+#: ../functions.pl:108
 #, perl-format
 msgid ""
 "This plugin cannot be loaded. Please notify the plugin's author, or remove "
@@ -6176,13 +6193,13 @@ msgid ""
 "%s"
 msgstr ""
 
-#: ../../openkore.pl:222
+#: ../functions.pl:172
 msgid ""
 "A configuration file failed to load. Did you download the latest "
 "configuration files?"
 msgstr "设置文件读取失败. 你需要下载一个新的文件吗?"
 
-#: ../../openkore.pl:229
+#: ../functions.pl:179
 msgid ""
 "\n"
 "Auto-generating Admin Password due to default...\n"
@@ -6190,7 +6207,7 @@ msgstr ""
 "\n"
 "未定义管理员密码.自动生成...\n"
 
-#: ../../openkore.pl:237
+#: ../functions.pl:187
 msgid ""
 "\n"
 "Generating session Admin Password...\n"
@@ -6198,19 +6215,15 @@ msgstr ""
 "\n"
 "生成管理员对话口令...\n"
 
-#: ../../openkore.pl:287
+#: ../functions.pl:235
 msgid "Checking for new portals... "
 msgstr "检测新传送点.. "
 
-#: ../../openkore.pl:289
+#: ../functions.pl:237
 msgid "found new portals!\n"
 msgstr "发现新的传送点!\n"
 
-#: ../../openkore.pl:290
-msgid "Compile portals?"
-msgstr "是否立即编译路点?"
-
-#: ../../openkore.pl:291
+#: ../functions.pl:239
 msgid ""
 "New portals have been added to the portals database. The portals database "
 "must be compiled before the new portals can be used. Would you like to "
@@ -6218,23 +6231,27 @@ msgid ""
 msgstr ""
 "新的入口已经被加入到数据库. 在使用之前你必须编译数据库. 你想现在就编译吗?\n"
 
-#: ../../openkore.pl:294
+#: ../functions.pl:242
 msgid "Yes, compile now."
 msgstr "是的, 马上编译."
 
-#: ../../openkore.pl:294
+#: ../functions.pl:242
 msgid "No, don't compile it."
 msgstr "不, 不要编译."
 
-#: ../../openkore.pl:296
+#: ../functions.pl:243
+msgid "Compile portals?"
+msgstr "是否立即编译路点?"
+
+#: ../functions.pl:245
 msgid "compiling portals"
 msgstr "正在编译路点"
 
-#: ../../openkore.pl:299
+#: ../functions.pl:248
 msgid "skipping compile"
 msgstr "跳过编译"
 
-#: ../../openkore.pl:302
+#: ../functions.pl:251
 msgid ""
 "none found\n"
 "\n"
@@ -6242,37 +6259,26 @@ msgstr ""
 "没有找到\n"
 "\n"
 
-#: ../../openkore.pl:311
-msgid "Enter Username: "
-msgstr "输入帐号: "
+#: ../functions.pl:259
+#, fuzzy
+msgid "Please enter your Ragnarok Online username."
+msgstr "请运行仙境客户端 (%s)\n"
 
-#: ../../openkore.pl:318
-msgid "Enter Password: "
-msgstr "输入密码:"
+#: ../functions.pl:266
+#, fuzzy
+msgid "Please enter your Ragnarok Online password."
+msgstr "请输入您的仓库密码:\n"
 
-#: ../../openkore.pl:327
-msgid "Master servers"
-msgstr "主服务器"
-
-#: ../../openkore.pl:328
-msgid "Please choose a master server to connect to: "
-msgstr "请选择一个主服务器: "
-
-#: ../../openkore.pl:338
+#: ../functions.pl:287
 msgid "No username or password set."
 msgstr "没有设置用户名或者密码."
 
-#. Translation Comment: Kore's exit message
-#: ../../openkore.pl:389
-msgid "Bye!\n"
-msgstr "再见!\n"
-
-#: ../functions.pl:50
+#: ../functions.pl:341
 #, perl-format
 msgid "Next restart in %s\n"
 msgstr "下次重新开始 %s\n"
 
-#: ../functions.pl:274
+#: ../functions.pl:562
 msgid ""
 "\n"
 "Auto-restarting!!\n"
@@ -6280,39 +6286,39 @@ msgstr ""
 "\n"
 "自动重新启动!!\n"
 
-#: ../functions.pl:280
+#: ../functions.pl:568
 #, perl-format
 msgid "Sleeping for %s\n"
 msgstr "静止 %s\n"
 
-#: ../functions.pl:319
+#: ../functions.pl:607
 #, perl-format
 msgid "Changing configuration file (from \"%s\" to \"%s\")...\n"
 msgstr "变更设置文件 (从 \"%s\" 到 \"%s\")...\n"
 
 #. Translation Comment: Interface Title with character status
-#: ../functions.pl:389
+#: ../functions.pl:677
 #, perl-format
 msgid "%s B%s (%s), J%s (%s) : w%s%s - %s"
 msgstr "%s B%s (%s), J%s (%s) : w%s%s - %s"
 
 #. Translation Comment: Interface Title
-#: ../functions.pl:396
+#: ../functions.pl:684
 #, perl-format
 msgid "%sNot connected - %s"
 msgstr "%s没有连接 - %s"
 
 #. Translation Comment: Interface Title
-#: ../functions.pl:399
+#: ../functions.pl:687
 #, perl-format
 msgid "%sConnecting - %s"
 msgstr "%s连接 - %s"
 
-#: ../functions.pl:582
+#: ../functions.pl:852
 msgid "Map loaded\n"
 msgstr "读取地图\n"
 
-#: ../functions.pl:815
+#: ../functions.pl:1085
 #, perl-format
 msgid "Unknown packet - %s\n"
 msgstr "未知封包 - %s\n"
@@ -6340,6 +6346,15 @@ msgstr "OpenKore 新的"
 #: ../webstart/WebstartServer.pm:91
 msgid "Do not display this web page again."
 msgstr "不要再显示这个页面."
+
+#~ msgid "Failed to load %s: %s\n"
+#~ msgstr "读取失败 %s: %s\n"
+
+#~ msgid "Failed to create %s: %s\n"
+#~ msgstr "创建失败 %s: %s\n"
+
+#~ msgid "Enter Username: "
+#~ msgstr "输入帐号: "
 
 #~ msgid "Unable to load plugin: %s does not exist\n"
 #~ msgstr "无法读入插件: %s 不存在t\n"
