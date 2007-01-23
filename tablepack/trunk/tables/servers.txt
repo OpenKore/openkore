@@ -237,6 +237,18 @@ storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x
 serverEncoding Tagalog
 gameGuard 1
 
+## http://www.raggame.ru/
+[Russia - rRO]
+ip 81.177.13.7
+port 6900
+master_version 25
+version 90
+serverType 13
+serverEncoding Russian
+pauseCharServer 1
+patchserver web.raggame.ru
+patchpath /patch02
+
 [Taiwan - twRO: Test]
 ip 61.220.62.26
 port 6900
@@ -715,7 +727,7 @@ patchserver wpatch.ragnarok.in.th
 patchpath /patch70
 serverEncoding Thai
 
-http://www.rovietnam.com.vn/
+## http://www.rovietnam.com.vn/
 [Vietnam - vRO: SD]
 ip 222.255.122.20
 port 6900
@@ -728,17 +740,18 @@ secureLogin_requestCode
 secureLogin_account 0
 serverEncoding Western
 
-## http://www.raggame.ru/
-[Russia - rRO]
-ip 81.177.13.7
+## http://www.rovietnam.com.vn/
+[Vietnam - vRO: Thu Thach]
+ip 222.255.122.20
 port 6900
-master_version 25
-version 90
-serverType 13
-serverEncoding Russian
-pauseCharServer 1
-patchserver web.raggame.ru
-patchpath /patch02
+master_version 32
+version 1
+serverType 10
+secureLogin 1
+secureLogin_type 0
+secureLogin_requestCode
+secureLogin_account 0
+serverEncoding Western
 
 ## http://www.rohispano.com/
 [Latin America - RO Hispano]
@@ -1134,12 +1147,32 @@ serverType 4
 serverEncoding Western
 
 ## http://subwaytovenus.free.fr/
-[NiktoutRO Private Server]
-ip 213.186.35.44
+[NiktoutRO (Chaos) Private Server]
+ip 81.93.240.200
 port 6904
-version 20
+version 5120
 master_version 14
-serverType 5
+serverType 4
+private 1
+serverEncoding Western
+
+## http://subwaytovenus.free.fr/
+[NiktoutRO (Loki) Private Server]
+ip 66.90.73.241
+port 6904
+version 5120
+master_version 14
+serverType 4
+private 1
+serverEncoding Western
+
+## http://subwaytovenus.free.fr/
+[NiktoutRO (Sakray) Private Server]
+ip 66.90.73.241
+port 6903
+version 5120
+master_version 14
+serverType 4
 private 1
 serverEncoding Western
 
@@ -1381,9 +1414,19 @@ version 20
 serverType 4
 serverEncoding Western
 
+## http://zeonro.no-ip.org/vote.html
+[ZeonRO (Medium Rate) Private Server]
+ip zeonro.no-ip.org
+port 6900
+master_version 14
+version 24
+serverType 4
+serverEncoding Western
 
 
-# The server details below needs verification
+
+##### The server details below needs verification
+
 
 ## http://anti-gravity.cc/
 [Anti-GravityRO Private Server]
@@ -1392,6 +1435,16 @@ port 6900
 master_version 18
 version 0
 serverType 0
+serverEncoding Western
+
+## http://www.cakero.net/
+[CakeRO (High Rate) Private Server]
+ip 72.232.3.66
+port 6901
+master_version 14
+version 1
+serverType 5
+private 1
 serverEncoding Western
 
 ## http://mobro.mob-games.com/
@@ -1449,19 +1502,9 @@ serverType 5
 serverEncoding Western
 
 ## http://www.kawaii-ro.net/
-[Kawaii-ro]
+[Kawaii-RO Private Server]
 ip 194.146.226.57
 port 5121
-master_version 14
-version 1
-serverType 5
-private 1
-serverEncoding Western
-
-## http://www.cakero.net/
-[CakeRO (HIGH RATE) - 2k/2k/1k]
-ip 72.232.3.66
-port 6901
 master_version 14
 version 1
 serverType 5
