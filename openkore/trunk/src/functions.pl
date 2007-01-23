@@ -46,7 +46,7 @@ use constant {
 	STATE_INITIALIZED           => 6
 };
 
-my $state;
+our $state;
 
 sub mainLoop {
 	$state = STATE_LOAD_PLUGINS if (!defined $state);

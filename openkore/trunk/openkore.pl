@@ -95,20 +95,8 @@ sub __start {
 	Benchmark::begin("Real time") if DEBUG;
 	$interface->mainLoop();
 	Benchmark::end("Real time") if DEBUG;
-	Plugins::unloadAll();
 
-
-	#### SHUTDOWN ####
-
-	# Translation Comment: Kore's exit message
-	Log::message(T("Bye!\n"));
-	Log::message($Settings::versionText);
-
-	if (DEBUG && open(F, ">:utf8", "benchmark-results.txt")) {
-		print F Benchmark::results("mainLoop");
-		close F;
-		print "Benchmark results saved to benchmark-results.txt\n";
-	}
+	main::shutdown();
 }
 
 # Parse command-line arguments.
@@ -165,6 +153,19 @@ sub selfCheck {
 		$interface->errorDialog(TF("Your version of the XSTools library is too old. Please upgrade it.\n" .
 			"Please read %s", "http://www.openkore.com/aliases/xstools.php"));
 		exit 1;
+	}
+}
+
+sub shutdown {
+	Plugins::unloadAll();
+	# Translation Comment: Kore's exit message
+	Log::message(T("Bye!\n"));
+	Log::message($Settings::versionText);
+
+	if (DEBUG && open(F, ">:utf8", "benchmark-results.txt")) {
+		print F Benchmark::results("mainLoop");
+		close F;
+		print "Benchmark results saved to benchmark-results.txt\n";
 	}
 }
 
