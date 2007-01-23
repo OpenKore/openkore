@@ -63,7 +63,7 @@ our ($iterationTime, $updateUITime, $updateUITime2);
 sub OnInit {
 	my $self = shift;
 
-	$CVS = ($Settings::CVS =~ /CVS/);
+	$CVS = ($Settings::CVS =~ /SVN/);
 	$self->createInterface;
 	$self->iterate;
 
@@ -119,7 +119,9 @@ sub mainLoop {
 
 		if ($sleepTime ne $config{sleepTime}) {
 			$sleepTime = $config{sleepTime};
-			$timer->Start($sleepTime / 1000);
+			$timer->Start(($sleepTime / 1000) > 0
+				? ($sleepTime / 1000)
+				: 10);
 		}
 		main::mainLoop();
 
@@ -127,7 +129,9 @@ sub mainLoop {
 	};
 
 	EVT_TIMER($self, 247, $sub);
-	$timer->Start($config{sleepTime} / 1000);
+	$timer->Start(($sleepTime / 1000) > 0
+		? ($sleepTime / 1000)
+		: 10);
 	$self->MainLoop;
 }
 
