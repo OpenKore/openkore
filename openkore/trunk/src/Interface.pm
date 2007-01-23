@@ -49,7 +49,7 @@ sub loadInterface {
 	my $module = "Interface::$name";
 	eval "use $module;";
 	if ($@) {
-		ModuleLoadException->throw(error => "Cannot load module $module.", module => $module);
+		ModuleLoadException->throw(error => "Cannot load module $module", module => $module);
 	}
 
 	my $constructor = UNIVERSAL::can($module, 'new');
