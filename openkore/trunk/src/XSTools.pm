@@ -15,7 +15,7 @@ package XSTools;
 use strict;
 use FindBin qw($RealBin);
 use File::Spec;
-use Cwd 'abs_path';
+use Cwd 'abs_path', 'realpath';
 use DynaLoader;
 use XSLoader;
 
@@ -109,10 +109,10 @@ sub compile {
 	}
 }
 
-my (undef, $dir, undef) = File::Spec->splitpath(__FILE__);
-push @makefilePaths, abs_path(File::Spec->join($dir, ".."));
+my ($drive, $dirs, undef) = File::Spec->splitpath(realpath(__FILE__));
+$dirs = "$drive$dirs";
+push @makefilePaths, abs_path(File::Spec->join($dirs, ".."));
 push @makefilePaths, $RealBin;
-
 
 # Initialize the library, auto-compile if necessary.
 eval {
