@@ -35,6 +35,7 @@ use Utils::Unix;
 
 sub new {
 	my $class = shift;
+	binmode STDOUT;
 	STDOUT->autoflush(0);
 	return bless {}, $class;
 }
@@ -65,7 +66,9 @@ sub getInput {
 sub writeOutput {
 	my ($self, $type, $message, $domain) = @_;
 	my $code = Utils::Unix::getColorForMessage(\%consoleColors, $type, $domain);
-	print STDOUT $code . $message . Utils::Unix::getColor('reset');
+	print STDOUT $code;
+	print STDOUT $message;
+	print STDOUT Utils::Unix::getColor('reset');
 	STDOUT->flush;
 }
 
@@ -76,7 +79,9 @@ sub title {
 		if (defined($self->{title}) && $self->{title} ne $title) {
 			$self->{title} = $title;
 			if ($ENV{TERM} eq 'xterm' || $ENV{TERM} eq 'screen') {
-				print STDOUT "\e]2;" . $title . "\a";
+				print STDOUT "\e]2;";
+				print $title;
+				print "\a";
 				STDOUT->flush;
 			}
 		}
