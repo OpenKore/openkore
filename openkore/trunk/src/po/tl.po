@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: openkore 1.9.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-23 08:12+0700\n"
+"POT-Creation-Date: 2007-01-24 15:52+0100\n"
 "PO-Revision-Date: 2006-04-12 17:55-0300\n"
 "Last-Translator: Illusionist\n"
 "Language-Team: Tagalog\n"
@@ -2361,7 +2361,7 @@ msgstr ""
 msgid "Please correct the above errors and type 'reload %s'.\n"
 msgstr ""
 
-#: ../Interface.pm:123
+#: ../Interface.pm:126
 #, fuzzy
 msgid "Enter your answer: "
 msgstr "Pakitype ang password:"
@@ -4878,6 +4878,53 @@ msgid ""
 "Price\n"
 msgstr ""
 
+#: ../Network/XKore2.pm:256
+#, perl-format
+msgid "couldn't connect: %s\n"
+msgstr ""
+
+#: ../Network/XKore2.pm:389 ../Network/XKore2.pm:559
+#, perl-format
+msgid "Unable to listen on XKore2 port (%s:%s): %s"
+msgstr ""
+
+#: ../Network/XKore2.pm:456
+msgid "XKore 2 failed login: Invalid Username and/or Password.\n"
+msgstr ""
+
+#: ../Network/XKore2.pm:485
+msgid ""
+"Received GameGuard sync request. Client allowed to login account server.\n"
+msgstr ""
+
+#: ../Network/XKore2.pm:488
+msgid ""
+"Received GameGuard sync request. Client allowed to login char/map server.\n"
+msgstr ""
+
+#: ../Network/XKore2.pm:1002
+msgid ""
+"blueConnection to server lost. Please wait while the connection is "
+"reestablished."
+msgstr ""
+
+#: ../Network/XKore2.pm:1005
+msgid "Unknown error within XKore 2"
+msgstr ""
+
+#: ../Network/XKore2.pm:1036
+msgid "blueConnection reestablished. Enjoy. =)"
+msgstr ""
+
+#: ../Network/XKore2.pm:1049
+msgid "blueStill trying to connect..."
+msgstr ""
+
+#: ../Network/XKore2.pm:1062
+#, perl-format
+msgid "Unknown/unexpected XKore 2 packet: %s (state: %s).\n"
+msgstr ""
+
 #: ../Network/XKore.pm:51
 #, perl-format
 msgid ""
@@ -4931,53 +4978,6 @@ msgstr ""
 #: ../Network/XKore.pm:499
 #, perl-format
 msgid "Client modified in %d places.\n"
-msgstr ""
-
-#: ../Network/XKore2.pm:256
-#, perl-format
-msgid "couldn't connect: %s\n"
-msgstr ""
-
-#: ../Network/XKore2.pm:389 ../Network/XKore2.pm:559
-#, perl-format
-msgid "Unable to listen on XKore2 port (%s:%s): %s"
-msgstr ""
-
-#: ../Network/XKore2.pm:456
-msgid "XKore 2 failed login: Invalid Username and/or Password.\n"
-msgstr ""
-
-#: ../Network/XKore2.pm:485
-msgid ""
-"Received GameGuard sync request. Client allowed to login account server.\n"
-msgstr ""
-
-#: ../Network/XKore2.pm:488
-msgid ""
-"Received GameGuard sync request. Client allowed to login char/map server.\n"
-msgstr ""
-
-#: ../Network/XKore2.pm:1002
-msgid ""
-"blueConnection to server lost. Please wait while the connection is "
-"reestablished."
-msgstr ""
-
-#: ../Network/XKore2.pm:1005
-msgid "Unknown error within XKore 2"
-msgstr ""
-
-#: ../Network/XKore2.pm:1036
-msgid "blueConnection reestablished. Enjoy. =)"
-msgstr ""
-
-#: ../Network/XKore2.pm:1049
-msgid "blueStill trying to connect..."
-msgstr ""
-
-#: ../Network/XKore2.pm:1062
-#, perl-format
-msgid "Unknown/unexpected XKore 2 packet: %s (state: %s).\n"
 msgstr ""
 
 #: ../Network/XKoreProxy.pm:264
@@ -5524,12 +5524,7 @@ msgid ""
 "Homunculus is stuck at %s (%d,%d), while walking from (%d,%d) to (%d,%d)."
 msgstr ""
 
-#. Translation Comment: Kore's exit message
-#: ../../openkore.pl:104
-msgid "Bye!\n"
-msgstr ""
-
-#: ../../openkore.pl:140
+#: ../../openkore.pl:128
 #, perl-format
 msgid ""
 "Your Windows TCP/IP stack is broken. Please read\n"
@@ -5537,7 +5532,7 @@ msgid ""
 "to learn how to solve this."
 msgstr ""
 
-#: ../../openkore.pl:151
+#: ../../openkore.pl:139
 msgid ""
 "You have old files in the OpenKore folder, which may cause conflicts.\n"
 "Please delete your entire OpenKore source folder, and redownload everything."
@@ -5547,7 +5542,7 @@ msgstr ""
 "Kung maari lang sana ay burahin mo ang buong OpenKore source folder at i-"
 "download ito muli."
 
-#: ../../openkore.pl:157
+#: ../../openkore.pl:145
 #, perl-format
 msgid ""
 "Your version of the XSTools library is too old.\n"
@@ -5556,7 +5551,7 @@ msgstr ""
 "Luma na ang XSTools library mo.\n"
 "Kung maari ay pakibasa ito %s"
 
-#: ../../openkore.pl:161
+#: ../../openkore.pl:149
 #, perl-format
 msgid ""
 "Your version of XSTools library is incompatible.\n"
@@ -5565,7 +5560,7 @@ msgstr ""
 "Hindi tugma ang XSTools library mo.\n"
 "Kung maari ay pakibasa ito %s"
 
-#: ../../openkore.pl:165
+#: ../../openkore.pl:153
 #, perl-format
 msgid ""
 "Your version of the XSTools library is too old. Please upgrade it.\n"
@@ -5573,6 +5568,11 @@ msgid ""
 msgstr ""
 "Luma na ang XSTools library mo.\n"
 "Kung maari ay pakibasa ito %s"
+
+#. Translation Comment: Kore's exit message
+#: ../../openkore.pl:162
+msgid "Bye!\n"
+msgstr ""
 
 #: ../functions.pl:108
 #, perl-format

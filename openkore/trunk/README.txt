@@ -94,6 +94,7 @@ Credits:
 - heero: servertype 15 (pRO Thor) support.
 - And of course, all developers with SVN write access :)
   See http://cia.navi.cx/stats/project/openkore
+- littlewens: Traditional Chinese translations.
 
 
 =========================
