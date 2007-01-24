@@ -29,7 +29,8 @@ use constant FAILED   => 4;
 our $busServerScript;
 
 BEGIN {
-	my (undef, $dirs) = splitpath(realpath(__FILE__));
+	my ($drive, $dirs) = splitpath(realpath(__FILE__));
+	$dirs = "$drive$dirs";
 	$busServerScript = realpath(catfile($dirs, "..", "bus-server.pl"));
 }
 
