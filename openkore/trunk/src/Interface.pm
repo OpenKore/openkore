@@ -120,10 +120,10 @@ sub query {
 	my $footer = '-' x length($title);
 	$message =~ s/\n+$//s;
 	$message = "$title\n$message\n$footer\n";
-	$message .= T("Enter your answer: ");
 
 	while (1) {
 		$self->writeOutput("message", $message, "input");
+		$self->writeOutput("message", T("Enter your answer: "), "input");
 		my $mode = $args{isPassword} ? -9 : -1;
 		my $result = $self->getInput($mode);
 		if (!defined($result) || $result eq '') {
