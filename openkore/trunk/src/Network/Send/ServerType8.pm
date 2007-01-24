@@ -11,17 +11,17 @@
 #
 #  $Revision$
 #  $Id$
-#  Modified by skseo, Jan-16-2007, Fixed bugs.
+#  Modified by skseo, Jan-24-2007, Fixed bugs.
 ########################################################################
 package Network::Send::ServerType8;
 
 use strict;
-use Globals qw($char $syncSync $net %config);
+use Globals qw($accountID $sessionID $sessionID2 $accountSex $char $charID %config %guild @chars $masterServer $syncSync $net);
 use Network::Send::ServerType0;
 use base qw(Network::Send::ServerType0);
-use Log qw(error debug);
+use Log qw(message warning error debug);
+use I18N qw(stringToBytes);
 use Utils qw(getTickCount getHex getCoordString);
-
 
 sub new {
 	my ($class) = @_;
