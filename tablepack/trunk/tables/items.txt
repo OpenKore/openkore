@@ -545,7 +545,7 @@
 1093#Empty_Potion_Bottle#
 501#Red_Potion#
 502#Orange_Potion#
-503#Yellow_potion#
+503#Yellow_Potion#
 504#White_Potion#
 505#Blue_Potion#
 506#Green_Potion#
