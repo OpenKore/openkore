@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.9.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-23 08:12+0700\n"
+"POT-Creation-Date: 2007-01-24 15:52+0100\n"
 "PO-Revision-Date: 2006-12-31 06:50+0900\n"
 "Last-Translator: skseo <skseo76@hotmail.com>\n"
 "Language-Team: skseo <skseo76@hotmail.com>\n"
@@ -2888,7 +2888,7 @@ msgstr " %s 에서 오류를 찾았습니다.:\n"
 msgid "Please correct the above errors and type 'reload %s'.\n"
 msgstr "Please correct the above errors and type 'reload %s'.\n"
 
-#: ../Interface.pm:123
+#: ../Interface.pm:126
 #, fuzzy
 msgid "Enter your answer: "
 msgstr "패스워드 입력: "
@@ -5503,6 +5503,58 @@ msgstr ""
 "#  이름                                          형태        수량       가"
 "격\n"
 
+#: ../Network/XKore2.pm:256
+#, perl-format
+msgid "couldn't connect: %s\n"
+msgstr "접속할 수 없습니다.: %s\n"
+
+#: ../Network/XKore2.pm:389 ../Network/XKore2.pm:559
+#, perl-format
+msgid "Unable to listen on XKore2 port (%s:%s): %s"
+msgstr "Unable to listen on XKore2 port (%s:%s): %s"
+
+#: ../Network/XKore2.pm:456
+msgid "XKore 2 failed login: Invalid Username and/or Password.\n"
+msgstr "XKore 2 failed login: 유효하지 않은 Username and/or Password.\n"
+
+#: ../Network/XKore2.pm:485
+msgid ""
+"Received GameGuard sync request. Client allowed to login account server.\n"
+msgstr ""
+"Received GameGuard sync request. Client allowed to login account server.\n"
+
+#: ../Network/XKore2.pm:488
+msgid ""
+"Received GameGuard sync request. Client allowed to login char/map server.\n"
+msgstr ""
+"게임가드 동기화 요청 받았습니다. 클라이언트가 char/map 서버로 로그인을 허락하"
+"였습니다.\n"
+
+#: ../Network/XKore2.pm:1002
+msgid ""
+"blueConnection to server lost. Please wait while the connection is "
+"reestablished."
+msgstr ""
+"blueConnection to server lost. Please wait while the connection is "
+"reestablished."
+
+#: ../Network/XKore2.pm:1005
+msgid "Unknown error within XKore 2"
+msgstr "Unknown error within XKore 2"
+
+#: ../Network/XKore2.pm:1036
+msgid "blueConnection reestablished. Enjoy. =)"
+msgstr "blueConnection reestablished. Enjoy. =)"
+
+#: ../Network/XKore2.pm:1049
+msgid "blueStill trying to connect..."
+msgstr "blueStill trying to connect..."
+
+#: ../Network/XKore2.pm:1062
+#, perl-format
+msgid "Unknown/unexpected XKore 2 packet: %s (state: %s).\n"
+msgstr "Unknown/unexpected XKore 2 packet: %s (state: %s).\n"
+
 #: ../Network/XKore.pm:51
 #, perl-format
 msgid ""
@@ -5560,58 +5612,6 @@ msgstr "봇 감지 제거하기 위한 클라이언트 패치 중:\n"
 #, perl-format
 msgid "Client modified in %d places.\n"
 msgstr "클라이언트 %d 위치가 수정되었습니다..\n"
-
-#: ../Network/XKore2.pm:256
-#, perl-format
-msgid "couldn't connect: %s\n"
-msgstr "접속할 수 없습니다.: %s\n"
-
-#: ../Network/XKore2.pm:389 ../Network/XKore2.pm:559
-#, perl-format
-msgid "Unable to listen on XKore2 port (%s:%s): %s"
-msgstr "Unable to listen on XKore2 port (%s:%s): %s"
-
-#: ../Network/XKore2.pm:456
-msgid "XKore 2 failed login: Invalid Username and/or Password.\n"
-msgstr "XKore 2 failed login: 유효하지 않은 Username and/or Password.\n"
-
-#: ../Network/XKore2.pm:485
-msgid ""
-"Received GameGuard sync request. Client allowed to login account server.\n"
-msgstr ""
-"Received GameGuard sync request. Client allowed to login account server.\n"
-
-#: ../Network/XKore2.pm:488
-msgid ""
-"Received GameGuard sync request. Client allowed to login char/map server.\n"
-msgstr ""
-"게임가드 동기화 요청 받았습니다. 클라이언트가 char/map 서버로 로그인을 허락하"
-"였습니다.\n"
-
-#: ../Network/XKore2.pm:1002
-msgid ""
-"blueConnection to server lost. Please wait while the connection is "
-"reestablished."
-msgstr ""
-"blueConnection to server lost. Please wait while the connection is "
-"reestablished."
-
-#: ../Network/XKore2.pm:1005
-msgid "Unknown error within XKore 2"
-msgstr "Unknown error within XKore 2"
-
-#: ../Network/XKore2.pm:1036
-msgid "blueConnection reestablished. Enjoy. =)"
-msgstr "blueConnection reestablished. Enjoy. =)"
-
-#: ../Network/XKore2.pm:1049
-msgid "blueStill trying to connect..."
-msgstr "blueStill trying to connect..."
-
-#: ../Network/XKore2.pm:1062
-#, perl-format
-msgid "Unknown/unexpected XKore 2 packet: %s (state: %s).\n"
-msgstr "Unknown/unexpected XKore 2 packet: %s (state: %s).\n"
 
 #: ../Network/XKoreProxy.pm:264
 msgid "Client disconnected\n"
@@ -6168,56 +6168,56 @@ msgid ""
 msgstr ""
 "Homunculus is stuck at %s (%d,%d), while walking from (%d,%d) to (%d,%d)."
 
+#: ../../openkore.pl:128
+#, perl-format
+msgid ""
+"Your Windows TCP/IP stack is broken. Please read\n"
+"  %s\n"
+"to learn how to solve this."
+msgstr ""
+"Your Windows TCP/IP stack is broken. Please read\n"
+"  %s\n"
+"to learn how to solve this."
+
+#: ../../openkore.pl:139
+msgid ""
+"You have old files in the OpenKore folder, which may cause conflicts.\n"
+"Please delete your entire OpenKore source folder, and redownload everything."
+msgstr ""
+"You have old files in the OpenKore folder, which may cause conflicts.\n"
+"Please delete your entire OpenKore source folder, and redownload everything."
+
+#: ../../openkore.pl:145
+#, perl-format
+msgid ""
+"Your version of the XSTools library is too old.\n"
+"Please read %s"
+msgstr ""
+"Your version of the XSTools library is too old.\n"
+"Please read %s"
+
+#: ../../openkore.pl:149
+#, perl-format
+msgid ""
+"Your version of XSTools library is incompatible.\n"
+"Please read %s"
+msgstr ""
+"Your version of XSTools library is incompatible.\n"
+"Please read %s"
+
+#: ../../openkore.pl:153
+#, perl-format
+msgid ""
+"Your version of the XSTools library is too old. Please upgrade it.\n"
+"Please read %s"
+msgstr ""
+"Your version of the XSTools library is too old. Please upgrade it.\n"
+"Please read %s"
+
 #. Translation Comment: Kore's exit message
-#: ../../openkore.pl:104
+#: ../../openkore.pl:162
 msgid "Bye!\n"
 msgstr "Bye!\n"
-
-#: ../../openkore.pl:140
-#, perl-format
-msgid ""
-"Your Windows TCP/IP stack is broken. Please read\n"
-"  %s\n"
-"to learn how to solve this."
-msgstr ""
-"Your Windows TCP/IP stack is broken. Please read\n"
-"  %s\n"
-"to learn how to solve this."
-
-#: ../../openkore.pl:151
-msgid ""
-"You have old files in the OpenKore folder, which may cause conflicts.\n"
-"Please delete your entire OpenKore source folder, and redownload everything."
-msgstr ""
-"You have old files in the OpenKore folder, which may cause conflicts.\n"
-"Please delete your entire OpenKore source folder, and redownload everything."
-
-#: ../../openkore.pl:157
-#, perl-format
-msgid ""
-"Your version of the XSTools library is too old.\n"
-"Please read %s"
-msgstr ""
-"Your version of the XSTools library is too old.\n"
-"Please read %s"
-
-#: ../../openkore.pl:161
-#, perl-format
-msgid ""
-"Your version of XSTools library is incompatible.\n"
-"Please read %s"
-msgstr ""
-"Your version of XSTools library is incompatible.\n"
-"Please read %s"
-
-#: ../../openkore.pl:165
-#, perl-format
-msgid ""
-"Your version of the XSTools library is too old. Please upgrade it.\n"
-"Please read %s"
-msgstr ""
-"Your version of the XSTools library is too old. Please upgrade it.\n"
-"Please read %s"
 
 #: ../functions.pl:108
 #, perl-format

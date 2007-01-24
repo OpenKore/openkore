@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenKore Thai Edition\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-23 08:12+0700\n"
+"POT-Creation-Date: 2007-01-24 15:52+0100\n"
 "PO-Revision-Date: 2006-11-14 22:06+0700\n"
 "Last-Translator: Richard <dewa5227@yahoo.com>\n"
 "Language-Team: \n"
@@ -2873,7 +2873,7 @@ msgstr "พบข้อผิดพลาดที่ %s:\n"
 msgid "Please correct the above errors and type 'reload %s'.\n"
 msgstr "กรุณาแก้ไขข้อผิดพลาดที่แจ้งใว้ด้านบนแล้ว ป้อน 'reload %s'\n"
 
-#: ../Interface.pm:123
+#: ../Interface.pm:126
 #, fuzzy
 msgid "Enter your answer: "
 msgstr "กรุณาป้อน Password: "
@@ -5482,6 +5482,55 @@ msgstr ""
 "%s\n"
 "#  ชื่อ                                          ชนิด        จำนวน       ราคา\n"
 
+#: ../Network/XKore2.pm:256
+#, perl-format
+msgid "couldn't connect: %s\n"
+msgstr "ไม่สามารถเชื่อมต่อ: %s\n"
+
+#: ../Network/XKore2.pm:389 ../Network/XKore2.pm:559
+#, perl-format
+msgid "Unable to listen on XKore2 port (%s:%s): %s"
+msgstr "ไม่สามารถเปิด XKore2 port (%s:%s): %s"
+
+#: ../Network/XKore2.pm:456
+msgid "XKore 2 failed login: Invalid Username and/or Password.\n"
+msgstr "XKore 2 การล๊อกอินล้มเหลว: Username และ/หรือ Password ผิดพลาด\n"
+
+#: ../Network/XKore2.pm:485
+msgid ""
+"Received GameGuard sync request. Client allowed to login account server.\n"
+msgstr ""
+"Received GameGuard sync request. Client allowed to login account server.\n"
+
+#: ../Network/XKore2.pm:488
+msgid ""
+"Received GameGuard sync request. Client allowed to login char/map server.\n"
+msgstr ""
+"Received GameGuard sync request. Client allowed to login char/map server.\n"
+
+#: ../Network/XKore2.pm:1002
+msgid ""
+"blueConnection to server lost. Please wait while the connection is "
+"reestablished."
+msgstr "blueการเชื่อมต่อกับเซิฟเวอรืได้ขาดหาย กรุณารอซักครู่ระหว่างที่ทำการเชื่อมต่อใหม่"
+
+#: ../Network/XKore2.pm:1005
+msgid "Unknown error within XKore 2"
+msgstr "พบข้อผิดพลาดภายใน XKore 2"
+
+#: ../Network/XKore2.pm:1036
+msgid "blueConnection reestablished. Enjoy. =)"
+msgstr "blueทำการเชื่อมต่อกลับคืนได้แล้ว  =)"
+
+#: ../Network/XKore2.pm:1049
+msgid "blueStill trying to connect..."
+msgstr "blueยังคงพยายามทำการเชื่อมต่อ..."
+
+#: ../Network/XKore2.pm:1062
+#, perl-format
+msgid "Unknown/unexpected XKore 2 packet: %s (state: %s).\n"
+msgstr "XKore 2 ไม่รู้จัก packet: %s (state: %s).\n"
+
 #: ../Network/XKore.pm:51
 #, perl-format
 msgid ""
@@ -5539,55 +5588,6 @@ msgstr "ทำการแพทช์ client เพื่อเอาระบ�
 #, perl-format
 msgid "Client modified in %d places.\n"
 msgstr "Client ได้ถูกแก้ไขจำนวน %d ตำแหน่ง\n"
-
-#: ../Network/XKore2.pm:256
-#, perl-format
-msgid "couldn't connect: %s\n"
-msgstr "ไม่สามารถเชื่อมต่อ: %s\n"
-
-#: ../Network/XKore2.pm:389 ../Network/XKore2.pm:559
-#, perl-format
-msgid "Unable to listen on XKore2 port (%s:%s): %s"
-msgstr "ไม่สามารถเปิด XKore2 port (%s:%s): %s"
-
-#: ../Network/XKore2.pm:456
-msgid "XKore 2 failed login: Invalid Username and/or Password.\n"
-msgstr "XKore 2 การล๊อกอินล้มเหลว: Username และ/หรือ Password ผิดพลาด\n"
-
-#: ../Network/XKore2.pm:485
-msgid ""
-"Received GameGuard sync request. Client allowed to login account server.\n"
-msgstr ""
-"Received GameGuard sync request. Client allowed to login account server.\n"
-
-#: ../Network/XKore2.pm:488
-msgid ""
-"Received GameGuard sync request. Client allowed to login char/map server.\n"
-msgstr ""
-"Received GameGuard sync request. Client allowed to login char/map server.\n"
-
-#: ../Network/XKore2.pm:1002
-msgid ""
-"blueConnection to server lost. Please wait while the connection is "
-"reestablished."
-msgstr "blueการเชื่อมต่อกับเซิฟเวอรืได้ขาดหาย กรุณารอซักครู่ระหว่างที่ทำการเชื่อมต่อใหม่"
-
-#: ../Network/XKore2.pm:1005
-msgid "Unknown error within XKore 2"
-msgstr "พบข้อผิดพลาดภายใน XKore 2"
-
-#: ../Network/XKore2.pm:1036
-msgid "blueConnection reestablished. Enjoy. =)"
-msgstr "blueทำการเชื่อมต่อกลับคืนได้แล้ว  =)"
-
-#: ../Network/XKore2.pm:1049
-msgid "blueStill trying to connect..."
-msgstr "blueยังคงพยายามทำการเชื่อมต่อ..."
-
-#: ../Network/XKore2.pm:1062
-#, perl-format
-msgid "Unknown/unexpected XKore 2 packet: %s (state: %s).\n"
-msgstr "XKore 2 ไม่รู้จัก packet: %s (state: %s).\n"
 
 #: ../Network/XKoreProxy.pm:264
 msgid "Client disconnected\n"
@@ -6138,12 +6138,7 @@ msgid ""
 "Homunculus is stuck at %s (%d,%d), while walking from (%d,%d) to (%d,%d)."
 msgstr "Homunculus ติดอยู่ที่ %s (%d,%d), ระหว่างที่เดินจาก (%d,%d) ถึง (%d,%d)."
 
-#. Translation Comment: Kore's exit message
-#: ../../openkore.pl:104
-msgid "Bye!\n"
-msgstr "โชคดี!\n"
-
-#: ../../openkore.pl:140
+#: ../../openkore.pl:128
 #, perl-format
 msgid ""
 "Your Windows TCP/IP stack is broken. Please read\n"
@@ -6154,7 +6149,7 @@ msgstr ""
 "กรุณาอ่าน %s\n"
 "เพื่อศึกษาวิธีแก้ใข"
 
-#: ../../openkore.pl:151
+#: ../../openkore.pl:139
 msgid ""
 "You have old files in the OpenKore folder, which may cause conflicts.\n"
 "Please delete your entire OpenKore source folder, and redownload everything."
@@ -6162,7 +6157,7 @@ msgstr ""
 "คุณมีไฟล์เวอร์ชั่นเก่าใน OpenKore folder ซึ่งอาจทำให้เกิดความขัดแย้งกันได้\n"
 "กรุณาลบทุกไฟล์ใน OpenKore source folder และดาวน์โหลดไฟล์ใหม่"
 
-#: ../../openkore.pl:157
+#: ../../openkore.pl:145
 #, perl-format
 msgid ""
 "Your version of the XSTools library is too old.\n"
@@ -6171,7 +6166,7 @@ msgstr ""
 "เวอร์ชั่นของ XSTools เก่าเกินไป\n"
 "กรุณาอ่าน %s"
 
-#: ../../openkore.pl:161
+#: ../../openkore.pl:149
 #, perl-format
 msgid ""
 "Your version of XSTools library is incompatible.\n"
@@ -6180,7 +6175,7 @@ msgstr ""
 "เวอร์ชั่นของ XSTools ไม่สามารเข้ากันได้\n"
 "กรุณาอ่าน %s"
 
-#: ../../openkore.pl:165
+#: ../../openkore.pl:153
 #, perl-format
 msgid ""
 "Your version of the XSTools library is too old. Please upgrade it.\n"
@@ -6188,6 +6183,11 @@ msgid ""
 msgstr ""
 "เวอร์ชั่นของ XSTools เก่าเกินไป กรุณาดาวน์โหลดใหม่\n"
 "กรุณาอ่าน %s"
+
+#. Translation Comment: Kore's exit message
+#: ../../openkore.pl:162
+msgid "Bye!\n"
+msgstr "โชคดี!\n"
 
 #: ../functions.pl:108
 #, perl-format
