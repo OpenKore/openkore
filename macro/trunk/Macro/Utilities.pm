@@ -77,7 +77,7 @@ sub cmpr {
 		return 0
 	}
 
-	if ($a =~ /^[\d.]+$/ && $b =~ /^[\d.]+$/) {
+	if ($a =~ /^-?[\d.]+$/ && $b =~ /^-?[\d.]+$/) {
 		if (($cond eq "=" || $cond eq "==") && $a == $b) {return 1}
 		if ($cond eq ">=" && $a >= $b) {return 1}
 		if ($cond eq "<=" && $a <= $b) {return 1}
