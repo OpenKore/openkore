@@ -16,7 +16,7 @@ package Bus::Server::Starter;
 
 use strict;
 use Time::HiRes qw(time);
-use File::Spec::Functions qw(splitpath catfile);
+use File::Spec;
 use Cwd qw(realpath);
 
 use Utils::PerlLauncher;
@@ -29,9 +29,9 @@ use constant FAILED   => 4;
 our $busServerScript;
 
 BEGIN {
-	my ($drive, $dirs) = splitpath(realpath(__FILE__));
+	my ($drive, $dirs) = File::Spec->splitpath(realpath(__FILE__));
 	$dirs = "$drive$dirs";
-	$busServerScript = realpath(catfile($dirs, "..", "bus-server.pl"));
+	$busServerScript = realpath(File::Spec->catfile($dirs, "..", "bus-server.pl"));
 }
 
 sub new {
