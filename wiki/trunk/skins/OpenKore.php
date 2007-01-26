@@ -46,8 +46,8 @@ class OpenKoreTemplate extends QuickTemplate {
 			$html = preg_replace('/<(.*?) \/>/', '<${1}>', $html);
 
 			// Get rid of <p> tags that Mediawiki puts before and after <html>
-			$html = preg_replace('/<p>(\n)*<(div|dl|table)/', '<${2}', $html);
-			$html = preg_replace('/<\/(div|dl|table)>(\n)*<\/p>/', '</${1}>', $html);
+			$html = preg_replace('/<p>(\n)*<(div|dl|table|script)/', '<${2}', $html);
+			$html = preg_replace('/<\/(div|dl|table|script)>(\n)*<\/p>/', '</${1}>', $html);
 
 			$html = preg_replace('/(@@TITLE@@.*?@@TITLE@@)/', '<!-- ${1} -->', $html);
 
@@ -63,6 +63,11 @@ class OpenKoreTemplate extends QuickTemplate {
 	}
 
 	function execute() {
+		$html = parent::gethtml('bodytext');
+		if (preg_match('/^<div class="noarticletext">/s', $html)) {
+			header("HTTP/1.1 404 File Not Found");
+		}
+
 		if (isset($_GET['isManual']))
 			$this->myPrintManualLayout();
 		else

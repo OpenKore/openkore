@@ -46,10 +46,10 @@
 	?>
 
 	<div id="openkore_donation">
-		<?php
-		require('/home/openkore/resources/paypal.php');
-		printPaypalButton("Support OpenKore:<br>");
-		?>
+		<div>Support OpenKore:</div>
+		<div><a href="http://www.openkore.com/wiki/index.php/Fund_pool">
+			<div>Learn about</div><div>the Fund Pool</div>
+		</a></div>
 	</div>
 	<?php } ?>
 

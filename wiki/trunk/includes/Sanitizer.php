@@ -1033,8 +1033,8 @@ class Sanitizer {
 		# Numbers refer to sections in HTML 4.01 standard describing the element.
 		# See: http://www.w3.org/TR/html4/
 		$whitelist = array (
-			'a'   => array($common, 'href'),
-			'img' => array($common, 'src', 'width', 'height', 'alt'),
+			'a'   => array_merge($common, array('href')),
+			'img' => array_merge($common, array('src', 'width', 'height', 'alt')),
 
 			# 7.5.4
 			'div'        => $block,

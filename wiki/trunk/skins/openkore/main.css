@@ -36,6 +36,7 @@ pre {
 	padding: 0.2cm;
 	overflow: auto;
 	font-size: medium;
+	font-family: 'Bitstream Vera Sans Mono', 'Courier New', Courier, Monospace;
 }
 
 
@@ -248,11 +249,12 @@ fieldset.operaprefsection {
 
 dl.wikidl dt {
 	font-weight: bold;
+	margin-top: 0.75em;
+	margin-bottom: 0.5em;
 }
 
 dl.wikidl dd {
-	margin-top: 0.6em;
-	margin-bottom: 1.4em;
+	margin-bottom: 0.75em;
 }
 
 
