@@ -84,7 +84,7 @@ sub new {
 		'0081' => ['errors', 'C1', [qw(type)]],
 		'0087' => ['character_moves', 'x4 a5 C1', [qw(coords unknown)]],
 		'0088' => ['actor_movement_interrupted', 'a4 v1 v1', [qw(ID x y)]],
-		'008A' => ['actor_action', 'a4 a4 a4 V2 s1 v1 C1 v1', [qw(sourceID targetID tick src_speed dst_speed damage param2 type param3)]],
+		'008A' => ['actor_action', 'a4 a4 a4 V2 n0 v1 C1 v1', [qw(sourceID targetID tick src_speed dst_speed damage param2 type param3)]],
 		'008D' => ['public_chat', 'v1 a4 Z*', [qw(len ID message)]],
 		'008E' => ['self_chat', 'x2 Z*', [qw(message)]],
 		'0091' => ['map_change', 'Z16 v1 v1', [qw(map x y)]],
@@ -162,7 +162,7 @@ sub new {
 		'010C' => ['mvp_other', 'a4', [qw(ID)]],
 		'010E' => ['skill_update', 'v1 v1 v1 v1 C1', [qw(skillID lv sp range up)]], # range = skill range, up = this skill can be leveled up further
 		'010F' => ['skills_list'],
-		'0114' => ['skill_use', 'v1 a4 a4 V1 V1 V1 s1 v1 v1 C1', [qw(skillID sourceID targetID tick src_speed dst_speed damage level param3 type)]],
+		'0114' => ['skill_use', 'v1 a4 a4 V1 V1 V1 n0 v1 v1 C1', [qw(skillID sourceID targetID tick src_speed dst_speed damage level param3 type)]],
 		'0117' => ['skill_use_location', 'v1 a4 v1 v1 v1', [qw(skillID sourceID lv x y)]],
 		'0119' => ['character_status', 'a4 v3 x', [qw(ID param1 param2 param3)]],
 		'011A' => ['skill_used_no_damage', 'v1 v1 a4 a4 C1', [qw(skillID amount targetID sourceID fail)]],
@@ -261,7 +261,7 @@ sub new {
 		'01DA' => ['actor_display', 'a4 v5 C1 x1 v3 x4 v5 a4 x4 v1 x1 C1 a5 x3 v1', [qw(ID walk_speed param1 param2 param3 type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID skillstatus sex coords lv)]],
 		'01DC' => ['secure_login_key', 'x2 a*', [qw(secure_key)]],
 		'01D6' => ['pvp_mode2', 'v1', [qw(type)]],
-		'01DE' => ['skill_use', 'v1 a4 a4 V1 V1 V1 l1 v1 v1 C1', [qw(skillID sourceID targetID tick src_speed dst_speed damage level param3 type)]],
+		'01DE' => ['skill_use', 'v1 a4 a4 V1 V1 V1 N0 v1 v1 C1', [qw(skillID sourceID targetID tick src_speed dst_speed damage level param3 type)]],
 		'01E1' => ['revolving_entity', 'a4 v1', [qw(sourceID entity)]],
 		#'01E2' => ['marriage_unknown'], clif_parse_ReqMarriage
 		#'01E4' => ['marriage_unknown'], clif_marriage_process
