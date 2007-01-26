@@ -73,24 +73,10 @@
 	</div>
 
 	<div id="openkore_donation">
-		<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
-		<div>
-		Support OpenKore:<br>
-		<input type="hidden" name="cmd" value="_xclick">
-		<input type="hidden" name="business" value="rbvkinfo@gmail.com">
-		<input type="hidden" name="item_name" value="OpenKore Donation">
-		<input type="hidden" name="item_number" value="1">
-		<input type="hidden" name="page_style" value="PayPal">
-		<input type="hidden" name="no_shipping" value="1">
-		<input type="hidden" name="return" value="http://www.openkore.com/donation-ok.php">
-		<input type="hidden" name="cancel_return" value="http://www.openkore.com/">
-		<input type="hidden" name="cn" value="Comments">
-		<input type="hidden" name="currency_code" value="USD">
-		<input type="hidden" name="tax" value="0">
-		<input type="hidden" name="bn" value="PP-DonationsBF">
-		<input type="image" src="https://www.paypal.com/en_US/i/btn/x-click-but21.gif" name="submit" alt="Make payments with PayPal - it's fast, free and secure!" style="vertical-align: middle;">
-		</div>
-		</form>
+		<div>Support OpenKore:</div>
+		<div><a href="http://www.openkore.com/wiki/index.php/Fund_pool">
+			<div>Learn about</div><div>the Fund Pool</div>
+		</a></div>
 	</div>
 </div>
 
