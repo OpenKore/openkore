@@ -42,9 +42,16 @@ The installation is very similar to a normal PhpBB installation:
 3. Start your web server.
 4. Start your web browser and go to the URL for install.php.
 
-You must also run some post-installation SQL queries because of all
-the mods we have:
+5. Run post-installation SQL queries. See appendix A.
+6. Create the following forums (with these exact names):
+   - Trash
+   - Other OpenKore & VisualKore Support
+7. Create the following user group:
+   Forum Contributors
 
+
+Appendix A: SQL queries
+-----------------------
 ### ==== SQL queries begin ==== ###
 
 # OOptions
