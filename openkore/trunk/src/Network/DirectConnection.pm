@@ -516,11 +516,15 @@ sub checkConnection {
 		$conState_tries++;
 		main::initConnectVars();
 		my $master = $masterServer;
+		my ($ip, $port);
 		if ($master->{private}) {
-			$self->serverConnect($config{forceMapIP} || $master->{ip}, $map_port);
+			$ip = $config{forceMapIP} || $master->{ip};
+			$port = $map_port;
 		} else {
-			$self->serverConnect($config{forceMapIP} || $map_ip, $map_port);
+			$ip = $master->{mapServer_ip} || $config{forceMapIP} || $map_ip;
+			$port = $master->{mapServer_port} || $map_port;
 		}
+		$self->serverConnect($ip, $port);
 
 		# call plugin's hook to determine if we can continue the connection
 		if ($self->serverAlive) {
