@@ -31,7 +31,7 @@ BEGIN_EVENT_TABLE(View, MainFrame)
 END_EVENT_TABLE()
 
 View::View()
-	: MainFrame(NULL, -1, wxS(""),  wxDefaultPosition, wxDefaultSize, 0),
+	: MainFrame(NULL),
 	  timer(this, WORKER_THREAD_POLL_ID)
 {
 	int width, height;
