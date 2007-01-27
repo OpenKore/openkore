@@ -13,7 +13,7 @@ view.cpp
 view.h
 worker-thread.cpp
 worker-thread.h
-ui.wxg
+ui.fbp
 ui.rc
 manifest.xml
 mondrian.ico
