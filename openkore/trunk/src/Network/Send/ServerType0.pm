@@ -1077,16 +1077,6 @@ sub sendMapLogin {
 			pack("V", getTickCount()) .
 			pack("C*", $sex);
 
-	} elsif ($self->{serverType} == 10) { #vRO
-		$msg = pack("C*",0x72, 0x00, 0x00, 0x00) .
-			$accountID .
-			pack("C*", 0x40) .
-			$charID .
-			pack ("C*", 0xFF, 0xFF, 0xFF, 0xCC) .
-			$sessionID .
-			pack("V", getTickCount()) .
-			pack("C*", $sex);
-
 	} elsif ($self->{serverType} == 11) {
 		$msg = pack("C*", 0x72,0, 0, 0, 0xE8) .
 			$accountID .
