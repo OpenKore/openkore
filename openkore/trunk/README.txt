@@ -97,6 +97,7 @@ Credits:
 - littlewens: Traditional Chinese translations.
 - PlayingSafe: Fixes for big-endian systems, such as Mac-PPC.
 - clarious: Help with vRO support.
+- DInvalid: Correctly set character direction upon move.
 
 
 =========================
