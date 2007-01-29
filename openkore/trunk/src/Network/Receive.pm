@@ -1759,6 +1759,18 @@ sub character_moves {
 	debug "You're moving from ($char->{pos}{x}, $char->{pos}{y}) to ($char->{pos_to}{x}, $char->{pos_to}{y}) - distance $dist, unknown $args->{unknown}\n", "parseMsg_move";
 	$char->{time_move} = time;
 	$char->{time_move_calc} = distance($char->{pos}, $char->{pos_to}) * ($char->{walk_speed} || 0.12);
+
+	# Correct the direction in which we're looking
+	my (%vec, $degree);
+	getVector(\%vec, $char->{pos_to}, $char->{pos});
+	$degree = vectorToDegree(\%vec);
+	if (defined $degree) {
+		my $direction = int sprintf("%.0f", (360 - $degree) / 45);
+		$char->{look}{body} = $direction & 0x07;
+		$char->{look}{head} = 0;
+	}
+
+	# Ugly; AI code in network subsystem! This must be fixed.
 	if (AI::action eq "mapRoute" && $config{route_escape_reachedNoPortal} && $dist eq "0.0"){
 	   if (!$portalsID[0]) {
 		if ($config{route_escape_shout} ne "" && !defined($timeout{ai_route_escape}{time})){

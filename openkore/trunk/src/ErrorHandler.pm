@@ -80,6 +80,7 @@ sub errorHandler {
 	my $log = '';
 	$log .= "$Settings::NAME version $Settings::VERSION\n" if (defined $Settings::VERSION);
 	$log .= "\@ai_seq = @Globals::ai_seq\n" if (defined @Globals::ai_seq);
+	$log .= "conState = $Globals::conState\n" if (defined $Globals::conState);
 	if (defined @Plugins::plugins) {
 		$log .= "Loaded plugins:\n";
 		foreach my $plugin (@Plugins::plugins) {
