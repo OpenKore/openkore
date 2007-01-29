@@ -138,10 +138,10 @@ namespace OSL {
 	 * bar = NULL;   // The Foo instance is now deleted.
 	 * @endcode
 	 *
-	 * If you try to dereference an empty smart pointer, it will throw PointerException:
+	 * If you try to dereference an empty smart pointer, it will throw PointerException&:
 	 * @code
 	 * Pointer<Foo> empty;
-	 * *empty; // PointerException thrown!
+	 * *empty; // PointerException& thrown!
 	 * @endcode
 	 *
 	 * On the other hand, the -> operator will return NULL if the smart pointer
@@ -163,6 +163,7 @@ namespace OSL {
 	 * @code
 	 * Pointer<Foo> p;
 	 * @endcode
+	 * This is due to weird C++ caveats.
 	 *
 	 *
 	 * @section object Special support for Object reference counting
@@ -240,8 +241,13 @@ namespace OSL {
 			shared = pointer.shared;
 			Atomic::increment(shared->refcount);
 		}
+
 	public:
-		Pointer(T *data = NULL) throw() {
+		Pointer() throw() {
+			createReference(NULL, false);
+		}
+
+		Pointer(T *data) throw() {
 			createReference(data, false);
 		}
 
@@ -261,8 +267,10 @@ namespace OSL {
 		 * @code
 		 * Object *foo = new Object();
 		 * foo->ref();
+		 * // foo now has a reference count of 2.
 		 * do {
 		 *     Pointer<Object> p(foo);
+		 *     // foo still has a reference count of 2.
 		 * } while (0);
 		 * // foo is now deleted. The ref() call didn't prevent it from
 		 * // being deleted since the smart pointer calls 'delete foo'

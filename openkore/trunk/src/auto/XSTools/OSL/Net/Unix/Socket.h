@@ -18,6 +18,9 @@
  *  MA  02110-1301  USA
  */
 
+// This file is necessary because the concrete Socket implementation class
+// is used by the concrete ServerSocket implementation class.
+
 #ifndef _OSL_UNIX_SOCKET_H_
 #define _OSL_UNIX_SOCKET_H_
 
