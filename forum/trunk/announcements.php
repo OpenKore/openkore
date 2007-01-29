@@ -3,13 +3,13 @@ define('ANNOUNCEMENTS_FORUM_NAME', "Announcements");
 define('WEBSITE_BASE_URL', "http://forums.openkore.com/");
 define('FORUM_DATABASE_ENCODING', 'UTF-8');
 
-require_once('includes/phpbb.php');
-PhpBB::init(array('template' => false));
+define('IN_PHPBB', true);
+$phpbb_root_path = './';
+include($phpbb_root_path . 'extension.inc');
+include($phpbb_root_path . 'common.'.$phpEx);
 
 header("Content-Type: application/xml");
 printNewsFeed(getNews());
-
-PhpBB::finalize();
 
 function getNews($limit = 8) {
 	global $db;
