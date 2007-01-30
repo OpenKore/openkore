@@ -10,6 +10,11 @@ wxHideConsole 1
 # Whether to enable the bus system.
 bus 0
 
+# If you want to connect to an already running bus server on a different
+# computer, specify the host and port here.
+bus_server_host
+bus_server_port
+
 
 ###### Vx interface settings ######
 panelTwo_domains publicchat, pm, guildchat, partychat, pm/sent, list, info, selfchat, schat, error, warning
