@@ -20,14 +20,17 @@ package Task::Route;
 use strict;
 use Time::HiRes qw(time);
 use Scalar::Util;
+use Carp::Assert;
 
 use Modules 'register';
 use Task::WithSubtask;
 use base qw(Task::WithSubtask);
 use Task::Move;
+
 use Globals qw($char $field $net %config);
 use Log qw(message debug);
 use Network;
+use Field;
 use Translation qw(T TF);
 use Misc;
 use Utils qw(timeOut distance calcPosition);
@@ -349,27 +352,34 @@ sub iterate {
 # }
 
 ##
-# Task::Route->getRoute(returnArray, r_field, r_start, r_dest, [avoidWalls = 1])
-# returnArray: reference to an array. The solution will be stored in here.
-# r_field: reference to a field hash (usually \%field).
-# r_start: reference to a hash. This is the start coordinate.
-# r_dest: reference to a hash. This is the destination coordinate.
+# Task::Route->getRoute(Array* solution, Field field, Hash* start, Hash* dest, [boolean avoidWalls = true])
+# $solution: The route solution will be stored in here.
+# field: the field on which a route must be calculated.
+# start: The is the start coordinate.
+# dest: The destination coordinate.
 # noAvoidWalls: 1 if you don't want to avoid walls on route.
 # Returns: 1 if the calculation succeeded, 0 if not.
 #
-# Calculates how to walk from $r_start to $r_dest.
-# The blocks you have to walk on in order to get to $r_dest are stored in
-# $returnArray. This function is a convenience wrapper function for the stuff
+# Calculate how to walk from $start to $dest on field $field, or check whether there
+# is a path from $start to $dest on field $field.
+#
+# If $solution is given, then the blocks you have to walk on in order to get to $dest
+# are stored in there.
+#
+# This function is a convenience wrapper function for the stuff
 # in Utils/PathFinding.pm
 sub getRoute {
-	my ($class, $returnArray, $field, $r_start, $r_dest, $avoidWalls) = @_;
-	@{$returnArray} = ();
-	return 1 if (!defined $r_dest->{x} || $r_dest->{y} eq '');
+	my ($class, $solution, $field, $start, $dest, $avoidWalls) = @_;
+	assert(UNIVERSAL::isa($field, 'Field')) if DEBUG;
+	if (!defined $dest->{x} || $dest->{y} eq '') {
+		@{$solution} = () if ($solution);
+		return 1;
+	}
 
 	# The exact destination may not be a spot that we can walk on.
 	# So we find a nearby spot that is walkable.
-	my %start = %{$r_start};
-	my %dest = %{$r_dest};
+	my %start = %{$start};
+	my %dest = %{$dest};
 	Misc::closestWalkableSpot($field, \%start);
 	Misc::closestWalkableSpot($field, \%dest);
 
@@ -390,16 +400,15 @@ sub getRoute {
 		field => $field,
 		weights => $weights
 	);
-	return undef if !$pathfinding;
+	return undef if (!$pathfinding);
 
-	my $ret = $pathfinding->run($returnArray);
-	if ($ret <= 0) {
-		# Failure
-		return undef;
+	my $ret;
+	if ($solution) {
+		$ret = $pathfinding->run($solution);
 	} else {
-		# Success
-		return $ret;
+		$ret = $pathfinding->runcount();
 	}
+	return $ret > 0;
 }
 
 sub mapChanged {
