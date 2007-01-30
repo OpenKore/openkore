@@ -2223,10 +2223,6 @@ sub sendSync {
 		$msg = pack("C*", 0x89, 0x00, 0x00, 0x00);
 		$msg .= $syncSync;
 
-	} elsif ($self->{serverType} == 10) { #vRO
-		$msg = pack("C*", 0x7E, 0x00, 0x5F, 0x04);
-		$msg .= $syncSync;
-		
 	} elsif ($self->{serverType} == 11) {
 		$msg = pack("C*", 0x7E, 0x00);
 		$msg .= pack("C*", 0x30, 0x00, 0x80,) if ($initialSync);
