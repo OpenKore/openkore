@@ -1,6 +1,6 @@
 /*
  *  OpenKore C++ Standard Library
- *  Copyright (C) 2006  VCL
+ *  Copyright (C) 2006,2007  VCL
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -17,6 +17,9 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  *  MA  02110-1301  USA
  */
+
+// Do not compile this file independently, it's supposed to be automatically
+// included by another source file.
 
 class PosixThread: public ThreadImplementation {
 private:
