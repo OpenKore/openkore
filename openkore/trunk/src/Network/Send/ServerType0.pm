@@ -117,11 +117,6 @@ sub sendAttack {
 	} elsif ($self->{serverType} == 9) {
 		$msg = pack("C*", 0x90, 0x01) . pack("x5") . $monID . pack("x6") . pack("C", $flag);
 
-	} elsif ($self->{serverType} == 10) {
-		$msg = pack("C2 x3", 0x89, 0x00, 0x00, 0x00, 0x00) .
-		$monID .
-		pack("x9 C1", $flag);
-
 	} elsif ($self->{serverType} == 12) { # pRO Thor: packet 0190
 		error "Your server is not supported because it uses padded packets.\n";
 		if (AI::action() eq "NPC") {
@@ -468,9 +463,6 @@ sub sendDrop {
 			pack("x5") .
 			pack("v*", $amount);
 
-	} elsif ($self->{serverType} == 10) {
-		$msg = pack("C2 x3 v1 x1 v1", 0xA2, 0x00, $index, $amount);
-	
 	} elsif ($self->{serverType} == 11) {
 		$msg = pack("C*", 0xA2, 0x00) .
 			pack("C*", 0x00, 0x00, 0x08, 0xA2) .
@@ -602,9 +594,6 @@ sub sendGetPlayerInfo {
 	} elsif ($self->{serverType} == 9) {
 		$msg = pack("C*", 0x8c, 0x00) . pack("x6") . $ID;
 
-	} elsif ($self->{serverType} == 10) {
-		$msg = pack("C*", 0x94, 0x00) . pack("x5") . $ID;
-	
 	} elsif ($self->{serverType} == 11) {
 		$msg = pack("C*", 0x94, 0x00) . pack("C*", 0x30, 0x03, 0x44, 0xA1) . $ID;
 
@@ -1851,9 +1840,6 @@ sub sendSkillUseLoc {
 			pack("C*", 0x3D, 0xF8, 0xFA, 0x12, 0x00, 0x18, 0xEE) .
 			pack("v*", $y);
 
-	} elsif ($self->{serverType} == 10) {
-		$msg = pack("C2 x3 v1 x2 v1 x1 v1 x6 v1", 0x16, 0x01, $lv, $ID, $x, $y);
-		
 	} elsif ($self->{serverType} == 11) {
 		$msg = pack("C*", 0x16, 0x01, 0x7F, 0x00, 0x04, 0xFA) .
 			pack("v", $lv) .
@@ -1880,9 +1866,7 @@ sub sendSkillUseLoc {
 }
 
 sub sendStorageAdd {
-	my $self = shift;
-	my $index = shift;
-	my $amount = shift;
+	my ($self, $index, $amount) = @_;
 	my $msg;
 	if ($self->{serverType} == 0) {
 		$msg = pack("C*", 0xF3, 0x00) . pack("v*", $index) . pack("V*", $amount);
@@ -1930,9 +1914,6 @@ sub sendStorageAdd {
 			pack("x12") .
 			pack("V*", $amount);
 
-	} elsif ($self->{serverType} == 10) {
-		$msg = pack("C2 x5 v1 x1 V1", 0xF3, 0x00, $index, $amount);
-		
 	} elsif ($self->{serverType} == 11) {
 		$msg = pack("C*", 0xF3, 0x00, 0xEA, 0x73, 0x50, 0xF8) .
 			pack("v", $index) .
@@ -2029,9 +2010,6 @@ sub sendStorageGet {
 			pack("v*", $index) . pack("x9") .
 			pack("V*", $amount);
 
-	} elsif ($self->{serverType} == 10) {
-		$msg = pack("C2 x12 v1 x2 V1", 0xF5, 0x00, $index, $amount);
-		
 	} elsif ($self->{serverType} == 11) {
 		$msg = pack("C*", 0xF5, 0x00, 0xCC, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00) .
 			pack("v*", $index) .
@@ -2277,9 +2255,6 @@ sub sendTake {
 		# the variable keys included in the packets.
 		$msg = pack("C*", 0xf5, 0x00) . pack("x7") . $itemID;
 
-	} elsif ($self->{serverType} == 10) {
-		$msg = pack("C2 x2", 0x9F, 0x00) . $itemID;
-		
 	} elsif ($self->{serverType} == 11) {
 		$msg = pack("C*", 0x9F, 0x00, 0x00, 0x00, 0x08) . $itemID;
 
