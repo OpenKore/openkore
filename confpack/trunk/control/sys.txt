@@ -6,22 +6,9 @@ locale
 wxHideConsole 1
 
 
-###### IPC framework settings ######
-# Whether to enable the IPC framework.
-ipc 0
-# Specify the IPC manager's host and port. Only useful if you're running
-# a remote IPC manager. Leave these options empty to let Kore automatically
-# start an IPC manager on localhost when necessary.
-ipc_manager_host
-ipc_manager_port
-
-# The following two options only has effect if you're not using a remote IPC
-# manager. (if you let Kore automatically start the local IPC manager)
-#
-# Bind to this IP. Leave empty to not bind to any IP.
-ipc_manager_bind
-# And start the IPC manager at this port.
-ipc_manager_startAtPort
+###### Bus system settings ######
+# Whether to enable the bus system.
+bus 0
 
 
 ###### Vx interface settings ######
