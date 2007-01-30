@@ -300,25 +300,17 @@ sub checkConnection {
 	if ($conState == 1 && (!$self->{remote_socket} || !$self->{remote_socket}->connected) && timeOut($timeout_ex{'master'}) && !$conState_tries) {
 		my $master = $masterServer = $masterServers{$config{master}};
 
-		if ($master->{serverType} ne '' && $config{serverType} != $master->{serverType}) {
-			main::configModify('serverType', $master->{serverType});
-		}
-		if ($master->{chatLangCode} ne '' && $config{chatLangCode} != $master->{chatLangCode}) {
-			main::configModify('chatLangCode', $master->{chatLangCode});
-		}
-		if ($master->{storageEncryptKey} ne '' && $config{storageEncryptKey} ne $master->{storageEncryptKey}) {
-			main::configModify('storageEncryptKey', $master->{storageEncryptKey});
+		foreach my $serverOption ('serverType', 'chatLangCode', 'storageEncryptKey', 'gameGuard', 'charBlockSize',
+					'paddedPackets', 'paddedPackets_attackID', 'paddedPackets_skillUseID',
+					'mapServer_ip', 'mapServer_port') {
+			if ($master->{$serverOption} ne '' && $config{$serverOption} ne $master->{$serverOption}) {
+				main::configModify($serverOption, $master->{$serverOption});
+			}
 		}
 		if ($master->{serverEncoding} ne '' && $config{serverEncoding} ne $master->{serverEncoding}) {
 			main::configModify('serverEncoding', $master->{serverEncoding});
 		} elsif ($config{serverEncoding} eq '') {
 			main::configModify('serverEncoding', 'Western');
-		}
-		if ($master->{gameGuard} ne '' && $config{gameGuard} != $master->{gameGuard}) {
-			main::configModify('gameGuard', $master->{gameGuard});
-		}
-		if ($master->{charBlockSize} ne '' && $config{charBlockSize} != $master->{charBlockSize}) {
-			main::configModify('charBlockSize', $master->{charBlockSize});
 		}
 
 		message T("Connecting to Account Server...\n", "connection");
