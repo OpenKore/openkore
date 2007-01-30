@@ -122,7 +122,6 @@ sub iterate {
 
 	Misc::checkValidity("AI part 1.1");
 	processAutoBreakTime();
-	processWaypoint();
 	processDead();
 	processStorageGet();
 	processCartAdd();
@@ -1365,57 +1364,6 @@ sub processAutoBreakTime {
 	}
 }
 
-##### WAYPOINT ####
-sub processWaypoint {
-	if (AI::action eq "waypoint") {
-		my $args = AI::args;
-
-		if (defined $args->{walkedTo}) {
-			message TF("Arrived at waypoint %s\n",$args->{walkedTo}), "waypoint";
-			Plugins::callHook('waypoint/arrived', {
-				points => $args->{points},
-				index => $args->{walkedTo}
-			});
-			delete $args->{walkedTo};
-
-		} elsif ($args->{index} > -1 && $args->{index} < @{$args->{points}}) {
-			# Walk to the next point
-			my $point = $args->{points}[$args->{index}];
-			message TF("Walking to waypoint %s: %s(%s): %s,%s\n", $args->{index}, $maps_lut{$point->{map}}, $point->{map}, $point->{x}, $point->{y}), "waypoint";
-			$args->{walkedTo} = $args->{index};
-			$args->{index} += $args->{inc};
-
-			my $result = ai_route($point->{map}, $point->{x}, $point->{y},
-				attackOnRoute => $args->{attackOnRoute},
-				tags => "waypoint");
-			if (!$result) {
-				error TF("Unable to calculate how to walk to %s (%s, %s)\n", $point->{map}, $point->{x}, $point->{y});
-				AI::dequeue;
-			}
-
-		} else {
-			# We're at the end of the waypoint.
-			# Figure out what to do now.
-			if (!$args->{whenDone}) {
-				AI::dequeue;
-
-			} elsif ($args->{whenDone} eq 'repeat') {
-				$args->{index} = 0;
-
-			} elsif ($args->{whenDone} eq 'reverse') {
-				if ($args->{inc} < 0) {
-					$args->{inc} = 1;
-					$args->{index} = 1;
-					$args->{index} = 0 if ($args->{index} > $#{$args->{points}});
-				} else {
-					$args->{inc} = -1;
-					$args->{index} -= 2;
-					$args->{index} = 0 if ($args->{index} < 0);
-				}
-			}
-		}
-	}
-}
 
 ##### DEAD #####
 sub processDead {

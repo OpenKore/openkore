@@ -1,4 +1,5 @@
 CalcMapRoute.pm
+CheckPoints.pm
 FollowActor.pm
 MapRoute.pm
 Move.pm
