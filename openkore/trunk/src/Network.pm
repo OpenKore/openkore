@@ -35,10 +35,12 @@ use Modules 'register';
 # 2.5 (set by parseMsg()): Just passed character selection; next 4 bytes will be
 #      the account ID
 
-use constant NOT_CONNECTED => 1;
-use constant CONNECTED_TO_MASTER_SERVER => 2;
-use constant CONNECTED_TO_LOGIN_SERVER => 3;
-use constant CONNECTED_TO_CHAR_SERVER => 4;
-use constant IN_GAME => 5;
+use constant {
+	NOT_CONNECTED              => 1,
+	CONNECTED_TO_MASTER_SERVER => 2,
+	CONNECTED_TO_LOGIN_SERVER  => 3,
+	CONNECTED_TO_CHAR_SERVER   => 4,
+	IN_GAME                    => 5
+};
 
 1;
