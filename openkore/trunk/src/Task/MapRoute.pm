@@ -109,17 +109,17 @@ sub activate {
 sub iterate {
 	my ($self) = @_;
 	return if (!$self->SUPER::iterate() || $net->getState() != Network::IN_GAME);
-	return if (!$field{name} || !defined $char->{pos_to}{x} || !defined $char->{pos_to}{y});
+	return if (!$field || !defined $char->{pos_to}{x} || !defined $char->{pos_to}{y});
 
 	my @solution;
 	if (@{$self->{mapSolution}} == 0) {
 		$self->setDone();
 		debug "Map Router has finished traversing the map solution\n", "route";
 
-	} elsif ( $field{name} ne $self->{mapSolution}[0]{map}
+	} elsif ( $field->name() ne $self->{mapSolution}[0]{map}
 	     || ( $self->{mapChanged} && !$self->{teleport} ) ) {
 		# Solution Map does not match current map
-		debug "Current map $field{name} does not match solution [ $self->{mapSolution}[0]{portal} ].\n", "route";
+		debug "Current map " . $field->name() . " does not match solution [ $self->{mapSolution}[0]{portal} ].\n", "route";
 		delete $self->{substage};
 		delete $self->{timeout};
 		delete $self->{mapChanged};
@@ -138,7 +138,7 @@ sub iterate {
 					# NPC sequence is a failure
 					# We delete that portal and try again
 					delete $portals_lut{"$self->{mapSolution}[0]{map} $self->{mapSolution}[0]{pos}{x} $self->{mapSolution}[0]{pos}{y}"};
-					warning TF("Unable to talk to NPC at %s (%s,%s).\n", $field{name}, $self->{mapSolution}[0]{pos}{x}, $self->{mapSolution}[0]{pos}{y}), "route";
+					warning TF("Unable to talk to NPC at %s (%s,%s).\n", $field->name(), $self->{mapSolution}[0]{pos}{x}, $self->{mapSolution}[0]{pos}{y}), "route";
 					$self->initMapCalculator();	# redo MAP router
 				}
 			}
@@ -150,7 +150,7 @@ sub iterate {
 				$self->{substage} = 'Waiting for Warp';
 				$self->{old_x} = $char->{pos_to}{x};
 				$self->{old_y} = $char->{pos_to}{y};
-				$self->{old_map} = $field{name};
+				$self->{old_map} = $field->name();
 				my $task = new Task::TalkNPC(
 					x => $self->{mapSolution}[0]{pos}{x},
 					y => $self->{mapSolution}[0]{pos}{y},
@@ -158,7 +158,7 @@ sub iterate {
 				$self->setSubtask($task);
 			} else {
 				error TF("Insufficient zenny to pay for service at %s (%s,%s).\n",
-					$field{name}, $self->{mapSolution}[0]{pos}{x},
+					$field->name(), $self->{mapSolution}[0]{pos}{x},
 					$self->{mapSolution}[0]{pos}{y}), "route";
 				$self->initMapCalculator(); # Redo MAP router
 			}
@@ -168,7 +168,7 @@ sub iterate {
 			debug "MapRoute - We spent too much time; bailing out.\n", "route";
 			$self->setError(TOO_MUCH_TIME, "Too much time spent on route traversal.");
 
-		} elsif ( Task::Route->getRoute(\@solution, \%field, $char->{pos_to}, $self->{mapSolution}[0]{pos}) ) {
+		} elsif ( Task::Route->getRoute(\@solution, $field, $char->{pos_to}, $self->{mapSolution}[0]{pos}) ) {
 			# NPC is reachable from current position
 			# >> Then "route" to it
 			debug "Walking towards the NPC\n", "route";
@@ -185,7 +185,7 @@ sub iterate {
 		} else {
 			# Error, NPC is not reachable from current pos
 			debug "CRITICAL ERROR: NPC is not reachable from current location.\n", "route";
-			error TF("Unable to walk from %s (%s,%s) to NPC at (%s,%s).\n", $field{name}, $char->{pos_to}{x}, $char->{pos_to}{y}, $self->{mapSolution}[0]{pos}{x}, $self->{mapSolution}[0]{pos}{y}), "route";
+			error TF("Unable to walk from %s (%s,%s) to NPC at (%s,%s).\n", $field->name(), $char->{pos_to}{x}, $char->{pos_to}{y}, $self->{mapSolution}[0]{pos}{x}, $self->{mapSolution}[0]{pos}{y}), "route";
 			shift @{$self->{mapSolution}};
 		}
 
@@ -203,7 +203,7 @@ sub iterate {
 			debug "We spent too much time; bailing out.\n", "route";
 			$self->setError(TOO_MUCH_TIME, "Too much time spent on route traversal.");
 
-		} elsif ( Task::Route->getRoute(\@solution, \%field, $char->{pos_to}, $self->{mapSolution}[0]{pos}) ) {
+		} elsif ( Task::Route->getRoute(\@solution, $field, $char->{pos_to}, $self->{mapSolution}[0]{pos}) ) {
 			# X,Y is reachable from current position
 			# >> Then "route" to it
 			my $task = new Task::Route(
@@ -219,7 +219,7 @@ sub iterate {
 
 		} else {
 			warning TF("No LOS from %s (%s,%s) to Final Destination at (%s,%s).\n",
-				$field{name}, $char->{pos_to}{x}, $char->{pos_to}{y},
+				$field->name(), $char->{pos_to}{x}, $char->{pos_to}{y},
 				$self->{mapSolution}[0]{pos}{x},
 				$self->{mapSolution}[0]{pos}{y}), "route";
 			error TF("Cannot reach (%s,%s) from current position.\n",
@@ -245,8 +245,8 @@ sub iterate {
 			# Teleport until we're close enough to the portal
 			$self->{teleport} = $config{route_teleport} if (!defined $self->{teleport});
 
-			if ($self->{teleport} && !$cities_lut{"$field{name}.rsw"}
-			&& !existsInList($config{route_teleport_notInMaps}, $field{name})
+			if ($self->{teleport} && !$cities_lut{$field->name() . ".rsw"}
+			&& !existsInList($config{route_teleport_notInMaps}, $field->name())
 			&& ( !$config{route_teleport_maxTries} || $self->{teleportTries} <= $config{route_teleport_maxTries} )) {
 				my $minDist = $config{route_teleport_minDistance};
 
@@ -266,7 +266,7 @@ sub iterate {
 					my $dist = new PathFinding(
 						start => $char->{pos_to},
 						dest => $portal->{pos},
-						field => \%field
+						field => $field
 					)->runcount;
 					debug "Distance to portal ($portal->{portal}) is $dist\n", "route_teleport";
 
@@ -295,7 +295,7 @@ sub iterate {
 			}
 
 			if ($walk) {
-				if ( Task::Route->getRoute( \@solution, \%field, $char->{pos_to}, $self->{mapSolution}[0]{pos} ) ) {
+				if ( Task::Route->getRoute( \@solution, $field, $char->{pos_to}, $self->{mapSolution}[0]{pos} ) ) {
 					# Portal is reachable from current position
 					# >> Then "route" to it
 					debug "Portal route within same map.\n", "route";
@@ -310,7 +310,10 @@ sub iterate {
 					$self->setSubtask($task);
 
 				} else {
-					warning TF("No LOS from %s (%s,%s) to Portal at (%s,%s).\n", $field{'name'}, $char->{'pos_to'}{'x'}, $char->{'pos_to'}{'y'}, $self->{mapSolution}[0]{'pos'}{'x'}, $self->{mapSolution}[0]{'pos'}{'y'}), "route";
+					warning TF("No LOS from %s (%s,%s) to Portal at (%s,%s).\n",
+						$field->name(), $char->{pos_to}{x}, $char->{pos_to}{y},
+						$self->{mapSolution}[0]{pos}{x}, $self->{mapSolution}[0]{pos}{y}),
+						"route";
 					error T("Cannot reach portal from current position\n"), "route";
 					shift @{$self->{mapSolution}};
 				}
@@ -322,7 +325,7 @@ sub iterate {
 sub initMapCalculator {
 	my ($self) = @_;
 	my $task = new Task::CalcMapRoute(
-		sourceMap => $field{name},
+		sourceMap => $field->name(),
 		sourceX => $char->{pos_to}{x},
 		sourceY => $char->{pos_to}{y},
 		map => $self->{dest}{map},
@@ -336,6 +339,22 @@ sub subtaskDone {
 	my ($self, $task) = @_;
 	if ($task->isa('Task::CalcMapRoute') && !$task->getError()) {
 		$self->{mapSolution} = $task->getRoute();
+		if (@{$self->{mapSolution}} == 0) {
+			# The map solution is empty, meaning that the destination
+			# is on the same map and that we can walk there directly.
+			my $task = new Task::Route(
+				x => $self->{dest}{pos}{x},
+				y => $self->{dest}{pos}{y},
+				maxTime => $self->{maxTime},
+				avoidWalls => $self->{avoidWalls},
+				distFromGoal => $self->{distFromGoal},
+				pyDistFromGoal => $self->{pyDistFromGoal}
+			);
+			$self->setSubtask($task);
+		}
+
+	} elsif (my $error = $task->getError()) {
+		$self->setError(1234, $error->{message});
 	}
 }
 

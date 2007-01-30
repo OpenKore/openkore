@@ -25,7 +25,7 @@ use Task;
 use base qw(Task);
 use Task::Route;
 use Field;
-use Globals qw(%config %field %portals_lut %portals_los %timeout $char %routeWeights);
+use Globals qw(%config $field %portals_lut %portals_los %timeout $char %routeWeights);
 use Translation qw(T TF);
 use Log qw(debug);
 use Utils qw(timeOut);
@@ -64,7 +64,7 @@ sub new {
 		ArgumentException->throw(error => "Invalid arguments.");
 	}
 
-	$self->{source}{map} = defined($args{sourceMap}) ? $args{sourceMap} : $field{name};
+	$self->{source}{map} = defined($args{sourceMap}) ? $args{sourceMap} : $field->name();
 	$self->{source}{x} = defined($args{sourceX}) ? $args{sourceX} : $char->{pos_to}{x};
 	$self->{source}{y} = defined($args{sourceY}) ? $args{sourceY} : $char->{pos_to}{y};
 	$self->{dest}{map} = $args{map};
@@ -100,17 +100,27 @@ sub iterate {
 		my $openlist = $self->{openlist};
 		my $closelist = $self->{closelist};
 		eval {
-			$self->{dest}{field} = new Field($self->{dest}{map});
+			$self->{dest}{field} = new Field(name => $self->{dest}{map});
 		};
-		if ($@) {
+		if (caught('FileNotFoundException', 'IOException')) {
 			$self->setError(1234, "Cannot load field $self->{dest}{map}.");
+			return;
+		} elsif ($@) {
+			die $@;
+		}
+
+		# Check whether destination is walkable from the starting point.
+		if (Task::Route->getRoute(undef, $field, $self->{source}, $self->{dest}{pos}, 0)) {
+			$self->{mapSolution} = [];
+			$self->setDone();
+			return;
 		}
 
 		# Initializes the openlist with portals walkable from the starting point.
 		foreach my $portal (keys %portals_lut) {
 			my $entry = $portals_lut{$portal};
-			next if ($entry->{source}{map} ne $field{name});
-			my $ret = Task::Route->getRoute($self->{solution}, \%field, $self->{source}, $entry->{source});
+			next if ($entry->{source}{map} ne $field->name());
+			my $ret = Task::Route->getRoute($self->{solution}, $field, $self->{source}, $entry->{source});
 			if ($ret) {
 				foreach my $dest (keys %{$entry->{dest}}) {
 					my $penalty = int(($entry->{dest}{$dest}{steps} ne '') ? $routeWeights{NPC} : $routeWeights{PORTAL});
@@ -139,7 +149,7 @@ sub iterate {
 			my $destpos = "$self->{dest}{pos}{x},$self->{dest}{pos}{y}";
 			$destpos = "($destpos)" if ($destpos ne "");
 			$self->setError(0, TF("Cannot calculate a route from %s (%d,%d) to %s %s",
-				$field{name}, $self->{source}{x}, $self->{source}{y},
+				$field->name(), $self->{source}{x}, $self->{source}{y},
 				$self->{dest}{map}, $destpos));
 			debug "CalcMapRoute failed.\n", "route";
 		}
@@ -167,6 +177,7 @@ sub getRouteString {
 	foreach my $node (@{$self->{mapSolution}}) {
 		push @maps, $node->{map};
 	}
+	push @maps, "$self->{dest}{map}";
 	return join(' -> ', @maps);
 }
 
