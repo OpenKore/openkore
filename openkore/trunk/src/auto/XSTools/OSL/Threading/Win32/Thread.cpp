@@ -18,6 +18,9 @@
  *  MA  02110-1301  USA
  */
 
+// Do not compile this file independently, it's supposed to be automatically
+// included by another source file.
+
 class Win32Thread: public ThreadImplementation {
 private:
 	HANDLE thread;
