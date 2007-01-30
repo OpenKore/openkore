@@ -46,7 +46,6 @@ our @EXPORT = (
 	ai_skillUse
 	ai_skillUse2
 	ai_storageAutoCheck
-	ai_waypoint
 	cartGet
 	cartAdd
 	ai_talkNPC
@@ -676,31 +675,6 @@ sub ai_storageAutoCheck {
 	}
 	return 0;
 }
-
-##
-# ai_waypoint(points, [whenDone, attackOnRoute])
-# points: reference to an array containing waypoint information. FileParsers::parseWaypoint() creates such an array.
-# whenDone: specifies what to do when the waypoint has finished. Possible values are: 'repeat' (repeat waypoint) or 'reverse' (repeat waypoint, but in opposite direction).
-# attackOnRoute: 0 (or not given) if you don't want to attack anything while walking, 1 if you want to attack aggressives, and 2 if you want to attack all monsters.
-#
-# Initialize a waypoint.
-sub ai_waypoint {
-	my %args = (
-		points => shift,
-		index => 0,
-		inc => 1,
-		whenDone => shift,
-		attackOnRoute => shift
-	);
-
-	if ($args{whenDone} && $args{whenDone} ne "repeat" && $args{whenDone} ne "reverse") {
-		error TF("Unknown waypoint argument: %s\n", $args{whenDone});
-		return;
-	}
-	AI::queue("waypoint", \%args);
-}
-
-
 
 
 ##

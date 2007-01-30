@@ -66,6 +66,7 @@ use constant TOO_MUCH_TIME => 1;
 sub new {
 	my $class = shift;
 	my %args = @_;
+	# TODO: do we need a mutex 'npc' too?
 	my $self = $class->SUPER::new(@_, autostop => 1, autofail => 0, mutexes => ['movement']);
 
 	if (!$args{map}) {
