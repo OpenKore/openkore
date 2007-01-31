@@ -45,9 +45,9 @@
 # }
 # </pre>
 #
-# <h3>Example 2: Simple usage</h3>
+# <h3>Example 2: Simple usage - adding functions as callbacks</h3>
 # The @MODULE(ActorList) class is a well-known class which supports events.
-# Whenever you add an Actor to an ActorList, an onAdd event is triggered.
+# Whenever you add an Actor to an ActorList, an <b>onAdd</b> event is triggered.
 # This example shows you how to respond to an onAdd event.
 #
 # This also demonstrates how $CallbackList->add() and $CallbackList->remove()
@@ -68,15 +68,18 @@
 #     print "A monster has been added to the monsters list!\n";
 # }
 # </pre>
-#
-# <h3>Object oriented</h3>
 package CallbackList;
 
 use strict;
 use Carp::Assert;
 use Scalar::Util;
 
-# Field identifiers for items inside $CallbackList->{callbacks}
+# Field identifiers for CallbackList classes.
+use constant {
+	CALLBACKS => 0
+};
+
+# Field identifiers for items inside $CallbackList->[CALLBACKS]
 use constant {
 	FUNCTION => 0,
 	ID       => 1,
@@ -96,40 +99,34 @@ use constant {
 #         Invariant: defined(ID)
 #
 #     Object OBJECT:
-#         May be undef.
+#         The callback's class object. May not exist (if no object was passed to
+#         add()) or be undef (if the object was destroyed).
 #
 #     Scalar USERDATA:
 #         May be undef.
 # }
 
 ##
-# CallbackList CallbackList->new(String name)
-# name: A name for the event this CallbackList represents.
-# Requires: defined($name)
+# CallbackList CallbackList->new()
 # Ensures:
 #     $self->size() == 0
-#     $self->getName() eq $name
 #
 # Create a new CallbackList object.
 sub new {
 	my ($class, $name) = @_;
-	my %self = (
-		# String name
-		#
-		# Invariant: defined(name)
-		name => $name,
+	my @self;
 
-		# Array<CallbackItem> callbacks
-		#
-		# Invariant:
-		#     defined(callbacks)
-		#     for all i in [0 .. callbacks.size - 1]:
-		#         defined($callbacks[i])
-		#         ${callbacks[i][ID]} == i
-		#         
-		callbacks => []
-	);
-	return bless \%self, $class;
+	# Array<CallbackItem> CALLBACKS:
+	#
+	# An array of callbacks that are currently registered.
+	# Invariant:
+	#     defined(CALLBACKS)
+	#         for all i in [0 .. CALLBACKS.size - 1]:
+	#             defined(CALLBACKS[i])
+	#             ${CALLBACKS[i][ID]} == i
+	$self[CALLBACKS] = [];
+
+	return bless \@self, $class;
 }
 
 ##
@@ -161,20 +158,12 @@ sub add {
 	if (defined $userData) {
 		$item[USERDATA] = $userData;
 	}
-	push @{$self->{callbacks}}, \@item;
+	push @{$self->[CALLBACKS]}, \@item;
 
-	my $index = @{$self->{callbacks}} - 1;
+	my $index = @{$self->[CALLBACKS]} - 1;
 	my $ID = \$index;
 	$item[ID] = $ID;
 	return $ID;
-}
-
-##
-# boolean $CallbackList->empty()
-#
-# Check whether there are any callbacks in this CallbackList.
-sub empty {
-	return @{$_[0]->{callbacks}} == 0;
 }
 
 ##
@@ -186,9 +175,9 @@ sub empty {
 sub remove {
 	my ($self, $ID) = @_;
 	assert(defined $ID) if DEBUG;
-	return if (!defined($$ID) || $$ID < 0 || $$ID >= @{$self->{callbacks}});
+	return if (!defined($$ID) || $$ID < 0 || $$ID >= @{$self->[CALLBACKS]});
 
-	my $callbacks = $self->{callbacks};
+	my $callbacks = $self->[CALLBACKS];
 	for (my $i = $$ID + 1; $i < @{$callbacks}; $i++) {
 		${$callbacks->[$i][ID]}--;
 	}
@@ -211,8 +200,21 @@ sub remove {
 # - $source and $argument are the parameters passed to this method.
 # `l`
 sub call {
-	foreach my $item (@{$_[0]->{callbacks}}) {
-		$item->[FUNCTION]->($item->[OBJECT], $_[1], $_[2], $item->[USERDATA]);
+	my $self = $_[0];
+	my @IDsToRemove;
+
+	foreach my $item (@{$self->[CALLBACKS]}) {
+		if (exists $item->[OBJECT] && !defined $item->[OBJECT]) {
+			# This object was destroyed, so remove the corresponding callback.
+			push @IDsToRemove, $item->[ID];
+
+		} else {
+			$item->[FUNCTION]->($item->[OBJECT], $_[1], $_[2], $item->[USERDATA]);
+		}
+	}
+
+	foreach my $ID (@IDsToRemove) {
+		$self->remove($ID);
 	}
 }
 
@@ -222,17 +224,15 @@ sub call {
 #
 # Returns the number of registered callbacks in this list.
 sub size {
-	return @{$_[0]->{callbacks}};
+	return @{$_[0]->[CALLBACKS]};
 }
 
 ##
-# String $CallbackList->getName()
-# Ensures: defined(result)
+# boolean $CallbackList->empty()
 #
-# Returns the name of the event this CallbackList represents, as passed to
-# the constructor.
-sub getName {
-	return $_[0]->{name};
+# Check whether there are any callbacks in this CallbackList.
+sub empty {
+	return @{$_[0]->[CALLBACKS]} == 0;
 }
 
 ##
@@ -242,14 +242,10 @@ sub getName {
 # Create a deep copy of this CallbackList.
 sub deepCopy {
 	my ($self) = @_;
-	my $copy = new CallbackList($self->{name});
-	foreach my $callback (@{$self->{callbacks}}) {
-		my @cbCopy;
-		$cbCopy[FUNCTION] = $callback->[FUNCTION];
-		$cbCopy[ID]       = $callback->[ID];
-		$cbCopy[OBJECT]   = $callback->[OBJECT];
-		$cbCopy[USERDATA] = $callback->[USERDATA];
-		push @{$copy->{callbacks}}, \@cbCopy;
+	my $copy = new CallbackList();
+	foreach my $item (@{$self->[CALLBACKS]}) {
+		my @callbackItemCopy = @{$item};
+		push @{$copy->[CALLBACKS]}, \@callbackItemCopy;
 	}
 	return $copy;
 }
@@ -261,10 +257,9 @@ sub deepCopy {
 sub checkValidity {
 	my ($self) = @_;
 
-	assert defined($self->{name});
-	assert defined($self->{callbacks});
-	for (my $i = 0; $i < @{$self->{callbacks}}; $i++) {
-		my $k = $self->{callbacks}[$i];
+	assert defined($self->[CALLBACKS]);
+	for (my $i = 0; $i < @{$self->[CALLBACKS]}; $i++) {
+		my $k = $self->[CALLBACKS][$i];
 		assert defined($k);
 		assert defined($k->[FUNCTION]);
 		assert defined($k->[ID]);
