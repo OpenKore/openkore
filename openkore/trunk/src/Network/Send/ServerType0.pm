@@ -883,9 +883,6 @@ sub sendItemUse {
 			pack("x9") .
 			$targetID;
 
-	} elsif ($self->{serverType} == 10) {
-		$msg = pack("C2 x2 v1 x4", 0xA7, 0x00, $ID) . $targetID;
-	
 	} elsif ($self->{serverType} == 11) {
 		$msg = pack("C*", 0xA7, 0x00, 0x32, 0x06, 0x1C) . 
 			pack("v*", $ID) .
@@ -942,9 +939,6 @@ sub sendLook {
 			pack("C*", $head, 0x00) . pack("x2") .
 			pack("C*", $body);
 
-	} elsif ($self->{serverType} == 10) {
-		$msg = pack("C2 x5 C1 x2 C1", 0x9B, 0x00, $head, 0x00, $body);
-		
 	} elsif ($self->{serverType} == 11) { 
 		$msg = pack("C*", 0x9B, 0x00, 0x33, 0x06, 0x00, 0x00, $head,
 			0x00, 0x08, 0xA0, 0x30, 0x03, 0x00, 0x00, $body);

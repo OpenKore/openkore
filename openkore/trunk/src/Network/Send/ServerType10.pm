@@ -16,6 +16,7 @@ use strict;
 use Network::Send::ServerType0;
 use base qw(Network::Send::ServerType0);
 
+use Globals qw($char);
 use Plugins;
 use Log qw(debug);
 use Utils qw(getTickCount getCoordString getHex);
@@ -55,6 +56,22 @@ sub sendGetPlayerInfo {
 	my $msg = pack("C*", 0xF5, 0x00) . $ID . pack("C*", 0x00, 0x00, 0x00); 
 	$self->sendToServer($msg);
 	debug "Sent get player info: ID - ".getHex($ID)."\n", "sendPacket", 2;
+}
+
+sub sendItemUse {
+	my ($self, $ID, $targetID) = @_;
+	my $msg = pack("C*", 0x9F, 0x00) . $targetID . pack("v",$ID);
+	$self->sendToServer($msg);
+	debug "Item Use: $ID\n", "sendPacket", 2;
+}
+
+sub sendLook {
+	my ($self, $body, $head) = @_;
+	my $msg = pack("C*", 0x90, 0x01, $body, $head, 0x00);
+	$self->sendToServer($msg);
+	debug "Sent look: $body $head\n", "sendPacket", 2;
+	$char->{look}{head} = $head;
+	$char->{look}{body} = $body;
 }
 
 sub sendMapLogin {
