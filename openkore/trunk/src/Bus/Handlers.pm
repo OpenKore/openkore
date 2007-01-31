@@ -38,7 +38,7 @@ sub DESTROY {
 }
 
 sub process {
-	my ($self, undef, undef, $args) = @_;
+	my ($self, undef, $args) = @_;
 
 	my $MID = $args->{messageID};
 	$args = $args->{args};

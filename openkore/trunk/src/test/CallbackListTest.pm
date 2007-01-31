@@ -76,12 +76,12 @@ sub testAddAndCall {
 sub testParams {
 	my $sub;
 	my $count = 0;
-	my ($object, $source, $l, $arg, $userData);
+	my ($object, $source, $arg, $userData);
 
 	init();
 
 	$sub = sub {
-		($object, $source, $l, $arg, $userData) = @_;
+		($object, $source, $arg, $userData) = @_;
 		$count++;
 	};
 	$list->add($self, $sub);
@@ -91,7 +91,6 @@ sub testParams {
 	is($count, 1);
 	is($object, $self);
 	is($source, $self);
-	is($l, $list);
 	is($arg, 123);
 	ok(!defined($userData));
 
@@ -104,7 +103,6 @@ sub testParams {
 	is($count, 3);
 	is($object, $self);
 	ok(!defined $source);
-	is($l, $list);
 	is($arg, "abc");
 	is($userData, "my user data");
 
@@ -115,7 +113,6 @@ sub testParams {
 	is($count, 6);
 	ok(!defined $object);
 	ok($source == $self);
-	is($l, $list);
 	ok(!defined($arg));
 	is($userData, 456);
 }
