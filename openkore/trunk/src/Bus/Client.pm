@@ -47,29 +47,28 @@ use constant {
 sub new {
 	my $class = shift;
 	my %args = @_;
-	my %self;
-	my $this = bless \%self, $class;
+	my $self = bless {}, $class;
 
-	$self{host} = $args{host};
-	$self{port} = $args{port};
-	$self{userAgent}   = $args{userAgent} || "OpenKore";
-	$self{privateOnly} = defined($args{privateOnly}) ? $args{privateOnly} : 0;
+	$self->{host} = $args{host};
+	$self->{port} = $args{port};
+	$self->{userAgent}   = $args{userAgent} || "OpenKore";
+	$self->{privateOnly} = defined($args{privateOnly}) ? $args{privateOnly} : 0;
 
 	# A queue containing messages to be sent next time we're
 	# connected to the bus.
-	$self{sendQueue} = [];
-	$self{seq} = 0;
-	$self{onMessageReceived} = new CallbackList("onMessageReceived");
-	$self{onDialogRequested} = new CallbackList("onDialogRequested");
+	$self->{sendQueue} = [];
+	$self->{seq} = 0;
+	$self->{onMessageReceived} = new CallbackList();
+	$self->{onDialogRequested} = new CallbackList();
 
 	if (!$args{host} && !$args{port}) {
-		$self{starter} = new Bus::Server::Starter();
-		$self{state} = STARTING_SERVER;
+		$self->{starter} = new Bus::Server::Starter();
+		$self->{state} = STARTING_SERVER;
 	} else {
-		$this->reconnect();
+		$self->reconnect();
 	}
 
-	return $this;
+	return $self;
 }
 
 sub iterate {

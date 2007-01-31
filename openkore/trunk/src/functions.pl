@@ -226,7 +226,7 @@ sub initNetworking {
 		my $port = $sys{bus_server_port};
 		$host = undef if ($host eq '');
 		$port = undef if ($port eq '');
-		$bus = new Bus::Client(undef, $host, $port);
+		$bus = new Bus::Client(host => $host, port => $port);
 		our $busMessageHandler = new Bus::Handlers($bus);
 	}
 }
