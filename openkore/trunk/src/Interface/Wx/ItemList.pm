@@ -103,7 +103,7 @@ sub _getActorForIndex {
 
 
 sub _onAdd {
-	my ($self, undef, undef, $arg) = @_;
+	my ($self, undef, $arg) = @_;
 	my ($actor, $index) = @{$arg};
 	my $addr = Scalar::Util::refaddr($actor);
 
@@ -115,7 +115,7 @@ sub _onAdd {
 }
 
 sub _onRemove {
-	my ($self, undef, undef, $arg) = @_;
+	my ($self, undef, $arg) = @_;
 	my ($actor, $index) = @{$arg};
 	my $addr = Scalar::Util::refaddr($actor);
 
