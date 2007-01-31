@@ -74,11 +74,6 @@ use strict;
 use Carp::Assert;
 use Scalar::Util;
 
-# Field identifiers for CallbackList classes.
-use constant {
-	CALLBACKS => 0
-};
-
 # Field identifiers for items inside $CallbackList->[CALLBACKS]
 use constant {
 	FUNCTION => 0,
@@ -88,6 +83,13 @@ use constant {
 };
 
 ### CATEGORY: Class CallbackList
+
+# class CallbackList is_a Array<CallbackItem>
+#
+# Invariant:
+#     for all i in [0 .. size - 1]:
+#         defined(self[i])
+#         ${self[i][ID]} == i
 
 # struct CallbackItem is_a Array {
 #     Function FUNCTION:
@@ -113,20 +115,8 @@ use constant {
 #
 # Create a new CallbackList object.
 sub new {
-	my ($class, $name) = @_;
-	my @self;
-
-	# Array<CallbackItem> CALLBACKS:
-	#
-	# An array of callbacks that are currently registered.
-	# Invariant:
-	#     defined(CALLBACKS)
-	#         for all i in [0 .. CALLBACKS.size - 1]:
-	#             defined(CALLBACKS[i])
-	#             ${CALLBACKS[i][ID]} == i
-	$self[CALLBACKS] = [];
-
-	return bless \@self, $class;
+	my ($class) = @_;
+	return bless [], $class;
 }
 
 ##
@@ -158,9 +148,9 @@ sub add {
 	if (defined $userData) {
 		$item[USERDATA] = $userData;
 	}
-	push @{$self->[CALLBACKS]}, \@item;
+	push @{$self}, \@item;
 
-	my $index = @{$self->[CALLBACKS]} - 1;
+	my $index = @{$self} - 1;
 	my $ID = \$index;
 	$item[ID] = $ID;
 	return $ID;
@@ -175,9 +165,9 @@ sub add {
 sub remove {
 	my ($self, $ID) = @_;
 	assert(defined $ID) if DEBUG;
-	return if (!defined($$ID) || $$ID < 0 || $$ID >= @{$self->[CALLBACKS]});
+	return if (!defined($$ID) || $$ID < 0 || $$ID >= @{$self});
 
-	my $callbacks = $self->[CALLBACKS];
+	my $callbacks = $self;
 	for (my $i = $$ID + 1; $i < @{$callbacks}; $i++) {
 		${$callbacks->[$i][ID]}--;
 	}
@@ -200,21 +190,23 @@ sub remove {
 # - $source and $argument are the parameters passed to this method.
 # `l`
 sub call {
-	my $self = $_[0];
-	my @IDsToRemove;
+	my $IDsToRemove;
 
-	foreach my $item (@{$self->[CALLBACKS]}) {
+	foreach my $item (@{$_[0]}) {
 		if (exists $item->[OBJECT] && !defined $item->[OBJECT]) {
 			# This object was destroyed, so remove the corresponding callback.
-			push @IDsToRemove, $item->[ID];
+			$IDsToRemove ||= [];	# We use a reference to an array as micro-optimization.
+			push @{$IDsToRemove}, $item->[ID];
 
 		} else {
 			$item->[FUNCTION]->($item->[OBJECT], $_[1], $_[2], $item->[USERDATA]);
 		}
 	}
 
-	foreach my $ID (@IDsToRemove) {
-		$self->remove($ID);
+	if ($IDsToRemove) {
+		foreach my $ID (@{$IDsToRemove}) {
+			$_[0]->remove($ID);
+		}
 	}
 }
 
@@ -224,7 +216,7 @@ sub call {
 #
 # Returns the number of registered callbacks in this list.
 sub size {
-	return @{$_[0]->[CALLBACKS]};
+	return @{$_[0]};
 }
 
 ##
@@ -232,7 +224,7 @@ sub size {
 #
 # Check whether there are any callbacks in this CallbackList.
 sub empty {
-	return @{$_[0]->[CALLBACKS]} == 0;
+	return @{$_[0]} == 0;
 }
 
 ##
@@ -243,9 +235,9 @@ sub empty {
 sub deepCopy {
 	my ($self) = @_;
 	my $copy = new CallbackList();
-	foreach my $item (@{$self->[CALLBACKS]}) {
+	foreach my $item (@{$self}) {
 		my @callbackItemCopy = @{$item};
-		push @{$copy->[CALLBACKS]}, \@callbackItemCopy;
+		push @{$copy}, \@callbackItemCopy;
 	}
 	return $copy;
 }
@@ -257,9 +249,8 @@ sub deepCopy {
 sub checkValidity {
 	my ($self) = @_;
 
-	assert defined($self->[CALLBACKS]);
-	for (my $i = 0; $i < @{$self->[CALLBACKS]}; $i++) {
-		my $k = $self->[CALLBACKS][$i];
+	for (my $i = 0; $i < @{$self}; $i++) {
+		my $k = $self->[$i];
 		assert defined($k);
 		assert defined($k->[FUNCTION]);
 		assert defined($k->[ID]);
