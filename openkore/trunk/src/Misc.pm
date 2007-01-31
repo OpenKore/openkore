@@ -828,7 +828,7 @@ EOF
 
 
 sub actorAdded {
-	my (undef, $source, undef, $arg) = @_;
+	my (undef, $source, $arg) = @_;
 	my ($actor, $index) = @{$arg};
 
 	$actor->{binID} = $index;
@@ -890,7 +890,7 @@ sub actorAdded {
 }
 
 sub actorRemoved {
-	my (undef, $source, undef, $arg) = @_;
+	my (undef, $source, $arg) = @_;
 	my ($actor, $index) = @{$arg};
 
 	my ($type, $list, $hash);

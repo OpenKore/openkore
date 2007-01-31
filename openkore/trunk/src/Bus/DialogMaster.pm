@@ -122,7 +122,7 @@ sub getReply {
 }
 
 sub messageReceived {
-	my ($self, undef, undef, $message) = @_;
+	my ($self, undef, $message) = @_;
 	my $state = $self->{state};
 	my $MID   = $message->{messageID};
 	my $args  = $message->{args};

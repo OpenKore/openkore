@@ -63,7 +63,7 @@ sub reply {
 }
 
 sub messageReceived {
-	my ($self, undef, undef, $message) = @_;
+	my ($self, undef, $message) = @_;
 	my $args = $message->{args};
 	if ($args->{dialogID} eq $self->{dialogID} && $args->{FROM} eq $self->{peerID}) {
 		# We received a new query for this dialog.

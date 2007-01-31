@@ -108,7 +108,7 @@ use constant {
 # Requires: defined($name)
 # Ensures:
 #     $self->size() == 0
-#     getName() eq $name
+#     $self->getName() eq $name
 #
 # Create a new CallbackList object.
 sub new {
@@ -203,7 +203,7 @@ sub remove {
 # Call all callback functions in this CallbackList. Each function
 # $function will be called as follows:
 # <pre>
-# $function->($object, $source, $list, $argument, $userData);
+# $function->($object, $source, $argument, $userData);
 # </pre>
 # `l
 # - $object and $userData are the arguments passed to $CallbackList->add()
@@ -212,7 +212,7 @@ sub remove {
 # `l`
 sub call {
 	foreach my $item (@{$_[0]->{callbacks}}) {
-		$item->[FUNCTION]->($item->[OBJECT], $_[1], $_[0], $_[2], $item->[USERDATA]);
+		$item->[FUNCTION]->($item->[OBJECT], $_[1], $_[2], $item->[USERDATA]);
 	}
 }
 
