@@ -75,7 +75,7 @@
 	<div id="openkore_donation">
 		<div>Support OpenKore:</div>
 		<div><a href="http://www.openkore.com/wiki/index.php/Fund_pool">
-			<div>Learn about</div><div>the Fund Pool</div>
+			<span>Learn about<br>the Fund Pool</span>
 		</a></div>
 	</div>
 </div>
