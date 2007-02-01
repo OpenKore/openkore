@@ -57,7 +57,7 @@ sub testAdd {
 	my $addCalled = 0;
 
 	my $sub = sub {
-		my $arg = $_[3];
+		my $arg = $_[2];
 		ok($arg->[0] == $items[$#items]);
 		$addCalled++;
 	};
@@ -97,7 +97,7 @@ sub testRemove {
 	my ($deletedItem, $deletedIndex);
 
 	my $sub = sub {
-		my $arg = $_[3];
+		my $arg = $_[2];
 		ok($arg->[0] == $deletedItem);
 	};
 	$self->{list}->onRemove()->add(undef, $sub);
