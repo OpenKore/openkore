@@ -93,25 +93,25 @@ sub initHandlers {
 	homun              => \&cmdHomunculus,
 	g                  => \&cmdGuildChat,
 	getplayerinfo      => \&cmdGetPlayerInfo,
-	#GM Commands - Start
-     gmb			    => \&cmdGmb,
-     gmbb			    => \&cmdGmbb,
-     gmnb			    => \&cmdGmnb,
-     gmlb			    => \&cmdGmlb,
-     gmlbb		    => \&cmdGmlbb,
-     gmnlb		    => \&cmdGmnlb,
-     gmmapmove		    => \&cmdGmmapmove,
-     gmcreate		    => \&cmdGmcreate,
-     gmhide		    => \&cmdGmhide,
-     gmwarpto		    => \&cmdGmwarpto,
-     gmsummon		    => \&cmdGmsummon,
-     gmdc			    => \&cmdGmdc,
-     gmresetskill	    => \&cmdGmresetskill,
-     gmresetstate	    => \&cmdGmresetstate,
+	# GM Commands - Start
+	gmb                => \&cmdGmb,
+	gmbb               => \&cmdGmbb,
+	gmnb               => \&cmdGmnb,
+	gmlb               => \&cmdGmlb,
+	gmlbb              => \&cmdGmlbb,
+	gmnlb              => \&cmdGmnlb,
+	gmmapmove          => \&cmdGmmapmove,
+	gmcreate           => \&cmdGmcreate,
+	gmhide             => \&cmdGmhide,
+	gmwarpto           => \&cmdGmwarpto,
+	gmsummon           => \&cmdGmsummon,
+	gmdc               => \&cmdGmdc,
+	gmresetskill       => \&cmdGmresetskill,
+	gmresetstate       => \&cmdGmresetstate,
 	gmmute             => \&cmdGmmute,
 	gmunmute           => \&cmdGmunmute,
 	gmkillall          => \&cmdGmkillall,
-	#GM Commands - End
+	# GM Commands - End
 	guild              => \&cmdGuild,
 	help               => \&cmdHelp,
 	i                  => \&cmdInventory,
@@ -1944,12 +1944,13 @@ sub cmdGmsummon {
 	return unless ($conState == 5);
 
 	if ($args eq '') {
-		error "Usage: gmsummon <player_name>\n";
-		return;
+		error "Usage: gmsummon <player name>\n" .
+			"Summon a player.\n";
+	} elsif ($net->getState() != Network::IN_GAME) {
+		error "You are not logged in the game.\n";
+	} else {
+		$messageSender->sendGmSummon($args);
 	}
-
-	my $packet = pack("C*", 0xBD, 0x01).pack("a24", $args);
-	$messageSender->sendToServer($packet);
 }
 
 sub cmdGmdc {

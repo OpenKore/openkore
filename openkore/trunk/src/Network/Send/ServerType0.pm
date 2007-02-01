@@ -625,6 +625,12 @@ sub sendGetSellList {
 	debug "Sent sell to NPC: ".getHex($ID)."\n", "sendPacket", 2;
 }
 
+sub sendGmSummon {
+	my ($self, $playerName) = @_;
+	my $packet = pack("C*", 0xBD, 0x01) . pack("a24", stringToBytes($playerName));
+	$self->sendToServer($packet);
+}
+
 sub sendGuildAlly {
 	my ($self, $ID, $flag) = @_;
 	my $msg = pack("C*", 0x72, 0x01).$ID.pack("V1", $flag);
