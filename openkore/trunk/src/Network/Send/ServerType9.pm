@@ -1,6 +1,8 @@
 #########################################################################
-#  OpenKore - Packet sending
-#  This module contains functions for sending packets to the server.
+#  OpenKore - Network subsystem
+#  Message sending
+#
+#  Copyright (c) 2005,2006,2007 OpenKore Team
 #
 #  This software is open source, licensed under the GNU General Public
 #  License, version 2.
