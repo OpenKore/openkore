@@ -477,10 +477,10 @@ sub minHeapAdd {
 }
 
 ##
-# shuffleArray(Array array)
+# void shuffleArray(Array* array)
 # array: A reference to an array.
 #
-# This function randomizes the order of the items in the array.
+# Randomize the order of the items in the array.
 sub shuffleArray {
 	my $r_array = shift;
 	my $i = @{$r_array};

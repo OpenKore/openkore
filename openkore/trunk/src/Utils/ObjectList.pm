@@ -101,16 +101,16 @@ sub new {
 		OL_cItems => [],
 
 		# Invariant: defined(onAdd)
-		OL_onAdd => new CallbackList("onAdd"),
+		OL_onAdd => new CallbackList(),
 
 		# Invariant: defined(onRemove)
-		OL_onRemove => new CallbackList("onRemove"),
+		OL_onRemove => new CallbackList(),
 
 		# Invariant: defined(onClearBegin)
-		OL_onClearBegin => new CallbackList("onClearBegin"),
+		OL_onClearBegin => new CallbackList(),
 
 		# Invariant: defined(onClearEnd)
-		OL_onClearEnd => new CallbackList("onClearEnd")
+		OL_onClearEnd => new CallbackList()
 	);
 	return bless \%self, $class;
 }
