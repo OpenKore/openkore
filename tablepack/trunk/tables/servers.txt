@@ -1158,8 +1158,8 @@ serverEncoding Western
 
 ## http://subwaytovenus.free.fr/
 [NiktoutRO (Chaos) Private Server]
-ip 81.93.240.200
-port 6904
+ip 66.90.118.62
+port 5100
 version 5120
 master_version 14
 serverType 0
