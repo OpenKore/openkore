@@ -744,8 +744,6 @@ secureLogin_type 0
 secureLogin_requestCode
 secureLogin_account 0
 serverEncoding Western
-mapServer_ip 222.255.122.36
-mapServer_port 5000
 paddedPackets 1
 paddedPackets_attackID 0x85
 paddedPackets_skillUseID 0xA2
