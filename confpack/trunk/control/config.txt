@@ -312,6 +312,16 @@ homunculus_teleportAuto_dropTargetKS 0
 homunculus_teleportAuto_totalDmg 0
 homunculus_teleportAuto_totalDmgInLock 0
 
+# intimacyMax / Min sets a threshhold of when not to feed your homunculus
+# If intimacy is HIGHER than the minimum or LOWER/EQUAL to the max, we wont feed.
+homunculus_intimacyMax 999
+homunculus_intimacyMin 911
+
+# How long should we wait between feeding? 
+# default: random between 10 and 60 seconds
+homunculus_hungerTimeoutMax 60
+homunculus_hungerTimeoutMin 10
+
 ######## Block options ########
 # You can copy & paste any block multiple times. So if you want to
 # configure two attack skills, just duplicate the attackSkillSlot block.
