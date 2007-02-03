@@ -787,9 +787,11 @@ sub attack {
 	AUTOEQUIP: {
 		last AUTOEQUIP if (UNIVERSAL::isa($target, 'Actor::Player'));
 
+
 		my $i = 0;
 		my $Lequip = 0;
-		my ($Rdef,$Ldef,$Req,$Leq,$arrow,$j);
+		my $Runeq =0;
+		my (%eq_list,$Req,$Leq,$arrow,$j);
 		while (exists $config{"autoSwitch_$i"}) {
 			if (!$config{"autoSwitch_$i"}) {
 				$i++;
@@ -798,50 +800,57 @@ sub attack {
 
 			if (existsInList($config{"autoSwitch_$i"}, $monsters{$ID}{'name'})) {
 				message TF("Encounter Monster : %s\n", $monsters{$ID}{'name'});
+#Edit by DInvalid - using bulkEquip to aviod uneqip and lose TwoHand Quicken, etc 
+			if ($config{"autoSwitch_$i"."_rightHand"}) {
 
-				$Req = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{"autoSwitch_$i"."_rightHand"}) if ($config{"autoSwitch_$i"."_rightHand"});
-				$Leq = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{"autoSwitch_$i"."_leftHand"}) if ($config{"autoSwitch_$i"."_leftHand"});
-				$arrow = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{"autoSwitch_$i"."_arrow"}) if ($config{"autoSwitch_$i"."_arrow"});
-
-				if ($Leq ne "" && !$char->{inventory}[$Leq]{equipped}) {
-					message TF("Auto Equiping [L]: %s (%s)\n", $config{"autoSwitch_$i"."_leftHand"}, $Leq), "equip";
-					$Lequip = 1;
+				if ($config{"autoSwitch_$i"."_rightHand"} eq "[NONE]" && $char->{equipment}{'rightHand'}) {
+					$Runeq = 1;
+					message TF("Auto UnEquiping [R]: %s\n", $config{"autoSwitch_$i"."_rightHand"}), "equip";
+					$char->{equipment}{'rightHand'}->unequip();
 				}
-				if ($Req ne "" && !$chars[$config{'char'}]{'inventory'}[$Req]{'equipped'} || $config{"autoSwitch_$i"."_rightHand"} eq "[NONE]") {
-					$Ldef = findLastIndex(\@{$chars[$config{'char'}]{'inventory'}}, "equipped",32);
-					if ($Ldef eq "") {
-						$Ldef = findLastIndex(\@{$chars[$config{'char'}]{'inventory'}}, "equipped",2);
-						$Ldef = findLastIndex(\@{$chars[$config{'char'}]{'inventory'}}, "equipped",34) if ($Ldef eq "");
-						$messageSender->sendUnequip($chars[$config{'char'}]{'inventory'}[$Ldef]{'index'}) if ($Ldef ne "");
-					}
+				$Req = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{"autoSwitch_$i"."_rightHand"});
+				if ($Req ne "" && !$char->{inventory}[$Req]{equipped}){
+					message TF("Auto Equiping [R]: %s\n", $config{"autoSwitch_$i"."_rightHand"}), "equip";
+					%eq_list =  (rightHand => $Req);
+				}
 
-					$Rdef = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "equipped",34);
-					$Rdef = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "equipped",2) if($Rdef eq "");
-					#Debug for 2hand Quicken and Bare Hand attack with 2hand weapon
-					if((!Misc::whenStatusActive("Twohand Quicken, Adrenaline, Spear Quicken") || $config{"autoSwitch_$i"."_rightHand"} eq "[NONE]") && $Rdef ne "" && $Rdef ne $Ldef) {
-						$messageSender->sendUnequip($chars[$config{'char'}]{'inventory'}[$Rdef]{'index'});
+			}
+
+			if ($config{"autoSwitch_$i"."_leftHand"}) {
+
+				if ($config{"autoSwitch_$i"."_leftHand"} eq "[NONE]" && $char->{equipment}{'leftHand'}) {
+					if (!($Runeq && $char->{equipment}{'rightHand'} == $char->{equipment}{'leftHand'})) {
+						message TF("Auto UnEquiping [L]: %s\n", $config{"autoSwitch_$i"."_leftHand"}), "equip";
+						$char->{equipment}{'leftHand'}->unequip();	
 					}
+				}
+				$Leq = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{"autoSwitch_$i"."_leftHand"});
+		
+				if ($Leq ne "" && !$char->{inventory}[$Leq]{equipped}) {
+	
 					if ($Req eq $Leq) {
+						$Leq = "";
 						for ($j=0; $j < @{$chars[$config{'char'}]{'inventory'}};$j++) {
 							next if (!$char->{inventory}[$j] || !%{$char->{inventory}[$j]});
-							if ($chars[$config{'char'}]{'inventory'}[$j]{'name'} eq $config{"autoSwitch_$i"."_rightHand"} && $j != $Leq) {
-								$Req = $j;
+							if ($chars[$config{'char'}]{'inventory'}[$j]{'name'} eq $config{"autoSwitch_$i"."_leftHand"} && $j != $Req) {
+								$Leq = $j;
 								last;
 							}
 						}
 					}
-					if ($config{"autoSwitch_$i"."_rightHand"} ne "[NONE]") {
-						message TF("Auto Equiping [R]: %s\n", $config{"autoSwitch_$i"."_rightHand"}), "equip";
-						$char->{inventory}[$Req]->equip();
-						if ($Lequip == 0) {
-							if ($config{'autoSwitch_default_leftHand'}) {
-								$Leq = findIndexString_lc($char->{inventory}, "name", $config{'autoSwitch_default_leftHand'});
-								$Lequip = 1;
-							}
-						}
+
+					if ($Leq ne "") {
+						message TF("Auto Equiping [L]: %s (%s)\n", $config{"autoSwitch_$i"."_leftHand"}, $Leq), "equip";
+						%eq_list->{leftHand} = $Leq;
 					}
 				}
-				$char->{inventory}[$Leq]->equip() if ($Leq ne "" && $Lequip == 1);
+		        }
+			if (%eq_list) {
+				Actor::Item::bulkEquip(\%eq_list);
+			}
+
+				$arrow = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{"autoSwitch_$i"."_arrow"}) if ($config{"autoSwitch_$i"."_arrow"});
+
 
 				if ($arrow ne "" && !$chars[$config{'char'}]{'inventory'}[$arrow]{'equipped'}) {
 					message TF("Auto Equiping [A]: %s\n", $config{"autoSwitch_$i"."_arrow"}), "equip";
@@ -862,42 +871,63 @@ sub attack {
 			$i++;
 		}
 
-		$Lequip = 0;
-		$Leq = "";
-		$Req = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{'autoSwitch_default_rightHand'});
-		if ($config{'autoSwitch_default_leftHand'}) {
-			$Leq = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{'autoSwitch_default_leftHand'});
-			if ($Leq ne "" && !$chars[$config{'char'}]{'inventory'}[$Leq]{'equipped'}) {
-				message TF("Auto equiping default [L]: %s\n", $config{'autoSwitch_default_leftHand'}), "equip";
-				$Lequip = 1;
-			}
-		}
-		if ($config{'autoSwitch_default_rightHand'}) {
-			#$Req = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{'autoSwitch_default_rightHand'});
-			if($Req ne "" && !$chars[$config{'char'}]{'inventory'}[$Req]{'equipped'}) {
-				$Rdef = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "equipped",2);
-				$messageSender->sendUnequip($chars[$config{'char'}]{'inventory'}[$Rdef]{'index'}) if($Rdef ne "" && $chars[$config{'char'}]{'inventory'}[$Rdef]{'equipped'});
 
-				$Ldef = findLastIndex(\@{$chars[$config{'char'}]{'inventory'}}, "equipped", 32);
-				if ($Ldef eq "") {
-					$Ldef = findLastIndex(\@{$chars[$config{'char'}]{'inventory'}}, "equipped",2);
-					$Ldef = findLastIndex(\@{$chars[$config{'char'}]{'inventory'}}, "equipped",34) if ($Ldef eq "");
-					if ($Ldef ne "" && $chars[$config{'char'}]{'inventory'}[$Ldef]{'equipped'}) {
-						$messageSender->sendUnequip($chars[$config{'char'}]{'inventory'}[$Ldef]{'index'});
-						$Lequip = 1;
-					}
+
+			$Leq="";
+			$Req="";
+
+###################
+			if ($config{"autoSwitch_default_rightHand"}) {
+
+				if ($config{"autoSwitch_default_rightHand"} eq "[NONE]" && $char->{equipment}{'rightHand'}) {
+					$Runeq = 1;
+					message TF("Auto UnEquiping [R]: %s\n", $config{"autoSwitch_default_rightHand"}), "equip";
+					$char->{equipment}{'rightHand'}->unequip();
+				}
+				$Req = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{"autoSwitch_default_rightHand"});
+				if ($Req ne "" && !$char->{inventory}[$Req]{equipped}){
+					message TF("Auto Equiping [R]: %s\n", $config{"autoSwitch_default_rightHand"}), "equip";
+					%eq_list =  (rightHand => $Req);
 				}
 
-				$Rdef = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "equipped", 34);
-				$Rdef = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "equipped", 2) if ($Rdef eq "");
-				$messageSender->sendUnequip($chars[$config{'char'}]{'inventory'}[$Rdef]{'index'}) if($Rdef ne "" && $chars[$config{'char'}]{'inventory'}[$Rdef]{'equipped'} && $Rdef ne $Ldef);
-
-				message TF("Auto equiping default [R]: %s (unequip %s)\n",
-					$config{'autoSwitch_default_rightHand'}, $Rdef), "equip";
-				$chars[$config{'char'}]{'inventory'}[$Req]->equip();
 			}
-		}
-		$chars[$config{'char'}]{'inventory'}[$Leq]->equip() if ($Lequip == 1 && $Leq ne "");
+
+			if ($config{"autoSwitch_default_leftHand"}) {
+
+				if ($config{"autoSwitch_default_leftHand"} eq "[NONE]" && $char->{equipment}{'leftHand'}) {
+					if (!($Runeq && $char->{equipment}{'rightHand'} == $char->{equipment}{'leftHand'})) {
+						message TF("Auto UnEquiping [L]: %s\n", $config{"autoSwitch_default_leftHand"}), "equip";
+						$char->{equipment}{'leftHand'}->unequip();	
+					}
+				}
+				$Leq = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{"autoSwitch_default_leftHand"});
+		
+				if ($Leq ne "" && !$char->{inventory}[$Leq]{equipped}) {
+	
+					if ($Req eq $Leq) {
+						$Leq = "";
+						for ($j=0; $j < @{$chars[$config{'char'}]{'inventory'}};$j++) {
+							next if (!$char->{inventory}[$j] || !%{$char->{inventory}[$j]});
+							if ($chars[$config{'char'}]{'inventory'}[$j]{'name'} eq $config{"autoSwitch_default_leftHand"} && $j != $Req) {
+								$Leq = $j;
+								last;
+							}
+						}
+					}
+
+					if ($Leq ne "") {
+						message TF("Auto Equiping [L]: %s (%s)\n", $config{"autoSwitch_default_leftHand"}, $Leq), "equip";
+						%eq_list->{leftHand} = $Leq;
+					}
+				}
+		        }
+			if (%eq_list) {
+				Actor::Item::bulkEquip(\%eq_list);
+			}
+
+
+###################
+
 		if ($config{'autoSwitch_default_arrow'}) {
 			$arrow = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{'autoSwitch_default_arrow'});
 			if($arrow ne "" && !$chars[$config{'char'}]{'inventory'}[$arrow]{'equipped'}) {

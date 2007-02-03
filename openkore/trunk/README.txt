@@ -23,6 +23,8 @@ Bug fixes:
 - Fix support for FreeBSD, MacOS X and other Unix.
 - Fix Sun Sparc support.
 - Fix chat room creation.
+- AutoSwitch will now not lose status effect like Twohand Quicken, when
+  switching weapons.
 
 New config options:
 - dealAuto_names <list of player names>
@@ -97,7 +99,7 @@ Credits:
 - littlewens: Traditional Chinese translations.
 - PlayingSafe: Fixes for big-endian systems, such as Mac-PPC.
 - clarious: Help with vRO support.
-- DInvalid: Correctly set character direction upon move.
+- DInvalid: Correctly set character direction upon move, autoSwitch bugfix.
 
 
 =========================
