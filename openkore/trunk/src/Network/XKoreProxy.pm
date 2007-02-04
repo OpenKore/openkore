@@ -333,6 +333,8 @@ sub checkServer {
 			$self->{nextIp} = $master->{ip};
 			$self->{nextPort} = $master->{port};
 			message TF("Proxying to [%s]\n", $config{master}), "connection" unless ($self->{gotError});
+			$packetParser = Network::Receive->create($config{serverType});
+			$messageSender = Network::Send->create($self, $config{serverType});
 		}
 
 		$self->serverConnect($self->{nextIp}, $self->{nextPort}) unless ($self->{gotError});
@@ -492,6 +494,7 @@ sub modifyPacketIn {
 
 sub modifyPacketOut {
 	my ($self, $msg) = @_;
+	use bytes; no encoding 'utf8';
 
 	return undef if (length($msg) < 1);
 
@@ -508,7 +511,7 @@ sub modifyPacketOut {
 		($switch eq "0116" &&
 			$config{serverType} == 4 )) {
 		# Intercept the RO client's sync
-	
+
 		$msg = "";
 		#$self->sendSync();	
 		

@@ -1046,7 +1046,7 @@ sub parseMsg {
 		if (length($msg) >= 4) {
 			$net->setState(Network::CONNECTED_TO_MASTER_SERVER);
 			$accountID = substr($msg, 0, 4);
-			debug "Selecting character, new accountID: ".unpack("V", $accountID)."\n";
+			debug "Selecting character, new accountID: ".unpack("V", $accountID)."\n", "connection";
 			$net->clientSend($accountID);
 			return substr($msg, 4);
 		} else {
