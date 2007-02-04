@@ -496,6 +496,7 @@ sub mainLoop_initialized {
 	# Receive and handle data from the RO server
 	my $servMsg = $net->serverRecv;
 	if ($servMsg && length($servMsg)) {
+		use bytes; no encoding 'utf8';
 		Benchmark::begin("parseMsg") if DEBUG;
 		$msg .= $servMsg;
 		my $msg_length = length($msg);
@@ -504,15 +505,14 @@ sub mainLoop_initialized {
 			last if ($msg_length == length($msg));
 			$msg_length = length($msg);
 		}
-		$net->clientFlush() if (UNIVERSAL::isa($net, 'XKoreProxy'));
+		$net->clientFlush() if (UNIVERSAL::isa($net, 'Network::XKoreProxy'));
 		Benchmark::end("parseMsg") if DEBUG;
 	}
 
 	# Receive and handle data from the RO client
 	my $cliMsg = $net->clientRecv;
 	if ($cliMsg && length($cliMsg)) {
-		use bytes; # pmak/VCL - fix corrupted data introduced by UTF8
-		no encoding 'utf8';
+		use bytes; no encoding 'utf8';
 		$msgOut .= $cliMsg;
 		my $msg_length = length($msgOut);
 		while ($msgOut ne "") {

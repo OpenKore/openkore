@@ -3388,7 +3388,7 @@ sub login_error {
 	$net->serverDisconnect();
 	if ($args->{type} == 0) {
 		error T("Account name doesn't exist\n"), "connection";
-		if (!$net->clientAlive() && !$config{'ignoreInvalidLogin'} && !UNIVERSAL::isa($net, 'XKoreProxy')) {
+		if (!$net->clientAlive() && !$config{'ignoreInvalidLogin'} && !UNIVERSAL::isa($net, 'Network::XKoreProxy')) {
 			my $username = $interface->query(T("Enter your Ragnarok Online username again."));
 			if (defined($username)) {
 				configModify('username', $username, 1);
@@ -3401,7 +3401,7 @@ sub login_error {
 		}
 	} elsif ($args->{type} == 1) {
 		error T("Password Error\n"), "connection";
-		if (!$net->clientAlive() && !$config{'ignoreInvalidLogin'} && !UNIVERSAL::isa($net, 'XKoreProxy')) {
+		if (!$net->clientAlive() && !$config{'ignoreInvalidLogin'} && !UNIVERSAL::isa($net, 'Network::XKoreProxy')) {
 			my $password = $interface->query(T("Enter your Ragnarok Online password again."), isPassword => 1);
 			if (defined($password)) {
 				configModify('password', $password, 1);

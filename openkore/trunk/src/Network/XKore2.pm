@@ -238,7 +238,7 @@ sub checkTracker {
 	my $host = $config{XKore_trackerIp} || 'localhost';
 	my $port = $config{XKore_trackerPort} || 6901;
 
-	return unless (defined $self->{client_listen} && $self->serverAlive && $conState == 5);
+	return unless (defined $self->{client_listen} && $self->serverAlive && $self->getState() == Network::IN_GAME);
 
 	if ($$t_state == 0 && timeOut($timeout{xkore_tracker})) {
 		debug("Connecting to XKore2 master ($host:$port)... ", "connection");
@@ -310,7 +310,7 @@ sub checkClient {
 	my $self = shift;
 
 	# Check if the client is active when the server is not.
-	if ($conState < 4 && $self->clientAlmostAlive && $self->{client_state} > 0) {
+	if ($self->getState() != Network::IN_GAME && $self->clientAlmostAlive && $self->{client_state} > 0) {
 		# Kick the client if they haven't logged in before
 		unless ($self->{client_state} == 5 && !$self->{client_saved}{custom}) {
 			error "$self->{client_state}\n";
@@ -1030,7 +1030,7 @@ sub checkClient {
 			# Do state-specific checks
 			if ($$c_state == -2) {
 				# Check if we've reestablished the check with the server
-				if ($conState > 4) {
+				if ($self->getState() == Network::IN_GAME) {
 					# Plunk the character back down in the regular map they're on, and
 					# tell them that we've reconnected.
 					$msg = T("blueConnection reestablished. Enjoy. =)");

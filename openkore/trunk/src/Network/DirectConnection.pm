@@ -171,6 +171,7 @@ sub serverSend {
 ##
 # $net->serverRecv()
 #
+# Receive data from the RO server.
 sub serverRecv {
 	my $self = shift;
 	my $msg;
@@ -196,7 +197,7 @@ sub serverDisconnect {
 	my $self = shift;
 	
 	if ($self->serverAlive) {
-		$messageSender->sendQuit() if ($conState == 5);
+		$messageSender->sendQuit() if ($self->getState() == Network::IN_GAME);
 
 		message TF("Disconnecting (%s:%s)...", $self->{remote_socket}->peerhost(), 
 			$self->{remote_socket}->peerport()), "connection";
@@ -297,7 +298,7 @@ sub checkConnection {
 	
 	return if ($Settings::no_connect);
 
-	if ($conState == 1 && (!$self->{remote_socket} || !$self->{remote_socket}->connected) && timeOut($timeout_ex{'master'}) && !$conState_tries) {
+	if ($self->getState() == Network::NOT_CONNECTED && (!$self->{remote_socket} || !$self->{remote_socket}->connected) && timeOut($timeout_ex{'master'}) && !$conState_tries) {
 		my $master = $masterServer = $masterServers{$config{master}};
 
 		foreach my $serverOption ('serverType', 'chatLangCode', 'storageEncryptKey', 'gameGuard', 'charBlockSize',
@@ -416,7 +417,7 @@ sub checkConnection {
 	} elsif ($conState == 1.5) {
 		
 		if (!$self->serverAlive) {
-			$conState = 1;
+			$self->setState(Network::NOT_CONNECTED);
 			undef $conState_tries;
 			return;
 		}
@@ -475,7 +476,7 @@ sub checkConnection {
 		$timeout_ex{'master'}{'timeout'} = $timeout{'reconnect'}{'timeout'};
 		$self->serverDisconnect;
 		undef $conState_tries;
-		$conState = 1;
+		$self->setState(Network::NOT_CONNECTED);
 
 	} elsif ($conState == 3 && !$self->serverAlive() && $config{'char'} ne "" && !$conState_tries) {
 		message T("Connecting to Character Select Server...\n"), "connection";
@@ -496,7 +497,7 @@ sub checkConnection {
 		$timeout_ex{'master'}{'time'} = time;
 		$timeout_ex{'master'}{'timeout'} = $timeout{'reconnect'}{'timeout'};
 		$self->serverDisconnect;
-		$conState = 1;
+		$self->setState(Network::NOT_CONNECTED);
 		undef $conState_tries;
 
 	} elsif ($conState == 4 && !$self->serverAlive() && !$conState_tries) {
@@ -533,7 +534,7 @@ sub checkConnection {
 		message T("Timeout on Map Server, connecting to Account Server...\n"), "connection";
 		$timeout_ex{master}{timeout} = $timeout{reconnect}{timeout};
 		$self->serverDisconnect;
-		$conState = 1;
+		$self->setState(Network::NOT_CONNECTED);
 		undef $conState_tries;
 
 	} elsif ($conState == 5 && !$self->serverAlive()) {
@@ -546,7 +547,7 @@ sub checkConnection {
 			error TF("Disconnected from Map Server, connecting to Account Server in %s seconds...\n", $timeout{reconnect}{timeout}), "connection";
 			$timeout_ex{master}{time} = time;
 			$timeout_ex{master}{timeout} = $timeout{reconnect}{timeout};
-			$conState = 1;
+			$self->setState(Network::NOT_CONNECTED);
 			undef $conState_tries;
 		}
 
@@ -561,7 +562,7 @@ sub checkConnection {
 			$timeout_ex{master}{time} = time;
 			$timeout_ex{master}{timeout} = $timeout{reconnect}{timeout};
 			$self->serverDisconnect;
-			$conState = 1;
+			$self->setState(Network::NOT_CONNECTED);
 			undef $conState_tries;
 		}
 	}

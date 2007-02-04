@@ -12,6 +12,9 @@
 #  $Id$
 #
 #########################################################################
+# Note: the difference between XKore2 and XKoreProxy is that XKore2 can
+# work headless (it handles all server messages by itself), while
+# XKoreProxy lets the RO client handle many server messages.
 package Network::XKoreProxy;
 
 use strict;
@@ -34,6 +37,17 @@ use Network::Send ();
 my $clientBuffer;
 my %flushTimer;
 
+# Members:
+#
+# Socket proxy_listen
+#    A server socket which accepts new connections from the RO client.
+#    This is only defined when the RO client hasn't already connected
+#    to XKoreProxy.
+#
+# Socket proxy
+#    A client socket, which connects XKoreProxy with the RO client.
+#    This is only defined when the RO client has connected to XKoreProxy.
+
 ##
 # Network::XKoreProxy->new()
 #
@@ -54,9 +68,12 @@ sub new {
 	$self->{charServerIp} = undef;
 	$self->{charServerPort} = undef;
 	$self->{gotError} = 0;
-	$self->{packetPending} = '';
 	$self->{waitingClient} = 1;
-	$clientBuffer = '';
+	{
+		no encoding 'utf8';
+		$self->{packetPending} = '';
+		$clientBuffer = '';
+	}
 
 	message T("X-Kore mode intialized.\n"), "startup";
 
@@ -76,10 +93,10 @@ sub version {
 sub DESTROY {
 	my $self = shift;
 
-	close($self->{server});
 	close($self->{proxy_listen});	
 	close($self->{proxy});
 }
+
 
 ######################
 ## Server Functions ##
@@ -112,14 +129,13 @@ sub serverPeerPort {
 
 sub serverRecv {
 	my $self = shift;
-	
 	return $self->{server}->serverRecv();
 }
 
 sub serverSend {
 	my $self = shift;
 	my $msg = shift;
-	
+
 	$self->{server}->serverSend($msg);
 }
 
@@ -183,7 +199,7 @@ sub clientSend {
 	my $dontMod = shift;
 
 	return unless ($self->proxyAlive);
-	
+
 	$msg = $self->modifyPacketIn($msg) unless ($dontMod);
 	if ($config{debugPacket_ro_received}) {
 		debug "Modified packet sent to client\n";
@@ -211,7 +227,7 @@ sub clientRecv {
 	return undef unless ($self->proxyAlive && dataWaiting(\$self->{proxy}));
 
 	$self->{proxy}->recv($msg, $Settings::MAX_READ);
-	if ($msg eq '') {
+	if (length($msg) == 0) {
 		# Connection from client closed
 		close($self->{proxy});
 		return undef;
@@ -233,8 +249,10 @@ sub checkConnection {
 	$self->checkServer();
 	
 	# Check the Poseidon Embed Server
-	$self->{poseidon}->iterate($self) if ($self->clientAlive() && ($conState == 5) && defined($config{gameGuard})
-		&& $config{gameGuard} ne '2');
+	if ($self->clientAlive() && $self->getState() == Network::IN_GAME
+	 && defined($config{gameGuard}) && $config{gameGuard} ne '2') {
+		$self->{poseidon}->iterate($self);
+	}
 }
 
 sub checkProxy {
@@ -262,7 +280,7 @@ sub checkProxy {
 		# Client disconnected... (or never existed)
 		if ($self->serverAlive()) {
 			message T("Client disconnected\n"), "connection";
-			$conState = 1 if ($conState == 5);
+			$self->setState(Network::NOT_CONNECTED) if ($self->getState() == Network::IN_GAME);
 			$self->{waitingClient} = 1;
 			$self->serverDisconnect();
 		}
@@ -294,7 +312,7 @@ sub checkProxy {
 	}
 	
 	if ($self->proxyAlive() && defined($self->{packetPending})) {
-		checkPacketReplay();	
+		checkPacketReplay();
 	}
 }
 
@@ -315,10 +333,8 @@ sub checkServer {
 			$self->{nextIp} = $master->{ip};
 			$self->{nextPort} = $master->{port};
 			message TF("Proxying to [%s]\n", $config{master}), "connection" unless ($self->{gotError});
-			$packetParser = Network::Receive->create($config{serverType}) if (!$packetParser);
-			$messageSender = Network::Send->create($self, $config{serverType}) if (!$messageSender);
 		}
-		
+
 		$self->serverConnect($self->{nextIp}, $self->{nextPort}) unless ($self->{gotError});
 		if (!$self->serverAlive()) {
 			$self->{charServerIp} = undef;
@@ -331,18 +347,16 @@ sub checkServer {
 		# clean Next Server uppon connection
 		$self->{nextIp} = undef;
 		$self->{nextPort} = undef;
-		
 	}
 }
 
 ##
-# $net->checkPacketReplay()
-#
-# Internal use only
+# $Network_XKoreProxy->checkPacketReplay()
 #
 # Setup a timer to repeat the received logon/server change packet to the client
 # in case it didn't responded in an appropriate time.
-
+#
+# This is an internal function.
 sub checkPacketReplay {
 	my $self = shift;
 	
@@ -377,6 +391,7 @@ sub modifyPacketIn {
 	# packet replay check: reset status for every different packet received
 	if ($self->{packetPending} && ($self->{packetPending} ne $msg)) {
 		debug "Removing pending packet from queue\n";
+		use bytes; no encoding 'utf8';
 		delete $self->{replayTimeout};
 		$self->{packetPending} = '';
 		$self->{packetReplayTrial} = 0;
@@ -389,7 +404,9 @@ sub modifyPacketIn {
 		}
 	}
 
-	if ($switch eq "0069") {		
+	if ($switch eq "0069") {
+		use bytes; no encoding 'utf8';
+
 		# queue the packet as requiring client's response in time
 		$self->{packetPending} = $msg;
 		
@@ -407,7 +424,7 @@ sub modifyPacketIn {
 				$self->{nextIp} = makeIP(substr($serverInfo, $i, 4));
 				$self->{nextIp} = $masterServer->{ip} if ($masterServer && $masterServer->{private});
 				$self->{nextPort} = unpack("v1", substr($serverInfo, $i+4, 2));
-				debug " next server to connect ($self->{nextIp}:$self->{nextPort})\n";
+				debug " next server to connect ($self->{nextIp}:$self->{nextPort})\n", "connection";
 				
 				$self->{charServerIp} = $self->{nextIp};
 				$self->{charServerPort} = $self->{nextPort};
@@ -495,7 +512,7 @@ sub modifyPacketOut {
 		$msg = "";
 		#$self->sendSync();	
 		
-	} if ($switch eq "0228" && $conState == 5 && $config{gameGuard} eq '2') {
+	} if ($switch eq "0228" && $self->getState() == Network::IN_GAME && $config{gameGuard} eq '2') {
 		if ($self->{poseidon}->awaitingResponse) {
 			$self->{poseidon}->setResponse($msg);
 			$msg = '';
