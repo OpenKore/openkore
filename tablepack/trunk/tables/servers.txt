@@ -1168,9 +1168,9 @@ serverEncoding Western
 [NiktoutRO (Loki) Private Server]
 ip 66.90.73.241
 port 6904
-version 5120
+version 20
 master_version 14
-serverType 0
+serverType 5
 private 1
 serverEncoding Western
 
