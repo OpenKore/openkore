@@ -289,6 +289,10 @@ sub checkProxy {
 		$self->{waitClientDC} = undef;
 		debug "Removing pending packet from queue\n" if (defined $self->{packetPending});
 		$self->{packetPending} = '';
+
+		# FIXME: there's a racing condition here. If the RO client tries to connect
+		# to the listening port before we've set it up (this happens if sleepTime is
+		# sufficiently high), then the client will freeze.
 		
 		# (Re)start listening...
 		my $ip = $config{XKore_listenIp} || '127.0.0.1';
