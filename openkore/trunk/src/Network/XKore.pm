@@ -255,7 +255,7 @@ sub checkConnection {
 	return if ($self->serverAlive);
 	
 	# (Re-)initialize X-Kore if necessary
-	$conState = 1;
+	$self->setState(Network::NOT_CONNECTED);
 	my $printed;
 	my $pid;
 	# Wait until the RO client has started
