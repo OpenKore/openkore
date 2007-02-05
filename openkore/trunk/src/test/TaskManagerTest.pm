@@ -33,6 +33,9 @@ sub testStaticMutexes {
 	$tm->iterate();
 	assertActiveTasks($tm, "", "Active tasks: none");
 	assertInactiveTasks($tm, "", "Inactive tasks: none");
+	is($tm->countTasksByName('A'), 0);
+	is($tm->countTasksByName('B'), 0);
+	is($tm->countTasksByName('C'), 0);
 
 	$tm = new TaskManager();
 	$tm->add($taskA = createTask(name => "A", mutexes => ["1", "2"]));
@@ -41,6 +44,9 @@ sub testStaticMutexes {
 	$tm->reschedule();
 	assertActiveTasks($tm, "A,B,C", "Active tasks: A,B,C");
 	assertInactiveTasks($tm, "", "Inactive tasks: none");
+	is($tm->countTasksByName('A'), 1);
+	is($tm->countTasksByName('B'), 1);
+	is($tm->countTasksByName('C'), 1);
 
 	$tm = new TaskManager();
 	$tm->add($taskA = createTask(name => "A", mutexes => ["1", "2"]));
@@ -57,17 +63,29 @@ sub testStaticMutexes {
 	$tm->reschedule();
 	assertActiveTasks($tm, "C", "Active tasks: C");
 	assertInactiveTasks($tm, "A,B", "Inactive tasks: A,B");
+	is($tm->countTasksByName('A'), 1);
+	is($tm->countTasksByName('B'), 1);
+	is($tm->countTasksByName('C'), 1);
+	is($tm->countTasksByName('D'), 0);
 
 	$taskC->markDone();
 	$tm->iterate();
 	$tm->reschedule();
 	assertActiveTasks($tm, "B", "Active tasks: B");
 	assertInactiveTasks($tm, "A", "Inactive tasks: A");
+	is($tm->countTasksByName('A'), 1);
+	is($tm->countTasksByName('B'), 1);
+	is($tm->countTasksByName('C'), 0);
+	is($tm->countTasksByName('D'), 0);
 
 	$tm->add(createTask(name => "D", mutexes => ["3"]));
 	$tm->iterate();
 	assertActiveTasks($tm, "B,D", "Active tasks after setting non-conflicting mutexes: B,D");
 	assertInactiveTasks($tm, "A", "Inactive tasks: A");
+	is($tm->countTasksByName('A'), 1);
+	is($tm->countTasksByName('B'), 1);
+	is($tm->countTasksByName('C'), 0);
+	is($tm->countTasksByName('D'), 1);
 }
 
 # Test a case in which task mutexes are dynamic (do change during the task's life time).
@@ -198,6 +216,8 @@ sub testMisc {
 	my $taskB = createTask(name => "B");
 }
 
+##########################
+
 sub createTask {
 	return new TaskManagerTest::Task(@_);
 }
@@ -222,6 +242,7 @@ sub assertInactiveTasks {
 	is(join(',', @names), $tasksString, $diagnostics);
 }
 
+##########################
 
 package TaskManagerTest::Task;
 

@@ -17,6 +17,8 @@
 # XKoreProxy lets the RO client handle many server messages.
 package Network::XKoreProxy;
 
+# FIXME: $syncSync is not set correctly (required for ropp)
+
 use strict;
 use base qw(Exporter);
 use Exporter;
