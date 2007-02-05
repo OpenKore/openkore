@@ -70,6 +70,15 @@ sub new {
 		#         !$inactiveTasks->has($task)
 		grayTasks => new Set(),
 
+		# Hash<String, int>
+		# This variable remembers the number of instances for each task name.
+		#
+		# Invariant:
+		#     All task names in $activeTasks and $inactiveTasks are in $tasksByName.
+		#     for all $value in $tasksByName:
+		#         defined($value) && $value > 0
+		tasksByName => {},
+
 		# Maps a Task to an array of callback IDs. Used to unregister callbacks.
 		# Invariant: Every task in $activeTasks and $inactiveTasks is in $events.
 		events => {},
@@ -93,13 +102,14 @@ sub add {
 	assert(defined $task) if DEBUG;
 	assert($task->getStatus() == Task::INACTIVE) if DEBUG;
 	$self->{inactiveTasks}->add($task);
+	$self->{tasksByName}{$task->getName()}++;
 	$self->{shouldReschedule} = 1;
 
 	my $ID1 = $task->onMutexesChanged->add($self, \&onMutexesChanged);
 	my $ID2 = $task->onStop->add($self, \&onStop);
 	$self->{events}{$task} = [$ID1, $ID2];
 }
-use Log;
+
 # Reschedule tasks. Do not call this method directly!
 sub reschedule {
 	my ($self) = @_;
@@ -131,7 +141,8 @@ sub reschedule {
 		if ($hasConflict) {
 			# There is a conflict, so make this task inactive.
 			deactivateTask($activeTasks, $inactiveTasks,
-				$grayTasks, $activeMutexes, $task);
+				$grayTasks, $activeMutexes, $self->{tasksByName},
+				$task);
 		} else {
 			# No conflict, so assign mutex ownership to this task.
 			foreach my $mutex (@{$task->getMutexes()}) {
@@ -177,7 +188,8 @@ sub reschedule {
 					# Mutex was locked by lower priority task.
 					# Deactivate old task.
 					deactivateTask($activeTasks, $inactiveTasks,
-						$grayTasks, $activeMutexes, $oldTask);
+						$grayTasks, $activeMutexes, $self->{tasksByName},
+						$oldTask);
 				}
 				$activeMutexes->{$mutex} = $task;
 			}
@@ -218,31 +230,37 @@ sub checkValidity {
 	my $activeMutexes = $self->{activeMutexes};
 
 	foreach my $task (@{$activeTasks}) {
-		die unless ($task->getStatus() == Task::RUNNING || $task->getStatus() == Task::STOPPED);
-		die unless (!$inactiveTasks->has($task));
+		assert($task->getStatus() == Task::RUNNING || $task->getStatus() == Task::STOPPED);
+		assert(!$inactiveTasks->has($task));
 		if (!$grayTasks->has($task)) {
 	 		foreach my $mutex (@{$task->getMutexes()}) {
-	 			die unless ($activeMutexes->{$mutex} == $task);
+	 			assert($activeMutexes->{$mutex} == $task);
  			}
  		}
 	}
 	foreach my $task (@{$inactiveTasks}) {
 		my $status = $task->getStatus();
-		die unless ($status = Task::INTERRUPTED || $status == Task::INACTIVE || $status == Task::STOPPED);
-		die unless (!$activeTasks->has($task));
+		assert($status = Task::INTERRUPTED || $status == Task::INACTIVE || $status == Task::STOPPED);
+		assert(!$activeTasks->has($task));
 		foreach my $mutex (@{$task->getMutexes()}) {
-			die unless ($activeMutexes->{$mutex} != $task);
+			assert($activeMutexes->{$mutex} != $task);
 		}
 	}
 	foreach my $task (@{$grayTasks}) {
-		die unless ($activeTasks->has($task));
-		die unless (!$inactiveTasks->has($task));
+		assert($activeTasks->has($task));
+		assert(!$inactiveTasks->has($task));
 	}
 
 	my $activeMutexes = $self->{activeMutexes};
 	foreach my $mutex (keys %{$activeMutexes}) {
 		my $owner = $activeMutexes->{$mutex};
-		die unless ($self->{activeTasks}->has($owner));
+		assert($self->{activeTasks}->has($owner));
+	}
+
+	my $tasksByName = $self->{tasksByName};
+	foreach my $value (values %{$tasksByName}) {
+		assert(defined $value);
+		assert($value > 0);
 	}
 }
 
@@ -271,7 +289,8 @@ sub iterate {
 		my $status = $task->getStatus();
 		if ($status == Task::DONE || $status == Task::STOPPED) {
 			deactivateTask($activeTasks, $self->{inactiveTasks},
-				$self->{grayTasks}, $activeMutexes, $task);
+				$self->{grayTasks}, $activeMutexes, $self->{tasksByName},
+				$task);
 
 			my $IDs = $self->{events}{$task};
 			$task->onMutexesChanged->remove($IDs->[0]);
@@ -300,6 +319,18 @@ sub stopAll {
 		# If the task does not stop immediately, then we'll
 		# be notified by the onStop event once it's stopped.
 	}
+}
+
+##
+# int $TaskManager->countTasksByName(String name)
+# Ensures: result >= 0
+#
+# Count the number of tasks that have the specified name.
+sub countTasksByName {
+	my ($self, $name) = @_;
+	my $result = $self->{tasksByName}{$name};
+	$result = 0 if (!defined $result);
+	return $result;
 }
 
 ##
@@ -416,11 +447,18 @@ sub higherPriority {
 # and the gray list, and removing its mutex locks. If the task isn't
 # completed or stopped, then it will be added to the inactive task list.
 sub deactivateTask {
-	my ($activeTasks, $inactiveTasks, $grayTasks, $activeMutexes, $task) = @_;
+	my ($activeTasks, $inactiveTasks, $grayTasks, $activeMutexes, $tasksByName, $task) = @_;
 
 	my $status = $task->getStatus();
 	if ($status != Task::DONE && $status != Task::STOPPED) {
 		$inactiveTasks->add($task);
+	} else {
+		my $name = $task->getName();
+		$tasksByName->{$name}--;
+		assert($tasksByName->{$name} >= 0) if DEBUG();
+		if ($tasksByName->{$name} == 0) {
+			delete $tasksByName->{$name};
+		}
 	}
 	$activeTasks->remove($task);
 	$grayTasks->remove($task);

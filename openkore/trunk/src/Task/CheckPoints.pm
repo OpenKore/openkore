@@ -48,11 +48,6 @@ sub new {
 	$self->{whenDone} = $args{whenDone};
 	$self->{index} = 0;
 	$self->{inc} = 1;
-	$self->{checkpoints} = [
-		{ map => 'prontera', x => 51, y => 172 },
-		{ map => 'prontera', x => 75, y => 237 },
-		{ map => 'prontera', x => 36, y => 205 }
-	];
 
 	return $self;
 }
