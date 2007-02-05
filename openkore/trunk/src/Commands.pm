@@ -4063,13 +4063,13 @@ sub cmdTop10 {
 		message T("Function 'top10' (Show Top 10 Lists)\n" .
 			"Usage: top10 <b|a|t|p> | <black|alche|tk|pk> | <blacksmith|alchemist|taekwon|pvp>\n");
 	} elsif ($arg1 eq "a" || $arg1 eq "alche" || $arg1 eq "alchemist") {
-		sendTop10Alchemist($net);
+		$messageSender->sendTop10Alchemist();
 	} elsif ($arg1 eq "b" || $arg1 eq "black" || $arg1 eq "blacksmith") {
-		sendTop10Blacksmith($net);
+		$messageSender->sendTop10Blacksmith();
 	} elsif ($arg1 eq "p" || $arg1 eq "pk" || $arg1 eq "pvp") {
-		sendTop10PK($net);
+		$messageSender->sendTop10PK();
 	} elsif ($arg1 eq "t" || $arg1 eq "tk" || $arg1 eq "taekwon") {
-		sendTop10Taekwon($net);		
+		$messageSender->sendTop10Taekwon();		
 	} else {
 		error T("Syntax Error in function 'top10' (Show Top 10 Lists)\n" .
 			"Usage: top10 <b|a|t|p> |\n" .
