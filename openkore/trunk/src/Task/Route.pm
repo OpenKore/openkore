@@ -28,7 +28,7 @@ use base qw(Task::WithSubtask);
 use Task::Move;
 
 use Globals qw($char $field $net %config);
-use Log qw(message debug);
+use Log qw(message debug warning);
 use Network;
 use Field;
 use Translation qw(T TF);
