@@ -3235,7 +3235,7 @@ sub item_disappeared {
 	if ($item) {
 		if ($config{attackLooters} && AI::action ne "sitAuto" && pickupitems(lc($item->{name})) > 0) {
 			foreach my Actor::Monster $monster (@{$monstersList->getItems()}) { # attack looter code
-				if (my $control = mon_control($monster->name,$monster->nameID)) {
+				if (my $control = mon_control($monster->name,$monster->{nameID})) {
 					next if ( ($control->{attack_auto}  ne "" && $control->{attack_auto} == -1)
 						|| ($control->{attack_lvl}  ne "" && $control->{attack_lvl} > $char->{lv})
 						|| ($control->{attack_jlvl} ne "" && $control->{attack_jlvl} > $char->{lv_job})
@@ -4751,7 +4751,7 @@ sub skill_cast {
 	# Skill Cancel
 	my $monster = $monstersList->getByID($sourceID);
 	my $control;
-	$control = mon_control($monster->name,$monster->nameID) if ($monster);
+	$control = mon_control($monster->name,$monster->{nameID}) if ($monster);
 	if ($AI == 2 && $control->{skillcancel_auto}) {
 		if ($targetID eq $accountID || $dist > 0 || (AI::action eq "attack" && AI::args->{ID} ne $sourceID)) {
 			message TF("Monster Skill - switch Target to : %s (%d)\n", $monster->name, $monster->{binID});
