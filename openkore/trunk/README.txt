@@ -51,6 +51,7 @@ New features:
 - Added route_escape_shout <Message> to somewhat avoid gm bot check.
 - It is now possible to enter special characters into the OpenKore console on Windows.
 - It is now possible to use simple block labels in "conf" command.
+- It is now possible to use monster IDs in mon_control.txt
 
 New commands:
 - top10 <b|a|t|p> | <black|alche|tk|pk> | <blacksmith|alchemist|taekwon|pvp>
@@ -100,7 +101,7 @@ Credits:
 - PlayingSafe: Fixes for big-endian systems, such as Mac-PPC.
 - clarious: Help with vRO support.
 - DInvalid: Correctly set character direction upon move, autoSwitch bugfix.
-
+- Anarki: Monster ID support for mon_control.txt
 
 =========================
 ### OpenKore 1.9.2 (beta)

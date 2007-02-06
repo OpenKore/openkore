@@ -281,7 +281,7 @@ sub ai_getAggressives {
 	my @agMonsters;
 
 	foreach my $monster (@{$monstersList->getItems()}) {
-		my $control = Misc::mon_control($monster->name) if $type || !$wantArray;
+		my $control = Misc::mon_control($monster->name,$monster->{nameID}) if $type || !$wantArray;
 		my $ID = $monster->{ID};
 
 		if (($type && ($control->{attack_auto} == 2)) ||

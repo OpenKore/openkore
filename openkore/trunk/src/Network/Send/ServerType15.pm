@@ -146,7 +146,7 @@ sub sendItemUse {
 
 sub sendLook {
 	my ($self, $body, $head) = @_;
-	my $msg = pack("C4 x1", 0x72, 0x00, $body, $head);
+	my $msg = pack("C3 x1 C1", 0x72, 0x00, $head, $body);
 
 	$self->sendToServer($msg);
 	debug "Sent look: $body $head\n", "sendPacket", 2;

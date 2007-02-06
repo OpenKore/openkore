@@ -1810,7 +1810,7 @@ sub objectAdded {
 	}
 
 	if ($type eq 'monster') {
-		if (mon_control($obj->{name})->{teleport_search}) {
+		if (mon_control($obj->{name},$obj->{nameID})->{teleport_search}) {
 			$ai_v{temp}{searchMonsters}++;
 		}
 	}
@@ -1826,7 +1826,7 @@ sub objectRemoved {
 	my ($type, $ID, $obj) = @_;
 
 	if ($type eq 'monster') {
-		if (mon_control($obj->{name})->{teleport_search}) {
+		if (mon_control($obj->{name},$obj->{nameID})->{teleport_search}) {
 			$ai_v{temp}{searchMonsters}--;
 		}
 	}
@@ -1854,9 +1854,9 @@ sub items_control {
 # Returns the mon_control.txt settings for monster name $name.
 # If $name has no specific settings, use 'all'.
 sub mon_control {
-	my ($name) = @_;
-
-	return $mon_control{lc($name)} || $mon_control{all} || { attack_auto => 1 };
+	my $name = shift;
+	my $nameID = shift;
+	return $mon_control{lc($name)} || $mon_control{$nameID} || $mon_control{all} || { attack_auto => 1 };
 }
 
 ##
@@ -2295,7 +2295,7 @@ sub updateDamageTables {
 				useTeleport(1);
 			}
 
-			if (AI::action eq "attack" && mon_control($monster->{name})->{attack_auto} == 3 && $damage) {
+			if (AI::action eq "attack" && mon_control($monster->{name},$monster->{nameID})->{attack_auto} == 3 && $damage) {
 				# Mob-training, you only need to attack the monster once to provoke it
 				message TF("%s (%s) has been provoked, searching another monster\n", $monster->{name}, $monster->{binID});
 				stopAttack();
@@ -2323,7 +2323,7 @@ sub updateDamageTables {
 
 			if ($AI == 2) {
 				my $teleport = 0;
-				if (mon_control($monster->{name})->{teleport_auto} == 2 && $damage){
+				if (mon_control($monster->{name},$monster->{nameID})->{teleport_auto} == 2 && $damage){
 					message TF("Teleporting due to attack from %s\n",
 						$monster->{name}), "teleport";
 					$teleport = 1;
@@ -2381,7 +2381,7 @@ sub updateDamageTables {
 					if (!$attackTarget->{dmgToYou} && !$attackTarget->{dmgFromYou} && distance($monster->{pos_to}, calcPosition($char)) <= $attackSeq->{attackMethod}{distance}) {
 						my $ignore = 0;
 						# Don't attack ignored monsters
-						if ((my $control = mon_control($monster->{name}))) {
+						if ((my $control = mon_control($monster->{name},$monster->{nameID}))) {
 							$ignore = 1 if ( ($control->{attack_auto} == -1)
 								|| ($control->{attack_lvl} ne "" && $control->{attack_lvl} > $char->{lv})
 								|| ($control->{attack_jlvl} ne "" && $control->{attack_jlvl} > $char->{lv_job})
@@ -2401,7 +2401,7 @@ sub updateDamageTables {
 						}
 					}
 
-				} elsif (AI::action eq "attack" && mon_control($monster->{name})->{attack_auto} == 3
+				} elsif (AI::action eq "attack" && mon_control($monster->{name},$monster->{nameID})->{attack_auto} == 3
 					&& ($monster->{dmgToYou} || $monster->{missedYou} || $monster->{dmgFromYou})) {
 
 					# Mob-training, stop attacking the monster if it has been attacking you
@@ -2435,7 +2435,7 @@ sub updateDamageTables {
 
 			if ($AI == 2 && $char->{homunculus} && $ID2 eq $char->{homunculus}{ID}) {
 				my $teleport = 0;
-				if (mon_control($monster->{name})->{teleport_auto} == 2 && $damage){
+				if (mon_control($monster->{name},$monster->{nameID})->{teleport_auto} == 2 && $damage){
 					message TF("Homunculus teleporting due to attack from %s\n",
 						$monster->{name}), "teleport";
 					$teleport = 1;
@@ -2487,7 +2487,7 @@ sub updateDamageTables {
 					if (!$attackTarget->{dmgToPlayer}{$char->{homunculus}{ID}} && !$attackTarget->{dmgFromPlayer}{$char->{homunculus}{ID}} && distance($monster->{pos_to}, calcPosition($char->{homunculus})) <= $attackSeq->{attackMethod}{distance}) {
 						my $ignore = 0;
 						# Don't attack ignored monsters
-						if ((my $control = mon_control($monster->{name}))) {
+						if ((my $control = mon_control($monster->{name},$monster->{nameID}))) {
 							$ignore = 1 if ( ($control->{attack_auto} == -1)
 								|| ($control->{attack_lvl} ne "" && $control->{attack_lvl} > $char->{lv})
 								|| ($control->{attack_jlvl} ne "" && $control->{attack_jlvl} > $char->{lv_job})

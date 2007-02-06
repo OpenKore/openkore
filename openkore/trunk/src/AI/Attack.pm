@@ -120,7 +120,7 @@ sub process {
 		}
 
 		# Mob-training, stop attacking the monster if it is already aggressive
-		if ((my $control = mon_control($monster->{name}))) {
+		if ((my $control = mon_control($monster->{name},$monster->{nameID}))) {
 			if ($control->{attack_auto} == 3
 				&& ($monster->{dmgToYou} || $monster->{missedYou} || $monster->{dmgFromYou})) {
 
