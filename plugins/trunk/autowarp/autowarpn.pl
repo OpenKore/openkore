@@ -58,9 +58,9 @@ sub unload {
 }
 
 sub AI_hook {
-        if ($config{lockMap} ne $field{name} &&
+        if ($config{lockMap} ne $field->name() &&
           $ai_seq[0] eq "move" && $ai_seq[1] eq "route" && $ai_seq[2] eq "mapRoute" && $ai_seq[3] eq "follow" && $ai_seq[4] eq "" &&
-          existsInList($config{lockMap_autoWarp_from}, $field{name}) && $config{lockMap_autoWarp_to} ne "" &&
+          existsInList($config{lockMap_autoWarp_from}, $field->name()) && $config{lockMap_autoWarp_to} ne "" &&
           $char->{skills}{AL_WARP} && $char->{skills}{AL_WARP}{lv} > 0 && $warpauto_no_memo eq "" &&
           inInventory("Blue Gemstone")
         ) {
@@ -68,11 +68,11 @@ sub AI_hook {
                 AI::queue("autowarp");
                 AI::args->{timeout} = 1;
                 AI::args->{time} = time;
-                AI::args->{map} = $config{lockMap_autoWarp_to}; #$field{name};
+                AI::args->{map} = $config{lockMap_autoWarp_to}; #$field->name();
         }
 
         if (AI::action eq "autowarp") {
-                if ($field{name} eq AI::args->{map} || $warpauto_no_memo ne "" ) {
+                if ($field->name() eq AI::args->{map} || $warpauto_no_memo ne "" ) {
                         AI::dequeue;
                         return;
                 }
@@ -80,15 +80,15 @@ sub AI_hook {
                         my $pos = getEmptyPos($char, 4);
                         debug TF("Attempting to cast warp portal at %i %i\n", $pos->{x}, $pos->{y}), "autowarpn";
                         stopAttack();
-                        sendSkillUseLoc(\$remote_socket, 27, 4, $pos->{x}, $pos->{y});
+                        $messageSender->sendSkillUseLoc(27, 4, $pos->{x}, $pos->{y});
                         AI::args->{timeout} = 1;
                         AI::args->{time} = time;
                 }
         }
 
         if (AI::action eq "autowarp-walkinto") {
-                if ($field{name} eq AI::args->{map}) {
-                        debug TF("We have used our warp portal to \"%s\"\n", $field{name}), "autowarpn";
+                if ($field->name() eq AI::args->{map}) {
+                        debug TF("We have used our warp portal to \"%s\"\n", $field->name()), "autowarpn";
                         AI::dequeue;
                         return;
                 }
@@ -96,7 +96,7 @@ sub AI_hook {
                         my $x = AI::args->{x};
                         my $y = AI::args->{y};
                         debug TF("Moving into warp portal at %i %i\n", $x, $y), "autowarpn";
-                        main::ai_route($field{name}, $x, $y, noSitAuto => 1, attackOnRoute => 0);
+                        main::ai_route($field->name(), $x, $y, noSitAuto => 1, attackOnRoute => 0);
                         AI::args->{timeout} = 1;
                         AI::args->{time} = time;
                 }
@@ -112,7 +112,7 @@ sub checkPortalList {
 
         debug TF("Received warp portal list, selecting destination...\n"), "autowarpn";
         if ( existsInList($memos, $config{lockMap_autoWarp_to}) ) {
-                sendOpenWarp(\$remote_socket, $config{'lockMap_autoWarp_to'}.".gat");
+                $messageSender->sendOpenWarp($config{'lockMap_autoWarp_to'}.".gat");
         } else {
                 error "No Memo for \"$config{lockMap_autoWarp_to}\", aborting autowarp...\n", "error";
                 $warpauto_no_memo = $config{lockMap_autoWarp_to};
@@ -169,7 +169,7 @@ sub getEmptyPos {
                         $posy = $obj->{pos_to}{y} + ( $vectors[$vecy] * $i * -1) || ( ($i*2) /-2 );
                         for (my $k = 0; $k < ($i*2); $k++) {
                                 #debug "Checking $posx $posy $vecx $vecy $i\n";
-                                if (checkFieldWalkable(\%field, $posx, $posy) && !$pos{$posx}{$posy}) {
+                                if ($field->isWalkable($posx, $posy) && !$pos{$posx}{$posy}) {
                                         my $pos = {x=>$posx, y=>$posy};
                                         return $pos if checkLineWalkable($obj->{pos_to}, $pos);
                                 }
