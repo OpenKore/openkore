@@ -10,11 +10,12 @@
 #include "rmd128.h"
 #include "misty1.h"
 #include "cast.h"
+#include "snefru.h"
 
 //CEXTERN dword STDCALL _func0(dword key);
 //CEXTERN dword STDCALL _func1(dword key);
 //CEXTERN dword STDCALL _func2(dword key);
-CEXTERN dword STDCALL _func3(dword key);
+//CEXTERN dword STDCALL _func3(dword key);
 CEXTERN dword STDCALL _func4(dword key);
 CEXTERN dword STDCALL _func5(dword key);
 CEXTERN dword STDCALL _func6(dword key);
@@ -85,9 +86,17 @@ dword func2(dword aKey)
 }
 
 //-----------------------------------------------------------------------------
+// Snefru
 dword func3(dword aKey)
 {
-	return _func3(aKey);
+	dword input[16] = {0x0023D6F7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+	dword output[4];
+
+	input[7] = aKey;
+
+	snefruHash512(output, input);
+
+	return output[1];
 }
 
 //-----------------------------------------------------------------------------
