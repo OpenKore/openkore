@@ -116,3 +116,5 @@
 208 Nen
 209 Adjustment
 210 Increase Accuracy
+250 Exp rate x1.5
+252 Drop rate x2
