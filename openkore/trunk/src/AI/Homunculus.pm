@@ -1114,7 +1114,7 @@ sub processAutoAttack {
 				next if (!$_ || !checkMonsterCleanness($_));
 				my $monster = $monsters{$_};
 				# Ignore ignored monsters in mon_control.txt
-				if ((my $control = mon_control($monster->{name}))) {
+				if ((my $control = mon_control($monster->{name},$monster->{nameID}))) {
 					next if ( ($control->{attack_auto} ne "" && $control->{attack_auto} <= 0)
 						|| ($control->{attack_lvl} ne "" && $control->{attack_lvl} > $char->{lv})
 						|| ($control->{attack_jlvl} ne "" && $control->{attack_jlvl} > $char->{lv_job})
@@ -1184,7 +1184,7 @@ sub processAutoAttack {
 				next if (positionNearPortal($pos, $portalDist));
 
 				# Don't attack ignored monsters
-				if ((my $control = mon_control($monster->{name}))) {
+				if ((my $control = mon_control($monster->{name},$monster->{nameID}))) {
 					next if ( ($control->{attack_auto} == -1)
 						|| ($control->{attack_lvl} ne "" && $control->{attack_lvl} > $char->{lv})
 						|| ($control->{attack_jlvl} ne "" && $control->{attack_jlvl} > $char->{lv_job})
@@ -1210,7 +1210,7 @@ sub processAutoAttack {
 					next if (positionNearPortal($pos, $portalDist));
 
 					# Don't attack ignored monsters
-					if ((my $control = mon_control($monster->{name}))) {
+					if ((my $control = mon_control($monster->{name},$monster->{nameID}))) {
 						next if ( ($control->{attack_auto} == -1)
 							|| ($control->{attack_lvl} ne "" && $control->{attack_lvl} > $char->{lv})
 							|| ($control->{attack_jlvl} ne "" && $control->{attack_jlvl} > $char->{lv_job})
@@ -1233,7 +1233,7 @@ sub processAutoAttack {
 					next if (positionNearPortal($pos, $portalDist));
 
 					# Don't attack ignored monsters
-					if ((my $control = mon_control($monster->{name}))) {
+					if ((my $control = mon_control($monster->{name},$monster->{nameID}))) {
 						next if ( ($control->{attack_auto} == -1)
 							|| ($control->{attack_lvl} ne "" && $control->{attack_lvl} > $char->{lv})
 							|| ($control->{attack_jlvl} ne "" && $control->{attack_jlvl} > $char->{lv_job})
