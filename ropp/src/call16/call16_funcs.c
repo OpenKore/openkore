@@ -11,14 +11,18 @@
 #include "misty1.h"
 #include "cast.h"
 #include "snefru.h"
+#include "safer.h"
 
+//-----------------------------------------------------------------------------
+// linkage to asm code
+//
 //CEXTERN dword STDCALL _func0(dword key);
 //CEXTERN dword STDCALL _func1(dword key);
 //CEXTERN dword STDCALL _func2(dword key);
 //CEXTERN dword STDCALL _func3(dword key);
 CEXTERN dword STDCALL _func4(dword key);
-CEXTERN dword STDCALL _func5(dword key);
-CEXTERN dword STDCALL _func6(dword key);
+//CEXTERN dword STDCALL _func5(dword key);
+//CEXTERN dword STDCALL _func6(dword key);
 //CEXTERN dword STDCALL _func7(dword key);
 //CEXTERN dword STDCALL _func8(dword key);
 CEXTERN dword STDCALL _func9(dword key);
@@ -106,15 +110,48 @@ dword func4(dword aKey)
 }
 
 //-----------------------------------------------------------------------------
+// Safer block
+safer_key_t saferKey1, saferKey2;
+char saferInited1 = 0;
+char saferInited2 = 0;
+
 dword func5(dword aKey)
 {
-	return _func5(aKey);
+	safer_block_t Key = { 0x9C, 0x56, 0xD1, 0x12, 0x23, 0xC0, 0xB4, 0x37 };
+
+	safer_block_t inBlock = {0, 0, 0, 0, 0, 0, 0, 0}; 
+	safer_block_t outBlock = {0, 0, 0, 0, 0, 0, 0, 0}; 
+
+   if ( saferInited1 == 0 ) { 
+      Safer_Init_Module(); 
+      Safer_Expand_Userkey( Key, Key, 8, 0, saferKey1 );
+      saferInited1 = 1; 
+   } 
+
+   *(dword*)(inBlock) = aKey; 
+   Safer_Encrypt_Block( inBlock, saferKey1, outBlock ); 
+
+   return *(dword*)(outBlock); 
 }
 
 //-----------------------------------------------------------------------------
 dword func6(dword aKey)
 {
-	return _func6(aKey);
+	safer_block_t Key = { 0x9C, 0x56, 0xDD, 0x12, 0x23, 0xC1, 0xB4, 0x37 };
+
+	safer_block_t inBlock = {0, 0, 0, 0, 0, 0, 0, 0}; 
+	safer_block_t outBlock = {0, 0, 0, 0, 0, 0, 0, 0}; 
+
+   if ( saferInited2 == 0 ) { 
+      Safer_Init_Module(); 
+      Safer_Expand_Userkey( Key, Key, 8, 0, saferKey2 );
+      saferInited2 = 1; 
+   } 
+
+   *(dword*)(inBlock) = aKey; 
+   Safer_Decrypt_Block( inBlock, saferKey2, outBlock ); 
+
+   return *(dword*)(outBlock); 
 }
 
 //-----------------------------------------------------------------------------
