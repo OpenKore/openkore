@@ -36,24 +36,24 @@ CEXTERN dword STDCALL _funcF(dword key);
 //-----------------------------------------------------------------------------
 // MacGuffin Cipher block
 //
-MCGKey MCGKey1, MCGKey2;
-char MCGInited1 = 0;
-char MCGInited2 = 0;
-
 dword func0(dword aKey)
 {
-	byte Key[16] = {
-		0x40, 0xF2, 0x41, 0xB2, 0x69, 0xF6, 0xF1, 0xAF,
-		0x63, 0xF4, 0x5D, 0xFF, 0x0E, 0x1B, 0x11, 0x9B
-	};
+	static MCGKey	MCGKey1;
+	static bool		MCGInited1 = false;
 
-	if( MCGInited1 == 0 ) {
+	if ( ! MCGInited1 ) {
+		byte Key[16] = {
+			0x40, 0xF2, 0x41, 0xB2, 0x69, 0xF6, 0xF1, 0xAF,
+			0x63, 0xF4, 0x5D, 0xFF, 0x0E, 0x1B, 0x11, 0x9B
+		};
 		MCGKeyset(Key, &MCGKey1);
-		MCGInited1 = 1;
+
+		MCGInited1 = true;
 	}
 
-	dword Blk[2] = {0, 0};
+	dword Blk[2] = { 0 };
 	Blk[0] = aKey;
+
 	MCGBlockEncrypt0((byte*)Blk, &MCGKey1);
 	
 	return Blk[0];
@@ -62,17 +62,20 @@ dword func0(dword aKey)
 //----------------------------------------
 dword func1(dword aKey)
 {
-	byte Key[16] = {
-		0x40, 0xF2, 0x41, 0xB2, 0x69, 0xF6, 0xF1, 0xAF,
-		0x63, 0xF4, 0x5B, 0xFF, 0x0E, 0x1C, 0x11, 0x9B
-	};
+	static MCGKey	MCGKey2;
+	static bool		MCGInited2 = false;
 
-	if( MCGInited2 == 0 ) {
+	if ( ! MCGInited2 ) {
+		byte Key[16] = {
+			0x40, 0xF2, 0x41, 0xB2, 0x69, 0xF6, 0xF1, 0xAF,
+			0x63, 0xF4, 0x5B, 0xFF, 0x0E, 0x1C, 0x11, 0x9B
+		};
 		MCGKeyset(Key, &MCGKey2);
-		MCGInited2 = 1;
+
+		MCGInited2 = true;
 	}
 
-	dword Blk[2] = {0, 0};
+	dword Blk[2] = { 0 };
 	Blk[0] = aKey;
 	MCGBlockEncrypt1((byte*)Blk, &MCGKey2);
 
@@ -83,7 +86,7 @@ dword func1(dword aKey)
 // RIPEMD-128
 dword func2(dword aKey)
 {
-	dword MDbuf[4] = {0, 0, 0, 0};
+	dword MDbuf[4] = { 0 };
 	MDinit(MDbuf);
 	MDfinish(MDbuf,(byte*)&aKey, 4, 1);
 	return MDbuf[3];
@@ -93,7 +96,7 @@ dword func2(dword aKey)
 // Snefru
 dword func3(dword aKey)
 {
-	dword input[16] = {0x0023D6F7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+	dword input[16] = { 0x0023D6F7, 0 };
 	dword output[4];
 
 	input[7] = aKey;
@@ -111,69 +114,72 @@ dword func4(dword aKey)
 
 //-----------------------------------------------------------------------------
 // Safer block
-safer_key_t saferKey1, saferKey2;
-char saferInited1 = 0;
-char saferInited2 = 0;
-
 dword func5(dword aKey)
 {
-	safer_block_t Key = { 0x9C, 0x56, 0xD1, 0x12, 0x23, 0xC0, 0xB4, 0x37 };
+	static safer_key_t saferKey1;
+	static bool saferInited1 = false;
 
-	safer_block_t inBlock = {0, 0, 0, 0, 0, 0, 0, 0}; 
-	safer_block_t outBlock = {0, 0, 0, 0, 0, 0, 0, 0}; 
+	if ( ! saferInited1 ) { 
+		Safer_Init_Module(); 
 
-   if ( saferInited1 == 0 ) { 
-      Safer_Init_Module(); 
-      Safer_Expand_Userkey( Key, Key, 8, 0, saferKey1 );
-      saferInited1 = 1; 
-   } 
+		safer_block_t Key = { 0x9C, 0x56, 0xD1, 0x12, 0x23, 0xC0, 0xB4, 0x37 };
+		Safer_Expand_Userkey( Key, Key, 8, 0, saferKey1 );
 
-   *(dword*)(inBlock) = aKey; 
-   Safer_Encrypt_Block( inBlock, saferKey1, outBlock ); 
+		saferInited1 = true; 
+	} 
 
-   return *(dword*)(outBlock); 
+	safer_block_t inBlock = { 0 }; 
+	safer_block_t outBlock = { 0 }; 
+
+	*(dword*)(inBlock) = aKey; 
+	Safer_Encrypt_Block( inBlock, saferKey1, outBlock ); 
+
+	return *(dword*)(outBlock); 
 }
 
 //-----------------------------------------------------------------------------
 dword func6(dword aKey)
 {
-	safer_block_t Key = { 0x9C, 0x56, 0xDD, 0x12, 0x23, 0xC1, 0xB4, 0x37 };
+	static safer_key_t saferKey2;
+	static bool saferInited2 = false;
 
-	safer_block_t inBlock = {0, 0, 0, 0, 0, 0, 0, 0}; 
-	safer_block_t outBlock = {0, 0, 0, 0, 0, 0, 0, 0}; 
+	if ( ! saferInited2 ) { 
+		Safer_Init_Module(); 
 
-   if ( saferInited2 == 0 ) { 
-      Safer_Init_Module(); 
-      Safer_Expand_Userkey( Key, Key, 8, 0, saferKey2 );
-      saferInited2 = 1; 
-   } 
+		safer_block_t Key = { 0x9C, 0x56, 0xDD, 0x12, 0x23, 0xC1, 0xB4, 0x37 };
+		Safer_Expand_Userkey( Key, Key, 8, 0, saferKey2 );
 
-   *(dword*)(inBlock) = aKey; 
-   Safer_Decrypt_Block( inBlock, saferKey2, outBlock ); 
+		saferInited2 = true; 
+	} 
+
+	safer_block_t inBlock = { 0 }; 
+	safer_block_t outBlock = { 0 }; 
+
+	*(dword*)(inBlock) = aKey; 
+	Safer_Decrypt_Block( inBlock, saferKey2, outBlock ); 
 
    return *(dword*)(outBlock); 
 }
 
 //-----------------------------------------------------------------------------
 // CAST block
-cast_key CASTKey1, CASTKey2;
-char CASTInited1 = 0;
-char CASTInited2 = 0;
-
 dword func7(dword aKey)
 {
-	byte Key[16] = {
-		0x40, 0xF2, 0x41, 0xB2, 0x69, 0xF6, 0xF1, 0xAF,
-		0x63, 0xF3, 0x5D, 0xFF, 0x0E, 0x1C, 0x11, 0x9B
-	};
+	static cast_key CASTKey1;
+	static bool CASTInited1 = false;
 
-	if( CASTInited1 == 0 ) {
+	if ( ! CASTInited1 ) {
+		byte Key[16] = {
+			0x40, 0xF2, 0x41, 0xB2, 0x69, 0xF6, 0xF1, 0xAF,
+			0x63, 0xF3, 0x5D, 0xFF, 0x0E, 0x1C, 0x11, 0x9B
+		};
 		cast_setkey(&CASTKey1, Key, 16);
-		CASTInited1 = 1;
+
+		CASTInited1 = true;
 	}
 
-	byte inBlock[8] = {0, 0, 0, 0, 0, 0, 0, 0};
-	byte outBlock[8] = {0, 0, 0, 0, 0, 0, 0, 0};
+	byte inBlock[8] = { 0 };
+	byte outBlock[8] = { 0 };
 	
 	*(dword*)(inBlock) = aKey;
 	cast_encrypt(&CASTKey1, inBlock, outBlock);
@@ -184,18 +190,21 @@ dword func7(dword aKey)
 //-----------------------------------------------------------------------------
 dword func8(dword aKey)
 {
-	byte Key[16] = {
-		0x40, 0xF2, 0x41, 0xB2, 0x69, 0xF6, 0xF1, 0xAF,
-		0x63, 0xF4, 0x5E, 0xFF, 0x0E, 0x1C, 0x11, 0x9B
-	};
+	static cast_key CASTKey2;
+	static bool CASTInited2 = false;
 
-	if( CASTInited2 == 0 ) {
+	if ( ! CASTInited2 ) {
+		byte Key[16] = {
+			0x40, 0xF2, 0x41, 0xB2, 0x69, 0xF6, 0xF1, 0xAF,
+			0x63, 0xF4, 0x5E, 0xFF, 0x0E, 0x1C, 0x11, 0x9B
+		};
 		cast_setkey(&CASTKey2, Key, 16);
-		CASTInited2 = 1;
+
+		CASTInited2 = true;
 	}
 	
-	byte inBlock[8] = {0, 0, 0, 0, 0, 0, 0, 0};
-	byte outBlock[8] = {0, 0, 0, 0, 0, 0, 0, 0};
+	byte inBlock[8] = { 0 };
+	byte outBlock[8] = { 0 };
 
 	*(dword*)(inBlock) = aKey;
 	cast_decrypt(&CASTKey2, inBlock, outBlock);
@@ -230,23 +239,21 @@ dword funcC(dword aKey)
 //-----------------------------------------------------------------------------
 // MISTY1 block
 //
-word MSTKey1[32], MSTKey2[32];
-char MSTInited1 = 0;
-char MSTInited2 = 0;
-
 dword funcD(dword aKey)
 {
-	dword Key[4] = {
-		0x73DA73C3, 0x83FA7ECA, 0x83943092, 0xADEFCDEA
-	};
+	static word MSTKey1[32];
+	static bool MSTInited1 = false;
 	
-	if( MSTInited1 == 0 ) {
+	if ( ! MSTInited1 ) {
+		dword Key[4] = { 0x73DA73C3, 0x83FA7ECA, 0x83943092, 0xADEFCDEA };
 		MSTInit(MSTKey1, Key);
-		MSTInited1 = 1;
+
+		MSTInited1 = true;
 	}
 	
 	dword Cipher[2];
-	dword Block[2] = {0, 0};
+	dword Block[2] = { 0 };
+	
 	Block[0] = aKey;
 	MSTEncryptD(MSTKey1, Block, Cipher);
 	
@@ -256,17 +263,19 @@ dword funcD(dword aKey)
 //----------------------------------------
 dword funcE(dword aKey)
 {
-	dword Key[4] = {
-		0x73DA73C3, 0x83FA7ECA, 0x84643092, 0xADEFCDEA
-	};
+	static word MSTKey2[32];
+	static bool MSTInited2 = false;
 
-	if( MSTInited2 == 0 ) {
+	if ( ! MSTInited2 ) {
+		dword Key[4] = { 0x73DA73C3, 0x83FA7ECA, 0x84643092, 0xADEFCDEA };
 		MSTInit(MSTKey2, Key);
-		MSTInited2 = 1;
+
+		MSTInited2 = true;
 	}
 
 	dword Cipher[2];
-	dword Block[2] = {0, 0};
+	dword Block[2] = { 0 };
+
 	Block[0] = aKey;
 	MSTEncryptE(MSTKey2, Block, Cipher);
 	
