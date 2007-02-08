@@ -102,6 +102,7 @@ Credits:
 - clarious: Help with vRO support.
 - DInvalid: Correctly set character direction upon move, autoSwitch bugfix.
 - Anarki: Monster ID support for mon_control.txt
+- kanzo: ropp fix for XKoreProxy.
 
 =========================
 ### OpenKore 1.9.2 (beta)
