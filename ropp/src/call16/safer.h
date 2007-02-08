@@ -37,10 +37,8 @@
 /******************* Macros ***************************************************/
  
 /******************* Types ****************************************************/
-#define safer_block_t unsigned char
-/* [SAFER_BLOCK_LEN]; */
-#define safer_key_t unsigned char
-/* [SAFER_KEY_LEN]; */
+typedef unsigned char safer_block_t[SAFER_BLOCK_LEN];
+typedef unsigned char safer_key_t[SAFER_KEY_LEN];
 
 /******************* Module Data **********************************************/
 
@@ -93,11 +91,24 @@
 *   post: 'block_out' contains the plain-text block.
 *
 *******************************************************************************/
-typedef unsigned char	byte;		// unsigned 8-bit type
-typedef unsigned short	word;		// unsigned 16-bit type
-typedef unsigned long	word32;		// unsigned 32-bit type
 
-static void _mcrypt_Safer_Init_Module();
+#ifndef NOT_ANSI_C
+    extern void Safer_Init_Module(void);
+    extern void Safer_Expand_Userkey(safer_block_t userkey_1,
+                                     safer_block_t userkey_2,
+                                     unsigned int nof_rounds,
+                                     int strengthened,
+                                     safer_key_t key);
+    extern void Safer_Encrypt_Block (safer_block_t block_in, safer_key_t key, 
+                                     safer_block_t block_out);
+    extern void Safer_Decrypt_Block (safer_block_t block_in, safer_key_t key,
+                                     safer_block_t block_out);
+#else
+    Safer_Init_Module();
+    Safer_Expand_Userkey();
+    Safer_Encrypt_Block();
+    Safer_Decrypt_Block();
+#endif
 
 /******************************************************************************/
 #endif /* SAFER_H */
