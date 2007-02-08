@@ -515,11 +515,13 @@ sub modifyPacketOut {
 			$config{serverType} == 3 ||
 			$config{serverType} == 5 )) ||
 		($switch eq "0116" &&
-			$config{serverType} == 4 )) {
+			$config{serverType} == 4 ) ||
+		($switch eq "00F3" &&
+		  $config{serverType} == 10)) { #for vRO
 		# Intercept the RO client's sync
 
 		$msg = "";
-		#$self->sendSync();	
+		$self->sendSync();	
 		
 	} if ($switch eq "0228" && $self->getState() == Network::IN_GAME && $config{gameGuard} eq '2') {
 		if ($self->{poseidon}->awaitingResponse) {
