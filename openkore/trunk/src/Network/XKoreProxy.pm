@@ -521,7 +521,7 @@ sub modifyPacketOut {
 		# Intercept the RO client's sync
 
 		$msg = "";
-		$self->sendSync();	
+		$messageSender->sendSync() if ($messageSender);
 		
 	} if ($switch eq "0228" && $self->getState() == Network::IN_GAME && $config{gameGuard} eq '2') {
 		if ($self->{poseidon}->awaitingResponse) {
