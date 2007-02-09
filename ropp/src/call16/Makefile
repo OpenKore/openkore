@@ -1,9 +1,9 @@
 NASM=nasm -f elf
-NASMOBJ=func_4.o func_9a.o func_bc.o func_f.o
+NASMOBJ=func_9a.o func_bc.o func_f.o
 
 CC=gcc
 CFLAGS= -Wall -fPIC
-COBJ=call16_funcs.o cast.o mcg_cipher.o misty1.o rmd128.o snefru.o safer.o
+COBJ=call16_funcs.o cast.o mcg_cipher.o misty1.o rmd128.o snefru.o safer.o tiger.o
 
 CXX=g++
 CXXFLAGS=$(CFLAGS)
@@ -14,8 +14,6 @@ CXXOBJ=call16.o
 libropp.so: $(NASMOBJ) $(COBJ) $(CXXOBJ)
 	$(CXX) $(NASMOBJ) $(COBJ) $(CXXOBJ) -fPIC -shared -o libropp.so
 
-func_4.o: func_4.asm
-	$(NASM) $< -o $@
 func_9a.o: func_9a.asm
 	$(NASM) $< -o $@
 func_bc.o: func_bc.asm
@@ -39,6 +37,8 @@ rmd128.o: rmd128.c
 snefru.o: snefru.c
 	$(CC) -c $(CFLAGS) $< -o $@
 safer.o: safer.c
+	$(CC) -c $(CFLAGS) $< -o $@
+tiger.o: tiger.c
 	$(CC) -c $(CFLAGS) $< -o $@
 
 clean:

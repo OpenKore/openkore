@@ -10,6 +10,7 @@
 #include "rmd128.h"
 #include "misty1.h"
 #include "cast.h"
+#include "tiger.h"
 #include "snefru.h"
 #include "safer.h"
 
@@ -20,7 +21,7 @@
 //CEXTERN dword STDCALL _func1(dword key);
 //CEXTERN dword STDCALL _func2(dword key);
 //CEXTERN dword STDCALL _func3(dword key);
-CEXTERN dword STDCALL _func4(dword key);
+//CEXTERN dword STDCALL _func4(dword key);
 //CEXTERN dword STDCALL _func5(dword key);
 //CEXTERN dword STDCALL _func6(dword key);
 //CEXTERN dword STDCALL _func7(dword key);
@@ -109,7 +110,13 @@ dword func3(dword aKey)
 //-----------------------------------------------------------------------------
 dword func4(dword aKey)
 {
-	return _func4(aKey);
+	dword	res[6] = { 0 };
+	dword	str[16] = { 0 };
+
+	str[1] = aKey;
+	tiger(str, 64, res);
+
+	return res[2];
 }
 
 //-----------------------------------------------------------------------------
