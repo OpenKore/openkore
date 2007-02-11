@@ -61,7 +61,7 @@ our @EXPORT_OK = qw(parseArguments addConfigFile delConfigFile %sys $VERSION);
 our $NAME = 'OpenKore';
 our $VERSION = '1.9.3';
 # Translation Comment: Version String
-our $CVS = T(" (SVN version)");
+our $CVS = "";
 our $WEBSITE = 'http://www.openkore.com/';
 # Translation Comment: Version String
 our $versionText = "*** $NAME ${VERSION}${CVS} - " . T("Custom Ragnarok Online client") . " ***\n***   $WEBSITE   ***\n";
