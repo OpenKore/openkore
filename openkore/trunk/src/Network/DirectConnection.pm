@@ -54,12 +54,12 @@ use Translation;
 
 ##
 # Network::DirectConnection->new([wrapper])
-# wrapper: If this Network object is to be wrapped by another object which is interface-compatible
-#          with the Network class, then specify the wrapper object here. The message sender will
-#          use this wrapper to send socket data. Internally, the reference to the wrapper will be
-#          stored as a weak reference.
+# wrapper: If this object is to be wrapped by another object which is interface-compatible
+#          with the Network::DirectConnection class, then specify the wrapper object here. The message
+#          sender will use this wrapper to send socket data. Internally, the reference to the wrapper
+#          will be stored as a weak reference.
 #
-# Create a new Network object. The connection is not yet established.
+# Create a new Network::DirectConnection object. The connection is not yet established.
 sub new {
 	my ($class, $wrapper) = @_;
 	my %self;
@@ -169,7 +169,7 @@ sub serverSend {
 }
 
 ##
-# $net->serverRecv()
+# Bytes $net->serverRecv()
 #
 # Receive data from the RO server.
 sub serverRecv {
@@ -179,8 +179,8 @@ sub serverRecv {
 	return undef unless (dataWaiting(\$self->{remote_socket}));
 	
 	$self->{remote_socket}->recv($msg, $Settings::MAX_READ);
-	if ($msg eq '') {
-		# Connection from server closed
+	if (!defined($msg) || length($msg) == 0) {
+		# Connection from server closed.
 		close($self->{remote_socket});
 		return undef;
 	}
