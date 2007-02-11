@@ -211,6 +211,7 @@ sub _checkActorHash($$$$) {
 
 # Checks whether the internal state of some variables are correct.
 sub checkValidity {
+	return;
 	return if (!DEBUG || $ENV{OPENKORE_NO_CHECKVALIDITY});
 	my ($name) = @_;
 	$name = "Validity check:" if (!defined $name);
