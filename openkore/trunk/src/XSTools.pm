@@ -109,9 +109,13 @@ sub compile {
 	}
 }
 
-my ($drive, $dirs, undef) = File::Spec->splitpath(realpath(__FILE__));
-$dirs = "$drive$dirs";
-push @makefilePaths, abs_path(File::Spec->join($dirs, ".."));
+eval {
+	# We put this in an 'eval' because realpath() will die if we're run in a
+	# PerlApp executable, because __FILE__ does not exist.
+	my ($drive, $dirs, undef) = File::Spec->splitpath(realpath(__FILE__));
+	$dirs = "$drive$dirs";
+	push @makefilePaths, abs_path(File::Spec->join($dirs, ".."));
+};
 push @makefilePaths, $RealBin;
 
 # Initialize the library, auto-compile if necessary.

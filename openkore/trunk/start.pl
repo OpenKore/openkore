@@ -71,7 +71,6 @@ if (0) {
 	require XSTools;
 	require Encode;
 	require encoding;
-	require Carp::Assert;
 	require Storable;
 	require Compress::Zlib;
 	require "unicore/lib/gc_sc/SpacePer.pl";
