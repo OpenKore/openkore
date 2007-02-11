@@ -115,7 +115,7 @@ sub results {
 	$result .= "------------------------------------------------------------------------------\n";
 
 	$totalUser = $results{$relativeTo}[USER];
-	$totalSystem = $results{$relativeTo}[USER];
+	$totalSystem = $results{$relativeTo}[SYSTEM];
 	$totalUS = $totalUser + $totalSystem;
 	$totalReal = $results{$relativeTo}[REAL];
 
