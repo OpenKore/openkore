@@ -1119,7 +1119,7 @@ sub parseMsg {
 	Plugins::callHook('parseMsg/pre', {switch => $switch, msg => $msg, msg_size => $msg_size});
 
 	if ($msg_size > 0 && !$packetParser->willMangle($switch)) {
-		# Continue the message to the client
+		# If we're running in X-Kore mode, pass the message back to the RO client.
 		$net->clientSend(substr($msg, 0, $msg_size));
 	}
 

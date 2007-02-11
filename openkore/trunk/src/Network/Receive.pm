@@ -162,7 +162,7 @@ sub new {
 		'010C' => ['mvp_other', 'a4', [qw(ID)]],
 		'010E' => ['skill_update', 'v1 v1 v1 v1 C1', [qw(skillID lv sp range up)]], # range = skill range, up = this skill can be leveled up further
 		'010F' => ['skills_list'],
-			'0114' => ['skill_use', 'v1 a4 a4 V1 V1 V1 v1 v1 v1 C1', [qw(skillID sourceID targetID tick src_speed dst_speed damage level param3 type)]],
+		'0114' => ['skill_use', 'v1 a4 a4 V1 V1 V1 v1 v1 v1 C1', [qw(skillID sourceID targetID tick src_speed dst_speed damage level param3 type)]],
 		'0117' => ['skill_use_location', 'v1 a4 v1 v1 v1', [qw(skillID sourceID lv x y)]],
 		'0119' => ['character_status', 'a4 v3 x', [qw(ID param1 param2 param3)]],
 		'011A' => ['skill_used_no_damage', 'v1 v1 a4 a4 C1', [qw(skillID amount targetID sourceID fail)]],
@@ -310,19 +310,20 @@ sub new {
 		'023E' => ['storage_password_request', 'v1', [qw(flag)]],
 		'0259' => ['gameguard_grant', 'C1', [qw(server)]],
 		'0274' => ['account_server_info', 'x2 a4 a4 a4 x30 C1 x4 a*', [qw(sessionID accountID sessionID2 accountSex serverInfo)]],
-		};
+	};
 
-	bless \%self, $class;
-	return \%self;
+	return bless \%self, $class;
 }
 
-# $NetworkReceive->willMangle($switch)
+##
+# boolean $packetParser->willMangle(Bytes messageID)
 #
-# Return 1 if a packet with the given switch would be mangled.
-# Return 0 otherwise.
+# Check whether the message with the specified message ID will be mangled.
+# If the bot is running in X-Kore mode, then messages that will be mangled will not
+# be sent to the RO client.
 sub willMangle {
 	my ($self, $switch) = @_;
-	
+
 	return 1 if $Plugins::hooks{"packet_mangle/$switch"};
 
 	my $packet = $self->{packet_list}{$switch};

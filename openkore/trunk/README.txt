@@ -2,10 +2,26 @@
 ### OpenKore 1.9.3 (beta)
 =========================
 
-To Fix:
-- XKore2 is not acting like a real server, it doesn't send complete
-  information to the client. Connecting to XKore2 from another kore would
-  fail. 
+Credits:
+- Darkfate: partial servertype 11 support.
+- piroJOKE: server information updates and table files updates,
+  labels idea, partial servertype 13 support.
+- Click: improved shop list randomization.
+- Stalker: runFromTarget fix
+- raizend: Top 10 packet parsers
+- illusionist: Party fix, Guild Messages, top10 command, bRO support
+- edeline: help with kRO server fixes.
+- skseo: Korean translations and kRO fixes.
+- Tatka: help with special character support in the Win32 console.
+- heero: servertype 15 (pRO Thor) support.
+- And of course, all developers with SVN write access :)
+  See http://cia.navi.cx/stats/project/openkore
+- littlewens: Traditional Chinese translations.
+- PlayingSafe: Fixes for big-endian systems, such as Mac-PPC.
+- clarious: Help with vRO support.
+- DInvalid: Correctly set character direction upon move, autoSwitch bugfix.
+- Anarki: Monster ID support for mon_control.txt
+- kanzo: ropp fix for XKoreProxy.
 
 Bug fixes:
 - Fixed Party bug where the bot would follow any random player 
@@ -83,26 +99,6 @@ Internal:
   This will eventually replace the old AI framework.
 - The IPC framework has been entirely replaced by the OpenKore bus system.
 
-Credits:
-- Darkfate: partial servertype 11 support.
-- piroJOKE: server information updates and table files updates,
-  labels idea, partial servertype 13 support.
-- Click: improved shop list randomization.
-- Stalker: runFromTarget fix
-- raizend: Top 10 packet parsers
-- illusionist: Party fix, Guild Messages, top10 command, bRO support
-- edeline: help with kRO server fixes.
-- skseo: Korean translations and kRO fixes.
-- Tatka: help with special character support in the Win32 console.
-- heero: servertype 15 (pRO Thor) support.
-- And of course, all developers with SVN write access :)
-  See http://cia.navi.cx/stats/project/openkore
-- littlewens: Traditional Chinese translations.
-- PlayingSafe: Fixes for big-endian systems, such as Mac-PPC.
-- clarious: Help with vRO support.
-- DInvalid: Correctly set character direction upon move, autoSwitch bugfix.
-- Anarki: Monster ID support for mon_control.txt
-- kanzo: ropp fix for XKoreProxy.
 
 =========================
 ### OpenKore 1.9.2 (beta)
