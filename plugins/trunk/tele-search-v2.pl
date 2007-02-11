@@ -75,8 +75,9 @@ sub checkSp {
 }
 sub search {
 	if ($config{'teleport_search'} && Misc::inLockMap() && $timeout{'ai_teleport_search'}{'timeout'}) {
-	
+		message("TS Debug: Config set, we're in lockMap and timeout is set.\n") if $config{'teleport_search_debug'};
 		if ($maploaded && !$allow_tele)  {
+			message("TS Debug: Map is loaded but we're not allowed to teleport.\n") if $config{'teleport_search_debug'};
 			$timeout{'ai_teleport_search'}{'time'} = time;
 			$allow_tele = 1;
                         
@@ -94,6 +95,7 @@ sub search {
 
 		# We're doing something else besides looking for monsters, reset the timeout.
 		} elsif (!checkIdle()) {
+			message("TS Debug: We're doing something else besides looking for a target now.\n") if $config{'teleport_search_debug'};
 			$timeout{'ai_teleport_search'}{'time'} = time;
 		}
 		
