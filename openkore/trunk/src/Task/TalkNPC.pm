@@ -71,9 +71,9 @@ sub new {
 
 	# Watch for map change events. Pass a weak reference to ourselves in order
 	# to avoid circular references (memory leaks).
-	my $weak_self = $self;
-	Scalar::Util::weaken($weak_self);
-	$self->{mapChangedHook} = Plugins::addHook('Network::Receive::map_changed', \&mapChanged, $weak_self);
+	my @holder = ($self);
+	Scalar::Util::weaken($holder[0]);
+	$self->{mapChangedHook} = Plugins::addHook('Network::Receive::map_changed', \&mapChanged, \@holder);
 
 	return $self;
 }
@@ -280,7 +280,8 @@ sub cancelTalk {
 }
 
 sub mapChanged {
-	my (undef, undef, $self) = @_;
+	my (undef, undef, $holder) = @_;
+	my $self = $holder->[0];
 	$self->{mapChanged} = 1;
 }
 
