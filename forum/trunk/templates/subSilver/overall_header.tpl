@@ -52,11 +52,10 @@
 		<table id="openkore_navigation_language_bar" cellspacing="0" cellpadding="0">
 		<tr>
 			<td><a href="http://forums.openkore.com/" title="International forum"><img src="images/international.png" width="24" height="24" alt="">International</a></td>
-			<td><a href="http://www.openkore.de/" title="Deutsche forum"><img src="images/germany.png" width="24" height="24" alt="">Deutsch</a></td>
+			<td><a href="http://www.ingamers.de/" title="Deutsche forum"><img src="images/germany.png" width="24" height="24" alt="">Deutsch</a></td>
 			<td><a href="http://www.openkore.com.br/" title="Fórum Brasileiro"><img src="images/brazil.png" width="24" height="24" alt="">Brazil</a></td> <!-- --Roger-- -->
 			<td><a href="http://www.rofan.ru/" title="Россия"><img src="/images/russia.png" width="24" height="24" alt="">Россия</a></td><!-- kLabMouse -->
 			<td><a href="http://ro.yyro.com/" title="中文"><img src="images/chinese.png" width="24" height="24" alt="">中文</a></td><!-- lkm -->
-			<td><a href="http://openkore.dnip.net" title="한국"><img src="/images/korea.png" width="24" height="24" alt="">한국</a></td> <!-- skseo -->
 		</tr>
 		<tr>
 			<td><a href="http://darkmoon.ath.cx/" title="Filipino forum"><img src="images/philippines.png" width="24" height="24" alt="">Philippines</a></td>
