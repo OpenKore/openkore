@@ -157,7 +157,7 @@ sub getSubtask {
 sub setSubtask {
 	my ($self, $subtask) = @_;
 	assert(!defined($self->getSubtask())) if DEBUG;
-	assert($subtask->getStatus() == Task::INACTIVE);
+	assert($subtask->getStatus() == Task::INACTIVE) if DEBUG;
 	$self->{ST_subtask} = $subtask;
 	$subtask->activate() if ($subtask);
 }

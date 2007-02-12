@@ -60,9 +60,9 @@ sub new {
 	$self->{probe}{timeout} = 0.33;
 	$self->{wait_after_login}{timeout} = 2;
 
-	my $weak_self = $self;
-	Scalar::Util::weaken($weak_self);
-	$self->{hook} = Plugins::addHook('Network::stateChanged', \&networkStateChanged, $weak_self);
+	my @holder = ($self);
+	Scalar::Util::weaken($holder[0]);
+	$self->{hook} = Plugins::addHook('Network::stateChanged', \&networkStateChanged, \@holder);
 
 	return $self;
 }
@@ -151,10 +151,11 @@ sub processFollow {
 }
 
 sub networkStateChanged {
-	my (undef, undef, $self) = @_;
+	my (undef, undef, $holder) = @_;
 	if ($net->getState() == Network::IN_GAME) {
 		# After logging into the game, wait some time for
 		# actors to appear on screen.
+		my $self = $holder->[0];
 		$self->{wait_after_login}{time} = time;
 	}
 }
