@@ -49,6 +49,7 @@ use constant {
 our $state;
 
 sub mainLoop {
+	Benchmark::begin('mainLoop') if DEBUG;
 	$state = STATE_LOAD_PLUGINS if (!defined $state);
 
 	# Parse command input
@@ -96,6 +97,7 @@ sub mainLoop {
 		die "Unknown state $state.";
 	}
 
+	Benchmark::end('mainLoop') if DEBUG;
 	# Reload any modules that requested to be reloaded
 	Modules::reloadAllInQueue();
 }

@@ -55,10 +55,13 @@ use strict;
 use Time::HiRes qw(time);
 use Carp::Assert;
 use Data::Dumper;
+use Modules 'register';
 
-use constant USER => 0;
-use constant SYSTEM => 1;
-use constant REAL => 2;
+use constant {
+	USER   => 0,
+	SYSTEM => 1,
+	REAL   => 2
+};
 
 our %results;
 our %times;
@@ -120,6 +123,7 @@ sub results {
 	$totalReal = $results{$relativeTo}[REAL];
 
 	my $sortFunc = sub {
+		my ($a, $b) = @_;
 		if ($a eq $relativeTo) {
 			return -1;
 		} elsif ($b eq $relativeTo) {
