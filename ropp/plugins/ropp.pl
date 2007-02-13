@@ -24,6 +24,7 @@
 package PaddedPacketsPlugin;
 
 use strict;
+use lib $Plugins::current_plugin_folder;
 use Time::HiRes qw(time);
 
 use Globals;
