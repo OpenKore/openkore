@@ -37,6 +37,7 @@ Bug fixes:
 - Fix sendQuitToCharSelect
 - Fix Korean character encoding support.
 - Fix kRO support.
+- Fix vRO support.
 - Fix support for FreeBSD, MacOS X and other Unix.
 - Fix Sun Sparc support.
 - Fix chat room creation.
