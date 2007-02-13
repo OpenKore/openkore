@@ -745,8 +745,8 @@ secureLogin_requestCode
 secureLogin_account 0
 serverEncoding Western
 paddedPackets 1
-paddedPackets_attackID 0x85
-paddedPackets_skillUseID 0xA2
+paddedPackets_attackID 0x0193
+paddedPackets_skillUseID 0x0089
 
 ## http://www.rovietnam.com.vn/
 [Vietnam - vRO: Thu Thach]
@@ -754,12 +754,15 @@ ip 222.255.122.20
 port 6900
 master_version 32
 version 1
-serverType 10
+serverType 13
 secureLogin 1
 secureLogin_type 0
 secureLogin_requestCode
 secureLogin_account 0
 serverEncoding Western
+paddedPackets 1
+paddedPackets_attackID 0x0193
+paddedPackets_skillUseID 0x0089
 
 ## http://www.rohispano.com/
 [Latin America - RO Hispano]
