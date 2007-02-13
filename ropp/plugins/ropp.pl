@@ -21,48 +21,38 @@
 # sent by original client when sitting/standing, attacking and using skills, and show
 # debug information.
 
-package PPEngine;
+package PaddedPacketsPlugin;
 
-use lib 'plugins';
-use Time::HiRes qw(time);
-use Globals;
-use Utils;
 use strict;
+use Time::HiRes qw(time);
+
+use Globals;
 use Plugins;
+use Utils;
 use Network;
 use Network::Send;
 use Skills;
-use Log;
-use Log qw(message);
-use Log qw(error);
-use Log qw(debug);
+use Log qw(message error debug);
 use Commands;
 use Win32::API;
 
-my %statisticsReporting;
-Plugins::register("ppengine", "RO Padded Packet Engine", \&on_unload, \&on_reload);
+Plugins::register("ppengine", "RO Padded Packet Engine", \&onUnload);
 my $hooks = Plugins::addHooks(
-            ['packet_pre/sendSit',	\&doSit, undef],
-            ['packet_pre/sendStand', \&doStand, undef],
-            ['packet_pre/sendAttack', \&doAttack, undef],
-            ['packet_pre/sendSkillUse', \&doSkillUse, undef],
-            ['RO_sendMsg_pre',\&onRO_sendMsg_pre, undef],
-            ['mainLoop_post',\&doStatistics, undef],
+	['Network::serverConnect/master', \&init, undef],
+	['packet_pre/sendSit',      \&onSendSit, undef],
+	['packet_pre/sendStand',    \&onSendStand, undef],
+	['packet_pre/sendAttack',   \&onSendAttack, undef],
+	['packet_pre/sendSkillUse', \&onSendSkillUse, undef],
+	['RO_sendMsg_pre',          \&onRO_sendMsg_pre, undef],
+	['mainLoop_post',           \&processStatisticsReporting, undef],
 );
 my $commands = Commands::register(
-     ["syncs", "Prints MapSync, Sync and AccId", \&doSyncs],
+	["syncs", "Prints MapSync, Sync and AccId", \&cmdSyncs],
 );
 
-sub on_unload {
-	Commands::unregister($commands);
-	Plugins::delHooks($hooks);
-}
+my %statisticsReporting;
 
-sub on_reload {
-	&on_unload;
-}
-
-#Loading ropp.dll and importing functions
+# Loading ropp.dll and importing functions
 Win32::API->Import('ropp', 'CreateSitStand', 'PL' ,'N') or die "Can't import CreateSitStand\n$!";
 Win32::API->Import('ropp', 'CreateAtk', 'PLL' ,'N') or die "Can't import CreateAtk\n$!";
 Win32::API->Import('ropp', 'CreateSkillUse', 'PLLL' ,'N') or die "Can't import CreateSkillUse\n$!";
@@ -76,115 +66,89 @@ Win32::API->Import('ropp', 'SetPacket', 'PLL') or die "Can't import SetPacket\n$
 Win32::API->Import('ropp', 'DecodePacket', 'PL') or die "Can't import DecodePacket\n$!";
 Win32::API->Import('ropp', 'GetKey', 'L' ,'N') or die "Can't import GetKey\n$!";
 
-# Setting packet IDs for Sit/Stand/Attack and SkillUse
-my $attackID = 0x89;		#  IDs for rRO
-my $skillUseID = 0x113;
-SetPacketIDs($attackID, $skillUseID);
-$attackID = sprintf('%04x', $attackID);
-$skillUseID = sprintf('%04x', $skillUseID);
-
+my ($enabled, $attackID, $skillUseID);
 my $LastPaddedPacket;
 
-sub doSyncs {
-	message "MapSync = [".getHex($syncMapSync)."] Sync = [".getHex($syncSync)."] AccID = [".getHex($accountID)."]\n";
+
+sub onUnload {
+	Commands::unregister($commands);
+	Plugins::delHooks($hooks);
 }
 
-sub SetHashData {
-	SetAccountId(unpack("L1",$accountID));
-	SetMapSync(unpack("L1",$syncMapSync));
-	SetSync(unpack("L1",$syncSync));
+sub init {
+	# Setting packet IDs for Sit/Stand/Attack and SkillUse
+	$enabled = $masterServer->{paddedPackets};
+	if ($enabled) {
+		$attackID   = hex($masterServer->{paddedPackets_attackID}) || 0x89;
+		$skillUseID = hex($masterServer->{paddedPackets_skillUseID}) || 0x113;
+		SetPacketIDs($attackID, $skillUseID);
+		$attackID = sprintf('%04x', $attackID);
+		$attackID = sprintf('%04x', $skillUseID);
+	}
 }
 
-sub GenerateSitStand {
-	my $sit = shift;
-	my $Packet = " " x 256;
-	SetHashData();
-	my $len = CreateSitStand($Packet, $sit);
-	return substr($Packet, 0, $len);
+sub onSendSit {
+	if ($enabled) {
+		my ($hook, $args) = @_;
+		$args->{return} = 1;
+		$args->{msg} = generateSitStand(1);
+	}
 }
 
-sub GenerateAtk{
-	my ($TargetId, $flag) = @_;
-	my $Packet = " " x 256;
-	SetHashData();
-	my $len = CreateAtk($Packet, unpack("L1", $TargetId), $flag);
-	return substr($Packet, 0, $len);
+sub onSendStand {
+	if ($enabled) {
+		my ($hook, $args) = @_;
+		$args->{return} = 1;
+		$args->{msg} = generateSitStand(0);
+	}
 }
 
-sub GenerateSkillUse
-{
-	my ($SkillId, $SkillLv, $TargetId) = @_;
-	my $Packet = " " x 256;
-	SetHashData();
-	my $len = CreateSkillUse($Packet, $SkillId, $SkillLv, unpack("L1", $TargetId));
-	return substr($Packet, 0, $len);
+sub onSendAttack {
+	if ($enabled) {
+		my ($hook, $args) = @_;
+		$args->{return} = 1;
+		$args->{msg} = GenerateAtk($args->{monID}, $args->{flag});
+	}
 }
 
-sub doSit {
-	my $hook = shift;
-	my $args = shift;
-	$args->{return} = 1;
-	$args->{msg} = GenerateSitStand(1);
-}
-
-sub doStand {
-	my $hook = shift;
-	my $args = shift;
-	$args->{return} = 1;
-	$args->{msg} = GenerateSitStand(0);
-}
-
-sub doAttack {
-	my $hook = shift;
-	my $args = shift;
-	$args->{return} = 1;
-	$args->{msg} = GenerateAtk($args->{monID}, $args->{flag});
-}
-
-sub doSkillUse {
-	my $hook = shift;
-	my $args = shift;
-	$args->{return} = 1;
-	$args->{msg} = GenerateSkillUse($args->{ID}, $args->{lv},  $args->{targetID});
+sub onSendSkillUse {
+	if ($enabled) {
+		my ($hook, $args) = @_;
+		$args->{return} = 1;
+		$args->{msg} = GenerateSkillUse($args->{ID}, $args->{lv},  $args->{targetID});
+	}
 }
 
 sub onRO_sendMsg_pre {
-	my $hookName = shift;
-	my $args = shift;
+	return unless ($enabled);
+	my (undef, $args) = @_;
 	my $switch = $args->{switch};
 	my $msg = $args->{msg};
 	my $sendMsg = $args->{sendMsg};
 	my ($Packet, $orig, $lib);
 	my $Parsed = 0;
 
-	if($switch eq $attackID || $switch eq $skillUseID)
-	{
+	if ($switch eq $attackID || $switch eq $skillUseID) {
 		if(length($LastPaddedPacket) <= length($msg)) {
 			$LastPaddedPacket = $msg;
-		} else
-		{
+		} else {
 			$LastPaddedPacket = $msg . substr($LastPaddedPacket, length($msg));
 		}
 	}
+	return if (!$config{debugPPEngine});
 
-	if(!$config{debugPPEngine}) {
-		return;
-	} 
-	
-	if ($switch eq $attackID)
-	{
-		SetHashData();
+	if ($switch eq $attackID) {
+		setHashData();
 		DecodePacket($msg, 2);
 		my $TargetId = GetKey(0);
 		my $Flag = GetKey(1);
-		if ($Flag == 2)
-		{
+		if ($Flag == 2) {
 			$orig = getHex($msg);
 			
 			# SetPacket is not actually needed for packet creation. Only for comparing with original packets.
 			SetPacket($LastPaddedPacket, length($LastPaddedPacket), $TargetId);
 
-			$lib = getHex(GenerateSitStand(1));
+			$lib = getHex(generateSitStand(1));
 			$Parsed = 1;
 			message "======================== Sit ========================\n";
 		} elsif ($Flag  == 3)
@@ -194,7 +158,7 @@ sub onRO_sendMsg_pre {
 			# SetPacket is not actually needed for packet creation. Only for comparing with original packets.
 			SetPacket($LastPaddedPacket, length($LastPaddedPacket), $TargetId);
 
-			$lib = getHex(GenerateSitStand(0));
+			$lib = getHex(generateSitStand(0));
 			$Parsed = 1;
 			message "======================= Stand =======================\n";
 		} elsif ($Flag  == 7 || $Flag == 0)
@@ -204,14 +168,13 @@ sub onRO_sendMsg_pre {
 			# SetPacket is not actually needed for packet creation. Only for comparing with original packets.
 			SetPacket($LastPaddedPacket, length($LastPaddedPacket), $TargetId);
 
-			$lib = getHex(GenerateAtk(pack('L1', $TargetId), $Flag));
+			$lib = getHex(generateAtk(pack('L1', $TargetId), $Flag));
 			$Parsed = 1;
 			message "======================= Attack ======================\n";
 			message "Target: [". getHex($TargetId). "] Flag: $Flag\n";
 		}
-	} elsif ($switch eq $skillUseID)
-	{
-		SetHashData();
+	} elsif ($switch eq $skillUseID) {
+		setHashData();
 		DecodePacket($msg, 3);
 		my $SkillLv = GetKey(0);
 		my $SkillId = GetKey(1);
@@ -221,18 +184,17 @@ sub onRO_sendMsg_pre {
 		# SetPacket is not actually needed for packet creation. Only for comparing with original packets.
 		SetPacket($LastPaddedPacket, length($LastPaddedPacket), $TargetId);
 		
-		$lib = getHex(GenerateSkillUse($SkillId, $SkillLv, $TargetId));
+		$lib = getHex(generateSkillUse($SkillId, $SkillLv, $TargetId));
 		my $Skill = Skills->new(id => $SkillId);
 		$Parsed = 1;
 		message "====================== SkillUse ======================\n";
 		message "Skill: $SkillId (" . $Skill->name . ")   Level: $SkillLv   Target: [". getHex($TargetId). "]\n";
 	}
-	if($Parsed)	{
-		if($orig eq $lib) {
+	if ($Parsed) {
+		if ($orig eq $lib) {
 			message "Packets are identical\n";
-		}
-		else {
-			doSyncs();
+		} else {
+			cmdSyncs();
 			message "Packet by RO client:\n";
 			message "$orig\n";
 			message "Packet by library:\n";
@@ -241,14 +203,18 @@ sub onRO_sendMsg_pre {
 	}
 }
 
-sub doStatistics {
-	processStatisticsReporting();
+sub cmdSyncs {
+	message "MapSync = [".getHex($syncMapSync)."] Sync = [".getHex($syncSync)."] AccID = [".getHex($accountID)."]\n";
 }
+
+
+####################################
+
 
 # Anonymous statistics reporting. This gives us insight about
 # server our users play.
 sub processStatisticsReporting {
-	return if ($statisticsReporting{done} || !$config{master} || !$config{username});
+	return if ($enabled && $statisticsReporting{done} || !$config{master} || !$config{username});
 
 	if (!$statisticsReporting{http}) {
 		use Utils qw(urlencode);
@@ -281,4 +247,34 @@ sub processStatisticsReporting {
 	}
 }
 
-return 1;
+sub setHashData {
+	SetAccountId(unpack("L1", $accountID));
+	SetMapSync(unpack("L1", $syncMapSync));
+	SetSync(unpack("L1", $syncSync));
+}
+
+sub generateSitStand {
+	my ($sit) = @_;
+	my $packet = " " x 256;
+	setHashData();
+	my $len = CreateSitStand($packet, $sit);
+	return substr($packet, 0, $len);
+}
+
+sub generateAtk{
+	my ($targetId, $flag) = @_;
+	my $packet = " " x 256;
+	setHashData();
+	my $len = CreateAtk($packet, unpack("L1", $targetId), $flag);
+	return substr($packet, 0, $len);
+}
+
+sub generateSkillUse {
+	my ($skillId, $skillLv, $targetId) = @_;
+	my $packet = " " x 256;
+	setHashData();
+	my $len = CreateSkillUse($packet, $skillId, $skillLv, unpack("L1", $targetId));
+	return substr($packet, 0, $len);
+}
+
+1;
