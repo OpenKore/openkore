@@ -108,7 +108,7 @@ sub onSendAttack {
 	if ($enabled) {
 		my ($hook, $args) = @_;
 		$args->{return} = 1;
-		$args->{msg} = GenerateAtk($args->{monID}, $args->{flag});
+		$args->{msg} = generateAtk($args->{monID}, $args->{flag});
 	}
 }
 
@@ -116,7 +116,7 @@ sub onSendSkillUse {
 	if ($enabled) {
 		my ($hook, $args) = @_;
 		$args->{return} = 1;
-		$args->{msg} = GenerateSkillUse($args->{ID}, $args->{lv},  $args->{targetID});
+		$args->{msg} = generateSkillUse($args->{ID}, $args->{lv},  $args->{targetID});
 	}
 }
 
