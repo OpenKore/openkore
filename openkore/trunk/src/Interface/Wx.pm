@@ -100,7 +100,17 @@ sub DESTROY {
 
 
 sub mainLoop {
-	my $self = shift;
+	my ($self) = @_;
+	my $timer = new Wx::Timer($self, 246);
+	# Start the real main loop in 100 msec, so that the UI has
+	# the chance to layout correctly.
+	EVT_TIMER($self, 246, sub { $self->realMainLoop(); });
+	$timer->Start(100, 1);
+	$self->MainLoop;
+}
+
+sub realMainLoop {
+	my ($self) = @_;
 	my $timer = new Wx::Timer($self, 247);
 	my $sleepTime = $config{sleepTime};
 	my $quitting;
@@ -132,7 +142,6 @@ sub mainLoop {
 	$timer->Start(($sleepTime / 1000) > 0
 		? ($sleepTime / 1000)
 		: 10);
-	$self->MainLoop;
 }
 
 sub iterate {

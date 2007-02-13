@@ -2727,11 +2727,11 @@ sub guild_expulsionlist {
 	my ($self, $args) = @_;
 
 	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 88) {
-		my ($name) = unpack("Z24", substr($args->{'RAW_MSG'}, $i, 24));
-		my $acc = unpack("Z24", substr($args->{'RAW_MSG'}, $i + 24, 24));
+		my ($name)  = unpack("Z24", substr($args->{'RAW_MSG'}, $i, 24));
+		my $acc     = unpack("Z24", substr($args->{'RAW_MSG'}, $i + 24, 24));
 		my ($cause) = unpack("Z44", substr($args->{'RAW_MSG'}, $i + 48, 44));
-		$guild{expulsion}{$acc}{name} = $name;
-		$guild{expulsion}{$acc}{cause} = $cause;
+		$guild{expulsion}{$acc}{name} = bytesToString($name);
+		$guild{expulsion}{$acc}{cause} = bytesToString($cause);
 	}
 }
 
@@ -2792,20 +2792,20 @@ sub guild_members_list {
 	my $c = 0;
 	delete $guild{member};
 	for (my $i = 4; $i < $msg_size; $i+=104){
-		$guild{'member'}[$c]{'ID'}    = substr($msg, $i, 4);
-		$guild{'member'}[$c]{'charID'}	  = substr($msg, $i+4, 4);
+		$guild{member}[$c]{ID}    = substr($msg, $i, 4);
+		$guild{member}[$c]{charID}	  = substr($msg, $i+4, 4);
 		$jobID = unpack("v1", substr($msg, $i + 14, 2));
 		if ($jobID =~ /^40/) {
 			$jobID =~ s/^40/1/;
 			$jobID += 60;
 		}
-		$guild{'member'}[$c]{'jobID'} = $jobID;
-		$guild{'member'}[$c]{'lvl'}   = unpack("v1", substr($msg, $i + 16, 2));
-		$guild{'member'}[$c]{'contribution'} = unpack("V1", substr($msg, $i + 18, 4));
-		$guild{'member'}[$c]{'online'} = unpack("v1", substr($msg, $i + 22, 2));
+		$guild{member}[$c]{jobID} = $jobID;
+		$guild{member}[$c]{lvl}   = unpack("v1", substr($msg, $i + 16, 2));
+		$guild{member}[$c]{contribution} = unpack("V1", substr($msg, $i + 18, 4));
+		$guild{member}[$c]{online} = unpack("v1", substr($msg, $i + 22, 2));
 		my $gtIndex = unpack("V1", substr($msg, $i + 26, 4));
-		$guild{'member'}[$c]{'title'} = $guild{'title'}[$gtIndex];
-		$guild{'member'}[$c]{'name'} = bytesToString(unpack("Z24", substr($msg, $i + 80, 24)));
+		$guild{member}[$c]{title} = $guild{title}[$gtIndex];
+		$guild{member}[$c]{name} = bytesToString(unpack("Z24", substr($msg, $i + 80, 24)));
 		$c++;
 	}
 	
@@ -2814,12 +2814,12 @@ sub guild_members_list {
 sub guild_member_online_status {
 	my ($self, $args) = @_;
 
-	foreach my $guildmember (@{$guild{'member'}}) {
-		if ($guildmember->{'charID'} eq $args->{charID}) {
-			if ($guildmember->{'online'} = $args->{online}) {
-				message TF("Guild member %s logged in.\n", $guildmember->{'name'}), "guildchat";
+	foreach my $guildmember (@{$guild{member}}) {
+		if ($guildmember->{charID} eq $args->{charID}) {
+			if ($guildmember->{online} = $args->{online}) {
+				message TF("Guild member %s logged in.\n", $guildmember->{name}), "guildchat";
 			} else {
-				message TF("Guild member %s logged out.\n", $guildmember->{'name'}), "guildchat";
+				message TF("Guild member %s logged out.\n", $guildmember->{name}), "guildchat";
 			}
 			last;
 		}
@@ -2838,7 +2838,7 @@ sub guild_members_title_list {
 	my $gtIndex;
 	for (my $i = 4; $i < $msg_size; $i+=28) {
 		$gtIndex = unpack("V1", substr($msg, $i, 4));
-		$guild{'positions'}[$gtIndex]{'title'} = bytesToString(unpack("Z24", substr($msg, $i + 4, 24)));
+		$guild{positions}[$gtIndex]{title} = bytesToString(unpack("Z24", substr($msg, $i + 4, 24)));
 	}
 }
 
