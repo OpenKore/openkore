@@ -10,9 +10,10 @@
 #  See http://www.gnu.org/licenses/gpl.html for the full license.
 #########################################################################
 #
-#  ServerType for rRO Server
+#  ServerType for rRO and vRO
 #  27 December 2006: Updated to support 2006-12-18a protocol
-#  19 Jeanuary 2007: Updated to support 2007-01-16a protocol
+#  19 January  2007: Updated to support 2007-01-16a protocol
+#  13 February 2007: vRO now also uses this server type.
 #
 #########################################################################
 package Network::Send::ServerType13;
