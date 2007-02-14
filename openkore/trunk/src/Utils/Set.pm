@@ -56,8 +56,10 @@
 package Set;
 
 use strict;
+use Scalar::Util;
 use overload '@{}' => \&getArray;
 use overload '[]' => \&get;
+use overload '""' => \&_toString;
 
 ##
 # Set Set->new([elements...])
@@ -173,6 +175,12 @@ sub deepCopy {
 	$copy->{items} = [ @{$self->{items}} ];
 	$copy->{keys} = { %{$self->{keys}} };
 	return $copy;
+}
+
+sub _toString {
+	return sprintf("%s(0x%x)",
+		Scalar::Util::blessed($_[0]),
+		Scalar::Util::refaddr($_[0]));
 }
 
 1;
