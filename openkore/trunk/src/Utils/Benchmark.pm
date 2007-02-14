@@ -122,7 +122,7 @@ sub results {
 	$totalUS = $totalUser + $totalSystem;
 	$totalReal = $results{$relativeTo}[REAL];
 
-	my $sortFunc = sub {
+	my $sortFunc = sub($$) {
 		my ($a, $b) = @_;
 		if ($a eq $relativeTo) {
 			return -1;
