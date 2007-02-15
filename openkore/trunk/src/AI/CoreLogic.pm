@@ -2038,11 +2038,10 @@ sub processAutoBuy {
 			}
 		} else {
 			if ($args->{lastIndex} eq "" || $args->{lastIndex} != $args->{index}) {
-				# if this is a different item than last loop, get new info for itemID and resend buy
+				# sendBuy automatically terminates the shopping
+				# to the seller NPC for each item bought.
 				undef $args->{itemID};
-				if ($config{"buyAuto_$args->{index}"."_npc"} != $config{"buyAuto_$args->{lastIndex}"."_npc"}) {
-					undef $args->{sentBuy};
-				}
+				undef $args->{sentBuy};
 				$timeout{ai_buyAuto_giveup}{time} = time;
 			}
 			$args->{lastIndex} = $args->{index};

@@ -22,7 +22,7 @@ Credits:
 - DInvalid: Correctly set character direction upon move, autoSwitch bugfix.
 - Anarki: Monster ID support for mon_control.txt
 - kanzo: ropp fix for XKoreProxy.
-- xcv: Fix calculation of benchmark results.
+- xcv: Fix calculation of benchmark results and the autobuy AI.
 
 Bug fixes:
 - Fixed Party bug where the bot would follow any random player 
