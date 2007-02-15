@@ -9,8 +9,9 @@ Exceptions.pm
 LockFile.pm
 HttpReader.pm
 ObjectList.pm
+PathFinding.pm
 PerlLauncher.pm
-RDM128.pm
+RMD128.pm
 RMD160.pm
 Set.pm
 TextReader.pm
