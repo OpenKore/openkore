@@ -3540,7 +3540,7 @@ sub map_changed {
 	$map_ip = makeIP($args->{IP});
 	$map_port = $args->{port};
 	message(swrite(
-		"---------Map Change Info----------", [],
+		"---------Map  Info----------", [],
 		"MAP Name: @<<<<<<<<<<<<<<<<<<",
 		[$args->{map}],
 		"MAP IP: @<<<<<<<<<<<<<<<<<<",
@@ -3601,7 +3601,7 @@ sub map_loaded {
 		ai_clientSuspend(0, 10);
 		main::initMapChangeVars();
 	} else {
-		message	T("Requesting guild information...\n"), "info";
+		#message	T("Requesting guild information...\n"), "info";
 		$messageSender->sendGuildInfoRequest();
 
 		# Replies 01B6 (Guild Info) and 014C (Guild Ally/Enemy List)
