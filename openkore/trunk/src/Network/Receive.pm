@@ -2880,7 +2880,7 @@ sub guild_notice {
 		message $msg, "guildnotice";
 	}
 
-	message	T("Requesting guild information...\n"), "info";
+	#message	T("Requesting guild information...\n"), "info"; # Lets Disable this, its kinda useless.
 	$messageSender->sendGuildInfoRequest();
 
 	# Replies 01B6 (Guild Info) and 014C (Guild Ally/Enemy List)
