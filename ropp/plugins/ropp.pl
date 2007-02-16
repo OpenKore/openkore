@@ -54,6 +54,7 @@ my $commands = Commands::register(
 my %statisticsReporting;
 
 # Loading ropp.dll and importing functions
+$ENV{PATH} .= ";$Plugins::current_plugin_folder";
 Win32::API->Import('ropp', 'CreateSitStand', 'PL' ,'N') or die "Can't import CreateSitStand\n$!";
 Win32::API->Import('ropp', 'CreateAtk', 'PLL' ,'N') or die "Can't import CreateAtk\n$!";
 Win32::API->Import('ropp', 'CreateSkillUse', 'PLLL' ,'N') or die "Can't import CreateSkillUse\n$!";
