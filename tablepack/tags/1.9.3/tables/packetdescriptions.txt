@@ -1,0 +1,332 @@
+[Recv]
+0000 Idle
+0069 Account Info
+006A Connection Failed
+006B Received characters from Game Login Server
+006C Error logging into Game Login Server (invalid character specified)...
+0071 Received character ID and Map IP from Game Login Server
+0073 Enter Map
+0078 actor_display (actor exists)
+0079 Unit Connected
+007B actor_display (actor moved)
+007C Unit Spawned
+007F Received Sync
+0080 Unit Lost (Died, Disappeared, Disconnected)
+0081 Disconnected from Server
+0087 You Move
+0088 Unit Position
+008A Item take / attack damage / sit / stand
+008D Public message
+008E Public message by yourself
+0091 Map Changed
+0092 Map Server Changed
+0095 Unit Get Info
+0097 Private Message
+0098 Private Response
+009A Special Message
+009C Unit Look
+009D Item Exists
+009E Item Appeared
+00A0 Item Pickup
+00A1 Item Disappeared
+00A3 Inventory Items List
+00A4 Inventory Equipments List
+00A5 Storage Items List
+00A6 Storage Equipments List
+00A8 Inventory Used
+00AA Inventory Equip
+00AC Inventory Un-Equip
+00AF Inventory Removed
+00B0 Your Status Info
+00B1 Your Status Info (Exp, Job Exp, Zeny)
+00B3 Character Select Result
+00B4 NPC Talk
+00B5 NPC Continue
+00B6 NPC Cancel
+00B7 NPC Response
+00BC Your Status Added (Str, Agi, Vit, Int, Dex, Luk)
+00BD Your Status Info (Calculated)
+00BE Your Status Info (Points Need)
+00C0 Emotion
+00C2 Total Users
+00C3 Change Equipment Display
+00C4 NPC Buy-Sell
+00C6 NPC Buy List
+00C7 NPC Sell List
+00CA Buy Result
+00CB Sell Result
+00D1 Player (Ignored / Unignored)
+00D2 All Player (Ignored / Unignored)
+00D6 Chat Room Created
+00D7 Chat Room List
+00D8 Chat Room Closed
+00DA Join Chat Room Failed
+00DB Chat Room Users List
+00DC User Join Chat Room
+00DD User Left Chat Room
+00DF Chat Room Properties Modified
+00E1 Chat Room Owner Changed
+00E5 Deal Request
+00E7 Deal Accept
+00E9 Deal Added (Other)
+00EA Deal Added (You)
+00EC Deal Confirm
+00EE Deal Cancelled
+00F0 Deal Completed
+00F2 Storage Capacity
+00F4 Storage Added
+00F6 Storage Removed
+00F8 Storage Closed
+00FA Party Creation Result
+00FB Party Users List
+00FD Party Join Request (From You)
+00FE Party Join Request (From Other)
+0101 Party Share
+0104 Party User Info
+0105 Party User Left
+0106 Party HP
+0107 Party Move
+0109 Party Message
+010A MVP Item
+010B MVP Exp
+010C MVP Player
+010E Skill Level Changed
+010F Skills List
+0110 Skill Use Failed
+0111 New Skill
+0114 Skill Damage
+0117 Skill Location
+0119 Unit Status (Freeze, Poison, ...)
+011A Skill Restore
+011C Warp Portal List
+011E Memo
+011F Skill Area
+0120 Skill Disappeared
+0121 Cart Capacity
+0122 Cart Equipments List
+0123 Cart Items List
+0124 Cart Added
+0125 Cart Removed
+012C Cart Add Failed
+012D Vending
+0131 Vender Founded
+0132 Vender Lost
+0133 Vender Sell List
+0135 Vender Item Not Enough
+0136 Sell List
+0137 Sell
+0139 Range Attack with New Position
+013A Attack Range
+013B Arrow
+013C Arrow Equip
+013D Your HP/SP Changed
+013E Skill Cast
+0141 Your Status Changed (Str, Agi, Vit, Int, Dex, Luk, Bonus)
+0144 Mini Map Indicator
+0145 NPC Image
+0147 Skill Use
+0148 Resurrection
+014A Alignment Failed
+014B Alignment
+014C Guild Allies / Enemy List
+0150 Guild Info
+0154 Guild Members List
+0156 Guild Member Titles Selected
+015A Guild Member Leave
+015C Guild Member Delete
+0160 Guild Member Setting List
+0162 Guild Skills List
+0163 Guild Member Leave
+0166 Guild Member Titles List
+0169 Guild Join Result
+016A Guild Join Request (From Other)
+016C Guild Name
+016D Guild Member Online Status
+016F Guild Notice
+0171 Guild Ally Request
+0173 Guild Ally Result
+0174 Guild Member Titles Changed
+0177 Identify List
+0179 Identify
+017B Card Merge Items List
+017D Card Merge Status
+017F Guild Message
+0181 Guild Request Status
+0182 New Guild Member
+0184 Guild Ally / Enemy Un-Set Status
+0185 Guild Ally / Enemy Set Status
+0187 Request Sync Packet
+0188 Upgrade 
+0189 No Teleporting
+018B Exit
+018C Sense
+018D Mixture List
+018F Mixture Result
+0192 Map ?
+0194 Character Name
+0195 Player Guild Info
+0196 Unit Effect (Skill, Weight, ...)
+0199 PVP Off
+019A PVP On
+019B Unit Gained Level
+019E Slot Machine
+01A0 Pet Catch
+01A2 Pet Name
+01A3 Pet Request Food
+01A4 Pet Event
+01A6 Pet's Egg List
+01AA Pet Talk / Emo
+01AB Mute Counter
+01AC Stop or Snare
+01AD Arrow Craft
+01B0 Monster Transform
+01B3 NPC Image
+01B5 Account Remain
+01B6 Guild Info : 0150
+01B9 Unit Skill Failed
+01C4 Storage Added
+01C5 Cart Added 
+01C8 Inventory Used
+01C9 Skill Area : 011F
+01CD Available Autocast Spells
+01D0 Spirit or Coin Count (revolving entities)
+01D2 Combo Attack
+01D7 Weapon / Shield Display
+01D8 actor_display (actor exists)
+01D9 Unit Connected : 0079
+01DA actor_display (actor moved)
+01DB actor_display (actor connected)
+01DC Login Code
+01DE Skill Damage : 0114
+01E1 Spirit or Coin Count : 01D0
+01E6 Some Player Name.
+01EE Inventory Items List : 00A3
+01EF Cart Items List : 0123
+01F0 Storage Items List : 00A5
+01F2 Guild member in/out
+01F4 Deal Request
+01F5 Deal Accept
+0201 Friend List
+0206 Friend In/Out
+0207 Friend Request Receive
+0209 Friend Request Response
+020A Friend Removed
+0219 Blacksmith Top 10 Ranking
+021A Alchemist Top 10 Ranking
+021B Blacksmith Points
+021C Alchemist Points
+0224 Taekwon Ranking
+0226 Taekwon Top 10 Ranking
+0227 GameGuard Request
+022A actor_display (actor exists)
+022B actor_display (actor connected
+022C actor_display (actor moved)
+020E TaeKwon Misson
+0238 PK Top 10 Ranking
+
+[Send]
+0064 Master Login
+0065 Game Login
+0066 Char Login
+0072 Map Login
+007D Map Loaded
+007E Sync
+0085 Move
+0089 Attack / Sit / Stand
+008C Chat
+0090 Talk
+0094 Get Unit Info
+0096 Private Msg
+009B Look
+009F Take
+00A2 Drop
+00A7 Item Use
+00A9 Equip
+00AB Unequip
+00B2 Respawn
+00B8 Talk Response
+00B9 Talk Continue
+00BB Add Status Point
+00BF Emotion
+00C1 Who
+00C5 Get Store / Sell List
+00C8 Buy
+00C9 Sell
+00CF Ignore
+00D0 Ignore All
+00D3 Ignore List Request
+00D5 Chat Room Create
+00D9 Chat Room Join
+00DE Chat Room Change
+00E0 Chat Room Bestow
+00E2 Chat Room Kick
+00E3 Chat Room Leave
+00E4 Deal
+00E6 Deal Accept / Cancel
+00E8 Deal Add Item
+00EB Deal OK / Finalize
+00ED Current Deal Cancel
+00EF Deal Trade
+00F3 Storage Add
+00F5 Storage Get
+00F7 Storage Close
+00F9 Party Organize
+00FC Party Join Request
+00FF Party Join
+0100 Party Leave
+0102 Party Share EXP
+0103 Party Kick
+0108 Party Chat
+0112 Add Skill Point
+0113 Skill Use
+0116 Skill Use Location
+0118 Attack Stop
+011B Teleport / Warp Portal
+011D Memo
+0126 Cart Add
+0127 Cart Get
+0128 Cart Get (Shop)
+0129 Cart Storage Add
+012A Companion Release
+012E Shop Close
+012F Shop Open
+0130 Vender Items List
+0134 Vender Buy
+0146 Talk Cancel
+0149 Alignment
+014D Guild First Query
+014F Guild Query Page
+0151 Emblem Request
+0159 Guild Leave
+015B Guild Member Delete
+0168 Guild Join Request
+016B Guild Join
+016E Guild Notice
+0170 Guild Ally Request
+0172 Guild Ally
+0178 Identify
+017A Card Merge Request
+017C Card Merge
+017E Guild Chat
+0180 Guild Enemy Request
+0183 Guild Delete Request
+0187 Char BAN Check
+018A Exit
+018E Tempering
+0193 Character Name Request
+019F Pet Catch
+01A1 Pet Feed
+01A5 Pet Name
+01A7 Pet Incubator
+01A9 Pet Talk / Emo
+01B2 Shop Open
+01CE Autocast Skill
+01DB Login Code Request
+01DD Login
+01F9 Char Adoption Request
+01FA Login
+0202 Friend Request
+0203 Friend Remove
+0208 Friend Request Accept/Reject
+0228 gameguard_sync
+020D Homunculus Feed

@@ -1,0 +1,120 @@
+0 Provoke
+1 Endure
+2 Twohand Quicken
+3 Improve Concentration
+4 Hiding
+5 Cloaking
+6 Enchant Poison
+7 Poison React
+8 Quagmire
+9 Angelus
+10 Blessing
+11 Signum Crucis
+12 Increase AGI
+13 Decrease AGI
+14 Slow Poison
+15 Impositio Manus
+16 Suffragium
+17 Aspersio
+18 Benedictio
+19 Kyrie Eleison
+20 Magnificat
+21 Gloria
+22 Lex Aeterna
+23 Adrenaline Rush
+24 Weapon Perfection
+25 Power-Thrust
+26 Power Maximize
+27 Pecopeco
+28 Falcon
+29 Play Dead
+30 Crazy Uproar
+31 Energy Coat
+32 Armor Damaged
+33 Weapon Damaged
+34 Hallucination
+35 Owg 50%
+36 Owg 90%
+37 Concentration Potion
+38 Awakening Potion
+39 Berserk Potion
+41 Walking Speed Up
+42 Speed Up
+49 Barrier
+50 Strip Weapon
+51 Strip Shield
+52 Strip Armor
+53 Strip Helm
+54 Cp Weapon
+55 Cp Shield
+56 Cp Armor
+57 Cp Helm
+58 Auto Guard
+59 Reflect Shield
+60 Devotion
+61 Providence
+62 Defender
+64 Element Enchanted
+65 Auto Spell
+68 Spear Quicken
+77 Sleeping
+86 Vigor Explosion
+87 Steel Body
+89 Triple Attack Delay
+90 Flame Weapon
+91 Frost Weapon
+92 Lightning Loader
+93 Seismic Weapon
+100 Muted
+103 Aura Blade
+104 Parrying
+105 Concentration
+106 Tension Relax
+107 Berserk
+108 Fury
+109 Gospel
+110 Assumptio
+111 Basilica
+113 Magic Power
+114 Enchant Deadly Poison
+115 True Sight
+116 Wind Walk
+117 Meltdown
+118 Cart Boost
+119 Chase Walk
+120 Reject Sword
+121 Marionette Control
+122 Marionette Control
+124 Head Crush
+125 Joint Beat
+127 Memorize
+131 Magnum Break
+132 Auto Berserk
+135 Ready Storm
+137 Ready Down
+139 Ready Turn
+141 Ready Counter
+143 TK Dodge
+145 Run
+146 Dark Weapon
+148 Ghost Weapon
+149 Night
+150 Increase Atk
+151 Increase Matk
+152 Devil
+153 Kaite
+156 Kaizel
+158 Kaupe
+181 Preserve
+184 Invisible Detect
+185 Walking Speed Down
+188 Maximum Power Thrust
+203 Madness Canceller
+204 Gatling Fever
+206 Utsusemi
+207 Bunshin No Jutsu
+208 Nen
+209 Adjustment
+210 Increase Accuracy
+250 Exp rate x1.5
+252 Drop rate x2
