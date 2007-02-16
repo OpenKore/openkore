@@ -15,8 +15,6 @@ I'm happy to announce the 4th beta release of OpenKore, version 1.9.3. It hasn't
 - skseo: Korean translations and kRO fixes.
 - Tatka: help with special character support in the Win32 console.
 - heero: servertype 15 (pRO Thor) support.
-- And of course, all developers with SVN write access :)
-  See http://cia.navi.cx/stats/project/openkore
 - littlewens: Traditional Chinese translations.
 - PlayingSafe: Fixes for big-endian systems, such as Mac-PPC.
 - clarious: Help with vRO support.
@@ -24,7 +22,7 @@ I'm happy to announce the 4th beta release of OpenKore, version 1.9.3. It hasn't
 - Anarki: Monster ID support for mon_control.txt
 - kanzo: ropp fix for XKoreProxy.
 - xcv: Fix calculation of benchmark results and the autobuy AI.
-- And of course, everybody in the existing OpenKore team. :)
+- And of course, everybody in the existing OpenKore team. :) See http://cia.navi.cx/stats/project/openkore
 
 Here's a summary of the major changes in this release:
 - Lots and lots of bugs have been fixed. Most notably, many crashers, UTF-8 (character set handling) bugs and AI bugs have been fixed.
