@@ -1,0 +1,211 @@
+body {
+	margin: 0px 0px 0px 0px;
+	font-family: 'Bitstream Vera Sans', Arial, Sans-Serif;
+}
+img, .img {
+	border: 0;
+}
+h1 {
+	font-size: x-large;
+}
+h2 {
+	color: darkgray;
+	border-bottom: 1px dashed darkgray;
+	cursor: default;
+}
+h2:hover {
+	border-bottom: 1px solid gray;
+}
+
+.details_sep {
+	display: none;
+}
+
+#title {
+	color: white;
+	background: black;
+	font-weight: bold;
+	padding: 3px;
+}
+
+#navigation {
+	background: #8888d0;
+}
+#navigation a, #navigation li b {
+	color: white;
+	text-decoration: none;
+	padding-left: 12px;
+	padding-right: 12px;
+}
+#navigation a {
+	float: left;
+	display: block;
+}
+#navigation a:hover {
+	background-color: #aaaaf0;
+}
+#navigation ul {
+	display: inline;
+	padding: 0px;
+	margin: 0;
+	list-style-type: none;
+}
+#navigation li {
+	display: inline;
+	color: white;
+}
+
+#main {
+	margin: 8px 8px 8px 8px;
+}
+
+#footer {
+	font-size: small;
+	color: gray;
+	vertical-align: top;
+	font-family: 'Bitstream Vera Sans', Tahoma, Verdana, Arial, Sans-Serif;
+}
+#footer img, #footer .img {
+	vertical-align: top;
+}
+#footer ul {
+	list-style-type: none;
+	display: inline;
+	padding: 0;
+	margin: 0;
+	float: right;
+}
+#footer li {
+	display: inline;
+}
+
+.functionIndex, #moduleIndex {
+	width: 98%;
+	background: #eeeeee;
+	border: 1px lightgray solid;
+}
+.functionIndex th, #moduleIndex th {
+	color: white;
+	background: black;
+	padding-left: 6px;
+	padding-right: 6px;
+	text-align: left;
+}
+.functionIndex tr:hover, #moduleIndex tr:hover {
+	background: #e0e0ff;
+}
+
+.functionIndex td, #moduleIndex td {
+	padding: 3px;
+	
+}
+.functionIndex td {
+	font-family: 'Bitstream Vera Sans Mono', 'Courier New', Courier, Monospace;
+	font-size: smaller;
+}
+.functionIndex a, #moduleIndex a {
+	text-decoration: none;
+	color: blue;
+}
+.functionIndex a:visited, #moduleIndex a:visited {
+	color: darkblue;
+}
+.functionIndex a:hover, #moduleIndex a:hover {
+	text-decoration: underline;
+	color: red;
+}
+.functionIndex .decl, #moduleIndex .decl {
+	width: 100%;
+}
+
+#moduleIndex {
+	background: none;
+	border: none;
+}
+#moduleIndex .moduleName {
+	font-weight: bold;
+}
+#moduleIndex .moduleDesc {
+	width: 100%;
+}
+
+.function .decl {
+	margin-bottom: 0.2cm;
+	font-family: 'Bitstream Vera Sans Mono', 'Courier New', Courier, Monospace;
+}
+.function .params_and_returns {
+	background: #e4eeff;
+	padding: 6px;
+}
+.function .desc {
+	margin-bottom: 12px;
+}
+.example {
+	border: #ffe0bb dotted 1px;
+	background: #fffde8;
+	padding: 6px;
+	overflow: auto;
+	margin-left: 1.5em;
+}
+.example .comment {
+	color: darkblue;
+}
+dl .example {
+	margin-left: 0;
+}
+
+.moduleIndex a {
+	text-decoration: none;
+}
+.moduleIndex a:visited {
+	color: darkblue;
+}
+.moduleIndex a:hover {
+	text-decoration: underline;
+}
+
+.note {
+	padding: 1em;
+	border: solid 2px #ffdeab;
+	background: #fff9ec;
+	margin-bottom: 1em;
+}
+.note h3 {
+	padding: 0;
+	margin: 0;
+}
+
+.tip {
+	padding: 0.35cm;
+	border: solid 2px #ffdeab;
+	background: #fff9ec;
+	margin: 0.3cm;
+}
+.tip h4 {
+	padding: 0;
+	margin: 0;
+}
+
+.hashkeys {
+	background: #ffe5bc;
+	margin-left: 0.2cm;
+	padding: 0.2cm;
+}
+
+.hashkeys dt {
+	font-family: 'Bitstream Vera Sans Mono', 'Courier New', Monospace;
+	font-weight: bold;
+}
+
+dd.requires, dd.ensures, dd.invariant {
+	font-family: 'Bitstream Vera Sans Mono', 'Courier New', Monospace;
+	font-size: small;
+}
+
+.derived {
+	margin: 1em;
+	padding: 0.5em;
+	background: #ffeeee;
+	border: 1px solid #eedddd;
+	font-weight: bold;
+}
