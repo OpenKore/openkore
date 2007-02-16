@@ -1,4 +1,9 @@
 =========================
+### OpenKore 1.9.4 (beta)
+=========================
+
+
+=========================
 ### OpenKore 1.9.3 (beta)
 =========================
 
@@ -27,6 +32,7 @@ I'm happy to announce the 4th beta release of OpenKore, version 1.9.3. It hasn't
 Here's a summary of the major changes in this release:
 - Lots and lots of bugs have been fixed. Most notably, many crashers, UTF-8 (character set handling) bugs and AI bugs have been fixed.
 - Support for the following servers has been restored: vRO (Vietnam), rRO (Russia), euRO (Europe). Note that you need the ropp plugin in order to play on any of these servers.
+- Support for new classes, such as Gunslinger and Ninja.
 - We now support more platforms. OpenKore should now work correctly on FreeBSD, MacOS X and Sun Sparc.
 - OpenKore has been translated to traditional Chinese.
 - About 30% performance improvement compared to 1.9.2. This is because debugging has been disabled in this release.
