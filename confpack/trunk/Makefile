@@ -3,7 +3,7 @@
 # http://sources.redhat.com/cygwin/
 
 PACKAGE=confpack
-VERSION=1.9.2
+VERSION=1.9.3
 DIR=control
 FILENAME=$(PACKAGE)-$(VERSION).zip
 VERSIONFILE=ConfpackVersion.txt
