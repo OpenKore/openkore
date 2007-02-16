@@ -2,7 +2,8 @@
 ### OpenKore 1.9.3 (beta)
 =========================
 
-Credits:
+I'm happy to announce the 4th beta release of OpenKore, version 1.9.3. It hasn't been easy - many developers were busy with their real lives. Some new contributors joined us while others left. I'd like to give my thanks to the following people, who have contributed to this release. Without them OpenKore would not be what it is today. :)
+
 - Darkfate: partial servertype 11 support.
 - piroJOKE: server information updates and table files updates,
   labels idea, partial servertype 13 support.
@@ -23,6 +24,17 @@ Credits:
 - Anarki: Monster ID support for mon_control.txt
 - kanzo: ropp fix for XKoreProxy.
 - xcv: Fix calculation of benchmark results and the autobuy AI.
+- And of course, everybody in the existing OpenKore team. :)
+
+Here's a summary of the major changes in this release:
+- Lots and lots of bugs have been fixed. Most notably, many crashers, UTF-8 (character set handling) bugs and AI bugs have been fixed.
+- Support for the following servers has been restored: vRO (Vietnam), rRO (Russia), euRO (Europe). Note that you need the ropp plugin in order to play on any of these servers.
+- We now support more platforms. OpenKore should now work correctly on FreeBSD, MacOS X and Sun Sparc.
+- OpenKore has been translated to traditional Chinese.
+- About 30% performance improvement compared to 1.9.2. This is because debugging has been disabled in this release.
+
+
+Detailed list of changes follows:
 
 Bug fixes:
 - Fixed Party bug where the bot would follow any random player 
