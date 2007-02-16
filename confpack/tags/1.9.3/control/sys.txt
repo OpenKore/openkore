@@ -1,0 +1,40 @@
+###### Localization settings ######
+locale
+
+
+###### Wx interface settings ######
+wxHideConsole 1
+
+
+###### Bus system settings ######
+# Whether to enable the bus system.
+bus 0
+
+# If you want to connect to an already running bus server on a different
+# computer, specify the host and port here.
+bus_server_host
+bus_server_port
+
+
+###### Vx interface settings ######
+panelTwo_domains publicchat, pm, guildchat, partychat, pm/sent, list, info, selfchat, schat, error, warning
+panelOne_lineLimit 900
+panelTwo_lineLimit 100
+panelFont Verdana
+menuFont Lucida Console
+sbarFont Arial
+panelOne_height 8
+panelOne_width 60
+panelOne_side top
+panelOne_fontsize 8
+panelTwo_height 4
+panelTwo_width 40
+panelTwo_side bottom
+panelTwo_fontsize 8
+
+
+###### Miscellaneous ######
+sendAnonymousStatisticReport 1
+
+# It is recommended that you leave enableWebstart to 1!
+enableWebstart 1

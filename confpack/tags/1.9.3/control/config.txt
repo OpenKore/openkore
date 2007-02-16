@@ -1,0 +1,570 @@
+# Please Read the Users Manual
+# The Manual is located at http://openkore.sourceforge.net/manual/
+
+######## Login options and server-specific options ########
+
+master
+server
+username
+password
+char
+sex
+
+bindIp
+# 0 = normal server, 1 = oRO, 2 = pRO, 3 = eAthena/Freya,
+# 4 = new Freya, 5 = new eAthena, 6 = new oRO
+# 7 = Aegis 10.x with padded packets, 8 = kRO
+# 9 = eAthena, 10 = vRO, 11 = euRO
+# If Skills, Moving, Sitting or whatever doesnt work, try all other servertypes before you complain!
+serverType 0
+
+# 1 = hook into RO client, 2 = Act as stand-alone proxy, proxy = act as true proxy
+XKore 0
+XKore_silent 1
+XKore_bypassBotDetection 0
+XKore_exeName ragexe.exe
+
+# XKore 2 / Proxy configuration
+XKore_ID
+XKore_listenIp 127.0.0.1
+XKore_listenPort 6901
+XKore_publicIp 127.0.0.1
+XKore_proxyAllowed_IP
+
+# It is not advised to set secureAdminPassword if you're using Xkore 2
+secureAdminPassword 1
+adminPassword
+callSign
+commandPrefix ;
+
+pauseMapServer 0
+ignoreInvalidLogin 0
+secureLogin_requestCode
+
+message_length_max 80
+
+######## Main configuration ########
+
+alias_heal sp 28
+
+allowedMaps
+allowedMaps_reaction 1
+
+attackAuto 2
+attackAuto_party 1
+attackAuto_onlyWhenSafe 0
+attackAuto_followTarget 1
+attackAuto_inLockOnly 1
+attackDistance 1.5
+attackDistanceAuto 0
+attackMaxDistance 2.5
+attackMaxRouteDistance 100
+attackMaxRouteTime 4
+attackMinPlayerDistance 2
+attackMinPortalDistance 4
+attackUseWeapon 1
+attackNoGiveup 0
+attackCanSnipe 0
+attackCheckLOS 0
+attackLooters 0
+attackChangeTarget 1
+aggressiveAntiKS 0
+
+autoMoveOnDeath 0
+autoMoveOnDeath_x
+autoMoveOnDeath_y
+autoMoveOnDeath_map
+
+attackEquip_topHead
+attackEquip_midHead
+attackEquip_lowHead
+attackEquip_leftHand
+attackEquip_rightHand
+attackEquip_leftAccessory
+attackEquip_rightAccessory
+attackEquip_robe
+attackEquip_armor
+attackEquip_shoes
+attackEquip_arrow
+
+autoBreakTime {
+	startTime
+	stopTime
+}
+
+autoConfChange {
+	minTime
+	varTime
+	lvl
+	joblvl
+}
+
+autoMakeArrows 0
+
+autoRestart 0
+
+autoRestartMin 10800
+autoRestartSeed 3600
+
+autoRestartSleep 1
+autoSleepMin 900
+autoSleepSeed 900
+
+autoResponse 0
+
+autoSpell
+
+avoidGM_near 0
+avoidGM_near_inTown 0
+avoidGM_talk 0
+avoidGM_reconnect 1800
+avoidGM_ignoreList
+
+avoidList 1
+avoidList_inLockOnly 0
+avoidList_reconnect 1800
+
+cachePlayerNames 1
+cachePlayerNames_duration 900
+cachePlayerNames_maxSize 100
+
+clientSight 20
+
+dcOnDeath 0
+dcOnDualLogin 0
+dcOnDisconnect 0
+dcOnEmptyArrow 0
+dcOnMute 0
+dcOnPM 0
+dcOnZeny 0
+dcOnStorageFull 1
+
+follow 0
+followTarget
+followEmotion 1
+followEmotion_distance 4
+followFaceDirection 0
+followDistanceMax 6
+followDistanceMin 3
+followLostStep 12
+followSitAuto 0
+followBot 0
+
+ignoreServerShutdown
+
+itemsTakeAuto 2
+itemsTakeAuto_party 0
+itemsGatherAuto 2
+itemsMaxWeight 89
+itemsMaxWeight_sellOrStore 48
+itemsMaxNum_sellOrStore 99
+cartMaxWeight 7900
+
+lockMap
+lockMap_x
+lockMap_y
+lockMap_randX
+lockMap_randY
+
+route_escape_unknownMap 1
+route_escape_reachedNoPortal 1
+route_escape_randomWalk 1
+route_escape_shout
+route_randomWalk 1
+route_randomWalk_inTown 0
+route_randomWalk_maxRouteTime 75
+route_maxWarpFee
+route_maxNpcTries 5
+route_teleport 0
+route_teleport_minDistance 150
+route_teleport_maxTries 8
+route_teleport_notInMaps
+route_step 15
+
+runFromTarget 0
+runFromTarget_dist 6
+
+saveMap
+saveMap_warpToBuyOrSell 1
+saveMap_warpChatCommand
+
+shopAuto_open 0
+shop_random 0
+
+sitAuto_hp_lower 40
+sitAuto_hp_upper 100
+sitAuto_sp_lower 0
+sitAuto_sp_upper 0
+sitAuto_over_50 0
+sitAuto_idle 1
+
+statsAddAuto 0
+statsAddAuto_list
+statsAddAuto_dontUseBonus 0
+statsAdd_over_99 0
+
+skillsAddAuto 0
+skillsAddAuto_list
+
+tankMode 0
+tankModeTarget
+
+teleportAuto_hp 10
+teleportAuto_sp 0
+teleportAuto_idle 0
+teleportAuto_portal 0
+teleportAuto_search 0
+teleportAuto_minAggressives 0
+teleportAuto_minAggressivesInLock 0
+teleportAuto_onlyWhenSafe 0
+teleportAuto_maxDmg 500
+teleportAuto_maxDmgInLock 0
+teleportAuto_deadly 1
+teleportAuto_useSkill 3
+teleportAuto_useChatCommand
+teleportAuto_allPlayers 0
+teleportAuto_atkCount 0
+teleportAuto_atkMiss 10
+teleportAuto_unstuck 0
+teleportAuto_dropTarget 0
+teleportAuto_dropTargetKS 0
+teleportAuto_attackedWhenSitting 0
+teleportAuto_totalDmg 0
+teleportAuto_totalDmgInLock 0
+teleportAuto_equip_leftAccessory
+teleportAuto_equip_rightAccessory
+teleportAuto_lostHomunculus
+teleportAuto_lostTarget
+
+dealAuto 1
+dealAuto_names
+partyAuto 1
+partyAutoShare 0
+guildAutoDeny 1
+
+verbose 1
+showDomain 0
+squelchDomains
+verboseDomains
+beepDomains
+beepDomains_notInTown
+
+logChat 0
+logPrivateChat 1
+logPartyChat 1
+logGuildChat 1
+logSystemChat 1
+logEmoticons
+logConsole 0
+logAppendUsername 1
+
+chatTitleOversize 0
+shopTitleOversize 0
+
+sleepTime 10000
+intervalMapDrt 1
+
+ignoreAll 0
+itemHistory 0
+autoTalkCont 1
+noAutoSkill 0
+portalRecord 2
+missDamage 0
+
+tankersList
+
+removeActorWithDistance
+
+
+######## Homunculus Support ########
+
+homunculus_attackAuto 2
+homunculus_attackAuto_party 1
+homunculus_attackAuto_notInTown 1
+homunculus_attackAuto_onlyWhenSafe 0
+homunculus_attackDistance 1.5
+homunculus_attackMaxDistance 2.5
+homunculus_attackMaxRouteTime 4
+homunculus_attackMinPlayerDistance 3
+homunculus_attackMinPortalDistance 8
+homunculus_attackCanSnipe 0
+homunculus_attackCheckLOS 0
+homunculus_attackNoGiveup 0
+homunculus_attackChangeTarget 1
+
+homunculus_followDistanceMax 10
+homunculus_followDistanceMin 3
+
+homunculus_resurrectAuto 2
+
+homunculus_route_step 15
+
+homunculus_tankMode 0
+homunculus_tankModeTarget
+
+homunculus_teleportAuto_hp 10
+homunculus_teleportAuto_maxDmg 500
+homunculus_teleportAuto_maxDmgInLock 0
+homunculus_teleportAuto_deadly 1
+homunculus_teleportAuto_unstuck 0
+homunculus_teleportAuto_dropTarget 0
+homunculus_teleportAuto_dropTargetKS 0
+homunculus_teleportAuto_totalDmg 0
+homunculus_teleportAuto_totalDmgInLock 0
+
+# intimacyMax / Min sets a threshhold of when not to feed your homunculus
+# If intimacy is HIGHER than the minimum or LOWER/EQUAL to the max, we wont feed.
+homunculus_intimacyMax 999
+homunculus_intimacyMin 911
+
+# How long should we wait between feeding? 
+# default: random between 10 and 60 seconds
+homunculus_hungerTimeoutMax 60
+homunculus_hungerTimeoutMin 10
+
+######## Block options ########
+# You can copy & paste any block multiple times. So if you want to
+# configure two attack skills, just duplicate the attackSkillSlot block.
+
+attackSkillSlot {
+	lvl 10
+	dist 1.5
+	maxCastTime 0
+	minCastTime 0
+	hp
+	sp > 10
+	homunculus_hp
+	homunculus_sp
+	homunculus_dead
+	onAction
+	whenStatusActive
+	whenStatusInactive
+	whenFollowing
+	spirit
+	aggressives
+	previousDamage
+	stopWhenHit 0
+	inLockOnly 0
+	notInTown 0
+	timeout 0
+	disabled 0
+	monsters
+	notMonsters
+	maxAttempts 0
+	maxUses 0
+	target_whenStatusActive
+	target_whenStatusInactive
+	target_deltaHp
+	inInventory
+	isSelfSkill 0
+	equip_topHead
+	equip_midHead
+	equip_lowHead
+	equip_leftHand
+	equip_rightHand
+	equip_leftAccessory
+	equip_rightAccessory
+	equip_robe
+	equip_armor
+	equip_shoes
+	equip_arrow
+	manualAI 0
+}
+
+attackComboSlot {
+	afterSkill
+	waitBeforeUse
+	dist 1.5
+	isSelfSkill 1
+	target_deltaHp
+}
+
+
+useSelf_skill {
+	lvl 10
+	maxCastTime 0
+	minCastTime 0
+	hp
+	sp
+	homunculus_hp
+	homunculus_sp
+	homunculus_dead
+	onAction
+	whenStatusActive
+	whenStatusInactive
+	whenFollowing
+	spirit
+	aggressives
+	monsters
+	notMonsters
+	stopWhenHit 0
+	inLockOnly 0
+	notWhileSitting 0
+	notInTown 0
+	timeout 0
+	disabled 0
+	inInventory
+	manualAI 0
+}
+
+useSelf_skill_smartHeal 1
+
+
+partySkill {
+	lvl 10
+	maxCastTime 0
+	minCastTime 0
+	hp
+	sp
+	homunculus_hp
+	homunculus_sp
+	homunculus_dead
+	onAction
+	whenStatusActive
+	whenStatusInactive
+	whenFollowing
+	spirit
+	aggressives
+	monsters
+	notMonsters
+	stopWhenHit 0
+	inLockOnly 0
+	notWhileSitting 0
+	notInTown 0
+	timeout 0
+	disabled 0
+	manualAI 0
+	target
+	target_hp
+	target_isJob
+	target_isNotJob
+	target_whenStatusActive
+	target_whenStatusInactive
+	target_aggressives
+	target_monsters
+	target_timeout 0
+	target_deltaHp
+	target_dead 0
+	inInventory
+	isSelfSkill 0
+}
+
+
+autoSwitch_default_rightHand
+autoSwitch_default_leftHand
+autoSwitch_default_arrow
+
+# NOTE: In the case of two handed weapons, or no Shield,
+#       duplicate the weapon name for 'rightHand'
+# To attack with bare hands, specify "[NONE]" (without the quotes) for rightHand
+
+autoSwitch {
+	rightHand
+	leftHand
+	arrow
+	distance
+	useWeapon
+}
+
+equipAuto {
+	topHead
+	midHead
+	lowHead
+	leftHand
+	rightHand
+	leftAccessory
+	rightAccessory
+	robe
+	armor
+	shoes
+	arrow
+	monsters
+	weight 0
+	whileSitting 0
+	hp
+	sp
+	homunculus_hp
+	homunculus_sp
+	homunculus_dead
+	onAction
+	whenStatusActive
+	whenStatusInactive
+	whenFollowing
+	spirit
+	aggressives
+	stopWhenHit 0
+	inLockOnly 0
+	notWhileSitting 0
+	notInTown 0
+	timeout 0
+	disabled 0
+	inInventory
+	manualAI 0
+}
+
+useSelf_item {
+	hp
+	sp
+	homunculus_hp
+	homunculus_sp
+	homunculus_dead
+	onAction
+	whenStatusActive
+	whenStatusInactive
+	whenFollowing
+	spirit
+	aggressives
+	monsters
+	notMonsters
+	stopWhenHit 0
+	inLockOnly 0
+	notWhileSitting 0
+	notInTown 0
+	timeout
+	disabled 0
+	inInventory
+	manualAI 0
+}
+
+######## Autostorage/autosell ########
+
+buyAuto {
+	npc
+	standpoint
+	distance 5
+	minAmount 2
+	maxAmount 3
+}
+
+sellAuto 0
+sellAuto_npc
+sellAuto_standpoint
+sellAuto_distance 5
+
+storageAuto 0
+storageAuto_npc
+storageAuto_distance 5
+storageAuto_npc_type 1
+storageAuto_npc_steps
+storageAuto_password
+storageAuto_keepOpen 0
+storageAuto_useChatCommand
+relogAfterStorage 1
+
+getAuto {
+	minAmount
+	maxAmount
+	passive
+}
+
+######## Debugging options; only useful for developers ########
+
+debug 0
+debugPacket_unparsed 0
+debugPacket_received 0
+debugPacket_ro_sent 0
+debugPacket_sent 0
+debugPacket_exclude
+debugPacket_include
+debugPacket_include_dumpMethod
+debugDomains
