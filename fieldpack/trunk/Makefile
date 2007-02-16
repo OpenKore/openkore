@@ -2,7 +2,7 @@
 # If you want to run this Makefile in Windows, you need Cygwin:
 # http://sources.redhat.com/cygwin/
 
-VERSION=1.9.2
+VERSION=1.9.3
 FILENAME=fieldpack-$(VERSION).zip
 VERSIONFILE=fields/FieldpackVersion.txt
 
