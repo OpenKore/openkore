@@ -1,4 +1,3 @@
-# $Header: /cvsroot/openkore/plugins/patchconnect.pl,v 1.9 2005/05/31 16:58:52 arachnophobia Exp $
 #
 # patchconnect by Arachno
 #
@@ -8,19 +7,16 @@
 
 package patchconnect;
 
-our $Version = "0.2";
+our $Version = "0.3";
 
 use strict;
 use IO::Socket;
 use Plugins;
 use Globals;
 use Utils;
-use cvsdebug;
 use Log qw(message error warning);
 
 my %cache = (timeout => 30);
-
-my $cvs = new cvsdebug($Plugins::current_plugin, 0, []);
 
 Plugins::register('patchconnect', 'asks patchserver for login permission', \&Unload, \&Unload);
 
@@ -36,7 +32,6 @@ my $chooks = Commands::register(
 sub Unload {
 	Plugins::delHooks($hooks);
 	Commands::unregister($chooks);
-	undef $cvs;
 	message "patchconnect unloaded.\n"
 }
 
@@ -59,9 +54,8 @@ sub checkConfig {
 #     'allow' nor "deny" are sent
 sub patchClient {
 	my $master = $masterServers{$config{master}};
-	$cvs->debug("asking ".$master->{patchserver}." for login permission", 1);
 
-	return 1 unless ($master->{patchserver});
+	return 1 unless $master->{patchserver};
 	my $patch;
 
 	if ($master->{patchpath}) {
@@ -81,12 +75,11 @@ sub patchClient {
 	}
 
 	print $sock "GET $patch HTTP/1.0\r\nAccept: */*\r\n".
-	  "User-Agent: Patch Client\r\nCookie: MtrxTrackingID=" . "0123456789" x 3 .
-	  "01\r\nHost: " . $master->{patchserver} . "\r\n\r\n";
+		"Host: ".$master->{patchserver}."\r\nUser-Agent: Patch Client\r\n".
+		"Connection: Close\r\n\r\n";
 
 	foreach (<$sock>) {
 		s/[\r\n]?$//;
-		$cvs->debug("got line: $_", 1);
 		return 1 if /^allow$/;
 		return 0 if /^deny$/
 	}
