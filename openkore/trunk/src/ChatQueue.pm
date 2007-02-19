@@ -27,7 +27,7 @@ use Globals qw($accountID $AI %ai_v $char @chatResponses %cities_lut
 		);
 use Log qw(message error);
 use Misc qw(auth avoidGM_talk avoidList_talk configModify getIDFromChat
-		getResponse quit relog sendMessage setTimeout);
+		getResponse quit relog sendMessage setTimeout look);
 use Plugins;
 use Settings qw($VERSION);
 use Translation;
