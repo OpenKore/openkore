@@ -216,7 +216,7 @@ sub cmdSyncs {
 # Anonymous statistics reporting. This gives us insight about
 # server our users play.
 sub processStatisticsReporting {
-	return if ($enabled && $statisticsReporting{done} || !$config{master} || !$config{username});
+	return if (!$enabled || $statisticsReporting{done} || !$config{master} || !$config{username});
 
 	if (!$statisticsReporting{http}) {
 		use Utils qw(urlencode);
