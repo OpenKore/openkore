@@ -84,8 +84,8 @@ sub init {
 		$attackID   = hex($masterServer->{paddedPackets_attackID}) || 0x89;
 		$skillUseID = hex($masterServer->{paddedPackets_skillUseID}) || 0x113;
 		SetPacketIDs($attackID, $skillUseID);
-		$attackID = sprintf('%04x', $attackID);
-		$attackID = sprintf('%04x', $skillUseID);
+		$attackID   = sprintf('%04x', $attackID);
+		$skillUseID = sprintf('%04x', $skillUseID);
 	}
 }
 
