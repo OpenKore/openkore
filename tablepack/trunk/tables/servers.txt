@@ -1069,19 +1069,40 @@ version 122
 serverType 5
 serverEncoding Western
 
-## http://www.funro.mu/
+## http://www.hellraiser.mu/
 [FunRO (Hellraiser) Private Server]
-ip 207.226.22.221
-port 6900
+ip www.hellraiser.mu
+port 7000
 master_version 16
 version 0
 serverType 9
+charBlockSize 108
 serverEncoding Western
-
+ 
+## http://www.pulse-ro.mu/
+[FunRO (Pulse RO) Private Server]
+ip www.pulse-ro.mu
+port 8000
+master_version 16
+version 0
+serverType 9
+charBlockSize 108
+serverEncoding Western
+ 
 ## http://www.funro.mu/
 [FunRO (Nemesis) Private Server]
 ip www.funro.mu
 port 6000
+master_version 16
+version 0
+serverType 9
+charBlockSize 108
+serverEncoding Western
+ 
+## http://www.funro.mu/
+[FunRO (Taranis) Private Server]
+ip www.funro.mu
+port 5000
 master_version 16
 version 0
 serverType 9
