@@ -33,13 +33,14 @@ use Utils;
 use Network;
 use Network::Send;
 use Skills;
-use Log qw(message error debug);
+use Log qw(message error debug warning);
 use Commands;
 use Win32::API;
 
 Plugins::register("ppengine", "RO Padded Packet Engine", \&onUnload);
 my $hooks = Plugins::addHooks(
-	['Network::serverConnect/master', \&init, undef],
+	['Network::serverConnect/master', \&init, undef], #Fix me: this hook is not working in XKore mode
+	['map_loaded', \&init, undef], #Init for XKore mode
 	['packet_pre/sendSit',      \&onSendSit, undef],
 	['packet_pre/sendStand',    \&onSendStand, undef],
 	['packet_pre/sendAttack',   \&onSendAttack, undef],
@@ -71,7 +72,6 @@ Win32::API->Import('ropp', 'GetKey', 'L' ,'N') or die "Can't import GetKey\n$!";
 my ($enabled, $attackID, $skillUseID);
 my $LastPaddedPacket;
 
-
 sub onUnload {
 	Commands::unregister($commands);
 	Plugins::delHooks($hooks);
@@ -84,8 +84,8 @@ sub init {
 		$attackID   = hex($masterServer->{paddedPackets_attackID}) || 0x89;
 		$skillUseID = hex($masterServer->{paddedPackets_skillUseID}) || 0x113;
 		SetPacketIDs($attackID, $skillUseID);
-		$attackID   = sprintf('%04x', $attackID);
-		$skillUseID = sprintf('%04x', $skillUseID);
+		$attackID   = sprintf('%04X', $attackID);
+		$skillUseID = sprintf('%04X', $skillUseID);
 	}
 }
 
