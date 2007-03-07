@@ -846,23 +846,18 @@ sub parseSendMsg {
 			$syncSync = substr($msg, 8, 4);
 		} elsif ($config{serverType} == 12) {
 			$syncSync = substr($msg, 8, 4);
-		} elsif ($config{serverType} == 13) { # rRO
-			$syncSync = substr($msg, 5, 4); # formula: MapLoaded_len + Sync_len - 4 - Sync_packet_last_junk
 		} elsif ($config{serverType} == 16) {
 			$syncSync = substr($msg, 6, 4);
+		} else {
+			$syncSync = substr($msg, $masterServer->{mapLoadedTickOffset}, 4); # formula: MapLoaded_len + Sync_len - 4 - Sync_packet_last_junk
 		}
 		message T("Map loaded\n"), "connection";
 		
 		Plugins::callHook('map_loaded');
 
-	} elsif (($switch eq "007E" && ($config{serverType} == 11 || $config{serverType} == 12 || $config{serverType} == 16)) ||
-		 ($switch eq "007E" && $config{serverType} == 13)) { # rRO
+	} elsif ($switch eq sprintf('%04X', hex($masterServer->{syncID}) || $switch eq "007E")) {
 		#syncSync support for XKore 1 mode
-		if ($config{serverType} == 13) { # rRO
-			$syncSync = substr($msg, length($msg) - 9, 4); # formula: Sync_len - 4 - Sync_packet_last_junk
-		} else {
-			$syncSync = substr($msg, length($msg) - 4, 4);
-		}
+		$syncSync = substr($msg, $masterServer->{syncTickOffset}, 4);
 
 	} elsif ($switch eq "0085") {
 		#if ($config{serverType} == 0 || $config{serverType} == 1 || $config{serverType} == 2) {
