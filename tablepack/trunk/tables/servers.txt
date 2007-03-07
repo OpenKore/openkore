@@ -246,14 +246,20 @@ paddedPackets_skillUseID 0x89
 ip 81.177.13.7
 port 6900
 master_version 25
-version 90
+version 101
 serverType 13
 serverEncoding Russian
+pauseCharServer 1
 patchserver web.raggame.ru
 patchpath /patch02
 paddedPackets 1
-paddedPackets_attackID 0x89
-paddedPackets_skillUseID 0x113
+paddedPackets_attackID 0x72
+paddedPackets_skillUseID 0xF5
+# Data for XKore PP mode
+syncID 0xA7
+syncTickOffset 8
+mapLoadedTickOffset 10
+
 
 [Taiwan - twRO: Free]
 ip 220.130.113.238
