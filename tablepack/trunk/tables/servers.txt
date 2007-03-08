@@ -1,4 +1,4 @@
-# This file contains information about master servers.
+﻿# This file contains information about master servers.
 
 #####################
 # Official RO Servers
@@ -53,6 +53,7 @@ secureLogin_type 0
 secureLogin_requestCode
 secureLogin_account 0
 serverEncoding Western
+storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x007D8D6B, 0x08CB9ED9
 
 [Indonesia - idRO: Sakray]
 ip 202.93.18.250
