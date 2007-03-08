@@ -883,7 +883,7 @@ sub parseSendMsg {
 		($switch eq "00F3" && ($config{serverType} == 3 || $config{serverType} == 5 || $config{serverType} == 8 || $config{serverType} == 9 || $config{serverType} == 15)) ||
 		($switch eq "009F" && $config{serverType} == 4) ||
 		($switch eq "007E" && $config{serverType} == 12) ||
-		($switch eq "00F3" && $config{serverType} == 13) ||
+		($switch eq "0190" && $config{serverType} == 13) ||
 		($switch eq "0085" && $config{serverType} == 14) ||	# Public chat
 
 		$switch eq "0108" ||	# Party chat
