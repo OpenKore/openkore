@@ -4,8 +4,6 @@
 </div>
 <!-- END important_announcement -->
 
-{ADVERTISEMENT}
-
 <table width="100%" cellspacing="2" cellpadding="2" border="0">
   <tr> 
 	<td align="left" valign="bottom" colspan="2"><a class="maintitle" href="{U_VIEW_TOPIC}">{TOPIC_TITLE}</a><br />
@@ -63,7 +61,7 @@
 		</table></td>
 	</tr>
 	<tr> 
-		<td class="spaceRow" colspan="2" height="1"><img src="templates/subSilver/images/spacer.gif" alt="" width="1" height="1" /></td>
+		<td class="spaceRow" colspan="2" height="1"><img src="templates/subSilver/images/spacer.gif" alt="" width="1" height="1" />{postrow.TOPIC_ADVERTISEMENT}</td>
 	</tr>
 	<!-- END postrow -->
 	<tr align="center"> 
