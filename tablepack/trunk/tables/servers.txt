@@ -877,7 +877,7 @@ serverEncoding Western
 
 ## http://animaro.com/
 [AnimaRO Private Server]
-ip login.animaro.com
+ip 75.126.157.82
 port 6900
 master_version 0
 version 20
