@@ -952,6 +952,8 @@ if ( !$db->sql_query($sql) )
 	message_die(GENERAL_ERROR, "Could not update topic views.", '', __LINE__, __FILE__, $sql);
 }
 
+$topic_advertisement = '<div style="margin-top: 0.5em; margin-bottom: 0.5em">' . file_get_contents('templates/advertisement.txt') . "</div>";
+
 //
 // Okay, let's do the loop, yeah come on baby let's do the loop
 // and it goes like this ...
@@ -1339,8 +1341,10 @@ for($i = 0; $i < $total_posts; $i++)
 		'L_MINI_POST_ALT' => $mini_post_alt,
 
 		'U_MINI_POST' => $mini_post_url,
-		'U_POST_ID' => $postrow[$i]['post_id'])
+		'U_POST_ID' => $postrow[$i]['post_id'],
+		'TOPIC_ADVERTISEMENT' => $topic_advertisement)
 	);
+	$topic_advertisement = '';
 	display_post_attachments($postrow[$i]['post_id'], $postrow[$i]['post_attachment']);
 }
 
