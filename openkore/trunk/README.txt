@@ -30,6 +30,10 @@ I'm happy to announce the 4th beta release of OpenKore, version 1.9.3. It hasn't
 - And of course, everybody in the existing OpenKore team. :) See http://cia.navi.cx/stats/project/openkore
 
 Here's a summary of the major changes in this release:
+- When you start OpenKore, it will show you a friendly web interface, 
+  in which you can read project news (such as new OpenKore releases).
+  You can also use it to open the OpenKore configuration folder, to choose a 
+  language and to start OpenKore.
 - Lots and lots of bugs have been fixed. Most notably, many crashers, UTF-8 (character set handling) bugs and AI bugs have been fixed.
 - Support for the following servers has been restored: vRO (Vietnam), rRO (Russia), euRO (Europe). Note that you need the ropp plugin in order to play on any of these servers.
 - Support for new classes, such as Gunslinger and Ninja.

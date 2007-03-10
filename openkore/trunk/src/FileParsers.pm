@@ -217,12 +217,12 @@ sub parseConfigFile {
 		s/^[\t\s]*//;	# Remove leading tabs and whitespace
 		s/\s+$//g;	# Remove trailing whitespace
 		next if ($_ eq "");
-
+Log::message("Line: $_\n");
 		if (!defined $commentBlock && /^\/\*/) {
 			$commentBlock = 1;
 			next;
 
-		} elsif (m/\*\/$/) {
+		} elsif (defined $commentBlock && m/\*\/$/) {
 			undef $commentBlock;
 			next;
 

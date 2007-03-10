@@ -83,7 +83,7 @@ elif [[ "$1" == "--semibin" ]]; then
 fi
 
 if [[ "$BINDIST" == "1" ]]; then
-	for F in start.exe wxstart.exe NetRedirect.dll; do
+	for F in start.exe wxstart.exe NetRedirect.dll XSTools.dll; do
 		if [[ ! -f "$F" ]]; then
 			echo "Please put $F in the current folder."
 			exit 1
