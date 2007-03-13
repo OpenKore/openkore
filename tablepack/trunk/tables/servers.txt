@@ -1237,28 +1237,31 @@ serverEncoding Western
 
 ## http://www.pbro.com.br/ 
 [pbRO (Private Brazil: FuN Rate) Private Server]
-ip 72.36.224.170
+ip 208.101.49.238
 port 6600
-master_version 0
-version 0
+master_version 12
+version 208
 serverType 5
 private 1
+gameGuard 0
 
 [pbRO (Private Brazil: Low Rate) Private Server]
-ip 72.232.212.10
+ip 208.101.2.7
 port 6600
-master_version 0
-version 0
-serverType 5
+master_version 12
+version 208
+serverType 9
 private 1
+gameGuard 0
 
 [pbRO (Private Brazil: High Rate) Private Server]
-ip 72.21.50.122
+ip 208.101.49.234
 port 6600
-master_version 0
-version 0
-serverType 5
+master_version 12
+version 208
+serverType 9
 private 1
+gameGuard 0
 
 ## http://q-ro.net/qro/web/
 [qRO (Low Rate) Private Server]
