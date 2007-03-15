@@ -29,6 +29,9 @@ use Translation qw(T);
 use Utils qw(timeOut);
 use Utils::Exceptions;
 
+# Mutexes used by this task.
+use constant MUTEXES => ['movement'];
+
 ##
 # Task::SitStand->new(options...)
 #
@@ -43,10 +46,10 @@ use Utils::Exceptions;
 sub new {
 	my $class = shift;
 	my %args = @_;
-	my $self = $class->SUPER::new(@_, mutexes => ['movement']);
+	my $self = $class->SUPER::new(@_, mutexes => MUTEXES);
 
 	if ($args{mode} ne 'sit' && $args{mode} ne 'stand') {
-		ArgumentException->throw();
+		ArgumentException->throw("No mode specified.");
 	}
 
 	$self->{mode} = $args{mode};

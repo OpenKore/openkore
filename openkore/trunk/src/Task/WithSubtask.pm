@@ -27,11 +27,12 @@ package Task::WithSubtask;
 
 use strict;
 use Carp::Assert;
+
 use Modules 'register';
 use Task;
 use base qw(Task);
 
-# TODO: handle mutex changes in subtasks
+# TODO: handle mutex changes in subtasks?
 
 ##
 # Task::WithSubtask->new(options...)
@@ -51,7 +52,7 @@ use base qw(Task);
 #   stop() method will be called. Nothing else will happen in the current task:
 #   this is useful if you need to implement custom stop code.
 # `l`
-# If autostop is not specified, then it's assumed to be on.
+# The default value is true.
 #
 # <tt>autofail</tt> specifies whether this task should automatically fail if a subtask
 # has failed.
@@ -63,7 +64,7 @@ use base qw(Task);
 #   for handling the failure yourself by placing appropriate code in the method
 #   subtaskDone().
 # `l`
-# The default value is on.
+# The default value is true.
 sub new {
 	my $class = shift;
 	my %args = @_;
@@ -118,19 +119,32 @@ sub iterate {
 		# Run subtask if there is one.
 		my $task = $self->{ST_subtask};
 		$task->iterate();
+
+		# If the task is completed, then we return 1 (with one exception, see below).
+		# This way the child class doesn't have to wait for the next
+		# iteration before it can continue.
 		if ($task->getStatus() == Task::DONE) {
 			my $error;
+			my $result = 1;
 			delete $self->{ST_subtask};
 			if ($self->{ST_autofail} && ($error = $task->getError())) {
 				$self->setError($error->{code}, $error->{message});
+				# We already set the current task's status to DONE,
+				# so we don't want the child class's iterate() method
+				# to do anything.
+				$result = 0;
 			}
 			$self->subtaskDone($task);
+			return $result;
 		} elsif ($task->getStatus() == Task::STOPPED) {
 			$self->setStopped() if ($self->{ST_autostop});
 			delete $self->{ST_subtask};
 			$self->subtaskStopped($task);
+			return 1;
+		} else {
+			# Task is not completed.
+			return 0;
 		}
-		return 0;
 	} else {
 		return 1;
 	}

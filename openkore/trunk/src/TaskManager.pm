@@ -87,7 +87,7 @@ sub new {
 		# next iteration.
 		shouldReschedule => 0,
 
-		onTaskDone => new CallbackList('onTaskDone')
+		onTaskFinished => new CallbackList()
 	);
 	return bless \%self, $class;
 }
@@ -140,11 +140,12 @@ sub reschedule {
 
 		if ($hasConflict) {
 			# There is a conflict, so make this task inactive.
-			deactivateTask($activeTasks, $inactiveTasks,
+			$self->deactivateTask($activeTasks, $inactiveTasks,
 				$grayTasks, $activeMutexes, $self->{tasksByName},
 				$task);
 		} else {
-			# No conflict, so assign mutex ownership to this task.
+			# No conflict, so assign mutex locks to this task
+			# and remove its "gray" mark.
 			foreach my $mutex (@{$task->getMutexes()}) {
 				$activeMutexes->{$mutex} = $task;
 			}
@@ -187,7 +188,7 @@ sub reschedule {
 				if ($oldTask) {
 					# Mutex was locked by lower priority task.
 					# Deactivate old task.
-					deactivateTask($activeTasks, $inactiveTasks,
+					$self->deactivateTask($activeTasks, $inactiveTasks,
 						$grayTasks, $activeMutexes, $self->{tasksByName},
 						$oldTask);
 				}
@@ -285,21 +286,20 @@ sub iterate {
 			$status = $task->getStatus();
 		}
 
-		# Remove tasks that are stopped or completed.
+		# Remove tasks that are stopped or done.
 		my $status = $task->getStatus();
 		if ($status == Task::DONE || $status == Task::STOPPED) {
-			deactivateTask($activeTasks, $self->{inactiveTasks},
+			$self->deactivateTask($activeTasks, $self->{inactiveTasks},
 				$self->{grayTasks}, $activeMutexes, $self->{tasksByName},
 				$task);
 
+			# Remove the callbacks that we registered in this task.
 			my $IDs = $self->{events}{$task};
 			$task->onMutexesChanged->remove($IDs->[0]);
 			$task->onStop->remove($IDs->[1]);
 
 			$i--;
 			$self->{shouldReschedule} = 1;
-
-			$self->{onTaskDone}->call($self, { task => $task });
 		}
 	}
 	$self->checkValidity() if DEBUG;
@@ -345,12 +345,16 @@ sub activeTasksString {
 ##
 # String $TaskManager->activeTasksString()
 #
-# Returns a string which describes the current inactive tasks.
+# Returns a string which describes the currently inactive tasks.
 sub inactiveTasksString {
 	my ($self) = @_;
 	return getTaskSetString($self->{inactiveTasks});
 }
 
+##
+# String $TaskManager->activeMutexesString()
+#
+# Returns a string which describes the currently active mutexes.
 sub activeMutexesString {
 	my ($self) = @_;
 	my $activeMutexes = $self->{activeMutexes};
@@ -375,23 +379,27 @@ sub getTaskSetString {
 }
 
 ##
-# CallbackList $TaskManager->onTaskDone()
+# CallbackList $TaskManager->onTaskFinished()
 #
-# This event is triggered when a task is completed, either successfully
+# This event is triggered when a task is finished, either successfully
 # or with an error.
 #
-# The event argument a hash containing this item:<br>
-# <tt>task</tt> - The task that was completed.
-sub onTaskDone {
-	return $_[0]->{onTaskDone};
+# The event argument is a hash containing this item:<br>
+# <tt>task</tt> - The task that was finished.
+sub onTaskFinished {
+	return $_[0]->{onTaskFinished};
 }
+
+
+########## Private functions and callback handlers ##########
+
 
 sub onMutexesChanged {
 	my ($self, $task) = @_;
 	if ($task->getStatus() == Task::RUNNING) {
 		$self->{grayTasks}->add($task);
 
-		# Release its mutex ownerships.
+		# Release its mutex locks.
 		my $activeMutexes = $self->{activeMutexes};
 		foreach my $mutex (keys %{$activeMutexes}) {
 			if ($activeMutexes->{$mutex} == $task) {
@@ -447,7 +455,7 @@ sub higherPriority {
 # and the gray list, and removing its mutex locks. If the task isn't
 # completed or stopped, then it will be added to the inactive task list.
 sub deactivateTask {
-	my ($activeTasks, $inactiveTasks, $grayTasks, $activeMutexes, $tasksByName, $task) = @_;
+	my ($self, $activeTasks, $inactiveTasks, $grayTasks, $activeMutexes, $tasksByName, $task) = @_;
 
 	my $status = $task->getStatus();
 	if ($status != Task::DONE && $status != Task::STOPPED) {
@@ -455,10 +463,12 @@ sub deactivateTask {
 	} else {
 		my $name = $task->getName();
 		$tasksByName->{$name}--;
-		assert($tasksByName->{$name} >= 0) if DEBUG();
+		assert($tasksByName->{$name} >= 0) if DEBUG;
 		if ($tasksByName->{$name} == 0) {
 			delete $tasksByName->{$name};
 		}
+
+		$self->{onTaskFinished}->call($self, { task => $task });
 	}
 	$activeTasks->remove($task);
 	$grayTasks->remove($task);

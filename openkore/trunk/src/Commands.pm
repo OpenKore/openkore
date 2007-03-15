@@ -48,9 +48,6 @@ undef %completions;
 our %customCommands;
 
 
-# use SelfLoader; 1;
-# __DATA__
-
 sub initHandlers {
 	%handlers = (
 	a                  => \&cmdAttack,

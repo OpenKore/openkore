@@ -101,7 +101,7 @@ sub process {
 		my $monster = $monsters{$ID};
 
 		# Check for kill steal while moving
-		if ($monster && !checkMonsterCleanness($ID)) {
+		if ($monster && !Misc::checkMonsterCleanness($ID)) {
 			message T("Dropping target - you will not kill steal others\n");
 			stopAttack();
 			$monster->{ignore} = 1;

@@ -1,3 +1,4 @@
+# Unit test for Task::WithSubtask
 package TaskWithSubtaskTest;
 
 use Test::More;
@@ -16,15 +17,11 @@ sub testBasicUsage {
 	$task->activate();
 
 	$task->iterate();
-	is($task->getStatus(), Task::RUNNING);
-	ok(defined $task->getSubtask());
+	is($task->getStatus(), Task::RUNNING, "Task is running.");
+	ok(defined $task->getSubtask(), "Task has subtask.");
 
 	$task->iterate();
-	is($task->getStatus(), Task::RUNNING);
-	ok(!defined $task->getSubtask());
-
-	$task->iterate();
-	is($task->getStatus(), Task::DONE);
+	is($task->getStatus(), Task::DONE, "Task is done.");
 }
 
 sub testStop {
@@ -49,19 +46,19 @@ sub testSubtaskFailure {
 	my $task = new TaskWithSubtaskTest::TestTask(autofail => 0);
 	$task->activate();
 	$task->iterate();
+	is($task->getStatus(), Task::RUNNING, "Task is still running.");
 	$task->getSubtask()->markFailed();
 	$task->iterate();
-	is($task->getStatus(), Task::RUNNING);
-	$task->iterate();
-	is($task->getStatus(), Task::DONE);
+	is($task->getStatus(), Task::DONE, "Task is done.");
 	ok(!defined $task->getError());
 
 	my $task = new TaskWithSubtaskTest::TestTask();
 	$task->activate();
 	$task->iterate();
 	$task->getSubtask()->markFailed();
+	is($task->getStatus(), Task::RUNNING, "Task is still running.");
 	$task->iterate();
-	is($task->getStatus(), Task::DONE);
+	is($task->getStatus(), Task::DONE, "Task is done.");
 	ok(defined $task->getError());
 }
 
@@ -70,8 +67,7 @@ package TaskWithSubtaskTest::TestTask;
 # A test task which has exactly one subtask. It works as follows:
 # - The first iteration will switch context to the subtask.
 # - The second iteration will run the subtask, which in turn only
-#   runs one iteration before it's done.
-# - After the third iteration, the task will complete.
+#   runs one iteration. The task is then complete.
 
 use base qw(Task::WithSubtask);
 

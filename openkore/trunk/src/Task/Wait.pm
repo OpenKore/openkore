@@ -9,12 +9,12 @@
 #  also distribute the source code.
 #  See http://www.gnu.org/licenses/gpl.html for the full license.
 #########################################################################
-# This tasks waits a specified number of seconds. After that time has
+# This tasks does nothing but waiting a specified number of seconds. After that time has
 # elasped, it can run a specified subtask.
 #
 # So Task::Wait can be used to run a task in a point in the future. Here
 # is an example:
-# <pre class="">
+# <pre class="example">
 # # Suppose SomeTestTask is a task which prints "hello!" and then immediately exits.
 # my $testTask = new SomeTestTask();
 #
