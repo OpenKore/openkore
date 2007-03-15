@@ -1,3 +1,14 @@
+#########################################################################
+#  OpenKore - Task for easy chaining of different tasks.
+#  Copyright (c) 2007 OpenKore Developers
+#
+#  This software is open source, licensed under the GNU General Public
+#  License, version 2.
+#  Basically, this means that you're allowed to modify and distribute
+#  this software. However, if you distribute modified versions, you MUST
+#  also distribute the source code.
+#  See http://www.gnu.org/licenses/gpl.html for the full license.
+#########################################################################
 ##
 # MODULE DESCRIPTION: Easy chaining of different tasks.
 #
@@ -36,7 +47,8 @@ use Utils::Exceptions;
 #
 # The following arguments are allowed:
 # `l
-# - tasks - An array of tasks to be run.
+# - All options allowed for Task->new(), except 'mutexes'.
+# - tasks (required) - An array of tasks to be run.
 # `l`
 sub new {
 	my $class = shift;

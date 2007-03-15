@@ -1,6 +1,6 @@
 #########################################################################
-#  OpenKore - NPC talking task
-#  Copyright (c) 2004-2006 OpenKore Developers
+#  OpenKore - Convenience abstract base class for classes with subtasks.
+#  Copyright (c) 2006,2007 OpenKore Developers
 #
 #  This software is open source, licensed under the GNU General Public
 #  License, version 2.
@@ -9,7 +9,10 @@
 #  also distribute the source code.
 #  See http://www.gnu.org/licenses/gpl.html for the full license.
 #########################################################################
-# This is an abstract class for tasks which have at most one active subtask
+##
+# MODULE DESCRIPTION: Convenience abstract base class for classes with subtasks.
+#
+# This is an convenience abstract class for tasks which have at most one active subtask
 # at any time. It provides convenience methods for making the usage of subtasks
 # easy.
 #
