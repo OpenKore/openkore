@@ -28,6 +28,7 @@
 package Task;
 
 use strict;
+use Carp;
 use Carp::Assert;
 use Modules 'register';
 use Utils::CallbackList;
@@ -168,8 +169,8 @@ sub _assertStatus {
 	}
 
 	my @expectedStatuses = map { _getStatusName($_) } @_;
-	die "The current task's status should be one of: (" . join(',',@expectedStatuses) . ")\n" .
-		"But it's actually: " . _getStatusName($currentStatus);
+	Carp::confess("The current task's status should be one of: (" . join(',',@expectedStatuses) . ")\n" .
+		"But it's actually: " . _getStatusName($currentStatus) . "\n");
 }
 
 
@@ -217,7 +218,7 @@ sub getError {
 # Ensures: defined(result)
 #
 # Returns a reference to an array of mutexes for this task. Note that the mutex list may
-# change during a Task's life time.
+# change during a Task's life time. This list must not be modified outside the Task object.
 #
 # If you override this method, then you <b>must</b> ensure that when the mutex list changes,
 # you trigger a onMutexesChanged event. Otherwise the task manager will not behave correctly.
@@ -313,7 +314,11 @@ sub setStopped {
 ##
 # void $Task->setMutexes(mutexes...)
 #
-# Set the currently active mutexes. This will trigger an onMutexesChanged event.
+# Set the currently active mutexes for this task. This will trigger an
+# onMutexesChanged event.
+#
+# You should only call this method inside the class's iterate() method,
+# or during initialization. Otherwise you may confuse the task manager.
 sub setMutexes {
 	my $self = shift;
 	$self->{T_mutexes} = \@_;

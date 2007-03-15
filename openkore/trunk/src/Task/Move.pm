@@ -43,6 +43,9 @@ use Utils::Exceptions;
 # Error constants.
 use constant TOO_LONG => 1;
 
+# Mutexes used by this task.
+use constant MUTEXES => Task::SitStand::MUTEXES;
+
 
 ##
 # Task::Move->new(options...)
@@ -63,7 +66,7 @@ use constant TOO_LONG => 1;
 sub new {
 	my $class = shift;
 	my %args = @_;
-	my $self = $class->SUPER::new(@_, autostop => 1, autofail => 1, mutexes => ['movement']);
+	my $self = $class->SUPER::new(@_, autostop => 1, autofail => 1, mutexes => MUTEXES);
 
 	if ($args{x} == 0 || $args{y} == 0) {
 		ArgumentException->throw(error => "Invalid arguments.");

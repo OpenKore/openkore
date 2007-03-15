@@ -4,6 +4,7 @@ package TaskManagerTest;
 use strict;
 use Test::More;
 use Task;
+use Task::Testing;
 use TaskManager;
 
 sub start {
@@ -219,7 +220,7 @@ sub testMisc {
 ##########################
 
 sub createTask {
-	return new TaskManagerTest::Task(@_);
+	return new Task::Testing(@_);
 }
 
 sub assertActiveTasks {
@@ -240,36 +241,6 @@ sub assertInactiveTasks {
 	}
 	@names = sort @names;
 	is(join(',', @names), $tasksString, $diagnostics);
-}
-
-##########################
-
-package TaskManagerTest::Task;
-
-use base qw(Task);
-
-sub new {
-	my $class = shift;
-	my %args = @_;
-	my $self = $class->SUPER::new(@_);
-	$self->{autostop} = defined($args{autostop}) ? $args{autostop} : 1;
-	return $self;
-}
-
-sub stop {
-	my ($self) = @_;
-	$self->SUPER::stop() if ($self->{autostop});
-}
-
-sub iterate {
-	$_[0]->SUPER::iterate();
-	if ($_[0]->{done}) {
-		$_[0]->setDone();
-	}
-}
-
-sub markDone {
-	$_[0]->{done} = 1;
 }
 
 1;

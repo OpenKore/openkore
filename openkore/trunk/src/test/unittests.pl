@@ -8,13 +8,14 @@ use lib "$RealBin/../deps";
 
 use Test::More qw(no_plan);
 my @tests = qw(CallbackListTest ObjectListTest ActorListTest WhirlpoolTest
-	SetTest TaskManagerTest TaskWithSubtaskTest);
+	SetTest TaskManagerTest TaskWithSubtaskTest TaskChainedTest);
 if ($^O eq 'MSWin32') {
 	push @tests, qw(HttpReaderTest);
 }
 
 @tests = @ARGV if (@ARGV);
 foreach my $module (@tests) {
+	$module =~ s/\.pm$//;
 	eval {
 		require "${module}.pm";
 	};

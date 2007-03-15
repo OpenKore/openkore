@@ -1,4 +1,5 @@
 CalcMapRoute.pm
+Chained.pm
 CheckPoints.pm
 FollowActor.pm
 MapRoute.pm
@@ -6,5 +7,6 @@ Move.pm
 Route.pm
 SitStand.pm
 TalkNPC.pm
+Testing.pm
 Wait.pm
 WithSubtask.pm

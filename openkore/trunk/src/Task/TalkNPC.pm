@@ -36,6 +36,9 @@ use constant NPC_NO_RESPONSE => 2;
 use constant NO_SHOP_ITEM => 3;
 use constant WRONG_INSTRUCTIONS => 4;
 
+# Mutexes used by this task.
+use constant MUTEXES => ['npc'];
+
 
 ##
 # Task::TalkNPC->new(options...)
@@ -62,7 +65,7 @@ use constant WRONG_INSTRUCTIONS => 4;
 sub new {
 	my $class = shift;
 	my %args = @_;
-	my $self = $class->SUPER::new(@_, mutexes => ['npc']);
+	my $self = $class->SUPER::new(@_, mutexes => MUTEXES);
 
 	$self->{x} = $args{x};
 	$self->{y} = $args{y};

@@ -5,6 +5,7 @@ HttpReaderTest.pm
 SetTest.pm
 TaskManagerTest.pm
 TaskWithSubtaskTest.pm
+TaskChainedTest.pm
 WhirlpoolTest.pm
 unittests.pl
 
