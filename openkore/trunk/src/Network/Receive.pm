@@ -5559,6 +5559,10 @@ sub system_chat {
 	# Translation Comment: System/GM chat
 	message TF("[GM] %s\n", $message), "schat";
 	ChatQueue::add('gm', undef, undef, $message);
+	
+	Plugins::callHook('packet_sysMsg', {
+		Msg => $message
+	});
 }
 
 sub top10_alchemist_rank {
