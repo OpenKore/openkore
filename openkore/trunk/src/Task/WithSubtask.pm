@@ -35,8 +35,6 @@ use Modules 'register';
 use Task;
 use base qw(Task);
 
-# TODO: handle mutex changes in subtasks?
-
 ##
 # Task::WithSubtask->new(options...)
 #
@@ -74,7 +72,14 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 	$self->{ST_autostop} = defined($args{autostop}) ? $args{autostop} : 1;
 	$self->{ST_autofail} = defined($args{autofail}) ? $args{autofail} : 1;
+	$self->{ST_manageMutexes} = $args{manageMutexes};
 	return $self;
+}
+
+sub DESTROY {
+	my ($self) = @_;
+	$self->SUPER::DESTROY();
+	delete $self->{ST_mutexesChangedEvent} if ($self);
 }
 
 # Overrided method.
@@ -129,6 +134,7 @@ sub iterate {
 		if ($task->getStatus() == Task::DONE) {
 			my $error;
 			my $result = 1;
+			_restoreMutexes($self);
 			delete $self->{ST_subtask};
 			if ($self->{ST_autofail} && ($error = $task->getError())) {
 				$self->setError($error->{code}, $error->{message});
@@ -139,15 +145,19 @@ sub iterate {
 			}
 			$self->subtaskDone($task);
 			return $result;
+
 		} elsif ($task->getStatus() == Task::STOPPED) {
 			$self->setStopped() if ($self->{ST_autostop});
+			_restoreMutexes($self);
 			delete $self->{ST_subtask};
 			$self->subtaskStopped($task);
 			return 1;
+
 		} else {
 			# Task is not completed.
 			return 0;
 		}
+
 	} else {
 		return 1;
 	}
@@ -166,7 +176,7 @@ sub getSubtask {
 # Requires: !defined($self->getSubtask()) && $subtask->getStatus() == Task::INACTIVE
 # Ensures: $self->getSubtask() == $subtask
 #
-# Set the currently active subtask.This subtask is immediately activated. In the next
+# Set the currently active subtask. This subtask is immediately activated. In the next
 # iteration, the subtask will be run, and iterate() will return 0 to indicate that
 # we're currently running a subtask.
 #
@@ -176,7 +186,20 @@ sub setSubtask {
 	assert(!defined($self->getSubtask())) if DEBUG;
 	assert($subtask->getStatus() == Task::INACTIVE) if DEBUG;
 	$self->{ST_subtask} = $subtask;
-	$subtask->activate() if ($subtask);
+	if ($subtask) {
+		$subtask->activate();
+		if ($self->{ST_manageMutexes}) {
+			# Save the current mutexes (before we switched to the subtask).
+			my $mutexes = $self->getMutexes();
+			$self->{ST_oldmutexes} = [@{$mutexes}];
+
+			# Watch for changes in the subtask's mutex list and assign the subtask's
+			# current mutexes to current task.
+			$self->{ST_mutexesChangedEvent} = $subtask->onMutexesChanged->add($self,
+				\&_onSubtaskMutexesChanged);
+			_onSubtaskMutexesChanged($self, $subtask);
+		}
+	}
 }
 
 ##
@@ -198,6 +221,26 @@ sub subtaskDone {
 #
 # Called when a subtask is stopped by Task::WithSubtask.
 sub subtaskStopped {
+}
+
+# If this method is called then it means automutex is on.
+sub _onSubtaskMutexesChanged {
+	my ($self, $subtask) = @_;
+	my $mutexes = $subtask->getMutexes();
+	$self->setMutexes(@{$mutexes});
+}
+
+# Remove the callback on the subtask's OnMutexesChanged event,
+# and restore the mutex state to what it was before we switched
+# to the subtask.
+sub _restoreMutexes {
+	my ($self) = @_;
+	if ($self->{ST_manageMutexes}) {
+		$self->{ST_subtask}->onMutexesChanged->remove($self->{ST_mutexesChangedEvent});
+		delete $self->{ST_mutexesChangedEvent};
+		$self->setMutexes(@{$self->{ST_oldmutexes}});
+		delete $self->{ST_oldmutexes};
+	}
 }
 
 1;

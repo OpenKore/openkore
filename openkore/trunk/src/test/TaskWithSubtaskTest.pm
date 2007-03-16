@@ -3,12 +3,14 @@ package TaskWithSubtaskTest;
 
 use Test::More;
 use Task::WithSubtask;
+use Task::Testing;
 
 sub start {
 	print "### Starting TaskWithSubtaskTest\n";
 	testBasicUsage();
 	testStop();
 	testSubtaskFailure();
+	testMutexChanges();
 }
 
 sub testBasicUsage {
@@ -60,6 +62,35 @@ sub testSubtaskFailure {
 	$task->iterate();
 	is($task->getStatus(), Task::DONE, "Task is done.");
 	ok(defined $task->getError());
+}
+
+sub testMutexChanges {
+	print "Testing dynamic mutex changes...\n";
+	my $task = new Task::Testing(name => 'A', mutexes => ['3'], manageMutexes => 1);
+	my $subtask = new Task::Testing(name => 'B', mutexes => ['1', '2']);
+
+	$task->activate();
+	is_deeply($task->getMutexes(), ['3']);
+	$task->setSubtask($subtask);
+	is_deeply($task->getMutexes(), ['1', '2']);
+
+	$task->iterate();
+	is_deeply($task->getMutexes(), ['1', '2']);
+
+	$subtask->markDone();
+	$task->iterate();
+	is_deeply($task->getMutexes(), ['3']);
+
+
+	$subtask = new Task::Testing(name => 'B', mutexes => []);
+	$task->setSubtask($subtask);
+	is_deeply($task->getMutexes(), []);
+	$subtask->setMutexes('hello', 'world');
+	is_deeply($task->getMutexes(), ['hello', 'world']);
+
+	$subtask->markDone();
+	$task->iterate();
+	is_deeply($task->getMutexes(), ['3']);
 }
 
 

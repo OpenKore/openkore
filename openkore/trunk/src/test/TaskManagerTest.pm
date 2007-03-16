@@ -22,7 +22,7 @@ sub testStaticMutexes {
 	my ($taskA, $taskB, $taskC);
 	print "Testing case with static mutexes...\n";
 
-	$tm->add($taskA = createTask(name => "A"));
+	print "aaa\n";$tm->add($taskA = createTask(name => "A"));print "bbb\n";
 	$tm->add($taskB = createTask(name => "B"));
 	$tm->add($taskC = createTask(name => "C"));
 	$tm->reschedule();
