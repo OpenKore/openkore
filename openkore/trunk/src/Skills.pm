@@ -44,9 +44,6 @@ use Log qw(warning);
 
 use overload '""' => \&name;
 
-# use SelfLoader; 1;
-# __DATA__
-
 
 # These data structures work as follows:
 #

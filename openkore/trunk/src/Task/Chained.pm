@@ -17,6 +17,8 @@
 # of those tasks, in the same order as they are given. Task::Chain will
 # stop when all tasks are finished, or if a task failed.
 #
+# Task::Chained will also use the same mutex as the currently active subtask.
+#
 # <h3>Example</h3>
 # The following example creates a Task::Chained task which first stands, then
 # waits 3 seconds, and then sits again.
@@ -30,6 +32,8 @@
 # );
 # </pre>
 package Task::Chained;
+
+# TODO: handle changing mutexes
 
 use strict;
 
@@ -53,7 +57,7 @@ use Utils::Exceptions;
 sub new {
 	my $class = shift;
 	my %args = @_;
-	my $self = $class->SUPER::new(@_);
+	my $self = $class->SUPER::new(@_, manageMutexes => 1);
 
 	if (!$args{tasks}) {
 		ArgumentException->throw("No tasks specified.");
@@ -85,6 +89,7 @@ sub iterate {
 		# The previous subtask is done. Activate next task.
 		$self->activateNextTask(1);
 	}
+	return 1;
 }
 
 sub activateNextTask {
@@ -92,11 +97,6 @@ sub activateNextTask {
 	if (@{$self->{tasks}}) {
 		my $task = shift @{$self->{tasks}};
 		$self->setSubtask($task);
-
-		if ($assignMutexes) {
-			my $mutexes = $task->getMutexes();
-			$self->setMutexes(@{$mutexes});
-		}
 	}
 }
 
