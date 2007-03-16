@@ -1,7 +1,8 @@
-hugel.rsw#Hugel, the Quaint Garden Village#
+﻿hugel.rsw#Hugel, the Quaint Garden Village#
 hu_in01.rsw#Inside Hugel#
 que_bingo.rsw#Bingo Game Room#
 que_hugel.rsw#Odin Shrine's Underground#
+que_ng.rsw#Gunslinger Guild#
 p_track01.rsw#Monster Race Arena#
 p_track02.rsw#Monster Race Arena#
 odin_tem01.rsw#Odin Shirine#
