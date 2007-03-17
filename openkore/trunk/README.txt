@@ -2,6 +2,9 @@
 ### OpenKore 1.9.4 (beta)
 =========================
 
+- OpenKore Webstart has been removed. The experiment turned out to be
+  unsuccessful.
+
 
 =========================
 ### OpenKore 1.9.3 (beta)

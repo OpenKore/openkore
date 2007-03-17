@@ -89,20 +89,7 @@ if ($PerlApp::TOOL eq "PerlApp") {
 	}
 }
 
-my ($runWebstart, $file);
-if (@ARGV == 0) {
-	my %sys;
-	parseSysConfig("control\\sys.txt", \%sys);
-	if ($sys{enableWebstart} eq '' || $sys{enableWebstart}) {
-		$runWebstart = 1;
-	}
-}
-if ($runWebstart) {
-	$file = "src\\webstart\\webstart.pl";
-} else {
-	$file = "openkore.pl";
-}
-
+my $file = "openkore.pl";
 if ($ARGV[0] eq '!') {
 	shift;
 	while (@ARGV) {
@@ -130,23 +117,4 @@ if ($@) {
 	exit 1;
 } elsif (defined $ENV{INTERPRETER}) {
 	main::__start() if defined(&main::__start);
-}
-
-
-sub parseSysConfig {
-	my ($file, $sys) = @_;
-	my $f;
-	return if (!open($f, "<:utf8", $file));
-
-	while (!eof($f)) {
-		my ($line, $key, $val);
-		$line = <$f>;
-		$line =~ s/[\r\n]//g;
-
-		next if ($line eq '' || $line =~ /^#/);
-
-		($key, $val) = split / /, $line, 2;
-		$sys->{$key} = $val;
-	}
-	close $f;
 }
