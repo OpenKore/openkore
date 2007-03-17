@@ -24,7 +24,6 @@ DIRS=(.
 	src/deps/Exception
 	src/po
 	src/test
-	src/webstart
 	src/Actor
 	src/AI
 	src/Base
