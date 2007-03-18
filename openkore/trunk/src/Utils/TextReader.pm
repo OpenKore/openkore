@@ -31,7 +31,7 @@ package Utils::TextReader;
 
 use strict;
 use Encode;
-use Utils::CommonExceptions;
+use Utils::Exceptions;
 
 ##
 # Utils::TextReader->new(String filename)
@@ -69,7 +69,8 @@ sub eof {
 # Requires: !$TextReader->eof()
 # Throws: UTF8MalformedException
 #
-# Read one line from the file. UTF-8 BOM characters are automatically stripped.
+# Read one line from the file, including a possible newline character.
+# UTF-8 BOM characters are automatically stripped.
 sub readLine {
 	my $self = $_[0];
 	my $handle = $self->{handle};

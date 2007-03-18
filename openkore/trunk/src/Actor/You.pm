@@ -22,11 +22,41 @@
 package Actor::You;
 
 use strict;
-
 use Globals;
 use Log qw(message);
+use base qw(Actor);
 
-our @ISA = qw(Actor);
+##
+# Skills $char->{permitSkill}
+#
+# When you use certain items, the server temporarily permits you to use a skill.
+# For example, when you use an Yggdrasil Leaf, the server temporarily lets you
+# to use Resurrection.
+#
+# This member specifies which skill is currently temporarily permitted. It is undef
+# when there is no temporarily permitted skill.
+# The temporary permission is removed once you have used the skill, or when you have
+# changed map server. (TODO: are these really all the cases?)
+
+##
+# Hash<String, Hash> $char->{skills}
+#
+# Contains a set of skills that the character has. The keys of the hash
+# are the skill handles, and the values are a hash containing the following
+# items:
+# `l
+# - ID - The skill ID.
+# - lv - The maximum level of this skill.
+# - sp - The amount of SP that this skill needs, when used at the maximum level.
+# - range - The range of this skill, in blocks.
+# - up - Whether this skill can be leveled up further.
+# - targetType - ??? Probably related to %skillsArea
+# `l`
+
+##
+# Bytes $char->{charID}
+#
+# A unique character ID for this character (not the same as the account ID, or $char->{ID}).
 
 sub new {
 	my ($class) = @_;
@@ -39,6 +69,22 @@ sub nameString {
 	return 'yourself' if $self->{ID} eq $otherActor->{ID};
 	return 'you' if UNIVERSAL::isa($otherActor, 'Actor');
 	return 'You';
+}
+
+##
+# int $char->getSkillLevel(Skills skill)
+# Ensures: result >= 0
+#
+# Returns the maximum level of the specified skill. If the character doesn't
+# have that skill, the 0 is returned.
+sub getSkillLevel {
+	my ($self, $skill) = @_;
+	my $handle = $skill->handle();
+	if ($self->{skills}{$handle}) {
+		return $self->{skills}{$handle}{lv};
+	} else {
+		return 0;
+	}
 }
 
 ##

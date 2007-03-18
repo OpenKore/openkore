@@ -1,21 +1,32 @@
 package Task::UseSkill;
 
 use strict;
+use Modules 'register';
+use Time::HiRes qw(time);
+use Scalar::Util;
+use Carp::Assert;
+
 use Task::WithSubtask;
 use base qw(Task::WithSubtask);
 use Task::Chained;
 use Task::Function;
 use Task::SitStand;
 
-use Time::HiRes qw(time);
 use Globals qw($net $char %skillsArea $messageSender $accountID);
 use Network;
+use Plugins;
 use Skills;
+use Log qw(debug);
 use Translation qw(T TF);
+use Utils qw(timeOut);
 use Utils::Exceptions;
 
 # States
-use enum qw(PREPARING WAITING_FOR_CAST_TO_START WAITING_FOR_CAST_TO_FINISH);
+use enum qw(
+	PREPARING
+	WAITING_FOR_CAST_TO_START
+	WAITING_FOR_CAST_TO_FINISH
+);
 
 # Errors
 use enum qw(
@@ -66,6 +77,8 @@ sub new {
 		$self->{actorList} = $args{actorList};
 	}
 
+	$self->{state} = PREPARING;
+
 	# int castTries
 	# The number of times we've tried to cast the skill.
 	$self->{castTries} = 0;
@@ -74,11 +87,42 @@ sub new {
 	# A timer used when waiting for casting to start.
 	$self->{castWaitTimer}{timeout} = 1;
 
-	# Task::Chain preparationTask
-	# The task to be executed prior to casting the skill. Handles things like
-	# standing up, equipping necessary items, etc.
+	# int maxCastTries
+	# The maximum number of times to try to re-cast the skill before
+	# we give up.
+	$self->{maxCastTries} = 3;
+
+	# boolean castingFinished
+	# Whether casting has finished.
+
+	# boolean castingStarted
+	# Whether casting has started.
+
+	# Hash castingError
+	# If casting has failed, then this member contains error information.
+	# The hash has the following keys:
+	# - type - An identifier for the error.
+	# - message - A human-readable message for the error.
+
+	# boolean castingCancelled
+	# Whether casting has been cancelled.
+
+	my @holder = ($self);
+	Scalar::Util::weaken($holder[0]);
+	$self->{hooks} = Plugins::addHooks(
+		['is_casting',       \&onSkillCast, \@holder],
+		['packet_skilluse',  \&onSkillUse,  \@holder],
+		['packet_skillfail', \&onSkillFail, \@holder],
+		['packet_castCancelled', \&onSkillCancelled, \@holder]
+	);
 
 	return $self;
+}
+
+sub DESTROY {
+	my ($self) = @_;
+	Plugins::delHooks($self->{hooks});
+	$self->SUPER::DESTROY();
 }
 
 # Overrided method.
@@ -96,61 +140,108 @@ sub resume {
 	delete $self->{interruptTime};
 }
 
+# Called when a skill has started casting.
+sub onSkillCast {
+	my (undef, $args, $holder) = @_;
+	my $self = $holder->[0];
+	if ($self->getStatus() == Task::RUNNING && $args->{sourceID} eq $char->{ID}
+	 && $self->{skill}->id() == $args->{skillID}) {
+		$self->{castingStarted} = 1;
+	}
+}
+
+# Called when a skill has been used.
+sub onSkillUse {
+	my (undef, $args, $holder) = @_;
+	my $self = $holder->[0];
+	if ($self->getStatus() == Task::RUNNING && $args->{sourceID} eq $char->{ID}
+	 && $self->{skill}->id() == $args->{skillID}) {
+		$self->{castingFinished} = 1;
+	}
+}
+
+# Called when a skill has failed.
+sub onSkillFail {
+	my (undef, $args, $holder) = @_;
+	my $self = $holder->[0];
+	if ($self->getStatus() == Task::RUNNING && $self->{skill}->id() == $args->{skillID}) {
+		$self->{castingError} = {
+			type => $args->{failType},
+			message => $args->{failMessage}
+		};
+	}
+}
+
+# Called when a skill has been cancelled.
+sub onSkillCancelled {
+	my (undef, $args, $holder) = @_;
+	my $self = $holder->[0];
+	if ($self->getStatus() == Task::RUNNING && $args->{ID} eq $char->{ID}) {
+		$self->{castingCancelled} = 1;
+	}
+}
+
 # Check whether the target has been lost.
 sub targetLost {
 	my ($self) = @_;
-	return UNIVERSAL::isa($self->{target}, 'Actor') && $self->{actorList}->getByID($self->{target}{ID});
+	return UNIVERSAL::isa($self->{target}, 'Actor') && !$self->{actorList}->getByID($self->{target}{ID});
 }
 
-# Check whether casting has finished.
-sub castingFinished {
-}
-
-# Check whether casting has started.
-sub castingStarted {
+# Check whether we've equipped the necessary items (e.g. Vitata Card for Heal)
+# to be able to use the skill.
+sub hasNecessaryEquipment {
+	return 1;
 }
 
 # Check whether the preparation conditions are satisfied.
 sub checkPreparations {
 	my ($self) = @_;
-	return (!$char->{sitting} && hasNecessaryEquipment());
-}
-
-# Check whether casting has been cancelled.
-sub castingCancelled {
+	return !$char->{sitting} && $self->hasNecessaryEquipment();
 }
 
 # Cast the skill, reset castWaitTimer and increment castTries.
 sub castSkill {
 	my ($self) = @_;
+	my $skill = $self->{skill};
+	my $handle = $skill->handle();
+	my $skillID = $skill->id();
+	my $level = $skill->level();
 
-	# TODO: if skill is an area skill, and _target_ is an Actor, then use the actor's location instead.
-
-	my $handle = $self->{skill}->handle();
-	my $skillID = $self->{skill}->id();
 	if ($skillsArea{$handle} == 2) {
 		# A skill which is used on the character self.
-		$messageSender->sendSkillUse($skillID, $self->{lv}, $accountID);
+		$messageSender->sendSkillUse($skillID, $level, $accountID);
+
 	} elsif (UNIVERSAL::isa($self->{target}, 'Actor')) {
-		# A skill which is used on an actor.
-		$messageSender->sendSkillUse($skillID, $self->{lv}, $self->{target});
+		# The skill must be used on an actor.
+		if ($skillsArea{$handle} == 1) {
+			# This is a location skill.
+			$messageSender->sendSkillUseLoc($skillID, $level,
+				$self->{target}{pos_to}{x}, $self->{target}{pos_to}{y});
+		} else {
+			$messageSender->sendSkillUse($skillID, $level, $self->{target}{ID});
+		}
+
 	} else {
 		# A location skill.
-		$messageSender->sendSkillUseLoc($skillID, $self->{lv}, $self->{target}{x}, $self->{target}{y});
+		$messageSender->sendSkillUseLoc($skillID, $level, $self->{target}{x}, $self->{target}{y});
 	}
 
 	$self->{castTries}++;
 	$self->{castWaitTimer}{time} = time;
 }
 
+# TODO: check SP
+# actorList is not required if target is Actor::You
+
 sub iterate {
 	my ($self) = @_;
 	return if (!$char || $net->getState() != Network::IN_GAME);
 
 	my $handle = $self->{skill}->handle();
-	if (!$char->{skills}{$handle} || $char->{skills}{$handle}{lv} <= 0 || !($char->{permitSkill} && $char->{permitSkill}->handle eq $handle)) {
+	if ($char->getSkillLevel($self->{skill}) == 0 && !($char->{permitSkill} && $char->{permitSkill}->handle eq $handle)) {
 		$self->setError(ERROR_NO_SKILL, T("Skill %s cannot be used because character has no such skill.",
 			$self->{skill}->name()));
+		debug "UseSkill - No such skill.\n", "Task::UseSkill" if DEBUG;
 		return;
 	}
 
@@ -161,6 +252,7 @@ sub iterate {
 			]);
 			$self->setSubtask($task);
 			$self->{preparationTask} = $task;
+			debug "UseSkill - Created preparation subtask.\n", "Task::UseSkill" if DEBUG;
 		}
 
 		# Iterate preparation subtask
@@ -170,157 +262,78 @@ sub iterate {
 			$self->{state} = WAITING_FOR_CAST_TO_START;
 			$self->castSkill();
 			delete $self->{preparationTask};
+			debug "UseSkill - Preparation subtask completed with success, waiting for cast to start...\n", "Task::UseSkill" if DEBUG;
 
 		} elsif (!$self->getSubtask() && $self->{preparationTask}->getError()) {
 			# Preparation subtask completed with error.
 			my $error = $self->{preparationTask}->getError();
 			$self->setError(ERROR_PREPARATION_FAILED, $error->{message});
+			debug "UseSkill - Preparation failed: $error->{message}\n", "Task::UseSkill" if DEBUG;
 
 		} elsif ($self->targetLost()) {
 			$self->setError(ERROR_TARGET_LOST, T("Target lost."));
 			$self->{preparationTask}->stop() if ($self->{preparationTask});
+			debug "UseSkill - Target lost.\n", "Task::UseSkill" if DEBUG;
 		}
 
 	} elsif ($self->{state} == WAITING_FOR_CAST_TO_START) {
-		if ($self->castingFinished()) {
+		if ($self->{castingFinished}) {
 			$self->setDone();
+			debug "UseSkill - Done.\n", "Task::UseSkill" if DEBUG;
 
-		} elsif ($self->castingStarted()) {
+		} elsif ($self->{castingStarted}) {
+			delete $self->{castingStarted};
 			$self->{state} = WAITING_FOR_CAST_TO_FINISH;
+			debug "UseSkill - Casting started, waiting for cast to finish...\n", "Task::UseSkill" if DEBUG;
 
 		} elsif ($self->targetLost()) {
 			$self->setError(ERROR_TARGET_LOST, T("Target lost."));
+			debug "UseSkill - Target lost.\n", "Task::UseSkill" if DEBUG;
 
 		} elsif (timeOut($self->{castWaitTimer})) {
 			# Nothing happened within a period of time.
 			if ($self->{castTries} < $self->{maxCastTries}) {
 				$self->castSkill();
+				debug "UseSkill - Timeout, recasting skill.\n", "Task::UseSkill" if DEBUG;
 			} else {
 				$self->setError(ERROR_MAX_TRIES, TF("Unable to cast skill %s in %d tries.",
 					$self->{skill}->name(), $self->{maxCastTries}));
+				debug "UseSkill - Timeout, maximum tries reached.\n", "Task::UseSkill" if DEBUG;
 			}
 
 		} elsif (!$self->checkPreparations()) {
 			# Preparation conditions violated.
 			$self->{state} = PREPARING;
+			debug "UseSkill - Preparation conditions violated.\n" if DEBUG;
 		}
 
 	} elsif ($self->{state} == WAITING_FOR_CAST_TO_FINISH) {
-		if ($self->castingFinished()) {
+		if ($self->{castingFinished}) {
 			$self->setDone();
+			debug "UseSkill - Done.\n", "Task::UseSkill" if DEBUG;
 
-		} elsif ($self->castingCancelled()) {
+		} elsif ($self->{castingCancelled}) {
+			delete $self->{castingCancelled};
 			if ($self->{stopWhenHit}) {
 				$self->setError(ERROR_CASTING_CANCELLED, T("Casting has been cancelled."));
+				debug "UseSkill - Casting cancelled, stopping.\n", "Task::UseSkill" if DEBUG;
 
 			# Here we also check castTries. This differs from the state diagram.
 			# The state diagram will become too messy if I add this behavior.
 			} elsif ($self->{castTries} < $self->{maxCastTries}) {
 				$self->castSkill();
 				$self->{state} = WAITING_FOR_CAST_TO_START;
+				debug "UseSkill - Casting cancelled, retrying.\n", "Task::UseSkill" if DEBUG;
 
 			} else {
 				$self->setError(ERROR_MAX_TRIES, TF("Unable to cast skill in %d tries.", $self->{maxCastTries}));
+				debug "UseSkill - Casting cancelled, maximum tries reached.\n", "Task::UseSkill" if DEBUG;
 			}
 
-		} elsif ($self->getCastError()) {
-			$self->setError(ERROR_CASTING_FAILED, TF("Casting failed: %s", $self->getCastError()));
-		}
-	}
-}
-
-1;
-__DATA__
-sub iterate {
-	# FIXME: need to move closer before using skill on player,
-	# there might be line of sight problem too
-	# or the player disappers from the area
-
-	# If this is a skill that is used on the player itself...
-	if ($self->{monsterID} && $skillsArea{$self->{skillHandle}} == 2) {
-		delete $self->{monsterID};
-	}
-
-	if (exists $self->{ai_equipAuto_skilluse_giveup} && binFind(\@skillsID, $self->{skillHandle}) eq "" && timeOut($self->{ai_equipAuto_skilluse_giveup})) {
-		warning T("Timeout equiping for skill\n");
-		AI::dequeue;
-		${$self->{ret}} = 'equip timeout' if ($self->{ret});
-	} elsif (Actor::Item::scanConfigAndCheck("$self->{prefix}_equip")) {
-		#check if item needs to be equipped
-		Actor::Item::scanConfigAndEquip("$self->{prefix}_equip");
-	} elsif (timeOut($self->{waitBeforeUse})) {
-		if (defined $self->{monsterID} && !defined $monsters{$self->{monsterID}}) {
-			# This skill is supposed to be used for attacking a monster, but that monster has died
-			AI::dequeue;
-			${$self->{ret}} = 'target gone' if ($self->{ret});
-
-		} elsif ($char->{sitting}) {
-			AI::suspend;
-			stand();
-
-		# Use skill if we haven't done so yet
-		} elsif (!$self->{skill_used}) {
-			my $handle = $self->{skillHandle};
-			if (!defined $self->{skillID}) {
-				my $skill = new Skills(handle => $handle);
-				$self->{skillID} = $skill->id;
-			}
-			my $skillID = $self->{skillID};
-
-			if ($handle eq 'AL_TELEPORT') {
-				${$self->{ret}} = 'ok' if ($self->{ret});
-				AI::dequeue;
-				useTeleport($self->{lv});
-				last SKILL_USE;
-			}
-
-			$self->{skill_used} = 1;
-			$self->{giveup}{time} = time;
-
-			# Stop attacking, otherwise skill use might fail
-			my $attackIndex = AI::findAction("attack");
-			if (defined($attackIndex) && AI::args($attackIndex)->{attackMethod}{type} eq "weapon") {
-				# 2005-01-24 pmak: Commenting this out since it may
-				# be causing bot to attack slowly when a buff runs
-				# out.
-				#stopAttack();
-			}
-
-			# Give an error if we don't actually possess this skill
-			my $skill = new Skills(handle => $handle);
-			if ($char->{skills}{$handle}{lv} <= 0 && (!$char->{permitSkill} || $char->{permitSkill}->handle ne $handle)) {
-				debug "Attempted to use skill (".$skill->name.") which you do not have.\n";
-			}
-
-			$self->{maxCastTime}{time} = time;
-			if ($skillsArea{$handle} == 2) {
-				$messageSender->sendSkillUse($skillID, $self->{lv}, $accountID);
-			} elsif ($self->{x} ne "") {
-				$messageSender->sendSkillUseLoc($skillID, $self->{lv}, $self->{x}, $self->{y});
-			} else {
-				$messageSender->sendSkillUse($skillID, $self->{lv}, $self->{target});
-			}
-			undef $char->{permitSkill};
-			$self->{skill_use_last} = $char->{skills}{$handle}{time_used};
-
-			delete $char->{cast_cancelled};
-
-		} elsif (timeOut($self->{minCastTime})) {
-			if ($self->{skill_use_last} != $char->{skills}{$self->{skillHandle}}{time_used}) {
-				AI::dequeue;
-				${$self->{ret}} = 'ok' if ($self->{ret});
-
-			} elsif ($char->{cast_cancelled} > $char->{time_cast}) {
-				AI::dequeue;
-				${$self->{ret}} = 'cancelled' if ($self->{ret});
-
-			} elsif (timeOut($char->{time_cast}, $char->{time_cast_wait} + 0.5)
-				&& ( (timeOut($self->{giveup}) && (!$char->{time_cast} || !$self->{maxCastTime}{timeout}) )
-				|| ( $self->{maxCastTime}{timeout} && timeOut($self->{maxCastTime})) )
-			) {
-				AI::dequeue;
-				${$self->{ret}} = 'timeout' if ($self->{ret});
-			}
+		} elsif ($self->{castingError}) {
+			$self->setError(ERROR_CASTING_FAILED, TF("Casting failed: %s (%d)",
+				$self->{castingError}{message}, $self->{castingError}{type}));
+			debug "UseSkill - Casting failed: $self->{castingError}{message}.\n", "Task::UseSkill" if DEBUG;
 		}
 	}
 }

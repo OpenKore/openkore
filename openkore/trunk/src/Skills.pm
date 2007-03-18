@@ -13,144 +13,175 @@
 #
 #########################################################################
 ##
-# MODULE DESCRIPTION: Conversion between skill identifiers
+# MODULE DESCRIPTION: Character skill
+#
+# This class models a character skill (for example, Heal, Bash, Flee, Twohand Quicken, etc.).
 #
 # Skills have 3 different identifiers:
 # `l
-# - The full name ("Increase AGI").
-# - The handle, or internal name ("AL_INCAGI").
+# - The full name (e.g. "Increase AGI").
+# - The handle, or internal name (e.g. "AL_INCAGI").
 # - The skill ID (29).
 # `l`
+# When sending a "use skill" message to the RO server, the skill ID is used.
+# When your character logs in, the server sends a list of available skills of the character,
+# as well as the associated handles and other information. The RO client has a data file which
+# translates skill handles into a full name.
 #
-# The skill ID is send to the server when sending a skill use packet.
-# Different parts of Kore require a different skill identifier. Looking
-# up skill information was a mess.
-# This class provides an easy-to-use interface for conversion between those
-# identifiers, so you can easily look up information about skills.
-#
-# See Skills->new() for an example about how to use this class.
-#
-# <h3>2004-10-11 BACKWARD COMPATIBILITY NOTE</h3>
-# %skills_lut, %skills_rlut, %skillsID_lut and %skillsID_rlut are deprecated.
-# New code should not use these structures, and eventually, all references to
-# these structures should be replaced by the appropriate calls to this module.
-
+# OpenKore has a database file which contains information about skills. It associates different
+# skill identifiers with each other. During runtime, the in-memory version of this database
+# is dynamically updated as the server sends up-to-date information about skills.
 package Skills;
 
 use strict;
-use Globals qw($accountID $net $char %skillsSP_lut $messageSender);
-use vars qw(%skills);
+use Modules 'register';
+use Globals qw($accountID $char %skillsSP_lut $messageSender);
 use Log qw(warning);
+use Utils::TextReader;
+use Utils::Exceptions;
 
 use overload '""' => \&name;
 
+use constant {
+	# Passive skill; cannot be used.
+	TARGET_PASSIVE => 0,
 
-# These data structures work as follows:
+	# Used on enemies (i.e. monsters, and also people when in WoE/PVP).
+	TARGET_ENEMY => 1,
+
+	# Used on locations.
+	TARGET_LOCATION => 2,
+
+	# Always used on yourself, there's no targeting involved. Though some
+	# of these skills (like Gloria) have effect on the entire party.
+	TARGET_SELF => 4,
+
+	# Can be used on all actors.
+	TARGET_ACTORS => 16
+};
+
+
+# %skills is a database which contains information about skills. It has several
+# indexes, which allow you to quickly lookup skill information with any skill identifier.
 #
-# %skills = (
-#     'id' => (
-#         '1' => (
-#             'handle' => 'NV_BASIC',
-#             'name' => 'Basic Skill'
-#         )
-#         '2' => (
-#             'handle' => 'SM_SWORD',
-#             'name' => 'Sword Mastery'
-#         )
-#         '3' => (
-#             'handle' => 'SM_TWOHAND',
-#             'name' => 'Two-Handed Sword Mastery'
-#         )
+# %skills = {
+#     id => {
+#         1 => {
+#             handle => 'NV_BASIC',
+#             name   => 'Basic Skill'
+#         },
+#         2 => {
+#             handle => 'SM_SWORD',
+#             name   => 'Sword Mastery'
+#         },
+#         3 => {
+#             handle => 'SM_TWOHAND',
+#             name   => 'Two-Handed Sword Mastery'
+#         },
 #         ...
-#     )
-#     'handle' => (
-#         'NV_BASIC' => 1,
-#         'SM_SWORD' => 2,
-#         'SM_TWOHAND' => 3,
+#     },
+#     handle => {
+#         NV_BASIC   => 1,
+#         SM_SWORD   => 2,
+#         SM_TWOHAND => 3,
 #         ...
-#     )
-#     'name' => (
+#     },
+#     name => {
 #         'basic skill' => 1,
 #         'sword mastery' => 2,
 #         'two-handed sword mastery' => 3,
 #         ...
-#     )
-# );
-#
-
-##############################
-### CATEGORY: Constructor
-##############################
+#     }
+# };
+our %skills;
 
 ##
-# Skills->new(key => value)
-# key: id, handle, name or auto.
+# Skills->new(options...)
 #
-# Creates a new Skills object.
+# Creates a new Skills object. In the options, you must specify an identifier
+# for a skill.
 #
-# Example:
-# # All of these create the same object
-# my $heal = Skills->new(id => 28);
-# my $heal = Skills->new(handle => 'AL_HEAL');
-# my $heal = Skills->new(name => 'heal');
-# my $heal = Skills->new(auto => 'Heal');
-# my $heal = Skills->new(auto => 'AL_HEAL');
-# my $heal = Skills->new(auto => 28);
+# To specificy a skill identifier, use one of the following keys:
+# `l`
+# - id - A skill ID.
+# - name - A skill name. This is case-<b>in</b>sensitive.
+# - handle - A skill handle. This is case-sensitive.
+# - auto - Attempt to autodetect the value.
+# `l
+# For example, all of the following constructors create identical Skills objects:
+# <pre class="example">
+# $heal = new Skills(id => 28);
+# $heal = new Skills(handle => 'AL_HEAL');
+# $heal = new Skills(name => 'heal');
+# $heal = new Skills(auto => 'Heal');
+# $heal = new Skills(auto => 'AL_HEAL');
+# $heal = new Skills(auto => 28);
 #
-# $heal->id;     # returns 28
-# $heal->handle; # returns 'AL_HEAL'
-# $heal->name;   # returns 'Heal'
+# $heal->id();     # returns 28
+# $heal->handle(); # returns 'AL_HEAL'
+# $heal->name();   # returns 'Heal'
+# </pre>
+#
+# The following options are also allowed, and are optional:
+# `l
+# - level - The skill level. The default is 1.
+# - sp
+# - range
+# `l`
+#
+# You may also specify a 'level' option to set the skill level. If you don't
+# specify this parameter, then a level of 1 is assumed. For example:
+# <pre class="example">
+# $heal = new Skills(name => 'Heal');
+# $heal->level();  # returns 1
+#
+# $heal = new Skills(name => 'Heal', level => 5);
+# $heal->level();  # returns 5
+# </pre>
 sub new {
-	my ($class, $key, $value) = @_;
-
+	my $class = shift;
+	my %args = @_;
 	my %self;
-	if ($key eq 'id' || ($key eq 'auto' && $value =~ /^\d+$/)) {
-		$self{id} = $value if defined($skills{id});
-	} elsif ($key eq 'handle' || ($key eq 'auto' && uc($value) eq $value)) {
-		$self{id} = $skills{handle}{$value};
-	} elsif ($key eq 'name' || $key eq 'auto') {
-		$self{id} = $skills{name}{lc($value)};
+
+	if (defined $args{auto}) {
+		if ($args{auto} =~ /^\d+$/) {
+			$args{id} = $args{auto};
+		} elsif (uc($args{auto}) eq $args{auto}) {
+			$args{handle} = $args{auto};
+		} else {
+			$args{name} = $args{auto};
+		}
 	}
+
+	if (defined $args{id}) {
+		$self{id} = $args{id};
+	} elsif (defined $args{handle}) {
+		$self{id} = $skills{handle}{$args{handle}};
+	} elsif (defined $args{name}) {
+		$self{id} = $skills{name}{lc($args{name})};
+	} else {
+		ArgumentException->throw("No valid skill identifier specified.");
+	}
+
+	$self{level} = defined($args{level}) ? $args{level} : 1;
+
 	return bless \%self, $class;
 }
 
-##############################
-### CATEGORY: Class Methods
-##############################
-
-sub useSkill {
-	my ($skillName,$target,$lvl) = @_;
-
-	my $skill = new Skills(auto => $skillName);
-	$skill->use($target,$lvl);
-}
-
-sub checkLevel {
-	my $skillName = shift;
-
-	my $skill = new Skills(auto => $skillName);
-	return $skill->level();
-}
-
-##############################
-### CATEGORY: Methods
-##############################
-
 ##
-# $Skill->id()
+# int $Skill->id()
 #
 # Returns the ID number of the skill.
 sub id {
-	my $self = shift;
-	return $self->{id};
+	return $_[0]->{id};
 }
 
 ##
-# $Skill->handle()
+# String $Skill->handle()
 #
 # Returns the handle of the skill.
 sub handle {
-	my $self = shift;
+	my ($self) = @_;
 	return $skills{id}{$self->{id}}{handle};
 }
 
@@ -160,18 +191,7 @@ sub handle {
 # Returns the name of the skill.
 sub name {
 	my $self = shift;
-	return $skills{id}{$self->{id}}{name} || "Unknown ".$self->{id};
-}
-
-sub complete {
-	my $name = quotemeta(shift);
-	my @matches;
-	foreach my $skill (values %{$skills{id}}) {
-		if ($skill->{name} =~ /^$name/i) {
-			push @matches, $skill->{name};
-		}
-	}
-	return @matches;
+	return $skills{id}{$self->{id}}{name} || "Unknown $self->{id}";
 }
 
 ##
@@ -188,45 +208,61 @@ sub use {
 }
 
 ##
-# $Skill->level()
-# Return: SkillLvl
+# int $Skill->level()
+# Ensures: result > 0
 #
+# Returns the level of this skill.
 sub level {
-	my $self = shift;
-	return 0 unless $char->{skills}{$self->handle};
-	return $char->{skills}{$self->handle}{lv};
+	return $_[0]->{level};
 }
 
 ##
-# $Skill->sp([lvl])
-# lvl: of the skill
-# Return: sp cost
+# int $Skill->sp($level)
 #
+# Returns the SP required for level $level of this skill.
 sub sp {
-	my ($self,$lvl) = @_;
-
-	$lvl = $self->level unless $lvl;
-
-	return 0 unless $lvl;
-
-	my $handle = $self->handle;
+	my ($self, $level) = @_;
+	my $handle = $self->handle();
 	if ($skillsSP_lut{$handle}) {
-		return $skillsSP_lut{$handle}{$lvl};
-	} elsif ($char->{skills}{$handle}) {
+		return $skillsSP_lut{$handle}{$level};
+	} elsif ($char && $char->{skills} && $char->{skills}{$handle}) {
 		return $char->{skills}{$handle}{sp};
 	}
 }
 
-##
-# $Skill->checkSp([lvl])
-# lvl: of the skill
-# Return: can use or not
-#
-# checks whether the char can use the skill
-# right now
-sub checkSp {
-	my ($self,$lvl) = @_;
-	return $char->{sp} >= $self->sp($lvl);
+
+#######################################
+
+
+sub parseSkillsDatabase {
+	my ($file, $hash) = @_;
+	my $reader = new Utils::TextReader($file);
+	%{$hash} = ();
+	while (!$reader->eof()) {
+		my $line = $reader->readLine();
+		next if ($line =~ /^\/\//);
+		$line =~ s/[\r\n]//g;
+		$line =~ s/\s+$//g;
+		my ($id, $handle, $name) = split(' ', $line, 3);
+		if ($id && $handle ne "" && $name ne "") {
+			$hash->{id}{$id}{handle} = $handle;
+			$hash->{id}{$id}{name} = $name;
+			$hash->{handle}{$handle} = $id;
+			$hash->{name}{lc($name)} = $id;
+		}
+	}
+	return 1;
+}
+
+sub complete {
+	my $name = quotemeta(shift);
+	my @matches;
+	foreach my $skill (values %{$skills{id}}) {
+		if ($skill->{name} =~ /^$name/i) {
+			push @matches, $skill->{name};
+		}
+	}
+	return @matches;
 }
 
 1;

@@ -1970,6 +1970,9 @@ sub cast_cancelled {
 	my $skillName = $skill ? $skill->name : 'Unknown';
 	my $domain = ($ID eq $accountID) ? "selfSkill" : "skill";
 	message TF("%s failed to cast %s\n", $source, $skillName), $domain;
+	Plugins::callHook('packet_castCancelled', {
+		sourceID => $ID
+	});
 	delete $source->{casting};
 }
 
@@ -4340,7 +4343,9 @@ sub received_characters {
 		#exp display bugfix - chobit andy 20030129
 		$num = unpack("C1", substr($args->{RAW_MSG}, $i + 104, 1));
 		$chars[$num] = new Actor::You;
-		$chars[$num]{ID} = substr($args->{RAW_MSG}, $i, 4);
+		$chars[$num]{ID} = $accountID;
+		$chars[$num]{charID} = substr($args->{RAW_MSG}, $i, 4);
+		$chars[$num]{nameID} = unpack("V", $chars[$num]{ID});
 		$chars[$num]{exp} = unpack("V", substr($args->{RAW_MSG}, $i + 4, 4));
 		$chars[$num]{zenny} = unpack("V", substr($args->{RAW_MSG}, $i + 8, 4));
 		$chars[$num]{exp_job} = unpack("V", substr($args->{RAW_MSG}, $i + 12, 4));
@@ -4744,6 +4749,8 @@ sub skill_cast {
 		target => $target,
 		skillID => $skillID,
 		skill => $skill,
+		time => $source->{casting}{time},
+		castTime => $wait,
 		x => $x,
 		y => $y
 	});
@@ -4913,7 +4920,11 @@ sub skill_use_failed {
 		10 => 'Requirement'
 		);
 	warning TF("Skill %s failed (%s)\n", Skills->new(id => $skillID)->name, $failtype{$type}), "skill";
-	Plugins::callHook('packet_skillfail', {'skillID' => $skillID, 'failType' => $failtype{$type}});
+	Plugins::callHook('packet_skillfail', {
+		skillID     => $skillID,
+		failType    => $type,
+		failMessage => $failtype{$type}
+	});
 }
 
 sub skill_use_location {
@@ -5011,14 +5022,14 @@ sub skill_used_no_damage {
 		}
 	}
 	Plugins::callHook('packet_skilluse', {
-			'skillID' => $args->{skillID},
-			'sourceID' => $args->{sourceID},
-			'targetID' => $args->{targetID},
-			'damage' => 0,
-			'amount' => $args->{amount},
-			'x' => 0,
-			'y' => 0
-			});
+		skillID => $args->{skillID},
+		sourceID => $args->{sourceID},
+		targetID => $args->{targetID},
+		damage => 0,
+		amount => $args->{amount},
+		x => 0,
+		y => 0
+	});
 }
 
 sub skills_list {
