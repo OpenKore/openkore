@@ -5,6 +5,12 @@
 - OpenKore Webstart has been removed. The experiment turned out to be
   unsuccessful.
 
+Bug fixes:
+- Headgears are now detected correctly.
+
+Credits:
+- johnny: Fix for headgear display.
+
 
 =========================
 ### OpenKore 1.9.3 (beta)
