@@ -1293,6 +1293,16 @@ serverType 9
 private 1
 serverEncoding Russian
 
+## http://spectro.nunaze.info/
+[Spectre]
+ip 72.36.236.18
+port 6900
+master_version 14
+version 31966772
+serverType 0
+private 1
+serverEncoding Western
+
 ## http://www.speedro.de/speedro.html
 [SpeedRO Private Server]
 ip 205.177.72.106
