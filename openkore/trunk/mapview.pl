@@ -151,7 +151,7 @@ sub onTimer {
 		my ($key, $value) = split /=/, $line, 2;
 		if ($key eq 'NPC' || $key eq 'Monster' || $key eq 'Player') {
 			my ($x, $y) = split / /, $value;
-			push @{$state{$key}}, { type => $key, x => $x, y => $y };
+			push @{$state{$key}}, { x => $x, y => $y };
 		} else {
 			$state{$key} = $value;
 		}
@@ -170,14 +170,17 @@ sub onTimer {
 	my (@npcs, @monsters, @players);
 	foreach my $entry (@{$state{NPC}}) {
 		my %actor = (pos_to => $entry);
-		if ($entry->{type} eq 'NPC') {
-			push @npcs, \%actor;
-		} elsif ($entry->{type} eq 'Monster') {
-			push @monsters, \%actor;
-		} elsif ($entry->{type} eq 'Player') {
-			push @players, \%actor;
-		}
+		push @npcs, \%actor;
 	}
+	foreach my $entry (@{$state{Monster}}) {
+		my %actor = (pos_to => $entry);
+		push @monsters, \%actor;
+	}
+	foreach my $entry (@{$state{Player}}) {
+		my %actor = (pos_to => $entry);
+		push @players, \%actor;
+	}
+
 	$mapview->setMonsters(\@monsters);
 	$mapview->setPlayers(\@players);
 	$mapview->setNPCs(\@npcs);

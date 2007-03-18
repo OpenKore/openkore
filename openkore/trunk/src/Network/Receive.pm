@@ -4208,6 +4208,12 @@ sub player_equipment {
 			message TF("%s changed Shield to %s\n", $player, itemName({nameID => $ID2})), "parseMsg_statuslook", 2;
 			$player->{shield} = $ID2;
 		}
+	} elsif ($type == 3) {
+		$player->{headgear}{low} = $ID1;
+	} elsif ($type == 4) {
+		$player->{headgear}{top} = $ID1;
+	} elsif ($type == 5) {
+		$player->{headgear}{mid} = $ID1;
 	} elsif ($type == 9) {
 		if ($player->{shoes} && $ID1 ne $player->{shoes}) {
 			message TF("%s changed Shoes to: %s\n", $player, itemName({nameID => $ID1})), "parseMsg_statuslook", 2;
