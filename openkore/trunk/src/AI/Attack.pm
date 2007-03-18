@@ -286,7 +286,10 @@ sub main {
 
 	# Determine what combo skill to use
 	delete $args->{attackMethod};
-	my $lastSkill = Skills->new(id => $char->{last_skill_used})->name;
+	my $lastSkill;
+	if ($char->{last_skill_used}) {
+		$lastSkill = Skills->new(id => $char->{last_skill_used})->name;
+	}
 	my $i = 0;
 	while (exists $config{"attackComboSlot_$i"}) {
 		if (!$config{"attackComboSlot_$i"}) {

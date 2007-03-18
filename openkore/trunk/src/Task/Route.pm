@@ -80,7 +80,7 @@ sub new {
 	my $allowed = new Set('maxDistance', 'maxTime', 'distFromGoal', 'pyDistFromGoal',
 		'avoidWalls', 'notifyUponArrival');
 	foreach my $key (keys %args) {
-		if ($allowed->has($key)) {
+		if ($allowed->has($key) && defined($args{$key})) {
 			$self->{$key} = $args{$key};
 		}
 	}

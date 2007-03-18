@@ -28,10 +28,6 @@ use Globals;
 use Utils;
 
 
-# use SelfLoader; 1;
-# __DATA__
-
-
 ##
 # Actor::Player Match::player(ID, [boolean partial_match = false])
 # ID: either a number in the player list, or a player name.
@@ -57,11 +53,11 @@ sub player {
 		return $playersList->get($ID);
 	} elsif ($partial) {
 		$ID = quotemeta $ID;
-		foreach my Actor::Player $player (@{$playersList->getItems()}) {
+		foreach my $player (@{$playersList->getItems()}) {
 			return $player if ($player->name =~ /^$ID/i);
 		}
 	} else {
-		foreach my Actor::Player $player (@{$playersList->getItems()}) {
+		foreach my $player (@{$playersList->getItems()}) {
 			return $player if (lc($player->name) eq lc($ID));
 		}
 	}
