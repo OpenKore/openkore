@@ -54,7 +54,6 @@ our @EXPORT = qw(
 	parseROSlotsLUT
 	parseSectionedFile
 	parseShopControl
-	parseSkills
 	parseSkillsSPLUT
 	parseTimeouts
 	parseWaypoint
@@ -754,28 +753,6 @@ sub parseSectionedFile {
 		}
 	}
 	close FILE;
-	return 1;
-}
-
-sub parseSkills {
-	my ($file, $r_hash) = @_;
-
-	open(FILE, "<:utf8", $file);
-	foreach (<FILE>) {
-		s/\x{FEFF}//g;
-		next if (/^\/\//);
-		s/[\r\n]//g;
-		s/\s+$//g;
-		my ($id, $handle, $name) = split(' ', $_, 3);
-		if ($id && $handle ne "" && $name ne "") {
-			$$r_hash{id}{$id}{handle} = $handle;
-			$$r_hash{id}{$id}{name} = $name;
-			$$r_hash{handle}{$handle} = $id;
-			$$r_hash{name}{lc($name)} = $id;
-		}
-	}
-	close(FILE);
-
 	return 1;
 }
 

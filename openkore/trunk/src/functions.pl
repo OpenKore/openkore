@@ -158,7 +158,7 @@ sub loadDataFiles {
 	addConfigFile("$Settings::tables_folder/recvpackets.txt", \%rpackets, \&parseDataFile2);
 	addConfigFile("$Settings::tables_folder/servers.txt", \%masterServers, \&parseSectionedFile);
 	addConfigFile("$Settings::tables_folder/sex.txt", \%sex_lut, \&parseDataFile2);
-	addConfigFile("$Settings::tables_folder/skills.txt", \%Skills::skills, \&parseSkills);
+	addConfigFile("$Settings::tables_folder/skills.txt", \%Skills::skills, \&Skills::parseSkillsDatabase);
 	addConfigFile("$Settings::tables_folder/spells.txt", \%spells_lut, \&parseDataFile2);
 	addConfigFile("$Settings::tables_folder/skillsdescriptions.txt", \%skillsDesc_lut, \&parseRODescLUT);
 	addConfigFile("$Settings::tables_folder/skillssp.txt", \%skillsSP_lut, \&parseSkillsSPLUT);

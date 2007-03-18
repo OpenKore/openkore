@@ -1167,7 +1167,7 @@ sub charSelectScreen {
 			goto TOP;
 		}
 
-		$messageSender->sendCharDelete($chars[$charIndex]{ID}, $email);
+		$messageSender->sendCharDelete($chars[$charIndex]{charID}, $email);
 		message TF("Deleting character %s...\n", $chars[$charIndex]{name}), "connection";
 		$AI::temp::delIndex = $charIndex;
 		$timeout{charlogin}{time} = time;
