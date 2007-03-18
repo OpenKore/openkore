@@ -110,7 +110,8 @@ sub iterate {
 		}
 
 		# Check whether destination is walkable from the starting point.
-		if (Task::Route->getRoute(undef, $field, $self->{source}, $self->{dest}{pos}, 0)) {
+		if ($self->{source}{map} eq $self->{dest}{map}
+		 && Task::Route->getRoute(undef, $field, $self->{source}, $self->{dest}{pos}, 0)) {
 			$self->{mapSolution} = [];
 			$self->setDone();
 			return;

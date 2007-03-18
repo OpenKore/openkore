@@ -482,102 +482,33 @@ sub ai_route {
 	my $map = shift;
 	my $x = shift;
 	my $y = shift;
-	my %param = @_;
+	my %args = @_;
 	debug "On route to: $maps_lut{$map.'.rsw'}($map): $x, $y\n", "route";
 
-	my %args;
-	$x = int($x) if ($x ne "");
-	$y = int($y) if ($y ne "");
-	$args{'dest'}{'map'} = $map;
-	$args{'dest'}{'pos'}{'x'} = $x;
-	$args{'dest'}{'pos'}{'y'} = $y;
-	$args{'maxRouteDistance'} = $param{maxRouteDistance} if exists $param{maxRouteDistance};
-	$args{'maxRouteTime'} = $param{maxRouteTime} if exists $param{maxRouteTime};
-	$args{'attackOnRoute'} = $param{attackOnRoute} if exists $param{attackOnRoute};
-	$args{'distFromGoal'} = $param{distFromGoal} if exists $param{distFromGoal};
-	$args{'pyDistFromGoal'} = $param{pyDistFromGoal} if exists $param{pyDistFromGoal};
-	$args{'attackID'} = $param{attackID} if exists $param{attackID};
-	$args{'noSitAuto'} = $param{noSitAuto} if exists $param{noSitAuto};
-	$args{'noAvoidWalls'} = $param{noAvoidWalls} if exists $param{noAvoidWalls};
-	$args{notifyUponArrival} = $param{notifyUponArrival} if exists $param{notifyUponArrival};
-	$args{'tags'} = $param{tags} if exists $param{tags};
-	$args{'time_start'} = time;
+	# I can't use 'use' because of circular dependencies.
+	require Task::Route;
+	require Task::MapRoute;
 
-	if (!$param{'_internal'}) {
-		$args{'solution'} = [];
-		$args{'mapSolution'} = [];
-	} elsif (exists $param{'_solution'}) {
-		$args{'solution'} = $param{'_solution'};
-	}
-
-	# Destination is same map and isn't blocked by walls/water/whatever
-	my $pos = calcPosition($char);
-	if ($param{'_internal'} || ($field{'name'} eq $args{'dest'}{'map'} && ai_route_getRoute(\@{$args{solution}}, $field, $pos, $args{dest}{pos}, $args{noAvoidWalls}))) {
-		# Since the solution array is here, we can start in "Route Solution Ready"
-		$args{'stage'} = 'Route Solution Ready';
-		debug "Route Solution Ready\n", "route";
-		AI::queue("route", \%args);
-		return 1;
-	} else {
-		return 0 if ($param{noMapRoute});
-		# Nothing is initialized so we start scratch
-		AI::queue("mapRoute", \%args);
-		return 1;
-	}
-}
-
-##
-# ai_route_getRoute(returnArray, r_field, r_start, r_dest, [noAvoidWalls])
-# returnArray: reference to an array. The solution will be stored in here.
-# r_field: reference to a field hash (usually $field).
-# r_start: reference to a hash. This is the start coordinate.
-# r_dest: reference to a hash. This is the destination coordinate.
-# noAvoidWalls: 1 if you don't want to avoid walls on route.
-# Returns: 1 if the calculation succeeded, 0 if not.
-#
-# Calculates how to walk from $r_start to $r_dest.
-# The blocks you have to walk on in order to get to $r_dest are stored in
-# $returnArray. This function is a convenience wrapper function for the stuff
-# in PathFinding.pm
-sub ai_route_getRoute {
-	my ($returnArray, $field, $r_start, $r_dest, $noAvoidWalls) = @_;
-	undef @{$returnArray};
-	return 1 if ($r_dest->{x} eq '' || $r_dest->{y} eq '');
-
-	# The exact destination may not be a spot that we can walk on.
-	# So we find a nearby spot that is walkable.
-	my %start = %{$r_start};
-	my %dest = %{$r_dest};
-	Misc::closestWalkableSpot($field, \%start);
-	Misc::closestWalkableSpot($field, \%dest);
-
-	# Generate map weights (for wall avoidance)
-	my $weights;
-	if ($noAvoidWalls) {
-		$weights = chr(255) . (chr(1) x 255);
-	} else {
-		#$weights = join '', map chr $_, (255, 8, 7, 6, 5, 4, 3, 2, 1);
-		$weights = join('', (map chr($_), (255, 7, 6, 3, 2, 1)));
-		$weights .= chr(1) x (256 - length($weights));
-	}
-
-	# Calculate path
-	my $pathfinding = new PathFinding(
-		start => \%start,
-		dest => \%dest,
-		field => $field,
-		weights => $weights
+	my $task;
+	my @params = (
+		x => $x,
+		y => $y,
+		maxDistance => $args{maxRouteDistance},
+		maxTime => $args{maxRouteTime},
+		distFromGoal => $args{distFromGoal},
+		pyDistFromGoal => $args{pyDistFromGoal},
+		avoidWalls => !$args{noAvoidWalls},
+		notifyUponArrival => $args{notifyUponArrival}
 	);
-	return undef if !$pathfinding;
-
-	my $ret = $pathfinding->run($returnArray);
-	if ($ret <= 0) {
-		# Failure
-		return undef;
+	if ($args{noMapRoute}) {
+		$task = new Task::Route(@params);
 	} else {
-		# Success
-		return $ret;
+		$task = new Task::MapRoute(map => $map, @params);
 	}
+	$task->{attackOnRoute} = $args{attackOnRoute};
+	$task->{noSitAuto} = $args{noSitAuto};
+
+	AI::queue("route", $task);
 }
 
 #sellAuto for items_control - chobit andy 20030210

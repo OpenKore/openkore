@@ -230,8 +230,12 @@ sub castSkill {
 	$self->{castWaitTimer}{time} = time;
 }
 
-# TODO: check SP
-# actorList is not required if target is Actor::You
+# TODO:
+# - check SP
+# - actorList is not required if target is Actor::You
+# - walk to target if it's too far away
+# - equip necessary items
+# - when waiting for casting to finish, add a timeout
 
 sub iterate {
 	my ($self) = @_;

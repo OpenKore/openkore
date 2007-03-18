@@ -57,12 +57,10 @@ use constant TOO_MUCH_TIME => 1;
 #                  destination is reached.
 # - pyDistFromGoal - Same as distFromGoal, but this allows you to specify the
 #                    Pythagorian distance instead of block distance.
-# - avoidWalls - Whether to avoid walls. The default is yes.
+# - avoidWalls - Whether to avoid walls. The default is true.
 # - notifyUponArrival - Whether to print a message when we've reached the destination.
 #                       The default is no.
 # `l`
-#
-# x and y may not be 0 or undef. Otherwise, an ArgumentException will be thrown.
 sub new {
 	my $class = shift;
 	my %args = @_;
@@ -76,7 +74,7 @@ sub new {
 	my $allowed = new Set('maxDistance', 'maxTime', 'distFromGoal', 'pyDistFromGoal',
 		'avoidWalls', 'notifyUponArrival');
 	foreach my $key (keys %args) {
-		if ($allowed->has($key)) {
+		if ($allowed->has($key) && defined $args{$key}) {
 			$self->{$key} = $args{$key};
 		}
 	}
@@ -98,6 +96,7 @@ sub new {
 sub DESTROY {
 	my ($self) = @_;
 	Plugins::delHook($self->{mapChangedHook});
+	$self->SUPER::DESTROY();
 }
 
 sub activate {
@@ -111,6 +110,9 @@ sub iterate {
 	my ($self) = @_;
 	return if (!$self->SUPER::iterate() || $net->getState() != Network::IN_GAME);
 	return if (!$field || !defined $char->{pos_to}{x} || !defined $char->{pos_to}{y});
+	# When the CalcMapRouter subtask finishes, a new Route task may be set as subtask.
+	# In that case we don't want to continue or this MapRoute task may end prematurely.
+	return if ($self->getSubtask());
 
 	my @solution;
 	if (@{$self->{mapSolution}} == 0) {

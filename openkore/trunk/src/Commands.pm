@@ -2892,7 +2892,7 @@ sub cmdPlayerList {
 	my $msg;
 
 	if ($args ne "") {
-		my Actor::Player $player = Match::player($args);
+		my $player = Match::player($args);
 		if (!$player) {
 			error TF("Player \"%s\" does not exist.\n", $args);
 			return;
@@ -2971,7 +2971,7 @@ sub cmdPlayerList {
 
 	$msg =  T("-----------Player List-----------\n" .
 		"#    Name                                Sex   Lv  Job         Dist  Coord\n");
-	foreach my Actor::Player $player (@{$playersList->getItems()}) {
+	foreach my $player (@{$playersList->getItems()}) {
 		my ($name, $dist, $pos);
 		$name = $player->name;
 		if ($player->{guild} && %{$player->{guild}}) {
