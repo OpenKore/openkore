@@ -728,7 +728,8 @@ sub actor_died_or_disappeared {
 	my ($self,$args) = @_;
 	changeToInGameState();
 	my $ID = $args->{ID};
-
+	avoidList_ID($ID);
+	
 	if ($ID eq $accountID) {
 		message T("You have died\n");
 		closeShop() unless !$shopstarted || $config{'dcOnDeath'} == -1 || !$AI;
