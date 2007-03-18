@@ -100,6 +100,7 @@ our @EXPORT = (
 	actorListClearing
 	avoidGM_talk
 	avoidList_talk
+	avoidList_ID
 	calcStat
 	center
 	charSelectScreen
@@ -3325,6 +3326,20 @@ sub avoidList_near {
 			useTeleport(1);
 			return 1;
 		}
+	}
+	return 0;
+}
+
+sub avoidList_ID {
+	return if (!($config{avoidList}) || ($config{avoidList_inLockOnly} && $field{name} ne $config{lockMap}));
+
+	my $avoidID = unpack("V", shift);
+	if ($avoid{ID}{$avoidID} && $avoid{ID}{$avoidID}{disconnect_on_sight}) {
+		warning TF("%s is nearby, disconnecting...\n", $avoidID);
+		chatLog("k", TF("*** Found %s nearby and disconnected ***\n", $avoidID));
+		warning TF("Disconnect for %s seconds...\n", $config{avoidList_reconnect});
+		relog($config{avoidList_reconnect}, 1);
+		return 1;
 	}
 	return 0;
 }
