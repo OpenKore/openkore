@@ -41,8 +41,11 @@ use Utils::PathFinding;
 # TODO: this task should lock the 'npc' mutex when talking to NPCs!
 
 # Error code constants.
-use constant TOO_MUCH_TIME => 1;
-use constant CANNOT_CALCULATE_ROUTE => 2;
+use enum qw(
+	TOO_MUCH_TIME
+	CANNOT_CALCULATE_ROUTE
+	UNEXPECTED_STATE
+);
 
 
 ##
@@ -104,6 +107,7 @@ sub new {
 sub DESTROY {
 	my ($self) = @_;
 	Plugins::delHook($self->{mapChangedHook});
+	$self->SUPER::DESTROY();
 }
 
 ##
@@ -337,19 +341,9 @@ sub iterate {
 	} else {
 		# This statement should never be reached.
 		debug "Unexpected route stage [$self->{stage}] occured.\n", "route";
-		$self->setError(1234, "Unexpected route stage [$self->{stage}] occured.\n");
+		$self->setError(UNEXPECTED_STATE, "Unexpected route stage [$self->{stage}] occured.\n");
 	}
 }
-
-# No need to watch the subtask as our only subtask is Task::Move.
-# sub subtaskDone {
-# 	my ($self, $task) = @_;
-# 	my $error;
-# 	if (!$task->isa('Task::Move') && ($error = $task->getError())) {
-# 		debug "Subtask " . $task->getName() . " returned error: $error->{message}\n", "route";
-# 		$self->setError($error->{code}, $error->{message});
-# 	}
-# }
 
 ##
 # Task::Route->getRoute(Array* solution, Field field, Hash* start, Hash* dest, [boolean avoidWalls = true])

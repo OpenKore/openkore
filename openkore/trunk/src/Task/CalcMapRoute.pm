@@ -32,8 +32,16 @@ use Utils qw(timeOut);
 use Utils::Exceptions;
 
 # Stage constants.
-use constant INITIALIZE => 1;
-use constant CALCULATE_ROUTE => 2;
+use constant {
+	INITIALIZE => 1,
+	CALCULATE_ROUTE => 2
+};
+
+# Error constants.
+use enum qw(
+	CANNOT_LOAD_FIELD
+	CANNOT_CALCULATE_ROUTE
+);
 
 
 ##
@@ -103,7 +111,7 @@ sub iterate {
 			$self->{dest}{field} = new Field(name => $self->{dest}{map});
 		};
 		if (caught('FileNotFoundException', 'IOException')) {
-			$self->setError(1234, "Cannot load field $self->{dest}{map}.");
+			$self->setError(CANNOT_LOAD_FIELD, "Cannot load field $self->{dest}{map}.");
 			return;
 		} elsif ($@) {
 			die $@;
@@ -149,7 +157,7 @@ sub iterate {
 		} elsif ($self->{done}) {
 			my $destpos = "$self->{dest}{pos}{x},$self->{dest}{pos}{y}";
 			$destpos = "($destpos)" if ($destpos ne "");
-			$self->setError(0, TF("Cannot calculate a route from %s (%d,%d) to %s %s",
+			$self->setError(CANNOT_CALCULATE_ROUTE, TF("Cannot calculate a route from %s (%d,%d) to %s %s",
 				$field->name(), $self->{source}{x}, $self->{source}{y},
 				$self->{dest}{map}, $destpos));
 			debug "CalcMapRoute failed.\n", "route";
