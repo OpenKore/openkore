@@ -78,8 +78,8 @@ sub iterate {
 	Benchmark::end("AI (part 1.1)") if DEBUG;
 	Benchmark::begin("AI (part 1.2)") if DEBUG;
 	processDelayedTeleport();
-	processSit();
-	processStand();
+	processTask("sitting");
+	processTask("standing");
 	AI::Attack::process();
 	Benchmark::end("AI (part 1.2)") if DEBUG;
 	Benchmark::begin("AI (part 1.3)") if DEBUG;
@@ -581,24 +581,6 @@ sub processEscapeUnknownMaps {
 	}
 }
 
-##### SITTING #####
-sub processSit {
-	if (AI::action eq "sitting") {
-		if ($char->{sitting} || $char->{skills}{NV_BASIC}{lv} < 3) {
-			# Stop if we're already sitting
-			AI::dequeue;
-			$timeout{ai_sit}{time} = $timeout{ai_sit_wait}{time} = 0;
-
-		} elsif (!$char->{sitting} && timeOut($timeout{ai_sit}) && timeOut($timeout{ai_sit_wait})) {
-			# Send the 'sit' packet every x seconds until we're sitting
-			$messageSender->sendSit();
-			$timeout{ai_sit}{time} = time;
-
-			look($config{sitAuto_look}) if (defined $config{sitAuto_look});
-		}
-	}
-}
-
 ##### DELAYED-TELEPORT #####
 sub processDelayedTeleport {
 	if (AI::action eq 'teleport') {
@@ -611,20 +593,6 @@ sub processDelayedTeleport {
 			# We are still trying to use the Teleport skill
 			$messageSender->sendSkillUse(26, $char->{skills}{AL_TELEPORT}{lv}, $accountID);
 			$timeout{ai_teleport_retry}{time} = time;
-		}
-	}
-}
-
-##### STANDING #####
-sub processStand {
-	# Same logic as the 'sitting' AI
-	if (AI::action eq "standing") {
-		if (!$char->{sitting}) {
-			AI::dequeue;
-
-		} elsif (timeOut($timeout{ai_sit}) && timeOut($timeout{ai_stand_wait})) {
-			$messageSender->sendStand();
-			$timeout{ai_sit}{time} = time;
 		}
 	}
 }
