@@ -110,9 +110,13 @@ sub iterate {
 	my ($self) = @_;
 	return if (!$self->SUPER::iterate() || $net->getState() != Network::IN_GAME);
 	return if (!$field || !defined $char->{pos_to}{x} || !defined $char->{pos_to}{y});
+
 	# When the CalcMapRouter subtask finishes, a new Route task may be set as subtask.
 	# In that case we don't want to continue or this MapRoute task may end prematurely.
-	return if ($self->getSubtask());
+	#
+	# If the Route task bails out with an error then our subtaskDone() method will set
+	# an error in this task too. In that case we don't want to continue.
+	return if ($self->getSubtask() || $self->getStatus() != Task::RUNNING);
 
 	my @solution;
 	if (@{$self->{mapSolution}} == 0) {

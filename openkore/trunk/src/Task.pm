@@ -169,7 +169,7 @@ sub _assertStatus {
 	}
 
 	my @expectedStatuses = map { _getStatusName($_) } @_;
-	Carp::confess("The current task's status should be one of: (" . join(',',@expectedStatuses) . ")\n" .
+	Carp::confess("The current task's status should be one of: (" . join(',', @expectedStatuses) . ")\n" .
 		"But it's actually: " . _getStatusName($currentStatus) . "\n");
 }
 
