@@ -912,26 +912,16 @@ sub move {
 }
 
 sub sit {
-	$timeout{ai_sit_wait}{time} = time;
-	$timeout{ai_sit}{time} = time;
-
-	AI::clear("sitting", "standing");
-	if ($char->{skills}{NV_BASIC}{lv} >= 3) {
-		AI::queue("sitting");
-		$messageSender->sendSit();
-		Misc::look($config{sitAuto_look}) if (defined $config{sitAuto_look});
-	}
+	require Task::SitStand;
+	my $task = new Task::SitStand(mode => 'sit', wait => $timeout{ai_sit_wait}{timeout});
+	AI::queue("sitting", $task);
+	Misc::look($config{sitAuto_look}) if (defined $config{sitAuto_look});
 }
 
 sub stand {
-	$timeout{ai_stand_wait}{time} = time;
-	$timeout{ai_sit}{time} = time;
-
-	AI::clear("sitting", "standing");
-	if ($char->{skills}{NV_BASIC}{lv} >= 3) {
-		$messageSender->sendStand();
-		AI::queue("standing");
-	}
+	require Task::SitStand;
+	my $task = new Task::SitStand(mode => 'stand', wait => $timeout{ai_stand_wait}{timeout});
+	AI::queue("standing", $task);
 }
 
 sub take {

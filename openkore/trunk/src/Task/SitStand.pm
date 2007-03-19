@@ -25,12 +25,18 @@ use Task;
 use base qw(Task);
 use Globals qw(%timeout $char $messageSender $net);
 use Network;
+use Skills;
 use Translation qw(T);
 use Utils qw(timeOut);
 use Utils::Exceptions;
 
 # Mutexes used by this task.
 use constant MUTEXES => ['movement'];
+
+# Error codes
+use enum qw(NO_SKILL);
+
+# TODO: what about sitAuto_look?
 
 ##
 # Task::SitStand->new(options...)
@@ -55,6 +61,7 @@ sub new {
 	$self->{mode} = $args{mode};
 	$self->{wait}{timeout} = $args{wait};
 	$self->{retry}{timeout} = $timeout{ai_stand_wait}{timeout} || 1;
+	$self->{sitSkill} = new Skills(handle => 'NV_BASIC');
 
 	return $self;
 }
@@ -91,8 +98,8 @@ sub iterate {
 		$self->setDone();
 		$timeout{ai_sit}{time} = $timeout{ai_sit_wait}{time} = 0;
 
-	} elsif ($char->{skills}{NV_BASIC}{lv} < 3) {
-		$self->setError(1, T("Basic Skill level 3 is required in order to sit or stand."));
+	} elsif ($char->getSkillLevel($self->{sitSkill}) < 3) {
+		$self->setError(NO_SKILL, T("Basic Skill level 3 is required in order to sit or stand."));
 
 	} elsif (timeOut($self->{wait}) && timeOut($self->{retry})) {
 		if ($self->{mode} eq 'stand') {
