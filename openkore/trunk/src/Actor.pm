@@ -110,20 +110,19 @@ sub get {
 	assert(defined $ID) if DEBUG;
 
 	if ($ID eq $accountID) {
+		# I put assertions here because $char seems to be unblessed sometimes.
+		assert(defined $char) if DEBUG;
+		assert(UNIVERSAL::isa($char, 'Actor::You')) if DEBUG;
 		return $char;
-	} elsif ($playersList->getByID($ID)) {
-		return $playersList->getByID($ID);
-	} elsif ($monstersList->getByID($ID)) {
-		return $monstersList->getByID($ID);
-	} elsif ($npcsList->getByID($ID)) {
-		return $npcsList->getByID($ID);
-	} elsif ($petsList->getByID($ID)) {
-		return $petsList->getByID($ID);
-	} elsif ($portalsList->getByID($ID)) {
-		return $portalsList->getByID($ID);
-	} elsif (exists $items{$ID}) {
+	} elsif ($items{$ID}) {
 		return $items{$ID};
 	} else {
+		foreach my $list ($playersList, $monstersList, $npcsList, $petsList, $portalsList) {
+			my $actor = $list->getByID($ID);
+			if ($actor) {
+				return $actor;
+			}
+		}
 		return new Actor::Unknown($ID);
 	}
 }
