@@ -84,7 +84,13 @@ sub iterate {
 	Benchmark::end("AI (part 1.2)") if DEBUG;
 	Benchmark::begin("AI (part 1.3)") if DEBUG;
 	processSkillUse();
-	processTask("route");
+	processTask("route", onError => sub {
+		my ($task, $error) = @_;
+		if (!($task->isa('Task::MapRoute') && $error->{code} == Task::MapRoute::TOO_MUCH_TIME())
+		 && !($task->isa('Task::Route') && $error->{code} == Task::Route::TOO_MUCH_TIME())) {
+			error("$error->{message}\n");
+		}
+	});
 	processTake();
 	processMove();
 	Benchmark::end("AI (part 1.3)") if DEBUG;
@@ -730,7 +736,7 @@ sub processSkillUse {
 }
 
 sub processTask {
-	my ($ai_name, $done) = @_;
+	my $ai_name = shift;
 	if (AI::action eq $ai_name) {
 		my $task = AI::args;
 		if ($task->getStatus() == Task::INACTIVE) {
@@ -739,11 +745,16 @@ sub processTask {
 		$task->iterate();
 		if ($task->getStatus() == Task::DONE) {
 			AI::dequeue;
+			my %args = @_;
 			my $error = $task->getError();
 			if ($error) {
-				error("$error->{message}\n");
-			} elsif ($done) {
-				$done->($task);
+				if ($args{onError}) {
+					$args{onError}->($task, $error);
+				} else {
+					error("$error->{message}\n");
+				}
+			} elsif ($args{onSuccess}) {
+				$args{onSuccess}->($task);
 			}
 		}
 	}

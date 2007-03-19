@@ -35,7 +35,12 @@ use Utils::Exceptions;
 
 
 # Error constants.
-use constant TOO_MUCH_TIME => 1;
+use enum qw(
+	TOO_MUCH_TIME
+	CANNOT_CALCULATE_ROUTE
+	CANNOT_LOAD_FIELD
+	UNKNOWN_ERROR
+);
 
 
 ##
@@ -344,24 +349,50 @@ sub initMapCalculator {
 
 sub subtaskDone {
 	my ($self, $task) = @_;
-	if ($task->isa('Task::CalcMapRoute') && !$task->getError()) {
-		$self->{mapSolution} = $task->getRoute();
-		if (@{$self->{mapSolution}} == 0) {
-			# The map solution is empty, meaning that the destination
-			# is on the same map and that we can walk there directly.
-			my $task = new Task::Route(
-				x => $self->{dest}{pos}{x},
-				y => $self->{dest}{pos}{y},
-				maxTime => $self->{maxTime},
-				avoidWalls => $self->{avoidWalls},
-				distFromGoal => $self->{distFromGoal},
-				pyDistFromGoal => $self->{pyDistFromGoal}
-			);
-			$self->setSubtask($task);
+	if ($task->isa('Task::CalcMapRoute')) {
+		my $error = $task->getError();
+		if ($error) {
+			my $code;
+			if ($error->{code} == Task::CalcMapRoute::CANNOT_LOAD_FIELD) {
+				$code = CANNOT_LOAD_FIELD;
+			} elsif ($error->{code} == Task::CalcMapRoute::CANNOT_CALCULATE_ROUTE) {
+				$code = CANNOT_CALCULATE_ROUTE;
+			}
+			$self->setError($code, $error->{message});
+
+		} else {
+			$self->{mapSolution} = $task->getRoute();
+			if (@{$self->{mapSolution}} == 0) {
+				# The map solution is empty, meaning that the destination
+				# is on the same map and that we can walk there directly.
+				my $task = new Task::Route(
+					x => $self->{dest}{pos}{x},
+					y => $self->{dest}{pos}{y},
+					maxTime => $self->{maxTime},
+					avoidWalls => $self->{avoidWalls},
+					distFromGoal => $self->{distFromGoal},
+					pyDistFromGoal => $self->{pyDistFromGoal}
+				);
+				$self->setSubtask($task);
+			}
+		}
+
+	} elsif ($task->isa('Task::Route')) {
+		my $error = $task->getError();
+		if ($error) {
+			my $code;
+			if ($error->{code} == Task::Route::TOO_MUCH_TIME) {
+				$code = TOO_MUCH_TIME;
+			} elsif ($error->{code} == Task::Route::CANNOT_CALCULATE_ROUTE) {
+				$code = CANNOT_CALCULATE_ROUTE;
+			} else {
+				$code = UNKNOWN_ERROR;
+			}
+			$self->setError($code, $error->{message});
 		}
 
 	} elsif (my $error = $task->getError()) {
-		$self->setError(1234, $error->{message});
+		$self->setError(UNKNOWN_ERROR, $error->{message});
 	}
 }
 
