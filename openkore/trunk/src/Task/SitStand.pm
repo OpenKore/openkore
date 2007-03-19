@@ -36,8 +36,6 @@ use constant MUTEXES => ['movement'];
 # Error codes
 use enum qw(NO_SKILL);
 
-# TODO: what about sitAuto_look?
-
 ##
 # Task::SitStand->new(options...)
 #
