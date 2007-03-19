@@ -12,6 +12,13 @@
 # This task allows you to follow an actor (the target). This task will
 # continue infinitely until you stop it, or until the target has
 # disappeared from our sight.
+#
+# Note that this task does not handle situations where the target has entered
+# a portal. It also does not look up the target's coordinate using the party
+# list, of the target is a player who's in the party. This task is specialized
+# in following a single actor within the same map. More advanced follow
+# abilities should be implemented by a different task (TODO: write such a
+# task).
 package Task::FollowActor;
 
 use strict;
