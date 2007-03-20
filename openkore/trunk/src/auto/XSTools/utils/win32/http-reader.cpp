@@ -22,6 +22,8 @@ private:
 	HINTERNET connectHandle;
 	HINTERNET openHandle;
 	HANDLE threadHandle;
+	char *postData;
+	int postDataSize;
 	CRITICAL_SECTION lock;
 	std::string downloadBuffer;
 	HttpReaderStatus status;
@@ -245,8 +247,9 @@ public:
 		}
 
 		if (postData != NULL) {
-			if (!HttpAddRequestHeaders(connectHandle, "Content-Type: application/x-www-form-urlencoded\r\n",
-			    -1, HTTP_ADDREQ_FLAG_REPLACE | HTTP_ADDREQ_FLAG_ADD)) {
+			const char *header = "Content-Type: application/x-www-form-urlencoded\r\n";
+			if (!HttpAddRequestHeaders(openHandle, header, strlen(header),
+			    HTTP_ADDREQ_FLAG_REPLACE | HTTP_ADDREQ_FLAG_ADD)) {
 				error = "Cannot add Content-Type HTTP request header.";
 				return;
 			}
