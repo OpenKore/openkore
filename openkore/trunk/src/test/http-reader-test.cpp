@@ -39,27 +39,36 @@ using namespace OpenKore;
 
 
 typedef HttpReader * (*HttpReaderCreator) (const char *url);
+typedef HttpReader * (*HttpReaderPostCreator) (const char *url, const char *postData, int postDataSize);
 
-#define SMALL_TEST_URL "http://www.openkore.com/misc/testHttpReader.txt"
+#define SMALL_TEST_URL "http://www.openkore.com/test/HttpReader.txt"
 #define SMALL_TEST_CONTENT "Hello world!\n"
 #define SMALL_TEST_SIZE 13
 #define SMALL_TEST_CHECKSUM 2773980202U
 
-#define LARGE_TEST_URL "http://www.openkore.com:80/misc/testHttpReaderLarge.txt"
+#define LARGE_TEST_URL "http://www.openkore.com:80/test/HttpReaderLarge.txt"
 #define LARGE_TEST_SIZE 74048
 #define LARGE_TEST_CHECKSUM 1690026430U
 
 #define SLOW_TEST_URL "http://kambing.vlsm.org/gnu/gcc/gcc-4.1.0/gcc-core-4.1.0.tar.bz2"
 
-#define ERROR_URL "http://www.openkore.com/FileNotFound.txt"
+#define ERROR_URL "http://www.openkore.com/test/FileNotFound.txt"
 #define INVALID_URL "http://111.111.111.111:82/"
 #define INVALID_URL2 "http://www.fooooooo.com"
 #define SECURE_URL "https://sourceforge.net"
+
+#define POST_TEST_URL "http://www.openkore.com/test/TestPost.php"
+#define POST_TEST_DATA "mydata=hello+world"
 
 
 static HttpReader *
 createStdHttpReader(const char *url) {
 	return StdHttpReader::create(url);
+}
+
+static HttpReader *
+createStdHttpReaderPost(const char *url, const char *postData, int postDataSize) {
+	return StdHttpReader::createAndPost(url, postData, postDataSize);
 }
 
 static HttpReader *
@@ -81,8 +90,9 @@ public:
 	 * @param creatorFunc  A function which creates a HttpReader instance.
 	 * @require creatorFunc != NULL
 	 */
-	Tester(HttpReaderCreator creatorFunc) {
+	Tester(HttpReaderCreator creatorFunc, HttpReaderPostCreator creatorPostFunc) {
 		this->createHttpReader = creatorFunc;
+		this->createHttpReaderPost = creatorPostFunc;
 	}
 
 	virtual ~Tester() {}
@@ -118,6 +128,11 @@ public:
 		printf("Testing pullData (4)...\n");
 		assert( !testPullData(INVALID_URL2, 0, 0) );
 
+		if (createHttpReaderPost != NULL) {
+			printf("Testing POST...\n");
+			testPOST(POST_TEST_URL, POST_TEST_DATA);
+		}
+
 		printf("Testing cancellation while connecting (1)...\n");
 		testConnectCancellation(INVALID_URL);
 		printf("Testing cancellation while connecting (2)...\n");
@@ -140,6 +155,7 @@ protected:
 
 private:
 	HttpReaderCreator createHttpReader;
+	HttpReaderPostCreator createHttpReaderPost;
 
 protected:
 	// Test whether status transitions behave as documented.
@@ -295,6 +311,21 @@ protected:
 		time2 = time(NULL);
 		assert(time1 + 2 > time2);
 	}
+
+	void testPOST(const char *url, const char *data) {
+		HttpReader *http = createHttpReaderPost(url, data, -1);
+		while (http->getStatus() != HTTP_READER_DONE
+		    && http->getStatus() != HTTP_READER_ERROR) {
+			Sleep(10);
+		}
+
+		assert(http->getStatus() == HTTP_READER_DONE);
+
+		unsigned int downloadedLen = 0;
+		const char *downloadedData = http->getData(downloadedLen);
+		assert(strcmp(downloadedData, "yes") == 0);
+		delete http;
+	}
 };
 
 /**
@@ -302,7 +333,7 @@ protected:
  */
 class MirrorTester: public Tester {
 public:
-	MirrorTester() : Tester(createMirrorHttpReader) {
+	MirrorTester() : Tester(createMirrorHttpReader, NULL) {
 	}
 
 	virtual void
@@ -371,7 +402,7 @@ main() {
 	Tester *tester;
 
 	printf("### StdHttpReader\n");
-	tester = new Tester(createStdHttpReader);
+	tester = new Tester(createStdHttpReader, createStdHttpReaderPost);
 	tester->run();
 	delete tester;
 
