@@ -111,7 +111,7 @@ sub iterate {
 			$self->{dest}{field} = new Field(name => $self->{dest}{map});
 		};
 		if (caught('FileNotFoundException', 'IOException')) {
-			$self->setError(CANNOT_LOAD_FIELD, "Cannot load field $self->{dest}{map}.");
+			$self->setError(CANNOT_LOAD_FIELD, TF("Cannot load field '%s'.", $self->{dest}{map}));
 			return;
 		} elsif ($@) {
 			die $@;

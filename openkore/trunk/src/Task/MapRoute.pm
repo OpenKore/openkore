@@ -35,12 +35,23 @@ use Utils::Exceptions;
 
 
 # Error constants.
-use enum qw(
-	TOO_MUCH_TIME
+use enum (
+	# Routing errors
+	qw(TOO_MUCH_TIME
 	CANNOT_CALCULATE_ROUTE
-	CANNOT_LOAD_FIELD
-	UNKNOWN_ERROR
+	CANNOT_LOAD_FIELD),
+
+	# NPC errors
+	qw(NPC_NOT_FOUND
+	NPC_NO_RESPONSE
+	NO_SHOP_ITEM
+	WRONG_NPC_INSTRUCTIONS),
+
+	qw(UNKNOWN_ERROR)
 );
+
+
+# TODO: this task should lock the 'npc' mutex when talking to NPCs!
 
 
 ##
@@ -385,6 +396,24 @@ sub subtaskDone {
 				$code = TOO_MUCH_TIME;
 			} elsif ($error->{code} == Task::Route::CANNOT_CALCULATE_ROUTE) {
 				$code = CANNOT_CALCULATE_ROUTE;
+			} else {
+				$code = UNKNOWN_ERROR;
+			}
+			$self->setError($code, $error->{message});
+		}
+
+	} elsif ($task->isa('Task::TalkNPC')) {
+		my $error = $task->getError();
+		if ($error) {
+			my $code;
+			if ($error->{code} == Task::TalkNPC::NPC_NOT_FOUND) {
+				$code = NPC_NOT_FOUND;
+			} elsif ($error->{code} == Task::TalkNPC::NPC_NO_RESPONSE) {
+				$code = NPC_NO_RESPONSE;
+			} elsif ($error->{code} == Task::TalkNPC::NO_SHOP_ITEM) {
+				$code = NO_SHOP_ITEM;
+			} elsif ($error->{code} == Task::TalkNPC::WRONG_NPC_INSTRUCTIONS) {
+				$code = WRONG_NPC_INSTRUCTIONS;
 			} else {
 				$code = UNKNOWN_ERROR;
 			}
