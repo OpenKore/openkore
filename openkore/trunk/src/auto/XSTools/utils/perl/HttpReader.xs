@@ -68,10 +68,21 @@ CODE:
 	StdHttpReader::init();
 
 StdHttpReader *
-StdHttpReader::new(url)
+StdHttpReader::new(url, postData = NULL)
 	char *url
+	SV *postData
 CODE:
-	RETVAL = StdHttpReader::create(url);
+	if (postData == NULL) {
+		RETVAL = StdHttpReader::create(url);
+	} else if (!SvOK(postData)) {
+		croak("Invalid postData parameter.");
+	} else {
+		char *postDataString;
+		STRLEN len;
+
+		postDataString = SvPV(postData, len);
+		RETVAL = StdHttpReader::createAndPost(url, postDataString, len);
+	}
 OUTPUT:
 	RETVAL
 
