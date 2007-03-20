@@ -55,7 +55,7 @@ namespace OpenKore {
 	}
 
 	StdHttpReader *
-	createAndPost(const char *url,
+	StdHttpReader::createAndPost(const char *url,
 		      const char *postData,
 		      int postDataSize,
 		      const char *userAgent) {

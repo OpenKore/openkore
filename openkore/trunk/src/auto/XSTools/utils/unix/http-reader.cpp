@@ -165,6 +165,7 @@ public:
 			this->postData = (char *) malloc(postDataSize);
 			if (this->postData != NULL) {
 				memcpy(this->postData, postData, postDataSize);
+				this->postDataSize = postDataSize;
 			} else {
 				error = "Cannot allocate memory for POST data.";
 				return;
