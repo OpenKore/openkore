@@ -1151,14 +1151,15 @@ master_version 17
 version 254833758
 serverType 0
 
-## http://mobro.mob-games.com/
-[mobRO Private Server]
-ip 70.85.57.103
-port 6901
-version 0
-master_version 18
-serverType 5
-serverEncoding Western
+## http://minorityro.com/
+[MinorityRO Private Server]
+ip 85.214.60.32
+port 6900
+master_version 0
+version 20
+secureLogin 0
+chatLangCode 0
+serverType 0
 
 ## http://www.mysticalro.tk/
 [MysticalRO Private Server]
