@@ -37,6 +37,8 @@ private:
 
 	/** @invariant url != NULL */
 	char *url;
+	char *postData;
+	int postDataSize;
 	/** @invariant userAgent != NULL */
 	char *userAgent;
 	bool mutexInitialized;
@@ -83,6 +85,11 @@ private:
 			curl_easy_setopt(self->handle, CURLOPT_WRITEFUNCTION, writeCallback);
 			curl_easy_setopt(self->handle, CURLOPT_WRITEDATA, self);
 			curl_easy_setopt(self->handle, CURLOPT_FAILONERROR, 1);
+			if (self->postData != NULL) {
+				curl_easy_setopt(self->handle, CURLOPT_POST, 1);
+				curl_easy_setopt(self->handle, CURLOPT_POSTFIELDS, self->postData);
+				curl_easy_setopt(self->handle, CURLOPT_POSTFIELDSIZE, self->postDataSize);
+			}
 
 			if (curl_easy_perform(self->handle) == 0) {
 				self->lock();
@@ -122,9 +129,10 @@ private:
 	}
 
 public:
-	Private(const char *url, const char *userAgent) {
+	Private(const char *url, const char *postData, int postDataSize, const char *userAgent) {
 		refCount = 1;
 		this->url = NULL;
+		this->postData = NULL;
 		this->userAgent = NULL;
 		handle = NULL;
 		status = HTTP_READER_ERROR;
@@ -134,11 +142,9 @@ public:
 			error = "Cannot initialize mutex.";
 			mutexInitialized = false;
 			return;
+		} else {
+			mutexInitialized = true;
 		}
-
-		mutexInitialized = true;
-		this->url = strdup(url);
-		this->userAgent = strdup(userAgent);
 
 		pthread_attr_t attr;
 		if (pthread_attr_init(&attr) != 0) {
@@ -150,6 +156,21 @@ public:
 			error = "Cannot set thread attribute to detached.";
 			return;
 		}
+
+		this->url = strdup(url);
+		if (postData != NULL) {
+			if (postDataSize == -1) {
+				postDataSize = strlen(postData);
+			}
+			this->postData = (char *) malloc(postDataSize);
+			if (this->postData != NULL) {
+				memcpy(this->postData, postData, postDataSize);
+			} else {
+				error = "Cannot allocate memory for POST data.";
+				return;
+			}
+		}
+		this->userAgent = strdup(userAgent);
 
 		status = HTTP_READER_CONNECTING;
 		error = NULL;
@@ -167,6 +188,8 @@ public:
 	~Private() {
 		if (url != NULL)
 			free(url);
+		if (postData != NULL)
+			free(postData);
 		if (userAgent != NULL)
 			free(userAgent);
 		if (handle != NULL)
@@ -289,8 +312,10 @@ private:
 	Private *priv;
 public:
 	UnixHttpReader(const char *url,
+		       const char *postData,
+		       int postDataSize,
 		       const char *userAgent) {
-		priv = new Private(url, userAgent);
+		priv = new Private(url, postData, postDataSize, userAgent);
 	}
 
 	~UnixHttpReader() {

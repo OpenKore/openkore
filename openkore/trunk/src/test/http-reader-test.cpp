@@ -53,7 +53,7 @@ typedef HttpReader * (*HttpReaderCreator) (const char *url);
 
 #define ERROR_URL "http://www.openkore.com/FileNotFound.txt"
 #define INVALID_URL "http://111.111.111.111:82/"
-#define INVALID_URL2 "http://www.foooooo.com"
+#define INVALID_URL2 "http://www.fooooooo.com"
 #define SECURE_URL "https://sourceforge.net"
 
 
