@@ -41,7 +41,11 @@ use Utils qw(timeOut);
 use Utils::Exceptions;
 
 # Error constants.
-use constant TOO_LONG => 1;
+use enum qw(
+	TOO_LONG
+	NO_SIT_STAND_SKILL
+	UNKNOWN_ERROR
+);
 
 # Mutexes used by this task.
 use constant MUTEXES => Task::SitStand::MUTEXES;
@@ -155,6 +159,19 @@ sub subtaskDone {
 		$self->{start_time} = time;
 		$self->{giveup}{time} = time;
 	}
+}
+
+# Overrided method.
+sub translateSubtaskError {
+	my ($self, $task, $error) = @_;
+	my $code;
+	if ($task->isa('Task::SitStand') && $error->{code} == Task::SitStand::NO_SIT_STAND_SKILL) {
+		$code = NO_SIT_STAND_SKILL;
+	}
+	if (!defined $code) {
+		$code = UNKNOWN_ERROR;
+	}
+	return { code => $code, message => $error->{message} };
 }
 
 sub mapChanged {

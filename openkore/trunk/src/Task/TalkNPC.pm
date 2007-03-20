@@ -31,10 +31,12 @@ use Plugins;
 use Translation qw(T TF);
 
 # Error codes:
-use constant NPC_NOT_FOUND => 1;
-use constant NPC_NO_RESPONSE => 2;
-use constant NO_SHOP_ITEM => 3;
-use constant WRONG_INSTRUCTIONS => 4;
+use enum qw(
+	NPC_NOT_FOUND
+	NPC_NO_RESPONSE
+	NO_SHOP_ITEM
+	WRONG_NPC_INSTRUCTIONS
+);
 
 # Mutexes used by this task.
 use constant MUTEXES => ['npc'];
@@ -200,9 +202,9 @@ sub iterate {
 			if ($npcTalkType eq 'next') {
 				$messageSender->sendTalkContinue($self->{ID});
 			} else {
-				$self->setError(WRONG_INSTRUCTIONS,
-					"According to the instructions, the Next button " .
-					"must now be clicked on, but that's not possible.");
+				$self->setError(WRONG_NPC_INSTRUCTIONS,
+					T("According to the given NPC instructions, the Next button " .
+					"must now be clicked on, but that's not possible."));
 				$self->cancelTalk();
 			}
 
@@ -213,16 +215,16 @@ sub iterate {
 				if ($choice < @{$talk{responses}} - 1) {
 					$messageSender->sendTalkResponse($self->{ID}, $choice + 1);
 				} else {
-					$self->setError(WRONG_INSTRUCTIONS,
-						"According to the instructions, menu item $choice must " .
-						"now be selected, but there are only " .
-						(@{$talk{responses}} - 1) . " menu items.");
+					$self->setError(WRONG_NPC_INSTRUCTIONS,
+						TF("According to the given NPC instructions, menu item %d must " .
+						"now be selected, but there are only %d menu items.",
+						$choice, @{$talk{responses}} - 1));
 					$self->cancelTalk();
 				}
 			} else {
-				$self->setError(WRONG_INSTRUCTIONS,
-					"According to the instructions, a menu item " .
-					"must now be selected, but that's not possible.");
+				$self->setError(WRONG_NPC_INSTRUCTIONS,
+					T("According to the given NPC instructions, a menu item " .
+					"must now be selected, but that's not possible."));
 				$self->cancelTalk();
 			}
 

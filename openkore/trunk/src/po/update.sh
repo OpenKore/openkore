@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # This script extracts strings from the OpenKore source code,
 # updates openkore.pot and *.po, and compiles *.po to .mo.
 set -e
@@ -6,7 +6,7 @@ set -e
 LANGUAGES="tl id pt zh_CN zh th ko"
 
 echo "Extracting messages from source..."
-xgettext -L perl --force-po -o openkore.pot --keyword=T --keyword=TF \
+xgettext -L Perl --force-po -o openkore.pot --keyword=T --keyword=TF \
 	--add-comments='Translation Comment:' \
 	../*.pm \
 	../Network/*.pm \
@@ -14,8 +14,9 @@ xgettext -L perl --force-po -o openkore.pot --keyword=T --keyword=TF \
 	../Network/Send/*.pm \
 	../Poseidon/EmbedServer.pm \
 	../AI/*.pm \
+	../Task/*.pm \
 	../../openkore.pl \
-	../functions.pl \
+	../functions.pl
 
 sed 's/charset=CHARSET/charset=UTF-8/; s/^# SOME DESCRIPTIVE TITLE\.$/# LANGUAGE translation for OpenKore/; s/# This file is distributed under the same license as the PACKAGE package\./# This file is distributed under the same license as OpenKore./' openkore.pot > openkore.pot.2
 mv openkore.pot.2 openkore.pot

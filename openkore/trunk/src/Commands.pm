@@ -3491,6 +3491,7 @@ sub cmdStatAdd {
 }
 
 sub cmdStats {
+	my $guildName = $char->{guild} ? $char->{guild}{name} : T("None");
 	my $msg = swrite(TF(
 		"---------- Char Stats ----------\n" .
 		"Str: \@<<+\@<< #\@< Atk:  \@<<+\@<< Def:  \@<<+\@<<\n" .
@@ -3508,7 +3509,7 @@ sub cmdStats {
 	$char->{'vit'}, $char->{'vit_bonus'}, $char->{'points_vit'}, $char->{'hit'}, $char->{'flee'}, $char->{'flee_bonus'},
 	$char->{'int'}, $char->{'int_bonus'}, $char->{'points_int'}, $char->{'critical'}, $char->{'attack_speed'},
 	$char->{'dex'}, $char->{'dex_bonus'}, $char->{'points_dex'}, $char->{'points_free'},
-	$char->{'luk'}, $char->{'luk_bonus'}, $char->{'points_luk'}, $char->{guild} ? $char->{guild}{name} : T("None"),
+	$char->{'luk'}, $char->{'luk_bonus'}, $char->{'points_luk'}, $guildName,
 	"$haircolors{$char->{hair_color}} ($char->{hair_color})"]);
 	
 	$msg .= T("You are sitting.\n") if ($char->{sitting});

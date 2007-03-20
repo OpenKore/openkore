@@ -137,6 +137,7 @@ sub iterate {
 			_restoreMutexes($self);
 			delete $self->{ST_subtask};
 			if ($self->{ST_autofail} && ($error = $task->getError())) {
+				$error = $self->translateSubtaskError($task, $error);
 				$self->setError($error->{code}, $error->{message});
 				# We already set the current task's status to DONE,
 				# so we don't want the child class's iterate() method
@@ -221,6 +222,25 @@ sub subtaskDone {
 #
 # Called when a subtask is stopped by Task::WithSubtask.
 sub subtaskStopped {
+}
+
+##
+# Hash* $Task_WithSubtask->translateSubtaskError(Task subtask, Hash* error)
+# subtask: The subtask that finished with an error.
+# error: The subtask's error hash.
+# Returns: A new error hash.
+# Ensures: defined(result)
+#
+# When 'autofail' is turned on, Task::WithSubtask will set the error code and
+# error message of this task to the same value as the error code/message of the
+# subtask. If that is not what you want, then you can override that behavior
+# by overriding this method.
+#
+# This method allows you to specify how a subtask's error should be translated
+# into an error for this task.
+sub translateSubtaskError {
+	my ($self, $task, $error) = @_;
+	return $error;
 }
 
 # If this method is called then it means automutex is on.

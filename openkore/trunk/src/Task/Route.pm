@@ -38,8 +38,6 @@ use Utils::Exceptions;
 use Utils::Set;
 use Utils::PathFinding;
 
-# TODO: this task should lock the 'npc' mutex when talking to NPCs!
-
 # Error code constants.
 use enum qw(
 	TOO_MUCH_TIME
@@ -252,7 +250,7 @@ sub iterate {
 				}
 
 			} elsif (!$wasZero) {
-				# FIXME: this looks ugly!
+				# FIXME: this code looks ugly!
 				# We're stuck
 				my $msg = TF("Stuck at %s (%d,%d), while walking from (%d,%d) to (%d,%d).",
 					$field->name(), $char->{pos_to}{x}, $char->{pos_to}{y},

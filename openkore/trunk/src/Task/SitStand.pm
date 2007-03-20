@@ -34,7 +34,7 @@ use Utils::Exceptions;
 use constant MUTEXES => ['movement'];
 
 # Error codes
-use enum qw(NO_SKILL);
+use enum qw(NO_SIT_STAND_SKILL);
 
 ##
 # Task::SitStand->new(options...)
@@ -97,7 +97,7 @@ sub iterate {
 		$timeout{ai_sit}{time} = $timeout{ai_sit_wait}{time} = 0;
 
 	} elsif ($char->getSkillLevel($self->{sitSkill}) < 3) {
-		$self->setError(NO_SKILL, T("Basic Skill level 3 is required in order to sit or stand."));
+		$self->setError(NO_SIT_STAND_SKILL, T("Basic Skill level 3 is required in order to sit or stand."));
 
 	} elsif (timeOut($self->{wait}) && timeOut($self->{retry})) {
 		if ($self->{mode} eq 'stand') {
