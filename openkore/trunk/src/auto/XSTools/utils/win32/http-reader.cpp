@@ -114,7 +114,7 @@ private:
 
 		// Send HTTP request
 		self->status = HTTP_READER_CONNECTING;
-		if (!HttpSendRequest(self->openHandle, NULL, 0, NULL, 0)) {
+		if (!HttpSendRequest(self->openHandle, NULL, 0, self->postData, self->postDataSize)) {
 			EnterCriticalSection(&self->lock);
 			self->status = HTTP_READER_ERROR;
 			self->error = "Unable to send a HTTP request.";
@@ -183,12 +183,16 @@ private:
 
 public:
 	WinHttpReader(const char *url,
+		      const char *postData,
+		      int postDataSize,
 		      const char *userAgent) {
 		connectHandle = NULL;
 		openHandle = NULL;
 		threadHandle = NULL;
 		status = HTTP_READER_ERROR;
 		size = -2;
+		this->postData = NULL;
+		this->postDataSize = 0;
 
 		InitializeCriticalSection(&lock);
 
@@ -200,7 +204,7 @@ public:
 		}
 
 		INTERNET_SCHEME scheme;
-		char *host, *uri;
+		char *host, *uri, *method;
 		unsigned short port;
 
 		if (!splitURL(url, scheme, &host, port, &uri)) {
@@ -226,13 +230,35 @@ public:
 		if (scheme == INTERNET_SCHEME_HTTPS) {
 			flags |= INTERNET_FLAG_SECURE;
 		}
-		openHandle = HttpOpenRequest(connectHandle, "GET", uri, "HTTP/1.1",
+		if (postData == NULL) {
+			method = "GET";
+		} else {
+			method = "POST";
+		}
+		openHandle = HttpOpenRequest(connectHandle, method, uri, "HTTP/1.1",
 					     NULL, NULL, flags, 0);
 		free(host);
 		free(uri);
 		if (openHandle == NULL) {
 			error = "Cannot open a HTTP request.";
 			return;
+		}
+
+		if (postData != NULL) {
+			if (!HttpAddRequestHeaders(connectHandle, "Content-Type: application/x-www-form-urlencoded\r\n",
+			    -1, HTTP_ADDREQ_FLAG_REPLACE | HTTP_ADDREQ_FLAG_ADD)) {
+				error = "Cannot add Content-Type HTTP request header.";
+				return;
+			}
+			if (postDataSize == -1) {
+				this->postDataSize = postDataSize = strlen(postData);
+			}
+			this->postData = (char *) malloc(postDataSize);
+			if (this->postData == NULL) {
+				error = "Cannot allocate memory for HTTP POST data.";
+				return;
+			}
+			memcpy(this->postData, postData, postDataSize);
 		}
 
 		status = HTTP_READER_CONNECTING;
@@ -258,6 +284,8 @@ public:
 			WaitForSingleObject(threadHandle, INFINITE);
 			CloseHandle(threadHandle);
 		}
+		if (this->postData != NULL)
+			free(this->postData);
 	}
 
 	virtual HttpReaderStatus

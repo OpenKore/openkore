@@ -51,7 +51,19 @@ namespace OpenKore {
 			      const char *userAgent) {
 		assert(url != NULL);
 		assert(userAgent != NULL);
-		return new NativeHttpReader(url, userAgent);
+		return new NativeHttpReader(url, NULL, -1, userAgent);
+	}
+
+	StdHttpReader *
+	createAndPost(const char *url,
+		      const char *postData,
+		      int postDataSize,
+		      const char *userAgent) {
+		assert(url != NULL);
+		assert(postData != NULL);
+		assert(postDataSize >= -1);
+		assert(userAgent != NULL);
+		return new NativeHttpReader(url, postData, postDataSize, userAgent);
 	}
 
 	char *
@@ -59,7 +71,7 @@ namespace OpenKore {
 				const char *userAgent) {
 		assert(url != NULL);
 		assert(userAgent != NULL);
-		NativeHttpReader http(url, userAgent);
+		NativeHttpReader http(url, NULL, -1, userAgent);
 
 		HttpReaderStatus status = http.getStatus();
 		while (status != HTTP_READER_DONE && status != HTTP_READER_ERROR) {
