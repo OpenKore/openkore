@@ -62,6 +62,31 @@ namespace OpenKore {
 				      const char *userAgent = DEFAULT_USER_AGENT);
 
 		/**
+		 * Create a new StdHttpReader object in HTTP POST mode. It will start
+		 * posting the given data, after which it will start downloading.
+		 *
+		 * Before calling this function, you must have called init()
+		 * exactly once.
+		 *
+		 * @param url          The HTTP request URL.
+		 * @param postData     The data to post to the server. This MUST be a
+		 *                     valid urlencoded string.
+		 * @param postDataSize The size of _postData_, or -1 to automatically
+		 *                     calculate the length with strlen().
+		 * @param userAgent    The useragent string to use.
+		 * @require
+		 *     url != NULL
+		 *     postData != NULL
+		 *     postDataSize >= -1
+		 *     userAgent != NULL
+		 *     init() must have been called.
+		 */
+		static StdHttpReader *createAndPost(const char *url,
+				      const char *postData,
+				      int postDataSize = -1,
+				      const char *userAgent = DEFAULT_USER_AGENT);
+
+		/**
 		 * Convenience function for synchronously downloading
 		 * a file.
 		 *
