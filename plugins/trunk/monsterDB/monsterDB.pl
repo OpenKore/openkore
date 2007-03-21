@@ -275,7 +275,7 @@ sub monsterEquip {
 			foreach $slot (%equipSlot_lut) {
 				if ($config{"monsterEquip_${i}_equip_$slot"}
 				&& !$equip_list{"attackEquip_$slot"}
-				&& defined Item::get($config{"monsterEquip_${i}_equip_$slot"})) {
+				&& defined Actor::Item::get($config{"monsterEquip_${i}_equip_$slot"})) {
 					$equip_list{"attackEquip_$slot"} = $config{"monsterEquip_${i}_equip_$slot"};
 					debug "monsterDB: using ".$config{"monsterEquip_${i}_equip_$slot"}."\n",'monsterDB';
 				}
@@ -285,7 +285,7 @@ sub monsterEquip {
 	foreach (keys %equip_list) {
 		$config{$_} = $equip_list{$_};
 	}
-	Item::scanConfigAndEquip('attackEquip');
+	Actor::Item::scanConfigAndEquip('attackEquip');
 }
 
 1;
