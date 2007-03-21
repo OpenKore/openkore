@@ -45,6 +45,8 @@ use enum qw(
 	UNEXPECTED_STATE
 );
 
+# TODO: Add Homunculus support
+
 
 ##
 # Task::Route->new(options...)
@@ -344,7 +346,7 @@ sub iterate {
 }
 
 ##
-# Task::Route->getRoute(Array* solution, Field field, Hash* start, Hash* dest, [boolean avoidWalls = true])
+# boolean Task::Route->getRoute(Array* solution, Field field, Hash* start, Hash* dest, [boolean avoidWalls = true])
 # $solution: The route solution will be stored in here.
 # field: the field on which a route must be calculated.
 # start: The is the start coordinate.
