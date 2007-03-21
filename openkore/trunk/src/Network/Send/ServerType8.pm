@@ -40,7 +40,7 @@ sub sendAttack {
 		return;
 	}
 
-	my $msg = pack("C*", 0x90, 0x01, 0x00) . $monID . pack("C*",0x00, $flag); 
+	my $msg = pack("C*", 0x90, 0x01) . pack("x7") . $monID . pack("x9 C1", $flag);
 	$self->sendToServer($msg);
 	debug "Sent attack: ".getHex($monID)."\n", "sendPacket", 2;
 }
@@ -60,37 +60,34 @@ sub sendChat {
 
 sub sendDrop {
 	my ($self, $index, $amount) = @_;
-	my $msg = pack("C*", 0x16, 0x01) . pack("x10") .
-			pack("v*", $index) .
-			pack("x3") .
-			pack("v*", $amount);
+	
+	my $msg = pack("C*", 0x16, 0x01) . pack("x4") .pack("v*", $index) . pack("x7") . pack("v*", $amount);
 	$self->sendToServer($msg);
 	debug "Sent drop: $index x $amount\n", "sendPacket", 2;
 }
 
 sub sendGetPlayerInfo {
 	my ($self, $ID) = @_;
-	my $msg = pack("v1 x4", 0x8c) . $ID;
-
+	
+	my $msg = pack("C*", 0x8c, 0x00) . pack("x8") . $ID;
+	
 	$self->sendToServer($msg);
 	debug "Sent get player info: ID - ".getHex($ID)."\n", "sendPacket", 2;
 }
 
 sub sendItemUse {
 	my ($self, $ID, $targetID) = @_;
-	my $msg = pack("C*", 0x9f, 0x00) . pack("x8") .
-			pack("v*", $ID) .
-			pack("x2") .
-			$targetID;
+	
+	my $msg = pack("C*", 0x9f, 0x00) . pack("x5") . pack("v*", $ID) . pack("x7") . $targetID;
+
 	$self->sendToServer($msg);
 	debug "Item Use: $ID\n", "sendPacket", 2;
 }
 
 sub sendLook {
 	my ($self, $body, $head) = @_;
-	my $msg = pack("C*", 0x85, 0x00) . pack("x6") . 
-			pack("C*", $head, 0x00) . pack("x6") . 
-			pack("C*", 0x00, $body);
+	
+	my $msg = pack("C*", 0x85, 0x00) . pack("x2") . pack("C*", $head) . pack("x4") . pack("C*", $body);
 
 	$self->sendToServer($msg);
 	debug "Sent look: $body $head\n", "sendPacket", 2;
@@ -101,15 +98,9 @@ sub sendLook {
 sub sendMapLogin {
 	my ($self, $accountID, $charID, $sessionID, $sex) = @_;
 	$sex = 0 if ($sex > 1 || $sex < 0); # Sex can only be 0 (female) or 1 (male)
-	my $msg = pack("C*", 0x9b, 0) .
-			pack("x8") .
-			$accountID .
-			pack("x3") .
-			$charID .
-			pack("x2") . 
-			$sessionID .
-			pack("V", getTickCount()) .
-			pack("C*", $sex);
+	
+	my $msg = pack("C*", 0x9b, 0) . pack("x5") .$accountID . pack("x4") . $charID . pack("x6") . $sessionID . pack("V", getTickCount()) . pack("C*", $sex);
+
 	$self->sendToServer($msg);
 }
 
@@ -117,8 +108,9 @@ sub sendMove {
 	my $self = shift;
 	my $x = int scalar shift;
 	my $y = int scalar shift;
-	my $msg = pack("C*", 0xA7, 0x00) . pack("x8") .
-		getCoordString($x, $y);
+	
+	my $msg = pack("C*", 0xA7, 0x00) . pack("x3") . getCoordString($x, $y);
+
 	$self->sendToServer($msg);
 	debug "Sent move to: $x, $y\n", "sendPacket", 2;
 }
@@ -135,11 +127,29 @@ sub sendSit {
 		return;
 	}
 	
-	my $msg = pack("C2 x6 C1", 0x90, 0x01, 0x02);
+	my $msg = pack("C2 x20 C1", 0x90, 0x01, 0x02);
+
 	$self->sendToServer($msg);
 	debug "Sitting\n", "sendPacket", 2;
 
 
+}
+
+sub sendStand {
+	my $self = shift;
+
+	my %args;
+	$args{flag} = 3;
+	Plugins::callHook('packet_pre/sendStand', \%args);
+	if ($args{return}) {
+		$self->sendToServer($args{msg});
+		return;
+	}	
+	
+	my $msg = pack("C2 x20 C1", 0x90, 0x01, 0x03);
+
+	$self->sendToServer($msg);
+	debug "Standing\n", "sendPacket", 2;
 }
 
 sub sendSkillUse {
@@ -158,22 +168,17 @@ sub sendSkillUse {
 		return;
 	}
 
-	my $msg = pack("v1 x2 v1 x1 v1 x1", 0x72, $lv, $ID) . $targetID;
+	my $msg = pack("C*", 0x72, 0x00) . pack("x7") . pack("v*", $lv) . pack("x4") . pack("v*", $ID) . pack("x1") . $targetID;
+
 	$self->sendToServer($msg);
 	debug "Skill Use: $ID\n", "sendPacket", 2;
 }
 
 sub sendSkillUseLoc {
 	my ($self, $ID, $lv, $x, $y) = @_;
-	my $msg = pack("C*", 0x13, 0x01) .
-		pack("x4") .
-		pack("v", $lv) .
-		pack("x12") .
-		pack("v*", $ID) .
-		pack("C*", 0x00) .
-		pack("v*", $x) . 
-		pack("C*", 0xaf, 0x4e) .
-		pack("v*", $y);
+	
+	my $msg = pack("C*", 0x17, 0x01) . pack("v*", $ID) . pack("x4") . pack("v*", $lv) . pack("x12") . pack("v*", $x) . pack("C*", 0x19, 0xea, 0x4d, 0x09) . pack("v*", $y);
+
 	$self->sendToServer($msg);
 	debug "Skill Use on Location: $ID, ($x, $y)\n", "sendPacket", 2;
 }
@@ -182,14 +187,17 @@ sub sendStorageAdd {
 	my $self= shift;
 	my $index = shift;
 	my $amount = shift;
-	my $msg = pack("v1 x4 v1 x13 V1", 0x94, $index, $amount);
+	
+	my $msg = pack("C*", 0x94, 0x00) . pack("x1") . pack("v*", $index) . pack("x10") . pack("V*", $amount);
+	
 	$self->sendToServer($msg);
 	debug "Sent Storage Add: $index x $amount\n", "sendPacket", 2;
 }
 
 sub sendStorageGet {
 	my ($self, $index, $amount) = @_;
-	my $msg = pack("v1 x2 v1 x2 V1", 0xf7, $index, $amount);
+
+	my $msg = pack("C*", 0xf7, 0x00) . pack("x1") . pack("v*", $index) . pack("x8") . pack("V*", $amount);
 	$self->sendToServer($msg);
 	debug "Sent Storage Get: $index x $amount\n", "sendPacket", 2;
 }
@@ -201,22 +209,6 @@ sub sendStorageClose {
 	debug "Sent Storage Done\n", "sendPacket", 2;
 }
 
-sub sendStand {
-	my $self = shift;
-
-	my %args;
-	$args{flag} = 3;
-	Plugins::callHook('packet_pre/sendStand', \%args);
-	if ($args{return}) {
-		$self->sendToServer($args{msg});
-		return;
-	}	
-	
-	my $msg = pack("C2 x6 C1", 0x90, 0x01, 0x03);
-	$self->sendToServer($msg);
-	debug "Standing\n", "sendPacket", 2;
-}
-
 sub sendSync {
 	my ($self, $initialSync) = @_;
 	my $msg;
@@ -224,11 +216,8 @@ sub sendSync {
 	return if ($self->{net}->version == 1);
 
 	$syncSync = pack("V", getTickCount());
-	$msg = pack("C*", 0x89, 0x00);
-		$msg .= pack("C*", 0x00, 0x00, 0x00) if ($initialSync);
-		$msg .= pack("C*", 0x00, 0x00, 0x00) if (!$initialSync);
-		$msg .= pack("C*", 0x00, 0x00, 0x00, 0x00, 0x00);
-		$msg .= $syncSync; 
+	
+	my $msg = pack("C2 x5", 0x89, 0x00) . $syncSync;
 	$self->sendToServer($msg);
 	debug "Sent Sync\n", "sendPacket", 2;
 }
@@ -236,7 +225,8 @@ sub sendSync {
 sub sendTake {
 	my $self = shift;
 	my $itemID = shift; # $itemID = long
-	my $msg = pack("v1", 0xf5) . pack("x8") . $itemID;
+	
+	my $msg = pack("C*", 0xf5, 0x00) . pack("x5") . $itemID;
 	$self->sendToServer($msg);
 	debug "Sent take\n", "sendPacket", 2;
 }

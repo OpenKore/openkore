@@ -2,6 +2,7 @@
 ### OpenKore 1.9.4 (beta)
 =========================
 
+- kRO support (February 25 2007) has been fixed.
 - OpenKore Webstart has been removed. The experiment turned out to be
   unsuccessful.
 
@@ -10,6 +11,7 @@ Bug fixes:
 
 Credits:
 - johnny: Fix for headgear display.
+- skseo, gksmf0615: kRO support update.
 
 
 =========================
