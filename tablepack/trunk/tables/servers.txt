@@ -996,21 +996,12 @@ serverType 5
 serverEncoding Western
 
 ## http://www.euphro.com/
-[EuphRO (Alpha) Private Server]
-ip euphro.game-server.cc
-port 6900
+[EuphRO Private Server]
+ip 69.39.224.10
+port 3872
 master_version 14
-version 14
-serverType 5
-serverEncoding Western
-
-## http://www.euphro.com/
-[EuphRO (Eden) Private Server]
-ip euphro.game-server.cc
-port 6901
-master_version 14
-version 14
-serverType 5
+version 20
+serverType 9
 serverEncoding Western
 
 # http://www.equilibriumro.com/
