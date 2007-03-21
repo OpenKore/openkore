@@ -1,5 +1,5 @@
 #########################################################################
-#  OpenKore - Long intra-map movement task
+#  OpenKore - Actor following task
 #  Copyright (c) 2006 OpenKore Team
 #
 #  This software is open source, licensed under the GNU General Public

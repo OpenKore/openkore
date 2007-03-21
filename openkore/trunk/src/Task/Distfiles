@@ -1,6 +1,7 @@
 CalcMapRoute.pm
 Chained.pm
 CheckPoints.pm
+ErrorReport.pm
 FollowActor.pm
 Function.pm
 MapRoute.pm
