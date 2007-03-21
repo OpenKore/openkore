@@ -1,3 +1,21 @@
+#########################################################################
+#  OpenKore - Skill usage task
+#  Copyright (c) 2007 OpenKore Team
+#
+#  This software is open source, licensed under the GNU General Public
+#  License, version 2.
+#  Basically, this means that you're allowed to modify and distribute
+#  this software. However, if you distribute modified versions, you MUST
+#  also distribute the source code.
+#  See http://www.gnu.org/licenses/gpl.html for the full license.
+#########################################################################
+##
+# MODULE DESCRIPTION: Skill usage task.
+#
+# This task is specialized in using a single skill. It will:
+# - Execute necessary preparation actions, such as standing up.
+# - Retry to use the skill if it doesn't start within a time limit.
+# - Handle errors gracefully.
 package Task::UseSkill;
 
 use strict;
@@ -35,8 +53,14 @@ use enum qw(
 	ERROR_MAX_TRIES
 	ERROR_CASTING_CANCELLED
 	ERROR_CASTING_FAILED
+	ERROR_CASTING_TIMEOUT
 	ERROR_NO_SKILL
 );
+
+use constant {
+	DEFAULT_MAX_CAST_TRIES => 3,
+	DEFAULT_CAST_TIMEOUT   => 3
+};
 
 ##
 # Task::UseSkill->new(options...);
@@ -52,9 +76,9 @@ use enum qw(
 #       Actor object. If the skill is to be used on a location (as is the case
 #       for area spells), then this argument must be a hash containing an 'x' and
 #       a 'y' item, which specifies the location.
-# - actorList - If _target_ is an Actor object, then this argument must be set to
-#       the ActorList object which contains the Actor. This is used to check whether
-#       the target actor is still on screen.
+# - actorList - If _target_ is an Actor object, but not of the class 'Actor::You',
+#       then this argument must be set to the ActorList object which contains _target_.
+#       This is used to check whether the target actor is still on screen.
 # - stopWhenHit - Specifies whether you want to stop using this skill if casting has
 #       been cancelled because you've been hit. The default is true.
 # `l`
@@ -70,8 +94,8 @@ sub new {
 	$self->{skill} = $args{skill};
 	$self->{stopWhenHit} = defined($args{stopWhenHit}) ? $args{stopWhenHit} : 1;
 	if ($args{target}) {
-		if (UNIVERSAL::isa($args{target}, 'Actor') && !$args{actorList}) {
-			ArgumentException->throw("Target argument given, but no actorList argument given.");
+		if (UNIVERSAL::isa($args{target}, 'Actor') && !$args{target}->isa('Actor::You') && !$args{actorList}) {
+			ArgumentException->throw("No actorList argument given.");
 		}
 		$self->{target} = $args{target};
 		$self->{actorList} = $args{actorList};
@@ -90,13 +114,16 @@ sub new {
 	# int maxCastTries
 	# The maximum number of times to try to re-cast the skill before
 	# we give up.
-	$self->{maxCastTries} = 3;
+	$self->{maxCastTries} = DEFAULT_MAX_CAST_TRIES;
 
 	# boolean castingFinished
 	# Whether casting has finished.
 
 	# boolean castingStarted
 	# Whether casting has started.
+
+	# Hash castFinishTimer
+	# A timer for checking when the casting is supposed to be finished.
 
 	# Hash castingError
 	# If casting has failed, then this member contains error information.
@@ -147,6 +174,8 @@ sub onSkillCast {
 	if ($self->getStatus() == Task::RUNNING && $args->{sourceID} eq $char->{ID}
 	 && $self->{skill}->id() == $args->{skillID}) {
 		$self->{castingStarted} = 1;
+		$self->{castFinishTimer}{time} = time;
+		$self->{castFinishTimer}{timeout} = $args->{castTime} + DEFAULT_CAST_TIMEOUT;
 	}
 }
 
@@ -184,7 +213,8 @@ sub onSkillCancelled {
 # Check whether the target has been lost.
 sub targetLost {
 	my ($self) = @_;
-	return UNIVERSAL::isa($self->{target}, 'Actor') && !$self->{actorList}->getByID($self->{target}{ID});
+	return UNIVERSAL::isa($self->{target}, 'Actor') && !$self->{target}->isa('Actor::You')
+		&& !$self->{actorList}->getByID($self->{target}{ID});
 }
 
 # Check whether we've equipped the necessary items (e.g. Vitata Card for Heal)
@@ -231,11 +261,8 @@ sub castSkill {
 }
 
 # TODO:
-# - check SP
-# - actorList is not required if target is Actor::You
-# - walk to target if it's too far away
+# - walk to target if it's too far away?
 # - equip necessary items
-# - when waiting for casting to finish, add a timeout
 
 sub iterate {
 	my ($self) = @_;
@@ -305,6 +332,11 @@ sub iterate {
 				debug "UseSkill - Timeout, maximum tries reached.\n", "Task::UseSkill" if DEBUG;
 			}
 
+		} elsif ($self->{castingError}) {
+			$self->setError(ERROR_CASTING_FAILED, TF("Casting failed: %s (%d)",
+				$self->{castingError}{message}, $self->{castingError}{type}));
+			debug "UseSkill - Casting failed: $self->{castingError}{message}.\n", "Task::UseSkill" if DEBUG;
+
 		} elsif (!$self->checkPreparations()) {
 			# Preparation conditions violated.
 			$self->{state} = PREPARING;
@@ -338,6 +370,10 @@ sub iterate {
 			$self->setError(ERROR_CASTING_FAILED, TF("Casting failed: %s (%d)",
 				$self->{castingError}{message}, $self->{castingError}{type}));
 			debug "UseSkill - Casting failed: $self->{castingError}{message}.\n", "Task::UseSkill" if DEBUG;
+
+		} elsif (timeOut($self->{castFinishTimer})) {
+			$self->setError(ERROR_CASTING_TIMEOUT, T("Casting is supposed to be finished now, but nothing happened."));
+			debug "UseSkill - Timeout.\n", "Task::UseSkill" if DEBUG;
 		}
 	}
 }

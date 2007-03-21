@@ -35,6 +35,8 @@ use Skills;
 use Utils;
 use Misc;
 use AI;
+use Task;
+use Task::ErrorReport;
 use Match;
 use Translation;
 
@@ -4165,80 +4167,118 @@ sub cmdUseItemOnSelf {
 }
 
 sub cmdUseSkill {
-	my ($switch, $args) = @_;
-	my ($skillID, $lv, $target, $targetNum, $targetID, $x, $y);
+	my ($cmd, $args_string) = @_;
+	my ($target, $actorList, $skill, $level) = @_;
+	my @args = parseArgs($args_string);
 
-	# Resolve skill ID
-	($skillID, $args) = split(/ /, $args, 2);
-	my $skill = Skills->new(id => $skillID);
-	if (!defined $skill->id) {
-		error TF("Skill %s does not exist.\n", $skillID);
-		return;
-	}
-	my $char_skill = $char->{skills}{$skill->handle};
+	if ($cmd eq 'sl') {
+		my $x = $args[1];
+		my $y = $args[2];
+		if (@args < 3 || @args > 4) {
+			error T("Syntax error in function 'sl' (Use Skill on Location)\n" .
+				"Usage: sl <skill #> <x> <y> [level]\n");
+			return;
+		} elsif ($x !~ /^\d+$/ || $y !~ /^\d+/) {
+			error T("Error in function 'sl' (Use Skill on Location)\n" .
+				"Invalid coordinates given.\n");
+			return;
+		} elsif ($net->getState() != Network::IN_GAME) {
+			error T("Error in function 'sl' (Use Skill on Location)\n" .
+				"You are not logged into the game.\n");
+			return;
+		} else {
+			$target = { x => $x, y => $y };
+			$level = $args[3];
+		}
+		# This was the code for choosing a random location when x and y are not given:
+		# my $pos = calcPosition($char);
+		# my @positions = calcRectArea($pos->{x}, $pos->{y}, int(rand 2) + 2);
+		# $pos = $positions[rand(@positions)];
+		# ($x, $y) = ($pos->{x}, $pos->{y});
 
-	# Resolve skill level
-	if ($switch eq 'sl') {
-		($x, $y, $lv) = split(/ /, $args);
-	} elsif ($switch eq "ss") {
-		($lv) = split(/ /, $args);
-	} else {
-		($targetNum, $lv) = split(/ /, $args);
-		if ($targetNum !~ /^\d+$/) {
-			error TF("%s is not a number.\n", $targetNum);
+	} elsif ($cmd eq 'ss') {
+		if (@args < 1 || @args > 2) {
+			error T("Syntax error in function 'ss' (Use Skill on Self)\n" .
+				"Usage: ss <skill #> [level]\n");
+			return;
+		} elsif ($net->getState() != Network::IN_GAME) {
+			error T("Error in function 'ss' (Use Skill on Self)\n" .
+				"You are not logged into the game.\n");
+			return;
+		} else {
+			$target = $char;
+			$level = $args[1];
+		}
+
+	} elsif ($cmd eq 'sp') {
+		if (@args < 1 || @args > 3) {
+			error T("Syntax error in function 'sp' (Use Skill on Player)\n" .
+				"Usage: sp <skill #> <player #> [level]\n");
+			return;
+		} elsif ($net->getState() != Network::IN_GAME) {
+			error T("Error in function 'sp' (Use Skill on Player)\n" .
+				"You are not logged into the game.\n");
+			return;
+		} else {
+			$target = $playersList->get($args[1]);
+			if (!$target) {
+				error TF("Error in function 'sp' (Use Skill on Player)\n" .
+					"Player %d does not exist.\n", $args[1]);
+				return;
+			}
+			$actorList = $playersList;
+			$level = $args[2];
+		}
+
+	} elsif ($cmd eq 'sm') {
+		if (@args < 1 || @args > 3) {
+			error T("Syntax error in function 'sm' (Use Skill on Monster)\n" .
+				"Usage: sm <skill #> <monster #> [level]\n");
+			return;
+		} elsif ($net->getState() != Network::IN_GAME) {
+			error T("Error in function 'sm' (Use Skill on Monster)\n" .
+				"You are not logged into the game.\n");
+			return;
+		} else {
+			$target = $monstersList->get($args[1]);
+			if (!$target) {
+				error TF("Error in function 'sm' (Use Skill on Monster)\n" .
+					"Monster %d does not exist.\n", $args[1]);
+				return;
+			}
+			$actorList = $monstersList;
+			$level = $args[2];
+		}
+
+	} elsif ($cmd eq 'ssp') {
+		if (@args < 2 || @args > 3) {
+			error T("Syntax error in function 'ssp' (Use Skill on Area Spell Location)\n" .
+				"Usage: ssp <skill #> <spell #> [level]\n");
 			return;
 		}
-	}
-	# Attempt to fill in unspecified skill level
-	$lv ||= $char_skill->{lv};
-	$lv ||= 10; # Server should fix excessively high skill level for us
-
-	# Resolve target
-	if ($switch eq 'sl') {
-		if (!defined($x) || !defined($y)) {
-			#error "(X, Y) coordinates not specified.\n";
-			#return;
-			my $pos = calcPosition($char);
-			my @positions = calcRectArea($pos->{x}, $pos->{y}, int(rand 2) + 2);
-			$pos = $positions[rand(@positions)];
-			($x, $y) = ($pos->{x}, $pos->{y});
-		}
-	} elsif ($switch eq 'ss' || ($switch eq 'sp' && !defined($targetNum))) {
-		$targetID = $accountID;
-		$target = $char;
-	} elsif ($switch eq 'sp') {
-		$targetID = $playersID[$targetNum];
+		my $targetID = $spellsID[$args[1]];
 		if (!$targetID) {
-			error TF("Player %d does not exist.\n", $targetNum);
+			error TF("Spell %d does not exist.\n", $args[1]);
 			return;
 		}
-		$target = $players{$targetID};
-	} elsif ($switch eq 'sm') {
-		$targetID = $monstersID[$targetNum];
-		if (!$targetID) {
-			error TF("Monster %d does not exist.\n", $targetNum);
-			return;
-		}
-		$target = $monsters{$targetID};
-	} elsif ($switch eq 'ssp') {
-		$targetID = $spellsID[$targetNum];
-		if (!$targetID) {
-			error TF("Spell %d does not exist.\n", $targetNum);
-			return;
-		}
-		$target = $spells{$targetID};
+		my $pos = $spells{$targetID}{pos_to};
+		$target = { %{$pos} };
 	}
 
-	# Resolve target location as necessary
-	if (main::ai_getSkillUseType($skill->handle)) {
-		if ($targetID) {
-			$x = $target->{pos_to}{x};
-			$y = $target->{pos_to}{y};
-		}
-		main::ai_skillUse($skill->handle, $lv, 0, 0, $x, $y);
-	} else {
-		main::ai_skillUse($skill->handle, $lv, 0, 0, $targetID);
+	if (!defined $level) {
+		$level = $char->getSkillLevel(new Skills(auto => $args[0]));
 	}
+	$skill = Skills->new(auto => $args[0], level => $level);
+
+	require Task::UseSkill;
+	my $skillTask = new Task::UseSkill(
+		target => $target,
+		actorList => $actorList,
+		skill => $skill,
+		priority => Task::USER_PRIORITY
+	);
+	my $task = new Task::ErrorReport(task => $skillTask);
+	$taskManager->add($task);
 }
 
 sub cmdVender {
