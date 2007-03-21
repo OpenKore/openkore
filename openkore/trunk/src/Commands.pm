@@ -3385,7 +3385,12 @@ sub cmdSit {
 	$ai_v{sitAuto_forcedBySitCommand} = 1;
 	AI::clear("move", "route", "mapRoute");
 	AI::clear("attack") unless ai_getAggressives();
-	main::sit();
+	require Task::SitStand;
+	my $task = new Task::ErrorReport(
+		task => new Task::SitStand(mode => 'sit'),
+		priority => Task::USER_PRIORITY
+	);
+	$taskManager->add($task);
 	$ai_v{sitAuto_forceStop} = 0;
 }
 
@@ -3452,7 +3457,12 @@ sub cmdSpells {
 sub cmdStand {
 	delete $ai_v{sitAuto_forcedBySitCommand};
 	$ai_v{sitAuto_forceStop} = 1;
-	main::stand();
+	require Task::SitStand;
+	my $task = new Task::ErrorReport(
+		task => new Task::SitStand(mode => 'stand'),
+		priority => Task::USER_PRIORITY
+	);
+	$taskManager->add($task);
 }
 
 sub cmdStatAdd {
@@ -4274,10 +4284,12 @@ sub cmdUseSkill {
 	my $skillTask = new Task::UseSkill(
 		target => $target,
 		actorList => $actorList,
-		skill => $skill,
+		skill => $skill
+	);
+	my $task = new Task::ErrorReport(
+		task => $skillTask,
 		priority => Task::USER_PRIORITY
 	);
-	my $task = new Task::ErrorReport(task => $skillTask);
 	$taskManager->add($task);
 }
 
