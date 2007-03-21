@@ -61,6 +61,8 @@ sub subtaskDone {
 	if ($task->getError()) {
 		my $error = $task->getError();
 		error "$error->{message}\n";
+	} else {
+		$self->setDone();
 	}
 }
 
