@@ -697,45 +697,69 @@ sub mainLoop_initialized {
 }
 
 # Anonymous statistics reporting. This gives us insight about
-# server our users play.
+# servers that our users bot on.
 sub processStatisticsReporting {
 	our %statisticsReporting;
-	return if ($statisticsReporting{done} || !$config{master} || !$config{username});
+	if (!$statisticsReporting{reported} && $config{master} && $config{username}) {
+		if (!$statisticsReporting{http}) {
+			use Utils qw(urlencode);
+			import Utils::Whirlpool qw(whirlpool_hex);
 
-	if (!$statisticsReporting{http}) {
-		use Utils qw(urlencode);
-		import Utils::Whirlpool qw(whirlpool_hex);
+			# Note that ABSOLUTELY NO SENSITIVE INFORMATION about the
+			# user is sent. The username is filtered through an
+			# irreversible hashing algorithm before it is sent to the
+			# server. It is impossible to deduce the user's username
+			# from the data sent to the server.
+			#
+			# If you're still not convinced about the security of this,
+			# please read the following web pages for more details and explanation:
+			#   http://www.openkore.com/statistics.php
+			# -and-
+			#   http://forums.openkore.com/viewtopic.php?t=28044
+			my $url = "http://www.openkore.com/statistics.php";
+			my $post = "server=" . urlencode($config{master});
+			$post .= "&product=" . urlencode($Settings::NAME);
+			$post .= "&version=" . urlencode($Settings::VERSION);
+			$post .= "&uid=" . urlencode(whirlpool_hex($config{master} . $config{username} . $userSeed));
+			$statisticsReporting{http} = new StdHttpReader($url, $post);
+			debug "Posting anonymous usage statistics to $url\n", "statisticsReporting";
+		}
 
-		# Note that ABSOLUTELY NO SENSITIVE INFORMATION about the
-		# user is sent. The username is filtered through an
-		# irreversible hashing algorithm before it is sent to the
-		# server. It is impossible to deduce the user's username
-		# from the data sent to the server.
-		#
-		# If you're still not convinced about the security of this,
-		# please read the following web pages for more details and explanation:
-		#   http://www.openkore.com/statistics.php
-		# -and-
-		#   http://forums.openkore.com/viewtopic.php?t=28044
-		my $url = "http://www.openkore.com/statistics.php?";
-		$url .= "server=" . urlencode($config{master});
-		$url .= "&product=" . urlencode($Settings::NAME);
-		$url .= "&version=" . urlencode($Settings::VERSION);
-		$url .= "&uid=" . urlencode(whirlpool_hex($config{master} . $config{username} . $userSeed));
-		$statisticsReporting{http} = new StdHttpReader($url);
-		debug "Posting anonymous usage statistics to $url\n", "statisticsReporting";
-	}
+		my $http = $statisticsReporting{http};
+		if ($http->getStatus() == HttpReader::DONE) {
+			$statisticsReporting{reported} = 1;
+			delete $statisticsReporting{http};
+			debug "Statistics posting completed.\n", "statisticsReporting";
 
-	my $http = $statisticsReporting{http};
-	if ($http->getStatus() == HttpReader::DONE) {
-		$statisticsReporting{done} = 1;
-		delete $statisticsReporting{http};
-		debug "Statistics posting completed.\n", "statisticsReporting";
+		} elsif ($http->getStatus() == HttpReader::ERROR) {
+			$statisticsReporting{reported} = 1;
+			delete $statisticsReporting{http};
+			debug "Statistics posting failed: " . $http->getError() . "\n", "statisticsReporting";
+		}
 
-	} elsif ($http->getStatus() == HttpReader::ERROR) {
-		$statisticsReporting{done} = 1;
-		delete $statisticsReporting{http};
-		debug "Statistics posting failed: " . $http->getError() . "\n", "statisticsReporting";
+	} elsif (!$statisticsReporting{infoPosted} && $masterServer && $masterServer->{ip} && $config{master} && $conState == 5 && %damageTaken) {
+		if (!$statisticsReporting{http}) {
+			my $url = "http://www.openkore.com/server-info.php";
+			my $serverData = "";
+			foreach my $key (sort keys %{$masterServer}) {
+				$serverData .= "$key $masterServer->{$key}\n";
+			}
+			my $post = "server=" . urlencode($config{master}) . "&data=" . urlencode($serverData);
+			$statisticsReporting{http} = new StdHttpReader($url, $post);
+			debug "Posting server info to $url\n", "statisticsReporting";
+		}
+
+		my $http = $statisticsReporting{http};
+		if ($http->getStatus() == HttpReader::DONE) {
+			$statisticsReporting{infoPosted} = 1;
+			delete $statisticsReporting{http};
+			debug "Server info posting completed.\n", "statisticsReporting";
+
+		} elsif ($http->getStatus() == HttpReader::ERROR) {
+			$statisticsReporting{infoPosted} = 1;
+			delete $statisticsReporting{http};
+			debug "Server info posting failed: " . $http->getError() . "\n", "statisticsReporting";
+		}
 	}
 }
 
