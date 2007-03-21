@@ -406,7 +406,8 @@ sub homunculus_route {
 
 	# Destination is same map and isn't blocked by walls/water/whatever
 	my $pos = calcPosition($char->{homunculus});
-	if ($param{'_internal'} || (ai_route_getRoute(\@{$args{solution}}, $field, $pos, $args{dest}{pos}, $args{noAvoidWalls}))) {
+	require Task::Route;
+	if ($param{'_internal'} || (Task::Route->getRoute(\@{$args{solution}}, $field, $pos, $args{dest}{pos}, !$args{noAvoidWalls}))) {
 		# Since the solution array is here, we can start in "Route Solution Ready"
 		$args{'stage'} = 'Route Solution Ready';
 		debug "Homunculus route Solution Ready\n", "route";
