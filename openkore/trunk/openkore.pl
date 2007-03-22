@@ -61,7 +61,6 @@ sub __start {
 	use AI;
 	use AI::CoreLogic;
 	use AI::Attack;
-	use Skills;
 	use Actor;
 	use Actor::Player;
 	use Actor::Monster;

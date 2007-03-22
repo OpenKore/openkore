@@ -639,8 +639,8 @@ sub processSkillUse {
 			} elsif (!$args->{skill_used}) {
 				my $handle = $args->{skillHandle};
 				if (!defined $args->{skillID}) {
-					my $skill = new Skills(handle => $handle);
-					$args->{skillID} = $skill->id;
+					my $skill = new Skill(handle => $handle);
+					$args->{skillID} = $skill->getIDN();
 				}
 				my $skillID = $args->{skillID};
 
@@ -664,9 +664,9 @@ sub processSkillUse {
 				}
 
 				# Give an error if we don't actually possess this skill
-				my $skill = new Skills(handle => $handle);
-				if ($char->{skills}{$handle}{lv} <= 0 && (!$char->{permitSkill} || $char->{permitSkill}->handle ne $handle)) {
-					debug "Attempted to use skill (".$skill->name.") which you do not have.\n";
+				my $skill = new Skill(handle => $handle);
+				if ($char->{skills}{$handle}{lv} <= 0 && (!$char->{permitSkill} || $char->{permitSkill}->getHandle() ne $handle)) {
+					debug "Attempted to use skill (".$skill->getName().") which you do not have.\n";
 				}
 
 				$args->{maxCastTime}{time} = time;
@@ -1830,21 +1830,21 @@ sub processAutoSkillsRaise {
 		foreach my $item (@list) {
 			# Split each skill/level pair
 			my ($sk, $num) = $item =~ /(.*) (\d+)/;
-			my $skill = new Skills(auto => $sk);
+			my $skill = new Skill(auto => $sk);
 
-			if (!$skill->id) {
+			if (!$skill->getIDN()) {
 				error TF("Unknown skill '%s'; disabling skillsAddAuto\n", $sk);
 				$config{skillsAddAuto} = 0;
 				last;
 			}
 
-			my $handle = $skill->handle;
+			my $handle = $skill->getHandle();
 
 			# If skill needs to be raised to match desired amount && skill points are available
-			if ($skill->id && $char->{points_skill} > 0 && $char->{skills}{$handle}{lv} < $num) {
+			if ($skill->getIDN() && $char->{points_skill} > 0 && $char->getSkillLevel($skill) < $num) {
 				# raise skill
-				$messageSender->sendAddSkillPoint($skill->id);
-				message TF("Auto-adding skill %s\n", $skill->name);
+				$messageSender->sendAddSkillPoint($skill->getIDN());
+				message TF("Auto-adding skill %s\n", $skill->getName());
 
 				# save which skill was raised, so that when we received the
 				# "skill changed" packet (010F?) we can changed $skillChanged
@@ -2208,7 +2208,7 @@ sub processAutoSkillUse {
 		for (my $i = 0; exists $config{"useSelf_skill_$i"}; $i++) {
 			if ($config{"useSelf_skill_$i"} && checkSelfCondition("useSelf_skill_$i")) {
 				$ai_v{"useSelf_skill_$i"."_time"} = time;
-				$self_skill{ID} = Skills->new(name => lc($config{"useSelf_skill_$i"}))->handle;
+				$self_skill{ID} = Skill->new(name => lc($config{"useSelf_skill_$i"}))->getHandle();
 				unless ($self_skill{ID}) {
 					error "Unknown skill name '".$config{"useSelf_skill_$i"}."' in useSelf_skill_$i\n";
 					configModify("useSelf_skill_${i}_disabled", 1);
@@ -2242,7 +2242,7 @@ sub processAutoSkillUse {
 		}
 		if ($config{$self_skill{prefix}."_smartEncore"} &&
 			$char->{encoreSkill} &&
-			$char->{encoreSkill}->handle eq $self_skill{ID}) {
+			$char->{encoreSkill}->getHandle() eq $self_skill{ID}) {
 			# Use Encore skill instead if applicable
 			$self_skill{ID} = 'BD_ENCORE';
 		}
@@ -2273,7 +2273,7 @@ sub processPartySkillUse {
 					&& checkPlayerCondition("partySkill_$i"."_target", $ID)
 					&& checkSelfCondition("partySkill_$i")
 					){
-					$party_skill{ID} = Skills->new(name => lc($config{"partySkill_$i"}))->handle;
+					$party_skill{ID} = Skill->new(name => lc($config{"partySkill_$i"}))->getHandle();
 					$party_skill{lvl} = $config{"partySkill_$i"."_lvl"};
 					$party_skill{target} = $player->{name};
 					my $pos = $player->position;
@@ -2362,15 +2362,15 @@ sub processMonsterSkillUse {
 				my $monster = $monsters{$monsterID};
 				if (checkSelfCondition($prefix)
 				    && checkMonsterCondition("${prefix}_target", $monster)) {
-					my $skill = Skills->new(name => $config{$prefix});
+					my $skill = new Skill(name => $config{$prefix});
 
-					next if $config{"${prefix}_maxUses"} && $monster->{skillUses}{$skill->handle} >= $config{"${prefix}_maxUses"};
+					next if $config{"${prefix}_maxUses"} && $monster->{skillUses}{$skill->getHandle()} >= $config{"${prefix}_maxUses"};
 					next if $config{"${prefix}_target"} && !existsInList($config{"${prefix}_target"}, $monster->{name});
 
 					my $lvl = $config{"${prefix}_lvl"};
 					my $maxCastTime = $config{"${prefix}_maxCastTime"};
 					my $minCastTime = $config{"${prefix}_minCastTime"};
-					debug "Auto-monsterSkill on $monster->{name} ($monster->{binID}): ".$skill->name." (lvl $lvl)\n", "monsterSkill";
+					debug "Auto-monsterSkill on $monster->{name} ($monster->{binID}): ".$skill->getName()." (lvl $lvl)\n", "monsterSkill";
 					my $target = $config{"${prefix}_isSelfSkill"} ? $char : $monster;
 					ai_skillUse2($skill, $lvl, $maxCastTime, $minCastTime, $target, $prefix);
 					$ai_v{$prefix . "_time"}{$monsterID} = time;

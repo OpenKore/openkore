@@ -27,7 +27,7 @@ use Log qw(message);
 use base qw(Actor);
 
 ##
-# Skills $char->{permitSkill}
+# Skill $char->{permitSkill}
 #
 # When you use certain items, the server temporarily permits you to use a skill.
 # For example, when you use an Yggdrasil Leaf, the server temporarily lets you

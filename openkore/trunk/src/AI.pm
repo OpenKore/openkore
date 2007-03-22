@@ -582,10 +582,10 @@ sub ai_skillUse {
 sub ai_skillUse2 {
 	my ($skill, $lvl, $maxCastTime, $minCastTime, $target, $prefix) = @_;
 
-	if (!ai_getSkillUseType($skill->handle)) {
-		ai_skillUse($skill->handle, $lvl, $maxCastTime, $minCastTime, $target->{ID}, undef, undef, undef, undef, $prefix);
+	if (!ai_getSkillUseType($skill->getHandle())) {
+		ai_skillUse($skill->getHandle(), $lvl, $maxCastTime, $minCastTime, $target->{ID}, undef, undef, undef, undef, $prefix);
 	} else {
-		ai_skillUse($skill->handle, $lvl, $maxCastTime, $minCastTime, $target->{pos_to}{x}, $target->{pos_to}{y}, undef, undef, undef, $prefix);
+		ai_skillUse($skill->getHandle(), $lvl, $maxCastTime, $minCastTime, $target->{pos_to}{x}, $target->{pos_to}{y}, undef, undef, undef, $prefix);
 	}
 }
 

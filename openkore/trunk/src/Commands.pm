@@ -31,7 +31,6 @@ use Log qw(message debug error warning);
 use Network::Send ();
 use Settings;
 use Plugins;
-use Skills;
 use Skill;
 use Utils;
 use Misc;
@@ -383,7 +382,7 @@ sub defaultCompletor {
 
 	my $arg = $args[$#args];
 	@matches = completePlayerName($arg);
-	@matches = Skills::complete($arg) if (!@matches);
+	@matches = Skill::complete($arg) if (!@matches);
 	return ($last_arg_pos, \@matches);
 }
 
@@ -1785,37 +1784,37 @@ sub cmdHomunculus {
 			my $msg = T("-----Homunculus Skill List-----\n" .
 				"   # Skill Name                     Lv      SP\n");
 			foreach my $handle (@AI::Homunculus::homun_skillsID) {
-				my $skill = Skills->new(handle => $handle);
+				my $skill = new Skill(handle => $handle);
 				my $sp = $char->{skills}{$handle}{sp} || '';
 				$msg .= swrite(
 					"@>>> @<<<<<<<<<<<<<<<<<<<<<<<<<<<< @>>    @>>>",
-					[$skill->id, $skill->name, $char->{skills}{$handle}{lv}, $sp]);
+					[$skill->getIDN(), $skill->getName(), $char->getSkillLevel($skill), $sp]);
 			}
 			$msg .= TF("\nSkill Points: %d\n", $char->{homunculus}{points_skill});
 			$msg .= "-------------------------------\n";
 			message($msg, "list");
 
 		} elsif ($args[1] eq "add" && $args[2] =~ /\d+/) {
-			my $skill = Skills->new(id => $args[2]);
-			if (!$skill->id || !$char->{skills}{$skill->handle}) {
+			my $skill = new Skill(idn => $args[2]);
+			if (!$skill->getIDN() || !$char->{skills}{$skill->getHandle()}) {
 				error TF("Error in function 'homun skills add' (Add Skill Point)\n" .
 					"Skill %s does not exist.\n", $args[2]);
 			} elsif ($char->{homunculus}{points_skill} < 1) {
 				error TF("Error in function 'homun skills add' (Add Skill Point)\n" .
-					"Not enough skill points to increase %s\n", $skill->name);
+					"Not enough skill points to increase %s\n", $skill->getName());
 			} else {
-				$messageSender->sendAddSkillPoint($skill->id);
+				$messageSender->sendAddSkillPoint($skill->getIDN());
 			}
 
 		} elsif ($args[1] eq "desc" && $args[2] =~ /\d+/) {
-			my $skill = Skills->new(id => $args[2]);
-			if (!$skill->id) {
+			my $skill = new Skills(idn => $args[2]);
+			if (!$skill->getIDN()) {
 				error TF("Error in function 'homun skills desc' (Skill Description)\n" .
 					"Skill %s does not exist.\n", $args[2]);
 			} else {
-				my $description = $skillsDesc_lut{$skill->handle} || T("Error: No description available.\n");
+				my $description = $skillsDesc_lut{$skill->getHandle()} || T("Error: No description available.\n");
 				message TF("===============Skill Description===============\n" .
-					"Skill: %s\n\n", $skill->name), "info";
+					"Skill: %s\n\n", $skill->getName()), "info";
 				message $description, "info";
 				message "==============================================\n", "info";
 			}
@@ -3340,37 +3339,37 @@ sub cmdSkills {
 		my $msg = T("----------Skill List-----------\n" .
 			"   # Skill Name                     Lv      SP\n");
 		for my $handle (@skillsID) {
-			my $skill = Skills->new(handle => $handle);
+			my $skill = new Skill(handle => $handle);
 			my $sp = $char->{skills}{$handle}{sp} || '';
 			$msg .= swrite(
 				"@>>> @<<<<<<<<<<<<<<<<<<<<<<<<<<<< @>>    @>>>",
-				[$skill->id, $skill->name, $char->{skills}{$handle}{lv}, $sp]);
+				[$skill->getID(), $skill->getName(), $char->getSkillLevel($skill), $sp]);
 		}
 		$msg .= TF("\nSkill Points: %d\n", $char->{points_skill});
 		$msg .= "-------------------------------\n";
 		message($msg, "list");
 
 	} elsif ($arg1 eq "add" && $arg2 =~ /\d+/) {
-		my $skill = Skills->new(id => $arg2);
-		if (!$skill->id || !$char->{skills}{$skill->handle}) {
+		my $skill = new Skill(idn => $arg2);
+		if (!$skill->getIDN() || !$char->{skills}{$skill->getHandle()}) {
 			error TF("Error in function 'skills add' (Add Skill Point)\n" .
 				"Skill %s does not exist.\n", $arg2);
 		} elsif ($char->{points_skill} < 1) {
 			error TF("Error in function 'skills add' (Add Skill Point)\n" .
-				"Not enough skill points to increase %s\n", $skill->name);
+				"Not enough skill points to increase %s\n", $skill->getName());
 		} else {
-			$messageSender->sendAddSkillPoint($skill->id);
+			$messageSender->sendAddSkillPoint($skill->getIDN());
 		}
 
 	} elsif ($arg1 eq "desc" && $arg2 =~ /\d+/) {
-		my $skill = Skills->new(id => $arg2);
-		if (!$skill->id) {
+		my $skill = new Skill(idn => $arg2);
+		if (!$skill->getIDN()) {
 			error TF("Error in function 'skills desc' (Skill Description)\n" .
 				"Skill %s does not exist.\n", $arg2);
 		} else {
-			my $description = $skillsDesc_lut{$skill->handle} || T("Error: No description available.\n");
+			my $description = $skillsDesc_lut{$skill->getHandle()} || T("Error: No description available.\n");
 			message TF("===============Skill Description===============\n" .
-				"Skill: %s\n\n", $skill->name), "info";
+				"Skill: %s\n\n", $skill->getName()), "info";
 			message $description, "info";
 			message "==============================================\n", "info";
 		}
