@@ -19,7 +19,7 @@ Network::DirectConnection
 Network::Receive
 Network::Send
 Plugins
-Skills
+Skill
 Match
 Misc
 
