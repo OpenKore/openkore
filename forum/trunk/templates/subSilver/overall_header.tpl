@@ -6,26 +6,37 @@
 {META}
 {NAV_LINKS}
 <title>{PAGE_TITLE} :: {SITENAME}</title>
-<link rel="stylesheet" href="templates/subSilver/{T_HEAD_STYLESHEET}" type="text/css">
 <link href="http://www.openkore.com/include/openkore-topbar.css" media="screen" rel="stylesheet" type="text/css">
 <link href="http://www.openkore.com/include/statcounter.css" media="screen" rel="stylesheet" type="text/css">
 <link href="http://www.openkore.com/include/independent.css" media="screen" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="templates/subSilver/{T_HEAD_STYLESHEET}" type="text/css">
 <!-- Fix broken PNG transparency and CSS support for IE/Win5-6+ -->
 <!--[if gte IE 5.5000]>
 <script type="text/javascript" src="http://www.openkore.com/include/pngfix.js"></script>
 <link href="http://www.openkore.com/include/iefixes.css" media="screen" rel="stylesheet" type="text/css">
 <![endif]-->
+<script type="text/javascript" src="templates/subSilver/jquery.js"></script>
 
-<!-- BEGIN switch_enable_pm_popup -->
-<script language="Javascript" type="text/javascript">
+<script type="text/javascript">
 <!--
+	<!-- BEGIN switch_enable_pm_popup -->
 	if ( {PRIVATE_MESSAGE_NEW_FLAG} )
 	{
 		window.open('{U_PRIVATEMSGS_POPUP}', '_phpbbprivmsg', 'HEIGHT=225,resizable=yes,WIDTH=400');;
 	}
+	<!-- END switch_enable_pm_popup -->
+
+	function showMore() {
+		$('#openkore_forum_topbar div.more').css("display", "inline");
+		$('#openkore_forum_topbar li.more').hide();
+	}
+
+	function showLess() {
+		$('#openkore_forum_topbar div.more').hide();
+		$('#openkore_forum_topbar li.more').css("display", "inline");
+	}
 //-->
 </script>
-<!-- END switch_enable_pm_popup -->
 <!-- Begin Syntax Highlighting Mod -->
 <link rel="stylesheet" href="templates/subSilver/geshi.css" type="text/css">
 <!-- End Syntax Highlighting Mod -->
@@ -79,29 +90,36 @@
 	</div>
 </div>
 
-<div style="clear: both;"></div>
+<div id="openkore_forum_topbar">
+
+	<span class="title"><a href="http://www.openkore.com/"><img src="/images/small-logo.png" alt="The OpenKore Project" width="92" height="18"></a></span>
+	<ul>
+	<li><a href="{U_SEARCH}"><img src="templates/subSilver/images/icon_mini_search.gif" width="12" height="13" alt="{L_SEARCH}"><b>{L_SEARCH}</b></a></li>
+	<!-- BEGIN switch_user_logged_in -->
+	<li><a href="{U_PRIVATEMSGS}"><img src="templates/subSilver/images/icon_mini_message.gif" width="12" height="13" alt="{PRIVATE_MESSAGE_INFO}">{PRIVATE_MESSAGE_INFO}</a></li>
+	<!-- END switch_user_logged_in -->
+	<li><a href="{U_LOGIN_LOGOUT}"><img src="templates/subSilver/images/icon_mini_login.gif" width="12" height="13" border="0" alt="{L_LOGIN_LOGOUT}" hspace="3" />{L_LOGIN_LOGOUT}</a></li>
+	<!-- BEGIN switch_user_logged_out -->
+	<li><a href="profile.php?mode=register&amp;agreed=yes"><img src="templates/subSilver/images/icon_mini_register.gif" width="12" height="13" alt="{L_REGISTER}">{L_REGISTER}</a></li>
+	<!-- END switch_user_logged_out -->
+	<li class="more"><a href="javascript:void(showMore())">More »</a></li>
+	</ul>
+
+	<div class="more">
+	<ul>
+	<!-- BEGIN switch_user_logged_in -->
+	<li><a href="{U_PROFILE}"><img src="templates/subSilver/images/icon_mini_profile.gif" width="12" height="13" alt="{L_PROFILE}">{L_PROFILE}</a></li>
+	<!-- END switch_user_logged_in -->
+	<li><a href="{U_MEMBERLIST}"><img src="templates/subSilver/images/icon_mini_members.gif" width="12" height="13" alt="{L_MEMBERLIST}">{L_MEMBERLIST}</a></li>
+	<li><a href="{U_GROUP_CP}"><img src="templates/subSilver/images/icon_mini_groups.gif" width="12" height="13" alt="{L_USERGROUPS}">{L_USERGROUPS}</a></li>
+	<li><a href="javascript:void(showLess())">Less «</a></li>
+	</ul>
+	</div>
+
+</div>
 
 <div id="openkore_forum_inner">
 
 <table width="100%" cellspacing="0" cellpadding="10" border="0" align="center"> 
 	<tr> 
-		<td class="bodyline"><table width="100%" cellspacing="0" cellpadding="0" border="0">
-			<tr> 
-				<td><a href="http://www.openkore.com/"><img src="/images/logo.jpg" border="0" alt="The OpenKore Website" vspace="1" /></a></td>
-				<td align="center" width="100%" valign="middle"><span class="maintitle">{SITENAME}</span><br /><span class="gen">{SITE_DESCRIPTION}<br />&nbsp; </span> 
-				<table cellspacing="0" cellpadding="2" border="0">
-					<tr> 
-						<td align="center" valign="top" nowrap="nowrap"><!-- <span class="mainmenu">&nbsp;<a href="{U_FAQ}" class="mainmenu"><img src="templates/subSilver/images/icon_mini_faq.gif" width="12" height="13" border="0" alt="{L_FAQ}" hspace="3" />{L_FAQ}</a>&nbsp; &nbsp; --><a href="{U_SEARCH}" class="mainmenu"><img src="templates/subSilver/images/icon_mini_search.gif" width="12" height="13" border="0" alt="{L_SEARCH}" hspace="3" />{L_SEARCH}</a>&nbsp; &nbsp;<a href="{U_MEMBERLIST}" class="mainmenu"><img src="templates/subSilver/images/icon_mini_members.gif" width="12" height="13" border="0" alt="{L_MEMBERLIST}" hspace="3" />{L_MEMBERLIST}</a>&nbsp; &nbsp;<a href="{U_GROUP_CP}" class="mainmenu"><img src="templates/subSilver/images/icon_mini_groups.gif" width="12" height="13" border="0" alt="{L_USERGROUPS}" hspace="3" />{L_USERGROUPS}</a>&nbsp; 
-						<!-- BEGIN switch_user_logged_out -->
-						&nbsp;<a href="profile.php?mode=register&amp;agreed=yes" class="mainmenu"><img src="templates/subSilver/images/icon_mini_register.gif" width="12" height="13" border="0" alt="{L_REGISTER}" hspace="3" />{L_REGISTER}</a>&nbsp;
-						<!-- END switch_user_logged_out -->
-						</td>
-					</tr>
-					<tr>
-						<td height="25" align="center" valign="top" nowrap="nowrap"><span class="mainmenu">&nbsp;<a href="{U_PROFILE}" class="mainmenu"><img src="templates/subSilver/images/icon_mini_profile.gif" width="12" height="13" border="0" alt="{L_PROFILE}" hspace="3" />{L_PROFILE}</a>&nbsp; &nbsp;<a href="{U_PRIVATEMSGS}" class="mainmenu"><img src="templates/subSilver/images/icon_mini_message.gif" width="12" height="13" border="0" alt="{PRIVATE_MESSAGE_INFO}" hspace="3" />{PRIVATE_MESSAGE_INFO}</a>&nbsp; &nbsp;<a href="{U_LOGIN_LOGOUT}" class="mainmenu"><img src="templates/subSilver/images/icon_mini_login.gif" width="12" height="13" border="0" alt="{L_LOGIN_LOGOUT}" hspace="3" />{L_LOGIN_LOGOUT}</a>&nbsp;</span></td>
-					</tr>
-				</table></td>
-			</tr>
-		</table>
-
-		<br />
+		<td class="bodyline">

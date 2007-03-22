@@ -4,15 +4,14 @@
 </div>
 <!-- END important_announcement -->
 
+<div style="margin-bottom: 1em">
 {ADVERTISEMENT}
+</div>
 
 <table width="100%" cellspacing="0" cellpadding="2" border="0" align="center" style="padding-bottom: 1em;">
   <tr>
-	<td align="left" valign="bottom"><span class="gensmall">
-	<!-- BEGIN switch_user_logged_in -->
-	<span style="margin-right: 2em;">{LAST_VISIT_DATE}</span>
-	<!-- END switch_user_logged_in -->
-	{CURRENT_TIME}<br /></span><span class="nav"><a href="{U_INDEX}" class="nav">{L_INDEX}</a></span></td>
+	<td align="left" valign="bottom">
+	<span class="nav"><a href="{U_INDEX}" class="nav">{L_INDEX}</a></span></td>
 	<td align="right" valign="bottom" class="gensmall">
 		<!-- BEGIN switch_user_logged_in -->
 		<a href="{U_SEARCH_NEW}" class="gensmall">{L_SEARCH_NEW}</a> |
@@ -86,11 +85,12 @@
   </tr>
 </table>
 
-<table width="100%" cellpadding="1" cellspacing="1" border="0">
-<tr>
-	<td align="left" valign="top"><span class="gensmall">{L_ONLINE_EXPLAIN}</span></td>
-</tr>
-</table>
+<div style="margin-top: 0.3em"><span class="gensmall">
+<!-- BEGIN switch_user_logged_in -->
+<span style="margin-right: 2em;">{LAST_VISIT_DATE}</span>
+<!-- END switch_user_logged_in -->
+{CURRENT_TIME}
+</span></div>
 
 <!-- BEGIN switch_user_logged_out -->
 <form method="post" action="{S_LOGIN_ACTION}">

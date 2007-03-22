@@ -223,6 +223,62 @@ input.liteoption {
 	background-color: #FAFAFA;
 }
 
+#openkore_topbar #openkore_navigation {
+	margin-bottom: 0;
+}
+
+#openkore_forum_topbar {
+	clear: both;
+	background: #f3ebe8;
+	padding: 0.5em;
+	margin-bottom: 4px;
+	border-top: solid 1px #dccec6;
+	border-bottom: solid 1px #dccec6;
+	font-family: Verdana, 'Bitstream Vera Sans', Arial, Sans-Serif;
+	font-size: 10pt;
+	padding-bottom: 0.3em;
+}
+
+#openkore_forum_topbar .title {
+	margin-right: 1em;
+}
+
+#openkore_forum_topbar .title img {
+	vertical-align: middle;
+	border: 0;
+}
+
+#openkore_forum_topbar ul {
+	display: inline;
+	margin: 0;
+	padding: 0;
+	position: relative;
+	top: -2px;
+}
+
+#openkore_forum_topbar ul li {
+	display: inline;
+	margin-right: 1.5em;
+}
+
+#openkore_forum_topbar ul li a {
+	text-decoration: none;
+}
+
+#openkore_forum_topbar ul li a:hover {
+	text-decoration: underline;
+}
+
+#openkore_forum_topbar ul li img, #openkore_forum_topbar ul li .img {
+	border: 0;
+	vertical-align: middle;
+	margin-right: 0.5em;
+}
+
+#openkore_forum_topbar div.more {
+	display: none;
+}
+
 /* Begin Simple Subforums MOD */
 a.topic-new, a.topic-new:visited { color: {T_BODY_HLINK}; }
 a.topic-new:hover, a.topic-new:active { color: {T_BODY_LINK}; }
