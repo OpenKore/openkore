@@ -72,14 +72,14 @@ sub nameString {
 }
 
 ##
-# int $char->getSkillLevel(Skills skill)
+# int $char->getSkillLevel(Skill skill)
 # Ensures: result >= 0
 #
 # Returns the maximum level of the specified skill. If the character doesn't
 # have that skill, the 0 is returned.
 sub getSkillLevel {
 	my ($self, $skill) = @_;
-	my $handle = $skill->handle();
+	my $handle = $skill->getHandle();
 	if ($self->{skills}{$handle}) {
 		return $self->{skills}{$handle}{lv};
 	} else {

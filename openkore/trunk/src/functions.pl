@@ -159,9 +159,11 @@ sub loadDataFiles {
 	addConfigFile("$Settings::tables_folder/servers.txt", \%masterServers, \&parseSectionedFile);
 	addConfigFile("$Settings::tables_folder/sex.txt", \%sex_lut, \&parseDataFile2);
 	addConfigFile("$Settings::tables_folder/skills.txt", \%Skills::skills, \&Skills::parseSkillsDatabase);
+	addConfigFile("$Settings::tables_folder/skills.txt", undef, \&Skill::StaticInfo::parseSkillsDatabase);
 	addConfigFile("$Settings::tables_folder/spells.txt", \%spells_lut, \&parseDataFile2);
 	addConfigFile("$Settings::tables_folder/skillsdescriptions.txt", \%skillsDesc_lut, \&parseRODescLUT);
 	addConfigFile("$Settings::tables_folder/skillssp.txt", \%skillsSP_lut, \&parseSkillsSPLUT);
+	addConfigFile("$Settings::tables_folder/skillssp.txt", undef, \&Skill::StaticInfo::parseSPDatabase);
 	addConfigFile("$Settings::tables_folder/skillsstatus.txt", \%skillsStatus, \&parseDataFile2);
 	addConfigFile("$Settings::tables_folder/skillsailments.txt", \%skillsAilments, \&parseDataFile2);
 	addConfigFile("$Settings::tables_folder/skillsstate.txt", \%skillsState, \&parseDataFile2);

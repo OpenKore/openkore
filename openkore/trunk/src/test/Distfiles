@@ -3,6 +3,7 @@ CallbackListTest.pm
 ObjectListTest.pm
 HttpReaderTest.pm
 SetTest.pm
+SkillTest.pm
 TaskManagerTest.pm
 TaskWithSubtaskTest.pm
 TaskChainedTest.pm
@@ -13,3 +14,5 @@ bus-client-test.pl
 server.pl
 consoleui-test.cpp
 http-reader-test.cpp
+skills.txt
+skillssp.txt

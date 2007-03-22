@@ -25,7 +25,7 @@ use Task;
 use base qw(Task);
 use Globals qw(%timeout $char $messageSender $net);
 use Network;
-use Skills;
+use Skill;
 use Translation qw(T);
 use Utils qw(timeOut);
 use Utils::Exceptions;
@@ -59,7 +59,7 @@ sub new {
 	$self->{mode} = $args{mode};
 	$self->{wait}{timeout} = $args{wait};
 	$self->{retry}{timeout} = $timeout{ai_stand_wait}{timeout} || 1;
-	$self->{sitSkill} = new Skills(handle => 'NV_BASIC');
+	$self->{sitSkill} = new Skill(handle => 'NV_BASIC');
 
 	return $self;
 }
