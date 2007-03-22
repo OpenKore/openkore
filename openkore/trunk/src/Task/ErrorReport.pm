@@ -20,6 +20,8 @@
 # If the wrapped class finishes with an error, then the error message (as
 # passed to $Task->setError()) will be printed on screen.
 #
+# Task::ErrorReport will mimic the wrappee's name, priority and mutexes.
+#
 # <h3>Example</h3>
 # <pre class="example">
 # my $originalTask = new Task::SitStand(mode => 'sit');
@@ -46,12 +48,18 @@ use Log qw(error);
 # `l`
 sub new {
 	my $class = shift;
-	my $self = $class->SUPER::new(@_, autofail => 1, autostop => 1, manageMutexes => 1);
 	my %args = @_;
 
 	if (!$args{task}) {
 		ArgumentException->throw("No task argument given.");
 	}
+
+	my $self = $class->SUPER::new(@_,
+		autofail => 1,
+		autostop => 1,
+		manageMutexes => 1,
+		priority => $args{task}->getPriority(),
+		name => $args{task}->getName());
 	$self->setSubtask($args{task});
 	return $self;
 }

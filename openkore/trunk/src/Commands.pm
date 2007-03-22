@@ -3324,8 +3324,10 @@ sub cmdSit {
 	AI::clear("attack") unless ai_getAggressives();
 	require Task::SitStand;
 	my $task = new Task::ErrorReport(
-		task => new Task::SitStand(mode => 'sit'),
-		priority => Task::USER_PRIORITY
+		task => new Task::SitStand(
+			mode => 'sit',
+			priority => Task::USER_PRIORITY
+		)
 	);
 	$taskManager->add($task);
 	$ai_v{sitAuto_forceStop} = 0;
@@ -3396,8 +3398,10 @@ sub cmdStand {
 	$ai_v{sitAuto_forceStop} = 1;
 	require Task::SitStand;
 	my $task = new Task::ErrorReport(
-		task => new Task::SitStand(mode => 'stand'),
-		priority => Task::USER_PRIORITY
+		task => new Task::SitStand(
+			mode => 'stand',
+			priority => Task::USER_PRIORITY
+		)
 	);
 	$taskManager->add($task);
 }
@@ -4218,12 +4222,10 @@ sub cmdUseSkill {
 	my $skillTask = new Task::UseSkill(
 		target => $target,
 		actorList => $actorList,
-		skill => $skill
-	);
-	my $task = new Task::ErrorReport(
-		task => $skillTask,
+		skill => $skill,
 		priority => Task::USER_PRIORITY
 	);
+	my $task = new Task::ErrorReport(task => $skillTask);
 	$taskManager->add($task);
 }
 
