@@ -3345,7 +3345,7 @@ sub cmdSkills {
 			my $sp = $char->{skills}{$handle}{sp} || '';
 			$msg .= swrite(
 				"@>>> @<<<<<<<<<<<<<<<<<<<<<<<<<<<< @>>    @>>>",
-				[$skill->getID(), $skill->getName(), $char->getSkillLevel($skill), $sp]);
+				[$skill->getIDN(), $skill->getName(), $char->getSkillLevel($skill), $sp]);
 		}
 		$msg .= TF("\nSkill Points: %d\n", $char->{points_skill});
 		$msg .= "-------------------------------\n";
