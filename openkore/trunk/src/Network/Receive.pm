@@ -43,6 +43,7 @@ use Misc;
 use Plugins;
 use Utils;
 use Skills;
+use Skill;
 use AI;
 use Utils::Exceptions;
 use Utils::Crypton;
@@ -2497,24 +2498,27 @@ sub homunculus_skills {
 		my $level = unpack("v1", substr($msg, $i + 6, 2));
 		my $sp = unpack("v1", substr($msg, $i + 8, 2));
 		my $range = unpack("v1", substr($msg, $i + 10, 2));
-		my ($skillName) = unpack("Z*", substr($msg, $i + 12, 24));
-		$skillName = Skills->new(id => $skillID)->handle if (!$skillName);
+		my ($handle) = unpack("Z*", substr($msg, $i + 12, 24));
 		my $up = unpack("C1", substr($msg, $i+36, 1));
-
-		$char->{skills}{$skillName}{ID} = $skillID;
-		$char->{skills}{$skillName}{sp} = $sp;
-		$char->{skills}{$skillName}{range} = $range;
-		$char->{skills}{$skillName}{up} = $up;
-		$char->{skills}{$skillName}{targetType} = $targetType;
-		if (!$char->{skills}{$skillName}{lv}) {
-			$char->{skills}{$skillName}{lv} = $level;
+		if (!$handle) {
+			$handle = Skill->new(idn => $skillID)->getHandle();
 		}
-		binAdd(\@AI::Homunculus::homun_skillsID, $skillName) if (!binFind(\@AI::Homunculus::homun_skillsID, $skillName));
+
+		$char->{skills}{$handle}{ID} = $skillID;
+		$char->{skills}{$handle}{sp} = $sp;
+		$char->{skills}{$handle}{range} = $range;
+		$char->{skills}{$handle}{up} = $up;
+		$char->{skills}{$handle}{targetType} = $targetType;
+		if (!$char->{skills}{$handle}{lv}) {
+			$char->{skills}{$handle}{lv} = $level;
+		}
+		binAdd(\@AI::Homunculus::homun_skillsID, $handle) if (!binFind(\@AI::Homunculus::homun_skillsID, $handle));
+		Skill::DynamicInfo::add($skillID, $handle, $level, $sp, $range, $targetType);
 
 		Plugins::callHook('packet_homunSkills', {
-			'ID' => $skillID,
-			'skillName' => $skillName,
-			'level' => $level,
+			ID => $skillID,
+			handle => $handle,
+			level => $level,
 			});
 	}
 }
@@ -4810,16 +4814,15 @@ sub skill_update {
 
 	my ($ID, $lv, $sp, $range, $up) = ($args->{skillID}, $args->{lv}, $args->{sp}, $args->{range}, $args->{up});
 
-	my $skill = new Skills(id => $ID);
-	my $handle = $skill->handle;
-	my $name = $skill->name;
+	my $skill = new Skill(idn => $ID);
+	my $handle = $skill->getHandle();
+	my $name = $skill->getName();
 	$char->{skills}{$handle}{lv} = $lv;
 	$char->{skills}{$handle}{sp} = $sp;
 	$char->{skills}{$handle}{range} = $range;
 	$char->{skills}{$handle}{up} = $up;
 
-	# values not used right now:
-	# range = skill range, up = this skill can be leveled up further
+	Skill::DynamicInfo::add($ID, $handle, $lv, $sp, $range, $skill->getTargetType());
 
 	# Set $skillchanged to 2 so it knows to unset it when skill points are updated
 	if ($skillChanged eq $handle) {
@@ -5052,6 +5055,7 @@ sub skills_list {
 
 	undef @skillsID;
 	delete $char->{skills};
+	Skill::DynamicInfo::clear();
 	for (my $i = 4; $i < $msg_size; $i += 37) {
 		my $skillID = unpack("v1", substr($msg, $i, 2));
 		# target type is 0 for novice skill, 1 for enemy, 2 for place, 4 for immediate invoke, 16 for party member
@@ -5059,19 +5063,19 @@ sub skills_list {
 		my $level = unpack("v1", substr($msg, $i + 6, 2));
 		my $sp = unpack("v1", substr($msg, $i + 8, 2));
 		my $range = unpack("v1", substr($msg, $i + 10, 2));
-		my ($skillName) = unpack("Z*", substr($msg, $i + 12, 24));
-		if (!$skillName) {
-			$skillName = Skills->new(id => $skillID)->handle;
-		}
+		my ($handle) = unpack("Z*", substr($msg, $i + 12, 24));
 		my $up = unpack("C1", substr($msg, $i+36, 1));
+		if (!$handle) {
+			$handle = Skill->new(idn => $skillID)->getHandle();
+		}
 
-		$char->{skills}{$skillName}{ID} = $skillID;
-		$char->{skills}{$skillName}{sp} = $sp;
-		$char->{skills}{$skillName}{range} = $range;
-		$char->{skills}{$skillName}{up} = $up;
-		$char->{skills}{$skillName}{targetType} = $targetType;
-		if (!$char->{skills}{$skillName}{lv}) {
-			$char->{skills}{$skillName}{lv} = $level;
+		$char->{skills}{$handle}{ID} = $skillID;
+		$char->{skills}{$handle}{sp} = $sp;
+		$char->{skills}{$handle}{range} = $range;
+		$char->{skills}{$handle}{up} = $up;
+		$char->{skills}{$handle}{targetType} = $targetType;
+		if (!$char->{skills}{$handle}{lv}) {
+			$char->{skills}{$handle}{lv} = $level;
 		}
 		##
 		# I have no idea what the importance of this line (original) is:
@@ -5079,13 +5083,15 @@ sub skills_list {
 		# translated to new Skill syntax:
 		#     $Skills::skills{id}{$skillID}{name} = Skills->new(handle => lc($skillName))->name;
 		# commented out
-		binAdd(\@skillsID, $skillName);
+		binAdd(\@skillsID, $handle);
+
+		Skill::DynamicInfo::add($skillID, $handle, $level, $sp, $range, $targetType);
 
 		Plugins::callHook('packet_charSkills', {
-			'ID' => $skillID,
-			'skillName' => $skillName,
-			'level' => $level,
-			});
+			ID => $skillID,
+			handle => $handle,
+			level => $level,
+		});
 	}		
 }
 

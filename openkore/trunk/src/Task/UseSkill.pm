@@ -33,7 +33,7 @@ use Task::SitStand;
 use Globals qw($net $char %skillsArea $messageSender $accountID);
 use Network;
 use Plugins;
-use Skills;
+use Skill;
 use Log qw(debug);
 use Translation qw(T TF);
 use Utils qw(timeOut);
@@ -71,6 +71,8 @@ use constant {
 # `l
 # - All options allowed for Task->new(), except 'mutexes'.
 # - skill (required) - A Skill object, which represents the skill to be used.
+#       The level property must be set. If not set, the maximum available level will
+#       be used.
 # - target - Specifies the target to use this skill on. If the skill is to be
 #       used on an actor (such as a monster), then this argument must be an
 #       Actor object. If the skill is to be used on a location (as is the case
@@ -172,7 +174,7 @@ sub onSkillCast {
 	my (undef, $args, $holder) = @_;
 	my $self = $holder->[0];
 	if ($self->getStatus() == Task::RUNNING && $args->{sourceID} eq $char->{ID}
-	 && $self->{skill}->id() == $args->{skillID}) {
+	 && $self->{skill}->getIDN() == $args->{skillID}) {
 		$self->{castingStarted} = 1;
 		$self->{castFinishTimer}{time} = time;
 		$self->{castFinishTimer}{timeout} = $args->{castTime} + DEFAULT_CAST_TIMEOUT;
@@ -184,7 +186,7 @@ sub onSkillUse {
 	my (undef, $args, $holder) = @_;
 	my $self = $holder->[0];
 	if ($self->getStatus() == Task::RUNNING && $args->{sourceID} eq $char->{ID}
-	 && $self->{skill}->id() == $args->{skillID}) {
+	 && $self->{skill}->getIDN() == $args->{skillID}) {
 		$self->{castingFinished} = 1;
 	}
 }
@@ -193,7 +195,7 @@ sub onSkillUse {
 sub onSkillFail {
 	my (undef, $args, $holder) = @_;
 	my $self = $holder->[0];
-	if ($self->getStatus() == Task::RUNNING && $self->{skill}->id() == $args->{skillID}) {
+	if ($self->getStatus() == Task::RUNNING && $self->{skill}->getIDN() == $args->{skillID}) {
 		$self->{castingError} = {
 			type => $args->{failType},
 			message => $args->{failMessage}
@@ -233,17 +235,20 @@ sub checkPreparations {
 sub castSkill {
 	my ($self) = @_;
 	my $skill = $self->{skill};
-	my $handle = $skill->handle();
-	my $skillID = $skill->id();
-	my $level = $skill->level();
+	my $handle = $skill->getHandle();
+	my $skillID = $skill->getIDN();
+	my $level = $skill->getLevel();
+	if (!defined $level) {
+		$level = $char->getSkillLevel($skill);
+	}
 
-	if ($skillsArea{$handle} == 2) {
+	if ($skill->getTargetType() == Skill::TARGET_SELF) {
 		# A skill which is used on the character self.
 		$messageSender->sendSkillUse($skillID, $level, $accountID);
 
 	} elsif (UNIVERSAL::isa($self->{target}, 'Actor')) {
 		# The skill must be used on an actor.
-		if ($skillsArea{$handle} == 1) {
+		if ($skill->getTargetType() == Skill::TARGET_LOCATION) {
 			# This is a location skill.
 			$messageSender->sendSkillUseLoc($skillID, $level,
 				$self->{target}{pos_to}{x}, $self->{target}{pos_to}{y});
@@ -268,10 +273,11 @@ sub iterate {
 	my ($self) = @_;
 	return if (!$char || $net->getState() != Network::IN_GAME);
 
-	my $handle = $self->{skill}->handle();
-	if ($char->getSkillLevel($self->{skill}) == 0 && !($char->{permitSkill} && $char->{permitSkill}->handle eq $handle)) {
+	my $handle = $self->{skill}->getHandle();
+	if ($char->getSkillLevel($self->{skill}) == 0
+	&& !($char->{permitSkill} && $char->{permitSkill}->getHandle() eq $handle)) {
 		$self->setError(ERROR_NO_SKILL, T("Skill %s cannot be used because character has no such skill.",
-			$self->{skill}->name()));
+			$self->{skill}->getName()));
 		debug "UseSkill - No such skill.\n", "Task::UseSkill" if DEBUG;
 		return;
 	}
@@ -328,7 +334,7 @@ sub iterate {
 				debug "UseSkill - Timeout, recasting skill.\n", "Task::UseSkill" if DEBUG;
 			} else {
 				$self->setError(ERROR_MAX_TRIES, TF("Unable to cast skill %s in %d tries.",
-					$self->{skill}->name(), $self->{maxCastTries}));
+					$self->{skill}->getName(), $self->{maxCastTries}));
 				debug "UseSkill - Timeout, maximum tries reached.\n", "Task::UseSkill" if DEBUG;
 			}
 

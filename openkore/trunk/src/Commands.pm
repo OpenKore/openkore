@@ -32,6 +32,7 @@ use Network::Send ();
 use Settings;
 use Plugins;
 use Skills;
+use Skill;
 use Utils;
 use Misc;
 use AI;
@@ -155,7 +156,7 @@ sub initHandlers {
 	store              => \&cmdStore,
 	sl                 => \&cmdUseSkill,
 	sm                 => \&cmdUseSkill,
-	sp                 => \&cmdPlayerSkill,
+	sp                 => \&cmdUseSkill,
 	ss                 => \&cmdUseSkill,
 	ssp                => \&cmdUseSkill,
 	st                 => \&cmdStats,
@@ -193,9 +194,7 @@ sub initHandlers {
 }
 
 sub initCompletions {
-	%completions = (
-	sp		=> \&cmdPlayerSkill,
-	);
+	%completions = ();
 }
 
 ##
@@ -2991,67 +2990,6 @@ sub cmdPlayerList {
 	message($msg, "list");
 }
 
-sub cmdPlayerSkill {
-	my $switch = shift;
-	my $last_arg_pos;
-	my @args = parseArgs(shift, undef, undef, \$last_arg_pos);
-	my $mode = shift;
-
-	if ($mode eq 'c') {
-		# Completion mode
-		my $arg = $args[$#args];
-		my @matches;
-
-		if (@args == 2) {
-			# Complete skill name
-			@matches = Skills::complete($arg);
-		} elsif (@args == 3) {
-			# Complete player name
-			@matches = completePlayerName($arg);
-		}
-
-		return ($last_arg_pos, \@matches);
-	}
-
-	if (@args < 1) {
-		error T("Syntax Error in function 'sp' (Use Skill on Player)\n" .
-			"Usage: sp (skill # or name) [player # or name] [level]\n");
-		return;
-	}
-
-	my $skill = new Skills(auto => $args[0]);
-	my $target;
-	my $targetID;
-	my $char_skill = $char->{skills}{$skill->handle};
-	my $lv = $args[2] || $char_skill->{lv} || 10;
-
-	if (!defined $skill->id) {
-		error TF("Error in function 'sp' (Use Skill on Player)\n" .
-			"'%s' is not a valid skill.\n", $args[0]);
-		return;
-	}
-
-	if ($args[1] ne "") {
-		$target = Match::player($args[1], 1);
-		if (!$target) {
-			error TF("Error in function 'sp' (Use Skill on Player)\n" .
-				"Player '%s' does not exist.\n", $args[1]);
-			return;
-		}
-		$targetID = $target->{ID};
-	} else {
-		$target = $char;
-		$targetID = $accountID;
-	}
-
-	if (main::ai_getSkillUseType($skill->handle)) {
-		main::ai_skillUse($skill->handle, $lv, 0, 0,
-			$target->{pos_to}{x}, $target->{pos_to}{y});
-	} else {
-		main::ai_skillUse($skill->handle, $lv, 0, 0, $targetID);
-	}
-}
-
 sub cmdPlugin {
 	my (undef, $input) = @_;
 	my @args = split(/ +/, $input, 2);
@@ -4221,7 +4159,7 @@ sub cmdUseSkill {
 		}
 
 	} elsif ($cmd eq 'sp') {
-		if (@args < 1 || @args > 3) {
+		if (@args < 2 || @args > 3) {
 			error T("Syntax error in function 'sp' (Use Skill on Player)\n" .
 				"Usage: sp <skill #> <player #> [level]\n");
 			return;
@@ -4230,10 +4168,10 @@ sub cmdUseSkill {
 				"You are not logged into the game.\n");
 			return;
 		} else {
-			$target = $playersList->get($args[1]);
+			$target = Match::player($args[1], 1);
 			if (!$target) {
 				error TF("Error in function 'sp' (Use Skill on Player)\n" .
-					"Player %d does not exist.\n", $args[1]);
+					"Player '%s' does not exist.\n", $args[1]);
 				return;
 			}
 			$actorList = $playersList;
@@ -4241,7 +4179,7 @@ sub cmdUseSkill {
 		}
 
 	} elsif ($cmd eq 'sm') {
-		if (@args < 1 || @args > 3) {
+		if (@args < 2 || @args > 3) {
 			error T("Syntax error in function 'sm' (Use Skill on Monster)\n" .
 				"Usage: sm <skill #> <monster #> [level]\n");
 			return;
@@ -4275,10 +4213,7 @@ sub cmdUseSkill {
 		$target = { %{$pos} };
 	}
 
-	if (!defined $level) {
-		$level = $char->getSkillLevel(new Skills(auto => $args[0]));
-	}
-	$skill = Skills->new(auto => $args[0], level => $level);
+	$skill = new Skill(auto => $args[0], level => $level);
 
 	require Task::UseSkill;
 	my $skillTask = new Task::UseSkill(
