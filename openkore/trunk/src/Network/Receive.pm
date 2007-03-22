@@ -42,7 +42,6 @@ use Network::Send ();
 use Misc;
 use Plugins;
 use Utils;
-use Skills;
 use Skill;
 use AI;
 use Utils::Exceptions;
@@ -1968,7 +1967,7 @@ sub cast_cancelled {
 	my $source = Actor::get($ID);
 	$source->{cast_cancelled} = time;
 	my $skill = $source->{casting}->{skill};
-	my $skillName = $skill ? $skill->name : 'Unknown';
+	my $skillName = $skill ? $skill->getName() : 'Unknown';
 	my $domain = ($ID eq $accountID) ? "selfSkill" : "skill";
 	message TF("%s failed to cast %s\n", $source, $skillName), $domain;
 	Plugins::callHook('packet_castCancelled', {
@@ -3278,8 +3277,8 @@ sub item_skill {
 	my $sp = $args->{sp}; # we don't use this yet
 	my $skillName = $args->{skillName};
 
-	my $skill = Skills->new(id => $skillID);
-	message TF("Permitted to use %s (%d), level %d\n", $skill->name, $skillID, $skillLv);
+	my $skill = new Skill(idn => $skillID);
+	message TF("Permitted to use %s (%d), level %d\n", $skill->getName(), $skillID, $skillLv);
 
 	unless ($config{noAutoSkill}) {
 		$messageSender->sendSkillUse($skillID, $skillLv, $accountID);
@@ -4514,8 +4513,8 @@ sub resurrection {
 sub sage_autospell {
 	# Sage Autospell - list of spells availible sent from server
 	if ($config{autoSpell}) {
-		my $skill = Skills->new(name => $config{autoSpell});
-		$messageSender->sendAutoSpell($skill->id);
+		my $skill = new Skill(name => $config{autoSpell});
+		$messageSender->sendAutoSpell($skill->getIDN());
 	}	
 }
 
@@ -4713,7 +4712,7 @@ sub skill_cast {
 
 	Misc::checkValidity("skill_cast part 1");
 
-	my $skill = new Skills(id => $skillID);
+	my $skill = new Skill(idn => $skillID);
 	$source->{casting} = {
 		skill => $skill,
 		target => $target,
@@ -4749,7 +4748,7 @@ sub skill_cast {
 	Misc::checkValidity("skill_cast part 2");
 
 	my $domain = ($sourceID eq $accountID) ? "selfSkill" : "skill";
-	my $disp = skillCast_string($source, $target, $x, $y, $skill->name, $wait);
+	my $disp = skillCast_string($source, $target, $x, $y, $skill->getName(), $wait);
 	message $disp, $domain, 1;
 
 	Plugins::callHook('is_casting', {
@@ -4855,9 +4854,9 @@ sub skill_use {
 	countCastOn($args->{sourceID}, $args->{targetID}, $args->{skillID});
 
 	# Resolve source and target names
-	my $skill = new Skills(id => $args->{skillID});
+	my $skill = new Skill(idn => $args->{skillID});
 	$args->{skill} = $skill;
-	my $disp = skillUse_string($source, $target, $skill->name, $args->{damage}, 
+	my $disp = skillUse_string($source, $target, $skill->getName(), $args->{damage}, 
 		$args->{level}, ($args->{src_speed}/10));
 
 	if ($args->{damage} != -30000 &&
@@ -4902,7 +4901,7 @@ sub skill_use {
 	message $disp, $domain, 1;
 
 	if ($args->{targetID} eq $accountID && $args->{damage} > 0) {
-		$damageTaken{$source->{name}}{$skill->name} += $args->{damage};
+		$damageTaken{$source->{name}}{$skill->getName()} += $args->{damage};
 	}
 }
 
@@ -4928,7 +4927,7 @@ sub skill_use_failed {
 		9 => '90% Overweight',
 		10 => 'Requirement'
 		);
-	warning TF("Skill %s failed (%s)\n", Skills->new(id => $skillID)->name, $failtype{$type}), "skill";
+	warning TF("Skill %s failed (%s)\n", Skill->new(id => $skillID)->getName(), $failtype{$type}), "skill";
 	Plugins::callHook('packet_skillfail', {
 		skillID     => $skillID,
 		failType    => $type,
@@ -4951,7 +4950,7 @@ sub skill_use_location {
 
 	# Resolve source name
 	my $source = Actor::get($sourceID);
-	my $skillName = Skills->new(id => $skillID)->name;
+	my $skillName = Skill->new(id => $skillID)->getName();
 	my $disp = skillUseLocation_string($source, $skillName, $args);
 
 	# Print skill use message
@@ -5008,12 +5007,12 @@ sub skill_used_no_damage {
 	}
 
 	my $domain = ($args->{sourceID} eq $accountID) ? "selfSkill" : "skill";
-	my $skill = $args->{skill} = new Skills(id => $args->{skillID});
-	my $disp = skillUseNoDamage_string($source, $target, $skill->id, $skill->name, $args->{amount});
+	my $skill = $args->{skill} = new Skill(idn => $args->{skillID});
+	my $disp = skillUseNoDamage_string($source, $target, $skill->getIDN(), $skill->getName(), $args->{amount});
 	message $disp, $domain;
 	
 	# Set teleport time
-	if ($args->{sourceID} eq $accountID && $skill->handle eq 'AL_TELEPORT') {
+	if ($args->{sourceID} eq $accountID && $skill->getHandle() eq 'AL_TELEPORT') {
 		$timeout{ai_teleport_delay}{time} = time;
 	}
 
@@ -5022,10 +5021,10 @@ sub skill_used_no_damage {
 		my $player = $playersList->getByID($args->{sourceID});
 		if ($player && ($args->{skillID} == 28 || $args->{skillID} == 29 || $args->{skillID} == 34)) {
 			if ($args->{targetID} eq $accountID) {
-				chatLog("k", "***$source ".$skill->name." on $target$extra***\n");
+				chatLog("k", "***$source ".$skill->getName()." on $target$extra***\n");
 				sendMessage("pm", getResponse("skillgoodM"), $player->name);
 			} elsif ($monstersList->getByID($args->{targetID})) {
-				chatLog("k", "***$source ".$skill->name." on $target$extra***\n");
+				chatLog("k", "***$source ".$skill->getName()." on $target$extra***\n");
 				sendMessage("pm", getResponse("skillbadM"), $player->name);
 			}
 		}

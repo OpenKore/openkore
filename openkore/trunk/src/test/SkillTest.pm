@@ -21,6 +21,11 @@ sub testStaticInfo {
 	is($skill->getIDN(), 34);
 	is($skill->getHandle(), "AL_BLESSING");
 
+	$skill = new Skill(name => "blessing");
+	is($skill->getName(), "Blessing");
+	is($skill->getIDN(), 34);
+	is($skill->getHandle(), "AL_BLESSING");
+
 	$skill = new Skill(idn => 5);
 	is($skill->getName(), "Bash");
 	is($skill->getIDN(), 5);

@@ -27,6 +27,7 @@ use Actor;
 use Log qw(message debug warning);
 use Translation qw(T TF);
 use Network::Send ();
+use Skill;
 use Misc;
 use Utils;
 use Utils::Benchmark;
@@ -288,7 +289,7 @@ sub main {
 	delete $args->{attackMethod};
 	my $lastSkill;
 	if ($char->{last_skill_used}) {
-		$lastSkill = Skills->new(id => $char->{last_skill_used})->name;
+		$lastSkill = Skill->new(id => $char->{last_skill_used})->getName();
 	}
 	my $i = 0;
 	while (exists $config{"attackComboSlot_$i"}) {
@@ -344,10 +345,10 @@ sub main {
 				next;
 			}
 
-			my $skill = Skills->new(name => $config{"attackSkillSlot_$i"});
+			my $skill = new Skill(name => $config{"attackSkillSlot_$i"});
 			if (checkSelfCondition("attackSkillSlot_$i")
 				&& (!$config{"attackSkillSlot_$i"."_maxUses"} ||
-				    $target->{skillUses}{$skill->handle} < $config{"attackSkillSlot_$i"."_maxUses"})
+				    $target->{skillUses}{$skill->getHandle()} < $config{"attackSkillSlot_$i"."_maxUses"})
 				&& (!$config{"attackSkillSlot_$i"."_maxAttempts"} || $args->{attackSkillSlot_attempts}{$i} < $config{"attackSkillSlot_$i"."_maxAttempts"})
 				&& (!$config{"attackSkillSlot_$i"."_monsters"} || existsInList($config{"attackSkillSlot_$i"."_monsters"}, $target->{'name'}))
 				&& (!$config{"attackSkillSlot_$i"."_notMonsters"} || !existsInList($config{"attackSkillSlot_$i"."_notMonsters"}, $target->{'name'}))
@@ -577,10 +578,10 @@ sub main {
 			delete $args->{attackMethod};
 
 			ai_setSuspend(0);
-			my $skill = Skills->new(name => lc($config{"attackSkillSlot_$slot"}));
-			if (!ai_getSkillUseType($skill->handle)) {
+			my $skill = new Skill(name => lc($config{"attackSkillSlot_$slot"}));
+			if (!ai_getSkillUseType($skill->getHandle())) {
 				ai_skillUse(
-					$skill->handle,
+					$skill->getHandle(),
 					$config{"attackSkillSlot_${slot}_lvl"},
 					$config{"attackSkillSlot_${slot}_maxCastTime"},
 					$config{"attackSkillSlot_${slot}_minCastTime"},
@@ -593,7 +594,7 @@ sub main {
 			} else {
 				my $pos = calcPosition($config{"attackSkillSlot_${slot}_isSelfSkill"} ? $char : $target);
 				ai_skillUse(
-					$skill->handle,
+					$skill->getHandle(),
 					$config{"attackSkillSlot_${slot}_lvl"},
 					$config{"attackSkillSlot_${slot}_maxCastTime"},
 					$config{"attackSkillSlot_${slot}_minCastTime"},
@@ -611,7 +612,7 @@ sub main {
 		} elsif ($args->{attackMethod}{type} eq "combo") {
 			my $slot = $args->{attackMethod}{comboSlot};
 			my $isSelfSkill = $args->{attackMethod}{isSelfSkill};
-			my $skill = Skills->new(name => $config{"attackComboSlot_$slot"})->handle;
+			my $skill = Skill->new(name => $config{"attackComboSlot_$slot"})->getHandle();
 			delete $args->{attackMethod};
 
 			if (!ai_getSkillUseType($skill)) {

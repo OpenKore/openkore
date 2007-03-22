@@ -35,6 +35,7 @@ use Plugins;
 use FileParsers;
 use Settings;
 use Utils;
+use Skill;
 use Field;
 use Network;
 use Network::Send ();
@@ -2070,8 +2071,8 @@ sub sendMessage {
 # Keep track of when we last cast a skill
 sub setSkillUseTimer {
 	my ($skillID, $targetID, $wait) = @_;
-	my $skill = new Skills(id => $skillID);
-	my $handle = $skill->handle;
+	my $skill = new Skill(idn => $skillID);
+	my $handle = $skill->getHandle();
 
 	$char->{skills}{$handle}{time_used} = time;
 	delete $char->{time_cast};
@@ -2083,17 +2084,17 @@ sub setSkillUseTimer {
 	# increment monsterSkill maxUses counter
 	if (defined $targetID) {
 		my $actor = Actor::get($targetID);
-		$actor->{skillUses}{$skill->handle}++;
+		$actor->{skillUses}{$skill->getHandle()}++;
 	}
 
 	# Set encore skill if applicable
-	$char->{encoreSkill} = $skill if $targetID eq $accountID && $skillsEncore{$skill->handle};
+	$char->{encoreSkill} = $skill if $targetID eq $accountID && $skillsEncore{$skill->getHandle()};
 }
 
 sub setPartySkillTimer {
 	my ($skillID, $targetID) = @_;
-	my $skill = new Skills(id => $skillID);
-	my $handle = $skill->handle;
+	my $skill = new Skill(idn => $skillID);
+	my $handle = $skill->getHandle();
 
 	# set partySkill target_time
 	my $i = $targetTimeout{$targetID}{$handle};
@@ -2609,17 +2610,17 @@ sub useTeleport {
 
 	if ($sk_lvl > 0 && $internal > 0) {
 		# We have the teleport skill, and should use it
-		my $skill = new Skills(handle => 'AL_TELEPORT');
+		my $skill = new Skill(handle => 'AL_TELEPORT');
 		if ($use_lvl == 2 || $internal == 1 || ($internal == 2 && binSize(\@playersID))) {
 			# Send skill use packet to appear legitimate
 			# (Always send skill use packet for level 2 so that saveMap
 			# autodetection works)
 
 			if ($char->{sitting}) {
-				main::ai_skillUse($skill->handle, $sk_lvl, 0, 0, $accountID);
+				main::ai_skillUse($skill->getHandle(), $sk_lvl, 0, 0, $accountID);
 				return 1;
 			} else {
-				$messageSender->sendSkillUse($skill->id, $sk_lvl, $accountID);
+				$messageSender->sendSkillUse($skill->getIDN(), $sk_lvl, $accountID);
 				undef $char->{permitSkill};
 			}
 
@@ -3608,7 +3609,7 @@ sub checkSelfCondition {
 
 	# check skill use SP if this is a 'use skill' condition
 	if ($prefix =~ /skill/i) {
-		my $skill_handle = Skills->new(name => lc($config{$prefix}))->handle;
+		my $skill_handle = Skill->new(name => lc($config{$prefix}))->getHandle();
 		return 0 unless (($char->{skills}{$skill_handle} && $char->{skills}{$skill_handle}{lv} >= 1)
 						|| ($char->{permitSkill} &&	$char->{permitSkill}->name eq $config{$prefix})
 						|| $config{$prefix."_equip_leftAccessory"}
