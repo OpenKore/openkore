@@ -146,12 +146,26 @@ sub selfCheck {
 			"Please read %s", "http://www.openkore.com/aliases/xstools.php"));
 		exit 1;
 	} elsif (XSTools::majorVersion() != 4) {
-		$interface->errorDialog(TF("Your version of XSTools library is incompatible.\n" .
-			"Please read %s", "http://www.openkore.com/aliases/xstools.php"));
+		my $error;
+		if (defined $ENV{INTERPRETER}) {
+			$error = TF("Your version of (wx)start.exe is incompatible.\n" .
+				"Please upgrade it by reading %s", "http://www.openkore.com/aliases/xstools.php");
+		} else {
+			$error = TF("Your version of XSTools library is incompatible.\n" .
+				"Please upgrade it by reading %s", "http://www.openkore.com/aliases/xstools.php");
+		}
+		$interface->errorDialog($error);
 		exit 1;
 	} elsif (XSTools::minorVersion() < 4) {
-		$interface->errorDialog(TF("Your version of the XSTools library is too old. Please upgrade it.\n" .
-			"Please read %s", "http://www.openkore.com/aliases/xstools.php"));
+		my $error;
+		if (defined $ENV{INTERPRETER}) {
+			$error = TF("Your version of (wx)start.exe is too old.\n" .
+				"Please upgrade it by reading %s", "http://www.openkore.com/aliases/xstools.php")
+		} else {
+			$error = TF("Your version of the XSTools library is too old.\n" .
+				"Please upgrade it by reading %s", "http://www.openkore.com/aliases/xstools.php")
+		}
+		$interface->errorDialog($error);
 		exit 1;
 	}
 }
