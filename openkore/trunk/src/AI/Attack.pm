@@ -289,7 +289,7 @@ sub main {
 	delete $args->{attackMethod};
 	my $lastSkill;
 	if ($char->{last_skill_used}) {
-		$lastSkill = Skill->new(id => $char->{last_skill_used})->getName();
+		$lastSkill = Skill->new(idn => $char->{last_skill_used})->getName();
 	}
 	my $i = 0;
 	while (exists $config{"attackComboSlot_$i"}) {
