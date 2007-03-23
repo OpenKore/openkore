@@ -16,7 +16,7 @@ Credits:
 New commands:
 - Added more GM Commands
 	gmremove : Warp to a player via character name or user name.
-	gmremove : summons a player via character name or user name.
+	gmrecall : summons a player via character name or user name.
 
 =========================
 ### OpenKore 1.9.3 (beta)
