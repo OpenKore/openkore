@@ -97,7 +97,7 @@ ip 211.172.247.192
 port 6900
 master_version 0
 version 19
-serverType 8
+serverType 8_1
 serverEncoding Korean
 
 [Malaysia - mRO: Main Server: Balder]
