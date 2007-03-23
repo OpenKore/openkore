@@ -155,7 +155,7 @@ sub selfCheck {
 		}
 		$interface->errorDialog($error);
 		exit 1;
-	} elsif (XSTools::minorVersion() < 4) {
+	} elsif (XSTools::minorVersion() < 5) {
 		my $error;
 		if (defined $ENV{INTERPRETER}) {
 			$error = TF("Your version of (wx)start.exe is too old.\n" .
