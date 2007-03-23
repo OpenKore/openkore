@@ -254,8 +254,9 @@ public:
 				return;
 			}
 			if (postDataSize == -1) {
-				this->postDataSize = postDataSize = strlen(postData);
+				postDataSize = strlen(postData);
 			}
+			this->postDataSize = postDataSize;
 			this->postData = (char *) malloc(postDataSize);
 			if (this->postData == NULL) {
 				error = "Cannot allocate memory for HTTP POST data.";
