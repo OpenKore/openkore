@@ -13,6 +13,10 @@ Credits:
 - johnny: Fix for headgear display.
 - skseo, gksmf0615: kRO support update.
 
+New commands:
+- Added more GM Commands
+	gmremove : Warp to a player via character name or user name.
+	gmremove : summons a player via character name or user name.
 
 =========================
 ### OpenKore 1.9.3 (beta)

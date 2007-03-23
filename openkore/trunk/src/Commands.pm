@@ -104,6 +104,8 @@ sub initHandlers {
 	gmhide             => \&cmdGmhide,
 	gmwarpto           => \&cmdGmwarpto,
 	gmsummon           => \&cmdGmsummon,
+	gmrecall           => \&cmdGmremove,
+	gmremove           => \&cmdGmrecall,
 	gmdc               => \&cmdGmdc,
 	gmresetskill       => \&cmdGmresetskill,
 	gmresetstate       => \&cmdGmresetstate,
@@ -2030,6 +2032,32 @@ sub cmdGmwarpto {
 	}
 
 	my $packet = pack("C*", 0xBB, 0x01).pack("a24", $args);
+	$messageSender->sendToServer($packet);
+}
+
+sub cmdGmremove {
+	my (undef, $args) = @_;
+	return unless ($conState == 5);
+
+	if ($args eq '') {
+		error "Usage: gmwarpto [<Character Name> | <User Name>]\n";
+		return;
+	}
+
+	my $packet = pack("C*", 0xBC, 0x01).pack("a24", $args);
+	$messageSender->sendToServer($packet);
+}
+
+sub cmdGmrecall {
+	my (undef, $args) = @_;
+	return unless ($conState == 5);
+
+	if ($args eq '') {
+		error "Usage: gmwarpto [<Character Name> | <User Name>]\n";
+		return;
+	}
+
+	my $packet = pack("C*", 0xBA, 0x01).pack("a24", $args);
 	$messageSender->sendToServer($packet);
 }
 
