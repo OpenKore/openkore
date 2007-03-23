@@ -2513,66 +2513,71 @@ sub homunculus_skills {
 			$char->{skills}{$handle}{lv} = $level;
 		}
 		binAdd(\@AI::Homunculus::homun_skillsID, $handle) if (!binFind(\@AI::Homunculus::homun_skillsID, $handle));
-		Skill::DynamicInfo::add($skillID, $handle, $level, $sp, $range, $targetType);
+		Skill::DynamicInfo::add($skillID, $handle, $level, $sp, $range, $targetType, Skill::OWNER_HOMUN);
 
 		Plugins::callHook('packet_homunSkills', {
 			ID => $skillID,
 			handle => $handle,
 			level => $level,
-			});
+		});
 	}
 }
 
 sub homunculus_stats {
 	my ($self, $args) = @_;
-	$char->{homunculus}{name} = $args->{name};
+	my $homunculus = $char->{homunculus};
+	$homunculus->{name} = $args->{name};
+
+	# Homunculus states:
 	# 0 - alive
 	# 2 - rest
 	# 4 - dead
+
 	if (($args->{state} & ~8) > 1) {
 		foreach my $handle (@AI::Homunculus::homun_skillsID) {
 			delete $char->{skills}{$handle};
 		}
 		AI::Homunculus::clear();
 		undef @AI::Homunculus::homun_skillsID;
-		if ($char->{homunculus}{state} != $args->{state}) {
+		if ($homunculus->{state} != $args->{state}) {
 			if ($args->{state} & 2) {
 				message T("Your Homunculus was vaporized!\n"), 'homunculus';
 			} elsif ($args->{state} & 4) {
 				message T("Your Homunculus died!\n"), 'homunculus';
 			}
 		}
-	} elsif ($char->{homunculus}{state} != $args->{state}) {
-		if ($char->{homunculus}{state} & 2) {
+	} elsif ($homunculus->{state} != $args->{state}) {
+		if ($homunculus->{state} & 2) {
 			message T("Your Homunculus was recalled!\n"), 'homunculus';
 		} elsif ($char->{homunculus}{state} & 4) {
 			message T("Your Homunculus was resurrected!\n"), 'homunculus';
 		}
 	}
-	$char->{homunculus}{state} = $args->{state};
-	$char->{homunculus}{level} = $args->{lvl};
-	$char->{homunculus}{hunger} = $args->{hunger};
-	$char->{homunculus}{intimacy} = $args->{intimacy};
-	$char->{homunculus}{accessory} = $args->{accessory};
-	$char->{homunculus}{atk} = $args->{atk};
-	$char->{homunculus}{matk} = $args->{matk};
-	$char->{homunculus}{hit} = $args->{hit};
-	$char->{homunculus}{critical} = $args->{critical};
-	$char->{homunculus}{def} = $args->{def};
-	$char->{homunculus}{mdef} = $args->{mdef};
-	$char->{homunculus}{flee} = $args->{flee};
-	$char->{homunculus}{aspd} = $args->{aspd};
-	$char->{homunculus}{aspdDisp} = int (200 - (($args->{aspd} < 10) ? 10 : ($args->{aspd} / 10)));
-	$char->{homunculus}{hp} = $args->{hp};
-	$char->{homunculus}{hp_max} = $args->{hp_max};
-	$char->{homunculus}{sp} = $args->{sp};
-	$char->{homunculus}{sp_max} = $args->{sp_max};
-	$char->{homunculus}{exp} = $args->{exp};
-	$char->{homunculus}{exp_max} = $args->{exp_max};
-	$char->{homunculus}{hpPercent} = ($args->{hp} / $args->{hp_max}) * 100;
-	$char->{homunculus}{spPercent} = ($args->{sp} / $args->{sp_max}) * 100;
-	$char->{homunculus}{expPercent} = ($args->{exp_max}) ? ($args->{exp} / $args->{exp_max}) * 100 : 0;
-	$char->{homunculus}{points_skill} = $args->{points_skill};
+
+	$homunculus->{state}     = $args->{state};
+	$homunculus->{level}     = $args->{lvl};
+	$homunculus->{hunger}    = $args->{hunger};
+	$homunculus->{intimacy}  = $args->{intimacy};
+	$homunculus->{accessory} = $args->{accessory};
+	$homunculus->{atk}       = $args->{atk};
+	$homunculus->{matk}      = $args->{matk};
+	$homunculus->{hit}       = $args->{hit};
+	$homunculus->{critical}  = $args->{critical};
+	$homunculus->{def}       = $args->{def};
+	$homunculus->{mdef}      = $args->{mdef};
+	$homunculus->{flee}      = $args->{flee};
+	$homunculus->{aspd}      = $args->{aspd};
+	$homunculus->{aspdDisp}  = int (200 - (($args->{aspd} < 10) ? 10 : ($args->{aspd} / 10)));
+	$homunculus->{hp}        = $args->{hp};
+	$homunculus->{hp_max}    = $args->{hp_max};
+	$homunculus->{sp}        = $args->{sp};
+	$homunculus->{sp_max}    = $args->{sp_max};
+	$homunculus->{exp}       = $args->{exp};
+	$homunculus->{exp_max}   = $args->{exp_max};
+	$homunculus->{hpPercent} = ($args->{hp} / $args->{hp_max}) * 100;
+	$homunculus->{spPercent} = ($args->{sp} / $args->{sp_max}) * 100;
+	$homunculus->{expPercent}   = ($args->{exp_max}) ? ($args->{exp} / $args->{exp_max}) * 100 : 0;
+	$homunculus->{points_skill} = $args->{points_skill};
 }
 
 sub gameguard_grant {
@@ -4822,7 +4827,7 @@ sub skill_update {
 	$char->{skills}{$handle}{range} = $range;
 	$char->{skills}{$handle}{up} = $up;
 
-	Skill::DynamicInfo::add($ID, $handle, $lv, $sp, $range, $skill->getTargetType());
+	Skill::DynamicInfo::add($ID, $handle, $lv, $sp, $range, $skill->getTargetType(), Skill::OWNER_CHAR);
 
 	# Set $skillchanged to 2 so it knows to unset it when skill points are updated
 	if ($skillChanged eq $handle) {
@@ -5085,7 +5090,7 @@ sub skills_list {
 		# commented out
 		binAdd(\@skillsID, $handle);
 
-		Skill::DynamicInfo::add($skillID, $handle, $level, $sp, $range, $targetType);
+		Skill::DynamicInfo::add($skillID, $handle, $level, $sp, $range, $targetType, Skill::OWNER_CHAR);
 
 		Plugins::callHook('packet_charSkills', {
 			ID => $skillID,

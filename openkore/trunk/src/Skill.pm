@@ -41,6 +41,7 @@
 # - The maximum available skill level at the moment.
 # - The skill range.
 # - The skill's target type (whether it's used on yourself, on a location, on a monster, etc.)
+# - The skill's owner type: whether the skill is a character skill or homunculus skill.
 # `l`
 package Skill;
 
@@ -50,6 +51,7 @@ use Carp::Assert;
 use Utils::TextReader;
 use Utils::Exceptions;
 
+# Target type constants. See $Skill->getTargetType() for description.
 use constant {
 	# Passive skill; cannot be used.
 	TARGET_PASSIVE => 0,
@@ -67,6 +69,9 @@ use constant {
 	# Can be used on all actors.
 	TARGET_ACTORS => 16
 };
+
+# Owner type constants. See $Skill->getOwnerType() for description.
+use enum qw(OWNER_CHAR OWNER_HOMUN);
 
 
 ##
@@ -240,7 +245,15 @@ sub getRange {
 # int $Skill->getTargetType()
 #
 # Returns the skill's target type, which specifies on what kind of target
-# this skill can be used.
+# this skill can be used. Returns one of:
+# `l
+# - Skill::TARGET_PASSIVE  - Passive skill; cannot be used.
+# - Skill::TARGET_ENEMY    - Used on enemies (i.e. monsters, and also people when in WoE/PVP).
+# - Skill::TARGET_LOCATION - Used on locations.
+# - Skill::TARGET_SELF     - Always used on yourself, there's no targeting involved. Though
+#                            some of these skills (like Gloria) have effect on the entire party.
+# - Skill::TARGET_ACTORS   - Can be used on all actors.
+# `l`
 sub getTargetType {
 	my ($self) = @_;
 	if (!defined $self->{idn}) {
@@ -250,11 +263,31 @@ sub getTargetType {
 		return $entry->{targetType} if ($entry);
 
 		# TODO: use skillsarea.txt
+		# Do we even need this file? All the info is already given by the server.
 
 		# We don't know the target type so we just assume that it's used on
 		# an enemy (which is usually correct).
 		return TARGET_ENEMY;
 	}
+}
+
+##
+# int $Skill->getOwnerType()
+#
+# Returns the skill's owner type, which specifies whether this skill belongs to the character
+# or to the homunculus. Returns one of:
+# `l
+# - Skill::OWNER_CHAR  - This skill belongs to the character.
+# - Skill::OWNER_HOMUN - This skill belongs to the character's homunculus.
+# `l`
+sub getOwnerType {
+	my ($self) = @_;
+	if (defined $self->{idn}) {
+		my $entry = $Skill::DynamicInfo::skills{$self->{idn}};
+		return $entry->{ownerType} if ($entry);
+	}
+	# Just assume that this is a character skill. This is usually the case.
+	return OWNER_CHAR;
 }
 
 # Lookup an IDN by skill handle.
@@ -423,13 +456,14 @@ our %skills;
 our %handles;
 
 sub add {
-	my ($idn, $handle, $level, $sp, $range, $targetType) = @_;
+	my ($idn, $handle, $level, $sp, $range, $targetType, $ownerType) = @_;
 	$skills{$idn} = {
 		handle     => $handle,
 		level      => $level,
 		sp         => $sp,
 		range      => $range,
-		targetType => $targetType
+		targetType => $targetType,
+		ownerType  => $ownerType
 	};
 	$handles{$handle} = $idn;
 }

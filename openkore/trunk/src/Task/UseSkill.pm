@@ -169,11 +169,20 @@ sub resume {
 	delete $self->{interruptTime};
 }
 
+# Checks whether the caster of a skill is this character (in case of a character skill)
+# or the homunculus (in case of a Homunculus skill).
+sub casterIsCorrect {
+	my ($self, $actorID) = @_;
+	my $skill = $self->{skill};
+	return ($skill->getOwnerType() == Skill::OWNER_CHAR && $actorID eq $char->{ID})
+	    || ($skill->getOwnerType() == Skill::OWNER_HOMUN && $char->{homunculus} && $actorID eq $char->{homunculus}{ID});
+}
+
 # Called when a skill has started casting.
 sub onSkillCast {
 	my (undef, $args, $holder) = @_;
 	my $self = $holder->[0];
-	if ($self->getStatus() == Task::RUNNING && $args->{sourceID} eq $char->{ID}
+	if ($self->getStatus() == Task::RUNNING && $self->casterIsCorrect($args->{sourceID})
 	 && $self->{skill}->getIDN() == $args->{skillID}) {
 		$self->{castingStarted} = 1;
 		$self->{castFinishTimer}{time} = time;
@@ -185,7 +194,7 @@ sub onSkillCast {
 sub onSkillUse {
 	my (undef, $args, $holder) = @_;
 	my $self = $holder->[0];
-	if ($self->getStatus() == Task::RUNNING && $args->{sourceID} eq $char->{ID}
+	if ($self->getStatus() == Task::RUNNING && $self->casterIsCorrect($args->{sourceID})
 	 && $self->{skill}->getIDN() == $args->{skillID}) {
 		$self->{castingFinished} = 1;
 	}
@@ -207,7 +216,7 @@ sub onSkillFail {
 sub onSkillCancelled {
 	my (undef, $args, $holder) = @_;
 	my $self = $holder->[0];
-	if ($self->getStatus() == Task::RUNNING && $args->{ID} eq $char->{ID}) {
+	if ($self->getStatus() == Task::RUNNING && $self->casterIsCorrect($args->{sourceID})) {
 		$self->{castingCancelled} = 1;
 	}
 }
