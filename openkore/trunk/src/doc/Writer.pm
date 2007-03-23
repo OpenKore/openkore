@@ -23,7 +23,7 @@ sub makeupText {
 		}
 		$text = join("\n", @list);
 		$text =~ s/<li><\/li>//sg;
-		return "<ul>$text\n</ul>";
+		return "<{ul}>$text\n<{/ul}>";
 	}
 	sub preformatted {
 		my ($attrs, $text) = @_;
@@ -36,9 +36,9 @@ sub makeupText {
 
 	$text =~ s/\n\n/\n<{p}>\n\n/sg;
 	$text =~ s/(<\/dd>)\n<{p}>(\n*<dt>)/$1$2/sg;
-	$text =~ s/^`l$/<ul>/gm;
-	$text =~ s/^`l`$/<\/ul>/gm;
-	$text =~ s/<ul>(.*?)<\/ul>/&list($1)/gse;
+	$text =~ s/^`l$/<{ul}>/gm;
+	$text =~ s/^`l`$/<{\/ul}>/gm;
+	$text =~ s/<{ul}>(.*?)<{\/ul}>/&list($1)/gse;
 	$text =~ s/(^| |\n)(http:\/\/.*?)($| |\n)/$1<a href="$2">$2<\/a>$3/gs;
 
 
@@ -138,6 +138,15 @@ sub parseDeclarations {
 	return "(" . join(', ', @params) . ")";
 }
 
+sub compareSymbols {
+	if ($a =~ /->new$/) {
+		return -1;
+	} elsif ($b =~ /->new$/) {
+		return 1;
+	} else {
+		return $a cmp $b;
+	}
+}
 
 sub writeModuleHTML {
 	my $module = shift;
@@ -178,8 +187,9 @@ sub writeModuleHTML {
 		my $module = shift;
 		my $category = shift;
 		my $text = '';
+		my @symbols = keys %{$module->{categories}{$category}};
 
-		foreach my $itemName (sort(keys %{$module->{categories}{$category}})) {
+		foreach my $itemName (sort compareSymbols @symbols) {
 			my $item = $module->{categories}{$category}{$itemName};
 			my $name = $item->{name};
 			my $abstract = $item->{abstract} ? "abstract&nbsp;" : "";
@@ -207,7 +217,7 @@ sub writeModuleHTML {
 	sub writeFunctionIndices {
 		my $module = shift;
 		my $text = '';
-		foreach my $category (sort(keys %{$module->{categories}})) {
+		foreach my $category (sort (keys %{$module->{categories}})) {
 			$text .= writeFunctionIndex($module, $category);
 		}
 		return $text;

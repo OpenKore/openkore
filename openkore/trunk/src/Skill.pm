@@ -38,8 +38,9 @@
 # server sends us the information:
 # `l
 # - The SP usage.
+# - The maximum available skill level at the moment.
 # - The skill range.
-# - The skill 
+# - The skill's target type (whether it's used on yourself, on a location, on a monster, etc.)
 # `l`
 package Skill;
 
@@ -75,12 +76,12 @@ use constant {
 # for a skill.
 #
 # To specificy a skill identifier, use one of the following keys:
-# `l`
+# `l
 # - idn - A skill Identifier Number (IDN).
 # - name - A skill name. This is case-<b>in</b>sensitive.
 # - handle - A skill handle. This is case-sensitive.
 # - auto - Attempt to autodetect the value.
-# `l
+# `l`
 #
 # For example, all of the following constructors create identical Skill objects:
 # <pre class="example">
@@ -91,7 +92,7 @@ use constant {
 # $heal = new Skill(auto => 'AL_HEAL');
 # $heal = new Skill(auto => 28);
 #
-# $heal->getIDN();     # returns 28
+# $heal->getIDN();        # returns 28
 # $heal->getHandle();     # returns 'AL_HEAL'
 # $heal->getName();       # returns 'Heal'
 # </pre>
