@@ -2,16 +2,18 @@
 ### OpenKore 1.9.4 (beta)
 =========================
 
+Credits:
+- johnny: Fix for headgear display.
+- skseo, gksmf0615: kRO support update.
+- piroJOKE: Field updates.
+
+Important changes:
 - kRO support (February 25 2007) has been fixed.
 - OpenKore Webstart has been removed. The experiment turned out to be
   unsuccessful.
 
 Bug fixes:
 - Headgears are now detected correctly.
-
-Credits:
-- johnny: Fix for headgear display.
-- skseo, gksmf0615: kRO support update.
 
 New commands:
 - Added more GM Commands
