@@ -712,7 +712,7 @@ sub processStatisticsReporting {
 			debug "Statistics posting failed: " . $http->getError() . "\n", "statisticsReporting";
 		}
 
-	} elsif (!$statisticsReporting{infoPosted} && $masterServer && $masterServer->{ip} && $config{master} && $conState == 5 && $totaldmg) {
+	} elsif (!$statisticsReporting{infoPosted} && $masterServer && $masterServer->{ip} && $config{master} && $conState == 5 && $monstarttime) {
 		if (!$statisticsReporting{http}) {
 			my $url = "http://www.openkore.com/server-info.php";
 			my $serverData = "";
