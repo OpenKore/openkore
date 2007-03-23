@@ -723,7 +723,7 @@ sub processStatisticsReporting {
 			$post .= "&version=" . urlencode($Settings::VERSION);
 			$post .= "&uid=" . urlencode(whirlpool_hex($config{master} . $config{username} . $userSeed));
 			$statisticsReporting{http} = new StdHttpReader($url, $post);
-			debug "Posting anonymous usage statistics to $url\n", "statisticsReporting";
+			debug "Posting anonymous usage statistics to $url with data $post\n", "statisticsReporting";
 		}
 
 		my $http = $statisticsReporting{http};
@@ -747,7 +747,7 @@ sub processStatisticsReporting {
 			}
 			my $post = "server=" . urlencode($config{master}) . "&data=" . urlencode($serverData);
 			$statisticsReporting{http} = new StdHttpReader($url, $post);
-			debug "Posting server info to $url\n", "statisticsReporting";
+			debug "Posting server info to $url with data $post\n", "statisticsReporting";
 		}
 
 		my $http = $statisticsReporting{http};
