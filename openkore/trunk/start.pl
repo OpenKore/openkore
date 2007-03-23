@@ -31,7 +31,8 @@ use Config;
 if ($^O ne 'MSWin32') {
 	# We are not on Windows, so tell the user about it
 	print "\nThis file is meant to be compiled by PerlApp.\n";
-	print "To run kore, execute openkore.pl instead.\n\n"
+	print "To run kore, execute openkore.pl instead.\n\n";
+	exit 1;
 }
 
 
@@ -87,6 +88,10 @@ if ($PerlApp::TOOL eq "PerlApp") {
 	if (PerlApp::exe() =~ /wxstart\.exe$/i) {
 		$ENV{OPENKORE_DEFAULT_INTERFACE} = 'Wx';
 	}
+} else {
+	print "Do not run start.pl directly! If you're using Perl then run openkore.pl instead!\n";
+	<STDIN>;
+	exit 1;
 }
 
 my $file = "openkore.pl";
