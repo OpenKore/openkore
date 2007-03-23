@@ -276,7 +276,7 @@ sub iterate {
 	my $handle = $self->{skill}->getHandle();
 	if ($char->getSkillLevel($self->{skill}) == 0
 	&& !($char->{permitSkill} && $char->{permitSkill}->getHandle() eq $handle)) {
-		$self->setError(ERROR_NO_SKILL, T("Skill %s cannot be used because character has no such skill.",
+		$self->setError(ERROR_NO_SKILL, TF("Skill %s cannot be used because your character has no such skill.",
 			$self->{skill}->getName()));
 		debug "UseSkill - No such skill.\n", "Task::UseSkill" if DEBUG;
 		return;
