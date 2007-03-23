@@ -54,6 +54,12 @@ use base qw(Actor);
 # `l`
 
 ##
+# Actor::Homunculus $char->{homunculus}
+#
+# If the character has a homunculus, and the homunculus is currently online, then this
+# member points to character's homunculus object.
+
+##
 # Bytes $char->{charID}
 #
 # A unique character ID for this character (not the same as the account ID, or $char->{ID}).
