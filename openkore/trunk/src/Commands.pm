@@ -2040,7 +2040,7 @@ sub cmdGmremove {
 	return unless ($conState == 5);
 
 	if ($args eq '') {
-		error "Usage: gmwarpto [<Character Name> | <User Name>]\n";
+		error "Usage: gmremove [<Character Name> | <User Name>]\n";
 		return;
 	}
 
@@ -2053,7 +2053,7 @@ sub cmdGmrecall {
 	return unless ($conState == 5);
 
 	if ($args eq '') {
-		error "Usage: gmwarpto [<Character Name> | <User Name>]\n";
+		error "Usage: gmrecall [<Character Name> | <User Name>]\n";
 		return;
 	}
 
