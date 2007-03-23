@@ -1,4 +1,4 @@
-﻿hugel.rsw#Hugel, the Quaint Garden Village#
+hugel.rsw#Hugel, the Quaint Garden Village#
 hu_in01.rsw#Inside Hugel#
 que_bingo.rsw#Bingo Game Room#
 que_hugel.rsw#Odin Shrine's Underground#
@@ -554,4 +554,59 @@ pvp_y_6-5.rsw#PvP : Room Morroc#
 pvp_y_7-5.rsw#PvP : Room Morroc#
 pvp_y_8-5.rsw#PvP : Room Morroc#
 pvp_2vs2.rsw#PvP : Event Coliseum#
+06guild_01.rsw#Guild Arena#
+06guild_02.rsw#Guild Arena#
+06guild_03.rsw#Guild Arena#
+06guild_04.rsw#Guild Arena#
+06guild_05.rsw#Guild Arena#
+06guild_06.rsw#Guild Arena#
+06guild_07.rsw#Guild Arena#
+06guild_08.rsw#Guild Arena#
+06guild_r.rsw#Guild Arena Waiting Room#
+guild_vs4.rsw#Guild Arena#
+guild_vs5.rsw#Guild Arena#
+ice_dun01.rsw#Ice Cave#
+ice_dun02.rsw#Ice Cave#
+ice_dun03.rsw#Ice Cave#
+ice_dun04.rsw#Ice Cave#
+payon_in03.rsw#Inside Payon#
+que_rachel.rsw#Inside Freya's Temple#
+que_thor.rsw#Thor's Volcano Dungeon#
+ra_fild01.rsw#Audumra Grass Land#
+ra_fild02.rsw#Oz Gorge#
+ra_fild03.rsw#Ida Plane#
+ra_fild04.rsw#Audumra Grass Land#
+ra_fild05.rsw#Audumra Grass Land#
+ra_fild06.rsw#Fortu Luna#
+ra_fild07.rsw#Oz Gorge#
+ra_fild08.rsw#Ida Plane#
+ra_fild09.rsw#Audumra Grass Land#
+ra_fild10.rsw#Oz Gorge#
+ra_fild11.rsw#Ida Plane#
+ra_fild12.rsw#Ida Plane#
+ra_fild13.rsw#Beach of Tears#
+ra_in01.rsw#Inside Rachel#
+ra_san01.rsw#Freya's Sacred Precinct#
+ra_san02.rsw#Freya's Sacred Precinct#
+ra_san03.rsw#Freya's Sacred Precinct#
+ra_san04.rsw#Freya's Sacred Precinct#
+ra_san05.rsw#Freya's Sacred Precinct#
+ra_temin.rsw#Inside Rachel Sanctuary#
+ra_temple.rsw#Freya's Grand Temple (Sesilmir)#
+ra_temsky.rsw#Pope's Room (Sky Garden)#
+rachel.rsw#Rachel, Capital of Arunafelz, the Study Nation#
+thor_camp.rsw#Thor Camp#
+thor_v01.rsw#Thor's Volcano Dungeon#
+thor_v02.rsw#Thor's Volcano Dungeon#
+thor_v03.rsw#Thor's Volcano Dungeon#
+ve_fild01.rsw#Veins Field#
+ve_fild02.rsw#Veins Field#
+ve_fild03.rsw#Veins Field#
+ve_fild04.rsw#Veins Field#
+ve_fild05.rsw#Veins Field#
+ve_fild06.rsw#Veins Field#
+ve_fild07.rsw#Veins Field#
+ve_in.rsw#Inside Veins#
+ve_in02.rsw#Inside Veins#
+veins.rsw#Veins, the Desert Village#
 //-------------------------file end
