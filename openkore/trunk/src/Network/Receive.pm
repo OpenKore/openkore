@@ -1754,7 +1754,7 @@ sub character_deletion_failed {
 
 sub character_moves {
 	my ($self, $args) = @_;
-	
+
 	changeToInGameState();
 	makeCoords($char->{pos}, substr($args->{RAW_MSG}, 6, 3));
 	makeCoords2($char->{pos_to}, substr($args->{RAW_MSG}, 8, 3));
@@ -4928,7 +4928,7 @@ sub skill_use_failed {
 		9 => '90% Overweight',
 		10 => 'Requirement'
 		);
-	warning TF("Skill %s failed (%s)\n", Skill->new(id => $skillID)->getName(), $failtype{$type}), "skill";
+	warning TF("Skill %s failed (%s)\n", Skill->new(idn => $skillID)->getName(), $failtype{$type}), "skill";
 	Plugins::callHook('packet_skillfail', {
 		skillID     => $skillID,
 		failType    => $type,
@@ -4951,7 +4951,7 @@ sub skill_use_location {
 
 	# Resolve source name
 	my $source = Actor::get($sourceID);
-	my $skillName = Skill->new(id => $skillID)->getName();
+	my $skillName = Skill->new(idn => $skillID)->getName();
 	my $disp = skillUseLocation_string($source, $skillName, $args);
 
 	# Print skill use message
