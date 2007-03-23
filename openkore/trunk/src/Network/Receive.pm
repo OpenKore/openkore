@@ -375,8 +375,9 @@ sub reconstruct {
 # Network::Receive->create(serverType)
 sub create {
 	my ($self, $type) = @_;
+	($type) = $type =~ /([0-9_]+)/;
 	$type = 0 if $type eq '';
-	my $class = "Network::Receive::ServerType" . int($type);
+	my $class = "Network::Receive::ServerType" . $type;
 
 	undef $@;
 	eval "use $class;";

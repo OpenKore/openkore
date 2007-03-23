@@ -110,10 +110,6 @@ sub sendAttack {
 		}
 		return;
 
-	} elsif ($self->{serverType} == 8) { 
-		$msg = pack("C*", 0x90, 0x01, 0x00, 0x00, 0x00) . 
-		$monID . pack("C*",0x00, 0x00, 0x00, 0x00, 0x37, 0x66, 0x61, 0x32, 0x00, $flag);
-
 	} elsif ($self->{serverType} == 9) {
 		$msg = pack("C*", 0x90, 0x01) . pack("x5") . $monID . pack("x6") . pack("C", $flag);
 
@@ -244,7 +240,7 @@ sub sendChat {
 	$message = stringToBytes($message); # Type: Bytes
 	$charName = stringToBytes($char->{name});
 
-	if (($self->{serverType} == 3) || ($self->{serverType} == 5) || ($self->{serverType} == 8) || ($self->{serverType} == 9)) {
+	if (($self->{serverType} == 3) || ($self->{serverType} == 5) || ($self->{serverType} == 9)) {
 		$data = pack("C*", 0xf3, 0x00) .
 			pack("v*", length($charName) + length($message) + 8) .
 			$charName . " : " . $message . chr(0);
@@ -451,12 +447,6 @@ sub sendDrop {
 			pack("C*", 0xC8, 0xFE, 0xB2, 0x07, 0x63, 0x01, 0x00) .
 			pack("v*", $amount);
 
-	} elsif ($self->{serverType} == 8) {
-		$msg = pack("C*", 0x16, 0x01, 0x35, 0x34, 0x33) .
-			pack("v*", $index) .
-			pack("C*", 0x61) .
-			pack("v*", $amount);
-
 	} elsif ($self->{serverType} == 9) {
 		$msg = pack("C*", 0x16, 0x01) . pack("x6") .
 			pack("v*", $index) .
@@ -587,9 +577,6 @@ sub sendGetPlayerInfo {
 
 	} elsif ($self->{serverType} == 7) {
 		$msg = pack("C*", 0x94, 0x00) . pack("C*", 0x5B, 0x04, 0x0C, 0xF9, 0x12, 0x00, 0x36, 0xAE) . $ID;
-
-	} elsif ($self->{serverType} == 8) {
-		$msg = pack("v1 x5", 0x8c) . $ID;
 
 	} elsif ($self->{serverType} == 9) {
 		$msg = pack("C*", 0x8c, 0x00) . pack("x6") . $ID;
@@ -841,9 +828,7 @@ sub sendIgnoreListGet {
 }
 
 sub sendItemUse {
-	my $self = shift;
-	my $ID = shift;
-	my $targetID = shift;
+	my ($self, $ID, $targetID) = @_;
 	my $msg;
 	if ($self->{serverType} == 0) {
 		$msg = pack("C*", 0xA7, 0x00).pack("v*",$ID).$targetID;
@@ -875,12 +860,6 @@ sub sendItemUse {
 		$msg = pack("C*", 0xA7, 0x00, 0x12, 0x00, 0xB0, 0x5A, 0x61) .
 			pack("v*", $ID) .
 			pack("C*", 0xFA, 0x12, 0x00, 0xDA, 0xF9, 0x12, 0x00) .
-			$targetID;
-
-	} elsif ($self->{serverType} == 8) {
-		$msg = pack("C*", 0x9f, 0x00, 0x61, 0x62) .
-			pack("v*", $ID) .
-			pack("C*", 0x34, 0x35, 0x32, 0x61) .
 			$targetID;
 
 	} elsif ($self->{serverType} == 9) {
@@ -937,9 +916,6 @@ sub sendLook {
 		$msg = pack("C*", 0x9B, 0x00, 0x67, 0x00, $head,
 			0x00, 0x5B, 0x04, 0xE2, $body);
 
-	} elsif ($self->{serverType} == 8) {
-		$msg = pack("v1 x5 C1 x2 C1", 0x85, $head, $body);
-
 	} elsif ($self->{serverType} == 9) {
 		$msg = pack("C*", 0x85, 0x00) . pack("x5") .
 			pack("C*", $head, 0x00) . pack("x2") .
@@ -977,11 +953,7 @@ sub sendMapLoaded {
 }
 
 sub sendMapLogin {
-	my $self = shift;
-	my $accountID = shift;
-	my $charID = shift;
-	my $sessionID = shift;
-	my $sex = shift;
+	my ($self, $accountID, $charID, $sessionID, $sex) = @_;
 	my $msg;
 
 	$sex = 0 if ($sex > 1 || $sex < 0); # Sex can only be 0 (female) or 1 (male)
@@ -1042,18 +1014,6 @@ sub sendMapLogin {
 			$sessionID .
 			pack("V", getTickCount()) .
 			pack("C*",$sex);
-
-	} elsif ($self->{serverType} == 8) { #kRO 28 march 2006
-#  0>  9B 00 39 33 58 DE 4B 00    65 B0 05 0C 00 37 33 36
-# 16>  64 63 6F 83 44 34 60 6B    0A 00
-		$msg = pack("C*", 0x9b, 0, 0x39, 0x33) .
-			$accountID .
-			pack("C*", 0x65) .
-			$charID .
-			pack("C*", 0x37, 0x33, 0x36, 0x64) . 
-			$sessionID .
-			pack("V", getTickCount()) .
-			pack("C*", $sex);
 
 	} elsif ($self->{serverType} == 9) { # New eAthena
 		$msg = pack("C*", 0x9b, 0) .
@@ -1165,11 +1125,7 @@ sub sendMasterCodeRequest {
 }
 
 sub sendMasterLogin {
-	my $self = shift;
-	my $username = shift;
-	my $password = shift;
-	my $master_version = shift;
-	my $version = shift;
+	my ($self, $username, $password, $master_version, $version) = @_;
 	my $msg;
 
 	if ($self->{serverType} == 4) {
@@ -1194,14 +1150,6 @@ sub sendMasterLogin {
 		$msg = pack("v1 V", hex($masterServer->{masterLogin_packet}) || 0x64, $version) .
 			$username . $password .
 			pack("C*", $master_version);
-
-	} elsif ($self->{serverType} == 8) {
-		$msg = pack("v1 V", hex($masterServer->{masterLogin_packet}) || 0x277, $version) .
-			pack("a24", $username) .
-			pack("a24", $password) .
-			pack("C", $master_version) .
-			pack("a15", join(".", unpack("C4", $self->{net}->{remote_socket}->sockaddr()))) .
-			pack("C*", 0xAB, 0x31, 0x31, 0x31, 0x31, 0x31, 0x31, 0x31, 0x31, 0x31, 0x31, 0x31, 0x31, 0);
 
 	} else {
 		$msg = pack("v1 V", hex($masterServer->{masterLogin_packet}) || 0x64, $version) .
@@ -1274,9 +1222,6 @@ sub sendMove {
 
 	} elsif ($self->{serverType} == 7) {
 		$msg = pack("C*", 0x85, 0x00, 0xA8, 0x07, 0xE8) . getCoordString($x, $y);
-
-	} elsif ($self->{serverType} == 8) { #kRO 28 march 2006
-		$msg = pack("C*", 0xA7, 0x00, 0x00, 0x00) . getCoordString($x, $y);
 
 	} elsif ($self->{serverType} == 9) {
 		$msg = pack("C*", 0xa7, 0x00) . pack("x9") .
@@ -1608,9 +1553,6 @@ sub sendSit {
 		}
 		return;
 
-	} elsif ($self->{serverType} == 8) {
-		$msg = pack("C2 x16 C1", 0x90, 0x01, 0x02);
-
 	} elsif ($self->{serverType} == 9) {
 		$msg = pack("C2 x15 C1", 0x90, 0x01, 0x02);
 
@@ -1647,10 +1589,7 @@ sub sendSit {
 }
 
 sub sendSkillUse {
-	my $self = shift;
-	my $ID = shift;
-	my $lv = shift;
-	my $targetID = shift;
+	my ($self, $ID, $lv, $targetID) = @_;
 	my $msg;
 	
 	my %args;
@@ -1714,10 +1653,6 @@ sub sendSkillUse {
 			AI::dequeue();
 		}
 		return;
-
-	} elsif ($self->{serverType} == 8) {
-		# Kali fails are packet debugging...
-		$msg = pack("v1 x4 v1 x2 v1 x9", 0x72, $lv, $ID) . $targetID
 
 	} elsif ($self->{serverType} == 9) {
 		$msg = pack("C*", 0x72, 0x00) . pack("x9") .
@@ -1826,9 +1761,6 @@ sub sendSkillUseLoc {
 			pack("C*", 0x5B, 0x4E, 0xB4) .
 			pack("v*", $y);
 
-	} elsif ($self->{serverType} == 8) {
-		$msg = pack("C2 x3 v1 x2 v1 x1 v1 x6 v1", 0x13, 0x01, $lv, $ID, $x, $y);
-
 	} elsif ($self->{serverType} == 9) {
 		$msg = pack("C*", 0x13, 0x01) .
 			pack("x3") .
@@ -1905,9 +1837,6 @@ sub sendStorageAdd {
 			pack("C*", 0x88, 0xC5, 0x07, 0x00, 0x00, 0x00, 0x00, 0x7F, 0x0C, 0x7F) .
 			pack("V", $amount);
 
-	} elsif ($self->{serverType} == 8) {
-		$msg = pack("v1 x5 v1 x1 V1", 0x94, $index, $amount);
-
 	} elsif ($self->{serverType} == 9) {
 		$msg = pack("C*", 0x94, 0x00) . pack("x3") .
 			pack("v*", $index) .
@@ -1947,7 +1876,7 @@ sub sendStorageAddFromCart {
 sub sendStorageClose {
 	my ($self) = @_;
 	my $msg;
-	if (($self->{serverType} == 3) || ($self->{serverType} == 5) || ($self->{serverType} == 8) || ($self->{serverType} == 9) || ($self->{serverType} == 15)) {
+	if (($self->{serverType} == 3) || ($self->{serverType} == 5) || ($self->{serverType} == 9) || ($self->{serverType} == 15)) {
 		$msg = pack("C*", 0x93, 0x01);
 	} elsif ($self->{serverType} == 12) {
 		$msg = pack("C*", 0x72, 0x00);
@@ -1962,9 +1891,7 @@ sub sendStorageClose {
 }
 
 sub sendStorageGet {
-	my $self = shift;
-	my $index = shift;
-	my $amount = shift;
+	my ($self, $index, $amount) = @_;
 	my $msg;
 	if ($self->{serverType} == 0) {
 		$msg = pack("C*", 0xF5, 0x00) . pack("v*", $index) . pack("V*", $amount);
@@ -2001,9 +1928,6 @@ sub sendStorageGet {
 			pack("v*", $index) .
 			pack("C*", 0x00, 0x00, 0x00, 0x60, 0xF7, 0x12, 0x00, 0xB8) .
 			pack("V*", $amount);
-
-	} elsif ($self->{serverType} == 8) {
-		$msg = pack("v1 x12 v1 x2 V1", 0xf7, $index, $amount);
 
 	} elsif ($self->{serverType} == 9) {
 		$msg = pack("C*", 0xf7, 0x00) . pack("x9") .
@@ -2094,9 +2018,6 @@ sub sendStand {
 			AI::dequeue();
 		}
 		return;
-
-	} elsif ($self->{serverType} == 8) {
-		$msg = pack("C2 x16 C1", 0x90, 0x01, 0x03);
 
 	} elsif ($self->{serverType} == 9) {
 		$msg = pack("C*", 0x90, 0x01) . pack("x5") . pack("x4") . pack("x6") . pack("C", 0x03);
@@ -2196,11 +2117,6 @@ sub sendSync {
 		$msg .= pack("C*", 0x00, 0x00, 0xD0, 0x4F, 0x74) if (!$initialSync);
 		$msg .= $syncSync;
 
-	} elsif ($self->{serverType} == 8) { #kRO 28 march 2006
-		# 89 00 61 30 08 b0 a6 0a
-		$msg = pack("C*", 0x89, 0x00, 0x00, 0x00);
-		$msg .= $syncSync;
-
 	} elsif ($self->{serverType} == 11) {
 		$msg = pack("C*", 0x7E, 0x00);
 		$msg .= pack("C*", 0x30, 0x00, 0x80,) if ($initialSync);
@@ -2222,8 +2138,7 @@ sub sendSync {
 }
 
 sub sendTake {
-	my $self = shift;
-	my $itemID = shift; # $itemID = long
+	my ($self, $itemID) = @_;
 	my $msg;
 	if ($self->{serverType} == 0) {
 		$msg = pack("C*", 0x9F, 0x00) . $itemID;
@@ -2245,9 +2160,6 @@ sub sendTake {
 
 	} elsif ($self->{serverType} == 7) {
 		$msg = pack("C*", 0x9F, 0x00, 0x00, 0x00, 0xE8, 0x3C, 0x5B) . $itemID;
-
-	} elsif ($self->{serverType} == 8) {
-		$msg = pack("v1 x2", 0xf5) . $itemID;
 
 	} elsif ($self->{serverType} == 9) {
 		# this is the same with serverType 5,
