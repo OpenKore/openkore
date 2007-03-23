@@ -480,6 +480,7 @@
 489 CG_TAROTCARD Tarot Card of Fate
 490 CR_ACIDDEMONSTRATION Acid Demonstration
 491 CR_CULTIVATION Cultivation
+492 ITEM_ENCHANTARMS Weapon Enchantment
 493 TK_MISSION Taekwon Mission
 494 SL_HIGH Spirit of Rebirth
 495 KN_ONEHAND Onehand Quicken
