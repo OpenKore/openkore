@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenKore 1.9.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-03-24 08:39+0700\n"
-"PO-Revision-Date: 2007-03-24 08:40+0700\n"
-"Last-Translator: Richard <dewa5227@yahoo.com>\n"
+"POT-Creation-Date: 2006-11-10 20:50+0700\n"
+"PO-Revision-Date: 2007-03-24 20:16+0800\n"
+"Last-Translator: lkm <lj88kc@yahoo.com.cn>\n"
 "Language-Team: Lkm <lj88kc@yhaoo.com.cn>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -2643,67 +2643,60 @@ msgstr ""
 "道具 %s 不是可使用的类型.\n"
 
 #: ../Commands.pm:4157
-#, fuzzy
 msgid ""
 "Syntax error in function 'sl' (Use Skill on Location)\n"
 "Usage: sl <skill #> <x> <y> [level]\n"
 msgstr ""
-"语法错误 'sp' (对玩家使用技能)\n"
-"用法: sp (skill # or name) [player # or name] [level]\n"
+"语法错误 'sl' (对指定位置使用技能)\n"
+"用法: sl <skill #> <x> <y> [level]\n"
 
 #: ../Commands.pm:4161
-#, fuzzy
 msgid ""
 "Error in function 'sl' (Use Skill on Location)\n"
 "Invalid coordinates given.\n"
 msgstr ""
-"功能错误 'sp' (对玩家使用技能)\n"
-"'%s' 是错误的技能l.\n"
+"功能错误 'sl' (对指定位置使用技能)\n"
+"错误的坐标l.\n"
 
 #: ../Commands.pm:4165
-#, fuzzy
 msgid ""
 "Error in function 'sl' (Use Skill on Location)\n"
 "You are not logged into the game.\n"
 msgstr ""
-"功能错误 'sp' (对玩家使用技能)\n"
-"玩家 '%s' 不存在.\n"
+"功能错误 'sl' (对指定位置使用技能)\n"
+"你没有登陆.\n"
 
 #: ../Commands.pm:4180
-#, fuzzy
 msgid ""
 "Syntax error in function 'ss' (Use Skill on Self)\n"
 "Usage: ss <skill #> [level]\n"
 msgstr ""
-"语法错误 'sp' (对玩家使用技能)\n"
-"用法: sp (skill # or name) [player # or name] [level]\n"
+"语法错误 'ss' (对自己使用技能)\n"
+"用法: ss <skill #> [level]\n"
 
 #: ../Commands.pm:4184
-#, fuzzy
 msgid ""
 "Error in function 'ss' (Use Skill on Self)\n"
 "You are not logged into the game.\n"
 msgstr ""
-"功能错误 'sp' (对玩家使用技能)\n"
-"玩家 '%s' 不存在.\n"
+"功能错误 'ss' (对自己使用技能)\n"
+"你没有登陆.\n"
 
 #: ../Commands.pm:4194
-#, fuzzy
 msgid ""
 "Syntax error in function 'sp' (Use Skill on Player)\n"
 "Usage: sp <skill #> <player #> [level]\n"
 msgstr ""
 "语法错误 'sp' (对玩家使用技能)\n"
-"用法: sp (skill # or name) [player # or name] [level]\n"
+"用法: sp <skill #> <player #> [level]\n"
 
 #: ../Commands.pm:4198
-#, fuzzy
 msgid ""
 "Error in function 'sp' (Use Skill on Player)\n"
 "You are not logged into the game.\n"
 msgstr ""
 "功能错误 'sp' (对玩家使用技能)\n"
-"玩家 '%s' 不存在.\n"
+"你无法登陆.\n"
 
 #: ../Commands.pm:4204
 #, perl-format
@@ -2715,40 +2708,37 @@ msgstr ""
 "玩家 '%s' 不存在.\n"
 
 #: ../Commands.pm:4214
-#, fuzzy
 msgid ""
 "Syntax error in function 'sm' (Use Skill on Monster)\n"
 "Usage: sm <skill #> <monster #> [level]\n"
 msgstr ""
-"语法错误 'im' (对怪物使用道具)\n"
-"语法: im <item #> <monster #>\n"
+"语法错误 'sm' (对怪物使用技能)\n"
+"用法: sm <skill #> <monster #> [level]\n"
 
 #: ../Commands.pm:4218
-#, fuzzy
 msgid ""
 "Error in function 'sm' (Use Skill on Monster)\n"
 "You are not logged into the game.\n"
 msgstr ""
-"功能错误 'im' (对怪物使用道具)\n"
-"怪物 %s 不存在.\n"
+"功能错误 'sm' (对怪物使用技能)\n"
+"你无法进入.\n"
 
 #: ../Commands.pm:4224
-#, fuzzy, perl-format
+#, perl-format
 msgid ""
 "Error in function 'sm' (Use Skill on Monster)\n"
 "Monster %d does not exist.\n"
 msgstr ""
-"功能错误 'im' (对怪物使用道具)\n"
-"怪物 %s 不存在.\n"
+"功能错误 'sm' (对怪物使用技能)\n"
+"怪物 %d 不存在.\n"
 
 #: ../Commands.pm:4234
-#, fuzzy
 msgid ""
 "Syntax error in function 'ssp' (Use Skill on Area Spell Location)\n"
 "Usage: ssp <skill #> <spell #> [level]\n"
 msgstr ""
-"语法错误 'sp' (对玩家使用技能)\n"
-"用法: sp (skill # or name) [player # or name] [level]\n"
+"语法错误 'ssp' (在指定区域使用技能)\n"
+"用法: ssp <skill #> <spell #> [level]\n"
 
 #: ../Commands.pm:4240
 #, perl-format
@@ -3837,14 +3827,14 @@ msgid "*** Found %s (%s) nearby and teleported ***\n"
 msgstr "*** 发现 %s (%s)在附近，飞 ***\n"
 
 #: ../Misc.pm:3339
-#, fuzzy, perl-format
+#, perl-format
 msgid "%s is nearby, disconnecting...\n"
-msgstr "%s (%s) 在附近, 断开连接...\n"
+msgstr "%s 在附近, 闪...\n"
 
 #: ../Misc.pm:3340
-#, fuzzy, perl-format
+#, perl-format
 msgid "*** Found %s nearby and disconnected ***\n"
-msgstr "*** 发现 %s (%s) 在附近，断开连接 ***\n"
+msgstr "*** 发现 %s 在附近，闪 ***\n"
 
 #: ../Misc.pm:3373
 #, perl-format
@@ -6165,24 +6155,24 @@ msgid "Homunculus is stuck at %s (%d,%d), while walking from (%d,%d) to (%d,%d).
 msgstr "生命体附着在 %s (%d,%d), 当步行的时候从 (%d,%d) 到 (%d,%d)."
 
 #: ../Task/CalcMapRoute.pm:114
-#, fuzzy, perl-format
+#, perl-format
 msgid "Cannot load field '%s'."
-msgstr "不能读取 field %s\n"
+msgstr "读取失败 '%s'."
 
 #: ../Task/CalcMapRoute.pm:160
-#, fuzzy, perl-format
+#, perl-format
 msgid "Cannot calculate a route from %s (%d,%d) to %s %s"
-msgstr "计算锁定地图路径: %s(%s): %s, %s\n"
+msgstr "不能计算 %s (%d,%d) 到 %s %s"
 
 #: ../Task/CheckPoints.pm:62
-#, fuzzy, perl-format
+#, perl-format
 msgid "Arrived at waypoint %s\n"
-msgstr "喂养宠物 %s\n"
+msgstr "到达 %s\n"
 
 #: ../Task/CheckPoints.pm:68
-#, fuzzy, perl-format
+#, perl-format
 msgid "Walking to waypoint %s: %s(%s): %s,%s\n"
-msgstr "计算锁定地图路径: %s(%s): %s, %s\n"
+msgstr "走到 %s: %s(%s): %s,%s\n"
 
 #: ../Task/MapRoute.pm:164
 #, perl-format
@@ -6214,76 +6204,73 @@ msgid "Destination reached.\n"
 msgstr "目的地到达.\n"
 
 #: ../Task/Route.pm:260
-#, fuzzy
 msgid " Teleporting to unstuck."
-msgstr "瞬移.自动购买物品\n"
+msgstr " 要卡了，飞."
 
 #: ../Task/SitStand.pm:100
 msgid "Basic Skill level 3 is required in order to sit or stand."
-msgstr ""
+msgstr "基本等级要3级才能座下."
 
 #: ../Task/TalkNPC.pm:112
-#, fuzzy, perl-format
+#, perl-format
 msgid "Could not find an NPC at location (%d,%d)."
-msgstr "你使用 %s 在位置 (%d, %d)\n"
+msgstr "无法在找到 NPC 在 (%d,%d)."
 
 #: ../Task/TalkNPC.pm:148
 msgid "The NPC did not respond."
-msgstr ""
+msgstr "NPC 没有回应."
 
 #: ../Task/TalkNPC.pm:206
 msgid "According to the given NPC instructions, the Next button must now be clicked on, but that's not possible."
-msgstr ""
+msgstr "按照 NPC 指导, 需要按下下一步, 但是无法执行."
 
 #: ../Task/TalkNPC.pm:219
 #, perl-format
 msgid "According to the given NPC instructions, menu item %d must now be selected, but there are only %d menu items."
-msgstr ""
+msgstr "按照 NPC 指导, 需要选择 %d , 单现在只有 %d ."
 
 #: ../Task/TalkNPC.pm:226
 msgid "According to the given NPC instructions, a menu item must now be selected, but that's not possible."
-msgstr ""
+msgstr "按照 NPC 指导, 现在一定选择一个菜单, 但是无法执行."
 
 #: ../Task/TalkNPC.pm:246
 #, perl-format
 msgid "Shop item %d not found."
-msgstr ""
+msgstr "商店道具 %d 未被发现."
 
 #: ../Task/UseSkill.pm:288
 #, perl-format
 msgid "Skill %s cannot be used because your character has no such skill."
-msgstr ""
+msgstr "技能l %s 因为你没有，所以无法使用."
 
 #: ../Task/UseSkill.pm:320
 #: ../Task/UseSkill.pm:336
-#, fuzzy
 msgid "Target lost."
-msgstr "目标消失\n"
+msgstr "目标消失."
 
 #: ../Task/UseSkill.pm:345
 #, perl-format
 msgid "Unable to cast skill %s in %d tries."
-msgstr ""
+msgstr "不能使用 %s 在 %d ."
 
 #: ../Task/UseSkill.pm:351
 #: ../Task/UseSkill.pm:385
-#, fuzzy, perl-format
+#, perl-format
 msgid "Casting failed: %s (%d)"
-msgstr "物品辨识 : %s (%d)\n"
+msgstr "投掷失败: %s (%d)"
 
 #: ../Task/UseSkill.pm:369
-#, fuzzy
 msgid "Casting has been cancelled."
-msgstr "已经清空出售列表.\n"
+msgstr "投掷已经被取消."
 
 #: ../Task/UseSkill.pm:380
 #, perl-format
 msgid "Unable to cast skill in %d tries."
-msgstr ""
+msgstr "不能使用技能 %d ."
 
 #: ../Task/UseSkill.pm:390
 msgid "Casting is supposed to be finished now, but nothing happened."
-msgstr ""
+msgstr "投掷支持完成, 但是似乎没有作用."
 
 #: ../../openkore.pl:127
 #, perl-format
@@ -6314,16 +6301,16 @@ msgstr ""
 "请查看 %s"
 
 #: ../../openkore.pl:150
-#, fuzzy, perl-format
+#, perl-format
 msgid ""
 "Your version of (wx)start.exe is incompatible.\n"
 "Please upgrade it by reading %s"
 msgstr ""
-"你的 XSTools库 不是正确的版本.\n"
+"你的 (wx)start.exe 不是正确的版本.\n"
 "请查看 %s"
 
 #: ../../openkore.pl:153
-#, fuzzy, perl-format
+#, perl-format
 msgid ""
 "Your version of XSTools library is incompatible.\n"
 "Please upgrade it by reading %s"
@@ -6332,21 +6319,21 @@ msgstr ""
 "请查看 %s"
 
 #: ../../openkore.pl:161
-#, fuzzy, perl-format
+#, perl-format
 msgid ""
 "Your version of (wx)start.exe is too old.\n"
 "Please upgrade it by reading %s"
 msgstr ""
-"你的 XSTools库 太旧了.请升级.\n"
+"你的 (wx)start.exe 太旧了.\n"
 "请查看 %s"
 
 #: ../../openkore.pl:164
-#, fuzzy, perl-format
+#, perl-format
 msgid ""
 "Your version of the XSTools library is too old.\n"
 "Please upgrade it by reading %s"
 msgstr ""
-"你的 XSTools库 太旧了.请升级.\n"
+"你的 XSTools库 太旧了.\n"
 "请查看 %s"
 
 #. Translation Comment: Kore's exit message
@@ -6488,37 +6475,4 @@ msgstr "读取地图\n"
 #, perl-format
 msgid "Unknown packet - %s\n"
 msgstr "未知封包 - %s\n"
-
-#~ msgid "Skill %s does not exist.\n"
-#~ msgstr "技能 %s 不存在.\n"
-#~ msgid "%s is not a number.\n"
-#~ msgstr "%s 不是数字.\n"
-#~ msgid "Player %d does not exist.\n"
-#~ msgstr "玩家 %d 不存在.\n"
-#~ msgid "Monster %d does not exist.\n"
-#~ msgstr "怪物 %d 不存在.\n"
-#~ msgid "Stuck at %s (%d,%d), while walking from (%d,%d) to (%d,%d)."
-#~ msgstr "附着在 %s (%d,%d), 当步行的时候从 (%d,%d) 到 (%d,%d)."
-#~ msgid ""
-#~ "Unable to calculate how to walk from [%s(%s,%s)] to [%s%s] (no map "
-#~ "solution).\n"
-#~ msgstr "不能计算行走路径从 [%s(%s,%s)] 到 [%s%s] (没有地图).\n"
-#~ msgid "Insufficient zenny to pay for service at %s (%s,%s).\n"
-#~ msgstr "不够金钱支付 %s (%s,%s) 服务费.\n"
-#~ msgid "Cannot reach (%s,%s) from current position.\n"
-#~ msgstr "从当前的位置不能到达 (%s,%s) .\n"
-#~ msgid "Cannot reach portal from current position\n"
-#~ msgstr "从当前的位置不能到达路点\n"
-#~ msgid "Start OpenKore"
-#~ msgstr "启动 OpenKore"
-#~ msgid "Starting..."
-#~ msgstr "启动中..."
-#~ msgid "Configure"
-#~ msgstr "配置"
-#~ msgid "Help! It doesn't work!"
-#~ msgstr "注意! 这项无法正常工作!"
-#~ msgid "OpenKore News"
-#~ msgstr "OpenKore 新的"
-#~ msgid "Do not display this web page again."
-#~ msgstr "不要再显示这个页面."
 
