@@ -997,7 +997,7 @@ serverEncoding Western
 
 ## http://www.euphro.com/
 [EuphRO Private Server]
-ip 69.39.224.10
+ip a.euphro.com
 port 3872
 master_version 14
 version 20
