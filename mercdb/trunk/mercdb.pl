@@ -106,7 +106,7 @@ sub Called{
 		if ((!$rv) || ($tooEarly)){
 			# merchant was never visited before or the last visit is long enough away
 			# tell kore to get the venderList
-			main::sendEnteringVender(\$::remote_socket, $::venderListsID[$i]);
+			$Globals::messageSender->sendEnteringVender($::venderListsID[$i]);
 			
 			# update shopvisit database
 			my $selectQuery = "SELECT * FROM shopvisit WHERE shopOwnerID = '$shopOwnerID' AND server='$servername'";
