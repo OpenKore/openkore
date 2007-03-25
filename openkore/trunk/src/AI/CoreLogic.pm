@@ -710,6 +710,7 @@ sub processTask {
 		if ($task->getStatus() == Task::INACTIVE) {
 			$task->activate();
 		}
+		assert($task->getStatus() == Task::RUNNING) if DEBUG;
 		$task->iterate();
 		if ($task->getStatus() == Task::DONE) {
 			AI::dequeue;
