@@ -1809,7 +1809,7 @@ sub cmdHomunculus {
 			}
 
 		} elsif ($args[1] eq "desc" && $args[2] =~ /\d+/) {
-			my $skill = new Skills(idn => $args[2]);
+			my $skill = new Skill(idn => $args[2]);
 			if (!$skill->getIDN()) {
 				error TF("Error in function 'homun skills desc' (Skill Description)\n" .
 					"Skill %s does not exist.\n", $args[2]);

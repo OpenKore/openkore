@@ -83,7 +83,7 @@ sub __start {
 	use Poseidon::Client;
 	Modules::register(qw/Utils FileParsers
 		Network::Receive Network::Send Misc AI AI::CoreLogic
-		AI::Attack AI::Homunculus Skills
+		AI::Attack AI::Homunculus
 		ChatQueue Actor Actor::Player Actor::Monster Actor::You
 		Actor::Party Actor::Unknown Actor::Item Match Utils::Benchmark/);
 
