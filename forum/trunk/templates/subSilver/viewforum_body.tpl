@@ -4,8 +4,6 @@
 </div>
 <!-- END important_announcement -->
 
-{ADVERTISEMENT}
-
 <form method="post" action="{S_POST_DAYS_ACTION}">
   <table width="100%" cellspacing="2" cellpadding="2" border="0" align="center">
 	<tr> 
@@ -18,6 +16,7 @@
 	  <td align="right" valign="bottom" class="nav" nowrap="nowrap"><span class="gensmall"><a href="{U_MARK_READ}">{L_MARK_TOPICS_READ}</a></span></td>
 	</tr>
   </table>
+  <div style="margin-top: 0.5em; margin-bottom: 1em">{ADVERTISEMENT}</div>
   <!-- BEGIN catrow -->
 <table width="100%" cellpadding="2" cellspacing="1" border="0" class="forumline">
   <tr> 
