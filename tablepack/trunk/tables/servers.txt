@@ -239,13 +239,12 @@ pauseCharServer 1
 patchserver web.raggame.ru
 patchpath /patch02
 paddedPackets 1
-paddedPackets_attackID 0x72
-paddedPackets_skillUseID 0xF5
+paddedPackets_attackID 0x0190
+paddedPackets_skillUseID 0x7E
 # Data for XKore PP mode
-syncID 0xA7
-syncTickOffset 8
-mapLoadedTickOffset 10
-
+syncID 0x0116
+syncTickOffset 9
+mapLoadedTickOffset 11
 
 [Taiwan - twRO: Free]
 ip 220.130.113.238
