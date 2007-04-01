@@ -2819,7 +2819,7 @@ sub processAutoTeleport {
 		my $ok;
 		if ($config{teleportAuto_allPlayers} >= 2) {
 			foreach my $ID (@playersID) {
-				if ((!$char->{party} || !$char->{party}{users}{$ID}) && (!$char->{homunculus} || $ID ne $char->{homunculus})) {
+				if ((!$char->{party} || !$char->{party}{users}{$ID}) && (!$char->{homunculus} || $ID ne $char->{homunculus}{ID})) {
 					$ok = 1;
 					last;
 				}
