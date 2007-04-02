@@ -1,4 +1,7 @@
 <div style="text-align: center;">
+<a href="http://www.kore-ro.com/" style="margin-right: 1em;"><img src="/images/korero.png" style="border: 0"
+alt="KoreRO - FREE private server where botting is allowed" width="181" height="91"></a>
+
 <script type="text/javascript"><!--
 google_ad_client = "pub-6517874711201821";
 google_ad_width = 728;
