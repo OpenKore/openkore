@@ -739,7 +739,7 @@ ip 222.255.122.20
 port 6900
 master_version 26
 version 1
-serverType 10
+serverType 13
 secureLogin 1
 secureLogin_type 0
 secureLogin_requestCode
@@ -887,7 +887,7 @@ serverType 5
 serverEncoding Western
 
 ## http://baka-gaming.net
-[BakaRO]
+[BakaRO Private Server]
 ip 72.36.225.26
 port 1069
 master_version 14
@@ -896,14 +896,14 @@ serverType 9
 serverEncoding Western
 
 ## http://celestialro.net/
-[CelestialRO Private Server]
-ip 209.190.19.186
-port 6900
-master_version 14
-version 0
-private 1
-servertype 3
+[CelestiaRO Private Server]
+ip celestiaro.no-ip.info
+port 6575
+master_version 16
+version 70326
 serverEncoding Western
+serverType 8_1
+charBlockSize 108
 
 ## http://www.ceres-ro.net/
 [CeresRO (Low Rate Server Mahoro) Private Server]
