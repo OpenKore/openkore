@@ -277,6 +277,7 @@ sub castSkill {
 # TODO:
 # - walk to target if it's too far away?
 # - equip necessary items
+# - check whether we're silensed
 
 sub iterate {
 	my ($self) = @_;
