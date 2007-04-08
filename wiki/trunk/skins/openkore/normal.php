@@ -48,7 +48,7 @@
 	<div id="openkore_donation">
 		<div>Support OpenKore:</div>
 		<div><a href="http://www.openkore.com/wiki/index.php/Fund_pool">
-			<div>Learn about</div><div>the Fund Pool</div>
+			<span>Learn about<br>the Fund Pool</span>
 		</a></div>
 	</div>
 	<?php } ?>
@@ -164,6 +164,13 @@
 		</ul>
 	</div>
 </div>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-540582-2";
+urchinTracker();
+</script>
 
 </body>
 </html>
