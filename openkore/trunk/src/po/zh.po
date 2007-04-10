@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: OpenKore 1.9.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-03-24 08:39+0700\n"
-"PO-Revision-Date: 2007-03-24 08:40+0700\n"
-"Last-Translator: Richard <dewa5227@yahoo.com>\n"
+"PO-Revision-Date: 2007-04-10 21:41+0800\n"
+"Last-Translator: 小溫 <littlewens@yahoo.com.tw>\n"
 "Language-Team: littlewens <littlewens@yahoo.com.tw>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -2647,67 +2647,60 @@ msgstr ""
 "物品欄的物品 %s 非可使用物品.\n"
 
 #: ../Commands.pm:4157
-#, fuzzy
 msgid ""
 "Syntax error in function 'sl' (Use Skill on Location)\n"
 "Usage: sl <skill #> <x> <y> [level]\n"
 msgstr ""
-"'sp' 功能語法錯誤 (向玩家使用技能)\n"
-"使用方法: sp (技能編號或技能名稱) [玩家編號或名字] [技能等級]\n"
+"'sl' 功能語法錯誤 (使用地面技能)\n"
+"使用方法: sl <技能編號> < x 座標> < y 座標> [技能等級]\n"
 
 #: ../Commands.pm:4161
-#, fuzzy
 msgid ""
 "Error in function 'sl' (Use Skill on Location)\n"
 "Invalid coordinates given.\n"
 msgstr ""
-"'sp' 功能錯誤 (向玩家使用技能)\n"
-"'%s' 是一個無效的技能.\n"
+"'sl' 功能錯誤 (使用地面技能)\n"
+"給定的是無效的座標.\n"
 
 #: ../Commands.pm:4165
-#, fuzzy
 msgid ""
 "Error in function 'sl' (Use Skill on Location)\n"
 "You are not logged into the game.\n"
 msgstr ""
-"'sp' 功能錯誤 (向玩家使用技能)\n"
-"玩家 '%s' 並不存在.\n"
+"'sl' 功能錯誤 (使用地面技能)\n"
+"您尚未登入遊戲中.\n"
 
 #: ../Commands.pm:4180
-#, fuzzy
 msgid ""
 "Syntax error in function 'ss' (Use Skill on Self)\n"
 "Usage: ss <skill #> [level]\n"
 msgstr ""
-"'sp' 功能語法錯誤 (向玩家使用技能)\n"
-"使用方法: sp (技能編號或技能名稱) [玩家編號或名字] [技能等級]\n"
+"'ss' 功能語法錯誤 (對自己使用技能)\n"
+"使用方法: ss <技能編號> [技能等級]\n"
 
 #: ../Commands.pm:4184
-#, fuzzy
 msgid ""
 "Error in function 'ss' (Use Skill on Self)\n"
 "You are not logged into the game.\n"
 msgstr ""
-"'sp' 功能錯誤 (向玩家使用技能)\n"
-"玩家 '%s' 並不存在.\n"
+"'ss' 功能錯誤 (對自己使用技能)\n"
+"您尚未登入遊戲中.\n"
 
 #: ../Commands.pm:4194
-#, fuzzy
 msgid ""
 "Syntax error in function 'sp' (Use Skill on Player)\n"
 "Usage: sp <skill #> <player #> [level]\n"
 msgstr ""
 "'sp' 功能語法錯誤 (向玩家使用技能)\n"
-"使用方法: sp (技能編號或技能名稱) [玩家編號或名字] [技能等級]\n"
+"使用方法: sp <技能編號> <玩家編號> [技能等級]\n"
 
 #: ../Commands.pm:4198
-#, fuzzy
 msgid ""
 "Error in function 'sp' (Use Skill on Player)\n"
 "You are not logged into the game.\n"
 msgstr ""
 "'sp' 功能錯誤 (向玩家使用技能)\n"
-"玩家 '%s' 並不存在.\n"
+"您尚未登入遊戲中.\n"
 
 #: ../Commands.pm:4204
 #, perl-format
@@ -2719,40 +2712,37 @@ msgstr ""
 "玩家 '%s' 並不存在.\n"
 
 #: ../Commands.pm:4214
-#, fuzzy
 msgid ""
 "Syntax error in function 'sm' (Use Skill on Monster)\n"
 "Usage: sm <skill #> <monster #> [level]\n"
 msgstr ""
-"'im' 功能語法錯誤 (使用物品在怪物身上)\n"
-"使用方法: im <物品編號> <怪物編號>\n"
+"'sm' 功能語法錯誤 (使用技能在怪物身上)\n"
+"使用方法: sm <技能編號> <怪物編號> [技能等級]\n"
 
 #: ../Commands.pm:4218
-#, fuzzy
 msgid ""
 "Error in function 'sm' (Use Skill on Monster)\n"
 "You are not logged into the game.\n"
 msgstr ""
-"'im' 功能錯誤 (使用物品在怪物身上)\n"
-"怪物 %s 並不存在.\n"
+"'sm' 功能錯誤 (使用技能在怪物身上)\n"
+"您尚未登入遊戲中.\n"
 
 #: ../Commands.pm:4224
-#, fuzzy, perl-format
+#, perl-format
 msgid ""
 "Error in function 'sm' (Use Skill on Monster)\n"
 "Monster %d does not exist.\n"
 msgstr ""
-"'im' 功能錯誤 (使用物品在怪物身上)\n"
-"怪物 %s 並不存在.\n"
+"'sm' 功能錯誤 (使用技能在怪物身上)\n"
+"怪物 %d 並不存在.\n"
 
 #: ../Commands.pm:4234
-#, fuzzy
 msgid ""
 "Syntax error in function 'ssp' (Use Skill on Area Spell Location)\n"
 "Usage: ssp <skill #> <spell #> [level]\n"
 msgstr ""
-"'sp' 功能語法錯誤 (向玩家使用技能)\n"
-"使用方法: sp (技能編號或技能名稱) [玩家編號或名字] [技能等級]\n"
+"'ssp' 功能語法錯誤 (在指定範圍效果中使用技能)\n"
+"使用方法: ssp <技能編號> <範圍效果編號> [技能等級]\n"
 
 #: ../Commands.pm:4240
 #, perl-format
@@ -6250,9 +6240,9 @@ msgid "Shop item %d not found."
 msgstr "商店物品 %d 找不到."
 
 #: ../Task/UseSkill.pm:288
-#, fuzzy, perl-format
+#, perl-format
 msgid "Skill %s cannot be used because your character has no such skill."
-msgstr "技能 %s 無法被使用, 因為角色無此技能."
+msgstr "技能 %s 無法被使用, 因為您的角色無此技能."
 
 #: ../Task/UseSkill.pm:320
 #: ../Task/UseSkill.pm:336
@@ -6281,7 +6271,7 @@ msgstr "技能無法施展, 已嘗試 %d 次."
 
 #: ../Task/UseSkill.pm:390
 msgid "Casting is supposed to be finished now, but nothing happened."
-msgstr ""
+msgstr "此刻詠唱應該已經結束, 但卻沒有發生任何事."
 
 #: ../../openkore.pl:127
 #, perl-format
@@ -6312,40 +6302,40 @@ msgstr ""
 "請參閱 %s"
 
 #: ../../openkore.pl:150
-#, fuzzy, perl-format
+#, perl-format
 msgid ""
 "Your version of (wx)start.exe is incompatible.\n"
 "Please upgrade it by reading %s"
 msgstr ""
-"您的 XSTools library 的版本不相容.\n"
-"請參閱 %s"
+"您的 (wx)start.exe 版本不相容.\n"
+"請參閱 %s 以更新它"
 
 #: ../../openkore.pl:153
-#, fuzzy, perl-format
+#, perl-format
 msgid ""
 "Your version of XSTools library is incompatible.\n"
 "Please upgrade it by reading %s"
 msgstr ""
-"您的 XSTools library 的版本不相容.\n"
-"請參閱 %s"
+"您的 XSTools library 版本不相容.\n"
+"請參閱 %s 以更新它"
 
 #: ../../openkore.pl:161
-#, fuzzy, perl-format
+#, perl-format
 msgid ""
 "Your version of (wx)start.exe is too old.\n"
 "Please upgrade it by reading %s"
 msgstr ""
-"您的 XSTools library 的版本太舊. 請更新.\n"
-"請參閱 %s"
+"您的 (wx)start.exe 版本太舊.\n"
+"請參閱 %s 以更新它"
 
 #: ../../openkore.pl:164
-#, fuzzy, perl-format
+#, perl-format
 msgid ""
 "Your version of the XSTools library is too old.\n"
 "Please upgrade it by reading %s"
 msgstr ""
-"您的 XSTools library 的版本太舊. 請更新.\n"
-"請參閱 %s"
+"您的 XSTools library 版本太舊.\n"
+"請參閱 %s 以更新它"
 
 #. Translation Comment: Kore's exit message
 #: ../../openkore.pl:175
