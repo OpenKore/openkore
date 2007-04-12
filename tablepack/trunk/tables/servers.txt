@@ -903,7 +903,7 @@ port 6575
 master_version 16
 version 70326
 serverEncoding Western
-serverType 8_1
+serverType 9
 charBlockSize 108
 
 ## http://www.ceres-ro.net/
@@ -1353,6 +1353,14 @@ master_version 1
 version 20
 serverType 4
 private 1
+serverEncoding Western
+
+[UndergroundRO (Low Rate) Private Server]
+ip 84.16.234.162
+port 7900
+master_version 17
+version 20
+serverType 4
 serverEncoding Western
 
 ## http://www.utopiaro.com/
