@@ -32,7 +32,7 @@ use Plugins;
 use Utils;
 use Network;
 use Network::Send;
-use Skills;
+use Skill;
 use Log qw(message error debug warning);
 use Commands;
 use Win32::API;
@@ -51,8 +51,6 @@ my $hooks = Plugins::addHooks(
 my $commands = Commands::register(
 	["syncs", "Prints MapSync, Sync and AccId", \&cmdSyncs],
 );
-
-my %statisticsReporting;
 
 # Loading ropp.dll and importing functions
 $ENV{PATH} .= ";$Plugins::current_plugin_folder";
@@ -187,10 +185,10 @@ sub onRO_sendMsg_pre {
 		SetPacket($LastPaddedPacket, length($LastPaddedPacket), $TargetId);
 		
 		$lib = getHex(generateSkillUse($SkillId, $SkillLv, $TargetId));
-		my $Skill = Skills->new(id => $SkillId);
+		my $skill = new Skill(idn => $SkillId);
 		$Parsed = 1;
 		message "====================== SkillUse ======================\n";
-		message "Skill: $SkillId (" . $Skill->name . ")   Level: $SkillLv   Target: [". getHex($TargetId). "]\n";
+		message "Skill: $SkillId (" . $skill->getName() . ")   Level: $SkillLv   Target: [". getHex($TargetId). "]\n";
 	}
 	if ($Parsed) {
 		if ($orig eq $lib) {
@@ -216,6 +214,7 @@ sub cmdSyncs {
 # Anonymous statistics reporting. This gives us insight about
 # server our users play.
 sub processStatisticsReporting {
+	our %statisticsReporting;
 	return if (!$enabled || $statisticsReporting{done} || !$config{master} || !$config{username});
 
 	if (!$statisticsReporting{http}) {
@@ -227,12 +226,12 @@ sub processStatisticsReporting {
 		# irreversible hashing algorithm before it is sent to the
 		# server. It is impossible to deduce the user's username
 		# from the data sent to the server.
-		my $url = "http://www.openkore.com/ropp_statistics.php?";
-		$url .= "server=" . urlencode($config{master});
-		$url .= "&product=" . urlencode($Settings::NAME);
-		$url .= "&version=" . urlencode($Settings::VERSION);
-		$url .= "&uid=" . urlencode(whirlpool_hex($config{master} . $config{username} . $userSeed));
-		$statisticsReporting{http} = new StdHttpReader($url);
+		my $url = "http://www.openkore.com/ropp_statistics.php";
+		my $postData = "server=" . urlencode($config{master});
+		$postData .= "&product=" . urlencode($Settings::NAME);
+		$postData .= "&version=" . urlencode($Settings::VERSION);
+		$postData .= "&uid=" . urlencode(whirlpool_hex($config{master} . $config{username} . $userSeed));
+		$statisticsReporting{http} = new StdHttpReader($url, $postData);
 		debug "Posting anonymous usage statistics to $url\n", "statisticsReporting";
 	}
 
