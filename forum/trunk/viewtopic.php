@@ -952,8 +952,6 @@ if ( !$db->sql_query($sql) )
 	message_die(GENERAL_ERROR, "Could not update topic views.", '', __LINE__, __FILE__, $sql);
 }
 
-$topic_advertisement = '<div style="margin-top: 0.5em; margin-bottom: 0.5em">' . file_get_contents('templates/advertisement.txt') . "</div>";
-
 //
 // Okay, let's do the loop, yeah come on baby let's do the loop
 // and it goes like this ...
@@ -1293,6 +1291,21 @@ for($i = 0; $i < $total_posts; $i++)
 	$row_color = ( !($i % 2) ) ? $theme['td_color1'] : $theme['td_color2'];
 	$row_class = ( !($i % 2) ) ? $theme['td_class1'] : $theme['td_class2'];
 
+	if ($i == 0) {
+		$advertisement_file = 'templates/ad1.txt';
+	} elseif ($i == $total_posts - 1) {
+		$advertisement_file = 'templates/ad2.txt';
+	} else {
+		$advertisement_file = null;
+	}
+	if (!is_null($advertisement_file)) {
+		$topic_advertisement = '<div style="margin-top: 0.5em; margin-bottom: 0.5em">' .
+			file_get_contents($advertisement_file) .
+			"</div>";
+	} else {
+		$topic_advertisement = '';
+	}
+
 	$template->assign_block_vars('postrow', array(
 		'ROW_COLOR' => '#' . $row_color,
 		'ROW_CLASS' => $row_class,
@@ -1344,7 +1357,6 @@ for($i = 0; $i < $total_posts; $i++)
 		'U_POST_ID' => $postrow[$i]['post_id'],
 		'TOPIC_ADVERTISEMENT' => $topic_advertisement)
 	);
-	$topic_advertisement = '';
 	display_post_attachments($postrow[$i]['post_id'], $postrow[$i]['post_attachment']);
 }
 

@@ -229,7 +229,7 @@ class OConstants {
 	 */
 	public static function getAdvertisement() {
 		global $phpbb_root_path;
-		return file_get_contents($phpbb_root_path . "templates/advertisement.txt");
+		return file_get_contents($phpbb_root_path . "templates/ad1.txt");
 	}
 }
 
