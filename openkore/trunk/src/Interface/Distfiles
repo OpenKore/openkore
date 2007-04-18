@@ -1,4 +1,6 @@
 Console.pm
+Socket.pm
 Tk.pm
 Wx.pm
 Vx.pm
+attach-to-console.pl
