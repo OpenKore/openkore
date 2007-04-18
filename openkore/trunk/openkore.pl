@@ -182,4 +182,4 @@ sub shutdown {
 	}
 }
 
-__start() unless defined $ENV{INTERPRETER};
+__start() if (!defined($ENV{INTERPRETER}) && !$ENV{NO_AUTOSTART});

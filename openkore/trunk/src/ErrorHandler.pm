@@ -20,6 +20,7 @@
 package ErrorHandler;
 
 use strict;
+use UNIVERSAL qw(isa);
 use Carp;
 use Scalar::Util;
 use encoding 'utf8';
@@ -42,7 +43,7 @@ sub TF {
 }
 
 sub showError {
-	if (!$Globals::interface || UNIVERSAL::isa($Globals::interface, "Interface::Startup")) {
+	if (!$Globals::interface || isa($Globals::interface, "Interface::Startup") || isa($Globals::interface, "Interface::Socket")) {
 		print TF("%s\nPress ENTER to exit this program.\n", $_[0]);
 		<STDIN>;
 	} else {

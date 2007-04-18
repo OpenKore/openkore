@@ -107,6 +107,15 @@ sub new {
 	return bless \%self, $class;
 }
 
+sub createFromSocket {
+	my ($class, $socket) = @_;
+	my %self = (
+		BS_server  => $socket,
+		BS_clients => new ObjectList()
+	);
+	return bless \%self, $class;
+}
+
 sub DESTROY {
 	my ($self) = @_;
 	$self->{BS_server}->close if ($self->{BS_server});
@@ -124,7 +133,6 @@ sub clients {
 ##
 # String $BaseServer->getHost()
 # Returns: an IP address in textual form.
-# Ensure: defined(result)
 #
 # Get the IP address on which the server is started.
 sub getHost {
@@ -134,7 +142,6 @@ sub getHost {
 ##
 # int $BaseServer->getPort()
 # Returns: a port number.
-# Ensure: result > 0
 #
 # Get the port on which the server is started.
 sub getPort {
@@ -253,7 +260,9 @@ sub _newClient {
 	$sock->autoflush(0);
 
 	my $fd = fileno($sock);
-	my $client = new Base::Server::Client($sock, $sock->peerhost, $fd);
+	my $host;
+	$sock->peerhost if ($sock->can('peerhost'));
+	my $client = new Base::Server::Client($sock, $host, $fd);
 	my $index = $self->{BS_clients}->add($client);
 	$client->setIndex($index);
 	$self->onClientNew($client, $index);
