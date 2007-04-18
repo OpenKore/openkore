@@ -1,0 +1,41 @@
+<div style="margin-left: 10em; display: inline">
+<script type="text/javascript"><!--
+google_ad_client = "pub-6517874711201821";
+google_ad_width = 200;
+google_ad_height = 200;
+google_ad_format = "200x200_as";
+google_ad_type = "text";
+//2007-04-18: OpenKore
+google_ad_channel = "4681844176";
+google_color_border = "000000";
+google_color_bg = "000000";
+google_color_link = "FFFFFF";
+google_color_text = "CCCCCC";
+google_color_url = "999999";
+//-->
+</script>
+<script type="text/javascript"
+  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div>
+
+<div style="margin-left: 2em; display: inline">
+<script type="text/javascript"><!--
+google_ad_client = "pub-6517874711201821";
+google_ad_width = 200;
+google_ad_height = 200;
+google_ad_format = "200x200_as";
+google_ad_type = "text";
+//2007-04-18: OpenKore
+google_ad_channel = "4681844176";
+google_color_border = "6699CC";
+google_color_bg = "003366";
+google_color_link = "FFFFFF";
+google_color_text = "AECCEB";
+google_color_url = "AECCEB";
+//-->
+</script>
+<script type="text/javascript"
+  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div>
