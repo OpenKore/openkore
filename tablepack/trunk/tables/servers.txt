@@ -1269,6 +1269,16 @@ version 20
 serverType 5
 serverEncoding Western
 
+## http://www.rebirthro.com/
+[RebirthRO Private Server]
+ip 193.138.205.124
+port 6900
+master_version 16
+version 21
+serverEncoding Western
+serverType 5
+charBlockSize 108
+
 ## http://www.roforever.com/
 [RoForever Private Server]
 ip 69.125.34.102
