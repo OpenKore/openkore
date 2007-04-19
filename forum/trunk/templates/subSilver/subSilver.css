@@ -283,3 +283,8 @@ input.liteoption {
 a.topic-new, a.topic-new:visited { color: {T_BODY_HLINK}; }
 a.topic-new:hover, a.topic-new:active { color: {T_BODY_LINK}; }
 /* End Simple Subforums MOD */
+
+.google-search-box table {
+	margin-left: auto;
+	margin-right: auto;
+}
