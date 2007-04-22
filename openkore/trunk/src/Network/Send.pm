@@ -102,7 +102,10 @@ sub new {
 sub create {
 	my (undef, $net, $serverType) = @_;
 
-	my $class = "Network::Send::ServerType" . int($serverType);
+	($serverType) = $serverType =~ /([0-9_]+)/;
+	$serverType = 0 if ($serverType eq '');
+	my $class = "Network::Send::ServerType" . $serverType;
+
 	eval("use $class;");
 	if ($@ =~ /Can\'t locate/) {
 		Network::Send::ServerTypeNotSupported->throw(error => "Server type '$serverType' not supported.");
