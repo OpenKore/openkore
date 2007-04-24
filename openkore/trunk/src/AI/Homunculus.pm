@@ -169,9 +169,9 @@ sub iterate {
 
 		# Stop feeding when homunculus reaches 999~1000 intimacy, its useless to keep feeding from this point on
 		# you can starve it till it gets 911 hunger (actually you can starve it till 1 but we wanna keep its intimacy loyal).
-		if ($char->{homunculus}{intimacy} >= $config{homunculus_intimacyMax}) {
+		if ($char->{homunculus}{intimacy} >= $config{homunculus_intimacyMax} && $disallow_feeding) {
 			$disallow_feeding = 1;
-		} elsif ($char->{homunculus}{intimacy} <= $config{homunculus_intimacyMin}) {
+		} elsif ($char->{homunculus}{intimacy} <= $config{homunculus_intimacyMin} && !$disallow_feeding) {
 			$disallow_feeding = 0;
 		}
 
@@ -179,7 +179,7 @@ sub iterate {
 			&& $char->{homunculus}{hunger} ne '' 
 			&& $char->{homunculus}{hunger} <= $char->{homunculus}{hungerThreshold} 
 			&& timeOut($char->{homunculus}{feed_time},$char->{homunculus}{feed_timeout})
-			&& (!$disallow_feeding)) {
+			&& !$disallow_feeding) {
 			
 			processFeeding();
 			message T("Auto-feeding your Homunculus (".$char->{homunculus}{hunger}." hunger).\n"), 'homunculus';
