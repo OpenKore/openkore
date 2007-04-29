@@ -82,6 +82,7 @@ sub new {
 		'007F' => ['received_sync', 'V1', [qw(time)]],
 		'0080' => ['actor_died_or_disappeared', 'a4 C1', [qw(ID type)]],
 		'0081' => ['errors', 'C1', [qw(type)]],
+		'0086' => ['actor_display', 'a4 a5', [qw(ID coords)]],
 		'0087' => ['character_moves', 'x4 a5 C1', [qw(coords unknown)]],
 		'0088' => ['actor_movement_interrupted', 'a4 v1 v1', [qw(ID x y)]],
 		'008A' => ['actor_action', 'a4 a4 a4 V2 v1 v1 C1 v1', [qw(sourceID targetID tick src_speed dst_speed damage param2 type param3)]],
@@ -322,15 +323,18 @@ sub new {
 # If the bot is running in X-Kore mode, then messages that will be mangled will not
 # be sent to the RO client.
 sub willMangle {
-	my ($self, $switch) = @_;
+	my ($self, $messageID) = @_;
 
-	return 1 if $Plugins::hooks{"packet_mangle/$switch"};
+	my $packet = $self->{packet_list}{$messageID};
+	my $name;
+	$name = $packet->[0] if ($packet);
 
-	my $packet = $self->{packet_list}{$switch};
-	my $name = $packet->[0];
-
-	return 1 if $Plugins::hooks{"packet_mangle/$name"};
-	return 0;
+	my %args = (
+		messageID => $messageID,
+		name => $name
+	);
+	Plugins::callHook("Network::Receive/willMangle", \%args);
+	return $args{willMangle};
 }
 
 # $NetworkReceive->mangle($args)
@@ -341,16 +345,18 @@ sub willMangle {
 sub mangle {
 	my ($self, $args) = @_;
 
-	my $switch = $args->{switch};
-	my $hookname = "packet_mangle/$switch";
-	unless ($Plugins::hooks{$hookname}) {
-		my $packet = $self->{packet_list}{$switch};
-		my $name = $packet->[0];
-		$hookname = "packet_mangle/$name";
+	my %hook_args = (message => $args);
+	my $entry = $self->{packet_list}{$args->{switch}};
+	if ($entry) {
+		$hook_args{messageName} = $entry->[0];
 	}
-	my $hook = $Plugins::hooks{$hookname}->[0];
-	return unless $hook && $hook->{r_func};
-	return $hook->{r_func}($hookname, $args, $hook->{user_data});
+
+	Plugins::callHook("Network::Receive/mangle", \%hook_args);
+	if (exists $hook_args{ret}) {
+		return $hook_args{ret};
+	} else {
+		return 0;
+	}
 }
 
 # $NetworkReceive->reconstruct($args)
@@ -882,7 +888,6 @@ sub actor_display {
 
 	#### Step 1: create/get the correct actor object ####
 
-	#if ($jobs_lut{$args->{type}}) {
 	if ($jobs_lut{$args->{type}}) {
 		# Actor is a player (homunculus are considered players for now)
 		$actor = $playersList->getByID($args->{ID});
@@ -1122,7 +1127,8 @@ sub actor_display {
 
 	} elsif ($args->{switch} eq "007B" ||
 		$args->{switch} eq "01DA" ||
-		$args->{switch} eq "022C") {
+		$args->{switch} eq "022C" ||
+		$args->{switch} eq "0086") {
 		# Actor Moved
 
 		# Correct the direction in which they're looking

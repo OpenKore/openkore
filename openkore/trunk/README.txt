@@ -6,6 +6,7 @@ Credits:
 - johnny: Fix for headgear display.
 - skseo, gksmf0615: kRO support update.
 - piroJOKE: Field updates.
+- PetroW: Support for the new eAthena actor movement message.
 - Ptica: Socket bug fix in the bus framework.
 
 Important changes:
