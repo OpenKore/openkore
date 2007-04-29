@@ -6,6 +6,7 @@ Credits:
 - johnny: Fix for headgear display.
 - skseo, gksmf0615: kRO support update.
 - piroJOKE: Field updates.
+- Ptica: Socket bug fix in the bus framework.
 
 Important changes:
 - kRO support (February 25 2007) has been fixed.

@@ -92,19 +92,19 @@ sub send {
 # Throws IOException if reading from the socket fails.
 sub readNext {
 	my ($self, $ID) = @_;
-	return if (!dataWaiting($self->{sock}));
 
-	my $data;
-	eval {
-		$self->{sock}->recv($data, 1024 * 32, 0);
-	};
-	if ($@) {
-		IOException->throw($@);
-	} elsif (!defined $data || length($data) == 0) {
-		IOException->throw("Bus server closed connection.");
+	if (dataWaiting($self->{sock})) {
+		my $data;
+		eval {
+			$self->{sock}->recv($data, 1024 * 32, 0);
+		};
+		if ($@) {
+			IOException->throw($@);
+		} elsif (!defined $data || length($data) == 0) {
+			IOException->throw("Bus server closed connection.");
+		}
+		$self->{parser}->add($data);
 	}
-
-	$self->{parser}->add($data);
 	return $self->{parser}->readNext($ID);
 }
 
