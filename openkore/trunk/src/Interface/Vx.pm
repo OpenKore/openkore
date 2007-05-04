@@ -950,7 +950,7 @@ sub packet {
 		makeCoords(\%coords, substr($msg, 46, 3));
 		$self->moveObj($ID,"p",$coords{x},$coords{y});
 
-	} elsif ($switch eq "007B" || $switch eq "01DA" || $switch eq "01DA") {
+	} elsif ($switch eq "007B" || $switch eq "01DA" || $switch eq "0086") {
 		#007b <ID> l <speed> w <opt1> w <opt2> w <option> w <class> w <hair> w <weapon> w <head option bottom> w <server tick> l <shield> w <head option top> w <head option mid> w <hair color> w? W <head dir> w <guild> l <emblem> l <manner> w <karma> B <sex> B <X_Y_X_Y> 5B? B? B? B <Lv> B 
 		#01da <ID>.l <speed>.w <opt1>.w <opt2>.w <option>.w <class>.w <hair>.<item id1>.w <item id2>.w <head option bottom>.w <server tick>.l <head option top>.w <head option mid>.w <hair color>.w ?.w <head dir>.w <guild>.l <emblem>.l <manner>.w <karma>.B <sex>.B <X_Y_X_Y>.5B ?.B ?.B ?.B <Lv>.B ?.B
 		#Information of Character movement inside indicatory range
