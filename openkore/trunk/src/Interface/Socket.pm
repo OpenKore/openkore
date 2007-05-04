@@ -26,12 +26,14 @@ use strict;
 use Interface;
 use base qw(Interface);
 use Utils qw(timeOut);
+use Interface::Console::Simple;
 
 
 sub new {
 	my ($class) = @_;
 	my %self = (
-		server => new Interface::Socket::Server()
+		server => new Interface::Socket::Server(),
+		console => new Interface::Console::Simple()
 	);
 	return bless \%self, $class;
 }
@@ -44,6 +46,10 @@ sub iterate {
 sub getInput {
 	my ($self, $timeout) = @_;
 	my $line;
+
+	if (my $input = $self->{console}->getInput(0)) {
+		$self->{server}->addInput($input);
+	}
 
 	if ($timeout < 0) {
 		$line = $self->{server}->getInput();
@@ -68,6 +74,7 @@ sub getInput {
 sub writeOutput {
 	my $self = shift;
 	$self->{server}->addMessage(@_);
+	$self->{console}->writeOutput(@_);
 }
 
 sub title {
@@ -76,6 +83,7 @@ sub title {
 		if (defined($self->{title}) && $self->{title} ne $title) {
 			$self->{title} = $title;
 			$self->{server}->broadcast("SET_TITLE",	{ title => $title });
+			$self->{console}->title($title);
 		}
 	} else {
 		return $self->{title};
@@ -177,6 +185,11 @@ sub hasInput {
 sub getInput {
 	my ($self) = @_;
 	return shift @{$self->{inputs}};
+}
+
+sub addInput {
+	my ($self, $input) = @_;
+	push @{$self->{inputs}}, $input;
 }
 
 sub onClientNew {

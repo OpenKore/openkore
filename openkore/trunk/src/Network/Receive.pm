@@ -4242,25 +4242,40 @@ sub public_chat {
 	# Type: String
 	my $message = bytesToString($args->{message});
 	my ($chatMsgUser, $chatMsg); # Type: String
+	my ($actor, $dist);
 
-	($chatMsgUser, $chatMsg) = $message =~ /(.*?) : (.*)/;
-	$chatMsgUser =~ s/ $//;
-	stripLanguageCode(\$chatMsg);
+	if ($message =~ /:/) {
+		($chatMsgUser, $chatMsg) = split /:/, $message, 2;
+		$chatMsgUser =~ s/ $//;
+		$chatMsg =~ s/^ //;
+		stripLanguageCode(\$chatMsg);
 
-	my $actor = Actor::get($args->{ID});
+		$actor = Actor::get($args->{ID});
+		$dist = "unknown";
+		if (!$actor->isa('Actor::Unknown')) {
+			$dist = distance($char->{pos_to}, $actor->{pos_to});
+			$dist = sprintf("%.1f", $dist) if ($dist =~ /\./);
+		}
+		$message = "$chatMsgUser ($actor->{binID}): $chatMsg";
 
-	my $dist = "unknown";
-	if (!$actor->isa('Actor::Unknown')) {
-		$dist = distance($char->{pos_to}, $actor->{pos_to});
-		$dist = sprintf("%.1f", $dist) if ($dist =~ /\./);
+	} else {
+		$chatMsg = $message;
 	}
 
-	$message = "$chatMsgUser ($actor->{binID}): $chatMsg";
+	my $position = sprintf("[%s %d, %d]",
+		$field ? $field->name() : T("Unknown field,"),
+		$char->{pos_to}{x}, $char->{pos_to}{y});
+	my $distInfo;
+	if ($actor) {
+		$position .= sprintf(" [%d, %d] [dist=%s] (%d)",
+			$actor->{pos_to}{x}, $actor->{pos_to}{y},
+			$dist, $actor->{nameID});
+		$distInfo = "[dist=$dist] ";
+	}
 
 	# this code autovivifies $actor->{pos_to} but it doesnt matter
-	chatLog("c", "[$field{name} $char->{pos_to}{x}, $char->{pos_to}{y}] [$actor->{pos_to}{x}, $actor->{pos_to}{y}] [dist=$dist] ($actor->{nameID})" .
-		"$message\n") if ($config{logChat});
-	message TF("[dist=%s] %s\n", $dist, $message), "publicchat";
+	chatLog("c", "$position $message\n") if ($config{logChat});
+	message TF("%s%s\n", $distInfo, $message), "publicchat";
 
 	ChatQueue::add('c', $args->{ID}, $chatMsgUser, $chatMsg);
 	Plugins::callHook('packet_pubMsg', {
