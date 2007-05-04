@@ -9,6 +9,7 @@
 #
 #########################################################################
 
+package main;
 use strict;
 use FindBin qw($RealBin);
 use lib "$RealBin";
@@ -182,4 +183,8 @@ sub shutdown {
 	}
 }
 
-__start() if (!defined($ENV{INTERPRETER}) && !$ENV{NO_AUTOSTART});
+if (!defined($ENV{INTERPRETER}) && !$ENV{NO_AUTOSTART}) {
+	__start();
+}
+
+1;

@@ -7,6 +7,7 @@
 # See http://www.gnu.org/licenses/gpl.html for the full license.
 #########################################################################
 
+package main;
 use strict;
 use Time::HiRes qw(time usleep);
 use IO::Socket;
@@ -176,7 +177,6 @@ sub loadDataFiles {
 		exit 1;
 	}
 	Plugins::callHook('start3');
-
 
 	if ($config{'adminPassword'} eq 'x' x 10) {
 		Log::message(T("\nAuto-generating Admin Password due to default...\n"));
