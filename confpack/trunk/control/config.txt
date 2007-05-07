@@ -321,6 +321,8 @@ homunculus_intimacyMin 911
 # default: random between 10 and 60 seconds
 homunculus_hungerTimeoutMax 60
 homunculus_hungerTimeoutMin 10
+# Turn on/off homunculus autofeeding
+homunculus_autoFeed 1
 
 ######## Block options ########
 # You can copy & paste any block multiple times. So if you want to
