@@ -179,7 +179,8 @@ sub iterate {
 			&& $char->{homunculus}{hunger} ne '' 
 			&& $char->{homunculus}{hunger} <= $char->{homunculus}{hungerThreshold} 
 			&& timeOut($char->{homunculus}{feed_time},$char->{homunculus}{feed_timeout})
-			&& !$disallow_feeding) {
+			&& !$disallow_feeding
+			&& $config{homunculus_autoFeed}) {
 			
 			processFeeding();
 			message T("Auto-feeding your Homunculus (".$char->{homunculus}{hunger}." hunger).\n"), 'homunculus';
