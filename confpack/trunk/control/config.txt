@@ -295,8 +295,6 @@ homunculus_attackChangeTarget 1
 homunculus_followDistanceMax 10
 homunculus_followDistanceMin 3
 
-homunculus_resurrectAuto 2
-
 homunculus_route_step 15
 
 homunculus_tankMode 0
@@ -321,6 +319,7 @@ homunculus_intimacyMin 911
 # default: random between 10 and 60 seconds
 homunculus_hungerTimeoutMax 60
 homunculus_hungerTimeoutMin 10
+
 # Turn on/off homunculus autofeeding
 homunculus_autoFeed 1
 # In Wich maps should we allow feeding? (leave empty for any map)
