@@ -873,6 +873,13 @@ sub actor_display {
 		unShiftPack(\$coordsArg, \$coordsTo{x}, 10);
 		%coordsFrom = %coordsTo;
 	}
+	
+	if ($args->{switch} eq "0086") {
+		# Message 0086 contains less information about the actor than other similar
+		# messages. So we use the existing actor information.
+		$args = Actor::get($args->{ID})->deepCopy();
+		$args->{switch} = "0086";
+	}
 
 	# Remove actors with a distance greater than removeActorWithDistance. Useful for vending (so you don't spam
 	# too many packets in prontera and cause server lag). As a side effect, you won't be able to "see" actors
