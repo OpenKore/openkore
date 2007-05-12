@@ -121,6 +121,15 @@ serverType 0
 serverEncoding Western
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
 
+[Malaysia - mRO (English Free Server): Prontera]
+ip 202.71.105.29
+port 6900
+master_version 17
+version 1004
+serverType 0
+serverEncoding Western
+storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED
+
 [Malaysia - mRO: Sakray]
 ip 202.71.105.27
 port 6900
