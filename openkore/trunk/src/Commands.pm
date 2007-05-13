@@ -2420,7 +2420,8 @@ sub cmdInventory {
 			if (($item->{type} == 3 ||
 			     $item->{type} == 6 ||
 				 $item->{type} == 10 ||
-				 $item->{type} == 16) && !$item->{equipped}) {
+				 $item->{type} == 16) ||
+				 $item->{type} == 17) && !$item->{equipped}) {
 				push @non_useable, $i;
 			} elsif ($item->{type} <= 2) {
 				push @useable, $i;
@@ -2430,7 +2431,7 @@ sub cmdInventory {
 				$eqp{binID} = $i;
 				$eqp{name} = $item->{name};
 				$eqp{type} = $itemTypes_lut{$item->{type}};
-				$eqp{equipped} = ($item->{type} == 10 || $item->{type} == 16) ? $item->{amount} . " left" : $equipTypes_lut{$item->{equipped}};
+				$eqp{equipped} = ($item->{type} == 10 || $item->{type} == 16 || $item->{type} == 17) ? $item->{amount} . " left" : $equipTypes_lut{$item->{equipped}};
 				$eqp{equipped} .= " ($item->{equipped})";
 				# Translation Comment: Mark to tell item not identified
 				$eqp{identified} = " -- " . T("Not Identified") if !$item->{identified};
