@@ -15,7 +15,7 @@
 14 Headgear
 15 Gun
 16 Bullet
-17 Unknown_Type_17
+17 Shuriken
 18 Unknown_Type_18
 19 Unknown_Type_19
 20 Unknown_Type_20
