@@ -1,4 +1,4 @@
-=========================
+﻿=========================
 ### OpenKore 1.9.4 (beta)
 =========================
 
@@ -8,7 +8,7 @@ Credits:
 - piroJOKE: Field updates.
 - PetroW: Support for the new eAthena actor movement message.
 - Ptica: Socket bug fix in the bus framework.
-- Reignh: Fix for Ninja weapon
+- Reignh: Fix for Ninja weapon.
 
 Important changes:
 - kRO support (February 25 2007) has been fixed.
@@ -17,6 +17,7 @@ Important changes:
 
 Bug fixes:
 - Headgears are now detected correctly.
+- Ninja weapon are now detected correctly.
 
 New commands:
 - Added more GM Commands
