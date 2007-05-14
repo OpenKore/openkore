@@ -3626,7 +3626,7 @@ sub cmdStorage_list {
 		if ($item->{type} == 3 ||
 		    $item->{type} == 6 ||
 		    $item->{type} == 10 ||
-		    $item->{type} == 16) ||
+		    $item->{type} == 16 ||
 	            $item->{type} == 17) {
 			push @non_useable, $item;
 		} elsif ($item->{type} <= 2) {
