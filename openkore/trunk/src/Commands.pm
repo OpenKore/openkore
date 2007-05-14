@@ -2420,7 +2420,7 @@ sub cmdInventory {
 			if (($item->{type} == 3 ||
 			     $item->{type} == 6 ||
 				 $item->{type} == 10 ||
-				 $item->{type} == 16) ||
+				 $item->{type} == 16 ||
 				 $item->{type} == 17) && !$item->{equipped}) {
 				push @non_useable, $i;
 			} elsif ($item->{type} <= 2) {
