@@ -2230,7 +2230,7 @@ sub sendTalkNumber {
 sub sendTalkText {
 	my $self = shift;
 	my $ID = shift;
-	my $input = shift;
+	my $input = stringToBytes(shift);
 	my $msg = pack("C*", 0xD5, 0x01) . pack("v*", length($input)+length($ID)+5) . $ID . $input . chr(0);
 	$self->sendToServer($msg);
 	debug "Sent talk text: ".getHex($ID).", $input\n", "sendPacket", 2;
