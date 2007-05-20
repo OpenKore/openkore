@@ -4928,10 +4928,12 @@ sub parseMsg {
 			$charServer = $remote_socket->peerhost . ":" . $remote_socket->peerport;
 		}
 
-		my $startVal = $msg_size % 106;
+		my $charBlockSize = 106;
+		$charBlockSize = $masterServer->{charBlockSize} if ($masterServer && $masterServer->{charBlockSize});
+		my $startVal = $msg_size % $charBlockSize;
 
 		my $num;
-		for (my $i = $startVal; $i < $msg_size; $i += 106) {
+		for (my $i = $startVal; $i < $msg_size; $i += $charBlockSize) {
 			#exp display bugfix - chobit andy 20030129
 			$num = unpack("C1", substr($msg, $i + 104, 1));
 			$chars[$num] = new Actor::You;
