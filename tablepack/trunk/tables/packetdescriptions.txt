@@ -13,6 +13,7 @@
 007F Received Sync
 0080 Unit Lost (Died, Disappeared, Disconnected)
 0081 Disconnected from Server
+0086 actor_display (actor moved)
 0087 You Move
 0088 Unit Position
 008A Item take / attack damage / sit / stand
