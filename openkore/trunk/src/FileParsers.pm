@@ -28,6 +28,7 @@ use encoding 'utf8';
 use Carp;
 
 use Utils;
+use Utils::TextReader;
 use Plugins;
 use Log qw(warning error);
 
@@ -66,11 +67,7 @@ our @EXPORT = qw(
 	updateMonsterLUT
 	updatePortalLUT
 	updateNPCLUT
-	);
-
-
-# use SelfLoader; 1;
-# __DATA__
+);
 
 
 sub parseArrayFile {
@@ -78,16 +75,17 @@ sub parseArrayFile {
 	my $r_array = shift;
 	undef @{$r_array};
 
-	open FILE, "<:utf8", $file;
-	my @lines = <FILE>;
+	my @lines;
+	my $reader = new Utils::TextReader($file);
+	while (!$reader->eof()) {
+		push @lines, $reader->readLine();
+	}
 	@{$r_array} = scalar(@lines) + 1;
 	my $i = 1;
 	foreach (@lines) {
-		s/[\r\n\x{FEFF}]//g;
 		$r_array->[$i] = $_;
 		$i++;
 	}
-	close FILE;
 	return 1;
 }
 
@@ -96,23 +94,24 @@ sub parseAvoidControl {
 	my $r_hash = shift;
 	undef %{$r_hash};
 	my ($key,@args,$args);
-	open FILE, "<:utf8", $file;
+	my $reader = new Utils::TextReader($file);
 
 	my $section = "";
-	foreach (<FILE>) {
-		s/\x{FEFF}//g;
-		next if (/^#/);
-		s/[\r\n]//g;
-		s/\s+$//g;
+	while (!$reader->eof()) {
+		my $line = $reader->readLine();
+		$line =~ s/\x{FEFF}//g;
+		next if ($line =~ /^#/);
+		$line =~ s/[\r\n]//g;
+		$line =~ s/\s+$//g;
 
-		next if ($_ eq "");
+		next if ($line eq "");
 
-		if (/^\[(.*)\]$/) {
+		if ($line =~ /^\[(.*)\]$/) {
 			$section = $1;
 			next;
 
 		} else {
-			($key, $args) = lc($_) =~ /([\s\S]+?)[\s]+(\d+[\s\S]*)/;
+			($key, $args) = lc($line) =~ /([\s\S]+?)[\s]+(\d+[\s\S]*)/;
 			@args = split / /,$args;
 			if ($key ne "") {
 				$r_hash->{$section}{$key}{disconnect_on_sight} = $args[0];
@@ -121,7 +120,6 @@ sub parseAvoidControl {
 			}
 		}
 	}
-	close FILE;
 	return 1;
 }
 
@@ -129,17 +127,17 @@ sub parseChatResp {
 	my $file = shift;
 	my $r_array = shift;
 
-	open FILE, "<:utf8", $file;
-	foreach (<FILE>) {
-		s/[\r\n\x{FEFF}]//g;
-		next if ($_ eq "" || /^#/);
-		if (/^first_resp_/) {
+	my $reader = new Utils::TextReader($file);
+	while (!$reader->eof()) {
+		my $line = $reader->readLine();
+		$line =~ s/[\r\n\x{FEFF}]//g;
+		next if ($line eq "" || $line =~ /^#/);
+		if ($line =~ /^first_resp_/) {
 			Log::error(Translation::T("The chat_resp.txt format has changed. Please read News.txt and upgrade to the new format.\n"));
-			close FILE;
 			return;
 		}
 
-		my ($key, $value) = split /\t+/, lc($_), 2;
+		my ($key, $value) = split /\t+/, lc($line), 2;
 		my @input = split /,+/, $key;
 		my @responses = split /,+/, $value;
 
@@ -151,7 +149,6 @@ sub parseChatResp {
 			push @{$r_array}, \%args;
 		}
 	}
-	close FILE;
 	return 1;
 }
 
@@ -162,21 +159,22 @@ sub parseCommandsDescription {
 
 	undef %{$r_hash} unless $no_undef;
 	my ($key, $commentBlock, $description);
+	
+	my $reader = new Utils::TextReader($file);
+	while (!$reader->eof()) {
+		my $line = $reader->readLine();
+		$line =~ s/\x{FEFF}//g;
+		next if ($line =~ /^[\s\t]*#/);
+		$line =~ s/[\r\n]//g;	# Remove line endings
+		$line =~ s/^[\t\s]*//;	# Remove leading tabs and whitespace
+		$line =~ s/\s+$//g;	# Remove trailing whitespace
+		next if ($line eq "");
 
-	open FILE, "<:utf8", $file;
-	foreach (<FILE>) {
-		s/\x{FEFF}//g;
-		next if (/^[\s\t]*#/);
-		s/[\r\n]//g;	# Remove line endings
-		s/^[\t\s]*//;	# Remove leading tabs and whitespace
-		s/\s+$//g;	# Remove trailing whitespace
-		next if ($_ eq "");
-
-		if (!defined $commentBlock && /^\/\*/) {
+		if (!defined $commentBlock && $line =~ /^\/\*/) {
 			$commentBlock = 1;
 			next;
 
-		} elsif (m/\*\/$/) {
+		} elsif ($line =~ m/\*\/$/) {
 			undef $commentBlock;
 			next;
 
@@ -185,18 +183,17 @@ sub parseCommandsDescription {
 
 		} elsif ($description) {
 			$description = 0;
-			push @{$r_hash->{$key}}, $_;
+			push @{$r_hash->{$key}}, $line;
 
-		} elsif (/^\[(\w+)\]$/) {
+		} elsif ($line =~ /^\[(\w+)\]$/) {
 			$key = $1;
 			$description = 1;
 			$r_hash->{$key} = [];
 
-		} elsif (/^(.*?)\t+(.*)$/) {
+		} elsif ($line =~ /^(.*?)\t+(.*)$/) {
 			push @{$r_hash->{$key}}, [$1, $2];
 		}
 	}
-	close FILE;
 	return 1;
 }
 
@@ -208,31 +205,32 @@ sub parseConfigFile {
 	undef %{$r_hash} unless $no_undef;
 	my ($key, $value, $inBlock, $commentBlock, %blocks);
 
-	open FILE, "<:utf8", $file;
-	foreach (<FILE>) {
-		s/\x{FEFF}//g;
-		next if (/^[\s\t]*#/);
-		s/[\r\n]//g;	# Remove line endings
-		s/^[\t\s]*//;	# Remove leading tabs and whitespace
-		s/\s+$//g;	# Remove trailing whitespace
-		next if ($_ eq "");
+	my $reader = new Utils::TextReader($file);
+	while (!$reader->eof()) {
+		my $line = $reader->readLine();
+		$line =~ s/\x{FEFF}//g;
+		next if ($line =~ /^[\s\t]*#/);
+		$line =~ s/[\r\n]//g;	# Remove line endings
+		$line =~ s/^[\t\s]*//;	# Remove leading tabs and whitespace
+		$line =~ s/\s+$//g;	# Remove trailing whitespace
+		next if ($line eq "");
 
-		if (!defined $commentBlock && /^\/\*/) {
+		if (!defined $commentBlock && $line =~ /^\/\*/) {
 			$commentBlock = 1;
 			next;
 
-		} elsif (defined $commentBlock && m/\*\/$/) {
+		} elsif (defined $commentBlock && $line =~ m/\*\/$/) {
 			undef $commentBlock;
 			next;
 
 		} elsif (defined $commentBlock) {
 			next;
 
-		} elsif (!defined $inBlock && /{$/) {
+		} elsif (!defined $inBlock && $line =~ /{$/) {
 			# Begin of block
-			s/ *{$//;
-			($key, $value) = $_ =~ /^(.*?) (.*)/;
-			$key = $_ if ($key eq '');
+			$line =~ s/ *{$//;
+			($key, $value) = $line =~ /^(.*?) (.*)/;
+			$key = $line if ($key eq '');
 
 			if (!exists $blocks{$key}) {
 				$blocks{$key} = 0;
@@ -242,15 +240,15 @@ sub parseConfigFile {
 			$inBlock = "${key}_$blocks{$key}";
 			$r_hash->{$inBlock} = $value;
 
-		} elsif (defined $inBlock && $_ eq "}") {
+		} elsif (defined $inBlock && $line eq "}") {
 			# End of block
 			undef $inBlock;
 
 		} else {
 			# Option
-			($key, $value) = $_ =~ /^(.*?) (.*)/;
+			($key, $value) = $line =~ /^(.*?) (.*)/;
 			if ($key eq "") {
-				$key = $_;
+				$key = $line;
 				$key =~ s/ *$//;
 			}
 			$key = "${inBlock}_${key}" if (defined $inBlock);
@@ -282,8 +280,6 @@ sub parseConfigFile {
 		}
 	}
 
-	close FILE;
-
 	if ($inBlock) {
 		error Translation::TF("%s: Unclosed { at EOF\n", $file);
 		return 0;
@@ -295,15 +291,15 @@ sub parseEmotionsFile {
 	my $file = shift;
 	my $r_hash = shift;
 	undef %{$r_hash};
-	my ($line, $key, $word, $name);
-	open FILE, "<:utf8", $file;
-	foreach (<FILE>) {
-		s/\x{FEFF}//g;
-		next if (/^#/);
-		s/[\r\n]//g;
-		s/\s+$//g;
+	my ($key, $word, $name);
+	my $reader = new Utils::TextReader($file);
+	while (!$reader->eof()) {
+		my $line = $reader->readLine();
+		$line =~ s/\x{FEFF}//g;
+		next if ($line =~ /^#/);
+		$line =~ s/[\r\n]//g;
+		$line =~ s/\s+$//g;
 
-		$line = $_;
 		($key, $word, $name) = $line =~ /^(\d+) (\S+) (.*)$/;
 
 		if ($key ne "") {
@@ -311,7 +307,6 @@ sub parseEmotionsFile {
 			$$r_hash{$key}{display} = $name;
 		}
 	}
-	close FILE;
 	return 1;
 }
 
@@ -321,18 +316,18 @@ sub parseDataFile {
 	my $r_hash = shift;
 	undef %{$r_hash};
 	my ($key,$value);
-	open FILE, "<:utf8", $file;
-	foreach (<FILE>) {
-		s/\x{FEFF}//g;
-		next if (/^#/);
-		s/[\r\n]//g;
-		s/\s+$//g;
-		($key, $value) = $_ =~ /([\s\S]*) ([\s\S]*?)$/;
+	my $reader = new Utils::TextReader($file);
+	while (!$reader->eof()) {
+		my $line = $reader->readLine();
+		$line =~ s/\x{FEFF}//g;
+		next if ($line =~ /^#/);
+		$line =~ s/[\r\n]//g;
+		$line =~ s/\s+$//g;
+		($key, $value) = $line =~ /([\s\S]*) ([\s\S]*?)$/;
 		if ($key ne "" && $value ne "") {
 			$$r_hash{$key} = $value;
 		}
 	}
-	close FILE;
 	return 1;
 }
 
@@ -341,18 +336,18 @@ sub parseDataFile_lc {
 	my $r_hash = shift;
 	undef %{$r_hash};
 	my ($key,$value);
-	open FILE, "<:utf8", $file;
-	foreach (<FILE>) {
-		s/\x{FEFF}//g;
-		next if (/^#/);
-		s/[\r\n]//g;
-		s/\s+$//g;
-		($key, $value) = $_ =~ /([\s\S]*) ([\s\S]*?)$/;
+	my $reader = new Utils::TextReader($file);
+	while (!$reader->eof()) {
+		my $line = $reader->readLine();
+		$line =~ s/\x{FEFF}//g;
+		next if ($line =~ /^#/);
+		$line =~ s/[\r\n]//g;
+		$line =~ s/\s+$//g;
+		($key, $value) = $line =~ /([\s\S]*) ([\s\S]*?)$/;
 		if ($key ne "" && $value ne "") {
 			$$r_hash{lc($key)} = $value;
 		}
 	}
-	close FILE;
 	return 1;
 }
 
@@ -360,14 +355,15 @@ sub parseDataFile2 {
 	my ($file, $r_hash) = @_;
 
 	%{$r_hash} = ();
-	open FILE, "<:utf8", $file;
-	foreach (<FILE>) {
-		s/\x{FEFF}//g;
-		next if (/^#/);
-		s/[\r\n]//g;
-		next if (length($_) == 0);
+	my $reader = new Utils::TextReader($file);
+	while (!$reader->eof()) {
+		my $line = $reader->readLine();
+		$line =~ s/\x{FEFF}//g;
+		next if ($line =~ /^#/);
+		$line =~ s/[\r\n]//g;
+		next if (length($line) == 0);
 
-		my ($key, $value) = split / /, $_, 2;
+		my ($key, $value) = split / /, $line, 2;
 		$r_hash->{$key} = $value;
 	}
 	close FILE;
@@ -380,12 +376,12 @@ sub parseList {
 
 	undef %{$r_hash};
 
-	open FILE, "<:utf8", $file;
-	foreach (<FILE>) {
+	my $reader = new Utils::TextReader($file);
+	while (!$reader->eof()) {
+		my $line = $reader->readLine();
 		chomp;
-		$r_hash->{$_} = 1;
+		$r_hash->{$line} = 1;
 	}
-	close FILE;
 	return 1;
 }
 
@@ -410,25 +406,27 @@ sub parseShopControl {
 	my ($file, $shop) = @_;
 
 	%{$shop} = ();
-	open(SHOP, "<:utf8", $file);
+	my $reader = new Utils::TextReader($file);
 
 	# Read shop items
 	$shop->{items} = [];
 	my $linenum = 0;
 	my @errors = ();
+	my $line;
 
-	foreach (<SHOP>) {
+	while (!$reader->eof()) {
+		$line = $reader->readLine();
 		$linenum++;
 		chomp;
-		s/[\r\n\x{FEFF}]//g;
-		next if /^$/ || /^#/;
+		$line =~ s/[\r\n\x{FEFF}]//g;
+		next if $line =~ /^$/ || $line =~ /^#/;
 
 		if (!$shop->{title}) {
-			$shop->{title} = $_;
+			$shop->{title} = $line;
 			next;
 		}
 
-		my ($name, $price, $amount) = split(/\t+/);
+		my ($name, $price, $amount) = split(/\t+/, $line);
 		$price =~ s/^\s+//g;
 		$amount =~ s/^\s+//g;
 		my $real_price = $price;
@@ -451,11 +449,10 @@ sub parseShopControl {
 
 		push(@{$shop->{items}}, {name => $name, price => $real_price, amount => $amount});
 	}
-	close(SHOP);
 
 	if (@errors) {
 		error Translation::TF("Errors were found in %s:\n", $file);
-		foreach (@errors) { error("$_\n"); }
+		foreach (@errors) { error("$line\n"); }
 		error Translation::TF("Please correct the above errors and type 'reload %s'.\n", $file);
 		return 0;
 	}
@@ -468,13 +465,14 @@ sub parseItemsControl {
 	undef %{$r_hash};
 	my ($key, $args_text, %cache);
 
-	open FILE, "<:utf8", $file;
-	foreach (<FILE>) {
-		s/\x{FEFF}//g;
-		next if (/^#/);
-		s/[\r\n]//g;
-		s/\s+$//g;
-		($key, $args_text) = lc($_) =~ /([\s\S]+?) (\d+[\s\S]*)/;
+	my $reader = new Utils::TextReader($file);
+	while (!$reader->eof()) {
+		my $line = $reader->readLine();
+		$line =~ s/\x{FEFF}//g;
+		next if ($line =~ /^#/);
+		$line =~ s/[\r\n]//g;
+		$line =~ s/\s+$//g;
+		($key, $args_text) = lc($line) =~ /([\s\S]+?) (\d+[\s\S]*)/;
 		next if ($key eq "");
 
 		if ($cache{$args_text}) {
@@ -492,7 +490,6 @@ sub parseItemsControl {
 			$r_hash->{$key} = $cache{$args_text} = \%item;
 		}
 	}
-	close FILE;
 	return 1;
 }
 
@@ -502,8 +499,9 @@ sub parseNPCs {
 	my ($i, $string);
 	undef %{$r_hash};
 	my ($key, $value, @args);
-	open FILE, "<:utf8", $file;
-	while (my $line = <FILE>) {
+	my $reader = new Utils::TextReader($file);
+	while (!$reader->eof()) {
+		my $line = $reader->readLine();
 		$line =~ s/\cM|\cJ//g;
 		$line =~ s/^\s+|\s+$//g;
 		next if $line =~ /^#/ || $line eq '';
@@ -512,7 +510,6 @@ sub parseNPCs {
 		next unless $name;
 		$$r_hash{"$map $x $y"} = $name;
 	}
-	close FILE;
 	return 1;
 }
 
@@ -522,17 +519,18 @@ sub parseMonControl {
 	undef %{$r_hash};
 	my ($key,@args,$args);
 
-	open FILE, "<:utf8", $file;
-	foreach (<FILE>) {
-		s/\x{FEFF}//g;
-		next if (/^#/);
-		s/[\r\n]//g;
-		s/\s+$//g;
+	my $reader = new Utils::TextReader($file);
+	while (!$reader->eof()) {
+		my $line = $reader->readLine();
+		$line =~ s/\x{FEFF}//g;
+		next if ($line =~ /^#/);
+		$line =~ s/[\r\n]//g;
+		$line =~ s/\s+$//g;
 
-		if (/\t/) {
-			($key, $args) = split /\t+/, lc($_);
+		if ($line =~ /\t/) {
+			($key, $args) = split /\t+/, lc($line);
 		} else {
-			($key, $args) = lc($_) =~ /([\s\S]+?) ([\-\d\.]+[\s\S]*)/;
+			($key, $args) = lc($line) =~ /([\s\S]+?) ([\-\d\.]+[\s\S]*)/;
 		}
 
 		@args = split / /, $args;
@@ -548,7 +546,6 @@ sub parseMonControl {
 			$r_hash->{$key}{weight} = $args[8];
 		}
 	}
-	close FILE;
 	return 1;
 }
 
@@ -609,9 +606,12 @@ sub parsePortalsLOS {
 sub parsePriority {
 	my $file = shift;
 	my $r_hash = shift;
-	return unless open (FILE, "<:utf8", $file);
+	return unless my $reader = new Utils::TextReader($file);
 
-	my @lines = <FILE>;
+	my @lines;
+	while (!$reader->eof()) {
+			push @lines, $reader->readLine();
+	}
 	my $pri = $#lines;
 	foreach (@lines) {
 		s/\x{FEFF}//g;
@@ -620,7 +620,6 @@ sub parsePriority {
 		$$r_hash{lc($_)} = $pri + 1;
 		$pri--;
 	}
-	close FILE;
 	return 1;
 }
 
@@ -628,14 +627,14 @@ sub parseResponses {
 	my $file = shift;
 	my $r_hash = shift;
 	undef %{$r_hash};
-	my ($key,$value);
-	my $i;
-	open FILE, "<:utf8", $file;
-	foreach (<FILE>) {
-		s/\x{FEFF}//g;
-		next if (/^#/);
-		s/[\r\n]//g;
-		($key, $value) = $_ =~ /([\s\S]*?) ([\s\S]*)$/;
+	my ($i, $key,$value);
+	my $reader = new Utils::TextReader($file);
+	while (!$reader->eof()) {
+		my $line = $reader->readLine();
+		$line =~ s/\x{FEFF}//g;
+		next if ($line =~ /^#/);
+		$line =~ s/[\r\n]//g;
+		($key, $value) = $line =~ /([\s\S]*?) ([\s\S]*)$/;
 		if ($key ne "" && $value ne "") {
 			$i = 0;
 			while ($$r_hash{"$key\_$i"} ne "") {
@@ -644,7 +643,6 @@ sub parseResponses {
 			$$r_hash{"$key\_$i"} = $value;
 		}
 	}
-	close FILE;
 	return 1;
 }
 
@@ -659,18 +657,18 @@ sub parseROLUT {
 	return if ($ret{return});
 
 	undef %{$r_hash};
-	open FILE, "<:utf8", $file;
-	foreach (<FILE>) {
-		s/[\r\n\x{FEFF}]//g;
-		next if (length($_) == 0 || /^\/\//);
+	my $reader = new Utils::TextReader($file);
+	while (!$reader->eof()) {
+		my $line = $reader->readLine();
+		$line =~ s/[\r\n\x{FEFF}]//g;
+		next if (length($line) == 0 || $line =~ /^\/\//);
 
-		my ($id, $name) = split /#/, $_, 3;
+		my ($id, $name) = split /#/, $line, 3;
 		if ($id ne "" && $name ne "") {
 			$name =~ s/_/ /g;
 			$r_hash->{$id} = $name;
 		}
 	}
-	close FILE;
 	return 1;
 }
 
@@ -728,18 +726,18 @@ sub parseSectionedFile {
 	my $file = shift;
 	my $r_hash = shift;
 	undef %{$r_hash};
-	open(FILE, "<:utf8", $file);
+	my $reader = new Utils::TextReader($file);
 
 	my $section = "";
-	foreach (<FILE>) {
-		s/\x{FEFF}//g;
-		next if (/^#/);
-		s/[\r\n]//g;
-		s/\s+$//g;
-		next if ($_ eq "");
+	while (!$reader->eof()) {
+		my $line = $reader->readLine();
+		$line =~ s/\x{FEFF}//g;
+		next if ($line =~ /^#/);
+		$line =~ s/[\r\n]//g;
+		$line =~ s/\s+$//g;
+		next if ($line eq "");
 
-		my $line = $_;
-		if (/^\[(.*)\]$/i) {
+		if ($line =~ /^\[(.*)\]$/i) {
 			$section = $1;
 			next;
 		} else {
@@ -752,7 +750,6 @@ sub parseSectionedFile {
 			$r_hash->{$section}{$key} = $value;
 		}
 	}
-	close FILE;
 	return 1;
 }
 
@@ -781,19 +778,19 @@ sub parseSkillsSPLUT {
 sub parseTimeouts {
 	my $file = shift;
 	my $r_hash = shift;
-	open(FILE, "<:utf8", $file);
-	foreach (<FILE>) {
-		s/\x{FEFF}//g;
-		next if (/^#/);
-		s/[\r\n]//g;
+	my $reader = new Utils::TextReader($file);
+	while (!$reader->eof()) {
+		my $line = $reader->readLine();
+		$line =~ s/\x{FEFF}//g;
+		next if ($line =~ /^#/);
+		$line =~ s/[\r\n]//g;
 
-		my ($key, $value) = $_ =~ /([\s\S]+?) ([\s\S]*?)$/;
+		my ($key, $value) = $line =~ /([\s\S]+?) ([\s\S]*?)$/;
 		my @args = split (/ /, $value);
 		if ($key ne "") {
 			$$r_hash{$key}{'timeout'} = $args[0];
 		}
 	}
-	close FILE;
 	return 1;
 }
 
@@ -862,18 +859,19 @@ sub processUltimate {
 	my ($section, $rule, @lines, %written, %sectionsWritten);
 
 	undef %{$hash} if (!$writeMode);
-	if (open($f, "<:utf8", $file)) {
+	if (my $reader = new Utils::TextReader($file)) {
 
-	foreach (<$f>) {
-		s/\x{FEFF}//g;
-		s/[\r\n]//g;
+	while (!$reader->eof()) {
+		my $line = $reader->readLine();
+		$line =~ s/\x{FEFF}//g;
+		$line =~ s/[\r\n]//g;
 
-		if ($_ eq '' || /^[ \t]*#/) {
-			push @lines, $_ if ($writeMode);
+		if ($line eq '' || $line =~ /^[ \t]*#/) {
+			push @lines, $line if ($writeMode);
 			next;
 		}
 
-		if (/^\[(.+)\]$/) {
+		if ($line =~ /^\[(.+)\]$/) {
 			# New section
 			if ($writeMode) {
 				# First, finish writing everything in the previous section
@@ -888,8 +886,8 @@ sub processUltimate {
 					}
 
 				} else {
-					foreach my $line (@{$h}) {
-						push @add, $line if (!$written{$line});
+					foreach (@{$h}) {
+						push @add, $_ if (!$written{$_});
 					}
 				}
 
@@ -916,7 +914,7 @@ sub processUltimate {
 			$rule = $rules->{$secname};
 			if ($writeMode) {
 				$section = $hash->{$secname};
-				push @lines, $_;
+				push @lines, $line;
 				$sectionsWritten{$secname} = 1;
 
 			} else {
@@ -930,7 +928,7 @@ sub processUltimate {
 
 		} elsif ($rule ne 'list') {
 			# Line is a key-value pair
-			my ($key, $val) = split / /, $_, 2;
+			my ($key, $val) = split / /, $line, 2;
 			my $h = (defined $section) ? $section : $hash;
 
 			if ($writeMode) {
@@ -952,15 +950,14 @@ sub processUltimate {
 			# Line is part of a list
 			if ($writeMode) {
 				# Add line only if it exists in the hash
-				push @lines, $_ if (defined(binFind($section, $_)));
-				$written{$_} = 1;
+				push @lines, $line if (defined(binFind($section, $line)));
+				$written{$line} = 1;
 
 			} else {
-				push @{$section}, $_;
+				push @{$section}, $line;
 			}
 		}
 	}
-	close $f;
 
 	} # open
 
@@ -1001,7 +998,6 @@ sub processUltimate {
 	return 1;
 }
 
-
 sub writeDataFile {
 	my $file = shift;
 	my $r_hash = shift;
@@ -1023,36 +1019,37 @@ sub writeDataFileIntact {
 	my $no_undef = shift;
 
 	my (@lines, $key, $value, $inBlock, $commentBlock, %blocks);
-	open FILE, "<:utf8", $file;
-	foreach (<FILE>) {
-		s/\x{FEFF}//g;
-		s/[\r\n]//g;	# Remove line endings
-		if (/^[\s\t]*#/ || /^[\s\t]*$/ || /^\!include( |$)/) {
-			push @lines, $_;
+	my $reader = new Utils::TextReader($file);
+	while (!$reader->eof()) {
+		my $lines = $reader->readLine();
+		$lines =~ s/\x{FEFF}//g;
+		$lines =~ s/[\r\n]//g;	# Remove line endings
+		if ($lines =~ /^[\s\t]*#/ || $lines =~ /^[\s\t]*$/ || $lines =~ /^\!include( |$)/) {
+			push @lines, $lines;
 			next;
 		}
-		s/^[\t\s]*//;	# Remove leading tabs and whitespace
-		s/\s+$//g;	# Remove trailing whitespace
+		$lines =~ s/^[\t\s]*//;	# Remove leading tabs and whitespace
+		$lines =~ s/\s+$//g;	# Remove trailing whitespace
 
-		if (!defined $commentBlock && /^\/\*/) {
-			push @lines, "$_";
+		if (!defined $commentBlock && $lines =~ /^\/\*/) {
+			push @lines, "$lines";
 			$commentBlock = 1;
 			next;
 
-		} elsif (m/\*\/$/) {
-			push @lines, "$_";
+		} elsif ($lines =~ m/\*\/$/) {
+			push @lines, "$lines";
 			undef $commentBlock;
 			next;
 
 		} elsif ($commentBlock) {
-			push @lines, "$_";
+			push @lines, "$lines";
 			next;
 
-		} elsif (!defined $inBlock && /{$/) {
+		} elsif (!defined $inBlock && $lines =~ /{$/) {
 			# Begin of block
-			s/ *{$//;
-			($key, $value) = $_ =~ /^(.*?) (.*)/;
-			$key = $_ if ($key eq '');
+			$lines =~ s/ *{$//;
+			($key, $value) = $lines =~ /^(.*?) (.*)/;
+			$key = $lines if ($key eq '');
 
 			if (!exists $blocks{$key}) {
 				$blocks{$key} = 0;
@@ -1065,16 +1062,16 @@ sub writeDataFileIntact {
 			$line .= " $r_hash->{$inBlock}" if ($r_hash->{$inBlock} ne '');
 			push @lines, "$line {";
 
-		} elsif (defined $inBlock && $_ eq "}") {
+		} elsif (defined $inBlock && $lines eq "}") {
 			# End of block
 			undef $inBlock;
 			push @lines, "}";
 
 		} else {
 			# Option
-			($key, $value) = $_ =~ /^(.*?) (.*)/;
+			($key, $value) = $lines =~ /^(.*?) (.*)/;
 			if ($key eq "") {
-				$key = $_;
+				$key = $lines;
 				$key =~ s/ *$//;
 			}
 			if (defined $inBlock) {
@@ -1102,14 +1099,15 @@ sub writeDataFileIntact2 {
 	my $data;
 	my $key;
 
-	open(FILE, "<:utf8", $file);
-	foreach (<FILE>) {
-		s/\x{FEFF}//g;
-		if (/^#/ || $_ =~ /^\n/ || $_ =~ /^\r/) {
-			$data .= $_;
+	my $reader = new Utils::TextReader($file);
+	while (!$reader->eof()) {
+		my $line = $reader->readLine();
+		$line =~ s/\x{FEFF}//g;
+		if ($line =~ /^#/ || $line =~ /^\n/ || $line =~ /^\r/) {
+			$data .= $line;
 			next;
 		}
-		($key) = $_ =~ /^(\w+)/;
+		($key) = $line =~ /^(\w+)/;
 		$data .= $key;
 		$data .= " $$r_hash{$key}{'timeout'}" if $$r_hash{$key}{'timeout'} ne '';
 		$data .= "\n";
@@ -1141,18 +1139,18 @@ sub writeSectionedFileIntact {
 	my $section = "";
 	my @lines;
 
-	open(FILE, "<:utf8", $file);
-	foreach (<FILE>) {
-		s/[\r\n]//g;
-		if (/^#/ || /^ *$/) {
-			push @lines, $_;
+	my $reader = new Utils::TextReader($file);
+	while (!$reader->eof()) {
+		my $line = $reader->readLine();
+		$line =~ s/[\r\n]//g;
+		if ($line =~ /^#/ || $line =~ /^ *$/) {
+			push @lines, $line;
 			next;
 		}
 
-		my $line = $_;
-		if (/^\[(.*)\]$/) {
+		if ($line =~ /^\[(.*)\]$/) {
 			$section = $1;
-			push @lines, $_;
+			push @lines, $line;
 		} else {
 			my ($key, $value);
 			if ($line =~ / /) {

@@ -9,6 +9,7 @@ Credits:
 - PetroW: Support for the new eAthena actor movement message.
 - Ptica: Socket bug fix in the bus framework.
 - Reignh: Fix for Ninja weapon.
+- natz: Various contributions.
 
 Important changes:
 - kRO support (February 25 2007) has been fixed.
@@ -23,6 +24,7 @@ New commands:
 - Added more GM Commands
 	gmremove : Warp to a player via character name or user name.
 	gmrecall : summons a player via character name or user name.
+
 
 =========================
 ### OpenKore 1.9.3 (beta)
