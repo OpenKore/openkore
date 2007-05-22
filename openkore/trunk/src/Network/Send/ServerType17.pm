@@ -11,7 +11,7 @@
 #########################################################################
 # tRO (Thai) for 2007-05-22bRagexe by kLabMouse (thanks to abt123 and penz for support)
 # latest updaes will go here. Please don't use this ServerType for other servers except tRO.
-package Network::Send::ServerType15;
+package Network::Send::ServerType17;
 
 use strict;
 use Globals;
