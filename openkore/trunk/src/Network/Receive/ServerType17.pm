@@ -19,8 +19,8 @@ use Log qw(message warning error debug);
 use AI;
 use Translation;
 use Globals;
-use I18N;
-use Utils;
+use I18N qw(bytesToString);
+use Utils qw(getHex swrite makeIP makeCoords);
  
 sub new {
 	my ($class) = @_;
