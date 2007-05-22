@@ -14,9 +14,9 @@
 package Network::Send::ServerType15;
 
 use strict;
-use Globals qw($char $syncSync $net %config);
-use Network::Send::ServerType11;
-use base qw(Network::Send::ServerType11);
+use Globals;
+use Network::Send::ServerType0;
+use base qw(Network::Send::ServerType0);
 use Log qw(error debug);
 use I18N qw(stringToBytes);
 use Utils qw(getTickCount getHex getCoordString);
