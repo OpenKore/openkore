@@ -18,6 +18,8 @@ use base qw(Network::Receive);
 use Log qw(message warning error debug);
 use Translation;
 use Globals;
+use I18N qw(bytesToString);
+use Utils qw(getHex swrite makeIP makeCoords);
 
 sub new {
 	my ($class) = @_;
@@ -87,7 +89,7 @@ sub account_server_info {
 		$servers[$num]{ip} = makeIP(substr($msg, $i, 4));
 		$servers[$num]{ip} = $masterServer->{ip} if ($masterServer && $masterServer->{private});
 		$servers[$num]{port} = unpack("v1", substr($msg, $i+4, 2));
-		($servers[$num]{name}) = bytesToString(unpack("Z*", substr($msg, $i + 6, 20)));
+		$servers[$num]{name} = bytesToString(unpack("Z*", substr($msg, $i + 6, 20)));
 		$servers[$num]{users} = unpack("V",substr($msg, $i + 26, 4));
 		$num++;
 	}
