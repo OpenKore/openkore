@@ -256,107 +256,27 @@ syncID 0x7E
 syncTickOffset 3
 mapLoadedTickOffset 5
 
-[Thailand - tRO: Valkyrie (Account 1)]
-ip 203.144.244.10
-port 6900
-master_version 7
-version 24
-serverType 0
-secureLogin 3
-secureLogin_type 0
-secureLogin_requestCode
-secureLogin_account 3
-gameLogin_packet 0273
-charServer_ip 61.90.227.32
-charServer_port 5000
-patchserver wpatch.ragnarok.in.th
-patchpath /patch70
-serverEncoding Thai
-
-[Thailand - tRO: Valkyrie (Account 1.1)]
-ip 203.144.244.121
-port 6900
-master_version 7
-version 24
-serverType 0
-secureLogin 3
-secureLogin_type 0
-secureLogin_requestCode
-secureLogin_account 3
-gameLogin_packet 0273
-charServer_ip 61.90.227.32
-charServer_port 5000
-patchserver wpatch.ragnarok.in.th
-patchpath /patch70
-serverEncoding Thai
-
-[Thailand - tRO: Valkyrie (Account 2)]
-ip 203.144.244.5
-port 6900
-master_version 7
-version 24
-serverType 0
-secureLogin 3
-secureLogin_type 0
-secureLogin_requestCode
-secureLogin_account 3
-gameLogin_packet 0273
-charServer_ip 61.90.227.32
-charServer_port 5000
-patchserver wpatch.ragnarok.in.th
-patchpath /patch70
-serverEncoding Thai
-
-[Thailand - tRO: Valkyrie (Account 2.1)]
+[Thailand - tRO: Valkyrie2]
 ip 203.144.244.122
 port 6900
 master_version 7
-version 24
-serverType 0
+version 31
+serverType 17
 secureLogin 3
 secureLogin_type 0
 secureLogin_requestCode
 secureLogin_account 3
-gameLogin_packet 0273
-charServer_ip 61.90.227.32
-charServer_port 5000
+pauseCharServer 1
 patchserver wpatch.ragnarok.in.th
 patchpath /patch70
 serverEncoding Thai
-
-[Thailand - tRO: Valkyrie (Account 3)]
-ip 203.144.244.7
-port 6900
-master_version 7
-version 24
-serverType 0
-secureLogin 3
-secureLogin_type 0
-secureLogin_requestCode
-secureLogin_account 3
-gameLogin_packet 0273
-charServer_ip 61.90.227.32
-charServer_port 5000
-patchserver wpatch.ragnarok.in.th
-patchpath /patch70
-serverEncoding Thai
-
-[Thailand - tRO: Valkyrie (Account 3.1)]
-ip 203.144.244.123
-port 6900
-master_version 7
-version 24
-serverType 0
-secureLogin 3
-secureLogin_type 0
-secureLogin_requestCode
-secureLogin_account 3
-gameLogin_packet 0273
-charServer_ip 61.90.227.32
-charServer_port 5000
-patchserver wpatch.ragnarok.in.th
-patchpath /patch70
-serverEncoding Thai
+paddedPackets 1
+paddedPackets_attackID 0x193
+paddedPackets_skillUseID 0x89
+# Data for XKore PP mode
+syncID 0x7E
+syncTickOffset 3
+mapLoadedTickOffset 5
 
 ## http://www.rovietnam.com.vn/
 [Vietnam - vRO: SD]
