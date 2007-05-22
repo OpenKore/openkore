@@ -16,53 +16,21 @@ use strict;
 use Network::Receive;
 use base qw(Network::Receive);
 use Log qw(message warning error debug);
+use AI;
 use Translation;
 use Globals;
-use I18N qw(bytesToString);
-use Utils qw(getHex swrite makeIP makeCoords);
-
+use I18N;
+use Utils;
+ 
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new;
 	return $self;
 }
 
-sub map_loaded {
-	my ($self, $args) = @_;
-	$net->setState(Network::IN_GAME);
-	undef $conState_tries;
-	$char = $chars[$config{char}];
-
-	if ($net->version == 1) {
-		$net->setState(4);
-		message(T("Waiting for map to load...\n"), "connection");
-		ai_clientSuspend(0, 10);
-		main::initMapChangeVars();
-	} else {
-		message	T("Requesting guild information...\n"), "info";
-		$messageSender->sendGuildInfoRequest($net);
-
-		# Replies 01B6 (Guild Info) and 014C (Guild Ally/Enemy List)
-		$messageSender->sendGuildRequest($net, 0);
-
-		# Replies 0166 (Guild Member Titles List) and 0154 (Guild Members List)
-		$messageSender->sendGuildRequest($net, 1);
-		message(T("You are now in the game\n"), "connection");
-		$messageSender->sendMapLoaded();
-		$timeout{'ai'}{'time'} = time;
-	}
-
-	$char->{pos} = {};
-	makeCoords($char->{pos}, $args->{coords});
-	$char->{pos_to} = {%{$char->{pos}}};
-	message(TF("Your Coordinates: %s, %s\n", $char->{pos}{x}, $char->{pos}{y}), undef, 1);
-
-	$messageSender->sendIgnoreAll("all") if ($config{ignoreAll});
-}
-
 sub account_server_info {
 	my ($self, $args) = @_;
-	my $msg = substr($args->{serverInfo},4);
+	my $msg = substr($args->{serverInfo},4); # tRO uses some king of offset for the data.
 	my $msg_size = length($msg);
 
 	$net->setState(2);
