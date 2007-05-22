@@ -3119,7 +3119,7 @@ sub revolving_entity {
 	
 }
 
-sub inventory_items_nonstackable {
+sub inventory_items_equiped {
 	my ($self, $args) = @_;
 	changeToInGameState();
 	my $newmsg;
