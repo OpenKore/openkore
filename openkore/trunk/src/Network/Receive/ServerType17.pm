@@ -1,17 +1,23 @@
+#########################################################################
+#  OpenKore - Network subsystem
+#  Copyright (c) 2006 OpenKore Team
+#
+#  This software is open source, licensed under the GNU General Public
+#  License, version 2.
+#  Basically, this means that you're allowed to modify and distribute
+#  this software. However, if you distribute modified versions, you MUST
+#  also distribute the source code.
+#  See http://www.gnu.org/licenses/gpl.html for the full license.
+#########################################################################
 # tRO (Thai) for 2007-05-22bRagexe by kLabMouse (thanks to abt123 and penz for support)
 package Network::Receive::ServerType17;
 
 use strict;
-use Network::Receive ();
+use Network::Receive;
 use base qw(Network::Receive);
-use Time::HiRes qw(time usleep);
-
-use AI;
-use Globals qw($char %timeout $net %config @chars $conState $conState_tries $messageSender);
 use Log qw(message warning error debug);
 use Translation;
-use Network;
-use Utils qw(makeCoords);
+use Globals;
 
 sub new {
 	my ($class) = @_;
@@ -122,7 +128,5 @@ sub account_server_info {
 		}
 	}
 }
-
-
 
 1;
