@@ -311,6 +311,7 @@ sub new {
 		'023E' => ['storage_password_request', 'v1', [qw(flag)]],
 		'0259' => ['gameguard_grant', 'C1', [qw(server)]],
 		'0274' => ['account_server_info', 'x2 a4 a4 a4 x30 C1 x4 a*', [qw(sessionID accountID sessionID2 accountSex serverInfo)]],
+		'0295' => ['inventory_items_equiped'],
 	};
 
 	return bless \%self, $class;
@@ -3116,6 +3117,50 @@ sub revolving_entity {
 		message TF("%s has %s ".$entityType."(s) now\n", $actor, $entities), "parseMsg_statuslook", 2 if $entities != $actor->{spirits};
 	}
 	
+}
+
+sub inventory_items_nonstackable {
+	my ($self, $args) = @_;
+	changeToInGameState();
+	my $newmsg;
+	$self->decrypt(\$newmsg, substr($args->{RAW_MSG}, 4));
+	my $msg = substr($args->{RAW_MSG}, 0, 4) . $newmsg;
+	my $invIndex;
+	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 24) {
+		my $index = unpack("v1", substr($msg, $i, 2));
+		my $ID = unpack("v1", substr($msg, $i + 2, 2));
+		$invIndex = findIndex($char->{inventory}, "index", $index);
+		$invIndex = findIndex($char->{inventory}, "nameID", "") unless defined $invIndex;
+
+		my $item = $char->{inventory}[$invIndex] = new Actor::Item();
+		$item->{index} = $index;
+		$item->{invIndex} = $invIndex;
+		$item->{nameID} = $ID;
+		$item->{amount} = 1;
+		$item->{type} = unpack("C1", substr($msg, $i + 4, 1));
+		$item->{identified} = unpack("C1", substr($msg, $i + 5, 1));
+		$item->{type_equip} = unpack("v1", substr($msg, $i + 6, 2));
+		$item->{equipped} = unpack("v1", substr($msg, $i + 8, 2));
+		$item->{broken} = unpack("C1", substr($msg, $i + 10, 1));
+		$item->{upgrade} = unpack("C1", substr($msg, $i + 11, 1));
+		$item->{cards} = substr($msg, $i + 12, 8);
+		$item->{name} = itemName($item);
+		if ($item->{equipped}) {
+			foreach (%equipSlot_rlut){
+				if ($_ & $item->{equipped}){
+					next if $_ == 10; #work around Arrow bug
+					$char->{equipment}{$equipSlot_lut{$_}} = $item;
+				}
+			}
+		}
+
+
+		debug "Inventory: $item->{name} ($invIndex) x $item->{amount} - $itemTypes_lut{$item->{type}} - $equipTypes_lut{$item->{type_equip}}\n", "parseMsg";
+		Plugins::callHook('packet_inventory', {index => $invIndex});
+	}
+
+	$ai_v{'inventory_time'} = time + 1;
+	$ai_v{'cart_time'} = time + 1;
 }
 
 sub inventory_items_nonstackable {
