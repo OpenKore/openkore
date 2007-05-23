@@ -311,7 +311,9 @@ sub new {
 		'023E' => ['storage_password_request', 'v1', [qw(flag)]],
 		'0259' => ['gameguard_grant', 'C1', [qw(server)]],
 		'0274' => ['account_server_info', 'x2 a4 a4 a4 x30 C1 x4 a*', [qw(sessionID accountID sessionID2 accountSex serverInfo)]],
+		# tRO new packets, need some work on them
 		'0295' => ['inventory_items_equiped'],
+		'029A' => ['inventory_item_added', 'v1 v1 v1 C1 C1 C1 a10 v1 v1 v1', [qw(index amount nameID identified broken upgrade cards type_equip type fail)]],
 	};
 
 	return bless \%self, $class;
