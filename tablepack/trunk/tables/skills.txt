@@ -1,4 +1,4 @@
-1 NV_BASIC Basic Skill
+﻿1 NV_BASIC Basic Skill
 2 SM_SWORD Sword Mastery
 3 SM_TWOHAND Two-Handed Sword Mastery
 4 SM_RECOVERY Increase HP Recovery
@@ -329,6 +329,8 @@
 329 DC_FORTUNEKISS Fortune's Kiss
 330 DC_SERVICEFORYOU At Your Service
 331 NPC_SELFDESTRUCTION2 Self Destruction
+332 NPC_SPEEDUP Speed Up 
+333 NPC_REVENGE Revenge
 334 WE_MALE I'll save you
 335 WE_FEMALE I'll sacrifice myself for you
 336 WE_CALLPARTNER I'm missing you
@@ -343,8 +345,13 @@
 345 NPC_BREAKHELM Break Helm
 346 NPC_BREAKSHIELD Break Shield
 347 NPC_UNDEADATTACK Undead Attack
+348 NPC_CHANGEUNDEAD Change to Undead
 349 NPC_EXPLOSIONSPIRITS NPC Explosion Spirits
 350 NPC_INCAGI NPC Increase AGI
+351 NPC_SIEGEMODE Siege Mode
+352 NPC_CALLSLAVE Call Slaves
+353 NPC_INVISIBLE Turn Invisible
+354 NPC_RUN Run
 355 LK_AURABLADE Aura Blade
 356 LK_PARRYING Parrying
 357 LK_CONCENTRATION Concentration
@@ -463,6 +470,8 @@
 470 SL_SWOO Swoo
 471 SL_SKE Ske
 472 SL_SKA Ska
+473 SM_SELFPROVOKE Provoke Self
+474 NPC_EMOTION_ON On Emotion
 475 ST_PRESERVE Preserve
 476 ST_FULLSTRIP Full Strip
 477 WS_WEAPONREFINE Weapon Refine
