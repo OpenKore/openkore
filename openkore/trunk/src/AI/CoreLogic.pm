@@ -1654,7 +1654,7 @@ sub processAutoBuy {
 sub processAutoCart {
 	if ((AI::isIdle || AI::is(qw/route move buyAuto follow sitAuto items_take items_gather/))) {
 		my $timeout = $timeout{ai_cartAutoCheck}{timeout} || 2;
-		my $hasCart = 0;
+		my $hasCart = $cart{exists};
 		if ($char->{statuses}) {
 			foreach (keys %{$char->{statuses}}) {
 				if ($_ =~ /^Level \d Cart$/) {
@@ -1663,7 +1663,7 @@ sub processAutoCart {
 				}
 			}
 		}
-		if (timeOut($AI::Timeouts::autoCart, $timeout) && ($cart{exists}||$hasCart)) {
+		if (timeOut($AI::Timeouts::autoCart, $timeout) && $hasCart) {
 			my @addItems;
 			my @getItems;
 			my $inventory = $char->{inventory};
