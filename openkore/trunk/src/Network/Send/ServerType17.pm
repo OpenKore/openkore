@@ -9,7 +9,7 @@
 #  also distribute the source code.
 #  See http://www.gnu.org/licenses/gpl.html for the full license.
 #########################################################################
-# tRO (Thai) for 2007-05-22bRagexe by kLabMouse (thanks to abt123 and penz for support)
+# tRO (Thai) for 2007-05-22bRagexe by kLabMouse (thanks to abt123, championrpg and penz for support)
 # latest updaes will go here. Please don't use this ServerType for other servers except tRO.
 package Network::Send::ServerType17;
 
@@ -144,6 +144,13 @@ sub sendGetPlayerInfo { # 0190
 
 	$self->sendToServer($msg);
 	debug "Sent get player info: ID - ".getHex($ID)."\n", "sendPacket", 2;
+}
+
+sub sendGetCharacterName { # 00F5
+        my ($self, $ID) = @_;
+        my $msg = pack("S a4 x5", 0x00F5, $ID);
+        $self->sendToServer($msg);
+        debug "Sent get character name: ID - ".getHex($ID)."\n", "sendPacket", 2;
 }
 
 sub sendItemUse { # 0113

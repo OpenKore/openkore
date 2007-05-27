@@ -163,6 +163,7 @@ sub new {
 		'010C' => ['mvp_other', 'a4', [qw(ID)]],
 		'010E' => ['skill_update', 'v1 v1 v1 v1 C1', [qw(skillID lv sp range up)]], # range = skill range, up = this skill can be leveled up further
 		'010F' => ['skills_list'],
+		'0111' => ['linker_skill', 'v2 x2 v3 Z24', [qw(skillID target lv sp range name)]],
 		'0114' => ['skill_use', 'v1 a4 a4 V1 V1 V1 v1 v1 v1 C1', [qw(skillID sourceID targetID tick src_speed dst_speed damage level param3 type)]],
 		'0117' => ['skill_use_location', 'v1 a4 v1 v1 v1', [qw(skillID sourceID lv x y)]],
 		'0119' => ['character_status', 'a4 v3 x', [qw(ID param1 param2 param3)]],
@@ -312,7 +313,10 @@ sub new {
 		'0259' => ['gameguard_grant', 'C1', [qw(server)]],
 		'0274' => ['account_server_info', 'x2 a4 a4 a4 x30 C1 x4 a*', [qw(sessionID accountID sessionID2 accountSex serverInfo)]],
 		# tRO new packets, need some work on them
-		'0295' => ['inventory_items_equiped'],
+		'0295' => ['inventory_items_nonstackable'],
+		'0296' => ['storage_items_nonstackable'],
+		'0297' => ['cart_equip_list'],
+		# TODO: Fix '029A' packet, the ending seems to be wrong.
 		'029A' => ['inventory_item_added', 'v1 v1 v1 C1 C1 C1 a10 v1 v1 v1', [qw(index amount nameID identified broken upgrade cards type_equip type fail)]],
 	};
 
@@ -1578,8 +1582,9 @@ sub cart_equip_list {
 	my $msg_size = $args->{RAW_MSG_SIZE};
 	$self->decrypt(\$newmsg, substr($msg, 4));
 	$msg = substr($msg, 0, 4).$newmsg;
+	my $psize = ($args->{switch} eq '0297') ? 24 : 20;
 
-	for (my $i = 4; $i < $msg_size; $i += 20) {
+	for (my $i = 4; $i < $msg_size; $i += $psize) {
 		my $index = unpack("v1", substr($msg, $i, 2));
 		my $ID = unpack("v1", substr($msg, $i+2, 2));
 		my $type = unpack("C1",substr($msg, $i+4, 1));
@@ -3121,58 +3126,16 @@ sub revolving_entity {
 	
 }
 
-sub inventory_items_equiped {
-	my ($self, $args) = @_;
-	changeToInGameState();
-	my $newmsg;
-	$self->decrypt(\$newmsg, substr($args->{RAW_MSG}, 4));
-	my $msg = substr($args->{RAW_MSG}, 0, 4) . $newmsg;
-	my $invIndex;
-	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 24) {
-		my $index = unpack("v1", substr($msg, $i, 2));
-		my $ID = unpack("v1", substr($msg, $i + 2, 2));
-		$invIndex = findIndex($char->{inventory}, "index", $index);
-		$invIndex = findIndex($char->{inventory}, "nameID", "") unless defined $invIndex;
-
-		my $item = $char->{inventory}[$invIndex] = new Actor::Item();
-		$item->{index} = $index;
-		$item->{invIndex} = $invIndex;
-		$item->{nameID} = $ID;
-		$item->{amount} = 1;
-		$item->{type} = unpack("C1", substr($msg, $i + 4, 1));
-		$item->{identified} = unpack("C1", substr($msg, $i + 5, 1));
-		$item->{type_equip} = unpack("v1", substr($msg, $i + 6, 2));
-		$item->{equipped} = unpack("v1", substr($msg, $i + 8, 2));
-		$item->{broken} = unpack("C1", substr($msg, $i + 10, 1));
-		$item->{upgrade} = unpack("C1", substr($msg, $i + 11, 1));
-		$item->{cards} = substr($msg, $i + 12, 8);
-		$item->{name} = itemName($item);
-		if ($item->{equipped}) {
-			foreach (%equipSlot_rlut){
-				if ($_ & $item->{equipped}){
-					next if $_ == 10; #work around Arrow bug
-					$char->{equipment}{$equipSlot_lut{$_}} = $item;
-				}
-			}
-		}
-
-
-		debug "Inventory: $item->{name} ($invIndex) x $item->{amount} - $itemTypes_lut{$item->{type}} - $equipTypes_lut{$item->{type_equip}}\n", "parseMsg";
-		Plugins::callHook('packet_inventory', {index => $invIndex});
-	}
-
-	$ai_v{'inventory_time'} = time + 1;
-	$ai_v{'cart_time'} = time + 1;
-}
-
 sub inventory_items_nonstackable {
 	my ($self, $args) = @_;
 	changeToInGameState();
 	my $newmsg;
 	$self->decrypt(\$newmsg, substr($args->{RAW_MSG}, 4));
 	my $msg = substr($args->{RAW_MSG}, 0, 4) . $newmsg;
+	my $psize = ($args->{switch} eq '0295') ? 24 : 20;
 	my $invIndex;
-	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 20) {
+
+	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += $psize) {
 		my $index = unpack("v1", substr($msg, $i, 2));
 		my $ID = unpack("v1", substr($msg, $i + 2, 2));
 		$invIndex = findIndex($char->{inventory}, "index", $index);
@@ -3570,7 +3533,7 @@ sub map_change {
 	} else {
 		$messageSender->sendMapLoaded();
 		# Sending sync packet. Perhaps not only for server types 13 and 11
-		if ($config{serverType} == 11 || $config{serverType} == 12 || $config{serverType} == 13 || $config{serverType} == 16) {
+		if ($config{serverType} == 11 || $config{serverType} == 12 || $config{serverType} == 13 || $config{serverType} == 16 || $config{serverType} == 17) {
 			$messageSender->sendSync(1);
 		}
 		$timeout{'ai'}{'time'} = time;
@@ -5175,6 +5138,32 @@ sub skills_list {
 	}		
 }
 
+sub linker_skill {
+	my ($self, $args) = @_;
+
+	changeToInGameState();
+	my $handle = ($args->{name}) ? $args->{name} : Skill->new(idn => $args->{skillID})->getHandle();
+	
+	$char->{skills}{$handle}{ID} = $args->{skillID};
+	$char->{skills}{$handle}{sp} = $args->{sp};
+	$char->{skills}{$handle}{range} = $args->{range};
+	$char->{skills}{$handle}{up} = 0;
+	$char->{skills}{$handle}{targetType} = $args->{target};
+	$char->{skills}{$handle}{lv} = $args->{lv};
+	$char->{skills}{$handle}{new} = 1;
+
+	#Fix bug , receive status "Night" 2 time
+	binAdd(\@skillsID, $handle) if (binFind(\@skillsID, $handle) eq "");
+
+	Skill::DynamicInfo::add($args->{skillID}, $handle, $args->{lv}, $args->{sp}, $args->{target}, $args->{target}, Skill::OWNER_CHAR);
+
+	Plugins::callHook('packet_charSkills', {
+		ID => $args->{skillID},
+		handle => $handle,
+		level => $args->{lv},
+	});
+}
+
 sub stats_added {
 	my ($self, $args) = @_;
 	
@@ -5498,8 +5487,9 @@ sub storage_items_nonstackable {
 	my $newmsg;
 	$self->decrypt(\$newmsg, substr($args->{RAW_MSG}, 4));
 	my $msg = substr($args->{RAW_MSG}, 0, 4).$newmsg;
+	my $psize = ($args->{switch} eq '0296') ? 24 : 20;
 
-	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 20) {
+	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += $psize) {
 		my $index = unpack("v1", substr($msg, $i, 2));
 		my $ID = unpack("v1", substr($msg, $i + 2, 2));
 
