@@ -719,7 +719,17 @@ sub cmdCart {
 	my (undef, $input) = @_;
 	my ($arg1, $arg2) = split(' ', $input, 2);
 
-	if (!$cart{exists}) {
+	my $hasCart = 0;
+	if ($char->{statuses}) {
+		foreach (keys %{$char->{statuses}}) {
+			if ($_ =~ /^Level \d Cart$/) {
+				$hasCart = 1;
+				last;
+			}
+		}
+	}
+
+	if ((!$cart{exists})||(!$hasCart)) {
 		error T("Error in function 'cart' (Cart Management)\n" .
 			"You do not have a cart.\n");
 		return;
