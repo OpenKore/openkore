@@ -316,8 +316,7 @@ sub new {
 		'0295' => ['inventory_items_nonstackable'],
 		'0296' => ['storage_items_nonstackable'],
 		'0297' => ['cart_equip_list'],
-		# TODO: Fix '029A' packet, the ending seems to be wrong.
-		'029A' => ['inventory_item_added', 'v1 v1 v1 C1 C1 C1 a10 v1 v1 v1', [qw(index amount nameID identified broken upgrade cards type_equip type fail)]],
+		'029A' => ['inventory_item_added', 'v1 v1 v1 C1 C1 C1 a8 v1 C1 C1 a4', [qw(index amount nameID identified broken upgrade cards type_equip type fail cards_ext)]],
 	};
 
 	return bless \%self, $class;
@@ -1596,7 +1595,7 @@ sub cart_equip_list {
 		$item->{type_equip} = unpack("v1", substr($msg, $i+6, 2));
 		$item->{broken} = unpack("C1", substr($msg, $i+10, 1));
 		$item->{upgrade} = unpack("C1", substr($msg, $i+11, 1));
-		$item->{cards} = substr($msg, $i+12, 8);
+		$item->{cards} = ($args->{switch} eq '0297') ? substr($msg, $i+12, 12) : substr($msg, $i+12, 8);
 		$item->{name} = itemName($item);
 
 		debug "Non-Stackable Cart Item: $item->{name} ($index) x 1\n", "parseMsg";
@@ -3013,7 +3012,10 @@ sub inventory_item_added {
 			$item->{identified} = $args->{identified};
 			$item->{broken} = $args->{broken};
 			$item->{upgrade} = $args->{upgrade};
-			$item->{cards} = $args->{cards};
+			$item->{cards} = ($args->{switch} eq '029A') ? $args->{cards} + $args->{cards_ext}: $args->{cards};
+			if ($args->{switch} eq '029A') {
+				$args->{cards} .= $args->{cards_ext};
+			}
 			$item->{name} = itemName($item);
 		} else {
 			# Add stackable item
@@ -3152,7 +3154,7 @@ sub inventory_items_nonstackable {
 		$item->{equipped} = unpack("v1", substr($msg, $i + 8, 2));
 		$item->{broken} = unpack("C1", substr($msg, $i + 10, 1));
 		$item->{upgrade} = unpack("C1", substr($msg, $i + 11, 1));
-		$item->{cards} = substr($msg, $i + 12, 8);
+		$item->{cards} = ($args->{switch} eq '0295') ? substr($msg, $i + 12, 12) : substr($msg, $i + 12, 8);
 		$item->{name} = itemName($item);
 		if ($item->{equipped}) {
 			foreach (%equipSlot_rlut){
@@ -5502,7 +5504,7 @@ sub storage_items_nonstackable {
 		$item->{identified} = unpack("C1", substr($msg, $i + 5, 1));
 		$item->{broken} = unpack("C1", substr($msg, $i + 10, 1));
 		$item->{upgrade} = unpack("C1", substr($msg, $i + 11, 1));
-		$item->{cards} = substr($msg, $i + 12, 8);
+		$item->{cards} = ($args->{switch} eq '0296') ? substr($msg, $i + 12, 12) : substr($msg, $i + 12, 8);
 		$item->{name} = itemName($item);
 		$item->{binID} = binFind(\@storageID, $index);
 		debug "Storage: $item->{name} ($item->{binID})\n", "parseMsg";
