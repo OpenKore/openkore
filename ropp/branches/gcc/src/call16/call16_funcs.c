@@ -247,18 +247,25 @@ dword funcA(dword aKey)
 //-----------------------------------------------------------------------------
 dword funcB(dword aKey)
 {
-	return _funcC(aKey);
+	ByteType key[] = { 0x12, 0x43, 0x9F, 0x1F, 0xAB, 0xFF, 0x3A, 0x6F };
+	ByteType inBlock[8] = { 0 };
+	ByteType outBlock[8] = { 0 };
+	SetKey(key);
+	((dword *) inBlock)[0] = aKey;
+	Encrypt(inBlock, outBlock);
+	return ((dword *) outBlock)[0];
 }
 
 //-----------------------------------------------------------------------------
 dword funcC(dword aKey)
 {
 	ByteType key[] = { 0x22, 0x43, 0x9F, 0x1F, 0xAC, 0xFF, 0x3A, 0x6F };
-	ByteType plain[8];
+	ByteType inBlock[8] = { 0 };
+	ByteType outBlock[8] = { 0 };
 	SetKey(key);
-	memcpy(plain, &aKey, sizeof(dword));
-	Encrypt(plain, key);
-	return plain[0];
+	((dword *) inBlock)[0] = aKey;
+	Decrypt(inBlock, outBlock);
+	return ((dword *) outBlock)[0];
 }
 
 //-----------------------------------------------------------------------------
