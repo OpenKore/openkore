@@ -6,6 +6,7 @@
 #include "../typedefs.h"
 #include "call16.h"
 
+#include <string.h>
 #include "mcg_cipher.h"
 #include "rmd128.h"
 #include "misty1.h"
@@ -246,15 +247,18 @@ dword funcA(dword aKey)
 //-----------------------------------------------------------------------------
 dword funcB(dword aKey)
 {
-	ByteType key[] = { 0x12, 0x43, 0x9F, 0x1F, 0xAB, 0xFF, 0x3A, 0x6F };
-	SetKey(key);
 	return _funcC(aKey);
 }
 
 //-----------------------------------------------------------------------------
 dword funcC(dword aKey)
 {
-	return _funcC(aKey);
+	ByteType key[] = { 0x22, 0x43, 0x9F, 0x1F, 0xAC, 0xFF, 0x3A, 0x6F };
+	ByteType plain[8];
+	SetKey(key);
+	memcpy(plain, &aKey, sizeof(dword));
+	Encrypt(plain, key);
+	return plain[0];
 }
 
 //-----------------------------------------------------------------------------
