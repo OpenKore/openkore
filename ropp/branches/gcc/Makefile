@@ -11,10 +11,6 @@ all: objects
 objects:
 	$(CXX) $(CXXFLAGS) -c src/main/dll_interface.cpp -o src/main/dll_interface.o
 	$(CXX) $(CXXFLAGS) -c src/main/ppengine.cpp -o src/main/ppengine.o
-	$(NASM) src/call16/func_4.asm
-	$(NASM) src/call16/func_9a.asm
-	$(NASM) src/call16/func_56.asm
-	$(NASM) src/call16/func_bc.asm
 	$(NASM) src/call16/func_f.asm
 	cd src/call16 && $(CXX) $(CFLAGS) -c *.cpp *.c
 	$(CC) $(CFLAGS) -c src/call16/draft/func9A/turtle.c -o src/call16/draft/func9A/turtle.o

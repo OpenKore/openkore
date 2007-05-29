@@ -23,21 +23,6 @@ extern "C" {
 //-----------------------------------------------------------------------------
 // linkage to asm code
 //
-//CEXTERN dword STDCALL _func0(dword key);
-//CEXTERN dword STDCALL _func1(dword key);
-//CEXTERN dword STDCALL _func2(dword key);
-//CEXTERN dword STDCALL _func3(dword key);
-//CEXTERN dword STDCALL _func4(dword key);
-//CEXTERN dword STDCALL _func5(dword key);
-//CEXTERN dword STDCALL _func6(dword key);
-//CEXTERN dword STDCALL _func7(dword key);
-//CEXTERN dword STDCALL _func8(dword key);
-CEXTERN dword STDCALL _func9(dword key);
-CEXTERN dword STDCALL _funcA(dword key);
-CEXTERN dword STDCALL _funcB(dword key);
-CEXTERN dword STDCALL _funcC(dword key);
-//CEXTERN dword STDCALL _funcD(dword key);
-//CEXTERN dword STDCALL _funcE(dword key);
 CEXTERN dword STDCALL _funcF(dword key);
 
 //-----------------------------------------------------------------------------
@@ -226,22 +211,33 @@ dword func8(dword aKey)
 }
 
 //-----------------------------------------------------------------------------
+// Warning: not thread-safe
+static TK T_Key1, T_Key2;
+
 dword func9(dword aKey)
 {
-	TURTLEWORD shortkey[] = {0x40, 0xF2, 0x41, 0xB2, 0x60, 0xF6, 0xF2,
-		0xAF, 0x63, 0xF4, 0x5D, 0xFF, 0xE, 0x1C, 0x11, 0x9B};
-	HK key;
+	TURTLEWORD key[16] = { 0x40, 0xF2, 0x41, 0xB2, 0x69, 0xF6, 0xF2,
+		0xAF, 0x63, 0xF4, 0x5D, 0xFF, 0x0E, 0x1C, 0x11, 0x9B };
+	TURTLEWORD block[8] = { 0 };
 
-	hare_key(shortkey, sizeof(shortkey), &key);
-	//int turtle_key (TURTLEWORD *shortkey, int len, TK *key, int n);
-	//turtle_encrypt();
-	return _func9(aKey);
+	turtle_key(key, 16, &T_Key1, 8);
+	((dword *) block)[0] = aKey;
+	turtle_encrypt(block, &T_Key1);
+	return ((dword *) block)[0];
 }
+
 
 //-----------------------------------------------------------------------------
 dword funcA(dword aKey)
 {
-	return _funcA(aKey);
+	TURTLEWORD key[16] = { 0x40, 0xF2, 0x41, 0xB2, 0x69, 0xF6, 0xF1,
+		0xA5, 0x63, 0xF4, 0x5D, 0xFF, 0x0E, 0x1C, 0x11, 0x9B };
+	TURTLEWORD block[8] = { 0 };
+
+	turtle_key(key, 16, &T_Key2, 8);
+	((dword *) block)[0] = aKey;
+	turtle_decrypt(block, &T_Key2);
+	return ((dword *) block)[0];
 }
 
 //-----------------------------------------------------------------------------
