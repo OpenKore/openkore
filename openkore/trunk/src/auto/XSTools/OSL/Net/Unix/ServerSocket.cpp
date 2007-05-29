@@ -43,10 +43,13 @@ private:
 
 public:
 	UnixServerSocket(const char *address, unsigned short port) {
-		fd = socket (PF_INET, SOCK_STREAM, 0);
+		fd = socket(PF_INET, SOCK_STREAM, 0);
 		if (fd == -1) {
 			throw SocketException(strerror(errno), errno);
 		}
+
+		int on = 1;
+		setsockopt(fd, SOL_SOCKET, SO_REUSEADDR, &on, sizeof(on));
 
 		struct sockaddr_in addr;
 		char *c_address = NULL;
@@ -62,8 +65,9 @@ public:
 		if (bind(fd, (struct sockaddr *) &addr, sizeof(addr)) == -1) {
 			char message[200];
 			snprintf(message, sizeof(message),
-				"Cannot bind to %s: %s",
-				address, strerror(errno));
+				"Cannot bind to %s:%d: %s",
+				(address != NULL) ? address : "0.0.0.0",
+				port, strerror(errno));
 			::close(fd);
 			throw SocketException(message, errno);
 		}

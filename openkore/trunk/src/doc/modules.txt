@@ -42,6 +42,7 @@ Utils::Set
 Utils::StartupNotification::Launcher
 Utils::StartupNotification::Launchee
 Utils::StartupNotification::CreateSocketException
+Utils::TextReader
 Utils::PathFinding
 Utils::RMD128
 Utils::RMD160
