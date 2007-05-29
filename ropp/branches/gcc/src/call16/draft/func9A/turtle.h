@@ -33,8 +33,3 @@ int turtle_encrypt (TURTLEWORD *blk, TK *key);
 int turtle_decrypt (TURTLEWORD *blk,TK *key);
 int hare_key (TURTLEWORD *shortkey, int len, HK *key);
 TURTLEWORD hare_stream(HK *key);
-static keyperm(TURTLEWORD sbox[][NTURTLEWORDS], TURTLEWORD *key, int len, int n);
-static int r_turtle_encrypt(TURTLEWORD *in, TURTLEWORD *out, int n, TK *key);
-
-
-

@@ -25,7 +25,7 @@ extern "C" __declspec(dllexport) void __stdcall DecodePacket(byte *Packet, dword
 extern "C" __declspec(dllexport) dword __stdcall GetKey(dword KeyIndex);
 extern "C" __declspec(dllexport) void __stdcall SetPacket(byte *Packet, dword PacketLength, dword TargetId);
 
-extern "C" __declspec(dllexport) void __stdcall SetPacketIDs(word Sit, word Skill);
+extern "C" __declspec(dllexport) void __stdcall SetPacketIDs(dword Sit, dword Skill);
 
 PPEngine *Engine = new PPEngine;
 dword LastTargetId = 0;
@@ -85,7 +85,7 @@ void __stdcall SetAccountId(dword AccountId)
 	Engine->SetAccId(AccountId);
 }
 
-void __stdcall SetPacketIDs(word Sit, word Skill)
+void __stdcall SetPacketIDs(dword Sit, dword Skill)
 {
     SitPacketID = Sit;
     SkillPacketID = Skill;

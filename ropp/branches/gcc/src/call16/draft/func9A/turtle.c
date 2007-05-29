@@ -18,6 +18,9 @@
 
 static int r;
 
+static void keyperm(TURTLEWORD sbox[][NTURTLEWORDS], TURTLEWORD *key, int len, int n);
+static int r_turtle_encrypt(TURTLEWORD *in, TURTLEWORD *out, int n, TK *key);
+
 /*
  * Basic turtle encrypt
  * (encrypts blk in place)
@@ -177,7 +180,7 @@ static int r_turtle_encrypt(TURTLEWORD *in, TURTLEWORD *out, int n, TK *key) {
  * we go through each table WORDBITS times, which smoothes out the early
  * swaps and does a total of x log x swaps in each permutation.
  */
-static keyperm(TURTLEWORD sbox[][NTURTLEWORDS], TURTLEWORD *key, int len, int n) {
+static void keyperm(TURTLEWORD sbox[][NTURTLEWORDS], TURTLEWORD *key, int len, int n) {
     int a, b, i, j, k;
     TURTLEWORD t;
     for (b=0; b<n; b++) {
@@ -198,6 +201,5 @@ static keyperm(TURTLEWORD sbox[][NTURTLEWORDS], TURTLEWORD *key, int len, int n)
             }
         }
     }
-    return 0;
 }
 
