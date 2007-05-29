@@ -14,6 +14,11 @@
 #include "snefru.h"
 #include "safer.h"
 
+extern "C" {
+	#include "draft/func9A/turtle.h"
+	#include "draft/funcBC/feal8.c"
+}
+
 //-----------------------------------------------------------------------------
 // linkage to asm code
 //
@@ -222,6 +227,13 @@ dword func8(dword aKey)
 //-----------------------------------------------------------------------------
 dword func9(dword aKey)
 {
+	TURTLEWORD shortkey[] = {0x40, 0xF2, 0x41, 0xB2, 0x60, 0xF6, 0xF2,
+		0xAF, 0x63, 0xF4, 0x5D, 0xFF, 0xE, 0x1C, 0x11, 0x9B};
+	HK key;
+
+	hare_key(shortkey, sizeof(shortkey), &key);
+	//int turtle_key (TURTLEWORD *shortkey, int len, TK *key, int n);
+	//turtle_encrypt();
 	return _func9(aKey);
 }
 
@@ -234,6 +246,8 @@ dword funcA(dword aKey)
 //-----------------------------------------------------------------------------
 dword funcB(dword aKey)
 {
+	ByteType key[] = { 0x12, 0x43, 0x9F, 0x1F, 0xAB, 0xFF, 0x3A, 0x6F };
+	SetKey(key);
 	return _funcC(aKey);
 }
 

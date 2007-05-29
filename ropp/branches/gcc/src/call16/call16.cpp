@@ -13,6 +13,7 @@
 */
 
 #include "call16.h"
+#include <stdio.h>
 
 dword (*funcs[])(dword)={
 	func0, func1, func2, func3, func4, func5, func6, func7,
@@ -21,5 +22,7 @@ dword (*funcs[])(dword)={
 
 extern "C" dword Call16(int map_sync, int sync, int acc_id, short packet)
 {
-	return (funcs[(packet * packet + map_sync + sync + acc_id) & 0xF])(packet * acc_id + map_sync * sync);
+	unsigned int slot = (packet * packet + map_sync + sync + acc_id) & 0xF;
+	printf("Slot = %d\n", slot);
+	return (funcs[slot])(packet * acc_id + map_sync * sync);
 }

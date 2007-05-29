@@ -33,6 +33,8 @@ typedef unsigned long	dword;		// unsigned 32-bit type
 	#define CEXTERN
 #endif
 
-#define NULL 0
+#ifndef NULL
+	#define NULL 0
+#endif
 
 #endif
