@@ -49,7 +49,7 @@ while (!eof($f)) {
 	equals(readStr($f), generateSkillUse($skillID, $level, $targetID));
 	$i++;
 }
-# 179 -> 176 -> 165
+# 179 -> 176 -> 165 -> 162 -> 53 -> 7
 print "Failures: $fails\n";
 close($f);
 
