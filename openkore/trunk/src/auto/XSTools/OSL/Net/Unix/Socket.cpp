@@ -79,9 +79,7 @@ namespace _Intern {
 			ssize_t result = recv(fd, buffer, size, 0);
 			if (result == -1) {
 				throw IOException(strerror(errno), errno);
-			}
-
-			if (result == 0) {
+			} else if (result == 0) {
 				m_eof = true;
 				return -1;
 			} else {
