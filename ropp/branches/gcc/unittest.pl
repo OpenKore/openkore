@@ -26,6 +26,7 @@ binmode $f;
 
 my ($attackID, $skillUseID, $accountID, $syncMapSync, $syncSync, $LastPaddedPacket);
 my $i = 1;
+our $fails = 0;
 while (!eof($f)) {
 	$attackID = readInt($f);
 	$skillUseID = readInt($f);
@@ -48,7 +49,8 @@ while (!eof($f)) {
 	equals(readStr($f), generateSkillUse($skillID, $level, $targetID));
 	$i++;
 }
-
+# 179 -> 176 -> 165
+print "Failures: $fails\n";
 close($f);
 
 sub setHashData {
@@ -99,6 +101,7 @@ sub readStr {
 sub equals {
 	if ($_[0] ne $_[1]) {
 		print "Not equal\n";
+		$fails++;
 	}
 }
 
