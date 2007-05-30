@@ -213,10 +213,12 @@ sub _checkActorHash($$$$) {
 
 # Checks whether the internal state of some variables are correct.
 sub checkValidity {
-	return;
 	return if (!DEBUG || $ENV{OPENKORE_NO_CHECKVALIDITY});
 	my ($name) = @_;
 	$name = "Validity check:" if (!defined $name);
+
+	Carp::assert(UNIVERSAL::isa($char, 'Actor::You')) if ($net && $net->getState() == Network::IN_GAME);
+	return;
 
 	if ($char && $char->{inventory}) {
 		for (my $i = 0; $i < @{$char->{inventory}}; $i++) {
