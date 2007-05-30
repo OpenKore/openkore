@@ -2445,6 +2445,7 @@ sub processAutoAttack {
 
 	Benchmark::begin("ai_autoAttack") if DEBUG;
 
+	return if (!$field);
 	if ((AI::isIdle || AI::is(qw/route follow sitAuto take items_gather items_take/) || (AI::action eq "mapRoute" && AI::args->{stage} eq 'Getting Map Solution'))
 	     # Don't auto-attack monsters while taking loot, and itemsTake/GatherAuto >= 2
 	  && !($config{'itemsTakeAuto'} >= 2 && AI::is("take", "items_take"))
