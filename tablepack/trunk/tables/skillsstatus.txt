@@ -56,6 +56,7 @@
 62 Defender
 64 Element Enchanted
 65 Auto Spell
+67 Orc Head
 68 Spear Quicken
 77 Sleeping
 86 Vigor Explosion
@@ -65,6 +66,7 @@
 91 Frost Weapon
 92 Lightning Loader
 93 Seismic Weapon
+95 Stop
 100 Muted
 103 Aura Blade
 104 Parrying
@@ -75,6 +77,7 @@
 109 Gospel
 110 Assumptio
 111 Basilica
+112 Land Change
 113 Magic Power
 114 Enchant Deadly Poison
 115 True Sight
@@ -88,8 +91,10 @@
 124 Head Crush
 125 Joint Beat
 127 Memorize
+130 Mom, Dad, I love you!
 131 Magnum Break
 132 Auto Berserk
+133 Run
 135 Ready Storm
 137 Ready Down
 139 Ready Turn
@@ -97,6 +102,7 @@
 143 TK Dodge
 145 Run
 146 Dark Weapon
+147 Adrenaline All
 148 Ghost Weapon
 149 Night
 150 Increase Atk
@@ -104,17 +110,42 @@
 152 Devil
 153 Kaite
 156 Kaizel
+157 Kaahi
 158 Kaupe
+159 Esma
+161 Sword Quicken
+165 Warmth of Sun
+169 Comfort of Sun
+170 Comfort of Moon
+171 Comfort of Star
 181 Preserve
+182 Battle Command
 184 Invisible Detect
 185 Walking Speed Down
+186 Lucky Cast
 188 Maximum Power Thrust
+197 Shrink
+198 Sight Blaster
+199 Wink of Charm
+200 Close Confine
+201 Close Confine
 203 Madness Canceller
 204 Gatling Fever
+205 Happy Break
 206 Utsusemi
 207 Bunshin No Jutsu
 208 Nen
 209 Adjustment
 210 Increase Accuracy
+241 Steamed Tongue
+242 Steamed Scorpion
+243 Stew Of Immortality
+244 Hwergelmir's Tonic
+245 Dragon Breath Cocktail
+246 Cooked Nine Tail's Tails
+247 Honey Pastry
+248 Sesame Pastry
 250 Exp rate x1.5
+251 Life Insurance
 252 Drop rate x2
+253 Convex Mirror
