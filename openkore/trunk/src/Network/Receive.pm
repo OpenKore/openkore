@@ -313,6 +313,7 @@ sub new {
 		'0259' => ['gameguard_grant', 'C1', [qw(server)]],
 		'0274' => ['account_server_info', 'x2 a4 a4 a4 x30 C1 x4 a*', [qw(sessionID accountID sessionID2 accountSex serverInfo)]],
 		# tRO new packets, need some work on them
+		'0287' => ['cash_dealer'],
 		'0295' => ['inventory_items_nonstackable'],
 		'0296' => ['storage_items_nonstackable'],
 		'0297' => ['cart_equip_list'],
@@ -1662,6 +1663,41 @@ sub cart_items_list {
 	$ai_v{'inventory_time'} = time + 1;
 	$ai_v{'cart_time'} = time + 1;
 	
+}
+
+sub cash_dealer {
+	my ($self, $args) = @_;
+
+	undef @cashList;
+	my $cashList = 0;
+	$char->{cashpoint} = unpack("x4 V", $args->{RAW_MSG});
+
+	for (my $i = 8; $i < $args->{RAW_MSG_SIZE}; $i += 11) {
+		my ($price, $dcprice, $type, $ID) = unpack("V2 C v", substr($args->{RAW_MSG}, $i, 11));
+		my $store = $cashList[$cashList] = {};
+		my $display = ($items_lut{$ID} ne "") ? $items_lut{$ID} : "Unknown $ID";
+		$store->{name} = $display;
+		$store->{nameID} = $ID;
+		$store->{type} = $type;
+		$store->{price} = $dcprice;
+		$cashList++;
+	}
+
+	$ai_v{npc_talk}{talk} = 'cash';
+	# continue talk sequence now
+	$ai_v{npc_talk}{time} = time;
+
+	message TF("-----------CashList (Cash Point: %-5d)------------\n" .
+		"#  Name                    Type               Price\n", $char->{cashpoint}), "list";
+	my $display;
+	for (my $i = 0; $i < @cashList; $i++) {
+		$display = $cashList[$i]{name};
+		message(swrite(
+			"@< @<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<< @>>>>>>>p",
+			[$i, $display, $itemTypes_lut{$cashList[$i]{type}}, $cashList[$i]{price}]),
+			"list");
+	}
+	message("---------------------------------------------------\n", "list");
 }
 
 sub combo_delay {
