@@ -1668,7 +1668,7 @@ sub cart_items_list {
 sub cash_dealer {
 	my ($self, $args) = @_;
 
-	undef @cashList;
+	undef @cashList;
 	my $cashList = 0;
 	$char->{cashpoint} = unpack("x4 V", $args->{RAW_MSG});
 
