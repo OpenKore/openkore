@@ -217,7 +217,7 @@ sub checkValidity {
 	my ($name) = @_;
 	$name = "Validity check:" if (!defined $name);
 
-	Carp::assert(UNIVERSAL::isa($char, 'Actor::You')) if ($net && $net->getState() == Network::IN_GAME);
+#	Carp::assert(UNIVERSAL::isa($char, 'Actor::You')) if ($net && $net->getState() == Network::IN_GAME);
 	return;
 
 	if ($char && $char->{inventory}) {
