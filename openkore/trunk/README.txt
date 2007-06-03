@@ -25,6 +25,13 @@ New commands:
 	gmremove : Warp to a player via character name or user name.
 	gmrecall : summons a player via character name or user name.
 
+New config options:
+- homunculus_intimacyMax 	 : Max value of intimacy, if this value is reached feeding will discontinue till minimum is reached.
+- homunculus_intimacyMin 	 : Min value of intimacy, will continue feeding if this value is reached.
+- homunculus_hungerTimeoutMax 	 : How long should we wait between feedings? (max)
+- homunculus_hungerTimeoutMin 	 : same as above, but min value
+- homunculus_autoFeed 		 : turn on/off auto-feeding
+- homunculus_autoFeedAllowedMaps : map names where to allow auto-feeding (leave empty for all maps)
 
 =========================
 ### OpenKore 1.9.3 (beta)
