@@ -88,6 +88,7 @@
 120 Reject Sword
 121 Marionette Control
 122 Marionette Control
+123 Moonlit Water Mill
 124 Head Crush
 125 Joint Beat
 127 Memorize
@@ -104,7 +105,7 @@
 146 Dark Weapon
 147 Adrenaline All
 148 Ghost Weapon
-149 Night
+149 Spirit
 150 Increase Atk
 151 Increase Matk
 152 Devil
@@ -113,6 +114,7 @@
 157 Kaahi
 158 Kaupe
 159 Esma
+160 Night
 161 Sword Quicken
 165 Warmth of Sun
 169 Comfort of Sun
