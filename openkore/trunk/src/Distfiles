@@ -19,7 +19,6 @@ Modules.pm
 Network.pm
 Plugins.pm
 Settings.pm
-Skills.pm
 Skill.pm
 Task.pm
 TaskManager.pm
