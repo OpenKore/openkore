@@ -1,0 +1,5898 @@
+# Tagalog translation for OpenKore.
+# Copyright (C) 2005 OpenKore Team
+# This file is distributed under the same license as OpenKore.
+# kaliwanagan <kaliwanagan@users.sourceforge.net>, 2005.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: openkore 1.9.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2007-06-01 09:13+0700\n"
+"PO-Revision-Date: 2007-06-01 09:16+0700\n"
+"Last-Translator: Richard <dewa5227@yahoo.com>\n"
+"Language-Team: Tagalog\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../AI.pm:246
+#, perl-format
+msgid "Calculating route to find master: %s\n"
+msgstr ""
+
+#: ../AI.pm:248
+#, perl-format
+msgid "Calculating route to find master: %s (%s,%s)\n"
+msgstr ""
+
+#: ../AI.pm:708
+#, perl-format
+msgid "Priority Attacking: %s\n"
+msgstr ""
+
+#: ../AI.pm:710
+#, perl-format
+msgid "Attacking: %s\n"
+msgstr ""
+
+#: ../AI.pm:733
+#, perl-format
+msgid "Encounter Monster : %s\n"
+msgstr ""
+
+#: ../AI.pm:739
+#: ../AI.pm:815
+#, perl-format
+msgid "Auto UnEquiping [R]: %s\n"
+msgstr ""
+
+#: ../AI.pm:744
+#: ../AI.pm:820
+#, perl-format
+msgid "Auto Equiping [R]: %s\n"
+msgstr ""
+
+#: ../AI.pm:754
+#: ../AI.pm:830
+#, perl-format
+msgid "Auto UnEquiping [L]: %s\n"
+msgstr ""
+
+#: ../AI.pm:774
+#: ../AI.pm:850
+#, perl-format
+msgid "Auto Equiping [L]: %s (%s)\n"
+msgstr ""
+
+#: ../AI.pm:787
+#, perl-format
+msgid "Auto Equiping [A]: %s\n"
+msgstr ""
+
+#: ../AI.pm:793
+#, perl-format
+msgid "Change Attack Distance to : %s\n"
+msgstr ""
+
+#: ../AI.pm:798
+#, perl-format
+msgid "Change Attack useWeapon to : %s\n"
+msgstr ""
+
+#: ../AI.pm:865
+#, perl-format
+msgid "Auto equiping default [A]: %s\n"
+msgstr ""
+
+#: ../AI.pm:871
+#, perl-format
+msgid "Change Attack Distance to Default : %s\n"
+msgstr ""
+
+#: ../AI.pm:875
+#, perl-format
+msgid "Change Attack useWeapon to default : %s\n"
+msgstr ""
+
+#: ../ChatQueue.pm:281
+#, perl-format
+msgid "Calculating route to: %s(%s): %d, %d\n"
+msgstr ""
+
+#: ../ChatQueue.pm:283
+#: ../Commands.pm:2697
+#, perl-format
+msgid "Calculating route to: %s(%s)\n"
+msgstr ""
+
+#: ../ChatQueue.pm:290
+#: ../Commands.pm:2713
+#, perl-format
+msgid "Map %s does not exist\n"
+msgstr ""
+
+#: ../Commands.pm:244
+#, perl-format
+msgid "Unknown command '%s'. Please read the documentation for a list of commands.\n"
+msgstr ""
+
+#: ../Commands.pm:405
+msgid "AI sequences cleared\n"
+msgstr ""
+
+#: ../Commands.pm:409
+msgid "------ AI Sequence ---------------------\n"
+msgstr ""
+
+#: ../Commands.pm:416
+msgid "------ AI Sequences --------------------\n"
+msgstr ""
+
+#: ../Commands.pm:424
+msgid "AI is already set to auto mode\n"
+msgstr ""
+
+#: ../Commands.pm:428
+#: ../Commands.pm:462
+msgid "AI set to auto mode\n"
+msgstr ""
+
+#: ../Commands.pm:433
+msgid "AI is already set to manual mode\n"
+msgstr ""
+
+#: ../Commands.pm:437
+#: ../Commands.pm:458
+msgid "AI set to manual mode\n"
+msgstr ""
+
+#: ../Commands.pm:444
+#: ../Commands.pm:454
+msgid "AI turned off\n"
+msgstr ""
+
+#: ../Commands.pm:446
+msgid "AI is already off\n"
+msgstr ""
+
+#: ../Commands.pm:466
+msgid ""
+"Syntax Error in function 'ai' (AI Commands)\n"
+"Usage: ai [ clear | print | ai_v | auto | manual | off ]\n"
+msgstr ""
+
+#: ../Commands.pm:475
+#: ../Commands.pm:1786
+#, perl-format
+msgid "ai_seq (off) = %s\n"
+msgstr ""
+
+#: ../Commands.pm:477
+#: ../Commands.pm:1788
+#, perl-format
+msgid "ai_seq (manual) = %s\n"
+msgstr ""
+
+#: ../Commands.pm:479
+#: ../Commands.pm:1790
+#, perl-format
+msgid "ai_seq (auto) = %s\n"
+msgstr ""
+
+#: ../Commands.pm:481
+#: ../Commands.pm:1792
+msgid "solution\n"
+msgstr ""
+
+#: ../Commands.pm:482
+#, perl-format
+msgid "Active tasks: %s\n"
+msgstr ""
+
+#: ../Commands.pm:483
+#, perl-format
+msgid "Inactive tasks: %s\n"
+msgstr ""
+
+#: ../Commands.pm:494
+msgid "----------------- Item To Craft -----------------\n"
+msgstr ""
+
+#: ../Commands.pm:504
+msgid ""
+"Error in function 'arrowcraft' (Create Arrows)\n"
+"Type 'arrowcraft use' to get list.\n"
+msgstr ""
+
+#: ../Commands.pm:511
+msgid ""
+"Error in function 'arrowcraft' (Create Arrows)\n"
+"You don't have Arrow Making Skill.\n"
+msgstr ""
+
+#: ../Commands.pm:518
+#: ../Commands.pm:704
+#: ../Commands.pm:707
+#, perl-format
+msgid ""
+"Error in function 'arrowcraft forceuse #' (Create Arrows)\n"
+"You don't have item %s in your inventory.\n"
+msgstr ""
+
+#: ../Commands.pm:525
+msgid ""
+"Error in function 'arrowcraft' (Create Arrows)\n"
+"Usage: arrowcraft [<identify #>]\n"
+"Type 'arrowcraft use' to get list.\n"
+msgstr ""
+
+#: ../Commands.pm:536
+#, perl-format
+msgid ""
+"Error in function 'a' (Attack Monster)\n"
+"Monster %s does not exist.\n"
+msgstr ""
+
+#: ../Commands.pm:548
+msgid ""
+"Syntax Error in function 'a' (Attack Monster)\n"
+"Usage: attack <monster # | no | yes >\n"
+msgstr ""
+
+#: ../Commands.pm:561
+#, perl-format
+msgid "Stopped attacking %s (%s)\n"
+msgstr ""
+
+#: ../Commands.pm:572
+msgid ""
+"Syntax Error in function 'auth' (Overall Authorize)\n"
+"Usage: auth <username> <flag>\n"
+msgstr ""
+
+#: ../Commands.pm:580
+msgid "Initiating auto-buy.\n"
+msgstr ""
+
+#: ../Commands.pm:585
+msgid "Initiating auto-sell.\n"
+msgstr ""
+
+#: ../Commands.pm:590
+msgid "Initiating auto-storage.\n"
+msgstr ""
+
+#: ../Commands.pm:610
+msgid ""
+"Syntax Error in function 'buy' (Buy Store Item)\n"
+"Usage: buy <item #> [<amount>]\n"
+msgstr ""
+
+#: ../Commands.pm:613
+#, perl-format
+msgid ""
+"Error in function 'buy' (Buy Store Item)\n"
+"Store Item %s does not exist.\n"
+msgstr ""
+
+#: ../Commands.pm:633
+msgid "Cancelling card merge.\n"
+msgstr ""
+
+#: ../Commands.pm:635
+msgid ""
+"Error in function 'card mergecancel' (Cancel a card merge request)\n"
+"You are not currently in a card merge session.\n"
+msgstr ""
+
+#: ../Commands.pm:642
+#: ../Network/Receive.pm:1485
+msgid "-----Card Merge Candidates-----\n"
+msgstr ""
+
+#: ../Commands.pm:653
+msgid ""
+"Error in function 'card mergelist' (List availible card merge items)\n"
+"You are not currently in a card merge session.\n"
+msgstr ""
+
+#: ../Commands.pm:663
+#, perl-format
+msgid ""
+"Error in function 'card merge' (Finalize card merging onto item)\n"
+"There is no item %s in the card mergelist.\n"
+msgstr ""
+
+#: ../Commands.pm:666
+msgid ""
+"Error in function 'card merge' (Finalize card merging onto item)\n"
+"You are not currently in a card merge session.\n"
+msgstr ""
+
+#: ../Commands.pm:671
+msgid ""
+"Syntax Error in function 'card merge' (Finalize card merging onto item)\n"
+"Usage: card merge <item number>\n"
+"<item number> - Merge item number. Type 'card mergelist' to get number.\n"
+msgstr ""
+
+#: ../Commands.pm:680
+#, perl-format
+msgid "Sending merge list request for %s...\n"
+msgstr ""
+
+#: ../Commands.pm:683
+#, perl-format
+msgid ""
+"Error in function 'card use' (Request list of items for merging with card)\n"
+"Card %s does not exist.\n"
+msgstr ""
+
+#: ../Commands.pm:687
+msgid ""
+"Syntax Error in function 'card use' (Request list of items for merging with card)\n"
+"Usage: card use <item number>\n"
+"<item number> - Card inventory number. Type 'i' to get number.\n"
+msgstr ""
+
+#: ../Commands.pm:693
+msgid "-----------Card List-----------\n"
+msgstr ""
+
+#: ../Commands.pm:713
+msgid ""
+"Syntax Error in function 'card' (Card Compounding)\n"
+"Usage: card <use|mergelist|mergecancel|merge>\n"
+msgstr ""
+
+#: ../Commands.pm:733
+msgid ""
+"Error in function 'cart' (Cart Management)\n"
+"You do not have a cart.\n"
+msgstr ""
+
+#: ../Commands.pm:738
+msgid "Cart inventory is not available.\n"
+msgstr ""
+
+#: ../Commands.pm:742
+msgid ""
+"-------------Cart--------------\n"
+"#  Name\n"
+msgstr ""
+
+#: ../Commands.pm:747
+msgid " -- Not Identified"
+msgstr ""
+
+#: ../Commands.pm:750
+#, perl-format
+msgid ""
+"\n"
+"Capacity: %d/%d  Weight: %d/%d\n"
+msgstr ""
+
+#: ../Commands.pm:763
+#, perl-format
+msgid ""
+"Syntax Error in function 'cart desc' (Show Cart Item Description)\n"
+"'%s' is not a valid cart item number.\n"
+msgstr ""
+
+#: ../Commands.pm:766
+#, perl-format
+msgid ""
+"Error in function 'cart desc' (Show Cart Item Description)\n"
+"Cart Item %s does not exist.\n"
+msgstr ""
+
+#: ../Commands.pm:775
+msgid "Cart released.\n"
+msgstr ""
+
+#: ../Commands.pm:780
+#, perl-format
+msgid ""
+"Error in function 'cart'\n"
+"Command '%s' is not a known command.\n"
+msgstr ""
+
+#: ../Commands.pm:789
+msgid ""
+"Syntax Error in function 'cart add' (Add Item to Cart)\n"
+"Usage: cart add <item>\n"
+msgstr ""
+
+#: ../Commands.pm:803
+#, perl-format
+msgid ""
+"Error in function 'cart add' (Add Item to Cart)\n"
+"Inventory Item %s does not exist.\n"
+msgstr ""
+
+#: ../Commands.pm:818
+msgid ""
+"Syntax Error in function 'cart get' (Get Item from Cart)\n"
+"Usage: cart get <cart item>\n"
+msgstr ""
+
+#: ../Commands.pm:831
+#, perl-format
+msgid ""
+"Error in function 'cart get' (Get Item from Cart)\n"
+"Cart Item %s does not exist.\n"
+msgstr ""
+
+#: ../Commands.pm:846
+msgid ""
+"Syntax Error in function 'c' (Chat)\n"
+"Usage: c <message>\n"
+msgstr ""
+
+#: ../Commands.pm:855
+msgid "Chat log cleared.\n"
+msgstr ""
+
+#: ../Commands.pm:866
+msgid ""
+"Error in function 'chat bestow' (Bestow Admin in Chat)\n"
+"You are not in a Chat Room.\n"
+msgstr ""
+
+#: ../Commands.pm:869
+msgid ""
+"Syntax Error in function 'chat bestow' (Bestow Admin in Chat)\n"
+"Usage: chat bestow <user #>\n"
+msgstr ""
+
+#: ../Commands.pm:872
+#, perl-format
+msgid ""
+"Error in function 'chat bestow' (Bestow Admin in Chat)\n"
+"Chat Room User %s doesn't exist; type 'chat info' to see the list of users\n"
+msgstr ""
+
+#: ../Commands.pm:885
+msgid ""
+"Syntax Error in function 'chatmod' (Modify Chat Room)\n"
+"Usage: chat modify \"<title>\" [<limit #> <public flag> <password>]\n"
+msgstr ""
+
+#: ../Commands.pm:901
+msgid ""
+"Error in function 'chat kick' (Kick from Chat)\n"
+"You are not in a Chat Room.\n"
+msgstr ""
+
+#: ../Commands.pm:904
+msgid ""
+"Syntax Error in function 'chat kick' (Kick from Chat)\n"
+"Usage: chat kick <user #>\n"
+msgstr ""
+
+#: ../Commands.pm:907
+#, perl-format
+msgid ""
+"Error in function 'chat kick' (Kick from Chat)\n"
+"Chat Room User %s doesn't exist\n"
+msgstr ""
+
+#: ../Commands.pm:918
+msgid ""
+"Syntax Error in function 'chat join' (Join Chat Room)\n"
+"Usage: chat join <chat room #> [<password>]\n"
+msgstr ""
+
+#: ../Commands.pm:921
+msgid ""
+"Error in function 'chat join' (Join Chat Room)\n"
+"You are already in a chat room.\n"
+msgstr ""
+
+#: ../Commands.pm:924
+#, perl-format
+msgid ""
+"Error in function 'chat join' (Join Chat Room)\n"
+"Chat Room %s does not exist.\n"
+msgstr ""
+
+#: ../Commands.pm:932
+msgid ""
+"Error in function 'chat leave' (Leave Chat Room)\n"
+"You are not in a Chat Room.\n"
+msgstr ""
+
+#: ../Commands.pm:945
+msgid ""
+"Syntax Error in function 'chat create' (Create Chat Room)\n"
+"Usage: chat create \"<title>\" [<limit #> <public flag> <password>]\n"
+msgstr ""
+
+#: ../Commands.pm:948
+msgid ""
+"Error in function 'chat create' (Create Chat Room)\n"
+"You are already in a chat room.\n"
+msgstr ""
+
+#: ../Commands.pm:969
+msgid ""
+"------------------------------- Chat Room List --------------------------------\n"
+"#   Title                                  Owner                Users   Type\n"
+msgstr ""
+
+#: ../Commands.pm:986
+msgid "There is no chat room info - you are not in a chat room\n"
+msgstr ""
+
+#: ../Commands.pm:988
+msgid ""
+"-----------Chat Room Info-----------\n"
+"Title                     Users   Public/Private\n"
+msgstr ""
+
+#. Translation Comment: Users in chat room
+#: ../Commands.pm:999
+msgid "-- Users --\n"
+msgstr ""
+
+#: ../Commands.pm:1012
+msgid ""
+"Syntax Error in function 'chat' (Chat room management)\n"
+"Usage: chat <create|modify|join|kick|leave|info|list|bestow>\n"
+msgstr ""
+
+#: ../Commands.pm:1024
+msgid ""
+"Syntax Error in function 'chist' (Show Chat History)\n"
+"Usage: chist [<number of entries #>]\n"
+msgstr ""
+
+#: ../Commands.pm:1030
+msgid "------ Chat History --------------------\n"
+msgstr ""
+
+#: ../Commands.pm:1039
+#: ../Commands.pm:2404
+#, perl-format
+msgid "Unable to open %s\n"
+msgstr ""
+
+#: ../Commands.pm:1072
+msgid ""
+"Syntax Error in function 'conf' (Change a Configuration Key)\n"
+"Usage: conf <variable> [<value>|none]\n"
+msgstr ""
+
+#: ../Commands.pm:1076
+#, perl-format
+msgid "Config variable %s doesn't exist\n"
+msgstr ""
+
+#: ../Commands.pm:1081
+#, perl-format
+msgid "Config '%s' is not displayed\n"
+msgstr ""
+
+#: ../Commands.pm:1083
+#, perl-format
+msgid "Config '%s' is %s\n"
+msgstr ""
+
+#: ../Commands.pm:1102
+msgid "Damage Taken Report:\n"
+msgstr ""
+
+#: ../Commands.pm:1111
+#, perl-format
+msgid "Total Damage Taken: %s\n"
+msgstr ""
+
+#: ../Commands.pm:1112
+msgid "End of report.\n"
+msgstr ""
+
+#: ../Commands.pm:1116
+msgid "Damage Taken Report reset.\n"
+msgstr ""
+
+#: ../Commands.pm:1118
+msgid ""
+"Syntax error in function 'damage' (Damage Report)\n"
+"Usage: damage [reset]\n"
+msgstr ""
+
+#: ../Commands.pm:1128
+msgid ""
+"Error in function 'deal' (Deal a Player)\n"
+"You are already in a deal\n"
+msgstr ""
+
+#: ../Commands.pm:1131
+msgid ""
+"Error in function 'deal' (Deal a Player)\n"
+"You must first cancel the incoming deal\n"
+msgstr ""
+
+#: ../Commands.pm:1134
+#, perl-format
+msgid ""
+"Error in function 'deal' (Deal a Player)\n"
+"Player %s does not exist\n"
+msgstr ""
+
+#: ../Commands.pm:1139
+#, perl-format
+msgid "Attempting to deal %s\n"
+msgstr ""
+
+#: ../Commands.pm:1143
+msgid ""
+"Error in function 'deal' (Deal a Player)\n"
+"There is no incoming/current deal to cancel\n"
+msgstr ""
+
+#: ../Commands.pm:1151
+msgid ""
+"Error in function 'deal' (Deal a Player)\n"
+"There is no deal to accept\n"
+msgstr ""
+
+#: ../Commands.pm:1154
+#, perl-format
+msgid ""
+"Error in function 'deal' (Deal a Player)\n"
+"Cannot make the trade - %s has not finalized\n"
+msgstr ""
+
+#: ../Commands.pm:1157
+msgid ""
+"Error in function 'deal' (Deal a Player)\n"
+"You already accepted the final deal\n"
+msgstr ""
+
+#: ../Commands.pm:1164
+msgid "You accepted the final Deal\n"
+msgstr ""
+
+#: ../Commands.pm:1170
+msgid ""
+"Error in function 'deal_add' (Add Item to Deal)\n"
+"No deal in progress\n"
+msgstr ""
+
+#: ../Commands.pm:1173
+msgid ""
+"Error in function 'deal_add' (Add Item to Deal)\n"
+"Can't add any Items - You already finalized the deal\n"
+msgstr ""
+
+#: ../Commands.pm:1176
+#, perl-format
+msgid ""
+"Error in function 'deal_add' (Add Item to Deal)\n"
+"Inventory Item %s does not exist.\n"
+msgstr ""
+
+#: ../Commands.pm:1179
+msgid ""
+"Error in function 'deal_add' (Add Item to Deal)\n"
+"Amount must either be a number, or not specified.\n"
+msgstr ""
+
+#: ../Commands.pm:1188
+msgid "You can't add any more items to the deal\n"
+msgstr ""
+
+#: ../Commands.pm:1195
+#, perl-format
+msgid "You put forward %sz to Deal\n"
+msgstr ""
+
+#: ../Commands.pm:1198
+msgid ""
+"Syntax Error in function 'deal' (Deal a player)\n"
+"Usage: deal [<Player # | no | add>] [<item #>] [<amount>]\n"
+msgstr ""
+
+#: ../Commands.pm:1205
+msgid "There is no deal list - You are not in a deal\n"
+msgstr ""
+
+#: ../Commands.pm:1208
+msgid "-----------Current Deal-----------\n"
+msgstr ""
+
+#: ../Commands.pm:1261
+#, perl-format
+msgid "Zenny: %-25s Zenny: %-14s"
+msgstr ""
+
+#: ../Commands.pm:1285
+#, perl-format, perl-brace-format
+msgid ""
+"------------ Debug information ------------\n"
+"ConState: %s             Connected: %s\n"
+"AI enabled: %s            AI_forcedOff: %s\n"
+"@ai_seq = %s\n"
+"Last packet: %.2f secs ago\n"
+"$timeout{ai}: %.2f secs ago  (value should be >%s)\n"
+"Last AI() call: %.2f secs ago\n"
+"-------------------------------------------\n"
+msgstr ""
+
+#: ../Commands.pm:1313
+msgid ""
+"Syntax Error in function 'drop' (Drop Inventory Item)\n"
+"Usage: drop <item #> [<amount>]\n"
+msgstr ""
+
+#: ../Commands.pm:1332
+msgid "No items were dropped.\n"
+msgstr ""
+
+#: ../Commands.pm:1353
+msgid ""
+"Syntax Error in function 'e' (Emotion)\n"
+"Usage: e <command>\n"
+msgstr ""
+
+#. Translation Comment: List of equiped items on each slot
+#: ../Commands.pm:1374
+msgid "Slots:\n"
+msgstr ""
+
+#: ../Commands.pm:1387
+#: ../Commands.pm:4084
+#, fuzzy, perl-format
+msgid "You don't have %s.\n"
+msgstr "Namatay ka.\n"
+
+#: ../Commands.pm:1392
+#, perl-format
+msgid "Inventory Item %s (%s) can't be equipped.\n"
+msgstr ""
+
+#: ../Commands.pm:1414
+msgid ""
+"Syntax Error in function 'eval' (Evaluate a Perl expression)\n"
+"Usage: eval <expression>\n"
+msgstr ""
+
+#: ../Commands.pm:1457
+#, perl-format
+msgid ""
+"------------Exp Report------------\n"
+"Botting time : %s\n"
+"BaseExp      : %s %s\n"
+"JobExp       : %s %s\n"
+"BaseExp/Hour : %s %s\n"
+"JobExp/Hour  : %s %s\n"
+"Zenny        : %s\n"
+"Zenny/Hour   : %s\n"
+"Base Levelup Time Estimation : %s\n"
+"Job Levelup Time Estimation  : %s\n"
+"Died : %s\n"
+"Bytes Sent   : %s\n"
+"Bytes Rcvd   : %s\n"
+msgstr ""
+
+#: ../Commands.pm:1485
+msgid ""
+"-[Monster Killed Count]-----------------------\n"
+"#   ID     Name                      Count\n"
+msgstr ""
+
+#: ../Commands.pm:1496
+#, perl-format
+msgid "Total number of killed monsters: %s\n"
+msgstr ""
+
+#: ../Commands.pm:1504
+msgid ""
+"-[Item Change Count]--------------------------\n"
+"Name                                    Count\n"
+msgstr ""
+
+#: ../Commands.pm:1527
+msgid "Exp counter reset.\n"
+msgstr ""
+
+#: ../Commands.pm:1531
+msgid ""
+"Syntax error in function 'exp' (Exp Report)\n"
+"Usage: exp [<report | monster | item | reset>]\n"
+msgstr ""
+
+#: ../Commands.pm:1541
+msgid "Your falcon is active\n"
+msgstr ""
+
+#: ../Commands.pm:1543
+msgid "Your falcon is inactive\n"
+msgstr ""
+
+#: ../Commands.pm:1547
+msgid ""
+"Error in function 'falcon release' (Remove Falcon Status)\n"
+"You don't possess a falcon.\n"
+msgstr ""
+
+#: ../Commands.pm:1558
+msgid ""
+"Syntax Error in function 'follow' (Follow Player)\n"
+"Usage: follow <player #>\n"
+msgstr ""
+
+#: ../Commands.pm:1565
+#, perl-format
+msgid ""
+"Error in function 'follow' (Follow Player)\n"
+"Player %s either not visible or not online in party.\n"
+msgstr ""
+
+#: ../Commands.pm:1590
+#, perl-format
+msgid "Player %s does not exist\n"
+msgstr ""
+
+#: ../Commands.pm:1592
+msgid "Player name has not been received, please try again\n"
+msgstr ""
+
+#: ../Commands.pm:1602
+#, fuzzy, perl-format
+msgid "%s is already your friend\n"
+msgstr "'%s' ay hindi isang balidong server.\n"
+
+#: ../Commands.pm:1604
+#, fuzzy, perl-format
+msgid "Requesting %s to be your friend\n"
+msgstr "'%s' ay hindi isang balidong server.\n"
+
+#: ../Commands.pm:1611
+#: ../Commands.pm:1638
+#, fuzzy, perl-format
+msgid "Friend #%s does not exist\n"
+msgstr "Ang server %s ay napili\n"
+
+#: ../Commands.pm:1614
+#, perl-format
+msgid "Attempting to remove %s from your friend list\n"
+msgstr ""
+
+#: ../Commands.pm:1620
+msgid "Can't accept the friend request, no incoming request\n"
+msgstr ""
+
+#: ../Commands.pm:1622
+#, perl-format
+msgid "Accepting the friend request from %s\n"
+msgstr ""
+
+#: ../Commands.pm:1629
+msgid "Can't reject the friend request - no incoming request\n"
+msgstr ""
+
+#: ../Commands.pm:1631
+#, perl-format
+msgid "Rejecting the friend request from %s\n"
+msgstr ""
+
+#: ../Commands.pm:1642
+#, perl-format
+msgid "Friend %s has been added to the PM list as %s\n"
+msgstr ""
+
+#: ../Commands.pm:1645
+#, perl-format
+msgid "Friend %s is already in the PM list\n"
+msgstr ""
+
+#: ../Commands.pm:1650
+msgid ""
+"Syntax Error in function 'friend' (Manage Friends List)\n"
+"Usage: friend [request|remove|accept|reject|pm]\n"
+msgstr ""
+
+#: ../Commands.pm:1654
+msgid ""
+"------------- Friends --------------\n"
+"#   Name                      Online\n"
+msgstr ""
+
+#: ../Commands.pm:1672
+msgid "Error: No Homunculus detected.\n"
+msgstr ""
+
+#: ../Commands.pm:1680
+msgid ""
+"----------------- Homunculus Status --------------------\n"
+"Name: @<<<<<<<<<<<<<<<<<<<<<<<<< HP: @>>>>>>>>>>>>>>>>>>\n"
+"                                 SP: @>>>>>>>>>>>>>>>>>>\n"
+"Level: @<<   @>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n"
+"--------------------------------------------------------\n"
+"Atk: @>>>    Matk:     @>>>    Hunger:    @>>>\n"
+"Hit: @>>>    Critical: @>>>    Intimacy:  @>>>\n"
+"Def: @>>>    Mdef:     @>>>    Accessory: @>>>\n"
+"Flee:@>>>    Aspd:     @>>>\n"
+"--------------------------------------------------------"
+msgstr ""
+
+#: ../Commands.pm:1700
+msgid "Your homunculus is not yet hungry. Feeding it now will lower intimacy.\n"
+msgstr ""
+
+#: ../Commands.pm:1703
+msgid "Feeding your homunculus.\n"
+msgstr ""
+
+#: ../Commands.pm:1708
+#, perl-format
+msgid ""
+"Error in function 'homun move' (Homunculus Move)\n"
+"Invalid coordinates (%s, %s) specified.\n"
+msgstr ""
+
+#: ../Commands.pm:1722
+msgid "Homunculus AI sequences cleared\n"
+msgstr ""
+
+#: ../Commands.pm:1726
+#: ../Commands.pm:1733
+msgid "------ Homunculus AI Sequence ----------\n"
+msgstr ""
+
+#: ../Commands.pm:1738
+msgid "Homunculus AI is already set to auto mode\n"
+msgstr ""
+
+#: ../Commands.pm:1742
+#: ../Commands.pm:1776
+msgid "Homunculus AI set to auto mode\n"
+msgstr ""
+
+#: ../Commands.pm:1747
+msgid "Homunculus AI is already set to manual mode\n"
+msgstr ""
+
+#: ../Commands.pm:1751
+#: ../Commands.pm:1772
+msgid "Homunculus AI set to manual mode\n"
+msgstr ""
+
+#: ../Commands.pm:1758
+#: ../Commands.pm:1768
+msgid "Homunculus AI turned off\n"
+msgstr ""
+
+#: ../Commands.pm:1760
+msgid "Homunculus AI is already off\n"
+msgstr ""
+
+#: ../Commands.pm:1780
+msgid ""
+"Syntax Error in function 'homun ai' (Homunculus AI Commands)\n"
+"Usage: homun ai [ clear | print | auto | manual | off ]\n"
+msgstr ""
+
+#: ../Commands.pm:1796
+msgid ""
+"-----Homunculus Skill List-----\n"
+"   # Skill Name                     Lv      SP\n"
+msgstr ""
+
+#: ../Commands.pm:1805
+#: ../Commands.pm:3389
+#, perl-format
+msgid ""
+"\n"
+"Skill Points: %d\n"
+msgstr ""
+
+#: ../Commands.pm:1812
+#, perl-format
+msgid ""
+"Error in function 'homun skills add' (Add Skill Point)\n"
+"Skill %s does not exist.\n"
+msgstr ""
+
+#: ../Commands.pm:1815
+#, perl-format
+msgid ""
+"Error in function 'homun skills add' (Add Skill Point)\n"
+"Not enough skill points to increase %s\n"
+msgstr ""
+
+#: ../Commands.pm:1824
+#, perl-format
+msgid ""
+"Error in function 'homun skills desc' (Skill Description)\n"
+"Skill %s does not exist.\n"
+msgstr ""
+
+#: ../Commands.pm:1827
+#: ../Commands.pm:3411
+#: ../Misc.pm:1912
+msgid "Error: No description available.\n"
+msgstr ""
+
+#: ../Commands.pm:1828
+#: ../Commands.pm:3412
+#, perl-format
+msgid ""
+"===============Skill Description===============\n"
+"Skill: %s\n"
+"\n"
+msgstr ""
+
+#: ../Commands.pm:1835
+msgid ""
+"Syntax Error in function 'homun skills' (Homunculus Skills Functions)\n"
+"Usage: homun skills [(<add | desc>) [<skill #>]]\n"
+msgstr ""
+
+#: ../Commands.pm:1840
+msgid "Usage: homun < feed | s | status | move | standby | ai | aiv | skills>\n"
+msgstr ""
+
+#: ../Commands.pm:2080
+msgid ""
+"Syntax Error in function 'guild join' (Accept/Deny Guild Join Request)\n"
+"Usage: guild join <flag>\n"
+msgstr ""
+
+#: ../Commands.pm:2084
+msgid ""
+"Error in function 'guild join' (Join/Request to Join Guild)\n"
+"Can't accept/deny guild request - no incoming request.\n"
+msgstr ""
+
+#: ../Commands.pm:2092
+msgid "You accepted the guild join request.\n"
+msgstr ""
+
+#: ../Commands.pm:2094
+msgid "You denied the guild join request.\n"
+msgstr ""
+
+#: ../Commands.pm:2099
+msgid ""
+"Syntax Error in function 'guild create' (Create Guild)\n"
+"Usage: guild create <name>\n"
+msgstr ""
+
+#: ../Commands.pm:2106
+#, fuzzy
+msgid "You are not in a guild.\n"
+msgstr "Ikaw ay nakatayo.\n"
+
+#: ../Commands.pm:2111
+#: ../Commands.pm:2124
+#: ../Commands.pm:2567
+#, perl-format
+msgid "Player %s does not exist.\n"
+msgstr ""
+
+#: ../Commands.pm:2114
+#, perl-format
+msgid "Sent guild join request to %s\n"
+msgstr ""
+
+#: ../Commands.pm:2119
+msgid "No guild information available. Type guild to refresh and then try again.\n"
+msgstr ""
+
+#: ../Commands.pm:2126
+msgid "You must be guildmaster to set an alliance\n"
+msgstr ""
+
+#: ../Commands.pm:2130
+#, perl-format
+msgid "Sent guild alliance request to %s\n"
+msgstr ""
+
+#: ../Commands.pm:2135
+#, perl-format
+msgid "Sending guild leave: %s\n"
+msgstr ""
+
+#: ../Commands.pm:2139
+msgid ""
+"Syntax Error in function 'guild break' (Break Guild)\n"
+"Usage: guild break <guild name>\n"
+msgstr ""
+
+#: ../Commands.pm:2143
+#, perl-format
+msgid "Sending guild break: %s\n"
+msgstr ""
+
+#: ../Commands.pm:2147
+#: ../Network/Receive/ServerType0.pm:44
+msgid "Requesting guild information...\n"
+msgstr ""
+
+#: ../Commands.pm:2157
+msgid "Enter command to view guild information: guild <info | member>\n"
+msgstr ""
+
+#: ../Commands.pm:2159
+#, perl-format
+msgid "Type 'guild %s' again to view the information.\n"
+msgstr ""
+
+#: ../Commands.pm:2163
+msgid ""
+"---------- Guild Information ----------\n"
+"Name    : @<<<<<<<<<<<<<<<<<<<<<<<<\n"
+"Lv      : @<<\n"
+"Exp     : @>>>>>>>>>/@<<<<<<<<<<\n"
+"Master  : @<<<<<<<<<<<<<<<<<<<<<<<<\n"
+"Connect : @>>/@<<"
+msgstr ""
+
+#. Translation Comment: List of allies. Keep the same spaces of the - Guild Information - tag.
+#: ../Commands.pm:2173
+#, perl-format
+msgid "Ally    : %s (%s)\n"
+msgstr ""
+
+#: ../Commands.pm:2179
+#: ../Commands.pm:2200
+msgid "No guild member information available.\n"
+msgstr ""
+
+#: ../Commands.pm:2190
+#, perl-format
+msgid ""
+"Error in function 'guild kick' (Kick Guild Member)\n"
+"Invalid guild member '%s' specified.\n"
+msgstr ""
+
+#: ../Commands.pm:2194
+msgid ""
+"Syntax Error in function 'guild kick' (Kick Guild Member)\n"
+"Usage: guild kick <number> <reason>\n"
+msgstr ""
+
+#: ../Commands.pm:2204
+msgid ""
+"------------ Guild  Member ------------\n"
+"#  Name                       Job        Lv  Title                    Online\n"
+msgstr ""
+
+#. Translation Comment: Guild member online
+#. Translation Comment: Is the party user on list online?
+#: ../Commands.pm:2217
+#: ../Commands.pm:2780
+#: ../Commands.pm:2787
+msgid "Yes"
+msgstr ""
+
+#: ../Commands.pm:2217
+#: ../Commands.pm:2787
+msgid "No"
+msgstr ""
+
+#: ../Commands.pm:2233
+msgid ""
+"Syntax Error in function 'g' (Guild Chat)\n"
+"Usage: g <message>\n"
+msgstr ""
+
+#: ../Commands.pm:2251
+msgid "--------------- Available commands ---------------\n"
+msgstr ""
+
+#: ../Commands.pm:2289
+#, perl-format
+msgid "The command \"%s\" doesn't exist.\n"
+msgstr ""
+
+#: ../Commands.pm:2291
+#, perl-format
+msgid "These commands don't exist: %s\n"
+msgstr ""
+
+#: ../Commands.pm:2293
+msgid "Type 'help' to see a list of all available commands.\n"
+msgstr ""
+
+#: ../Commands.pm:2308
+#, perl-format
+msgid "------------ Help for '%s' ------------\n"
+msgstr ""
+
+#: ../Commands.pm:2344
+msgid "---------Identify List--------\n"
+msgstr ""
+
+#: ../Commands.pm:2356
+#, perl-format
+msgid ""
+"Error in function 'identify' (Identify Item)\n"
+"Identify Item %s does not exist\n"
+msgstr ""
+
+#: ../Commands.pm:2363
+msgid ""
+"Syntax Error in function 'identify' (Identify Item)\n"
+"Usage: identify [<identify #>]\n"
+msgstr ""
+
+#: ../Commands.pm:2372
+msgid ""
+"Syntax Error in function 'ignore' (Ignore Player/Everyone)\n"
+"Usage: ignore <flag> <name | all>\n"
+msgstr ""
+
+#: ../Commands.pm:2389
+msgid ""
+"Syntax Error in function 'ihist' (Show Item History)\n"
+"Usage: ihist [<number of entries #>]\n"
+msgstr ""
+
+#: ../Commands.pm:2395
+msgid "------ Item History --------------------\n"
+msgstr ""
+
+#: ../Commands.pm:2415
+msgid "Inventory is empty\n"
+msgstr ""
+
+#. Translation Comment: Mark to tell item not identified
+#. Translation Comment: Mark to show not identified items
+#: ../Commands.pm:2447
+#: ../Commands.pm:3649
+#: ../Misc.pm:2807
+msgid "Not Identified"
+msgstr ""
+
+#: ../Commands.pm:2456
+msgid "-----------Inventory-----------\n"
+msgstr ""
+
+#. Translation Comment: List of usable equipments
+#: ../Commands.pm:2459
+msgid "-- Equipment (Equipped) --\n"
+msgstr ""
+
+#. Translation Comment: Tell if the item is marked to be sold
+#: ../Commands.pm:2461
+#: ../Commands.pm:2470
+#: ../Commands.pm:2483
+#: ../Commands.pm:2496
+msgid "Will be sold"
+msgstr ""
+
+#. Translation Comment: List of equipments
+#: ../Commands.pm:2468
+msgid "-- Equipment (Not Equipped) --\n"
+msgstr ""
+
+#. Translation Comment: List of non-usable items
+#: ../Commands.pm:2477
+#: ../Commands.pm:3664
+msgid "-- Non-Usable --\n"
+msgstr ""
+
+#. Translation Comment: List of usable items
+#: ../Commands.pm:2491
+#: ../Commands.pm:3677
+msgid "-- Usable --\n"
+msgstr ""
+
+#: ../Commands.pm:2509
+msgid ""
+"Syntax Error in function 'i' (Inventory List)\n"
+"Usage: i [<u|eq|neq|nu|desc>] [<inventory item>]\n"
+msgstr ""
+
+#: ../Commands.pm:2519
+#, perl-format
+msgid ""
+"Error in function 'i' (Inventory Item Description)\n"
+"Inventory Item %s does not exist\n"
+msgstr ""
+
+#: ../Commands.pm:2528
+msgid ""
+"-----------Item List-----------\n"
+"   # Name                           Coord\n"
+msgstr ""
+
+#: ../Commands.pm:2543
+msgid "Item log cleared.\n"
+msgstr ""
+
+#: ../Commands.pm:2579
+msgid ""
+"Syntax Error in function 'look' (Look a Direction)\n"
+"Usage: look <body dir> [<head dir>]\n"
+msgstr ""
+
+#: ../Commands.pm:2589
+msgid ""
+"Syntax Error in function 'lookp' (Look at Player)\n"
+"Usage: lookp <player #>\n"
+msgstr ""
+
+#: ../Commands.pm:2592
+#, perl-format
+msgid ""
+"Error in function 'lookp' (Look at Player)\n"
+"'%s' is not a valid player number.\n"
+msgstr ""
+
+#: ../Commands.pm:2604
+#, perl-format
+msgid ""
+"Error in function '%s' (Manual Move)\n"
+"Usage: %s [distance]\n"
+msgstr ""
+
+#: ../Commands.pm:2633
+msgid ""
+"-----------Monster List-----------\n"
+"#   Name                        ID      DmgTo DmgFrom  Distance    Coordinates\n"
+msgstr ""
+
+#: ../Commands.pm:2674
+#, perl-format
+msgid "Move into portal number 0 (%s,%s)\n"
+msgstr ""
+
+#: ../Commands.pm:2678
+#: ../Commands.pm:2710
+msgid "No portals exist.\n"
+msgstr ""
+
+#: ../Commands.pm:2681
+msgid ""
+"Syntax Error in function 'move' (Move Player)\n"
+"Usage: move <x> <y> &| <map>\n"
+msgstr ""
+
+#: ../Commands.pm:2685
+msgid "Stopped all movement\n"
+msgstr ""
+
+#: ../Commands.pm:2692
+#, perl-format
+msgid "Calculating route to: %s(%s): %s, %s\n"
+msgstr ""
+
+#: ../Commands.pm:2706
+#, perl-format
+msgid "Move into portal number %s (%s,%s)\n"
+msgstr ""
+
+#: ../Commands.pm:2721
+msgid ""
+"-----------NPC List-----------\n"
+"#    Name                         Coordinates   ID\n"
+msgstr ""
+
+#: ../Commands.pm:2735
+msgid ""
+"Syntax Error in function 'nl' (List NPCs)\n"
+"Usage: nl [<npc #>]\n"
+msgstr ""
+
+#: ../Commands.pm:2762
+msgid ""
+"Error in function 'party' (Party Functions)\n"
+"Can't list party - you're not in a party.\n"
+msgstr ""
+
+#: ../Commands.pm:2765
+#, perl-format
+msgid ""
+"----------Party-----------\n"
+"%s\n"
+"#      Name                  Map                    Online    HP\n"
+msgstr ""
+
+#: ../Commands.pm:2807
+msgid ""
+"Syntax Error in function 'party create' (Organize Party)\n"
+"Usage: party create <party name>\n"
+msgstr ""
+
+#: ../Commands.pm:2814
+msgid ""
+"Syntax Error in function 'party join' (Accept/Deny Party Join Request)\n"
+"Usage: party join <flag>\n"
+msgstr ""
+
+#: ../Commands.pm:2817
+msgid ""
+"Error in function 'party join' (Join/Request to Join Party)\n"
+"Can't accept/deny party request - no incoming request.\n"
+msgstr ""
+
+#: ../Commands.pm:2824
+msgid ""
+"Error in function 'party request' (Request to Join Party)\n"
+"Can't request a join - you're not in a party.\n"
+msgstr ""
+
+#: ../Commands.pm:2827
+#, perl-format
+msgid ""
+"Error in function 'party request' (Request to Join Party)\n"
+"Can't request to join party - player %s does not exist.\n"
+msgstr ""
+
+#: ../Commands.pm:2833
+msgid ""
+"Error in function 'party leave' (Leave Party)\n"
+"Can't leave party - you're not in a party.\n"
+msgstr ""
+
+#: ../Commands.pm:2840
+msgid ""
+"Error in function 'party share' (Set Party Share EXP)\n"
+"Can't set share - you're not in a party.\n"
+msgstr ""
+
+#: ../Commands.pm:2843
+msgid ""
+"Syntax Error in function 'party share' (Set Party Share EXP)\n"
+"Usage: party share <flag>\n"
+msgstr ""
+
+#: ../Commands.pm:2850
+msgid ""
+"Error in function 'party kick' (Kick Party Member)\n"
+"Can't kick member - you're not in a party.\n"
+msgstr ""
+
+#: ../Commands.pm:2853
+msgid ""
+"Syntax Error in function 'party kick' (Kick Party Member)\n"
+"Usage: party kick <party member #>\n"
+msgstr ""
+
+#: ../Commands.pm:2856
+#, perl-format
+msgid ""
+"Error in function 'party kick' (Kick Party Member)\n"
+"Can't kick member - member %s doesn't exist.\n"
+msgstr ""
+
+#: ../Commands.pm:2862
+msgid ""
+"Syntax Error in function 'party' (Party Management)\n"
+"Usage: party [<create|join|request|leave|share|kick>]\n"
+msgstr ""
+
+#: ../Commands.pm:2870
+msgid ""
+"Syntax Error in function 'p' (Party Chat)\n"
+"Usage: p <message>\n"
+msgstr ""
+
+#: ../Commands.pm:2882
+msgid "Your Pecopeco is active"
+msgstr ""
+
+#: ../Commands.pm:2884
+msgid "Your Pecopeco is inactive"
+msgstr ""
+
+#: ../Commands.pm:2888
+msgid ""
+"Error in function 'pecopeco release' (Remove Pecopeco Status)\n"
+"You don't possess a Pecopeco.\n"
+msgstr ""
+
+#: ../Commands.pm:2899
+msgid ""
+"Error in function 'pet' (Pet Management)\n"
+"You don't have a pet.\n"
+msgstr ""
+
+#: ../Commands.pm:2903
+#, perl-format
+msgid ""
+"-----------Pet Status-----------\n"
+"Name: %-23s Accessory: %s"
+msgstr ""
+
+#: ../Commands.pm:2917
+msgid ""
+"-----------Pet List-----------\n"
+"#    Type                     Name\n"
+msgstr ""
+
+#: ../Commands.pm:2936
+#, perl-format
+msgid "Player \"%s\" does not exist.\n"
+msgstr ""
+
+#: ../Commands.pm:2969
+#, perl-format
+msgid ""
+"------------------ Player Info ------------------\n"
+"%s (%d)\n"
+"Account ID: %s (Hex: %s)\n"
+"Party: %s\n"
+"Guild: %s\n"
+"Position: %s, %s (%s of you: %s degrees)\n"
+"Level: %-7d Distance: %-17s\n"
+"Sex: %-6s    Class: %s\n"
+"-------------------------------------------------\n"
+"Body direction: %-19s Head direction:  %-19s\n"
+"Weapon: %s\n"
+"Shield: %s\n"
+"Shoes : %s\n"
+"Upper headgear: %-19s Middle headgear: %-19s\n"
+"Lower headgear: %-19s Hair color:      %-19s\n"
+"Walk speed: %s secs per block\n"
+msgstr ""
+
+#: ../Commands.pm:2997
+msgid "Player is dead.\n"
+msgstr ""
+
+#: ../Commands.pm:2999
+#, fuzzy
+msgid "Player is sitting.\n"
+msgstr "Si %s ay nakaupo.\n"
+
+#: ../Commands.pm:3003
+msgid "Player is facing towards you.\n"
+msgstr ""
+
+#: ../Commands.pm:3011
+msgid ""
+"-----------Player List-----------\n"
+"#    Name                                Sex   Lv  Job         Dist  Coord\n"
+msgstr ""
+
+#: ../Commands.pm:3036
+msgid ""
+"--------- Currently loaded plugins ---------\n"
+"#   Name              Description\n"
+msgstr ""
+
+#: ../Commands.pm:3056
+msgid ""
+"Syntax Error in function 'plugin reload' (Reload Plugin)\n"
+"Usage: plugin reload <plugin name|plugin number#|\"all\">\n"
+msgstr ""
+
+#: ../Commands.pm:3072
+msgid ""
+"Error in function 'plugin reload' (Reload Plugin)\n"
+"The specified plugin names do not exist.\n"
+msgstr ""
+
+#: ../Commands.pm:3084
+msgid ""
+"Syntax Error in function 'plugin load' (Load Plugin)\n"
+"Usage: plugin load <filename|\"all\">\n"
+msgstr ""
+
+#: ../Commands.pm:3098
+#: ../Commands.pm:3116
+#, perl-format
+msgid "Plugin %s unloaded.\n"
+msgstr ""
+
+#: ../Commands.pm:3100
+#, fuzzy, perl-format
+msgid "'%s' is not a valid plugin number.\n"
+msgstr "'%s' ay hindi isang tamang server.\n"
+
+#: ../Commands.pm:3104
+msgid ""
+"Syntax Error in function 'plugin unload' (Unload Plugin)\n"
+"Usage: plugin unload <plugin name|plugin number#|\"all\">\n"
+msgstr ""
+
+#: ../Commands.pm:3123
+msgid ""
+"--------------- Plugin command syntax ---------------\n"
+"Command:                                              Description:\n"
+" plugin                                                List loaded plugins\n"
+" plugin load <filename>                                Load a plugin\n"
+" plugin unload <plugin name|plugin number#|\"all\">      Unload a loaded plugin\n"
+" plugin reload <plugin name|plugin number#|\"all\">      Reload a loaded plugin\n"
+"-----------------------------------------------------\n"
+msgstr ""
+
+#: ../Commands.pm:3133
+msgid "Syntax Error in function 'plugin' (Control Plugins)\n"
+msgstr ""
+
+#: ../Commands.pm:3140
+msgid "-----------PM List-----------\n"
+msgstr ""
+
+#: ../Commands.pm:3154
+msgid ""
+"-----------Portal List-----------\n"
+"#    Name                                Coordinates\n"
+msgstr ""
+
+#: ../Commands.pm:3177
+msgid ""
+"Syntax Error in function 'pm' (Private Message)\n"
+"Usage: pm (username) (message)\n"
+"       pm (<#>) (message)\n"
+msgstr ""
+
+#: ../Commands.pm:3183
+#, perl-format
+msgid ""
+"Error in function 'pm' (Private Message)\n"
+"Quick look-up %s does not exist\n"
+msgstr ""
+
+#: ../Commands.pm:3186
+msgid ""
+"Error in function 'pm' (Private Message)\n"
+"You have not pm-ed anyone before\n"
+msgstr ""
+
+#: ../Commands.pm:3211
+msgid ""
+"Syntax Error in function 'reload' (Reload Configuration Files)\n"
+"Usage: reload <name|\"all\">\n"
+msgstr ""
+
+#: ../Commands.pm:3234
+msgid ""
+"Syntax Error in function 'relog' (Log out then log in.)\n"
+"Usage: relog [delay]\n"
+msgstr ""
+
+#: ../Commands.pm:3244
+msgid ""
+"Syntax Error in function 'repair' (Repair player's items.)\n"
+"Usage: repair [item number]\n"
+msgstr ""
+
+#: ../Commands.pm:3265
+msgid "Your sell list is empty.\n"
+msgstr ""
+
+#: ../Commands.pm:3268
+msgid ""
+"------------- Sell list -------------\n"
+"#   Item                           Amount\n"
+msgstr ""
+
+#: ../Commands.pm:3279
+#, perl-format
+msgid "Sold %s items.\n"
+msgstr ""
+
+#: ../Commands.pm:3284
+#, fuzzy
+msgid "Sell list has been cleared.\n"
+msgstr "Si %s ay nabuhay na mag-uli\n"
+
+#: ../Commands.pm:3287
+msgid ""
+"Syntax Error in function 'sell' (Sell Inventory Item)\n"
+"Usage: sell <inventory item index #> [<amount>]\n"
+"       sell list\n"
+"       sell done\n"
+"       sell cancel\n"
+msgstr ""
+
+#: ../Commands.pm:3300
+#, perl-format
+msgid "%s (%s) is already in the sell list.\n"
+msgstr ""
+
+#: ../Commands.pm:3313
+#, perl-format
+msgid "Added to sell list: %s (%s) x %s\n"
+msgstr ""
+
+#: ../Commands.pm:3315
+msgid "Type 'sell done' to sell everything in your sell list.\n"
+msgstr ""
+
+#: ../Commands.pm:3318
+#, perl-format
+msgid ""
+"Error in function 'sell' (Sell Inventory Item)\n"
+"'%s' is not a valid item index #; no item has been added to the sell list.\n"
+msgstr ""
+
+#: ../Commands.pm:3332
+msgid "You do not have a shop open.\n"
+msgstr ""
+
+#: ../Commands.pm:3337
+#, perl-format
+msgid ""
+"%s\n"
+"#  Name                                     Type         Qty       Price   Sold\n"
+msgstr ""
+
+#: ../Commands.pm:3351
+#, perl-format
+msgid ""
+"%s\n"
+"You have earned: %sz.\n"
+"Current zeny:    %sz.\n"
+"Maximum earned:  %sz.\n"
+"Maximum zeny:    %sz.\n"
+msgstr ""
+
+#: ../Commands.pm:3380
+msgid ""
+"----------Skill List-----------\n"
+"   # Skill Name                     Lv      SP\n"
+msgstr ""
+
+#: ../Commands.pm:3396
+#, perl-format
+msgid ""
+"Error in function 'skills add' (Add Skill Point)\n"
+"Skill %s does not exist.\n"
+msgstr ""
+
+#: ../Commands.pm:3399
+#, perl-format
+msgid ""
+"Error in function 'skills add' (Add Skill Point)\n"
+"Not enough skill points to increase %s\n"
+msgstr ""
+
+#: ../Commands.pm:3408
+#, perl-format
+msgid ""
+"Error in function 'skills desc' (Skill Description)\n"
+"Skill %s does not exist.\n"
+msgstr ""
+
+#: ../Commands.pm:3418
+msgid ""
+"Syntax Error in function 'skills' (Skills Functions)\n"
+"Usage: skills [<add | desc>] [<skill #>]\n"
+msgstr ""
+
+#: ../Commands.pm:3424
+msgid ""
+"-----------Area Effects List-----------\n"
+"  # Type                 Source                   X   Y\n"
+msgstr ""
+
+#: ../Commands.pm:3453
+msgid ""
+"Syntax Error in function 'stat_add' (Add Status Point)\n"
+"Usage: stat_add <str | agi | vit | int | dex | luk>\n"
+msgstr ""
+
+#: ../Commands.pm:3457
+msgid ""
+"Error in function 'stat_add' (Add Status Point)\n"
+"You cannot add more stat points than 99\n"
+msgstr ""
+
+#: ../Commands.pm:3461
+#, perl-format
+msgid ""
+"Error in function 'stat_add' (Add Status Point)\n"
+"Not enough status points to increase %s\n"
+msgstr ""
+
+#: ../Commands.pm:3486
+msgid "None"
+msgstr ""
+
+#: ../Commands.pm:3488
+#, perl-format
+msgid ""
+"---------- Char Stats ----------\n"
+"Str: @<<+@<< #@< Atk:  @<<+@<< Def:  @<<+@<<\n"
+"Agi: @<<+@<< #@< Matk: @<<@@<< Mdef: @<<+@<<\n"
+"Vit: @<<+@<< #@< Hit:  @<<     Flee: @<<+@<<\n"
+"Int: @<<+@<< #@< Critical: @<< Aspd: @<<\n"
+"Dex: @<<+@<< #@< Status Points: @<<<\n"
+"Luk: @<<+@<< #@< Guild: @<<<<<<<<<<<<<<<<<<<<<\n"
+"--------------------------------\n"
+"Hair color: @<<<<<<<<<<<<<<<<<\n"
+"Walk speed: %.2f secs per block\n"
+"--------------------------------"
+msgstr ""
+
+#: ../Commands.pm:3507
+#: ../Network/Receive.pm:652
+msgid "You are sitting.\n"
+msgstr "Ikaw ay nakaupo.\n"
+
+#: ../Commands.pm:3567
+#, perl-format
+msgid ""
+"----------------------- Status -------------------------\n"
+"@<<<<<<<<<<<<<<<<<<<<<<<         HP: @>>>>>>>>>>>>>>>>>>\n"
+"@<<<<<<<<<<<<<<<<<<<<<<<         SP: @>>>>>>>>>>>>>>>>>>\n"
+"Base: @<<    @>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n"
+"Job : @<<    @>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n"
+"Zeny: @<<<<<<<<<<<<<<<<<     Weight: @>>>>>>>>>>>>>>>>>>\n"
+"Statuses: %s\n"
+"Spirits/Coins: %s\n"
+"--------------------------------------------------------\n"
+"Total Damage: @>>>>>>>>>>>>> Dmg/sec: @<<<<<<<<<<<<<<\n"
+"Total Time spent (sec): @>>>>>>>>\n"
+"Last Monster took (sec): @>>>>>>>\n"
+"--------------------------------------------------------"
+msgstr ""
+
+#: ../Commands.pm:3610
+msgid ""
+"Syntax Error in function 'storage' (Storage Functions)\n"
+"Usage: storage [<eq|u|nu>]\n"
+"       storage close\n"
+"       storage add <inventory_item> [<amount>]\n"
+"       storage addfromcart <cart_item> [<amount>]\n"
+"       storage get <storage_item> [<amount>]\n"
+"       storage gettocart <storage_item> [<amount>]\n"
+"       storage desc <storage_item_#>\n"
+"       storage log"
+msgstr ""
+
+#: ../Commands.pm:3621
+msgid "No information about storage; it has not been opened before in this session\n"
+msgstr ""
+
+#: ../Commands.pm:3654
+msgid "-----------Storage-------------\n"
+msgstr ""
+
+#: ../Commands.pm:3657
+msgid "-- Equipment --\n"
+msgstr ""
+
+#: ../Commands.pm:3690
+#, perl-format
+msgid "Capacity: %d/%d\n"
+msgstr ""
+
+#: ../Commands.pm:3701
+#, perl-format
+msgid "Inventory Item '%s' does not exist.\n"
+msgstr ""
+
+#: ../Commands.pm:3706
+#, perl-format
+msgid "Inventory Item '%s' is equipped.\n"
+msgstr ""
+
+#: ../Commands.pm:3722
+#, perl-format
+msgid "Cart Item '%s' does not exist.\n"
+msgstr ""
+
+#: ../Commands.pm:3748
+#: ../Commands.pm:3774
+#, perl-format
+msgid "Storage Item '%s' does not exist.\n"
+msgstr ""
+
+#: ../Commands.pm:3796
+#, perl-format
+msgid ""
+"Error in function 'storage desc' (Show Storage Item Description)\n"
+"Storage Item %s does not exist.\n"
+msgstr ""
+
+#: ../Commands.pm:3808
+msgid ""
+"----------Store List-----------\n"
+"#  Name                    Type           Price\n"
+msgstr ""
+
+#: ../Commands.pm:3823
+#, perl-format
+msgid ""
+"Error in function 'store desc' (Store Item Description)\n"
+"Store item %s does not exist\n"
+msgstr ""
+
+#: ../Commands.pm:3829
+msgid ""
+"Syntax Error in function 'store' (Store Functions)\n"
+"Usage: store [<desc>] [<store item #>]\n"
+msgstr ""
+
+#: ../Commands.pm:3837
+msgid ""
+"Syntax Error in function 'switchconf' (Switch Configuration File)\n"
+"Usage: switchconf <filename>\n"
+msgstr ""
+
+#: ../Commands.pm:3840
+#, perl-format
+msgid ""
+"Syntax Error in function 'switchconf' (Switch Configuration File)\n"
+"File %s does not exist.\n"
+msgstr ""
+
+#: ../Commands.pm:3844
+#, perl-format
+msgid "Switched config file to \"%s\".\n"
+msgstr ""
+
+#: ../Commands.pm:3851
+msgid ""
+"Syntax Error in function 'take' (Take Item)\n"
+"Usage: take <item #>\n"
+msgstr ""
+
+#: ../Commands.pm:3854
+msgid ""
+"Error in function 'take first' (Take Item)\n"
+"There are no items near.\n"
+msgstr ""
+
+#: ../Commands.pm:3860
+#, perl-format
+msgid ""
+"Error in function 'take' (Take Item)\n"
+"Item %s does not exist.\n"
+msgstr ""
+
+#: ../Commands.pm:3873
+#, perl-format
+msgid ""
+"Error in function 'talk' (Talk to NPC)\n"
+"NPC %s does not exist\n"
+msgstr ""
+
+#: ../Commands.pm:3879
+#, perl-format
+msgid ""
+"Error in function 'talk %s' (Respond to NPC)\n"
+"You are not talking to any NPC.\n"
+msgstr ""
+
+#: ../Commands.pm:3884
+msgid ""
+"Error in function 'talk resp' (Respond to NPC)\n"
+"No NPC response list available.\n"
+msgstr ""
+
+#: ../Commands.pm:3889
+#, perl-format
+msgid ""
+"----------Responses-----------\n"
+"NPC: %s\n"
+"#  Response\n"
+msgstr ""
+
+#: ../Commands.pm:3901
+#, perl-format
+msgid ""
+"Error in function 'talk resp' (Respond to NPC)\n"
+"Response %s does not exist.\n"
+msgstr ""
+
+#: ../Commands.pm:3913
+msgid ""
+"Error in function 'talk num' (Respond to NPC)\n"
+"You must specify a number.\n"
+msgstr ""
+
+#: ../Commands.pm:3917
+#, perl-format
+msgid ""
+"Error in function 'talk num' (Respond to NPC)\n"
+"%s is not a valid number.\n"
+msgstr ""
+
+#: ../Commands.pm:3926
+msgid ""
+"Error in function 'talk text' (Respond to NPC)\n"
+"You must specify a string.\n"
+msgstr ""
+
+#: ../Commands.pm:3933
+msgid ""
+"Error in function 'talk cont' (Continue Talking to NPC)\n"
+"You are not talking to any NPC.\n"
+msgstr ""
+
+#: ../Commands.pm:3941
+#, fuzzy
+msgid "You are not talking to any NPC.\n"
+msgstr "Ikaw ay nakatayo.\n"
+
+#: ../Commands.pm:3950
+msgid ""
+"Syntax Error in function 'talk' (Talk to NPC)\n"
+"Usage: talk <NPC # | cont | resp | num> [<response #>|<number #>]\n"
+msgstr ""
+
+#: ../Commands.pm:3960
+msgid ""
+"Syntax Error in function 'talknpc' (Talk to an NPC)\n"
+"Usage: talknpc <x> <y> <sequence>\n"
+msgstr ""
+
+#: ../Commands.pm:3965
+#, perl-format
+msgid "Talking to NPC at (%d, %d) using sequence: %s\n"
+msgstr ""
+
+#: ../Commands.pm:3974
+msgid ""
+"Syntax Error in function 'tank' (Tank for a Player)\n"
+"Usage: tank <player #|player name>\n"
+msgstr ""
+
+#: ../Commands.pm:3982
+#: ../Commands.pm:4003
+#, perl-format
+msgid ""
+"Error in function 'tank' (Tank for a Player)\n"
+"Player %s does not exist.\n"
+msgstr ""
+
+#: ../Commands.pm:4020
+#, perl-format
+msgid ""
+"%s\n"
+"Name                                      Amount  Price\n"
+msgstr ""
+
+#: ../Commands.pm:4028
+#, perl-format
+msgid "Total of %d items to sell.\n"
+msgstr ""
+
+#: ../Commands.pm:4036
+msgid ""
+"Syntax Error in function 'timeout' (set a timeout)\n"
+"Usage: timeout <type> [<seconds>]\n"
+msgstr ""
+
+#: ../Commands.pm:4039
+#, perl-format
+msgid ""
+"Error in function 'timeout' (set a timeout)\n"
+"Timeout %s doesn't exist\n"
+msgstr ""
+
+#: ../Commands.pm:4042
+#, perl-format
+msgid "Timeout '%s' is %s\n"
+msgstr ""
+
+#: ../Commands.pm:4054
+msgid ""
+"Function 'top10' (Show Top 10 Lists)\n"
+"Usage: top10 <b|a|t|p> | <black|alche|tk|pk> | <blacksmith|alchemist|taekwon|pvp>\n"
+msgstr ""
+
+#: ../Commands.pm:4065
+msgid ""
+"Syntax Error in function 'top10' (Show Top 10 Lists)\n"
+"Usage: top10 <b|a|t|p> |\n"
+"             <black|alche|tk|pk> |\n"
+"             <blacksmith|alchemist|taekwon|pvp>\n"
+msgstr ""
+
+#: ../Commands.pm:4077
+msgid "You must specify an item to unequip.\n"
+msgstr ""
+
+#: ../Commands.pm:4089
+#, perl-format
+msgid ""
+"Error in function 'unequip' (Unequip Inventory Item)\n"
+"Inventory Item %s is not equipped.\n"
+msgstr ""
+
+#: ../Commands.pm:4102
+msgid ""
+"Syntax Error in function 'im' (Use Item on Monster)\n"
+"Usage: im <item #> <monster #>\n"
+msgstr ""
+
+#: ../Commands.pm:4105
+#, perl-format
+msgid ""
+"Error in function 'im' (Use Item on Monster)\n"
+"Inventory Item %s does not exist.\n"
+msgstr ""
+
+#: ../Commands.pm:4108
+#, perl-format
+msgid ""
+"Error in function 'im' (Use Item on Monster)\n"
+"Inventory Item %s is not of type Usable.\n"
+msgstr ""
+
+#: ../Commands.pm:4111
+#, perl-format
+msgid ""
+"Error in function 'im' (Use Item on Monster)\n"
+"Monster %s does not exist.\n"
+msgstr ""
+
+#: ../Commands.pm:4123
+msgid ""
+"Syntax Error in function 'ip' (Use Item on Player)\n"
+"Usage: ip <item #> <player #>\n"
+msgstr ""
+
+#: ../Commands.pm:4126
+#, perl-format
+msgid ""
+"Error in function 'ip' (Use Item on Player)\n"
+"Inventory Item %s does not exist.\n"
+msgstr ""
+
+#: ../Commands.pm:4129
+#, perl-format
+msgid ""
+"Error in function 'ip' (Use Item on Player)\n"
+"Inventory Item %s is not of type Usable.\n"
+msgstr ""
+
+#: ../Commands.pm:4132
+#, perl-format
+msgid ""
+"Error in function 'ip' (Use Item on Player)\n"
+"Player %s does not exist.\n"
+msgstr ""
+
+#: ../Commands.pm:4142
+msgid ""
+"Syntax Error in function 'is' (Use Item on Yourself)\n"
+"Usage: is <item>\n"
+msgstr ""
+
+#: ../Commands.pm:4148
+#, perl-format
+msgid ""
+"Error in function 'is' (Use Item on Yourself)\n"
+"Inventory Item %s does not exist.\n"
+msgstr ""
+
+#: ../Commands.pm:4153
+#, perl-format
+msgid ""
+"Error in function 'is' (Use Item on Yourself)\n"
+"Inventory Item %s is not of type Usable.\n"
+msgstr ""
+
+#: ../Commands.pm:4169
+msgid ""
+"Syntax error in function 'sl' (Use Skill on Location)\n"
+"Usage: sl <skill #> <x> <y> [level]\n"
+msgstr ""
+
+#: ../Commands.pm:4173
+msgid ""
+"Error in function 'sl' (Use Skill on Location)\n"
+"Invalid coordinates given.\n"
+msgstr ""
+
+#: ../Commands.pm:4177
+msgid ""
+"Error in function 'sl' (Use Skill on Location)\n"
+"You are not logged into the game.\n"
+msgstr ""
+
+#: ../Commands.pm:4192
+msgid ""
+"Syntax error in function 'ss' (Use Skill on Self)\n"
+"Usage: ss <skill #> [level]\n"
+msgstr ""
+
+#: ../Commands.pm:4196
+msgid ""
+"Error in function 'ss' (Use Skill on Self)\n"
+"You are not logged into the game.\n"
+msgstr ""
+
+#: ../Commands.pm:4206
+msgid ""
+"Syntax error in function 'sp' (Use Skill on Player)\n"
+"Usage: sp <skill #> <player #> [level]\n"
+msgstr ""
+
+#: ../Commands.pm:4210
+msgid ""
+"Error in function 'sp' (Use Skill on Player)\n"
+"You are not logged into the game.\n"
+msgstr ""
+
+#: ../Commands.pm:4216
+#, perl-format
+msgid ""
+"Error in function 'sp' (Use Skill on Player)\n"
+"Player '%s' does not exist.\n"
+msgstr ""
+
+#: ../Commands.pm:4226
+msgid ""
+"Syntax error in function 'sm' (Use Skill on Monster)\n"
+"Usage: sm <skill #> <monster #> [level]\n"
+msgstr ""
+
+#: ../Commands.pm:4230
+msgid ""
+"Error in function 'sm' (Use Skill on Monster)\n"
+"You are not logged into the game.\n"
+msgstr ""
+
+#: ../Commands.pm:4236
+#, perl-format
+msgid ""
+"Error in function 'sm' (Use Skill on Monster)\n"
+"Monster %d does not exist.\n"
+msgstr ""
+
+#: ../Commands.pm:4246
+msgid ""
+"Syntax error in function 'ssp' (Use Skill on Area Spell Location)\n"
+"Usage: ssp <skill #> <spell #> [level]\n"
+msgstr ""
+
+#: ../Commands.pm:4252
+#, fuzzy, perl-format
+msgid "Spell %d does not exist.\n"
+msgstr "'%s' ay hindi isang balidong server.\n"
+
+#: ../Commands.pm:4278
+msgid ""
+"Syntax error in function 'vender' (Vender Shop)\n"
+"Usage: vender <vender # | end> [<item #> <amount>]\n"
+msgstr ""
+
+#: ../Commands.pm:4284
+#, perl-format
+msgid ""
+"Error in function 'vender' (Vender Shop)\n"
+"Vender %s does not exist.\n"
+msgstr ""
+
+#: ../Commands.pm:4289
+msgid ""
+"Error in function 'vender' (Vender Shop)\n"
+"Vender ID is wrong.\n"
+msgstr ""
+
+#: ../Commands.pm:4300
+msgid ""
+"-----------Vender List-----------\n"
+"#   Title                                Coords     Owner\n"
+msgstr ""
+
+#: ../Commands.pm:4331
+msgid ""
+"Error in function 'warp' (Open/List Warp Portal)\n"
+"Usage: warp <map name | map number# | list>\n"
+msgstr ""
+
+#: ../Commands.pm:4336
+#: ../Commands.pm:4352
+msgid "You didn't cast warp portal.\n"
+msgstr ""
+
+#: ../Commands.pm:4341
+#, perl-format
+msgid "Invalid map number %s.\n"
+msgstr ""
+
+#: ../Commands.pm:4345
+#: ../Commands.pm:4372
+#, perl-format
+msgid "Attempting to open a warp portal to %s (%s)\n"
+msgstr ""
+
+#: ../Commands.pm:4356
+#: ../Network/Receive.pm:5948
+msgid ""
+"----------------- Warp Portal --------------------\n"
+"#  Place                           Map\n"
+msgstr ""
+
+#: ../Commands.pm:4368
+#, perl-format
+msgid "Map '%s' does not exist.\n"
+msgstr ""
+
+#: ../Commands.pm:4384
+msgid ""
+"Syntax error in function 'weight' (Inventory Weight Info)\n"
+"Usage: weight [item weight]\n"
+msgstr ""
+
+#: ../Commands.pm:4390
+msgid "Weight: %s/%s (%s%)\n"
+msgstr ""
+
+#: ../Commands.pm:4394
+#: ../Commands.pm:4400
+#, perl-format
+msgid "You can carry %s%s before %s overweight.\n"
+msgstr ""
+
+#: ../Commands.pm:4397
+#: ../Commands.pm:4403
+#, fuzzy, perl-format
+msgid "You are %s overweight.\n"
+msgstr "Ikaw ay nakaupo.\n"
+
+#: ../Commands.pm:4409
+#, perl-format
+msgid "Location %s (%s) : %d, %d\n"
+msgstr ""
+
+#: ../Commands.pm:4420
+#, perl-format
+msgid ""
+"Name:    %s (Level %s %s %s)\n"
+"Char ID: %s\n"
+"Acct ID: %s\n"
+msgstr ""
+
+#: ../ErrorHandler.pm:46
+#, perl-format
+msgid ""
+"%s\n"
+"Press ENTER to exit this program.\n"
+msgstr ""
+
+#: ../ErrorHandler.pm:72
+#, perl-format
+msgid ""
+"This program has encountered an unexpected problem. This is probably because\n"
+"of a bug in this program. Please tell us about this problem.\n"
+"\n"
+"The error message is:\n"
+"%s\n"
+"\n"
+"A more detailed error report is saved to errors.txt. Please include the\n"
+"contents of this file in your report, or we may not be able to help you!"
+msgstr ""
+
+#: ../ErrorHandler.pm:119
+#, perl-format
+msgid ""
+"\n"
+"\n"
+"Died at this line:\n"
+"%s\n"
+msgstr ""
+
+#: ../FileParsers.pm:136
+msgid "The chat_resp.txt format has changed. Please read News.txt and upgrade to the new format.\n"
+msgstr ""
+
+#: ../FileParsers.pm:273
+#, perl-format
+msgid "%s: Include file not found: %s\n"
+msgstr ""
+
+#: ../FileParsers.pm:284
+#, perl-format
+msgid "%s: Unclosed { at EOF\n"
+msgstr ""
+
+#: ../FileParsers.pm:435
+#, perl-format
+msgid "Line %s: Item '%s'"
+msgstr ""
+
+#: ../FileParsers.pm:437
+#, perl-format
+msgid "%s has non-integer price: %s"
+msgstr ""
+
+#: ../FileParsers.pm:439
+#, perl-format
+msgid "%s has incorrect comma placement in price: %s"
+msgstr ""
+
+#: ../FileParsers.pm:441
+#, perl-format
+msgid "%s has non-positive price: %s"
+msgstr ""
+
+#: ../FileParsers.pm:443
+#, perl-format
+msgid "%s has price over 1,000,000,000: %s"
+msgstr ""
+
+#: ../FileParsers.pm:447
+#, perl-format
+msgid "%s has amount over 30,000: %s"
+msgstr ""
+
+#: ../FileParsers.pm:454
+#, perl-format
+msgid "Errors were found in %s:\n"
+msgstr ""
+
+#: ../FileParsers.pm:456
+#, perl-format
+msgid "Please correct the above errors and type 'reload %s'.\n"
+msgstr ""
+
+#: ../Interface.pm:126
+#, fuzzy
+msgid "Enter your answer: "
+msgstr "Pakitype ang password:"
+
+#: ../Interface.pm:171
+msgid "Choice"
+msgstr ""
+
+#: ../Interface.pm:187
+#, fuzzy, perl-format
+msgid "'%s' is not a valid choice number.\n"
+msgstr "'%s' ay hindi isang tamang server.\n"
+
+#: ../Interface.pm:242
+msgid "Press ENTER to exit this program.\n"
+msgstr ""
+
+#: ../Interface.pm:244
+msgid "Press ENTER to continue...\n"
+msgstr ""
+
+#: ../Misc.pm:252
+#, perl-format
+msgid "Authorized user '%s' for admin\n"
+msgstr ""
+
+#: ../Misc.pm:254
+#, perl-format
+msgid "Revoked admin privilages for user '%s'\n"
+msgstr ""
+
+#: ../Misc.pm:281
+#: ../Misc.pm:313
+#, perl-format
+msgid "Config '%s' set to %s (was *not-displayed*)\n"
+msgstr ""
+
+#: ../Misc.pm:283
+#: ../Misc.pm:315
+#, perl-format
+msgid "Config '%s' set to %s (was %s)\n"
+msgstr ""
+
+#: ../Misc.pm:332
+#, perl-format
+msgid "Timeout '%s' set to %s (was %s)\n"
+msgstr ""
+
+#: ../Misc.pm:821
+#, perl-format
+msgid ""
+"No suitable browser detected. Please launch your favorite browser and go to:\n"
+"%s"
+msgstr ""
+
+#: ../Misc.pm:992
+msgid "Disconnecting to avoid GM!\n"
+msgstr ""
+
+#: ../Misc.pm:993
+#, perl-format
+msgid "*** The GM %s talked to you, auto disconnected ***\n"
+msgstr ""
+
+#: ../Misc.pm:995
+#: ../Misc.pm:1009
+#: ../Misc.pm:3322
+#: ../Misc.pm:3343
+#: ../Network/Receive.pm:2302
+#, fuzzy, perl-format
+msgid "Disconnect for %s seconds...\n"
+msgstr "Sisimulan ang auto-compile sa loob ng %d segundo...\n"
+
+#: ../Misc.pm:1007
+#, fuzzy, perl-format
+msgid "Disconnecting to avoid %s!\n"
+msgstr "Sisimulan ang auto-compile sa loob ng %d segundo...\n"
+
+#: ../Misc.pm:1008
+#, perl-format
+msgid "*** %s talked to you, auto disconnected ***\n"
+msgstr ""
+
+#: ../Misc.pm:1056
+msgid ""
+"-------  Character @< ---------\n"
+"Name: @<<<<<<<<<<<<<<<<<<<<<<<<\n"
+"Job:  @<<<<<<<      Job Exp: @<<<<<<<\n"
+"Lv:   @<<<<<<<      Str: @<<<<<<<<\n"
+"J.Lv: @<<<<<<<      Agi: @<<<<<<<<\n"
+"Exp:  @<<<<<<<      Vit: @<<<<<<<<\n"
+"HP:   @||||/@||||   Int: @<<<<<<<<\n"
+"SP:   @||||/@||||   Dex: @<<<<<<<<\n"
+"Zenny: @<<<<<<<<<<  Luk: @<<<<<<<<\n"
+"-------------------------------"
+msgstr ""
+
+#: ../Misc.pm:1072
+#, perl-format
+msgid "Slot %d: %s (%s, level %d/%d)"
+msgstr ""
+
+#: ../Misc.pm:1082
+#, perl-format
+msgid ""
+"------------- Character List -------------\n"
+"%s\n"
+"------------------------------------------\n"
+msgstr ""
+
+#: ../Misc.pm:1101
+msgid "Create a new character"
+msgstr ""
+
+#: ../Misc.pm:1101
+msgid "Delete a character"
+msgstr ""
+
+#: ../Misc.pm:1103
+msgid "Please chooce a character or an action."
+msgstr ""
+
+#: ../Misc.pm:1104
+#, fuzzy
+msgid "Character selection"
+msgstr "Ang server %s ay napili\n"
+
+#: ../Misc.pm:1126
+msgid "There are no characters on this account.\n"
+msgstr ""
+
+#: ../Misc.pm:1132
+msgid ""
+"Please enter the desired properties for your characters, in this form:\n"
+"(slot) \"(name)\" [ (str) (agi) (vit) (int) (dex) (luk) [ (hairstyle) [(haircolor)] ] ]"
+msgstr ""
+
+#: ../Misc.pm:1140
+msgid "You didn't specify enough parameters."
+msgstr ""
+
+#: ../Misc.pm:1144
+#, perl-format
+msgid "Creating character \"%s\" in slot \"%s\"...\n"
+msgstr ""
+
+#: ../Misc.pm:1152
+msgid "Select the character you want to delete."
+msgstr ""
+
+#: ../Misc.pm:1154
+msgid "Delete character"
+msgstr ""
+
+#: ../Misc.pm:1166
+#, perl-format
+msgid ""
+"Are you ABSOLUTELY SURE you want to delete:\n"
+"%s"
+msgstr ""
+
+#: ../Misc.pm:1167
+msgid "No, don't delete"
+msgstr ""
+
+#: ../Misc.pm:1167
+msgid "Yes, delete"
+msgstr ""
+
+#: ../Misc.pm:1168
+msgid "Confirm delete"
+msgstr ""
+
+#: ../Misc.pm:1174
+#, perl-format
+msgid "Deleting character %s...\n"
+msgstr ""
+
+#: ../Misc.pm:1200
+#: ../AI/CoreLogic.pm:2943
+#, perl-format
+msgid "The current map (%s) is not on the list of allowed maps.\n"
+msgstr ""
+
+#: ../Misc.pm:1201
+#: ../AI/CoreLogic.pm:2944
+#, perl-format
+msgid "** The current map (%s) is not on the list of allowed maps.\n"
+msgstr ""
+
+#: ../Misc.pm:1202
+msgid "** Exiting...\n"
+msgstr ""
+
+#: ../Misc.pm:1316
+msgid "We're not currently connected to the character login server."
+msgstr ""
+
+#: ../Misc.pm:1319
+#, fuzzy, perl-format
+msgid "Slot \"%s\" is not a valid number."
+msgstr "'%s' ay hindi isang tamang server.\n"
+
+#: ../Misc.pm:1322
+msgid "The slot must be comprised between 0 and 4."
+msgstr ""
+
+#: ../Misc.pm:1325
+#, perl-format
+msgid "Slot %s already contains a character (%s)."
+msgstr ""
+
+#: ../Misc.pm:1328
+msgid "Name must not be longer than 23 characters."
+msgstr ""
+
+#: ../Misc.pm:1334
+msgid "Stats must be comprised between 1 and 9."
+msgstr ""
+
+#: ../Misc.pm:1340
+msgid "The sums Str + Int, Agi + Luk and Vit + Dex must all be equal to 10."
+msgstr ""
+
+#: ../Misc.pm:1432
+msgid "Message Dumped into DUMP.txt!\n"
+msgstr ""
+
+#: ../Misc.pm:1574
+#, perl-format
+msgid "Inventory Item Removed: %s (%d) x %d\n"
+msgstr ""
+
+#: ../Misc.pm:1913
+#, perl-format
+msgid ""
+"===============Item Description===============\n"
+"Item: %s\n"
+"\n"
+msgstr ""
+
+#: ../Misc.pm:1950
+msgid "Exiting...\n"
+msgstr ""
+
+#: ../Misc.pm:1961
+#, fuzzy, perl-format
+msgid "Relogging in %d seconds...\n"
+msgstr "Sisimulan ang auto-compile sa loob ng %d segundo...\n"
+
+#: ../Misc.pm:2170
+#: ../Misc.pm:2174
+#, perl-format
+msgid "Remove perfectly hidden %s\n"
+msgstr ""
+
+#: ../Misc.pm:2249
+#, fuzzy, perl-format
+msgid "%s does not exist.\n"
+msgstr "'%s' ay hindi isang balidong server.\n"
+
+#: ../Misc.pm:2295
+msgid "Teleporting because of attack miss\n"
+msgstr ""
+
+#: ../Misc.pm:2299
+#, perl-format
+msgid "Teleporting after attacking a monster %d times\n"
+msgstr ""
+
+#: ../Misc.pm:2305
+#: ../Misc.pm:2413
+#, perl-format
+msgid "%s (%s) has been provoked, searching another monster\n"
+msgstr ""
+
+#: ../Misc.pm:2332
+#, perl-format
+msgid "Teleporting due to attack from %s\n"
+msgstr ""
+
+#: ../Misc.pm:2338
+#, fuzzy, perl-format
+msgid "Next %d dmg could kill you. Teleporting...\n"
+msgstr "Inaatake ka ng isang halimaw na walang pangalan. Teleport ngayon din...\n"
+
+#: ../Misc.pm:2345
+#, fuzzy, perl-format
+msgid "%s hit you for more than %d dmg. Teleporting...\n"
+msgstr "Inaatake ka ng isang halimaw na walang pangalan. Teleport ngayon din...\n"
+
+#: ../Misc.pm:2352
+#, perl-format
+msgid "%s hit you for more than %d dmg in lockMap. Teleporting...\n"
+msgstr ""
+
+#: ../Misc.pm:2358
+#, fuzzy, perl-format
+msgid "%s attacks you while you are sitting. Teleporting...\n"
+msgstr "Inaatake ka ng isang halimaw na walang pangalan. Teleport ngayon din...\n"
+
+#: ../Misc.pm:2366
+#, perl-format
+msgid "%s hit you for a total of more than %d dmg. Teleporting...\n"
+msgstr ""
+
+#: ../Misc.pm:2373
+#, perl-format
+msgid "%s hit you for a total of more than %d dmg in lockMap. Teleporting...\n"
+msgstr ""
+
+#: ../Misc.pm:2378
+#, perl-format
+msgid "%s hit you when your HP is too low. Teleporting...\n"
+msgstr ""
+
+#: ../Misc.pm:2400
+#, perl-format
+msgid "Change target to aggressive : %s (%s)\n"
+msgstr ""
+
+#: ../Misc.pm:2444
+#, perl-format
+msgid "Homunculus teleporting due to attack from %s\n"
+msgstr ""
+
+#: ../Misc.pm:2450
+#, fuzzy, perl-format
+msgid "Next %d dmg could kill your homunculus. Teleporting...\n"
+msgstr "Inaatake ka ng isang halimaw na walang pangalan. Teleport ngayon din...\n"
+
+#: ../Misc.pm:2457
+#, fuzzy, perl-format
+msgid "%s hit your homunculus for more than %d dmg. Teleporting...\n"
+msgstr "Inaatake ka ng isang halimaw na walang pangalan. Teleport ngayon din...\n"
+
+#: ../Misc.pm:2464
+#, fuzzy, perl-format
+msgid "%s hit your homunculus for more than %d dmg in lockMap. Teleporting...\n"
+msgstr "Inaatake ka ng isang halimaw na walang pangalan. Teleport ngayon din...\n"
+
+#: ../Misc.pm:2472
+#, fuzzy, perl-format
+msgid "%s hit your homunculus for a total of more than %d dmg. Teleporting...\n"
+msgstr "Inaatake ka ng isang halimaw na walang pangalan. Teleport ngayon din...\n"
+
+#: ../Misc.pm:2479
+#, fuzzy, perl-format
+msgid "%s hit your homunculus for a total of more than %d dmg in lockMap. Teleporting...\n"
+msgstr "Inaatake ka ng isang halimaw na walang pangalan. Teleport ngayon din...\n"
+
+#: ../Misc.pm:2484
+#, fuzzy, perl-format
+msgid "%s hit your homunculus when your homunculus' HP is too low. Teleporting...\n"
+msgstr "Inaatake ka ng isang halimaw na walang pangalan. Teleport ngayon din...\n"
+
+#: ../Misc.pm:2505
+#, perl-format
+msgid "Homunculus change target to aggressive : %s (%s)\n"
+msgstr ""
+
+#: ../Misc.pm:2643
+msgid "Using Teleport Skill Level 2 though we not have it!\n"
+msgstr ""
+
+#: ../Misc.pm:2698
+msgid "No Fly Wing or Butterfly Wing, fallback to Teleport Skill\n"
+msgstr ""
+
+#: ../Misc.pm:2704
+msgid "You don't have the Teleport skill or a Fly Wing\n"
+msgstr ""
+
+#: ../Misc.pm:2706
+msgid "You don't have the Teleport skill or a Butterfly Wing\n"
+msgstr ""
+
+#: ../Misc.pm:2800
+#, perl-format
+msgid "---------- Storage %s -----------\n"
+msgstr ""
+
+#. Translation Comment: Mark to show broken items
+#: ../Misc.pm:2809
+msgid "Broken"
+msgstr ""
+
+#. Translation Comment: Storage Capacity
+#: ../Misc.pm:2813
+#, perl-format
+msgid ""
+"\n"
+"Capacity: %d/%d\n"
+msgstr ""
+
+#: ../Misc.pm:2817
+#, fuzzy
+msgid "Storage logged\n"
+msgstr "Nakasara na ang taguan.\n"
+
+#: ../Misc.pm:2820
+#, fuzzy, perl-format
+msgid "Unable to write to %s\n"
+msgstr "Hindi ma-initialize ang IPC subsystem: %s\n"
+
+#: ../Misc.pm:2839
+#, perl-format
+msgid "%s %s %s - Dmg: %s (delay %s)\n"
+msgstr ""
+
+#: ../Misc.pm:2854
+#, perl-format
+msgid "You are casting %s on location (%d, %d) - (time %sms)\n"
+msgstr ""
+
+#: ../Misc.pm:2856
+#, fuzzy, perl-format
+msgid "Player %s (%d) is casting %s on location (%d, %d) - (time %sms)\n"
+msgstr "'%s' ay hindi isang balidong server.\n"
+
+#: ../Misc.pm:2859
+#, fuzzy, perl-format
+msgid "Monster %s (%d) is casting %s on location (%d, %d) - (time %sms)\n"
+msgstr "'%s' ay hindi isang balidong server.\n"
+
+#: ../Misc.pm:2862
+#, fuzzy, perl-format
+msgid "Unknown #%s (%d) is casting %s on location (%d, %d) - (time %sms)\n"
+msgstr "'%s' ay hindi isang balidong server.\n"
+
+#: ../Misc.pm:2869
+#, perl-format
+msgid "You are casting %s on yourself (time %sms)\n"
+msgstr ""
+
+#: ../Misc.pm:2871
+#, perl-format
+msgid "You are casting %s on player %s (%d) (time %sms)\n"
+msgstr ""
+
+#: ../Misc.pm:2874
+#, perl-format
+msgid "You are casting %s on monster %s (%d) (time %sms)\n"
+msgstr ""
+
+#: ../Misc.pm:2877
+#, perl-format
+msgid "You are casting %s on Unknown #%s (%d) (time %sms)\n"
+msgstr ""
+
+#: ../Misc.pm:2883
+#, perl-format
+msgid "Player %s (%d) is casting %s on you (time %sms)\n"
+msgstr ""
+
+#: ../Misc.pm:2888
+#, perl-format
+msgid "Player %s (%d) is casting %s on player %s (%d) (time %sms)\n"
+msgstr ""
+
+#: ../Misc.pm:2891
+#, perl-format
+msgid "Player %s (%d) is casting %s on himself (time %sms)\n"
+msgstr ""
+
+#: ../Misc.pm:2894
+#, perl-format
+msgid "Player %s (%d) is casting %s on herself (time %sms)\n"
+msgstr ""
+
+#: ../Misc.pm:2898
+#, perl-format
+msgid "Player %s (%d) is casting %s on monster %s (%d) (time %sms)\n"
+msgstr ""
+
+#: ../Misc.pm:2901
+#, perl-format
+msgid "Player %s (%d) is casting %s on Unknown #%s (%d) (time %sms)\n"
+msgstr ""
+
+#: ../Misc.pm:2907
+#, perl-format
+msgid "Monster %s (%d) is casting %s on you (time %sms)\n"
+msgstr ""
+
+#: ../Misc.pm:2910
+#, perl-format
+msgid "Monster %s (%d) is casting %s on player %s (%d) (time %sms)\n"
+msgstr ""
+
+#: ../Misc.pm:2914
+#, perl-format
+msgid "Monster %s (%d) is casting %s on monster %s (%d) (time %sms)\n"
+msgstr ""
+
+#: ../Misc.pm:2917
+#, perl-format
+msgid "Monster %s (%d) is casting %s on itself (time %sms)\n"
+msgstr ""
+
+#: ../Misc.pm:2921
+#, perl-format
+msgid "Monster %s (%d) is casting %s on Unknown #%s (%d) (time %sms)\n"
+msgstr ""
+
+#: ../Misc.pm:2927
+#, perl-format
+msgid "Unknown #%s (%d) is casting %s on you (time %sms)\n"
+msgstr ""
+
+#: ../Misc.pm:2930
+#, perl-format
+msgid "Unknown #%s (%d) is casting %s on player %s (%d) (time %sms)\n"
+msgstr ""
+
+#: ../Misc.pm:2933
+#, perl-format
+msgid "Unknown #%s (%d) is casting %s on monster %s (%d) (time %sms)\n"
+msgstr ""
+
+#: ../Misc.pm:2937
+#, perl-format
+msgid "Unknown #%s (%d) is casting %s on Unknown #%s (%d) (time %sms)\n"
+msgstr ""
+
+#: ../Misc.pm:2940
+#, perl-format
+msgid "Unknown #%s (%d) is casting %s on himself (time %sms)\n"
+msgstr ""
+
+#. Translation Comment: Ammount of Damage on Skill
+#: ../Misc.pm:2955
+#, perl-format
+msgid "Dmg: %s"
+msgstr ""
+
+#. Translation Comment: Skill name + level
+#: ../Misc.pm:2961
+#: ../Misc.pm:3049
+#, perl-format
+msgid "%s (lvl %s)"
+msgstr ""
+
+#: ../Misc.pm:2966
+#, perl-format
+msgid "You use %s on yourself %s(delay %s)\n"
+msgstr ""
+
+#: ../Misc.pm:2968
+#, perl-format
+msgid "You use %s on player %s (%d) %s(delay %s)\n"
+msgstr ""
+
+#: ../Misc.pm:2971
+#, perl-format
+msgid "You use %s on monster %s (%d) %s(delay %s)\n"
+msgstr ""
+
+#: ../Misc.pm:2974
+#, perl-format
+msgid "You use %s on Unknown #%s (%d) %s(delay %s)\n"
+msgstr ""
+
+#: ../Misc.pm:2980
+#, perl-format
+msgid "Player %s (%d) uses %s on you %s(delay %s)\n"
+msgstr ""
+
+#: ../Misc.pm:2985
+#, perl-format
+msgid "Player %s (%d) uses %s on player %s (%d) %s(delay %s)\n"
+msgstr ""
+
+#: ../Misc.pm:2988
+#, perl-format
+msgid "Player %s (%d) uses %s on himself %s(delay %s)\n"
+msgstr ""
+
+#: ../Misc.pm:2991
+#, perl-format
+msgid "Player %s (%d) uses %s on herself %s(delay %s)\n"
+msgstr ""
+
+#: ../Misc.pm:2995
+#, perl-format
+msgid "Player %s (%d) uses %s on monster %s (%d) %s(delay %s)\n"
+msgstr ""
+
+#: ../Misc.pm:2998
+#, perl-format
+msgid "Player %s (%d) uses %s on Unknown #%s (%d) %s(delay %s)\n"
+msgstr ""
+
+#: ../Misc.pm:3004
+#, perl-format
+msgid "Monster %s (%d) uses %s on you %s(delay %s)\n"
+msgstr ""
+
+#: ../Misc.pm:3007
+#, perl-format
+msgid "Monster %s (%d) uses %s on player %s (%d) %s(delay %s)\n"
+msgstr ""
+
+#: ../Misc.pm:3011
+#, perl-format
+msgid "Monster %s (%d) uses %s on monster %s (%d) %s(delay %s)\n"
+msgstr ""
+
+#: ../Misc.pm:3014
+#, perl-format
+msgid "Monster %s (%d) uses %s on itself %s(delay %s)\n"
+msgstr ""
+
+#: ../Misc.pm:3018
+#, perl-format
+msgid "Monster %s (%d) uses %s on Unknown #%s (%d) %s(delay %s)\n"
+msgstr ""
+
+#: ../Misc.pm:3024
+#, perl-format
+msgid "Unknown #%s (%d) uses %s on you %s(delay %s)\n"
+msgstr ""
+
+#: ../Misc.pm:3027
+#, perl-format
+msgid "Unknown #%s (%d) uses %s on player %s (%d) %s(delay %s)\n"
+msgstr ""
+
+#: ../Misc.pm:3030
+#, perl-format
+msgid "Unknown #%s (%d) uses %s on monster %s (%d) %s(delay %s)\n"
+msgstr ""
+
+#: ../Misc.pm:3034
+#, perl-format
+msgid "Unknown #%s (%d) uses %s on Unknown #%s (%d) %s(delay %s)\n"
+msgstr ""
+
+#: ../Misc.pm:3037
+#, perl-format
+msgid "Unknown #%s (%d) uses %s on himself %s(delay %s)\n"
+msgstr ""
+
+#: ../Misc.pm:3052
+#, perl-format
+msgid "You use %s on location (%d, %d)\n"
+msgstr ""
+
+#. Translation Comment: used Healing skill
+#: ../Misc.pm:3072
+#, perl-format
+msgid "%s hp gained"
+msgstr ""
+
+#. Translation Comment: used non-Healing skill - displays skill level
+#: ../Misc.pm:3076
+#, perl-format
+msgid "Lv %s"
+msgstr ""
+
+#: ../Misc.pm:3084
+#, perl-format
+msgid "You use %s on yourself %s\n"
+msgstr ""
+
+#. Translation Comment: You use a certain skill on an actor.
+#: ../Misc.pm:3087
+#, fuzzy, perl-format
+msgid "You use %s on %s %s\n"
+msgstr "Ikaw ngayon ay may job level na %s\n"
+
+#: ../Misc.pm:3092
+#, fuzzy, perl-format
+msgid "Player %s uses %s on you %s\n"
+msgstr "'%s' ay hindi isang balidong server.\n"
+
+#: ../Misc.pm:3097
+#, perl-format
+msgid "Player %s (%d) uses %s on player %s (%d) %s\n"
+msgstr ""
+
+#: ../Misc.pm:3100
+#, perl-format
+msgid "Player %s (%d) uses %s on himself %s\n"
+msgstr ""
+
+#: ../Misc.pm:3103
+#, perl-format
+msgid "Player %s (%d) uses %s on herself %s\n"
+msgstr ""
+
+#: ../Misc.pm:3107
+#, perl-format
+msgid "Player %s (%d) uses %s on monster %s (%d) %s\n"
+msgstr ""
+
+#: ../Misc.pm:3110
+#, perl-format
+msgid "Player %s (%d) uses %s on Unknown #%s (%d) %s\n"
+msgstr ""
+
+#: ../Misc.pm:3116
+#, perl-format
+msgid "Monster %s (%d) uses %s on you %s\n"
+msgstr ""
+
+#: ../Misc.pm:3119
+#, perl-format
+msgid "Monster %s (%d) uses %s on player %s (%d) %s\n"
+msgstr ""
+
+#: ../Misc.pm:3123
+#, perl-format
+msgid "Monster %s (%d) uses %s on monster %s (%d) %s\n"
+msgstr ""
+
+#: ../Misc.pm:3126
+#, perl-format
+msgid "Monster %s (%d) uses %s on itself %s\n"
+msgstr ""
+
+#: ../Misc.pm:3130
+#, perl-format
+msgid "Monster %s (%d) uses %s on Unknown #%s (%d) %s\n"
+msgstr ""
+
+#: ../Misc.pm:3136
+#, perl-format
+msgid "Unknown #%s (%d) uses %s on you %s\n"
+msgstr ""
+
+#: ../Misc.pm:3139
+#, perl-format
+msgid "Unknown #%s (%d) uses %s on player %s (%d) %s\n"
+msgstr ""
+
+#: ../Misc.pm:3142
+#, perl-format
+msgid "Unknown #%s (%d) uses %s on monster %s (%d) %s\n"
+msgstr ""
+
+#: ../Misc.pm:3146
+#, perl-format
+msgid "Unknown #%s (%d) uses %s on Unknown #%s (%d) %s\n"
+msgstr ""
+
+#: ../Misc.pm:3149
+#, perl-format
+msgid "Unknown #%s (%d) uses %s on himself %s\n"
+msgstr ""
+
+#: ../Misc.pm:3162
+#, fuzzy, perl-format
+msgid "You are now: %s\n"
+msgstr "Ikaw ngayon ay may job level na %s\n"
+
+#: ../Misc.pm:3164
+#, perl-format
+msgid "Player %s (%d) is now: %s\n"
+msgstr ""
+
+#: ../Misc.pm:3166
+#, perl-format
+msgid "Monster %s (%d) is now: %s\n"
+msgstr ""
+
+#: ../Misc.pm:3168
+#, perl-format
+msgid "Unknown #%s (%d) is now: %s\n"
+msgstr ""
+
+#: ../Misc.pm:3172
+#, fuzzy, perl-format
+msgid "You are again: %s\n"
+msgstr "Ikaw ay nakatayo.\n"
+
+#: ../Misc.pm:3174
+#, perl-format
+msgid "Player %s (%d) is again: %s\n"
+msgstr ""
+
+#: ../Misc.pm:3176
+#, perl-format
+msgid "Monster %s (%d) is again: %s\n"
+msgstr ""
+
+#: ../Misc.pm:3178
+#, perl-format
+msgid "Unknown #%s (%d) is again: %s\n"
+msgstr ""
+
+#: ../Misc.pm:3182
+#, fuzzy, perl-format
+msgid "You are no longer: %s\n"
+msgstr "Ikaw ngayon ay may job level na %s\n"
+
+#: ../Misc.pm:3184
+#, fuzzy, perl-format
+msgid "Player %s (%d) is no longer: %s\n"
+msgstr "'%s' ay hindi isang balidong server.\n"
+
+#: ../Misc.pm:3186
+#, fuzzy, perl-format
+msgid "Monster %s (%d) is no longer: %s\n"
+msgstr "'%s' ay hindi isang balidong server.\n"
+
+#: ../Misc.pm:3188
+#, fuzzy, perl-format
+msgid "Unknown #%s (%d) is no longer: %s\n"
+msgstr "'%s' ay hindi isang balidong server.\n"
+
+#: ../Misc.pm:3279
+#, perl-format
+msgid "GM %s is nearby, teleport & disconnect for %d seconds"
+msgstr ""
+
+#: ../Misc.pm:3284
+#, fuzzy, perl-format
+msgid "GM %s is nearby, disconnect for %s seconds"
+msgstr "Sisimulan ang auto-compile sa loob ng %d segundo...\n"
+
+#: ../Misc.pm:3290
+#, perl-format
+msgid "GM %s is nearby, teleporting"
+msgstr ""
+
+#: ../Misc.pm:3295
+#, perl-format
+msgid "GM %s is nearby, respawning"
+msgstr ""
+
+#: ../Misc.pm:3320
+#, perl-format
+msgid "%s (%s) is nearby, disconnecting...\n"
+msgstr ""
+
+#: ../Misc.pm:3321
+#, perl-format
+msgid "*** Found %s (%s) nearby and disconnected ***\n"
+msgstr ""
+
+#: ../Misc.pm:3327
+#, perl-format
+msgid "Teleporting to avoid player %s (%s)\n"
+msgstr ""
+
+#: ../Misc.pm:3328
+#, perl-format
+msgid "*** Found %s (%s) nearby and teleported ***\n"
+msgstr ""
+
+#: ../Misc.pm:3341
+#, fuzzy, perl-format
+msgid "%s is nearby, disconnecting...\n"
+msgstr "Sisimulan ang auto-compile sa loob ng %d segundo...\n"
+
+#: ../Misc.pm:3342
+#, fuzzy, perl-format
+msgid "*** Found %s nearby and disconnected ***\n"
+msgstr "Ikaw ay napipi nang %s na minuto, auto-disconnect!\n"
+
+#: ../Misc.pm:3375
+#, perl-format
+msgid "Processing map %s...\n"
+msgstr ""
+
+#: ../Misc.pm:3410
+#, perl-format
+msgid "Wrote portals Line of Sight table to '%s/portalsLOS.txt'\n"
+msgstr ""
+
+#: ../Misc.pm:3414
+#: ../Misc.pm:3418
+msgid "----------------------------Error Summary----------------------------\n"
+msgstr ""
+
+#: ../Misc.pm:3415
+#, perl-format
+msgid "Missing: %s.fld\n"
+msgstr ""
+
+#: ../Misc.pm:3416
+msgid ""
+"Note: LOS information for the above listed map(s) will be inaccurate;\n"
+"      however it is safe to ignore if those map(s) are not used\n"
+msgstr ""
+
+#: ../Misc.pm:3552
+msgid "Incomplete NPC info found in npcs.txt\n"
+msgstr ""
+
+#: ../Misc.pm:3969
+msgid "A shop has already been opened.\n"
+msgstr ""
+
+#: ../Misc.pm:3974
+msgid "You don't have the Vending skill.\n"
+msgstr ""
+
+#: ../Misc.pm:3979
+msgid "Your shop does not have a title.\n"
+msgstr ""
+
+#: ../Misc.pm:4011
+msgid "There are no items to sell.\n"
+msgstr ""
+
+#: ../Misc.pm:4023
+#, perl-format
+msgid "Shop opened (%s) with %d selling items.\n"
+msgstr ""
+
+#: ../Misc.pm:4030
+msgid "A shop has not been opened.\n"
+msgstr ""
+
+#: ../Misc.pm:4038
+#, fuzzy
+msgid "Shop closed.\n"
+msgstr "Nakasara na ang taguan.\n"
+
+#: ../Modules.pm:137
+#, perl-format
+msgid "Unable to reload code: %s not found\n"
+msgstr ""
+
+#: ../Modules.pm:155
+#, perl-format
+msgid "Failed to execute %s\n"
+msgstr ""
+
+#: ../Modules.pm:158
+#, perl-format
+msgid "%s exited abnormally\n"
+msgstr ""
+
+#: ../Modules.pm:161
+#, perl-format
+msgid "%s passed syntax check.\n"
+msgstr ""
+
+#: ../Modules.pm:164
+#, perl-format
+msgid "%s contains syntax errors.\n"
+msgstr ""
+
+#: ../Modules.pm:180
+#, perl-format
+msgid "Cannot find Perl interpreter %s\n"
+msgstr ""
+
+#: ../Modules.pm:184
+#, fuzzy, perl-format
+msgid "Checking %s for errors...\n"
+msgstr "Naghahanap ng mga bagong portal... "
+
+#. Translation Comment: Reloading a Kore's module
+#: ../Modules.pm:187
+#, perl-format
+msgid "Reloading %s...\n"
+msgstr ""
+
+#. Translation Comment: Unable to Reload a Kore's module
+#: ../Modules.pm:192
+#, perl-format
+msgid "Unable to reload %s\n"
+msgstr ""
+
+#. Translation Comment: Kore's module reloaded successfully
+#: ../Modules.pm:197
+msgid "Reloaded.\n"
+msgstr ""
+
+#: ../Plugins.pm:115
+#, perl-format
+msgid "Loading plugin %s...\n"
+msgstr ""
+
+#: ../Plugins.pm:122
+#, fuzzy, perl-format
+msgid "File %s does not exist."
+msgstr "Ang server %s ay napili\n"
+
+#: ../Plugins.pm:129
+#, perl-format
+msgid ""
+"Plugin contains syntax errors:\n"
+"%s"
+msgstr ""
+
+#. Translation Comment: Version String
+#: ../Settings.pm:64
+msgid " (SVN version)"
+msgstr ""
+
+#. Translation Comment: Version String
+#: ../Settings.pm:67
+msgid "Custom Ragnarok Online client"
+msgstr ""
+
+#: ../Settings.pm:68
+#, fuzzy, perl-format
+msgid "Welcome to %s."
+msgstr "Tuloy po kayo sa"
+
+#: ../Settings.pm:348
+#, perl-format
+msgid "Loading %s...\n"
+msgstr ""
+
+#: ../Settings.pm:350
+#, perl-format
+msgid "Error: Couldn't load %s\n"
+msgstr ""
+
+#: ../Network/DirectConnection.pm:145
+#, perl-format
+msgid "Connecting (%s:%s)... "
+msgstr ""
+
+#: ../Network/DirectConnection.pm:153
+msgid "connected\n"
+msgstr ""
+
+#: ../Network/DirectConnection.pm:154
+#, perl-format
+msgid "couldn't connect: %s (error code %d)\n"
+msgstr ""
+
+#: ../Network/DirectConnection.pm:202
+#, fuzzy, perl-format
+msgid "Disconnecting (%s:%s)..."
+msgstr "Sisimulan ang auto-compile sa loob ng %d segundo...\n"
+
+#: ../Network/DirectConnection.pm:206
+msgid "disconnected\n"
+msgstr ""
+
+#: ../Network/DirectConnection.pm:207
+msgid "couldn't disconnect\n"
+msgstr ""
+
+#: ../Network/DirectConnection.pm:317
+msgid "Connecting to Account Server...\n"
+msgstr ""
+
+#: ../Network/DirectConnection.pm:337
+msgid "Requesting permission to logon on account server...\n"
+msgstr ""
+
+#: ../Network/DirectConnection.pm:345
+#: ../Network/DirectConnection.pm:377
+msgid "Secure Login...\n"
+msgstr ""
+
+#: ../Network/DirectConnection.pm:404
+msgid "Sending encoded password...\n"
+msgstr ""
+
+#: ../Network/DirectConnection.pm:411
+msgid "Timeout on Account Server, reconnecting...\n"
+msgstr ""
+
+#: ../Network/DirectConnection.pm:436
+msgid "Connecting to Character Server...\n"
+msgstr ""
+
+#: ../Network/DirectConnection.pm:444
+#, perl-format
+msgid "Invalid server specified, server %s does not exist...\n"
+msgstr ""
+
+#: ../Network/DirectConnection.pm:451
+#: ../Network/Receive.pm:616
+#: ../Network/Receive/ServerType17.pm:84
+msgid "Please select your login server."
+msgstr ""
+
+#: ../Network/DirectConnection.pm:453
+#: ../Network/Receive.pm:618
+#: ../Network/Receive/ServerType17.pm:86
+msgid "Select Login Server"
+msgstr ""
+
+#: ../Network/DirectConnection.pm:474
+msgid "Timeout on Character Server, reconnecting...\n"
+msgstr ""
+
+#: ../Network/DirectConnection.pm:482
+msgid "Connecting to Character Select Server...\n"
+msgstr ""
+
+#: ../Network/DirectConnection.pm:496
+msgid "Timeout on Character Select Server, reconnecting...\n"
+msgstr ""
+
+#: ../Network/DirectConnection.pm:508
+msgid "Connecting to Map Server...\n"
+msgstr ""
+
+#: ../Network/DirectConnection.pm:534
+msgid "Timeout on Map Server, connecting to Account Server...\n"
+msgstr ""
+
+#: ../Network/DirectConnection.pm:543
+msgid "*** You disconnected, auto quit! ***\n"
+msgstr ""
+
+#: ../Network/DirectConnection.pm:544
+#, fuzzy
+msgid "Disconnected from Map Server, exiting...\n"
+msgstr "Sisimulan ang auto-compile sa loob ng %d segundo...\n"
+
+#: ../Network/DirectConnection.pm:547
+#, perl-format
+msgid "Disconnected from Map Server, connecting to Account Server in %s seconds...\n"
+msgstr ""
+
+#: ../Network/DirectConnection.pm:555
+msgid "Timeout on Map Server, "
+msgstr ""
+
+#: ../Network/DirectConnection.pm:558
+msgid "exiting...\n"
+msgstr ""
+
+#: ../Network/DirectConnection.pm:561
+#, fuzzy, perl-format
+msgid "connecting to Account Server in %s seconds...\n"
+msgstr "Sisimulan ang auto-compile sa loob ng %d segundo...\n"
+
+#: ../Network/Receive.pm:398
+#, perl-format
+msgid "Cannot load packet parser for ServerType '%s'.\n"
+msgstr ""
+
+#: ../Network/Receive.pm:553
+msgid "============= Account payment information =============\n"
+msgstr ""
+
+#: ../Network/Receive.pm:554
+#, perl-format
+msgid "Pay per day  : %s day(s) %s hour(s) and %s minute(s)\n"
+msgstr ""
+
+#: ../Network/Receive.pm:555
+#, perl-format
+msgid "Pay per hour : %s day(s) %s hour(s) and %s minute(s)\n"
+msgstr ""
+
+#: ../Network/Receive.pm:556
+msgid "-------------------------------------------------------\n"
+msgstr ""
+
+#: ../Network/Receive.pm:577
+#: ../Network/Receive/ServerType17.pm:45
+msgid ""
+"-----------Account Info------------\n"
+"Account ID: @<<<<<<<<< @<<<<<<<<<<\n"
+"Sex:        @<<<<<<<<<<<<<<<<<<<<<\n"
+"Session ID: @<<<<<<<<< @<<<<<<<<<<\n"
+"            @<<<<<<<<< @<<<<<<<<<<\n"
+"-----------------------------------"
+msgstr ""
+
+#: ../Network/Receive.pm:597
+#: ../Network/Receive/ServerType17.pm:65
+msgid ""
+"--------- Servers ----------\n"
+"#   Name                  Users  IP              Port\n"
+msgstr ""
+
+#: ../Network/Receive.pm:608
+#: ../Network/XKoreProxy.pm:450
+#: ../Network/Receive/ServerType17.pm:76
+msgid "Closing connection to Account Server\n"
+msgstr ""
+
+#: ../Network/Receive.pm:626
+#: ../Network/Receive/ServerType17.pm:94
+#, perl-format
+msgid "Forcing connect to char server %s: %s\n"
+msgstr ""
+
+#: ../Network/Receive.pm:629
+#: ../Network/Receive/ServerType17.pm:97
+#, perl-format
+msgid "Server %s selected\n"
+msgstr "Ang server %s ay napili\n"
+
+#: ../Network/Receive.pm:656
+#, fuzzy, perl-format
+msgid "%s is sitting.\n"
+msgstr "Si %s ay nakaupo.\n"
+
+#: ../Network/Receive.pm:666
+msgid "You are standing.\n"
+msgstr "Ikaw ay nakatayo.\n"
+
+#: ../Network/Receive.pm:672
+#, fuzzy, perl-format
+msgid "%s is standing.\n"
+msgstr "Si %s ay nakatayo.\n"
+
+#: ../Network/Receive.pm:748
+#, fuzzy
+msgid "You have died\n"
+msgstr "Namatay ka.\n"
+
+#: ../Network/Receive.pm:788
+#, fuzzy, perl-format
+msgid "Player Died: %s (%d) %s %s\n"
+msgstr "'%s' ay hindi isang balidong server.\n"
+
+#: ../Network/Receive.pm:1111
+#, perl-format
+msgid "NPC Exists: %s (%d, %d) (ID %d) - (%d)\n"
+msgstr ""
+
+#: ../Network/Receive.pm:1114
+#, perl-format
+msgid "Portal Exists: %s (%s, %s) - (%s)\n"
+msgstr ""
+
+#: ../Network/Receive.pm:1283
+#, fuzzy, perl-format
+msgid "%s is muted for %d minutes\n"
+msgstr "Ikaw ay napipi nang %s na minuto\n"
+
+#: ../Network/Receive.pm:1285
+#, fuzzy, perl-format
+msgid "%s is no longer muted\n"
+msgstr "'%s' ay hindi isang balidong server.\n"
+
+#: ../Network/Receive.pm:1371
+#, perl-format
+msgid "%s opened Warp Portal on (%d, %d)\n"
+msgstr ""
+
+#: ../Network/Receive.pm:1405
+#, fuzzy, perl-format
+msgid "Arrow/Bullet equipped: %s (%d)\n"
+msgstr "Naisuot na ang mga punla\n"
+
+#: ../Network/Receive.pm:1416
+msgid "Please equip arrow first."
+msgstr ""
+
+#: ../Network/Receive.pm:1419
+msgid "Please equip arrow first.\n"
+msgstr "Pakisuot po lamang ang mga punla.\n"
+
+#: ../Network/Receive.pm:1442
+msgid "Received Possible Arrow Craft List - type 'arrowcraft'\n"
+msgstr ""
+
+#: ../Network/Receive.pm:1452
+#, perl-format
+msgid "Autodetected attackDistance = %s\n"
+msgstr ""
+
+#: ../Network/Receive.pm:1461
+msgid "Buy completed.\n"
+msgstr "Tapos na ang pagbili.\n"
+
+#: ../Network/Receive.pm:1463
+msgid "Buy failed (insufficient zeny).\n"
+msgstr "Hindi matagumpay ang pagbili (kulang ang zeny).\n"
+
+#: ../Network/Receive.pm:1465
+msgid "Buy failed (insufficient weight capacity).\n"
+msgstr "Hindi matagumpay ang pagbili (hindi na kayang bitbitin).\n"
+
+#: ../Network/Receive.pm:1467
+msgid "Buy failed (too many different inventory items).\n"
+msgstr "Hindi matagumpay ang pagbili (mashadong madaming gamit sa  imbentaryo).\n"
+
+#: ../Network/Receive.pm:1469
+#, perl-format
+msgid "Buy failed (failure code %s).\n"
+msgstr "Hindi matagumpay ang pagbili (code %s).\n"
+
+#: ../Network/Receive.pm:1509
+msgid "Card merging failed\n"
+msgstr "Hindi matagumpay ang pagsasanib ng kard\n"
+
+#: ../Network/Receive.pm:1513
+#, perl-format
+msgid "%s has been successfully merged into %s\n"
+msgstr "Ang %s ay matagumpay na naisanib sa %s\n"
+
+#: ../Network/Receive.pm:1572
+#, perl-format
+msgid "Can't Add Cart Item (%s)\n"
+msgstr ""
+
+#: ../Network/Receive.pm:1626
+#, perl-format
+msgid "Cart Item Added: %s (%d) x %s\n"
+msgstr ""
+
+#: ../Network/Receive.pm:1690
+#, perl-format
+msgid ""
+"-----------CashList (Cash Point: %-5d)------------\n"
+"#  Name                    Type               Price\n"
+msgstr ""
+
+#: ../Network/Receive.pm:1722
+#, perl-format
+msgid "Cart Item Removed: %s (%d) x %s\n"
+msgstr ""
+
+#: ../Network/Receive.pm:1740
+msgid "Character creation failed. If you didn't make any mistake, then the name you chose already exists.\n"
+msgstr ""
+
+#: ../Network/Receive.pm:1772
+#, fuzzy, perl-format
+msgid "Character %s (%d) created.\n"
+msgstr "Ang server %s ay napili\n"
+
+#: ../Network/Receive.pm:1782
+#, fuzzy, perl-format
+msgid "Character %s (%d) deleted.\n"
+msgstr "Ang server %s ay napili\n"
+
+#: ../Network/Receive.pm:1789
+msgid "Character deleted.\n"
+msgstr ""
+
+#: ../Network/Receive.pm:1801
+msgid "Character cannot be deleted. Your e-mail address was probably wrong.\n"
+msgstr ""
+
+#: ../Network/Receive.pm:1871
+msgid "Chat Room Created\n"
+msgstr ""
+
+#: ../Network/Receive.pm:1897
+msgid "Can't join Chat Room - Incorrect Password\n"
+msgstr ""
+
+#: ../Network/Receive.pm:1899
+msgid "Can't join Chat Room - You're banned\n"
+msgstr ""
+
+#: ../Network/Receive.pm:1925
+msgid "Chat Room Properties Modified\n"
+msgstr ""
+
+#: ../Network/Receive.pm:1964
+#, perl-format
+msgid "%s has joined the Chat Room\n"
+msgstr ""
+
+#: ../Network/Receive.pm:1980
+msgid "You left the Chat Room\n"
+msgstr ""
+
+#: ../Network/Receive.pm:1982
+#, perl-format
+msgid "%s has left the Chat Room\n"
+msgstr ""
+
+#: ../Network/Receive.pm:2015
+#, perl-format
+msgid "You have joined the Chat Room %s\n"
+msgstr ""
+
+#: ../Network/Receive.pm:2029
+#, perl-format
+msgid "%s failed to cast %s\n"
+msgstr ""
+
+#: ../Network/Receive.pm:2055
+#, perl-format
+msgid "%s added Item to Deal: %s x %s\n"
+msgstr ""
+
+#: ../Network/Receive.pm:2059
+#, perl-format
+msgid "%s added %s z to Deal\n"
+msgstr ""
+
+#: ../Network/Receive.pm:2067
+msgid "That person is overweight; you cannot trade.\n"
+msgstr ""
+
+#: ../Network/Receive.pm:2070
+msgid "This item cannot be traded.\n"
+msgstr ""
+
+#: ../Network/Receive.pm:2073
+#, perl-format
+msgid "You cannot trade (fail code %s).\n"
+msgstr ""
+
+#: ../Network/Receive.pm:2083
+#, perl-format
+msgid "You added Item to Deal: %s x %s\n"
+msgstr ""
+
+#: ../Network/Receive.pm:2094
+msgid "That person is too far from you to trade.\n"
+msgstr ""
+
+#: ../Network/Receive.pm:2096
+msgid "That person is in another deal.\n"
+msgstr ""
+
+#: ../Network/Receive.pm:2113
+#, perl-format
+msgid "Engaged Deal with %s\n"
+msgstr ""
+
+#: ../Network/Receive.pm:2115
+#, perl-format
+msgid "Deal request failed (unknown error %s).\n"
+msgstr ""
+
+#: ../Network/Receive.pm:2123
+msgid "Deal Cancelled\n"
+msgstr ""
+
+#: ../Network/Receive.pm:2130
+msgid "Deal Complete\n"
+msgstr ""
+
+#: ../Network/Receive.pm:2137
+#, perl-format
+msgid "%s finalized the Deal\n"
+msgstr ""
+
+#: ../Network/Receive.pm:2143
+msgid "You finalized the Deal\n"
+msgstr ""
+
+#: ../Network/Receive.pm:2154
+#, perl-format
+msgid "%s (level %s) Requests a Deal\n"
+msgstr ""
+
+#: ../Network/Receive.pm:2155
+msgid "Type 'deal' to start dealing, or 'deal no' to deny the deal.\n"
+msgstr ""
+
+#: ../Network/Receive.pm:2177
+msgid "-----Egg Hatch Candidates-----\n"
+msgstr ""
+
+#. Translation Comment: "[dist=$dist] $name ($player->{binID}): $emotion\n"
+#: ../Network/Receive.pm:2202
+#, perl-format
+msgid "[dist=%s] %s (%d): %s\n"
+msgstr ""
+
+#. Translation Comment: "[dist=$dist] $monster->name ($monster->{binID}): $emotion\n"
+#: ../Network/Receive.pm:2230
+#, fuzzy, perl-format
+msgid "[dist=%s] Monster %s (%d): %s\n"
+msgstr "'%s' ay hindi isang balidong server.\n"
+
+#: ../Network/Receive.pm:2242
+#, perl-format
+msgid "[dist=%s] %s: %s\n"
+msgstr ""
+
+#: ../Network/Receive.pm:2252
+#, fuzzy, perl-format
+msgid "You can't put on %s (%d)\n"
+msgstr "Ikaw ngayon ay may job level na %s\n"
+
+#: ../Network/Receive.pm:2265
+#, fuzzy, perl-format
+msgid "You equip %s (%d) - %s (type %s)\n"
+msgstr "Ikaw ngayon ay may job level na %s\n"
+
+#: ../Network/Receive.pm:2279
+msgid "Lost connection; exiting\n"
+msgstr ""
+
+#: ../Network/Receive.pm:2292
+msgid "Server shutting down\n"
+msgstr ""
+
+#: ../Network/Receive.pm:2294
+msgid "Error: Server is closed\n"
+msgstr ""
+
+#: ../Network/Receive.pm:2297
+#, perl-format
+msgid ""
+"Critical Error: Dual login prohibited - Someone trying to login!\n"
+"\n"
+"%s will now immediately disconnect."
+msgstr ""
+
+#: ../Network/Receive.pm:2301
+#: ../Network/Receive.pm:2305
+msgid "Critical Error: Dual login prohibited - Someone trying to login!\n"
+msgstr ""
+
+#: ../Network/Receive.pm:2309
+msgid "Error: Out of sync with server\n"
+msgstr ""
+
+#: ../Network/Receive.pm:2311
+msgid "Error: Server is jammed due to over-population.\n"
+msgstr ""
+
+#: ../Network/Receive.pm:2313
+msgid "Error: You are underaged and cannot join this server.\n"
+msgstr ""
+
+#: ../Network/Receive.pm:2315
+msgid "Critical Error: You must pay to play this account!\n"
+msgstr ""
+
+#: ../Network/Receive.pm:2318
+msgid "Error: The server still recognizes your last connection\n"
+msgstr ""
+
+#: ../Network/Receive.pm:2320
+msgid "Error: IP capacity of this Internet Cafe is full. Would you like to pay the personal base?\n"
+msgstr ""
+
+#: ../Network/Receive.pm:2322
+msgid "Error: You are out of available time paid for\n"
+msgstr ""
+
+#: ../Network/Receive.pm:2324
+msgid "Error: You have been forced to disconnect by a GM\n"
+msgstr ""
+
+#: ../Network/Receive.pm:2326
+#, perl-format
+msgid "Unknown error %s\n"
+msgstr ""
+
+#: ../Network/Receive.pm:2377
+#, perl-format
+msgid "Exp gained: %d/%d (%.2f%%/%.2f%%)\n"
+msgstr ""
+
+#: ../Network/Receive.pm:2382
+#, perl-format
+msgid "You gained %s zeny.\n"
+msgstr ""
+
+#: ../Network/Receive.pm:2384
+#, perl-format
+msgid "You lost %s zeny.\n"
+msgstr ""
+
+#: ../Network/Receive.pm:2386
+#, perl-format
+msgid "Disconnecting due to zeny lower than %s."
+msgstr ""
+
+#: ../Network/Receive.pm:2395
+#, perl-format
+msgid "Required Exp: %s\n"
+msgstr ""
+
+#: ../Network/Receive.pm:2404
+#, perl-format
+msgid "BaseExp: %s | JobExp: %s\n"
+msgstr ""
+
+#: ../Network/Receive.pm:2411
+msgid "========Forge List========\n"
+msgstr ""
+
+#: ../Network/Receive.pm:2455
+#, perl-format
+msgid "Friend %s has disconnected\n"
+msgstr ""
+
+#: ../Network/Receive.pm:2457
+#, fuzzy, perl-format
+msgid "Friend %s has connected\n"
+msgstr "Ang server %s ay napili\n"
+
+#: ../Network/Receive.pm:2471
+#, perl-format
+msgid "%s wants to be your friend\n"
+msgstr ""
+
+#: ../Network/Receive.pm:2472
+#, perl-format
+msgid "Type 'friend accept' to be friend with %s, otherwise type 'friend reject'\n"
+msgstr ""
+
+#: ../Network/Receive.pm:2483
+#, fuzzy, perl-format
+msgid "%s is no longer your friend\n"
+msgstr "'%s' ay hindi isang balidong server.\n"
+
+#: ../Network/Receive.pm:2498
+#, perl-format
+msgid "%s rejected to be your friend\n"
+msgstr ""
+
+#: ../Network/Receive.pm:2506
+#, perl-format
+msgid "%s is now your friend\n"
+msgstr ""
+
+#: ../Network/Receive.pm:2513
+#, perl-format
+msgid "Fed homunculus with %s\n"
+msgstr ""
+
+#: ../Network/Receive.pm:2515
+#, perl-format
+msgid "Failed to feed homunculus with %s: no food in inventory.\n"
+msgstr ""
+
+#: ../Network/Receive.pm:2600
+msgid "Your Homunculus was vaporized!\n"
+msgstr ""
+
+#: ../Network/Receive.pm:2602
+msgid "Your Homunculus died!\n"
+msgstr ""
+
+#: ../Network/Receive.pm:2607
+msgid "Your Homunculus was recalled!\n"
+msgstr ""
+
+#: ../Network/Receive.pm:2609
+#, fuzzy
+msgid "Your Homunculus was resurrected!\n"
+msgstr "Ikaw ay nakatayo.\n"
+
+#: ../Network/Receive.pm:2643
+msgid ""
+"The server Denied the login because GameGuard packets where not replied correctly or too many time has been spent to send the response.\n"
+"Please verify the version of your poseidon server and try again\n"
+msgstr ""
+
+#: ../Network/Receive.pm:2648
+msgid "Server granted login request to account server\n"
+msgstr ""
+
+#: ../Network/Receive.pm:2650
+msgid "Server granted login request to char/map server\n"
+msgstr ""
+
+#: ../Network/Receive.pm:2701
+#, perl-format
+msgid "Incoming Request to Ally Guild '%s'\n"
+msgstr ""
+
+#: ../Network/Receive.pm:2711
+msgid "Guild broken.\n"
+msgstr ""
+
+#. Translation Comment: Guild Chat
+#: ../Network/Receive.pm:2769
+#, perl-format
+msgid "[Guild] %s\n"
+msgstr ""
+
+#: ../Network/Receive.pm:2784
+msgid "Guild create successful.\n"
+msgstr ""
+
+#: ../Network/Receive.pm:2785
+msgid "Guild create failed: Guild name already exists.\n"
+msgstr ""
+
+#: ../Network/Receive.pm:2786
+msgid "Guild create failed: Emperium is needed.\n"
+msgstr ""
+
+#: ../Network/Receive.pm:2791
+#, perl-format
+msgid "Guild create: Unknown error %s\n"
+msgstr ""
+
+#: ../Network/Receive.pm:2826
+#, perl-format
+msgid "Guild join request: %s\n"
+msgstr ""
+
+#: ../Network/Receive.pm:2828
+#, perl-format
+msgid "Guild join request: Unknown %s\n"
+msgstr ""
+
+#: ../Network/Receive.pm:2840
+#, perl-format
+msgid ""
+"%s has left the guild.\n"
+"Reason: %s\n"
+msgstr ""
+
+#: ../Network/Receive.pm:2847
+#, perl-format
+msgid ""
+"%s has been removed from the guild.\n"
+"Reason: %s\n"
+msgstr ""
+
+#: ../Network/Receive.pm:2889
+#, perl-format
+msgid "Guild member %s logged in.\n"
+msgstr ""
+
+#: ../Network/Receive.pm:2891
+#, perl-format
+msgid "Guild member %s logged out.\n"
+msgstr ""
+
+#: ../Network/Receive.pm:2945
+#, perl-format
+msgid ""
+"---Guild Notice---\n"
+"%s\n"
+"\n"
+"%s\n"
+"------------------\n"
+msgstr ""
+
+#: ../Network/Receive.pm:2969
+#, perl-format
+msgid "Incoming Request to join Guild '%s'\n"
+msgstr ""
+
+#: ../Network/Receive.pm:2983
+#, perl-format
+msgid "Item Identified: %s (%d)\n"
+msgstr ""
+
+#: ../Network/Receive.pm:3004
+#, perl-format
+msgid "Received Possible Identify List (%s item(s)) - type 'identify'\n"
+msgstr ""
+
+#: ../Network/Receive.pm:3010
+msgid "All Players ignored\n"
+msgstr ""
+
+#: ../Network/Receive.pm:3013
+msgid "All players unignored\n"
+msgstr ""
+
+#: ../Network/Receive.pm:3021
+msgid "Player ignored\n"
+msgstr ""
+
+#: ../Network/Receive.pm:3024
+msgid "Player unignored\n"
+msgstr ""
+
+#: ../Network/Receive.pm:3064
+#, perl-format
+msgid "Item added to inventory: %s (%d) x %d - %s"
+msgstr ""
+
+#: ../Network/Receive.pm:3084
+#, perl-format
+msgid "Auto-dropping item: %s (%d) x %d\n"
+msgstr ""
+
+#: ../Network/Receive.pm:3089
+msgid "Can't loot item...wait...\n"
+msgstr ""
+
+#: ../Network/Receive.pm:3091
+msgid "Cannot pickup item (inventory full)\n"
+msgstr ""
+
+#: ../Network/Receive.pm:3093
+msgid "Cannot pickup item (you're Frozen?)\n"
+msgstr ""
+
+#: ../Network/Receive.pm:3095
+#, perl-format
+msgid "Cannot pickup item (failure code %s)\n"
+msgstr ""
+
+#: ../Network/Receive.pm:3120
+#, perl-format
+msgid "You used Item: %s (%d) x %d - %d left\n"
+msgstr ""
+
+#: ../Network/Receive.pm:3137
+#, perl-format
+msgid "%s used Item: %s - %s left\n"
+msgstr ""
+
+#: ../Network/Receive.pm:3145
+#, perl-format
+msgid "%s got married!\n"
+msgstr ""
+
+#: ../Network/Receive.pm:3158
+#, fuzzy, perl-format
+msgid "You have %s "
+msgstr "Namatay ka.\n"
+
+#: ../Network/Receive.pm:3162
+#, perl-format
+msgid "%s has %s "
+msgstr ""
+
+#: ../Network/Receive.pm:3277
+#, perl-format
+msgid "Item Appeared: %s (%d) x %d (%d, %d)\n"
+msgstr ""
+
+#: ../Network/Receive.pm:3323
+#, perl-format
+msgid "Attack Looter: %s looted %s\n"
+msgstr ""
+
+#: ../Network/Receive.pm:3348
+#, perl-format
+msgid "Permitted to use %s (%d), level %d\n"
+msgstr ""
+
+#: ../Network/Receive.pm:3373
+#, perl-format
+msgid "Item %s has been upgraded to +%s\n"
+msgstr ""
+
+#: ../Network/Receive.pm:3388
+#, perl-format
+msgid "%s changed job to: %s\n"
+msgstr ""
+
+#: ../Network/Receive.pm:3392
+#, perl-format
+msgid "%s changed bottom headgear to: %s\n"
+msgstr ""
+
+#: ../Network/Receive.pm:3397
+#, perl-format
+msgid "%s changed top headgear to: %s\n"
+msgstr ""
+
+#: ../Network/Receive.pm:3402
+#, perl-format
+msgid "%s changed middle headgear to: %s\n"
+msgstr ""
+
+#: ../Network/Receive.pm:3408
+#, perl-format
+msgid "%s changed hair color to: %s (%s)\n"
+msgstr ""
+
+#: ../Network/Receive.pm:3465
+msgid "Account name doesn't exist\n"
+msgstr ""
+
+#: ../Network/Receive.pm:3467
+#, fuzzy
+msgid "Enter your Ragnarok Online username again."
+msgstr "Pakitype ang Username: "
+
+#: ../Network/Receive.pm:3478
+msgid "Password Error\n"
+msgstr ""
+
+#: ../Network/Receive.pm:3480
+#, fuzzy
+msgid "Enter your Ragnarok Online password again."
+msgstr "Pakitype ang password:"
+
+#: ../Network/Receive.pm:3491
+msgid "Server connection has been denied\n"
+msgstr ""
+
+#: ../Network/Receive.pm:3493
+msgid "Critical Error: Your account has been blocked."
+msgstr ""
+
+#: ../Network/Receive.pm:3497
+#, perl-format
+msgid ""
+"Connect failed, something is wrong with the login settings:\n"
+"version: %s\n"
+"master_version: %s\n"
+"serverType: %s\n"
+msgstr ""
+
+#: ../Network/Receive.pm:3503
+msgid "The server is temporarily blocking your connection\n"
+msgstr ""
+
+#: ../Network/Receive.pm:3512
+msgid "Error logging into Character Server (invalid character specified)...\n"
+msgstr ""
+
+#: ../Network/Receive.pm:3539
+#: ../Network/Receive.pm:3598
+#: ../Network/Receive.pm:4498
+#, fuzzy, perl-format
+msgid "Cannot load field %s: %s\n"
+msgstr "Hindi ma-initialize ang IPC subsystem: %s\n"
+
+#: ../Network/Receive.pm:3568
+#, perl-format
+msgid "Map Change: %s (%s, %s)\n"
+msgstr ""
+
+#: ../Network/Receive.pm:3627
+#: ../Network/XKoreProxy.pm:473
+msgid "Closing connection to Map Server\n"
+msgstr ""
+
+#: ../Network/Receive.pm:3674
+#: ../Network/Receive/ServerType0.pm:40
+msgid "Waiting for map to load...\n"
+msgstr ""
+
+#: ../Network/Receive.pm:3686
+#: ../Network/Receive/ServerType0.pm:52
+#, fuzzy
+msgid "You are now in the game\n"
+msgstr "Ikaw ay nakatayo.\n"
+
+#: ../Network/Receive.pm:3696
+#: ../Network/Receive/ServerType0.pm:60
+#, perl-format
+msgid "Your Coordinates: %s, %s\n"
+msgstr ""
+
+#: ../Network/Receive.pm:3704
+msgid "Memo Failed\n"
+msgstr ""
+
+#: ../Network/Receive.pm:3706
+msgid "Memo Succeeded\n"
+msgstr ""
+
+#: ../Network/Receive.pm:3714
+#, perl-format
+msgid "Minimap indicator at location %d, %d with the color %s cleared\n"
+msgstr ""
+
+#: ../Network/Receive.pm:3718
+#, perl-format
+msgid "Minimap indicator at location %d, %d with the color %s shown\n"
+msgstr ""
+
+#: ../Network/Receive.pm:3743
+#, fuzzy, perl-format
+msgid "Monster %s (%d) changed to %s\n"
+msgstr "'%s' ay hindi isang balidong server.\n"
+
+#: ../Network/Receive.pm:3771
+#: ../Network/Receive.pm:3772
+#, perl-format
+msgid "Get MVP item %s\n"
+msgstr ""
+
+#: ../Network/Receive.pm:3778
+#, perl-format
+msgid "%s become MVP!\n"
+msgstr ""
+
+#: ../Network/Receive.pm:3779
+#, perl-format
+msgid "%s became MVP!\n"
+msgstr ""
+
+#: ../Network/Receive.pm:3784
+#, perl-format
+msgid "Congratulations, you are the MVP! Your reward is %s exp!\n"
+msgstr ""
+
+#: ../Network/Receive.pm:3810
+msgid "Ready to start selling items\n"
+msgstr ""
+
+#: ../Network/Receive.pm:3826
+#, perl-format
+msgid "%s: Type 'store' to start buying, or type 'sell' to start selling\n"
+msgstr ""
+
+#: ../Network/Receive.pm:3860
+#, perl-format
+msgid ""
+"----------%s's Store List-----------\n"
+"#  Name                    Type               Price\n"
+msgstr ""
+
+#: ../Network/Receive.pm:3902
+#, perl-format
+msgid "%s: Done talking\n"
+msgstr ""
+
+#: ../Network/Receive.pm:3931
+#, perl-format
+msgid "%s: Auto-continuing talking\n"
+msgstr ""
+
+#: ../Network/Receive.pm:3936
+#, perl-format
+msgid "%s: Type 'talk cont' to continue talking\n"
+msgstr ""
+
+#: ../Network/Receive.pm:3949
+#, perl-format
+msgid "%s: Type 'talk num <number #>' to input a number.\n"
+msgstr ""
+
+#: ../Network/Receive.pm:3986
+msgid ""
+"----------Responses-----------\n"
+"#  Response\n"
+msgstr ""
+
+#: ../Network/Receive.pm:3998
+#, perl-format
+msgid "%s: Type 'talk resp #' to choose a response.\n"
+msgstr ""
+
+#: ../Network/Receive.pm:4007
+#, perl-format
+msgid "%s: Type 'talk text' (Respond to NPC)\n"
+msgstr ""
+
+#: ../Network/Receive.pm:4026
+#, perl-format
+msgid "[Party] %s\n"
+msgstr ""
+
+#: ../Network/Receive.pm:4041
+msgid "Party EXP set to Individual Take\n"
+msgstr ""
+
+#: ../Network/Receive.pm:4043
+msgid "Party EXP set to Even Share\n"
+msgstr ""
+
+#: ../Network/Receive.pm:4045
+msgid "Error setting party option\n"
+msgstr ""
+
+#: ../Network/Receive.pm:4058
+#, perl-format
+msgid "Incoming Request to join party '%s'\n"
+msgstr ""
+
+#: ../Network/Receive.pm:4066
+#, perl-format
+msgid "Join request failed: %s is already in a party\n"
+msgstr ""
+
+#: ../Network/Receive.pm:4068
+#, perl-format
+msgid "Join request failed: %s denied request\n"
+msgstr ""
+
+#: ../Network/Receive.pm:4070
+#, perl-format
+msgid "%s accepted your request\n"
+msgstr ""
+
+#: ../Network/Receive.pm:4084
+#, perl-format
+msgid "You joined party '%s'\n"
+msgstr ""
+
+#: ../Network/Receive.pm:4087
+#, perl-format
+msgid "%s joined your party '%s'\n"
+msgstr ""
+
+#: ../Network/Receive.pm:4114
+msgid "You left the party\n"
+msgstr ""
+
+#: ../Network/Receive.pm:4118
+#, perl-format
+msgid "%s left the party\n"
+msgstr ""
+
+#: ../Network/Receive.pm:4135
+msgid "Can't organize party - party name exists\n"
+msgstr ""
+
+#: ../Network/Receive.pm:4157
+#, perl-format
+msgid "Party Member: %s\n"
+msgstr ""
+
+#: ../Network/Receive.pm:4171
+msgid "Pet capture success\n"
+msgstr ""
+
+#: ../Network/Receive.pm:4173
+msgid "Pet capture failed\n"
+msgstr ""
+
+#: ../Network/Receive.pm:4191
+#, perl-format
+msgid "Fed pet with %s\n"
+msgstr ""
+
+#: ../Network/Receive.pm:4193
+#, perl-format
+msgid "Failed to feed pet with %s: no food in inventory.\n"
+msgstr ""
+
+#: ../Network/Receive.pm:4274
+#, perl-format
+msgid "%s changed Weapon to %s\n"
+msgstr ""
+
+#: ../Network/Receive.pm:4278
+#, perl-format
+msgid "%s changed Shield to %s\n"
+msgstr ""
+
+#: ../Network/Receive.pm:4289
+#, perl-format
+msgid "%s changed Shoes to: %s\n"
+msgstr ""
+
+#: ../Network/Receive.pm:4321
+msgid "Unknown field,"
+msgstr ""
+
+#: ../Network/Receive.pm:4333
+#, perl-format
+msgid "%s%s\n"
+msgstr ""
+
+#: ../Network/Receive.pm:4366
+#: ../Network/Receive.pm:4367
+#, perl-format
+msgid "(From: %s) : %s\n"
+msgstr ""
+
+#: ../Network/Receive.pm:4378
+msgid "*** You were PM'd, auto disconnect! ***\n"
+msgstr ""
+
+#: ../Network/Receive.pm:4379
+msgid "Disconnecting on PM!\n"
+msgstr ""
+
+#: ../Network/Receive.pm:4387
+#, perl-format
+msgid "(To %s) : %s\n"
+msgstr ""
+
+#: ../Network/Receive.pm:4396
+#, fuzzy, perl-format
+msgid "%s is not online\n"
+msgstr "'%s' ay hindi isang balidong server.\n"
+
+#: ../Network/Receive.pm:4398
+msgid "Player ignored your message\n"
+msgstr ""
+
+#: ../Network/Receive.pm:4400
+msgid "Player doesn't want to receive messages\n"
+msgstr ""
+
+#: ../Network/Receive.pm:4419
+msgid "Received characters from Character Server\n"
+msgstr ""
+
+#: ../Network/Receive.pm:4480
+msgid "Received character ID and Map IP from Character Server\n"
+msgstr ""
+
+#: ../Network/Receive.pm:4508
+#, perl-format
+msgid ""
+"----------Game Info----------\n"
+"Char ID: %s (%s)\n"
+"MAP Name: %s\n"
+"MAP IP: %s\n"
+"MAP Port: %s\n"
+"-----------------------------\n"
+msgstr ""
+
+#: ../Network/Receive.pm:4517
+#: ../Network/XKoreProxy.pm:471
+msgid "Closing connection to Character Server\n"
+msgstr ""
+
+#: ../Network/Receive.pm:4531
+#, fuzzy, perl-format
+msgid "You successfully refined a weapon (ID %s)!\n"
+msgstr "Matagumpay na nakumpuni ang %s.\n"
+
+#: ../Network/Receive.pm:4533
+#, perl-format
+msgid "You failed to refine a weapon (ID %s)!\n"
+msgstr ""
+
+#: ../Network/Receive.pm:4535
+#, perl-format
+msgid "You successfully made a potion (ID %s)!\n"
+msgstr ""
+
+#: ../Network/Receive.pm:4537
+#, perl-format
+msgid "You failed to make a potion (ID %s)!\n"
+msgstr ""
+
+#: ../Network/Receive.pm:4539
+#, perl-format
+msgid "You tried to refine a weapon (ID %s); result: unknown %s\n"
+msgstr ""
+
+#: ../Network/Receive.pm:4546
+msgid "--------Repair List--------\n"
+msgstr ""
+
+#: ../Network/Receive.pm:4567
+#, perl-format
+msgid "Repair of %s failed.\n"
+msgstr ""
+
+#: ../Network/Receive.pm:4569
+#, perl-format
+msgid "Successfully repaired %s.\n"
+msgstr "Matagumpay na nakumpuni ang %s.\n"
+
+#: ../Network/Receive.pm:4581
+#, fuzzy
+msgid "You have been resurrected\n"
+msgstr "Ikaw ay nakatayo.\n"
+
+#: ../Network/Receive.pm:4591
+#, perl-format
+msgid "%s has been resurrected\n"
+msgstr "Si %s ay nabuhay na mag-uli\n"
+
+#: ../Network/Receive.pm:4647
+msgid "Sync packet requested for wrong ID\n"
+msgstr ""
+
+#: ../Network/Receive.pm:4654
+msgid "TaeKwon Mission Rank : "
+msgstr ""
+
+#: ../Network/Receive.pm:4660
+msgid "TaeKwon Mission : "
+msgstr ""
+
+#: ../Network/Receive.pm:4668
+msgid "Unavailable Area To Teleport\n"
+msgstr ""
+
+#: ../Network/Receive.pm:4671
+msgid "Unavailable Area To Memo\n"
+msgstr ""
+
+#: ../Network/Receive.pm:4673
+#, perl-format
+msgid "Unavailable Area To Teleport (fail code %s)\n"
+msgstr ""
+
+#: ../Network/Receive.pm:4684
+#: ../Network/Receive.pm:4699
+msgid "PvP Display Mode\n"
+msgstr ""
+
+#: ../Network/Receive.pm:4687
+#: ../Network/Receive.pm:4702
+msgid "GvG Display Mode\n"
+msgstr ""
+
+#: ../Network/Receive.pm:4719
+#, perl-format
+msgid "Your PvP rank is: %s/%s\n"
+msgstr ""
+
+#: ../Network/Receive.pm:4729
+#, perl-format
+msgid ""
+"=====================Sense========================\n"
+"Monster: %-16s Level: %-12s\n"
+"Size:    %-16s Race:  %-12s\n"
+"Def:     %-16s MDef:  %-12s\n"
+"Element: %-16s HP:    %-12s\n"
+"=================Damage Modifiers=================\n"
+"Ice: %-3s     Earth: %-3s  Fire: %-3s  Wind: %-3s\n"
+"Poison: %-3s  Holy: %-3s   Dark: %-3s  Spirit: %-3s\n"
+"Undead: %-3s\n"
+"==================================================\n"
+msgstr ""
+
+#: ../Network/Receive.pm:4756
+#, perl-format
+msgid "sold: %s - %s %sz\n"
+msgstr ""
+
+#: ../Network/Receive.pm:4760
+#, perl-format
+msgid "sold out: %s\n"
+msgstr ""
+
+#: ../Network/Receive.pm:4763
+msgid "Items have been sold out.\n"
+msgstr ""
+
+#: ../Network/Receive.pm:4774
+#, perl-format
+msgid "You can sell %s items!\n"
+msgstr ""
+
+#: ../Network/Receive.pm:4857
+#, perl-format
+msgid "Monster Skill - switch Target to : %s (%d)\n"
+msgstr ""
+
+#: ../Network/Receive.pm:4886
+#, perl-format
+msgid "Avoid casting Skill - switch position to : %s,%s\n"
+msgstr ""
+
+#: ../Network/Receive.pm:5012
+#, perl-format
+msgid "Skill %s failed (%s)\n"
+msgstr ""
+
+#: ../Network/Receive.pm:5209
+msgid "Not enough stat points to add\n"
+msgstr ""
+
+#: ../Network/Receive.pm:5312
+msgid "Mute period expired.\n"
+msgstr ""
+
+#: ../Network/Receive.pm:5318
+#, perl-format
+msgid "You've been muted for %s minutes, auto disconnect!\n"
+msgstr "Ikaw ay napipi nang %s na minuto, auto-disconnect!\n"
+
+#: ../Network/Receive.pm:5319
+#, fuzzy, perl-format
+msgid "*** You have been muted for %s minutes, auto disconnect! ***\n"
+msgstr "Ikaw ay napipi nang %s na minuto, auto-disconnect!\n"
+
+#: ../Network/Receive.pm:5322
+#, perl-format
+msgid "You've been muted for %s minutes\n"
+msgstr "Ikaw ay napipi nang %s na minuto\n"
+
+#: ../Network/Receive.pm:5342
+#, perl-format
+msgid "You are now level %s\n"
+msgstr ""
+
+#: ../Network/Receive.pm:5344
+#: ../Network/Receive.pm:5345
+#, perl-format
+msgid "Disconnecting on level %s!\n"
+msgstr ""
+
+#: ../Network/Receive.pm:5403
+#, perl-format
+msgid "You are now job level %s\n"
+msgstr "Ikaw ngayon ay may job level na %s\n"
+
+#: ../Network/Receive.pm:5405
+#: ../Network/Receive.pm:5406
+#, perl-format
+msgid "Disconnecting on job level %s!\n"
+msgstr ""
+
+#: ../Network/Receive.pm:5470
+msgid "Storage closed.\n"
+msgstr "Nakasara na ang taguan.\n"
+
+#: ../Network/Receive.pm:5500
+#, perl-format
+msgid "Storage Item Added: %s (%d) x %s\n"
+msgstr ""
+
+#: ../Network/Receive.pm:5512
+#, perl-format
+msgid "Storage Item Removed: %s (%d) x %s\n"
+msgstr ""
+
+#: ../Network/Receive.pm:5585
+msgid "Storage opened.\n"
+msgstr ""
+
+#: ../Network/Receive.pm:5595
+msgid "Please enter a new character password:\n"
+msgstr ""
+
+#: ../Network/Receive.pm:5596
+msgid "Please enter a new storage password:\n"
+msgstr ""
+
+#: ../Network/Receive.pm:5601
+msgid "Please enter your character password."
+msgstr ""
+
+#: ../Network/Receive.pm:5606
+#, fuzzy, perl-format
+msgid "Character password set to: %s\n"
+msgstr "Walang username o password ang nakaset."
+
+#: ../Network/Receive.pm:5610
+msgid "Please enter your storage password."
+msgstr ""
+
+#: ../Network/Receive.pm:5615
+#, fuzzy, perl-format
+msgid "Storage password set to: %s\n"
+msgstr "Walang username o password ang nakaset."
+
+#: ../Network/Receive.pm:5622
+msgid "Unable to send character password. You must set the 'storageEncryptKey' option in config.txt or servers.txt.\n"
+msgstr ""
+
+#: ../Network/Receive.pm:5623
+msgid "Unable to send storage password. You must set the 'storageEncryptKey' option in config.txt or servers.txt.\n"
+msgstr ""
+
+#: ../Network/Receive.pm:5634
+msgid "You have entered the wrong password 5 times. Please try again later.\n"
+msgstr ""
+
+#: ../Network/Receive.pm:5655
+msgid "Successfully changed storage password.\n"
+msgstr ""
+
+#: ../Network/Receive.pm:5657
+#: ../Network/Receive.pm:5661
+msgid "Error: Incorrect storage password.\n"
+msgstr ""
+
+#: ../Network/Receive.pm:5659
+msgid "Successfully entered storage password.\n"
+msgstr ""
+
+#. Translation Comment: System/GM chat
+#: ../Network/Receive.pm:5692
+#, perl-format
+msgid "[GM] %s\n"
+msgstr ""
+
+#: ../Network/Receive.pm:5704
+#, perl-format
+msgid ""
+"============= ALCHEMIST RANK ================\n"
+"#    Name                             Points\n"
+"%s=============================================\n"
+msgstr ""
+
+#: ../Network/Receive.pm:5714
+#, perl-format
+msgid ""
+"============= BLACKSMITH RANK ===============\n"
+"#    Name                             Points\n"
+"%s=============================================\n"
+msgstr ""
+
+#: ../Network/Receive.pm:5724
+#, perl-format
+msgid ""
+"================ PVP RANK ===================\n"
+"#    Name                             Points\n"
+"%s=============================================\n"
+msgstr ""
+
+#: ../Network/Receive.pm:5734
+#, perl-format
+msgid ""
+"=============== TAEKWON RANK ================\n"
+"#    Name                             Points\n"
+"%s=============================================\n"
+msgstr ""
+
+#: ../Network/Receive.pm:5760
+#, fuzzy, perl-format
+msgid "You unequip %s (%d) - %s\n"
+msgstr "Ikaw ngayon ay may job level na %s\n"
+
+#: ../Network/Receive.pm:5771
+#, perl-format
+msgid "%s gained a level!\n"
+msgstr ""
+
+#: ../Network/Receive.pm:5773
+#, perl-format
+msgid "%s gained a job level!\n"
+msgstr ""
+
+#: ../Network/Receive.pm:5775
+#, perl-format
+msgid "%s failed to refine a weapon!\n"
+msgstr ""
+
+#: ../Network/Receive.pm:5777
+#, perl-format
+msgid "%s successfully refined a weapon!\n"
+msgstr ""
+
+#: ../Network/Receive.pm:5788
+#, fuzzy, perl-format
+msgid "You used Item: %s (%d) x %s\n"
+msgstr "Ikaw ngayon ay may job level na %s\n"
+
+#: ../Network/Receive.pm:5798
+#, perl-format
+msgid "There are currently %s users online\n"
+msgstr "Sa ngayon, mayroong %s na tao online\n"
+
+#: ../Network/Receive.pm:5824
+#, perl-format
+msgid ""
+"%s\n"
+"#  Name                                       Type           Amount       Price\n"
+msgstr ""
+
+#: ../Network/Receive.pm:5877
+#, fuzzy, perl-format
+msgid "Failed to buy %s of item #%s from vender (insufficient zeny).\n"
+msgstr "Hindi matagumpay ang pagbili (kulang ang zeny).\n"
+
+#: ../Network/Receive.pm:5879
+#, perl-format
+msgid "Failed to buy %s of item #%s from vender (overweight).\n"
+msgstr ""
+
+#: ../Network/Receive.pm:5881
+#, perl-format
+msgid "Failed to buy %s of item #%s from vender (unknown code %s).\n"
+msgstr ""
+
+#: ../Network/Receive.pm:5898
+#, perl-format
+msgid ""
+"%s\n"
+"#  Name                                          Type        Amount       Price\n"
+msgstr ""
+
+#: ../Network/XKore.pm:51
+#, perl-format
+msgid ""
+"Unable to start the X-Kore server.\n"
+"You can only run one X-Kore session at the same time.\n"
+"And make sure no other servers are running on port %s.\n"
+msgstr ""
+
+#: ../Network/XKore.pm:63
+#: ../Network/XKoreProxy.pm:80
+msgid "X-Kore mode intialized.\n"
+msgstr ""
+
+#: ../Network/XKore.pm:263
+#, perl-format
+msgid "Please start the Ragnarok Online client (%s)\n"
+msgstr ""
+
+#: ../Network/XKore.pm:271
+msgid "Error: You cannot type anything except 'quit' right now.\n"
+msgstr ""
+
+#: ../Network/XKore.pm:280
+msgid "Ragnarok Online client found\n"
+msgstr ""
+
+#: ../Network/XKore.pm:293
+msgid "You can login with the Ragnarok Online client now.\n"
+msgstr ""
+
+#: ../Network/XKore.pm:320
+msgid "Cannot find NetRedirect.dll. Please check your installation."
+msgstr ""
+
+#: ../Network/XKore.pm:327
+msgid "Unable to inject NetRedirect.dll"
+msgstr ""
+
+#: ../Network/XKore.pm:342
+msgid "Waiting for the Ragnarok Online client to connect to X-Kore..."
+msgstr ""
+
+#. Translation Comment: Waiting for the Ragnarok Online client to connect to X-Kore...
+#: ../Network/XKore.pm:345
+msgid "ready\n"
+msgstr ""
+
+#: ../Network/XKore.pm:439
+msgid "Patching client to remove bot detection:\n"
+msgstr ""
+
+#: ../Network/XKore.pm:501
+#, perl-format
+msgid "Client modified in %d places.\n"
+msgstr ""
+
+#: ../Network/XKore2.pm:256
+#, perl-format
+msgid "couldn't connect: %s\n"
+msgstr ""
+
+#: ../Network/XKore2.pm:389
+#: ../Network/XKore2.pm:559
+#, perl-format
+msgid "Unable to listen on XKore2 port (%s:%s): %s"
+msgstr ""
+
+#: ../Network/XKore2.pm:456
+msgid "XKore 2 failed login: Invalid Username and/or Password.\n"
+msgstr ""
+
+#: ../Network/XKore2.pm:485
+msgid "Received GameGuard sync request. Client allowed to login account server.\n"
+msgstr ""
+
+#: ../Network/XKore2.pm:488
+msgid "Received GameGuard sync request. Client allowed to login char/map server.\n"
+msgstr ""
+
+#: ../Network/XKore2.pm:1002
+msgid "blueConnection to server lost. Please wait while the connection is reestablished."
+msgstr ""
+
+#: ../Network/XKore2.pm:1005
+msgid "Unknown error within XKore 2"
+msgstr ""
+
+#: ../Network/XKore2.pm:1036
+msgid "blueConnection reestablished. Enjoy. =)"
+msgstr ""
+
+#: ../Network/XKore2.pm:1049
+msgid "blueStill trying to connect..."
+msgstr ""
+
+#: ../Network/XKore2.pm:1062
+#, perl-format
+msgid "Unknown/unexpected XKore 2 packet: %s (state: %s).\n"
+msgstr ""
+
+#: ../Network/XKoreProxy.pm:284
+#, fuzzy
+msgid "Client disconnected\n"
+msgstr "Ang server %s ay napili\n"
+
+#: ../Network/XKoreProxy.pm:315
+#, perl-format
+msgid "Waiting Ragnarok Client to connect on (%s:%s)\n"
+msgstr ""
+
+#: ../Network/XKoreProxy.pm:341
+#, perl-format
+msgid "Proxying to [%s]\n"
+msgstr ""
+
+#: ../Network/XKoreProxy.pm:351
+msgid "Invalid server specified or server does not exist...\n"
+msgstr ""
+
+#: ../Network/XKoreProxy.pm:375
+#, perl-format
+msgid ""
+"Client did not respond in time.\n"
+"Trying to replay the packet for %s of 3 times\n"
+msgstr ""
+
+#: ../Network/XKoreProxy.pm:381
+msgid "Client did not respond. Forcing disconnection\n"
+msgstr ""
+
+#: ../Network/XKoreProxy.pm:409
+msgid "Logon-grant packet received twice! Avoiding bug in client.\n"
+msgstr ""
+
+#: ../Network/XKoreProxy.pm:542
+#: ../functions.pl:279
+msgid "Please choose a master server to connect to."
+msgstr ""
+
+#: ../Network/XKoreProxy.pm:544
+#: ../functions.pl:281
+#, fuzzy
+msgid "Master servers"
+msgstr "Mga master server"
+
+#: ../Poseidon/EmbedServer.pm:48
+#, perl-format
+msgid ""
+"Embed Poseidon Server initialized\n"
+"Please read %s for more information.\n"
+"\n"
+msgstr ""
+
+#: ../Poseidon/EmbedServer.pm:65
+#, perl-format
+msgid "Poseidon: received query from client %s\n"
+msgstr ""
+
+#: ../Poseidon/EmbedServer.pm:110
+#, perl-format
+msgid "Poseidon: Sent result to client %s\n"
+msgstr ""
+
+#: ../Poseidon/EmbedServer.pm:116
+msgid "Poseidon: Querying Ragnarok Online client.\n"
+msgstr ""
+
+#: ../AI/Attack.pm:106
+#: ../AI/Attack.pm:217
+#: ../AI/Attack.pm:390
+msgid "Dropping target - you will not kill steal others\n"
+msgstr ""
+
+#: ../AI/Attack.pm:118
+#: ../AI/Attack.pm:159
+#: ../AI/Attack.pm:229
+#: ../AI/Attack.pm:540
+msgid "Teleport due to dropping attack target\n"
+msgstr ""
+
+#: ../AI/Attack.pm:128
+#, perl-format
+msgid "Dropping target - %s (%s) has been provoked\n"
+msgstr ""
+
+#: ../AI/Attack.pm:157
+msgid "Can't reach or damage target, dropping target\n"
+msgstr ""
+
+#: ../AI/Attack.pm:176
+#, fuzzy
+msgid "Target died\n"
+msgstr "Namatay ka.\n"
+
+#: ../AI/Attack.pm:211
+#, fuzzy
+msgid "Target lost\n"
+msgstr "Namatay ka.\n"
+
+#: ../AI/Attack.pm:442
+#: ../AI/Homunculus.pm:622
+#, perl-format
+msgid "%s; moving to (%s, %s)\n"
+msgstr ""
+
+#: ../AI/Attack.pm:538
+msgid "Unable to calculate a route to target, dropping target\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:377
+#, perl-format
+msgid "Done talking with %s.\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:535
+msgid "Escaping to into nearest portal.\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:543
+msgid "Found warp portal escaping into warp portal.\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:552
+msgid "Escape failed no portal found.\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:572
+msgid ""
+"Invalid coordinates specified for randomWalk\n"
+" Retrying..."
+msgstr ""
+
+#: ../AI/CoreLogic.pm:574
+#: ../AI/CoreLogic.pm:1889
+#, perl-format
+msgid "Calculating random route to: %s(%s): %s, %s\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:622
+msgid "Timeout equiping for skill\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:745
+#, perl-format
+msgid "Failed to take %s (%s) from (%s, %s) to (%s, %s)\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:767
+#: ../AI/CoreLogic.pm:2809
+#, perl-format
+msgid "Routing to (%s, %s) to take %s (%s), distance %s\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:869
+msgid "Auto-denying party request\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:871
+msgid "Auto-accepting party request\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:907
+#, fuzzy, perl-format
+msgid ""
+"\n"
+"Disconnecting due to break time: %s to %s\n"
+"\n"
+msgstr "Sisimulan ang auto-compile sa loob ng %d segundo...\n"
+
+#: ../AI/CoreLogic.pm:908
+#, perl-format
+msgid "*** Disconnected due to Break Time: %s to %s ***\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:939
+msgid "Auto-storaging due to death\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:944
+#, perl-format
+msgid "Moving to %s - %d,%d\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:962
+#, fuzzy
+msgid "Disconnecting on death!\n"
+msgstr "Sisimulan ang auto-compile sa loob ng %d segundo...\n"
+
+#: ../AI/CoreLogic.pm:963
+#, fuzzy
+msgid "*** You died, auto disconnect! ***\n"
+msgstr "Ikaw ay napipi nang %s na minuto, auto-disconnect!\n"
+
+#: ../AI/CoreLogic.pm:1066
+msgid "Auto-storaging due to excess weight\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:1094
+#: ../AI/CoreLogic.pm:1095
+#: ../AI/CoreLogic.pm:2203
+#: ../AI/CoreLogic.pm:2204
+#, fuzzy, perl-format
+msgid "Disconnecting on empty %s!\n"
+msgstr "Sisimulan ang auto-compile sa loob ng %d segundo...\n"
+
+#: ../AI/CoreLogic.pm:1113
+#, perl-format
+msgid "Auto-storaging due to insufficient %s\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:1167
+msgid "Teleporting to auto-storage\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:1172
+#, perl-format
+msgid "Calculating auto-storage route to: %s(%s): %s, %s\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:1186
+msgid "Warning storageAuto has changed. Please read News.txt\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:1193
+msgid "Using storage steps defined in config.\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:1195
+msgid "Something is wrong with storageAuto_npc_type in your config.\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:1322
+#, perl-format
+msgid "Attempt to get %s x %s from storage, retry: %s\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:1333
+#, perl-format
+msgid "storage: %s out of stock\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:1341
+msgid ""
+"Kore tried to get an item from storage 3 times, but failed.\n"
+"This problem could be caused by a server bug.\n"
+"To work around this problem, set 'relogAfterStorage' to 1, and relogin.\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:1357
+msgid "Character is still overweight after storageAuto (storage is full?)\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:1359
+#: ../AI/CoreLogic.pm:1360
+#, fuzzy
+msgid "Disconnecting on storage full!\n"
+msgstr "Sisimulan ang auto-compile sa loob ng %d segundo...\n"
+
+#: ../AI/CoreLogic.pm:1396
+msgid "Auto-sell sequence completed.\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:1432
+msgid "Teleporting to auto-sell\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:1436
+#, perl-format
+msgid "Calculating auto-sell route to: %s(%s): %s, %s\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:1589
+msgid "Teleporting to auto-buy\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:1593
+#, perl-format
+msgid "Calculating auto-buy route to: %s (%s): %s, %s\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:1735
+#, perl-format
+msgid "Invalid map specified for lockMap - map %s doesn't exist\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:1757
+msgid "Invalid coordinates specified for lockMap, coordinates are unwalkable\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:1764
+#, perl-format
+msgid "Calculating lockMap route to: %s(%s): %s, %s\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:1766
+#, perl-format
+msgid "Calculating lockMap route to: %s(%s)\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:1812
+#, perl-format
+msgid "Auto-adding stat %s\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:1846
+#, perl-format
+msgid "Unknown skill '%s'; disabling skillsAddAuto\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:1857
+#, perl-format
+msgid "Auto-adding skill %s\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:1886
+msgid "Invalid coordinates specified for randomWalk (coordinates are unwalkable); randomWalk disabled\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:1921
+#, perl-format
+msgid "Found my master - %s\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:1928
+msgid "Found my master!\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:1982
+msgid "Master died. I'll wait here.\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:1985
+msgid "I lost my master\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:1987
+msgid "Trying to get him back\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:1994
+#: ../AI/CoreLogic.pm:2079
+#, fuzzy
+msgid "My master disconnected\n"
+msgstr "Ang server %s ay napili\n"
+
+#: ../AI/CoreLogic.pm:2030
+#: ../AI/CoreLogic.pm:2107
+msgid "My master teleported\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:2034
+msgid "Trying to find lost master\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:2059
+msgid "Don't know what happened to Master\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:2075
+msgid "Couldn't find master, giving up\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:2103
+#, perl-format
+msgid "My master warped at (%s, %s) - moving to warp point\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:2763
+#, perl-format
+msgid "Gathering: %s (%s)\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:2780
+#, perl-format
+msgid "Failed to gather %s (%s) : Lost target\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:2788
+#, perl-format
+msgid "Failed to gather %s (%s) : No looting!\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:2792
+#, perl-format
+msgid "Failed to gather %s (%s) : Timeout\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:2842
+msgid "Teleporting to avoid all players\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:2882
+msgid "Teleporting due to insufficient HP/SP or too many aggressives\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:2893
+#, fuzzy, perl-format
+msgid "Teleporting to avoid %s\n"
+msgstr "Sisimulan ang auto-compile sa loob ng %d segundo...\n"
+
+#: ../AI/CoreLogic.pm:2909
+msgid "Teleporting due to idle\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:2921
+msgid "Teleporting to avoid portal\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:2946
+msgid "Respawning to save point.\n"
+msgstr ""
+
+#: ../AI/CoreLogic.pm:2947
+msgid "** Respawning to save point.\n"
+msgstr ""
+
+#: ../AI/Homunculus.pm:186
+msgid "Auto-feeding your Homunculus ("
+msgstr ""
+
+#: ../AI/Homunculus.pm:241
+msgid "Found your Homunculus!\n"
+msgstr ""
+
+#: ../AI/Homunculus.pm:246
+#, fuzzy
+msgid "Teleporting to get homunculus back\n"
+msgstr "Sisimulan ang auto-compile sa loob ng %d segundo...\n"
+
+#: ../AI/Homunculus.pm:255
+#, perl-format
+msgid "Trying to find your homunculus at location %d, %d (you are currently at %d, %d)\n"
+msgstr ""
+
+#: ../AI/Homunculus.pm:263
+msgid "You lost your Homunculus!\n"
+msgstr ""
+
+#: ../AI/Homunculus.pm:350
+#, perl-format
+msgid "Homunculus attacking: %s\n"
+msgstr ""
+
+#: ../AI/Homunculus.pm:483
+msgid "Homunculus can't reach or damage target, dropping target\n"
+msgstr ""
+
+#: ../AI/Homunculus.pm:485
+#: ../AI/Homunculus.pm:720
+#: ../AI/Homunculus.pm:778
+msgid "Teleport due to dropping homunculus attack target\n"
+msgstr ""
+
+#: ../AI/Homunculus.pm:496
+#, fuzzy
+msgid "Homunculus target died\n"
+msgstr "Namatay ka.\n"
+
+#: ../AI/Homunculus.pm:531
+#, fuzzy
+msgid "Homunculus target lost\n"
+msgstr "Namatay ka.\n"
+
+#: ../AI/Homunculus.pm:581
+#: ../AI/Homunculus.pm:766
+msgid "Dropping target - homunculus will not kill steal others\n"
+msgstr ""
+
+#: ../AI/Homunculus.pm:625
+#, perl-format
+msgid "%s; no acceptable place for homunculus to stand\n"
+msgstr ""
+
+#: ../AI/Homunculus.pm:718
+msgid "Unable to calculate a route to homunculus target, dropping target\n"
+msgstr ""
+
+#: ../AI/Homunculus.pm:858
+#: ../AI/Homunculus.pm:950
+msgid "Homunculus destination reached.\n"
+msgstr ""
+
+#: ../AI/Homunculus.pm:885
+#, perl-format
+msgid "Homunculus is stuck at %s (%d,%d), while walking from (%d,%d) to (%d,%d)."
+msgstr ""
+
+#: ../Task/CalcMapRoute.pm:114
+#, fuzzy, perl-format
+msgid "Cannot load field '%s'."
+msgstr "Hindi ma-initialize ang IPC subsystem: %s\n"
+
+#: ../Task/CalcMapRoute.pm:160
+#, perl-format
+msgid "Cannot calculate a route from %s (%d,%d) to %s %s"
+msgstr ""
+
+#: ../Task/CheckPoints.pm:62
+#, perl-format
+msgid "Arrived at waypoint %s\n"
+msgstr ""
+
+#: ../Task/CheckPoints.pm:68
+#, perl-format
+msgid "Walking to waypoint %s: %s(%s): %s,%s\n"
+msgstr ""
+
+#: ../Task/MapRoute.pm:164
+#, fuzzy, perl-format
+msgid "Unable to talk to NPC at %s (%s,%s).\n"
+msgstr "Hindi ma-initialize ang IPC subsystem: %s\n"
+
+#: ../Task/MapRoute.pm:211
+#, fuzzy, perl-format
+msgid "Unable to walk from %s (%s,%s) to NPC at (%s,%s).\n"
+msgstr "Hindi ma-initialize ang IPC subsystem: %s\n"
+
+#: ../Task/MapRoute.pm:244
+#, perl-format
+msgid "No LOS from %s (%s,%s) to Final Destination at (%s,%s).\n"
+msgstr ""
+
+#: ../Task/MapRoute.pm:300
+#, perl-format
+msgid "Attempting to teleport near portal, try #%s\n"
+msgstr ""
+
+#: ../Task/MapRoute.pm:336
+#, perl-format
+msgid "No LOS from %s (%s,%s) to Portal at (%s,%s).\n"
+msgstr ""
+
+#: ../Task/Route.pm:225
+msgid "Destination reached.\n"
+msgstr ""
+
+#: ../Task/Route.pm:260
+#, fuzzy
+msgid " Teleporting to unstuck."
+msgstr "Sisimulan ang auto-compile sa loob ng %d segundo...\n"
+
+#: ../Task/SitStand.pm:100
+msgid "Basic Skill level 3 is required in order to sit or stand."
+msgstr ""
+
+#: ../Task/TalkNPC.pm:112
+#, perl-format
+msgid "Could not find an NPC at location (%d,%d)."
+msgstr ""
+
+#: ../Task/TalkNPC.pm:148
+msgid "The NPC did not respond."
+msgstr ""
+
+#: ../Task/TalkNPC.pm:206
+msgid "According to the given NPC instructions, the Next button must now be clicked on, but that's not possible."
+msgstr ""
+
+#: ../Task/TalkNPC.pm:219
+#, perl-format
+msgid "According to the given NPC instructions, menu item %d must now be selected, but there are only %d menu items."
+msgstr ""
+
+#: ../Task/TalkNPC.pm:226
+msgid "According to the given NPC instructions, a menu item must now be selected, but that's not possible."
+msgstr ""
+
+#: ../Task/TalkNPC.pm:246
+#, perl-format
+msgid "Shop item %d not found."
+msgstr ""
+
+#: ../Task/UseSkill.pm:289
+#, perl-format
+msgid "Skill %s cannot be used because your character has no such skill."
+msgstr ""
+
+#: ../Task/UseSkill.pm:321
+#: ../Task/UseSkill.pm:337
+#, fuzzy
+msgid "Target lost."
+msgstr "Namatay ka.\n"
+
+#: ../Task/UseSkill.pm:346
+#, perl-format
+msgid "Unable to cast skill %s in %d tries."
+msgstr ""
+
+#: ../Task/UseSkill.pm:352
+#: ../Task/UseSkill.pm:386
+#, perl-format
+msgid "Casting failed: %s (%d)"
+msgstr ""
+
+#: ../Task/UseSkill.pm:370
+#, fuzzy
+msgid "Casting has been cancelled."
+msgstr "Si %s ay nabuhay na mag-uli\n"
+
+#: ../Task/UseSkill.pm:381
+#, fuzzy, perl-format
+msgid "Unable to cast skill in %d tries."
+msgstr "Hindi ma-initialize ang IPC subsystem: %s\n"
+
+#: ../Task/UseSkill.pm:391
+msgid "Casting is supposed to be finished now, but nothing happened."
+msgstr ""
+
+#: ../../openkore.pl:128
+#, perl-format
+msgid ""
+"Your Windows TCP/IP stack is broken. Please read\n"
+"  %s\n"
+"to learn how to solve this."
+msgstr ""
+
+#: ../../openkore.pl:139
+msgid ""
+"You have old files in the OpenKore folder, which may cause conflicts.\n"
+"Please delete your entire OpenKore source folder, and redownload everything."
+msgstr ""
+"Ikaw ay mayroong mgalumang files sa iyong OpenKore folder na maaaring magdulot ng problema.\n"
+"Kung maari lang sana ay burahin mo ang buong OpenKore source folder at i-download ito muli."
+
+#: ../../openkore.pl:145
+#, perl-format
+msgid ""
+"Your version of the XSTools library is too old.\n"
+"Please read %s"
+msgstr ""
+"Luma na ang XSTools library mo.\n"
+"Kung maari ay pakibasa ito %s"
+
+#: ../../openkore.pl:151
+#, fuzzy, perl-format
+msgid ""
+"Your version of (wx)start.exe is incompatible.\n"
+"Please upgrade it by reading %s"
+msgstr ""
+"Hindi tugma ang XSTools library mo.\n"
+"Kung maari ay pakibasa ito %s"
+
+#: ../../openkore.pl:154
+#, fuzzy, perl-format
+msgid ""
+"Your version of XSTools library is incompatible.\n"
+"Please upgrade it by reading %s"
+msgstr ""
+"Hindi tugma ang XSTools library mo.\n"
+"Kung maari ay pakibasa ito %s"
+
+#: ../../openkore.pl:162
+#, fuzzy, perl-format
+msgid ""
+"Your version of (wx)start.exe is too old.\n"
+"Please upgrade it by reading %s"
+msgstr ""
+"Luma na ang XSTools library mo.\n"
+"Kung maari ay pakibasa ito %s"
+
+#: ../../openkore.pl:165
+#, fuzzy, perl-format
+msgid ""
+"Your version of the XSTools library is too old.\n"
+"Please upgrade it by reading %s"
+msgstr ""
+"Luma na ang XSTools library mo.\n"
+"Kung maari ay pakibasa ito %s"
+
+#. Translation Comment: Kore's exit message
+#: ../../openkore.pl:176
+msgid "Bye!\n"
+msgstr ""
+
+#: ../functions.pl:111
+#, perl-format
+msgid ""
+"This plugin cannot be loaded. Please notify the plugin's author, or remove the plugin.\n"
+"\n"
+"The error message is:\n"
+"%s"
+msgstr ""
+
+#: ../functions.pl:176
+msgid "A configuration file failed to load. Did you download the latest configuration files?"
+msgstr ""
+
+#: ../functions.pl:182
+msgid ""
+"\n"
+"Auto-generating Admin Password due to default...\n"
+msgstr ""
+
+#: ../functions.pl:190
+msgid ""
+"\n"
+"Generating session Admin Password...\n"
+msgstr ""
+
+#: ../functions.pl:238
+msgid "Checking for new portals... "
+msgstr "Naghahanap ng mga bagong portal... "
+
+#: ../functions.pl:240
+msgid "found new portals!\n"
+msgstr "nakatagpo ng mga bagong portal!\n"
+
+#: ../functions.pl:242
+msgid "New portals have been added to the portals database. The portals database must be compiled before the new portals can be used. Would you like to compile portals now?\n"
+msgstr ""
+
+#: ../functions.pl:245
+msgid "Yes, compile now."
+msgstr ""
+
+#: ../functions.pl:245
+msgid "No, don't compile it."
+msgstr ""
+
+#: ../functions.pl:246
+#, fuzzy
+msgid "Compile portals?"
+msgstr "Ngayon na ba ang pagcompile ng portals? (Y/n) "
+
+#: ../functions.pl:248
+msgid "compiling portals"
+msgstr "kinocompile na ang mga portal"
+
+#: ../functions.pl:251
+msgid "skipping compile"
+msgstr "nilalagpasan ang pagcomple"
+
+#: ../functions.pl:254
+msgid ""
+"none found\n"
+"\n"
+msgstr ""
+"walang natagpuan\n"
+"\n"
+
+#: ../functions.pl:262
+msgid "Please enter your Ragnarok Online username."
+msgstr ""
+
+#: ../functions.pl:269
+msgid "Please enter your Ragnarok Online password."
+msgstr ""
+
+#: ../functions.pl:290
+msgid "No username or password set."
+msgstr "Walang username o password ang nakaset."
+
+#: ../functions.pl:344
+#, perl-format
+msgid "Next restart in %s\n"
+msgstr ""
+
+#: ../functions.pl:565
+msgid ""
+"\n"
+"Auto-restarting!!\n"
+msgstr ""
+
+#: ../functions.pl:571
+#, perl-format
+msgid "Sleeping for %s\n"
+msgstr ""
+
+#: ../functions.pl:610
+#, perl-format
+msgid "Changing configuration file (from \"%s\" to \"%s\")...\n"
+msgstr ""
+
+#. Translation Comment: Interface Title with character status
+#: ../functions.pl:680
+#, perl-format
+msgid "%s B%s (%s), J%s (%s) : w%s%s - %s"
+msgstr ""
+
+#. Translation Comment: Interface Title
+#: ../functions.pl:687
+#, perl-format
+msgid "%sNot connected - %s"
+msgstr ""
+
+#. Translation Comment: Interface Title
+#: ../functions.pl:690
+#, fuzzy, perl-format
+msgid "%sConnecting - %s"
+msgstr "Sisimulan ang auto-compile sa loob ng %d segundo...\n"
+
+#: ../functions.pl:879
+msgid "Map loaded\n"
+msgstr ""
+
+#: ../functions.pl:1107
+#, perl-format
+msgid "Unknown packet - %s\n"
+msgstr ""
+
+#, fuzzy
+#~ msgid "%s is not a number.\n"
+#~ msgstr "'%s' ay hindi isang balidong server.\n"
+#~ msgid "Enter Username: "
+#~ msgstr "Pakitype ang Username: "
+#~ msgid "One or more plugins failed to load."
+#~ msgstr "Isa o marami pang plugins ang hindi nagload."
+#~ msgid "Unable to initialize the IPC subsystem: %s\n"
+#~ msgstr "Hindi ma-initialize ang IPC subsystem: %s\n"
+#~ msgid "Monster with empty name attacking you. Teleporting...\n"
+#~ msgstr ""
+#~ "Inaatake ka ng isang halimaw na walang pangalan. Teleport ngayon din...\n"
+
+#, fuzzy
+#~ msgid "\"%s\" is not a valid character number.\n"
+#~ msgstr "'%s' ay hindi isang tamang server.\n"
+
+#, fuzzy
+#~ msgid "Character #%s does not exist.\n"
+#~ msgstr "Ang server %s ay napili\n"
+#~ msgid "#         Name\n"
+#~ msgstr "#         Pangalan\n"
+#~ msgid "'%s' is not a valid server.\n"
+#~ msgstr "'%s' ay hindi isang tamang server.\n"
+#~ msgid "Enter the number of your master server: "
+#~ msgstr "Pakitype ang bilang ng iyong master server: "
+#~ msgid "Auto-compile in %d seconds...\n"
+#~ msgstr "Sisimulan ang auto-compile sa loob ng %d segundo...\n"
+
