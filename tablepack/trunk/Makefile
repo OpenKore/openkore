@@ -26,7 +26,7 @@ $(FILENAME): $(DIR)/*.txt
 	rm -rf tmp
 
 distdir:
-	@if [[ "$(DISTDIR)" == "" ]]; then echo "You didn't set the DISTDIR parameter."; exit 1; fi
+	@if test "$(DISTDIR)" = ""; then echo "You didn't set the DISTDIR parameter."; exit 1; fi
 	rm -rf "$(DISTDIR)"
 	mkdir -p "$(DISTDIR)"
 	cp $(DIR)/*.txt "$(DISTDIR)"/
