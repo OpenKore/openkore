@@ -15,10 +15,13 @@ Important changes:
 - kRO support (February 25 2007) has been fixed.
 - OpenKore Webstart has been removed. The experiment turned out to be
   unsuccessful.
+- mRO server compatibility fixes.
+- tRO server compatibility fixes.
 
 Bug fixes:
 - Headgears are now detected correctly.
 - Ninja weapon are now detected correctly.
+- Many crashers have been fixed.
 
 New commands:
 - Added more GM Commands
@@ -32,6 +35,7 @@ New config options:
 - homunculus_hungerTimeoutMin 	 : same as above, but min value
 - homunculus_autoFeed 		 : turn on/off auto-feeding
 - homunculus_autoFeedAllowedMaps : map names where to allow auto-feeding (leave empty for all maps)
+
 
 =========================
 ### OpenKore 1.9.3 (beta)
