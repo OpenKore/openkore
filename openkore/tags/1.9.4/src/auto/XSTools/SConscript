@@ -1,0 +1,166 @@
+# -*-python-*-
+Import('*')
+import os.path
+import copy
+
+
+############### OpenKore Standard Library ###############
+#osl_objects = env.StaticObject(Split('''
+	#OSL/Object.cpp
+	#OSL/Exception.cpp
+	#OSL/Pointer.cpp
+	#OSL/Net/Socket.cpp
+	#OSL/Net/ServerSocket.cpp
+	#OSL/Threading/Runnable.cpp
+	#OSL/Threading/MutexLocker.cpp
+	#OSL/Threading/Atomic.cpp
+	#OSL/Threading/Mutex.cpp
+	#OSL/Threading/Thread.cpp
+	#OSL/IO/OutputStream.cpp
+	#OSL/IO/InputStream.cpp
+	#OSL/IO/IOException.cpp
+	#OSL/IO/BufferedOutputStream.cpp
+#'''))
+
+if win32:
+	osl_libs = ['ws2_32']
+else:
+	osl_libs = ['pthread']
+	if platform == "sunos":
+		osl_libs += ['socket', 'nsl']
+
+#env.Program('OSL/test/unit/run-tests', Split('''
+	#OSL/test/unit/main.cpp
+	#OSL/test/unit/AtomicTest.cpp
+	#OSL/test/unit/ObjectTest.cpp
+	#OSL/test/unit/ExceptionTest.cpp
+	#OSL/test/unit/PointerTest.cpp
+	#''') + osl_objects,
+	#LIBS = osl_libs)
+
+
+############### Define sources ###############
+
+# C/C++ source files
+sources = []
+# XS source files (input : output)
+XS_sources = {}
+
+### Pathfinding
+sources += [
+	'pathfinding/algorithm.cpp',
+	'pathfinding/wrapper.cpp'
+]
+XS_sources['pathfinding/wrapper.xs'] = 'pathfinding/wrapper.cpp'
+
+### Translation
+sources += [
+	'translation/filereader.cpp',
+	'translation/translator.cpp',
+	'translation/utils.cpp',
+	'translation/wrapper.cpp'
+]
+if win32:
+	sources += ['translation/winfilereader.cpp']
+else:
+	sources += ['translation/unixfilereader.cpp']
+XS_sources['translation/wrapper.xs'] = 'translation/wrapper.cpp'
+
+### Unix
+if not win32:
+	sources += [
+		'unix/unix.cpp',
+		'unix/consoleui.cpp'
+	]
+	XS_sources['unix/unix.xs'] = 'unix/unix.cpp';
+	perlenv.Depends('unix/unix.cpp', ['unix/consoleui-perl.xs', 'unix/consoleui.h'])
+
+## Win32
+if win32:
+	sources += [
+		'win32/utils.cpp',
+		'win32/wrapper.c'
+	]
+	XS_sources['win32/wrapper.xs'] = 'win32/wrapper.c'
+
+## Utils
+sources += [
+	'utils/http-reader.cpp',
+	'utils/std-http-reader.cpp',
+	'utils/mirror-http-reader.cpp',
+	'utils/c-bindings/http-reader.cpp',
+	'utils/perl/HttpReader.cpp',
+
+	'utils/whirlpool-algorithm.c',
+	'utils/perl/Whirlpool.c',
+
+	'utils/rmd128.c',
+	'utils/rmd160.c',
+	'utils/perl/RMD128.c',
+	'utils/perl/RMD160.c',
+
+	'utils/rijndael-alg-fst.c',
+	'utils/rijndael-api-fst.c',
+	'utils/aes-cfb.c'
+]
+XS_sources['utils/perl/HttpReader.xs'] = 'utils/perl/HttpReader.cpp'
+XS_sources['utils/perl/Whirlpool.xs'] = 'utils/perl/Whirlpool.c'
+XS_sources['utils/perl/RMD160.xs'] = 'utils/perl/RMD160.c'
+XS_sources['utils/perl/RMD128.xs'] = 'utils/perl/RMD128.c'
+if not win32:
+	perlenv.ParseConfig('curl-config --cflags --libs')
+
+### Misc
+sources += [
+	'misc/misc.c',
+	'misc/fastutils.cpp'
+]
+XS_sources['misc/misc.xs'] = 'misc/misc.c'
+XS_sources['misc/fastutils.xs'] = 'misc/fastutils.cpp'
+
+
+###################################################
+
+for input, output in XS_sources.iteritems():
+	perlenv.XS(output, input)
+
+
+############### XSTools ###############
+
+# External library dependencies
+deps = copy.copy(osl_libs)
+deps_path = []
+
+if not win32:
+	deps += [READLINE_LIB]
+	if have_ncurses:
+		deps += ['ncurses']
+	else:
+		deps += ['termcap']
+		deps_path += ['/usr/lib/termcap']
+else:
+	deps += ['winmm', 'wininet']
+
+perlenv['LIBS'] += deps
+perlenv['LIBPATH'] += deps_path
+
+# We're linking C++ objects so force usage of g++
+XSTools = perlenv.NativeDLL('XSTools', sources, CC = 'g++')
+
+if not win32 and not darwin:
+	# Perl expects XSTools.so, not libXSTools.so, so create symlink.
+	perlenv.Command('XSTools.so', XSTools,
+		[['ln', '-sf', 'libXSTools.so', 'XSTools.so']],
+		chdir=1)
+
+
+############### NetRedirect.dll ###############
+
+if win32:
+	sources = [
+		'win32/netredirect.cpp',
+		'win32/utils-netredirect.cpp'
+	]
+	libenv.NativeDLL('NetRedirect', sources,
+		CC = 'g++',
+		LIBS = ['ws2_32'])
