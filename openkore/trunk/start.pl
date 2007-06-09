@@ -54,6 +54,7 @@ if (0) {
 	require lib;
 	require integer;
 	require warnings;
+	require UNIVERSAL;
 	require Exporter;
 	require Fcntl;
 	require Carp;
