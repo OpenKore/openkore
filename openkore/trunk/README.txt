@@ -36,6 +36,15 @@ New config options:
 - homunculus_autoFeed 		 : turn on/off auto-feeding
 - homunculus_autoFeedAllowedMaps : map names where to allow auto-feeding (leave empty for all maps)
 
+New mon_control feature:
+- disconnect on monster:<teleport>:
+			1 to teleport if the monster is on the screen.
+			2 to teleport if the monster attacks you.
+			3 to disconnect if the monster is on your screen.
+			This is only used in auto-attack mode.
+			example :
+				Poring 0 3 0 
+				this will make kore disconnect for 30 secs when it sees poring.
 
 =========================
 ### OpenKore 1.9.3 (beta)
