@@ -12,8 +12,10 @@
 #  2 means always aggressive, auto-attack this monster when it appears, even if sitting.
 #  3 means to attack the monster once (provoke) then leave it, useful for mobbing.
 #
-# <teleport>: Put a 1 to teleport if the monster is on the screen,
-# or 2 to teleport if the monster attacks you.
+# <teleport>:
+# 1 to teleport if the monster is on the screen.
+# 2 to teleport if the monster attacks you.
+# 3 to disconnect if the monster is on your screen.
 # This is only used in auto-attack mode.
 #
 # <search>: Put a 1 to only attack the monster in the search mode.
