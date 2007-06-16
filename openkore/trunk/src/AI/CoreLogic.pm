@@ -2992,6 +2992,13 @@ sub processAvoid {
 		avoidList_near() if $config{avoidList};
 		$timeout{ai_avoidcheck}{time} = time;
 	}
+	foreach (@monstersID) {
+		next unless $_;
+		if (mon_control($monsters{$_}{name},$monsters{$_}{nameID})->{teleport_auto} == 3) {
+		   warning TF("Disconnecting for 30 secs to avoid %s\n", $monsters{$_}{name});
+		   relog(30);
+		}
+	}
 }
 
 ##### SEND EMOTICON #####
