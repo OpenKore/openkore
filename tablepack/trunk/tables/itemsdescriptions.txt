@@ -20237,3 +20237,285 @@ helping of fish cake.
 ^ffffff_^000000
 Weight: ^7777776^000000
 #
+// -------- Kafra Cash Shop
+12202#
+An excellent dish that originated from Louyang. Apart from the fact that it is too expensive, it has superb taste.
+STR + 10. 30 minutes duration.
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+12203#
+One of the four best dishes in the Sograt Desert, this scorpion dish is cooked using the heat of the desert sands.
+AGI + 10. 30 minutes duration.
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+12204#
+A cocktail with an unforgettable flavor as impressive as a^FFFFFF       ^000000 dragon's breath.
+INT + 10. 30 minutes duration.
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+12205#
+Named after the legendary spring believed to be the source of the world's rivers, this beverage is famous for its amazing taste. 
+DEX +10 30 minutes duration
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+12206#
+A rare specialty dish^FFFFFF    ^000000 from Payon that bestows
+luck on those fortunate enough to eat it. LUK +10. 30 minutes duration
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+12207#
+A stew with a funky
+smell that looks quite
+suspicious, but it really does give the feeling of
+immortality. VIT +10. 30 minutes duration.
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+12208#
+A manual that explains the effective way of the battle.
+It is a very detailed and well composed manual.
+^000088Exp rate is increased to 150% for 30 minutes.^000000
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+12209#
+A life insurance certificate issued by Kafra Center.
+Once the player receives the benefit from this certificate, the item will lose its effect.
+If the character dies within the 30-minute duration, no loss of EXP will be made.
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+12210#
+A tasty and sweet bubble gum.
+The item's drop rate increases by 100% for 30 minutes.
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+12211#
+A Kafra name card issued by Kafra Center.
+The Kafra will be in service once the call is made.
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+12212#
+An enchanted giant wing which lived in the ancient times.
+It allows to teleport many people at once to random areas when used by the party master.
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+12213#
+A stick that shines when the switch is used. People who see the light seem to lose part of their memory.
+Resets the skill tree and gives corresponding points.
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+12214#
+A clean convex mirror.
+A person in possession of the mirror can detect the appearance of the boss monsters. 
+It has 10 minutes duration and the effect is removed when the player goes out of the map after using the item or quitting the game.
+Some of the MVP monsters can not be detected.
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+12215#
+A scroll that has the record of using level 10 blessing.
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+12216#
+A scroll that has the record of using level 10 increase AGI.
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+12217#
+A scroll that has the record of using level 5 Aspersio.
+The scroll will get damaged if there is no holy water.
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+12218#
+A scroll that has the record of using level 5 Assumtio.
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+12219#
+A scroll that has the record of using level 10 Wind walk.
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+12220#
+A scroll that has the record of using level 5 Adrenalin rush.
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+12221#
+A suspicious looking machinery.
+It allows server-wide broadcasting.
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+7619#
+A concentrated Elunium that has been buried deep underground.
+Used as a material to make stronger armor.
+The rate of refining an armor without breaking it will increase.
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+7620#
+A concentrated Orideocon that has been buried deep underground.
+Used as a material to make stronger weapons.
+The rate of refining a weapon without breaking it will increase.
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+7621#
+A certificate that has the force of invulnerable Ziegfried.
+It has been told that a man who possesses this can overcome death.
+It revives the dead character.
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+12900#
+A box with 10 field manual books inside.
+^ffffff_^000000
+Field Manual - The EXP rate is increased to 150% for 30 minutes.
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+12901#
+A box with 10 life insurances inside
+^ffffff_^000000
+Life insurance - Does not lose exp when killed within the 30 minutes duration. Valid only once.
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+12902#
+A box with 10 tasty bubble gums.
+^ffffff_^000000
+Bubble gum - The item's drop rate increases by 100% for 30 minutes.
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+12903#
+A box containing 10 STR+10 dishes.
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+12904#
+A box containing 10 AGI+10 dishes.
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+12905#
+A box containing 10 INT+10 dishes.
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+12906#
+A box containing 10 DEX+10 dishes.
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+12907#
+A box containing 10 LUK+10 dishes.
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+12908#
+A box containing 10 VIT+10 dishes.
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+12909#
+A box with 10 Kafra name cards.
+^ffffff_^000000
+Kafra name card - A Kafra will be in service when used.
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+12910#
+A light box containing 10 giant fly wings.
+^ffffff_^000000
+Giant fly wing - It allows to teleport many people at once to random areas when used by the party master.
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+12911#
+A box with 1 shining stick inside. Fragile!
+^ffffff_^000000
+Shining stick - Resets the skill tree and gives corresponding points.
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+12912#
+A box with 10 convex mirrors. Fragile!
+^ffffff_^000000
+The person in possession of the mirror can detect the appearance of the boss monsters. 
+It has 10 minutes duration and the effect is removed when the player goes out of the map after using the item or quit the game.
+Some of the MVP monsters can not be detected.
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+12913#
+A box containing 20 blessing scrolls (LV10).
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+12914#
+A box containing 20 agi scrolls (LV10).
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+12915#
+A box containing 20 aspersio scrolls (LV5).
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+12916#
+A box containing 20 assumptio scrolls (LV5).
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+12917#
+A box containing 20 wind walk scrolls (LV10).
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+12918#
+A box containing 20 adrenalin rush scrolls (LV5).
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+12919#
+A box with 10 megaphones.
+^ffffff_^000000
+Megaphone - Allows server-wide broadcasting.
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+12920#
+A box with 1 concentrated eluniums.
+^ffffff_^000000
+Concentrated elunium - The rate of refining an armor without breaking it will increase.
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+12921#
+A box with 1 concentrated oridecon.
+^ffffff_^000000
+Concentrated oridecon - The rate of refining a weapon without breaking it will increase.
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+12922#
+A box containing 10 tokens of Ziegfried.
+^ffffff_^000000
+Token of Ziegfried - Revives the dead character when used.
+^ffffff_^000000
+Weight : ^7777771^000000
+#
