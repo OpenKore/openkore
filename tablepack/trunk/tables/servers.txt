@@ -1,4 +1,4 @@
-﻿# This file contains information about master servers.
+# This file contains information about master servers.
 
 #####################
 # Official RO Servers
@@ -75,7 +75,7 @@ ip 38.144.194.2
 port 6900
 master_version 1
 version 18
-serverType 0
+serverType 18
 serverEncoding Western
 
 [International - iRO: Sakray]
@@ -83,7 +83,7 @@ ip 38.144.194.2
 port 6900
 master_version 14
 version 18
-serverType 0
+serverType 18
 serverEncoding Western
 
 [Japan - jRO: Verdandi]
