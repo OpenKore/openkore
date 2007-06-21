@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenKore 1.9.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-11-10 20:50+0700\n"
-"PO-Revision-Date: 2007-06-02 08:23+0800\n"
-"Last-Translator: lkm <lj88kc@yahoo.com.cn>\n"
+"POT-Creation-Date: 2007-06-21 15:32+0700\n"
+"PO-Revision-Date: 2007-06-21 15:33+0700\n"
+"Last-Translator: Richard <dewa5227@yahoo.com>\n"
 "Language-Team: Lkm <lj88kc@yhaoo.com.cn>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -3971,26 +3971,21 @@ msgstr ""
 "%s"
 
 #. Translation Comment: Version String
-#: ../Settings.pm:64
-msgid " (SVN version)"
-msgstr " (SVN 版本)"
-
-#. Translation Comment: Version String
-#: ../Settings.pm:67
+#: ../Settings.pm:68
 msgid "Custom Ragnarok Online client"
 msgstr "自定义仙境客户端"
 
-#: ../Settings.pm:68
+#: ../Settings.pm:69
 #, perl-format
 msgid "Welcome to %s."
 msgstr "欢迎来到 %s."
 
-#: ../Settings.pm:348
+#: ../Settings.pm:349
 #, perl-format
 msgid "Loading %s...\n"
 msgstr "读取 %s...\n"
 
-#: ../Settings.pm:350
+#: ../Settings.pm:351
 #, perl-format
 msgid "Error: Couldn't load %s\n"
 msgstr "错误: 无法读取 %s\n"
@@ -6106,6 +6101,11 @@ msgstr "回到记录点.\n"
 msgid "** Respawning to save point.\n"
 msgstr "** 回到记录点.\n"
 
+#: ../AI/CoreLogic.pm:2998
+#, fuzzy, perl-format
+msgid "Disconnecting for 30 secs to avoid %s\n"
+msgstr "断开连接，因为发现要回避的人 %s!\n"
+
 #: ../AI/Homunculus.pm:186
 msgid "Auto-feeding your Homunculus ("
 msgstr "自动饲养生命体 ("
@@ -6495,4 +6495,7 @@ msgstr "读取地图\n"
 #, perl-format
 msgid "Unknown packet - %s\n"
 msgstr "未知封包 - %s\n"
+
+#~ msgid " (SVN version)"
+#~ msgstr " (SVN 版本)"
 
