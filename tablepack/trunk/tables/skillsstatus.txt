@@ -147,7 +147,7 @@
 246 Cooked Nine Tail's Tails
 247 Honey Pastry
 248 Sesame Pastry
-250 Exp rate x1.5
+250 Field Manual
 251 Life Insurance
-252 Drop rate x2
+252 Bubble Gum
 253 Convex Mirror
