@@ -64,7 +64,7 @@ sub sendMove {
 	my $self = shift;
 	my $x = int scalar shift;
 	my $y = int scalar shift;
-	my $msg = pack("C*", 0x85, 0x00, 0x00, 0x00, 0x00, 0x00) . getCoordString2($x, $y);
+	my $msg = pack("C*", 0x85, 0x00, 0x00, 0x00, 0x00, 0x00) . getCoordString2($x, $y, 1);
 	$self->sendToServer($msg);
 	debug "Sent move to: $x, $y\n", "sendPacket", 2;
 }
