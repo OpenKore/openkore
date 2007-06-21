@@ -35,6 +35,7 @@ use Plugins;
 use FileParsers;
 use Settings;
 use Utils;
+use Utils::Assert;
 use Skill;
 use Field;
 use Network;
@@ -217,7 +218,7 @@ sub checkValidity {
 	my ($name) = @_;
 	$name = "Validity check:" if (!defined $name);
 
-#	Carp::assert(UNIVERSAL::isa($char, 'Actor::You')) if ($net && $net->getState() == Network::IN_GAME);
+	assertClass($char, 'Actor::You') if ($net && $net->getState() == Network::IN_GAME);
 	return;
 
 	if ($char && $char->{inventory}) {
