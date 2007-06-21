@@ -72,10 +72,7 @@ sub sendAttack {
 		return;
 	}
 
-	if ($self->{serverType} == 0) {
-		$msg = pack("C*", 0x89, 0x00) . $monID . pack("C*", $flag);
-
-	} elsif (($self->{serverType} == 1) || ($self->{serverType} == 2)) {
+	if (($self->{serverType} == 1) || ($self->{serverType} == 2)) {
 		$msg = pack("C*", 0x89, 0x00, 0x00, 0x00) .
 		$monID .
 		pack("C*", 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, $flag);
@@ -132,6 +129,9 @@ sub sendAttack {
 			error "Failed to attack target.\n";
 			AI::dequeue();
 		}
+
+	} else {
+		$msg = pack("C*", 0x89, 0x00) . $monID . pack("C*", $flag);
 	}
 
 	$self->sendToServer($msg);
@@ -403,10 +403,8 @@ sub sendDealTrade {
 sub sendDrop {
 	my ($self, $index, $amount) = @_;
 	my $msg;
-	if ($self->{serverType} == 0) {
-		$msg = pack("C*", 0xA2, 0x00) . pack("v*", $index, $amount);
 
-	} elsif (($self->{serverType} == 1) || ($self->{serverType} == 2)) {
+	if (($self->{serverType} == 1) || ($self->{serverType} == 2)) {
 		$msg = pack("C*", 0xA2, 0x00) .
 			pack("C*", 0xFF, 0xFF, 0x08, 0x10) .
 			pack("v*", $index) .
@@ -468,6 +466,9 @@ sub sendDrop {
 
 	} elsif ($self->{serverType} == 15) {
 		$msg = pack("C2 x2 v1 x1 v1", 0x16, 0x01, $index, $amount);
+
+	} else {
+		$msg = pack("C*", 0xA2, 0x00) . pack("v*", $index, $amount);
 	}
 
 	$self->sendToServer($msg);
@@ -560,10 +561,7 @@ sub sendGetPlayerInfo {
 	my ($self, $ID) = @_;
 	my $msg;
 
-	if ($self->{serverType} == 0) {
-		$msg = pack("C*", 0x94, 0x00) . $ID;
-
-	} elsif (($self->{serverType} == 1) || ($self->{serverType} == 2)) {
+	if (($self->{serverType} == 1) || ($self->{serverType} == 2)) {
 		$msg = pack("C*", 0x94, 0x00) . pack("C*", 0x12, 0x00, 150, 75) . $ID;
 
 	} elsif (($self->{serverType} == 3) || ($self->{serverType} == 5)) {
@@ -592,6 +590,9 @@ sub sendGetPlayerInfo {
 
 	} elsif ($self->{serverType} == 15) {
 		$msg = pack("C*", 0x8C, 0x00) . pack("x1") . $ID. pack("C*", 0x0C, 0x18, 0xF9, 0x12);
+
+	} else {
+		$msg = pack("C*", 0x94, 0x00) . $ID;
 	}
 
 	$self->sendToServer($msg);
@@ -731,7 +732,6 @@ sub sendGuildRequest {
 	debug "Sent Guild Request Page : ".$page."\n", "sendPacket";
 }
 
-
 sub sendGuildSetAlly {
 	# this packet is for guildmaster asking to set alliance with another guildmaster
 	# the other sub for sendGuildAlly are responses to this sub
@@ -830,10 +830,8 @@ sub sendIgnoreListGet {
 sub sendItemUse {
 	my ($self, $ID, $targetID) = @_;
 	my $msg;
-	if ($self->{serverType} == 0) {
-		$msg = pack("C*", 0xA7, 0x00).pack("v*",$ID).$targetID;
 
-	} elsif (($self->{serverType} == 1) || ($self->{serverType} == 2)) {
+	if (($self->{serverType} == 1) || ($self->{serverType} == 2)) {
 		$msg = pack("C*", 0xA7, 0x00, 0x9A, 0x12, 0x1C).pack("v*", $ID, 0).$targetID;
 
 	} elsif ($self->{serverType} == 3) {
@@ -882,6 +880,9 @@ sub sendItemUse {
 
 	} elsif ($self->{serverType} == 15) {
 		$msg = pack("C4 v1", 0x9F, 0x00, 0x00, 0x00, $ID) . pack("x6"). $targetID. pack("x11");
+
+	} else {
+		$msg = pack("C*", 0xA7, 0x00).pack("v*",$ID).$targetID;
 	}
 	
 	$self->sendToServer($msg);
@@ -891,10 +892,8 @@ sub sendItemUse {
 sub sendLook {
 	my ($self, $body, $head) = @_;
 	my $msg;
-	if ($self->{serverType} == 0) {
-		$msg = pack("C*", 0x9B, 0x00, $head, 0x00, $body);
 
-	} elsif (($self->{serverType} == 1) || ($self->{serverType} == 2)) {
+	if (($self->{serverType} == 1) || ($self->{serverType} == 2)) {
 		$msg = pack("C*", 0x9B, 0x00, 0xF2, 0x04, 0xC0, 0xBD, $head,
 			0x00, 0xA0, 0x71, 0x75, 0x12, 0x88, 0xC1, $body);
 
@@ -934,6 +933,9 @@ sub sendLook {
 	} elsif ($self->{serverType} == 15) {
 		$msg = pack("C*", 0x85, 0x00, 0x38, 0x00, 0x00, 0x00, 0x00, $head, 
 			0x90, 0x60, 0xBD, 0x0C, 0xD8, $body);
+
+	} else {
+		$msg = pack("C*", 0x9B, 0x00, $head, 0x00, $body);
 	}
 
 	$self->sendToServer($msg);
@@ -1519,10 +1521,7 @@ sub sendSit {
 		return;
 	}
 
-	if ($self->{serverType} == 0) {
-		$msg = pack("C*", 0x89, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02);
-
-	} elsif (($self->{serverType} == 1) || ($self->{serverType} == 2)) {
+	if (($self->{serverType} == 1) || ($self->{serverType} == 2)) {
 		$msg = pack("C*", 0x89, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00,
 			0x00, 0x00, 0x00, 0x80, 0x00, 0x00, 0x02);
 
@@ -1582,6 +1581,9 @@ sub sendSit {
 			AI::dequeue();
 		}
 		return;
+
+	} else {
+		$msg = pack("C*", 0x89, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02);
 	}
 
 	$self->sendToServer($msg);
@@ -1602,10 +1604,7 @@ sub sendSkillUse {
 		return;
 	}
 	
-	if ($self->{serverType} == 0) {
-		$msg = pack("C*", 0x13, 0x01).pack("v*",$lv,$ID).$targetID;
-
-	} elsif (($self->{serverType} == 1) || ($self->{serverType} == 2)) {
+	if (($self->{serverType} == 1) || ($self->{serverType} == 2)) {
 		$msg = pack("v*", 0x0113, 0x0000, $lv) .
 			pack("V", 0) .
 			pack("v*", $ID, 0) .
@@ -1695,6 +1694,9 @@ sub sendSkillUse {
 			AI::dequeue();
 		}
 		return;
+
+	} else {
+		$msg = pack("C*", 0x13, 0x01).pack("v*",$lv,$ID).$targetID;
 	}
 	
 	$self->sendToServer($msg);
@@ -1704,10 +1706,8 @@ sub sendSkillUse {
 sub sendSkillUseLoc {
 	my ($self, $ID, $lv, $x, $y) = @_;
 	my $msg;
-	if ($self->{serverType} == 0) {
-		$msg = pack("C*", 0x16, 0x01).pack("v*",$lv,$ID,$x,$y);
 
-	} elsif (($self->{serverType} == 1) || ($self->{serverType} == 2)) {
+	if (($self->{serverType} == 1) || ($self->{serverType} == 2)) {
 		$msg = pack("v*", 0x0116, 0x0000, 0x0000, $lv) .
 			chr(0) . pack("v*", $ID) .
 			pack("V*", 0, 0, 0) .
@@ -1791,6 +1791,9 @@ sub sendSkillUseLoc {
 
 	} elsif ($self->{serverType} == 15) {
 		$msg = pack("v1 v1 v1 x5 v1 v1 v1", 0x13, 0x01, $lv, $ID, $x, $y);
+
+	} else {
+		$msg = pack("C*", 0x16, 0x01).pack("v*",$lv,$ID,$x,$y);
 	}
 	
 	$self->sendToServer($msg);
@@ -1800,10 +1803,8 @@ sub sendSkillUseLoc {
 sub sendStorageAdd {
 	my ($self, $index, $amount) = @_;
 	my $msg;
-	if ($self->{serverType} == 0) {
-		$msg = pack("C*", 0xF3, 0x00) . pack("v*", $index) . pack("V*", $amount);
 
-	} elsif (($self->{serverType} == 1) || ($self->{serverType} == 2)) {
+	if (($self->{serverType} == 1) || ($self->{serverType} == 2)) {
 		$msg = pack("C*", 0xF3, 0x00) . pack("C*", 0x12, 0x00, 0x40, 0x73) .
 			pack("v", $index) .
 			pack("C", 0xFF) .
@@ -1857,6 +1858,9 @@ sub sendStorageAdd {
 
 	} elsif ($self->{serverType} == 15) {
 		$msg = pack("C3 v1 x5 V1 x3", 0x94, 0x00, 0x00, $index, $amount);
+
+	} else {
+		$msg = pack("C*", 0xF3, 0x00) . pack("v*", $index) . pack("V*", $amount);
 	}
 	
 	$self->sendToServer($msg);
@@ -1893,10 +1897,8 @@ sub sendStorageClose {
 sub sendStorageGet {
 	my ($self, $index, $amount) = @_;
 	my $msg;
-	if ($self->{serverType} == 0) {
-		$msg = pack("C*", 0xF5, 0x00) . pack("v*", $index) . pack("V*", $amount);
 
-	} elsif (($self->{serverType} == 1) || ($self->{serverType} == 2)) {
+	if (($self->{serverType} == 1) || ($self->{serverType} == 2)) {
 		$msg = pack("v*", 0x00F5, 0, 0, 0, 0, 0, $index, 0, 0) . pack("V*", $amount);
 
 	} elsif ($self->{serverType} == 3) {
@@ -1948,6 +1950,9 @@ sub sendStorageGet {
 
 	} elsif ($self->{serverType} == 15) {
 		$msg = pack("C4 v1 x1 V1 x8", 0xF7, 0x00, 0x00, 0x00, $index, $amount);
+
+	} else {
+		$msg = pack("C*", 0xF5, 0x00) . pack("v*", $index) . pack("V*", $amount);
 	}
 	
 	$self->sendToServer($msg);
@@ -1987,10 +1992,7 @@ sub sendStand {
 		return;
 	}
 
-	if ($self->{serverType} == 0) {
-		$msg = pack("C*", 0x89, 0x00, 0x00, 0x00, 0x00, 0x00, 0x03);
-
-	} elsif (($self->{serverType} == 1) || ($self->{serverType} == 2)) {
+	if (($self->{serverType} == 1) || ($self->{serverType} == 2)) {
 		$msg = pack("C*", 0x89, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00,
 			0x00, 0x00, 0x00, 0x80, 0x00, 0x00, 0x03);
 
@@ -2048,6 +2050,9 @@ sub sendStand {
 			AI::dequeue();
 		}
 		return;
+
+	} else {
+		$msg = pack("C*", 0x89, 0x00, 0x00, 0x00, 0x00, 0x00, 0x03);
 	}
 	
 	$self->sendToServer($msg);
@@ -2074,10 +2079,7 @@ sub sendSync {
 
 	$syncSync = pack("V", getTickCount());
 
-	if ($self->{serverType} == 0) {
-		$msg = pack("C*", 0x7E, 0x00) . $syncSync;
-
-	} elsif (($self->{serverType} == 1) || ($self->{serverType} == 2)) {
+	if (($self->{serverType} == 1) || ($self->{serverType} == 2)) {
 		$msg = pack("C*", 0x7E, 0x00);
 		$msg .= pack("C*", 0x30, 0x00, 0x40) if ($initialSync);
 		$msg .= pack("C*", 0x00, 0x00, 0x1F) if (!$initialSync);
@@ -2131,6 +2133,8 @@ sub sendSync {
 
 	} elsif ($self->{serverType} == 15) { #pRO Thor (12/6/2006)
 		$msg = pack("C2 x11", 0x89, 0x00) . $syncSync . pack("x3");
+	} else {
+		$msg = pack("C*", 0x7E, 0x00) . $syncSync;
 	}
 	
 	$self->sendToServer($msg);
@@ -2140,10 +2144,8 @@ sub sendSync {
 sub sendTake {
 	my ($self, $itemID) = @_;
 	my $msg;
-	if ($self->{serverType} == 0) {
-		$msg = pack("C*", 0x9F, 0x00) . $itemID;
 
-	} elsif (($self->{serverType} == 1) || ($self->{serverType} == 2)) {
+	if (($self->{serverType} == 1) || ($self->{serverType} == 2)) {
 		$msg = pack("C*", 0x9F, 0x00, 0x00, 0x00, 0x68) . $itemID;
 
 	} elsif ($self->{serverType} == 3) {
@@ -2178,6 +2180,9 @@ sub sendTake {
 
 	} elsif ($self->{serverType} == 15) {
 		$msg = pack("C*", 0xF5, 0x00, 0x00, 0x00, 0x08) . $itemID . pack("x13");
+
+	} else {
+		$msg = pack("C*", 0x9F, 0x00) . $itemID;
 	}
 
 	$self->sendToServer($msg);

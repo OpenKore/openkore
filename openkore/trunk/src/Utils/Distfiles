@@ -1,4 +1,5 @@
 AppLauncher.pm
+Assert.pm
 Benchmark.pm
 CallbackList.pm
 CRAM.pm

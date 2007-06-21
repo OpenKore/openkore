@@ -25,6 +25,7 @@ package Network::Send;
 
 use strict;
 use encoding 'utf8';
+use Carp::Assert;
 
 use Exception::Class (
 	'Network::Send::ServerTypeNotSupported',
@@ -231,11 +232,7 @@ sub sendToServer {
 	my ($self, $msg) = @_;
 	my $net = $self->{net};
 
-	# Old plugins still send a non-existant $remote_socket. Unless we fix
-	# this, it'll cause unblessed reference errors and halt openkore.
-	#$r_net = $net if (!defined($r_net) || ref($r_net) eq ""
-	#		  || ref($r_net) eq 'SCALAR');
-
+	shouldnt(length($msg), 0);
 	return unless ($net->serverAlive);
 	if ($self->{serverType} != 2) {
 		encrypt(\$msg, $msg);
@@ -258,7 +255,7 @@ sub sendToServer {
 		my $label = $packetDescriptions{Send}{$messageID} ?
 			" - $packetDescriptions{Send}{$messageID}" : '';
 		if ($config{debugPacket_sent} == 1) {
-			debug("Packet Switch SENT: $messageID$label\n", "sendPacket", 0);
+			debug("Packet Switch SENT: $messageID$label (" . length($msg) . " bytes)\n", "sendPacket", 0);
 		} else {
 			Misc::visualDump($msg, $messageID.$label);
 		}

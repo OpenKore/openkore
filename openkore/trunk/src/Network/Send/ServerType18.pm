@@ -15,10 +15,10 @@ package Network::Send::ServerType18;
 use strict;
 use Globals qw($char $syncSync $net %config);
 use Network::Send::ServerType11;
-use base qw(Network::Send::ServerType11);
+use base qw(Network::Send::ServerType0);
 use Log qw(error debug);
 use I18N qw(stringToBytes);
-use Utils qw(getTickCount getHex getCoordString);
+use Utils qw(getTickCount getHex getCoordString2);
 
 sub new {
 	my ($class) = @_;
@@ -33,6 +33,13 @@ sub createRandomBytes {
 		$str .= chr(rand(256));
 	}
 	return $str;
+}
+
+sub sendGetPlayerInfo {
+	my ($self, $ID) = @_;
+	my $msg = pack("C*", 0x93, 0x01) . createRandomBytes(3) . $ID;
+	$self->sendToServer($msg);
+	debug "Sent get player info: ID - ".getHex($ID)."\n", "sendPacket", 2;
 }
 
 sub sendMapLogin {
@@ -51,6 +58,15 @@ sub sendMapLogin {
 		chr($sex) .
 		createRandomBytes(5);
 	$self->sendToServer($msg);
+}
+
+sub sendMove {
+	my $self = shift;
+	my $x = int scalar shift;
+	my $y = int scalar shift;
+	my $msg = pack("C*", 0x85, 0x00, 0x00, 0x00, 0x00, 0x00) . getCoordString2($x, $y);
+	$self->sendToServer($msg);
+	debug "Sent move to: $x, $y\n", "sendPacket", 2;
 }
 
 1;
