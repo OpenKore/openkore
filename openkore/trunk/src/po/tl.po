@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: openkore 1.9.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-06-01 09:13+0700\n"
-"PO-Revision-Date: 2007-06-01 09:16+0700\n"
+"POT-Creation-Date: 2007-06-21 15:32+0700\n"
+"PO-Revision-Date: 2007-06-21 15:33+0700\n"
 "Last-Translator: Richard <dewa5227@yahoo.com>\n"
 "Language-Team: Tagalog\n"
 "MIME-Version: 1.0\n"
@@ -3414,26 +3414,21 @@ msgid ""
 msgstr ""
 
 #. Translation Comment: Version String
-#: ../Settings.pm:64
-msgid " (SVN version)"
-msgstr ""
-
-#. Translation Comment: Version String
-#: ../Settings.pm:67
+#: ../Settings.pm:68
 msgid "Custom Ragnarok Online client"
 msgstr ""
 
-#: ../Settings.pm:68
+#: ../Settings.pm:69
 #, fuzzy, perl-format
 msgid "Welcome to %s."
 msgstr "Tuloy po kayo sa"
 
-#: ../Settings.pm:348
+#: ../Settings.pm:349
 #, perl-format
 msgid "Loading %s...\n"
 msgstr ""
 
-#: ../Settings.pm:350
+#: ../Settings.pm:351
 #, perl-format
 msgid "Error: Couldn't load %s\n"
 msgstr ""
@@ -5482,6 +5477,11 @@ msgstr ""
 #: ../AI/CoreLogic.pm:2947
 msgid "** Respawning to save point.\n"
 msgstr ""
+
+#: ../AI/CoreLogic.pm:2998
+#, fuzzy, perl-format
+msgid "Disconnecting for 30 secs to avoid %s\n"
+msgstr "Sisimulan ang auto-compile sa loob ng %d segundo...\n"
 
 #: ../AI/Homunculus.pm:186
 msgid "Auto-feeding your Homunculus ("

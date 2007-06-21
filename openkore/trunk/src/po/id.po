@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: openkore 1.9.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-06-01 09:13+0700\n"
-"PO-Revision-Date: 2007-06-01 09:15+0700\n"
+"POT-Creation-Date: 2007-06-21 15:32+0700\n"
+"PO-Revision-Date: 2007-06-21 15:33+0700\n"
 "Last-Translator: Richard <dewa5227@yahoo.com>\n"
 "Language-Team: Indonesian <dewa5227@yahoo.com>\n"
 "MIME-Version: 1.0\n"
@@ -3975,26 +3975,21 @@ msgstr ""
 "%s"
 
 #. Translation Comment: Version String
-#: ../Settings.pm:64
-msgid " (SVN version)"
-msgstr " (Versi SVN)"
-
-#. Translation Comment: Version String
-#: ../Settings.pm:67
+#: ../Settings.pm:68
 msgid "Custom Ragnarok Online client"
 msgstr "Kustomisasi Klien Ragnarok Online"
 
-#: ../Settings.pm:68
+#: ../Settings.pm:69
 #, perl-format
 msgid "Welcome to %s."
 msgstr "Selamat Datang di %s."
 
-#: ../Settings.pm:348
+#: ../Settings.pm:349
 #, perl-format
 msgid "Loading %s...\n"
 msgstr "Me-load %s...\n"
 
-#: ../Settings.pm:350
+#: ../Settings.pm:351
 #, perl-format
 msgid "Error: Couldn't load %s\n"
 msgstr "Error: Tidak dapat me-load %s\n"
@@ -6109,6 +6104,11 @@ msgstr "Spawn kembali ke simpan posisi.\n"
 msgid "** Respawning to save point.\n"
 msgstr "**Spawn kembali ke simpan posisi.\n"
 
+#: ../AI/CoreLogic.pm:2998
+#, perl-format
+msgid "Disconnecting for 30 secs to avoid %s\n"
+msgstr "Disconnecting selama 30 detik untuk menghindari %s\n"
+
 #: ../AI/Homunculus.pm:186
 msgid "Auto-feeding your Homunculus ("
 msgstr "Memberi makan Homunculus anda secara otomatis ("
@@ -6499,6 +6499,8 @@ msgstr "Map telah di-load\n"
 msgid "Unknown packet - %s\n"
 msgstr "Packet tidak diketahui - %s\n"
 
+#~ msgid " (SVN version)"
+#~ msgstr " (Versi SVN)"
 #~ msgid "[dist=%s] %s\n"
 #~ msgstr "[jarak=%s] %s\n"
 #~ msgid "Skill %s does not exist.\n"
