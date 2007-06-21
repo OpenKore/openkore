@@ -986,7 +986,7 @@
 2628#Novice_Armlet#
 1256#Katar_of_Frozen_Icicle#
 1257#Katar_of_Quaking#
-1258#Katar_of_ Raging_Blaze#
+1258#Katar_of_Raging_Blaze#
 1259#Katar_of_Piercing_Wind#
 1260#Sharpened_Legbone_of_Ghoul#
 1261#Infiltrator#
