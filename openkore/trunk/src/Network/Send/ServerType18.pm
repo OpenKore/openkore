@@ -74,11 +74,7 @@ sub sendMove {
 sub sendTake {
 	my $self = shift;
 	my $itemID = shift; # $itemID = long
-	my $msg =
-		pack("C*", 0x9A, 0x02) . 
-		$itemID .
-		pack("C*", 0x39, 0x02, 0x01) .
-		pack("x18");
+	my $msg = pack("C*", 0x16, 0x01) . $itemID;
 	$self->sendToServer($msg);
 	debug "Sent take\n", "sendPacket", 2;
 }
