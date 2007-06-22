@@ -29,10 +29,14 @@ use strict;
 use warnings;
 use Time::HiRes qw(time sleep);
 use Exception::Class ('Plugin::LoadException');
+use UNIVERSAL qw(isa);
 
 use Modules 'register';
 use Globals;
+use Utils qw(stringToQuark quarkToString);
 use Utils::DataStructures qw(binAdd);
+use Utils::ObjectList;
+use Utils::Exceptions;
 use Log qw(message);
 use Translation qw(T TF);
 
@@ -55,6 +59,9 @@ our $current_plugin_folder;
 
 our @plugins;
 our %hooks;
+
+use enum qw(HOOKNAME INDEX);
+use enum qw(CALLBACK USER_DATA);
 
 
 #############################
@@ -249,16 +256,16 @@ sub registered {
 
 
 ##
-# Plugins::addHook(String hookname, r_func, [user_data])
+# Plugins::addHook(String hookname, callback, [user_data])
 # hookname: Name of a hook.
-# r_func: Reference to the function to call.
-# user_data: Additional data to pass to r_func.
-# Returns: An ID which can be used to remove this hook.
+# callback: Reference to the function to call.
+# user_data: Additional data to pass to callback.
+# Returns: A handle which can be used to remove this hook.
 #
 # Add a hook for $hookname. Whenever Kore calls Plugins::callHook('foo'),
-# r_func is also called.
+# callback is also called.
 #
-# See also Plugins::callHook() for information about how r_func is called.
+# See also Plugins::callHook() for information about how callback is called.
 #
 # Example:
 # # Somewhere in your plugin:
@@ -278,56 +285,53 @@ sub registered {
 #     ...
 # }
 sub addHook {
-	my $hookname = shift;
-	my $r_func = shift;
-	my $user_data = shift;
+	my ($hookName, $callback, $user_data) = @_;
+	my $hookList = $hooks{$hookName} ||= new ObjectList();
 
-	my %hook = (
-		r_func => $r_func,
-		user_data => $user_data
-	);
-	$hooks{$hookname} = [] if (!defined $hooks{$hookname});
-	return binAdd($hooks{$hookname}, \%hook);
+	my @entry;
+	$entry[CALLBACK] = $callback;
+	$entry[USER_DATA] = $user_data if defined($user_data);
+
+	my @handle;
+	$handle[HOOKNAME] = stringToQuark($hookName);
+	$handle[INDEX] = $hookList->add(bless(\@entry, "Plugins::HookEntry"));
+	return bless(\@handle, 'Plugins::HookHandle');
 }
 
 ##
-# Plugins::addHooks( [hookname, r_func, user_data], ... )
-# Returns: a reference to an array. You need it for Plugins::delHooks()
+# Plugins::addHooks( [hookName, callback, user_data], ... )
+# Returns: A handle, which can be used with Plugins::delHook()
 #
 # A convenience function for adding many hooks with one function.
 #
-# See also: Plugins::addHook(), Plugins::delHooks()
+# See also: Plugins::addHook(), Plugins::delHook()
 #
 # Example:
 # $hooks = Plugins::addHooks(
-# 	['AI_pre',       \&onAI_pre, undef],
-# 	['mainLoop_pre', \&onMainLoop_pre, undef]
+# 	['AI_pre',       \&onAI_pre],
+# 	['mainLoop_pre', \&onMainLoop_pre, $some_user_data]
 # );
-# Plugins::delHooks($hooks);
+# Plugins::delHook($hooks);
 #
 # # The above is the same as:
 # $hook1 = Plugins::addHook('AI_pre', \&onAI_pre);
 # $hook2 = Plugins::addHook('mainLoop_pre', \&onMainLoop_pre);
-# Plugins::delHook('AI_pre', $hook1);
-# Plugins::delHook('mainLoop_pre', $hook2);
+# Plugins::delHook($hook1);
+# Plugins::delHook($hook2);
 sub addHooks {
 	my @hooks;
-	for my $hook (@_) {
-		my %hash = (
-			name => $hook->[0],
-			ID => addHook(@{$hook})
-		);
-		push @hooks, \%hash;
+	foreach my $params (@_) {
+		push @hooks, addHook(@{$params});
 	}
-	return \@hooks;
+	return bless(\@hooks, "Plugins::HookHandles");
 }
 
 ##
-# Plugins::delHook(hookname, ID)
+# Plugins::delHook(hookname, handle)
 # hookname: Name of a hook.
-# ID: The ID of the hook, as returned by Plugins::addHook()
+# handle: A hook handle, as returned by Plugins::addHook()
 #
-# Removes a hook. r_func will not be called anymore.
+# Removes a registered hook. $callback will not be called anymore.
 #
 # See also: Plugins::addHook()
 #
@@ -336,47 +340,75 @@ sub addHooks {
 # my $hook = Plugins::addHook('AI_pre', \&ai_called);
 #
 # sub on_unload {
-#     Plugins::delHook('AI_pre', $hook);
+#     Plugins::delHook($hook);
 #     Log::message "Example plugin unloaded.\n";
 # }
 sub delHook {
-	my $hookname = shift;
-	my $ID = shift;
-	delete $hooks{$hookname}[$ID] if ($hookname && $hooks{$hookname});
+	my ($handle) = @_;
+	if (isa($handle, 'Plugins::HookHandles')) {
+		foreach my $singleHandle (@{$handle}) {
+			delHook($singleHandle);
+		}
+
+	} elsif (isa($handle, 'Plugins::HookHandle') && defined $handle->[HOOKNAME]) {
+		my $hookName = quarkToString($handle->[HOOKNAME]);
+		my $hookList = $hooks{$hookName};
+		if ($hookList) {
+			my $entry = $hookList->get($handle->[INDEX]);
+			$hookList->remove($entry);
+		}
+		delete $handle->[HOOKNAME];
+		delete $handle->[INDEX];
+
+		if ($hookList->size() == 0) {
+			delete $hooks{$hookName};
+		}
+
+	} else {
+		ArgumentException->throw("Invalid hook handle passed to Plugins::delHook().");
+	}
 }
 
 ##
 # Plugins::delHooks(hooks)
-# hooks: The return value Plugins::addHooks()
 #
-# Removes all hooks that are registered by Plugins::addHook().
-#
-# See also: Plugins::addHooks(), Plugins::delHook()
+# An alias for Plugins::delHook(), for backwards compatibility reasons.
 sub delHooks {
-	delHook($_->{name}, $_->{ID}) foreach (@{$_[0]});
-	@{$_[0]} = ();
+	&delHook;
 }
 
 
 ##
-# void Plugins::callHook(String hookname, [r_param])
-# hookname: Name of the hook.
-# r_param: A reference to a hash that will be passed to the hook functions.
+# void Plugins::callHook(String hookName, [argument])
+# hookName: Name of the hook.
+# argument: An argument to pass to the hook's callback functions.
 #
-# Call all functions which are associated with the hook $hookname.
+# Call all callback functions which are associated with the hook $hookName.
 #
-# r_hook is called as follows: $r_hook->($hookname, $r_param, userdata as passed to addHook);
+# The hook's callback function is called as follows:
+# <pre class="example">
+# $callback->($hookName, $argument, userdata as passed to addHook);
+# </pre>
 #
 # See also: Plugins::addHook()
 sub callHook {
-	my $hookname = shift;
-	my $r_param = shift;
-	return if (!$hooks{$hookname});
-
-	foreach my $hook (@{$hooks{$hookname}}) {
-		next if (!$hook);
-		$hook->{r_func}->($hookname, $r_param, $hook->{user_data});
+	my ($hookName, $argument) = @_;
+	my $hookList = $hooks{$hookName};
+	if ($hookList) {
+		my $items = $hookList->getItems();
+		foreach my $entry (@{$items}) {
+			$entry->[CALLBACK]->($hookName, $argument, $entry->[USER_DATA]);
+		}
 	}
+}
+
+##
+# boolean Plugins::hasHook(String hookName)
+#
+# Check whether there are any hooks registered for the specified hook name.
+sub hasHook {
+	my ($hookName) = @_;
+	return defined $hooks{$hookName};
 }
 
 1;

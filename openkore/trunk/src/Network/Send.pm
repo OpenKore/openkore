@@ -240,12 +240,14 @@ sub sendToServer {
 
 	my $messageID = uc(unpack("H2", substr($msg, 1, 1))) . uc(unpack("H2", substr($msg, 0, 1)));
 
-	my $hookname = "packet_send/$messageID";
-	# FIXME: this is ugly and may not even always work.
-	my $hook = $Plugins::hooks{$hookname}->[0];
-	if ($hook && $hook->{r_func} &&
-	    $hook->{r_func}($hookname, {switch => $messageID, data => $msg}, $hook->{user_data})) {
-		return;
+	my $hookName = "packet_send/$messageID";
+	if (Plugins::hasHook($hookName)) {
+		my %args = (
+			switch => $messageID,
+			data => $msg
+		);
+		Plugins::callHook($hookName, \%args);
+		return if ($args{return});
 	}
 
 	$net->serverSend($msg);

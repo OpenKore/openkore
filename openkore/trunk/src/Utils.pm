@@ -24,6 +24,7 @@ use Time::HiRes qw(time usleep);
 use IO::Socket::INET;
 use Math::Trig;
 use Text::Wrap;
+use Scalar::Util;
 use Exporter;
 use base qw(Exporter);
 use Config;
@@ -43,9 +44,13 @@ our @EXPORT = (
 	# Other stuff
 	qw(dataWaiting dumpHash formatNumber getCoordString getCoordString2
 	getFormattedDate getHex giveHex getRange getTickCount
-	inRange judgeSkillArea makeCoords makeCoords2 makeDistMap makeIP encodeIP parseArgs shiftPack swrite timeConvert timeOut
+	inRange judgeSkillArea makeCoords makeCoords2 makeDistMap makeIP encodeIP parseArgs
+	quarkToString stringToQuark shiftPack swrite timeConvert timeOut
 	urldecode urlencode unShiftPack vocalString wrapText)
 );
+
+our %strings;
+our %quarks;
 
 
 
@@ -1002,6 +1007,54 @@ sub parseArgs {
 	return reverse @args;
 }
 
+##
+# quarkToString(quark)
+# quark: A quark as returned by stringToQuark()
+#
+# Convert a quark back into a string. See stringToQuark() for details.
+sub quarkToString {
+	my $quark = $_[0];
+	return $strings{$quark};
+}
+
+##
+# stringToQuark(string)
+#
+# Convert a string into a so-called quark. Each string will be converted to a unique quark.
+# This can be used to save memory, if your application uses many identical strings.
+#
+# For example, consider the following:
+# <pre class="example">
+# my @array;
+# for (1..10000) {
+#     push @array, "this is a string";
+# }
+# </pre>
+# The above example will store 10000 different copies of the string "this is my string" into
+# the array. Even though each string has the same content, each string uses its own memory.
+#
+# By using quarks, one can save a lot of memory:
+# <pre class="example">
+# my @array;
+# for (1..10000) {
+#     push @array, stringToQuark("this is a string");
+# }
+# </pre>
+# The array will now contain 10000 instances of the same quark, so very little memory is wasted.
+#
+# To convert a quark back to a string, use quarkToString().
+sub stringToQuark {
+	my $string = $_[0];
+	if (exists $quarks{$string}) {
+		return $quarks{$string};
+	} else {
+		my $ref = \$string;
+		$quarks{$string} = $ref;
+		$strings{$ref} = $string;
+		return $ref;
+	}
+}
+
 sub swrite {
 	my $result = '';
 	for (my $i = 0; $i < @_; $i += 2) {
@@ -1127,4 +1180,4 @@ sub wrapText {
 	return wrap('', '', $_[0]);
 }
 
-return 1;
+1;

@@ -1,6 +1,7 @@
 ActorListTest.pm
 CallbackListTest.pm
 ObjectListTest.pm
+PluginsHookTest.pm
 HttpReaderTest.pm
 SetTest.pm
 SkillTest.pm
