@@ -67,8 +67,6 @@ sub sendMove {
 	my $msg =
 		pack("C*", 0x85, 0x00, 0x00, 0x00, 0x00, 0x00) .
 		getCoordString2($x, $y, 1);
-	message (unpack("H*", getCoordString2($x, $y, 1))."\n");
-	message ("".$x."-".$y."\n");
 	$self->sendToServer($msg);
 	debug "Sent move to: $x, $y\n", "sendPacket", 2;
 }
