@@ -836,13 +836,6 @@ sub parseSendMsg {
 	# If the player tries to manually do something in the RO client, disable AI for a small period
 	# of time using ai_clientSuspend().
 
-	my $hookname = "packet_outMangle/$switch";
-	my $hook = $Plugins::hooks{$hookname}->[0];
-	if ($hook && $hook->{r_func} &&
-	    $hook->{r_func}($hookname, {switch => $switch, data => $sendMsg}, $hook->{user_data})) {
-		undef $sendMsg;
-	}
-
 	if ($switch eq "0066") {
 		# Login character selected
 		configModify("char", unpack("C*",substr($msg, 2, 1)));

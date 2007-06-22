@@ -9,8 +9,7 @@
 #  also distribute the source code.
 #  See http://www.gnu.org/licenses/gpl.html for the full license.
 #########################################################################
-# As of December 2006, this is the server type for:
-# iRO (International)
+# June 21 2007, this is the server type for:
 # pRO (Philippines), except Sakray and Thor
 # And many other servers.
 package Network::Send::ServerType0;
