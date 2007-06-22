@@ -72,7 +72,7 @@ sub sendAttack {
 		return;
 	}
 
-	if (($self->{serverType} == 1) || ($self->{serverType} == 2)) {
+	if (($self->{serverType} == 2)) {
 		$msg = pack("C*", 0x89, 0x00, 0x00, 0x00) .
 		$monID .
 		pack("C*", 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, $flag);
@@ -404,7 +404,7 @@ sub sendDrop {
 	my ($self, $index, $amount) = @_;
 	my $msg;
 
-	if (($self->{serverType} == 1) || ($self->{serverType} == 2)) {
+	if (($self->{serverType} == 2)) {
 		$msg = pack("C*", 0xA2, 0x00) .
 			pack("C*", 0xFF, 0xFF, 0x08, 0x10) .
 			pack("v*", $index) .
@@ -561,7 +561,7 @@ sub sendGetPlayerInfo {
 	my ($self, $ID) = @_;
 	my $msg;
 
-	if (($self->{serverType} == 1) || ($self->{serverType} == 2)) {
+	if (($self->{serverType} == 2)) {
 		$msg = pack("C*", 0x94, 0x00) . pack("C*", 0x12, 0x00, 150, 75) . $ID;
 
 	} elsif (($self->{serverType} == 3) || ($self->{serverType} == 5)) {
@@ -831,7 +831,7 @@ sub sendItemUse {
 	my ($self, $ID, $targetID) = @_;
 	my $msg;
 
-	if (($self->{serverType} == 1) || ($self->{serverType} == 2)) {
+	if (($self->{serverType} == 2)) {
 		$msg = pack("C*", 0xA7, 0x00, 0x9A, 0x12, 0x1C).pack("v*", $ID, 0).$targetID;
 
 	} elsif ($self->{serverType} == 3) {
@@ -893,7 +893,7 @@ sub sendLook {
 	my ($self, $body, $head) = @_;
 	my $msg;
 
-	if (($self->{serverType} == 1) || ($self->{serverType} == 2)) {
+	if (($self->{serverType} == 2)) {
 		$msg = pack("C*", 0x9B, 0x00, 0xF2, 0x04, 0xC0, 0xBD, $head,
 			0x00, 0xA0, 0x71, 0x75, 0x12, 0x88, 0xC1, $body);
 
@@ -1077,13 +1077,7 @@ sub sendMapLogin {
 
 		my $key;
 
-		if ($self->{serverType} == 1) {
-			$key = pack("C*", 0xFC, 0x2B, 0x8B, 0x01, 0x00);
-			#	0xFA,0x12,0x00,0xE0,0x5D
-			#	0xFA,0x12,0x00,0xD0,0x7B
-		} else {
-			$key = pack("C*", 0xFA, 0x12, 0, 0x50, 0x83);
-		}
+		$key = pack("C*", 0xFA, 0x12, 0, 0x50, 0x83);
 
 		$msg = pack("C*", 0x72, 0, 0, 0, 0) . $accountID .
 			$key .
@@ -1521,7 +1515,7 @@ sub sendSit {
 		return;
 	}
 
-	if (($self->{serverType} == 1) || ($self->{serverType} == 2)) {
+	if (($self->{serverType} == 2)) {
 		$msg = pack("C*", 0x89, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00,
 			0x00, 0x00, 0x00, 0x80, 0x00, 0x00, 0x02);
 
@@ -1604,7 +1598,7 @@ sub sendSkillUse {
 		return;
 	}
 	
-	if (($self->{serverType} == 1) || ($self->{serverType} == 2)) {
+	if (($self->{serverType} == 2)) {
 		$msg = pack("v*", 0x0113, 0x0000, $lv) .
 			pack("V", 0) .
 			pack("v*", $ID, 0) .
@@ -1707,7 +1701,7 @@ sub sendSkillUseLoc {
 	my ($self, $ID, $lv, $x, $y) = @_;
 	my $msg;
 
-	if (($self->{serverType} == 1) || ($self->{serverType} == 2)) {
+	if (($self->{serverType} == 2)) {
 		$msg = pack("v*", 0x0116, 0x0000, 0x0000, $lv) .
 			chr(0) . pack("v*", $ID) .
 			pack("V*", 0, 0, 0) .
@@ -1804,7 +1798,7 @@ sub sendStorageAdd {
 	my ($self, $index, $amount) = @_;
 	my $msg;
 
-	if (($self->{serverType} == 1) || ($self->{serverType} == 2)) {
+	if (($self->{serverType} == 2)) {
 		$msg = pack("C*", 0xF3, 0x00) . pack("C*", 0x12, 0x00, 0x40, 0x73) .
 			pack("v", $index) .
 			pack("C", 0xFF) .
@@ -1898,7 +1892,7 @@ sub sendStorageGet {
 	my ($self, $index, $amount) = @_;
 	my $msg;
 
-	if (($self->{serverType} == 1) || ($self->{serverType} == 2)) {
+	if (($self->{serverType} == 2)) {
 		$msg = pack("v*", 0x00F5, 0, 0, 0, 0, 0, $index, 0, 0) . pack("V*", $amount);
 
 	} elsif ($self->{serverType} == 3) {
@@ -1992,7 +1986,7 @@ sub sendStand {
 		return;
 	}
 
-	if (($self->{serverType} == 1) || ($self->{serverType} == 2)) {
+	if (($self->{serverType} == 2)) {
 		$msg = pack("C*", 0x89, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00,
 			0x00, 0x00, 0x00, 0x80, 0x00, 0x00, 0x03);
 
