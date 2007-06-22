@@ -2081,7 +2081,7 @@ sub sendTake {
 	my ($self, $itemID) = @_;
 	my $msg;
 
-	} elsif ($self->{serverType} == 3) {
+	if ($self->{serverType} == 3) {
 		$msg = pack("C*", 0xf5, 0x00, 0x00, 0x00, 0xb8) . $itemID;
 
 	} elsif ($self->{serverType} == 4) {
