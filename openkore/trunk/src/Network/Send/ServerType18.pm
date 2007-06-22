@@ -61,7 +61,7 @@ sub sendMapLogin {
 }
 
 sub sendMove {
-	my ($self) = @_;
+	my ($self) = shift;
 	my $x = int scalar shift;
 	my $y = int scalar shift;
 	my $msg =
@@ -69,6 +69,18 @@ sub sendMove {
 		getCoordString2($x, $y, 1);
 	$self->sendToServer($msg);
 	debug "Sent move to: $x, $y\n", "sendPacket", 2;
+}
+
+sub sendTake {
+	my $self = shift;
+	my $itemID = shift; # $itemID = long
+	my $msg =
+		pack("C*", 0x9A, 0x02) . 
+		$itemID .
+		pack("C*", 0x39, 0x02, 0x01) .
+		pack("x18");
+	$self->sendToServer($msg);
+	debug "Sent take\n", "sendPacket", 2;
 }
 
 1;
