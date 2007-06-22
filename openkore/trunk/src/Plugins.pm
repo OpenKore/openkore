@@ -345,6 +345,14 @@ sub addHooks {
 # }
 sub delHook {
 	my ($handle) = @_;
+	if (@_ > 1) {
+		# More than one parameter was passed. This means that the plugin
+		# is still using the old API. Make sure things are backwards
+		# compatible.
+		shift;
+		($handle) = @_;
+	}
+
 	if (isa($handle, 'Plugins::HookHandles')) {
 		foreach my $singleHandle (@{$handle}) {
 			delHook($singleHandle);
