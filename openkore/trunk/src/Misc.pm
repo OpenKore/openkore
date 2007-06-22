@@ -218,7 +218,8 @@ sub checkValidity {
 	my ($name) = @_;
 	$name = "Validity check:" if (!defined $name);
 
-	assertClass($char, 'Actor::You') if ($net && $net->getState() == Network::IN_GAME);
+	assertClass($char, 'Actor::You') if ($net && $net->getState() == Network::IN_GAME
+						&& $net->isa('Network::XKore'));
 	return;
 
 	if ($char && $char->{inventory}) {
