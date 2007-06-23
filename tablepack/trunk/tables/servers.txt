@@ -77,6 +77,9 @@ master_version 1
 version 18
 serverType 18
 serverEncoding Western
+paddedPackets 1
+paddedPackets_attackID 0x72
+paddedPackets_skillUseID 0xF5
 
 [International - iRO: Sakray]
 ip 38.144.194.2
