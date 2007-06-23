@@ -847,6 +847,11 @@ sub parseSendMsg {
 				$sendMsg = substr($sendMsg, 0, 18) . pack("C",$config{'sex'});
 			}
 		}
+	
+	} elsif ($switch eq "00A7") {
+			if($config{serverType} == 18) {
+				$syncSync = substr($msg, 8, 4);
+			}
 
 	} elsif ($switch eq "007D") {
 		# Map loaded

@@ -90,9 +90,10 @@ sub sendSync {
 	# XKore mode 1 lets the client take care of syncing.
 	return if ($self->{net}->version == 1);
 
+	$syncSync = pack("V", getTickCount());
 	$msg = pack("C*", 0xA7, 0x00) . 
 		pack("x6") .
-		pack("V", getTickCount());
+		$syncSync;
 	$self->sendToServer($msg);
 	debug "Sent Sync\n", "sendPacket", 2;
 }
