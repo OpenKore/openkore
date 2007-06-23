@@ -25,11 +25,6 @@ sub new {
 	return $class->SUPER::new(@_);
 }
 
-##
-# Todo: Attack/SkillUse/Sit/Stand => Padded Packets
-# Untested: sendSkillUseLoc() (Captured with poseidon)
-##
-
 # Create a random byte string of a specified length.
 sub createRandomBytes {
 	my ($length) = @_;
