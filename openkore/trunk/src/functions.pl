@@ -849,8 +849,15 @@ sub parseSendMsg {
 		}
 	
 	} elsif ($switch eq "00A7") {
+			#iRO XKore with Padded Packets Support
 			if($config{serverType} == 18) {
 				$syncSync = substr($msg, 8, 4);
+			}
+			
+	} elsif ($switch eq "007E") {
+			#euRO XKore with Padded Packets Support
+			if($config{serverType} == 16) {
+				$syncSync = substr($msg, 4, 4);
 			}
 
 	} elsif ($switch eq "007D") {
@@ -869,8 +876,6 @@ sub parseSendMsg {
 			$syncSync = substr($msg, 8, 4);
 		} elsif ($config{serverType} == 12) {
 			$syncSync = substr($msg, 8, 4);
-		} elsif ($config{serverType} == 16) {
-			$syncSync = substr($msg, 6, 4);
 		} else {
 			$syncSync = substr($msg, $masterServer->{mapLoadedTickOffset}, 4); # formula: MapLoaded_len + Sync_len - 4 - Sync_packet_last_junk
 		}
