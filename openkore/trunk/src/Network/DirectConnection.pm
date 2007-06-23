@@ -190,6 +190,15 @@ sub serverRecv {
 }
 
 ##
+# Bytes $net->serverAddress()
+#
+# Return the server's raw address.
+sub serverAddress {
+	my ($self) = @_;
+	return $self->{remote_socket}->sockaddr();
+}
+
+##
 # $net->serverDisconnect()
 #
 # Disconnect from the current Ragnarok Online server.

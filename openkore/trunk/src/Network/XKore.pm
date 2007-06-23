@@ -65,18 +65,10 @@ sub new {
 	return $self;
 }
 
-##
-# $net->version
-# Returns: XKore mode
-#
 sub version {
 	return 1;
 }
 
-##
-# $net->DESTROY()
-#
-# Shutdown function. Turn everything off.
 sub DESTROY {
 	my $self = shift;
 	
@@ -87,40 +79,22 @@ sub DESTROY {
 ## Server Functions ##
 ######################
 
-##
-# $net->serverAlive()
-# Returns: a boolean.
-#
-# Check whether the connection with the server (thru the client) is still alive.
 sub serverAlive {
 	return $_[0]->{client} && $_[0]->{client}->connected;
 }
 
-##
-# $net->serverConnect
-#
-# Not used with XKore mode 1
 sub serverConnect {
 	return undef;
 }
 
-##
-# $net->serverPeerHost
-#
 sub serverPeerHost {
 	return undef;
 }
 
-##
-# $net->serverPeerPort
-#
 sub serverPeerPort {
 	return undef;
 }
 
-##
-# $net->serverRecv()
-# Returns: the messages sent from the server, or undef if there are no pending messages.
 sub serverRecv {
 	my $self = shift;
 	$self->recv();
@@ -133,21 +107,17 @@ sub serverRecv {
 	return $packets;
 }
 
-##
-# $net->serverSend(msg)
-# msg: A scalar to send to the RO server
-#
 sub serverSend {
 	my $self = shift;
 	my $msg = shift;
 	$self->{client}->send("S".pack("v", length($msg)).$msg) if ($self->serverAlive);
 }
 
-##
-# $net->serverDisconnect
-#
-# This isn't used with XKore mode 1.
 sub serverDisconnect {
+	return undef;
+}
+
+sub serverAddress {
 	return undef;
 }
 

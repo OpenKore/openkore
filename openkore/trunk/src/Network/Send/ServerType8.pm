@@ -35,7 +35,7 @@ sub sendMasterLogin {
 		pack("a24", $username) .
 		pack("a24", $password) .
 		pack("C", $master_version) .
-		pack("a15", join(".", unpack("C4", $self->{net}->{remote_socket}->sockaddr()))) .
+		pack("a15", join(".", unpack("C4", $self->{net}->serverAddress()))) .
 		pack("C*", 0xAB, 0x31, 0x31, 0x31, 0x31, 0x31, 0x31, 0x31, 0x31, 0x31, 0x31, 0x31, 0x31, 0);
 	$self->sendToServer($msg);
 }
