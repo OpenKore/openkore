@@ -25,6 +25,9 @@ open($f, ">", "unittest.dat");
 binmode $f;
 
 my ($attackID, $skillUseID, $accountID, $syncMapSync, $syncSync, $LastPaddedPacket);
+
+SetPacket(" " x 512, 512, 0);
+
 for (my $i = 0; $i < 100; $i++) {
 	$attackID = int rand(MAX_INT);
 	$skillUseID = int rand(MAX_INT);
@@ -51,9 +54,9 @@ for (my $i = 0; $i < 100; $i++) {
 close($f);
 
 sub setHashData {
-	SetAccountId(unpack("L1", $accountID));
-	SetMapSync(unpack("L1", $syncMapSync));
-	SetSync(unpack("L1", $syncSync));
+	SetAccountId($accountID);
+	SetMapSync($syncMapSync);
+	SetSync($syncSync);
 }
 
 sub generateSitStand {
@@ -68,7 +71,7 @@ sub generateAtk {
 	my ($targetId, $flag) = @_;
 	my $packet = " " x 256;
 	setHashData();
-	my $len = CreateAtk($packet, unpack("L1", $targetId), $flag);
+	my $len = CreateAtk($packet, $targetId, $flag);
 	return substr($packet, 0, $len);
 }
 
@@ -76,7 +79,7 @@ sub generateSkillUse {
 	my ($skillId, $skillLv, $targetId) = @_;
 	my $packet = " " x 256;
 	setHashData();
-	my $len = CreateSkillUse($packet, $skillId, $skillLv, unpack("L1", $targetId));
+	my $len = CreateSkillUse($packet, $skillId, $skillLv, $targetId);
 	return substr($packet, 0, $len);
 }
 
