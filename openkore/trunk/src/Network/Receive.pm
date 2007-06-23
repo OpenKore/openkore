@@ -3617,7 +3617,7 @@ sub map_change {
 	} else {
 		$messageSender->sendMapLoaded();
 		# Sending sync packet. Perhaps not only for server types 13 and 11
-		if ($config{serverType} == 11 || $config{serverType} == 12 || $config{serverType} == 13 || $config{serverType} == 16 || $config{serverType} == 17) {
+		if ($config{serverType} == 11 || $config{serverType} == 12 || $config{serverType} == 13 || $config{serverType} == 16 || $config{serverType} == 17 || $config{serverType} == 18) {
 			$messageSender->sendSync(1);
 		}
 		$timeout{'ai'}{'time'} = time;
