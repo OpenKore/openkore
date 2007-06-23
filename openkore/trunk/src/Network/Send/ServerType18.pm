@@ -26,8 +26,8 @@ sub new {
 }
 
 ##
-# Todo:
-# sendDrop, sendSkillUseLoc
+# Todo: Attack/SkillUse/Sit/Stand => Padded Packets
+# Untested: sendSkillUseLoc() (Captured with poseidon)
 ##
 
 # Create a random byte string of a specified length.
@@ -132,11 +132,31 @@ sub sendItemUse {
 sub sendLook {
 	my ($self, $body, $head) = @_;
 	my $msg = pack("C*", 0xF7, 0x00, $head, 0x00, $body);
-
 	$self->sendToServer($msg);
 	debug "Sent look: $body $head\n", "sendPacket", 2;
 	$char->{look}{head} = $head;
 	$char->{look}{body} = $body;
+}
+
+sub sendDrop {
+	my ($self, $index, $amount) = @_;
+	my $msg = pack("C*", 0x7E, 0x00) .
+		pack("v1", $amount) .
+		pack("v1", $index);
+	$self->sendToServer($msg);
+	debug "Sent drop: $index x $amount\n", "sendPacket", 2;
+}
+
+sub sendSkillUseLoc {
+	my ($self, $ID, $lv, $x, $y) = @_;
+	my $msg = pack("C*", 0x8C, 0x00) .
+			pack("v", $lv) .
+			pack("v*", $ID) .
+			pack("v*", $x) .
+			pack("x4") .
+			pack("v*", $y);
+	$self->sendToServer($msg);
+	debug "Skill Use on Location: $ID, ($x, $y)\n", "sendPacket", 2;
 }
 
 1;
