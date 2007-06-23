@@ -55,7 +55,7 @@ use I18N qw(bytesToString);
 ### Public methods
 ######################################
 
-# Constructor for abstract base class; do not call directly.
+# Do not call this directly. Use create() instead.
 sub new {
 	my ($class) = @_;
 	my %self;

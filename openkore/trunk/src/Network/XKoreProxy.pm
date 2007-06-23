@@ -160,6 +160,11 @@ sub serverDisconnect {
 	return $self->{server}->serverDisconnect();
 }
 
+sub serverAddress {
+	my ($self) = @_;
+	return $self->{server}->serverAddress();
+}
+
 sub getState {
 	my ($self) = @_;
 	return $self->{server}->getState();
