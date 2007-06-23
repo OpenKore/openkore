@@ -24,6 +24,7 @@ use Time::HiRes qw(time usleep);
 use encoding 'utf8';
 use Carp::Assert;
 use Scalar::Util;
+use Exception::Class ('Network::Receive::InvalidServerType', 'Network::Receive::CreationError');
 
 use Globals;
 use Actor;
@@ -49,8 +50,12 @@ use Utils::Crypton;
 use Translation;
 use I18N qw(bytesToString);
 
-###### Public methods ######
 
+######################################
+### Public methods
+######################################
+
+# Constructor for abstract base class; do not call directly.
 sub new {
 	my ($class) = @_;
 	my %self;
@@ -324,49 +329,36 @@ sub new {
 }
 
 ##
-# boolean $packetParser->willMangle(Bytes messageID)
+# Network::Receive->create(String serverType)
 #
-# Check whether the message with the specified message ID will be mangled.
-# If the bot is running in X-Kore mode, then messages that will be mangled will not
-# be sent to the RO client.
-sub willMangle {
-	my ($self, $messageID) = @_;
-
-	my $packet = $self->{packet_list}{$messageID};
-	my $name;
-	$name = $packet->[0] if ($packet);
-
-	my %args = (
-		messageID => $messageID,
-		name => $name
-	);
-	Plugins::callHook("Network::Receive/willMangle", \%args);
-	return $args{willMangle};
-}
-
-# $NetworkReceive->mangle($args)
+# Create a new server message parsing object for the specified server type.
 #
-# Calls the appropriate plugin function to mangle the packet, which
-# destructively modifies $args.
-# Returns false if the packet should be suppressed.
-sub mangle {
-	my ($self, $args) = @_;
+# Throws Network::Receive::InvalidServerType if the specified server type does
+# not exist.
+# Throws Network::Receive::CreationError if some other error occured.
+sub create {
+	my ($self, $type) = @_;
+	($type) = $type =~ /([0-9_]+)/;
+	$type = 0 if $type eq '';
+	my $class = "Network::Receive::ServerType" . $type;
 
-	my %hook_args = (message => $args);
-	my $entry = $self->{packet_list}{$args->{switch}};
-	if ($entry) {
-		$hook_args{messageName} = $entry->[0];
-	}
-
-	Plugins::callHook("Network::Receive/mangle", \%hook_args);
-	if (exists $hook_args{ret}) {
-		return $hook_args{ret};
+	undef $@;
+	eval "use $class;";
+	if ($@ =~ /^Can't locate /s) {
+		Network::Receive::InvalidServerType->throw(
+			TF("Cannot load server message parser for server type '%s'.", $type)
+		);
+	} elsif ($@) {
+		Network::Receive::CreationError->throw(
+			TF("An error occured while loading the server message parser for server type '%s':\n%s",
+				$type, $@)
+		);
 	} else {
-		return 0;
+		return $class->new();
 	}
 }
 
-# $NetworkReceive->reconstruct($args)
+# $packetParser->reconstruct($args)
 #
 # Reconstructs a raw packet from $args using $self->{packet_list}.
 sub reconstruct {
@@ -382,24 +374,6 @@ sub reconstruct {
 	}
 	my $packet = pack("H2 H2 $packString", substr($switch, 2, 2), substr($switch, 0, 2), @vars);
 	return $packet;
-}
-
-##
-# Network::Receive->create(serverType)
-sub create {
-	my ($self, $type) = @_;
-	($type) = $type =~ /([0-9_]+)/;
-	$type = 0 if $type eq '';
-	my $class = "Network::Receive::ServerType" . $type;
-
-	undef $@;
-	eval "use $class;";
-	if ($@) {
-		error TF("Cannot load packet parser for ServerType '%s'.\n", $type);
-		return;
-	}
-
-	return eval "new $class;";
 }
 
 sub parse {
@@ -440,6 +414,78 @@ sub parse {
 }
 
 ##
+# boolean $packetParser->willMangle(Bytes messageID)
+# messageID: a message ID, such as "008A".
+#
+# Check whether the message with the specified message ID will be mangled.
+# If the bot is running in X-Kore mode, then messages that will be mangled will not
+# be sent to the RO client.
+#
+# By default, a message will never be mangled. Plugins can register mangling procedures
+# though. This is done by using the following hooks:
+# `l
+# - "Network::Receive/willMangle" - This hook has arguments 'messageID' (Bytes) and 'name' (String).
+#          'name' is a human-readable description of the message, and may be undef. Plugins
+#          should set the 'return' argument to 1 if they want willMangle() to return 1.
+# - "Network::Receive/mangle" - This hook has arguments 'messageArgs' and 'messageName' (the latter may be undef).
+# `l`
+# The following example demonstrates how this is done:
+# <pre class="example">
+# Plugins::addHook("Network::Receive/willMangle", \&willMangle);
+# Plugins::addHook("Network::Receive/mangle", \&mangle);
+#
+# sub willMangle {
+#     my (undef, $args) = @_;
+#     if ($args->{messageID} eq '008A') {
+#         $args->{willMangle} = 1;
+#     }
+# }
+#
+# sub mangle {
+#     my (undef, $args) = @_;
+#     my $message_args = $args->{messageArgs};
+#     if ($message_args->{switch} eq '008A') {
+#         ...Modify $message_args as necessary....
+#     }
+# }
+# </pre>
+sub willMangle {
+	if (Plugins::hasHook("Network::Receive/willMangle")) {
+		my ($self, $messageID) = @_;
+		my $packet = $self->{packet_list}{$messageID};
+		my $name;
+		$name = $packet->[0] if ($packet);
+
+		my %args = (
+			messageID => $messageID,
+			name => $name
+		);
+		Plugins::callHook("Network::Receive/willMangle", \%args);
+		return $args{return};
+	} else {
+		return undef;
+	}
+}
+
+# boolean $packetParser->mangle(Array* args)
+#
+# Calls the appropriate plugin function to mangle the packet, which
+# destructively modifies $args.
+# Returns false if the packet should be suppressed.
+sub mangle {
+	my ($self, $args) = @_;
+
+	my %hook_args = (messageArgs => $args);
+	my $entry = $self->{packet_list}{$args->{switch}};
+	if ($entry) {
+		$hook_args{messageName} = $entry->[0];
+	}
+
+	Plugins::callHook("Network::Receive/mangle", \%hook_args);
+	return $hook_args{return};
+}
+
+##
 # Network::Receive->decrypt(r_msg, themsg)
 # r_msg: a reference to a scalar.
 # themsg: the message to decrypt.
@@ -460,7 +506,7 @@ sub decrypt {
 	my @mask;
 	my $i;
 	my ($temp, $msg_temp, $len_add, $len_total, $loopin, $len, $val);
-	if ($config{'encrypt'} == 1) {
+	if ($config{encrypt} == 1) {
 		undef $$r_msg;
 		undef $len_add;
 		undef $msg_temp;
@@ -493,7 +539,7 @@ sub decrypt {
 		}
 		$len_total = $len + $len_add;
 		$$r_msg = $msg_temp.substr($themsg, $len_total, length($themsg) - $len_total);
-	} elsif ($config{'encrypt'} >= 2) {
+	} elsif ($config{encrypt} >= 2) {
 		undef $$r_msg;
 		undef $len_add;
 		undef $msg_temp;
@@ -539,7 +585,7 @@ sub decrypt {
 
 sub account_payment_info {
 	my ($self, $args) = @_;
-my $D_minute = $args->{D_minute};
+	my $D_minute = $args->{D_minute};
 	my $H_minute = $args->{H_minute};
 
 	my $D_d = int($D_minute / 1440);
@@ -574,12 +620,12 @@ sub account_server_info {
 	$accountSex2 = ($config{'sex'} ne "") ? $config{'sex'} : $accountSex;
 
 	message swrite(
-		T("-----------Account Info------------\n" . 
+		T("-----------Account Info------------\n" .
 		"Account ID: \@<<<<<<<<< \@<<<<<<<<<<\n" .
 		"Sex:        \@<<<<<<<<<<<<<<<<<<<<<\n" .
 		"Session ID: \@<<<<<<<<< \@<<<<<<<<<<\n" .
 		"            \@<<<<<<<<< \@<<<<<<<<<<\n" .
-		"-----------------------------------"), 
+		"-----------------------------------"),
 		[unpack("V1",$accountID), getHex($accountID), $sex_lut{$accountSex}, unpack("V1",$sessionID), getHex($sessionID),
 		unpack("V1",$sessionID2), getHex($sessionID2)]), 'connection';
 
@@ -623,8 +669,8 @@ sub account_server_info {
 			}
 
 		} elsif ($masterServer->{charServer_ip}) {
-			message TF("Forcing connect to char server %s: %s\n", $masterServer->{charServer_ip}, $masterServer->{charServer_port}), 'connection';	
-			
+			message TF("Forcing connect to char server %s: %s\n", $masterServer->{charServer_ip}, $masterServer->{charServer_port}), 'connection';
+
 		} else {
 			message TF("Server %s selected\n",$config{server}), 'connection';
 		}
@@ -743,7 +789,7 @@ sub actor_died_or_disappeared {
 	changeToInGameState();
 	my $ID = $args->{ID};
 	avoidList_ID($ID);
-	
+
 	if ($ID eq $accountID) {
 		message T("You have died\n");
 		closeShop() unless !$shopstarted || $config{'dcOnDeath'} == -1 || !$AI;
@@ -880,7 +926,7 @@ sub actor_display {
 		unShiftPack(\$coordsArg, \$coordsTo{x}, 10);
 		%coordsFrom = %coordsTo;
 	}
-	
+
 	if ($args->{switch} eq "0086") {
 		# Message 0086 contains less information about the actor than other similar
 		# messages. So we use the existing actor information.
@@ -1408,7 +1454,7 @@ sub arrow_equipped {
 
 sub arrow_none {
 	my ($self, $args) = @_;
-	
+
 	my $type = $args->{type};
 	if ($type == 0) {
 		delete $char->{'arrow'};
@@ -1431,7 +1477,7 @@ sub arrowcraft_list {
 	my $msg_size = $args->{RAW_MSG_SIZE};
 	$self->decrypt(\$newmsg, substr($msg, 4));
 	$msg = substr($msg, 0, 4).$newmsg;
-	
+
 	undef @arrowCraftID;
 	for (my $i = 4; $i < $msg_size; $i += 2) {
 		my $ID = unpack("v1", substr($msg, $i, 2));
@@ -1444,7 +1490,7 @@ sub arrowcraft_list {
 
 sub attack_range {
 	my ($self, $args) = @_;
-	
+
 	my $type = $args->{type};
 	debug "Your attack range is: $type\n";
 	$char->{attack_range} = $type;
@@ -1452,7 +1498,7 @@ sub attack_range {
 		message TF("Autodetected attackDistance = %s\n", $type), "success";
 		configModify('attackDistance', $type, 1);
 		configModify('attackMaxDistance', $type, 1);
-	}	
+	}
 }
 
 sub buy_result {
@@ -1472,7 +1518,7 @@ sub buy_result {
 
 sub card_merge_list {
 	my ($self, $args) = @_;
-	
+
 	# You just requested a list of possible items to merge a card into
 	# The RO client does this when you double click a card
 	my $newmsg;
@@ -1494,12 +1540,12 @@ sub card_merge_list {
 	}
 
 	$display .= "-------------------------------\n";
-	message $display, "list";	
+	message $display, "list";
 }
 
 sub card_merge_status {
 	my ($self, $args) = @_;
-		
+
 	# something about successful compound?
 	my $item_index = $args->{item_index};
 	my $card_index = $args->{card_index};
@@ -1544,7 +1590,7 @@ sub card_merge_status {
 	}
 
 	undef @cardMergeItemsID;
-	undef $cardMergeIndex;	
+	undef $cardMergeIndex;
 }
 
 sub cart_info {
@@ -1574,7 +1620,7 @@ sub cart_add_failed {
 
 sub cart_equip_list {
 	my ($self, $args) = @_;
-	
+
 	# "0122" sends non-stackable item info
 	# "0123" sends stackable item info
 	my $newmsg;
@@ -1604,7 +1650,7 @@ sub cart_equip_list {
 	}
 
 	$ai_v{'inventory_time'} = time + 1;
-	$ai_v{'cart_time'} = time + 1;	
+	$ai_v{'cart_time'} = time + 1;
 }
 
 sub cart_item_added {
@@ -1630,12 +1676,12 @@ sub cart_item_added {
 
 sub cart_items_list {
 	my ($self, $args) = @_;
-	
+
 	my $newmsg;
 	my $msg = $args->{RAW_MSG};
 	my $msg_size = $args->{RAW_MSG_SIZE};
 	my $switch = $args->{switch};
-	
+
 	$self->decrypt(\$newmsg, substr($msg, 4));
 	$msg = substr($msg, 0, 4).$newmsg;
 	my $psize = ($switch eq "0123") ? 10 : 18;
@@ -1662,7 +1708,7 @@ sub cart_items_list {
 
 	$ai_v{'inventory_time'} = time + 1;
 	$ai_v{'cart_time'} = time + 1;
-	
+
 }
 
 sub cash_dealer {
@@ -1737,7 +1783,7 @@ sub changeToInGameState {
 }
 
 sub character_creation_failed {
-	message T("Character creation failed. " . 
+	message T("Character creation failed. " .
 		"If you didn't make any mistake, then the name you chose already exists.\n"), "info";
 	if (charSelectScreen() == 1) {
 		$net->setState(3);
@@ -1749,7 +1795,7 @@ sub character_creation_failed {
 
 sub character_creation_successful {
 	my ($self, $args) = @_;
-	
+
 	my $char = new Actor::You;
 	$char->{ID} = $args->{ID};
 	$char->{name} = bytesToString($args->{name});
@@ -1851,7 +1897,7 @@ sub character_name {
 
 sub character_status {
 	my ($self, $args) = @_;
-	
+
 	if ($args->{ID} eq $accountID) {
 		$char->{param1} = $args->{param1};
 		$char->{param2} = $args->{param2};
@@ -1892,7 +1938,7 @@ sub chat_info {
 
 sub chat_join_result {
 	my ($self, $args) = @_;
-	
+
 	if ($args->{type} == 1) {
 		message T("Can't join Chat Room - Incorrect Password\n");
 	} elsif ($args->{type} == 2) {
@@ -1902,7 +1948,7 @@ sub chat_join_result {
 
 sub chat_modified {
 	my ($self, $args) = @_;
-	
+
 	my $title;
 	$self->decrypt(\$title, $args->{title});
 	$title = bytesToString($title);
@@ -2035,14 +2081,14 @@ sub cast_cancelled {
 
 sub chat_removed {
 	my ($self, $args) = @_;
-	
+
 	binRemove(\@chatRoomsID, $args->{ID});
 	delete $chatRooms{ $args->{ID} };
 }
 
 sub deal_add_other {
 	my ($self, $args) = @_;
-	
+
 	if ($args->{nameID} > 0) {
 		my $item = $currentDeal{other}{ $args->{nameID} } ||= {};
 		$item->{amount} += $args->{amount};
@@ -2089,7 +2135,7 @@ sub deal_add_you {
 
 sub deal_begin {
 	my ($self, $args) = @_;
-	
+
 	if ($args->{type} == 0) {
 		error T("That person is too far from you to trade.\n");
 	} elsif ($args->{type} == 2) {
@@ -2186,11 +2232,11 @@ sub egg_list {
 sub emoticon {
 	my ($self, $args) = @_;
 	my $emotion = $emotions_lut{$args->{type}}{display} || "<emotion #$args->{type}>";
-	
+
 	if ($args->{ID} eq $accountID) {
 		message "$char->{name}: $emotion\n", "emotion";
 		chatLog("e", "$char->{name}: $emotion\n") if (existsInList($config{'logEmoticons'}, $args->{type}) || $config{'logEmoticons'} eq "all");
-		
+
 	} elsif (my $player = $playersList->getByID($args->{ID})) {
 		my $name = $player->name;
 
@@ -2228,7 +2274,7 @@ sub emoticon {
 
 		# Translation Comment: "[dist=$dist] $monster->name ($monster->{binID}): $emotion\n"
 		message TF("[dist=%s] Monster %s (%d): %s\n", $dist, $monster->name, $monster->{binID}, $emotion), "emotion";
-		
+
 	} else {
 		my $actor = Actor::get($args->{ID});
 		my $name = $actor->name;
@@ -2238,7 +2284,7 @@ sub emoticon {
 			$dist = distance($char->{pos_to}, $actor->{pos_to});
 			$dist = sprintf("%.1f", $dist) if ($dist =~ /\./);
 		}
-		
+
 		message TF("[dist=%s] %s: %s\n", $dist, $actor->nameIdx, $emotion), "emotion";
 		chatLog("e", "$name".": $emotion\n") if (existsInList($config{'logEmoticons'}, $args->{type}) || $config{'logEmoticons'} eq "all");
 	}
@@ -2407,7 +2453,7 @@ sub exp_zeny_info {
 
 sub forge_list {
 	my ($self, $args) = @_;
-	
+
 	message T("========Forge List========\n");
 	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 8) {
 		my $viewID = unpack("v1", substr($args->{RAW_MSG}, $i, 2));
@@ -2458,12 +2504,12 @@ sub friend_logon {
 			}
 			last;
 		}
-	}	
+	}
 }
 
 sub friend_request {
 	my ($self, $args) = @_;
-	
+
 	# Incoming friend request
 	$incomingFriend{'accountID'} = $args->{accountID};
 	$incomingFriend{'charID'} = $args->{charID};
@@ -2485,12 +2531,12 @@ sub friend_removed {
 			delete $friends{$i};
 			last;
 		}
-	}	
+	}
 }
 
 sub friend_response {
 	my ($self, $args) = @_;
-		
+
 	# Response to friend request
 	my $type = $args->{type};
 	my $name = bytesToString($args->{name});
@@ -2504,7 +2550,7 @@ sub friend_response {
 		$friends{$ID}{'name'} = $name;
 		$friends{$ID}{'online'} = 1;
 		message TF("%s is now your friend\n", $incomingFriend{'name'});
-	}	
+	}
 }
 
 sub homunculus_food {
@@ -2545,7 +2591,7 @@ sub homunculus_skills {
 	my $newmsg;
 	my $msg = $args->{RAW_MSG};
 	my $msg_size = $args->{RAW_MSG_SIZE};
-	
+
 	undef @AI::Homunculus::homun_skillsID;
 	for (my $i = 4; $i < $msg_size; $i += 37) {
 		my $skillID = unpack("v1", substr($msg, $i, 2));
@@ -2640,7 +2686,7 @@ sub gameguard_grant {
 	my ($self, $args) = @_;
 
 	if ($args->{server} == 0) {
-		error T("The server Denied the login because GameGuard packets where not replied " . 
+		error T("The server Denied the login because GameGuard packets where not replied " .
 			"correctly or too many time has been spent to send the response.\n" .
 			"Please verify the version of your poseidon server and try again\n"), "poseidon";
 		return;
@@ -2665,7 +2711,7 @@ sub gameguard_request {
 
 sub guild_allies_enemy_list {
 	my ($self, $args) = @_;
-	
+
 	# Guild Allies/Enemy List
 	# <len>.w (<type>.l <guildID>.l <guild name>.24B).*
 	# type=0 Ally
@@ -2740,7 +2786,7 @@ sub guild_skills_list {
 		my $level = unpack("v1", substr($msg, $i + 6, 2));
 		my $sp = unpack("v1", substr($msg, $i + 8, 2));
 		my ($skillName) = unpack("Z*", substr($msg, $i + 12, 24));
- 
+
 		my $up = unpack("C1", substr($msg, $i+36, 1));
 		$guild{skills}{$skillName}{ID} = $skillID;
 		$guild{skills}{$skillName}{sp} = $sp;
@@ -2751,7 +2797,7 @@ sub guild_skills_list {
 		}
 	}
 }
- 
+
 sub guild_chat {
 	my ($self, $args) = @_;
 	my ($chatMsgUser, $chatMsg); # Type: String
@@ -2779,7 +2825,7 @@ sub guild_chat {
 sub guild_create_result {
 	my ($self, $args) = @_;
 	my $type = $args->{type};
-	
+
 	my %types = (
 		0 => T("Guild create successful.\n"),
 		2 => T("Guild create failed: Guild name already exists.\n"),
@@ -2836,14 +2882,14 @@ sub guild_location {
 
 sub guild_leave {
 	my ($self, $args) = @_;
-	
+
 	message TF("%s has left the guild.\n" .
-		"Reason: %s\n", $args->{name}, $args->{message}), "schat";	
+		"Reason: %s\n", $args->{name}, $args->{message}), "schat";
 }
 
 sub guild_expulsion {
 	my ($self, $args) = @_;
-	
+
 	message TF("%s has been removed from the guild.\n" .
 		"Reason: %s\n", $args->{name}, $args->{message}), "schat";
 }
@@ -2857,7 +2903,7 @@ sub guild_members_list {
 	my $msg_size = $args->{RAW_MSG_SIZE};
 	$self->decrypt(\$newmsg, substr($msg, 4, length($msg) - 4));
 	$msg = substr($msg, 0, 4) . $newmsg;
-	
+
 	my $c = 0;
 	delete $guild{member};
 	for (my $i = 4; $i < $msg_size; $i+=104){
@@ -2877,7 +2923,7 @@ sub guild_members_list {
 		$guild{member}[$c]{name} = bytesToString(unpack("Z24", substr($msg, $i + 80, 24)));
 		$c++;
 	}
-	
+
 }
 
 sub guild_member_online_status {
@@ -2897,11 +2943,11 @@ sub guild_member_online_status {
 
 sub guild_members_title_list {
 	my ($self, $args) = @_;
-	
+
 	my $newmsg;
 	my $msg = $args->{RAW_MSG};
 	my $msg_size = $args->{RAW_MSG_SIZE};
-	
+
 	$self->decrypt(\$newmsg, substr($msg, 4, length($msg) - 4));
 	$msg = substr($msg, 0, 4) . $newmsg;
 	my $gtIndex;
@@ -2913,7 +2959,7 @@ sub guild_members_title_list {
 
 sub guild_name {
 	my ($self, $args) = @_;
-	
+
 	my $guildID = $args->{guildID};
 	my $emblemID = $args->{emblemID};
 	my $mode = $args->{mode};
@@ -2921,16 +2967,16 @@ sub guild_name {
 	$char->{guild}{name} = $guildName;
 	$char->{guildID} = $guildID;
 	$char->{guild}{emblem} = $emblemID;
-	
+
 	$messageSender->sendGuildInfoRequest();	# Is this necessary?? (requests for guild info packet 014E)
-	
+
 	$messageSender->sendGuildRequest(0);	#requests for guild info packet 01B6 and 014C
 	$messageSender->sendGuildRequest(1);	#requests for guild member packet 0166 and 0154
 }
 
 sub guild_notice {
 	my ($self, $args) = @_;
-	
+
 	my $msg = $args->{RAW_MSG};
 	my ($address) = unpack("Z*", substr($msg, 2, 60));
 	my ($message) = unpack("Z*", substr($msg, 62, 120));
@@ -2969,12 +3015,12 @@ sub guild_request {
 	message TF("Incoming Request to join Guild '%s'\n", $name);
 	$incomingGuild{'ID'} = $ID;
 	$incomingGuild{'Type'} = 1;
-	$timeout{'ai_guildAutoDeny'}{'time'} = time;	
+	$timeout{'ai_guildAutoDeny'}{'time'} = time;
 }
 
 sub identify {
 	my ($self, $args) = @_;
-	
+
 	my $index = $args->{index};
 	my $invIndex = findIndex($char->{inventory}, "index", $index);
 	my $item = $char->{inventory}[$invIndex];
@@ -2986,20 +3032,20 @@ sub identify {
 
 sub identify_list {
 	my ($self, $args) = @_;
-	
+
 	my $newmsg;
 	my $msg = $args->{RAW_MSG};
 	my $msg_size = $args->{RAW_MSG_SIZE};
 	$self->decrypt(\$newmsg, substr($msg, 4));
 	$msg = substr($msg, 0, 4).$newmsg;
-	
+
 	undef @identifyID;
 	for (my $i = 4; $i < $msg_size; $i += 2) {
 		my $index = unpack("v1", substr($msg, $i, 2));
 		my $invIndex = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "index", $index);
 		binAdd(\@identifyID, $invIndex);
 	}
-	
+
 	my $num = @identifyID;
 	message TF("Received Possible Identify List (%s item(s)) - type 'identify'\n", $num), 'info';
 }
@@ -3061,7 +3107,7 @@ sub inventory_item_added {
 		$item->{invIndex} = $invIndex;
 
 		$itemChange{$item->{name}} += $amount;
-		my $disp = TF("Item added to inventory: %s (%d) x %d - %s", 
+		my $disp = TF("Item added to inventory: %s (%d) x %d - %s",
 			$item->{name}, $invIndex, $amount, $itemTypes_lut{$item->{type}});
 		message "$disp\n", "drop";
 
@@ -3147,7 +3193,7 @@ sub married {
 
 sub revolving_entity {
 	my ($self, $args) = @_;
-	
+
 	# Monk Spirits or Gunslingers' coins
 	my $sourceID = $args->{sourceID};
 	my $entities = $args->{entity};
@@ -3161,7 +3207,7 @@ sub revolving_entity {
 		$actor->{spirits} = $entities;
 		message TF("%s has %s ".$entityType."(s) now\n", $actor, $entities), "parseMsg_statuslook", 2 if $entities != $actor->{spirits};
 	}
-	
+
 }
 
 sub inventory_items_nonstackable {
@@ -3358,7 +3404,7 @@ sub item_skill {
 		ID => $skillID,
 		level => $skillLv,
 		name => $skillName
-	});	
+	});
 }
 
 sub item_upgrade {
@@ -3439,7 +3485,7 @@ sub job_equipment_hair_change {
 
 sub hp_sp_changed {
 	my ($self, $args) = @_;
-		
+
 	my $type = $args->{type};
 	my $amount = $args->{amount};
 	if ($type == 5) {
@@ -3448,7 +3494,7 @@ sub hp_sp_changed {
 	} elsif ($type == 7) {
 		$chars[$config{'char'}]{'sp'} += $amount;
 		$chars[$config{'char'}]{'sp'} = $chars[$config{'char'}]{'sp_max'} if ($chars[$config{'char'}]{'sp'} > $chars[$config{'char'}]{'sp_max'});
-	}	
+	}
 }
 
 sub local_broadcast {
@@ -3662,11 +3708,11 @@ sub map_changed {
 }
 
 sub map_loaded {
-	#Note: ServerType0 overrides this function
+	# Note: ServerType0 overrides this function
 	my ($self, $args) = @_;
 	$net->setState(Network::IN_GAME);
 	undef $conState_tries;
-	$char = $chars[$config{'char'}];
+	$char = $chars[$config{char}];
 	$syncMapSync = pack('V1',$args->{syncMapSync});
 
 	if ($net->version == 1) {
@@ -3675,7 +3721,6 @@ sub map_loaded {
 		ai_clientSuspend(0, 10);
 		main::initMapChangeVars();
 	} else {
-		#message	T("Requesting guild information...\n"), "info";
 		$messageSender->sendGuildInfoRequest();
 
 		# Replies 01B6 (Guild Info) and 014C (Guild Ally/Enemy List)
@@ -3683,7 +3728,7 @@ sub map_loaded {
 
 		# Replies 0166 (Guild Member Titles List) and 0154 (Guild Members List)
 		$messageSender->sendGuildRequest(1);
-		message T("You are now in the game\n"), "connection";
+		message(T("You are now in the game\n"), "connection");
 		$messageSender->sendMapLoaded();
 		$messageSender->sendSync(1);
 		debug "Sent initial sync\n", "connection";
@@ -3693,9 +3738,9 @@ sub map_loaded {
 	$char->{pos} = {};
 	makeCoords($char->{pos}, $args->{coords});
 	$char->{pos_to} = {%{$char->{pos}}};
-	message TF("Your Coordinates: %s, %s\n", $char->{pos}{x}, $char->{pos}{y}), undef, 1;
+	message(TF("Your Coordinates: %s, %s\n", $char->{pos}{x}, $char->{pos}{y}), undef, 1);
 
-	$messageSender->sendIgnoreAll("all") if ($config{'ignoreAll'});
+	$messageSender->sendIgnoreAll("all") if ($config{ignoreAll});
 }
 
 sub memo_success {
@@ -3709,7 +3754,7 @@ sub memo_success {
 
 sub minimap_indicator {
 	my ($self, $args) = @_;
-	
+
 	if ($args->{clear}) {
 		message TF("Minimap indicator at location %d, %d " .
 		"with the color %s cleared\n", $args->{x}, $args->{y}, $args->{color}),
@@ -3723,7 +3768,7 @@ sub minimap_indicator {
 
 sub monster_typechange {
 	my ($self, $args) = @_;
-	
+
 	# Class change / monster type change
 	# 01B0 : long ID, byte WhateverThisIs, long type
 	my $ID = $args->{ID};
@@ -3746,10 +3791,10 @@ sub monster_typechange {
 
 sub monster_ranged_attack {
 	my ($self, $args) = @_;
-	
+
 	my $ID = $args->{ID};
 	my $type = $args->{type};
-	
+
 	my %coords1;
 	$coords1{x} = $args->{sourceX};
 	$coords1{y} = $args->{sourceY};
@@ -3762,7 +3807,7 @@ sub monster_ranged_attack {
 	$char->{pos} = {%coords2};
 	$char->{pos_to} = {%coords2};
 	debug "Received attack location - monster: $coords1{x},$coords1{y} - " .
-		"you: $coords2{x},$coords2{y}\n", "parseMsg_move", 2;	
+		"you: $coords2{x},$coords2{y}\n", "parseMsg_move", 2;
 }
 
 sub mvp_item {
@@ -4121,7 +4166,7 @@ sub party_leave {
 
 sub party_location {
 	my ($self, $args) = @_;
-	
+
 	my $ID = $args->{ID};
 	$chars[$config{char}]{party}{users}{$ID}{pos}{x} = $args->{x};
 	$chars[$config{char}]{party}{users}{$ID}{pos}{y} = $args->{y};
@@ -4268,7 +4313,7 @@ sub player_equipment {
 	if ($type == 0) {
 		# Player changed job
 		$player->{jobID} = $ID1;
-		
+
 	} elsif ($type == 2) {
 		if ($ID1 ne $player->{weapon}) {
 			message TF("%s changed Weapon to %s\n", $player, itemName({nameID => $ID1})), "parseMsg_statuslook", 2;
@@ -4561,7 +4606,7 @@ sub repair_list {
 
 sub repair_result {
 	my ($self, $args) = @_;
-	
+
 	my $itemName = itemNameSimple($args->{nameID});
 	if ($args->{flag}) {
 		message TF("Repair of %s failed.\n", $itemName);
@@ -4572,7 +4617,7 @@ sub repair_result {
 
 sub resurrection {
 	my ($self, $args) = @_;
-	
+
 	my $targetID = $args->{targetID};
 	my $player = $playersList->getByID($targetID);
 	my $type = $args->{type};
@@ -4588,8 +4633,8 @@ sub resurrection {
 			undef $player->{'dead'};
 			$player->{deltaHp} = 0;
 		}
-		message TF("%s has been resurrected\n", getActorName($targetID)), "info";		
-	}	
+		message TF("%s has been resurrected\n", getActorName($targetID)), "info";
+	}
 }
 
 sub sage_autospell {
@@ -4597,7 +4642,7 @@ sub sage_autospell {
 	if ($config{autoSpell}) {
 		my $skill = new Skill(name => $config{autoSpell});
 		$messageSender->sendAutoSpell($skill->getIDN());
-	}	
+	}
 }
 
 sub secure_login_key {
@@ -4718,7 +4763,7 @@ sub pvp_rank {
 		if ($ai_v{temp}{pvp}) {
 			message TF("Your PvP rank is: %s/%s\n", $rank, $num), "map_event";
 		}
-	}	
+	}
 }
 
 sub sense_result {
@@ -4736,7 +4781,7 @@ sub sense_result {
 			"Poison: %-3s  Holy: %-3s   Dark: %-3s  Spirit: %-3s\n" .
 			"Undead: %-3s\n" .
 			"==================================================\n",
-			$monsters_lut{$args->{nameID}}, $args->{level}, $size_lut[$args->{size}], $race_lut[$args->{race}], 
+			$monsters_lut{$args->{nameID}}, $args->{level}, $size_lut[$args->{size}], $race_lut[$args->{race}],
 			$args->{def}, $args->{mdef}, $elements_lut{$args->{element}}, $args->{hp},
 			$args->{ice}, $args->{earth}, $args->{fire}, $args->{wind}, $args->{poison}, $args->{holy}, $args->{dark},
 			$args->{spirit}, $args->{undead}), "list";
@@ -4744,11 +4789,11 @@ sub sense_result {
 
 sub shop_sold {
 	my ($self, $args) = @_;
-	
+
 	# sold something
 	my $number = $args->{number};
 	my $amount = $args->{amount};
-	
+
 	$articles[$number]{sold} += $amount;
 	my $earned = $amount * $articles[$number]{price};
 	$shopEarned += $earned;
@@ -4887,7 +4932,7 @@ sub skill_cast {
 		}
 
 		Misc::checkValidity("skill_cast part 4");
-	}		
+	}
 }
 
 sub skill_update {
@@ -4938,7 +4983,7 @@ sub skill_use {
 	# Resolve source and target names
 	my $skill = new Skill(idn => $args->{skillID});
 	$args->{skill} = $skill;
-	my $disp = skillUse_string($source, $target, $skill->getName(), $args->{damage}, 
+	my $disp = skillUse_string($source, $target, $skill->getName(), $args->{damage},
 		$args->{level}, ($args->{src_speed}/10));
 
 	if ($args->{damage} != -30000 &&
@@ -5092,7 +5137,7 @@ sub skill_used_no_damage {
 	my $skill = $args->{skill} = new Skill(idn => $args->{skillID});
 	my $disp = skillUseNoDamage_string($source, $target, $skill->getIDN(), $skill->getName(), $args->{amount});
 	message $disp, $domain;
-	
+
 	# Set teleport time
 	if ($args->{sourceID} eq $accountID && $skill->getHandle() eq 'AL_TELEPORT') {
 		$timeout{ai_teleport_delay}{time} = time;
@@ -5130,7 +5175,7 @@ sub skills_list {
 	my $newmsg;
 	my $msg = $args->{RAW_MSG};
 	my $msg_size = $args->{RAW_MSG_SIZE};
-	
+
 	$self->decrypt(\$newmsg, substr($msg, 4));
 	$msg = substr($msg, 0, 4).$newmsg;
 
@@ -5173,7 +5218,7 @@ sub skills_list {
 			handle => $handle,
 			level => $level,
 		});
-	}		
+	}
 }
 
 sub linker_skill {
@@ -5181,7 +5226,7 @@ sub linker_skill {
 
 	changeToInGameState();
 	my $handle = ($args->{name}) ? $args->{name} : Skill->new(idn => $args->{skillID})->getHandle();
-	
+
 	$char->{skills}{$handle}{ID} = $args->{skillID};
 	$char->{skills}{$handle}{sp} = $args->{sp};
 	$char->{skills}{$handle}{range} = $args->{range};
@@ -5204,7 +5249,7 @@ sub linker_skill {
 
 sub stats_added {
 	my ($self, $args) = @_;
-	
+
 	if ($args->{val} == 207) {
 		error T("Not enough stat points to add\n");
 	} else {
@@ -5691,7 +5736,7 @@ sub system_chat {
 	# Translation Comment: System/GM chat
 	message TF("[GM] %s\n", $message), "schat";
 	ChatQueue::add('gm', undef, undef, $message);
-	
+
 	Plugins::callHook('packet_sysMsg', {
 		Msg => $message
 	});
@@ -5704,7 +5749,7 @@ sub top10_alchemist_rank {
 	message TF("============= ALCHEMIST RANK ================\n" .
 		"#    Name                             Points\n".
 		"%s" .
-		"=============================================\n", $textList), "list";	
+		"=============================================\n", $textList), "list";
 }
 
 sub top10_blacksmith_rank {
@@ -5763,7 +5808,7 @@ sub unequip_item {
 
 sub unit_levelup {
 	my ($self, $args) = @_;
-	
+
 	my $ID = $args->{ID};
 	my $type = $args->{type};
 	my $name = getActorName($ID);
@@ -5780,7 +5825,7 @@ sub unit_levelup {
 
 sub use_item {
 	my ($self, $args) = @_;
-	
+
 	changeToInGameState();
 	my $invIndex = findIndex($char->{inventory}, "index", $args->{index});
 	if (defined $invIndex) {
@@ -5794,7 +5839,7 @@ sub use_item {
 
 sub users_online {
 	my ($self, $args) = @_;
-	
+
 	message TF("There are currently %s users online\n", $args->{users}), "info";
 }
 
@@ -5815,14 +5860,14 @@ sub vender_items_list {
 
 	my $msg = $args->{RAW_MSG};
 	my $msg_size = $args->{RAW_MSG_SIZE};
-	
+
 	undef @venderItemList;
 	undef $venderID;
 	$venderID = substr($msg,4,4);
 	my $player = Actor::get($venderID);
 
 	message TF("%s\n" .
-		"#  Name                                       Type           Amount       Price\n", 
+		"#  Name                                       Type           Amount       Price\n",
 		center(' Vender: ' . $player->nameIdx . ' ', 79, '-')), "list";
 	for (my $i = 8; $i < $msg_size; $i+=22) {
 		my $number = unpack("v1", substr($msg, $i + 6, 2));
@@ -5858,7 +5903,7 @@ sub vender_items_list {
 	Plugins::callHook('packet_vender_store2', {
 		venderID => $venderID,
 		itemList => \@venderItemList
-	});	
+	});
 }
 
 sub vender_lost {
@@ -5884,7 +5929,7 @@ sub vender_buy_fail {
 
 sub vending_start {
 	my ($self, $args) = @_;
-		
+
 	my $msg = $args->{RAW_MSG};
 	my $msg_size = unpack("v1",substr($msg, 2, 2));
 
@@ -5896,7 +5941,7 @@ sub vending_start {
 	# FIXME: Read the packet the server sends us to determine
 	# the shop title instead of using $shop{title}.
 	message TF("%s\n" .
-		"#  Name                                          Type        Amount       Price\n", 
+		"#  Name                                          Type        Amount       Price\n",
 		center(" $shop{title} ", 79, '-')), "list";
 	for (my $i = 8; $i < $msg_size; $i += 22) {
 		my $number = unpack("v1", substr($msg, $i + 4, 2));
@@ -5925,7 +5970,7 @@ sub vending_start {
 
 sub warp_portal_list {
 	my ($self, $args) = @_;
-	
+
 	# strip gat extension
 	($args->{memo1}) = $args->{memo1} =~ /^(.*)\.gat/;
 	($args->{memo2}) = $args->{memo2} =~ /^(.*)\.gat/;
@@ -5958,4 +6003,3 @@ sub warp_portal_list {
 }
 
 1;
-

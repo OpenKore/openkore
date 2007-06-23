@@ -48,7 +48,9 @@ use Network;
 use Network::Send ();
 use Plugins;
 use Settings;
+use Interface;
 use Utils qw(dataWaiting timeOut);
+use Utils::Exceptions;
 use Misc qw(chatLog);
 use Translation;
 
@@ -319,9 +321,17 @@ sub checkConnection {
 		$conState_tries++;
 		$initSync = 1;
 		undef $msg;
-		$packetParser = Network::Receive->create($config{serverType});
-		my $wrapper = ($self->{wrapper}) ? $self->{wrapper} : $self;
-		$messageSender = Network::Send->create($wrapper, $config{serverType});
+
+		eval {
+			$packetParser = Network::Receive->create($config{serverType});
+			my $wrapper = ($self->{wrapper}) ? $self->{wrapper} : $self;
+			$messageSender = Network::Send->create($wrapper, $config{serverType});
+		};
+		if (my $e = caught('Exception::Class::Base')) {
+			$interface->errorDialog($e->message());
+			$quit = 1;
+			return;
+		}
 		$self->serverConnect($master->{ip}, $master->{port});
 
 		# call plugin's hook to determine if we can continue the work
