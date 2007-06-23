@@ -23,7 +23,6 @@ use Time::HiRes qw(time);
 use Carp::Assert;
 use IO::Socket;
 use Text::ParseWords;
-use Carp::Assert;
 use encoding 'utf8';
 
 use Globals;
@@ -710,7 +709,7 @@ sub processTask {
 		if ($task->getStatus() == Task::INACTIVE) {
 			$task->activate();
 		}
-		assert($task->getStatus() == Task::RUNNING) if DEBUG;
+		should($task->getStatus(), Task::RUNNING) if DEBUG;
 		$task->iterate();
 		if ($task->getStatus() == Task::DONE) {
 			AI::dequeue;

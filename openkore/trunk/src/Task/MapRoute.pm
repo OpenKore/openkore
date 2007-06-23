@@ -376,6 +376,11 @@ sub subtaskDone {
 			if (@{$self->{mapSolution}} == 0) {
 				# The map solution is empty, meaning that the destination
 				# is on the same map and that we can walk there directly.
+				if (!defined($self->{dest}{pos}{x}) || !defined($self->{dest}{pos}{y})) {
+					die "MapRoute task has inconsistent state.\n" .
+						"Current field name: " . $field->name() . "\n" .
+						"Target field name: $self->{dest}{map}\n";
+				}
 				my $task = new Task::Route(
 					x => $self->{dest}{pos}{x},
 					y => $self->{dest}{pos}{y},
