@@ -27,7 +27,7 @@ sub new {
 
 ##
 # Todo:
-# sendDrop, sendItemUse, sendLook, sendSkillUseLoc, sendStorageAdd, sendStorageAdd, sendStorageGet
+# sendDrop, sendSkillUseLoc
 ##
 
 # Create a random byte string of a specified length.
@@ -95,6 +95,48 @@ sub sendSync {
 		pack("V", getTickCount());
 	$self->sendToServer($msg);
 	debug "Sent Sync\n", "sendPacket", 2;
+}
+
+sub sendStorageAdd {
+	my $self = shift;
+	my $index = shift;
+	my $amount = shift;
+	my $msg = pack("C*", 0xA2, 0x00) .
+			pack("v", $index) .
+			pack("V", $amount) .
+			pack("x8");
+	$self->sendToServer($msg);
+	debug "Sent Storage Add: $index x $amount\n", "sendPacket", 2;
+}
+
+sub sendStorageGet {
+	my ($self, $index, $amount) = @_;
+	my $msg = pack("C*", 0x9B, 0x00) .
+			pack("V*", $amount) .
+			pack("x12") .
+			pack("v*", $index);
+			
+	$self->sendToServer($msg);
+	debug "Sent Storage Get: $index x $amount\n", "sendPacket", 2;
+}
+
+sub sendItemUse {
+	my ($self, $ID, $targetID) = @_;
+	my $msg = pack("C*", 0x9F, 0x00) .
+		pack("v*", $ID) .
+		$targetID;
+	$self->sendToServer($msg);
+	debug "Item Use: $ID\n", "sendPacket", 2;
+}
+
+sub sendLook {
+	my ($self, $body, $head) = @_;
+	my $msg = pack("C*", 0xF7, 0x00, $head, 0x00, $body);
+
+	$self->sendToServer($msg);
+	debug "Sent look: $body $head\n", "sendPacket", 2;
+	$char->{look}{head} = $head;
+	$char->{look}{body} = $body;
 }
 
 1;
