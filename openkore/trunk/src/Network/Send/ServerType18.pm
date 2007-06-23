@@ -25,6 +25,11 @@ sub new {
 	return $class->SUPER::new(@_);
 }
 
+##
+# Todo:
+# sendDrop, sendItemUse, sendLook, sendSkillUseLoc, sendStorageAdd, sendStorageAdd, sendStorageGet
+##
+
 # Create a random byte string of a specified length.
 sub createRandomBytes {
 	my ($length) = @_;
@@ -53,8 +58,8 @@ sub sendMapLogin {
 		$accountID .
 		chr(0) .
 		$sessionID .
-		pack("V", getTickCount()) .
 		createRandomBytes(9) .
+		pack("V", getTickCount()) .
 		chr($sex) .
 		createRandomBytes(5);
 	$self->sendToServer($msg);
@@ -64,9 +69,9 @@ sub sendMove {
 	my ($self) = shift;
 	my $x = int scalar shift;
 	my $y = int scalar shift;
-	my $msg =
-		pack("C*", 0x85, 0x00, 0x00, 0x00, 0x00, 0x00) .
+	my $msg = pack("C*", 0x85, 0x00, 0x00, 0x00, 0x00, 0x00) .
 		getCoordString2($x, $y, 1);
+		
 	$self->sendToServer($msg);
 	debug "Sent move to: $x, $y\n", "sendPacket", 2;
 }
@@ -77,6 +82,19 @@ sub sendTake {
 	my $msg = pack("C*", 0x16, 0x01) . $itemID;
 	$self->sendToServer($msg);
 	debug "Sent take\n", "sendPacket", 2;
+}
+
+sub sendSync {
+	my ($self, $initialSync) = @_;
+	my $msg;
+	# XKore mode 1 lets the client take care of syncing.
+	return if ($self->{net}->version == 1);
+
+	$msg = pack("C*", 0xA7, 0x00) . 
+		pack("x6") .
+		pack("V", getTickCount());
+	$self->sendToServer($msg);
+	debug "Sent Sync\n", "sendPacket", 2;
 }
 
 1;
