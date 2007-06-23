@@ -33,8 +33,10 @@ use Utils qw(dataWaiting timeOut makeIP encodeIP swrite existsInList);
 use Misc qw(configModify visualDump);
 use Translation qw(T TF);
 use I18N qw(bytesToString);
+use Interface;
 use Network;
 use Network::Send ();
+use Utils::Exceptions;
 
 my $clientBuffer;
 my %flushTimer;
@@ -339,8 +341,15 @@ sub checkServer {
 			$self->{nextIp} = $master->{ip};
 			$self->{nextPort} = $master->{port};
 			message TF("Proxying to [%s]\n", $config{master}), "connection" unless ($self->{gotError});
-			$packetParser = Network::Receive->create($config{serverType});
-			$messageSender = Network::Send->create($self, $config{serverType});
+			eval {
+				$packetParser = Network::Receive->create($config{serverType});
+				$messageSender = Network::Send->create($self, $config{serverType});
+			};
+			if (my $e = caught('Exception::Class::Base')) {
+				$interface->errorDialog($e->message());
+				$quit = 1;
+				return;
+			}
 		}
 
 		$self->serverConnect($self->{nextIp}, $self->{nextPort}) unless ($self->{gotError});
