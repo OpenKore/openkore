@@ -1,5 +1,3 @@
 typemap
 HttpReader.xs
-RMD128.xs
-RMD160.xs
 Whirlpool.xs

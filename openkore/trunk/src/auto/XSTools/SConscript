@@ -94,19 +94,12 @@ sources += [
 	'utils/whirlpool-algorithm.c',
 	'utils/perl/Whirlpool.c',
 
-	'utils/rmd128.c',
-	'utils/rmd160.c',
-	'utils/perl/RMD128.c',
-	'utils/perl/RMD160.c',
-
 	'utils/rijndael-alg-fst.c',
 	'utils/rijndael-api-fst.c',
 	'utils/aes-cfb.c'
 ]
 XS_sources['utils/perl/HttpReader.xs'] = 'utils/perl/HttpReader.cpp'
 XS_sources['utils/perl/Whirlpool.xs'] = 'utils/perl/Whirlpool.c'
-XS_sources['utils/perl/RMD160.xs'] = 'utils/perl/RMD160.c'
-XS_sources['utils/perl/RMD128.xs'] = 'utils/perl/RMD128.c'
 if not win32:
 	perlenv.ParseConfig('curl-config --cflags --libs')
 

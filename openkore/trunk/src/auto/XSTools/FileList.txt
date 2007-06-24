@@ -7,10 +7,24 @@ those C and C++ APIs.
 
 Subfolders
 ----------
-pathfinding/
+PathFinding/
 	Contains:
 	- C and C++ source files for the OpenKore pathfinding algorithm.
 	- Perl XS wrapper for the C/C++ pathfinding API.
+
+Translation/
+	Code for internationalization and localization (translation)
+	support in OpenKore.
+
+PaddedPackets/
+	Padded packets emulator. See README.TXT in this folder for more
+	information.
+
+utils/
+	Contains:
+	- HttpReader, an asynchronous HTTP client.
+	- The Whirlpool hashing function.
+	- Rijndael (AES) encryption.
 
 unix/
 	Contains Unix-specific functions and their associated Perl XS
