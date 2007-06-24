@@ -331,7 +331,7 @@ def buildXS(target, source, env):
 		str(source[0])]
 	return os.spawnvp(os.P_WAIT, perlconfig['perl'], command)
 
-perlenv['BUILDERS']['XS'] = Builder(action = buildXS)
+perlenv.Append(BUILDERS = { 'XS' : Builder(action = buildXS) })
 
 
 ### Invoke SConscripts ###
