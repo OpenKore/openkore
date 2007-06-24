@@ -144,4 +144,66 @@ sub sendTake {
 	debug "Sent take\n", "sendPacket", 2;
 }
 
+sub sendSit {
+	my $self = shift;
+
+	my %args;
+	$args{flag} = 2;
+	Plugins::callHook('packet_pre/sendSit', \%args);
+	if ($args{return}) {
+		$self->sendToServer($args{msg});
+		return;
+	}
+	
+	error "Your server is not supported because it uses padded packets.\n";
+	if (AI::action() eq "sitting") {
+		error "Failed to sit.\n";
+		AI::dequeue();
+	}
+}
+
+sub sendStand {
+	my $self = shift;
+
+	my %args;
+	$args{flag} = 3;
+	Plugins::callHook('packet_pre/sendStand', \%args);
+	if ($args{return}) {
+		$self->sendToServer($args{msg});
+		return;
+	}	
+	
+	error "Your server is not supported because it uses padded packets.\n";
+	if (AI::action() eq "standing") {
+		error "Failed to stand.\n";
+		AI::dequeue();
+	}
+}
+
+sub sendSkillUse {
+	my $self = shift;
+	my $ID = shift;
+	my $lv = shift;
+	my $targetID = shift;
+	
+	my %args;
+	$args{ID} = $ID;
+	$args{lv} = $lv;
+	$args{targetID} = $targetID;
+	Plugins::callHook('packet_pre/sendSkillUse', \%args);
+	if ($args{return}) {
+		$self->sendToServer($args{msg});
+		return;
+	}
+
+	error "Your server is not supported because it uses padded packets.\n";
+	if (AI::action() eq 'teleport') {
+		error "Failed to use teleport skill.\n";
+		AI::dequeue();
+	} elsif (AI::action() ne "skill_use") {
+		error "Failed to use skill.\n";
+		AI::dequeue();
+	}
+}
+
 1;
