@@ -5,6 +5,7 @@
  *	Released 1997.10.11
  */
 
+#include <string.h>
 #include "../typedefs.h"
 
 #include "cast.h"
@@ -136,6 +137,10 @@ void cast_setkey(cast_key* key, byte* rawkey, int keybytes)
 {
 	dword t[4], z[4], x[4];
 	int i;
+
+	memset(t, 0, sizeof(t));
+	memset(z, 0, sizeof(z));
+	memset(x, 0, sizeof(x));
 
 	// Set number of rounds to 12 or 16, depending on key length
 	key->rounds = (keybytes <= 10 ? 12 : 16);
