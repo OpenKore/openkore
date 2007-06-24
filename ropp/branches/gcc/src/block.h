@@ -24,6 +24,7 @@ namespace PaddedPackets {
 
 	/**
 	 * A dword buffer which can dynamically grow as necessary.
+	 * This is used internally by the Engine class.
 	 */
 	class Block {
 	public:

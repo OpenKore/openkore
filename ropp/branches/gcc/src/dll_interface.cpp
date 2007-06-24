@@ -1,5 +1,5 @@
-#include "ppengine.h"
-#include "ropp.h"
+#include "engine.h"
+#include "dll_interface.h"
 
 using namespace OpenKore::PaddedPackets;
 
