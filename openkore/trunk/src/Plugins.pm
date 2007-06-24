@@ -28,7 +28,7 @@ package Plugins;
 use strict;
 use warnings;
 use Time::HiRes qw(time sleep);
-use Exception::Class ('Plugin::LoadException');
+use Exception::Class ('Plugin::LoadException', 'Plugin::DeniedException');
 use UNIVERSAL qw(isa);
 
 use Modules 'register';
@@ -75,6 +75,8 @@ use enum qw(CALLBACK USER_DATA);
 # the plugins folder. Plugins must have the .pl extension.
 #
 # Throws Plugin::LoadException if a plugin failed to load.
+# Throws Plugin::DeniedException if the plugin system refused to load a plugin. This can
+# happen, for example, if it detects that a plugin is incompatible.
 sub loadAll {
 	my (@plugins, @subdirs);
 	my $pathDelimiter = ($^O eq 'MSWin32') ? ';' : ':';
@@ -117,6 +119,8 @@ sub loadAll {
 # Loads a plugin.
 #
 # Throws Plugin::LoadException if it failed to load.
+# Throws Plugin::DeniedException if the plugin system refused to load this plugin. This can
+# happen, for example, if it detects that a plugin is incompatible.
 sub load {
 	my $file = shift;
 	message(TF("Loading plugin %s...\n", $file), "plugins");
@@ -127,6 +131,9 @@ sub load {
 
 	if (! -f $file) {
 		Plugin::LoadException->throw(TF("File %s does not exist.", $file));
+	} elsif ($file =~ /(^|\/)ropp\.pl$/i) {
+		Plugin::DeniedException->throw(TF("The ROPP plugin (ropp.pl) is obsolete and is " .
+			"no longer necessary. Please remove it, or OpenKore will not work correctly."));
 	}
 
 	undef $!;

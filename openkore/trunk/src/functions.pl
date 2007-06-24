@@ -115,6 +115,9 @@ sub loadPlugins {
 			"%s",
 			$e->message));
 		exit 1;
+	} elsif (my $e = caught('Plugin::DeniedException')) {
+		$interface->errorDialog($e->message);
+		exit 1;
 	} elsif ($@) {
 		die $@;
 	}
