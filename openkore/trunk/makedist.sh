@@ -44,7 +44,7 @@ DIRS=(.
 	src/Utils/StartupNotification
 	src/auto/XSTools
 	src/auto/XSTools/misc
-	src/auto/XSTools/pathfinding
+	src/auto/XSTools/PathFinding
 	src/auto/XSTools/unix
 	src/auto/XSTools/win32
 	src/auto/XSTools/Translation
