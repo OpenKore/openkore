@@ -1,16 +1,15 @@
 CC=gcc -mno-cygwin
-CFLAGS=
+CFLAGS=-Wall -DBUILDING_DLL -g
 CXX=g++ -mno-cygwin
-CXXFLAGS=-Wall
+CXXFLAGS=$(CFLAGS)
 NASM=nasm -f gnuwin32
 DLLWRAP=dllwrap --driver-name g++ --target=i386-mingw32 --add-stdcall-alias -mno-cygwin --export-all-symbols --output-def ropp.def
+.PHONY: objects
 
 all: objects
-	$(DLLWRAP) src/main/*.o src/call16/*.o src/call16/draft/func9A/turtle.o -o ropp.dll -lstdc++
+	$(CXX) -shared -Wl,--output-def=libropp.def -Wl,--out-implib=libropp.a -Wl,--dll -L. src/*.o src/Algorithms/*.o -o ropp.dll -s -Wl,--kill-at
 
 objects:
-	$(CXX) $(CXXFLAGS) -c src/main/dll_interface.cpp -o src/main/dll_interface.o
-	$(CXX) $(CXXFLAGS) -c src/main/ppengine.cpp -o src/main/ppengine.o
-	$(NASM) src/call16/func_f.asm
-	cd src/call16 && $(CXX) $(CFLAGS) -c *.cpp *.c
-	$(CC) $(CFLAGS) -c src/call16/draft/func9A/turtle.c -o src/call16/draft/func9A/turtle.o
+	cd src/Algorithms && $(CC) $(CFLAGS) -c *.c
+	cd src/Algorithms && $(CXX) $(CXXFLAGS) -c *.cpp
+	cd src && $(CXX) $(CXXFLAGS) -c *.cpp
