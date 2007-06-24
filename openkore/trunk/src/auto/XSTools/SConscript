@@ -110,6 +110,25 @@ XS_sources['utils/perl/RMD128.xs'] = 'utils/perl/RMD128.c'
 if not win32:
 	perlenv.ParseConfig('curl-config --cflags --libs')
 
+### Padded packets
+sources += [
+	'PaddedPackets/Algorithms/cast.c',
+	'PaddedPackets/Algorithms/feal8.c',
+	'PaddedPackets/Algorithms/mcg_cipher.c',
+	'PaddedPackets/Algorithms/misty1.c',
+	'PaddedPackets/Algorithms/rmd128.c',
+	'PaddedPackets/Algorithms/safer.c',
+	'PaddedPackets/Algorithms/seal.c',
+	'PaddedPackets/Algorithms/snefru.c',
+	'PaddedPackets/Algorithms/tiger.c',
+	'PaddedPackets/Algorithms/turtle.c',
+	'PaddedPackets/Algorithms/algorithms.cpp',
+	'PaddedPackets/block.cpp',
+	'PaddedPackets/engine.cpp',
+	'PaddedPackets/PaddedPackets.xs.cpp',
+]
+XS_sources['PaddedPackets/PaddedPackets.xs'] = 'PaddedPackets/PaddedPackets.xs.cpp'
+
 ### Misc
 sources += [
 	'misc/misc.c',
