@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include "algorithms.h"
 
 #include "mcg_cipher.h"
@@ -12,8 +11,10 @@
 #include "safer.h"
 #include "seal.h"
 
+
 // MacGuffin Cipher
-dword func0(dword aKey)
+static dword
+func0(dword aKey)
 {
 	byte Key[16]={0x40, 0xF2, 0x41, 0xB2, 0x69, 0xF6, 0xF1, 0xAF, 0x63, 0xF4, 0x5D, 0xFF, 0xE, 0x1B, 0x11, 0x9B};
 	dword Blk[2]={0,0};
@@ -30,7 +31,8 @@ dword func0(dword aKey)
 }
 
 // MacGuffin Cipher
-dword func1(dword aKey)
+static dword
+func1(dword aKey)
 {
 	byte Key[16]={0x40, 0xF2, 0x41, 0xB2, 0x69, 0xF6, 0xF1, 0xAF, 0x63, 0xF4, 0x5B, 0xFF, 0xE, 0x1C, 0x11, 0x9B};
 	dword Blk[2]={0,0};
@@ -45,8 +47,10 @@ dword func1(dword aKey)
 	MCGBlockEncrypt1((byte*)Blk,&ExpKey);
 	return Blk[0];
 }
+
 //RIPEMD-128
-dword func2(dword aKey)
+static dword
+func2(dword aKey)
 {
 	dword MDbuf[4]={0,0,0,0};
 	MDinit(MDbuf); //sub_502500
@@ -55,7 +59,8 @@ dword func2(dword aKey)
 }
 
 // Snefru
-dword func3(dword aKey)
+static dword
+func3(dword aKey)
 {
 	dword input[16] = { 0x0023D6F7, 0 };
 	dword output[4];
@@ -68,7 +73,8 @@ dword func3(dword aKey)
 }
 
 // Tiger
-dword func4(dword aKey)
+static dword
+func4(dword aKey)
 {
 	dword	res[6] = { 0 };
 	dword	str[16] = { 0 };
@@ -79,9 +85,9 @@ dword func4(dword aKey)
 	return res[2];
 }
 
-//-----------------------------------------------------------------------------
-// Safer block
-dword func5(dword aKey)
+// Safer
+static dword
+func5(dword aKey)
 {
 	static safer_key_t saferKey1;
 	static bool saferInited1 = false;
@@ -104,8 +110,9 @@ dword func5(dword aKey)
 	return *(dword*)(outBlock);
 }
 
-//-----------------------------------------------------------------------------
-dword func6(dword aKey)
+// Safer
+static dword
+func6(dword aKey)
 {
 	static safer_key_t saferKey2;
 	static bool saferInited2 = false;
@@ -125,10 +132,12 @@ dword func6(dword aKey)
 	*(dword*)(inBlock) = aKey;
 	Safer_Decrypt_Block( inBlock, saferKey2, outBlock );
 
-   return *(dword*)(outBlock);
+	return *(dword*)(outBlock);
 }
 
-dword func7(dword aKey)
+// CAST
+static dword
+func7(dword aKey)
 {
 	static cast_key CASTKey;
 	static bool CASTInited = false;
@@ -148,8 +157,9 @@ dword func7(dword aKey)
 	return *(dword*)(outBlock);
 }
 
-//-----------------------------------------------------------------------------
-dword func8(dword aKey)
+// CAST
+static dword
+func8(dword aKey)
 {
 	static cast_key CASTKey;
 	static bool CASTInited = false;
@@ -169,7 +179,10 @@ dword func8(dword aKey)
 	return *(dword*)(outBlock);
 }
 
-dword func9(dword aKey) {
+// TURTLE
+static dword
+func9(dword aKey)
+{
 	TURTLEWORD key[16] = { 0x40, 0xF2, 0x41, 0xB2, 0x69, 0xF6, 0xF2,
 		0xAF, 0x63, 0xF4, 0x5D, 0xFF, 0x0E, 0x1C, 0x11, 0x9B };
 	TURTLEWORD block[8] = { 0 };
@@ -181,7 +194,10 @@ dword func9(dword aKey) {
 	return ((dword *) block)[0];
 }
 
-dword funcA(dword aKey) {
+// TURTLE
+static dword
+funcA(dword aKey)
+{
 	TURTLEWORD key[16] = { 0x40, 0xF2, 0x41, 0xB2, 0x69, 0xF6, 0xF1,
 		0xA5, 0x63, 0xF4, 0x5D, 0xFF, 0x0E, 0x1C, 0x11, 0x9B };
 	TURTLEWORD block[8] = { 0 };
@@ -193,7 +209,10 @@ dword funcA(dword aKey) {
 	return ((dword *) block)[0];
 }
 
-dword funcB(dword aKey) {
+// FEAL-8
+static dword
+funcB(dword aKey)
+{
 	unsigned char key[] = { 0x12, 0x43, 0x9F, 0x1F, 0xAB, 0xFF, 0x3A, 0x6F };
 	unsigned char inBlock[8] = { 0 };
 	unsigned char outBlock[8] = { 0 };
@@ -203,7 +222,10 @@ dword funcB(dword aKey) {
 	return ((dword *) outBlock)[0];
 }
 
-dword funcC(dword aKey) {
+// FEAL-8
+static dword
+funcC(dword aKey)
+{
 	unsigned char key[] = { 0x22, 0x43, 0x9F, 0x1F, 0xAC, 0xFF, 0x3A, 0x6F };
 	unsigned char inBlock[8] = { 0 };
 	unsigned char outBlock[8] = { 0 };
@@ -213,7 +235,9 @@ dword funcC(dword aKey) {
 	return ((dword *) outBlock)[0];
 }
 
-dword funcD(dword aKey)
+// Misty-1
+static dword
+funcD(dword aKey)
 {
 	dword Key[4]={0x73DA73C3, 0x83FA7ECA, 0x83943092, 0xADEFCDEA};
 	dword Cipher[2];
@@ -221,8 +245,7 @@ dword funcD(dword aKey)
 	static word ExpKey[32];
 	static char KeyNE = 1;
 	Block[0] = aKey;
-	if(KeyNE)
-	{
+	if (KeyNE) {
 		MSTInit(ExpKey, Key);
 		KeyNE = 0;
 	}
@@ -230,7 +253,9 @@ dword funcD(dword aKey)
 	return Cipher[0];
 }
 
-dword funcE(dword aKey)
+// Misty-1
+static dword
+funcE(dword aKey)
 {
 	dword Key[4]={0x73DA73C3, 0x83FA7ECA, 0x84643092, 0xADEFCDEA};
 	dword Cipher[2];
@@ -247,9 +272,15 @@ dword funcE(dword aKey)
 	return Cipher[0];
 }
 
-dword funcF(dword aKey)
+// SEAL
+static dword
+funcF(dword aKey)
 {
-	byte key[20] = {0x40, 0xF2, 0xFF, 0xB2, 0x69, 0xF6, 0xF1, 0xAF, 0x63, 0xF4, 0x5D, 0x41, 0x0E, 0x1C, 0x11, 0x9B, 0xF0, 0x45, 0xBE, 0xEA};
+	byte key[20] = {
+		0x40, 0xF2, 0xFF, 0xB2, 0x69, 0xF6, 0xF1,
+		0xAF, 0x63, 0xF4, 0x5D, 0x41, 0x0E, 0x1C,
+		0x11, 0x9B, 0xF0, 0x45, 0xBE, 0xEA
+	};
 	dword buf[2] = {aKey, 0};
 	seal_ctx sc;
 	seal_key(&sc, key);
@@ -257,15 +288,29 @@ dword funcF(dword aKey)
 	return buf[0];
 }
 
-dword (*funcs[])(dword)={
+
+/*******************************************************/
+
+static dword (*funcs[])(dword) = {
 	func0, func1, func2, func3, func4, func5, func6, func7,
 	func8, func9, funcA, funcB, funcC, funcD, funcE, funcF
 };
 
-dword hash_func(int N, dword key){return funcs[N](key);}
-dword call_16(int map_sync, int sync, int acc_id, short packet)
-{
-	unsigned int slot = (packet * packet + map_sync + sync + acc_id) & 0xF;
-	printf("Slot = %d\n", slot);
-	return funcs[slot](packet * acc_id + map_sync * sync);
-}
+namespace OpenKore {
+namespace PaddedPackets {
+
+	dword
+	createHash(int map_sync, int sync, int account_id, short packet)
+	{
+		unsigned int slot = (packet * packet + map_sync + sync + account_id) & 0xF;
+		return funcs[slot](packet * account_id + map_sync * sync);
+	}
+	
+	dword
+	createHash(int algorithm_id, dword key)
+	{
+		return funcs[algorithm_id](key);
+	}
+
+} // PaddedPackets
+} // OpenKore

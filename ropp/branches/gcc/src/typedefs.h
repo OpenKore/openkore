@@ -11,7 +11,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See http://www.gnu.org/licenses/gpl.html for the full license.
-*/
+ */
 
 #ifndef _ROPP_TYPEDEFS_H_
 #define _ROPP_TYPEDEFS_H_
