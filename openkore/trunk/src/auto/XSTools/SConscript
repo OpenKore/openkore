@@ -48,23 +48,23 @@ XS_sources = {}
 
 ### Pathfinding
 sources += [
-	'pathfinding/algorithm.cpp',
-	'pathfinding/wrapper.cpp'
+	'PathFinding/algorithm.cpp',
+	'PathFinding/PathFinding.xs.cpp'
 ]
-XS_sources['pathfinding/wrapper.xs'] = 'pathfinding/wrapper.cpp'
+XS_sources['PathFinding/PathFinding.xs'] = 'PathFinding/PathFinding.xs.cpp'
 
 ### Translation
 sources += [
 	'Translation/filereader.cpp',
 	'Translation/translator.cpp',
 	'Translation/utils.cpp',
-	'Translation/wrapper.cpp'
+	'Translation/Translation.xs.cpp'
 ]
 if win32:
 	sources += ['Translation/winfilereader.cpp']
 else:
 	sources += ['Translation/unixfilereader.cpp']
-XS_sources['Translation/wrapper.xs'] = 'Translation/wrapper.cpp'
+XS_sources['Translation/Translation.xs'] = 'Translation/Translation.xs.cpp'
 
 ### Unix
 if not win32:

@@ -1,5 +1,5 @@
 algorithm.cpp
 algorithm.h
 Changes
-wrapper.xs
+PathFinding.xs
 typemap

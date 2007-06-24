@@ -8,4 +8,4 @@ utils.h
 utils.cpp
 winfilereader.h
 winfilereader.cpp
-wrapper.xs
+Translation.xs
