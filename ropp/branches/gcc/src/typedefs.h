@@ -30,9 +30,9 @@ typedef unsigned long  dword;	// unsigned 32-bit type
 
 #ifndef DLL_CEXPORT
 	#ifdef BUILDING_DLL
-		#define DLL_CEXPORT extern "C" __declspec(dllexport)
+		#define DLL_CEXPORT extern "C" __declspec(dllexport) STDCALL
 	#else
-		#define DLL_CEXPORT extern "C" __declspec(dllimport)
+		#define DLL_CEXPORT extern "C" __declspec(dllimport) STDCALL
 	#endif
 #endif
 
