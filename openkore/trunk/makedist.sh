@@ -47,7 +47,8 @@ DIRS=(.
 	src/auto/XSTools/pathfinding
 	src/auto/XSTools/unix
 	src/auto/XSTools/win32
-	src/auto/XSTools/translation
+	src/auto/XSTools/Translation
+	src/auto/XSTools/PaddedPackets
 	src/auto/XSTools/utils
 	src/auto/XSTools/utils/win32
 	src/auto/XSTools/utils/unix

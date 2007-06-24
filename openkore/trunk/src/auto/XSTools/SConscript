@@ -55,16 +55,16 @@ XS_sources['pathfinding/wrapper.xs'] = 'pathfinding/wrapper.cpp'
 
 ### Translation
 sources += [
-	'translation/filereader.cpp',
-	'translation/translator.cpp',
-	'translation/utils.cpp',
-	'translation/wrapper.cpp'
+	'Translation/filereader.cpp',
+	'Translation/translator.cpp',
+	'Translation/utils.cpp',
+	'Translation/wrapper.cpp'
 ]
 if win32:
-	sources += ['translation/winfilereader.cpp']
+	sources += ['Translation/winfilereader.cpp']
 else:
-	sources += ['translation/unixfilereader.cpp']
-XS_sources['translation/wrapper.xs'] = 'translation/wrapper.cpp'
+	sources += ['Translation/unixfilereader.cpp']
+XS_sources['Translation/wrapper.xs'] = 'Translation/wrapper.cpp'
 
 ### Unix
 if not win32:
