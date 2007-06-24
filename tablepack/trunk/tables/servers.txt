@@ -88,6 +88,9 @@ master_version 14
 version 18
 serverType 18
 serverEncoding Western
+paddedPackets 1
+paddedPackets_attackID 0x72
+paddedPackets_skillUseID 0xF5
 
 [Japan - jRO: Verdandi]
 ip 61.215.212.13
