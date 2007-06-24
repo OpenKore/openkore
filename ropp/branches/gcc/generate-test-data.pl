@@ -18,7 +18,7 @@ Win32::API->Import('ropp', 'SetPacket', 'PLL') or die "Can't import SetPacket\n$
 Win32::API->Import('ropp', 'DecodePacket', 'PL') or die "Can't import DecodePacket\n$!";
 Win32::API->Import('ropp', 'GetKey', 'L' ,'N') or die "Can't import GetKey\n$!";
 
-use constant MAX_INT => 4294967296;
+use constant MAX_SHORT => 65536;
 
 my $f;
 open($f, ">", "unittest.dat");
@@ -29,20 +29,20 @@ my ($attackID, $skillUseID, $accountID, $syncMapSync, $syncSync, $LastPaddedPack
 SetPacket(" " x 512, 512, 0);
 
 for (my $i = 0; $i < 100; $i++) {
-	$attackID = int rand(MAX_INT);
-	$skillUseID = int rand(MAX_INT);
-	$accountID = int rand(MAX_INT);
-	$syncMapSync = int rand(MAX_INT);
-	$syncSync = int rand(MAX_INT);
+	$attackID = rand(MAX_SHORT) & 0xFFFF;
+	$skillUseID = rand(MAX_SHORT) & 0xFFFF;
+	$accountID = (rand(MAX_SHORT) & 0xFFFF) * MAX_SHORT + (rand(MAX_SHORT)  & 0xFFFF);
+	$syncMapSync = (rand(MAX_SHORT) & 0xFFFF) * MAX_SHORT + (rand(MAX_SHORT)  & 0xFFFF);
+	$syncSync = (rand(MAX_SHORT) & 0xFFFF) * MAX_SHORT + (rand(MAX_SHORT)  & 0xFFFF);
 	print $f pack("V*", $attackID, $skillUseID, $accountID, $syncMapSync, $syncSync);
 
 	SetPacketIDs($attackID, $skillUseID);
 
-	my $monID = int rand(MAX_INT);
+	my $monID = (rand(MAX_SHORT) & 0xFFFF) * MAX_SHORT + (rand(MAX_SHORT)  & 0xFFFF);
 	my $flag = int rand(10);
 	my $skillID = int rand(100);
 	my $level = int rand(11);
-	my $targetID = int rand(MAX_INT);
+	my $targetID = (rand(MAX_SHORT) & 0xFFFF) * MAX_SHORT + (rand(MAX_SHORT)  & 0xFFFF);
 	print $f pack("V*", $monID, $flag, $skillID, $level, $targetID);
 	
 	printStr($f, generateSitStand(1)); # sit
