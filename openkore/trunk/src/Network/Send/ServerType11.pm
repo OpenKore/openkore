@@ -14,6 +14,7 @@ package Network::Send::ServerType11;
 use strict;
 use Globals qw($accountID $sessionID $sessionID2 $accountSex $char $charID %config %guild @chars $masterServer $syncSync $net);
 use Network::Send::ServerType0;
+use Network::PaddedPackets;
 use base qw(Network::Send::ServerType0);
 use Log qw(message warning error debug);
 use I18N qw(stringToBytes);
@@ -22,6 +23,12 @@ use Utils qw(getTickCount getHex getCoordString);
 sub new {
 	my ($class) = @_;
 	return $class->SUPER::new(@_);
+}
+
+sub sendAttack {
+	my ($self, $monID, $flag) = @_;
+	$self->sendToServer(Network::PaddedPackets::generateAtk($monID, $flag));
+	debug "Sent attack: ".getHex($monID)."\n", "sendPacket", 2;
 }
 
 sub sendDrop {
@@ -170,88 +177,22 @@ sub sendTake {
 	debug "Sent take\n", "sendPacket", 2;
 }
 
-sub sendAttack {
-	my ($self, $monID, $flag) = @_;
-
-	my %args;
-	$args{monID} = $monID;
-	$args{flag} = $flag;
-	Plugins::callHook('packet_pre/sendAttack', \%args);
-	if ($args{return}) {
-		$self->sendToServer($args{msg});
-		return;
-	}
-
-	error "Your server is not supported because it uses padded packets.\n";
-	if (AI::action() eq "NPC") {
-		error "Failed to talk to monster NPC.\n";
-		AI::dequeue();
-	} elsif (AI::action() eq "attack") {
-		error "Failed to attack target.\n";
-		AI::dequeue();
-	}
-}
-
 sub sendSit {
-	my $self = shift;
-
-	my %args;
-	$args{flag} = 2;
-	Plugins::callHook('packet_pre/sendSit', \%args);
-	if ($args{return}) {
-		$self->sendToServer($args{msg});
-		return;
-	}
-	
-	error "Your server is not supported because it uses padded packets.\n";
-	if (AI::action() eq "sitting") {
-		error "Failed to sit.\n";
-		AI::dequeue();
-	}
+	my ($self) = @_;
+	$self->sendToServer(Network::PaddedPackets::generateSitStand(1));
+	debug "Sitting\n", "sendPacket", 2;
 }
 
 sub sendStand {
-	my $self = shift;
-
-	my %args;
-	$args{flag} = 3;
-	Plugins::callHook('packet_pre/sendStand', \%args);
-	if ($args{return}) {
-		$self->sendToServer($args{msg});
-		return;
-	}	
-	
-	error "Your server is not supported because it uses padded packets.\n";
-	if (AI::action() eq "standing") {
-		error "Failed to stand.\n";
-		AI::dequeue();
-	}
+	my ($self) = @_;
+	$self->sendToServer(Network::PaddedPackets::generateSitStand(0));
+	debug "Standing\n", "sendPacket", 2;
 }
 
 sub sendSkillUse {
-	my $self = shift;
-	my $ID = shift;
-	my $lv = shift;
-	my $targetID = shift;
-	
-	my %args;
-	$args{ID} = $ID;
-	$args{lv} = $lv;
-	$args{targetID} = $targetID;
-	Plugins::callHook('packet_pre/sendSkillUse', \%args);
-	if ($args{return}) {
-		$self->sendToServer($args{msg});
-		return;
-	}
-
-	error "Your server is not supported because it uses padded packets.\n";
-	if (AI::action() eq 'teleport') {
-		error "Failed to use teleport skill.\n";
-		AI::dequeue();
-	} elsif (AI::action() ne "skill_use") {
-		error "Failed to use skill.\n";
-		AI::dequeue();
-	}
+	my ($self, $ID, $lv, $targetID) = @_;
+	$self->sendToServer(Network::PaddedPackets::generateSkillUse($ID, $lv,  $targetID));
+	debug "Skill Use: $ID\n", "sendPacket", 2;
 }
 
 1;
