@@ -3,17 +3,17 @@
 
 #include "typedefs.h"
 
-DLL_CEXPORT dword STDCALL CreateSitStand(byte *Packet, dword Sit);
-DLL_CEXPORT dword STDCALL CreateAtk(byte *Packet, dword TargetId, dword Ctrl);
-DLL_CEXPORT dword STDCALL CreateSkillUse(byte *Packet, dword SkillId, dword SkillLv, dword TargetId);
-DLL_CEXPORT void  STDCALL SetMapSync(dword MapSync);
-DLL_CEXPORT void  STDCALL SetSync(dword Sync);
-DLL_CEXPORT void  STDCALL SetAccountId(dword AccountId);
+DLL_CEXPORT dword STDCALL CreateSitStand(byte *packet, dword sit);
+DLL_CEXPORT dword STDCALL CreateAtk(byte *packet, dword targetId, dword ctrl);
+DLL_CEXPORT dword STDCALL CreateSkillUse(byte *packet, dword skillId, dword skillLv, dword targetId);
+DLL_CEXPORT void  STDCALL SetMapSync(dword mapSync);
+DLL_CEXPORT void  STDCALL SetSync(dword sync);
+DLL_CEXPORT void  STDCALL SetAccountId(dword accountId);
 
-DLL_CEXPORT void  STDCALL DecodePacket(byte *Packet, dword KeyCount);
-DLL_CEXPORT dword STDCALL GetKey(dword KeyIndex);
-DLL_CEXPORT void  STDCALL SetPacket(byte *Packet, dword PacketLength, dword TargetId);
+DLL_CEXPORT void  STDCALL DecodePacket(byte *packet, dword keyCount);
+DLL_CEXPORT dword STDCALL GetKey(dword keyIndex);
+DLL_CEXPORT void  STDCALL SetPacket(byte *packet, dword packetLength, dword targetId);
 
-DLL_CEXPORT void  STDCALL SetPacketIDs(word Sit, word Skill);
+DLL_CEXPORT void  STDCALL SetPacketIDs(word sit, word skill);
 
 #endif /* _ROPP_H_ */

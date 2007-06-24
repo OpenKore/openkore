@@ -16,78 +16,12 @@
 #include <memory.h>
 #include <stdlib.h>
 #include "ppengine.h"
+#include "block.h"
 #include "Algorithms/algorithms.h"
 
 namespace OpenKore {
 namespace PaddedPackets {
 	
-
-/********** Block **********/
-
-Block::Block()
-{
-	// Reserve some space
-	bufLen = 5;
-	buffer = new dword[bufLen];
-
-	memset(buffer, 0, bufLen * sizeof(dword));
-	currentPos = 0;
-}
-
-Block::~Block()
-{
-	if (buffer != NULL) {
-		delete[] buffer;
-	}
-}
-
-void Block::reset()
-{
-	currentPos = 0;
-}
-
-void Block::add(dword data)
-{
-	if (buffer == NULL) {
-		return;
-	}
-
-	if (currentPos == (bufLen - 1)) {
-		// Allocate more space.
-		bufLen = bufLen + 10;
-		dword *newBuffer = new dword[ bufLen ];
-
-		//if ( newBuffer == NULL )
-		//throw something here
-
-		memcpy( (void*)newBuffer, (void*)buffer, bufLen );
-		delete[] buffer;
-		buffer = newBuffer;
-	} else {
-		// Write to buffer directly.
-		buffer[currentPos] = data;
-		currentPos++;
-	}
-}
-
-unsigned int
-Block::getSize() const
-{
-	return currentPos;
-}
-
-dword
-Block::operator[](unsigned int index) const
-{
-	if (index < currentPos) {
-		return buffer[index];
-	} else {
-		return 0;
-	}
-}
-
-
-/********** Engine **********/
 
 Engine::Engine()
 {
@@ -102,46 +36,45 @@ Engine::~Engine()
 }
 
 void
-Engine::AddKey(dword data)
+Engine::addKey(dword data)
 {
 	inputKeys.add( data );
 }
 
 void
-Engine::SetSync(dword sync)
+Engine::setSync(dword sync)
 {
 	clientSync = sync;
 }
 
 void
-Engine::SetMapSync(dword mapSync)
+Engine::setMapSync(dword mapSync)
 {
 	serverMapSync = mapSync;
 }
 
 void
-Engine::SetAccId(dword accId)
+Engine::setAccId(dword accId)
 {
 	clientAccId = accId;
 }
 
 void
-Engine::SetPacket(byte *packet, dword len)
+Engine::setPacket(byte *packet, dword len)
 {
 	memcpy( pktBuffer, packet, len);
 }
 
 unsigned int
-Engine::Encode(byte *dest, word type)
+Engine::encode(byte *dest, word type)
 {
 	dword offsets[] = { 15, 14, 12, 9, 5, 0 };
-
-	dword hashData = createHash( serverMapSync, clientSync, clientAccId, type );
+	dword hashData = createHash(serverMapSync, clientSync, clientAccId, type);
 
 	unsigned int packetLength = 0;
 	int iterations = 5;
 	// pad_2
-	for( int iter = 0; iter <= iterations; iter++) {
+	for (int iter = 0; iter <= iterations; iter++) {
 		packetLength = (1 + inputKeys.getSize()) * 4;
 
 		dword intCtr = 5;
@@ -167,12 +100,12 @@ Engine::Encode(byte *dest, word type)
 }
 
 void
-Engine::Decode(byte *src, unsigned int keys)
+Engine::decode(byte *src, unsigned int keys)
 {
 	// Reset output keys
 	outputKeys.reset();
 
-	dword hashData = createHash( serverMapSync, clientSync, clientAccId, *(word*)src );
+	dword hashData = createHash(serverMapSync, clientSync, clientAccId, *(word*)src);
 
 	dword intCtr = 5;
 	byte *readPtr = src + 4;
@@ -185,7 +118,7 @@ Engine::Decode(byte *src, unsigned int keys)
 	}
 }
 
-dword Engine::GetKey(unsigned int index) const
+dword Engine::getKey(unsigned int index) const
 {
 	return outputKeys[index];
 }

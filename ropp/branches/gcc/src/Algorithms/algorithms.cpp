@@ -1,3 +1,7 @@
+#define ROPP_DEBUG
+#ifdef ROPP_DEBUG
+	#include <stdio.h>
+#endif
 #include "algorithms.h"
 
 #include "mcg_cipher.h"
@@ -303,6 +307,9 @@ namespace PaddedPackets {
 	createHash(int map_sync, int sync, int account_id, short packet)
 	{
 		unsigned int slot = (packet * packet + map_sync + sync + account_id) & 0xF;
+		#ifdef ROPP_DEBUG
+			printf("Algorithm = %d\n", slot);
+		#endif
 		return funcs[slot](packet * account_id + map_sync * sync);
 	}
 	
