@@ -23,6 +23,7 @@ use Log qw(message warning error debug);
 use Interface;
 use Network::Receive;
 use Network::Send ();
+use Network::PaddedPackets;
 use Commands;
 use Misc;
 use Plugins;
@@ -232,6 +233,8 @@ sub initNetworking {
 		$bus = new Bus::Client(host => $host, port => $port);
 		our $busMessageHandler = new Bus::Handlers($bus);
 	}
+	
+	Network::PaddedPackets::init();
 }
 
 sub initPortalsDatabase {

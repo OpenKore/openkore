@@ -65,3 +65,9 @@ PaddedPackets.xs is responsible for generating the padded packets.
 Algorithms/algorithms.cpp is the main interface to the 16 different
 hashing functions.
 engine.cpp is a utility class used when generating padded packets.
+
+
+Credits
+-------
+Many thanks to Japplegame, Jerry and kLabMouse. :) They wrote the base for
+the padded packets emulator, and without them this would not exist.
