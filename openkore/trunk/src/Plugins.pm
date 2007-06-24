@@ -133,7 +133,8 @@ sub load {
 		Plugin::LoadException->throw(TF("File %s does not exist.", $file));
 	} elsif ($file =~ /(^|\/)ropp\.pl$/i) {
 		Plugin::DeniedException->throw(TF("The ROPP plugin (ropp.pl) is obsolete and is " .
-			"no longer necessary. Please remove it, or OpenKore will not work correctly."));
+			"no longer necessary. Please remove it, or %s will not work correctly.",
+			$Settings::NAME || "OpenKore"));
 	}
 
 	undef $!;
