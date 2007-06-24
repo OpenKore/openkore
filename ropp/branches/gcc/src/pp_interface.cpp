@@ -1,62 +1,64 @@
 #include "ppengine.h"
 #include "ropp.h"
 
-static PPEngine *Engine = new PPEngine;
+using namespace OpenKore::PaddedPackets;
+
+static Engine *engine = new Engine;
 static dword LastTargetId = 0;
 static word SitPacketID = 0x89;
 static word SkillPacketID = 0x113;
 
 DLL_CEXPORT void STDCALL DecodePacket(byte *Packet, dword KeyCount)
 {
-	Engine->Decode(Packet, KeyCount);
+	engine->Decode(Packet, KeyCount);
 }
 
 DLL_CEXPORT dword STDCALL GetKey(dword KeyIndex)
 {
-	return Engine->GetKey(KeyIndex);
+	return engine->GetKey(KeyIndex);
 }
 
 DLL_CEXPORT dword STDCALL CreateSitStand(byte *Packet, dword Sit)
 {
-	Engine->AddKey(LastTargetId); LastTargetId = 0;
-	Engine->AddKey(Sit ? 2 : 3);
-	return Engine->Encode(Packet, SitPacketID);
+	engine->AddKey(LastTargetId); LastTargetId = 0;
+	engine->AddKey(Sit ? 2 : 3);
+	return engine->Encode(Packet, SitPacketID);
 }
 
 DLL_CEXPORT dword STDCALL CreateAtk(byte *Packet, dword TargetId, dword Ctrl)
 {
-	Engine->AddKey(TargetId);
-	Engine->AddKey(7);
-	return Engine->Encode(Packet, SitPacketID);
+	engine->AddKey(TargetId);
+	engine->AddKey(7);
+	return engine->Encode(Packet, SitPacketID);
 }
 
 DLL_CEXPORT dword STDCALL CreateSkillUse(byte *Packet, dword SkillId, dword SkillLv, dword TargetId)
 {
-	Engine->AddKey(SkillLv);
-	Engine->AddKey(SkillId);
-	Engine->AddKey(TargetId);
-	return Engine->Encode(Packet, SkillPacketID);
+	engine->AddKey(SkillLv);
+	engine->AddKey(SkillId);
+	engine->AddKey(TargetId);
+	return engine->Encode(Packet, SkillPacketID);
 }
 
 DLL_CEXPORT void STDCALL SetPacket(byte *Packet, dword PacketLength, dword TargetId)
 {
-	Engine->SetPacket(Packet, PacketLength);
+	engine->SetPacket(Packet, PacketLength);
 	LastTargetId = TargetId;
 }
 
 DLL_CEXPORT void STDCALL SetMapSync(dword MapSync)
 {
-	Engine->SetMapSync(MapSync);
+	engine->SetMapSync(MapSync);
 }
 
 DLL_CEXPORT void STDCALL SetSync(dword Sync)
 {
-	Engine->SetSync(Sync);
+	engine->SetSync(Sync);
 }
 
 DLL_CEXPORT void STDCALL SetAccountId(dword AccountId)
 {
-	Engine->SetAccId(AccountId);
+	engine->SetAccId(AccountId);
 }
 
 DLL_CEXPORT void STDCALL SetPacketIDs(word Sit, word Skill)

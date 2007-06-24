@@ -16,7 +16,4 @@ DLL_CEXPORT void  STDCALL SetPacket(byte *Packet, dword PacketLength, dword Targ
 
 DLL_CEXPORT void  STDCALL SetPacketIDs(word Sit, word Skill);
 
-DLL_CEXPORT dword STDCALL HashFunc(int N, dword Key);
-DLL_CEXPORT dword STDCALL Call16(int map_sync, int sync, int acc_id, short packet);
-
 #endif /* _ROPP_H_ */

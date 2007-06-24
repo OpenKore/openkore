@@ -1,94 +1,95 @@
 /*
- OpenKore - Padded Packet Emulator.
-
- This program is free software; you can redistribute it and/or
- modify it under the terms of the GNU General Public License
- as published by the Free Software Foundation; either version 2
- of the License, or (at your option) any later version.
-
- This program is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- See http://www.gnu.org/licenses/gpl.html for the full license.
-*/
+ * OpenKore - Padded Packet Emulator.
+ * Copyright (c) 2007 kLabMouse, Japplegame, and many other contributors
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See http://www.gnu.org/licenses/gpl.html for the full license.
+ */
 
 #include <memory.h>
 #include <stdlib.h>
 #include "ppengine.h"
 #include "Algorithms/algorithms.h"
 
-//---------------------------------------------------------------------------
-PPBlock::PPBlock()
+namespace OpenKore {
+namespace PaddedPackets {
+	
+
+/********** Block **********/
+
+Block::Block()
 {
-	// reserve some space
+	// Reserve some space
 	bufLen = 5;
-	buffer = new dword[ bufLen ];
+	buffer = new dword[bufLen];
 
-//	if ( newBuffer == NULL )
-//	throw something here
-
-	memset( buffer, 0, bufLen * sizeof(dword) );
+	memset(buffer, 0, bufLen * sizeof(dword));
 	currentPos = 0;
 }
 
-//---------------------------------------------------------------------------
-PPBlock::~PPBlock()
+Block::~Block()
 {
-	if ( buffer != NULL ) {
+	if (buffer != NULL) {
 		delete[] buffer;
 	}
 }
 
-//---------------------------------------------------------------------------
-void PPBlock::Reset()
+void Block::reset()
 {
 	currentPos = 0;
 }
 
-//---------------------------------------------------------------------------
-void PPBlock::Add(dword data)
+void Block::add(dword data)
 {
-	if ( buffer == NULL ) {
+	if (buffer == NULL) {
 		return;
 	}
 
-	if ( currentPos == (bufLen - 1) ) {
-		// allocate more space
+	if (currentPos == (bufLen - 1)) {
+		// Allocate more space.
 		bufLen = bufLen + 10;
 		dword *newBuffer = new dword[ bufLen ];
 
-//		if ( newBuffer == NULL )
-//		throw something here
+		//if ( newBuffer == NULL )
+		//throw something here
 
 		memcpy( (void*)newBuffer, (void*)buffer, bufLen );
 		delete[] buffer;
 		buffer = newBuffer;
+	} else {
+		// Write to buffer directly.
+		buffer[currentPos] = data;
+		currentPos++;
 	}
-	// } else {
-	// write directly
-	buffer[ currentPos++ ] = data;
 }
 
-//---------------------------------------------------------------------------
-unsigned int PPBlock::GetSize() const
+unsigned int
+Block::getSize() const
 {
 	return currentPos;
 }
 
-//---------------------------------------------------------------------------
-dword PPBlock::operator [](unsigned int index) const
+dword
+Block::operator[](unsigned int index) const
 {
-	if ( index < currentPos ) {
-		return buffer[ index ];
+	if (index < currentPos) {
+		return buffer[index];
 	} else {
 		return 0;
 	}
 }
 
 
-//---------------------------------------------------------------------------
-//---------------------------------------------------------------------------
-PPEngine::PPEngine()
+/********** Engine **********/
+
+Engine::Engine()
 {
 	serverMapSync = 0;
 	clientSync = 0;
@@ -96,57 +97,56 @@ PPEngine::PPEngine()
 	memset( pktBuffer, 0, PPENGINE_BUFSIZE * sizeof(byte) );
 }
 
-//---------------------------------------------------------------------------
-PPEngine::~PPEngine()
+Engine::~Engine()
 {
 }
 
-//---------------------------------------------------------------------------
-void PPEngine::AddKey(dword data)
+void
+Engine::AddKey(dword data)
 {
-	inputKeys.Add( data );
+	inputKeys.add( data );
 }
 
-//---------------------------------------------------------------------------
-void PPEngine::SetSync(dword sync)
+void
+Engine::SetSync(dword sync)
 {
 	clientSync = sync;
 }
 
-//---------------------------------------------------------------------------
-void PPEngine::SetMapSync(dword mapSync)
+void
+Engine::SetMapSync(dword mapSync)
 {
 	serverMapSync = mapSync;
 }
 
-//---------------------------------------------------------------------------
-void PPEngine::SetAccId(dword accId)
+void
+Engine::SetAccId(dword accId)
 {
 	clientAccId = accId;
 }
 
-//---------------------------------------------------------------------------
-void PPEngine::SetPacket(byte *packet, dword len)
+void
+Engine::SetPacket(byte *packet, dword len)
 {
 	memcpy( pktBuffer, packet, len);
 }
 
-//---------------------------------------------------------------------------
-unsigned int PPEngine::Encode(byte *dest, word type)
+unsigned int
+Engine::Encode(byte *dest, word type)
 {
 	dword offsets[] = { 15, 14, 12, 9, 5, 0 };
 
-	dword hashData = call_16( serverMapSync, clientSync, clientAccId, type );
+	dword hashData = createHash( serverMapSync, clientSync, clientAccId, type );
 
 	unsigned int packetLength = 0;
 	int iterations = 5;
 	// pad_2
 	for( int iter = 0; iter <= iterations; iter++) {
-		packetLength = (1 + inputKeys.GetSize()) * 4;
+		packetLength = (1 + inputKeys.getSize()) * 4;
 
 		dword intCtr = 5;
 		byte *writePtr = pktBuffer + 4;
-		for( unsigned int pass = 0; pass < inputKeys.GetSize(); pass++ ) {
+		for( unsigned int pass = 0; pass < inputKeys.getSize(); pass++ ) {
 			dword magic = ((intCtr * (dword)pass) + (hashData - offsets[iter])) % 0x27;
 			packetLength += magic;
 			intCtr += 3;
@@ -160,19 +160,19 @@ unsigned int PPEngine::Encode(byte *dest, word type)
 	*(word*)pktBuffer = (word)type;
 
 	// Reset input keys for next generation
-	inputKeys.Reset();
+	inputKeys.reset();
 
 	memcpy(dest, pktBuffer, packetLength);
 	return packetLength;
 }
 
-//---------------------------------------------------------------------------
-void PPEngine::Decode(byte *src, unsigned int keys)
+void
+Engine::Decode(byte *src, unsigned int keys)
 {
 	// Reset output keys
-	outputKeys.Reset();
+	outputKeys.reset();
 
-	dword hashData = call_16( serverMapSync, clientSync, clientAccId, *(word*)src );
+	dword hashData = createHash( serverMapSync, clientSync, clientAccId, *(word*)src );
 
 	dword intCtr = 5;
 	byte *readPtr = src + 4;
@@ -181,13 +181,14 @@ void PPEngine::Decode(byte *src, unsigned int keys)
 		intCtr += 3;
 
 		readPtr += (4 + magic);
-		outputKeys.Add( *((dword*)readPtr - 1) );
+		outputKeys.add( *((dword*)readPtr - 1) );
 	}
 }
 
-//---------------------------------------------------------------------------
-dword PPEngine::GetKey(unsigned int index) const
+dword Engine::GetKey(unsigned int index) const
 {
 	return outputKeys[index];
 }
-//---------------------------------------------------------------------------
+
+} // PaddedPackets
+} // OpenKore
