@@ -17,51 +17,34 @@
 #define _PPENGINE_H_
 
 #include "typedefs.h"
+#include "block.h"
 
 namespace OpenKore {
 namespace PaddedPackets {
 
-	class Block {
-	public:
-		Block();
-		~Block();
-
-		void reset();
-		void add(dword data);
-
-		dword operator[](unsigned int index) const;
-		unsigned int getSize() const;
-
-	private:
-		dword *buffer;
-		unsigned int currentPos, bufLen;
-	};
-
-
-
-	#define PPENGINE_BUFSIZE	512
+	#define PPENGINE_BUFSIZE 512
 
 	class Engine {
 	public:
 		Engine();
 		~Engine();
 
-		void AddKey(dword data);
-		dword GetKey(unsigned int index) const;
+		void addKey(dword data);
+		dword getKey(unsigned int index) const;
 
-		void SetSync(dword sync);
-		void SetMapSync(dword mapSync);
-		void SetAccId(dword accId);
-	
+		void setSync(dword sync);
+		void setMapSync(dword mapSync);
+		void setAccId(dword accId);
+
 		// generates packet to destAddr and returns length of packet
-		unsigned int Encode(byte *dest, word type);
-	
+		unsigned int encode(byte *dest, word type);
+
 		// decodes packet from src and peeks given number of keys.
 		// Use GetKey() to actually get the keys
-		void Decode(byte *src, unsigned int keys);
-	
+		void decode(byte *src, unsigned int keys);
+
 		// copy external packet to internal buffer
-		void SetPacket(byte *packet, dword len);
+		void setPacket(byte *packet, dword len);
 	
 	private:
 		Block inputKeys, outputKeys;
