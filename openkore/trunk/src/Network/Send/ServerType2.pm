@@ -12,8 +12,12 @@
 package Network::Send::ServerType2;
 
 use strict;
+use Globals qw($accountID $sessionID $sessionID2 $accountSex $char $charID %config %guild @chars $masterServer $syncSync $net);
 use Network::Send::ServerType0;
 use base qw(Network::Send::ServerType0);
+use Log qw(message warning error debug);
+use I18N qw(stringToBytes);
+use Utils qw(getTickCount getHex getCoordString);
 
 sub new {
 	my ($class) = @_;
@@ -31,11 +35,6 @@ sub sendTake {
 sub sendAttack {
 	my ($self, $monID, $flag) = @_;
 	my $msg;
-
-	my %args;
-	$args{monID} = $monID;
-	$args{flag} = $flag;
-	Plugins::callHook('packet_pre/sendAttack', \%args);
 	
 	$msg = pack("C*", 0x89, 0x00, 0x00, 0x00).
 		$monID .
@@ -91,14 +90,6 @@ sub sendLook {
 sub sendSit {
 	my $self = shift;
 	my $msg;
-
-	my %args;
-	$args{flag} = 2;
-	Plugins::callHook('packet_pre/sendSit', \%args);
-	if ($args{return}) {
-		$self->sendToServer($args{msg});
-		return;
-	}
 		
 	$msg = pack("C*", 0x89, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00,0x00, 0x00, 0x00, 0x80, 0x00, 0x00, 0x02);
 	
@@ -109,16 +100,6 @@ sub sendSit {
 sub sendSkillUse {
 	my ($self, $ID, $lv, $targetID) = @_;
 	my $msg;
-	
-	my %args;
-	$args{ID} = $ID;
-	$args{lv} = $lv;
-	$args{targetID} = $targetID;
-	Plugins::callHook('packet_pre/sendSkillUse', \%args);
-	if ($args{return}) {
-		$self->sendToServer($args{msg});
-		return;
-}
 	
 	$msg = pack("v*", 0x0113, 0x0000, $lv) .
 			pack("V", 0) .
@@ -163,14 +144,6 @@ sub sendStorageGet {
 sub sendStand {
 	my $self = shift;
 	my $msg;
-
-	my %args;
-	$args{flag} = 3;
-	Plugins::callHook('packet_pre/sendStand', \%args);
-	if ($args{return}) {
-		$self->sendToServer($args{msg});
-		return;
-	}
 	
 	$msg = pack("C*", 0x89, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00,
 				0x00, 0x00, 0x00, 0x80, 0x00, 0x00, 0x03);

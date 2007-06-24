@@ -13,8 +13,12 @@
 package Network::Send::ServerType1;
 
 use strict;
+use Globals qw($accountID $sessionID $sessionID2 $accountSex $char $charID %config %guild @chars $masterServer $syncSync $net);
 use Network::Send::ServerType0;
 use base qw(Network::Send::ServerType0);
+use Log qw(message warning error debug);
+use I18N qw(stringToBytes);
+use Utils qw(getTickCount getHex getCoordString);
 
 sub new {
 	my ($class) = @_;
@@ -86,7 +90,7 @@ sub sendLook {
 	my $msg;
 
 	$sex = 0 if ($sex > 1 || $sex < 0); # Sex can only be 0 (female) or 1 (male)
-	$key = pack("C*", 0xFC, 0x2B, 0x8B, 0x01, 0x00);
+	my $key = pack("C*", 0xFC, 0x2B, 0x8B, 0x01, 0x00);
 	#	0xFA,0x12,0x00,0xE0,0x5D
 	#	0xFA,0x12,0x00,0xD0,0x7B
 	$msg = pack("C*", 0x72, 0, 0, 0, 0) . $accountID . $key . $charID .	pack("C*", 0xFF, 0xFF) .

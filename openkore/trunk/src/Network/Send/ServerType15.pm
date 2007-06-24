@@ -27,7 +27,8 @@ sub new {
 
 sub sendAttack {
 	my ($self, $monID, $flag) = @_;
-
+	my $msg;
+	
 	my %args;
 	$args{monID} = $monID;
 	$args{flag} = $flag;
@@ -36,8 +37,7 @@ sub sendAttack {
 		$self->sendToServer($args{msg});
 		return;
 	}
-
-	error "Your server is not supported because it uses padded packets.\n";
+	
 	if (AI::action() eq "NPC") {
 		error "Failed to talk to monster NPC.\n";
 		AI::dequeue();
@@ -45,6 +45,21 @@ sub sendAttack {
 		error "Failed to attack target.\n";
 		AI::dequeue();
 	}
+}
+
+sub sendChat {
+	my ($self, $message) = @_;
+	$message = "|00$message" if ($config{chatLangCode} && $config{chatLangCode} ne "none");
+
+	my ($data, $charName); # Type: Bytes
+	$message = stringToBytes($message); # Type: Bytes
+	$charName = stringToBytes($char->{name});
+	
+	$data = pack("C*", 0xF3, 0x00) .
+		pack("v*", length($charName) + length($message) + 8) .
+		$charName . " : " . $message . chr(0);
+	
+	$self->sendToServer($data);
 }
 
 sub sendSit {
@@ -109,22 +124,12 @@ sub sendSkillUse {
 	}
 }
 
-sub sendChat {
-	my ($self, $message) = @_;
-	$message = "|00$message" if ($config{chatLangCode} && $config{chatLangCode} ne "none");
-
-	my ($data, $charName); # Type: Bytes
-	$message = stringToBytes($message); # Type: Bytes
-	$charName = stringToBytes($char->{name});
-	$data = pack("C*", 0xF3, 0x00) .
-		pack("v*", length($charName) + length($message) + 8) .
-		$charName . " : " . $message . chr(0);
-	$self->sendToServer($data);
-}
-
 sub sendDrop {
 	my ($self, $index, $amount) = @_;
-	my $msg = pack("C2 v1 v1", 0x9B, 0x00, $index, $amount);
+	my $msg;
+
+	$msg = pack("C2 x2 v1 x1 v1", 0x16, 0x01, $index, $amount);
+
 	$self->sendToServer($msg);
 	debug "Sent drop: $index x $amount\n", "sendPacket", 2;
 }
