@@ -21,12 +21,12 @@
 package Network::Send::ServerType13;
 
 use strict;
+use Globals qw($accountID $sessionID $sessionID2 $accountSex $char $charID %config %guild @chars $masterServer $syncSync $net);
 use Network::Send::ServerType0;
 use base qw(Network::Send::ServerType0);
-use Globals qw($accountID $sessionID $sessionID2 $accountSex $char $charID %config %guild @chars $masterServer $syncSync);
-use Log qw(error debug);
+use Log qw(message warning error debug);
 use I18N qw(stringToBytes);
-use Utils;
+use Utils qw(getTickCount getHex getCoordString);
 
 sub new {
 	my ($class) = @_;

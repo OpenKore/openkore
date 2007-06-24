@@ -15,13 +15,12 @@
 package Network::Send::ServerType10;
 
 use strict;
+use Globals qw($accountID $sessionID $sessionID2 $accountSex $char $charID %config %guild @chars $masterServer $syncSync $net);
 use Network::Send::ServerType0;
 use base qw(Network::Send::ServerType0);
-
-use Globals qw($char);
-use Plugins;
-use Log qw(debug);
-use Utils qw(getTickCount getCoordString getHex);
+use Log qw(message warning error debug);
+use I18N qw(stringToBytes);
+use Utils qw(getTickCount getHex getCoordString);
 
 sub new {
 	my ($class) = @_;
@@ -142,6 +141,36 @@ sub sendTake {
 	my $msg = pack("C*", 0x16, 0x01) . $itemID;
 	$self->sendToServer($msg);
 	debug "Sent take\n", "sendPacket", 2;
+}
+
+sub sendSit {
+	my $self = shift;
+	my $msg;
+
+	$msg = pack("C2 x16 C1", 0x89, 0x00, 0x02);
+
+	$self->sendToServer($msg);
+	debug "Sitting\n", "sendPacket", 2;
+}
+
+sub sendSkillUse {
+	my ($self, $ID, $lv, $targetID) = @_;
+	my $msg;
+	
+	$msg = pack("C2 x4 v1 x2 v1 x9", 0x13, 0x01, $lv, $ID) . $targetID;
+	
+	$self->sendToServer($msg);
+	debug "Skill Use: $ID\n", "sendPacket", 2;
+}
+
+sub sendStand {
+	my $self = shift;
+	my $msg;
+	
+	$msg = pack("C2 x16 C1", 0x89, 0x00, 0x03);
+	
+	$self->sendToServer($msg);
+	debug "Standing\n", "sendPacket", 2;
 }
 
 1;
