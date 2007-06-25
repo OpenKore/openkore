@@ -12,8 +12,6 @@ HttpReader.pm
 ObjectList.pm
 PathFinding.pm
 PerlLauncher.pm
-RMD128.pm
-RMD160.pm
 Set.pm
 TextReader.pm
 Unix.pm
