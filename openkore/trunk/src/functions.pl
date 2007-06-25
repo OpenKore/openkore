@@ -278,23 +278,19 @@ sub promptFirstTimeInformation {
 			}
 			configModify('password', $msg, 1);
 		}
+	}
 
-		if ($config{'master'} eq "" || $config{'master'} =~ /^\d+$/ || !exists $masterServers{$config{'master'}}) {
-			my @servers = sort { lc($a) cmp lc($b) } keys(%masterServers);
-			my $choice = $interface->showMenu(
-				T("Please choose a master server to connect to."),
-				\@servers,
-				title => T("Master servers"));
-			if ($choice == -1) {
-				exit;
-			} else {
-				configModify('master', $servers[$choice], 1);
-			}
+	if ($config{master} eq "" || $config{master} =~ /^\d+$/ || !exists $masterServers{$config{master}}) {
+		my @servers = sort { lc($a) cmp lc($b) } keys(%masterServers);
+		my $choice = $interface->showMenu(
+			T("Please choose a master server to connect to."),
+			\@servers,
+			title => T("Master servers"));
+		if ($choice == -1) {
+			exit;
+		} else {
+			configModify('master', $servers[$choice], 1);
 		}
-
-	} elsif ($net->version != 1 && (!$config{'username'} || !$config{'password'})) {
-		$interface->errorDialog(T("No username or password set."));
-		exit 1;
 	}
 }
 
@@ -744,7 +740,8 @@ sub processStatisticsReporting {
 			debug "Statistics posting failed: " . $http->getError() . "\n", "statisticsReporting";
 		}
 
-	} elsif (!$statisticsReporting{infoPosted} && $masterServer && $masterServer->{ip} && $config{master} && $conState == 5 && $monstarttime) {
+	} elsif (!$statisticsReporting{infoPosted} && $masterServer && $masterServer->{ip}
+	      && $config{master} && $net && $net->getState() == Network::IN_GAME && $monstarttime) {
 		if (!$statisticsReporting{http}) {
 			my $url = "http://www.openkore.com/server-info.php";
 			my $serverData = "";

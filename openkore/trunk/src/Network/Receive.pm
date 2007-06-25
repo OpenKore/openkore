@@ -679,7 +679,7 @@ sub account_server_info {
 
 sub actor_action {
 	my ($self,$args) = @_;
-	changeToInGameState();
+	return unless changeToInGameState();
 
 	if ($args->{type} == 1) {
 		# Take item
@@ -786,7 +786,7 @@ sub actor_action {
 
 sub actor_died_or_disappeared {
 	my ($self,$args) = @_;
-	changeToInGameState();
+	return unless changeToInGameState();
 	my $ID = $args->{ID};
 	avoidList_ID($ID);
 
@@ -898,7 +898,7 @@ sub actor_died_or_disappeared {
 # This function is a merge of actor_exists, actor_connected, actor_moved, etc...
 sub actor_display {
 	my ($self, $args) = @_;
-	changeToInGameState();
+	return unless changeToInGameState();
 	my ($actor, $mustAdd);
 
 
@@ -1236,7 +1236,7 @@ sub actor_display {
 
 sub actor_info {
 	my ($self, $args) = @_;
-	changeToInGameState();
+	return unless changeToInGameState();
 
 	debug "Received object info: $args->{name}\n", "parseMsg_presence/name", 2;
 
@@ -1290,7 +1290,7 @@ sub actor_info {
 
 sub actor_look_at {
 	my ($self, $args) = @_;
-	changeToInGameState();
+	return unless changeToInGameState();
 
 	my $actor = Actor::get($args->{ID});
 	$actor->{look}{head} = $args->{head};
@@ -1779,7 +1779,25 @@ sub change_to_constate25 {
 }
 
 sub changeToInGameState {
-	$net->setState(Network::IN_GAME) if ($net->getState() != 4 && $net->version == 1);
+	if ($net->version() == 1) {
+		if ($accountID && UNIVERSAL::isa($char, 'Actor::You')) {
+			if ($net->getState() != Network::IN_GAME) {
+				$net->setState(Network::IN_GAME);
+			}
+			return 1;
+		} else {
+			if ($net->getState() != Network::IN_GAME_BUT_UNINITIALIZED) {
+				$net->setState(Network::IN_GAME_BUT_UNINITIALIZED);
+				if ($config{verbose} && $messageSender && !$sentWelcomeMessage) {
+					$messageSender->injectAdminMessage("Please relogin to enable X-${Settings::NAME}.");
+					$sentWelcomeMessage = 1;
+				}
+			}
+			return 0;
+		}
+	} else {
+		return 1;
+	}
 }
 
 sub character_creation_failed {
@@ -1857,7 +1875,7 @@ sub character_deletion_failed {
 sub character_moves {
 	my ($self, $args) = @_;
 
-	changeToInGameState();
+	return unless changeToInGameState();
 	makeCoords($char->{pos}, substr($args->{RAW_MSG}, 6, 3));
 	makeCoords2($char->{pos_to}, substr($args->{RAW_MSG}, 8, 3));
 	my $dist = sprintf("%.1f", distance($char->{pos}, $char->{pos_to}));
@@ -2375,7 +2393,7 @@ sub errors {
 
 sub exp_zeny_info {
 	my ($self, $args) = @_;
-	changeToInGameState();
+	return unless changeToInGameState();
 
 	if ($args->{type} == 1) {
 		$char->{exp_last} = $char->{exp};
@@ -2587,7 +2605,7 @@ sub homunculus_skills {
 	my ($self, $args) = @_;
 
 	# Character skill list
-	changeToInGameState();
+	return unless changeToInGameState();
 	my $newmsg;
 	my $msg = $args->{RAW_MSG};
 	my $msg_size = $args->{RAW_MSG_SIZE};
@@ -3075,7 +3093,7 @@ sub ignore_player_result {
 sub inventory_item_added {
 	my ($self, $args) = @_;
 
-	changeToInGameState();
+	return unless changeToInGameState();
 
 	my ($index, $amount, $fail) = ($args->{index}, $args->{amount}, $args->{fail});
 
@@ -3144,7 +3162,7 @@ sub inventory_item_added {
 
 sub inventory_item_removed {
 	my ($self, $args) = @_;
-	changeToInGameState();
+	return unless changeToInGameState();
 	my $invIndex = findIndex($char->{inventory}, "index", $args->{index});
 	$args->{item} = $char->{inventory}[$invIndex];
 	inventoryItemRemoved($invIndex, $args->{amount});
@@ -3212,7 +3230,7 @@ sub revolving_entity {
 
 sub inventory_items_nonstackable {
 	my ($self, $args) = @_;
-	changeToInGameState();
+	return unless changeToInGameState();
 	my $newmsg;
 	$self->decrypt(\$newmsg, substr($args->{RAW_MSG}, 4));
 	my $msg = substr($args->{RAW_MSG}, 0, 4) . $newmsg;
@@ -3258,7 +3276,7 @@ sub inventory_items_nonstackable {
 
 sub inventory_items_stackable {
 	my ($self, $args) = @_;
-	changeToInGameState();
+	return unless changeToInGameState();
 	my $newmsg;
 	$self->decrypt(\$newmsg, substr($msg, 4));
 	my $msg = substr($args->{RAW_MSG}, 0, 4).$newmsg;
@@ -3296,7 +3314,7 @@ sub inventory_items_stackable {
 
 sub item_appeared {
 	my ($self, $args) = @_;
-	changeToInGameState();
+	return unless changeToInGameState();
 
 	my $item = $itemsList->getByID($args->{ID});
 	my $mustAdd;
@@ -3326,7 +3344,7 @@ sub item_appeared {
 
 sub item_exists {
 	my ($self, $args) = @_;
-	changeToInGameState();
+	return unless changeToInGameState();
 
 	my $item = $itemsList->getByID($args->{ID});
 	my $mustAdd;
@@ -3350,7 +3368,7 @@ sub item_exists {
 
 sub item_disappeared {
 	my ($self, $args) = @_;
-	changeToInGameState();
+	return unless changeToInGameState();
 
 	my $item = $itemsList->getByID($args->{ID});
 	if ($item) {
@@ -3423,7 +3441,7 @@ sub item_upgrade {
 
 sub job_equipment_hair_change {
 	my ($self, $args) = @_;
-	changeToInGameState();
+	return unless changeToInGameState();
 
 	my $actor = Actor::get($args->{ID});
 	assert(UNIVERSAL::isa($actor, "Actor")) if DEBUG;
@@ -3569,7 +3587,7 @@ sub login_error_game_login_server {
 # map_change also represents teleport events.
 sub map_change {
 	my ($self, $args) = @_;
-	changeToInGameState();
+	return unless changeToInGameState();
 
 	my $oldMap = $field ? $field->name() : undef;
 	my ($map) = $args->{map} =~ /([\s\S]*)\./;
@@ -4392,7 +4410,7 @@ sub private_message {
 	my ($newmsg, $msg); # Type: Bytes
 
 	# Private message
-	changeToInGameState();
+	return unless changeToInGameState();
 
 	# Type: String
 	my $privMsgUser = bytesToString($args->{privMsgUser});
@@ -4565,9 +4583,9 @@ sub received_character_ID_and_Map {
 }
 
 sub received_sync {
-    changeToInGameState();
-    debug "Received Sync\n", 'parseMsg', 2;
-    $timeout{'play'}{'time'} = time;
+	return unless changeToInGameState();
+	debug "Received Sync\n", 'parseMsg', 2;
+	$timeout{'play'}{'time'} = time;
 }
 
 sub refine_result {
@@ -4822,7 +4840,7 @@ sub shop_skill {
 sub skill_cast {
 	my ($self, $args) = @_;
 
-	changeToInGameState();
+	return unless changeToInGameState();
 	my $sourceID = $args->{sourceID};
 	my $targetID = $args->{targetID};
 	my $x = $args->{x};
@@ -4960,6 +4978,7 @@ sub skill_update {
 
 sub skill_use {
 	my ($self, $args) = @_;
+	return unless changeToInGameState();
 
 	if (my $spell = $spells{$args->{sourceID}}) {
 		# Resolve source of area attack skill
@@ -4973,7 +4992,6 @@ sub skill_use {
 	delete $source->{casting};
 
 	# Perform trigger actions
-	changeToInGameState();
 	updateDamageTables($args->{sourceID}, $args->{targetID}, $args->{damage}) if ($args->{damage} != -30000);
 	setSkillUseTimer($args->{skillID}, $args->{targetID}) if ($args->{sourceID} eq $accountID);
 	setPartySkillTimer($args->{skillID}, $args->{targetID}) if
@@ -5097,6 +5115,8 @@ sub skill_use_location {
 
 sub skill_used_no_damage {
 	my ($self, $args) = @_;
+	return unless changeToInGameState();
+
 	# Skill used on target, with no damage done
 	if (my $spell = $spells{$args->{sourceID}}) {
 		# Resolve source of area attack skill
@@ -5104,7 +5124,6 @@ sub skill_used_no_damage {
 	}
 
 	# Perform trigger actions
-	changeToInGameState();
 	setSkillUseTimer($args->{skillID}, $args->{targetID}) if ($args->{sourceID} eq $accountID
 		&& $skillsArea{$args->{skillHandle}} != 2); # ignore these skills because they screw up monk comboing
 	setPartySkillTimer($args->{skillID}, $args->{targetID}) if
@@ -5171,7 +5190,7 @@ sub skills_list {
 	my ($self, $args) = @_;
 
 	# Character skill list
-	changeToInGameState();
+	return unless changeToInGameState();
 	my $newmsg;
 	my $msg = $args->{RAW_MSG};
 	my $msg_size = $args->{RAW_MSG_SIZE};
@@ -5224,7 +5243,7 @@ sub skills_list {
 sub linker_skill {
 	my ($self, $args) = @_;
 
-	changeToInGameState();
+	return unless changeToInGameState();
 	my $handle = ($args->{name}) ? $args->{name} : Skill->new(idn => $args->{skillID})->getHandle();
 
 	$char->{skills}{$handle}{ID} = $args->{skillID};
@@ -5344,7 +5363,7 @@ sub stats_info {
 
 sub stat_info {
 	my ($self,$args) = @_;
-	changeToInGameState();
+	return unless changeToInGameState();
 	if ($args->{type} == 0) {
 		$char->{walk_speed} = $args->{val} / 1000;
 		debug "Walk speed: $args->{val}\n", "parseMsg", 2;
@@ -5785,7 +5804,7 @@ sub top10_taekwon_rank {
 sub unequip_item {
 	my ($self, $args) = @_;
 
-	changeToInGameState();
+	return unless changeToInGameState();
 	my $invIndex = findIndex($char->{inventory}, "index", $args->{index});
 	delete $char->{inventory}[$invIndex]{equipped} if ($char->{inventory}[$invIndex]);
 
@@ -5826,7 +5845,7 @@ sub unit_levelup {
 sub use_item {
 	my ($self, $args) = @_;
 
-	changeToInGameState();
+	return unless changeToInGameState();
 	my $invIndex = findIndex($char->{inventory}, "index", $args->{index});
 	if (defined $invIndex) {
 		$char->{inventory}[$invIndex]{amount} -= $args->{amount};

@@ -128,7 +128,6 @@ sub getState {
 sub setState {
 	my ($self, $state) = @_;
 	$conState = $state;
-	$masterServer = $masterServers{$config{master}};
 	Plugins::callHook('Network::stateChanged');
 }
 

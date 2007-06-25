@@ -53,12 +53,7 @@ sub iterate {
 	Benchmark::end("ai_prepare") if DEBUG;
 
 	return if (!$AI);
-	if (!$accountID) {
-		$AI = 0;
-		$messageSender->injectAdminMessage("Please relogin to enable X-${Settings::NAME}.") if ($config{verbose});
-		return;
-	}
-	if ($net->clientAlive() && !$sentWelcomeMessage && timeOut($timeout{'welcomeText'})) {
+	if ($net->clientAlive() && !$sentWelcomeMessage && timeOut($timeout{welcomeText})) {
 		$messageSender->injectAdminMessage($Settings::welcomeText) if ($config{'verbose'} && !$config{'XKore_silent'});
 		$sentWelcomeMessage = 1;
 	}
