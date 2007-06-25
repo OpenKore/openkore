@@ -1833,7 +1833,8 @@ sub processAutoSkillsRaise {
 
 		foreach my $item (@list) {
 			# Split each skill/level pair
-			my ($sk, $num) = $item =~ /(.*) (\d+)/;
+			my ($sk, undef, $num) = $item =~ /^(.*?)( (\d+))?$/;
+			$num = 1 if (!defined $num);
 			my $skill = new Skill(auto => $sk);
 
 			if (!$skill->getIDN()) {
