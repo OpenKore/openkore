@@ -42,11 +42,38 @@ sub sendAttack {
 	debug "Sent attack: ".getHex($monID)."\n", "sendPacket", 2;
 }
 
+sub sendDrop {
+	my ($self, $index, $amount) = @_;
+	my $msg = pack("C*", 0x7E, 0x00) .
+		pack("v1", $amount) .
+		pack("v1", $index);
+	$self->sendToServer($msg);
+	debug "Sent drop: $index x $amount\n", "sendPacket", 2;
+}
+
 sub sendGetPlayerInfo {
 	my ($self, $ID) = @_;
 	my $msg = pack("C*", 0x93, 0x01) . createRandomBytes(3) . $ID;
 	$self->sendToServer($msg);
 	debug "Sent get player info: ID - ".getHex($ID)."\n", "sendPacket", 2;
+}
+
+sub sendItemUse {
+	my ($self, $ID, $targetID) = @_;
+	my $msg = pack("C*", 0x9F, 0x00) .
+		pack("v*", $ID) .
+		$targetID;
+	$self->sendToServer($msg);
+	debug "Item Use: $ID\n", "sendPacket", 2;
+}
+
+sub sendLook {
+	my ($self, $body, $head) = @_;
+	my $msg = pack("C*", 0xF7, 0x00, $head, 0x00, $body);
+	$self->sendToServer($msg);
+	debug "Sent look: $body $head\n", "sendPacket", 2;
+	$char->{look}{head} = $head;
+	$char->{look}{body} = $body;
 }
 
 sub sendMapLogin {
@@ -78,26 +105,34 @@ sub sendMove {
 	debug "Sent move to: $x, $y\n", "sendPacket", 2;
 }
 
-sub sendTake {
-	my $self = shift;
-	my $itemID = shift; # $itemID = long
-	my $msg = pack("C*", 0x16, 0x01) . $itemID;
-	$self->sendToServer($msg);
-	debug "Sent take\n", "sendPacket", 2;
+sub sendSit {
+	my ($self) = @_;
+	$self->sendToServer(Network::PaddedPackets::generateSitStand(1));
+	debug "Sitting\n", "sendPacket", 2;
 }
 
-sub sendSync {
-	my ($self, $initialSync) = @_;
-	my $msg;
-	# XKore mode 1 lets the client take care of syncing.
-	return if ($self->{net}->version == 1);
+sub sendSkillUse {
+	my ($self, $ID, $lv, $targetID) = @_;
+	$self->sendToServer(Network::PaddedPackets::generateSkillUse($ID, $lv,  $targetID));
+	debug "Skill Use: $ID\n", "sendPacket", 2;
+}
 
-	$syncSync = pack("V", getTickCount());
-	$msg = pack("C*", 0xA7, 0x00) . 
-		pack("x6") .
-		$syncSync;
+sub sendSkillUseLoc {
+	my ($self, $ID, $lv, $x, $y) = @_;
+	my $msg = pack("C*", 0x8C, 0x00) .
+			pack("v", $lv) .
+			pack("v*", $ID) .
+			pack("v*", $x) .
+			pack("x4") .
+			pack("v*", $y);
 	$self->sendToServer($msg);
-	debug "Sent Sync\n", "sendPacket", 2;
+	debug "Skill Use on Location: $ID, ($x, $y)\n", "sendPacket", 2;
+}
+
+sub sendStand {
+	my ($self) = @_;
+	$self->sendToServer(Network::PaddedPackets::generateSitStand(0));
+	debug "Standing\n", "sendPacket", 2;
 }
 
 sub sendStorageAdd {
@@ -123,61 +158,26 @@ sub sendStorageGet {
 	debug "Sent Storage Get: $index x $amount\n", "sendPacket", 2;
 }
 
-sub sendItemUse {
-	my ($self, $ID, $targetID) = @_;
-	my $msg = pack("C*", 0x9F, 0x00) .
-		pack("v*", $ID) .
-		$targetID;
+sub sendSync {
+	my ($self, $initialSync) = @_;
+	my $msg;
+	# XKore mode 1 lets the client take care of syncing.
+	return if ($self->{net}->version == 1);
+
+	$syncSync = pack("V", getTickCount());
+	$msg = pack("C*", 0xA7, 0x00) . 
+		pack("x6") .
+		$syncSync;
 	$self->sendToServer($msg);
-	debug "Item Use: $ID\n", "sendPacket", 2;
+	debug "Sent Sync\n", "sendPacket", 2;
 }
 
-sub sendLook {
-	my ($self, $body, $head) = @_;
-	my $msg = pack("C*", 0xF7, 0x00, $head, 0x00, $body);
+sub sendTake {
+	my $self = shift;
+	my $itemID = shift; # $itemID = long
+	my $msg = pack("C*", 0x16, 0x01) . $itemID;
 	$self->sendToServer($msg);
-	debug "Sent look: $body $head\n", "sendPacket", 2;
-	$char->{look}{head} = $head;
-	$char->{look}{body} = $body;
-}
-
-sub sendDrop {
-	my ($self, $index, $amount) = @_;
-	my $msg = pack("C*", 0x7E, 0x00) .
-		pack("v1", $amount) .
-		pack("v1", $index);
-	$self->sendToServer($msg);
-	debug "Sent drop: $index x $amount\n", "sendPacket", 2;
-}
-
-sub sendSkillUseLoc {
-	my ($self, $ID, $lv, $x, $y) = @_;
-	my $msg = pack("C*", 0x8C, 0x00) .
-			pack("v", $lv) .
-			pack("v*", $ID) .
-			pack("v*", $x) .
-			pack("x4") .
-			pack("v*", $y);
-	$self->sendToServer($msg);
-	debug "Skill Use on Location: $ID, ($x, $y)\n", "sendPacket", 2;
-}
-
-sub sendSit {
-	my ($self) = @_;
-	$self->sendToServer(Network::PaddedPackets::generateSitStand(1));
-	debug "Sitting\n", "sendPacket", 2;
-}
-
-sub sendStand {
-	my ($self) = @_;
-	$self->sendToServer(Network::PaddedPackets::generateSitStand(0));
-	debug "Standing\n", "sendPacket", 2;
-}
-
-sub sendSkillUse {
-	my ($self, $ID, $lv, $targetID) = @_;
-	$self->sendToServer(Network::PaddedPackets::generateSkillUse($ID, $lv,  $targetID));
-	debug "Skill Use: $ID\n", "sendPacket", 2;
+	debug "Sent take\n", "sendPacket", 2;
 }
 
 1;
