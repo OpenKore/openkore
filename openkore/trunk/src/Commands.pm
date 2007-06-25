@@ -28,6 +28,7 @@ use encoding 'utf8';
 use Modules 'register';
 use Globals;
 use Log qw(message debug error warning);
+use Network;
 use Network::Send ();
 use Settings;
 use Plugins;
@@ -771,7 +772,7 @@ sub cmdCart {
 		
 	} elsif ($arg1 eq "release") {
 		$messageSender->sendCompanionRelease();
-		if ($conState == 5) {
+		if ($net && $net->getState() == Network::IN_GAME) {
 			message T("Cart released.\n"), "success";
 			$cart{exists} = 0;
 		}
@@ -1932,7 +1933,7 @@ sub cmdGmnlb {
 
 sub cmdGmmapmove {
 	my (undef, $args) = @_;
-	return unless ($conState == 5);
+	return unless ($net && $net->getState() == Network::IN_GAME);
 
 	my ($map_name) = $args =~ /(\S+)/;
 	# this will pack as 0 if it fails to match
@@ -1950,7 +1951,7 @@ sub cmdGmmapmove {
 
 sub cmdGmsummon {
 	my (undef, $args) = @_;
-	return unless ($conState == 5);
+	return unless ($net && $net->getState() == Network::IN_GAME);
 
 	if ($args eq '') {
 		error "Usage: gmsummon <player name>\n" .
@@ -1964,7 +1965,7 @@ sub cmdGmsummon {
 
 sub cmdGmdc {
 	my (undef, $args) = @_;
-	return unless ($conState == 5);
+	return unless ($net && $net->getState() == Network::IN_GAME);
 
 	if ($args !~ /^\d+$/) {
 		error "Usage: gmdc <player_AID>\n";
@@ -1976,14 +1977,14 @@ sub cmdGmdc {
 }
 
 sub cmdGmkillall {
-	return unless ($conState == 5);
+	return unless ($net && $net->getState() == Network::IN_GAME);
 	my $packet = pack("C*", 0xCE, 0x00);
 	$messageSender->sendToServer($packet);
 }
 
 sub cmdGmcreate {
 	my (undef, $args) = @_;
-	return unless ($conState == 5);
+	return unless ($net && $net->getState() == Network::IN_GAME);
 
 	if ($args eq '') {
 		error "Usage: gmcreate (<MONSTER_NAME> || <Item_Name>) \n";
@@ -1995,7 +1996,7 @@ sub cmdGmcreate {
 }
 
 sub cmdGmhide {
-	return unless ($conState == 5);
+	return unless ($net && $net->getState() == Network::IN_GAME);
 	my $packet = pack("C*", 0x9D, 0x01, 0x40, 0x00, 0x00, 0x00);
 	$messageSender->sendToServer($packet);
 }
@@ -2034,7 +2035,7 @@ sub cmdGmunmute {
 
 sub cmdGmwarpto {
 	my (undef, $args) = @_;
-	return unless ($conState == 5);
+	return unless ($net && $net->getState() == Network::IN_GAME);
 
 	if ($args eq '') {
 		error "Usage: gmwarpto <Player Name>\n";
@@ -2047,7 +2048,7 @@ sub cmdGmwarpto {
 
 sub cmdGmremove {
 	my (undef, $args) = @_;
-	return unless ($conState == 5);
+	return unless ($net && $net->getState() == Network::IN_GAME);
 
 	if ($args eq '') {
 		error "Usage: gmremove [<Character Name> | <User Name>]\n";
@@ -2060,7 +2061,7 @@ sub cmdGmremove {
 
 sub cmdGmrecall {
 	my (undef, $args) = @_;
-	return unless ($conState == 5);
+	return unless ($net && $net->getState() == Network::IN_GAME);
 
 	if ($args eq '') {
 		error "Usage: gmrecall [<Character Name> | <User Name>]\n";

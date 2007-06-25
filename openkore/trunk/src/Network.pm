@@ -40,7 +40,14 @@ use constant {
 	CONNECTED_TO_MASTER_SERVER => 2,
 	CONNECTED_TO_LOGIN_SERVER  => 3,
 	CONNECTED_TO_CHAR_SERVER   => 4,
-	IN_GAME                    => 5
+	IN_GAME                    => 5,
+	
+	# This can only happen if we're in XKore or XKoreProxy mode.
+	# It means that the RO client is already logged in the game
+	# before OpenKore did. Because of this, OpenKore does not have
+	# enough information (such as the character's name) to be able to
+	# work properly.
+	IN_GAME_BUT_UNINITIALIZED  => -1
 };
 
 1;
