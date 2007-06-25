@@ -44,8 +44,6 @@ Utils::StartupNotification::Launchee
 Utils::StartupNotification::CreateSocketException
 Utils::TextReader
 Utils::PathFinding
-Utils::RMD128
-Utils::RMD160
 Utils::Unix
 Utils::Whirlpool
 Utils::Win32
