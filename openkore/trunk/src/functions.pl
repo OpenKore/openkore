@@ -842,7 +842,11 @@ sub parseSendMsg {
 	# If the player tries to manually do something in the RO client, disable AI for a small period
 	# of time using ai_clientSuspend().
 
-	if ($switch eq "0066") {
+	if ($switch eq sprintf('%04X', hex($masterServer->{syncID}))) {
+		#syncSync support for XKore 1 mode
+		$syncSync = substr($msg, $masterServer->{syncTickOffset}, 4);
+
+	} elsif ($switch eq "0066") {
 		# Login character selected
 		configModify("char", unpack("C*",substr($msg, 2, 1)));
 
@@ -888,10 +892,6 @@ sub parseSendMsg {
 		message T("Map loaded\n"), "connection";
 		
 		Plugins::callHook('map_loaded');
-
-	} elsif ($switch eq sprintf('%04X', hex($masterServer->{syncID}) || $switch eq "007E")) {
-		#syncSync support for XKore 1 mode
-		$syncSync = substr($msg, $masterServer->{syncTickOffset}, 4);
 
 	} elsif ($switch eq "0085") {
 		#if ($config{serverType} == 0 || $config{serverType} == 1 || $config{serverType} == 2) {
