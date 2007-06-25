@@ -2,6 +2,10 @@
 ### OpenKore what-will-become-2.0.0
 =========================
 
+Credits:
+- Japplegame, Darkfate, championrpg, wheee, djfelone, Dragonight!:
+  Contributions to iRO and padded packets support.
+
 
 =========================
 ### OpenKore 1.9.4 (beta)
