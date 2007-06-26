@@ -11,6 +11,7 @@
 #########################################################################
 # tRO (Thai) for 2007-05-22bRagexe by kLabMouse (thanks to abt123, championrpg and penz for support)
 # latest updaes will go here. Please don't use this ServerType for other servers except tRO.
+# Servertype overvie: http://www.openkore.com/wiki/index.php/ServerType
 package Network::Send::ServerType17;
 
 use strict;

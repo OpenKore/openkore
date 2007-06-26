@@ -10,6 +10,7 @@
 #  See http://www.gnu.org/licenses/gpl.html for the full license.
 #########################################################################
 # iRO (International) as of June 21 2007.
+# Servertype overvie: http://www.openkore.com/wiki/index.php/ServerType
 package Network::Send::ServerType18;
 
 use strict;
@@ -43,17 +44,17 @@ sub sendAttack {
 }
 
 sub sendChat {
-        my ($self, $message) = @_;
-        $message = "|00$message" if ($config{chatLangCode} && $config{chatLangCode} ne "none");
+	my ($self, $message) = @_;
+	$message = "|00$message" if ($config{chatLangCode} && $config{chatLangCode} ne "none");
 
-        my ($data, $charName); # Type: Bytes
-        $message = stringToBytes($message); # Type: Bytes
-        $charName = stringToBytes($char->{name});
+	my ($data, $charName); # Type: Bytes
+	$message = stringToBytes($message); # Type: Bytes
+	$charName = stringToBytes($char->{name});
 
-        $data = pack("C*", 0x90, 0x01) .
-        pack("v*", length($charName) + length($message) + 8) .
-        $charName . " : " . $message . chr(0);
-        $self->sendToServer($data);
+	$data = pack("C*", 0x90, 0x01) .
+	pack("v*", length($charName) + length($message) + 8) .
+	$charName . " : " . $message . chr(0);
+	$self->sendToServer($data);
 }
 
 sub sendDrop {
