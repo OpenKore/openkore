@@ -42,6 +42,20 @@ sub sendAttack {
 	debug "Sent attack: ".getHex($monID)."\n", "sendPacket", 2;
 }
 
+sub sendChat {
+        my ($self, $message) = @_;
+        $message = "|00$message" if ($config{chatLangCode} && $config{chatLangCode} ne "none");
+
+        my ($data, $charName); # Type: Bytes
+        $message = stringToBytes($message); # Type: Bytes
+        $charName = stringToBytes($char->{name});
+
+        $data = pack("C*", 0x90, 0x01) .
+        pack("v*", length($charName) + length($message) + 8) .
+        $charName . " : " . $message . chr(0);
+        $self->sendToServer($data);
+}
+
 sub sendDrop {
 	my ($self, $index, $amount) = @_;
 	my $msg = pack("C*", 0x7E, 0x00) .
