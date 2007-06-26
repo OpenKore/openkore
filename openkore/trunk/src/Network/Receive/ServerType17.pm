@@ -10,6 +10,7 @@
 #  See http://www.gnu.org/licenses/gpl.html for the full license.
 #########################################################################
 # tRO (Thai) for 2007-05-22bRagexe by kLabMouse (thanks to abt123 and penz for support)
+# Servertype overvie: http://www.openkore.com/wiki/index.php/ServerType
 package Network::Receive::ServerType17;
 
 use strict;

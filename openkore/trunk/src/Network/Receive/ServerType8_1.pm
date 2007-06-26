@@ -1,4 +1,5 @@
 # Korea (kRO)
+# Servertype overvie: http://www.openkore.com/wiki/index.php/ServerType
 package Network::Receive::ServerType8_1;
 
 use strict;
