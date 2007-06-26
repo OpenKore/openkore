@@ -10,6 +10,7 @@
 #  See http://www.gnu.org/licenses/gpl.html for the full license.
 #########################################################################
 # pRO Thor (Philippines) as of December 20 2006
+# Servertype overvie: http://www.openkore.com/wiki/index.php/ServerType
 package Network::Send::ServerType15;
 
 use strict;

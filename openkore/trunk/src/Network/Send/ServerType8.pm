@@ -14,6 +14,7 @@
 #  Modified by skseo, Jan-24-2007, Fixed bugs.
 ########################################################################
 # Korea (kRO), before February 2007
+# Servertype overvie: http://www.openkore.com/wiki/index.php/ServerType
 package Network::Send::ServerType8;
 
 use strict;

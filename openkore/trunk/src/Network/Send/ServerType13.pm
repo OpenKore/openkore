@@ -18,6 +18,7 @@
 #  23 March    2007: Updated to support rRO 2007-02-26e protocol
 #  12 June     2007: Updated to support rRO 2007-05-29a protocol
 #########################################################################
+# Servertype overvie: http://www.openkore.com/wiki/index.php/ServerType
 package Network::Send::ServerType13;
 
 use strict;
