@@ -39,6 +39,7 @@ use Utils::Win32;
 use encoding 'utf8';
 use Encode;
 use I18N qw(stringToBytes);
+use Translation qw(T);
 
 
 use Globals;
@@ -190,7 +191,19 @@ sub readEvents {
 #				print "\n";
 			#Other ASCII (+ ISO Latin-*)
 			} elsif ($event[5] >= 32 && $event[5] != 127 && $event[5] <= 255) {
-				my $char = Encode::decode("cp" . $self->{codepage}, chr($event[5]));
+				my $char;
+				eval {
+					$char = Encode::decode("cp" . $self->{codepage}, chr($event[5]));
+				};
+				if ($@ =~ /^Unknown encoding/s) {
+					$self->errorDialog(T("Your Windows's default language is not supported by OpenKore.\n" .
+						"Please go to 'Start->Control Panel->Regional and language options' and set " .
+						"the Windows default language to English."));
+					exit 1;
+				} elsif ($@) {
+					die $@;
+				}
+
 				if ($self->{in_pos} < length($self->{input_part})) {
 					$self->{out_con}->Scroll(
 						$self->{in_pos}, $self->{in_line}, $self->{right}, $self->{in_line},
