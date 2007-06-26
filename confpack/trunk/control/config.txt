@@ -11,11 +11,8 @@ char
 sex
 
 bindIp
-# 0 = normal server, 1 = oRO, 2 = pRO, 3 = eAthena/Freya,
-# 4 = new Freya, 5 = new eAthena, 6 = new oRO
-# 7 = Aegis 10.x with padded packets, 8 = kRO
-# 9 = eAthena, 10 = vRO, 11 = euRO
-# If Skills, Moving, Sitting or whatever doesnt work, try all other servertypes before you complain!
+# For an overview of all servertypes please go to the following URL:
+# http://www.openkore.com/wiki/index.php/ServerType#English
 serverType 0
 
 # 1 = hook into RO client, 2 = Act as stand-alone proxy, proxy = act as true proxy
@@ -149,8 +146,6 @@ followDistanceMin 3
 followLostStep 12
 followSitAuto 0
 followBot 0
-
-ignoreServerShutdown
 
 itemsTakeAuto 2
 itemsTakeAuto_party 0
