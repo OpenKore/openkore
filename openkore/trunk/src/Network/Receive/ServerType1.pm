@@ -1,4 +1,4 @@
-# Servertype overvie: http://www.openkore.com/wiki/index.php/ServerType
+# Servertype overview: http://www.openkore.com/wiki/index.php/ServerType
 package Network::Receive::ServerType1;
 
 use strict;
