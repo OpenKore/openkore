@@ -10,6 +10,7 @@
 #  See http://www.gnu.org/licenses/gpl.html for the full license.
 #########################################################################
 # iRO (International) as of June 21 2007.
+# Servertype overvie: http://www.openkore.com/wiki/index.php/ServerType
 package Network::Receive::ServerType18;
 
 use strict;

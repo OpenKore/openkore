@@ -1,4 +1,5 @@
 # euRO (Europe) as of September 16 2006
+# Servertype overvie: http://www.openkore.com/wiki/index.php/ServerType
 package Network::Receive::ServerType11;
 
 use strict;
