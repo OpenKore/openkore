@@ -12,7 +12,7 @@
 # vRO (Vietnam)
 # Note that as of February 2007, vRO uses server type 13 instead of 10,
 # so this server type is obsolete at the moment.
-# Servertype overvie: http://www.openkore.com/wiki/index.php/ServerType
+# Servertype overview: http://www.openkore.com/wiki/index.php/ServerType
 package Network::Send::ServerType10;
 
 use strict;

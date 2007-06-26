@@ -9,7 +9,7 @@
 #  also distribute the source code.
 #  See http://www.gnu.org/licenses/gpl.html for the full license.
 #########################################################################
-# Servertype overvie: http://www.openkore.com/wiki/index.php/ServerType
+# Servertype overview: http://www.openkore.com/wiki/index.php/ServerType
 package Network::Send::ServerType2;
 
 use strict;
