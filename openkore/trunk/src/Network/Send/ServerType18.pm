@@ -173,6 +173,13 @@ sub sendStorageGet {
 	debug "Sent Storage Get: $index x $amount\n", "sendPacket", 2;
 }
 
+sub sendStorageClose {
+        my ($self) = @_;
+        my $msg = pack("C*", 0x13, 0x01);
+        $self->sendToServer($msg);
+        debug "Sent Storage Done\n", "sendPacket", 2;
+}
+
 sub sendSync {
 	my ($self, $initialSync) = @_;
 	my $msg;
