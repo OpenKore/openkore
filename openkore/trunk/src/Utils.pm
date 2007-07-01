@@ -38,7 +38,9 @@ our @EXPORT = (
 	@{$Utils::DataStructures::EXPORT_TAGS{all}},
 
 	# Math
-	qw(calcPosition checkMovementDirection distance blockDistance getVector moveAlongVector normalize vectorToDegree max min),
+	qw(calcPosition checkMovementDirection distance
+	binToSignedInt binToSignedShort blockDistance getVector moveAlongVector
+	normalize vectorToDegree max min),
 	# OS-specific
 	qw(checkLaunchedApp launchApp launchScript),
 	# Other stuff
@@ -155,6 +157,36 @@ sub distance {
         %line = %{$pos1};
     }
     return sqrt($line{x} ** 2 + $line{y} ** 2);
+}
+
+##
+# int binToSignedInt(Bytes data)
+#
+# Convert a binary string, which represents a 32-bit
+# little-endian integer, into a signed Perl integer.
+sub binToSignedInt {
+	my $result = unpack("V", $_[0]);
+	# Check most significant bit.
+	if ($result & 2147483648) {
+		return -0xFFFFFFFF + $result - 1;
+	} else {
+		return $result;
+	}
+}
+
+##
+# int binToSignedShort(Bytes data)
+#
+# Convert a binary string, which represents a 16-bit
+# little-endian integer, into a signed Perl integer.
+sub binToSignedShort {
+	my $result = unpack("v", $_[0]);
+	# Check most significant bit.
+	if ($result & 32768) {
+		return -0xFFFF + $result - 1;
+	} else {
+		return $result;
+	}
 }
 
 ##
