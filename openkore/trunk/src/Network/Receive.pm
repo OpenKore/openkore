@@ -1493,6 +1493,8 @@ sub attack_range {
 
 	my $type = $args->{type};
 	debug "Your attack range is: $type\n";
+	return unless changeToInGameState();
+
 	$char->{attack_range} = $type;
 	if ($config{attackDistanceAuto} && $config{attackDistance} != $type) {
 		message TF("Autodetected attackDistance = %s\n", $type), "success";
