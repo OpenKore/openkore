@@ -856,16 +856,14 @@ sub parseSendMsg {
 		}
 	
 	} elsif ($switch eq "00A7") {
-			#iRO XKore with Padded Packets Support
-			if($config{serverType} == 18) {
-				$syncSync = substr($msg, 8, 4);
-			}
+		if($masterServer && $masterServer->{paddedPackets}) {
+			$syncSync = substr($msg, 8, 4);
+		}
 			
 	} elsif ($switch eq "007E") {
-			#euRO XKore with Padded Packets Support
-			if($config{serverType} == 16) {
-				$syncSync = substr($msg, 4, 4);
-			}
+		if($masterServer && $masterServer->{paddedPackets}) {
+			$syncSync = substr($msg, 4, 4);
+		}
 
 	} elsif ($switch eq "007D") {
 		# Map loaded
