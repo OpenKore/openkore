@@ -8,6 +8,7 @@ sub start {
 	print "### Starting PluginsHookTest\n";
 	testAddHook();
 	testAddHooks();
+	testLegacyAPI();
 }
 
 sub testAddHook {
@@ -98,6 +99,13 @@ sub testAddHooks {
 	ok(!Plugins::hasHook('hook3'));
 	Plugins::callHook('hook1');
 	is($value, 2);
+}
+
+sub testLegacyAPI {
+	my $handle = Plugins::addHook('hook1', sub {});
+	ok(Plugins::hasHook('hook1'));
+	Plugins::delHook('hook1', $handle);
+	ok(!Plugins::hasHook('hook1'));
 }
 
 1;

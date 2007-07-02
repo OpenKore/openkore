@@ -1359,6 +1359,7 @@ sub actor_name_received {
 sub actor_status_active {
 	my ($self, $args) = @_;
 
+	return unless changeToInGameState();
 	my ($type, $ID, $flag) = @{$args}{qw(type ID flag)};
 
 	my $skillName = (defined($skillsStatus{$type})) ? $skillsStatus{$type} : "Unknown $type";
@@ -4412,7 +4413,6 @@ sub private_message {
 	my ($self, $args) = @_;
 	my ($newmsg, $msg); # Type: Bytes
 
-	# Private message
 	return unless changeToInGameState();
 
 	# Type: String
