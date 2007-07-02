@@ -111,8 +111,8 @@ sub get {
 
 	if ($ID eq $accountID) {
 		# I put assertions here because $char seems to be unblessed sometimes.
-		assert(defined $char) if DEBUG;
-		assert(UNIVERSAL::isa($char, 'Actor::You')) if DEBUG;
+		assert(defined $char, '$char must be defined') if DEBUG;
+		assert(UNIVERSAL::isa($char, 'Actor::You'), '$char must be of class Actor::You') if DEBUG;
 		return $char;
 	} elsif ($items{$ID}) {
 		return $items{$ID};
