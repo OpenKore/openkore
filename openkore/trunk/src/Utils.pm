@@ -39,7 +39,8 @@ our @EXPORT = (
 
 	# Math
 	qw(calcPosition checkMovementDirection distance
-	binToSignedInt binToSignedShort blockDistance getVector moveAlongVector
+	intToSignedInt intToSignedShort
+	blockDistance getVector moveAlongVector
 	normalize vectorToDegree max min),
 	# OS-specific
 	qw(checkLaunchedApp launchApp launchScript),
@@ -160,12 +161,11 @@ sub distance {
 }
 
 ##
-# int binToSignedInt(Bytes data)
+# int intToSignedInt(int i)
 #
-# Convert a binary string, which represents a 32-bit
-# little-endian integer, into a signed Perl integer.
-sub binToSignedInt {
-	my $result = unpack("V", $_[0]);
+# Convert a 32-bit unsigned integer into a signed integer.
+sub intToSignedInt {
+	my $result = $_[0];
 	# Check most significant bit.
 	if ($result & 2147483648) {
 		return -0xFFFFFFFF + $result - 1;
@@ -175,12 +175,11 @@ sub binToSignedInt {
 }
 
 ##
-# int binToSignedShort(Bytes data)
+# int intToSignedShort(int i)
 #
-# Convert a binary string, which represents a 16-bit
-# little-endian integer, into a signed Perl integer.
-sub binToSignedShort {
-	my $result = unpack("v", $_[0]);
+# Convert a 16-bit unsigned integer into a signed integer.
+sub intToSignedShort {
+	my $result = $_[0];
 	# Check most significant bit.
 	if ($result & 32768) {
 		return -0xFFFF + $result - 1;

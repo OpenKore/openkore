@@ -681,7 +681,7 @@ sub actor_action {
 	my ($self,$args) = @_;
 	return unless changeToInGameState();
 
-	$args->{damage} = binToSignedShort($args->{damage});
+	$args->{damage} = intToSignedShort($args->{damage});
 	if ($args->{type} == 1) {
 		# Take item
 		my $source = Actor::get($args->{sourceID});
@@ -4995,7 +4995,7 @@ sub skill_use {
 	delete $source->{casting};
 
 	# Perform trigger actions
-	$args->{damage} = binToSignedShort($args->{damage});
+	$args->{damage} = intToSignedShort($args->{damage});
 	updateDamageTables($args->{sourceID}, $args->{targetID}, $args->{damage}) if ($args->{damage} != -30000);
 	setSkillUseTimer($args->{skillID}, $args->{targetID}) if ($args->{sourceID} eq $accountID);
 	setPartySkillTimer($args->{skillID}, $args->{targetID}) if
