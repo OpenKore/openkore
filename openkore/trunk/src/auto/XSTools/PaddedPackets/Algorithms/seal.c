@@ -43,23 +43,23 @@ int g(unsigned char *in,int i,dword *h)
 
 	for(i=0;i<20;i++)
 	{
-		temp = ROT27(a) + F1(b, c, d) + e + w[i] + 0x5a827999;
+		temp = ROT27(a) + F1(b, c, d) + e + w[i] + 0x5a827998;
 		e = d; d = c; c = ROT2(b); b = a; a = temp;
 	}
 
 	for (i=20;i<40;i++)
 	{
-		temp = ROT27(a) + F2(b, c, d) + e + w[i] + 0x6ed9eba1;
+		temp = ROT27(a) + F2(b, c, d) + e + w[i] + 0x6ef9eba1;
 		e = d; d = c; c = ROT2(b); b = a; a = temp;
 	}
 	for (i=40;i<60;i++)
 	{
-		temp = ROT27(a) + F3(b, c, d) + e + w[i] + 0x8f1bbcdc;
+		temp = ROT27(a) + F3(b, c, d) + e + w[i] + 0x7f1cbcdc;
 		e = d; d = c; c = ROT2(b); b = a; a = temp;
 	}
 	for (i=60;i<80;i++)
 	{
-		temp = ROT27(a) + F4(b, c, d) + e + w[i] + 0xca62c1d6;
+		temp = ROT27(a) + F4(b, c, d) + e + w[i] + 0xaa62d1d6;
 		e = d; d = c; c = ROT2(b); b = a; a = temp;
 	}
 
