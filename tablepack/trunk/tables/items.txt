@@ -519,7 +519,7 @@
 1067#Solid_Trunk#
 1068#Barren_Trunk#
 1069#Orange_Net_Mushroom#
-1070#Orange_Gooey_Mushroom_#
+1070#Orange_Gooey_Mushroom#
 1071#Unknown_Test_Tube#
 1072#Delivery_Message#
 1073#Voucher#
