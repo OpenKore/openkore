@@ -597,7 +597,7 @@ sub checkClient {
 
 		debug "Wanted to sync.\n", "connection";
 
-	} elsif ($$c_state == 3 && ((
+	} elsif ($$c_state == 3 && (
 		# Ignore invalid serverTypes
 		($config{XKore_ignoreInvalidServerType} && (
 			$switch eq "0072" ||
@@ -613,7 +613,10 @@ sub checkClient {
 			$config{serverType} == 5 )) ||
 		# serverType 4
 		($switch eq "00F5" &&
-			$config{serverType} == 4 ))
+			$config{serverType} == 4 ) ||
+		# serverType 18
+		($switch eq "00F3" &&
+			$config{serverType} == 18)
 		)) {
 		# Client sent MapLogin
 
