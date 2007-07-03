@@ -4207,6 +4207,7 @@ sub party_organize_result {
 
 sub party_users_info {
 	my ($self, $args) = @_;
+	return unless changeToInGameState();
 
 	my $msg;
 	$self->decrypt(\$msg, substr($args->{RAW_MSG}, 28));
@@ -4219,15 +4220,17 @@ sub party_users_info {
 		if (binFind(\@partyUsersID, $ID) eq "") {
 			binAdd(\@partyUsersID, $ID);
 		}
-		$chars[$config{char}]{party}{users}{$ID} = new Actor::Party;
-		$chars[$config{char}]{party}{users}{$ID}{name} = bytesToString(unpack("Z24", substr($msg, $i + 4, 24)));
-		message TF("Party Member: %s\n", $chars[$config{char}]{party}{users}{$ID}{name}), undef, 1;
-		$chars[$config{char}]{party}{users}{$ID}{map} = unpack("Z16", substr($msg, $i + 28, 16));
-		$chars[$config{char}]{party}{users}{$ID}{online} = !(unpack("C1",substr($msg, $i + 45, 1)));
-		$chars[$config{char}]{party}{users}{$ID}{admin} = 1 if ($num == 0);
+		$char->{party}{users}{$ID} = new Actor::Party();
+		$char->{party}{users}{$ID}{name} = bytesToString(unpack("Z24", substr($msg, $i + 4, 24)));
+		message TF("Party Member: %s\n", $char->{party}{users}{$ID}{name}), undef, 1;
+		$char->{party}{users}{$ID}{map} = unpack("Z16", substr($msg, $i + 28, 16));
+		$char->{party}{users}{$ID}{online} = !(unpack("C1",substr($msg, $i + 45, 1)));
+		$char->{party}{users}{$ID}{admin} = 1 if ($num == 0);
 	}
 
-	$messageSender->sendPartyShareEXP(1) if ($config{partyAutoShare} && $chars[$config{char}]{party} && %{$chars[$config{char}]{party}});
+	if ($config{partyAutoShare} && $char->{party} && %{$char->{party}}) {
+		$messageSender->sendPartyShareEXP(1);
+	}
 
 }
 
