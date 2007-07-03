@@ -5748,7 +5748,7 @@ sub storage_password_result {
 
 sub switch_character {
 	# User is switching characters in X-Kore
-	$net->setState(CONNECTED_TO_MASTER_SERVER);
+	$net->setState(Network::CONNECTED_TO_MASTER_SERVER);
 	$net->serverDisconnect();
 }
 
