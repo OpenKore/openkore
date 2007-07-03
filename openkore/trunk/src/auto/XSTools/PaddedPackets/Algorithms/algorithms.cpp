@@ -1,4 +1,4 @@
-#define ROPP_DEBUG
+//#define ROPP_DEBUG
 #ifdef ROPP_DEBUG
 	#include <stdio.h>
 #endif

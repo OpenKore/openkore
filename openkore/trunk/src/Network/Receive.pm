@@ -5319,6 +5319,7 @@ sub stats_added {
 
 sub stats_info {
 	my ($self, $args) = @_;
+	return unless changeToInGameState();
 	$char->{points_free} = $args->{points_free};
 	$char->{str} = $args->{str};
 	$char->{points_str} = $args->{points_str};
@@ -5483,6 +5484,7 @@ sub stat_info {
 
 sub stat_info2 {
 	my ($self, $args) = @_;
+	return unless changeToInGameState();
 	my ($type, $val, $val2) = @{$args}{qw(type val val2)};
 	if ($type == 13) {
 		$char->{str} = $val;
@@ -5745,8 +5747,8 @@ sub storage_password_result {
 }
 
 sub switch_character {
-	# 00B3 - user is switching characters in XKore
-	$net->setState(2);
+	# User is switching characters in X-Kore
+	$net->setState(CONNECTED_TO_MASTER_SERVER);
 	$net->serverDisconnect();
 }
 
