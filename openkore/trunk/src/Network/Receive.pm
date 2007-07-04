@@ -3758,6 +3758,7 @@ sub map_loaded {
 	}
 
 	if ($char && changeToInGameState()) {
+		$net->setState(Network::IN_GAME) if ($net->getState() != Network::IN_GAME);
 		$char->{pos} = {};
 		makeCoords($char->{pos}, $args->{coords});
 		$char->{pos_to} = {%{$char->{pos}}};
