@@ -522,6 +522,7 @@ sub mainLoop_initialized {
 		my $msg_length = length($msgOut);
 		while ($msgOut ne "") {
 			$msgOut = parseSendMsg($msgOut);
+			Misc::checkValidity("parseSendMsg (post)");
 			last if ($msg_length == length($msgOut));
 			$msg_length = length($msgOut);
 		}
@@ -551,6 +552,7 @@ sub mainLoop_initialized {
 		Misc::checkValidity("AI");
 		return if $quit;
 	}
+	Misc::checkValidity("mainLoop_part2.1");
 	$taskManager->iterate();
 
 	Benchmark::end("mainLoop_part2") if DEBUG;
@@ -558,6 +560,7 @@ sub mainLoop_initialized {
 
 	# Process bus events.
 	$bus->iterate() if ($bus);
+	Misc::checkValidity("mainLoop_part2.2");
 
 
 	###### Other stuff that's run in the main loop #####
@@ -585,6 +588,8 @@ sub mainLoop_initialized {
 		undef $conState_tries;
 		initRandomRestart();
 	}
+	
+	Misc::checkValidity("mainLoop_part2.3");
 
 	# Automatically switch to a different config file
 	# based on certain conditions
@@ -666,10 +671,12 @@ sub mainLoop_initialized {
 		}
 	}
 
+	Misc::checkValidity("mainLoop_part2.4");
+	
 	# Set interface title
 	my $charName;
 	my $title;
-	$charName = '$char->{name}: ' if ($char);
+	$charName = "$char->{name}: " if ($char);
 	if ($net->getState() == Network::IN_GAME) {
 		my ($basePercent, $jobPercent, $weight, $pos);
 
@@ -849,7 +856,7 @@ sub parseSendMsg {
 		configModify("char", unpack("C*",substr($msg, 2, 1)));
 
 	} elsif ($switch eq "0072") {
-		if ($config{serverType} == 0) {
+		if ($masterServer->{serverType} == 0) {
 			# Map login
 			if ($config{'sex'} ne "") {
 				$sendMsg = substr($sendMsg, 0, 18) . pack("C",$config{'sex'});
@@ -868,7 +875,7 @@ sub parseSendMsg {
 
 	} elsif ($switch eq "007D") {
 		# Map loaded
-		$net->setState(Network::IN_GAME);
+		$packetParser->changeToInGameState();
 		AI::clear("clientSuspend");
 		$timeout{'ai'}{'time'} = time;
 		if ($firstLoginMap) {
@@ -878,9 +885,9 @@ sub parseSendMsg {
 		$timeout{'welcomeText'}{'time'} = time;
 		$ai_v{portalTrace_mapChanged} = time;
 		#syncSync support for XKore 1 mode
-		if($config{serverType} == 11) {
+		if($masterServer->{serverType} == 11) {
 			$syncSync = substr($msg, 8, 4);
-		} elsif ($config{serverType} == 12) {
+		} elsif ($masterServer->{serverType} == 12) {
 			$syncSync = substr($msg, 8, 4);
 		} else {
 			$syncSync = substr($msg, $masterServer->{mapLoadedTickOffset}, 4); # formula: MapLoaded_len + Sync_len - 4 - Sync_packet_last_junk
@@ -890,7 +897,7 @@ sub parseSendMsg {
 		Plugins::callHook('map_loaded');
 
 	} elsif ($switch eq "0085") {
-		#if ($config{serverType} == 0 || $config{serverType} == 1 || $config{serverType} == 2) {
+		#if ($masterServer->{serverType} == 0 || $masterServer->{serverType} == 1 || $masterServer->{serverType} == 2) {
 		#	#Move
 		#	AI::clear("clientSuspend");
 		#	makeCoords(\%coords, substr($msg, 2, 3));
@@ -898,7 +905,7 @@ sub parseSendMsg {
 		#}
 
 	} elsif ($switch eq "0089") {
-		if ($config{serverType} == 0) {
+		if ($masterServer->{serverType} == 0) {
 			# Attack
 			if (!$config{'tankMode'} && !AI::inQueue("attack")) {
 				AI::clear("clientSuspend");
@@ -909,12 +916,12 @@ sub parseSendMsg {
 		}
 		#undef $sendMsg;
 
-	} elsif (($switch eq "008C" && ($config{serverType} == 0 || $config{serverType} == 1 || $config{serverType} == 2 || $config{serverType} == 6 || $config{serverType} == 7 || $config{serverType} == 10 || $config{serverType} == 11)) ||
-		($switch eq "00F3" && ($config{serverType} == 3 || $config{serverType} == 5 || $config{serverType} == 8 || $config{serverType} == 9 || $config{serverType} == 15)) ||
-		($switch eq "009F" && $config{serverType} == 4) ||
-		($switch eq "007E" && $config{serverType} == 12) ||
-		($switch eq "0190" && ($config{serverType} == 13 || $config{serverType} == 18)) ||
-		($switch eq "0085" && $config{serverType} == 14) ||	# Public chat
+	} elsif (($switch eq "008C" && ($masterServer->{serverType} == 0 || $masterServer->{serverType} == 1 || $masterServer->{serverType} == 2 || $masterServer->{serverType} == 6 || $masterServer->{serverType} == 7 || $masterServer->{serverType} == 10 || $masterServer->{serverType} == 11)) ||
+		($switch eq "00F3" && ($masterServer->{serverType} == 3 || $masterServer->{serverType} == 5 || $masterServer->{serverType} == 8 || $masterServer->{serverType} == 9 || $masterServer->{serverType} == 15)) ||
+		($switch eq "009F" && $masterServer->{serverType} == 4) ||
+		($switch eq "007E" && $masterServer->{serverType} == 12) ||
+		($switch eq "0190" && ($masterServer->{serverType} == 13 || $masterServer->{serverType} == 18)) ||
+		($switch eq "0085" && $masterServer->{serverType} == 14) ||	# Public chat
 
 		$switch eq "0108" ||	# Party chat
 
@@ -963,39 +970,41 @@ sub parseSendMsg {
 			push @lastpm, {%lastpm};
 		}
 
-	} elsif (($switch eq "009B" && $config{serverType} == 0) ||
-		($switch eq "009B" && $config{serverType} == 1) ||
-		($switch eq "009B" && $config{serverType} == 2) ||
-		($switch eq "0085" && $config{serverType} == 3) ||
-		($switch eq "00F3" && $config{serverType} == 4) ||
-		($switch eq "0085" && $config{serverType} == 5) ||
-		#($switch eq "009B" && $config{serverType} == 6) || serverType 6 uses what?
-		($switch eq "009B" && $config{serverType} == 7) ||
-		($switch eq "0072" && $config{serverType} == 13)) { # rRO
+	} elsif (($switch eq "009B" && $masterServer->{serverType} == 0) ||
+		($switch eq "009B" && $masterServer->{serverType} == 1) ||
+		($switch eq "009B" && $masterServer->{serverType} == 2) ||
+		($switch eq "0085" && $masterServer->{serverType} == 3) ||
+		($switch eq "00F3" && $masterServer->{serverType} == 4) ||
+		($switch eq "0085" && $masterServer->{serverType} == 5) ||
+		#($switch eq "009B" && $masterServer->{serverType} == 6) || serverType 6 uses what?
+		($switch eq "009B" && $masterServer->{serverType} == 7) ||
+		($switch eq "0072" && $masterServer->{serverType} == 13)) { # rRO
 		# Look
 		
-		if ($config{serverType} == 0) {
-			$char->{look}{head} = unpack("C", substr($msg, 2, 1));
-			$char->{look}{body} = unpack("C", substr($msg, 4, 1));
-		} elsif ($config{serverType} == 1 ||
-			$config{serverType} == 2 ||
-			$config{serverType} == 4 ||
-			$config{serverType} == 7) {
-			$char->{look}{head} = unpack("C", substr($msg, 6, 1));
-			$char->{look}{body} = unpack("C", substr($msg, 14, 1));
-		} elsif ($config{serverType} == 3) {
-			$char->{look}{head} = unpack("C", substr($msg, 12, 1));
-			$char->{look}{body} = unpack("C", substr($msg, 22, 1));
-		} elsif ($config{serverType} == 5) {
-			$char->{look}{head} = unpack("C", substr($msg, 8, 1));
-			$char->{look}{body} = unpack("C", substr($msg, 16, 1));
-		} elsif ($config{serverType} == 13) { # rRO
-			$char->{look}{head} = unpack("C", substr($msg, 2, 1));
-			$char->{look}{body} = unpack("C", substr($msg, 4, 1));
-		}	
+		if ($char) {
+			if ($masterServer->{serverType} == 0) {
+				$char->{look}{head} = unpack("C", substr($msg, 2, 1));
+				$char->{look}{body} = unpack("C", substr($msg, 4, 1));
+			} elsif ($masterServer->{serverType} == 1 ||
+				$masterServer->{serverType} == 2 ||
+				$masterServer->{serverType} == 4 ||
+				$masterServer->{serverType} == 7) {
+				$char->{look}{head} = unpack("C", substr($msg, 6, 1));
+				$char->{look}{body} = unpack("C", substr($msg, 14, 1));
+			} elsif ($masterServer->{serverType} == 3) {
+				$char->{look}{head} = unpack("C", substr($msg, 12, 1));
+				$char->{look}{body} = unpack("C", substr($msg, 22, 1));
+			} elsif ($masterServer->{serverType} == 5) {
+				$char->{look}{head} = unpack("C", substr($msg, 8, 1));
+				$char->{look}{body} = unpack("C", substr($msg, 16, 1));
+			} elsif ($masterServer->{serverType} == 13) { # rRO
+				$char->{look}{head} = unpack("C", substr($msg, 2, 1));
+				$char->{look}{body} = unpack("C", substr($msg, 4, 1));
+			}
+		}
 
 	} elsif ($switch eq "009F") {
-		if ($config{serverType} == 0) {
+		if ($masterServer->{serverType} == 0) {
 			# Take
 			AI::clear("clientSuspend");
 			ai_clientSuspend($switch, 2, substr($msg,2,4));
@@ -1061,7 +1070,7 @@ sub parseMsg {
 	if (length($msg) >= 4 && substr($msg,0,4) ne $accountID && $net->getState() >= 4 && $lastswitch ne $switch
 	 && length($msg) >= unpack("v1", substr($msg, 0, 2))) {
 		# The decrypt below casued annoying unparsed errors (at least in serverType  2)
-		if ($config{serverType} != 2) {
+		if ($masterServer->{serverType} != 2) {
 			Network::Receive->decrypt(\$msg, $msg)
 		}
 	}
