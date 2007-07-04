@@ -667,29 +667,30 @@ sub mainLoop_initialized {
 	}
 
 	# Set interface title
-	my $charName = $chars[$config{'char'}]{'name'};
+	my $charName;
 	my $title;
-	$charName .= ': ' if defined $charName;
+	$charName = '$char->{name}: ' if ($char);
 	if ($net->getState() == Network::IN_GAME) {
 		my ($basePercent, $jobPercent, $weight, $pos);
 
-		$basePercent = sprintf("%.2f", $chars[$config{'char'}]{'exp'} / $chars[$config{'char'}]{'exp_max'} * 100) if $chars[$config{'char'}]{'exp_max'};
-		$jobPercent = sprintf("%.2f", $chars[$config{'char'}]{'exp_job'} / $chars[$config{'char'}]{'exp_job_max'} * 100) if $chars[$config{'char'}]{'exp_job_max'};
-		$weight = int($chars[$config{'char'}]{'weight'} / $chars[$config{'char'}]{'weight_max'} * 100) . "%" if $chars[$config{'char'}]{'weight_max'};
-		$pos = " : $char->{pos_to}{x},$char->{pos_to}{y} $field{'name'}" if ($char->{pos_to} && $field{'name'});
+		assert(defined $char);
+		$basePercent = sprintf("%.2f", $char->{exp} / $char->{exp_max} * 100) if ($char->{exp_max});
+		$jobPercent = sprintf("%.2f", $char->{exp_job} / $char->{exp_job_max} * 100) if ($char->{exp_job_max});
+		$weight = int($char->{weight} / $char->{weight_max} * 100) . "%" if ($char->{weight_max});
+		$pos = " : $char->{pos_to}{x},$char->{pos_to}{y} " . $field->name() if ($char->{pos_to} && $field);
 
 		# Translation Comment: Interface Title with character status
 		$title = TF("%s B%s (%s), J%s (%s) : w%s%s - %s",
-			${charName}, $chars[$config{'char'}]{'lv'}, $basePercent.'%',
-			$chars[$config{'char'}]{'lv_job'}, $jobPercent.'%',
-			$weight, ${pos}, $Settings::NAME);
+			$charName, $char->{lv}, $basePercent . '%',
+			$char->{lv_job}, $jobPercent . '%',
+			$weight, $pos, $Settings::NAME);
 
 	} elsif ($net->getState() == Network::NOT_CONNECTED) {
 		# Translation Comment: Interface Title
-		$title = TF("%sNot connected - %s", ${charName}, $Settings::NAME);
+		$title = TF("%sNot connected - %s", $charName, $Settings::NAME);
 	} else {
 		# Translation Comment: Interface Title
-		$title = TF("%sConnecting - %s", ${charName}, $Settings::NAME);
+		$title = TF("%sConnecting - %s", $charName, $Settings::NAME);
 	}
 	my %args = (return => $title);
 	Plugins::callHook('mainLoop::setTitle',\%args);
