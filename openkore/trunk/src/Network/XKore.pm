@@ -57,8 +57,12 @@ sub new {
 	$self->{serverPackets} = "";
 	$self->{clientPackets} = "";
 
-	$packetParser = Network::Receive->create($config{serverType});
-	$messageSender = Network::Send->create($self, $config{serverType});
+	$masterServer = $masterServers{$config{master}};
+	if ($config{serverType} != $masterServer->{serverType}) {
+		Misc::configModify('serverType', $masterServer->{serverType});
+	}
+	$packetParser = Network::Receive->create($masterServer->{serverType});
+	$messageSender = Network::Send->create($self, $masterServer->{serverType});
 
 	message T("X-Kore mode intialized.\n"), "startup";
 

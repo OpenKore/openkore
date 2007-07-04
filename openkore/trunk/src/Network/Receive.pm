@@ -76,7 +76,7 @@ sub new {
 		'006F' => ['character_deletion_successful'],
 		'0070' => ['character_deletion_failed'],
 		'0071' => ['received_character_ID_and_Map', 'a4 Z16 a4 v1', [qw(charID mapName mapIP mapPort)]],
-		'0073' => ['map_loaded','V a3',[qw(syncMapSync coords)]],
+		'0073' => ['map_loaded', 'V a3', [qw(syncMapSync coords)]],
 		'0075' => ['changeToInGameState'],
 		'0077' => ['changeToInGameState'],
 		'0078' => ['actor_display', 'a4 v14 a4 x7 C1 a3 x2 C1 v1', [qw(ID walk_speed param1 param2 param3 type hair_style weapon lowhead shield tophead midhead hair_color clothes_color head_dir guildID sex coords act lv)]],
@@ -3732,10 +3732,10 @@ sub map_changed {
 sub map_loaded {
 	# Note: ServerType0 overrides this function
 	my ($self, $args) = @_;
-	$net->setState(Network::IN_GAME);
+
 	undef $conState_tries;
 	$char = $chars[$config{char}];
-	$syncMapSync = pack('V1',$args->{syncMapSync});
+	$syncMapSync = pack('V1', $args->{syncMapSync});
 
 	if ($net->version == 1) {
 		$net->setState(4);
@@ -3757,10 +3757,12 @@ sub map_loaded {
 		$timeout{'ai'}{'time'} = time;
 	}
 
-	$char->{pos} = {};
-	makeCoords($char->{pos}, $args->{coords});
-	$char->{pos_to} = {%{$char->{pos}}};
-	message(TF("Your Coordinates: %s, %s\n", $char->{pos}{x}, $char->{pos}{y}), undef, 1);
+	if ($char && changeToInGameState()) {
+		$char->{pos} = {};
+		makeCoords($char->{pos}, $args->{coords});
+		$char->{pos_to} = {%{$char->{pos}}};
+		message(TF("Your Coordinates: %s, %s\n", $char->{pos}{x}, $char->{pos}{y}), undef, 1);
+	}
 
 	$messageSender->sendIgnoreAll("all") if ($config{ignoreAll});
 }
@@ -4486,7 +4488,7 @@ sub received_characters {
 	return if ($net->getState() == Network::IN_GAME);
 	my ($self, $args) = @_;
 	message T("Received characters from Character Server\n"), "connection";
-	$net->setState(3);
+	$net->setState(Network::CONNECTED_TO_LOGIN_SERVER);
 	undef $conState_tries;
 	undef @chars;
 
