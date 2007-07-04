@@ -695,7 +695,7 @@ sub mainLoop_initialized {
 	Plugins::callHook('mainLoop::setTitle',\%args);
 	$interface->title($args{return});
 
-
+	Misc::checkValidity("mainLoop_part3");
 	Benchmark::end("mainLoop_part3") if DEBUG;
 }
 
