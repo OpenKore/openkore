@@ -5671,7 +5671,7 @@ sub storage_password_request {
 			message T("Please enter a new character password:\n");
 		} else {
 			if ($config{storageAuto_password} eq '') {
-				my $input = $interface->query(T("Please enter a new storage password:"), isPassword => 1);
+				my $input = $interface->query(T("You've never set a storage password before.\nYou must set a storage password before you can use the storage.\nPlease enter a new storage password:"), isPassword => 1);
 				if (!defined($input)) {
 					return;
 				}

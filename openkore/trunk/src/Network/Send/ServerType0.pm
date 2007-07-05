@@ -1173,7 +1173,7 @@ sub sendStoragePassword {
 	} elsif ($type == 2) {
 		$msg = pack("C C v", 0x3B, 0x02, $type).pack("H*", "EC62E539BB6BBC811A60C06FACCB7EC8").$pass;
 	} else {
-		return;
+		ArgumentException->throw("The 'type' argument has invalid value ($type).");
 	}
 	$self->sendToServer($msg);
 }
