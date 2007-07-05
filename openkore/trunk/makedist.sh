@@ -49,6 +49,7 @@ DIRS=(.
 	src/auto/XSTools/win32
 	src/auto/XSTools/Translation
 	src/auto/XSTools/PaddedPackets
+	src/auto/XSTools/PaddedPackets/Algorithms
 	src/auto/XSTools/utils
 	src/auto/XSTools/utils/win32
 	src/auto/XSTools/utils/unix
