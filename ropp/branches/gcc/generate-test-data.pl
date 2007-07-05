@@ -28,21 +28,26 @@ my ($attackID, $skillUseID, $accountID, $syncMapSync, $syncSync, $LastPaddedPack
 
 PP_SetPacket(" " x 512, 512, 0);
 
-for (my $i = 0; $i < 100; $i++) {
-	$attackID = rand(MAX_SHORT) & 0xFFFF;
-	$skillUseID = rand(MAX_SHORT) & 0xFFFF;
-	$accountID = (rand(MAX_SHORT) & 0xFFFF) * MAX_SHORT + (rand(MAX_SHORT)  & 0xFFFF);
-	$syncMapSync = (rand(MAX_SHORT) & 0xFFFF) * MAX_SHORT + (rand(MAX_SHORT)  & 0xFFFF);
-	$syncSync = (rand(MAX_SHORT) & 0xFFFF) * MAX_SHORT + (rand(MAX_SHORT)  & 0xFFFF);
+for (my $i = 0; $i < 500; $i++) {
+	$attackID = int(rand(MAX_SHORT) & 0xFFFF);
+	$skillUseID = int(rand(MAX_SHORT) & 0xFFFF);
+	$accountID = randomInt();
+	if (int(rand(2)) == 1) {
+		# For some reason we need this, or algorithm 15
+		# will never be unit tested.
+		$accountID++;
+	}
+	$syncMapSync = randomInt();
+	$syncSync = randomInt();
 	print $f pack("V*", $attackID, $skillUseID, $accountID, $syncMapSync, $syncSync);
 
 	PP_SetPacketIDs($attackID, $skillUseID);
 
-	my $monID = (rand(MAX_SHORT) & 0xFFFF) * MAX_SHORT + (rand(MAX_SHORT)  & 0xFFFF);
+	my $monID = ();
 	my $flag = int rand(10);
 	my $skillID = int rand(100);
 	my $level = int rand(11);
-	my $targetID = (rand(MAX_SHORT) & 0xFFFF) * MAX_SHORT + (rand(MAX_SHORT)  & 0xFFFF);
+	my $targetID = randomInt();
 	print $f pack("V*", $monID, $flag, $skillID, $level, $targetID);
 	
 	printStr($f, generateSitStand(1)); # sit
@@ -52,6 +57,10 @@ for (my $i = 0; $i < 100; $i++) {
 }
 
 close($f);
+
+sub randomInt {
+	return int((rand(MAX_SHORT) & 0xFFFF) * MAX_SHORT + (rand(MAX_SHORT) & 0xFFFF));
+}
 
 sub setHashData {
 	PP_SetAccountId($accountID);
