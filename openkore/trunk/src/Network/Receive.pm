@@ -5667,9 +5667,32 @@ sub storage_password_request {
 	my ($self, $args) = @_;
 
 	if ($args->{flag} == 0) {
-		message (($args->{switch} eq '023E') ?
-			T("Please enter a new character password:\n") :
-			T("Please enter a new storage password:\n"));
+		if ($args->{switch} eq '023E') {
+			message T("Please enter a new character password:\n");
+		} else {
+			if ($config{storageAuto_password} eq '') {
+				my $input = $interface->query(T("Please enter a new storage password:"), isPassword => 1);
+				if (!defined($input)) {
+					return;
+				}
+				configModify('storageAuto_password', $input, 1);
+			}
+		}
+
+		my @key = split /[, ]+/, $config{storageEncryptKey};
+		if (!@key) {
+			error (($args->{switch} eq '023E') ?
+				T("Unable to send character password. You must set the 'storageEncryptKey' option in config.txt or servers.txt.\n") :
+				T("Unable to send storage password. You must set the 'storageEncryptKey' option in config.txt or servers.txt.\n"));
+			return;
+		}
+		my $crypton = new Utils::Crypton(pack("V*", @key), 32);
+		my $num = ($args->{switch} eq '023E') ? $config{charSelect_password} : $config{storageAuto_password};
+		$num = sprintf("%d%08d", length($num), $num);
+		my $ciphertextBlock = $crypton->encrypt(pack("V*", $num, 0, 0, 0));
+		message TF("Storage password set to: %s\n", $config{storageAuto_password}), "success";
+		$messageSender->sendStoragePassword($ciphertextBlock, 2);
+		$messageSender->sendStoragePassword($ciphertextBlock, 3);
 
 	} elsif ($args->{flag} == 1) {
 		if ($args->{switch} eq '023E') {
