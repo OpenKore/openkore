@@ -26,6 +26,7 @@ use Globals qw($accountID $sessionID $sessionID2 $accountSex $char $charID %conf
 use Log qw(message warning error debug);
 use I18N qw(stringToBytes);
 use Utils;
+use Utils::Exceptions;
 
 
 sub new {
