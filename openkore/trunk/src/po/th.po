@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenKore Thai Edition\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-06-25 20:31+0700\n"
-"PO-Revision-Date: 2007-06-25 20:37+0700\n"
+"POT-Creation-Date: 2007-07-05 19:43+0700\n"
+"PO-Revision-Date: 2007-07-06 11:29+0700\n"
 "Last-Translator: Richard <dewa5227@yahoo.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -306,7 +306,7 @@ msgstr ""
 "คุณยังไม่ได้ส่งคำขอรวมการ์ด\n"
 
 #: ../Commands.pm:643
-#: ../Network/Receive.pm:1531
+#: ../Network/Receive.pm:1535
 msgid "-----Card Merge Candidates-----\n"
 msgstr "-----รายการไอเท็มที่สามารถรวมกับการ์ดได้-----\n"
 
@@ -2175,7 +2175,7 @@ msgstr ""
 "--------------------------------"
 
 #: ../Commands.pm:3508
-#: ../Network/Receive.pm:698
+#: ../Network/Receive.pm:699
 msgid "You are sitting.\n"
 msgstr "คุณกำลังนั่งอยู่\n"
 
@@ -2809,7 +2809,7 @@ msgid "Attempting to open a warp portal to %s (%s)\n"
 msgstr "พยายามเปิดวาปไปยัง %s (%s)\n"
 
 #: ../Commands.pm:4357
-#: ../Network/Receive.pm:6012
+#: ../Network/Receive.pm:6047
 msgid ""
 "----------------- Warp Portal --------------------\n"
 "#  Place                           Map\n"
@@ -3022,7 +3022,7 @@ msgstr "*** GM %s พูดคุยกับคุณ ยุติการเ�
 #: ../Misc.pm:1011
 #: ../Misc.pm:3324
 #: ../Misc.pm:3345
-#: ../Network/Receive.pm:2366
+#: ../Network/Receive.pm:2370
 #, perl-format
 msgid "Disconnect for %s seconds...\n"
 msgstr "หยุดการเชื่อมต่อเป็นเวลา %s วินาที\n"
@@ -4057,14 +4057,14 @@ msgstr "Server ที่ได้กำหนดใว้ใช้ไม่ไ�
 
 #: ../Network/DirectConnection.pm:470
 #: ../Network/Receive.pm:662
-#: ../Network/Receive/ServerType17.pm:84
+#: ../Network/Receive/ServerType17.pm:85
 #, fuzzy
 msgid "Please select your login server."
 msgstr "กรุณาเลือกเซิฟเวอร์เพื่อล๊อกอิน:"
 
 #: ../Network/DirectConnection.pm:472
 #: ../Network/Receive.pm:664
-#: ../Network/Receive/ServerType17.pm:86
+#: ../Network/Receive/ServerType17.pm:87
 msgid "Select Login Server"
 msgstr "เลือกเซิฟเวอร์เพื่อล๊อกอิน"
 
@@ -4145,7 +4145,7 @@ msgid "-------------------------------------------------------\n"
 msgstr "-------------------------------------------------------\n"
 
 #: ../Network/Receive.pm:623
-#: ../Network/Receive/ServerType17.pm:45
+#: ../Network/Receive/ServerType17.pm:46
 msgid ""
 "-----------Account Info------------\n"
 "Account ID: @<<<<<<<<< @<<<<<<<<<<\n"
@@ -4162,7 +4162,7 @@ msgstr ""
 "-----------------------------------"
 
 #: ../Network/Receive.pm:643
-#: ../Network/Receive/ServerType17.pm:65
+#: ../Network/Receive/ServerType17.pm:66
 msgid ""
 "--------- Servers ----------\n"
 "#   Name                  Users  IP              Port\n"
@@ -4172,133 +4172,133 @@ msgstr ""
 
 #: ../Network/Receive.pm:654
 #: ../Network/XKoreProxy.pm:464
-#: ../Network/Receive/ServerType17.pm:76
+#: ../Network/Receive/ServerType17.pm:77
 msgid "Closing connection to Account Server\n"
 msgstr "ยกเลิกการติดต่อกับ Account Server\n"
 
 #: ../Network/Receive.pm:672
-#: ../Network/Receive/ServerType17.pm:94
+#: ../Network/Receive/ServerType17.pm:95
 #, perl-format
 msgid "Forcing connect to char server %s: %s\n"
 msgstr "กำลังบังคับเพื่อที่จะติดต่อกับ char server %s: %s\n"
 
 #: ../Network/Receive.pm:675
-#: ../Network/Receive/ServerType17.pm:97
+#: ../Network/Receive/ServerType17.pm:98
 #, perl-format
 msgid "Server %s selected\n"
 msgstr "เซิฟเวอร์ %s ได้ถูกเลือก\n"
 
-#: ../Network/Receive.pm:702
+#: ../Network/Receive.pm:703
 #, perl-format
 msgid "%s is sitting.\n"
 msgstr "%s กำลังนั่งอยู่\n"
 
-#: ../Network/Receive.pm:712
+#: ../Network/Receive.pm:713
 msgid "You are standing.\n"
 msgstr "คุณกำลังยืนอยู่\n"
 
-#: ../Network/Receive.pm:718
+#: ../Network/Receive.pm:719
 #, perl-format
 msgid "%s is standing.\n"
 msgstr "%s กำลังยืนอยู่\n"
 
-#: ../Network/Receive.pm:794
+#: ../Network/Receive.pm:795
 msgid "You have died\n"
 msgstr "คุณได้ตายแล้ว\n"
 
-#: ../Network/Receive.pm:834
+#: ../Network/Receive.pm:835
 #, perl-format
 msgid "Player Died: %s (%d) %s %s\n"
 msgstr "ผู้เล่นตาย: %s (%d) %s %s\n"
 
-#: ../Network/Receive.pm:1157
+#: ../Network/Receive.pm:1158
 #, perl-format
 msgid "NPC Exists: %s (%d, %d) (ID %d) - (%d)\n"
 msgstr "NPC ได้ปรากฎขึ้น: %s (%d, %d) (ID %d) - (%d)\n"
 
-#: ../Network/Receive.pm:1160
+#: ../Network/Receive.pm:1161
 #, perl-format
 msgid "Portal Exists: %s (%s, %s) - (%s)\n"
 msgstr "Portal ได้ปรากฎขึ้น: %s (%s, %s) - (%s)\n"
 
-#: ../Network/Receive.pm:1329
+#: ../Network/Receive.pm:1330
 #, perl-format
 msgid "%s is muted for %d minutes\n"
 msgstr "%s ได้ถูกห้ามพูดคุยและใช้สกิลเป็นเวลา %d นาที\n"
 
-#: ../Network/Receive.pm:1331
+#: ../Network/Receive.pm:1332
 #, perl-format
 msgid "%s is no longer muted\n"
 msgstr "%s ถูกปลดจากการห้ามพูดคุยและใช้สกิลแล้ว\n"
 
-#: ../Network/Receive.pm:1417
+#: ../Network/Receive.pm:1419
 #, perl-format
 msgid "%s opened Warp Portal on (%d, %d)\n"
 msgstr "%s ได้เปิด Warp Portal ที่ตำแหน่ง (%d, %d)\n"
 
-#: ../Network/Receive.pm:1451
+#: ../Network/Receive.pm:1453
 #, perl-format
 msgid "Arrow/Bullet equipped: %s (%d)\n"
 msgstr "ลูกธนู/ลูกกระสุน ได้ถูกสวมใส่: %s (%d)\n"
 
-#: ../Network/Receive.pm:1462
+#: ../Network/Receive.pm:1464
 msgid "Please equip arrow first."
 msgstr "กรุณาใส่ลูกธนูก่อน"
 
-#: ../Network/Receive.pm:1465
+#: ../Network/Receive.pm:1467
 msgid "Please equip arrow first.\n"
 msgstr "กรุณาใส่ลูกธนูก่อน\n"
 
-#: ../Network/Receive.pm:1488
+#: ../Network/Receive.pm:1490
 msgid "Received Possible Arrow Craft List - type 'arrowcraft'\n"
 msgstr "ได้รับรายการลูกธนูที่สามารถสร้างได้แล้ว ป้อนคำสั่ง 'arrowcraft' เพื่อดูรายการ\n"
 
-#: ../Network/Receive.pm:1498
+#: ../Network/Receive.pm:1502
 #, perl-format
 msgid "Autodetected attackDistance = %s\n"
 msgstr "ตรวจสอบระยะโจมตีอัตโนมัติ ระยะโจมตี = %s\n"
 
-#: ../Network/Receive.pm:1507
+#: ../Network/Receive.pm:1511
 msgid "Buy completed.\n"
 msgstr "ซื้อของเรียบร้อยแล้ว\n"
 
-#: ../Network/Receive.pm:1509
+#: ../Network/Receive.pm:1513
 msgid "Buy failed (insufficient zeny).\n"
 msgstr "การซื้อล้มเหลว เนื่องจากเซ็นนีไม่พอ\n"
 
-#: ../Network/Receive.pm:1511
+#: ../Network/Receive.pm:1515
 msgid "Buy failed (insufficient weight capacity).\n"
 msgstr "การซื้อล้มเหลว เนื่องจากน้ำหนักเกิน\n"
 
-#: ../Network/Receive.pm:1513
+#: ../Network/Receive.pm:1517
 msgid "Buy failed (too many different inventory items).\n"
 msgstr "การซื้อล้มเหลว เนื่องจากช่องเก็บของในตัวเต็ม\n"
 
-#: ../Network/Receive.pm:1515
+#: ../Network/Receive.pm:1519
 #, perl-format
 msgid "Buy failed (failure code %s).\n"
 msgstr "การซื้อล้มเหลว (failure code %s).\n"
 
-#: ../Network/Receive.pm:1555
+#: ../Network/Receive.pm:1559
 msgid "Card merging failed\n"
 msgstr "การรวมการ์ดล้มเหลว\n"
 
-#: ../Network/Receive.pm:1559
+#: ../Network/Receive.pm:1563
 #, perl-format
 msgid "%s has been successfully merged into %s\n"
 msgstr "%s ได้ถูกรวมกับ %s อย่างสมบูรณ์\n"
 
-#: ../Network/Receive.pm:1618
+#: ../Network/Receive.pm:1622
 #, perl-format
 msgid "Can't Add Cart Item (%s)\n"
 msgstr "ไม่สามารถเอาไอเท็มลงรถเข็นได้ (%s)\n"
 
-#: ../Network/Receive.pm:1672
+#: ../Network/Receive.pm:1676
 #, perl-format
 msgid "Cart Item Added: %s (%d) x %s\n"
 msgstr "ไอเท็มได้นำเข้ารถเข็น: %s (%d) x %s\n"
 
-#: ../Network/Receive.pm:1736
+#: ../Network/Receive.pm:1740
 #, fuzzy, perl-format
 msgid ""
 "-----------CashList (Cash Point: %-5d)------------\n"
@@ -4307,189 +4307,189 @@ msgstr ""
 "----------รายการขายไอเท็มของ %s-----------\n"
 "#  ชื่อ                    ชนิด               ราคา\n"
 
-#: ../Network/Receive.pm:1768
+#: ../Network/Receive.pm:1772
 #, perl-format
 msgid "Cart Item Removed: %s (%d) x %s\n"
 msgstr "ไอเท็มได้ถูกนำออกจากรถเข็น: %s (%d) x %s\n"
 
-#: ../Network/Receive.pm:1804
+#: ../Network/Receive.pm:1808
 msgid "Character creation failed. If you didn't make any mistake, then the name you chose already exists.\n"
 msgstr "ไม่สามมารถสร้างตัวละครได้ ถ้าคุณไม่ได้ทำอะไรผิดพลาด ชื่อตัวละครอาจจะมีอยู่แล้ว (ซ้ำ)\n"
 
-#: ../Network/Receive.pm:1836
+#: ../Network/Receive.pm:1840
 #, perl-format
 msgid "Character %s (%d) created.\n"
 msgstr "ตัวละคร %s (%d) ได้ถูกสร้างแล้ว\n"
 
-#: ../Network/Receive.pm:1846
+#: ../Network/Receive.pm:1850
 #, perl-format
 msgid "Character %s (%d) deleted.\n"
 msgstr "ตัวละคร %s (%d) ได้ถูกลบ\n"
 
-#: ../Network/Receive.pm:1853
+#: ../Network/Receive.pm:1857
 msgid "Character deleted.\n"
 msgstr "ตัวละครได้ถูกลบแล้ว\n"
 
-#: ../Network/Receive.pm:1865
+#: ../Network/Receive.pm:1869
 msgid "Character cannot be deleted. Your e-mail address was probably wrong.\n"
 msgstr "ไม่สามารถลบตัวละครได้ อาจเป็นไปได้ว่า e-mai ผิดผลาด\n"
 
-#: ../Network/Receive.pm:1935
+#: ../Network/Receive.pm:1939
 msgid "Chat Room Created\n"
 msgstr "สร้างห้องสนธนาแล้ว\n"
 
-#: ../Network/Receive.pm:1961
+#: ../Network/Receive.pm:1965
 msgid "Can't join Chat Room - Incorrect Password\n"
 msgstr "ไม่สามารถเข้าร่วห้องสนธนาได้ เนื่องจากรหัสผ่านผิดพลาด\n"
 
-#: ../Network/Receive.pm:1963
+#: ../Network/Receive.pm:1967
 msgid "Can't join Chat Room - You're banned\n"
 msgstr "ไม่สามารถเข้าร่วห้องสนธนาได้ เนื่องจากคุณโดนปิดกั้น (แบน)\n"
 
-#: ../Network/Receive.pm:1989
+#: ../Network/Receive.pm:1993
 msgid "Chat Room Properties Modified\n"
 msgstr "เปลี่ยนการตั้งค่าห้องสนธนาแล้ว\n"
 
-#: ../Network/Receive.pm:2028
+#: ../Network/Receive.pm:2032
 #, perl-format
 msgid "%s has joined the Chat Room\n"
 msgstr "%s ได้เข้ามาในห้องสนธนา\n"
 
-#: ../Network/Receive.pm:2044
+#: ../Network/Receive.pm:2048
 msgid "You left the Chat Room\n"
 msgstr "%s คุณได้ออกจากห้องสนธนา\n"
 
-#: ../Network/Receive.pm:2046
+#: ../Network/Receive.pm:2050
 #, perl-format
 msgid "%s has left the Chat Room\n"
 msgstr "%s ได้ออกจากห้องสนธนา\n"
 
-#: ../Network/Receive.pm:2079
+#: ../Network/Receive.pm:2083
 #, perl-format
 msgid "You have joined the Chat Room %s\n"
 msgstr "คุณได้เข้าร่วมห้องสนธนา %s\n"
 
-#: ../Network/Receive.pm:2093
+#: ../Network/Receive.pm:2097
 #, perl-format
 msgid "%s failed to cast %s\n"
 msgstr "%s ได้ล้มเหลวในการร่าย %s\n"
 
-#: ../Network/Receive.pm:2119
+#: ../Network/Receive.pm:2123
 #, perl-format
 msgid "%s added Item to Deal: %s x %s\n"
 msgstr "%s ได้ใส่ไอเท็มเพื่อแลกเปลี่ยน: %s x %s\n"
 
-#: ../Network/Receive.pm:2123
+#: ../Network/Receive.pm:2127
 #, perl-format
 msgid "%s added %s z to Deal\n"
 msgstr "%s ได้ใส่ %s เซ็นนีเพื่อแลกเปลี่ยน\n"
 
-#: ../Network/Receive.pm:2131
+#: ../Network/Receive.pm:2135
 msgid "That person is overweight; you cannot trade.\n"
 msgstr "ฝ่ายตรงข้ามน้ำหนักเกิน ไม่สามารถแลกเปลี่ยนได้\n"
 
-#: ../Network/Receive.pm:2134
+#: ../Network/Receive.pm:2138
 msgid "This item cannot be traded.\n"
 msgstr "ไอเท็มนี้ไม่สามารซื้อขายได้\n"
 
-#: ../Network/Receive.pm:2137
+#: ../Network/Receive.pm:2141
 #, perl-format
 msgid "You cannot trade (fail code %s).\n"
 msgstr "คุณไม่สามารซื้อขายได้ (fail code %s).\n"
 
-#: ../Network/Receive.pm:2147
+#: ../Network/Receive.pm:2151
 #, perl-format
 msgid "You added Item to Deal: %s x %s\n"
 msgstr "คุณได้ใส่ไอเท็มเพื่อแลกเปลี่ยน: %s x %s\n"
 
-#: ../Network/Receive.pm:2158
+#: ../Network/Receive.pm:2162
 msgid "That person is too far from you to trade.\n"
 msgstr "ระยะห่างเกินกว่าที่จะแลกเปลี่ยนได้\n"
 
-#: ../Network/Receive.pm:2160
+#: ../Network/Receive.pm:2164
 msgid "That person is in another deal.\n"
 msgstr "กำลังแลกเปลี่ยนกับผู้อื่นอยู่\n"
 
-#: ../Network/Receive.pm:2177
+#: ../Network/Receive.pm:2181
 #, perl-format
 msgid "Engaged Deal with %s\n"
 msgstr "ยืนยันการแลกเปลี่ยนกับ %s\n"
 
-#: ../Network/Receive.pm:2179
+#: ../Network/Receive.pm:2183
 #, perl-format
 msgid "Deal request failed (unknown error %s).\n"
 msgstr "ข้อเสนอการแลกเปลี่ยนล้มเหลว (unknown error %s).\n"
 
-#: ../Network/Receive.pm:2187
+#: ../Network/Receive.pm:2191
 msgid "Deal Cancelled\n"
 msgstr "ยกเลิกการแลกเปลี่ยนแล้ว\n"
 
-#: ../Network/Receive.pm:2194
+#: ../Network/Receive.pm:2198
 msgid "Deal Complete\n"
 msgstr "การแลกเปลี่ยนเรียบร้อย\n"
 
-#: ../Network/Receive.pm:2201
+#: ../Network/Receive.pm:2205
 #, perl-format
 msgid "%s finalized the Deal\n"
 msgstr "%s ยืนยันการแลกเปลี่ยน\n"
 
-#: ../Network/Receive.pm:2207
+#: ../Network/Receive.pm:2211
 msgid "You finalized the Deal\n"
 msgstr "คุณยืนยันการแลกเปลี่ยน\n"
 
-#: ../Network/Receive.pm:2218
+#: ../Network/Receive.pm:2222
 #, perl-format
 msgid "%s (level %s) Requests a Deal\n"
 msgstr "%s (level %s) เสนอการแลกเปลี่ยน\n"
 
-#: ../Network/Receive.pm:2219
+#: ../Network/Receive.pm:2223
 msgid "Type 'deal' to start dealing, or 'deal no' to deny the deal.\n"
 msgstr "ป้อน 'deal' เพื่อเริ่มการแลกเปลี่ยน หรือ 'deal no' เพื่อปฏิเสธ\n"
 
-#: ../Network/Receive.pm:2241
+#: ../Network/Receive.pm:2245
 msgid "-----Egg Hatch Candidates-----\n"
 msgstr "-----Egg Hatch Candidates-----\n"
 
 #. Translation Comment: "[dist=$dist] $name ($player->{binID}): $emotion\n"
-#: ../Network/Receive.pm:2266
+#: ../Network/Receive.pm:2270
 #, perl-format
 msgid "[dist=%s] %s (%d): %s\n"
 msgstr "[ระยะห่าง=%s] %s (%d): %s\n"
 
 #. Translation Comment: "[dist=$dist] $monster->name ($monster->{binID}): $emotion\n"
-#: ../Network/Receive.pm:2294
+#: ../Network/Receive.pm:2298
 #, perl-format
 msgid "[dist=%s] Monster %s (%d): %s\n"
 msgstr "[ระยะห่าง=%s] Monster %s (%d): %s\n"
 
-#: ../Network/Receive.pm:2306
+#: ../Network/Receive.pm:2310
 #, perl-format
 msgid "[dist=%s] %s: %s\n"
 msgstr "[ระยะห่าง=%s] %s: %s\n"
 
-#: ../Network/Receive.pm:2316
+#: ../Network/Receive.pm:2320
 #, perl-format
 msgid "You can't put on %s (%d)\n"
 msgstr "คุณไม่สามารถสวมใส่ %s (%d)\n"
 
-#: ../Network/Receive.pm:2329
+#: ../Network/Receive.pm:2333
 #, perl-format
 msgid "You equip %s (%d) - %s (type %s)\n"
 msgstr "คุณได้สวมใส่ %s (%d) - %s (type %s)\n"
 
-#: ../Network/Receive.pm:2343
+#: ../Network/Receive.pm:2347
 msgid "Lost connection; exiting\n"
 msgstr "การเชื่อมต่อขาดหาย กำลังออก\n"
 
-#: ../Network/Receive.pm:2356
+#: ../Network/Receive.pm:2360
 msgid "Server shutting down\n"
 msgstr "เซิฟเวอร์กำลังปิดอยู่\n"
 
-#: ../Network/Receive.pm:2358
+#: ../Network/Receive.pm:2362
 msgid "Error: Server is closed\n"
 msgstr "พบข้อผิดพลาด: เซิฟเวอร์ได้ปิดตัวลง\n"
 
-#: ../Network/Receive.pm:2361
+#: ../Network/Receive.pm:2365
 #, perl-format
 msgid ""
 "Critical Error: Dual login prohibited - Someone trying to login!\n"
@@ -4500,144 +4500,144 @@ msgstr ""
 "\n"
 "%s กำลังจะยกเลิกการติดต่อกับเซิฟเวอร์"
 
-#: ../Network/Receive.pm:2365
 #: ../Network/Receive.pm:2369
+#: ../Network/Receive.pm:2373
 msgid "Critical Error: Dual login prohibited - Someone trying to login!\n"
 msgstr "พบข้อผิดพลาดขั้นร้ายแรง: มีการล๊อกอินซ้อนเข้ามา - มีบางคนกำลังพยายามล๊อกอินซ้อน!\n"
 
-#: ../Network/Receive.pm:2373
+#: ../Network/Receive.pm:2377
 msgid "Error: Out of sync with server\n"
 msgstr "พบข้อผิดพลาด: สัญญาณเข้าจังหวะขาดหาย\n"
 
-#: ../Network/Receive.pm:2375
+#: ../Network/Receive.pm:2379
 msgid "Error: Server is jammed due to over-population.\n"
 msgstr "พบข้อผิดพลาด: มีผู้ใช้ใน server มากเกินไป\n"
 
-#: ../Network/Receive.pm:2377
+#: ../Network/Receive.pm:2381
 msgid "Error: You are underaged and cannot join this server.\n"
 msgstr "พบข้อผิดพลาด: ไฟล์เวอร์ชั่นเก่าเกินไป\n"
 
-#: ../Network/Receive.pm:2379
+#: ../Network/Receive.pm:2383
 msgid "Critical Error: You must pay to play this account!\n"
 msgstr "พบข้อผิดพลาดร้ายแรง: คุณจะต้องเติมเวลา!\n"
 
-#: ../Network/Receive.pm:2382
+#: ../Network/Receive.pm:2386
 msgid "Error: The server still recognizes your last connection\n"
 msgstr "พบข้อผิดพลาด: server ยังจดจำการเชื่อมต่อล่าสุดของคุณอยู่\n"
 
-#: ../Network/Receive.pm:2384
+#: ../Network/Receive.pm:2388
 msgid "Error: IP capacity of this Internet Cafe is full. Would you like to pay the personal base?\n"
 msgstr "พบข้อผิดพลาด: IP capacity of this Internet Cafe is full. Would you like to pay the personal base?\n"
 
-#: ../Network/Receive.pm:2386
+#: ../Network/Receive.pm:2390
 msgid "Error: You are out of available time paid for\n"
 msgstr "พบข้อผิดพลาด: เวลาที่คุณเติมได้หมดลงแล้ว\n"
 
-#: ../Network/Receive.pm:2388
+#: ../Network/Receive.pm:2392
 msgid "Error: You have been forced to disconnect by a GM\n"
 msgstr "พบข้อผิดพลาด: คุณได้ถูกขับออกโดย GM\n"
 
-#: ../Network/Receive.pm:2390
+#: ../Network/Receive.pm:2394
 #, perl-format
 msgid "Unknown error %s\n"
 msgstr "Unknown error %s\n"
 
-#: ../Network/Receive.pm:2441
+#: ../Network/Receive.pm:2445
 #, perl-format
 msgid "Exp gained: %d/%d (%.2f%%/%.2f%%)\n"
 msgstr "ได้รับค่าประสบการณ์: %d/%d (%.2f%%/%.2f%%)\n"
 
-#: ../Network/Receive.pm:2446
+#: ../Network/Receive.pm:2450
 #, perl-format
 msgid "You gained %s zeny.\n"
 msgstr "คุณได้รับ %s zeny.\n"
 
-#: ../Network/Receive.pm:2448
+#: ../Network/Receive.pm:2452
 #, perl-format
 msgid "You lost %s zeny.\n"
 msgstr "คุณได้เสีย %s zeny.\n"
 
-#: ../Network/Receive.pm:2450
+#: ../Network/Receive.pm:2454
 #, perl-format
 msgid "Disconnecting due to zeny lower than %s."
 msgstr "ยกเลิกการติดต่อเนื่องจาก zeny ต่ำกว่า %s."
 
-#: ../Network/Receive.pm:2459
+#: ../Network/Receive.pm:2463
 #, perl-format
 msgid "Required Exp: %s\n"
 msgstr "ต้องการ Exp: %s\n"
 
-#: ../Network/Receive.pm:2468
+#: ../Network/Receive.pm:2472
 #, perl-format
 msgid "BaseExp: %s | JobExp: %s\n"
 msgstr "BaseExp: %s | JobExp: %s\n"
 
-#: ../Network/Receive.pm:2475
+#: ../Network/Receive.pm:2479
 msgid "========Forge List========\n"
 msgstr "========รายการตีอาวุธ========\n"
 
-#: ../Network/Receive.pm:2519
+#: ../Network/Receive.pm:2523
 #, perl-format
 msgid "Friend %s has disconnected\n"
 msgstr "เพื่อน %s ได้ออกไปแล้ว\n"
 
-#: ../Network/Receive.pm:2521
+#: ../Network/Receive.pm:2525
 #, perl-format
 msgid "Friend %s has connected\n"
 msgstr "เพื่อน %s ได้เข้ามาแล้ว\n"
 
-#: ../Network/Receive.pm:2535
+#: ../Network/Receive.pm:2539
 #, perl-format
 msgid "%s wants to be your friend\n"
 msgstr "%s ต้องการจะเป็นเพื่อนกับคุณ\n"
 
-#: ../Network/Receive.pm:2536
+#: ../Network/Receive.pm:2540
 #, perl-format
 msgid "Type 'friend accept' to be friend with %s, otherwise type 'friend reject'\n"
 msgstr "ป้อน 'friend accept' เพื่อที่จะเป็นเพื่อนกับ %s, หรือปฏิเสธโดยป้อน 'friend reject'\n"
 
-#: ../Network/Receive.pm:2547
+#: ../Network/Receive.pm:2551
 #, perl-format
 msgid "%s is no longer your friend\n"
 msgstr "%s ไม่ได้เป็นเพื่อนกับคุณแล้ว\n"
 
-#: ../Network/Receive.pm:2562
+#: ../Network/Receive.pm:2566
 #, perl-format
 msgid "%s rejected to be your friend\n"
 msgstr "%s ปฏิเสธการเป็นเพื่อนกับคุณ\n"
 
-#: ../Network/Receive.pm:2570
+#: ../Network/Receive.pm:2574
 #, perl-format
 msgid "%s is now your friend\n"
 msgstr "ตอนนี้ %s ได้เป็นเพื่อนกับคุณแล้ว\n"
 
-#: ../Network/Receive.pm:2577
+#: ../Network/Receive.pm:2581
 #, perl-format
 msgid "Fed homunculus with %s\n"
 msgstr "ได้ให้อาหาร Homunculus ด้วย %s\n"
 
-#: ../Network/Receive.pm:2579
+#: ../Network/Receive.pm:2583
 #, perl-format
 msgid "Failed to feed homunculus with %s: no food in inventory.\n"
 msgstr "การให้อาหาร Homunculus ด้วย %s ล้มเหลว เนื่องจากอาหารของ Homunculus หมด\n"
 
-#: ../Network/Receive.pm:2664
+#: ../Network/Receive.pm:2668
 msgid "Your Homunculus was vaporized!\n"
 msgstr "Homunculus ของคุณได้กลายเป็นไอ!\n"
 
-#: ../Network/Receive.pm:2666
+#: ../Network/Receive.pm:2670
 msgid "Your Homunculus died!\n"
 msgstr "Homunculus ของคุณตาย!\n"
 
-#: ../Network/Receive.pm:2671
+#: ../Network/Receive.pm:2675
 msgid "Your Homunculus was recalled!\n"
 msgstr "Homunculus ของคุณได้ถูกปลุกขึ้นมา\n"
 
-#: ../Network/Receive.pm:2673
+#: ../Network/Receive.pm:2677
 msgid "Your Homunculus was resurrected!\n"
 msgstr "คุณได้ชุบชีวิต Homunculus ของคุณแล้ว\n"
 
-#: ../Network/Receive.pm:2707
+#: ../Network/Receive.pm:2711
 msgid ""
 "The server Denied the login because GameGuard packets where not replied correctly or too many time has been spent to send the response.\n"
 "Please verify the version of your poseidon server and try again\n"
@@ -4645,57 +4645,57 @@ msgstr ""
 "The server Denied the login because GameGuard packets where not replied correctly or too many time has been spent to send the response.\n"
 "Please verify the version of your poseidon server and try again\n"
 
-#: ../Network/Receive.pm:2712
+#: ../Network/Receive.pm:2716
 msgid "Server granted login request to account server\n"
 msgstr "Server granted login request to account server\n"
 
-#: ../Network/Receive.pm:2714
+#: ../Network/Receive.pm:2718
 msgid "Server granted login request to char/map server\n"
 msgstr "Server granted login request to char/map server\n"
 
-#: ../Network/Receive.pm:2765
+#: ../Network/Receive.pm:2769
 #, perl-format
 msgid "Incoming Request to Ally Guild '%s'\n"
 msgstr "กิล '%s' ได้ยื่นข้อเสนอในการเป็นพันธมิตรกับกิลของคุณ\n"
 
-#: ../Network/Receive.pm:2775
+#: ../Network/Receive.pm:2779
 msgid "Guild broken.\n"
 msgstr "การยุบกิลเรียบร้อย\n"
 
 #. Translation Comment: Guild Chat
-#: ../Network/Receive.pm:2833
+#: ../Network/Receive.pm:2837
 #, perl-format
 msgid "[Guild] %s\n"
 msgstr "[กิล] %s\n"
 
-#: ../Network/Receive.pm:2848
+#: ../Network/Receive.pm:2852
 msgid "Guild create successful.\n"
 msgstr "การสร้างกิลสำเร็จ\n"
 
-#: ../Network/Receive.pm:2849
+#: ../Network/Receive.pm:2853
 msgid "Guild create failed: Guild name already exists.\n"
 msgstr "การสร้างกิลล้มเหลว: มีชื่อกิลนี้อยู่แล้ว\n"
 
-#: ../Network/Receive.pm:2850
+#: ../Network/Receive.pm:2854
 msgid "Guild create failed: Emperium is needed.\n"
 msgstr "การสร้างกิลล้มเหลว: ต้องใช้ Emperium\n"
 
-#: ../Network/Receive.pm:2855
+#: ../Network/Receive.pm:2859
 #, perl-format
 msgid "Guild create: Unknown error %s\n"
 msgstr "การสร้างกิลล้มเหลว ไม่ทราบสาเหตุ %s\n"
 
-#: ../Network/Receive.pm:2890
+#: ../Network/Receive.pm:2894
 #, perl-format
 msgid "Guild join request: %s\n"
 msgstr "ได้รับข้อเสนอให้เข้าร่วมกิล: %s\n"
 
-#: ../Network/Receive.pm:2892
+#: ../Network/Receive.pm:2896
 #, perl-format
 msgid "Guild join request: Unknown %s\n"
 msgstr "ถูกเสนอให้เข้าร่วมกิล: Unknown %s\n"
 
-#: ../Network/Receive.pm:2904
+#: ../Network/Receive.pm:2908
 #, perl-format
 msgid ""
 "%s has left the guild.\n"
@@ -4704,7 +4704,7 @@ msgstr ""
 "%s ได้ออกจากกิล\n"
 "เหตุผล: %s\n"
 
-#: ../Network/Receive.pm:2911
+#: ../Network/Receive.pm:2915
 #, perl-format
 msgid ""
 "%s has been removed from the guild.\n"
@@ -4713,17 +4713,17 @@ msgstr ""
 "%s ได้ถูกไล่ออกจากกิล\n"
 "เหตุผล: %s\n"
 
-#: ../Network/Receive.pm:2953
+#: ../Network/Receive.pm:2957
 #, perl-format
 msgid "Guild member %s logged in.\n"
 msgstr "สมาชิกกิล %s ได้เข้ามาแล้ว\n"
 
-#: ../Network/Receive.pm:2955
+#: ../Network/Receive.pm:2959
 #, perl-format
 msgid "Guild member %s logged out.\n"
 msgstr "สมาชิกกิล %s ได้ออกไปแล้ว\n"
 
-#: ../Network/Receive.pm:3009
+#: ../Network/Receive.pm:3013
 #, perl-format
 msgid ""
 "---Guild Notice---\n"
@@ -4738,161 +4738,161 @@ msgstr ""
 "%s\n"
 "------------------\n"
 
-#: ../Network/Receive.pm:3033
+#: ../Network/Receive.pm:3037
 #, perl-format
 msgid "Incoming Request to join Guild '%s'\n"
 msgstr "ได้รับข้อเสนอให้ร่วมกิล '%s'\n"
 
-#: ../Network/Receive.pm:3047
+#: ../Network/Receive.pm:3051
 #, perl-format
 msgid "Item Identified: %s (%d)\n"
 msgstr "ไอเท็มได้ถูกตรวจสอบแล้ว: %s (%d)\n"
 
-#: ../Network/Receive.pm:3068
+#: ../Network/Receive.pm:3072
 #, perl-format
 msgid "Received Possible Identify List (%s item(s)) - type 'identify'\n"
 msgstr "ได้รับรายการไอเท็มที่สามารถตรวจสอบได้แล้ว (%s item(s)) - ป้อน 'identify' ตรวจสอบไอเท็ม\n"
 
-#: ../Network/Receive.pm:3074
+#: ../Network/Receive.pm:3078
 msgid "All Players ignored\n"
 msgstr "ไม่ยอมรับการกระซิบจากทุกคน\n"
 
-#: ../Network/Receive.pm:3077
+#: ../Network/Receive.pm:3081
 msgid "All players unignored\n"
 msgstr "คุณได้ยอมรับการกระซิบจากทุกคน\n"
 
-#: ../Network/Receive.pm:3085
+#: ../Network/Receive.pm:3089
 msgid "Player ignored\n"
 msgstr "ได้ถูกห้ามกระซิบ\n"
 
-#: ../Network/Receive.pm:3088
+#: ../Network/Receive.pm:3092
 msgid "Player unignored\n"
 msgstr "ได้อนุญาตให้กระซิบได้\n"
 
-#: ../Network/Receive.pm:3128
+#: ../Network/Receive.pm:3132
 #, perl-format
 msgid "Item added to inventory: %s (%d) x %d - %s"
 msgstr "คุณได้รับไอเท็ม: %s (%d) x %d - %s"
 
-#: ../Network/Receive.pm:3148
+#: ../Network/Receive.pm:3152
 #, perl-format
 msgid "Auto-dropping item: %s (%d) x %d\n"
 msgstr "ทิ้งไอเท็มอัตโนมัติ: %s (%d) x %d\n"
 
-#: ../Network/Receive.pm:3153
+#: ../Network/Receive.pm:3157
 msgid "Can't loot item...wait...\n"
 msgstr "ไม่สามารถเก็บไอเท็ม...รอ...\n"
 
-#: ../Network/Receive.pm:3155
+#: ../Network/Receive.pm:3159
 msgid "Cannot pickup item (inventory full)\n"
 msgstr "ไม่สามารถเก็บไอเท็ม (ช่องเก็บของเต็ม)\n"
 
-#: ../Network/Receive.pm:3157
+#: ../Network/Receive.pm:3161
 msgid "Cannot pickup item (you're Frozen?)\n"
 msgstr "ไม่สามารถเก็บไอเท็ม (คุณถูกแช่แข็งหรือเปล่า?)\n"
 
-#: ../Network/Receive.pm:3159
+#: ../Network/Receive.pm:3163
 #, perl-format
 msgid "Cannot pickup item (failure code %s)\n"
 msgstr "ไม่สามารถเก็บไอเท็ม (failure code %s)\n"
 
-#: ../Network/Receive.pm:3184
+#: ../Network/Receive.pm:3188
 #, perl-format
 msgid "You used Item: %s (%d) x %d - %d left\n"
 msgstr "คุณใช้ไอเท็ม: %s (%d) x %d - เหลืออยู่ %d\n"
 
-#: ../Network/Receive.pm:3201
+#: ../Network/Receive.pm:3205
 #, perl-format
 msgid "%s used Item: %s - %s left\n"
 msgstr "%s ใช้ไอเท็ม: %s - เหลืออยู่ %s\n"
 
-#: ../Network/Receive.pm:3209
+#: ../Network/Receive.pm:3213
 #, perl-format
 msgid "%s got married!\n"
 msgstr "%s ได้แต่งงานแล้ว!\n"
 
-#: ../Network/Receive.pm:3222
+#: ../Network/Receive.pm:3226
 #, perl-format
 msgid "You have %s "
 msgstr "คุณมี %s"
 
-#: ../Network/Receive.pm:3226
+#: ../Network/Receive.pm:3230
 #, perl-format
 msgid "%s has %s "
 msgstr "%s มี %s "
 
-#: ../Network/Receive.pm:3341
+#: ../Network/Receive.pm:3345
 #, perl-format
 msgid "Item Appeared: %s (%d) x %d (%d, %d)\n"
 msgstr "ไอเท็มได้ปรากฎขึ้น: %s (%d) x %d (%d, %d)\n"
 
-#: ../Network/Receive.pm:3387
+#: ../Network/Receive.pm:3391
 #, perl-format
 msgid "Attack Looter: %s looted %s\n"
 msgstr "โจมตีมอนสเตอร์ที่ลูทของ: %s ได้ขโมย %s\n"
 
-#: ../Network/Receive.pm:3412
+#: ../Network/Receive.pm:3416
 #, perl-format
 msgid "Permitted to use %s (%d), level %d\n"
 msgstr "ได้รับอนุญาตให้ใช้ %s (%d), level %d\n"
 
-#: ../Network/Receive.pm:3437
+#: ../Network/Receive.pm:3441
 #, perl-format
 msgid "Item %s has been upgraded to +%s\n"
 msgstr "ไอเท็ม %s ได้ถูกตีบวกเป็น +%s\n"
 
-#: ../Network/Receive.pm:3452
+#: ../Network/Receive.pm:3456
 #, perl-format
 msgid "%s changed job to: %s\n"
 msgstr "%s เปลี่ยนอาชีพเป็น: %s\n"
 
-#: ../Network/Receive.pm:3456
+#: ../Network/Receive.pm:3460
 #, perl-format
 msgid "%s changed bottom headgear to: %s\n"
 msgstr "%s เปลี่ยนหมวกส่วนล่างเป็น: %s\n"
 
-#: ../Network/Receive.pm:3461
+#: ../Network/Receive.pm:3465
 #, perl-format
 msgid "%s changed top headgear to: %s\n"
 msgstr "%s เปลี่ยนหมวกส่วนบนเป็น: %s\n"
 
-#: ../Network/Receive.pm:3466
+#: ../Network/Receive.pm:3470
 #, perl-format
 msgid "%s changed middle headgear to: %s\n"
 msgstr "%s เปลี่ยนหมวกส่วนกลางเป็น: %s\n"
 
-#: ../Network/Receive.pm:3472
+#: ../Network/Receive.pm:3476
 #, perl-format
 msgid "%s changed hair color to: %s (%s)\n"
 msgstr "%s เปลี่ยนสีผมเป็น: %s (%s)\n"
 
-#: ../Network/Receive.pm:3529
+#: ../Network/Receive.pm:3533
 msgid "Account name doesn't exist\n"
 msgstr "ไม่พบไอดีนี้\n"
 
-#: ../Network/Receive.pm:3531
+#: ../Network/Receive.pm:3535
 #, fuzzy
 msgid "Enter your Ragnarok Online username again."
 msgstr "กรุณาป้อนไอดีอีกครั้ง: "
 
-#: ../Network/Receive.pm:3542
+#: ../Network/Receive.pm:3546
 msgid "Password Error\n"
 msgstr "รหัสผ่านผิดพลาด\n"
 
-#: ../Network/Receive.pm:3544
+#: ../Network/Receive.pm:3548
 #, fuzzy
 msgid "Enter your Ragnarok Online password again."
 msgstr "กรุณาป้อนรหัสผ่านอีกครั้ง: "
 
-#: ../Network/Receive.pm:3555
+#: ../Network/Receive.pm:3559
 msgid "Server connection has been denied\n"
 msgstr "ถูกปฏิเสธการเชื่อมต่อกับเซิฟเวอร์\n"
 
-#: ../Network/Receive.pm:3557
+#: ../Network/Receive.pm:3561
 msgid "Critical Error: Your account has been blocked."
 msgstr "พบข้อผิดพลาดขั้นร้ายแรง: ไอดีของคุณถูกระงับใช้งาน"
 
-#: ../Network/Receive.pm:3561
+#: ../Network/Receive.pm:3565
 #, perl-format
 msgid ""
 "Connect failed, something is wrong with the login settings:\n"
@@ -4905,101 +4905,104 @@ msgstr ""
 "master_version: %s\n"
 "serverType: %s\n"
 
-#: ../Network/Receive.pm:3567
+#: ../Network/Receive.pm:3571
 msgid "The server is temporarily blocking your connection\n"
 msgstr "เซิฟเวอร์ได้ปฏิเสธการเชื่อมต่อของคุณชั่วคราว\n"
 
-#: ../Network/Receive.pm:3576
+#: ../Network/Receive.pm:3580
 msgid "Error logging into Character Server (invalid character specified)...\n"
 msgstr "พบการผิดพลาดในการเชื่อมต่อสู่ Character Server (invalid character specified)...\n"
 
-#: ../Network/Receive.pm:3603
-#: ../Network/Receive.pm:3662
-#: ../Network/Receive.pm:4561
+#: ../Network/Receive.pm:3607
+#: ../Network/Receive.pm:3666
+#: ../Network/Receive.pm:4570
 #, fuzzy, perl-format
 msgid "Cannot load field %s: %s\n"
 msgstr "ล้มเหลวในการโหลด %s: %s\n"
 
-#: ../Network/Receive.pm:3632
+#: ../Network/Receive.pm:3636
 #, perl-format
 msgid "Map Change: %s (%s, %s)\n"
 msgstr "พิกัดในแผนที่ได้ถูกเปลี่ยน: %s (%s, %s)\n"
 
-#: ../Network/Receive.pm:3691
+#: ../Network/Receive.pm:3695
 #: ../Network/XKoreProxy.pm:487
 msgid "Closing connection to Map Server\n"
 msgstr "Closing connection to Map Server\n"
 
-#: ../Network/Receive.pm:3738
-#: ../Network/Receive/ServerType0.pm:40
+#: ../Network/Receive.pm:3742
+#: ../Network/Receive/ServerType0.pm:41
+#: ../Network/Receive/ServerType15.pm:32
 msgid "Waiting for map to load...\n"
 msgstr "กำลังรอให้โหลดแมปเสร็จ...\n"
 
-#: ../Network/Receive.pm:3749
-#: ../Network/Receive/ServerType0.pm:51
+#: ../Network/Receive.pm:3753
+#: ../Network/Receive/ServerType0.pm:52
+#: ../Network/Receive/ServerType15.pm:43
 msgid "You are now in the game\n"
 msgstr "คุณได้เข้าสูเกมส์แล้ว\n"
 
-#: ../Network/Receive.pm:3759
-#: ../Network/Receive/ServerType0.pm:59
+#: ../Network/Receive.pm:3765
+#: ../Network/Receive/ServerType0.pm:60
+#: ../Network/Receive/ServerType15.pm:53
 #, perl-format
 msgid "Your Coordinates: %s, %s\n"
 msgstr "พิกัดของคุณคือ: %s, %s\n"
 
-#: ../Network/Receive.pm:3767
+#: ../Network/Receive.pm:3774
 msgid "Memo Failed\n"
 msgstr "การจดจำจุดวาปล้มเหลว\n"
 
-#: ../Network/Receive.pm:3769
+#: ../Network/Receive.pm:3776
 msgid "Memo Succeeded\n"
 msgstr "จดจำจุดวาปเรียบร้อยแล้ว\n"
 
-#: ../Network/Receive.pm:3777
+#: ../Network/Receive.pm:3784
 #, perl-format
 msgid "Minimap indicator at location %d, %d with the color %s cleared\n"
 msgstr "ตัวชี้บน Minimap ที่พิกัด %d, %d ที่มีสี %s ได้ถูกลบไปแล้ว\n"
 
-#: ../Network/Receive.pm:3781
+#: ../Network/Receive.pm:3788
 #, perl-format
 msgid "Minimap indicator at location %d, %d with the color %s shown\n"
 msgstr "ตัวชี้บน Minimap ที่พิกัด %d, %d ที่มีสี %s ได้ปรากฎขึ้น\n"
 
-#: ../Network/Receive.pm:3806
+#: ../Network/Receive.pm:3813
 #, perl-format
 msgid "Monster %s (%d) changed to %s\n"
 msgstr "มอนสเตอร์ %s (%d) ได้เปลี่ยนเป็น %s\n"
 
-#: ../Network/Receive.pm:3834
-#: ../Network/Receive.pm:3835
+#: ../Network/Receive.pm:3841
+#: ../Network/Receive.pm:3842
 #, perl-format
 msgid "Get MVP item %s\n"
 msgstr "ได้รับ MVP ไอเท็ม %s\n"
 
-#: ../Network/Receive.pm:3841
+#: ../Network/Receive.pm:3848
 #, perl-format
 msgid "%s become MVP!\n"
 msgstr "%s ได้ MVP!\n"
 
-#: ../Network/Receive.pm:3842
+#: ../Network/Receive.pm:3849
 #, perl-format
 msgid "%s became MVP!\n"
 msgstr "%s ได้ MVP!\n"
 
-#: ../Network/Receive.pm:3847
+#: ../Network/Receive.pm:3854
 #, perl-format
 msgid "Congratulations, you are the MVP! Your reward is %s exp!\n"
 msgstr "ขอแสดงความยินดี คุณได้รับตำแหน่ง MVP! คุณได้รับค่าประสบการณ์ %s เป็นรางวัล!\n"
 
-#: ../Network/Receive.pm:3873
+#: ../Network/Receive.pm:3880
 msgid "Ready to start selling items\n"
 msgstr "พร้อมที่จะเริ่มการซื้อขายไอเท็ม\n"
 
-#: ../Network/Receive.pm:3889
+#: ../Network/Receive.pm:3896
 #, perl-format
 msgid "%s: Type 'store' to start buying, or type 'sell' to start selling\n"
 msgstr "%s: ป้อน 'store' เพื่อที่จะเริ่มการซื้อ, หรือป้อน 'sell' เพื่อเริ่มการขาย\n"
 
-#: ../Network/Receive.pm:3923
+#: ../Network/Receive.pm:3930
 #, perl-format
 msgid ""
 "----------%s's Store List-----------\n"
@@ -5008,27 +5011,27 @@ msgstr ""
 "----------รายการขายไอเท็มของ %s-----------\n"
 "#  ชื่อ                    ชนิด               ราคา\n"
 
-#: ../Network/Receive.pm:3965
+#: ../Network/Receive.pm:3972
 #, perl-format
 msgid "%s: Done talking\n"
 msgstr "%s: สิ้นสุดการสนธนา\n"
 
-#: ../Network/Receive.pm:3994
+#: ../Network/Receive.pm:4001
 #, perl-format
 msgid "%s: Auto-continuing talking\n"
 msgstr "%s: ดำเนินการสนธนาต่อโดยอัตโนมัติ\n"
 
-#: ../Network/Receive.pm:3999
+#: ../Network/Receive.pm:4006
 #, perl-format
 msgid "%s: Type 'talk cont' to continue talking\n"
 msgstr "%s: ป้อน 'talk cont' เพื่อสนธนาต่อ\n"
 
-#: ../Network/Receive.pm:4012
+#: ../Network/Receive.pm:4019
 #, perl-format
 msgid "%s: Type 'talk num <number #>' to input a number.\n"
 msgstr "%s: ป้อน 'talk num <หมายเลข #>' เพื่อป้อนหมายเลข\n"
 
-#: ../Network/Receive.pm:4049
+#: ../Network/Receive.pm:4056
 msgid ""
 "----------Responses-----------\n"
 "#  Response\n"
@@ -5036,165 +5039,165 @@ msgstr ""
 "----------การตอบสนอง-----------\n"
 "#  การตอบสนอง\n"
 
-#: ../Network/Receive.pm:4061
+#: ../Network/Receive.pm:4068
 #, perl-format
 msgid "%s: Type 'talk resp #' to choose a response.\n"
 msgstr "%s: ป้อน 'talk resp #' เพื่อเลือกตัวเลือก\n"
 
-#: ../Network/Receive.pm:4070
+#: ../Network/Receive.pm:4077
 #, perl-format
 msgid "%s: Type 'talk text' (Respond to NPC)\n"
 msgstr "%s: ป้อน 'talk text' (เพื่อโต้ตอบกับ NPC)\n"
 
-#: ../Network/Receive.pm:4089
+#: ../Network/Receive.pm:4096
 #, perl-format
 msgid "[Party] %s\n"
 msgstr "[สมาชิกปาร์ตี้] %s\n"
 
-#: ../Network/Receive.pm:4104
+#: ../Network/Receive.pm:4111
 msgid "Party EXP set to Individual Take\n"
 msgstr "ปาร์ตี้ EXP ได้ถูกตั้งให้ได้เป็นรายบุคคล\n"
 
-#: ../Network/Receive.pm:4106
+#: ../Network/Receive.pm:4113
 msgid "Party EXP set to Even Share\n"
 msgstr "ปาร์ตี้ EXP ได้ถูกตั้งให้แชร์กัน\n"
 
-#: ../Network/Receive.pm:4108
+#: ../Network/Receive.pm:4115
 msgid "Error setting party option\n"
 msgstr "ไม่สามารถตั้งค่าปาร์ตี้ใหม่ได้\n"
 
-#: ../Network/Receive.pm:4121
+#: ../Network/Receive.pm:4128
 #, perl-format
 msgid "Incoming Request to join party '%s'\n"
 msgstr "ได้รับข้อเสนอให้เข้าร่วมปารตี้ '%s'\n"
 
-#: ../Network/Receive.pm:4129
+#: ../Network/Receive.pm:4136
 #, perl-format
 msgid "Join request failed: %s is already in a party\n"
 msgstr "เสนอให้ร่มปาร์ตี้ล้มเหลวเนื่องจาก %s ได้อยู่ในปาร์ตี้แล้ว\n"
 
-#: ../Network/Receive.pm:4131
+#: ../Network/Receive.pm:4138
 #, perl-format
 msgid "Join request failed: %s denied request\n"
 msgstr "%s ได้ปฏิเสธการร่วมปาร์ตี้กับคุณ\n"
 
-#: ../Network/Receive.pm:4133
+#: ../Network/Receive.pm:4140
 #, perl-format
 msgid "%s accepted your request\n"
 msgstr "%s ได้ยอมรับข้อเสนอของคุณ\n"
 
-#: ../Network/Receive.pm:4147
+#: ../Network/Receive.pm:4154
 #, perl-format
 msgid "You joined party '%s'\n"
 msgstr "คุณได้เข้าร่วมปาร์ตี้ '%s' แล้ว\n"
 
-#: ../Network/Receive.pm:4150
+#: ../Network/Receive.pm:4157
 #, perl-format
 msgid "%s joined your party '%s'\n"
 msgstr "%s ได้เข้าร่วมปาร์ตี้ '%s' ของคุณแล้ว\n"
 
-#: ../Network/Receive.pm:4177
+#: ../Network/Receive.pm:4184
 msgid "You left the party\n"
 msgstr "คุณได้ออกจากปาร์ตี้\n"
 
-#: ../Network/Receive.pm:4181
+#: ../Network/Receive.pm:4188
 #, perl-format
 msgid "%s left the party\n"
 msgstr "%s ได้ออกจากปาร์ตี้\n"
 
-#: ../Network/Receive.pm:4198
+#: ../Network/Receive.pm:4205
 msgid "Can't organize party - party name exists\n"
 msgstr "ไม่สามารถตั้งปาร์ตี้ได้ เนื่องจากมีชื่อปาร์ตี้เดียวกันนี้อยู่แล้ว\n"
 
-#: ../Network/Receive.pm:4220
+#: ../Network/Receive.pm:4228
 #, perl-format
 msgid "Party Member: %s\n"
 msgstr "สมาชิก Party : %s\n"
 
-#: ../Network/Receive.pm:4234
+#: ../Network/Receive.pm:4244
 msgid "Pet capture success\n"
 msgstr "จับสัตว์เลี้ยงได้สำเร็จ\n"
 
-#: ../Network/Receive.pm:4236
+#: ../Network/Receive.pm:4246
 msgid "Pet capture failed\n"
 msgstr "จับสัตว์เลี้ยงได้ล้มเหลว\n"
 
-#: ../Network/Receive.pm:4254
+#: ../Network/Receive.pm:4264
 #, perl-format
 msgid "Fed pet with %s\n"
 msgstr "ได้ให้อาหารสัตวเลี้ยงด้วย %s\n"
 
-#: ../Network/Receive.pm:4256
+#: ../Network/Receive.pm:4266
 #, perl-format
 msgid "Failed to feed pet with %s: no food in inventory.\n"
 msgstr "การให้อาหารสัตว์เลี้ยงด้วย %s ล้มเหลว เนื่องจากอาหารสัตว์เลี้ยงหมด\n"
 
-#: ../Network/Receive.pm:4337
+#: ../Network/Receive.pm:4347
 #, perl-format
 msgid "%s changed Weapon to %s\n"
 msgstr "%s เปลี่ยนอาวุธเป็น %s\n"
 
-#: ../Network/Receive.pm:4341
+#: ../Network/Receive.pm:4351
 #, perl-format
 msgid "%s changed Shield to %s\n"
 msgstr "%s เปลี่ยนโล่เป็น %s\n"
 
-#: ../Network/Receive.pm:4352
+#: ../Network/Receive.pm:4362
 #, perl-format
 msgid "%s changed Shoes to: %s\n"
 msgstr "%s เปลี่ยนรองเท้าเป็น %s\n"
 
-#: ../Network/Receive.pm:4384
+#: ../Network/Receive.pm:4394
 #, fuzzy
 msgid "Unknown field,"
 msgstr "พบสัตว์เลี้ยงที่ไม่รู้จัก #%s"
 
-#: ../Network/Receive.pm:4396
+#: ../Network/Receive.pm:4406
 #, perl-format
 msgid "%s%s\n"
 msgstr ""
 
-#: ../Network/Receive.pm:4429
-#: ../Network/Receive.pm:4430
+#: ../Network/Receive.pm:4438
+#: ../Network/Receive.pm:4439
 #, perl-format
 msgid "(From: %s) : %s\n"
 msgstr "(จาก: %s) : %s\n"
 
-#: ../Network/Receive.pm:4441
+#: ../Network/Receive.pm:4450
 msgid "*** You were PM'd, auto disconnect! ***\n"
 msgstr "*** คุณได้รับการกระซิบ ยกเลิกการเชื่อมต่อโดยอัตโนมัติ! ***\n"
 
-#: ../Network/Receive.pm:4442
+#: ../Network/Receive.pm:4451
 msgid "Disconnecting on PM!\n"
 msgstr "ยกเลิกการติดต่อเนื่องจาก ได้รับการกระซิบ!\n"
 
-#: ../Network/Receive.pm:4450
+#: ../Network/Receive.pm:4459
 #, perl-format
 msgid "(To %s) : %s\n"
 msgstr "(ถึง %s) : %s\n"
 
-#: ../Network/Receive.pm:4459
+#: ../Network/Receive.pm:4468
 #, perl-format
 msgid "%s is not online\n"
 msgstr "%s ยังไม่ได้เข้ามา\n"
 
-#: ../Network/Receive.pm:4461
+#: ../Network/Receive.pm:4470
 msgid "Player ignored your message\n"
 msgstr "ถูกปฏิเสธการกระซิบ\n"
 
-#: ../Network/Receive.pm:4463
+#: ../Network/Receive.pm:4472
 msgid "Player doesn't want to receive messages\n"
 msgstr "ไม่มีอารมณ์พูดคุยกับคนอื่น\n"
 
-#: ../Network/Receive.pm:4482
+#: ../Network/Receive.pm:4491
 msgid "Received characters from Character Server\n"
 msgstr "ได้รับข้อมูลตัวละครจาก Character Server\n"
 
-#: ../Network/Receive.pm:4543
+#: ../Network/Receive.pm:4552
 msgid "Received character ID and Map IP from Character Server\n"
 msgstr "ได้รับรหัสตัวละครและ Map IP จาก Character Server\n"
 
-#: ../Network/Receive.pm:4571
+#: ../Network/Receive.pm:4580
 #, perl-format
 msgid ""
 "----------Game Info----------\n"
@@ -5211,100 +5214,100 @@ msgstr ""
 "Port ของแผนที่: %s\n"
 "-----------------------------\n"
 
-#: ../Network/Receive.pm:4580
+#: ../Network/Receive.pm:4589
 #: ../Network/XKoreProxy.pm:485
 msgid "Closing connection to Character Server\n"
 msgstr "ทำการเชื่อมต่อกับ Character Server\n"
 
-#: ../Network/Receive.pm:4594
+#: ../Network/Receive.pm:4603
 #, perl-format
 msgid "You successfully refined a weapon (ID %s)!\n"
 msgstr "คุณตีบวกอาวุธได้สำเร็จ (ID %s)!\n"
 
-#: ../Network/Receive.pm:4596
+#: ../Network/Receive.pm:4605
 #, perl-format
 msgid "You failed to refine a weapon (ID %s)!\n"
 msgstr "คุณล้มเหลวในการตีบวกอาวุธ (ID %s)!\n"
 
-#: ../Network/Receive.pm:4598
+#: ../Network/Receive.pm:4607
 #, perl-format
 msgid "You successfully made a potion (ID %s)!\n"
 msgstr "คุณประสบความสำเร็จในการสร้าง potion (ID %s)!\n"
 
-#: ../Network/Receive.pm:4600
+#: ../Network/Receive.pm:4609
 #, perl-format
 msgid "You failed to make a potion (ID %s)!\n"
 msgstr "คุณได้ล้มเหลวในการสร้าง potion (ID %s)!\n"
 
-#: ../Network/Receive.pm:4602
+#: ../Network/Receive.pm:4611
 #, perl-format
 msgid "You tried to refine a weapon (ID %s); result: unknown %s\n"
 msgstr "คุณได้ทำการตีบวก (ID %s); ผล: ไม่ทราบ %s\n"
 
-#: ../Network/Receive.pm:4609
+#: ../Network/Receive.pm:4618
 msgid "--------Repair List--------\n"
 msgstr "--------รายการซ่อมแซม--------\n"
 
-#: ../Network/Receive.pm:4630
+#: ../Network/Receive.pm:4639
 #, perl-format
 msgid "Repair of %s failed.\n"
 msgstr "การซ่อม %s ล้มเหลว\n"
 
-#: ../Network/Receive.pm:4632
+#: ../Network/Receive.pm:4641
 #, perl-format
 msgid "Successfully repaired %s.\n"
 msgstr "ได้ซ่อม %s เรียบร้อยแล้ว\n"
 
-#: ../Network/Receive.pm:4644
+#: ../Network/Receive.pm:4653
 msgid "You have been resurrected\n"
 msgstr "คุณได้ถูกชุบชีวิตแล้ว\n"
 
-#: ../Network/Receive.pm:4654
+#: ../Network/Receive.pm:4663
 #, perl-format
 msgid "%s has been resurrected\n"
 msgstr "%s ได้ถูกชุบชีวิตแล้ว\n"
 
-#: ../Network/Receive.pm:4710
+#: ../Network/Receive.pm:4719
 msgid "Sync packet requested for wrong ID\n"
 msgstr "สัญญาณเข้าจังหวะได้ร้องขอมาแต่ ID ผิด\n"
 
-#: ../Network/Receive.pm:4717
+#: ../Network/Receive.pm:4726
 msgid "TaeKwon Mission Rank : "
 msgstr "TaeKwon Mission Rank : "
 
-#: ../Network/Receive.pm:4723
+#: ../Network/Receive.pm:4732
 msgid "TaeKwon Mission : "
 msgstr "TaeKwon Mission : "
 
-#: ../Network/Receive.pm:4731
+#: ../Network/Receive.pm:4740
 msgid "Unavailable Area To Teleport\n"
 msgstr "ไม่อนุญาตให้ Teleport ในพื้นที่นี้\n"
 
-#: ../Network/Receive.pm:4734
+#: ../Network/Receive.pm:4743
 msgid "Unavailable Area To Memo\n"
 msgstr "ไม่อนุญาตให้จดจำจุดวาปในพื้นที่นี้\n"
 
-#: ../Network/Receive.pm:4736
+#: ../Network/Receive.pm:4745
 #, perl-format
 msgid "Unavailable Area To Teleport (fail code %s)\n"
 msgstr "ไม่อนุญาตให้ Teleport ในพื้นที่นี้ (fail code %s)\n"
 
-#: ../Network/Receive.pm:4747
-#: ../Network/Receive.pm:4762
+#: ../Network/Receive.pm:4756
+#: ../Network/Receive.pm:4771
 msgid "PvP Display Mode\n"
 msgstr "คุณอบู่ในพื้นที่ PvP Mode\n"
 
-#: ../Network/Receive.pm:4750
-#: ../Network/Receive.pm:4765
+#: ../Network/Receive.pm:4759
+#: ../Network/Receive.pm:4774
 msgid "GvG Display Mode\n"
 msgstr "คุณอบู่ในพื้นที่ GvG Mode\n"
 
-#: ../Network/Receive.pm:4782
+#: ../Network/Receive.pm:4791
 #, perl-format
 msgid "Your PvP rank is: %s/%s\n"
 msgstr "อันดับใน PvP ของคุณคือ: %s/%s\n"
 
-#: ../Network/Receive.pm:4792
+#: ../Network/Receive.pm:4801
 #, perl-format
 msgid ""
 "=====================Sense========================\n"
@@ -5329,163 +5332,169 @@ msgstr ""
 "Undead: %-3s\n"
 "==================================================\n"
 
-#: ../Network/Receive.pm:4819
+#: ../Network/Receive.pm:4828
 #, perl-format
 msgid "sold: %s - %s %sz\n"
 msgstr "ขาย: %s - %s %sz\n"
 
-#: ../Network/Receive.pm:4823
+#: ../Network/Receive.pm:4832
 #, perl-format
 msgid "sold out: %s\n"
 msgstr "%s ได้ถูกขายไปแล้ว\n"
 
-#: ../Network/Receive.pm:4826
+#: ../Network/Receive.pm:4835
 msgid "Items have been sold out.\n"
 msgstr "ไอเท็มได้ถูกขายไปแล้ว\n"
 
-#: ../Network/Receive.pm:4837
+#: ../Network/Receive.pm:4846
 #, perl-format
 msgid "You can sell %s items!\n"
 msgstr "คุณสามารถขาย %s ได้!\n"
 
-#: ../Network/Receive.pm:4920
+#: ../Network/Receive.pm:4929
 #, perl-format
 msgid "Monster Skill - switch Target to : %s (%d)\n"
 msgstr "Monster Skill - เปลี่ยนเป้าหมายเป็น : %s (%d)\n"
 
-#: ../Network/Receive.pm:4949
+#: ../Network/Receive.pm:4958
 #, perl-format
 msgid "Avoid casting Skill - switch position to : %s,%s\n"
 msgstr "หลบหลีก Skill - ย้ายตำเหน่งเป็น : %s,%s\n"
 
-#: ../Network/Receive.pm:5075
+#: ../Network/Receive.pm:5085
 #, perl-format
 msgid "Skill %s failed (%s)\n"
 msgstr "Skill %s ล้มเหลว (%s)\n"
 
-#: ../Network/Receive.pm:5273
+#: ../Network/Receive.pm:5283
 msgid "Not enough stat points to add\n"
 msgstr "แต้ม stat ไม่พอ\n"
 
-#: ../Network/Receive.pm:5376
+#: ../Network/Receive.pm:5387
 msgid "Mute period expired.\n"
 msgstr "สิ้นสุดการห้ามพูดคุยและใช้สกิลแล้ว\n"
 
-#: ../Network/Receive.pm:5382
+#: ../Network/Receive.pm:5393
 #, perl-format
 msgid "You've been muted for %s minutes, auto disconnect!\n"
 msgstr "คุณได้ถูกห้ามพูดคุยและใช้สกิลเป็นเวลา %s นาที กำลังยกเลิกการติดต่อ!\n"
 
-#: ../Network/Receive.pm:5383
+#: ../Network/Receive.pm:5394
 #, perl-format
 msgid "*** You have been muted for %s minutes, auto disconnect! ***\n"
 msgstr "*** คุณได้ถูกห้ามพูดคุยและใช้สกิลเป็นเวลา %s นาที กำลังยกเลิกการติดต่อ! ***\n"
 
-#: ../Network/Receive.pm:5386
+#: ../Network/Receive.pm:5397
 #, perl-format
 msgid "You've been muted for %s minutes\n"
 msgstr "คุณได้ถูกห้ามพูดคุยและใช้สกิลเป็นเวลา %s นาที\n"
 
-#: ../Network/Receive.pm:5406
+#: ../Network/Receive.pm:5417
 #, perl-format
 msgid "You are now level %s\n"
 msgstr "ตอนนี้คุณ level %s แล้ว\n"
 
-#: ../Network/Receive.pm:5408
-#: ../Network/Receive.pm:5409
+#: ../Network/Receive.pm:5419
+#: ../Network/Receive.pm:5420
 #, perl-format
 msgid "Disconnecting on level %s!\n"
 msgstr "ยกเลิกการติดต่อเมื่อ level %s!\n"
 
-#: ../Network/Receive.pm:5467
+#: ../Network/Receive.pm:5478
 #, perl-format
 msgid "You are now job level %s\n"
 msgstr "ตอนนี้คุณ job level %s\n"
 
-#: ../Network/Receive.pm:5469
-#: ../Network/Receive.pm:5470
+#: ../Network/Receive.pm:5480
+#: ../Network/Receive.pm:5481
 #, perl-format
 msgid "Disconnecting on job level %s!\n"
 msgstr "ยกเลิกการติดต่อเมื่อ job level %s!\n"
 
-#: ../Network/Receive.pm:5534
+#: ../Network/Receive.pm:5546
 msgid "Storage closed.\n"
 msgstr "ที่เก็บของปิดลงแล้ว\n"
 
-#: ../Network/Receive.pm:5564
+#: ../Network/Receive.pm:5576
 #, perl-format
 msgid "Storage Item Added: %s (%d) x %s\n"
 msgstr "ได้เก็บไอเท็มลงในที่เก็บของ: %s (%d) x %s\n"
 
-#: ../Network/Receive.pm:5576
+#: ../Network/Receive.pm:5588
 #, perl-format
 msgid "Storage Item Removed: %s (%d) x %s\n"
 msgstr "ไอเท็มลงในที่เก็บของได้ถูกนำออกไป: %s (%d) x %s\n"
 
-#: ../Network/Receive.pm:5649
+#: ../Network/Receive.pm:5661
 msgid "Storage opened.\n"
 msgstr "ได้เปิดที่เก็บของแล้ว\n"
 
-#: ../Network/Receive.pm:5659
+#: ../Network/Receive.pm:5671
 msgid "Please enter a new character password:\n"
 msgstr "กรุณาตั้งรหัสผ่านตัวละครใหม่:\n"
 
-#: ../Network/Receive.pm:5660
-msgid "Please enter a new storage password:\n"
-msgstr "กรุณา ตั้งรหัสผ่าน ที่เก็บของใหม่:\n"
-
-#: ../Network/Receive.pm:5665
-#, fuzzy
-msgid "Please enter your character password."
-msgstr "กรุณาป้อนรหัสผ่านตัวละคร:\n"
-
-#: ../Network/Receive.pm:5670
-#, perl-format
-msgid "Character password set to: %s\n"
-msgstr "รหัสผ่านตัวละครได้ถูกเปลี่ยนเป็น: %s\n"
-
 #: ../Network/Receive.pm:5674
-#, fuzzy
-msgid "Please enter your storage password."
-msgstr "กรุณาป้อนรหัสผ่านเพื่อเปิดที่เก็บของ:\n"
+msgid ""
+"You've never set a storage password before.\n"
+"You must set a storage password before you can use the storage.\n"
+"Please enter a new storage password:"
+msgstr ""
 
-#: ../Network/Receive.pm:5679
+#: ../Network/Receive.pm:5685
+#: ../Network/Receive.pm:5721
+msgid "Unable to send character password. You must set the 'storageEncryptKey' option in config.txt or servers.txt.\n"
+msgstr "ไม่สามารส่งรหัสผ่านตัวละครได้ คุณจะต้องตั้งค่า 'storageEncryptKey' ใน config.txt หรือ servers.txt\n"
+
+#: ../Network/Receive.pm:5686
+#: ../Network/Receive.pm:5722
+msgid "Unable to send storage password. You must set the 'storageEncryptKey' option in config.txt or servers.txt.\n"
+msgstr "ไม่สามารส่งรหัสผ่านที่เก็บของได้ คุณจะต้องตั้งค่า 'storageEncryptKey' ใน config.txt หรือ servers.txt\n"
+
+#: ../Network/Receive.pm:5693
+#: ../Network/Receive.pm:5714
 #, perl-format
 msgid "Storage password set to: %s\n"
 msgstr "รหัสผ่านที่เก็บของได้ถูกเปลี่ยนเป็น: %s\n"
 
-#: ../Network/Receive.pm:5686
-msgid "Unable to send character password. You must set the 'storageEncryptKey' option in config.txt or servers.txt.\n"
-msgstr "ไม่สามารส่งรหัสผ่านตัวละครได้ คุณจะต้องตั้งค่า 'storageEncryptKey' ใน config.txt หรือ servers.txt\n"
+#: ../Network/Receive.pm:5700
+#, fuzzy
+msgid "Please enter your character password."
+msgstr "กรุณาป้อนรหัสผ่านตัวละคร:\n"
 
-#: ../Network/Receive.pm:5687
-msgid "Unable to send storage password. You must set the 'storageEncryptKey' option in config.txt or servers.txt.\n"
-msgstr "ไม่สามารส่งรหัสผ่านที่เก็บของได้ คุณจะต้องตั้งค่า 'storageEncryptKey' ใน config.txt หรือ servers.txt\n"
+#: ../Network/Receive.pm:5705
+#, perl-format
+msgid "Character password set to: %s\n"
+msgstr "รหัสผ่านตัวละครได้ถูกเปลี่ยนเป็น: %s\n"
 
-#: ../Network/Receive.pm:5698
+#: ../Network/Receive.pm:5709
+#, fuzzy
+msgid "Please enter your storage password."
+msgstr "กรุณาป้อนรหัสผ่านเพื่อเปิดที่เก็บของ:\n"
+
+#: ../Network/Receive.pm:5733
 msgid "You have entered the wrong password 5 times. Please try again later.\n"
 msgstr "คุณได้ป้อนรหัสผ่านผิด 5 ครั้งแล้ว กรุณาลองใหมภายหลัง\n"
 
-#: ../Network/Receive.pm:5719
+#: ../Network/Receive.pm:5754
 msgid "Successfully changed storage password.\n"
 msgstr "การตั้งรหัสผ่านที่เก็บของเรียบร้อย\n"
 
-#: ../Network/Receive.pm:5721
-#: ../Network/Receive.pm:5725
+#: ../Network/Receive.pm:5756
+#: ../Network/Receive.pm:5760
 msgid "Error: Incorrect storage password.\n"
 msgstr "พบข้อผิดพลาด รหัสผ่านเปิดที่เก็บของไม่ถูกต้อง\n"
 
-#: ../Network/Receive.pm:5723
+#: ../Network/Receive.pm:5758
 msgid "Successfully entered storage password.\n"
 msgstr "เปิดที่เก็บของด้วนรหัสผ่าน สำเร็จ\n"
 
 #. Translation Comment: System/GM chat
-#: ../Network/Receive.pm:5756
+#: ../Network/Receive.pm:5791
 #, perl-format
 msgid "[GM] %s\n"
 msgstr "[GM] %s\n"
 
-#: ../Network/Receive.pm:5768
+#: ../Network/Receive.pm:5803
 #, perl-format
 msgid ""
 "============= ALCHEMIST RANK ================\n"
@@ -5496,7 +5505,7 @@ msgstr ""
 "#    ชื่อ                             คะแนน\n"
 "%s=============================================\n"
 
-#: ../Network/Receive.pm:5778
+#: ../Network/Receive.pm:5813
 #, perl-format
 msgid ""
 "============= BLACKSMITH RANK ===============\n"
@@ -5507,7 +5516,7 @@ msgstr ""
 "#    ชื่อ                             คะแนน\n"
 "%s=============================================\n"
 
-#: ../Network/Receive.pm:5788
+#: ../Network/Receive.pm:5823
 #, perl-format
 msgid ""
 "================ PVP RANK ===================\n"
@@ -5518,7 +5527,7 @@ msgstr ""
 "#    ชื่อ                             คะแนน\n"
 "%s=============================================\n"
 
-#: ../Network/Receive.pm:5798
+#: ../Network/Receive.pm:5833
 #, perl-format
 msgid ""
 "=============== TAEKWON RANK ================\n"
@@ -5529,42 +5538,42 @@ msgstr ""
 "#    ชื่อ                             คะแนน\n"
 "%s=============================================\n"
 
-#: ../Network/Receive.pm:5824
+#: ../Network/Receive.pm:5859
 #, perl-format
 msgid "You unequip %s (%d) - %s\n"
 msgstr "คุณได้ถอด %s (%d) - %s\n"
 
-#: ../Network/Receive.pm:5835
+#: ../Network/Receive.pm:5870
 #, perl-format
 msgid "%s gained a level!\n"
 msgstr "%s ได้อัพ level!\n"
 
-#: ../Network/Receive.pm:5837
+#: ../Network/Receive.pm:5872
 #, perl-format
 msgid "%s gained a job level!\n"
 msgstr "%s ได้อัพ job level!\n"
 
-#: ../Network/Receive.pm:5839
+#: ../Network/Receive.pm:5874
 #, perl-format
 msgid "%s failed to refine a weapon!\n"
 msgstr "%s ได้สกัดไอเท็มล้มเหลว!\n"
 
-#: ../Network/Receive.pm:5841
+#: ../Network/Receive.pm:5876
 #, perl-format
 msgid "%s successfully refined a weapon!\n"
 msgstr "%s ได้สกัดไอเท็มสำเร็จ!\n"
 
-#: ../Network/Receive.pm:5852
+#: ../Network/Receive.pm:5887
 #, perl-format
 msgid "You used Item: %s (%d) x %s\n"
 msgstr "คุณใช้ไอเท็ม: %s (%d) x %s\n"
 
-#: ../Network/Receive.pm:5862
+#: ../Network/Receive.pm:5897
 #, perl-format
 msgid "There are currently %s users online\n"
 msgstr "ขณะนี้มีผู้เล่น %s คนได้ online อยู่\n"
 
-#: ../Network/Receive.pm:5888
+#: ../Network/Receive.pm:5923
 #, perl-format
 msgid ""
 "%s\n"
@@ -5573,22 +5582,22 @@ msgstr ""
 "%s\n"
 "#  ชื่อ                                       ชนิด           จำนวน       ราคา\n"
 
-#: ../Network/Receive.pm:5941
+#: ../Network/Receive.pm:5976
 #, perl-format
 msgid "Failed to buy %s of item #%s from vender (insufficient zeny).\n"
 msgstr "การซื้อจำนวน %s ล้มเหลวของไอเท็ม #%s (เซ็นนีไม่พอ)\n"
 
-#: ../Network/Receive.pm:5943
+#: ../Network/Receive.pm:5978
 #, perl-format
 msgid "Failed to buy %s of item #%s from vender (overweight).\n"
 msgstr "การซื้อไอเท็ม %s ล้มเหลว  ลำดับไอเท็ม#%s จากร้านค้า (น้ำหนักเกิน).\n"
 
-#: ../Network/Receive.pm:5945
+#: ../Network/Receive.pm:5980
 #, perl-format
 msgid "Failed to buy %s of item #%s from vender (unknown code %s).\n"
 msgstr "การซื้อไอเท็ม %s ล้มเหลว  ลำดับไอเท็ม#%s จากร้านค้า (unknown code %s).\n"
 
-#: ../Network/Receive.pm:5962
+#: ../Network/Receive.pm:5997
 #, perl-format
 msgid ""
 "%s\n"
@@ -5608,50 +5617,50 @@ msgstr ""
 "คุณสามารเชื่อมต่อกับ X-Kore ได้เพียงหนึ่งการเชื่อมต่อเท่านั้น\n"
 "และต้องแน่ใจว่าไม่มี server อื่นๆรันที่ port %s ด้วย\n"
 
-#: ../Network/XKore.pm:63
+#: ../Network/XKore.pm:67
 #: ../Network/XKoreProxy.pm:82
 msgid "X-Kore mode intialized.\n"
 msgstr "X-Kore mode ได้ถูกเริ่มขึ้นมาแล้ว\n"
 
-#: ../Network/XKore.pm:232
+#: ../Network/XKore.pm:236
 #, perl-format
 msgid "Please start the Ragnarok Online client (%s)\n"
 msgstr "กรุณารัน Ragnarok Online client (%s)\n"
 
-#: ../Network/XKore.pm:240
+#: ../Network/XKore.pm:244
 msgid "Error: You cannot type anything except 'quit' right now.\n"
 msgstr "พบข้อผิดพลาด: คุณไม่สามารถป้อนคำสั่งใดๆในตอนนี้ได้นอกจาก 'quit'\n"
 
-#: ../Network/XKore.pm:249
+#: ../Network/XKore.pm:253
 msgid "Ragnarok Online client found\n"
 msgstr "ตรวจพบ Ragnarok Online client แล้ว\n"
 
-#: ../Network/XKore.pm:262
+#: ../Network/XKore.pm:266
 msgid "You can login with the Ragnarok Online client now.\n"
 msgstr "คุณสามารถล๊อกอินด้วย Ragnarok Online client ได้แล้ว\n"
 
-#: ../Network/XKore.pm:289
+#: ../Network/XKore.pm:293
 msgid "Cannot find NetRedirect.dll. Please check your installation."
 msgstr "ไม่พบ NetRedirect.dll กรุณาตรวจสอบ"
 
-#: ../Network/XKore.pm:296
+#: ../Network/XKore.pm:300
 msgid "Unable to inject NetRedirect.dll"
 msgstr "Unable to inject NetRedirect.dll"
 
-#: ../Network/XKore.pm:311
+#: ../Network/XKore.pm:315
 msgid "Waiting for the Ragnarok Online client to connect to X-Kore..."
 msgstr "กำลังรอ Ragnarok Client ทำการเชื่อมต่อกับ X-Kore..."
 
 #. Translation Comment: Waiting for the Ragnarok Online client to connect to X-Kore...
-#: ../Network/XKore.pm:314
+#: ../Network/XKore.pm:318
 msgid "ready\n"
 msgstr "พร้อม\n"
 
-#: ../Network/XKore.pm:408
+#: ../Network/XKore.pm:412
 msgid "Patching client to remove bot detection:\n"
 msgstr "ทำการแพทช์ client เพื่อเอาระบบตรวจจับบอทออก:\n"
 
-#: ../Network/XKore.pm:470
+#: ../Network/XKore.pm:474
 #, perl-format
 msgid "Client modified in %d places.\n"
 msgstr "Client ได้ถูกแก้ไขจำนวน %d ตำแหน่ง\n"
@@ -5679,23 +5688,23 @@ msgstr "Received GameGuard sync request. Client allowed to login account server.
 msgid "Received GameGuard sync request. Client allowed to login char/map server.\n"
 msgstr "Received GameGuard sync request. Client allowed to login char/map server.\n"
 
-#: ../Network/XKore2.pm:1007
+#: ../Network/XKore2.pm:1010
 msgid "blueConnection to server lost. Please wait while the connection is reestablished."
 msgstr "blueการเชื่อมต่อกับเซิฟเวอรืได้ขาดหาย กรุณารอซักครู่ระหว่างที่ทำการเชื่อมต่อใหม่"
 
-#: ../Network/XKore2.pm:1010
+#: ../Network/XKore2.pm:1013
 msgid "Unknown error within XKore 2"
 msgstr "พบข้อผิดพลาดภายใน XKore 2"
 
-#: ../Network/XKore2.pm:1041
+#: ../Network/XKore2.pm:1044
 msgid "blueConnection reestablished. Enjoy. =)"
 msgstr "blueทำการเชื่อมต่อกลับคืนได้แล้ว  =)"
 
-#: ../Network/XKore2.pm:1054
+#: ../Network/XKore2.pm:1057
 msgid "blueStill trying to connect..."
 msgstr "blueยังคงพยายามทำการเชื่อมต่อ..."
 
-#: ../Network/XKore2.pm:1067
+#: ../Network/XKore2.pm:1070
 #, perl-format
 msgid "Unknown/unexpected XKore 2 packet: %s (state: %s).\n"
 msgstr "XKore 2 ไม่รู้จัก packet: %s (state: %s).\n"
@@ -6470,7 +6479,7 @@ msgstr "กรุณาป้อนรหัสผ่านเพื่อเป
 msgid "Next restart in %s\n"
 msgstr "เริ่มต้นการทำงานใหม่ครั้งต่อไปใน %s\n"
 
-#: ../functions.pl:567
+#: ../functions.pl:570
 msgid ""
 "\n"
 "Auto-restarting!!\n"
@@ -6478,43 +6487,46 @@ msgstr ""
 "\n"
 "กำลังเริ่มการทำงานใหม่โดยอัตโนมัติ!!\n"
 
-#: ../functions.pl:573
+#: ../functions.pl:576
 #, perl-format
 msgid "Sleeping for %s\n"
 msgstr "พักการทำงานเป็นเวลา %s\n"
 
-#: ../functions.pl:612
+#: ../functions.pl:617
 #, perl-format
 msgid "Changing configuration file (from \"%s\" to \"%s\")...\n"
 msgstr "กำลังเปลี่ยนไฟล์คอนฟิก (จาก \"%s\" ไปเป็น \"%s\")...\n"
 
 #. Translation Comment: Interface Title with character status
-#: ../functions.pl:682
+#: ../functions.pl:690
 #, perl-format
 msgid "%s B%s (%s), J%s (%s) : w%s%s - %s"
 msgstr "%s B%s (%s), J%s (%s) : w%s%s - %s"
 
 #. Translation Comment: Interface Title
-#: ../functions.pl:689
+#: ../functions.pl:697
 #, perl-format
 msgid "%sNot connected - %s"
 msgstr "%s ยังไม่ได้ทำการเชื่อมต่อ - %s"
 
 #. Translation Comment: Interface Title
-#: ../functions.pl:692
+#: ../functions.pl:700
 #, perl-format
 msgid "%sConnecting - %s"
 msgstr "%s กำลังเชื่อมต่อ - %s"
 
-#: ../functions.pl:889
+#: ../functions.pl:895
 msgid "Map loaded\n"
 msgstr "แผนที่ได้ถูกโหลดแล้ว\n"
 
-#: ../functions.pl:1113
+#: ../functions.pl:1121
 #, perl-format
 msgid "Unknown packet - %s\n"
 msgstr "พบ packet ที่ไม่รู้จัก - %s\n"
 
+#, fuzzy
+#~ msgid "Please enter a new storage password:"
+#~ msgstr "กรุณา ตั้งรหัสผ่าน ที่เก็บของใหม่:\n"
 #~ msgid "No username or password set."
 #~ msgstr "ยังไม่ได้ตั้งค่า username หรือ password"
 #~ msgid "[dist=%s] %s\n"
