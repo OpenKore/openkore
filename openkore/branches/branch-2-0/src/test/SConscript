@@ -1,0 +1,37 @@
+# -*-python-*-
+Import('*')
+
+XSTools_dir = '../auto/XSTools'
+
+### consoleui-test ###
+if not win32:
+	dir = XSTools_dir + '/unix'
+
+	e = env.Clone()
+	e.Append(CPPPATH = dir)
+	e.Append(LIBS = [READLINE_LIB, 'pthread'])
+	if have_ncurses:
+		e.Append(LIBS = ['ncurses'])
+	else:
+		e.Append(LIBS = ['termcap'])
+		e.Append(LIBPATH = ['/usr/lib/termcap'])
+	e.Program('consoleui-test', [
+		'consoleui-test.cpp',
+		dir + '/consoleui.cpp'
+	])
+
+### http-reader-test ###
+dir = XSTools_dir + '/utils'
+e = env.Clone()
+e.Append(CPPPATH = dir)
+if win32:
+	e.Append(LIBS = ['wininet'])
+else:
+	e.Append(LIBS = ['pthread'])
+	e.ParseConfig('curl-config --cflags --libs')
+e.Program('http-reader-test', [
+	'http-reader-test.cpp',
+	dir + '/http-reader.cpp',
+	dir + '/std-http-reader.cpp',
+	dir + '/mirror-http-reader.cpp'
+])
