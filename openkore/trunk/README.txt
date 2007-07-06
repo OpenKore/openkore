@@ -1,14 +1,16 @@
 =========================
-### OpenKore what-will-become-2.0.0
+### OpenKore 2.0.0
 =========================
 
+After a long time, OpenKore 2.0.0 has finally been release. This is a
+stable release, and is not beta. There are no new features compared to 1.9.4,
+but many bugs have been fixed. Furthermore, iRO (International) support has
+been restored.
+
 Many thanks to the following people who made this release possible:
-- Japplegame, Darkfate, championrpg, wheee, djfelone, Dragonight!,
-  Bibian,  kLabMouse:
-  Contributions to iRO and padded packets support.
-
-There are no new features, but many bugs have been fixed.
-
+Japplegame, Darkfate, championrpg, wheee, djfelone, Dragonight!,
+Bibian,  kLabMouse: contributions to iRO and padded packets support.
+And of course, to all the usual OpenKore developers.
 
 
 =========================
