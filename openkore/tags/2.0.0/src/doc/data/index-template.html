@@ -1,0 +1,105 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>Index : OpenKore source code documentation</title>
+	<link rel="stylesheet" type="text/css" href="openkore.css">
+	<style type="text/css">
+	<!--
+	ul a {
+		text-decoration: none;
+	}
+	ul a:hover {
+		text-decoration: underline;
+	}
+	-->
+	</style>
+
+	<!-- Fix broken PNG transparency for IE/Win5-6+ -->
+	<!--[if gte IE 5.5000]>
+	<script type="text/javascript" src="pngfix.js"></script>
+	<![endif]-->
+</head>
+
+<body>
+
+<div id="title">OpenKore source code documentation</div>
+
+<div id="navigation">
+	<ul>
+	<li><a href="http://www.openkore.com/">Main website</a></li>
+	<li><b>Table of contents</b></li>
+	</ul>
+</div>
+
+<div id="main">
+
+
+<h1>Table of contents</h1>
+
+<h3>This is work in progress!</h3>
+
+
+<h2>Introduction</h2>
+
+<img src="development.png" style="float: left; margin-right: 0.25cm;">
+This is the source code documentation page for OpenKore.<br>
+If you're new to OpenKore development, please read the <a href="http://www.openkore.com/wiki/index.php/Developers_Introduction_Guide">OpenKore Development Introduction Guide</a>.
+<div style="clear: left;"></div>
+
+
+<h2>Quick source code overview (not finished)</h2>
+
+<ul>
+<li><a href="init.html">Initialization &amp; main loop</a></li>
+<li><a href="http://www.openkore.com/wiki/index.php/Network_subsystem">Network subsystem overview</a></li>
+<li><a href="artificial-intelligence.html">AI ("Artificial Intelligence")</a></li>
+<li>Important global variables</li>
+</ul>
+
+
+<h2>Special guides</h2>
+
+<ul>
+<li><a href="plugin-tut.html">Plugin Writing Tutorial</a></li>
+</ul>
+
+
+<h2>Modules (not everything is documented)</h2>
+<table id="moduleIndex">
+@MODULES@
+</table>
+
+
+<h2>Independent utility modules</h2>
+These utility modules are generic can be used independently from OpenKore.
+<table id="moduleIndex">
+@UTILS_MODULES@
+</table>
+
+
+<h2>The Wx interface</h2>
+OpenKore has a graphical user interface written with WxWidgets.
+In short, it's called the Wx interface. It uses many custom controls.
+Here's a list of some of the documented custom controls.
+<table id="moduleIndex">
+@WXMODULES@
+</table>
+
+
+<p><hr><p>
+
+<div id="footer">
+	<ul>
+	<li><a href="http://validator.w3.org/check?uri=referer" title="Valid HTML 4.01!"><img src="http://www.w3.org/Icons/valid-html401" alt="Valid HTML 4.01!" height="31" width="88"></a></li>
+	<li><a href="http://www.mozilla.com/" title="Get Firefox - Take Back the Web"><img width="104" height="32" src="http://www.mozilla.org/products/firefox/buttons/getfirefox_small.png" alt="Get Firefox - Take Back the Web"></a></li>
+	<li><a href="http://www.mozilla.com/" title="If you were looking at this page in any browser but Microsoft Internet Explorer, it would look and run better and faster"><img width="45" height="45" src="http://linuxart.com/img/noIE-small.png" alt="If you were looking at this page in any browser but Microsoft Internet Explorer, it would look and run better and faster"></a></li>
+	</ul>
+
+	Last modified: @MODIFIED@
+</div>
+
+</div>
+
+</body>
+</html>
