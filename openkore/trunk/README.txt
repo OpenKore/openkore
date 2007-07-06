@@ -3,7 +3,7 @@
 =========================
 
 After a long time, OpenKore 2.0.0 has finally been release. This is a
-stable release, and is not beta. There are no new features compared to 1.9.4,
+stable released, and is not beta. There are no new features compared to 1.9.4,
 but many bugs have been fixed. Furthermore, iRO (International) support has
 been restored.
 
