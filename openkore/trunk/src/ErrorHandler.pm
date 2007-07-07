@@ -70,12 +70,13 @@ sub errorHandler {
 
 	# Create the message to be displayed to the user.
 	my $display = TF("This program has encountered an unexpected problem. This is probably because\n" .
-	             "of a bug in this program. Please tell us about this problem.\n\n" .
-	             "The error message is:\n" .
-	             "%s\n\n" .
-	             "A more detailed error report is saved to errors.txt. Please include the\n" .
-	             "contents of this file in your report, or we may not be able to help you!",
-	             $errorMessage);
+	                 "of a bug in this program, or in one of the plugins. Please tell us about this\n" .
+	                 "problem.\n\n" .
+	                 "The error message is:\n" .
+	                 "%s\n\n" .
+	                 "A more detailed error report is saved to errors.txt. Please include the\n" .
+	                 "contents of this file in your report, or we may not be able to help you!",
+	                 $errorMessage);
 
 	# Create the errors.txt error log.
 	my $log = '';
