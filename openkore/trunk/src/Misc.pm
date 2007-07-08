@@ -1092,7 +1092,7 @@ sub charSelectScreen {
 	Plugins::callHook('charSelectScreen', \%plugin_args);
 	return $plugin_args{return} if ($plugin_args{return});
 
-	if ($plugin_args{autoLogin} && @chars && $config{char} ne "" && $chars[$config{char}]) {
+	if ($plugin_args{autoLogin} && @chars && $config{char} ne "" && $char) {
 		$messageSender->sendCharLogin($config{char});
 		$timeout{charlogin}{time} = time;
 		return 1;
@@ -3521,12 +3521,12 @@ sub getActorNames {
 
 # return ID based on name if party member is online
 sub findPartyUserID {
-	if ($chars[$config{'char'}]{'party'} && %{$chars[$config{'char'}]{'party'}}) {
+	if ($char->{party} && %{$char->{party}}) {
 		my $partyUserName = shift;
 		for (my $j = 0; $j < @partyUsersID; $j++) {
 	        	next if ($partyUsersID[$j] eq "");
-			if ($partyUserName eq $chars[$config{'char'}]{'party'}{'users'}{$partyUsersID[$j]}{'name'}
-				&& $chars[$config{'char'}]{'party'}{'users'}{$partyUsersID[$j]}{'online'}) {
+			if ($partyUserName eq $char->{party}{users}{$partyUsersID[$j]}{name}
+				&& $char->{party}{users}{$partyUsersID[$j]}{online}) {
 				return $partyUsersID[$j];
 			}
 		}
@@ -3644,11 +3644,11 @@ sub checkSelfCondition {
 
 	if ($config{$prefix . "_onAction"}) { return 0 unless (existsInList($config{$prefix . "_onAction"}, AI::action())); }
 	if ($config{$prefix . "_notOnAction"}) { return 0 if (existsInList($config{$prefix . "_onAction"}, AI::action())); }
-	if ($config{$prefix . "_spirit"}) {return 0 unless (inRange($chars[$config{char}]{spirits}, $config{$prefix . "_spirit"})); }
+	if ($config{$prefix . "_spirit"}) {return 0 unless (inRange($char->{spirits}, $config{$prefix . "_spirit"})); }
 
 	if ($config{$prefix . "_timeout"}) { return 0 unless timeOut($ai_v{$prefix . "_time"}, $config{$prefix . "_timeout"}) }
 	if ($config{$prefix . "_inLockOnly"} > 0) { return 0 unless ($field{name} eq $config{lockMap}); }
-	if ($config{$prefix . "_notWhileSitting"} > 0) { return 0 if ($chars[$config{char}]{'sitting'}); }
+	if ($config{$prefix . "_notWhileSitting"} > 0) { return 0 if ($char->{sitting}); }
 	if ($config{$prefix . "_notInTown"} > 0) { return 0 if ($cities_lut{$field{name}.'.rsw'}); }
 
 	if ($config{$prefix . "_monsters"} && !($prefix =~ /skillSlot/i) && !($prefix =~ /ComboSlot/i)) {
@@ -3774,12 +3774,12 @@ sub checkPlayerCondition {
 	if ($config{$prefix . "_notWhileSitting"} > 0) { return 0 if ($player->{sitting}); }
 
 	# we will have player HP info (only) if we are in the same party
-	if ($chars[$config{char}]{party} && $chars[$config{char}]{party}{users}{$id}) {
+	if ($char->{party} && $char->{party}{users}{$id}) {
 		if ($config{$prefix . "_hp"}) {
 			if ($config{$prefix."_hp"} =~ /^(.*)\%$/) {
-				return 0 if (!inRange(percent_hp($chars[$config{char}]{party}{users}{$id}), $1));
+				return 0 if (!inRange(percent_hp($char->{party}{users}{$id}), $1));
 			} else {
-				return 0 if (!inRange($chars[$config{char}]{party}{users}{$id}{hp}, $config{$prefix . "_hp"}));
+				return 0 if (!inRange($char->{party}{users}{$id}{hp}, $config{$prefix . "_hp"}));
 			}
 		}
 	} elsif ($char->{homunculus} && $char->{homunculus}{ID} eq $id) {

@@ -739,7 +739,7 @@ sub attack {
 					message TF("Auto UnEquiping [R]: %s\n", $config{"autoSwitch_$i"."_rightHand"}), "equip";
 					$char->{equipment}{'rightHand'}->unequip();
 				}
-				$Req = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{"autoSwitch_$i"."_rightHand"});
+				$Req = findIndexString_lc($char->{inventory}, "name", $config{"autoSwitch_$i"."_rightHand"});
 				if ($Req ne "" && !$char->{inventory}[$Req]{equipped}){
 					message TF("Auto Equiping [R]: %s\n", $config{"autoSwitch_$i"."_rightHand"}), "equip";
 					%eq_list =  (rightHand => $Req);
@@ -755,15 +755,15 @@ sub attack {
 						$char->{equipment}{'leftHand'}->unequip();	
 					}
 				}
-				$Leq = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{"autoSwitch_$i"."_leftHand"});
+				$Leq = findIndexString_lc($char->{inventory}, "name", $config{"autoSwitch_$i"."_leftHand"});
 		
 				if ($Leq ne "" && !$char->{inventory}[$Leq]{equipped}) {
 	
 					if ($Req eq $Leq) {
 						$Leq = "";
-						for ($j=0; $j < @{$chars[$config{'char'}]{'inventory'}};$j++) {
+						for ($j=0; $j < @{$char->{inventory}};$j++) {
 							next if (!$char->{inventory}[$j] || !%{$char->{inventory}[$j]});
-							if ($chars[$config{'char'}]{'inventory'}[$j]{'name'} eq $config{"autoSwitch_$i"."_leftHand"} && $j != $Req) {
+							if ($char->{inventory}[$j]{name} eq $config{"autoSwitch_$i"."_leftHand"} && $j != $Req) {
 								$Leq = $j;
 								last;
 							}
@@ -780,12 +780,12 @@ sub attack {
 				Actor::Item::bulkEquip(\%eq_list);
 			}
 
-				$arrow = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{"autoSwitch_$i"."_arrow"}) if ($config{"autoSwitch_$i"."_arrow"});
+				$arrow = findIndexString_lc($char->{inventory}, "name", $config{"autoSwitch_$i"."_arrow"}) if ($config{"autoSwitch_$i"."_arrow"});
 
 
-				if ($arrow ne "" && !$chars[$config{'char'}]{'inventory'}[$arrow]{'equipped'}) {
+				if ($arrow ne "" && !$char->{inventory}[$arrow]{'equipped'}) {
 					message TF("Auto Equiping [A]: %s\n", $config{"autoSwitch_$i"."_arrow"}), "equip";
-					$chars[$config{'char'}]{'inventory'}[$arrow]->equip();
+					$char->{inventory}[$arrow]->equip();
 				}
 				if ($config{"autoSwitch_$i"."_distance"} && $config{"autoSwitch_$i"."_distance"} != $config{'attackDistance'}) {
 					$ai_v{'attackDistance'} = $config{'attackDistance'};
@@ -815,7 +815,7 @@ sub attack {
 					message TF("Auto UnEquiping [R]: %s\n", $config{"autoSwitch_default_rightHand"}), "equip";
 					$char->{equipment}{'rightHand'}->unequip();
 				}
-				$Req = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{"autoSwitch_default_rightHand"});
+				$Req = findIndexString_lc($char->{inventory}, "name", $config{"autoSwitch_default_rightHand"});
 				if ($Req ne "" && !$char->{inventory}[$Req]{equipped}){
 					message TF("Auto Equiping [R]: %s\n", $config{"autoSwitch_default_rightHand"}), "equip";
 					%eq_list =  (rightHand => $Req);
@@ -831,15 +831,15 @@ sub attack {
 						$char->{equipment}{'leftHand'}->unequip();	
 					}
 				}
-				$Leq = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{"autoSwitch_default_leftHand"});
+				$Leq = findIndexString_lc($char->{inventory}, "name", $config{"autoSwitch_default_leftHand"});
 		
 				if ($Leq ne "" && !$char->{inventory}[$Leq]{equipped}) {
 	
 					if ($Req eq $Leq) {
 						$Leq = "";
-						for ($j=0; $j < @{$chars[$config{'char'}]{'inventory'}};$j++) {
+						for ($j=0; $j < @{$char->{inventory}};$j++) {
 							next if (!$char->{inventory}[$j] || !%{$char->{inventory}[$j]});
-							if ($chars[$config{'char'}]{'inventory'}[$j]{'name'} eq $config{"autoSwitch_default_leftHand"} && $j != $Req) {
+							if ($char->{inventory}[$j]{name} eq $config{"autoSwitch_default_leftHand"} && $j != $Req) {
 								$Leq = $j;
 								last;
 							}
@@ -860,10 +860,10 @@ sub attack {
 ###################
 
 		if ($config{'autoSwitch_default_arrow'}) {
-			$arrow = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{'autoSwitch_default_arrow'});
-			if($arrow ne "" && !$chars[$config{'char'}]{'inventory'}[$arrow]{'equipped'}) {
+			$arrow = findIndexString_lc($char->{inventory}, "name", $config{'autoSwitch_default_arrow'});
+			if($arrow ne "" && !$char->{inventory}[$arrow]{equipped}) {
 				message TF("Auto equiping default [A]: %s\n", $config{'autoSwitch_default_arrow'}), "equip";
-				$chars[$config{'char'}]{'inventory'}[$arrow]->equip();
+				$char->{inventory}[$arrow]->equip();
 			}
 		}
 		if ($ai_v{'attackDistance'} && $config{'attackDistance'} != $ai_v{'attackDistance'}) {
