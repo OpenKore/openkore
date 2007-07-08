@@ -1,5 +1,5 @@
 #########################################################################
-#  OpenKore - Generic utility functions
+#  OpenKore - Actor list
 #
 #  Copyright (c) 2006 OpenKore Development Team
 #
@@ -49,7 +49,7 @@ sub new {
 	# Invariant: defined(type)
 	$self->{type} = $type;
 
-	# Hash<Actor> IDmap
+	# Hash<Bytes, Actor> IDmap
 	# Maps an actor ID ($Actor->{ID}) to an actor. Used
 	# for fast lookups of actors based on IDs.
 	#
@@ -72,7 +72,7 @@ sub new {
 #
 # Adds an actor to this ActorList.
 #
-# This method overloads $Object->add(), and has a stronger precondition.
+# This method overloads $ObjectList->add(), and has a stronger precondition.
 # See the documentation for that method for more information about this
 # method.
 sub add {
@@ -107,7 +107,7 @@ sub getByID {
 #
 # Removes an actor from this ActorList.
 #
-# This method overloads $Object->remove(), and has a stronger precondition.
+# This method overloads $ObjectList->remove(), and has a stronger precondition.
 # See the documentation for that method for more information about this
 # method.
 sub remove {
