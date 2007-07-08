@@ -1,4 +1,11 @@
 =========================
+### OpenKore 2.1.0 (beta)
+=========================
+
+New config options:
+- dcOnPlayer		: Makes the bot exit once a player is detected in your FOV on your lockMap.
+
+=========================
 ### OpenKore 2.0.0
 =========================
 

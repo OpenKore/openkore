@@ -174,6 +174,7 @@ sub iterate {
 	processAvoid();
 	processSendEmotion();
 	processAutoShopOpen();
+	processDcOnPlayer();
 	Benchmark::end("AI (part 4)") if DEBUG;
 
 
@@ -3011,6 +3012,19 @@ sub processAutoShopOpen {
 	}
 	if ($config{'shopAuto_open'} && AI::isIdle && $conState == 5 && !$char->{sitting} && timeOut($timeout{ai_shop}) && !$shopstarted) {
 		openShop();
+	}
+}
+
+
+sub processDcOnPlayer {
+	# Disconnect when a player is detected
+	my $map_name_lu = $field{name}.'.rsw';
+	if (!$cities_lut{$map_name_lu} && !AI::inQueue("storageAuto", "buyAuto") && $config{dcOnPlayer}
+	    && ($config{'lockMap'} eq "" || $field{name} eq $config{'lockMap'})
+	 && binSize(\@playersID) && timeOut($AI::Temp::Teleport_allPlayers, 0.75)) {
+		message T("Player detected, disconnecting!\n");
+		chatLog("k", T("*** Player detected, disconnecting! ***\n"));
+		$quit = 1;
 	}
 }
 
