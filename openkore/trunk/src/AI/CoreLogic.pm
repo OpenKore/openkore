@@ -704,6 +704,7 @@ sub processTask {
 		my $task = AI::args;
 		if ($task->getStatus() == Task::INACTIVE) {
 			$task->activate();
+			should($task->getStatus(), Task::RUNNING) if DEBUG;
 		}
 		should($task->getStatus(), Task::RUNNING) if DEBUG;
 		$task->iterate();
