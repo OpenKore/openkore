@@ -376,7 +376,7 @@ sub delHook {
 		delete $handle->[HOOKNAME];
 		delete $handle->[INDEX];
 
-		if ($hookList->size() == 0) {
+		if ($hookList && $hookList->size() == 0) {
 			delete $hooks{$hookName};
 		}
 
