@@ -3022,10 +3022,15 @@ sub processDcOnPlayer {
 	if (!$cities_lut{$map_name_lu} && !AI::inQueue("storageAuto", "buyAuto") && $config{dcOnPlayer}
 	    && ($config{'lockMap'} eq "" || $field{name} eq $config{'lockMap'})
 	 && binSize(\@playersID) && timeOut($AI::Temp::Teleport_allPlayers, 0.75)) {
-		message T("Player detected, disconnecting!\n");
-		chatLog("k", T("*** Player detected, disconnecting! ***\n"));
-		$quit = 1;
+	 
+	 foreach my $ID (@playersID) {
+		if ((!$char->{party} || !$char->{party}{users}{$ID}) && (!$char->{homunculus} || $ID ne $char->{homunculus}{ID})) {
+			message T("Player detected, disconnecting!\n");
+			chatLog("k", T("*** Player detected, disconnecting! ***\n"));
+			$quit = 1;
+			last;
+			}
+		}
 	}
 }
-
 1;
