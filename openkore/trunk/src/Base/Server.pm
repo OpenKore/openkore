@@ -75,6 +75,7 @@ no warnings 'redefine';
 use IO::Socket::INET;
 use Base::Server::Client;
 use Utils::ObjectList;
+use Utils::Exceptions;
 
 
 ################################
@@ -87,6 +88,8 @@ use Utils::ObjectList;
 # bind: the IP address to bind the server socket to. If unspecified, the socket will be bound to "localhost". Specify "0.0.0.0" to not bind to any address.
 #
 # Start a server at the specified port and IP address.
+#
+# Throws SocketException if the server socket cannot be created.
 sub new {
 	my $class = shift;
 	my $port = (shift || 0);
@@ -99,7 +102,9 @@ sub new {
 		LocalPort	=> $port,
 		Proto		=> 'tcp',
 		ReuseAddr	=> 1);
-	return undef if (!$self{BS_server});
+	if (!$self{BS_server}) {
+		SocketException->throw($@);
+	}
 
 	$self{BS_host} = $self{BS_server}->sockhost;
 	$self{BS_port} = $self{BS_server}->sockport;
