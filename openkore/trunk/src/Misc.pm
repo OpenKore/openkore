@@ -1092,7 +1092,7 @@ sub charSelectScreen {
 	Plugins::callHook('charSelectScreen', \%plugin_args);
 	return $plugin_args{return} if ($plugin_args{return});
 
-	if ($plugin_args{autoLogin} && @chars && $config{char} ne "" && $char) {
+	if ($plugin_args{autoLogin} && @chars && $config{char} ne "" && $chars[$config{char}]) {
 		$messageSender->sendCharLogin($config{char});
 		$timeout{charlogin}{time} = time;
 		return 1;
@@ -1102,7 +1102,7 @@ sub charSelectScreen {
 		my @choices = @charNames;
 		push @choices, (T('Create a new character'), T('Delete a character'));
 		my $choice = $interface->showMenu(
-			T("Please chooce a character or an action."), \@choices,
+			T("Please choose a character or an action."), \@choices,
 			title => T("Character selection"));
 		if ($choice == -1) {
 			# User cancelled
