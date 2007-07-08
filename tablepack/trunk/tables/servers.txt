@@ -612,12 +612,13 @@ serverEncoding Western
 
 ## http://www.euphro.com/
 [EuphRO Private Server]
-ip a.euphro.com
+ip game.euphrogame.com
 port 3872
+charBlockSize 108
 master_version 14
-version 20
-serverType 9
 serverEncoding Western
+serverType 9
+version 20
 
 # http://www.equilibriumro.com/
 [EquilibriumRO Private Server]
