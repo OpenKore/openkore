@@ -135,6 +135,7 @@ dcOnMute 0
 dcOnPM 0
 dcOnZeny 0
 dcOnStorageFull 1
+dcOnPlayer 0
 
 follow 0
 followTarget
