@@ -3064,7 +3064,7 @@ sub identify_list {
 	undef @identifyID;
 	for (my $i = 4; $i < $msg_size; $i += 2) {
 		my $index = unpack("v1", substr($msg, $i, 2));
-		my $invIndex = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "index", $index);
+		my $invIndex = findIndex($char->{inventory}, "index", $index);
 		binAdd(\@identifyID, $invIndex);
 	}
 
@@ -3511,11 +3511,11 @@ sub hp_sp_changed {
 	my $type = $args->{type};
 	my $amount = $args->{amount};
 	if ($type == 5) {
-		$chars[$config{'char'}]{'hp'} += $amount;
-		$chars[$config{'char'}]{'hp'} = $chars[$config{'char'}]{'hp_max'} if ($chars[$config{'char'}]{'hp'} > $chars[$config{'char'}]{'hp_max'});
+		$char->{hp} += $amount;
+		$char->{hp} = $char->{hp_max} if ($char->{hp} > $char->{hp_max});
 	} elsif ($type == 7) {
-		$chars[$config{'char'}]{'sp'} += $amount;
-		$chars[$config{'char'}]{'sp'} = $chars[$config{'char'}]{'sp_max'} if ($chars[$config{'char'}]{'sp'} > $chars[$config{'char'}]{'sp_max'});
+		$char->{sp} += $amount;
+		$char->{sp} = $char->{sp_max} if ($char->{sp} > $char->{sp_max});
 	}
 }
 
@@ -3631,9 +3631,9 @@ sub map_change {
 		x => $args->{x},
 		y => $args->{y}
 	);
-	$chars[$config{char}]{pos} = {%coords};
-	$chars[$config{char}]{pos_to} = {%coords};
-	message TF("Map Change: %s (%s, %s)\n", $args->{map}, $chars[$config{'char'}]{'pos'}{'x'}, $chars[$config{'char'}]{'pos'}{'y'}), "connection";
+	$char->{pos} = {%coords};
+	$char->{pos_to} = {%coords};
+	message TF("Map Change: %s (%s, %s)\n", $args->{map}, $char->{pos}{x}, $char->{pos}{y}), "connection";
 	if ($net->version == 1) {
 		ai_clientSuspend(0, 10);
 	} else {
@@ -3718,7 +3718,7 @@ sub map_changed {
 		$ai_v{"useSelf_skill_$i"."_time"} = 0;
 		$i++;
 	}
-	undef %{$chars[$config{char}]{statuses}} if ($chars[$config{char}]{statuses});
+	delete $char->{statuses};
 	$char->{spirits} = 0;
 	undef $char->{permitSkill};
 	undef $char->{encoreSkill};
@@ -4106,7 +4106,7 @@ sub party_chat {
 
 sub party_exp {
 	my ($self, $args) = @_;
-	$chars[$config{char}]{party}{share} = $args->{type};
+	$char->{party}{share} = $args->{type};
 	if ($args->{type} == 0) {
 		message T("Party EXP set to Individual Take\n"), "party", 1;
 	} elsif ($args->{type} == 1) {
@@ -4119,8 +4119,8 @@ sub party_exp {
 sub party_hp_info {
 	my ($self, $args) = @_;
 	my $ID = $args->{ID};
-	$chars[$config{char}]{party}{users}{$ID}{hp} = $args->{hp};
-	$chars[$config{char}]{party}{users}{$ID}{hp_max} = $args->{hp_max};
+	$char->{party}{users}{$ID}{hp} = $args->{hp};
+	$char->{party}{users}{$ID}{hp_max} = $args->{hp_max};
 }
 
 sub party_invite {
@@ -4148,7 +4148,7 @@ sub party_join {
 	$name = bytesToString($name);
 	$user = bytesToString($user);
 
-	if (!$char->{party} || !%{$char->{party}} || !$chars[$config{char}]{party}{users}{$ID} || !%{$chars[$config{char}]{party}{users}{$ID}}) {
+	if (!$char->{party} || !%{$char->{party}} || !$char->{party}{users}{$ID} || !%{$char->{party}{users}{$ID}}) {
 		binAdd(\@partyUsersID, $ID) if (binFind(\@partyUsersID, $ID) eq "");
 		if ($ID eq $accountID) {
 			message TF("You joined party '%s'\n", $name), undef, 1;
@@ -4157,17 +4157,17 @@ sub party_join {
 			message TF("%s joined your party '%s'\n", $user, $name), undef, 1;
 		}
 	}
-	$chars[$config{char}]{party}{users}{$ID} = new Actor::Party;
+	$char->{party}{users}{$ID} = new Actor::Party;
 	if ($type == 0) {
-		$chars[$config{char}]{party}{users}{$ID}{online} = 1;
+		$char->{party}{users}{$ID}{online} = 1;
 	} elsif ($type == 1) {
-		$chars[$config{char}]{party}{users}{$ID}{online} = 0;
+		$char->{party}{users}{$ID}{online} = 0;
 	}
-	$chars[$config{char}]{party}{name} = $name;
-	$chars[$config{char}]{party}{users}{$ID}{pos}{x} = $x;
-	$chars[$config{char}]{party}{users}{$ID}{pos}{y} = $y;
-	$chars[$config{char}]{party}{users}{$ID}{map} = $map;
-	$chars[$config{char}]{party}{users}{$ID}{name} = $user;
+	$char->{party}{name} = $name;
+	$char->{party}{users}{$ID}{pos}{x} = $x;
+	$char->{party}{users}{$ID}{pos}{y} = $y;
+	$char->{party}{users}{$ID}{map} = $map;
+	$char->{party}{users}{$ID}{name} = $user;
 
 	if ($config{partyAutoShare} && $char->{party} && $char->{party}{users}{$accountID}{admin}) {
 		$messageSender->sendPartyShareEXP(1);
@@ -4178,11 +4178,11 @@ sub party_leave {
 	my ($self, $args) = @_;
 
 	my $ID = $args->{ID};
-	delete $chars[$config{char}]{party}{users}{$ID};
+	delete $char->{party}{users}{$ID};
 	binRemove(\@partyUsersID, $ID);
 	if ($ID eq $accountID) {
 		message T("You left the party\n");
-		delete $chars[$config{char}]{party} if ($chars[$config{char}]{party});
+		delete $char->{party};
 		undef @partyUsersID;
 	} else {
 		message TF("%s left the party\n", bytesToString($args->{name}));
@@ -4193,10 +4193,10 @@ sub party_location {
 	my ($self, $args) = @_;
 
 	my $ID = $args->{ID};
-	$chars[$config{char}]{party}{users}{$ID}{pos}{x} = $args->{x};
-	$chars[$config{char}]{party}{users}{$ID}{pos}{y} = $args->{y};
-	$chars[$config{char}]{party}{users}{$ID}{online} = 1;
-	debug "Party member location: $chars[$config{char}]{party}{users}{$ID}{name} - $args->{x}, $args->{y}\n", "parseMsg";
+	$char->{party}{users}{$ID}{pos}{x} = $args->{x};
+	$char->{party}{users}{$ID}{pos}{y} = $args->{y};
+	$char->{party}{users}{$ID}{online} = 1;
+	debug "Party member location: $char->{party}{users}{$ID}{name} - $args->{x}, $args->{y}\n", "parseMsg";
 }
 
 sub party_organize_result {
