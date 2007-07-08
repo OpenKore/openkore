@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenKore 1.9.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-07-05 19:43+0700\n"
-"PO-Revision-Date: 2007-07-06 11:30+0700\n"
-"Last-Translator: Richard <dewa5227@yahoo.com>\n"
+"POT-Creation-Date: 2006-11-10 20:50+0700\n"
+"PO-Revision-Date: 2007-07-08 08:09+0800\n"
+"Last-Translator: lkm <lj88kc@yahoo.com.cn>\n"
 "Language-Team: Lkm <lj88kc@yhaoo.com.cn>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -5438,6 +5438,9 @@ msgid ""
 "You must set a storage password before you can use the storage.\n"
 "Please enter a new storage password:"
 msgstr ""
+"你还没有设定过仓库密码.\n"
+"在使用仓库前必须设定一个仓库密码.\n"
+"请输入你的仓库密码:"
 
 #: ../Network/Receive.pm:5685
 #: ../Network/Receive.pm:5721
@@ -6518,8 +6521,4 @@ msgstr "读取地图\n"
 #, perl-format
 msgid "Unknown packet - %s\n"
 msgstr "未知封包 - %s\n"
-
-#, fuzzy
-#~ msgid "Please enter a new storage password:"
-#~ msgstr "请输入一个新的仓库密码:\n"
 
