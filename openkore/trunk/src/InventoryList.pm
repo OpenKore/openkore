@@ -67,6 +67,12 @@ sub new {
 	return $self;
 }
 
+sub DESTROY {
+	my ($self) = @_;
+	$self->clear();
+	$self->SUPER::DESTROY();
+}
+
 ##
 # int $InventoryList->add(Actor::Item item)
 # Requires:
@@ -125,6 +131,21 @@ sub getByServerIndex {
 	my ($self, $serverIndex) = @_;
 	foreach my $item (@{$self->getItems()}) {
 		if ($item->{index} == $serverIndex) {
+			return $item;
+		}
+	}
+	return undef;
+}
+
+##
+# Actor::Item $InventoryList->getByNameID(Bytes nameID)
+#
+# Return the first Actor::Item object, whose 'nameID' field is equal to $nameID.
+# If nothing is found, undef is returned.
+sub getByNameID {
+	my ($self, $nameID) = @_;
+	foreach my $item (@{$self->getItems()}) {
+		if ($item->{nameID} eq $nameID) {
 			return $item;
 		}
 	}
