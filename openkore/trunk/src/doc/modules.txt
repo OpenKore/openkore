@@ -6,6 +6,7 @@ Actor::Item
 ActorList
 I18N
 Interface
+InventoryList
 ChatQueue
 Commands
 Log

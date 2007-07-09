@@ -18,7 +18,7 @@
 # The InventoryList class models a character's inventory or a Kapra storage.
 #
 # <h3>Differences compared to ObjectList</h3>
-# All items in ActorList are of the same class, and are all a
+# All items in Inventory are of the same class, and are all a
 # subclass of @CLASS(Actor::Item).
 package InventoryList;
 
@@ -84,7 +84,7 @@ sub DESTROY {
 # Adds an item to this InventoryList. $item->{invIndex} will automatically be set
 # index in which that item is stored in this list.
 #
-# This method overloads $Object->add(), and has a stronger precondition.
+# This method overloads $ObjectList->add(), and has a stronger precondition.
 # See the documentation for that method for more information about this
 # method.
 sub add {
