@@ -130,6 +130,10 @@ sub testNameChange {
 	ok(!$list->getByName("Item 1"));
 	ok(!$list->getByName("Item 2"));
 	$list->checkValidity();
+
+	ok($list->getByName("jellopy") == $item1);
+	ok($list->getByName("gold") == $item2);
+	ok($list->getByName("item 3") == $item3);
 }
 
 1;
