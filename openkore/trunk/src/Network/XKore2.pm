@@ -768,22 +768,17 @@ sub checkClient {
 		# Sort items into stackable and non-stackable
 		my @stackable;
 		my @nonstackable;
-		for (my $i = 0; $i < @{$char->{inventory}}; $i++) {
-			my $item = $char->{inventory}[$i];
-			next unless $item && %{$item};
-
+		foreach my $item (@{$char->inventory->getItems()}) {
 			if ($item->{type} <= 3 || $item->{type} == 6 || $item->{type} == 10 || $item->{type} == 16) {
-				push @stackable, $i;
+				push @stackable, $item;
 			} else {
-				push @nonstackable, $i;
+				push @nonstackable, $item;
 			}
 		}
 
 		# Send stackable item information
 		my $stackableInfo = "";
-		for (my $i = 0; $i < @stackable; $i++) {
-			my $item = $char->{inventory}[$stackable[$i]];
-
+		foreach my $item (@stackable) {
 			$stackableInfo .= pack('v2 C2 v1 x2', $item->{index}, $item->{nameID}, $item->{type}, 1, #(identified)
 				$item->{amount});
 		}
@@ -791,9 +786,7 @@ sub checkClient {
 
 		# Send non-stackable item (mostly equipment) information
 		my $nonstackableInfo = "";
-		for (my $i = 0; $i < @nonstackable; $i++) {
-			my $item = $char->{inventory}[$nonstackable[$i]];
-
+		foreach my $item (@nonstackable) {
 			$nonstackableInfo .= pack('v2 C2 v2 C2 a8', $item->{index}, $item->{nameID}, $item->{type},
 				$item->{identified}, $item->{type_equip}, $item->{equipped}, $item->{broken},
 				$item->{upgrade}, $item->{cards});

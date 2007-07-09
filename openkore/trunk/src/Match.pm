@@ -75,14 +75,12 @@ sub inventoryItem {
 
 	if ($name =~ /^\d+$/) {
 		# A number was provided
-		my $item = $char->{inventory}[$name];
+		my $item = $char->inventory->get($name);
 		return UNIVERSAL::isa($item, 'Actor::Item') ? $item : undef;
 	}
 
 	# A name was provided; match it
-	my $index = findIndexString_lc($char->{inventory}, 'name', $name);
-	return unless defined($index);
-	return $char->{inventory}[$index];
+	return $char->inventory->getByName($name);
 }
 
 ##

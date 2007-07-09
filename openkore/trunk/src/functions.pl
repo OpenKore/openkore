@@ -387,12 +387,15 @@ sub initMapChangeVars {
 	}
 
 	# this is just used for portalRecord (add opposite portal by guessing method)
-	$chars[$config{char}]{old_pos_to} = {%{$chars[$config{char}]{pos_to}}} if ($chars[$config{char}]{pos_to});
-	delete $chars[$config{char}]{sitting};
-	delete $chars[$config{char}]{dead};
-	delete $chars[$config{char}]{warp};
-	delete $chars[$config{char}]{casting};
-	delete $chars[$config{char}]{homunculus}{appear_time};
+	if ($char) {
+		$char->{old_pos_to} = {%{$char->{pos_to}}} if ($char->{pos_to});
+		delete $char->{sitting};
+		delete $char->{dead};
+		delete $char->{warp};
+		delete $char->{casting};
+		delete $char->{homunculus}{appear_time};
+		$char->inventory->clear();
+	}
 	$timeout{play}{time} = time;
 	$timeout{ai_sync}{time} = time;
 	$timeout{ai_sit_idle}{time} = time;
@@ -422,7 +425,6 @@ sub initMapChangeVars {
 	$ai_v{inventory_time} = time + 60;
 	$ai_v{temp} = {};
 	$cart{inventory} = [];
-	$chars[$config{char}]{inventory} = [];
 	undef @venderItemList;
 	undef $venderID;
 	undef @venderListsID;
