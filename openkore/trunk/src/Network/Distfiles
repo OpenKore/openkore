@@ -2,6 +2,7 @@ DirectConnection.pm
 Receive.pm
 Send.pm
 PaddedPackets.pm
+MessageTokenizer.pm
 XKore.pm
 XKore2.pm
 XKoreProxy.pm
