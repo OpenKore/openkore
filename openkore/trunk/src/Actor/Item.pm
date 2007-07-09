@@ -296,7 +296,7 @@ sub UnEquipByType {
 # to the RO server.
 # This index does not necessarily equals the inventory index, as stored by OpenKore.
 #
-# Ssee also: $ActorItem->{invIndex}
+# See also: $ActorItem->{invIndex}
 
 ##
 # int $ActorItem->{amount}
