@@ -22,8 +22,6 @@
 # subclass of @CLASS(Actor::Item).
 package InventoryList;
 
-# TODO: watch for name change events
-
 use strict;
 use Carp::Assert;
 use Utils::ObjectList;
@@ -41,14 +39,16 @@ sub new {
 	my $self = $class->SUPER::new();
 
 	# Hash<String, int> nameIndex
-	# Maps an item name to an item index. Used
-	# for fast lookups of items based on names.
+	# Maps an item name to an item index. Used for fast lookups
+	# of items based on names. Note that the key is always in
+	# lowercase.
 	#
 	# Invariant:
 	#     defined(nameIndex)
 	#     scalar(keys nameIndex) == size()
 	#     for all keys $k in nameIndex:
-	#         getByName($k)->{name} eq $k
+	#         lc(getByName($k)->{name}) eq $k
+	#         lc($k) eq $k
 	#     for all values $v in nameIndex:
 	#         defined(get($v))
 	$self->{nameIndex} = {};
@@ -92,11 +92,11 @@ sub add {
 	assert(defined $item) if DEBUG;
 	assert($item->isa('Actor::Item')) if DEBUG;
 	assert(defined $item->{name}) if DEBUG;
-	assert(!exists $self->{nameIndex}{$item->{name}}) if DEBUG;
+	assert(!exists $self->{nameIndex}{lc($item->{name})}) if DEBUG;
 
 	my $invIndex = $self->SUPER::add($item);
 	$item->{invIndex} = $invIndex;
-	$self->{nameIndex}{$item->{name}} = $invIndex;
+	$self->{nameIndex}{lc($item->{name})} = $invIndex;
 	my $eventID = $item->onNameChange->add($self, \&onNameChange);
 	$self->{nameChangeEvents}{$invIndex} = $eventID;
 	return $invIndex;
@@ -109,12 +109,13 @@ sub add {
 # Ensures: if defined(result): result->{ID} eq $ID
 #
 # Looks up an Actor::Item object based on the item name.
+# The name lookup is case-insensitive.
 #
 # See also: $Actor->{ID}
 sub getByName {
 	my ($self, $name) = @_;
 	assert(defined $name) if DEBUG;
-	my $index = $self->{nameIndex}{$name};
+	my $index = $self->{nameIndex}{lc($name)};
 	if (defined $index) {
 		return $self->get($index);
 	} else {
@@ -153,6 +154,24 @@ sub getByNameID {
 }
 
 ##
+# Actor::Item $InventoryList->getByCondition(Function condition)
+#
+# Return the first Actor::Item object for which the function $condition returns true.
+# If nothing is found, undef is returned.
+#
+# $condition is called with exactly one parameter, namely the item that is currently
+# being checked.
+sub getByCondition {
+	my ($self, $condition) = @_;
+	foreach my $item (@{$self->getItems()}) {
+		if ($condition->($item)) {
+			return $item;
+		}
+	}
+	return undef;
+}
+
+##
 # boolean $InventoryList->remove(Actor::Item item)
 # Requires: defined($item) && defined($item->{name})
 #
@@ -169,7 +188,7 @@ sub remove {
 
 	my $result = $self->SUPER::remove($item);
 	if ($result) {
-		delete $self->{nameIndex}{$item->{name}};
+		delete $self->{nameIndex}{lc($item->{name})};
 		my $eventID = $self->{nameChangeEvents}{$item->{invIndex}};
 		delete $self->{nameChangeEvents}{$item->{invIndex}};
 		$item->onNameChange->remove($eventID);
@@ -218,7 +237,8 @@ sub checkValidity {
 	assert(defined $self->{nameChangeEvents});
 	should(scalar(keys %{$self->{nameChangeEvents}}), $self->size());
 	foreach my $k (keys %{$self->{nameIndex}}) {
-		should($self->getByName($k)->{name}, $k);
+		should(lc($self->getByName($k)->{name}), $k);
+		should(lc $k, $k);
 	}
 	foreach my $v (values %{$self->{nameIndex}}) {
 		assert(defined $self->get($v));
@@ -228,10 +248,10 @@ sub checkValidity {
 sub onNameChange {
 	my ($self, $item) = @_;
 	foreach my $name (keys %{$self->{nameIndex}}) {
-		my $index = $self->{nameIndex}{$name};
+		my $index = $self->{nameIndex}{lc($name)};
 		if ($index == $item->{invIndex}) {
-			delete $self->{nameIndex}{$name};
-			$self->{nameIndex}{$item->{name}} = $item->{invIndex};
+			delete $self->{nameIndex}{lc($name)};
+			$self->{nameIndex}{lc($item->{name})} = $item->{invIndex};
 			return;
 		}
 	}
