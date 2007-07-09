@@ -984,13 +984,13 @@ sub processCartAdd {
 	if (AI::action eq "cartAdd" && timeOut(AI::args)) {
 		my $item = AI::args->{items}[0];
 		my $i = $item->{index};
-
-		if ($char->{inventory}[$i]) {
+		my $invItem = $char->inventory->get($i);
+		if ($invItem) {
 			my $amount = $item->{amount};
-			if (!$amount || $amount > $char->{inventory}[$i]{amount}) {
-				$amount = $char->{inventory}[$i]{amount};
+			if (!$amount || $amount > $invItem->{amount}) {
+				$amount = $invItem->{amount};
 			}
-			$messageSender->sendCartAdd($char->{inventory}[$i]{index}, $amount);
+			$messageSender->sendCartAdd($invItem->{index}, $amount);
 		}
 		shift @{AI::args->{items}};
 		AI::args->{time} = time;
@@ -1024,7 +1024,7 @@ sub processAutoMakeArrow {
 	 && timeOut($AI::Timeouts::autoArrow, 0.2) && $config{autoMakeArrows} && defined binFind(\@skillsID, 'AC_MAKINGARROW') ) {
 		my $max = @arrowCraftID;
 		for (my $i = 0; $i < $max; $i++) {
-			my $item = $char->{inventory}[$arrowCraftID[$i]];
+			my $item = $char->inventory->get($arrowCraftID[$i]);
 			next if (!$item);
 			if ($arrowcraft_items{lc($item->{name})}) {
 				$messageSender->sendArrowCraft($item->{nameID});
@@ -1068,7 +1068,7 @@ sub processAutoStorage {
 		  && ($config{storageAuto_npc} ne "" || $config{storageAuto_useChatCommand})
 		  && !$ai_v{sitAuto_forcedBySitCommand}
 		  && !AI::inQueue("storageAuto")
-		  && @{$char->{inventory}} > 0) {
+		  && $char->inventory->size() > 0) {
 
 		# Initiate autostorage when we're low on some item, and getAuto is set
 		my $found;
@@ -1076,13 +1076,13 @@ sub processAutoStorage {
 		Misc::checkValidity("AutoStorage part 1");
 		for ($i = 0; exists $config{"getAuto_$i"}; $i++) {
 			next unless ($config{"getAuto_$i"});
-			my $invIndex = findIndexString_lc($char->{inventory}, "name", $config{"getAuto_$i"});
+			my $item = $char->inventory->getByName($config{"getAuto_$i"});
 			if ($config{"getAuto_${i}_minAmount"} ne "" &&
 			    $config{"getAuto_${i}_maxAmount"} ne "" &&
 			    !$config{"getAuto_${i}_passive"} &&
-			    (!defined($invIndex) ||
-				 ($char->{inventory}[$invIndex]{amount} <= $config{"getAuto_${i}_minAmount"} &&
-				  $char->{inventory}[$invIndex]{amount} < $config{"getAuto_${i}_maxAmount"})
+			    (!$item ||
+				 ($item->{amount} <= $config{"getAuto_${i}_minAmount"} &&
+				  $item->{amount} < $config{"getAuto_${i}_maxAmount"})
 			    )
 			) {
 				if ($storage{opened} && findKeyString(\%storage, "name", $config{"getAuto_$i"}) eq '') {
@@ -1105,7 +1105,7 @@ sub processAutoStorage {
 
 		# Only autostorage when we're on an attack route, or not moving
 		if ((!defined($routeIndex) || $attackOnRoute > 1) && $found &&
-			@{$char->{inventory}} > 0) {
+			$char->inventory->size() > 0) {
 	 		message TF("Auto-storaging due to insufficient %s\n", $config{"getAuto_$i"});
 			AI::queue("storageAuto");
 		}
@@ -1219,9 +1219,8 @@ sub processAutoStorage {
 
 				# inventory to storage
 				$args->{nextItem} = 0 unless $args->{nextItem};
-				for (my $i = $args->{nextItem}; $i < @{$char->{inventory}}; $i++) {
-					my $item = $char->{inventory}[$i];
-					next unless ($item && %{$item});
+				for (my $i = $args->{nextItem}; $i < @{$char->inventory->getItems()}; $i++) {
+					my $item = $char->inventory->getItems()->[$i];
 					next if $item->{equipped};
 					next if ($item->{broken} && $item->{type} == 7); # dont store pet egg in use
 
@@ -1300,9 +1299,10 @@ sub processAutoStorage {
 					}
 
 					my %item;
+					my $invItem = $char->inventory->getByName($item{name});
 					$item{name} = $config{"getAuto_$args->{index}"};
-					$item{inventory}{index} = findIndexString_lc($char->{inventory}, "name", $item{name});
-					$item{inventory}{amount} = ($item{inventory}{index} ne "") ? $char->{inventory}[$item{inventory}{index}]{amount} : 0;
+					$item{inventory}{index} = $invItem ? $invItem->{invIndex} : undef;
+					$item{inventory}{amount} = $invItem ? $invItem->{amount} : 0;
 					$item{storage}{index} = findKeyString(\%storage, "name", $item{name});
 					$item{storage}{amount} = ($item{storage}{index} ne "")? $storage{$item{storage}{index}}{amount} : 0;
 					$item{max_amount} = $config{"getAuto_$args->{index}"."_maxAmount"};
@@ -1370,7 +1370,7 @@ sub processAutoStorage {
 sub processAutoSell {
 	if ((AI::action eq "" || AI::action eq "route" || AI::action eq "sitAuto" || AI::action eq "follow")
 		&& (($config{'itemsMaxWeight_sellOrStore'} && percent_weight($char) >= $config{'itemsMaxWeight_sellOrStore'})
-			|| ($config{'itemsMaxNum_sellOrStore'} && @{$char->{inventory}} >= $config{'itemsMaxNum_sellOrStore'})
+			|| ($config{'itemsMaxNum_sellOrStore'} && $char->inventory->size() >= $config{'itemsMaxNum_sellOrStore'})
 			|| (!$config{'itemsMaxWeight_sellOrStore'} && percent_weight($char) >= $config{'itemsMaxWeight'})
 			)
 		&& $config{'sellAuto'}
@@ -1453,9 +1453,8 @@ sub processAutoSell {
 
 			# Form list of items to sell
 			my @sellItems;
-			for (my $i = 0; $i < @{$char->{inventory}};$i++) {
-				my $item = $char->{inventory}[$i];
-				next if (!$item || !%{$item} || $item->{equipped});
+			foreach my $item (@{$char->inventory->getItems()}) {
+				next if ($item->{equipped});
 
 				my $control = items_control($item->{name});
 
@@ -1495,12 +1494,15 @@ sub processAutoBuy {
 		my $i = 0;
 		while (1) {
 			last if (!$config{"buyAuto_$i"} || !$config{"buyAuto_$i"."_npc"});
-			$ai_v{'temp'}{'invIndex'} = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{"buyAuto_$i"});
+			my $item = $char->inventory->getByName($config{"buyAuto_$i"});
 			if ($config{"buyAuto_$i"."_minAmount"} ne "" && $config{"buyAuto_$i"."_maxAmount"} ne ""
 				&& (checkSelfCondition("buyAuto_$i"))
-				&& ($ai_v{'temp'}{'invIndex'} eq ""
-				|| ($chars[$config{'char'}]{'inventory'}[$ai_v{'temp'}{'invIndex'}]{'amount'} <= $config{"buyAuto_$i"."_minAmount"}
-				&& $chars[$config{'char'}]{'inventory'}[$ai_v{'temp'}{'invIndex'}]{'amount'} < $config{"buyAuto_$i"."_maxAmount"}))) {
+				&& (!$item
+				    || ($item->{amount} <= $config{"buyAuto_$i"."_minAmount"}
+				        && $item->{amount} < $config{"buyAuto_$i"."_maxAmount"}
+				       )
+				)
+			) {
 				$ai_v{'temp'}{'found'} = 1;
 			}
 			$i++;
@@ -1536,8 +1538,9 @@ sub processAutoBuy {
 			# did we already fail to do this buyAuto slot? (only fails in this way if the item is nonexistant)
 			next if ($args->{index_failed}{$i});
 
-			$args->{invIndex} = findIndexString_lc($char->{inventory}, "name", $config{"buyAuto_$i"});
-			if ($config{"buyAuto_$i"."_maxAmount"} ne "" && ($args->{invIndex} eq "" || $char->{inventory}[$args->{invIndex}]{amount} < $config{"buyAuto_$i"."_maxAmount"})) {
+			my $item = $char->inventory->getByName($config{"buyAuto_$i"});
+			$args->{invIndex} = $item ? $item->{invIndex} : undef;
+			if ($config{"buyAuto_$i"."_maxAmount"} ne "" && (!$item || $item->{amount} < $config{"buyAuto_$i"."_maxAmount"})) {
 				next if ($config{"buyAuto_$i"."_zeny"} && !inRange($char->{zenny}, $config{"buyAuto_$i"."_zeny"}));
 
 				# get NPC info, use standpoint if provided
@@ -1603,9 +1606,9 @@ sub processAutoBuy {
 
 			# find the item ID if we don't know it yet
 			if ($args->{itemID} eq "") {
-				if ($args->{invIndex} && $char->{inventory}[$args->{invIndex}]) {
+				if ($args->{invIndex} && $char->inventory->get($args->{invIndex})) {
 					# if we have the item in our inventory, we can quickly get the nameID
-					$args->{itemID} = $char->{inventory}[$args->{invIndex}]{nameID};
+					$args->{itemID} = $char->inventory->get($args->{invIndex})->{nameID};
 				} else {
 					# scan the entire items.txt file (this is slow)
 					foreach (keys %items_lut) {
@@ -1636,7 +1639,7 @@ sub processAutoBuy {
 			}
 			if ($args->{invIndex} ne "") {
 				# this item is in the inventory already, get what we need
-				$messageSender->sendBuy($args->{'itemID'}, $config{"buyAuto_$args->{index}"."_maxAmount"} - $char->{inventory}[$args->{invIndex}]{amount});
+				$messageSender->sendBuy($args->{itemID}, $config{"buyAuto_$args->{index}"."_maxAmount"} - $char->inventory->get($args->{invIndex})->{amount});
 			} else {
 				# get the full amount
 				$messageSender->sendBuy($args->{itemID}, $config{"buyAuto_$args->{index}"."_maxAmount"});
@@ -1662,26 +1665,20 @@ sub processAutoCart {
 		if (timeOut($AI::Timeouts::autoCart, $timeout) && $hasCart) {
 			my @addItems;
 			my @getItems;
-			my $inventory = $char->{inventory};
 			my $cartInventory = $cart{inventory};
 			my $max;
 
 			if ($config{cartMaxWeight} && $cart{weight} < $config{cartMaxWeight}) {
-				$max = @{$inventory};
-				for (my $i = 0; $i < $max; $i++) {
-					my $item = $inventory->[$i];
-					next unless ($item);
+				foreach my $item (@{$char->inventory->getItems()}) {
 					next if ($item->{broken} && $item->{type} == 7); # dont auto-cart add pet eggs in use
 					next if ($item->{equipped});
-
 					my $control = items_control($item->{name});
-
 					if ($control->{cart_add} && $item->{amount} > $control->{keep}) {
 						my %obj;
-						$obj{index} = $i;
+						$obj{index} = $item->{invIndex};
 						$obj{amount} = $item->{amount} - $control->{keep};
 						push @addItems, \%obj;
-						debug "Scheduling $item->{name} ($i) x $obj{amount} for adding to cart\n", "ai_autoCart";
+						debug "Scheduling $item->{name} ($item->{invIndex}) x $obj{amount} for adding to cart\n", "ai_autoCart";
 					}
 				}
 				cartAdd(\@addItems);
@@ -1694,12 +1691,12 @@ sub processAutoCart {
 				my $control = items_control($cartItem->{name});
 				next unless ($control->{cart_get});
 
-				my $invIndex = findIndexString_lc($inventory, "name", $cartItem->{name});
+				my $item = $char->inventory->getByName($cartItem->{name});
 				my $amount;
-				if ($invIndex eq '') {
+				if (!$item) {
 					$amount = $control->{keep};
-				} elsif ($inventory->[$invIndex]{'amount'} < $control->{keep}) {
-					$amount = $control->{keep} - $inventory->[$invIndex]{'amount'};
+				} elsif ($item->{amount} < $control->{keep}) {
+					$amount = $control->{keep} - $item->{amount};
 				}
 				if ($amount > $cartItem->{amount}) {
 					$amount = $cartItem->{amount};
@@ -2189,14 +2186,14 @@ sub processAutoItemUse {
 		my $i = 0;
 		while (exists $config{"useSelf_item_$i"}) {
 			if ($config{"useSelf_item_$i"} && checkSelfCondition("useSelf_item_$i")) {
-				my $index = findIndexStringList_lc($char->{inventory}, "name", $config{"useSelf_item_$i"});
-				if (defined $index) {
-					$messageSender->sendItemUse($char->{inventory}[$index]{index}, $accountID);
+				my $item = $char->inventory->getByName($config{"useSelf_item_$i"});
+				if ($item) {
+					$messageSender->sendItemUse($item->{index}, $accountID);
 					$ai_v{"useSelf_item_$i"."_time"} = time;
 					$timeout{ai_item_use_auto}{time} = time;
-					debug qq~Auto-item use: $char->{inventory}[$index]{name}\n~, "ai";
+					debug qq~Auto-item use: $item->{name}\n~, "ai";
 					last;
-				} elsif ($config{"useSelf_item_${i}_dcOnEmpty"} && @{$char->{inventory}} > 0) {
+				} elsif ($config{"useSelf_item_${i}_dcOnEmpty"} && $char->inventory->size() > 0) {
 					error TF("Disconnecting on empty %s!\n", $config{"useSelf_item_$i"});
 					chatLog("k", TF("Disconnecting on empty %s!\n", $config{"useSelf_item_$i"}));
 					quit();

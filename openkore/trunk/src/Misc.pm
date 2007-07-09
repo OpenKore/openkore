@@ -222,16 +222,6 @@ sub checkValidity {
 						&& $net->isa('Network::XKore'));
 	return;
 
-	if ($char && $char->{inventory}) {
-		for (my $i = 0; $i < @{$char->{inventory}}; $i++) {
-			if ($char->{inventory}[$i] && !UNIVERSAL::isa($char->{inventory}[$i], "Actor::Item")) {
-				die "$name\n" .
-					"Inventory item $i is not an Item:\n" .
-					Dumper($char->{inventory});
-			}
-		}
-	}
-
 	_checkActorHash($name, \%items, 'Actor::Item', 'item');
 	_checkActorHash($name, \%monsters, 'Actor::Monster', 'monster');
 	_checkActorHash($name, \%players, 'Actor::Player', 'player');
@@ -1378,17 +1368,19 @@ sub dealAddItem {
 }
 
 ##
-# drop(item, amount)
+# drop(itemIndex, amount)
 #
-# Drops $amount of $item. If $amount is not specified or too large, it defaults
-# to the number of $item you have.
+# Drops $amount of the item specified by $itemIndex. If $amount is not specified or too large, it defaults
+# to the number of items you have.
 sub drop {
-	my ($item, $amount) = @_;
-
-	if (!$amount || $amount > $char->{inventory}[$item]{amount}) {
-		$amount = $char->{inventory}[$item]{amount};
+	my ($itemIndex, $amount) = @_;
+	my $item = $char->inventory->get($itemIndex);
+	if ($item) {
+		if (!$amount || $amount > $item->{amount}) {
+			$amount = $item->{amount};
+		}
+		$messageSender->sendDrop($item->{index}, $amount);
 	}
-	$messageSender->sendDrop($char->{inventory}[$item]{index}, $amount);
 }
 
 sub dumpData {
@@ -1545,19 +1537,19 @@ sub getSpellName {
 }
 
 ##
-# inInventory($item, $quantity = 1)
+# inInventory($itemName, $quantity = 1)
 #
-# Returns $index (can be 0!) if you have at least $quantity units of $item in
-# your inventory.
+# Returns the item's index (can be 0!) if you have at least $quantity units of the item
+# specified by $itemName in your inventory.
 # Returns nothing otherwise.
 sub inInventory {
-	my ($item, $quantity) = @_;
+	my ($itemIndex, $quantity) = @_;
 	$quantity ||= 1;
 
-	my $index = findIndexString_lc($char->{inventory}, 'name', $item);
-	return if !defined($index);
-	return unless $char->{inventory}[$index]{amount} >= $quantity;
-	return $index;
+	my $item = $char->inventory->getByName($itemIndex);
+	return if !$item;
+	return unless $item->{amount} >= $quantity;
+	return $item->{invIndex};
 }
 
 ##
@@ -1569,14 +1561,13 @@ sub inInventory {
 sub inventoryItemRemoved {
 	my ($invIndex, $amount) = @_;
 
-	my $item = $char->{inventory}[$invIndex];
-	if (!$char->{arrow} ||
-	    ($char->{inventory}[$invIndex] && $char->{arrow} != $char->{inventory}[$invIndex]{index})) {
+	my $item = $char->inventory->get($invIndex);
+	if (!$char->{arrow} || ($item && $char->{arrow} != $item->{index})) {
 		# This item is not an equipped arrow
 		message TF("Inventory Item Removed: %s (%d) x %d\n", $item->{name}, $invIndex, $amount), "inventory";
 	}
 	$item->{amount} -= $amount;
-	delete $char->{inventory}[$invIndex] if $item->{amount} <= 0;
+	$char->inventory->remove($item) if ($item->{amount} <= 0);
 	$itemChange{$item->{name}} -= $amount;
 }
 
@@ -2676,20 +2667,19 @@ sub useTeleport {
 	# try to use item
 
 	# could lead to problems if the ItemID would be different on some servers
-	# 1 Jan 2006 - instead of nameID, search for *wing in the inventory and return
-	# the $invIndex (kaliwanagan)
-	my $invIndex;
+	# 1 Jan 2006 - instead of nameID, search for *wing in the inventory
+	my $item;
 	if ($use_lvl == 1) {
-		$invIndex = findIndexString_lc($char->{'inventory'}, "name", "Fly Wing");
+		$item = $char->inventory->getByName("Fly Wing");
 	} elsif ($use_lvl == 2) {
-		$invIndex = findIndexString_lc($char->{'inventory'}, "name", "Butterfly Wing");
+		$item = $char->inventory->getByName("Butterfly Wing");
 	}
 
-	if (defined $invIndex) {
+	if ($item) {
 		# We have Fly Wing/Butterfly Wing.
 		# Don't spam the "use fly wing" packet, or we'll end up using too many wings.
 		if (timeOut($timeout{ai_teleport})) {
-			$messageSender->sendItemUse($char->{inventory}[$invIndex]{index}, $accountID);
+			$messageSender->sendItemUse($item->{index}, $accountID);
 			$timeout{ai_teleport}{time} = time;
 		}
 		return 1;
@@ -3684,10 +3674,10 @@ sub checkSelfCondition {
 
 	if ($config{$prefix."_inInventory"}) {
 		foreach my $input (split / *, */, $config{$prefix."_inInventory"}) {
-			my ($item,$count) = $input =~ /(.*?)(?:\s+([><]=? *\d+))?$/;
+			my ($itemName, $count) = $input =~ /(.*?)(?:\s+([><]=? *\d+))?$/;
 			$count = '>0' if $count eq '';
-			my $iX = findIndexString_lc($char->{inventory}, "name", $item);
- 			return 0 if !inRange(!defined $iX ? 0 : $char->{inventory}[$iX]{amount}, $count);
+			my $item = $char->inventory->getByName($itemName);
+ 			return 0 if !inRange(!$item ? 0 : $item->{amount}, $count);
 		}
 	}
 
