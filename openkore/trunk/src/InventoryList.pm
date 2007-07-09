@@ -22,6 +22,8 @@
 # subclass of @CLASS(Actor::Item).
 package InventoryList;
 
+# TODO: watch for name change events
+
 use strict;
 use Carp::Assert;
 use Utils::ObjectList;
@@ -38,16 +40,29 @@ sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new();
 
-	# Hash<String, Actor::Item> nameIndex
-	# Maps an item name to an Actor::Item object. Used
+	# Hash<String, int> nameIndex
+	# Maps an item name to an item index. Used
 	# for fast lookups of items based on names.
 	#
 	# Invariant:
 	#     defined(nameIndex)
 	#     scalar(keys nameIndex) == size()
+	#     for all keys $k in nameIndex:
+	#         getByName($k)->{name} eq $k
 	#     for all values $v in nameIndex:
-	#         find($v) != -1
+	#         defined(get($v))
 	$self->{nameIndex} = {};
+
+	# Hash<int, Scalar> nameChangeEvents
+	# InventoryList watches for name change events in all of its
+	# items. This variable maps an item index in this list to the
+	# registered event ID, so that the event watcher can be removed
+	# later.
+	#
+	# Invariant:
+	#     defined(nameChangeEvents)
+	#     scalar(keys nameChangeEvents) == size()
+	$self->{nameChangeEvents} = {};
 
 	return $self;
 }
@@ -73,9 +88,11 @@ sub add {
 	assert(defined $item->{name}) if DEBUG;
 	assert(!exists $self->{nameIndex}{$item->{name}}) if DEBUG;
 
-	$self->{nameIndex}{$item->{name}} = $item;
 	my $invIndex = $self->SUPER::add($item);
 	$item->{invIndex} = $invIndex;
+	$self->{nameIndex}{$item->{name}} = $invIndex;
+	my $eventID = $item->onNameChange->add($self, \&onNameChange);
+	$self->{nameChangeEvents}{$invIndex} = $eventID;
 	return $invIndex;
 }
 
@@ -91,7 +108,12 @@ sub add {
 sub getByName {
 	my ($self, $name) = @_;
 	assert(defined $name) if DEBUG;
-	return $self->{nameIndex}{$name};
+	my $index = $self->{nameIndex}{$name};
+	if (defined $index) {
+		return $self->get($index);
+	} else {
+		return undef;
+	}
 }
 
 ##
@@ -127,6 +149,9 @@ sub remove {
 	my $result = $self->SUPER::remove($item);
 	if ($result) {
 		delete $self->{nameIndex}{$item->{name}};
+		my $eventID = $self->{nameChangeEvents}{$item->{invIndex}};
+		delete $self->{nameChangeEvents}{$item->{invIndex}};
+		$item->onNameChange->remove($eventID);
 	}
 	return $result;
 }
@@ -152,8 +177,14 @@ sub removeByName {
 # overloaded
 sub doClear {
 	my ($self) = @_;
+	foreach my $item (@{$self->getItems()}) {
+		my $eventID = $self->{nameChangeEvents}{$item->{invIndex}};
+		delete $self->{nameChangeEvents}{$item->{invIndex}};
+		$item->onNameChange->remove($eventID);
+	}
 	$self->SUPER::doClear();
 	$self->{nameIndex} = {};
+	$self->{nameChangeEvents} = {};
 }
 
 # overloaded
@@ -163,9 +194,27 @@ sub checkValidity {
 
 	assert(defined $self->{nameIndex});
 	should(scalar(keys %{$self->{nameIndex}}), $self->size());
-	foreach my $v (values %{$self->{nameIndex}}) {
-		assert($self->find($v) != -1);
+	assert(defined $self->{nameChangeEvents});
+	should(scalar(keys %{$self->{nameChangeEvents}}), $self->size());
+	foreach my $k (keys %{$self->{nameIndex}}) {
+		should($self->getByName($k)->{name}, $k);
 	}
+	foreach my $v (values %{$self->{nameIndex}}) {
+		assert(defined $self->get($v));
+	}
+}
+
+sub onNameChange {
+	my ($self, $item) = @_;
+	foreach my $name (keys %{$self->{nameIndex}}) {
+		my $index = $self->{nameIndex}{$name};
+		if ($index == $item->{invIndex}) {
+			delete $self->{nameIndex}{$name};
+			$self->{nameIndex}{$item->{name}} = $item->{invIndex};
+			return;
+		}
+	}
+	assert(0, 'This should never be reached.') if DEBUG;
 }
 
 1;
