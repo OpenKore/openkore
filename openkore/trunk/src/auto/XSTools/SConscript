@@ -96,8 +96,10 @@ sources += [
 
 	'utils/rijndael-alg-fst.c',
 	'utils/rijndael-api-fst.c',
-	'utils/aes-cfb.c'
+	'utils/aes-cfb.c',
+	'utils/perl/Benchmark.cpp'
 ]
+XS_sources['utils/perl/Benchmark.xs'] = 'utils/perl/Benchmark.cpp'
 XS_sources['utils/perl/HttpReader.xs'] = 'utils/perl/HttpReader.cpp'
 XS_sources['utils/perl/Whirlpool.xs'] = 'utils/perl/Whirlpool.c'
 if not win32:
