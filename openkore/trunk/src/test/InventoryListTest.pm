@@ -23,6 +23,7 @@ sub run {
 	$self->SUPER::run();
 	$self->testGetAndRemoveByName();
 	$self->testNameChange();
+	$self->testNonstackableItems();
 }
 
 # overloaded
@@ -39,10 +40,15 @@ sub init {
 
 # overloaded
 sub createTestObject {
-	my $actor = new Actor::Item();
+	my ($self, $name) = @_;
+	my $item = new Actor::Item();
 	$count++;
-	$actor->{name} = "Item $count";
-	return $actor;
+	if (defined $name) {
+		$item->{name} = $name;
+	} else {
+		$item->{name} = "Item $count";
+	}
+	return $item;
 }
 
 # overloaded
@@ -134,6 +140,26 @@ sub testNameChange {
 	ok($list->getByName("jellopy") == $item1);
 	ok($list->getByName("gold") == $item2);
 	ok($list->getByName("item 3") == $item3);
+}
+
+sub testNonstackableItems {
+	my ($self) = @_;
+	$self->init();
+	my $list = $self->{list};
+	my $item1 = $self->createTestObject("Sword");
+	my $item2 = $self->createTestObject("Jellopy");
+	my $item3 = $self->createTestObject("Sword");
+	my $item4 = $self->createTestObject("Katana");
+	my $tmp;
+
+	$list->add($item1);
+	$list->add($item2);
+	$list->add($item3);
+	$list->add($item4);
+	is($list->size(), 4);
+	$tmp = $list->getByName('Sword');
+	ok($tmp == $item1 || $tmp == $item3);
+	$list->checkValidity();
 }
 
 1;

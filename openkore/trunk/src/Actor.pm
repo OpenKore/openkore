@@ -253,8 +253,9 @@ sub name {
 sub setName {
 	my ($self, $name) = @_;
 
+	my $oldName = $self->{name};
 	$self->{name} = $name;
-	$self->{onNameChange}->call($self);
+	$self->{onNameChange}->call($self, { oldName => $oldName });
 	$self->{onUpdate}->call($self);
 }
 

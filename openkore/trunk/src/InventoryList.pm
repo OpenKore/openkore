@@ -38,19 +38,26 @@ sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new();
 
-	# Hash<String, int> nameIndex
-	# Maps an item name to an item index. Used for fast lookups
-	# of items based on names. Note that the key is always in
-	# lowercase.
+	# Hash<String, Array<int>> nameIndex
+	# Maps an item name to a list of item indices. Used for fast
+	# case-insensitive lookups of items based on names. Note that
+	# the key is always in lowercase.
 	#
 	# Invariant:
 	#     defined(nameIndex)
-	#     scalar(keys nameIndex) == size()
+	#     scalar(keys nameIndex) <= size()
+	#     The sum of sizes of all values in nameIndex == size()
 	#     for all keys $k in nameIndex:
 	#         lc(getByName($k)->{name}) eq $k
 	#         lc($k) eq $k
 	#     for all values $v in nameIndex:
-	#         defined(get($v))
+	#         defined($v)
+	#         scalar(@{$v}) > 0
+	#         for all $i in the array $v:
+	#             defined($i)
+	#             defined(get($i))
+	#             get($i)->{invIndex} == $i
+	#             $i is unique in the entire nameIndex.
 	$self->{nameIndex} = {};
 
 	# Hash<int, Scalar> nameChangeEvents
@@ -92,11 +99,14 @@ sub add {
 	assert(defined $item) if DEBUG;
 	assert($item->isa('Actor::Item')) if DEBUG;
 	assert(defined $item->{name}) if DEBUG;
-	assert(!exists $self->{nameIndex}{lc($item->{name})}) if DEBUG;
+	assert($self->find($item) == -1) if DEBUG;
 
 	my $invIndex = $self->SUPER::add($item);
 	$item->{invIndex} = $invIndex;
-	$self->{nameIndex}{lc($item->{name})} = $invIndex;
+
+	my $indexSlot = $self->getNameIndexSlot($item->{name});
+	push @{$indexSlot}, $invIndex;
+
 	my $eventID = $item->onNameChange->add($self, \&onNameChange);
 	$self->{nameChangeEvents}{$invIndex} = $eventID;
 	return $invIndex;
@@ -108,16 +118,17 @@ sub add {
 # Requires: defined($name)
 # Ensures: if defined(result): result->{ID} eq $ID
 #
-# Looks up an Actor::Item object based on the item name.
-# The name lookup is case-insensitive.
+# Looks up an Actor::Item object based on the item name. The name lookup is
+# case-insensitive. If there is more than one item with this name, then it
+# is unspecified which exact item will be returned.
 #
 # See also: $Actor->{ID}
 sub getByName {
 	my ($self, $name) = @_;
 	assert(defined $name) if DEBUG;
-	my $index = $self->{nameIndex}{lc($name)};
-	if (defined $index) {
-		return $self->get($index);
+	my $indexSlot = $self->{nameIndex}{lc($name)};
+	if ($indexSlot) {
+		return $self->get($indexSlot->[0]);
 	} else {
 		return undef;
 	}
@@ -188,7 +199,17 @@ sub remove {
 
 	my $result = $self->SUPER::remove($item);
 	if ($result) {
-		delete $self->{nameIndex}{lc($item->{name})};
+		my $indexSlot = $self->getNameIndexSlot($item->{name});
+		for (my $i = 0; $i < @{$indexSlot}; $i++) {
+			if ($indexSlot->[$i] == $item->{invIndex}) {
+				splice(@{$indexSlot}, $i, 1);
+				last;
+			}
+		}
+		if (@{$indexSlot} == 0) {
+			delete $self->{nameIndex}{lc($item->{name})};
+		}
+
 		my $eventID = $self->{nameChangeEvents}{$item->{invIndex}};
 		delete $self->{nameChangeEvents}{$item->{invIndex}};
 		$item->onNameChange->remove($eventID);
@@ -202,8 +223,11 @@ sub remove {
 # Returns: Whether the item with the specified name was in the list.
 # Requires: defined($name)
 #
-# Removes an item based on the item name. This will trigger an onRemove event
-# before the item is removed.
+# Removes an item based on the item name. The name lookup is case-insensitive.
+# If there is more than one item with this name, then it is unspecified which
+# exact item (with that name) is removed.
+#
+# This will trigger an onRemove event before the item is removed.
 sub removeByName {
 	my ($self, $name) = @_;
 	my $item = $self->getByName($name);
@@ -233,25 +257,53 @@ sub checkValidity {
 	$self->SUPER::checkValidity();
 
 	assert(defined $self->{nameIndex});
-	should(scalar(keys %{$self->{nameIndex}}), $self->size());
-	assert(defined $self->{nameChangeEvents});
-	should(scalar(keys %{$self->{nameChangeEvents}}), $self->size());
+	assert(scalar(keys %{$self->{nameIndex}}) <= $self->size());
 	foreach my $k (keys %{$self->{nameIndex}}) {
 		should(lc($self->getByName($k)->{name}), $k);
 		should(lc $k, $k);
 	}
+	
+	my $sum = 0;
+	my %invIndexCount;
 	foreach my $v (values %{$self->{nameIndex}}) {
-		assert(defined $self->get($v));
+		assert(defined $v);
+		assert(@{$v} > 0);
+		foreach my $i (@{$v}) {
+			assert(defined $i);
+			assert(defined $self->get($i));
+			assert($self->get($i)->{invIndex} == $i);
+			$invIndexCount{$i}++;
+			should($invIndexCount{$i}, 1);
+		}
+		$sum += @{$v};
 	}
+	should($sum, $self->size());
+
+	assert(defined $self->{nameChangeEvents});
+	should(scalar(keys %{$self->{nameChangeEvents}}), $self->size());
+}
+
+sub getNameIndexSlot {
+	my ($self, $name) = @_;
+	return $self->{nameIndex}{lc($name)} ||= [];
 }
 
 sub onNameChange {
-	my ($self, $item) = @_;
-	foreach my $name (keys %{$self->{nameIndex}}) {
-		my $index = $self->{nameIndex}{lc($name)};
-		if ($index == $item->{invIndex}) {
-			delete $self->{nameIndex}{lc($name)};
-			$self->{nameIndex}{lc($item->{name})} = $item->{invIndex};
+	my ($self, $item, $args) = @_;
+	assert(defined($item->{name}), 'An item must have a name.');
+
+	my $indexSlot = $self->getNameIndexSlot($args->{oldName});
+	for (my $i = 0; $i < @{$indexSlot}; $i++) {
+		if ($indexSlot->[$i] == $item->{invIndex}) {
+			# Delete from old index slot.
+			splice(@{$indexSlot}, $i, 1);
+			if (@{$indexSlot} == 0) {
+				delete $self->{nameIndex}{lc($args->{oldName})};
+			}
+
+			# Add to new index slot.
+			$indexSlot = $self->getNameIndexSlot($item->{name});
+			push @{$indexSlot}, $item->{invIndex};
 			return;
 		}
 	}
