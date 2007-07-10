@@ -52,6 +52,7 @@
 package Benchmark;
 
 use strict;
+use Time::HiRes;
 use Modules 'register';
 use XSTools;
 
@@ -79,7 +80,7 @@ sub percent {
 	if ($total == 0) {
 		return '-';
 	} else {
-		return sprintf("%.1f%%", $part / $total * 100);
+		return sprintf("%.2f%%", $part / $total * 100);
 	}
 }
 
