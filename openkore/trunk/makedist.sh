@@ -28,6 +28,7 @@ DIRS=(.
 	src/AI
 	src/Base
 	src/Base/Server
+	src/Base/Ragnarok
 	src/Base/WebServer
 	src/Bus
 	src/Bus/Server
