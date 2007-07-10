@@ -24,6 +24,7 @@ use Interface;
 use Network::Receive;
 use Network::Send ();
 use Network::PaddedPackets;
+use Network::MessageTokenizer;
 use Commands;
 use Misc;
 use Plugins;
@@ -1068,7 +1069,7 @@ sub parseMsg {
 	return $msg if (length($msg) < 2);
 
 	# Determine packet switch
-	my $switch = uc(unpack("H2", substr($msg, 1, 1))) . uc(unpack("H2", substr($msg, 0, 1)));
+	my $switch = Network::MessageTokenizer::getMessageID($msg);
 	if (length($msg) >= 4 && substr($msg,0,4) ne $accountID && $net->getState() >= 4 && $lastswitch ne $switch
 	 && length($msg) >= unpack("v1", substr($msg, 0, 2))) {
 		# The decrypt below casued annoying unparsed errors (at least in serverType  2)

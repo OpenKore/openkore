@@ -153,10 +153,6 @@ sub clientPeerPort {
 	return undef;
 }
 
-sub clientConnect {
-	return undef;
-}
-
 sub clientSend {
 	use bytes;
 	no encoding 'utf8';

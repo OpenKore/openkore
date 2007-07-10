@@ -235,57 +235,45 @@ sub setState {
 ######################
 
 ##
-# $net->clientAlive()
+# boolean $net->clientAlive()
 #
+# Check whether there are one or more clients connected to Kore.
 sub clientAlive {
-	return undef;
+	my %args = (net => $_[0]);
+	Plugins::callHook('Network::clientAlive', \%args);
+	return $args{return};
 }
 
 ##
-# $net->clientPeerHost()
+# $net->clientSend(Bytes data)
 #
-sub clientPeerHost {
-	return undef;
-}
-
-##
-# $net->clientPeerPort()
-#
-sub clientPeerPort {
-	return undef;
-}
-
-##
-# $net->clientConnect()
-#
-sub clientConnect {
-	return undef;
-}
-
-##
-# $net->clientSend()
-#
-# Blank function: there is no client.
+# Make the RO client think that it has received $data.
 sub clientSend {
-	return undef;
+	my ($self) = @_;
+	if ($self->clientAlive && Plugins::hasHook('Network::clientSend')) {
+		my %args = (net => $self, data => $_[1]);
+		Plugins::callHook('Network::clientSend', \%args);
+		return $args{return};
+	} else {
+		return undef;
+	}
 }
 
 ##
-# $net->clientRecv()
-# Returns: Nothing.
+# Bytes $net->clientRecv()
 #
-# There is never going to be a connection with the client using Kore Mode 0
+# Receive data that the RO client wants to send to the RO server.
 sub clientRecv {
-	return undef;
+	my ($self) = @_;
+	if ($self->clientAlive) {
+		my %args = (net => $_[0]);
+		Plugins::callHook('Network::clientRecv', \%args);
+		return $args{return};
+	} else {
+		return undef;
+	}
 }
 
-##
-# $net->clientDisconnect()
-#
-#
-sub clientDisconnect {
-	return undef;
-}
 
 #######################
 ## Utility Functions ##
@@ -293,7 +281,7 @@ sub clientDisconnect {
 
 #######################################
 #######################################
-#Check Connection
+# Check Connection
 #######################################
 #######################################
 
