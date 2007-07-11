@@ -504,36 +504,32 @@ sub mainLoop_initialized {
 	my $data = $net->serverRecv;
 	if (defined($data) && length($data) > 0) {
 		Benchmark::begin("parseMsg") if DEBUG;
+
 		$incomingMessages->add($data);
+		if (expectingAccountID($incomingMessages->getBuffer())) {
+			parseIncomingMessage($incomingMessages->getBuffer());
+			$incomingMessages->clear(4);
+		}
+
 		eval {
 			while ($data = $incomingMessages->readNext()) {
 				parseIncomingMessage($data);
 			}
 		};
 		if (caught('Network::MessageTokenizer::Unknownmessage')) {
-			my $expectingAccountID = expectingAccountID($incomingMessages->getBuffer());
-			if ($expectingAccountID) {
-				parseIncomingMessage($incomingMessages->getBuffer());
-			} else {
-				# Unknown message - ignore it
-				my $switch = Network::MessageTokenizer::getMessageID($incomingMessages->getBuffer());
-				if (!existsInList($config{debugPacket_exclude}, $switch)) {
-					warning TF("Unknown packet - %s\n", $switch), "connection";
-					dumpData($incomingMessages->getBuffer()) if ($config{debugPacket_unparsed});
-				}
+			# Unknown message - ignore it
+			my $switch = Network::MessageTokenizer::getMessageID($incomingMessages->getBuffer());
+			if (!existsInList($config{debugPacket_exclude}, $switch)) {
+				warning TF("Unknown packet - %s\n", $switch), "connection";
+				dumpData($incomingMessages->getBuffer()) if ($config{debugPacket_unparsed});
 			}
-
 			# Pass it along to the client, whatever it is
 			$net->clientSend($incomingMessages->getBuffer());
-			
-			if ($expectingAccountID) {
-				$incomingMessages->clear(4);
-			} else {
-				$incomingMessages->clear();
-			}
+			$incomingMessages->clear();
 		} elsif ($@) {
 			die $@;
 		}
+
 		$net->clientFlush() if (UNIVERSAL::isa($net, 'Network::XKoreProxy'));
 		Benchmark::end("parseMsg") if DEBUG;
 	}
