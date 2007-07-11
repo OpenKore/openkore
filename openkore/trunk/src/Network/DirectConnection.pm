@@ -317,7 +317,7 @@ sub checkConnection {
 		$shopstarted = 1;
 		$conState_tries++;
 		$initSync = 1;
-		undef $msg;
+		$incomingMessages->clear();
 
 		eval {
 			$packetParser = Network::Receive->create($config{serverType});

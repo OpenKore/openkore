@@ -1044,7 +1044,7 @@ sub charSelectScreen {
 		next unless ($chars[$num] && %{$chars[$num]});
 		if (0) {
 			# The old (more verbose) message
-			$msg .= swrite(
+			swrite(
 				T("-------  Character \@< ---------\n" .
 				"Name: \@<<<<<<<<<<<<<<<<<<<<<<<<\n" .
 				"Job:  \@<<<<<<<      Job Exp: \@<<<<<<<\n" .
