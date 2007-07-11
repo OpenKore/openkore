@@ -54,11 +54,18 @@ sub add {
 }
 
 ##
-# void $Network_MessageTokenizer->clear()
+# void $Network_MessageTokenizer->clear([int size])
+# Requires: size >= 0
 #
-# Clear the internal buffer.
+# Clear the internal buffer. If $size is given, only the first $size
+# bytes are removed.
 sub clear {
-	$_[0]->{buffer} = '';
+	my ($self, $size) = @_;
+	if (defined $size) {
+		substr($_[0]->{buffer}, 0, $size, '');
+	} else {
+		$_[0]->{buffer} = '';
+	}
 }
 
 ##

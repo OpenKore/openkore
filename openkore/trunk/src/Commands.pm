@@ -1339,12 +1339,12 @@ sub cmdDrop {
 }
 
 sub cmdDump {
-	dumpData($msg);
+	dumpData($incomingMessages->getBuffer());
 	quit();
 }
 
 sub cmdDumpNow {
-	dumpData($msg);
+	dumpData($incomingMessages->getBuffer());
 }
 
 sub cmdEmotion {

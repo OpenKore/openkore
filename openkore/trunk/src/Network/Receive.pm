@@ -2561,10 +2561,10 @@ sub friend_response {
 	} else {
 		my $ID = @friendsID;
 		binAdd(\@friendsID, $ID);
-		$friends{$ID}{'accountID'} = substr($msg, 4, 4);
-		$friends{$ID}{'charID'} = substr($msg, 8, 4);
-		$friends{$ID}{'name'} = $name;
-		$friends{$ID}{'online'} = 1;
+		$friends{$ID}{accountID} = substr($args->{RAW_MSG}, 4, 4);
+		$friends{$ID}{charID} = substr($args->{RAW_MSG}, 8, 4);
+		$friends{$ID}{name} = $name;
+		$friends{$ID}{online} = 1;
 		message TF("%s is now your friend\n", $incomingFriend{'name'});
 	}
 }
@@ -3273,7 +3273,7 @@ sub inventory_items_stackable {
 	my ($self, $args) = @_;
 	return unless changeToInGameState();
 	my $newmsg;
-	$self->decrypt(\$newmsg, substr($msg, 4));
+	$self->decrypt(\$newmsg, substr($args->{RAW_MSG}, 4));
 	my $msg = substr($args->{RAW_MSG}, 0, 4).$newmsg;
 	my $psize = ($args->{switch} eq "00A3") ? 10 : 18;
 
@@ -4019,7 +4019,7 @@ sub npc_talk_responses {
 	# Each item is divided with ':'
 	my $newmsg;
 	$self->decrypt(\$newmsg, substr($args->{RAW_MSG}, 8));
-	my $msg = substr($msg, 0, 8).$newmsg;
+	my $msg = substr($args->{RAW_MSG}, 0, 8).$newmsg;
 
 	my $ID = substr($msg, 4, 4);
 	$talk{ID} = $ID;
