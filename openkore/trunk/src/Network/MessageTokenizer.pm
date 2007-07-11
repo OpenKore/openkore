@@ -93,32 +93,27 @@ sub getBuffer {
 # If not, undef will be returned.
 sub readNext {
 	my ($self) = @_;
+	my $buffer = \$self->{buffer};
 
-	return undef if (length($self->{buffer}) < 2);
+	return undef if (length($$buffer) < 2);
 
-	my $switch = getMessageID($self->{buffer});
+	my $switch = getMessageID($$buffer);
 	my $rpackets = $self->{rpackets};
-	my $size;
+	my $size = $rpackets->{$switch};
 
-	if ($rpackets->{$switch} eq '-' || $switch eq "0070") {
-		# Complete message; the size of this message is equal
-		# to the size of the entire TCP packet.
-		$size = length($self->{buffer});
-
-	} elsif ($rpackets->{$switch} eq '0') {
-		# Variable length message.
-		if (length($self->{buffer}) < 4) {
-			return undef;
-		}
-		$size = unpack("v", substr($self->{buffer}, 2, 2));
-		if (length($self->{buffer}) < $size) {
-			return undef;
-		}
-
-	} elsif ($rpackets->{$switch} > 1) {
+	if ($size > 1) {
 		# Static length message.
-		$size = $rpackets->{$switch};
-		if (length($self->{buffer}) < $size) {
+		if (length($$buffer) < $size) {
+			return undef;
+		}
+
+	} elsif ($size eq '0') {
+		# Variable length message.
+		if (length($$buffer) < 4) {
+			return undef;
+		}
+		$size = unpack("v", substr($$buffer, 2, 2));
+		if (length($$buffer) < $size) {
 			return undef;
 		}
 
@@ -126,8 +121,8 @@ sub readNext {
 		Network::MessageTokenizer::Unknownmessage->throw("Unknown message '$switch'.");
 	}
 
-	my $result = substr($self->{buffer}, 0, $size);
-	substr($self->{buffer}, 0, $size, '');
+	my $result = substr($$buffer, 0, $size);
+	substr($$buffer, 0, $size, '');
 	return $result;
 }
 
