@@ -39,6 +39,7 @@ use Log qw(message warning error debug);
 use FileParsers;
 use Interface;
 use Network;
+use Network::MessageTokenizer;
 use Network::Send ();
 use Misc;
 use Plugins;
@@ -380,17 +381,18 @@ sub parse {
 	my ($self, $msg) = @_;
 
 	$bytesReceived += length($msg);
-	my $switch = uc(unpack("H2", substr($msg, 1, 1))) . uc(unpack("H2", substr($msg, 0, 1)));
+	my $switch = Network::MessageTokenizer::getMessageID($msg);
 	my $handler = $self->{packet_list}{$switch};
-	return 0 unless $handler;
+	return undef unless $handler;
 
 	debug "Received packet: $switch Handler: $handler->[0]\n", "packetParser", 2;
 
 	# RAW_MSG is the entire message, including packet switch
-	my %args;
-	$args{switch} = $switch;
-	$args{RAW_MSG} = $msg;
-	$args{RAW_MSG_SIZE} = length($msg);
+	my %args = (
+		switch => $switch,
+		RAW_MSG => $msg,
+		RAW_MSG_SIZE => length($msg)
+	);
 	if ($handler->[1]) {
 		my @unpacked_data = unpack("x2 $handler->[1]", $msg);
 		my $keys = $handler->[2];
