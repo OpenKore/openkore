@@ -255,3 +255,28 @@ CODE:
 	}
 OUTPUT:
 	RETVAL
+
+SV *
+FormatMessage(code)
+	int code
+INIT:
+	WCHAR buffer[1024];
+	DWORD size;
+CODE:
+	size = FormatMessageW(FORMAT_MESSAGE_FROM_SYSTEM, NULL, code,
+		0, buffer, sizeof(buffer) - 1, NULL);
+	if (size == 0) {
+		XSRETURN_UNDEF;
+	} else {
+		char utf8buffer[1024 * 4];
+		buffer[size] = 0;
+		size = WideCharToMultiByte(CP_UTF8, 0, buffer, size,
+			utf8buffer, sizeof(utf8buffer), NULL, NULL);
+		if (size == 0) {
+			XSRETURN_UNDEF;
+		}
+		RETVAL = newSVpvn(utf8buffer, size - 1);
+		SvUTF8_on(RETVAL);
+	}
+OUTPUT:
+	RETVAL
