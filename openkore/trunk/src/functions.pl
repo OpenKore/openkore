@@ -465,12 +465,12 @@ sub initMapChangeVars {
 	$timeout{ai_shop}{time} = time;
 	$timeout{ai_storageAuto}{time} = time + 5;
 	$timeout{ai_buyAuto}{time} = time + 5;
+	$timeout{ai_shop}{time} = time;
 
 	AI::clear("attack", "move");
 	AI::Homunculus::clear("attack", "route", "move");
 	ChatQueue::clear;
 
-	initOtherVars();
 	Plugins::callHook('packet_mapChange');
 
 	$logAppend = ($config{logAppendUsername}) ? "_$config{username}_$config{char}" : '';
@@ -494,10 +494,6 @@ sub initStatVars {
 	$totalelasped = 0;
 	$statChanged = 0;
 	$skillChanged = 0;
-}
-
-sub initOtherVars {
-	$timeout{ai_shop}{time} = time;
 }
 
 
