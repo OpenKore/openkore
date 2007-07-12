@@ -47,6 +47,7 @@ sub new {
 	} elsif (!open($self{handle}, "<", $file)) {
 		IOException->throw(error => $!);
 	}
+	$self{file} = $file;
 	$self{line} = 1;
 
 	return bless \%self, $class;
@@ -91,7 +92,8 @@ sub readLine {
 		  )*$/x) {
 			UTF8MalformedException->throw(
 				error => "Malformed UTF-8 data at line $_[0]->{line}.",
-				line => $self->{line}
+				textfileline => $self->{line},
+				textfile => $self->{file}
 			);
 		}
 	}

@@ -3215,8 +3215,19 @@ sub cmdReload {
 			"Usage: reload <name|\"all\">\n");
 
 	} else {
-		Settings::parseReload($args);
-		Log::initLogFiles();
+		eval {
+			Settings::parseReload($args);
+			Log::initLogFiles();
+		};
+		if (my $e = caught('UTF8MalformedException')) {
+			error TF(
+				"The file %s must be valid UTF-8 encoded, which it is \n" .
+				"currently not. To solve this prolem, please use Notepad\n" .
+				"to save that file as valid UTF-8.",
+				$e->textfile);
+		} elsif ($@) {
+			die $@;
+		}
 	}
 }
 

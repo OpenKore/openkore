@@ -177,9 +177,21 @@ sub loadDataFiles {
 	addConfigFile("$Settings::tables_folder/skillsencore.txt", \%skillsEncore, \&parseList);
 
 	Plugins::callHook('start2');
-	if (!Settings::load()) {
-		$interface->errorDialog(T("A configuration file failed to load. Did you download the latest configuration files?"));
+	eval {
+		if (!Settings::load()) {
+			$interface->errorDialog(T("A configuration file failed to load. Did you download the latest configuration files?"));
+			exit 1;
+		}
+	};
+	if (my $e = caught('UTF8MalformedException')) {
+		$interface->errorDialog(TF(
+			"The file %s must be valid UTF-8 encoded, which it is \n" .
+			"currently not. To solve this prolem, please use Notepad\n" .
+			"to save that file as valid UTF-8.",
+			$e->textfile));
 		exit 1;
+	} elsif ($@) {
+		die $@;
 	}
 	Plugins::callHook('start3');
 
@@ -1093,14 +1105,14 @@ sub parseIncomingMessage {
 
 	# Determine packet switch
 	my $switch = Network::MessageTokenizer::getMessageID($msg);
-	if (length($msg) >= 4 && substr($msg,0,4) ne $accountID && $net->getState() >= 4 && $lastswitch ne $switch
-	 && length($msg) >= unpack("v1", substr($msg, 0, 2))) {
+	if (length($msg) >= 4 && substr($msg, 0, 4) ne $accountID && $net->getState() >= Network::CONNECTED_TO_CHAR_SERVER
+	 && $lastswitch ne $switch && length($msg) >= unpack("v1", substr($msg, 0, 2))) {
 		# The decrypt below casued annoying unparsed errors (at least in serverType  2)
 		if ($masterServer->{serverType} != 2) {
-			Network::Receive->decrypt(\$msg, $msg)
+			Network::Receive->decrypt(\$msg, $msg);
+			$switch = Network::MessageTokenizer::getMessageID($msg);
 		}
 	}
-	$switch = uc(unpack("H2", substr($msg, 1, 1))) . uc(unpack("H2", substr($msg, 0, 1)));
 
 	# The user is running in X-Kore mode and wants to switch character or gameGuard type 2 after 0259 tag 02.
 	# We're now expecting an accountID, unless the server has replicated packet 0259 (server-side bug).
