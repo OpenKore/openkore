@@ -6,7 +6,7 @@
 # See http://www.gnu.org/licenses/gpl.html
 
 package macro;
-my $Version = "1.3.5";
+my $Version = "1.3.5a";
 my $Changed = sprintf("%s %s %s",
 	q$Date$
 	=~ /(\d{4}-\d{2}-\d{2}) (\d{2}:\d{2}:\d{2}) ([+-]\d{4})/);
@@ -90,6 +90,7 @@ sub cleanup {
 	Settings::delConfigFile($cfID);
 	Log::delHook($loghook);
 	foreach (@{$autohooks}) {Plugins::delHook($_)}
+	undef $autohooks;
 	undef $queue;
 	undef %macro;
 	undef %automacro;
@@ -107,6 +108,7 @@ sub parseAndHook {
 # only adds hooks that are needed
 sub hookOnDemand {
 	foreach (@{$autohooks}) {Plugins::delHook($_)}
+	undef $autohooks;
 	Log::delHook($loghook) if defined $loghook;
 	my %load = ('AI_pre' => 1);
 	my $hookToLog;
