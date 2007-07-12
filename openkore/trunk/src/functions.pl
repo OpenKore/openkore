@@ -383,10 +383,12 @@ sub initConfChange {
 sub initConnectVars {
 	# we must use $chars[$config{char}] here because $char may not be set
 	initMapChangeVars();
-	$chars[$config{char}]{skills} = {} if ($chars[$config{char}]{skills});
+	if ($char) {
+		$char->{skills} = {};
+		delete $char->{mute_period};
+		delete $char->{muted};
+	}
 	undef @skillsID;
-	delete $chars[$config{char}]{mute_period};
-	delete $chars[$config{char}]{muted};
 	$useArrowCraft = 1;
 }
 
