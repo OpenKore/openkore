@@ -2186,7 +2186,7 @@ sub processAutoItemUse {
 		my $i = 0;
 		while (exists $config{"useSelf_item_$i"}) {
 			if ($config{"useSelf_item_$i"} && checkSelfCondition("useSelf_item_$i")) {
-				my $item = $char->inventory->getByName($config{"useSelf_item_$i"});
+				my $item = $char->inventory->getByNameList($config{"useSelf_item_$i"});
 				if ($item) {
 					$messageSender->sendItemUse($item->{index}, $accountID);
 					$ai_v{"useSelf_item_$i"."_time"} = time;
