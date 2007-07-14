@@ -1327,7 +1327,7 @@ sub cmdDrop {
 					push(@items, $_) if ($char->inventory->get($_));
 				}
 			} else {
-				push @items, $_ if ($char->inventory->($_));
+				push @items, $_ if ($char->inventory->get($_));
 			}
 		}
 		if (@items > 0) {

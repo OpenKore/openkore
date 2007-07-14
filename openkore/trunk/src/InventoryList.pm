@@ -183,6 +183,30 @@ sub getByCondition {
 }
 
 ##
+# Actor::Item $InventoryList->getByNameList(String nameList)
+# nameList: a string containing a comma-separated list of item names.
+# Requires: defined($nameList)
+# Returns: The found item, or undef if not found.
+#
+# Lookup an item by using the specified name list. For example, if $nameList
+# is "Red Potion,White Potion,Jellopy", then this method will look up
+# either Red Potion, White Potion or Jellopy, whichever is found
+# first.
+sub getByNameList {
+	my ($self, $lists) = @_;
+	assert(defined $lists) if DEBUG;
+	my @items = split / *, */, lc($lists);
+	foreach my $name (@items) {
+		next if (!$name);
+		my $indexSlot = $self->{nameIndex}{$name};
+		if ($indexSlot) {
+			return $self->get($indexSlot->[0]);
+		}
+	}
+	return undef;
+}
+
+##
 # boolean $InventoryList->remove(Actor::Item item)
 # Requires: defined($item) && defined($item->{name})
 #
