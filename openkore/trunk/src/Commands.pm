@@ -34,6 +34,7 @@ use Settings;
 use Plugins;
 use Skill;
 use Utils;
+use Utils::Exceptions;
 use Misc;
 use AI;
 use Task;
