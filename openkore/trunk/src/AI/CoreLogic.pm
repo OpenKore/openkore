@@ -1299,7 +1299,11 @@ sub processAutoStorage {
 					}
 
 					my %item;
-					my $invItem = $char->inventory->getByName($item{name});
+					my $invItem = $char->inventory->getByName($config{"getAuto_$args->{index}"});
+					if (!$invItem) {
+						$args->{index}++;
+						next;
+					}
 					$item{name} = $config{"getAuto_$args->{index}"};
 					$item{inventory}{index} = $invItem ? $invItem->{invIndex} : undef;
 					$item{inventory}{amount} = $invItem ? $invItem->{amount} : 0;
