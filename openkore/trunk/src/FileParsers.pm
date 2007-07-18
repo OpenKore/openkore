@@ -859,107 +859,106 @@ sub processUltimate {
 	my ($section, $rule, @lines, %written, %sectionsWritten);
 
 	undef %{$hash} if (!$writeMode);
-	if (my $reader = new Utils::TextReader($file)) {
+	if (-f $file) {
+		my $reader = new Utils::TextReader($file);
+		while (!$reader->eof()) {
+			my $line = $reader->readLine();
+			$line =~ s/\x{FEFF}//g;
+			$line =~ s/[\r\n]//g;
 
-	while (!$reader->eof()) {
-		my $line = $reader->readLine();
-		$line =~ s/\x{FEFF}//g;
-		$line =~ s/[\r\n]//g;
-
-		if ($line eq '' || $line =~ /^[ \t]*#/) {
-			push @lines, $line if ($writeMode);
-			next;
-		}
-
-		if ($line =~ /^\[(.+)\]$/) {
-			# New section
-			if ($writeMode) {
-				# First, finish writing everything in the previous section
-				my $h = (defined $section) ? $section : $hash;
-				my @add;
-
-				if ($rule ne 'list') {
-					foreach my $key (keys %{$h}) {
-						if (!$written{$key} && !ref($h->{$key})) {
-							push @add, "$key $h->{$key}";
-						}
-					}
-
-				} else {
-					foreach (@{$h}) {
-						push @add, $_ if (!$written{$_});
-					}
-				}
-
-				# Add after the first non-empty line from the end
-				my $linesFromEnd;
-				for (my $i = @lines - 1; $i >= 0; $i--) {
-					if ($lines[$i] ne '') {
-						$linesFromEnd = @lines - $i - 1;
-						for (my $j = $i + 1; $j < @lines; $j++) {
-							delete $lines[$j];
-						}
-						push @lines, @add;
-						for (my $j = 0; $j < $linesFromEnd; $j++) {
-							push @lines, '';
-						}
-						last;
-					}
-				}
-				undef %written;
+			if ($line eq '' || $line =~ /^[ \t]*#/) {
+				push @lines, $line if ($writeMode);
+				next;
 			}
 
-			# Parse the new section
-			$secname = $1;
-			$rule = $rules->{$secname};
-			if ($writeMode) {
-				$section = $hash->{$secname};
-				push @lines, $line;
-				$sectionsWritten{$secname} = 1;
+			if ($line =~ /^\[(.+)\]$/) {
+				# New section
+				if ($writeMode) {
+					# First, finish writing everything in the previous section
+					my $h = (defined $section) ? $section : $hash;
+					my @add;
 
-			} else {
-				if ($rule ne 'list') {
-					$section = {};
-				} else {
-					$section = [];
-				}
-				$hash->{$secname} = $section;
-			}
+					if ($rule ne 'list') {
+						foreach my $key (keys %{$h}) {
+							if (!$written{$key} && !ref($h->{$key})) {
+								push @add, "$key $h->{$key}";
+							}
+						}
 
-		} elsif ($rule ne 'list') {
-			# Line is a key-value pair
-			my ($key, $val) = split / /, $line, 2;
-			my $h = (defined $section) ? $section : $hash;
-
-			if ($writeMode) {
-				# Delete line if value doesn't exist
-				if (exists $h->{$key}) {
-					if (!defined $h->{$key}) {
-						push @lines, $key;
 					} else {
-						push @lines, "$key $h->{$key}";
+						foreach (@{$h}) {
+							push @add, $_ if (!$written{$_});
+						}
 					}
-					$written{$key} = 1;
+
+					# Add after the first non-empty line from the end
+					my $linesFromEnd;
+					for (my $i = @lines - 1; $i >= 0; $i--) {
+						if ($lines[$i] ne '') {
+							$linesFromEnd = @lines - $i - 1;
+							for (my $j = $i + 1; $j < @lines; $j++) {
+								delete $lines[$j];
+							}
+							push @lines, @add;
+							for (my $j = 0; $j < $linesFromEnd; $j++) {
+								push @lines, '';
+							}
+							last;
+						}
+					}
+					undef %written;
+				}
+
+				# Parse the new section
+				$secname = $1;
+				$rule = $rules->{$secname};
+				if ($writeMode) {
+					$section = $hash->{$secname};
+					push @lines, $line;
+					$sectionsWritten{$secname} = 1;
+
+				} else {
+					if ($rule ne 'list') {
+						$section = {};
+					} else {
+						$section = [];
+					}
+					$hash->{$secname} = $section;
+				}
+
+			} elsif ($rule ne 'list') {
+				# Line is a key-value pair
+				my ($key, $val) = split / /, $line, 2;
+				my $h = (defined $section) ? $section : $hash;
+
+				if ($writeMode) {
+					# Delete line if value doesn't exist
+					if (exists $h->{$key}) {
+						if (!defined $h->{$key}) {
+							push @lines, $key;
+						} else {
+							push @lines, "$key $h->{$key}";
+						}
+						$written{$key} = 1;
+					}
+
+				} else {
+					$h->{$key} = $val;
 				}
 
 			} else {
-				$h->{$key} = $val;
-			}
+				# Line is part of a list
+				if ($writeMode) {
+					# Add line only if it exists in the hash
+					push @lines, $line if (defined(binFind($section, $line)));
+					$written{$line} = 1;
 
-		} else {
-			# Line is part of a list
-			if ($writeMode) {
-				# Add line only if it exists in the hash
-				push @lines, $line if (defined(binFind($section, $line)));
-				$written{$line} = 1;
-
-			} else {
-				push @{$section}, $line;
+				} else {
+					push @{$section}, $line;
+				}
 			}
 		}
 	}
-
-	} # open
 
 	if ($writeMode) {
 		# Add stuff that haven't already been added
