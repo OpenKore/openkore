@@ -80,7 +80,7 @@ sub errorHandler {
 
 	# Create the errors.txt error log.
 	my $log = '';
-	$log .= "$Settings::NAME version ${Settings::VERSION}${Settings::CVS}\n" if (defined $Settings::VERSION);
+	$log .= "$Settings::NAME version ${Settings::VERSION}${Settings::SVN}\n" if (defined $Settings::VERSION);
 	$log .= "\@ai_seq = @Globals::ai_seq\n" if (defined @Globals::ai_seq);
 	$log .= "Network state = $Globals::conState\n" if (defined $Globals::conState);
 	$log .= "Network handler = " . Scalar::Util::blessed($Globals::net) . "\n" if ($Globals::net);
