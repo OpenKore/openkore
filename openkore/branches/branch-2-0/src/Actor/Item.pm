@@ -16,7 +16,7 @@
 ##
 # MODULE DESCRIPTION: Inventory item object
 #
-# All members in $char->{inventory} are of the Actor::Item class.
+# All members in $char->inventory are of the Actor::Item class.
 
 package Actor::Item;
 
@@ -115,25 +115,16 @@ sub get {
 
 	# user supplied an inventory index
 	if ($name =~ /^\d+$/) {
-		my $item = $char->{inventory}[$name];
-		return undef unless $item;
-		assert(UNIVERSAL::isa($item, 'Actor::Item')) if DEBUG;
-		return $item;
-
+		return $char->inventory->get($name);
 	# user supplied an item name
 	} else {
-		my $index;
+		my $condition;
 		if ($notEquipped) {
-			$index = findIndexString_lc_not_equip($char->{inventory}, 'name', $name, $skipIndex);
+			$condition = sub { $_[0]->{invIndex} != $skipIndex && $_[0]->{name} eq $name };
 		} else {
-			$index = findIndexString_lc($char->{inventory}, 'name', $name, $skipIndex);
+			$condition = sub { !$_[0]->{equipped} && $_[0]->{name} eq $name };
 		}
-		return undef if !defined($index);
-		my $item = $char->{inventory}[$index];
-		return undef unless $item;
-
-		assert(UNIVERSAL::isa($item, 'Actor::Item')) if DEBUG;
-		return $item;
+		return $char->inventory->getByCondition($condition);
 	}
 }
 
@@ -296,7 +287,7 @@ sub UnEquipByType {
 # to the RO server.
 # This index does not necessarily equals the inventory index, as stored by OpenKore.
 #
-# Ssee also: $ActorItem->{invIndex}
+# See also: $ActorItem->{invIndex}
 
 ##
 # int $ActorItem->{amount}

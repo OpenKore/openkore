@@ -25,6 +25,7 @@ use strict;
 use Globals;
 use Log qw(message);
 use base qw(Actor);
+use InventoryList;
 
 ##
 # Skill $char->{permitSkill}
@@ -66,7 +67,9 @@ use base qw(Actor);
 
 sub new {
 	my ($class) = @_;
-	return $class->SUPER::new('You');
+	my $self = $class->SUPER::new('You');
+	$self->{__inventory} = new InventoryList();
+	return $self;
 }
 
 sub nameString {
@@ -91,6 +94,15 @@ sub getSkillLevel {
 	} else {
 		return 0;
 	}
+}
+
+##
+# InventoryList $char->inventory()
+# Ensures: defined(result)
+#
+# Get the inventory list for this character.
+sub inventory {
+	return $_[0]->{__inventory};
 }
 
 ##

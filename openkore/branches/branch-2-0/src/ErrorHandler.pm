@@ -70,16 +70,17 @@ sub errorHandler {
 
 	# Create the message to be displayed to the user.
 	my $display = TF("This program has encountered an unexpected problem. This is probably because\n" .
-	             "of a bug in this program. Please tell us about this problem.\n\n" .
-	             "The error message is:\n" .
-	             "%s\n\n" .
-	             "A more detailed error report is saved to errors.txt. Please include the\n" .
-	             "contents of this file in your report, or we may not be able to help you!",
-	             $errorMessage);
+	                 "of a bug in this program, or in one of the plugins. Please tell us about this\n" .
+	                 "problem.\n\n" .
+	                 "The error message is:\n" .
+	                 "%s\n\n" .
+	                 "A more detailed error report is saved to errors.txt. Please include the\n" .
+	                 "contents of this file in your report, or we may not be able to help you!",
+	                 $errorMessage);
 
 	# Create the errors.txt error log.
 	my $log = '';
-	$log .= "$Settings::NAME version ${Settings::VERSION}${Settings::CVS}\n" if (defined $Settings::VERSION);
+	$log .= "$Settings::NAME version ${Settings::VERSION}${Settings::SVN}\n" if (defined $Settings::VERSION);
 	$log .= "\@ai_seq = @Globals::ai_seq\n" if (defined @Globals::ai_seq);
 	$log .= "Network state = $Globals::conState\n" if (defined $Globals::conState);
 	$log .= "Network handler = " . Scalar::Util::blessed($Globals::net) . "\n" if ($Globals::net);

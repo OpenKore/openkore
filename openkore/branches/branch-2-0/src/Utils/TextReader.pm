@@ -18,6 +18,10 @@
 # should read <a href="http://www.joelonsoftware.com/articles/Unicode.html">this article
 # by Joel on Software</a>.
 #
+# If the text file is not valid UTF-8, then it will assume that the text file
+# is in the system's default encoding. If that isn't correct either, then an
+# exception will be thrown during reading.
+#
 # This class is to be used as follows:
 # <pre class="example">
 # use Utils::TextReader;
@@ -33,6 +37,14 @@ use strict;
 use Encode;
 use Utils::Exceptions;
 
+my $supportsAutoConversion;
+eval {
+	$supportsAutoConversion = 0;
+	require Translation;
+	require Encode;
+	$supportsAutoConversion = defined(&Translation::getLocaleCharset);
+};
+
 ##
 # Utils::TextReader->new(String filename)
 # Throws: FileNotFoundException, IOException
@@ -47,6 +59,7 @@ sub new {
 	} elsif (!open($self{handle}, "<", $file)) {
 		IOException->throw(error => $!);
 	}
+	$self{file} = $file;
 	$self{line} = 1;
 
 	return bless \%self, $class;
@@ -89,10 +102,19 @@ sub readLine {
 		   | [\xF1-\xF3][\x80-\xBF]{3}          # planes 4-15
 		   |  \xF4[\x80-\x8F][\x80-\xBF]{2}     # plane 16
 		  )*$/x) {
-			UTF8MalformedException->throw(
-				error => "Malformed UTF-8 data at line $_[0]->{line}.",
-				line => $self->{line}
-			);
+			if ($supportsAutoConversion) {
+				eval {
+					$line = Encode::decode(Translation::getLocaleCharset(),
+						$line, Encode::FB_CROAK);
+				};
+			}
+			if (!$supportsAutoConversion || $@) {
+				UTF8MalformedException->throw(
+					error => "Malformed UTF-8 data at line $_[0]->{line}.",
+					textfileline => $self->{line},
+					textfile => $self->{file}
+				);
+			}
 		}
 	}
 

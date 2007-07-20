@@ -2,7 +2,7 @@
 # This script creates a source tarball for OpenKore, confpack and tablepack.
 
 PACKAGE=openkore
-VERSION=2.0.0
+VERSION=2.0.1
 
 DIRS=(.
 	src
@@ -28,6 +28,7 @@ DIRS=(.
 	src/AI
 	src/Base
 	src/Base/Server
+	src/Base/Ragnarok
 	src/Base/WebServer
 	src/Bus
 	src/Bus/Server

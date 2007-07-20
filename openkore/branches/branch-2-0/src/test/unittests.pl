@@ -8,7 +8,7 @@ use lib "$RealBin/../deps";
 
 use Test::More qw(no_plan);
 my @tests = qw(CallbackListTest ObjectListTest ActorListTest WhirlpoolTest
-	SetTest SkillTest
+	SetTest SkillTest InventoryListTest
 	TaskManagerTest TaskWithSubtaskTest TaskChainedTest
 	PluginsHookTest);
 if ($^O eq 'MSWin32') {

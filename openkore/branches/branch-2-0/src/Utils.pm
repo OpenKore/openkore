@@ -717,19 +717,15 @@ sub judgeSkillArea {
 # When both coordinates are packed together, 
 # the bit usage becomes double that, 20 -- or 2.5 bytes
 sub makeCoords {
-	my $r_hash = shift;
-	my $rawCoords = shift;
-
+	my ($r_hash, $rawCoords) = @_;
 	unShiftPack(\$rawCoords, undef, 4);
 	makeCoords2($r_hash, $rawCoords);
 }
  
 sub makeCoords2 {
-	my $r_hash = shift;
-	my $rawCoords = shift;
-
-	unShiftPack(\$rawCoords, \$$r_hash{'y'}, 10);
-	unShiftPack(\$rawCoords, \$$r_hash{'x'}, 10);
+	my ($r_hash, $rawCoords) = @_;
+	unShiftPack(\$rawCoords, \$r_hash->{y}, 10);
+	unShiftPack(\$rawCoords, \$r_hash->{x}, 10);
 }
  
 sub makeCoords3 {

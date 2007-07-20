@@ -52,19 +52,14 @@
 package Benchmark;
 
 use strict;
-use Time::HiRes qw(time);
-use Carp::Assert;
-use Data::Dumper;
+use Time::HiRes;
 use Modules 'register';
+use XSTools;
 
-use constant {
-	USER   => 0,
-	SYSTEM => 1,
-	REAL   => 2
-};
+XSTools::bootModule('Utils::Benchmark');
+init();
 
-our %results;
-our %times;
+# Note that some functions are implemented in src/auto/XSTools/utils/perl/Benchmark.xs
 
 ##
 # void Benchmark::begin(String domain)
@@ -72,11 +67,6 @@ our %times;
 # Requires: defined($domain)
 #
 # Begin measuring the time that a piece of code will take.
-sub begin {
-	my $item = $times{$_[0]} ||= [];
-	($item->[USER], $item->[SYSTEM]) = times;
-	$item->[REAL] = time;
-}
 
 ##
 # void Benchmark::end(String domain)
@@ -84,23 +74,13 @@ sub begin {
 # Requires: defined($domain)
 #
 # End measuring the time that a piece of code took.
-sub end {
-	my $domain = $_[0];
-	my ($currentUtime, $currentStime) = times;
-	my $result = $results{$domain} ||= [];
-	my $times = $times{$domain};
-
-	$result->[USER] += $currentUtime - $times->[USER];
-	$result->[SYSTEM] += $currentStime - $times->[SYSTEM];
-	$result->[REAL] += time - $times->[REAL];
-}
 
 sub percent {
 	my ($part, $total) = @_;
 	if ($total == 0) {
 		return '-';
 	} else {
-		return sprintf("%.1f%%", $part / $total * 100);
+		return sprintf("%.2f%%", $part / $total * 100);
 	}
 }
 
@@ -113,14 +93,14 @@ sub percent {
 # Returns a string which contains the benchmarking results.
 sub results {
 	my ($relativeTo) = @_;
-	my ($result, $totalUser, $totalSystem, $totalUS, $totalReal);
-	$result  = sprintf "%-22s %-8s  %-8s  %-17s  %-17s\n", "Domain", "User", "System", "Total", "Real";
-	$result .= "------------------------------------------------------------------------------\n";
+	my $results = getResults();
 
-	$totalUser = $results{$relativeTo}[USER];
-	$totalSystem = $results{$relativeTo}[SYSTEM];
-	$totalUS = $totalUser + $totalSystem;
-	$totalReal = $results{$relativeTo}[REAL];
+	my ($result, $totalCPU, $totalReal);
+	$result  = sprintf "%-30s  %-23s  %-23s\n", "Domain", "CPU", "Real";
+	$result .= "------------------------------------------------------------------------\n";
+
+	$totalCPU = clock2msec($results->{$relativeTo}{clock});
+	$totalReal = $results->{$relativeTo}{realTime};
 
 	my $sortFunc = sub($$) {
 		my ($a, $b) = @_;
@@ -133,16 +113,12 @@ sub results {
 		}
 	};
 
-	foreach my $domain (sort $sortFunc keys(%results)) {
-		my $item = $results{$domain};
-		my $us = $item->[USER] + $item->[SYSTEM];
-
-		$result .= sprintf "%-22s %-8s  %-8s  %-17s  %-17s\n",
+	foreach my $domain (sort $sortFunc keys(%{$results})) {
+		my $item = $results->{$domain};
+		$result .= sprintf "%-30s  %-23s  %-23s\n",
 			$domain,
-			sprintf("%.3f", $item->[USER]),
-			sprintf("%.3f", $item->[SYSTEM]),
-			sprintf("%.3f (%s)", $us,           percent($us, $totalUS)),
-			sprintf("%.3f (%s)", $item->[REAL], percent($item->[REAL], $totalReal));
+			sprintf("%.3f (%s)", clock2msec($item->{clock}), percent(clock2msec($item->{clock}), $totalCPU)),
+			sprintf("%.3f (%s)", $item->{realTime},          percent($item->{realTime}, $totalReal));
 	}
 	return $result;
 }

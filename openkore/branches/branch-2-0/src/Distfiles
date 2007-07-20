@@ -12,6 +12,7 @@ FileParsers.pm
 Globals.pm
 I18N.pm
 Interface.pm
+InventoryList.pm
 Log.pm
 Match.pm
 Misc.pm

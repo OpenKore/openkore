@@ -41,12 +41,12 @@ get_locale_charset() {
 #ifdef WIN32
 	static char buf[2 + 10 + 1];
 
-	/* Woe32 has a function returning the locale's codepage as a number. */
-	sprintf (buf, "CP%u", GetACP ());
+	/* Win32 has a function returning the locale's codepage as a number. */
+	sprintf(buf, "CP%u", GetACP());
 	codeset = buf;
 #else
-	/* Most systems support nl_langinfo (CODESET) nowadays.  */
-	codeset = nl_langinfo (CODESET);
+	/* Most systems support nl_langinfo(CODESET) nowadays.  */
+	codeset = nl_langinfo(CODESET);
 #endif
 	return codeset;
 }
