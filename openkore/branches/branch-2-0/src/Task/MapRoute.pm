@@ -118,7 +118,7 @@ sub DESTROY {
 sub activate {
 	my ($self) = @_;
 	$self->SUPER::activate();
-	$self->initMapCalculator();
+	$self->initMapCalculator() if ($net->getState() == Network::IN_GAME && $field);
 	$self->{time_start} = time;
 }
 
@@ -135,7 +135,10 @@ sub iterate {
 	return if ($self->getSubtask() || $self->getStatus() != Task::RUNNING);
 
 	my @solution;
-	if (@{$self->{mapSolution}} == 0) {
+	if (!$self->{mapSolution}) {
+		$self->initMapCalculator();
+
+	} elsif (@{$self->{mapSolution}} == 0) {
 		$self->setDone();
 		debug "Map Router has finished traversing the map solution\n", "route";
 
@@ -373,14 +376,11 @@ sub subtaskDone {
 
 		} else {
 			$self->{mapSolution} = $task->getRoute();
-			if (@{$self->{mapSolution}} == 0) {
-				# The map solution is empty, meaning that the destination
-				# is on the same map and that we can walk there directly.
-				if (!defined($self->{dest}{pos}{x}) || !defined($self->{dest}{pos}{y})) {
-					die "MapRoute task has inconsistent state.\n" .
-						"Current field name: " . $field->name() . "\n" .
-						"Target field name: $self->{dest}{map}\n";
-				}
+			# The map solution is empty, meaning that the destination
+			# is on the same map and that we can walk there directly.
+			# Of course, we only do that if we have a specific position
+			# to walk to.
+			if (@{$self->{mapSolution}} == 0 && defined($self->{dest}{pos}{x}) && defined($self->{dest}{pos}{y})) {
 				my $task = new Task::Route(
 					x => $self->{dest}{pos}{x},
 					y => $self->{dest}{pos}{y},

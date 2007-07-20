@@ -1,4 +1,22 @@
 =========================
+### OpenKore 2.0.1
+=========================
+
+- Many bugs have been fixed.
+- Some small performance improvements.
+- New configuration option 'dcOnPlayer': makes the bot exit once a player
+  is detected in your FOV on your lockMap.
+- The character inventory data structure has been refactored. Plugins that
+  make use of the inventory will likely have to be updated. More information
+  about the change can be found here:
+  http://forums.openkore.com/viewtopic.php?t=32101
+
+Credits:
+- natz: Various bug fixes.
+
+
+
+=========================
 ### OpenKore 2.0.0
 =========================
 

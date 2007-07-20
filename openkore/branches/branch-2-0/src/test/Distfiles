@@ -2,6 +2,7 @@ ActorListTest.pm
 CallbackListTest.pm
 ObjectListTest.pm
 PluginsHookTest.pm
+InventoryListTest.pm
 HttpReaderTest.pm
 SetTest.pm
 SkillTest.pm

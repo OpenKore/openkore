@@ -1,5 +1,5 @@
 #########################################################################
-#  OpenKore - Generic utility functions
+#  OpenKore - Object list
 #
 #  Copyright (c) 2006 OpenKore Development Team
 #

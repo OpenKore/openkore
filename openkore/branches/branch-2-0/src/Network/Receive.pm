@@ -39,6 +39,7 @@ use Log qw(message warning error debug);
 use FileParsers;
 use Interface;
 use Network;
+use Network::MessageTokenizer;
 use Network::Send ();
 use Misc;
 use Plugins;
@@ -380,17 +381,18 @@ sub parse {
 	my ($self, $msg) = @_;
 
 	$bytesReceived += length($msg);
-	my $switch = uc(unpack("H2", substr($msg, 1, 1))) . uc(unpack("H2", substr($msg, 0, 1)));
+	my $switch = Network::MessageTokenizer::getMessageID($msg);
 	my $handler = $self->{packet_list}{$switch};
-	return 0 unless $handler;
+	return undef unless $handler;
 
 	debug "Received packet: $switch Handler: $handler->[0]\n", "packetParser", 2;
 
 	# RAW_MSG is the entire message, including packet switch
-	my %args;
-	$args{switch} = $switch;
-	$args{RAW_MSG} = $msg;
-	$args{RAW_MSG_SIZE} = length($msg);
+	my %args = (
+		switch => $switch,
+		RAW_MSG => $msg,
+		RAW_MSG_SIZE => length($msg)
+	);
 	if ($handler->[1]) {
 		my @unpacked_data = unpack("x2 $handler->[1]", $msg);
 		my $keys = $handler->[2];
@@ -1445,12 +1447,12 @@ sub arrow_equipped {
 	return unless $args->{index};
 	$char->{arrow} = $args->{index};
 
-	my $invIndex = findIndex($char->{inventory}, "index", $args->{index});
-	if ($invIndex ne "" && $char->{equipment}{arrow} != $char->{inventory}[$invIndex]) {
-		$char->{equipment}{arrow} = $char->{inventory}[$invIndex];
-		$char->{inventory}[$invIndex]{equipped} = 32768;
+	my $item = $char->inventory->getByServerIndex($args->{index});
+	if ($item && $char->{equipment}{arrow} != $item) {
+		$char->{equipment}{arrow} = $item;
+		$item->{equipped} = 32768;
 		$ai_v{temp}{waitForEquip}-- if $ai_v{temp}{waitForEquip};
-		message TF("Arrow/Bullet equipped: %s (%d)\n", $char->{inventory}[$invIndex]{name}, $invIndex);
+		message TF("Arrow/Bullet equipped: %s (%d)\n", $item->{name}, $item->{invIndex});
 	}
 }
 
@@ -1483,8 +1485,8 @@ sub arrowcraft_list {
 	undef @arrowCraftID;
 	for (my $i = 4; $i < $msg_size; $i += 2) {
 		my $ID = unpack("v1", substr($msg, $i, 2));
-		my $index = findIndex($char->{inventory}, "nameID", $ID);
-		binAdd(\@arrowCraftID, $index);
+		my $item = $char->inventory->getByNameID($ID);
+		binAdd(\@arrowCraftID, $item->{invIndex});
 	}
 
 	message T("Received Possible Arrow Craft List - type 'arrowcraft'\n");
@@ -1538,9 +1540,9 @@ sub card_merge_list {
 	my $invIndex;
 	for (my $i = 4; $i < $len; $i += 2) {
 		$index = unpack("v1", substr($msg, $i, 2));
-		$invIndex = findIndex($char->{inventory}, "index", $index);
-		binAdd(\@cardMergeItemsID,$invIndex);
-		$display .= "$invIndex $char->{inventory}[$invIndex]{name}\n";
+		my $item = $char->inventory->getByServerIndex($index);
+		binAdd(\@cardMergeItemsID, $item->{invIndex});
+		$display .= "$item->{invIndex} $item->{name}\n";
 	}
 
 	$display .= "-------------------------------\n";
@@ -1558,39 +1560,34 @@ sub card_merge_status {
 	if ($fail) {
 		message T("Card merging failed\n");
 	} else {
-		my $item_invindex = findIndex($char->{inventory}, "index", $item_index);
-		my $card_invindex = findIndex($char->{inventory}, "index", $card_index);
-		message TF("%s has been successfully merged into %s\n", $char->{inventory}[$card_invindex]{name}, $char->{inventory}[$item_invindex]{name}), "success";
+		my $item = $char->inventory->getByServerIndex($item_index);
+		my $card = $char->inventory->getByServerIndex($card_index);
+		message TF("%s has been successfully merged into %s\n",
+			$card->{name}, $item->{name}), "success";
 
-		# get the ID so we can pack this into the weapon cards
-		my $nameID = $char->{inventory}[$card_invindex]{nameID};
-
-		# remove one of the card
-		my $item = $char->{inventory}[$card_invindex];
-		$item->{amount} -= 1;
-		if ($item->{amount} <= 0) {
-			delete $char->{inventory}[$card_invindex];
+		# Remove one of the card
+		$card->{amount} -= 1;
+		if ($card->{amount} <= 0) {
+			$char->inventory->remove($card);
 		}
 
-		# rename the slotted item now
-		my $item = $char->{inventory}[$item_invindex];
-		# put the card into the item
+		# Rename the slotted item now
 		# FIXME: this is unoptimized
 		my $newcards;
 		my $addedcard;
 		for (my $i = 0; $i < 4; $i++) {
-			my $card = substr($item->{cards}, $i*2, 2);
+			my $card = substr($item->{cards}, $i * 2, 2);
 			if (unpack("v1", $card)) {
 				$newcards .= $card;
 			} elsif (!$addedcard) {
-				$newcards .= pack("v1", $nameID);
+				$newcards .= pack("v1", $card->{nameID});
 				$addedcard = 1;
 			} else {
 				$newcards .= pack("v1", 0);
 			}
 		}
 		$item->{cards} = $newcards;
-		$item->{name} = itemName($item);
+		$item->setName(itemName($item));
 	}
 
 	undef @cardMergeItemsID;
@@ -2144,15 +2141,14 @@ sub deal_add_you {
 
 	return unless $args->{index} > 0;
 
-	my $invIndex = findIndex($char->{inventory}, 'index', $args->{index});
-	my $item = $char->{inventory}[$invIndex];
+	my $item = $char->inventory->getByServerIndex($args->{index});
 	$currentDeal{you}{$item->{nameID}}{amount} += $currentDeal{lastItemAmount};
 	$item->{amount} -= $currentDeal{lastItemAmount};
 	message TF("You added Item to Deal: %s x %s\n", $item->{name}, $currentDeal{lastItemAmount}), "deal";
 	$itemChange{$item->{name}} -= $currentDeal{lastItemAmount};
 	$currentDeal{you_items}++;
 	$args->{item} = $item;
-	delete $char->{inventory}[$invIndex] if $item->{amount} <= 0;
+	$char->inventory->remove($item) if ($item->{amount} <= 0);
 }
 
 sub deal_begin {
@@ -2242,11 +2238,11 @@ sub devotion {
 
 sub egg_list {
 	my ($self, $args) = @_;
-	message T("-----Egg Hatch Candidates-----\n"), "list";
+	message T("----- Egg Hatch Candidates -----\n"), "list";
 	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 2) {
 		my $index = unpack("v1", substr($args->{RAW_MSG}, $i, 2));
-		my $invIndex = findIndex($char->{inventory}, "index", $index);
-		message "$invIndex $char->{inventory}[$invIndex]{name}\n", "list";
+		my $item = $char->inventory->getByServerIndex($index);
+		message "$item->{invIndex} $item->{name}\n", "list";
 	}
 	message "------------------------------\n", "list";
 }
@@ -2314,10 +2310,9 @@ sub emoticon {
 
 sub equip_item {
 	my ($self, $args) = @_;
-	my $invIndex = findIndex($char->{inventory}, "index", $args->{index});
-	my $item = $char->{inventory}[$invIndex];
+	my $item = $char->inventory->getByServerIndex($args->{index});
 	if (!$args->{success}) {
-		message TF("You can't put on %s (%d)\n", $item->{name}, $invIndex);
+		message TF("You can't put on %s (%d)\n", $item->{name}, $item->{invIndex});
 	} else {
 		$item->{equipped} = $args->{type};
 		if ($args->{type} == 10) {
@@ -2330,7 +2325,8 @@ sub equip_item {
 				}
 			}
 		}
-		message TF("You equip %s (%d) - %s (type %s)\n", $item->{name}, $invIndex, $equipTypes_lut{$item->{type_equip}}, $args->{type}), 'inventory';
+		message TF("You equip %s (%d) - %s (type %s)\n", $item->{name}, $item->{invIndex},
+			$equipTypes_lut{$item->{type_equip}}, $args->{type}), 'inventory';
 	}
 	$ai_v{temp}{waitForEquip}-- if $ai_v{temp}{waitForEquip};
 }
@@ -2567,10 +2563,10 @@ sub friend_response {
 	} else {
 		my $ID = @friendsID;
 		binAdd(\@friendsID, $ID);
-		$friends{$ID}{'accountID'} = substr($msg, 4, 4);
-		$friends{$ID}{'charID'} = substr($msg, 8, 4);
-		$friends{$ID}{'name'} = $name;
-		$friends{$ID}{'online'} = 1;
+		$friends{$ID}{accountID} = substr($args->{RAW_MSG}, 4, 4);
+		$friends{$ID}{charID} = substr($args->{RAW_MSG}, 8, 4);
+		$friends{$ID}{name} = $name;
+		$friends{$ID}{online} = 1;
 		message TF("%s is now your friend\n", $incomingFriend{'name'});
 	}
 }
@@ -3044,11 +3040,10 @@ sub identify {
 	my ($self, $args) = @_;
 
 	my $index = $args->{index};
-	my $invIndex = findIndex($char->{inventory}, "index", $index);
-	my $item = $char->{inventory}[$invIndex];
+	my $item = $char->inventory->getByServerIndex($index);
 	$item->{identified} = 1;
 	$item->{type_equip} = $itemSlots_lut{$item->{nameID}};
-	message TF("Item Identified: %s (%d)\n", $item->{name}, $invIndex), "info";
+	message TF("Item Identified: %s (%d)\n", $item->{name}, $item->{invIndex}), "info";
 	undef @identifyID;
 }
 
@@ -3064,8 +3059,8 @@ sub identify_list {
 	undef @identifyID;
 	for (my $i = 4; $i < $msg_size; $i += 2) {
 		my $index = unpack("v1", substr($msg, $i, 2));
-		my $invIndex = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "index", $index);
-		binAdd(\@identifyID, $invIndex);
+		my $item = $char->inventory->getByServerIndex($index);
+		binAdd(\@identifyID, $item->{invIndex});
 	}
 
 	my $num = @identifyID;
@@ -3102,12 +3097,10 @@ sub inventory_item_added {
 	my ($index, $amount, $fail) = ($args->{index}, $args->{amount}, $args->{fail});
 
 	if (!$fail) {
-		my $item;
-		my $invIndex = findIndex($char->{inventory}, "index", $index);
-		if (!defined $invIndex) {
+		my $item = $char->inventory->getByServerIndex($index);
+		if (!$item) {
 			# Add new item
-			$invIndex = findIndex($char->{inventory}, "nameID", "");
-			$item = $char->{inventory}[$invIndex] = new Actor::Item();
+			$item = new Actor::Item();
 			$item->{index} = $index;
 			$item->{nameID} = $args->{nameID};
 			$item->{type} = $args->{type};
@@ -3121,16 +3114,15 @@ sub inventory_item_added {
 				$args->{cards} .= $args->{cards_ext};
 			}
 			$item->{name} = itemName($item);
+			$char->inventory->add($item);
 		} else {
 			# Add stackable item
-			$item = $char->{inventory}[$invIndex];
 			$item->{amount} += $amount;
 		}
-		$item->{invIndex} = $invIndex;
 
 		$itemChange{$item->{name}} += $amount;
 		my $disp = TF("Item added to inventory: %s (%d) x %d - %s",
-			$item->{name}, $invIndex, $amount, $itemTypes_lut{$item->{type}});
+			$item->{name}, $item->{invIndex}, $amount, $itemTypes_lut{$item->{type}});
 		message "$disp\n", "drop";
 
 		$disp .= " ($field{name})\n";
@@ -3146,10 +3138,9 @@ sub inventory_item_added {
 
 		if ($AI == 2) {
 			# Auto-drop item
-			$item = $char->{inventory}[$invIndex];
 			if (pickupitems(lc($item->{name})) == -1 && !AI::inQueue('storageAuto', 'buyAuto')) {
 				$messageSender->sendDrop($item->{index}, $amount);
-				message TF("Auto-dropping item: %s (%d) x %d\n", $item->{name}, $invIndex, $amount), "drop";
+				message TF("Auto-dropping item: %s (%d) x %d\n", $item->{name}, $item->{invIndex}, $amount), "drop";
 			}
 		}
 
@@ -3160,17 +3151,16 @@ sub inventory_item_added {
 	} elsif ($fail == 1) {
 		message T("Cannot pickup item (you're Frozen?)\n"), "drop";
 	} else {
-		message TF("Cannot pickup item (failure code %s)\n", $fail), "drop";
+		message TF("Cannot pickup item (failure code %d)\n", $fail), "drop";
 	}
 }
 
 sub inventory_item_removed {
 	my ($self, $args) = @_;
 	return unless changeToInGameState();
-	my $invIndex = findIndex($char->{inventory}, "index", $args->{index});
-	$args->{item} = $char->{inventory}[$invIndex];
-	inventoryItemRemoved($invIndex, $args->{amount});
-	Plugins::callHook('packet_item_removed', {index => $invIndex});
+	my $item = $char->inventory->getByServerIndex($args->{index});
+	inventoryItemRemoved($item->{invIndex}, $args->{amount});
+	Plugins::callHook('packet_item_removed', {index => $item->{invIndex}});
 }
 
 sub item_used {
@@ -3180,20 +3170,20 @@ sub item_used {
 		@{$args}{qw(index itemID ID remaining)};
 
 	if ($ID eq $accountID) {
-		my $invIndex = findIndex($char->{inventory}, "index", $index);
-		my $item = $char->{inventory}[$invIndex];
+		my $item = $char->inventory->getByServerIndex($index);
 		my $amount = $item->{amount} - $remaining;
 		$item->{amount} -= $amount;
 
-		message TF("You used Item: %s (%d) x %d - %d left\n", $item->{name}, $invIndex, $amount, $remaining), "useItem", 1;
+		message TF("You used Item: %s (%d) x %d - %d left\n", $item->{name}, $item->{invIndex},
+			$amount, $remaining), "useItem", 1;
 		$itemChange{$item->{name}}--;
 		if ($item->{amount} <= 0) {
-			delete $char->{inventory}[$invIndex];
+			$char->inventory->remove($item);
 		}
 
 		Plugins::callHook('packet_useitem', {
 			item => $item,
-			invIndex => $invIndex,
+			invIndex => $item->{invIndex},
 			name => $item->{name},
 			amount => $amount
 		});
@@ -3244,10 +3234,12 @@ sub inventory_items_nonstackable {
 	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += $psize) {
 		my $index = unpack("v1", substr($msg, $i, 2));
 		my $ID = unpack("v1", substr($msg, $i + 2, 2));
-		$invIndex = findIndex($char->{inventory}, "index", $index);
-		$invIndex = findIndex($char->{inventory}, "nameID", "") unless defined $invIndex;
-
-		my $item = $char->{inventory}[$invIndex] = new Actor::Item();
+		my $item = $char->inventory->getByServerIndex($index);
+		my $add;
+		if (!$item) {
+			$item = new Actor::Item();
+			$add = 1;
+		}
 		$item->{index} = $index;
 		$item->{invIndex} = $invIndex;
 		$item->{nameID} = $ID;
@@ -3269,9 +3261,10 @@ sub inventory_items_nonstackable {
 			}
 		}
 
+		$char->inventory->add($item) if ($add);
 
-		debug "Inventory: $item->{name} ($invIndex) x $item->{amount} - $itemTypes_lut{$item->{type}} - $equipTypes_lut{$item->{type_equip}}\n", "parseMsg";
-		Plugins::callHook('packet_inventory', {index => $invIndex});
+		debug "Inventory: $item->{name} ($item->{invIndex}) x $item->{amount} - $itemTypes_lut{$item->{type}} - $equipTypes_lut{$item->{type_equip}}\n", "parseMsg";
+		Plugins::callHook('packet_inventory', {index => $item->{invIndex}});
 	}
 
 	$ai_v{'inventory_time'} = time + 1;
@@ -3282,20 +3275,19 @@ sub inventory_items_stackable {
 	my ($self, $args) = @_;
 	return unless changeToInGameState();
 	my $newmsg;
-	$self->decrypt(\$newmsg, substr($msg, 4));
+	$self->decrypt(\$newmsg, substr($args->{RAW_MSG}, 4));
 	my $msg = substr($args->{RAW_MSG}, 0, 4).$newmsg;
 	my $psize = ($args->{switch} eq "00A3") ? 10 : 18;
 
 	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += $psize) {
 		my $index = unpack("v1", substr($msg, $i, 2));
 		my $ID = unpack("v1", substr($msg, $i + 2, 2));
-		my $invIndex = findIndex($char->{inventory}, "index", $index);
-		if ($invIndex eq "") {
-			$invIndex = findIndex($char->{inventory}, "nameID", "");
+		my $item = $char->inventory->getByServerIndex($index);
+		my $add;
+		if (!$item) {
+			$item = new Actor::Item();
+			$add = 1;
 		}
-
-		my $item = $char->{inventory}[$invIndex] = new Actor::Item();
-		$item->{invIndex} = $invIndex;
 		$item->{index} = $index;
 		$item->{nameID} = $ID;
 		$item->{amount} = unpack("v1", substr($msg, $i + 6, 2));
@@ -3307,9 +3299,12 @@ sub inventory_items_stackable {
 			$char->{equipment}{arrow} = $item;
 		}
 		$item->{name} = itemName($item);
-		debug "Inventory: $item->{name} ($invIndex) x $item->{amount} - " .
+
+		$char->inventory->add($item) if ($add);
+		
+		debug "Inventory: $item->{name} ($item->{invIndex}) x $item->{amount} - " .
 			"$itemTypes_lut{$item->{type}}\n", "parseMsg";
-		Plugins::callHook('packet_inventory', {index => $invIndex, item => $item});
+		Plugins::callHook('packet_inventory', {index => $item->{invIndex}, item => $item});
 	}
 
 	$ai_v{'inventory_time'} = time + 1;
@@ -3431,15 +3426,13 @@ sub item_skill {
 
 sub item_upgrade {
 	my ($self, $args) = @_;
-
 	my ($type, $index, $upgrade) = @{$args}{qw(type index upgrade)};
 
-	my $invIndex = findIndex($char->{inventory}, "index", $index);
-	if (defined $invIndex) {
-		my $item = $char->{inventory}[$invIndex];
+	my $item = $char->inventory->getByServerIndex($index);
+	if ($item) {
 		$item->{upgrade} = $upgrade;
 		message TF("Item %s has been upgraded to +%s\n", $item->{name}, $upgrade), "parseMsg/upgrade";
-		$item->{name} = itemName($item);
+		$item->setName(itemName($item));
 	}
 }
 
@@ -3511,11 +3504,11 @@ sub hp_sp_changed {
 	my $type = $args->{type};
 	my $amount = $args->{amount};
 	if ($type == 5) {
-		$chars[$config{'char'}]{'hp'} += $amount;
-		$chars[$config{'char'}]{'hp'} = $chars[$config{'char'}]{'hp_max'} if ($chars[$config{'char'}]{'hp'} > $chars[$config{'char'}]{'hp_max'});
+		$char->{hp} += $amount;
+		$char->{hp} = $char->{hp_max} if ($char->{hp} > $char->{hp_max});
 	} elsif ($type == 7) {
-		$chars[$config{'char'}]{'sp'} += $amount;
-		$chars[$config{'char'}]{'sp'} = $chars[$config{'char'}]{'sp_max'} if ($chars[$config{'char'}]{'sp'} > $chars[$config{'char'}]{'sp_max'});
+		$char->{sp} += $amount;
+		$char->{sp} = $char->{sp_max} if ($char->{sp} > $char->{sp_max});
 	}
 }
 
@@ -3631,9 +3624,9 @@ sub map_change {
 		x => $args->{x},
 		y => $args->{y}
 	);
-	$chars[$config{char}]{pos} = {%coords};
-	$chars[$config{char}]{pos_to} = {%coords};
-	message TF("Map Change: %s (%s, %s)\n", $args->{map}, $chars[$config{'char'}]{'pos'}{'x'}, $chars[$config{'char'}]{'pos'}{'y'}), "connection";
+	$char->{pos} = {%coords};
+	$char->{pos_to} = {%coords};
+	message TF("Map Change: %s (%s, %s)\n", $args->{map}, $char->{pos}{x}, $char->{pos}{y}), "connection";
 	if ($net->version == 1) {
 		ai_clientSuspend(0, 10);
 	} else {
@@ -3718,7 +3711,7 @@ sub map_changed {
 		$ai_v{"useSelf_skill_$i"."_time"} = 0;
 		$i++;
 	}
-	undef %{$chars[$config{char}]{statuses}} if ($chars[$config{char}]{statuses});
+	delete $char->{statuses};
 	$char->{spirits} = 0;
 	undef $char->{permitSkill};
 	undef $char->{encoreSkill};
@@ -4028,7 +4021,7 @@ sub npc_talk_responses {
 	# Each item is divided with ':'
 	my $newmsg;
 	$self->decrypt(\$newmsg, substr($args->{RAW_MSG}, 8));
-	my $msg = substr($msg, 0, 8).$newmsg;
+	my $msg = substr($args->{RAW_MSG}, 0, 8).$newmsg;
 
 	my $ID = substr($msg, 4, 4);
 	$talk{ID} = $ID;
@@ -4106,7 +4099,7 @@ sub party_chat {
 
 sub party_exp {
 	my ($self, $args) = @_;
-	$chars[$config{char}]{party}{share} = $args->{type};
+	$char->{party}{share} = $args->{type};
 	if ($args->{type} == 0) {
 		message T("Party EXP set to Individual Take\n"), "party", 1;
 	} elsif ($args->{type} == 1) {
@@ -4119,8 +4112,8 @@ sub party_exp {
 sub party_hp_info {
 	my ($self, $args) = @_;
 	my $ID = $args->{ID};
-	$chars[$config{char}]{party}{users}{$ID}{hp} = $args->{hp};
-	$chars[$config{char}]{party}{users}{$ID}{hp_max} = $args->{hp_max};
+	$char->{party}{users}{$ID}{hp} = $args->{hp};
+	$char->{party}{users}{$ID}{hp_max} = $args->{hp_max};
 }
 
 sub party_invite {
@@ -4148,7 +4141,7 @@ sub party_join {
 	$name = bytesToString($name);
 	$user = bytesToString($user);
 
-	if (!$char->{party} || !%{$char->{party}} || !$chars[$config{char}]{party}{users}{$ID} || !%{$chars[$config{char}]{party}{users}{$ID}}) {
+	if (!$char->{party} || !%{$char->{party}} || !$char->{party}{users}{$ID} || !%{$char->{party}{users}{$ID}}) {
 		binAdd(\@partyUsersID, $ID) if (binFind(\@partyUsersID, $ID) eq "");
 		if ($ID eq $accountID) {
 			message TF("You joined party '%s'\n", $name), undef, 1;
@@ -4157,17 +4150,17 @@ sub party_join {
 			message TF("%s joined your party '%s'\n", $user, $name), undef, 1;
 		}
 	}
-	$chars[$config{char}]{party}{users}{$ID} = new Actor::Party;
+	$char->{party}{users}{$ID} = new Actor::Party;
 	if ($type == 0) {
-		$chars[$config{char}]{party}{users}{$ID}{online} = 1;
+		$char->{party}{users}{$ID}{online} = 1;
 	} elsif ($type == 1) {
-		$chars[$config{char}]{party}{users}{$ID}{online} = 0;
+		$char->{party}{users}{$ID}{online} = 0;
 	}
-	$chars[$config{char}]{party}{name} = $name;
-	$chars[$config{char}]{party}{users}{$ID}{pos}{x} = $x;
-	$chars[$config{char}]{party}{users}{$ID}{pos}{y} = $y;
-	$chars[$config{char}]{party}{users}{$ID}{map} = $map;
-	$chars[$config{char}]{party}{users}{$ID}{name} = $user;
+	$char->{party}{name} = $name;
+	$char->{party}{users}{$ID}{pos}{x} = $x;
+	$char->{party}{users}{$ID}{pos}{y} = $y;
+	$char->{party}{users}{$ID}{map} = $map;
+	$char->{party}{users}{$ID}{name} = $user;
 
 	if ($config{partyAutoShare} && $char->{party} && $char->{party}{users}{$accountID}{admin}) {
 		$messageSender->sendPartyShareEXP(1);
@@ -4178,11 +4171,11 @@ sub party_leave {
 	my ($self, $args) = @_;
 
 	my $ID = $args->{ID};
-	delete $chars[$config{char}]{party}{users}{$ID};
+	delete $char->{party}{users}{$ID};
 	binRemove(\@partyUsersID, $ID);
 	if ($ID eq $accountID) {
 		message T("You left the party\n");
-		delete $chars[$config{char}]{party} if ($chars[$config{char}]{party});
+		delete $char->{party};
 		undef @partyUsersID;
 	} else {
 		message TF("%s left the party\n", bytesToString($args->{name}));
@@ -4193,10 +4186,10 @@ sub party_location {
 	my ($self, $args) = @_;
 
 	my $ID = $args->{ID};
-	$chars[$config{char}]{party}{users}{$ID}{pos}{x} = $args->{x};
-	$chars[$config{char}]{party}{users}{$ID}{pos}{y} = $args->{y};
-	$chars[$config{char}]{party}{users}{$ID}{online} = 1;
-	debug "Party member location: $chars[$config{char}]{party}{users}{$ID}{name} - $args->{x}, $args->{y}\n", "parseMsg";
+	$char->{party}{users}{$ID}{pos}{x} = $args->{x};
+	$char->{party}{users}{$ID}{pos}{y} = $args->{y};
+	$char->{party}{users}{$ID}{online} = 1;
+	debug "Party member location: $char->{party}{users}{$ID}{name} - $args->{x}, $args->{y}\n", "parseMsg";
 }
 
 sub party_organize_result {
@@ -5840,8 +5833,8 @@ sub unequip_item {
 	my ($self, $args) = @_;
 
 	return unless changeToInGameState();
-	my $invIndex = findIndex($char->{inventory}, "index", $args->{index});
-	delete $char->{inventory}[$invIndex]{equipped} if ($char->{inventory}[$invIndex]);
+	my $item = $char->inventory->getByServerIndex($args->{index});
+	delete $item->{equipped};
 
 	if ($args->{type} == 10) {
 		delete $char->{equipment}{arrow};
@@ -5853,10 +5846,10 @@ sub unequip_item {
 			}
 		}
 	}
-
-	my $item = $char->{inventory}[$invIndex];
 	if ($item) {
-		message TF("You unequip %s (%d) - %s\n", $item->{name}, $invIndex, $equipTypes_lut{$item->{type_equip}}), 'inventory';
+		message TF("You unequip %s (%d) - %s\n",
+			$item->{name}, $item->{invIndex},
+			$equipTypes_lut{$item->{type_equip}}), 'inventory';
 	}
 }
 
@@ -5881,12 +5874,12 @@ sub use_item {
 	my ($self, $args) = @_;
 
 	return unless changeToInGameState();
-	my $invIndex = findIndex($char->{inventory}, "index", $args->{index});
-	if (defined $invIndex) {
-		$char->{inventory}[$invIndex]{amount} -= $args->{amount};
-		message TF("You used Item: %s (%d) x %s\n", $char->{inventory}[$invIndex]{name}, $invIndex, $args->{amount}), "useItem";
-		if ($char->{inventory}[$invIndex]{amount} <= 0) {
-			delete $char->{inventory}[$invIndex];
+	my $item = $char->inventory->getByServerIndex($args->{index});
+	if ($item) {
+		$item->{amount} -= $args->{amount};
+		message TF("You used Item: %s (%d) x %s\n", $item->{name}, $item->{invIndex}, $args->{amount}), "useItem";
+		if ($item->{amount} <= 0) {
+			$char->inventory->remove($item);
 		}
 	}
 }

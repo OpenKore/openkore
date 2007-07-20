@@ -2,3 +2,6 @@ Active branches in SVN
 ----------------------
 https://svn.sourceforge.net/svnroot/openkore/openkore/branches/branch-1-6
 	This is the branch for the 1.6 series.
+
+https://svn.sourceforge.net/svnroot/openkore/openkore/branches/branch-2-0
+	This is the branch for the 2.0 series.

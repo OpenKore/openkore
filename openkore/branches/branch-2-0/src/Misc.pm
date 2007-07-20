@@ -222,16 +222,6 @@ sub checkValidity {
 						&& $net->isa('Network::XKore'));
 	return;
 
-	if ($char && $char->{inventory}) {
-		for (my $i = 0; $i < @{$char->{inventory}}; $i++) {
-			if ($char->{inventory}[$i] && !UNIVERSAL::isa($char->{inventory}[$i], "Actor::Item")) {
-				die "$name\n" .
-					"Inventory item $i is not an Item:\n" .
-					Dumper($char->{inventory});
-			}
-		}
-	}
-
 	_checkActorHash($name, \%items, 'Actor::Item', 'item');
 	_checkActorHash($name, \%monsters, 'Actor::Monster', 'monster');
 	_checkActorHash($name, \%players, 'Actor::Player', 'player');
@@ -1054,7 +1044,7 @@ sub charSelectScreen {
 		next unless ($chars[$num] && %{$chars[$num]});
 		if (0) {
 			# The old (more verbose) message
-			$msg .= swrite(
+			swrite(
 				T("-------  Character \@< ---------\n" .
 				"Name: \@<<<<<<<<<<<<<<<<<<<<<<<<\n" .
 				"Job:  \@<<<<<<<      Job Exp: \@<<<<<<<\n" .
@@ -1102,7 +1092,7 @@ sub charSelectScreen {
 		my @choices = @charNames;
 		push @choices, (T('Create a new character'), T('Delete a character'));
 		my $choice = $interface->showMenu(
-			T("Please chooce a character or an action."), \@choices,
+			T("Please choose a character or an action."), \@choices,
 			title => T("Character selection"));
 		if ($choice == -1) {
 			# User cancelled
@@ -1378,17 +1368,19 @@ sub dealAddItem {
 }
 
 ##
-# drop(item, amount)
+# drop(itemIndex, amount)
 #
-# Drops $amount of $item. If $amount is not specified or too large, it defaults
-# to the number of $item you have.
+# Drops $amount of the item specified by $itemIndex. If $amount is not specified or too large, it defaults
+# to the number of items you have.
 sub drop {
-	my ($item, $amount) = @_;
-
-	if (!$amount || $amount > $char->{inventory}[$item]{amount}) {
-		$amount = $char->{inventory}[$item]{amount};
+	my ($itemIndex, $amount) = @_;
+	my $item = $char->inventory->get($itemIndex);
+	if ($item) {
+		if (!$amount || $amount > $item->{amount}) {
+			$amount = $item->{amount};
+		}
+		$messageSender->sendDrop($item->{index}, $amount);
 	}
-	$messageSender->sendDrop($char->{inventory}[$item]{index}, $amount);
 }
 
 sub dumpData {
@@ -1545,19 +1537,19 @@ sub getSpellName {
 }
 
 ##
-# inInventory($item, $quantity = 1)
+# inInventory($itemName, $quantity = 1)
 #
-# Returns $index (can be 0!) if you have at least $quantity units of $item in
-# your inventory.
+# Returns the item's index (can be 0!) if you have at least $quantity units of the item
+# specified by $itemName in your inventory.
 # Returns nothing otherwise.
 sub inInventory {
-	my ($item, $quantity) = @_;
+	my ($itemIndex, $quantity) = @_;
 	$quantity ||= 1;
 
-	my $index = findIndexString_lc($char->{inventory}, 'name', $item);
-	return if !defined($index);
-	return unless $char->{inventory}[$index]{amount} >= $quantity;
-	return $index;
+	my $item = $char->inventory->getByName($itemIndex);
+	return if !$item;
+	return unless $item->{amount} >= $quantity;
+	return $item->{invIndex};
 }
 
 ##
@@ -1569,14 +1561,13 @@ sub inInventory {
 sub inventoryItemRemoved {
 	my ($invIndex, $amount) = @_;
 
-	my $item = $char->{inventory}[$invIndex];
-	if (!$char->{arrow} ||
-	    ($char->{inventory}[$invIndex] && $char->{arrow} != $char->{inventory}[$invIndex]{index})) {
+	my $item = $char->inventory->get($invIndex);
+	if (!$char->{arrow} || ($item && $char->{arrow} != $item->{index})) {
 		# This item is not an equipped arrow
 		message TF("Inventory Item Removed: %s (%d) x %d\n", $item->{name}, $invIndex, $amount), "inventory";
 	}
 	$item->{amount} -= $amount;
-	delete $char->{inventory}[$invIndex] if $item->{amount} <= 0;
+	$char->inventory->remove($item) if ($item->{amount} <= 0);
 	$itemChange{$item->{name}} -= $amount;
 }
 
@@ -2676,20 +2667,19 @@ sub useTeleport {
 	# try to use item
 
 	# could lead to problems if the ItemID would be different on some servers
-	# 1 Jan 2006 - instead of nameID, search for *wing in the inventory and return
-	# the $invIndex (kaliwanagan)
-	my $invIndex;
+	# 1 Jan 2006 - instead of nameID, search for *wing in the inventory
+	my $item;
 	if ($use_lvl == 1) {
-		$invIndex = findIndexString_lc($char->{'inventory'}, "name", "Fly Wing");
+		$item = $char->inventory->getByName("Fly Wing");
 	} elsif ($use_lvl == 2) {
-		$invIndex = findIndexString_lc($char->{'inventory'}, "name", "Butterfly Wing");
+		$item = $char->inventory->getByName("Butterfly Wing");
 	}
 
-	if (defined $invIndex) {
+	if ($item) {
 		# We have Fly Wing/Butterfly Wing.
 		# Don't spam the "use fly wing" packet, or we'll end up using too many wings.
 		if (timeOut($timeout{ai_teleport})) {
-			$messageSender->sendItemUse($char->{inventory}[$invIndex]{index}, $accountID);
+			$messageSender->sendItemUse($item->{index}, $accountID);
 			$timeout{ai_teleport}{time} = time;
 		}
 		return 1;
@@ -3521,12 +3511,12 @@ sub getActorNames {
 
 # return ID based on name if party member is online
 sub findPartyUserID {
-	if ($chars[$config{'char'}]{'party'} && %{$chars[$config{'char'}]{'party'}}) {
+	if ($char->{party} && %{$char->{party}}) {
 		my $partyUserName = shift;
 		for (my $j = 0; $j < @partyUsersID; $j++) {
 	        	next if ($partyUsersID[$j] eq "");
-			if ($partyUserName eq $chars[$config{'char'}]{'party'}{'users'}{$partyUsersID[$j]}{'name'}
-				&& $chars[$config{'char'}]{'party'}{'users'}{$partyUsersID[$j]}{'online'}) {
+			if ($partyUserName eq $char->{party}{users}{$partyUsersID[$j]}{name}
+				&& $char->{party}{users}{$partyUsersID[$j]}{online}) {
 				return $partyUsersID[$j];
 			}
 		}
@@ -3644,11 +3634,11 @@ sub checkSelfCondition {
 
 	if ($config{$prefix . "_onAction"}) { return 0 unless (existsInList($config{$prefix . "_onAction"}, AI::action())); }
 	if ($config{$prefix . "_notOnAction"}) { return 0 if (existsInList($config{$prefix . "_onAction"}, AI::action())); }
-	if ($config{$prefix . "_spirit"}) {return 0 unless (inRange($chars[$config{char}]{spirits}, $config{$prefix . "_spirit"})); }
+	if ($config{$prefix . "_spirit"}) {return 0 unless (inRange($char->{spirits}, $config{$prefix . "_spirit"})); }
 
 	if ($config{$prefix . "_timeout"}) { return 0 unless timeOut($ai_v{$prefix . "_time"}, $config{$prefix . "_timeout"}) }
 	if ($config{$prefix . "_inLockOnly"} > 0) { return 0 unless ($field{name} eq $config{lockMap}); }
-	if ($config{$prefix . "_notWhileSitting"} > 0) { return 0 if ($chars[$config{char}]{'sitting'}); }
+	if ($config{$prefix . "_notWhileSitting"} > 0) { return 0 if ($char->{sitting}); }
 	if ($config{$prefix . "_notInTown"} > 0) { return 0 if ($cities_lut{$field{name}.'.rsw'}); }
 
 	if ($config{$prefix . "_monsters"} && !($prefix =~ /skillSlot/i) && !($prefix =~ /ComboSlot/i)) {
@@ -3684,10 +3674,10 @@ sub checkSelfCondition {
 
 	if ($config{$prefix."_inInventory"}) {
 		foreach my $input (split / *, */, $config{$prefix."_inInventory"}) {
-			my ($item,$count) = $input =~ /(.*?)(?:\s+([><]=? *\d+))?$/;
+			my ($itemName, $count) = $input =~ /(.*?)(?:\s+([><]=? *\d+))?$/;
 			$count = '>0' if $count eq '';
-			my $iX = findIndexString_lc($char->{inventory}, "name", $item);
- 			return 0 if !inRange(!defined $iX ? 0 : $char->{inventory}[$iX]{amount}, $count);
+			my $item = $char->inventory->getByName($itemName);
+ 			return 0 if !inRange(!$item ? 0 : $item->{amount}, $count);
 		}
 	}
 
@@ -3774,12 +3764,12 @@ sub checkPlayerCondition {
 	if ($config{$prefix . "_notWhileSitting"} > 0) { return 0 if ($player->{sitting}); }
 
 	# we will have player HP info (only) if we are in the same party
-	if ($chars[$config{char}]{party} && $chars[$config{char}]{party}{users}{$id}) {
+	if ($char->{party} && $char->{party}{users}{$id}) {
 		if ($config{$prefix . "_hp"}) {
 			if ($config{$prefix."_hp"} =~ /^(.*)\%$/) {
-				return 0 if (!inRange(percent_hp($chars[$config{char}]{party}{users}{$id}), $1));
+				return 0 if (!inRange(percent_hp($char->{party}{users}{$id}), $1));
 			} else {
-				return 0 if (!inRange($chars[$config{char}]{party}{users}{$id}{hp}, $config{$prefix . "_hp"}));
+				return 0 if (!inRange($char->{party}{users}{$id}{hp}, $config{$prefix . "_hp"}));
 			}
 		}
 	} elsif ($char->{homunculus} && $char->{homunculus}{ID} eq $id) {

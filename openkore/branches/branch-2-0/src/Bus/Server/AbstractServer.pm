@@ -56,8 +56,6 @@ sub new {
 	my $self;
 
 	$self = $class->SUPER::new($port, $bind);
-	return if (!$self);
-
 	$self->{BAS_maxID} = 0;
 	$self->{BAS_busClients} = {};
 

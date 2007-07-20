@@ -46,7 +46,7 @@ use Exception::Class (
 	'BusNotRunningException' => { isa => 'IOException' },
 
 	'DataFormatException',
-	'UTF8MalformedException' => { isa => 'DataFormatException', fields => 'line' }
+	'UTF8MalformedException' => { isa => 'DataFormatException', fields => ['textfileline', 'textfile'] }
 );
 
 our @EXPORT = qw(caught);

@@ -34,6 +34,7 @@ use Settings;
 use Plugins;
 use Skill;
 use Utils;
+use Utils::Exceptions;
 use Misc;
 use AI;
 use Task;
@@ -497,7 +498,7 @@ sub cmdArrowCraft {
 				next if ($arrowCraftID[$i] eq "");
 				message(swrite(
 					"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
-					[$i, $char->{inventory}[$arrowCraftID[$i]]{name}]),"list");
+					[$i, $char->inventory->get($arrowCraftID[$i])->{name}]),"list");
 
 			}
 			message("-------------------------------------------------\n","list")
@@ -513,15 +514,16 @@ sub cmdArrowCraft {
 				"You don't have Arrow Making Skill.\n");
 		}
 	} elsif ($arg1 eq "forceuse") {
-		if ($char->{inventory}[$arg2] && %{$char->{inventory}[$arg2]}) {
-			$messageSender->sendArrowCraft($char->{inventory}[$arg2]{nameID});
+		my $item = $char->inventory->get($arg2);
+		if ($item) {
+			$messageSender->sendArrowCraft($item->{nameID});
 		} else {
 			error TF("Error in function 'arrowcraft forceuse #' (Create Arrows)\n" . 
 				"You don't have item %s in your inventory.\n", $arg2);
 		}
 	} else {
 		if ($arrowCraftID[$arg1] ne "") {
-			$messageSender->sendArrowCraft($char->{inventory}[$arrowCraftID[$arg1]]{nameID});
+			$messageSender->sendArrowCraft($char->inventory->get($arrowCraftID[$arg1])->{nameID});
 		} else {
 			error T("Error in function 'arrowcraft' (Create Arrows)\n" .
 				"Usage: arrowcraft [<identify #>]\n" .
@@ -642,11 +644,10 @@ sub cmdCard {
 			my $msg;
 			$msg .= T("-----Card Merge Candidates-----\n");
 			foreach my $card (@cardMergeItemsID) {
-				next if $card eq "" || !$char->{inventory}[$card] ||
-					!%{$char->{inventory}[$card]};
+				next if $card eq "" || !$char->inventory->get($card);
 				$msg .= swrite(
 					"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
-					[$card, $char->{inventory}[$card]]);
+					[$card, $char->inventory->get($card)]);
 			}
 			$msg .= "-------------------------------\n";
 			message $msg, "list";
@@ -658,7 +659,8 @@ sub cmdCard {
 		if ($arg2 =~ /^\d+$/) {
 			my $found = binFind(\@cardMergeItemsID, $arg2);
 			if (defined $found) {
-				$messageSender->sendCardMerge($char->{inventory}[$cardMergeIndex]{index}, $char->{inventory}[$arg2]{index});
+				$messageSender->sendCardMerge($char->inventory->get($cardMergeIndex)->{index},
+					$char->inventory->get($arg2)->{index});
 			} else {
 				if ($cardMergeIndex ne "") {
 					error TF("Error in function 'card merge' (Finalize card merging onto item)\n" . 
@@ -675,11 +677,11 @@ sub cmdCard {
 		}
 	} elsif ($arg1 eq "use") {
 		if ($arg2 =~ /^\d+$/) {
-			if ($char->{inventory}[$arg2] && %{$char->{inventory}[$arg2]}) {
+			if ($char->inventory->get($arg2)) {
 				$cardMergeIndex = $arg2;
-				$messageSender->sendCardMergeRequest($char->{inventory}[$cardMergeIndex]{index});
+				$messageSender->sendCardMergeRequest($char->inventory->get($cardMergeIndex)->{index});
 				message TF("Sending merge list request for %s...\n", 
-					$char->{inventory}[$cardMergeIndex]{name});
+					$char->inventory->get($cardMergeIndex)->{name});
 			} else {
 				error TF("Error in function 'card use' (Request list of items for merging with card)\n" . 
 					"Card %s does not exist.\n", $arg2);
@@ -692,23 +694,23 @@ sub cmdCard {
 	} elsif ($arg1 eq "list") {
 		my $msg;
 		$msg .= T("-----------Card List-----------\n");
-		for (my $i = 0; $i < @{$char->{inventory}}; $i++) {
-			next if (!$char->{'inventory'}[$i] || !%{$char->{'inventory'}[$i]});
-			if ($char->{inventory}[$i]{type} == 6) {
-				$msg .= "$i $char->{inventory}[$i]{name} x $char->{inventory}[$i]{amount}\n";
+		foreach my $item (@{$char->inventory->getItems()}) {
+			if ($item->{type} == 6) {
+				$msg .= "$item->{invIndex} $item->{name} x $item->{amount}\n";
 			}
 		}
 		$msg .= "-------------------------------\n";
 		message $msg, "list";
 	} elsif ($arg1 eq "forceuse") {
-		if (!$char->{inventory}[$arg2] || !%{$char->{inventory}[$arg2]}) {
+		if (!$char->inventory->get($arg2)) {
 			error TF("Error in function 'arrowcraft forceuse #' (Create Arrows)\n" .
 				"You don't have item %s in your inventory.\n", $arg2);
-		} elsif (!$char->{inventory}[$arg3] || !%{$char->{inventory}[$arg3]}) {
+		} elsif (!$char->inventory->get($arg3)) {
 			error TF("Error in function 'arrowcraft forceuse #' (Create Arrows)\n" .
 				"You don't have item %s in your inventory.\n"), $arg3;
 		} else {
-			$messageSender->sendCardMerge($char->{inventory}[$arg2]{index}, $char->{inventory}[$arg3]{index});
+			$messageSender->sendCardMerge($char->inventory->get($arg2)->{index},
+				$char->inventory->get($arg3)->{index});
 		}
 	} else {
 		error T("Syntax Error in function 'card' (Card Compounding)\n" .
@@ -1173,7 +1175,7 @@ sub cmdDeal {
 	} elsif ($arg[0] eq "add" && $currentDeal{'you_finalize'}) {
 		error T("Error in function 'deal_add' (Add Item to Deal)\n" .
 			"Can't add any Items - You already finalized the deal\n");
-	} elsif ($arg[0] eq "add" && $arg[1] =~ /\d+/ && ( !$char->{'inventory'}[$arg[1]] || !%{$char->{'inventory'}[$arg[1]]} )) {
+	} elsif ($arg[0] eq "add" && $arg[1] =~ /\d+/ && !$char->inventory->get($arg[1])) {
 		error TF("Error in function 'deal_add' (Add Item to Deal)\n" .
 			"Inventory Item %s does not exist.\n", $arg[1]);
 	} elsif ($arg[0] eq "add" && $arg[2] && $arg[2] !~ /\d+/) {
@@ -1181,10 +1183,12 @@ sub cmdDeal {
 			"Amount must either be a number, or not specified.\n");
 	} elsif ($arg[0] eq "add" && $arg[1] =~ /\d+/) {
 		if ($currentDeal{you_items} < 10) {
-			if (!$arg[2] || $arg[2] > $char->{'inventory'}[$arg[1]]{'amount'}) {
-				$arg[2] = $char->{'inventory'}[$arg[1]]{'amount'};
+			my $item = $char->inventory->get($arg[1]);
+			my $amount = $item->{amount};
+			if (!$arg[2] || $arg[2] > $amount) {
+				$arg[2] = $amount;
 			}
-			dealAddItem($char->{inventory}[$arg[1]], $arg[2]);
+			dealAddItem($item, $arg[2]);
 		} else {
 			error T("You can't add any more items to the deal\n"), "deal";
 		}
@@ -1321,10 +1325,10 @@ sub cmdDrop {
 		foreach (@temp) {
 			if (/(\d+)-(\d+)/) {
 				for ($1..$2) {
-					push(@items, $_) if ($char->{inventory}[$_] && %{$char->{inventory}[$_]});
+					push(@items, $_) if ($char->inventory->get($_));
 				}
 			} else {
-				push @items, $_ if ($char->{inventory}[$_] && %{$char->{inventory}[$_]});
+				push @items, $_ if ($char->inventory->get($_));
 			}
 		}
 		if (@items > 0) {
@@ -1336,12 +1340,12 @@ sub cmdDrop {
 }
 
 sub cmdDump {
-	dumpData($msg);
+	dumpData($incomingMessages->getBuffer());
 	quit();
 }
 
 sub cmdDumpNow {
-	dumpData($msg);
+	dumpData($incomingMessages->getBuffer());
 }
 
 sub cmdEmotion {
@@ -2347,7 +2351,7 @@ sub cmdIdentify {
 			next if ($identifyID[$i] eq "");
 			message(swrite(
 				"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
-				[$i, $char->{'inventory'}[$identifyID[$i]]{name}]),
+				[$i, $char->inventory->get($identifyID[$i])->{name}]),
 				"list");
 		}
 		message("------------------------------\n", "list");
@@ -2357,7 +2361,7 @@ sub cmdIdentify {
 			error TF("Error in function 'identify' (Identify Item)\n" .
 				"Identify Item %s does not exist\n", $arg1);
 		} else {
-			$messageSender->sendIdentify($char->{'inventory'}[$identifyID[$arg1]]{'index'});
+			$messageSender->sendIdentify($char->inventory->get($identifyID[$arg1])->{index});
 		}
 
 	} else {
@@ -2412,7 +2416,7 @@ sub cmdInventory {
 	my ($arg1) = $args =~ /^(\w+)/;
 	my ($arg2) = $args =~ /^\w+ (.+)/;
 
-	if (!$char->{'inventory'}) {
+	if (!$char || $char->inventory->size() == 0) {
 		error T("Inventory is empty\n");
 		return;
 	}
@@ -2424,22 +2428,19 @@ sub cmdInventory {
 		my @non_useable;
 		my ($i, $display, $index, $sell);
 
-		for ($i = 0; $i < @{$char->{inventory}}; $i++) {
-			my $item = $char->{inventory}[$i];
-			next unless $item && %{$item};
-
+		foreach my $item (@{$char->inventory->getItems()}) {
 			if (($item->{type} == 3 ||
 			     $item->{type} == 6 ||
-				 $item->{type} == 10 ||
-				 $item->{type} == 16 ||
-				 $item->{type} == 17) && !$item->{equipped}) {
-				push @non_useable, $i;
+			     $item->{type} == 10 ||
+			     $item->{type} == 16 ||
+			     $item->{type} == 17) && !$item->{equipped}) {
+				push @non_useable, $item->{invIndex};
 			} elsif ($item->{type} <= 2) {
-				push @useable, $i;
+				push @useable, $item->{invIndex};
 			} else {
 				my %eqp;
 				$eqp{index} = $item->{index};
-				$eqp{binID} = $i;
+				$eqp{binID} = $item->{invIndex};
 				$eqp{name} = $item->{name};
 				$eqp{type} = $itemTypes_lut{$item->{type}};
 				$eqp{equipped} = ($item->{type} == 10 || $item->{type} == 16 || $item->{type} == 17) ? $item->{amount} . " left" : $equipTypes_lut{$item->{equipped}};
@@ -2478,8 +2479,9 @@ sub cmdInventory {
 			$msg .= T("-- Non-Usable --\n");
 			for ($i = 0; $i < @non_useable; $i++) {
 				$index = $non_useable[$i];
-				$display = $char->{inventory}[$index]{name};
-				$display .= " x $char->{inventory}[$index]{amount}";
+				my $item = $char->inventory->get($index);
+				$display = $item->{name};
+				$display .= " x $item->{amount}";
 				# Translation Comment: Tell if the item is marked to be sold 				
 				$sell = defined(findIndex(\@sellList, "invIndex", $index)) ? T("Will be sold") : "";
 				$msg .= swrite(
@@ -2492,8 +2494,9 @@ sub cmdInventory {
 			$msg .= T("-- Usable --\n");
 			for ($i = 0; $i < @useable; $i++) {
 				$index = $useable[$i];
-				$display = $char->{inventory}[$index]{name};
-				$display .= " x $char->{inventory}[$index]{amount}";
+				my $item = $char->inventory->get($index);
+				$display = $item->{name};
+				$display .= " x $item->{amount}";
 				$sell = defined(findIndex(\@sellList, "invIndex", $index)) ? T("Will be sold") : "";
 				$msg .= swrite(
 					"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<",
@@ -3213,8 +3216,19 @@ sub cmdReload {
 			"Usage: reload <name|\"all\">\n");
 
 	} else {
-		Settings::parseReload($args);
-		Log::initLogFiles();
+		eval {
+			Settings::parseReload($args);
+			Log::initLogFiles();
+		};
+		if (my $e = caught('UTF8MalformedException')) {
+			error TF(
+				"The file %s must be valid UTF-8 encoded, which it is \n" .
+				"currently not. To solve this prolem, please use Notepad\n" .
+				"to save that file as valid UTF-8.",
+				$e->textfile);
+		} elsif ($@) {
+			die $@;
+		}
 	}
 }
 
@@ -4102,17 +4116,17 @@ sub cmdUseItemOnMonster {
 	if ($arg1 eq "" || $arg2 eq "") {
 		error T("Syntax Error in function 'im' (Use Item on Monster)\n" .
 			"Usage: im <item #> <monster #>\n");
-	} elsif (!$char->{'inventory'}[$arg1] || !%{$char->{'inventory'}[$arg1]}) {
+	} elsif (!$char->inventory->get($arg1)) {
 		error TF("Error in function 'im' (Use Item on Monster)\n" .
 			"Inventory Item %s does not exist.\n", $arg1);
-	} elsif ($char->{'inventory'}[$arg1]{'type'} > 2) {
+	} elsif ($char->inventory->get($arg1)->{type} > 2) {
 		error TF("Error in function 'im' (Use Item on Monster)\n" .
 			"Inventory Item %s is not of type Usable.\n", $arg1);
 	} elsif ($monstersID[$arg2] eq "") {
 		error TF("Error in function 'im' (Use Item on Monster)\n" .
 			"Monster %s does not exist.\n", $arg2);
 	} else {
-		$char->{'inventory'}[$arg1]->use($monstersID[$arg2]);
+		$char->inventory->get($arg1)->use($monstersID[$arg2]);
 	}
 }
 
@@ -4123,17 +4137,17 @@ sub cmdUseItemOnPlayer {
 	if ($arg1 eq "" || $arg2 eq "") {
 		error T("Syntax Error in function 'ip' (Use Item on Player)\n" .
 			"Usage: ip <item #> <player #>\n");
-	} elsif (!$char->{'inventory'}[$arg1] || !%{$char->{'inventory'}[$arg1]}) {
+	} elsif (!$char->inventory->get($arg1)) {
 		error TF("Error in function 'ip' (Use Item on Player)\n" .
 			"Inventory Item %s does not exist.\n", $arg1);
-	} elsif ($char->{'inventory'}[$arg1]{'type'} > 2) {
+	} elsif ($char->inventory->get($arg1)->{type} > 2) {
 		error TF("Error in function 'ip' (Use Item on Player)\n" .
 			"Inventory Item %s is not of type Usable.\n", $arg1);
 	} elsif ($playersID[$arg2] eq "") {
 		error TF("Error in function 'ip' (Use Item on Player)\n" .
 			"Player %s does not exist.\n", $arg2);
 	} else {
-		$char->{'inventory'}[$arg1]->use($playersID[$arg2]);
+		$char->inventory->get($arg1)->use($playersID[$arg2]);
 	}
 }
 
