@@ -31,6 +31,7 @@ use strict;
 use Exporter;
 use base qw(Exporter);
 use Getopt::Long;
+use FindBin qw($RealBin);
 
 use Modules 'register';
 use Globals;
@@ -397,6 +398,29 @@ sub parseReload {
 		$temp[@temp] = $temp{$f};
 	}
 	load(\@temp);
+}
+
+##
+# int Settings::getSVNRevision()
+#
+# Return OpenKore's SVN revision number, or undef if that information cannot be retrieved.
+sub getSVNRevision {
+	my $f;
+	if (open($f, "<", "$RealBin/.svn/entries")) {
+		my $revision;
+		eval {
+			die unless <$f> =~ /^\d+$/;	# We only support the non-XML format
+			die unless <$f> eq "\n";	# Empty string for current directory.
+			die unless <$f> eq "dir\n";	# We expect a directory entry.
+			$revision = <$f>;
+			$revision =~ s/[\r\n]//g;
+			undef $revision unless $revision =~ /^\d+$/;
+		};
+		close($f);
+		return $revision;
+	} else {
+		return;
+	}
 }
 
 1;
