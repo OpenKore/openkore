@@ -72,10 +72,10 @@ sub errorHandler {
 	my $display = TF("This program has encountered an unexpected problem. This is probably because\n" .
 	                 "of a bug in this program, or in one of the plugins. Please tell us about this\n" .
 	                 "problem.\n\n" .
+	                 "A detailed error report has been saved to errors.txt. Please include the\n" .
+	                 "contents of this file in your bug report, or we may not be able to help you!\n\n" .
 	                 "The error message is:\n" .
-	                 "%s\n\n" .
-	                 "A more detailed error report is saved to errors.txt. Please include the\n" .
-	                 "contents of this file in your report, or we may not be able to help you!",
+	                 "%s",
 	                 $errorMessage);
 
 	# Create the errors.txt error log.
@@ -84,6 +84,12 @@ sub errorHandler {
 	$log .= "\@ai_seq = @Globals::ai_seq\n" if (defined @Globals::ai_seq);
 	$log .= "Network state = $Globals::conState\n" if (defined $Globals::conState);
 	$log .= "Network handler = " . Scalar::Util::blessed($Globals::net) . "\n" if ($Globals::net);
+	my $revision = Settings::getSVNRevision();
+	if (defined $revision) {
+		$log .= "SVN revision: $revision\n";
+	} else {
+		$log .= "SVN revision: unknown\n";
+	}
 	if (defined @Plugins::plugins) {
 		$log .= "Loaded plugins:\n";
 		foreach my $plugin (@Plugins::plugins) {
