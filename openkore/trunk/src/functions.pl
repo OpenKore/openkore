@@ -110,11 +110,12 @@ sub loadPlugins {
 		Plugins::loadAll();
 	};
 	if (my $e = caught('Plugin::LoadException')) {
-		$interface->errorDialog(TF("This plugin cannot be loaded. Please notify the plugin's author, " .
-			"or remove the plugin.\n\n" .
+		$interface->errorDialog(TF("This plugin cannot be loaded because of a problem in the plugin. " .
+			"Please notify the plugin's author about this problem, " .
+			"or remove the plugin so %s can start.\n\n" .
 			"The error message is:\n" .
 			"%s",
-			$e->message));
+			$Settings::NAME, $e->message));
 		exit 1;
 	} elsif (my $e = caught('Plugin::DeniedException')) {
 		$interface->errorDialog($e->message);

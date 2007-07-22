@@ -179,10 +179,8 @@ sub unloadAll {
 	foreach my $plugin (@plugins) {
 		next if (!$plugin);
 		$plugin->{unload_callback}->() if (defined $plugin->{unload_callback});
-		undef %{$plugin};
 	}
-	undef @plugins;
-	return 0;
+	@plugins = ();
 }
 
 
