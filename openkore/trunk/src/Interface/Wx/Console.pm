@@ -23,7 +23,8 @@ package Interface::Wx::Console;
 
 use strict;
 use Wx ':everything';
-use base qw(Wx::TextCtrl);
+use Wx::RichText;
+use base qw(Wx::RichTextCtrl);
 require DynaLoader;
 use encoding 'utf8';
 
@@ -34,84 +35,53 @@ use constant MAX_LINES => 1000;
 our %fgcolors;
 
 sub new {
-	my ($class, $parent, $noColors) = @_;
+	my ($class, $parent) = @_;
 
 	my $self = $class->SUPER::new($parent, -1, '',
 		wxDefaultPosition, wxDefaultSize,
-		wxTE_MULTILINE | wxTE_RICH | wxTE_NOHIDESEL);
+		wxTE_MULTILINE | wxVSCROLL | wxTE_NOHIDESEL);
 	$self->SetEditable(0);
-	$self->{noColors} = $noColors;
-	if (!$noColors) {
-		$self->SetBackgroundColour(new Wx::Colour(0, 0, 0));
-	}
+	$self->BeginSuppressUndo();
+	$self->SetBackgroundColour(new Wx::Colour(0, 0, 0));
 
-	### Fonts
-	my ($fontName, $fontSize);
+	my $font;
 	if (Wx::wxMSW()) {
-		$fontSize = 9;
-		$fontName = 'Courier New';
+		$font = new Wx::Font(9, wxMODERN, wxNORMAL, wxNORMAL, 0, 'Courier New');
 	} else {
-		$fontSize = 10;
-		$fontName = 'MiscFixed';
+		$font = new Wx::Font(10, wxMODERN, wxNORMAL, wxNORMAL, 0, 'MiscFixed');
 	}
+	$self->changeFont($font);
 
-	if ($fontName) {
-		$self->changeFont(new Wx::Font($fontSize, wxMODERN, wxNORMAL, wxNORMAL, 0, $fontName));
-	} else {
-		$self->changeFont(new Wx::Font($fontSize, wxMODERN, wxNORMAL, wxNORMAL));
-	}
-
-	### Styles
-	if (!$noColors) {
-		$self->{defaultStyle} = new Wx::TextAttr(
-			new Wx::Colour(255, 255, 255),
-			$self->GetBackgroundColour,
-			$self->{font}
-		);
-		$self->SetDefaultStyle($self->{defaultStyle});
-
-		$self->{inputStyle} = new Wx::TextAttr(
-			new Wx::Colour(200, 200, 200),
-			wxNullColour
-		);
-	}
+	$self->{inputStyle} = new Wx::TextAttrEx();
+	$self->{inputStyle}->SetTextColour(new Wx::Colour(200, 200, 200));
 
 	return $self;
 }
 
 sub changeFont {
-	my $self = shift;
-	my $font = shift;
+	my ($self, $font) = @_;
 	return unless $font->Ok;
 
 	$self->{font} = $font;
+	my $bold = new Wx::Font(
+		$font->GetPointSize(),
+		$font->GetFamily(),
+		$font->GetStyle(),
+		wxBOLD,
+		$font->GetUnderlined(),
+		$font->GetFaceName()
+	);
+	$self->{boldFont} = $bold;
 
-	if ($self->{noColors}) {
-		#$self->{defaultStyle} = new Wx::TextAttr($self->{defaultStyle}->GetTextColour, wxNullColour, $font);
-		#$self->SetDefaultStyle($self->{defaultStyle});
-		$self->SetFont($font);
+	$self->{defaultStyle} = new Wx::TextAttr(
+		new Wx::Colour(255, 255, 255),
+		$self->GetBackgroundColour,
+		$font
+	);
+	$self->SetDefaultStyle($self->{defaultStyle});
 
-	} else {
-		my $bold = new Wx::Font(
-			$font->GetPointSize(),
-			$font->GetFamily(),
-			$font->GetStyle(),
-			wxBOLD,
-			$font->GetUnderlined(),
-			$font->GetFaceName()
-		);
-		$self->{boldFont} = $bold;
-
-		$self->{defaultStyle} = new Wx::TextAttr(
-			new Wx::Colour(255, 255, 255),
-			$self->GetBackgroundColour,
-			$font
-		);
-		$self->SetDefaultStyle($self->{defaultStyle});
-
-		foreach (keys %fgcolors) {
-			delete $fgcolors{$_}[STYLE_SLOT];
-		}
+	foreach (keys %fgcolors) {
+		delete $fgcolors{$_}[STYLE_SLOT];
 	}
 }
 
@@ -131,12 +101,9 @@ sub selectFont {
 }
 
 sub add {
-	my $self = shift;
-	my $type = shift;
-	my $msg = shift;
-	my $domain = shift;
+	my ($self, $type, $msg, $domain) = @_;
 
-	$self->Freeze();
+	my $atBottom = $self->IsPositionVisible($self->GetLastPosition());
 
 	# Determine color
 	my $revertStyle;
@@ -154,9 +121,12 @@ sub add {
 					$fgcolors{$colorName}[1],
 					$fgcolors{$colorName}[2]);
 				if ($fgcolors{$colorName}[3]) {
-					$style = new Wx::TextAttr($color, wxNullColour, $self->{boldFont});
+					$style = new Wx::TextAttrEx();
+					$style->SetTextColour($color);
+					$style->SetFont($self->{boldFont});
 				} else {
-					$style = new Wx::TextAttr($color);
+					$style = new Wx::TextAttrEx();
+					$style->SetTextColour($color);
 				}
 				$fgcolors{$colorName}[STYLE_SLOT] = $style;
 			}
@@ -165,20 +135,20 @@ sub add {
 			$revertStyle = 1;
 		}
 	}
-
-	# Add text
+	
 	$self->AppendText($msg);
 	$self->SetDefaultStyle($self->{defaultStyle}) if ($revertStyle);
 
 	# Limit the number of lines in the console
-	if ($self->GetNumberOfLines > MAX_LINES) {
+	if ($self->GetNumberOfLines() > MAX_LINES) {
 		my $linesToDelete = $self->GetNumberOfLines() - MAX_LINES;
 		my $pos = $self->XYToPosition(0, $linesToDelete + MAX_LINES / 10);
 		$self->Remove(0, $pos);
 	}
 
-	$self->SetInsertionPointEnd();
-	$self->Thaw();
+	if ($atBottom) {
+		$self->ShowPosition($self->GetLastPosition());
+	}
 }
 
 
