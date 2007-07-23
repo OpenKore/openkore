@@ -2,7 +2,7 @@
 #  OpenKore - WxWidgets Interface
 #  Text input control with history support
 #
-#  Copyright (c) 2004 OpenKore development team 
+#  Copyright (c) 2004,2007 OpenKore development team 
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -106,18 +106,17 @@ sub _onUpdown {
 		$targetBox = $parent->FindWindow('targetBox') if ($parent);
 		$targetBox->SetFocus if ($targetBox);
 
-	} elsif ($event->GetKeyCode == WXK_NEXT && $event->ControlDown) {
+	} elsif ($event->GetKeyCode == WXK_PAGEDOWN && $event->ControlDown) {
 		my $parent = $self->GetParent;
 		my $notebook;
 		$notebook = $parent->FindWindow('notebook') if ($parent);
 		$notebook->nextPage if ($notebook);
 
-	} elsif ($event->GetKeyCode == WXK_PRIOR && $event->ControlDown) {
+	} elsif ($event->GetKeyCode == WXK_PAGEUP && $event->ControlDown) {
 		my $parent = $self->GetParent;
 		my $notebook;
 		$notebook = $parent->FindWindow('notebook') if ($parent);
 		$notebook->prevPage if ($notebook);
-
 
 	} else {
 		$event->Skip;
