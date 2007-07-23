@@ -128,6 +128,12 @@ sub loadPlugins {
 sub loadDataFiles {
 	import Settings qw(addConfigFile);
 
+	# These pragmas are necessary in order to support non-ASCII filenames.
+	# If we use UTF-8 strings then Perl will think the file doesn't exist,
+	# if $Settings::control_folder or $Settings::tables_folder contains
+	# non-ASCII characters.
+	no encoding 'utf8';
+
 	addConfigFile($Settings::config_file, \%config,\&parseConfigFile);
 	addConfigFile($Settings::items_control_file, \%items_control,\&parseItemsControl);
 	addConfigFile($Settings::mon_control_file, \%mon_control, \&parseMonControl);
@@ -176,6 +182,8 @@ sub loadDataFiles {
 	addConfigFile("$Settings::tables_folder/skillslooks.txt", \%skillsLooks, \&parseDataFile2);
 	addConfigFile("$Settings::tables_folder/skillsarea.txt", \%skillsArea, \&parseDataFile2);
 	addConfigFile("$Settings::tables_folder/skillsencore.txt", \%skillsEncore, \&parseList);
+	
+	use encoding 'utf8';
 
 	Plugins::callHook('start2');
 	eval {
