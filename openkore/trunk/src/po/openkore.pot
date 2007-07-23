@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-07-16 10:27+0700\n"
+"POT-Creation-Date: 2007-07-23 00:11+0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1611,7 +1611,7 @@ msgid ""
 "Usage: reload <name|\"all\">\n"
 msgstr ""
 
-#: ../Commands.pm:3225 ../functions.pl:188
+#: ../Commands.pm:3225 ../functions.pl:189
 #, perl-format
 msgid ""
 "The file %s must be valid UTF-8 encoded, which it is \n"
@@ -2324,14 +2324,15 @@ msgid ""
 "this\n"
 "problem.\n"
 "\n"
-"The error message is:\n"
-"%s\n"
+"A detailed error report has been saved to errors.txt. Please include the\n"
+"contents of this file in your bug report, or we may not be able to help "
+"you!\n"
 "\n"
-"A more detailed error report is saved to errors.txt. Please include the\n"
-"contents of this file in your report, or we may not be able to help you!"
+"The error message is:\n"
+"%s"
 msgstr ""
 
-#: ../ErrorHandler.pm:120
+#: ../ErrorHandler.pm:126
 #, perl-format
 msgid ""
 "\n"
@@ -3387,26 +3388,26 @@ msgid ""
 msgstr ""
 
 #. Translation Comment: Version String
-#: ../Settings.pm:64
+#: ../Settings.pm:65
 msgid " (SVN version)"
 msgstr ""
 
 #. Translation Comment: Version String
-#: ../Settings.pm:67
+#: ../Settings.pm:68
 msgid "Custom Ragnarok Online client"
 msgstr ""
 
-#: ../Settings.pm:68
+#: ../Settings.pm:69
 #, perl-format
 msgid "Welcome to %s."
 msgstr ""
 
-#: ../Settings.pm:348
+#: ../Settings.pm:349
 #, perl-format
 msgid "Loading %s...\n"
 msgstr ""
 
-#: ../Settings.pm:350
+#: ../Settings.pm:351
 #, perl-format
 msgid "Error: Couldn't load %s\n"
 msgstr ""
@@ -5073,11 +5074,11 @@ msgstr ""
 msgid "Logon-grant packet received twice! Avoiding bug in client.\n"
 msgstr ""
 
-#: ../Network/XKoreProxy.pm:556 ../functions.pl:299
+#: ../Network/XKoreProxy.pm:556 ../functions.pl:300
 msgid "Please choose a master server to connect to."
 msgstr ""
 
-#: ../Network/XKoreProxy.pm:558 ../functions.pl:301
+#: ../Network/XKoreProxy.pm:558 ../functions.pl:302
 msgid "Master servers"
 msgstr ""
 
@@ -5695,124 +5696,125 @@ msgstr ""
 #: ../functions.pl:113
 #, perl-format
 msgid ""
-"This plugin cannot be loaded. Please notify the plugin's author, or remove "
-"the plugin.\n"
+"This plugin cannot be loaded because of a problem in the plugin. Please "
+"notify the plugin's author about this problem, or remove the plugin so %s "
+"can start.\n"
 "\n"
 "The error message is:\n"
 "%s"
 msgstr ""
 
-#: ../functions.pl:182
+#: ../functions.pl:183
 msgid ""
 "A configuration file failed to load. Did you download the latest "
 "configuration files?"
 msgstr ""
 
-#: ../functions.pl:199
+#: ../functions.pl:200
 msgid ""
 "\n"
 "Auto-generating Admin Password due to default...\n"
 msgstr ""
 
-#: ../functions.pl:207
+#: ../functions.pl:208
 msgid ""
 "\n"
 "Generating session Admin Password...\n"
 msgstr ""
 
-#: ../functions.pl:257
+#: ../functions.pl:258
 msgid "Checking for new portals... "
 msgstr ""
 
-#: ../functions.pl:259
+#: ../functions.pl:260
 msgid "found new portals!\n"
 msgstr ""
 
-#: ../functions.pl:261
+#: ../functions.pl:262
 msgid ""
 "New portals have been added to the portals database. The portals database "
 "must be compiled before the new portals can be used. Would you like to "
 "compile portals now?\n"
 msgstr ""
 
-#: ../functions.pl:264
+#: ../functions.pl:265
 msgid "Yes, compile now."
 msgstr ""
 
-#: ../functions.pl:264
+#: ../functions.pl:265
 msgid "No, don't compile it."
 msgstr ""
 
-#: ../functions.pl:265
+#: ../functions.pl:266
 msgid "Compile portals?"
 msgstr ""
 
-#: ../functions.pl:267
+#: ../functions.pl:268
 msgid "compiling portals"
 msgstr ""
 
-#: ../functions.pl:270
+#: ../functions.pl:271
 msgid "skipping compile"
 msgstr ""
 
-#: ../functions.pl:273
+#: ../functions.pl:274
 msgid ""
 "none found\n"
 "\n"
 msgstr ""
 
-#: ../functions.pl:281
+#: ../functions.pl:282
 msgid "Please enter your Ragnarok Online username."
 msgstr ""
 
-#: ../functions.pl:288
+#: ../functions.pl:289
 msgid "Please enter your Ragnarok Online password."
 msgstr ""
 
-#: ../functions.pl:360
+#: ../functions.pl:361
 #, perl-format
 msgid "Next restart in %s\n"
 msgstr ""
 
-#: ../functions.pl:533
+#: ../functions.pl:534
 #, perl-format
 msgid "Unknown packet - %s\n"
 msgstr ""
 
-#: ../functions.pl:605
+#: ../functions.pl:606
 msgid ""
 "\n"
 "Auto-restarting!!\n"
 msgstr ""
 
-#: ../functions.pl:611
+#: ../functions.pl:612
 #, perl-format
 msgid "Sleeping for %s\n"
 msgstr ""
 
-#: ../functions.pl:652
+#: ../functions.pl:653
 #, perl-format
 msgid "Changing configuration file (from \"%s\" to \"%s\")...\n"
 msgstr ""
 
 #. Translation Comment: Interface Title with character status
-#: ../functions.pl:725
+#: ../functions.pl:726
 #, perl-format
 msgid "%s B%s (%s), J%s (%s) : w%s%s - %s"
 msgstr ""
 
 #. Translation Comment: Interface Title
-#: ../functions.pl:732
+#: ../functions.pl:733
 #, perl-format
 msgid "%sNot connected - %s"
 msgstr ""
 
 #. Translation Comment: Interface Title
-#: ../functions.pl:735
+#: ../functions.pl:736
 #, perl-format
 msgid "%sConnecting - %s"
 msgstr ""
 
-#: ../functions.pl:931
+#: ../functions.pl:932
 msgid "Map loaded\n"
 msgstr ""
