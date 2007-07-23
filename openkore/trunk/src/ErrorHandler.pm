@@ -108,8 +108,7 @@ sub errorHandler {
 	} elsif (defined &Carp::longmess) {
 		$log .= "Stack trace:\n";
 		my $e = $errorMessage;
-		$e =~ s/ at .*? line \d+\.$//s;
-		$log .= Carp::longmess($e);
+		$log .= Carp::longmess("$e\n");
 	}
 	$log =~ s/\n+$//s;
 

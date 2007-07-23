@@ -355,9 +355,10 @@ sub createInterface {
 	my $timer = new Wx::Timer($self, 73289);
 	EVT_TIMER($self, 73289, sub {
 		$self->{inputBox}->SetFocus;
+		$self->{notebook}->switchPage('Console');
 #		$splitter->SetSashGravity(1);
 	});
-	$timer->Start(100, 1);
+	$timer->Start(500, 1);
 
 	# Hide console on Win32
 	if ($^O eq 'MSWin32' && $sys{wxHideConsole}) {
@@ -726,9 +727,7 @@ sub onInputEnter {
 	my $n = $self->{inputType}->GetSelection;
 	if ($n == 0 || $text =~ /^\/(.*)/) {
 		my $command = ($n == 0) ? $text : $1;
-		$self->{console}->SetDefaultStyle($self->{console}{inputStyle});
-		$self->{console}->AppendText("$command\n");
-		$self->{console}->SetDefaultStyle($self->{console}{defaultStyle});
+		$self->{console}->add("input", "$command\n");
 		$self->{inputBox}->Remove(0, -1);
 		$self->{input} = $command;
 		return;
