@@ -5,6 +5,7 @@
 Bug fixes:
 - Fix loading of data files that are located in folders with non-ASCII
   characters.
+- X-Kore 2 has been entirely rewritten and is now more reliable.
 
 
 =========================

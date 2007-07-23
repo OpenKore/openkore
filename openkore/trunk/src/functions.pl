@@ -230,8 +230,10 @@ sub initNetworking {
 			$net = new Network::XKore;
 		} elsif ($XKore_version eq "2") {
 			# Run as a proxy bot, allowing Ragnarok to connect while botting
+			require Network::DirectConnection;
 			require Network::XKore2;
-			$net = new Network::XKore2;
+			$net = new Network::DirectConnection;
+			Network::XKore2::start();
 		} elsif ($XKore_version eq "3" || $XKore_version eq "proxy") {
 			# Proxy Ragnarok client connection
 			require Network::XKoreProxy;
