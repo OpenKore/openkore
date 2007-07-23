@@ -331,7 +331,7 @@ sub checkClient {
 			my ($map, $x, $y) = ("$field{name}.gat", 500, 500);
 			Plugins::callHook('XKore/map', {r_map => \$map, r_x => \$x, r_y => \$y});
 
-			$msg = pack('C2 Z16 v2', 0x91, 0, $map, $x, $y);
+			my $msg = pack('C2 Z16 v2', 0x91, 0, $map, $x, $y);
 			$self->clientSend($msg,1);
 			$self->{client_state} = -2;
 		}
