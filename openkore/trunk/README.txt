@@ -2,6 +2,10 @@
 ### OpenKore 2.0.2
 =========================
 
+Bug fixes:
+- Fix loading of data files that are located in folders with non-ASCII
+  characters.
+
 
 =========================
 ### OpenKore 2.0.1
