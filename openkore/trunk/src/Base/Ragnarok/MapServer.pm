@@ -33,7 +33,6 @@ sub new {
 
 sub getCharInfo {
 	#my ($self, $session) = @_;
-	
 }
 
 sub handleLogin {
