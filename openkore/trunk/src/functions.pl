@@ -915,7 +915,7 @@ sub parseOutgoingClientMessage {
 		}
 
 	} elsif ($switch eq "007E") {
-		if($masterServer && $masterServer->{paddedPackets}) {
+		if ($masterServer && $masterServer->{paddedPackets}) {
 			$syncSync = substr($msg, 4, 4);
 		}
 

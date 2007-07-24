@@ -27,10 +27,14 @@ use Network::MessageTokenizer;
 use I18N qw(stringToBytes);
 use Utils qw(shiftPack);
 
+
 # Overrided method.
 sub onClientNew {
 	my ($self, $client, $index) = @_;
 	$self->SUPER::onClientNew($client, $index);
+
+	# In here we store messages that the RO client wants to
+	# send to the server.
 	$client->{outbox} = new Network::MessageTokenizer($self->getRecvPackets());
 }
 

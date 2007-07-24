@@ -2457,7 +2457,7 @@ sub exp_zeny_info {
 		$char->{exp_max_last} = $char->{exp_max};
 		$char->{exp_max} = $args->{val};
 		debug(TF("Required Exp: %s\n", $args->{val}), "parseMsg");
-		if (!$net->clientAlive() && $initSync && $config{serverType} == 2) {
+		if (!$net->clientAlive() && $initSync && $masterServer->{serverType} == 2) {
 			$messageSender->sendSync(1);
 			$initSync = 0;
 		}
@@ -3632,10 +3632,12 @@ sub map_change {
 	} else {
 		$messageSender->sendMapLoaded();
 		# Sending sync packet. Perhaps not only for server types 13 and 11
-		if ($config{serverType} == 11 || $config{serverType} == 12 || $config{serverType} == 13 || $config{serverType} == 16 || $config{serverType} == 17 || $config{serverType} == 18) {
+		my $serverType = $masterServer->{serverType};
+		if ($serverType == 11 || $serverType == 12 || $serverType == 13 || $serverType == 16
+		 || $serverType == 17 || $serverType == 18) {
 			$messageSender->sendSync(1);
 		}
-		$timeout{'ai'}{'time'} = time;
+		$timeout{ai}{time} = time;
 	}
 
 	my %hookArgs = (oldMap => $oldMap);
@@ -4702,7 +4704,7 @@ sub sync_request {
 	# I'm not sure what this is. In inRO this seems to have something
 	# to do with logging into the game server, while on
 	# oRO it has got something to do with the sync packet.
-	if ($config{serverType} == 1) {
+	if ($masterServer->{serverType} == 1) {
 		my $ID = $args->{ID};
 		if ($ID == $accountID) {
 			$timeout{ai_sync}{time} = time;

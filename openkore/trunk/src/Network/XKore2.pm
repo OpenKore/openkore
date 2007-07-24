@@ -21,6 +21,7 @@ use strict;
 use Globals qw(%config %rpackets $masterServer);
 use Plugins;
 use Base::Ragnarok::SessionStore;
+use Network;
 use Network::XKore2::AccountServer;
 use Network::XKore2::CharServer;
 use Network::XKore2::MapServer;
@@ -98,13 +99,19 @@ sub clientRecv {
 	use bytes;
 	my (undef, $args) = @_;
 
-	my $result = '';
-	foreach my $client (@{$mapServer->clients}) {
-		while (my $message = $client->{outbox}->readNext()) {
-			$result .= $message;
+	if ($args->{net}->getState() != Network::IN_GAME) {
+		foreach my $client (@{$mapServer->clients}) {
+			$client->{outbox} = '' if ($client->{outbox});
 		}
+	} else {
+		my $result = '';
+		foreach my $client (@{$mapServer->clients}) {
+			while (my $message = $client->{outbox}->readNext()) {
+				$result .= $message;
+			}
+		}
+		$args->{return} = $result if (length($result) > 0);
 	}
-	$args->{return} = $result if (length($result) > 0);
 }
 
 sub mainLoop {
