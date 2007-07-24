@@ -384,6 +384,8 @@ sub createMenuBar {
 	$self->{mManual} = $self->addMenu($opMenu, '&Manual Botting', \&onManualAI, 'Pause automated botting and allow manual control');
 	$self->{mResume} = $self->addMenu($opMenu, '&Automatic Botting', \&onEnableAI, 'Resume all automated botting activity');
 	$opMenu->AppendSeparator;
+	$self->addMenu($opMenu, 'Copy Last 100 Lines of Text', \&onCopyLastOutput);
+	$opMenu->AppendSeparator;
 	if ($^O eq 'MSWin32') {
 		$self->addMenu($opMenu, 'Minimize to &Tray', \&onMinimizeToTray, 'Minimize to a small task bar tray icon');
 		$opMenu->AppendSeparator;
@@ -781,6 +783,11 @@ sub onManualAI {
 
 sub onDisableAI {
 	$AI = 0;
+}
+
+sub onCopyLastOutput {
+	my ($self) = @_;
+	$self->{console}->copyLastLines(100);
 }
 
 sub onMinimizeToTray {

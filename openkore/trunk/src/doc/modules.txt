@@ -51,5 +51,6 @@ Utils::Win32
 
 Bus::Messages
 
+Interface::Wx::Console
 Interface::Wx::DockNotebook
 Interface::Wx::DockNotebook::Page
