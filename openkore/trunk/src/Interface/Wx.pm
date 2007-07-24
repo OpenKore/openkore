@@ -25,6 +25,10 @@ package Interface::Wx;
 
 # Note: don't use wxTimer for anything important. It's known to cause reentrancy issues!
 
+BEGIN {
+	require Wx::Perl::Packager if ($^O eq 'MSWin32');
+}
+
 use strict;
 use Wx ':everything';
 use Wx::Event qw(EVT_CLOSE EVT_MENU EVT_MENU_OPEN EVT_LISTBOX_DCLICK
@@ -521,11 +525,9 @@ sub createSplitterContent {
 	my $page = $notebook->newPage(0, 'Console');
 	my $console = $self->{console} = new Interface::Wx::Console($page);
 	$page->set($console);
-print "1\n";
+
 	$page = $notebook->newPage(1, 'Chat Log', 0);
-	print "2\n";
 	my $chatLog = $self->{chatLog} = new Interface::Wx::LogView($page);
-	print "3\n";
 	$page->set($chatLog);
 	$chatLog->addColor("selfchat", 0, 148, 0);
 	$chatLog->addColor("pm", 142, 120, 0);
