@@ -1238,7 +1238,7 @@ sub processAutoStorage {
 						$args->{lastIndex} = $item->{index};
 						$messageSender->sendStorageAdd($item->{index}, $item->{amount} - $control->{keep});
 						$timeout{ai_storageAuto}{time} = time;
-						$args->{nextItem} = $i + 1;
+						$args->{nextItem} = $i;
 						return;
 					}
 				}

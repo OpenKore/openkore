@@ -6,6 +6,11 @@ Bug fixes:
 - Fix loading of data files that are located in folders with non-ASCII
   characters.
 - X-Kore 2 has been entirely rewritten and is now more reliable.
+- Fixed autostorage.
+- The Wx interface now allows you to scroll up the console.
+
+Credits:
+- rastalo & shamikchand: Autostorage bug report & fix.
 
 
 =========================
