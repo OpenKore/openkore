@@ -19,21 +19,33 @@
 #  $Id$
 #
 #########################################################################
+##
+# MODULE DESCRIPTION: Console control.
+#
+# This control emulates a console, similar to xterm/gnome-terminal/the DOS box.
+# It supports automatic scrolling, colored text, and a bounded scrollback buffer.
 package Interface::Wx::Console;
 
 use strict;
 use Wx ':everything';
 use Wx::RichText;
 use base qw(Wx::RichTextCtrl);
-require DynaLoader;
 use encoding 'utf8';
 
-use Globals;
+use Globals qw(%consoleColors);
+use Utils::StringScanner;
+
 use constant STYLE_SLOT => 4;
 use constant MAX_LINES => 1000;
 
 our %fgcolors;
 
+
+##
+# Interface::Wx::Console->new(Wx::Window parent)
+#
+# Create a new Interface::Wx::Console control, with $parent as its parent
+# control.
 sub new {
 	my ($class, $parent) = @_;
 
@@ -42,7 +54,12 @@ sub new {
 		wxTE_MULTILINE | wxVSCROLL | wxTE_NOHIDESEL);
 	$self->SetEditable(0);
 	$self->BeginSuppressUndo();
-	$self->SetBackgroundColour(new Wx::Colour(0, 0, 0));
+	#$self->SetForegroundColour(wxWHITE);
+	#$self->SetBackgroundColour(wxBLACK);
+
+	$self->{defaultStyle} = new Wx::TextAttrEx();
+	$self->{defaultStyle}->SetTextColour($self->GetForegroundColour());
+	$self->{defaultStyle}->SetBackgroundColour($self->GetBackgroundColour());
 
 	my $font;
 	if (Wx::wxMSW()) {
@@ -50,15 +67,20 @@ sub new {
 	} else {
 		$font = new Wx::Font(10, wxMODERN, wxNORMAL, wxNORMAL, 0, 'MiscFixed');
 	}
-	$self->changeFont($font);
+	$self->setFont($font);
 
-	$self->{inputStyle} = new Wx::TextAttrEx();
-	$self->{inputStyle}->SetTextColour(new Wx::Colour(200, 200, 200));
+	$self->{inputStyle} = {
+		color => new Wx::Colour(200, 200, 200)
+	};
 
 	return $self;
 }
 
-sub changeFont {
+##
+# void $Interface_Wx_Console->setFont(Wx::Font font)
+#
+# Set the font used in this console.
+sub setFont {
 	my ($self, $font) = @_;
 	return unless $font->Ok;
 
@@ -73,87 +95,157 @@ sub changeFont {
 	);
 	$self->{boldFont} = $bold;
 
-	$self->{defaultStyle} = new Wx::TextAttr(
-		new Wx::Colour(255, 255, 255),
-		$self->GetBackgroundColour,
-		$font
-	);
-	$self->SetDefaultStyle($self->{defaultStyle});
+	$self->{defaultStyle}->SetFont($font);
+	$self->SetBasicStyleEx($self->{defaultStyle});
+	$self->Refresh();
 
-	foreach (keys %fgcolors) {
-		delete $fgcolors{$_}[STYLE_SLOT];
+	foreach my $colorName (keys %fgcolors) {
+		delete $fgcolors{$colorName}[STYLE_SLOT];
 	}
 }
 
+##
+# void $Wx_Interface_Console->selectFont(Wx::Window parent)
+#
+# Show a font dialog and let the user pick a font. This font
+# will be used in this console.
 sub selectFont {
-	my $self = shift;
-	my $parent = shift;
+	my ($self, $parent) = @_;
 
 	my $fontData = new Wx::FontData;
 	$fontData->SetInitialFont($self->{font});
 	$fontData->EnableEffects(0);
 
 	my $dialog = new Wx::FontDialog($parent, $fontData);
+	$dialog->Show();
 	if ($dialog->ShowModal == wxID_OK) {
-		$self->changeFont($dialog->GetFontData->GetChosenFont);
+		$self->setFont($dialog->GetFontData->GetChosenFont());
 	}
-	$dialog->Destroy;
+	$dialog->Destroy();
 }
 
-sub add {
-	my ($self, $type, $msg, $domain) = @_;
+sub copyLastLines {
+	my ($self, $limit) = @_;
+	my $startLine = $self->GetNumberOfLines() - $limit;
+	my $startPos = $self->XYToPosition(0, $startLine < 0 ? 0 : $startLine);
+	my $endPos = $self->XYToPosition(0, $self->GetNumberOfLines() - 1);
+	$self->SetSelection($startPos, $endPos);
+	$self->Copy();
+}
 
-	my $atBottom = $self->IsPositionVisible($self->GetLastPosition());
+sub determineFontStyle {
+	my ($self, $type, $domain) = @_;
 
-	# Determine color
-	my $revertStyle;
-	if (!$self->{noColors} && $consoleColors{$type}) {
+	if ($type eq 'input') {
+		return $self->{inputStyle};
+	} elsif ($consoleColors{$type}) {
+		my $result;
 		$domain = 'default' if (!$consoleColors{$type}{$domain});
 
 		my $colorName = $consoleColors{$type}{$domain};
 		if ($fgcolors{$colorName} && $colorName ne "default" && $colorName ne "reset") {
-			my $style;
 			if ($fgcolors{$colorName}[STYLE_SLOT]) {
-				$style = $fgcolors{$colorName}[STYLE_SLOT];
+				$result = $fgcolors{$colorName}[STYLE_SLOT];
 			} else {
-				my $color = new Wx::Colour(
-					$fgcolors{$colorName}[0],
-					$fgcolors{$colorName}[1],
-					$fgcolors{$colorName}[2]);
-				if ($fgcolors{$colorName}[3]) {
-					$style = new Wx::TextAttrEx();
-					$style->SetTextColour($color);
-					$style->SetFont($self->{boldFont});
-				} else {
-					$style = new Wx::TextAttrEx();
-					$style->SetTextColour($color);
-				}
-				$fgcolors{$colorName}[STYLE_SLOT] = $style;
+				$result = {
+					color => new Wx::Colour(
+						$fgcolors{$colorName}[0],
+						$fgcolors{$colorName}[1],
+						$fgcolors{$colorName}[2]),
+					bold => $fgcolors{$colorName}[3]
+				};
+				$fgcolors{$colorName}[STYLE_SLOT] = $result;
 			}
-
-			$self->SetDefaultStyle($style);
-			$revertStyle = 1;
 		}
+		return $result;
 	}
-	
-	$self->AppendText($msg);
-	$self->SetDefaultStyle($self->{defaultStyle}) if ($revertStyle);
+}
 
-	# Limit the number of lines in the console
+sub isAtBottom {
+	my ($self) = @_;
+	return $self->IsPositionVisible($self->GetLastPosition());
+}
+
+sub finalizePrinting {
+	my ($self, $wasAtBottom) = @_;
+
+	# Limit the number of lines in the console.
 	if ($self->GetNumberOfLines() > MAX_LINES) {
 		my $linesToDelete = $self->GetNumberOfLines() - MAX_LINES;
 		my $pos = $self->XYToPosition(0, $linesToDelete + MAX_LINES / 10);
 		$self->Remove(0, $pos);
 	}
 
-	if ($atBottom) {
-		$self->ShowPosition($self->GetLastPosition());
+	$self->ShowPosition($self->GetLastPosition()) if ($wasAtBottom);
+}
+
+##
+# void $Interface_Wx_Console->add(String type, String message, String domain)
+#
+# Print a text to this console, with the given type and domain. See the
+# logging framework (@MODULE(Log)) for more information about message
+# types and message domains.
+sub add {
+	my ($self, $type, $msg, $domain) = @_;
+	my $atBottom = $self->isAtBottom();
+
+	# Apply the appropriate font style, then add the text, then revert
+	# back to the previous font style.
+	my $style = $self->determineFontStyle($type, $domain);
+	if ($style) {
+		$self->BeginTextColour($style->{color});
+		$self->BeginBold() if ($style->{bold});
 	}
+	$self->AppendText($msg);
+	if ($style) {
+		$self->EndTextColour();
+		$self->EndBold() if ($style->{bold});
+	}
+
+	$self->finalizePrinting($atBottom);
+}
+
+sub addColoredText {
+	my ($self, $text) = @_;
+	my $atBottom = $self->isAtBottom();
+
+	my $style = new Wx::TextAttrEx();
+	$style->SetTextColour(wxBLACK);
+	$style->SetBackgroundColour(wxWHITE);
+	$self->BeginStyle($style);
+
+	my $scanner = new Utils::StringScanner($text);
+	my $colorCodeEncountered;
+	while (!$scanner->eos()) {
+		my $text = $scanner->scanUntil(qr/\^[a-fA-F0-9]{6}/o);
+		if (defined($text) && length($text) > 0) {
+			# Process text.
+			$self->AppendText($text);
+		} else {
+			$text = $scanner->scan(qr/\^[a-fA-F0-9]{6}/o);
+			if (defined $text) {
+				# Process color code.
+				$text =~ /([a-f0-9]{2})([a-f0-9]{2})([a-f0-9]{2})/i;
+				$self->EndTextColour() if ($colorCodeEncountered);
+				$self->BeginTextColour(new Wx::Colour(hex($1), hex($2), hex($3)));
+				$colorCodeEncountered = 1;
+			} else {
+				# Process text until end-of-string.
+				$self->AppendText($scanner->rest());
+				$scanner->terminate();
+			}
+		}
+	}
+
+	$self->EndTextColour() if ($colorCodeEncountered);
+	$self->EndStyle();
+	$self->finalizePrinting($atBottom);
 }
 
 
 #####################################
 
+# Maps color names to color codes and font weights.
 # Format: [R, G, B, bold]
 %fgcolors = (
 	'reset'		=> [255, 255, 255],
