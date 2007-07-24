@@ -54,8 +54,8 @@ sub new {
 		wxTE_MULTILINE | wxVSCROLL | wxTE_NOHIDESEL);
 	$self->SetEditable(0);
 	$self->BeginSuppressUndo();
-	#$self->SetForegroundColour(wxWHITE);
-	#$self->SetBackgroundColour(wxBLACK);
+	$self->SetForegroundColour(wxWHITE);
+	$self->SetBackgroundColour(wxBLACK);
 
 	$self->{defaultStyle} = new Wx::TextAttrEx();
 	$self->{defaultStyle}->SetTextColour($self->GetForegroundColour());

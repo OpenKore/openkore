@@ -386,7 +386,6 @@ sub defaultCompletor {
 
 	my $arg = $args[$#args];
 	@matches = completePlayerName($arg);
-	@matches = Skill::complete($arg) if (!@matches);
 	return ($last_arg_pos, \@matches);
 }
 
