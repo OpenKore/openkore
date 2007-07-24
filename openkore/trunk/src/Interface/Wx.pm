@@ -385,11 +385,8 @@ sub createMenuBar {
 	$self->{mResume} = $self->addMenu($opMenu, '&Automatic Botting', \&onEnableAI, 'Resume all automated botting activity');
 	$opMenu->AppendSeparator;
 	$self->addMenu($opMenu, 'Copy Last 100 Lines of Text', \&onCopyLastOutput);
+	$self->addMenu($opMenu, 'Minimize to &Tray', \&onMinimizeToTray, 'Minimize to a small task bar tray icon');
 	$opMenu->AppendSeparator;
-	if ($^O eq 'MSWin32') {
-		$self->addMenu($opMenu, 'Minimize to &Tray', \&onMinimizeToTray, 'Minimize to a small task bar tray icon');
-		$opMenu->AppendSeparator;
-	}
 	$self->addMenu($opMenu, 'E&xit	Ctrl-W', \&quit, 'Exit this program');
 	$menu->Append($opMenu, 'P&rogram');
 
