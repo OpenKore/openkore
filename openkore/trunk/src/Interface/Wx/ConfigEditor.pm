@@ -203,7 +203,7 @@ sub downloadManual {
 		my $label = new Wx::StaticText($dialog, -1, "Downloading manual, please wait...");
 		$sizer->Add($label, 1, wxGROW | wxALL, 8);
 		my $gauge = new Wx::Gauge($dialog, -1, 100, wxDefaultPosition,
-			[0, 16], wxGA_SMOOTH | wxGA_HORIZONTAL | wxGA_PROGRESSBAR);
+			[0, 16], wxGA_SMOOTH | wxGA_HORIZONTAL);
 		$sizer->Add($gauge, 0, wxGROW | wxLEFT | wxRIGHT, 8);
 		my $button = new Wx::Button($dialog, 475, '&Cancel');
 		$sizer->Add($button, 0, wxALL | wxALIGN_CENTRE_HORIZONTAL, 8);
