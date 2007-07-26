@@ -93,11 +93,11 @@ sub _selectCategory {
 	}
 
 	if ($self->{intro}) {
-		$self->{hsizer}->Remove($self->{intro});
+		$self->{hsizer}->Detach($self->{intro});
 		$self->{intro}->Destroy;
 		delete $self->{intro};
 	} elsif ($self->{editor}) {
-		$self->{hsizer}->Remove($self->{editor});
+		$self->{hsizer}->Detach($self->{editor});
 		$self->{editor}->Destroy;
 		delete $self->{editor};
 	}
