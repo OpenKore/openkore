@@ -3171,14 +3171,18 @@ sub item_used {
 
 	if ($ID eq $accountID) {
 		my $item = $char->inventory->getByServerIndex($index);
-		my $amount = $item->{amount} - $remaining;
-		$item->{amount} -= $amount;
+		if ($item) {
+			my $amount = $item->{amount} - $remaining;
+			$item->{amount} -= $amount;
 
-		message TF("You used Item: %s (%d) x %d - %d left\n", $item->{name}, $item->{invIndex},
-			$amount, $remaining), "useItem", 1;
-		$itemChange{$item->{name}}--;
-		if ($item->{amount} <= 0) {
-			$char->inventory->remove($item);
+			message TF("You used Item: %s (%d) x %d - %d left\n", $item->{name}, $item->{invIndex},
+				$amount, $remaining), "useItem", 1;
+			$itemChange{$item->{name}}--;
+			if ($item->{amount} <= 0) {
+				$char->inventory->remove($item);
+			}
+		} else {
+			message TF("You used %d unknown items - %d left\n", $amount, $remaining), "useItem", 1;
 		}
 
 		Plugins::callHook('packet_useitem', {
@@ -3187,7 +3191,6 @@ sub item_used {
 			name => $item->{name},
 			amount => $amount
 		});
-		$args->{item} = $item;
 
 	} else {
 		my $actor = Actor::get($ID);
