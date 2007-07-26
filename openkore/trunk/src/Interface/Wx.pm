@@ -565,9 +565,9 @@ sub createSplitterContent {
 	my $mapView = $self->{mapViewer} = new Interface::Wx::MapViewer($mapDock);
 	$mapDock->setParentFrame($frame);
 	$mapDock->set($mapView);
-	$mapView->onMouseMove(\&onMapMouseMove, $self);
-	$mapView->onClick(\&onMapClick, $self);
-	$mapView->onMapChange(\&onMap_MapChange, $mapDock);
+	$mapView->onMouseMove($self, \&onMapMouseMove);
+	$mapView->onClick->add($self, \&onMapClick);
+	$mapView->onMapChange($self, \&onMap_MapChange, $mapDock);
 	$mapView->parsePortals("$Settings::tables_folder/portals.txt");
 	if ($field && $char) {
 		$mapView->set($field->name(), $char->{pos_to}{x}, $char->{pos_to}{y}, $field);
@@ -983,7 +983,8 @@ sub onChatAdd {
 
 sub onMapMouseMove {
 	# Mouse moved over the map viewer control
-	my ($self, $x, $y) = @_;
+	my ($self, undef, $args) = @_;
+	my ($x, $y) = @{$args};
 	my $walkable;
 
 	$walkable = $field->isWalkable($x, $y);
@@ -997,7 +998,8 @@ sub onMapMouseMove {
 
 sub onMapClick {
 	# Clicked on map viewer control
-	my ($self, $x, $y) = @_;
+	my ($self, undef, $args) = @_;
+	my ($x, $y) = @{$args};
 	my $checkPortal = 0;
 	delete $self->{mouseMapText};
 	if ($self->{mapViewer} && $self->{mapViewer}->{portals}
@@ -1022,7 +1024,7 @@ sub onMapClick {
 }
 
 sub onMap_MapChange {
-	my ($mapDock) = @_;
+	my (undef, undef, undef, $mapDock) = @_;
 	$mapDock->title($field->name());
 	$mapDock->Fit;
 }
