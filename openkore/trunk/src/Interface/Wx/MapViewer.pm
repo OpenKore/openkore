@@ -357,7 +357,6 @@ sub _onPaint {
 	return unless ($self->{bitmap});
 
 	my ($x, $y);
-	$dc->BeginDrawing;
 
 	$dc->SetPen(wxBLACK_PEN);
 	$dc->SetBrush(wxBLACK_BRUSH);
@@ -425,8 +424,6 @@ sub _onPaint {
 		$dc->SetBrush(wxCYAN_BRUSH);
 		$dc->DrawEllipse($x - 5, $y - 5, 10, 10);
 	}
-
-	$dc->EndDrawing;
 }
 
 return 1;
