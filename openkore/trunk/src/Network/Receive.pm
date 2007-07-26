@@ -3171,8 +3171,8 @@ sub item_used {
 
 	if ($ID eq $accountID) {
 		my $item = $char->inventory->getByServerIndex($index);
+		my $amount = $item->{amount} - $remaining;
 		if ($item) {
-			my $amount = $item->{amount} - $remaining;
 			$item->{amount} -= $amount;
 
 			message TF("You used Item: %s (%d) x %d - %d left\n", $item->{name}, $item->{invIndex},
