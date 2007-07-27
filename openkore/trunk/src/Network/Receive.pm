@@ -3168,11 +3168,17 @@ sub item_used {
 
 	my ($index, $itemID, $ID, $remaining) =
 		@{$args}{qw(index itemID ID remaining)};
+	my %hook_args = (
+		serverIndex => $index,
+		itemID => $ID,
+		userID => $ID,
+		remaining => $remaining
+	);
 
 	if ($ID eq $accountID) {
 		my $item = $char->inventory->getByServerIndex($index);
-		my $amount = $item->{amount} - $remaining;
 		if ($item) {
+			my $amount = $item->{amount} - $remaining;
 			$item->{amount} -= $amount;
 
 			message TF("You used Item: %s (%d) x %d - %d left\n", $item->{name}, $item->{invIndex},
@@ -3181,22 +3187,22 @@ sub item_used {
 			if ($item->{amount} <= 0) {
 				$char->inventory->remove($item);
 			}
-		} else {
-			message TF("You used %d unknown items - %d left\n", $amount, $remaining), "useItem", 1;
-		}
 
-		Plugins::callHook('packet_useitem', {
-			item => $item,
-			invIndex => $item->{invIndex},
-			name => $item->{name},
-			amount => $amount
-		});
+			$hook_args{item} = $item;
+			$hook_args{invIndex} = $item->{invIndex};
+			$hook_args{name} => $item->{name};
+			$hook_args{amount} = $amount;
+
+		} else {
+			message TF("You used unknown item #%d - %d left\n", $itemID, $remaining), "useItem", 1;
+		}
 
 	} else {
 		my $actor = Actor::get($ID);
 		my $itemDisplay = itemNameSimple($itemID);
 		message TF("%s used Item: %s - %s left\n", $actor, $itemDisplay, $remaining), "useItem", 2;
 	}
+	Plugins::callHook('packet_useitem', \%hook_args);
 }
 
 sub married {
