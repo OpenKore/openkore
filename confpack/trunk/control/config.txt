@@ -311,8 +311,7 @@ homunculus_teleportAuto_totalDmgInLock 0
 homunculus_intimacyMax 999
 homunculus_intimacyMin 911
 
-# How long should we wait between feeding? 
-# default: random between 10 and 60 seconds
+# How long should we wait between feeding? default: random between 10 and 60 seconds
 homunculus_hungerTimeoutMax 60
 homunculus_hungerTimeoutMin 10
 
@@ -321,6 +320,9 @@ homunculus_autoFeed 1
 # In Wich maps should we allow feeding? (leave empty for any map)
 homunculus_autoFeedAllowedMaps
 
+# Feed homunculus between MIN and MAX value (example: between 11 and 25)
+homunculus_hungerMin 11
+homunculus_hungerMax 24
 
 ######## Block options ########
 # You can copy & paste any block multiple times. So if you want to
