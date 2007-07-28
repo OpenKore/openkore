@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: OpenKore 1.9.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-07-23 00:11+0700\n"
-"PO-Revision-Date: 2007-07-24 19:54+0800\n"
+"PO-Revision-Date: 2007-07-29 00:11+0800\n"
 "Last-Translator: 小溫 <littlewens@yahoo.com.tw>\n"
 "Language-Team: littlewens <littlewens@yahoo.com.tw>\n"
 "MIME-Version: 1.0\n"
@@ -3877,7 +3877,7 @@ msgid ""
 "Note: LOS information for the above listed map(s) will be inaccurate;\n"
 "      however it is safe to ignore if those map(s) are not used\n"
 msgstr ""
-"注意: 以上列出的地圖的LOS資訊不正確;\n"
+"注意: 以上列出的地圖的 LOS 資訊不正確;\n"
 "      然而假如這些地圖沒有使用到的話是可安全被忽略的\n"
 
 #: ../Misc.pm:3544
@@ -6259,7 +6259,7 @@ msgstr "無法從 %s (%s,%s) 走到位於 (%s,%s) 的NPC.\n"
 #: ../Task/MapRoute.pm:247
 #, perl-format
 msgid "No LOS from %s (%s,%s) to Final Destination at (%s,%s).\n"
-msgstr "無 LOS 能從 %s (%s,%s) 到最終的目的地 (%s,%s).\n"
+msgstr "從 %s (%s,%s) 到最終的目的地 (%s,%s) 無 LOS.\n"
 
 #: ../Task/MapRoute.pm:303
 #, perl-format
@@ -6269,7 +6269,7 @@ msgstr "嘗試在傳點附近瞬移, 試著 #%s\n"
 #: ../Task/MapRoute.pm:339
 #, perl-format
 msgid "No LOS from %s (%s,%s) to Portal at (%s,%s).\n"
-msgstr "無LOS從 %s (%s,%s) 到 (%s,%s) 的傳點.\n"
+msgstr "從 %s (%s,%s) 到 (%s,%s) 的傳點無 LOS.\n"
 
 #: ../Task/Route.pm:225
 msgid "Destination reached.\n"
