@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.9.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-07-23 00:11+0700\n"
-"PO-Revision-Date: 2007-07-23 00:15+0700\n"
+"POT-Creation-Date: 2007-07-29 14:21+0700\n"
+"PO-Revision-Date: 2007-07-29 14:24+0700\n"
 "Last-Translator: h4rry84 <dewa5227@yahoo.com>\n"
 "Language-Team: skseo <skseo76@hotmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -98,13 +98,13 @@ msgid "Calculating route to: %s(%s): %d, %d\n"
 msgstr "경로 계산 : %s(%s): %d, %d\n"
 
 #: ../ChatQueue.pm:283
-#: ../Commands.pm:2701
+#: ../Commands.pm:2700
 #, perl-format
 msgid "Calculating route to: %s(%s)\n"
 msgstr "경로 계산 : %s(%s)\n"
 
 #: ../ChatQueue.pm:290
-#: ../Commands.pm:2717
+#: ../Commands.pm:2716
 #, perl-format
 msgid "Map %s does not exist\n"
 msgstr "맵 %s 이 존재하지 않습니다.\n"
@@ -114,46 +114,46 @@ msgstr "맵 %s 이 존재하지 않습니다.\n"
 msgid "Unknown command '%s'. Please read the documentation for a list of commands.\n"
 msgstr "알려지지 않은 명령어 '%s'. 명령어 목록에 대한 문서를 읽으세요.\n"
 
-#: ../Commands.pm:407
+#: ../Commands.pm:406
 msgid "AI sequences cleared\n"
 msgstr "AI 시퀀스 초기화\n"
 
-#: ../Commands.pm:411
+#: ../Commands.pm:410
 msgid "------ AI Sequence ---------------------\n"
 msgstr "------ AI 시퀀스 ---------------------\n"
 
-#: ../Commands.pm:418
+#: ../Commands.pm:417
 msgid "------ AI Sequences --------------------\n"
 msgstr "------ AI 시퀀스 --------------------\n"
 
-#: ../Commands.pm:426
+#: ../Commands.pm:425
 msgid "AI is already set to auto mode\n"
 msgstr "AI 이미 자동 모드로 설정\n"
 
-#: ../Commands.pm:430
-#: ../Commands.pm:464
+#: ../Commands.pm:429
+#: ../Commands.pm:463
 msgid "AI set to auto mode\n"
 msgstr "AI : 자동 모드 : auto mode\n"
 
-#: ../Commands.pm:435
+#: ../Commands.pm:434
 msgid "AI is already set to manual mode\n"
 msgstr "이미 AI 수동 모드 설정\n"
 
-#: ../Commands.pm:439
-#: ../Commands.pm:460
+#: ../Commands.pm:438
+#: ../Commands.pm:459
 msgid "AI set to manual mode\n"
 msgstr "AI 수동 모드로 설정\n"
 
-#: ../Commands.pm:446
-#: ../Commands.pm:456
+#: ../Commands.pm:445
+#: ../Commands.pm:455
 msgid "AI turned off\n"
 msgstr "AI 끄기\n"
 
-#: ../Commands.pm:448
+#: ../Commands.pm:447
 msgid "AI is already off\n"
 msgstr "AI 이미 끄져있음\n"
 
-#: ../Commands.pm:468
+#: ../Commands.pm:467
 msgid ""
 "Syntax Error in function 'ai' (AI Commands)\n"
 "Usage: ai [ clear | print | ai_v | auto | manual | off ]\n"
@@ -161,44 +161,44 @@ msgstr ""
 "문법 오류 in function 'ai' (AI Commands)\n"
 "사용법: ai [ clear | print | ai_v | auto | manual | off ]\n"
 
-#: ../Commands.pm:477
-#: ../Commands.pm:1791
+#: ../Commands.pm:476
+#: ../Commands.pm:1790
 #, perl-format
 msgid "ai_seq (off) = %s\n"
 msgstr "ai_seq (끔) = %s\n"
 
-#: ../Commands.pm:479
-#: ../Commands.pm:1793
+#: ../Commands.pm:478
+#: ../Commands.pm:1792
 #, perl-format
 msgid "ai_seq (manual) = %s\n"
 msgstr "ai_seq (수동) = %s\n"
 
-#: ../Commands.pm:481
-#: ../Commands.pm:1795
+#: ../Commands.pm:480
+#: ../Commands.pm:1794
 #, perl-format
 msgid "ai_seq (auto) = %s\n"
 msgstr "ai_seq (자동) = %s\n"
 
-#: ../Commands.pm:483
-#: ../Commands.pm:1797
+#: ../Commands.pm:482
+#: ../Commands.pm:1796
 msgid "solution\n"
 msgstr "해결\n"
 
-#: ../Commands.pm:484
+#: ../Commands.pm:483
 #, perl-format
 msgid "Active tasks: %s\n"
 msgstr "활성화 작업: %s\n"
 
-#: ../Commands.pm:485
+#: ../Commands.pm:484
 #, perl-format
 msgid "Inactive tasks: %s\n"
 msgstr "비활성화 작업: %s\n"
 
-#: ../Commands.pm:496
+#: ../Commands.pm:495
 msgid "----------------- Item To Craft -----------------\n"
 msgstr "----------------- 아이템 재료 -----------------\n"
 
-#: ../Commands.pm:506
+#: ../Commands.pm:505
 msgid ""
 "Error in function 'arrowcraft' (Create Arrows)\n"
 "Type 'arrowcraft use' to get list.\n"
@@ -206,7 +206,7 @@ msgstr ""
 "오류 함수 'arrowcraft' (Create Arrows)\n"
 "Type 'arrowcraft use' to get list.\n"
 
-#: ../Commands.pm:513
+#: ../Commands.pm:512
 msgid ""
 "Error in function 'arrowcraft' (Create Arrows)\n"
 "You don't have Arrow Making Skill.\n"
@@ -214,9 +214,9 @@ msgstr ""
 "오류 함수 'arrowcraft' (화살 생성)\n"
 "화살 만들기 스킬을 가지고 있지 않습니다.\n"
 
-#: ../Commands.pm:521
-#: ../Commands.pm:706
-#: ../Commands.pm:709
+#: ../Commands.pm:520
+#: ../Commands.pm:705
+#: ../Commands.pm:708
 #, perl-format
 msgid ""
 "Error in function 'arrowcraft forceuse #' (Create Arrows)\n"
@@ -225,7 +225,7 @@ msgstr ""
 "오류 함수  'arrowcraft forceuse #' (Create Arrows)\n"
 "아이템 %s 을 장비창에 가지고 있지 않습니다.\n"
 
-#: ../Commands.pm:528
+#: ../Commands.pm:527
 msgid ""
 "Error in function 'arrowcraft' (Create Arrows)\n"
 "Usage: arrowcraft [<identify #>]\n"
@@ -235,7 +235,7 @@ msgstr ""
 "사용법: arrowcraft [<identify #>]\n"
 "입력 'arrowcraft use' 얻은 목록에서.\n"
 
-#: ../Commands.pm:539
+#: ../Commands.pm:538
 #, perl-format
 msgid ""
 "Error in function 'a' (Attack Monster)\n"
@@ -244,7 +244,7 @@ msgstr ""
 "오류 함수 'a' (Attack Monster)\n"
 "몬스터 %s 존재하지 않습니다.\n"
 
-#: ../Commands.pm:551
+#: ../Commands.pm:550
 msgid ""
 "Syntax Error in function 'a' (Attack Monster)\n"
 "Usage: attack <monster # | no | yes >\n"
@@ -252,12 +252,12 @@ msgstr ""
 "오류 함수 'a' (Attack Monster)\n"
 "사용법: attack <monster # | no | yes >\n"
 
-#: ../Commands.pm:564
+#: ../Commands.pm:563
 #, perl-format
 msgid "Stopped attacking %s (%s)\n"
 msgstr "공격 중지 %s (%s)\n"
 
-#: ../Commands.pm:575
+#: ../Commands.pm:574
 msgid ""
 "Syntax Error in function 'auth' (Overall Authorize)\n"
 "Usage: auth <username> <flag>\n"
@@ -265,19 +265,19 @@ msgstr ""
 "문법 오류 함수 'auth' (Overall Authorize)\n"
 "사용법: auth <username> <flag>\n"
 
-#: ../Commands.pm:583
+#: ../Commands.pm:582
 msgid "Initiating auto-buy.\n"
 msgstr "초기화 자동구매 auto-buy.\n"
 
-#: ../Commands.pm:588
+#: ../Commands.pm:587
 msgid "Initiating auto-sell.\n"
 msgstr "초기화 자동 판매 auto-sell.\n"
 
-#: ../Commands.pm:593
+#: ../Commands.pm:592
 msgid "Initiating auto-storage.\n"
 msgstr "초기화 자동 저장 auto-storage.\n"
 
-#: ../Commands.pm:613
+#: ../Commands.pm:612
 msgid ""
 "Syntax Error in function 'buy' (Buy Store Item)\n"
 "Usage: buy <item #> [<amount>]\n"
@@ -285,7 +285,7 @@ msgstr ""
 "문법 오류 함수 'buy' (Buy Store Item)\n"
 "사용법: buy <item #> [<amount>]\n"
 
-#: ../Commands.pm:616
+#: ../Commands.pm:615
 #, perl-format
 msgid ""
 "Error in function 'buy' (Buy Store Item)\n"
@@ -294,11 +294,11 @@ msgstr ""
 "오류 함수 'buy' (Buy Store Item)\n"
 "창고 아이템 %s 이 존재하지 않습니다.\n"
 
-#: ../Commands.pm:636
+#: ../Commands.pm:635
 msgid "Cancelling card merge.\n"
 msgstr "카드 병합 취소.\n"
 
-#: ../Commands.pm:638
+#: ../Commands.pm:637
 msgid ""
 "Error in function 'card mergecancel' (Cancel a card merge request)\n"
 "You are not currently in a card merge session.\n"
@@ -306,12 +306,12 @@ msgstr ""
 "오류 함수 'card mergecancel' (Cancel a card merge request)\n"
 "카드 병합 세션이 아닙니다.\n"
 
-#: ../Commands.pm:645
+#: ../Commands.pm:644
 #: ../Network/Receive.pm:1537
 msgid "-----Card Merge Candidates-----\n"
 msgstr "-----카드 병합 지원 목록-----\n"
 
-#: ../Commands.pm:655
+#: ../Commands.pm:654
 msgid ""
 "Error in function 'card mergelist' (List availible card merge items)\n"
 "You are not currently in a card merge session.\n"
@@ -319,7 +319,7 @@ msgstr ""
 "오류 함수 'card mergelist' (카드 병합 가능 목록s)\n"
 "현재 카드 병합할 세션이 아닙니다.\n"
 
-#: ../Commands.pm:666
+#: ../Commands.pm:665
 #, perl-format
 msgid ""
 "Error in function 'card merge' (Finalize card merging onto item)\n"
@@ -328,7 +328,7 @@ msgstr ""
 "오류 함수 'card merge' (아이템에 카드 병합하기)\n"
 "아이템 %s 카트 병합 목록에 없습니다.\n"
 
-#: ../Commands.pm:669
+#: ../Commands.pm:668
 msgid ""
 "Error in function 'card merge' (Finalize card merging onto item)\n"
 "You are not currently in a card merge session.\n"
@@ -336,7 +336,7 @@ msgstr ""
 "오류 함수 'card merge' (Finalize card merging onto item)\n"
 "현재 카드 병합 목록에 없습니다.\n"
 
-#: ../Commands.pm:674
+#: ../Commands.pm:673
 msgid ""
 "Syntax Error in function 'card merge' (Finalize card merging onto item)\n"
 "Usage: card merge <item number>\n"
@@ -346,12 +346,12 @@ msgstr ""
 "사용법: card merge <item number>\n"
 "<item number> - 병합 아이템 번호. 'card mergelist'에서 얻는 번호 입력하세요.\n"
 
-#: ../Commands.pm:683
+#: ../Commands.pm:682
 #, perl-format
 msgid "Sending merge list request for %s...\n"
 msgstr "보내기 병합 목록 요청 %s...\n"
 
-#: ../Commands.pm:686
+#: ../Commands.pm:685
 #, perl-format
 msgid ""
 "Error in function 'card use' (Request list of items for merging with card)\n"
@@ -360,7 +360,7 @@ msgstr ""
 "오류 함수 'card use' (카드와 병합할 아이템 목록)\n"
 "카드 %s 가 존재하지 않습니다.\n"
 
-#: ../Commands.pm:690
+#: ../Commands.pm:689
 msgid ""
 "Syntax Error in function 'card use' (Request list of items for merging with card)\n"
 "Usage: card use <item number>\n"
@@ -370,11 +370,11 @@ msgstr ""
 "사용법: card use <item number>\n"
 "<item number> - 카드 장비창 번호.  'i' 에서 얻은 번호 입력하세요.\n"
 
-#: ../Commands.pm:696
+#: ../Commands.pm:695
 msgid "-----------Card List-----------\n"
 msgstr "-----------카드 목록-----------\n"
 
-#: ../Commands.pm:716
+#: ../Commands.pm:715
 msgid ""
 "Syntax Error in function 'card' (Card Compounding)\n"
 "Usage: card <use|mergelist|mergecancel|merge>\n"
@@ -382,7 +382,7 @@ msgstr ""
 "문법 오류 합수 'card' (카드 조합)\n"
 "사용법: card <use|mergelist|mergecancel|merge>\n"
 
-#: ../Commands.pm:736
+#: ../Commands.pm:735
 msgid ""
 "Error in function 'cart' (Cart Management)\n"
 "You do not have a cart.\n"
@@ -390,11 +390,11 @@ msgstr ""
 "오류 함수 'cart' (카트 관리)\n"
 "카드를 가지고 있지 않습니다.\n"
 
-#: ../Commands.pm:741
+#: ../Commands.pm:740
 msgid "Cart inventory is not available.\n"
 msgstr "카트 장비창이 유효하지 않습니다.\n"
 
-#: ../Commands.pm:745
+#: ../Commands.pm:744
 msgid ""
 "-------------Cart--------------\n"
 "#  Name\n"
@@ -402,11 +402,11 @@ msgstr ""
 "-------------카트--------------\n"
 "#  이름\n"
 
-#: ../Commands.pm:750
+#: ../Commands.pm:749
 msgid " -- Not Identified"
 msgstr " -- 비 감정"
 
-#: ../Commands.pm:753
+#: ../Commands.pm:752
 #, perl-format
 msgid ""
 "\n"
@@ -415,7 +415,7 @@ msgstr ""
 "\n"
 "용량: %d/%d  무게: %d/%d\n"
 
-#: ../Commands.pm:766
+#: ../Commands.pm:765
 #, perl-format
 msgid ""
 "Syntax Error in function 'cart desc' (Show Cart Item Description)\n"
@@ -424,7 +424,7 @@ msgstr ""
 "문법오류 함수 'cart desc' (카트 아이템 상세 보기)\n"
 "'%s' 유효하지 않은 카트 아이템 번호입니다.\n"
 
-#: ../Commands.pm:769
+#: ../Commands.pm:768
 #, perl-format
 msgid ""
 "Error in function 'cart desc' (Show Cart Item Description)\n"
@@ -433,11 +433,11 @@ msgstr ""
 "오류 함수 'cart desc' (카트아이템 설명 보기)\n"
 "카트 아이템 %s 존재하지 않습니다.\n"
 
-#: ../Commands.pm:778
+#: ../Commands.pm:777
 msgid "Cart released.\n"
 msgstr "카트 해제.\n"
 
-#: ../Commands.pm:783
+#: ../Commands.pm:782
 #, perl-format
 msgid ""
 "Error in function 'cart'\n"
@@ -446,7 +446,7 @@ msgstr ""
 "오류 함수 'cart'\n"
 "명령어 '%s' 은 존재하지 않는 명령어.\n"
 
-#: ../Commands.pm:792
+#: ../Commands.pm:791
 msgid ""
 "Syntax Error in function 'cart add' (Add Item to Cart)\n"
 "Usage: cart add <item>\n"
@@ -454,7 +454,7 @@ msgstr ""
 "문법오류 함수 'cart add' (카트에 아이템 추가)\n"
 "사용법: cart add <item>\n"
 
-#: ../Commands.pm:806
+#: ../Commands.pm:805
 #, perl-format
 msgid ""
 "Error in function 'cart add' (Add Item to Cart)\n"
@@ -463,7 +463,7 @@ msgstr ""
 "함수 오류 'cart add' (카트에 아이템 추가)\n"
 "장비창에 아이템 %s 이 존재하지 않습니다.\n"
 
-#: ../Commands.pm:821
+#: ../Commands.pm:820
 msgid ""
 "Syntax Error in function 'cart get' (Get Item from Cart)\n"
 "Usage: cart get <cart item>\n"
@@ -471,7 +471,7 @@ msgstr ""
 "문법오류 함수 'cart get' (카트에 아이템 획득)\n"
 "사용법: cart get <cart item>\n"
 
-#: ../Commands.pm:834
+#: ../Commands.pm:833
 #, perl-format
 msgid ""
 "Error in function 'cart get' (Get Item from Cart)\n"
@@ -480,7 +480,7 @@ msgstr ""
 "오류 함수 'cart get' (카트에 아이템 획득)\n"
 "Cart Item %s 존재하지 않음.\n"
 
-#: ../Commands.pm:849
+#: ../Commands.pm:848
 msgid ""
 "Syntax Error in function 'c' (Chat)\n"
 "Usage: c <message>\n"
@@ -488,11 +488,11 @@ msgstr ""
 "문법오류 함수 'c' (Chat)\n"
 "Usage: c <message>\n"
 
-#: ../Commands.pm:858
+#: ../Commands.pm:857
 msgid "Chat log cleared.\n"
 msgstr "채팅 로그 삭제.\n"
 
-#: ../Commands.pm:869
+#: ../Commands.pm:868
 msgid ""
 "Error in function 'chat bestow' (Bestow Admin in Chat)\n"
 "You are not in a Chat Room.\n"
@@ -500,7 +500,7 @@ msgstr ""
 "함수 오류 'chat bestow' (채팅방장 넘겨주기)\n"
 "채팅방에 있지 않습니다.\n"
 
-#: ../Commands.pm:872
+#: ../Commands.pm:871
 msgid ""
 "Syntax Error in function 'chat bestow' (Bestow Admin in Chat)\n"
 "Usage: chat bestow <user #>\n"
@@ -508,7 +508,7 @@ msgstr ""
 "문법오류 함수 'chat bestow' (채팅방장 넘겨주기)\n"
 "사용법: chat bestow <user #>\n"
 
-#: ../Commands.pm:875
+#: ../Commands.pm:874
 #, perl-format
 msgid ""
 "Error in function 'chat bestow' (Bestow Admin in Chat)\n"
@@ -517,7 +517,7 @@ msgstr ""
 "함수 오류 'chat bestow' (채팅방장 넘겨주기)\n"
 "채팅방 사용자 %s 가 없습니다; 'chat info'에 사용자 목록에 번호를 입력하세요.\n"
 
-#: ../Commands.pm:888
+#: ../Commands.pm:887
 msgid ""
 "Syntax Error in function 'chatmod' (Modify Chat Room)\n"
 "Usage: chat modify \"<title>\" [<limit #> <public flag> <password>]\n"
@@ -525,7 +525,7 @@ msgstr ""
 "문법오류 함수 'chatmod' (채팅방 수정하기)\n"
 "사용법: chat modify \"<title>\" [<limit #> <public flag> <password>]\n"
 
-#: ../Commands.pm:904
+#: ../Commands.pm:903
 msgid ""
 "Error in function 'chat kick' (Kick from Chat)\n"
 "You are not in a Chat Room.\n"
@@ -533,7 +533,7 @@ msgstr ""
 "오류 함수 'chat kick' (강퇴하기)\n"
 "채팅방에 있지 않습니다.\n"
 
-#: ../Commands.pm:907
+#: ../Commands.pm:906
 msgid ""
 "Syntax Error in function 'chat kick' (Kick from Chat)\n"
 "Usage: chat kick <user #>\n"
@@ -541,7 +541,7 @@ msgstr ""
 "문법오류 함수 'chat kick' (강퇴하기)\n"
 "사용법: chat kick <user #>\n"
 
-#: ../Commands.pm:910
+#: ../Commands.pm:909
 #, perl-format
 msgid ""
 "Error in function 'chat kick' (Kick from Chat)\n"
@@ -550,7 +550,7 @@ msgstr ""
 "오류 함수 'chat kick' (강퇴하기)\n"
 "채팅방 사용자 %s 없음\n"
 
-#: ../Commands.pm:921
+#: ../Commands.pm:920
 msgid ""
 "Syntax Error in function 'chat join' (Join Chat Room)\n"
 "Usage: chat join <chat room #> [<password>]\n"
@@ -558,7 +558,7 @@ msgstr ""
 "문법오류 함수 'chat join' (채팅 참여)\n"
 "Usage: chat join <chat room #> [<password>]\n"
 
-#: ../Commands.pm:924
+#: ../Commands.pm:923
 msgid ""
 "Error in function 'chat join' (Join Chat Room)\n"
 "You are already in a chat room.\n"
@@ -566,7 +566,7 @@ msgstr ""
 "오류 함수 'chat join' (채팅 참여)\n"
 "이미 채팅방에 있습니다.\n"
 
-#: ../Commands.pm:927
+#: ../Commands.pm:926
 #, perl-format
 msgid ""
 "Error in function 'chat join' (Join Chat Room)\n"
@@ -575,7 +575,7 @@ msgstr ""
 "오류 함수 'chat join' (채팅방 참여)\n"
 "채팅방 %s 존재하지 않습니다.\n"
 
-#: ../Commands.pm:935
+#: ../Commands.pm:934
 msgid ""
 "Error in function 'chat leave' (Leave Chat Room)\n"
 "You are not in a Chat Room.\n"
@@ -583,7 +583,7 @@ msgstr ""
 "함수 오류 'chat leave' (채팅방 나가기)\n"
 "채팅방에 있지 않습니다.\n"
 
-#: ../Commands.pm:948
+#: ../Commands.pm:947
 msgid ""
 "Syntax Error in function 'chat create' (Create Chat Room)\n"
 "Usage: chat create \"<title>\" [<limit #> <public flag> <password>]\n"
@@ -591,7 +591,7 @@ msgstr ""
 "문법오류 함수 'chat create' (채팅방 생성)\n"
 "Usage: chat create \"<title>\" [<limit #> <public flag> <password>]\n"
 
-#: ../Commands.pm:951
+#: ../Commands.pm:950
 msgid ""
 "Error in function 'chat create' (Create Chat Room)\n"
 "You are already in a chat room.\n"
@@ -599,7 +599,7 @@ msgstr ""
 "오류 함수 'chat create' (채팅방 생성)\n"
 "이미 채팅방에 있습니다.\n"
 
-#: ../Commands.pm:972
+#: ../Commands.pm:971
 msgid ""
 "------------------------------- Chat Room List --------------------------------\n"
 "#   Title                                  Owner                Users   Type\n"
@@ -607,11 +607,11 @@ msgstr ""
 "------------------------------- 채팅방 목록 --------------------------------\n"
 "#   방제                                  소유자                사용자   형태\n"
 
-#: ../Commands.pm:989
+#: ../Commands.pm:988
 msgid "There is no chat room info - you are not in a chat room\n"
 msgstr "채팅 정보가 없습니다- 채팅방에 있지 않습니다\n"
 
-#: ../Commands.pm:991
+#: ../Commands.pm:990
 msgid ""
 "-----------Chat Room Info-----------\n"
 "Title                     Users   Public/Private\n"
@@ -620,11 +620,11 @@ msgstr ""
 "방제                     사용자   공개/비밀\n"
 
 #. Translation Comment: Users in chat room
-#: ../Commands.pm:1002
+#: ../Commands.pm:1001
 msgid "-- Users --\n"
 msgstr "-- 사용자 --\n"
 
-#: ../Commands.pm:1015
+#: ../Commands.pm:1014
 msgid ""
 "Syntax Error in function 'chat' (Chat room management)\n"
 "Usage: chat <create|modify|join|kick|leave|info|list|bestow>\n"
@@ -632,7 +632,7 @@ msgstr ""
 "Syntax Error in function 'chat' (채팅 관리)\n"
 "Usage: chat <create|modify|join|kick|leave|info|list|bestow>\n"
 
-#: ../Commands.pm:1027
+#: ../Commands.pm:1026
 msgid ""
 "Syntax Error in function 'chist' (Show Chat History)\n"
 "Usage: chist [<number of entries #>]\n"
@@ -640,17 +640,17 @@ msgstr ""
 "Syntax Error in function 'chist' (채팅 기록 보기)\n"
 "Usage: chist [<number of entries #>]\n"
 
-#: ../Commands.pm:1033
+#: ../Commands.pm:1032
 msgid "------ Chat History --------------------\n"
 msgstr "------ 채팅 기록 --------------------\n"
 
-#: ../Commands.pm:1042
-#: ../Commands.pm:2409
+#: ../Commands.pm:1041
+#: ../Commands.pm:2408
 #, perl-format
 msgid "Unable to open %s\n"
 msgstr "열 수 없습니다. %s\n"
 
-#: ../Commands.pm:1075
+#: ../Commands.pm:1074
 msgid ""
 "Syntax Error in function 'conf' (Change a Configuration Key)\n"
 "Usage: conf <variable> [<value>|none]\n"
@@ -658,39 +658,39 @@ msgstr ""
 "Syntax Error in function 'conf' (설정키 변경)\n"
 "Usage: conf <variable> [<value>|none]\n"
 
-#: ../Commands.pm:1079
+#: ../Commands.pm:1078
 #, perl-format
 msgid "Config variable %s doesn't exist\n"
 msgstr "설정 값 %s 존재하지 않음\n"
 
-#: ../Commands.pm:1084
+#: ../Commands.pm:1083
 #, perl-format
 msgid "Config '%s' is not displayed\n"
 msgstr "설정 '%s' 표시되지 않음\n"
 
-#: ../Commands.pm:1086
+#: ../Commands.pm:1085
 #, perl-format
 msgid "Config '%s' is %s\n"
 msgstr "설정 '%s' is %s\n"
 
-#: ../Commands.pm:1105
+#: ../Commands.pm:1104
 msgid "Damage Taken Report:\n"
 msgstr "태권 데미지 보고:\n"
 
-#: ../Commands.pm:1114
+#: ../Commands.pm:1113
 #, perl-format
 msgid "Total Damage Taken: %s\n"
 msgstr "태권 총 데미지: %s\n"
 
-#: ../Commands.pm:1115
+#: ../Commands.pm:1114
 msgid "End of report.\n"
 msgstr "보고 끝.\n"
 
-#: ../Commands.pm:1119
+#: ../Commands.pm:1118
 msgid "Damage Taken Report reset.\n"
 msgstr "태권 데미지 보고 재설정t.\n"
 
-#: ../Commands.pm:1121
+#: ../Commands.pm:1120
 msgid ""
 "Syntax error in function 'damage' (Damage Report)\n"
 "Usage: damage [reset]\n"
@@ -698,7 +698,7 @@ msgstr ""
 "Syntax error in function 'damage' (데미지 보고)\n"
 "Usage: damage [reset]\n"
 
-#: ../Commands.pm:1131
+#: ../Commands.pm:1130
 msgid ""
 "Error in function 'deal' (Deal a Player)\n"
 "You are already in a deal\n"
@@ -706,7 +706,7 @@ msgstr ""
 "Error in function 'deal' (플레이어 거래)\n"
 "You are already in a deal\n"
 
-#: ../Commands.pm:1134
+#: ../Commands.pm:1133
 msgid ""
 "Error in function 'deal' (Deal a Player)\n"
 "You must first cancel the incoming deal\n"
@@ -714,7 +714,7 @@ msgstr ""
 "Error in function 'deal' (플레이어 거래)\n"
 "You must first cancel the incoming deal\n"
 
-#: ../Commands.pm:1137
+#: ../Commands.pm:1136
 #, perl-format
 msgid ""
 "Error in function 'deal' (Deal a Player)\n"
@@ -723,12 +723,12 @@ msgstr ""
 "Error in function 'deal' (플레이어 거래)\n"
 "Player %s does not exist\n"
 
-#: ../Commands.pm:1142
+#: ../Commands.pm:1141
 #, perl-format
 msgid "Attempting to deal %s\n"
 msgstr "거래 시도 %s\n"
 
-#: ../Commands.pm:1146
+#: ../Commands.pm:1145
 msgid ""
 "Error in function 'deal' (Deal a Player)\n"
 "There is no incoming/current deal to cancel\n"
@@ -736,7 +736,7 @@ msgstr ""
 "Error in function 'deal' (플레이어 거래)\n"
 "There is no incoming/current deal to cancel\n"
 
-#: ../Commands.pm:1154
+#: ../Commands.pm:1153
 msgid ""
 "Error in function 'deal' (Deal a Player)\n"
 "There is no deal to accept\n"
@@ -744,7 +744,7 @@ msgstr ""
 "Error in function 'deal' (플레이어 거래)\n"
 "There is no deal to accept\n"
 
-#: ../Commands.pm:1157
+#: ../Commands.pm:1156
 #, perl-format
 msgid ""
 "Error in function 'deal' (Deal a Player)\n"
@@ -753,7 +753,7 @@ msgstr ""
 "Error in function 'deal' (플레이어 거래)\n"
 "거래할 수 없음 - %s has not finalized\n"
 
-#: ../Commands.pm:1160
+#: ../Commands.pm:1159
 msgid ""
 "Error in function 'deal' (Deal a Player)\n"
 "You already accepted the final deal\n"
@@ -761,11 +761,11 @@ msgstr ""
 "Error in function 'deal' (플레이어 거래)\n"
 "이미 거래 완료되었습니다.l\n"
 
-#: ../Commands.pm:1167
+#: ../Commands.pm:1166
 msgid "You accepted the final Deal\n"
 msgstr "마지막 거래 시도됐습니다.l\n"
 
-#: ../Commands.pm:1173
+#: ../Commands.pm:1172
 msgid ""
 "Error in function 'deal_add' (Add Item to Deal)\n"
 "No deal in progress\n"
@@ -773,7 +773,7 @@ msgstr ""
 "Error in function 'deal_add' (거래 아이템 추가)\n"
 "No deal in progress\n"
 
-#: ../Commands.pm:1176
+#: ../Commands.pm:1175
 msgid ""
 "Error in function 'deal_add' (Add Item to Deal)\n"
 "Can't add any Items - You already finalized the deal\n"
@@ -781,7 +781,7 @@ msgstr ""
 "Error in function 'deal_add' (거래 아이템 추가)\n"
 "아이템을 추가할 수 없습니다. - 이미 거래 완료l\n"
 
-#: ../Commands.pm:1179
+#: ../Commands.pm:1178
 #, perl-format
 msgid ""
 "Error in function 'deal_add' (Add Item to Deal)\n"
@@ -790,7 +790,7 @@ msgstr ""
 "Error in function 'deal_add' (거래 아이템 추가l)\n"
 "Inventory Item %s 존재하지 않습니다.\n"
 
-#: ../Commands.pm:1182
+#: ../Commands.pm:1181
 msgid ""
 "Error in function 'deal_add' (Add Item to Deal)\n"
 "Amount must either be a number, or not specified.\n"
@@ -798,16 +798,16 @@ msgstr ""
 "Error in function 'deal_add' (거래 아이템 추가l)\n"
 "양은 지정된 수만 가능합니다..\n"
 
-#: ../Commands.pm:1193
+#: ../Commands.pm:1192
 msgid "You can't add any more items to the deal\n"
 msgstr "더이상 아이템을 추가할 수 없습니다.\n"
 
-#: ../Commands.pm:1200
+#: ../Commands.pm:1199
 #, perl-format
 msgid "You put forward %sz to Deal\n"
 msgstr "You put forward %sz 거래\n"
 
-#: ../Commands.pm:1203
+#: ../Commands.pm:1202
 msgid ""
 "Syntax Error in function 'deal' (Deal a player)\n"
 "Usage: deal [<Player # | no | add>] [<item #>] [<amount>]\n"
@@ -815,20 +815,20 @@ msgstr ""
 "문법오류 함수 'deal' (플레이어 거래)\n"
 "Usage: deal [<Player # | no | add>] [<item #>] [<amount>]\n"
 
-#: ../Commands.pm:1210
+#: ../Commands.pm:1209
 msgid "There is no deal list - You are not in a deal\n"
 msgstr "거래 목록이 없습니다. - 거래 중이 아닙니다.l\n"
 
-#: ../Commands.pm:1213
+#: ../Commands.pm:1212
 msgid "-----------Current Deal-----------\n"
 msgstr "-----------현재 거래-----------\n"
 
-#: ../Commands.pm:1266
+#: ../Commands.pm:1265
 #, perl-format
 msgid "Zenny: %-25s Zenny: %-14s"
 msgstr "제니: %-25s Zenny: %-14s"
 
-#: ../Commands.pm:1290
+#: ../Commands.pm:1289
 #, perl-format, perl-brace-format
 msgid ""
 "------------ Debug information ------------\n"
@@ -849,7 +849,7 @@ msgstr ""
 "Last AI() call: %.2f secs ago\n"
 "-------------------------------------------\n"
 
-#: ../Commands.pm:1318
+#: ../Commands.pm:1317
 msgid ""
 "Syntax Error in function 'drop' (Drop Inventory Item)\n"
 "Usage: drop <item #> [<amount>]\n"
@@ -857,11 +857,11 @@ msgstr ""
 "문법오류 함수 'drop' (Drop Inventory Item)\n"
 "Usage: drop <item #> [<amount>]\n"
 
-#: ../Commands.pm:1337
+#: ../Commands.pm:1336
 msgid "No items were dropped.\n"
 msgstr "아이템이 드롭되지 않았습니다.\n"
 
-#: ../Commands.pm:1358
+#: ../Commands.pm:1357
 msgid ""
 "Syntax Error in function 'e' (Emotion)\n"
 "Usage: e <command>\n"
@@ -870,22 +870,22 @@ msgstr ""
 "Usage: e <command>\n"
 
 #. Translation Comment: List of equiped items on each slot
-#: ../Commands.pm:1379
+#: ../Commands.pm:1378
 msgid "Slots:\n"
 msgstr "슬롯:\n"
 
-#: ../Commands.pm:1392
-#: ../Commands.pm:4099
+#: ../Commands.pm:1391
+#: ../Commands.pm:4098
 #, perl-format
 msgid "You don't have %s.\n"
 msgstr "가지고 있지 않습니다. %s.\n"
 
-#: ../Commands.pm:1397
+#: ../Commands.pm:1396
 #, perl-format
 msgid "Inventory Item %s (%s) can't be equipped.\n"
 msgstr "Inventory Item %s (%s) 장착할 수 없습니다.\n"
 
-#: ../Commands.pm:1419
+#: ../Commands.pm:1418
 msgid ""
 "Syntax Error in function 'eval' (Evaluate a Perl expression)\n"
 "Usage: eval <expression>\n"
@@ -893,7 +893,7 @@ msgstr ""
 "Syntax Error in function 'eval' (펄 표현식 계산)\n"
 "Usage: eval <expression>\n"
 
-#: ../Commands.pm:1462
+#: ../Commands.pm:1461
 #, perl-format
 msgid ""
 "------------Exp Report------------\n"
@@ -924,7 +924,7 @@ msgstr ""
 "Bytes Sent   : %s\n"
 "Bytes Rcvd   : %s\n"
 
-#: ../Commands.pm:1490
+#: ../Commands.pm:1489
 msgid ""
 "-[Monster Killed Count]-----------------------\n"
 "#   ID     Name                      Count\n"
@@ -932,12 +932,12 @@ msgstr ""
 "-[몬스터 죽인 수]-----------------------\n"
 "#   ID     Name                      Count\n"
 
-#: ../Commands.pm:1501
+#: ../Commands.pm:1500
 #, perl-format
 msgid "Total number of killed monsters: %s\n"
 msgstr "죽은 몬스터 총수: %s\n"
 
-#: ../Commands.pm:1509
+#: ../Commands.pm:1508
 msgid ""
 "-[Item Change Count]--------------------------\n"
 "Name                                    Count\n"
@@ -945,11 +945,11 @@ msgstr ""
 "-[아이템 변경 수]--------------------------\n"
 "이름                                    수\n"
 
-#: ../Commands.pm:1532
+#: ../Commands.pm:1531
 msgid "Exp counter reset.\n"
 msgstr "Exp 경험치 카운터 재설정.\n"
 
-#: ../Commands.pm:1536
+#: ../Commands.pm:1535
 msgid ""
 "Syntax error in function 'exp' (Exp Report)\n"
 "Usage: exp [<report | monster | item | reset>]\n"
@@ -957,15 +957,15 @@ msgstr ""
 "Syntax error in function 'exp' (Exp 보고)\n"
 "Usage: exp [<report | monster | item | reset>]\n"
 
-#: ../Commands.pm:1546
+#: ../Commands.pm:1545
 msgid "Your falcon is active\n"
 msgstr "팔콘 활성화\n"
 
-#: ../Commands.pm:1548
+#: ../Commands.pm:1547
 msgid "Your falcon is inactive\n"
 msgstr "팔콘 비활성화\n"
 
-#: ../Commands.pm:1552
+#: ../Commands.pm:1551
 msgid ""
 "Error in function 'falcon release' (Remove Falcon Status)\n"
 "You don't possess a falcon.\n"
@@ -973,7 +973,7 @@ msgstr ""
 "Error in function 'falcon release' (팔콘 상태 제거)\n"
 "You don't possess a falcon.\n"
 
-#: ../Commands.pm:1563
+#: ../Commands.pm:1562
 msgid ""
 "Syntax Error in function 'follow' (Follow Player)\n"
 "Usage: follow <player #>\n"
@@ -981,7 +981,7 @@ msgstr ""
 "Syntax Error in function 'follow' (플레이어 따라가기)\n"
 "Usage: follow <player #>\n"
 
-#: ../Commands.pm:1570
+#: ../Commands.pm:1569
 #, perl-format
 msgid ""
 "Error in function 'follow' (Follow Player)\n"
@@ -990,65 +990,65 @@ msgstr ""
 "Error in function 'follow' (따라가기)\n"
 "Player %s either not visible or not online in party.\n"
 
-#: ../Commands.pm:1595
+#: ../Commands.pm:1594
 #, perl-format
 msgid "Player %s does not exist\n"
 msgstr "Player %s 가 존재하지 않습니다.\n"
 
-#: ../Commands.pm:1597
+#: ../Commands.pm:1596
 msgid "Player name has not been received, please try again\n"
 msgstr "플레이어 이름을 받을 수 없습니다, 다시 시도\n"
 
-#: ../Commands.pm:1607
+#: ../Commands.pm:1606
 #, perl-format
 msgid "%s is already your friend\n"
 msgstr "%s 이미 친구입니다.\n"
 
-#: ../Commands.pm:1609
+#: ../Commands.pm:1608
 #, perl-format
 msgid "Requesting %s to be your friend\n"
 msgstr "친구 요청 %s \n"
 
-#: ../Commands.pm:1616
-#: ../Commands.pm:1643
+#: ../Commands.pm:1615
+#: ../Commands.pm:1642
 #, perl-format
 msgid "Friend #%s does not exist\n"
 msgstr "친구 #%s 없음\n"
 
-#: ../Commands.pm:1619
+#: ../Commands.pm:1618
 #, perl-format
 msgid "Attempting to remove %s from your friend list\n"
 msgstr "친구목록 제거 시도 %s \n"
 
-#: ../Commands.pm:1625
+#: ../Commands.pm:1624
 msgid "Can't accept the friend request, no incoming request\n"
 msgstr "친구요청 허락 불가, no incoming request\n"
 
-#: ../Commands.pm:1627
+#: ../Commands.pm:1626
 #, perl-format
 msgid "Accepting the friend request from %s\n"
 msgstr "친구 요청 허락 %s\n"
 
-#: ../Commands.pm:1634
+#: ../Commands.pm:1633
 msgid "Can't reject the friend request - no incoming request\n"
 msgstr "친구 요청 거절할 수 없음 - no incoming request\n"
 
-#: ../Commands.pm:1636
+#: ../Commands.pm:1635
 #, perl-format
 msgid "Rejecting the friend request from %s\n"
 msgstr "친구요청 거절 %s\n"
 
-#: ../Commands.pm:1647
+#: ../Commands.pm:1646
 #, perl-format
 msgid "Friend %s has been added to the PM list as %s\n"
 msgstr "Friend %s has been added to the PM list as %s\n"
 
-#: ../Commands.pm:1650
+#: ../Commands.pm:1649
 #, perl-format
 msgid "Friend %s is already in the PM list\n"
 msgstr "Friend %s is already in the PM list\n"
 
-#: ../Commands.pm:1655
+#: ../Commands.pm:1654
 msgid ""
 "Syntax Error in function 'friend' (Manage Friends List)\n"
 "Usage: friend [request|remove|accept|reject|pm]\n"
@@ -1056,7 +1056,7 @@ msgstr ""
 "Syntax Error in function 'friend' (친구목록 관리)\n"
 "Usage: friend [request|remove|accept|reject|pm]\n"
 
-#: ../Commands.pm:1659
+#: ../Commands.pm:1658
 msgid ""
 "------------- Friends --------------\n"
 "#   Name                      Online\n"
@@ -1064,11 +1064,11 @@ msgstr ""
 "------------- 친구 --------------\n"
 "#   이름                      온라인\n"
 
-#: ../Commands.pm:1677
+#: ../Commands.pm:1676
 msgid "Error: No Homunculus detected.\n"
 msgstr "Error: 호문클루스 감지되지 않음.\n"
 
-#: ../Commands.pm:1685
+#: ../Commands.pm:1684
 msgid ""
 "----------------- Homunculus Status --------------------\n"
 "Name: @<<<<<<<<<<<<<<<<<<<<<<<<< HP: @>>>>>>>>>>>>>>>>>>\n"
@@ -1092,15 +1092,15 @@ msgstr ""
 "회피:@>>>    공속:     @>>>\n"
 "--------------------------------------------------------"
 
-#: ../Commands.pm:1705
+#: ../Commands.pm:1704
 msgid "Your homunculus is not yet hungry. Feeding it now will lower intimacy.\n"
 msgstr "호문이 아직 배고프지 않습니다. Feeding it now will lower intimacy.\n"
 
-#: ../Commands.pm:1708
+#: ../Commands.pm:1707
 msgid "Feeding your homunculus.\n"
 msgstr "호문 먹이주기.\n"
 
-#: ../Commands.pm:1713
+#: ../Commands.pm:1712
 #, perl-format
 msgid ""
 "Error in function 'homun move' (Homunculus Move)\n"
@@ -1109,43 +1109,43 @@ msgstr ""
 "Error in function 'homun move' (호문클루스 이동)\n"
 "Invalid coordinates (%s, %s) specified.\n"
 
-#: ../Commands.pm:1727
+#: ../Commands.pm:1726
 msgid "Homunculus AI sequences cleared\n"
 msgstr "Homunculus AI sequences 삭제\n"
 
-#: ../Commands.pm:1731
-#: ../Commands.pm:1738
+#: ../Commands.pm:1730
+#: ../Commands.pm:1737
 msgid "------ Homunculus AI Sequence ----------\n"
 msgstr "----- 호문클루스 AI 시퀀스 ----------\n"
 
-#: ../Commands.pm:1743
+#: ../Commands.pm:1742
 msgid "Homunculus AI is already set to auto mode\n"
 msgstr "Homunculus AI : 자동 auto mode\n"
 
-#: ../Commands.pm:1747
-#: ../Commands.pm:1781
+#: ../Commands.pm:1746
+#: ../Commands.pm:1780
 msgid "Homunculus AI set to auto mode\n"
 msgstr "Homunculus AI 자동 auto mode\n"
 
-#: ../Commands.pm:1752
+#: ../Commands.pm:1751
 msgid "Homunculus AI is already set to manual mode\n"
 msgstr "Homunculus AI 이미 수동 manual mode\n"
 
-#: ../Commands.pm:1756
-#: ../Commands.pm:1777
+#: ../Commands.pm:1755
+#: ../Commands.pm:1776
 msgid "Homunculus AI set to manual mode\n"
 msgstr "Homunculus AI 수동 manual mode\n"
 
-#: ../Commands.pm:1763
-#: ../Commands.pm:1773
+#: ../Commands.pm:1762
+#: ../Commands.pm:1772
 msgid "Homunculus AI turned off\n"
 msgstr "Homunculus AI 끄기\n"
 
-#: ../Commands.pm:1765
+#: ../Commands.pm:1764
 msgid "Homunculus AI is already off\n"
 msgstr "Homunculus AI 이미 끄져있음\n"
 
-#: ../Commands.pm:1785
+#: ../Commands.pm:1784
 msgid ""
 "Syntax Error in function 'homun ai' (Homunculus AI Commands)\n"
 "Usage: homun ai [ clear | print | auto | manual | off ]\n"
@@ -1153,7 +1153,7 @@ msgstr ""
 "문법오류 함수 'homun ai' (Homunculus AI Commands)\n"
 "Usage: homun ai [ clear | print | auto | manual | off ]\n"
 
-#: ../Commands.pm:1801
+#: ../Commands.pm:1800
 msgid ""
 "-----Homunculus Skill List-----\n"
 "   # Skill Name                     Lv      SP\n"
@@ -1161,8 +1161,8 @@ msgstr ""
 "-----호문클루스 스킬 목록-----\n"
 "   # 스킬 이름                     Lv      SP\n"
 
-#: ../Commands.pm:1810
-#: ../Commands.pm:3404
+#: ../Commands.pm:1809
+#: ../Commands.pm:3403
 #, perl-format
 msgid ""
 "\n"
@@ -1171,7 +1171,7 @@ msgstr ""
 "\n"
 "스킬 포인트: %d\n"
 
-#: ../Commands.pm:1817
+#: ../Commands.pm:1816
 #, perl-format
 msgid ""
 "Error in function 'homun skills add' (Add Skill Point)\n"
@@ -1180,7 +1180,7 @@ msgstr ""
 "Error in function 'homun skills add' (스킬 포인트 추가)\n"
 "Skill %s does not exist.\n"
 
-#: ../Commands.pm:1820
+#: ../Commands.pm:1819
 #, perl-format
 msgid ""
 "Error in function 'homun skills add' (Add Skill Point)\n"
@@ -1189,7 +1189,7 @@ msgstr ""
 "Error in function 'homun skills add' (스킬 포인트 추가)\n"
 "Not enough skill points to increase %s\n"
 
-#: ../Commands.pm:1829
+#: ../Commands.pm:1828
 #, perl-format
 msgid ""
 "Error in function 'homun skills desc' (Skill Description)\n"
@@ -1198,14 +1198,14 @@ msgstr ""
 "Error in function 'homun skills desc' (스킬 설명)\n"
 "Skill %s does not exist.\n"
 
-#: ../Commands.pm:1832
-#: ../Commands.pm:3426
+#: ../Commands.pm:1831
+#: ../Commands.pm:3425
 #: ../Misc.pm:1905
 msgid "Error: No description available.\n"
 msgstr "Error: 설명 불가.\n"
 
-#: ../Commands.pm:1833
-#: ../Commands.pm:3427
+#: ../Commands.pm:1832
+#: ../Commands.pm:3426
 #, perl-format
 msgid ""
 "===============Skill Description===============\n"
@@ -1216,7 +1216,7 @@ msgstr ""
 "Skill: %s\n"
 "\n"
 
-#: ../Commands.pm:1840
+#: ../Commands.pm:1839
 msgid ""
 "Syntax Error in function 'homun skills' (Homunculus Skills Functions)\n"
 "Usage: homun skills [(<add | desc>) [<skill #>]]\n"
@@ -1224,11 +1224,11 @@ msgstr ""
 "Syntax Error in function 'homun skills' (호문 스킬 함수)\n"
 "Usage: homun skills [(<add | desc>) [<skill #>]]\n"
 
-#: ../Commands.pm:1845
+#: ../Commands.pm:1844
 msgid "Usage: homun < feed | s | status | move | standby | ai | aiv | skills>\n"
 msgstr "Usage: homun < feed | s | status | move | standby | ai | aiv | skills>\n"
 
-#: ../Commands.pm:2085
+#: ../Commands.pm:2084
 msgid ""
 "Syntax Error in function 'guild join' (Accept/Deny Guild Join Request)\n"
 "Usage: guild join <flag>\n"
@@ -1236,7 +1236,7 @@ msgstr ""
 "Syntax Error in function 'guild join' (길드요청 승인/거부)\n"
 "Usage: guild join <flag>\n"
 
-#: ../Commands.pm:2089
+#: ../Commands.pm:2088
 msgid ""
 "Error in function 'guild join' (Join/Request to Join Guild)\n"
 "Can't accept/deny guild request - no incoming request.\n"
@@ -1244,15 +1244,15 @@ msgstr ""
 "Error in function 'guild join' (길드 요청 승인/거부)\n"
 "Can't accept/deny guild request - no incoming request.\n"
 
-#: ../Commands.pm:2097
+#: ../Commands.pm:2096
 msgid "You accepted the guild join request.\n"
 msgstr "길드 가입 요청하였습니다..\n"
 
-#: ../Commands.pm:2099
+#: ../Commands.pm:2098
 msgid "You denied the guild join request.\n"
 msgstr "길드 가입 요청을 거부하였습니다.\n"
 
-#: ../Commands.pm:2104
+#: ../Commands.pm:2103
 msgid ""
 "Syntax Error in function 'guild create' (Create Guild)\n"
 "Usage: guild create <name>\n"
@@ -1260,41 +1260,41 @@ msgstr ""
 "Syntax Error in function 'guild create' (길드 생성)\n"
 "Usage: guild create <name>\n"
 
-#: ../Commands.pm:2111
+#: ../Commands.pm:2110
 msgid "You are not in a guild.\n"
 msgstr "길드에 있지 않음.\n"
 
-#: ../Commands.pm:2116
-#: ../Commands.pm:2129
-#: ../Commands.pm:2571
+#: ../Commands.pm:2115
+#: ../Commands.pm:2128
+#: ../Commands.pm:2570
 #, perl-format
 msgid "Player %s does not exist.\n"
 msgstr "Player %s 가 존재하지 않습니다.\n"
 
-#: ../Commands.pm:2119
+#: ../Commands.pm:2118
 #, perl-format
 msgid "Sent guild join request to %s\n"
 msgstr "길드 가입 요청 %s\n"
 
-#: ../Commands.pm:2124
+#: ../Commands.pm:2123
 msgid "No guild information available. Type guild to refresh and then try again.\n"
 msgstr "길드 정도 없음. Type guild to refresh and then try again.\n"
 
-#: ../Commands.pm:2131
+#: ../Commands.pm:2130
 msgid "You must be guildmaster to set an alliance\n"
 msgstr "동맹은 길드마스터만 가능\n"
 
-#: ../Commands.pm:2135
+#: ../Commands.pm:2134
 #, perl-format
 msgid "Sent guild alliance request to %s\n"
 msgstr "길드 동맹 요청 %s\n"
 
-#: ../Commands.pm:2140
+#: ../Commands.pm:2139
 #, perl-format
 msgid "Sending guild leave: %s\n"
 msgstr "길드 떠나기 %s\n"
 
-#: ../Commands.pm:2144
+#: ../Commands.pm:2143
 msgid ""
 "Syntax Error in function 'guild break' (Break Guild)\n"
 "Usage: guild break <guild name>\n"
@@ -1302,25 +1302,25 @@ msgstr ""
 "Syntax Error in function 'guild break' (길드 해체)\n"
 "Usage: guild break <guild name>\n"
 
-#: ../Commands.pm:2148
+#: ../Commands.pm:2147
 #, perl-format
 msgid "Sending guild break: %s\n"
 msgstr "길드 해체 보내기: %s\n"
 
-#: ../Commands.pm:2152
+#: ../Commands.pm:2151
 msgid "Requesting guild information...\n"
 msgstr "길드 정보 요청 중...\n"
 
-#: ../Commands.pm:2162
+#: ../Commands.pm:2161
 msgid "Enter command to view guild information: guild <info | member>\n"
 msgstr "길드 정보 명령어 보기: guild <info | member>\n"
 
-#: ../Commands.pm:2164
+#: ../Commands.pm:2163
 #, perl-format
 msgid "Type 'guild %s' again to view the information.\n"
 msgstr "입력 'guild %s' 정보 다시 보기.\n"
 
-#: ../Commands.pm:2168
+#: ../Commands.pm:2167
 msgid ""
 "---------- Guild Information ----------\n"
 "Name    : @<<<<<<<<<<<<<<<<<<<<<<<<\n"
@@ -1337,17 +1337,17 @@ msgstr ""
 "접속    : @>>/@<<"
 
 #. Translation Comment: List of allies. Keep the same spaces of the - Guild Information - tag.
-#: ../Commands.pm:2178
+#: ../Commands.pm:2177
 #, perl-format
 msgid "Ally    : %s (%s)\n"
 msgstr "동맹    : %s (%s)\n"
 
-#: ../Commands.pm:2184
-#: ../Commands.pm:2205
+#: ../Commands.pm:2183
+#: ../Commands.pm:2204
 msgid "No guild member information available.\n"
 msgstr "길드 정보 이용 불가.\n"
 
-#: ../Commands.pm:2195
+#: ../Commands.pm:2194
 #, perl-format
 msgid ""
 "Error in function 'guild kick' (Kick Guild Member)\n"
@@ -1356,7 +1356,7 @@ msgstr ""
 "Error in function 'guild kick' (길드 맴버 탈퇴)\n"
 "Invalid guild member '%s' specified.\n"
 
-#: ../Commands.pm:2199
+#: ../Commands.pm:2198
 msgid ""
 "Syntax Error in function 'guild kick' (Kick Guild Member)\n"
 "Usage: guild kick <number> <reason>\n"
@@ -1364,7 +1364,7 @@ msgstr ""
 "Syntax Error in function 'guild kick' (길드 맴버 탈퇴)\n"
 "Usage: guild kick <number> <reason>\n"
 
-#: ../Commands.pm:2209
+#: ../Commands.pm:2208
 msgid ""
 "------------ Guild  Member ------------\n"
 "#  Name                       Job        Lv  Title                    Online\n"
@@ -1374,18 +1374,18 @@ msgstr ""
 
 #. Translation Comment: Guild member online
 #. Translation Comment: Is the party user on list online?
-#: ../Commands.pm:2222
-#: ../Commands.pm:2784
-#: ../Commands.pm:2791
+#: ../Commands.pm:2221
+#: ../Commands.pm:2783
+#: ../Commands.pm:2790
 msgid "Yes"
 msgstr "예"
 
-#: ../Commands.pm:2222
-#: ../Commands.pm:2791
+#: ../Commands.pm:2221
+#: ../Commands.pm:2790
 msgid "No"
 msgstr "아니오"
 
-#: ../Commands.pm:2238
+#: ../Commands.pm:2237
 msgid ""
 "Syntax Error in function 'g' (Guild Chat)\n"
 "Usage: g <message>\n"
@@ -1393,34 +1393,34 @@ msgstr ""
 "문법오류 함수 'g' (Guild Chat)\n"
 "Usage: g <message>\n"
 
-#: ../Commands.pm:2256
+#: ../Commands.pm:2255
 msgid "--------------- Available commands ---------------\n"
 msgstr "--------------- 가능한 명령어 ---------------\n"
 
-#: ../Commands.pm:2294
+#: ../Commands.pm:2293
 #, perl-format
 msgid "The command \"%s\" doesn't exist.\n"
 msgstr "명령어 \"%s\" 은 존재하지 않습니다.\n"
 
-#: ../Commands.pm:2296
+#: ../Commands.pm:2295
 #, perl-format
 msgid "These commands don't exist: %s\n"
 msgstr "이 명령어는 존재하지 않습니다.: %s\n"
 
-#: ../Commands.pm:2298
+#: ../Commands.pm:2297
 msgid "Type 'help' to see a list of all available commands.\n"
 msgstr " 모든 가능한 명령어 목록을 보려면 'help' 를 입력하세요.\n"
 
-#: ../Commands.pm:2313
+#: ../Commands.pm:2312
 #, perl-format
 msgid "------------ Help for '%s' ------------\n"
 msgstr "------------ Help for '%s' ------------\n"
 
-#: ../Commands.pm:2349
+#: ../Commands.pm:2348
 msgid "---------Identify List--------\n"
 msgstr "---------Identify List--------\n"
 
-#: ../Commands.pm:2361
+#: ../Commands.pm:2360
 #, perl-format
 msgid ""
 "Error in function 'identify' (Identify Item)\n"
@@ -1429,7 +1429,7 @@ msgstr ""
 "Error in function 'identify' (Identify Item)\n"
 "Identify Item %s does not exist\n"
 
-#: ../Commands.pm:2368
+#: ../Commands.pm:2367
 msgid ""
 "Syntax Error in function 'identify' (Identify Item)\n"
 "Usage: identify [<identify #>]\n"
@@ -1437,7 +1437,7 @@ msgstr ""
 "Syntax Error in function 'identify' (Identify Item)\n"
 "Usage: identify [<identify #>]\n"
 
-#: ../Commands.pm:2377
+#: ../Commands.pm:2376
 msgid ""
 "Syntax Error in function 'ignore' (Ignore Player/Everyone)\n"
 "Usage: ignore <flag> <name | all>\n"
@@ -1445,7 +1445,7 @@ msgstr ""
 "Syntax Error in function 'ignore' (Ignore Player/Everyone)\n"
 "Usage: ignore <flag> <name | all>\n"
 
-#: ../Commands.pm:2394
+#: ../Commands.pm:2393
 msgid ""
 "Syntax Error in function 'ihist' (Show Item History)\n"
 "Usage: ihist [<number of entries #>]\n"
@@ -1453,57 +1453,57 @@ msgstr ""
 "Syntax Error in function 'ihist' (Show Item History)\n"
 "Usage: ihist [<number of entries #>]\n"
 
-#: ../Commands.pm:2400
+#: ../Commands.pm:2399
 msgid "------ Item History --------------------\n"
 msgstr "------ 아이템 기록 --------------------\n"
 
-#: ../Commands.pm:2420
+#: ../Commands.pm:2419
 msgid "Inventory is empty\n"
 msgstr "장비창은 비었습니다.\n"
 
 #. Translation Comment: Mark to tell item not identified
 #. Translation Comment: Mark to show not identified items
-#: ../Commands.pm:2449
-#: ../Commands.pm:3664
+#: ../Commands.pm:2448
+#: ../Commands.pm:3663
 #: ../Misc.pm:2799
 msgid "Not Identified"
 msgstr "비 감정"
 
-#: ../Commands.pm:2458
+#: ../Commands.pm:2457
 msgid "-----------Inventory-----------\n"
 msgstr "-----------장비창-----------\n"
 
 #. Translation Comment: List of usable equipments
-#: ../Commands.pm:2461
+#: ../Commands.pm:2460
 msgid "-- Equipment (Equipped) --\n"
 msgstr "-- 장비 (장착) --\n"
 
 #. Translation Comment: Tell if the item is marked to be sold
-#: ../Commands.pm:2463
-#: ../Commands.pm:2472
-#: ../Commands.pm:2486
-#: ../Commands.pm:2500
+#: ../Commands.pm:2462
+#: ../Commands.pm:2471
+#: ../Commands.pm:2485
+#: ../Commands.pm:2499
 msgid "Will be sold"
 msgstr "판매될"
 
 #. Translation Comment: List of equipments
-#: ../Commands.pm:2470
+#: ../Commands.pm:2469
 msgid "-- Equipment (Not Equipped) --\n"
 msgstr "-- 장비 (비 장착) --\n"
 
 #. Translation Comment: List of non-usable items
-#: ../Commands.pm:2479
-#: ../Commands.pm:3679
+#: ../Commands.pm:2478
+#: ../Commands.pm:3678
 msgid "-- Non-Usable --\n"
 msgstr "-- 비소모용 --\n"
 
 #. Translation Comment: List of usable items
-#: ../Commands.pm:2494
-#: ../Commands.pm:3692
+#: ../Commands.pm:2493
+#: ../Commands.pm:3691
 msgid "-- Usable --\n"
 msgstr "-- 소모용 --\n"
 
-#: ../Commands.pm:2513
+#: ../Commands.pm:2512
 msgid ""
 "Syntax Error in function 'i' (Inventory List)\n"
 "Usage: i [<u|eq|neq|nu|desc>] [<inventory item>]\n"
@@ -1511,7 +1511,7 @@ msgstr ""
 "Syntax Error in function 'i' (Inventory List)\n"
 "Usage: i [<u|eq|neq|nu|desc>] [<inventory item>]\n"
 
-#: ../Commands.pm:2523
+#: ../Commands.pm:2522
 #, perl-format
 msgid ""
 "Error in function 'i' (Inventory Item Description)\n"
@@ -1520,7 +1520,7 @@ msgstr ""
 "Error in function 'i' (Inventory Item Description)\n"
 "Inventory Item %s does not exist\n"
 
-#: ../Commands.pm:2532
+#: ../Commands.pm:2531
 msgid ""
 "-----------Item List-----------\n"
 "   # Name                           Coord\n"
@@ -1528,11 +1528,11 @@ msgstr ""
 "-----------아이템 목록-----------\n"
 "   # 이름                           좌표\n"
 
-#: ../Commands.pm:2547
+#: ../Commands.pm:2546
 msgid "Item log cleared.\n"
 msgstr "아이템기록 삭제.\n"
 
-#: ../Commands.pm:2583
+#: ../Commands.pm:2582
 msgid ""
 "Syntax Error in function 'look' (Look a Direction)\n"
 "Usage: look <body dir> [<head dir>]\n"
@@ -1540,7 +1540,7 @@ msgstr ""
 "Syntax Error in function 'look' (Look a Direction)\n"
 "Usage: look <body dir> [<head dir>]\n"
 
-#: ../Commands.pm:2593
+#: ../Commands.pm:2592
 msgid ""
 "Syntax Error in function 'lookp' (Look at Player)\n"
 "Usage: lookp <player #>\n"
@@ -1548,7 +1548,7 @@ msgstr ""
 "Syntax Error in function 'lookp' (Look at Player)\n"
 "Usage: lookp <player #>\n"
 
-#: ../Commands.pm:2596
+#: ../Commands.pm:2595
 #, perl-format
 msgid ""
 "Error in function 'lookp' (Look at Player)\n"
@@ -1557,7 +1557,7 @@ msgstr ""
 "Error in function 'lookp' (Look at Player)\n"
 "'%s' is not a valid player number.\n"
 
-#: ../Commands.pm:2608
+#: ../Commands.pm:2607
 #, perl-format
 msgid ""
 "Error in function '%s' (Manual Move)\n"
@@ -1566,7 +1566,7 @@ msgstr ""
 "Error in function '%s' (Manual Move)\n"
 "Usage: %s [distance]\n"
 
-#: ../Commands.pm:2637
+#: ../Commands.pm:2636
 msgid ""
 "-----------Monster List-----------\n"
 "#   Name                        ID      DmgTo DmgFrom  Distance    Coordinates\n"
@@ -1574,17 +1574,17 @@ msgstr ""
 "-----------몬스터 목록-----------\n"
 "#   이름                        ID      DmgTo DmgFrom  거리    좌표\n"
 
-#: ../Commands.pm:2678
+#: ../Commands.pm:2677
 #, perl-format
 msgid "Move into portal number 0 (%s,%s)\n"
 msgstr "포털 번호 0 (%s,%s) 으로 이동합니다.\n"
 
-#: ../Commands.pm:2682
-#: ../Commands.pm:2714
+#: ../Commands.pm:2681
+#: ../Commands.pm:2713
 msgid "No portals exist.\n"
 msgstr "포탈이 없습니다.\n"
 
-#: ../Commands.pm:2685
+#: ../Commands.pm:2684
 msgid ""
 "Syntax Error in function 'move' (Move Player)\n"
 "Usage: move <x> <y> &| <map>\n"
@@ -1592,21 +1592,21 @@ msgstr ""
 "Syntax Error in function 'move' (Move Player)\n"
 "Usage: move <x> <y> &| <map>\n"
 
-#: ../Commands.pm:2689
+#: ../Commands.pm:2688
 msgid "Stopped all movement\n"
 msgstr "모든 이동 중지t\n"
 
-#: ../Commands.pm:2696
+#: ../Commands.pm:2695
 #, perl-format
 msgid "Calculating route to: %s(%s): %s, %s\n"
 msgstr "경로 계산 : %s(%s): %s, %s\n"
 
-#: ../Commands.pm:2710
+#: ../Commands.pm:2709
 #, perl-format
 msgid "Move into portal number %s (%s,%s)\n"
 msgstr "포털번호 %s (%s,%s) 로 이동합니다. \n"
 
-#: ../Commands.pm:2725
+#: ../Commands.pm:2724
 msgid ""
 "-----------NPC List-----------\n"
 "#    Name                         Coordinates   ID\n"
@@ -1614,7 +1614,7 @@ msgstr ""
 "-----------NPC 목록-----------\n"
 "#    이름                         좌표   ID\n"
 
-#: ../Commands.pm:2739
+#: ../Commands.pm:2738
 msgid ""
 "Syntax Error in function 'nl' (List NPCs)\n"
 "Usage: nl [<npc #>]\n"
@@ -1622,7 +1622,7 @@ msgstr ""
 "Syntax Error in function 'nl' (List NPCs)\n"
 "Usage: nl [<npc #>]\n"
 
-#: ../Commands.pm:2766
+#: ../Commands.pm:2765
 msgid ""
 "Error in function 'party' (Party Functions)\n"
 "Can't list party - you're not in a party.\n"
@@ -1630,7 +1630,7 @@ msgstr ""
 "Error in function 'party' (Party Functions)\n"
 "Can't list party - you're not in a party.\n"
 
-#: ../Commands.pm:2769
+#: ../Commands.pm:2768
 #, perl-format
 msgid ""
 "----------Party-----------\n"
@@ -1641,7 +1641,7 @@ msgstr ""
 "%s\n"
 "#      이름                  지도                    온라인    HP\n"
 
-#: ../Commands.pm:2811
+#: ../Commands.pm:2810
 msgid ""
 "Syntax Error in function 'party create' (Organize Party)\n"
 "Usage: party create <party name>\n"
@@ -1649,7 +1649,7 @@ msgstr ""
 "Syntax Error in function 'party create' (Organize Party)\n"
 "Usage: party create <party name>\n"
 
-#: ../Commands.pm:2818
+#: ../Commands.pm:2817
 msgid ""
 "Syntax Error in function 'party join' (Accept/Deny Party Join Request)\n"
 "Usage: party join <flag>\n"
@@ -1657,7 +1657,7 @@ msgstr ""
 "Syntax Error in function 'party join' (파티 참가 요청 승인/거부)\n"
 "Usage: party join <flag>\n"
 
-#: ../Commands.pm:2821
+#: ../Commands.pm:2820
 msgid ""
 "Error in function 'party join' (Join/Request to Join Party)\n"
 "Can't accept/deny party request - no incoming request.\n"
@@ -1665,7 +1665,7 @@ msgstr ""
 "Error in function 'party join' (파티 참가 요청)\n"
 "Can't accept/deny party request - no incoming request.\n"
 
-#: ../Commands.pm:2828
+#: ../Commands.pm:2827
 msgid ""
 "Error in function 'party request' (Request to Join Party)\n"
 "Can't request a join - you're not in a party.\n"
@@ -1673,7 +1673,7 @@ msgstr ""
 "Error in function 'party request' (파티 참가 요청)\n"
 "Can't request a join - you're not in a party.\n"
 
-#: ../Commands.pm:2831
+#: ../Commands.pm:2830
 #, perl-format
 msgid ""
 "Error in function 'party request' (Request to Join Party)\n"
@@ -1682,7 +1682,7 @@ msgstr ""
 "Error in function 'party request' (파티 참가 요청)\n"
 "Can't request to join party - player %s does not exist.\n"
 
-#: ../Commands.pm:2837
+#: ../Commands.pm:2836
 msgid ""
 "Error in function 'party leave' (Leave Party)\n"
 "Can't leave party - you're not in a party.\n"
@@ -1690,7 +1690,7 @@ msgstr ""
 "Error in function 'party leave' (파티 떠나기)\n"
 "Can't leave party - you're not in a party.\n"
 
-#: ../Commands.pm:2844
+#: ../Commands.pm:2843
 msgid ""
 "Error in function 'party share' (Set Party Share EXP)\n"
 "Can't set share - you're not in a party.\n"
@@ -1698,7 +1698,7 @@ msgstr ""
 "Error in function 'party share' (파티 EXP 경험치 공유)\n"
 "Can't set share - you're not in a party.\n"
 
-#: ../Commands.pm:2847
+#: ../Commands.pm:2846
 msgid ""
 "Syntax Error in function 'party share' (Set Party Share EXP)\n"
 "Usage: party share <flag>\n"
@@ -1706,7 +1706,7 @@ msgstr ""
 "Syntax Error in function 'party share' (파티 경험치 공유 EXP)\n"
 "Usage: party share <flag>\n"
 
-#: ../Commands.pm:2854
+#: ../Commands.pm:2853
 msgid ""
 "Error in function 'party kick' (Kick Party Member)\n"
 "Can't kick member - you're not in a party.\n"
@@ -1714,7 +1714,7 @@ msgstr ""
 "Error in function 'party kick' (Kick Party Member)\n"
 "Can't kick member - you're not in a party.\n"
 
-#: ../Commands.pm:2857
+#: ../Commands.pm:2856
 msgid ""
 "Syntax Error in function 'party kick' (Kick Party Member)\n"
 "Usage: party kick <party member #>\n"
@@ -1722,7 +1722,7 @@ msgstr ""
 "Syntax Error in function 'party kick' (Kick Party Member)\n"
 "Usage: party kick <party member #>\n"
 
-#: ../Commands.pm:2860
+#: ../Commands.pm:2859
 #, perl-format
 msgid ""
 "Error in function 'party kick' (Kick Party Member)\n"
@@ -1731,7 +1731,7 @@ msgstr ""
 "Error in function 'party kick' (Kick Party Member)\n"
 "Can't kick member - member %s doesn't exist.\n"
 
-#: ../Commands.pm:2866
+#: ../Commands.pm:2865
 msgid ""
 "Syntax Error in function 'party' (Party Management)\n"
 "Usage: party [<create|join|request|leave|share|kick>]\n"
@@ -1739,7 +1739,7 @@ msgstr ""
 "Syntax Error in function 'party' (Party Management)\n"
 "Usage: party [<create|join|request|leave|share|kick>]\n"
 
-#: ../Commands.pm:2874
+#: ../Commands.pm:2873
 msgid ""
 "Syntax Error in function 'p' (Party Chat)\n"
 "Usage: p <message>\n"
@@ -1747,15 +1747,15 @@ msgstr ""
 "Syntax Error in function 'p' (Party Chat)\n"
 "Usage: p <message>\n"
 
-#: ../Commands.pm:2886
+#: ../Commands.pm:2885
 msgid "Your Pecopeco is active"
 msgstr "페코페코 활성화"
 
-#: ../Commands.pm:2888
+#: ../Commands.pm:2887
 msgid "Your Pecopeco is inactive"
 msgstr "페코페코 비활성화"
 
-#: ../Commands.pm:2892
+#: ../Commands.pm:2891
 msgid ""
 "Error in function 'pecopeco release' (Remove Pecopeco Status)\n"
 "You don't possess a Pecopeco.\n"
@@ -1763,7 +1763,7 @@ msgstr ""
 "Error in function 'pecopeco release' (페코페코 상태 제거)\n"
 "You don't possess a Pecopeco.\n"
 
-#: ../Commands.pm:2903
+#: ../Commands.pm:2902
 msgid ""
 "Error in function 'pet' (Pet Management)\n"
 "You don't have a pet.\n"
@@ -1771,7 +1771,7 @@ msgstr ""
 "Error in function 'pet' (펫 관리)\n"
 "You don't have a pet.\n"
 
-#: ../Commands.pm:2907
+#: ../Commands.pm:2906
 #, perl-format
 msgid ""
 "-----------Pet Status-----------\n"
@@ -1780,7 +1780,7 @@ msgstr ""
 "-----------펫 상태-----------\n"
 "이름: %-23s 악세사리: %s"
 
-#: ../Commands.pm:2921
+#: ../Commands.pm:2920
 msgid ""
 "-----------Pet List-----------\n"
 "#    Type                     Name\n"
@@ -1788,12 +1788,12 @@ msgstr ""
 "-----------펫 목록-----------\n"
 "#    Type                     Name\n"
 
-#: ../Commands.pm:2940
+#: ../Commands.pm:2939
 #, perl-format
 msgid "Player \"%s\" does not exist.\n"
 msgstr "Player \"%s\" 존재하지 않습니다.\n"
 
-#: ../Commands.pm:2973
+#: ../Commands.pm:2972
 #, perl-format
 msgid ""
 "------------------ Player Info ------------------\n"
@@ -1830,19 +1830,19 @@ msgstr ""
 "하단투구: %-19s 머리색깔:      %-19s\n"
 "걷는속도: %s 초/블럭\n"
 
-#: ../Commands.pm:3001
+#: ../Commands.pm:3000
 msgid "Player is dead.\n"
 msgstr "플레이어 사망\n"
 
-#: ../Commands.pm:3003
+#: ../Commands.pm:3002
 msgid "Player is sitting.\n"
 msgstr "플레이어 앉음.\n"
 
-#: ../Commands.pm:3007
+#: ../Commands.pm:3006
 msgid "Player is facing towards you.\n"
 msgstr "당신을 향해 대면하고 있습니다.\n"
 
-#: ../Commands.pm:3015
+#: ../Commands.pm:3014
 msgid ""
 "-----------Player List-----------\n"
 "#    Name                                Sex   Lv  Job         Dist  Coord\n"
@@ -1850,7 +1850,7 @@ msgstr ""
 "-----------플레이어 목록-----------\n"
 "#    이름                                성별   Lv  Job         거리  좌표\n"
 
-#: ../Commands.pm:3040
+#: ../Commands.pm:3039
 msgid ""
 "--------- Currently loaded plugins ---------\n"
 "#   Name              Description\n"
@@ -1858,7 +1858,7 @@ msgstr ""
 "--------- 현재 읽은 플러그인 ---------\n"
 "#   이름              설명\n"
 
-#: ../Commands.pm:3060
+#: ../Commands.pm:3059
 msgid ""
 "Syntax Error in function 'plugin reload' (Reload Plugin)\n"
 "Usage: plugin reload <plugin name|plugin number#|\"all\">\n"
@@ -1866,7 +1866,7 @@ msgstr ""
 "Syntax Error in function 'plugin reload' (Reload Plugin)\n"
 "Usage: plugin reload <plugin name|plugin number#|\"all\">\n"
 
-#: ../Commands.pm:3076
+#: ../Commands.pm:3075
 msgid ""
 "Error in function 'plugin reload' (Reload Plugin)\n"
 "The specified plugin names do not exist.\n"
@@ -1874,7 +1874,7 @@ msgstr ""
 "오류 함수 'plugin reload' (플러그인 Reload)\n"
 "The specified plugin names do not exist.\n"
 
-#: ../Commands.pm:3088
+#: ../Commands.pm:3087
 msgid ""
 "Syntax Error in function 'plugin load' (Load Plugin)\n"
 "Usage: plugin load <filename|\"all\">\n"
@@ -1882,18 +1882,18 @@ msgstr ""
 "문법오류 함수 'plugin load' (플러그인 Load)\n"
 "Usage: plugin load <filename|\"all\">\n"
 
-#: ../Commands.pm:3102
-#: ../Commands.pm:3120
+#: ../Commands.pm:3101
+#: ../Commands.pm:3119
 #, perl-format
 msgid "Plugin %s unloaded.\n"
 msgstr "Plugin %s unloaded.\n"
 
-#: ../Commands.pm:3104
+#: ../Commands.pm:3103
 #, perl-format
 msgid "'%s' is not a valid plugin number.\n"
 msgstr "'%s' is not a valid plugin number.\n"
 
-#: ../Commands.pm:3108
+#: ../Commands.pm:3107
 msgid ""
 "Syntax Error in function 'plugin unload' (Unload Plugin)\n"
 "Usage: plugin unload <plugin name|plugin number#|\"all\">\n"
@@ -1901,7 +1901,7 @@ msgstr ""
 "Syntax Error in function 'plugin unload' (Unload Plugin)\n"
 "Usage: plugin unload <plugin name|plugin number#|\"all\">\n"
 
-#: ../Commands.pm:3127
+#: ../Commands.pm:3126
 msgid ""
 "--------------- Plugin command syntax ---------------\n"
 "Command:                                              Description:\n"
@@ -1919,15 +1919,15 @@ msgstr ""
 " plugin reload <plugin name|plugin number#|\"all\">      Reload a loaded plugin\n"
 "-----------------------------------------------------\n"
 
-#: ../Commands.pm:3137
+#: ../Commands.pm:3136
 msgid "Syntax Error in function 'plugin' (Control Plugins)\n"
 msgstr "문법오류 함수 'plugin' (Control Plugins)\n"
 
-#: ../Commands.pm:3144
+#: ../Commands.pm:3143
 msgid "-----------PM List-----------\n"
 msgstr "-----------PM 목록-----------\n"
 
-#: ../Commands.pm:3158
+#: ../Commands.pm:3157
 msgid ""
 "-----------Portal List-----------\n"
 "#    Name                                Coordinates\n"
@@ -1935,7 +1935,7 @@ msgstr ""
 "-----------Portal 목록-----------\n"
 "#    이름                                좌표\n"
 
-#: ../Commands.pm:3181
+#: ../Commands.pm:3180
 msgid ""
 "Syntax Error in function 'pm' (Private Message)\n"
 "Usage: pm (username) (message)\n"
@@ -1945,7 +1945,7 @@ msgstr ""
 "Usage: pm (username) (message)\n"
 "       pm (<#>) (message)\n"
 
-#: ../Commands.pm:3187
+#: ../Commands.pm:3186
 #, perl-format
 msgid ""
 "Error in function 'pm' (Private Message)\n"
@@ -1954,7 +1954,7 @@ msgstr ""
 "Error in function 'pm' (Private Message)\n"
 "Quick look-up %s does not exist\n"
 
-#: ../Commands.pm:3190
+#: ../Commands.pm:3189
 msgid ""
 "Error in function 'pm' (Private Message)\n"
 "You have not pm-ed anyone before\n"
@@ -1962,7 +1962,7 @@ msgstr ""
 "Error in function 'pm' (Private Message)\n"
 "You have not pm-ed anyone before\n"
 
-#: ../Commands.pm:3215
+#: ../Commands.pm:3214
 msgid ""
 "Syntax Error in function 'reload' (Reload Configuration Files)\n"
 "Usage: reload <name|\"all\">\n"
@@ -1970,8 +1970,8 @@ msgstr ""
 "Syntax Error in function 'reload' (Reload Configuration Files)\n"
 "Usage: reload <name|\"all\">\n"
 
-#: ../Commands.pm:3225
-#: ../functions.pl:189
+#: ../Commands.pm:3224
+#: ../functions.pl:197
 #, perl-format
 msgid ""
 "The file %s must be valid UTF-8 encoded, which it is \n"
@@ -1979,7 +1979,7 @@ msgid ""
 "to save that file as valid UTF-8."
 msgstr ""
 
-#: ../Commands.pm:3249
+#: ../Commands.pm:3248
 msgid ""
 "Syntax Error in function 'relog' (Log out then log in.)\n"
 "Usage: relog [delay]\n"
@@ -1987,7 +1987,7 @@ msgstr ""
 "Syntax Error in function 'relog' (Log out then log in.)\n"
 "Usage: relog [delay]\n"
 
-#: ../Commands.pm:3259
+#: ../Commands.pm:3258
 msgid ""
 "Syntax Error in function 'repair' (Repair player's items.)\n"
 "Usage: repair [item number]\n"
@@ -1995,11 +1995,11 @@ msgstr ""
 "Syntax Error in function 'repair' (Repair player's items.)\n"
 "Usage: repair [item number]\n"
 
-#: ../Commands.pm:3280
+#: ../Commands.pm:3279
 msgid "Your sell list is empty.\n"
 msgstr "판매 목록이 비어있습니다.\n"
 
-#: ../Commands.pm:3283
+#: ../Commands.pm:3282
 msgid ""
 "------------- Sell list -------------\n"
 "#   Item                           Amount\n"
@@ -2007,16 +2007,16 @@ msgstr ""
 "------------- 판매 목록 -------------\n"
 "#   아이템                           수량\n"
 
-#: ../Commands.pm:3294
+#: ../Commands.pm:3293
 #, perl-format
 msgid "Sold %s items.\n"
 msgstr "아이템 %s 팔렸습니다.\n"
 
-#: ../Commands.pm:3299
+#: ../Commands.pm:3298
 msgid "Sell list has been cleared.\n"
 msgstr "판매목록이 삭제되었습니다.\n"
 
-#: ../Commands.pm:3302
+#: ../Commands.pm:3301
 msgid ""
 "Syntax Error in function 'sell' (Sell Inventory Item)\n"
 "Usage: sell <inventory item index #> [<amount>]\n"
@@ -2030,21 +2030,21 @@ msgstr ""
 "       sell done\n"
 "       sell cancel\n"
 
-#: ../Commands.pm:3315
+#: ../Commands.pm:3314
 #, perl-format
 msgid "%s (%s) is already in the sell list.\n"
 msgstr "%s (%s) 은 이미 판매 목록에 있습니다.\n"
 
-#: ../Commands.pm:3328
+#: ../Commands.pm:3327
 #, perl-format
 msgid "Added to sell list: %s (%s) x %s\n"
 msgstr "판매 목록에 추가: %s (%s) x %s\n"
 
-#: ../Commands.pm:3330
+#: ../Commands.pm:3329
 msgid "Type 'sell done' to sell everything in your sell list.\n"
 msgstr "'sell done' 판매 목록 모두 판매완료 입력.\n"
 
-#: ../Commands.pm:3333
+#: ../Commands.pm:3332
 #, perl-format
 msgid ""
 "Error in function 'sell' (Sell Inventory Item)\n"
@@ -2053,11 +2053,11 @@ msgstr ""
 "Error in function 'sell' (Sell Inventory Item)\n"
 "'%s' is not a valid item index #; no item has been added to the sell list.\n"
 
-#: ../Commands.pm:3347
+#: ../Commands.pm:3346
 msgid "You do not have a shop open.\n"
 msgstr "상정 개설을 가지고 있지 않음.\n"
 
-#: ../Commands.pm:3352
+#: ../Commands.pm:3351
 #, perl-format
 msgid ""
 "%s\n"
@@ -2066,7 +2066,7 @@ msgstr ""
 "%s\n"
 "#  이름                                     형태         수량       가격   판매\n"
 
-#: ../Commands.pm:3366
+#: ../Commands.pm:3365
 #, perl-format
 msgid ""
 "%s\n"
@@ -2081,7 +2081,7 @@ msgstr ""
 "최대 획득:  %sz.\n"
 "최대 제니:    %sz.\n"
 
-#: ../Commands.pm:3395
+#: ../Commands.pm:3394
 msgid ""
 "----------Skill List-----------\n"
 "   # Skill Name                     Lv      SP\n"
@@ -2089,7 +2089,7 @@ msgstr ""
 "----------스킬 목록 ----------\n"
 "   # 스킬 이름                     Lv      SP\n"
 
-#: ../Commands.pm:3411
+#: ../Commands.pm:3410
 #, perl-format
 msgid ""
 "Error in function 'skills add' (Add Skill Point)\n"
@@ -2098,7 +2098,7 @@ msgstr ""
 "Error in function 'skills add' (Add Skill Point)\n"
 "Skill %s does not exist.\n"
 
-#: ../Commands.pm:3414
+#: ../Commands.pm:3413
 #, perl-format
 msgid ""
 "Error in function 'skills add' (Add Skill Point)\n"
@@ -2107,7 +2107,7 @@ msgstr ""
 "Error in function 'skills add' (Add Skill Point)\n"
 "Not enough skill points to increase %s\n"
 
-#: ../Commands.pm:3423
+#: ../Commands.pm:3422
 #, perl-format
 msgid ""
 "Error in function 'skills desc' (Skill Description)\n"
@@ -2116,7 +2116,7 @@ msgstr ""
 "Error in function 'skills desc' (Skill Description)\n"
 "Skill %s does not exist.\n"
 
-#: ../Commands.pm:3433
+#: ../Commands.pm:3432
 msgid ""
 "Syntax Error in function 'skills' (Skills Functions)\n"
 "Usage: skills [<add | desc>] [<skill #>]\n"
@@ -2124,7 +2124,7 @@ msgstr ""
 "Syntax Error in function 'skills' (Skills Functions)\n"
 "Usage: skills [<add | desc>] [<skill #>]\n"
 
-#: ../Commands.pm:3439
+#: ../Commands.pm:3438
 msgid ""
 "-----------Area Effects List-----------\n"
 "  # Type                 Source                   X   Y\n"
@@ -2132,7 +2132,7 @@ msgstr ""
 "-----------Area Effects List-----------\n"
 "  # Type                 Source                   X   Y\n"
 
-#: ../Commands.pm:3468
+#: ../Commands.pm:3467
 msgid ""
 "Syntax Error in function 'stat_add' (Add Status Point)\n"
 "Usage: stat_add <str | agi | vit | int | dex | luk>\n"
@@ -2140,7 +2140,7 @@ msgstr ""
 "Syntax Error in function 'stat_add' (Add Status Point)\n"
 "Usage: stat_add <str | agi | vit | int | dex | luk>\n"
 
-#: ../Commands.pm:3472
+#: ../Commands.pm:3471
 msgid ""
 "Error in function 'stat_add' (Add Status Point)\n"
 "You cannot add more stat points than 99\n"
@@ -2148,7 +2148,7 @@ msgstr ""
 "Error in function 'stat_add' (Add Status Point)\n"
 "You cannot add more stat points than 99\n"
 
-#: ../Commands.pm:3476
+#: ../Commands.pm:3475
 #, perl-format
 msgid ""
 "Error in function 'stat_add' (Add Status Point)\n"
@@ -2157,11 +2157,11 @@ msgstr ""
 "Error in function 'stat_add' (Add Status Point)\n"
 "Not enough status points to increase %s\n"
 
-#: ../Commands.pm:3501
+#: ../Commands.pm:3500
 msgid "None"
 msgstr "없음"
 
-#: ../Commands.pm:3503
+#: ../Commands.pm:3502
 #, perl-format
 msgid ""
 "---------- Char Stats ----------\n"
@@ -2188,12 +2188,12 @@ msgstr ""
 "걷는속도: %.2f 초/블럭\n"
 "--------------------------------"
 
-#: ../Commands.pm:3522
+#: ../Commands.pm:3521
 #: ../Network/Receive.pm:701
 msgid "You are sitting.\n"
 msgstr "앉기\n"
 
-#: ../Commands.pm:3582
+#: ../Commands.pm:3581
 #, perl-format
 msgid ""
 "----------------------- Status -------------------------\n"
@@ -2224,7 +2224,7 @@ msgstr ""
 "최근 친 몬스터 (sec): @>>>>>>>\n"
 "--------------------------------------------------------"
 
-#: ../Commands.pm:3625
+#: ../Commands.pm:3624
 msgid ""
 "Syntax Error in function 'storage' (Storage Functions)\n"
 "Usage: storage [<eq|u|nu>]\n"
@@ -2246,45 +2246,45 @@ msgstr ""
 "       storage desc <storage_item_#>\n"
 "       storage log"
 
-#: ../Commands.pm:3636
+#: ../Commands.pm:3635
 msgid "No information about storage; it has not been opened before in this session\n"
 msgstr "No information about storage; it has not been opened before in this session\n"
 
-#: ../Commands.pm:3669
+#: ../Commands.pm:3668
 msgid "-----------Storage-------------\n"
 msgstr "-----------창고-------------\n"
 
-#: ../Commands.pm:3672
+#: ../Commands.pm:3671
 msgid "-- Equipment --\n"
 msgstr "-- 장비 --\n"
 
-#: ../Commands.pm:3705
+#: ../Commands.pm:3704
 #, perl-format
 msgid "Capacity: %d/%d\n"
 msgstr "용량: %d/%d\n"
 
-#: ../Commands.pm:3716
+#: ../Commands.pm:3715
 #, perl-format
 msgid "Inventory Item '%s' does not exist.\n"
 msgstr "장비창 아이템 '%s' 이 존재하지 않습니다.\n"
 
-#: ../Commands.pm:3721
+#: ../Commands.pm:3720
 #, perl-format
 msgid "Inventory Item '%s' is equipped.\n"
 msgstr "Inventory Item '%s' 이 장착되었습니다.\n"
 
-#: ../Commands.pm:3737
+#: ../Commands.pm:3736
 #, perl-format
 msgid "Cart Item '%s' does not exist.\n"
 msgstr "Cart Item '%s' 존재하지 않습니다.\n"
 
-#: ../Commands.pm:3763
-#: ../Commands.pm:3789
+#: ../Commands.pm:3762
+#: ../Commands.pm:3788
 #, perl-format
 msgid "Storage Item '%s' does not exist.\n"
 msgstr "Storage Item '%s' 존재하지 않습니다.\n"
 
-#: ../Commands.pm:3811
+#: ../Commands.pm:3810
 #, perl-format
 msgid ""
 "Error in function 'storage desc' (Show Storage Item Description)\n"
@@ -2293,7 +2293,7 @@ msgstr ""
 "Error in function 'storage desc' (Show Storage Item Description)\n"
 "Storage Item %s does not exist.\n"
 
-#: ../Commands.pm:3823
+#: ../Commands.pm:3822
 msgid ""
 "----------Store List-----------\n"
 "#  Name                    Type           Price\n"
@@ -2301,7 +2301,7 @@ msgstr ""
 "----------창고 목록-----------\n"
 "#  이름                    형태           가격\n"
 
-#: ../Commands.pm:3838
+#: ../Commands.pm:3837
 #, perl-format
 msgid ""
 "Error in function 'store desc' (Store Item Description)\n"
@@ -2310,7 +2310,7 @@ msgstr ""
 "Error in function 'store desc' (Store Item Description)\n"
 "Store item %s does not exist\n"
 
-#: ../Commands.pm:3844
+#: ../Commands.pm:3843
 msgid ""
 "Syntax Error in function 'store' (Store Functions)\n"
 "Usage: store [<desc>] [<store item #>]\n"
@@ -2318,7 +2318,7 @@ msgstr ""
 "Syntax Error in function 'store' (Store Functions)\n"
 "Usage: store [<desc>] [<store item #>]\n"
 
-#: ../Commands.pm:3852
+#: ../Commands.pm:3851
 msgid ""
 "Syntax Error in function 'switchconf' (Switch Configuration File)\n"
 "Usage: switchconf <filename>\n"
@@ -2326,7 +2326,7 @@ msgstr ""
 "Syntax Error in function 'switchconf' (Switch Configuration File)\n"
 "Usage: switchconf <filename>\n"
 
-#: ../Commands.pm:3855
+#: ../Commands.pm:3854
 #, perl-format
 msgid ""
 "Syntax Error in function 'switchconf' (Switch Configuration File)\n"
@@ -2335,12 +2335,12 @@ msgstr ""
 "Syntax Error in function 'switchconf' (Switch Configuration File)\n"
 "File %s does not exist.\n"
 
-#: ../Commands.pm:3859
+#: ../Commands.pm:3858
 #, perl-format
 msgid "Switched config file to \"%s\".\n"
 msgstr "Switched config file to \"%s\".\n"
 
-#: ../Commands.pm:3866
+#: ../Commands.pm:3865
 msgid ""
 "Syntax Error in function 'take' (Take Item)\n"
 "Usage: take <item #>\n"
@@ -2348,7 +2348,7 @@ msgstr ""
 "Syntax Error in function 'take' (Take Item)\n"
 "Usage: take <item #>\n"
 
-#: ../Commands.pm:3869
+#: ../Commands.pm:3868
 msgid ""
 "Error in function 'take first' (Take Item)\n"
 "There are no items near.\n"
@@ -2356,7 +2356,7 @@ msgstr ""
 "Error in function 'take first' (Take Item)\n"
 "There are no items near.\n"
 
-#: ../Commands.pm:3875
+#: ../Commands.pm:3874
 #, perl-format
 msgid ""
 "Error in function 'take' (Take Item)\n"
@@ -2365,7 +2365,7 @@ msgstr ""
 "Error in function 'take' (Take Item)\n"
 "Item %s does not exist.\n"
 
-#: ../Commands.pm:3888
+#: ../Commands.pm:3887
 #, perl-format
 msgid ""
 "Error in function 'talk' (Talk to NPC)\n"
@@ -2374,7 +2374,7 @@ msgstr ""
 "Error in function 'talk' (Talk to NPC)\n"
 "NPC %s does not exist\n"
 
-#: ../Commands.pm:3894
+#: ../Commands.pm:3893
 #, perl-format
 msgid ""
 "Error in function 'talk %s' (Respond to NPC)\n"
@@ -2383,7 +2383,7 @@ msgstr ""
 "Error in function 'talk %s' (Respond to NPC)\n"
 "You are not talking to any NPC.\n"
 
-#: ../Commands.pm:3899
+#: ../Commands.pm:3898
 msgid ""
 "Error in function 'talk resp' (Respond to NPC)\n"
 "No NPC response list available.\n"
@@ -2391,7 +2391,7 @@ msgstr ""
 "Error in function 'talk resp' (Respond to NPC)\n"
 "No NPC response list available.\n"
 
-#: ../Commands.pm:3904
+#: ../Commands.pm:3903
 #, perl-format
 msgid ""
 "----------Responses-----------\n"
@@ -2402,7 +2402,7 @@ msgstr ""
 "NPC: %s\n"
 "#  Response\n"
 
-#: ../Commands.pm:3916
+#: ../Commands.pm:3915
 #, perl-format
 msgid ""
 "Error in function 'talk resp' (Respond to NPC)\n"
@@ -2411,7 +2411,7 @@ msgstr ""
 "Error in function 'talk resp' (Respond to NPC)\n"
 "Response %s does not exist.\n"
 
-#: ../Commands.pm:3928
+#: ../Commands.pm:3927
 msgid ""
 "Error in function 'talk num' (Respond to NPC)\n"
 "You must specify a number.\n"
@@ -2419,7 +2419,7 @@ msgstr ""
 "Error in function 'talk num' (Respond to NPC)\n"
 "You must specify a number.\n"
 
-#: ../Commands.pm:3932
+#: ../Commands.pm:3931
 #, perl-format
 msgid ""
 "Error in function 'talk num' (Respond to NPC)\n"
@@ -2428,7 +2428,7 @@ msgstr ""
 "Error in function 'talk num' (Respond to NPC)\n"
 "%s is not a valid number.\n"
 
-#: ../Commands.pm:3941
+#: ../Commands.pm:3940
 msgid ""
 "Error in function 'talk text' (Respond to NPC)\n"
 "You must specify a string.\n"
@@ -2436,7 +2436,7 @@ msgstr ""
 "Error in function 'talk text' (Respond to NPC)\n"
 "You must specify a string.\n"
 
-#: ../Commands.pm:3948
+#: ../Commands.pm:3947
 msgid ""
 "Error in function 'talk cont' (Continue Talking to NPC)\n"
 "You are not talking to any NPC.\n"
@@ -2444,11 +2444,11 @@ msgstr ""
 "Error in function 'talk cont' (Continue Talking to NPC)\n"
 "You are not talking to any NPC.\n"
 
-#: ../Commands.pm:3956
+#: ../Commands.pm:3955
 msgid "You are not talking to any NPC.\n"
 msgstr "어떤 NPC 와 대답할 수 없습니다.\n"
 
-#: ../Commands.pm:3965
+#: ../Commands.pm:3964
 msgid ""
 "Syntax Error in function 'talk' (Talk to NPC)\n"
 "Usage: talk <NPC # | cont | resp | num> [<response #>|<number #>]\n"
@@ -2456,7 +2456,7 @@ msgstr ""
 "Syntax Error in function 'talk' (Talk to NPC)\n"
 "Usage: talk <NPC # | cont | resp | num> [<response #>|<number #>]\n"
 
-#: ../Commands.pm:3975
+#: ../Commands.pm:3974
 msgid ""
 "Syntax Error in function 'talknpc' (Talk to an NPC)\n"
 "Usage: talknpc <x> <y> <sequence>\n"
@@ -2464,12 +2464,12 @@ msgstr ""
 "Syntax Error in function 'talknpc' (Talk to an NPC)\n"
 "Usage: talknpc <x> <y> <sequence>\n"
 
-#: ../Commands.pm:3980
+#: ../Commands.pm:3979
 #, perl-format
 msgid "Talking to NPC at (%d, %d) using sequence: %s\n"
 msgstr " NPC (%d, %d) 와 대화 using sequence: %s\n"
 
-#: ../Commands.pm:3989
+#: ../Commands.pm:3988
 msgid ""
 "Syntax Error in function 'tank' (Tank for a Player)\n"
 "Usage: tank <player #|player name>\n"
@@ -2477,8 +2477,8 @@ msgstr ""
 "Syntax Error in function 'tank' (Tank for a Player)\n"
 "Usage: tank <player #|player name>\n"
 
-#: ../Commands.pm:3997
-#: ../Commands.pm:4018
+#: ../Commands.pm:3996
+#: ../Commands.pm:4017
 #, perl-format
 msgid ""
 "Error in function 'tank' (Tank for a Player)\n"
@@ -2487,7 +2487,7 @@ msgstr ""
 "Error in function 'tank' (Tank for a Player)\n"
 "Player %s does not exist.\n"
 
-#: ../Commands.pm:4035
+#: ../Commands.pm:4034
 #, perl-format
 msgid ""
 "%s\n"
@@ -2496,12 +2496,12 @@ msgstr ""
 "%s\n"
 "이름                                      수량  가격\n"
 
-#: ../Commands.pm:4043
+#: ../Commands.pm:4042
 #, perl-format
 msgid "Total of %d items to sell.\n"
 msgstr "판매한 총 아이템 %d l.\n"
 
-#: ../Commands.pm:4051
+#: ../Commands.pm:4050
 msgid ""
 "Syntax Error in function 'timeout' (set a timeout)\n"
 "Usage: timeout <type> [<seconds>]\n"
@@ -2509,7 +2509,7 @@ msgstr ""
 "Syntax Error in function 'timeout' (set a timeout)\n"
 "Usage: timeout <type> [<seconds>]\n"
 
-#: ../Commands.pm:4054
+#: ../Commands.pm:4053
 #, perl-format
 msgid ""
 "Error in function 'timeout' (set a timeout)\n"
@@ -2518,12 +2518,12 @@ msgstr ""
 "Error in function 'timeout' (set a timeout)\n"
 "Timeout %s doesn't exist\n"
 
-#: ../Commands.pm:4057
+#: ../Commands.pm:4056
 #, perl-format
 msgid "Timeout '%s' is %s\n"
 msgstr "Timeout '%s' is %s\n"
 
-#: ../Commands.pm:4069
+#: ../Commands.pm:4068
 msgid ""
 "Function 'top10' (Show Top 10 Lists)\n"
 "Usage: top10 <b|a|t|p> | <black|alche|tk|pk> | <blacksmith|alchemist|taekwon|pvp>\n"
@@ -2531,7 +2531,7 @@ msgstr ""
 "Function 'top10' (Show Top 10 Lists)\n"
 "Usage: top10 <b|a|t|p> | <black|alche|tk|pk> | <blacksmith|alchemist|taekwon|pvp>\n"
 
-#: ../Commands.pm:4080
+#: ../Commands.pm:4079
 msgid ""
 "Syntax Error in function 'top10' (Show Top 10 Lists)\n"
 "Usage: top10 <b|a|t|p> |\n"
@@ -2543,11 +2543,11 @@ msgstr ""
 "             <black|alche|tk|pk> |\n"
 "             <blacksmith|alchemist|taekwon|pvp>\n"
 
-#: ../Commands.pm:4092
+#: ../Commands.pm:4091
 msgid "You must specify an item to unequip.\n"
 msgstr "You must specify an item to unequip.\n"
 
-#: ../Commands.pm:4104
+#: ../Commands.pm:4103
 #, perl-format
 msgid ""
 "Error in function 'unequip' (Unequip Inventory Item)\n"
@@ -2556,7 +2556,7 @@ msgstr ""
 "Error in function 'unequip' (Unequip Inventory Item)\n"
 "Inventory Item %s is not equipped.\n"
 
-#: ../Commands.pm:4117
+#: ../Commands.pm:4116
 msgid ""
 "Syntax Error in function 'im' (Use Item on Monster)\n"
 "Usage: im <item #> <monster #>\n"
@@ -2564,7 +2564,7 @@ msgstr ""
 "Syntax Error in function 'im' (Use Item on Monster)\n"
 "Usage: im <item #> <monster #>\n"
 
-#: ../Commands.pm:4120
+#: ../Commands.pm:4119
 #, perl-format
 msgid ""
 "Error in function 'im' (Use Item on Monster)\n"
@@ -2573,7 +2573,7 @@ msgstr ""
 "Error in function 'im' (Use Item on Monster)\n"
 "Inventory Item %s does not exist.\n"
 
-#: ../Commands.pm:4123
+#: ../Commands.pm:4122
 #, perl-format
 msgid ""
 "Error in function 'im' (Use Item on Monster)\n"
@@ -2582,7 +2582,7 @@ msgstr ""
 "Error in function 'im' (Use Item on Monster)\n"
 "Inventory Item %s is not of type Usable.\n"
 
-#: ../Commands.pm:4126
+#: ../Commands.pm:4125
 #, perl-format
 msgid ""
 "Error in function 'im' (Use Item on Monster)\n"
@@ -2591,7 +2591,7 @@ msgstr ""
 "Error in function 'im' (Use Item on Monster)\n"
 "Monster %s does not exist.\n"
 
-#: ../Commands.pm:4138
+#: ../Commands.pm:4137
 msgid ""
 "Syntax Error in function 'ip' (Use Item on Player)\n"
 "Usage: ip <item #> <player #>\n"
@@ -2599,7 +2599,7 @@ msgstr ""
 "Syntax Error in function 'ip' (Use Item on Player)\n"
 "Usage: ip <item #> <player #>\n"
 
-#: ../Commands.pm:4141
+#: ../Commands.pm:4140
 #, perl-format
 msgid ""
 "Error in function 'ip' (Use Item on Player)\n"
@@ -2608,7 +2608,7 @@ msgstr ""
 "Error in function 'ip' (Use Item on Player)\n"
 "Inventory Item %s does not exist.\n"
 
-#: ../Commands.pm:4144
+#: ../Commands.pm:4143
 #, perl-format
 msgid ""
 "Error in function 'ip' (Use Item on Player)\n"
@@ -2617,7 +2617,7 @@ msgstr ""
 "Error in function 'ip' (Use Item on Player)\n"
 "Inventory Item %s is not of type Usable.\n"
 
-#: ../Commands.pm:4147
+#: ../Commands.pm:4146
 #, perl-format
 msgid ""
 "Error in function 'ip' (Use Item on Player)\n"
@@ -2626,7 +2626,7 @@ msgstr ""
 "Error in function 'ip' (Use Item on Player)\n"
 "Player %s does not exist.\n"
 
-#: ../Commands.pm:4157
+#: ../Commands.pm:4156
 msgid ""
 "Syntax Error in function 'is' (Use Item on Yourself)\n"
 "Usage: is <item>\n"
@@ -2634,7 +2634,7 @@ msgstr ""
 "Syntax Error in function 'is' (Use Item on Yourself)\n"
 "Usage: is <item>\n"
 
-#: ../Commands.pm:4163
+#: ../Commands.pm:4162
 #, perl-format
 msgid ""
 "Error in function 'is' (Use Item on Yourself)\n"
@@ -2643,7 +2643,7 @@ msgstr ""
 "Error in function 'is' (Use Item on Yourself)\n"
 "Inventory Item %s does not exist.\n"
 
-#: ../Commands.pm:4168
+#: ../Commands.pm:4167
 #, perl-format
 msgid ""
 "Error in function 'is' (Use Item on Yourself)\n"
@@ -2652,7 +2652,7 @@ msgstr ""
 "Error in function 'is' (Use Item on Yourself)\n"
 "Inventory Item %s is not of type Usable.\n"
 
-#: ../Commands.pm:4184
+#: ../Commands.pm:4183
 #, fuzzy
 msgid ""
 "Syntax error in function 'sl' (Use Skill on Location)\n"
@@ -2661,7 +2661,7 @@ msgstr ""
 "문법오류 함수 'sp' (Use Skill on Player)\n"
 "Usage: sp (skill # or name) [player # or name] [level]\n"
 
-#: ../Commands.pm:4188
+#: ../Commands.pm:4187
 #, fuzzy
 msgid ""
 "Error in function 'sl' (Use Skill on Location)\n"
@@ -2670,7 +2670,7 @@ msgstr ""
 "Error in function 'sp' (Use Skill on Player)\n"
 "'%s' is not a valid skill.\n"
 
-#: ../Commands.pm:4192
+#: ../Commands.pm:4191
 #, fuzzy
 msgid ""
 "Error in function 'sl' (Use Skill on Location)\n"
@@ -2679,7 +2679,7 @@ msgstr ""
 "Error in function 'sp' (Use Skill on Player)\n"
 "Player '%s' does not exist.\n"
 
-#: ../Commands.pm:4207
+#: ../Commands.pm:4206
 #, fuzzy
 msgid ""
 "Syntax error in function 'ss' (Use Skill on Self)\n"
@@ -2688,7 +2688,7 @@ msgstr ""
 "문법오류 함수 'sp' (Use Skill on Player)\n"
 "Usage: sp (skill # or name) [player # or name] [level]\n"
 
-#: ../Commands.pm:4211
+#: ../Commands.pm:4210
 #, fuzzy
 msgid ""
 "Error in function 'ss' (Use Skill on Self)\n"
@@ -2697,7 +2697,7 @@ msgstr ""
 "Error in function 'sp' (Use Skill on Player)\n"
 "Player '%s' does not exist.\n"
 
-#: ../Commands.pm:4221
+#: ../Commands.pm:4220
 #, fuzzy
 msgid ""
 "Syntax error in function 'sp' (Use Skill on Player)\n"
@@ -2706,7 +2706,7 @@ msgstr ""
 "문법오류 함수 'sp' (Use Skill on Player)\n"
 "Usage: sp (skill # or name) [player # or name] [level]\n"
 
-#: ../Commands.pm:4225
+#: ../Commands.pm:4224
 #, fuzzy
 msgid ""
 "Error in function 'sp' (Use Skill on Player)\n"
@@ -2715,7 +2715,7 @@ msgstr ""
 "Error in function 'sp' (Use Skill on Player)\n"
 "Player '%s' does not exist.\n"
 
-#: ../Commands.pm:4231
+#: ../Commands.pm:4230
 #, perl-format
 msgid ""
 "Error in function 'sp' (Use Skill on Player)\n"
@@ -2724,7 +2724,7 @@ msgstr ""
 "Error in function 'sp' (Use Skill on Player)\n"
 "Player '%s' does not exist.\n"
 
-#: ../Commands.pm:4241
+#: ../Commands.pm:4240
 #, fuzzy
 msgid ""
 "Syntax error in function 'sm' (Use Skill on Monster)\n"
@@ -2733,7 +2733,7 @@ msgstr ""
 "Syntax Error in function 'im' (Use Item on Monster)\n"
 "Usage: im <item #> <monster #>\n"
 
-#: ../Commands.pm:4245
+#: ../Commands.pm:4244
 #, fuzzy
 msgid ""
 "Error in function 'sm' (Use Skill on Monster)\n"
@@ -2742,7 +2742,7 @@ msgstr ""
 "Error in function 'im' (Use Item on Monster)\n"
 "Monster %s does not exist.\n"
 
-#: ../Commands.pm:4251
+#: ../Commands.pm:4250
 #, fuzzy, perl-format
 msgid ""
 "Error in function 'sm' (Use Skill on Monster)\n"
@@ -2751,7 +2751,7 @@ msgstr ""
 "Error in function 'im' (Use Item on Monster)\n"
 "Monster %s does not exist.\n"
 
-#: ../Commands.pm:4261
+#: ../Commands.pm:4260
 #, fuzzy
 msgid ""
 "Syntax error in function 'ssp' (Use Skill on Area Spell Location)\n"
@@ -2760,12 +2760,12 @@ msgstr ""
 "문법오류 함수 'sp' (Use Skill on Player)\n"
 "Usage: sp (skill # or name) [player # or name] [level]\n"
 
-#: ../Commands.pm:4267
+#: ../Commands.pm:4266
 #, perl-format
 msgid "Spell %d does not exist.\n"
 msgstr "Spell %d 존재하지 않습니다.\n"
 
-#: ../Commands.pm:4293
+#: ../Commands.pm:4292
 msgid ""
 "Syntax error in function 'vender' (Vender Shop)\n"
 "Usage: vender <vender # | end> [<item #> <amount>]\n"
@@ -2773,7 +2773,7 @@ msgstr ""
 "Syntax error in function 'vender' (Vender Shop)\n"
 "Usage: vender <vender # | end> [<item #> <amount>]\n"
 
-#: ../Commands.pm:4299
+#: ../Commands.pm:4298
 #, perl-format
 msgid ""
 "Error in function 'vender' (Vender Shop)\n"
@@ -2782,7 +2782,7 @@ msgstr ""
 "Error in function 'vender' (Vender Shop)\n"
 "Vender %s does not exist.\n"
 
-#: ../Commands.pm:4304
+#: ../Commands.pm:4303
 msgid ""
 "Error in function 'vender' (Vender Shop)\n"
 "Vender ID is wrong.\n"
@@ -2790,7 +2790,7 @@ msgstr ""
 "Error in function 'vender' (Vender Shop)\n"
 "Vender ID is wrong.\n"
 
-#: ../Commands.pm:4315
+#: ../Commands.pm:4314
 msgid ""
 "-----------Vender List-----------\n"
 "#   Title                                Coords     Owner\n"
@@ -2798,7 +2798,7 @@ msgstr ""
 "-----------노점 목록-----------\n"
 "#   제목                                좌표     소유자\n"
 
-#: ../Commands.pm:4346
+#: ../Commands.pm:4345
 msgid ""
 "Error in function 'warp' (Open/List Warp Portal)\n"
 "Usage: warp <map name | map number# | list>\n"
@@ -2806,24 +2806,24 @@ msgstr ""
 "Error in function 'warp' (Open/List Warp Portal)\n"
 "Usage: warp <map name | map number# | list>\n"
 
-#: ../Commands.pm:4351
-#: ../Commands.pm:4367
+#: ../Commands.pm:4350
+#: ../Commands.pm:4366
 msgid "You didn't cast warp portal.\n"
 msgstr "워프포탈 주문을 못합니다.\n"
 
-#: ../Commands.pm:4356
+#: ../Commands.pm:4355
 #, perl-format
 msgid "Invalid map number %s.\n"
 msgstr "잘못된 맵 번호 %s.\n"
 
-#: ../Commands.pm:4360
-#: ../Commands.pm:4387
+#: ../Commands.pm:4359
+#: ../Commands.pm:4386
 #, perl-format
 msgid "Attempting to open a warp portal to %s (%s)\n"
 msgstr "워프포탈 열려고 시도합니다. %s (%s)\n"
 
-#: ../Commands.pm:4371
-#: ../Network/Receive.pm:6040
+#: ../Commands.pm:4370
+#: ../Network/Receive.pm:6051
 msgid ""
 "----------------- Warp Portal --------------------\n"
 "#  Place                           Map\n"
@@ -2831,12 +2831,12 @@ msgstr ""
 "----------------- 워프 포탈l --------------------\n"
 "#  장소                           지도\n"
 
-#: ../Commands.pm:4383
+#: ../Commands.pm:4382
 #, perl-format
 msgid "Map '%s' does not exist.\n"
 msgstr "Map '%s' 은 존재하지 않습니다.\n"
 
-#: ../Commands.pm:4399
+#: ../Commands.pm:4398
 msgid ""
 "Syntax error in function 'weight' (Inventory Weight Info)\n"
 "Usage: weight [item weight]\n"
@@ -2844,28 +2844,28 @@ msgstr ""
 "Syntax error in function 'weight' (Inventory Weight Info)\n"
 "Usage: weight [item weight]\n"
 
-#: ../Commands.pm:4405
+#: ../Commands.pm:4404
 msgid "Weight: %s/%s (%s%)\n"
 msgstr "무게: %s/%s (%s%)\n"
 
-#: ../Commands.pm:4409
-#: ../Commands.pm:4415
+#: ../Commands.pm:4408
+#: ../Commands.pm:4414
 #, perl-format
 msgid "You can carry %s%s before %s overweight.\n"
 msgstr "You can carry %s%s before %s overweight.\n"
 
-#: ../Commands.pm:4412
-#: ../Commands.pm:4418
+#: ../Commands.pm:4411
+#: ../Commands.pm:4417
 #, perl-format
 msgid "You are %s overweight.\n"
 msgstr " %s 무게초과.\n"
 
-#: ../Commands.pm:4424
+#: ../Commands.pm:4423
 #, perl-format
 msgid "Location %s (%s) : %d, %d\n"
 msgstr "위치 %s (%s) : %d, %d\n"
 
-#: ../Commands.pm:4435
+#: ../Commands.pm:4434
 #, perl-format
 msgid ""
 "Name:    %s (Level %s %s %s)\n"
@@ -2907,7 +2907,7 @@ msgstr ""
 "errors.txt 파일에 더 상세한 오류 내용이 있습니다. 그 파일에\n"
 "포함된 내용을 우리에게 전달해주시면 도움을 드릴 수 있습니다!"
 
-#: ../ErrorHandler.pm:126
+#: ../ErrorHandler.pm:125
 #, perl-format
 msgid ""
 "\n"
@@ -2974,25 +2974,25 @@ msgstr " %s 에서 오류를 찾았습니다.:\n"
 msgid "Please correct the above errors and type 'reload %s'.\n"
 msgstr "Please correct the above errors and type 'reload %s'.\n"
 
-#: ../Interface.pm:126
+#: ../Interface.pm:127
 #, fuzzy
 msgid "Enter your answer: "
 msgstr "패스워드 입력: "
 
-#: ../Interface.pm:171
+#: ../Interface.pm:172
 msgid "Choice"
 msgstr "선택"
 
-#: ../Interface.pm:187
+#: ../Interface.pm:188
 #, perl-format
 msgid "'%s' is not a valid choice number.\n"
 msgstr "'%s' 은 잘못된 선택번호입니다.\n"
 
-#: ../Interface.pm:242
+#: ../Interface.pm:243
 msgid "Press ENTER to exit this program.\n"
 msgstr "종료하려면 ENTER 를 누르세요.\n"
 
-#: ../Interface.pm:244
+#: ../Interface.pm:245
 msgid "Press ENTER to continue...\n"
 msgstr "계속하려면 ENTER 를 누르세요...\n"
 
@@ -4820,103 +4820,108 @@ msgstr "아이템 주울 수 없음 (얼었나?)\n"
 msgid "Cannot pickup item (failure code %d)\n"
 msgstr "아이템 주울 수 없음(코드 실패 %s)\n"
 
-#: ../Network/Receive.pm:3177
+#: ../Network/Receive.pm:3184
 #, perl-format
 msgid "You used Item: %s (%d) x %d - %d left\n"
 msgstr "아이템을 사용하였습니다.: %s (%d) x %d - %d 남음\n"
 
-#: ../Network/Receive.pm:3195
+#: ../Network/Receive.pm:3197
+#, fuzzy, perl-format
+msgid "You used unknown item #%d - %d left\n"
+msgstr "아이템을 사용하였습니다.: %s (%d) x %d - %d 남음\n"
+
+#: ../Network/Receive.pm:3203
 #, perl-format
 msgid "%s used Item: %s - %s left\n"
 msgstr "%s 아이템 사용했습니다.: %s - %s 남음\n"
 
-#: ../Network/Receive.pm:3203
+#: ../Network/Receive.pm:3212
 #, perl-format
 msgid "%s got married!\n"
 msgstr "%s 결혼했습니다!\n"
 
-#: ../Network/Receive.pm:3216
+#: ../Network/Receive.pm:3225
 #, perl-format
 msgid "You have %s "
 msgstr "%s 가집니다. "
 
-#: ../Network/Receive.pm:3220
+#: ../Network/Receive.pm:3229
 #, perl-format
 msgid "%s has %s "
 msgstr "%s has %s "
 
-#: ../Network/Receive.pm:3340
+#: ../Network/Receive.pm:3349
 #, perl-format
 msgid "Item Appeared: %s (%d) x %d (%d, %d)\n"
 msgstr "아이템 수집: %s (%d) x %d (%d, %d)\n"
 
-#: ../Network/Receive.pm:3386
+#: ../Network/Receive.pm:3395
 #, perl-format
 msgid "Attack Looter: %s looted %s\n"
 msgstr "Attack Looter: %s looted %s\n"
 
-#: ../Network/Receive.pm:3411
+#: ../Network/Receive.pm:3420
 #, perl-format
 msgid "Permitted to use %s (%d), level %d\n"
 msgstr "Permitted to use %s (%d), level %d\n"
 
-#: ../Network/Receive.pm:3434
+#: ../Network/Receive.pm:3443
 #, perl-format
 msgid "Item %s has been upgraded to +%s\n"
 msgstr "Item %s 가 +%s 로 업그레이드 되었습니다.\n"
 
-#: ../Network/Receive.pm:3449
+#: ../Network/Receive.pm:3458
 #, perl-format
 msgid "%s changed job to: %s\n"
 msgstr "%s 직업이 변경되었습니다. : %s\n"
 
-#: ../Network/Receive.pm:3453
+#: ../Network/Receive.pm:3462
 #, perl-format
 msgid "%s changed bottom headgear to: %s\n"
 msgstr "%s 하단투구가 변경되었습니다. : %s\n"
 
-#: ../Network/Receive.pm:3458
+#: ../Network/Receive.pm:3467
 #, perl-format
 msgid "%s changed top headgear to: %s\n"
 msgstr "%s 상단투구가 변경되었습니다. : %s\n"
 
-#: ../Network/Receive.pm:3463
+#: ../Network/Receive.pm:3472
 #, perl-format
 msgid "%s changed middle headgear to: %s\n"
 msgstr "%s 중단투구가 변경되었습니다. : %s\n"
 
-#: ../Network/Receive.pm:3469
+#: ../Network/Receive.pm:3478
 #, perl-format
 msgid "%s changed hair color to: %s (%s)\n"
 msgstr "%s 머리색깔이 변경되었습니다. : %s (%s)\n"
 
-#: ../Network/Receive.pm:3526
+#: ../Network/Receive.pm:3535
 msgid "Account name doesn't exist\n"
 msgstr "계정 이름이 존재하지 않습니다.\n"
 
-#: ../Network/Receive.pm:3528
+#: ../Network/Receive.pm:3537
 #, fuzzy
 msgid "Enter your Ragnarok Online username again."
 msgstr "사용자명 재입력: "
 
-#: ../Network/Receive.pm:3539
+#: ../Network/Receive.pm:3548
 msgid "Password Error\n"
 msgstr "패스워드 오류\n"
 
-#: ../Network/Receive.pm:3541
+#: ../Network/Receive.pm:3550
 #, fuzzy
 msgid "Enter your Ragnarok Online password again."
 msgstr "패스워드 재입력: "
 
-#: ../Network/Receive.pm:3552
+#: ../Network/Receive.pm:3561
 msgid "Server connection has been denied\n"
 msgstr "서버 접속 거부되었습니다.\n"
 
-#: ../Network/Receive.pm:3554
+#: ../Network/Receive.pm:3563
 msgid "Critical Error: Your account has been blocked."
 msgstr "Critical Error: 계정이 블럭되었습니다."
 
-#: ../Network/Receive.pm:3558
+#: ../Network/Receive.pm:3567
 #, perl-format
 msgid ""
 "Connect failed, something is wrong with the login settings:\n"
@@ -4929,104 +4934,104 @@ msgstr ""
 "master_version: %s\n"
 "serverType: %s\n"
 
-#: ../Network/Receive.pm:3564
+#: ../Network/Receive.pm:3573
 msgid "The server is temporarily blocking your connection\n"
 msgstr "서버가 일시적으로 접속을 블럭했습니다.\n"
 
-#: ../Network/Receive.pm:3573
+#: ../Network/Receive.pm:3582
 msgid "Error logging into Character Server (invalid character specified)...\n"
 msgstr "캐릭터 서버 로그인 오류 (잘못된 캐릭터 지정)...\n"
 
-#: ../Network/Receive.pm:3600
-#: ../Network/Receive.pm:3659
-#: ../Network/Receive.pm:4563
+#: ../Network/Receive.pm:3609
+#: ../Network/Receive.pm:3670
+#: ../Network/Receive.pm:4574
 #, fuzzy, perl-format
 msgid "Cannot load field %s: %s\n"
 msgstr "Failed to load %s: %s\n"
 
-#: ../Network/Receive.pm:3629
+#: ../Network/Receive.pm:3638
 #, perl-format
 msgid "Map Change: %s (%s, %s)\n"
 msgstr "맵 변경: %s (%s, %s)\n"
 
-#: ../Network/Receive.pm:3688
+#: ../Network/Receive.pm:3699
 #: ../Network/XKoreProxy.pm:487
 msgid "Closing connection to Map Server\n"
 msgstr "맵 서버 접속 닫는 중...\n"
 
-#: ../Network/Receive.pm:3735
+#: ../Network/Receive.pm:3746
 #: ../Network/Receive/ServerType0.pm:41
 #: ../Network/Receive/ServerType15.pm:32
 msgid "Waiting for map to load...\n"
 msgstr "맵 로딩 위해 기다리는 중...\n"
 
-#: ../Network/Receive.pm:3746
+#: ../Network/Receive.pm:3757
 #: ../Network/Receive/ServerType0.pm:52
 #: ../Network/Receive/ServerType15.pm:43
 msgid "You are now in the game\n"
 msgstr "게임 상에 있습니다.\n"
 
-#: ../Network/Receive.pm:3758
+#: ../Network/Receive.pm:3769
 #: ../Network/Receive/ServerType0.pm:60
 #: ../Network/Receive/ServerType15.pm:53
 #, perl-format
 msgid "Your Coordinates: %s, %s\n"
 msgstr "위치: %s, %s\n"
 
-#: ../Network/Receive.pm:3767
+#: ../Network/Receive.pm:3778
 msgid "Memo Failed\n"
 msgstr "메모 기억 실패\n"
 
-#: ../Network/Receive.pm:3769
+#: ../Network/Receive.pm:3780
 msgid "Memo Succeeded\n"
 msgstr "메모 기억 성공\n"
 
-#: ../Network/Receive.pm:3777
+#: ../Network/Receive.pm:3788
 #, perl-format
 msgid "Minimap indicator at location %d, %d with the color %s cleared\n"
 msgstr "미니맵 표시 위치 %d, %d 색깔 %s 지우기\n"
 
-#: ../Network/Receive.pm:3781
+#: ../Network/Receive.pm:3792
 #, perl-format
 msgid "Minimap indicator at location %d, %d with the color %s shown\n"
 msgstr "미니맵 지시 위치 %d, %d 색깔 %s 보기\n"
 
-#: ../Network/Receive.pm:3806
+#: ../Network/Receive.pm:3817
 #, perl-format
 msgid "Monster %s (%d) changed to %s\n"
 msgstr "몬스터가 %s (%d) 가 %s 로 바뀌었습니다.\n"
 
-#: ../Network/Receive.pm:3834
-#: ../Network/Receive.pm:3835
+#: ../Network/Receive.pm:3845
+#: ../Network/Receive.pm:3846
 #, perl-format
 msgid "Get MVP item %s\n"
 msgstr "MVP 아이템 획득 %s\n"
 
-#: ../Network/Receive.pm:3841
+#: ../Network/Receive.pm:3852
 #, perl-format
 msgid "%s become MVP!\n"
 msgstr "%s MVP 가 되었습니다.!\n"
 
-#: ../Network/Receive.pm:3842
+#: ../Network/Receive.pm:3853
 #, perl-format
 msgid "%s became MVP!\n"
 msgstr "%s MVP가 되었습니다.!\n"
 
-#: ../Network/Receive.pm:3847
+#: ../Network/Receive.pm:3858
 #, perl-format
 msgid "Congratulations, you are the MVP! Your reward is %s exp!\n"
 msgstr "축하합니다, MVP 입니다! 보상 %s 경험치를 받았습니다.!\n"
 
-#: ../Network/Receive.pm:3873
+#: ../Network/Receive.pm:3884
 msgid "Ready to start selling items\n"
 msgstr "판매할 아이템 시작 준비s\n"
 
-#: ../Network/Receive.pm:3889
+#: ../Network/Receive.pm:3900
 #, perl-format
 msgid "%s: Type 'store' to start buying, or type 'sell' to start selling\n"
 msgstr "%s: 입력 'store' 구입 시작, 입력 'sell' 판매 시작\n"
 
-#: ../Network/Receive.pm:3923
+#: ../Network/Receive.pm:3934
 #, perl-format
 msgid ""
 "----------%s's Store List-----------\n"
@@ -5035,27 +5040,27 @@ msgstr ""
 "----------%s's 상점 목록-----------\n"
 "#  이름                    형태               가격\n"
 
-#: ../Network/Receive.pm:3965
+#: ../Network/Receive.pm:3976
 #, perl-format
 msgid "%s: Done talking\n"
 msgstr "%s: 대화 완료\n"
 
-#: ../Network/Receive.pm:3994
+#: ../Network/Receive.pm:4005
 #, perl-format
 msgid "%s: Auto-continuing talking\n"
 msgstr "%s: Auto-continuing 자동 대화 넘기기\n"
 
-#: ../Network/Receive.pm:3999
+#: ../Network/Receive.pm:4010
 #, perl-format
 msgid "%s: Type 'talk cont' to continue talking\n"
 msgstr "%s: 입력 'talk cont' 자동 대화 넘기기\n"
 
-#: ../Network/Receive.pm:4012
+#: ../Network/Receive.pm:4023
 #, perl-format
 msgid "%s: Type 'talk num <number #>' to input a number.\n"
 msgstr "%s: 'talk num <번호 #>' 에 번호를 입력하세요.\n"
 
-#: ../Network/Receive.pm:4049
+#: ../Network/Receive.pm:4060
 msgid ""
 "----------Responses-----------\n"
 "#  Response\n"
@@ -5063,164 +5068,164 @@ msgstr ""
 "----------대답-----------\n"
 "#  대답\n"
 
-#: ../Network/Receive.pm:4061
+#: ../Network/Receive.pm:4072
 #, perl-format
 msgid "%s: Type 'talk resp #' to choose a response.\n"
 msgstr "%s: 'talk resp #' 치고 대답 선택하세요..\n"
 
-#: ../Network/Receive.pm:4070
+#: ../Network/Receive.pm:4081
 #, perl-format
 msgid "%s: Type 'talk text' (Respond to NPC)\n"
 msgstr "%s: Type 'talk text' (Respond to NPC)\n"
 
-#: ../Network/Receive.pm:4089
+#: ../Network/Receive.pm:4100
 #, perl-format
 msgid "[Party] %s\n"
 msgstr "[파티] %s\n"
 
-#: ../Network/Receive.pm:4104
+#: ../Network/Receive.pm:4115
 msgid "Party EXP set to Individual Take\n"
 msgstr "파티 경험치를 개인 취득으로 설정\n"
 
-#: ../Network/Receive.pm:4106
+#: ../Network/Receive.pm:4117
 msgid "Party EXP set to Even Share\n"
 msgstr "파티 경험치를 균등분배로 설정\n"
 
-#: ../Network/Receive.pm:4108
+#: ../Network/Receive.pm:4119
 msgid "Error setting party option\n"
 msgstr "Error setting party option\n"
 
-#: ../Network/Receive.pm:4121
+#: ../Network/Receive.pm:4132
 #, perl-format
 msgid "Incoming Request to join party '%s'\n"
 msgstr "파티 합류 요청 '%s'\n"
 
-#: ../Network/Receive.pm:4129
+#: ../Network/Receive.pm:4140
 #, perl-format
 msgid "Join request failed: %s is already in a party\n"
 msgstr "합류 요청 실패 : %s 은 이미 파티가 있습니다.\n"
 
-#: ../Network/Receive.pm:4131
+#: ../Network/Receive.pm:4142
 #, perl-format
 msgid "Join request failed: %s denied request\n"
 msgstr "합류 요청 실패: %s 요청을 거부했습니다.\n"
 
-#: ../Network/Receive.pm:4133
+#: ../Network/Receive.pm:4144
 #, perl-format
 msgid "%s accepted your request\n"
 msgstr "%s accepted your request\n"
 
-#: ../Network/Receive.pm:4147
+#: ../Network/Receive.pm:4158
 #, perl-format
 msgid "You joined party '%s'\n"
 msgstr "파티 '%s' 에 가입했습니다.\n"
 
-#: ../Network/Receive.pm:4150
+#: ../Network/Receive.pm:4161
 #, perl-format
 msgid "%s joined your party '%s'\n"
 msgstr "%s 가 당신의 '%s' 파티에 합류했습니다.\n"
 
-#: ../Network/Receive.pm:4177
+#: ../Network/Receive.pm:4188
 msgid "You left the party\n"
 msgstr "파티 떠났습니다.\n"
 
-#: ../Network/Receive.pm:4181
+#: ../Network/Receive.pm:4192
 #, perl-format
 msgid "%s left the party\n"
 msgstr "%s 파티를 떠났습니다.\n"
 
-#: ../Network/Receive.pm:4198
+#: ../Network/Receive.pm:4209
 msgid "Can't organize party - party name exists\n"
 msgstr "파티를 생성할 수 없습니다. 같은 파티이름이 이미 있습니다.\n"
 
-#: ../Network/Receive.pm:4221
+#: ../Network/Receive.pm:4232
 #, perl-format
 msgid "Party Member: %s\n"
 msgstr "파티 맴버: %s\n"
 
-#: ../Network/Receive.pm:4237
+#: ../Network/Receive.pm:4248
 msgid "Pet capture success\n"
 msgstr "펫 포획 성공\n"
 
-#: ../Network/Receive.pm:4239
+#: ../Network/Receive.pm:4250
 msgid "Pet capture failed\n"
 msgstr "펫 포획 실패\n"
 
-#: ../Network/Receive.pm:4257
+#: ../Network/Receive.pm:4268
 #, perl-format
 msgid "Fed pet with %s\n"
 msgstr "Fed pet with %s\n"
 
-#: ../Network/Receive.pm:4259
+#: ../Network/Receive.pm:4270
 #, perl-format
 msgid "Failed to feed pet with %s: no food in inventory.\n"
 msgstr "%s 에게 펫 먹이 주기 실패: 장비창에 먹이가 없습니다.\n"
 
-#: ../Network/Receive.pm:4340
+#: ../Network/Receive.pm:4351
 #, perl-format
 msgid "%s changed Weapon to %s\n"
 msgstr "%s 은 %s 로 무기 변경되었습니다.\n"
 
-#: ../Network/Receive.pm:4344
+#: ../Network/Receive.pm:4355
 #, perl-format
 msgid "%s changed Shield to %s\n"
 msgstr "%s 은 %s 로 방패 변경되었습니다.\n"
 
-#: ../Network/Receive.pm:4355
+#: ../Network/Receive.pm:4366
 #, perl-format
 msgid "%s changed Shoes to: %s\n"
 msgstr "%s 는 %s 신발로 변경되었습니다.\n"
 
-#: ../Network/Receive.pm:4387
+#: ../Network/Receive.pm:4398
 msgid "Unknown field,"
 msgstr ""
 
-#: ../Network/Receive.pm:4399
+#: ../Network/Receive.pm:4410
 #, perl-format
 msgid "%s%s\n"
 msgstr ""
 
-#: ../Network/Receive.pm:4431
-#: ../Network/Receive.pm:4432
+#: ../Network/Receive.pm:4442
+#: ../Network/Receive.pm:4443
 #, perl-format
 msgid "(From: %s) : %s\n"
 msgstr "(From: %s) : %s\n"
 
-#: ../Network/Receive.pm:4443
+#: ../Network/Receive.pm:4454
 msgid "*** You were PM'd, auto disconnect! ***\n"
 msgstr "*** You were PM'd, 자동 종료! ***\n"
 
-#: ../Network/Receive.pm:4444
+#: ../Network/Receive.pm:4455
 msgid "Disconnecting on PM!\n"
 msgstr "종료 on PM!\n"
 
-#: ../Network/Receive.pm:4452
+#: ../Network/Receive.pm:4463
 #, perl-format
 msgid "(To %s) : %s\n"
 msgstr "(To %s) : %s\n"
 
-#: ../Network/Receive.pm:4461
+#: ../Network/Receive.pm:4472
 #, perl-format
 msgid "%s is not online\n"
 msgstr "%s 온라인이 아닙니다.\n"
 
-#: ../Network/Receive.pm:4463
+#: ../Network/Receive.pm:4474
 msgid "Player ignored your message\n"
 msgstr "플레이어가 당신의 메세지를 무시했습니다.\n"
 
-#: ../Network/Receive.pm:4465
+#: ../Network/Receive.pm:4476
 msgid "Player doesn't want to receive messages\n"
 msgstr "플레이어가 메세지 받기를 원하지 않습니다.\n"
 
-#: ../Network/Receive.pm:4484
+#: ../Network/Receive.pm:4495
 msgid "Received characters from Character Server\n"
 msgstr "캐릭터 서버로부터 캐릭터를 받았습니다.\n"
 
-#: ../Network/Receive.pm:4545
+#: ../Network/Receive.pm:4556
 msgid "Received character ID and Map IP from Character Server\n"
 msgstr "캐릭터 서버로부터 캐릭터 ID 와 맵 IP 를 받았습니다.\n"
 
-#: ../Network/Receive.pm:4573
+#: ../Network/Receive.pm:4584
 #, perl-format
 msgid ""
 "----------Game Info----------\n"
@@ -5237,100 +5242,100 @@ msgstr ""
 "맵 Port: %s\n"
 "-----------------------------\n"
 
-#: ../Network/Receive.pm:4582
+#: ../Network/Receive.pm:4593
 #: ../Network/XKoreProxy.pm:485
 msgid "Closing connection to Character Server\n"
 msgstr "캐릭터 서버 접속 닫는 중...\n"
 
-#: ../Network/Receive.pm:4596
+#: ../Network/Receive.pm:4607
 #, perl-format
 msgid "You successfully refined a weapon (ID %s)!\n"
 msgstr "무기 (ID %s) 제련 성공하였습니다!\n"
 
-#: ../Network/Receive.pm:4598
+#: ../Network/Receive.pm:4609
 #, perl-format
 msgid "You failed to refine a weapon (ID %s)!\n"
 msgstr "무기 (ID %s) 제련 실패했습니다!\n"
 
-#: ../Network/Receive.pm:4600
+#: ../Network/Receive.pm:4611
 #, perl-format
 msgid "You successfully made a potion (ID %s)!\n"
 msgstr "포션 (ID %s) 성공적으로 만들었습니다.!\n"
 
-#: ../Network/Receive.pm:4602
+#: ../Network/Receive.pm:4613
 #, perl-format
 msgid "You failed to make a potion (ID %s)!\n"
 msgstr "포션 (ID %s) 제조 실패하였습니다.!\n"
 
-#: ../Network/Receive.pm:4604
+#: ../Network/Receive.pm:4615
 #, perl-format
 msgid "You tried to refine a weapon (ID %s); result: unknown %s\n"
 msgstr "무기 제련 시도 했습니다. (ID %s); 결과: unknown %s\n"
 
-#: ../Network/Receive.pm:4611
+#: ../Network/Receive.pm:4622
 msgid "--------Repair List--------\n"
 msgstr "--------수리 목록--------\n"
 
-#: ../Network/Receive.pm:4632
+#: ../Network/Receive.pm:4643
 #, perl-format
 msgid "Repair of %s failed.\n"
 msgstr "%s 의 수리 실패.\n"
 
-#: ../Network/Receive.pm:4634
+#: ../Network/Receive.pm:4645
 #, perl-format
 msgid "Successfully repaired %s.\n"
 msgstr "%s 성공적으로 수리했습니다.\n"
 
-#: ../Network/Receive.pm:4646
+#: ../Network/Receive.pm:4657
 msgid "You have been resurrected\n"
 msgstr "환생되었습니다\n"
 
-#: ../Network/Receive.pm:4656
+#: ../Network/Receive.pm:4667
 #, perl-format
 msgid "%s has been resurrected\n"
 msgstr "%s has been resurrected\n"
 
-#: ../Network/Receive.pm:4712
+#: ../Network/Receive.pm:4723
 msgid "Sync packet requested for wrong ID\n"
 msgstr "Sync 패킷이 잘못된 ID 요청했습니다.\n"
 
-#: ../Network/Receive.pm:4719
+#: ../Network/Receive.pm:4730
 msgid "TaeKwon Mission Rank : "
 msgstr "태권 미션 랭크 : "
 
-#: ../Network/Receive.pm:4725
+#: ../Network/Receive.pm:4736
 msgid "TaeKwon Mission : "
 msgstr "태권 미션 : "
 
-#: ../Network/Receive.pm:4733
+#: ../Network/Receive.pm:4744
 msgid "Unavailable Area To Teleport\n"
 msgstr "텔레포트 할 수 없는 지역\n"
 
-#: ../Network/Receive.pm:4736
+#: ../Network/Receive.pm:4747
 msgid "Unavailable Area To Memo\n"
 msgstr "기억할 수 없는 지역\n"
 
-#: ../Network/Receive.pm:4738
+#: ../Network/Receive.pm:4749
 #, perl-format
 msgid "Unavailable Area To Teleport (fail code %s)\n"
 msgstr "Unavailable Area To Teleport (fail code %s)\n"
 
-#: ../Network/Receive.pm:4749
-#: ../Network/Receive.pm:4764
+#: ../Network/Receive.pm:4760
+#: ../Network/Receive.pm:4775
 msgid "PvP Display Mode\n"
 msgstr "PvP Display Mode\n"
 
-#: ../Network/Receive.pm:4752
-#: ../Network/Receive.pm:4767
+#: ../Network/Receive.pm:4763
+#: ../Network/Receive.pm:4778
 msgid "GvG Display Mode\n"
 msgstr "GvG Display Mode\n"
 
-#: ../Network/Receive.pm:4784
+#: ../Network/Receive.pm:4795
 #, perl-format
 msgid "Your PvP rank is: %s/%s\n"
 msgstr "Your PvP rank is: %s/%s\n"
 
-#: ../Network/Receive.pm:4794
+#: ../Network/Receive.pm:4805
 #, perl-format
 msgid ""
 "=====================Sense========================\n"
@@ -5355,169 +5360,169 @@ msgstr ""
 "불사: %-3s\n"
 "==================================================\n"
 
-#: ../Network/Receive.pm:4821
+#: ../Network/Receive.pm:4832
 #, perl-format
 msgid "sold: %s - %s %sz\n"
 msgstr "sold: %s - %s %sz\n"
 
-#: ../Network/Receive.pm:4825
+#: ../Network/Receive.pm:4836
 #, perl-format
 msgid "sold out: %s\n"
 msgstr "팔렸습니다. : %s\n"
 
-#: ../Network/Receive.pm:4828
+#: ../Network/Receive.pm:4839
 msgid "Items have been sold out.\n"
 msgstr "아이템이 팔렸습니다.\n"
 
-#: ../Network/Receive.pm:4839
+#: ../Network/Receive.pm:4850
 #, perl-format
 msgid "You can sell %s items!\n"
 msgstr "You can sell %s items!\n"
 
-#: ../Network/Receive.pm:4922
+#: ../Network/Receive.pm:4933
 #, perl-format
 msgid "Monster Skill - switch Target to : %s (%d)\n"
 msgstr "Monster Skill - switch Target to : %s (%d)\n"
 
-#: ../Network/Receive.pm:4951
+#: ../Network/Receive.pm:4962
 #, perl-format
 msgid "Avoid casting Skill - switch position to : %s,%s\n"
 msgstr "Avoid casting Skill - switch position to : %s,%s\n"
 
-#: ../Network/Receive.pm:5078
+#: ../Network/Receive.pm:5089
 #, perl-format
 msgid "Skill %s failed (%s)\n"
 msgstr "Skill %s failed (%s)\n"
 
-#: ../Network/Receive.pm:5276
+#: ../Network/Receive.pm:5287
 msgid "Not enough stat points to add\n"
 msgstr "Not enough stat points to add\n"
 
-#: ../Network/Receive.pm:5380
+#: ../Network/Receive.pm:5391
 msgid "Mute period expired.\n"
 msgstr "Mute period expired.\n"
 
-#: ../Network/Receive.pm:5386
+#: ../Network/Receive.pm:5397
 #, perl-format
 msgid "You've been muted for %s minutes, auto disconnect!\n"
 msgstr "%s 분 동안 채금 당했습니다, 자동 종료!\n"
 
-#: ../Network/Receive.pm:5387
+#: ../Network/Receive.pm:5398
 #, perl-format
 msgid "*** You have been muted for %s minutes, auto disconnect! ***\n"
 msgstr "*** %s 분 동안 채금 당했습니다, 자동 종료! ***\n"
 
-#: ../Network/Receive.pm:5390
+#: ../Network/Receive.pm:5401
 #, perl-format
 msgid "You've been muted for %s minutes\n"
 msgstr "%s 분 동안 채금 당했습니다.\n"
 
-#: ../Network/Receive.pm:5410
+#: ../Network/Receive.pm:5421
 #, perl-format
 msgid "You are now level %s\n"
 msgstr "%s 레벨이 되었습니다. \n"
 
-#: ../Network/Receive.pm:5412
-#: ../Network/Receive.pm:5413
+#: ../Network/Receive.pm:5423
+#: ../Network/Receive.pm:5424
 #, perl-format
 msgid "Disconnecting on level %s!\n"
 msgstr "%s 레벨이 되어 종료합니다!\n"
 
-#: ../Network/Receive.pm:5471
+#: ../Network/Receive.pm:5482
 #, perl-format
 msgid "You are now job level %s\n"
 msgstr "%s 잡레벨이 되었습니다.\n"
 
-#: ../Network/Receive.pm:5473
-#: ../Network/Receive.pm:5474
+#: ../Network/Receive.pm:5484
+#: ../Network/Receive.pm:5485
 #, perl-format
 msgid "Disconnecting on job level %s!\n"
 msgstr "잡 레벨이 %s 되어 종료합니다!\n"
 
-#: ../Network/Receive.pm:5539
+#: ../Network/Receive.pm:5550
 msgid "Storage closed.\n"
 msgstr "창고가 닫혔습니다.\n"
 
-#: ../Network/Receive.pm:5569
+#: ../Network/Receive.pm:5580
 #, perl-format
 msgid "Storage Item Added: %s (%d) x %s\n"
 msgstr "창고 아이템 추가: %s (%d) x %s\n"
 
-#: ../Network/Receive.pm:5581
+#: ../Network/Receive.pm:5592
 #, perl-format
 msgid "Storage Item Removed: %s (%d) x %s\n"
 msgstr "창고 아이템 제거: %s (%d) x %s\n"
 
-#: ../Network/Receive.pm:5654
+#: ../Network/Receive.pm:5665
 msgid "Storage opened.\n"
 msgstr "창고 열려습니다.\n"
 
-#: ../Network/Receive.pm:5664
+#: ../Network/Receive.pm:5675
 msgid "Please enter a new character password:\n"
 msgstr "새로운 캐릭터 패스워드 입력하세요:\n"
 
-#: ../Network/Receive.pm:5667
+#: ../Network/Receive.pm:5678
 msgid ""
 "You've never set a storage password before.\n"
 "You must set a storage password before you can use the storage.\n"
 "Please enter a new storage password:"
 msgstr ""
 
-#: ../Network/Receive.pm:5678
-#: ../Network/Receive.pm:5714
+#: ../Network/Receive.pm:5689
+#: ../Network/Receive.pm:5725
 msgid "Unable to send character password. You must set the 'storageEncryptKey' option in config.txt or servers.txt.\n"
 msgstr "캐릭터 비번을 보낼 수 없습니다. 반드시 config.txt 나 servers.txt 에서 'storageEncryptKey' 옵션을 설정해야합니다.\n"
 
-#: ../Network/Receive.pm:5679
-#: ../Network/Receive.pm:5715
+#: ../Network/Receive.pm:5690
+#: ../Network/Receive.pm:5726
 msgid "Unable to send storage password. You must set the 'storageEncryptKey' option in config.txt or servers.txt.\n"
 msgstr "창고 비번을 보낼 수 없습니다. 반드시 config.txt 나 servers.txt 에서 'storageEncryptKey' 옵션을 설정해야합니다.\n"
 
-#: ../Network/Receive.pm:5686
-#: ../Network/Receive.pm:5707
+#: ../Network/Receive.pm:5697
+#: ../Network/Receive.pm:5718
 #, perl-format
 msgid "Storage password set to: %s\n"
 msgstr "창고 비밀번호 설정: %s\n"
 
-#: ../Network/Receive.pm:5693
+#: ../Network/Receive.pm:5704
 #, fuzzy
 msgid "Please enter your character password."
 msgstr "캐릭터 패스워드 입력하세요:\n"
 
-#: ../Network/Receive.pm:5698
+#: ../Network/Receive.pm:5709
 #, perl-format
 msgid "Character password set to: %s\n"
 msgstr "캐릭터 패스워드 설정: %s\n"
 
-#: ../Network/Receive.pm:5702
+#: ../Network/Receive.pm:5713
 #, fuzzy
 msgid "Please enter your storage password."
 msgstr "창고 비밀번호를 입력하세요.:\n"
 
-#: ../Network/Receive.pm:5726
+#: ../Network/Receive.pm:5737
 msgid "You have entered the wrong password 5 times. Please try again later.\n"
 msgstr "틀린 비번을 5 번 이상 입력했습니다. 다시 시도하세요.\n"
 
-#: ../Network/Receive.pm:5747
+#: ../Network/Receive.pm:5758
 msgid "Successfully changed storage password.\n"
 msgstr "성공적으로 창고 비번이 변경되었습니다.\n"
 
-#: ../Network/Receive.pm:5749
-#: ../Network/Receive.pm:5753
+#: ../Network/Receive.pm:5760
+#: ../Network/Receive.pm:5764
 msgid "Error: Incorrect storage password.\n"
 msgstr "오류: 부정확한 창고 비번\n"
 
-#: ../Network/Receive.pm:5751
+#: ../Network/Receive.pm:5762
 msgid "Successfully entered storage password.\n"
 msgstr "성공적으로 창고 비번을 입력했습니다.\n"
 
 #. Translation Comment: System/GM chat
-#: ../Network/Receive.pm:5784
+#: ../Network/Receive.pm:5795
 #, perl-format
 msgid "[GM] %s\n"
 msgstr "[GM] %s\n"
 
-#: ../Network/Receive.pm:5796
+#: ../Network/Receive.pm:5807
 #, perl-format
 msgid ""
 "============= ALCHEMIST RANK ================\n"
@@ -5528,7 +5533,7 @@ msgstr ""
 "#    이름                             포인트\n"
 "%s=============================================\n"
 
-#: ../Network/Receive.pm:5806
+#: ../Network/Receive.pm:5817
 #, perl-format
 msgid ""
 "============= BLACKSMITH RANK ===============\n"
@@ -5539,7 +5544,7 @@ msgstr ""
 "#    이름                             포인트\n"
 "%s=============================================\n"
 
-#: ../Network/Receive.pm:5816
+#: ../Network/Receive.pm:5827
 #, perl-format
 msgid ""
 "================ PVP RANK ===================\n"
@@ -5550,7 +5555,7 @@ msgstr ""
 "#    이름                             포인트\n"
 "%s=============================================\n"
 
-#: ../Network/Receive.pm:5826
+#: ../Network/Receive.pm:5837
 #, perl-format
 msgid ""
 "=============== TAEKWON RANK ================\n"
@@ -5561,42 +5566,42 @@ msgstr ""
 "#    이름                             포인트\n"
 "%s=============================================\n"
 
-#: ../Network/Receive.pm:5850
+#: ../Network/Receive.pm:5861
 #, perl-format
 msgid "You unequip %s (%d) - %s\n"
 msgstr "You unequip %s (%d) - %s\n"
 
-#: ../Network/Receive.pm:5863
+#: ../Network/Receive.pm:5874
 #, perl-format
 msgid "%s gained a level!\n"
 msgstr "%s 레벨이 되었습니다!\n"
 
-#: ../Network/Receive.pm:5865
+#: ../Network/Receive.pm:5876
 #, perl-format
 msgid "%s gained a job level!\n"
 msgstr "%s 잡 레벨이 되었습니다!\n"
 
-#: ../Network/Receive.pm:5867
+#: ../Network/Receive.pm:5878
 #, perl-format
 msgid "%s failed to refine a weapon!\n"
 msgstr "%s 무기 제련 실패하였습니다.!\n"
 
-#: ../Network/Receive.pm:5869
+#: ../Network/Receive.pm:5880
 #, perl-format
 msgid "%s successfully refined a weapon!\n"
 msgstr "%s 성공적으로 무기 제련 성공하였습니다!\n"
 
-#: ../Network/Receive.pm:5880
+#: ../Network/Receive.pm:5891
 #, perl-format
 msgid "You used Item: %s (%d) x %s\n"
 msgstr "아이템 사용: %s (%d) x %s\n"
 
-#: ../Network/Receive.pm:5890
+#: ../Network/Receive.pm:5901
 #, perl-format
 msgid "There are currently %s users online\n"
 msgstr "There are currently %s users online\n"
 
-#: ../Network/Receive.pm:5916
+#: ../Network/Receive.pm:5927
 #, perl-format
 msgid ""
 "%s\n"
@@ -5605,22 +5610,22 @@ msgstr ""
 "%s\n"
 "#  이름                                       Type           수량       가격\n"
 
-#: ../Network/Receive.pm:5969
+#: ../Network/Receive.pm:5980
 #, perl-format
 msgid "Failed to buy %s of item #%s from vender (insufficient zeny).\n"
 msgstr "Failed to buy %s of item #%s from vender (insufficient zeny).\n"
 
-#: ../Network/Receive.pm:5971
+#: ../Network/Receive.pm:5982
 #, perl-format
 msgid "Failed to buy %s of item #%s from vender (overweight).\n"
 msgstr "Failed to buy %s of item #%s from vender (overweight).\n"
 
-#: ../Network/Receive.pm:5973
+#: ../Network/Receive.pm:5984
 #, perl-format
 msgid "Failed to buy %s of item #%s from vender (unknown code %s).\n"
 msgstr "Failed to buy %s of item #%s from vender (unknown code %s).\n"
 
-#: ../Network/Receive.pm:5990
+#: ../Network/Receive.pm:6001
 #, perl-format
 msgid ""
 "%s\n"
@@ -5688,50 +5693,6 @@ msgstr "봇 감지 제거하기 위한 클라이언트 패치 중:\n"
 msgid "Client modified in %d places.\n"
 msgstr "클라이언트 %d 위치가 수정되었습니다..\n"
 
-#: ../Network/XKore2.pm:257
-#, perl-format
-msgid "couldn't connect: %s\n"
-msgstr "접속할 수 없습니다.: %s\n"
-
-#: ../Network/XKore2.pm:390
-#: ../Network/XKore2.pm:560
-#, perl-format
-msgid "Unable to listen on XKore2 port (%s:%s): %s"
-msgstr "Unable to listen on XKore2 port (%s:%s): %s"
-
-#: ../Network/XKore2.pm:457
-msgid "XKore 2 failed login: Invalid Username and/or Password.\n"
-msgstr "XKore 2 failed login: 유효하지 않은 Username and/or Password.\n"
-
-#: ../Network/XKore2.pm:486
-msgid "Received GameGuard sync request. Client allowed to login account server.\n"
-msgstr "Received GameGuard sync request. Client allowed to login account server.\n"
-
-#: ../Network/XKore2.pm:489
-msgid "Received GameGuard sync request. Client allowed to login char/map server.\n"
-msgstr "게임가드 동기화 요청 받았습니다. 클라이언트가 char/map 서버로 로그인을 허락하였습니다.\n"
-
-#: ../Network/XKore2.pm:999
-msgid "blueConnection to server lost. Please wait while the connection is reestablished."
-msgstr "blueConnection to server lost. Please wait while the connection is reestablished."
-
-#: ../Network/XKore2.pm:1002
-msgid "Unknown error within XKore 2"
-msgstr "Unknown error within XKore 2"
-
-#: ../Network/XKore2.pm:1033
-msgid "blueConnection reestablished. Enjoy. =)"
-msgstr "blueConnection reestablished. Enjoy. =)"
-
-#: ../Network/XKore2.pm:1046
-msgid "blueStill trying to connect..."
-msgstr "blueStill trying to connect..."
-
-#: ../Network/XKore2.pm:1059
-#, perl-format
-msgid "Unknown/unexpected XKore 2 packet: %s (state: %s).\n"
-msgstr "Unknown/unexpected XKore 2 packet: %s (state: %s).\n"
-
 #: ../Network/XKoreProxy.pm:291
 msgid "Client disconnected\n"
 msgstr "Client disconnected\n"
@@ -5768,13 +5729,13 @@ msgid "Logon-grant packet received twice! Avoiding bug in client.\n"
 msgstr "Logon-grant packet received twice! Avoiding bug in client.\n"
 
 #: ../Network/XKoreProxy.pm:556
-#: ../functions.pl:300
+#: ../functions.pl:310
 #, fuzzy
 msgid "Please choose a master server to connect to."
 msgstr "접속할 마스터 서버를 선택하세요.: "
 
 #: ../Network/XKoreProxy.pm:558
-#: ../functions.pl:302
+#: ../functions.pl:312
 msgid "Master servers"
 msgstr "Master servers"
 
@@ -5834,7 +5795,7 @@ msgid "Target lost\n"
 msgstr "목표물을(를) 놓쳤습니다.\n"
 
 #: ../AI/Attack.pm:442
-#: ../AI/Homunculus.pm:622
+#: ../AI/Homunculus.pm:623
 #, perl-format
 msgid "%s; moving to (%s, %s)\n"
 msgstr "%s; (%s, %s) 로 이동 중\n"
@@ -6168,70 +6129,70 @@ msgstr ""
 msgid "*** Player detected, disconnecting! ***\n"
 msgstr "*** 죽었습니다, 자동 종료!***\n"
 
-#: ../AI/Homunculus.pm:186
+#: ../AI/Homunculus.pm:187
 msgid "Auto-feeding your Homunculus ("
 msgstr "Auto-feeding 호문클루스 ("
 
-#: ../AI/Homunculus.pm:241
+#: ../AI/Homunculus.pm:242
 msgid "Found your Homunculus!\n"
 msgstr "호문클루스 찾았음!\n"
 
-#: ../AI/Homunculus.pm:246
+#: ../AI/Homunculus.pm:247
 msgid "Teleporting to get homunculus back\n"
 msgstr "호문 뒤에서 획득위해 텔레포트\n"
 
-#: ../AI/Homunculus.pm:255
+#: ../AI/Homunculus.pm:256
 #, perl-format
 msgid "Trying to find your homunculus at location %d, %d (you are currently at %d, %d)\n"
 msgstr "Trying to find your homunculus at location %d, %d (you are currently at %d, %d)\n"
 
-#: ../AI/Homunculus.pm:263
+#: ../AI/Homunculus.pm:264
 msgid "You lost your Homunculus!\n"
 msgstr "호문을 잃어버림!\n"
 
-#: ../AI/Homunculus.pm:350
+#: ../AI/Homunculus.pm:351
 #, perl-format
 msgid "Homunculus attacking: %s\n"
 msgstr "호문 공격: %s\n"
 
-#: ../AI/Homunculus.pm:483
+#: ../AI/Homunculus.pm:484
 msgid "Homunculus can't reach or damage target, dropping target\n"
 msgstr "Homunculus can't reach or damage target, dropping target\n"
 
-#: ../AI/Homunculus.pm:485
-#: ../AI/Homunculus.pm:720
-#: ../AI/Homunculus.pm:778
+#: ../AI/Homunculus.pm:486
+#: ../AI/Homunculus.pm:721
+#: ../AI/Homunculus.pm:779
 msgid "Teleport due to dropping homunculus attack target\n"
 msgstr "Teleport due to dropping homunculus attack target\n"
 
-#: ../AI/Homunculus.pm:496
+#: ../AI/Homunculus.pm:497
 msgid "Homunculus target died\n"
 msgstr "호문 목표 죽음\n"
 
-#: ../AI/Homunculus.pm:531
+#: ../AI/Homunculus.pm:532
 msgid "Homunculus target lost\n"
 msgstr "호문 목표 잃음t\n"
 
-#: ../AI/Homunculus.pm:581
-#: ../AI/Homunculus.pm:766
+#: ../AI/Homunculus.pm:582
+#: ../AI/Homunculus.pm:767
 msgid "Dropping target - homunculus will not kill steal others\n"
 msgstr "Dropping target - homunculus will not kill steal others\n"
 
-#: ../AI/Homunculus.pm:625
+#: ../AI/Homunculus.pm:626
 #, perl-format
 msgid "%s; no acceptable place for homunculus to stand\n"
 msgstr "%s; no acceptable place for homunculus to stand\n"
 
-#: ../AI/Homunculus.pm:718
+#: ../AI/Homunculus.pm:719
 msgid "Unable to calculate a route to homunculus target, dropping target\n"
 msgstr "Unable to calculate a route to homunculus target, dropping target\n"
 
-#: ../AI/Homunculus.pm:858
-#: ../AI/Homunculus.pm:950
+#: ../AI/Homunculus.pm:859
+#: ../AI/Homunculus.pm:951
 msgid "Homunculus destination reached.\n"
 msgstr "Homunculus destination reached.\n"
 
-#: ../AI/Homunculus.pm:885
+#: ../AI/Homunculus.pm:886
 #, perl-format
 msgid "Homunculus is stuck at %s (%d,%d), while walking from (%d,%d) to (%d,%d)."
 msgstr "Homunculus is stuck at %s (%d,%d), while walking from (%d,%d) to (%d,%d)."
@@ -6435,11 +6396,11 @@ msgid ""
 "%s"
 msgstr ""
 
-#: ../functions.pl:183
+#: ../functions.pl:191
 msgid "A configuration file failed to load. Did you download the latest configuration files?"
 msgstr "A configuration file failed to load. Did you download the latest configuration files?"
 
-#: ../functions.pl:200
+#: ../functions.pl:208
 msgid ""
 "\n"
 "Auto-generating Admin Password due to default...\n"
@@ -6447,7 +6408,7 @@ msgstr ""
 "\n"
 "Auto-generating Admin Password due to default...\n"
 
-#: ../functions.pl:208
+#: ../functions.pl:216
 msgid ""
 "\n"
 "Generating session Admin Password...\n"
@@ -6455,39 +6416,39 @@ msgstr ""
 "\n"
 "관리자 비번 세션 생성 중...\n"
 
-#: ../functions.pl:258
+#: ../functions.pl:268
 msgid "Checking for new portals... "
 msgstr "새로운 포탈 검사 중... "
 
-#: ../functions.pl:260
+#: ../functions.pl:270
 msgid "found new portals!\n"
 msgstr "새로운 포탈을 찾았습니다.!\n"
 
-#: ../functions.pl:262
+#: ../functions.pl:272
 msgid "New portals have been added to the portals database. The portals database must be compiled before the new portals can be used. Would you like to compile portals now?\n"
 msgstr "새로운 포탈을 포탈 데이터베이스에 추가됩니다. 새로운 포탈을 사용하기 전에 반드시 컴파일 해야합니다. 포탈을 컴파일 하시겠습니까?\n"
 
-#: ../functions.pl:265
+#: ../functions.pl:275
 msgid "Yes, compile now."
 msgstr "예, 지금 컴파일 합니다.."
 
-#: ../functions.pl:265
+#: ../functions.pl:275
 msgid "No, don't compile it."
 msgstr "아니요, 컴파일 하지 않습니다."
 
-#: ../functions.pl:266
+#: ../functions.pl:276
 msgid "Compile portals?"
 msgstr "포탈 컴파일하겠습니까?"
 
-#: ../functions.pl:268
+#: ../functions.pl:278
 msgid "compiling portals"
 msgstr "포탈 컴파일 중"
 
-#: ../functions.pl:271
+#: ../functions.pl:281
 msgid "skipping compile"
 msgstr "컴파일 스킵 중"
 
-#: ../functions.pl:274
+#: ../functions.pl:284
 msgid ""
 "none found\n"
 "\n"
@@ -6495,27 +6456,27 @@ msgstr ""
 "찾을 수 없음\n"
 "\n"
 
-#: ../functions.pl:282
+#: ../functions.pl:292
 #, fuzzy
 msgid "Please enter your Ragnarok Online username."
 msgstr "(%s) 라그나로크 온라인 클라이언트를 시작하세요.\n"
 
-#: ../functions.pl:289
+#: ../functions.pl:299
 #, fuzzy
 msgid "Please enter your Ragnarok Online password."
 msgstr "창고 비밀번호를 입력하세요.:\n"
 
-#: ../functions.pl:361
+#: ../functions.pl:371
 #, perl-format
 msgid "Next restart in %s\n"
 msgstr "다음 재시작 %s\n"
 
-#: ../functions.pl:534
+#: ../functions.pl:544
 #, perl-format
 msgid "Unknown packet - %s\n"
 msgstr "알려지지 않은 패킷 - %s\n"
 
-#: ../functions.pl:606
+#: ../functions.pl:616
 msgid ""
 "\n"
 "Auto-restarting!!\n"
@@ -6523,37 +6484,68 @@ msgstr ""
 "\n"
 "자동-재시작!!\n"
 
-#: ../functions.pl:612
+#: ../functions.pl:622
 #, perl-format
 msgid "Sleeping for %s\n"
 msgstr "Sleeping for %s\n"
 
-#: ../functions.pl:653
+#: ../functions.pl:663
 #, perl-format
 msgid "Changing configuration file (from \"%s\" to \"%s\")...\n"
 msgstr "Changing configuration file (from \"%s\" to \"%s\")...\n"
 
 #. Translation Comment: Interface Title with character status
-#: ../functions.pl:726
+#: ../functions.pl:736
 #, perl-format
 msgid "%s B%s (%s), J%s (%s) : w%s%s - %s"
 msgstr "%s B%s (%s), J%s (%s) : w%s%s - %s"
 
 #. Translation Comment: Interface Title
-#: ../functions.pl:733
+#: ../functions.pl:743
 #, perl-format
 msgid "%sNot connected - %s"
 msgstr "%s 접속되지 않음 - %s"
 
 #. Translation Comment: Interface Title
-#: ../functions.pl:736
+#: ../functions.pl:746
 #, perl-format
 msgid "%sConnecting - %s"
 msgstr "%s 접속 중 - %s"
 
-#: ../functions.pl:932
+#: ../functions.pl:942
 msgid "Map loaded\n"
 msgstr "맵 로딩됨\n"
+
+#~ msgid "couldn't connect: %s\n"
+#~ msgstr "접속할 수 없습니다.: %s\n"
+#~ msgid "Unable to listen on XKore2 port (%s:%s): %s"
+#~ msgstr "Unable to listen on XKore2 port (%s:%s): %s"
+#~ msgid "XKore 2 failed login: Invalid Username and/or Password.\n"
+#~ msgstr "XKore 2 failed login: 유효하지 않은 Username and/or Password.\n"
+#~ msgid ""
+#~ "Received GameGuard sync request. Client allowed to login account server.\n"
+#~ msgstr ""
+#~ "Received GameGuard sync request. Client allowed to login account server.\n"
+#~ msgid ""
+#~ "Received GameGuard sync request. Client allowed to login char/map "
+#~ "server.\n"
+#~ msgstr ""
+#~ "게임가드 동기화 요청 받았습니다. 클라이언트가 char/map 서버로 로그인을 허"
+#~ "락하였습니다.\n"
+#~ msgid ""
+#~ "blueConnection to server lost. Please wait while the connection is "
+#~ "reestablished."
+#~ msgstr ""
+#~ "blueConnection to server lost. Please wait while the connection is "
+#~ "reestablished."
+#~ msgid "Unknown error within XKore 2"
+#~ msgstr "Unknown error within XKore 2"
+#~ msgid "blueConnection reestablished. Enjoy. =)"
+#~ msgstr "blueConnection reestablished. Enjoy. =)"
+#~ msgid "blueStill trying to connect..."
+#~ msgstr "blueStill trying to connect..."
+#~ msgid "Unknown/unexpected XKore 2 packet: %s (state: %s).\n"
+#~ msgstr "Unknown/unexpected XKore 2 packet: %s (state: %s).\n"
 
 #, fuzzy
 #~ msgid "Please enter a new storage password:"
