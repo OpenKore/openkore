@@ -293,15 +293,11 @@ sub getSoldOut {
 # get amount of an item in inventory
 sub getInventoryAmount {
 	$cvs->debug("getInventoryAmount(@_)", $logfac{function_call_macro} | $logfac{function_call_auto});
-	my $item = shift;
-	return 0 unless $char->{inventory};
-	my @ids = getItemIDs($item, \@{$char->{inventory}});
-	my $amount = 0;
-	foreach my $id (@ids) {
-		next unless $id >= 0;
-		$amount += $char->{inventory}[$id]{amount}
-	}
-	return $amount
+	my $name = shift;
+	my $item = $char->inventory->getByName($name);
+	return 0 unless $item;
+	my $amount = $item->{amount};
+	return $amount;
 }
 
 # get amount of an item in cart
