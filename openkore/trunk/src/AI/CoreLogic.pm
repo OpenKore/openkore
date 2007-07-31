@@ -171,10 +171,10 @@ sub iterate {
 	processAutoTeleport();
 	processAllowedMaps();
 	processAutoResponse();
+	processDcOnPlayer();
 	processAvoid();
 	processSendEmotion();
 	processAutoShopOpen();
-	processDcOnPlayer();
 	Benchmark::end("AI (part 4)") if DEBUG;
 
 
