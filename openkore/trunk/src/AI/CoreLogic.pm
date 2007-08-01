@@ -168,10 +168,10 @@ sub iterate {
 	processItemsTake();
 	processItemsAutoGather();
 	processItemsGather();
+	processDcOnPlayer();
 	processAutoTeleport();
 	processAllowedMaps();
 	processAutoResponse();
-	processDcOnPlayer();
 	processAvoid();
 	processSendEmotion();
 	processAutoShopOpen();
