@@ -9,8 +9,15 @@ Bug fixes:
 - Fixed autostorage.
 - The Wx interface now allows you to scroll up the console.
 
+New config options:
+- teleportAuto_notPlayers	: comma-separated names of players to 
+				  ignore by teleportAuto_allPlayers
+				  you can also use player IDs 
+				  (recommended)
+
 Credits:
 - rastalo & shamikchand: Autostorage bug report & fix.
+- gtbot: teleportAuto_notPlayers
 
 
 =========================
