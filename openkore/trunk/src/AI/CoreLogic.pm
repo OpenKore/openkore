@@ -2833,7 +2833,13 @@ sub processAutoTeleport {
 				}
 			}
 		} else {
-			$ok = 1;
+			foreach my Actor::Player $player (@{$playersList->getItems()}) {
+				if (existsInList($config{teleportAuto_notPlayers}, $player->{name}) || existsInList($config{teleportAuto_notPlayers}, $player->{nameID})) {
+					$ok = 0;
+				} else {
+					$ok = 1;
+				}
+			}
 		}
 
 		if ($ok) {
