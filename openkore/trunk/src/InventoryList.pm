@@ -112,6 +112,20 @@ sub add {
 	return $invIndex;
 }
 
+if (DEBUG) {
+	eval q{
+		# Override get() to do more error checking.
+		sub get {
+			my ($self, $index) = @_;
+			my $item = $self->SUPER::get($index);
+			if ($item) {
+				assert(defined $item->{invIndex}, "invIndex must be defined");
+			}
+			return $item;
+		}
+	};
+}
+
 ##
 # Actor::Item $InventoryList->getByName(String name)
 # Returns: An Actor::Item, or undef if there is no item with that name in this list.
@@ -266,6 +280,7 @@ sub removeByName {
 sub doClear {
 	my ($self) = @_;
 	foreach my $item (@{$self->getItems()}) {
+		assert(defined $item->{invIndex}, "invIndex must be defined") if DEBUG;
 		my $eventID = $self->{nameChangeEvents}{$item->{invIndex}};
 		delete $self->{nameChangeEvents}{$item->{invIndex}};
 		$item->onNameChange->remove($eventID);
