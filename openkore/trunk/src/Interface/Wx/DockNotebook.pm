@@ -160,7 +160,7 @@ sub closePage {
 			$self->{sizer}->Add($page2, 1, wxGROW);
 			$notebook->DeletePage(0);
 
-			$self->{sizer}->Remove($notebook);
+			$self->{sizer}->Detach($notebook);
 			$notebook->Destroy;
 			delete $self->{notebook};
 			$self->Layout;
@@ -169,7 +169,7 @@ sub closePage {
 		}
 
 	} else {
-		$self->{sizer}->Remove($page);
+		$self->{sizer}->Detach($page);
 		$page->Destroy;
 		delete $self->{page};
 		$self->Layout;

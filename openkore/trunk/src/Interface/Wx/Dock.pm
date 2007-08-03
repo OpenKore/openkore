@@ -79,7 +79,7 @@ sub detach {
 
 		if ($self->{control}) {
 			$self->{control}->Reparent($dialog);
-			$self->{sizer}->Remove($self->{control});
+			$self->{sizer}->Detach($self->{control});
 			$self->Layout;
 		}
 
@@ -164,7 +164,7 @@ sub set {
 	my $self = shift;
 	my $control = shift;
 	if ($self->{control}) {
-		$self->{sizer}->Remove($self->{control});
+		$self->{sizer}->Detach($self->{control});
 		$self->{control}->Destroy;
 	}
 	$self->{control} = $control;
