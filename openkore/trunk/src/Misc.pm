@@ -220,6 +220,7 @@ sub checkValidity {
 
 	assertClass($char, 'Actor::You') if ($net && $net->getState() == Network::IN_GAME
 						&& $net->isa('Network::XKore'));
+	assertClass($char, 'Actor::You') if ($char);
 	return;
 
 	_checkActorHash($name, \%items, 'Actor::Item', 'item');
