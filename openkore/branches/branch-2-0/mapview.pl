@@ -74,8 +74,8 @@ sub OnInit {
 
 	$mapview = new Interface::Wx::MapViewer($frame);
 	$mapview->setMapDir($options{maps});
-	$mapview->onMouseMove(\&onMouseMove);
-	$mapview->onMapChange(\&onMapChange);
+	$mapview->onMouseMove->add(undef, \&onMouseMove);
+	$mapview->onMapChange->add(undef, \&onMapChange);
 	$sizer->Add($mapview, 1, wxGROW);
 
 	$status = new Wx::StatusBar($frame, -1, wxST_SIZEGRIP);
@@ -86,7 +86,7 @@ sub OnInit {
 	$frame->SetSizer($sizer);
 
 	if ($ARGV[0] eq '') {
-		$mapview->onClick(\&onClick);
+		$mapview->onClick->add(undef, \&onClick);
 
 		my $timer = new Wx::Timer($self, 5);
 		EVT_TIMER($self, 5, \&onTimer);
@@ -107,14 +107,16 @@ sub OnInit {
 }
 
 sub onMouseMove {
-	my (undef, $x, $y) = @_;
+	my (undef, undef, $args) = @_;
+	my ($x, $y) = @{$args};
 	$x = 0 if ($x < 0);
 	$y = 0 if ($y < 0);
 	$status->SetStatusText("Mouse over: $x, $y", 1);
 }
 
 sub onClick {
-	my (undef, $x, $y) = @_;
+	my (undef, undef, $args) = @_;
+	my ($x, $y) = @{$args};
 
 	if ($state{busHost} && (!$bus || $bus->serverHost() ne $state{busHost} || $bus->serverPort() ne $state{busPort})) {
 		require Bus::Client;

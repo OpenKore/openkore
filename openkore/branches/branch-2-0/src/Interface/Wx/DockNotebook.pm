@@ -1,7 +1,7 @@
 #########################################################################
 #  OpenKore - WxWidgets Interface
 #
-#  Copyright (c) 2005 OpenKore development team 
+#  Copyright (c) 2005,2007 OpenKore development team 
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -103,7 +103,7 @@ sub newPage {
 			$self->{sizer}->Add($self->{notebook}, 1, wxGROW);
 
 			# Reparent the first page
-			$self->{sizer}->Remove($self->{page});
+			$self->{sizer}->Detach($self->{page});
 			$self->{page}->Reparent($self->{notebook});
 			$self->{notebook}->AddPage($self->{page}, $self->{page}{title});
 			$self->Layout;
@@ -160,7 +160,7 @@ sub closePage {
 			$self->{sizer}->Add($page2, 1, wxGROW);
 			$notebook->DeletePage(0);
 
-			$self->{sizer}->Remove($notebook);
+			$self->{sizer}->Detach($notebook);
 			$notebook->Destroy;
 			delete $self->{notebook};
 			$self->Layout;
@@ -169,7 +169,7 @@ sub closePage {
 		}
 
 	} else {
-		$self->{sizer}->Remove($page);
+		$self->{sizer}->Detach($page);
 		$page->Destroy;
 		delete $self->{page};
 		$self->Layout;

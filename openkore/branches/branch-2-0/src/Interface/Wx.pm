@@ -25,6 +25,10 @@ package Interface::Wx;
 
 # Note: don't use wxTimer for anything important. It's known to cause reentrancy issues!
 
+BEGIN {
+	require Wx::Perl::Packager if ($^O eq 'MSWin32');
+}
+
 use strict;
 use Wx ':everything';
 use Wx::Event qw(EVT_CLOSE EVT_MENU EVT_MENU_OPEN EVT_LISTBOX_DCLICK
@@ -355,9 +359,10 @@ sub createInterface {
 	my $timer = new Wx::Timer($self, 73289);
 	EVT_TIMER($self, 73289, sub {
 		$self->{inputBox}->SetFocus;
+		$self->{notebook}->switchPage('Console');
 #		$splitter->SetSashGravity(1);
 	});
-	$timer->Start(100, 1);
+	$timer->Start(500, 1);
 
 	# Hide console on Win32
 	if ($^O eq 'MSWin32' && $sys{wxHideConsole}) {
@@ -379,10 +384,9 @@ sub createMenuBar {
 	$self->{mManual} = $self->addMenu($opMenu, '&Manual Botting', \&onManualAI, 'Pause automated botting and allow manual control');
 	$self->{mResume} = $self->addMenu($opMenu, '&Automatic Botting', \&onEnableAI, 'Resume all automated botting activity');
 	$opMenu->AppendSeparator;
-	if ($^O eq 'MSWin32') {
-		$self->addMenu($opMenu, 'Minimize to &Tray', \&onMinimizeToTray, 'Minimize to a small task bar tray icon');
-		$opMenu->AppendSeparator;
-	}
+	$self->addMenu($opMenu, 'Copy Last 100 Lines of Text', \&onCopyLastOutput);
+	$self->addMenu($opMenu, 'Minimize to &Tray', \&onMinimizeToTray, 'Minimize to a small task bar tray icon');
+	$opMenu->AppendSeparator;
 	$self->addMenu($opMenu, 'E&xit	Ctrl-W', \&quit, 'Exit this program');
 	$menu->Append($opMenu, 'P&rogram');
 
@@ -561,9 +565,9 @@ sub createSplitterContent {
 	my $mapView = $self->{mapViewer} = new Interface::Wx::MapViewer($mapDock);
 	$mapDock->setParentFrame($frame);
 	$mapDock->set($mapView);
-	$mapView->onMouseMove(\&onMapMouseMove, $self);
-	$mapView->onClick(\&onMapClick, $self);
-	$mapView->onMapChange(\&onMap_MapChange, $mapDock);
+	$mapView->onMouseMove($self, \&onMapMouseMove);
+	$mapView->onClick->add($self, \&onMapClick);
+	$mapView->onMapChange($self, \&onMap_MapChange, $mapDock);
 	$mapView->parsePortals("$Settings::tables_folder/portals.txt");
 	if ($field && $char) {
 		$mapView->set($field->name(), $char->{pos_to}{x}, $char->{pos_to}{y}, $field);
@@ -726,9 +730,7 @@ sub onInputEnter {
 	my $n = $self->{inputType}->GetSelection;
 	if ($n == 0 || $text =~ /^\/(.*)/) {
 		my $command = ($n == 0) ? $text : $1;
-		$self->{console}->SetDefaultStyle($self->{console}{inputStyle});
-		$self->{console}->AppendText("$command\n");
-		$self->{console}->SetDefaultStyle($self->{console}{defaultStyle});
+		$self->{console}->add("input", "$command\n");
 		$self->{inputBox}->Remove(0, -1);
 		$self->{input} = $command;
 		return;
@@ -778,6 +780,11 @@ sub onManualAI {
 
 sub onDisableAI {
 	$AI = 0;
+}
+
+sub onCopyLastOutput {
+	my ($self) = @_;
+	$self->{console}->copyLastLines(100);
 }
 
 sub onMinimizeToTray {
@@ -976,7 +983,8 @@ sub onChatAdd {
 
 sub onMapMouseMove {
 	# Mouse moved over the map viewer control
-	my ($self, $x, $y) = @_;
+	my ($self, undef, $args) = @_;
+	my ($x, $y) = @{$args};
 	my $walkable;
 
 	$walkable = $field->isWalkable($x, $y);
@@ -990,7 +998,8 @@ sub onMapMouseMove {
 
 sub onMapClick {
 	# Clicked on map viewer control
-	my ($self, $x, $y) = @_;
+	my ($self, undef, $args) = @_;
+	my ($x, $y) = @{$args};
 	my $checkPortal = 0;
 	delete $self->{mouseMapText};
 	if ($self->{mapViewer} && $self->{mapViewer}->{portals}
@@ -1015,7 +1024,7 @@ sub onMapClick {
 }
 
 sub onMap_MapChange {
-	my ($mapDock) = @_;
+	my (undef, undef, undef, $mapDock) = @_;
 	$mapDock->title($field->name());
 	$mapDock->Fit;
 }

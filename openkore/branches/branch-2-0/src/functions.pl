@@ -110,11 +110,12 @@ sub loadPlugins {
 		Plugins::loadAll();
 	};
 	if (my $e = caught('Plugin::LoadException')) {
-		$interface->errorDialog(TF("This plugin cannot be loaded. Please notify the plugin's author, " .
-			"or remove the plugin.\n\n" .
+		$interface->errorDialog(TF("This plugin cannot be loaded because of a problem in the plugin. " .
+			"Please notify the plugin's author about this problem, " .
+			"or remove the plugin so %s can start.\n\n" .
 			"The error message is:\n" .
 			"%s",
-			$e->message));
+			$Settings::NAME, $e->message));
 		exit 1;
 	} elsif (my $e = caught('Plugin::DeniedException')) {
 		$interface->errorDialog($e->message);
@@ -126,6 +127,12 @@ sub loadPlugins {
 
 sub loadDataFiles {
 	import Settings qw(addConfigFile);
+
+	# These pragmas are necessary in order to support non-ASCII filenames.
+	# If we use UTF-8 strings then Perl will think the file doesn't exist,
+	# if $Settings::control_folder or $Settings::tables_folder contains
+	# non-ASCII characters.
+	no encoding 'utf8';
 
 	addConfigFile($Settings::config_file, \%config,\&parseConfigFile);
 	addConfigFile($Settings::items_control_file, \%items_control,\&parseItemsControl);
@@ -175,6 +182,8 @@ sub loadDataFiles {
 	addConfigFile("$Settings::tables_folder/skillslooks.txt", \%skillsLooks, \&parseDataFile2);
 	addConfigFile("$Settings::tables_folder/skillsarea.txt", \%skillsArea, \&parseDataFile2);
 	addConfigFile("$Settings::tables_folder/skillsencore.txt", \%skillsEncore, \&parseList);
+	
+	use encoding 'utf8';
 
 	Plugins::callHook('start2');
 	eval {
@@ -221,8 +230,10 @@ sub initNetworking {
 			$net = new Network::XKore;
 		} elsif ($XKore_version eq "2") {
 			# Run as a proxy bot, allowing Ragnarok to connect while botting
+			require Network::DirectConnection;
 			require Network::XKore2;
-			$net = new Network::XKore2;
+			$net = new Network::DirectConnection;
+			Network::XKore2::start();
 		} elsif ($XKore_version eq "3" || $XKore_version eq "proxy") {
 			# Proxy Ragnarok client connection
 			require Network::XKoreProxy;
@@ -904,7 +915,7 @@ sub parseOutgoingClientMessage {
 		}
 
 	} elsif ($switch eq "007E") {
-		if($masterServer && $masterServer->{paddedPackets}) {
+		if ($masterServer && $masterServer->{paddedPackets}) {
 			$syncSync = substr($msg, 4, 4);
 		}
 

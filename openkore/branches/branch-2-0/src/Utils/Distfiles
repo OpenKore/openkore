@@ -13,6 +13,7 @@ ObjectList.pm
 PathFinding.pm
 PerlLauncher.pm
 Set.pm
+StringScanner.pm
 TextReader.pm
 Unix.pm
 Whirlpool.pm

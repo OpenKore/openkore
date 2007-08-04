@@ -168,13 +168,13 @@ sub iterate {
 	processItemsTake();
 	processItemsAutoGather();
 	processItemsGather();
+	processDcOnPlayer();
 	processAutoTeleport();
 	processAllowedMaps();
 	processAutoResponse();
 	processAvoid();
 	processSendEmotion();
 	processAutoShopOpen();
-	processDcOnPlayer();
 	Benchmark::end("AI (part 4)") if DEBUG;
 
 
@@ -1238,7 +1238,7 @@ sub processAutoStorage {
 						$args->{lastIndex} = $item->{index};
 						$messageSender->sendStorageAdd($item->{index}, $item->{amount} - $control->{keep});
 						$timeout{ai_storageAuto}{time} = time;
-						$args->{nextItem} = $i + 1;
+						$args->{nextItem} = $i;
 						return;
 					}
 				}
@@ -2833,7 +2833,13 @@ sub processAutoTeleport {
 				}
 			}
 		} else {
-			$ok = 1;
+			foreach my Actor::Player $player (@{$playersList->getItems()}) {
+				if (existsInList($config{teleportAuto_notPlayers}, $player->{name}) || existsInList($config{teleportAuto_notPlayers}, $player->{nameID})) {
+					$ok = 0;
+				} else {
+					$ok = 1;
+				}
+			}
 		}
 
 		if ($ok) {

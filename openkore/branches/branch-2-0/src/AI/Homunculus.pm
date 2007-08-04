@@ -129,9 +129,8 @@ sub is {
 }
 
 sub processFeeding {
-	# Minimum value to feed homunculus 20 hunger, maximum would be 40.	
 	# Homun loses intimacy if you let hunger fall lower than 11 and if you feed it above 75 (?)
-	$char->{homunculus}{hungerThreshold} = int(rand(14))+11;
+	$char->{homunculus}{hungerThreshold} = int(rand($config{homunculus_hungerMin}))+($config{homunculus_hungerMax} - $config{homunculus_hungerMin});
 	# Make a random timeout, to appear more humanlike when we have to feed our homun more than once in a row.
 	$char->{homunculus}{feed_timeout} = int(rand(($config{homunculus_hungerTimeoutMax})-$config{homunculus_hungerTimeoutMin}))+$config{homunculus_hungerTimeoutMin};
 	$char->{homunculus}{feed_time} = time;
@@ -165,6 +164,8 @@ sub iterate {
 		$config{homunculus_intimacyMin} = 911 if (!$config{homunculus_intimacyMin});
 		$config{homunculus_hungerTimeoutMax} = 60 if (!$config{homunculus_hungerTimeoutMax});
 		$config{homunculus_hungerTimeoutMin} = 10 if (!$config{homunculus_hungerTimeoutMin});
+		$config{homunculus_hungerMin} = 11 if (!$config{homunculus_hungerMin});
+		$config{homunculus_hungerMax} = 24 if (!$config{homunculus_hungerMax});
 
 		# Stop feeding when homunculus reaches 999~1000 intimacy, its useless to keep feeding from this point on
 		# you can starve it till it gets 911 hunger (actually you can starve it till 1 but we wanna keep its intimacy loyal).
