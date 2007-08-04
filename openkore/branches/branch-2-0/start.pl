@@ -25,6 +25,12 @@
 # __start() unless defined $ENV{INTERPRETER};
 package StarterScript;
 
+BEGIN {
+	if ($ENV{BUILDING_WX} && $^O eq 'MSWin32') {
+		require Wx::Perl::Packager;
+	}
+}
+
 use strict;
 use Config;
 

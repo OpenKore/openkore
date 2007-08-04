@@ -27,8 +27,11 @@ use Wx::Event qw(EVT_PAINT EVT_LEFT_DOWN EVT_MOTION EVT_ERASE_BACKGROUND);
 use File::Spec;
 use base qw(Wx::Panel);
 use FastUtils;
+use Utils::CallbackList;
+
 
 our %addedHandlers;
+
 
 sub new {
 	my $class = shift;
@@ -36,15 +39,21 @@ sub new {
 	$self->{mapDir} = 'map';
 	$self->{points} = [];
 	$self->SetBackgroundColour(new Wx::Colour(0, 0, 0));
-	$self->{destBrush} = new Wx::Brush(new Wx::Colour(255, 110, 245), wxSOLID);
-	$self->{playerBrush} = new Wx::Brush(new Wx::Colour(0, 200, 0), wxSOLID);
+
+	$self->{destBrush}    = new Wx::Brush(new Wx::Colour(255, 110, 245), wxSOLID);
+	$self->{playerBrush}  = new Wx::Brush(new Wx::Colour(0, 200, 0), wxSOLID);
 	$self->{monsterBrush} = new Wx::Brush(new Wx::Colour(215, 0, 0), wxSOLID);
-	$self->{npcBrush} = new Wx::Brush(new Wx::Colour(180, 0, 255), wxSOLID);
-	$self->{portalBrush} = new Wx::Brush(new Wx::Colour(255, 128, 64), wxSOLID);
-	EVT_PAINT($self, \&_onPaint);
-	EVT_LEFT_DOWN($self, \&_onClick);
-	EVT_MOTION($self, \&_onMotion);
-	EVT_ERASE_BACKGROUND($self, \&_onErase);
+	$self->{npcBrush}     = new Wx::Brush(new Wx::Colour(180, 0, 255), wxSOLID);
+	$self->{portalBrush}  = new Wx::Brush(new Wx::Colour(255, 128, 64), wxSOLID);
+	EVT_PAINT($self, \&_handlePaintEvent);
+	EVT_LEFT_DOWN($self, \&_handleLeftDownEvent);
+	EVT_MOTION($self, \&_handleMotionEvent);
+	EVT_ERASE_BACKGROUND($self, \&_handleEraseEvent);
+
+	$self->{onClick} = new CallbackList();
+	$self->{onMouseMove} = new CallbackList();
+	$self->{onMapChange} = new CallbackList();
+
 	return $self;
 }
 
@@ -52,27 +61,15 @@ sub new {
 #### Events ####
 
 sub onClick {
-	my $self = shift;
-	my $callback = shift;
-	my $user_data = shift;
-	$self->{clickCb} = $callback;
-	$self->{clickData} = $user_data;
+	return $_[0]->{onClick};
 }
 
 sub onMouseMove {
-	my $self = shift;
-	my $callback = shift;
-	my $user_data = shift;
-	$self->{mouseMoveCb} = $callback;
-	$self->{mouseMoveData} = $user_data;
+	return $_[0]->{onMouseMove};
 }
 
 sub onMapChange {
-	my $self = shift;
-	my $callback = shift;
-	my $user_data = shift;
-	$self->{mapChangeCb} = $callback;
-	$self->{mapChangeData} = $user_data;
+	return $_[0]->{onMapChange};
 }
 
 
@@ -99,7 +96,7 @@ sub set {
 			$sizer->SetItemMinSize($self, $bitmap->GetWidth, $bitmap->GetHeight);
 		}
 
-		$self->{mapChangeCb}->($self->{mapChangeData}) if ($self->{mapChangeCb});
+		$self->{onMapChange}->call($self);
 		$self->{needUpdate} = 1;
 
 	} elsif ($x ne $self->{field}{x} || $y ne $self->{field}{y}) {
@@ -242,35 +239,35 @@ sub parsePortals {
 #### Private ####
 
 
-sub _onClick {
+sub _handleLeftDownEvent {
 	my $self = shift;
 	my $event = shift;
-	if ($self->{clickCb} && $self->{field}{width} && $self->{field}{height}) {
+	if (!$self->{onClick}->empty() && $self->{field}{width} && $self->{field}{height}) {
 		my ($x, $y, $xscale, $yscale);
 		$xscale = $self->{field}{width} / $self->{bitmap}->GetWidth();
 		$yscale = $self->{field}{height} / $self->{bitmap}->GetHeight();
 		$x = $event->GetX * $xscale;
 		$y = $self->{field}{height} - ($event->GetY * $yscale);
 
-		$self->{clickCb}->($self->{clickData}, int $x, int $y);
+		$self->{onClick}->call($self, [int $x, int $y]);
 	}
 }
 
-sub _onMotion {
+sub _handleMotionEvent {
 	my $self = shift;
 	my $event = shift;
-	if ($self->{mouseMoveCb} && $self->{field}{width} && $self->{field}{height}) {
+	if (!$self->{onMouseMove}->empty() && $self->{field}{width} && $self->{field}{height}) {
 		my ($x, $y, $xscale, $yscale);
 		$xscale = $self->{field}{width} / $self->{bitmap}->GetWidth;
 		$yscale = $self->{field}{height} / $self->{bitmap}->GetHeight;
 		$x = $event->GetX * $xscale;
 		$y = $self->{field}{height} - ($event->GetY * $yscale);
 
-		$self->{mouseMoveCb}->($self->{mouseMoveData}, int $x, int $y);
+		$self->{onMouseMove}->call($self, [int $x, int $y]);
 	}
 }
 
-sub _onErase {
+sub _handleEraseEvent {
 	my $self = shift;
 	if ($self->{bitmap}) {
 		# Do nothing; prevent flickering when drawing
@@ -351,13 +348,12 @@ sub _posXYToView {
 	return ($x, $y);
 }
 
-sub _onPaint {
+sub _handlePaintEvent {
 	my $self = shift;
 	my $dc = new Wx::PaintDC($self);
 	return unless ($self->{bitmap});
 
 	my ($x, $y);
-	$dc->BeginDrawing;
 
 	$dc->SetPen(wxBLACK_PEN);
 	$dc->SetBrush(wxBLACK_BRUSH);
@@ -425,8 +421,6 @@ sub _onPaint {
 		$dc->SetBrush(wxCYAN_BRUSH);
 		$dc->DrawEllipse($x - 5, $y - 5, 10, 10);
 	}
-
-	$dc->EndDrawing;
 }
 
-return 1;
+1;

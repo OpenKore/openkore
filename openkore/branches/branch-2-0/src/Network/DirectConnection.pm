@@ -34,9 +34,9 @@
 package Network::DirectConnection;
 
 use strict;
-
-use base qw(Exporter);
+use Modules 'register';
 use Exporter;
+use base qw(Exporter);
 use Time::HiRes qw(time);
 use IO::Socket::INET;
 use encoding 'utf8';
