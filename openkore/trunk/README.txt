@@ -8,6 +8,7 @@ Bug fixes:
 - X-Kore 2 has been entirely rewritten and is now more reliable.
 - Fixed autostorage.
 - The Wx interface now allows you to scroll up the console.
+- Many crashes have been fixed.
 
 New config options:
 - teleportAuto_notPlayers:
