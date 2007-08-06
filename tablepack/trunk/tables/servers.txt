@@ -592,6 +592,15 @@ version 1337
 serverType 8
 serverEncoding Western
 
+## http://ebilro.nu/
+[EbilRO Private Server]
+ip 89.106.69.194
+port 6900
+version 20
+master_version 16
+serverType 3
+serverEncoding Western
+
 ## http://www.envyro.com/
 [EnvyRO Private Server]
 ip 209.30.173.93
