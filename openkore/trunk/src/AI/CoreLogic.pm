@@ -706,7 +706,20 @@ sub processTask {
 			$task->activate();
 			should($task->getStatus(), Task::RUNNING) if DEBUG;
 		}
-		should($task->getStatus(), Task::RUNNING) if DEBUG;
+		if (DEBUG && $task->getStatus() != Task::RUNNING) {
+			require Scalar::Util;
+			require Data::Dumper;
+			# Make sure redundant information is not included in the error report.
+			if ($task->isa('Task::MapRoute')) {
+				delete $task->{ST_subtask}{solution};
+			} elsif ($task->isa('Task::Route') && $task->{ST_subtask}) {
+				delete $task->{solution};
+			}
+			die "Task '" . $task->getName() . "' (class " . Scalar::Util::blessed($task) . ") has status " .
+				Task::_getStatusName($task->getStatus()) .
+				", but should be RUNNING. Object details:\n" .
+				Data::Dumper::Dumper($task);
+		}
 		$task->iterate();
 		if ($task->getStatus() == Task::DONE) {
 			AI::dequeue;
@@ -1299,12 +1312,13 @@ sub processAutoStorage {
 					}
 
 					my %item;
-					my $invItem = $char->inventory->getByName($config{"getAuto_$args->{index}"});
-					if (!$invItem) {
+					my $itemName = $config{"getAuto_$args->{index}"};
+					if (!$itemName) {
 						$args->{index}++;
 						next;
 					}
-					$item{name} = $config{"getAuto_$args->{index}"};
+					my $invItem = $char->inventory->getByName($itemName);
+					$item{name} = $itemName;
 					$item{inventory}{index} = $invItem ? $invItem->{invIndex} : undef;
 					$item{inventory}{amount} = $invItem ? $invItem->{amount} : 0;
 					$item{storage}{index} = findKeyString(\%storage, "name", $item{name});
