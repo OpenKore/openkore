@@ -1573,17 +1573,19 @@ sub card_merge_status {
 
 		# Rename the slotted item now
 		# FIXME: this is unoptimized
-		my $newcards;
+		use bytes;
+		no encoding 'utf8';
+		my $newcards = '';
 		my $addedcard;
 		for (my $i = 0; $i < 4; $i++) {
-			my $card = substr($item->{cards}, $i * 2, 2);
-			if (unpack("v1", $card)) {
-				$newcards .= $card;
+			my $cardData = substr($item->{cards}, $i * 2, 2);
+			if (unpack("v", $cardData)) {
+				$newcards .= $cardData;
 			} elsif (!$addedcard) {
-				$newcards .= pack("v1", $card->{nameID});
+				$newcards .= pack("v", $card->{nameID});
 				$addedcard = 1;
 			} else {
-				$newcards .= pack("v1", 0);
+				$newcards .= pack("v", 0);
 			}
 		}
 		$item->{cards} = $newcards;
