@@ -3,6 +3,8 @@
 =========================
 
 - getAuto has been fixed.
+- Card merging has been fixed.
+- Fixed a crash that occured when Kore is stuck during movement.
 
 
 =========================
