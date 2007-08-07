@@ -722,7 +722,18 @@ sub processTask {
 		}
 		$task->iterate();
 		if ($task->getStatus() == Task::DONE) {
-			AI::dequeue;
+			# We can't just dequeue the last AI sequence. Perhaps the task
+			# pushed a new AI sequence on the AI stack just before finishing.
+			# For example, the Route task does that when it's stuck.
+			# So, we must dequeue the correct sequence without affecting the
+			# others.
+			for (my $i = 0; $i < @AI::ai_seq; $i++) {
+				if ($AI::ai_seq[$i] eq $ai_name) {
+					splice(@AI::ai_seq, $i, 1);
+					splice(@AI::ai_seq_args, $i, 1);
+					last;
+				}
+			}
 			my %args = @_;
 			my $error = $task->getError();
 			if ($error) {

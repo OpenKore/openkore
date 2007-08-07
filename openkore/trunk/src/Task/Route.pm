@@ -42,6 +42,7 @@ use Utils::PathFinding;
 use enum qw(
 	TOO_MUCH_TIME
 	CANNOT_CALCULATE_ROUTE
+	STUCK
 	UNEXPECTED_STATE
 );
 
@@ -263,7 +264,7 @@ sub iterate {
 				$msg .= "\n";
 				warning $msg, "route";
 				Misc::useTeleport(1) if $config{teleportAuto_unstuck};
-				$self->setDone();
+				$self->setError(STUCK, T("Stuck during route."));
 			} else {
 				$self->{time_step} = time;
 			}
