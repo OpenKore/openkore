@@ -5007,7 +5007,11 @@ sub skill_use {
 	delete $source->{casting};
 
 	# Perform trigger actions
-	$args->{damage} = intToSignedShort($args->{damage});
+	if ($args->{switch} eq "0114") {
+		$args->{damage} = intToSignedShort($args->{damage});
+	} else {
+		$args->{damage} = intToSignedInt($args->{damage});
+	}
 	updateDamageTables($args->{sourceID}, $args->{targetID}, $args->{damage}) if ($args->{damage} != -30000);
 	setSkillUseTimer($args->{skillID}, $args->{targetID}) if ($args->{sourceID} eq $accountID);
 	setPartySkillTimer($args->{skillID}, $args->{targetID}) if
