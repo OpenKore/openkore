@@ -209,8 +209,8 @@ storageEncryptKey 0x050B6F79, 0x0202C179, 0x0E20120, 0x04FA43E3, 0x0179B6C8, 0x0
 serverEncoding Tagalog
 charBlockSize 108
 paddedPackets 1
-paddedPackets_attackID 0x0193
-paddedPackets_skillUseID 0x0089
+paddedPackets_attackID 0x0190
+paddedPackets_skillUseID 0x007E
 
 [Philippines - pRO: Urdr]
 ip 202.57.118.231
