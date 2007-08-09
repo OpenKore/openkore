@@ -1537,7 +1537,6 @@ sub card_merge_list {
 	$display .= T("-----Card Merge Candidates-----\n");
 
 	my $index;
-	my $invIndex;
 	for (my $i = 4; $i < $len; $i += 2) {
 		$index = unpack("v1", substr($msg, $i, 2));
 		my $item = $char->inventory->getByServerIndex($index);
@@ -3240,7 +3239,6 @@ sub inventory_items_nonstackable {
 	$self->decrypt(\$newmsg, substr($args->{RAW_MSG}, 4));
 	my $msg = substr($args->{RAW_MSG}, 0, 4) . $newmsg;
 	my $psize = ($args->{switch} eq '0295') ? 24 : 20;
-	my $invIndex;
 
 	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += $psize) {
 		my $index = unpack("v1", substr($msg, $i, 2));
@@ -3252,7 +3250,6 @@ sub inventory_items_nonstackable {
 			$add = 1;
 		}
 		$item->{index} = $index;
-		$item->{invIndex} = $invIndex;
 		$item->{nameID} = $ID;
 		$item->{amount} = 1;
 		$item->{type} = unpack("C1", substr($msg, $i + 4, 1));
