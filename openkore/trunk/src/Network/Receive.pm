@@ -3641,8 +3641,8 @@ sub map_change {
 		$messageSender->sendMapLoaded();
 		# Sending sync packet. Perhaps not only for server types 13 and 11
 		my $serverType = $masterServer->{serverType};
-		if ($serverType == 11 || $serverType == 12 || $serverType == 13 || $serverType == 16
-		 || $serverType == 17 || $serverType == 18) {
+		if ($serverType == 11 || $serverType == 12 || $serverType == 13 || $serverType == 15
+		 || $serverType == 16 || $serverType == 17 || $serverType == 18) {
 			$messageSender->sendSync(1);
 		}
 		$timeout{ai}{time} = time;
