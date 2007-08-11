@@ -36,16 +36,21 @@ Plugins::register('Tele-Search v2', 'Alternative tele-search v2.', \&unload);
 my $hooks = Plugins::addHooks(
 	['AI_pre',\&search, undef],
 	['map_loaded', \&MapLoaded, undef],
-	['packet/sendMapLoaded', \&MapLoaded, undef]    
+	['packet/sendMapLoaded', \&MapLoaded, undef],
 );
 
 my ($maploaded,$allow_tele);
+
+# Set $maploaded to 1, this incase we reload the plugin for whatever reason...
+if ($net && $net->getState() == Network::IN_GAME) {
+	$maploaded = 1;
+}
 
 sub unload {
     Plugins::delHooks($hooks);
 	message("Unloaded Teleport search v2.\n","info");
 }
-       
+	   
 sub MapLoaded {
 	$maploaded = 1;
 }
