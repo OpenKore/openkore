@@ -3648,8 +3648,12 @@ sub map_change {
 		$timeout{ai}{time} = time;
 	}
 
-	my %hookArgs = (oldMap => $oldMap);
-	Plugins::callHook('Network::Receive::map_changed', \%hookArgs);
+	Plugins::callHook('Network::Receive::map_changed', {
+		oldMap => $oldMap,
+		allowedTeleport => $allowedTeleport
+	});
+	
+	$allowedTeleport = 0;
 }
 
 sub map_changed {
@@ -3727,9 +3731,12 @@ sub map_changed {
 	undef $char->{encoreSkill};
 	$cart{exists} = 0;
 	undef %guild;
-
-	my %hookArgs = (oldMap => $oldMap);
-	Plugins::callHook('Network::Receive::map_changed', \%hookArgs);
+	
+	Plugins::callHook('Network::Receive::map_changed', {
+		oldMap => $oldMap,
+		allowedTeleport => $allowedTeleport
+	});
+	$allowedTeleport = 0;
 }
 
 sub map_loaded {
