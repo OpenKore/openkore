@@ -236,7 +236,7 @@ sub checkEquip {
 		}
 	}
 	# check for item (equipped whatever)
-	foreach my $item (@{$char->{inventory}}) {
+	foreach my $item (@{$char->inventory->getItems()}) {
 		return 1 if ($item->{equipped} && lc($item->{name}) eq lc($arg))
 	}
 	return 0
