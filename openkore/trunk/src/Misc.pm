@@ -2163,7 +2163,9 @@ sub setStatus {
 		if (UNIVERSAL::isa($actor, "Actor::Player")) {
 			message TF("Remove perfectly hidden %s\n", $actor);
 			$playersList->remove($actor);
-
+			# Call the hook when a perfectly hidden player is detected
+			Plugins::callHook('perfect_hidden_player',undef);
+			
 		} elsif (UNIVERSAL::isa($actor, "Actor::Monster")) {
 			message TF("Remove perfectly hidden %s\n", $actor);
 			$monstersList->remove($actor);
