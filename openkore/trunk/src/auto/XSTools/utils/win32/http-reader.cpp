@@ -27,7 +27,8 @@ private:
 	CRITICAL_SECTION lock;
 	std::string downloadBuffer;
 	HttpReaderStatus status;
-	const char *error;
+	char *error;
+	bool errorMustBeFreed;
 	int size;
 
 
@@ -117,9 +118,23 @@ private:
 		// Send HTTP request
 		self->status = HTTP_READER_CONNECTING;
 		if (!HttpSendRequest(self->openHandle, NULL, 0, self->postData, self->postDataSize)) {
+			DWORD code;
+			char buf[1024];
+
+			code = GetLastError();
 			EnterCriticalSection(&self->lock);
 			self->status = HTTP_READER_ERROR;
-			self->error = "Unable to send a HTTP request.";
+			if (FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM, NULL, code, 0, buf,
+			    sizeof(buf), NULL) == 0) {
+				if (code == 12045) {
+					strncpy(buf, "Invalid server certificate.", sizeof(buf));
+				} else {
+					snprintf(buf, sizeof(buf), "Unable to send a HTTP request: error code %u",
+						(unsigned int) code);
+				}
+			}
+			self->error = strdup(buf);
+			self->errorMustBeFreed = true;
 			LeaveCriticalSection(&self->lock);
 			return 0;
 		}
@@ -192,6 +207,8 @@ public:
 		openHandle = NULL;
 		threadHandle = NULL;
 		status = HTTP_READER_ERROR;
+		error = NULL;
+		errorMustBeFreed = false;
 		size = -2;
 		this->postData = NULL;
 		this->postDataSize = 0;
@@ -265,8 +282,15 @@ public:
 			memcpy(this->postData, postData, postDataSize);
 		}
 
+		// Ignore invalid SSL certificates.
+		DWORD len = sizeof(flags);
+		InternetQueryOption(openHandle, INTERNET_OPTION_SECURITY_FLAGS,
+			(LPVOID) &flags, &len);
+		flags |= SECURITY_FLAG_IGNORE_UNKNOWN_CA;
+		InternetSetOption(openHandle, INTERNET_OPTION_SECURITY_FLAGS,
+			&flags, sizeof(flags));
+
 		status = HTTP_READER_CONNECTING;
-		error = NULL;
 		size = -1;
 
 		DWORD threadID;
@@ -275,6 +299,8 @@ public:
 			error = "Cannot create a thread.";
 			return;
 		}
+		if (errorMustBeFreed && error != NULL)
+			free(error);
 	}
 
 	~WinHttpReader() {
