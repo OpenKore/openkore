@@ -1537,7 +1537,6 @@ sub card_merge_list {
 	$display .= T("-----Card Merge Candidates-----\n");
 
 	my $index;
-	my $invIndex;
 	for (my $i = 4; $i < $len; $i += 2) {
 		$index = unpack("v1", substr($msg, $i, 2));
 		my $item = $char->inventory->getByServerIndex($index);
@@ -1573,17 +1572,19 @@ sub card_merge_status {
 
 		# Rename the slotted item now
 		# FIXME: this is unoptimized
-		my $newcards;
+		use bytes;
+		no encoding 'utf8';
+		my $newcards = '';
 		my $addedcard;
 		for (my $i = 0; $i < 4; $i++) {
-			my $card = substr($item->{cards}, $i * 2, 2);
-			if (unpack("v1", $card)) {
-				$newcards .= $card;
+			my $cardData = substr($item->{cards}, $i * 2, 2);
+			if (unpack("v", $cardData)) {
+				$newcards .= $cardData;
 			} elsif (!$addedcard) {
-				$newcards .= pack("v1", $card->{nameID});
+				$newcards .= pack("v", $card->{nameID});
 				$addedcard = 1;
 			} else {
-				$newcards .= pack("v1", 0);
+				$newcards .= pack("v", 0);
 			}
 		}
 		$item->{cards} = $newcards;
@@ -3238,7 +3239,6 @@ sub inventory_items_nonstackable {
 	$self->decrypt(\$newmsg, substr($args->{RAW_MSG}, 4));
 	my $msg = substr($args->{RAW_MSG}, 0, 4) . $newmsg;
 	my $psize = ($args->{switch} eq '0295') ? 24 : 20;
-	my $invIndex;
 
 	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += $psize) {
 		my $index = unpack("v1", substr($msg, $i, 2));
@@ -3250,7 +3250,6 @@ sub inventory_items_nonstackable {
 			$add = 1;
 		}
 		$item->{index} = $index;
-		$item->{invIndex} = $invIndex;
 		$item->{nameID} = $ID;
 		$item->{amount} = 1;
 		$item->{type} = unpack("C1", substr($msg, $i + 4, 1));
@@ -3642,15 +3641,19 @@ sub map_change {
 		$messageSender->sendMapLoaded();
 		# Sending sync packet. Perhaps not only for server types 13 and 11
 		my $serverType = $masterServer->{serverType};
-		if ($serverType == 11 || $serverType == 12 || $serverType == 13 || $serverType == 16
-		 || $serverType == 17 || $serverType == 18) {
+		if ($serverType == 11 || $serverType == 12 || $serverType == 13 || $serverType == 15
+		 || $serverType == 16 || $serverType == 17 || $serverType == 18) {
 			$messageSender->sendSync(1);
 		}
 		$timeout{ai}{time} = time;
 	}
 
-	my %hookArgs = (oldMap => $oldMap);
-	Plugins::callHook('Network::Receive::map_changed', \%hookArgs);
+	Plugins::callHook('Network::Receive::map_changed', {
+		oldMap => $oldMap,
+		allowedTeleport => $allowedTeleport
+	});
+	
+	$allowedTeleport = 0;
 }
 
 sub map_changed {
@@ -3728,9 +3731,12 @@ sub map_changed {
 	undef $char->{encoreSkill};
 	$cart{exists} = 0;
 	undef %guild;
-
-	my %hookArgs = (oldMap => $oldMap);
-	Plugins::callHook('Network::Receive::map_changed', \%hookArgs);
+	
+	Plugins::callHook('Network::Receive::map_changed', {
+		oldMap => $oldMap,
+		allowedTeleport => $allowedTeleport
+	});
+	$allowedTeleport = 0;
 }
 
 sub map_loaded {
@@ -5005,7 +5011,11 @@ sub skill_use {
 	delete $source->{casting};
 
 	# Perform trigger actions
-	$args->{damage} = intToSignedShort($args->{damage});
+	if ($args->{switch} eq "0114") {
+		$args->{damage} = intToSignedShort($args->{damage});
+	} else {
+		$args->{damage} = intToSignedInt($args->{damage});
+	}
 	updateDamageTables($args->{sourceID}, $args->{targetID}, $args->{damage}) if ($args->{damage} != -30000);
 	setSkillUseTimer($args->{skillID}, $args->{targetID}) if ($args->{sourceID} eq $accountID);
 	setPartySkillTimer($args->{skillID}, $args->{targetID}) if

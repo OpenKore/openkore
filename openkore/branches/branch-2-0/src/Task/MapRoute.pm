@@ -39,6 +39,7 @@ use enum (
 	# Routing errors
 	qw(TOO_MUCH_TIME
 	CANNOT_CALCULATE_ROUTE
+	STUCK
 	CANNOT_LOAD_FIELD),
 
 	# NPC errors
@@ -401,6 +402,8 @@ sub subtaskDone {
 				$code = TOO_MUCH_TIME;
 			} elsif ($error->{code} == Task::Route::CANNOT_CALCULATE_ROUTE) {
 				$code = CANNOT_CALCULATE_ROUTE;
+			} elsif ($error->{code} == Task::Route::STUCK) {
+				$code = STUCK;
 			} else {
 				$code = UNKNOWN_ERROR;
 			}

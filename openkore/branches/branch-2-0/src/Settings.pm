@@ -60,7 +60,7 @@ our @EXPORT_OK = qw(parseArguments addConfigFile delConfigFile %sys $VERSION);
 
 # Translation Comment: Strings for the name and version of the application
 our $NAME = 'OpenKore';
-our $VERSION = '2.0.2';
+our $VERSION = '2.0.3';
 # Translation Comment: Version String
 #our $SVN = T(" (SVN version)");
 our $SVN = "";

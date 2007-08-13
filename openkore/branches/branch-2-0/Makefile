@@ -1,4 +1,4 @@
-.PHONY: all clean dist bindist
+.PHONY: all clean dist bindist test
 
 # NOTE TO DEVELOPERS:
 # We use the SCons build system (http://www.scons.org/). This makefile is
@@ -21,3 +21,6 @@ dist:
 
 bindist:
 	bash makedist.sh --bin
+
+test:
+	perl openkore.pl --control=../control --tables=../tables --fields=../fields $$ARGS

@@ -2163,7 +2163,9 @@ sub setStatus {
 		if (UNIVERSAL::isa($actor, "Actor::Player")) {
 			message TF("Remove perfectly hidden %s\n", $actor);
 			$playersList->remove($actor);
-
+			# Call the hook when a perfectly hidden player is detected
+			Plugins::callHook('perfect_hidden_player',undef);
+			
 		} elsif (UNIVERSAL::isa($actor, "Actor::Monster")) {
 			message TF("Remove perfectly hidden %s\n", $actor);
 			$monstersList->remove($actor);
@@ -2581,11 +2583,13 @@ sub useTeleport {
 	my ($use_lvl, $internal, $emergency) = @_;
 
 	if ($use_lvl == 2 && $config{saveMap_warpChatCommand}) {
+		$allowedTeleport = 1;
 		sendMessage($messageSender, "c", $config{saveMap_warpChatCommand});
 		return 1;
 	}
 
 	if ($use_lvl == 1 && $config{teleportAuto_useChatCommand}) {
+		$allowedTeleport = 1;
 		sendMessage($messageSender, "c", $config{teleportAuto_useChatCommand});
 		return 1;
 	}
@@ -2613,6 +2617,7 @@ sub useTeleport {
 			# autodetection works)
 
 			if ($char->{sitting}) {
+				$allowedTeleport = 1;
 				main::ai_skillUse($skill->getHandle(), $sk_lvl, 0, 0, $accountID);
 				return 1;
 			} else {
@@ -2621,6 +2626,7 @@ sub useTeleport {
 			}
 
 			if (!$emergency && $use_lvl == 1) {
+				$allowedTeleport = 1;
 				$timeout{ai_teleport_retry}{time} = time;
 				AI::queue('teleport');
 				return 1;
@@ -2630,6 +2636,7 @@ sub useTeleport {
 		delete $ai_v{temp}{teleport};
 		debug "Sending Teleport using Level $use_lvl\n", "useTeleport";
 		if ($use_lvl == 1) {
+			$allowedTeleport = 1;
 			$messageSender->sendTeleport("Random");
 			return 1;
 		} elsif ($use_lvl == 2) {
@@ -2641,7 +2648,7 @@ sub useTeleport {
 			# on official servers.
 			my $telemap = "prontera.gat";
 			$telemap = "$config{saveMap}.gat" if ($config{saveMap} ne "");
-
+			$allowedTeleport = 1;
 			$messageSender->sendTeleport($telemap);
 			return 1;
 		}
@@ -2680,6 +2687,7 @@ sub useTeleport {
 		# We have Fly Wing/Butterfly Wing.
 		# Don't spam the "use fly wing" packet, or we'll end up using too many wings.
 		if (timeOut($timeout{ai_teleport})) {
+			$allowedTeleport = 1;
 			$messageSender->sendItemUse($item->{index}, $accountID);
 			$timeout{ai_teleport}{time} = time;
 		}
@@ -2698,7 +2706,8 @@ sub useTeleport {
 	} else {
 		message T("You don't have the Teleport skill or a Butterfly Wing\n"), "teleport";
 	}
-
+	
+	$allowedTeleport = 0;
 	return 0;
 }
 

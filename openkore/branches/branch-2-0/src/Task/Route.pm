@@ -42,6 +42,7 @@ use Utils::PathFinding;
 use enum qw(
 	TOO_MUCH_TIME
 	CANNOT_CALCULATE_ROUTE
+	STUCK
 	UNEXPECTED_STATE
 );
 
@@ -230,18 +231,20 @@ sub iterate {
 
 		} elsif ($self->{old_x} == $cur_x && $self->{old_y} == $cur_y && timeOut($self->{time_step}, 3)) {
 			# We tried to move for 3 seconds, but we are still on the same spot,
-			# decrease step size.
+			# so decrease the step size. If the step size becomes 0, then we're stuck.
 			# However, if $self->{index} was already 0, then that means
 			# we were almost at the destination (only 1 more step is needed).
 			# But we got interrupted (by auto-attack for example). Don't count that
 			# as stuck.
 			my $wasZero = $self->{index} == 0;
-			$self->{index} = int($self->{index} * 0.8);
+			$self->{index} = int($self->{index} / 2);
 			if ($self->{index}) {
 				debug "Route - not moving, decreasing step size to $self->{index}\n", "route";
 				if (@{$self->{solution}}) {
 					# If we still have more points to cover, walk to next point
-					$self->{index} = @{$self->{solution}} - 1 if $self->{index} >= @{$self->{solution}};
+					if ($self->{index} >= @{$self->{solution}}) {
+						$self->{index} = @{$self->{solution}} - 1;
+					}
 					$self->{new_x} = $self->{solution}[$self->{index}]{x};
 					$self->{new_y} = $self->{solution}[$self->{index}]{y};
 					$self->{time_step} = time;
@@ -261,7 +264,7 @@ sub iterate {
 				$msg .= "\n";
 				warning $msg, "route";
 				Misc::useTeleport(1) if $config{teleportAuto_unstuck};
-				$self->setDone();
+				$self->setError(STUCK, T("Stuck during route."));
 			} else {
 				$self->{time_step} = time;
 			}
@@ -271,8 +274,6 @@ sub iterate {
 			# move commands periodically to keep moving and updating our position
 			my $begin = time;
 			my $solution = $self->{solution};
-			$self->{index} = $config{route_step} unless $self->{index};
-			$self->{index}++ if ($self->{index} < $config{route_step});
 
 			if (defined($self->{old_x}) && defined($self->{old_y})) {
 				# See how far we've walked since the last move command and
@@ -290,13 +291,14 @@ sub iterate {
 				}
 				# Remove the last step also if we reached the destination
 				$trimsteps = @{$solution} - 1 if ($trimsteps >= @{$solution});
-				#$trimsteps = @{$solution} if ($trimsteps <= $self->{'index'} && $self->{'new_x'} == $cur_x && $self->{'new_y'} == $cur_y);
 				$trimsteps = @{$solution} if ($cur_x == $solution->[$#{$solution}]{x} && $cur_y == $solution->[$#{$solution}]{y});
 				debug "Route - trimming down solution (" . @{$solution} . ") by $trimsteps steps\n", "route";
 				splice(@{$solution}, 0, $trimsteps) if ($trimsteps > 0);
 			}
 
 			my $stepsleft = @{$solution};
+			$self->{index} = $config{route_step} unless defined $self->{index};
+			#$self->{index}++ if ($self->{index} < $config{route_step});
 			if ($stepsleft > 0) {
 				# If we still have more points to cover, walk to next point
 				$self->{index} = $stepsleft - 1 if ($self->{index} >= $stepsleft);
