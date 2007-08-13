@@ -171,7 +171,7 @@ sub onTimer {
 
 	my (@npcs, @monsters, @players);
 	foreach my $entry (@{$state{NPC}}) {
-		my %actor = (pos_to => $entry);
+		my %actor = (pos_to => $entry, pos => $entry);
 		push @npcs, \%actor;
 	}
 	foreach my $entry (@{$state{Monster}}) {

@@ -706,10 +706,34 @@ sub processTask {
 			$task->activate();
 			should($task->getStatus(), Task::RUNNING) if DEBUG;
 		}
-		should($task->getStatus(), Task::RUNNING) if DEBUG;
+		if (DEBUG && $task->getStatus() != Task::RUNNING) {
+			require Scalar::Util;
+			require Data::Dumper;
+			# Make sure redundant information is not included in the error report.
+			if ($task->isa('Task::MapRoute')) {
+				delete $task->{ST_subtask}{solution};
+			} elsif ($task->isa('Task::Route') && $task->{ST_subtask}) {
+				delete $task->{solution};
+			}
+			die "Task '" . $task->getName() . "' (class " . Scalar::Util::blessed($task) . ") has status " .
+				Task::_getStatusName($task->getStatus()) .
+				", but should be RUNNING. Object details:\n" .
+				Data::Dumper::Dumper($task);
+		}
 		$task->iterate();
 		if ($task->getStatus() == Task::DONE) {
-			AI::dequeue;
+			# We can't just dequeue the last AI sequence. Perhaps the task
+			# pushed a new AI sequence on the AI stack just before finishing.
+			# For example, the Route task does that when it's stuck.
+			# So, we must dequeue the correct sequence without affecting the
+			# others.
+			for (my $i = 0; $i < @AI::ai_seq; $i++) {
+				if ($AI::ai_seq[$i] eq $ai_name) {
+					splice(@AI::ai_seq, $i, 1);
+					splice(@AI::ai_seq_args, $i, 1);
+					last;
+				}
+			}
 			my %args = @_;
 			my $error = $task->getError();
 			if ($error) {
@@ -1299,12 +1323,13 @@ sub processAutoStorage {
 					}
 
 					my %item;
-					my $invItem = $char->inventory->getByName($config{"getAuto_$args->{index}"});
-					if (!$invItem) {
+					my $itemName = $config{"getAuto_$args->{index}"};
+					if (!$itemName) {
 						$args->{index}++;
 						next;
 					}
-					$item{name} = $config{"getAuto_$args->{index}"};
+					my $invItem = $char->inventory->getByName($itemName);
+					$item{name} = $itemName;
 					$item{inventory}{index} = $invItem ? $invItem->{invIndex} : undef;
 					$item{inventory}{amount} = $invItem ? $invItem->{amount} : 0;
 					$item{storage}{index} = findKeyString(\%storage, "name", $item{name});

@@ -101,7 +101,7 @@ sub clientRecv {
 
 	if ($args->{net}->getState() != Network::IN_GAME) {
 		foreach my $client (@{$mapServer->clients}) {
-			$client->{outbox} = '' if ($client->{outbox});
+			$client->{outbox}->clear() if ($client->{outbox});
 		}
 	} else {
 		my $result = '';
