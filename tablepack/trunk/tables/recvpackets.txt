@@ -1,4 +1,4 @@
-# Packet lengths for iRO (June 21, 2007)
+# Packet lengths for iRO (August 13, 2007)
 0064 55
 0065 17
 0066 3
@@ -556,8 +556,16 @@
 029F 3
 02A2 8
 02A5 8
+02A6 22
+02A7 22
+02A8 162
+02A9 58
 02AA 4
 02AB 36
 02AC 6
 02AD 8
 02B0 85
+02B8 22
+02B9 191
+02BA 9
+02BB 4
