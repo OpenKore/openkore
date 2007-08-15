@@ -355,8 +355,11 @@ sub mercDbFill{
 				for (my $c=0; $c<=4; $c++){
 					if ($cards[$c]) {
 						my $d = $c + 1;
+						my $cardName =  main::cardName($cards[$c]);
+						$cardName =~ s/\\/\\\\/g;
+						$cardName =~ s/'/\\'/g;
 						$insertTemp .= " card" . $d . "ID = '" . $cards[$c] . "', \n";
-						$insertQuery2 .= " card" . $d . " = '". main::cardName($cards[$c])."', \n";
+						$insertQuery2 .= " card" . $d . " = '".$cardName."', \n";
 					}
 				}	
 			}
