@@ -3508,6 +3508,7 @@ sub job_equipment_hair_change {
 
 sub hp_sp_changed {
 	my ($self, $args) = @_;
+	return unless changeToInGameState();
 
 	my $type = $args->{type};
 	my $amount = $args->{amount};

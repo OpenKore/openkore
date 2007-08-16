@@ -32,7 +32,8 @@ class Private: public HttpReader {
 private:
 	unsigned int refCount;
 	HttpReaderStatus status;
-	const char *error;
+	char *error;
+	char errorBuffer[CURL_ERROR_SIZE];
 	int size;
 
 	/** @invariant url != NULL */
@@ -85,6 +86,7 @@ private:
 			curl_easy_setopt(self->handle, CURLOPT_WRITEFUNCTION, writeCallback);
 			curl_easy_setopt(self->handle, CURLOPT_WRITEDATA, self);
 			curl_easy_setopt(self->handle, CURLOPT_FAILONERROR, 1);
+			curl_easy_setopt(self->handle, CURLOPT_ERRORBUFFER, self->errorBuffer);
 			if (self->postData != NULL) {
 				curl_easy_setopt(self->handle, CURLOPT_POST, 1);
 				curl_easy_setopt(self->handle, CURLOPT_POSTFIELDS, self->postData);
@@ -98,7 +100,7 @@ private:
 			} else {
 				self->lock();
 				self->status = HTTP_READER_ERROR;
-				self->error = "Cannot send HTTP request.";
+				self->error = self->errorBuffer;
 				self->size = -2;
 				self->unlock();
 			}
