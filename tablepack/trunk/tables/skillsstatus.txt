@@ -96,12 +96,13 @@
 131 Magnum Break
 132 Auto Berserk
 133 Run
+134 Ready Spurt
 135 Ready Storm
 137 Ready Down
 139 Ready Turn
 141 Ready Counter
 143 TK Dodge
-145 Run
+145 Spurt
 146 Dark Weapon
 147 Adrenaline All
 148 Ghost Weapon
