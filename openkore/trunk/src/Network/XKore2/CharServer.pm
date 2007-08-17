@@ -39,7 +39,7 @@ sub getCharacters {
 sub charBlockSize {
 	my ($self) = @_;
 	if ($masterServer) {
-		return $masterSever->{charBlockSize} || $self->{charBlockSize} || 106;
+		return $masterServer->{charBlockSize} || $self->{charBlockSize} || 106;
 	} else {
 		return $self->SUPER::charBlockSize();
 	}
