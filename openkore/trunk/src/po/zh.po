@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: OpenKore 1.9.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-08-08 10:40+0700\n"
-"PO-Revision-Date: 2007-08-14 20:24+0800\n"
+"PO-Revision-Date: 2007-08-18 12:29+0800\n"
 "Last-Translator: 小溫 <littlewens@yahoo.com.tw>\n"
 "Language-Team: littlewens <littlewens@yahoo.com.tw>\n"
 "MIME-Version: 1.0\n"
@@ -6225,7 +6225,7 @@ msgstr "從 %s (%s,%s) 到最終的目的地 (%s,%s) 無 LOS.\n"
 #: ../Task/MapRoute.pm:304
 #, perl-format
 msgid "Attempting to teleport near portal, try #%s\n"
-msgstr "嘗試在傳點附近瞬移, 試著 #%s\n"
+msgstr "嘗試瞬移至傳點附近, 嘗試次數 #%s\n"
 
 #: ../Task/MapRoute.pm:340
 #, perl-format
