@@ -6,10 +6,8 @@
 # See http://www.gnu.org/licenses/gpl.html
 
 package macro;
-my $Version = "2.0.0-pre0";
-my $Changed = sprintf("%s %s %s",
-	q$Date: 2007-01-21 16:50:30 +0100 (Sun, 21 Jan 2007) $
-	=~ /(\d{4}-\d{2}-\d{2}) (\d{2}:\d{2}:\d{2}) ([+-]\d{4})/);
+my $Version = "2.0.0-pre2";
+my ($rev) = q$Revision$ =~ /(\d+)/;
 
 use strict;
 use Plugins;
@@ -28,10 +26,6 @@ use Macro::Utilities qw(callMacro);
 #########
 # startup
 Plugins::register('macro', 'allows usage of macros', \&Unload, \&Reload);
-
-# dummy cvsdebug object
-$cvs = sub {return bless{}}->();
-sub debug {message "DEBUG active: $_[1]\n"}
 
 my $hooks = Plugins::addHooks(
 	['configModify', \&onconfigModify, undef],
@@ -143,14 +137,6 @@ sub checkConfig {
 	return 1
 }
 
-# parser for macro_debug config line
-sub parseDebug {
-	my @reqfac = split(/[\|\s]+/, shift);
-	my $loglevel = 0;
-	foreach my $l (@reqfac) {$loglevel = $loglevel | $logfac{$l}}
-	return $loglevel;
-}
-
 # macro command handler
 sub commandHandler {
 	### no parameter given
@@ -226,11 +212,11 @@ sub commandHandler {
 	### parameter: version
 	} elsif ($arg eq 'version') {
 		message "macro plugin version $Version\n", "list";
-		message "macro.pl ". $Changed."\n";
-		message "Macro::Automacro ".$Macro::Automacro::Changed."\n";
-		message "Macro::Script ".$Macro::Script::Changed."\n";
-		message "Macro::Parser ".$Macro::Parser::Changed."\n";
-		message "Macro::Utilities ".$Macro::Utilities::Changed."\n"
+		message "macro.pl ". $rev."\n";
+		message "Macro::Automacro ".$Macro::Automacro::rev."\n";
+		message "Macro::Script ".$Macro::Script::rev."\n";
+		message "Macro::Parser ".$Macro::Parser::rev."\n";
+		message "Macro::Utilities ".$Macro::Utilities::rev."\n"
 	### parameter: probably a macro
 	} else {
 		if (defined $queue) {

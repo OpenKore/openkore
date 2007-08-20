@@ -13,9 +13,8 @@ use Macro::Parser qw(parseCmd);
 use Macro::Utilities qw(cmpr);
 use Macro::Automacro qw(releaseAM lockAM);
 use Log qw(message);
-our $Changed = sprintf("%s %s %s",
-	q$Date: 2006-12-06 00:19:16 +0100 (Wed, 06 Dec 2006) $
-	=~ /(\d{4}-\d{2}-\d{2}) (\d{2}:\d{2}:\d{2}) ([+-]\d{4})/);
+
+our ($rev) = q$Revision$ =~ /(\d+)/;
 
 # constructor
 sub new {
@@ -164,7 +163,6 @@ sub next {
 		$self->{error} = $self->{subcall}->{error};
 		return
 	}
-
 	my $line = ${$macro{$self->{name}}}[$self->{line}];
 	if (!defined $line) {
 		if ($self->{repeat} > 1) {

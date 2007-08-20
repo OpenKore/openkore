@@ -5,7 +5,7 @@ use strict;
 require Exporter;
 our @ISA = qw(Exporter);
 our @EXPORT_OK = qw(ai_isIdle between cmpr match getArgs refreshGlobal getnpcID getPlayerID
-	getItemIDs getStorageIDs getSoldOut getInventoryAmount getCartAmount getShopAmount getStorageAmount
+	getItemIDs getInventoryIDs getStorageIDs getSoldOut getInventoryAmount getCartAmount getShopAmount getStorageAmount
 	getRandom getRandomRange getConfig getWord callMacro);
 
 use Utils;
@@ -14,9 +14,7 @@ use AI;
 use Log qw(warning error);
 use Macro::Data;
 
-our $Changed = sprintf("%s %s %s",
-	q$Date: 2007-01-25 17:30:13 +0100 (Thu, 25 Jan 2007) $
-	=~ /(\d{4}-\d{2}-\d{2}) (\d{2}:\d{2}:\d{2}) ([+-]\d{4})/);
+our ($rev) = q$Revision$ =~ /(\d+)/;
 
 # own ai_Isidle check that excludes deal
 sub ai_isIdle {
@@ -123,7 +121,7 @@ sub getArgs {
 # gets word from message
 sub getWord {
 	my ($message, $wordno) = $_[0] =~ /^"(.*?)",\s?(\d+)$/s;
-	my @words = split(/[ ,.:;"'!?\r\n]/, $message);
+	my @words = split(/[ ,.:;\"\'!?\r\n]/, $message); ## FIXME
 	my $no = 1;
 	foreach (@words) {
 		next if /^$/;
@@ -188,11 +186,13 @@ sub getVenderID {
 }
 
 # get inventory item ids
+# checked and ok
 sub getInventoryIDs {
+	return unless $char->inventory->size();
 	my $find = lc($_[0]);
 	my @ids;
 	foreach my $item (@{$char->inventory->getItems}) {
-		if (lc($item->name) eq $find) {push @ids, $item->{binId}}
+		if (lc($item->name) eq $find) {push @ids, $item->{invIndex}}
 	}
 	return @ids
 }
@@ -225,7 +225,6 @@ sub getStorageIDs {
 # get amount of sold out slots
 sub getSoldOut {
 ### TODO
-	$cvs->debug("getSoldOut(@_)", $logfac{function_call_auto});
 	return 0 unless $shopstarted;
 	my $soldout = 0;
 	foreach my $aitem (@::articles) {
@@ -286,7 +285,7 @@ sub getRandom {
 	my $arg = $_[0];
 	my @items;
 	my $id = 0;
-	while (($items[$id++]) = $_[0] =~ /^[, ]*"(.*?)"/) {
+	while (($items[$id++]) = $arg =~ /^[, ]*"(.*?)"/) {
 		$arg =~ s/^[, ]*".*?"//g;
 	}
 	pop @items;
