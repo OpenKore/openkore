@@ -4,10 +4,7 @@ use strict;
 
 require Exporter;
 our @ISA = qw(Exporter);
-our @EXPORT = qw(%macro %automacro %varStack $queue $onHold %amSingle %amMulti @slots $macroKeywords $cvs %logfac);
-
-our $cvs;
-our %logfac;
+our @EXPORT = qw(%macro %automacro %varStack $queue $onHold %amSingle %amMulti @slots $macroKeywords);
 
 our %macro;
 our %automacro;

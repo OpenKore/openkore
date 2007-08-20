@@ -10,13 +10,11 @@ our @EXPORT = qw(parseMacroFile parseCmd);
 use Globals;
 use Log qw(message warning error);
 use Macro::Data;
-use Macro::Utilities qw(refreshGlobal getnpcID getItemIDs getStorageIDs
+use Macro::Utilities qw(refreshGlobal getnpcID getItemIDs getStorageIDs getInventoryIDs
 	getPlayerID getRandom getRandomRange getInventoryAmount getCartAmount
 	getShopAmount getStorageAmount getConfig getWord);
 
-our $Changed = sprintf("%s %s %s",
-	q$Date: 2006-11-16 10:39:29 +0100 (Thu, 16 Nov 2006) $
-	=~ /(\d{4}-\d{2}-\d{2}) (\d{2}:\d{2}:\d{2}) ([+-]\d{4})/);
+our ($rev) = q$Revision$ =~ /(\d+)/;
 
 # adapted config file parser
 sub parseMacroFile {
@@ -145,14 +143,14 @@ sub parseKw {
 
 # substitute variables
 sub subvars {
-### TODO
+# should be working now
 	my $pre = $_[0];
 	my ($var, $tmp);
 
 	# variables
 	while ((undef, $var) = $pre =~ /(^|[^\\])\$(\.?[a-z][a-z\d]*)/i) {
 		$tmp = ($varStack{$var} or "");
-		$pre =~ s/(^|[^\\])\$$var([^a-zA-Z\d]|$)/$1$tmp$2/g
+		$pre =~ s/(^|[^\\])\$$var([^a-zA-Z\d]|$)/$1$tmp$2/g;
 	}
 
 	# doublevars (is this really working?)
@@ -168,21 +166,23 @@ sub subvars {
 # returns undef if something went wrong, else the parsed command or "".
 sub parseCmd {
 	return "" unless defined $_[0];
+	my $cmd = $_[0];
+	my ($kw, $arg, $targ, $ret);
 
 	# refresh global vars only once per command line
 	refreshGlobal();
 
-	while (my ($kw, $arg) = parseKw($_[0])) {
-		my $ret = "_%_";
+	while (($kw, $targ) = parseKw($cmd)) {
+		$ret = "_%_";
 		# first parse _then_ substitute. slower but more safe
-		$arg = subvars($arg);
+		$arg = subvars($targ);
 
 		if ($kw eq 'npc')           {$ret = getnpcID($arg)}
 		elsif ($kw eq 'cart')       {($ret) = getItemIDs($arg, $::cart{'inventory'})}
 		elsif ($kw eq 'Cart')       {$ret = join ',', getItemIDs($arg, $::cart{'inventory'})}
 		elsif ($kw eq 'inventory')  {($ret) = getInventoryIDs($arg)}
 		elsif ($kw eq 'Inventory')  {$ret = join ',', getInventoryIDs($arg)}
-		elsif ($kw eq 'store')      {($ret) = getItemIDs($arg, \@::articles)}
+		elsif ($kw eq 'store')      {($ret) = getItemIDs($arg, \@::storeList)}
 		elsif ($kw eq 'storage')    {($ret) = getStorageIDs($arg)}
 		elsif ($kw eq 'Storage')    {$ret = join ',', getStorageIDs($arg)}
 		elsif ($kw eq 'player')     {$ret = getPlayerID($arg)}
@@ -197,10 +197,12 @@ sub parseCmd {
 		elsif ($kw eq 'arg')        {$ret = getWord($arg)}
 		elsif ($kw eq 'eval')       {$ret = eval($arg)}
 		return unless defined $ret;
-		return $_[0] if $ret eq '_%_';
-		$arg = quotemeta $arg; $_[0] =~ s/\@$kw\s*\(\s*$arg\s*\)/$ret/g
+		return $cmd if $ret eq '_%_';
+		$targ = quotemeta $targ; $cmd =~ s/\@$kw\s*\(\s*$targ\s*\)/$ret/g
 	}
-	return $_[0]
+
+	$cmd = subvars($cmd);
+	return $cmd
 }
 
 1;

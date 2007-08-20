@@ -20,9 +20,7 @@ use Macro::Utilities qw(between cmpr match getArgs refreshGlobal
 	getPlayerID getSoldOut getInventoryAmount getCartAmount getShopAmount
 	getStorageAmount callMacro);
 
-our $Changed = sprintf("%s %s %s",
-	q$Date: 2007-03-23 02:56:48 +0100 (Fri, 23 Mar 2007) $
-	=~ /(\d{4}-\d{2}-\d{2}) (\d{2}:\d{2}:\d{2}) ([+-]\d{4})/);
+our ($rev) = q$Revision$ =~ /(\d+)/;
 
 # check for variable #######################################
 sub checkVar {
@@ -153,7 +151,6 @@ sub checkStatus {
 # uses: getInventoryAmount, getCartAmount, getShopAmount,
 #       getStorageAmount (Macro::Utils?)
 sub checkItem {
-### TODO
 	my ($where, $check) = @_;
 	if ($check =~ /,/) {
 		my @checks = split(/\s*,\s*/, $check);
@@ -178,10 +175,9 @@ sub checkItem {
 # checks for near person ##################################
 sub checkPerson {
 ### TODO
-	$cvs->debug("checkPerson(@_)", $logfac{function_call_auto} | $logfac{automacro_checks});
 	my ($who, $dist) = $_[0] =~ /^"(.*)"\s*,?\s*(.*)/;
 	return 0 unless defined $who;
-	my $r_id = getPlayerID($who, \@playersID);
+	my $r_id = getPlayerID($who);
 	return 0 if $r_id < 0;
 	return 1 unless $dist;
 	my $mypos = calcPosition($char);
