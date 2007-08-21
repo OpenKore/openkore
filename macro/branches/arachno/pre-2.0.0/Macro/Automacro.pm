@@ -467,7 +467,7 @@ sub automacroCheck {
 		$automacro{$am}->{disabled} = 1 if $automacro{$am}->{'run-once'};
 
 		foreach my $i (@{$automacro{$am}->{set}}) {
-			my ($var, $val) = $i =~ /^(.*?)\s+(.*)$/;
+			my ($var, $val) = $i =~ /^(.*?)\s+(.*)/;
 			$varStack{$var} = $val
 		}
 

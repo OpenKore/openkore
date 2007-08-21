@@ -94,7 +94,7 @@ sub parseMacroFile {
 			next
 		}
 
-		my ($key, $value) = $_ =~ /^(.*?)\s+(.*)$/;
+		my ($key, $value) = $_ =~ /^(.*?)\s+(.*)/;
 		unless (defined $key) {
 			warning "$file: ignoring '$_' (munch, munch, strange food)\n";
 			next
