@@ -99,12 +99,14 @@
 		<input type="text" class="post" style="width: 150px"  name="yim" size="20" maxlength="255" value="{YIM}" />
 	  </td>
 	</tr>
+	<!-- BEGIN switch_user_logged_in -->
 	<tr> 
 	  <td class="row1"><span class="gen">{L_WEBSITE}:</span></td>
 	  <td class="row2"> 
 		<input type="text" class="post" style="width: 200px"  name="website" size="25" maxlength="255" value="{WEBSITE}" />
 	  </td>
 	</tr>
+	<!-- END switch_user_logged_in -->
 	<tr> 
 	  <td class="row1"><span class="gen">{L_LOCATION}:</span></td>
 	  <td class="row2"> 
@@ -123,12 +125,14 @@
 		<input type="text" class="post" style="width: 200px"  name="interests" size="35" maxlength="150" value="{INTERESTS}" />
 	  </td>
 	</tr>
+	<!-- BEGIN switch_user_logged_in -->
 	<tr> 
 	  <td class="row1"><span class="gen">{L_SIGNATURE}:</span><br /><span class="gensmall">{L_SIGNATURE_EXPLAIN}<br /><br />{HTML_STATUS}<br />{BBCODE_STATUS}<br />{SMILIES_STATUS}</span></td>
 	  <td class="row2"> 
 		<textarea name="signature" style="width: 300px" rows="6" cols="30" class="post">{SIGNATURE}</textarea>
 	  </td>
 	</tr>
+	<!-- END switch_user_logged_in -->
 	<tr> 
 	  <td class="catSides" colspan="2" height="28">&nbsp;</td>
 	</tr>
