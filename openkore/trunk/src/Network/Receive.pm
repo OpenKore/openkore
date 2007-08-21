@@ -3160,8 +3160,10 @@ sub inventory_item_removed {
 	my ($self, $args) = @_;
 	return unless changeToInGameState();
 	my $item = $char->inventory->getByServerIndex($args->{index});
-	inventoryItemRemoved($item->{invIndex}, $args->{amount});
-	Plugins::callHook('packet_item_removed', {index => $item->{invIndex}});
+	if ($item) {
+		inventoryItemRemoved($item->{invIndex}, $args->{amount});
+		Plugins::callHook('packet_item_removed', {index => $item->{invIndex}});
+	}
 }
 
 sub item_used {
