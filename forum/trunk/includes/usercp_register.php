@@ -43,6 +43,12 @@ if ( !defined('IN_PHPBB') )
 $unhtml_specialchars_match = array('#&gt;#', '#&lt;#', '#&quot;#', '#&amp;#');
 $unhtml_specialchars_replace = array('>', '<', '"', '&');
 
+// Start Website Signature removal mod
+// Change "$ban_ip = false;" to "$ban_ip = true;" to ban the of the user if
+// it tries to enter in something in the website or signature sections
+$ban_ip = true;
+// End Website Signature removal mod
+
 // ---------------------------------------
 // Load agreement template since user has not yet
 // agreed to registration conditions/coppa
@@ -459,6 +465,22 @@ if ( isset($HTTP_POST_VARS['submit']) )
 	{
 		rawurlencode($website);
 	}
+
+	// Start Website Signature removal mod
+	if ( ($mode == 'register') && (($signature != '')||($website != '')) )
+	{
+		if ($ban_ip == true)
+		{
+			$sql = "INSERT INTO ".BANLIST_TABLE." (`ban_ip`) VALUES('".$userdata['session_ip']."')";
+			if ( !$db->sql_query($sql))
+			{
+				message_die(GENERAL_ERROR, "Couldn't insert ban_ip info into database", "", __LINE__, __FILE__, $sql);
+			}
+		}
+		session_end($userdata['session_id'], $userdata['user_id']);
+		message_die(GENERAL_ERROR, 'Die robot!');
+	}
+	// End Website Signature removal mod
 
 	$avatar_sql = '';
 
