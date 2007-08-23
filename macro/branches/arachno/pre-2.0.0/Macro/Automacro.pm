@@ -174,15 +174,16 @@ sub checkItem {
 
 # checks for near person ##################################
 sub checkPerson {
-### TODO
-	my ($who, $dist) = $_[0] =~ /^"(.*)"\s*,?\s*(.*)/;
-	return 0 unless defined $who;
-	my $r_id = getPlayerID($who);
-	return 0 if $r_id < 0;
-	return 1 unless $dist;
-	my $mypos = calcPosition($char);
-	my $pos = calcPosition($::players{$::playersID[$r_id]});
-	return distance($mypos, $pos) <= $dist ?1:0
+	my ($who, $dist) = $_[0] =~ /^(["\/].*?["\/])\s*,?\s*(.*)/;
+
+	foreach my $player (@{$playersList->getItems()}) {
+		next unless match($who, $player->name);
+		if ($dist > 0) {
+			return (distance($char->{pos_to}, $player->{pos_to}) <= $dist)?1:0
+		}
+		return 1
+	}
+	return 0
 }
 
 # checks arg1 for condition in arg3 #######################

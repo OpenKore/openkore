@@ -4,7 +4,7 @@ use strict;
 
 require Exporter;
 our @ISA = qw(Exporter);
-our @EXPORT = qw(%macro %automacro %varStack $queue $onHold %amSingle %amMulti @slots $macroKeywords);
+our @EXPORT = qw(%macro %automacro %varStack $queue $onHold %amSingle %amMulti $macroKeywords);
 
 our %macro;
 our %automacro;
@@ -60,14 +60,6 @@ our %amMulti = (
 	'storage' => 1,      # check: item amount in storage
 	'shop' => 1,         # check: item amount in shop
 	'cart' => 1          # check: item amount in cart
-);
-
-our @slots = qw(
-	topHead midHead lowHead
-	leftHand rightHand
-	robe armor shoes
-	leftAccessory rightAccessory
-	arrow
 );
 
 our $macroKeywords =
