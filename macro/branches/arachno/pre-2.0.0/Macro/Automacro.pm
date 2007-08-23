@@ -1,3 +1,4 @@
+# $Id$
 package Macro::Automacro;
 
 use strict;
@@ -6,7 +7,7 @@ require Exporter;
 our @ISA = qw(Exporter);
 our @EXPORT_OK = qw(releaseAM lockAM automacroCheck consoleCheckWrapper);
 our @EXPORT = qw(checkVar checkVarVar checkLoc checkLevel checkLevel checkClass
-	checkPercent checkStatus checkItem checkPerson checkCond checkEquip checkCast
+	checkPercent checkStatus checkItem checkPerson checkCond checkCast
 	checkEquip checkMsg checkMonster checkAggressives checkConsole checkMapChange
 	checkNotMonster);
 
@@ -211,7 +212,7 @@ sub checkEquip {
 		if (my $item = $char->{equipment}{$1}) {
 			return lc($2) eq lc($item->name)?1:0
 		}
-		return $2 eq 'none'?1:0
+		return lc($2) eq 'none'?1:0
 	}
 
 	$arg = lc($arg);
