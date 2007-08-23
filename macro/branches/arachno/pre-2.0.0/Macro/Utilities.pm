@@ -224,7 +224,6 @@ sub getStorageIDs {
 
 # get amount of sold out slots
 sub getSoldOut {
-### TODO
 	return 0 unless $shopstarted;
 	my $soldout = 0;
 	foreach my $aitem (@::articles) {
