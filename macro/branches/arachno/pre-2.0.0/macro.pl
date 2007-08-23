@@ -1,5 +1,6 @@
 # macro by Arachno
 #
+# $Id$
 #
 # This source code is licensed under the
 # GNU General Public License, Version 2.

@@ -1,3 +1,4 @@
+# $Id$
 package Macro::Script;
 
 use strict;
