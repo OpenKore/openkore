@@ -362,9 +362,8 @@ sub lockAM {
 
 # parses automacros and checks conditions #################
 sub automacroCheck {
-### TODO
 	my ($trigger, $args) = @_;
-	return unless $conState == 5 || $trigger =~ /^(?:charSelectScreen|Network)/;
+	return unless $conState == 5 || $trigger =~ /^(?:charSelectScreen|Network|log)/;
 
 	# do not run an automacro if there's already a macro running and the running
 	# macro is non-interruptible
