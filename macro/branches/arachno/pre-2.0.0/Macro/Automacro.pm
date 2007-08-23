@@ -198,30 +198,25 @@ sub checkCond {
 # equipped leftHand none, .. # equipped nothing on lefthand etc.
 # see @Item::slots
 sub checkEquip {
-# TODO: Actor::Item::slots
-	return 0;
-
 	if ($_[0] =~ /,/) {
 		my @equip = split(/\s*,\s*/, $_[0]);
 		foreach my $e (@equip) {return 1 if checkEquip($e)}
 		return 0
 	}
 
-	my $arg = lc($_[0]);
-	# check whether or not a slot is given (equipped rightHand whatever)
-	foreach my $slot (@slots) {
-		if ($arg =~ /^$slot\s+/) {
-			$arg =~ s/^$slot\s+//;
-			if (my $item = $char->{equipment}{$slot}{name}) {
-				return lc($item) eq $arg?1:0
-			} else {
-				return $arg eq 'none'?1:0
-			}
+	my $arg = $_[0];
+
+	if ($arg =~ m/^((?:top|mid|low)Head|(?:left|right)Hand|robe|armor|shoes|(?:left|right)Accessory|arrow)\s+(.*)/i) {
+		if (my $item = $char->{equipment}{$1}) {
+			return lc($2) eq lc($item->name)?1:0
 		}
+		return $2 eq 'none'?1:0
 	}
-	# check for item (equipped whatever)
-	foreach my $item (@{$char->{inventory}}) {
-		return 1 if ($item->{equipped} && lc($item->{name}) eq $arg)
+
+	$arg = lc($arg);
+	foreach my $s (keys %{$char->{equipment}}) {
+		next unless lc($char->{equipment}{$s}->name) eq $arg;
+		return 1
 	}
 	return 0
 }
