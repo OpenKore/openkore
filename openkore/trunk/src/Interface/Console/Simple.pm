@@ -43,12 +43,21 @@ sub new {
 sub getInput {
 	my ($self, $timeout) = @_;
 	my $line;
+	my $bits;
 
 	if ($timeout < 0) {
-		$line = <STDIN>;
+		my $done;
+		while (!$done) {
+			$bits = '';
+			vec($bits, fileno(STDIN), 1) = 1;
+			if (select($bits, undef, undef, 1) > 0) {
+				$line = <STDIN>;
+				$done = 1;
+			}
+		}
 
 	} else {
-		my $bits = '';
+		$bits = '';
 		vec($bits, fileno(STDIN), 1) = 1;
 		if (select($bits, undef, undef, $timeout) > 0) {
 			$line = <STDIN>;
