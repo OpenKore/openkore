@@ -141,7 +141,7 @@ sub getConfig {
 sub refreshGlobal {
 	my $var = $_[0];
 
-	$varStack{".map"} = (defined $field)?$field->name:"unknown";
+	$varStack{".map"} = $field->name;
 	my $pos = calcPosition($char); $varStack{".pos"} = sprintf("%d %d", $pos->{x}, $pos->{y});
 	$varStack{".time"} = time;
 	$varStack{".datetime"} = scalar localtime;
