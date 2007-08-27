@@ -150,13 +150,13 @@ sub subvars {
 
 	# variables
 	while ((undef, $var) = $pre =~ /(^|[^\\])\$(\.?[a-z][a-z\d]*)/i) {
-		$tmp = ($varStack{$var} or "");
+		$tmp = (defined $varStack{$var})?$varStack{$var}:"";
 		$pre =~ s/(^|[^\\])\$$var([^a-zA-Z\d]|$)/$1$tmp$2/g;
 	}
 
 	# doublevars (is this really working?)
 	while (($var) = $pre =~ /\$\{(.*?)\}/i) {
-		$tmp = ($varStack{"#$var"} or "");
+		$tmp = (defined $varStack{"#$var"})?$varStack{"#$var"}:"";
 		$pre =~ s/\$\{$var\}/$tmp/g
 	}
 
