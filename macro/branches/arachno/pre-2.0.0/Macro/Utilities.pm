@@ -6,8 +6,8 @@ use strict;
 require Exporter;
 our @ISA = qw(Exporter);
 our @EXPORT_OK = qw(ai_isIdle q4rx between cmpr match getArgs refreshGlobal getnpcID getPlayerID
-	getItemIDs getInventoryIDs getStorageIDs getSoldOut getInventoryAmount getCartAmount getShopAmount getStorageAmount
-	getRandom getRandomRange getConfig getWord callMacro);
+	getVenderID getItemIDs getInventoryIDs getStorageIDs getSoldOut getInventoryAmount getCartAmount
+	getShopAmount getStorageAmount getRandom getRandomRange getConfig getWord callMacro);
 
 use Utils;
 use Globals;
@@ -184,7 +184,7 @@ sub getPlayerID {
 # get vender array index
 sub getVenderID {
 	for (my $i = 0; $i < @::venderListsID; $i++) {
-		next if $::venderListsID eq "";
+		next if $::venderListsID[$i] eq "";
 		my $player = Actor::get($::venderListsID[$i]);
 		return $i if $player->name eq $_[0]
 	}
