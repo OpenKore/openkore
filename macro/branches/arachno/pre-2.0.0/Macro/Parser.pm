@@ -13,7 +13,7 @@ use Log qw(message warning error);
 use Macro::Data;
 use Macro::Utilities qw(refreshGlobal getnpcID getItemIDs getStorageIDs getInventoryIDs
 	getPlayerID getRandom getRandomRange getInventoryAmount getCartAmount
-	getShopAmount getStorageAmount getConfig getWord);
+	getShopAmount getStorageAmount getConfig getWord q4rx);
 
 our ($rev) = q$Revision$ =~ /(\d+)/;
 
@@ -53,7 +53,6 @@ sub parseMacroFile {
 			if ($_ eq "}") {
 				undef %block
 			} else {
-				# TODO: check syntax
 				push(@{$macro{$block{name}}}, $_)
 			}
 			next
@@ -149,14 +148,16 @@ sub subvars {
 	my ($var, $tmp);
 
 	# variables
-	while ((undef, $var) = $pre =~ /(^|[^\\])\$(\.?[a-z][a-z\d]*)/i) {
+	while (($var) = $pre =~ /(?:^|[^\\])\$(\.?[a-z][a-z\d]*)/i) {
 		$tmp = (defined $varStack{$var})?$varStack{$var}:"";
+		$var = q4rx $var;
 		$pre =~ s/(^|[^\\])\$$var([^a-zA-Z\d]|$)/$1$tmp$2/g;
 	}
 
-	# doublevars (is this really working?)
+	# doublevars
 	while (($var) = $pre =~ /\$\{(.*?)\}/i) {
 		$tmp = (defined $varStack{"#$var"})?$varStack{"#$var"}:"";
+		$var = q4rx $var;
 		$pre =~ s/\$\{$var\}/$tmp/g
 	}
 
@@ -199,7 +200,8 @@ sub parseCmd {
 		elsif ($kw eq 'eval')       {$ret = eval($arg)}
 		return unless defined $ret;
 		return $cmd if $ret eq '_%_';
-		$targ = quotemeta $targ; $cmd =~ s/\@$kw\s*\(\s*$targ\s*\)/$ret/g
+		$targ = q4rx $targ;
+		$cmd =~ s/\@$kw\s*\(\s*$targ\s*\)/$ret/g
 	}
 
 	$cmd = subvars($cmd);

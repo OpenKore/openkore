@@ -5,7 +5,7 @@ use strict;
 
 require Exporter;
 our @ISA = qw(Exporter);
-our @EXPORT_OK = qw(ai_isIdle between cmpr match getArgs refreshGlobal getnpcID getPlayerID
+our @EXPORT_OK = qw(ai_isIdle q4rx between cmpr match getArgs refreshGlobal getnpcID getPlayerID
 	getItemIDs getInventoryIDs getStorageIDs getSoldOut getInventoryAmount getCartAmount getShopAmount getStorageAmount
 	getRandom getRandomRange getConfig getWord callMacro);
 
@@ -82,6 +82,11 @@ sub cmpr {
 	return 0
 }
 
+sub q4rx {
+	my $s = $_[0];
+	$s =~ s/([\/+(){}\[\]\\])/\\$1/g;
+	return $s
+}
 
 sub match {
 	my ($text, $kw) = @_;
@@ -122,7 +127,7 @@ sub getArgs {
 # gets word from message
 sub getWord {
 	my ($message, $wordno) = $_[0] =~ /^"(.*?)",\s?(\d+)$/s;
-	my @words = split(/[ ,.:;\"\'!?\r\n]/, $message); ## FIXME
+	my @words = split(/[ ,.:;\"\'!?\r\n]/, $message);
 	my $no = 1;
 	foreach (@words) {
 		next if /^$/;
