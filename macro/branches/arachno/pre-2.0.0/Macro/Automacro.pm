@@ -27,28 +27,14 @@ our ($rev) = q$Revision$ =~ /(\d+)/;
 sub checkVar {
 	my ($var, $cond, $val) = getArgs($_[0]);
 
+	$var = "#$var" if $_[1] eq 'varvar';
+
 	if ($cond eq "unset") {return exists $varStack{$var}?0:1}
 
 	refreshGlobal($var);
 
 	if (exists $varStack{$var}) {
 		return cmpr($varStack{$var}, $cond, $val)
-	} else {
-		return $cond eq "!="
-	}
-}
-
-# check for a variable's variable ##########################
-sub checkVarVar {
-### TODO: might be broken
-	my $arg = $_[0];
-	my ($varvar, $cond, $val) = getArgs($arg);
-
-	if ($cond eq "unset") {return exists $varStack{"#".$varStack{$varvar}}?0:1}
-
-	if (exists $varStack{"#".$varStack{$varvar}}) {
-		$arg =~ s/$varvar/"#$varStack{$varvar}"/g;
-		return checkVar($arg)
 	} else {
 		return $cond eq "!="
 	}
@@ -67,8 +53,7 @@ sub checkLoc {
 		foreach my $l (@locs) {return 1 if checkLoc($l)}
 		return 0
 	}
-	my $not = 0;
-	if ($arg =~ /^not /) {$not = 1; $arg =~ s/^not +//g}
+	my $not = ($arg =~ s/^not +//)?1:0;
 	my ($map, $x1, $y1, $x2, $y2) = split(/ /, $arg);
 	if ($map eq $field->name) {
 		if ($x1 && $y1) {
@@ -137,9 +122,7 @@ sub checkStatus {
 	}
 
 	my $status = lc($_[0]);
-	my $not = 0;
-
-	if ($status =~ /^not /) {$not = 1; $status =~ s/^not +//g}
+	my $not = ($status =~ s/^not +//)?1:0;
 
 	foreach (split(',', $varStack{".status"})) {
 		if (lc($_) eq $status) {return $not?0:1}
@@ -259,7 +242,7 @@ sub checkMsg {
 			my @tfld = split(/,/, $allowed);
 			for (my $i = 0; $i < @tfld; $i++) {
 				next unless defined $tfld[$i];
-				$tfld[$i] =~ s/^ +//g; $tfld[$i] =~ s/ +$//g;
+				$tfld[$i] =~ s/(?:^ +| +$)//g;
 				if ($arg->{privMsgUser} eq $tfld[$i]) {$auth = 1; last}
 			}
 		}
@@ -270,7 +253,7 @@ sub checkMsg {
 
 	$arg->{Msg} =~ s/[\r\n]*$//g;
 	if (match($arg->{Msg},$msg)){
-		$varStack{$var} = quotemeta $arg->{MsgUser};
+		$varStack{$var} = $arg->{MsgUser};
 		$varStack{$var."Msg"} = $arg->{Msg};
 		return 1
 	}
@@ -394,8 +377,18 @@ sub automacroCheck {
 			# save arguments
 			my $s = 0;
 			foreach my $save (@{$automacro{$am}->{save}}) {
-				if (defined $args->{$save}) {$varStack{".hooksave$s"} = $args->{$save}}
-				else {error "[macro] \$args->{$save} does not exist\n"}
+				if (defined $args->{$save}) {
+					if (ref($args->{$save}) eq 'SCALAR') {
+						$varStack{".hooksave$s"} = ${$args->{$save}}
+					} else {
+						if (!$::config{macro_nowarn} && ref($args->{$save}) ne '') {
+							warning "[macro] \$.hooksave$s is of type ".ref($args->{$save}).". Take care!\n"
+						}
+						$varStack{".hooksave$s"} = $args->{$save}
+					}
+				} else {
+					error "[macro] \$args->{$save} does not exist\n"
+				}
 				$s++
 			}
 		} elsif (defined $automacro{$am}->{console}) {
@@ -403,7 +396,7 @@ sub automacroCheck {
 				next CHKAM unless checkConsole($automacro{$am}->{console}, $args)
 			} else {next CHKAM}
 		} elsif (defined $automacro{$am}->{spell}) {
-			if ($trigger =~ /^(is_casting|packet_skilluse)$/) {
+			if ($trigger =~ /^(?:is_casting|packet_skilluse)$/) {
 			next CHKAM unless checkCast($automacro{$am}->{spell}, $args)
 			} else {next CHKAM}
 		} elsif (defined $automacro{$am}->{pm}) {
@@ -434,8 +427,8 @@ sub automacroCheck {
 		foreach my $i (@{$automacro{$am}->{monster}})    {next CHKAM unless checkMonster($i)}
 		foreach my $i (@{$automacro{$am}->{aggressives}}){next CHKAM unless checkAggressives($i)}
 		foreach my $i (@{$automacro{$am}->{location}})   {next CHKAM unless checkLoc($i)}
-		foreach my $i (@{$automacro{$am}->{var}})        {next CHKAM unless checkVar($i)}
-		foreach my $i (@{$automacro{$am}->{varvar}})     {next CHKAM unless checkVarVar($i)}
+		foreach my $i (@{$automacro{$am}->{var}})        {next CHKAM unless checkVar($i, "")}
+		foreach my $i (@{$automacro{$am}->{varvar}})     {next CHKAM unless checkVar($i, "varvar")}
 		foreach my $i (@{$automacro{$am}->{base}})       {next CHKAM unless checkLevel($i, "lv")}
 		foreach my $i (@{$automacro{$am}->{job}})        {next CHKAM unless checkLevel($i, "lv_job")}
 		foreach my $i (@{$automacro{$am}->{hp}})         {next CHKAM unless checkPercent($i, "hp")}

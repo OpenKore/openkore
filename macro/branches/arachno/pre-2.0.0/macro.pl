@@ -7,7 +7,7 @@
 # See http://www.gnu.org/licenses/gpl.html
 
 package macro;
-my $Version = "2.0.0-pre4";
+my $Version = "2.0.0-rc1";
 my ($rev) = q$Revision$ =~ /(\d+)/;
 
 use strict;
@@ -220,6 +220,12 @@ sub commandHandler {
 		message "Macro::Script ".$Macro::Script::rev."\n";
 		message "Macro::Parser ".$Macro::Parser::rev."\n";
 		message "Macro::Utilities ".$Macro::Utilities::rev."\n"
+	### debug
+#	} elsif ($arg eq 'varstack') {
+#		message "varstack\n", "list";
+#		foreach my $v (keys %varStack) {
+#			message "\$varStack{$v} = [".$varStack{$v}."]\n"
+#		}
 	### parameter: probably a macro
 	} else {
 		if (defined $queue) {
