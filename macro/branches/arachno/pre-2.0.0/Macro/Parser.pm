@@ -12,7 +12,7 @@ use Globals;
 use Log qw(message warning error);
 use Macro::Data;
 use Macro::Utilities qw(refreshGlobal getnpcID getItemIDs getStorageIDs getInventoryIDs
-	getPlayerID getRandom getRandomRange getInventoryAmount getCartAmount
+	getPlayerID getVenderID getRandom getRandomRange getInventoryAmount getCartAmount
 	getShopAmount getStorageAmount getConfig getWord q4rx);
 
 our ($rev) = q$Revision$ =~ /(\d+)/;
