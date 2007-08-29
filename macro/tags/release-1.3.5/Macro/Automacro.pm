@@ -1,4 +1,3 @@
-# $Id$
 package Macro::Automacro;
 
 use strict;
@@ -7,27 +6,29 @@ require Exporter;
 our @ISA = qw(Exporter);
 our @EXPORT_OK = qw(releaseAM lockAM automacroCheck consoleCheckWrapper);
 our @EXPORT = qw(checkVar checkVarVar checkLoc checkLevel checkLevel checkClass
-	checkPercent checkStatus checkItem checkPerson checkCond checkCast
+	checkPercent checkStatus checkItem checkPerson checkCond checkEquip checkCast
 	checkEquip checkMsg checkMonster checkAggressives checkConsole checkMapChange
 	checkNotMonster);
 
 use Utils;
 use Globals;
-use Skill;
+use Skills;
 use AI;
 use Log qw(message error warning);
 use Macro::Data;
-use Macro::Utilities qw(between cmpr match getArgs refreshGlobal
+use Macro::Utilities qw(between cmpr match getArgs setVar getVar refreshGlobal
 	getPlayerID getSoldOut getInventoryAmount getCartAmount getShopAmount
 	getStorageAmount callMacro);
 
-our ($rev) = q$Revision$ =~ /(\d+)/;
+our $Changed = sprintf("%s %s %s",
+	q$Date: 2006-12-06 00:19:16 +0100 (Wed, 06 Dec 2006) $
+	=~ /(\d{4}-\d{2}-\d{2}) (\d{2}:\d{2}:\d{2}) ([+-]\d{4})/);
 
 # check for variable #######################################
 sub checkVar {
-	my ($var, $cond, $val) = getArgs($_[0]);
-
-	$var = "#$var" if $_[1] eq 'varvar';
+	$cvs->debug("checkVar(@_)", $logfac{function_call_auto} | $logfac{automacro_checks});
+	my $arg = shift;
+	my ($var, $cond, $val) = getArgs($arg);
 
 	if ($cond eq "unset") {return exists $varStack{$var}?0:1}
 
@@ -40,6 +41,22 @@ sub checkVar {
 	}
 }
 
+# check for a variable's variable ##########################
+sub checkVarVar {
+	$cvs->debug("checkVarVar(@_)", $logfac{function_call_auto} | $logfac{automacro_checks});
+	my $arg = shift;
+	my ($varvar, $cond, $val) = getArgs($arg);
+
+	if ($cond eq "unset") {return exists $varStack{"#".$varStack{$varvar}}?0:1}
+
+	if (exists $varStack{"#".$varStack{$varvar}}) {
+		$arg =~ s/$varvar/"#$varStack{$varvar}"/g;
+		return checkVar($arg)
+	} else {
+		return $cond eq "!="
+	}
+}
+
 # checks for location ######################################
 # parameter: map [x1 y1 [x2 y2]]
 # note: when looking in the default direction (north)
@@ -47,15 +64,17 @@ sub checkVar {
 #                           (x2|y2)=(lower right)
 # uses: calcPosition (Utils?)
 sub checkLoc {
-	my $arg = $_[0];
+	$cvs->debug("checkLoc(@_)", $logfac{function_call_auto} | $logfac{automacro_checks});
+	my $arg = shift;
 	if ($arg =~ /,/) {
 		my @locs = split(/\s*,\s*/, $arg);
 		foreach my $l (@locs) {return 1 if checkLoc($l)}
 		return 0
 	}
-	my $not = ($arg =~ s/^not +//)?1:0;
+	my $not = 0;
+	if ($arg =~ /^not /) {$not = 1; $arg =~ s/^not //g}
 	my ($map, $x1, $y1, $x2, $y2) = split(/ /, $arg);
-	if ($map eq $field->name) {
+	if ($map eq $field{name}) {
 		if ($x1 && $y1) {
 			my $pos = calcPosition($char);
 			return 0 unless defined $pos->{x} && defined $pos->{y};
@@ -78,12 +97,15 @@ sub checkLoc {
 # checks for base/job level ################################
 # uses cmpr (Macro::Utils)
 sub checkLevel {
-	my ($cond, $level) = $_[0] =~ /([<>=!]+)\s*(\d+)/;
-	return cmpr($char->{$_[1]}, $cond, $level)
+	$cvs->debug("checkLevel(@_)", $logfac{function_call_auto} | $logfac{automacro_checks});
+	my ($arg, $what) = @_;
+	my ($cond, $level) = $arg =~ /([<>=!]+)\s*(\d+)/;
+	return cmpr($char->{$what}, $cond, $level)
 }
 
 # checks for player's jobclass #############################
 sub checkClass {
+	$cvs->debug("checkClass(@_)", $logfac{function_call_auto} | $logfac{automacro_checks});
 	return 0 unless defined $char->{jobID};
 	return lc($_[0]) eq lc($::jobs_lut{$char->{jobID}})?1:0
 }
@@ -91,9 +113,10 @@ sub checkClass {
 # checks for HP/SP/Weight ##################################
 # uses cmpr (Macro::Utils)
 sub checkPercent {
+	$cvs->debug("checkPercent(@_)", $logfac{function_call_auto} | $logfac{automacro_checks});
 	my ($arg, $what) = @_;
 	my ($cond, $amount) = $arg =~ /([<>=!]+)\s*(\d+%?)/;
-	if ($what =~ /^(?:hp|sp|weight)$/) {
+	if ($what =~ /^(hp|sp|weight)$/) {
 		return 0 unless (defined $char->{$what} && defined $char->{$what."_max"});
 		if ($amount =~ /\d+%$/ && $char->{$what."_max"}) {
 			$amount =~ s/%$//;
@@ -115,26 +138,35 @@ sub checkPercent {
 
 # checks for status #######################################
 sub checkStatus {
-	if ($_[0] =~ /,/) {
-		my @statuses = split(/\s*,\s*/, $_[0]);
+	$cvs->debug("checkStatus(@_)", $logfac{function_call_auto} | $logfac{automacro_checks});
+	my $status = shift;
+	if ($status =~ /,/) {
+		my @statuses = split(/\s*,\s*/, $status);
 		foreach my $s (@statuses) {return 1 if checkStatus($s)}
 		return 0
 	}
-
-	my $status = lc($_[0]);
-	my $not = ($status =~ s/^not +//)?1:0;
-
-	foreach (split(',', $varStack{".status"})) {
-		if (lc($_) eq $status) {return $not?0:1}
+	my $not = 0;
+	if ($status =~ /^not /) {$not = 1; $status =~ s/^not +//g}
+	if ($status eq 'muted') {
+		if ($char->{muted}) {return $not?0:1}
+		else {return $not?1:0}
+	}
+	if ($status eq 'dead') {
+		if ($char->{dead}) {return $not?0:1}
+		else {return $not?1:0}
+	}
+	if (!$char->{statuses}) {return $not?1:0}
+	foreach (keys %{$char->{statuses}}) {
+		if (lc($_) eq lc($status)) {return $not?0:1}
 	}
 	return $not?1:0
 }
-
 
 # checks for item conditions ##############################
 # uses: getInventoryAmount, getCartAmount, getShopAmount,
 #       getStorageAmount (Macro::Utils?)
 sub checkItem {
+	$cvs->debug("checkItem(@_)", $logfac{function_call_auto} | $logfac{automacro_checks});
 	my ($where, $check) = @_;
 	if ($check =~ /,/) {
 		my @checks = split(/\s*,\s*/, $check);
@@ -158,23 +190,24 @@ sub checkItem {
 
 # checks for near person ##################################
 sub checkPerson {
-	my ($who, $dist) = $_[0] =~ /^(["\/].*?["\/]\w*)\s*,?\s*(.*)/;
-
-	foreach my $player (@{$playersList->getItems()}) {
-		next unless match($player->name, $who);
-		if ($dist > 0) {
-			return (distance($char->{pos_to}, $player->{pos_to}) <= $dist)?1:0
-		}
-		return 1
-	}
-	return 0
+	$cvs->debug("checkPerson(@_)", $logfac{function_call_auto} | $logfac{automacro_checks});
+	my ($who, $dist) = $_[0] =~ /^"(.*)"\s*,?\s*(.*)/;
+	return 0 unless defined $who;
+	my $r_id = getPlayerID($who, \@playersID);
+	return 0 if $r_id < 0;
+	return 1 unless $dist;
+	my $mypos = calcPosition($char);
+	my $pos = calcPosition($::players{$::playersID[$r_id]});
+	return distance($mypos, $pos) <= $dist ?1:0
 }
 
 # checks arg1 for condition in arg3 #######################
 # uses: cmpr (Macro::Utils)
 sub checkCond {
-	my ($cond, $amount) = $_[1] =~ /([<>=!]+)\s*(\d+)/;
-	return cmpr($_[0], $cond, $amount)?1:0
+	$cvs->debug("checkCond(@_)", $logfac{function_call_auto} | $logfac{automacro_checks});
+	my $what = shift;
+	my ($cond, $amount) = $_[0] =~ /([<>=!]+)\s*(\d+)/;
+	return cmpr($what, $cond, $amount)?1:0
 }
 
 # checks for equipment ####################################
@@ -183,25 +216,28 @@ sub checkCond {
 # equipped leftHand none, .. # equipped nothing on lefthand etc.
 # see @Item::slots
 sub checkEquip {
-	if ($_[0] =~ /,/) {
-		my @equip = split(/\s*,\s*/, $_[0]);
+	$cvs->debug("checkEquip(@_)", $logfac{function_call_auto} | $logfac{automacro_checks});
+	my $arg = shift;
+	if ($arg =~ /,/) {
+		my @equip = split(/\s*,\s*/, $arg);
 		foreach my $e (@equip) {return 1 if checkEquip($e)}
 		return 0
 	}
 
-	my $arg = $_[0];
-
-	if ($arg =~ m/^((?:top|mid|low)Head|(?:left|right)Hand|robe|armor|shoes|(?:left|right)Accessory|arrow)\s+(.*)/i) {
-		if (my $item = $char->{equipment}{$1}) {
-			return lc($2) eq lc($item->name)?1:0
+	# check whether or not a slot is given (equipped rightHand whatever)
+	foreach my $slot (@slots) {
+		if ($arg =~ /^$slot\s+/) {
+			$arg =~ s/^$slot\s+//;
+			if (my $item = $char->{equipment}{$slot}{name}) {
+				return lc($item) eq lc($arg)?1:0
+			} else {
+				return $arg eq 'none'?1:0
+			}
 		}
-		return lc($2) eq 'none'?1:0
 	}
-
-	$arg = lc($arg);
-	foreach my $s (keys %{$char->{equipment}}) {
-		next unless lc($char->{equipment}{$s}->name) eq $arg;
-		return 1
+	# check for item (equipped whatever)
+	foreach my $item (@{$char->{inventory}}) {
+		return 1 if ($item->{equipped} && lc($item->{name}) eq lc($arg))
 	}
 	return 0
 }
@@ -209,21 +245,22 @@ sub checkEquip {
 # checks for a spell casted on us #########################
 # uses: distance, judgeSkillArea (Utils?)
 sub checkCast {
+	$cvs->debug("checkCast(@_)", $logfac{function_call_auto} | $logfac{automacro_checks});
 	my ($cast, $args) = @_;
-	$cast = lc($cast);
 	my $pos = calcPosition($char);
 	return 0 if $args->{sourceID} eq $accountID;
 	my $target = (defined $args->{targetID})?$args->{targetID}:0;
 	if (($target eq $accountID ||
 		($pos->{x} == $args->{x} && $pos->{y} == $args->{y}) ||
 		distance($pos, $args) <= judgeSkillArea($args->{skillID})) &&
-		existsInList($cast, lc(Skill->new(idn => $args->{skillID})->getName()))) {return 1}
+		existsInList(lc($cast), lc(Skills->new(id => $args->{skillID})->name))) {return 1}
 	return 0
 }
 
 # checks for public, private, party or guild message ######
-# uses calcPosition, distance (Utils?)
+# uses calcPosition, distance (Utils?), setVar (Macro::Utils?)
 sub checkMsg {
+	$cvs->debug("checkMsg(@_)", $logfac{function_call_auto} | $logfac{automacro_checks});
 	my ($var, $tmp, $arg) = @_;
 	my $msg;
 	if ($var eq '.lastpub') {
@@ -242,7 +279,7 @@ sub checkMsg {
 			my @tfld = split(/,/, $allowed);
 			for (my $i = 0; $i < @tfld; $i++) {
 				next unless defined $tfld[$i];
-				$tfld[$i] =~ s/(?:^ +| +$)//g;
+				$tfld[$i] =~ s/^ +//g; $tfld[$i] =~ s/ +$//g;
 				if ($arg->{privMsgUser} eq $tfld[$i]) {$auth = 1; last}
 			}
 		}
@@ -253,8 +290,8 @@ sub checkMsg {
 
 	$arg->{Msg} =~ s/[\r\n]*$//g;
 	if (match($arg->{Msg},$msg)){
-		$varStack{$var} = $arg->{MsgUser};
-		$varStack{$var."Msg"} = $arg->{Msg};
+		setVar($var, quotemeta $arg->{MsgUser});
+		setVar($var."Msg", $arg->{Msg});
 		return 1
 	}
 	return 0
@@ -262,14 +299,15 @@ sub checkMsg {
 
 # checks for monster, credits to illusionist
 sub checkMonster {
-	my $monsterList = $_[0];
+	$cvs->debug("checkMonsters(@_)", $logfac{function_call_auto} | $logfac{automacro_checks});
+	my $monsterList = shift;
 	foreach (@monstersID) {
 		next unless defined $_;
 		if (existsInList($monsterList, $monsters{$_}->{name})) {
 			my $pos = calcPosition($monsters{$_});
-			my $val = sprintf("%d %d %s", $pos->{x}, $pos->{y}, $field->name);
-			$varStack{".lastMonster"} = $monsters{$_}->{name};
-			$varStack{".lastMonsterPos"} = $val;
+			my $val = sprintf("%d %d %s", $pos->{x}, $pos->{y}, $field{name});
+			setVar(".lastMonster", $monsters{$_}->{name});
+			setVar(".lastMonsterPos", $val);
 			return 1
 		}
 	}
@@ -279,7 +317,8 @@ sub checkMonster {
 # checks for forbidden monster
 # quick hack, maybe combine it with checkMonster later
 sub checkNotMonster {
-	my $monsterList = $_[0];
+	$cvs->debug("checkNotMonster(@_)", $logfac{function_call_auto} | $logfac{automacro_checks});
+	my $monsterList = shift;
 	foreach (@monstersID) {
 		next unless defined $_;
 		next if existsInList($monsterList, $monsters{$_}->{name});
@@ -290,16 +329,20 @@ sub checkNotMonster {
 
 # checks for aggressives
 sub checkAggressives {
-	my ($cond, $amount) = $_[0] =~ /([<>=!]+)\s*(\d+)/;
+	$cvs->debug("checkAggressives(@_)", $logfac{function_call_auto} | $logfac{automacro_checks});
+	my $arg = shift;
+	my ($cond, $amount) = $arg =~ /([<>=!]+)\s*(\d+)/;
 	return cmpr(scalar ai_getAggressives, $cond, $amount)
 }
 
 # checks for console message
 sub checkConsole {
+	$cvs->debug("checkConsole(@_)", $logfac{function_call_auto} | $logfac{automacro_checks}) if defined $cvs;
 	my ($msg, $arg) = @_;
 	$$arg[4] =~ s/[\r\n]*$//;
 	if (match($$arg[4],$msg)){
-		$varStack{".lastLogMsg"} = $$arg[4];
+		$$arg[4] =~ s/\n$//g;
+		setVar(".lastLogMsg", $$arg[4]);
 		return 1
 	}
 	return 0
@@ -308,7 +351,7 @@ sub checkConsole {
 sub consoleCheckWrapper {
 	return unless defined $conState;
 	# skip "macro" and "cvsdebug" domains to avoid loops
-	return if $_[1] =~ /^(?:macro|cvsdebug)$/;
+	return if $_[1] =~ /^(macro|cvsdebug)$/;
 	# skip debug messages unless macro_allowDebug is set
 	return if ($_[0] eq 'debug' && !$::config{macro_allowDebug});
 	my @args = @_;
@@ -317,19 +360,25 @@ sub consoleCheckWrapper {
 
 # checks for map change
 sub checkMapChange {
-	return ($_[0] eq '*' || existsInList($_[0], $field->name))?1:0
+	$cvs->debug("checkMapChange(@_)", $logfac{function_call_auto} | $logfac{automacro_checks});
+	my $map = shift;
+	return ($map eq '*' || existsInList($map, $field{name}))?1:0
 }
 
 # releases a locked automacro ##################
 sub releaseAM {
-	if ($_[0] eq 'all') {
-		foreach (keys %automacro) {
-			undef $automacro{$_}->{disabled}
+	$cvs->debug("releaseAM(@_)", $logfac{function_call_macro});
+	my $am = shift;
+	if ($am eq 'all') {
+		foreach my $am (keys %automacro) {
+			undef $automacro{$am}->{disabled}
 		}
 		return 1
 	}
-	if (defined $automacro{$_[0]}) {
-		undef $automacro{$_[0]}->{disabled};
+	if (defined $automacro{$am}) {
+		if (defined $automacro{$am}->{disabled}) {
+			undef $automacro{$am}->{disabled}
+		}
 		return 1
 	}
 	return 0
@@ -337,8 +386,10 @@ sub releaseAM {
 
 # locks an automacro ##################
 sub lockAM {
-	if (defined $automacro{$_[0]}) {
-		$automacro{$_[0]}->{disabled} = 1;
+	$cvs->debug("lockAM(@_)", $logfac{function_call_macro});
+	my $am = shift;
+	if (defined $automacro{$am}) {
+		$automacro{$am}->{disabled} = 1;
 		return 1
 	}
 	return 0
@@ -347,13 +398,11 @@ sub lockAM {
 # parses automacros and checks conditions #################
 sub automacroCheck {
 	my ($trigger, $args) = @_;
-	return unless $conState == 5 || $trigger =~ /^(?:charSelectScreen|Network)/;
+	return unless $conState == 5 || $trigger =~ /^(charSelectScreen|Network)/;
 
 	# do not run an automacro if there's already a macro running and the running
 	# macro is non-interruptible
 	return if (defined $queue && !$queue->interruptible);
-
-	refreshGlobal();
 
 	CHKAM:
 	foreach my $am (sort {
@@ -376,19 +425,9 @@ sub automacroCheck {
 			next CHKAM unless $trigger eq $automacro{$am}->{hook};
 			# save arguments
 			my $s = 0;
-			foreach my $save (@{$automacro{$am}->{save}}) {
-				if (defined $args->{$save}) {
-					if (ref($args->{$save}) eq 'SCALAR') {
-						$varStack{".hooksave$s"} = ${$args->{$save}}
-					} else {
-						if (!$::config{macro_nowarn} && ref($args->{$save}) ne '') {
-							warning "[macro] \$.hooksave$s is of type ".ref($args->{$save}).". Take care!\n"
-						}
-						$varStack{".hooksave$s"} = $args->{$save}
-					}
-				} else {
-					error "[macro] \$args->{$save} does not exist\n"
-				}
+			while (my $save = $automacro{$am}->{'save'.$s}) {
+				if (defined $args->{$save}) {setVar(".hooksave$s", $args->{$save})}
+				else {error "[macro] \$args->{$save} does not exist\n"}
 				$s++
 			}
 		} elsif (defined $automacro{$am}->{console}) {
@@ -396,7 +435,7 @@ sub automacroCheck {
 				next CHKAM unless checkConsole($automacro{$am}->{console}, $args)
 			} else {next CHKAM}
 		} elsif (defined $automacro{$am}->{spell}) {
-			if ($trigger =~ /^(?:is_casting|packet_skilluse)$/) {
+			if ($trigger =~ /^(is_casting|packet_skilluse)$/) {
 			next CHKAM unless checkCast($automacro{$am}->{spell}, $args)
 			} else {next CHKAM}
 		} elsif (defined $automacro{$am}->{pm}) {
@@ -421,14 +460,14 @@ sub automacroCheck {
 			} else {next CHKAM}
 		}
 
-		next CHKAM if (defined $automacro{$am}->{map}    && $automacro{$am}->{map} ne $field->name);
+		next CHKAM if (defined $automacro{$am}->{map}    && $automacro{$am}->{map} ne $field{name});
 		next CHKAM if (defined $automacro{$am}->{class}  && !checkClass($automacro{$am}->{class}));
 		next CHKAM if (defined $automacro{$am}->{notMonster} && !checkNotMonster($automacro{$am}->{notMonster}));
 		foreach my $i (@{$automacro{$am}->{monster}})    {next CHKAM unless checkMonster($i)}
 		foreach my $i (@{$automacro{$am}->{aggressives}}){next CHKAM unless checkAggressives($i)}
 		foreach my $i (@{$automacro{$am}->{location}})   {next CHKAM unless checkLoc($i)}
-		foreach my $i (@{$automacro{$am}->{var}})        {next CHKAM unless checkVar($i, "")}
-		foreach my $i (@{$automacro{$am}->{varvar}})     {next CHKAM unless checkVar($i, "varvar")}
+		foreach my $i (@{$automacro{$am}->{var}})        {next CHKAM unless checkVar($i)}
+		foreach my $i (@{$automacro{$am}->{varvar}})     {next CHKAM unless checkVarVar($i)}
 		foreach my $i (@{$automacro{$am}->{base}})       {next CHKAM unless checkLevel($i, "lv")}
 		foreach my $i (@{$automacro{$am}->{job}})        {next CHKAM unless checkLevel($i, "lv_job")}
 		foreach my $i (@{$automacro{$am}->{hp}})         {next CHKAM unless checkPercent($i, "hp")}
@@ -456,8 +495,8 @@ sub automacroCheck {
 		$automacro{$am}->{disabled} = 1 if $automacro{$am}->{'run-once'};
 
 		foreach my $i (@{$automacro{$am}->{set}}) {
-			my ($var, $val) = $i =~ /^(.*?)\s+(.*)/;
-			$varStack{$var} = $val
+			my ($var, $val) = $i =~ /^(.*?)\s+(.*)$/;
+			setVar($var, $val)
 		}
 
 		if (defined $automacro{$am}->{call}) {
@@ -469,7 +508,7 @@ sub automacroCheck {
 				$queue->orphan($automacro{$am}->{orphan}) if defined $automacro{$am}->{orphan};
 				$queue->timeout($automacro{$am}->{delay}) if $automacro{$am}->{delay};
 				$queue->setMacro_delay($automacro{$am}->{macro_delay}) if $automacro{$am}->{macro_delay};
-				$varStack{".caller"} = $am;
+				setVar(".caller", $am);
 				$onHold = 0;
 				callMacro
 			} else {

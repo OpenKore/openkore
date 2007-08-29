@@ -1,12 +1,13 @@
+# $Id$
 package Macro::Utilities;
 
 use strict;
 
 require Exporter;
 our @ISA = qw(Exporter);
-our @EXPORT_OK = qw(ai_isIdle between cmpr match getArgs setVar getVar refreshGlobal getnpcID getPlayerID
-	getItemIDs getStorageIDs getSoldOut getInventoryAmount getCartAmount getShopAmount getStorageAmount
-	getRandom getRandomRange getConfig getWord callMacro);
+our @EXPORT_OK = qw(ai_isIdle q4rx between cmpr match getArgs refreshGlobal getnpcID getPlayerID
+	getVenderID getItemIDs getInventoryIDs getStorageIDs getSoldOut getInventoryAmount getCartAmount
+	getShopAmount getStorageAmount getRandom getRandomRange getConfig getWord callMacro);
 
 use Utils;
 use Globals;
@@ -14,11 +15,7 @@ use AI;
 use Log qw(warning error);
 use Macro::Data;
 
-our $Changed = sprintf("%s %s %s",
-	q$Date$
-	=~ /(\d{4}-\d{2}-\d{2}) (\d{2}:\d{2}:\d{2}) ([+-]\d{4})/);
-      
-my $orphanWarn = 1;
+our ($rev) = q$Revision$ =~ /(\d+)/;
 
 # own ai_Isidle check that excludes deal
 sub ai_isIdle {
@@ -28,36 +25,25 @@ sub ai_isIdle {
 	# may happen when messing around with "ai clear" and stuff.
 	if (defined $queue && !AI::inQueue('macro')) {
 		my $method = $queue->orphan;
-		if ($orphanWarn) {
-			error "[macro] orphaned macro!\n", "macro";
-			warning "found an active macro '".$queue->name."' but no 'macro' record in ai queue\n", "macro";
-			warning "using method '$method' to solve this problem\n", "macro";
-			$orphanWarn = 0
-		}
 
 		# 'terminate' undefs the macro object and returns "ai is not idle"
 		if ($method eq 'terminate') {
 			undef $queue;
-			$orphanWarn = 1;
 			return 0
 		# 'reregister' re-inserts "macro" in ai_queue at the first position
 		} elsif ($method eq 'reregister') {
 			$queue->register;
-			$orphanWarn = 1;
 			return 1
 		# 'reregister_safe' waits until AI is idle then re-inserts "macro"
 		} elsif ($method eq 'reregister_safe') {
 			if (AI::isIdle || AI::is('deal')) {
 				$queue->register;
-				$orphanWarn = 1;
 				return 1
 			}
 			return 0
-		# everything else terminates the macro (default behaviour)
 		} else {
-			warning "unknown method. terminating macro\n", "macro";
+			error "unknown 'orphan' method. terminating macro\n", "macro";
 			undef $queue;
-			$orphanWarn = 1;
 			return 0
 		}
 	}
@@ -70,10 +56,10 @@ sub between {
 }
 
 sub cmpr {
-	$cvs->debug("cmpr (@_)", $logfac{function_call_auto});
 	my ($a, $cond, $b) = @_;
 	unless (defined $a && defined $cond && defined $b) {
-		error "cmpr: wrong # of arguments\n", "macro";
+		# this produces a warning but that's what we want
+		error "cmpr: wrong # of arguments ($a) ($cond) ($b)\n", "macro";
 		return 0
 	}
 
@@ -86,6 +72,7 @@ sub cmpr {
 		if ($cond eq "!=" && $a != $b) {return 1}
 		return 0
 	}
+
 	if (($cond eq "=" || $cond eq "==") && $a eq $b) {return 1}
 	if ($cond eq "!=" && $a ne $b) {return 1}
 	if ($cond eq "~") {
@@ -95,36 +82,39 @@ sub cmpr {
 	return 0
 }
 
+sub q4rx {
+	my $s = $_[0];
+	$s =~ s/([\/+(){}\[\]\\])/\\$1/g;
+	return $s
+}
+
 sub match {
-	$cvs->debug("match (@_)", $logfac{function_call_auto});
 	my ($text, $kw) = @_;
 
 	unless (defined $text && defined $kw) {
-		error "match: wrong # of args\n", "macro";
+		# this produces a warning but that's what we want
+		error "match: wrong # of arguments ($text) ($kw)\n", "macro";
 		return 0
 	}
 
-	my $match;
-	my $flag;
-  
-	if ($kw =~ /^".*"$/) {$match = 0}
-	elsif ($kw =~ /^\/.*\/\w?$/) {$match = 1}
-	else {return 0}
-	($kw, $flag) = $kw =~ /^[\/"](.*?)[\/"](\w?)/;
-  
-	if ($match == 0 && $text eq $kw) {return 1}
-	if ($match == 1 && ($text =~ /$kw/ || ($flag eq 'i' && $text =~ /$kw/i))) {
-		no strict;
-		foreach my $idx (1..$#-) {setVar(".lastMatch".$idx, ${$idx})}
-		use strict;
-		return 1
+	if ($kw =~ /^"(.*?)"$/) {
+		return $text eq $1
+	}
+
+	if ($kw =~ /^\/(.*?)\/(\w?)/) {
+		if ($text =~ /$1/ || ($2 eq 'i' && $text =~ /$1/i)) {
+			no strict;
+			foreach my $idx (1..$#-) {$varStack{".lastMatch$idx"} = ${$idx}}
+			use strict;
+			return 1
+		}
 	}
 
 	return 0
 }
 
 sub getArgs {
-	my $arg = shift;
+	my $arg = $_[0];
 	if ($arg =~ /".*"/) {
 		my @ret = $arg =~ /^"(.*?)"\s+(.*?)( .*)?$/;
 		$ret[2] =~ s/^\s+//g if defined $ret[2];
@@ -136,14 +126,12 @@ sub getArgs {
 
 # gets word from message
 sub getWord {
-	$cvs->debug("getWord(@_)", $logfac{function_call_macro});
-	my $arg = shift;
-	my ($message, $wordno) = $arg =~ /^"(.*?)",\s?(\d+)$/s;
-	my @words = split(/[ ,.:;"'!?\r\n]/, $message);
+	my ($message, $wordno) = $_[0] =~ /^"(.*?)",\s?(\d+)$/s;
+	my @words = split(/[ ,.:;\"\'!?\r\n]/, $message);
 	my $no = 1;
 	foreach (@words) {
 		next if /^$/;
-		return $_ if ($no == $wordno);
+		return $_ if $no == $wordno;
 		$no++
 	}
 	return ""
@@ -151,115 +139,78 @@ sub getWord {
 
 # gets openkore setting
 sub getConfig {
-	$cvs->debug("getConfig(@_)", $logfac{function_call_macro});
-	my $setting = shift;
-	return (defined $::config{$setting})?$::config{$setting}:""
-}
-
-# adds variable and value to stack
-sub setVar {
-	my ($var, $val) = @_;
-	$cvs->debug("'$var' = '$val'", $logfac{variable_trace});
-	$varStack{$var} = $val;
-	return 1
-}
-
-# gets variable's value from stack
-sub getVar {
-	my $var = shift;
-	refreshGlobal($var);
-	return unless defined $varStack{$var};
-	return $varStack{$var}
+	return (defined $::config{$_[0]})?$::config{$_[0]}:""
 }
 
 # sets and/or refreshes global variables
 sub refreshGlobal {
-	my $var = shift;
+	my $var = $_[0];
 
-	if (!defined $var || $var eq '.map') {
-		setVar(".map", $field{name})
-	}
-
-	if (!defined $var || $var eq '.pos') {
-		my $pos = calcPosition($char);
-		my $val = sprintf("%d %d", $pos->{x}, $pos->{y});
-		setVar(".pos", $val)
-	}
-
-	if (!defined $var || $var eq '.time') {
-		setVar(".time", time)
-	}
-
-	if (!defined $var || $var eq '.datetime') {
-		setVar(".datetime", scalar localtime)
-	}
+	$varStack{".map"} = $field->name;
+	my $pos = calcPosition($char); $varStack{".pos"} = sprintf("%d %d", $pos->{x}, $pos->{y});
+	$varStack{".time"} = time;
+	$varStack{".datetime"} = scalar localtime;
+	$varStack{".hp"} = $char->{hp};
+	$varStack{".sp"} = $char->{sp};
+	$varStack{".lvl"} = $char->{lv};
+	$varStack{".joblvl"} = $char->{lv_job};
+	$varStack{".spirits"} = ($char->{spirits} or 0);
+	$varStack{".zeny"} = $char->{zenny};
 	
-	if (!defined $var || $var eq '.hp') {
-		setVar(".hp", $char->{hp})
-	}
-	
-	if (!defined $var || $var eq '.sp') {
-		setVar(".sp", $char->{sp})
-	}
-	
-	if (!defined $var || $var eq '.lvl') {
-		setVar(".lvl", $char->{lv})
-	}
-
-	if (!defined $var || $var eq '.joblvl') {
-		setVar(".joblvl", $char->{lv_job})
-	}
-
-	if (!defined $var || $var eq '.spirits') {
-		setVar(".spirits", ($char->{spirits} or 0))
-	}
-
-	if (!defined $var || $var eq '.zeny') {
-		setVar(".zeny", $char->{zenny})
-	}
-
-	if (!defined $var || $var eq '.status') {
-		my @statuses;
-		if ($char->{muted}) {push @statuses, "muted"}
-		if ($char->{dead}) {push @statuses, "dead"}
-		foreach (keys %{$char->{statuses}}) {push @statuses, $_}
-		setVar(".status", join ',', @statuses)
-	}
+	my @statuses;
+	if ($char->{muted}) {push @statuses, "muted"}
+	if ($char->{dead}) {push @statuses, "dead"}
+	foreach (keys %{$char->{statuses}}) {push @statuses, $_}
+	$varStack{".status"} = join ',', @statuses
 }
 
 # get NPC array index
 sub getnpcID {
-	$cvs->debug("getnpcID(@_)", $logfac{function_call_macro});
 	my ($tmpx, $tmpy) = split(/ /,$_[0]);
-	for (my $id = 0; $id < @npcsID; $id++) {
-		next unless $npcsID[$id];
-		if ($npcs{$npcsID[$id]}{pos}{x} == $tmpx &&
-			$npcs{$npcsID[$id]}{pos}{y} == $tmpy) {return $id}
+	foreach my $npc (@{$npcsList->getItems()}) {
+		return $npc->{binID} if ($npc->{pos}{x} == $tmpx && $npc->{pos}{y} == $tmpy)
 	}
 	return -1
 }
 
-## getPlayerID(name, r_array)
 # get player array index
 sub getPlayerID {
-	$cvs->debug("getPlayerID(@_)", $logfac{function_call_macro} | $logfac{function_call_auto});
-	my ($name, $pool) = @_;
-	for (my $id = 0; $id < @{$pool}; $id++) {
-		next unless $$pool[$id];
-		next unless $players{$$pool[$id]}->{name};
-		if ($players{$$pool[$id]}->{name} eq $name) {return $id}
+	foreach my $pl (@{$playersList->getItems()}) {
+		return $pl->{binID} if $pl->name eq $_[0]
 	}
 	return -1
+}
+
+# get vender array index
+sub getVenderID {
+	for (my $i = 0; $i < @::venderListsID; $i++) {
+		next if $::venderListsID[$i] eq "";
+		my $player = Actor::get($::venderListsID[$i]);
+		return $i if $player->name eq $_[0]
+	}
+	return -1
+}
+
+# get inventory item ids
+# checked and ok
+sub getInventoryIDs {
+	return unless $char->inventory->size();
+	my $find = lc($_[0]);
+	my @ids;
+	foreach my $item (@{$char->inventory->getItems}) {
+		if (lc($item->name) eq $find) {push @ids, $item->{invIndex}}
+	}
+	return @ids
 }
 
 # get item array index
+# works for $cart{'inventory'}, @articles
 sub getItemIDs {
-	$cvs->debug("getItemIDs(@_)", $logfac{function_call_macro} | $logfac{function_call_auto});
-	my ($item, $pool) = @_;
+	my ($item, $pool) = (lc($_[0]), $_[1]);
 	my @ids;
 	for (my $id = 0; $id < @{$pool}; $id++) {
 		next unless $$pool[$id];
-		if (lc($$pool[$id]{name}) eq lc($item)) {push @ids, $id}
+		if (lc($$pool[$id]{name}) eq $item) {push @ids, $id}
 	}
 	unless (@ids) {push @ids, -1}
 	return @ids
@@ -267,12 +218,11 @@ sub getItemIDs {
 
 # get storage array index
 sub getStorageIDs {
-	$cvs->debug("getStorageIDs(@_)", $logfac{function_call_macro} | $logfac{function_call_auto});
-	my $item = shift;
+	my $item = lc($_[0]);
 	my @ids;
 	for (my $id = 0; $id < @storageID; $id++) {
 		next unless $storageID[$id];
-		if (lc($storage{$storageID[$id]}{name}) eq lc($item)) {push @ids, $id}
+		if (lc($storage{$storageID[$id]}{name}) eq $item) {push @ids, $id}
 	}
 	unless (@ids) {push @ids, -1}
 	return @ids
@@ -280,7 +230,6 @@ sub getStorageIDs {
 
 # get amount of sold out slots
 sub getSoldOut {
-	$cvs->debug("getSoldOut(@_)", $logfac{function_call_auto});
 	return 0 unless $shopstarted;
 	my $soldout = 0;
 	foreach my $aitem (@::articles) {
@@ -292,58 +241,53 @@ sub getSoldOut {
 
 # get amount of an item in inventory
 sub getInventoryAmount {
-	$cvs->debug("getInventoryAmount(@_)", $logfac{function_call_macro} | $logfac{function_call_auto});
-	my $name = shift;
-	my $item = $char->inventory->getByName($name);
-	return 0 unless $item;
-	my $amount = $item->{amount};
-	return $amount;
+	my $arg = lc($_[0]);
+	my $amount = 0;
+	foreach my $item (@{$char->inventory->getItems}) {
+		if (lc($item->name) eq $arg) {$amount += $item->{amount}}
+	}
+	return $amount
 }
 
 # get amount of an item in cart
 sub getCartAmount {
-	$cvs->debug("getCartAmount(@_)", $logfac{function_call_macro} | $logfac{function_call_auto});
-	my $item = shift;
+	my $arg = lc($_[0]);
 	return 0 unless $cart{inventory};
-	my @ids = getItemIDs($item, \@{$cart{inventory}});
 	my $amount = 0;
-	foreach my $id (@ids) {
-		next unless $id >= 0;
-		$amount += $cart{inventory}[$id]{amount}
+	for (my $id = 0; $id < @{$cart{'inventory'}}; $id++) {
+		next unless $cart{'inventory'}[$id];
+		if (lc($cart{'inventory'}[$id]{name}) eq $arg) {$amount += $cart{'inventory'}[$id]{amount}}
 	}
 	return $amount
 }
 
 # get amount of an item in shop
 sub getShopAmount {
-	$cvs->debug("getShopAmount(@_)", $logfac{function_call_macro} | $logfac{function_call_auto});
-	my $item = shift;
+	my $arg = lc($_[0]);
 	my $amount = 0;
 	foreach my $aitem (@::articles) {
 		next unless $aitem;
-		if (lc($aitem->{name}) eq lc($item)) {$amount += $aitem->{quantity}}
+		if (lc($aitem->{name}) eq $arg) {$amount += $aitem->{quantity}}
 	}
 	return $amount
 }
 
 # get amount of an item in storage
+# returns -1 if the storage is closed
 sub getStorageAmount {
-	$cvs->debug("getStorageAmount(@_)", $logfac{function_call_macro} | $logfac{function_call_auto});
-	my $item = shift;
-	return 0 unless $::storage{opened};
-	my @ids = getStorageIDs($item);
+	my $arg = lc($_[0]);
+	return -1 unless $::storage{opened};
 	my $amount = 0;
-	foreach my $id (@ids) {
-		next unless $id >= 0;
-		$amount += $storage{$storageID[$id]}{amount}
+	for (my $id = 0; $id < @storageID; $id++) {
+		next unless $storageID[$id];
+		if (lc($storage{$storageID[$id]}{name}) eq $arg) {$amount += $storage{$storageID[$id]}{amount}}
 	}
 	return $amount
 }
 
-# returns random item from argument list ##################
+# returns random item from argument list
 sub getRandom {
-	$cvs->debug("getRandom(@_)", $logfac{function_call_macro});
-	my $arg = shift;
+	my $arg = $_[0];
 	my @items;
 	my $id = 0;
 	while (($items[$id++]) = $arg =~ /^[, ]*"(.*?)"/) {
@@ -359,16 +303,14 @@ sub getRandom {
 
 # returns random number within the given range  ###########
 sub getRandomRange {
-	$cvs->debug("getRandomRange(@_)", $logfac{function_call_macro});
 	my ($low, $high) = split(/,\s*/, $_[0]);
 	return int(rand($high-$low+1))+$low if (defined $high && defined $low)
 }
 
 sub processCmd {
-	$cvs->debug("processCmd (@_)", $logfac{developers});
-	my $command = shift;
-	if (defined $command) {
-		if ($command ne '') {
+	my $command = $_[0];
+	if (defined $_[0]) {
+		if ($_[0] ne '') {
 			unless (Commands::run($command)) {
 				error(sprintf("[macro] %s failed with %s\n", $queue->name, $command), "macro");
 				undef $queue;
