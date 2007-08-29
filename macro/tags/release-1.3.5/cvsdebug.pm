@@ -1,4 +1,4 @@
-# $Id$
+# $Id: cvsdebug.pm 4773 2006-07-30 21:12:53Z arachnophobia $
 # package cvsdebug (arachno)
 #
 # copy this file into your openkore top folder
@@ -80,7 +80,7 @@ cvsdebug - package for debugging openkore plugins
 
 =head1 VERSION
 
-    Version: 1.0 $Date$
+    Version: 1.0 $Date: 2006-07-30 23:12:53 +0200 (Sun, 30 Jul 2006) $
 
 =head1 SYNOPSIS
 
