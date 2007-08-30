@@ -1,4 +1,11 @@
 =========================
+### OpenKore 2.0.4
+=========================
+
+- The Console::Curses interface have been fixed (thanks to Dodge and Paldium).
+
+
+=========================
 ### OpenKore 2.0.3
 =========================
 

@@ -200,7 +200,7 @@ sub readEvents {
 			last;
 		} elsif ((ord($ch) == 9 || ord($ch) == 127 || $ch eq KEY_BACKSPACE) && $self->{inputBuffer}) {
 			# Backspace
-			$self->{inputBuffer} = substr($self->{inputBuffer}, 0, -1);
+			$self->{inputBuffer} = substr($self->{inputBuffer}, 0, $self->{inputPos} - 1) . substr($self->{inputBuffer}, $self->{inputPos});
 			$self->{inputPos}--;
 		} elsif (ord($ch) == 12) {
 			# Ctrl-L
@@ -434,7 +434,7 @@ sub updatePopups {
 sub updateStatus {
 	my $self = shift;
 
-	return if (!$self->{winStatus});
+	return if (!$char || !$self->{winStatus});
 
 	erase $self->{winStatus};
 	my $width = int($self->{winStatusWidth} / 2);
