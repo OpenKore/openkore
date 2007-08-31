@@ -144,6 +144,7 @@ sub getConfig {
 
 # sets and/or refreshes global variables
 sub refreshGlobal {
+	return unless $conState == 5;
 	my $var = $_[0];
 
 	$varStack{".map"} = $field->name;
