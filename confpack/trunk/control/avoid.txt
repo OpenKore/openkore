@@ -1,5 +1,6 @@
 # avoid.txt: Avoid certain players
-# this avoid txt is made for iRo therefore, if you are playing another server, please remove them.
+# WARNING: This avoid txt is made for iRo therefore, if you are playing another server, 
+# 		please remove them.
 
 # Format: <name> (TAB(s)) <disconnect when in sight> <teleport when in sight> <disconnect on chat>
 [Players]
