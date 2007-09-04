@@ -1,29 +1,17 @@
+# $Id$
 package Macro::Data;
 
 use strict;
 
 require Exporter;
 our @ISA = qw(Exporter);
-our @EXPORT = qw(%macro %automacro %varStack $queue $cvs %logfac $onHold %amSingle %amMulti @slots $macroKeywords);
+our @EXPORT = qw(%macro %automacro %varStack $queue $onHold %amSingle %amMulti $macroKeywords);
 
 our %macro;
 our %automacro;
 our %varStack;
 our $queue;
-our $cvs;
 our $onHold;
-
-our %logfac = (
-	'variable_trace'      => 1,    # tracks variables
-	'command_preparsed'   => 2,    # unparsed command line
-	'command_parsed'      => 4,    # parsed command line
-	'parser_steps'        => 8,    # parser steps
-	'function_call_macro' => 16,   # functions with low traffic, macro functions
-	'function_call_auto'  => 32,   # functions with high traffic, automacro functions
-	'automacro_checks'    => 64,   # automacro checks
-	'developers'          => 128,  # debugging messages useful for developers
-	'full'                => 255   # full debugging
-);
 
 our %amSingle = (
 	'map' => 1,          # map check
@@ -73,14 +61,6 @@ our %amMulti = (
 	'storage' => 1,      # check: item amount in storage
 	'shop' => 1,         # check: item amount in shop
 	'cart' => 1          # check: item amount in cart
-);
-
-our @slots = qw(
-	topHead midHead lowHead
-	leftHand rightHand
-	robe armor shoes
-	leftAccessory rightAccessory
-	arrow
 );
 
 our $macroKeywords =

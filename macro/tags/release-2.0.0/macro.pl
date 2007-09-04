@@ -1,15 +1,14 @@
 # macro by Arachno
 #
+# $Id$
 #
 # This source code is licensed under the
 # GNU General Public License, Version 2.
 # See http://www.gnu.org/licenses/gpl.html
 
 package macro;
-my $Version = "1.3.6";
-my $Changed = sprintf("%s %s %s",
-	q$Date$
-	=~ /(\d{4}-\d{2}-\d{2}) (\d{2}:\d{2}:\d{2}) ([+-]\d{4})/);
+my $Version = "2.0.0";
+my ($rev) = q$Revision$ =~ /(\d+)/;
 
 use strict;
 use Plugins;
@@ -19,14 +18,11 @@ use Utils;
 use Misc;
 use Log qw(message error warning);
 use lib $Plugins::current_plugin_folder;
-use cvsdebug;
 use Macro::Data;
 use Macro::Script;
 use Macro::Parser qw(parseMacroFile);
 use Macro::Automacro qw(automacroCheck consoleCheckWrapper releaseAM);
-use Macro::Utilities qw(setVar callMacro);
-
-$cvs = new cvsdebug($Plugins::current_plugin, 0, []);
+use Macro::Utilities qw(callMacro);
 
 #########
 # startup
@@ -45,12 +41,12 @@ my $loghook;
 my $cfID;
 my $macro_file;
 
+message "Gewidmet crckdns - danke für die heißen Tips :)";
+
 # onconfigModify
 sub onconfigModify {
 	my (undef, $args) = @_;
-	if ($args->{key} eq 'macro_debug') {
-		$cvs->setDebug(&parseDebug($args->{val}))
-	} elsif ($args->{key} eq 'macro_file') {
+	if ($args->{key} eq 'macro_file') {
 		my $macrofile = "$Settings::control_folder/".$args->{val};
 		Settings::delConfigFile($cfID);
 		$cfID = Settings::addConfigFile($macrofile, \%macro, \&parseAndHook);
@@ -60,13 +56,9 @@ sub onconfigModify {
 
 # onstart3
 sub onstart3 {
-	$cvs->setDebug(&parseDebug($::config{macro_debug})) if defined $::config{macro_debug};
-	if (&checkConfig) {
-		$cfID = Settings::addConfigFile("$Settings::control_folder/".$macro_file, \%macro, \&parseAndHook);
-		Settings::load($cfID)
-	} else {
-		Plugins::unload("macro");
-	}
+	&checkConfig;
+	$cfID = Settings::addConfigFile("$Settings::control_folder/".$macro_file, \%macro, \&parseAndHook);
+	Settings::load($cfID)
 }
 
 # onReload
@@ -82,7 +74,6 @@ sub Unload {
 	&cleanup;
 	Plugins::delHooks($hooks);
 	Commands::unregister($chooks);
-	undef $cvs
 }
 
 sub cleanup {
@@ -138,44 +129,19 @@ sub hookOnDemand {
 
 # checks macro configuration
 sub checkConfig {
-	if ($::config{macro_readmanual} ne 'red/chili') {
-		warning "[macro] you should read the documentation before using this plugin: ".
-			"http://www.openkore.com/macro.php\n";
-		return 0
-	}
+	$timeout{macro_delay}{timeout} = 1 unless defined $timeout{macro_delay};
+	$macro_file = (defined $::config{macro_file})?$::config{macro_file}:"macros.txt";
 
-	if (!defined $timeout{macro_delay}) {
-		warning "[macro] you did not specify 'macro_delay' in timeouts.txt. Assuming 1s\n";
-		$timeout{macro_delay}{timeout} = 1
-	}
-	if (!defined $::config{macro_orphans}) {
-		warning "[macro] you did not specify 'macro_orphans' in config.txt. Assuming 'terminate'\n";
-		configModify('macro_orphans', 'terminate');
-	} elsif ($::config{macro_orphans} ne 'terminate' &&
-			$::config{macro_orphans} ne 'reregister' &&
-			$::config{macro_orphans} ne 'reregister_safe') {
-		warning "[macro] macro_orphans ".$::config{macro_orphans}." is not a valid option.\n";
+	if (!defined $::config{macro_orphans} || $::config{macro_orphans} !~ /^(?:terminate|reregister(?:_safe)?)$/) {
+		warning "[macro] orphans: using method 'terminate'\n";
 		configModify('macro_orphans', 'terminate')
 	}
-	if (defined $::config{macro_file}) {
-		$macro_file = $::config{macro_file}
-	} else {
-		$macro_file = "macros.txt"
-	}
-	return 1
-}
 
-# parser for macro_debug config line
-sub parseDebug {
-	my @reqfac = split(/[\|\s]+/, shift);
-	my $loglevel = 0;
-	foreach my $l (@reqfac) {$loglevel = $loglevel | $logfac{$l}}
-	return $loglevel;
+	return 1
 }
 
 # macro command handler
 sub commandHandler {
-	$cvs->debug("commandHandler (@_)", $logfac{developers});
 	### no parameter given
 	if (!defined $_[1]) {
 		message "usage: macro [MACRO|list|stop|set|version|reset] [automacro]\n", "list";
@@ -185,7 +151,6 @@ sub commandHandler {
 			"macro stop: stop current macro\n".
 			"macro pause: interrupt current macro\n".
 			"macro resume: resume interrupted macro\n".
-			"macro set {variable} {value}: set/change variable to value\n".
 			"macro version: print macro plugin version\n".
 			"macro reset [automacro]: resets run-once status for all or given automacro(s)\n";
 		return
@@ -234,21 +199,6 @@ sub commandHandler {
 		} else {
 			warning "There's no macro currently running.\n"
 		}
-	### parameter: set foo bar
-	} elsif ($arg eq 'set')  {
-		unless (defined $params[0]) {
-			warning "syntax: 'macro set variable value' or 'macro set variable'";
-			return
-		}
-		my $var = shift @params;
-		my $val = join " ", @params;
-		if ($val ne '') {
-			setVar($var, $val);
-			message "$var set to $val\n"
-		} else {
-			delete $varStack{$var};
-			message "$var removed\n"
-		}
 	### parameter: reset
 	} elsif ($arg eq 'reset') {
 		if (!defined $params[0]) {
@@ -265,14 +215,17 @@ sub commandHandler {
 	### parameter: version
 	} elsif ($arg eq 'version') {
 		message "macro plugin version $Version\n", "list";
-		message "macro.pl ". $Changed."\n";
-		message "Macro::Automacro ".$Macro::Automacro::Changed."\n";
-		message "Macro::Script ".$Macro::Script::Changed."\n";
-		message "Macro::Parser ".$Macro::Parser::Changed."\n";
-		message "Macro::Utilities ".$Macro::Utilities::Changed."\n"
-	### parameter: dump (hidden)
-	} elsif ($arg eq 'dump') {
-		$cvs->dump
+		message "macro.pl ". $rev."\n";
+		message "Macro::Automacro ".$Macro::Automacro::rev."\n";
+		message "Macro::Script ".$Macro::Script::rev."\n";
+		message "Macro::Parser ".$Macro::Parser::rev."\n";
+		message "Macro::Utilities ".$Macro::Utilities::rev."\n"
+	### debug
+#	} elsif ($arg eq 'varstack') {
+#		message "varstack\n", "list";
+#		foreach my $v (keys %varStack) {
+#			message "\$varStack{$v} = [".$varStack{$v}."]\n"
+#		}
 	### parameter: probably a macro
 	} else {
 		if (defined $queue) {
@@ -289,11 +242,10 @@ sub commandHandler {
 			if ($params[$idx] eq '-orphan') {$orphan = $params[++$idx]}
 			if ($params[$idx] eq '--') {splice @params, 0, ++$idx; $cparms = 1; last}
 		}
-		if ($cparms) {foreach my $p (1..@params) {setVar(".param".$p, $params[$p-1])}}
+		if ($cparms) {foreach my $p (1..@params) {$varStack{".param".$p} = $params[$p-1]}}
 		$queue = new Macro::Script($arg, $repeat);
 		if (!defined $queue) {error "macro $arg not found or error in queue\n"}
 		else {
-			$cvs->debug("macro $arg selected.", $logfac{'function_call_macro'});
 			$onHold = 0;
 			if ($oAI) {$queue->overrideAI(1)}
 			if ($exclusive) {$queue->interruptible(0)}
@@ -309,14 +261,14 @@ __END__
 
 =head1 NAME
 
-macro.pl - plugin for openkore 1.6.2 and later
+macro.pl - plugin for openkore 2.0.0 and later
 
 =head1 AVAILABILITY
 
-Get the latest release from L<http://openkore.sf.net/macro/#download>
-or via SVN:
+Get the latest release from L<http://www.openkore.com/wiki/index.php/Macro_plugin>
+or from SVN:
 
-C<svn co https://svn.sourceforge.net/svnroot/openkore/macro/trunk/>
+C<svn co https://openkore.svn.sourceforge.net/svnroot/openkore/macro/trunk/>
 
 =head1 AUTHOR
 

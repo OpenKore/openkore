@@ -1,3 +1,4 @@
+# $Id$
 package Macro::Parser;
 
 use strict;
@@ -10,14 +11,12 @@ our @EXPORT = qw(parseMacroFile parseCmd);
 use Globals;
 use Log qw(message warning error);
 use Macro::Data;
-use Macro::Utilities qw(setVar getVar getnpcID getItemIDs getStorageIDs
-	getPlayerID getRandom getRandomRange getInventoryAmount getCartAmount
-	getShopAmount getStorageAmount getConfig getWord);
+use Macro::Utilities qw(refreshGlobal getnpcID getItemIDs getStorageIDs getInventoryIDs
+	getPlayerID getVenderID getRandom getRandomRange getInventoryAmount getCartAmount
+	getShopAmount getStorageAmount getConfig getWord q4rx);
 
-our $Changed = sprintf("%s %s %s",
-	q$Date$
-	=~ /(\d{4}-\d{2}-\d{2}) (\d{2}:\d{2}:\d{2}) ([+-]\d{4})/);
-      
+our ($rev) = q$Revision$ =~ /(\d+)/;
+
 # adapted config file parser
 sub parseMacroFile {
 	my ($file, $no_undef) = @_;
@@ -54,7 +53,6 @@ sub parseMacroFile {
 			if ($_ eq "}") {
 				undef %block
 			} else {
-				# TODO: check syntax
 				push(@{$macro{$block{name}}}, $_)
 			}
 			next
@@ -82,7 +80,7 @@ sub parseMacroFile {
 				}
 				if ($amSingle{$key}) {
 					$automacro{$block{name}}->{$key} = $value
-				} elsif ($amMulti{$key} || $key =~ /^save\d+$/) {
+				} elsif ($amMulti{$key}) {
 					push(@{$automacro{$block{name}}->{$key}}, $value)
 				} else {
 					warning "$file: ignoring '$_' (munch, munch, unknown automacro keyword)\n"
@@ -96,14 +94,13 @@ sub parseMacroFile {
 			next
 		}
 
-		my ($key, $value) = $_ =~ /^(.*?)\s+(.*)$/;
+		my ($key, $value) = $_ =~ /^(.*?)\s+(.*)/;
 		unless (defined $key) {
 			warning "$file: ignoring '$_' (munch, munch, strange food)\n";
 			next
 		}
 
 		if ($key eq "!include") {
-			# stolen from FileParsers.pm, kekeke
 			my $f = $value;
 			if (!File::Spec->file_name_is_absolute($value) && $value !~ /^\//) {
 				if ($file =~ /[\/\\]/) {
@@ -131,13 +128,12 @@ sub parseMacroFile {
 # parses a text for keywords and returns keyword + argument as array
 # should be an adequate workaround for the parser bug
 sub parseKw {
-	my $text = shift;
-	my @pair = $text =~ /\@($macroKeywords)\s*\(\s*(.*?)\s*\)/i;
+	my @pair = $_[0] =~ /\@($macroKeywords)\s*\(\s*(.*?)\s*\)/i;
 	return unless @pair;
 	if ($pair[0] eq 'arg') {
-		return $text =~ /\@(arg)\s*\(\s*(".*?",\s*\d+)\s*\)/
+		return $_[0] =~ /\@(arg)\s*\(\s*(".*?",\s*\d+)\s*\)/
 	} elsif ($pair[0] eq 'random') {
-		return $text =~ /\@(random)\s*\(\s*(".*?")\s*\)/
+		return $_[0] =~ /\@(random)\s*\(\s*(".*?")\s*\)/
 	}
 	while ($pair[1] =~ /\@($macroKeywords)\s*\(/) {
 		@pair = $pair[1] =~ /\@($macroKeywords)\s*\((.*)/
@@ -145,45 +141,54 @@ sub parseKw {
 	return @pair
 }
 
+# substitute variables
+sub subvars {
+# should be working now
+	my $pre = $_[0];
+	my ($var, $tmp);
+
+	# variables
+	while (($var) = $pre =~ /(?:^|[^\\])\$(\.?[a-z][a-z\d]*)/i) {
+		$tmp = (defined $varStack{$var})?$varStack{$var}:"";
+		$var = q4rx $var;
+		$pre =~ s/(^|[^\\])\$$var([^a-zA-Z\d]|$)/$1$tmp$2/g;
+	}
+
+	# doublevars
+	while (($var) = $pre =~ /\$\{(.*?)\}/i) {
+		$tmp = (defined $varStack{"#$var"})?$varStack{"#$var"}:"";
+		$var = q4rx $var;
+		$pre =~ s/\$\{$var\}/$tmp/g
+	}
+
+	return $pre
+}
+
 # command line parser for macro
 # returns undef if something went wrong, else the parsed command or "".
 sub parseCmd {
-	$cvs->debug("parseCmd (@_)", $logfac{function_call_macro});
-	my $command = shift;
-	return "" unless defined $command;
-	my $var;
+	return "" unless defined $_[0];
+	my $cmd = $_[0];
+	my ($kw, $arg, $targ, $ret);
 
-	# substitute variables
-	while ((undef, $var) = $command =~ /(^|[^\\])\$(\.?[a-z][a-z\d]*)/i) {
-		$cvs->debug("found variable $var in $command", $logfac{parser_steps});
-		my $tmp = getVar($var);
-		$tmp = "" unless defined $tmp;
-		$var = quotemeta $var;
-		$command =~ s/(^|[^\\])\$$var([^a-zA-Z\d]|$)/$1$tmp$2/g
-	}
+	# refresh global vars only once per command line
+	refreshGlobal();
 
-	# substitute doublevars
-	while (($var) = $command =~ /\$\{(.*?)\}/i) {
-		$cvs->debug("found doublevar $var in $command", $logfac{parser_steps});
-		my $tmp = getVar("#".$var);
-		$tmp = "" unless defined $tmp;
-		$var = quotemeta $var;
-		$command =~ s/\$\{$var\}/$tmp/g
-	}
+	while (($kw, $targ) = parseKw($cmd)) {
+		$ret = "_%_";
+		# first parse _then_ substitute. slower but more safe
+		$arg = subvars($targ);
 
-	while (my ($kw, $arg) = parseKw($command)) {
-		$cvs->debug("parsing '$command': '$kw', '$arg'", $logfac{parser_steps});
-		my $ret = "_%_";
 		if ($kw eq 'npc')           {$ret = getnpcID($arg)}
-		elsif ($kw eq 'cart')       {($ret) = getItemIDs($arg, \@{$cart{inventory}})}
-		elsif ($kw eq 'Cart')       {$ret = join ',', getItemIDs($arg, \@{$cart{inventory}})}
-		elsif ($kw eq 'inventory')  {($ret) = getItemIDs($arg, \@{$char->{inventory}})}
-		elsif ($kw eq 'Inventory')  {$ret = join ',', getItemIDs($arg, \@{$char->{inventory}})}
+		elsif ($kw eq 'cart')       {($ret) = getItemIDs($arg, $::cart{'inventory'})}
+		elsif ($kw eq 'Cart')       {$ret = join ',', getItemIDs($arg, $::cart{'inventory'})}
+		elsif ($kw eq 'inventory')  {($ret) = getInventoryIDs($arg)}
+		elsif ($kw eq 'Inventory')  {$ret = join ',', getInventoryIDs($arg)}
 		elsif ($kw eq 'store')      {($ret) = getItemIDs($arg, \@::storeList)}
 		elsif ($kw eq 'storage')    {($ret) = getStorageIDs($arg)}
 		elsif ($kw eq 'Storage')    {$ret = join ',', getStorageIDs($arg)}
-		elsif ($kw eq 'player')     {$ret = getPlayerID($arg, \@::playersID)}
-		elsif ($kw eq 'vender')     {$ret = getPlayerID($arg, \@::venderListsID)}
+		elsif ($kw eq 'player')     {$ret = getPlayerID($arg)}
+		elsif ($kw eq 'vender')     {$ret = getVenderID($arg)}
 		elsif ($kw eq 'random')     {$ret = getRandom($arg)}
 		elsif ($kw eq 'rand')       {$ret = getRandomRange($arg)}
 		elsif ($kw eq 'invamount')  {$ret = getInventoryAmount($arg)}
@@ -194,10 +199,13 @@ sub parseCmd {
 		elsif ($kw eq 'arg')        {$ret = getWord($arg)}
 		elsif ($kw eq 'eval')       {$ret = eval($arg)}
 		return unless defined $ret;
-		return $command if $ret eq '_%_';
-		$arg = quotemeta $arg; $command =~ s/\@$kw\s*\(\s*$arg\s*\)/$ret/g
+		return $cmd if $ret eq '_%_';
+		$targ = q4rx $targ;
+		$cmd =~ s/\@$kw\s*\(\s*$targ\s*\)/$ret/g
 	}
-	return $command
+
+	$cmd = subvars($cmd);
+	return $cmd
 }
 
 1;
