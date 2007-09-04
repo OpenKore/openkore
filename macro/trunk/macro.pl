@@ -7,7 +7,7 @@
 # See http://www.gnu.org/licenses/gpl.html
 
 package macro;
-my $Version = "2.0.1-svn";
+my $Version = "2.0.1";
 my ($rev) = q$Revision$ =~ /(\d+)/;
 
 use strict;
@@ -41,7 +41,7 @@ my $loghook;
 my $cfID;
 my $macro_file;
 
-message "Gewidmet crckdns - danke für die heißen Tips :)";
+message "Gewidmet crckdns - danke für die heißen Tips :)\n";
 
 # onconfigModify
 sub onconfigModify {
