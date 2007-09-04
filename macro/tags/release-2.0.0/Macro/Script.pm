@@ -1,3 +1,4 @@
+# $Id$
 package Macro::Script;
 
 use strict;
@@ -10,13 +11,12 @@ use Globals;
 use AI;
 use Macro::Data;
 use Macro::Parser qw(parseCmd);
-use Macro::Utilities qw(setVar getVar cmpr);
+use Macro::Utilities qw(cmpr);
 use Macro::Automacro qw(releaseAM lockAM);
 use Log qw(message);
-our $Changed = sprintf("%s %s %s",
-	q$Date$
-	=~ /(\d{4}-\d{2}-\d{2}) (\d{2}:\d{2}:\d{2}) ([+-]\d{4})/);
-      
+
+our ($rev) = q$Revision$ =~ /(\d+)/;
+
 # constructor
 sub new {
 	my ($class, $name, $repeat) = @_;
@@ -46,121 +46,100 @@ sub new {
 
 # destructor
 sub DESTROY {
-	my $self = shift;
-	AI::clear('macro') if (AI::inQueue('macro') && !$self->{submacro})
+	AI::clear('macro') if (AI::inQueue('macro') && !$_[0]->{submacro})
 }
 
 # declares current macro to be a submacro
 sub regSubmacro {
-	my $self = shift;
-	$self->{submacro} = 1
+	$_[0]->{submacro} = 1
 }
 
 # registers to AI queue
 sub register {
-	my $self = shift;
-	AI::queue('macro') unless $self->{overrideAI};
-	$self->{registered} = 1
+	AI::queue('macro') unless $_[0]->{overrideAI};
+	$_[0]->{registered} = 1
 }
 
 # checks register status
 sub registered {
-	my $self = shift;
-	return $self->{registered}
+	return $_[0]->{registered}
 }
 
 # sets or gets method for orphaned macros
 sub orphan {
-	my ($self, $method) = @_;
-	if (defined $method) {$self->{orphan} = $method}
-	return $self->{orphan}
-}
-
-# sets repeat
-sub setRepeat {
-	my $self = shift;
-	$self->{repeat} = shift
+	if (defined $_[1]) {$_[0]->{orphan} = $_[1]}
+	return $_[0]->{orphan}
 }
 
 # sets macro_delay timeout for this macro
 sub setMacro_delay {
-	my $self = shift;
-	$self->{macro_delay} = shift
+	$_[0]->{macro_delay} = $_[1]
 }
 
 # sets or gets timeout for next command
 sub timeout {
-	my ($self, $timeout) = @_;
-	if (defined $timeout) {$self->{timeout} = $timeout}
-	return (time => $self->{time}, timeout => $self->{timeout})
+	if (defined $_[1]) {$_[0]->{timeout} = $_[1]}
+	return (time => $_[0]->{time}, timeout => $_[0]->{timeout})
 }
 
 # sets or gets override AI value
 sub overrideAI {
-	my ($self, $flag) = @_;
-	if (defined $flag) {$self->{overrideAI} = $flag}
-	return $self->{overrideAI}
+	if (defined $_[1]) {$_[0]->{overrideAI} = $_[1]}
+	return $_[0]->{overrideAI}
 }
 
 # sets or get interruptible flag
 sub interruptible {
-	my ($self, $flag) = @_;
-	if (defined $flag) {$self->{interruptible} = $flag}
-	return $self->{interruptible}
+	if (defined $_[1]) {$_[0]->{interruptible} = $_[1]}
+	return $_[0]->{interruptible}
 }
 
 # sets or gets macro block flag
 sub macro_block {
-	my ($self, $flag) = @_;
-	if (defined $flag) {$self->{macro_block} = $flag}
-	return $self->{macro_block}
+	if (defined $_[1]) {$_[0]->{macro_block} = $_[1]}
+	return $_[0]->{macro_block}
 }
 
 # returns whether or not the macro finished
 sub finished {
-	my $self = shift;
-	return $self->{finished}
+	return $_[0]->{finished}
 }
 
 # returns the name of the current macro
 sub name {
-	my $self = shift;
-	return $self->{name}
+	return $_[0]->{name}
 }
 
 # returns the current line number
 sub line {
-	my $self = shift;
-	return $self->{line}
+	return $_[0]->{line}
 }
 
 # returns the error line
 sub error {
-	my $self = shift;
-	return $self->{error}
+	return $_[0]->{error}
 }
 
 # re-sets the timer
 sub ok {
-	my $self = shift;
-	$self->{time} = time
+	$_[0]->{time} = time
 }
 
 # scans the script for labels
 sub scanLabels {
-	my $script = shift;
+	my $script = $_[0];
 	my %labels;
 	for (my $line = 0; $line < @{$script}; $line++) {
 		if (${$script}[$line] =~ /^:/) {
-			my ($label) = ${$script}[$line] =~ /^:(.*)$/;
+			my ($label) = ${$script}[$line] =~ /^:(.*)/;
 			$labels{$label} = $line
 		}
 		if (${$script}[$line] =~ /^while\s+/) {
-			my ($label) = ${$script}[$line] =~ /\s+as\s+(.*)$/;
+			my ($label) = ${$script}[$line] =~ /\s+as\s+(.*)/;
 			$labels{$label} = $line
 		}
 		if (${$script}[$line] =~ /^end\s+/) {
-			my ($label) = ${$script}[$line] =~ /^end\s+(.*)$/;
+			my ($label) = ${$script}[$line] =~ /^end\s+(.*)/;
 			$labels{"end ".$label} = $line
 		}
 	}
@@ -169,7 +148,7 @@ sub scanLabels {
 
 # processes next line
 sub next {
-	my $self = shift;
+	my $self = $_[0];
 	if (defined $self->{subcall}) {
 		my $command = $self->{subcall}->next;
 		if (defined $command) {
@@ -185,7 +164,6 @@ sub next {
 		$self->{error} = $self->{subcall}->{error};
 		return
 	}
-
 	my $line = ${$macro{$self->{name}}}[$self->{line}];
 	if (!defined $line) {
 		if ($self->{repeat} > 1) {
@@ -232,8 +210,8 @@ sub next {
 	##########################################
 	# if statement: if (foo = bar) goto label?
 	} elsif ($line =~ /^if\s/) {
-		my ($first, $cond, $last, $then) = $line =~ /^if\s+\(\s*"?(.*?)"?\s+([<>=!~]+?)\s+"?(.*?)"?\s*\)\s+(.*?)$/;
-		if (!defined $first || !defined $cond || !defined $last || !defined $then || $then !~ /^(goto\s|stop)/) {
+		my ($first, $cond, $last, $then) = $line =~ /^if\s+\(\s*"?(.*?)"?\s+([<>=!~]+?)\s+"?(.*?)"?\s*\)\s+(.*)/;
+		if (!defined $first || !defined $cond || !defined $last || !defined $then || $then !~ /^(?:goto\s|stop)/) {
 			$self->{error} = "$errtpl: syntax error in if statement"
 		} else {
 			my $pfirst = parseCmd($first); my $plast = parseCmd($last);
@@ -247,7 +225,7 @@ sub next {
 					} else {
 						$self->{error} = "$errtpl: cannot find label $tmp"
 					}
-				} elsif ($then =~ /^stop$/) {
+				} elsif ($then eq "stop") {
 					$self->{finished} = 1
 				}
 			} else {
@@ -258,7 +236,7 @@ sub next {
 	##########################################
 	# while statement: while (foo <= bar) as label
 	} elsif ($line =~ /^while\s/) {
-		my ($first, $cond, $last, $label) = $line =~ /^while\s+\(\s*"?(.*?)"?\s+([<>=!]+?)\s+"?(.*?)"?\s*\)\s+as\s+(.*)$/;
+		my ($first, $cond, $last, $label) = $line =~ /^while\s+\(\s*"?(.*?)"?\s+([<>=!]+?)\s+"?(.*?)"?\s*\)\s+as\s+(.*)/;
 		if (!defined $first || !defined $cond || !defined $last || !defined $label) {
 			$self->{error} = "$errtpl: syntax error in while statement"
 		} else {
@@ -275,28 +253,31 @@ sub next {
 	# pop value from variable: $var = [$list]
 	} elsif ($line =~ /^\$[a-z][a-z\d]*\s+=\s+\[\s*\$[a-z][a-z\d]*\s*\]$/i) {
 		my ($var, $list) = $line =~ /^\$([a-z][a-z\d]*?)\s+=\s+\[\s*\$([a-z][a-z\d]*?)\s*\]$/i;
-		my $listitems = (getVar($list) or "");
+		my $listitems = ($varStack{$list} or "");
 		my $val;
-		if (($val) = $listitems =~ /^(.*?)(,|$)/) {
-			$listitems =~ s/^(.*?)(,|$)//;
-			setVar($list, $listitems)
+		if (($val) = $listitems =~ /^(.*?)(?:,|$)/) {
+			$listitems =~ s/^(?:.*?)(?:,|$)//;
+			$varStack{$list} = $listitems
 		} else {
 			$val = $listitems
 		}
-		setVar($var, $val);
+		$varStack{$var} = $val;
 		$self->{line}++;
 		$self->{timeout} = 0;
 	##########################################
 	# set variable: $variable = value
 	} elsif ($line =~ /^\$[a-z]/i) {
 		my ($var, $val);
-		if (($var, $val) = $line =~ /^\$([a-z][a-z\d]*?)\s+=\s+(.*)$/i) {
+		if (($var, $val) = $line =~ /^\$([a-z][a-z\d]*?)\s+=\s+(.*)/i) {
 			my $pval = parseCmd($val);
-			if (defined $pval) {setVar($var, $pval)}
+			if (defined $pval) {$varStack{$var} = $pval}
 			else {$self->{error} = "$errtpl: $val failed"}
 		} elsif (($var, $val) = $line =~ /^\$([a-z][a-z\d]*?)([+-]{2})$/i) {
-			if ($val eq '++') {setVar($var, (getVar($var) or 0)+1)}
-			else {setVar($var, (getVar($var) or 0)-1)}
+			if ($val eq '++') {
+				$varStack{$var} = ($varStack{$var} or 0)+1
+			} else {
+				$varStack{$var} = ($varStack{$var} or 0)-1
+			}
 		} else {
 			$self->{error} = "$errtpl: unrecognized assignment"
 		}
@@ -306,8 +287,8 @@ sub next {
 	# set doublevar: ${$variable} = value
 	} elsif ($line =~ /^\$\{\$[.a-z]/i) {
 		my ($dvar, $val);
-		if (($dvar, $val) = $line =~ /^\$\{\$([.a-z][a-z\d]*?)\}\s+=\s+(.*)$/i) {
-			my $var = getVar($dvar);
+		if (($dvar, $val) = $line =~ /^\$\{\$([.a-z][a-z\d]*?)\}\s+=\s+(.*)/i) {
+			my $var = $varStack{$dvar};
 			unless (defined $var) {
 				$self->{error} = "$errtpl: $dvar not defined"
 			} else {
@@ -315,16 +296,19 @@ sub next {
 				unless (defined $pval) {
 					$self->{error} = "$errtpl: $val failed"
 				} else {
-					setVar("#".$var, parseCmd($val))
+					$varStack{"#$var"} = parseCmd($val)
 				}
 			}
 		} elsif (($dvar, $val) = $line =~ /^\$\{\$([.a-z][a-z\d]*?)\}([+-]{2})$/i) {
-			my $var = getVar($dvar);
+			my $var = $varStack{$dvar};
 			unless (defined $var) {
 				$self->{error} = "$errtpl: $dvar undefined"
 			} else {
-				if ($val eq '++') {setVar("#".$var, (getVar("#".$var) or 0)+1)}
-				else {setVar("#".$var, (getVar("#".$var) or 0)-1)}
+				if ($val eq '++') {
+					$varStack{"#$var"} = ($varStack{"#$var"} or 0)+1
+				} else {
+					$varStack{"#$var"} = ($varStack{"#$var"} or 0)-1
+				}
 			}
 		} else {
 			$self->{error} = "$errtpl: unrecognized assignment."
@@ -350,7 +334,7 @@ sub next {
 				$self->{error} = "$errtpl: do not use 'macro set'. Use \$foo = bar"
 			} elsif ($arg eq 'stop') {
 				$self->{error} = "$errtpl: use 'stop' instead"
-			} elsif ($arg !~ /^(list|status)$/) {
+			} elsif ($arg !~ /^(?:list|status)$/) {
 				$self->{error} = "$errtpl: use 'call $arg' instead of 'macro $arg'"
 			}
 		} elsif ($tmp =~ /^ai\s+clear$/) {
@@ -394,7 +378,7 @@ sub next {
 		$self->{line}++
 	##########################################
 	# stop command
-	} elsif ($line =~ /^stop$/) {
+	} elsif ($line eq "stop") {
 		$self->{finished} = 1
 	##########################################
 	# release command
@@ -445,7 +429,7 @@ sub next {
 			$self->{overrideAI} = $val
 		} elsif ($var eq 'exclusive' && $val =~ /^[01]$/) {
 			$self->{interruptible} = $val?0:1
-		} elsif ($var eq 'orphan' && $val =~ /^(terminate|reregister|reregister_safe)$/) {
+		} elsif ($var eq 'orphan' && $val =~ /^(?:terminate|reregister(?:_safe)?)$/) {
 			$self->{orphan} = $val
 		} else {
 			$self->{error} = "$errtpl: unrecognized key or wrong value"
