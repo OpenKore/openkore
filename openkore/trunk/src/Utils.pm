@@ -49,7 +49,7 @@ our @EXPORT = (
 	getFormattedDate getHex giveHex getRange getTickCount
 	inRange judgeSkillArea makeCoords makeCoords2 makeDistMap makeIP encodeIP parseArgs
 	quarkToString stringToQuark shiftPack swrite timeConvert timeOut
-	urldecode urlencode unShiftPack vocalString wrapText)
+	urldecode urlencode unShiftPack vocalString wrapText pin_encode)
 );
 
 our %strings;
@@ -1205,6 +1205,39 @@ sub vocalString {
 sub wrapText {
 	local($Text::Wrap::columns) = $_[1];
 	return wrap('', '', $_[0]);
+}
+
+##
+# PIN Encode Function, used to hide the real PIN code, using KEY
+# syntax: $foo = pin_encode(String pin, Dword key)
+# pin: the sting that contains PIN code
+# key: the dword value that contains the encrypting key
+# Requires: error()
+#
+sub pin_encode {
+  my ($pin, $key) = @_;
+  my $pincode = 0x00000000;
+  # $key = pack("V", $key);
+  $key &= 0xFFFFFFFF;
+  $key ^= 0xFFFFFFFF;
+  # Check PIN len
+  if ((length($pin) > 3) && (length($pin) < 9)) {
+    # Convert String to number
+    $pincode = pack("V", $pin);
+    # Encryption loop
+    for(my $loopin = 0; $loopin < length($pin); $loopin++) {
+      $pincode &= 0xFFFFFFFF;
+      $pincode += 0x05F5E100; # Static Encryption Key
+      $pincode &= 0xFFFFFFFF;
+    }
+    # Finalize Encryption
+    $pincode &= 0xFFFFFFFF;
+    $pincode ^= $key;
+    $pincode &= 0xFFFFFFFF;
+  } else {
+    error (T("PIN must be at least 4, and not more than 9"));
+  };
+  return $pincode;
 }
 
 1;

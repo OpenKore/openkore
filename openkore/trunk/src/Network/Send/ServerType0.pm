@@ -1179,6 +1179,51 @@ sub sendStoragePassword {
 	$self->sendToServer($msg);
 }
 
+sub send_pin_code {
+	my $self = shift;
+	# String's with PIN codes
+	my $pin1 = shift;
+	my $pin2 = shift;
+        # Actually the Key
+	my $key_v = shift;
+	# 2 = set password
+	# 3 = enter password
+	my $type = shift;
+        # dword value of the Security key
+
+	my $msg;
+	if ($type == 2) {
+		my @key = split /[, ]+/, $config{PINEncryptKey};
+		if (!@key) {
+			error (T("Unable to send PIN code. You must set the 'PINEncryptKey' option in config.txt or servers.txt.\n"));
+			return;
+		}
+		my $crypton = new Utils::Crypton(pack("V*", @key), 32);
+		my $num1 = pin_encode($pin1, $key_v);
+		my $num2 = pin_encode($pin2, $key_v);
+		my $ciphertextblock1 = $crypton->encrypt(pack("V*", $num1, 0, 0, 0)); 
+		my $ciphertextblock2 = $crypton->encrypt(pack("V*", $num2, 0, 0, 0)); 
+
+		$msg = pack("C C v", 0x3B, 0x02, $type).$ciphertextblock1.$ciphertextblock2;
+	} elsif ($type == 3) {
+		my @key = split /[, ]+/, $config{PINEncryptKey};
+		if (!@key) {
+			error (T("Unable to send PIN code. You must set the 'PINEncryptKey' option in config.txt or servers.txt.\n"));
+			return;
+		}
+		my $crypton = new Utils::Crypton(pack("V*", @key), 32);
+		my $num1 = pin_encode(pack("V4", $pin1), $key_v);
+		my $num2 = pin_encode(pack("V4", $pin2), $key_v);
+		my $ciphertextblock1 = $crypton->encrypt(pack("V*", $num1, 0, 0, 0)); 
+		my $ciphertextblock2 = $crypton->encrypt(pack("V*", 0, 0, 0, 0)); 
+
+		$msg = pack("C C v", 0x3B, 0x02, $type).$ciphertextblock1.$ciphertextblock2;
+	} else {
+		ArgumentException->throw("The 'type' argument has invalid value ($type).");
+	}
+	$self->sendToServer($msg);
+}
+
 sub sendStand {
 	my $self = shift;
 	my $msg;
