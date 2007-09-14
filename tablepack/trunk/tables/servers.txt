@@ -338,19 +338,19 @@ mapLoadedTickOffset 5
 
 ## http://www.rovietnam.com.vn/
 [Vietnam - vRO: SD]
-ip 222.255.122.20
+ip 222.255.122.36
 port 6900
 master_version 26
 version 1
-serverType 13
+serverType 12
 secureLogin 1
 secureLogin_type 0
 secureLogin_requestCode
 secureLogin_account 0
 serverEncoding Western
 paddedPackets 1
-paddedPackets_attackID 0x0193
-paddedPackets_skillUseID 0x0089
+paddedPackets_attackID 0x0190
+paddedPackets_skillUseID 0x0085
 
 ## http://www.rovietnam.com.vn/
 [Vietnam - vRO: Thu Thach]
