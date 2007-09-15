@@ -3,6 +3,7 @@
 =========================
 
 - The Console::Curses interface have been fixed (thanks to Dodge and Paldium).
+- PIN code support [by kLabMouse] (tahnks to toq, Biozinc and mRO Playesr who helped me)
 
 
 =========================
