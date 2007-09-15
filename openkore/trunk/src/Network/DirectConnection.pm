@@ -300,7 +300,7 @@ sub checkConnection {
 	if ($self->getState() == Network::NOT_CONNECTED && (!$self->{remote_socket} || !$self->{remote_socket}->connected) && timeOut($timeout_ex{'master'}) && !$conState_tries) {
 		my $master = $masterServer = $masterServers{$config{master}};
 
-		foreach my $serverOption ('serverType', 'chatLangCode', 'storageEncryptKey', 'gameGuard', 'charBlockSize',
+		foreach my $serverOption ('serverType', 'chatLangCode', 'storageEncryptKey', 'PINEncryptKey', 'gameGuard', 'charBlockSize',
 					'paddedPackets', 'paddedPackets_attackID', 'paddedPackets_skillUseID',
 					'mapServer_ip', 'mapServer_port') {
 			if ($master->{$serverOption} ne '' && $config{$serverOption} ne $master->{$serverOption}) {
