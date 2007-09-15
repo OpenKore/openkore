@@ -5812,7 +5812,7 @@ sub pin_code_request {
 			return;
 		}
 		message TF("Setting PIN code to: %s\n", $config{pin});
-		$messageSender->send_pincode($config{pin}, $config{pin}, $args->{key},  2);
+		$messageSender->send_pin_code($config{pin}, $config{pin}, $args->{key},  2);
 	} elsif ($args->{flag} == 1) { # Please Enter PIN code
 		if ($config{pin} eq '') {
 			my $input = $interface->query(T("You don't set 'PIN' code config value.\nPlease enter PIN code:"), isPassword => 1);
@@ -5852,7 +5852,7 @@ sub pin_code_request {
 			return;
 		}
 		message TF("Setting PIN code to '%s' from '%s'\n", $config{pin}, $oldpin);
-		$messageSender->send_pincode($oldpin, $config{pin}, $args->{key},  2);
+		$messageSender->send_pin_code($oldpin, $config{pin}, $args->{key},  2);
 	} elsif ($args->{flag} == 4) { # PIN Wrong, Please Retype PIN
 		configModify('pin', '', 1);
 		if ($config{pin} eq '') {
