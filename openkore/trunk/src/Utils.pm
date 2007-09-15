@@ -1219,15 +1219,13 @@ sub wrapText {
 #
 sub pin_encode {
   my ($pin, $key) = @_;
-  # $key = pack("V", $key);
   $key &= 0xFFFFFFFF;
   $key ^= 0xFFFFFFFF;
-  #$pin = sprintf("%d", $pin);
   # Check PIN len
   if ((length($pin) > 3) && (length($pin) < 9)) {
     my $pincode;
     # Convert String to number
-    $pincode = pack("V", $pin);
+    $pincode = $pin;
     # Encryption loop
     for(my $loopin = 0; $loopin < length($pin); $loopin++) {
       $pincode &= 0xFFFFFFFF;
@@ -1237,8 +1235,7 @@ sub pin_encode {
     # Finalize Encryption
     $pincode &= 0xFFFFFFFF;
     $pincode ^= $key;
-    #$pincode &= 0xFFFFFFFF;
-    $pincode &= 0xFFFF;
+    $pincode &= 0xFFFFFFFF;
     return $pincode;
   } elsif (length($pin) == 0) {
     my $pincode;
@@ -1247,8 +1244,7 @@ sub pin_encode {
     # Finalize Encryption
     $pincode &= 0xFFFFFFFF;
     $pincode ^= $key;
-    #$pincode &= 0xFFFFFFFF;
-    $pincode &= 0xFFFF;
+    $pincode &= 0xFFFFFFFF;
     return $pincode;
   } else {
     return 0;
