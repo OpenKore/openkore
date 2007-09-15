@@ -5811,8 +5811,7 @@ sub pin_code_request {
 			error (T("Unable to send PIN code. You must set the 'PINEncryptKey' option in config.txt or servers.txt.\n"));
 			return;
 		}
-		message T("Setting PIN code to: %s\n", $config{pin});
-		# $messageSender->send_pin_code($config{pin}, 0, 2);
+		message TF("Setting PIN code to: %s\n", $config{pin});
 		$messageSender->send_pincode($config{pin}, $config{pin}, $args->{key},  2);
 	} elsif ($args->{flag} == 1) { # Please Enter PIN code
 		if ($config{pin} eq '') {
@@ -5828,12 +5827,32 @@ sub pin_code_request {
 			error (T("Unable to send PIN code. You must set the 'PINEncryptKey' option in config.txt or servers.txt.\n"));
 			return;
 		}
-		message T("Setting PIN code to: %s\n", $config{pin});
+		message TF("Setting PIN code to: %s\n", $config{pin});
 		$messageSender->send_pin_code($config{pin}, 0, $args->{key}, 3);
 	} elsif ($args->{flag} == 2) { # PIN set Succefully
-		message T("PIN code set succefuly to: %s\n", $config{pin});
+		message TF("PIN code changed succefuly to: %s\n", $config{pin});
 	} elsif ($args->{flag} == 3) { # PIN Changed Succefully
-		message T("PIN code Changed succefuly to: %s\n", $config{pin});
+		message TF("Failed to change PIN\nPlease try again\n");
+		configModify('pin', '', 1);
+		my $input = $interface->query(T("Please enter a old PIN code:"), isPassword => 1);
+		if (!defined($input)) {
+			return;
+		}
+		my $oldpin = $input;
+
+		my $input = $interface->query(T("Please enter a new PIN code:"), isPassword => 1);
+		if (!defined($input)) {
+			return;
+		}
+		configModify('pin', $input, 1);
+
+		my @key = split /[, ]+/, $config{PINEncryptKey};
+		if (!@key) {
+			error (T("Unable to send PIN code. You must set the 'PINEncryptKey' option in config.txt or servers.txt.\n"));
+			return;
+		}
+		message TF("Setting PIN code to '%s' from '%s'\n", $config{pin}, $oldpin);
+		$messageSender->send_pincode($oldpin, $config{pin}, $args->{key},  2);
 	} elsif ($args->{flag} == 4) { # PIN Wrong, Please Retype PIN
 		configModify('pin', '', 1);
 		if ($config{pin} eq '') {
@@ -5849,7 +5868,7 @@ sub pin_code_request {
 			error (T("Unable to send PIN code. You must set the 'PINEncryptKey' option in config.txt or servers.txt.\n"));
 			return;
 		}
-		message T("Setting PIN code to: %s\n", $config{pin});
+		message TF("Setting PIN code to: %s\n", $config{pin});
 		$messageSender->send_pin_code($config{pin}, 0, $args->{key}, 3);
 	} elsif ($args->{flag} == 5) { # PIN Entered 3 times Wrong, Disconnect
 		error T("PIN Entered 3 times Wrong, Reconnecting.\n"); 

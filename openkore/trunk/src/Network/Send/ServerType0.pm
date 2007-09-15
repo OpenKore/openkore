@@ -1193,38 +1193,47 @@ sub send_pin_code {
         # dword value of the Security key
 
 	my $msg;
+	if (unpack("V", pack("V", $pin1)) != $pin1) {
+		error (T("PIN code must contain only digits.\n"));
+		return;
+	}
 	if ($type == 2) {
-		my @key = split /[, ]+/, $config{PINEncryptKey};
-		if (!@key) {
-			error (T("Unable to send PIN code. You must set the 'PINEncryptKey' option in config.txt or servers.txt.\n"));
+		if (unpack("V", pack("V", $pin2)) != $pin2) {
+			error (T("PIN code must contain only digits.\n"));
 			return;
 		}
-		my $crypton = new Utils::Crypton(pack("V*", @key), 32);
-		my $num1 = pin_encode($pin1, $key_v);
-		my $num2 = pin_encode($pin2, $key_v);
-		message(TF("Sending PIN code, pin1:%s , pin2:%s , key:%s , num1:%s , num2:%s\n", $pin1, $pin2, $key_v, $num1, $num2), undef, 1);
-		my $ciphertextblock1 = $crypton->encrypt(pack("V*", $num1, 0, 0, 0)); 
-		my $ciphertextblock2 = $crypton->encrypt(pack("V*", $num2, 0, 0, 0)); 
-
-		$msg = pack("C C v", 0x3B, 0x02, $type).$ciphertextblock1.$ciphertextblock2;
+	}
+	my @key = split /[, ]+/, $config{PINEncryptKey};
+	if (!@key) {
+		error (T("Unable to send PIN code. You must set the 'PINEncryptKey' option in config.txt or servers.txt.\n"));
+		return;
+	}
+	my $crypton = new Utils::Crypton(pack("V*", @key), 32);
+	my $num1 = pin_encode($pin1, $key_v);
+	my $num2 = pin_encode($pin2, $key_v);
+	if ($type == 2) {
+		if ((length($pin1)>3)&&(length($pin1)<9)&&(length($pin2)>3)&&(length($pin2)<9)) {
+			my $ciphertextblock1 = $crypton->encrypt(pack("V*", $num1, 0, 0, 0)); 
+			my $ciphertextblock2 = $crypton->encrypt(pack("V*", $num2, 0, 0, 0));
+			$msg = pack("C C v", 0x3B, 0x02, $type).$ciphertextblock1.$ciphertextblock2;
+			$self->sendToServer($msg);
+		} else {
+			error (T("PIN code must be more than 3 and less than 9 chars long.\n"));
+			return;
+		}
 	} elsif ($type == 3) {
-		my @key = split /[, ]+/, $config{PINEncryptKey};
-		if (!@key) {
-			error (T("Unable to send PIN code. You must set the 'PINEncryptKey' option in config.txt or servers.txt.\n"));
+		if ((length($pin1)>3)&&(length($pin1)<9)) {
+			my $ciphertextblock1 = $crypton->encrypt(pack("V*", $num1, 0, 0, 0)); 
+			my $ciphertextblock2 = $crypton->encrypt(pack("V*", 0, 0, 0, 0)); 
+			$msg = pack("C C v", 0x3B, 0x02, $type).$ciphertextblock1.$ciphertextblock2;
+			$self->sendToServer($msg);
+		} else {
+			error (T("PIN code must be more than 3 and less than 9 chars long.\n"));
 			return;
 		}
-		my $crypton = new Utils::Crypton(pack("V*", @key), 32);
-		my $num1 = pin_encode($pin1, $key_v);
-		my $num2 = pin_encode($pin2, $key_v);
-		message(TF("Sending Set PIN code, pin1:%s , pin2:%s , key:%s , num1:%s , num2:%s\n", $pin1, $pin2, $key_v, $num1, $num2), undef, 1); 
-		my $ciphertextblock1 = $crypton->encrypt(pack("V*", $num1, 0, 0, 0)); 
-		my $ciphertextblock2 = $crypton->encrypt(pack("V*", 0, 0, 0, 0)); 
-
-		$msg = pack("C C v", 0x3B, 0x02, $type).$ciphertextblock1.$ciphertextblock2;
 	} else {
 		ArgumentException->throw("The 'type' argument has invalid value ($type).");
 	}
-	$self->sendToServer($msg);
 }
 
 sub sendStand {
