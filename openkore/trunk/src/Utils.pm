@@ -1210,18 +1210,22 @@ sub wrapText {
 ##
 # PIN Encode Function, used to hide the real PIN code, using KEY
 # syntax: $foo = pin_encode(String pin, Dword key)
+##
+# PIN Encode Function, used to hide the real PIN code, using KEY
+# syntax: $foo = pin_encode(String pin, Dword key)
 # pin: the sting that contains PIN code
 # key: the dword value that contains the encrypting key
-# Requires: error()
+# Requires: None
 #
 sub pin_encode {
   my ($pin, $key) = @_;
-  my $pincode = 0x00000000;
   # $key = pack("V", $key);
   $key &= 0xFFFFFFFF;
   $key ^= 0xFFFFFFFF;
+  #$pin = sprintf("%d", $pin);
   # Check PIN len
   if ((length($pin) > 3) && (length($pin) < 9)) {
+    my $pincode;
     # Convert String to number
     $pincode = pack("V", $pin);
     # Encryption loop
@@ -1233,11 +1237,22 @@ sub pin_encode {
     # Finalize Encryption
     $pincode &= 0xFFFFFFFF;
     $pincode ^= $key;
+    #$pincode &= 0xFFFFFFFF;
+    $pincode &= 0xFFFF;
+    return $pincode;
+  } elsif (length($pin) == 0) {
+    my $pincode;
+    # Convert String to number
+    $pincode = 0;
+    # Finalize Encryption
     $pincode &= 0xFFFFFFFF;
+    $pincode ^= $key;
+    #$pincode &= 0xFFFFFFFF;
+    $pincode &= 0xFFFF;
+    return $pincode;
   } else {
-    error (T("PIN must be at least 4, and not more than 9"));
-  };
-  return $pincode;
+    return 0;
+  }
 }
 
 1;

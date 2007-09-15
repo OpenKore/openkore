@@ -5828,7 +5828,7 @@ sub pin_code_request {
 			error (T("Unable to send PIN code. You must set the 'PINEncryptKey' option in config.txt or servers.txt.\n"));
 			return;
 		}
-		message T("Setting PIN code to: %s\n", $config{PIN});
+		message T("Setting PIN code to: %s\n", $config{pin});
 		$messageSender->send_pin_code($config{pin}, 0, $args->{key}, 3);
 	} elsif ($args->{flag} == 2) { # PIN set Succefully
 		message T("PIN code set succefuly to: %s\n", $config{pin});
