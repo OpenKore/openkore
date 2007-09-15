@@ -24,6 +24,7 @@ use base qw(Network::Send);
 use Plugins;
 use Globals qw($accountID $sessionID $sessionID2 $accountSex $char $charID %config %guild @chars $masterServer $syncSync);
 use Log qw(message warning error debug);
+use Translation qw(T TF);
 use I18N qw(stringToBytes);
 use Utils;
 use Utils::Exceptions;
@@ -1201,6 +1202,7 @@ sub send_pin_code {
 		my $crypton = new Utils::Crypton(pack("V*", @key), 32);
 		my $num1 = pin_encode($pin1, $key_v);
 		my $num2 = pin_encode($pin2, $key_v);
+		message(TF("Sending PIN code, pin1:%s , pin2:%s , key:%s , num1:%s , num2:%s\n", $pin1, $pin2, $key_v, $num1, $num2), undef, 1);
 		my $ciphertextblock1 = $crypton->encrypt(pack("V*", $num1, 0, 0, 0)); 
 		my $ciphertextblock2 = $crypton->encrypt(pack("V*", $num2, 0, 0, 0)); 
 
@@ -1212,8 +1214,9 @@ sub send_pin_code {
 			return;
 		}
 		my $crypton = new Utils::Crypton(pack("V*", @key), 32);
-		my $num1 = pin_encode(pack("V4", $pin1), $key_v);
-		my $num2 = pin_encode(pack("V4", $pin2), $key_v);
+		my $num1 = pin_encode($pin1, $key_v);
+		my $num2 = pin_encode($pin2, $key_v);
+		message(TF("Sending Set PIN code, pin1:%s , pin2:%s , key:%s , num1:%s , num2:%s\n", $pin1, $pin2, $key_v, $num1, $num2), undef, 1); 
 		my $ciphertextblock1 = $crypton->encrypt(pack("V*", $num1, 0, 0, 0)); 
 		my $ciphertextblock2 = $crypton->encrypt(pack("V*", 0, 0, 0, 0)); 
 
