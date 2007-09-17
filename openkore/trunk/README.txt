@@ -5,6 +5,9 @@
 - The Console::Curses interface have been fixed (thanks to Dodge and Paldium).
 - PIN code support [by kLabMouse] (tahnks to toq, Biozinc and mRO Playesr who helped me)
 
+Credits:
+- glew: Support for disconnecting when storage is full.
+
 
 =========================
 ### OpenKore 2.0.3
