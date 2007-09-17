@@ -7,6 +7,7 @@
 
 Credits:
 - glew: Support for disconnecting when storage is full.
+- Paldium: Readline interface fixes.
 
 
 =========================
