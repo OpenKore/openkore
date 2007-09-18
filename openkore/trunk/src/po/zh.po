@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: OpenKore 1.9.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-09-15 10:39+0700\n"
-"PO-Revision-Date: 2007-09-15 10:48+0700\n"
-"Last-Translator: h4rry84 <dewa5227@yahoo.com>\n"
+"PO-Revision-Date: 2007-09-18 18:46+0800\n"
+"Last-Translator: 小溫 <littlewens@yahoo.com.tw>\n"
 "Language-Team: littlewens <littlewens@yahoo.com.tw>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -4016,7 +4016,7 @@ msgstr "錯誤: 無法載入 %s\n"
 
 #: ../Utils.pm:1238
 msgid "PIN must be at least 4, and not more than 9"
-msgstr ""
+msgstr "PIN 碼至少要 4 碼, 且不超過 9 碼."
 
 #: ../Network/DirectConnection.pm:147
 #, perl-format
@@ -5517,48 +5517,53 @@ msgid ""
 "You've never set PIN code before.\n"
 "Please enter a new PIN code:"
 msgstr ""
+"您尚未設定過 PIN 碼.\n"
+"請輸入一個新的 PIN 碼:"
 
 #: ../Network/Receive.pm:5811
 #: ../Network/Receive.pm:5828
 #: ../Network/Receive.pm:5849
 #: ../Network/Send/ServerType0.pm:1198
 #: ../Network/Send/ServerType0.pm:1211
-#, fuzzy
 msgid "Unable to send PIN code. You must set the 'PINEncryptKey' option in config.txt or servers.txt.\n"
-msgstr "無法傳送倉庫密碼. 您必須在config.txt或server.txt中設定'storageEncryptKey'選項.\n"
+msgstr "無法傳送 PIN 碼. 您必須在config.txt或server.txt中設定'PINEncryptKey'選項.\n"
 
 #: ../Network/Receive.pm:5814
 #: ../Network/Receive.pm:5831
 #: ../Network/Receive.pm:5852
 #, perl-format
 msgid "Setting PIN code to: %s\n"
-msgstr ""
+msgstr "PIN 碼設定為: %s\n"
 
 #: ../Network/Receive.pm:5819
 msgid ""
 "You don't set 'PIN' code config value.\n"
 "Please enter PIN code:"
 msgstr ""
+"您沒有設定 PIN 碼的值.\n"
+"請輸入 PIN 碼:"
 
 #: ../Network/Receive.pm:5834
 #, perl-format
 msgid "PIN code set succefuly to: %s\n"
-msgstr ""
+msgstr "PIN 碼成功設定為: %s\n"
 
 #: ../Network/Receive.pm:5836
-#, fuzzy, perl-format
+#, perl-format
 msgid "PIN code Changed succefuly to: %s\n"
-msgstr "%s 變換盔甲為 %s\n"
+msgstr "PIN 碼成功更換為: %s\n"
 
 #: ../Network/Receive.pm:5840
 msgid ""
 "PIN code Wrong.\n"
 "Please enter PIN code:"
 msgstr ""
+"PIN 碼錯誤.\n"
+"請輸入 PIN 碼:"
 
 #: ../Network/Receive.pm:5855
 msgid "PIN Entered 3 times Wrong, Reconnecting.\n"
-msgstr ""
+msgstr "PIN 碼輸入錯誤 3 次, 重新連線.\n"
 
 #. Translation Comment: System/GM chat
 #: ../Network/Receive.pm:5878
