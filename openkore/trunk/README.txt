@@ -2,12 +2,11 @@
 ### OpenKore 2.0.4
 =========================
 
+- mRO (Malaysia) PIN code support [by kLabMouse] (thanks to toq, Biozinc and
+  mRO players who helped me)
+- Support for disconnecting when storage is full (thanks to glew).
 - The Console::Curses interface have been fixed (thanks to Dodge and Paldium).
-- PIN code support [by kLabMouse] (tahnks to toq, Biozinc and mRO Playesr who helped me)
-
-Credits:
-- glew: Support for disconnecting when storage is full.
-- Paldium: Readline interface fixes.
+- Readline interface fixes (thanks to Paldium).
 
 
 =========================
