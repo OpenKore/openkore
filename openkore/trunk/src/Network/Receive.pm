@@ -5862,12 +5862,12 @@ sub login_pin_code_request {
 		warning TF("Failed to change the login PIN code. Please try again.\n");
 
 		configModify('loginPinCode', '', silent => 1);
-		my $oldPin = queryPinCode(T("Please enter your old login PIN code:"));
+		my $oldPin = queryLoginPinCode(T("Please enter your old login PIN code:"));
 		if (!defined($oldPin)) {
 			return;
 		}
 
-		my $newPinCode = queryPinCode(T("Please enter a new login PIN code:"));
+		my $newPinCode = queryLoginPinCode(T("Please enter a new login PIN code:"));
 		if (!defined($newPinCode)) {
 			return;
 		}
@@ -5884,7 +5884,7 @@ sub login_pin_code_request {
 	} elsif ($args->{flag} == 4) {
 		# PIN code incorrect.
 		configModify('loginPinCode', '', 1);
-		return if (!queryAndSavePinCode(T("The login PIN code that you entered is incorrect. Please re-enter your login PIN code.")));
+		return if (!queryAndSaveLoginPinCode(T("The login PIN code that you entered is incorrect. Please re-enter your login PIN code.")));
 
 		my @key = split /[, ]+/, $masterServer->{PINEncryptKey};
 		if (!@key) {
@@ -5905,6 +5905,7 @@ sub login_pin_code_request {
 	} else {
 		debug("login_pin_code_request: unknown flag $args->{flag}\n");
 	}
+	$timeout{master}{time} = time;
 }
 
 sub switch_character {
