@@ -310,7 +310,7 @@ sub checkConnection {
 	if ($self->getState() == Network::NOT_CONNECTED && (!$self->{remote_socket} || !$self->{remote_socket}->connected) && timeOut($timeout_ex{'master'}) && !$conState_tries) {
 		my $master = $masterServer = $masterServers{$config{master}};
 
-		foreach my $serverOption ('serverType', 'chatLangCode', 'storageEncryptKey', 'PINEncryptKey', 'gameGuard', 'charBlockSize',
+		foreach my $serverOption ('serverType', 'chatLangCode', 'storageEncryptKey', 'gameGuard', 'charBlockSize',
 					'paddedPackets', 'paddedPackets_attackID', 'paddedPackets_skillUseID',
 					'mapServer_ip', 'mapServer_port') {
 			if ($master->{$serverOption} ne '' && $config{$serverOption} ne $master->{$serverOption}) {
@@ -334,8 +334,8 @@ sub checkConnection {
 			my $wrapper = ($self->{wrapper}) ? $self->{wrapper} : $self;
 			$messageSender = Network::Send->create($wrapper, $config{serverType});
 		};
-		if (my $e = caught('Exception::Class::Base')) {
-			$interface->errorDialog($e->message());
+		if ($@) {
+			$interface->errorDialog("$@");
 			$quit = 1;
 			return;
 		}
