@@ -1196,7 +1196,7 @@ sub sendLoginPinCode {
 	if ($pin1 !~ /^\d*$/) {
 		ArgumentException->throw("PIN code 1 must contain only digits.");
 	}
-	if ($type == 2 && $pin2 =~ /^\d*$/) {
+	if ($type == 2 && $pin2 !~ /^\d*$/) {
 		ArgumentException->throw("PIN code 2 must contain only digits.");
 	}
 	if (!$encryptionKey) {
