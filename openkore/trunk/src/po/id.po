@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: openkore 2.0.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-09-15 10:39+0700\n"
-"PO-Revision-Date: 2007-09-15 10:47+0700\n"
+"POT-Creation-Date: 2007-09-19 11:39+0700\n"
+"PO-Revision-Date: 2007-09-19 11:43+0700\n"
 "Last-Translator: h4rry84 <dewa5227@yahoo.com>\n"
 "Language-Team: Indonesian <dewa5227@yahoo.com>\n"
 "MIME-Version: 1.0\n"
@@ -2820,7 +2820,7 @@ msgid "Attempting to open a warp portal to %s (%s)\n"
 msgstr "Akan membuka sebuah warp portal ke %s (%s)\n"
 
 #: ../Commands.pm:4370
-#: ../Network/Receive.pm:6134
+#: ../Network/Receive.pm:6153
 msgid ""
 "----------------- Warp Portal --------------------\n"
 "#  Place                           Map\n"
@@ -3169,13 +3169,13 @@ msgid "Deleting character %s...\n"
 msgstr "Menghapus character %s...\n"
 
 #: ../Misc.pm:1193
-#: ../AI/CoreLogic.pm:2972
+#: ../AI/CoreLogic.pm:2979
 #, perl-format
 msgid "The current map (%s) is not on the list of allowed maps.\n"
 msgstr "Map sekarang (%s) tidak ada pada list map yang diperbolehkan.\n"
 
 #: ../Misc.pm:1194
-#: ../AI/CoreLogic.pm:2973
+#: ../AI/CoreLogic.pm:2980
 #, perl-format
 msgid "** The current map (%s) is not on the list of allowed maps.\n"
 msgstr "** Map saat ini (%s) tidak terdapat dalam list map yang diperbolehkan.\n"
@@ -4017,10 +4017,6 @@ msgstr "Me-load %s...\n"
 msgid "Error: Couldn't load %s\n"
 msgstr "Error: Tidak dapat me-load %s\n"
 
-#: ../Utils.pm:1238
-msgid "PIN must be at least 4, and not more than 9"
-msgstr "PIN harus tidak kurang dari 4, dan tidak lebih dari 9"
-
 #: ../Network/DirectConnection.pm:147
 #, perl-format
 msgid "Connecting (%s:%s)... "
@@ -4035,103 +4031,103 @@ msgstr "Telah connect\n"
 msgid "couldn't connect: %s (error code %d)\n"
 msgstr "Tidak dapat connect: %s (error code %d)\n"
 
-#: ../Network/DirectConnection.pm:213
+#: ../Network/DirectConnection.pm:223
 #, perl-format
 msgid "Disconnecting (%s:%s)..."
 msgstr "Mengakhiri koneksi (%s:%s)..."
 
-#: ../Network/DirectConnection.pm:217
+#: ../Network/DirectConnection.pm:227
 msgid "disconnected\n"
 msgstr "Telah disconnect\n"
 
-#: ../Network/DirectConnection.pm:218
+#: ../Network/DirectConnection.pm:228
 msgid "couldn't disconnect\n"
 msgstr "Tidak dapat connect\n"
 
-#: ../Network/DirectConnection.pm:316
+#: ../Network/DirectConnection.pm:326
 msgid "Connecting to Account Server...\n"
 msgstr "Melakukan koneksi ke Account Server...\n"
 
-#: ../Network/DirectConnection.pm:344
+#: ../Network/DirectConnection.pm:354
 msgid "Requesting permission to logon on account server...\n"
 msgstr "Meminta izin untuk logon ke account server...\n"
 
-#: ../Network/DirectConnection.pm:352
-#: ../Network/DirectConnection.pm:384
+#: ../Network/DirectConnection.pm:362
+#: ../Network/DirectConnection.pm:394
 msgid "Secure Login...\n"
 msgstr "Login Keamanan...\n"
 
-#: ../Network/DirectConnection.pm:411
+#: ../Network/DirectConnection.pm:421
 msgid "Sending encoded password...\n"
 msgstr "Mengirimkan password yang di-encode...\n"
 
-#: ../Network/DirectConnection.pm:418
+#: ../Network/DirectConnection.pm:428
 msgid "Timeout on Account Server, reconnecting...\n"
 msgstr "Terputus dari Account Server, Berusaha untuk terhubung ulang...\n"
 
-#: ../Network/DirectConnection.pm:443
+#: ../Network/DirectConnection.pm:453
 msgid "Connecting to Character Server...\n"
 msgstr "Melakukan koneksi ke Character Server...\n"
 
-#: ../Network/DirectConnection.pm:451
+#: ../Network/DirectConnection.pm:461
 #, perl-format
 msgid "Invalid server specified, server %s does not exist...\n"
 msgstr "Server yang dispesifikasikan salah, server %s tidak ada...\n"
 
-#: ../Network/DirectConnection.pm:458
+#: ../Network/DirectConnection.pm:468
 #: ../Network/Receive.pm:666
 #: ../Network/Receive/ServerType17.pm:85
 msgid "Please select your login server."
 msgstr "Silahkan memilih login server anda:"
 
-#: ../Network/DirectConnection.pm:460
+#: ../Network/DirectConnection.pm:470
 #: ../Network/Receive.pm:668
 #: ../Network/Receive/ServerType17.pm:87
 msgid "Select Login Server"
 msgstr "Pilih Login Server"
 
-#: ../Network/DirectConnection.pm:481
+#: ../Network/DirectConnection.pm:491
 msgid "Timeout on Character Server, reconnecting...\n"
 msgstr "Terputus dari Character Server, Berusaha untuk terhubung ulang...\n"
 
-#: ../Network/DirectConnection.pm:489
+#: ../Network/DirectConnection.pm:499
 msgid "Connecting to Character Select Server...\n"
 msgstr "Melakukan koneksi ke Character Select Server...\n"
 
-#: ../Network/DirectConnection.pm:503
+#: ../Network/DirectConnection.pm:513
 msgid "Timeout on Character Select Server, reconnecting...\n"
 msgstr "Terputus dari Character Select Server, Berusaha untuk terhubung ulang...\n"
 
-#: ../Network/DirectConnection.pm:515
+#: ../Network/DirectConnection.pm:525
 msgid "Connecting to Map Server...\n"
 msgstr "Melakukan koneksi ke Map Server...\n"
 
-#: ../Network/DirectConnection.pm:541
+#: ../Network/DirectConnection.pm:551
 msgid "Timeout on Map Server, connecting to Account Server...\n"
 msgstr "Timeout di Map Server, melakukan koneksi ke Account Server...\n"
 
-#: ../Network/DirectConnection.pm:550
+#: ../Network/DirectConnection.pm:560
 msgid "*** You disconnected, auto quit! ***\n"
 msgstr "*** Anda disconnect, keluar secara otomatis! ***\n"
 
-#: ../Network/DirectConnection.pm:551
+#: ../Network/DirectConnection.pm:561
 msgid "Disconnected from Map Server, exiting...\n"
 msgstr "Disconnect dari Map Server, keluar...\n"
 
-#: ../Network/DirectConnection.pm:554
+#: ../Network/DirectConnection.pm:564
 #, perl-format
 msgid "Disconnected from Map Server, connecting to Account Server in %s seconds...\n"
 msgstr "Disconnect dari Map Server, Melakukan koneksi ke Account Server dalam %s detik...\n"
 
-#: ../Network/DirectConnection.pm:562
+#: ../Network/DirectConnection.pm:572
 msgid "Timeout on Map Server, "
 msgstr "Terputus dari Map Server,"
 
-#: ../Network/DirectConnection.pm:565
+#: ../Network/DirectConnection.pm:575
 msgid "exiting...\n"
 msgstr "keluar...\n"
 
-#: ../Network/DirectConnection.pm:568
+#: ../Network/DirectConnection.pm:578
 #, perl-format
 msgid "connecting to Account Server in %s seconds...\n"
 msgstr "Melakukan koneksi ke Account Server dalam %s detik...\n"
@@ -5524,21 +5520,21 @@ msgstr ""
 "Silahkan masukkan sebuah kode PIN:"
 
 #: ../Network/Receive.pm:5811
-#: ../Network/Receive.pm:5828
-#: ../Network/Receive.pm:5849
-#: ../Network/Send/ServerType0.pm:1198
-#: ../Network/Send/ServerType0.pm:1211
+#: ../Network/Receive.pm:5827
+#: ../Network/Receive.pm:5851
+#: ../Network/Receive.pm:5868
+#: ../Network/Send/ServerType0.pm:1208
 msgid "Unable to send PIN code. You must set the 'PINEncryptKey' option in config.txt or servers.txt.\n"
 msgstr "Tidak dapat mengirimkan kode PIN. Anda harus menseting opsi 'PINEncryptKey' di config.txt atau server.txt.\n"
 
 #: ../Network/Receive.pm:5814
-#: ../Network/Receive.pm:5831
-#: ../Network/Receive.pm:5852
+#: ../Network/Receive.pm:5830
+#: ../Network/Receive.pm:5871
 #, perl-format
 msgid "Setting PIN code to: %s\n"
 msgstr "Melakukan set kode PIN ke: %s\n"
 
-#: ../Network/Receive.pm:5819
+#: ../Network/Receive.pm:5818
 msgid ""
 "You don't set 'PIN' code config value.\n"
 "Please enter PIN code:"
@@ -5546,17 +5542,33 @@ msgstr ""
 "Anda tidak melakukan set nilai kode 'PIN' pada config.\n"
 "Silahkan masukkan kode PIN:"
 
-#: ../Network/Receive.pm:5834
+#: ../Network/Receive.pm:5833
 #, perl-format
-msgid "PIN code set succefuly to: %s\n"
-msgstr "Kode PIN telah berhasil diset ke: %s\n"
+msgid "PIN code changed succefuly to: %s\n"
+msgstr "Kode PIN telah berhasil dirubah ke : %s\n"
 
-#: ../Network/Receive.pm:5836
+#: ../Network/Receive.pm:5835
+msgid ""
+"Failed to change PIN\n"
+"Please try again\n"
+msgstr ""
+"gagal mengubah PIN\n"
+"Silahkan mencoba kembali\n"
+
+#: ../Network/Receive.pm:5837
+msgid "Please enter a old PIN code:"
+msgstr "Silahkan masukkan kode PIN yang lama:"
+
+#: ../Network/Receive.pm:5843
+msgid "Please enter a new PIN code:"
+msgstr "Silahkan masukkan kode PIN yang baru:"
+
+#: ../Network/Receive.pm:5854
 #, perl-format
-msgid "PIN code Changed succefuly to: %s\n"
-msgstr "Kode PIN telah berhasil dirubah ke: %s\n"
+msgid "Setting PIN code to '%s' from '%s'\n"
+msgstr "Melakukan set kode PIN ke '%s' dari '%s'\n"
 
-#: ../Network/Receive.pm:5840
+#: ../Network/Receive.pm:5859
 msgid ""
 "PIN code Wrong.\n"
 "Please enter PIN code:"
@@ -5564,17 +5576,17 @@ msgstr ""
 "Kode PIN Salah.\n"
 "Silahkan masukkan kode PIN:"
 
-#: ../Network/Receive.pm:5855
+#: ../Network/Receive.pm:5874
 msgid "PIN Entered 3 times Wrong, Reconnecting.\n"
 msgstr "PIN yang dimasukkan 3 kali Salah, Berusaha untuk terhubung ulang.\n"
 
 #. Translation Comment: System/GM chat
-#: ../Network/Receive.pm:5878
+#: ../Network/Receive.pm:5897
 #, perl-format
 msgid "[GM] %s\n"
 msgstr "[GM] %s\n"
 
-#: ../Network/Receive.pm:5890
+#: ../Network/Receive.pm:5909
 #, perl-format
 msgid ""
 "============= ALCHEMIST RANK ================\n"
@@ -5585,7 +5597,7 @@ msgstr ""
 "#    Nama                             Poin\n"
 "%s=============================================\n"
 
-#: ../Network/Receive.pm:5900
+#: ../Network/Receive.pm:5919
 #, perl-format
 msgid ""
 "============= BLACKSMITH RANK ===============\n"
@@ -5596,7 +5608,7 @@ msgstr ""
 "#    Nama                             Poin\n"
 "%s=============================================\n"
 
-#: ../Network/Receive.pm:5910
+#: ../Network/Receive.pm:5929
 #, perl-format
 msgid ""
 "================ PVP RANK ===================\n"
@@ -5607,7 +5619,7 @@ msgstr ""
 "#    Nama                             Poin\n"
 "%s=============================================\n"
 
-#: ../Network/Receive.pm:5920
+#: ../Network/Receive.pm:5939
 #, perl-format
 msgid ""
 "=============== TAEKWON RANK ================\n"
@@ -5618,42 +5630,42 @@ msgstr ""
 "#    Nama                             Poin\n"
 "%s=============================================\n"
 
-#: ../Network/Receive.pm:5944
+#: ../Network/Receive.pm:5963
 #, perl-format
 msgid "You unequip %s (%d) - %s\n"
 msgstr "Anda melepas equip %s (%d) - %s\n"
 
-#: ../Network/Receive.pm:5957
+#: ../Network/Receive.pm:5976
 #, perl-format
 msgid "%s gained a level!\n"
 msgstr "%s naik level!\n"
 
-#: ../Network/Receive.pm:5959
+#: ../Network/Receive.pm:5978
 #, perl-format
 msgid "%s gained a job level!\n"
 msgstr "%s naik job level!\n"
 
-#: ../Network/Receive.pm:5961
+#: ../Network/Receive.pm:5980
 #, perl-format
 msgid "%s failed to refine a weapon!\n"
 msgstr "%s gagal untuk menempa sebuah senjata!\n"
 
-#: ../Network/Receive.pm:5963
+#: ../Network/Receive.pm:5982
 #, perl-format
 msgid "%s successfully refined a weapon!\n"
 msgstr "%s berhasil menempa sebuah senjata!\n"
 
-#: ../Network/Receive.pm:5974
+#: ../Network/Receive.pm:5993
 #, perl-format
 msgid "You used Item: %s (%d) x %s\n"
 msgstr "Anda menggunakan Item: %s (%d) x %s\n"
 
-#: ../Network/Receive.pm:5984
+#: ../Network/Receive.pm:6003
 #, perl-format
 msgid "There are currently %s users online\n"
 msgstr "Saat ini ada %s pemain yang sedang online\n"
 
-#: ../Network/Receive.pm:6010
+#: ../Network/Receive.pm:6029
 #, perl-format
 msgid ""
 "%s\n"
@@ -5662,22 +5674,22 @@ msgstr ""
 "%s\n"
 "#  Nama                                       Tipe           Jumlah       Harga\n"
 
-#: ../Network/Receive.pm:6063
+#: ../Network/Receive.pm:6082
 #, perl-format
 msgid "Failed to buy %s of item #%s from vender (insufficient zeny).\n"
 msgstr "Gagal membeli %s dari item #%s dari penjual (tidak cukup zeny).\n"
 
-#: ../Network/Receive.pm:6065
+#: ../Network/Receive.pm:6084
 #, perl-format
 msgid "Failed to buy %s of item #%s from vender (overweight).\n"
 msgstr "Gagal untuk membeli %s dari item #%s dari vender (kelebihan berat).\n"
 
-#: ../Network/Receive.pm:6067
+#: ../Network/Receive.pm:6086
 #, perl-format
 msgid "Failed to buy %s of item #%s from vender (unknown code %s).\n"
 msgstr "Gagal untuk membeli %s dari item #%s dari vender (kode tidak diketahui %s).\n"
 
-#: ../Network/Receive.pm:6084
+#: ../Network/Receive.pm:6103
 #, perl-format
 msgid ""
 "%s\n"
@@ -5790,6 +5802,16 @@ msgstr "Pilih sebuah master server untuk terhubung."
 msgid "Master servers"
 msgstr "Master server"
 
+#: ../Network/Send/ServerType0.pm:1197
+#: ../Network/Send/ServerType0.pm:1202
+msgid "PIN code must contain only digits.\n"
+msgstr "Kode PIN harus hanya mengandung digit.\n"
+
+#: ../Network/Send/ServerType0.pm:1221
+#: ../Network/Send/ServerType0.pm:1231
+msgid "PIN code must be more than 3 and less than 9 chars long.\n"
+msgstr "Panjang Kode PIN harus lebih dari 3 karakter dan kurang dari 9 karakter.\n"
+
 #: ../Poseidon/EmbedServer.pm:48
 #, perl-format
 msgid ""
@@ -5881,7 +5903,7 @@ msgstr ""
 " Mencoba lagi..."
 
 #: ../AI/CoreLogic.pm:569
-#: ../AI/CoreLogic.pm:1912
+#: ../AI/CoreLogic.pm:1919
 #, perl-format
 msgid "Calculating random route to: %s(%s): %s, %s\n"
 msgstr "Mengkalkulasi rute random ke: %s(%s): %s, %s\n"
@@ -5896,7 +5918,7 @@ msgid "Failed to take %s (%s) from (%s, %s) to (%s, %s)\n"
 msgstr "Gagal untuk mengambil %s (%s) dari (%s, %s) ke (%s, %s)\n"
 
 #: ../AI/CoreLogic.pm:787
-#: ../AI/CoreLogic.pm:2832
+#: ../AI/CoreLogic.pm:2839
 #, perl-format
 msgid "Routing to (%s, %s) to take %s (%s), distance %s\n"
 msgstr "Rute ke (%s, %s) untuk mengambil %s (%s), jarak %s\n"
@@ -5948,8 +5970,8 @@ msgstr "Storage secara otomatis dikarenakan kelebihan berat\n"
 
 #: ../AI/CoreLogic.pm:1114
 #: ../AI/CoreLogic.pm:1115
-#: ../AI/CoreLogic.pm:2226
-#: ../AI/CoreLogic.pm:2227
+#: ../AI/CoreLogic.pm:2233
+#: ../AI/CoreLogic.pm:2234
 #, perl-format
 msgid "Disconnecting on empty %s!\n"
 msgstr "Mengakhiri koneksi saat kehabisan %s!\n"
@@ -5980,17 +6002,22 @@ msgstr "Menggunakan storage dengan step yang telah ditentukan di config.\n"
 msgid "Something is wrong with storageAuto_npc_type in your config.\n"
 msgstr "Ada yang salah dengan storageAuto_npc_type di config Anda.\n"
 
-#: ../AI/CoreLogic.pm:1347
+#: ../AI/CoreLogic.pm:1246
+#: ../AI/CoreLogic.pm:1247
+msgid "Disconnecting because storage is full!\n"
+msgstr "Disconnect dikarenakan storage penuh!\n"
+
+#: ../AI/CoreLogic.pm:1354
 #, perl-format
 msgid "Attempt to get %s x %s from storage, retry: %s\n"
 msgstr "Mencoba untuk mengambil %s x %s dari storage, percobaan: %s\n"
 
-#: ../AI/CoreLogic.pm:1358
+#: ../AI/CoreLogic.pm:1365
 #, perl-format
 msgid "storage: %s out of stock\n"
 msgstr "storage: %s kehabisan stok\n"
 
-#: ../AI/CoreLogic.pm:1366
+#: ../AI/CoreLogic.pm:1373
 msgid ""
 "Kore tried to get an item from storage 3 times, but failed.\n"
 "This problem could be caused by a server bug.\n"
@@ -6000,182 +6027,182 @@ msgstr ""
 "Problem ini mungkin dikarenakan oleh bug pada server.\n"
 "Untuk mengatasi hal ini , set 'relogAfterStorage' menjadi 1, dan login ulang.\n"
 
-#: ../AI/CoreLogic.pm:1382
+#: ../AI/CoreLogic.pm:1389
 msgid "Character is still overweight after storageAuto (storage is full?)\n"
 msgstr "Karakter masih kelebihan berat setelah storageAuto (storage penuh?)\n"
 
-#: ../AI/CoreLogic.pm:1384
-#: ../AI/CoreLogic.pm:1385
+#: ../AI/CoreLogic.pm:1391
+#: ../AI/CoreLogic.pm:1392
 msgid "Disconnecting on storage full!\n"
 msgstr "mengakhiri koneksi saat storage penuh!\n"
 
-#: ../AI/CoreLogic.pm:1421
+#: ../AI/CoreLogic.pm:1428
 msgid "Auto-sell sequence completed.\n"
 msgstr "Urutan menjual secara otomatis Selesai.\n"
 
-#: ../AI/CoreLogic.pm:1457
+#: ../AI/CoreLogic.pm:1464
 msgid "Teleporting to auto-sell\n"
 msgstr "Melakukan Teleport untuk menjual secara otomatis\n"
 
-#: ../AI/CoreLogic.pm:1461
+#: ../AI/CoreLogic.pm:1468
 #, perl-format
 msgid "Calculating auto-sell route to: %s(%s): %s, %s\n"
 msgstr "Mengkalkulasi rute menjual secara otomatis ke: %s(%s): %s, %s\n"
 
-#: ../AI/CoreLogic.pm:1617
+#: ../AI/CoreLogic.pm:1624
 msgid "Teleporting to auto-buy\n"
 msgstr "Melakukan Teleport untuk membeli secara otomatis\n"
 
-#: ../AI/CoreLogic.pm:1621
+#: ../AI/CoreLogic.pm:1628
 #, perl-format
 msgid "Calculating auto-buy route to: %s (%s): %s, %s\n"
 msgstr "Mengkalkulasi rute membeli secara otomatis ke: %s(%s): %s, %s\n"
 
-#: ../AI/CoreLogic.pm:1757
+#: ../AI/CoreLogic.pm:1764
 #, perl-format
 msgid "Invalid map specified for lockMap - map %s doesn't exist\n"
 msgstr "Map yang dispesifikasikan untuk lockMap salah - map %s tidak ada\n"
 
-#: ../AI/CoreLogic.pm:1779
+#: ../AI/CoreLogic.pm:1786
 msgid "Invalid coordinates specified for lockMap, coordinates are unwalkable\n"
 msgstr "Koordinat yang dispesifikasikan untuk lockMap salah, Koordinat tersebut tidak dapat dijalani\n"
 
-#: ../AI/CoreLogic.pm:1786
+#: ../AI/CoreLogic.pm:1793
 #, perl-format
 msgid "Calculating lockMap route to: %s(%s): %s, %s\n"
 msgstr "Mengkalkulasi rute lockMap ke: %s(%s): %s, %s\n"
 
-#: ../AI/CoreLogic.pm:1788
+#: ../AI/CoreLogic.pm:1795
 #, perl-format
 msgid "Calculating lockMap route to: %s(%s)\n"
 msgstr "Mengkalkulasi rute lockMap ke: %s(%s)\n"
 
-#: ../AI/CoreLogic.pm:1834
+#: ../AI/CoreLogic.pm:1841
 #, perl-format
 msgid "Auto-adding stat %s\n"
 msgstr "Menambahkan secara otomatis stat %s\n"
 
-#: ../AI/CoreLogic.pm:1869
+#: ../AI/CoreLogic.pm:1876
 #, perl-format
 msgid "Unknown skill '%s'; disabling skillsAddAuto\n"
 msgstr "Skill tidak diketahui '%s'; menonaktifkan skillsAddAuto\n"
 
-#: ../AI/CoreLogic.pm:1880
+#: ../AI/CoreLogic.pm:1887
 #, perl-format
 msgid "Auto-adding skill %s\n"
 msgstr "Menambahkan secara otomatis skill %s\n"
 
-#: ../AI/CoreLogic.pm:1909
+#: ../AI/CoreLogic.pm:1916
 msgid "Invalid coordinates specified for randomWalk (coordinates are unwalkable); randomWalk disabled\n"
 msgstr "Koordinat yang dispesifikasikan untuk randomWalk salah(Koordinat tidak dapat dijalani); randomWalk dinonaktifkan\n"
 
-#: ../AI/CoreLogic.pm:1944
+#: ../AI/CoreLogic.pm:1951
 #, perl-format
 msgid "Found my master - %s\n"
 msgstr "Menemukan master - %s\n"
 
-#: ../AI/CoreLogic.pm:1951
+#: ../AI/CoreLogic.pm:1958
 msgid "Found my master!\n"
 msgstr "Menemukan master!\n"
 
-#: ../AI/CoreLogic.pm:2005
+#: ../AI/CoreLogic.pm:2012
 msgid "Master died. I'll wait here.\n"
 msgstr "Master meninggal. Saya akan menunggu disini .\n"
 
-#: ../AI/CoreLogic.pm:2008
+#: ../AI/CoreLogic.pm:2015
 msgid "I lost my master\n"
 msgstr "Saya kehilangan master\n"
 
-#: ../AI/CoreLogic.pm:2010
+#: ../AI/CoreLogic.pm:2017
 msgid "Trying to get him back\n"
 msgstr "mecoba untuk mendapatkan dia kembali\n"
 
-#: ../AI/CoreLogic.pm:2017
-#: ../AI/CoreLogic.pm:2102
+#: ../AI/CoreLogic.pm:2024
+#: ../AI/CoreLogic.pm:2109
 msgid "My master disconnected\n"
 msgstr "Master telah disconnect\n"
 
-#: ../AI/CoreLogic.pm:2053
-#: ../AI/CoreLogic.pm:2130
+#: ../AI/CoreLogic.pm:2060
+#: ../AI/CoreLogic.pm:2137
 msgid "My master teleported\n"
 msgstr "Master telah teleport\n"
 
-#: ../AI/CoreLogic.pm:2057
+#: ../AI/CoreLogic.pm:2064
 msgid "Trying to find lost master\n"
 msgstr "Mencoba untuk menemukan master yang hilang\n"
 
-#: ../AI/CoreLogic.pm:2082
+#: ../AI/CoreLogic.pm:2089
 msgid "Don't know what happened to Master\n"
 msgstr "Tidak tahu apa yang terjadi pada Master\n"
 
-#: ../AI/CoreLogic.pm:2098
+#: ../AI/CoreLogic.pm:2105
 msgid "Couldn't find master, giving up\n"
 msgstr "Tidak dapat menemukan master, menyerah\n"
 
-#: ../AI/CoreLogic.pm:2126
+#: ../AI/CoreLogic.pm:2133
 #, perl-format
 msgid "My master warped at (%s, %s) - moving to warp point\n"
 msgstr "Master warp ke (%s, %s) - berjalan ke warp point\n"
 
-#: ../AI/CoreLogic.pm:2786
+#: ../AI/CoreLogic.pm:2793
 #, perl-format
 msgid "Gathering: %s (%s)\n"
 msgstr "Mengumpulkan: %s (%s)\n"
 
-#: ../AI/CoreLogic.pm:2803
+#: ../AI/CoreLogic.pm:2810
 #, perl-format
 msgid "Failed to gather %s (%s) : Lost target\n"
 msgstr "Gagal untuk mengumpulkan %s (%s) : Kehilangan target\n"
 
-#: ../AI/CoreLogic.pm:2811
+#: ../AI/CoreLogic.pm:2818
 #, perl-format
 msgid "Failed to gather %s (%s) : No looting!\n"
 msgstr "Gagal untuk mengumpulkan %s (%s) : Tidak memungut!\n"
 
-#: ../AI/CoreLogic.pm:2815
+#: ../AI/CoreLogic.pm:2822
 #, perl-format
 msgid "Failed to gather %s (%s) : Timeout\n"
 msgstr "gagal untuk mengumpulkan %s (%s) : Timeout\n"
 
-#: ../AI/CoreLogic.pm:2871
+#: ../AI/CoreLogic.pm:2878
 msgid "Teleporting to avoid all players\n"
 msgstr "Melakukan Teleport untuk menghindari semua player\n"
 
-#: ../AI/CoreLogic.pm:2911
+#: ../AI/CoreLogic.pm:2918
 msgid "Teleporting due to insufficient HP/SP or too many aggressives\n"
 msgstr "Melakukan Teleport dikarenakan tidak cukup HP/SP atau terlalu banyak aggressive\n"
 
-#: ../AI/CoreLogic.pm:2922
+#: ../AI/CoreLogic.pm:2929
 #, perl-format
 msgid "Teleporting to avoid %s\n"
 msgstr "Melakukan Teleport untuk menghindari %s\n"
 
-#: ../AI/CoreLogic.pm:2938
+#: ../AI/CoreLogic.pm:2945
 msgid "Teleporting due to idle\n"
 msgstr "Melakukan Teleport dikarenakan diam(tidak bergerak)\n"
 
-#: ../AI/CoreLogic.pm:2950
+#: ../AI/CoreLogic.pm:2957
 msgid "Teleporting to avoid portal\n"
 msgstr "Melakukan Teleport untuk menghindari portal\n"
 
-#: ../AI/CoreLogic.pm:2975
+#: ../AI/CoreLogic.pm:2982
 msgid "Respawning to save point.\n"
 msgstr "Spawn kembali ke simpan posisi.\n"
 
-#: ../AI/CoreLogic.pm:2976
+#: ../AI/CoreLogic.pm:2983
 msgid "** Respawning to save point.\n"
 msgstr "**Spawn kembali ke simpan posisi.\n"
 
-#: ../AI/CoreLogic.pm:3027
+#: ../AI/CoreLogic.pm:3034
 #, perl-format
 msgid "Disconnecting for 30 secs to avoid %s\n"
 msgstr "Disconnecting selama 30 detik untuk menghindari %s\n"
 
-#: ../AI/CoreLogic.pm:3061
+#: ../AI/CoreLogic.pm:3068
 msgid "Player detected, disconnecting!\n"
 msgstr "Player terdeteksi, melakukan disconnect!\n"
 
-#: ../AI/CoreLogic.pm:3062
+#: ../AI/CoreLogic.pm:3069
 msgid "*** Player detected, disconnecting! ***\n"
 msgstr "*** Player terdeteksi, disconnect secara otomatis! ***\n"
 
@@ -6569,6 +6596,10 @@ msgstr "%sTerhubung - %s"
 msgid "Map loaded\n"
 msgstr "Map telah di-load\n"
 
+#~ msgid "PIN must be at least 4, and not more than 9"
+#~ msgstr "PIN harus tidak kurang dari 4, dan tidak lebih dari 9"
+#~ msgid "PIN code set succefuly to: %s\n"
+#~ msgstr "Kode PIN telah berhasil diset ke: %s\n"
 #~ msgid "couldn't connect: %s\n"
 #~ msgstr "tidak dapat connect: %s\n"
 #~ msgid "Unable to listen on XKore2 port (%s:%s): %s"
@@ -6601,10 +6632,6 @@ msgstr "Map telah di-load\n"
 #~ msgid "Unknown/unexpected XKore 2 packet: %s (state: %s).\n"
 #~ msgstr ""
 #~ "Packet XKore 2 yang tidak diketahui/tidak diperkirakan: %s (state: %s).\n"
-
-#, fuzzy
-#~ msgid "Please enter a new storage password:"
-#~ msgstr "Silahkan masukkan password storage yang baru:\n"
 #~ msgid "No username or password set."
 #~ msgstr "Username atau password tidak di-set."
 #~ msgid "[dist=%s] %s\n"
