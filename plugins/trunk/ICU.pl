@@ -1,5 +1,5 @@
 #########################################################################
-#  OpenKore - Telesearch Plugin v2
+#  OpenKore - ICU
 #  Copyright (c) 2007 Bibian
 #
 # This plugin is licensed under Creative Commons "Attribution-NonCommercial-ShareAlike 2.5"
