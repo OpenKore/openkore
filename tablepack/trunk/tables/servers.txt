@@ -496,6 +496,16 @@ version 20
 serverType 0
 serverEncoding Western
 
+## http://animaro.com/
+[AtlantisRO Private Server]
+ip 209.190.27.146
+master_version 18
+port 6900
+private 1
+serverEncoding Western
+serverType 9
+version 20
+
 ## http://excalibur-ro.com/
 [AvalonRO Private Server]
 ip 206.222.29.186
@@ -773,6 +783,17 @@ master_version 13
 version 20
 serverType 5
 serverEncoding Western
+
+## http://www.kore-ro.com
+[KoreRO Private Server]
+ip ro1.serveftp.net
+port 6901
+master_version 16
+version 20
+serverType 3
+private 1
+serverEncoding Western
+charBlockSize 108
 
 ## http://www.mavero.de/
 [MaveRO Private Server]
