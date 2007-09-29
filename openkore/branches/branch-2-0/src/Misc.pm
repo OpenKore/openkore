@@ -251,31 +251,51 @@ sub auth {
 }
 
 ##
-# configModify(key, val, [silent])
+# void configModify(String key, String value, ...)
 # key: a key name.
-# val: the new value.
-# silent: if set to 1, do not print a message to the console.
+# value: the new value.
 #
-# Changes the value of the configuration variable $key to $val.
-# %config and config.txt will be updated.
+# Changes the value of the configuration option $key to $value.
+# Both %config and config.txt will be updated.
+#
+# You may also call configModify() with additional optional options:
+# `l
+# - autoCreate (boolean): Whether the configuration option $key
+#                         should be created if it doesn't already exist.
+#                         The default is true.
+# - silent (boolean): By default, output will be printed, notifying the user
+#                     that a config option has been changed. Setting this to
+#                     true will surpress that output.
+# `l`
 sub configModify {
 	my $key = shift;
 	my $val = shift;
-	my $silent = shift;
+	my %args;
+
+	if (@_ == 1) {
+		$args{silent} = $_[0];
+	} else {
+		%args = @_;
+	}
+	$args{autoCreate} = 1 if (!exists $args{autoCreate});
 
 	Plugins::callHook('configModify', {
 		key => $key,
 		val => $val,
-		silent => $silent
+		additionalOptions => \%args
 	});
 
-	my $oldval = $config{$key};
-	if ($key =~ /password/i) {
-		message TF("Config '%s' set to %s (was *not-displayed*)\n", $key, $val), "info" unless ($silent);
-	} else {
-		message TF("Config '%s' set to %s (was %s)\n", $key, $val, $oldval), "info" unless ($silent);
+	if (!$args{silent} && $key !~ /password/i) {
+		my $oldval = $config{$key};
+		message TF("Config '%s' set to %s (was %s)\n", $key, $val, $oldval), "info";
 	}
-
+	if ($args{autoCreate} && !exists $config{$key}) {
+		my $f;
+		if (open($f, ">>", $Settings::config_file)) {
+			print $f "$key\n";
+			close($f);
+		}
+	}
 	$config{$key} = $val;
 	saveConfigFile();
 }

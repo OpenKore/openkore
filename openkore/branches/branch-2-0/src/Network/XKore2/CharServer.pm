@@ -15,7 +15,7 @@
 package Network::XKore2::CharServer;
 
 use strict;
-use Globals qw($char);
+use Globals qw($char $masterServer);
 use Base::Ragnarok::CharServer;
 use base qw(Base::Ragnarok::CharServer);
 
@@ -34,6 +34,15 @@ sub getCharacters {
 		}
 	}
 	return @chars;
+}
+
+sub charBlockSize {
+	my ($self) = @_;
+	if ($masterServer) {
+		return $masterServer->{charBlockSize} || $self->{charBlockSize} || 106;
+	} else {
+		return $self->SUPER::charBlockSize();
+	}
 }
 
 1;

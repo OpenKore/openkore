@@ -52,7 +52,10 @@ sub new {
 
 sub DESTROY {
 	my ($self) = @_;
-	$self->unlock() if ($self->locked());
+	# Only unlock if process didn't fork since the lock was obtained.
+	if ($self->locked() && $self->{pid} == $$) {
+		$self->unlock();
+	}
 }
 
 ##
@@ -109,6 +112,7 @@ sub _lock {
 		if ($block) {
 			if ($result) {
 				$self->{handle} = $f;
+				$self->{pid} = $$;
 			} else {
 				close $f;
 				IOException->throw("Cannot lock lockfile.");

@@ -165,8 +165,15 @@ sub serverSend {
 	my $self = shift;
 	my $msg = shift;
 	if ($self->serverAlive) {
-		$self->{remote_socket}->send($msg);
-		Plugins::callHook("Network::serverSend", { msg => $msg });
+		if (Plugins::hasHook("Network::serverSend/pre")) {
+			Plugins::callHook("Network::serverSend/pre", { msg => \$msg });
+		}
+		if (defined $msg) {
+			$self->{remote_socket}->send($msg);
+			if (Plugins::hasHook("Network::serverSend")) {
+				Plugins::callHook("Network::serverSend", { msg => $msg });
+			}
+		}
 	}
 }
 
@@ -181,6 +188,9 @@ sub serverRecv {
 	return undef unless (dataWaiting(\$self->{remote_socket}));
 	
 	$self->{remote_socket}->recv($msg, $Settings::MAX_READ);
+	if (Plugins::hasHook("Network::serverRecv")) {
+		Plugins::callHook("Network::serverRecv", { msg => $msg });
+	}
 	if (!defined($msg) || length($msg) == 0) {
 		# Connection from server closed.
 		close($self->{remote_socket});
@@ -324,8 +334,8 @@ sub checkConnection {
 			my $wrapper = ($self->{wrapper}) ? $self->{wrapper} : $self;
 			$messageSender = Network::Send->create($wrapper, $config{serverType});
 		};
-		if (my $e = caught('Exception::Class::Base')) {
-			$interface->errorDialog($e->message());
+		if ($@) {
+			$interface->errorDialog("$@");
 			$quit = 1;
 			return;
 		}

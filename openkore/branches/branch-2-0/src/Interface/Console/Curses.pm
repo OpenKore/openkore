@@ -200,7 +200,7 @@ sub readEvents {
 			last;
 		} elsif ((ord($ch) == 9 || ord($ch) == 127 || $ch eq KEY_BACKSPACE) && $self->{inputBuffer}) {
 			# Backspace
-			$self->{inputBuffer} = substr($self->{inputBuffer}, 0, -1);
+			$self->{inputBuffer} = substr($self->{inputBuffer}, 0, $self->{inputPos} - 1) . substr($self->{inputBuffer}, $self->{inputPos});
 			$self->{inputPos}--;
 		} elsif (ord($ch) == 12) {
 			# Ctrl-L
@@ -434,13 +434,13 @@ sub updatePopups {
 sub updateStatus {
 	my $self = shift;
 
-	return if (!$self->{winStatus});
+	return if (!$char || !$self->{winStatus});
 
 	erase $self->{winStatus};
 	my $width = int($self->{winStatusWidth} / 2);
 
-	$self->printw($self->{winStatus}, 0, 0, "{bold|yellow}   Char: {bold|white}@*{normal} (@* @*)",
-		$char->{name}, $jobs_lut{$char->{jobID}}, $sex_lut{$char->{sex}});
+	$self->printw($self->{winStatus}, 0, 0, "{bold|yellow} Char: {bold|white}@*{normal} (@*@*@*@*",
+		$char->{name}, $jobs_lut{$char->{jobID}}, " - ", $sex_lut{$char->{sex}}, ")");
 	my $bexpbar = $self->makeBar($width-24, $char->{exp}, $char->{exp_max});
 	$self->printw($self->{winStatus}, 1, 0, "{bold|yellow}   Base:{normal} @<< $bexpbar (@#.##%)",
 		$char->{lv}, $char->{exp_max} ? $char->{exp} / $char->{exp_max} * 100 : 0);
