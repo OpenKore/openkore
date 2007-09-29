@@ -324,6 +324,8 @@ sub new {
 		'0296' => ['storage_items_nonstackable'],
 		'0297' => ['cart_equip_list'],
 		'029A' => ['inventory_item_added', 'v1 v1 v1 C1 C1 C1 a8 v1 C1 C1 a4', [qw(index amount nameID identified broken upgrade cards type_equip type fail cards_ext)]],
+		# mRO PIN code Check
+		'02AD' => ['login_pin_code_request', 'v1 V', [qw(flag key)]],
 	};
 
 	return bless \%self, $class;
@@ -576,6 +578,41 @@ sub decrypt {
 		$$r_msg = $msg_temp.substr($themsg, $len_total, length($themsg) - $len_total);
 	} else {
 		$$r_msg = $themsg;
+	}
+}
+
+
+#######################################
+###### Private methods
+#######################################
+
+sub queryLoginPinCode {
+	my $message = $_[0] || T("You've never set a login PIN code before.\nPlease enter a new login PIN code:");
+	do {
+		my $input = $interface->query($message, isPassword => 1,);
+		if (!defined($input)) {
+			quit();
+			return;
+		} else {
+			if ($input !~ /^\d+$/) {
+				$interface->errorDialog(T("The PIN code may only contain digits."));
+			} elsif ((length($input) <= 3) || (length($input) >= 9)) {
+				$interface->errorDialog(T("The PIN code must be between 4 and 9 characters."));
+			} else {
+				return $input;
+			}
+		}
+	} while (1);
+}
+
+sub queryAndSaveLoginPinCode {
+	my ($message) = @_;
+	my $pin = queryLoginPinCode($message);
+	if (defined $pin) {
+		configModify('loginPinCode', $pin, silent => 1);
+		return 1;
+	} else {
+		return 0;
 	}
 }
 
@@ -3160,8 +3197,10 @@ sub inventory_item_removed {
 	my ($self, $args) = @_;
 	return unless changeToInGameState();
 	my $item = $char->inventory->getByServerIndex($args->{index});
-	inventoryItemRemoved($item->{invIndex}, $args->{amount});
-	Plugins::callHook('packet_item_removed', {index => $item->{invIndex}});
+	if ($item) {
+		inventoryItemRemoved($item->{invIndex}, $args->{amount});
+		Plugins::callHook('packet_item_removed', {index => $item->{invIndex}});
+	}
 }
 
 sub item_used {
@@ -3508,6 +3547,7 @@ sub job_equipment_hair_change {
 
 sub hp_sp_changed {
 	my ($self, $args) = @_;
+	return unless changeToInGameState();
 
 	my $type = $args->{type};
 	my $amount = $args->{amount};
@@ -5787,6 +5827,85 @@ sub storage_password_result {
 
 	# $args->{val}
 	# unknown, what is this for?
+}
+
+sub login_pin_code_request {
+	my ($self, $args) = @_;
+	my $done;
+
+	if ($args->{flag} == 0) {
+		# PIN code has never been set before, so set it.
+		return if ($config{loginPinCode} eq '' && !queryAndSaveLoginPinCode());
+		my @key = split /[, ]+/, $masterServer->{PINEncryptKey};
+		if (!@key) {
+			$interface->errorDialog(T("Unable to send PIN code. You must set the 'PINEncryptKey' option in servers.txt."));
+			quit();
+			return;
+		}
+		$messageSender->sendLoginPinCode($config{loginPinCode}, $config{loginPinCode}, $args->{key}, 2, \@key);
+
+	} elsif ($args->{flag} == 1) {
+		# PIN code query request.
+		return if ($config{loginPinCode} eq '' && !queryAndSaveLoginPinCode());
+		my @key = split /[, ]+/, $masterServer->{PINEncryptKey};
+		if (!@key) {
+			$interface->errorDialog(T("Unable to send PIN code. You must set the 'PINEncryptKey' option in servers.txt."));
+			quit();
+			return;
+		}
+		$messageSender->sendLoginPinCode($config{loginPinCode}, 0, $args->{key}, 3, \@key);
+
+	} elsif ($args->{flag} == 2) {
+		message T("Login PIN code has been changed successfully.\n");
+
+	} elsif ($args->{flag} == 3) {
+		warning TF("Failed to change the login PIN code. Please try again.\n");
+
+		configModify('loginPinCode', '', silent => 1);
+		my $oldPin = queryLoginPinCode(T("Please enter your old login PIN code:"));
+		if (!defined($oldPin)) {
+			return;
+		}
+
+		my $newPinCode = queryLoginPinCode(T("Please enter a new login PIN code:"));
+		if (!defined($newPinCode)) {
+			return;
+		}
+		configModify('loginPinCode', $newPinCode, silent => 1);
+
+		my @key = split /[, ]+/, $masterServer->{PINEncryptKey};
+		if (!@key) {
+			$interface->errorDialog(T("Unable to send PIN code. You must set the 'PINEncryptKey' option in servers.txt."));
+			quit();
+			return;
+		}
+		$messageSender->sendLoginPinCode($oldPin, $newPinCode, $args->{key},  2, \@key);
+
+	} elsif ($args->{flag} == 4) {
+		# PIN code incorrect.
+		configModify('loginPinCode', '', 1);
+		return if (!queryAndSaveLoginPinCode(T("The login PIN code that you entered is incorrect. Please re-enter your login PIN code.")));
+
+		my @key = split /[, ]+/, $masterServer->{PINEncryptKey};
+		if (!@key) {
+			$interface->errorDialog(T("Unable to send PIN code. You must set the 'PINEncryptKey' option in servers.txt."));
+			quit();
+			return;
+		}
+		$messageSender->sendPinCode($config{loginPinCode}, 0, $args->{key}, 3, \@key);
+
+	} elsif ($args->{flag} == 5) {
+		# PIN Entered 3 times Wrong, Disconnect
+		warning T("You have entered 3 incorrect login PIN codes in a row. Reconnecting...\n");
+		configModify('loginPinCode', '', silent => 1);
+		$timeout_ex{master}{time} = time;
+		$timeout_ex{master}{timeout} = $timeout{reconnect}{timeout};
+		$net->serverDisconnect();
+
+	} else {
+		debug("login_pin_code_request: unknown flag $args->{flag}\n");
+	}
+	$timeout{master}{time} = time;
 }
 
 sub switch_character {

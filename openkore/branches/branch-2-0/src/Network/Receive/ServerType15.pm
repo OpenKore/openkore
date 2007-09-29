@@ -33,6 +33,9 @@ sub map_loaded {
 		ai_clientSuspend(0, 10);
 		main::initMapChangeVars();
 	} else {
+		$messageSender->sendMapLoaded();
+		$messageSender->sendSync(1);
+		debug "Sent initial sync\n", "connection";
 		$messageSender->sendGuildInfoRequest();
 
 		# Replies 01B6 (Guild Info) and 014C (Guild Ally/Enemy List)
@@ -41,9 +44,6 @@ sub map_loaded {
 		# Replies 0166 (Guild Member Titles List) and 0154 (Guild Members List)
 		$messageSender->sendGuildRequest(1);
 		message(T("You are now in the game\n"), "connection");
-		$messageSender->sendMapLoaded();
-		$messageSender->sendSync(1);
-		debug "Sent initial sync\n", "connection";
 		$timeout{'ai'}{'time'} = time;
 	}
 

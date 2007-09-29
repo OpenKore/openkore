@@ -47,6 +47,7 @@ sub new {
 	$self->{sessionStore} = $options{sessionStore};
 	$self->{mapServer} = $options{mapServer};
 	$self->{name} = $options{name} || 'Ragnarok Online';
+	$self->{charBlockSize} = $options{charBlockSize} || 106;
 	return $self;
 }
 
@@ -60,6 +61,10 @@ sub getPlayersCount {
 
 sub getCharacters {
 	die "This is an abstract method and has not been implemented.";
+}
+
+sub charBlockSize {
+	return $_[0]->{charBlockSize};
 }
 
 sub process_0065 {
@@ -82,7 +87,7 @@ sub process_0065 {
 		foreach my $char ($self->getCharacters($session)) {
 			$index++;
 			next if (!$char);
-			my $charStructure = pack('x106');
+			my $charStructure = pack('x' . $self->charBlockSize());
 
 			substr($charStructure, 0, 18) = pack('a4 V3 v',
 				$char->{charID},	# character ID

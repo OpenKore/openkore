@@ -70,7 +70,12 @@ ConsoleUI::~ConsoleUI() {
 
 void
 ConsoleUI::lineRead(char *line) {
-	if (*line != '\0') {
+	if (line == NULL) {
+		pthread_mutex_lock(&inputLock);
+		input.push(strdup(""));
+		pthread_mutex_unlock(&inputLock);
+		quit = true;
+	} else if (*line != '\0') {
 		pthread_mutex_lock(&inputLock);
 		input.push(line);
 		pthread_mutex_unlock(&inputLock);

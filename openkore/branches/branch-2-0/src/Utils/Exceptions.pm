@@ -44,6 +44,7 @@ use Exception::Class (
 	'FileNotFoundException'  => { isa => 'IOException' },
 	'SocketException'        => { isa => 'IOException' },
 	'BusNotRunningException' => { isa => 'IOException' },
+	'ProtocolException'      => { isa => 'IOException' },
 
 	'DataFormatException',
 	'UTF8MalformedException' => { isa => 'DataFormatException', fields => ['textfileline', 'textfile'] }

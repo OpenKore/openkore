@@ -49,7 +49,7 @@ our @EXPORT = (
 	getFormattedDate getHex giveHex getRange getTickCount
 	inRange judgeSkillArea makeCoords makeCoords2 makeDistMap makeIP encodeIP parseArgs
 	quarkToString stringToQuark shiftPack swrite timeConvert timeOut
-	urldecode urlencode unShiftPack vocalString wrapText)
+	urldecode urlencode unShiftPack vocalString wrapText pin_encode)
 );
 
 our %strings;
@@ -1205,6 +1205,46 @@ sub vocalString {
 sub wrapText {
 	local($Text::Wrap::columns) = $_[1];
 	return wrap('', '', $_[0]);
+}
+
+##
+# int pin_encode(int pin, int key)
+# pin: the PIN code
+# key: the encryption key
+#
+# PIN Encode Function, used to hide the real PIN code, using KEY.
+sub pin_encode {
+	my ($pin, $key) = @_;
+	$key &= 0xFFFFFFFF;
+	$key ^= 0xFFFFFFFF;
+	# Check PIN len
+	if ((length($pin) > 3) && (length($pin) < 9)) {
+		my $pincode;
+		# Convert String to number
+		$pincode = $pin;
+		# Encryption loop
+		for(my $loopin = 0; $loopin < length($pin); $loopin++) {
+			$pincode &= 0xFFFFFFFF;
+			$pincode += 0x05F5E100; # Static Encryption Key
+			$pincode &= 0xFFFFFFFF;
+		}
+		# Finalize Encryption
+		$pincode &= 0xFFFFFFFF;
+		$pincode ^= $key;
+		$pincode &= 0xFFFFFFFF;
+		return $pincode;
+	} elsif (length($pin) == 0) {
+		my $pincode;
+		# Convert String to number
+		$pincode = 0;
+		# Finalize Encryption
+		$pincode &= 0xFFFFFFFF;
+		$pincode ^= $key;
+		$pincode &= 0xFFFFFFFF;
+		return $pincode;
+	} else {
+		return 0;
+	}
 }
 
 1;
