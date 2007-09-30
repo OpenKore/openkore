@@ -279,11 +279,66 @@ syncID 0x00F5
 syncTickOffset 2
 mapLoadedTickOffset 4
 
+[Taiwan - twRO: Alfheim (chaos, loki)]
+ip 61.220.60.11
+port 6900
+master_version 5
+version 111
+serverType 0
+serverEncoding Traditional Chinese
+storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+
+[Taiwan - twRO: Asgard (Lidia, Sakray)]
+ip 61.220.60.36
+port 6900
+master_version 5
+version 111
+serverType 0
+serverEncoding Traditional Chinese
+storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+
 [Taiwan - twRO: Free]
 ip 220.130.113.238
 port 6900
 master_version 5
-version 1004
+version 111
+serverType 0
+serverEncoding Traditional Chinese
+storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+PINEncryptKey 0x050D6F79, 0x202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x5973DF2, 0x007D8D6B, 0x08CB9ED9
+
+[Taiwan - twRO: Jotunheim (Iris, Penril)]
+ip 61.220.56.147
+port 6900
+master_version 5
+version 111
+serverType 0
+serverEncoding Traditional Chinese
+storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+
+[Taiwan - twRO: Midgard (Balder)]
+ip 61.220.62.30
+port 6900
+master_version 5
+version 111
+serverType 0
+serverEncoding Traditional Chinese
+storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+
+[Taiwan - twRO: Muspelheim (Odin, Thor)]
+ip 61.220.56.132
+port 6900
+master_version 5
+version 111
+serverType 0
+serverEncoding Traditional Chinese
+storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+
+[Taiwan - twRO: Nidavellir (Idun)]
+ip 61.220.62.116
+port 6900
+master_version 5
+version 111
 serverType 0
 serverEncoding Traditional Chinese
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
@@ -292,16 +347,34 @@ storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x
 ip 61.220.62.26
 port 6900
 master_version 5
-version 301
+version 111
 serverType 0
 serverEncoding Traditional Chinese
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
 
-[Taiwan - twRO: Midgard]
-ip 61.220.62.30
+[Taiwan - twRO: Vanaheim (aegir)]
+ip 61.220.62.25
 port 6900
 master_version 5
-version 301
+version 111
+serverType 0
+serverEncoding Traditional Chinese
+storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+
+[Taiwan - twRO: Manaheim (geiriod)]
+ip 203.69.46.167
+port 6900
+master_version 5
+version 111
+serverType 0
+serverEncoding Traditional Chinese
+storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+
+[Taiwan - twRO: Utgard (isa)]
+ip 203.69.46.166
+port 6900
+master_version 5
+version 111
 serverType 0
 serverEncoding Traditional Chinese
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
