@@ -1570,7 +1570,7 @@ sub processAutoBuy {
 		undef $args->{index};
 
 		for (my $i = 0; exists $config{"buyAuto_$i"}; $i++) {
-			next if (!$config{"buyAuto_$i"});
+			next if (!$config{"buyAuto_$i"} || $config{"buyAuto_${i}_disabled"});
 			# did we already fail to do this buyAuto slot? (only fails in this way if the item is nonexistant)
 			next if ($args->{index_failed}{$i});
 
