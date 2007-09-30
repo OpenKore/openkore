@@ -13,6 +13,7 @@ use Time::HiRes qw(time usleep);
 use IO::Socket;
 use Text::ParseWords;
 use Carp::Assert;
+use Data::YAML::Writer;
 use Config;
 use encoding 'utf8';
 
@@ -704,26 +705,46 @@ sub mainLoop_initialized {
 
 	processStatisticsReporting() unless ($sys{sendAnonymousStatisticReport} eq "0");
 
-	# Update state.txt
-	if ($field{name} && $net->getState() == Network::IN_GAME && timeOut($AI::Timeouts::mapdrt, $config{intervalMapDrt})) {
-		$AI::Timeouts::mapdrt = time;
-
-		my $pos = calcPosition($char);
+	# Update state.yml
+	if (timeOut($AI::Timeouts::stateUpdate, 0.5)) {
+		my %state;
 		my $f;
-		if (open($f, ">:utf8", "$Settings::logs_folder/state.txt")) {
-			print $f "fieldName=$field{name}\n";
-			print $f "fieldBaseName=$field{baseName}\n";
-			print $f "x=$pos->{x}\n";
-			print $f "y=$pos->{y}\n";
-			if ($bus && $bus->getState() == Bus::Client::CONNECTED()) {
-				print $f "busHost=" . $bus->serverHost() . "\n";
-				print $f "busPort=" . $bus->serverPort() . "\n";
-				print $f "busClientID=" . $bus->ID() . "\n";
-			}
+		$AI::Timeouts::stateUpdate = time;
+
+		if ($field{name} && $net->getState() == Network::IN_GAME) {
+			my $pos = calcPosition($char);
+			%state = (
+				connectionState => 'in game',
+				fieldName => $field{name},
+				fieldBaseName => $field{baseName},
+				charName => $char->{name},
+				x => $pos->{x},
+				y => $pos->{y}
+			);
+			$state{actors} = {};
 			foreach my $actor (@{$npcsList->getItems()}, @{$playersList->getItems()}, @{$monstersList->getItems()}) {
-				print $f "$actor->{actorType}=$actor->{pos_to}{x} $actor->{pos_to}{y}\n";
+				my $actorType = $actor->{actorType};
+				$state{actors}{$actorType} ||= [];
+				push @{$state{actors}{$actorType}}, {
+					x => $actor->{pos_to}{x},
+					y => $actor->{pos_to}{y}
+				};
 			}
-			close($f);
+		} else {
+			%state = (
+				connectionState => 'not logged in'
+			);
+		}
+		if ($bus && $bus->getState() == Bus::Client::CONNECTED()) {
+			$state{bus}{host} = $bus->serverHost();
+			$state{bus}{port} = $bus->serverPort();
+			$state{bus}{clientID} = $bus->ID();
+		}
+
+		if (open($f, ">:utf8", "$Settings::logs_folder/state.yml")) {
+			my $writer = new Data::YAML::Writer();
+			$writer->write(\%state, $f);
+			close $f;
 		}
 	}
 
@@ -933,7 +954,7 @@ sub parseOutgoingClientMessage {
 		# Map loaded
 		$packetParser->changeToInGameState();
 		AI::clear("clientSuspend");
-		$timeout{'ai'}{'time'} = time;
+		$timeout{ai}{time} = time;
 		if ($firstLoginMap) {
 			undef $sentWelcomeMessage;
 			undef $firstLoginMap;

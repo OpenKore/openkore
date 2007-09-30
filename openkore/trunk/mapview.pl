@@ -13,6 +13,7 @@ use FindBin qw($RealBin);
 use lib "$RealBin/src";
 use lib "$RealBin/src/deps";
 use Getopt::Long;
+use Data::YAML::Reader;
 
 my %options = (
 	fields => 'fields',
@@ -60,7 +61,7 @@ my $status;
 
 my $field;
 my $bus;
-my %state;
+my $state;
 
 sub OnInit {
 	my $self = shift;
@@ -118,18 +119,18 @@ sub onClick {
 	my (undef, undef, $args) = @_;
 	my ($x, $y) = @{$args};
 
-	if ($state{busHost} && (!$bus || $bus->serverHost() ne $state{busHost} || $bus->serverPort() ne $state{busPort})) {
+	if ($state->{bus}{host} && (!$bus || $bus->serverHost() ne $state->{bus}{host} || $bus->serverPort() ne $state->{bus}{port})) {
 		require Bus::Client;
 		$bus = new Bus::Client(
-			host => $state{busHost},
-			port => $state{busPort},
+			host => $state->{bus}{host},
+			port => $state->{bus}{port},
 			privateOnly => 1,
 			userAgent => "Map Viewer"
 		);
 	}
 	if ($bus) {
 		$bus->send("MoveTo", {
-			TO => $state{busClientID},
+			TO => $state->{bus}{clientID},
 			field => $field->name(),
 			x => $x,
 			y => $y
@@ -143,42 +144,36 @@ sub onMapChange {
 }
 
 sub onTimer {
-	my $f;
-	return unless open($f, "<:utf8", "$options{logs}/state.txt");
+	my ($f, $reader);
+	return unless (open($f, "<:utf8", "$options{logs}/state.yml"));
 
-	%state = (NPC => [], Monster => [], Player => []);
-	while (!eof($f)) {
-		my $line = <$f>;
-		$line =~ s/[\r\n]//g;
-		my ($key, $value) = split /=/, $line, 2;
-		if ($key eq 'NPC' || $key eq 'Monster' || $key eq 'Player') {
-			my ($x, $y) = split / /, $value;
-			push @{$state{$key}}, { x => $x, y => $y };
-		} else {
-			$state{$key} = $value;
-		}
+	$reader = new Data::YAML::Reader;
+	eval {
+		$state = $reader->read($f);
+	};
+	if ($@ || $state->{connectionState} ne 'in game') {
+		return;
 	}
-	close $f;
 
-	if (!$field || $state{fieldName} ne $field->name()) {
+	if (!$field || $state->{fieldName} ne $field->name()) {
 		eval {
-			$field = new Field(file => "$options{fields}/$state{fieldBaseName}.fld",
+			$field = new Field(file => "$options{fields}/$state->{fieldBaseName}.fld",
 				loadDistanceMap => 0);
-			$field->{name} = $state{fieldName};
+			$field->{name} = $state->{fieldName};
 		};
 	}
-	$mapview->set($state{fieldBaseName}, $state{x}, $state{y}, $field);
+	$mapview->set($state->{fieldBaseName}, $state->{x}, $state->{y}, $field);
 
 	my (@npcs, @monsters, @players);
-	foreach my $entry (@{$state{NPC}}) {
+	foreach my $entry (@{$state->{actors}{NPC}}) {
 		my %actor = (pos_to => $entry, pos => $entry);
 		push @npcs, \%actor;
 	}
-	foreach my $entry (@{$state{Monster}}) {
+	foreach my $entry (@{$state->{actors}{Monster}}) {
 		my %actor = (pos_to => $entry);
 		push @monsters, \%actor;
 	}
-	foreach my $entry (@{$state{Player}}) {
+	foreach my $entry (@{$state->{actors}{Player}}) {
 		my %actor = (pos_to => $entry);
 		push @players, \%actor;
 	}
@@ -188,7 +183,7 @@ sub onTimer {
 	$mapview->setNPCs(\@npcs);
 
 	$mapview->update;
-	$status->SetStatusText("$state{x}, $state{y}", 0);
+	$status->SetStatusText("$state->{x}, $state->{y}", 0);
 }
 
 sub onBusTimer {
