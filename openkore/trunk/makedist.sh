@@ -22,7 +22,7 @@ DIRS=(.
 	src/deps/Class/Data
 	src/deps/Devel
 	src/deps/Exception
-	src/deps/YAML
+	src/deps/Data/YAML
 	src/po
 	src/test
 	src/Actor
