@@ -1,4 +1,4 @@
-## Makefile used to automatically build a distribution (zipfile).
+# Makefile used to automatically build a distribution (zipfile).
 # If you want to run this Makefile in Windows, you need Cygwin:
 # http://sources.redhat.com/cygwin/
 
