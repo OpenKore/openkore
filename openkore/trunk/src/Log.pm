@@ -228,7 +228,7 @@ sub processMsg {
 				}
 
 				if ($config{logConsole} &&
-				    open(F, ">>:utf8", "$Settings::logs_folder/console.txt")) {
+					open(F, ">>:utf8", "$Settings::logs_folder/console.txt")) {
 					print F $message2;
 					close(F);
 				}

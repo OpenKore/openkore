@@ -1026,7 +1026,7 @@ sub cmdChist {
 		error T("Syntax Error in function 'chist' (Show Chat History)\n" .
 			"Usage: chist [<number of entries #>]\n");
 
-	} elsif (open(CHAT, "<:utf8", $Settings::chat_file)) {
+	} elsif (open(CHAT, "<:utf8", $Settings::chat_log_file)) {
 		my @chat = <CHAT>;
 		close(CHAT);
 		message T("------ Chat History --------------------\n"), "list";
@@ -1038,7 +1038,7 @@ sub cmdChist {
 		message "----------------------------------------\n", "list";
 
 	} else {
-		error TF("Unable to open %s\n", $Settings::chat_file);
+		error TF("Unable to open %s\n", $Settings::chat_log_file);
 	}
 }
 
@@ -1414,17 +1414,19 @@ sub cmdEquip_list {
 }
 
 sub cmdEval {
-	if ($_[1] eq "") {
-		error T("Syntax Error in function 'eval' (Evaluate a Perl expression)\n" .
-			"Usage: eval <expression>\n");
-	} else {
-		package main;
-		no strict;
-		undef $@;
-		eval $_[1];
-		if (defined $@ && $@ ne '') {
-			$@ .= "\n" if ($@ !~ /\n$/s);
-			Log::error($@);
+	if (!$Settings::lockdown) {
+		if ($_[1] eq "") {
+			error T("Syntax Error in function 'eval' (Evaluate a Perl expression)\n" .
+				"Usage: eval <expression>\n");
+		} else {
+			package main;
+			no strict;
+			undef $@;
+			eval $_[1];
+			if (defined $@ && $@ ne '') {
+				$@ .= "\n" if ($@ !~ /\n$/s);
+				Log::error($@);
+			}
 		}
 	}
 }
@@ -3032,6 +3034,7 @@ sub cmdPlayerList {
 }
 
 sub cmdPlugin {
+	return if ($Settings::lockdown);
 	my (undef, $input) = @_;
 	my @args = split(/ +/, $input, 2);
 
@@ -3167,7 +3170,7 @@ sub cmdPortalList {
 		}
 		message("---------------------------------\n", "list");
 	} elsif ($arg eq 'recompile') {
-		Settings::parseReload("portals");
+		Settings::loadByRegexp(qr/portals/);
 		Misc::compilePortals() if Misc::compilePortals_check();
 	}
 }
@@ -3216,7 +3219,15 @@ sub cmdReload {
 
 	} else {
 		eval {
-			Settings::parseReload($args);
+			my $progressHandler = sub {
+				my ($filename) = @_;
+				message TF("Loading %s...\n", $filename);
+			};
+			if ($args eq 'all') {
+				Settings::loadAll($progressHandler);
+			} else {
+				Settings::loadByRegexp(qr/$args/, $progressHandler);
+			}
 			Log::initLogFiles();
 		};
 		if (my $e = caught('UTF8MalformedException')) {

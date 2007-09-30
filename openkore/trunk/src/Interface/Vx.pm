@@ -192,7 +192,7 @@ sub initTk {
 	#$self->{mw}->minsize(316,290);
 	$self->{mw}->protocol('WM_DELETE_WINDOW', [\&OnExit, $self]);
 	#$self->{mw}->Icon(-image=>$self->{mw}->Photo(-file=>"hyb.gif"));
-	$self->{mw}->title("$Settings::NAME");
+	$self->{mw}->title($Settings::NAME);
 
 	# Main window menu
 

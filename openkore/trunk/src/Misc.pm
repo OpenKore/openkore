@@ -247,7 +247,7 @@ sub auth {
 		message TF("Revoked admin privilages for user '%s'\n", $user), "success";
 	}
 	$overallAuth{$user} = $flag;
-	writeDataFile("$Settings::control_folder/overallAuth.txt", \%overallAuth);
+	writeDataFile(Settings::getControlFile("overallAuth.txt"), \%overallAuth);
 }
 
 ##
@@ -291,7 +291,7 @@ sub configModify {
 	}
 	if ($args{autoCreate} && !exists $config{$key}) {
 		my $f;
-		if (open($f, ">>", $Settings::config_file)) {
+		if (open($f, ">>", Settings::getConfigFilename())) {
 			print $f "$key\n";
 			close($f);
 		}
@@ -336,7 +336,7 @@ sub bulkConfigModify {
 #
 # Writes %config to config.txt.
 sub saveConfigFile {
-	writeDataFileIntact($Settings::config_file, \%config);
+	writeDataFileIntact(Settings::getConfigFilename(), \%config);
 }
 
 sub setTimeout {
@@ -344,7 +344,7 @@ sub setTimeout {
 	my $time = shift;
 	message TF("Timeout '%s' set to %s (was %s)\n", $timeout, $time, $timeout{$timeout}{timeout}), "info";
 	$timeout{$timeout}{'timeout'} = $time;
-	writeDataFileIntact2("$Settings::control_folder/timeouts.txt", \%timeout);
+	writeDataFileIntact2(Settings::getControlFilename("timeouts.txt"), \%timeout);
 }
 
 
@@ -734,7 +734,7 @@ sub itemLog {
 sub chatLog {
 	my $type = shift;
 	my $message = shift;
-	open CHAT, ">>:utf8", $Settings::chat_file;
+	open CHAT, ">>:utf8", $Settings::chat_log_file;
 	print CHAT "[".getFormattedDate(int(time))."][".uc($type)."] $message";
 	close CHAT;
 }
@@ -749,7 +749,7 @@ sub shopLog {
 sub monsterLog {
 	my $crud = shift;
 	return if (!$config{'monsterLog'});
-	open MONLOG, ">>:utf8", $Settings::monster_log;
+	open MONLOG, ">>:utf8", $Settings::monster_log_file;
 	print MONLOG "[".getFormattedDate(int(time))."] $crud\n";
 	close MONLOG;
 }
@@ -1192,8 +1192,8 @@ sub charSelectScreen {
 }
 
 sub chatLog_clear {
-	if (-f $Settings::chat_file) {
-		unlink($Settings::chat_file);
+	if (-f $Settings::chat_log_file) {
+		unlink($Settings::chat_log_file);
 	}
 }
 
@@ -2266,13 +2266,7 @@ sub switchConfigFile {
 		return 0;
 	}
 
-	foreach (@Settings::configFiles) {
-		if ($_->{file} eq $Settings::config_file) {
-			$_->{file} = $filename;
-			last;
-		}
-	}
-	$Settings::config_file = $filename;
+	Settings::setConfigFilename($filename);
 	parseConfigFile($filename, \%config);
 	return 1;
 }
@@ -2818,7 +2812,7 @@ sub writeStorageLog {
 	my ($show_error_on_fail) = @_;
 	my $f;
 
-	if (open($f, ">:utf8", $Settings::storage_file)) {
+	if (open($f, ">:utf8", $Settings::storage_log_file)) {
 		print $f TF("---------- Storage %s -----------\n", getFormattedDate(int(time)));
 		for (my $i = 0; $i < @storageID; $i++) {
 			next if (!$storageID[$i]);
@@ -2839,7 +2833,7 @@ sub writeStorageLog {
 		message T("Storage logged\n"), "success";
 
 	} elsif ($show_error_on_fail) {
-		error TF("Unable to write to %s\n", $Settings::storage_file);
+		error TF("Unable to write to %s\n", $Settings::storage_log_file);
 	}
 }
 
@@ -3428,8 +3422,8 @@ sub compilePortals {
 	return 0 if $checkOnly;
 
 	# Write new portalsLOS.txt
-	writePortalsLOS("$Settings::tables_folder/portalsLOS.txt", \%portals_los);
-	message TF("Wrote portals Line of Sight table to '%s/portalsLOS.txt'\n", $Settings::tables_folder), "system";
+	writePortalsLOS(Settings::getTableFilename("portalsLOS.txt"), \%portals_los);
+	message TF("Wrote portals Line of Sight table to '%s'\n", Settings::getTableFilename("portalsLOS.txt")), "system";
 
 	# Print warning for missing fields
 	if (%missingMap) {

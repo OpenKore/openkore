@@ -1,4 +1,12 @@
 =========================
+### OpenKore 2.0.5
+=========================
+
+- Add ability to locate data files from multiple possible locations.
+- Added lockdown mode.
+
+
+=========================
 ### OpenKore 2.0.4
 =========================
 

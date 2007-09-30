@@ -187,7 +187,7 @@ sub serverRecv {
 	
 	return undef unless (dataWaiting(\$self->{remote_socket}));
 	
-	$self->{remote_socket}->recv($msg, $Settings::MAX_READ);
+	$self->{remote_socket}->recv($msg, 1024 * 32);
 	if (Plugins::hasHook("Network::serverRecv")) {
 		Plugins::callHook("Network::serverRecv", { msg => $msg });
 	}

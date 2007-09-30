@@ -493,7 +493,7 @@ sub processPortalRecording {
 		$portals_lut{$ID}{dest}{$destName}{y} = $sourcePos{y};
 
 		message TF("Recorded new portal (destination): %s (%s, %s) -> %s (%s, %s)\n", $field{name}, $destPos{x}, $destPos{y}, $sourceMap, $sourcePos{x}, $sourcePos{y}), "portalRecord";
-		updatePortalLUT("$Settings::tables_folder/portals.txt",
+		updatePortalLUT(Settings::getTableFilename("portals.txt"),
 				$field{name}, $destPos{x}, $destPos{y},
 				$sourceMap, $sourcePos{x}, $sourcePos{y});
 	}
@@ -510,7 +510,7 @@ sub processPortalRecording {
 		$portals_lut{$ID}{dest}{$destName}{y} = $destPos{y};
 
 		message TF("Recorded new portal (source): %s (%s, %s) -> %s (%s, %s)\n", $sourceMap, $sourcePos{x}, $sourcePos{y}, $field{name}, $char->{pos}{x}, $char->{pos}{y}), "portalRecord";
-		updatePortalLUT("$Settings::tables_folder/portals.txt",
+		updatePortalLUT(Settings::getTableFilename("portals.txt"),
 				$sourceMap, $sourcePos{x}, $sourcePos{y},
 				$field{name}, $char->{pos}{x}, $char->{pos}{y});
 	}

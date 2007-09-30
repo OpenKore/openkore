@@ -1,5 +1,6 @@
 #########################################################################
 #  OpenKore - Settings
+#  Copyright (c) 2007 OpenKore Developers
 #
 #  This software is open source, licensed under the GNU General Public
 #  License, version 2.
@@ -13,35 +14,48 @@
 #
 #########################################################################
 ##
-# MODULE DESCRIPTION: Settings and configuration loading
+# MODULE DESCRIPTION: Settings and configuration files management.
 #
-# This module:
+# Core OpenKore settings, such as OpenKore's program name and version number,
+# are stored by this module.
+#
+# OpenKore uses two kinds of data files:
 # `l
-# - Handles commandline argument parsing.
-# - Keeps a list of configuration files.
-# - Contains functions which are used for loading configuration.
+# - Control files. These configuration files define character-specific
+#   behavior and can be changed at any time.
+# - Table files. These files contain character-independent, but server-specific
+#   information that OpenKore needs. These files are read-mostly (don't change
+#   often).
 # `l`
+# This module is also responsible for data file management. It allows one to:
+# `l
+# - Register control or table files by name.
+# - Locate control or table files from multiple possible locations.
+# - (Re)load control or table files based on some search criteria.
+# `l`
+# Most of the functions for parsing configuration files are located in
+# FileParsers.pm, while the variables which contain the configuration data are
+# in Globals.pm.
 #
-# The functions for parsing configuration files are in FileParsers.pm.
-# The variables which contain the configuration data are in Globals.pm.
-
+# Finally, the Settings module provides support functions for commandline
+# argument parsing.
 package Settings;
 
 use strict;
+use lib 'src/deps';
+use lib 'src';
 use Exporter;
 use base qw(Exporter);
-use Getopt::Long;
+use Carp::Assert;
+use UNIVERSAL qw(isa);
 use FindBin qw($RealBin);
-
-use Modules 'register';
-use Globals;
-use Plugins;
-use Utils::DataStructures qw(binAdd);
-use Utils::Exceptions;
-use Log qw(warning error);
+use Getopt::Long;
+use File::Spec;
 use Translation qw(T TF);
+use Utils::ObjectList;
+use Utils::Exceptions;
 
-our @EXPORT_OK = qw(parseArguments addConfigFile delConfigFile %sys $VERSION);
+use enum qw(CONTROL_FILE_TYPE TABLE_FILE_TYPE);
 
 
 ###################################
@@ -60,70 +74,55 @@ our @EXPORT_OK = qw(parseArguments addConfigFile delConfigFile %sys $VERSION);
 
 # Translation Comment: Strings for the name and version of the application
 our $NAME = 'OpenKore';
-our $VERSION = '2.0.4';
+our $VERSION = 'what-will-become-2.0.5';
 # Translation Comment: Version String
 our $SVN = T(" (SVN version)");
 our $WEBSITE = 'http://www.openkore.com/';
 # Translation Comment: Version String
 our $versionText = "*** $NAME ${VERSION}${SVN} - " . T("Custom Ragnarok Online client") . " ***\n***   $WEBSITE   ***\n";
 our $welcomeText = TF("Welcome to %s.", $NAME);
-our $MAX_READ = 30000;
 
-# Commandline arguments
-our $control_folder;
-our $tables_folder;
-our $logs_folder;
-our $plugins_folder;
-our $config_file;
-our $items_control_file;
-our $pickupitems_file;
-our $mon_control_file;
-our $chat_file;
-our $item_log_file;
-our $storage_file;
-our $shop_log_file;
-our $shop_file;
-our $def_field;
-our $monster_log;
-our $default_interface;
-our $no_connect;
 
-# System configuration
+# Data file folders.
+our @controlFolders;
+our @tablesFolders;
+our @pluginsFolders;
+# The registered data files.
+our $files;
+# System configuration.
 our %sys;
 
-# Configuration files and associated file parsers
-our @configFiles;
+our $fields_folder;
+our $logs_folder;
 
-# Other stuff
+our $config_file;
+our $mon_control_file;
+our $items_control_file;
+our $shop_file;
+
+our $chat_log_file;
+our $storage_log_file;
+our $shop_log_file;
+our $monster_log_file;
+our $item_log_file;
+
+our $interface;
+our $lockdown;
+our $no_connect;
+
+
 my $pathDelimiter = ($^O eq 'MSWin32') ? ';' : ':';
-our $usageText = <<EOF;
-Usage: openkore.exe [options...]
 
-The supported options are:
---help                     Displays this help message.
---control=path             Use a different folder as control folder.
---tables=path              Use a different folder as tables folder.
---logs=path                Save log files in a different folder.
---plugins=paths            Look for plugins in specified folder. You can
-                           specify multiple paths, delimited by '$pathDelimiter'.
---fields=path              Where fields folder to use.
-
---config=path/file         Which config.txt to use.
---mon_control=path/file    Which mon_control.txt to use.
---items_control=path/file  Which items_control.txt to use.
---pickupitems=path/file    Which pickupitems.txt to use.
---chat=path/file           Which chat.txt to use.
---shop=path/file           Which shop.txt to use.
---monsters=path/file       Which monsters.txt to use.
---items=path/file          Which items.txt to use.
-
---interface=module         Which interface to use at startup.
-
-Developer options:
---no-connect               Do not connect to any servers.
-EOF
+sub MODINIT {
+	$files = new ObjectList();
+}
+use Modules 'register';
+our @EXPORT_OK = qw(%sys);
 
 
+###################################
+### CATEGORY: Public functions
+###################################
 
 ##
 # Settings::parseArguments()
@@ -138,83 +137,299 @@ EOF
 #
 # If the arguments are not correct, then an ArgumentException is thrown.
 sub parseArguments {
-	$control_folder = "control";
-	$tables_folder = "tables";
-	$logs_folder = "logs";
-	$plugins_folder = "plugins";
-	$def_field = "fields";
+	my %options;
 
-	# We don't pre-define the values for other variables here.
-	# Defining variables that include other variables (that may be changed later) is a bad thing.
-	# Example: since control_folder == control by default, even if the user sets control_folder == conf as a getopt
-	# $config_file will still be control/config.txt since $control_folder was set to control when $config_file was defined.
+	undef $fields_folder;
+	undef $logs_folder;
 	undef $config_file;
 	undef $mon_control_file;
 	undef $items_control_file;
-	undef $pickupitems_file;
-	undef $chat_file;
 	undef $shop_file;
-	undef $storage_file;
-	undef $monster_log;
-	undef $item_log_file;
-	undef $default_interface;
-	undef $no_connect;
+	undef $chat_log_file;
+	undef $storage_log_file;
+	undef $interface;
+	undef $lockdown;
 
-	my $help_option;
-	my $warnText;
 	local $SIG{__WARN__} = sub {
 		ArgumentException->throw($_[0]);
 	};
 	GetOptions(
-		'help',	              \$help_option,
-		'control=s',          \$control_folder,
-		'tables=s',           \$tables_folder,
+		'control=s',          \$options{control},
+		'tables=s',           \$options{tables},
+		'plugins=s',          \$options{plugins},
+		'fields=s',           \$fields_folder,
 		'logs=s',             \$logs_folder,
-		'plugins=s',          \$plugins_folder,
-		'fields=s',           \$def_field,
 
 		'config=s',           \$config_file,
 		'mon_control=s',      \$mon_control_file,
 		'items_control=s',    \$items_control_file,
-		'pickupitems=s',      \$pickupitems_file,
-		'chat=s',             \$chat_file,
 		'shop=s',             \$shop_file,
-		'storage=s',          \$storage_file,
-		'monsters=s',         \$monster_log,
-		'items=s',            \$item_log_file,
+		'chat-log=s',         \$chat_log_file,
+		'storage-log=s',      \$storage_log_file,
 
-		'interface=s',        \$default_interface,
+		'interface=s',        \$interface,
+		'lockdown',           \$lockdown,
+		'help',	              \$options{help},
 
 		'no-connect',         \$no_connect
 	);
 
-	# This is where variables depending on other userconfigable variables should be set..
-	# after we see what the user is changing...
-	$config_file        = "$control_folder/config.txt" if (!defined $config_file);
-	$mon_control_file   = "$control_folder/mon_control.txt" if (!defined $mon_control_file);
-	$items_control_file = "$control_folder/items_control.txt" if (!defined $items_control_file);
-	$pickupitems_file   = "$control_folder/pickupitems.txt" if (!defined $pickupitems_file);
-	$chat_file          = "$logs_folder/chat.txt" if (!defined $chat_file);
-	$shop_file          = "$control_folder/shop.txt" if (!defined $shop_file);
-	$monster_log        = "$logs_folder/monsters.txt" if (!defined $monster_log);
-	$item_log_file      = "$logs_folder/items.txt" if (!defined $item_log_file);
-	$storage_file       = "$logs_folder/storage.txt" if (!defined $storage_file);
-	$shop_log_file    ||= "$logs_folder/shop.txt";
-	if (!defined $default_interface) {
+	if ($options{control}) {
+		setControlFolders(split($pathDelimiter, $options{control}));
+	} else {
+		setControlFolders("control");
+	}
+	if ($options{tables}) {
+		setTablesFolders(split($pathDelimiter, $options{tables}));
+	} else {
+		setTablesFolders("tables");
+	}
+	if ($options{plugins}) {
+		setPluginsFolders(split($pathDelimiter, $options{plugins}));
+	} else {
+		setPluginsFolders("plugins");
+	}
+
+	$fields_folder = "fields" if (!defined $fields_folder);
+	$logs_folder = "logs" if (!defined $logs_folder);
+	$chat_log_file = File::Spec->catfile($logs_folder, "chat.txt");
+	$storage_log_file = File::Spec->catfile($logs_folder, "storage.txt");
+	$shop_log_file = File::Spec->catfile($logs_folder, "shop_log.txt");
+	$monster_log_file = File::Spec->catfile($logs_folder, "monster_log.txt");
+	$item_log_file = File::Spec->catfile($logs_folder, "item_log.txt");
+	if (!defined $interface) {
 		if ($ENV{OPENKORE_DEFAULT_INTERFACE} && $ENV{OPENKORE_DEFAULT_INTERFACE} ne "") {
-			$default_interface = $ENV{OPENKORE_DEFAULT_INTERFACE};
+			$interface = $ENV{OPENKORE_DEFAULT_INTERFACE};
 		} else {
-			$default_interface = "Console"
+			$interface = "Console"
 		}
 	}
 
-	return 0 if ($help_option);
+	return 0 if ($options{help});
 	if (! -d $logs_folder) {
 		if (!mkdir($logs_folder)) {
 			IOException->throw("Unable to create folder $logs_folder ($!)");
 		}
 	}
 	return 1;
+}
+
+sub getUsageText {
+	my $text = qq{
+		Usage: openkore.exe [options...]
+
+		General path options:
+		--control=PATHS           Specify folders in which to look for control files.
+		--tables=PATHS            Specify folders in which to look for table files.
+		--plugins=PATH            Specify folders in which to look for plugins.
+		For the above options, you can specify multiple paths, delimited by '$pathDelimiter'.
+
+		--fields=PATH             Specify the folder in which to look for field files.
+		--logs=PATH               Save log files in the specified folder.
+
+		Control files lookup options:
+		--config=FILENAME         Which config.txt to use.
+		--mon_control=FILENAME    Which mon_control.txt to use.
+		--items_control=FILENAME  Which items_control.txt to use.
+		--shop=FILENAME           Which shop.txt to use.
+		--chat-log=FILENAME       Which chat log file to use.
+		--storage-log=FILENAME    Which storage log file to use.
+
+		Other options:
+		--interface=NAME          Which interface to use at startup.
+		--lockdown                Disable potentially insecure features.
+		--help                    Displays this help message.
+
+		Developer options:
+		--no-connect              Do not connect to any servers.
+	};
+	$text =~ s/^\n//s;
+	$text =~ s/^\t\t?//gm;
+	return $text;
+}
+
+##
+# void Settings::setControlFolders(Array<String> folders)
+#
+# Set the folders in which to look for control files.
+sub setControlFolders {
+	@controlFolders = @_;
+}
+
+sub getControlFolders {
+	return @controlFolders;
+}
+
+##
+# void Settings::setTablesFolders(Array<String> folders)
+#
+# Set the folders in which to look for table files.
+sub setTablesFolders {
+	@tablesFolders = @_;
+}
+
+sub setPluginsFolders {
+	@pluginsFolders = @_;
+}
+
+sub getPluginsFolders {
+	return @pluginsFolders;
+}
+
+##
+# Settings::addControlFile(String name, options...)
+# Returns: A handle for this data file, which can be used by
+#          Settings::removeFile() or Settings::loadByHandle().
+#
+# Register a control file. This file will be eligable for (re)loading
+# when one of the load() functions is called.
+#
+# The following options are allowed:
+# `l
+# - loader (required): must be either a reference to a function, or
+#       be an array in which the first element is a function reference.
+#       This function will be used to load this control file. In case
+#       of an array, all but the first element of that array will be passed
+#       to the load function as additional parameters.
+# - autoSearch (boolean): whether the full filename of this control file
+#       should be looked up by looking into one of the folders specified by
+#       Settings::setControlFolders(). If disabled, it will be assumed that
+#       $name is a correct absolute or relative path. The default is enabled.
+# `l`
+sub addControlFile {
+	my $name = shift;
+	return _addFile($name, CONTROL_FILE_TYPE, @_);
+}
+
+##
+# Settings::addTableFile(String name, options...)
+#
+# This is like Settings::addControlFile(), but for table files.
+sub addTableFile {
+	my $name = shift;
+	return _addFile($name, TABLE_FILE_TYPE, @_);
+}
+
+##
+# void Settings::removeFile(handle)
+#
+# Unregister a file that was registered by Settings::addControlFile()
+# or Settings::addTableFile().
+sub removeFile {
+	my ($handle) = @_;
+	$files->remove($files->get($handle));
+}
+
+##
+# void loadByHandle(handle, [Function progressHandler])
+# handle: A handle, as returned by Settings::addControlFile() or
+#         Settings::addTableFile().
+# progressHandler: A function which will be called when the filename
+#                  resolved.
+#
+# Load or reload a data file as specified by the given data file handle.
+# Throws FileNotFoundException if the file cannot be found in any of the
+# search locations.
+# Note that the data file loader function may throw additional exceptions.
+#
+# The progress handler function, if specified, will be called when the
+# full filename of this data file has been resolved (that is, it has been
+# found in one of the search locations), but before the file is actually
+# loaded. It is useful for displaying progress reports.
+#
+# The progress handler function is called with two arguments: the filename,
+# and the data file's type (which can be Settings::CONTROL_FILE_TYPE or
+# Settings::TABLE_FILE_TYPE).
+# For example:
+# <pre class="example">
+# Settings::loadByHandle($handle, sub {
+#     my ($filename, $type) = @_;
+#     print "$_[0] is about to be loaded!\n";
+#     if ($type == Settings::CONTROL_FILE_TYPE) {
+#         print "And it's a control file.\n";
+#     } else {
+#         print "And it's a table file.\n";
+#     }
+# });
+# </pre>
+sub loadByHandle {
+	my ($handle, $progressHandler) = @_;
+	assert(defined $handle) if DEBUG;
+	my $object = $files->get($handle);
+	assert(defined $object) if DEBUG;
+
+	my $filename;
+	if ($object->{autoSearch}) {
+		if ($object->{type} == CONTROL_FILE_TYPE) {
+			$filename = _findFileFromFolders($object->{name}, \@controlFolders);
+		} else {
+			$filename = _findFileFromFolders($object->{name}, \@tablesFolders);
+		}
+	} else {
+		$filename = $object->{name};
+	}
+	if (!defined($filename) || ! -f $filename) {
+		$filename = $object->{name} if (!defined $filename);
+		if ($object->{type} == CONTROL_FILE_TYPE) {
+			FileNotFoundException->throw(
+				message => TF("Cannot load control file %s", $filename),
+				filename => $filename);
+		} else {
+			FileNotFoundException->throw(
+				message => TF("Cannot load table file %s", $filename),
+				filename => $filename);
+		}
+	} elsif ($progressHandler) {
+		$progressHandler->($filename, $object->{type});
+	}
+
+	if (ref($object->{loader}) eq 'ARRAY') {
+		my @array = @{$object->{loader}};
+		my $loader = shift @array;
+		$loader->($filename, @array);
+	} else {
+		$object->{loader}->($filename);
+	}
+}
+
+sub loadByRegexp {
+	my ($regexp, $progressHandler) = @_;
+	my @result;
+	foreach my $object (@{$files->getItems()}) {
+		if ($object->{name} =~ /$regexp/) {
+			loadByHandle($object->{index}, $progressHandler);
+		}
+	}
+}
+
+sub loadAll {
+	my ($progressHandler) = @_;
+	foreach my $object (@{$files->getItems()}) {
+		loadByHandle($object->{index}, $progressHandler);
+	}
+}
+
+##
+# int Settings::getSVNRevision()
+#
+# Return OpenKore's SVN revision number, or undef if that information cannot be retrieved.
+sub getSVNRevision {
+	my $f;
+	if (open($f, "<", "$RealBin/.svn/entries")) {
+		my $revision;
+		eval {
+			die unless <$f> =~ /^\d+$/;	# We only support the non-XML format
+			die unless <$f> eq "\n";	# Empty string for current directory.
+			die unless <$f> eq "dir\n";	# We expect a directory entry.
+			$revision = <$f>;
+			$revision =~ s/[\r\n]//g;
+			undef $revision unless $revision =~ /^\d+$/;
+		};
+		close($f);
+		return $revision;
+	} else {
+		return;
+	}
 }
 
 sub loadSysConfig {
@@ -225,10 +440,128 @@ sub writeSysConfig {
 	_processSysConfig(1);
 }
 
+
+##########################################
+### CATEGORY: Data file lookup functions
+##########################################
+
+##
+# String Settings::getControlFilename(String name)
+# name: A valid base file name.
+# Returns: A valid filename, or undef if not found.
+# Ensures: if defined($result): -f $result
+#
+# Get a control file by its name. This file will be looked up
+# in all possible locations, as specified by earlier calls
+# to Settings::setControlFolders().
+sub getControlFilename {
+	return _findFileFromFolders($_[0], \@controlFolders);
+}
+
+##
+# String Settings::getTableFilename(String name)
+# name: A valid base file name.
+# Ensures: if defined($result): -f $result
+#
+# Get a table file by its name. This file will be looked up
+# in all possible locations, as specified by earlier calls
+# to Settings::setTabblesFolders().
+sub getTableFilename {
+	return _findFileFromFolders($_[0], \@tablesFolders);
+}
+
+sub getConfigFilename {
+	if (defined $config_file) {
+		return $config_file;
+	} else {
+		return getControlFilename("config.txt");
+	}
+}
+
+sub setConfigFilename {
+	my ($new_filename) = @_;
+	my $current_filename = getConfigFilename();
+	foreach my $object (@{$files->getItems()}) {
+		if ($object->{name} eq $current_filename) {
+			$object->{name} = $new_filename;
+			last;
+		}
+	}
+	$config_file = $new_filename;
+}
+
+sub getMonControlFilename {
+	if (defined $mon_control_file) {
+		return $mon_control_file;
+	} else {
+		return getControlFilename("mon_control.txt");
+	}
+}
+
+sub getItemsControlFilename {
+	if (defined $items_control_file) {
+		return $items_control_file;
+	} else {
+		return getControlFilename("items_control.txt");
+	}
+}
+
+sub getShopFilename {
+	if (defined $shop_file) {
+		return $shop_file;
+	} else {
+		return getControlFilename("shop.txt");
+	}
+}
+
+
+##########################
+# Private methods
+##########################
+
+sub _assertNameIsBasename {
+	my (undef, undef, $file) = File::Spec->splitpath($_[0]);
+	if ($file ne $_[0]) {
+		ArgumentException->throw("Name must be a valid file base name.");
+	}
+}
+
+sub _findFileFromFolders {
+	my ($name, $folders) = @_;
+	_assertNameIsBasename($name);
+	foreach my $dir (@{$folders}) {
+		my $filename = File::Spec->catfile($dir, $name);
+		if (-f $filename) {
+			return $filename;
+		}
+	}
+	return undef;
+}
+
+sub _addFile {
+	my $name = shift;
+	my $type = shift;
+	my %options = @_;
+	if (!$options{loader}) {
+		ArgumentException->throw("The 'loader' option must be specified.");
+	}
+	my $object = {
+		type => $type,
+		name => $name,
+		mustExist  => exists($options{mustExist}) ? $options{mustExist} : 1,
+		autoSearch => exists($options{autoSearch}) ? $options{autoSearch} : 1,
+		loader     => $options{loader}
+	};
+	my $index = $files->add(bless($object, 'Settings::Handle'));
+	$object->{index} = $index;
+	return $index;
+}
+
 sub _processSysConfig {
 	my ($writeMode) = @_;
 	my ($f, @lines, %keysNotWritten);
-	return if (!open($f, "<:utf8", "$control_folder/sys.txt"));
+	my $sysFile = getControlFilename("sys.txt");
+	return if (!$sysFile || !open($f, "<:utf8", $sysFile));
 	
 	if ($writeMode) {
 		foreach my $key (keys %sys) {
@@ -261,7 +594,7 @@ sub _processSysConfig {
 	}
 	close $f;
 
-	if ($writeMode && open($f, ">:utf8", "$control_folder/sys.txt")) {
+	if ($writeMode && open($f, ">:utf8", $sysFile)) {
 		foreach my $line (@lines) {
 			print $f "$line\n";
 		}
@@ -269,156 +602,6 @@ sub _processSysConfig {
 			print $f "$key $sys{$key}\n";
 		}
 		close $f;
-	}
-}
-
-
-##
-# Settings::addConfigFile(String file, r_store, parser_func)
-# file: The configuration file to add.
-# r_store: A reference to a variable (of any type) that's used to store the configuration data.
-# parser_func: A function which parses $file and put the result into r_store.
-# Returns: an ID which you can pass to Settings::delConfigFile() or Settings::load()
-#
-# Adds a configuration file to the internal configuration file list. The configuration file won't be
-# loaded immediately.
-# Configuration files in the list are (re)loaded:
-# `l
-# - At startup
-# - When the user types the 'reload' command.
-# `l`
-# If you want to load this configuration file now, use Settings::load().
-#
-# parser_func is called like this: $parser_func->($file, $r_store);
-#
-# See also: Settings::delConfigFile(), Settings::load(), FileParsers.pm
-#
-# Example:
-# # Configuration file account.txt looks like this:
-# username blabla
-# password 1234
-#
-# # Perl source:
-# use FileParsers; # This is where parseDataFile() is defined
-#
-# # Add configuration file
-# my %account;
-# my $ID = Settings::addConfigFile("account.txt", \%account, \&parseDataFile);
-# # %account is now still empty
-# Settings::load($ID);             # Now account.txt is loaded %account is filled
-# print "$account{username}\n";    # -> "blabla"
-#
-# Settings::delConfigFile($ID);
-sub addConfigFile {
-	my ($file, $r_store, $func) = @_;
-	my %item;
-
-	$item{file} = $file;
-	$item{hash} = $r_store;
-	$item{func} = $func;
-	return binAdd(\@configFiles, \%item);
-}
-
-##
-# Settings::delConfigFile(ID)
-# ID: An ID, as returned by Settings::addConfigFile()
-#
-# Removes a configuration file from the internal configuration file list.
-# See also: Settings::addConfigFile()
-sub delConfigFile {
-	my $ID = shift;
-	delete $configFiles[$ID];
-}
-
-sub load {
-	my $items = shift;
-	my @array;
-
-	if (!defined $items) {
-		@array = @configFiles;
-	} elsif (!ref($items)) {
-		push @array, $configFiles[$items];
-	} elsif (ref($items) eq 'ARRAY') {
-		@array = @{$items};
-	}
-
-	Plugins::callHook('preloadfiles', {files => \@array});
-	my $i = 1;
-	foreach (@array) {
-		if (-f $_->{file}) {
-			Log::message(TF("Loading %s...\n", $_->{file}), "load");
-		} elsif ($_->{file} !~ /(portalsLOS|npcs)\.txt$/i) {
-			Log::error(TF("Error: Couldn't load %s\n", $_->{file}), "load");
-			return 0;
-		}
-
-		Plugins::callHook('loadfiles', {files => \@array, current => $i});
-		return 0 unless $_->{func}->($_->{file}, $_->{hash});
-		$i++;
-	}
-	Plugins::callHook('postloadfiles', {files => \@array});
-	return 1;
-}
-
-sub parseReload {
-	my $temp = shift;
-	my @temp;
-	my %temp;
-	my $temp2;
-	my $qm;
-	my $except;
-	my $found;
-
-	while ($temp =~ /(\w+)/g) {
-		$temp2 = $1;
-		$qm = quotemeta $temp2;
-		if ($temp2 eq "all") {
-			foreach (@configFiles) {
-				$temp{$_->{file}} = $_;
-			}
-
-		} elsif ($temp2 =~ /\bexcept\b/i || $temp2 =~ /\bbut\b/i) {
-			$except = 1;
-
-		} else {
-			if ($except) {
-				foreach (@configFiles) {
-					delete $temp{$_->{file}} if $_->{file} =~ /$qm/i;
-				}
-			} else {
-				foreach (@configFiles) {
-					$temp{$_->{file}} = $_ if $_->{file} =~ /$qm/i;
-				}
-			}
-		}
-	}
-
-	foreach my $f (keys %temp) {
-		$temp[@temp] = $temp{$f};
-	}
-	load(\@temp);
-}
-
-##
-# int Settings::getSVNRevision()
-#
-# Return OpenKore's SVN revision number, or undef if that information cannot be retrieved.
-sub getSVNRevision {
-	my $f;
-	if (open($f, "<", "$RealBin/.svn/entries")) {
-		my $revision;
-		eval {
-			die unless <$f> =~ /^\d+$/;	# We only support the non-XML format
-			die unless <$f> eq "\n";	# Empty string for current directory.
-			die unless <$f> eq "dir\n";	# We expect a directory entry.
-			$revision = <$f>;
-			$revision =~ s/[\r\n]//g;
-			undef $revision unless $revision =~ /^\d+$/;
-		};
-		close($f);
-		return $revision;
-	} else {
-		return;
 	}
 }
 

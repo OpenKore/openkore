@@ -41,7 +41,7 @@ use Exception::Class (
 	'ClassCreateException'     => { fields => 'class' },
 
 	'IOException',
-	'FileNotFoundException'  => { isa => 'IOException' },
+	'FileNotFoundException'  => { isa => 'IOException', fields => 'filename' },
 	'SocketException'        => { isa => 'IOException' },
 	'BusNotRunningException' => { isa => 'IOException' },
 	'ProtocolException'      => { isa => 'IOException' },

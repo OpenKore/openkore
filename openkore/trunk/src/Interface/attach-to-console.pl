@@ -54,7 +54,7 @@ sub start {
 	$socket->flush();
 
 	$parser = new Bus::MessageParser();
-	Settings::addConfigFile("$Settings::control_folder/consolecolors.txt", \%consoleColors, \&parseSectionedFile);
+	Settings::addControlFile("consolecolors.txt", handler => [\&parseSectionedFile, \%consoleColors]);
 	Settings::load();
 
 	$interface = new Interface::Console();

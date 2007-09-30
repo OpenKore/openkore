@@ -327,8 +327,8 @@ sub loadByName {
 	my ($self, $name, $loadDistanceMap) = @_;
 	my $file = $self->nameToBaseName($name);
 
-	if ($Settings::def_field) {
-		$file = File::Spec->catfile($Settings::def_field, $file);
+	if ($Settings::fields_folder) {
+		$file = File::Spec->catfile($Settings::fields_folder, $file);
 	}
 	if (! -f $file) {
 		$file .= ".gz";
@@ -347,7 +347,7 @@ sub nameToBaseName {
 	my ($self, $name) = @_;
 	my ($fieldFolder, $baseName);
 
-	$fieldFolder = $Settings::def_field || ".";
+	$fieldFolder = $Settings::fields_folder || ".";
 	if ($masterServer && $masterServer->{"field_$name"}) {
 		# Handle server-specific versions of the field.
 		$baseName = $masterServer->{"field_$name"};

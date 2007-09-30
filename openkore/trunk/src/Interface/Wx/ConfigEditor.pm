@@ -184,10 +184,7 @@ sub downloadManual {
 	my ($self, $parent) = @_;
 	my ($file, $f, $time);
 
-	if (defined $Settings::control_folder) {
-		$file = "$Settings::control_folder/manual.html";
-	}
-
+	$file = Settings::getControlFile("manual.txt");
 	$time = (stat($file))[9];
 	# Download manual if it hasn't been downloaded yet,
 	# or if the local copy is more than 3 days old
@@ -243,6 +240,10 @@ sub downloadManual {
 		$timer->Start(100);
 		$dialog->ShowModal;
 
+		if (!defined $file) {
+			my @folders = Settings::getControlFolders();
+			$file = "$folders[0]/manual.txt";
+		}
 		if ($manual && open($f, ">", $file)) {
 			binmode F;
 			print $f $manual;
