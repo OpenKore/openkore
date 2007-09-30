@@ -125,7 +125,7 @@ our @EXPORT_OK = qw(%sys);
 ###################################
 
 ##
-# Settings::parseArguments()
+# int Settings::parseArguments()
 # Returns: 1 on success, 0 if a 'usage' text should be displayed.
 #
 # Parse commandline arguments. Various variables within the Settings
@@ -214,6 +214,10 @@ sub parseArguments {
 	return 1;
 }
 
+##
+# String Settings::getUsageText()
+#
+# Return the usage text that should be displayed.
 sub getUsageText {
 	my $text = qq{
 		Usage: openkore.exe [options...]
@@ -268,10 +272,18 @@ sub setTablesFolders {
 	@tablesFolders = @_;
 }
 
+##
+# void Settings::setPluginsFolders(Array<String> folders)
+#
+# Set the folders in which to look for plugins.
 sub setPluginsFolders {
 	@pluginsFolders = @_;
 }
 
+##
+# Array<String> Settings::getPluginsFolders()
+#
+# Get the folders in which to look for plugins.
 sub getPluginsFolders {
 	return @pluginsFolders;
 }
@@ -392,6 +404,13 @@ sub loadByHandle {
 	}
 }
 
+##
+# void Settings::loadAll(regexp, Function progressHandler)
+#
+# (Re)loads all registered data files whose name matches the given regular expression.
+# This method follows the same contract as
+# Settings::loadByHandle(), so see that method for parameter descriptions
+# and exceptions.
 sub loadByRegexp {
 	my ($regexp, $progressHandler) = @_;
 	my @result;
@@ -402,6 +421,12 @@ sub loadByRegexp {
 	}
 }
 
+##
+# void Settings::loadAll(Function progressHandler)
+#
+# (Re)loads all registered data files. This method follows the same contract as
+# Settings::loadByHandle(), so see that method for parameter descriptions
+# and exceptions.
 sub loadAll {
 	my ($progressHandler) = @_;
 	foreach my $object (@{$files->getItems()}) {
