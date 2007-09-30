@@ -4,6 +4,7 @@
 
 - Add ability to locate data files from multiple possible locations.
 - Added lockdown mode.
+- Fixed the 'followBot' feature.
 
 
 =========================

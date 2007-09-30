@@ -2015,7 +2015,7 @@ sub processFollow {
  		message T("I lost my master\n"), "follow";
 		if ($config{'followBot'}) {
  			message T("Trying to get him back\n"), "follow";
-			sendMessage("pm", "move $chars[$config{'char'}]{'pos_to'}{'x'} $chars[$config{'char'}]{'pos_to'}{'y'}", $config{followTarget});
+			sendMessage($messageSender, "pm", "move $chars[$config{'char'}]{'pos_to'}{'x'} $chars[$config{'char'}]{'pos_to'}{'y'}", $config{followTarget});
 		}
 
 		delete $args->{'following'};
