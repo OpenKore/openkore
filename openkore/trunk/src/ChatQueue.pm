@@ -29,7 +29,6 @@ use Log qw(message error);
 use Misc qw(auth avoidGM_talk avoidList_talk configModify getIDFromChat
 		getResponse quit relog sendMessage setTimeout look);
 use Plugins;
-use Settings qw($VERSION);
 use Translation;
 use Utils qw(formatNumber getFormattedDate parseArgs swrite timeConvert timeOut);
 
@@ -402,7 +401,7 @@ sub processChatCommand {
 		main::useTeleport(2);
 	
 	} elsif ($switch eq "version") {
-		$vars->{ver} = $VERSION;
+		$vars->{ver} = $Settings::VERSION;
 		sendMessage($messageSender, $type, getResponse("versionS"), $user) if $config{verbose};
 
 	} elsif ($switch eq "where") {

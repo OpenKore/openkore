@@ -126,71 +126,78 @@ sub loadPlugins {
 }
 
 sub loadDataFiles {
-	import Settings qw(addConfigFile);
-
 	# These pragmas are necessary in order to support non-ASCII filenames.
 	# If we use UTF-8 strings then Perl will think the file doesn't exist,
 	# if $Settings::control_folder or $Settings::tables_folder contains
 	# non-ASCII characters.
 	no encoding 'utf8';
 
-	addConfigFile($Settings::config_file, \%config,\&parseConfigFile);
-	addConfigFile($Settings::items_control_file, \%items_control,\&parseItemsControl);
-	addConfigFile($Settings::mon_control_file, \%mon_control, \&parseMonControl);
-	addConfigFile("$Settings::control_folder/overallAuth.txt", \%overallAuth, \&parseDataFile);
-	addConfigFile($Settings::pickupitems_file, \%pickupitems, \&parseDataFile_lc);
-	addConfigFile("$Settings::control_folder/responses.txt", \%responses, \&parseResponses);
-	addConfigFile("$Settings::control_folder/timeouts.txt", \%timeout, \&parseTimeouts);
-	addConfigFile($Settings::shop_file, \%shop, \&parseShopControl);
-	addConfigFile("$Settings::control_folder/chat_resp.txt", \@chatResponses, \&parseChatResp);
-	addConfigFile("$Settings::control_folder/avoid.txt", \%avoid, \&parseAvoidControl);
-	addConfigFile("$Settings::control_folder/priority.txt", \%priority, \&parsePriority);
-	addConfigFile("$Settings::control_folder/consolecolors.txt", \%consoleColors, \&parseSectionedFile);
-	addConfigFile("$Settings::control_folder/routeweights.txt", \%routeWeights, \&parseDataFile);
-	addConfigFile("$Settings::control_folder/arrowcraft.txt", \%arrowcraft_items, \&parseDataFile_lc);
+	Settings::addControlFile(Settings::getConfigFilename(),
+		loader => [\&parseConfigFile, \%config],
+		autoSearch => 0);
+	Settings::addControlFile(Settings::getMonControlFilename(),
+		loader => [\&parseMonControl, \%mon_control],
+		autoSearch => 0);
+	Settings::addControlFile(Settings::getItemsControlFilename(),
+		loader => [\&parseItemsControl, \%items_control],
+		autoSearch => 0);
+	Settings::addControlFile(Settings::getShopFilename(),
+		loader => [\&parseShopControl, \%shop],
+		autoSearch => 0);
+	Settings::addControlFile('overallAuth.txt', loader => [\&parseDataFile, \%overallAuth]);
+	Settings::addControlFile('pickupitems.txt', loader => [\&parseDataFile_lc, \%pickupitems]);
+	Settings::addControlFile('responses.txt',   loader => [\&parseResponses, \%responses]);
+	Settings::addControlFile('timeouts.txt',    loader => [\&parseTimeouts, \%timeout]);
+	Settings::addControlFile('chat_resp.txt',   loader => [\&parseChatResp, \@chatResponses]);
+	Settings::addControlFile('avoid.txt',       loader => [\&parseAvoidControl, \%avoid]);
+	Settings::addControlFile('priority.txt',    loader => [\&parsePriority, \%priority]);
+	Settings::addControlFile('consolecolors.txt', loader => [\&parseSectionedFile, \%consoleColors]);
+	Settings::addControlFile('routeweights.txt',  loader => [\&parseDataFile, \%routeWeights]);
+	Settings::addControlFile('arrowcraft.txt',  loader => [\&parseDataFile_lc, \%arrowcraft_items]);
 
-	addConfigFile("$Settings::tables_folder/cities.txt", \%cities_lut, \&parseROLUT);
-	addConfigFile("$Settings::tables_folder/commanddescriptions.txt", \%descriptions, \&parseCommandsDescription);
-	addConfigFile("$Settings::tables_folder/directions.txt", \%directions_lut, \&parseDataFile2);
-	addConfigFile("$Settings::tables_folder/elements.txt", \%elements_lut, \&parseROLUT);
-	addConfigFile("$Settings::tables_folder/emotions.txt", \%emotions_lut, \&parseEmotionsFile);
-	addConfigFile("$Settings::tables_folder/equiptypes.txt", \%equipTypes_lut, \&parseDataFile2);
-	addConfigFile("$Settings::tables_folder/haircolors.txt", \%haircolors, \&parseDataFile2);
-	addConfigFile("$Settings::tables_folder/headgears.txt", \@headgears_lut, \&parseArrayFile);
-	addConfigFile("$Settings::tables_folder/items.txt", \%items_lut, \&parseROLUT);
-	addConfigFile("$Settings::tables_folder/itemsdescriptions.txt", \%itemsDesc_lut, \&parseRODescLUT);
-	addConfigFile("$Settings::tables_folder/itemslots.txt", \%itemSlots_lut, \&parseROSlotsLUT);
-	addConfigFile("$Settings::tables_folder/itemslotcounttable.txt", \%itemSlotCount_lut, \&parseROLUT);
-	addConfigFile("$Settings::tables_folder/itemtypes.txt", \%itemTypes_lut, \&parseDataFile2);
-	addConfigFile("$Settings::tables_folder/maps.txt", \%maps_lut, \&parseROLUT);
-	addConfigFile("$Settings::tables_folder/monsters.txt", \%monsters_lut, \&parseDataFile2);
-	addConfigFile("$Settings::tables_folder/npcs.txt", \%npcs_lut, \&parseNPCs);
-	addConfigFile("$Settings::tables_folder/packetdescriptions.txt", \%packetDescriptions, \&parseSectionedFile);
-	addConfigFile("$Settings::tables_folder/portals.txt", \%portals_lut, \&parsePortals);
-	addConfigFile("$Settings::tables_folder/portalsLOS.txt", \%portals_los, \&parsePortalsLOS);
-	addConfigFile("$Settings::tables_folder/recvpackets.txt", \%rpackets, \&parseDataFile2);
-	addConfigFile("$Settings::tables_folder/servers.txt", \%masterServers, \&parseSectionedFile);
-	addConfigFile("$Settings::tables_folder/sex.txt", \%sex_lut, \&parseDataFile2);
-	addConfigFile("$Settings::tables_folder/skills.txt", undef, \&Skill::StaticInfo::parseSkillsDatabase);
-	addConfigFile("$Settings::tables_folder/spells.txt", \%spells_lut, \&parseDataFile2);
-	addConfigFile("$Settings::tables_folder/skillsdescriptions.txt", \%skillsDesc_lut, \&parseRODescLUT);
-	addConfigFile("$Settings::tables_folder/skillssp.txt", \%skillsSP_lut, \&parseSkillsSPLUT);
-	addConfigFile("$Settings::tables_folder/skillssp.txt", undef, \&Skill::StaticInfo::parseSPDatabase);
-	addConfigFile("$Settings::tables_folder/skillsstatus.txt", \%skillsStatus, \&parseDataFile2);
-	addConfigFile("$Settings::tables_folder/skillsailments.txt", \%skillsAilments, \&parseDataFile2);
-	addConfigFile("$Settings::tables_folder/skillsstate.txt", \%skillsState, \&parseDataFile2);
-	addConfigFile("$Settings::tables_folder/skillslooks.txt", \%skillsLooks, \&parseDataFile2);
-	addConfigFile("$Settings::tables_folder/skillsarea.txt", \%skillsArea, \&parseDataFile2);
-	addConfigFile("$Settings::tables_folder/skillsencore.txt", \%skillsEncore, \&parseList);
-	
+	Settings::addTableFile('cities.txt',      loader => [\&parseROLUT, \%cities_lut]);
+	Settings::addTableFile('commanddescriptions.txt', loader => [\&parseCommandsDescription, \%descriptions]);
+	Settings::addTableFile('directions.txt',  loader => [\&parseDataFile2, \%directions_lut]);
+	Settings::addTableFile('elements.txt',    loader => [\&parseROLUT, \%elements_lut]);
+	Settings::addTableFile('emotions.txt',    loader => [\&parseEmotionsFile, \%emotions_lut]);
+	Settings::addTableFile('equiptypes.txt',  loader => [\&parseDataFile2, \%equipTypes_lut]);
+	Settings::addTableFile('haircolors.txt',  loader => [\&parseDataFile2, \%haircolors]);
+	Settings::addTableFile('headgears.txt',   loader => [\&parseArrayFile, \@headgears_lut]);
+	Settings::addTableFile('items.txt',       loader => [\&parseROLUT, \%items_lut]);
+	Settings::addTableFile('itemsdescriptions.txt',   loader => [\&parseRODescLUT, \%itemsDesc_lut]);
+	Settings::addTableFile('itemslots.txt',   loader => [\&parseROSlotsLUT, \%itemSlots_lut]);
+	Settings::addTableFile('itemslotcounttable.txt',  loader => [\&parseROLUT, \%itemSlotCount_lut]);
+	Settings::addTableFile('itemtypes.txt',   loader => [\&parseDataFile2, \%itemTypes_lut]);
+	Settings::addTableFile('maps.txt',        loader => [\&parseROLUT, \%maps_lut]);
+	Settings::addTableFile('monsters.txt',    loader => [\&parseDataFile2, \%monsters_lut]);
+	Settings::addTableFile('npcs.txt',        loader => [\&parseNPCs, \%npcs_lut]);
+	Settings::addTableFile('packetdescriptions.txt',  loader => [\&parseSectionedFile, \%packetDescriptions]);
+	Settings::addTableFile('portals.txt',     loader => [\&parsePortals, \%portals_lut]);
+	Settings::addTableFile('portalsLOS.txt',  loader => [\&parsePortalsLOS, \%portals_los]);
+	Settings::addTableFile('recvpackets.txt', loader => [\&parseDataFile2, \%rpackets]);
+	Settings::addTableFile('servers.txt',     loader => [\&parseSectionedFile, \%masterServers]);
+	Settings::addTableFile('sex.txt',         loader => [\&parseDataFile2, \%sex_lut]);
+	Settings::addTableFile('skills.txt',      loader => \&Skill::StaticInfo::parseSkillsDatabase);
+	Settings::addTableFile('spells.txt',      loader => [\&parseDataFile2, \%spells_lut]);
+	Settings::addTableFile('skillsdescriptions.txt',  loader => [\&parseRODescLUT, \%skillsDesc_lut]);
+	Settings::addTableFile('skillssp.txt',    loader => [\&parseSkillsSPLUT, \%skillsSP_lut]);
+	Settings::addTableFile('skillssp.txt',    loader => \&Skill::StaticInfo::parseSPDatabase);
+	Settings::addTableFile('skillsstatus.txt',        loader => [\&parseDataFile2, \%skillsStatus]);
+	Settings::addTableFile('skillsailments.txt',      loader => [\&parseDataFile2, \%skillsAilments]);
+	Settings::addTableFile('skillsstate.txt', loader => [\&parseDataFile2, \%skillsState]);
+	Settings::addTableFile('skillslooks.txt', loader => [\&parseDataFile2, \%skillsLooks]);
+	Settings::addTableFile('skillsarea.txt',  loader => [\&parseDataFile2, \%skillsArea]);
+	Settings::addTableFile('skillsencore.txt',        loader => [\&parseList, \%skillsEncore]);
+
 	use encoding 'utf8';
 
 	Plugins::callHook('start2');
 	eval {
-		if (!Settings::load()) {
-			$interface->errorDialog(T("A configuration file failed to load. Did you download the latest configuration files?"));
-			exit 1;
-		}
+		my $progressHandler = sub {
+			my ($filename) = @_;
+			message TF("Loading %s...\n", $filename);
+		};
+		Settings::loadAll($progressHandler);
 	};
 	if (my $e = caught('UTF8MalformedException')) {
 		$interface->errorDialog(TF(
@@ -198,6 +205,9 @@ sub loadDataFiles {
 			"currently not. To solve this prolem, please use Notepad\n" .
 			"to save that file as valid UTF-8.",
 			$e->textfile));
+		exit 1;
+	} elsif (my $e = caught('FileNotFoundException')) {
+		$interface->errorDialog(TF("Unable to load the file %s.", $e->filename));
 		exit 1;
 	} elsif ($@) {
 		die $@;
@@ -485,12 +495,12 @@ sub initMapChangeVars {
 	Plugins::callHook('packet_mapChange');
 
 	$logAppend = ($config{logAppendUsername}) ? "_$config{username}_$config{char}" : '';
-	if ($config{logAppendUsername} && !($Settings::storage_file =~ /$logAppend/)) {
-		$Settings::chat_file	 = substr($Settings::chat_file,0,length($Settings::chat_file)-4)."$logAppend.txt";
-		$Settings::monster_log	 = substr($Settings::monster_log,0,length($Settings::monster_log)-4)."$logAppend.txt";
-		$Settings::item_log_file = substr($Settings::item_log_file,0,length($Settings::item_log_file)-4)."$logAppend.txt";
-		$Settings::storage_file  = substr($Settings::storage_file,0,length($Settings::storage_file)-4)."$logAppend.txt";
-		$Settings::shop_log_file = substr($Settings::shop_log_file,0,length($Settings::shop_log_file)-4)."$logAppend.txt";
+	if ($config{logAppendUsername} && index($Settings::storage_log_file, $logAppend) == -1) {
+		$Settings::chat_log_file     = substr($Settings::chat_log_file,    0, length($Settings::chat_log_file)    - 4) . "$logAppend.txt";
+		$Settings::storage_log_file  = substr($Settings::storage_log_file, 0, length($Settings::storage_log_file) - 4) . "$logAppend.txt";
+		$Settings::shop_log_file     = substr($Settings::shop_log_file,    0, length($Settings::shop_log_file)    - 4) . "$logAppend.txt";
+		$Settings::monster_log_file  = substr($Settings::monster_log_file, 0, length($Settings::monster_log_log)  - 4) . "$logAppend.txt";
+		$Settings::item_log_file     = substr($Settings::item_log_file,    0, length($Settings::item_log_file)    - 4) . "$logAppend.txt";
 	}
 }
 

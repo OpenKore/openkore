@@ -293,7 +293,6 @@ if (0) {
 	};
 
 	$self->{mapBtn} = $addButton->(':: Map', [\&mapToggle, $self]);
-	$self->{settingsBtn} = $addButton->(':: Settings', [\&showSettings, $self]) if ($ENV{'OPENKORE_SETTINGS'} && -f $ENV{'OPENKORE_SETTINGS'});
 	$self->{helpBtn} = $addButton->(':: Help', [\&showManual, $self]) if ($self->{ShellExecute});
 	$self->{exitBtn} = $addButton->(':: Exit', [\&OnExit, $self]);
 
@@ -590,18 +589,6 @@ sub OnExit{
 sub showManual {
 	my $self = shift;
 	$self->{ShellExecute}->Call(0, '', 'http://openkore.sourceforge.net/manual/', '', '', 1);
-}
-
-sub showSettings {
-	return unless $buildType == 0;
-	my $self = shift;
-	my ($obj, $priority);
-	eval 'use Win32::Process; use Win32; $priority = NORMAL_PRIORITY_CLASS;';
-
-	Win32::Process::Create($obj, $ENV{OPENKORE_SETTINGS}, "\"$ENV{OPENKORE_SETTINGS}\" " .
-		"/settings \"$Settings::config_file\" \"$Settings::control_folder\" \"$Settings::tables_folder\"",
-		0, $priority, ".");
-	$self->{SettingsObj} = $obj;
 }
 
 sub resetColors {

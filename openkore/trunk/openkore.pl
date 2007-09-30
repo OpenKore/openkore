@@ -40,7 +40,7 @@ sub __start {
 
 	use Globals;
 	use Interface;
-	$interface = Interface->loadInterface($Settings::default_interface);
+	$interface = Interface->loadInterface($Settings::interface);
 	selfCheck();
 
 
@@ -103,14 +103,14 @@ sub __start {
 sub parseArguments {
 	eval {
 		if (!Settings::parseArguments()) {
-			print $Settings::usageText;
+			print Settings::getUsageText();
 			exit 1;
 		}
 	};
 	if (my $e = caught('IOException', 'ArgumentException')) {
 		print "Error: $e\n";
 		if ($e->isa('ArgumentException')) {
-			print $Settings::usageText;
+			print Settings::getUsageText();
 		}
 		exit 1;
 	} elsif ($@) {

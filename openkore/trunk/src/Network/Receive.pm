@@ -1297,7 +1297,7 @@ sub actor_info {
 		if ($monsters_lut{$monster->{nameID}} eq "") {
 			$monster->setName($name);
 			$monsters_lut{$monster->{nameID}} = $name;
-			updateMonsterLUT("$Settings::tables_folder/monsters.txt", $monster->{nameID}, $name);
+			updateMonsterLUT(Settings::getTableFilename("monsters.txt"), $monster->{nameID}, $name);
 		}
 	}
 
@@ -1312,7 +1312,7 @@ sub actor_info {
 		my $location = "$field{name} $npc->{pos}{x} $npc->{pos}{y}";
 		if (!$npcs_lut{$location}) {
 			$npcs_lut{$location} = $npc->{name};
-			updateNPCLUT("$Settings::tables_folder/npcs.txt", $location, $npc->{name});
+			updateNPCLUT(Settings::getTableFilename("npcs.txt"), $location, $npc->{name});
 		}
 	}
 
@@ -2397,7 +2397,7 @@ sub errors {
 	} elsif ($args->{type} == 2) {
 		if ($config{'dcOnDualLogin'} == 1) {
 			$interface->errorDialog(TF("Critical Error: Dual login prohibited - Someone trying to login!\n\n" .
-				"%s will now immediately disconnect.", $Settings::NAME));
+				"%s will now immediately 	disconnect.", $Settings::NAME));
 			$quit = 1;
 		} elsif ($config{'dcOnDualLogin'} >= 2) {
 			error T("Critical Error: Dual login prohibited - Someone trying to login!\n"), "connection";
@@ -3613,7 +3613,7 @@ sub login_error {
 	}
 	if ($args->{type} != 5 && $versionSearch) {
 		$versionSearch = 0;
-		writeSectionedFileIntact("$Settings::tables_folder/servers.txt", \%masterServers);
+		writeSectionedFileIntact(Settings::getTableFilename("servers.txt"), \%masterServers);
 	}
 }
 
