@@ -50,12 +50,12 @@ sub start {
 		print "Cannot connect to $ARGV[0]: $!\n";
 		exit 1;
 	}
-	$socket->send(serialize("START"));
+	$socket->send(serialize("set active"));
 	$socket->flush();
 
 	$parser = new Bus::MessageParser();
-	Settings::addControlFile("consolecolors.txt", handler => [\&parseSectionedFile, \%consoleColors]);
-	Settings::load();
+	Settings::addControlFile("consolecolors.txt", loader => [\&parseSectionedFile, \%consoleColors]);
+	Settings::loadAll();
 
 	$interface = new Interface::Console();
 	$interface->mainLoop();
@@ -78,11 +78,11 @@ sub mainLoop {
 		} else {
 			$parser->add($data);
 			while (my $args = $parser->readNext(\$ID)) {
-				if ($ID eq "OUTPUT") {
+				if ($ID eq "output") {
 					$interface->writeOutput($args->{type},
 						$args->{message},
 						$args->{domain});
-				} elsif ($ID eq "SET_TITLE") {
+				} elsif ($ID eq "title changed") {
 					$interface->title($args->{title});
 				}
 			}
@@ -93,7 +93,7 @@ sub mainLoop {
 		if ($input eq "detach") {
 			$quit = 1;
 		} else {
-			my $message = serialize("INPUT", { data => $input });
+			my $message = serialize("input", { data => $input });
 			$socket->send($message);
 			$socket->flush();
 		}
