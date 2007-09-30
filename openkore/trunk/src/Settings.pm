@@ -290,8 +290,7 @@ sub getPluginsFolders {
 
 ##
 # Settings::addControlFile(String name, options...)
-# Returns: A handle for this data file, which can be used by
-#          Settings::removeFile() or Settings::loadByHandle().
+# Returns: A handle for this data file, which can be used by Settings::removeFile() or Settings::loadByHandle().
 #
 # Register a control file. This file will be eligable for (re)loading
 # when one of the load() functions is called.
@@ -405,7 +404,7 @@ sub loadByHandle {
 }
 
 ##
-# void Settings::loadAll(regexp, Function progressHandler)
+# void Settings::loadAll(regexp, [Function progressHandler])
 #
 # (Re)loads all registered data files whose name matches the given regular expression.
 # This method follows the same contract as
@@ -422,7 +421,7 @@ sub loadByRegexp {
 }
 
 ##
-# void Settings::loadAll(Function progressHandler)
+# void Settings::loadAll([Function progressHandler])
 #
 # (Re)loads all registered data files. This method follows the same contract as
 # Settings::loadByHandle(), so see that method for parameter descriptions
