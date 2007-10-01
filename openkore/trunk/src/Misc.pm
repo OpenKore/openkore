@@ -247,7 +247,7 @@ sub auth {
 		message TF("Revoked admin privilages for user '%s'\n", $user), "success";
 	}
 	$overallAuth{$user} = $flag;
-	writeDataFile(Settings::getControlFile("overallAuth.txt"), \%overallAuth);
+	writeDataFile(Settings::getControlFilename("overallAuth.txt"), \%overallAuth);
 }
 
 ##

@@ -184,7 +184,7 @@ sub downloadManual {
 	my ($self, $parent) = @_;
 	my ($file, $f, $time);
 
-	$file = Settings::getControlFile("manual.txt");
+	$file = Settings::getControlFilename("manual.txt");
 	$time = (stat($file))[9];
 	# Download manual if it hasn't been downloaded yet,
 	# or if the local copy is more than 3 days old
