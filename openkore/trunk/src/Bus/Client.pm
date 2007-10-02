@@ -13,6 +13,25 @@
 #  $Id$
 #
 #########################################################################
+##
+# MODULE DESCRIPTION: High level interface to the bus system
+#
+# <h2>About the bus system</h2>
+# The bus system's goal is to allow different OpenKore instances to easily
+# communicate with each other, and to allow external tools to easily
+# communicate with a running OpenKore instance.
+#
+# The bus is a communication channel which supports broadcast communication
+# as well as private communication. One can compare it to an open street:
+# anyone can shout a message to everybody (broadcast communication) or
+# whisper a message into someone else's ears (private communication).
+#
+# Furthermore, the bus system is based on discrete <em>messages</em> instead
+# of byte streams. See @MODULE(Bus::Messages) for information the message
+# format.
+#
+# This module provides an easy to use interface to interact with the bus
+# system.
 package Bus::Client;
 
 use strict;
