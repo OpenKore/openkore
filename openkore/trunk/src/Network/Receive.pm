@@ -2859,6 +2859,8 @@ sub guild_chat {
 	my ($chatMsgUser, $chatMsg); # Type: String
 	my $chat; # Type: String
 
+	return unless changeToInGameState();
+
 	$chat = bytesToString($args->{message});
 	if (($chatMsgUser, $chatMsg) = $chat =~ /(.*?) : (.*)/) {
 		$chatMsgUser =~ s/ $//;
