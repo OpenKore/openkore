@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: OpenKore 1.9.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-10-05 17:32+0700\n"
-"PO-Revision-Date: 2007-10-05 17:41+0700\n"
-"Last-Translator: h4rry84 <dewa5227@yahoo.com>\n"
+"PO-Revision-Date: 2007-10-06 13:18+0800\n"
+"Last-Translator: 小溫 <littlewens@yahoo.com.tw>\n"
 "Language-Team: littlewens <littlewens@yahoo.com.tw>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -40,7 +40,7 @@ msgstr "正要攻擊: %s\n"
 #: ../AI.pm:731
 #, perl-format
 msgid "Encounter Monster : %s\n"
-msgstr "遭遇怪物: %s\n"
+msgstr "遭遇魔物: %s\n"
 
 #: ../AI.pm:736
 #: ../AI.pm:804
@@ -245,15 +245,15 @@ msgid ""
 "Error in function 'a' (Attack Monster)\n"
 "Monster %s does not exist.\n"
 msgstr ""
-"'a' 功能錯誤 (攻擊怪物)\n"
-"怪物 %s 並不存在.\n"
+"'a' 功能錯誤 (攻擊魔物)\n"
+"魔物 %s 並不存在.\n"
 
 #: ../Commands.pm:550
 msgid ""
 "Syntax Error in function 'a' (Attack Monster)\n"
 "Usage: attack <monster # | no | yes >\n"
 msgstr ""
-"'a' 功能語法錯誤 (攻擊怪物)\n"
+"'a' 功能語法錯誤 (攻擊魔物)\n"
 "使用方法: attack <monster # | no | yes >\n"
 
 #: ../Commands.pm:563
@@ -931,13 +931,13 @@ msgid ""
 "-[Monster Killed Count]-----------------------\n"
 "#   ID     Name                      Count\n"
 msgstr ""
-"-[殺死的怪物計算]-----------------------------\n"
+"-[殺死的魔物計算]-----------------------------\n"
 "#   ID     名稱                       計數\n"
 
 #: ../Commands.pm:1502
 #, perl-format
 msgid "Total number of killed monsters: %s\n"
-msgstr "總共殺死的怪物數量: %s\n"
+msgstr "總共殺死的魔物數量: %s\n"
 
 #: ../Commands.pm:1510
 msgid ""
@@ -1573,7 +1573,7 @@ msgid ""
 "-----------Monster List-----------\n"
 "#   Name                        ID      DmgTo DmgFrom  Distance    Coordinates\n"
 msgstr ""
-"-------------怪物清單-------------\n"
+"-------------魔物清單-------------\n"
 "#   名稱                        ID      給予傷害 被傷害  距離        座標\n"
 
 #: ../Commands.pm:2679
@@ -2232,7 +2232,7 @@ msgstr ""
 "--------------------------------------------------------\n"
 "對敵總傷害: @>>>>>>>>>>>>> 每秒輸出傷害: @<<<<<<<<<<<<<<\n"
 "花費時間 (秒): @>>>>>>>>\n"
-"打死最後一隻怪物所花時間 (秒): @>>>>>>>\n"
+"打死最後一隻魔物所花時間 (秒): @>>>>>>>\n"
 "--------------------------------------------------------"
 
 #: ../Commands.pm:3635
@@ -2572,8 +2572,8 @@ msgid ""
 "Syntax Error in function 'im' (Use Item on Monster)\n"
 "Usage: im <item #> <monster #>\n"
 msgstr ""
-"'im' 功能語法錯誤 (使用物品在怪物身上)\n"
-"使用方法: im <物品編號> <怪物編號>\n"
+"'im' 功能語法錯誤 (使用物品在魔物身上)\n"
+"使用方法: im <物品編號> <魔物編號>\n"
 
 #: ../Commands.pm:4130
 #, perl-format
@@ -2581,7 +2581,7 @@ msgid ""
 "Error in function 'im' (Use Item on Monster)\n"
 "Inventory Item %s does not exist.\n"
 msgstr ""
-"'im' 功能錯誤 (使用物品在怪物身上)\n"
+"'im' 功能錯誤 (使用物品在魔物身上)\n"
 "物品欄的物品 %s 並不存在.\n"
 
 #: ../Commands.pm:4133
@@ -2590,7 +2590,7 @@ msgid ""
 "Error in function 'im' (Use Item on Monster)\n"
 "Inventory Item %s is not of type Usable.\n"
 msgstr ""
-"'im' 功能錯誤 (使用物品在怪物身上)\n"
+"'im' 功能錯誤 (使用物品在魔物身上)\n"
 "物品欄的物品 %s 非可使用物品.\n"
 
 #: ../Commands.pm:4136
@@ -2599,8 +2599,8 @@ msgid ""
 "Error in function 'im' (Use Item on Monster)\n"
 "Monster %s does not exist.\n"
 msgstr ""
-"'im' 功能錯誤 (使用物品在怪物身上)\n"
-"怪物 %s 並不存在.\n"
+"'im' 功能錯誤 (使用物品在魔物身上)\n"
+"魔物 %s 並不存在.\n"
 
 #: ../Commands.pm:4148
 msgid ""
@@ -2733,15 +2733,15 @@ msgid ""
 "Syntax error in function 'sm' (Use Skill on Monster)\n"
 "Usage: sm <skill #> <monster #> [level]\n"
 msgstr ""
-"'sm' 功能語法錯誤 (使用技能在怪物身上)\n"
-"使用方法: sm <技能編號> <怪物編號> [技能等級]\n"
+"'sm' 功能語法錯誤 (使用技能在魔物身上)\n"
+"使用方法: sm <技能編號> <魔物編號> [技能等級]\n"
 
 #: ../Commands.pm:4255
 msgid ""
 "Error in function 'sm' (Use Skill on Monster)\n"
 "You are not logged into the game.\n"
 msgstr ""
-"'sm' 功能錯誤 (使用技能在怪物身上)\n"
+"'sm' 功能錯誤 (使用技能在魔物身上)\n"
 "您尚未登入遊戲中.\n"
 
 #: ../Commands.pm:4261
@@ -2750,8 +2750,8 @@ msgid ""
 "Error in function 'sm' (Use Skill on Monster)\n"
 "Monster %d does not exist.\n"
 msgstr ""
-"'sm' 功能錯誤 (使用技能在怪物身上)\n"
-"怪物 %d 並不存在.\n"
+"'sm' 功能錯誤 (使用技能在魔物身上)\n"
+"魔物 %d 並不存在.\n"
 
 #: ../Commands.pm:4271
 msgid ""
@@ -3263,13 +3263,13 @@ msgstr "因攻擊Miss而瞬移\n"
 #: ../Misc.pm:2309
 #, perl-format
 msgid "Teleporting after attacking a monster %d times\n"
-msgstr "因攻擊怪物超過 %d 次而瞬移\n"
+msgstr "因攻擊魔物超過 %d 次而瞬移\n"
 
 #: ../Misc.pm:2315
 #: ../Misc.pm:2423
 #, perl-format
 msgid "%s (%s) has been provoked, searching another monster\n"
-msgstr "%s (%s) 已被挑釁, 尋找其它怪物中\n"
+msgstr "%s (%s) 已被挑釁, 尋找其它魔物中\n"
 
 #: ../Misc.pm:2342
 #, perl-format
@@ -3419,7 +3419,7 @@ msgstr "玩家 %s (%d) 正在詠唱 %s 於座標 (%d, %d) - (時間 %sms)\n"
 #: ../Misc.pm:2875
 #, perl-format
 msgid "Monster %s (%d) is casting %s on location (%d, %d) - (time %sms)\n"
-msgstr "怪物 %s (%d) 正在詠唱 %s 於座標 (%d, %d) - (時間 %sms)\n"
+msgstr "魔物 %s (%d) 正在詠唱 %s 於座標 (%d, %d) - (時間 %sms)\n"
 
 #: ../Misc.pm:2878
 #, perl-format
@@ -3439,7 +3439,7 @@ msgstr "您正在詠唱 %s 於玩家 %s (%d) (時間 %sms)\n"
 #: ../Misc.pm:2890
 #, perl-format
 msgid "You are casting %s on monster %s (%d) (time %sms)\n"
-msgstr "您正在詠唱 %s 於怪物 %s (%d) (時間 %sms)\n"
+msgstr "您正在詠唱 %s 於魔物 %s (%d) (時間 %sms)\n"
 
 #: ../Misc.pm:2893
 #, perl-format
@@ -3469,7 +3469,7 @@ msgstr "玩家 %s (%d) 正在詠唱 %s 給她自己 (時間 %sms)\n"
 #: ../Misc.pm:2914
 #, perl-format
 msgid "Player %s (%d) is casting %s on monster %s (%d) (time %sms)\n"
-msgstr "玩家 %s (%d) 正在詠唱 %s 於怪物 %s (%d) (時間 %sms)\n"
+msgstr "玩家 %s (%d) 正在詠唱 %s 於魔物 %s (%d) (時間 %sms)\n"
 
 #: ../Misc.pm:2917
 #, perl-format
@@ -3479,27 +3479,27 @@ msgstr "玩家 %s (%d) 正在詠唱 %s 於未知 #%s (%d) (時間 %sms)\n"
 #: ../Misc.pm:2923
 #, perl-format
 msgid "Monster %s (%d) is casting %s on you (time %sms)\n"
-msgstr "怪物 %s (%d) 正在詠唱 %s 於您 (時間 %sms)\n"
+msgstr "魔物 %s (%d) 正在詠唱 %s 於您 (時間 %sms)\n"
 
 #: ../Misc.pm:2926
 #, perl-format
 msgid "Monster %s (%d) is casting %s on player %s (%d) (time %sms)\n"
-msgstr "怪物 %s (%d) 正在詠唱 %s 於玩家 %s (%d) (時間 %sms)\n"
+msgstr "魔物 %s (%d) 正在詠唱 %s 於玩家 %s (%d) (時間 %sms)\n"
 
 #: ../Misc.pm:2930
 #, perl-format
 msgid "Monster %s (%d) is casting %s on monster %s (%d) (time %sms)\n"
-msgstr "怪物 %s (%d) 正在詠唱 %s 於怪物 %s (%d) (時間 %sms)\n"
+msgstr "魔物 %s (%d) 正在詠唱 %s 於魔物 %s (%d) (時間 %sms)\n"
 
 #: ../Misc.pm:2933
 #, perl-format
 msgid "Monster %s (%d) is casting %s on itself (time %sms)\n"
-msgstr "怪物 %s (%d) 正在詠唱 %s 給他自己 (時間 %sms)\n"
+msgstr "魔物 %s (%d) 正在詠唱 %s 給他自己 (時間 %sms)\n"
 
 #: ../Misc.pm:2937
 #, perl-format
 msgid "Monster %s (%d) is casting %s on Unknown #%s (%d) (time %sms)\n"
-msgstr "怪物 %s (%d) 正在詠唱 %s 於未知 #%s (%d) (時間 %sms)\n"
+msgstr "魔物 %s (%d) 正在詠唱 %s 於未知 #%s (%d) (時間 %sms)\n"
 
 #: ../Misc.pm:2943
 #, perl-format
@@ -3514,7 +3514,7 @@ msgstr "未知 #%s (%d) 正在詠唱 %s 於玩家 %s (%d) (時間 %sms)\n"
 #: ../Misc.pm:2949
 #, perl-format
 msgid "Unknown #%s (%d) is casting %s on monster %s (%d) (time %sms)\n"
-msgstr "未知 #%s (%d) 正在詠唱 %s 於怪物 %s (%d) (時間 %sms)\n"
+msgstr "未知 #%s (%d) 正在詠唱 %s 於魔物 %s (%d) (時間 %sms)\n"
 
 #: ../Misc.pm:2953
 #, perl-format
@@ -3552,7 +3552,7 @@ msgstr "您施展 %s 於玩家 %s (%d) %s(延遲 %s)\n"
 #: ../Misc.pm:2987
 #, perl-format
 msgid "You use %s on monster %s (%d) %s(delay %s)\n"
-msgstr "您施展 %s 於怪物 %s (%d) %s(延遲 %s)\n"
+msgstr "您施展 %s 於魔物 %s (%d) %s(延遲 %s)\n"
 
 #: ../Misc.pm:2990
 #, perl-format
@@ -3582,7 +3582,7 @@ msgstr "玩家 %s (%d) 施展 %s 給她自己 %s(延遲 %s)\n"
 #: ../Misc.pm:3011
 #, perl-format
 msgid "Player %s (%d) uses %s on monster %s (%d) %s(delay %s)\n"
-msgstr "玩家 %s (%d) 施展 %s 於怪物 %s (%d) %s(延遲 %s)\n"
+msgstr "玩家 %s (%d) 施展 %s 於魔物 %s (%d) %s(延遲 %s)\n"
 
 #: ../Misc.pm:3014
 #, perl-format
@@ -3592,27 +3592,27 @@ msgstr "玩家 %s (%d) 施展 %s 於未知 #%s (%d) %s(延遲 %s)\n"
 #: ../Misc.pm:3020
 #, perl-format
 msgid "Monster %s (%d) uses %s on you %s(delay %s)\n"
-msgstr "怪物 %s (%d) 施展 %s 於您 %s(延遲 %s)\n"
+msgstr "魔物 %s (%d) 施展 %s 於您 %s(延遲 %s)\n"
 
 #: ../Misc.pm:3023
 #, perl-format
 msgid "Monster %s (%d) uses %s on player %s (%d) %s(delay %s)\n"
-msgstr "怪物 %s (%d) 施展 %s 於玩家 %s (%d) %s(延遲 %s)\n"
+msgstr "魔物 %s (%d) 施展 %s 於玩家 %s (%d) %s(延遲 %s)\n"
 
 #: ../Misc.pm:3027
 #, perl-format
 msgid "Monster %s (%d) uses %s on monster %s (%d) %s(delay %s)\n"
-msgstr "怪物 %s (%d) 施展 %s 於怪物 %s (%d) %s(延遲 %s)\n"
+msgstr "魔物 %s (%d) 施展 %s 於魔物 %s (%d) %s(延遲 %s)\n"
 
 #: ../Misc.pm:3030
 #, perl-format
 msgid "Monster %s (%d) uses %s on itself %s(delay %s)\n"
-msgstr "怪物 %s (%d) 施展 %s 給他自己 %s(延遲 %s)\n"
+msgstr "魔物 %s (%d) 施展 %s 給他自己 %s(延遲 %s)\n"
 
 #: ../Misc.pm:3034
 #, perl-format
 msgid "Monster %s (%d) uses %s on Unknown #%s (%d) %s(delay %s)\n"
-msgstr "怪物 %s (%d) 施展 %s 於未知 #%s (%d) %s(延遲 %s)\n"
+msgstr "魔物 %s (%d) 施展 %s 於未知 #%s (%d) %s(延遲 %s)\n"
 
 #: ../Misc.pm:3040
 #, perl-format
@@ -3627,7 +3627,7 @@ msgstr "未知 #%s (%d) 施展 %s 於玩家 %s (%d) %s(延遲 %s)\n"
 #: ../Misc.pm:3046
 #, perl-format
 msgid "Unknown #%s (%d) uses %s on monster %s (%d) %s(delay %s)\n"
-msgstr "未知 #%s (%d) 施展 %s 於怪物 %s (%d) %s(延遲 %s)\n"
+msgstr "未知 #%s (%d) 施展 %s 於魔物 %s (%d) %s(延遲 %s)\n"
 
 #: ../Misc.pm:3050
 #, perl-format
@@ -3690,7 +3690,7 @@ msgstr "玩家 %s (%d) 施展 %s 給她自己 %s\n"
 #: ../Misc.pm:3123
 #, perl-format
 msgid "Player %s (%d) uses %s on monster %s (%d) %s\n"
-msgstr "玩家 %s (%d) 施展 %s 於怪物 %s (%d) %s\n"
+msgstr "玩家 %s (%d) 施展 %s 於魔物 %s (%d) %s\n"
 
 #: ../Misc.pm:3126
 #, perl-format
@@ -3700,27 +3700,27 @@ msgstr "玩家 %s (%d) 施展 %s 於未知 #%s (%d) %s\n"
 #: ../Misc.pm:3132
 #, perl-format
 msgid "Monster %s (%d) uses %s on you %s\n"
-msgstr "怪物 %s (%d) 施展 %s 於您 %s\n"
+msgstr "魔物 %s (%d) 施展 %s 於您 %s\n"
 
 #: ../Misc.pm:3135
 #, perl-format
 msgid "Monster %s (%d) uses %s on player %s (%d) %s\n"
-msgstr "怪物 %s (%d) 施展 %s 於玩家 %s (%d) %s\n"
+msgstr "魔物 %s (%d) 施展 %s 於玩家 %s (%d) %s\n"
 
 #: ../Misc.pm:3139
 #, perl-format
 msgid "Monster %s (%d) uses %s on monster %s (%d) %s\n"
-msgstr "怪物 %s (%d) 施展 %s 於怪物 %s (%d) %s\n"
+msgstr "魔物 %s (%d) 施展 %s 於魔物 %s (%d) %s\n"
 
 #: ../Misc.pm:3142
 #, perl-format
 msgid "Monster %s (%d) uses %s on itself %s\n"
-msgstr "怪物 %s (%d) 施展 %s 給他自己 %s\n"
+msgstr "魔物 %s (%d) 施展 %s 給他自己 %s\n"
 
 #: ../Misc.pm:3146
 #, perl-format
 msgid "Monster %s (%d) uses %s on Unknown #%s (%d) %s\n"
-msgstr "怪物 %s (%d) 施展 %s 於未知 #%s (%d) %s\n"
+msgstr "魔物 %s (%d) 施展 %s 於未知 #%s (%d) %s\n"
 
 #: ../Misc.pm:3152
 #, perl-format
@@ -3735,7 +3735,7 @@ msgstr "未知 #%s (%d) 施展 %s 於玩家 %s (%d) %s\n"
 #: ../Misc.pm:3158
 #, perl-format
 msgid "Unknown #%s (%d) uses %s on monster %s (%d) %s\n"
-msgstr "未知 #%s (%d) 施展 %s 於怪物 %s (%d) %s\n"
+msgstr "未知 #%s (%d) 施展 %s 於魔物 %s (%d) %s\n"
 
 #: ../Misc.pm:3162
 #, perl-format
@@ -3760,7 +3760,7 @@ msgstr "玩家 %s (%d) 現在為: %s\n"
 #: ../Misc.pm:3182
 #, perl-format
 msgid "Monster %s (%d) is now: %s\n"
-msgstr "怪物 %s (%d) 現在為: %s\n"
+msgstr "魔物 %s (%d) 現在為: %s\n"
 
 #: ../Misc.pm:3184
 #, perl-format
@@ -3780,7 +3780,7 @@ msgstr "玩家 %s (%d) 再度為: %s\n"
 #: ../Misc.pm:3192
 #, perl-format
 msgid "Monster %s (%d) is again: %s\n"
-msgstr "怪物 %s (%d) 再度為: %s\n"
+msgstr "魔物 %s (%d) 再度為: %s\n"
 
 #: ../Misc.pm:3194
 #, perl-format
@@ -3800,7 +3800,7 @@ msgstr "玩家 %s (%d) 不再為: %s\n"
 #: ../Misc.pm:3202
 #, perl-format
 msgid "Monster %s (%d) is no longer: %s\n"
-msgstr "怪物 %s (%d) 不再為: %s\n"
+msgstr "魔物 %s (%d) 不再為: %s\n"
 
 #: ../Misc.pm:3204
 #, perl-format
@@ -3863,9 +3863,9 @@ msgid "Processing map %s...\n"
 msgstr "處理地圖 %s 中...\n"
 
 #: ../Misc.pm:3426
-#, fuzzy, perl-format
+#, perl-format
 msgid "Wrote portals Line of Sight table to '%s'\n"
-msgstr "Wrote portals Line of Sight table to '%s/portalsLOS.txt'\n"
+msgstr "Wrote portals Line of Sight table to '%s'\n"
 
 #: ../Misc.pm:3430
 #: ../Misc.pm:3434
@@ -4010,14 +4010,14 @@ msgid "Welcome to %s."
 msgstr "歡迎來到 %s."
 
 #: ../Settings.pm:386
-#, fuzzy, perl-format
+#, perl-format
 msgid "Cannot load control file %s"
-msgstr "無法載入地圖 '%s'."
+msgstr "無法載入 control 檔案 %s"
 
 #: ../Settings.pm:390
-#, fuzzy, perl-format
+#, perl-format
 msgid "Cannot load table file %s"
-msgstr "無法載入地圖 '%s'."
+msgstr "無法載入 table 檔案 %s"
 
 #: ../Network/DirectConnection.pm:147
 #, perl-format
@@ -4149,23 +4149,20 @@ msgstr ""
 "%s"
 
 #: ../Network/Receive.pm:590
-#, fuzzy
 msgid ""
 "You've never set a login PIN code before.\n"
 "Please enter a new login PIN code:"
 msgstr ""
-"您尚未設定過 PIN 碼.\n"
-"請輸入一個新的 PIN 碼:"
+"您尚未設定過登入 PIN 碼.\n"
+"請輸入一個新的登入 PIN 碼:"
 
 #: ../Network/Receive.pm:598
-#, fuzzy
 msgid "The PIN code may only contain digits."
-msgstr "PIN 碼只能包含數字.\n"
+msgstr "PIN 碼只能包含數字."
 
 #: ../Network/Receive.pm:600
-#, fuzzy
 msgid "The PIN code must be between 4 and 9 characters."
-msgstr "PIN 碼必須介於 3 個字元及 9 個字元之間.\n"
+msgstr "PIN 碼必須介於 4 個字元及 9 個字元之間."
 
 #: ../Network/Receive.pm:638
 msgid "============= Account payment information =============\n"
@@ -4501,7 +4498,7 @@ msgstr "[距離=%s] %s (%d): %s\n"
 #: ../Network/Receive.pm:2332
 #, perl-format
 msgid "[dist=%s] Monster %s (%d): %s\n"
-msgstr "[距離=%s] 怪物 %s (%d): %s\n"
+msgstr "[距離=%s] 魔物 %s (%d): %s\n"
 
 #: ../Network/Receive.pm:2344
 #, perl-format
@@ -4531,7 +4528,7 @@ msgid "Error: Server is closed\n"
 msgstr "錯誤: 伺服器已關閉\n"
 
 #: ../Network/Receive.pm:2399
-#, fuzzy, perl-format
+#, perl-format
 msgid ""
 "Critical Error: Dual login prohibited - Someone trying to login!\n"
 "\n"
@@ -4539,7 +4536,7 @@ msgid ""
 msgstr ""
 "嚴重錯誤: 雙重登入障礙 - 有別人正試著登入!\n"
 "\n"
-"%s 現在將立刻斷線."
+"%s 現在將立刻 \t斷線."
 
 #: ../Network/Receive.pm:2403
 #: ../Network/Receive.pm:2407
@@ -5014,7 +5011,7 @@ msgstr "小地圖指標位於座標 %d, %d 並使用顏色 %s 顯示\n"
 #: ../Network/Receive.pm:3867
 #, perl-format
 msgid "Monster %s (%d) changed to %s\n"
-msgstr "怪物 %s (%d) 已轉變為 %s\n"
+msgstr "魔物 %s (%d) 已轉變為 %s\n"
 
 #: ../Network/Receive.pm:3895
 #: ../Network/Receive.pm:3896
@@ -5397,7 +5394,7 @@ msgstr "您可以賣 %s 個物品!\n"
 #: ../Network/Receive.pm:4983
 #, perl-format
 msgid "Monster Skill - switch Target to : %s (%d)\n"
-msgstr "怪物技能 - 轉換目標為 : %s (%d)\n"
+msgstr "魔物技能 - 轉換目標為 : %s (%d)\n"
 
 #: ../Network/Receive.pm:5012
 #, perl-format
@@ -5536,39 +5533,32 @@ msgstr "成功地輸入了倉庫密碼.\n"
 #: ../Network/Receive.pm:5856
 #: ../Network/Receive.pm:5882
 #: ../Network/Receive.pm:5895
-#, fuzzy
 msgid "Unable to send PIN code. You must set the 'PINEncryptKey' option in servers.txt."
-msgstr "無法傳送 PIN 碼. 您必須在config.txt或server.txt中設定'PINEncryptKey'選項.\n"
+msgstr "無法傳送 PIN 碼. 您必須在 server.txt 中設定'PINEncryptKey'選項."
 
 #: ../Network/Receive.pm:5863
-#, fuzzy
 msgid "Login PIN code has been changed successfully.\n"
-msgstr "PIN 碼成功更換為: %s\n"
+msgstr "登入 PIN 碼已更換成功.\n"
 
 #: ../Network/Receive.pm:5866
-#, fuzzy
 msgid "Failed to change the login PIN code. Please try again.\n"
-msgstr ""
-"更改 PIN 碼失敗\n"
-"請再試一次\n"
+msgstr "更改登入 PIN 碼失敗. 請再試一次.\n"
 
 #: ../Network/Receive.pm:5869
-#, fuzzy
 msgid "Please enter your old login PIN code:"
-msgstr "請輸入舊 PIN 碼:"
+msgstr "請輸入您的舊登入 PIN 碼:"
 
 #: ../Network/Receive.pm:5874
-#, fuzzy
 msgid "Please enter a new login PIN code:"
-msgstr "請輸入新的 PIN 碼:"
+msgstr "請輸入新的登入 PIN 碼:"
 
 #: ../Network/Receive.pm:5891
 msgid "The login PIN code that you entered is incorrect. Please re-enter your login PIN code."
-msgstr ""
+msgstr "您輸入的登入 PIN 碼是不正確的.請重新輸入您的登入 PIN 碼."
 
 #: ../Network/Receive.pm:5903
 msgid "You have entered 3 incorrect login PIN codes in a row. Reconnecting...\n"
-msgstr ""
+msgstr "您已輸入 3 次錯誤的登入 PIN 碼.重新連線中...\n"
 
 #. Translation Comment: System/GM chat
 #: ../Network/Receive.pm:5928
@@ -6459,9 +6449,9 @@ msgstr ""
 "%s"
 
 #: ../functions.pl:211
-#, fuzzy, perl-format
+#, perl-format
 msgid "Unable to load the file %s."
-msgstr "無法重新載入 %s\n"
+msgstr "無法載入檔案 %s."
 
 #: ../functions.pl:219
 msgid ""
@@ -6641,5 +6631,5 @@ msgstr "地圖已載入\n"
 #~ msgid "Player %d does not exist.\n"
 #~ msgstr "玩家 %d 並不存在.\n"
 #~ msgid "Monster %d does not exist.\n"
-#~ msgstr "怪物 %d 並不存在.\n"
+#~ msgstr "魔物 %d 並不存在.\n"
 
