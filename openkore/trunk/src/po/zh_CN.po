@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenKore 1.9.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-10-05 17:32+0700\n"
-"PO-Revision-Date: 2007-10-05 17:41+0700\n"
-"Last-Translator: h4rry84 <dewa5227@yahoo.com>\n"
+"POT-Creation-Date: 2006-11-10 20:50+0700\n"
+"PO-Revision-Date: 2007-10-07 15:32+0800\n"
+"Last-Translator: lkm <lj88kc@yahoo.com.cn>\n"
 "Language-Team: Lkm <lj88kc@yhaoo.com.cn>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -3859,9 +3859,9 @@ msgid "Processing map %s...\n"
 msgstr "处理地图 %s...\n"
 
 #: ../Misc.pm:3426
-#, fuzzy, perl-format
+#, perl-format
 msgid "Wrote portals Line of Sight table to '%s'\n"
-msgstr "写入入口到 '%s/portalsLOS.txt'\n"
+msgstr "写入入口到 '%s'\n"
 
 #: ../Misc.pm:3430
 #: ../Misc.pm:3434
@@ -4008,14 +4008,14 @@ msgid "Welcome to %s."
 msgstr "欢迎来到 %s."
 
 #: ../Settings.pm:386
-#, fuzzy, perl-format
+#, perl-format
 msgid "Cannot load control file %s"
-msgstr "读取失败 '%s'."
+msgstr "无法读取 control 文件 %s"
 
 #: ../Settings.pm:390
-#, fuzzy, perl-format
+#, perl-format
 msgid "Cannot load table file %s"
-msgstr "读取失败 '%s'."
+msgstr "无法读取 table 文件 %s"
 
 #: ../Network/DirectConnection.pm:147
 #, perl-format
@@ -4147,7 +4147,6 @@ msgstr ""
 "%s"
 
 #: ../Network/Receive.pm:590
-#, fuzzy
 msgid ""
 "You've never set a login PIN code before.\n"
 "Please enter a new login PIN code:"
@@ -4156,14 +4155,12 @@ msgstr ""
 "请重新设置:"
 
 #: ../Network/Receive.pm:598
-#, fuzzy
 msgid "The PIN code may only contain digits."
-msgstr "PIN 码必须是数字.\n"
+msgstr "PIN 码必须是数字."
 
 #: ../Network/Receive.pm:600
-#, fuzzy
 msgid "The PIN code must be between 4 and 9 characters."
-msgstr "PIN 必须大于 3 小于 9 位.\n"
+msgstr "PIN 必须大于 3 小于 9 位."
 
 #: ../Network/Receive.pm:638
 msgid "============= Account payment information =============\n"
@@ -4529,7 +4526,7 @@ msgid "Error: Server is closed\n"
 msgstr "错误: 服务器已经关闭\n"
 
 #: ../Network/Receive.pm:2399
-#, fuzzy, perl-format
+#, perl-format
 msgid ""
 "Critical Error: Dual login prohibited - Someone trying to login!\n"
 "\n"
@@ -5534,39 +5531,32 @@ msgstr "成功输入仓库密码.\n"
 #: ../Network/Receive.pm:5856
 #: ../Network/Receive.pm:5882
 #: ../Network/Receive.pm:5895
-#, fuzzy
 msgid "Unable to send PIN code. You must set the 'PINEncryptKey' option in servers.txt."
-msgstr "无法发送 PIN 码. 您必须在config.txt中或者servers.txt中设置 'PINEncryptKey'  项目.\n"
+msgstr "无法发送 PIN 码. 您必须在config.txt中或者servers.txt中设置 'PINEncryptKey'  项目."
 
 #: ../Network/Receive.pm:5863
-#, fuzzy
 msgid "Login PIN code has been changed successfully.\n"
-msgstr "PIN 码成功改变为: %s\n"
+msgstr "PIN 码成功改变.\n"
 
 #: ../Network/Receive.pm:5866
-#, fuzzy
 msgid "Failed to change the login PIN code. Please try again.\n"
-msgstr ""
-"改变 PIN 码失败\n"
-"请重试\n"
+msgstr "改变 PIN 码失败.请重试\n"
 
 #: ../Network/Receive.pm:5869
-#, fuzzy
 msgid "Please enter your old login PIN code:"
 msgstr "请输入老的 PIN 码:"
 
 #: ../Network/Receive.pm:5874
-#, fuzzy
 msgid "Please enter a new login PIN code:"
 msgstr "请输入新的 PIN 码:"
 
 #: ../Network/Receive.pm:5891
 msgid "The login PIN code that you entered is incorrect. Please re-enter your login PIN code."
-msgstr ""
+msgstr "输入的 PIN 码错误. 请重新输入."
 
 #: ../Network/Receive.pm:5903
 msgid "You have entered 3 incorrect login PIN codes in a row. Reconnecting...\n"
-msgstr ""
+msgstr "你已经连续 3 次输入了错误的 PIN 码. 重新开始连接...\n"
 
 #. Translation Comment: System/GM chat
 #: ../Network/Receive.pm:5928
@@ -6458,9 +6448,9 @@ msgstr ""
 "%s"
 
 #: ../functions.pl:211
-#, fuzzy, perl-format
+#, perl-format
 msgid "Unable to load the file %s."
-msgstr "无法重新读取 %s\n"
+msgstr "无法装载文件 %s."
 
 #: ../functions.pl:219
 msgid ""
@@ -6575,29 +6565,4 @@ msgstr "%s连接 - %s"
 #: ../functions.pl:973
 msgid "Map loaded\n"
 msgstr "读取地图\n"
-
-#~ msgid "Error: Couldn't load %s\n"
-#~ msgstr "错误: 无法读取 %s\n"
-#~ msgid "Setting PIN code to: %s\n"
-#~ msgstr "PIN 码设置为: %s\n"
-#~ msgid ""
-#~ "You don't set 'PIN' code config value.\n"
-#~ "Please enter PIN code:"
-#~ msgstr ""
-#~ "你没有设置 'PIN' 码.\n"
-#~ "请重新设置:"
-#~ msgid "Setting PIN code to '%s' from '%s'\n"
-#~ msgstr "PIN 码设置为 '%s' 原来 '%s'\n"
-#~ msgid ""
-#~ "PIN code Wrong.\n"
-#~ "Please enter PIN code:"
-#~ msgstr ""
-#~ "PIN 码错误.\n"
-#~ "请重新输入 PIN 码:"
-#~ msgid "PIN Entered 3 times Wrong, Reconnecting.\n"
-#~ msgstr "PIN 输入错误达到 3 次, 重新登陆.\n"
-#~ msgid ""
-#~ "A configuration file failed to load. Did you download the latest "
-#~ "configuration files?"
-#~ msgstr "设置文件读取失败. 你需要下载一个新的文件吗?"
 
