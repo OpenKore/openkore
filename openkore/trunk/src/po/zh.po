@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: OpenKore 1.9.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-10-05 17:32+0700\n"
-"PO-Revision-Date: 2007-10-06 13:18+0800\n"
+"PO-Revision-Date: 2007-10-09 17:24+0800\n"
 "Last-Translator: 小溫 <littlewens@yahoo.com.tw>\n"
 "Language-Team: littlewens <littlewens@yahoo.com.tw>\n"
 "MIME-Version: 1.0\n"
@@ -4065,7 +4065,7 @@ msgstr "送出已加密的密碼...\n"
 
 #: ../Network/DirectConnection.pm:428
 msgid "Timeout on Account Server, reconnecting...\n"
-msgstr "帳號伺服器過時, 重新連線中...\n"
+msgstr "帳號伺服器逾時, 重新連線中...\n"
 
 #: ../Network/DirectConnection.pm:453
 msgid "Connecting to Character Server...\n"
@@ -4153,7 +4153,7 @@ msgid ""
 "You've never set a login PIN code before.\n"
 "Please enter a new login PIN code:"
 msgstr ""
-"您尚未設定過登入 PIN 碼.\n"
+"您的 config 檔尚未設定登入 PIN 碼.\n"
 "請輸入一個新的登入 PIN 碼:"
 
 #: ../Network/Receive.pm:598
