@@ -45,7 +45,7 @@ secureLogin_account 0
 serverEncoding Western
 gameGuard 1
 
-[Indonesia - idRO: Chaos/Loki/Freya]
+[Indonesia - idRO: Thor]
 ip 202.43.167.66
 port 6900
 master_version 12
