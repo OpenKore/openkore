@@ -5936,7 +5936,7 @@ sub system_chat {
 sub top10_alchemist_rank {
 	my ($self, $args) = @_;
 
-	$textList = bytesToString(top10Listing($args));
+	my $textList = bytesToString(top10Listing($args));
 	message TF("============= ALCHEMIST RANK ================\n" .
 		"#    Name                             Points\n".
 		"%s" .
@@ -5946,7 +5946,7 @@ sub top10_alchemist_rank {
 sub top10_blacksmith_rank {
 	my ($self, $args) = @_;
 
-	$textList = bytesToString(top10Listing($args));
+	my $textList = bytesToString(top10Listing($args));
 	message TF("============= BLACKSMITH RANK ===============\n" .
 		"#    Name                             Points\n".
 		"%s" .
@@ -5956,7 +5956,7 @@ sub top10_blacksmith_rank {
 sub top10_pk_rank {
 	my ($self, $args) = @_;
 
-	$textList = bytesToString(top10Listing($args));
+	my $textList = bytesToString(top10Listing($args));
 	message TF("================ PVP RANK ===================\n" .
 		"#    Name                             Points\n".
 		"%s" .
@@ -5966,7 +5966,7 @@ sub top10_pk_rank {
 sub top10_taekwon_rank {
 	my ($self, $args) = @_;
 
-	$textList = bytesToString(top10Listing($args));
+	my $textList = bytesToString(top10Listing($args));
 	message TF("=============== TAEKWON RANK ================\n" .
 		"#    Name                             Points\n".
 		"%s" .
