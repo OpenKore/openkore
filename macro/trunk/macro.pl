@@ -47,18 +47,18 @@ message "Gewidmet crckdns - danke für die heißen Tips :)\n";
 sub onconfigModify {
 	my (undef, $args) = @_;
 	if ($args->{key} eq 'macro_file') {
-		my $macrofile = "$Settings::control_folder/".$args->{val};
-		Settings::delConfigFile($cfID);
-		$cfID = Settings::addConfigFile($macrofile, \%macro, \&parseAndHook);
-		Settings::load($cfID)
+		my $macrofile = $args->{val};
+		Settings::removeFile($cfID);
+		$cfID = Settings::addControlFile($macrofile, loader => [ \&parseAndHook, \%macro]);
+		Settings::loadByHandle($cfID);
 	}
 }
 
 # onstart3
 sub onstart3 {
 	&checkConfig;
-	$cfID = Settings::addConfigFile("$Settings::control_folder/".$macro_file, \%macro, \&parseAndHook);
-	Settings::load($cfID)
+	$cfID = Settings::addControlFile($macro_file,loader => [\&parseAndHook,\%macro]);
+	Settings::loadByHandle($cfID);
 }
 
 # onReload
@@ -78,7 +78,7 @@ sub Unload {
 
 sub cleanup {
 	message "cleaning up\n";
-	Settings::delConfigFile($cfID);
+	Settings::removeFile($cfID);
 	Log::delHook($loghook);
 	foreach (@{$autohooks}) {Plugins::delHook($_)}
 	undef $autohooks;
