@@ -265,6 +265,7 @@ paddedPackets_skillUseID 0x0085
 syncID 0x00F5
 syncTickOffset 2
 mapLoadedTickOffset 4
+gameGuard 1
 
 [Philippines - pRO: Sakray]
 ip 202.57.118.232
