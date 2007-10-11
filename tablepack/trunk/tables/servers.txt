@@ -243,6 +243,29 @@ storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x
 serverEncoding Tagalog
 charBlockSize 108
 
+[Philippines - pRO: Valkyrie]
+ip 202.57.118.235
+port 6900
+master_version 15
+version 1
+secureLogin 1
+secureLogin_type 0
+secureLogin_requestCode
+secureLogin_account 0
+serverType 13
+patchserver wpatch.ragnarok.com.ph
+patchpath /patch50
+storageEncryptKey 0x050B6F79, 0x0202C179, 0x0E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+serverEncoding Tagalog
+charBlockSize 108
+paddedPackets 1
+paddedPackets_attackID 0x0094
+paddedPackets_skillUseID 0x0085
+# Data for XKore PP mode
+syncID 0x00F5
+syncTickOffset 2
+mapLoadedTickOffset 4
+
 [Philippines - pRO: Sakray]
 ip 202.57.118.232
 port 6900
