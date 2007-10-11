@@ -1340,6 +1340,7 @@ sub actor_look_at {
 
 sub actor_movement_interrupted {
 	my ($self, $args) = @_;
+	return unless changeToInGameState();
 	my %coords;
 	$coords{x} = $args->{x};
 	$coords{y} = $args->{y};
