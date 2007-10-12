@@ -113,6 +113,7 @@ sub iterate {
 
 	ChatQueue::processFirst;
 
+	processDcOnPlayer();
 	processEquip();
 	processDeal();
 	processDealAuto();
@@ -168,7 +169,6 @@ sub iterate {
 	processItemsTake();
 	processItemsAutoGather();
 	processItemsGather();
-	processDcOnPlayer();
 	processAutoTeleport();
 	processAllowedMaps();
 	processAutoResponse();
