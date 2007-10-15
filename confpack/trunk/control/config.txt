@@ -156,6 +156,8 @@ itemsMaxWeight 89
 itemsMaxWeight_sellOrStore 48
 itemsMaxNum_sellOrStore 99
 cartMaxWeight 7900
+itemsTakeAuto_new 0
+    
 
 lockMap
 lockMap_x
