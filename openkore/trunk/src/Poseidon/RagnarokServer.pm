@@ -175,42 +175,42 @@ sub onClientData {
 
 	} elsif (($switch eq '01DD') || ($switch eq '01FA') || ($switch eq '0064') || ($switch eq '0060') || ($switch eq '0277')) { # 0064 packet thanks to abt123
 
-		my $data = pack("C*", 0xAD, 0x02, 0x00, 0x00, 0x1E, 0x0A, 0x00, 0x00);
-		$client->send($data);
-#		my $sex = 1;
-#		my $serverName = pack("a20", "Poseidon server"); # server name should be less than or equal to 20 characters
-#		my $serverUsers = pack("V", @{$self->clients()} - 1);
-#		# '0069' => ['account_server_info', 'x2 a4 a4 a4 x30 C1 a*',
-#		# 			[qw(sessionID accountID sessionID2 accountSex serverInfo)]],
-#		my $data = pack("C*", 0x69, 0x00, 0x4f, 0x00) . 
-#			$sessionID . $accountID . $sessionID2 . 
-#			pack("x30") . pack("C1", $sex) .
-#			pack("C*", $ipElements[0], $ipElements[1], $ipElements[2], $ipElements[3]) .
-#			$port .	$serverName . $serverUsers . pack("x2");
-#
+#		my $data = pack("C*", 0xAD, 0x02, 0x00, 0x00, 0x1E, 0x0A, 0x00, 0x00);
 #		$client->send($data);
-#
-#		# save servers.txt info
-#		$clientdata{$index}{version} = unpack("V", substr($msg, 2, 4));
-#		$clientdata{$index}{master_version} = unpack("C", substr($msg, length($msg) - 1, 1));
-#		if ($switch eq '01DD') {
-#			$clientdata{$index}{secureLogin} = 1;
-#			undef $clientdata{$index}{secureLogin_account};
-#		} elsif ($switch eq '01FA') {
-#			$clientdata{$index}{secureLogin} = 3;
-#			$clientdata{$index}{secureLogin_account} = unpack("C", substr($msg, 47, 1));
-#		} else {
-#			undef $clientdata{$index}{secureLogin};
-#			undef $clientdata{$index}{secureLogin_type};
-#			undef $clientdata{$index}{secureLogin_account};
-#			undef $clientdata{$index}{secureLogin_requestCode};
-#		}
-#		if (($switch ne '01DD') && ($switch ne '01FA') && ($switch ne '0064')) {
-#			$clientdata{$index}{masterLogin_packet} = $switch;
-#		} else {
-#			undef $clientdata{$index}{masterLogin_packet};
-#		}
-#
+		my $sex = 1;
+		my $serverName = pack("a20", "Poseidon server"); # server name should be less than or equal to 20 characters
+		my $serverUsers = pack("V", @{$self->clients()} - 1);
+		# '0069' => ['account_server_info', 'x2 a4 a4 a4 x30 C1 a*',
+		# 			[qw(sessionID accountID sessionID2 accountSex serverInfo)]],
+		my $data = pack("C*", 0x69, 0x00, 0x4f, 0x00) . 
+			$sessionID . $accountID . $sessionID2 . 
+			pack("x30") . pack("C1", $sex) .
+			pack("C*", $ipElements[0], $ipElements[1], $ipElements[2], $ipElements[3]) .
+			$port .	$serverName . $serverUsers . pack("x2");
+
+		$client->send($data);
+
+		# save servers.txt info
+		$clientdata{$index}{version} = unpack("V", substr($msg, 2, 4));
+		$clientdata{$index}{master_version} = unpack("C", substr($msg, length($msg) - 1, 1));
+		if ($switch eq '01DD') {
+			$clientdata{$index}{secureLogin} = 1;
+			undef $clientdata{$index}{secureLogin_account};
+		} elsif ($switch eq '01FA') {
+			$clientdata{$index}{secureLogin} = 3;
+			$clientdata{$index}{secureLogin_account} = unpack("C", substr($msg, 47, 1));
+		} else {
+			undef $clientdata{$index}{secureLogin};
+			undef $clientdata{$index}{secureLogin_type};
+			undef $clientdata{$index}{secureLogin_account};
+			undef $clientdata{$index}{secureLogin_requestCode};
+		}
+		if (($switch ne '01DD') && ($switch ne '01FA') && ($switch ne '0064')) {
+			$clientdata{$index}{masterLogin_packet} = $switch;
+		} else {
+			undef $clientdata{$index}{masterLogin_packet};
+		}
+
 	} elsif (($switch eq '0065') || ($msg =~ /^$packed_switch$accountID$sessionID$sessionID2\x0\x0.$/)) { # client sends server choice packet
 
 		my $exp = pack("V", 0);
