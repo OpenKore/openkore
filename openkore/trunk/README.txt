@@ -5,6 +5,7 @@
 - Add ability to locate data files from multiple possible locations.
 - Added lockdown mode.
 - Fixed the 'followBot' feature.
+- Added 'StorageZeny' for storage, and 'zeny' in 'SelfCondition'. (thanks to 4epT and piroJOKE)
 
 
 =========================

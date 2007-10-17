@@ -3762,6 +3762,10 @@ sub checkSelfCondition {
 		return 0 if $item && $item->{equipped};
 	}
 
+	if ($config{$prefix."_zeny"}) {
+		return 0 if (!inRange($char->{zenny}, $config{$prefix."_zeny"}));
+	}
+
 	# not working yet
 	if ($config{$prefix."_whenWater"}) {
 		my $pos = calcPosition($char);
