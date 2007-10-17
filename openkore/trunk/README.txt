@@ -6,7 +6,7 @@
 - Added lockdown mode.
 - Fixed the 'followBot' feature.
 - Added 'StorageZeny' for storage, and 'zeny' in 'SelfCondition'. (thanks to 4epT and piroJOKE)
-
+- Added serverType 19 to support pRO Valkyrie
 
 =========================
 ### OpenKore 2.0.4
