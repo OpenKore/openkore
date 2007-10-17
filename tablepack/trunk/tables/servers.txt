@@ -262,6 +262,10 @@ paddedPackets 1
 paddedPackets_attackID 0x0190
 paddedPackets_skillUseID 0x00A7
 gameGuard 1
+# Data for XKore PP mode
+syncID 0x009B
+syncTickOffset 2
+mapLoadedTickOffset 4
 
 [Philippines - pRO: Sakray]
 ip 202.57.118.232
