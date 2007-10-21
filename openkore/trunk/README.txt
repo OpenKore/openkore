@@ -7,6 +7,7 @@
 - Fixed the 'followBot' feature.
 - Added 'StorageZeny' for storage, and 'zeny' in 'SelfCondition'. (thanks to 4epT and piroJOKE)
 - Added serverType 19 to support pRO Valkyrie
+- Added serverType 17_1 to support tRO Servers (thanks to abt123)
 
 =========================
 ### OpenKore 2.0.4
