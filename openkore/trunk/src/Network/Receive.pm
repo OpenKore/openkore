@@ -3769,13 +3769,15 @@ sub map_changed {
 		$ai_v{"useSelf_skill_$i"."_time"} = 0;
 		$i++;
 	}
-	delete $char->{statuses};
-	$char->{spirits} = 0;
-	undef $char->{permitSkill};
-	undef $char->{encoreSkill};
+	if ($char) {
+		delete $char->{statuses};
+		$char->{spirits} = 0;
+		delete $char->{permitSkill};
+		delete $char->{encoreSkill};
+	}
 	$cart{exists} = 0;
 	undef %guild;
-	
+
 	Plugins::callHook('Network::Receive::map_changed', {
 		oldMap => $oldMap,
 		allowedTeleport => $allowedTeleport
