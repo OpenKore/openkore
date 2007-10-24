@@ -431,8 +431,8 @@ patchserver wpatch.ragnarok.in.th
 patchpath /patch70
 serverEncoding Thai
 paddedPackets 1
-paddedPackets_attackID 0x94
-paddedPackets_skillUseID 0x85
+paddedPackets_attackID 0x193
+paddedPackets_skillUseID 0x89
 # Data for XKore PP mode
 syncID 0x7E
 syncTickOffset 3
@@ -475,8 +475,8 @@ patchserver wpatch.ragnarok.in.th
 patchpath /patch70
 serverEncoding Thai
 paddedPackets 1
-paddedPackets_attackID 0x94
-paddedPackets_skillUseID 0x85
+paddedPackets_attackID 0x193
+paddedPackets_skillUseID 0x89
 # Data for XKore PP mode
 syncID 0x7E
 syncTickOffset 3
@@ -497,8 +497,8 @@ patchserver wpatch.ragnarok.in.th
 patchpath /patch70
 serverEncoding Thai
 paddedPackets 1
-paddedPackets_attackID 0x94
-paddedPackets_skillUseID 0x85
+paddedPackets_attackID 0x193
+paddedPackets_skillUseID 0x89
 # Data for XKore PP mode
 syncID 0x7E
 syncTickOffset 3
