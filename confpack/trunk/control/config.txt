@@ -555,6 +555,7 @@ storageAuto_password
 storageAuto_keepOpen 0
 storageAuto_useChatCommand
 relogAfterStorage 1
+minStorageZeny 50
 
 getAuto {
 	minAmount
