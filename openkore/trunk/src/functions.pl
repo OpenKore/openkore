@@ -964,8 +964,6 @@ sub parseOutgoingClientMessage {
 		# syncSync support for XKore 1 mode
 		if($masterServer->{serverType} == 11) {
 			$syncSync = substr($msg, 8, 4);
-		} elsif ($masterServer->{serverType} == 12) {
-			$syncSync = substr($msg, 8, 4);
 		} else {
 			# formula: MapLoaded_len + Sync_len - 4 - Sync_packet_last_junk
 			$syncSync = substr($msg, $masterServer->{mapLoadedTickOffset}, 4);
