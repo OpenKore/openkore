@@ -10,6 +10,11 @@
 #  See http://www.gnu.org/licenses/gpl.html for the full license.
 #########################################################################
 # pRO Valkyrie as of October 24 2007
+# paddedPackets_attackID 0x0190
+# paddedPackets_skillUseID 0x007E
+# syncID 0x116
+# syncTickOffset 9
+# mapLoadedTickOffset 11
 # Servertype overview: http://www.openkore.com/wiki/index.php/ServerType
 package Network::Send::ServerType20;
 
