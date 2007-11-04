@@ -234,6 +234,7 @@ teleportAuto_equip_leftAccessory
 teleportAuto_equip_rightAccessory
 teleportAuto_lostHomunculus
 teleportAuto_lostTarget
+teleportAuto_useItemForRespawn
 
 dealAuto 1
 dealAuto_names
