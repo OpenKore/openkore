@@ -7,6 +7,7 @@
 - Fixed the 'followBot' feature.
 - Added 'StorageZeny' for storage, and 'zeny' in 'SelfCondition'. (thanks to 4epT and piroJOKE)
 - Added serverType 19 and 20 to support pRO Valkyrie
+- Added 'teleportAuto_useItemForRespawn' if set to 1 Kore will use Butterfly Wing to respawn.
 
 =========================
 ### OpenKore 2.0.4
