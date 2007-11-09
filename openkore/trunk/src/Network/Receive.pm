@@ -5934,7 +5934,7 @@ sub init_prefix_enc {
 	}
 	my $w = ($c[6]<<12) + ($c[4]<<8) + ($c[7]<<4) + $c[1];
 	$enc_val1 = ($c[2]<<12) + ($c[3]<<8) + ($c[5]<<4) + $c[8];
-	$enc_val2 = (((($enc_val1 ^ 0x0000F3AC) + $w) << 16) | (($args->{param1} ^ 0x000049DF) + $w)) ^ $args->{param2};
+	$enc_val2 = (((($enc_val1 ^ 0x0000F3AC) + $w) << 16) | (($enc_val1 ^ 0x000049DF) + $w)) ^ $args->{param2};
 }
 
 sub switch_character {
