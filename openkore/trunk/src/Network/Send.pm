@@ -34,7 +34,7 @@ use Exception::Class (
 
 use Globals qw(%config $encryptVal $bytesSent $conState %packetDescriptions $enc_val1 $enc_val2);
 use I18N qw(stringToBytes);
-use Utils qw(existsInList);
+use Utils qw(existsInList thertyTwoBitMUL);
 use Misc;
 use Log qw(debug);
 
@@ -224,7 +224,7 @@ sub encrypt_prefix {
 
 	if (($enc_val1 != 0)&&($enc_val2 != 0)) {
 		# Prepare Encryption
-		$enc_val1 = (0x000343FD * $enc_val1) + $enc_val2;
+		$enc_val1 = thertyTwoBitMUL(0x000343FD, $enc_val1) + $enc_val2;
 		$enc_val1 &= 0xFFFFFFFF;
 
 		# Encrypt Prefix

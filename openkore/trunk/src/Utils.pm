@@ -49,7 +49,7 @@ our @EXPORT = (
 	getFormattedDate getHex giveHex getRange getTickCount
 	inRange judgeSkillArea makeCoords makeCoords2 makeDistMap makeIP encodeIP parseArgs
 	quarkToString stringToQuark shiftPack swrite timeConvert timeOut
-	urldecode urlencode unShiftPack vocalString wrapText pin_encode)
+	urldecode urlencode unShiftPack vocalString wrapText pin_encode thertyTwoBitMUL)
 );
 
 our %strings;
@@ -1247,4 +1247,15 @@ sub pin_encode {
 	}
 }
 
+# Multiply to values without overflow.
+sub thertyTwoBitMUL {
+	my ($a, $b) = @_;
+	my $sum = 0;
+	for (my $i=0;$i<32;$i++) {
+		if (($b>>$i)&0x01) {
+			$sum += ($a<<$i) & 0xFFFFFFFF; 
+		}
+	}
+	return $sum;
+}
 1;
