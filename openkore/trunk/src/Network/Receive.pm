@@ -326,6 +326,8 @@ sub new {
 		'029A' => ['inventory_item_added', 'v1 v1 v1 C1 C1 C1 a8 v1 C1 C1 a4', [qw(index amount nameID identified broken upgrade cards type_equip type fail cards_ext)]],
 		# mRO PIN code Check
 		'02AD' => ['login_pin_code_request', 'v1 V', [qw(flag key)]],
+		# Packet Prefix encryption Support
+		'02AE' => ['init_prefix_enc', 'V1 V1', [qw(param1 param2)]],
 	};
 
 	return bless \%self, $class;
@@ -5913,6 +5915,26 @@ sub login_pin_code_request {
 		debug("login_pin_code_request: unknown flag $args->{flag}\n");
 	}
 	$timeout{master}{time} = time;
+}
+
+sub init_prefix_enc {
+	my ($self, $args) = @_;
+
+	# Check, if Server uses Encryption
+	return if ($config{encrypt_packet_prefix} eq '');
+
+	# Send Encryption Initted First
+	$messageSender->sendPrefixEncryptionInnited();
+
+	my @c;
+	my $shtmp = $args{param1};
+	for (my $i=8;$i>0;$i--) {
+		$c[$i] = $shtmp & 0x0F;
+		$shtmp >>= 4;
+	}
+	my $w = ($c[6]<<12) + ($c[4]<<8) + ($c[7]<<4) + $c[1];
+	$enc_val1 = ($c[2]<<12) + ($c[3]<<8) + ($c[5]<<4) + $c[8];
+	$enc_val2 = (((($dword_78943C ^ 0x0000F3AC) + $w) << 16) | (($args{param1} ^ 0x000049DF) + $w)) ^ $args{param2};
 }
 
 sub switch_character {
