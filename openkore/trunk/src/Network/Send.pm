@@ -34,7 +34,7 @@ use Exception::Class (
 
 use Globals qw(%config $encryptVal $bytesSent $conState %packetDescriptions $enc_val1 $enc_val2);
 use I18N qw(stringToBytes);
-use Utils qw(existsInList thertyTwoBitMUL);
+use Utils qw(existsInList);
 use Misc;
 use Log qw(debug);
 

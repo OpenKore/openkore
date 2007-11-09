@@ -49,7 +49,7 @@ our @EXPORT = (
 	getFormattedDate getHex giveHex getRange getTickCount
 	inRange judgeSkillArea makeCoords makeCoords2 makeDistMap makeIP encodeIP parseArgs
 	quarkToString stringToQuark shiftPack swrite timeConvert timeOut
-	urldecode urlencode unShiftPack vocalString wrapText pin_encode thertyTwoBitMUL)
+	urldecode urlencode unShiftPack vocalString wrapText pin_encode)
 );
 
 our %strings;
