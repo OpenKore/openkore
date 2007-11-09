@@ -220,7 +220,7 @@ sub encrypt_prefix {
 		return;
 	}
 
-	my $packet_prefix = unpack("v", $r_msg);
+	my $packet_prefix = unpack("v", $$r_msg);
 
 	if (($enc_val1 != 0)&&($enc_val2 != 0)) {
 		# Prepare Encryption
@@ -232,7 +232,7 @@ sub encrypt_prefix {
 		$packet_prefix &= 0xFFFF;
 	}
 
-	$$r_msg = pack("v", $packet_prefix) . substr($r_msg, 2);
+	$$r_msg = pack("v", $packet_prefix) . substr($$r_msg, 2);
 }
 
 sub injectMessage {
