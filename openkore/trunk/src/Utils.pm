@@ -1247,15 +1247,4 @@ sub pin_encode {
 	}
 }
 
-# Multiply to values without overflow.
-sub thertyTwoBitMUL {
-	my ($a, $b) = @_;
-	my $sum = 0;
-	for (my $i=0;$i<32;$i++) {
-		if (($b>>$i)&0x01) {
-			$sum += ($a<<$i) & 0xFFFFFFFF; 
-		}
-	}
-	return $sum;
-}
 1;
