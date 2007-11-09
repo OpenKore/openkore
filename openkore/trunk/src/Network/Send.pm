@@ -214,6 +214,13 @@ sub encrypt_prefix {
 	use bytes;
 	my $r_msg = shift;
 	my $themsg = shift;
+
+	if ($net->getState() != Network::IN_GAME) {
+		$enc_val1 = 0;
+		$enc_val2 = 0;
+		return;
+	}
+
 	my $packet_prefix = unpack("v", $r_msg);
 
 	if (($enc_val1 != 0)&&($enc_val2 != 0)) {
