@@ -6087,7 +6087,7 @@ sub vender_items_list {
 			price => $item->{price},
 			upgrade => $item->{upgrade},
 			cards => $item->{cards},
-			type => $item{type}
+			type => $item->{type}
 		});
 
 		message(swrite(
