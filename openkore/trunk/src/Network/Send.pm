@@ -32,7 +32,7 @@ use Exception::Class (
 	'Network::Send::CreationException'
 );
 
-use Globals qw(%config $encryptVal $bytesSent $conState %packetDescriptions);
+use Globals qw(%config $encryptVal $bytesSent $conState %packetDescriptions $enc_val1 $enc_val2);
 use I18N qw(stringToBytes);
 use Utils qw(existsInList);
 use Misc;
@@ -210,13 +210,36 @@ sub encrypt {
 	$$r_msg = $newmsg;
 }
 
+sub encrypt_prefix {
+	use bytes;
+	my $r_msg = shift;
+	my $themsg = shift;
+	my $packet_prefix = unpack("v", $r_msg);
+
+	if (($enc_val1 != 0)&&(enc_val2 != 0)) {
+		# Prepare Encryption
+		$enc_val1 = (0x000343FD * $enc_val1) + $enc_val2;
+		$enc_val1 &= 0xFFFFFFFF;
+
+		# Encrypt Prefix
+		$packet_prefix = $packet_prefix ^ (($enc_val1 >> 16) & 0x7FFF);
+		$packet_prefix &= 0xFFFF;
+	}
+
+	$$r_msg = pack("v", $packet_prefix) . substr($r_msg, 2);
+}
+
 sub injectMessage {
 	my ($self, $message) = @_;
 	my $name = stringToBytes("|");
 	my $msg .= $name . stringToBytes(" : $message") . chr(0);
-	encrypt(\$msg, $msg);
+	# encrypt(\$msg, $msg);
+
+	# Packet Prefix Encryption Support
+	encrypt_prefix(\$msg, $msg);
+
 	$msg = pack("C*", 0x09, 0x01) . pack("v*", length($name) + length($message) + 12) . pack("C*",0,0,0,0) . $msg;
-	encrypt(\$msg, $msg);
+	## encrypt(\$msg, $msg);
 	$self->{net}->clientSend($msg);
 }
 
@@ -224,7 +247,10 @@ sub injectAdminMessage {
 	my ($self, $message) = @_;
 	$message = stringToBytes($message);
 	$message = pack("C*",0x9A, 0x00) . pack("v*", length($message)+5) . $message .chr(0);
-	encrypt(\$message, $message);
+	# encrypt(\$message, $message);
+
+	# Packet Prefix Encryption Support
+	encrypt_prefix(\$message, $message);
 	$self->{net}->clientSend($message);
 }
 
@@ -234,9 +260,6 @@ sub sendToServer {
 
 	shouldnt(length($msg), 0);
 	return unless ($net->serverAlive);
-	if ($self->{serverType} != 2) {
-		encrypt(\$msg, $msg);
-	}
 
 	my $messageID = uc(unpack("H2", substr($msg, 1, 1))) . uc(unpack("H2", substr($msg, 0, 1)));
 
@@ -249,6 +272,11 @@ sub sendToServer {
 		Plugins::callHook($hookName, \%args);
 		return if ($args{return});
 	}
+
+	# encrypt(\$msg, $msg);
+
+	# Packet Prefix Encryption Support
+	encrypt_prefix(\$msg, $msg);
 
 	$net->serverSend($msg);
 	$bytesSent += length($msg);
