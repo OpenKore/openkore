@@ -212,10 +212,9 @@ sub encrypt {
 
 sub encrypt_prefix {
 	use bytes;
-	my $r_msg = shift;
-	my $themsg = shift;
+	my ($self, $r_msg, $themsg) = @_;
 
-	if ($net->getState() != Network::IN_GAME) {
+	if ($self->{net}->getState() != Network::IN_GAME) {
 		$enc_val1 = 0;
 		$enc_val2 = 0;
 		return;
@@ -243,7 +242,7 @@ sub injectMessage {
 	# encrypt(\$msg, $msg);
 
 	# Packet Prefix Encryption Support
-	encrypt_prefix(\$msg, $msg);
+	$self->encrypt_prefix(\$msg, $msg);
 
 	$msg = pack("C*", 0x09, 0x01) . pack("v*", length($name) + length($message) + 12) . pack("C*",0,0,0,0) . $msg;
 	## encrypt(\$msg, $msg);
@@ -257,7 +256,7 @@ sub injectAdminMessage {
 	# encrypt(\$message, $message);
 
 	# Packet Prefix Encryption Support
-	encrypt_prefix(\$message, $message);
+	$self->encrypt_prefix(\$message, $message);
 	$self->{net}->clientSend($message);
 }
 
@@ -283,7 +282,7 @@ sub sendToServer {
 	# encrypt(\$msg, $msg);
 
 	# Packet Prefix Encryption Support
-	encrypt_prefix(\$msg, $msg);
+	$self->encrypt_prefix(\$msg, $msg);
 
 	$net->serverSend($msg);
 	$bytesSent += length($msg);
