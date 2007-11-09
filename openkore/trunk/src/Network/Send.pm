@@ -216,7 +216,7 @@ sub encrypt_prefix {
 	my $themsg = shift;
 	my $packet_prefix = unpack("v", $r_msg);
 
-	if (($enc_val1 != 0)&&(enc_val2 != 0)) {
+	if (($enc_val1 != 0)&&($enc_val2 != 0)) {
 		# Prepare Encryption
 		$enc_val1 = (0x000343FD * $enc_val1) + $enc_val2;
 		$enc_val1 &= 0xFFFFFFFF;
