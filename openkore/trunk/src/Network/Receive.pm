@@ -3167,7 +3167,6 @@ sub inventory_item_added {
 		my $disp = TF("Item added to inventory: %s (%d) x %d - %s",
 			$item->{name}, $item->{invIndex}, $amount, $itemTypes_lut{$item->{type}});
 		message "$disp\n", "drop";
-		message "Equip Type: ".$args->{type_equip}." - Item Type: ".$args->{type};
 		$disp .= " ($field{name})\n";
 		itemLog($disp);
 
