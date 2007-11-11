@@ -4283,7 +4283,7 @@ sub party_users_info {
 		}
 		$char->{party}{users}{$ID} = new Actor::Party();
 		$char->{party}{users}{$ID}{name} = bytesToString(unpack("Z24", substr($msg, $i + 4, 24)));
-		message TF("Party Member: %s\n", $char->{party}{users}{$ID}{name}), undef, 1;
+		message TF("Party Member: %s\n", $char->{party}{users}{$ID}{name}), "party", 1;
 		$char->{party}{users}{$ID}{map} = unpack("Z16", substr($msg, $i + 28, 16));
 		$char->{party}{users}{$ID}{online} = !(unpack("C1",substr($msg, $i + 45, 1)));
 		$char->{party}{users}{$ID}{admin} = 1 if ($num == 0);
