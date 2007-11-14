@@ -225,7 +225,7 @@ sub encrypt_prefix {
 	if (($enc_val1 != 0)&&($enc_val2 != 0)) {
 		# Prepare Encryption
 		$enc_val1 = (0x000343FD * $enc_val1) + $enc_val2;
-		$enc_val1 &= 0xFFFFFFFF;
+		$enc_val1 = $enc_val1 % 2 ** 32;
 		debug (sprintf("enc_val1 = %x", $enc_val1) . "\n", "sendPacket", 2);
 		# Encrypt Prefix
 		$packet_prefix = $packet_prefix ^ (($enc_val1 >> 16) & 0x7FFF);
