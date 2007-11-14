@@ -35,6 +35,7 @@ createAtk(packet, targetId, ctrl)
 	unsigned int targetId
 	unsigned int ctrl
 CODE:
+	ctrl = ctrl + 1; // Shut up compiler warning.
 	engine.addKey(targetId);
 	engine.addKey(7);
 	RETVAL = engine.encode((byte *) packet, sitPacketID);
