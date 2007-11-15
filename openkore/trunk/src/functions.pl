@@ -590,6 +590,7 @@ sub mainLoop_initialized {
 		my $result = Poseidon::Client::getInstance()->getResult();
 		if (defined($result)) {
 			debug "Received Poseidon result.\n", "poseidon";
+			$messageSender->encrypt_prefix(\$result, $result) if ($masterServer->{encrypt_packet_prefix} != '');
 			$net->serverSend($result);
 		}
 	}
