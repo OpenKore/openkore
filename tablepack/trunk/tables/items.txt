@@ -516,7 +516,7 @@
 1067#Solid_Trunk#
 1068#Barren_Trunk#
 1069#Orange_Net_Mushroom#
-1070#Orange_Gooey_Mushroom_#
+1070#Orange_Gooey_Mushroom#
 1071#Unknown_Test_Tube#
 1072#Delivery_Message#
 1073#Voucher#
@@ -528,8 +528,8 @@
 1079#Voucher#
 1080#Voucher#
 1081#Delivery_Box#
-1082#Delivery_Box_#
-1083#Delivery_Box__#
+1082#Delivery_Box#
+1083#Delivery_Box#
 1084#Kafra_Pass#
 1085#Unknown_Test_Tube#
 1086#Unknown_Test_Tube#
@@ -542,7 +542,7 @@
 1093#Empty_Potion_Bottle#
 501#Red_Potion#
 502#Orange_Potion#
-503#Yellow_potion#
+503#Yellow_Potion#
 504#White_Potion#
 505#Blue_Potion#
 506#Green_Potion#
@@ -983,7 +983,7 @@
 2628#Novice_Armlet#
 1256#Katar_of_Frozen_Icicle#
 1257#Katar_of_Quaking#
-1258#Katar_of_ Raging_Blaze#
+1258#Katar_of_Raging_Blaze#
 1259#Katar_of_Piercing_Wind#
 1260#Sharpened_Legbone_of_Ghoul#
 1261#Infiltrator#
@@ -1462,7 +1462,7 @@
 7232#Silver_Ore#
 7233#Mithril_Ore#
 670#Bag_of_Gold_Coins#
-671#Gold_Coin_#
+671#Gold_Coin#
 672#Bag_of_Bronze_Coins#
 673#Bronze_Coin#
 674#Mithril_Coin#
@@ -1876,7 +1876,7 @@
 // ------- 2005 The sign 3 -----
 
 2642#Serin's_Gold_Ring#
-2643#Serin's_Gold_Ring_#
+2643#Serin's_Gold_Ring#
 7304#Witch's_Spell_Scroll#
 7305#Symbol_of_the_Nine_Realms#
 7306#Piece_of_Spirit#
@@ -1886,7 +1886,7 @@
 12020#Cursed_Water#
 7313#Witch's_Medal#
 7314#The_Sign#
-2644#The_Sign_#
+2644#The_Sign#
 
 
 // ------- 2005 City of Steel, Einbroch -----
