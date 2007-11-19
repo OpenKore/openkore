@@ -1111,6 +1111,7 @@ sub parseOutgoingClientMessage {
 	}
 
 	if ($sendMsg ne "") {
+	    $messageSender->encrypt_prefix(\$sendMsg, $sendMsg);
 		$net->serverSend($sendMsg);
 	}
 
