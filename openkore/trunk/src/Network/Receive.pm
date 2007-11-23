@@ -3696,7 +3696,6 @@ sub map_change {
 
 	Plugins::callHook('Network::Receive::map_changed', {
 		oldMap => $oldMap,
-		allowedTeleport => $allowedTeleport
 	});
 	
 	$timeout{ai}{time} = time;
@@ -3783,7 +3782,6 @@ sub map_changed {
 
 	Plugins::callHook('Network::Receive::map_changed', {
 		oldMap => $oldMap,
-		allowedTeleport => $allowedTeleport
 	});
 	$timeout{ai}{time} = time;
 	$allowedTeleport = 0;
