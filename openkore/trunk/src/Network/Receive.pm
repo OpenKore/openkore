@@ -1192,8 +1192,9 @@ sub actor_display {
 			my $domain = existsInList($config{friendlyAID}, unpack("V1", $actor->{ID})) ? 'parseMsg_presence' : 'parseMsg_presence/player';
 			debug "Player Exists: " . $actor->name . " ($actor->{binID}) Level $actor->{lv} $sex_lut{$actor->{sex}} $jobs_lut{$actor->{jobID}} ($coordsFrom{x}, $coordsFrom{y})\n", $domain;
 
-			# Shouldn't this have a more specific hook name?
-			Plugins::callHook('player', {player => $actor});
+			Plugins::callHook('player', {player => $actor});  #backwards compatibailty
+
+			Plugins::callHook('player_exist', {player => $actor});
 
 		} elsif ($actor->isa('Actor::NPC')) {
 			message TF("NPC Exists: %s (%d, %d) (ID %d) - (%d)\n", $actor->name, $actor->{pos_to}{x}, $actor->{pos_to}{y}, $actor->{nameID}, $actor->{binID}), "parseMsg_presence", 1;
@@ -1221,8 +1222,9 @@ sub actor_display {
 			my $domain = existsInList($config{friendlyAID}, unpack("V1", $args->{ID})) ? 'parseMsg_presence' : 'parseMsg_presence/player';
 			debug "Player Connected: ".$actor->name." ($actor->{binID}) Level $args->{lv} $sex_lut{$actor->{sex}} $jobs_lut{$actor->{jobID}} ($coordsTo{x}, $coordsTo{y})\n", $domain;
 
-			# Again, this hook name isn't very specific.
-			Plugins::callHook('player', {player => $actor});
+			Plugins::callHook('player', {player => $actor});  #backwards compatibailty
+
+			Plugins::callHook('player_connected', {player => $actor});
 		} else {
 			debug "Unknown Connected: $args->{type} - ", "parseMsg";
 		}
