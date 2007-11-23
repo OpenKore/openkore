@@ -2595,15 +2595,21 @@ sub updatePlayerNameCache {
 # level: 1 to teleport to a random spot, 2 to respawn.
 sub useTeleport {
 	my ($use_lvl, $internal, $emergency) = @_;
-
+		
+	my %args = (
+		level => $use_lvl, # 1 = Teleport, 2 = respawn
+		emergency => $emergency, # Needs a fast tele
+		internal => $internal # Did we call useTeleport from inside useTeleport?
+	);
+		
 	if ($use_lvl == 2 && $config{saveMap_warpChatCommand}) {
-		$allowedTeleport = 1;
+		Plugins::callHook('teleport_sent', \%args);
 		sendMessage($messageSender, "c", $config{saveMap_warpChatCommand});
 		return 1;
 	}
 
 	if ($use_lvl == 1 && $config{teleportAuto_useChatCommand}) {
-		$allowedTeleport = 1;
+		Plugins::callHook('teleport_sent', \%args);
 		sendMessage($messageSender, "c", $config{teleportAuto_useChatCommand});
 		return 1;
 	}
@@ -2631,7 +2637,7 @@ sub useTeleport {
 			# autodetection works)
 
 			if ($char->{sitting}) {
-				$allowedTeleport = 1;
+				Plugins::callHook('teleport_sent', \%args);
 				main::ai_skillUse($skill->getHandle(), $sk_lvl, 0, 0, $accountID);
 				return 1;
 			} else {
@@ -2640,7 +2646,7 @@ sub useTeleport {
 			}
 
 			if (!$emergency && $use_lvl == 1) {
-				$allowedTeleport = 1;
+				Plugins::callHook('teleport_sent', \%args);
 				$timeout{ai_teleport_retry}{time} = time;
 				AI::queue('teleport');
 				return 1;
@@ -2650,7 +2656,7 @@ sub useTeleport {
 		delete $ai_v{temp}{teleport};
 		debug "Sending Teleport using Level $use_lvl\n", "useTeleport";
 		if ($use_lvl == 1) {
-			$allowedTeleport = 1;
+			Plugins::callHook('teleport_sent', \%args);
 			$messageSender->sendTeleport("Random");
 			return 1;
 		} elsif ($use_lvl == 2) {
@@ -2662,7 +2668,7 @@ sub useTeleport {
 			# on official servers.
 			my $telemap = "prontera.gat";
 			$telemap = "$config{saveMap}.gat" if ($config{saveMap} ne "");
-			$allowedTeleport = 1;
+			Plugins::callHook('teleport_sent', \%args);
 			$messageSender->sendTeleport($telemap);
 			return 1;
 		}
@@ -2701,7 +2707,7 @@ sub useTeleport {
 		# We have Fly Wing/Butterfly Wing.
 		# Don't spam the "use fly wing" packet, or we'll end up using too many wings.
 		if (timeOut($timeout{ai_teleport})) {
-			$allowedTeleport = 1;
+			Plugins::callHook('teleport_sent', \%args);
 			$messageSender->sendItemUse($item->{index}, $accountID);
 			$timeout{ai_teleport}{time} = time;
 		}
@@ -2721,7 +2727,6 @@ sub useTeleport {
 		message T("You don't have the Teleport skill or a Butterfly Wing\n"), "teleport";
 	}
 	
-	$allowedTeleport = 0;
 	return 0;
 }
 
