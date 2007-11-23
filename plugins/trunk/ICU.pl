@@ -32,27 +32,33 @@ use Utils;
 use Log qw(debug message warning error); 
 use Misc;
   
-Plugins::register('I.C.U 0.2.1', 'Detects GM Bot tests.', \&onUnload); 
+Plugins::register('I.C.U 0.2.2', 'Detects GM Bot tests.', \&onUnload); 
   
 my $hooks = Plugins::addHooks( 
 	['is_casting', \&skillDetect, undef], 
 	['packet_skilluse', \&skillDetect, undef],
 	['Network::Receive::map_changed',\&teleportDetect, undef],
-	['mainLoop_post',\&checkCommands, undef]
+	['mainLoop_post',\&checkCommands, undef],
+	['teleport_sent',\&teleported, undef]
+	
 ); 
 
-my (@commands, %commandInfo,$position);
+my (@commands,%commandInfo,$position,$allowedTeleport);
  
 sub onUnload { 
 	Plugins::delHooks($hooks); 
 } 
  
+sub teleported {
+	my ($self, $args) = @_;
+	$allowedTeleport = 1;
+}
+ 
 sub teleportDetect {
 	my ($self, $args) = @_;
-	my $allowed = $args->{allowedTeleport};
 	my $oldmap = $args->{oldMap};
 	
-	return if($allowed || !$config{'icu_0_teleportDetect'});
+	return if($allowedTeleport || !$config{'icu_0_teleportDetect'});
 	logEvent(" Unauthorized/Forced teleport detected (From ".$oldmap." to ".$field{'name'}." \n");
 	playSound("teleport") if $config{'icu_0_teleportSound'};
 	runCommands("teleport") if ($config{'icu_0_teleportCommands'});
