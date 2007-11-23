@@ -40,7 +40,6 @@ my $hooks = Plugins::addHooks(
 	['Network::Receive::map_changed',\&teleportDetect, undef],
 	['mainLoop_post',\&checkCommands, undef],
 	['teleport_sent',\&teleported, undef]
-	
 ); 
 
 my (@commands,%commandInfo,$position,$allowedTeleport);
@@ -57,6 +56,7 @@ sub teleported {
 sub teleportDetect {
 	my ($self, $args) = @_;
 	my $oldmap = $args->{oldMap};
+	$allowedTeleport = 0;
 	
 	return if($allowedTeleport || !$config{'icu_0_teleportDetect'});
 	logEvent(" Unauthorized/Forced teleport detected (From ".$oldmap." to ".$field{'name'}." \n");
