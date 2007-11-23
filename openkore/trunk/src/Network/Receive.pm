@@ -3699,7 +3699,6 @@ sub map_change {
 	});
 	
 	$timeout{ai}{time} = time;
-	$allowedTeleport = 0;
 }
 
 sub map_changed {
@@ -3784,7 +3783,6 @@ sub map_changed {
 		oldMap => $oldMap,
 	});
 	$timeout{ai}{time} = time;
-	$allowedTeleport = 0;
 }
 
 sub map_loaded {
