@@ -9,7 +9,6 @@ use Modules 'register';
 use Base::RagnarokServer;
 use base qw(Base::RagnarokServer);
 use Utils;
-
 use constant SESSION_TIMEOUT => 120;
 use constant DUMMY_POSITION => {
 	map => 'prontera.gat',
@@ -61,6 +60,19 @@ sub handleLogin {
 			int(time),	# syncMapSync
 			$coords		# character coordinates
 		));
+	}
+}
+
+sub process_0072 {
+	my ($self, $client, $message) = @_;
+	if ($self->{serverType} == 0) {
+      my ($accountID, $charID, $sessionID, $gender) = unpack('a4 a4 V x4 C', $message);
+      $self->handleLogin($client, $accountID, $charID, $sessionID, $gender);
+      return 1;
+	} else { #oRO and pRO and idRO
+		my ($accountID, $charID, $sessionID, $gender) = unpack('a4 x5 a4 x2 V x4 C', $message);
+      $self->handleLogin($client, $accountID, $charID, $sessionID, $gender);
+      return 1;
 	}
 }
 
