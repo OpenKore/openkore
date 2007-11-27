@@ -7,6 +7,7 @@ use bytes;
 
 use Modules 'register';
 use Base::RagnarokServer;
+
 use base qw(Base::RagnarokServer);
 use Utils;
 use constant SESSION_TIMEOUT => 120;
@@ -54,23 +55,24 @@ sub handleLogin {
 		shiftPack(\$coords, $charInfo->{x}, 10);
 		shiftPack(\$coords, $charInfo->{y}, 10);
 		shiftPack(\$coords, 0, 4);
-
-		$client->send(pack("C2 V a3 x2",
+		my $output = pack("C2 V a3 x2",
 			0x73, 0x00,
 			int(time),	# syncMapSync
 			$coords		# character coordinates
-		));
+		);
+		$client->send($output);
 	}
 }
 
 sub process_0072 {
 	my ($self, $client, $message) = @_;
 	if ($self->{serverType} == 0) {
-      my ($accountID, $charID, $sessionID, $gender) = unpack('a4 a4 V x4 C', $message);
+		# Map server login.
+      my ($accountID, $charID, $sessionID, $gender) = unpack('x2 a4 a4 V x4 C', $message);
       $self->handleLogin($client, $accountID, $charID, $sessionID, $gender);
       return 1;
 	} else { #oRO and pRO and idRO
-		my ($accountID, $charID, $sessionID, $gender) = unpack('a4 x5 a4 x2 V x4 C', $message);
+		my ($accountID, $charID, $sessionID, $gender) = unpack('x2 a4 x5 a4 x2 V x4 C', $message);
       $self->handleLogin($client, $accountID, $charID, $sessionID, $gender);
       return 1;
 	}
