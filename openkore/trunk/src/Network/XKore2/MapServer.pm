@@ -387,6 +387,14 @@ sub handleMapLoaded {
 	if ($char->{sitting}) {
 		$client->send(pack('C2 a4 x20 C1 x2', 0x8A, 0x00, $char->{ID}, 2));
 	}
+	
+   #Hack to Avoid Sprite Error Crash if you are level 99
+   #This is acomplished by sending gm hide and unhiding again
+   $output = pack('C15', 0x29, 0x02, 0xA7, 0x94, 0x04, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40);
+   $client->send($output);
+	
+   $output = pack('C15', 0x29, 0x02, 0xA7, 0x94, 0x04);
+   $client->send($output);
 }
 
 sub process_007D {
