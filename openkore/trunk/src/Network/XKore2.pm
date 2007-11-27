@@ -18,7 +18,8 @@
 package Network::XKore2;
 
 use strict;
-use Globals qw(%config %rpackets $masterServer);
+use Globals qw(%config %rpackets $masterServer $char);
+use Utils qw(makeCoords calcPosition);
 use Plugins;
 use Base::Ragnarok::SessionStore;
 use Network;
@@ -27,7 +28,7 @@ use Network::XKore2::CharServer;
 use Network::XKore2::MapServer;
 use Modules 'register';
 
-our ($hooks, $sessionStore, $accountServer, $charServer, $mapServer);
+our ($hooks, $sessionStore, $accountServer, $charServer, $mapServer ,$mapServerChange);
 
 ##
 # void Network::XKore2::start()
@@ -89,9 +90,11 @@ sub clientSend {
 	my (undef, $args) = @_;
 	if ($args->{net}->getState() == Network::IN_GAME) {
 		foreach my $client (@{$mapServer->clients}) {
-			$client->send($args->{data});
+			my $sendData = filterPacket($args->{data});
+			$client->send($sendData) if (length($sendData) > 0);
 		}
 	}
+
 }
 
 sub clientRecv {
@@ -112,6 +115,21 @@ sub clientRecv {
 		}
 		$args->{return} = $result if (length($result) > 0);
 	}
+}
+
+sub filterPacket {
+	my ($msg) = shift;
+	my $switch = uc(unpack("H2", substr($msg, 1, 1))) . uc(unpack("H2", substr($msg, 0, 1)));
+	if ($switch eq "0092"){
+      $mapServerChange = unpack('x2 Z16 x*', $msg);
+		$mapServerChange =~ /([\s\S]*)\./;
+		return "";
+	}elsif ($switch eq "00B0" && $mapServerChange ne ''){
+		my $pos = calcPosition($char);
+      $msg = pack("C*",0x91,0). pack("a16", $mapServerChange) . pack("v1 v1", $pos->{x}, $pos->{y}).$msg;
+	   $mapServerChange = '';
+	}
+	return $msg;
 }
 
 sub mainLoop {
