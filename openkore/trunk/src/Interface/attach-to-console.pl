@@ -37,10 +37,12 @@ my $parser;
 start();
 
 sub start {
+	if (!Settings::parseArguments()) {
+		usage(1);
+	}
 	if (@ARGV != 1) {
 		usage(1);
 	}
-	Settings::parseArguments();
 
 	$socket = new IO::Socket::UNIX(
 		Type => SOCK_STREAM,
