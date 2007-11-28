@@ -86,6 +86,10 @@ sub mainLoop {
 						$args->{domain});
 				} elsif ($ID eq "title changed") {
 					$interface->title($args->{title});
+				} elsif ($ID eq "inputted") {
+					$interface->writeOutput("message",
+						"$args->{data}\n",
+						"input");
 				}
 			}
 		}

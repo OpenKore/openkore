@@ -53,6 +53,7 @@ use strict;
 use Time::HiRes qw(sleep);
 use IO::Socket;
 use Interface;
+use Translation;
 use base qw(Interface);
 use Utils qw(timeOut);
 use Interface::Console::Simple;
@@ -148,6 +149,19 @@ sub title {
 	} else {
 		return $self->{title};
 	}
+}
+
+sub errorDialog {
+	my ($self, $message, $fatal) = @_;
+	$fatal = 1 unless defined $fatal;
+
+	$self->writeOutput("error", "$message\n", "error");
+	if ($fatal) {
+		$self->writeOutput("message", Translation::T("Enter 'e' or 'q' to exit this program.\n"), "console")
+	} else {
+		$self->writeOutput("message", Translation::T("Enter 'c' to continue...\n"), "console")
+	}
+	$self->getInput(-1);
 }
 
 
@@ -278,8 +292,18 @@ sub getInput {
 
 # Put something in the input queue.
 sub addInput {
-	my ($self, $input) = @_;
+	my ($self, $input, $client) = @_;
 	push @{$self->{inputs}}, $input;
+	
+	# Tell all clients, except the one that generated this input,
+	# that new input is received.
+	my $clients = $self->clients();
+	my $message = serialize('inputted', { data => $input });
+	foreach my $client (@{$clients}) {
+		if ($client->{mode} == ACTIVE) {
+			$client->send($message);
+		}
+	}
 }
 
 sub setTitle {
@@ -317,7 +341,7 @@ sub onClientData {
 	my $ID;
 	while (my $args = $self->{parser}->readNext(\$ID)) {
 		if ($ID eq "input") {
-			$self->addInput($args->{data});
+			$self->addInput($args->{data}, $client);
 
 		} elsif ($ID eq "set active") {
 			$client->{mode} = ACTIVE;
