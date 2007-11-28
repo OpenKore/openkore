@@ -41,7 +41,7 @@ use Task;
 use Task::ErrorReport;
 use Match;
 use Translation;
-
+use I18N qw(stringToBytes);
 
 our %handlers;
 our %completions;
@@ -1862,7 +1862,7 @@ sub cmdGmb {
 	}
 
 	my $msg = "$char->{name}: $args" . chr(0);
-	my $packet = pack("C*", 0x99, 0x00) . pack("v", length($msg) + 4) . $msg;
+	my $packet = pack("C*", 0x99, 0x00) . pack("v", length($msg) + 4) . stringToBytes($msg);
 	$messageSender->sendToServer($packet);
 }
 
@@ -1876,7 +1876,7 @@ sub cmdGmbb {
 	}
 
 	my $msg = "blue$args" . chr(0);
-	my $packet = pack("C*", 0x99, 0x00) . pack("v", length($msg) + 4) . $msg;
+	my $packet = pack("C*", 0x99, 0x00) . pack("v", length($msg) + 4) . stringToBytes($msg);
 	$messageSender->sendToServer($packet);
 }
 
@@ -1890,7 +1890,7 @@ sub cmdGmnb {
 	}
 
 	my $msg = $args . chr(0);
-	my $packet = pack("C*", 0x99, 0x00) . pack("v", length($msg) + 4) . $msg;
+	my $packet = pack("C*", 0x99, 0x00) . pack("v", length($msg) + 4) . stringToBytes($msg);
 	$messageSender->sendToServer($packet);
 }
 
@@ -1904,7 +1904,7 @@ sub cmdGmlb {
 	}
 
 	my $msg = "$char->{name}: $args" . chr(0);
-	my $packet = pack("C*", 0x9c, 0x01) . pack("v", length($msg) + 4) . $msg;
+	my $packet = pack("C*", 0x9c, 0x01) . pack("v", length($msg) + 4) . stringToBytes($msg);
 	$messageSender->sendToServer($packet);
 }
 
@@ -1918,7 +1918,7 @@ sub cmdGmlbb {
 	}
 
 	my $msg = "blue$args" . chr(0);
-	my $packet = pack("C*", 0x9c, 0x01) . pack("v", length($msg) + 4) . $msg;
+	my $packet = pack("C*", 0x9c, 0x01) . pack("v", length($msg) + 4) . stringToBytes($msg);
 	$messageSender->sendToServer($packet);
 }
 
@@ -1932,7 +1932,7 @@ sub cmdGmnlb {
 	}
 
 	my $msg = $args . chr(0);
-	my $packet = pack("C*", 0x9c, 0x01) . pack("v", length($msg) + 4) . $msg;
+	my $packet = pack("C*", 0x9c, 0x01) . pack("v", length($msg) + 4) . stringToBytes($msg);
 	$messageSender->sendToServer($packet);
 }
 
