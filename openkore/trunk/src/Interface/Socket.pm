@@ -50,18 +50,25 @@
 package Interface::Socket;
 
 use strict;
+use Time::HiRes qw(sleep);
+use IO::Socket;
 use Interface;
 use base qw(Interface);
 use Utils qw(timeOut);
 use Interface::Console::Simple;
 
+use constant MAX_LOG_ENTRIES => 5000;
+
 
 sub new {
 	my ($class) = @_;
-	my %self = (
-		server => new Interface::Socket::Server(),
-		console => new Interface::Console::Simple()
-	);
+	my (%self, $f);
+
+	$self{server} = new Interface::Socket::Server();
+	$self{console} = new Interface::Console::Simple();
+	open($f, ">:utf8", "$Settings::logs_folder/console.log");
+	$self{consoleLogFile} = $f;
+	$self{logEntryCount} = 0;
 	return bless \%self, $class;
 }
 
@@ -74,12 +81,20 @@ sub getInput {
 	my ($self, $timeout) = @_;
 	my $line;
 
-	if (my $input = $self->{console}->getInput(0)) {
-		$self->{server}->addInput($input);
-	}
-
 	if ($timeout < 0) {
-		$line = $self->{server}->getInput();
+		$self->{server}->setWaitingForInput(1);
+		while (!defined($line)) {
+			if (my $input = $self->{console}->getInput(0)) {
+				$self->{server}->addInput($input);
+			}
+			if ($self->{server}->hasInput()) {
+				$line = $self->{server}->getInput();
+			} else {
+				$self->{server}->iterate();
+				sleep 0.01;
+			}
+		}
+		$self->{server}->setWaitingForInput(0);
 
 	} elsif ($timeout == 0) {
 		if ($self->{server}->hasInput()) {
@@ -88,11 +103,19 @@ sub getInput {
 
 	} else {
 		my %time = (time => time, timeout => $timeout);
+		$self->{server}->setWaitingForInput(1);
 		while (!defined($line) && !timeOut(\%time)) {
+			if (my $input = $self->{console}->getInput(0)) {
+				$self->{server}->addInput($input);
+			}
 			if ($self->{server}->hasInput()) {
 				$line = $self->{server}->getInput();
+			} else {
+				$self->{server}->iterate();
+				sleep 0.01;
 			}
 		}
+		$self->{server}->setWaitingForInput(0);
 	}
 
 	return $line;
@@ -102,6 +125,16 @@ sub writeOutput {
 	my $self = shift;
 	$self->{server}->addMessage(@_);
 	$self->{console}->writeOutput(@_);
+	if ($self->{consoleLogFile}) {
+		$self->{logEntryCount}++;
+		if ($self->{logEntryCount} < MAX_LOG_ENTRIES) {
+			$self->{consoleLogFile}->print($_[1]);
+		} else {
+			truncate $self->{consoleLogFile}, 0;
+			$self->{consoleLogFile}->print($self->{server}->getScrollbackBuffer());
+		}
+		$self->{consoleLogFile}->flush();
+	}
 }
 
 sub title {
@@ -127,6 +160,8 @@ use base qw(Base::Server);
 use Settings;
 use Bus::Messages qw(serialize);
 use Bus::MessageParser;
+
+use constant MAX_MESSAGE_SCROLLBACK => 20;
 
 # Client modes.
 use enum qw(PASSIVE ACTIVE);
@@ -174,12 +209,13 @@ sub new {
 
 	my $self = $class->SUPER::createFromSocket($socket);
 	$self->{parser} = new Bus::MessageParser();
-	# A message log, used to sent the last 20 messages to the client
-	# when that client switches to active mode.
+	# A message log, used to sent the last MAX_MESSAGE_SCROLLBACK messages to
+	# the client when that client switches to active mode.
 	$self->{messages} = [];
 	$self->{inputs} = [];
 	$self->{socket_file} = $socket_file;
 	$self->{pid_file} = $pid_file;
+	$self->{waitingForInput} = 0;
 
 	$SIG{INT} = $SIG{TERM} = $SIG{QUIT} = sub {
 		unlink $socket_file;
@@ -197,6 +233,8 @@ sub DESTROY {
 	$self->SUPER::DESTROY();
 }
 
+#### Public methods ####
+
 sub addMessage {
 	my ($self, $type, $message, $domain) = @_;
 	$self->broadcast("output", {
@@ -206,7 +244,7 @@ sub addMessage {
 	});
 	# Add to message log.
 	push @{$self->{messages}}, [$type, $message, $domain];
-	if (@{$self->{messages}} > 20) {
+	if (@{$self->{messages}} > MAX_MESSAGE_SCROLLBACK) {
 		shift @{$self->{messages}};
 	}
 }
@@ -249,6 +287,23 @@ sub setTitle {
 	$self->{title} = $title;
 	$self->broadcast("title changed", { title => $title });
 }
+
+sub setWaitingForInput {
+	my ($self, $waitingForInput) = @_;
+	$self->{waitingForInput} = $waitingForInput;
+}
+
+sub getScrollbackBuffer {
+	my ($self) = @_;
+	my $text = '';
+	foreach my $message (@{$self->{messages}}) {
+		$text .= $message->[1];
+	}
+	return $text;
+}
+
+
+#### Protected overrided methods ####
 
 sub onClientNew {
 	my ($self, $client) = @_;
