@@ -30,9 +30,13 @@ sub login {
 		$session->{sex} = 0;
 		$session->{dummy} = 1;
 	}
+
+	if ($config{username} ne $username || $config{adminPassword} ne $password ){
+		return Base::Ragnarok::AccountServer::PASSWORD_INCORRECT;
+	}
+
 	return Base::Ragnarok::AccountServer::LOGIN_SUCCESS;
 }
 
 1;
 
-			
