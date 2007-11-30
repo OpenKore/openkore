@@ -772,14 +772,15 @@ master_version 16
 serverType 5
 serverEncoding Western
 
-## http://www.ethereal-ro.com/
+## http://www.ethereal-revenge.com/
 [EtherealRO Private Server]
-ip 216.32.66.4
-port 6901
+ip 72.232.218.138
+port 5001
 version 0
 master_version 18
-serverType 5
+serverType 0
 serverEncoding Western
+charBlockSize 108
 
 ## http://www.euphro.com/
 [EuphRO Private Server]
