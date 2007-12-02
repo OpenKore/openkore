@@ -313,7 +313,7 @@ sub send {
 # }
 #
 # if ($query->getState() == Bus::Query::DONE) {
-#     while (my ($messageID, $args) = $query->getReply(\$messageID)) {
+#     while (my ($messageID, $args) = $query->getReply()) {
 #         print "We have received a reply!\n";
 #         # Do something with $messageID and $args...
 #     }
