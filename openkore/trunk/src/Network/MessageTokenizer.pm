@@ -118,7 +118,7 @@ sub readNext {
 		}
 
 	} else {
-		Network::MessageTokenizer::Unknownmessage->throw("Unknown message '$switch'.");
+		Network::MessageTokenizer::UnknownMessage->throw("Unknown message '$switch'.");
 	}
 
 	my $result = substr($$buffer, 0, $size);
