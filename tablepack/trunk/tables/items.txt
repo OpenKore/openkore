@@ -1216,7 +1216,7 @@
 2111#Sacred_Mission#
 2340#Novice_Breastplate#
 2341#Legion_Plate_Armor#
-2342#Legion_Plate_Armor# 
+2342#Legion_Plate_Armor#
 2343#Robe_of_Cast#
 2411#Greaves#
 2412#Greaves#
@@ -2521,7 +2521,7 @@
 // --------- Hugel Odeng Quest -----------
 584#Fish_Cake_Soup#
 //----------------2007 Valentine's Day & White Day event
-7715#Hand-made_Chocolate Recipe#		
+7715#Hand-made_Chocolate_Recipe#		
 7716#Chocolate_Strawberry_Recipe#		
 7717#Chocolate_Tart_Recipe#		
 7718#Cacao_Bean#		
@@ -2765,23 +2765,23 @@
 12933#Pet_Egg_4#
 12934#Pet_Egg_5#
 
-12983#Pet Egg Scroll Box6#
-12984#Pet Egg Scroll Box7#
-12985#Pet Egg Scroll Box8#
-12986#Pet Egg Scroll Box9#
-12987#Pet Egg Scroll Box10#
-12988#Pet Egg Scroll Box11#
-12989#Pet Egg Scroll6#
-12990#Pet Egg Scroll7#
-12991#Pet Egg Scroll8#
-12992#Pet Egg Scroll9#
-12993#Pet Egg Scroll10#
-12994#Pet Egg Scroll11#
-12995#White Herb Box#
-12996#Blue Herb Box#
-12997#Elunium Box#
-12998#Oridecon Box#
-12999#Branch Of Dead Tree Box#
+12983#Pet_Egg_Scroll_Box6#
+12984#Pet_Egg_Scroll_Box7#
+12985#Pet_Egg_Scroll_Box8#
+12986#Pet_Egg_Scroll_Box9#
+12987#Pet_Egg_Scroll_Box10#
+12988#Pet_Egg_Scroll_Box11#
+12989#Pet_Egg_Scroll6#
+12990#Pet_Egg_Scroll7#
+12991#Pet_Egg_Scroll8#
+12992#Pet_Egg_Scroll9#
+12993#Pet_Egg_Scroll10#
+12994#Pet_Egg_Scroll11#
+12995#White_Herb_Box#
+12996#Blue_Herb_Box#
+12997#Elunium_Box#
+12998#Oridecon_Box#
+12999#Branch_Of_Dead_Tree_Box#
 
 7619#Enriched_Elunium#
 7620#Enriched_Oridecon#
