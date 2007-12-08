@@ -21,7 +21,7 @@ package Network::MessageTokenizer;
 
 use strict;
 use Carp::Assert;
-use Exception::Class qw(Network::MessageTokenizer::Unknownmessage);
+use Exception::Class qw(Network::MessageTokenizer::UnknownMessage);
 use Modules 'register';
 use bytes;
 no encoding 'utf8';
