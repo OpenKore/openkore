@@ -31,6 +31,7 @@ storageEncryptKey 0x050B6F79, 0x0202C179, 0x0E20120, 0x04FA43E3, 0x0179B6C8, 0x0
 paddedPackets 1
 paddedPackets_attackID 0x89
 paddedPackets_skillUseID 0x113
+encrypt_packet_prefix 1
 
 [India - inRO]
 ip 202.92.9.35
