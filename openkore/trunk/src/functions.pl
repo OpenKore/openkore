@@ -548,7 +548,7 @@ sub mainLoop_initialized {
 				parseIncomingMessage($data);
 			}
 		};
-		if (caught('Network::MessageTokenizer::Unknownmessage')) {
+		if (caught('Network::MessageTokenizer::UnknownMessage')) {
 			# Unknown message - ignore it
 			my $switch = Network::MessageTokenizer::getMessageID($incomingMessages->getBuffer());
 			if (!existsInList($config{debugPacket_exclude}, $switch)) {
@@ -576,7 +576,7 @@ sub mainLoop_initialized {
 				Misc::checkValidity("parseSendMsg (post)");
 			}
 		};
-		if (caught('Network::MessageTokenizer::Unknownmessage')) {
+		if (caught('Network::MessageTokenizer::UnknownMessage')) {
 			# Unknown message - ignore it
 			parseOutgoingClientMessage($outgoingClientMessages->getBuffer());
 			$outgoingClientMessages->clear();
