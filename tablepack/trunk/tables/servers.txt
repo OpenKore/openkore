@@ -291,11 +291,11 @@ charBlockSize 108
 
 ## http://www.raggame.ru/
 [Russia - rRO]
-# 20.06.2007
+# 12.12.2007
 ip 81.177.13.7
 port 6900
 master_version 25
-version 301
+version 1004
 serverType 0
 serverEncoding Russian
 pauseCharServer 1
