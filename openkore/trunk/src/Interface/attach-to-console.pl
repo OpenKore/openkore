@@ -95,7 +95,7 @@ sub mainLoop {
 		}
 	}
 
-	if (my $input = $interface->getInput(0)) {
+	if (defined(my $input = $interface->getInput(0))) {
 		if ($input eq "detach") {
 			$quit = 1;
 		} else {
