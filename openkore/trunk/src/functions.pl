@@ -537,31 +537,26 @@ sub mainLoop_initialized {
 	if (defined($data) && length($data) > 0) {
 		Benchmark::begin("parseMsg") if DEBUG;
 
+		my $type;
 		$incomingMessages->add($data);
-		if (expectingAccountID($incomingMessages->getBuffer())) {
-			parseIncomingMessage($incomingMessages->getBuffer());
-			$incomingMessages->clear(4);
-		}
-
-		eval {
-			while ($data = $incomingMessages->readNext()) {
+		while ($data = $incomingMessages->readNext(\$type)) {
+			if ($type == Network::MessageTokenizer::KNOWN_MESSAGE) {
 				parseIncomingMessage($data);
+			} else {
+				if ($type == Network::MessageTokenizer::UNKNOWN_MESSAGE) {
+					# Unknown message - ignore it
+					my $messageID = Network::MessageTokenizer::getMessageID($data);
+					if (!existsInList($config{debugPacket_exclude}, $messageID)) {
+						warning TF("Unknown packet - %s\n", $messageID), "connection";
+						visualDump($data, "<< Received unknown packet") if ($config{debugPacket_unparsed});
+					}
+				} elsif ($config{debugPacket_received}) {
+					debug "Received account ID\n", "parseMsg", 0 ;
+				}
+				# Pass it along to the client, whatever it is
+				$net->clientSend($data);
 			}
-		};
-		if (caught('Network::MessageTokenizer::UnknownMessage')) {
-			# Unknown message - ignore it
-			my $switch = Network::MessageTokenizer::getMessageID($incomingMessages->getBuffer());
-			if (!existsInList($config{debugPacket_exclude}, $switch)) {
-				warning TF("Unknown packet - %s\n", $switch), "connection";
-				dumpData($incomingMessages->getBuffer()) if ($config{debugPacket_unparsed});
-			}
-			# Pass it along to the client, whatever it is
-			$net->clientSend($incomingMessages->getBuffer());
-			$incomingMessages->clear();
-		} elsif ($@) {
-			die $@;
 		}
-
 		$net->clientFlush() if (UNIVERSAL::isa($net, 'Network::XKoreProxy'));
 		Benchmark::end("parseMsg") if DEBUG;
 	}
@@ -569,19 +564,10 @@ sub mainLoop_initialized {
 	# Receive and handle data from the RO client
 	$data = $net->clientRecv;
 	if (defined($data) && length($data) > 0) {
+		my $type;
 		$outgoingClientMessages->add($data);
-		eval {
-			while ($data = $outgoingClientMessages->readNext()) {
-				parseOutgoingClientMessage($data);
-				Misc::checkValidity("parseSendMsg (post)");
-			}
-		};
-		if (caught('Network::MessageTokenizer::UnknownMessage')) {
-			# Unknown message - ignore it
-			parseOutgoingClientMessage($outgoingClientMessages->getBuffer());
-			$outgoingClientMessages->clear();
-		} elsif ($@) {
-			die $@;
+		while ($data = $outgoingClientMessages->readNext(\$type)) {
+			parseOutgoingClientMessage($data);
 		}
 	}
 
@@ -1128,13 +1114,6 @@ sub parseOutgoingClientMessage {
 #######################################
 
 
-sub expectingAccountID {
-	my ($msg) = @_;
-	return (substr($msg, 0, 4) eq $accountID && ($net->getState() == 2 || $net->getState() == 4))
-		|| ($net->version == 1 && !$accountID && length($msg) == 4);
-}
-
-
 ##
 # void parseIncomingMessage(Bytes msg)
 # msg: The data to parse, as received from the socket.
@@ -1171,11 +1150,12 @@ sub parseIncomingMessage {
 	$lastswitch = $switch;
 	if ($config{debugPacket_received} && !existsInList($config{'debugPacket_exclude'}, $switch)) {
 		my $label = $packetDescriptions{Recv}{$switch} ?
-			" ($packetDescriptions{Recv}{$switch})" : '';
+			"[$packetDescriptions{Recv}{$switch}]" : '';
 		if ($config{debugPacket_received} == 1) {
-			debug "Packet: $switch$label\n", "parseMsg", 0;
+			debug sprintf("Received packet: %-4s [%d bytes] %s\n", $switch, length($msg), $label),
+				"parseMsg", 0;
 		} else {
-			visualDump($msg, "$switch$label");
+			visualDump($msg, "<< Received packet: $switch  $label");
 		}
 	}
 
@@ -1199,29 +1179,7 @@ sub parseIncomingMessage {
 	}
 
 	$lastPacketTime = time;
-	if (expectingAccountID($msg)) {
-		$accountID = substr($msg, 0, 4);
-		$AI = 2 if (!$AI_forcedOff);
-		if ($config{'encrypt'} && $net->getState() == 4) {
-			my $encryptKey1 = unpack("V1", substr($msg, 6, 4));
-			my $encryptKey2 = unpack("V1", substr($msg, 10, 4));
-			my ($imult, $imult2);
-			{
-				use integer;
-				$imult = (($encryptKey1 * $encryptKey2) + $encryptKey1) & 0xFF;
-				$imult2 = ((($encryptKey1 * $encryptKey2) << 4) + $encryptKey2 + ($encryptKey1 * 2)) & 0xFF;
-			}
-			$encryptVal = $imult + ($imult2 << 8);
-			#$msg_size = 14;
-		} else {
-			#$msg_size = 4;
-		}
-		debug "Received account ID\n", "parseMsg", 0 if ($config{debugPacket_received});
-		
-		# Continue the message to the client
-		$net->clientSend($msg);
-
-	} elsif ($packetParser &&
+	if ($packetParser &&
 		(my $args = $packetParser->parse($msg))) {
 		# Use the new object-oriented packet parser
 		if ($config{debugPacket_received} > 2 &&

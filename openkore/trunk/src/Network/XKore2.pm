@@ -109,7 +109,8 @@ sub clientRecv {
 	} else {
 		my $result = '';
 		foreach my $client (@{$mapServer->clients}) {
-			while (my $message = $client->{outbox}->readNext()) {
+			my $type;
+			while (my $message = $client->{outbox}->readNext(\$type)) {
 				$result .= $message;
 			}
 		}

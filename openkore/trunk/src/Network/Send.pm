@@ -289,11 +289,11 @@ sub sendToServer {
 
 	if ($config{debugPacket_sent} && !existsInList($config{debugPacket_exclude}, $messageID)) {
 		my $label = $packetDescriptions{Send}{$messageID} ?
-			" - $packetDescriptions{Send}{$messageID}" : '';
+			"[$packetDescriptions{Send}{$messageID}]" : '';
 		if ($config{debugPacket_sent} == 1) {
-			debug("Packet Switch SENT: $messageID$label (" . length($msg) . " bytes)\n", "sendPacket", 0);
+			debug(sprintf("Sent packet    : %-4s [%d bytes] %s\n", $messageID, $label, length($msg)), "sendPacket", 0);
 		} else {
-			Misc::visualDump($msg, $messageID.$label);
+			Misc::visualDump($msg, ">> Sent packet: $messageID  $label");
 		}
 	}
 }
