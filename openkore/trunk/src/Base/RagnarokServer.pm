@@ -47,8 +47,9 @@ sub onClientNew {
 sub onClientData {
 	my ($self, $client, $data) = @_;
 	$client->{tokenizer}->add($data);
-	eval {
-		while (my $message = $client->{tokenizer}->readNext()) {
+	my $type;
+	while (my $message = $client->{tokenizer}->readNext(\$type)) {
+		if ($type == Network::MessageTokenizer::KNOWN_MESSAGE) {
 			my $ID = Network::MessageTokenizer::getMessageID($message);
 			my $handler = $self->can('process_' . $ID);
 			if ($handler) {
@@ -56,13 +57,9 @@ sub onClientData {
 			} else {
 				$self->unhandledMessage($client, $message);
 			}
+		} else {
+			$client->close();
 		}
-	};
-	if (caught('Network::MessageTokenizer::Unknownmessage')) {
-		$client->close();
-	} elsif ($@) {
-		$client->close();
-		die $@;
 	}
 }
 

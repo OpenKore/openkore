@@ -403,11 +403,15 @@ sub visualDump {
 	my ($msg, $label) = @_;
 	my $dump;
 	my $puncations = quotemeta '~!@#$%^&*()_-+=|\"\'';
+	no encoding 'utf8';
+	use bytes;
 
-	my $labelStr = $label ? " ($label)" : '';
-	$dump = "================================================\n" .
-		getFormattedDate(int(time)) . "\n\n" .
-		length($msg) . " bytes$labelStr\n\n";
+	$dump = "================================================\n";
+	if (defined $label) {
+		$dump .= sprintf("%-15s [%d bytes]   %s\n", $label, length($msg), getFormattedDate(int(time)));
+	} else {
+		$dump .= sprintf("%d bytes   %s\n", length($msg), getFormattedDate(int(time)));
+	}
 
 	for (my $i = 0; $i < length($msg); $i += 16) {
 		my $line;
@@ -416,9 +420,7 @@ sub visualDump {
 
 		for (my $j = 0; $j < length($data); $j++) {
 			my $char = substr($data, $j, 1);
-
-			if (($char =~ /\W/ && $char =~ /\S/ && !($char =~ /[$puncations]/))
-			    || ($char eq chr(10) || $char eq chr(13) || $char eq "\t")) {
+			if (ord($char) < 32 || ord($char) > 126) {
 				$rawData .= '.';
 			} else {
 				$rawData .= substr($data, $j, 1);

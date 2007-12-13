@@ -154,6 +154,7 @@ sub serverConnect {
 	($self->{remote_socket} && inet_aton($self->{remote_socket}->peerhost()) eq inet_aton($host)) ?
 		message T("connected\n"), "connection" :
 		error(TF("couldn't connect: %s (error code %d)\n", "$!", int($!)), "connection");
+	$incomingMessages->nextMessageMightBeAccountID();
 }
 
 ##

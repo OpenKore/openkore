@@ -21,10 +21,10 @@ package Network::MessageTokenizer;
 
 use strict;
 use Carp::Assert;
-use Exception::Class qw(Network::MessageTokenizer::UnknownMessage);
 use Modules 'register';
 use bytes;
 no encoding 'utf8';
+use enum qw(KNOWN_MESSAGE UNKNOWN_MESSAGE ACCOUNT_ID);
 
 ##
 # Network::MessageTokenizer->new(Hash* rpackets)
@@ -69,6 +69,15 @@ sub clear {
 }
 
 ##
+# void $Network_MessageTokenizer->nextMessageMightBeAccountID()
+#
+# Tell this tokenizer that the next message might be the account ID.
+sub nextMessageMightBeAccountID {
+	my ($self) = @_;
+	$self->{nextMessageMightBeAccountID} = 1;
+}
+
+##
 # String Network::MessageTokenizer::getMessageID(Bytes message)
 # Requires: length($message) >= 2
 #
@@ -87,12 +96,20 @@ sub getBuffer {
 }
 
 ##
-# Bytes $Network_MessageTokenizer->readNext()
+# Bytes $Network_MessageTokenizer->readNext(int* type)
 #
 # Read the next full message from the buffer, if there is one.
 # If not, undef will be returned.
+#
+# The message's type will be returned via the type parameter.
+# It will be one of:
+# `l
+# - KNOWN_MESSAGE - This is a known message, i.e. we know its length.
+# - UNKNOWN_MESSAGE - This is an unknown message, i.e. we don't know its length.
+# - ACCOUNT_ID - This is an account ID.
+# `l`
 sub readNext {
-	my ($self) = @_;
+	my ($self, $type) = @_;
 	my $buffer = \$self->{buffer};
 
 	return undef if (length($$buffer) < 2);
@@ -100,29 +117,44 @@ sub readNext {
 	my $switch = getMessageID($$buffer);
 	my $rpackets = $self->{rpackets};
 	my $size = $rpackets->{$switch};
+	my $result;
+
+	my $nextMessageMightBeAccountID = $self->{nextMessageMightBeAccountID};
+	$self->{nextMessageMightBeAccountID} = undef;
 
 	if ($size > 1) {
 		# Static length message.
-		if (length($$buffer) < $size) {
-			return undef;
+		if (length($$buffer) >= $size) {
+			$result = substr($$buffer, 0, $size);
+			substr($$buffer, 0, $size, '');
+			$$type = KNOWN_MESSAGE;
 		}
 
-	} elsif ($size eq '0') {
+	} elsif (defined($size) && $size == 0) {
 		# Variable length message.
-		if (length($$buffer) < 4) {
-			return undef;
+		if (length($$buffer) >= 4) {
+			$size = unpack("v", substr($$buffer, 2, 2));
+			if (length($$buffer) >= $size) {
+				$result = substr($$buffer, 0, $size);
+				substr($$buffer, 0, $size, '');
+				$$type = KNOWN_MESSAGE;
+			}
 		}
-		$size = unpack("v", substr($$buffer, 2, 2));
-		if (length($$buffer) < $size) {
-			return undef;
+
+	} elsif ($nextMessageMightBeAccountID) {
+		if (length($$buffer) >= 4) {
+			$result = substr($$buffer, 0, 4);
+			substr($$buffer, 0, 4, '');
+			$$type = ACCOUNT_ID;
+		} else {
+			$self->{nextMessageMightBeAccountID} = $nextMessageMightBeAccountID;
 		}
 
 	} else {
-		Network::MessageTokenizer::UnknownMessage->throw("Unknown message '$switch'.");
+		$result = $$buffer;
+		$self->{buffer} = '';
+		$$type = UNKNOWN_MESSAGE;
 	}
-
-	my $result = substr($$buffer, 0, $size);
-	substr($$buffer, 0, $size, '');
 	return $result;
 }
 
