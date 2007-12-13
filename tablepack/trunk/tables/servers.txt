@@ -3,7 +3,7 @@
 #####################
 # Official RO Servers
 
-[Brazil - bRO]
+[Brazil - bRO: Odin]
 ip 200.229.49.10
 port 6900
 master_version 22
@@ -16,6 +16,22 @@ secureLogin_account 0
 serverEncoding Western
 gameGuard 2
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x0E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+encrypt_packet_prefix 1
+
+[Brazil - bRO: Thor]
+ip 200.229.49.39
+port 6900
+master_version 22
+version 1
+serverType 0
+secureLogin 1
+secureLogin_type 0
+secureLogin_requestCode
+secureLogin_account 0
+serverEncoding Western
+gameGuard 2
+storageEncryptKey 0x050B6F79, 0x0202C179, 0x0E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+encrypt_packet_prefix 1
 
 [Europe - euRO]
 ip 217.68.157.42
