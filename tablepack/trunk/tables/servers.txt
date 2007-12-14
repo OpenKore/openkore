@@ -48,6 +48,7 @@ paddedPackets 0
 paddedPackets_attackID 0x89
 paddedPackets_skillUseID 0x113
 encrypt_packet_prefix 1
+recvpackets recvpackets-euro.txt
 
 [India - inRO]
 ip 202.92.9.35

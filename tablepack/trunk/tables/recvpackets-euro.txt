@@ -1,4 +1,3 @@
-# Rename this file to recvpackets.txt if you play euRO.
 0064 55
 0065 17
 0066 3
