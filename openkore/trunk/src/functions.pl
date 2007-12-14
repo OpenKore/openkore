@@ -917,11 +917,16 @@ sub parseOutgoingClientMessage {
 		#syncSync support for XKore 1 mode
 		$syncSync = substr($msg, $masterServer->{syncTickOffset}, 4);
 
+	} elsif ($switch eq "0065") {
+		# Login to character server
+		$incomingMessages->nextMessageMightBeAccountID();
+
 	} elsif ($switch eq "0066") {
 		# Login character selected
 		configModify("char", unpack("C*",substr($msg, 2, 1)));
 
 	} elsif ($switch eq "0072") {
+		$incomingMessages->nextMessageMightBeAccountID();
 		if ($masterServer->{serverType} == 0) {
 			# Map login
 			if ($config{'sex'} ne "") {
