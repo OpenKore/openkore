@@ -1377,11 +1377,11 @@ sub sendWho {
 	debug "Sent Who\n", "sendPacket", 2;
 }
 
-sub sendPrefixEncryptionInnited {
+sub sendMessageIDEncryptionInitialized {
 	my $self = shift;
 	my $msg = pack("C*", 0xAF, 0x02);
 	$self->sendToServer($msg);
-	debug "Sent Prefix Encryption Innited\n", "sendPacket", 2;
+	debug "Sent Message ID Encryption Initialized\n", "sendPacket", 2;
 }
 
 1;

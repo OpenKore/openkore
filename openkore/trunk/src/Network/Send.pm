@@ -210,9 +210,9 @@ sub encrypt {
 	$$r_msg = $newmsg;
 }
 
-sub encrypt_prefix {
+sub encryptMessageID {
 	use bytes;
-	my ($self, $r_msg, $themsg) = @_;
+	my ($self, $r_message) = @_;
 
 	if ($self->{net}->getState() != Network::IN_GAME) {
 		$enc_val1 = 0;
@@ -220,19 +220,17 @@ sub encrypt_prefix {
 		return;
 	}
 
-	my $packet_prefix = unpack("v", $$r_msg);
-
-	if (($enc_val1 != 0)&&($enc_val2 != 0)) {
-		# Prepare Encryption
+	my $messageID = unpack("v", $$r_message);
+	if ($enc_val1 != 0 && $enc_val2 != 0) {
+		# Prepare encryption
 		$enc_val1 = (0x000343FD * $enc_val1) + $enc_val2;
 		$enc_val1 = $enc_val1 % 2 ** 32;
 		debug (sprintf("enc_val1 = %x", $enc_val1) . "\n", "sendPacket", 2);
-		# Encrypt Prefix
-		$packet_prefix = $packet_prefix ^ (($enc_val1 >> 16) & 0x7FFF);
-		$packet_prefix &= 0xFFFF;
+		# Encrypt message ID
+		$messageID = $messageID ^ (($enc_val1 >> 16) & 0x7FFF);
+		$messageID &= 0xFFFF;
+		$$r_message = pack("v", $messageID) . substr($$r_message, 2);
 	}
-
-	$$r_msg = pack("v", $packet_prefix) . substr($$r_msg, 2);
 }
 
 sub injectMessage {
@@ -242,7 +240,7 @@ sub injectMessage {
 	# encrypt(\$msg, $msg);
 
 	# Packet Prefix Encryption Support
-	$self->encrypt_prefix(\$msg, $msg);
+	$self->encryptMessageID(\$msg);
 
 	$msg = pack("C*", 0x09, 0x01) . pack("v*", length($name) + length($message) + 12) . pack("C*",0,0,0,0) . $msg;
 	## encrypt(\$msg, $msg);
@@ -256,7 +254,7 @@ sub injectAdminMessage {
 	# encrypt(\$message, $message);
 
 	# Packet Prefix Encryption Support
-	$self->encrypt_prefix(\$message, $message);
+	$self->encryptMessageID(\$message);
 	$self->{net}->clientSend($message);
 }
 
@@ -282,7 +280,7 @@ sub sendToServer {
 	# encrypt(\$msg, $msg);
 
 	# Packet Prefix Encryption Support
-	$self->encrypt_prefix(\$msg, $msg);
+	$self->encryptMessageID(\$msg);
 
 	$net->serverSend($msg);
 	$bytesSent += length($msg);
@@ -291,7 +289,7 @@ sub sendToServer {
 		my $label = $packetDescriptions{Send}{$messageID} ?
 			"[$packetDescriptions{Send}{$messageID}]" : '';
 		if ($config{debugPacket_sent} == 1) {
-			debug(sprintf("Sent packet    : %-4s [%d bytes] %s\n", $messageID, $label, length($msg)), "sendPacket", 0);
+			debug(sprintf("Sent packet    : %-4s    [%2d bytes]  %s\n", $messageID, length($msg), $label), "sendPacket", 0);
 		} else {
 			Misc::visualDump($msg, ">> Sent packet: $messageID  $label");
 		}

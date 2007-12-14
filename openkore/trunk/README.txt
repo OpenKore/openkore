@@ -11,8 +11,7 @@
 - Added 'teleportAuto_useItemForRespawn' if set to 1 Kore will use
   Butterfly Wing to respawn.
 - Added support for encrypted padded packets
-- Added servers.txt option encrypt_packet_prefix
-  Set to 1 to enable support for encrypted packet prefixes
+
 
 =========================
 ### OpenKore 2.0.4
