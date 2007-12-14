@@ -327,7 +327,7 @@ sub new {
 		# mRO PIN code Check
 		'02AD' => ['login_pin_code_request', 'v1 V', [qw(flag key)]],
 		# Packet Prefix encryption Support
-		'02AE' => ['init_prefix_enc', 'V1 V1', [qw(param1 param2)]],
+		'02AE' => ['initialize_message_id_encryption', 'V1 V1', [qw(param1 param2)]],
 	};
 
 	return bless \%self, $class;
@@ -5914,18 +5914,13 @@ sub login_pin_code_request {
 	$timeout{master}{time} = time;
 }
 
-sub init_prefix_enc {
+sub initialize_message_id_encryption {
 	my ($self, $args) = @_;
-
-	# Check, if Server uses Encryption
-	return if ($masterServer->{encrypt_packet_prefix} eq '');
-
-	# Send Encryption Initted First
-	$messageSender->sendPrefixEncryptionInnited();
+	$messageSender->sendMessageIDEncryptionInitialized();
 
 	my @c;
 	my $shtmp = $args->{param1};
-	for (my $i=8;$i>0;$i--) {
+	for (my $i = 8; $i > 0; $i--) {
 		$c[$i] = $shtmp & 0x0F;
 		$shtmp >>= 4;
 	}

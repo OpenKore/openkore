@@ -578,7 +578,7 @@ sub mainLoop_initialized {
 		my $result = Poseidon::Client::getInstance()->getResult();
 		if (defined($result)) {
 			debug "Received Poseidon result.\n", "poseidon";
-			$messageSender->encrypt_prefix(\$result, $result) if ($masterServer->{encrypt_packet_prefix} != '');
+			$messageSender->encryptMessageID(\$result);
 			$net->serverSend($result);
 		}
 	}
@@ -1159,7 +1159,7 @@ sub parseIncomingMessage {
 		my $label = $packetDescriptions{Recv}{$switch} ?
 			"[$packetDescriptions{Recv}{$switch}]" : '';
 		if ($config{debugPacket_received} == 1) {
-			debug sprintf("Received packet: %-4s [%d bytes] %s\n", $switch, length($msg), $label),
+			debug sprintf("Received packet: %-4s    [%2d bytes]  %s\n", $switch, length($msg), $label),
 				"parseMsg", 0;
 		} else {
 			visualDump($msg, "<< Received packet: $switch  $label");
