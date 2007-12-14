@@ -16,7 +16,6 @@ secureLogin_account 0
 serverEncoding Western
 gameGuard 2
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x0E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
-encrypt_packet_prefix 1
 
 [Brazil - bRO: Thor]
 ip 200.229.49.39
@@ -31,7 +30,6 @@ secureLogin_account 0
 serverEncoding Western
 gameGuard 2
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x0E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
-encrypt_packet_prefix 1
 
 [Europe - euRO]
 ip 217.68.157.42
@@ -47,7 +45,6 @@ storageEncryptKey 0x050B6F79, 0x0202C179, 0x0E20120, 0x04FA43E3, 0x0179B6C8, 0x0
 paddedPackets 0
 paddedPackets_attackID 0x89
 paddedPackets_skillUseID 0x113
-encrypt_packet_prefix 1
 recvpackets recvpackets-euro.txt
 
 [India - inRO]
@@ -101,7 +98,6 @@ secureLogin_type 0
 secureLogin_account 0
 serverEncoding Western
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x007D8D6B, 0x08CB9ED9
-encrypt_packet_prefix 1
 
 [Indonesia - idRO: Pvp Server]
 ip 202.93.18.251
@@ -254,7 +250,6 @@ patchpath /patch50
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x0E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
 serverEncoding Tagalog
 charBlockSize 108
-encrypt_packet_prefix 1
 
 [Philippines - pRO: Urdr]
 ip 202.57.118.231
@@ -288,7 +283,6 @@ storageEncryptKey 0x050B6F79, 0x0202C179, 0x0E20120, 0x04FA43E3, 0x0179B6C8, 0x0
 serverEncoding Tagalog
 charBlockSize 108
 gameGuard 1
-encrypt_packet_prefix 1
 
 [Philippines - pRO: Sakray]
 ip 202.57.118.232
@@ -318,7 +312,6 @@ serverEncoding Russian
 pauseCharServer 1
 patchserver web.raggame.ru
 patchpath /patch02
-encrypt_packet_prefix 1
 
 [Taiwan - twRO: Alfheim (chaos, loki)]
 ip 61.220.60.11
