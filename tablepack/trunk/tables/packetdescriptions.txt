@@ -224,10 +224,11 @@
 022C actor_display (actor moved)
 020E TaeKwon Misson
 0238 PK Top 10 Ranking
+02AE Initialize Message ID Encryption
 
 [Send]
-0064 Master Login
-0065 Game Login
+0064 Account Server Login
+0065 Character Server Login
 0066 Char Login
 0072 Map Login
 007D Map Loaded
@@ -331,3 +332,4 @@
 0208 Friend Request Accept/Reject
 0228 gameguard_sync
 020D Homunculus Feed
+02AF Message ID Encryption Initialized
