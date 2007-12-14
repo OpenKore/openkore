@@ -41,6 +41,7 @@ use Time::HiRes qw(time);
 use IO::Socket::INET;
 use encoding 'utf8';
 use Scalar::Util;
+use File::Spec;
 
 use Globals;
 use Log qw(message error);
@@ -322,6 +323,13 @@ sub checkConnection {
 			main::configModify('serverEncoding', $master->{serverEncoding});
 		} elsif ($config{serverEncoding} eq '') {
 			main::configModify('serverEncoding', 'Western');
+		}
+		if (Settings::setRecvPacketsName($masterServer->{recvpackets})) {
+			my (undef, undef, $basename) = File::Spec->splitpath(Settings::getRecvPacketsFilename());
+			Settings::loadByRegexp(quotemeta $basename, sub {
+				my ($filename) = @_;
+				message TF("Loading %s...\n", $filename);
+			});
 		}
 
 		message T("Connecting to Account Server...\n", "connection");
