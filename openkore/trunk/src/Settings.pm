@@ -99,6 +99,7 @@ our $config_file;
 our $mon_control_file;
 our $items_control_file;
 our $shop_file;
+our $recvpackets_name;
 
 our $chat_log_file;
 our $storage_log_file;
@@ -535,6 +536,27 @@ sub getShopFilename {
 		return $shop_file;
 	} else {
 		return getControlFilename("shop.txt");
+	}
+}
+
+sub getRecvPacketsFilename {
+	return getTableFilename($recvpackets_name || "recvpackets.txt");
+}
+
+sub setRecvPacketsName {
+	my ($new_name) = @_;
+	if ($recvpackets_name ne $new_name) {
+		my $current_filename = getRecvPacketsFilename();
+		foreach my $object (@{$files->getItems()}) {
+			if ($object->{name} eq $current_filename) {
+				$object->{name} = getTableFilename($new_name || "recvpackets.txt");
+				last;
+			}
+		}
+		$recvpackets_name = $new_name;
+		return 1;
+	} else {
+		return undef;
 	}
 }
 

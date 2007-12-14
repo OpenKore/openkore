@@ -156,6 +156,9 @@ sub loadDataFiles {
 	Settings::addControlFile('routeweights.txt',  loader => [\&parseDataFile, \%routeWeights]);
 	Settings::addControlFile('arrowcraft.txt',  loader => [\&parseDataFile_lc, \%arrowcraft_items]);
 
+	Settings::addTableFile(Settings::getRecvPacketsFilename(),
+		loader => [\&parseDataFile2, \%rpackets],
+		autoSearch => 0);
 	Settings::addTableFile('cities.txt',      loader => [\&parseROLUT, \%cities_lut]);
 	Settings::addTableFile('commanddescriptions.txt', loader => [\&parseCommandsDescription, \%descriptions]);
 	Settings::addTableFile('directions.txt',  loader => [\&parseDataFile2, \%directions_lut]);
@@ -175,7 +178,6 @@ sub loadDataFiles {
 	Settings::addTableFile('packetdescriptions.txt',  loader => [\&parseSectionedFile, \%packetDescriptions]);
 	Settings::addTableFile('portals.txt',     loader => [\&parsePortals, \%portals_lut]);
 	Settings::addTableFile('portalsLOS.txt',  loader => [\&parsePortalsLOS, \%portals_los]);
-	Settings::addTableFile('recvpackets.txt', loader => [\&parseDataFile2, \%rpackets]);
 	Settings::addTableFile('servers.txt',     loader => [\&parseSectionedFile, \%masterServers]);
 	Settings::addTableFile('sex.txt',         loader => [\&parseDataFile2, \%sex_lut]);
 	Settings::addTableFile('skills.txt',      loader => \&Skill::StaticInfo::parseSkillsDatabase);
