@@ -1104,7 +1104,7 @@ sub parseOutgoingClientMessage {
 	}
 
 	if ($sendMsg ne "") {
-	    $messageSender->encrypt_prefix(\$sendMsg, $sendMsg);
+		$messageSender->encryptMessageID(\$sendMsg);
 		$net->serverSend($sendMsg);
 	}
 
