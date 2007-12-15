@@ -48,7 +48,7 @@ sub new {
 		LocalPort	=> $port,
 		Proto		=> 'tcp');
 	if (!$self->{server}) {
-		XKore::CannotStart->throw(error => TF("Unable to start the X-Kore server.\n" . 
+		Network::XKore::CannotStart->throw(error => TF("Unable to start the X-Kore server.\n" . 
 			"You can only run one X-Kore session at the same time.\n" . 
 			"And make sure no other servers are running on port %s.\n", $port));
 	}
