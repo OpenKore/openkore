@@ -84,7 +84,7 @@ sub errorHandler {
 	$log .= "\@ai_seq = @Globals::ai_seq\n" if (defined @Globals::ai_seq);
 	$log .= "Network state = $Globals::conState\n" if (defined $Globals::conState);
 	$log .= "Network handler = " . Scalar::Util::blessed($Globals::net) . "\n" if ($Globals::net);
-	my $revision = Settings::getSVNRevision();
+	my $revision = defined(&Settings::getSVNRevision) ? Settings::getSVNRevision() : undef;
 	if (defined $revision) {
 		$log .= "SVN revision: $revision\n";
 	} else {

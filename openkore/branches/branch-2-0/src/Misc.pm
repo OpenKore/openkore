@@ -247,7 +247,7 @@ sub auth {
 		message TF("Revoked admin privilages for user '%s'\n", $user), "success";
 	}
 	$overallAuth{$user} = $flag;
-	writeDataFile("$Settings::control_folder/overallAuth.txt", \%overallAuth);
+	writeDataFile(Settings::getControlFilename("overallAuth.txt"), \%overallAuth);
 }
 
 ##
@@ -291,7 +291,7 @@ sub configModify {
 	}
 	if ($args{autoCreate} && !exists $config{$key}) {
 		my $f;
-		if (open($f, ">>", $Settings::config_file)) {
+		if (open($f, ">>", Settings::getConfigFilename())) {
 			print $f "$key\n";
 			close($f);
 		}
@@ -336,7 +336,7 @@ sub bulkConfigModify {
 #
 # Writes %config to config.txt.
 sub saveConfigFile {
-	writeDataFileIntact($Settings::config_file, \%config);
+	writeDataFileIntact(Settings::getConfigFilename(), \%config);
 }
 
 sub setTimeout {
@@ -344,7 +344,7 @@ sub setTimeout {
 	my $time = shift;
 	message TF("Timeout '%s' set to %s (was %s)\n", $timeout, $time, $timeout{$timeout}{timeout}), "info";
 	$timeout{$timeout}{'timeout'} = $time;
-	writeDataFileIntact2("$Settings::control_folder/timeouts.txt", \%timeout);
+	writeDataFileIntact2(Settings::getControlFilename("timeouts.txt"), \%timeout);
 }
 
 
@@ -403,11 +403,15 @@ sub visualDump {
 	my ($msg, $label) = @_;
 	my $dump;
 	my $puncations = quotemeta '~!@#$%^&*()_-+=|\"\'';
+	no encoding 'utf8';
+	use bytes;
 
-	my $labelStr = $label ? " ($label)" : '';
-	$dump = "================================================\n" .
-		getFormattedDate(int(time)) . "\n\n" .
-		length($msg) . " bytes$labelStr\n\n";
+	$dump = "================================================\n";
+	if (defined $label) {
+		$dump .= sprintf("%-15s [%d bytes]   %s\n", $label, length($msg), getFormattedDate(int(time)));
+	} else {
+		$dump .= sprintf("%d bytes   %s\n", length($msg), getFormattedDate(int(time)));
+	}
 
 	for (my $i = 0; $i < length($msg); $i += 16) {
 		my $line;
@@ -416,9 +420,7 @@ sub visualDump {
 
 		for (my $j = 0; $j < length($data); $j++) {
 			my $char = substr($data, $j, 1);
-
-			if (($char =~ /\W/ && $char =~ /\S/ && !($char =~ /[$puncations]/))
-			    || ($char eq chr(10) || $char eq chr(13) || $char eq "\t")) {
+			if (ord($char) < 32 || ord($char) > 126) {
 				$rawData .= '.';
 			} else {
 				$rawData .= substr($data, $j, 1);
@@ -734,7 +736,7 @@ sub itemLog {
 sub chatLog {
 	my $type = shift;
 	my $message = shift;
-	open CHAT, ">>:utf8", $Settings::chat_file;
+	open CHAT, ">>:utf8", $Settings::chat_log_file;
 	print CHAT "[".getFormattedDate(int(time))."][".uc($type)."] $message";
 	close CHAT;
 }
@@ -749,7 +751,7 @@ sub shopLog {
 sub monsterLog {
 	my $crud = shift;
 	return if (!$config{'monsterLog'});
-	open MONLOG, ">>:utf8", $Settings::monster_log;
+	open MONLOG, ">>:utf8", $Settings::monster_log_file;
 	print MONLOG "[".getFormattedDate(int(time))."] $crud\n";
 	close MONLOG;
 }
@@ -1192,8 +1194,8 @@ sub charSelectScreen {
 }
 
 sub chatLog_clear {
-	if (-f $Settings::chat_file) {
-		unlink($Settings::chat_file);
+	if (-f $Settings::chat_log_file) {
+		unlink($Settings::chat_log_file);
 	}
 }
 
@@ -2266,13 +2268,7 @@ sub switchConfigFile {
 		return 0;
 	}
 
-	foreach (@Settings::configFiles) {
-		if ($_->{file} eq $Settings::config_file) {
-			$_->{file} = $filename;
-			last;
-		}
-	}
-	$Settings::config_file = $filename;
+	Settings::setConfigFilename($filename);
 	parseConfigFile($filename, \%config);
 	return 1;
 }
@@ -2601,15 +2597,21 @@ sub updatePlayerNameCache {
 # level: 1 to teleport to a random spot, 2 to respawn.
 sub useTeleport {
 	my ($use_lvl, $internal, $emergency) = @_;
-
+		
+	my %args = (
+		level => $use_lvl, # 1 = Teleport, 2 = respawn
+		emergency => $emergency, # Needs a fast tele
+		internal => $internal # Did we call useTeleport from inside useTeleport?
+	);
+		
 	if ($use_lvl == 2 && $config{saveMap_warpChatCommand}) {
-		$allowedTeleport = 1;
+		Plugins::callHook('teleport_sent', \%args);
 		sendMessage($messageSender, "c", $config{saveMap_warpChatCommand});
 		return 1;
 	}
 
 	if ($use_lvl == 1 && $config{teleportAuto_useChatCommand}) {
-		$allowedTeleport = 1;
+		Plugins::callHook('teleport_sent', \%args);
 		sendMessage($messageSender, "c", $config{teleportAuto_useChatCommand});
 		return 1;
 	}
@@ -2628,7 +2630,7 @@ sub useTeleport {
 	# only if we want to use skill ?
 	return if ($char->{muted});
 
-	if ($sk_lvl > 0 && $internal > 0) {
+	if ($sk_lvl > 0 && $internal > 0 && !$config{'teleportAuto_useItemForRespawn'}) {
 		# We have the teleport skill, and should use it
 		my $skill = new Skill(handle => 'AL_TELEPORT');
 		if ($use_lvl == 2 || $internal == 1 || ($internal == 2 && binSize(\@playersID))) {
@@ -2637,7 +2639,7 @@ sub useTeleport {
 			# autodetection works)
 
 			if ($char->{sitting}) {
-				$allowedTeleport = 1;
+				Plugins::callHook('teleport_sent', \%args);
 				main::ai_skillUse($skill->getHandle(), $sk_lvl, 0, 0, $accountID);
 				return 1;
 			} else {
@@ -2646,7 +2648,7 @@ sub useTeleport {
 			}
 
 			if (!$emergency && $use_lvl == 1) {
-				$allowedTeleport = 1;
+				Plugins::callHook('teleport_sent', \%args);
 				$timeout{ai_teleport_retry}{time} = time;
 				AI::queue('teleport');
 				return 1;
@@ -2656,7 +2658,7 @@ sub useTeleport {
 		delete $ai_v{temp}{teleport};
 		debug "Sending Teleport using Level $use_lvl\n", "useTeleport";
 		if ($use_lvl == 1) {
-			$allowedTeleport = 1;
+			Plugins::callHook('teleport_sent', \%args);
 			$messageSender->sendTeleport("Random");
 			return 1;
 		} elsif ($use_lvl == 2) {
@@ -2668,7 +2670,7 @@ sub useTeleport {
 			# on official servers.
 			my $telemap = "prontera.gat";
 			$telemap = "$config{saveMap}.gat" if ($config{saveMap} ne "");
-			$allowedTeleport = 1;
+			Plugins::callHook('teleport_sent', \%args);
 			$messageSender->sendTeleport($telemap);
 			return 1;
 		}
@@ -2676,7 +2678,7 @@ sub useTeleport {
 
 	# No skill try to equip a Tele clip or something,
 	# if teleportAuto_equip_* is set
-	if (Actor::Item::scanConfigAndCheck('teleportAuto_equip')) {
+	if (Actor::Item::scanConfigAndCheck('teleportAuto_equip') && !$config{'teleportAuto_useItemForRespawn'}) {
 		return if AI::inQueue('teleport');
 		debug "Equipping Accessory to teleport\n", "useTeleport";
 		AI::queue('teleport', {lv => $use_lvl});
@@ -2707,7 +2709,7 @@ sub useTeleport {
 		# We have Fly Wing/Butterfly Wing.
 		# Don't spam the "use fly wing" packet, or we'll end up using too many wings.
 		if (timeOut($timeout{ai_teleport})) {
-			$allowedTeleport = 1;
+			Plugins::callHook('teleport_sent', \%args);
 			$messageSender->sendItemUse($item->{index}, $accountID);
 			$timeout{ai_teleport}{time} = time;
 		}
@@ -2727,7 +2729,6 @@ sub useTeleport {
 		message T("You don't have the Teleport skill or a Butterfly Wing\n"), "teleport";
 	}
 	
-	$allowedTeleport = 0;
 	return 0;
 }
 
@@ -2818,7 +2819,7 @@ sub writeStorageLog {
 	my ($show_error_on_fail) = @_;
 	my $f;
 
-	if (open($f, ">:utf8", $Settings::storage_file)) {
+	if (open($f, ">:utf8", $Settings::storage_log_file)) {
 		print $f TF("---------- Storage %s -----------\n", getFormattedDate(int(time)));
 		for (my $i = 0; $i < @storageID; $i++) {
 			next if (!$storageID[$i]);
@@ -2839,7 +2840,7 @@ sub writeStorageLog {
 		message T("Storage logged\n"), "success";
 
 	} elsif ($show_error_on_fail) {
-		error TF("Unable to write to %s\n", $Settings::storage_file);
+		error TF("Unable to write to %s\n", $Settings::storage_log_file);
 	}
 }
 
@@ -3428,8 +3429,8 @@ sub compilePortals {
 	return 0 if $checkOnly;
 
 	# Write new portalsLOS.txt
-	writePortalsLOS("$Settings::tables_folder/portalsLOS.txt", \%portals_los);
-	message TF("Wrote portals Line of Sight table to '%s/portalsLOS.txt'\n", $Settings::tables_folder), "system";
+	writePortalsLOS(Settings::getTableFilename("portalsLOS.txt"), \%portals_los);
+	message TF("Wrote portals Line of Sight table to '%s'\n", Settings::getTableFilename("portalsLOS.txt")), "system";
 
 	# Print warning for missing fields
 	if (%missingMap) {
@@ -3766,6 +3767,10 @@ sub checkSelfCondition {
 	if ($config{$prefix."_whenNotEquipped"}) {
 		my $item = Actor::Item::get($config{$prefix."_whenNotEquipped"});
 		return 0 if $item && $item->{equipped};
+	}
+
+	if ($config{$prefix."_zeny"}) {
+		return 0 if (!inRange($char->{zenny}, $config{$prefix."_zeny"}));
 	}
 
 	# not working yet

@@ -1,4 +1,19 @@
 =========================
+### OpenKore 2.0.5
+=========================
+
+- Added ability to locate data files from multiple possible locations.
+- Added lockdown mode.
+- Fixed the 'followBot' feature.
+- Added 'StorageZeny' for storage, and 'zeny' in 'SelfCondition'.
+  (thanks to 4epT and piroJOKE)
+- Added serverType 19 and 20 to support pRO Valkyrie
+- Added 'teleportAuto_useItemForRespawn' if set to 1 Kore will use
+  Butterfly Wing to respawn.
+- Added support for encrypted padded packets
+
+
+=========================
 ### OpenKore 2.0.4
 =========================
 
@@ -105,12 +120,24 @@ New commands:
 	gmrecall : summons a player via character name or user name.
 
 New config options:
-- homunculus_intimacyMax 	 : Max value of intimacy, if this value is reached feeding will discontinue till minimum is reached.
-- homunculus_intimacyMin 	 : Min value of intimacy, will continue feeding if this value is reached.
-- homunculus_hungerTimeoutMax 	 : How long should we wait between feedings? (max)
-- homunculus_hungerTimeoutMin 	 : same as above, but min value
-- homunculus_autoFeed 		 : turn on/off auto-feeding
-- homunculus_autoFeedAllowedMaps : map names where to allow auto-feeding (leave empty for all maps)
+- homunculus_intimacyMax
+  Max value of intimacy, if this value is reached feeding will discontinue until
+  minimum is reached.
+
+- homunculus_intimacyMin
+  Min value of intimacy, will continue feeding if this value is reached.
+  
+- homunculus_hungerTimeoutMax
+  How long should we wait between feedings? (max)
+  
+- homunculus_hungerTimeoutMin
+  same as above, but min value
+  
+- homunculus_autoFeed
+  turn on/off auto-feeding
+  
+- homunculus_autoFeedAllowedMaps
+  map names where to allow auto-feeding (leave empty for all maps)
 
 New mon_control feature:
 - disconnect on monster:<teleport>:

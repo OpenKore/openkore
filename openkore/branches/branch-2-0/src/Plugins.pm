@@ -79,9 +79,10 @@ use enum qw(CALLBACK USER_DATA);
 # happen, for example, if it detects that a plugin is incompatible.
 sub loadAll {
 	my (@plugins, @subdirs);
-	my $pathDelimiter = ($^O eq 'MSWin32') ? ';' : ':';
 
-	foreach my $dir (split /($pathDelimiter)+/, $Settings::plugins_folder || ".") {
+	my @pluginsFolders;
+	@pluginsFolders = Settings::getPluginsFolders() if (defined &Settings::getPluginsFolders);
+	foreach my $dir (@pluginsFolders) {
 		my @items;
 
 		next if (!opendir(DIR, $dir));

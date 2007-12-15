@@ -37,10 +37,12 @@ my $parser;
 start();
 
 sub start {
+	if (!Settings::parseArguments()) {
+		usage(1);
+	}
 	if (@ARGV != 1) {
 		usage(1);
 	}
-	Settings::parseArguments();
 
 	$socket = new IO::Socket::UNIX(
 		Type => SOCK_STREAM,
@@ -50,12 +52,12 @@ sub start {
 		print "Cannot connect to $ARGV[0]: $!\n";
 		exit 1;
 	}
-	$socket->send(serialize("START"));
+	$socket->send(serialize("set active"));
 	$socket->flush();
 
 	$parser = new Bus::MessageParser();
-	Settings::addConfigFile("$Settings::control_folder/consolecolors.txt", \%consoleColors, \&parseSectionedFile);
-	Settings::load();
+	Settings::addControlFile("consolecolors.txt", loader => [\&parseSectionedFile, \%consoleColors]);
+	Settings::loadAll();
 
 	$interface = new Interface::Console();
 	$interface->mainLoop();
@@ -78,22 +80,26 @@ sub mainLoop {
 		} else {
 			$parser->add($data);
 			while (my $args = $parser->readNext(\$ID)) {
-				if ($ID eq "OUTPUT") {
+				if ($ID eq "output") {
 					$interface->writeOutput($args->{type},
 						$args->{message},
 						$args->{domain});
-				} elsif ($ID eq "SET_TITLE") {
+				} elsif ($ID eq "title changed") {
 					$interface->title($args->{title});
+				} elsif ($ID eq "inputted") {
+					$interface->writeOutput("message",
+						"$args->{data}\n",
+						"input");
 				}
 			}
 		}
 	}
 
-	if (my $input = $interface->getInput(0)) {
+	if (defined(my $input = $interface->getInput(0))) {
 		if ($input eq "detach") {
 			$quit = 1;
 		} else {
-			my $message = serialize("INPUT", { data => $input });
+			my $message = serialize("input", { data => $input });
 			$socket->send($message);
 			$socket->flush();
 		}

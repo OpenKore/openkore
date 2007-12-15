@@ -595,6 +595,9 @@ sub ai_skillUse2 {
 # Returns 0 otherwise.
 sub ai_storageAutoCheck {
 	return 0 if ($char->getSkillLevel(new Skill(handle => 'NV_BASIC')) < 6);
+	if ($config{minStorageZeny}) {
+		return 0 if ($char->{zenny} < $config{minStorageZeny});
+	}
 	foreach my $item (@{$char->inventory->getItems()}) {
 		next if ($item->{equipped});
 		my $control = Misc::items_control($item->{name});

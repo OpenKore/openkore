@@ -85,7 +85,7 @@ sub title {
 	my ($self, $title) = @_;
 
 	if ($title) {
-		if (defined($self->{title}) && $self->{title} ne $title) {
+		if (!defined($self->{title}) || $self->{title} ne $title) {
 			$self->{title} = $title;
 			if ($ENV{TERM} eq 'xterm' || $ENV{TERM} eq 'screen') {
 				print STDOUT "\e]2;";

@@ -113,6 +113,7 @@ sub iterate {
 
 	ChatQueue::processFirst;
 
+	processDcOnPlayer();
 	processEquip();
 	processDeal();
 	processDealAuto();
@@ -168,7 +169,6 @@ sub iterate {
 	processItemsTake();
 	processItemsAutoGather();
 	processItemsGather();
-	processDcOnPlayer();
 	processAutoTeleport();
 	processAllowedMaps();
 	processAutoResponse();
@@ -493,7 +493,7 @@ sub processPortalRecording {
 		$portals_lut{$ID}{dest}{$destName}{y} = $sourcePos{y};
 
 		message TF("Recorded new portal (destination): %s (%s, %s) -> %s (%s, %s)\n", $field{name}, $destPos{x}, $destPos{y}, $sourceMap, $sourcePos{x}, $sourcePos{y}), "portalRecord";
-		updatePortalLUT("$Settings::tables_folder/portals.txt",
+		updatePortalLUT(Settings::getTableFilename("portals.txt"),
 				$field{name}, $destPos{x}, $destPos{y},
 				$sourceMap, $sourcePos{x}, $sourcePos{y});
 	}
@@ -510,7 +510,7 @@ sub processPortalRecording {
 		$portals_lut{$ID}{dest}{$destName}{y} = $destPos{y};
 
 		message TF("Recorded new portal (source): %s (%s, %s) -> %s (%s, %s)\n", $sourceMap, $sourcePos{x}, $sourcePos{y}, $field{name}, $char->{pos}{x}, $char->{pos}{y}), "portalRecord";
-		updatePortalLUT("$Settings::tables_folder/portals.txt",
+		updatePortalLUT(Settings::getTableFilename("portals.txt"),
 				$sourceMap, $sourcePos{x}, $sourcePos{y},
 				$field{name}, $char->{pos}{x}, $char->{pos}{y});
 	}
@@ -1570,7 +1570,7 @@ sub processAutoBuy {
 		undef $args->{index};
 
 		for (my $i = 0; exists $config{"buyAuto_$i"}; $i++) {
-			next if (!$config{"buyAuto_$i"});
+			next if (!$config{"buyAuto_$i"} || $config{"buyAuto_${i}_disabled"});
 			# did we already fail to do this buyAuto slot? (only fails in this way if the item is nonexistant)
 			next if ($args->{index_failed}{$i});
 
@@ -2015,7 +2015,7 @@ sub processFollow {
  		message T("I lost my master\n"), "follow";
 		if ($config{'followBot'}) {
  			message T("Trying to get him back\n"), "follow";
-			sendMessage("pm", "move $chars[$config{'char'}]{'pos_to'}{'x'} $chars[$config{'char'}]{'pos_to'}{'y'}", $config{followTarget});
+			sendMessage($messageSender, "pm", "move $chars[$config{'char'}]{'pos_to'}{'x'} $chars[$config{'char'}]{'pos_to'}{'y'}", $config{followTarget});
 		}
 
 		delete $args->{'following'};
