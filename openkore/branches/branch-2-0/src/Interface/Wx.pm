@@ -67,7 +67,7 @@ our ($iterationTime, $updateUITime, $updateUITime2);
 sub OnInit {
 	my $self = shift;
 
-	$CVS = ($Settings::CVS =~ /SVN/);
+	$CVS = ($Settings::SVN =~ /SVN/);
 	$self->createInterface;
 	$self->iterate;
 
@@ -568,7 +568,7 @@ sub createSplitterContent {
 	$mapView->onMouseMove($self, \&onMapMouseMove);
 	$mapView->onClick->add($self, \&onMapClick);
 	$mapView->onMapChange($self, \&onMap_MapChange, $mapDock);
-	$mapView->parsePortals("$Settings::tables_folder/portals.txt");
+	$mapView->parsePortals(Settings::getTableFilename("portals.txt"));
 	if ($field && $char) {
 		$mapView->set($field->name(), $char->{pos_to}{x}, $char->{pos_to}{y}, $field);
 	}

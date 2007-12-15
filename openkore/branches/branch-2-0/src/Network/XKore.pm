@@ -48,7 +48,7 @@ sub new {
 		LocalPort	=> $port,
 		Proto		=> 'tcp');
 	if (!$self->{server}) {
-		XKore::CannotStart->throw(error => TF("Unable to start the X-Kore server.\n" . 
+		Network::XKore::CannotStart->throw(error => TF("Unable to start the X-Kore server.\n" . 
 			"You can only run one X-Kore session at the same time.\n" . 
 			"And make sure no other servers are running on port %s.\n", $port));
 	}
@@ -61,8 +61,18 @@ sub new {
 	if ($config{serverType} != $masterServer->{serverType}) {
 		Misc::configModify('serverType', $masterServer->{serverType});
 	}
+	if (Settings::setRecvPacketsName($masterServer->{recvpackets})) {
+		my (undef, undef, $basename) = File::Spec->splitpath(Settings::getRecvPacketsFilename());
+		Settings::loadByRegexp(quotemeta $basename, sub {
+			my ($filename) = @_;
+			message TF("Loading %s...\n", $filename);
+		});
+	}
 	$packetParser = Network::Receive->create($masterServer->{serverType});
 	$messageSender = Network::Send->create($self, $masterServer->{serverType});
+	
+	Plugins::addHook("Network::Receive/willMangle", \&willMangle);
+	Plugins::addHook("Network::Receive/mangle", \&mangle);
 
 	message T("X-Kore mode intialized.\n"), "startup";
 
@@ -131,8 +141,10 @@ sub getState {
 
 sub setState {
 	my ($self, $state) = @_;
-	$conState = $state;
-	Plugins::callHook('Network::stateChanged');
+	if ($conState != $state) {
+		$conState = $state;
+		Plugins::callHook('Network::stateChanged');
+	}
 }
 
 
@@ -372,6 +384,26 @@ sub recv {
 	}
 	
 	return 1;
+}
+
+sub willMangle {
+    my (undef, $args) = @_;
+    
+    $args->{return} = 0;
+    if ($args->{messageID} eq '02AE') {
+        $args->{return} = 1;
+    }
+}
+
+sub mangle {
+    my (undef, $args) = @_;
+    my $message_args = $args->{messageArgs};
+
+    $args->{return} = 0;
+    if ($message_args->{switch} eq '02AE') {
+        # nah
+        $args->{return} = 2;
+    }
 }
 
 ##

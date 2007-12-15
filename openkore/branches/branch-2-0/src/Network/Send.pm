@@ -32,7 +32,7 @@ use Exception::Class (
 	'Network::Send::CreationException'
 );
 
-use Globals qw(%config $encryptVal $bytesSent $conState %packetDescriptions);
+use Globals qw(%config $encryptVal $bytesSent $conState %packetDescriptions $enc_val1 $enc_val2);
 use I18N qw(stringToBytes);
 use Utils qw(existsInList);
 use Misc;
@@ -210,13 +210,40 @@ sub encrypt {
 	$$r_msg = $newmsg;
 }
 
+sub encryptMessageID {
+	use bytes;
+	my ($self, $r_message) = @_;
+
+	if ($self->{net}->getState() != Network::IN_GAME) {
+		$enc_val1 = 0;
+		$enc_val2 = 0;
+		return;
+	}
+
+	my $messageID = unpack("v", $$r_message);
+	if ($enc_val1 != 0 && $enc_val2 != 0) {
+		# Prepare encryption
+		$enc_val1 = (0x000343FD * $enc_val1) + $enc_val2;
+		$enc_val1 = $enc_val1 % 2 ** 32;
+		debug (sprintf("enc_val1 = %x", $enc_val1) . "\n", "sendPacket", 2);
+		# Encrypt message ID
+		$messageID = $messageID ^ (($enc_val1 >> 16) & 0x7FFF);
+		$messageID &= 0xFFFF;
+		$$r_message = pack("v", $messageID) . substr($$r_message, 2);
+	}
+}
+
 sub injectMessage {
 	my ($self, $message) = @_;
 	my $name = stringToBytes("|");
 	my $msg .= $name . stringToBytes(" : $message") . chr(0);
-	encrypt(\$msg, $msg);
+	# encrypt(\$msg, $msg);
+
+	# Packet Prefix Encryption Support
+	$self->encryptMessageID(\$msg);
+
 	$msg = pack("C*", 0x09, 0x01) . pack("v*", length($name) + length($message) + 12) . pack("C*",0,0,0,0) . $msg;
-	encrypt(\$msg, $msg);
+	## encrypt(\$msg, $msg);
 	$self->{net}->clientSend($msg);
 }
 
@@ -224,7 +251,10 @@ sub injectAdminMessage {
 	my ($self, $message) = @_;
 	$message = stringToBytes($message);
 	$message = pack("C*",0x9A, 0x00) . pack("v*", length($message)+5) . $message .chr(0);
-	encrypt(\$message, $message);
+	# encrypt(\$message, $message);
+
+	# Packet Prefix Encryption Support
+	$self->encryptMessageID(\$message);
 	$self->{net}->clientSend($message);
 }
 
@@ -234,9 +264,6 @@ sub sendToServer {
 
 	shouldnt(length($msg), 0);
 	return unless ($net->serverAlive);
-	if ($self->{serverType} != 2) {
-		encrypt(\$msg, $msg);
-	}
 
 	my $messageID = uc(unpack("H2", substr($msg, 1, 1))) . uc(unpack("H2", substr($msg, 0, 1)));
 
@@ -250,16 +277,21 @@ sub sendToServer {
 		return if ($args{return});
 	}
 
+	# encrypt(\$msg, $msg);
+
+	# Packet Prefix Encryption Support
+	$self->encryptMessageID(\$msg);
+
 	$net->serverSend($msg);
 	$bytesSent += length($msg);
 
 	if ($config{debugPacket_sent} && !existsInList($config{debugPacket_exclude}, $messageID)) {
 		my $label = $packetDescriptions{Send}{$messageID} ?
-			" - $packetDescriptions{Send}{$messageID}" : '';
+			"[$packetDescriptions{Send}{$messageID}]" : '';
 		if ($config{debugPacket_sent} == 1) {
-			debug("Packet Switch SENT: $messageID$label (" . length($msg) . " bytes)\n", "sendPacket", 0);
+			debug(sprintf("Sent packet    : %-4s    [%2d bytes]  %s\n", $messageID, length($msg), $label), "sendPacket", 0);
 		} else {
-			Misc::visualDump($msg, $messageID.$label);
+			Misc::visualDump($msg, ">> Sent packet: $messageID  $label");
 		}
 	}
 }

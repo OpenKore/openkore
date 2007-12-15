@@ -13,6 +13,7 @@ use Time::HiRes qw(time usleep);
 use IO::Socket;
 use Text::ParseWords;
 use Carp::Assert;
+use Data::YAML::Writer;
 use Config;
 use encoding 'utf8';
 
@@ -126,71 +127,80 @@ sub loadPlugins {
 }
 
 sub loadDataFiles {
-	import Settings qw(addConfigFile);
-
 	# These pragmas are necessary in order to support non-ASCII filenames.
 	# If we use UTF-8 strings then Perl will think the file doesn't exist,
 	# if $Settings::control_folder or $Settings::tables_folder contains
 	# non-ASCII characters.
 	no encoding 'utf8';
 
-	addConfigFile($Settings::config_file, \%config,\&parseConfigFile);
-	addConfigFile($Settings::items_control_file, \%items_control,\&parseItemsControl);
-	addConfigFile($Settings::mon_control_file, \%mon_control, \&parseMonControl);
-	addConfigFile("$Settings::control_folder/overallAuth.txt", \%overallAuth, \&parseDataFile);
-	addConfigFile($Settings::pickupitems_file, \%pickupitems, \&parseDataFile_lc);
-	addConfigFile("$Settings::control_folder/responses.txt", \%responses, \&parseResponses);
-	addConfigFile("$Settings::control_folder/timeouts.txt", \%timeout, \&parseTimeouts);
-	addConfigFile($Settings::shop_file, \%shop, \&parseShopControl);
-	addConfigFile("$Settings::control_folder/chat_resp.txt", \@chatResponses, \&parseChatResp);
-	addConfigFile("$Settings::control_folder/avoid.txt", \%avoid, \&parseAvoidControl);
-	addConfigFile("$Settings::control_folder/priority.txt", \%priority, \&parsePriority);
-	addConfigFile("$Settings::control_folder/consolecolors.txt", \%consoleColors, \&parseSectionedFile);
-	addConfigFile("$Settings::control_folder/routeweights.txt", \%routeWeights, \&parseDataFile);
-	addConfigFile("$Settings::control_folder/arrowcraft.txt", \%arrowcraft_items, \&parseDataFile_lc);
+	Settings::addControlFile(Settings::getConfigFilename(),
+		loader => [\&parseConfigFile, \%config],
+		autoSearch => 0);
+	Settings::addControlFile(Settings::getMonControlFilename(),
+		loader => [\&parseMonControl, \%mon_control],
+		autoSearch => 0);
+	Settings::addControlFile(Settings::getItemsControlFilename(),
+		loader => [\&parseItemsControl, \%items_control],
+		autoSearch => 0);
+	Settings::addControlFile(Settings::getShopFilename(),
+		loader => [\&parseShopControl, \%shop],
+		autoSearch => 0);
+	Settings::addControlFile('overallAuth.txt', loader => [\&parseDataFile, \%overallAuth]);
+	Settings::addControlFile('pickupitems.txt', loader => [\&parseDataFile_lc, \%pickupitems]);
+	Settings::addControlFile('responses.txt',   loader => [\&parseResponses, \%responses]);
+	Settings::addControlFile('timeouts.txt',    loader => [\&parseTimeouts, \%timeout]);
+	Settings::addControlFile('chat_resp.txt',   loader => [\&parseChatResp, \@chatResponses]);
+	Settings::addControlFile('avoid.txt',       loader => [\&parseAvoidControl, \%avoid]);
+	Settings::addControlFile('priority.txt',    loader => [\&parsePriority, \%priority]);
+	Settings::addControlFile('consolecolors.txt', loader => [\&parseSectionedFile, \%consoleColors]);
+	Settings::addControlFile('routeweights.txt',  loader => [\&parseDataFile, \%routeWeights]);
+	Settings::addControlFile('arrowcraft.txt',  loader => [\&parseDataFile_lc, \%arrowcraft_items]);
 
-	addConfigFile("$Settings::tables_folder/cities.txt", \%cities_lut, \&parseROLUT);
-	addConfigFile("$Settings::tables_folder/commanddescriptions.txt", \%descriptions, \&parseCommandsDescription);
-	addConfigFile("$Settings::tables_folder/directions.txt", \%directions_lut, \&parseDataFile2);
-	addConfigFile("$Settings::tables_folder/elements.txt", \%elements_lut, \&parseROLUT);
-	addConfigFile("$Settings::tables_folder/emotions.txt", \%emotions_lut, \&parseEmotionsFile);
-	addConfigFile("$Settings::tables_folder/equiptypes.txt", \%equipTypes_lut, \&parseDataFile2);
-	addConfigFile("$Settings::tables_folder/haircolors.txt", \%haircolors, \&parseDataFile2);
-	addConfigFile("$Settings::tables_folder/headgears.txt", \@headgears_lut, \&parseArrayFile);
-	addConfigFile("$Settings::tables_folder/items.txt", \%items_lut, \&parseROLUT);
-	addConfigFile("$Settings::tables_folder/itemsdescriptions.txt", \%itemsDesc_lut, \&parseRODescLUT);
-	addConfigFile("$Settings::tables_folder/itemslots.txt", \%itemSlots_lut, \&parseROSlotsLUT);
-	addConfigFile("$Settings::tables_folder/itemslotcounttable.txt", \%itemSlotCount_lut, \&parseROLUT);
-	addConfigFile("$Settings::tables_folder/itemtypes.txt", \%itemTypes_lut, \&parseDataFile2);
-	addConfigFile("$Settings::tables_folder/maps.txt", \%maps_lut, \&parseROLUT);
-	addConfigFile("$Settings::tables_folder/monsters.txt", \%monsters_lut, \&parseDataFile2);
-	addConfigFile("$Settings::tables_folder/npcs.txt", \%npcs_lut, \&parseNPCs);
-	addConfigFile("$Settings::tables_folder/packetdescriptions.txt", \%packetDescriptions, \&parseSectionedFile);
-	addConfigFile("$Settings::tables_folder/portals.txt", \%portals_lut, \&parsePortals);
-	addConfigFile("$Settings::tables_folder/portalsLOS.txt", \%portals_los, \&parsePortalsLOS);
-	addConfigFile("$Settings::tables_folder/recvpackets.txt", \%rpackets, \&parseDataFile2);
-	addConfigFile("$Settings::tables_folder/servers.txt", \%masterServers, \&parseSectionedFile);
-	addConfigFile("$Settings::tables_folder/sex.txt", \%sex_lut, \&parseDataFile2);
-	addConfigFile("$Settings::tables_folder/skills.txt", undef, \&Skill::StaticInfo::parseSkillsDatabase);
-	addConfigFile("$Settings::tables_folder/spells.txt", \%spells_lut, \&parseDataFile2);
-	addConfigFile("$Settings::tables_folder/skillsdescriptions.txt", \%skillsDesc_lut, \&parseRODescLUT);
-	addConfigFile("$Settings::tables_folder/skillssp.txt", \%skillsSP_lut, \&parseSkillsSPLUT);
-	addConfigFile("$Settings::tables_folder/skillssp.txt", undef, \&Skill::StaticInfo::parseSPDatabase);
-	addConfigFile("$Settings::tables_folder/skillsstatus.txt", \%skillsStatus, \&parseDataFile2);
-	addConfigFile("$Settings::tables_folder/skillsailments.txt", \%skillsAilments, \&parseDataFile2);
-	addConfigFile("$Settings::tables_folder/skillsstate.txt", \%skillsState, \&parseDataFile2);
-	addConfigFile("$Settings::tables_folder/skillslooks.txt", \%skillsLooks, \&parseDataFile2);
-	addConfigFile("$Settings::tables_folder/skillsarea.txt", \%skillsArea, \&parseDataFile2);
-	addConfigFile("$Settings::tables_folder/skillsencore.txt", \%skillsEncore, \&parseList);
-	
+	Settings::addTableFile(Settings::getRecvPacketsFilename(),
+		loader => [\&parseDataFile2, \%rpackets],
+		autoSearch => 0);
+	Settings::addTableFile('cities.txt',      loader => [\&parseROLUT, \%cities_lut]);
+	Settings::addTableFile('commanddescriptions.txt', loader => [\&parseCommandsDescription, \%descriptions]);
+	Settings::addTableFile('directions.txt',  loader => [\&parseDataFile2, \%directions_lut]);
+	Settings::addTableFile('elements.txt',    loader => [\&parseROLUT, \%elements_lut]);
+	Settings::addTableFile('emotions.txt',    loader => [\&parseEmotionsFile, \%emotions_lut]);
+	Settings::addTableFile('equiptypes.txt',  loader => [\&parseDataFile2, \%equipTypes_lut]);
+	Settings::addTableFile('haircolors.txt',  loader => [\&parseDataFile2, \%haircolors]);
+	Settings::addTableFile('headgears.txt',   loader => [\&parseArrayFile, \@headgears_lut]);
+	Settings::addTableFile('items.txt',       loader => [\&parseROLUT, \%items_lut]);
+	Settings::addTableFile('itemsdescriptions.txt',   loader => [\&parseRODescLUT, \%itemsDesc_lut]);
+	Settings::addTableFile('itemslots.txt',   loader => [\&parseROSlotsLUT, \%itemSlots_lut]);
+	Settings::addTableFile('itemslotcounttable.txt',  loader => [\&parseROLUT, \%itemSlotCount_lut]);
+	Settings::addTableFile('itemtypes.txt',   loader => [\&parseDataFile2, \%itemTypes_lut]);
+	Settings::addTableFile('maps.txt',        loader => [\&parseROLUT, \%maps_lut]);
+	Settings::addTableFile('monsters.txt',    loader => [\&parseDataFile2, \%monsters_lut]);
+	Settings::addTableFile('npcs.txt',        loader => [\&parseNPCs, \%npcs_lut]);
+	Settings::addTableFile('packetdescriptions.txt',  loader => [\&parseSectionedFile, \%packetDescriptions]);
+	Settings::addTableFile('portals.txt',     loader => [\&parsePortals, \%portals_lut]);
+	Settings::addTableFile('portalsLOS.txt',  loader => [\&parsePortalsLOS, \%portals_los]);
+	Settings::addTableFile('servers.txt',     loader => [\&parseSectionedFile, \%masterServers]);
+	Settings::addTableFile('sex.txt',         loader => [\&parseDataFile2, \%sex_lut]);
+	Settings::addTableFile('skills.txt',      loader => \&Skill::StaticInfo::parseSkillsDatabase);
+	Settings::addTableFile('spells.txt',      loader => [\&parseDataFile2, \%spells_lut]);
+	Settings::addTableFile('skillsdescriptions.txt',  loader => [\&parseRODescLUT, \%skillsDesc_lut]);
+	Settings::addTableFile('skillssp.txt',    loader => [\&parseSkillsSPLUT, \%skillsSP_lut]);
+	Settings::addTableFile('skillssp.txt',    loader => \&Skill::StaticInfo::parseSPDatabase);
+	Settings::addTableFile('skillsstatus.txt',        loader => [\&parseDataFile2, \%skillsStatus]);
+	Settings::addTableFile('skillsailments.txt',      loader => [\&parseDataFile2, \%skillsAilments]);
+	Settings::addTableFile('skillsstate.txt', loader => [\&parseDataFile2, \%skillsState]);
+	Settings::addTableFile('skillslooks.txt', loader => [\&parseDataFile2, \%skillsLooks]);
+	Settings::addTableFile('skillsarea.txt',  loader => [\&parseDataFile2, \%skillsArea]);
+	Settings::addTableFile('skillsencore.txt',        loader => [\&parseList, \%skillsEncore]);
+
 	use encoding 'utf8';
 
 	Plugins::callHook('start2');
 	eval {
-		if (!Settings::load()) {
-			$interface->errorDialog(T("A configuration file failed to load. Did you download the latest configuration files?"));
-			exit 1;
-		}
+		my $progressHandler = sub {
+			my ($filename) = @_;
+			message TF("Loading %s...\n", $filename);
+		};
+		Settings::loadAll($progressHandler);
 	};
 	if (my $e = caught('UTF8MalformedException')) {
 		$interface->errorDialog(TF(
@@ -198,6 +208,9 @@ sub loadDataFiles {
 			"currently not. To solve this prolem, please use Notepad\n" .
 			"to save that file as valid UTF-8.",
 			$e->textfile));
+		exit 1;
+	} elsif (my $e = caught('FileNotFoundException')) {
+		$interface->errorDialog(TF("Unable to load the file %s.", $e->filename));
 		exit 1;
 	} elsif ($@) {
 		die $@;
@@ -485,12 +498,12 @@ sub initMapChangeVars {
 	Plugins::callHook('packet_mapChange');
 
 	$logAppend = ($config{logAppendUsername}) ? "_$config{username}_$config{char}" : '';
-	if ($config{logAppendUsername} && !($Settings::storage_file =~ /$logAppend/)) {
-		$Settings::chat_file	 = substr($Settings::chat_file,0,length($Settings::chat_file)-4)."$logAppend.txt";
-		$Settings::monster_log	 = substr($Settings::monster_log,0,length($Settings::monster_log)-4)."$logAppend.txt";
-		$Settings::item_log_file = substr($Settings::item_log_file,0,length($Settings::item_log_file)-4)."$logAppend.txt";
-		$Settings::storage_file  = substr($Settings::storage_file,0,length($Settings::storage_file)-4)."$logAppend.txt";
-		$Settings::shop_log_file = substr($Settings::shop_log_file,0,length($Settings::shop_log_file)-4)."$logAppend.txt";
+	if ($config{logAppendUsername} && index($Settings::storage_log_file, $logAppend) == -1) {
+		$Settings::chat_log_file     = substr($Settings::chat_log_file,    0, length($Settings::chat_log_file)    - 4) . "$logAppend.txt";
+		$Settings::storage_log_file  = substr($Settings::storage_log_file, 0, length($Settings::storage_log_file) - 4) . "$logAppend.txt";
+		$Settings::shop_log_file     = substr($Settings::shop_log_file,    0, length($Settings::shop_log_file)    - 4) . "$logAppend.txt";
+		$Settings::monster_log_file  = substr($Settings::monster_log_file, 0, length($Settings::monster_log_log)  - 4) . "$logAppend.txt";
+		$Settings::item_log_file     = substr($Settings::item_log_file,    0, length($Settings::item_log_file)    - 4) . "$logAppend.txt";
 	}
 }
 
@@ -526,31 +539,26 @@ sub mainLoop_initialized {
 	if (defined($data) && length($data) > 0) {
 		Benchmark::begin("parseMsg") if DEBUG;
 
+		my $type;
 		$incomingMessages->add($data);
-		if (expectingAccountID($incomingMessages->getBuffer())) {
-			parseIncomingMessage($incomingMessages->getBuffer());
-			$incomingMessages->clear(4);
-		}
-
-		eval {
-			while ($data = $incomingMessages->readNext()) {
+		while ($data = $incomingMessages->readNext(\$type)) {
+			if ($type == Network::MessageTokenizer::KNOWN_MESSAGE) {
 				parseIncomingMessage($data);
+			} else {
+				if ($type == Network::MessageTokenizer::UNKNOWN_MESSAGE) {
+					# Unknown message - ignore it
+					my $messageID = Network::MessageTokenizer::getMessageID($data);
+					if (!existsInList($config{debugPacket_exclude}, $messageID)) {
+						warning TF("Unknown packet - %s\n", $messageID), "connection";
+						visualDump($data, "<< Received unknown packet") if ($config{debugPacket_unparsed});
+					}
+				} elsif ($config{debugPacket_received}) {
+					debug "Received account ID\n", "parseMsg", 0 ;
+				}
+				# Pass it along to the client, whatever it is
+				$net->clientSend($data);
 			}
-		};
-		if (caught('Network::MessageTokenizer::Unknownmessage')) {
-			# Unknown message - ignore it
-			my $switch = Network::MessageTokenizer::getMessageID($incomingMessages->getBuffer());
-			if (!existsInList($config{debugPacket_exclude}, $switch)) {
-				warning TF("Unknown packet - %s\n", $switch), "connection";
-				dumpData($incomingMessages->getBuffer()) if ($config{debugPacket_unparsed});
-			}
-			# Pass it along to the client, whatever it is
-			$net->clientSend($incomingMessages->getBuffer());
-			$incomingMessages->clear();
-		} elsif ($@) {
-			die $@;
 		}
-
 		$net->clientFlush() if (UNIVERSAL::isa($net, 'Network::XKoreProxy'));
 		Benchmark::end("parseMsg") if DEBUG;
 	}
@@ -558,19 +566,10 @@ sub mainLoop_initialized {
 	# Receive and handle data from the RO client
 	$data = $net->clientRecv;
 	if (defined($data) && length($data) > 0) {
+		my $type;
 		$outgoingClientMessages->add($data);
-		eval {
-			while ($data = $outgoingClientMessages->readNext()) {
-				parseOutgoingClientMessage($data);
-				Misc::checkValidity("parseSendMsg (post)");
-			}
-		};
-		if (caught('Network::MessageTokenizer::Unknownmessage')) {
-			# Unknown message - ignore it
-			parseOutgoingClientMessage($outgoingClientMessages->getBuffer());
-			$outgoingClientMessages->clear();
-		} elsif ($@) {
-			die $@;
+		while ($data = $outgoingClientMessages->readNext(\$type)) {
+			parseOutgoingClientMessage($data);
 		}
 	}
 
@@ -579,6 +578,7 @@ sub mainLoop_initialized {
 		my $result = Poseidon::Client::getInstance()->getResult();
 		if (defined($result)) {
 			debug "Received Poseidon result.\n", "poseidon";
+			$messageSender->encryptMessageID(\$result);
 			$net->serverSend($result);
 		}
 	}
@@ -694,26 +694,46 @@ sub mainLoop_initialized {
 
 	processStatisticsReporting() unless ($sys{sendAnonymousStatisticReport} eq "0");
 
-	# Update state.txt
-	if ($field{name} && $net->getState() == Network::IN_GAME && timeOut($AI::Timeouts::mapdrt, $config{intervalMapDrt})) {
-		$AI::Timeouts::mapdrt = time;
-
-		my $pos = calcPosition($char);
+	# Update state.yml
+	if (timeOut($AI::Timeouts::stateUpdate, 0.5)) {
+		my %state;
 		my $f;
-		if (open($f, ">:utf8", "$Settings::logs_folder/state.txt")) {
-			print $f "fieldName=$field{name}\n";
-			print $f "fieldBaseName=$field{baseName}\n";
-			print $f "x=$pos->{x}\n";
-			print $f "y=$pos->{y}\n";
-			if ($bus && $bus->getState() == Bus::Client::CONNECTED()) {
-				print $f "busHost=" . $bus->serverHost() . "\n";
-				print $f "busPort=" . $bus->serverPort() . "\n";
-				print $f "busClientID=" . $bus->ID() . "\n";
-			}
+		$AI::Timeouts::stateUpdate = time;
+
+		if ($field{name} && $net->getState() == Network::IN_GAME) {
+			my $pos = calcPosition($char);
+			%state = (
+				connectionState => 'in game',
+				fieldName => $field{name},
+				fieldBaseName => $field{baseName},
+				charName => $char->{name},
+				x => $pos->{x},
+				y => $pos->{y}
+			);
+			$state{actors} = {};
 			foreach my $actor (@{$npcsList->getItems()}, @{$playersList->getItems()}, @{$monstersList->getItems()}) {
-				print $f "$actor->{actorType}=$actor->{pos_to}{x} $actor->{pos_to}{y}\n";
+				my $actorType = $actor->{actorType};
+				$state{actors}{$actorType} ||= [];
+				push @{$state{actors}{$actorType}}, {
+					x => $actor->{pos_to}{x},
+					y => $actor->{pos_to}{y}
+				};
 			}
-			close($f);
+		} else {
+			%state = (
+				connectionState => 'not logged in'
+			);
+		}
+		if ($bus && $bus->getState() == Bus::Client::CONNECTED()) {
+			$state{bus}{host} = $bus->serverHost();
+			$state{bus}{port} = $bus->serverPort();
+			$state{bus}{clientID} = $bus->ID();
+		}
+
+		if (open($f, ">:utf8", "$Settings::logs_folder/state.yml")) {
+			my $writer = new Data::YAML::Writer();
+			$writer->write(\%state, $f);
+			close $f;
 		}
 	}
 
@@ -897,11 +917,16 @@ sub parseOutgoingClientMessage {
 		#syncSync support for XKore 1 mode
 		$syncSync = substr($msg, $masterServer->{syncTickOffset}, 4);
 
+	} elsif ($switch eq "0065") {
+		# Login to character server
+		$incomingMessages->nextMessageMightBeAccountID();
+
 	} elsif ($switch eq "0066") {
 		# Login character selected
 		configModify("char", unpack("C*",substr($msg, 2, 1)));
 
 	} elsif ($switch eq "0072") {
+		$incomingMessages->nextMessageMightBeAccountID();
 		if ($masterServer->{serverType} == 0) {
 			# Map login
 			if ($config{'sex'} ne "") {
@@ -923,7 +948,7 @@ sub parseOutgoingClientMessage {
 		# Map loaded
 		$packetParser->changeToInGameState();
 		AI::clear("clientSuspend");
-		$timeout{'ai'}{'time'} = time;
+		$timeout{ai}{time} = time;
 		if ($firstLoginMap) {
 			undef $sentWelcomeMessage;
 			undef $firstLoginMap;
@@ -932,8 +957,6 @@ sub parseOutgoingClientMessage {
 		$ai_v{portalTrace_mapChanged} = time;
 		# syncSync support for XKore 1 mode
 		if($masterServer->{serverType} == 11) {
-			$syncSync = substr($msg, 8, 4);
-		} elsif ($masterServer->{serverType} == 12) {
 			$syncSync = substr($msg, 8, 4);
 		} else {
 			# formula: MapLoaded_len + Sync_len - 4 - Sync_packet_last_junk
@@ -1081,6 +1104,7 @@ sub parseOutgoingClientMessage {
 	}
 
 	if ($sendMsg ne "") {
+	    $messageSender->encrypt_prefix(\$sendMsg, $sendMsg);
 		$net->serverSend($sendMsg);
 	}
 
@@ -1095,13 +1119,6 @@ sub parseOutgoingClientMessage {
 #Parse Message
 #######################################
 #######################################
-
-
-sub expectingAccountID {
-	my ($msg) = @_;
-	return (substr($msg, 0, 4) eq $accountID && ($net->getState() == 2 || $net->getState() == 4))
-		|| ($net->version == 1 && !$accountID && length($msg) == 4);
-}
 
 
 ##
@@ -1140,11 +1157,12 @@ sub parseIncomingMessage {
 	$lastswitch = $switch;
 	if ($config{debugPacket_received} && !existsInList($config{'debugPacket_exclude'}, $switch)) {
 		my $label = $packetDescriptions{Recv}{$switch} ?
-			" ($packetDescriptions{Recv}{$switch})" : '';
+			"[$packetDescriptions{Recv}{$switch}]" : '';
 		if ($config{debugPacket_received} == 1) {
-			debug "Packet: $switch$label\n", "parseMsg", 0;
+			debug sprintf("Received packet: %-4s    [%2d bytes]  %s\n", $switch, length($msg), $label),
+				"parseMsg", 0;
 		} else {
-			visualDump($msg, "$switch$label");
+			visualDump($msg, "<< Received packet: $switch  $label");
 		}
 	}
 
@@ -1168,29 +1186,7 @@ sub parseIncomingMessage {
 	}
 
 	$lastPacketTime = time;
-	if (expectingAccountID($msg)) {
-		$accountID = substr($msg, 0, 4);
-		$AI = 2 if (!$AI_forcedOff);
-		if ($config{'encrypt'} && $net->getState() == 4) {
-			my $encryptKey1 = unpack("V1", substr($msg, 6, 4));
-			my $encryptKey2 = unpack("V1", substr($msg, 10, 4));
-			my ($imult, $imult2);
-			{
-				use integer;
-				$imult = (($encryptKey1 * $encryptKey2) + $encryptKey1) & 0xFF;
-				$imult2 = ((($encryptKey1 * $encryptKey2) << 4) + $encryptKey2 + ($encryptKey1 * 2)) & 0xFF;
-			}
-			$encryptVal = $imult + ($imult2 << 8);
-			#$msg_size = 14;
-		} else {
-			#$msg_size = 4;
-		}
-		debug "Received account ID\n", "parseMsg", 0 if ($config{debugPacket_received});
-		
-		# Continue the message to the client
-		$net->clientSend($msg);
-
-	} elsif ($packetParser &&
+	if ($packetParser &&
 		(my $args = $packetParser->parse($msg))) {
 		# Use the new object-oriented packet parser
 		if ($config{debugPacket_received} > 2 &&

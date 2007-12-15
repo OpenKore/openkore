@@ -41,6 +41,7 @@ use Time::HiRes qw(time);
 use IO::Socket::INET;
 use encoding 'utf8';
 use Scalar::Util;
+use File::Spec;
 
 use Globals;
 use Log qw(message error);
@@ -154,6 +155,7 @@ sub serverConnect {
 	($self->{remote_socket} && inet_aton($self->{remote_socket}->peerhost()) eq inet_aton($host)) ?
 		message T("connected\n"), "connection" :
 		error(TF("couldn't connect: %s (error code %d)\n", "$!", int($!)), "connection");
+	$incomingMessages->nextMessageMightBeAccountID();
 }
 
 ##
@@ -187,7 +189,7 @@ sub serverRecv {
 	
 	return undef unless (dataWaiting(\$self->{remote_socket}));
 	
-	$self->{remote_socket}->recv($msg, $Settings::MAX_READ);
+	$self->{remote_socket}->recv($msg, 1024 * 32);
 	if (Plugins::hasHook("Network::serverRecv")) {
 		Plugins::callHook("Network::serverRecv", { msg => $msg });
 	}
@@ -321,6 +323,13 @@ sub checkConnection {
 			main::configModify('serverEncoding', $master->{serverEncoding});
 		} elsif ($config{serverEncoding} eq '') {
 			main::configModify('serverEncoding', 'Western');
+		}
+		if (Settings::setRecvPacketsName($masterServer->{recvpackets})) {
+			my (undef, undef, $basename) = File::Spec->splitpath(Settings::getRecvPacketsFilename());
+			Settings::loadByRegexp(quotemeta $basename, sub {
+				my ($filename) = @_;
+				message TF("Loading %s...\n", $filename);
+			});
 		}
 
 		message T("Connecting to Account Server...\n", "connection");

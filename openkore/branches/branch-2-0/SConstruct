@@ -277,9 +277,9 @@ libenv['BUILDERS']['NativeDLL'] = NativeDLLBuilder
 perlenv = libenv.Clone()
 if win32:
 	# Windows
-	perlenv['CCFLAGS'] += Split('-Wno-comments')
+	perlenv['CCFLAGS'] += Split('-Wno-comments -include stdint.h')
 	perlenv['CPPDEFINES'] += Split('__MINGW32__ WIN32IO_IS_STDIO ' +
-		'_INTPTR_T_DEFINED _UINTPTR_T_DEFINED CHECK_FORMAT')
+		'_UINTPTR_T_DEFINED CHECK_FORMAT')
 	perlenv['LIBS'] += ['perl58']
 	perlenv['LIBPATH'] += [perlconfig['coredir']]
 elif not darwin:

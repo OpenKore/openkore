@@ -10,6 +10,11 @@
 #  See http://www.gnu.org/licenses/gpl.html for the full license.
 #########################################################################
 # pRO Thor (Philippines) as of December 20 2006
+# paddedPackets_attackID 0x009B
+# paddedPackets_skillUseID 0x0089
+# syncID 0x009F
+# syncTickOffset 9
+# mapLoadedTickOffset 11
 # Servertype overview: http://www.openkore.com/wiki/index.php/ServerType
 package Network::Send::ServerType15;
 

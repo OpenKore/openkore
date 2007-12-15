@@ -326,6 +326,8 @@ sub new {
 		'029A' => ['inventory_item_added', 'v1 v1 v1 C1 C1 C1 a8 v1 C1 C1 a4', [qw(index amount nameID identified broken upgrade cards type_equip type fail cards_ext)]],
 		# mRO PIN code Check
 		'02AD' => ['login_pin_code_request', 'v1 V', [qw(flag key)]],
+		# Packet Prefix encryption Support
+		'02AE' => ['initialize_message_id_encryption', 'V1 V1', [qw(param1 param2)]],
 	};
 
 	return bless \%self, $class;
@@ -1190,8 +1192,9 @@ sub actor_display {
 			my $domain = existsInList($config{friendlyAID}, unpack("V1", $actor->{ID})) ? 'parseMsg_presence' : 'parseMsg_presence/player';
 			debug "Player Exists: " . $actor->name . " ($actor->{binID}) Level $actor->{lv} $sex_lut{$actor->{sex}} $jobs_lut{$actor->{jobID}} ($coordsFrom{x}, $coordsFrom{y})\n", $domain;
 
-			# Shouldn't this have a more specific hook name?
-			Plugins::callHook('player', {player => $actor});
+			Plugins::callHook('player', {player => $actor});  #backwards compatibailty
+
+			Plugins::callHook('player_exist', {player => $actor});
 
 		} elsif ($actor->isa('Actor::NPC')) {
 			message TF("NPC Exists: %s (%d, %d) (ID %d) - (%d)\n", $actor->name, $actor->{pos_to}{x}, $actor->{pos_to}{y}, $actor->{nameID}, $actor->{binID}), "parseMsg_presence", 1;
@@ -1219,8 +1222,9 @@ sub actor_display {
 			my $domain = existsInList($config{friendlyAID}, unpack("V1", $args->{ID})) ? 'parseMsg_presence' : 'parseMsg_presence/player';
 			debug "Player Connected: ".$actor->name." ($actor->{binID}) Level $args->{lv} $sex_lut{$actor->{sex}} $jobs_lut{$actor->{jobID}} ($coordsTo{x}, $coordsTo{y})\n", $domain;
 
-			# Again, this hook name isn't very specific.
-			Plugins::callHook('player', {player => $actor});
+			Plugins::callHook('player', {player => $actor});  #backwards compatibailty
+
+			Plugins::callHook('player_connected', {player => $actor});
 		} else {
 			debug "Unknown Connected: $args->{type} - ", "parseMsg";
 		}
@@ -1297,7 +1301,7 @@ sub actor_info {
 		if ($monsters_lut{$monster->{nameID}} eq "") {
 			$monster->setName($name);
 			$monsters_lut{$monster->{nameID}} = $name;
-			updateMonsterLUT("$Settings::tables_folder/monsters.txt", $monster->{nameID}, $name);
+			updateMonsterLUT(Settings::getTableFilename("monsters.txt"), $monster->{nameID}, $name);
 		}
 	}
 
@@ -1312,7 +1316,7 @@ sub actor_info {
 		my $location = "$field{name} $npc->{pos}{x} $npc->{pos}{y}";
 		if (!$npcs_lut{$location}) {
 			$npcs_lut{$location} = $npc->{name};
-			updateNPCLUT("$Settings::tables_folder/npcs.txt", $location, $npc->{name});
+			updateNPCLUT(Settings::getTableFilename("npcs.txt"), $location, $npc->{name});
 		}
 	}
 
@@ -1340,6 +1344,7 @@ sub actor_look_at {
 
 sub actor_movement_interrupted {
 	my ($self, $args) = @_;
+	return unless changeToInGameState();
 	my %coords;
 	$coords{x} = $args->{x};
 	$coords{y} = $args->{y};
@@ -2397,7 +2402,7 @@ sub errors {
 	} elsif ($args->{type} == 2) {
 		if ($config{'dcOnDualLogin'} == 1) {
 			$interface->errorDialog(TF("Critical Error: Dual login prohibited - Someone trying to login!\n\n" .
-				"%s will now immediately disconnect.", $Settings::NAME));
+				"%s will now immediately 	disconnect.", $Settings::NAME));
 			$quit = 1;
 		} elsif ($config{'dcOnDualLogin'} >= 2) {
 			error T("Critical Error: Dual login prohibited - Someone trying to login!\n"), "connection";
@@ -2859,6 +2864,8 @@ sub guild_chat {
 	my ($chatMsgUser, $chatMsg); # Type: String
 	my $chat; # Type: String
 
+	return unless changeToInGameState();
+
 	$chat = bytesToString($args->{message});
 	if (($chatMsgUser, $chatMsg) = $chat =~ /(.*?) : (.*)/) {
 		$chatMsgUser =~ s/ $//;
@@ -3162,7 +3169,6 @@ sub inventory_item_added {
 		my $disp = TF("Item added to inventory: %s (%d) x %d - %s",
 			$item->{name}, $item->{invIndex}, $amount, $itemTypes_lut{$item->{type}});
 		message "$disp\n", "drop";
-
 		$disp .= " ($field{name})\n";
 		itemLog($disp);
 
@@ -3613,7 +3619,7 @@ sub login_error {
 	}
 	if ($args->{type} != 5 && $versionSearch) {
 		$versionSearch = 0;
-		writeSectionedFileIntact("$Settings::tables_folder/servers.txt", \%masterServers);
+		writeSectionedFileIntact(Settings::getTableFilename("servers.txt"), \%masterServers);
 	}
 }
 
@@ -3681,8 +3687,8 @@ sub map_change {
 		$messageSender->sendMapLoaded();
 		# Sending sync packet. Perhaps not only for server types 13 and 11
 		my $serverType = $masterServer->{serverType};
-		if ($serverType == 11 || $serverType == 12 || $serverType == 13 || $serverType == 15
-		 || $serverType == 16 || $serverType == 17 || $serverType == 18) {
+		if ($serverType == 11 || $serverType == 12 || $serverType == 13 || $serverType == 14 || $serverType == 15
+		 || $serverType == 16 || $serverType == 17 || $serverType == 18 || $serverType == 19 || $serverType == 20) {
 			$messageSender->sendSync(1);
 		}
 		$timeout{ai}{time} = time;
@@ -3690,10 +3696,9 @@ sub map_change {
 
 	Plugins::callHook('Network::Receive::map_changed', {
 		oldMap => $oldMap,
-		allowedTeleport => $allowedTeleport
 	});
 	
-	$allowedTeleport = 0;
+	$timeout{ai}{time} = time;
 }
 
 sub map_changed {
@@ -3765,18 +3770,19 @@ sub map_changed {
 		$ai_v{"useSelf_skill_$i"."_time"} = 0;
 		$i++;
 	}
-	delete $char->{statuses};
-	$char->{spirits} = 0;
-	undef $char->{permitSkill};
-	undef $char->{encoreSkill};
+	if ($char) {
+		delete $char->{statuses};
+		$char->{spirits} = 0;
+		delete $char->{permitSkill};
+		delete $char->{encoreSkill};
+	}
 	$cart{exists} = 0;
 	undef %guild;
-	
+
 	Plugins::callHook('Network::Receive::map_changed', {
 		oldMap => $oldMap,
-		allowedTeleport => $allowedTeleport
 	});
-	$allowedTeleport = 0;
+	$timeout{ai}{time} = time;
 }
 
 sub map_loaded {
@@ -4275,7 +4281,7 @@ sub party_users_info {
 		}
 		$char->{party}{users}{$ID} = new Actor::Party();
 		$char->{party}{users}{$ID}{name} = bytesToString(unpack("Z24", substr($msg, $i + 4, 24)));
-		message TF("Party Member: %s\n", $char->{party}{users}{$ID}{name}), undef, 1;
+		message TF("Party Member: %s\n", $char->{party}{users}{$ID}{name}), "party", 1;
 		$char->{party}{users}{$ID}{map} = unpack("Z16", substr($msg, $i + 28, 16));
 		$char->{party}{users}{$ID}{online} = !(unpack("C1",substr($msg, $i + 45, 1)));
 		$char->{party}{users}{$ID}{admin} = 1 if ($num == 0);
@@ -5908,6 +5914,21 @@ sub login_pin_code_request {
 	$timeout{master}{time} = time;
 }
 
+sub initialize_message_id_encryption {
+	my ($self, $args) = @_;
+	$messageSender->sendMessageIDEncryptionInitialized();
+
+	my @c;
+	my $shtmp = $args->{param1};
+	for (my $i = 8; $i > 0; $i--) {
+		$c[$i] = $shtmp & 0x0F;
+		$shtmp >>= 4;
+	}
+	my $w = ($c[6]<<12) + ($c[4]<<8) + ($c[7]<<4) + $c[1];
+	$enc_val1 = ($c[2]<<12) + ($c[3]<<8) + ($c[5]<<4) + $c[8];
+	$enc_val2 = (((($enc_val1 ^ 0x0000F3AC) + $w) << 16) | (($enc_val1 ^ 0x000049DF) + $w)) ^ $args->{param2};
+}
+
 sub switch_character {
 	# User is switching characters in X-Kore
 	$net->setState(Network::CONNECTED_TO_MASTER_SERVER);
@@ -5932,7 +5953,7 @@ sub system_chat {
 sub top10_alchemist_rank {
 	my ($self, $args) = @_;
 
-	my $textList = top10Listing($args);
+	my $textList = bytesToString(top10Listing($args));
 	message TF("============= ALCHEMIST RANK ================\n" .
 		"#    Name                             Points\n".
 		"%s" .
@@ -5942,7 +5963,7 @@ sub top10_alchemist_rank {
 sub top10_blacksmith_rank {
 	my ($self, $args) = @_;
 
-	my $textList = top10Listing($args);
+	my $textList = bytesToString(top10Listing($args));
 	message TF("============= BLACKSMITH RANK ===============\n" .
 		"#    Name                             Points\n".
 		"%s" .
@@ -5952,7 +5973,7 @@ sub top10_blacksmith_rank {
 sub top10_pk_rank {
 	my ($self, $args) = @_;
 
-	my $textList = top10Listing($args);
+	my $textList = bytesToString(top10Listing($args));
 	message TF("================ PVP RANK ===================\n" .
 		"#    Name                             Points\n".
 		"%s" .
@@ -5962,7 +5983,7 @@ sub top10_pk_rank {
 sub top10_taekwon_rank {
 	my ($self, $args) = @_;
 
-	my $textList = top10Listing($args);
+	my $textList = bytesToString(top10Listing($args));
 	message TF("=============== TAEKWON RANK ================\n" .
 		"#    Name                             Points\n".
 		"%s" .
@@ -6077,7 +6098,10 @@ sub vender_items_list {
 			number => $number,
 			name => $item->{name},
 			amount => $item->{amount},
-			price => $item->{price}
+			price => $item->{price},
+			upgrade => $item->{upgrade},
+			cards => $item->{cards},
+			type => $item->{type}
 		});
 
 		message(swrite(
