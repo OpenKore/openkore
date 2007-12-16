@@ -51,3 +51,7 @@ lou_in02.rsw#Inside Castle of Dragon#
 lou_in01.rsw#Inside Castle of Dragon#
 rachel.rsw#Rachel#
 ra_in01.rsw#Inside Rachel#
+lighthalzen.rsw#Lightharlzen, the City-State of Prosperity#
+lhz_in01.rsw#Rekenber Corporation Headquarters#
+lhz_in02.rsw#Inside Lighthalzen#
+lhz_in03.rsw#Inside Lighthalzen#
