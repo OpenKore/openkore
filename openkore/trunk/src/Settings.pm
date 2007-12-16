@@ -74,9 +74,10 @@ use enum qw(CONTROL_FILE_TYPE TABLE_FILE_TYPE);
 
 # Translation Comment: Strings for the name and version of the application
 our $NAME = 'OpenKore';
-our $VERSION = '2.0.5';
+our $VERSION = '2.0.5.1';
 # Translation Comment: Version String
-our $SVN = T(" (SVN version)");
+#our $SVN = T(" (SVN version)");
+our $SVN = '';
 our $WEBSITE = 'http://www.openkore.com/';
 # Translation Comment: Version String
 our $versionText = "*** $NAME ${VERSION}${SVN} - " . T("Custom Ragnarok Online client") . " ***\n***   $WEBSITE   ***\n";
@@ -271,6 +272,10 @@ sub getControlFolders {
 # Set the folders in which to look for table files.
 sub setTablesFolders {
 	@tablesFolders = @_;
+}
+
+sub getTablesFolders {
+	return @tablesFolders;
 }
 
 ##
