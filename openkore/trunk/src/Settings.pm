@@ -74,7 +74,7 @@ use enum qw(CONTROL_FILE_TYPE TABLE_FILE_TYPE);
 
 # Translation Comment: Strings for the name and version of the application
 our $NAME = 'OpenKore';
-our $VERSION = '2.0.5.1';
+our $VERSION = '2.0.5.2';
 # Translation Comment: Version String
 #our $SVN = T(" (SVN version)");
 our $SVN = '';

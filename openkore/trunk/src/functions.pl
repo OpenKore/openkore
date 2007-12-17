@@ -909,6 +909,8 @@ sub parseOutgoingClientMessage {
 	}
 
 	Plugins::callHook('RO_sendMsg_pre', {switch => $switch, msg => $msg, realMsg => \$sendMsg});
+	
+	my $serverType = $masterServer->{serverType};
 
 	# If the player tries to manually do something in the RO client, disable AI for a small period
 	# of time using ai_clientSuspend().
@@ -925,13 +927,14 @@ sub parseOutgoingClientMessage {
 		# Login character selected
 		configModify("char", unpack("C*",substr($msg, 2, 1)));
 
-	} elsif ($switch eq "0072") {
+	} elsif (
+		($switch eq "0072" && $serverType == 0) ||
+		($switch eq "00F3" && $serverType == 18)
+	) {
+		# Map login
 		$incomingMessages->nextMessageMightBeAccountID();
-		if ($masterServer->{serverType} == 0) {
-			# Map login
-			if ($config{'sex'} ne "") {
-				$sendMsg = substr($sendMsg, 0, 18) . pack("C",$config{'sex'});
-			}
+		if ($serverType == 0 && $config{sex} ne "") {
+			$sendMsg = substr($sendMsg, 0, 18) . pack("C",$config{'sex'});
 		}
 
 	} elsif ($switch eq "00A7") {
