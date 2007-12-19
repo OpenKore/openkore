@@ -144,10 +144,10 @@ sub getConfig {
 
 # sets and/or refreshes global variables
 sub refreshGlobal {
-	return unless $conState == 5;
+	return unless $net->getState() == Network::IN_GAME;
 	my $var = $_[0];
 
-	$varStack{".map"} = $field->name;
+	$varStack{".map"} = (defined $field)?$field->name:"undef";
 	my $pos = calcPosition($char); $varStack{".pos"} = sprintf("%d %d", $pos->{x}, $pos->{y});
 	$varStack{".time"} = time;
 	$varStack{".datetime"} = scalar localtime;
@@ -321,8 +321,7 @@ sub processCmd {
 		$queue->ok;
 		if (defined $queue && $queue->finished) {undef $queue}
 	} else {
-		error(sprintf("[macro] %s error: %s\n", $queue->name, $queue->error), "macro");
-		warning "the line number may be incorrect if you called a sub-macro.\n", "macro";
+		error(sprintf("[macro] %s error: %s\n", (defined $queue->{subcall})?$queue->{subcall}->name:$queue->name, $queue->error), "macro");
 		undef $queue
 	}
 }

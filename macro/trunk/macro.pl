@@ -7,7 +7,7 @@
 # See http://www.gnu.org/licenses/gpl.html
 
 package macro;
-my $Version = "2.0.2-svn";
+my $Version = "2.0.2";
 my ($rev) = q$Revision$ =~ /(\d+)/;
 
 use strict;
@@ -41,15 +41,12 @@ my $loghook;
 my $cfID;
 my $macro_file;
 
-message "Gewidmet crckdns - danke für die heißen Tips :)\n";
-
 # onconfigModify
 sub onconfigModify {
 	my (undef, $args) = @_;
 	if ($args->{key} eq 'macro_file') {
-		my $macrofile = $args->{val};
 		Settings::removeFile($cfID);
-		$cfID = Settings::addControlFile($macrofile, loader => [ \&parseAndHook, \%macro]);
+		$cfID = Settings::addControlFile($$args->{val}, loader => [ \&parseAndHook, \%macro]);
 		Settings::loadByHandle($cfID);
 	}
 }
