@@ -7,7 +7,7 @@
 # See http://www.gnu.org/licenses/gpl.html
 
 package macro;
-my $Version = "2.0.2";
+my $Version = "2.0.3-svn";
 my ($rev) = q$Revision$ =~ /(\d+)/;
 
 use strict;
