@@ -1,3 +1,4 @@
+# Packet lengths for iRO (December 19, 2007)
 0064 55
 0065 17
 0066 3
