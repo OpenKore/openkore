@@ -3636,7 +3636,7 @@ sub checkSelfCondition {
 	if ($prefix =~ /skill/i) {
 		my $skill_handle = Skill->new(name => lc($config{$prefix}))->getHandle();
 		return 0 unless (($char->{skills}{$skill_handle} && $char->{skills}{$skill_handle}{lv} >= 1)
-						|| ($char->{permitSkill} &&	$char->{permitSkill}->name eq $config{$prefix})
+						|| ($char->{permitSkill} && $char->{permitSkill}->getName() eq $config{$prefix})
 						|| $config{$prefix."_equip_leftAccessory"}
 						|| $config{$prefix."_equip_rightAccessory"}
 						|| $config{$prefix."_equip_leftHand"}
