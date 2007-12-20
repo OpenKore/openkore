@@ -74,10 +74,9 @@ use enum qw(CONTROL_FILE_TYPE TABLE_FILE_TYPE);
 
 # Translation Comment: Strings for the name and version of the application
 our $NAME = 'OpenKore';
-our $VERSION = '2.0.5.2';
+our $VERSION = 'what-will-become-2.0.6';
 # Translation Comment: Version String
-#our $SVN = T(" (SVN version)");
-our $SVN = '';
+our $SVN = T(" (SVN version)");
 our $WEBSITE = 'http://www.openkore.com/';
 # Translation Comment: Version String
 our $versionText = "*** $NAME ${VERSION}${SVN} - " . T("Custom Ragnarok Online client") . " ***\n***   $WEBSITE   ***\n";

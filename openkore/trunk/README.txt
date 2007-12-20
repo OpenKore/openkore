@@ -1,4 +1,13 @@
 =========================
+### OpenKore what-will-become-2.0.6
+=========================
+
+- Added a 'messageIDEncryption' option to servers.txt. When set to 0, it will
+  disable the usage of message ID encryption, even if the server appears to
+  require it.
+
+
+=========================
 ### OpenKore 2.0.5.2
 =========================
 
