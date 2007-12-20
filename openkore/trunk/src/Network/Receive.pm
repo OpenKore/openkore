@@ -5916,17 +5916,19 @@ sub login_pin_code_request {
 
 sub initialize_message_id_encryption {
 	my ($self, $args) = @_;
-	$messageSender->sendMessageIDEncryptionInitialized();
+	if ($masterServer->{messageIDEncryption} ne '0') {
+		$messageSender->sendMessageIDEncryptionInitialized();
 
-	my @c;
-	my $shtmp = $args->{param1};
-	for (my $i = 8; $i > 0; $i--) {
-		$c[$i] = $shtmp & 0x0F;
-		$shtmp >>= 4;
+		my @c;
+		my $shtmp = $args->{param1};
+		for (my $i = 8; $i > 0; $i--) {
+			$c[$i] = $shtmp & 0x0F;
+			$shtmp >>= 4;
+		}
+		my $w = ($c[6]<<12) + ($c[4]<<8) + ($c[7]<<4) + $c[1];
+		$enc_val1 = ($c[2]<<12) + ($c[3]<<8) + ($c[5]<<4) + $c[8];
+		$enc_val2 = (((($enc_val1 ^ 0x0000F3AC) + $w) << 16) | (($enc_val1 ^ 0x000049DF) + $w)) ^ $args->{param2};
 	}
-	my $w = ($c[6]<<12) + ($c[4]<<8) + ($c[7]<<4) + $c[1];
-	$enc_val1 = ($c[2]<<12) + ($c[3]<<8) + ($c[5]<<4) + $c[8];
-	$enc_val2 = (((($enc_val1 ^ 0x0000F3AC) + $w) << 16) | (($enc_val1 ^ 0x000049DF) + $w)) ^ $args->{param2};
 }
 
 sub switch_character {
