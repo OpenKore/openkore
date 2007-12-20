@@ -315,6 +315,7 @@ serverEncoding Russian
 pauseCharServer 1
 patchserver web.raggame.ru
 patchpath /patch02
+recvpackets recvpackets-rro.txt
 
 [Taiwan - twRO: Alfheim (chaos, loki)]
 ip 61.220.60.11
