@@ -122,7 +122,16 @@ sub readNext {
 	my $nextMessageMightBeAccountID = $self->{nextMessageMightBeAccountID};
 	$self->{nextMessageMightBeAccountID} = undef;
 
-	if ($size > 1) {
+	if ($nextMessageMightBeAccountID) {
+		if (length($$buffer) >= 4) {
+			$result = substr($$buffer, 0, 4);
+			substr($$buffer, 0, 4, '');
+			$$type = ACCOUNT_ID;
+		} else {
+			$self->{nextMessageMightBeAccountID} = $nextMessageMightBeAccountID;
+		}
+
+	} elsif ($size > 1) {
 		# Static length message.
 		if (length($$buffer) >= $size) {
 			$result = substr($$buffer, 0, $size);
@@ -139,15 +148,6 @@ sub readNext {
 				substr($$buffer, 0, $size, '');
 				$$type = KNOWN_MESSAGE;
 			}
-		}
-
-	} elsif ($nextMessageMightBeAccountID) {
-		if (length($$buffer) >= 4) {
-			$result = substr($$buffer, 0, 4);
-			substr($$buffer, 0, 4, '');
-			$$type = ACCOUNT_ID;
-		} else {
-			$self->{nextMessageMightBeAccountID} = $nextMessageMightBeAccountID;
 		}
 
 	} else {
