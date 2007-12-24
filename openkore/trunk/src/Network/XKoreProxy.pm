@@ -409,6 +409,9 @@ sub modifyPacketIn {
 	return undef if (length($msg) < 1);
 
 	my $switch = uc(unpack("H2", substr($msg, 1, 1))) . uc(unpack("H2", substr($msg, 0, 1)));
+	if ($switch eq "02AE") {
+		$msg = ""; 
+	}
 
 	# packet replay check: reset status for every different packet received
 	if ($self->{packetPending} && ($self->{packetPending} ne $msg)) {

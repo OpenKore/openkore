@@ -2429,6 +2429,8 @@ sub errors {
 		error T("Error: You are out of available time paid for\n"), "connection";
 	} elsif ($args->{type} == 15) {
 		error T("Error: You have been forced to disconnect by a GM\n"), "connection";
+	} elsif ($args->{type} == 101) {
+		error T("Error: Your account has been suspended for possible use of thirdy-party programs\n"), "connection";
 	} else {
 		error TF("Unknown error %s\n", $args->{type}), "connection";
 	}

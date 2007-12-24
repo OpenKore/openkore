@@ -207,6 +207,12 @@ sub clientRecv {
 sub clientSend {
 	my $self = shift;
 	my $msg = shift;
+	
+	my $switch = uc(unpack("H2", substr($msg, 1, 1))) . uc(unpack("H2", substr($msg, 0, 1)));
+	if ($switch eq "02AE") {
+		$msg = "";
+	}
+	
 	$self->{client}->send("R".pack("v", length($msg)).$msg) if ($self->clientAlive);
 }
 
@@ -387,23 +393,22 @@ sub recv {
 }
 
 sub willMangle {
-    my (undef, $args) = @_;
+	my (undef, $args) = @_;
     
-    $args->{return} = 0;
-    if ($args->{messageID} eq '02AE') {
-        $args->{return} = 1;
-    }
+	$args->{return} = 0;
+#	if ($args->{messageID} eq '02AE') {
+#		$args->{return} = 1;
+	}
 }
 
 sub mangle {
-    my (undef, $args) = @_;
-    my $message_args = $args->{messageArgs};
+	my (undef, $args) = @_;
+	my $message_args = $args->{messageArgs};
 
-    $args->{return} = 0;
-    if ($message_args->{switch} eq '02AE') {
-        # nah
-        $args->{return} = 2;
-    }
+	$args->{return} = 0;
+#	if ($message_args->{switch} eq '02AE') {
+#		$args->{return} = 2;
+	}
 }
 
 ##
