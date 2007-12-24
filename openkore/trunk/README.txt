@@ -5,6 +5,8 @@
 - Added a 'messageIDEncryption' option to servers.txt. When set to 0, it will
   disable the usage of message ID encryption, even if the server appears to
   require it.
+- Added handler for error 101 (account suspension)
+- Fixed XKore to work with EPP enabled servers (thanks Belial)
 
 
 =========================

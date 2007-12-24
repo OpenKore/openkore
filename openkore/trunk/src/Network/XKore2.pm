@@ -122,13 +122,15 @@ sub filterPacket {
 	my ($msg) = shift;
 	my $switch = uc(unpack("H2", substr($msg, 1, 1))) . uc(unpack("H2", substr($msg, 0, 1)));
 	if ($switch eq "0092"){
-      $mapServerChange = unpack('x2 Z16 x*', $msg);
+	    $mapServerChange = unpack('x2 Z16 x*', $msg);
 		$mapServerChange =~ /([\s\S]*)\./;
 		return "";
-	}elsif ($switch eq "00B0" && $mapServerChange ne ''){
+	} elsif ($switch eq "00B0" && $mapServerChange ne '') {
 		my $pos = calcPosition($char);
-      $msg = pack("C*",0x91,0). pack("a16", $mapServerChange) . pack("v1 v1", $pos->{x}, $pos->{y}).$msg;
-	   $mapServerChange = '';
+		$msg = pack("C*",0x91,0). pack("a16", $mapServerChange) . pack("v1 v1", $pos->{x}, $pos->{y}).$msg;
+		$mapServerChange = '';
+	} elsif ($switch eq "02AE") { 
+		$msg = "";
 	}
 	return $msg;
 }
