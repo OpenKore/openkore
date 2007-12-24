@@ -35,6 +35,7 @@ adminPassword
 callSign
 commandPrefix ;
 
+pauseCharServer 0
 pauseMapServer 0
 ignoreInvalidLogin 0
 secureLogin_requestCode
