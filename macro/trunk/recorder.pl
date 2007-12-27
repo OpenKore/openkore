@@ -58,7 +58,8 @@ sub commandHandler {
 			error "nothing to do.\n"
 		}
 	} elsif ($arg eq 'save') {
-		my $filename = $Settings::control_folder."/macros-".time.".rec";
+		my @folders = Settings::getControlFolders();
+		my $filename = $folders[0]."/macros-".time.".rec";
 		open MACRO, "> $filename";
 		foreach my $m (keys %macros) {
 			print MACRO "macro $m {\n";
