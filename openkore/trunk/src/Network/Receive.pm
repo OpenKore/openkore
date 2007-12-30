@@ -281,6 +281,7 @@ sub new {
 		'01EE' => ['inventory_items_stackable'],
 		'01EF' => ['cart_items_list'],
 		'01F2' => ['guild_member_online_status', 'a4 a4 V1 v3', [qw(ID charID online sex hair_style hair_color)]],
+		'01F3' => ['npc_effect', 'a4 a4', [qw(ID effect)]],
 		'01F4' => ['deal_request', 'Z24 x4 v1', [qw(user level)]],
 		'01F5' => ['deal_begin', 'C1 a4 v1', [qw(type targetID level)]],
 		#'01F6' => ['adopt_unknown'], # clif_parse_ReqAdopt
@@ -295,6 +296,7 @@ sub new {
 		'0209' => ['friend_response', 'C1 Z24', [qw(type name)]],
 		'020A' => ['friend_removed', 'a4 a4', [qw(friendAccountID friendCharID)]],
 		'020E' => ['taekwon_mission_receive', 'Z24 a4 c1', [qw(monName ID value)]],
+		'0215' => ['gospel_buff_aligned', 'a4', [qw(ID)]],
 		'0219' => ['top10_blacksmith_rank'],
 		'021A' => ['top10_alchemist_rank'],
 		'021B' => ['blacksmith_points', 'V1 V1', [qw(points total)]],
@@ -3006,6 +3008,15 @@ sub guild_member_online_status {
 	}
 }
 
+sub npc_effect {
+	my ($self, $args) = @_;
+	my $effect = unpack("V1", $args->{effect});
+	my $ID = $args->{ID};
+	my $name = getNPCName($ID);
+	
+	message TF("%s: *%s*\n", $name, ''), "npc";
+}
+
 sub guild_members_title_list {
 	my ($self, $args) = @_;
 
@@ -4788,6 +4799,35 @@ sub taekwon_rank {
 sub taekwon_mission_receive {
 	my ($self, $args) = @_;
      message T("TaeKwon Mission : ".$args->{monName}."(".$args->{value}."\%)"."\n"), "info";
+}
+
+sub gospel_buff_aligned {
+	my ($self, $args) = @_;
+	my $status = unpack("V1", $args->{ID});
+	
+	if ($status == 21) {
+     		message T("All abnormal status effects have been removed.\n"), "info";
+	} elsif ($status == 22) {
+     		message T("You will be immune to abnormal status effects for the next minute.\n"), "info";
+	} elsif ($status == 23) {
+     		message T("Your Max HP will stay increased for the next minute.\n"), "info";
+	} elsif ($status == 24) {
+     		message T("Your Max SP will stay increased for the next minute.\n"), "info";
+	} elsif ($status == 25) {
+     		message T("All of your Stats will stay increased for the next minute.\n"), "info";
+	} elsif ($status == 28) {
+     		message T("Your weapon will remain blessed with Holy power for the next minute.\n"), "info";
+	} elsif ($status == 29) {
+     		message T("Your armor will remain blessed with Holy power for the next minute.\n"), "info";
+	} elsif ($status == 30) {
+     		message T("Your Defense will stay increased for the next 10 seconds.\n"), "info";
+	} elsif ($status == 31) {
+     		message T("Your Attack strength will stay increased for the next minute.\n"), "info";
+	} elsif ($status == 32) {
+     		message T("Your Accuracy and Flee Rate will stay increased for the next minute.\n"), "info";
+	} else {
+     		#message T("Unknown buff from Gospel: " . $status . "\n"), "info";
+	}
 }
 
 sub no_teleport {

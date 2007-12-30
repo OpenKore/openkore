@@ -7,6 +7,7 @@
   require it.
 - Added handler for error 101 (account suspension)
 - Fixed XKore to work with EPP enabled servers (thanks Belial)
+- Added Gospel and NPC Skill effect recognition (thanks to johnny)
 
 
 =========================
