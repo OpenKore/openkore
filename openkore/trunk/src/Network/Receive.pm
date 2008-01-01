@@ -2432,7 +2432,9 @@ sub errors {
 	} elsif ($args->{type} == 15) {
 		error T("Error: You have been forced to disconnect by a GM\n"), "connection";
 	} elsif ($args->{type} == 101) {
-		error T("Error: Your account has been suspended for possible use of thirdy-party programs\n"), "connection";
+		error T("Error: Your account has been suspended until the next maintenance period for possible use of 3rd party programs\n"), "connection";
+	} elsif ($args->{type} == 102) {
+		error T("Error: For an hour, more than 10 connections having same IP address, have made. Please check this matter.\n"), "connection";
 	} else {
 		error TF("Unknown error %s\n", $args->{type}), "connection";
 	}
