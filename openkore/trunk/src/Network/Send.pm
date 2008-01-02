@@ -240,7 +240,7 @@ sub injectMessage {
 	# encrypt(\$msg, $msg);
 
 	# Packet Prefix Encryption Support
-	$self->encryptMessageID(\$msg);
+	#$self->encryptMessageID(\$msg);
 
 	$msg = pack("C*", 0x09, 0x01) . pack("v*", length($name) + length($message) + 12) . pack("C*",0,0,0,0) . $msg;
 	## encrypt(\$msg, $msg);
@@ -254,7 +254,7 @@ sub injectAdminMessage {
 	# encrypt(\$message, $message);
 
 	# Packet Prefix Encryption Support
-	$self->encryptMessageID(\$message);
+	#$self->encryptMessageID(\$message);
 	$self->{net}->clientSend($message);
 }
 
