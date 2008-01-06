@@ -4215,6 +4215,7 @@ sub party_invite_result {
 sub party_join {
 	my ($self, $args) = @_;
 
+	return unless changeToInGameState();
 	my ($ID, $x, $y, $type, $name, $user, $map) = @{$args}{qw(ID x y type name user map)};
 	$name = bytesToString($name);
 	$user = bytesToString($user);
