@@ -1488,6 +1488,7 @@ sub area_spell_disappears {
 
 sub arrow_equipped {
 	my ($self, $args) = @_;
+	return unless changeToInGameState();
 	return unless $args->{index};
 	$char->{arrow} = $args->{index};
 
