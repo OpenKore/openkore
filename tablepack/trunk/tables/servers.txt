@@ -428,23 +428,18 @@ ip 203.144.244.5
 port 6900
 master_version 7
 version 24
-serverType 17_1
+serverType 0
 secureLogin 3
 secureLogin_type 0
-secureLogin_requestCode
-secureLogin_account 3
+secureLogin_account 0
+gameLogin_packet 0x275
+encrypt_packet_prefix 1
 pauseCharServer 1
 patchserver wpatch.ragnarok.in.th
 patchpath /patch70
 serverEncoding Thai
-paddedPackets 1
-paddedPackets_attackID 0x193
-paddedPackets_skillUseID 0x89
-# Data for XKore PP mode
-syncID 0x7E
-syncTickOffset 3
-mapLoadedTickOffset 5
 
+# please double check before use this entry
 [Thailand - tRO: Valkyrie2]
 ip 203.144.244.122
 port 6900
@@ -472,44 +467,32 @@ ip 203.144.244.121
 port 6900
 master_version 7
 version 24
-serverType 17_1
+serverType 0
 secureLogin 3
 secureLogin_type 0
-secureLogin_requestCode
-secureLogin_account 3
+secureLogin_account 0
+gameLogin_packet 0x275
+encrypt_packet_prefix 1
 pauseCharServer 1
 patchserver wpatch.ragnarok.in.th
 patchpath /patch70
 serverEncoding Thai
-paddedPackets 1
-paddedPackets_attackID 0x193
-paddedPackets_skillUseID 0x89
-# Data for XKore PP mode
-syncID 0x7E
-syncTickOffset 3
-mapLoadedTickOffset 5
 
 [Thailand - tRO Free life server (Yoyo(new), Picky)]
 ip 203.144.244.100
 port 6900
 master_version 7
 version 24
-serverType 17_1
+serverType 0
 secureLogin 3
 secureLogin_type 0
-secureLogin_requestCode
-secureLogin_account 3
+secureLogin_account 0
+gameLogin_packet 0x275
+encrypt_packet_prefix 1
 pauseCharServer 1
 patchserver wpatch.ragnarok.in.th
 patchpath /patch70
 serverEncoding Thai
-paddedPackets 1
-paddedPackets_attackID 0x193
-paddedPackets_skillUseID 0x89
-# Data for XKore PP mode
-syncID 0x7E
-syncTickOffset 3
-mapLoadedTickOffset 5
 
 ## http://www.rovietnam.com.vn/
 [Vietnam - vRO: SD]
