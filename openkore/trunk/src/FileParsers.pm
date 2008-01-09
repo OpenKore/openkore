@@ -237,7 +237,11 @@ sub parseConfigFile {
 			} else {
 				$blocks{$key}++;
 			}
-			$inBlock = "${key}_$blocks{$key}";
+			if ($key ne 'teleportAuto'){
+				$inBlock = "${key}_$blocks{$key}";
+			} else {
+				$inBlock = "${key}";
+			}
 			$r_hash->{$inBlock} = $value;
 
 		} elsif (defined $inBlock && $line eq "}") {
