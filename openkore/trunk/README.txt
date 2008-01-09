@@ -8,7 +8,7 @@
 - Added handler for error 101 (account suspension)
 - Fixed XKore to work with EPP enabled servers (thanks Belial)
 - Added Gospel and NPC Skill effect recognition (thanks to johnny)
-
+- teleportAuto can now be parsed in block format ( http://forums.openkore.com/viewtopic.php?t=36627 )
 
 =========================
 ### OpenKore 2.0.5.2
