@@ -209,33 +209,35 @@ skillsAddAuto_list
 tankMode 0
 tankModeTarget
 
-teleportAuto_hp 10
-teleportAuto_sp 0
-teleportAuto_idle 0
-teleportAuto_portal 0
-teleportAuto_search 0
-teleportAuto_minAggressives 0
-teleportAuto_minAggressivesInLock 0
-teleportAuto_onlyWhenSafe 0
-teleportAuto_maxDmg 500
-teleportAuto_maxDmgInLock 0
-teleportAuto_deadly 1
-teleportAuto_useSkill 3
-teleportAuto_useChatCommand
-teleportAuto_allPlayers 0
-teleportAuto_atkCount 0
-teleportAuto_atkMiss 10
-teleportAuto_unstuck 0
-teleportAuto_dropTarget 0
-teleportAuto_dropTargetKS 0
-teleportAuto_attackedWhenSitting 0
-teleportAuto_totalDmg 0
-teleportAuto_totalDmgInLock 0
-teleportAuto_equip_leftAccessory
-teleportAuto_equip_rightAccessory
-teleportAuto_lostHomunculus
-teleportAuto_lostTarget
-teleportAuto_useItemForRespawn
+teleportAuto {
+	hp 10
+	sp 0
+	idle 0
+	portal 0
+	search 0
+	minAggressives 0
+	minAggressivesInLock 0
+	onlyWhenSafe 0
+	maxDmg 500
+	maxDmgInLock 0
+	deadly 1
+	useSkill 3
+	useChatCommand
+	allPlayers 0
+	atkCount 0
+	atkMiss 10
+	unstuck 0
+	dropTarget 0
+	dropTargetKS 0
+	attackedWhenSitting 0
+	totalDmg 0
+	totalDmgInLock 0
+	equip_leftAccessory
+	equip_rightAccessory
+	lostHomunculus
+	lostTarget
+	useItemForRespawn
+}
 
 dealAuto 1
 dealAuto_names
