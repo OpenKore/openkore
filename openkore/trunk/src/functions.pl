@@ -730,7 +730,7 @@ sub mainLoop_initialized {
 			$state{bus}{clientID} = $bus->ID();
 		}
 
-		if (open($f, ">:utf8", "$Settings::logs_folder/state.yml")) {
+		if (open($f, ">:utf8", "$Settings::logs_folder/state_".$config{'username'}.".yml")) {
 			my $writer = new Data::YAML::Writer();
 			$writer->write(\%state, $f);
 			close $f;
