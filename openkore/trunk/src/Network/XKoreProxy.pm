@@ -540,7 +540,7 @@ sub modifyPacketOut {
 		$msg = "";
 		$messageSender->sendSync() if ($messageSender);
 		
-	} if ($switch eq "0228" && $self->getState() == Network::IN_GAME && $config{gameGuard} eq '2') {
+	} if ($switch eq "0228" && $self->getState() == Network::IN_GAME && $config{gameGuard} ne '2') {
 		if ($self->{poseidon}->awaitingResponse) {
 			$self->{poseidon}->setResponse($msg);
 			$msg = '';

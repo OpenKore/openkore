@@ -19,6 +19,7 @@ use Bus::Messages qw(serialize);
 use Log qw(message);
 use Translation qw(T TF);
 use base qw(Base::Server);
+use Globals;
 
 my $CLASS = "Poseidon::EmbedServer";
 
@@ -68,9 +69,9 @@ sub process {
 		packet => $args->{packet},
 		client => $client
 	);
+	
 	Scalar::Util::weaken($request{client});
 	push @{$self->{"$CLASS queue"}}, \%request;
-#	my $packet = substr($ipcArgs->{packet}, 0, 18);
 }
 
 sub onClientNew {
@@ -104,6 +105,11 @@ sub iterate {
 			my ($data, %args);
 
 			$args{packet} = shift @{$response};
+
+			# FIXME: somehow, xkoreproxy makes the RO client send two identical gameguard syncs making the receiver
+			# disconnect from the server - this happens intermittently
+			$args{packet} = substr($args{packet}, 0, 18);
+
 			$data = serialize("Poseidon Reply", \%args);
 			$queue->[0]{client}->send($data);
 			$queue->[0]{client}->close();
@@ -114,7 +120,9 @@ sub iterate {
 
 	} elsif (@{$queue} > 0 && !$self->{sentQuery}) {
 		message T("Poseidon: Querying Ragnarok Online client.\n"), "poseidon";
-		$r_net->clientSend($queue->[0]{packet});
+		#$r_net->clientSend($queue->[0]{packet});
+		# send the query to the connected RO client
+		$messageSender->{net}->clientSend($queue->[0]{packet});
 		$self->{sentQuery} = 1;
 	}
 }
