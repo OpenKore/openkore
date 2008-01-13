@@ -1059,7 +1059,11 @@ sub writeDataFileIntact {
 			} else {
 				$blocks{$key}++;
 			}
-			$inBlock = "${key}_$blocks{$key}";
+			if ($key ne 'teleportAuto'){
+				$inBlock = "${key}_$blocks{$key}";
+			} else {
+				$inBlock = "${key}";
+			}
 
 			my $line = $key;
 			$line .= " $r_hash->{$inBlock}" if ($r_hash->{$inBlock} ne '');
