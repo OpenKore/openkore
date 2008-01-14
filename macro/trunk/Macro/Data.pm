@@ -34,7 +34,9 @@ our %amSingle = (
 	'macro_delay' => 1,  # option: default macro delay
 	'hook' => 1,         # check: openkore hook
 	'priority' => 1,     # option: automacro priority
-	'exclusive' => 1     # option: is macro interruptible
+	'exclusive' => 1,     # option: is macro interruptible
+	'eval' => 1	     # check : eval 
+	
 );
 
 our %amMulti = (

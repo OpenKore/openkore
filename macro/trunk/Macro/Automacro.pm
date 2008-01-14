@@ -320,6 +320,12 @@ sub checkMapChange {
 	return ($_[0] eq '*' || existsInList($_[0], $field->name))?1:0
 }
 
+# checks for eval
+sub checkEval {
+	return eval $_[0];
+}
+
+
 # releases a locked automacro ##################
 sub releaseAM {
 	if ($_[0] eq 'all') {
@@ -424,6 +430,8 @@ sub automacroCheck {
 		next CHKAM if (defined $automacro{$am}->{map}    && $automacro{$am}->{map} ne $field->name);
 		next CHKAM if (defined $automacro{$am}->{class}  && !checkClass($automacro{$am}->{class}));
 		next CHKAM if (defined $automacro{$am}->{notMonster} && !checkNotMonster($automacro{$am}->{notMonster}));
+		next CHKAM if (defined $automacro{$am}->{eval} && !checkEval($automacro{$am}->{eval}));
+
 		foreach my $i (@{$automacro{$am}->{monster}})    {next CHKAM unless checkMonster($i)}
 		foreach my $i (@{$automacro{$am}->{aggressives}}){next CHKAM unless checkAggressives($i)}
 		foreach my $i (@{$automacro{$am}->{location}})   {next CHKAM unless checkLoc($i)}
