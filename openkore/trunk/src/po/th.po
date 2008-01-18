@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: OpenKore Thai Edition\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-01-01 13:13+0700\n"
-"PO-Revision-Date: 2007-10-05 17:41+0700\n"
-"Last-Translator: h4rry84 <dewa5227@yahoo.com>\n"
+"PO-Revision-Date: 2008-01-19 00:13+0700\n"
+"Last-Translator: abt123 <abt123@sourceforge.net>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -37,22 +37,26 @@ msgstr "ทำการโจมตี: %s\n"
 msgid "Encounter Monster : %s\n"
 msgstr "กำลังเผชิญหน้ากับมอนสเตอร์: %s\n"
 
-#: ../AI.pm:739 ../AI.pm:807
-#, fuzzy, perl-format
+#: ../AI.pm:739
+#: ../AI.pm:807
+#, perl-format
 msgid "Auto UnEquiping [R]: %s\n"
-msgstr "ส่วมใส่อัตโนมัติ [R]: %s\n"
+msgstr "ถอดออกอัตโนมัติ [R]: %s\n"
 
-#: ../AI.pm:744 ../AI.pm:812
+#: ../AI.pm:744
+#: ../AI.pm:812
 #, perl-format
 msgid "Auto Equiping [R]: %s\n"
 msgstr "ส่วมใส่อัตโนมัติ [R]: %s\n"
 
-#: ../AI.pm:753 ../AI.pm:821
-#, fuzzy, perl-format
+#: ../AI.pm:753
+#: ../AI.pm:821
+#, perl-format
 msgid "Auto UnEquiping [L]: %s\n"
-msgstr "ส่วมใส่อัตโนมัติ [R]: %s\n"
+msgstr "ถอดออกอัตโนมัติ [L]: %s\n"
 
-#: ../AI.pm:770 ../AI.pm:839
+#: ../AI.pm:770
+#: ../AI.pm:839
 #, perl-format
 msgid "Auto Equiping [L]: %s (%s)\n"
 msgstr "ส่วมใส่อัตโนมัติ [L]: %s (%s)\n"
@@ -92,20 +96,21 @@ msgstr "เปลี่ยนค่าตัวแปร Attack useWeapon ไป
 msgid "Calculating route to: %s(%s): %d, %d\n"
 msgstr "กำลังคำนวณหาเส้นทางไปยัง: %s(%s): %d, %d\n"
 
-#: ../ChatQueue.pm:282 ../Commands.pm:2702
+#: ../ChatQueue.pm:282
+#: ../Commands.pm:2702
 #, perl-format
 msgid "Calculating route to: %s(%s)\n"
 msgstr "กำลังคำนวณหาเส้นทางไปยัง: %s(%s)\n"
 
-#: ../ChatQueue.pm:289 ../Commands.pm:2718
+#: ../ChatQueue.pm:289
+#: ../Commands.pm:2718
 #, perl-format
 msgid "Map %s does not exist\n"
 msgstr "แผนที่ %s ไม่มีอยู่\n"
 
 #: ../Commands.pm:246
 #, perl-format
-msgid ""
-"Unknown command '%s'. Please read the documentation for a list of commands.\n"
+msgid "Unknown command '%s'. Please read the documentation for a list of commands.\n"
 msgstr "ไม่รู้จักคำสั่งนี้ '%s'  กรุณาอ่านคู่มือ สำหรับรายการคำสั่งที่ใช้ได้\n"
 
 #: ../Commands.pm:406
@@ -124,7 +129,8 @@ msgstr "------ ลำดับ(เหตุการณ์) ของ AI -------
 msgid "AI is already set to auto mode\n"
 msgstr "AI ได้ถูกตั้งให้เป็นระบบอัตโนมัติอยู่แล้ว\n"
 
-#: ../Commands.pm:429 ../Commands.pm:463
+#: ../Commands.pm:429
+#: ../Commands.pm:463
 msgid "AI set to auto mode\n"
 msgstr "AI ได้ถูกตั้งให้เป็นระบบอัตโนมัติ\n"
 
@@ -132,11 +138,13 @@ msgstr "AI ได้ถูกตั้งให้เป็นระบบอั
 msgid "AI is already set to manual mode\n"
 msgstr "AI ได้ถูกตั้งให้เป็นระบบบังคับด้วยมืออยู่แล้ว\n"
 
-#: ../Commands.pm:438 ../Commands.pm:459
+#: ../Commands.pm:438
+#: ../Commands.pm:459
 msgid "AI set to manual mode\n"
 msgstr "AI ได้ถูกตั้งให้เป็นระบบบังคับด้วยมือ\n"
 
-#: ../Commands.pm:445 ../Commands.pm:455
+#: ../Commands.pm:445
+#: ../Commands.pm:455
 msgid "AI turned off\n"
 msgstr "AI ถูกปิดตัวลง\n"
 
@@ -152,34 +160,38 @@ msgstr ""
 "รูปแบบการใช้ฟังก์ชั่น 'ai' (คำสั่ง AI) ผิดพลาด\n"
 "รูปแบบการใช้งาน: ai [ clear | print | ai_v | auto | manual | off ]\n"
 
-#: ../Commands.pm:476 ../Commands.pm:1792
+#: ../Commands.pm:476
+#: ../Commands.pm:1792
 #, perl-format
 msgid "ai_seq (off) = %s\n"
 msgstr "ai_seq (ปิด) = %s\n"
 
-#: ../Commands.pm:478 ../Commands.pm:1794
+#: ../Commands.pm:478
+#: ../Commands.pm:1794
 #, perl-format
 msgid "ai_seq (manual) = %s\n"
 msgstr "ai_seq (บังคับด้วยมือl) = %s\n"
 
-#: ../Commands.pm:480 ../Commands.pm:1796
+#: ../Commands.pm:480
+#: ../Commands.pm:1796
 #, perl-format
 msgid "ai_seq (auto) = %s\n"
 msgstr "ai_seq (อัตโนมัติ) = %s\n"
 
-#: ../Commands.pm:482 ../Commands.pm:1798
+#: ../Commands.pm:482
+#: ../Commands.pm:1798
 msgid "solution\n"
 msgstr "ทางออก(คำตอบ)\n"
 
 #: ../Commands.pm:483
-#, fuzzy, perl-format
+#, perl-format
 msgid "Active tasks: %s\n"
-msgstr "ทำการโจมตี: %s\n"
+msgstr "Active tasks: %s\n"
 
 #: ../Commands.pm:484
 #, perl-format
 msgid "Inactive tasks: %s\n"
-msgstr ""
+msgstr "Inactive tasks: %s\n"
 
 #: ../Commands.pm:495
 msgid "----------------- Item To Craft -----------------\n"
@@ -201,7 +213,9 @@ msgstr ""
 "พบข้อผิดพลาดในฟังก์ชั่น 'arrowcraft' (สร้างลูกธนู)\n"
 "คุณไม่มีสกิลในการสร้างลูกธนู\n"
 
-#: ../Commands.pm:520 ../Commands.pm:705 ../Commands.pm:708
+#: ../Commands.pm:520
+#: ../Commands.pm:705
+#: ../Commands.pm:708
 #, perl-format
 msgid ""
 "Error in function 'arrowcraft forceuse #' (Create Arrows)\n"
@@ -291,7 +305,8 @@ msgstr ""
 "พบข้อผิดพลาดในฟังก์ชั่น 'card mergecancel' (ยกเลิกการร้องขอการรวมการ์ด)\n"
 "คุณยังไม่ได้ส่งคำขอรวมการ์ด\n"
 
-#: ../Commands.pm:644 ../Network/Receive.pm:1581
+#: ../Commands.pm:644
+#: ../Network/Receive.pm:1581
 msgid "-----Card Merge Candidates-----\n"
 msgstr "-----รายการไอเท็มที่สามารถรวมกับการ์ดได้-----\n"
 
@@ -346,8 +361,7 @@ msgstr ""
 
 #: ../Commands.pm:689
 msgid ""
-"Syntax Error in function 'card use' (Request list of items for merging with "
-"card)\n"
+"Syntax Error in function 'card use' (Request list of items for merging with card)\n"
 "Usage: card use <item number>\n"
 "<item number> - Card inventory number. Type 'i' to get number.\n"
 msgstr ""
@@ -586,13 +600,10 @@ msgstr ""
 
 #: ../Commands.pm:971
 msgid ""
-"------------------------------- Chat Room List "
-"--------------------------------\n"
-"#   Title                                  Owner                Users   "
-"Type\n"
+"------------------------------- Chat Room List --------------------------------\n"
+"#   Title                                  Owner                Users   Type\n"
 msgstr ""
-"------------------------------- รายการห้องสนธนา "
-"--------------------------------\n"
+"------------------------------- รายการห้องสนธนา --------------------------------\n"
 "#   หัวข้อ                                  เจ้าของ                ผู้ใช้   ชนิด\n"
 
 #: ../Commands.pm:988
@@ -632,7 +643,8 @@ msgstr ""
 msgid "------ Chat History --------------------\n"
 msgstr "------ ประวัติการสนธนา --------------------\n"
 
-#: ../Commands.pm:1041 ../Commands.pm:2410
+#: ../Commands.pm:1041
+#: ../Commands.pm:2410
 #, perl-format
 msgid "Unable to open %s\n"
 msgstr "ไม่สามารถเปิด %s\n"
@@ -861,7 +873,8 @@ msgstr ""
 msgid "Slots:\n"
 msgstr "Slots:\n"
 
-#: ../Commands.pm:1391 ../Commands.pm:4109
+#: ../Commands.pm:1391
+#: ../Commands.pm:4109
 #, perl-format
 msgid "You don't have %s.\n"
 msgstr "คุณไม่มี %s.\n"
@@ -995,7 +1008,8 @@ msgstr "%s เป็นเพื่อนกับคุณอยู่แล้
 msgid "Requesting %s to be your friend\n"
 msgstr "%s ต้องการจะเป็นเพื่อนกับคุณ\n"
 
-#: ../Commands.pm:1617 ../Commands.pm:1644
+#: ../Commands.pm:1617
+#: ../Commands.pm:1644
 #, perl-format
 msgid "Friend #%s does not exist\n"
 msgstr "เพื่อน #%s ไม่มีอยู่\n"
@@ -1078,8 +1092,7 @@ msgstr ""
 "--------------------------------------------------------"
 
 #: ../Commands.pm:1706
-msgid ""
-"Your homunculus is not yet hungry. Feeding it now will lower intimacy.\n"
+msgid "Your homunculus is not yet hungry. Feeding it now will lower intimacy.\n"
 msgstr "Homunculus ของคุณยังไม่หิว การให้อาหารในตอนนี้จะทำให้ความสนิทสนมลดลง\n"
 
 #: ../Commands.pm:1709
@@ -1099,7 +1112,8 @@ msgstr ""
 msgid "Homunculus AI sequences cleared\n"
 msgstr "Homunculus AI sequences ถูกล้างแล้ว\n"
 
-#: ../Commands.pm:1732 ../Commands.pm:1739
+#: ../Commands.pm:1732
+#: ../Commands.pm:1739
 msgid "------ Homunculus AI Sequence ----------\n"
 msgstr "------ ลำดับ(เหตุการณ์) ของ Homunculus AI ---------------------\n"
 
@@ -1107,7 +1121,8 @@ msgstr "------ ลำดับ(เหตุการณ์) ของ Homunculus
 msgid "Homunculus AI is already set to auto mode\n"
 msgstr "Homunculus AI ได้ถูกตั้งให้เป็นระบบอัตโนมัติอยู่แล้ว\n"
 
-#: ../Commands.pm:1748 ../Commands.pm:1782
+#: ../Commands.pm:1748
+#: ../Commands.pm:1782
 msgid "Homunculus AI set to auto mode\n"
 msgstr "Homunculus AI ได้ถูกตั้งให้เป็นระบบอัตโนมัติ\n"
 
@@ -1115,11 +1130,13 @@ msgstr "Homunculus AI ได้ถูกตั้งให้เป็นระ�
 msgid "Homunculus AI is already set to manual mode\n"
 msgstr "Homunculus AI ได้ถูกตั้งให้เป็นระบบบังคับด้วยมืออยู่แล้ว\n"
 
-#: ../Commands.pm:1757 ../Commands.pm:1778
+#: ../Commands.pm:1757
+#: ../Commands.pm:1778
 msgid "Homunculus AI set to manual mode\n"
 msgstr "Homunculus AI ได้ถูกตั้งให้เป็นระบบบังคับด้วยมือ\n"
 
-#: ../Commands.pm:1764 ../Commands.pm:1774
+#: ../Commands.pm:1764
+#: ../Commands.pm:1774
 msgid "Homunculus AI turned off\n"
 msgstr "Homunculus AI ถูกปิดตัวลง\n"
 
@@ -1143,7 +1160,8 @@ msgstr ""
 "----------รายการสกิลของ homunculus-----------\n"
 "   # ชื่อสกิล                     Lv      SP\n"
 
-#: ../Commands.pm:1811 ../Commands.pm:3414
+#: ../Commands.pm:1811
+#: ../Commands.pm:3414
 #, perl-format
 msgid ""
 "\n"
@@ -1179,11 +1197,14 @@ msgstr ""
 "พบข้อผิดพลาดในฟังก์ชั่น 'homun skills desc' (แสดงรายละเอียดสกิล homunculus)\n"
 "สกิล %s ไม่มีอยู่\n"
 
-#: ../Commands.pm:1833 ../Commands.pm:3436 ../Misc.pm:1928
+#: ../Commands.pm:1833
+#: ../Commands.pm:3436
+#: ../Misc.pm:1928
 msgid "Error: No description available.\n"
 msgstr "พบข้อผิดพลาด: ไม่มีรายละเอียด\n"
 
-#: ../Commands.pm:1834 ../Commands.pm:3437
+#: ../Commands.pm:1834
+#: ../Commands.pm:3437
 #, perl-format
 msgid ""
 "===============Skill Description===============\n"
@@ -1203,11 +1224,8 @@ msgstr ""
 "รูปแบบการใช้งาน: homun skills [(<add | desc>) [<skill #>]]\n"
 
 #: ../Commands.pm:1846
-msgid ""
-"Usage: homun < feed | s | status | move | standby | ai | aiv | skills>\n"
-msgstr ""
-"รูปแบบการใช้งาน: homun < feed | s | status | move | standby | ai | aiv | "
-"skills>\n"
+msgid "Usage: homun < feed | s | status | move | standby | ai | aiv | skills>\n"
+msgstr "รูปแบบการใช้งาน: homun < feed | s | status | move | standby | ai | aiv | skills>\n"
 
 #: ../Commands.pm:2086
 msgid ""
@@ -1245,7 +1263,9 @@ msgstr ""
 msgid "You are not in a guild.\n"
 msgstr "คุณไม่ได้อยู่ในกิล\n"
 
-#: ../Commands.pm:2117 ../Commands.pm:2130 ../Commands.pm:2572
+#: ../Commands.pm:2117
+#: ../Commands.pm:2130
+#: ../Commands.pm:2572
 #, perl-format
 msgid "Player %s does not exist.\n"
 msgstr "ผู้เล่น %s ไม่มีอยู่\n"
@@ -1256,8 +1276,7 @@ msgid "Sent guild join request to %s\n"
 msgstr "ส่งข้อเสนอให้เข้าร่วมกิลไปยัง %s\n"
 
 #: ../Commands.pm:2125
-msgid ""
-"No guild information available. Type guild to refresh and then try again.\n"
+msgid "No guild information available. Type guild to refresh and then try again.\n"
 msgstr "ไม่มีข้อมูลของกิล ป้อน guild เพื่อรับข้อมูลใหม่ แล้วลองใหม่อีกครั้ง\n"
 
 #: ../Commands.pm:2132
@@ -1322,7 +1341,8 @@ msgstr ""
 msgid "Ally    : %s (%s)\n"
 msgstr "พันธมิตร    : %s (%s)\n"
 
-#: ../Commands.pm:2185 ../Commands.pm:2206
+#: ../Commands.pm:2185
+#: ../Commands.pm:2206
 msgid "No guild member information available.\n"
 msgstr "ไม่มีข้อมูลสมาชิกกิลอยู่\n"
 
@@ -1346,19 +1366,21 @@ msgstr ""
 #: ../Commands.pm:2210
 msgid ""
 "------------ Guild  Member ------------\n"
-"#  Name                       Job        Lv  Title                    "
-"Online\n"
+"#  Name                       Job        Lv  Title                    Online\n"
 msgstr ""
 "------------ Guild  Member ------------\n"
 "#  ชื่อ                       อาชีพ        Lv  ฉายา                    ออนไลน์\n"
 
 #. Translation Comment: Guild member online
 #. Translation Comment: Is the party user on list online?
-#: ../Commands.pm:2223 ../Commands.pm:2785 ../Commands.pm:2792
+#: ../Commands.pm:2223
+#: ../Commands.pm:2785
+#: ../Commands.pm:2792
 msgid "Yes"
 msgstr "ออนไลน์"
 
-#: ../Commands.pm:2223 ../Commands.pm:2792
+#: ../Commands.pm:2223
+#: ../Commands.pm:2792
 msgid "No"
 msgstr "ไม่ได้ออนไลน์"
 
@@ -1440,7 +1462,9 @@ msgstr "ไอเท็มในตัวว่างเปล่า\n"
 
 #. Translation Comment: Mark to tell item not identified
 #. Translation Comment: Mark to show not identified items
-#: ../Commands.pm:2450 ../Commands.pm:3674 ../Misc.pm:2830
+#: ../Commands.pm:2450
+#: ../Commands.pm:3674
+#: ../Misc.pm:2830
 msgid "Not Identified"
 msgstr "ยังไม่ได้ตรวจสอบ"
 
@@ -1453,8 +1477,10 @@ msgstr "-----------รายการของในตัว-----------\n"
 msgid "-- Equipment (Equipped) --\n"
 msgstr "-- อุปกรณ์สวมใส่ (สวมใส่อยู่) --\n"
 
-#. Translation Comment: Tell if the item is marked to be sold 				
-#: ../Commands.pm:2464 ../Commands.pm:2473 ../Commands.pm:2487
+#. Translation Comment: Tell if the item is marked to be sold
+#: ../Commands.pm:2464
+#: ../Commands.pm:2473
+#: ../Commands.pm:2487
 #: ../Commands.pm:2501
 msgid "Will be sold"
 msgstr "จะถูกขาย"
@@ -1465,12 +1491,14 @@ msgid "-- Equipment (Not Equipped) --\n"
 msgstr "-- อุปกรณ์สวมใส่ (ไม่ได้สวมใส่อยู่) --\n"
 
 #. Translation Comment: List of non-usable items
-#: ../Commands.pm:2480 ../Commands.pm:3689
+#: ../Commands.pm:2480
+#: ../Commands.pm:3689
 msgid "-- Non-Usable --\n"
 msgstr "-- ไม่สามารถใช้ได้ --\n"
 
 #. Translation Comment: List of usable items
-#: ../Commands.pm:2495 ../Commands.pm:3702
+#: ../Commands.pm:2495
+#: ../Commands.pm:3702
 msgid "-- Usable --\n"
 msgstr "-- สามารถใช้ได้ --\n"
 
@@ -1540,8 +1568,7 @@ msgstr ""
 #: ../Commands.pm:2638
 msgid ""
 "-----------Monster List-----------\n"
-"#   Name                        ID      DmgTo DmgFrom  Distance    "
-"Coordinates\n"
+"#   Name                        ID      DmgTo DmgFrom  Distance    Coordinates\n"
 msgstr ""
 "-----------รายชื่อมอนสเตอร์-----------\n"
 "#   ชื่อ                        ID      DmgTo DmgFrom  ระยะห่าง    พิกัด\n"
@@ -1551,7 +1578,8 @@ msgstr ""
 msgid "Move into portal number 0 (%s,%s)\n"
 msgstr "เดินไปสู่ portal หมายเลข 0 (%s,%s)\n"
 
-#: ../Commands.pm:2683 ../Commands.pm:2715
+#: ../Commands.pm:2683
+#: ../Commands.pm:2715
 msgid "No portals exist.\n"
 msgstr "ไม่มี portal อยู่เลย\n"
 
@@ -1696,9 +1724,7 @@ msgstr ""
 msgid ""
 "Error in function 'party kick' (Kick Party Member)\n"
 "Can't kick member - member %s doesn't exist.\n"
-msgstr ""
-"พบข้อผิดพลาดในฟังก์ชั่น 'party kick' (ไล่สมาชิกปาร์ตี้)ไม่สามารไล่สมาชิกปาร์ตี้ - สมาชิก %s "
-"ไม่มีอยู่\n"
+msgstr "พบข้อผิดพลาดในฟังก์ชั่น 'party kick' (ไล่สมาชิกปาร์ตี้)ไม่สามารไล่สมาชิกปาร์ตี้ - สมาชิก %s ไม่มีอยู่\n"
 
 #: ../Commands.pm:2867
 msgid ""
@@ -1851,7 +1877,8 @@ msgstr ""
 "รูปแบบการใช้ฟังก์ชั่น 'plugin load' (โหลด Plugin) ผิดพลาด\n"
 "รูปแบบการใช้งาน: plugin load <filename|\"all\">\n"
 
-#: ../Commands.pm:3104 ../Commands.pm:3122
+#: ../Commands.pm:3104
+#: ../Commands.pm:3122
 #, perl-format
 msgid "Plugin %s unloaded.\n"
 msgstr "Plugin %s ได้ถูกนำออกไปแล้ว\n"
@@ -1875,20 +1902,16 @@ msgid ""
 "Command:                                              Description:\n"
 " plugin                                                List loaded plugins\n"
 " plugin load <filename>                                Load a plugin\n"
-" plugin unload <plugin name|plugin number#|\"all\">      Unload a loaded "
-"plugin\n"
-" plugin reload <plugin name|plugin number#|\"all\">      Reload a loaded "
-"plugin\n"
+" plugin unload <plugin name|plugin number#|\"all\">      Unload a loaded plugin\n"
+" plugin reload <plugin name|plugin number#|\"all\">      Reload a loaded plugin\n"
 "-----------------------------------------------------\n"
 msgstr ""
 "--------------- รูปแบการใช้คำสั่ง Plugin ---------------\n"
 "คำสั่ง:                                              รายละเอียด:\n"
-" plugin                                                แสดงรายการ plugin "
-"ที่กำลังใช้งาน\n"
+" plugin                                                แสดงรายการ plugin ที่กำลังใช้งาน\n"
 " plugin load <filename>                                โหลด plugin\n"
 " plugin unload <plugin name|plugin number#|\"all\">      เอา plugin ออก\n"
-" plugin reload <plugin name|plugin number#|\"all\">      เริ่มการทำงาน plugin "
-"ใหม่\n"
+" plugin reload <plugin name|plugin number#|\"all\">      เริ่มการทำงาน plugin ใหม่\n"
 "-----------------------------------------------------\n"
 
 #: ../Commands.pm:3139
@@ -1942,19 +1965,25 @@ msgstr ""
 "รูปแบบการใช้ฟังก์ชั่น 'reload' (โหลดไฟล์ Config ใหม่) ผิดพลาด\n"
 "รูปแบบการใช้งาน: reload <name|\"all\">\n"
 
-#: ../Commands.pm:3224 ../Network/DirectConnection.pm:333
-#: ../Network/XKore.pm:68 ../functions.pl:201
+#: ../Commands.pm:3224
+#: ../Network/DirectConnection.pm:333
+#: ../Network/XKore.pm:68
+#: ../functions.pl:201
 #, perl-format
 msgid "Loading %s...\n"
 msgstr "กำลังโหลด %s...\n"
 
-#: ../Commands.pm:3235 ../functions.pl:207
+#: ../Commands.pm:3235
+#: ../functions.pl:207
 #, perl-format
 msgid ""
 "The file %s must be valid UTF-8 encoded, which it is \n"
 "currently not. To solve this prolem, please use Notepad\n"
 "to save that file as valid UTF-8."
 msgstr ""
+"ไฟล์ %s จะต้องบันทึกในรูปแบบ UTF-8 ซึ่งในตอนนี้ไม่ใช่\n"
+"เพื่อที่จะแก้ใขปัญหานี้ ให้ใช้โปรแกรม Notepad เปิดไฟล์แล้ว\n"
+"เซฟเป็นแบบ UTF-8"
 
 #: ../Commands.pm:3259
 msgid ""
@@ -2038,12 +2067,10 @@ msgstr "คุณไม่มีร้านให้เปิด\n"
 #, perl-format
 msgid ""
 "%s\n"
-"#  Name                                     Type         Qty       Price   "
-"Sold\n"
+"#  Name                                     Type         Qty       Price   Sold\n"
 msgstr ""
 "%s\n"
-"#  ชื่อ                                     ชนิด         จำนวน       ราคา   "
-"ขายไปแล้ว\n"
+"#  ชื่อ                                     ชนิด         จำนวน       ราคา   ขายไปแล้ว\n"
 
 #: ../Commands.pm:3376
 #, perl-format
@@ -2167,7 +2194,8 @@ msgstr ""
 "Walk speed: %.2f secs per block\n"
 "--------------------------------"
 
-#: ../Commands.pm:3532 ../Network/Receive.pm:742
+#: ../Commands.pm:3532
+#: ../Network/Receive.pm:742
 msgid "You are sitting.\n"
 msgstr "คุณกำลังนั่งอยู่\n"
 
@@ -2225,8 +2253,7 @@ msgstr ""
 "       storage log"
 
 #: ../Commands.pm:3646
-msgid ""
-"No information about storage; it has not been opened before in this session\n"
+msgid "No information about storage; it has not been opened before in this session\n"
 msgstr "ไม่มีข้อมูลคลังเก็บของ เนื่องจากยังไม่เคยเปิดคลังเก็บของในการเชื่อมต่อครั้งนี้\n"
 
 #: ../Commands.pm:3679
@@ -2257,7 +2284,8 @@ msgstr "ไอเท็ม '%s' ถูกสวมใส่\n"
 msgid "Cart Item '%s' does not exist.\n"
 msgstr "ไอเท็ม '%s' ไม่มีอยู่ในรถเข็น\n"
 
-#: ../Commands.pm:3773 ../Commands.pm:3799
+#: ../Commands.pm:3773
+#: ../Commands.pm:3799
 #, perl-format
 msgid "Storage Item '%s' does not exist.\n"
 msgstr "ไอเท็ม '%s' ไม่มีอยู่ในคลังเก็บของ\n"
@@ -2455,7 +2483,8 @@ msgstr ""
 "รูปแบบการใช้ฟังก์ชั่น 'tank' (แทงค์ให้กับผู้เล่น) ผิดพลาด\n"
 "รูปแบบการใช้งาน: tank <player #|player name>\n"
 
-#: ../Commands.pm:4007 ../Commands.pm:4028
+#: ../Commands.pm:4007
+#: ../Commands.pm:4028
 #, perl-format
 msgid ""
 "Error in function 'tank' (Tank for a Player)\n"
@@ -2503,12 +2532,10 @@ msgstr "Timeout '%s' คือ %s\n"
 #: ../Commands.pm:4079
 msgid ""
 "Function 'top10' (Show Top 10 Lists)\n"
-"Usage: top10 <b|a|t|p> | <black|alche|tk|pk> | <blacksmith|alchemist|taekwon|"
-"pvp>\n"
+"Usage: top10 <b|a|t|p> | <black|alche|tk|pk> | <blacksmith|alchemist|taekwon|pvp>\n"
 msgstr ""
 "ฟังก์ชั่น 'top10' (แสดง 10 อันดับแรกของแต่ละอาชีพ)\n"
-"รูปแบบการใช้งาน: top10 <b|a|t|p> | <black|alche|tk|pk> | <blacksmith|alchemist|"
-"taekwon|pvp>\n"
+"รูปแบบการใช้งาน: top10 <b|a|t|p> | <black|alche|tk|pk> | <blacksmith|alchemist|taekwon|pvp>\n"
 
 #: ../Commands.pm:4090
 msgid ""
@@ -2632,67 +2659,60 @@ msgstr ""
 "ไอเท็ม %s ไม่ใช่ไอเท็มที่กดใช้ได้\n"
 
 #: ../Commands.pm:4194
-#, fuzzy
 msgid ""
 "Syntax error in function 'sl' (Use Skill on Location)\n"
 "Usage: sl <skill #> <x> <y> [level]\n"
 msgstr ""
-"รูปแบบการใช้ฟังก์ชั่น 'sp' (ใช้สกิลกับผู้เล่น) ผิดพลาด\n"
-"รูปแบบการใช้งาน: sp (skill # or name) [player # or name] [level]\n"
+"รูปแบบการใช้ฟังก์ชั่น 'sl' (ใช้สกิลไปยังพื้น) ผิดพลาด\n"
+"รูปแบบการใช้งาน: sl <skill #> <x> <y> [level]\n"
 
 #: ../Commands.pm:4198
-#, fuzzy
 msgid ""
 "Error in function 'sl' (Use Skill on Location)\n"
 "Invalid coordinates given.\n"
 msgstr ""
-"พบข้อผิดพลาดในฟังก์ชั่น 'sp' (ใช้สกิลกับผู้เล่น)\n"
-"สกิล '%s' ไม่สามารถใช้ได้\n"
+"พบข้อผิดพลาดในฟังก์ชั่น  'sl' (ใช้สกิลไปยังพื้น) ผิดพลาด\n"
+"พื้นที่ที่ให้มาไม่สามารถใช้สกิลได้\n"
 
 #: ../Commands.pm:4202
-#, fuzzy
 msgid ""
 "Error in function 'sl' (Use Skill on Location)\n"
 "You are not logged into the game.\n"
 msgstr ""
-"พบข้อผิดพลาดในฟังก์ชั่น 'sp' (ใช้สกิลกับผู้เล่น)\n"
-"ผู้เล่น '%s' ไม่มีอยู่\n"
+"พบข้อผิดพลาดในฟังก์ชั่น 'sp' (ใช้สกิลไปยังพื้น)\n"
+"คุณยังไม่ได้อยู่ในเกมส์\n"
 
 #: ../Commands.pm:4217
-#, fuzzy
 msgid ""
 "Syntax error in function 'ss' (Use Skill on Self)\n"
 "Usage: ss <skill #> [level]\n"
 msgstr ""
-"รูปแบบการใช้ฟังก์ชั่น 'sp' (ใช้สกิลกับผู้เล่น) ผิดพลาด\n"
-"รูปแบบการใช้งาน: sp (skill # or name) [player # or name] [level]\n"
+"รูปแบบการใช้ฟังก์ชั่น 'ss' (ใช้สกิลกับตัวเอง) ผิดพลาด\n"
+"รูปแบบการใช้งาน: ss <skill #> [level]\n"
 
 #: ../Commands.pm:4221
-#, fuzzy
 msgid ""
 "Error in function 'ss' (Use Skill on Self)\n"
 "You are not logged into the game.\n"
 msgstr ""
-"พบข้อผิดพลาดในฟังก์ชั่น 'sp' (ใช้สกิลกับผู้เล่น)\n"
-"ผู้เล่น '%s' ไม่มีอยู่\n"
+"พบข้อผิดพลาดในฟังก์ชั่น 'ss' (ใช้สกิลกับตัวเอง)\n"
+"คุณยังไม่ได้อยู่ในเกมส์\n"
 
 #: ../Commands.pm:4231
-#, fuzzy
 msgid ""
 "Syntax error in function 'sp' (Use Skill on Player)\n"
 "Usage: sp <skill #> <player #> [level]\n"
 msgstr ""
 "รูปแบบการใช้ฟังก์ชั่น 'sp' (ใช้สกิลกับผู้เล่น) ผิดพลาด\n"
-"รูปแบบการใช้งาน: sp (skill # or name) [player # or name] [level]\n"
+"Usage: sp <skill #> <player #> [level]\n"
 
 #: ../Commands.pm:4235
-#, fuzzy
 msgid ""
 "Error in function 'sp' (Use Skill on Player)\n"
 "You are not logged into the game.\n"
 msgstr ""
 "พบข้อผิดพลาดในฟังก์ชั่น 'sp' (ใช้สกิลกับผู้เล่น)\n"
-"ผู้เล่น '%s' ไม่มีอยู่\n"
+"คุณยังไม่ได้อยู่ในเกมส์\n"
 
 #: ../Commands.pm:4241
 #, perl-format
@@ -2704,40 +2724,37 @@ msgstr ""
 "ผู้เล่น '%s' ไม่มีอยู่\n"
 
 #: ../Commands.pm:4251
-#, fuzzy
 msgid ""
 "Syntax error in function 'sm' (Use Skill on Monster)\n"
 "Usage: sm <skill #> <monster #> [level]\n"
 msgstr ""
-"รูปแบบการใช้ฟังก์ชั่น 'im' (ใช้ไอเท็มกับมอนสเตอร์) ผิดพลาด\n"
-"รูปแบบการใช้งาน: im <item #> <monster #>\n"
+"รูปแบบการใช้ฟังก์ชั่น 'sm' (ใช้สกิลกับมอนสเตอร์) ผิดพลาด\n"
+"รูปแบบการใช้งาน:  sm <skill #> <monster #> [level]\n"
 
 #: ../Commands.pm:4255
-#, fuzzy
 msgid ""
 "Error in function 'sm' (Use Skill on Monster)\n"
 "You are not logged into the game.\n"
 msgstr ""
-"พบข้อผิดพลาดในฟังก์ชั่น 'im' (ใช้ไอเท็มกับมอนสเตอร์)\n"
-"มอนสเตอร์ %s ไม่มีอยู่\n"
+"พบข้อผิดพลาดในฟังก์ชั่น 'sm' (ใช้สกิลกับมอนสเตอร์)\n"
+"คุณยังไม่ได้อยู่ในเกมส์\n"
 
 #: ../Commands.pm:4261
-#, fuzzy, perl-format
+#, perl-format
 msgid ""
 "Error in function 'sm' (Use Skill on Monster)\n"
 "Monster %d does not exist.\n"
 msgstr ""
-"พบข้อผิดพลาดในฟังก์ชั่น 'im' (ใช้ไอเท็มกับมอนสเตอร์)\n"
-"มอนสเตอร์ %s ไม่มีอยู่\n"
+"พบข้อผิดพลาดในฟังก์ชั่น 'sm' (ใช้สกิลกับมอนสเตอร์)\n"
+"มอนสเตอร์ %d ไม่มีอยู่\n"
 
 #: ../Commands.pm:4271
-#, fuzzy
 msgid ""
 "Syntax error in function 'ssp' (Use Skill on Area Spell Location)\n"
 "Usage: ssp <skill #> <spell #> [level]\n"
 msgstr ""
-"รูปแบบการใช้ฟังก์ชั่น 'sp' (ใช้สกิลกับผู้เล่น) ผิดพลาด\n"
-"รูปแบบการใช้งาน: sp (skill # or name) [player # or name] [level]\n"
+"รูปแบบการใช้ฟังก์ชั่น 'ssp' (ใช้สกิลบนพื้นที่เวทย์มนต์) ผิดพลาด\n"
+"รูปแบบการใช้งาน: ssp <skill #> <spell #> [level]\n"
 
 #: ../Commands.pm:4277
 #, perl-format
@@ -2785,7 +2802,8 @@ msgstr ""
 "พบข้อผิดพลาดในฟังก์ชั่น 'warp' (เปิด/ดูรายการ Warp Portal)\n"
 "รูปแบบการใช้ฟังก์ชั่น: warp <map name | map number# | list>\n"
 
-#: ../Commands.pm:4361 ../Commands.pm:4377
+#: ../Commands.pm:4361
+#: ../Commands.pm:4377
 msgid "You didn't cast warp portal.\n"
 msgstr "คุณไม่ได้ร่าย warp portal\n"
 
@@ -2794,12 +2812,14 @@ msgstr "คุณไม่ได้ร่าย warp portal\n"
 msgid "Invalid map number %s.\n"
 msgstr "หมายเลขของแผนที่ใช้ไม่ได้ %s.\n"
 
-#: ../Commands.pm:4370 ../Commands.pm:4397
+#: ../Commands.pm:4370
+#: ../Commands.pm:4397
 #, perl-format
 msgid "Attempting to open a warp portal to %s (%s)\n"
 msgstr "พยายามเปิดวาปไปยัง %s (%s)\n"
 
-#: ../Commands.pm:4381 ../Network/Receive.pm:6250
+#: ../Commands.pm:4381
+#: ../Network/Receive.pm:6250
 msgid ""
 "----------------- Warp Portal --------------------\n"
 "#  Place                           Map\n"
@@ -2824,12 +2844,14 @@ msgstr ""
 msgid "Weight: %s/%s (%s%)\n"
 msgstr "น้ำหนัก: %s/%s (%s%)\n"
 
-#: ../Commands.pm:4419 ../Commands.pm:4425
+#: ../Commands.pm:4419
+#: ../Commands.pm:4425
 #, perl-format
 msgid "You can carry %s%s before %s overweight.\n"
 msgstr "คุณสามารถบรรทุก %s%s ก่อน %s น้ำหนักเกิน\n"
 
-#: ../Commands.pm:4422 ../Commands.pm:4428
+#: ../Commands.pm:4422
+#: ../Commands.pm:4428
 #, perl-format
 msgid "You are %s overweight.\n"
 msgstr "คุณน้ำหนักเกิน %s\n"
@@ -2862,19 +2884,25 @@ msgstr ""
 #: ../ErrorHandler.pm:72
 #, perl-format
 msgid ""
-"This program has encountered an unexpected problem. This is probably "
-"because\n"
-"of a bug in this program, or in one of the plugins. Please tell us about "
-"this\n"
+"This program has encountered an unexpected problem. This is probably because\n"
+"of a bug in this program, or in one of the plugins. Please tell us about this\n"
 "problem.\n"
 "\n"
 "A detailed error report has been saved to errors.txt. Please include the\n"
-"contents of this file in your bug report, or we may not be able to help "
-"you!\n"
+"contents of this file in your bug report, or we may not be able to help you!\n"
 "\n"
 "The error message is:\n"
 "%s"
 msgstr ""
+"โปรแกรมนี่ประสพปัญหาอย่างไม่ได้คาดคิด  นี่อาจจะเกิดมาจาก\n"
+"บัคของตัวโปรแกรมเอง หรือเกิดจากปลั๊กอินตัวใดตัวหนึ่ง\n"
+"กรุณาแจ้งเราเกี่ยวกับปัญหานี้\n"
+"\n"
+"รายละเอียดของรายงานความผิดพลาดที่เกิดขึ้นได้ถูกบันทึกลงใน errors.txt\n"
+"กรุณาส่งรายงานนนี้ แนบไปกับการรายงานบัคให้กับเรา ไม่เช่นนั้นเราอาจไม่สามารถช่วยคุณได้!\n"
+"\n"
+"ข้อความแสดงถึงข้อผิดพลาด:\n"
+"%s"
 
 #: ../ErrorHandler.pm:125
 #, perl-format
@@ -2890,11 +2918,8 @@ msgstr ""
 "%s\n"
 
 #: ../FileParsers.pm:136
-msgid ""
-"The chat_resp.txt format has changed. Please read News.txt and upgrade to "
-"the new format.\n"
-msgstr ""
-"รูปแบบ chat_resp.txt ได้ถูกเปลี่ยนแปลง กรุณาอ่าน News.txt และทำการอัพเดทไฟล์ใหม่\n"
+msgid "The chat_resp.txt format has changed. Please read News.txt and upgrade to the new format.\n"
+msgstr "รูปแบบ chat_resp.txt ได้ถูกเปลี่ยนแปลง กรุณาอ่าน News.txt และทำการอัพเดทไฟล์ใหม่\n"
 
 #: ../FileParsers.pm:273
 #, perl-format
@@ -2947,9 +2972,8 @@ msgid "Please correct the above errors and type 'reload %s'.\n"
 msgstr "กรุณาแก้ไขข้อผิดพลาดที่แจ้งใว้ด้านบนแล้ว ป้อน 'reload %s'\n"
 
 #: ../Interface.pm:127
-#, fuzzy
 msgid "Enter your answer: "
-msgstr "กรุณาป้อน Password: "
+msgstr "กรุณาป้อนคำตอบ: "
 
 #: ../Interface.pm:172
 msgid "Choice"
@@ -2978,7 +3002,8 @@ msgstr "ให้อำนาจผู้ใช้ '%s' สำหรับสิ
 msgid "Revoked admin privilages for user '%s'\n"
 msgstr "ยกเลิกสิทธิ์ admin สำหรับผู้ใช้ '%s'\n"
 
-#: ../Misc.pm:290 ../Misc.pm:328
+#: ../Misc.pm:290
+#: ../Misc.pm:328
 #, perl-format
 msgid "Config '%s' set to %s (was %s)\n"
 msgstr "Config '%s' ถูกตั้งเป็น %s (ค่าเดิม %s)\n"
@@ -2996,8 +3021,7 @@ msgstr "Timeout '%s' ถูกตั้งเป็น %s (ค่าเดิม
 #: ../Misc.pm:836
 #, perl-format
 msgid ""
-"No suitable browser detected. Please launch your favorite browser and go "
-"to:\n"
+"No suitable browser detected. Please launch your favorite browser and go to:\n"
 "%s"
 msgstr ""
 "ไม่สามารถครวจพบ เบราซ์เซอร์ ได้ กรุณาเปิดเบราซ์เซอร์ แล้วไปที่:\n"
@@ -3012,7 +3036,10 @@ msgstr "ยกเลิกการติดต่อเพื่อหนี GM
 msgid "*** The GM %s talked to you, auto disconnected ***\n"
 msgstr "*** GM %s พูดคุยกับคุณ ยุติการเชื่อมต่อโดยอัตโนมัติ ***\n"
 
-#: ../Misc.pm:1010 ../Misc.pm:1024 ../Misc.pm:3345 ../Misc.pm:3366
+#: ../Misc.pm:1010
+#: ../Misc.pm:1024
+#: ../Misc.pm:3345
+#: ../Misc.pm:3366
 #: ../Network/Receive.pm:2411
 #, perl-format
 msgid "Disconnect for %s seconds...\n"
@@ -3077,9 +3104,8 @@ msgid "Delete a character"
 msgstr "ลบตัวละคร"
 
 #: ../Misc.pm:1118
-#, fuzzy
 msgid "Please choose a character or an action."
-msgstr "กรุณาเลือกตัวละคร หรือกระทำการอย่างหนึ่งอย่างใด: "
+msgstr "กรุณาเลือกตัวละคร หรือกระทำการอย่างหนึ่งอย่างใด"
 
 #: ../Misc.pm:1119
 msgid "Character selection"
@@ -3090,14 +3116,12 @@ msgid "There are no characters on this account.\n"
 msgstr "ยังไม่มีตัวละครใน ไอดี นี้\n"
 
 #: ../Misc.pm:1147
-#, fuzzy
 msgid ""
 "Please enter the desired properties for your characters, in this form:\n"
-"(slot) \"(name)\" [ (str) (agi) (vit) (int) (dex) (luk) [ (hairstyle) "
-"[(haircolor)] ] ]"
+"(slot) \"(name)\" [ (str) (agi) (vit) (int) (dex) (luk) [ (hairstyle) [(haircolor)] ] ]"
 msgstr ""
 "กรุณาป้อนคุณสมบัติของตัวละครให้อยู่ในรูปแบบต่อไปนี้:\n"
-"(ช่องที่) \"(ชื่อ)\" [ (str) (agi) (vit) (int) (dex) (luk) [ (ทรงผม) [(สีผม)] ] ]\n"
+"(ช่องที่) \"(ชื่อ)\" [ (str) (agi) (vit) (int) (dex) (luk) [ (ทรงผม) [(สีผม)] ] ]"
 
 #: ../Misc.pm:1155
 msgid "You didn't specify enough parameters."
@@ -3109,22 +3133,21 @@ msgid "Creating character \"%s\" in slot \"%s\"...\n"
 msgstr "สร้างตัวละคร \"%s\" ในช่องที่ \"%s\"...\n"
 
 #: ../Misc.pm:1167
-#, fuzzy
 msgid "Select the character you want to delete."
-msgstr "เลือกตัวละครที่ต้องการลบ: "
+msgstr "เลือกตัวละครที่ต้องการลบ"
 
 #: ../Misc.pm:1169
 msgid "Delete character"
 msgstr "ลบตัวละคร"
 
 #: ../Misc.pm:1181
-#, fuzzy, perl-format
+#, perl-format
 msgid ""
 "Are you ABSOLUTELY SURE you want to delete:\n"
 "%s"
 msgstr ""
 "คุณแน่ใจหรือไม่ว่าจะลบ:\n"
-"%s\n"
+"%s"
 
 #: ../Misc.pm:1182
 msgid "No, don't delete"
@@ -3143,12 +3166,14 @@ msgstr "ยืนยันการลบ"
 msgid "Deleting character %s...\n"
 msgstr "กำลังลบตัวละคร %s...\n"
 
-#: ../Misc.pm:1215 ../AI/CoreLogic.pm:2979
+#: ../Misc.pm:1215
+#: ../AI/CoreLogic.pm:2979
 #, perl-format
 msgid "The current map (%s) is not on the list of allowed maps.\n"
 msgstr "แผนที่ปัจจุบัน (%s) ไม่ได้อยู่ในรายการ allowed maps\n"
 
-#: ../Misc.pm:1216 ../AI/CoreLogic.pm:2980
+#: ../Misc.pm:1216
+#: ../AI/CoreLogic.pm:2980
 #, perl-format
 msgid "** The current map (%s) is not on the list of allowed maps.\n"
 msgstr "** แผนที่ปัจจุบัน (%s) ไม่ได้อยู่ในรายการ allowed maps\n"
@@ -3216,7 +3241,8 @@ msgstr "กำลังออกจากโปรแกรม...\n"
 msgid "Relogging in %d seconds...\n"
 msgstr "กำลังจะล๊อกอินใหม่ภายใน %d วินาที...\n"
 
-#: ../Misc.pm:2186 ../Misc.pm:2192
+#: ../Misc.pm:2186
+#: ../Misc.pm:2192
 #, perl-format
 msgid "Remove perfectly hidden %s\n"
 msgstr "Remove perfectly hidden %s\n"
@@ -3235,7 +3261,8 @@ msgstr "เทเลพอทเนื่องจากโจมตี miss\n"
 msgid "Teleporting after attacking a monster %d times\n"
 msgstr "เทเลพอทหลังจากโจมตีมอนสเตอร์ไปแล้ว %d ครั้ง\n"
 
-#: ../Misc.pm:2317 ../Misc.pm:2425
+#: ../Misc.pm:2317
+#: ../Misc.pm:2425
 #, perl-format
 msgid "%s (%s) has been provoked, searching another monster\n"
 msgstr "%s (%s) ถูกโจมตีไปแล้ว ค้นหามอนสเตอร์ตัวใหม่\n"
@@ -3302,30 +3329,23 @@ msgstr "%s โจมตี homunculus ของคุณโดยเกิดค
 
 #: ../Misc.pm:2476
 #, perl-format
-msgid ""
-"%s hit your homunculus for more than %d dmg in lockMap. Teleporting...\n"
+msgid "%s hit your homunculus for more than %d dmg in lockMap. Teleporting...\n"
 msgstr "%s โจมตี homunculus ของคุณความเสียหายเกิน %d ใน lockMap  กำลังเทเลพอท...\n"
 
 #: ../Misc.pm:2484
 #, perl-format
-msgid ""
-"%s hit your homunculus for a total of more than %d dmg. Teleporting...\n"
+msgid "%s hit your homunculus for a total of more than %d dmg. Teleporting...\n"
 msgstr "%s โจมตี homunculus ของคุณรวมความเสียหายแล้วเกิน %d  กำลังเทเลพอท...\n"
 
 #: ../Misc.pm:2491
 #, perl-format
-msgid ""
-"%s hit your homunculus for a total of more than %d dmg in lockMap. "
-"Teleporting...\n"
-msgstr ""
-"%s โจมตี homunculus ของคุณรวมความเสียหายแล้วเกิน %d ใน lockMap  กำลังเทเลพอท...\n"
+msgid "%s hit your homunculus for a total of more than %d dmg in lockMap. Teleporting...\n"
+msgstr "%s โจมตี homunculus ของคุณรวมความเสียหายแล้วเกิน %d ใน lockMap  กำลังเทเลพอท...\n"
 
 #: ../Misc.pm:2496
 #, perl-format
-msgid ""
-"%s hit your homunculus when your homunculus' HP is too low. Teleporting...\n"
-msgstr ""
-"%s โจมตี homunculus ของคุณเมื่อ HP ของ homunculus น้อยเกินไป กำลังเทเลพอท...\n"
+msgid "%s hit your homunculus when your homunculus' HP is too low. Teleporting...\n"
+msgstr "%s โจมตี homunculus ของคุณเมื่อ HP ของ homunculus น้อยเกินไป กำลังเทเลพอท...\n"
 
 #: ../Misc.pm:2517
 #, perl-format
@@ -3509,7 +3529,8 @@ msgid "Dmg: %s"
 msgstr "ความเสียหาย: %s"
 
 #. Translation Comment: Skill name + level
-#: ../Misc.pm:2984 ../Misc.pm:3072
+#: ../Misc.pm:2984
+#: ../Misc.pm:3072
 #, perl-format
 msgid "%s (lvl %s)"
 msgstr "%s (lvl %s)"
@@ -3823,14 +3844,14 @@ msgid "*** Found %s (%s) nearby and teleported ***\n"
 msgstr "*** ตรวจพบ %s (%s) ใกล้เข้ามา ได้ทำการเทเลพอทหนีแล้ว ***\n"
 
 #: ../Misc.pm:3364
-#, fuzzy, perl-format
+#, perl-format
 msgid "%s is nearby, disconnecting...\n"
-msgstr "%s (%s) ใกล้เข้ามา ยุตติการเชื่อมต่อ...\n"
+msgstr "%s ใกล้เข้ามา ยุตติการเชื่อมต่อ...\n"
 
 #: ../Misc.pm:3365
-#, fuzzy, perl-format
+#, perl-format
 msgid "*** Found %s nearby and disconnected ***\n"
-msgstr "*** ตรวจพบ %s (%s) ใกล้เข้ามา ทำการยกเลิกการติดต่อ ***\n"
+msgstr "*** ตรวจพบ %s ใกล้เข้ามา ทำการยกเลิกการติดต่อ ***\n"
 
 #: ../Misc.pm:3398
 #, perl-format
@@ -3838,15 +3859,14 @@ msgid "Processing map %s...\n"
 msgstr "ทำการประมวลผลแผนที่ %s...\n"
 
 #: ../Misc.pm:3433
-#, fuzzy, perl-format
+#, perl-format
 msgid "Wrote portals Line of Sight table to '%s'\n"
-msgstr "เขียนตาราง LOS ไปยัง '%s/portalsLOS.txt'\n"
+msgstr "เขียนตาราง LOS ไปยัง '%s'\n"
 
-#: ../Misc.pm:3437 ../Misc.pm:3441
+#: ../Misc.pm:3437
+#: ../Misc.pm:3441
 msgid "----------------------------Error Summary----------------------------\n"
-msgstr ""
-"----------------------------"
-"รายงานสรุปข้อผิดพลาดที่พบ----------------------------\n"
+msgstr "----------------------------รายงานสรุปข้อผิดพลาดที่พบ----------------------------\n"
 
 #: ../Misc.pm:3438
 #, perl-format
@@ -3952,23 +3972,23 @@ msgid "Loading plugin %s...\n"
 msgstr "กำลังโหลด plugin %s...\n"
 
 #: ../Plugins.pm:134
-#, fuzzy, perl-format
+#, perl-format
 msgid "File %s does not exist."
-msgstr "สกิล %s ไม่มีอยู่\n"
+msgstr "ไฟล์ %s ไม่มีอยู่"
 
 #: ../Plugins.pm:136
 #, perl-format
-msgid ""
-"The ROPP plugin (ropp.pl) is obsolete and is no longer necessary. Please "
-"remove it, or %s will not work correctly."
-msgstr ""
+msgid "The ROPP plugin (ropp.pl) is obsolete and is no longer necessary. Please remove it, or %s will not work correctly."
+msgstr "ปลั๊กอิน ROPP(ropp.pl) ไม่จะเป็นอีกต่อไปแล้ว กรุณาลบมันออก ไม่เช่นนั้น %s อาจไม่ทำงานได้อย่างถูกต้อง"
 
 #: ../Plugins.pm:145
-#, fuzzy, perl-format
+#, perl-format
 msgid ""
 "Plugin contains syntax errors:\n"
 "%s"
-msgstr "%s มีรูปแบบภาษาผิดพลาดอยู่\n"
+msgstr ""
+"ปลั๊กอินมีรูปแบบภาษาที่ผิดพลาดอยู่\n"
+"%s"
 
 #. Translation Comment: Version String
 #: ../Settings.pm:79
@@ -3986,14 +4006,14 @@ msgid "Welcome to %s."
 msgstr "ยินดีต้อนรับท่านสู่ %s"
 
 #: ../Settings.pm:391
-#, fuzzy, perl-format
+#, perl-format
 msgid "Cannot load control file %s"
-msgstr "คุณไม่สามารซื้อขายได้ (fail code %s).\n"
+msgstr "ไม่สามารถโหลด control ไฟล์ %s ได้"
 
 #: ../Settings.pm:395
-#, fuzzy, perl-format
+#, perl-format
 msgid "Cannot load table file %s"
-msgstr "คุณไม่สามารซื้อขายได้ (fail code %s).\n"
+msgstr "ไม่สามารถโหลด table ไฟล์ %s ได้"
 
 #: ../Network/DirectConnection.pm:148
 #, perl-format
@@ -4030,7 +4050,8 @@ msgstr "ทำการเชื่อมต่อกับ Account Server...\n"
 msgid "Requesting permission to logon on account server...\n"
 msgstr "กำลังร้องขอสิทธิ์ในการเข้าถึง account server...\n"
 
-#: ../Network/DirectConnection.pm:373 ../Network/DirectConnection.pm:405
+#: ../Network/DirectConnection.pm:373
+#: ../Network/DirectConnection.pm:405
 msgid "Secure Login...\n"
 msgstr "ทำการล๊อกอินแบบมีการเข้ารหัส...\n"
 
@@ -4051,13 +4072,14 @@ msgstr "ทำการเชื่อมต่อกับ Character Server...\
 msgid "Invalid server specified, server %s does not exist...\n"
 msgstr "Server ที่ได้กำหนดใว้ใช้ไม่ได้, server %s ไม่มีอยู่...\n"
 
-#: ../Network/DirectConnection.pm:479 ../Network/Receive.pm:705
+#: ../Network/DirectConnection.pm:479
+#: ../Network/Receive.pm:705
 #: ../Network/Receive/ServerType17.pm:85
-#, fuzzy
 msgid "Please select your login server."
-msgstr "กรุณาเลือกเซิฟเวอร์เพื่อล๊อกอิน:"
+msgstr "กรุณาเลือกเซิฟเวอร์เพื่อล๊อกอิน"
 
-#: ../Network/DirectConnection.pm:481 ../Network/Receive.pm:707
+#: ../Network/DirectConnection.pm:481
+#: ../Network/Receive.pm:707
 #: ../Network/Receive/ServerType17.pm:87
 msgid "Select Login Server"
 msgstr "เลือกเซิฟเวอร์เพื่อล๊อกอิน"
@@ -4092,10 +4114,8 @@ msgstr "ยกเลิกการติดต่อกับ Map Server แล
 
 #: ../Network/DirectConnection.pm:575
 #, perl-format
-msgid ""
-"Disconnected from Map Server, connecting to Account Server in %s seconds...\n"
-msgstr ""
-"ยกเลิกการติดต่อกับ Map Server แล้ว, ทำการเชื่อมต่อกับ Account Server ใน %s วินาที...\n"
+msgid "Disconnected from Map Server, connecting to Account Server in %s seconds...\n"
+msgstr "ยกเลิกการติดต่อกับ Map Server แล้ว, ทำการเชื่อมต่อกับ Account Server ใน %s วินาที...\n"
 
 #: ../Network/DirectConnection.pm:583
 msgid "Timeout on Map Server, "
@@ -4111,32 +4131,34 @@ msgid "connecting to Account Server in %s seconds...\n"
 msgstr "ทำการเชื่อมต่อกับ Account Server ภายใน %s วินาที...\n"
 
 #: ../Network/Receive.pm:356
-#, fuzzy, perl-format
+#, perl-format
 msgid "Cannot load server message parser for server type '%s'."
-msgstr "ไม่สามารถโหลด packet parser สำหรับ ServerType '%s' ได้\n"
+msgstr "ไม่สามารถโหลด packet parser สำหรับ ServerType '%s' ได้"
 
 #: ../Network/Receive.pm:360
 #, perl-format
 msgid ""
-"An error occured while loading the server message parser for server type '%"
-"s':\n"
+"An error occured while loading the server message parser for server type '%s':\n"
 "%s"
 msgstr ""
+"เกิดความผิดพลาดระหว่างโหลด server message parser สำหรับ server type '%s':\n"
+"%s"
 
 #: ../Network/Receive.pm:594
 msgid ""
 "You've never set a login PIN code before.\n"
 "Please enter a new login PIN code:"
 msgstr ""
+"คุณยังไม่ได้ตั้ง PIN code\n"
+"กรุณรป้อน PIN:"
 
 #: ../Network/Receive.pm:602
 msgid "The PIN code may only contain digits."
-msgstr ""
+msgstr "PIN อาจใช้ได้เฉพาะตัวเลขเท่านั้น"
 
 #: ../Network/Receive.pm:604
-#, fuzzy
 msgid "The PIN code must be between 4 and 9 characters."
-msgstr "ช่องตัวละครจะต้องอยู่ในช่วง 0 ถึง 4"
+msgstr "PIN จะต้องมีความยาวระหว่าง 4 ถึง 9 ตัวอักษร"
 
 #: ../Network/Receive.pm:642
 msgid "============= Account payment information =============\n"
@@ -4156,7 +4178,8 @@ msgstr "แบบรายชั่วโมง : %s วัน %s ชั่ว�
 msgid "-------------------------------------------------------\n"
 msgstr "-------------------------------------------------------\n"
 
-#: ../Network/Receive.pm:666 ../Network/Receive/ServerType17.pm:46
+#: ../Network/Receive.pm:666
+#: ../Network/Receive/ServerType17.pm:46
 msgid ""
 "-----------Account Info------------\n"
 "Account ID: @<<<<<<<<< @<<<<<<<<<<\n"
@@ -4172,7 +4195,8 @@ msgstr ""
 "            @<<<<<<<<< @<<<<<<<<<<\n"
 "-----------------------------------"
 
-#: ../Network/Receive.pm:686 ../Network/Receive/ServerType17.pm:66
+#: ../Network/Receive.pm:686
+#: ../Network/Receive/ServerType17.pm:66
 msgid ""
 "--------- Servers ----------\n"
 "#   Name                  Users  IP              Port\n"
@@ -4180,17 +4204,20 @@ msgstr ""
 "--------- Servers ----------\n"
 "#   ชื่อ                  ผู้เล่น  IP              Port\n"
 
-#: ../Network/Receive.pm:697 ../Network/XKoreProxy.pm:467
+#: ../Network/Receive.pm:697
+#: ../Network/XKoreProxy.pm:467
 #: ../Network/Receive/ServerType17.pm:77
 msgid "Closing connection to Account Server\n"
 msgstr "ยกเลิกการติดต่อกับ Account Server\n"
 
-#: ../Network/Receive.pm:715 ../Network/Receive/ServerType17.pm:95
+#: ../Network/Receive.pm:715
+#: ../Network/Receive/ServerType17.pm:95
 #, perl-format
 msgid "Forcing connect to char server %s: %s\n"
 msgstr "กำลังบังคับเพื่อที่จะติดต่อกับ char server %s: %s\n"
 
-#: ../Network/Receive.pm:718 ../Network/Receive/ServerType17.pm:98
+#: ../Network/Receive.pm:718
+#: ../Network/Receive/ServerType17.pm:98
 #, perl-format
 msgid "Server %s selected\n"
 msgstr "เซิฟเวอร์ %s ได้ถูกเลือก\n"
@@ -4306,12 +4333,12 @@ msgid "Cart Item Added: %s (%d) x %s\n"
 msgstr "ไอเท็มได้นำเข้ารถเข็น: %s (%d) x %s\n"
 
 #: ../Network/Receive.pm:1782
-#, fuzzy, perl-format
+#, perl-format
 msgid ""
 "-----------CashList (Cash Point: %-5d)------------\n"
 "#  Name                    Type               Price\n"
 msgstr ""
-"----------รายการขายไอเท็มของ %s-----------\n"
+"-----------CashList (Cash Point: %-5d)------------\n"
 "#  ชื่อ                    ชนิด               ราคา\n"
 
 #: ../Network/Receive.pm:1814
@@ -4320,9 +4347,7 @@ msgid "Cart Item Removed: %s (%d) x %s\n"
 msgstr "ไอเท็มได้ถูกนำออกจากรถเข็น: %s (%d) x %s\n"
 
 #: ../Network/Receive.pm:1850
-msgid ""
-"Character creation failed. If you didn't make any mistake, then the name you "
-"chose already exists.\n"
+msgid "Character creation failed. If you didn't make any mistake, then the name you chose already exists.\n"
 msgstr "ไม่สามมารถสร้างตัวละครได้ ถ้าคุณไม่ได้ทำอะไรผิดพลาด ชื่อตัวละครอาจจะมีอยู่แล้ว (ซ้ำ)\n"
 
 #: ../Network/Receive.pm:1882
@@ -4456,9 +4481,8 @@ msgid "Type 'deal' to start dealing, or 'deal no' to deny the deal.\n"
 msgstr "ป้อน 'deal' เพื่อเริ่มการแลกเปลี่ยน หรือ 'deal no' เพื่อปฏิเสธ\n"
 
 #: ../Network/Receive.pm:2286
-#, fuzzy
 msgid "----- Egg Hatch Candidates -----\n"
-msgstr "-----Egg Hatch Candidates-----\n"
+msgstr "-----รายการไข่ที่จะฟักได้-----\n"
 
 #. Translation Comment: "[dist=$dist] $name ($player->{binID}): $emotion\n"
 #: ../Network/Receive.pm:2311
@@ -4500,7 +4524,7 @@ msgid "Error: Server is closed\n"
 msgstr "พบข้อผิดพลาด: เซิฟเวอร์ได้ปิดตัวลง\n"
 
 #: ../Network/Receive.pm:2406
-#, fuzzy, perl-format
+#, perl-format
 msgid ""
 "Critical Error: Dual login prohibited - Someone trying to login!\n"
 "\n"
@@ -4508,9 +4532,10 @@ msgid ""
 msgstr ""
 "พบข้อผิดพลาดขั้นร้ายแรง: มีการล๊อกอินซ้อนเข้ามา - มีบางคนกำลังพยายามล๊อกอินซ้อน!\n"
 "\n"
-"%s กำลังจะยกเลิกการติดต่อกับเซิฟเวอร์"
+"%s กำลังจะยกเลิกการติดต่อกับเซิฟเวอร์ \tยกเลิกการเชื่อมต่อ"
 
-#: ../Network/Receive.pm:2410 ../Network/Receive.pm:2414
+#: ../Network/Receive.pm:2410
+#: ../Network/Receive.pm:2414
 msgid "Critical Error: Dual login prohibited - Someone trying to login!\n"
 msgstr "พบข้อผิดพลาดขั้นร้ายแรง: มีการล๊อกอินซ้อนเข้ามา - มีบางคนกำลังพยายามล๊อกอินซ้อน!\n"
 
@@ -4535,12 +4560,8 @@ msgid "Error: The server still recognizes your last connection\n"
 msgstr "พบข้อผิดพลาด: server ยังจดจำการเชื่อมต่อล่าสุดของคุณอยู่\n"
 
 #: ../Network/Receive.pm:2429
-msgid ""
-"Error: IP capacity of this Internet Cafe is full. Would you like to pay the "
-"personal base?\n"
-msgstr ""
-"พบข้อผิดพลาด: IP capacity of this Internet Cafe is full. Would you like to pay "
-"the personal base?\n"
+msgid "Error: IP capacity of this Internet Cafe is full. Would you like to pay the personal base?\n"
+msgstr "พบข้อผิดพลาด: IP capacity of this Internet Cafe is full. Would you like to pay the personal base?\n"
 
 #: ../Network/Receive.pm:2431
 msgid "Error: You are out of available time paid for\n"
@@ -4551,16 +4572,12 @@ msgid "Error: You have been forced to disconnect by a GM\n"
 msgstr "พบข้อผิดพลาด: คุณได้ถูกขับออกโดย GM\n"
 
 #: ../Network/Receive.pm:2435
-msgid ""
-"Error: Your account has been suspended until the next maintenance period for "
-"possible use of 3rd party programs\n"
-msgstr ""
+msgid "Error: Your account has been suspended until the next maintenance period for possible use of 3rd party programs\n"
+msgstr "พบข้อผิดพลาด: ID ของคุณได้ถูกระงับการใช้งานชั่วคราว จนถึงการบำรุงรักษาเซิฟเวอร์ครั้งต่อไป เนื่องจากเป็นไปได้ว่าคุณได้ใช้โปรแกรมช่วเหลือในการเล่น\n"
 
 #: ../Network/Receive.pm:2437
-msgid ""
-"Error: For an hour, more than 10 connections having same IP address, have "
-"made. Please check this matter.\n"
-msgstr ""
+msgid "Error: For an hour, more than 10 connections having same IP address, have made. Please check this matter.\n"
+msgstr "พบข้อผิดพลาด: ในชั่วโมงที่ผ่านมามีการเชื่อมต่อมากกว่า 10 การเชื่อมที่มาจาก IP เดียวกัน กรุณาตรวจสอบ\n"
 
 #: ../Network/Receive.pm:2439
 #, perl-format
@@ -4618,10 +4635,8 @@ msgstr "%s ต้องการจะเป็นเพื่อนกับค
 
 #: ../Network/Receive.pm:2585
 #, perl-format
-msgid ""
-"Type 'friend accept' to be friend with %s, otherwise type 'friend reject'\n"
-msgstr ""
-"ป้อน 'friend accept' เพื่อที่จะเป็นเพื่อนกับ %s, หรือปฏิเสธโดยป้อน 'friend reject'\n"
+msgid "Type 'friend accept' to be friend with %s, otherwise type 'friend reject'\n"
+msgstr "ป้อน 'friend accept' เพื่อที่จะเป็นเพื่อนกับ %s, หรือปฏิเสธโดยป้อน 'friend reject'\n"
 
 #: ../Network/Receive.pm:2596
 #, perl-format
@@ -4666,12 +4681,10 @@ msgstr "คุณได้ชุบชีวิต Homunculus ของคุณ
 
 #: ../Network/Receive.pm:2756
 msgid ""
-"The server Denied the login because GameGuard packets where not replied "
-"correctly or too many time has been spent to send the response.\n"
+"The server Denied the login because GameGuard packets where not replied correctly or too many time has been spent to send the response.\n"
 "Please verify the version of your poseidon server and try again\n"
 msgstr ""
-"The server Denied the login because GameGuard packets where not replied "
-"correctly or too many time has been spent to send the response.\n"
+"The server Denied the login because GameGuard packets where not replied correctly or too many time has been spent to send the response.\n"
 "Please verify the version of your poseidon server and try again\n"
 
 #: ../Network/Receive.pm:2761
@@ -4753,9 +4766,9 @@ msgid "Guild member %s logged out.\n"
 msgstr "สมาชิกกิล %s ได้ออกไปแล้ว\n"
 
 #: ../Network/Receive.pm:3019
-#, fuzzy, perl-format
+#, perl-format
 msgid "%s: *%s*\n"
-msgstr "(ถึง %s) : %s\n"
+msgstr "%s: *%s*\n"
 
 #: ../Network/Receive.pm:3069
 #, perl-format
@@ -4785,9 +4798,7 @@ msgstr "ไอเท็มได้ถูกตรวจสอบแล้ว: %
 #: ../Network/Receive.pm:3127
 #, perl-format
 msgid "Received Possible Identify List (%s item(s)) - type 'identify'\n"
-msgstr ""
-"ได้รับรายการไอเท็มที่สามารถตรวจสอบได้แล้ว (%s item(s)) - ป้อน 'identify' "
-"ตรวจสอบไอเท็ม\n"
+msgstr "ได้รับรายการไอเท็มที่สามารถตรวจสอบได้แล้ว (%s item(s)) - ป้อน 'identify' ตรวจสอบไอเท็ม\n"
 
 #: ../Network/Receive.pm:3133
 msgid "All Players ignored\n"
@@ -4828,9 +4839,9 @@ msgid "Cannot pickup item (you're Frozen?)\n"
 msgstr "ไม่สามารถเก็บไอเท็ม (คุณถูกแช่แข็งหรือเปล่า?)\n"
 
 #: ../Network/Receive.pm:3213
-#, fuzzy, perl-format
+#, perl-format
 msgid "Cannot pickup item (failure code %d)\n"
-msgstr "ไม่สามารถเก็บไอเท็ม (failure code %s)\n"
+msgstr "ไม่สามารถเก็บไอเท็ม (failure code %d)\n"
 
 #: ../Network/Receive.pm:3245
 #, perl-format
@@ -4838,9 +4849,9 @@ msgid "You used Item: %s (%d) x %d - %d left\n"
 msgstr "คุณใช้ไอเท็ม: %s (%d) x %d - เหลืออยู่ %d\n"
 
 #: ../Network/Receive.pm:3258
-#, fuzzy, perl-format
+#, perl-format
 msgid "You used unknown item #%d - %d left\n"
-msgstr "คุณใช้ไอเท็ม: %s (%d) x %d - เหลืออยู่ %d\n"
+msgstr "คุณใช้ไอเท็ม: #%d - เหลืออยู่ %d\n"
 
 #: ../Network/Receive.pm:3264
 #, perl-format
@@ -4912,18 +4923,16 @@ msgid "Account name doesn't exist\n"
 msgstr "ไม่พบไอดีนี้\n"
 
 #: ../Network/Receive.pm:3597
-#, fuzzy
 msgid "Enter your Ragnarok Online username again."
-msgstr "กรุณาป้อนไอดีอีกครั้ง: "
+msgstr "กรุณาป้อนไอดีอีกครั้ง"
 
 #: ../Network/Receive.pm:3608
 msgid "Password Error\n"
 msgstr "รหัสผ่านผิดพลาด\n"
 
 #: ../Network/Receive.pm:3610
-#, fuzzy
 msgid "Enter your Ragnarok Online password again."
-msgstr "กรุณาป้อนรหัสผ่านอีกครั้ง: "
+msgstr "กรุณาป้อนรหัสผ่านอีกครั้ง"
 
 #: ../Network/Receive.pm:3621
 msgid "Server connection has been denied\n"
@@ -4952,38 +4961,45 @@ msgstr "เซิฟเวอร์ได้ปฏิเสธการเชื
 
 #: ../Network/Receive.pm:3642
 msgid "Error logging into Character Server (invalid character specified)...\n"
-msgstr ""
-"พบการผิดพลาดในการเชื่อมต่อสู่ Character Server (invalid character specified)...\n"
+msgstr "พบการผิดพลาดในการเชื่อมต่อสู่ Character Server (invalid character specified)...\n"
 
-#: ../Network/Receive.pm:3669 ../Network/Receive.pm:3733
+#: ../Network/Receive.pm:3669
+#: ../Network/Receive.pm:3733
 #: ../Network/Receive.pm:4641
-#, fuzzy, perl-format
+#, perl-format
 msgid "Cannot load field %s: %s\n"
-msgstr "ล้มเหลวในการโหลด %s: %s\n"
+msgstr "ล้มเหลวในการโหลดแผนที่ %s: %s\n"
 
 #: ../Network/Receive.pm:3698
 #, perl-format
 msgid "Map Change: %s (%s, %s)\n"
 msgstr "พิกัดในแผนที่ได้ถูกเปลี่ยน: %s (%s, %s)\n"
 
-#: ../Network/Receive.pm:3762 ../Network/XKoreProxy.pm:490
+#: ../Network/Receive.pm:3762
+#: ../Network/XKoreProxy.pm:490
 msgid "Closing connection to Map Server\n"
 msgstr "Closing connection to Map Server\n"
 
-#: ../Network/Receive.pm:3813 ../Network/Receive/ServerType0.pm:41
-#: ../Network/Receive/ServerType15.pm:32 ../Network/Receive/ServerType19.pm:32
+#: ../Network/Receive.pm:3813
+#: ../Network/Receive/ServerType0.pm:41
+#: ../Network/Receive/ServerType15.pm:32
+#: ../Network/Receive/ServerType19.pm:32
 #: ../Network/Receive/ServerType20.pm:32
 msgid "Waiting for map to load...\n"
 msgstr "กำลังรอให้โหลดแมปเสร็จ...\n"
 
-#: ../Network/Receive.pm:3824 ../Network/Receive/ServerType0.pm:52
-#: ../Network/Receive/ServerType15.pm:46 ../Network/Receive/ServerType19.pm:46
+#: ../Network/Receive.pm:3824
+#: ../Network/Receive/ServerType0.pm:52
+#: ../Network/Receive/ServerType15.pm:46
+#: ../Network/Receive/ServerType19.pm:46
 #: ../Network/Receive/ServerType20.pm:46
 msgid "You are now in the game\n"
 msgstr "คุณได้เข้าสูเกมส์แล้ว\n"
 
-#: ../Network/Receive.pm:3836 ../Network/Receive/ServerType0.pm:60
-#: ../Network/Receive/ServerType15.pm:53 ../Network/Receive/ServerType19.pm:53
+#: ../Network/Receive.pm:3836
+#: ../Network/Receive/ServerType0.pm:60
+#: ../Network/Receive/ServerType15.pm:53
+#: ../Network/Receive/ServerType19.pm:53
 #: ../Network/Receive/ServerType20.pm:53
 #, perl-format
 msgid "Your Coordinates: %s, %s\n"
@@ -5012,7 +5028,8 @@ msgstr "ตัวชี้บน Minimap ที่พิกัด %d, %d ที�
 msgid "Monster %s (%d) changed to %s\n"
 msgstr "มอนสเตอร์ %s (%d) ได้เปลี่ยนเป็น %s\n"
 
-#: ../Network/Receive.pm:3912 ../Network/Receive.pm:3913
+#: ../Network/Receive.pm:3912
+#: ../Network/Receive.pm:3913
 #, perl-format
 msgid "Get MVP item %s\n"
 msgstr "ได้รับ MVP ไอเท็ม %s\n"
@@ -5187,16 +5204,16 @@ msgid "%s changed Shoes to: %s\n"
 msgstr "%s เปลี่ยนรองเท้าเป็น %s\n"
 
 #: ../Network/Receive.pm:4465
-#, fuzzy
 msgid "Unknown field,"
-msgstr "พบสัตว์เลี้ยงที่ไม่รู้จัก #%s"
+msgstr "ไม่รู้จักแผนที่นี้ "
 
 #: ../Network/Receive.pm:4477
 #, perl-format
 msgid "%s%s\n"
-msgstr ""
+msgstr "%s%s\n"
 
-#: ../Network/Receive.pm:4509 ../Network/Receive.pm:4510
+#: ../Network/Receive.pm:4509
+#: ../Network/Receive.pm:4510
 #, perl-format
 msgid "(From: %s) : %s\n"
 msgstr "(จาก: %s) : %s\n"
@@ -5252,7 +5269,8 @@ msgstr ""
 "Port ของแผนที่: %s\n"
 "-----------------------------\n"
 
-#: ../Network/Receive.pm:4660 ../Network/XKoreProxy.pm:488
+#: ../Network/Receive.pm:4660
+#: ../Network/XKoreProxy.pm:488
 msgid "Closing connection to Character Server\n"
 msgstr "ทำการเชื่อมต่อกับ Character Server\n"
 
@@ -5318,43 +5336,43 @@ msgstr "TaeKwon Mission : "
 
 #: ../Network/Receive.pm:4811
 msgid "All abnormal status effects have been removed.\n"
-msgstr ""
+msgstr "ความผิดปกติทั้งหมดได้ถูกแก้ไข\n"
 
 #: ../Network/Receive.pm:4813
 msgid "You will be immune to abnormal status effects for the next minute.\n"
-msgstr ""
+msgstr "คุณจะไม่โดนสถานที่ไม่ดี เป็นเวลา 1 นาที\n"
 
 #: ../Network/Receive.pm:4815
 msgid "Your Max HP will stay increased for the next minute.\n"
-msgstr ""
+msgstr "ค่า HP สูงสุดของคุณเพิ่มขึ้นเป็นเวลา 1 นาที\n"
 
 #: ../Network/Receive.pm:4817
 msgid "Your Max SP will stay increased for the next minute.\n"
-msgstr ""
+msgstr "ค่า SP สูงสุดของคุณเพิ่มขึ้นเป็นเวลา 1 นาที\n"
 
 #: ../Network/Receive.pm:4819
 msgid "All of your Stats will stay increased for the next minute.\n"
-msgstr ""
+msgstr "Status ทั้งหมดเพิ่มขึ้นเป็นเวลา 1 นาที\n"
 
 #: ../Network/Receive.pm:4821
 msgid "Your weapon will remain blessed with Holy power for the next minute.\n"
-msgstr ""
+msgstr "อาวุธของคุณจะอยู่ในสถานะ ศักดิ์สิทธิ์ เป็นเวลา 1 นาที\n"
 
 #: ../Network/Receive.pm:4823
 msgid "Your armor will remain blessed with Holy power for the next minute.\n"
-msgstr ""
+msgstr "เกราะของคุณจะอยู่ในสถานะ ศักดิ์สิทธิ์ เป็นเวลา 1 นาที\n"
 
 #: ../Network/Receive.pm:4825
 msgid "Your Defense will stay increased for the next 10 seconds.\n"
-msgstr ""
+msgstr "DEF ของคุณจะเพิ่มขึ้นเป็นเวลา 10 วินาที\n"
 
 #: ../Network/Receive.pm:4827
 msgid "Your Attack strength will stay increased for the next minute.\n"
-msgstr ""
+msgstr "ATK ของคุณเพิ่มขึ้นเป็เวลา 1 นาที\n"
 
 #: ../Network/Receive.pm:4829
 msgid "Your Accuracy and Flee Rate will stay increased for the next minute.\n"
-msgstr ""
+msgstr "HIT และ FLEE ของคุณเพิ่มขึ้นเป็เวลา 1 นาที\n"
 
 #: ../Network/Receive.pm:4840
 msgid "Unavailable Area To Teleport\n"
@@ -5369,11 +5387,13 @@ msgstr "ไม่อนุญาตให้จดจำจุดวาปใน
 msgid "Unavailable Area To Teleport (fail code %s)\n"
 msgstr "ไม่อนุญาตให้ Teleport ในพื้นที่นี้ (fail code %s)\n"
 
-#: ../Network/Receive.pm:4856 ../Network/Receive.pm:4871
+#: ../Network/Receive.pm:4856
+#: ../Network/Receive.pm:4871
 msgid "PvP Display Mode\n"
 msgstr "คุณอบู่ในพื้นที่ PvP Mode\n"
 
-#: ../Network/Receive.pm:4859 ../Network/Receive.pm:4874
+#: ../Network/Receive.pm:4859
+#: ../Network/Receive.pm:4874
 msgid "GvG Display Mode\n"
 msgstr "คุณอบู่ในพื้นที่ GvG Mode\n"
 
@@ -5469,7 +5489,8 @@ msgstr "คุณได้ถูกห้ามพูดคุยและใช
 msgid "You are now level %s\n"
 msgstr "ตอนนี้คุณ level %s แล้ว\n"
 
-#: ../Network/Receive.pm:5523 ../Network/Receive.pm:5524
+#: ../Network/Receive.pm:5523
+#: ../Network/Receive.pm:5524
 #, perl-format
 msgid "Disconnecting on level %s!\n"
 msgstr "ยกเลิกการติดต่อเมื่อ level %s!\n"
@@ -5479,7 +5500,8 @@ msgstr "ยกเลิกการติดต่อเมื่อ level %s!\n
 msgid "You are now job level %s\n"
 msgstr "ตอนนี้คุณ job level %s\n"
 
-#: ../Network/Receive.pm:5584 ../Network/Receive.pm:5585
+#: ../Network/Receive.pm:5584
+#: ../Network/Receive.pm:5585
 #, perl-format
 msgid "Disconnecting on job level %s!\n"
 msgstr "ยกเลิกการติดต่อเมื่อ job level %s!\n"
@@ -5512,32 +5534,29 @@ msgid ""
 "You must set a storage password before you can use the storage.\n"
 "Please enter a new storage password:"
 msgstr ""
+"คุณยะงไม่ได้ตั้งรหัสผ่านสำหรับคลังเก็บของ\n"
+"คุณจะต้องตั้งรหัสผ่านเสียก่อน จึงจะสามารถใช้คลังเก็บของได้\n"
+"โปรดป้อนรหัส:"
 
-#: ../Network/Receive.pm:5789 ../Network/Receive.pm:5825
-msgid ""
-"Unable to send character password. You must set the 'storageEncryptKey' "
-"option in config.txt or servers.txt.\n"
-msgstr ""
-"ไม่สามารส่งรหัสผ่านตัวละครได้ คุณจะต้องตั้งค่า 'storageEncryptKey' ใน config.txt หรือ "
-"servers.txt\n"
+#: ../Network/Receive.pm:5789
+#: ../Network/Receive.pm:5825
+msgid "Unable to send character password. You must set the 'storageEncryptKey' option in config.txt or servers.txt.\n"
+msgstr "ไม่สามารส่งรหัสผ่านตัวละครได้ คุณจะต้องตั้งค่า 'storageEncryptKey' ใน config.txt หรือ servers.txt\n"
 
-#: ../Network/Receive.pm:5790 ../Network/Receive.pm:5826
-msgid ""
-"Unable to send storage password. You must set the 'storageEncryptKey' option "
-"in config.txt or servers.txt.\n"
-msgstr ""
-"ไม่สามารส่งรหัสผ่านที่เก็บของได้ คุณจะต้องตั้งค่า 'storageEncryptKey' ใน config.txt หรือ "
-"servers.txt\n"
+#: ../Network/Receive.pm:5790
+#: ../Network/Receive.pm:5826
+msgid "Unable to send storage password. You must set the 'storageEncryptKey' option in config.txt or servers.txt.\n"
+msgstr "ไม่สามารส่งรหัสผ่านที่เก็บของได้ คุณจะต้องตั้งค่า 'storageEncryptKey' ใน config.txt หรือ servers.txt\n"
 
-#: ../Network/Receive.pm:5797 ../Network/Receive.pm:5818
+#: ../Network/Receive.pm:5797
+#: ../Network/Receive.pm:5818
 #, perl-format
 msgid "Storage password set to: %s\n"
 msgstr "รหัสผ่านที่เก็บของได้ถูกเปลี่ยนเป็น: %s\n"
 
 #: ../Network/Receive.pm:5804
-#, fuzzy
 msgid "Please enter your character password."
-msgstr "กรุณาป้อนรหัสผ่านตัวละคร:\n"
+msgstr "กรุณาป้อนรหัสผ่านตัวละคร"
 
 #: ../Network/Receive.pm:5809
 #, perl-format
@@ -5545,9 +5564,8 @@ msgid "Character password set to: %s\n"
 msgstr "รหัสผ่านตัวละครได้ถูกเปลี่ยนเป็น: %s\n"
 
 #: ../Network/Receive.pm:5813
-#, fuzzy
 msgid "Please enter your storage password."
-msgstr "กรุณาป้อนรหัสผ่านเพื่อเปิดที่เก็บของ:\n"
+msgstr "กรุณาป้อนรหัสผ่านเพื่อเปิดที่เก็บของ"
 
 #: ../Network/Receive.pm:5837
 msgid "You have entered the wrong password 5 times. Please try again later.\n"
@@ -5557,7 +5575,8 @@ msgstr "คุณได้ป้อนรหัสผ่านผิด 5 คร
 msgid "Successfully changed storage password.\n"
 msgstr "การตั้งรหัสผ่านที่เก็บของเรียบร้อย\n"
 
-#: ../Network/Receive.pm:5860 ../Network/Receive.pm:5864
+#: ../Network/Receive.pm:5860
+#: ../Network/Receive.pm:5864
 msgid "Error: Incorrect storage password.\n"
 msgstr "พบข้อผิดพลาด รหัสผ่านเปิดที่เก็บของไม่ถูกต้อง\n"
 
@@ -5565,45 +5584,36 @@ msgstr "พบข้อผิดพลาด รหัสผ่านเปิ�
 msgid "Successfully entered storage password.\n"
 msgstr "เปิดที่เก็บของด้วนรหัสผ่าน สำเร็จ\n"
 
-#: ../Network/Receive.pm:5891 ../Network/Receive.pm:5902
-#: ../Network/Receive.pm:5928 ../Network/Receive.pm:5941
-#, fuzzy
-msgid ""
-"Unable to send PIN code. You must set the 'PINEncryptKey' option in servers."
-"txt."
-msgstr ""
-"ไม่สามารส่งรหัสผ่านที่เก็บของได้ คุณจะต้องตั้งค่า 'storageEncryptKey' ใน config.txt หรือ "
-"servers.txt\n"
+#: ../Network/Receive.pm:5891
+#: ../Network/Receive.pm:5902
+#: ../Network/Receive.pm:5928
+#: ../Network/Receive.pm:5941
+msgid "Unable to send PIN code. You must set the 'PINEncryptKey' option in servers.txt."
+msgstr "ไม่สามารส่ง PIN ได้ คุณจะต้องตั้งค่า 'PINEncryptKey' ใน servers.txt"
 
 #: ../Network/Receive.pm:5909
-#, fuzzy
 msgid "Login PIN code has been changed successfully.\n"
-msgstr "%s เปลี่ยนโล่เป็น %s\n"
+msgstr "ประสบความสำเร็จในหารเปลี่ยน PIN\n"
 
 #: ../Network/Receive.pm:5912
 msgid "Failed to change the login PIN code. Please try again.\n"
-msgstr ""
+msgstr "ล้มเหลวในการเปลี่ยน PIN กรุณรลองใหม่อีกครั้ง\n"
 
 #: ../Network/Receive.pm:5915
-#, fuzzy
 msgid "Please enter your old login PIN code:"
-msgstr "กรุณา ตั้งรหัสผ่าน ที่เก็บของใหม่:\n"
+msgstr "กรุณาป้อน PIN เดิม:"
 
 #: ../Network/Receive.pm:5920
-#, fuzzy
 msgid "Please enter a new login PIN code:"
-msgstr "กรุณา ตั้งรหัสผ่าน ที่เก็บของใหม่:\n"
+msgstr "กรุณาป้อน PIN ใหม่:"
 
 #: ../Network/Receive.pm:5937
-msgid ""
-"The login PIN code that you entered is incorrect. Please re-enter your login "
-"PIN code."
-msgstr ""
+msgid "The login PIN code that you entered is incorrect. Please re-enter your login PIN code."
+msgstr "PIN ที่คุณป้อนผิด กรุณาป้อน PIN ใหม่"
 
 #: ../Network/Receive.pm:5949
-msgid ""
-"You have entered 3 incorrect login PIN codes in a row. Reconnecting...\n"
-msgstr ""
+msgid "You have entered 3 incorrect login PIN codes in a row. Reconnecting...\n"
+msgstr "คุณได้ป้อน PIN ผิดติดต่อกัน 3 ครั้ง  ทำการเชื่อมต่อใหม่...\n"
 
 #. Translation Comment: System/GM chat
 #: ../Network/Receive.pm:5991
@@ -5694,8 +5704,7 @@ msgstr "ขณะนี้มีผู้เล่น %s คนได้ online 
 #, perl-format
 msgid ""
 "%s\n"
-"#  Name                                       Type           Amount       "
-"Price\n"
+"#  Name                                       Type           Amount       Price\n"
 msgstr ""
 "%s\n"
 "#  ชื่อ                                       ชนิด           จำนวน       ราคา\n"
@@ -5719,8 +5728,7 @@ msgstr "การซื้อไอเท็ม %s ล้มเหลว  ลำ
 #, perl-format
 msgid ""
 "%s\n"
-"#  Name                                          Type        Amount       "
-"Price\n"
+"#  Name                                          Type        Amount       Price\n"
 msgstr ""
 "%s\n"
 "#  ชื่อ                                          ชนิด        จำนวน       ราคา\n"
@@ -5736,7 +5744,8 @@ msgstr ""
 "คุณสามารเชื่อมต่อกับ X-Kore ได้เพียงหนึ่งการเชื่อมต่อเท่านั้น\n"
 "และต้องแน่ใจว่าไม่มี server อื่นๆรันที่ port %s ด้วย\n"
 
-#: ../Network/XKore.pm:77 ../Network/XKoreProxy.pm:82
+#: ../Network/XKore.pm:77
+#: ../Network/XKoreProxy.pm:82
 msgid "X-Kore mode intialized.\n"
 msgstr "X-Kore mode ได้ถูกเริ่มขึ้นมาแล้ว\n"
 
@@ -5818,12 +5827,13 @@ msgstr "Client ไม่ตอบสนอง ทำการบังคับ�
 msgid "Logon-grant packet received twice! Avoiding bug in client.\n"
 msgstr "Logon-grant packet ได้รับมาสองครั้ง! ระวังบัค.\n"
 
-#: ../Network/XKoreProxy.pm:559 ../functions.pl:323
-#, fuzzy
+#: ../Network/XKoreProxy.pm:559
+#: ../functions.pl:323
 msgid "Please choose a master server to connect to."
-msgstr "กรุณาเลือกเซิฟเวอร์ที่ต้องการเชื่อมต่อ:"
+msgstr "กรุณาเลือกเซิฟเวอร์ที่ต้องการเชื่อมต่อ"
 
-#: ../Network/XKoreProxy.pm:561 ../functions.pl:325
+#: ../Network/XKoreProxy.pm:561
+#: ../functions.pl:325
 msgid "Master servers"
 msgstr "Master servers"
 
@@ -5852,11 +5862,15 @@ msgstr "Poseidon: ส่งผลการทำงานให้กับ clie
 msgid "Poseidon: Querying Ragnarok Online client.\n"
 msgstr "Poseidon: จัดคิวให้ Ragnarok Online client.\n"
 
-#: ../AI/Attack.pm:106 ../AI/Attack.pm:217 ../AI/Attack.pm:390
+#: ../AI/Attack.pm:106
+#: ../AI/Attack.pm:217
+#: ../AI/Attack.pm:390
 msgid "Dropping target - you will not kill steal others\n"
 msgstr "ยกเลิกเป้าหมาย - คุณจะไม่แจมผู้อื่น\n"
 
-#: ../AI/Attack.pm:118 ../AI/Attack.pm:159 ../AI/Attack.pm:229
+#: ../AI/Attack.pm:118
+#: ../AI/Attack.pm:159
+#: ../AI/Attack.pm:229
 #: ../AI/Attack.pm:540
 msgid "Teleport due to dropping attack target\n"
 msgstr "Teleport เนื่องจากได้ยกเลิกเป้าหมาย\n"
@@ -5878,7 +5892,8 @@ msgstr "เป้าหมายตายแล้ว\n"
 msgid "Target lost\n"
 msgstr "เป้าหมายหายไป\n"
 
-#: ../AI/Attack.pm:442 ../AI/Homunculus.pm:623
+#: ../AI/Attack.pm:442
+#: ../AI/Homunculus.pm:623
 #, perl-format
 msgid "%s; moving to (%s, %s)\n"
 msgstr "%s; เดินไปที่ (%s, %s)\n"
@@ -5912,7 +5927,8 @@ msgstr ""
 "พิกัดที่กำหนดใว้สำหรับ randomWalk ใช้ไม่ได้\n"
 "กำลังลองใหม่..."
 
-#: ../AI/CoreLogic.pm:569 ../AI/CoreLogic.pm:1919
+#: ../AI/CoreLogic.pm:569
+#: ../AI/CoreLogic.pm:1919
 #, perl-format
 msgid "Calculating random route to: %s(%s): %s, %s\n"
 msgstr "กำลังคำนวณหาเส้นทางเดินสุ่มไปยัง: %s(%s): %s, %s\n"
@@ -5926,7 +5942,8 @@ msgstr "หมดเวลาในการสวมใส่เพื่อใ
 msgid "Failed to take %s (%s) from (%s, %s) to (%s, %s)\n"
 msgstr "การเก็บล้มเหลว %s (%s) จาก (%s, %s) ถึง (%s, %s)\n"
 
-#: ../AI/CoreLogic.pm:787 ../AI/CoreLogic.pm:2839
+#: ../AI/CoreLogic.pm:787
+#: ../AI/CoreLogic.pm:2839
 #, perl-format
 msgid "Routing to (%s, %s) to take %s (%s), distance %s\n"
 msgstr "กำหนดเส้นทางไปที่ (%s, %s) เพื่อเก็บ %s (%s), ระยะทาง %s\n"
@@ -5976,7 +5993,9 @@ msgstr "*** คุณได้ตาย กำลังยกเลิกกา�
 msgid "Auto-storaging due to excess weight\n"
 msgstr "กำลังจะเก็บของโดยอัตโนมัติ เนื่องจากถึงน้ำหนักที่ตั้งใว้\n"
 
-#: ../AI/CoreLogic.pm:1114 ../AI/CoreLogic.pm:1115 ../AI/CoreLogic.pm:2233
+#: ../AI/CoreLogic.pm:1114
+#: ../AI/CoreLogic.pm:1115
+#: ../AI/CoreLogic.pm:2233
 #: ../AI/CoreLogic.pm:2234
 #, perl-format
 msgid "Disconnecting on empty %s!\n"
@@ -6008,8 +6027,8 @@ msgstr "ใช้ลำดับการใช้คลังเก็บขอ
 msgid "Something is wrong with storageAuto_npc_type in your config.\n"
 msgstr "มีบางอย่าผิดพลาดกับ storageAuto_npc_type ในคอนฟิกของคุณ\n"
 
-#: ../AI/CoreLogic.pm:1246 ../AI/CoreLogic.pm:1247
-#, fuzzy
+#: ../AI/CoreLogic.pm:1246
+#: ../AI/CoreLogic.pm:1247
 msgid "Disconnecting because storage is full!\n"
 msgstr "ยกเลิกการติดต่อเนื่องจากคลังเก็บของเต็ม!\n"
 
@@ -6037,7 +6056,8 @@ msgstr ""
 msgid "Character is still overweight after storageAuto (storage is full?)\n"
 msgstr "ตัวละครยังคงน้ำหนักเกิน หลังจากใช้คลังเก็บของ (คลังเก็บของเต็มหรือเปล่า?)\n"
 
-#: ../AI/CoreLogic.pm:1391 ../AI/CoreLogic.pm:1392
+#: ../AI/CoreLogic.pm:1391
+#: ../AI/CoreLogic.pm:1392
 msgid "Disconnecting on storage full!\n"
 msgstr "ยกเลิกการติดต่อเนื่องจากคลังเก็บของเต็ม!\n"
 
@@ -6098,12 +6118,8 @@ msgid "Auto-adding skill %s\n"
 msgstr "กำลังอัพ skill %s ให้โดยอัตโนมัติ\n"
 
 #: ../AI/CoreLogic.pm:1916
-msgid ""
-"Invalid coordinates specified for randomWalk (coordinates are unwalkable); "
-"randomWalk disabled\n"
-msgstr ""
-"พิกัดที่กำหนดให้กับ randomWalk ไม่สามารถใช้ได้ (พิกัดดังกล่าวเป็นพื้นที่ๆไม่สามารถเดินได้); "
-"ยกเลิกการทำงานฟังก์ชั่น randomWalk\n"
+msgid "Invalid coordinates specified for randomWalk (coordinates are unwalkable); randomWalk disabled\n"
+msgstr "พิกัดที่กำหนดให้กับ randomWalk ไม่สามารถใช้ได้ (พิกัดดังกล่าวเป็นพื้นที่ๆไม่สามารถเดินได้); ยกเลิกการทำงานฟังก์ชั่น randomWalk\n"
 
 #: ../AI/CoreLogic.pm:1951
 #, perl-format
@@ -6126,11 +6142,13 @@ msgstr "ผมหลงกับเจ้านาย\n"
 msgid "Trying to get him back\n"
 msgstr "พยายามเอาเขากลับคืนมา\n"
 
-#: ../AI/CoreLogic.pm:2024 ../AI/CoreLogic.pm:2109
+#: ../AI/CoreLogic.pm:2024
+#: ../AI/CoreLogic.pm:2109
 msgid "My master disconnected\n"
 msgstr "เจ้านายยกเลิกการติดต่อแล้ว\n"
 
-#: ../AI/CoreLogic.pm:2060 ../AI/CoreLogic.pm:2137
+#: ../AI/CoreLogic.pm:2060
+#: ../AI/CoreLogic.pm:2137
 msgid "My master teleported\n"
 msgstr "เจ้านายได้เทเลพอทหนีไปแล้ว\n"
 
@@ -6201,18 +6219,17 @@ msgid "** Respawning to save point.\n"
 msgstr "** กลับไปเกิดยังจุดเซฟ\n"
 
 #: ../AI/CoreLogic.pm:3034
-#, fuzzy, perl-format
+#, perl-format
 msgid "Disconnecting for 30 secs to avoid %s\n"
-msgstr "ยกเลิกการติดต่อเพื่อหนี %s!\n"
+msgstr "ยกเลิกการติดต่อ เป็นเวลา 30 วินาที เพื่อหลีกเลี่ยง %s\n"
 
 #: ../AI/CoreLogic.pm:3068
 msgid "Player detected, disconnecting!\n"
-msgstr ""
+msgstr "ตรวจพบผู้เล่น ยกเลิกการเชื่อมต่อ!\n"
 
 #: ../AI/CoreLogic.pm:3069
-#, fuzzy
 msgid "*** Player detected, disconnecting! ***\n"
-msgstr "*** คุณได้ตาย กำลังยกเลิกการติดต่อ! ***\n"
+msgstr "*** ตรวจพบผู้เล่น กำลังยกเลิกการติดต่อ! ***\n"
 
 #: ../AI/Homunculus.pm:187
 msgid "Auto-feeding your Homunculus ("
@@ -6228,9 +6245,7 @@ msgstr "พยายามเอา Homunculus กลับคืนมา\n"
 
 #: ../AI/Homunculus.pm:256
 #, perl-format
-msgid ""
-"Trying to find your homunculus at location %d, %d (you are currently at %d, %"
-"d)\n"
+msgid "Trying to find your homunculus at location %d, %d (you are currently at %d, %d)\n"
 msgstr "กำลังลองหา homunculus ของคุณที่ตำแหน่ง %d, %d (ตอนนี้คุณอยู่ที่ %d, %d)\n"
 
 #: ../AI/Homunculus.pm:264
@@ -6246,7 +6261,9 @@ msgstr "Homunculus ทำการโจมตี: %s\n"
 msgid "Homunculus can't reach or damage target, dropping target\n"
 msgstr "Homunculus ไม่สามารถไปถึงหรือทำความเสียหายให้เป้าหมาย, ยกเลิกเป้าหมาย\n"
 
-#: ../AI/Homunculus.pm:486 ../AI/Homunculus.pm:721 ../AI/Homunculus.pm:779
+#: ../AI/Homunculus.pm:486
+#: ../AI/Homunculus.pm:721
+#: ../AI/Homunculus.pm:779
 msgid "Teleport due to dropping homunculus attack target\n"
 msgstr "Teleport เนื่องจากได้ยกเลิกเป้าหมายของ Homunculus\n"
 
@@ -6258,7 +6275,8 @@ msgstr "เป้าหมายของ Homunculus ตายแล้ว\n"
 msgid "Homunculus target lost\n"
 msgstr "เป้าหมายของ Homunculus หายไป\n"
 
-#: ../AI/Homunculus.pm:582 ../AI/Homunculus.pm:767
+#: ../AI/Homunculus.pm:582
+#: ../AI/Homunculus.pm:767
 msgid "Dropping target - homunculus will not kill steal others\n"
 msgstr "ยกเลิกเป้าหมาย - Homunculus ของคุณจะไม่แจมผู้อื่น\n"
 
@@ -6271,25 +6289,25 @@ msgstr "%s; ไม่มีที่สำหรับให้ homunculus ข�
 msgid "Unable to calculate a route to homunculus target, dropping target\n"
 msgstr "ไม่สามารคำนวณหาเส้นทางไปถึงเป้าหมายของ Homunculus ได้, ยกเลิกเป้าหมาย\n"
 
-#: ../AI/Homunculus.pm:859 ../AI/Homunculus.pm:951
+#: ../AI/Homunculus.pm:859
+#: ../AI/Homunculus.pm:951
 msgid "Homunculus destination reached.\n"
 msgstr "Homunculus ถึงปลายทางแล้ว\n"
 
 #: ../AI/Homunculus.pm:886
 #, perl-format
-msgid ""
-"Homunculus is stuck at %s (%d,%d), while walking from (%d,%d) to (%d,%d)."
+msgid "Homunculus is stuck at %s (%d,%d), while walking from (%d,%d) to (%d,%d)."
 msgstr "Homunculus ติดอยู่ที่ %s (%d,%d), ระหว่างที่เดินจาก (%d,%d) ถึง (%d,%d)."
 
 #: ../Task/CalcMapRoute.pm:114
-#, fuzzy, perl-format
+#, perl-format
 msgid "Cannot load field '%s'."
-msgstr "คุณไม่สามารซื้อขายได้ (fail code %s).\n"
+msgstr "ไม่สามารถโหลดแผนที่ '%s'"
 
 #: ../Task/CalcMapRoute.pm:160
-#, fuzzy, perl-format
+#, perl-format
 msgid "Cannot calculate a route from %s (%d,%d) to %s %s"
-msgstr "กำลังคำนวณหาเส้นทางไปยัง: %s(%s): %s, %s\n"
+msgstr "กำลังคำนวณหาเส้นทางจาก %s (%d,%d) ไปยัง %s %s"
 
 #: ../Task/CheckPoints.pm:62
 #, perl-format
@@ -6331,85 +6349,77 @@ msgid "Destination reached.\n"
 msgstr "ถึงปลายทางแล้ว\n"
 
 #: ../Task/Route.pm:261
-#, fuzzy
 msgid " Teleporting to unstuck."
-msgstr "กำลังเทเลพอทกลับไปซื้อของโดยอัตโนมัติ\n"
+msgstr "กำลังเทเลพอทเพื่อแก้อาการเดินติด"
 
 #: ../Task/Route.pm:265
 msgid "Stuck during route."
-msgstr ""
+msgstr "ติด ในระหว่างการเดินทาง"
 
 #: ../Task/SitStand.pm:100
 msgid "Basic Skill level 3 is required in order to sit or stand."
-msgstr ""
+msgstr "ต้องการ Basic Skill level 3 ในการนั่ง"
 
 #: ../Task/TalkNPC.pm:112
-#, fuzzy, perl-format
+#, perl-format
 msgid "Could not find an NPC at location (%d,%d)."
-msgstr "ไม่พบ NPC ในตำแหน่งที่ได้กำหนดใว้\n"
+msgstr "ไม่พบ NPC ในตำแหน่ง (%d,%d)"
 
 #: ../Task/TalkNPC.pm:148
-#, fuzzy
 msgid "The NPC did not respond."
-msgstr "NPC ไม่ตอบสนอง\n"
+msgstr "NPC ไม่ตอบสนอง"
 
 #: ../Task/TalkNPC.pm:206
-msgid ""
-"According to the given NPC instructions, the Next button must now be clicked "
-"on, but that's not possible."
-msgstr ""
+msgid "According to the given NPC instructions, the Next button must now be clicked on, but that's not possible."
+msgstr "เนื่องจาก ลำดับการพูดคุยกับ NPC ตอนนี้จะต้องกดปุม Next แต่ว่าตอนนี้ไม่สามารถทำได้"
 
 #: ../Task/TalkNPC.pm:219
 #, perl-format
-msgid ""
-"According to the given NPC instructions, menu item %d must now be selected, "
-"but there are only %d menu items."
-msgstr ""
+msgid "According to the given NPC instructions, menu item %d must now be selected, but there are only %d menu items."
+msgstr "เนื่องจาก ลำดับการพูดคุยกับ NPC เมนูหมายเลข %d จะต้องถูกเลือกในตอนนี้ แต่ว่ามีเพียง %d ตัวเลือกเท่านั้น"
 
 #: ../Task/TalkNPC.pm:226
-msgid ""
-"According to the given NPC instructions, a menu item must now be selected, "
-"but that's not possible."
-msgstr ""
+msgid "According to the given NPC instructions, a menu item must now be selected, but that's not possible."
+msgstr "เนื่องจาก ลำดับการพูดคุยกับ NPC เมนูจะต้องถูกเลือกในตอนนี้ แต่ว่าตอนนี้ไม่สามารถทำได้"
 
 #: ../Task/TalkNPC.pm:246
 #, perl-format
 msgid "Shop item %d not found."
-msgstr ""
+msgstr "ไม่พบไอเท็มในร้านค้า: %d"
 
 #: ../Task/UseSkill.pm:289
 #, perl-format
 msgid "Skill %s cannot be used because your character has no such skill."
-msgstr ""
+msgstr "สกิล %s ไม่สามารถใช้ได้เนื่องจากคุณไม่มีสกิลนี้"
 
-#: ../Task/UseSkill.pm:321 ../Task/UseSkill.pm:337
-#, fuzzy
+#: ../Task/UseSkill.pm:321
+#: ../Task/UseSkill.pm:337
 msgid "Target lost."
-msgstr "เป้าหมายหายไป\n"
+msgstr "เป้าหมายหายไป"
 
 #: ../Task/UseSkill.pm:346
 #, perl-format
 msgid "Unable to cast skill %s in %d tries."
-msgstr ""
+msgstr "ไม่สามารถร่ายสกิล %s ใน %d ครั้ง"
 
-#: ../Task/UseSkill.pm:352 ../Task/UseSkill.pm:386
-#, fuzzy, perl-format
+#: ../Task/UseSkill.pm:352
+#: ../Task/UseSkill.pm:386
+#, perl-format
 msgid "Casting failed: %s (%d)"
-msgstr "ไอเท็มได้ถูกตรวจสอบแล้ว: %s (%d)\n"
+msgstr "การร่ายเวทย์ล้มเหลว: %s (%d)"
 
 #: ../Task/UseSkill.pm:370
-#, fuzzy
 msgid "Casting has been cancelled."
-msgstr "รายการขายได้ถูกลบแล้ว\n"
+msgstr "การร่ายเวทย์ได้ถูกยกเลิก"
 
 #: ../Task/UseSkill.pm:381
-#, fuzzy, perl-format
+#, perl-format
 msgid "Unable to cast skill in %d tries."
-msgstr "ไม่สามารถโหลด plugin %s: %s\n"
+msgstr "ไม่สามารถร่ายสกิลได้ใน %d ครั้ง"
 
 #: ../Task/UseSkill.pm:391
 msgid "Casting is supposed to be finished now, but nothing happened."
-msgstr ""
+msgstr "การร่ายเวทย์น่าจะเสร็จแล้ว แต่ไม่มีอะไรเกิดขึ้น"
 
 #: ../../openkore.pl:128
 #, perl-format
@@ -6440,40 +6450,40 @@ msgstr ""
 "กรุณาอ่าน %s"
 
 #: ../../openkore.pl:151
-#, fuzzy, perl-format
+#, perl-format
 msgid ""
 "Your version of (wx)start.exe is incompatible.\n"
 "Please upgrade it by reading %s"
 msgstr ""
-"เวอร์ชั่นของ XSTools ไม่สามารเข้ากันได้\n"
-"กรุณาอ่าน %s"
+"เวอร์ชั่นของ (wx)start.exe ไม่สามารเข้ากันได้\n"
+"กรุณาอัพเกรด โดยอ่าน %s"
 
 #: ../../openkore.pl:154
-#, fuzzy, perl-format
+#, perl-format
 msgid ""
 "Your version of XSTools library is incompatible.\n"
 "Please upgrade it by reading %s"
 msgstr ""
 "เวอร์ชั่นของ XSTools ไม่สามารเข้ากันได้\n"
-"กรุณาอ่าน %s"
+"กรุณาอัพเกรด โดยอ่าน %s"
 
 #: ../../openkore.pl:162
-#, fuzzy, perl-format
+#, perl-format
 msgid ""
 "Your version of (wx)start.exe is too old.\n"
 "Please upgrade it by reading %s"
 msgstr ""
-"เวอร์ชั่นของ %s (%s%s) เก่าเกินไป\n"
-"กรุณาอัพเกรดให้เป็นรุ่นล่าสุด %s\n"
+"เวอร์ชั่นของ (wx)start.exe เก่าเกินไป\n"
+"กรุณาอัพเกรดให้เป็นรุ่นล่าสุด โดยอ่าน %s"
 
 #: ../../openkore.pl:165
-#, fuzzy, perl-format
+#, perl-format
 msgid ""
 "Your version of the XSTools library is too old.\n"
 "Please upgrade it by reading %s"
 msgstr ""
-"เวอร์ชั่นของ XSTools เก่าเกินไป กรุณาดาวน์โหลดใหม่\n"
-"กรุณาอ่าน %s"
+"เวอร์ชั่นของ XSTools เก่าเกินไป\n"
+"กรุณาอัพเกรด โดยอ่าน %s"
 
 #. Translation Comment: Kore's exit message
 #: ../../openkore.pl:176
@@ -6483,18 +6493,20 @@ msgstr "โชคดี!\n"
 #: ../functions.pl:114
 #, perl-format
 msgid ""
-"This plugin cannot be loaded because of a problem in the plugin. Please "
-"notify the plugin's author about this problem, or remove the plugin so %s "
-"can start.\n"
+"This plugin cannot be loaded because of a problem in the plugin. Please notify the plugin's author about this problem, or remove the plugin so %s can start.\n"
 "\n"
 "The error message is:\n"
 "%s"
 msgstr ""
+"ปลั๊กอินนี้ไม่สามารถโหลดได้ เนื่องจากความผิดพลาดในตัวปลั๊กอินเอง กรุณาแจ้งผู้สร้างปลั๊กอินนี้ หรือลบปลั๊กอินนี้ เพื่อให้ %s สามารถเริ่มการทำงานได้\n"
+"\n"
+"ข้อความระบุความผิดพลาด:\n"
+"%s"
 
 #: ../functions.pl:213
-#, fuzzy, perl-format
+#, perl-format
 msgid "Unable to load the file %s."
-msgstr "ไม่สามารถโหลด %s ใหม่ได้\n"
+msgstr "ไม่สามารถโหลดไฟล์ %s"
 
 #: ../functions.pl:221
 msgid ""
@@ -6521,13 +6533,8 @@ msgid "found new portals!\n"
 msgstr "ตรวจพบ portal ใหม่!\n"
 
 #: ../functions.pl:285
-msgid ""
-"New portals have been added to the portals database. The portals database "
-"must be compiled before the new portals can be used. Would you like to "
-"compile portals now?\n"
-msgstr ""
-"portal ใหม่ได้ถูกเพิ่มเข้าไปในฐานข้อมูล portal แล้ว  ซึ่งฐานข้อมูลนี้จะต้องคอมไพล์ก่อนที่ portal "
-"ใหม่ที่ได้เพิ่มเข้าไปจะใช้ได้  คุณต้องการจะคอมไพล์เลยใหม?\n"
+msgid "New portals have been added to the portals database. The portals database must be compiled before the new portals can be used. Would you like to compile portals now?\n"
+msgstr "portal ใหม่ได้ถูกเพิ่มเข้าไปในฐานข้อมูล portal แล้ว  ซึ่งฐานข้อมูลนี้จะต้องคอมไพล์ก่อนที่ portal ใหม่ที่ได้เพิ่มเข้าไปจะใช้ได้  คุณต้องการจะคอมไพล์เลยใหม?\n"
 
 #: ../functions.pl:288
 msgid "Yes, compile now."
@@ -6558,14 +6565,12 @@ msgstr ""
 "\n"
 
 #: ../functions.pl:305
-#, fuzzy
 msgid "Please enter your Ragnarok Online username."
-msgstr "กรุณารัน Ragnarok Online client (%s)\n"
+msgstr "กรุณาป้อนไอดี"
 
 #: ../functions.pl:312
-#, fuzzy
 msgid "Please enter your Ragnarok Online password."
-msgstr "กรุณาป้อนรหัสผ่านเพื่อเปิดที่เก็บของ:\n"
+msgstr "กรุณาป้อนรหัสผ่าน"
 
 #: ../functions.pl:384
 #, perl-format
@@ -6623,83 +6628,61 @@ msgstr "แผนที่ได้ถูกโหลดแล้ว\n"
 #, fuzzy
 #~ msgid "Setting PIN code to '%s' from '%s'\n"
 #~ msgstr "เทเลพอทเนื่องจากถูกโจมตีจาก %s\n"
-
 #~ msgid ""
 #~ "A configuration file failed to load. Did you download the latest "
 #~ "configuration files?"
 #~ msgstr "ล้มเหลวในการโหลดไฟล์คอนฟิก คุณได้ดาวโหลดไฟล์คอนฟิกล่าสุดมาหรือเปล่า?"
-
 #~ msgid "couldn't connect: %s\n"
 #~ msgstr "ไม่สามารถเชื่อมต่อ: %s\n"
-
 #~ msgid "Unable to listen on XKore2 port (%s:%s): %s"
 #~ msgstr "ไม่สามารถเปิด XKore2 port (%s:%s): %s"
-
 #~ msgid "XKore 2 failed login: Invalid Username and/or Password.\n"
 #~ msgstr "XKore 2 การล๊อกอินล้มเหลว: Username และ/หรือ Password ผิดพลาด\n"
-
 #~ msgid ""
 #~ "Received GameGuard sync request. Client allowed to login account server.\n"
 #~ msgstr ""
 #~ "Received GameGuard sync request. Client allowed to login account server.\n"
-
 #~ msgid ""
 #~ "Received GameGuard sync request. Client allowed to login char/map "
 #~ "server.\n"
 #~ msgstr ""
 #~ "Received GameGuard sync request. Client allowed to login char/map "
 #~ "server.\n"
-
 #~ msgid ""
 #~ "blueConnection to server lost. Please wait while the connection is "
 #~ "reestablished."
 #~ msgstr "blueการเชื่อมต่อกับเซิฟเวอรืได้ขาดหาย กรุณารอซักครู่ระหว่างที่ทำการเชื่อมต่อใหม่"
-
 #~ msgid "Unknown error within XKore 2"
 #~ msgstr "พบข้อผิดพลาดภายใน XKore 2"
-
 #~ msgid "blueConnection reestablished. Enjoy. =)"
 #~ msgstr "blueทำการเชื่อมต่อกลับคืนได้แล้ว  =)"
-
 #~ msgid "blueStill trying to connect..."
 #~ msgstr "blueยังคงพยายามทำการเชื่อมต่อ..."
-
 #~ msgid "Unknown/unexpected XKore 2 packet: %s (state: %s).\n"
 #~ msgstr "XKore 2 ไม่รู้จัก packet: %s (state: %s).\n"
-
 #~ msgid "No username or password set."
 #~ msgstr "ยังไม่ได้ตั้งค่า username หรือ password"
-
 #~ msgid "[dist=%s] %s\n"
 #~ msgstr "[ระยะห่าง=%s] %s\n"
-
 #~ msgid "Skill %s does not exist.\n"
 #~ msgstr "สกิล %s ไม่มีอยู่\n"
-
 #~ msgid "%s is not a number.\n"
 #~ msgstr "%s ไม่ใช่ตัวเลข\n"
-
 #~ msgid "Player %d does not exist.\n"
 #~ msgstr "ผู้เล่น %d ไม่มีอยู่\n"
-
 #~ msgid "Monster %d does not exist.\n"
 #~ msgstr "มอนสเตอร์ %d ไม่มีอยู่\n"
-
 #~ msgid "Stuck at %s (%d,%d), while walking from (%d,%d) to (%d,%d)."
 #~ msgstr "ติดอยู่ที่ %s (%d,%d), ระหว่างที่เดินจาก (%d,%d) ถึง (%d,%d)."
-
 #~ msgid ""
 #~ "Unable to calculate how to walk from [%s(%s,%s)] to [%s%s] (no map "
 #~ "solution).\n"
 #~ msgstr ""
 #~ "ไม่สามารถคำนวณหาเส้นทางเดินจาก [%s(%s,%s)] ถึง [%s%s] (no map solution).\n"
-
 #~ msgid "Insufficient zenny to pay for service at %s (%s,%s).\n"
 #~ msgstr "zenny ไม่พอที่จะจ่ายสำหรับบริการที่ %s (%s,%s).\n"
-
 #~ msgid "Cannot reach (%s,%s) from current position.\n"
 #~ msgstr "ไม่สามารถไปถึง (%s,%s) จากตำแหน่งปัจจุบัน\n"
-
 #~ msgid "Cannot reach portal from current position\n"
 #~ msgstr "ไม่สามารไปถึง portal จากตำแหน่งปัจจุบันได้\n"
 
@@ -6710,48 +6693,34 @@ msgstr "แผนที่ได้ถูกโหลดแล้ว\n"
 #, fuzzy
 #~ msgid "Configure"
 #~ msgstr "ยืนยันการลบ"
-
 #~ msgid "Auto equiping default [L]: %s\n"
 #~ msgstr "ส่วมใส่อุปกรณ์ปริยายอัตโนมัติ [L]: %s\n"
-
 #~ msgid "Auto equiping default [R]: %s (unequip %s)\n"
 #~ msgstr "ส่วมใส่อุปกรณ์ปริยายอัตโนมัติ [R]: %s (ถอด %s)\n"
-
 #~ msgid "Unknown waypoint argument: %s\n"
 #~ msgstr "พบตัวแปร waypoint ที่ไม่รู้จัก: %s\n"
-
 #~ msgid "Failed to load %s: %s\n"
 #~ msgstr "ล้มเหลวในการโหลด %s: %s\n"
-
 #~ msgid "Failed to create %s: %s\n"
 #~ msgstr "ล้มเหลวในการสร้าง %s: %s\n"
-
 #~ msgid "Enter Username: "
 #~ msgstr "กรุณาป้อน Username: "
-
 #~ msgid "Unable to load plugin: %s does not exist\n"
 #~ msgstr "ไม่สามารถโหลด plugin: %s ได้เนื่องจากมันไม่มีอยู่\n"
-
 #~ msgid "cannot open file"
 #~ msgstr "ไม่สามารถเปิดไฟล์"
-
 #~ msgid "One or more plugins failed to load."
 #~ msgstr "ไม่สามารถโหลด plugins บางตัว"
-
 #~ msgid "Unable to load field file: no field name specified.\n"
 #~ msgstr "ไม่สามารถโหลด field ได้: ไม่มี field ที่ระบุ\n"
-
 #~ msgid ""
 #~ "Could not load field %s - this map is not supported, please do not bot "
 #~ "here.\n"
 #~ msgstr "ไม่สามารถโหลดแผนที่ %s ได้ - แผนที่นี้ยังไม่รองรับ กรุณาอย่าเปิดบอทที่นี่\n"
-
 #~ msgid "Could not write dist cache file %s: %s\n"
 #~ msgstr "Could not write dist cache file %s: %s\n"
-
 #~ msgid "Unable to initialize the IPC subsystem: %s\n"
 #~ msgstr "ไม่สามารเริ่มต้นการทำงานของ IPC subsystem ได้: %s\n"
-
 #~ msgid ""
 #~ "Program terminated unexpectedly. Error message:\n"
 #~ "%s\n"
@@ -6760,19 +6729,14 @@ msgstr "แผนที่ได้ถูกโหลดแล้ว\n"
 #~ "โปรแกรมหยุดการทำงานอย่างไม่คาดคิด ข้อความบอกข้อผิดพลาด:\n"
 #~ "%s\n"
 #~ "รายละเอียดได้ถูกบันทึกใว้ใน errors.txt แล้ว"
-
 #~ msgid "Choose your server.  Enter the server number: "
 #~ msgstr "เลือกเซิฟเวอร์ของคุณ โดยป้อนหมายเลขของเซิฟเวอร์:"
-
 #~ msgid "Could not load field %s - you must install the kore-field pack!\n"
 #~ msgstr "ไม่สามารถโหลด field %s - คุณจะต้องติดตั้ง kore-field pack!\n"
-
 #~ msgid "You have %s spirit(s) now\n"
 #~ msgstr "คุณมี %s spirit(s) ในตอนนี้\n"
-
 #~ msgid "%s has %s spirit(s) now\n"
 #~ msgstr "%s มี %s spirit(s) ในตอนนี้\n"
-
 #~ msgid ""
 #~ "If you are having problems with XKore 1 because of GameGuard,\n"
 #~ "try changing the config to 'XKore proxy' (without quotes)\n"
@@ -6781,48 +6745,34 @@ msgstr "แผนที่ได้ถูกโหลดแล้ว\n"
 #~ "ถ้าคุณมีปัญหากับ XKore 1 เนื่องจาก GameGuard\n"
 #~ "ลองเปลี่ยนไปใช้ XKore proxy แทน\n"
 #~ "รายละเอียดเพิ่มเติมอ่านได้ที่ %s.\n"
-
 #~ msgid "Player #%s does not exist.\n"
 #~ msgstr "ผู้เล่น #%s ไม่มีอยู่\n"
-
 #~ msgid "You attack player %s (%d) - Dmg: %s (delay %s)\n"
 #~ msgstr "กำลังโจมตีผู้เล่น %s (%d) - ความเสียหาย: %s (ดีเลย์ %s)\n"
-
 #~ msgid "You attack monster %s (%d) - Dmg: %s (delay %s)\n"
 #~ msgstr "กำลังโจมตีมอนสเตอร์ %s (%d) - ความเสียหาย: %s (ดีเลย์ %s)\n"
-
 #~ msgid "You attack Unknown #%s (%d) - Dmg: %s (delay %s)\n"
 #~ msgstr "คุณโจมตี Unknown #%s (%d) - ความเสียหาย: %s (ดีเลย์ %s)\n"
-
 #~ msgid "Player %s (%d) attacks you - Dmg: %s (delay %s)\n"
 #~ msgstr "ผู้เล่น %s (%d) โจมตีคุณ - ความเสียหาย: %s (ดีเลย์ %s)\n"
-
 #~ msgid "Player %s (%d) attacks player %s (%d) - Dmg: %s (delay %s)\n"
 #~ msgstr "ผู้เล่น %s (%d) โจมตีผู้เล่น %s (%d) - ความเสียหาย: %s (ดีเลย์ %s)\n"
-
 #~ msgid "Player %s (%d) attacks monster %s (%d) - Dmg: %s (delay %s)\n"
 #~ msgstr "ผู้เล่น %s (%d) โจมตีมอนสเตอร์ %s (%d) - ความเสียหาย: %s (ดีเลย์ %s)\n"
-
 #~ msgid "Player %s (%d) attacks Unknown #%s (%d) - Dmg: %s (delay %s)\n"
 #~ msgstr "ผู้เล่น %s (%d) โจมตี Unknown #%s (%d) - ความเสียหาย: %s (ดีเลย์ %s)\n"
-
 #~ msgid "Monster %s (%d) attacks player %s (%d) - Dmg: %s (delay %s)\n"
 #~ msgstr "มอนสเตอร์ %s (%d) โจมตีผู้เล่น %s (%d) - ความเสียหาย: %s (ดีเลย์ %s)\n"
-
 #~ msgid "Monster %s (%d) attacks monster %s (%d) - Dmg: %s (delay %s)\n"
 #~ msgstr "มอนสเตอร์ %s (%d) โจมตีมอนสเตอร์ %s (%d) - ความเสียหาย: %s (ดีเลย์ %s)\n"
-
 #~ msgid "Monster %s (%d) attacks Unknown #%s (%d) - Dmg: %s (delay %s)\n"
 #~ msgstr "มอนสเตอร์ %s (%d) โจมตี Unknown #%s (%d) - ความเสียหาย: %s (ดีเลย์ %s)\n"
-
 #~ msgid "Unknown #%s (%d) attacks you - Dmg: %s (delay %s)\n"
 #~ msgstr "Unknown #%s (%d) โจมตีคุณ - ความเสียหาย: %s (ดีเลย์ %s)\n"
-
 #~ msgid "Unknown #%s (%d) attacks player %s (%d) - Dmg: %s (delay %s)\n"
 #~ msgstr "Unknown #%s (%d) โจมตีผู้เล่น %s (%d) - ความเสียหาย: %s (ดีเลย์ %s)\n"
-
 #~ msgid "Unknown #%s (%d) attacks monster %s (%d) - Dmg: %s (delay %s)\n"
 #~ msgstr "Unknown #%s (%d) โจมตีมอนสเตอร์ %s (%d) - ความเสียหาย: %s (ดีเลย์ %s)\n"
-
 #~ msgid "Unknown #%s (%d) attacks Unknown #%s (%d) - Dmg: %s (delay %s)\n"
 #~ msgstr "Unknown #%s (%d) โจมตี Unknown #%s (%d) - ความเสียหาย: %s (ดีเลย์ %s)\n"
+
