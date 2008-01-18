@@ -32,7 +32,7 @@ use Utils;
 use Log qw(debug message warning error); 
 use Misc;
   
-Plugins::register('I.C.U 0.2.2', 'Detects GM Bot tests.', \&onUnload); 
+Plugins::register('I.C.U 0.2.3', 'Detects GM Bot tests.', \&onUnload); 
   
 my $hooks = Plugins::addHooks( 
 	['is_casting', \&skillDetect, undef], 
@@ -56,13 +56,14 @@ sub teleported {
 sub teleportDetect {
 	my ($self, $args) = @_;
 	my $oldmap = $args->{oldMap};
-	$allowedTeleport = 0;
 	
-	return if($allowedTeleport || !$config{'icu_0_teleportDetect'});
-	logEvent(" Unauthorized/Forced teleport detected (From ".$oldmap." to ".$field{'name'}." \n");
+	if ($allowedTeleport || !$config{'icu_0_teleportDetect'}) {
+		$allowedTeleport = 0;
+		return;
+	}
+	logEvent("Unauthorized/Forced teleport detected (From ".$oldmap." to ".$field{'name'}." \n");
 	playSound("teleport") if $config{'icu_0_teleportSound'};
 	runCommands("teleport") if ($config{'icu_0_teleportCommands'});
-
 }
 
 # This part of the plugin is not done yet...
