@@ -11,9 +11,9 @@
 #
 #  $Revision$
 #  $Id$
-#  Modified by skseo, Jan-24-2007, Fixed bugs.
 ########################################################################
 # Korea (kRO), before February 2007
+# The majority of private servers on Dec 2007; packet_ver 22 of eAthena
 # Servertype overview: http://www.openkore.com/wiki/index.php/ServerType
 package Network::Send::ServerType8;
 
@@ -28,17 +28,6 @@ use Utils qw(getTickCount getHex getCoordString);
 sub new {
 	my ($class) = @_;
 	return $class->SUPER::new(@_);
-}
-
-sub sendMasterLogin {
-	my ($self, $username, $password, $master_version, $version) = @_;
-	my $msg = pack("v1 V", hex($masterServer->{masterLogin_packet}) || 0x277, $version) .
-		pack("a24", $username) .
-		pack("a24", $password) .
-		pack("C", $master_version) .
-		pack("a15", join(".", unpack("C4", $self->{net}->serverAddress()))) .
-		pack("C*", 0xAB, 0x31, 0x31, 0x31, 0x31, 0x31, 0x31, 0x31, 0x31, 0x31, 0x31, 0x31, 0x31, 0);
-	$self->sendToServer($msg);
 }
 
 sub sendMove {
