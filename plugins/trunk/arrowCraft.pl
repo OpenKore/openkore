@@ -3,6 +3,7 @@ package arrowCraft;
 #
 # This plugin is licensed under the GNU GPL
 # Copyright 2005 by kaliwanagan
+# Fixed for OpenKore 2.0.5+
 # --------------------------------------------------
 #
 # How to install this thing..:
@@ -38,17 +39,16 @@ sub cast {
         my $i = 0;
        
         while (exists $config{$prefix.$i}) {
-                my $invIndex = main::findIndexString_lc($char->{'inventory'}, "name", $config{$prefix.$i});
-                my $item = $char->{'inventory'}[$invIndex];
+                my $item = $char->inventory->getByName($config{$prefix.$i});
                 $delay{'timeout'} = $config{$prefix.$i."_delay"} || 1;
-                if ((defined $invIndex) &&
+                if ((@{$char->inventory->getItems()}) &&
                         (main::timeOut(\%delay)) &&
                         ($item->{'amount'} > 0) &&
-                        (main::checkSelfCondition($prefix.$i)))
+                        (main::checkSelfCondition($prefix.$i))) 
                 {
 						#Remove the comment bellow if you play on eathena server
 						#Commands::run('arrowcraft use');
-                        sendArrowCraft($net,$item->{'nameID'});
+                        sendArrowCraft($messageSender,$item->{'nameID'});
                         message ("You use Arrow Craft on item: " . $item->{'name'} . "\n", "selfSkill");
                         $delay{'time'} = time;
                 }
