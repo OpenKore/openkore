@@ -4861,6 +4861,12 @@ sub pvp_mode1 {
 		message T("GvG Display Mode\n"), "map_event";
 		$pvp = 2;
 	}
+	
+	if ($pvp) {
+		Plugins::callHook('pvp_mode', {
+			pvp => $pvp # If set to 1 its PvP and if set to 2 its GvG
+		});
+	}
 }
 
 sub pvp_mode2 {
@@ -4875,6 +4881,12 @@ sub pvp_mode2 {
 	} elsif ($type == 8) {
 		message T("GvG Display Mode\n"), "map_event";
 		$pvp = 2;
+	}
+	
+	if ($pvp) {
+		Plugins::callHook('pvp_mode', {
+			pvp => $pvp # If set to 1 its PvP and if set to 2 its GvG
+		});
 	}
 }
 
