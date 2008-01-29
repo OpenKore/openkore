@@ -24,6 +24,7 @@ use Time::HiRes qw(time);
 use Globals;
 use AI;
 use Actor;
+use Field;
 use Log qw(message debug warning);
 use Translation qw(T TF);
 use Network::Send ();
@@ -426,6 +427,7 @@ sub main {
 			# 2. It must be within $config{followDistanceMax} of
 			#    $masterPos, if we have a master.
 			if (checkLineSnipable($spot, $realMonsterPos) &&
+			    $field->isWalkable($spot->{x}, $spot->{y}) &&
 			    (!$master || distance($spot, $masterPos) <= $config{followDistanceMax})) {
 				# FIXME: use route distance, not pythagorean distance
 				my $dist = distance($realMyPos, $spot);
