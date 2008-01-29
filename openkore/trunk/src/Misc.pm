@@ -1279,6 +1279,11 @@ sub checkMonsterCleanness {
 		}
 	}
 
+	if (($monster->{statuses} && scalar(keys %{$monster->{statuses}}))
+	 || objectInsideSpell($monster)) {
+		return 0;
+	}
+
 	# If monster hasn't been attacked by other players
 	if (scalar(keys %{$monster->{missedFromPlayer}}) == 0
 	 && scalar(keys %{$monster->{dmgFromPlayer}})    == 0
