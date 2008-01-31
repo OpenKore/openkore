@@ -320,7 +320,7 @@ pauseCharServer 1
 patchserver web.raggame.ru
 patchpath /patch02
 recvpackets recvpackets-rro.txt
-recvpackets recvpackets-rro.txt
+field_morocc morocc-old.fld
 
 [Taiwan - twRO: Alfheim (chaos, loki)]
 ip 61.220.60.11
