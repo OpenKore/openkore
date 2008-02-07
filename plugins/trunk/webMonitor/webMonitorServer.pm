@@ -97,8 +97,8 @@ sub request {
 
 	my (@unusable, @usable, @equipment, @uequipment);
 	my (@unusableAmount, @usableAmount);
-	for (my $i; $i < @{$char->{inventory}}; $i++) {
-		my $item = $char->{inventory}[$i];
+	for (my $i; $i < @{$char->inventory->getItems()}; $i++) {
+		my $item = $char->inventory->getItems()->[$i];
 		next unless $item && %{$item};
 		if (($item->{type} == 3 || $item->{type} == 6 ||
 			$item->{type} == 10) && !$item->{equipped})
