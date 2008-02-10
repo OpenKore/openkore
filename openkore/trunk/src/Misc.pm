@@ -155,7 +155,8 @@ our @EXPORT = (
 	whenStatusActive
 	whenStatusActiveMon
 	whenStatusActivePL
-	writeStorageLog/,
+	writeStorageLog
+	getBestTarget/,
 
 	# Actor's Actions Text
 	qw/attack_string
@@ -2847,6 +2848,91 @@ sub writeStorageLog {
 	} elsif ($show_error_on_fail) {
 		error TF("Unable to write to %s\n", $Settings::storage_log_file);
 	}
+}
+
+##
+# getBestTarget(possibleTargets)
+# possibleTargets: reference to an array of monsters' IDs
+#
+# Returns ID of the best target
+sub getBestTarget {
+	my $possibleTargets = @_[0];
+	if (!$possibleTargets) {
+		return;
+	}
+
+	my $portalDist = $config{'attackMinPortalDistance'} || 4;
+	my $playerDist = $config{'attackMinPlayerDistance'} || 1;
+
+	my @noLOSMonsters;
+	my $myPos = calcPosition($char);
+	my ($highestPri, $smallestDist, $bestTarget);
+
+	# First of all we check monsters in LOS, then the rest of monsters
+
+	foreach (@{$possibleTargets}) {
+		my $monster = $monsters{$_};
+		my $pos = calcPosition($monster);
+		next if (positionNearPlayer($pos, $playerDist)
+			|| positionNearPortal($pos, $portalDist)
+		);
+		if ((my $control = mon_control($monster->{name},$monster->{nameID}))) {
+			next if ( ($control->{attack_auto} == -1)
+				|| ($control->{attack_lvl} ne "" && $control->{attack_lvl} > $char->{lv})
+				|| ($control->{attack_jlvl} ne "" && $control->{attack_jlvl} > $char->{lv_job})
+				|| ($control->{attack_hp}  ne "" && $control->{attack_hp} > $char->{hp})
+				|| ($control->{attack_sp}  ne "" && $control->{attack_sp} > $char->{sp})
+				|| ($control->{attack_auto} == 3 && ($monster->{dmgToYou} || $monster->{missedYou} || $monster->{dmgFromYou}))
+			);
+		}
+		if ($config{'attackCanSnipe'}) {
+			if (!checkLineSnipable($myPos, $pos)) {
+				push(@noLOSMonsters, $_);
+				next;
+			}
+		} else {
+			if (!checkLineWalkable($myPos, $pos)) {
+				push(@noLOSMonsters, $_);
+				next;
+			}
+		}
+		my $name = lc $monster->{name};
+		my $dist = distance($myPos, $pos);
+		if (!defined($highestPri) || ($priority{$name} > $highestPri)) {
+			$highestPri = $priority{$name};
+			$smallestDist = $dist;
+			$bestTarget = $_;
+		}
+		if ((!defined($highestPri) || $priority{$name} == $highestPri)
+		  && (!defined($smallestDist) || $dist < $smallestDist)) {
+			$highestPri = $priority{$name};
+			$smallestDist = $dist;
+			$bestTarget = $_;
+		}
+	}
+	if (!$bestTarget && scalar(@noLOSMonsters) > 0) {
+		foreach (@noLOSMonsters) {
+			# The most optimal solution is to include the path lenghts' comparison, however it will take
+			# more time and CPU resources, so, we use rough solution with priority and distance comparison
+
+			my $monster = $monsters{$_};
+			my $pos = calcPosition($monster);
+			my $name = lc $monster->{name};
+			my $dist = distance($myPos, $pos);
+			if (!defined($highestPri) || ($priority{$name} > $highestPri)) {
+				$highestPri = $priority{$name};
+				$smallestDist = $dist;
+				$bestTarget = $_;
+			}
+			if ((!defined($highestPri) || $priority{$name} == $highestPri)
+			  && (!defined($smallestDist) || $dist < $smallestDist)) {
+				$highestPri = $priority{$name};
+				$smallestDist = $dist;
+				$bestTarget = $_;
+			}
+		}
+	}
+	return $bestTarget;
 }
 
 #######################################
