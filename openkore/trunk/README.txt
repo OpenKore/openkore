@@ -9,6 +9,7 @@
 - Fixed XKore to work with EPP enabled servers (thanks Belial)
 - Added Gospel and NPC Skill effect recognition (thanks to johnny)
 - teleportAuto can now be parsed in block format ( http://forums.openkore.com/viewtopic.php?t=36627 )
+- Fixed range check and work of target_deltaHp (by 4epT)
 
 =========================
 ### OpenKore 2.0.5.2
@@ -31,7 +32,7 @@
 - Added ability to locate data files from multiple possible locations.
 - Added lockdown mode.
 - Fixed the 'followBot' feature.
-- Added 'StorageZeny' for storage, and 'zeny' in 'SelfCondition'.
+- Added 'minStorageZeny' for storage, and 'zeny' in 'SelfCondition'.
   (thanks to 4epT and piroJOKE)
 - Added serverType 19 and 20 to support pRO Valkyrie
 - Added 'teleportAuto_useItemForRespawn' if set to 1 Kore will use
