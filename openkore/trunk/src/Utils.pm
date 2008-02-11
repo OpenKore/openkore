@@ -643,17 +643,17 @@ sub getRange {
 	return if (!defined $param);
 
 	# remove % from the first number here (i.e. hp 50%..60%) because it's easiest
-	if ($param =~ /(\d+(?:\.\d+)?)\%?\s*(?:-|\.\.)\s*(\d+(?:\.\d+)?)/) {
+	if ($param =~ /(-?\d+(?:\.\d+)?)\%?\s*(?:-|\.\.)\s*(-?\d+(?:\.\d+)?)/) {
 		return ($1, $2, 1);
-	} elsif ($param =~ />\s*(\d+(?:\.\d+)?)/) {
+	} elsif ($param =~ />\s*(-?\d+(?:\.\d+)?)/) {
 		return ($1, undef, 0);
-	} elsif ($param =~ />=\s*(\d+(?:\.\d+)?)/) {
+	} elsif ($param =~ />=\s*(-?\d+(?:\.\d+)?)/) {
 		return ($1, undef, 1);
-	} elsif ($param =~ /<\s*(\d+(?:\.\d+)?)/) {
+	} elsif ($param =~ /<\s*(-?\d+(?:\.\d+)?)/) {
 		return (undef, $1, 0);
-	} elsif ($param =~ /<=\s*(\d+(?:\.\d+)?)/) {
+	} elsif ($param =~ /<=\s*(-?\d+(?:\.\d+)?)/) {
 		return (undef, $1, 1);
-	} elsif ($param =~/^(\d+(?:\.\d+)?)/) {
+	} elsif ($param =~/^(-?\d+(?:\.\d+)?)/) {
 		return ($1, $1, 1);
 	}
 }
