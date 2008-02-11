@@ -2525,6 +2525,16 @@ sub processAutoAttack {
 				$attackOnRoute = 2;
 			}
 
+			my $LOSSubRoute = 0;
+			if ($config{attackCheckLOS}
+			 && !$attackOnRoute
+			 && scalar(@ai_seq) > 2
+			 && AI::action eq "route"
+			 && AI::action(1) eq "attack"
+			 && AI::action(scalar(@ai_seq)-1) eq "route") {
+				$LOSSubRoute = 1;
+			}
+
 
 			### Step 1: Generate a list of all monsters that we are allowed to attack. ###
 
@@ -2532,22 +2542,12 @@ sub processAutoAttack {
 			my @partyMonsters;
 
 			# List aggressive monsters
-			@aggressives = ai_getAggressives(1) if ($config{'attackAuto'} && $attackOnRoute);
+			@aggressives = ai_getAggressives(1) if ($config{'attackAuto'} && ($attackOnRoute || $LOSSubRoute));
 
 			# List party monsters
 			foreach (@monstersID) {
 				next if (!$_ || !checkMonsterCleanness($_));
 				my $monster = $monsters{$_};
-				# Ignore ignored monsters in mon_control.txt
-				if (my $control = mon_control($monster->{name},$monster->{nameID})) {
-					next if ( ($control->{attack_auto} ne "" && $control->{attack_auto} <= 0)
-						|| ($control->{attack_lvl} ne "" && $control->{attack_lvl} > $char->{lv})
-						|| ($control->{attack_jlvl} ne "" && $control->{attack_jlvl} > $char->{lv_job})
-						|| ($control->{attack_hp}  ne "" && $control->{attack_hp} > $char->{hp})
-						|| ($control->{attack_sp}  ne "" && $control->{attack_sp} > $char->{sp})
-						|| ($control->{attack_auto} == 3 && ($monster->{dmgToYou} || $monster->{missedYou} || $monster->{dmgFromYou}))
-						);
-				}
 
 				OpenKoreMod::autoAttack($monster) if (defined &OpenKoreMod::autoAttack);
 
@@ -2568,60 +2568,65 @@ sub processAutoAttack {
 					push @partyMonsters, $_;
 					next;
 				}
+				my $control = mon_control($monster->{name});
+				if (!AI::is(qw/sitAuto take items_gather items_take/)
+				 && $config{'attackAuto'} >= 2
+				 && $control->{attack_auto} == 1
+				 && !$ai_v{sitAuto_forcedBySitCommand}
+				 && ($attackOnRoute >= 2 || $LOSSubRoute)
+				 && !$monster->{dmgFromYou}
+				 && timeOut($monster->{attack_failed}, $timeout{ai_attack_unfail}{timeout})) {
+					push @aggressives, $_;
+				}
 			}
 
 
 			### Step 2: Pick out the "best" monster ###
 
-			$attackTarget = getBestTarget(\@aggressives);
-			if (!$attackTarget) {
-				$attackTarget = getBestTarget(\@partyMonsters);
-			}
-			if($config{attackCheckLOS} && !$attackTarget && !$attackOnRoute) {
+			if (!$LOSSubRoute) {
+				$attackTarget = getBestTarget(\@aggressives);
+				if (!$attackTarget) {
+					$attackTarget = getBestTarget(\@partyMonsters);
+				}
+			} else {
 				my ($i,$c);
 				$i = scalar(@ai_seq);
 				# Check whether we are on a LOS subroute
-				if ($i > 2
-				  && AI::action eq "route"
-				  && AI::action(1) eq "attack"
-				  && AI::action($i-1) eq "route") {
-					@aggressives = ai_getAggressives(1) if ($config{'attackAuto'});
-					my $myPos = calcPosition($char);
-					my @monstersInLOS;
-					for ($c=0;$c<scalar(@aggressives);$c++) {
-						my $monster = $monsters{$aggressives[$c]};
-						my $pos = $monster->{pos_to};
-						if ($config{'attackCanSnipe'}) {
-							if (checkLineSnipable($myPos, $pos)) {
-								push (@monstersInLOS, $aggressives[$c]);
-							}
-						} else {
-							if (checkLineWalkable($myPos, $pos)) {
-								push (@monstersInLOS, $aggressives[$c]);
-							}
+				my @monstersInLOS;
+				my $myPos = calcPosition($char);
+				for ($c=0;$c<scalar(@aggressives);$c++) {
+					my $monster = $monsters{$aggressives[$c]};
+					my $pos = $monster->{pos_to};
+					if ($config{'attackCanSnipe'}) {
+						if (checkLineSnipable($myPos, $pos)) {
+							push (@monstersInLOS, $aggressives[$c]);
+						}
+					} else {
+						if (checkLineWalkable($myPos, $pos)) {
+							push (@monstersInLOS, $aggressives[$c]);
 						}
 					}
-					$attackTarget = getBestTarget(\@monstersInLOS);
-					if ($attackTarget) {
-						Log::message("New target was choosen\n");
-						my (@ai_seq_temp, @ai_seq_args_temp);
-						# Remove all unnecessary actions (all except the main route)
-						for($c=0;$c<$i;$c++) {
-							if (($ai_seq[$c] ne "route")
-							  && ($ai_seq[$c] ne "move")
-							  && ($ai_seq[$c] ne "attack")) {
-								push(@ai_seq_temp, $ai_seq[$c]);
-								push(@ai_seq_args_temp, $ai_seq_args[$c]);
-							}
+				}
+				$attackTarget = getBestTarget(\@monstersInLOS);
+				if ($attackTarget) {
+					Log::message("New target was choosen\n");
+					my (@ai_seq_temp, @ai_seq_args_temp);
+					# Remove all unnecessary actions (all except the main route)
+					for($c=0;$c<$i;$c++) {
+						if (($ai_seq[$c] ne "route")
+						  && ($ai_seq[$c] ne "move")
+						  && ($ai_seq[$c] ne "attack")) {
+							push(@ai_seq_temp, $ai_seq[$c]);
+							push(@ai_seq_args_temp, $ai_seq_args[$c]);
 						}
-						# Add the main route and rewrite the sequence
-						push(@ai_seq_temp, $ai_seq[$i-1]);
-						push(@ai_seq_args_temp, $ai_seq_args[$i-1]);
-						@ai_seq = @ai_seq_temp;
-						@ai_seq_args = @ai_seq_args_temp;
-						# We need this timeout not to have attack started many times
-						$timeout{'ai_attack_auto'}{'time'} = time;
 					}
+					# Add the main route and rewrite the sequence
+					push(@ai_seq_temp, $ai_seq[$i-1]);
+					push(@ai_seq_args_temp, $ai_seq_args[$i-1]);
+					@ai_seq = @ai_seq_temp;
+					@ai_seq_args = @ai_seq_args_temp;
+					# We need this timeout not to have attack started many times
+					$timeout{'ai_attack_auto'}{'time'} = time;
 				}
 			}
 		}
