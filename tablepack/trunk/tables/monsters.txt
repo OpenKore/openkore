@@ -2,7 +2,7 @@
 #Remove all lines below to have Kore auto-generate this table
 1001 Scorpion
 1002 Poring
-1003 Thief Bug's Egg
+1003 Test Egg
 1004 Hornet
 1005 Familiar
 1006 Thief Bug's Larva
@@ -181,7 +181,7 @@
 1179 Whisper
 1180 Nine Tail
 1181 Zombie Dragon
-1182 Red Mushroom
+1182 Thief Mushroom
 1183 Chonchon
 1184 Fabre
 1185 Whisper
@@ -368,10 +368,10 @@
 1392 Rotar Zairo
 1393 Mummy
 1394 Zombie
-1395 Crystal 1
-1396 Crystal 2
-1397 Crystal 3
-1398 Crystal 4
+1395 Crystal-1
+1396 Crystal-2
+1397 Crystal-3
+1398 Crystal-4
 1399 Event Bapho
 1400 Karakasa
 1401 Shinobi
@@ -505,7 +505,7 @@
 1620 Noxious
 1621 Venomous
 1622 Teddy Bear
-1623 RSX 0806
+1623 RSX-0806
 1624 Waste Stove
 1625 Porcellio
 1626 DarkPriest
