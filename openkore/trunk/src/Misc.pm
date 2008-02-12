@@ -156,7 +156,8 @@ our @EXPORT = (
 	whenStatusActiveMon
 	whenStatusActivePL
 	writeStorageLog
-	getBestTarget/,
+	getBestTarget
+	isSafe/,
 
 	# Actor's Actions Text
 	qw/attack_string
@@ -2933,6 +2934,17 @@ sub getBestTarget {
 		}
 	}
 	return $bestTarget;
+}
+
+##
+# Returns 1 if there is a player nearby (except party) or 0 if not
+sub isSafe {
+	foreach (@playersID) {
+		if (!$char->{party}{users}{$_}) {
+			return 0;
+		}
+	}
+	return 1;
 }
 
 #######################################

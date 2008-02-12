@@ -2193,8 +2193,12 @@ sub processSitAuto {
 		debug "sitAuto - sit\n", "sitAuto";
 		sit();
 
+	} elsif ($action eq "sitAuto" && $ai_v{'sitAuto_forceStop'}) {
+		AI::dequeue;
+		stand() if (!AI::isIdle && !AI::is(qw(follow sitting clientSuspend)) && !$config{'sitAuto_idle'} && $char->{sitting});
+
 	# Stand if our HP is high enough
-	} elsif ($action eq "sitAuto" && ($ai_v{'sitAuto_forceStop'} || $upper_ok)) {
+	} elsif ($action eq "sitAuto" && $upper_ok) {
 		AI::dequeue;
 		debug "HP is now > $config{sitAuto_hp_upper}\n", "sitAuto";
 		stand() if (!AI::isIdle && !AI::is(qw(follow sitting clientSuspend)) && !$config{'sitAuto_idle'} && $char->{sitting});
@@ -2494,20 +2498,11 @@ sub processAutoAttack {
 				}
 			}
 		}
-		my $safe = 1;
-		if ($config{'attackAuto_onlyWhenSafe'}) {
-			foreach (@playersID) {
-				if (!$char->{party}{users}{$_}) {
-					$safe = 0;
-					last;
-				}
-			}
-		}
 
 		my $attackTarget;
 
 		if ((!$config{'tankMode'} || $foundTankee)
-		  && $safe) {
+		  && (!$config{'attackAuto_onlyWhenSafe'} || Misc::isSafe())) {
 			# Detect whether we are currently in follow mode
 			my $following;
 			my $followID;
@@ -2604,9 +2599,9 @@ sub processAutoAttack {
 				@aggressives = @monstersInLOS;
 			}
 
-			$attackTarget = getBestTarget(\@aggressives);
+			$attackTarget = Misc::getBestTarget(\@aggressives);
 			if (!$attackTarget) {
-				$attackTarget = getBestTarget(\@partyMonsters);
+				$attackTarget = Misc::getBestTarget(\@partyMonsters);
 			}
 
 			if ($LOSSubRoute && $attackTarget) {
@@ -2797,7 +2792,7 @@ sub processAutoTeleport {
 	# Check whether it's safe to teleport
 	if (!$cities_lut{$map_name_lu}) {
 		if ($config{teleportAuto_onlyWhenSafe}) {
-			if (!binSize(\@playersID) || timeOut($timeout{ai_teleport_safe_force})) {
+			if (Misc::isSafe() || timeOut($timeout{ai_teleport_safe_force})) {
 				$safe = 1;
 				$timeout{ai_teleport_safe_force}{time} = time;
 			}
