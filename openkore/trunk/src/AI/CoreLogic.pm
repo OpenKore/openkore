@@ -2583,20 +2583,14 @@ sub processAutoAttack {
 
 			### Step 2: Pick out the "best" monster ###
 
-			if (!$LOSSubRoute) {
-				$attackTarget = getBestTarget(\@aggressives);
-				if (!$attackTarget) {
-					$attackTarget = getBestTarget(\@partyMonsters);
-				}
-			} else {
-				my ($i,$c);
-				$i = scalar(@ai_seq);
-				# Check whether we are on a LOS subroute
+			# We define whether we should attack only monsters in LOS, if so, list only them
+			if (!$config{attackCheckLOS} || $LOSSubRoute) {
+				# List only monsters in LOS
 				my @monstersInLOS;
 				my $myPos = calcPosition($char);
-				for ($c=0;$c<scalar(@aggressives);$c++) {
+				for (my $c=0;$c<scalar(@aggressives);$c++) {
 					my $monster = $monsters{$aggressives[$c]};
-					my $pos = $monster->{pos_to};
+					my $pos = calcPosition($monster);
 					if ($config{'attackCanSnipe'}) {
 						if (checkLineSnipable($myPos, $pos)) {
 							push (@monstersInLOS, $aggressives[$c]);
@@ -2607,27 +2601,34 @@ sub processAutoAttack {
 						}
 					}
 				}
-				$attackTarget = getBestTarget(\@monstersInLOS);
-				if ($attackTarget) {
-					Log::message("New target was choosen\n");
-					my (@ai_seq_temp, @ai_seq_args_temp);
-					# Remove all unnecessary actions (all except the main route)
-					for($c=0;$c<$i;$c++) {
-						if (($ai_seq[$c] ne "route")
-						  && ($ai_seq[$c] ne "move")
-						  && ($ai_seq[$c] ne "attack")) {
-							push(@ai_seq_temp, $ai_seq[$c]);
-							push(@ai_seq_args_temp, $ai_seq_args[$c]);
-						}
+				@aggressives = @monstersInLOS;
+			}
+
+			$attackTarget = getBestTarget(\@aggressives);
+			if (!$attackTarget) {
+				$attackTarget = getBestTarget(\@partyMonsters);
+			}
+
+			if ($LOSSubRoute && $attackTarget) {
+				Log::message("New target was choosen\n");
+				# Remove all unnecessary actions (attacks and movements but the main route)
+				my $i = scalar(@ai_seq);
+				my (@ai_seq_temp, @ai_seq_args_temp);
+				for(my $c=0;$c<$i;$c++) {
+					if (($ai_seq[$c] ne "route")
+					  && ($ai_seq[$c] ne "move")
+					  && ($ai_seq[$c] ne "attack")) {
+						push(@ai_seq_temp, $ai_seq[$c]);
+						push(@ai_seq_args_temp, $ai_seq_args[$c]);
 					}
-					# Add the main route and rewrite the sequence
-					push(@ai_seq_temp, $ai_seq[$i-1]);
-					push(@ai_seq_args_temp, $ai_seq_args[$i-1]);
-					@ai_seq = @ai_seq_temp;
-					@ai_seq_args = @ai_seq_args_temp;
-					# We need this timeout not to have attack started many times
-					$timeout{'ai_attack_auto'}{'time'} = time;
 				}
+				# Add the main route and rewrite the sequence
+				push(@ai_seq_temp, $ai_seq[$i-1]);
+				push(@ai_seq_args_temp, $ai_seq_args[$i-1]);
+				@ai_seq = @ai_seq_temp;
+				@ai_seq_args = @ai_seq_args_temp;
+				# We need this timeout not to have attack started many times
+				$timeout{'ai_attack_auto'}{'time'} = time;
 			}
 		}
 
