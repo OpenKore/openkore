@@ -1951,7 +1951,7 @@ sub processFollow {
 				last;
 			}			
 		}
-	} elsif (!$args->{'following'} && $players{$args->{'ID'}} && %{$players{$args->{'ID'}}}) {
+	} elsif (!$args->{'following'} && $players{$args->{'ID'}} && %{$players{$args->{'ID'}}} && !${$players{$args->{'ID'}}}{'dead'}) {
 		$args->{'following'} = 1;
 		delete $args->{'ai_follow_lost'};
  		message TF("Found my master!\n"), "follow"
