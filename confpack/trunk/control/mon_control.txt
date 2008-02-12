@@ -110,7 +110,7 @@ Yellow Plant 0 0 0
 
 ##### MVPs and Dangerous Monsters #####
 Amon Ra 0 1 0
-Arc Angeling 0 1 0
+Archangeling 0 1 0
 Baphomet 0 1 0
 Bacsojin 0 1 0
 Dark Illusion 0 1 0
@@ -120,9 +120,9 @@ Doppelganger 0 1 0
 Dracula 0 1 0
 Drake 0 1 0
 Eddga 0 1 0
-Evil Snake Lord 0 1 0
+Dark Snake Lord 0 1 0
 Garm 0 1 0
-General Ygnizem 0 1 0
+Egnigem Cenia 0 1 0
 Golden Thief Bug 0 2 0
 Incantation Samurai 0 1 0
 Lady Tany 0 1 0
@@ -130,14 +130,14 @@ Lord of Death 0 1 0
 Maya 0 1 0
 Maya Purple 0 1 0
 Mistress 0 1 0
-Moonlight Flower 0 1 0
-Mutant Dragonoid 0 1 0
+Moonlight 0 1 0
+Mutant Dragon 0 1 0
 Orc Hero 0 1 0
 Orc Lord 0 1 0
 Osiris 0 1 0
 Pharaoh 0 1 0
 Phreeoni 0 1 0
-RSX 0806 0 1 0
+RSX-0806 0 1 0
 Stormy Knight 0 1 0
 Tao Gunka 0 1 0
 Thanatos 0 1 0
