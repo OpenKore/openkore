@@ -1245,7 +1245,9 @@ sub processAutoAttack {
 							);
 					}
 
-					if (!defined($smallestDist) || (my $dist = distance($myPos, $pos)) < $smallestDist) {
+					my $name = lc $monster->{name};
+					if ((!defined($smallestDist) || (my $dist = distance($myPos, $pos)) < $smallestDist)
+					  && $priority{$name} == $highestPri) {
 						$smallestDist = $dist;
 						$attackTarget = $_;
 						$priorityAttack = 1;

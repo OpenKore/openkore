@@ -2852,12 +2852,13 @@ sub writeStorageLog {
 }
 
 ##
-# getBestTarget(possibleTargets)
+# getBestTarget(possibleTargets, nonLOSNotAllowed)
 # possibleTargets: reference to an array of monsters' IDs
+# nonLOSNotAllowed: if set, non-LOS monsters aren't checked up
 #
 # Returns ID of the best target
 sub getBestTarget {
-	my $possibleTargets = @_[0];
+	my ($possibleTargets, $nonLOSNotAllowed) = @_;
 	if (!$possibleTargets) {
 		return;
 	}
@@ -2911,7 +2912,7 @@ sub getBestTarget {
 			$bestTarget = $_;
 		}
 	}
-	if (!$bestTarget && scalar(@noLOSMonsters) > 0) {
+	if (!$nonLOSNotAllowed && !$bestTarget && scalar(@noLOSMonsters) > 0) {
 		foreach (@noLOSMonsters) {
 			# The most optimal solution is to include the path lenghts' comparison, however it will take
 			# more time and CPU resources, so, we use rough solution with priority and distance comparison
