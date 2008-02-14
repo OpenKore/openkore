@@ -2199,6 +2199,18 @@ sub processSitAuto {
 
 	# Stand if our HP is high enough
 	} elsif ($action eq "sitAuto" && $upper_ok) {
+		if ($timeout{ai_safe_stand_up}{timeout} && !isSafe()) {
+			if (!$timeout{ai_safe_stand_up}{passed}) {
+				$timeout{ai_safe_stand_up}{time} = time;
+				$timeout{ai_safe_stand_up}{passed} = 1;
+				return;
+			} elsif ($timeout{ai_safe_stand_up}{passed} && !timeOut($timeout{ai_safe_stand_up})) {
+				return;
+			} elsif ($timeout{ai_safe_stand_up}{passed} && timeOut($timeout{ai_safe_stand_up})) {
+				$timeout{ai_safe_stand_up}{time} = 0;
+				$timeout{ai_safe_stand_up}{passed} = 0;
+			}
+		}
 		AI::dequeue;
 		debug "HP is now > $config{sitAuto_hp_upper}\n", "sitAuto";
 		stand() if (!AI::isIdle && !AI::is(qw(follow sitting clientSuspend)) && !$config{'sitAuto_idle'} && $char->{sitting});
@@ -2502,7 +2514,7 @@ sub processAutoAttack {
 		my $attackTarget;
 
 		if ((!$config{'tankMode'} || $foundTankee)
-		  && (!$config{'attackAuto_onlyWhenSafe'} || Misc::isSafe())) {
+		  && (!$config{'attackAuto_onlyWhenSafe'} || isSafe())) {
 			# Detect whether we are currently in follow mode
 			my $following;
 			my $followID;
@@ -2578,32 +2590,18 @@ sub processAutoAttack {
 
 			### Step 2: Pick out the "best" monster ###
 
-			# We define whether we should attack only monsters in LOS, if so, list only them
+			# We define whether we should attack only monsters in LOS or not
 			if (!$config{attackCheckLOS} || $LOSSubRoute) {
-				# List only monsters in LOS
-				my @monstersInLOS;
-				my $myPos = calcPosition($char);
-				for (my $c=0;$c<scalar(@aggressives);$c++) {
-					my $monster = $monsters{$aggressives[$c]};
-					my $pos = calcPosition($monster);
-					if ($config{'attackCanSnipe'}) {
-						if (checkLineSnipable($myPos, $pos)) {
-							push (@monstersInLOS, $aggressives[$c]);
-						}
-					} else {
-						if (checkLineWalkable($myPos, $pos)) {
-							push (@monstersInLOS, $aggressives[$c]);
-						}
-					}
+				$attackTarget = getBestTarget(\@aggressives, 1);
+				if (!$attackTarget) {
+					$attackTarget = getBestTarget(\@partyMonsters, 1);
 				}
-				@aggressives = @monstersInLOS;
+			} elsif ($config{attackCheckLOS}) {
+				$attackTarget = getBestTarget(\@aggressives);
+				if (!$attackTarget) {
+					$attackTarget = getBestTarget(\@partyMonsters);
+				}
 			}
-
-			$attackTarget = Misc::getBestTarget(\@aggressives);
-			if (!$attackTarget) {
-				$attackTarget = Misc::getBestTarget(\@partyMonsters);
-			}
-
 			if ($LOSSubRoute && $attackTarget) {
 				Log::message("New target was choosen\n");
 				# Remove all unnecessary actions (attacks and movements but the main route)
@@ -2792,7 +2790,7 @@ sub processAutoTeleport {
 	# Check whether it's safe to teleport
 	if (!$cities_lut{$map_name_lu}) {
 		if ($config{teleportAuto_onlyWhenSafe}) {
-			if (Misc::isSafe() || timeOut($timeout{ai_teleport_safe_force})) {
+			if (isSafe() || timeOut($timeout{ai_teleport_safe_force})) {
 				$safe = 1;
 				$timeout{ai_teleport_safe_force}{time} = time;
 			}
