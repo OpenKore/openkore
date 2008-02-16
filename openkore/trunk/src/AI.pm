@@ -897,7 +897,23 @@ sub sit {
 	require Task::SitStand;
 	my $task = new Task::SitStand(mode => 'sit', wait => $timeout{ai_sit_wait}{timeout});
 	AI::queue("sitting", $task);
-	Misc::look($config{sitAuto_look}) if (defined $config{sitAuto_look});
+	if (defined $config{sitAuto_look}) {
+		my $sitAutoLook = $config{sitAuto_look};
+		if ((!$field->isWalkable($char->{pos}{x},$char->{pos}{y}+1) && $sitAutoLook == 0)
+		  || (!$field->isWalkable($char->{pos}{x}-1,$char->{pos}{y}+1) && $sitAutoLook == 1)
+		  || (!$field->isWalkable($char->{pos}{x}-1,$char->{pos}{y}) && $sitAutoLook == 2)
+		  || (!$field->isWalkable($char->{pos}{x}-1,$char->{pos}{y}-1) && $sitAutoLook == 3)
+		  ) {
+			$sitAutoLook += 4;
+		} elsif ((!$field->isWalkable($char->{pos}{x},$char->{pos}{y}-1) && $sitAutoLook == 4)
+		  || (!$field->isWalkable($char->{pos}{x}+1,$char->{pos}{y}-1) && $sitAutoLook == 5)
+		  || (!$field->isWalkable($char->{pos}{x}+1,$char->{pos}{y}) && $sitAutoLook == 6)
+		  || (!$field->isWalkable($char->{pos}{x}+1,$char->{pos}{y}+1) && $sitAutoLook == 7)
+		  ) {
+			$sitAutoLook -= 4;
+		}
+		Misc::look($sitAutoLook);
+	}
 }
 
 sub stand {
