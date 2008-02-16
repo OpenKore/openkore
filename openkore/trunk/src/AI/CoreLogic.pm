@@ -2200,7 +2200,9 @@ sub processSitAuto {
 	# Stand if our HP is high enough
 	} elsif ($action eq "sitAuto" && $upper_ok) {
 		if ($timeout{ai_safe_stand_up}{timeout} && !isSafe()) {
-			if (!$timeout{ai_safe_stand_up}{passed}) {
+			if (!$timeout{ai_safe_stand_up}{passed}
+			  || ($timeout{ai_safe_stand_up}{passed} && timeOut($timeout{ai_safe_stand_up}{time}, $timeout{ai_safe_stand_up}{timeout} + 1))
+			) {
 				$timeout{ai_safe_stand_up}{time} = time;
 				$timeout{ai_safe_stand_up}{passed} = 1;
 				return;
