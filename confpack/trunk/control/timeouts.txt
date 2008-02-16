@@ -74,6 +74,9 @@ ai_sit_idle 10
 ai_stand_wait 0
 # Sit after x seconds, after having typed the "sit" command
 ai_sit_wait 0
+# If there are non-party players around and you are to stand up due to the
+# hp/sp sufficiency, do so when the specified number of seconds elapsed
+ai_safe_stand_up 2
 
 ai_skill_use_giveup 1
 ai_item_use_auto 0.5
