@@ -2692,7 +2692,7 @@ sub useTeleport {
 		if ($emergency ||
 		    !$config{teleportAuto_useSkill} ||
 		    $config{teleportAuto_useSkill} == 3 ||
-		    $config{teleportAuto_useSkill} == 2 && !binSize(\@playersID)) {
+		    $config{teleportAuto_useSkill} == 2 && isSafe()) {
 			$timeout{ai_teleport_delay}{time} = 1;
 		}
 		Actor::Item::scanConfigAndEquip('teleportAuto_equip');
