@@ -2640,7 +2640,7 @@ sub useTeleport {
 	if ($sk_lvl > 0 && $internal > 0 && !$config{'teleportAuto_useItemForRespawn'}) {
 		# We have the teleport skill, and should use it
 		my $skill = new Skill(handle => 'AL_TELEPORT');
-		if ($use_lvl == 2 || $internal == 1 || ($internal == 2 && binSize(\@playersID))) {
+		if ($use_lvl == 2 || $internal == 1 || ($internal == 2 && !isSafe())) {
 			# Send skill use packet to appear legitimate
 			# (Always send skill use packet for level 2 so that saveMap
 			# autodetection works)
@@ -2938,10 +2938,10 @@ sub getBestTarget {
 }
 
 ##
-# Returns 1 if there is a player nearby (except party) or 0 if not
+# Returns 1 if there is a player nearby (except party and homunculus) or 0 if not
 sub isSafe {
 	foreach (@playersID) {
-		if (!$char->{party}{users}{$_}) {
+		if (!$char->{party}{users}{$_} && (!$char->{homunculus} || $_ ne $char->{homunculus}{ID})) {
 			return 0;
 		}
 	}
@@ -3852,7 +3852,7 @@ sub checkSelfCondition {
 	}
 
 	if ($config{$prefix."_onlyWhenSafe"}) {
-		return 0 if binSize(\@playersID);
+		return 0 if !isSafe();
 	}
 
 	if ($config{$prefix."_inMap"}) {

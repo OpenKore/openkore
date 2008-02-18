@@ -2765,18 +2765,14 @@ sub processAutoTeleport {
 
 		my $ok;
 		if ($config{teleportAuto_allPlayers} >= 2) {
-			foreach my $ID (@playersID) {
-				if ((!$char->{party} || !$char->{party}{users}{$ID}) && (!$char->{homunculus} || $ID ne $char->{homunculus}{ID})) {
-					$ok = 1;
-					last;
-				}
+			if (!isSafe()) {
+				$ok = 1;
 			}
 		} else {
 			foreach my Actor::Player $player (@{$playersList->getItems()}) {
-				if (existsInList($config{teleportAuto_notPlayers}, $player->{name}) || existsInList($config{teleportAuto_notPlayers}, $player->{nameID})) {
-					$ok = 0;
-				} else {
+				if (!existsInList($config{teleportAuto_notPlayers}, $player->{name}) && !existsInList($config{teleportAuto_notPlayers}, $player->{nameID})) {
 					$ok = 1;
+					last;
 				}
 			}
 		}
@@ -2968,16 +2964,9 @@ sub processDcOnPlayer {
 	my $map_name_lu = $field{name}.'.rsw';
 	if (!$cities_lut{$map_name_lu} && !AI::inQueue("storageAuto", "buyAuto") && $config{dcOnPlayer}
 	    && ($config{'lockMap'} eq "" || $field{name} eq $config{'lockMap'})
-	 && binSize(\@playersID) && timeOut($AI::Temp::Teleport_allPlayers, 0.75)) {
-	 
-	 foreach my $ID (@playersID) {
-		if ((!$char->{party} || !$char->{party}{users}{$ID}) && (!$char->{homunculus} || $ID ne $char->{homunculus}{ID})) {
-			message T("Player detected, disconnecting!\n");
-			chatLog("k", T("*** Player detected, disconnecting! ***\n"));
-			$quit = 1;
-			last;
-			}
-		}
+	    && !isSafe() && timeOut($AI::Temp::Teleport_allPlayers, 0.75)) {
+
+		$quit = 1;
 	}
 }
 1;
