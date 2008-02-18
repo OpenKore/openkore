@@ -139,7 +139,7 @@
 1137 Kobold-5
 1138 Magnolia
 1139 Mantis
-1140 Maduk
+1140 Marduk
 1141 Marina
 1142 Marine Sphere
 1143 Marionette
@@ -167,7 +167,7 @@
 1165 Sand Man
 1166 Savage
 1167 Savage Babe
-1168 Pupa
+1168 Scorpion King
 1169 Skel Worker
 1170 Sohee
 1171 Soldier Andre
@@ -217,6 +217,28 @@
 1215 Stem worm
 1216 Penomena
 1219 Abyss Knight
+1220 Desert Wolf
+1221 Savage
+1222 High Orc
+1223 Orc
+1224 Poison Spore
+1225 Choco
+1226 Kobold
+1227 Goblin
+1228 Phen
+1229 Fabre
+1230 Pupa
+1231 Creamy
+1232 Peco Peco Egg
+1233 Peco Peco
+1234 Yoyo
+1235 Smoking Orc
+1236 Ant Egg
+1237 Andre
+1238 Piere
+1239 Deniro
+1240 Picky
+1241 Picky
 1242 Marin
 1243 Sasquath
 1244 Jakk Xmas
@@ -261,6 +283,7 @@
 1283 Chimera
 1284 Hugeling
 1285 Archer Guardian
+1286 Knight Guardian
 1287 Soldier Guardian
 1288 Emperium
 1289 Maya Purple
@@ -368,10 +391,10 @@
 1392 Rotar Zairo
 1393 Mummy
 1394 Zombie
-1395 Crystal-1
-1396 Crystal-2
-1397 Crystal-3
-1398 Crystal-4
+1395 Wind Crystal
+1396 Earth Crystal
+1397 Fire Crystal
+1398 Water Crystal
 1399 Event Bapho
 1400 Karakasa
 1401 Shinobi
@@ -380,12 +403,15 @@
 1404 Miyabi Ningyo
 1405 Tengu
 1406 Kapha
+1407 Dokebi
 1408 Bloody Butterfly
 1409 Rice Cake Boy
 1410 Enchanted Peach Tree
+1411 Peach Tree Bullet
 1412 Evil Cloud Hermit
 1413 Hermit Plant
-1415 Baby Leapord
+1414 Ginseng Bullet
+1415 Baby Leopard
 1416 Wicked Nymph
 1417 Zipper Bear
 1418 Dark Snake Lord
@@ -401,7 +427,7 @@
 1428 Poison Spore
 1429 Argiope
 1430 Argos
-1431 Baphomet
+1431 Baphomet Jr
 1432 Desert Wolf
 1433 Deviruchi
 1434 Drainliar
@@ -466,14 +492,18 @@
 1493 Dryad
 1494 Beetle king
 1495 Stone Shooter
+1496 Stone Shooter Bullet
 1497 Wooden Golem
 1498 Wootan Shooter
 1499 Wootan Fighter
 1500 Parasite
+1501 Parasite Bullet
+1502 Pori Pori
 1503 Gibbet
 1504 Dullahan
 1505 Loli Ruri
 1506 Disguise
+1507 Bloody Murderer
 1508 Quve
 1509 Lude
 1510 Hylozoist
@@ -487,14 +517,98 @@
 1518 Bacsojin
 1519 Chung E
 1520 Boiled Rice
+1521 Alice
+1522 Ancient Mummy
+1523 Antique Firelock
+1524 Baby Leopard
+1525 Bathory
+1526 Bloody Butterfly
+1527 Clock Tower Manager
+1528 Clock
+1529 Dark Snake Lord
+1530 Dracula
+1531 Evil Cloud Hermit
+1532 Explosion
+1533 Fur Seal
+1534 Goblin
+1535 Goblin
+1536 Goblin
+1537 Goblin
+1538 Goblin
+1539 Goblin Leader
+1540 Golem
+1541 Greatest General
+1542 Incantation Samurai
+1543 Kapha
+1544 Karakasa
+1545 Kobold-G1
+1546 Kobold-G2
+1547 Kobold-G3
+1548 Kobold Leader
+1549 Lava Golem
+1550 Live Peach Tree
+1551 Marse
+1552 Miyabi Ningyo
+1553 Myst
+1554 Nightmare Terror
+1555 Parasite
+1556 Poison Toad
+1557 Rotar Zairo
+1558 Sandman
+1559 Scorpion
+1560 Shinobi
+1561 Smokie
+1562 Soldier Skeleton
+1563 Tengu
+1564 Wicked Nymph
+1565 Wild Ginseng
+1566 Wraith Dead
+1567 Ancient Worm
+1568 Angeling
+1569 Bloody Knight
+1570 Cramp
+1571 Deviace
+1572 Drops
+1573 Elder
+1574 Elder Willow
+1575 Flora
+1576 Ghostring
+1577 Goblin Archer
+1578 Horong
+1579 Hydra
+1580 Incubus
+1581 Vocal
 1582 Deviling
 1583 Tao Gunka
 1584 Tamruan
 1585 Mime Monkey
 1586 Leaf Cat
 1587 Kraben
+1588 Christmas Orc
+1589 Mandragora
+1590 Geographer
+1591 Lunatic
+1592 Gangster
+1593 Ancient Mummy
+1594 Freezer
+1595 Marin
+1596 Tamruan
+1597 Gargoyle
+1598 Blazzer
+1599 Giant Whisper
+1600 Heater
+1601 Permeter
+1602 Solider
+1603 Bigfoot
+1604 Giant Hornet
+1605 Dark Illusion
 1606 Garm Baby
-1607 Gobline Xmas
+1607 Christmas Goblin
+1608 Thief Bug Male
+1609 Dancing Dragon
+1610 Munak
+1611 Bongun
+1612 Hyegun
 1613 Metaling
 1614 Mineral
 1615 Obsidian
@@ -508,7 +622,7 @@
 1623 RSX-0806
 1624 Waste Stove
 1625 Porcellio
-1626 DarkPriest
+1626 Hellion Revenant
 1627 Anopheles
 1628 Holden
 1629 Hill Wind
@@ -542,26 +656,26 @@
 1657 Laurell Weinder
 1658 Egnigem Cenia
 1659 Wikebine Tres
-1660  Armeyer Dinze
+1660 Armeyer Dinze
 1661 Errende Ebecee
 1662 Kavach Icarus
 1663 Laurell Weinder
 1664 Photon Cannon
-1665 Photon Cannon
-1666 Photon Cannon
-1667 Photon Cannon
+1665 Photon Cannon-1
+1666 Photon Cannon-2
+1667 Photon Cannon-3
 1668 Archdam
 1669 Dimik
-1670 Dimik
-1671 Dimik
-1672 Dimik
-1673 Dimik
+1670 Dimik-1
+1671 Dimik-2
+1672 Dimik-3
+1673 Dimik-4
 1674 Monemus
 1675 Venatu
-1676 Venatu
-1677 Venatu
-1678 Venatu
-1679 Venatu
+1676 Venatu-1
+1677 Venatu-2
+1678 Venatu-3
+1679 Venatu-4
 1680 Hill Wind
 1681 Gemini-S58
 1682 Remover
@@ -575,11 +689,11 @@
 1690 Spring Rabbit
 1691 Kraben
 1692 Breeze
-1693 Plasma
-1694 Plasma
-1695 Plasma
-1696 Plasma
-1697 Plasma
+1693 Plasma-Y
+1694 Plasma-R
+1695 Plasma-G
+1696 Plasma-P
+1697 Plasma-B
 1698 Deathword
 1699 Ancient Mimic
 1700 Observation
@@ -650,3 +764,162 @@
 1765 Valkyrie
 1766 Angeling
 1767 Deviling
+1768 Gloom Under Night
+1769 Agav
+1770 Echio
+1771 Vanberk
+1772 Isilla
+1773 Hodremlin
+1774 Seeker
+1775 Snowier
+1776 Siroma
+1777 Ice Titan
+1778 Gazeti
+1779 Ktullanux
+1780 Muscipular
+1781 Drosera
+1782 Roween
+1783 Galion
+1784 Stapo
+1785 Atroce
+1786 Agav
+1787 Echio
+1788 Ice Titan
+1789 Iceicle
+1790 Rafflesia
+1791 Galion
+1792 Soccer Ball
+1793 Megalith
+1794 Roween
+1795 Bloody Knight
+1796 Aunoe
+1797 Fanat
+1798 Treasure Chest
+1799 Lord Knight Seyren
+1800 Assassin Cross Eremes
+1801 Whitesmith Harword
+1802 High Priest Magaleta
+1803 Sniper Shecil
+1804 High Wizard Katrinn
+1805 Lord Knight Seyren
+1806 Assassin Cross Eremes
+1807 Whitesmith Harword
+1808 High Priest Magaleta
+1809 Sniper Shecil
+1810 High Wizard Katrinn
+1811 Smokie
+1812 Lude
+1813 Hydro
+1814 Moonlight Flower
+1815 Rice Cake
+1816 Gourd
+1817 Detale
+1818 Alarm
+1819 Bathory
+1820 Bigfoot
+1821 Desert Wolf
+1822 Deviruchi
+1823 Freezer
+1824 Garm Baby
+1825 Chistmas Goblin
+1826 Myst
+1827 Sasquatch
+1828 Gullinbrusti
+1829 Sword Guardian
+1830 Bow Guardian
+1831 Salamander
+1832 Ifrit
+1833 Kasa
+1834 Salamander
+1835 Kasa
+1836 Magmaring
+1837 Imp
+1838 Knocker
+1839 Byorgue
+1840 Golden Savage
+1841 Snake
+1842 Anacondaq
+1843 Side Winder
+1844 Isis
+1845 Treasure Box
+1846 Emperium
+1847 Poring
+1848 Baphomet
+1849 Osiris
+1850 Orc Hero
+1851 Mobster
+1852 Angeling
+1853 Deviling
+1854 Muka
+1855 Poison Spore
+1856 Magnolia
+1857 Marin
+1858 Plankton
+1859 Mandragora
+1860 Coco
+1861 Choco
+1862 Martin
+1863 Spring Rabbit
+1864 Zombie Slaughter
+1865 Ragged Zombie
+1866 Hell Poodle
+1867 Banshee
+1868 Banshee
+1869 Flame Skull
+1870 Necromancer
+1871 Falling Bishop
+1872 Beelzebub Fly
+1873 Beelzebub
+1874 Beelzebub
+1875 Tristan 3RD
+1876 Lord of Death
+1877 Crystal
+1878 Shining Plant
+1879 Spring Rabbit
+1880 Wood Goblin
+1881 Mavka
+1882 Babayaga
+1883 Uzdas
+1884 Lesavka
+1885 Gorynych
+1886 Lesavka
+1887 Freezer
+1888 Garm Baby
+1889 Garm
+1890 Gopinich
+1891 Randgris
+1892 Loli Ruri
+1893 Knight of Abyss
+1894 Pouring
+1895 Seyren
+1896 Katrinn
+1897 Baphomet
+1898 Zombie
+1899 Knight Guardian
+1900 Archer Guardian
+1901 Condor
+1902 Treasure Box-2
+1903 Treasure Box-3
+1904 Bomb Poring
+1905 Barricade
+1906 Barricade
+1907 Emperium-1
+1908 Emperium-2
+1909 Flag-OA
+1910 Flag-OB
+1911 Flag-N
+1912 Flag-OFA
+1913 Flag-OFB
+1914 Flag-A2
+1915 Flag-B2
+1916 Satan Morroc
+1917 Satan Morroc
+1918 Morroc's Shadow Angel
+1919 Morroc's Shadow Golem
+1920 Morroc's Shadow Human
+1921 Morroc's Shadow Spirit
+1922 Morroc's Shadow Angel
+1923 Morroc's Shadow Golem
+1924 Morroc's Shadow Human
+1925 Morroc's Shadow Spirit
+1963 Chung E
