@@ -2540,7 +2540,8 @@ sub processAutoAttack {
 			 && scalar(@ai_seq) > 2
 			 && AI::action eq "route"
 			 && AI::action(1) eq "attack"
-			 && AI::action(scalar(@ai_seq)-1) eq "route") {
+			 && AI::action(scalar(@ai_seq)-1) eq "route"
+			 && !AI::args(0)->{distFromGoal}) {
 				$LOSSubRoute = 1;
 			}
 
