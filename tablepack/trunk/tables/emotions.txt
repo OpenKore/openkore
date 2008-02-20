@@ -61,3 +61,20 @@
 61 dice4 *Dice#4*
 62 dice5 *Dice#5*
 63 dice6 *Dice#6*
+64 flg7 *Flag 7*
+65 hand *Hand*
+66 flg8 *Flag 8*
+67 flg9 *Flag 9*
+68 phone *CellPhone(?!)*
+69 mail *E-Mail(?!)*
+70 e70 *Unknown(Hieroglyphs?!)*
+71 sp1 *Cell signal power 1/3(?!)*
+72 sp2 *Cell signal power 2/3(?!)*
+73 sp3 *Cell signal power 3/3(?!)*
+74 e74 *Unknown(Lines?!)*
+75 e75 *Unknown(FearFace?!)*
+76 e76 *Unknown(PopEyes?!)*
+77 e77 *Unknown(Boooring?!)*
+78 e78 *Unknown(BlessingLight?!)*
+79 e79 *Unknown(GhostBreath?!)*
+80 e80 *Unknown(GhostFace?!)*
