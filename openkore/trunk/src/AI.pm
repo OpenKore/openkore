@@ -897,20 +897,25 @@ sub sit {
 	require Task::SitStand;
 	my $task = new Task::SitStand(mode => 'sit', wait => $timeout{ai_sit_wait}{timeout});
 	AI::queue("sitting", $task);
-	if (defined $config{sitAuto_look}) {
+	if (defined $config{sitAuto_look} && !$config{sitAuto_look_from_wall}) {
+		Misc::look($config{sitAuto_look});
+	} elsif (defined $config{sitAuto_look} && $config{sitAuto_look_from_wall}) {
 		my $sitAutoLook = $config{sitAuto_look};
-		if ((!$field->isWalkable($char->{pos}{x},$char->{pos}{y}+1) && $sitAutoLook == 0)
-		  || (!$field->isWalkable($char->{pos}{x}-1,$char->{pos}{y}+1) && $sitAutoLook == 1)
-		  || (!$field->isWalkable($char->{pos}{x}-1,$char->{pos}{y}) && $sitAutoLook == 2)
-		  || (!$field->isWalkable($char->{pos}{x}-1,$char->{pos}{y}-1) && $sitAutoLook == 3)
-		  ) {
-			$sitAutoLook += 4;
-		} elsif ((!$field->isWalkable($char->{pos}{x},$char->{pos}{y}-1) && $sitAutoLook == 4)
-		  || (!$field->isWalkable($char->{pos}{x}+1,$char->{pos}{y}-1) && $sitAutoLook == 5)
-		  || (!$field->isWalkable($char->{pos}{x}+1,$char->{pos}{y}) && $sitAutoLook == 6)
-		  || (!$field->isWalkable($char->{pos}{x}+1,$char->{pos}{y}+1) && $sitAutoLook == 7)
-		  ) {
-			$sitAutoLook -= 4;
+		my $wallRange = $config{sitAuto_look_from_wall};
+		for (my $i=1;$i<=$wallRange;$i++) {
+			if ((!$field->isWalkable($char->{pos}{x},$char->{pos}{y}+$wallRange) && $sitAutoLook == 0)
+			  || (!$field->isWalkable($char->{pos}{x}-$wallRange,$char->{pos}{y}+$wallRange) && $sitAutoLook == 1)
+			  || (!$field->isWalkable($char->{pos}{x}-$wallRange,$char->{pos}{y}) && $sitAutoLook == 2)
+			  || (!$field->isWalkable($char->{pos}{x}-$wallRange,$char->{pos}{y}-$wallRange) && $sitAutoLook == 3)
+			  ) {
+				$sitAutoLook += 4;
+			} elsif ((!$field->isWalkable($char->{pos}{x},$char->{pos}{y}-$wallRange) && $sitAutoLook == 4)
+			  || (!$field->isWalkable($char->{pos}{x}+$wallRange,$char->{pos}{y}-$wallRange) && $sitAutoLook == 5)
+			  || (!$field->isWalkable($char->{pos}{x}+$wallRange,$char->{pos}{y}) && $sitAutoLook == 6)
+			  || (!$field->isWalkable($char->{pos}{x}+$wallRange,$char->{pos}{y}+$wallRange) && $sitAutoLook == 7)
+			  ) {
+				$sitAutoLook -= 4;
+			}
 		}
 		Misc::look($sitAutoLook);
 	}
