@@ -197,6 +197,9 @@ sitAuto_sp_lower 0
 sitAuto_sp_upper 0
 sitAuto_over_50 0
 sitAuto_idle 1
+sitAuto_look
+sitAuto_look_from_wall
+
 
 statsAddAuto 0
 statsAddAuto_list
