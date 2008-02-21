@@ -10,6 +10,8 @@
 - Added Gospel and NPC Skill effect recognition (thanks to johnny)
 - teleportAuto can now be parsed in block format ( http://forums.openkore.com/viewtopic.php?t=36627 )
 - Fixed range check and work of target_deltaHp (by 4epT)
+- processAutoAttack is rewritten, it now uses new functions (getBestTarget(), isSafe()). priority.txt works.
+- Added sitAuto_safe_stand_up timeout and sitAuto_look_from_wall config option.
 
 =========================
 ### OpenKore 2.0.5.2
