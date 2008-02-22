@@ -12,6 +12,7 @@
 - Fixed range check and work of target_deltaHp (by 4epT)
 - processAutoAttack is rewritten, it now uses new functions (getBestTarget(), isSafe()). priority.txt works.
 - Added sitAuto_safe_stand_up timeout and sitAuto_look_from_wall config option.
+- Added new monsters, fields, emotions, portals.
 
 =========================
 ### OpenKore 2.0.5.2

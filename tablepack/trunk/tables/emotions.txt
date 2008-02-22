@@ -67,7 +67,7 @@
 67 flg9 *Flag 9*
 68 phone *CellPhone(?!)*
 69 mail *E-Mail(?!)*
-70 e70 *Unknown(RedHieroglyphs)*
+70 rh *Unknown(RedHieroglyphs)*
 71 sp1 *Cell signal power 1/3(?!)*
 72 sp2 *Cell signal power 2/3(?!)*
 73 sp3 *Cell signal power 3/3(?!)*
