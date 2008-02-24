@@ -1542,14 +1542,21 @@ sub cmdExp {
 sub cmdFalcon {
 	my (undef, $arg1) = @_;
 
+	my $hasFalcon;
+	foreach my $ID (keys %{$char->{statuses}}) {
+		if ($ID eq "Falcon") {
+			$hasFalcon = 1;
+			last;
+		}
+	}
 	if ($arg1 eq "") {
-		if (hasFalcon()) {
+		if ($hasFalcon) {
 			message T("Your falcon is active\n");
 		} else {
 			message T("Your falcon is inactive\n");
 		}
 	} elsif ($arg1 eq "release") {
-		if (!hasFalcon()) {
+		if (!$hasFalcon) {
 		error T("Error in function 'falcon release' (Remove Falcon Status)\n" .
 			"You don't possess a falcon.\n");
 		} else {
