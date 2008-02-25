@@ -537,41 +537,75 @@ sub checkLineSnipable {
 	my $from = shift;
 	my $to = shift;
 
-	# Simulate tracing a line to the location (Bresenham's algorithm)
-	my ($x0, $y0, $x1, $y1) = ($from->{x}, $from->{y}, $to->{x}, $to->{y});
-	my ($dx, $dy) = ($x1 - $x0, $y1 - $y0);
-	my ($stepx, $stepy);
+	# Simulate tracing a line to the location (modified Bresenham's algorithm)
+	my ($X0, $Y0, $X1, $Y1) = ($from->{x}, $from->{y}, $to->{x}, $to->{y});
 
-	if ($dy < 0) {$dy = -$dy; $stepy = -1;} else {$stepy = 1;}
-	if ($dx < 0) {$dx = -$dx; $stepx = -1;} else {$stepx = 1;}
-	$dy <<= 1;
-	$dx <<= 1;
-
-	if ($dx > $dy) {
-		my $fraction = $dy - ($dx >> 1);
-		while ($x0 != $x1) {
-			if ($fraction >= 0) {
-				$y0 += $stepy;
-				$fraction -= $dx;
-			}
-			$x0 += $stepx;
-			$fraction += $dy;
-			return 0 if (!$field->isSnipable($x0, $y0));
-		}
+	my $steep;
+	my $posX = 1;
+	my $posY = 1;
+	if ($X1 - $X0 < 0) {
+		$posX = -1;
+	}
+	if ($Y1 - $Y0 < 0) {
+		$posY = -1;
+	}
+	if (abs($Y0 - $Y1) < abs($X0 - $X1)) {
+		$steep = 0;
 	} else {
-		my $fraction = $dx - ($dy >> 1);
-		while ($y0 != $y1) {
-			if ($fraction >= 0) {
-				$x0 += $stepx;
-				$fraction -= $dy;
-			}
-			$y0 += $stepy;
-			$fraction += $dx;
-			return 0 if (!$field->isSnipable($x0, $y0));
+		$steep = 1;
+	}
+	if ($steep == 1) {
+		my $Yt = $Y0;
+		$Y0 = $X0;
+		$X0 = $Yt;
+
+		$Yt = $Y1;
+		$Y1 = $X1;
+		$X1 = $Yt;
+	}
+	if ($X0 > $X1) {
+		my $Xt = $X0;
+		$X0 = $X1;
+		$X1 = $Xt;
+
+		my $Yt = $Y0;
+		$Y0 = $Y1;
+		$Y1 = $Yt;
+	}
+	my $dX = $X1 - $X0;
+	my $dY = abs($Y1 - $Y0);
+	my $E = 0;
+	my $dE;
+	if ($dX) {
+		$dE = $dY / $dX;
+	} else {
+		# Delta X is 0, it only occures when $from is equal to $to
+		return 1;
+	}
+	my $stepY;
+	if ($Y0 < $Y1) {
+		$stepY = 1;
+	} else {
+		$stepY = -1;
+	}
+	my $Y = $Y0;
+	my $Erate = 0.99;
+	if (($posY == -1 && $posX == 1) || ($posY == 1 && $posX == -1)) {
+		$Erate = 0.01;
+	}
+	for (my $X=$X0;$X<=$X1;$X++) {
+		$E += $dE;
+		if ($steep == 1) {
+			return 0 if (!$field->isSnipable($Y, $X));
+		} else {
+			return 0 if (!$field->isSnipable($X, $Y));
+		}
+		if ($E >= $Erate) {
+			$Y += $stepY;
+			$E -= 1;
 		}
 	}
 	return 1;
-
 }
 
 ##
