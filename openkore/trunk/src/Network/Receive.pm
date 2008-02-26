@@ -1400,6 +1400,19 @@ sub actor_name_received {
 			" (not on screen): " . bytesToString($args->{name}) . "\n",
 			"parseMsg_presence/remote", 2;
 	}
+
+	my $monster = $monstersList->getByID($args->{ID});
+	if ($monster) {
+		my $name = bytesToString($args->{name});
+		debug "Monster Info 2: $name ($monster->{binID})\n", "parseMsg", 2;
+		$monster->{name_given} = $name;
+		if ($monsters_lut{$monster->{nameID}} eq "") {
+			$monster->setName($name);
+			$monsters_lut{$monster->{nameID}} = $name;
+			updateMonsterLUT(Settings::getTableFilename("monsters.txt"), $monster->{nameID}, $name);
+		}
+	}
+
 }
 
 sub actor_status_active {
