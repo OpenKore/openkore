@@ -2828,11 +2828,24 @@ sub processAutoTeleport {
 	if ($safe && timeOut($timeout{ai_teleport_away})) {
 		foreach (@monstersID) {
 			next unless $_;
-			if (mon_control($monsters{$_}{name},$monsters{$_}{nameID})->{teleport_auto} == 1) {
+			my $teleAuto = mon_control($monsters{$_}{name},$monsters{$_}{nameID})->{teleport_auto};
+			if ($teleAuto == 1) {
 				message TF("Teleporting to avoid %s\n", $monsters{$_}{name}), "teleport";
 				$ai_v{temp}{clear_aiQueue} = 1 if (useTeleport(1));
 				$timeout{ai_teleport_away}{time} = time;
 				return;
+			} elsif ($teleAuto < 0) {
+				my $pos = calcPosition($monsters{$_});
+				my $myPos = calcPosition($char);
+				my $dist = distance($pos, $myPos);
+				if ($dist <= abs($teleAuto)) {
+					if(checkLineWalkable($myPos, $pos) || checkLineSnipable($myPos, $pos)) {
+						message TF("Teleporting due to monster being too close %s\n", $monsters{$_}{name}), "teleport";
+						$ai_v{temp}{clear_aiQueue} = 1 if (useTeleport(1));
+						$timeout{ai_teleport_away}{time} = time;
+						return;
+					}
+				}
 			}
 		}
 		$timeout{ai_teleport_away}{time} = time;
