@@ -193,7 +193,7 @@ sub serverRecv {
 	
 	$self->{remote_socket}->recv($msg, 1024 * 32);
 	if (Plugins::hasHook("Network::serverRecv")) {
-		Plugins::callHook("Network::serverRecv", { msg => $msg });
+		Plugins::callHook("Network::serverRecv", { msg => \$msg });
 	}
 	if (!defined($msg) || length($msg) == 0) {
 		# Connection from server closed.
