@@ -13,6 +13,7 @@
 #  3 means to attack the monster once (provoke) then leave it, useful for mobbing.
 #
 # <teleport>:
+# > 0 (-1, -2, etc.) to set exact critical distance for this monster. Teleport, if the monster reaches it.
 # 1 to teleport if the monster is on the screen.
 # 2 to teleport if the monster attacks you.
 # 3 to disconnect if the monster is on your screen.
