@@ -2966,7 +2966,8 @@ sub processAutoShopOpen {
 	if ($config{'shopAuto_open'} && !AI::isIdle) {
 		$timeout{ai_shop}{time} = time;
 	}
-	if ($config{'shopAuto_open'} && AI::isIdle && $conState == 5 && !$char->{sitting} && timeOut($timeout{ai_shop}) && !$shopstarted) {
+	if ($config{'shopAuto_open'} && AI::isIdle && $conState == 5 && !$char->{sitting} && timeOut($timeout{ai_shop}) && !$shopstarted
+	  && $field{name} eq $config{'lockMap'}) {
 		openShop();
 	}
 }
