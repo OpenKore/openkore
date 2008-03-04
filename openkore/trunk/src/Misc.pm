@@ -2669,7 +2669,7 @@ sub useTeleport {
 	}
 
 	# We dont have the skill or we want to respawn using a butterfly wing
-	if (!$sk_lvl || ($config{'teleportAuto_useItemForRespawn'} && $use_lvl == 2)) {
+	if (!$sk_lvl || ($config{'teleportAuto_useItemForRespawn'} && $use_lvl == 2) || !$config{'teleportAuto_useSkill'}) {
 		my $item;
 		if ($use_lvl == 1) {
 			$item = $char->inventory->getByName("Fly Wing");
