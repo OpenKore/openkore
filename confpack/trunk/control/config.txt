@@ -133,6 +133,7 @@ dcOnDeath 0
 dcOnDualLogin 0
 dcOnDisconnect 0
 dcOnEmptyArrow 0
+dcOnMaxReconnections 0
 dcOnMute 0
 dcOnPM 0
 dcOnZeny 0
