@@ -350,6 +350,7 @@ sub checkConnection {
 			$quit = 1;
 			return;
 		}
+		$reconnectCount++;
 		$self->serverConnect($master->{ip}, $master->{port});
 
 		# call plugin's hook to determine if we can continue the work
@@ -436,6 +437,10 @@ sub checkConnection {
 		undef $secureLoginKey;
 
 	} elsif ($conState == 1 && timeOut($timeout{'master'}) && timeOut($timeout_ex{'master'})) {
+		if ($config{dcOnMaxReconnections} && $config{dcOnMaxReconnections} <= $reconnectCount) {
+			$quit = 1;
+			return;
+		}
 		error T("Timeout on Account Server, reconnecting...\n"), "connection";
 		$timeout_ex{'master'}{'time'} = time;
 		$timeout_ex{'master'}{'timeout'} = $timeout{'reconnect'}{'timeout'};
@@ -491,6 +496,7 @@ sub checkConnection {
 		# call plugin's hook to determine if we can continue the connection
 		if ($self->serverAlive) {
 			Plugins::callHook("Network::serverConnect/char");
+			$reconnectCount = 0;
 			return if ($conState == 1.5);
 		}
 		
