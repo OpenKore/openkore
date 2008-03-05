@@ -273,7 +273,8 @@ sub iterate {
 			my $begin = time;
 			my $solution = $self->{solution};
 			$self->{index} = $config{route_step} unless $self->{index};
-			$self->{index}++ if ($self->{index} < $config{route_step});
+			$self->{index}++ if (($self->{index} < $config{route_step})
+			  && ($self->{old_x} != $cur_x || $self->{old_y} != $cur_y));
 
 			if (defined($self->{old_x}) && defined($self->{old_y})) {
 				# See how far we've walked since the last move command and
