@@ -961,6 +961,9 @@ sub onAddPrivMsgUser {
 
 sub onChatAdd {
 	my ($self, $hook, $params) = @_;
+	my @tmpdate = localtime();
+	if ($tmpdate[1] < 10) {$tmpdate[1] = "0".$tmpdate[1]};
+	if ($tmpdate[2] < 10) {$tmpdate[2] = "0".$tmpdate[2]};
 
 	return if (!$self->{notebook}->hasPage('Chat Log'));
 	if ($hook eq "ChatQueue::add" && $params->{type} ne "pm") {
@@ -968,16 +971,16 @@ sub onChatAdd {
 		if ($params->{type} ne "c") {
 			$msg = "[$params->{type}] ";
 		}
-		$msg .= "$params->{user} : $params->{msg}\n";
+		$msg .= "[$tmpdate[2]:$tmpdate[1]] $params->{user}: $params->{msg}\n";
 		$self->{chatLog}->add($msg, $params->{type});
 
 	} elsif ($hook eq "packet_selfChat") {
 		# only display this message if it's a real self-chat
-		$self->{chatLog}->add("$params->{user} : $params->{msg}\n", "selfchat") if ($params->{user});
+		$self->{chatLog}->add("[$tmpdate[2]:$tmpdate[1]] $params->{user}: $params->{msg}\n", "selfchat") if ($params->{user});
 	} elsif ($hook eq "packet_privMsg") {
-		$self->{chatLog}->add("(From: $params->{privMsgUser}) : $params->{privMsg}\n", "pm");
+		$self->{chatLog}->add("([$tmpdate[2]:$tmpdate[1]] From: $params->{privMsgUser}): $params->{privMsg}\n", "pm");
 	} elsif ($hook eq "packet_sentPM") {
-		$self->{chatLog}->add("(To: $params->{to}) : $params->{msg}\n", "pm");
+		$self->{chatLog}->add("([$tmpdate[2]:$tmpdate[1]] To: $params->{to}): $params->{msg}\n", "pm");
 	}
 }
 
