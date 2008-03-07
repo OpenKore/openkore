@@ -326,6 +326,9 @@ sub new {
 		'0296' => ['storage_items_nonstackable'],
 		'0297' => ['cart_equip_list'],
 		'029A' => ['inventory_item_added', 'v1 v1 v1 C1 C1 C1 a8 v1 C1 C1 a4', [qw(index amount nameID identified broken upgrade cards type_equip type fail cards_ext)]],
+		# tRO HShield packet challenge. 
+		# Borrow sub gameguard_request because it use the same mechanic.
+		'02A6' => ['gameguard_request'],
 		# mRO PIN code Check
 		'02AD' => ['login_pin_code_request', 'v1 V', [qw(flag key)]],
 		# Packet Prefix encryption Support
