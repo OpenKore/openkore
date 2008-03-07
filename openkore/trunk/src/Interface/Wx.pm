@@ -416,8 +416,7 @@ sub createMenuBar {
 	$self->addMenu($viewMenu,
 		'&Font...',		\&onFontChange, 'Change console font');
 	$viewMenu->AppendSeparator;
-	$self->addMenu($viewMenu,
-		'&Clear Console',	\&onClearConsole);
+	$self->addMenu($viewMenu, 'Clear Console', sub {my $self = shift; $self->{console}->Remove(0, 40000)}, 'Clear content of console');
 	$menu->Append($viewMenu, '&View');
 
 	# Settings menu
@@ -811,11 +810,6 @@ sub onClose {
 sub onFontChange {
 	my $self = shift;
 	$self->{console}->selectFont($self->{frame});
-}
-
-sub onClearConsole {
-	my $self = shift;
-	$self->{console}->Remove(0, -1);
 }
 
 sub onAdvancedConfig {
