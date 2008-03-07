@@ -157,13 +157,19 @@ sub determineFontStyle {
 				$fgcolors{$colorName}[STYLE_SLOT] = $result;
 			}
 		}
+				else {
+				$result = {
+					color => new Wx::Colour(255, 255, 255)
+				};
+				$fgcolors{$colorName}[STYLE_SLOT] = $result;
+			}
 		return $result;
 	}
 }
 
 sub isAtBottom {
 	my ($self) = @_;
-	return $self->IsPositionVisible($self->GetLastPosition());
+	return $self->IsPositionVisible($self->GetLastPosition()-5);
 }
 
 sub finalizePrinting {
