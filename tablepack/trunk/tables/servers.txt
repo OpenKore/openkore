@@ -433,7 +433,7 @@ secureLogin 3
 secureLogin_type 0
 secureLogin_account 0
 gameLogin_packet 0x275
-encrypt_packet_prefix 1
+gameGuard 1
 pauseCharServer 1
 patchserver wpatch.ragnarok.in.th
 patchpath /patch70
@@ -472,7 +472,7 @@ secureLogin 3
 secureLogin_type 0
 secureLogin_account 0
 gameLogin_packet 0x275
-encrypt_packet_prefix 1
+gameGuard 1
 pauseCharServer 1
 patchserver wpatch.ragnarok.in.th
 patchpath /patch70
@@ -488,7 +488,7 @@ secureLogin 3
 secureLogin_type 0
 secureLogin_account 0
 gameLogin_packet 0x275
-encrypt_packet_prefix 1
+gameGuard 1
 pauseCharServer 1
 patchserver wpatch.ragnarok.in.th
 patchpath /patch70
