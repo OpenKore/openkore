@@ -21,7 +21,7 @@ sub new {
 	my $vsizer = new Wx::BoxSizer(wxVERTICAL);
 	$hsizer->Add($vsizer, 0, wxGROW | wxRIGHT, 8);
 
-	my $label = new Wx::StaticText($self, -1, 'Category:');
+	my $label = new Wx::StaticText($self, -1, 'Categories:');
 	$vsizer->Add($label, 0);
 
 	my $list = $self->{list} = new Wx::ListBox($self, 81, wxDefaultPosition, wxDefaultSize,
@@ -184,7 +184,8 @@ sub downloadManual {
 	my ($self, $parent) = @_;
 	my ($file, $f, $time);
 
-	$file = Settings::getControlFilename("manual.txt");
+	$file = Settings::getControlFilename("manual.html");
+
 	$time = (stat($file))[9];
 	# Download manual if it hasn't been downloaded yet,
 	# or if the local copy is more than 3 days old
@@ -242,7 +243,7 @@ sub downloadManual {
 
 		if (!defined $file) {
 			my @folders = Settings::getControlFolders();
-			$file = "$folders[0]/manual.txt";
+			$file = "$folders[0]/manual.html";
 		}
 		if ($manual && open($f, ">", $file)) {
 			binmode F;
@@ -325,9 +326,8 @@ sub _help {
 	if ($manual eq '') {
 		return 'Unable to download the manual.';
 	} else {
-		my $tmp = quotemeta "<b class=\"item\">$name";
-		my ($found) = $manual =~ /<li>(${tmp}.*?)<\/li>/s;
-		$found =~ s/^<b .*?>(.*?)<\/b>/<b><font color="blue">$1<\/font><\/b>/s;
+		my $tmp = quotemeta "<dt class=\"item\"><b>$name";
+		my ($found) = $manual =~ /<a name=\"$name\"><\/a>.*?<dl class=\"primaryList\">\n(${tmp}.*?)<\/dl>/s;
 		$found = "No help available for \"$name\"." if ($found eq '');
 		return $found;
 	}
