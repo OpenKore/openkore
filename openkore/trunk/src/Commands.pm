@@ -3044,7 +3044,7 @@ sub cmdPlayerList {
 		my $headMid = headgearName($player->{headgear}{mid});
 		my $headLow = headgearName($player->{headgear}{low});
 		
-		$msg = TF(" ------------------Player Info ------------------\n" .
+		$msg = TF("------------------Player Info ------------------\n" .
 			"%s (%d)\n" .
 			"Account ID: %s (Hex: %s)\n" .
 			"Party: %s\n" .
@@ -3082,7 +3082,7 @@ sub cmdPlayerList {
 		if ($degPlayerToYou >= $head * 45 - 29 && $degPlayerToYou <= $head * 45 + 29) {
 			$msg .= T("Player is facing towards you.\n");
 		}
-		$msg .= " ------------------Statuses ------------------\n";
+		$msg .= "------------------- Statuses -------------------\n";
 #############################################################
 #Statuses
 #############################################################
