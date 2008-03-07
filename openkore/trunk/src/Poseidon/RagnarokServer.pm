@@ -182,11 +182,20 @@ sub onClientData {
 		my $serverUsers = pack("V", @{$self->clients()} - 1);
 		# '0069' => ['account_server_info', 'x2 a4 a4 a4 x30 C1 a*',
 		# 			[qw(sessionID accountID sessionID2 accountSex serverInfo)]],
-		my $data = pack("C*", 0x69, 0x00, 0x4f, 0x00) . 
-			$sessionID . $accountID . $sessionID2 . 
-			pack("x30") . pack("C1", $sex) .
-			pack("C*", $ipElements[0], $ipElements[1], $ipElements[2], $ipElements[3]) .
-			$port .	$serverName . $serverUsers . pack("x2");
+		my $data;
+		if ($switch eq '01FA') {
+			$data = pack("C*", 0x69, 0x00, 0x53, 0x00) . 
+				$sessionID . $accountID . $sessionID2 . 
+				pack("x30") . pack("C1", $sex) . pack("x4") .
+				pack("C*", $ipElements[0], $ipElements[1], $ipElements[2], $ipElements[3]) .
+				$port .	$serverName . $serverUsers . pack("x2");
+		} else {
+			$data = pack("C*", 0x69, 0x00, 0x4F, 0x00) . 
+				$sessionID . $accountID . $sessionID2 . 
+				pack("x30") . pack("C1", $sex) .
+				pack("C*", $ipElements[0], $ipElements[1], $ipElements[2], $ipElements[3]) .
+				$port .	$serverName . $serverUsers . pack("x2");
+		}
 
 		$client->send($data);
 
@@ -211,7 +220,7 @@ sub onClientData {
 			undef $clientdata{$index}{masterLogin_packet};
 		}
 
-	} elsif (($switch eq '0065') || ($msg =~ /^$packed_switch$accountID$sessionID$sessionID2\x0\x0.$/)) { # client sends server choice packet
+	} elsif (($switch eq '0065') || ($switch eq '0275') || ($msg =~ /^$packed_switch$accountID$sessionID$sessionID2\x0\x0.$/)) { # client sends server choice packet
 
 		my $exp = pack("V", 0);
 		my $zeny = pack("V", 0);
@@ -496,6 +505,11 @@ sub onClientData {
 		$client->send(pack("C*", 0x8B, 0x01, 0x00, 0x00));
 
 	} elsif ($switch eq '0228') { # client sends game guard sync
+		# Queue the response
+		$self->{response} = $msg;
+		$self->{state} = 'requested';
+	
+	} elsif ($switch eq '02A7') { # client sends hShield response
 		# Queue the response
 		$self->{response} = $msg;
 		$self->{state} = 'requested';
