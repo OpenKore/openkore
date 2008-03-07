@@ -2942,8 +2942,74 @@ sub cmdPlayerList {
 	my (undef, $args) = @_;
 	my $msg;
 
+	if ($args eq "g") {
+	my $maxpl;
+	my $maxplg=0;
+	$msg =  T("-----------Player List-----------\n" .
+		"#    Name                                Sex   Lv  Job         Dist  Coord\n");
+	foreach my $player (@{$playersList->getItems()}) {
+		my ($name, $dist, $pos);
+		$name = $player->name;
+
+		if ($char->{guild}{name} eq ($player->{guild}{name})) {
+
+		if ($player->{guild} && %{$player->{guild}}) {
+			$name .= " [$player->{guild}{name}]";
+		}
+		$dist = distance($char->{pos_to}, $player->{pos_to});
+		$dist = sprintf("%.1f", $dist) if (index ($dist, '.') > -1);
+		$pos = '(' . $player->{pos_to}{x} . ', ' . $player->{pos_to}{y} . ')';
+		
+		$maxpl = @{$playersList->getItems()};
+		$maxplg = $maxplg+1;
+
+		$msg .= swrite(
+			"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<< @<< @<<<<<<<<<< @<<<< @<<<<<<<<<<",
+			[$player->{binID}, $name, $sex_lut{$player->{sex}}, $player->{lv}, $player->job, $dist, $pos]);
+	}
+}
+	$msg .= "Total guild players $maxplg \n";
+	$msg .= "Total players $maxpl \n";
+	$msg .= "---------------------------------\n";
+	message($msg, "list");
+	return;
+}
+
+	if ($args eq "p") {
+	my $maxpl;
+	my $maxplp=0;
+	$msg =  T("-----------Player List-----------\n" .
+		"#    Name                                Sex   Lv  Job         Dist  Coord\n");
+	foreach my $player (@{$playersList->getItems()}) {
+		my ($name, $dist, $pos);
+		$name = $player->name;
+
+		if ($char->{party}{name} eq ($player->{party}{name})) {
+
+		if ($player->{guild} && %{$player->{guild}}) {
+			$name .= " [$player->{guild}{name}]";
+		}
+		$dist = distance($char->{pos_to}, $player->{pos_to});
+		$dist = sprintf("%.1f", $dist) if (index ($dist, '.') > -1);
+		$pos = '(' . $player->{pos_to}{x} . ', ' . $player->{pos_to}{y} . ')';
+		
+		$maxpl = @{$playersList->getItems()};
+		$maxplp = $maxplp+1;
+
+		$msg .= swrite(
+			"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<< @<< @<<<<<<<<<< @<<<< @<<<<<<<<<<",
+			[$player->{binID}, $name, $sex_lut{$player->{sex}}, $player->{lv}, $player->job, $dist, $pos]);
+	}
+}
+	$msg .= "Total party players $maxplp \n";
+	$msg .= "Total players $maxpl \n";
+	$msg .= "---------------------------------\n";
+	message($msg, "list");
+	return;
+}
+
 	if ($args ne "") {
-		my $player = Match::player($args);
+		my Actor::Player $player = Match::player($args);
 		if (!$player) {
 			error TF("Player \"%s\" does not exist.\n", $args);
 			return;
@@ -2977,12 +3043,13 @@ sub cmdPlayerList {
 		my $headTop = headgearName($player->{headgear}{top});
 		my $headMid = headgearName($player->{headgear}{mid});
 		my $headLow = headgearName($player->{headgear}{low});
-
-		$msg = TF("------------------ Player Info ------------------\n" .
+		
+		$msg = TF(" ------------------Player Info ------------------\n" .
 			"%s (%d)\n" .
 			"Account ID: %s (Hex: %s)\n" .
 			"Party: %s\n" .
 			"Guild: %s\n" .
+			"Guild title: %s\n" .
 			"Position: %s, %s (%s of you: %s degrees)\n" .
 			"Level: %-7d Distance: %-17s\n" .
 			"Sex: %-6s    Class: %s\n" .
@@ -2997,6 +3064,7 @@ sub cmdPlayerList {
 		$player->name, $player->{binID}, $player->{nameID}, $hex, 
 		($player->{party} && $player->{party}{name} ne '') ? $player->{party}{name} : '',
 		($player->{guild}) ? $player->{guild}{name} : '',
+		($player->{guild}) ? $player->{guild}{title} : '',
 		$pos->{x}, $pos->{y}, $directions_lut{$youToPlayer}, int($degYouToPlayer),
 		$player->{lv}, $dist, $sex_lut{$player->{sex}}, $jobs_lut{$player->{jobID}},
 		"$directions_lut{$body} ($body)", "$directions_lut{$head} ($head)",
@@ -3014,30 +3082,42 @@ sub cmdPlayerList {
 		if ($degPlayerToYou >= $head * 45 - 29 && $degPlayerToYou <= $head * 45 + 29) {
 			$msg .= T("Player is facing towards you.\n");
 		}
-
+		$msg .= " ------------------Statuses ------------------\n";
+#############################################################
+#Statuses
+#############################################################
+		my $statuses = 'none';
+		if (defined $player->{statuses} && %{$player->{statuses}}) {
+			$statuses = join(", ", keys %{$player->{statuses}});
+		}
+		$msg .= TF("Statuses: %s \n", $statuses);
 		$msg .= "-------------------------------------------------\n";
 		message $msg, "info";
 		return;
 	}
 
-	$msg =  T("-----------Player List-----------\n" .
-		"#    Name                                Sex   Lv  Job         Dist  Coord\n");
-	foreach my $player (@{$playersList->getItems()}) {
-		my ($name, $dist, $pos);
-		$name = $player->name;
-		if ($player->{guild} && %{$player->{guild}}) {
-			$name .= " [$player->{guild}{name}]";
+	{
+	my $maxpl;
+		$msg =  T("-----------Player List-----------\n" .
+			"#    Name                                Sex   Lv  Job         Dist  Coord\n");
+		foreach my $player (@{$playersList->getItems()}) {
+			my ($name, $dist, $pos);
+			$name = $player->name;
+			if ($player->{guild} && %{$player->{guild}}) {
+				$name .= " [$player->{guild}{name}]";
+			}
+			$dist = distance($char->{pos_to}, $player->{pos_to});
+			$dist = sprintf("%.1f", $dist) if (index ($dist, '.') > -1);
+			$pos = '(' . $player->{pos_to}{x} . ', ' . $player->{pos_to}{y} . ')';
+			$maxpl = @{$playersList->getItems()};
+			$msg .= swrite(
+				"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<< @<< @<<<<<<<<<< @<<<< @<<<<<<<<<<",
+				[$player->{binID}, $name, $sex_lut{$player->{sex}}, $player->{lv}, $player->job, $dist, $pos]);
 		}
-		$dist = distance($char->{pos_to}, $player->{pos_to});
-		$dist = sprintf("%.1f", $dist) if (index ($dist, '.') > -1);
-		$pos = '(' . $player->{pos_to}{x} . ', ' . $player->{pos_to}{y} . ')';
-
-		$msg .= swrite(
-			"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<< @<< @<<<<<<<<<< @<<<< @<<<<<<<<<<",
-			[$player->{binID}, $name, $sex_lut{$player->{sex}}, $player->{lv}, $player->job, $dist, $pos]);
+		$msg .= "Total players $maxpl \n";
+		$msg .= "---------------------------------\n";
+		message($msg, "list");
 	}
-	$msg .= "---------------------------------\n";
-	message($msg, "list");
 }
 
 sub cmdPlugin {
