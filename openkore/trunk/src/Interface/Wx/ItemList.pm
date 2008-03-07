@@ -106,7 +106,7 @@ sub _onAdd {
 	my ($self, undef, $arg) = @_;
 	my ($actor, $index) = @{$arg};
 	my $addr = Scalar::Util::refaddr($actor);
-
+	$self->DeleteAllItems;
 	my $ID = $actor->onNameChange->add($self, \&_onNameChange);
 	$self->{onNameChangeCallbacks}{$addr} = $ID;
 
@@ -118,7 +118,7 @@ sub _onRemove {
 	my ($self, undef, $arg) = @_;
 	my ($actor, $index) = @{$arg};
 	my $addr = Scalar::Util::refaddr($actor);
-
+	$self->DeleteAllItems;
 	my $ID = $self->{onNameChangeCallbacks}{$addr};
 	$actor->onNameChange->remove($ID);
 	delete $self->{onNameChangeCallbacks}{$addr};
