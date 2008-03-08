@@ -250,6 +250,8 @@ List pets that are on screen.
 List players that are on screen.
 				lists players on screen
 <player #>			displays detailed info about a player
+p				lists party players on screen
+g				lists guild players on screen
 [plugin]
 Control plugins.
 				lists loaded plugins
