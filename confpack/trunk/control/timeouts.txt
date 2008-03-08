@@ -114,7 +114,6 @@ ai_cartAuto 0.15
 ai_cartAutoCheck 2
 ai_avoidcheck 0.5
 ai_shop 4
-ai_npcTalk 8
 
 # delay before starting escape sequence
 ai_route_escape 8
