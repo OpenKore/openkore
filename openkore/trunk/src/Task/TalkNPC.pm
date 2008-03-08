@@ -102,7 +102,8 @@ sub iterate {
 	my ($self) = @_;
 	$self->SUPER::iterate(); # Do not forget to call this!
 	return unless ($net->getState() == Network::IN_GAME);
-
+	my $timeResponse = ($config{npcTimeResponse} >= 5) ? $config{npcTimeResponse}:5;
+	
 	if ($self->{stage} eq 'Not Started') {
 		if (!timeOut($char->{time_move}, $char->{time_move_calc} + 0.2)) {
 			# Wait for us to stop moving before talking.
@@ -141,7 +142,7 @@ sub iterate {
 		#$messageSender->sendTalkCancel($self->{ID}) if ($npcsList->getByID($self->{ID}));
 		$self->setDone();
 
-	} elsif (timeOut($self->{time}, $timeout{ai_npcTalk}{timeout})) {
+	} elsif (timeOut($self->{time}, $timeResponse)) {
 		# If NPC does not respond before timing out, then by default, it's
 		# a failure.
 		$messageSender->sendTalkCancel($self->{ID});
@@ -157,10 +158,10 @@ sub iterate {
 
 		# We give the NPC some time to respond. This time will be reset once
 		# the NPC responds.
-		$ai_v{npc_talk}{time} = time + $timeout{ai_npcTalk}{timeout} + 5;
+		$ai_v{npc_talk}{time} = time + $timeResponse;
 
 		if ($config{autoTalkCont}) {
-			while ($self->{steps}[0] =~ /c/i) {
+			while ($self->{steps}[0] =~ /^c$/i) {
 				shift @{$self->{steps}};
 			}
 		}
@@ -168,7 +169,7 @@ sub iterate {
 		my $step = $self->{steps}[0];
 		my $npcTalkType = $ai_v{npc_talk}{talk};
 
-		if ($step =~ /w(\d+)/i) {
+		if ($step =~ /^w(\d+)/i) {
 			# Wait x seconds.
 			my $time = $1;
 			$ai_v{npc_talk}{time} = time + $time;
@@ -181,8 +182,8 @@ sub iterate {
 		} elsif ( $step =~ /^a=(.*)/i ) {
 			# Run a command.
 			my $command = $1;
-			$ai_v{npc_talk}{time} = time + 1;
-			$self->{time} = time + 1;
+			$ai_v{npc_talk}{time} = time + $timeResponse - 4;
+			$self->{time} = time + $timeResponse - 4;
 			Commands::run($command);
 
 		} elsif ( $step =~ /d(\d+)/i ) {
