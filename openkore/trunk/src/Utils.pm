@@ -679,7 +679,7 @@ sub inRange {
 	} elsif (defined $min) {
 		return 1 if ($value > $min || ($inclusive && $value == $min));
 	} elsif (defined $max) {
-		return 1 if ($value < $max || ($inclusive && $value == $min));
+		return 1 if ($value < $max || ($inclusive && $value == $max));
 	}
 
 	return 0;
