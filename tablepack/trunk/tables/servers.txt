@@ -438,6 +438,7 @@ pauseCharServer 1
 patchserver wpatch.ragnarok.in.th
 patchpath /patch70
 serverEncoding Thai
+recvpackets recvpackets-tro.txt
 
 # please double check before use this entry
 [Thailand - tRO: Valkyrie2]
@@ -461,8 +462,9 @@ paddedPackets_skillUseID 0x89
 syncID 0x7E
 syncTickOffset 3
 mapLoadedTickOffset 5
+recvpackets recvpackets-tro.txt
 
-[Thailand - tRO Free life server (Poring)]
+[Thailand - tRO Free life server (Alice(new), Poring)]
 ip 203.144.244.121
 port 6900
 master_version 7
@@ -477,8 +479,9 @@ pauseCharServer 1
 patchserver wpatch.ragnarok.in.th
 patchpath /patch70
 serverEncoding Thai
+recvpackets recvpackets-tro.txt
 
-[Thailand - tRO Free life server (Yoyo(new), Picky)]
+[Thailand - tRO Free life server (Yoyo, Picky)]
 ip 203.144.244.100
 port 6900
 master_version 7
@@ -493,6 +496,7 @@ pauseCharServer 1
 patchserver wpatch.ragnarok.in.th
 patchpath /patch70
 serverEncoding Thai
+recvpackets recvpackets-tro.txt
 
 ## http://www.rovietnam.com.vn/
 [Vietnam - vRO: SD]
