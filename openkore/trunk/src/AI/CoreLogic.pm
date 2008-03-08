@@ -66,6 +66,7 @@ sub iterate {
 	Benchmark::begin("AI (part 1.1)") if DEBUG;
 	processLook();
 	processNPCTalk();
+	processEquip();
 	processDrop();
 	processEscapeUnknownMaps();
 	Benchmark::end("AI (part 1.1)") if DEBUG;
@@ -113,7 +114,6 @@ sub iterate {
 	ChatQueue::processFirst;
 
 	processDcOnPlayer();
-	processEquip();
 	processDeal();
 	processDealAuto();
 	processPartyAuto();
