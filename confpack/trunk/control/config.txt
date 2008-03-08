@@ -565,6 +565,8 @@ storageAuto_useChatCommand
 relogAfterStorage 1
 minStorageZeny 50
 
+npcTimeResponse
+
 getAuto {
 	minAmount
 	maxAmount
