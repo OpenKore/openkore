@@ -201,6 +201,7 @@ sub getInventoryIDs {
 	foreach my $item (@{$char->inventory->getItems}) {
 		if (lc($item->name) eq $find) {push @ids, $item->{invIndex}}
 	}
+	unless (@ids) {push @ids, -1}
 	return @ids
 }
 
