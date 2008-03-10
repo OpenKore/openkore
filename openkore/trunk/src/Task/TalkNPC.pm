@@ -109,7 +109,7 @@ sub iterate {
 			# Wait for us to stop moving before talking.
 			return;
 
-		} elsif (timeOut($self->{time}, $timeout{ai_npcTalk}{timeout})) {
+		} elsif (timeOut($self->{time}, $timeResponse)) {
 			$self->setError(NPC_NOT_FOUND, TF("Could not find an NPC at location (%d,%d).",
 				$self->{x}, $self->{y}));
 
