@@ -1322,7 +1322,7 @@ sub checkMonsterCleanness {
 
 	if (objectInsideSpell($monster)) {
 		# Prohibit attacking this monster in the future
-		@_[0]->{dmgFromPlayer}{$char->{ID}} = 1;
+		$monster->{dmgFromPlayer}{$char->{ID}} = 1;
 		return 0;
 	}
 
