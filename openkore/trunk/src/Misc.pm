@@ -689,17 +689,22 @@ sub closestWalkableSpot {
 }
 
 ##
-# objectInsideSpell(object)
+# objectInsideSpell(object, [ignore_party_members = 1])
 # object: reference to a player or monster hash.
 #
 # Checks whether an object is inside someone else's spell area.
 # (Traps are also "area spells").
 sub objectInsideSpell {
 	my $object = shift;
+	my $ignore_party_members = shift;
+	$ignore_party_members = 1 if (!defined $ignore_party_members);
+
 	my ($x, $y) = ($object->{pos_to}{x}, $object->{pos_to}{y});
 	foreach (@spellsID) {
 		my $spell = $spells{$_};
-		if ($spell->{sourceID} ne $accountID && $spell->{pos}{x} == $x && $spell->{pos}{y} == $y) {
+		if ((!$ignore_party_members || !$char->{party} || !$char->{party}{users}{$spell->{sourceID}})
+		  && $spell->{sourceID} ne $accountID
+		  && $spell->{pos}{x} == $x && $spell->{pos}{y} == $y) {
 			return 1;
 		}
 	}
@@ -1287,7 +1292,7 @@ sub checkMonsterCleanness {
 	if ($config{aggressiveAntiKS}) {
 		# Aggressive anti-KS mode, for people who are paranoid about not kill stealing.
 
-		#If we attacked the monster first, do not drop it... Cause WE are being ks'd
+		# If we attacked the monster first, do not drop it, we are being KSed
 		return 1 if ($monster->{dmgFromYou} || $monster->{missedFromYou});
 		
 		# If others attacked the monster then always drop it, wether it attacked us or not!
@@ -1315,8 +1320,9 @@ sub checkMonsterCleanness {
 		}
 	}
 
-	if (($monster->{statuses} && scalar(keys %{$monster->{statuses}}))
-	 || objectInsideSpell($monster)) {
+	if (objectInsideSpell($monster)) {
+		# Prohibit attacking this monster in the future
+		@_[0]->{dmgFromPlayer}{$char->{ID}} = 1;
 		return 0;
 	}
 
