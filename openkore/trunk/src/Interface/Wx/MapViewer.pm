@@ -23,11 +23,15 @@ package Interface::Wx::MapViewer;
 
 use strict;
 use Wx ':everything';
-use Wx::Event qw(EVT_PAINT EVT_LEFT_DOWN EVT_MOTION EVT_ERASE_BACKGROUND);
+# vcl code use Wx::Event qw(EVT_PAINT EVT_LEFT_DOWN EVT_MOTION EVT_ERASE_BACKGROUND);
+use Wx::Event qw(EVT_PAINT EVT_LEFT_DOWN EVT_RIGHT_DOWN EVT_MOTION EVT_ERASE_BACKGROUND);
 use File::Spec;
 use base qw(Wx::Panel);
 use FastUtils;
-use Utils::CallbackList;
+# vcl code use Utils::CallbackList;
+use Log qw(message);
+use Globals;
+use Translation qw(TF);
 
 
 our %addedHandlers;
@@ -45,14 +49,21 @@ sub new {
 	$self->{monsterBrush} = new Wx::Brush(new Wx::Colour(215, 0, 0), wxSOLID);
 	$self->{npcBrush}     = new Wx::Brush(new Wx::Colour(180, 0, 255), wxSOLID);
 	$self->{portalBrush}  = new Wx::Brush(new Wx::Colour(255, 128, 64), wxSOLID);
-	EVT_PAINT($self, \&_handlePaintEvent);
-	EVT_LEFT_DOWN($self, \&_handleLeftDownEvent);
-	EVT_MOTION($self, \&_handleMotionEvent);
-	EVT_ERASE_BACKGROUND($self, \&_handleEraseEvent);
+# vcl code 	EVT_PAINT($self, \&_handlePaintEvent);
+# vcl code 	EVT_LEFT_DOWN($self, \&_handleLeftDownEvent);
+# vcl code 	EVT_MOTION($self, \&_handleMotionEvent);
+# vcl code 	EVT_ERASE_BACKGROUND($self, \&_handleEraseEvent);
 
-	$self->{onClick} = new CallbackList();
-	$self->{onMouseMove} = new CallbackList();
-	$self->{onMapChange} = new CallbackList();
+	EVT_PAINT($self, \&_onPaint);
+	EVT_LEFT_DOWN($self, \&_onClick);
+	EVT_RIGHT_DOWN($self, \&_onRightClick);
+	EVT_MOTION($self, \&_onMotion);
+	EVT_ERASE_BACKGROUND($self, \&_onErase);
+
+
+# vcl code 	$self->{onClick} = new CallbackList();
+# vcl code 	$self->{onMouseMove} = new CallbackList();
+# vcl code 	$self->{onMapChange} = new CallbackList();
 
 	return $self;
 }
@@ -60,18 +71,41 @@ sub new {
 
 #### Events ####
 
+# vcl code sub onClick {
+# vcl code 	return $_[0]->{onClick};
+# vcl code }
+
+# vcl code sub onMouseMove {
+# vcl code 	return $_[0]->{onMouseMove};
+# vcl code }
+
+# vcl code sub onMapChange {
+# vcl code 	return $_[0]->{onMapChange};
+# vcl code }
+
 sub onClick {
-	return $_[0]->{onClick};
+	my $self = shift;
+	my $callback = shift;
+	my $user_data = shift;
+	$self->{clickCb} = $callback;
+	$self->{clickData} = $user_data;
 }
 
 sub onMouseMove {
-	return $_[0]->{onMouseMove};
+	my $self = shift;
+	my $callback = shift;
+	my $user_data = shift;
+	$self->{mouseMoveCb} = $callback;
+	$self->{mouseMoveData} = $user_data;
 }
 
 sub onMapChange {
-	return $_[0]->{onMapChange};
+	my $self = shift;
+	my $callback = shift;
+	my $user_data = shift;
+	$self->{mapChangeCb} = $callback;
+	$self->{mapChangeData} = $user_data;
 }
-
 
 #### Public methods ####
 
@@ -96,7 +130,8 @@ sub set {
 			$sizer->SetItemMinSize($self, $bitmap->GetWidth, $bitmap->GetHeight);
 		}
 
-		$self->{onMapChange}->call($self);
+# vcl code 		$self->{onMapChange}->call($self);
+		$self->{mapChangeCb}->($self->{mapChangeData}) if ($self->{mapChangeCb});
 		$self->{needUpdate} = 1;
 
 	} elsif ($x ne $self->{field}{x} || $y ne $self->{field}{y}) {
@@ -239,35 +274,63 @@ sub parsePortals {
 #### Private ####
 
 
-sub _handleLeftDownEvent {
+# vcl code sub _handleLeftDownEvent {
+sub _onClick {
 	my $self = shift;
 	my $event = shift;
-	if (!$self->{onClick}->empty() && $self->{field}{width} && $self->{field}{height}) {
+# vcl code 	if (!$self->{onClick}->empty() && $self->{field}{width} && $self->{field}{height}) {
+		if ($self->{clickCb} && $self->{field}{width} && $self->{field}{height}) {
 		my ($x, $y, $xscale, $yscale);
 		$xscale = $self->{field}{width} / $self->{bitmap}->GetWidth();
 		$yscale = $self->{field}{height} / $self->{bitmap}->GetHeight();
 		$x = $event->GetX * $xscale;
 		$y = $self->{field}{height} - ($event->GetY * $yscale);
 
-		$self->{onClick}->call($self, [int $x, int $y]);
+# vcl code 		$self->{onClick}->call($self, [int $x, int $y]);
+		$self->{clickCb}->($self->{clickData}, int $x, int $y);
 	}
 }
 
-sub _handleMotionEvent {
+# vcl code sub _handleMotionEvent {
+sub _onRightClick {
 	my $self = shift;
 	my $event = shift;
-	if (!$self->{onMouseMove}->empty() && $self->{field}{width} && $self->{field}{height}) {
+# vcl code 	if (!$self->{onMouseMove}->empty() && $self->{field}{width} && $self->{field}{height}) {
+	if ($self->{clickCb} && $self->{field}{width} && $self->{field}{height}) {
+		my ($x, $y, $xscale, $yscale);
+		$xscale = $self->{field}{width} / $self->{bitmap}->GetWidth();
+		$yscale = $self->{field}{height} / $self->{bitmap}->GetHeight();
+		$x = $event->GetX * $xscale;
+		$y = $self->{field}{height} - ($event->GetY * $yscale);
+
+		my $coord = "$x $y";
+		my $map = $field{name};
+		AI::clear(qw/move route mapRoute/);
+		message TF("Walking to waypoint: $x, $y\n"), "success";
+		main::ai_route($map, $x, $y,
+		attackOnRoute => 2,
+		noSitAuto => 1,
+		notifyUponArrival => 1);
+	}
+}
+
+sub _onMotion {
+	my $self = shift;
+	my $event = shift;
+	if ($self->{mouseMoveCb} && $self->{field}{width} && $self->{field}{height}) {
 		my ($x, $y, $xscale, $yscale);
 		$xscale = $self->{field}{width} / $self->{bitmap}->GetWidth;
 		$yscale = $self->{field}{height} / $self->{bitmap}->GetHeight;
 		$x = $event->GetX * $xscale;
 		$y = $self->{field}{height} - ($event->GetY * $yscale);
 
-		$self->{onMouseMove}->call($self, [int $x, int $y]);
+# vcl code 			$self->{onMouseMove}->call($self, [int $x, int $y]);
+		$self->{mouseMoveCb}->($self->{mouseMoveData}, int $x, int $y);
 	}
 }
 
-sub _handleEraseEvent {
+# vcl code sub _handleEraseEvent {
+sub _onErase {
 	my $self = shift;
 	if ($self->{bitmap}) {
 		# Do nothing; prevent flickering when drawing
@@ -348,7 +411,8 @@ sub _posXYToView {
 	return ($x, $y);
 }
 
-sub _handlePaintEvent {
+# vcl code sub _handlePaintEvent {
+sub _onPaint {
 	my $self = shift;
 	my $dc = new Wx::PaintDC($self);
 	return unless ($self->{bitmap});
