@@ -944,10 +944,10 @@ sub onTargetBoxKeyDown {
 
 sub onInitialized {
 	my ($self) = @_;
-	$self->{itemList}->init($playersList, undef,
+	$self->{itemList}->init($npcsList, new Wx::Colour(103, 0, 162),
+			$playersList, undef,
 			$monstersList, new Wx::Colour(200, 0, 0),
-			$itemsList, new Wx::Colour(0, 0, 200),
-			$npcsList, new Wx::Colour(103, 0, 162));
+			$itemsList, new Wx::Colour(0, 0, 200));
 }
 
 sub onAddPrivMsgUser {
