@@ -183,8 +183,13 @@ sub onRightClick {
 sub OnGetItemText {
 	my ($self, $item, $column) = @_;
 	my $actor = $self->_getActorForIndex($item);
+	my $acnam = "$actor->{name}";
+	if ($acnam eq "") {
+		$acnam = $actor->name;
+	}
+	my $info = "$acnam($actor->{pos_to}{x},$actor->{pos_to}{y})";
 	if ($actor) {
-		return $actor->name;
+		return $info;
 	} else {
 		return "";
 	}
