@@ -914,6 +914,7 @@ sub onItemListActivate {
 	my ($self, $actor) = @_;
 
 	if ($actor->isa('Actor::Player')) {
+		Commands::run("lookp " . $actor->{binID});
 		Commands::run("pl " . $actor->{binID});
 
 	} elsif ($actor->isa('Actor::Monster')) {
