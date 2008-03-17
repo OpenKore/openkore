@@ -1546,7 +1546,7 @@ sub processAutoBuy {
 		if ($ai_v{'temp'}{'ai_route_index'} ne "") {
 			$ai_v{'temp'}{'ai_route_attackOnRoute'} = AI::args($ai_v{'temp'}{'ai_route_index'})->{'attackOnRoute'};
 		}
-		if (!($ai_v{'temp'}{'ai_route_index'} ne "" && $ai_v{'temp'}{'ai_route_attackOnRoute'} <= 1) && $ai_v{'temp'}{'found'}) {
+		if (!($ai_v{'temp'}{'ai_route_index'} ne "" && AI::findAction("buyAuto")) && $ai_v{'temp'}{'found'}) {
 			AI::queue("buyAuto");
 		}
 		$timeout{'ai_buyAuto'}{'time'} = time;
