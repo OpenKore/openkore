@@ -1383,3 +1383,28 @@ version 1
 serverType 5
 private 1
 serverEncoding Western
+
+## http://www.eternityro.net/
+[EternityRO Private Server]
+ip eternityro.no-ip.org
+port 6937
+master_version 1
+version 85726
+serverType 9
+secureLogin 1
+secureLogin_requestCode DA 01 
+serverEncoding Western
+private 1
+recvpackets recvpackets-eternityRO.txt
+charBlock 108
+
+[Legacy RO]
+ip 74.86.240.226
+port 6900
+master_version 14
+version 10
+serverType 8_3
+private 1
+serverEncoding Western
+charBlockSize 108
+#storageEncryptKey 0x050B6F79,0x0202C179,0x00E20120,0x04FA43E3,0x0179B6C8,0x05973DF2,0x007D8D6B,0x08CB9ED9
