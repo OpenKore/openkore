@@ -1228,7 +1228,7 @@
 1241#Cursed_Dagger#
 1242#Dagger_of_Counter#
 7093#Cogwheel#
-7094#Fragment# //strange_cut
+7094#Fragment#
 7095#Metal_Fragment#
 7096#Lava#
 7097#Burning_Heart#
@@ -1310,7 +1310,7 @@
 7147#Jasmine#
 7148#Mother's_Letter#
 
-// ---- Amatsu- 01 ----------------
+// ---- Amatsu - 01 ----------------
 663#Songpyun#
 7149#Yellow_Plate#
 7150#Piece_of_Bamboo#
@@ -1577,7 +1577,6 @@
 2640#Kafra_Ring#
 1913#Electric_Guitar#
 5098#Tiger_Mask#
-684#Durian#
 
 // ----- Ayothaya -----
 
@@ -1963,7 +1962,6 @@
 5106#2nd_Anniversary_Hat#
 
 // -------- US 2nd anniversary event items --------
-2647#Nile_Rose#
 7332#Complete_Tablet#
 7333#Prontera_Tablet#
 7334#Payon_Tablet#
@@ -2114,14 +2112,14 @@
 
 // -------- Ancient Relics, Juperos ---------- 
 
-7352#Transparent_Plate#
-7353#Transparent_Plate#
-7354#Transparent_Plate#
-7355#Transparent_Plate#
-7356#Crest_Piece#
-7357#Crest_Piece#
-7358#Crest_Piece#
-7359#Crest_Piece#
+7352#Transparent_Plate1#
+7353#Transparent_Plate2#
+7354#Transparent_Plate3#
+7355#Transparent_Plate4#
+7356#Crest_Piece1#
+7357#Crest_Piece2#
+7358#Crest_Piece3#
+7359#Crest_Piece4#
 
 // ---- Box ----
 12027#Giggling_Box#
@@ -2148,27 +2146,27 @@
 2662#Vesper_Core_04#
 12040#Stone_of_Sage#
 //------------2006 USA 3rd anniversary------------------------
-5147#Baseball_Cap#			
-7530#Travel_Brochure_[Amatsu]#			
-7531#Travel_Brochure_[Kunlun]#			
-7532#Travel_Brochure_[Louyang]#			
-7533#Travel_Brochure_[Ayothaya]#			
-7534#Amatsu_Completed_Photo_Album#			
-7535#Kunlun_Completed_Photo_Album#			
-7536#Louyang_Completed_Photo_Album#			
-7537#Ayothaya_Completed_Photo_Album#			
-// --------- 2006 Lotto Event ----------						
-7361#Lotto_Ball_01#						
-7362#Lotto_Ball_02#						
-7363#Lotto_Ball_03#						
-7364#Lotto_Ball_04#						
-7365#Lotto_Ball_05#						
-7366#Lotto_Ball_06#						
-7367#Lotto_Ball_07#						
-7368#Lotto_Ball_08#						
-7369#Lotto_Ball_09#						
-7370#Lotto_Ball_10#						
-7371#Lotto_Ball_11#						
+5147#Baseball_Cap#
+7530#Travel_Brochure_[Amatsu]#
+7531#Travel_Brochure_[Kunlun]#
+7532#Travel_Brochure_[Louyang]#
+7533#Travel_Brochure_[Ayothaya]#
+7534#Amatsu_Completed_Photo_Album#
+7535#Kunlun_Completed_Photo_Album#
+7536#Louyang_Completed_Photo_Album#
+7537#Ayothaya_Completed_Photo_Album#
+// --------- 2006 Lotto Event ----------
+7361#Lotto_Ball_01#
+7362#Lotto_Ball_02#
+7363#Lotto_Ball_03#
+7364#Lotto_Ball_04#
+7365#Lotto_Ball_05#
+7366#Lotto_Ball_06#
+7367#Lotto_Ball_07#
+7368#Lotto_Ball_08#
+7369#Lotto_Ball_09#
+7370#Lotto_Ball_10#
+7371#Lotto_Ball_11#
 7372#Lotto_Ball_12#
 7373#Lotto_Ball_13#
 7374#Lotto_Ball_14#
@@ -2201,13 +2199,13 @@
 12037#Lotto_Box_03#
 12038#Lotto_Box_04#
 12039#Lotto_Box_05#
-7540#Lotto_Ball_39#	
-7541#Lotto_Ball_40#	
-7542#Lotto_Ball_41#	
-7543#Lotto_Ball_42#	
-7544#Lotto_Ball_43#	
-7545#Lotto_Ball_44#	
-7546#Lotto_Ball_45#	
+7540#Lotto_Ball_39#
+7541#Lotto_Ball_40#
+7542#Lotto_Ball_41#
+7543#Lotto_Ball_42#
+7544#Lotto_Ball_43#
+7545#Lotto_Ball_44#
+7546#Lotto_Ball_45#
 //---------------RO OST item-------------------------
 5151#Note_Headphone#
 // ------------- 2005 Mobile Acolyte ------------
@@ -2215,7 +2213,6 @@
 2665#Exorcising_Ring#
 5133#Sheep_Hat#
 2666#Lantern_of_Hope#
-12130#Cookie_Bag#
 // -------------- Main Quest ---------------
 7416#Letter_of_Recommendation#
 7417#Written_Request(A)#
@@ -2235,10 +2232,10 @@
 // -------------- Additional Skill Item --------------
 1771#Venom_Knife#
 7419#Embryo_Creation_Guide#
-12114#Elemental_Converter#
-12115#Elemental_Converter#
-12116#Elemental_Converter#
-12117#Elemental_Converter#
+12114#Flame_Elemental_Converter#
+12115#Frost_Elemental_Converter#
+12116#Seismic_Elemental_Converter#
+12117#Lightning_Elemental_Converter#
 12118#Fireproof_Potion#
 12119#Coldproof_Potion#
 12120#Earthproof_Potion#
@@ -2352,9 +2349,6 @@
 580#Bread#
 581#Edible_Mushroom#
 582#Orange#
-12122#Sesame_Pastry#
-12123#Honey_Pastry#
-12124#Rainbow_Cake#
 12125#Outdoor_Cooking_Kit#
 12126#Home_Cooking_Kit#
 12127#Professional_Cooking_Kit#
@@ -2387,9 +2381,9 @@
 
 7483#Key_of_the_Seal#
 //------------------2006 Halloween-------------------------------
-7609#Pumpkin_Mojo#	
-12192#Pumpkin_Pie#	
-5202#Fantastic_Pumpkin-Head#	
+7609#Pumpkin_Mojo#
+12192#Pumpkin_Pie#
+5202#Fantastic_Pumpkin-Head#
 //-----------------2006 Christmas---------------------------
 12200#X-mas_Cake#
 5204#Rudolph's_Nose#
@@ -2521,17 +2515,17 @@
 // --------- Hugel Odeng Quest -----------
 584#Fish_Cake_Soup#
 //----------------2007 Valentine's Day & White Day event
-7715#Hand-made_Chocolate_Recipe#		
-7716#Chocolate_Strawberry_Recipe#		
-7717#Chocolate_Tart_Recipe#		
-7718#Cacao_Bean#		
-7604#Flour#		
-596#Cute_Strawberry-Choco#		
-597#Lovely_Choco-Tart#		
-12234#Fierce_Cacao_99%#		
-12235#Chocolate_Strawberry#		
-12236#Chocolate_Tart#		
-12237#Junky_Chocolate#		
+7715#Hand-made_Chocolate_Recipe#
+7716#Chocolate_Strawberry_Recipe#
+7717#Chocolate_Tart_Recipe#
+7718#Cacao_Bean#
+7604#Flour#
+596#Cute_Strawberry-Choco#
+597#Lovely_Choco-Tart#
+12234#Fierce_Cacao_99%#
+12235#Chocolate_Strawberry#
+12236#Chocolate_Tart#
+12237#Junky_Chocolate#
 //---------2007 St. Patrick's Day Event ----------------
 12245#Green_Ale#
 7720#Gold_Coin#
@@ -2781,7 +2775,6 @@
 12996#Blue_Herb_Box#
 12997#Elunium_Box#
 12998#Oridecon_Box#
-12999#Branch_Of_Dead_Tree_Box#
 
 7619#Enriched_Elunium#
 7620#Enriched_Oridecon#
@@ -2868,84 +2861,6 @@
 1563#Refined_Sage's_Diary#
 1623#Refined_Mighty_Staff#
 1817#Refined_Kaiser_Knuckle#
-// ------------------- 2006 »ó¹Ý±â ½Å±ÔÄ«µå Ãß°¡.-----------------------
-
-4332#Waste_Stove_Card#
-4333#Venomous_Card#
-4334#Noxious_Card#
-4335#Pitman_Card#
-4336#Ungoliant_Card#
-4337#Porcellio_Card#
-4338#Obsidian_Card#
-4339#Mineral_Card#
-4340#Teddy_Bear_Card#
-4341#Metaling_Card#
-4342#RSX-0806_Card#
-4343#Holden_Card#
-4344#Anopheles_Card#
-4345#Hill_Wind_Card#
-4346#Egnigem_Cenia_Card#
-4347#Armeyer_Dinze_Card#
-4348#Wickebine_Tres_Card#
-4349#Errende_Ebecee_Card#
-4350#Laurell_Weinder_Card#
-4351#Kavach_Icarus_Card#
-4352#Boss_Egnigem_Card#
-4353#Remover_Card#
-4354#Gemini-S58_Card#
-4355#Gremlin_Card#
-4356#Beholder_Card#
-4357#Lord_Knight_Card#
-4358#Seyren_Windsor_Card#
-4359#Assassin_Cross_Card#
-4360#Eremes_Guile_Card#
-4361#MasterSmith_Card#
-4362#Howard_Alt-Eisen_Card#
-4363#High_Priest_Card#
-4364#Margaretha_Sorin_Card#
-4365#High_Wizard_Card#
-4366#Kathryne_Keyron_Card#
-4367#Sniper_Card#
-4368#Cecil_Damon_Card#
-4369#Venatu_Card#
-4370#Dimik_Card#
-4371#Archdam_Card#
-4372#White_Lady_Card#
-4373#Green_Maiden_Card#
-4374#Vesper_Card#
-4375#Orc_Baby_Card#
-4376#Lady_Tanee_Card#
-4377#Grove_Card#
-4378#Gold_Acidus_Card#
-4379#Blue_Acidus_Card#
-4380#Red_Ferus_Card#
-4381#Green_Ferus_Card#
-4382#Yellow_Novus_Card#
-4383#Red_Novus_Card#
-4384#Hydrolancer_Card#
-4385#Dragon_Egg_Card#
-4386#Detardeurus_Card#
-4387#Ancient_Mimic_Card#
-4388#Death_Word_Card#
-4389#Plasma_Card#
-4390#Breeze_Card#
-4391#Baroness_of_Retribution_Card#
-4392#Dame_of_Sentinel_Card#
-4393#Mistress_of_Shelter_Card#
-4394#Lady_Solace_Card#
-4395#Maero_of_Thanatos_Card#
-4396#Odium_of_Thanatos_Card#
-4397#Despero_of_Thanatos_Card#
-4398#Dolor_of_Thanatos_Card#
-4399#Memory_of_Thanatos_Card#
-4400#Aliza_Card#
-4401#Alicel_Card#
-4402#Aliot_Card#
-4403#Kiel-D-01_Card#
-4404#Skogul_Card#
-4405#Frus_Card#
-4406#Skeggiold_Card#
-4407#Randgris_Card#
 
 // ---------------- Ã¥ÀÐ±â --------------------
 11001#Adventure_Story_Vol.1#
@@ -3300,12 +3215,12 @@
 2717#Pocket_Watch#
 2718#Lunatic_Brooch#
 2719#Iron_Wrist#
-2720#Medalion#
-2721#Medalion#
-2722#Medalion#
-2723#Medalion#
-2724#Medalion#
-2725#Medalion#
+2720#Medal_Swordman#
+2721#Medal_Thief#
+2722#Medal_Acolyte#
+2723#Medal_Mage#
+2724#Medal_Archer#
+2725#Medal_Merchant#
 2726#Feather_of_Icarus#
 2727#Renown_Archer's_Scarf#
 2728#Cursed_Hand#
@@ -3815,29 +3730,29 @@
 12703#Holy_Egg#
 12704#Elixir_Of_Life#
 12705#Noble_Nameplate#
-12706#Luck_Cookie#
-12707#Luck_Cookie#
-12708#Luck_Cookie#
+12706#Luck_Cookie1#
+12707#Luck_Cookie2#
+12708#Luck_Cookie3#
 12927#Aspersio_5_Scroll_Box#
 12928#LV5_Aspersio_Scroll#
-12965#Emergency_Box#
-12966#Emergency_Box#
-12967#Emergency_Box#
-12968#Emergency_Box_Scroll#
-12969#Emergency_Box_Scroll#
-12970#Emergency_Box_Scroll#
-12971#Teleport_Box#
-12972#Teleport_Box#
-12973#Teleport_Box#
-12974#Teleport_Box#
-12975#Teleport_Box#
-12976#Teleport_Box#
-12977#Teleport_Scroll#
-12978#Teleport_Scroll#
-12979#Teleport_Scroll#
-12980#Teleport_Scroll#
-12981#Teleport_Scroll#
-12982#Teleport_Scroll#
+12965#Emergency_Box1#
+12966#Emergency_Box2#
+12967#Emergency_Box3#
+12968#Emergency_Box_Scroll1#
+12969#Emergency_Box_Scroll2#
+12970#Emergency_Box_Scroll3#
+12971#Teleport_Box1#
+12972#Teleport_Box2#
+12973#Teleport_Box3#
+12974#Teleport_Box4#
+12975#Teleport_Box5#
+12976#Teleport_Box6#
+12977#Teleport_Scroll1#
+12978#Teleport_Scroll2#
+12979#Teleport_Scroll3#
+12980#Teleport_Scroll4#
+12981#Teleport_Scroll5#
+12982#Teleport_Scroll6#
 13020#Warrior's_Balmung#
 13024#Refined_Swordbreaker#
 13025#Refined_Mailbreaker#
@@ -3894,11 +3809,11 @@
 13523#Shoe_Card_Scroll_Box#
 13524#Accessory_Card_Scroll_Box#
 13525#Zeny_Scroll_Box#
-13526#Pet_Egg_Scroll_Box#
-13527#Pet_Egg_Scroll_Box#
-13528#Pet_Egg_Scroll_Box#
-13529#Pet_Egg_Scroll_Box#
-13530#Pet_Egg_Scroll_Box#
+13526#Pet_Egg_Scroll_Box1#
+13527#Pet_Egg_Scroll_Box2#
+13528#Pet_Egg_Scroll_Box3#
+13529#Pet_Egg_Scroll_Box4#
+13530#Pet_Egg_Scroll_Box5#
 13538#Meteor__Storm_Scroll_Box#
 13539#Storm_Gust_Scroll_Box#
 13540#Lord_of_Vermilion_Scroll_Box#
@@ -4131,9 +4046,9 @@
 13807#Birthday_Firecracker_Box#
 13808#Christmas_Firecracker_Box#
 13814#Healing_Box#
-13815#Goblin_Taming_Box#
-13816#Goblin_Taming_Box#
-13817#Goblin_Taming_Box#
+13815#Knife_Goblin_Box#
+13816#Flail_Goblin_Box#
+13817#Hammer_Goblin_Box#
 13818#Deleter_Taming_Box#
 13819#Diabolic_Taming_Box#
 13820#Wanderer_Taming_Box#
@@ -4218,9 +4133,9 @@
 14548#Valentine's_Day_Firecracker#
 14549#Birthday_Firecracker#
 14550#Christmas_Firecracker#
-14569#Goblin_Ring#
-14570#Goblin_Ring#
-14571#Goblin_Ring#
+14569#Knife_Goblin_Ring#
+14570#Flail_Goblin_Ring#
+14571#Hammer_Goblin_Ring#
 14572#Holy_Gemstone#
 14573#Cursed_Ruby2#
 14574#Human_Skull#
