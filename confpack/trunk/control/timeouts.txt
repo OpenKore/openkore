@@ -35,10 +35,15 @@ ai_attack_waitAfterKill 0.7
 ai_attack_unstuck 2.75
 ai_attack_unfail 5
 
+# Pause for the specified number of seconds after taking something,
+# it increases the interval between taking several items and between
+# taking the last item and continuing the actions.
+ai_items_take_delay 1.4
+
 # When your monster died, start checking for loot after x seconds
 ai_items_take_start 0.4
 
-# Stop checking for loot x seconds after it has begun checking.
+# Stop checking for loot x seconds after it has begun checking
 ai_items_take_end 1.2
 
 # When standing near an item, send the 'take' packet every x seconds until
@@ -94,7 +99,7 @@ ai_teleport_safe_force 120
 ai_teleport_retry 0.5
 ai_teleport_delay 0.5
 
-# You probably don't ever have to change the following timeouts.
+# You probably don't ever have to change the following timeouts
 ai_route_calcRoute 1
 ai_route_npcTalk 10
 
