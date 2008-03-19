@@ -475,6 +475,7 @@ sub ai_items_take {
 	$args{ai_items_take_end}{timeout} = $timeout{ai_items_take_end}{timeout};
 	$args{ai_items_take_start}{time} = time;
 	$args{ai_items_take_start}{timeout} = $timeout{ai_items_take_start}{timeout};
+	$args{ai_items_take_delay}{timeout} = $timeout{ai_items_take_delay}{timeout};
 	AI::queue("items_take", \%args);
 }
 
