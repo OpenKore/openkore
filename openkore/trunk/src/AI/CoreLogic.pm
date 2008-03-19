@@ -2652,7 +2652,8 @@ sub processItemsTake {
 		AI::dequeue;
 		ai_clientSuspend(0, $timeout{ai_attack_waitAfterKill}{timeout}) unless (ai_getAggressives());
 	}
-	if (AI::action eq "items_take" && timeOut(AI::args->{ai_items_take_start})) {
+	if (AI::action eq "items_take" && timeOut(AI::args->{ai_items_take_start})
+	 && timeOut(AI::args->{ai_items_take_delay})) {
 		my $foundID;
 		my ($dist, $dist_to);
 
@@ -2671,6 +2672,7 @@ sub processItemsTake {
 		if (defined $foundID) {
 			AI::args->{ai_items_take_end}{time} = time;
 			AI::args->{started} = 1;
+			AI::args->{ai_items_take_delay}{time} = time;
 			take($foundID);
 		} elsif (AI::args->{started} || timeOut(AI::args->{ai_items_take_end})) {
 			$timeout{'ai_attack_auto'}{'time'} = 0;
