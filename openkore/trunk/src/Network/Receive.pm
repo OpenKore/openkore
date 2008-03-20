@@ -3802,6 +3802,16 @@ sub map_changed {
 		$ai_v{"useSelf_skill_$i"."_time"} = 0;
 		$i++;
 	}
+	$i = 0;
+	while (exists $config{"doCommand_$i"}) {
+		if (!$config{"doCommand_$i"}) {
+			$i++;
+			next;
+		}
+
+		$ai_v{"doCommand_$i"."_time"} = 0;
+		$i++;
+	}
 	if ($char) {
 		delete $char->{statuses};
 		$char->{spirits} = 0;
