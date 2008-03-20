@@ -14,6 +14,33 @@
 - processAutoAttack is rewritten, it now uses new functions (getBestTarget(), isSafe()). priority.txt works.
 - Added sitAuto_safe_stand_up timeout and sitAuto_look_from_wall config option.
 - Added new items, monsters, fields, emotions, portals.
+- Integraded doCommand plugin into openkore source (settings in config.txt)
+  
+  doCommand <console command> {
+	hp
+	sp
+	homunculus_hp
+	homunculus_sp
+	homunculus_dead
+	onAction
+	whenStatusActive
+	whenStatusInactive
+	whenFollowing
+	spirit
+	aggressives
+	monsters
+	notMonsters
+	stopWhenHit 0
+	inLockOnly 0
+	notWhileSitting 0
+	notInTown 0
+	timeout
+	disabled 0
+	inInventory
+	inCart
+	inMap
+	manualAI 0
+  }
 
 =========================
 ### OpenKore 2.0.5.2

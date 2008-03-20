@@ -78,6 +78,7 @@ sub iterate {
 	Benchmark::end("AI (part 1.2)") if DEBUG;
 	Benchmark::begin("AI (part 1.3)") if DEBUG;
 	processSkillUse();
+	processAutoCommandUse();
 	processTask("route", onError => sub {
 		my ($task, $error) = @_;
 		if (!($task->isa('Task::MapRoute') && $error->{code} == Task::MapRoute::TOO_MUCH_TIME())
@@ -2228,6 +2229,23 @@ sub processSitAuto {
 				AI::queue("sitAuto");
 				debug "Auto-sitting\n", "sitAuto";
 			}
+		}
+	}
+}
+
+##### AUTO-COMMAND USE #####
+sub processAutoCommandUse {
+	if (AI::isIdle || AI::is(qw(route mapRoute follow sitAuto take items_gather items_take attack skill_use))) {
+		my $i = 0;
+		while (exists $config{"doCommand_$i"}) {
+			if ($config{"doCommand_$i"} && checkSelfCondition("doCommand_$i")) {
+				Commands::run($config{"doCommand_$i"});
+				$ai_v{"doCommand_$i"."_time"} = time;
+				my $cmd_prefix = $config{"doCommand_$i"};
+				debug qq~Auto-Command use: $cmd_prefix\n~, "ai";
+				last;
+			}
+			$i++;
 		}
 	}
 }
