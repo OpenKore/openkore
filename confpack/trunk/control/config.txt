@@ -392,6 +392,32 @@ attackComboSlot {
 	target_deltaHp
 }
 
+doCommand {
+	hp
+	sp
+	homunculus_hp
+	homunculus_sp
+	homunculus_dead
+	onAction
+	whenStatusActive
+	whenStatusInactive
+	whenFollowing
+	spirit
+	aggressives
+	monsters
+	notMonsters
+	stopWhenHit 0
+	inLockOnly 0
+	notWhileSitting 0
+	notInTown 0
+	timeout
+	disabled 0
+	inInventory
+	inCart
+	inMap
+	manualAI 0
+}
+
 
 useSelf_skill {
 	lvl 10
