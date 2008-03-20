@@ -742,7 +742,7 @@ sub actor_action {
 		# Sit
 		my ($source, $verb) = getActorNames($args->{sourceID}, 0, 'are', 'is');
 		if ($args->{sourceID} eq $accountID) {
-			message T("You are sitting.\n");
+			message T("You are sitting.\n") if (!$char->{sitting});
 			$char->{sitting} = 1;
 			AI::queue("sitAuto") unless (AI::inQueue("sitAuto")) || $ai_v{sitAuto_forcedBySitCommand};
 		} else {
@@ -756,7 +756,7 @@ sub actor_action {
 		# Stand
 		my ($source, $verb) = getActorNames($args->{sourceID}, 0, 'are', 'is');
 		if ($args->{sourceID} eq $accountID) {
-			message T("You are standing.\n");
+			message T("You are standing.\n") if ($char->{sitting});
 			if ($config{sitAuto_idle}) {
 				$timeout{ai_sit_idle}{time} = time;
 			}
@@ -838,7 +838,7 @@ sub actor_died_or_disappeared {
 	avoidList_ID($ID);
 
 	if ($ID eq $accountID) {
-		message T("You have died\n");
+		message T("You have died\n") if (!$char->{dead});
 		closeShop() unless !$shopstarted || $config{'dcOnDeath'} == -1 || !$AI;
 		$char->{deathCount}++;
 		$char->{dead} = 1;
