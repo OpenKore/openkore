@@ -1336,7 +1336,11 @@ sub processAutoStorage {
 						next;
 					}
 					my $invItem = $char->inventory->getByName($itemName);
-					$item{name} = $itemName;
+						foreach (keys %items_lut) { 
+							if (lc($items_lut{$_}) eq lc($config{"getAuto_$args->{index}"})) { 
+								$item{name} = $items_lut{$_}; 
+							} 
+						}
 					$item{inventory}{index} = $invItem ? $invItem->{invIndex} : undef;
 					$item{inventory}{amount} = $invItem ? $invItem->{amount} : 0;
 					$item{storage}{index} = findKeyString(\%storage, "name", $item{name});
