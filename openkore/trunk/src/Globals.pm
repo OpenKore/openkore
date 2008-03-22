@@ -33,6 +33,7 @@ our %EXPORT_TAGS = (
 	interface => [qw($interface)],
 	misc    => [qw($quit $reconnectCount @lastpm %lastpm @privMsgUsers %timeout_ex $shopstarted $dmgpsec $totalelasped $elasped $totaldmg %overallAuth %responseVars %talk $startTime_EXP $startingZenny @monsters_Killed $bExpSwitch $jExpSwitch $totalBaseExp $totalJobExp $shopEarned %itemChange $XKore_dontRedirect $monkilltime $monstarttime $startedattack $firstLoginMap $sentWelcomeMessage $versionSearch $monsterBaseExp $monsterJobExp %descriptions %flags %damageTaken $logAppend @sellList $userSeed $taskManager)],
 	syncs => [qw($syncSync $syncMapSync)],
+	cmdqueue => [qw($cmdQueue @cmdQueueList $cmdQueueStartTime $cmdQueueTime)],
 );
 
 our @EXPORT = (
@@ -43,6 +44,7 @@ our @EXPORT = (
 	@{$EXPORT_TAGS{interface}},
 	@{$EXPORT_TAGS{misc}},
 	@{$EXPORT_TAGS{syncs}},
+	@{$EXPORT_TAGS{cmdqueue}},
 );
 
 
@@ -397,6 +399,11 @@ our $bytesReceived = 0;
 
 our $syncSync;
 our $syncMapSync;
+
+our $cmdQueue = 0;
+our $cmdQueueStartTime;
+our $cmdQueueTime = 0;
+our @cmdQueueList;
 
 END {
 	undef $interface if defined $interface;
