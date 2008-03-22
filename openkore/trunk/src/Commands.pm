@@ -228,8 +228,23 @@ sub run {
 		my ($switch, $args) = split(/ +/, $command, 2);
 		$handler = $customCommands{$switch}{callback} if ($customCommands{$switch});
 		$handler = $handlers{$switch} if (!$handler && $handlers{$switch});
-		
-		if ($handler) {
+
+		if (($switch eq 'pause') && (!$cmdQueue) && (!$AI_forcedOff) && ($net->getState() == Network::IN_GAME)) {
+			$cmdQueue = 1;
+			$cmdQueueStartTime = time;
+			if ($args > 0) {
+				$cmdQueueTime = $args;
+			} else {
+				$cmdQueueTime = 1;
+			}
+			debug "Command queueing started\n", "ai";
+		} elsif (($switch eq 'pause') && ($cmdQueue > 0)) {
+			push(@cmdQueueList, $command);
+		} elsif (($switch eq 'pause') && (($AI_forcedOff == 1) || ($net->getState() != Network::IN_GAME))) {
+			error TF("Cannot use pause command now.\n");
+		} elsif (($handler) && ($cmdQueue > 0)) {
+			push(@cmdQueueList, $command);
+		} elsif ($handler) {
 			my %params;
 			$params{switch} = $switch;
 			$params{args} = $args;
@@ -398,6 +413,8 @@ sub cmdAI {
 	$args =~ s/ .*//;
 
 	# Clear AI
+	@cmdQueueList = ();
+	$cmdQueue = 0;
 	if ($args eq 'clear') {
 		AI::clear;
 		$taskManager->stopAll();
@@ -3341,6 +3358,8 @@ sub cmdReloadCode {
 sub cmdRelog {
 	my (undef, $arg) = @_;
 	if (!$arg || $arg =~ /^\d+$/) {
+		@cmdQueueList = ();
+		$cmdQueue = 0;
 		relog($arg);
 	} else {
 		error T("Syntax Error in function 'relog' (Log out then log in.)\n" .

@@ -14,6 +14,11 @@
 - processAutoAttack is rewritten, it now uses new functions (getBestTarget(), isSafe()). priority.txt works.
 - Added sitAuto_safe_stand_up timeout and sitAuto_look_from_wall config option.
 - Added new items, monsters, fields, emotions, portals.
+- Added new console command 'pause'.
+  Syntax: 
+        pause <seconds> - any command executed after this will have to wait a specified
+                          number of seconds before its executed assumed as 1 if no parameter 
+                          specified. (resets on ai off/manual and when not ingame)
 - Integraded doCommand plugin into openkore source (settings in config.txt)
   
   doCommand <console command> {

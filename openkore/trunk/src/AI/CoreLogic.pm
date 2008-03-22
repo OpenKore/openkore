@@ -188,6 +188,21 @@ sub iterate {
 	}
 	$ai_v{'AI_last_finished'} = time;
 
+	if ($cmdQueue && timeOut($cmdQueueStartTime,$cmdQueueTime)) {
+		my $execCommand = '';
+		if (@cmdQueueList) {
+			$execCommand = join (";;", @cmdQueueList);
+		} else {
+			$execCommand = $cmdQueueList[0];
+		}	
+		@cmdQueueList = ();
+		$cmdQueue = 0;
+		$cmdQueueTime = 0;
+		debug "Executing queued command: $execCommand\n", "ai";
+		Commands::run($execCommand);
+	}
+
+
 	Plugins::callHook('AI_post');
 }
 
