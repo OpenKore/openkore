@@ -1115,11 +1115,13 @@ sub processAutoStorage {
 		Misc::checkValidity("AutoStorage part 1");
 		for ($i = 0; exists $config{"getAuto_$i"}; $i++) {
 			next unless ($config{"getAuto_$i"});
+			if ($config{"getAuto_$i"} ne '' && $storage{opened} && findKeyString(\%storage, "name", $config{"getAuto_$i"}) eq '') {
 				foreach (keys %items_lut) {
 					if (lc($items_lut{$_}) eq lc($config{"getAuto_$i"})) {
-						$config{"getAuto_$i"} = $items_lut{$_};
+						configModify("getAuto_$i", $items_lut{$_});
 					}
 				}
+			}
 			my $item = $char->inventory->getByName($config{"getAuto_$i"});
 			if ($config{"getAuto_${i}_minAmount"} ne "" &&
 			    $config{"getAuto_${i}_maxAmount"} ne "" &&
