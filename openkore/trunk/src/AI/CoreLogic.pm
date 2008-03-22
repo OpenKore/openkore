@@ -1117,7 +1117,7 @@ sub processAutoStorage {
 			next unless ($config{"getAuto_$i"});
 			if ($storage{opened} && findKeyString(\%storage, "name", $config{"getAuto_$i"}) eq '') {
 				foreach (keys %items_lut) {
-					if (lc($items_lut{$_}) eq lc($config{"getAuto_$i"})) {
+					if ((lc($items_lut{$_}) eq lc($config{"getAuto_$i"})) && ($items_lut{$_} ne $config{"getAuto_$i"})) {
 						configModify("getAuto_$i", $items_lut{$_});
 					}
 				}
