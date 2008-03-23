@@ -2977,16 +2977,18 @@ sub cmdPlayerList {
 		$dist = sprintf("%.1f", $dist) if (index ($dist, '.') > -1);
 		$pos = '(' . $player->{pos_to}{x} . ', ' . $player->{pos_to}{y} . ')';
 		
-		$maxpl = @{$playersList->getItems()};
 		$maxplg = $maxplg+1;
 
 		$msg .= swrite(
 			"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<< @<< @<<<<<<<<<< @<<<< @<<<<<<<<<<",
 			[$player->{binID}, $name, $sex_lut{$player->{sex}}, $player->{lv}, $player->job, $dist, $pos]);
 	}
+		$maxpl = @{$playersList->getItems()};
 }
 	$msg .= "Total guild players $maxplg \n";
-	$msg .= "Total players $maxpl \n";
+		if ($maxpl ne "") {
+			$msg .= "Total players $maxpl \n";
+		} else	{$msg .= "There are no players beside \n";}
 	$msg .= "---------------------------------\n";
 	message($msg, "list");
 	return;
@@ -3010,16 +3012,18 @@ sub cmdPlayerList {
 		$dist = sprintf("%.1f", $dist) if (index ($dist, '.') > -1);
 		$pos = '(' . $player->{pos_to}{x} . ', ' . $player->{pos_to}{y} . ')';
 		
-		$maxpl = @{$playersList->getItems()};
 		$maxplp = $maxplp+1;
 
 		$msg .= swrite(
 			"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<< @<< @<<<<<<<<<< @<<<< @<<<<<<<<<<",
 			[$player->{binID}, $name, $sex_lut{$player->{sex}}, $player->{lv}, $player->job, $dist, $pos]);
 	}
+		$maxpl = @{$playersList->getItems()};
 }
 	$msg .= "Total party players $maxplp \n";
-	$msg .= "Total players $maxpl \n";
+		if ($maxpl ne "") {
+			$msg .= "Total players $maxpl \n";
+		} else	{$msg .= "There are no players beside \n";}
 	$msg .= "---------------------------------\n";
 	message($msg, "list");
 	return;
@@ -3131,7 +3135,9 @@ sub cmdPlayerList {
 				"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<< @<< @<<<<<<<<<< @<<<< @<<<<<<<<<<",
 				[$player->{binID}, $name, $sex_lut{$player->{sex}}, $player->{lv}, $player->job, $dist, $pos]);
 		}
-		$msg .= "Total players $maxpl \n";
+		if ($maxpl ne "") {
+			$msg .= "Total players $maxpl \n";
+		} else	{$msg .= "There are no players beside \n";}
 		$msg .= "---------------------------------\n";
 		message($msg, "list");
 	}
