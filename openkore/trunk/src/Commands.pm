@@ -242,7 +242,7 @@ sub run {
 			push(@cmdQueueList, $command);
 		} elsif (($switch eq 'pause') && (($AI_forcedOff == 1) || ($net->getState() != Network::IN_GAME))) {
 			error TF("Cannot use pause command now.\n");
-		} elsif (($handler) && ($cmdQueue > 0) && (!defined binFind(\@cmdQueuePriority,$switch) && ($command ne 'cart'))) {
+		} elsif (($handler) && ($cmdQueue > 0) && (!defined binFind(\@cmdQueuePriority,$switch) && ($command ne 'cart') && ($command ne 'storage'))) {
 			push(@cmdQueueList, $command);
 		} elsif ($handler) {
 			my %params;
