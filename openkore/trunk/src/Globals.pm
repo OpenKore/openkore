@@ -404,6 +404,9 @@ our $cmdQueue = 0;
 our $cmdQueueStartTime;
 our $cmdQueueTime = 0;
 our @cmdQueueList;
+our @cmdQueuePriority = ('ai','aiv','al','debug','chist','dl','exp','friend','g','guild','help','i',
+	'ihist','il','ml','nl','p','party','petl','pl','plugin','relog','pml','portals','quit','rc',
+	'reload','s','skills','spells','st','stat_add','store','vl','weight');
 
 END {
 	undef $interface if defined $interface;
