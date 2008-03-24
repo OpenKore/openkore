@@ -3892,30 +3892,20 @@ sub cmdStorage_get {
 	storageGet(\@items, $amount) if @items;
 }
 
-sub cmdStorage_gettocart {
-	my $items = shift;
+sub cmdStorage_gettocart { 
+	my $items = shift; 
 
-	my ($names, $amount) = $items =~ /^(.*?)(?: (\d+))?$/;
-	my @names = split(',', $names);
-	my @items;
-
-	for my $name (@names) {
-		if ($name =~ /^(\d+)\-(\d+)$/) {
-			for my $i ($1..$2) {
-				push @items, $storage{$storageID[$i]} if ($storage{$storageID[$i]});
-			}
-
-		} else {
-			my $item = Match::storageItem($name);
-			if (!$item) {
-				error TF("Storage Item '%s' does not exist.\n", $name);
-				next;
-			}
-			push @items, $item;
-		}
+	my ($name, $amount) = $items =~ /^(.*?)(?: (\d+))?$/; 
+	my $item = Match::storageItem($name); 
+	if (!$item) { 
+		error TF("Storage Item '%s' does not exist.\n", $name); 
+		return; 
 	}
 
-	$messageSender->sendStorageGetToCart(\@items, $amount) if @items;
+	if (!defined($amount) || $amount > $item->{amount}) { 
+		$amount = $item->{amount}; 
+	}
+	$messageSender->sendStorageGetToCart($item->{index}, $amount); 
 }
 
 sub cmdStorage_close {
