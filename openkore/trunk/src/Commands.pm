@@ -2988,7 +2988,7 @@ sub cmdPlayerList {
 	$msg .= "Total guild players $maxplg \n";
 		if ($maxpl ne "") {
 			$msg .= "Total players $maxpl \n";
-		} else	{$msg .= "There are no players beside \n";}
+		} else	{$msg .= "There are no players near you.\n";}
 	$msg .= "---------------------------------\n";
 	message($msg, "list");
 	return;
@@ -3020,10 +3020,10 @@ sub cmdPlayerList {
 	}
 		$maxpl = @{$playersList->getItems()};
 }
-	$msg .= "Total party players $maxplp \n";
+	$msg .= "Total party players: $maxplp \n";
 		if ($maxpl ne "") {
-			$msg .= "Total players $maxpl \n";
-		} else	{$msg .= "There are no players beside \n";}
+			$msg .= "\nTotal players: $maxpl \n";
+		} else	{$msg .= "There are no players near you.\n";}
 	$msg .= "---------------------------------\n";
 	message($msg, "list");
 	return;
