@@ -124,9 +124,16 @@ sub readNext {
 
 	if ($nextMessageMightBeAccountID) {
 		if (length($$buffer) >= 4) {
-			$result = substr($$buffer, 0, 4);
-			substr($$buffer, 0, 4, '');
-			$$type = ACCOUNT_ID;
+			
+		$result = substr($$buffer, 0, 4);
+		if (unpack("V1",$result) == unpack("V1",$Globals::accountID)) {
+				substr($$buffer, 0, 4, '');
+				$$type = ACCOUNT_ID;
+			} else {
+				$$type = KNOWN_MESSAGE; # Account ID is "hidden" in a packet (0283 is one of them)
+				return;
+			}
+		
 		} else {
 			$self->{nextMessageMightBeAccountID} = $nextMessageMightBeAccountID;
 		}
