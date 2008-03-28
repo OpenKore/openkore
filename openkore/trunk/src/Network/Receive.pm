@@ -321,6 +321,7 @@ sub new {
 		'0259' => ['gameguard_grant', 'C1', [qw(server)]],
 		'0274' => ['account_server_info', 'x2 a4 a4 a4 x30 C1 x4 a*', [qw(sessionID accountID sessionID2 accountSex serverInfo)]],
 		# tRO new packets, need some work on them
+		'0283' => ['account_id', 'V1', [qw(accountID)]],
 		'0287' => ['cash_dealer'],
 		'0295' => ['inventory_items_nonstackable'],
 		'0296' => ['storage_items_nonstackable'],
@@ -628,6 +629,13 @@ sub queryAndSaveLoginPinCode {
 ###### Packet handling callbacks ######
 #######################################
 
+# This is for what eA calls PacketVersion 9, they send the AID in a 'proper' packet
+sub account_id {
+	my ($self, $args) = @_;
+	# the account ID is already unpacked into PLAIN TEXT when it gets to this function...
+	# So lets not fuckup the $accountID since we need that later... someone will prolly have to fix this later on
+	#$accountID = $args->{accountID};
+}
 
 sub account_payment_info {
 	my ($self, $args) = @_;
