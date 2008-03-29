@@ -2093,6 +2093,7 @@ ve_fild04 115 50 ve_fild06 80 183
 ve_fild05 200 330 ve_fild03 222 48
 ve_fild05 359 192 ve_fild06 80 183
 ve_fild06 153 220 veins 218 355
+ve_fild06 81 177 ve_fild04 115 55
 ve_fild07 147 371 veins 146 28
 yuno_fild06 369 136 hu_fild04 28 126
 hu_fild04 26 126 yuno_fild06 367 136
