@@ -1,0 +1,34 @@
+</td>
+		</tr>
+	</table>
+
+	<!-- IF PAGINATION -->
+		<table width="80%" align="{S_CONTENT_FLOW_END}" cellspacing="1">
+		<tr>
+			<td class="nav" valign="middle" nowrap="nowrap">&nbsp;{PAGE_NUMBER}<br /></td>
+			<td class="gensmall" nowrap="nowrap">&nbsp;[ <!-- IF TOTAL_TOPICS -->{TOTAL_TOPICS}<!-- ELSEIF TOTAL_POSTS -->{TOTAL_POSTS}<!-- ELSE -->{TOTAL}<!-- ENDIF --> ]&nbsp;</td>
+			<td class="gensmall" width="100%" align="{S_CONTENT_FLOW_END}" nowrap="nowrap"><!-- INCLUDE pagination.html --></td>
+		</tr>
+		</table>
+		<br />
+	<!-- ENDIF -->
+	
+</div>
+
+<br clear="all" />
+
+<!-- INCLUDE breadcrumbs.html -->
+
+<br clear="all" />
+
+	<!-- IF U_MCP -->
+		<p class="linkmcp">
+			[ <a href="{U_MCP}">{L_MCP}</a><!-- IF U_MCP_FORUM --> | <a href="{U_MCP_FORUM}">{L_MODERATE_FORUM}</a><!-- ENDIF -->
+			<!-- IF U_MCP_TOPIC --> | <a href="{U_MCP_TOPIC}">{L_MODERATE_TOPIC}</a><!-- ENDIF -->
+			<!-- IF U_MCP_POST --> | <a href="{U_MCP_POST}">{L_MODERATE_POST}</a><!-- ENDIF --> ]
+		</p>
+	<!-- ENDIF -->
+
+<div align="{S_CONTENT_FLOW_END}"><!-- INCLUDE jumpbox.html --></div>
+
+<!-- INCLUDE overall_footer.html -->

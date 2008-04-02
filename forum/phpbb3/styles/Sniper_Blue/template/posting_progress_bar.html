@@ -1,0 +1,60 @@
+<!-- INCLUDE simple_header.html -->
+<script type="text/javascript">
+// <![CDATA[
+	/**
+	* Close upload popup
+	*/
+	function close_popup()
+	{
+		if (opener != null)
+		{
+			if (opener.close_waitscreen != null)
+			{
+				if (opener.close_waitscreen == 1)
+				{
+					opener.close_waitscreen = 0;
+					self.close();
+					return 0;
+				}
+			}
+		}
+		setTimeout("close_popup()", 1000);
+		return 0;
+	}
+// ]]>
+</script>
+
+<br />
+<table width="100%" border="0" cellspacing="0" cellpadding="10">
+<tr>
+	<td>
+		<table class="tablebg" width="100%" border="0" cellspacing="1">
+		<tr>
+			<th>{L_UPLOAD_IN_PROGRESS}</th>
+		</tr>
+		<tr>
+			<td class="row1" align="center"><br />
+				<table class="tablebg" cellspacing="1">
+				<tr>
+					<td class="row2">{PROGRESS_BAR}</td>
+				</tr>
+				</table><br />
+			</td>
+		</tr>
+		</table>
+		<table width="100%" celspacing="0">
+		<tr>
+			<td align="right"><a href="#" onclick="window.close(); return false;"><img src="{T_THEME_PATH}/images/close.png"></a></td>
+		</tr>
+		</table>
+	</td>
+</tr>
+</table>
+<br />
+
+<script type="text/javascript">
+// <![CDATA[
+	close_popup();	
+// ]]>
+</script>
+<!-- INCLUDE simple_footer.html -->
