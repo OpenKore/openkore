@@ -342,29 +342,16 @@ if ($user->data['is_registered'])
 if ($forum_data['forum_type'] == FORUM_POST)
 {
 	// Obtain announcements ... removed sort ordering, sort by time in all cases
-	//Global Annoucments: dont get global if sub forums exist
-	if ($forum_data['left_id'] != $forum_data['right_id'] - 1)
-	{
-		$sql = $db->sql_build_query('SELECT', array(
-			'SELECT'	=> $sql_array['SELECT'],
-			'FROM'		=> $sql_array['FROM'],
-			'LEFT_JOIN'	=> $sql_array['LEFT_JOIN'],
-			'WHERE'		=> 't.forum_id IN (' . $forum_id . ', 0)',
-			'ORDER_BY'	=> 't.topic_time DESC',
-		));
-	} else {
+	$sql = $db->sql_build_query('SELECT', array(
+		'SELECT'	=> $sql_array['SELECT'],
+		'FROM'		=> $sql_array['FROM'],
+		'LEFT_JOIN'	=> $sql_array['LEFT_JOIN'],
 	
-		$sql = $db->sql_build_query('SELECT', array(
-			'SELECT'	=> $sql_array['SELECT'],
-			'FROM'		=> $sql_array['FROM'],
-			'LEFT_JOIN'	=> $sql_array['LEFT_JOIN'],
-		
-			'WHERE'		=> 't.forum_id IN (' . $forum_id . ', 0)
+		'WHERE'		=> 't.forum_id IN (' . $forum_id . ', 0)
 			AND t.topic_type IN (' . POST_ANNOUNCE . ', ' . POST_GLOBAL . ')',
 
-			'ORDER_BY'	=> 't.topic_time DESC',
-		));
-	}
+		'ORDER_BY'	=> 't.topic_time DESC',
+	));
 	$result = $db->sql_query($sql);
 
 	while ($row = $db->sql_fetchrow($result))
