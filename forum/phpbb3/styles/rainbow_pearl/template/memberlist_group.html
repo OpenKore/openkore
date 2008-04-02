@@ -1,0 +1,16 @@
+<div><div class="tbl-h-l"><div class="tbl-h-r"><div class="tbl-h-c"><div class="tbl-title">{L_GROUP_INFORMATION}</div></div></div></div>
+<table class="tablebg" width="100%" cellpadding="0" cellspacing="0">
+<tr>
+	<td class="row1" width="20%"><b class="genmed">{L_GROUP_NAME}:</b></td>
+	<td class="row2"><b class="gen"<!-- IF GROUP_COLOR --> style="color:#{GROUP_COLOR}"<!-- ENDIF -->>{GROUP_NAME}</b></td>
+<!-- IF AVATAR_IMG or RANK_IMG or GROUP_RANK or U_PM -->
+	<td class="row1" width="33%" rowspan="2" align="center"><!-- IF AVATAR_IMG -->{AVATAR_IMG}<!-- ENDIF --><!-- IF RANK_IMG --><br />{RANK_IMG}<!-- ENDIF --><!-- IF GROUP_RANK --><br /><span class="gensmall">{GROUP_RANK}</span><br /><!-- ENDIF --><!-- IF U_PM --><br /><a href="{U_PM}">{PM_IMG}</a><!-- ENDIF --></td>
+<!-- ENDIF -->
+</tr>
+<tr>
+	<td class="row1" width="20%"><b class="genmed">{L_GROUP_DESC}:</b></td>
+	<td class="row2"><span class="gen">{GROUP_DESC}</span><p class="forumdesc">{GROUP_TYPE}</p></td>
+</tr>
+<tr><td class="cat-bottom" colspan="3">&nbsp;</td></tr>
+</table>
+<div class="tbl-f-l"><div class="tbl-f-r"><div class="tbl-f-c">&nbsp;</div></div></div></div>
