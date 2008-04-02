@@ -314,6 +314,8 @@ if (($topic_data['topic_type'] == POST_STICKY || $topic_data['topic_type'] == PO
 
 // Setup look and feel
 $user->setup('viewtopic', $topic_data['forum_style']);
+//global annoucements
+$user->add_lang('mcp');
 
 if (!$topic_data['topic_approved'] && !$auth->acl_get('m_approve', $forum_id))
 {
@@ -531,6 +533,8 @@ $server_path = (!$view) ? $phpbb_root_path : generate_board_url() . '/';
 
 // Replace naughty words in title
 $topic_data['topic_title'] = censor_text($topic_data['topic_title']);
+//global_announcements
+global_announcements();
 
 //global announcements
 	if ($config['load_global_announcements_topic'])
