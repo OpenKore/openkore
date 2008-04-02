@@ -24,6 +24,8 @@ include($phpbb_root_path . 'includes/functions_display.' . $phpEx);
 $user->session_begin();
 $auth->acl($user->data);
 $user->setup('viewforum');
+//global announcements
+$user->add_lang('mcp');
 
 display_forums('', $config['load_moderators']);
 
