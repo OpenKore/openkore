@@ -1,0 +1,10 @@
+<div class="bc-tbl bc-div">
+	<p class="bc-header">
+		<a href="{U_INDEX}">{L_INDEX}</a><!-- BEGIN navlinks -->&nbsp;&#187;&nbsp;<a href="{navlinks.U_VIEW_FORUM}">{navlinks.FORUM_NAME}</a><!-- END navlinks -->
+	</p>
+	<div class="bc-links">
+		<div class="bc-links-left">{CURRENT_TIME}<!-- IF S_USER_LOGGED_IN -->&nbsp;|&nbsp;{LAST_VISIT_DATE}<!-- ENDIF --><br />{S_TIMEZONE}</div>
+		<a href="{U_SEARCH_UNANSWERED}">{L_SEARCH_UNANSWERED}</a>&nbsp;|&nbsp;<a href="{U_SEARCH_ACTIVE_TOPICS}">{L_SEARCH_ACTIVE_TOPICS}</a><br />
+		<!-- IF not S_IS_BOT and U_MARK_FORUMS --><a href="{U_MARK_FORUMS}">{L_MARK_FORUMS_READ}</a>&nbsp;|&nbsp;<!-- ENDIF --><!-- IF S_USER_LOGGED_IN --><a href="{U_SEARCH_NEW}">{L_SEARCH_NEW}</a>&nbsp;|&nbsp;<a href="{U_SEARCH_SELF}">{L_SEARCH_SELF}</a><!-- ELSE -->&nbsp;<!-- ENDIF -->
+	</div>
+</div>
