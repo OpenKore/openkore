@@ -13,9 +13,9 @@
 			<ul class="topiclist">
 				<li class="header">
 					<dl class="icon">
-						<dt><!-- IF not forumrow.U_VIEWFORUM -->{forumrow.FORUM_NAME}<!-- ELSEIF forumrow.S_IS_CAT --><a href="{forumrow.U_VIEWFORUM}">{forumrow.FORUM_NAME}</a><!-- ELSE -->{L_FORUM}<!-- ENDIF --></dt>
-						<dd class="topics"><!-- IF S_HAS_GLOBAL and not forumrow.U_VIEWFORUM -->{L_REPLIES}<!-- ELSE -->{L_TOPICS}<!-- ENDIF --></dd>
-						<dd class="posts"><!-- IF S_HAS_GLOBAL and not forumrow.U_VIEWFORUM -->{L_VIEWS}<!-- ELSE -->{L_POSTS}<!-- ENDIF --></dd>
+						<dt><!-- IF forumrow.S_IS_CAT --><a href="{forumrow.U_VIEWFORUM}">{forumrow.FORUM_NAME}</a><!-- ELSE -->{L_FORUM}<!-- ENDIF --></dt>
+						<dd class="topics">{L_TOPICS}</dd>
+						<dd class="posts">{L_POSTS}</dd>
 						<dd class="lastpost"><span>{L_LAST_POST}</span></dd>
 					</dl>
 				</li>
@@ -26,7 +26,7 @@
 	<!-- IF not forumrow.S_IS_CAT -->
 		<li class="row">
 			<dl class="icon" style="background-image: url({forumrow.FORUM_FOLDER_IMG_SRC}); background-repeat: no-repeat;">
-				<dt<!-- IF forumrow.TOPIC_ICON_IMG --> style="background-image: url({T_ICONS_PATH}{forumrow.TOPIC_ICON_IMG}); background-repeat: no-repeat;"<!-- ENDIF --><!-- IF forumrow.TOPIC_FOLDER_IMG_ALT --> title="{forumrow.TOPIC_FOLDER_IMG_ALT}"<!-- ENDIF -->>
+				<dt>
 					<!-- IF forumrow.FORUM_IMAGE --><span class="forum-image">{forumrow.FORUM_IMAGE}</span><!-- ENDIF -->
 					<a href="{forumrow.U_VIEWFORUM}" class="forumtitle">{forumrow.FORUM_NAME}</a><br />
 					{forumrow.FORUM_DESC}
@@ -41,7 +41,7 @@
 					<dd class="topics">{forumrow.TOPICS} <dfn>{L_TOPICS}</dfn></dd>
 					<dd class="posts">{forumrow.POSTS} <dfn>{L_POSTS}</dfn></dd>
 					<dd class="lastpost"><span>
-						<!-- IF forumrow.LAST_POST_TIME --><dfn>{L_LAST_POST}</dfn> <!-- IF forumrow.ATTACH_ICON_IMG -->{forumrow.ATTACH_ICON_IMG} <!-- ENDIF -->{L_POST_BY_AUTHOR} {forumrow.LAST_POSTER_FULL}
+						<!-- IF forumrow.LAST_POST_TIME --><dfn>{L_LAST_POST}</dfn> {L_POST_BY_AUTHOR} {forumrow.LAST_POSTER_FULL}
 						<a href="{forumrow.U_LAST_POST}">{LAST_POST_IMG}</a> <br />{L_POSTED_ON_DATE} {forumrow.LAST_POST_TIME}<!-- ELSE -->{L_NO_POSTS}<!-- ENDIF --></span>
 					</dd>
 				<!-- ENDIF -->
