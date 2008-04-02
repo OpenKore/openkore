@@ -260,6 +260,83 @@ function display_forums($root_data = '', $display_moderators = true, $return_mod
 		get_moderators($forum_moderators, $forum_ids_moderator);
 	}
 
+		//global announcements
+	if ($config['load_global_announcements_home'])
+	{
+		$sql = 'SELECT *
+			FROM ' . TOPICS_TABLE . "
+			WHERE forum_id = 0 AND topic_type = " . POST_GLOBAL  . "
+			ORDER BY topic_time DESC";//order by original creation user topic_last_post_time for last commented
+		$result = $db->sql_query($sql);
+		while ($row = $db->sql_fetchrow($result))
+		{
+			// Grab topic icons stolen form cache.php
+			global $cache;
+			$icons = $cache->obtain_icons();
+	
+			//normal topic fetch (sorta)
+			$unread_topic = (isset($topic_tracking_info[$row['topic_id']]) && $row['topic_last_post_time'] > $topic_tracking_info[$topic_id]) ? true : false;
+			// Get folder img, topic status/type related information
+			$folder_img = $folder_alt = $topic_type = '';
+			topic_status($row, $row['topic_replies'], $unread_topic, $folder_img, $folder_alt, $topic_type);
+	
+			// Create last post link information, if appropriate
+			if ($row['topic_last_post_id'])
+			{
+				$last_post_subject = $row['topic_last_post_subject'];
+				$last_post_time = $user->format_date($row['topic_last_post_time']);
+				$last_post_url = append_sid("{$phpbb_root_path}viewtopic.$phpEx", 'f=' . $row['forum_id'] . '&amp;p=' . $row['topic_last_post_id']) . '#p' . $row['topic_last_post_id'];
+			}
+			else
+			{
+				$last_post_subject = $last_post_time = $last_post_url = '';
+			}
+			
+			$template->assign_block_vars('forumrow', array(
+				'S_IS_CAT'			=> false,
+				'S_NO_CAT'			=> false,
+				'S_IS_LINK'			=> false,
+				'S_UNREAD_FORUM'	=> true,//need to tweak
+				'S_LOCKED_FORUM'	=> false,
+				'S_SUBFORUMS'		=> false,
+	
+				'FORUM_ID'				=> $row['forum_id'],
+				'FORUM_NAME'			=> $row['topic_title'],
+				'TOPICS'				=> $row['topic_replies'],
+				'POSTS'					=> $row['topic_views'],//note using same varible name, just not system generated
+				'FORUM_FOLDER_IMG'		=> $user->img($folder_img, $folder_alt),
+				'FORUM_FOLDER_IMG_SRC'	=> $user->img($folder_img, $folder_alt, false, '', 'src'),
+				
+				//need to generate these
+				'LAST_POST_SUBJECT'		=> censor_text($last_post_subject),
+				'LAST_POST_TIME'		=> $last_post_time,
+				'LAST_POSTER'			=> get_username_string('username', $row['topic_last_poster_id'], $row['topic_last_poster_name'], $row['topic_last_poster_colour']),
+				'LAST_POSTER_COLOUR'	=> get_username_string('colour', $row['topic_last_poster_id'], $row['topic_last_poster_name'], $row['topic_last_poster_colour']),
+				'LAST_POSTER_FULL'		=> get_username_string('full', $row['topic_last_poster_id'], $row['topic_last_poster_name'], $row['topic_last_poster_colour']),
+
+				'U_VIEWFORUM'		=> append_sid("{$phpbb_root_path}viewtopic.$phpEx", 'f=' . $row['forum_id'] . '&amp;t=' . $row['topic_id']),
+				'U_LAST_POSTER'		=> get_username_string('profile', $row['topic_last_poster_id'], $row['topic_last_poster_name'], $row['topic_last_poster_colour']),
+				'U_LAST_POST'		=> $last_post_url,
+				
+				//EXTRA
+				'S_IS_GLOBAL'			=> true,//custom var
+				'TOPIC_AUTHOR'				=> get_username_string('username', $row['topic_poster'], $row['topic_first_poster_name'], $row['topic_first_poster_colour']),
+				'TOPIC_AUTHOR_COLOUR'		=> get_username_string('colour', $row['topic_poster'], $row['topic_first_poster_name'], $row['topic_first_poster_colour']),
+				'TOPIC_AUTHOR_FULL'			=> get_username_string('full', $row['topic_poster'], $row['topic_first_poster_name'], $row['topic_first_poster_colour']),
+				'FIRST_POST_TIME'			=> $user->format_date($row['topic_time']),
+				'TOPIC_FOLDER_IMG_ALT'	=> $user->lang[$folder_alt],
+				'TOPIC_ICON_IMG'		=> (!empty($icons[$row['icon_id']])) ? $icons[$row['icon_id']]['img'] : '',
+				'TOPIC_ICON_IMG_WIDTH'	=> (!empty($icons[$row['icon_id']])) ? $icons[$row['icon_id']]['width'] : '',
+				'TOPIC_ICON_IMG_HEIGHT'	=> (!empty($icons[$row['icon_id']])) ? $icons[$row['icon_id']]['height'] : '',
+				'ATTACH_ICON_IMG'		=> ($auth->acl_get('u_download') && $auth->acl_get('f_download', $forum_id) && $row['topic_attachment']) ? $user->img('icon_topic_attach', $user->lang['TOTAL_ATTACHMENTS']) : ''
+				)
+			);
+		}
+		$db->sql_freeresult($result);
+	}
+	//end global announcements
+
+	
 	// Used to tell whatever we have to create a dummy category or not.
 	$last_catless = true;
 	foreach ($forum_rows as $row)
@@ -425,7 +502,8 @@ function display_forums($root_data = '', $display_moderators = true, $return_mod
 
 			'U_VIEWFORUM'		=> $u_viewforum,
 			'U_LAST_POSTER'		=> get_username_string('profile', $row['forum_last_poster_id'], $row['forum_last_poster_name'], $row['forum_last_poster_colour']),
-			'U_LAST_POST'		=> $last_post_url)
+			'U_LAST_POST'		=> $last_post_url,
+			'S_IS_GLOBAL'		=> false)
 		);
 
 		// Assign subforums loop for style authors
