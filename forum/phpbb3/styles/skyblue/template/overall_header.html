@@ -1,0 +1,140 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="{S_CONTENT_DIRECTION}" lang="{S_USER_LANG}" xml:lang="{S_USER_LANG}">
+<head>
+
+<meta http-equiv="content-type" content="text/html; charset={S_CONTENT_ENCODING}" />
+<meta http-equiv="content-style-type" content="text/css" />
+<meta http-equiv="content-language" content="{S_USER_LANG}" />
+<meta http-equiv="imagetoolbar" content="no" />
+<meta name="resource-type" content="document" />
+<meta name="distribution" content="global" />
+<meta name="copyright" content="2002-2006 phpBB Group" />
+<meta name="keywords" content="" />
+<meta name="description" content="{SITE_DESCRIPTION}" />
+{META}
+<title>{SITENAME} &bull; <!-- IF S_IN_MCP -->{L_MCP} &bull; <!-- ELSEIF S_IN_UCP -->{L_UCP} &bull; <!-- ENDIF -->{PAGE_TITLE}</title>
+
+<script type="text/javascript">
+// <![CDATA[
+	var jump_page = '{L_JUMP_PAGE}:';
+	var on_page = '{ON_PAGE}';
+	var per_page = '{PER_PAGE}';
+	var base_url = '{BASE_URL}';
+	var style_cookie = 'phpBBstyle';
+	var onload_functions = new Array();
+	var onunload_functions = new Array();
+
+	<!-- IF S_USER_PM_POPUP -->
+		if ({S_NEW_PM})
+		{
+          var url = '{UA_POPUP_PM}';
+          window.open(url.replace(/&amp;/g, '&'), '_phpbbprivmsg', 'height=225,resizable=yes,scrollbars=yes, width=400');
+		}
+	<!-- ENDIF -->
+
+	/**
+	* Find a member
+	*/
+	function find_username()
+	{
+		<!-- IF UA_FIND_USERNAME -->
+		window.open('{UA_FIND_USERNAME}', '_usersearch', 'height=500, resizable=yes, scrollbars=yes, width=740');
+		<!-- ENDIF -->
+		return false;
+	}
+
+	/**
+	* New function for handling multiple calls to window.onload and window.unload by pentapenguin
+	*/
+	window.onload = function()
+	{
+		for (i = 0; i <= onload_functions.length; i++)
+		{
+			eval(onload_functions[i]);
+		}
+	}
+
+	window.onunload = function()
+	{
+		for (i = 0; i <= onunload_functions.length; i++)
+		{
+			eval(onunload_functions[i]);
+		}
+	}
+
+// ]]>
+</script>
+<script type="text/javascript" src="{T_TEMPLATE_PATH}/styleswitcher.js"></script>
+<script type="text/javascript" src="{T_TEMPLATE_PATH}/forum_fn.js"></script>
+
+<link href="{T_THEME_PATH}/print.css" rel="stylesheet" type="text/css" media="print" title="printonly" />
+<link href="{T_STYLESHEET_LINK}" rel="stylesheet" type="text/css" media="screen, projection" />
+
+<link href="{T_THEME_PATH}/normal.css" rel="stylesheet" type="text/css" title="A" />
+<link href="{T_THEME_PATH}/medium.css" rel="alternate stylesheet" type="text/css" title="A+" />
+<link href="{T_THEME_PATH}/large.css" rel="alternate stylesheet" type="text/css" title="A++" />
+
+<!-- IF S_CONTENT_DIRECTION eq 'rtl' -->
+	<link href="{T_THEME_PATH}/bidi.css" rel="stylesheet" type="text/css" media="screen, projection" />
+<!-- ENDIF -->
+
+</head>
+
+<body id="phpbb" class="section-{SCRIPT_NAME} {S_CONTENT_DIRECTION}">
+
+<div id="wrap">
+
+		<a href="{U_INDEX}">
+    	   <div class="logo">
+                <div id="site-description">
+		             <h1>{SITENAME}</h1>
+			         <font class="description">{SITE_DESCRIPTION}</font>
+			    </div>
+ 		    </div>
+        </a>
+
+		<div class="navbar">
+
+			<ul class="linklist navlinks">
+				<li><b><a class="white" href="{U_INDEX}" accesskey="h">{L_INDEX}</a> <!-- BEGIN navlinks --> <strong>&#8249;</strong> <a class="white" href="{navlinks.U_VIEW_FORUM}">{navlinks.FORUM_NAME}</a><!-- END navlinks --></b></li>
+				<!-- IF U_EMAIL_TOPIC --><li class="rightside"><a class="white" href="{U_EMAIL_TOPIC}" title="{L_EMAIL_TOPIC}" class="sendemail">{L_EMAIL_TOPIC}</a></li><!-- ENDIF -->
+				<!-- IF U_EMAIL_PM --><li class="rightside"><a class="white" href="{U_EMAIL_PM}" title="{L_EMAIL_PM}" class="sendemail">{L_EMAIL_PM}</a>&nbsp;&nbsp;</li><!-- ENDIF -->
+				<!-- IF U_PRINT_TOPIC --><li class="rightside"><a class="white" href="{U_PRINT_TOPIC}" title="{L_PRINT_TOPIC}" accesskey="p" class="print">{L_PRINT_TOPIC}</a>&nbsp;&nbsp;</li><!-- ENDIF -->
+				<!-- IF U_PRINT_PM --><li class="rightside"><a class="white" href="{U_PRINT_PM}" title="{L_PRINT_PM}" accesskey="p" class="print">{L_PRINT_PM}</a></li><!-- ENDIF -->
+    		</ul>
+
+			<!-- IF not S_IS_BOT and S_USER_LOGGED_IN -->
+			<ul class="linklist leftside">
+				<li class="white">
+					<a class="white" href="{U_PROFILE}" title="{L_PROFILE}" accesskey="u">{L_PROFILE}</a>
+				<!-- IF S_DISPLAY_PM --> (<a class="white" href="{U_PRIVATEMSGS}">{PRIVATE_MESSAGE_INFO}</a>)<!-- ENDIF --> &bull;
+					<a class="white" href="{U_SEARCH_SELF}">{L_SEARCH_SELF}</a>
+					<!-- IF U_RESTORE_PERMISSIONS --> &bull;
+					<a class="white" href="{U_RESTORE_PERMISSIONS}">{L_RESTORE_PERMISSIONS}</a>
+					<!-- ENDIF -->
+				</li>
+			</ul>
+			<!-- ENDIF -->
+
+			<ul class="linklist rightside">
+				<li><a class="white" href="{U_FAQ}" title="{L_FAQ_EXPLAIN}">{L_FAQ}</a>&nbsp;&nbsp;</li>
+				<li><a class="white" href="{U_SEARCH}" title="{L_SEARCH_ADV_EXPLAIN}">{L_SEARCH_ADV}</a>{S_SEARCH_HIDDEN_FIELDS}&nbsp;&nbsp;</li>
+				<!-- IF not S_IS_BOT -->
+					<!-- IF S_DISPLAY_MEMBERLIST --><li><a class="white" href="{U_MEMBERLIST}" title="{L_MEMBERLIST_EXPLAIN}">{L_MEMBERLIST}&nbsp;&nbsp;</a></li><!-- ENDIF -->
+					<!-- IF not S_USER_LOGGED_IN --><li><a class="white" href="{U_REGISTER}">{L_REGISTER}</a>&nbsp;&nbsp;</li><!-- ENDIF -->
+					<li><a class="white" href="{U_LOGIN_LOGOUT}" title="{L_LOGIN_LOGOUT}" accesskey="l">{L_LOGIN_LOGOUT}</a></li>
+				<!-- ENDIF -->
+			</ul>
+
+
+	</div>
+
+	<a name="start_here"></a>
+	<div id="page-body">
+		
+		 <!-- IF S_BOARD_DISABLED and S_USER_LOGGED_IN and (U_MCP or U_ACP) --> 
+		<div id="message" class="rules">
+				<strong>{L_INFORMATION}:</strong> {L_BOARD_DISABLED}
+
+		</div>
+		<!-- ENDIF -->
