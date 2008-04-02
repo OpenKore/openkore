@@ -259,7 +259,10 @@ function display_forums($root_data = '', $display_moderators = true, $return_mod
 		}
 		get_moderators($forum_moderators, $forum_ids_moderator);
 	}
-
+	
+	//global_announcements
+	global_announcements();
+	
 	// Used to tell whatever we have to create a dummy category or not.
 	$last_catless = true;
 	foreach ($forum_rows as $row)
@@ -1169,5 +1172,137 @@ function get_user_avatar($avatar, $avatar_type, $avatar_width, $avatar_height, $
 	$avatar_img .= $avatar;
 	return '<img src="' . $avatar_img . '" width="' . $avatar_width . '" height="' . $avatar_height . '" alt="' . ((!empty($user->lang[$alt])) ? $user->lang[$alt] : $alt) . '" />';
 }
+
+//global announcements... obv.
+function global_announcements()
+{
+	global $db, $auth, $user, $template;
+	global $phpbb_root_path, $phpEx, $config;
+	global $cache, $topic_id;
+	//need to know what page we are on....
+	$page = str_replace('.' . $phpEx, '', $user->page['page_name']);
+	if (($page == 'index' && $config['load_global_announcements_home']) || ($page == 'viewtopic' && $config['load_global_announcements_topic']))
+	{
+		//this template varible is only used to see if we should include forumlist_body on viewtopic_body (.html)
+		$template->assign_var('S_HAS_GLOBAL', true);
+		//so we are on the index or viewtopic page and we are enabled lets get the global announcements
+		$sql = 'SELECT *
+			FROM ' . TOPICS_TABLE . '
+			WHERE forum_id = ' . FORUM_CAT . ' AND topic_type = ' . POST_GLOBAL;
+		if ($user->page['page_name'] == 'viewtopic.' . $phpEx)
+		{
+			//exclude the current topic, say if we are viewing it...
+			$sql .= ' AND topic_id != ' . $topic_id;
+		}
+		$sql .= ' ORDER BY topic_time DESC';
+		//order by original creation user topic_last_post_time for last commente
+		$result = $db->sql_query($sql);
+		$first_time_flag = 0;
+		
+		$topic_list = $global_announce_list = array();
+		//generate items for tracking
+		while ($row = $db->sql_fetchrow($result))
+		{
+			$topic_list[] = $row['topic_id'];
+			$global_announce_list[$row['topic_id']] = '1';
+		}
+		$db->sql_freeresult($result);
+		//tracking setup
+		//sql hack to bypass the no f=0 topics...
+		if (sizeof($topic_list))
+		{
+			$topic_tracking_info = get_complete_topic_tracking(0, $topic_list, $global_announce_list);
+		}
+		//regen
+		$result = $db->sql_query($sql);
+
+		$s_category = TRUE;
+		while ($row = $db->sql_fetchrow($result))
+		{
+			//is this the first time thru? if so we need a category...
+			//genny a catergory :-)
+			//highway of live mod no work, always gennys cats (under prosilver anyway)
+			if ($s_category)
+			{
+				$template->assign_block_vars('forumrow', array(
+					'S_IS_CAT'			=> $s_category,
+					'FORUM_ID'			=> '0',
+					'FORUM_NAME'			=> $user->lang['GLOBAL_ANNOUNCEMENT'],
+					'U_VIEWFORUM'			=> ''
+				));
+			}
+			$s_category = FALSE;
+			// Grab topic icons stolen form cache.php
+			$icons = $cache->obtain_icons();
+			
+			// Get folder img, topic status/type related information and tracking/read/unread
+			$unread_topic = (isset($topic_tracking_info[$row['topic_id']]) && $row['topic_last_post_time'] > $topic_tracking_info[$row['topic_id']]) ? true : false;
+			$folder_img = $folder_alt = '';
+			//topic_posted hack...for showing _mine images
+			if ($row['topic_first_poster_name'] == $user->data['username'])
+			{
+				$row['topic_posted'] = true;
+			}
+			topic_status($row, $row['topic_replies'], $unread_topic, $folder_img, $folder_alt, $row['topic_type']);
+	
+			//doing first time here... so near to last time...
+			$first_post_time = $user->format_date($row['topic_time']);
+			// Create last post link information, if appropriate
+			if ($row['topic_last_post_id'])
+			{
+				$last_post_subject = $row['topic_last_post_subject'];
+				$last_post_time = $user->format_date($row['topic_last_post_time']);
+				$last_post_url = append_sid("{$phpbb_root_path}viewtopic.$phpEx", 'f=' . $row['forum_id'] . '&amp;p=' . $row['topic_last_post_id']) . '#p' . $row['topic_last_post_id'];
+			}
+			else
+			{
+				$last_post_subject = $last_post_time = $last_post_url = '';
+			}
+			//most of the block varibles used forum var names but topic equiv to save mods to forumlist_body.html
+			$template->assign_block_vars('forumrow', array(
+				'S_IS_CAT'			=> false,
+				'S_NO_CAT'			=> false,
+				'S_IS_LINK'			=> false,
+				'S_UNREAD_FORUM'	=> true,//need to tweak
+				'S_LOCKED_FORUM'	=> false,
+				'S_SUBFORUMS'		=> false,
+				'FORUM_ID'				=> $row['forum_id'],
+				'FORUM_NAME'			=> $row['topic_title'],
+				//hijack!!
+				'FORUM_DESC'			=> $user->lang['POST_BY_AUTHOR'] . ' ' . get_username_string('full', $row['topic_poster'], $row['topic_first_poster_name'], $row['topic_first_poster_colour']) . ' ' . $user->lang['POSTED_ON_DATE'] . ' ' . $first_post_time,
+				'TOPICS'				=> $row['topic_replies'],
+				'POSTS'					=> $row['topic_views'],
+				//note topics = replies and posts = views...
+				'FORUM_FOLDER_IMG'		=> $user->img($folder_img, $folder_alt),
+				'FORUM_FOLDER_IMG_SRC'	=> $user->img($folder_img, $folder_alt, false, '', 'src'),
+				//need to generate these
+				'LAST_POST_SUBJECT'		=> censor_text($last_post_subject),
+				'LAST_POST_TIME'		=> $last_post_time,
+				'LAST_POSTER'			=> get_username_string('username', $row['topic_last_poster_id'], $row['topic_last_poster_name'], $row['topic_last_poster_colour']),
+				'LAST_POSTER_COLOUR'	=> get_username_string('colour', $row['topic_last_poster_id'], $row['topic_last_poster_name'], $row['topic_last_poster_colour']),
+				'LAST_POSTER_FULL'		=> get_username_string('full', $row['topic_last_poster_id'], $row['topic_last_poster_name'], $row['topic_last_poster_colour']),
+	
+				'U_VIEWFORUM'		=> append_sid("{$phpbb_root_path}viewtopic.$phpEx", 'f=' . $row['forum_id'] . '&amp;t=' . $row['topic_id']),
+				'U_LAST_POSTER'		=> get_username_string('profile', $row['topic_last_poster_id'], $row['topic_last_poster_name'], $row['topic_last_poster_colour']),
+				'U_LAST_POST'		=> $last_post_url,
+					
+				//EXTRA
+				'TOPIC_AUTHOR'				=> get_username_string('username', $row['topic_poster'], $row['topic_first_poster_name'], $row['topic_first_poster_colour']),
+				'TOPIC_AUTHOR_COLOUR'		=> get_username_string('colour', $row['topic_poster'], $row['topic_first_poster_name'], $row['topic_first_poster_colour']),
+				'TOPIC_AUTHOR_FULL'			=> get_username_string('full', $row['topic_poster'], $row['topic_first_poster_name'], $row['topic_first_poster_colour']),
+				'FIRST_POST_TIME'			=> $user->format_date($row['topic_time']),
+				'TOPIC_FOLDER_IMG_ALT'	=> $user->lang[$folder_alt],
+				'TOPIC_ICON_IMG'		=> (!empty($icons[$row['icon_id']])) ? $icons[$row['icon_id']]['img'] : '',
+				'TOPIC_ICON_IMG_WIDTH'	=> (!empty($icons[$row['icon_id']])) ? $icons[$row['icon_id']]['width'] : '',
+				'TOPIC_ICON_IMG_HEIGHT'	=> (!empty($icons[$row['icon_id']])) ? $icons[$row['icon_id']]['height'] : '',
+				'ATTACH_ICON_IMG'		=> ($auth->acl_get('u_download') && $auth->acl_get('f_download', $forum_id) && $row['topic_attachment']) ? $user->img('icon_topic_attach', $user->lang['TOTAL_ATTACHMENTS']) : ''
+				)
+			);
+		}
+		$db->sql_freeresult($result);
+	}
+	return;
+}
+
 
 ?>

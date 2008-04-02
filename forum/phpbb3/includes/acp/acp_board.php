@@ -93,6 +93,8 @@ class acp_board
 						'load_cpf_memberlist'	=> array('lang' => 'LOAD_CPF_MEMBERLIST',	'validate' => 'bool',	'type' => 'radio:yes_no', 'explain' => false),
 						'load_cpf_viewprofile'	=> array('lang' => 'LOAD_CPF_VIEWPROFILE',	'validate' => 'bool',	'type' => 'radio:yes_no', 'explain' => false),
 						'load_cpf_viewtopic'	=> array('lang' => 'LOAD_CPF_VIEWTOPIC',	'validate' => 'bool',	'type' => 'radio:yes_no', 'explain' => false),
+						'load_global_announcements_home'	=> array('lang'	=> 'LOAD_GLOBAL_ANNOUNCEMENTS_HOME',	'validate' => 'bool',	'type' => 'radio:yes_no', 'explain' => false),
+						'load_global_announcements_topic'	=> array('lang'	=> 'LOAD_GLOBAL_ANNOUNCEMENTS_TOPIC',	'validate' => 'bool',	'type' => 'radio:yes_no', 'explain' => false),						
 					)
 				);
 			break;
