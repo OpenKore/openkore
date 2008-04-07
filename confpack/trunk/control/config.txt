@@ -4,7 +4,7 @@
 ######## Login options and server-specific options ########
 
 master
-server
+server 
 username
 password
 pin
