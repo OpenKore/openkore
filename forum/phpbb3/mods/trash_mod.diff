@@ -1,0 +1,197 @@
+Index: language/en/viewtopic.php
+===================================================================
+--- language/en/viewtopic.php	(revision 6320)
++++ language/en/viewtopic.php	(revision 6326)
+@@ -106,7 +106,7 @@
+ 	'VISIT_WEBSITE'			=> 'WWW',
+ 	'VOTE_SUBMITTED'		=> 'Your vote has been cast.',
+ 	'VOTE_CONVERTED'		=> 'Changing votes is not supported for converted polls.',
+-
++	'TRASH_TOPIC'			=> 'Trash topic',
+ ));
+ 
+-?>
+\ No newline at end of file
++?>
+Index: language/en/acp/board.php
+===================================================================
+--- language/en/acp/board.php	(revision 6320)
++++ language/en/acp/board.php	(revision 6326)
+@@ -53,6 +53,7 @@
+ 	'SYSTEM_TIMEZONE'				=> 'System timezone',
+ 	'WARNINGS_EXPIRE'				=> 'Warning duration',
+ 	'WARNINGS_EXPIRE_EXPLAIN'		=> 'Number of days that will elapse before the warning will automatically expire from a user’s record.',
++	'BOARD_TRASHCAN'				=> 'Trashcan',
+ ));
+ 
+ // Board Features
+@@ -81,6 +82,7 @@
+ 	'ALLOW_TOPIC_NOTIFY'		=> 'Allow subscribing to topics',
+ 	'BOARD_PM'					=> 'Private messaging',
+ 	'BOARD_PM_EXPLAIN'			=> 'Enable or disable private messaging for all users.',
++	'BOARD_TRASHCAN_EXPLAIN'	=> 'Select the forum to be used as trashcan.',
+ ));
+ 
+ // Avatar Settings
+@@ -458,4 +460,4 @@
+ 	'JAB_USERNAME_EXPLAIN'		=> 'Specify a registered username. The username will not be checked for validity.',
+ ));
+ 
+-?>
+\ No newline at end of file
++?>
+Index: language/en/acp/common.php
+===================================================================
+--- language/en/acp/common.php	(revision 6320)
++++ language/en/acp/common.php	(revision 6326)
+@@ -674,6 +674,7 @@
+ 	'LOG_WORD_ADD'			=> '<strong>Added word censor</strong><br />» %s',
+ 	'LOG_WORD_DELETE'		=> '<strong>Deleted word censor</strong><br />» %s',
+ 	'LOG_WORD_EDIT'			=> '<strong>Edited word censor</strong><br />» %s',
++	'LOG_TRASH'				=>  '<strong>Trashed Post</strong><br />',
+ ));
+ 
+ ?>
+\ No newline at end of file
+Index: language/en/mcp.php
+===================================================================
+--- language/en/mcp.php	(revision 6320)
++++ language/en/mcp.php	(revision 6326)
+@@ -318,6 +318,7 @@
+ 	'TOPIC_FORKED_SUCCESS'		=> 'The selected topic has been copied successfully.',
+ 	'TOPIC_LOCKED_SUCCESS'		=> 'The selected topic has been locked.',
+ 	'TOPIC_MOVED_SUCCESS'		=> 'The selected topic has been moved successfully.',
++	'TOPIC_TRASHED_SUCCESS'		=> 'The selected topic has been trashed successfully.',
+ 	'TOPIC_NOT_EXIST'			=> 'The topic you selected does not exist.',
+ 	'TOPIC_RESYNC_SUCCESS'		=> 'The selected topic has been resynchronised.',
+ 	'TOPIC_SPLIT_SUCCESS'		=> 'The selected topic has been split successfully.',
+Index: viewtopic.php
+===================================================================
+--- viewtopic.php	(revision 6320)
++++ viewtopic.php	(revision 6326)
+@@ -502,6 +502,7 @@
+ $allow_change_type = ($auth->acl_get('m_', $forum_id) || ($user->data['is_registered'] && $user->data['user_id'] == $topic_data['topic_poster'])) ? true : false;
+ 
+ $topic_mod = '';
++$topic_mod .= ($auth->acl_get('m_delete', $forum_id)) ? '<option value="trash_topic">' . $user->lang['TRASH_TOPIC'] . '</option>' : '';
+ $topic_mod .= ($auth->acl_get('m_lock', $forum_id) || ($auth->acl_get('f_user_lock', $forum_id) && $user->data['is_registered'] && $user->data['user_id'] == $topic_data['topic_poster'] && $topic_data['topic_status'] == ITEM_UNLOCKED)) ? (($topic_data['topic_status'] == ITEM_UNLOCKED) ? '<option value="lock">' . $user->lang['LOCK_TOPIC'] . '</option>' : '<option value="unlock">' . $user->lang['UNLOCK_TOPIC'] . '</option>') : '';
+ $topic_mod .= ($auth->acl_get('m_delete', $forum_id)) ? '<option value="delete_topic">' . $user->lang['DELETE_TOPIC'] . '</option>' : '';
+ $topic_mod .= ($auth->acl_get('m_move', $forum_id) && $topic_data['topic_status'] != ITEM_MOVED) ? '<option value="move">' . $user->lang['MOVE_TOPIC'] . '</option>' : '';
+@@ -515,6 +516,7 @@
+ $topic_mod .= ($allow_change_type && $auth->acl_get('f_announce', $forum_id) && $topic_data['topic_type'] != POST_GLOBAL) ? '<option value="make_global">' . $user->lang['MAKE_GLOBAL'] . '</option>' : '';
+ $topic_mod .= ($auth->acl_get('m_', $forum_id)) ? '<option value="topic_logs">' . $user->lang['VIEW_TOPIC_LOGS'] . '</option>' : '';
+ 
++
+ // If we've got a hightlight set pass it on to pagination.
+ $pagination = generate_pagination(append_sid("{$phpbb_root_path}viewtopic.$phpEx", "f=$forum_id&amp;t=$topic_id&amp;$u_sort_param" . (($highlight_match) ? "&amp;hilit=$highlight" : '')), $total_posts, $config['posts_per_page'], $start);
+ 
+@@ -1574,4 +1576,4 @@
+ 
+ page_footer();
+ 
+-?>
+\ No newline at end of file
++?>
+Index: mcp.php
+===================================================================
+--- mcp.php	(revision 6320)
++++ mcp.php	(revision 6326)
+@@ -165,6 +165,7 @@
+ 		case 'move':
+ 		case 'delete_post':
+ 		case 'delete_topic':
++		case 'trash_topic':
+ 			$module->load('mcp', 'main', 'quickmod');
+ 			exit_handler();
+ 		break;
+@@ -833,4 +834,4 @@
+ 	return ($single_forum === false) ? true : (int) $forum_id;
+ }
+ 
+-?>
+\ No newline at end of file
++?>
+Index: includes/acp/acp_board.php
+===================================================================
+--- includes/acp/acp_board.php	(revision 6320)
++++ includes/acp/acp_board.php	(revision 6326)
+@@ -85,6 +85,7 @@
+ 						'allow_nocensors'		=> array('lang' => 'ALLOW_NO_CENSORS',		'validate' => 'bool',	'type' => 'radio:yes_no', 'explain' => true),
+ 						'allow_bookmarks'		=> array('lang' => 'ALLOW_BOOKMARKS',		'validate' => 'bool',	'type' => 'radio:yes_no', 'explain' => true),
+ 						'allow_birthdays'		=> array('lang' => 'ALLOW_BIRTHDAYS',		'validate' => 'bool',	'type' => 'radio:yes_no', 'explain' => true),
++						'board_trashcan'		=> array('lang' => 'BOARD_TRASHCAN',		'validate' => 'int',	'type' => 'select', 'explain' => true,'function' => 'make_forum_select'),
+ 
+ 						'legend2'				=> 'ACP_LOAD_SETTINGS',
+ 						'load_birthdays'		=> array('lang' => 'YES_BIRTHDAYS',			'validate' => 'bool',	'type' => 'radio:yes_no', 'explain' => true),
+@@ -810,6 +811,16 @@
+ 		return "<select name=\"dateoptions\" id=\"dateoptions\" onchange=\"if (this.value == 'custom') { document.getElementById('" . addslashes($key) . "').value = '" . addslashes($value) . "'; } else { document.getElementById('" . addslashes($key) . "').value = this.value; }\">$dateformat_options</select>
+ 		<input type=\"text\" name=\"config[$key]\" id=\"$key\" value=\"$value\" maxlength=\"30\" />";
+ 	}
++	
++		/**
++	* Board disable option and message
++	*/
++	function board_trashcan($value, $key)
++	{
++		global $user;
++
++		die("$value - $key");
++	}
+ }
+ 
+-?>
+\ No newline at end of file
++?>
+Index: includes/mcp/mcp_main.php
+===================================================================
+--- includes/mcp/mcp_main.php	(revision 6320)
++++ includes/mcp/mcp_main.php	(revision 6326)
+@@ -79,7 +79,7 @@
+ 
+ 				change_topic_type($action, $topic_ids);
+ 			break;
+-
++			
+ 			case 'move':
+ 				$user->add_lang('viewtopic');
+ 
+@@ -131,8 +131,16 @@
+ 
+ 				mcp_delete_post($post_ids);
+ 			break;
++			
++			case 'trash_topic':
++					
++				$result = $db->sql_query("SELECT `config_value` FROM `phpbb3_config` WHERE `config_name` = 'board_trashcan';");
++				$trash_id = $result->fetch_row();
++				$db->sql_freeresult();
++				mcp_trash_topic($trash_id,request_var('f', 0),request_var('t', 0));
++			break;
+ 		}
+-
++		
+ 		switch ($mode)
+ 		{
+ 			case 'front':
+@@ -1224,4 +1232,20 @@
+ 	}
+ }
+ 
++function mcp_trash_topic($trash_forum,$forum_id,$topic_id) {
++	global $auth, $user, $db, $template, $config;
++	global $phpEx, $phpbb_root_path;
++	move_topics($topic_id, $trash_forum[0], true);
++	
++	add_log('mod', $trash_forum, $topic_id, 'LOG_TRASH');
++	
++	$redirect = request_var('redirect', build_url(array('_f_', 'action', 'quickmod')));
++	$additional_msg = $success_msg = '';
++	$success_msg = (sizeof($topic_id) == 1) ? 'TOPIC_TRASHED_SUCCESS' : 'TOPIC_TRASHED_SUCCESS';
++	meta_refresh(3, $redirect);
++	
++	$message = $user->lang[$success_msg];	
++	trigger_error($message);
++}
++
+ ?>
+\ No newline at end of file
