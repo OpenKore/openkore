@@ -85,6 +85,7 @@ class acp_board
 						'allow_nocensors'		=> array('lang' => 'ALLOW_NO_CENSORS',		'validate' => 'bool',	'type' => 'radio:yes_no', 'explain' => true),
 						'allow_bookmarks'		=> array('lang' => 'ALLOW_BOOKMARKS',		'validate' => 'bool',	'type' => 'radio:yes_no', 'explain' => true),
 						'allow_birthdays'		=> array('lang' => 'ALLOW_BIRTHDAYS',		'validate' => 'bool',	'type' => 'radio:yes_no', 'explain' => true),
+						'board_trashcan'		=> array('lang' => 'BOARD_TRASHCAN',		'validate' => 'int',	'type' => 'select', 'explain' => true,'function' => 'make_forum_select'),
 
 						'legend2'				=> 'ACP_LOAD_SETTINGS',
 						'load_birthdays'		=> array('lang' => 'YES_BIRTHDAYS',			'validate' => 'bool',	'type' => 'radio:yes_no', 'explain' => true),
@@ -809,6 +810,16 @@ class acp_board
 
 		return "<select name=\"dateoptions\" id=\"dateoptions\" onchange=\"if (this.value == 'custom') { document.getElementById('" . addslashes($key) . "').value = '" . addslashes($value) . "'; } else { document.getElementById('" . addslashes($key) . "').value = this.value; }\">$dateformat_options</select>
 		<input type=\"text\" name=\"config[$key]\" id=\"$key\" value=\"$value\" maxlength=\"30\" />";
+	}
+	
+		/**
+	* Board disable option and message
+	*/
+	function board_trashcan($value, $key)
+	{
+		global $user;
+
+		die("$value - $key");
 	}
 }
 

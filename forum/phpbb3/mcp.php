@@ -165,6 +165,7 @@ if ($quickmod)
 		case 'move':
 		case 'delete_post':
 		case 'delete_topic':
+		case 'trash_topic':
 			$module->load('mcp', 'main', 'quickmod');
 			exit_handler();
 		break;

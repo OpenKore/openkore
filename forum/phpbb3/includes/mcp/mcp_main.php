@@ -79,7 +79,7 @@ class mcp_main
 
 				change_topic_type($action, $topic_ids);
 			break;
-
+			
 			case 'move':
 				$user->add_lang('viewtopic');
 
@@ -131,8 +131,16 @@ class mcp_main
 
 				mcp_delete_post($post_ids);
 			break;
+			
+			case 'trash_topic':
+					
+				$result = $db->sql_query("SELECT `config_value` FROM `phpbb3_config` WHERE `config_name` = 'board_trashcan';");
+				$trash_id = $result->fetch_row();
+				$db->sql_freeresult();
+				mcp_trash_topic($trash_id,request_var('f', 0),request_var('t', 0));
+			break;
 		}
-
+		
 		switch ($mode)
 		{
 			case 'front':
@@ -1222,6 +1230,18 @@ function mcp_fork_topic($topic_ids)
 
 		trigger_error($user->lang[$success_msg] . '<br /><br />' . $return_link);
 	}
+}
+
+function mcp_trash_topic($trash_forum,$forum_id,$topic_id) {
+	global $auth, $user, $db, $template, $config;
+	global $phpEx, $phpbb_root_path;
+	move_topics($topic_id, $trash_forum[0], true);
+	$redirect = request_var('redirect', build_url(array('_f_', 'action', 'quickmod')));
+	$additional_msg = $success_msg = '';
+	$success_msg = (sizeof($topic_id) == 1) ? 'TOPIC_MOVED_SUCCESS' : 'TOPICS_MOVED_SUCCESS';
+	meta_refresh(3, $redirect);
+	$message = $user->lang[$success_msg];	
+	trigger_error($message);
 }
 
 ?>

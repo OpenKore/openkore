@@ -53,6 +53,7 @@ $lang = array_merge($lang, array(
 	'SYSTEM_TIMEZONE'				=> 'System timezone',
 	'WARNINGS_EXPIRE'				=> 'Warning duration',
 	'WARNINGS_EXPIRE_EXPLAIN'		=> 'Number of days that will elapse before the warning will automatically expire from a user’s record.',
+	'BOARD_TRASHCAN'				=> 'Trashcan',
 ));
 
 // Board Features
@@ -81,6 +82,7 @@ $lang = array_merge($lang, array(
 	'ALLOW_TOPIC_NOTIFY'		=> 'Allow subscribing to topics',
 	'BOARD_PM'					=> 'Private messaging',
 	'BOARD_PM_EXPLAIN'			=> 'Enable or disable private messaging for all users.',
+	'BOARD_TRASHCAN_EXPLAIN'	=> 'Select the forum to be used as trashcan.',
 ));
 
 // Avatar Settings
