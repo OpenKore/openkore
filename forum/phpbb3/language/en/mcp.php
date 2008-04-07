@@ -318,6 +318,7 @@ $lang = array_merge($lang, array(
 	'TOPIC_FORKED_SUCCESS'		=> 'The selected topic has been copied successfully.',
 	'TOPIC_LOCKED_SUCCESS'		=> 'The selected topic has been locked.',
 	'TOPIC_MOVED_SUCCESS'		=> 'The selected topic has been moved successfully.',
+	'TOPIC_TRASHED_SUCCESS'		=> 'The selected topic has been trashed successfully.',
 	'TOPIC_NOT_EXIST'			=> 'The topic you selected does not exist.',
 	'TOPIC_RESYNC_SUCCESS'		=> 'The selected topic has been resynchronised.',
 	'TOPIC_SPLIT_SUCCESS'		=> 'The selected topic has been split successfully.',
