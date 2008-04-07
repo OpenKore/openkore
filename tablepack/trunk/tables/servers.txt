@@ -932,8 +932,8 @@ serverEncoding Western
 
 ## http://www.kore-ro.com
 [KoreRO Private Server]
-ip ro1.serveftp.net
-port 6901
+ip koreserver.info
+port 6900
 master_version 16
 version 20
 serverType 3
