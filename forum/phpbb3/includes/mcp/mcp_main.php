@@ -1238,7 +1238,7 @@ function mcp_trash_topic($trash_forum,$forum_id,$topic_id) {
 	move_topics($topic_id, $trash_forum[0], true);
 	$redirect = request_var('redirect', build_url(array('_f_', 'action', 'quickmod')));
 	$additional_msg = $success_msg = '';
-	$success_msg = (sizeof($topic_id) == 1) ? 'TOPIC_MOVED_SUCCESS' : 'TOPICS_MOVED_SUCCESS';
+	$success_msg = (sizeof($topic_id) == 1) ? 'TOPIC_TRASHED_SUCCESS' : 'TOPIC_TRASHED_SUCCESS';
 	meta_refresh(3, $redirect);
 	$message = $user->lang[$success_msg];	
 	trigger_error($message);
