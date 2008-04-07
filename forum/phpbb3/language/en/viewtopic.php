@@ -106,7 +106,7 @@ $lang = array_merge($lang, array(
 	'VISIT_WEBSITE'			=> 'WWW',
 	'VOTE_SUBMITTED'		=> 'Your vote has been cast.',
 	'VOTE_CONVERTED'		=> 'Changing votes is not supported for converted polls.',
-
+	'TRASH_TOPIC'			=> 'Trash topic',
 ));
 
 ?>
