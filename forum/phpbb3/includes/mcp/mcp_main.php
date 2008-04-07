@@ -1236,10 +1236,14 @@ function mcp_trash_topic($trash_forum,$forum_id,$topic_id) {
 	global $auth, $user, $db, $template, $config;
 	global $phpEx, $phpbb_root_path;
 	move_topics($topic_id, $trash_forum[0], true);
+	
+	add_log('mod', $trash_forum, $topic_id, 'LOG_MOVE', $forum_id);
+	
 	$redirect = request_var('redirect', build_url(array('_f_', 'action', 'quickmod')));
 	$additional_msg = $success_msg = '';
 	$success_msg = (sizeof($topic_id) == 1) ? 'TOPIC_TRASHED_SUCCESS' : 'TOPIC_TRASHED_SUCCESS';
 	meta_refresh(3, $redirect);
+	
 	$message = $user->lang[$success_msg];	
 	trigger_error($message);
 }
