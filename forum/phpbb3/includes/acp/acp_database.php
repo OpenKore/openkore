@@ -2,7 +2,7 @@
 /**
 *
 * @package acp
-* @version $Id: acp_database.php,v 1.82 2007/10/05 14:36:32 acydburn Exp $
+* @version $Id: acp_database.php 8479 2008-03-29 00:22:48Z naderman $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -341,6 +341,7 @@ class acp_database
 								break;
 
 								case 'postgres':
+									$delim = ";\n";
 									while (($sql = $fgetd($fp, $delim, $read, $seek, $eof)) !== false)
 									{
 										$query = trim($sql);

@@ -4,7 +4,7 @@
 * ucp [English]
 *
 * @package language
-* @version $Id: ucp.php,v 1.136 2007/10/08 14:38:26 acydburn Exp $
+* @version $Id: ucp.php 8479 2008-03-29 00:22:48Z naderman $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -88,7 +88,7 @@ $lang = array_merge($lang, array(
 	'ATTACHMENTS_DELETED'			=> 'Attachments successfully deleted.',
 	'ATTACHMENT_DELETED'			=> 'Attachment successfully deleted.',
 	'AVATAR_CATEGORY'				=> 'Category',
-	'AVATAR_EXPLAIN'				=> 'Maximum dimensions; width: %1$d pixels, height: %2$d pixels, file size: %3$dkB.',
+	'AVATAR_EXPLAIN'				=> 'Maximum dimensions; width: %1$d pixels, height: %2$d pixels, file size: %3$.2f KiB.',
 	'AVATAR_FEATURES_DISABLED'		=> 'The avatar functionality is currently disabled.',
 	'AVATAR_GALLERY'				=> 'Local gallery',
 	'AVATAR_GENERAL_UPLOAD_ERROR'	=> 'Could not upload avatar to %s.',
@@ -223,6 +223,7 @@ $lang = array_merge($lang, array(
 
 	'IF_FOLDER_FULL'			=> 'If folder is full',
 	'IMPORTANT_NEWS'			=> 'Important announcements',
+	'INVALID_USER_BIRTHDAY'			=> 'The entered birthday is not a valid date.',
 	'INVALID_CHARS_USERNAME'	=> 'The username contains forbidden characters.',
 	'INVALID_CHARS_NEW_PASSWORD'=> 'The password does not contain the required characters.',
 	'ITEMS_REQUIRED'			=> 'The items marked with * are required profile fields and need to be filled out.',

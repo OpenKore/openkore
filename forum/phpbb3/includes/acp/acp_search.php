@@ -2,7 +2,7 @@
 /**
 *
 * @package acp
-* @version $Id: acp_search.php,v 1.38 2007/10/05 14:36:32 acydburn Exp $
+* @version $Id: acp_search.php 8479 2008-03-29 00:22:48Z naderman $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -181,6 +181,26 @@ class acp_search
 				{
 					trigger_error($error . adm_back_link($this->u_action), E_USER_WARNING);
 				}
+			}
+
+			$search = null;
+			$error = false;
+			if (!$this->init_search($config['search_type'], $search, $error))
+			{
+				if ($updated)
+				{
+					if (method_exists($search, 'config_updated'))
+					{
+						if ($search->config_updated())
+						{
+							trigger_error($error . adm_back_link($this->u_action), E_USER_WARNING);
+						}
+					}
+				}
+			}
+			else
+			{
+				trigger_error($error . adm_back_link($this->u_action), E_USER_WARNING);
 			}
 
 			trigger_error($user->lang['CONFIG_UPDATED'] . $extra_message . adm_back_link($this->u_action));
@@ -518,9 +538,9 @@ class acp_search
 	function close_popup_js()
 	{
 		return "<script type=\"text/javascript\">\n" .
-			"<!--\n" .
+			"// <![CDATA[\n" .
 			"	close_waitscreen = 1;\n" .
-			"//-->\n" .
+			"// ]]>\n" .
 			"</script>\n";
 	}
 

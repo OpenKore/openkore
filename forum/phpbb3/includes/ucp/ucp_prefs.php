@@ -2,7 +2,7 @@
 /**
 *
 * @package ucp
-* @version $Id: ucp_prefs.php,v 1.54 2007/10/05 14:36:34 acydburn Exp $
+* @version $Id: ucp_prefs.php 8479 2008-03-29 00:22:48Z naderman $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -114,7 +114,7 @@ class ucp_prefs
 				$s_custom = false;
 
 				$dateformat_options .= '<option value="custom"';
-				if (!in_array($data['dateformat'], array_keys($user->lang['dateformats'])))
+				if (!isset($user->lang['dateformats'][$data['dateformat']]))
 				{
 					$dateformat_options .= ' selected="selected"';
 					$s_custom = true;

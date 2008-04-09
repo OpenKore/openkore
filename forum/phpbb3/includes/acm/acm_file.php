@@ -2,7 +2,7 @@
 /**
 *
 * @package acm
-* @version $Id: acm_file.php,v 1.55 2007/11/17 12:14:27 acydburn Exp $
+* @version $Id: acm_file.php 8479 2008-03-29 00:22:48Z naderman $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -312,7 +312,7 @@ class acm
 
 		if ($var_name[0] == '_')
 		{
-			$this->remove_file($this->cache_dir . 'data' . $var_name . ".$phpEx");
+			$this->remove_file($this->cache_dir . 'data' . $var_name . ".$phpEx", true);
 		}
 		else if (isset($this->vars[$var_name]))
 		{
@@ -375,7 +375,7 @@ class acm
 		}
 		else if ($expired)
 		{
-			$this->remove_file($this->cache_dir . 'sql_' . md5($query) . ".$phpEx");
+			$this->remove_file($this->cache_dir . 'sql_' . md5($query) . ".$phpEx", true);
 			return false;
 		}
 
@@ -489,13 +489,15 @@ class acm
 	/**
 	* Removes/unlinks file
 	*/
-	function remove_file($filename)
+	function remove_file($filename, $check = false)
 	{
-		if (!@unlink($filename))
+		if ($check && !@is_writeable($this->cache_dir))
 		{
 			// E_USER_ERROR - not using language entry - intended.
 			trigger_error('Unable to remove files within ' . $this->cache_dir . '. Please check directory permissions.', E_USER_ERROR);
 		}
+
+		return @unlink($filename);
 	}
 }
 

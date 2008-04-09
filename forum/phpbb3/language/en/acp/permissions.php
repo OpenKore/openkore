@@ -4,7 +4,7 @@
 * acp_permissions [English]
 *
 * @package language
-* @version $Id: permissions.php,v 1.38 2007/10/08 14:38:26 acydburn Exp $
+* @version $Id: permissions.php 8479 2008-03-29 00:22:48Z naderman $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -115,7 +115,7 @@ $lang = array_merge($lang, array(
 
 	'DEFAULT'					=> 'Default',
 	'DELETE_ROLE'				=> 'Delete role',
-	'DELETE_ROLE_CONFIRM'		=> 'Are you sure you want to remove this role? Items having this role assigned will <strong>not</strong> loose their permission settings.',
+	'DELETE_ROLE_CONFIRM'		=> 'Are you sure you want to remove this role? Items having this role assigned will <strong>not</strong> lose their permission settings.',
 	'DISPLAY_ROLE_ITEMS'		=> 'View items using this role',
 
 	'EDIT_PERMISSIONS'			=> 'Edit permissions',

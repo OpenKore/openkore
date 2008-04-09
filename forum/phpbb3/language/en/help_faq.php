@@ -4,7 +4,7 @@
 * help_faq [English]
 *
 * @package language
-* @version $Id: help_faq.php,v 1.42 2007/10/04 15:07:24 acydburn Exp $
+* @version $Id: help_faq.php 8479 2008-03-29 00:22:48Z naderman $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -144,7 +144,7 @@ $help = array(
 	),
 	array(
 		0 => 'Why did I receive a warning?',
-		1 => 'Each board administrator has their own set of rules for their site. If you have broken a rule, you may issued a warning. Please note that this is the board administrator’s decision, and the phpBB Group has nothing to do with the warnings on the given site. Contact the board administrator if you are unsure about why you were issued a warning.'
+		1 => 'Each board administrator has their own set of rules for their site. If you have broken a rule, you may be issued a warning. Please note that this is the board administrator’s decision, and the phpBB Group has nothing to do with the warnings on the given site. Contact the board administrator if you are unsure about why you were issued a warning.'
 	),
 	array(
 		0 => 'How can I report posts to a moderator?',

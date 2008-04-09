@@ -2,7 +2,7 @@
 /**
 *
 * @package install
-* @version $Id: functions_convert.php,v 1.68 2007/10/14 12:31:32 kellanved Exp $
+* @version $Id: functions_convert.php 8479 2008-03-29 00:22:48Z naderman $
 * @copyright (c) 2006 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -1282,7 +1282,7 @@ function restore_config($schema)
 			// Most are...
 			if (is_string($config_value))
 			{
-				$config_value = utf8_htmlspecialchars($config_value);
+				$config_value = truncate_string(utf8_htmlspecialchars($config_value), 255, false);
 			}
 
 			set_config($config_name, $config_value);
