@@ -4,7 +4,7 @@
 * groups [English]
 *
 * @package language
-* @version $Id: groups.php,v 1.22 2007/10/04 15:07:24 acydburn Exp $
+* @version $Id: groups.php 8479 2008-03-29 00:22:48Z naderman $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -40,8 +40,10 @@ $lang = array_merge($lang, array(
 	'ALREADY_IN_GROUP'			=> 'You are already a member of the selected group.',
 	'ALREADY_IN_GROUP_PENDING'	=> 'You already requested joining the selected group.',
 
-	'CHANGED_DEFAULT_GROUP'	=> 'Successfully changed default group.',
-	
+	'CANNOT_JOIN_GROUP'			=> 'You are not able to join this group. You are only able to join open and freely open groups.',
+	'CANNOT_RESIGN_GROUP'		=> 'You are not able to resign from this group. You are only able to resign from open and freely open groups.',
+	'CHANGED_DEFAULT_GROUP'		=> 'Successfully changed default group.',
+
 	'GROUP_AVATAR'						=> 'Group avatar',
 	'GROUP_CHANGE_DEFAULT'				=> 'Are you sure you want to change your default membership to the group “%s”?',
 	'GROUP_CLOSED'						=> 'Closed',

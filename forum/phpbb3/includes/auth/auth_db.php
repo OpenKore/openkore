@@ -7,7 +7,7 @@
 * This is for authentication via the integrated user table
 *
 * @package login
-* @version $Id: auth_db.php,v 1.24 2007/10/05 12:42:06 acydburn Exp $
+* @version $Id: auth_db.php 8479 2008-03-29 00:22:48Z naderman $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -32,8 +32,18 @@ function login_db(&$username, &$password)
 	if (!$password)
 	{
 		return array(
-			'status'	=> LOGIN_BREAK,
+			'status'	=> LOGIN_ERROR_PASSWORD,
 			'error_msg'	=> 'NO_PASSWORD_SUPPLIED',
+			'user_row'	=> array('user_id' => ANONYMOUS),
+		);
+	}
+
+	if (!$username)
+	{
+		return array(
+			'status'	=> LOGIN_ERROR_USERNAME,
+			'error_msg'	=> 'LOGIN_ERROR_USERNAME',
+			'user_row'	=> array('user_id' => ANONYMOUS),
 		);
 	}
 

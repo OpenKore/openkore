@@ -4,7 +4,7 @@
 * posting [English]
 *
 * @package language
-* @version $Id: posting.php,v 1.74 2007/10/04 15:07:24 acydburn Exp $
+* @version $Id: posting.php 8479 2008-03-29 00:22:48Z naderman $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -77,7 +77,7 @@ $lang = array_merge($lang, array(
 	'DELETE_MESSAGE'			=> 'Delete message',
 	'DELETE_MESSAGE_CONFIRM'	=> 'Are you sure you want to delete this message?',
 	'DELETE_OWN_POSTS'			=> 'Sorry but you can only delete your own posts.',
-	'DELETE_POST_CONFIRM'		=> 'Are you sure you want to delete this message?',
+	'DELETE_POST_CONFIRM'		=> 'Are you sure you want to delete this post?',
 	'DELETE_POST_WARN'			=> 'Once deleted the post cannot be recovered',
 	'DISABLE_BBCODE'			=> 'Disable BBCode',
 	'DISABLE_MAGIC_URL'			=> 'Do not automatically parse URLs',

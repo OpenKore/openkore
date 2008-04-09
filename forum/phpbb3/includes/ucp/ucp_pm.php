@@ -1,7 +1,7 @@
 <?php
 /**
 * @package ucp
-* @version $Id: ucp_pm.php,v 1.47 2007/11/07 10:45:38 acydburn Exp $
+* @version $Id: ucp_pm.php 8479 2008-03-29 00:22:48Z naderman $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -92,7 +92,7 @@ class ucp_pm
 				{
 					if ($user->data['user_new_privmsg'])
 					{
-						$l_new_message = ($user->data['user_new_privmsg'] == 1 ) ? $user->lang['YOU_NEW_PM'] : $user->lang['YOU_NEW_PMS'];
+						$l_new_message = ($user->data['user_new_privmsg'] == 1) ? $user->lang['YOU_NEW_PM'] : $user->lang['YOU_NEW_PMS'];
 					}
 					else
 					{

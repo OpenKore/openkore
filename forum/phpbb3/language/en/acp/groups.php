@@ -4,7 +4,7 @@
 * acp_groups [English]
 *
 * @package language
-* @version $Id: groups.php,v 1.29 2007/10/04 15:07:24 acydburn Exp $
+* @version $Id: groups.php 8479 2008-03-29 00:22:48Z naderman $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -107,6 +107,7 @@ $lang = array_merge($lang, array(
 	'NO_GROUPS_CREATED'			=> 'No groups created yet.',
 	'NO_PERMISSIONS'			=> 'Do not copy permissions',
 	'NO_USERS'					=> 'You haven’t entered any users.',
+	'NO_USERS_ADDED'			=> 'No users were added to the group.',
 
 	'SPECIAL_GROUPS'			=> 'Pre-defined groups',
 	'SPECIAL_GROUPS_EXPLAIN'	=> 'Pre-defined groups are special groups, they cannot be deleted or directly modified. However you can still add users and alter basic settings.',

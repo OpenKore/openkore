@@ -4,7 +4,7 @@
 * install [English]
 *
 * @package language
-* @version $Id: install.php,v 1.131 2007/11/18 11:48:18 acydburn Exp $
+* @version $Id: install.php 8479 2008-03-29 00:22:48Z naderman $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -85,7 +85,7 @@ $lang = array_merge($lang, array(
 	'CONVERT_NEW_CONVERSION'	=> 'New conversion',
 	'CONVERT_NOT_EXIST'			=> 'The specified convertor does not exist.',
 	'CONVERT_OPTIONS'			=> 'Options',
-	'CONVERT_SETTINGS_VERIFIED'	=> 'The information you entered has been verified. To start the conversion process, push the button below to begin.',
+	'CONVERT_SETTINGS_VERIFIED'	=> 'The information you entered has been verified. To start the conversion process, please push the button below.',
 	'CONV_ERR_FATAL'			=> 'Fatal conversion error',
 
 	'CONV_ERROR_ATTACH_FTP_DIR'			=> 'FTP upload for attachments is enabled at the old board. Please disable the FTP upload option and make sure a valid upload directory is specified, then copy all attachment files to this new web accessible directory. Once you have done this, restart the convertor.',
@@ -460,7 +460,7 @@ $lang = array_merge($lang, array(
 	'NO_VISIBLE_CHANGES'			=> 'No visible changes',
 	'NOTICE'						=> 'Notice',
 	'NUM_CONFLICTS'					=> 'Number of conflicts',
-	'NUMBER_OF_FILES_COLLECTED'		=> 'Currently having differences about %1$d from %2$d files collected.<br />Please wait until file collection finished.',
+	'NUMBER_OF_FILES_COLLECTED'		=> 'Currently differences of %1$d of %2$d files have been checked.<br />Please wait until all files are checked.',
 
 	'OLD_UPDATE_FILES'		=> 'Update files are out of date. The update files found are for updating from phpBB %1$s to phpBB %2$s but the latest version of phpBB is %3$s.',
 

@@ -2,7 +2,7 @@
 /**
 *
 * @package phpBB3
-* @version $Id: functions_messenger.php,v 1.102 2007/11/17 20:03:32 acydburn Exp $
+* @version $Id: functions_messenger.php 8479 2008-03-29 00:22:48Z naderman $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -1056,8 +1056,7 @@ class smtp_class
 		global $user;
 
 		$err_msg = '';
-		$local_host = php_uname('n');
-		$local_host = (empty($local_host)) ? 'localhost' : $local_host;
+		$local_host = (function_exists('php_uname')) ? php_uname('n') : $user->host;
 
 		// If we are authenticating through pop-before-smtp, we
 		// have to login ones before we get authenticated
@@ -1332,7 +1331,7 @@ class smtp_class
 		// Realm
 		if (empty($tokens['realm']))
 		{
-			$tokens['realm'] = php_uname('n');
+			$tokens['realm'] = (function_exists('php_uname')) ? php_uname('n') : $user->host;
 		}
 
 		// Maxbuf

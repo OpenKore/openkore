@@ -2,7 +2,7 @@
 /**
 *
 * @package diff
-* @version $Id: renderer.php,v 1.8 2007/10/05 14:36:33 acydburn Exp $
+* @version $Id: renderer.php 8479 2008-03-29 00:22:48Z naderman $
 * @copyright (c) 2006 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -301,7 +301,7 @@ class diff_renderer_unified extends diff_renderer
 	{
 		return '<pre class="diff context">' . htmlspecialchars($this->_lines($lines, ' ')) . '<br /></pre>';
 	}
-	
+
 	function _added($lines)
 	{
 		return '<pre class="diff added">' . htmlspecialchars($this->_lines($lines, '+')) . '<br /></pre>';
@@ -448,7 +448,7 @@ class diff_renderer_inline extends diff_renderer
 		// Therefore we split on words, but include all blocks of whitespace in the wordlist.
 		$splitted_text_1 = $this->_split_on_words($text1, $nl);
 		$splitted_text_2 = $this->_split_on_words($text2, $nl);
-		
+
 		$diff = &new diff($splitted_text_1, $splitted_text_2);
 		unset($splitted_text_1, $splitted_text_2);
 
@@ -463,7 +463,7 @@ class diff_renderer_inline extends diff_renderer
 	{
 		// Ignore \0; otherwise the while loop will never finish.
 		$string = str_replace("\0", '', $string);
-		
+
 		$words = array();
 		$length = strlen($string);
 		$pos = 0;
@@ -537,7 +537,7 @@ class diff_renderer_raw extends diff_renderer
 	{
 		return $this->_lines($lines, ' ');
 	}
-	
+
 	function _added($lines)
 	{
 		return $this->_lines($lines, '+');
@@ -603,7 +603,7 @@ class diff_renderer_side_by_side extends diff_renderer
 			// Iterate through every header block of changes
 			foreach ($this->lines as $header)
 			{
-				$output .= '<tr><th>Line ' . $header['oldline'] . '</th><th>' . $user->lang['LINE'] . ' ' . $header['newline'] . '</th></tr>';
+				$output .= '<tr><th>' . $user->lang['LINE'] . ' ' . $header['oldline'] . '</th><th>' . $user->lang['LINE'] . ' ' . $header['newline'] . '</th></tr>';
 
 				// Each header block consists of a number of changes (add, remove, change).
 				$current_context = '';
