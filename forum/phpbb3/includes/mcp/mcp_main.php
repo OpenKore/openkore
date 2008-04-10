@@ -34,7 +34,7 @@ class mcp_main
 	function main($id, $mode)
 	{
 		global $auth, $db, $user, $template, $action;
-		global $config, $phpbb_root_path, $phpEx;
+		global $config, $phpbb_root_path, $phpEx, $table_prefix;
 
 		$quickmod = ($mode == 'quickmod') ? true : false;
 
@@ -134,7 +134,7 @@ class mcp_main
 			
 			case 'trash_topic':
 					
-				$result = $db->sql_query("SELECT `config_value` FROM `phpbb3_config` WHERE `config_name` = 'board_trashcan';");
+				$result = $db->sql_query("SELECT `config_value` FROM `".$table_prefix."config` WHERE `config_name` = 'board_trashcan';");
 				$trash_id = $result->fetch_row();
 				$db->sql_freeresult();
 				mcp_trash_topic($trash_id,request_var('f', 0),request_var('t', 0));
