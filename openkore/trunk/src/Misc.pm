@@ -2924,6 +2924,7 @@ sub getBestTarget {
 				|| ($control->{attack_hp}  ne "" && $control->{attack_hp} > $char->{hp})
 				|| ($control->{attack_sp}  ne "" && $control->{attack_sp} > $char->{sp})
 				|| ($control->{attack_auto} == 3 && ($monster->{dmgToYou} || $monster->{missedYou} || $monster->{dmgFromYou}))
+				|| ($control->{attack_auto} == 0 && !($monster->{dmgToYou} || $monster->{missedYou}))
 			);
 		}
 		if ($config{'attackCanSnipe'}) {
