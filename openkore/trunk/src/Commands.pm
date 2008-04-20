@@ -2330,22 +2330,23 @@ sub cmdHelp {
 sub helpIndent {
 	my $cmd = shift;
 	my $desc = shift;
+	my @tmp = @{$desc};
 	my $message;
 	my $messageTmp;
 	my @words;
 	my $length = 0;
 
 	$message = TF("------------ Help for '%s' ------------\n", $cmd);
-	$message .= shift(@{$desc}) . "\n";
+	$message .= shift(@tmp) . "\n";
 
-	foreach (@{$desc}) {
+	foreach (@tmp) {
 		$length = length($_->[0]) if length($_->[0]) > $length;
 	}
 	my $pattern = "$cmd %-${length}s    %s\n";
 	my $padsize = length($cmd) + $length + 5;
 	my $pad = sprintf("%-${padsize}s", '');
 
-	foreach (@{$desc}) {
+	foreach (@tmp) {
 		if ($padsize + length($_->[1]) > 79) {
 			@words = split(/ /, $_->[1]);
 			$message .= sprintf("$cmd %-${length}s    ", $_->[0]);
