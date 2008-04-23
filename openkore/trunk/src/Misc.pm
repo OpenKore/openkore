@@ -3876,12 +3876,12 @@ sub checkSelfCondition {
 
 	if ($config{$prefix."_whenPermitSkill"}) {
 		return 0 unless $char->{permitSkill} &&
-			$char->{permitSkill}->name eq $config{$prefix."_whenPermitSkill"};
+			$char->{permitSkill}->getName() eq $config{$prefix."_whenPermitSkill"};
 	}
 
 	if ($config{$prefix."_whenNotPermitSkill"}) {
 		return 0 if $char->{permitSkill} &&
-			$char->{permitSkill}->name eq $config{$prefix."_whenNotPermitSkill"};
+			$char->{permitSkill}->getName() eq $config{$prefix."_whenNotPermitSkill"};
 	}
 
 	if ($config{$prefix."_whenFlag"}) {
