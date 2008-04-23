@@ -1974,7 +1974,7 @@ sub processFollow {
 				last;
 			}			
 		}
-	} elsif (!$args->{'following'} && $players{$args->{'ID'}} && %{$players{$args->{'ID'}}} && !${$players{$args->{'ID'}}}{'dead'}) {
+	} elsif (!$args->{'following'} && $players{$args->{'ID'}} && %{$players{$args->{'ID'}}} && !${$players{$args->{'ID'}}}{'dead'} && ($players{$args->{'ID'}}->name eq $config{followTarget})) {
 		$args->{'following'} = 1;
 		delete $args->{'ai_follow_lost'};
  		message TF("Found my master!\n"), "follow"
@@ -2363,6 +2363,7 @@ sub processPartySkillUse {
 			foreach my $ID (@playersID) {
 				next if ($ID eq "");
 				next if ((!$char->{party} || !$char->{party}{users}{$ID}) && (!$char->{homunculus} || $char->{homunculus}{ID} ne $ID) && !$config{"partySkill_$i"."_notPartyOnly"});
+				next if ($char->{party}{users}{$ID}->{name} ne $playersList->getByID($ID)->name);
 				my $player = Actor::get($ID);
 				next unless UNIVERSAL::isa($player, 'Actor::Player');
 				if (inRange(distance($char->{pos_to}, $players{$ID}{pos}), $config{partySkillDistance} || "1..8")
