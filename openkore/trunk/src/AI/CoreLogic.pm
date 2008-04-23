@@ -2278,6 +2278,7 @@ sub processAutoItemUse {
 	  && timeOut($timeout{ai_item_use_auto})) {
 		my $i = 0;
 		while (exists $config{"useSelf_item_$i"}) {
+			if ($config{"useSelf_item_${i}_timeout"} eq "") {$config{"useSelf_item_${i}_timeout"} = 0;}
 			if ($config{"useSelf_item_$i"} && checkSelfCondition("useSelf_item_$i")) {
 				my $item = $char->inventory->getByNameList($config{"useSelf_item_$i"});
 				if ($item) {
