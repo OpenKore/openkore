@@ -881,6 +881,7 @@ sub actor_died_or_disappeared {
 
 		$monster->{gone_time} = time;
 		$monsters_old{$ID} = $monster->deepCopy();
+		Plugins::callHook('monster_disappeared', {monster => $monster});
 		$monstersList->remove($monster);
 
 	} elsif (defined $playersList->getByID($ID)) {
@@ -910,6 +911,8 @@ sub actor_died_or_disappeared {
 
 			$player->{gone_time} = time;
 			$players_old{$ID} = $player->deepCopy();
+			Plugins::callHook('player_disappeared', {player => $player});
+			
 			$playersList->remove($player);
 		}
 
