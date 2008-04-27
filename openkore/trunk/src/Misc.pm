@@ -2858,6 +2858,12 @@ sub whenStatusActivePL {
 			return 1 if $player->{statuses}{$_};
 		}
 	}
+	if ($char->{party}{users}{$ID}{online}) {
+		my @arr = split /\s*,\s*/, $statuses;
+		foreach (@arr) {
+			return 1 if $char->{party}{users}{$ID}{statuses}{$_};
+		}
+	}
 	return 0;
 }
 

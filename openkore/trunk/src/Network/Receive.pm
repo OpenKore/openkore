@@ -1448,12 +1448,17 @@ sub actor_status_active {
 			$again = 'again' if $actor->{statuses}{$skillName};
 			$actor->{statuses}{$skillName} = 1;
 		}
+		if ($char->{party}{users}{$ID}{name}) {
+			$again = 'again' if $char->{party}{users}{$ID}{statuses}{$skillName};
+			$char->{party}{users}{$ID}{statuses}{$skillName} = 1;
+		}
 		my $disp = status_string($actor, $skillName, $again);
 		message $disp, "parseMsg_statuslook", $ID eq $accountID ? 1 : 2;
 
 	} else {
 		# Skill de-activated (expired)
 		delete $actor->{statuses}{$skillName} if $actor;
+		delete $char->{party}{users}{$ID}{statuses}{$skillName} if ($char->{party}{users}{$ID}{name});
 		my $disp = status_string($actor, $skillName, 'no longer');
 		message $disp, "parseMsg_statuslook", $ID eq $accountID ? 1 : 2;
 	}
@@ -4267,11 +4272,12 @@ sub party_join {
 			message TF("%s joined your party '%s'\n", $user, $name), undef, 1;
 		}
 	}
-	$char->{party}{users}{$ID} = new Actor::Party;
+	$char->{party}{users}{$ID} = new Actor::Party if ($char->{party}{users}{$ID}{name});
 	if ($type == 0) {
 		$char->{party}{users}{$ID}{online} = 1;
 	} elsif ($type == 1) {
 		$char->{party}{users}{$ID}{online} = 0;
+		delete $char->{party}{users}{$ID}{statuses};
 	}
 	$char->{party}{name} = $name;
 	$char->{party}{users}{$ID}{pos}{x} = $x;
