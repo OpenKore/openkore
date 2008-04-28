@@ -129,7 +129,7 @@ sub parseMacroFile {
 # parses a text for keywords and returns keyword + argument as array
 # should be an adequate workaround for the parser bug
 sub parseKw {
-	my @pair = $_[0] =~ /\@($macroKeywords)\s*\(\s*(.*?)\s*\)(?=$)/i;
+	my @pair = $_[0] =~ /\@($macroKeywords)\s*\(\s*(.*?)\s*\)$/i;
 	return unless @pair;
 	if ($pair[0] eq 'arg') {
 		return $_[0] =~ /\@(arg)\s*\(\s*(".*?",\s*\d+)\s*\)/
