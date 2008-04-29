@@ -211,6 +211,9 @@ sub finishAttacking {
 	} else {
 		message T("Target lost\n"), "ai_attack";
 	}
+
+	Plugins::callHook('attack_end', {ID => $ID})
+
 }
 
 sub dropTargetWhileMoving {
