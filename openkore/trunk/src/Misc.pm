@@ -4152,7 +4152,7 @@ sub makeShop {
 		return;
 	}
 
-	if (!$shop{title}) {
+	if (!$shop{title_line}) {
 		error T("Your shop does not have a title.\n");
 		return;
 	}
@@ -4194,7 +4194,10 @@ sub makeShop {
 
 sub openShop {
 	my @items = makeShop();
+	my @shopnames;
 	return unless @items;
+	@shopnames = split(/;;/, $shop{title_line});
+	$shop{title} = $shopnames[int rand($#shopnames)];
 	$shop{title} = ($config{shopTitleOversize}) ? $shop{title} : substr($shop{title},0,36);
 	$messageSender->sendOpenShop($shop{title}, \@items);
 	message TF("Shop opened (%s) with %d selling items.\n", $shop{title}, @items.""), "success";
