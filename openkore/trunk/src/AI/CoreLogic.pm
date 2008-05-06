@@ -1547,6 +1547,7 @@ sub processAutoSell {
 
 #####AUTO BUY#####
 sub processAutoBuy {
+		my $needitem;
 	if ((AI::action eq "" || AI::action eq "route" || AI::action eq "follow") && timeOut($timeout{'ai_buyAuto'}) && time > $ai_v{'inventory_time'}) {
 		undef $ai_v{'temp'}{'found'};
 		my $i = 0;
@@ -1562,6 +1563,10 @@ sub processAutoBuy {
 				)
 			) {
 				$ai_v{'temp'}{'found'} = 1;
+				my $bai = $config{"buyAuto_$i"};
+				if ($needitem eq "") {
+					$needitem = "$bai";
+				} else {$needitem = "$needitem, $bai";}
 			}
 			$i++;
 		}
@@ -1635,6 +1640,7 @@ sub processAutoBuy {
 				$do_route = 1;
 			}
 		}
+		my $msgneeditem;
 		if ($do_route) {
 			if ($args->{warpedToSave} && !$args->{mapChanged}) {
 				undef $args->{warpedToSave};
@@ -1643,11 +1649,17 @@ sub processAutoBuy {
 			if ($config{'saveMap'} ne "" && $config{'saveMap_warpToBuyOrSell'} && !$args->{warpedToSave}
 			&& !$cities_lut{$field{'name'}.'.rsw'} && $config{'saveMap'} ne $field{name}) {
 				$args->{warpedToSave} = 1;
-				message T("Teleporting to auto-buy\n"), "teleport";
+				if ($needitem ne "") {
+					$msgneeditem = "Auto-buy: $needitem\n";
+				}
+ 				message T("$msgneeditem"."Teleporting to auto-buy\n"), "teleport";
 				useTeleport(2);
 				$timeout{ai_buyAuto_wait}{time} = time;
 			} else {
- 				message TF("Calculating auto-buy route to: %s (%s): %s, %s\n", $maps_lut{$args->{npc}{map}.'.rsw'}, $args->{npc}{map}, $args->{npc}{pos}{x}, $args->{npc}{pos}{y}), "route";
+				if ($needitem ne "") {
+					$msgneeditem = "Auto-buy: $needitem\n";
+				}
+ 				message TF("$msgneeditem"."Calculating auto-buy route to: %s (%s): %s, %s\n", $maps_lut{$args->{npc}{map}.'.rsw'}, $args->{npc}{map}, $args->{npc}{pos}{x}, $args->{npc}{pos}{y}), "route";
 				ai_route($args->{npc}{map}, $args->{npc}{pos}{x}, $args->{npc}{pos}{y},
 					attackOnRoute => 1,
 					distFromGoal => $config{"buyAuto_$args->{index}"."_distance"});
