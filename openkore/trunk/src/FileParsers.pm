@@ -425,8 +425,8 @@ sub parseShopControl {
 		$line =~ s/[\r\n\x{FEFF}]//g;
 		next if $line =~ /^$/ || $line =~ /^#/;
 
-		if (!$shop->{title}) {
-			$shop->{title} = $line;
+		if (!$shop->{title_line}) { 
+			$shop->{title_line} = $line;
 			next;
 		}
 
