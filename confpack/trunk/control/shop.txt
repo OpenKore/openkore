@@ -1,4 +1,4 @@
-My Shop
+My Shop;;My cool shop;;My nice shop
 
 Jellopy		3
 Andre Card	200,000		5
@@ -14,3 +14,6 @@ Andre Card	200,000		5
 # If <price> has commas in it, they must appear in the right places.
 # This can be useful for preventing accidentally vending an item
 # for the wrong price.
+#
+#Random shop name:
+#My Shop;;My cool shop;;My nice shop
