@@ -4197,7 +4197,7 @@ sub openShop {
 	my @shopnames;
 	return unless @items;
 	@shopnames = split(/;;/, $shop{title_line});
-	$shop{title} = $shopnames[int rand($#shopnames)];
+	$shop{title} = $shopnames[int rand($#shopnames + 1)];
 	$shop{title} = ($config{shopTitleOversize}) ? $shop{title} : substr($shop{title},0,36);
 	$messageSender->sendOpenShop($shop{title}, \@items);
 	message TF("Shop opened (%s) with %d selling items.\n", $shop{title}, @items.""), "success";
