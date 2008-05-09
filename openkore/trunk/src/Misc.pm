@@ -3940,7 +3940,8 @@ sub checkSelfCondition {
 
 sub checkPlayerCondition {
 	my ($prefix, $id) = @_;
-
+	return if (!$id);
+	
 	my $player = $playersList->getByID($id);
 
 	if ($config{$prefix . "_timeout"}) { return 0 unless timeOut($ai_v{$prefix . "_time"}{$id}, $config{$prefix . "_timeout"}) }
