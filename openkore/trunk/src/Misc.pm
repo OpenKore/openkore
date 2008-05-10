@@ -2849,6 +2849,9 @@ sub whenStatusActiveMon {
 
 sub whenStatusActivePL {
 	my ($ID, $statuses) = @_;
+	
+	# Incase this method was called with empty values, send TRUE back... since the user doesnt have any statusses they want to check
+	return 1 if (!$ID || !$statuses);
 	return whenStatusActive($statuses) if ($ID eq $accountID);
 
 	my $player = $playersList->getByID($ID);
@@ -3728,7 +3731,7 @@ sub getNPCInfo {
 
 sub checkSelfCondition {
 	my $prefix = shift;
-
+	return 0 if (!$prefix);
 	return 0 if ($config{$prefix . "_disabled"});
 
 	return 0 if $config{$prefix."_whenIdle"} && !AI::isIdle();
@@ -3940,13 +3943,13 @@ sub checkSelfCondition {
 
 sub checkPlayerCondition {
 	my ($prefix, $id) = @_;
-	return if (!$id);
+	return 0 if (!$id);
 	
 	my $player = $playersList->getByID($id);
 
 	if ($config{$prefix . "_timeout"}) { return 0 unless timeOut($ai_v{$prefix . "_time"}{$id}, $config{$prefix . "_timeout"}) }
-	if ($config{$prefix . "_whenStatusActive"}) { return 0 unless (whenStatusActivePL($id, $config{$prefix . "_whenStatusActive"})); }
-	if ($config{$prefix . "_whenStatusInactive"}) { return 0 if (whenStatusActivePL($id, $config{$prefix . "_whenStatusInactive"})); }
+	if ($config{$prefix . "_target_whenStatusActive"}) { return 0 unless (whenStatusActivePL($id, $config{$prefix . "_target_whenStatusActive"})); }
+	if ($config{$prefix . "_target_whenStatusInactive"}) { return 0 if (whenStatusActivePL($id, $config{$prefix . "_target_whenStatusInactive"})); }
 	if ($config{$prefix . "_notWhileSitting"} > 0) { return 0 if ($player->{sitting}); }
 
 	# we will have player HP info (only) if we are in the same party
@@ -4037,6 +4040,7 @@ sub checkPlayerCondition {
 	);
 
 	Plugins::callHook('checkPlayerCondition', \%args);
+
 	return $args{return};
 }
 
