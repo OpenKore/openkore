@@ -1,4 +1,5 @@
 <!-- INCLUDE overall_header.html -->
+<div align="center">{AD_CODE3}</div>
 <!-- IF U_MCP --><p>[&nbsp;<a href="{U_MCP}">{L_MCP}</a>&nbsp;]</p><!-- ENDIF -->
 <!-- IF S_HAS_GLOBAL -->
 	<!-- INCLUDE forumlist_body.html -->
@@ -212,7 +213,7 @@
 					<!-- IF postrow.U_JABBER --><li class="jabber-icon"><a href="{postrow.U_JABBER}" onclick="popup(this.href, 550, 320); return false;" title="{L_JABBER}"><span>{L_JABBER}</span></a></li><!-- ENDIF -->
 				</ul>
 			</dd>
-		<!-- ENDIF -->
+		<!-- ENDIF --> 
 		<!-- ENDIF -->
 
 		</dl>
@@ -225,6 +226,29 @@
 
 	<hr class="divider" />
 <!-- END postrow -->
+
+	<!-- IF AD_CODE2 -->
+	<div class="post bg3">
+	<div class="inner"><span class="corners-top"><span></span></span>
+	<div align="center">{AD_CODE2}</div>
+	<span class="corners-bottom"><span></span></span></div></div> 
+	<!-- ENDIF -->
+	
+	<!-- IF postrow.S_FIRST_ROW == 2 --> 
+	<!-- IF AD_CODE1 and not AD_CODE2 -->
+	<div class="post bg3">
+	<div class="inner"><span class="corners-top"><span></span></span>
+	<div align="center">{AD_CODE1}</div>
+	<span class="corners-bottom"><span></span></span></div></div> 
+	<!-- ENDIF -->
+	<!-- ENDIF -->
+<!-- END postrow -->
+<!-- IF AD_CODE4 -->
+<div class="post bg3">
+<div class="inner"><span class="corners-top"><span></span></span>
+<div align="center">{AD_CODE4}</div>
+<span class="corners-bottom"><span></span></span></div></div>
+<!-- ENDIF -->
 
 <!-- IF S_NUM_POSTS > 1 or PREVIOUS_PAGE -->
 	<form id="viewtopic" method="post" action="{S_TOPIC_ACTION}">

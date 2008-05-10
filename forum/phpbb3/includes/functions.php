@@ -3436,8 +3436,55 @@ function page_header($page_title = '', $display_online_list = true)
 		$user_lang = substr($user_lang, 0, strpos($user_lang, '-x-'));
 	}
 
+	// Start output Ad
+	$adID = '';
+	$forum_id = isset($f) ? $f : 0;
+	$sql = "SELECT a.code, a.ad_id, a.position, a.type, a.image, a.url, a.height, a.width
+		FROM " . AD_TABLE ." a, " . USER_GROUP_TABLE . " g
+		WHERE (a.max_views >= a.views OR a.max_views = '0')
+		AND (FIND_IN_SET(" .$forum_id. ", a.show_forums) > 0 OR a.show_all_forums = '1')
+		AND g.user_id = " . $user->data['user_id'] . "
+		AND FIND_IN_SET(g.group_id, a.groups)
+		AND FIND_IN_SET(" . $user->data['user_rank'] . ", a.ranks)
+		AND a.start_time < " . time() . "
+		AND a.end_time > " . time() . "
+		AND (a.clicks <= a.max_clicks OR a.max_clicks = '0')
+		ORDER BY rand()";
+	$result = $db->sql_query($sql);
+			
+	while($row = $db->sql_fetchrow($result))
+	{
+		if ($row['type'] == 2)
+		{
+			$adcode[$row['position']] = '<a href="' . $phpbb_root_path . 'adclick.' . $phpEx . '?id=' . $row['ad_id'] . '"><img src="' . $row['image'] . '" height="' . $row['height'] . '" width="' . $row['width'] . '" alt="" /></a>';
+		}
+		else
+		{
+			$adcode[$row['position']] = html_entity_decode($row['code']);
+		}
+		$adID[$row['position']]['ID'] = $row['ad_id'];
+	}
+	$db->sql_freeresult($result);
+	
+	// update views for every Ad
+	for ($i = 1; $i <= 6; $i++)
+	{
+		if (isset($adID[$i]['ad_id']))
+		{
+			$db->sql_query('UPDATE ' . AD_TABLE . ' SET views = views +1 WHERE ad_id = ' . $adID[$i]['ad_id']);
+		}
+	} 
+	// End output Ad
+
+
 	// The following assigns all _common_ variables that may be used at any point in a template.
 	$template->assign_vars(array(
+		'AD_CODE1'  => isset($adcode[1]) ? $adcode[1] : '',
+		'AD_CODE2'  => isset($adcode[2]) ? $adcode[2] : '',
+		'AD_CODE3'  => isset($adcode[3]) ? $adcode[3] : '',
+		'AD_CODE4'  => isset($adcode[4]) ? $adcode[4] : '',
+		'AD_CODE5'  => isset($adcode[5]) ? $adcode[5] : '',
+		'AD_CODE6'  => isset($adcode[6]) ? $adcode[6] : '',
 		'SITENAME'						=> $config['sitename'],
 		'SITE_DESCRIPTION'				=> $config['site_desc'],
 		'PAGE_TITLE'					=> $page_title,
@@ -3524,7 +3571,6 @@ function page_header($page_title = '', $display_online_list = true)
 
 	// application/xhtml+xml not used because of IE
 	header('Content-type: text/html; charset=UTF-8');
-
 	header('Cache-Control: private, no-cache="set-cookie"');
 	header('Expires: 0');
 	header('Pragma: no-cache');

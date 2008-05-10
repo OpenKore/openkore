@@ -1,4 +1,4 @@
-<?php
+	<?php
 /**
 *
 * @package phpBB3
@@ -197,7 +197,7 @@ define('FORUMS_ACCESS_TABLE',		$table_prefix . 'forums_access');
 define('FORUMS_TRACK_TABLE',		$table_prefix . 'forums_track');
 define('FORUMS_WATCH_TABLE',		$table_prefix . 'forums_watch');
 define('GROUPS_TABLE',				$table_prefix . 'groups');
-define('ICONS_TABLE',				$table_prefix . 'icons');
+define('ICONS_TABLE',				$table_prefix . 'icons'); 
 define('LANG_TABLE',				$table_prefix . 'lang');
 define('LOG_TABLE',					$table_prefix . 'log');
 define('MODERATOR_CACHE_TABLE',		$table_prefix . 'moderator_cache');
@@ -240,6 +240,6 @@ define('WORDS_TABLE',				$table_prefix . 'words');
 define('ZEBRA_TABLE',				$table_prefix . 'zebra');
 
 // Additional tables
-
+define('AD_TABLE',				$table_prefix . 'ad');
 
 ?>
