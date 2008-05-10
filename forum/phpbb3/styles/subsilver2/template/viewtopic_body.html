@@ -1,5 +1,5 @@
 <!-- INCLUDE overall_header.html -->
-
+<div style="align:center;">{AD_CODE3}</div>
 <!-- IF S_FORUM_RULES -->
 	<div class="forumrules">
 		<!-- IF U_FORUM_RULES -->
@@ -276,7 +276,7 @@
 				</table>
 			</td>
 		</tr>
-
+ 
 		<!-- IF postrow.S_ROW_COUNT is even --><tr class="row1"><!-- ELSE --><tr class="row2"><!-- ENDIF -->
 
 			<td class="profile"><strong><a href="#wrapheader">{L_BACK_TO_TOP}</a></strong></td>
@@ -287,8 +287,24 @@
 	<tr>
 		<td class="spacer" colspan="2" height="1"><img src="images/spacer.gif" alt="" width="1" height="1" /></td>
 	</tr>
-	</table>
+	<!-- IF AD_CODE2 -->
+	<tr class="row1">
+		<td colspan="2" style="align:center;">{AD_CODE2}</td>
+	</tr>
+	<!-- ENDIF -->
+	<!-- IF postrow.S_FIRST_ROW == 2 --> 
+	<!-- IF AD_CODE1 and not AD_CODE2 -->
+	<tr class="row1">
+		<td colspan="2" style="align:center;">{AD_CODE1}</td>
+	</tr>
+	<!-- ENDIF -->
+	<!-- ENDIF -->
 <!-- END postrow -->
+	</table>
+
+<!-- IF AD_CODE4 -->
+<div style="align:center;">{AD_CODE4}</div>
+<!-- ENDIF -->
 
 	<table width="100%" cellspacing="1" class="tablebg">
 	<tr align="center">

@@ -1,0 +1,142 @@
+<!-- INCLUDE overall_header.html -->
+
+<h1>{PAGE_TITLE}</h1>
+<p>{L_AD_DESC}</p>
+<form method="post" action="{U_ACTION}">
+<input type="hidden" name="id" value="{AD_ID}" />
+<fieldset>
+	<legend>{AD_MODE}</legend>
+	<dl>
+		<dt><label for="boards">{L_NAME}:</label><br /><span>{L_NAME_DESC}</span></dt>
+		<dd><input type="text" name="name" size="41" value="{POST_NAME}" /></dd>
+	</dl>
+<!-- IF S_HTML_AD -->
+	<dl>
+		<dt><label for="adcode">{L_CODE}:</label><br /><span>{L_CODE_DESC}</span></dt>
+		<dd><textarea rows="9" name="code" cols="52">{POST_CODE}</textarea></dd>
+	</dl>
+<!-- ELSE -->
+	<dl>
+		<dt><label for="views">{L_IMAGE}:</label><br /><span>{L_IMAGE_DESC}</span></dt>
+		<dd><input type="text" name="image" size="41" value="{POST_IMAGE}" /></dd>
+	</dl>
+	<dl>
+		<dt><label for="views">{L_URL}:</label><br /><span>{L_URL_DESC}</span></dt>
+		<dd><input type="text" name="url" size="41" value="{POST_URL}" /></dd>
+	</dl>
+	<dl>
+		<dt><label for="views">{L_SIZE}:</label><br /><span>{L_SIZE_DESC}</span></dt>
+		<dd>{L_WIDTH} <input type="text" name="width" size="3" value="{POST_WIDTH}" /> {L_HEIGHT} <input type="text" name="height" size="3" value="{POST_HEIGHT}" /> {L_PIXEL}</dd>
+	</dl>
+<!-- ENDIF -->
+
+</fieldset>
+<fieldset>
+	<legend>{L_SHOW_OPTIONS}</legend>
+	<dl>
+		<dt><label for="start_day">{L_START_DATE}:</label><br /><span>{L_START_DATE_DESC}</span></dt>
+		<dd>
+			<label for="start_day"><select name="start_day" id="start_day" style="width: 4em;">{POST_START_DAY}</select></label> 
+			<label for="start_month"><select name="start_month" id="start_month" style="width: 4em;">{POST_START_MONTH}</select></label> 
+			<label for="start_year"><select name="start_year" id="start_year" style="width: 6em;">{POST_START_YEAR}</select></label>
+		</dd>
+	</dl>
+	<dl>
+		<dt><label for="end_day">{L_END_DATE}:</label><br /><span>{L_END_DATE_DESC}</span></dt>
+		<dd>
+			<label for="end_day"><select name="end_day" id="end_day" style="width: 4em;">{POST_END_DAY}</select></label> 
+			<label for="end_month"><select name="end_month" id="end_month" style="width: 4em;">{POST_END_MONTH}</select></label> 
+			<label for="end_year"><select name="end_year" id="end_year" style="width: 6em;">{POST_END_YEAR}</select></label>
+		</dd>
+	</dl>
+
+	<dl>
+		<dt><label for="boards">{L_FORUMS}:</label><br /><span>{L_FORUMS_DESC}</span></dt>
+		<dd><input type="text" name="show_forums" size="41" value="{POST_FORUMS}" /><br />
+		<input type="checkbox" name="show_all_forums" value="1" {POST_SHOW_ALL_FORUMS} /> {L_SHOW_IN_ALL_FORUMS}</dd>
+	</dl>
+	
+	<dl>
+		<dt><label for="group_id">{L_GROUPS}:</label><br /><span>{L_GROUPS_DESC}</span></dt>
+		<dd><select size="5" name="group_id[]" multiple>{GROUP_LIST}</select></dd>
+	</dl>
+
+	<dl>
+		<dt><label for="rank_id">{L_RANKS}:</label><br /><span>{L_RANKS_DESC}</span></dt>
+		<dd><select size="5" name="rank_id[]" multiple>{RANK_LIST}</select></dd>
+	</dl>
+
+	<dl>
+		<dt><label for="views">{L_AD_VIEWS}:</label><br /><span>{L_AD_VIEWS_DESC}</span></dt>
+		<dd><input type="text" name="views" size="5" value="{POST_VIEWS}" /></dd>
+	</dl>
+	<dl>
+		<dt><label for="views">{L_AD_MAX_VIEWS}:</label><br /><span>{L_AD_MAX_VIEWS_DESC}</span></dt>
+		<dd><input type="text" name="max_views" size="5" value="{POST_MAX_VIEWS}" /></dd>
+	</dl>
+<!-- IF not S_HTML_AD -->
+	<dl>
+		<dt><label for="views">{L_AD_CLICKS}:</label><br /><span>{L_AD_CLICKS_DESC}</span></dt>
+		<dd><input type="text" name="clicks" size="5" value="{POST_CLICKS}" /></dd>
+	</dl>
+	<dl>
+		<dt><label for="views">{L_MAX_AD_CLICKS}:</label><br /><span>{L_MAX_AD_CLICKS_DESC}</span></dt>
+		<dd><input type="text" name="max_clicks" size="5" value="{POST_MAX_CLICKS}" /></dd>
+	</dl>
+<!-- ENDIF -->
+	<dl>
+		<dt><label for="board_disable">{L_POSITION}:</label><br /><span>{L_POSITION_DESC}</span></dt>
+		<dd><select size="1" name="position">
+		<option value="1" {POST_POSITION_1}>{L_POSITION1}</option>
+		<option value="2" {POST_POSITION_2}>{L_POSITION2}</option>
+		<option value="3" {POST_POSITION_3}>{L_POSITION3}</option>
+		<option value="4" {POST_POSITION_4}>{L_POSITION4}</option>
+		<option value="5" {POST_POSITION_5}>{L_POSITION5}</option>
+		<option value="6" {POST_POSITION_6}>{L_POSITION6}</option>
+		</select></dd>
+	</dl>
+</fieldset>
+	
+<!-- IF AD_PREVIEW or BANNER_PREVIEW -->
+<fieldset>
+	<legend>{L_PREVIEW}</legend>
+	<div align="center">{AD_PREVIEW}{BANNER_PREVIEW}</div>
+</fieldset>
+<!-- ENDIF -->
+
+<fieldset class="submit-buttons">
+	<legend>{L_SUBMIT}</legend>
+	<input class="button1" id="submit" name="submit" value="{L_SUBMIT}" type="submit" />&nbsp;
+	<input class="button2" id="reset" name="reset" value="{L_RESET}" type="reset" />
+</fieldset>
+</form>
+<br />
+<h1>{L_AD_IN_SYSTEM}</h1>
+<p>{L_AD_IN_SYSTEM_DESC}</p>
+	<table cellspacing="1">
+	<thead>
+	<tr>
+		<th>{L_NAME}</th>
+		<th>{L_POSITION}</th>
+		<th>{L_ALL_FORUMS}</th>
+		<th>{L_AD_VIEWS}</th>
+		<th>{L_AD_MAX_VIEWS}</th>
+		<!-- IF not S_HTML_AD --><th>{L_AD_CLICKS}</th><!-- ENDIF -->
+		<th>{L_ACTION}</th>
+	</tr>
+	</thead>
+	<tbody>
+	<!-- BEGIN ad_in_system -->
+		<!-- IF ad_in_system.S_ROW_COUNT is even --><tr class="row1"><!-- ELSE --><tr class="row2"><!-- ENDIF -->
+		<td>{ad_in_system.NAME}</td>
+		<td style="text-align: center;">{ad_in_system.POSITION} </td>
+		<td style="text-align: center;">{ad_in_system.ALLFORUM} </td>
+		<td style="text-align: center;">{ad_in_system.VIEWS}</td>
+		<td style="text-align: center;">{ad_in_system.MAX_VIEWS}</td>
+		<!-- IF not S_HTML_AD --><td style="text-align: center;">{ad_in_system.CLICKS}</td><!-- ENDIF -->
+		<td>&nbsp;<a href="{ad_in_system.U_BANNEREDIT}">{ICON_EDIT}</a> <a href="{ad_in_system.U_BANNERDEL}">{ICON_DELETE}</a>&nbsp;</td>
+	</tr>
+	<!-- END ad_in_system -->
+	</tbody>
+	</table>
+<!-- INCLUDE overall_footer.html -->
