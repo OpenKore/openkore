@@ -5706,6 +5706,7 @@ sub stats_points_needed {
 sub storage_closed {
 	message T("Storage closed.\n"), "storage";
 	delete $ai_v{temp}{storage_opened};
+	delete $storage{opened};
 	Plugins::callHook('packet_storage_close');
 
 	# Storage log
