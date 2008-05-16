@@ -409,7 +409,7 @@ Gives a report about your inventory weight.
 Shows your current location.
 [who]
 Display the number of people on the current server.
-[who]
+[whoami]
 Display your character and account ID.
 [north]
 Move 5 steps north.
