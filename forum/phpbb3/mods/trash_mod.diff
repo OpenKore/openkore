@@ -142,10 +142,19 @@ Index: includes/acp/acp_board.php
 -?>
 \ No newline at end of file
 +?>
-Index: includes/mcp/mcp_main.php
+Index: mcp_main.php
 ===================================================================
---- includes/mcp/mcp_main.php	(revision 6320)
-+++ includes/mcp/mcp_main.php	(revision 6326)
+--- mcp_main.php	(revision 6320)
++++ mcp_main.php	(revision 6356)
+@@ -34,7 +34,7 @@
+ 	function main($id, $mode)
+ 	{
+ 		global $auth, $db, $user, $template, $action;
+-		global $config, $phpbb_root_path, $phpEx;
++		global $config, $phpbb_root_path, $phpEx, $table_prefix;
+ 
+ 		$quickmod = ($mode == 'quickmod') ? true : false;
+ 
 @@ -79,7 +79,7 @@
  
  				change_topic_type($action, $topic_ids);
@@ -162,7 +171,7 @@ Index: includes/mcp/mcp_main.php
 +			
 +			case 'trash_topic':
 +					
-+				$result = $db->sql_query("SELECT `config_value` FROM `phpbb3_config` WHERE `config_name` = 'board_trashcan';");
++				$result = $db->sql_query("SELECT `config_value` FROM `".$table_prefix."config` WHERE `config_name` = 'board_trashcan';");
 +				$trash_id = $result->fetch_row();
 +				$db->sql_freeresult();
 +				mcp_trash_topic($trash_id,request_var('f', 0),request_var('t', 0));
