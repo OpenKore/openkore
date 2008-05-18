@@ -64,25 +64,23 @@ sub checkIdle {
 }
 
 sub checkSp {
-	if ($config{'teleportAuto_useSkill'} == 1) {
-		if ($config{'teleport_search_minSp'} && $config{'teleport_search_minSp'} <= $char->{sp}) {
-			return 1;
-		} elsif (!$config{'teleport_search_minSp'} && $char->{sp} >= 10) {
-			error ("teleport_search_minSp is missing ! Using default value (10 sp)!\n");
-			$config{'teleport_search_minSp'} = 10;
-			return 1;
-		} else {
-			return 0;
-		}
-	} elsif ($config{'teleportAuto_useSkill'} > 1) {
+	# We're not (or not always) using SP so dont bother checking, this way you can tele-search with flywings too
+	return 1 if (!$config{'teleportAuto_useSkill'} || $config{'teleportAuto_useSkill'} == > 1);
+	
+	if ($config{'teleport_search_minSp'} && $config{'teleport_search_minSp'} <= $char->{sp}) {
 		return 1;
+	} elsif (!$config{'teleport_search_minSp'} && $char->{sp} >= 10) {
+		error ("teleport_search_minSp is missing ! Using default value (10 sp)!\n");
+		$config{'teleport_search_minSp'} = 10;
+		return 1;
+	} else {
+		return 0;
 	}
 }
 sub search {
 	if ($config{'teleport_search'} && Misc::inLockMap() && $timeout{'ai_teleport_search'}{'timeout'}) {
-		message("TS Debug: Config set, we're in lockMap and timeout is set.\n") if $config{'teleport_search_debug'};
+		
 		if ($maploaded && !$allow_tele)  {
-			message("TS Debug: Map is loaded but we're not allowed to teleport.\n") if $config{'teleport_search_debug'};
 			$timeout{'ai_teleport_search'}{'time'} = time;
 			$allow_tele = 1;
                         
@@ -93,20 +91,18 @@ sub search {
 			$maploaded = 0;
 			# Attempt to teleport, give error and unload plugin if we cant.
 			if (!Misc::useTeleport(1)) {
-				error ("Fatal error, we dont have the skill nor items to teleport! - Unloading plugin.\n");
-				unload();
+				error ("Unable to tele-search cause we can't teleport!\n");
 				return;
 			} 
 
 		# We're doing something else besides looking for monsters, reset the timeout.
 		} elsif (!checkIdle()) {
-			message("TS Debug: We're doing something else besides looking for a target now.\n") if $config{'teleport_search_debug'};
 			$timeout{'ai_teleport_search'}{'time'} = time;
 		}
 		
         # Oops! timeouts.txt is missing a crucial value, lets use the default value ;)
         } elsif (!$timeout{'ai_teleport_search'}{'timeout'}) {
-			error ("timeouts.txt missing setting! Using default timeout now!\n");
+			error ("timeouts.txt missing setting! Using default timeout of 5 seconds.\n");
 			$timeout{'ai_teleport_search'}{'timeout'} = 5;
 			return;
         }
