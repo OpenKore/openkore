@@ -400,7 +400,6 @@ sub main {
 		}
 
 	} elsif ($config{attackCheckLOS} &&
-		 $args->{attackMethod}{distance} > 2 &&
 		 !checkLineSnipable($realMyPos, $realMonsterPos)) {
 		# We are a ranged attacker without LOS
 
