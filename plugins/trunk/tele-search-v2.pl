@@ -65,7 +65,7 @@ sub checkIdle {
 
 sub checkSp {
 	# We're not (or not always) using SP so dont bother checking, this way you can tele-search with flywings too
-	return 1 if (!$config{'teleportAuto_useSkill'} || $config{'teleportAuto_useSkill'} == > 1);
+	return 1 if (!$config{'teleportAuto_useSkill'} || $config{'teleportAuto_useSkill'} > 1);
 	
 	if ($config{'teleport_search_minSp'} && $config{'teleport_search_minSp'} <= $char->{sp}) {
 		return 1;
