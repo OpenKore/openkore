@@ -1652,7 +1652,7 @@ sub processAutoBuy {
 				if ($needitem ne "") {
 					$msgneeditem = "Auto-buy: $needitem\n";
 				}
- 				message T("$msgneeditem"."Teleporting to auto-buy\n"), "teleport";
+ 				message T($msgneeditem."Teleporting to auto-buy\n"), "teleport";
 				useTeleport(2);
 				$timeout{ai_buyAuto_wait}{time} = time;
 			} else {
