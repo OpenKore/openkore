@@ -1659,7 +1659,7 @@ sub processAutoBuy {
 				if ($needitem ne "") {
 					$msgneeditem = "Auto-buy: $needitem\n";
 				}
- 				message TF("$msgneeditem"."Calculating auto-buy route to: %s (%s): %s, %s\n", $maps_lut{$args->{npc}{map}.'.rsw'}, $args->{npc}{map}, $args->{npc}{pos}{x}, $args->{npc}{pos}{y}), "route";
+ 				message TF($msgneeditem."Calculating auto-buy route to: %s (%s): %s, %s\n", $maps_lut{$args->{npc}{map}.'.rsw'}, $args->{npc}{map}, $args->{npc}{pos}{x}, $args->{npc}{pos}{y}), "route";
 				ai_route($args->{npc}{map}, $args->{npc}{pos}{x}, $args->{npc}{pos}{y},
 					attackOnRoute => 1,
 					distFromGoal => $config{"buyAuto_$args->{index}"."_distance"});
