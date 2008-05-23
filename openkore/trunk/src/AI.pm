@@ -831,8 +831,8 @@ sub attack {
 					}
 				}
 
-				if (!$Leq) {
-					message TF("Auto Equiping [L]: %s (%s)\n", $config{"autoSwitch_default_leftHand"}, $Leq), "equip";
+				if ($Leq) {
+					message TF("Auto Equiping [L]: %s\n", $config{"autoSwitch_default_leftHand"}), "equip";
 					$eq_list{leftHand} = $Leq->{invIndex};
 				}
 			}
