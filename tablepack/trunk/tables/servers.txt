@@ -1403,7 +1403,7 @@ ip 74.86.240.226
 port 6900
 master_version 14
 version 11
-serverType 8_3
+serverType 8_4
 private 1
 serverEncoding Western
 charBlockSize 108
