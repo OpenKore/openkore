@@ -23,7 +23,6 @@ use lib $Plugins::current_plugin_folder;
 use Globals;
 use Plugins;
 use Network::Send;
-use Network::DirectConnection;
 
 my $connecting = 0;
 
@@ -40,7 +39,8 @@ my $hooks = Plugins::addHooks(
 	['Network::serverSend/pre', \&encrypt],
 	['Network::serverConnect/master', \&init],
 	['Network::serverConnect/char', \&init],
-	['Network::serverConnect/mapserver', \&init]
+	['Network::serverConnect/mapserver', \&init],
+	['RO_sendMsg_pre', \&init_xkore]
 );
 
 sub onUnload {
@@ -70,6 +70,15 @@ sub init {
 	$connecting = 1;
 	$net->serverSend($key);
 	$connecting = 0;
+}
+
+sub init_xkore {
+	my ($hook, $args) = @_;
+	my $switch = $args->{switch};
+	
+	if( $switch eq '0064' || $switch eq '0065' || $switch eq '009B' ) {
+		init();
+	}
 }
 
 1;
