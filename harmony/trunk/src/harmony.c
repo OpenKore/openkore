@@ -52,8 +52,6 @@ create_packet(unsigned char *dst, unsigned char *src, unsigned long len)
 		
 	*buf = tmp & 3 | (*buf & 0xFC);
 	
-	*buf = 0x41;
-	
 	if ( len % 4 )
 		tmp = 4 - len % 4;
 	else
@@ -69,8 +67,6 @@ create_packet(unsigned char *dst, unsigned char *src, unsigned long len)
 		tmp = ((tmp - 1) | 0xFFFFFF00) + 1;
 		
 	*buf_rand = (*src ^ 0x36) ^ tmp;
-	
-	*buf_rand = 0xE9;
 	
 	tmp = *buf & 3;
 
@@ -140,7 +136,6 @@ create_key(unsigned char *dst)
 	tmp_tick_count = GetTickCount();
 	srand(tmp_tick_count);
 	tmp_rand = rand() + 78319;
-	tmp_rand = 0x00014679;
 
 	switch_bf_key();
 	
@@ -158,16 +153,13 @@ create_key(unsigned char *dst)
 	tmp_rand = rand() + 42564;
 
 	*key_rand_2 = (rand() >> 5) | (8 * (tmp_rand >> 3));
-	*key_rand_2 = 0xF7AA;
 
 	srand(tmp_rand);
 	tmp_rand = rand();
 	*key_rand_3 = tmp_rand;
-	*key_rand_3 = 0x28EE;
 
 	srand(8 * *(key + 1));
 	*key_rand_4 = rand();
-	*key_rand_4 = 0x6305;
 
 	bf_encipher(key_cipher, &key_cpy[5], 8, bf_key, 256);
 	memcpy(key_cpy, key, 5);
