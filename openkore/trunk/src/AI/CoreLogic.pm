@@ -1415,7 +1415,8 @@ sub processAutoStorage {
 					quit();
 				}
 			}
-			if ($config{'relogAfterStorage'}) {
+			
+			if ($config{'relogAfterStorage'} && $config{'XKore'} ne "1") {
 				writeStorageLog(0);
 				relog();
 			}
