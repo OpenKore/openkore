@@ -63,20 +63,19 @@ sub checkIdle {
 	}
 }
 
-sub checkSp {
-	# We're not (or not always) using SP so dont bother checking, this way you can tele-search with flywings too
-	return 1 if (!$config{'teleportAuto_useSkill'} || $config{'teleportAuto_useSkill'} > 1);
+sub canTeleport {
+	$config{'teleport_search_minSp'} = 10 if (!$config{'teleport_search_minSp'});
+	my $item = InventoryList::InventoryList->getByName("Fly Wing");
 	
-	if ($config{'teleport_search_minSp'} && $config{'teleport_search_minSp'} <= $char->{sp}) {
-		return 1;
-	} elsif (!$config{'teleport_search_minSp'} && $char->{sp} >= 10) {
-		error ("teleport_search_minSp is missing ! Using default value (10 sp)!\n");
-		$config{'teleport_search_minSp'} = 10;
+	if ((!$config{'teleportAuto_useSkill'} && $item) || # Using flywings
+		($config{'teleportAuto_useSkill'} > 1) || # Using no SP for teleport
+		($config{'teleportAuto_useSkill'} == 1 && $config{'teleport_search_minSp'} <= $char->{sp})) { # Using SP to teleport
 		return 1;
 	} else {
 		return 0;
 	}
 }
+
 sub search {
 	if ($config{'teleport_search'} && Misc::inLockMap() && $timeout{'ai_teleport_search'}{'timeout'}) {
 		
@@ -85,7 +84,7 @@ sub search {
 			$allow_tele = 1;
                         
 		# Check if we're allowed to teleport, if map is loaded, timeout has passed and we're just looking for targets.
-		} elsif ($maploaded && $allow_tele && timeOut($timeout{'ai_teleport_search'}) && checkIdle() && checkSp()) {
+		} elsif ($maploaded && $allow_tele && timeOut($timeout{'ai_teleport_search'}) && checkIdle() && canTeleport()) {
 			message("Attemping to tele-search.\n","info");
 			$allow_tele = 0;
 			$maploaded = 0;
