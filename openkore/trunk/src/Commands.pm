@@ -2532,7 +2532,7 @@ sub cmdInventory {
 		$msg .= "-------------------------------\n";
 		message($msg, "list");
 
-	} elsif ($arg1 eq "desc") {
+	} elsif ($arg1 eq "desc" && $arg2 ne "") {
 		cmdInventory_desc($arg2);
 
 	} else {
