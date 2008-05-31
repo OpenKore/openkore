@@ -862,9 +862,10 @@ sub actor_died_or_disappeared {
 			debug "Monster Died: " . $monster->name . " ($monster->{binID})\n", "parseMsg_damage";
 			$monster->{dead} = 1;
 
-			if ($config{itemsTakeAuto_party} &&
+			if ((AI::action ne "attack" || AI::args(0)->{ID} ne $ID) &&
+			    ($config{itemsTakeAuto_party} &&
 			    ($monster->{dmgFromParty} > 0 ||
-			     $monster->{dmgFromYou} > 0)) {
+			     $monster->{dmgFromYou} > 0))) {
 				AI::clear("items_take");
 				ai_items_take($monster->{pos}{x}, $monster->{pos}{y},
 					$monster->{pos_to}{x}, $monster->{pos_to}{y});

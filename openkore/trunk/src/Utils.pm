@@ -41,7 +41,7 @@ our @EXPORT = (
 	qw(calcPosition checkMovementDirection distance
 	intToSignedInt intToSignedShort
 	blockDistance getVector moveAlongVector
-	normalize vectorToDegree max min),
+	normalize vectorToDegree max min ceil),
 	# OS-specific
 	qw(checkLaunchedApp launchApp launchScript),
 	# Other stuff
@@ -329,6 +329,16 @@ sub min {
 	my ($a, $b) = @_;
 
 	return $a < $b ? $a : $b;
+}
+
+##
+# ceil($number)
+#
+# Returns the rounded up number
+# Used for distances (only deciles taken into consideration)
+sub ceil {
+	my($number) = shift;
+	return int($number + .9 * ($number <=> 0));
 }
 
 
