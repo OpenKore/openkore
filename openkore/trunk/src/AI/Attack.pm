@@ -64,7 +64,7 @@ sub process {
 		my $target = Actor::get($ID);
 
 		if ($target->{type} ne 'Unknown' && $attackSeq->{monsterPos} && %{$attackSeq->{monsterPos}}
-		 && distance(calcPosition($target), $attackSeq->{monsterPos}) > $attackSeq->{attackMethod}{maxDistance}) {
+		 && ceil(distance(calcPosition($target), $attackSeq->{monsterPos})) > $attackSeq->{attackMethod}{maxDistance}) {
 			# Monster has moved; stop moving and let the attack AI readjust route
 			AI::dequeue;
 			AI::dequeue if (AI::action eq "route");
@@ -73,7 +73,7 @@ sub process {
 			debug "Target has moved more than $attackSeq->{attackMethod}{maxDistance} blocks; readjusting route\n", "ai_attack";
 
 		} elsif ($target->{type} ne 'Unknown' && $attackSeq->{monsterPos} && %{$attackSeq->{monsterPos}}
-		 && distance(calcPosition($target), calcPosition($char)) <= $attackSeq->{attackMethod}{maxDistance}) {
+		 && ceil(distance(calcPosition($target), calcPosition($char))) <= $attackSeq->{attackMethod}{maxDistance}) {
 			# Monster is within attack range; stop moving
 			AI::dequeue;
 			AI::dequeue if (AI::action eq "route");
@@ -86,12 +86,16 @@ sub process {
 	}
 
 	if (AI::action eq "attack") {
-		if (shouldGiveUp()) {
-			giveUp();
-		} elsif (targetGone()) {
+		my $ID = $args->{ID};
+		if (targetGone()) {
 			finishAttacking();
+		} elsif (shouldGiveUp()) {
+			giveUp();
 		} else {
-			main();
+			if (timeOut($args->{attackMainTimeout}, 0.1)) {
+				$args->{attackMainTimeout} = time;
+				main();
+			}
 		}
 	}
 
@@ -172,7 +176,6 @@ sub finishAttacking {
 	$timeout{'ai_attack'}{'time'} -= $timeout{'ai_attack'}{'timeout'};
 	my $ID = $args->{ID};
 	AI::dequeue;
-
 	if ($monsters_old{$ID} && $monsters_old{$ID}{dead}) {
 		message T("Target died\n"), "ai_attack";
 		monKilled();
@@ -256,12 +259,12 @@ sub main {
 	my $target = Actor::get($ID);
 	my $myPos = $char->{pos_to};
 	my $monsterPos = $target->{pos_to};
-	my $monsterDist = distance($myPos, $monsterPos);
+	my $monsterDist = ceil(distance($myPos, $monsterPos));
 
 	my ($realMyPos, $realMonsterPos, $realMonsterDist, $hitYou);
 	my $realMyPos = calcPosition($char);
 	my $realMonsterPos = calcPosition($target);
-	my $realMonsterDist = distance($realMyPos, $realMonsterPos);
+	my $realMonsterDist = ceil(distance($realMyPos, $realMonsterPos));
 	if (!$config{'runFromTarget'}) {
 		$myPos = $realMyPos;
 		$monsterPos = $realMonsterPos;
@@ -400,9 +403,10 @@ sub main {
 		}
 
 	} elsif ($config{attackCheckLOS} &&
-		 !checkLineSnipable($realMyPos, $realMonsterPos)) {
+		 ($config{'attackCanSnipe'} && !checkLineSnipable($realMyPos, $realMonsterPos)) ||
+		 (!$config{'attackCanSnipe'} || $realMonsterDist > $args->{attackMethod}{distance}) && (!checkLineWalkable($realMyPos, $realMonsterPos) || !checkLineSnipable($realMyPos, $realMonsterPos))
+		) {
 		# We are a ranged attacker without LOS
-
 		# Calculate squares around monster within shooting range, but not
 		# closer than runFromTarget_dist
 		my @stand = calcRectArea2($realMonsterPos->{x}, $realMonsterPos->{y},
@@ -428,10 +432,12 @@ sub main {
 			# 1. It must have LOS to the target ($realMonsterPos).
 			# 2. It must be within $config{followDistanceMax} of
 			#    $masterPos, if we have a master.
-			if (checkLineSnipable($spot, $realMonsterPos) &&
+			if (
+			    checkLineSnipable($spot, $realMonsterPos) && ($config{'attackCanSnipe'} || checkLineWalkable($spot, $realMonsterPos)) &&
 			    $field->isWalkable($spot->{x}, $spot->{y}) &&
-			    (!$master || distance($spot, $masterPos) <= $config{followDistanceMax})) {
-				# FIXME: use route distance, not pythagorean distance
+			    (!$master || ceil(distance($spot, $masterPos)) <= $config{followDistanceMax}) &&
+			    ceil(distance($spot, $realMonsterPos)) <= $args->{attackMethod}{distance}
+			) {
 				my $dist = distance($realMyPos, $spot);
 				if (!defined($best_dist) || $dist < $best_dist) {
 					$best_dist = $dist;
@@ -444,13 +450,15 @@ sub main {
 		my $msg = "No LOS from ($realMyPos->{x}, $realMyPos->{y}) to target ($realMonsterPos->{x}, $realMonsterPos->{y})";
 		if ($best_spot) {
 			message TF("%s; moving to (%s, %s)\n", $msg, $best_spot->{x}, $best_spot->{y});
-			ai_route($field{name}, $best_spot->{x}, $best_spot->{y});
+			# Restart attack from processAutoAttack
+			AI::dequeue;
+			ai_route($field{name}, $best_spot->{x}, $best_spot->{y}, LOSSubRoute => 1);
 		} else {
 			warning TF("%s; no acceptable place to stand\n", $msg);
 			AI::dequeue;
 		}
 
-	} elsif ($config{'runFromTarget'} && ($monsterDist < $config{'runFromTarget_dist'} || $hitYou)) {
+	} elsif ($config{'runFromTarget'} && ($realMonsterDist < $config{'runFromTarget_dist'} || $hitYou)) {
 		#my $begin = time;
 		# Get a list of blocks that we can run to
 		my @blocks = calcRectArea($myPos->{x}, $myPos->{y},
@@ -507,7 +515,7 @@ sub main {
 		$args->{avoiding} = 1;
 		move($bestBlock->{x}, $bestBlock->{y}, $ID);
 
-	} elsif ($monsterDist > $args->{attackMethod}{maxDistance}
+	} elsif ($realMonsterDist > $args->{attackMethod}{maxDistance}
 	  && timeOut($args->{ai_attack_giveup}, 0.5)) {
 		# The target monster moved; move to target
 		$args->{move_start} = time;
@@ -551,9 +559,8 @@ sub main {
 		# Attack the target. In case of tanking, only attack if it hasn't been hit once.
 		if (!$args->{firstAttack}) {
 			$args->{firstAttack} = 1;
-			my $dist = sprintf("%.1f", $monsterDist);
 			my $pos = "$myPos->{x},$myPos->{y}";
-			debug "Ready to attack target (which is $dist blocks away); we're at ($pos)\n", "ai_attack";
+			debug "Ready to attack target (which is $realMonsterDist blocks away); we're at ($pos)\n", "ai_attack";
 		}
 
 		$args->{unstuck}{time} = time if (!$args->{unstuck}{time});

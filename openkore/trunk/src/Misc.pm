@@ -2902,7 +2902,7 @@ sub writeStorageLog {
 ##
 # getBestTarget(possibleTargets, nonLOSNotAllowed)
 # possibleTargets: reference to an array of monsters' IDs
-# nonLOSNotAllowed: if set, non-LOS monsters aren't checked up
+# nonLOSNotAllowed: if set, non-LOS monsters (and monsters that aren't in attackMaxDistance) aren't checked up
 #
 # Returns ID of the best target
 sub getBestTarget {
@@ -2942,13 +2942,17 @@ sub getBestTarget {
 				next;
 			}
 		} else {
-			if (!checkLineWalkable($myPos, $pos)) {
+			if (!checkLineWalkable($myPos, $pos) || !checkLineSnipable($myPos, $pos)) {
 				push(@noLOSMonsters, $_);
 				next;
 			}
 		}
 		my $name = lc $monster->{name};
-		my $dist = distance($myPos, $pos);
+		my $dist = ceil(distance($myPos, $pos));
+		# Monsters that aren't in attackMaxDistance are not checked up
+		if ($nonLOSNotAllowed && ($config{'attackDistance'} < $dist)) {
+			next;
+		}
 		if (!defined($highestPri) || ($priority{$name} > $highestPri)) {
 			$highestPri = $priority{$name};
 			$smallestDist = $dist;
@@ -2969,7 +2973,7 @@ sub getBestTarget {
 			my $monster = $monsters{$_};
 			my $pos = calcPosition($monster);
 			my $name = lc $monster->{name};
-			my $dist = distance($myPos, $pos);
+			my $dist = ceil(distance($myPos, $pos));
 			if (!defined($highestPri) || ($priority{$name} > $highestPri)) {
 				$highestPri = $priority{$name};
 				$smallestDist = $dist;

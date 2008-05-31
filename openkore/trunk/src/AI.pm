@@ -296,10 +296,11 @@ sub ai_getAggressives {
 			# The other parameters are re-checked along, so you can continue to attack a monster who has
 			# already been hit but lost the line for some reason.
 			# Also, check if the forced aggressive is a clean target when it has not marked as "yours".
+			my $myPos = calcPosition($char);
 			my $pos = calcPosition($monster);
 
 			next if (($type && $control->{attack_auto} == 2)
-				&& (($config{'attackCanSnipe'}) ? !Misc::checkLineSnipable($char->{pos_to}, $pos) : !Misc::checkLineWalkable($char->{pos_to}, $pos))
+				&& (($config{'attackCanSnipe'}) ? !Misc::checkLineSnipable($myPos, $pos) : (!Misc::checkLineWalkable($myPos, $pos) || !Misc::checkLineSnipable($myPos, $pos)))
 				&& !$monster->{dmgToYou} && !$monster->{missedYou}
 				&& ($party && (!$monster->{dmgToParty} && !$monster->{missedToParty} && !$monster->{dmgFromParty}))
 				);
@@ -508,6 +509,7 @@ sub ai_route {
 	}
 	$task->{attackOnRoute} = $args{attackOnRoute};
 	$task->{noSitAuto} = $args{noSitAuto};
+	$task->{LOSSubRoute} = $args{LOSSubRoute};
 
 	AI::queue("route", $task);
 }

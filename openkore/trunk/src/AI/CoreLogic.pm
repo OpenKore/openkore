@@ -784,7 +784,7 @@ sub processTake {
 	} elsif (AI::action eq "take") {
 		my $ID = AI::args->{ID};
 		my $myPos = $char->{pos_to};
-		my $dist = distance($items{$ID}{pos}, $myPos);
+		my $dist = ceil(distance($items{$ID}{pos}, $myPos));
 		my $item = $items{AI::args->{ID}};
 		debug "Planning to take $item->{name} ($item->{binID}), distance $dist\n", "drop";
 
@@ -2591,12 +2591,9 @@ sub processAutoAttack {
 
 			my $LOSSubRoute = 0;
 			if ($config{attackCheckLOS}
-			 && !$attackOnRoute
-			 && scalar(@ai_seq) > 2
-			 && AI::action eq "route"
-			 && AI::action(1) eq "attack"
-			 && AI::action(scalar(@ai_seq)-1) eq "route"
-			 && !AI::args(0)->{distFromGoal}) {
+			 && AI::args(0)->{LOSSubRoute}
+			) {
+
 				$LOSSubRoute = 1;
 			}
 
