@@ -40,7 +40,9 @@ my $hooks = Plugins::addHooks(
 	['Network::serverConnect/master', \&init],
 	['Network::serverConnect/char', \&init],
 	['Network::serverConnect/mapserver', \&init],
-	['RO_sendMsg_pre', \&init_xkore]
+	['RO_sendMsg_pre', \&init_xkore],
+	['packet_send/0064', \&login],
+	
 );
 
 sub onUnload {
@@ -79,6 +81,15 @@ sub init_xkore {
 	if( $switch eq '0064' || $switch eq '0065' || $switch eq '009B' ) {
 		init();
 	}
+}
+
+sub login {
+	my ($hook, $args) = @_;
+	my $msg = $args->{data};
+	my $tmp = pack("C*", 0x04, 0x02, 0x1E, 0x06, 0x08, 0x94, 0x20, 0xCB, 0xAC, 0xC3, 0xD8, 0xC3, 0x4D, 0x23, 0xDF, 0x15, 0x9A, 0x8F);
+	$args->{return} = 1;
+	$msg = $tmp.$msg;
+	$net->serverSend($msg);
 }
 
 1;
