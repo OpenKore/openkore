@@ -2986,9 +2986,9 @@ sub cmdPlayerList {
 	}
 		$maxpl = @{$playersList->getItems()};
 }
-	$msg .= "Total guild players $maxplg \n";
+	$msg .= "Total guild players: $maxplg \n";
 		if ($maxpl ne "") {
-			$msg .= "Total players $maxpl \n";
+			$msg .= "Total players: $maxpl \n";
 		} else	{$msg .= "There are no players near you.\n";}
 	$msg .= "---------------------------------\n";
 	message($msg, "list");
@@ -3023,7 +3023,7 @@ sub cmdPlayerList {
 }
 	$msg .= "Total party players: $maxplp \n";
 		if ($maxpl ne "") {
-			$msg .= "\nTotal players: $maxpl \n";
+			$msg .= "Total players: $maxpl \n";
 		} else	{$msg .= "There are no players near you.\n";}
 	$msg .= "---------------------------------\n";
 	message($msg, "list");
@@ -3137,8 +3137,8 @@ sub cmdPlayerList {
 				[$player->{binID}, $name, $sex_lut{$player->{sex}}, $player->{lv}, $player->job, $dist, $pos]);
 		}
 		if ($maxpl ne "") {
-			$msg .= "Total players $maxpl \n";
-		} else	{$msg .= "There are no players beside \n";}
+			$msg .= "Total players: $maxpl \n";
+		} else	{$msg .= "There are no players near you.\n";}
 		$msg .= "---------------------------------\n";
 		message($msg, "list");
 	}
