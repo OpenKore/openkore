@@ -507,6 +507,7 @@ sub ai_route {
 	} else {
 		$task = new Task::MapRoute(map => $map, @params);
 	}
+	$task->{attackID} = $args{attackID};
 	$task->{attackOnRoute} = $args{attackOnRoute};
 	$task->{noSitAuto} = $args{noSitAuto};
 	$task->{LOSSubRoute} = $args{LOSSubRoute};
