@@ -1326,10 +1326,28 @@ sub checkMonsterCleanness {
 		return 0;
 	}
 
+	#check party casting on mob
+	my $allowed = 1; 
+	if (scalar(keys %{$monster->{castOnByPlayer}}) > 0) 
+	{ 
+		foreach (keys %{$monster->{castOnByPlayer}}) 
+		{ 
+			my $ID1=$_; 
+			my $source = Actor::get($_); 
+			unless ( existsInList($config{tankersList}, $source->{name}) || 
+				($char->{party} && %{$char->{party}} && $char->{party}{users}{$ID1} && %{$char->{party}{users}{$ID1}})) 
+			{ 
+				$allowed = 0; 
+				last; 
+			} 
+		} 
+	} 
+
 	# If monster hasn't been attacked by other players
 	if (scalar(keys %{$monster->{missedFromPlayer}}) == 0
 	 && scalar(keys %{$monster->{dmgFromPlayer}})    == 0
-	 && scalar(keys %{$monster->{castOnByPlayer}})   == 0
+	 #&& scalar(keys %{$monster->{castOnByPlayer}})   == 0	#change to $allowed
+	&& $allowed
 
 	 # and it hasn't attacked any other player
 	 && scalar(keys %{$monster->{missedToPlayer}}) == 0
