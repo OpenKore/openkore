@@ -30,7 +30,7 @@ use Task::Chained;
 use Task::Function;
 use Task::SitStand;
 
-use Globals qw($net $char %skillsArea $messageSender $accountID);
+use Globals qw($net $char %skillsArea $messageSender $accountID %timeout);
 use Network;
 use Plugins;
 use Skill;
@@ -111,7 +111,7 @@ sub new {
 
 	# Hash castWaitTimer
 	# A timer used when waiting for casting to start.
-	$self->{castWaitTimer}{timeout} = 1;
+	$self->{castWaitTimer}{timeout} = $timeout{ai_skill_use}{timeout};
 
 	# int maxCastTries
 	# The maximum number of times to try to re-cast the skill before
