@@ -128,6 +128,7 @@ our @EXPORT = (
 	look
 	lookAtPosition
 	manualMove
+	meetingPosition
 	objectAdded
 	objectRemoved
 	items_control
@@ -623,7 +624,7 @@ sub checkLineWalkable {
 	my $min_obstacle_size = shift;
 	$min_obstacle_size = 5 if (!defined $min_obstacle_size);
 
-	my $dist = distance($from, $to);
+	my $dist = round(distance($from, $to));
 	my %vec;
 
 	getVector(\%vec, $to, $from);
@@ -1882,6 +1883,80 @@ sub manualMove {
 	main::ai_route($field{name}, $char->{pos_to}{x} + $dx, $char->{pos_to}{y} + $dy);
 }
 
+##
+# meetingPosition(ID, attackMaxDistance)
+# ID: ID of the character to meet.
+# attackMaxDistance: attack distance based on attack method.
+#
+# Returns: the position where the character should go to meet a moving monster.
+sub meetingPosition {
+	my ($target, $attackMaxDistance) = @_;
+	my $monsterSpeed = 1 / $target->{walk_speed};
+	my $timeMonsterMoves = time - $target->{time_move};
+
+	my %monsterPos;
+	$monsterPos{x} = $target->{pos}{x};
+	$monsterPos{y} = $target->{pos}{y};
+	my %monsterPosTo;
+	$monsterPosTo{x} = $target->{pos_to}{x};
+	$monsterPosTo{y} = $target->{pos_to}{y};
+
+	my %realMonsterPos = calcPosFromTime(\%monsterPos, \%monsterPosTo, $monsterSpeed, $timeMonsterMoves);
+
+	my $mySpeed = 1 / $char->{walk_speed};
+	my $timeCharMoves = time - $char->{time_move};
+
+	my %myPos;
+	$myPos{x} = $char->{pos}{x};
+	$myPos{y} = $char->{pos}{y};
+	my %myPosTo;
+	$myPosTo{x} = $char->{pos_to}{x};
+	$myPosTo{y} = $char->{pos_to}{y};
+
+	my %realMyPos = calcPosFromTime(\%myPos, \%myPosTo, $mySpeed, $timeCharMoves);
+
+	my $timeMonsterWalks;
+	my $timeCharWalks;
+	my %monsterStep;
+	my %charStep;
+	# There can not be zero step if monster moves
+	for (my $monsterStep = 1; $monsterStep <= countSteps(\%realMonsterPos, \%monsterPosTo); $monsterStep++) {
+		# Calculate the steps
+		%monsterStep = moveAlong(\%realMonsterPos, \%monsterPosTo, $monsterStep);
+
+		# Calculate time to walk for monster
+		$timeMonsterWalks = calcTime(\%realMonsterPos, \%monsterStep, $monsterSpeed);
+
+		# Character's route to monsterStep position
+		for (my $charStep = 0; $charStep <= countSteps(\%realMyPos, \%monsterStep); $charStep++) {
+			# Calculate the steps
+			%charStep = moveAlong(\%realMyPos, \%monsterStep, $charStep);
+
+			# Check whether the distance is fine
+			if (round(distance(\%charStep, \%monsterStep)) <= $attackMaxDistance) {
+				# Calculate time to walk for char
+				$timeCharWalks = calcTime(\%realMyPos, \%charStep, $mySpeed);
+
+				# Check whether character comes earlier or at the same time
+				if ($timeCharWalks <= $timeMonsterWalks) {
+					return \%charStep;
+				}
+			}
+		}
+	}
+	# If the monster is too fast, move to its pos_to plus attackMaxDistance
+	for (my $charStep = 0; $charStep <= countSteps(\%realMyPos, \%monsterPosTo); $charStep++) {
+		# Calculate the steps
+		%charStep = moveAlong(\%realMyPos, \%monsterPosTo, $charStep);
+
+		# Check whether the distance is fine
+		if (round(distance(\%charStep, \%monsterPosTo)) <= $attackMaxDistance) {
+			last;
+		}
+	}
+	return \%charStep;
+}
+
 sub objectAdded {
 	my ($type, $ID, $obj) = @_;
 
@@ -2966,7 +3041,7 @@ sub getBestTarget {
 			}
 		}
 		my $name = lc $monster->{name};
-		my $dist = ceil(distance($myPos, $pos));
+		my $dist = round(distance($myPos, $pos));
 		# Monsters that aren't in attackMaxDistance are not checked up
 		if ($nonLOSNotAllowed && ($config{'attackDistance'} < $dist)) {
 			next;
@@ -2991,7 +3066,7 @@ sub getBestTarget {
 			my $monster = $monsters{$_};
 			my $pos = calcPosition($monster);
 			my $name = lc $monster->{name};
-			my $dist = ceil(distance($myPos, $pos));
+			my $dist = round(distance($myPos, $pos));
 			if (!defined($highestPri) || ($priority{$name} > $highestPri)) {
 				$highestPri = $priority{$name};
 				$smallestDist = $dist;
