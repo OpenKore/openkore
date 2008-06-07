@@ -38,10 +38,10 @@ our @EXPORT = (
 	@{$Utils::DataStructures::EXPORT_TAGS{all}},
 
 	# Math
-	qw(calcPosition checkMovementDirection distance
+	qw(calcPosFromTime calcPosition calcTime checkMovementDirection countSteps distance
 	intToSignedInt intToSignedShort
-	blockDistance getVector moveAlongVector
-	normalize vectorToDegree max min ceil),
+	blockDistance getVector moveAlong moveAlongVector
+	normalize vectorToDegree max min round ceil),
 	# OS-specific
 	qw(checkLaunchedApp launchApp launchScript),
 	# Other stuff
@@ -63,6 +63,107 @@ our %quarks;
 ################################
 ################################
 
+
+##
+# calcPosFromTime(pos, pos_to, speed, time)
+#
+# Returns: the position where an actor moving from $pos to $pos_to with
+# the speed $speed will be in $time amount of time.
+# Walls are not considered.
+sub calcPosFromTime {
+	my ($pos, $pos_to, $speed, $time) = @_;
+	my $posX = $$pos{x};
+	my $posY = $$pos{y};
+	my $pos_toX = $$pos_to{x};
+	my $pos_toY = $$pos_to{y};
+	my $stepType = 0; # 1 - vertical or horizontal; 2 - diagonal
+	my $s = 0; # step
+
+	my %result;
+	$result{x} = $pos_toX;
+	$result{y} = $pos_toY;
+
+	if (!$speed) {
+		return %result;
+	}
+	while (1) {
+		$s++;
+		$stepType = 0;
+		if ($posX < $pos_toX) {
+			$posX++;
+			$stepType++;
+		}
+		if ($posX > $pos_toX) {
+			$posX--;
+			$stepType++;
+		}
+		if ($posY < $pos_toY) {
+			$posY++;
+			$stepType++;
+		}
+		if ($posY > $pos_toY) {
+			$posY--;
+			$stepType++;
+		}
+
+		if ($stepType == 2) {
+			$time -= sqrt(2) / $speed;
+		} elsif ($stepType == 1) {
+			$time -= 1 / $speed;
+		} else {
+			$s--;
+			last;
+		}
+		if ($time < 0) {
+			$s--;
+			last;
+		}
+	}
+
+	%result = moveAlong($pos, $pos_to, $s);
+	return %result;
+}
+
+##
+# calcTime(pos, pos_to, speed)
+#
+# Returns: time to move from $pos to $pos_to with $speed speed.
+# Walls are not considered.
+sub calcTime {
+	my ($pos, $pos_to, $speed) = @_;
+	my $posX = $$pos{x};
+	my $posY = $$pos{y};
+	my $pos_toX = $$pos_to{x};
+	my $pos_toY = $$pos_to{y};
+	my $stepType = 0; # 1 - vertical or horizontal; 2 - diagonal
+	my $time = 0;
+
+	while ($posX ne $pos_toX || $posY ne $pos_toY) {
+		$stepType = 0;
+		if ($posX < $pos_toX) {
+			$posX++;
+			$stepType++;
+		}
+		if ($posX > $pos_toX) {
+			$posX--;
+			$stepType++;
+		}
+		if ($posY < $pos_toY) {
+			$posY++;
+			$stepType++;
+		}
+		if ($posY > $pos_toY) {
+			$posY--;
+			$stepType++;
+		}
+		if ($stepType == 2) {
+			$time += sqrt(2) / $speed;
+		} elsif ($stepType == 1) {
+			$time += 1 / $speed;
+		}
+	}
+	return $time;
+}
 
 ##
 # calcPosition(object, [extra_time, float])
@@ -128,6 +229,36 @@ sub checkMovementDirection {
 	my $obj1ToObj2Degree = vectorToDegree(\%objVec);
 	return abs($obj1ToObj2Degree - $movementDegree) <= $fuzziness ||
 		(($obj1ToObj2Degree - $movementDegree) % 360) <= $fuzziness;
+}
+
+##
+# countSteps(pos, pos_to)
+#
+# Returns: the number of steps from $pos to $pos_to.
+# Walls are not considered.
+sub countSteps {
+	my ($pos, $pos_to) = @_;
+	my $posX = $$pos{x};
+	my $posY = $$pos{y};
+	my $pos_toX = $$pos_to{x};
+	my $pos_toY = $$pos_to{y};
+	my $s = 0; # steps
+	while ($posX ne $pos_toX || $posY ne $pos_toY) {
+		$s++;
+		if ($posX < $pos_toX) {
+			$posX++;
+		}
+		if ($posX > $pos_toX) {
+			$posX--;
+		}
+		if ($posY < $pos_toY) {
+			$posY++;
+		}
+		if ($posY > $pos_toY) {
+			$posY--;
+		}
+	}
+	return $s;
 }
 
 ##
@@ -219,6 +350,45 @@ sub getVector {
 	my $from = shift;
 	$r_store->{x} = $to->{x} - $from->{x};
 	$r_store->{y} = $to->{y} - $from->{y};
+}
+
+##
+# moveAlong(pos, pos_to, step)
+#
+# Returns: the position where an actor will be after $step steps
+# while walking from $pos to $pos_to.
+# Walls are not considered.
+sub moveAlong {
+	my ($pos, $pos_to, $step) = @_;
+	my $posX = $$pos{x};
+	my $posY = $$pos{y};
+	my $pos_toX = $$pos_to{x};
+	my $pos_toY = $$pos_to{y};
+
+	my %result;
+	$result{x} = $posX;
+	$result{y} = $posY;
+
+	if (!$step) {
+		return %result;
+	}
+	for (my $s = 1; $s <= $step; $s++) {
+		if ($posX < $pos_toX) {
+			$posX++;
+		}
+		if ($posX > $pos_toX) {
+			$posX--;
+		}
+		if ($posY < $pos_toY) {
+			$posY++;
+		}
+		if ($posY > $pos_toY) {
+			$posY--;
+		}
+	}
+	$result{x} = $posX;
+	$result{y} = $posY;
+	return %result;
 }
 
 ##
@@ -329,6 +499,15 @@ sub min {
 	my ($a, $b) = @_;
 
 	return $a < $b ? $a : $b;
+}
+
+##
+# round($number)
+#
+# Returns the rounded number
+sub round {
+	my($number) = shift;
+	return int($number + .5 * ($number <=> 0));
 }
 
 ##

@@ -784,14 +784,14 @@ sub processTake {
 	} elsif (AI::action eq "take") {
 		my $ID = AI::args->{ID};
 		my $myPos = $char->{pos_to};
-		my $dist = ceil(distance($items{$ID}{pos}, $myPos));
+		my $dist = round(distance($items{$ID}{pos}, $myPos));
 		my $item = $items{AI::args->{ID}};
 		debug "Planning to take $item->{name} ($item->{binID}), distance $dist\n", "drop";
 
 		if ($char->{sitting}) {
 			stand();
 
-		} elsif ($dist > 2) {
+		} elsif ($dist > 1) {
 			if (!$config{itemsTakeAuto_new}) {
 				my (%vec, %pos);
 				getVector(\%vec, $item->{pos}, $myPos);
@@ -3026,7 +3026,6 @@ sub processAutoShopOpen {
 	}
 }
 
-
 sub processDcOnPlayer {
 	# Disconnect when a player is detected
 	my $map_name_lu = $field{name}.'.rsw';
@@ -3037,4 +3036,5 @@ sub processDcOnPlayer {
 		$quit = 1;
 	}
 }
+
 1;

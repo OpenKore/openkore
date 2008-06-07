@@ -64,7 +64,7 @@ sub process {
 		my $target = Actor::get($ID);
 
 		if ($target->{type} ne 'Unknown' && $attackSeq->{monsterPos} && %{$attackSeq->{monsterPos}}
-		 && ceil(distance(calcPosition($target), $attackSeq->{monsterPos})) > $attackSeq->{attackMethod}{maxDistance}) {
+		 && round(distance(calcPosition($target), $attackSeq->{monsterPos})) > $attackSeq->{attackMethod}{maxDistance}) {
 			# Monster has moved; stop moving and let the attack AI readjust route
 			AI::dequeue;
 			AI::dequeue if (AI::action eq "route");
@@ -73,7 +73,7 @@ sub process {
 			debug "Target has moved more than $attackSeq->{attackMethod}{maxDistance} blocks; readjusting route\n", "ai_attack";
 
 		} elsif ($target->{type} ne 'Unknown' && $attackSeq->{monsterPos} && %{$attackSeq->{monsterPos}}
-		 && ceil(distance(calcPosition($target), calcPosition($char))) <= $attackSeq->{attackMethod}{maxDistance}) {
+		 && round(distance(calcPosition($target), calcPosition($char))) <= $attackSeq->{attackMethod}{maxDistance}) {
 			# Monster is within attack range; stop moving
 			AI::dequeue;
 			AI::dequeue if (AI::action eq "route");
@@ -259,12 +259,12 @@ sub main {
 	my $target = Actor::get($ID);
 	my $myPos = $char->{pos_to};
 	my $monsterPos = $target->{pos_to};
-	my $monsterDist = ceil(distance($myPos, $monsterPos));
+	my $monsterDist = round(distance($myPos, $monsterPos));
 
 	my ($realMyPos, $realMonsterPos, $realMonsterDist, $hitYou);
 	my $realMyPos = calcPosition($char);
 	my $realMonsterPos = calcPosition($target);
-	my $realMonsterDist = ceil(distance($realMyPos, $realMonsterPos));
+	my $realMonsterDist = round(distance($realMyPos, $realMonsterPos));
 	if (!$config{'runFromTarget'}) {
 		$myPos = $realMyPos;
 		$monsterPos = $realMonsterPos;
@@ -435,8 +435,8 @@ sub main {
 			if (
 			    checkLineSnipable($spot, $realMonsterPos) && ($config{'attackCanSnipe'} || checkLineWalkable($spot, $realMonsterPos)) &&
 			    $field->isWalkable($spot->{x}, $spot->{y}) &&
-			    (!$master || ceil(distance($spot, $masterPos)) <= $config{followDistanceMax}) &&
-			    ceil(distance($spot, $realMonsterPos)) <= $args->{attackMethod}{distance}
+			    (!$master || round(distance($spot, $masterPos)) <= $config{followDistanceMax}) &&
+			    round(distance($spot, $realMonsterPos)) <= $args->{attackMethod}{distance}
 			) {
 				my $dist = distance($realMyPos, $spot);
 				if (!defined($best_dist) || $dist < $best_dist) {
@@ -521,24 +521,13 @@ sub main {
 		$args->{move_start} = time;
 		$args->{monsterPos} = {%{$monsterPos}};
 
-		# Calculate how long it would take to reach the monster.
-		# Calculate where the monster would be when you've reached its
-		# previous position.
-		my $time_needed;
-		if (objectIsMovingTowards($target, $char, 45)) {
-			$time_needed = $monsterDist * $char->{walk_speed};
-		} else {
-			# If monster is not moving towards you, then you need more time to walk
-			$time_needed = $monsterDist * $char->{walk_speed} + 2;
-		}
-		my $pos = calcPosition($target, $time_needed);
+		my $pos = meetingPosition($target, $args->{attackMethod}{maxDistance});
 
 		my $dist = sprintf("%.1f", $monsterDist);
 		debug "Target distance $dist is >$args->{attackMethod}{maxDistance}; moving to target: " .
 			"from ($myPos->{x},$myPos->{y}) to ($pos->{x},$pos->{y})\n", "ai_attack";
 
 		my $result = ai_route($field{'name'}, $pos->{x}, $pos->{y},
-			distFromGoal => $args->{attackMethod}{distance},
 			maxRouteTime => $config{'attackMaxRouteTime'},
 			attackID => $ID,
 			noMapRoute => 1,
