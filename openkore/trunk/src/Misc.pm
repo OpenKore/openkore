@@ -3043,7 +3043,7 @@ sub getBestTarget {
 		my $name = lc $monster->{name};
 		my $dist = round(distance($myPos, $pos));
 		# Monsters that aren't in attackMaxDistance are not checked up
-		if ($nonLOSNotAllowed && ($config{'attackDistance'} < $dist)) {
+		if ($nonLOSNotAllowed && ($config{'attackMaxDistance'} < $dist)) {
 			next;
 		}
 		if (!defined($highestPri) || ($priority{$name} > $highestPri)) {
