@@ -1902,8 +1902,8 @@ sub meetingPosition {
 	$monsterPosTo{y} = $target->{pos_to}{y};
 
 	my %realMonsterPos = calcPosFromTime(\%monsterPos, \%monsterPosTo, $monsterSpeed, $timeMonsterMoves);
-
-	my $mySpeed = 1 / $char->{walk_speed};
+	
+	my $mySpeed = ($char->{walk_speed}) ? 1 / $char->{walk_speed} : 0;
 	my $timeCharMoves = time - $char->{time_move};
 
 	my %myPos;
