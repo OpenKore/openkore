@@ -3822,7 +3822,7 @@ sub getNPCInfo {
 	if (defined($$return_hash{map}) && defined($$return_hash{pos}{x}) && defined($$return_hash{pos}{y})) {
 		$$return_hash{ok} = 1;
 	} else {
-		error T("Incomplete NPC info found in npcs.txt\n");
+		error T("Invalid NPC information for autoBuy, autoSell or autoStorage! (".$id.")\n");
 	}
 }
 
