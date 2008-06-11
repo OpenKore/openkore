@@ -138,6 +138,8 @@ sub calcTime {
 	my $stepType = 0; # 1 - vertical or horizontal; 2 - diagonal
 	my $time = 0;
 
+	return if (!$speed); # Make sure $speed actually has a non-zero value...
+
 	while ($posX ne $pos_toX || $posY ne $pos_toY) {
 		$stepType = 0;
 		if ($posX < $pos_toX) {
