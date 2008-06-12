@@ -3435,7 +3435,10 @@ sub item_appeared {
 	$itemsList->add($item) if ($mustAdd);
 
 	# Take item as fast as possible
-	if ($AI == 2 && pickupitems(lc($item->{name})) == 2 && distance($item->{pos}, $char->{pos_to}) <= 5) {
+	if ($AI == 2 && pickupitems(lc($item->{name})) == 2
+	 && ($config{'itemsTakeAuto'} || $config{'itemsGatherAuto'})
+	 && (percent_weight($char) < $config{'itemsMaxWeight'})
+	 && distance($item->{pos}, $char->{pos_to}) <= 5) {
 		$messageSender->sendTake($args->{ID});
 	}
 
