@@ -2,6 +2,7 @@
 ### OpenKore what-will-become-2.0.6
 =========================
 
+- Modified move command. Now supports standard "map x y" parameter sequence.
 - Fixed pickupitems flag 2 not checking itemsTakeAuto, itemsGatherAuto & itemsMaxWeight.
 - Added a 'messageIDEncryption' option to servers.txt. When set to 0, it will
   disable the usage of message ID encryption, even if the server appears to

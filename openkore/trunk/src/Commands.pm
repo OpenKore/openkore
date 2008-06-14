@@ -2689,27 +2689,33 @@ sub cmdMonsterList {
 
 sub cmdMove {
 	my (undef, $args) = @_;
-	my ($arg1, $arg2, $arg3) = $args =~ /^(\d+) (\d+)(.*?)$/;
+	my ($arg1, $arg2, $arg3) = $args =~ /(\S+) (\d+)(?: (.*))?/;
 
-	my $map;
+	my ($map, $x, $y);
 	if ($arg1 eq "") {
+		# map name or portal number
 		$map = $args;
-	} else {
+	} elsif ($arg3 eq "") {
+		# coordinates
+		$x = $arg1;
+		$y = $arg2;
+	} elsif ($arg1 =~ /^\d+$/) {
+		# coordinates and map
+		$x = $arg1;
+		$y = $arg2;
 		$map = $arg3;
+	} else {
+		# map and coordinates
+		$x = $arg2;
+		$y = $arg3;
+		$map = $arg1;
 	}
-	$map =~ s/\s//g;
-	# FIXME: this should be integrated with the other numbers
-	if ($args eq "0") {
-		if ($portalsID[0]) {
-			message TF("Move into portal number 0 (%s,%s)\n", 
-				$portals{$portalsID[0]}{'pos'}{'x'}, $portals{$portalsID[0]}{'pos'}{'y'});
-			main::ai_route($field{name}, $portals{$portalsID[0]}{'pos'}{'x'}, $portals{$portalsID[0]}{'pos'}{'y'}, attackOnRoute => 1, noSitAuto => 1);
-		} else {
-			error T("No portals exist.\n");
-		}
-	} elsif (($arg1 eq "" || $arg2 eq "") && !$map) {
+	
+	if (($x eq "" || $y eq "") && $map eq "") {
 		error T("Syntax Error in function 'move' (Move Player)\n" .
-			"Usage: move <x> <y> &| <map>\n");
+			"Usage: move <x> <y> [<map>]\n" .
+			"       move <map> [<x> <y>]" .
+			"       move <portal#>\n");
 	} elsif ($map eq "stop") {
 		AI::clear(qw/move route mapRoute/);
 		message T("Stopped all movement\n"), "success";
@@ -2717,12 +2723,9 @@ sub cmdMove {
 		AI::clear(qw/move route mapRoute/);
 		$map = $field{name} if ($map eq "");
 		if ($maps_lut{"${map}.rsw"}) {
-			my ($x, $y);
-			if ($arg2 ne "") {
+			if ($x ne "") {
 				message TF("Calculating route to: %s(%s): %s, %s\n", 
-					$maps_lut{$map.'.rsw'}, $map, $arg1, $arg2), "route";
-				$x = $arg1;
-				$y = $arg2;
+					$maps_lut{$map.'.rsw'}, $map, $x, $y), "route";
 			} else {
 				message TF("Calculating route to: %s(%s)\n", 
 					$maps_lut{$map.'.rsw'}, $map), "route";
@@ -2731,7 +2734,7 @@ sub cmdMove {
 				attackOnRoute => 1,
 				noSitAuto => 1,
 				notifyUponArrival => 1);
-		} elsif ($map =~ /^\d$/) {
+		} elsif ($map =~ /^\d+$/) {
 			if ($portalsID[$map]) {
 				message TF("Move into portal number %s (%s,%s)\n", 
 					$map, $portals{$portalsID[$map]}{'pos'}{'x'}, $portals{$portalsID[$map]}{'pos'}{'y'});
