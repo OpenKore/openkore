@@ -2689,7 +2689,7 @@ sub cmdMonsterList {
 
 sub cmdMove {
 	my (undef, $args) = @_;
-	my ($arg1, $arg2, $arg3) = $args =~ /(\S+) (\d+)(?: (.*))?/;
+	my ($arg1, $arg2, $arg3) = $args =~ /^(.+?) (.+?)(?: (.*))?$/;
 
 	my ($map, $x, $y);
 	if ($arg1 eq "") {
@@ -2699,6 +2699,7 @@ sub cmdMove {
 		# coordinates
 		$x = $arg1;
 		$y = $arg2;
+		$map = $field{name};
 	} elsif ($arg1 =~ /^\d+$/) {
 		# coordinates and map
 		$x = $arg1;
@@ -2711,17 +2712,16 @@ sub cmdMove {
 		$map = $arg1;
 	}
 	
-	if (($x eq "" || $y eq "") && $map eq "") {
+	if ((($x !~ /^\d+$/ || $y !~ /^\d+$/) && $arg1 ne "") || ($args eq "")) {
 		error T("Syntax Error in function 'move' (Move Player)\n" .
 			"Usage: move <x> <y> [<map>]\n" .
-			"       move <map> [<x> <y>]" .
+			"       move <map> [<x> <y>]\n" .
 			"       move <portal#>\n");
 	} elsif ($map eq "stop") {
 		AI::clear(qw/move route mapRoute/);
 		message T("Stopped all movement\n"), "success";
 	} else {
 		AI::clear(qw/move route mapRoute/);
-		$map = $field{name} if ($map eq "");
 		if ($maps_lut{"${map}.rsw"}) {
 			if ($x ne "") {
 				message TF("Calculating route to: %s(%s): %s, %s\n", 
