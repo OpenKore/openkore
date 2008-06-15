@@ -4077,6 +4077,12 @@ sub npc_talk {
 	$ai_v{npc_talk}{time} = time;
 
 	my $name = getNPCName($ID);
+	Plugins::callHook('npc_talk', {
+						ID => $ID,
+						nameID => $talk{nameID},
+						name => $name,
+						msg => $talk{msg},
+						});
 	message "$name: $talk{msg}\n", "npc";
 }
 
