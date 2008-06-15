@@ -3727,21 +3727,21 @@ sub cmdStatus {
 }
 
 sub cmdStorage {
-	if ($storage{opened}) {
+	if ($storage{opened} || $storage{openedThisSession}) {
 		my (undef, $args) = @_;
 
 		my ($switch, $items) = split(' ', $args, 2);
 		if (!$switch || $switch eq 'eq' || $switch eq 'u' || $switch eq 'nu') {
 			cmdStorage_list($switch);
-		} elsif ($switch eq 'add') {
+		} elsif ($switch eq 'add' && $storage{opened}) {
 			cmdStorage_add($items);
-		} elsif ($switch eq 'addfromcart') {
+		} elsif ($switch eq 'addfromcart'  && $storage{opened}) {
 			cmdStorage_addfromcart($items);
-		} elsif ($switch eq 'get') {
+		} elsif ($switch eq 'get'  && $storage{opened}) {
 			cmdStorage_get($items);
-		} elsif ($switch eq 'gettocart') {
+		} elsif ($switch eq 'gettocart'  && $storage{opened}) {
 			cmdStorage_gettocart($items);
-		} elsif ($switch eq 'close') {
+		} elsif ($switch eq 'close'  && $storage{opened}) {
 			cmdStorage_close();
 		} elsif ($switch eq 'log') {
 			cmdStorage_log();

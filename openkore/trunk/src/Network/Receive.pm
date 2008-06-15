@@ -5833,6 +5833,7 @@ sub storage_opened {
 	$ai_v{temp}{storage_opened} = 1;
 	if (!$storage{opened}) {
 		$storage{opened} = 1;
+		$storage{openedThisSession} = 1;
 		message T("Storage opened.\n"), "storage";
 		Plugins::callHook('packet_storage_open');
 	}
