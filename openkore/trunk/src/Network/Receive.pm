@@ -4186,9 +4186,12 @@ sub npc_talk_responses {
 	}
 	$list .= "-------------------------------\n";
 	message($list, "list");
-
 	my $name = getNPCName($ID);
-
+	Plugins::callHook('npc_talk_responses', {
+						ID => $ID,
+						name => $name,
+						responses => $talk{responses},
+						});
 	message TF("%s: Type 'talk resp #' to choose a response.\n", $name), "npc";
 }
 
