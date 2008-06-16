@@ -65,7 +65,7 @@ sub checkIdle {
 
 sub canTeleport {
 	$config{'teleport_search_minSp'} = 10 if (!$config{'teleport_search_minSp'});
-	my $item = InventoryList::InventoryList->getByName("Fly Wing");
+	my $item = $char->inventory->getByName("Fly Wing");
 	
 	if ((!$config{'teleportAuto_useSkill'} && $item) || # Using flywings
 		($config{'teleportAuto_useSkill'} > 1) || # Using no SP for teleport
