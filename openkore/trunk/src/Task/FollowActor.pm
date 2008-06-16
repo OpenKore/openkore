@@ -192,8 +192,8 @@ sub intercept {
 		moveAlongVector(\%try, $bPos, \%actorB_vec, $dist);
 
 		my $actorA_to_try_dist = distance($aPos, \%try);
-		my $aWalkTime = $actorA_to_try_dist / $actorA->{walk_speed};
-		my $bWalkTime = $dist / $actorB->{walk_speed};
+		my $aWalkTime = ($actorA->{walk_speed}) ? $actorA_to_try_dist / $actorA->{walk_speed} : 0;
+		my $bWalkTime = ($actorB->{walk_speed}) ? $dist / $actorB->{walk_speed} : 0;
 
 		#printf("tryX = %.2f, tryY = %.2f, aTime = %.2f, bTime = %.2f\n",
 		#	$try{x}, $try{y}, $aWalkTime, $bWalkTime);
