@@ -1891,7 +1891,7 @@ sub manualMove {
 # Returns: the position where the character should go to meet a moving monster.
 sub meetingPosition {
 	my ($target, $attackMaxDistance) = @_;
-	my $monsterSpeed = 1 / $target->{walk_speed};
+	my $monsterSpeed = ($target->{walk_speed}) ? 1 / $target->{walk_speed} : 0;
 	my $timeMonsterMoves = time - $target->{time_move};
 
 	my %monsterPos;
