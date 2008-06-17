@@ -130,7 +130,7 @@ sub checkItem {
 	$item = $char->inventory->getByServerIndex($item->{index});
 	$taskManager->onTaskFinished->remove($talkCallback);
 	if (!$item) {
-		$startRefine = 0
+		$startRefine = 0;
 		message("Item broke :(\n","info");
 	} else {
 		message("Upgraded to ".$item->{name}."\n","info");
