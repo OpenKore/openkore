@@ -39,6 +39,7 @@ my $hooks = Plugins::addHooks(
 	['AI_pre',\&main, undef],
 	['map_loaded', \&MapLoaded, undef],
 	['packet/sendMapLoaded', \&MapLoaded, undef],
+	['parseMsg/pre', \&itemEquiped, undef],
 );
 
 my ($item,$metal,$maploaded,$routeCallback,$talkCallback,%npc,$startRefine,$talking);
@@ -56,7 +57,7 @@ $timeout{'refine'}{'timeout'} = 1; # No need to go any faster than 1 iteration p
 $timeout{'refine'}{'time'} = time;
 
 sub main {
-	return if (!$maploaded || !$config{"autoRefine_0"} || !timeOut($timeout{'refine'}));
+	return if (!$maploaded || !$config{"autoRefine_0"} || !timeOut($timeout{'refine'} || ($item && !$item->{equipped})));
 	selectItem() if (!$item);
 	
 	return if (!$item || !$metal || $metal->{amount} < 1);
@@ -76,6 +77,7 @@ sub main {
 		undef $metal;
 	} else {
 		$startRefine = 0;
+		message("We have run out of items to refine or metals to refine them with!\n","info");
 	}
 	$timeout{'refine'}{'time'} = time;
 }
@@ -129,9 +131,16 @@ sub checkItem {
 	$taskManager->onTaskFinished->remove($talkCallback);
 	if (!$item) {
 		$startRefine = 0
+		message("Item broke :(\n","info");
 	} else {
 		message("Upgraded to ".$item->{name}."\n","info");
 	}
+}
+
+sub itemEquiped {
+	my ($self, $args) = @_;
+	return if ($args->{switch} ne "00AA" || $args->{switch} ne "00AC"); # 00AA = Item is Equiped packet, 00AC = unequipped	
+	$item->{equipped} = ($args->{switch} eq "00AA") ? 1 : 0; # If 00AA then 1, else 0
 }
 
 sub MapLoaded {
