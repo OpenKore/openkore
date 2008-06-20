@@ -3823,10 +3823,10 @@ sub getNPCInfo {
 	$$return_hash{pos}{x} = $x;
 	$$return_hash{pos}{y} = $y;
 
-	if (defined($$return_hash{map}) && defined($$return_hash{pos}{x}) && defined($$return_hash{pos}{y})) {
+	if (($$return_hash{map} ne "") && ($$return_hash{pos}{x} ne "") && ($$return_hash{pos}{y} ne "")) {
 		$$return_hash{ok} = 1;
 	} else {
-		error T("Invalid NPC information for autoBuy, autoSell or autoStorage! (".$id.")\n");
+		error TF("Invalid NPC information for autoBuy, autoSell or autoStorage! (%s)\n", $id);
 	}
 }
 
