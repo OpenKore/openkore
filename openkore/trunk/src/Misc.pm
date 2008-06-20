@@ -4045,8 +4045,8 @@ sub checkPlayerCondition {
 	my $player = $playersList->getByID($id);
 
 	if ($config{$prefix . "_timeout"}) { return 0 unless timeOut($ai_v{$prefix . "_time"}{$id}, $config{$prefix . "_timeout"}) }
-	if ($config{$prefix . "_target_whenStatusActive"}) { return 0 unless (whenStatusActivePL($id, $config{$prefix . "_target_whenStatusActive"})); }
-	if ($config{$prefix . "_target_whenStatusInactive"}) { return 0 if (whenStatusActivePL($id, $config{$prefix . "_target_whenStatusInactive"})); }
+	if ($config{$prefix . "_whenStatusActive"}) { return 0 unless (whenStatusActivePL($id, $config{$prefix . "_whenStatusActive"})); }
+	if ($config{$prefix . "_whenStatusInactive"}) { return 0 if (whenStatusActivePL($id, $config{$prefix . "_whenStatusInactive"})); }
 	if ($config{$prefix . "_notWhileSitting"} > 0) { return 0 if ($player->{sitting}); }
 
 	# we will have player HP info (only) if we are in the same party
