@@ -2593,15 +2593,14 @@ sub processAutoAttack {
 			if ($config{attackCheckLOS}
 			 && AI::args(0)->{LOSSubRoute}
 			) {
-
 				$LOSSubRoute = 1;
 			}
-
 
 			### Step 1: Generate a list of all monsters that we are allowed to attack. ###
 
 			my @aggressives;
 			my @partyMonsters;
+			my @cleanMonsters;
 
 			# List aggressive monsters
 			@aggressives = ai_getAggressives(1) if ($config{'attackAuto'} && ($attackOnRoute || $LOSSubRoute));
@@ -2630,33 +2629,27 @@ sub processAutoAttack {
 					push @partyMonsters, $_;
 					next;
 				}
+
 				my $control = mon_control($monster->{name});
 				if (!AI::is(qw/sitAuto take items_gather items_take/)
 				 && $config{'attackAuto'} >= 2
-				 && $control->{attack_auto} == 1
+				 && ($control->{attack_auto} == 1 || $control->{attack_auto} == 3)
 				 && !$ai_v{sitAuto_forcedBySitCommand}
 				 && ($attackOnRoute >= 2 || $LOSSubRoute)
 				 && !$monster->{dmgFromYou}
 				 && timeOut($monster->{attack_failed}, $timeout{ai_attack_unfail}{timeout})) {
-					push @aggressives, $_;
+					push @cleanMonsters, $_;
 				}
 			}
-
 
 			### Step 2: Pick out the "best" monster ###
 
 			# We define whether we should attack only monsters in LOS or not
-			if (!$config{attackCheckLOS} || $LOSSubRoute) {
-				$attackTarget = getBestTarget(\@aggressives, 1);
-				if (!$attackTarget) {
-					$attackTarget = getBestTarget(\@partyMonsters, 1);
-				}
-			} elsif ($config{attackCheckLOS}) {
-				$attackTarget = getBestTarget(\@aggressives);
-				if (!$attackTarget) {
-					$attackTarget = getBestTarget(\@partyMonsters);
-				}
-			}
+			my $nonLOSNotAllowed = !$config{attackCheckLOS} || $LOSSubRoute;
+			$attackTarget = getBestTarget(\@aggressives, $nonLOSNotAllowed)
+							|| getBestTarget(\@partyMonsters, $nonLOSNotAllowed)
+							|| getBestTarget(\@cleanMonsters, $nonLOSNotAllowed);
+
 			if ($LOSSubRoute && $attackTarget) {
 				Log::message("New target was choosen\n");
 				# Remove all unnecessary actions (attacks and movements but the main route)
