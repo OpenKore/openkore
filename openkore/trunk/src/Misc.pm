@@ -3035,17 +3035,21 @@ sub getBestTarget {
 				next;
 			}
 		} else {
-			if (!checkLineWalkable($myPos, $pos) || !checkLineSnipable($myPos, $pos)) {
+			if (!checkLineWalkable($myPos, $pos)) {
 				push(@noLOSMonsters, $_);
 				next;
 			}
 		}
 		my $name = lc $monster->{name};
 		my $dist = round(distance($myPos, $pos));
-		# Monsters that aren't in attackMaxDistance are not checked up
-		if ($nonLOSNotAllowed && ($config{'attackMaxDistance'} < $dist)) {
-			next;
-		}
+		
+		# COMMENTED (FIX THIS): attackMaxDistance should never be used as indication of LOS
+		#     The objective of attackMaxDistance is to determine the range of normal attack,
+		#     and not the range of character's ability to engage monsters
+		## Monsters that aren't in attackMaxDistance are not checked up
+		##if ($nonLOSNotAllowed && ($config{'attackMaxDistance'} < $dist)) {
+		##	next;
+		##}
 		if (!defined($highestPri) || ($priority{$name} > $highestPri)) {
 			$highestPri = $priority{$name};
 			$smallestDist = $dist;
