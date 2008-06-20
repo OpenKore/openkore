@@ -4,10 +4,10 @@
 ######## Login options and server-specific options ########
 
 master
-server 
+server
 username
 password
-pin
+loginPinCode
 char
 sex
 
@@ -23,11 +23,9 @@ XKore_bypassBotDetection 0
 XKore_exeName ragexe.exe
 
 # XKore 2 / Proxy configuration
-XKore_ID
 XKore_listenIp 127.0.0.1
 XKore_listenPort 6901
 XKore_publicIp 127.0.0.1
-XKore_proxyAllowed_IP
 
 # It is not advised to set secureAdminPassword if you're using Xkore 2
 secureAdminPassword 1
@@ -167,7 +165,6 @@ lockMap_y
 lockMap_randX
 lockMap_randY
 
-route_escape_unknownMap 1
 route_escape_reachedNoPortal 1
 route_escape_randomWalk 1
 route_escape_shout
@@ -213,35 +210,32 @@ skillsAddAuto_list
 tankMode 0
 tankModeTarget
 
-teleportAuto {
-	hp 10
-	sp 0
-	idle 0
-	portal 0
-	search 0
-	minAggressives 0
-	minAggressivesInLock 0
-	onlyWhenSafe 0
-	maxDmg 500
-	maxDmgInLock 0
-	deadly 1
-	useSkill 3
-	useChatCommand
-	allPlayers 0
-	atkCount 0
-	atkMiss 10
-	unstuck 0
-	dropTarget 0
-	dropTargetKS 0
-	attackedWhenSitting 0
-	totalDmg 0
-	totalDmgInLock 0
-	equip_leftAccessory
-	equip_rightAccessory
-	lostHomunculus
-	lostTarget
-	useItemForRespawn
-}
+teleportAuto_hp 10
+teleportAuto_sp 0
+teleportAuto_idle 0
+teleportAuto_portal 0
+teleportAuto_search 0
+teleportAuto_minAggressives 0
+teleportAuto_minAggressivesInLock 0
+teleportAuto_onlyWhenSafe 0
+teleportAuto_maxDmg 500
+teleportAuto_maxDmgInLock 0
+teleportAuto_deadly 1
+teleportAuto_useSkill 3
+teleportAuto_useChatCommand
+teleportAuto_allPlayers 0
+teleportAuto_atkCount 0
+teleportAuto_atkMiss 10
+teleportAuto_unstuck 0
+teleportAuto_dropTarget 0
+teleportAuto_dropTargetKS 0
+teleportAuto_attackedWhenSitting 0
+teleportAuto_totalDmg 0
+teleportAuto_totalDmgInLock 0
+teleportAuto_equip_leftAccessory
+teleportAuto_equip_rightAccessory
+teleportAuto_lostHomunculus
+teleportAuto_useItemForRespawn
 
 dealAuto 1
 dealAuto_names
@@ -269,7 +263,6 @@ chatTitleOversize 0
 shopTitleOversize 0
 
 sleepTime 10000
-intervalMapDrt 1
 
 ignoreAll 0
 itemHistory 0
@@ -292,8 +285,6 @@ homunculus_attackAuto_onlyWhenSafe 0
 homunculus_attackDistance 1.5
 homunculus_attackMaxDistance 2.5
 homunculus_attackMaxRouteTime 4
-homunculus_attackMinPlayerDistance 3
-homunculus_attackMinPortalDistance 8
 homunculus_attackCanSnipe 0
 homunculus_attackCheckLOS 0
 homunculus_attackNoGiveup 0
