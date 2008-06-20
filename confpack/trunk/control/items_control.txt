@@ -48,7 +48,6 @@ Butterfly Wing 10 1 0
 Fly Wing 100 1 0
 
 Blue Potion 0 1 0
-Condensed Blue Potion 0 1 0
 Condensed Red Potion 50 1 0
 Condensed White Potion 50 1 0
 Condensed Yellow Potion 50 1 0
@@ -83,8 +82,8 @@ Chain Mail 0 0 1
 Circlet 0 0 1
 Coat 0 0 1
 Coat [1] 0 0 1
-Cotton Shirts 0 0 1
-Cotton Shirts [1] 0 0 1
+Cotton Shirt 0 0 1
+Cotton Shirt [1] 0 0 1
 #Crystal Pumps 0 0 1
 Diamond Ring 0 0 1
 Diver Goggles 0 0 1
@@ -324,7 +323,6 @@ Anolian Skin 0 0 1
 Antelope Horn 0 0 1
 Antelope Skin 0 0 1
 Ant Jaw 0 0 1
-A piece of Bamboo 0 0 1
 Apple 0 0 1
 Apple Juice 0 0 1
 Bacillus 0 0 1
@@ -333,7 +331,6 @@ Banana Juice 0 0 1
 Barren Trunk 0 0 1
 Bear's Footskin 0 0 1
 Bee Sting 0 0 1
-Bent Spoon 0 0 1
 Bill of Birds 0 0 1
 Black Hair 0 0 1
 Black Ladle 0 0 1
@@ -363,7 +360,6 @@ Clam Shell 0 0 1
 Claw of Desert Wolf 0 0 1
 Claw of Monkey 0 0 1
 Claw of Rat 0 0 1
-Clock Hand 0 0 1
 Clover 0 0 1
 Cobweb 0 0 1
 Cogwheel 0 0 1
@@ -440,7 +436,7 @@ Meat 0 0 1
 Memento 0 0 1
 Metal Fragment 0 0 1
 Milk 0 0 1
-Mold Powder 0 0 1
+Mould Powder 0 0 1
 Mole Claw 0 0 1
 Mole Whiskers 0 0 1
 Monster's Feed 0 0 1
@@ -449,6 +445,7 @@ Mother's Letter 0 0 1
 Moth Wings 0 0 1
 Mud Lump 0 0 1
 Mushroom Spore 0 0 1
+Needle of Alarm 0 0 1
 Nightmare 0 0 1
 Nine Tails 0 0 1
 Nipper 0 0 1
@@ -466,15 +463,17 @@ PecoPeco Feather 0 0 1
 PecoPeco Food 0 0 1
 Pencil Case 0 0 1
 Phracon 0 0 1
+Piece of Bamboo 0 0 1
 Piece of Egg Shell 0 0 1
 Piece of Shield 0 0 1
 Pointed Scale 0 0 1
 Poisonous Powder 0 0 1
+Poisonous Toad Skin 0 0 1
 Poison Spore 0 0 1
 Porcupine Quill 0 0 1
 Poring Doll 0 0 1
 Powder of Butterfly 0 0 1
-Pumkin 0 0 1
+Pumpkin 0 0 1
 Puppet 0 0 1
 Raccoon Leaf 0 0 1
 Racoon Doll 0 0 1
@@ -511,7 +510,6 @@ Short Daenggie 0 0 1
 Silk Mat 0 0 1
 Single Cell 0 0 1
 Skel-Bone 0 0 1
-Skin of Poisonous Toad 0 0 1
 Skull 0 0 1
 Slick Paper 0 0 1
 Snail's Shell 0 0 1
@@ -521,6 +519,7 @@ Solid Shell 0 0 1
 Solid Trunk 0 0 1
 Songpyun 0 0 1
 Spawn 0 0 1
+Spoon Stub 0 0 1
 Spore Doll 0 0 1
 Squid Ink 0 0 1
 Stem 0 0 1
