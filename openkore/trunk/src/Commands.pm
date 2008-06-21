@@ -2835,22 +2835,13 @@ sub cmdParty {
 		message("--------------------------\n", "list");
 
 	} elsif ($arg1 eq "create") {
-		my ($name,$ipick,$ishare) = $args =~ /^create ([\s\S]+?) ?([01]?) ?([01]?)/;
-		if (!$name) {
+		my ($arg2) = $args =~ /^\w* ([\s\S]*)/;
+		if ($arg2 eq "") {
 			error T("Syntax Error in function 'party create' (Organize Party)\n" .
-				"Usage: party create <party name> [<pickupshare> [itemshare]]\n");
+				"Usage: party create <party name>\n");
 		} else {
-			$messageSender->sendPartyOrganize($name,$ipick,$ishare);
+			$messageSender->sendPartyOrganize($arg2);
 		}
-
-#	} elsif ($arg1 eq "create") {
-#		my ($arg2) = $args =~ /^\w* ([\s\S]*)/;
-#		if ($arg2 eq "") {
-#			error T("Syntax Error in function 'party create' (Organize Party)\n" .
-#				"Usage: party create <party name>\n");
-#		} else {
-#			$messageSender->sendPartyOrganize($arg2);
-#		}
 
 	} elsif ($arg1 eq "join" && $arg2 ne "1" && $arg2 ne "0") {
 		error T("Syntax Error in function 'party join' (Accept/Deny Party Join Request)\n" .
@@ -3643,8 +3634,10 @@ sub cmdStatus {
 	my $msg;
 	my ($baseEXPKill, $jobEXPKill);
 
-	if ($char) {
-
+	if (!$char) {
+		error T("Error in function 's' (Self Functions)\n" .
+			"Can't display character - not yet recieved from server.\n");
+	} else {
 		if ($char->{'exp_last'} > $char->{'exp'}) {
 			$baseEXPKill = $char->{'exp_max_last'} - $char->{'exp_last'} + $char->{'exp'};
 		} elsif ($char->{'exp_last'} == 0 && $char->{'exp_max_last'} == 0) {
