@@ -52,6 +52,7 @@ use Actor::Pet;
 use Actor::Unknown;
 use Time::HiRes qw(time usleep);
 use Translation;
+use Utils::Exceptions;
 
 our @EXPORT = (
 	# Config modifiers
@@ -196,7 +197,8 @@ our @EXPORT = (
 	makeShop
 	openShop
 	closeShop
-	inLockMap/
+	inLockMap
+	parseReload/
 	);
 
 
@@ -4334,6 +4336,31 @@ sub inLockMap {
 		return 1;
 	} else {
 		return 0;
+	}
+}
+
+sub parseReload {
+	my ($args) = @_;
+	eval {
+		my $progressHandler = sub {
+			my ($filename) = @_;
+			message TF("Loading %s...\n", $filename);
+		};
+		if ($args eq 'all') {
+			Settings::loadAll($progressHandler);
+		} else {
+			Settings::loadByRegexp(qr/$args/, $progressHandler);
+		}
+		Log::initLogFiles();
+	};
+	if (my $e = caught('UTF8MalformedException')) {
+		error TF(
+			"The file %s must be valid UTF-8 encoded, which it is \n" .
+			"currently not. To solve this prolem, please use Notepad\n" .
+			"to save that file as valid UTF-8.",
+			$e->textfile);
+	} elsif ($@) {
+		die $@;
 	}
 }
 
