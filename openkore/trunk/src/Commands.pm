@@ -3330,29 +3330,8 @@ sub cmdReload {
 	if ($args eq '') {
 		error T("Syntax Error in function 'reload' (Reload Configuration Files)\n" .
 			"Usage: reload <name|\"all\">\n");
-
 	} else {
-		eval {
-			my $progressHandler = sub {
-				my ($filename) = @_;
-				message TF("Loading %s...\n", $filename);
-			};
-			if ($args eq 'all') {
-				Settings::loadAll($progressHandler);
-			} else {
-				Settings::loadByRegexp(qr/$args/, $progressHandler);
-			}
-			Log::initLogFiles();
-		};
-		if (my $e = caught('UTF8MalformedException')) {
-			error TF(
-				"The file %s must be valid UTF-8 encoded, which it is \n" .
-				"currently not. To solve this prolem, please use Notepad\n" .
-				"to save that file as valid UTF-8.",
-				$e->textfile);
-		} elsif ($@) {
-			die $@;
-		}
+		parseReload($args);
 	}
 }
 

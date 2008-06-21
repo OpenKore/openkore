@@ -27,7 +27,7 @@ use Globals qw($accountID $AI %ai_v $char @chatResponses %cities_lut
 		);
 use Log qw(message error);
 use Misc qw(auth avoidGM_talk avoidList_talk configModify getIDFromChat
-		getResponse quit relog sendMessage setTimeout look);
+		getResponse quit relog sendMessage setTimeout look parseReload);
 use Plugins;
 use Translation;
 use Utils qw(formatNumber getFormattedDate parseArgs swrite timeConvert timeOut);
@@ -295,7 +295,7 @@ sub processChatCommand {
 		}
 
 	} elsif ($switch eq "reload") {
-		Settings::parseReload($after);
+		parseReload($after);
 		sendMessage($messageSender, $type, getResponse("reloadS"), $user) if $config{verbose};
 		$timeout{ai_thanks_set}{time} = time;
 
