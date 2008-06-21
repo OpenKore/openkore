@@ -2,7 +2,9 @@
 ### OpenKore what-will-become-2.0.6
 =========================
 
-- Modified move command. Now supports standard "map x y" parameter sequence.
+- Fixed minimap_indicator (thanks to windows98SE)
+- Fixed bug in getNPCInfo that allows a zero-length map name.
+- Modified move command. Now supports standard "map x y" parameter sequence. (thanks to Chontrad, Alexander)
 - Fixed pickupitems flag 2 not checking itemsTakeAuto, itemsGatherAuto & itemsMaxWeight.
 - Added a 'messageIDEncryption' option to servers.txt. When set to 0, it will
   disable the usage of message ID encryption, even if the server appears to
@@ -10,7 +12,6 @@
 - Added handler for error 101 (account suspension)
 - Fixed XKore to work with EPP enabled servers (thanks Belial)
 - Added Gospel and NPC Skill effect recognition (thanks to johnny)
-- teleportAuto can now be parsed in block format ( http://forums.openkore.com/viewtopic.php?t=36627 )
 - Fixed range check and work of target_deltaHp (by 4epT)
 - Fixed typo in 'notOnAction' (by 4epT)
 - processAutoAttack is rewritten, it now uses new functions (getBestTarget(), isSafe()). priority.txt works.

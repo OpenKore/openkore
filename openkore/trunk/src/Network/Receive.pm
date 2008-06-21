@@ -199,7 +199,7 @@ sub new {
 		'013C' => ['arrow_equipped', 'v1', [qw(index)]],
 		'0141' => ['stat_info2', 'v1 x2 v1 x2 v1', [qw(type val val2)]],
 		'0142' => ['npc_talk_number', 'a4', [qw(ID)]],
-		'0144' => ['minimap_indicator', 'V1 V1 V1 V1 v1 x3', [qw(ID clear x y color)]],
+		'0144' => ['minimap_indicator', 'a4 V3 C5', [qw(npcID type x y ID blue green red alpha)]],
 		'0147' => ['item_skill', 'v1 v1 v1 v1 v1 v1 A*', [qw(skillID targetType unknown skillLv sp unknown2 skillName)]],
 		'0148' => ['resurrection', 'a4 v1', [qw(targetID type)]],
 		'014C' => ['guild_allies_enemy_list'],
@@ -3898,13 +3898,13 @@ sub memo_success {
 sub minimap_indicator {
 	my ($self, $args) = @_;
 
-	if ($args->{clear}) {
+	if ($args->{type} == 2) {
 		message TF("Minimap indicator at location %d, %d " .
-		"with the color %s cleared\n", $args->{x}, $args->{y}, $args->{color}),
+		"with the color %s cleared\n", $args->{x}, $args->{y}, "[R:$args->{red}, G:$args->{green}, B:$args->{blue}, A:$args->{alpha}]"),
 		"info";
 	} else {
 		message TF("Minimap indicator at location %d, %d " .
-		"with the color %s shown\n", $args->{x}, $args->{y}, $args->{color}),
+		"with the color %s shown\n", $args->{x}, $args->{y}, "[R:$args->{red}, G:$args->{green}, B:$args->{blue}, A:$args->{alpha}]"),
 		"info";
 	}
 }
