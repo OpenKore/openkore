@@ -417,7 +417,7 @@ sub cmdAI {
 	$cmdQueue = 0;
 	if ($args eq 'clear') {
 		AI::clear;
-		$taskManager->stopAll();
+		$taskManager->stopAll() if defined $taskManager;
 		delete $ai_v{temp};
 		undef $char->{dead};
 		message T("AI sequences cleared\n"), "success";
@@ -497,11 +497,15 @@ sub cmdAIv {
 		message TF("ai_seq (auto) = %s\n", "@ai_seq"), "list";
 	}
 	message T("solution\n"), "list" if (AI::args->{'solution'});
-	message TF("Active tasks: %s\n", $taskManager->activeTasksString()), "info";
-	message TF("Inactive tasks: %s\n", $taskManager->inactiveTasksString()), "info";
+	message TF("Active tasks: %s\n", (defined $taskManager) ? $taskManager->activeTasksString() : ''), "info";
+	message TF("Inactive tasks: %s\n", (defined $taskManager) ? $taskManager->inactiveTasksString() : ''), "info";
 }
 
 sub cmdArrowCraft {
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command (%s)\n", shift);
+		return;
+	}
 	my (undef, $args) = @_;
 	my ($arg1) = $args =~ /^(\w+)/;
 	my ($arg2) = $args =~ /^\w+ (\d+)/;
@@ -611,17 +615,29 @@ sub cmdAutoStorage {
 }
 
 sub cmdBangBang {
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command (%s)\n", shift);
+		return;
+	}
 	my $bodydir = $char->{look}{body} - 1;
 	$bodydir = 7 if ($bodydir == -1);
 	$messageSender->sendLook($bodydir, $char->{look}{head});
 }
 
 sub cmdBingBing {
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command (%s)\n", shift);
+		return;
+	}
 	my $bodydir = ($char->{look}{body} + 1) % 8;
 	$messageSender->sendLook($bodydir, $char->{look}{head});
 }
 
 sub cmdBuy {
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command (%s)\n", shift);
+		return;
+	}
 	my (undef, $args) = @_;
 	my ($arg1) = $args =~ /^(\d+)/;
 	my ($arg2) = $args =~ /^\d+ (\d+)$/;
@@ -640,13 +656,20 @@ sub cmdBuy {
 }
 
 sub cmdCard {
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command (%s)\n", shift);
+		return;
+	}
 	my (undef, $input) = @_;
 	my ($arg1) = $input =~ /^(\w+)/;
 	my ($arg2) = $input =~ /^\w+ (\d+)/;
 	my ($arg3) = $input =~ /^\w+ \d+ (\d+)/;
 
 	if ($arg1 eq "mergecancel") {
-		if ($cardMergeIndex ne "") {
+		if (!defined $messageSender) {
+			error T("Error in function 'bingbing' (Change look direction)\n" .
+				"Can't use command while not connected to server.\n");
+		} elsif ($cardMergeIndex ne "") {
 			undef $cardMergeIndex;
 			$messageSender->sendCardMerge(-1, -1);
 			message T("Cancelling card merge.\n");
@@ -739,7 +762,7 @@ sub cmdCart {
 	my ($arg1, $arg2) = split(' ', $input, 2);
 
 	my $hasCart = $cart{exists};
-	if ($char->{statuses}) {
+	if ($char && $char->{statuses}) {
 		foreach (keys %{$char->{statuses}}) {
 			if ($_ =~ /^Level \d Cart$/) {
 				$hasCart = 1;
@@ -771,12 +794,6 @@ sub cmdCart {
 		$msg .= "-------------------------------\n";
 		message($msg, "list");
 
-	} elsif ($arg1 eq "add") {
-		cmdCart_add($arg2);
-
-	} elsif ($arg1 eq "get") {
-		cmdCart_get($arg2);
-
 	} elsif ($arg1 eq "desc") {
 		if (!($arg2 =~ /\d+/)) {
 			error TF("Syntax Error in function 'cart desc' (Show Cart Item Description)\n" .
@@ -787,8 +804,26 @@ sub cmdCart {
 		} else {
 			printItemDesc($cart{'inventory'}[$arg2]{'nameID'});
 		}
-		
+
+	} elsif ($arg1 eq "add") {
+		if (!$net || $net->getState() != Network::IN_GAME) {
+			error TF("You must be logged in the game to use this command (%s)\n", 'cart ' . $arg1);
+			return;
+		}
+		cmdCart_add($arg2);
+
+	} elsif ($arg1 eq "get") {
+		if (!$net || $net->getState() != Network::IN_GAME) {
+			error TF("You must be logged in the game to use this command (%s)\n", 'cart ' . $arg1);
+			return;
+		}
+		cmdCart_get($arg2);
+
 	} elsif ($arg1 eq "release") {
+		if (!$net || $net->getState() != Network::IN_GAME) {
+			error TF("You must be logged in the game to use this command (%s)\n", 'cart ' . $arg1);
+			return;
+		}
 		$messageSender->sendCompanionRelease();
 		if ($net && $net->getState() == Network::IN_GAME) {
 			message T("Cart released.\n"), "success";
@@ -860,6 +895,11 @@ sub cmdCart_get {
 
 
 sub cmdChat {
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command (%s)\n", shift);
+		return;
+	}
+
 	my (undef, $arg1) = @_;
 	if ($arg1 eq "") {
 		error T("Syntax Error in function 'c' (Chat)\n" .
@@ -875,6 +915,11 @@ sub cmdChatLogClear {
 }
 
 sub cmdChatRoom {
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command (%s)\n", shift);
+		return;
+	}
+
 	my (undef, $args) = @_;
 	my ($arg1) = $args =~ /^(\w+)/;
 
@@ -1060,6 +1105,10 @@ sub cmdChist {
 }
 
 sub cmdCloseShop {
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command (%s)\n", shift);
+		return;
+	}
 	main::closeShop();
 }
 
@@ -1140,6 +1189,11 @@ sub cmdDamage {
 }
 
 sub cmdDeal {
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command (%s)\n", shift);
+		return;
+	}
+
 	my (undef, $args) = @_;
 	my @arg = split / /, $args;
 
@@ -1317,6 +1371,10 @@ sub cmdDebug {
 }
 
 sub cmdDoriDori {
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command (%s)\n", shift);
+		return;
+	}
 	my $headdir;
 	if ($char->{look}{head} == 2) {
 		$headdir = 1;
@@ -1327,6 +1385,10 @@ sub cmdDoriDori {
 }
 
 sub cmdDrop {
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command (%s)\n", shift);
+		return;
+	}
 	my (undef, $args) = @_;
 	my ($arg1) = $args =~ /^([\d,-]+)/;
 	my ($arg2) = $args =~ /^[\d,-]+ (\d+)$/;
@@ -1356,16 +1418,20 @@ sub cmdDrop {
 }
 
 sub cmdDump {
-	dumpData($incomingMessages->getBuffer());
+	dumpData((defined $incomingMessages) ? $incomingMessages->getBuffer() : '');
 	quit();
 }
 
 sub cmdDumpNow {
-	dumpData($incomingMessages->getBuffer());
+	dumpData((defined $incomingMessages) ? $incomingMessages->getBuffer() : '');
 }
 
 sub cmdEmotion {
 	# Show emotion
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command (%s)\n", shift);
+		return;
+	}
 	my (undef, $args) = @_;
 
 	my $num = getEmotionByCommand($args);
@@ -1379,6 +1445,7 @@ sub cmdEmotion {
 }
 
 sub cmdEquip {
+
 	# Equip an item
 	my (undef, $args) = @_;
 	my ($arg1,$arg2) = $args =~ /^(\S+)\s*(.*)/;
@@ -1393,6 +1460,11 @@ sub cmdEquip {
 	if ($arg1 eq "slots") {
 		# Translation Comment: List of equiped items on each slot
 		message T("Slots:\n") . join("\n", @Actor::Item::slots). "\n", "list";
+		return;
+	}
+
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command (%s)\n", 'eq ' . $args);
 		return;
 	}
 
@@ -1423,6 +1495,10 @@ sub cmdEquip {
 }
 
 sub cmdEquip_list {
+	if (!$char) {
+		error T("Character equipment not yet ready\n");
+		return;
+	}
 	for my $slot (@Actor::Item::slots) {
 		my $item = $char->{equipment}{$slot};
 		my $name = $item ? $item->nameString : '-';
@@ -1455,6 +1531,28 @@ sub cmdExp {
 	# exp report
 	my ($arg1) = $args =~ /^(\w+)/;
 	
+	if ($arg1 eq "reset") {
+		$knownArg = 1;
+		($bExpSwitch,$jExpSwitch,$totalBaseExp,$totalJobExp) = (2,2,0,0);
+		$startTime_EXP = time;
+		$startingZenny = $char->{zenny} if $char;
+		undef @monsters_Killed;
+		$dmgpsec = 0;
+		$totaldmg = 0;
+		$elasped = 0;
+		$totalelasped = 0;
+		undef %itemChange;
+		$bytesSent = 0;
+		$bytesReceived = 0;
+		message T("Exp counter reset.\n"), "success";
+		return;
+	}
+	
+	if (!$char) {
+		error T("Exp report not yet ready\n");
+		return;
+	}
+
 	if (($arg1 eq "") || ($arg1 eq "report")) {
 		$knownArg = 1;
 		my ($endTime_EXP, $w_sec, $bExpPerHour, $jExpPerHour, $EstB_sec, $percentB, $percentJ, $zennyMade, $zennyPerHour, $EstJ_sec, $percentJhr, $percentBhr);
@@ -1534,22 +1632,6 @@ sub cmdExp {
 
 	}
 	
-	if ($arg1 eq "reset") {
-		$knownArg = 1;
-		($bExpSwitch,$jExpSwitch,$totalBaseExp,$totalJobExp) = (2,2,0,0);
-		$startTime_EXP = time;
-		$startingZenny = $char->{zenny};
-		undef @monsters_Killed;
-		$dmgpsec = 0;
-		$totaldmg = 0;
-		$elasped = 0;
-		$totalelasped = 0;
-		undef %itemChange;
-		$bytesSent = 0;
-		$bytesReceived = 0;
-		message T("Exp counter reset.\n"), "success";
-	}
-	
 	if (!$knownArg) {
 		error T("Syntax error in function 'exp' (Exp Report)\n" .
 			"Usage: exp [<report | monster | item | reset>]\n");
@@ -1560,10 +1642,12 @@ sub cmdFalcon {
 	my (undef, $arg1) = @_;
 
 	my $hasFalcon;
-	foreach my $ID (keys %{$char->{statuses}}) {
-		if ($ID eq "Falcon") {
-			$hasFalcon = 1;
-			last;
+	if ($char) {
+		foreach my $ID (keys %{$char->{statuses}}) {
+			if ($ID eq "Falcon") {
+				$hasFalcon = 1;
+				last;
+			}
 		}
 	}
 	if ($arg1 eq "") {
@@ -1574,8 +1658,11 @@ sub cmdFalcon {
 		}
 	} elsif ($arg1 eq "release") {
 		if (!$hasFalcon) {
-		error T("Error in function 'falcon release' (Remove Falcon Status)\n" .
-			"You don't possess a falcon.\n");
+			error T("Error in function 'falcon release' (Remove Falcon Status)\n" .
+				"You don't possess a falcon.\n");
+		} elsif (!$net || $net->getState() != Network::IN_GAME) {
+			error TF("You must be logged in the game to use this command (%s)\n", 'falcon release');
+			return;
 		} else {
 			$messageSender->sendCompanionRelease();
 		}
@@ -1613,7 +1700,22 @@ sub cmdFriend {
 	my (undef, $args) = @_;
 	my ($arg1, $arg2) = split(' ', $args, 2);
 
-	if ($arg1 eq "request") {
+	if ($arg1 eq "") {
+		message T("------------- Friends --------------\n" .
+			"#   Name                      Online\n"), "list";
+		for (my $i = 0; $i < @friendsID; $i++) {
+			message(swrite(
+				"@<  @<<<<<<<<<<<<<<<<<<<<<<<  @",
+				[$i + 1, $friends{$i}{'name'}, $friends{$i}{'online'}? 'X':'']),
+				"list");
+		}
+		message("----------------------------------\n", "list");
+
+	} elsif (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command (%s)\n", 'friend ' . $arg1);
+		return;
+
+	} elsif ($arg1 eq "request") {
 		my $player = Match::player($arg2);
 
 		if (!$player) {
@@ -1676,28 +1778,20 @@ sub cmdFriend {
 			}
 		}
 
-	} elsif ($arg1 ne "") {
+	} else {
 		error T("Syntax Error in function 'friend' (Manage Friends List)\n" .
 			"Usage: friend [request|remove|accept|reject|pm]\n");
-
-	} else {
-		message T("------------- Friends --------------\n" .
-			"#   Name                      Online\n"), "list";
-		for (my $i = 0; $i < @friendsID; $i++) {
-			message(swrite(
-				"@<  @<<<<<<<<<<<<<<<<<<<<<<<  @",
-				[$i + 1, $friends{$i}{'name'}, $friends{$i}{'online'}? 'X':'']),
-				"list");
-		}
-		message("----------------------------------\n", "list");
 	}
-
 }
 
 sub cmdHomunculus {
  	my (undef, $subcmd) = @_;
 	my @args = parseArgs($subcmd);
 
+	if (!$char) {
+		error T("Error: Can't detect homunculus - character is not yet ready\n");
+		return;
+	}
 	if (!$char->{homunculus} || !$char->{homunculus}{appear_time} || ($char->{homunculus}{state} & 2) || ($char->{homunculus}{state} & 4)) {
 		error T("Error: No Homunculus detected.\n");
 
@@ -1726,6 +1820,10 @@ sub cmdHomunculus {
 		message($msg, "info");
 
 	} elsif ($subcmd eq "feed") {
+		if (!$net || $net->getState() != Network::IN_GAME) {
+			error TF("You must be logged in the game to use this command (%s)\n", 'homun ' . $subcmd);
+			return;
+		}
 		if ($char->{homunculus}{hunger} >= 76) {
 			message T("Your homunculus is not yet hungry. Feeding it now will lower intimacy.\n"), "homunculus";
 		} else {
@@ -1734,6 +1832,10 @@ sub cmdHomunculus {
 		}
 
 	} elsif ($args[0] eq "move") {
+		if (!$net || $net->getState() != Network::IN_GAME) {
+			error TF("You must be logged in the game to use this command (%s)\n", 'homun ' . $subcmd);
+			return;
+		}
 		if (!($args[1] =~ /^\d+$/) || !($args[2] =~ /^\d+$/)) {
 			error TF("Error in function 'homun move' (Homunculus Move)\n" .
 				"Invalid coordinates (%s, %s) specified.\n", $args[1], $args[2]);
@@ -1744,6 +1846,10 @@ sub cmdHomunculus {
 		}
 
 	} elsif ($subcmd eq "standby") {
+		if (!$net || $net->getState() != Network::IN_GAME) {
+			error TF("You must be logged in the game to use this command (%s)\n", 'homun ' . $subcmd);
+			return;
+		}
 		$messageSender->sendHomunculusStandBy($char->{homunculus}{ID});
 
 	} elsif ($args[0] eq 'ai') {
@@ -1837,6 +1943,10 @@ sub cmdHomunculus {
 			message($msg, "list");
 
 		} elsif ($args[1] eq "add" && $args[2] =~ /\d+/) {
+			if (!$net || $net->getState() != Network::IN_GAME) {
+				error TF("You must be logged in the game to use this command (%s)\n", 'homun ' . $subcmd);
+				return;
+			}
 			my $skill = new Skill(idn => $args[2]);
 			if (!$skill->getIDN() || !$char->{skills}{$skill->getHandle()}) {
 				error TF("Error in function 'homun skills add' (Add Skill Point)\n" .
@@ -1872,11 +1982,20 @@ sub cmdHomunculus {
 }
 
 sub cmdGetPlayerInfo {
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command (%s)\n", shift);
+		return;
+	}
 	my (undef, $args) = @_;
 	$messageSender->sendGetPlayerInfo(pack("V", $args));
 }
 
 sub cmdGmb {
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command (%s)\n", shift);
+		return;
+	}
+
 	my (undef, $args) = @_;
 	return unless ($char);
 
@@ -1891,6 +2010,11 @@ sub cmdGmb {
 }
 
 sub cmdGmbb {
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command (%s)\n", shift);
+		return;
+	}
+
 	my (undef, $args) = @_;
 	return unless ($char);
 
@@ -1905,6 +2029,11 @@ sub cmdGmbb {
 }
 
 sub cmdGmnb {
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command (%s)\n", shift);
+		return;
+	}
+
 	my (undef, $args) = @_;
 	return unless ($char);
 
@@ -1919,6 +2048,11 @@ sub cmdGmnb {
 }
 
 sub cmdGmlb {
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command (%s)\n", shift);
+		return;
+	}
+
 	my (undef, $args) = @_;
 	return unless ($char);
 
@@ -1933,6 +2067,11 @@ sub cmdGmlb {
 }
 
 sub cmdGmlbb {
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command (%s)\n", shift);
+		return;
+	}
+
 	my (undef, $args) = @_;
 	return unless ($char);
 
@@ -1947,6 +2086,11 @@ sub cmdGmlbb {
 }
 
 sub cmdGmnlb {
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command (%s)\n", shift);
+		return;
+	}
+
 	my (undef, $args) = @_;
 	return unless ($char);
 
@@ -1961,8 +2105,12 @@ sub cmdGmnlb {
 }
 
 sub cmdGmmapmove {
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command (%s)\n", shift);
+		return;
+	}
+
 	my (undef, $args) = @_;
-	return unless ($net && $net->getState() == Network::IN_GAME);
 
 	my ($map_name) = $args =~ /(\S+)/;
 	# this will pack as 0 if it fails to match
@@ -1979,22 +2127,28 @@ sub cmdGmmapmove {
 }
 
 sub cmdGmsummon {
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command (%s)\n", shift);
+		return;
+	}
+
 	my (undef, $args) = @_;
-	return unless ($net && $net->getState() == Network::IN_GAME);
 
 	if ($args eq '') {
 		error "Usage: gmsummon <player name>\n" .
 			"Summon a player.\n";
-	} elsif ($net->getState() != Network::IN_GAME) {
-		error "You are not logged in the game.\n";
 	} else {
 		$messageSender->sendGmSummon($args);
 	}
 }
 
 sub cmdGmdc {
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command (%s)\n", shift);
+		return;
+	}
+
 	my (undef, $args) = @_;
-	return unless ($net && $net->getState() == Network::IN_GAME);
 
 	if ($args !~ /^\d+$/) {
 		error "Usage: gmdc <player_AID>\n";
@@ -2006,14 +2160,20 @@ sub cmdGmdc {
 }
 
 sub cmdGmkillall {
-	return unless ($net && $net->getState() == Network::IN_GAME);
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command (%s)\n", shift);
+		return;
+	}
 	my $packet = pack("C*", 0xCE, 0x00);
 	$messageSender->sendToServer($packet);
 }
 
 sub cmdGmcreate {
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command (%s)\n", shift);
+		return;
+	}
 	my (undef, $args) = @_;
-	return unless ($net && $net->getState() == Network::IN_GAME);
 
 	if ($args eq '') {
 		error "Usage: gmcreate (<MONSTER_NAME> || <Item_Name>) \n";
@@ -2025,22 +2185,37 @@ sub cmdGmcreate {
 }
 
 sub cmdGmhide {
-	return unless ($net && $net->getState() == Network::IN_GAME);
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command (%s)\n", shift);
+		return;
+	}
 	my $packet = pack("C*", 0x9D, 0x01, 0x40, 0x00, 0x00, 0x00);
 	$messageSender->sendToServer($packet);
 }
 
 sub cmdGmresetstate {
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command (%s)\n", shift);
+		return;
+	}
 	my $packet = pack("C1 C1 v1", 0x97, 0x01, 0);
 	$messageSender->sendToServer($packet);
 }
 
 sub cmdGmresetskill {
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command (%s)\n", shift);
+		return;
+	}
 	my $packet = pack("C1 C1 v1", 0x97, 0x01, 1);
 	$messageSender->sendToServer($packet);
 }
 
 sub cmdGmmute {
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command (%s)\n", shift);
+		return;
+	}
 	my (undef, $args) = @_;
 	my ($ID, $time) = $args =~ /^(\d+) (\d+)/;
 	if (!$ID) {
@@ -2052,6 +2227,10 @@ sub cmdGmmute {
 }
 
 sub cmdGmunmute {
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command (%s)\n", shift);
+		return;
+	}
 	my (undef, $args) = @_;
 	my ($ID, $time) = $args =~ /^(\d+) (\d+)/;
 	if (!$ID) {
@@ -2063,8 +2242,11 @@ sub cmdGmunmute {
 }
 
 sub cmdGmwarpto {
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command (%s)\n", shift);
+		return;
+	}
 	my (undef, $args) = @_;
-	return unless ($net && $net->getState() == Network::IN_GAME);
 
 	if ($args eq '') {
 		error "Usage: gmwarpto <Player Name>\n";
@@ -2076,8 +2258,11 @@ sub cmdGmwarpto {
 }
 
 sub cmdGmremove {
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command (%s)\n", shift);
+		return;
+	}
 	my (undef, $args) = @_;
-	return unless ($net && $net->getState() == Network::IN_GAME);
 
 	if ($args eq '') {
 		error "Usage: gmremove [<Character Name> | <User Name>]\n";
@@ -2089,8 +2274,11 @@ sub cmdGmremove {
 }
 
 sub cmdGmrecall {
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command (%s)\n", shift);
+		return;
+	}
 	my (undef, $args) = @_;
-	return unless ($net && $net->getState() == Network::IN_GAME);
 
 	if ($args eq '') {
 		error "Usage: gmrecall [<Character Name> | <User Name>]\n";
@@ -2783,6 +2971,11 @@ sub cmdNPCList {
 }
 
 sub cmdOpenShop {
+	if (!defined $messageSender) {
+		error T("Error in function 'openshop' (Open Shop)\n" .
+			"Can't use command while not connected to server\n");
+		return;
+	}
 	main::openShop();
 }
 
@@ -3634,7 +3827,7 @@ sub cmdStatus {
 	my $msg;
 	my ($baseEXPKill, $jobEXPKill);
 
-	if (!$char) {
+	if (!defined $char) {
 		error T("Error in function 's' (Self Functions)\n" .
 			"Can't display character - not yet recieved from server.\n");
 	} else {
