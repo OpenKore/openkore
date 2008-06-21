@@ -2,6 +2,7 @@
 ### OpenKore what-will-become-2.0.6
 =========================
 
+- Fixed bug in stripping callSign from chat commands
 - Fixed minimap_indicator (thanks to windows98SE)
 - Fixed bug in getNPCInfo that allows a zero-length map name.
 - Modified move command. Now supports standard "map x y" parameter sequence. (thanks to Chontrad, Alexander)

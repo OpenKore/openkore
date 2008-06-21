@@ -104,7 +104,7 @@ sub processFirst {
 	my $callSign = quotemeta $config{callSign};
 	if ($overallAuth{$user} && ( $type eq "pm" || $msg =~ /^\b*$callSign\b*/i )) {
 		my $msg2 = $msg;
-		$msg2 =~ s/^\b*$callSign\b*//i;
+		$msg2 =~ s/^\b*$callSign\b* *//i;
 		$msg2 =~ s/ *$//;
 		return if processChatCommand($type, $user, $msg2);
 	}
