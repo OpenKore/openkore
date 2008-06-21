@@ -2835,13 +2835,22 @@ sub cmdParty {
 		message("--------------------------\n", "list");
 
 	} elsif ($arg1 eq "create") {
-		my ($arg2) = $args =~ /^\w* ([\s\S]*)/;
-		if ($arg2 eq "") {
+		my ($name,$ipick,$ishare) = $args =~ /^create ([\s\S]+?) ?([01]?) ?([01]?)/;
+		if (!$name) {
 			error T("Syntax Error in function 'party create' (Organize Party)\n" .
-				"Usage: party create <party name>\n");
+				"Usage: party create <party name> [<pickupshare> [itemshare]]\n");
 		} else {
-			$messageSender->sendPartyOrganize($arg2);
+			$messageSender->sendPartyOrganize($name,$ipick,$ishare);
 		}
+
+#	} elsif ($arg1 eq "create") {
+#		my ($arg2) = $args =~ /^\w* ([\s\S]*)/;
+#		if ($arg2 eq "") {
+#			error T("Syntax Error in function 'party create' (Organize Party)\n" .
+#				"Usage: party create <party name>\n");
+#		} else {
+#			$messageSender->sendPartyOrganize($arg2);
+#		}
 
 	} elsif ($arg1 eq "join" && $arg2 ne "1" && $arg2 ne "0") {
 		error T("Syntax Error in function 'party join' (Accept/Deny Party Join Request)\n" .
@@ -3634,75 +3643,79 @@ sub cmdStatus {
 	my $msg;
 	my ($baseEXPKill, $jobEXPKill);
 
-	if ($char->{'exp_last'} > $char->{'exp'}) {
-		$baseEXPKill = $char->{'exp_max_last'} - $char->{'exp_last'} + $char->{'exp'};
-	} elsif ($char->{'exp_last'} == 0 && $char->{'exp_max_last'} == 0) {
-		$baseEXPKill = 0;
-	} else {
-		$baseEXPKill = $char->{'exp'} - $char->{'exp_last'};
-	}
-	if ($char->{'exp_job_last'} > $char->{'exp_job'}) {
-		$jobEXPKill = $char->{'exp_job_max_last'} - $char->{'exp_job_last'} + $char->{'exp_job'};
-	} elsif ($char->{'exp_job_last'} == 0 && $char->{'exp_job_max_last'} == 0) {
-		$jobEXPKill = 0;
-	} else {
-		$jobEXPKill = $char->{'exp_job'} - $char->{'exp_job_last'};
-	}
+	if ($char) {
+
+		if ($char->{'exp_last'} > $char->{'exp'}) {
+			$baseEXPKill = $char->{'exp_max_last'} - $char->{'exp_last'} + $char->{'exp'};
+		} elsif ($char->{'exp_last'} == 0 && $char->{'exp_max_last'} == 0) {
+			$baseEXPKill = 0;
+		} else {
+			$baseEXPKill = $char->{'exp'} - $char->{'exp_last'};
+		}
+		if ($char->{'exp_job_last'} > $char->{'exp_job'}) {
+			$jobEXPKill = $char->{'exp_job_max_last'} - $char->{'exp_job_last'} + $char->{'exp_job'};
+		} elsif ($char->{'exp_job_last'} == 0 && $char->{'exp_job_max_last'} == 0) {
+			$jobEXPKill = 0;
+		} else {
+			$jobEXPKill = $char->{'exp_job'} - $char->{'exp_job_last'};
+		}
 
 
-	my ($hp_string, $sp_string, $base_string, $job_string, $weight_string, $job_name_string, $zeny_string);
+		my ($hp_string, $sp_string, $base_string, $job_string, $weight_string, $job_name_string, $zeny_string);
 
-	$hp_string = $char->{'hp'}."/".$char->{'hp_max'}." ("
-		.int($char->{'hp'}/$char->{'hp_max'} * 100)
-		."%)" if $char->{'hp_max'};
-	$sp_string = $char->{'sp'}."/".$char->{'sp_max'}." ("
-		.int($char->{'sp'}/$char->{'sp_max'} * 100)
-		."%)" if $char->{'sp_max'};
-	$base_string = formatNumber($char->{'exp'})."/".formatNumber($char->{'exp_max'})." /$baseEXPKill ("
+		$hp_string = $char->{'hp'}."/".$char->{'hp_max'}." ("
+			.int($char->{'hp'}/$char->{'hp_max'} * 100)
+			."%)" if $char->{'hp_max'};
+		$sp_string = $char->{'sp'}."/".$char->{'sp_max'}." ("
+			.int($char->{'sp'}/$char->{'sp_max'} * 100)
+			."%)" if $char->{'sp_max'};
+		$base_string = formatNumber($char->{'exp'})."/".formatNumber($char->{'exp_max'})." /$baseEXPKill ("
 			.sprintf("%.2f",$char->{'exp'}/$char->{'exp_max'} * 100)
 			."%)"
 			if $char->{'exp_max'};
-	$job_string = formatNumber($char->{'exp_job'})."/".formatNumber($char->{'exp_job_max'})." /$jobEXPKill ("
+		$job_string = formatNumber($char->{'exp_job'})."/".formatNumber($char->{'exp_job_max'})." /$jobEXPKill ("
 			.sprintf("%.2f",$char->{'exp_job'}/$char->{'exp_job_max'} * 100)
 			."%)"
 			if $char->{'exp_job_max'};
-	$weight_string = $char->{'weight'}."/".$char->{'weight_max'} .
+		$weight_string = $char->{'weight'}."/".$char->{'weight_max'} .
 			" (" . sprintf("%.1f", $char->{'weight'}/$char->{'weight_max'} * 100)
 			. "%)"
 			if $char->{'weight_max'};
-	$job_name_string = "$jobs_lut{$char->{'jobID'}} $sex_lut{$char->{'sex'}}";
-	$zeny_string = formatNumber($char->{'zenny'}) if (defined($char->{'zenny'}));
+		$job_name_string = "$jobs_lut{$char->{'jobID'}} $sex_lut{$char->{'sex'}}";
+		$zeny_string = formatNumber($char->{'zenny'}) if (defined($char->{'zenny'}));
 
-	# Translation Comment: No status effect on player		
-	my $statuses = 'none';
-	if (defined $char->{statuses} && %{$char->{statuses}}) {
-		$statuses = join(", ", keys %{$char->{statuses}});
-	}
+		# Translation Comment: No status effect on player		
+		my $statuses = 'none';
+		if (defined $char->{statuses} && %{$char->{statuses}}) {
+			$statuses = join(", ", keys %{$char->{statuses}});
+		}
 
-	my $dmgpsec_string = sprintf("%.2f", $dmgpsec);
-	my $totalelasped_string = sprintf("%.2f", $totalelasped);
-	my $elasped_string = sprintf("%.2f", $elasped);
+		my $dmgpsec_string = sprintf("%.2f", $dmgpsec);
+		my $totalelasped_string = sprintf("%.2f", $totalelasped);
+		my $elasped_string = sprintf("%.2f", $elasped);
 	
-	$msg = swrite(
-		TF("----------------------- Status -------------------------\n" .
-		"\@<<<<<<<<<<<<<<<<<<<<<<<         HP: \@>>>>>>>>>>>>>>>>>>\n" .
-		"\@<<<<<<<<<<<<<<<<<<<<<<<         SP: \@>>>>>>>>>>>>>>>>>>\n" .
-		"Base: \@<<    \@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n" .
-		"Job : \@<<    \@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n" .
-		"Zeny: \@<<<<<<<<<<<<<<<<<     Weight: \@>>>>>>>>>>>>>>>>>>\n" .
-		"Statuses: %s\n" .
-		"Spirits/Coins: %s\n" .
-		"--------------------------------------------------------\n" .
-		"Total Damage: \@>>>>>>>>>>>>> Dmg/sec: \@<<<<<<<<<<<<<<\n" .
-		"Total Time spent (sec): \@>>>>>>>>\n" .
-		"Last Monster took (sec): \@>>>>>>>\n" .
-		"--------------------------------------------------------",
-		$statuses, (exists $char->{spirits} ? $char->{spirits} : 0)),
-		[$char->{'name'}, $hp_string, $job_name_string, $sp_string,
-		$char->{'lv'}, $base_string, $char->{'lv_job'}, $job_string, $zeny_string, $weight_string,
-		$totaldmg, $dmgpsec_string, $totalelasped_string, $elasped_string]);
+		$msg = swrite(
+			TF("----------------------- Status -------------------------\n" .
+			"\@<<<<<<<<<<<<<<<<<<<<<<<         HP: \@>>>>>>>>>>>>>>>>>>\n" .
+			"\@<<<<<<<<<<<<<<<<<<<<<<<         SP: \@>>>>>>>>>>>>>>>>>>\n" .
+			"Base: \@<<    \@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n" .
+			"Job : \@<<    \@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n" .
+			"Zeny: \@<<<<<<<<<<<<<<<<<     Weight: \@>>>>>>>>>>>>>>>>>>\n" .
+			"Statuses: %s\n" .
+			"Spirits/Coins: %s\n" .
+			"--------------------------------------------------------\n" .
+			"Total Damage: \@>>>>>>>>>>>>> Dmg/sec: \@<<<<<<<<<<<<<<\n" .
+			"Total Time spent (sec): \@>>>>>>>>\n" .
+			"Last Monster took (sec): \@>>>>>>>\n" .
+			"--------------------------------------------------------",
+			$statuses, (exists $char->{spirits} ? $char->{spirits} : 0)),
+			[$char->{'name'}, $hp_string, $job_name_string, $sp_string,
+			$char->{'lv'}, $base_string, $char->{'lv_job'}, $job_string, $zeny_string, $weight_string,
+			$totaldmg, $dmgpsec_string, $totalelasped_string, $elasped_string]);
 		
-	message($msg, "info");
+		message($msg, "info");
+
+	}
 }
 
 sub cmdStorage {
