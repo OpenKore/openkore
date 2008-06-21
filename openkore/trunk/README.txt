@@ -2,7 +2,7 @@
 ### OpenKore what-will-become-2.0.6
 =========================
 
-- Fixed bug in 'reload' chat command
+- Fixed bug in 'reload' chat command (thanks to Motivus)
 - Fixed bug in stripping callSign from chat commands
 - Fixed minimap_indicator (thanks to windows98SE)
 - Fixed bug in getNPCInfo that allows a zero-length map name.
