@@ -2956,7 +2956,11 @@ sub guild_expulsionlist {
 sub guild_info {
 	my ($self, $args) = @_;
 	# Guild Info
-	hashCopyByKey(\%guild, $args, qw(ID lvl conMember maxMember average exp next_exp members name master));
+	foreach (qw(ID lvl conMember maxMember average exp next_exp members)) {
+		$guild{$_} = $args->{$_};
+	}
+	$guild{name} = bytesToString($args->{name});
+	$guild{master} = bytesToString($args->{master});
 	$guild{members}++; # count ourselves in the guild members count
 }
 
