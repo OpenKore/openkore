@@ -451,7 +451,7 @@ sub main {
 		my $msg = "No LOS from ($realMyPos->{x}, $realMyPos->{y}) to target ($realMonsterPos->{x}, $realMonsterPos->{y})";
 		if ($best_spot) {
 			message TF("%s; moving to (%s, %s)\n", $msg, $best_spot->{x}, $best_spot->{y});
-			if ($config{attackChangeTarget} == 2)
+			if ($config{attackChangeTarget} == 2) {
 				# Restart attack from processAutoAttack
 				AI::dequeue;
 				ai_route($field{name}, $best_spot->{x}, $best_spot->{y}, LOSSubRoute => 1);
