@@ -2729,7 +2729,7 @@ sub homunculus_skills {
 sub homunculus_stats {
 	my ($self, $args) = @_;
 	my $homunculus = $char->{homunculus};
-	$homunculus->{name} = $args->{name};
+	$homunculus->{name} = bytesToString($args->{name});
 
 	# Homunculus states:
 	# 0 - alive
@@ -2991,14 +2991,14 @@ sub guild_leave {
 	my ($self, $args) = @_;
 
 	message TF("%s has left the guild.\n" .
-		"Reason: %s\n", $args->{name}, $args->{message}), "schat";
+		"Reason: %s\n", bytesToString($args->{name}), bytesToString($args->{message})), "schat";
 }
 
 sub guild_expulsion {
 	my ($self, $args) = @_;
 
 	message TF("%s has been removed from the guild.\n" .
-		"Reason: %s\n", $args->{name}, $args->{message}), "schat";
+		"Reason: %s\n", bytesToString($args->{name}), bytesToString($args->{message})), "schat";
 }
 
 sub guild_members_list {
@@ -4256,19 +4256,20 @@ sub party_hp_info {
 
 sub party_invite {
 	my ($self, $args) = @_;
-	message TF("Incoming Request to join party '%s'\n", $args->{name});
+	message TF("Incoming Request to join party '%s'\n", bytesToString($args->{name}));
 	$incomingParty{ID} = $args->{ID};
 	$timeout{ai_partyAutoDeny}{time} = time;
 }
 
 sub party_invite_result {
 	my ($self, $args) = @_;
+	my $name = bytesToString($args->{name});
 	if ($args->{type} == 0) {
-		warning TF("Join request failed: %s is already in a party\n", $args->{name});
+		warning TF("Join request failed: %s is already in a party\n", $name);
 	} elsif ($args->{type} == 1) {
-		warning TF("Join request failed: %s denied request\n", $args->{name});
+		warning TF("Join request failed: %s denied request\n", $name);
 	} elsif ($args->{type} == 2) {
-		message TF("%s accepted your request\n", $args->{name}), "info";
+		message TF("%s accepted your request\n", $name), "info";
 	}
 }
 
