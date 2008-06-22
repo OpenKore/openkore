@@ -2293,7 +2293,79 @@ sub cmdGuild {
 	my (undef, $args) = @_;
 	my ($arg1, $arg2) = split(' ', $args, 2);
 
-	if ($arg1 eq "join") {
+	if ($arg1 eq "" || (!%guild && ($arg1 eq "info" || $arg1 eq "member" || $arg1 eq "kick"))) {
+		if (!$net || $net->getState() != Network::IN_GAME) {
+			if ($arg1 eq "") {
+				error T("You must be logged in the game to request guild information\n");
+			} else {
+				error TF("Guild information is not yet available. You must login to the game and use the '%s' command first\n", 'guild');
+			}
+			return;
+		}
+		message	T("Requesting guild information...\n"), "info";
+		$messageSender->sendGuildInfoRequest();
+
+		# Replies 01B6 (Guild Info) and 014C (Guild Ally/Enemy List)
+		$messageSender->sendGuildRequest(0);
+
+		# Replies 0166 (Guild Member Titles List) and 0154 (Guild Members List)
+		$messageSender->sendGuildRequest(1);
+
+		if ($arg1 eq "") {
+			message T("Enter command to view guild information: guild <info | member>\n"), "info";
+		} else {
+			message	TF("Type 'guild %s' again to view the information.\n", $args), "info";
+		}
+
+	} elsif ($arg1 eq "info") {
+		message swrite(T("---------- Guild Information ----------\n" .
+			"Name    : \@<<<<<<<<<<<<<<<<<<<<<<<<\n" .
+			"Lv      : \@<<\n" .
+			"Exp     : \@>>>>>>>>>/\@<<<<<<<<<<\n" .
+			"Master  : \@<<<<<<<<<<<<<<<<<<<<<<<<\n" .
+			"Connect : \@>>/\@<<"),
+			[$guild{name}, $guild{lvl}, $guild{exp}, $guild{next_exp}, $guild{master}, 
+			$guild{conMember}, $guild{maxMember}]),	"info";
+		for my $ally (keys %{$guild{ally}}) {
+			# Translation Comment: List of allies. Keep the same spaces of the - Guild Information - tag.
+			message TF("Ally    : %s (%s)\n", $guild{ally}{$ally}, $ally), "info";
+		}
+		message("---------------------------------------\n", "info");
+
+	} elsif ($arg1 eq "member") {
+		if (!$guild{member}) {
+			error T("No guild member information available.\n");
+			return;
+		}
+
+		my $msg = T("------------ Guild  Member ------------\n" .
+			"#  Name                       Job        Lv  Title                    Online\n");
+
+		my ($i, $name, $job, $lvl, $title, $online, $ID, $charID);
+		my $count = @{$guild{member}};
+		for ($i = 0; $i < $count; $i++) {
+			$name  = $guild{member}[$i]{name};
+			next if (!defined $name);
+
+			$job   = $jobs_lut{$guild{member}[$i]{jobID}};
+			$lvl   = $guild{member}[$i]{lvl};
+			$title = $guild{member}[$i]{title};
+ 			# Translation Comment: Guild member online
+			$online = $guild{member}[$i]{online} ? T("Yes") : T("No");
+			$ID = unpack("V",$guild{member}[$i]{ID});
+			$charID = unpack("V",$guild{member}[$i]{charID});
+
+			$msg .= swrite("@< @<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<< @>  @<<<<<<<<<<<<<<<<<<<<<<< @<<",
+					[$i, $name, $job, $lvl, $title, $online, $ID, $charID]);
+		}
+		$msg .= "---------------------------------------\n";
+		message $msg, "list";
+		
+	} elsif (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command (%s)\n", 'guild ' . $arg1);
+		return;
+
+	} elsif ($arg1 eq "join") {
 		if ($arg2 ne "1" && $arg2 ne "0") {
 			error T("Syntax Error in function 'guild join' (Accept/Deny Guild Join Request)\n" .
 				"Usage: guild join <flag>\n");
@@ -2361,37 +2433,6 @@ sub cmdGuild {
 			message TF("Sending guild break: %s\n", $arg2);
 		}
 
-	} elsif ($arg1 eq "" || !%guild) {
-		message	T("Requesting guild information...\n"), "info";
-		$messageSender->sendGuildInfoRequest();
-
-		# Replies 01B6 (Guild Info) and 014C (Guild Ally/Enemy List)
-		$messageSender->sendGuildRequest(0);
-
-		# Replies 0166 (Guild Member Titles List) and 0154 (Guild Members List)
-		$messageSender->sendGuildRequest(1);
-
-		if ($arg1 eq "") {
-			message T("Enter command to view guild information: guild <info | member>\n"), "info";
-		} else {
-			message	TF("Type 'guild %s' again to view the information.\n", $args), "info";
-		}
-
-	} elsif ($arg1 eq "info") {
-		message swrite(T("---------- Guild Information ----------\n" .
-			"Name    : \@<<<<<<<<<<<<<<<<<<<<<<<<\n" .
-			"Lv      : \@<<\n" .
-			"Exp     : \@>>>>>>>>>/\@<<<<<<<<<<\n" .
-			"Master  : \@<<<<<<<<<<<<<<<<<<<<<<<<\n" .
-			"Connect : \@>>/\@<<"),
-			[$guild{name}, $guild{lvl}, $guild{exp}, $guild{next_exp}, $guild{master}, 
-			$guild{conMember}, $guild{maxMember}]),	"info";
-		for my $ally (keys %{$guild{ally}}) {
-			# Translation Comment: List of allies. Keep the same spaces of the - Guild Information - tag.
-			message TF("Ally    : %s (%s)\n", $guild{ally}{$ally}, $ally), "info";
-		}
-		message("---------------------------------------\n", "info");
-
 	} elsif ($arg1 eq "kick") {
 		if (!$guild{member}) {
 			error T("No guild member information available.\n");
@@ -2412,40 +2453,14 @@ sub cmdGuild {
 			error T("Syntax Error in function 'guild kick' (Kick Guild Member)\n" .
 				"Usage: guild kick <number> <reason>\n");
 		}
-
-	} elsif ($arg1 eq "member") {
-		if (!$guild{member}) {
-			error T("No guild member information available.\n");
-			return;
-		}
-
-		my $msg = T("------------ Guild  Member ------------\n" .
-			"#  Name                       Job        Lv  Title                    Online\n");
-
-		my ($i, $name, $job, $lvl, $title, $online, $ID, $charID);
-		my $count = @{$guild{member}};
-		for ($i = 0; $i < $count; $i++) {
-			$name  = $guild{member}[$i]{name};
-			next if (!defined $name);
-
-			$job   = $jobs_lut{$guild{member}[$i]{jobID}};
-			$lvl   = $guild{member}[$i]{lvl};
-			$title = $guild{member}[$i]{title};
- 			# Translation Comment: Guild member online
-			$online = $guild{member}[$i]{online} ? T("Yes") : T("No");
-			$ID = unpack("V",$guild{member}[$i]{ID});
-			$charID = unpack("V",$guild{member}[$i]{charID});
-
-			$msg .= swrite("@< @<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<< @>  @<<<<<<<<<<<<<<<<<<<<<<< @<<",
-					[$i, $name, $job, $lvl, $title, $online, $ID, $charID]);
-		}
-		$msg .= "---------------------------------------\n";
-		message $msg, "list";
-
 	}
 }
 
 sub cmdGuildChat {
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command (%s)\n", shift);
+		return;
+	}
 	my (undef, $arg1) = @_;
 	if ($arg1 eq "") {
 		error T("Syntax Error in function 'g' (Guild Chat)\n" .
@@ -2558,6 +2573,10 @@ sub helpIndent {
 }
 
 sub cmdIdentify {
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command (%s)\n", shift);
+		return;
+	}
 	my (undef, $arg1) = @_;
 	if ($arg1 eq "") {
 		message T("---------Identify List--------\n"), "list";
@@ -2585,6 +2604,10 @@ sub cmdIdentify {
 }
 
 sub cmdIgnore {
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command (%s)\n", shift);
+		return;
+	}
 	my (undef, $args) = @_;
 	my ($arg1, $arg2) = $args =~ /^(\d+) ([\s\S]*)/;
 	if ($arg1 eq "" || $arg2 eq "" || ($arg1 ne "0" && $arg1 ne "1")) {
@@ -2815,6 +2838,10 @@ sub cmdLookPlayer {
 }
 
 sub cmdManualMove {
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command (%s)\n", shift);
+		return;
+	}
 	my ($switch, $steps) = @_;
 	if (!$steps) {
 		$steps = 5; 
@@ -2843,6 +2870,10 @@ sub cmdManualMove {
 }
 
 sub cmdMemo {
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command (%s)\n", shift);
+		return;
+	}
 	$messageSender->sendMemo();
 }
 
@@ -2851,7 +2882,7 @@ sub cmdMonsterList {
 	message TF("-----------Monster List-----------\n" .
 		"#   Name                        ID      DmgTo DmgFrom  Distance    Coordinates\n"),	"list";
 
-	$monsters = $monstersList->getItems();
+	$monsters = $monstersList->getItems() if ($monstersList);
 	foreach my $monster (@{$monsters}) {
 		$dmgTo = ($monster->{dmgTo} ne "")
 			? $monster->{dmgTo}
@@ -2876,6 +2907,10 @@ sub cmdMonsterList {
 }
 
 sub cmdMove {
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command (%s)\n", shift);
+		return;
+	}
 	my (undef, $args) = @_;
 	my ($arg1, $arg2, $arg3) = $args =~ /^(.+?) (.+?)(?: (.*))?$/;
 
@@ -2941,39 +2976,39 @@ sub cmdNPCList {
 	my @arg = parseArgs($args);
 	my $msg = T("-----------NPC List-----------\n" .
 		"#    Name                         Coordinates   ID\n");
+	if ($npcsList) {
+		if ($arg[0] =~ /^\d+$/) {
+			my $i = $arg[0];
+			if (my $npc = $npcsList->get($i)) {
+				my $pos = "($npc->{pos_to}{x}, $npc->{pos_to}{y})";
+				$msg .= swrite(
+					"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<   @<<<<<<<<",
+					[$i, $npc->name, $pos, $npc->{nameID}]);
+				$msg .= "---------------------------------\n";
+				message $msg, "info";
 
-	if ($arg[0] =~ /^\d+$/) {
-		my $i = $arg[0];
-		if (my $npc = $npcsList->get($i)) {
-			my $pos = "($npc->{pos_to}{x}, $npc->{pos_to}{y})";
+			} else {
+				error T("Syntax Error in function 'nl' (List NPCs)\n" .
+					"Usage: nl [<npc #>]\n");
+			}
+			return;
+		}
+
+		my $npcs = $npcsList->getItems();
+		foreach my $npc (@{$npcs}) {
+			my $pos = "($npc->{pos}{x}, $npc->{pos}{y})";
 			$msg .= swrite(
 				"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<   @<<<<<<<<",
-				[$i, $npc->name, $pos, $npc->{nameID}]);
-			$msg .= "---------------------------------\n";
-			message $msg, "info";
-
-		} else {
-			error T("Syntax Error in function 'nl' (List NPCs)\n" .
-				"Usage: nl [<npc #>]\n");
+				[$npc->{binID}, $npc->name, $pos, $npc->{nameID}]);
 		}
-		return;
-	}
-
-	my $npcs = $npcsList->getItems();
-	foreach my $npc (@{$npcs}) {
-		my $pos = "($npc->{pos}{x}, $npc->{pos}{y})";
-		$msg .= swrite(
-			"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<   @<<<<<<<<",
-			[$npc->{binID}, $npc->name, $pos, $npc->{nameID}]);
 	}
 	$msg .= "---------------------------------\n";
 	message $msg, "list";
 }
 
 sub cmdOpenShop {
-	if (!defined $messageSender) {
-		error T("Error in function 'openshop' (Open Shop)\n" .
-			"Can't use command while not connected to server\n");
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command (%s)\n", shift);
 		return;
 	}
 	main::openShop();
@@ -2984,7 +3019,7 @@ sub cmdParty {
 	my ($arg1) = $args =~ /^(\w*)/;
 	my ($arg2) = $args =~ /^\w* (\d+)\b/;
 
-	if ($arg1 eq "" && ( !$char->{'party'} || !%{$char->{'party'}} )) {
+	if ($arg1 eq "" && (!$char || !$char->{'party'} || !%{$char->{'party'}} )) {
 		error T("Error in function 'party' (Party Functions)\n" .
 			"Can't list party - you're not in a party.\n");
 	} elsif ($arg1 eq "") {
@@ -3026,6 +3061,10 @@ sub cmdParty {
 				"list");
 		}
 		message("--------------------------\n", "list");
+
+	} elsif (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command (%s)\n", 'party ' . $arg1);
+		return;
 
 	} elsif ($arg1 eq "create") {
 		my ($arg2) = $args =~ /^\w* ([\s\S]*)/;
@@ -3091,6 +3130,10 @@ sub cmdParty {
 }
 
 sub cmdPartyChat {
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command (%s)\n", shift);
+		return;
+	}
 	my (undef, $arg1) = @_;
 	if ($arg1 eq "") {
 		error T("Syntax Error in function 'p' (Party Chat)\n" .
@@ -3103,16 +3146,29 @@ sub cmdPartyChat {
 sub cmdPecopeco {
 	my (undef, $arg1) = @_;
 
+	my $hasPecopeco;
+	if ($char) {
+		foreach my $ID (keys %{$char->{statuses}}) {
+			if ($ID eq "Pecopeco") {
+				$hasPecopeco = 1;
+				last;
+			}
+		}
+	}
 	if ($arg1 eq "") {
-		if (hasPecopeco()) {
-			message T("Your Pecopeco is active");
+		if ($hasPecopeco) {
+			message T("Your Pecopeco is active\n");
 		} else {
-			message T("Your Pecopeco is inactive");			
+			message T("Your Pecopeco is inactive\n");			
 		}
 	} elsif ($arg1 eq "release") {
-		if (!hasPecopeco()) {
-		error T("Error in function 'pecopeco release' (Remove Pecopeco Status)\n" .
-			"You don't possess a Pecopeco.\n");
+		if (!$net || $net->getState() != Network::IN_GAME) {
+			error TF("You must be logged in the game to use this command (%s)\n", 'pecopeco release');
+			return;
+		}
+		if (!$hasPecopeco) {
+			error T("Error in function 'pecopeco release' (Remove Pecopeco Status)\n" .
+				"You don't possess a Pecopeco.\n");
 		} else {
 			$messageSender->sendCompanionRelease();
 		}
@@ -3127,6 +3183,10 @@ sub cmdPet {
 
 	} elsif ($subcmd eq "s" || $subcmd eq "status") {
 		message TF("-----------Pet Status-----------\nName: %-23s Accessory: %s", $pet{name}, itemNameSimple($pet{accessory})), "list";
+
+	} elsif (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command (%s)\n", 'pet ' . $subcmd);
+		return;
 
 	} elsif ($subcmd eq "p" || $subcmd eq "performance") {
 		$messageSender->sendPetPerformance();
@@ -3157,77 +3217,85 @@ sub cmdPlayerList {
 	my $msg;
 
 	if ($args eq "g") {
-	my $maxpl;
-	my $maxplg=0;
-	$msg =  T("-----------Player List-----------\n" .
-		"#    Name                                Sex   Lv  Job         Dist  Coord\n");
-	foreach my $player (@{$playersList->getItems()}) {
-		my ($name, $dist, $pos);
-		$name = $player->name;
+		my $maxpl;
+		my $maxplg=0;
+		$msg =  T("-----------Player List-----------\n" .
+			"#    Name                                Sex   Lv  Job         Dist  Coord\n");
+		if ($playersList) {
+			foreach my $player (@{$playersList->getItems()}) {
+				my ($name, $dist, $pos);
+				$name = $player->name;
 
-		if ($char->{guild}{name} eq ($player->{guild}{name})) {
+				if ($char->{guild}{name} eq ($player->{guild}{name})) {
 
-		if ($player->{guild} && %{$player->{guild}}) {
-			$name .= " [$player->{guild}{name}]";
+					if ($player->{guild} && %{$player->{guild}}) {
+						$name .= " [$player->{guild}{name}]";
+					}
+					$dist = distance($char->{pos_to}, $player->{pos_to});
+					$dist = sprintf("%.1f", $dist) if (index ($dist, '.') > -1);
+					$pos = '(' . $player->{pos_to}{x} . ', ' . $player->{pos_to}{y} . ')';
+					
+					$maxplg = $maxplg+1;
+
+					$msg .= swrite(
+						"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<< @<< @<<<<<<<<<< @<<<< @<<<<<<<<<<",
+						[$player->{binID}, $name, $sex_lut{$player->{sex}}, $player->{lv}, $player->job, $dist, $pos]);
+				}
+				$maxpl = @{$playersList->getItems()};
+			}
 		}
-		$dist = distance($char->{pos_to}, $player->{pos_to});
-		$dist = sprintf("%.1f", $dist) if (index ($dist, '.') > -1);
-		$pos = '(' . $player->{pos_to}{x} . ', ' . $player->{pos_to}{y} . ')';
-		
-		$maxplg = $maxplg+1;
-
-		$msg .= swrite(
-			"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<< @<< @<<<<<<<<<< @<<<< @<<<<<<<<<<",
-			[$player->{binID}, $name, $sex_lut{$player->{sex}}, $player->{lv}, $player->job, $dist, $pos]);
-	}
-		$maxpl = @{$playersList->getItems()};
-}
-	$msg .= "Total guild players: $maxplg \n";
+		$msg .= "Total guild players: $maxplg \n";
 		if ($maxpl ne "") {
 			$msg .= "Total players: $maxpl \n";
-		} else	{$msg .= "There are no players near you.\n";}
-	$msg .= "---------------------------------\n";
-	message($msg, "list");
-	return;
-}
+		} else {
+			$msg .= "There are no players near you.\n";
+		}
+		$msg .= "---------------------------------\n";
+		message($msg, "list");
+		return;
+	}
 
 	if ($args eq "p") {
-	my $maxpl;
-	my $maxplp=0;
-	$msg =  T("-----------Player List-----------\n" .
-		"#    Name                                Sex   Lv  Job         Dist  Coord\n");
-	foreach my $player (@{$playersList->getItems()}) {
-		my ($name, $dist, $pos);
-		$name = $player->name;
+		my $maxpl;
+		my $maxplp=0;
+		$msg =  T("-----------Player List-----------\n" .
+			"#    Name                                Sex   Lv  Job         Dist  Coord\n");
+		if ($playersList) {
+			foreach my $player (@{$playersList->getItems()}) {
+				my ($name, $dist, $pos);
+				$name = $player->name;
 
-		if ($char->{party}{name} eq ($player->{party}{name})) {
+				if ($char->{party}{name} eq ($player->{party}{name})) {
 
-		if ($player->{guild} && %{$player->{guild}}) {
-			$name .= " [$player->{guild}{name}]";
+					if ($player->{guild} && %{$player->{guild}}) {
+						$name .= " [$player->{guild}{name}]";
+					}
+					$dist = distance($char->{pos_to}, $player->{pos_to});
+					$dist = sprintf("%.1f", $dist) if (index ($dist, '.') > -1);
+					$pos = '(' . $player->{pos_to}{x} . ', ' . $player->{pos_to}{y} . ')';
+					
+					$maxplp = $maxplp+1;
+
+					$msg .= swrite(
+						"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<< @<< @<<<<<<<<<< @<<<< @<<<<<<<<<<",
+						[$player->{binID}, $name, $sex_lut{$player->{sex}}, $player->{lv}, $player->job, $dist, $pos]);
+				}
+				$maxpl = @{$playersList->getItems()};
+			}
 		}
-		$dist = distance($char->{pos_to}, $player->{pos_to});
-		$dist = sprintf("%.1f", $dist) if (index ($dist, '.') > -1);
-		$pos = '(' . $player->{pos_to}{x} . ', ' . $player->{pos_to}{y} . ')';
-		
-		$maxplp = $maxplp+1;
-
-		$msg .= swrite(
-			"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<< @<< @<<<<<<<<<< @<<<< @<<<<<<<<<<",
-			[$player->{binID}, $name, $sex_lut{$player->{sex}}, $player->{lv}, $player->job, $dist, $pos]);
-	}
-		$maxpl = @{$playersList->getItems()};
-}
-	$msg .= "Total party players: $maxplp \n";
+		$msg .= "Total party players: $maxplp \n";
 		if ($maxpl ne "") {
 			$msg .= "Total players: $maxpl \n";
-		} else	{$msg .= "There are no players near you.\n";}
-	$msg .= "---------------------------------\n";
-	message($msg, "list");
-	return;
-}
+		} else {
+			$msg .= "There are no players near you.\n";
+		}
+		$msg .= "---------------------------------\n";
+		message($msg, "list");
+		return;
+	}
 
 	if ($args ne "") {
-		my Actor::Player $player = Match::player($args);
+		my Actor::Player $player = Match::player($args) if ($playersList);
 		if (!$player) {
 			error TF("Player \"%s\" does not exist.\n", $args);
 			return;
@@ -3315,22 +3383,24 @@ sub cmdPlayerList {
 	}
 
 	{
-	my $maxpl;
+		my $maxpl;
 		$msg =  T("-----------Player List-----------\n" .
 			"#    Name                                Sex   Lv  Job         Dist  Coord\n");
-		foreach my $player (@{$playersList->getItems()}) {
-			my ($name, $dist, $pos);
-			$name = $player->name;
-			if ($player->{guild} && %{$player->{guild}}) {
-				$name .= " [$player->{guild}{name}]";
+		if ($playersList) {
+			foreach my $player (@{$playersList->getItems()}) {
+				my ($name, $dist, $pos);
+				$name = $player->name;
+				if ($player->{guild} && %{$player->{guild}}) {
+					$name .= " [$player->{guild}{name}]";
+				}
+				$dist = distance($char->{pos_to}, $player->{pos_to});
+				$dist = sprintf("%.1f", $dist) if (index ($dist, '.') > -1);
+				$pos = '(' . $player->{pos_to}{x} . ', ' . $player->{pos_to}{y} . ')';
+				$maxpl = @{$playersList->getItems()};
+				$msg .= swrite(
+					"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<< @<< @<<<<<<<<<< @<<<< @<<<<<<<<<<",
+					[$player->{binID}, $name, $sex_lut{$player->{sex}}, $player->{lv}, $player->job, $dist, $pos]);
 			}
-			$dist = distance($char->{pos_to}, $player->{pos_to});
-			$dist = sprintf("%.1f", $dist) if (index ($dist, '.') > -1);
-			$pos = '(' . $player->{pos_to}{x} . ', ' . $player->{pos_to}{y} . ')';
-			$maxpl = @{$playersList->getItems()};
-			$msg .= swrite(
-				"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<< @<< @<<<<<<<<<< @<<<< @<<<<<<<<<<",
-				[$player->{binID}, $name, $sex_lut{$player->{sex}}, $player->{lv}, $player->job, $dist, $pos]);
 		}
 		if ($maxpl ne "") {
 			$msg .= "Total players: $maxpl \n";
@@ -3483,6 +3553,10 @@ sub cmdPortalList {
 }
 
 sub cmdPrivateMessage {
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command (%s)\n", shift);
+		return;
+	}
 	my ($switch, $args) = @_;
 	my ($user, $msg) = parseArgs($args, 2);
 
@@ -3550,6 +3624,10 @@ sub cmdRelog {
 }
 
 sub cmdRepair {
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command (%s)\n", shift);
+		return;
+	}
 	my (undef, $args) = @_;
 	if ($args =~ /^\d+$/) {
 		$messageSender->sendRepairItem($args);
@@ -3560,6 +3638,10 @@ sub cmdRepair {
 }
 
 sub cmdRespawn {
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command (%s)\n", shift);
+		return;
+	}
 	if ($char->{dead}) {
 		$messageSender->sendRespawn();
 	} else {
@@ -3568,6 +3650,10 @@ sub cmdRespawn {
 }
 
 sub cmdSell {
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command (%s)\n", shift);
+		return;
+	}
 	my @args = parseArgs($_[1]);
 
 	if ($args[0] eq "" && $talk{buyOrSell}) {
@@ -3636,6 +3722,10 @@ sub cmdSell {
 }
 
 sub cmdSendRaw {
+	if (!$net || $net->getState() == Network::NOT_CONNECTED) {
+		error TF("You must be connected to the server to use this command (%s)\n", shift);
+		return;
+	}
 	my (undef, $args) = @_;
 	$messageSender->sendRaw($args);
 }
@@ -3671,6 +3761,10 @@ sub cmdShopInfoSelf {
 }
 
 sub cmdSit {
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command (%s)\n", shift);
+		return;
+	}
 	$ai_v{sitAuto_forcedBySitCommand} = 1;
 	AI::clear("move", "route", "mapRoute");
 	AI::clear("attack") unless ai_getAggressives();
@@ -3704,6 +3798,10 @@ sub cmdSkills {
 		message($msg, "list");
 
 	} elsif ($arg1 eq "add" && $arg2 =~ /\d+/) {
+		if (!$net || $net->getState() != Network::IN_GAME) {
+			error TF("You must be logged in the game to use this command (%s)\n", 'skills add');
+			return;
+		}
 		my $skill = new Skill(idn => $arg2);
 		if (!$skill->getIDN() || !$char->{skills}{$skill->getHandle()}) {
 			error TF("Error in function 'skills add' (Add Skill Point)\n" .
@@ -3746,6 +3844,10 @@ sub cmdSpells {
 }
 
 sub cmdStand {
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command (%s)\n", shift);
+		return;
+	}
 	delete $ai_v{sitAuto_forcedBySitCommand};
 	$ai_v{sitAuto_forceStop} = 1;
 	require Task::SitStand;
@@ -3760,6 +3862,10 @@ sub cmdStand {
 
 sub cmdStatAdd {
 	# Add status point
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command (%s)\n", shift);
+		return;
+	}
 	my (undef, $arg) = @_;
 	if ($arg ne "str" && $arg ne "agi" && $arg ne "vit" && $arg ne "int"
 	 && $arg ne "dex" && $arg ne "luk") {
@@ -3796,6 +3902,10 @@ sub cmdStatAdd {
 }
 
 sub cmdStats {
+	if (!$char) {
+		error T("Character stats information not yet available.\n");
+		return;
+	}
 	my $guildName = $char->{guild} ? $char->{guild}{name} : T("None");
 	my $msg = swrite(TF(
 		"---------- Char Stats ----------\n" .
@@ -3827,81 +3937,80 @@ sub cmdStatus {
 	my $msg;
 	my ($baseEXPKill, $jobEXPKill);
 
-	if (!defined $char) {
-		error T("Error in function 's' (Self Functions)\n" .
-			"Can't display character - not yet recieved from server.\n");
-	} else {
-		if ($char->{'exp_last'} > $char->{'exp'}) {
-			$baseEXPKill = $char->{'exp_max_last'} - $char->{'exp_last'} + $char->{'exp'};
-		} elsif ($char->{'exp_last'} == 0 && $char->{'exp_max_last'} == 0) {
-			$baseEXPKill = 0;
-		} else {
-			$baseEXPKill = $char->{'exp'} - $char->{'exp_last'};
-		}
-		if ($char->{'exp_job_last'} > $char->{'exp_job'}) {
-			$jobEXPKill = $char->{'exp_job_max_last'} - $char->{'exp_job_last'} + $char->{'exp_job'};
-		} elsif ($char->{'exp_job_last'} == 0 && $char->{'exp_job_max_last'} == 0) {
-			$jobEXPKill = 0;
-		} else {
-			$jobEXPKill = $char->{'exp_job'} - $char->{'exp_job_last'};
-		}
-
-
-		my ($hp_string, $sp_string, $base_string, $job_string, $weight_string, $job_name_string, $zeny_string);
-
-		$hp_string = $char->{'hp'}."/".$char->{'hp_max'}." ("
-			.int($char->{'hp'}/$char->{'hp_max'} * 100)
-			."%)" if $char->{'hp_max'};
-		$sp_string = $char->{'sp'}."/".$char->{'sp_max'}." ("
-			.int($char->{'sp'}/$char->{'sp_max'} * 100)
-			."%)" if $char->{'sp_max'};
-		$base_string = formatNumber($char->{'exp'})."/".formatNumber($char->{'exp_max'})." /$baseEXPKill ("
-			.sprintf("%.2f",$char->{'exp'}/$char->{'exp_max'} * 100)
-			."%)"
-			if $char->{'exp_max'};
-		$job_string = formatNumber($char->{'exp_job'})."/".formatNumber($char->{'exp_job_max'})." /$jobEXPKill ("
-			.sprintf("%.2f",$char->{'exp_job'}/$char->{'exp_job_max'} * 100)
-			."%)"
-			if $char->{'exp_job_max'};
-		$weight_string = $char->{'weight'}."/".$char->{'weight_max'} .
-			" (" . sprintf("%.1f", $char->{'weight'}/$char->{'weight_max'} * 100)
-			. "%)"
-			if $char->{'weight_max'};
-		$job_name_string = "$jobs_lut{$char->{'jobID'}} $sex_lut{$char->{'sex'}}";
-		$zeny_string = formatNumber($char->{'zenny'}) if (defined($char->{'zenny'}));
-
-		# Translation Comment: No status effect on player		
-		my $statuses = 'none';
-		if (defined $char->{statuses} && %{$char->{statuses}}) {
-			$statuses = join(", ", keys %{$char->{statuses}});
-		}
-
-		my $dmgpsec_string = sprintf("%.2f", $dmgpsec);
-		my $totalelasped_string = sprintf("%.2f", $totalelasped);
-		my $elasped_string = sprintf("%.2f", $elasped);
-	
-		$msg = swrite(
-			TF("----------------------- Status -------------------------\n" .
-			"\@<<<<<<<<<<<<<<<<<<<<<<<         HP: \@>>>>>>>>>>>>>>>>>>\n" .
-			"\@<<<<<<<<<<<<<<<<<<<<<<<         SP: \@>>>>>>>>>>>>>>>>>>\n" .
-			"Base: \@<<    \@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n" .
-			"Job : \@<<    \@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n" .
-			"Zeny: \@<<<<<<<<<<<<<<<<<     Weight: \@>>>>>>>>>>>>>>>>>>\n" .
-			"Statuses: %s\n" .
-			"Spirits/Coins: %s\n" .
-			"--------------------------------------------------------\n" .
-			"Total Damage: \@>>>>>>>>>>>>> Dmg/sec: \@<<<<<<<<<<<<<<\n" .
-			"Total Time spent (sec): \@>>>>>>>>\n" .
-			"Last Monster took (sec): \@>>>>>>>\n" .
-			"--------------------------------------------------------",
-			$statuses, (exists $char->{spirits} ? $char->{spirits} : 0)),
-			[$char->{'name'}, $hp_string, $job_name_string, $sp_string,
-			$char->{'lv'}, $base_string, $char->{'lv_job'}, $job_string, $zeny_string, $weight_string,
-			$totaldmg, $dmgpsec_string, $totalelasped_string, $elasped_string]);
-		
-		message($msg, "info");
-
+	if (!$char) {
+		error T("Character status information not yet available.\n");
+		return;
 	}
+
+	if ($char->{'exp_last'} > $char->{'exp'}) {
+		$baseEXPKill = $char->{'exp_max_last'} - $char->{'exp_last'} + $char->{'exp'};
+	} elsif ($char->{'exp_last'} == 0 && $char->{'exp_max_last'} == 0) {
+		$baseEXPKill = 0;
+	} else {
+		$baseEXPKill = $char->{'exp'} - $char->{'exp_last'};
+	}
+	if ($char->{'exp_job_last'} > $char->{'exp_job'}) {
+		$jobEXPKill = $char->{'exp_job_max_last'} - $char->{'exp_job_last'} + $char->{'exp_job'};
+	} elsif ($char->{'exp_job_last'} == 0 && $char->{'exp_job_max_last'} == 0) {
+		$jobEXPKill = 0;
+	} else {
+		$jobEXPKill = $char->{'exp_job'} - $char->{'exp_job_last'};
+	}
+
+
+	my ($hp_string, $sp_string, $base_string, $job_string, $weight_string, $job_name_string, $zeny_string);
+
+	$hp_string = $char->{'hp'}."/".$char->{'hp_max'}." ("
+		.int($char->{'hp'}/$char->{'hp_max'} * 100)
+		."%)" if $char->{'hp_max'};
+	$sp_string = $char->{'sp'}."/".$char->{'sp_max'}." ("
+		.int($char->{'sp'}/$char->{'sp_max'} * 100)
+		."%)" if $char->{'sp_max'};
+	$base_string = formatNumber($char->{'exp'})."/".formatNumber($char->{'exp_max'})." /$baseEXPKill ("
+		.sprintf("%.2f",$char->{'exp'}/$char->{'exp_max'} * 100)
+		."%)"
+		if $char->{'exp_max'};
+	$job_string = formatNumber($char->{'exp_job'})."/".formatNumber($char->{'exp_job_max'})." /$jobEXPKill ("
+		.sprintf("%.2f",$char->{'exp_job'}/$char->{'exp_job_max'} * 100)
+		."%)"
+		if $char->{'exp_job_max'};
+	$weight_string = $char->{'weight'}."/".$char->{'weight_max'} .
+		" (" . sprintf("%.1f", $char->{'weight'}/$char->{'weight_max'} * 100)
+		. "%)"
+		if $char->{'weight_max'};
+	$job_name_string = "$jobs_lut{$char->{'jobID'}} $sex_lut{$char->{'sex'}}";
+	$zeny_string = formatNumber($char->{'zenny'}) if (defined($char->{'zenny'}));
+
+	# Translation Comment: No status effect on player		
+	my $statuses = 'none';
+	if (defined $char->{statuses} && %{$char->{statuses}}) {
+		$statuses = join(", ", keys %{$char->{statuses}});
+	}
+
+	my $dmgpsec_string = sprintf("%.2f", $dmgpsec);
+	my $totalelasped_string = sprintf("%.2f", $totalelasped);
+	my $elasped_string = sprintf("%.2f", $elasped);
+
+	$msg = swrite(
+		TF("----------------------- Status -------------------------\n" .
+		"\@<<<<<<<<<<<<<<<<<<<<<<<         HP: \@>>>>>>>>>>>>>>>>>>\n" .
+		"\@<<<<<<<<<<<<<<<<<<<<<<<         SP: \@>>>>>>>>>>>>>>>>>>\n" .
+		"Base: \@<<    \@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n" .
+		"Job : \@<<    \@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n" .
+		"Zeny: \@<<<<<<<<<<<<<<<<<     Weight: \@>>>>>>>>>>>>>>>>>>\n" .
+		"Statuses: %s\n" .
+		"Spirits/Coins: %s\n" .
+		"--------------------------------------------------------\n" .
+		"Total Damage: \@>>>>>>>>>>>>> Dmg/sec: \@<<<<<<<<<<<<<<\n" .
+		"Total Time spent (sec): \@>>>>>>>>\n" .
+		"Last Monster took (sec): \@>>>>>>>\n" .
+		"--------------------------------------------------------",
+		$statuses, (exists $char->{spirits} ? $char->{spirits} : 0)),
+		[$char->{'name'}, $hp_string, $job_name_string, $sp_string,
+		$char->{'lv'}, $base_string, $char->{'lv_job'}, $job_string, $zeny_string, $weight_string,
+		$totaldmg, $dmgpsec_string, $totalelasped_string, $elasped_string]);
+	
+	message($msg, "info");
 }
 
 sub cmdStorage {
@@ -4125,7 +4234,8 @@ sub cmdStore {
 				"list");
 		}
 		message("-------------------------------\n", "list");
-	} elsif ($arg1 eq "" && $talk{'buyOrSell'}) {
+	} elsif ($arg1 eq "" && $talk{'buyOrSell'}
+	 && $net && $net->getState() != Network::IN_GAME) {
 		$messageSender->sendGetStoreList($talk{'ID'});
 
 	} elsif ($arg1 eq "desc" && $arg2 =~ /\d+/ && !$storeList[$arg2]) {
@@ -4174,6 +4284,10 @@ sub cmdTake {
 }
 
 sub cmdTalk {
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command (%s)\n", shift);
+		return;
+	}
 	my (undef, $args) = @_;
 	my ($arg1) = $args =~ /^(\w+)/;
 	my ($arg2) = $args =~ /^\w+ (\d+)/;
@@ -4316,6 +4430,10 @@ sub cmdTank {
 }
 
 sub cmdTeleport {
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command (%s)\n", shift);
+		return;
+	}
 	my (undef, $args) = @_;
 	my ($arg1) = $args =~ /^(\d)/;
 	$arg1 = 1 unless $arg1;
@@ -4356,6 +4474,10 @@ sub cmdTimeout {
 }
 
 sub cmdTop10 {
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command (%s)\n", shift);
+		return;
+	}
 	my (undef, $args) = @_;
 	my ($arg1) = $args;
 	
@@ -4379,6 +4501,10 @@ sub cmdTop10 {
 }
 
 sub cmdUnequip {
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command (%s)\n", shift);
+		return;
+	}
 	my (undef, $args) = @_;
 	my ($arg1) = $args;
 
@@ -4403,6 +4529,10 @@ sub cmdUnequip {
 }
 
 sub cmdUseItemOnMonster {
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command (%s)\n", shift);
+		return;
+	}
 	my (undef, $args) = @_;
 	my ($arg1) = $args =~ /^(\d+)/;
 	my ($arg2) = $args =~ /^\d+ (\d+)/;
@@ -4425,6 +4555,10 @@ sub cmdUseItemOnMonster {
 }
 
 sub cmdUseItemOnPlayer {
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command (%s)\n", shift);
+		return;
+	}
 	my (undef, $args) = @_;
 	my ($arg1) = $args =~ /^(\d+)/;
 	my ($arg2) = $args =~ /^\d+ (\d+)/;
@@ -4446,6 +4580,10 @@ sub cmdUseItemOnPlayer {
 }
 
 sub cmdUseItemOnSelf {
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command (%s)\n", shift);
+		return;
+	}
 	my (undef, $args) = @_;
 	if ($args eq "") {
 		error T("Syntax Error in function 'is' (Use Item on Yourself)\n" .
@@ -4467,6 +4605,10 @@ sub cmdUseItemOnSelf {
 }
 
 sub cmdUseSkill {
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command (%s)\n", shift);
+		return;
+	}
 	my ($cmd, $args_string) = @_;
 	my ($target, $actorList, $skill, $level) = @_;
 	my @args = parseArgs($args_string);
@@ -4481,10 +4623,6 @@ sub cmdUseSkill {
 		} elsif ($x !~ /^\d+$/ || $y !~ /^\d+/) {
 			error T("Error in function 'sl' (Use Skill on Location)\n" .
 				"Invalid coordinates given.\n");
-			return;
-		} elsif ($net->getState() != Network::IN_GAME) {
-			error T("Error in function 'sl' (Use Skill on Location)\n" .
-				"You are not logged into the game.\n");
 			return;
 		} else {
 			$target = { x => $x, y => $y };
@@ -4501,10 +4639,6 @@ sub cmdUseSkill {
 			error T("Syntax error in function 'ss' (Use Skill on Self)\n" .
 				"Usage: ss <skill #> [level]\n");
 			return;
-		} elsif ($net->getState() != Network::IN_GAME) {
-			error T("Error in function 'ss' (Use Skill on Self)\n" .
-				"You are not logged into the game.\n");
-			return;
 		} else {
 			$target = $char;
 			$level = $args[1];
@@ -4514,10 +4648,6 @@ sub cmdUseSkill {
 		if (@args < 2 || @args > 3) {
 			error T("Syntax error in function 'sp' (Use Skill on Player)\n" .
 				"Usage: sp <skill #> <player #> [level]\n");
-			return;
-		} elsif ($net->getState() != Network::IN_GAME) {
-			error T("Error in function 'sp' (Use Skill on Player)\n" .
-				"You are not logged into the game.\n");
 			return;
 		} else {
 			$target = Match::player($args[1], 1);
@@ -4534,10 +4664,6 @@ sub cmdUseSkill {
 		if (@args < 2 || @args > 3) {
 			error T("Syntax error in function 'sm' (Use Skill on Monster)\n" .
 				"Usage: sm <skill #> <monster #> [level]\n");
-			return;
-		} elsif ($net->getState() != Network::IN_GAME) {
-			error T("Error in function 'sm' (Use Skill on Monster)\n" .
-				"You are not logged into the game.\n");
 			return;
 		} else {
 			$target = $monstersList->get($args[1]);
@@ -4579,6 +4705,10 @@ sub cmdUseSkill {
 }
 
 sub cmdVender {
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command (%s)\n", shift);
+		return;
+	}
 	my (undef, $args) = @_;
 	my ($arg1) = $args =~ /^([\d\w]+)/;
 	my ($arg2) = $args =~ /^[\d\w]+ (\d+)/;
@@ -4634,6 +4764,10 @@ sub cmdVersion {
 }
 
 sub cmdWarp {
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command (%s)\n", shift);
+		return;
+	}
 	my (undef, $map) = @_;
 
 	if ($map eq '') {
@@ -4685,6 +4819,10 @@ sub cmdWarp {
 }
 
 sub cmdWeight {
+	if (!$char) {
+		error T("Character weight information not yet available.\n");
+		return;
+	}
 	my (undef, $itemWeight) = @_;
 
 	$itemWeight ||= 1;
@@ -4714,16 +4852,28 @@ sub cmdWeight {
 }
 
 sub cmdWhere {
+	if (!$char) {
+		error T("Location not yet available.\n");
+		return;
+	}
 	my $pos = calcPosition($char);
 	message TF("Location %s (%s) : %d, %d\n", $maps_lut{$field{name}.'.rsw'}, 
 		$field{name}, $pos->{x}, $pos->{y}), "info";
 }
 
 sub cmdWho {
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command (%s)\n", shift);
+		return;
+	}
 	$messageSender->sendWho();
 }
 
 sub cmdWhoAmI {
+	if (!$char) {
+		error T("Character information not yet available.\n");
+		return;
+	}
 	my $GID = unpack("L1", $charID);
 	my $AID = unpack("L1", $accountID);
 	message TF("Name:    %s (Level %s %s %s)\n" .

@@ -2111,11 +2111,11 @@ sub quit {
 sub relog {
 	my $timeout = (shift || 5);
 	my $silent = shift;
-	$net->setState(1);
+	$net->setState(1) if ($net);
 	undef $conState_tries;
 	$timeout_ex{'master'}{'time'} = time;
 	$timeout_ex{'master'}{'timeout'} = $timeout;
-	$net->serverDisconnect();
+	$net->serverDisconnect() if ($net);
 	message TF("Relogging in %d seconds...\n", $timeout), "connection" unless $silent;
 }
 
@@ -4254,6 +4254,8 @@ sub makeShop {
 		error T("A shop has already been opened.\n");
 		return;
 	}
+
+	return unless $char;
 
 	if (!$char->{skills}{MC_VENDING}{lv}) {
 		error T("You don't have the Vending skill.\n");
