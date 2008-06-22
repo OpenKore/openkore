@@ -2570,8 +2570,7 @@ sub processAutoAttack {
 
 		my $attackTarget;
 
-		if ((!$config{'tankMode'} || $foundTankee)
-		  && (!$config{'attackAuto_onlyWhenSafe'} || isSafe())) {
+		if (!$config{'tankMode'} || $foundTankee) {
 			# Detect whether we are currently in follow mode
 			my $following;
 			my $followID;
@@ -2634,6 +2633,7 @@ sub processAutoAttack {
 				if (!AI::is(qw/sitAuto take items_gather items_take/)
 				 && $config{'attackAuto'} >= 2
 				 && ($control->{attack_auto} == 1 || $control->{attack_auto} == 3)
+				 && (!$config{'attackAuto_onlyWhenSafe'} || isSafe())
 				 && !$ai_v{sitAuto_forcedBySitCommand}
 				 && ($attackOnRoute >= 2 || $LOSSubRoute)
 				 && !$monster->{dmgFromYou}

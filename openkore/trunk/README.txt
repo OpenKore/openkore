@@ -2,6 +2,7 @@
 ### OpenKore what-will-become-2.0.6
 =========================
 
+- New flag for attackChangeTarget: 2 - find better attack target while gaining LOS to current target.
 - Fixed bug crashes when console commands access undefined objects
 - Fixed bug in 'reload' chat command (thanks to Motivus)
 - Fixed bug in stripping callSign from chat commands
