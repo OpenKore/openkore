@@ -1263,7 +1263,7 @@ sub cmdDeal {
 			error T("You can't add any more items to the deal\n"), "deal";
 		}
 	} elsif ($arg[0] eq "add" && $arg[1] eq "z") {
-		if (!$arg[2] || $arg[2] > $char->{'zenny'}) {
+		if (!$arg[2] && !($arg[2] eq "0") || $arg[2] > $char->{'zenny'}) {
 			$arg[2] = $char->{'zenny'};
 		}
 		$currentDeal{'you_zenny'} = $arg[2];
