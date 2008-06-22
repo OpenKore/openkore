@@ -402,10 +402,11 @@ sub main {
 			useTeleport(1);
 		}
 
-	} elsif ($config{attackCheckLOS} &&
-		 ($config{'attackCanSnipe'} && !checkLineSnipable($realMyPos, $realMonsterPos)) ||
-		 (!$config{'attackCanSnipe'} || $realMonsterDist > $args->{attackMethod}{distance}) && (!checkLineWalkable($realMyPos, $realMonsterPos) || !checkLineSnipable($realMyPos, $realMonsterPos))
-		) {
+	} elsif (
+		$config{attackCheckLOS} && $args->{attackMethod}{distance} > 2
+		&& (($config{attackCanSnipe} && !checkLineSnipable($realMyPos, $realMonsterPos))
+		|| (!$config{attackCanSnipe} && $realMonsterDist < $args->{attackMethod}{maxDistance} && !checkLineWalkable($realMyPos, $realMonsterPos)))
+	) {
 		# We are a ranged attacker without LOS
 		# Calculate squares around monster within shooting range, but not
 		# closer than runFromTarget_dist
@@ -433,10 +434,10 @@ sub main {
 			# 2. It must be within $config{followDistanceMax} of
 			#    $masterPos, if we have a master.
 			if (
-			    checkLineSnipable($spot, $realMonsterPos) && ($config{'attackCanSnipe'} || checkLineWalkable($spot, $realMonsterPos)) &&
-			    $field->isWalkable($spot->{x}, $spot->{y}) &&
-			    (!$master || round(distance($spot, $masterPos)) <= $config{followDistanceMax}) &&
-			    round(distance($spot, $realMonsterPos)) <= $args->{attackMethod}{distance}
+			    (($config{attackCanSnipe} && checkLineSnipable($spot, $realMonsterPos))
+				 || checkLineWalkable($spot, $realMonsterPos))
+				&& $field->isWalkable($spot->{x}, $spot->{y})
+				&& (!$master || round(distance($spot, $masterPos)) <= $config{followDistanceMax})
 			) {
 				my $dist = distance($realMyPos, $spot);
 				if (!defined($best_dist) || $dist < $best_dist) {
@@ -450,9 +451,13 @@ sub main {
 		my $msg = "No LOS from ($realMyPos->{x}, $realMyPos->{y}) to target ($realMonsterPos->{x}, $realMonsterPos->{y})";
 		if ($best_spot) {
 			message TF("%s; moving to (%s, %s)\n", $msg, $best_spot->{x}, $best_spot->{y});
-			# Restart attack from processAutoAttack
-			AI::dequeue;
-			ai_route($field{name}, $best_spot->{x}, $best_spot->{y}, LOSSubRoute => 1);
+			if ($config{attackChangeTarget} == 2)
+				# Restart attack from processAutoAttack
+				AI::dequeue;
+				ai_route($field{name}, $best_spot->{x}, $best_spot->{y}, LOSSubRoute => 1);
+			} else {
+				ai_route($field{name}, $best_spot->{x}, $best_spot->{y});
+			}
 		} else {
 			warning TF("%s; no acceptable place to stand\n", $msg);
 			AI::dequeue;
