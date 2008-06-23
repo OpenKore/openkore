@@ -2769,33 +2769,10 @@ sub useTeleport {
 		$sk_lvl = $char->{skills}{AL_TELEPORT}{lv};
 	}
 
-	# We dont have the skill or we want to respawn using a butterfly wing
-	if (!$sk_lvl || ($config{'teleportAuto_useItemForRespawn'} && $use_lvl == 2) || !$config{'teleportAuto_useSkill'}) {
-		my $item;
-		if ($use_lvl == 1) {
-			$item = $char->inventory->getByName("Fly Wing");
-		} elsif ($use_lvl == 2) {
-			$item = $char->inventory->getByName("Butterfly Wing");
-		}
-
-		if ($item) {
-			# We have Fly Wing/Butterfly Wing.
-			# Don't spam the "use fly wing" packet, or we'll end up using too many wings.
-			if (timeOut($timeout{ai_teleport})) {
-				Plugins::callHook('teleport_sent', \%args);
-				$messageSender->sendItemUse($item->{index}, $accountID);
-				$timeout{ai_teleport}{time} = time;
-			}
-			return 1;
-		} else {
-			error("No Fly wing, Butterfly Wing or skill to teleport!\n");
-			$timeout{ai_teleport}{time} = time;
-		}
-	}
 	# only if we want to use skill ?
 	return if ($char->{muted});
 
-	if ($sk_lvl > 0 && $internal > 0) {
+	if ($sk_lvl > 0 && $internal > 0 && ($use_lvl == 1 || !$config{'teleportAuto_useItemForRespawn'})) {
 		# We have the teleport skill, and should use it
 		my $skill = new Skill(handle => 'AL_TELEPORT');
 		if ($use_lvl == 2 || $internal == 1 || ($internal == 2 && !isSafe())) {
@@ -2843,7 +2820,7 @@ sub useTeleport {
 
 	# No skill try to equip a Tele clip or something,
 	# if teleportAuto_equip_* is set
-	if (Actor::Item::scanConfigAndCheck('teleportAuto_equip')) {
+	if (Actor::Item::scanConfigAndCheck('teleportAuto_equip') && ($use_lvl == 1 || !$config{'teleportAuto_useItemForRespawn'})) {
 		return if AI::inQueue('teleport');
 		debug "Equipping Accessory to teleport\n", "useTeleport";
 		AI::queue('teleport', {lv => $use_lvl});
@@ -2855,6 +2832,29 @@ sub useTeleport {
 		}
 		Actor::Item::scanConfigAndEquip('teleportAuto_equip');
 		#Commands::run('aiv');
+		return 1;
+	}
+
+	# else if $internal == 0 or $sk_lvl == 0
+	# try to use item
+
+	# could lead to problems if the ItemID would be different on some servers
+	# 1 Jan 2006 - instead of nameID, search for *wing in the inventory
+	my $item;
+	if ($use_lvl == 1) {
+		$item = $char->inventory->getByName("Fly Wing");
+	} elsif ($use_lvl == 2) {
+		$item = $char->inventory->getByName("Butterfly Wing");
+	}
+
+	if ($item) {
+		# We have Fly Wing/Butterfly Wing.
+		# Don't spam the "use fly wing" packet, or we'll end up using too many wings.
+		if (timeOut($timeout{ai_teleport})) {
+			Plugins::callHook('teleport_sent', \%args);
+			$messageSender->sendItemUse($item->{index}, $accountID);
+			$timeout{ai_teleport}{time} = time;
+		}
 		return 1;
 	}
 
