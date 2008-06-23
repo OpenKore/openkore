@@ -3,20 +3,49 @@
 #include <stdlib.h>
 #include <string.h>
 
-char *str_replace(char *t1, char *t2, char *t6)
+char *str_replace(const char *src, const char *from, const char *to)
 {
-    char *t4;
-    char *t5 = malloc(0);
+    size_t size    = strlen(src) + 1;
+    size_t fromlen = strlen(from);
+    size_t tolen   = strlen(to);
 
-    while (strstr(t6,t1)) {
-        t4 = strstr(t6,t1);
-        strncpy(t5+strlen(t5),t6,t4-t6);
-        strcat(t5,t2);
-        t4 += strlen(t1);
-        t6 = t4;
+    char *value = malloc(size);
+
+    char *dst = value;
+
+    if (value != NULL) {
+        for (;;) {
+            const char *match = strstr(src, from);
+            if (match != NULL) {
+                size_t count = match - src;
+
+                char *temp;
+
+                size += tolen - fromlen;
+
+                temp = realloc(value, size);
+ 
+                if (temp == NULL) {
+                    free(value);
+                    return NULL;
+                }
+
+                dst = temp + (dst - value);
+                value = temp;
+                memmove(dst, src, count);
+                src += count;
+                dst += count;
+                memmove(dst, to, tolen);
+                src += fromlen;
+                dst += tolen;
+            } else {
+                strcpy(dst, src);
+                break;
+            }
+        }
     }
 
-    return strcat(t5,t4);
+    return value;
 }
 
 int AegisPortals()
@@ -52,7 +81,7 @@ int AegisPortals()
                     if (!inblock) {
                         strtok(line, " ");
                         from = strtok(NULL, " ");   // Source map
-                        from = str_replace("\"", "", from);
+                        from = str_replace(from, "\"", "");
                         strtok(NULL, " ");
                         from_x = strtok(NULL, " "); // Source X coordinate
                         from_y = strtok(NULL, " "); // Source Y coordinate
@@ -60,7 +89,7 @@ int AegisPortals()
                     } else {
                         strtok(line, " ");
                         to = strtok(NULL, " ");     // Destination map
-                        to = str_replace("\"", "", to);
+                        to = str_replace(to, "\"", "");
                         to_x = strtok(NULL, " ");   // Destination X coordinate
                         to_y = strtok(NULL, " ");   // Destination Y coordinate
                         inblock = 0;
