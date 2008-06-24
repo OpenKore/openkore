@@ -4235,7 +4235,7 @@ sub cmdStore {
 		}
 		message("-------------------------------\n", "list");
 	} elsif ($arg1 eq "" && $talk{'buyOrSell'}
-	 && ($net || $net->getState() == Network::IN_GAME)) {   
+	 && ($net && $net->getState() == Network::IN_GAME)) {
 		$messageSender->sendGetStoreList($talk{'ID'});
 
 	} elsif ($arg1 eq "desc" && $arg2 =~ /\d+/ && !$storeList[$arg2]) {
