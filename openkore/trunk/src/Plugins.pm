@@ -34,11 +34,12 @@ use UNIVERSAL qw(isa);
 use Modules 'register';
 use Globals;
 use Utils qw(stringToQuark quarkToString);
-use Utils::DataStructures qw(binAdd);
+use Utils::DataStructures qw(binAdd existsInList);
 use Utils::ObjectList;
 use Utils::Exceptions;
 use Log qw(message);
 use Translation qw(T TF);
+use Settings qw(%sys);
 
 
 #############################
@@ -78,10 +79,22 @@ use enum qw(CALLBACK USER_DATA);
 # Throws Plugin::DeniedException if the plugin system refused to load a plugin. This can
 # happen, for example, if it detects that a plugin is incompatible.
 sub loadAll {
-	my (@plugins, @subdirs);
+	if (!exists $sys{'loadPlugins'}) {
+		message T("Loading all plugins (by default)...\n", 'plugins');
+	} elsif ($sys{'loadPlugins'} && $sys{'loadPlugins'} eq '1') {
+		message T("Loading all plugins...\n", 'plugins');
+	} elsif (!$sys{'loadPlugins'}) {
+		message T("Automatic loading of plugins disabled\n", 'plugins');
+		return;
+	} elsif ($sys{'loadPlugins'} eq '2') {
+		message T("Selectively loading plugins...\n", 'plugins');
+	}
+	
+	my (@plugins, @subdirs, @names);
 
 	my @pluginsFolders;
 	@pluginsFolders = Settings::getPluginsFolders() if (defined &Settings::getPluginsFolders);
+
 	foreach my $dir (@pluginsFolders) {
 		my @items;
 
@@ -90,25 +103,37 @@ sub loadAll {
 		closedir DIR;
 
 		foreach my $file (@items) {
-			push @plugins, "$dir/$file" if (-f "$dir/$file" && $file =~ /\.(pl|lp)$/);
+			if (-f "$dir/$file" && $file =~ /\.(pl|lp)$/) {
+				push @plugins, "$dir/$file";
+				push @names, substr($file, 0, -3) if (exists $sys{'loadPlugins'} && $sys{'loadPlugins'} eq '2');
+			} elsif (-d "$dir/$file" && $file !~ /^(\.|CVS$)/i) {
+				push @subdirs, "$dir/$file";
+			}
 		}
-		foreach my $subdir (@items) {
-			push @subdirs, "$dir/$subdir" if (-d "$dir/$subdir" && $subdir !~ /^(\.|CVS$)/i);
-		}
-	}
-
-	foreach my $plugin (@plugins) {
-		load($plugin);
 	}
 
 	foreach my $dir (@subdirs) {
-		next unless (opendir(DIR, $dir));
-		@plugins = grep { -f "$dir/$_" && /\.(pl|lp)$/ } readdir(DIR);
-		closedir(DIR);
+		my @items;
 
-		foreach my $plugin (@plugins) {
-			load("$dir/$plugin");
+		next if (!opendir(DIR, $dir));
+		@items = readdir DIR;
+		closedir DIR;
+
+		foreach my $file (@items) {
+			if (-f "$dir/$file" && $file =~ /\.(pl|lp)$/) {
+				push @plugins, "$dir/$file";
+				push @names, substr($file, 0, -3) if (exists $sys{'loadPlugins'} && $sys{'loadPlugins'} eq '2');
+			}
 		}
+	}
+
+	while (@plugins) {
+		my $plugin = shift(@plugins);
+		if (exists $sys{'loadPlugins'} && $sys{'loadPlugins'} eq '2') {
+			my $file = shift(@names);
+			next if (exists $sys{'loadPlugins_list'} && !existsInList($sys{'loadPlugins_list'}, $file));
+		}
+		load($plugin);
 	}
 }
 

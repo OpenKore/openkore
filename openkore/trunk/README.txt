@@ -1,7 +1,17 @@
 =========================
 ### OpenKore what-will-become-2.0.6
 =========================
-
+- Implemented option for selective loading of plugins (by Technology).
+  Added new sys.txt options: loadPlugins & loadPlugins_list
+  Syntax:
+		loadPlugins <flag> - this option controls loading of plugins at startup
+								  or when the "plugin load all" command is used.
+								  0 : do not load plugins
+								  1 : load all plugins
+								  2 : only load plugins that are listed in loadPlugins_list
+		loadPlugins_list <list> - if loadPlugins is set to 2, this comma-separated list of plugin names
+								  (filename without the extension) specifies which plugin files
+								  to load at startup or when the "plugin load all" command is used.
 - New flag for attackChangeTarget: 2 - find better attack target while gaining LOS to current target.
 - Fixed bug crashes when console commands access undefined objects
 - Fixed bug in 'reload' chat command (thanks to Motivus)
