@@ -81,11 +81,11 @@ use enum qw(CALLBACK USER_DATA);
 sub loadAll {
 	if (!exists $sys{'loadPlugins'}) {
 		message T("Loading all plugins (by default)...\n", 'plugins');
-	} elsif ($sys{'loadPlugins'} && $sys{'loadPlugins'} eq '1') {
-		message T("Loading all plugins...\n", 'plugins');
 	} elsif (!$sys{'loadPlugins'}) {
 		message T("Automatic loading of plugins disabled\n", 'plugins');
 		return;
+	} elsif ($sys{'loadPlugins'} eq '1') {
+		message T("Loading all plugins...\n", 'plugins');
 	} elsif ($sys{'loadPlugins'} eq '2') {
 		message T("Selectively loading plugins...\n", 'plugins');
 	}
