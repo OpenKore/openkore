@@ -53,7 +53,7 @@ sub unload {
     Plugins::delHooks($hooks);
 }
 
-$timeout{'refine'}{'timeout'} = 1; # No need to go any faster than 1 iteration per second
+$timeout{'refine'}{'timeout'} = 2; # No need to go any faster than 1 iteration per second
 $timeout{'refine'}{'time'} = time;
 
 sub main {
@@ -68,7 +68,7 @@ sub main {
 	if (!$startRefine) {
 		route($npc{map},$npc{x},$npc{y});
 	} elsif ($startRefine && $item->{equipped} && $item->{upgrade} < $config{"autoRefine_0_maxRefine"}) { # Item exists, we have metals are near the refiner and equiped the item... it is also below the + treshhold we want
-		talkNPC($npc{x},$npc{y},$npc{sequence}." w1 c w1 r0 w1 c w1 c n");
+		talkNPC($npc{x},$npc{y},$npc{sequence});
 	} elsif ($startRefine && !$item->{equipped}) { # Item exists in inventory but is not equiped, equip it
 		$item->equip();
 	} elsif ($startRefine && $item->{equipped} && $item->{upgrade} => $config{"autoRefine_0_maxRefine"}) { # Max refined reached, unequip it
@@ -133,7 +133,7 @@ sub checkItem {
 		$startRefine = 0;
 		message("Item broke :(\n","info");
 	} else {
-		message("Upgraded to ".$item->{name}."\n","info");
+		message("Upgraded ".$item->{name}."\n","info");
 	}
 }
 
