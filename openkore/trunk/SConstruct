@@ -28,7 +28,7 @@ import sys
 platform = str(ARGUMENTS.get('OS', Platform()))
 cygwin = platform == "cygwin"
 darwin = platform == "darwin"
-win32 = cygwin or platform == "windows"
+win32 = cygwin or platform == "win32"
 have_ncurses = False
 READLINE_LIB = 'readline'
 
