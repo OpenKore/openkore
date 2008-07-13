@@ -3659,7 +3659,7 @@ sub login_error {
 			}
 		}
 	} elsif ($args->{type} == 3) {
-		error T("Server connection has been denied\n"), "connection";
+		error T("The server denied your connection.\n"), "connection";
 	} elsif ($args->{type} == 4) {
 		$interface->errorDialog(T("Critical Error: Your account has been blocked."));
 		$quit = 1 unless ($net->clientAlive());
