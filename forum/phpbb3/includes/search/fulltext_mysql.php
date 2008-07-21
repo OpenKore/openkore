@@ -2,7 +2,7 @@
 /**
 *
 * @package search
-* @version $Id: fulltext_mysql.php,v 1.51 2007/11/29 18:26:20 davidmj Exp $
+* @version $Id: fulltext_mysql.php 8604 2008-06-04 17:25:50Z naderman $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -546,8 +546,8 @@ class fulltext_mysql extends search_backend
 			break;
 
 			case 't':
-				$sql_sort_table	= ($type == 'posts') ? TOPICS_TABLE . ' t, ' : '';
-				$sql_sort_join	= ($type == 'posts') ? ' AND t.topic_id = p.topic_id ' : '';
+				$sql_sort_table	= ($type == 'posts' && !$firstpost_only) ? TOPICS_TABLE . ' t, ' : '';
+				$sql_sort_join	= ($type == 'posts' && !$firstpost_only) ? ' AND t.topic_id = p.topic_id ' : '';
 			break;
 
 			case 'f':

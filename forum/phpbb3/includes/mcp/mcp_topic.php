@@ -2,7 +2,7 @@
 /**
 *
 * @package mcp
-* @version $Id: mcp_topic.php,v 1.62 2007/10/12 18:13:50 acydburn Exp $
+* @version $Id: mcp_topic.php 8520 2008-04-21 13:17:30Z acydburn $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -386,7 +386,7 @@ function split_topic($action, $topic_id, $to_forum_id, $subject)
 		return;
 	}
 
-	$redirect = request_var('redirect', build_url(array('_f_', 'quickmod')));
+	$redirect = request_var('redirect', build_url(array('quickmod')));
 
 	$s_hidden_fields = build_hidden_fields(array(
 		'i'				=> 'main',
@@ -550,7 +550,7 @@ function merge_posts($topic_id, $to_topic_id)
 		return;
 	}
 
-	$redirect = request_var('redirect', build_url(array('_f_', 'quickmod')));
+	$redirect = request_var('redirect', build_url(array('quickmod')));
 
 	$s_hidden_fields = build_hidden_fields(array(
 		'i'				=> 'main',

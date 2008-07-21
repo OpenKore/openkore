@@ -2,7 +2,7 @@
 /**
 *
 * @package acp
-* @version $Id: acp_main.php 8479 2008-03-29 00:22:48Z naderman $
+* @version $Id: acp_main.php 8580 2008-06-02 17:10:21Z Kellanved $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -61,6 +61,14 @@ class acp_main
 
 		if ($action)
 		{
+			if ($action === 'admlogout')
+			{
+				$user->unset_admin();
+				$redirect_url = append_sid("{$phpbb_root_path}index.$phpEx");
+				meta_refresh(3, $redirect_url);
+				trigger_error($user->lang['ADM_LOGGED_OUT'] . '<br /><br />' . sprintf($user->lang['RETURN_INDEX'], '<a href="' . $redirect_url . '">', '</a>'));
+			}
+
 			if (!confirm_box(true))
 			{
 				switch ($action)
@@ -108,6 +116,7 @@ class acp_main
 			{
 				switch ($action)
 				{
+
 					case 'online':
 						if (!$auth->acl_get('a_board'))
 						{

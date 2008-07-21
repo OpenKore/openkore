@@ -2,7 +2,7 @@
 /**
 *
 * @package acp
-* @version $Id: acp_icons.php 8479 2008-03-29 00:22:48Z naderman $
+* @version $Id: acp_icons.php 8628 2008-06-09 11:58:57Z Kellanved $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -436,7 +436,7 @@ class acp_icons
 					default:
 						$suc_lang = $lang;
 				}
-				$errormsgs = '<br />';
+				$errormsgs = '';
 				foreach ($errors as $img => $error)
 				{
 					$errormsgs .= '<br />' . sprintf($user->lang[$error], $img);
@@ -447,7 +447,7 @@ class acp_icons
 				}
 				else
 				{
-					trigger_error($user->lang[$suc_lang . '_ADDED'] . $errormsgs .adm_back_link($this->u_action), $level);
+					trigger_error($user->lang[$suc_lang . '_ADDED'] . $errormsgs . adm_back_link($this->u_action), $level);
 				}
 
 			break;

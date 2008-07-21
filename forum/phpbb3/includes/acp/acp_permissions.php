@@ -2,7 +2,7 @@
 /**
 *
 * @package acp
-* @version $Id: acp_permissions.php 8479 2008-03-29 00:22:48Z naderman $
+* @version $Id: acp_permissions.php 8496 2008-04-08 10:07:05Z davidmj $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -1156,7 +1156,7 @@ class acp_permissions
 		}
 
 		// Not ideal, due to the filesort, non-use of indexes, etc.
-		$sql = 'SELECT DISTINCT u.user_id, u.username
+		$sql = 'SELECT DISTINCT u.user_id, u.username, u.username_clean, u.user_regdate
 			FROM ' . USERS_TABLE . ' u, ' . ACL_USERS_TABLE . " a
 			WHERE u.user_id = a.user_id
 				$sql_forum_id

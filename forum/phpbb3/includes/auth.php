@@ -2,7 +2,7 @@
 /**
 *
 * @package phpBB3
-* @version $Id: auth.php 8479 2008-03-29 00:22:48Z naderman $
+* @version $Id: auth.php 8502 2008-04-11 14:14:23Z acydburn $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -800,7 +800,7 @@ class auth
 			{
 				$this->_set_group_hold_ary($hold_ary[$row['forum_id']], $row['auth_option_id'], $row['auth_setting']);
 			}
-			else
+			else if (!empty($this->role_cache[$row['auth_role_id']]))
 			{
 				foreach (unserialize($this->role_cache[$row['auth_role_id']]) as $option_id => $setting)
 				{

@@ -2,7 +2,7 @@
 /**
 *
 * @package phpBB3
-* @version $Id: viewonline.php 8479 2008-03-29 00:22:48Z naderman $
+* @version $Id: viewonline.php 8677 2008-07-03 12:43:49Z acydburn $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -225,8 +225,9 @@ while ($row = $db->sql_fetchrow($result))
 				{
 					case 'posting':
 						preg_match('#mode=([a-z]+)#', $row['session_page'], $on_page);
+						$posting_mode = (!empty($on_page[1])) ? $on_page[1] : '';
 
-						switch ($on_page[1])
+						switch ($posting_mode)
 						{
 							case 'reply':
 							case 'quote':

@@ -2,7 +2,7 @@
 /**
 *
 * @package phpBB3
-* @version $Id: message_parser.php 8479 2008-03-29 00:22:48Z naderman $
+* @version $Id: message_parser.php 8665 2008-06-21 15:09:44Z acydburn $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -346,6 +346,12 @@ class bbcode_firstpass extends bbcode
 		$in = trim($in);
 		$error = false;
 
+		// Do not allow 0-sizes generally being entered
+		if ($width <= 0 || $height <= 0)
+		{
+			return '[flash=' . $width . ',' . $height . ']' . $in . '[/flash]';
+		}
+
 		// Apply the same size checks on flash files as on images
 		if ($config['max_' . $this->mode . '_img_height'] || $config['max_' . $this->mode . '_img_width'])
 		{
@@ -394,7 +400,10 @@ class bbcode_firstpass extends bbcode
 			case 'php':
 
 				$remove_tags = false;
-				$code = str_replace(array('&lt;', '&gt;'), array('<', '>'), $code);
+
+				$str_from = array('&lt;', '&gt;', '&#91;', '&#93;', '&#46;', '&#58;', '&#058;');
+				$str_to = array('<', '>', '[', ']', '.', ':', ':');
+				$code = str_replace($str_from, $str_to, $code);
 
 				if (!preg_match('/\<\?.*?\?\>/is', $code))
 				{

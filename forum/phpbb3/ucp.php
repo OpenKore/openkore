@@ -2,7 +2,7 @@
 /**
 *
 * @package ucp
-* @version $Id: ucp.php,v 1.93 2007/10/05 14:30:07 acydburn Exp $
+* @version $Id: ucp.php 8655 2008-06-13 19:39:01Z acydburn $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -69,7 +69,7 @@ switch ($mode)
 
 	case 'confirm':
 		$module->load('ucp', 'confirm');
-		exit_handler();
+		exit;
 	break;
 
 	case 'login':
@@ -93,7 +93,7 @@ switch ($mode)
 			$message = ($user->data['user_id'] == ANONYMOUS) ? $user->lang['LOGOUT_REDIRECT'] : $user->lang['LOGOUT_FAILED'];
 		}
 		meta_refresh(3, append_sid("{$phpbb_root_path}index.$phpEx"));
-	
+
 		$message = $message . '<br /><br />' . sprintf($user->lang['RETURN_INDEX'], '<a href="' . append_sid("{$phpbb_root_path}index.$phpEx") . '">', '</a> ');
 		trigger_error($message);
 
@@ -135,7 +135,7 @@ switch ($mode)
 	break;
 
 	case 'delete_cookies':
-		
+
 		// Delete Cookies with dynamic names (do NOT delete poll cookies)
 		if (confirm_box(true))
 		{

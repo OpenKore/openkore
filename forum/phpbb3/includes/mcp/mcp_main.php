@@ -2,7 +2,7 @@
 /**
 *
 * @package mcp
-* @version $Id: mcp_main.php,v 1.73 2007/10/05 14:36:33 acydburn Exp $
+* @version $Id: mcp_main.php 8631 2008-06-09 12:36:06Z Kellanved $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -243,7 +243,7 @@ function lock_unlock($action, $ids)
 	}
 	unset($orig_ids);
 
-	$redirect = request_var('redirect', build_url(array('_f_', 'action', 'quickmod')));
+	$redirect = request_var('redirect', build_url(array('action', 'quickmod')));
 
 	$s_hidden_fields = build_hidden_fields(array(
 		$sql_id . '_list'	=> $ids,
@@ -329,7 +329,7 @@ function change_topic_type($action, $topic_ids)
 		break;
 	}
 
-	$redirect = request_var('redirect', build_url(array('_f_', 'action', 'quickmod')));
+	$redirect = request_var('redirect', build_url(array('action', 'quickmod')));
 
 	$s_hidden_fields = array(
 		'topic_id_list'	=> $topic_ids,
@@ -550,7 +550,7 @@ function mcp_move_topic($topic_ids)
 	}
 
 	$to_forum_id = request_var('to_forum_id', 0);
-	$redirect = request_var('redirect', build_url(array('_f_', 'action', 'quickmod')));
+	$redirect = request_var('redirect', build_url(array('action', 'quickmod')));
 	$additional_msg = $success_msg = '';
 
 	$s_hidden_fields = build_hidden_fields(array(
@@ -562,7 +562,7 @@ function mcp_move_topic($topic_ids)
 
 	if ($to_forum_id)
 	{
-		$forum_data = get_forum_data($to_forum_id);
+		$forum_data = get_forum_data($to_forum_id, 'f_post');
 
 		if (!sizeof($forum_data))
 		{
@@ -770,7 +770,7 @@ function mcp_delete_topic($topic_ids)
 		return;
 	}
 
-	$redirect = request_var('redirect', build_url(array('_f_', 'action', 'quickmod')));
+	$redirect = request_var('redirect', build_url(array('action', 'quickmod')));
 	$forum_id = request_var('f', 0);
 
 	$s_hidden_fields = build_hidden_fields(array(
@@ -826,7 +826,7 @@ function mcp_delete_post($post_ids)
 		return;
 	}
 
-	$redirect = request_var('redirect', build_url(array('_f_', 'action', 'quickmod')));
+	$redirect = request_var('redirect', build_url(array('action', 'quickmod')));
 	$forum_id = request_var('f', 0);
 
 	$s_hidden_fields = build_hidden_fields(array(
@@ -949,7 +949,7 @@ function mcp_fork_topic($topic_ids)
 
 	$to_forum_id = request_var('to_forum_id', 0);
 	$forum_id = request_var('f', 0);
-	$redirect = request_var('redirect', build_url(array('_f_', 'action', 'quickmod')));
+	$redirect = request_var('redirect', build_url(array('action', 'quickmod')));
 	$additional_msg = $success_msg = '';
 
 	$s_hidden_fields = build_hidden_fields(array(
@@ -961,7 +961,7 @@ function mcp_fork_topic($topic_ids)
 
 	if ($to_forum_id)
 	{
-		$forum_data = get_forum_data($to_forum_id);
+		$forum_data = get_forum_data($to_forum_id, 'f_post');
 
 		if (!sizeof($topic_ids))
 		{
@@ -998,7 +998,7 @@ function mcp_fork_topic($topic_ids)
 
 	if (confirm_box(true))
 	{
-		$topic_data = get_topic_data($topic_ids);
+		$topic_data = get_topic_data($topic_ids, 'f_post');
 
 		$total_posts = 0;
 		$new_topic_id_list = array();

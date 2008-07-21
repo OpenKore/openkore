@@ -2,7 +2,7 @@
 /**
 *
 * @package phpBB3
-* @version $Id: file.php 8479 2008-03-29 00:22:48Z naderman $
+* @version $Id: file.php 8514 2008-04-21 10:54:41Z acydburn $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -18,6 +18,12 @@ $phpEx = substr(strrchr(__FILE__, '.'), 1);
 if (isset($_GET['avatar']))
 {
 	require($phpbb_root_path . 'config.' . $phpEx);
+
+	if (!defined('PHPBB_INSTALLED') || empty($dbms) || empty($acm_type))
+	{
+		exit;
+	}
+
 	require($phpbb_root_path . 'includes/acm/acm_' . $acm_type . '.' . $phpEx);
 	require($phpbb_root_path . 'includes/cache.' . $phpEx);
 	require($phpbb_root_path . 'includes/db/' . $dbms . '.' . $phpEx);

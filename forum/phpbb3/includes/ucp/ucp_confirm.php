@@ -2,7 +2,7 @@
 /**
 *
 * @package VC
-* @version $Id: ucp_confirm.php,v 1.27 2007/10/05 14:36:33 acydburn Exp $
+* @version $Id: ucp_confirm.php 8655 2008-06-13 19:39:01Z acydburn $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -73,7 +73,9 @@ class ucp_confirm
 
 		$captcha = new captcha();
 		$captcha->execute($row['code'], $row['seed']);
-		exit;
+
+		garbage_collection();
+		exit_handler();
 	}
 }
 
