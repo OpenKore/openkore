@@ -2,7 +2,7 @@
 /**
 *
 * @package acp
-* @version $Id: acp_styles.php 8479 2008-03-29 00:22:48Z naderman $
+* @version $Id: acp_styles.php 8530 2008-04-28 17:13:50Z Kellanved $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -694,6 +694,15 @@ parse_css_file = {PARSE_CSS_FILE}
 		if (!$template_info)
 		{
 			trigger_error($user->lang['NO_TEMPLATE'] . adm_back_link($this->u_action), E_USER_WARNING);
+		}
+		
+		if ($save_changes && !check_form_key('acp_styles'))
+		{
+			trigger_error($user->lang['FORM_INVALID'] . adm_back_link($this->u_action), E_USER_WARNING);
+		}
+		else if (!$save_changes)
+		{
+			add_form_key('acp_styles');
 		}
 
 		// save changes to the template if the user submitted any

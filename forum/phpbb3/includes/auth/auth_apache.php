@@ -5,7 +5,7 @@
 * Authentication plug-ins is largely down to Sergey Kanareykin, our thanks to him.
 *
 * @package login
-* @version $Id: auth_apache.php 8479 2008-03-29 00:22:48Z naderman $
+* @version $Id: auth_apache.php 8602 2008-06-04 16:05:27Z naderman $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -148,8 +148,8 @@ function autologin_apache()
 
 	if (!empty($php_auth_user) && !empty($php_auth_pw))
 	{
-		set_var($php_auth_user, $php_auth_user, 'string');
-		set_var($php_auth_pw, $php_auth_pw, 'string');
+		set_var($php_auth_user, $php_auth_user, 'string', true);
+		set_var($php_auth_pw, $php_auth_pw, 'string', true);
 
 		$sql = 'SELECT *
 			FROM ' . USERS_TABLE . "
@@ -233,7 +233,7 @@ function validate_session_apache(&$user)
 	}
 
 	$php_auth_user = '';
-	set_var($php_auth_user, $_SERVER['PHP_AUTH_USER'], 'string');
+	set_var($php_auth_user, $_SERVER['PHP_AUTH_USER'], 'string', true);
 
 	return ($php_auth_user === $user['username']) ? true : false;
 }

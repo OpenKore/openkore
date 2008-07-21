@@ -2,7 +2,7 @@
 /**
 *
 * @package utf
-* @version $Id: utf_tools.php,v 1.72 2007/12/04 16:20:38 naderman Exp $
+* @version $Id: utf_tools.php 8510 2008-04-20 05:16:42Z davidmj $
 * @copyright (c) 2006 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -1840,7 +1840,7 @@ function utf8_clean_string($text)
 /**
 * A wrapper for htmlspecialchars($value, ENT_COMPAT, 'UTF-8')
 */
-function utf8_htmlspecialchars(&$value)
+function utf8_htmlspecialchars($value)
 {
 	return htmlspecialchars($value, ENT_COMPAT, 'UTF-8');
 }

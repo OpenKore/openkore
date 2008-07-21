@@ -2,7 +2,7 @@
 /**
 *
 * @package acp
-* @version $Id: index.php 8479 2008-03-29 00:22:48Z naderman $
+* @version $Id: index.php 8591 2008-06-04 11:40:53Z Kellanved $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -45,7 +45,7 @@ define('IN_ADMIN', true);
 $phpbb_admin_path = (defined('PHPBB_ADMIN_PATH')) ? PHPBB_ADMIN_PATH : './';
 
 // Some oft used variables
-$safe_mode		= (@ini_get('safe_mode') == '1' || @strtolower(ini_get('safe_mode')) === 'on') ? true : false;
+$safe_mode		= (@ini_get('safe_mode') == '1' || strtolower(@ini_get('safe_mode')) === 'on') ? true : false;
 $file_uploads	= (@ini_get('file_uploads') == '1' || strtolower(@ini_get('file_uploads')) === 'on') ? true : false;
 $module_id		= request_var('i', '');
 $mode			= request_var('mode', '');
@@ -116,6 +116,7 @@ function adm_page_header($page_title)
 		'ROOT_PATH'				=> $phpbb_admin_path,
 
 		'U_LOGOUT'				=> append_sid("{$phpbb_root_path}ucp.$phpEx", 'mode=logout'),
+		'U_ADM_LOGOUT'			=> append_sid("{$phpbb_admin_path}index.$phpEx", 'action=admlogout'),
 		'U_ADM_INDEX'			=> append_sid("{$phpbb_admin_path}index.$phpEx"),
 		'U_INDEX'				=> append_sid("{$phpbb_root_path}index.$phpEx"),
 

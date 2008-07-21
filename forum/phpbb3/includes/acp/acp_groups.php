@@ -2,7 +2,7 @@
 /**
 *
 * @package acp
-* @version $Id: acp_groups.php,v 1.63 2007/10/05 14:36:32 acydburn Exp $
+* @version $Id: acp_groups.php 8634 2008-06-09 13:05:34Z Kellanved $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -87,24 +87,32 @@ class acp_groups
 
 				// Approve, demote or promote
 				$group_name = ($group_row['group_type'] == GROUP_SPECIAL) ? $user->lang['G_' . $group_row['group_name']] : $group_row['group_name'];
-				group_user_attributes($action, $group_id, $mark_ary, false, $group_name);
-
-				switch ($action)
+				$error = group_user_attributes($action, $group_id, $mark_ary, false, $group_name);
+				
+				if (!$error)
 				{
-					case 'demote':
-						$message = 'GROUP_MODS_DEMOTED';
-					break;
+					switch ($action)
+					{
+						case 'demote':
+							$message = 'GROUP_MODS_DEMOTED';
+						break;
 
-					case 'promote':
-						$message = 'GROUP_MODS_PROMOTED';
-					break;
+						case 'promote':
+							$message = 'GROUP_MODS_PROMOTED';
+						break;
 
-					case 'approve':
-						$message = 'USERS_APPROVED';
-					break;
+						case 'approve':
+							$message = 'USERS_APPROVED';
+						break;
+					}
+
+					trigger_error($user->lang[$message] . adm_back_link($this->u_action . '&amp;action=list&amp;g=' . $group_id));
 				}
-
-				trigger_error($user->lang[$message] . adm_back_link($this->u_action . '&amp;action=list&amp;g=' . $group_id));
+				else
+				{
+					trigger_error($user->lang[$error] . adm_back_link($this->u_action . '&amp;action=list&amp;g=' . $group_id), E_USER_WARNING);
+				}
+				
 			break;
 
 			case 'default':

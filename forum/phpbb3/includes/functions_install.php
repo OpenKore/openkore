@@ -2,7 +2,7 @@
 /**
 *
 * @package install
-* @version $Id: functions_install.php,v 1.17 2007/11/19 16:43:59 acydburn Exp $
+* @version $Id: functions_install.php 8507 2008-04-20 04:57:29Z davidmj $
 * @copyright (c) 2006 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -286,7 +286,7 @@ function connect_check_db($error_connect, &$error, $dbms_details, $table_prefix,
 	{
 		case 'mysql':
 		case 'mysqli':
-			if (strpos($table_prefix, '-') !== false || strpos($table_prefix, '.') !== false)
+			if (strspn($table_prefix, '-./\\') !== 0)
 			{
 				$error[] = $lang['INST_ERR_PREFIX_INVALID'];
 				return false;

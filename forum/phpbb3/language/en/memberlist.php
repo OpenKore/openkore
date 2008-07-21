@@ -4,7 +4,7 @@
 * memberlist [English]
 *
 * @package language
-* @version $Id: memberlist.php 8479 2008-03-29 00:22:48Z naderman $
+* @version $Id: memberlist.php 8574 2008-05-29 13:59:47Z Kellanved $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -132,6 +132,7 @@ $lang = array_merge($lang, array(
 
 	'USERNAME_BEGINS_WITH'	=> 'Username begins with',
 	'USER_ADMIN'			=> 'Administrate user',
+	'USER_BAN'				=> 'Banning',
 	'USER_FORUM'			=> 'User statistics',
 	'USER_ONLINE'			=> 'Online',
 	'USER_PRESENCE'			=> 'Board presence',

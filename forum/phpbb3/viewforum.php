@@ -2,7 +2,7 @@
 /**
 *
 * @package phpBB3
-* @version $Id: viewforum.php 8479 2008-03-29 00:22:48Z naderman $
+* @version $Id: viewforum.php 8674 2008-06-28 15:07:37Z acydburn $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -107,7 +107,9 @@ if ($forum_data['forum_type'] == FORUM_LINK && $forum_data['forum_link'])
 		$db->sql_query($sql);
 	}
 
-	redirect($forum_data['forum_link']);
+	// We redirect to the url. The third parameter indicates that external redirects are allowed.
+	redirect($forum_data['forum_link'], false, true);
+	exit;
 }
 
 // Build navigation links

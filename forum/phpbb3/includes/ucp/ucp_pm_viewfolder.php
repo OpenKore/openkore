@@ -2,7 +2,7 @@
 /**
 *
 * @package ucp
-* @version $Id: ucp_pm_viewfolder.php,v 1.58 2007/10/05 14:36:34 acydburn Exp $
+* @version $Id: ucp_pm_viewfolder.php 8567 2008-05-26 12:00:17Z acydburn $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -493,7 +493,7 @@ function get_pm_from($folder_id, $folder, $user_id)
 	}
 	else
 	{
-		$pm_count = $folder[$folder_id]['num_messages'];
+		$pm_count = (!empty($folder[$folder_id]['num_messages'])) ? $folder[$folder_id]['num_messages'] : 0;
 		$sql_limit_time = '';
 	}
 

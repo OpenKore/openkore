@@ -1,7 +1,7 @@
 <?php
 /**
 * @package ucp
-* @version $Id: ucp_pm.php 8479 2008-03-29 00:22:48Z naderman $
+* @version $Id: ucp_pm.php 8521 2008-04-21 13:20:13Z acydburn $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -129,15 +129,7 @@ class ucp_pm
 			break;
 
 			case 'options':
-				$sql = 'SELECT group_message_limit
-					FROM ' . GROUPS_TABLE . '
-					WHERE group_id = ' . $user->data['group_id'];
-				$result = $db->sql_query($sql, 3600);
-				$message_limit = (int) $db->sql_fetchfield('group_message_limit');
-				$db->sql_freeresult($result);
-
-				$user->data['message_limit'] = (!$message_limit) ? $config['pm_max_msgs'] : $message_limit;
-
+				set_user_message_limit();
 				get_folder($user->data['user_id']);
 
 				include($phpbb_root_path . 'includes/ucp/ucp_pm_options.' . $phpEx);
@@ -168,14 +160,7 @@ class ucp_pm
 
 			case 'view':
 
-				$sql = 'SELECT group_message_limit
-					FROM ' . GROUPS_TABLE . '
-					WHERE group_id = ' . $user->data['group_id'];
-				$result = $db->sql_query($sql, 3600);
-				$message_limit = (int) $db->sql_fetchfield('group_message_limit');
-				$db->sql_freeresult($result);
-
-				$user->data['message_limit'] = (!$message_limit) ? $config['pm_max_msgs'] : $message_limit;
+				set_user_message_limit();
 
 				if ($folder_specified)
 				{

@@ -2,7 +2,7 @@
 /**
 *
 * @package acp
-* @version $Id: acp_captcha.php,v 1.12 2007/10/05 14:36:32 acydburn Exp $
+* @version $Id: acp_captcha.php 8655 2008-06-13 19:39:01Z acydburn $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 */
@@ -29,7 +29,7 @@ class acp_captcha
 
 		$user->add_lang('acp/board');
 
-		
+
 		$captcha_vars = array(
 			'captcha_gd_x_grid'				=> 'CAPTCHA_GD_X_GRID',
 			'captcha_gd_y_grid'				=> 'CAPTCHA_GD_Y_GRID',
@@ -54,7 +54,7 @@ class acp_captcha
 			}
 			$captcha = new captcha();
 			$captcha->execute(gen_rand_string(mt_rand(5, 8)), time());
-			exit_handler();
+			exit;
 		}
 
 		$config_vars = array(
@@ -90,7 +90,7 @@ class acp_captcha
 		}
 		else
 		{
-			
+
 			$preview_image_src = append_sid(append_sid("{$phpbb_admin_path}index.$phpEx", "i=$id&amp;demo=demo"));
 			if (@extension_loaded('gd'))
 			{
@@ -110,7 +110,7 @@ class acp_captcha
 				'CAPTCHA_PREVIEW'	=> $preview_image_src,
 				'PREVIEW'			=> isset($_POST['preview']),
 			));
-			
+
 		}
 	}
 }

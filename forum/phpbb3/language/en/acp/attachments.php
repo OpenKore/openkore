@@ -4,7 +4,7 @@
 * acp_attachments [English]
 *
 * @package language
-* @version $Id: attachments.php,v 1.31 2007/10/04 15:07:24 acydburn Exp $
+* @version $Id: attachments.php 8555 2008-05-15 14:10:11Z Kellanved $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -71,6 +71,8 @@ $lang = array_merge($lang, array(
 	'CAT_QUICKTIME_FILES'		=> 'Quicktime media files',
 	'CAT_RM_FILES'				=> 'RealMedia media files',
 	'CAT_WM_FILES'				=> 'Windows Media media files',
+	'CHECK_CONTENT'				=> 'Check attachment files',
+	'CHECK_CONTENT_EXPLAIN'		=> 'Some browsers can be tricked to assume an incorrect mimetype for uploaded files. This option ensures that such files likely to cause this are rejected.',
 	'CREATE_GROUP'				=> 'Create new group',
 	'CREATE_THUMBNAIL'			=> 'Create thumbnail',
 	'CREATE_THUMBNAIL_EXPLAIN'	=> 'Create a thumbnail in all possible situations.',

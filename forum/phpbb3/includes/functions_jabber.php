@@ -2,7 +2,7 @@
 /**
 *
 * @package phpBB3
-* @version $Id: functions_jabber.php 8479 2008-03-29 00:22:48Z naderman $
+* @version $Id: functions_jabber.php 8516 2008-04-21 11:11:08Z acydburn $
 * @copyright (c) 2007 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -399,12 +399,13 @@ class jabber
 				$second_time = isset($this->session['id']);
 				$this->session['id'] = $xml['stream:stream'][0]['@']['id'];
 
+				/** Currently commented out due to problems with some jabber server - reason unknown
 				if ($second_time)
 				{
 					// If we are here for the second time after TLS, we need to continue logging in
 					$this->login();
 					return;
-				}
+				}*/
 
 				// go on with authentication?
 				if (isset($this->features['stream:features'][0]['#']['bind']) || !empty($this->session['tls']))
