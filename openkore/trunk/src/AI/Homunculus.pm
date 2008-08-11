@@ -495,6 +495,7 @@ sub processAttack {
 
 		if ($monsters_old{$ID} && $monsters_old{$ID}{dead}) {
 			message T("Homunculus target died\n"), 'homunculus_attack';
+			Plugins::callHook("homonulus_target_died");
 			monKilled();
 
 			# Pickup loot when monster's dead

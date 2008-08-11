@@ -2522,6 +2522,7 @@ sub exp_zeny_info {
 			($monsterJobExp / $char->{exp_job_max} * 100) :
 			0;
 		message TF("Exp gained: %d/%d (%.2f%%/%.2f%%)\n", $monsterBaseExp, $monsterJobExp, $basePercent, $jobPercent), "exp";
+		Plugins::callHook('exp_gained');
 
 	} elsif ($args->{type} == 20) {
 		my $change = $args->{val} - $char->{zenny};
