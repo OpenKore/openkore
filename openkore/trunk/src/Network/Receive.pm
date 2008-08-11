@@ -6312,9 +6312,9 @@ sub warp_portal_list {
 	($args->{memo4}) = $args->{memo4} =~ /^(.*)\.gat/;
 	# Auto-detect saveMap
 	if ($args->{type} == 26) {
-		configModify('saveMap', $args->{memo2}) if $args->{memo2};
+		configModify('saveMap', $args->{memo2}) if ($args->{memo2} && $config{'saveMap'} ne $args->{memo2});
 	} elsif ($args->{type} == 27) {
-		configModify('saveMap', $args->{memo1}) if $args->{memo1};
+		configModify('saveMap', $args->{memo1}) if ($args->{memo1} && $config{'saveMap'} ne $args->{memo1});
 	}
 
 	$char->{warp}{type} = $args->{type};
