@@ -152,3 +152,4 @@
 251 Life Insurance
 252 Bubble Gum
 253 Convex Mirror
+286 Critical Wound
