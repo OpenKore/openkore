@@ -1384,7 +1384,8 @@ sub processAutoStorage {
 					}
 
 					if ($item{storage}{amount} < $item{amount_needed}) {
-						warning TF("storage: %s out of stock\n", $item{name});
+						warning TF("storage: %s out of stock - getAuto block disabled\n", $item{name});
+						$config{"getAuto_$args->{index}_disabled"} = 1;
 					}
 
 					if (!$config{relogAfterStorage} && $args->{retry} >= 3 && !$args->{warned}) {
