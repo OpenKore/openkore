@@ -212,6 +212,9 @@ sub finishAttacking {
 		}
 		## kokal end
 
+	} elsif ($config{teleportAuto_lostTarget}) {
+		message T("Target lost, teleporting.\n"), "ai_attack";
+		useTeleport(1);
 	} else {
 		message T("Target lost\n"), "ai_attack";
 	}
