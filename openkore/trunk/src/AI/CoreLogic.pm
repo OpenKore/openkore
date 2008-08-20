@@ -1110,7 +1110,6 @@ sub processAutoStorage {
 		  && $char->inventory->size() > 0) {
 
 		# Initiate autostorage when we're low on some item, and getAuto is set
-		my $found = 0;
 		my $needitem = "";
 		my $i;
 		Misc::checkValidity("AutoStorage part 1");
@@ -1140,9 +1139,7 @@ sub processAutoStorage {
 						quit();
 					}
 				} else {
-					$found = $found + 1;
 					if ($storage{openedThisSession} && findKeyString(\%storage, "name", $config{"getAuto_$i"}) eq '') {
-						$found = $found - 1;
 					} else {
 							my $sti = $config{"getAuto_$i"};
 							if ($needitem eq "") {
@@ -1159,7 +1156,7 @@ sub processAutoStorage {
 		$attackOnRoute = AI::args($routeIndex)->{attackOnRoute} if (defined $routeIndex);
 
 		# Only autostorage when we're on an attack route, or not moving
-		if ((!defined($routeIndex) || $attackOnRoute > 1) && $found > 0 &&
+		if ((!defined($routeIndex) || $attackOnRoute > 1) && $needitem ne "" &&
 			$char->inventory->size() > 0) {
 	 		message TF("Auto-storaging due to insufficient %s\n", $needitem);
 			AI::queue("storageAuto");
