@@ -1111,6 +1111,7 @@ sub processAutoStorage {
 
 		# Initiate autostorage when we're low on some item, and getAuto is set
 		my $found = 0;
+		my $needitem = "";
 		my $i;
 		Misc::checkValidity("AutoStorage part 1");
 		for ($i = 0; exists $config{"getAuto_$i"}; $i++) {
@@ -1142,9 +1143,13 @@ sub processAutoStorage {
 					$found = $found + 1;
 					if ($storage{openedThisSession} && findKeyString(\%storage, "name", $config{"getAuto_$i"}) eq '') {
 						$found = $found - 1;
-					}
+					} else {
+							my $sti = $config{"getAuto_$i"};
+							if ($needitem eq "") {
+								$needitem = "$sti";
+							} else {$needitem = "$needitem, $sti";}
+						}
 				}
-#				last;
 			}
 		}
 		Misc::checkValidity("AutoStorage part 2");
@@ -1156,7 +1161,7 @@ sub processAutoStorage {
 		# Only autostorage when we're on an attack route, or not moving
 		if ((!defined($routeIndex) || $attackOnRoute > 1) && $found > 0 &&
 			$char->inventory->size() > 0) {
-	 		message TF("Auto-storaging due to insufficient %s\n", $config{"getAuto_$i"});
+	 		message TF("Auto-storaging due to insufficient %s\n", $needitem);
 			AI::queue("storageAuto");
 		}
 		$timeout{'ai_storageAuto'}{'time'} = time;
@@ -1388,8 +1393,7 @@ sub processAutoStorage {
 					}
 
 					if ($item{storage}{amount} < $item{amount_needed}) {
-						warning TF("storage: %s out of stock - getAuto block disabled\n", $item{name});
-						$config{"getAuto_$args->{index}_disabled"} = 1;
+						warning TF("storage: %s out of stock\n", $item{name});
 					}
 
 					if (!$config{relogAfterStorage} && $args->{retry} >= 3 && !$args->{warned}) {
