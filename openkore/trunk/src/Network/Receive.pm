@@ -847,6 +847,7 @@ sub actor_died_or_disappeared {
 
 	if ($ID eq $accountID) {
 		message T("You have died\n") if (!$char->{dead});
+		Plugins::callHook('self_died');
 		closeShop() unless !$shopstarted || $config{'dcOnDeath'} == -1 || !$AI;
 		$char->{deathCount}++;
 		$char->{dead} = 1;
@@ -3226,6 +3227,8 @@ sub inventory_item_added {
 		$disp .= " ($field{name})\n";
 		itemLog($disp);
 
+		Plugins::callHook('item_gathered',{item => $item->{name}});
+
 		$args->{item} = $item;
 
 		# TODO: move this stuff to AI()
@@ -3874,6 +3877,7 @@ sub map_loaded {
 		# Replies 0166 (Guild Member Titles List) and 0154 (Guild Members List)
 		$messageSender->sendGuildRequest(1);
 		message(T("You are now in the game\n"), "connection");
+		Plugins::callHook('in_game');
 		$messageSender->sendMapLoaded();
 		$messageSender->sendSync(1);
 		debug "Sent initial sync\n", "connection";
@@ -6146,8 +6150,10 @@ sub unit_levelup {
 	my $name = getActorName($ID);
 	if ($type == 0) {
 		message TF("%s gained a level!\n", $name);
+		Plugins::callHook('base_level');
 	} elsif ($type == 1) {
 		message TF("%s gained a job level!\n", $name);
+		Plugins::callHook('job_level');
 	} elsif ($type == 2) {
 		message TF("%s failed to refine a weapon!\n", $name), "refine";
 	} elsif ($type == 3) {
