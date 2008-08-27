@@ -50,6 +50,7 @@ sub map_loaded {
 		# Replies 0166 (Guild Member Titles List) and 0154 (Guild Members List)
 		$messageSender->sendGuildRequest(1);
 		message(T("You are now in the game\n"), "connection");
+		Plugins::callHook('in_game');
 		$messageSender->sendMapLoaded();
 		$timeout{'ai'}{'time'} = time;
 	}
