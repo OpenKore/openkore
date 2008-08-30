@@ -877,6 +877,7 @@ serverType 8
 private 1
 serverEncoding Western
 charBlockSize 108
+recvpackets recvpackets-servertype8.txt
 
 ## http://www.mavero.de/
 [MaveRO Private Server]
