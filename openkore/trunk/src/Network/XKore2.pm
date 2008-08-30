@@ -129,7 +129,7 @@ sub filterPacket {
 		my $pos = calcPosition($char);
 		$msg = pack("C*",0x91,0). pack("a16", $mapServerChange) . pack("v1 v1", $pos->{x}, $pos->{y}).$msg;
 		$mapServerChange = '';
-	} elsif ($switch eq "02AE") { 
+	} elsif ($switch eq "02AE") {
 		$msg = "";
 	}
 	return $msg;

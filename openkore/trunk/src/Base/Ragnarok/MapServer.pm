@@ -7,7 +7,7 @@ use bytes;
 
 use Modules 'register';
 use Base::RagnarokServer;
-
+use Misc;
 use base qw(Base::RagnarokServer);
 use Utils;
 use constant SESSION_TIMEOUT => 120;
@@ -83,6 +83,29 @@ sub process_00F3 {
 	if ($self->getServerType() == 18) {
 		# Map server login.
 		my ($charID, $accountID, $sessionID, $gender) = unpack('x5 a4 a4 x V x9 x4 C', $message);
+		$self->handleLogin($client, $accountID, $charID, $sessionID, $gender);
+		return 1;
+	} else {
+		$self->unhandledMessage($client, $message);
+		return 0;
+	}
+}
+
+#	$msg = pack("C*", 0x9b, 0, 0x39, 0x33) .
+#		$accountID .
+#		pack("C*", 0x65) .
+#		$charID .
+#		pack("C*", 0x37, 0x33, 0x36, 0x64) .
+#		$sessionID .
+#		pack("V", getTickCount()) .
+#		pack("C*", $sex);
+
+sub process_009B {
+	my ($self, $client, $message) = @_;
+
+	if ($self->getServerType() == 8) {
+		# Map server login.
+		my ($accountID , $charID, $sessionID, $gender) = unpack('x4 a4 x a4 x4 V x4 C', $message);
 		$self->handleLogin($client, $accountID, $charID, $sessionID, $gender);
 		return 1;
 	} else {
