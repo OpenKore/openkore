@@ -570,7 +570,7 @@ serverEncoding Western
 
 ## http://www.anthemro.com/
 [AnthemRO Private Server]
-ip 72.55.174.166
+ip 72.55.174.209
 port 6900
 master_version 0
 version 20
