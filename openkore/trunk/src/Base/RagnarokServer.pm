@@ -8,6 +8,7 @@ use Base::Server;
 use base qw(Base::Server);
 use Network::MessageTokenizer;
 use Utils::Exceptions;
+use Misc;
 
 sub new {
 	my ($class, $host, $port, $serverType, $rpackets) = @_;

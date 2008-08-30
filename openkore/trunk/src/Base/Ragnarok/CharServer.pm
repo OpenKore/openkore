@@ -7,6 +7,7 @@ use Socket qw(inet_aton);
 use Modules 'register';
 use Base::RagnarokServer;
 use base qw(Base::RagnarokServer);
+use Misc;
 
 use constant SESSION_TIMEOUT => 120;
 use constant DUMMY_CHARACTER => {
@@ -123,6 +124,9 @@ sub process_0065 {
 
 			$output .= $charStructure;
 		}
+        if ($self->{serverType} == 8){
+            $output = pack('C20') . $output;
+        }
 
 		# SECURITY NOTE: the session should be marked as belonging to this
 		# character server only. Right now there is the possibility that
@@ -135,6 +139,7 @@ sub process_0065 {
 		$client->send($accountID);
 		$client->send(pack('C2 v', 0x6B, 0x00, length($output) + 4) . $output);
 	}
+
 }
 
 sub process_0066 {
@@ -167,11 +172,8 @@ sub process_0066 {
 				$client->send($output);
 			}
 		}
-		$client->close();
-
-	} else {
-		$client->close();
 	}
+	$client->close();
 }
 
 sub process_0187 {
