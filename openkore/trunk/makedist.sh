@@ -2,7 +2,7 @@
 # This script creates a source tarball for OpenKore, confpack and tablepack.
 
 PACKAGE=openkore
-VERSION=2.0.5.1
+VERSION=2.0.6
 
 DIRS=(.
 	src
