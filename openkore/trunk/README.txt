@@ -1,5 +1,5 @@
 =========================
-### OpenKore what-will-become-2.0.6
+### OpenKore 2.0.6
 =========================
 - Implemented option for selective loading of plugins (by Technology).
   Added new sys.txt options: loadPlugins & loadPlugins_list
