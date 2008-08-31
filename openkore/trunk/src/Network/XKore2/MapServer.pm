@@ -195,7 +195,7 @@ sub handleMapLoaded {
 
 		# Send non-stackable item (mostly equipment) information
 		$output = '';
-		foreach my $item (@stackable) {
+		foreach my $item (@nonstackable) {
 			$output .= pack('v2 C2 v2 C2 a8',
 				$item->{index}, $item->{nameID}, $item->{type},
 				$item->{identified}, $item->{type_equip}, $item->{equipped}, $item->{broken},

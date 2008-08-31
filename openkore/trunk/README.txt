@@ -32,6 +32,7 @@
 - Added sitAuto_safe_stand_up timeout and sitAuto_look_from_wall config option.
 - Added new items, monsters, fields, emotions, portals.
 - Added ServerType 8 support for XKore2
+- Fixed XKore 2 not showing equiptment. - Thanks to Technology
 - Added new console command 'pause'.
   Syntax: 
         pause <seconds> - any command executed after this will have to wait a specified
