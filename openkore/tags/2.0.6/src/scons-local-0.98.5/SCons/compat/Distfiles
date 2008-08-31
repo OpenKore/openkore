@@ -1,0 +1,11 @@
+builtins.py
+_scons_hashlib.py
+_scons_itertools.py
+_scons_optparse.py
+_scons_sets.py
+_scons_sets15.py
+_scons_shlex.py
+_scons_subprocess.py
+_scons_textwrap.py
+_scons_UserString.py
+__init__.py
