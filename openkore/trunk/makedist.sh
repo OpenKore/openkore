@@ -9,14 +9,14 @@ DIRS=(.
 	src/build
 	src/scons-local-0.98.5
 	src/scons-local-0.98.5/SCons
+	src/scons-local-0.98.5/SCons/compat
 	src/scons-local-0.98.5/SCons/Node
-	src/scons-local-0.98.5/SCons/Optik
 	src/scons-local-0.98.5/SCons/Options
 	src/scons-local-0.98.5/SCons/Platform
 	src/scons-local-0.98.5/SCons/Scanner
 	src/scons-local-0.98.5/SCons/Script
-	src/scons-local-0.98.5/SCons/Sig
 	src/scons-local-0.98.5/SCons/Tool
+	src/scons-local-0.98.5/SCons/Variables
 	src/deps
 	src/deps/Carp
 	src/deps/Class/Data
