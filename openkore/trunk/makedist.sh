@@ -7,16 +7,16 @@ VERSION=2.0.5.1
 DIRS=(.
 	src
 	src/build
-	src/scons-local-0.96.93
-	src/scons-local-0.96.93/SCons
-	src/scons-local-0.96.93/SCons/Node
-	src/scons-local-0.96.93/SCons/Optik
-	src/scons-local-0.96.93/SCons/Options
-	src/scons-local-0.96.93/SCons/Platform
-	src/scons-local-0.96.93/SCons/Scanner
-	src/scons-local-0.96.93/SCons/Script
-	src/scons-local-0.96.93/SCons/Sig
-	src/scons-local-0.96.93/SCons/Tool
+	src/scons-local-0.98.5
+	src/scons-local-0.98.5/SCons
+	src/scons-local-0.98.5/SCons/Node
+	src/scons-local-0.98.5/SCons/Optik
+	src/scons-local-0.98.5/SCons/Options
+	src/scons-local-0.98.5/SCons/Platform
+	src/scons-local-0.98.5/SCons/Scanner
+	src/scons-local-0.98.5/SCons/Script
+	src/scons-local-0.98.5/SCons/Sig
+	src/scons-local-0.98.5/SCons/Tool
 	src/deps
 	src/deps/Carp
 	src/deps/Class/Data
