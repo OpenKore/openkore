@@ -1,0 +1,80 @@
+0 ! *!*
+1 ? *?*
+2 ho,delight *Whistling*
+3 lv,heart *Heart*
+4 swt,sweat *Sweat*
+5 ic *Idea*
+6 an,fret *$!@#*
+7 ag,ghk *Grumble*
+8 $,money *Zeny!*
+9 ... *...*
+10 pea,gawi *Peace*
+11 fst,bawi *Fist*
+12 wav,bo,qh *Wave*
+13 flg *Flag 1*
+14 lv2 *Love*
+15 thx *Thanks*
+16 wah *Wah*
+17 sry *Sorry*
+18 heh *Heh*
+19 swt2 *Sweat*
+20 hmm *Hmm*
+21 no1 *Nice One*
+22 ?? *??*
+23 omg *Omg*
+24 o,oh *O*
+25 x *X*
+26 hp *Help*
+27 go *Go*
+28 sob *Sob*
+29 gg *Good Game*
+30 kis *Kiss*
+31 kis2 *Kiss 2*
+32 pif *Pfft*
+33 ok *Ok*
+35 flg2 *Flag 2*
+36 e1,bzz,stare *Angry*
+37 e2,rice,hungry *Drool*
+38 e3,awsm,cool *2 Hearts*
+39 e4,meh,tongue *Bleks*
+40 e5,shy *Na-ah*
+41 e6,pat,goodboy *Pat Pat*
+42 e7,mp,sptime *SP*
+43 e8,slur,sexy *Horny*
+44 e9,com,comeon *Come Here*
+45 e10,yawn,sleepy *Yawn*
+46 e11,grat,congrats *Congratulations*
+47 e12,hptime *HP*
+48 flg3 *Flag 3*
+49 flg4 *Flag 4*
+50 flg5 *Flag 5*
+51 flg6 *Flag 6*
+52 e13,fsh *FlashEyes(?!)*
+53 e14,spin *SpinEyes(?!)*
+54 e15,sigh *'o'(?!)*
+55 e16,dum *Dumb(?!)*
+56 e17,crwd *( . )(?!)*
+57 e18,desp,otl *Down(?!)*
+58 dice1 *Dice#1*
+59 dice2 *Dice#2*
+60 dice3 *Dice#3*
+61 dice4 *Dice#4*
+62 dice5 *Dice#5*
+63 dice6 *Dice#6*
+64 flg7 *Flag 7*
+65 e20,here *PointingHand*
+66 flg8 *Flag 8*
+67 flg9 *Flag 9*
+68 phone *CellPhone(?!)*
+69 mail *E-Mail(?!)*
+70 rh *Unknown(RedHieroglyphs)*
+71 sp1 *Cell signal power 1/3(?!)*
+72 sp2 *Cell signal power 2/3(?!)*
+73 sp3 *Cell signal power 3/3(?!)*
+74 e27,hum *Unknown(Face w/lines)*
+75 e28,abs *Fear!(?!)*
+76 e29,oops *Oops*
+77 e30,spit *Boooring(?!)*
+78 e31,ene *BlessingLight*
+79 e32,panic *Panic!*
+80 e33,whisp *Whisp*
