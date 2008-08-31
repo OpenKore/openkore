@@ -1,0 +1,564 @@
+# In this file you can control which items to put in storage,
+# to sell, or to leave in the inventory.
+#
+# Syntax:
+# (item name) (minimum) (auto-store) (auto-sell) [put in cart] [get from cart]
+# item name	: Name of the item.
+# miminum	: The minimum amount of this item that you want to keep in inventory.
+# autostore	: Set to 1 to walk back to a Kapra NPC to put in storage.
+# autosell	: Set to 1 to sell item at a buy/sell NPC.
+# put in cart	: Set to 1 to automatically put this item in cart.
+# get from cart : Set to 1 to automatically get this item from cart.
+#
+# The example below will sell all jellopies, store all knifes and puts
+# all flowers in cart:
+#	Jellopy 0 0 1
+#	Knife 0 1 0
+#	Flower 0 0 0 1
+#
+# This example will get Red Potions from cart if you have less than 25
+# of them in your inventory:
+# 	Red Potion 25 0 0 0 1
+#
+# The item name isn't case sensitive. Only items found in this file will
+# be stored or sold.
+#
+# If auto-store and auto-sell are 1, Kore will do storage first (unless
+# storage is full) then sell.
+#
+# Kore will not sell or store equipped items. For example, if you're using
+# a knife and you have a line to auto-sell all knives, kore will sell any
+# extras it picks up, not the knife it's using.
+#
+# Don't forget to set the storageAuto, sellAuto and related configuration
+# options in config.txt, or this file won't have any effect.
+#
+# An auto-sell list and auto-storage list is provided by default, modify it
+# as you see fit.
+
+
+# All items not mentioned in this file will be automatically stored in storage.
+all 0 1 0
+
+
+##### HEAL/SUPPORT ITEMS #####
+# Adjust these to your needs
+
+Butterfly Wing 10 1 0
+Fly Wing 100 1 0
+
+Blue Potion 0 1 0
+Condensed Red Potion 50 1 0
+Condensed White Potion 50 1 0
+Condensed Yellow Potion 50 1 0
+Green Potion 0 1 0
+Red Potion 25 1 0
+Orange Potion 25 1 0
+White Potion 25 1 0
+Yellow potion 25 1 0
+
+##### ARROWS #####
+# You may want to modify these if you're an archer/hunter
+
+Arrow 3000 1 0
+
+
+
+#########################
+##### SELLING ITEMS #####
+#########################
+
+
+##### WORTHLESS GEARS #####
+# Worthless gears which are sold by default
+
+Adventurer's Suit 0 0 1
+Bandana 0 0 1
+Biretta 0 0 1
+Boots 0 0 1
+Buckler 0 0 1
+Cap 0 0 1
+Chain Mail 0 0 1
+Circlet 0 0 1
+Coat 0 0 1
+Coat [1] 0 0 1
+Cotton Shirt 0 0 1
+Cotton Shirt [1] 0 0 1
+#Crystal Pumps 0 0 1
+Diamond Ring 0 0 1
+Diver Goggles 0 0 1
+Eye Patch 0 0 1
+Flower Ring 0 0 1
+Flu Mask 0 0 1
+Full Plate 0 0 1
+Gangster Mask 0 0 1
+Gemmed Sallet 0 0 1
+Glasses 0 0 1
+Gold Ring 0 0 1
+Guard 0 0 1
+Hair Band 0 0 1
+Hat 0 0 1
+Helm 0 0 1
+High Heels 0 0 1
+Hood 0 0 1
+Hood [1] 0 0 1
+Jacket 0 0 1
+Jacket [1] 0 0 1
+Manteau 0 0 1
+Mantle 0 0 1
+Mantle [1] 0 0 1
+Mirror Shield 0 0 1
+Mr. Smile 0 0 1
+Muffler 0 0 1
+Padded Armor 0 0 1
+Pantie 0 0 1
+Ribbon 0 0 1
+Ribbon [1] 0 0 1
+Rosary 0 0 1
+Saint's Robe 0 0 1
+Sandals 0 0 1
+Sandals [1] 0 0 1
+Scapulare 0 0 1
+Shackles 0 0 1
+Shield 0 0 1
+Shoes 0 0 1
+Silk Robe 0 0 1
+Silver Ring 0 0 1
+Silver Robe 0 0 1
+Silver Robe [1] 0 0 1
+Skull Ring 0 0 1
+Thief Clothes 0 0 1
+Tights 0 0 1
+Turban 0 0 1
+Wooden Mail 0 0 1
+Wooden Mail [1] 0 0 1
+
+
+##### WORTHLESS WEAPONS #####
+# Worthless weapons which are sold by default
+
+Arbalest Bow [1] 0 0 1
+Arc Wand 0 0 1
+Arc Wand [1] 0 0 1
+Axe 0 0 1
+Axe [3] 0 0 1
+Axe [4] 0 0 1
+Bastard Sword 0 0 1
+Bastard Sword [2] 0 0 1
+Battle Axe 0 0 1
+Battle Axe [3] 0 0 1
+Battle Axe [4] 0 0 1
+Belt [1] 0 0 1
+#Bible [2] 0 0 1
+Bill Guisarme 0 0 1
+Blade 0 0 1
+Blade [3] 0 0 1
+Blade [4] 0 0 1
+Bow 0 0 1
+Bow [3] 0 0 1
+Bow [4] 0 0 1
+Broad Sword [1] 0 0 1
+Buster 0 0 1
+Buster [1] 0 0 1
+Chain [2] 0 0 1
+#Chemeti Whip 0 0 1
+Claw [1] 0 0 1
+Claw [2] 0 0 1
+Claymore 0 0 1
+Club 0 0 1
+Club [3] 0 0 1
+Club [4] 0 0 1
+Composite Bow 0 0 1
+Composite Bow [3] 0 0 1
+Cross Bow 0 0 1
+Cross Bow [2] 0 0 1
+Cutter 0 0 1
+Cutter [3] 0 0 1
+Cutter [4] 0 0 1
+Dagger 0 0 1
+Dagger [2] 0 0 1
+Dagger [3] 0 0 1
+Damascus [1] 0 0 1
+Dirk 0 0 1
+Dirk [2] 0 0 1
+Dirk [3] 0 0 1
+Falchion 0 0 1
+Falchion [3] 0 0 1
+Finger [1] 0 0 1
+Finger [2] 0 0 1
+Fist 0 0 1
+Fist [1] 0 0 1
+Flail [2] 0 0 1
+Flail [3] 0 0 1
+Flamberge 0 0 1
+Gakkung Bow [1] 0 0 1
+#Girl's Diary [1] 0 0 1
+Gladius 0 0 1
+Gladius [2] 0 0 1
+Glaive 0 0 1
+Glaive [2] 0 0 1
+Glaive [3] 0 0 1
+Great Bow 0 0 1
+Great Bow [2] 0 0 1
+Great Bow [3] 0 0 1
+Guisarme 0 0 1
+Guisarme [2] 0 0 1
+Guitar 0 0 1
+Guitar [1] 0 0 1
+Gumoongoh [1] 0 0 1
+Gumoongoh [2] 0 0 1
+Haedonggum [1] 0 0 1
+Hallberd [1] 0 0 1
+Hallberd [2] 0 0 1
+Hammer 0 0 1
+Hammer [2] 0 0 1
+Hammer [3] 0 0 1
+Harp [1] 0 0 1
+Harp [2] 0 0 1
+Jamadhar 0 0 1
+Javelin 0 0 1
+Javelin [3] 0 0 1
+Javelin [4] 0 0 1
+Jur [2] 0 0 1
+Katana 0 0 1
+Katana [3] 0 0 1
+Katana [4] 0 0 1
+Katar [1] 0 0 1
+Knife 0 0 1
+Knife [3] 0 0 1
+Knife [4] 0 0 1
+Knuckle Dusters [2] 0 0 1
+Knuckle Dusters [3] 0 0 1
+Lance 0 0 1
+#Lariat Whip 0 0 1
+Lute [2] 0 0 1
+Lute [3] 0 0 1
+Mace 0 0 1
+Mace [3] 0 0 1
+#Mace [4] 0 0 1
+Main Gauche 0 0 1
+Main Gauche [3] 0 0 1
+Mandolin [2] 0 0 1
+Mandolin [3] 0 0 1
+Morning Star [1] 0 0 1
+Morning Star [2] 0 0 1
+Novice Armlet [1] 0 0 1
+Novice Breastplate [1] 0 0 1
+Orcish Axe 0 0 1
+Orcish Sword 0 0 1
+Partizan 0 0 1
+Partizan [1] 0 0 1
+Partizan [2] 0 0 1
+Pike 0 0 1
+Pike [3] 0 0 1
+Rante Whip 0 0 1
+Rante Whip [1] 0 0 1
+Rapier 0 0 1
+Rapier [2] 0 0 1
+Rapier [3] 0 0 1
+Repeating Crossbow [1] 0 0 1
+Ring Pommel Saber [2] 0 0 1
+Rod 0 0 1
+Rod [3] 0 0 1
+#Rod [4] 0 0 1
+Rope [3] 0 0 1
+#Rope [4] 0 0 1
+Saber [2] 0 0 1
+Scimiter [2] 0 0 1
+Scimiter [3] 0 0 1
+Slayer 0 0 1
+Slayer [2] 0 0 1
+Slayer [3] 0 0 1
+Smasher [2] 0 0 1
+Smasher [3] 0 0 1
+Spear 0 0 1
+Spear [3] 0 0 1
+Spear [4] 0 0 1
+Staff 0 0 1
+Staff [2] 0 0 1
+Stiletto 0 0 1
+Stiletto [2] 0 0 1
+Stiletto [3] 0 0 1
+Studded Knuckles [2] 0 0 1
+Studded Knuckles [3] 0 0 1
+Sword 0 0 1
+Sword [3] 0 0 1
+Sword [4] 0 0 1
+Sword Mace 0 0 1
+Tail Whip [1] 0 0 1
+Tail Whip [2] 0 0 1
+Trident 0 0 1
+Trident [2] 0 0 1
+Tsurugi 0 0 1
+Tsurugi [1] 0 0 1
+Tsurugi [2] 0 0 1
+Two-handed Axe 0 0 1
+Two-handed Axe [1] 0 0 1
+Two-handed Sword 0 0 1
+Two-handed Sword [1] 0 0 1
+Violin [3] 0 0 1
+#Violin [4] 0 0 1
+Waghnak [3] 0 0 1
+Waghnak [4] 0 0 1
+Wand 0 0 1
+Wand [2] 0 0 1
+Wand [3] 0 0 1
+#War Axe [1] 0 0 1
+Whip [1] 0 0 1
+Whip [2] 0 0 1
+Whip [3] 0 0 1
+Wire Whip [2] 0 0 1
+Wire Whip [3] 0 0 1
+
+
+##### STANDARD LOOT #####
+# Useless items that are sold by default
+
+Acorn 0 0 1
+Ancient Lips 0 0 1
+Ancient Tooth 0 0 1
+Animal Poop 0 0 1
+Animal Skin 0 0 1
+Anolian Skin 0 0 1
+Antelope Horn 0 0 1
+Antelope Skin 0 0 1
+Ant Jaw 0 0 1
+Apple 0 0 1
+Apple Juice 0 0 1
+Bacillus 0 0 1
+Banana 0 0 1
+Banana Juice 0 0 1
+Barren Trunk 0 0 1
+Bear's Footskin 0 0 1
+Bee Sting 0 0 1
+Bill of Birds 0 0 1
+Black Hair 0 0 1
+Black Ladle 0 0 1
+Blue Hair 0 0 1
+Bouquet 0 0 1
+Brigan 0 0 1
+Broken Liquor Jar 0 0 1
+Broken Shell 0 0 1
+Broken Shuriken 0 0 1
+Broken Sword 0 0 1
+Broken Turtle Shell 0 0 1
+Bug Leg 0 0 1
+Burning Hair 0 0 1
+Burning Heart 0 0 1
+Burning Horseshoe 0 0 1
+Burnt Tree 0 0 1
+Cactus Needle 0 0 1
+Carrot 0 0 1
+Carrot Juice 0 0 1
+Cheese 0 0 1
+China 0 0 1
+Chonchon Doll 0 0 1
+Chrysalis 0 0 1
+Chung Jah 0 0 1
+Clam Flesh 0 0 1
+Clam Shell 0 0 1
+Claw of Desert Wolf 0 0 1
+Claw of Monkey 0 0 1
+Claw of Rat 0 0 1
+Clover 0 0 1
+Cobweb 0 0 1
+Cogwheel 0 0 1
+Conch 0 0 1
+Coral Reef 0 0 1
+Cotton Mat 0 0 1
+Coupon 0 0 1
+Crab Shell 0 0 1
+Crystal Mirror 0 0 1
+Cultish Masque 0 0 1
+Cyfar 0 0 1
+Daenggie 0 0 1
+Dark Mask 0 0 1
+Dead Medusa 0 0 1
+Decayed Nail 0 0 1
+Destroyed Armor 0 0 1
+Detonator 0 0 1
+Dokebi Horn 0 0 1
+Dragon Canine 0 0 1
+Dragon Scale 0 0 1
+Dragon Skin 0 0 1
+Dragon Tail 0 0 1
+Earthworm Peeling 0 0 1
+Elder Pixie's Moustache 0 0 1
+Emveretarcon 0 0 1
+Fabric 0 0 1
+Falcon Food 0 0 1
+Fang 0 0 1
+Feather 0 0 1
+Feather of Birds 0 0 1
+Fin 0 0 1
+Fine-grained Trunk 0 0 1
+Fine Grit 0 0 1
+Fine Sand 0 0 1
+Fish Tail 0 0 1
+Flower 0 0 1
+Fluff 0 0 1
+Fragment 0 0 1
+Frill 0 0 1
+Frozen Rose 0 0 1
+Garlet 0 0 1
+Gill 0 0 1
+Glass Bead 0 0 1
+Glitter Shell 0 0 1
+Glossy Hair 0 0 1
+Golden Hair 0 0 1
+Grasshopper's Leg 0 0 1
+Grit 0 0 1
+Harpy Feather 0 0 1
+Harpy Talon 0 0 1
+Heart of Mermaid 0 0 1
+Horn 0 0 1
+Horrendous Hair 0 0 1
+Horrendous Mouth 0 0 1
+Horseshoe 0 0 1
+Ice Cubic 0 0 1
+Immortal Heart 0 0 1
+Insect Feeler 0 0 1
+Invite for Duel 0 0 1
+Jack o' Pumpkin 0 0 1
+Jasmine 0 0 1
+Jellopy 0 0 1
+Lantern 0 0 1
+Large Jellopy 0 0 1
+Lava 0 0 1
+Live Coal 0 0 1
+Manacles 0 0 1
+Mane 0 0 1
+Maneater Blossom 0 0 1
+Maneater Root 0 0 1
+Mantis Scythe 0 0 1
+Matchstick 0 0 1
+Meat 0 0 1
+Memento 0 0 1
+Metal Fragment 0 0 1
+Milk 0 0 1
+Mould Powder 0 0 1
+Mole Claw 0 0 1
+Mole Whiskers 0 0 1
+Monster's Feed 0 0 1
+Moth Dust 0 0 1
+Mother's Letter 0 0 1
+Moth Wings 0 0 1
+Mud Lump 0 0 1
+Mushroom Spore 0 0 1
+Needle of Alarm 0 0 1
+Nightmare 0 0 1
+Nine Tails 0 0 1
+Nipper 0 0 1
+Nose Ring 0 0 1
+Nut Shell 0 0 1
+Ogre Tooth 0 0 1
+Oil Paper 0 0 1
+Old Frying Pan 0 0 1
+Old Shuriken 0 0 1
+Orc Claw 0 0 1
+Orcish Voucher 0 0 1
+Orc's Fang 0 0 1
+Osiris Doll 0 0 1
+PecoPeco Feather 0 0 1
+PecoPeco Food 0 0 1
+Pencil Case 0 0 1
+Phracon 0 0 1
+Piece of Bamboo 0 0 1
+Piece of Egg Shell 0 0 1
+Piece of Shield 0 0 1
+Pointed Scale 0 0 1
+Poisonous Powder 0 0 1
+Poisonous Toad Skin 0 0 1
+Poison Spore 0 0 1
+Porcupine Quill 0 0 1
+Poring Doll 0 0 1
+Powder of Butterfly 0 0 1
+Pumpkin 0 0 1
+Puppet 0 0 1
+Raccoon Leaf 0 0 1
+Racoon Doll 0 0 1
+Ragnarok T-shirt 0 0 1
+Rainbow Shell 0 0 1
+Rat Tail 0 0 1
+Raw Fish 0 0 1
+Red Frame 0 0 1
+#Red Stocking 0 0 1
+Reins 0 0 1
+Reptile Tongue 0 0 1
+Resin 0 0 1
+Rice Cake 0 0 1
+Rocker Doll 0 0 1
+Root of Stone 0 0 1
+Rotten Bandage 0 0 1
+Rouge 0 0 1
+Round Shell 0 0 1
+Sand Clump 0 0 1
+Scale Shell 0 0 1
+Scell 0 0 1
+Scorpion Claw 0 0 1
+Scorpion Nipper 0 0 1
+Scorpion Tail 0 0 1
+Sea-otter Fur 0 0 1
+Sharp Leaf 0 0 1
+Sharp Paper 0 0 1
+Sharp scale 0 0 1
+Shell 0 0 1
+Shining Scale 0 0 1
+Shining Spear Blade 0 0 1
+Shoot 0 0 1
+Short Daenggie 0 0 1
+Silk Mat 0 0 1
+Single Cell 0 0 1
+Skel-Bone 0 0 1
+Skull 0 0 1
+Slick Paper 0 0 1
+Snail's Shell 0 0 1
+Snake Scale 0 0 1
+Soft Apron 0 0 1
+Solid Shell 0 0 1
+Solid Trunk 0 0 1
+Songpyun 0 0 1
+Spawn 0 0 1
+Spoon Stub 0 0 1
+Spore Doll 0 0 1
+Squid Ink 0 0 1
+Stem 0 0 1
+Sticky Mucus 0 0 1
+Sticky Webfoot 0 0 1
+Stiff Horn 0 0 1
+Stinky Scale 0 0 1
+Stone 0 0 1
+Stone Fragment 0 0 1
+Stone Heart 0 0 1
+Sushi 0 0 1
+Tail of Steel Scorpion 0 0 1
+Talon 0 0 1
+Tattered Clothes 0 0 1
+Tendon 0 0 1
+Tengu Nose 0 0 1
+Tentacle 0 0 1
+Tiger Skin 0 0 1
+Tongue 0 0 1
+Tooth of Bat 0 0 1
+Tough Scalelike Stem 0 0 1
+Tree Root 0 0 1
+#Tribal Solidarity 0 0 1
+Turtle Shell 0 0 1
+Venom Canine 0 0 1
+Wedding Bouquet 0 0 1
+Wing of Dragonfly 0 0 1
+Wing of Red Bat 0 0 1
+Witherless Rose 0 0 1
+Wolf Claw 0 0 1
+Worm Peeling 0 0 1
+Worn-out Kimono 0 0 1
+Worn Out Page 0 0 1
+Worn-out Prison Uniform 0 0 1
+Yam 0 0 1
+Yarn 0 0 1
+Yellow Plate 0 0 1
+Young Twig 0 0 1
+Yoyo Doll 0 0 1
+Yoyo Tail 0 0 1
+Zargon 0 0 1
+Zenorc's Fang 0 0 1
