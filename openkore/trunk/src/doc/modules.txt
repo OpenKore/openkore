@@ -19,6 +19,9 @@ Modules
 Network::DirectConnection
 Network::Receive
 Network::Send
+Network::XKore
+Network::XKore2
+Network::XKoreProxy
 Plugins
 Skill
 Match
