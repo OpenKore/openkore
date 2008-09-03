@@ -32,8 +32,8 @@ package Task::ErrorReport;
 
 use strict;
 use Modules 'register';
-use Task::WithSubTask;
-use base qw(Task::WithSubTask);
+use Task::WithSubtask;
+use base qw(Task::WithSubtask);
 use Log qw(error);
 
 ##
