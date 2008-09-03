@@ -33,7 +33,9 @@ sub new {
 	$self->{activeMutexes} = {};
 	$self->{events} = {};
 	$self->{shouldReschedule} = 0;
-	$self->{firstUse} = 2;
+	$self->{firstUse} = 1;
+
+	# $self->{ST_oldmutexes};
 
 	return $self;
 }
@@ -73,10 +75,7 @@ sub stop {
 	}
 }
 
-# ##############################################################
-# TODO:
-# 2) Call Apropriate event hadler
-# ##############################################################
+# Overrided method.
 sub iterate {
 	my ($self) = @_;
 
@@ -130,11 +129,6 @@ sub iterate {
 
 #################################################### Public functions ####################################################
 
-# ##############################################################
-# TODO:
-# 1) Add some String Identifer, so we could get $task by that ID
-# 2) On First Run. Save our Mutexes, and Set new one.
-# ##############################################################
 sub addSubTask {
 	my $self = shift;
 	my %args = @_;
@@ -152,7 +146,7 @@ sub addSubTask {
 		$task{T_onSubTaskError} = new CallbackList("onSubTaskError");
 
 		# Set events and their handlers
-		my $ID1 = $task->onMutexesChanged->add($self, \&onMutexesChanged);
+		my $ID1 = $task->onMutexesChanged->add($self, \&onMutexChanged);
 		my $ID2 = $task->onStop->add($self, \&onSubTaskDone);
 		# Set non standart events and their handlers
 		my $ID3 = defined($args{onSubTaskInterrupt}) ? $task->onSubTaskInterrupt->add($self, $args{onSubTaskInterrupt}) : undef;
@@ -163,13 +157,17 @@ sub addSubTask {
 		$self->{events}{$task} = [$ID1, $ID2, $ID3, $ID4, $ID5, $ID6, $ID7];
 
 		# We will need to Rebuild Mutexes when First SubTask was Added.
-		$self->{firstUse} = 1 if ($self->{firstUse} == 2);
+		if ($self->{firstUse} == 1) {
+			my $mutexes = $self->getMutexes();
+			$self->{ST_oldmutexes} = [@{$mutexes}];
+			$self->{firstUse} = 0;
+		};
 	}
 }
 
 # #######################################################################
 # TODO:
-# Really return Chosen SubTask
+# Really return Chosen SubTask by it's Name.
 # #######################################################################
 sub getSubTaskByName {
 	# return $_[0]->{ST_subtask};
@@ -177,10 +175,6 @@ sub getSubTaskByName {
 
 #################################################### Private functions ####################################################
 
-# #######################################################################
-# TODO:
-# Handle Reporting SubTask Errors
-# #######################################################################
 sub deactivateSubTask {
 	my ($self, $task) = @_;
 
@@ -197,6 +191,16 @@ sub deactivateSubTask {
 			$self->interruptSubTask($task);
 		}
 	} else {
+		my $error;
+		if ($error = $task->getError())) {
+			if (! $subtask->onSubTaskError->empty()) {
+				$task->onSubTaskError->call($task, $error);
+			}
+		} else {
+			if (! $subtask->onSubTaskDone->empty()) {
+				$task->onSubTaskDone->call($task);
+			}
+		}
 		if ($self->{activeSubTasks}->has($task)) { # Our Task is on Active List
 			$self->{activeSubTasks}->remove($task);
 			$self->{onSubTaskDone}->call($self, $task);
@@ -206,15 +210,12 @@ sub deactivateSubTask {
 		}
 	}
 	$self->deleteTaskMutexes($task);
+	$self->recalcActiveSubTaskMutexes();
 }
 
 sub reschedule {
 	my ($self) = @_;
-	my $activeSubTasks      = $self->{activeSubTasks};
-	my $inactiveTasks    = $self->{inactiveTasks};
-	my $grayTasks        = $self->{grayTasks};
-	my $activeMutexes    = $self->{activeMutexes};
-	my $oldInactiveTasks = $inactiveTasks->deepCopy();
+	my $recalcMutex;
 
 	# Activate UnActive SubTasks that don't conflict Anymore
 	foreach my $task (@{$self->{unactiveSubTasks}}) {
@@ -231,6 +232,7 @@ sub reschedule {
 					$self->{unactiveSubTasks}->remove($task);
 					# Now Update Mutex List
 					$self->addTaskMutexes($task);
+					$recalcMutex = 1;
 				}
 			# Or We have High Priority then Active SubTask
 			} elsif (higherPriority($task, $self->{activeMutexes}, \@conflictingMutexes)) {
@@ -242,6 +244,7 @@ sub reschedule {
 					# Now Update Mutex List
 					$self->addTaskMutexes($task);
 					# Other Operations will handle DeActivation part, that will DeActivate Low Priority SubTask
+					$recalcMutex = 1;
 			}
 		}
 	}
@@ -264,10 +267,12 @@ sub reschedule {
 					$self->{activeSubTasks}->remove($task);
 					$self->{unactiveSubTasks}->add($task);
 					$self->interruptSubTask($task);
+					$recalcMutex = 1;
 				} elsif ($self->{queSubTasks}->has($task)) { # Our Task in on Que List
 					$self->{queSubTasks}->remove($task);
 					$self->{unactiveSubTasks}->add($task);
 					$self->interruptSubTask($task);
+					$recalcMutex = 1;
 				}
 			}
 		} else {
@@ -283,7 +288,12 @@ sub reschedule {
 		}
 	}
 
+	if ($recalcMutex == 1) {
+		$self->recalcActiveSubTaskMutexes();
+	}
+
 	$self->{shouldReschedule} = 0;
+
 }
 
 sub resort {
@@ -335,9 +345,18 @@ sub deleteTaskMutexes {
 
 # #######################################################################
 # TODO:
-# Really Recalculate all the active SubTasks mutexes, and set our mutex.
+# Make it work.
+# "activeMutexes" must hold a list of all active Mutexes used bu all SubTasks
+# When Setting Mutexes, it must set the whole list (SelfMutex + All SubTask Mutexes).
 # #######################################################################
 sub recalcActiveSubTaskMutexes {
+	my ($self) = @_;
+	my $activeMutexes;
+	foreach my $task (@{$self->{activeSubTasks}}, @{$self->{queSubTasks}}) {
+		# $task->getMutexes();
+	}
+
+	$self->setMutexes(@{$self->{ST_oldmutexes}, $activeMutexes});
 }
 
 sub interruptSubTask {
@@ -397,21 +416,12 @@ sub higherPriority {
 
 ################################################ SubTask  callback handlers ################################################
 
-# ###########################################
-# TODO:
-# Call Handler apropriate registered event for Finished SubTask
-# ###########################################
 sub onSubTaskDone {
 	my ($self, $subtask) = @_;
-	$task->onSubTaskDone->call($task);
+	$self->deactivateSubTask($task);
 }
 
-sub onSubTaskMutexesChanged {
-	my ($self, $subtask) = @_;
-	$self->recalcActiveSubTaskMutexes();
-}
-
-sub onSubTaskRestoreMutexes {
+sub onMutexChanged {
 	my ($self) = @_;
 	$self->recalcActiveSubTaskMutexes();
 }
