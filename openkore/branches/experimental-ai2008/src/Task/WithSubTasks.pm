@@ -27,6 +27,7 @@ sub new {
 
 	# Multiple SubTask support
 	$self->{activeSubTasks} = new Set(); # Set of Active SubTasks
+	$self->{queSubTasks} = new Set(); # Set of Active SubTasks
 
 	$self->{activeMutexes} = {};
 	$self->{tasksByName} = {};
@@ -87,23 +88,23 @@ sub stop {
 
 # ##############################################################
 # TODO:
-# 1) Itterate only one (first in set) SubTask a time. If it's still Active, move it to the end of list.
 # 2) Call Apropriate event hadler
-# 3) Intelligent manage of SubTasks
 # ##############################################################
 sub iterate {
 	my ($self) = @_;
 
-	# $self->checkValidity() if DEBUG;
-	# $self->reschedule() if ($self->{shouldReschedule});
-	# $self->checkValidity() if DEBUG;
-
+	# Copy of class Vars.
 	my $activeSubTasks = $self->{activeSubTasks};
 	my $activeMutexes = $self->{activeMutexes};
 
+	# Move all SubTasks from Que to Active list
 	my $count = $activeSubTasks->size();
-	if ($count < 1) $self->reschedule();
+	if ($count < 1) $self->resort();
 
+	# Activate All pending SubTasks
+	$self->reschedule() if ($self->{shouldReschedule});
+
+	# Itterate only one (Top) SubTask. If none in the list, then just do nothing.
 	if ($activeSubTasks->size() > 0) {
 	# for (my $i = 0; $i < @{$activeSubTasks}; $i++) {
 		my $task = $activeSubTasks->get(0);
@@ -132,6 +133,11 @@ sub iterate {
 
 			$i--;
 			# $self->{shouldReschedule} = 1;
+		} else {
+			# Move SubTask to Que list
+			my $queTasks = $self->{queSubTasks};
+			$activeSubTasks->remove($task);
+			$queTasks->add($task);
 		}
 	}
 	# $self->checkValidity() if DEBUG;
@@ -217,6 +223,123 @@ sub deactivateSubTask {
 	# 		delete $activeMutexes->{$mutex};
 	# 	}
 	# }
+}
+
+# ##############################################################
+# TODO:
+# 1) Make it Activate pending Sub Tasks
+# 2) Make it controll Mutexes and Priorities
+# ##############################################################
+sub reschedule {
+	my ($self) = @_;
+	my $activeTasks      = $self->{activeTasks};
+	my $inactiveTasks    = $self->{inactiveTasks};
+	my $grayTasks        = $self->{grayTasks};
+	my $activeMutexes    = $self->{activeMutexes};
+	my $oldActiveTasks   = $activeTasks->deepCopy();
+	my $oldInactiveTasks = $inactiveTasks->deepCopy();
+
+	# The algorithm produces the following result:
+	# All active tasks do not conflict with each other, such tasks with higher
+	# priority will be active compared to conflicting tasks with lower priority.
+	#
+	# This algorithm does not produce the optimal result as that would take
+	# far too much time, but the result should be good enough in most cases.
+
+	# Deactivate gray tasks that conflict with active mutexes.
+	# TODO:
+	while (@{$grayTasks} > 0) {
+		my $task = $grayTasks->get(0);
+		my $hasConflict = 0;
+		foreach my $mutex (@{$task->getMutexes()}) { # Better use this: if ((@conflictingMutexes = intersect($activeMutexes, $task->getMutexes())) == 0)
+			if (exists $activeMutexes->{$mutex}) {
+				$hasConflict = 1;
+				last;
+			}
+		}
+		if ($hasConflict) {
+			$self->deactivateTask($task);
+		} else {
+			foreach my $mutex (@{$task->getMutexes()}) { # Add SubTask Mutex to the list of Mutexes.
+				$activeMutexes->{$mutex} = $task;
+			}
+			shift @{$grayTasks};
+		}
+	}
+
+	# Activate inactive tasks such that active tasks don't conflict with each other.
+	for (my $i = 0; $i < @{$inactiveTasks}; $i++) {
+		my $task = $inactiveTasks->get($i);
+		my @conflictingMutexes;
+		if ($task->getStatus() == Task::STOPPED) {
+			$inactiveTasks->remove($task); # Stopped SubTasks must don't go here. They will be deleted once event called.
+			$i--;
+		} elsif ((@conflictingMutexes = intersect($activeMutexes, $task->getMutexes())) == 0) {
+			# Move to Active Tasks List
+			$activeTasks->add($task);
+			$inactiveTasks->remove($task);
+			$i--;
+			foreach my $mutex (@{$task->getMutexes()}) { # Add SubTask Mutex to the list of Mutexes.
+				$activeMutexes->{$mutex} = $task;
+			}
+		} elsif (higherPriority($task, $activeMutexes, \@conflictingMutexes)) {
+			# Move to Active Tasks List
+			$activeTasks->add($task);
+			$inactiveTasks->remove($task);
+			$i--;
+			foreach my $mutex (@{$task->getMutexes()}) { # We have a High Priority Task with the same Mutex, so Deactivate SubTask with Low Priority
+				my $oldTask = $activeMutexes->{$mutex};
+				if ($oldTask) {
+					$self->deactivateTask($oldTask);
+				}
+				$activeMutexes->{$mutex} = $task;
+			}
+		}
+	}
+
+	# Activate Pending or Interrupted SubTask
+	foreach my $task (@{$activeTasks}) {
+		if (!$oldActiveTasks->has($task)) {
+			my $status = $task->getStatus();
+			if ($status == Task::INACTIVE) {
+				$task->activate();
+			} elsif ($status == Task::INTERRUPTED) {
+				$task->resume();
+			}
+		}
+	}
+
+	# TODO:
+	foreach my $task (@{$inactiveTasks}) {
+		if (!$oldInactiveTasks->has($task)) {
+			$task->interrupt();
+		}
+	}
+
+	$self->{shouldReschedule} = 0;
+}
+
+# ##############################################################
+# TODO:
+# 1) Make it move all SubTasks from Que to Active list
+# 2) call "reshedule"
+# ##############################################################
+sub resort {
+	my ($self) = @_;
+	my $activeTasks	= $self->{activeSubTasks};
+	my $queTasks	= $self->{queSubTasks};
+	my $oldQueTasks	= $queTasks->deepCopy();
+
+	# Move SubTasks from Que to Active list
+	foreach my $task (@{$queTasks}) {
+		if (!$oldQueTasks->has($task)) {
+			$activeTasks->add($task);
+			$queTasks->remove($task);
+		}
+	}
+
+	# We need to Reshedule them, becouse Order may change. 
+	$self->{shouldReschedule} = 1;
 }
 
 # #######################################################################
