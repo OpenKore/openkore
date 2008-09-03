@@ -24,8 +24,8 @@ use Time::HiRes qw(time);
 use Scalar::Util;
 use Carp::Assert;
 
-use Task::WithSubtask;
-use base qw(Task::WithSubtask);
+use Task::WithSubTask;
+use base qw(Task::WithSubTask);
 use Task::Chained;
 use Task::Function;
 use Task::SitStand;

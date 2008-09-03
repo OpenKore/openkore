@@ -3,8 +3,8 @@
 package Task::Testing;
 
 use strict;
-use Task::WithSubtask;
-use base qw(Task::WithSubtask);
+use Task::WithSubTask;
+use base qw(Task::WithSubTask);
 
 sub new {
 	my $class = shift;

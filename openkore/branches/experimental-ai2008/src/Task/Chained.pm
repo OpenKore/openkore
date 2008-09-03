@@ -38,8 +38,8 @@ package Task::Chained;
 use strict;
 
 use Modules 'register';
-use Task::WithSubtask;
-use base qw(Task::WithSubtask);
+use Task::WithSubTask;
+use base qw(Task::WithSubTask);
 
 use Utils::Exceptions;
 

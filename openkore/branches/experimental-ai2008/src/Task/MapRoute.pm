@@ -19,11 +19,11 @@ use Scalar::Util;
 
 use Modules 'register';
 use Globals;
-use Task::WithSubtask;
+use Task::WithSubTask;
 use Task::Route;
 use Task::CalcMapRoute;
 use Task::TalkNPC;
-use base qw(Task::WithSubtask);
+use base qw(Task::WithSubTask);
 use Translation qw(T TF);
 use Log qw(message debug warning error);
 use Network;
@@ -60,7 +60,7 @@ use enum (
 #
 # Create a new Task::Route object. The following options are allowed:
 # `l
-# - All options allowed by Task::WithSubtask->new(), except 'mutexes', 'autostop' and 'autofail'.
+# - All options allowed by Task::WithSubTask->new(), except 'mutexes', 'autostop' and 'autofail'.
 # - map (required) - The map you want to go to, for example "prontera".
 # - x, y - The coordinate on the destination map you want to walk to. On some maps this is
 #          important because they're split by a river. Depending on which side of the river

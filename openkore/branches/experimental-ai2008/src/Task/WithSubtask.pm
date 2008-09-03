@@ -16,7 +16,7 @@
 # at any time. It provides convenience methods for making the usage of subtasks
 # easy.
 #
-# Task::WithSubtask has the following features:
+# Task::WithSubTask has the following features:
 # `l
 # - Allows you to easily switch context to a subtask, allowing to subtask to
 #   temporarily have complete control.
@@ -26,7 +26,7 @@
 #
 # When you override iterate(), don't forget to check the return value of the
 # super method. See $Task_WithSubtask->iterate() for more information.
-package Task::WithSubtask;
+package Task::WithSubTask;
 
 use strict;
 use Carp::Assert;
@@ -36,9 +36,9 @@ use Task;
 use base qw(Task);
 
 ##
-# Task::WithSubtask->new(options...)
+# Task::WithSubTask->new(options...)
 #
-# Create a new Task::WithSubtask object. All options for Task->new() are allowed.
+# Create a new Task::WithSubTask object. All options for Task->new() are allowed.
 # Two more options are allowed: <tt>autostop</tt> and <tt>autofail</tt> (both
 # are booleans).
 #
@@ -220,7 +220,7 @@ sub subtaskDone {
 ##
 # void $Task_WithSubtask->subtaskStopped(Task subtask)
 #
-# Called when a subtask is stopped by Task::WithSubtask.
+# Called when a subtask is stopped by Task::WithSubTask.
 sub subtaskStopped {
 }
 
@@ -231,7 +231,7 @@ sub subtaskStopped {
 # Returns: A new error hash.
 # Ensures: defined(result)
 #
-# When 'autofail' is turned on, Task::WithSubtask will set the error code and
+# When 'autofail' is turned on, Task::WithSubTask will set the error code and
 # error message of this task to the same value as the error code/message of the
 # subtask. If that is not what you want, then you can override that behavior
 # by overriding this method.
