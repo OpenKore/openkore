@@ -33,6 +33,8 @@ sub new {
 	$self->{activeMutexes} = {};
 	$self->{events} = {};
 	$self->{shouldReschedule} = 0;
+	$self->{firstUse} = 2;
+
 	return $self;
 }
 
@@ -78,16 +80,15 @@ sub stop {
 sub iterate {
 	my ($self) = @_;
 
-	# Copy of class Vars.
-	my $activeSubTasks = $self->{activeSubTasks};
-	my $activeMutexes = $self->{activeMutexes};
-
 	# Move all SubTasks from Que to Active list
-	my $count = $activeSubTasks->size();
-	if ($count < 1) $self->resort();
+	$self->resort() if ($self->{activeSubTasks}->size() < 1);
 
 	# Activate All pending SubTasks
 	$self->reschedule() if ($self->{shouldReschedule});
+
+	# Copy of class Vars.
+	my $activeSubTasks = $self->{activeSubTasks};
+	my $activeMutexes = $self->{activeMutexes};
 
 	# Itterate only one (Top) SubTask. If none in the list, then just do nothing.
 	if ($activeSubTasks->size() > 0) {
@@ -102,7 +103,7 @@ sub iterate {
 		# Remove tasks that are stopped or done.
 		my $status = $task->getStatus();
 		if ($status == Task::DONE || $status == Task::STOPPED) {
-			$self->deactivateTask($task);
+			$self->deactivateSubTask($task);
 
 			# Remove the callbacks that we registered in this task.
 			my $IDs = $self->{events}{$task};
@@ -117,7 +118,7 @@ sub iterate {
 			$task->onSubTaskError->remove($IDs->[6]);
 
 			$i--;
-			# $self->{shouldReschedule} = 1;
+			$self->{shouldReschedule} = 1;
 		} else {
 			# Move SubTask to Que list
 			my $queTasks = $self->{queSubTasks};
@@ -160,6 +161,9 @@ sub addSubTask {
 		my $ID6 = defined($args{onSubTaskDone}) ? $task->onSubTaskDone->add($self, $args{T_onSubTaskDone}) : undef;
 		my $ID7 = defined($args{onSubTaskError}) ? $task->onSubTaskError->add($self, $args{onSubTaskError}) : undef;
 		$self->{events}{$task} = [$ID1, $ID2, $ID3, $ID4, $ID5, $ID6, $ID7];
+
+		# We will need to Rebuild Mutexes when First SubTask was Added.
+		$self->{firstUse} = 1 if ($self->{firstUse} == 2);
 	}
 }
 
@@ -176,35 +180,32 @@ sub getSubTaskByName {
 # #######################################################################
 # TODO:
 # Handle Reporting SubTask Errors
-# Rewrite it a little bit.
 # #######################################################################
 sub deactivateSubTask {
 	my ($self, $task) = @_;
 
 	my $activeTasks = $self->{activeTasks};
-	my $inactiveTasks = $self->{inactiveTasks};
-	my $grayTasks = $self->{grayTasks};
-	my $tasksByName = $self->{tasksByName};
 	my $status = $task->getStatus();
 	if ($status != Task::DONE && $status != Task::STOPPED) {
-		# $inactiveTasks->add($task);
+		if ($self->{activeSubTasks}->has($task)) { # Our Task is on Active List
+			$self->{activeSubTasks}->remove($task);
+			$self->{unactiveSubTasks}->add($task);
+			$self->interruptSubTask($task);
+		} elsif ($self->{queSubTasks}->has($task)) { # Our Task in on Que List
+			$self->{queSubTasks}->remove($task);
+			$self->{unactiveSubTasks}->add($task);
+			$self->interruptSubTask($task);
+		}
 	} else {
-		my $name = $task->getName();
-		$tasksByName->{$name}--;
-		if ($tasksByName->{$name} == 0) {
-			delete $tasksByName->{$name};
-		}
-
-		$self->{onSubTaskDone}->call($self, $task);
-		$activeTasks->remove($task);
-		# $grayTasks->remove($task);
-	}
-
-	foreach my $mutex (@{$task->getMutexes()}) {
-		if ($activeMutexes->{$mutex} == $task) {
-			delete $activeMutexes->{$mutex};
+		if ($self->{activeSubTasks}->has($task)) { # Our Task is on Active List
+			$self->{activeSubTasks}->remove($task);
+			$self->{onSubTaskDone}->call($self, $task);
+		} elsif ($self->{queSubTasks}->has($task)) { # Our Task in on Que List
+			$self->{queSubTasks}->remove($task);
+			$self->{onSubTaskDone}->call($self, $task);
 		}
 	}
+	$self->deleteTaskMutexes($task);
 }
 
 sub reschedule {
@@ -367,6 +368,30 @@ sub stopSubTask {
 			$subtask->onSubTaskStop->call($subtask);
 		}
 	}
+}
+
+# Copy form TaskManager
+sub intersect {
+	my ($set1, $set2) = @_;
+	my @result;
+	foreach my $element (@{$set2}) {
+		if (exists $set1->{$element}) {
+			push @result, $element;
+		}
+	}
+	return @result;
+}
+
+# Copy form TaskManager
+sub higherPriority {
+	my ($task, $mutexTaskMapper, $mutexes) = @_;
+	my $priority = $task->getPriority();
+	my $result = 1;
+	for (my $i = 0; $i < @{$mutexes} && $result; $i++) {
+		my $task2 = $mutexTaskMapper->{$mutexes->[$i]};
+		$result = $result && $priority > $task2->getPriority();
+	}
+	return $result;
 }
 
 
