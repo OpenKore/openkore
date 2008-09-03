@@ -30,8 +30,8 @@ use Time::HiRes qw(time);
 use Scalar::Util;
 
 use Modules 'register';
-use Task::WithSubtask;
-use base qw(Task::WithSubtask);
+use Task::WithSubTask;
+use base qw(Task::WithSubTask);
 use Task::SitStand;
 use Globals qw(%timeout $char $net $messageSender);
 use Plugins;

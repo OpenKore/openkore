@@ -23,8 +23,8 @@ use Scalar::Util;
 use Carp::Assert;
 
 use Modules 'register';
-use Task::WithSubtask;
-use base qw(Task::WithSubtask);
+use Task::WithSubTask;
+use base qw(Task::WithSubTask);
 use Task::Move;
 
 use Globals qw($char $field $net %config);
@@ -54,7 +54,7 @@ use enum qw(
 #
 # Create a new Task::Route object. The following options are allowed:
 # `l
-# - All options allowed by Task::WithSubtask->new(), except 'mutexes', 'autostop' and 'autofail'.
+# - All options allowed by Task::WithSubTask->new(), except 'mutexes', 'autostop' and 'autofail'.
 # - x (required) - The X-coordinate that you want to move to.
 # - y (required) - The Y-coordinate that you want to move to.
 # - maxDistance - The maximum distance (in blocks) that the route may be. If

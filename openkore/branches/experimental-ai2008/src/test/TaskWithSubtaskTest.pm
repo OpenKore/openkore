@@ -1,8 +1,8 @@
-# Unit test for Task::WithSubtask
+# Unit test for Task::WithSubTask
 package TaskWithSubtaskTest;
 
 use Test::More;
-use Task::WithSubtask;
+use Task::WithSubTask;
 use Task::Testing;
 
 sub start {
@@ -100,7 +100,7 @@ package TaskWithSubtaskTest::TestTask;
 # - The second iteration will run the subtask, which in turn only
 #   runs one iteration. The task is then complete.
 
-use base qw(Task::WithSubtask);
+use base qw(Task::WithSubTask);
 
 sub activate {
 	my ($self) = @_;

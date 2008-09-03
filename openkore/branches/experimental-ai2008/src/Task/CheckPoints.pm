@@ -13,8 +13,8 @@
 package Task::CheckPoints;
 
 use strict;
-use Task::WithSubtask;
-use base qw(Task::WithSubtask);
+use Task::WithSubTask;
+use base qw(Task::WithSubTask);
 
 use Modules 'register';
 use Globals qw($net %maps_lut);
