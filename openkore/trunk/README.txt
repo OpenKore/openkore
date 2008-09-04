@@ -2,6 +2,12 @@
 ### OpenKore what-will-become-2.0.7
 =========================
 
+=========================
+### OpenKore 2.0.6.1 (to be released)
+=========================
+- Dist file wasn't written properly therefore, 2.0.6 doesn't have servertypes 8_1-8_4
+  This version is suppose to cover it up.
+
 
 =========================
 ### OpenKore 2.0.6
