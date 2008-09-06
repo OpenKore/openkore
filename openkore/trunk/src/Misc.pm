@@ -292,7 +292,15 @@ sub configModify {
 
 	if (!$args{silent} && $key !~ /password/i) {
 		my $oldval = $config{$key};
-		message TF("Config '%s' set to %s (was %s)\n", $key, $val, $oldval), "info";
+		if (!defined $oldval) {
+			$oldval = "not set";
+		}
+
+		if (!defined $val) {
+			message TF("Config '%s' unset (was %s)\n", $key, $oldval), "info";
+		} else {
+			message TF("Config '%s' set to %s (was %s)\n", $key, $val, $oldval), "info";
+		}
 	}
 	if ($args{autoCreate} && !exists $config{$key}) {
 		my $f;
