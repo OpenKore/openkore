@@ -5,6 +5,7 @@ use Time::HiRes qw(time);
 no encoding 'utf8';
 use bytes;
 
+use Globals;
 use Modules 'register';
 use Base::RagnarokServer;
 use Misc;
@@ -61,6 +62,10 @@ sub handleLogin {
 			$coords		# character coordinates
 		);
 		$client->send($output);
+		
+		# Send the walking speed to the client, else the client just snaps around till it gets a speed increase/decrease 
+		$output  = pack('C2 v V', 0xB0, 0x00, 0, $char->{walk_speed} * 1000);		# Walk speed
+		$client->send($output);
 	}
 }
 
@@ -71,6 +76,10 @@ sub process_0072 {
       my ($accountID, $charID, $sessionID, $gender) = unpack('x2 a4 a4 V x4 C', $message);
       $self->handleLogin($client, $accountID, $charID, $sessionID, $gender);
       return 1;
+	} elsif ($self->getServerType()  == 8) {
+		# packet sendSkillUse
+		$self->unhandledMessage($client, $message);
+		return 0;
 	} else { #oRO and pRO and idRO
 		my ($accountID, $charID, $sessionID, $gender) = unpack('x2 a4 x5 a4 x2 V x4 C', $message);
       $self->handleLogin($client, $accountID, $charID, $sessionID, $gender);
