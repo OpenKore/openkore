@@ -50,7 +50,8 @@ sub handleLogin {
 		$client->{session} = $session;
 
 		my $output;
-		$output = pack("C2",0x83, 0x02) if ($self->getServerType() == '8_4');
+		#Note: in perl 8 == "8_4" == '8_4',  so to separate them you need to use a regular expression
+		$output = pack("C2",0x83, 0x02) if ($self->getServerType() =~ m/^8(_[1-4])$/);
 		$output .= $accountID;
 
 		my $charInfo = $self->getCharInfo($session);
