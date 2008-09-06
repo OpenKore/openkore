@@ -1,4 +1,9 @@
 =========================
+### OpenKore 2.0.6.1
+=========================
+- Include missing files that is required for servertype 8_*
+- updated servers.txt
+=========================
 ### OpenKore 2.0.6
 =========================
 - Implemented option for selective loading of plugins (by Technology).
