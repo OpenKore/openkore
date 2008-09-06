@@ -5670,6 +5670,10 @@ sub stat_info {
 	} else {
 		debug "Something: $args->{val}\n", "parseMsg", 2;
 	}
+	
+	if (!$char->{walk_speed}) {
+		$char->{walk_speed} = 0.15; # This is the default speed, since xkore requires this and eA (And aegis?) do not send this if its default speed
+	}
 }
 
 sub stat_info2 {
