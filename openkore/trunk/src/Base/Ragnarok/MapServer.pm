@@ -49,14 +49,16 @@ sub handleLogin {
 		$self->{sessionStore}->remove($session);
 		$client->{session} = $session;
 
-		$client->send($accountID);
+		my $output;
+		$output = pack("C2",0x83, 0x02) if ($self->getServerType() == '8_4');
+		$output .= $accountID;
 
 		my $charInfo = $self->getCharInfo($session);
 		my $coords = '';
 		shiftPack(\$coords, $charInfo->{x}, 10);
 		shiftPack(\$coords, $charInfo->{y}, 10);
 		shiftPack(\$coords, 0, 4);
-		my $output = pack("C2 V a3 x2",
+		$output .= pack("C2 V a3 x2",
 			0x73, 0x00,
 			int(time),	# syncMapSync
 			$coords		# character coordinates
