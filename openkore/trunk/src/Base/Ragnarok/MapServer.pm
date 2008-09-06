@@ -65,11 +65,11 @@ sub handleLogin {
 		
 		# Send the walking speed to the client, else the client just snaps around till it gets a speed increase/decrease 
 		$output  = pack('C2 v V', 0xB0, 0x00, 0, $char->{walk_speed} * 1000);		# Walk speed
-		$client->send($output);
 		# Send weapon/shield appearance
 		$output .= pack('C2 a4 C v2', 0xD7, 0x01, $char->{ID}, 2, $char->{weapon}, $char->{shield});
 		# Send status info
 		$output .= pack('C2 a4 v3 x', 0x19, 0x01, $char->{ID}, $char->{param1}, $char->{param2}, $char->{param3});
+		$client->send($output);
 	}
 }
 
