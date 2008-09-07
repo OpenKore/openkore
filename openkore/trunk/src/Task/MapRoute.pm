@@ -99,7 +99,9 @@ sub new {
 	$self->{dest}{map} = $args{map};
 	$self->{dest}{pos}{x} = $args{x};
 	$self->{dest}{pos}{y} = $args{y};
-	$self->{avoidWalls} = 1 if (!defined $self->{avoidWalls});
+	if ($config{'route_avoidWalls'}) {
+		$self->{avoidWalls} = 1 if (!defined $self->{avoidWalls});
+	} else {$self->{avoidWalls} = 0;}
 
 	# Watch for map change events. Pass a weak reference to ourselves in order
 	# to avoid circular references (memory leaks).
