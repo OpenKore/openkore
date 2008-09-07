@@ -168,6 +168,7 @@ lockMap_randY
 route_escape_reachedNoPortal 1
 route_escape_randomWalk 1
 route_escape_shout
+route_avoidWalls 1
 route_randomWalk 1
 route_randomWalk_inTown 0
 route_randomWalk_maxRouteTime 75
