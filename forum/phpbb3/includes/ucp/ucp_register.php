@@ -205,6 +205,8 @@ class ucp_register
 				if (($dnsbl = $user->check_dnsbl('register')) !== false)
 				{
 					$error[] = sprintf($user->lang['IP_BLACKLISTED'], $user->ip, $dnsbl[1]);
+				} elseif ($user ->checkSpambots($user->ip,request_var('email', '')) {
+					$error[] = sprintf($user->lang['IP_BLACKLISTED'], $user->ip, "IP/Email was found on www.stopforumspam.com");
 				}
 			}
 
