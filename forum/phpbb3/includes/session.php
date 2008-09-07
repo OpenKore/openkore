@@ -2052,6 +2052,24 @@ class user extends session
 			return $var;
 		}
 	}
+	
+	function checkSpambots($ip,$mail){
+	    //check the e-mail adress
+	    $xml_string = file_get_contents('http://www.stopforumspam.com/api?email='.$mail);
+	    $xml = new SimpleXMLElement($xml_string);
+	    
+		if($xml->appears == 'yes') {
+	        return true;
+	    
+		} elseif($spambot != true) {
+	        //e-mail not found in the database, now check the ip
+	        $xml_string = file_get_contents('http://www.stopforumspam.com/api?ip='.$ip);
+	        $xml = new SimpleXMLElement($xml_string);
+	        if($xml->appears == 'yes') {
+	            return true;
+	        }
+	    }
+	}
 }
 
 ?>
