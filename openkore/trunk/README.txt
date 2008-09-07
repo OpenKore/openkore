@@ -1,6 +1,7 @@
 =========================
 ### OpenKore what-will-become-2.0.7
 =========================
+- Added route_avoidWalls config option.
 
 =========================
 ### OpenKore 2.0.6.1 (to be released)
