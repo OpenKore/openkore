@@ -5670,6 +5670,10 @@ sub stat_info {
 	} else {
 		debug "Something: $args->{val}\n", "parseMsg", 2;
 	}
+	
+	if (!$char->{walk_speed}) {
+		$char->{walk_speed} = 0.15; # This is the default speed, since xkore requires this and eA (And aegis?) do not send this if its default speed
+	}
 }
 
 sub stat_info2 {
@@ -6150,10 +6154,10 @@ sub unit_levelup {
 	my $name = getActorName($ID);
 	if ($type == 0) {
 		message TF("%s gained a level!\n", $name);
-		Plugins::callHook('base_level');
+		Plugins::callHook('base_level', {name => $name});
 	} elsif ($type == 1) {
 		message TF("%s gained a job level!\n", $name);
-		Plugins::callHook('job_level');
+		Plugins::callHook('job_level', {name => $name});
 	} elsif ($type == 2) {
 		message TF("%s failed to refine a weapon!\n", $name), "refine";
 	} elsif ($type == 3) {

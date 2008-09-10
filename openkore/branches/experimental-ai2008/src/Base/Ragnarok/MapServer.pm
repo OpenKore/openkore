@@ -5,6 +5,7 @@ use Time::HiRes qw(time);
 no encoding 'utf8';
 use bytes;
 
+use Globals;
 use Modules 'register';
 use Base::RagnarokServer;
 use Misc;
@@ -48,14 +49,17 @@ sub handleLogin {
 		$self->{sessionStore}->remove($session);
 		$client->{session} = $session;
 
-		$client->send($accountID);
+		my $output;
+		#Note: in perl 8 == "8_4" == '8_4',  so to separate them you need to use a regular expression
+		$output = pack("C2",0x83, 0x02) if ($self->getServerType() =~ m/^8(_[1-4])$/);
+		$output .= $accountID;
 
 		my $charInfo = $self->getCharInfo($session);
 		my $coords = '';
 		shiftPack(\$coords, $charInfo->{x}, 10);
 		shiftPack(\$coords, $charInfo->{y}, 10);
 		shiftPack(\$coords, 0, 4);
-		my $output = pack("C2 V a3 x2",
+		$output .= pack("C2 V a3 x2",
 			0x73, 0x00,
 			int(time),	# syncMapSync
 			$coords		# character coordinates
@@ -71,6 +75,10 @@ sub process_0072 {
       my ($accountID, $charID, $sessionID, $gender) = unpack('x2 a4 a4 V x4 C', $message);
       $self->handleLogin($client, $accountID, $charID, $sessionID, $gender);
       return 1;
+	} elsif ($self->getServerType()  == 8) {
+		# packet sendSkillUse
+		$self->unhandledMessage($client, $message);
+		return 0;
 	} else { #oRO and pRO and idRO
 		my ($accountID, $charID, $sessionID, $gender) = unpack('x2 a4 x5 a4 x2 V x4 C', $message);
       $self->handleLogin($client, $accountID, $charID, $sessionID, $gender);

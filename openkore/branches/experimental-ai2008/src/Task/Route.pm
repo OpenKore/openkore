@@ -54,7 +54,7 @@ use enum qw(
 #
 # Create a new Task::Route object. The following options are allowed:
 # `l
-# - All options allowed by Task::WithSubTask->new(), except 'mutexes', 'autostop' and 'autofail'.
+# - All options allowed by Task::WithSubtask->new(), except 'mutexes', 'autostop' and 'autofail'.
 # - x (required) - The X-coordinate that you want to move to.
 # - y (required) - The Y-coordinate that you want to move to.
 # - maxDistance - The maximum distance (in blocks) that the route may be. If
@@ -92,7 +92,9 @@ sub new {
 	$self->{dest}{map} = $field->name();
 	$self->{dest}{pos}{x} = $args{x};
 	$self->{dest}{pos}{y} = $args{y};
-	$self->{avoidWalls} = 1 if (!defined $self->{avoidWalls});
+	if ($config{'route_avoidWalls'}) {
+		$self->{avoidWalls} = 1 if (!defined $self->{avoidWalls});
+	} else {$self->{avoidWalls} = 0;}
 	$self->{solution} = [];
 	$self->{stage} = '';
 

@@ -88,6 +88,8 @@ sub loadAll {
 		message T("Loading all plugins...\n", 'plugins');
 	} elsif ($sys{'loadPlugins'} eq '2') {
 		message T("Selectively loading plugins...\n", 'plugins');
+	} elsif ($sys{'loadPlugins'} eq '3') {
+		message T("Selectively skipping plugins...\n", 'plugins');
 	}
 	
 	my (@plugins, @subdirs, @names);
@@ -104,6 +106,8 @@ sub loadAll {
 
 		foreach my $file (@items) {
 			if (-f "$dir/$file" && $file =~ /\.(pl|lp)$/) {
+				next if (exists $sys{'loadPlugins'} && $sys{'loadPlugins'} eq '3' && existsInList($sys{'skipPlugins_list'}, substr($file, 0, -3)));
+
 				push @plugins, "$dir/$file";
 				push @names, substr($file, 0, -3) if (exists $sys{'loadPlugins'} && $sys{'loadPlugins'} eq '2');
 			} elsif (-d "$dir/$file" && $file !~ /^(\.|CVS$)/i) {

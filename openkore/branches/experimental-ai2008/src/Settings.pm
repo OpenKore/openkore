@@ -104,6 +104,7 @@ our $recvpackets_name;
 our $chat_log_file;
 our $storage_log_file;
 our $shop_log_file;
+our $sys_file;
 our $monster_log_file;
 our $item_log_file;
 
@@ -148,6 +149,7 @@ sub parseArguments {
 	undef $shop_file;
 	undef $chat_log_file;
 	undef $storage_log_file;
+	undef $sys_file;
 	undef $interface;
 	undef $lockdown;
 
@@ -167,6 +169,7 @@ sub parseArguments {
 		'shop=s',             \$shop_file,
 		'chat-log=s',         \$chat_log_file,
 		'storage-log=s',      \$storage_log_file,
+		'sys=s',              \$sys_file,
 
 		'interface=s',        \$interface,
 		'lockdown',           \$lockdown,
@@ -239,6 +242,7 @@ sub getUsageText {
 		--shop=FILENAME           Which shop.txt to use.
 		--chat-log=FILENAME       Which chat log file to use.
 		--storage-log=FILENAME    Which storage log file to use.
+		--sys=FILENAME            Which sys.txt to use.
 
 		Other options:
 		--interface=NAME          Which interface to use at startup.
@@ -543,6 +547,14 @@ sub getShopFilename {
 	}
 }
 
+sub getSysFilename {
+	if (defined $sys_file) {
+		return $sys_file;
+	} else {
+		return getControlFilename("sys.txt");
+	}
+}
+
 sub getRecvPacketsFilename {
 	return getTableFilename($recvpackets_name || "recvpackets.txt");
 }
@@ -610,7 +622,7 @@ sub _addFile {
 sub _processSysConfig {
 	my ($writeMode) = @_;
 	my ($f, @lines, %keysNotWritten);
-	my $sysFile = getControlFilename("sys.txt");
+	my $sysFile = getSysFilename();
 	return if (!$sysFile || !open($f, "<:utf8", $sysFile));
 	
 	if ($writeMode) {
