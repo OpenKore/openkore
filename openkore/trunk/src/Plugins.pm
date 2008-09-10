@@ -106,7 +106,7 @@ sub loadAll {
 
 		foreach my $file (@items) {
 			if (-f "$dir/$file" && $file =~ /\.(pl|lp)$/) {
-				next if (exists $sys{'loadPlugins'} && $sys{'loadPlugins'} eq '3' && existsInList($sys{'loadPlugins_list'}, substr($file, 0, -3)));
+				next if (exists $sys{'loadPlugins'} && $sys{'loadPlugins'} eq '3' && existsInList($sys{'skipPlugins_list'}, substr($file, 0, -3)));
 
 				push @plugins, "$dir/$file";
 				push @names, substr($file, 0, -3) if (exists $sys{'loadPlugins'} && $sys{'loadPlugins'} eq '2');
