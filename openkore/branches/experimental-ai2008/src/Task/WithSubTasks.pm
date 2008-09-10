@@ -9,6 +9,23 @@
 #  also distribute the source code.
 #  See http://www.gnu.org/licenses/gpl.html for the full license.
 #########################################################################
+##
+# MODULE DESCRIPTION: Convenience abstract base class for classes with multiple SubTasks.
+#
+# This is an convenience abstract class for tasks which have at least one active subtask
+# at any time. It provides convenience methods for making the usage of managing SubTasks
+# easy.
+#
+# Task::WithSubTasks has the following features:
+# `l
+# - Allows you to run at least one SubTask.
+# - Allows you to easly manipulate any Running/Interrupted SubTask
+# - interrupt(), resume() and stop() calls are automatically propagated to all SubTasks.
+# - Allows you to define custom behavior when a subtask has completed, compleated with error, stopped, interrupted or even resumed.
+# `l`
+#
+# When you override iterate(), don't forget to check the return value of the
+# super method. See $Task_WithSubTasks->iterate() for more information.
 package Task::WithSubTasks;
 
 use strict;
@@ -20,6 +37,15 @@ use base qw(Task);
 
 ############################################### Constructor and Destructor  ###############################################
 
+##
+# Task::WithSubTaks->new(options...);
+#
+# Create a new Task::WithSubTaks object.
+#
+# The following options are allowed:
+# `l
+# - All options allowed for Task->new(), except 'mutexes'.
+# `l`
 sub new {
 	my $class = shift;
 	my %args = @_;
@@ -27,7 +53,7 @@ sub new {
 
 	# Multiple SubTask support
 	$self->{activeSubTasks} = new Set(); # Set of Active SubTasks
-	$self->{queSubTasks} = new Set(); # Set of Active SubTasks
+	$self->{queSubTasks} = new Set(); # Set of Que SubTasks that need to be Activated
 	$self->{unactiveSubTasks} = new Set(); # Set on Non Active SubTasks
 
 	$self->{activeMutexes} = {};
@@ -35,7 +61,7 @@ sub new {
 	$self->{shouldReschedule} = 0;
 	$self->{firstUse} = 1;
 
-	# $self->{ST_oldmutexes};
+	$self->{ST_oldmutexes};
 
 	return $self;
 }
@@ -75,9 +101,18 @@ sub stop {
 	}
 }
 
-# Overrided method.
+##
+# boolean $Task_WithSubTasks->iterate()
+#
+# This is like $Task->iterate(), but return 0 when any SubTask is running, and 1
+# when no SubTasks are running. If you override this method then you must check
+# the super call's return value. If the return value is 0 then you should do
+# nothing in the overrided iterate() method.
+#
+# <b>Note:</b> Itterate method will only Intterate one SubTasks a time, to reduce Hi CPU load.
 sub iterate {
 	my ($self) = @_;
+	$self->SUPER::iterate();
 
 	# Move all SubTasks from Que to Active list
 	$self->resort() if ($self->{activeSubTasks}->size() < 1);
@@ -118,17 +153,44 @@ sub iterate {
 
 			$i--;
 			$self->{shouldReschedule} = 1;
+			return 0;
 		} else {
 			# Move SubTask to Que list
 			my $queTasks = $self->{queSubTasks};
 			$activeSubTasks->remove($task);
 			$queTasks->add($task);
+			return 0;
 		}
+	} else {
+		return 1;
 	}
 }
 
 #################################################### Public functions ####################################################
 
+##
+# void $Task_WithSubTasks->addSubTask()
+#
+# Adds newly created Task to the list of Que SubTasks.
+# Requires: !defined($self->getSubtask()) && $subtask->getStatus() == Task::INACTIVE
+#
+# <b>Note:</b> SubTask name must be set, so you could use $Task_WithSubTasks->getSubTaskByName($name).
+#
+# Example:
+# $self->addSubTask(
+#	task => new Task::Move(x => $self->{new_x}, y => $self->{new_y}, name => 'move to target'),
+#	onSubTaskInterrupt => &onMoveInterrupt,
+#	onSubTaskResume => &onMoveResume
+#	onSubTaskStop => &onMoveDone
+#	onSubTaskError => &onMoveError );
+#
+# `l 
+# - <tt>task</tt> (required) - The SubTask you whant to run.
+# - <tt>onSubTaskInterrupt</tt> - Pointer to function witch will be called when <tt>task</tt> is Interrupted.
+# - <tt>onSubTaskResume</tt> - Pointer to function witch will be called when <tt>task</tt> is Resumed.
+# - <tt>onSubTaskStop</tt> - Pointer to function witch will be called when <tt>task</tt> is Stopped/Done without Error.
+# - <tt>onSubTaskError</tt> - Pointer to function witch will be called when <tt>task</tt> is Stopped/Done with Error.
+# `l`
 sub addSubTask {
 	my $self = shift;
 	my %args = @_;
@@ -136,7 +198,7 @@ sub addSubTask {
 	if (defined($args{task})) {
 		my $task = $args{task};
 		$self->{allSubTasks}->add($task);
-		$self->{tasksByName}{$task->getName()}++;
+		# $self->{tasksByName}{$task->getName()}++;
 		
 		# Create Custom Callback Handlers, to call parent event handlers for new task.
 		$task{T_onSubTaskInterrupt} = new CallbackList("onSubTaskInterrupt");
@@ -165,31 +227,43 @@ sub addSubTask {
 	}
 }
 
-# #######################################################################
-# TODO:
-# Really return Chosen SubTask by it's Name.
-# #######################################################################
+##
+# Task $Task_WithSubTasks->getSubTaskByName()
+#
+# Return SubTask by it's <tt>name</tt>, or undef if there is none.
+#
+# <b>Note:</b> SubTask name must be set, so you could use this method.
+#
+# Example:
+# my $movee_task = $self->getSubTaskByName('move to target');
+#
+# `l 
+# - <tt>name</tt> (required) - The SubTask name you whant to get.
+# `l`
 sub getSubTaskByName {
-	# return $_[0]->{ST_subtask};
+	my ($self, $name) = @_;
+	foreach my $task (@{$self->{activeSubTasks}}, @{$self->{queSubTasks}}, @{$self->{unactiveSubTasks}}) {
+		my $subtask_name = $task->getName();
+		if ($subtask_name eq $name) {
+			return $task;
+		}
+	}
+	return undef;
 }
 
 #################################################### Private functions ####################################################
 
+# ###############################################################
+# Deactivate/Interrupt Active/Que SubTask.
+# Note: Don't call this procedure directly.
+# ###############################################################
 sub deactivateSubTask {
 	my ($self, $task) = @_;
 
 	my $activeTasks = $self->{activeTasks};
 	my $status = $task->getStatus();
 	if ($status != Task::DONE && $status != Task::STOPPED) {
-		if ($self->{activeSubTasks}->has($task)) { # Our Task is on Active List
-			$self->{activeSubTasks}->remove($task);
-			$self->{unactiveSubTasks}->add($task);
-			$self->interruptSubTask($task);
-		} elsif ($self->{queSubTasks}->has($task)) { # Our Task in on Que List
-			$self->{queSubTasks}->remove($task);
-			$self->{unactiveSubTasks}->add($task);
-			$self->interruptSubTask($task);
-		}
+		$self->interruptSubTask($task);
 	} else {
 		my $error;
 		if ($error = $task->getError())) {
@@ -208,11 +282,13 @@ sub deactivateSubTask {
 			$self->{queSubTasks}->remove($task);
 			$self->{onSubTaskDone}->call($self, $task);
 		}
+		$self->deleteTaskMutexes($task);
+		$self->recalcActiveSubTaskMutexes();
 	}
-	$self->deleteTaskMutexes($task);
-	$self->recalcActiveSubTaskMutexes();
 }
 
+# Reshedule All current SubTasks
+# Note: Don't call this procedure directly.
 sub reschedule {
 	my ($self) = @_;
 	my $recalcMutex;
@@ -296,19 +372,18 @@ sub reschedule {
 
 }
 
+# Move all Pending Tasks from Que to Active List
+# Note: Don't call this procedure directly.
 sub resort {
 	my ($self) = @_;
-	my $activeTasks	= $self->{activeSubTasks};
-	my $queTasks	= $self->{queSubTasks};
-	my $oldQueTasks	= $queTasks->deepCopy();
 
 	# Move SubTasks from Que to Active list
-	foreach my $task (@{$queTasks}) {
+	foreach my $task (@{$self->{queSubTasks}}) {
 		# Restore Mutexes part 1
 		$self->deleteTaskMutexes($task);
 		# Move Task
-		$activeTasks->add($task);
-		$queTasks->remove($task);
+		$self->{activeSubTasks}->add($task);
+		$self->{queSubTasks}->remove($task);
 		# Restore Mutexes part 2
 		$self->addTaskMutexes($task);
 	}
@@ -317,9 +392,8 @@ sub resort {
 	$self->{shouldReschedule} = 1;
 }
 
-# ###############################################################
 # Add Task Mutexes to list of Active Task Mutexes
-# ###############################################################
+# Note: Don't call this procedure directly.
 sub addTaskMutexes {
 	my ($self, $subtask) = @_;
 
@@ -329,9 +403,8 @@ sub addTaskMutexes {
 	}
 }
 
-# ###############################################################
 # Delete Task Mutexes from list of Active Task Mutexes
-# ###############################################################
+# Note: Don't call this procedure directly.
 sub deleteTaskMutexes {
 	my ($self, $subtask) = @_;
 
@@ -343,32 +416,63 @@ sub deleteTaskMutexes {
 	}
 }
 
-# #######################################################################
-# TODO:
-# Make it work.
-# "activeMutexes" must hold a list of all active Mutexes used bu all SubTasks
-# When Setting Mutexes, it must set the whole list (SelfMutex + All SubTask Mutexes).
-# #######################################################################
+# Recalculates and Set's current Task mutexes based on SelfMutex and all Active SubTasks mutexes
+# Note: Don't call this procedure directly.
 sub recalcActiveSubTaskMutexes {
 	my ($self) = @_;
-	my $activeMutexes;
+	my @activeMutexes;
 	foreach my $task (@{$self->{activeSubTasks}}, @{$self->{queSubTasks}}) {
-		# $task->getMutexes();
+		push @activeMutexes, $task->getMutexes();
 	}
-
-	$self->setMutexes(@{$self->{ST_oldmutexes}, $activeMutexes});
+	push @activeMutexes, $self->{ST_oldmutexes};
+	$self->setMutexes(@activeMutexes);
 }
 
+##
+# Task $Task_WithSubTasks->interruptSubTask()
+#
+# Interrupts the given <tt>task</tt>.
+#
+# Example:
+# $self->interruptSubTask(task=> $self->getSubTaskByName('move to target'));
+#
+# `l 
+# - <tt>task</tt> (required) - The SubTask you whant to Interrupt.
+# `l`
 sub interruptSubTask {
-	my ($self, $subtask) = @_;
-	$subtask->interrupt();
-	if ($subtask->getStatus() == Task::INTERRUPTED) {
-		if (! $subtask->onSubTaskInterrupt->empty()) {
-			$subtask->onSubTaskInterrupt->call($subtask);
+	my ($self, $task) = @_;
+	if (($self->{activeSubTasks}->has($task))||($self->{queSubTasks}->has($task))) {
+		$task->interrupt();
+		if ($task->getStatus() == Task::INTERRUPTED) {
+			if (! $task->onSubTaskInterrupt->empty()) {
+				$task->onSubTaskInterrupt->call($task);
+			}
+			# May-be we left some Mutexes???
+			$self->deleteTaskMutexes($task);
+			if ($self->{activeSubTasks}->has($task)) { # Our Task is on Active List
+				$self->{activeSubTasks}->remove($task);
+				$self->{unactiveSubTasks}->add($task);
+			} elsif ($self->{queSubTasks}->has($task)) { # Our Task in on Que List
+				$self->{queSubTasks}->remove($task);
+				$self->{unactiveSubTasks}->add($task);
+			}
+			# Now recalc SubTask Mutexes
+			$self->recalcActiveSubTaskMutexes();
 		}
 	}
 }
 
+##
+# Task $Task_WithSubTasks->resumeSubTask()
+#
+# Resumes the given <tt>task</tt>.
+#
+# Example:
+# $self->resumeSubTask(task=> $self->getSubTaskByName('move to target'));
+#
+# `l 
+# - <tt>task</tt> (required) - The SubTask you whant to Resume.
+# `l`
 sub resumeSubTask {
 	my ($self, $subtask) = @_;
 	$subtask->resume();
@@ -376,9 +480,30 @@ sub resumeSubTask {
 		if (! $subtask->onSubTaskResume->empty()) {
 			$subtask->onSubTaskResume->call($subtask);
 		}
+		# May-be we left some Mutexes???
+		$self->deleteTaskMutexes($task);
+		if ($self->{unactiveSubTasks}->has($task)) { # Our Task is on Unactive List
+			$self->{unactiveSubTasks}->remove($task);
+			$self->{queSubTasks}->add($task);
+		}
+		# Add Current SubTasks Mutexes to the list
+		$self->addTaskMutexes($task);
+		# Now recalc SubTask Mutexes
+		$self->recalcActiveSubTaskMutexes();
 	}
 }
 
+##
+# Task $Task_WithSubTasks->stopSubTask()
+#
+# Stop the given <tt>task</tt>.
+#
+# Example:
+# $self->stopSubTask(task=> $self->getSubTaskByName('move to target'));
+#
+# `l 
+# - <tt>task</tt> (required) - The SubTask you whant to Stop.
+# `l`
 sub stopSubTask {
 	my ($self, $subtask) = @_;
 	$subtask->stop();
@@ -386,10 +511,16 @@ sub stopSubTask {
 		if (! $subtask->onSubTaskStop->empty()) {
 			$subtask->onSubTaskStop->call($subtask);
 		}
+		# Call SubTask Deactivation
+		$self->deactivateSubTask($task);
 	}
 }
 
-# Copy form TaskManager
+# Return the intersection of the given sets.
+#
+# set1: A reference to a hash whose keys are the set elements.
+# set2: A reference to an array which contains the elements in the set.
+# Returns: An array containing the intersect elements.
 sub intersect {
 	my ($set1, $set2) = @_;
 	my @result;
@@ -401,7 +532,13 @@ sub intersect {
 	return @result;
 }
 
-# Copy form TaskManager
+# Check whether $task has a higher priority than all tasks specified
+# by the given mutexes.
+#
+# task: The task to check.
+# mutexTaskMapper: A hash which maps a mutex name to a task that owns that mutex.
+# mutexes: A list of mutexes to check.
+# Requires: All elements in $mutexes can be successfully mapped by $mutexTaskMapper.
 sub higherPriority {
 	my ($task, $mutexTaskMapper, $mutexes) = @_;
 	my $priority = $task->getPriority();
