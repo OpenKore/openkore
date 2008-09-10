@@ -60,7 +60,7 @@ use enum (
 #
 # Create a new Task::Route object. The following options are allowed:
 # `l
-# - All options allowed by Task::WithSubTask->new(), except 'mutexes', 'autostop' and 'autofail'.
+# - All options allowed by Task::WithSubtask->new(), except 'mutexes', 'autostop' and 'autofail'.
 # - map (required) - The map you want to go to, for example "prontera".
 # - x, y - The coordinate on the destination map you want to walk to. On some maps this is
 #          important because they're split by a river. Depending on which side of the river
@@ -99,7 +99,9 @@ sub new {
 	$self->{dest}{map} = $args{map};
 	$self->{dest}{pos}{x} = $args{x};
 	$self->{dest}{pos}{y} = $args{y};
-	$self->{avoidWalls} = 1 if (!defined $self->{avoidWalls});
+	if ($config{'route_avoidWalls'}) {
+		$self->{avoidWalls} = 1 if (!defined $self->{avoidWalls});
+	} else {$self->{avoidWalls} = 0;}
 
 	# Watch for map change events. Pass a weak reference to ourselves in order
 	# to avoid circular references (memory leaks).

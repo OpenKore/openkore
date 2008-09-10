@@ -1148,7 +1148,11 @@ sub cmdConf {
 		if ($arg1 =~ /password/i) {
 			message TF("Config '%s' is not displayed\n", $arg1), "info";
 		} else {
-			message TF("Config '%s' is %s\n", $arg1, $value), "info";
+			if (defined $value) {
+				message TF("Config '%s' is %s\n", $arg1, $value), "info";
+			} else {
+				message TF("Config '%s' is not set\n", $arg1, $value), "info";
+			}
 		}
 
 	} else {

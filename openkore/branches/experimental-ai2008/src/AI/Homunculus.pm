@@ -130,7 +130,7 @@ sub is {
 
 sub processFeeding {
 	# Homun loses intimacy if you let hunger fall lower than 11 and if you feed it above 75 (?)
-	$char->{homunculus}{hungerThreshold} = int(rand($config{homunculus_hungerMin}))+($config{homunculus_hungerMax} - $config{homunculus_hungerMin});
+	$char->{homunculus}{hungerThreshold} = $config{homunculus_hungerMin}+ int(rand($config{homunculus_hungerMax} - $config{homunculus_hungerMin}));
 	# Make a random timeout, to appear more humanlike when we have to feed our homun more than once in a row.
 	$char->{homunculus}{feed_timeout} = int(rand(($config{homunculus_hungerTimeoutMax})-$config{homunculus_hungerTimeoutMin}))+$config{homunculus_hungerTimeoutMin};
 	$char->{homunculus}{feed_time} = time;
