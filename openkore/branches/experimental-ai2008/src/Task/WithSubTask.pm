@@ -10,22 +10,22 @@
 #  See http://www.gnu.org/licenses/gpl.html for the full license.
 #########################################################################
 ##
-# MODULE DESCRIPTION: Convenience abstract base class for classes with subtasks.
+# MODULE DESCRIPTION: Convenience abstract base class for classes with SubTask.
 #
 # This is an convenience abstract class for tasks which have at most one active subtask
-# at any time. It provides convenience methods for making the usage of subtasks
+# at any time. It provides convenience methods for making the usage of subtask
 # easy.
 #
 # Task::WithSubTask has the following features:
 # `l
 # - Allows you to easily switch context to a subtask, allowing to subtask to
 #   temporarily have complete control.
-# - interrupt(), resume() and stop() calls are automatically propagated to subtasks.
+# - interrupt(), resume() and stop() calls are automatically propagated to subtask.
 # - Allows you to define custom behavior when a subtask has completed or stopped.
 # `l`
 #
 # When you override iterate(), don't forget to check the return value of the
-# super method. See $Task_WithSubtask->iterate() for more information.
+# super method. See $Task_WithSubTask->iterate() for more information.
 package Task::WithSubTask;
 
 use strict;
@@ -113,7 +113,7 @@ sub stop {
 }
 
 ##
-# boolean $Task_WithSubtask->iterate()
+# boolean $Task_WithSubTask->iterate()
 #
 # This is like $Task->iterate(), but return 0 when a subtask is running, and 1
 # when a subtask is not running. If you override this method then you must check
@@ -165,7 +165,7 @@ sub iterate {
 }
 
 ##
-# Task $Task_WithSubtask->getSubtask()
+# Task $Task_WithSubTask->getSubtask()
 #
 # Return the currently set subtask, or undef if there is none.
 sub getSubtask {
@@ -173,7 +173,7 @@ sub getSubtask {
 }
 
 ##
-# void $Task_WithSubtask->setSubtask(Task subtask)
+# void $Task_WithSubTask->setSubtask(Task subtask)
 # Requires: !defined($self->getSubtask()) && $subtask->getStatus() == Task::INACTIVE
 # Ensures: $self->getSubtask() == $subtask
 #
@@ -204,7 +204,7 @@ sub setSubtask {
 }
 
 ##
-# void $Task_WithSubtask->subtaskDone(Task subtask)
+# void $Task_WithSubTask->subtaskDone(Task subtask)
 #
 # Called when a subtask has completed, either successfully or with an error.
 #
@@ -218,14 +218,14 @@ sub subtaskDone {
 }
 
 ##
-# void $Task_WithSubtask->subtaskStopped(Task subtask)
+# void $Task_WithSubTask->subtaskStopped(Task subtask)
 #
 # Called when a subtask is stopped by Task::WithSubTask.
 sub subtaskStopped {
 }
 
 ##
-# Hash* $Task_WithSubtask->translateSubtaskError(Task subtask, Hash* error)
+# Hash* $Task_WithSubTask->translateSubtaskError(Task subtask, Hash* error)
 # subtask: The subtask that finished with an error.
 # error: The subtask's error hash.
 # Returns: A new error hash.
