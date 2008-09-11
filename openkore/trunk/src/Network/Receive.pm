@@ -3965,15 +3965,20 @@ sub monster_ranged_attack {
 sub mvp_item {
 	my ($self, $args) = @_;
 	my $display = itemNameSimple($args->{itemID});
-	message TF("Get MVP item %s\n", $display);
-	chatLog("k", TF("Get MVP item %s\n", $display));
+	message TF("Got MVP item %s\n", $display);
+	chatLog("k", TF("Got MVP item %s\n", $display));
 }
 
 sub mvp_other {
 	my ($self, $args) = @_;
 	my $display = Actor::get($args->{ID});
-	message TF("%s become MVP!\n", $display);
-	chatLog("k", TF("%s became MVP!\n", $display));
+	if ($display eq "You") {
+			message TF("%s are the MVP!\n", $display);
+			chatLog("k", TF("%s were the MVP!\n", $display));
+		} else {
+			message TF("%s is the MVP!\n", $display);
+			chatLog("k", TF("%s was the MVP!\n", $display));
+		}
 }
 
 sub mvp_you {
