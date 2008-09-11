@@ -19,8 +19,8 @@
 # Task::WithSubTasks has the following features:
 # `l
 # - Allows you to run at least one SubTask.
-# - Allows you to easly manipulate any Running/Interrupted SubTask
-# - interrupt(), resume() and stop() calls are automatically propagated to all SubTasks.
+# - Allows you to easly manipulate any Running/Interrupted SubTask.
+# - interrupt, resume and stop calls are automatically propagated to all SubTasks.
 # - Allows you to define custom behavior when a subtask has completed, compleated with error, stopped, interrupted or even resumed.
 # `l`
 #
@@ -35,10 +35,10 @@ use Modules 'register';
 use Task;
 use base qw(Task);
 
-############################################### Constructor and Destructor  ###############################################
+### CATEGORY: Class methods
 
 ##
-# Task::WithSubTaks->new(options...);
+# $Task::WithSubTaks->new(options...)
 #
 # Create a new Task::WithSubTaks object.
 #
@@ -72,7 +72,7 @@ sub DESTROY {
 	# delete $self->{ST_mutexesChangedEvent} if ($self);
 }
 
-#################################################### Overrided methods ####################################################
+### CATEGORY: Overrided methods
 
 # Overrided method.
 sub interrupt {
@@ -109,7 +109,7 @@ sub stop {
 # the super call's return value. If the return value is 0 then you should do
 # nothing in the overrided iterate() method.
 #
-# <b>Note:</b> Itterate method will only Intterate one SubTasks a time, to reduce Hi CPU load.
+# <b>Note:</b> Itterate method will only Itterate one SubTasks a time, to reduce Hi CPU load.
 sub iterate {
 	my ($self) = @_;
 	$self->SUPER::iterate();
@@ -166,13 +166,17 @@ sub iterate {
 	}
 }
 
-#################################################### Public functions ####################################################
+### CATEGORY: Methods
 
 ##
 # void $Task_WithSubTasks->addSubTask()
+# task: (required) The SubTask you whant to run.
+# onSubTaskInterrupt: Pointer to function witch will be called when <tt>task</tt> is Interrupted.
+# onSubTaskResume: Pointer to function witch will be called when <tt>task</tt> is Resumed.
+# onSubTaskStop: Pointer to function witch will be called when <tt>task</tt> is Stopped/Done without Error.
+# onSubTaskError: Pointer to function witch will be called when <tt>task</tt> is Stopped/Done with Error.
 #
 # Adds newly created Task to the list of Que SubTasks.
-# Requires: !defined($self->getSubtask()) && $subtask->getStatus() == Task::INACTIVE
 #
 # <b>Note:</b> SubTask name must be set, so you could use $Task_WithSubTasks->getSubTaskByName($name).
 #
@@ -183,14 +187,6 @@ sub iterate {
 #	onSubTaskResume => &onMoveResume
 #	onSubTaskStop => &onMoveDone
 #	onSubTaskError => &onMoveError );
-#
-# `l 
-# - <tt>task</tt> (required) - The SubTask you whant to run.
-# - <tt>onSubTaskInterrupt</tt> - Pointer to function witch will be called when <tt>task</tt> is Interrupted.
-# - <tt>onSubTaskResume</tt> - Pointer to function witch will be called when <tt>task</tt> is Resumed.
-# - <tt>onSubTaskStop</tt> - Pointer to function witch will be called when <tt>task</tt> is Stopped/Done without Error.
-# - <tt>onSubTaskError</tt> - Pointer to function witch will be called when <tt>task</tt> is Stopped/Done with Error.
-# `l`
 sub addSubTask {
 	my $self = shift;
 	my %args = @_;
@@ -229,6 +225,7 @@ sub addSubTask {
 
 ##
 # Task $Task_WithSubTasks->getSubTaskByName()
+# name: (required) The SubTask name you whant to get.
 #
 # Return SubTask by it's <tt>name</tt>, or undef if there is none.
 #
@@ -236,10 +233,6 @@ sub addSubTask {
 #
 # Example:
 # my $movee_task = $self->getSubTaskByName('move to target');
-#
-# `l 
-# - <tt>name</tt> (required) - The SubTask name you whant to get.
-# `l`
 sub getSubTaskByName {
 	my ($self, $name) = @_;
 	foreach my $task (@{$self->{activeSubTasks}}, @{$self->{queSubTasks}}, @{$self->{unactiveSubTasks}}) {
@@ -250,8 +243,6 @@ sub getSubTaskByName {
 	}
 	return undef;
 }
-
-#################################################### Private functions ####################################################
 
 # ###############################################################
 # Deactivate/Interrupt Active/Que SubTask.
@@ -429,16 +420,13 @@ sub recalcActiveSubTaskMutexes {
 }
 
 ##
-# Task $Task_WithSubTasks->interruptSubTask()
+# void $Task_WithSubTasks->interruptSubTask()
+# task: (required) The SubTask you whant to Interrupt.
 #
 # Interrupts the given <tt>task</tt>.
 #
 # Example:
 # $self->interruptSubTask(task=> $self->getSubTaskByName('move to target'));
-#
-# `l 
-# - <tt>task</tt> (required) - The SubTask you whant to Interrupt.
-# `l`
 sub interruptSubTask {
 	my ($self, $task) = @_;
 	if (($self->{activeSubTasks}->has($task))||($self->{queSubTasks}->has($task))) {
@@ -463,16 +451,13 @@ sub interruptSubTask {
 }
 
 ##
-# Task $Task_WithSubTasks->resumeSubTask()
+# void $Task_WithSubTasks->resumeSubTask()
+# task: (required) The SubTask you whant to Resume.
 #
 # Resumes the given <tt>task</tt>.
 #
 # Example:
 # $self->resumeSubTask(task=> $self->getSubTaskByName('move to target'));
-#
-# `l 
-# - <tt>task</tt> (required) - The SubTask you whant to Resume.
-# `l`
 sub resumeSubTask {
 	my ($self, $subtask) = @_;
 	$subtask->resume();
@@ -494,16 +479,13 @@ sub resumeSubTask {
 }
 
 ##
-# Task $Task_WithSubTasks->stopSubTask()
+# void $Task_WithSubTasks->stopSubTask()
+# task: (required) The SubTask you whant to Stop.
 #
 # Stop the given <tt>task</tt>.
 #
 # Example:
 # $self->stopSubTask(task=> $self->getSubTaskByName('move to target'));
-#
-# `l 
-# - <tt>task</tt> (required) - The SubTask you whant to Stop.
-# `l`
 sub stopSubTask {
 	my ($self, $subtask) = @_;
 	$subtask->stop();
@@ -550,8 +532,6 @@ sub higherPriority {
 	return $result;
 }
 
-
-################################################ SubTask  callback handlers ################################################
 
 sub onSubTaskDone {
 	my ($self, $subtask) = @_;
