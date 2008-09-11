@@ -1612,7 +1612,7 @@ sub cmdExp {
 		for (my $i = 0; $i < @monsters_Killed; $i++) {
 			next if ($monsters_Killed[$i] eq "");
 			message(swrite(
-				"@<< @<<<<< @<<<<<<<<<<<<<<<<<<<<<<<< @<<< ",
+				"@<< @<<<<< @<<<<<<<<<<<<<<<<<<<<<< @<<<<< ",
 				[$i, $monsters_Killed[$i]{nameID}, $monsters_Killed[$i]{name}, $monsters_Killed[$i]{count}]),
 				"list");
 			$total += $monsters_Killed[$i]{count};
