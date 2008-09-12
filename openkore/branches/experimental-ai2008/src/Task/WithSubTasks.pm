@@ -61,7 +61,7 @@ sub new {
 	$self->{shouldReschedule} = 0;
 	$self->{firstUse} = 1;
 
-	$self->{ST_oldmutexes};
+	$self->{ST_oldmutexes} = [];
 
 	return $self;
 }
@@ -78,7 +78,7 @@ sub DESTROY {
 sub interrupt {
 	my ($self) = @_;
 	$self->SUPER::interrupt();
-	foreach my $task @{$self->{activeSubTasks}}) {
+	foreach my $task (@{ $self->{activeSubTasks} }) {
 		$self->interruptSubTask($task);
 	}
 }
@@ -87,7 +87,7 @@ sub interrupt {
 sub resume {
 	my ($self) = @_;
 	$self->SUPER::resume();
-	foreach my $task @{$self->{activeSubTasks}}) {
+	foreach my $task (@{ $self->{activeSubTasks} }) {
 		$self->resumeSubTask($task);
 	}
 }
@@ -96,8 +96,8 @@ sub resume {
 sub stop {
 	my ($self) = @_;
 	$self->SUPER::stop();
-	foreach my $task @{$self->{activeSubTasks}}) {
-		@self->stopSubTask($task);
+	foreach my $task (@{ $self->{activeSubTasks} }) {
+		$self->stopSubTask($task);
 	}
 }
 
@@ -135,7 +135,7 @@ sub iterate {
 		}
 
 		# Remove tasks that are stopped or done.
-		my $status = $task->getStatus();
+		$status = $task->getStatus();
 		if ($status == Task::DONE || $status == Task::STOPPED) {
 			$self->deactivateSubTask($task);
 
@@ -151,7 +151,7 @@ sub iterate {
 			$task->onSubTaskDone->remove($IDs->[5]);
 			$task->onSubTaskError->remove($IDs->[6]);
 
-			$i--;
+			# $i--;
 			$self->{shouldReschedule} = 1;
 			return 0;
 		} else {
@@ -197,11 +197,11 @@ sub addSubTask {
 		# $self->{tasksByName}{$task->getName()}++;
 		
 		# Create Custom Callback Handlers, to call parent event handlers for new task.
-		$task{T_onSubTaskInterrupt} = new CallbackList("onSubTaskInterrupt");
-		$task{T_onSubTaskResume} = new CallbackList("onSubTaskResume");
-		$task{T_onSubTaskStop} = new CallbackList("onSubTaskStop");
-		$task{T_onSubTaskDone} = new CallbackList("onSubTaskDone");
-		$task{T_onSubTaskError} = new CallbackList("onSubTaskError");
+		$task->{T_onSubTaskInterrupt} = new CallbackList("onSubTaskInterrupt");
+		$task->{T_onSubTaskResume} = new CallbackList("onSubTaskResume");
+		$task->{T_onSubTaskStop} = new CallbackList("onSubTaskStop");
+		$task->{T_onSubTaskDone} = new CallbackList("onSubTaskDone");
+		$task->{T_onSubTaskError} = new CallbackList("onSubTaskError");
 
 		# Set events and their handlers
 		my $ID1 = $task->onMutexesChanged->add($self, \&onMutexChanged);
@@ -256,13 +256,13 @@ sub deactivateSubTask {
 	if ($status != Task::DONE && $status != Task::STOPPED) {
 		$self->interruptSubTask($task);
 	} else {
-		my $error;
-		if ($error = $task->getError())) {
-			if (! $subtask->onSubTaskError->empty()) {
+		my $error= $task->getError();
+		if ($error) {
+			if (! $task->onSubTaskError->empty()) {
 				$task->onSubTaskError->call($task, $error);
 			}
 		} else {
-			if (! $subtask->onSubTaskDone->empty()) {
+			if (! $task->onSubTaskDone->empty()) {
 				$task->onSubTaskDone->call($task);
 			}
 		}
@@ -386,10 +386,10 @@ sub resort {
 # Add Task Mutexes to list of Active Task Mutexes
 # Note: Don't call this procedure directly.
 sub addTaskMutexes {
-	my ($self, $subtask) = @_;
+	my ($self, $task) = @_;
 
 	my $activeMutexes    = $self->{activeMutexes};
-	foreach my $mutex (@{$task->getMutexes()}) {
+	foreach my $mutex (@{ $task->getMutexes() }) {
 		$activeMutexes->{$mutex} = $task;
 	}
 }
@@ -459,11 +459,11 @@ sub interruptSubTask {
 # Example:
 # $self->resumeSubTask(task=> $self->getSubTaskByName('move to target'));
 sub resumeSubTask {
-	my ($self, $subtask) = @_;
-	$subtask->resume();
-	if ($subtask->getStatus() == Task::RUNNING) {
-		if (! $subtask->onSubTaskResume->empty()) {
-			$subtask->onSubTaskResume->call($subtask);
+	my ($self, $task) = @_;
+	$task->resume();
+	if ($task->getStatus() == Task::RUNNING) {
+		if (! $task->onSubTaskResume->empty()) {
+			$task->onSubTaskResume->call($task);
 		}
 		# May-be we left some Mutexes???
 		$self->deleteTaskMutexes($task);
@@ -487,11 +487,11 @@ sub resumeSubTask {
 # Example:
 # $self->stopSubTask(task=> $self->getSubTaskByName('move to target'));
 sub stopSubTask {
-	my ($self, $subtask) = @_;
-	$subtask->stop();
-	if ($subtask->getStatus() == Task::STOPPED) {
-		if (! $subtask->onSubTaskStop->empty()) {
-			$subtask->onSubTaskStop->call($subtask);
+	my ($self, $task) = @_;
+	$task->stop();
+	if ($task->getStatus() == Task::STOPPED) {
+		if (! $task->onSubTaskStop->empty()) {
+			$task->onSubTaskStop->call($task);
 		}
 		# Call SubTask Deactivation
 		$self->deactivateSubTask($task);
@@ -534,7 +534,7 @@ sub higherPriority {
 
 
 sub onSubTaskDone {
-	my ($self, $subtask) = @_;
+	my ($self, $task) = @_;
 	$self->deactivateSubTask($task);
 }
 

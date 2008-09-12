@@ -95,7 +95,8 @@ sub cancel {
 
 sub finalize {
 	my ($self,$args) = @_;
-	return 0 $self->{state} = 'engaged';
+	$self->{state} = 'engaged';
+	return 0;
 }
 
 sub trade {
