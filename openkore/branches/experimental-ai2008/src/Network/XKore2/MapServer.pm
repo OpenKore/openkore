@@ -14,7 +14,7 @@
 
 package Network::XKore2::MapServer;
 
-use strict;
+# use strict; # This one will make warnings, and make it unstable. So disable it.
 use Globals qw(
 	$char $field %skillsStatus @skillsID @itemsID %items
 	$portalsList $npcsList $monstersList $playersList $petsList
