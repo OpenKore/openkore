@@ -121,6 +121,8 @@ sub get {
 		my $condition;
 		if ($notEquipped) {
 			$condition = sub { $_[0]->{invIndex} != $skipIndex && $_[0]->{name} eq $name && !$_[0]->{equipped} };
+		} elsif (!$notEquipped) {
+			$condition = sub { $_[0]->{invIndex} != $skipIndex && $_[0]->{name} eq $name && $_[0]->{equipped} };
 		} else {
 			$condition = sub { $_[0]->{invIndex} != $skipIndex && $_[0]->{name} eq $name };
 		}
@@ -420,6 +422,20 @@ sub equipInSlot {
 		$messageSender->sendEquip($self->{index}, $equipSlot_rlut{$slot});
 	#}
 	queueEquip(1);
+	return 0;
+}
+
+##
+# void $ActorItem->unequipFromSlot(slot dontqueue)
+# slot: where item should be unequipped.
+#
+# Unequips item from $slot.
+sub unequipFromSlot {
+	my ($self,$slot) = @_;
+	return 1 unless defined $equipSlot_rlut{$slot};
+	return 1 if (!$char->{equipment}{$slot} # return if no Item is equiped in this slot
+				|| $char->{equipment}{$slot}{name} ne $self->{name}); # or if the item name does not match
+	$messageSender->sendUnequip($self->{index});
 	return 0;
 }
 
