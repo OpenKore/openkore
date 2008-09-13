@@ -120,9 +120,9 @@ sub get {
 	} else {
 		my $condition;
 		if ($notEquipped) {
-			$condition = sub { $_[0]->{invIndex} != $skipIndex && $_[0]->{name} eq $name };
+			$condition = sub { $_[0]->{invIndex} != $skipIndex && $_[0]->{name} eq $name && !$_[0]->{equipped} };
 		} else {
-			$condition = sub { !$_[0]->{equipped} && $_[0]->{name} eq $name };
+			$condition = sub { $_[0]->{invIndex} != $skipIndex && $_[0]->{name} eq $name };
 		}
 		return $char->inventory->getByCondition($condition);
 	}
