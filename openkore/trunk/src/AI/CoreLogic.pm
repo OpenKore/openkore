@@ -1815,11 +1815,11 @@ sub processLockMap {
 					if ($config{lockMap_x} ne '' || $config{lockMap_y} ne '') {
 						do {
 							$lockX = int($config{lockMap_x}) if ($config{lockMap_x} ne '');
-							$lockX = int(rand($field{width}) + 1) if (!$config{lockMap_x} && $config{lockMap_y});
-							$lockX += (int(rand($config{lockMap_randX}))+1) if ($config{lockMap_randX} ne '');
+							$lockX = int(rand($field{width} + 1)) if (!$config{lockMap_x} && $config{lockMap_y});
+							$lockX += (int(rand($config{lockMap_randX} + 1))) if ($config{lockMap_randX} ne '');
 							$lockY = int($config{lockMap_y}) if ($config{lockMap_y} ne '');
-							$lockY = int(rand($field{width}) + 1) if (!$config{lockMap_y} && $config{lockMap_x});
-							$lockY += (int(rand($config{lockMap_randY}))+1) if ($config{lockMap_randY} ne '');
+							$lockY = int(rand($field{width} + 1)) if (!$config{lockMap_y} && $config{lockMap_x});
+							$lockY += (int(rand($config{lockMap_randY} + 1))) if ($config{lockMap_randY} ne '');
 						} while (--$i && !$lockField->isWalkable($lockX, $lockY));
 					}
 				};
@@ -1948,9 +1948,9 @@ sub processRandomWalk {
 		my ($randX, $randY);
 		my $i = 500;
 		do {
-			$randX = int(rand($field{width}) + 1);
+			$randX = int(rand($field{width} + 1));
 			$randX = int($config{'lockMap_x'} - $config{'lockMap_randX'} + rand(2*$config{'lockMap_randX'}+1)) if ($config{'lockMap_x'} ne '' && $config{'lockMap_randX'} ne '');
-			$randY = int(rand($field{height}) + 1);
+			$randY = int(rand($field{height} + 1));
 			$randY = int($config{'lockMap_y'} - $config{'lockMap_randY'} + rand(2*$config{'lockMap_randY'}+1)) if ($config{'lockMap_y'} ne '' && $config{'lockMap_randY'} ne '');
 		} while (--$i && !$field->isWalkable($randX, $randY));
 		if (!$i) {
