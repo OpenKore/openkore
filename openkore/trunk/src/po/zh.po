@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: OpenKore 1.9.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-09-09 16:19+0700\n"
-"PO-Revision-Date: 2008-09-10 17:11+0800\n"
+"PO-Revision-Date: 2008-09-15 14:53+0800\n"
 "Last-Translator: littlewens <littlewens@yahoo.com.tw>\n"
 "Language-Team: littlewens <littlewens@yahoo.com.tw>\n"
 "MIME-Version: 1.0\n"
@@ -966,7 +966,7 @@ msgstr ""
 #. Translation Comment: List of equiped items on each slot
 #: ../Commands.pm:1466
 msgid "Slots:\n"
-msgstr "洞數:\n"
+msgstr "裝備部位:\n"
 
 #: ../Commands.pm:1484
 #: ../Commands.pm:4523
