@@ -425,7 +425,6 @@ sub unequipFromSlot {
 		error TF("No such equipped Inventory Item: %s in slot: %s\n", $self->{name}, $slot);
 		return 1;
 	}
-	debug ("test");
 	$messageSender->sendUnequip($self->{index});
 	return 0;
 }
