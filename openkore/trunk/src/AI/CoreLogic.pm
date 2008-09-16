@@ -1794,48 +1794,49 @@ sub processAutoCart {
 
 ##### LOCKMAP #####
 sub processLockMap {
-	if (AI::isIdle && $config{lockMap}
-		&& !$ai_v{sitAuto_forcedBySitCommand}
-		&& ($field{name} ne $config{lockMap}
-			|| ($config{lockMap_x} ne '' && ($char->{pos_to}{x} < $config{lockMap_x} - $config{lockMap_randX} || $char->{pos_to}{x} > $config{lockMap_x} + $config{lockMap_randX}))
-			|| ($config{lockMap_y} ne '' && ($char->{pos_to}{y} < $config{lockMap_y} - $config{lockMap_randY} || $char->{pos_to}{y} > $config{lockMap_y} + $config{lockMap_randY}))
+	if (AI::isIdle && $config{'lockMap'}
+		&& !$ai_v{'sitAuto_forcedBySitCommand'}
+		&& ($field{'name'} ne $config{'lockMap'}
+			|| ($config{'lockMap_x'} && ($char->{pos_to}{x} < $config{'lockMap_x'} - $config{'lockMap_randX'} || $char->{pos_to}{x} > $config{'lockMap_x'} + $config{'lockMap_randX'}))
+			|| ($config{'lockMap_y'} && ($char->{pos_to}{y} < $config{'lockMap_y'} - $config{'lockMap_randY'} || $char->{pos_to}{y} > $config{'lockMap_y'} + $config{'lockMap_randY'}))
 	)) {
 
-		if ($maps_lut{$config{lockMap}.'.rsw'} eq '') {
-			error TF("Invalid map specified for lockMap - map %s doesn't exist\n", $config{lockMap});
-			$config{lockMap} = '';
+		unless ($maps_lut{$config{'lockMap'}.'.rsw'}) {
+			error TF("Invalid map specified for lockMap - map %s doesn't exist\n", $config{'lockMap'});
+			$config{'lockMap'} = '';
 		} else {
 			my %args;
 			Plugins::callHook("AI/lockMap", \%args);
-			if (!$args{return}) {
+			unless ($args{'return'}) {
 				my ($lockX, $lockY, $i);
 				eval {
-					my $lockField = new Field(name => $config{lockMap}, loadDistanceMap => 0);
+					my $lockField = new Field(name => $config{'lockMap'}, loadDistanceMap => 0);
 					$i = 500;
-					if ($config{lockMap_x} ne '' || $config{lockMap_y} ne '') {
+					if ($config{'lockMap_x'} || $config{'lockMap_y'}) {
 						do {
-							$lockX = int($config{lockMap_x}) if ($config{lockMap_x} ne '');
-							$lockX = int(rand($field{width} + 1)) if (!$config{lockMap_x} && $config{lockMap_y});
-							$lockX += (int(rand($config{lockMap_randX} + 1))) if ($config{lockMap_randX} ne '');
-							$lockY = int($config{lockMap_y}) if ($config{lockMap_y} ne '');
-							$lockY = int(rand($field{width} + 1)) if (!$config{lockMap_y} && $config{lockMap_x});
-							$lockY += (int(rand($config{lockMap_randY} + 1))) if ($config{lockMap_randY} ne '');
+							$lockX = int(rand($field{'width'} + 1)) if (!$config{'lockMap_x'} && $config{'lockMap_y'});
+							$lockX = int($config{'lockMap_x'}) if ($config{'lockMap_x'});
+							$lockX += (int(rand(2*$config{'lockMap_randX'} + 1) - $config{'lockMap_randX'})) if ($config{'lockMap_x'} && $config{'lockMap_randX'});
+
+							$lockY = int(rand($field{'width'} + 1)) if (!$config{'lockMap_y'} && $config{'lockMap_x'});
+							$lockY = int($config{'lockMap_y'}) if ($config{'lockMap_y'});
+							$lockY += (int(rand(2*$config{'lockMap_randY'} + 1) - $config{'lockMap_randY'})) if ($config{'lockMap_y'} && $config{'lockMap_randY'});
 						} while (--$i && !$lockField->isWalkable($lockX, $lockY));
 					}
 				};
 				if (caught('FileNotFoundException') || !$i) {
 					error T("Invalid coordinates specified for lockMap, coordinates are unwalkable\n");
-					$config{lockMap} = '';
+					$config{'lockMap'} = '';
 				} else {
 					my $attackOnRoute = 2;
-					$attackOnRoute = 1 if ($config{attackAuto_inLockOnly} == 1);
-					$attackOnRoute = 0 if ($config{attackAuto_inLockOnly} > 1);
+					$attackOnRoute = 1 if ($config{'attackAuto_inLockOnly'} == 1);
+					$attackOnRoute = 0 if ($config{'attackAuto_inLockOnly'} > 1);
 					if (defined $lockX || defined $lockY) {
-						message TF("Calculating lockMap route to: %s(%s): %s, %s\n", $maps_lut{$config{lockMap}.'.rsw'}, $config{lockMap}, $lockX, $lockY), "route";
+						message TF("Calculating lockMap route to: %s(%s): %s, %s\n", $maps_lut{$config{'lockMap'}.'.rsw'}, $config{'lockMap'}, $lockX, $lockY), "route";
 					} else {
-						message TF("Calculating lockMap route to: %s(%s)\n", $maps_lut{$config{lockMap}.'.rsw'}, $config{lockMap}), "route";
+						message TF("Calculating lockMap route to: %s(%s)\n", $maps_lut{$config{'lockMap'}.'.rsw'}, $config{'lockMap'}), "route";
 					}
-					ai_route($config{lockMap}, $lockX, $lockY, attackOnRoute => $attackOnRoute);
+					ai_route($config{'lockMap'}, $lockX, $lockY, attackOnRoute => $attackOnRoute);
 				}
 			}
 		}
