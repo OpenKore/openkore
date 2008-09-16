@@ -867,4 +867,34 @@ yuno_in05.rsw#Power Plant of Ymir's Heart#
 yuno_pre.rsw#Schwaltzvalt Government Buildings#
 yuno.rsw#Juno, Capital of Schwarzwald Republic#
 z_agit.rsw#Z Grade Agit Point#
+1@orcs.rsw#Orc Underground Cave#
+2@orcs.rsw#Orc Underground Cave#
+arug_dun01.rsw#Arunafeltz Guild Dungeon#
+arug_que01.rsw#Stone's North#
+bat_c01.rsw#Kriger Von Midgard#
+bat_c02.rsw#Kriger Von Midgard#
+bat_c03.rsw#Kriger Von Midgard#
+man_fild01.rsw#Manuk Field#
+man_fild03.rsw#Manuk Field#
+mid_camp.rsw#Midgarts Expedition Camp#
+mid_campin.rsw#Inside Midgarts Expedition Camp#
+moc_fild22b.rsw#Crack of Dimension#
+que_dan01.rsw#Hugel Field#
+que_dan02.rsw#A desolated house in Juno#
+que_qaru01.rsw#Fallacious Okolnir#
+que_qaru02.rsw#Fallacious Okolnir#
+que_qaru03.rsw#Fallacious Okolnir#
+que_qaru04.rsw#Fallacious Okolnir#
+que_qaru05.rsw#Fallacious Okolnir#
+que_qsch02.rsw#Fallacious Okolnir#
+que_qsch03.rsw#Fallacious Okolnir#
+que_qsch04.rsw#Fallacious Okolnir#
+que_qsch05.rsw#Fallacious Okolnir#
+schg_dun01.rsw#Schwartzvald Guild Dungeon#
+schg_que01.rsw#Stone's North#
+spl_fild02.rsw#Splendid Field#
+spl_fild03.rsw#Splendid Field#
+g_room1-1.rsw#Quiz Revolution#
+g_room1-2.rsw#Quiz Revolution#
+g_room1-3.rsw#Quiz Revolution#
 //-------------------------file end
