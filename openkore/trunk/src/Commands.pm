@@ -1478,10 +1478,10 @@ sub cmdEquip {
 		$arg1 .= " $arg2" if $arg2;
 	}
 
-	$item = Actor::Item::get(defined $slot ? $arg2 : $arg1, undef, 1);
-
+	$item = Actor::Item::get(defined $slot ? $arg2 : $arg1, 1);
 	if (!$item) {
-		error TF("No such non-equiped Inventory Item: %s\n", $args);
+		$args =~ s/^($slot)\s//g if ($slot);
+		error TF("No such non-equipped Inventory Item: %s\n", $args);
 		return;
 	}
 
@@ -1492,8 +1492,7 @@ sub cmdEquip {
 	}
 	if ($slot) {
 		$item->equipInSlot($slot);
-	}
-	else {
+	} else {
 		$item->equip();
 	}
 }
@@ -4534,10 +4533,12 @@ sub cmdUnequip {
 		$arg1 .= " $arg2" if $arg2;
 	}
 
-	$item = Actor::Item::get(defined $slot ? $arg2 : $arg1, undef, 0);
+	$item = Actor::Item::get(defined $slot ? $arg2 : $arg1, 0);
 
 	if (!$item) {
-		error TF("No such non-equiped Inventory Item: %s\n", $args);
+		$args =~ s/^($slot)\s//g if ($slot);
+		$slot = "undefined" unless ($slot);
+		error TF("No such equipped Inventory Item: %s in slot: %s\n", $args, $slot);
 		return;
 	}
 
@@ -4548,8 +4549,7 @@ sub cmdUnequip {
 	}
 	if ($slot) {
 		$item->unequipFromSlot($slot);
-	}
-	else {
+	} else {
 		$item->unequip();
 	}
 }
