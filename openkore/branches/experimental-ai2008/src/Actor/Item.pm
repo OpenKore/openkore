@@ -32,6 +32,7 @@ use Utils;
 use Log qw(message error warning debug);
 use Network::Send ();
 use AI;
+use Translation;
 
 use overload '""' => \&_toString;
 use overload '==' => \&_isis;
@@ -98,17 +99,16 @@ sub new {
 ##############################
 
 ##
-# Actor::Item::get(name, skipIndex, notEquipped)
+# Actor::Item::get(name, notEquipped)
 # item: can be either an object itself, an ID or a name.
-# skipIndex: tells this function to not select a certain item (used for getting another item with the same name).
-# notEquipped: do not select unequipped items.
-# Returns: an Actor::Item object, or undef if not found.
+# notEquipped: 1 = not equipped item; 0 = equipped item; undef = all item
+# Returns: an Actor::Item object, or undef if not found or parameters not matched.
 #
 # Find an item in the inventory, based on the search criteria specified by the parameters.
 #
 # See also: Actor::Item::getMultiple()
 sub get {
-	my ($name, $skipIndex, $notEquipped) = @_;
+	my ($name, $notEquipped) = @_;
 
 	return undef if (!defined $name);
 	return $name if UNIVERSAL::isa($name, 'Actor::Item');
@@ -120,9 +120,11 @@ sub get {
 	} else {
 		my $condition;
 		if ($notEquipped) {
-			$condition = sub { $_[0]->{invIndex} != $skipIndex && $_[0]->{name} eq $name };
+			$condition = sub { $_[0]->{name} eq $name && !$_[0]->{equipped} };
+		} elsif (!$notEquipped && defined($notEquipped)) {
+			$condition = sub { $_[0]->{name} eq $name && $_[0]->{equipped} };
 		} else {
-			$condition = sub { !$_[0]->{equipped} && $_[0]->{name} eq $name };
+			$condition = sub { $_[0]->{name} eq $name };
 		}
 		return $char->inventory->getByCondition($condition);
 	}
@@ -165,27 +167,14 @@ sub getMultiple {
 # %list = (leftHand => 'Katar', rightHand => 10);
 # Actor::Item::bulkEquip(\%list);
 sub bulkEquip {
-	my $list = shift;
-
+	my $list = $_[0];
 	return unless $list && %{$list};
-
-	my ($item, $rightHand, $rightAccessory);
+	my $item;
 	foreach (keys %{$list}) {
-		if (!exists $equipSlot_rlut{$_}) {
-			debug "Wrong Itemslot specified: $_\n",'Actor::Item';
-		}
-
-		my $skipIndex;
-		$skipIndex = $rightHand if ($_ eq 'leftHand');
-		$skipIndex = $rightAccessory if ($_ eq 'leftAccessory');
-		$item = Actor::Item::get($list->{$_}, $skipIndex, 1);
-
-		next if !$item;
-
+		error "Wrong Itemslot specified: $_\n",'Actor::Item' if (!exists $equipSlot_rlut{$_});
+		$item = Actor::Item::get($list->{$_}, 1);
+		next unless $item;
 		$item->equipInSlot($_);
-
-		$rightHand = $item->{invIndex} if $_ eq 'rightHand';
-		$rightAccessory = $item->{invIndex} if $_ eq 'rightAccessory';
 	}
 }
 
@@ -227,7 +216,7 @@ sub scanConfigAndCheck {
 	my $count = 0;
 	foreach my $slot (values %equipSlot_lut) {
 		if (exists $config{"${prefix}_$slot"}){
-			my $item = get($config{"${prefix}_$slot"});
+			my $item = Actor::Item::get($config{"${prefix}_$slot"}, 1);
 			if ($item && !($char->{equipment}{$slot} && $char->{equipment}{$slot}{name} eq $item->{name})) {
 				$count++;
 			}
@@ -406,20 +395,37 @@ sub use {
 # Equips item in $slot.
 sub equipInSlot {
 	my ($self,$slot) = @_;
-	return 1 unless defined $equipSlot_rlut{$slot};
-	return 1 if ($char->{equipment}{$slot} # return if Item is already equipped
-				&& $char->{equipment}{$slot}{name} eq $self->{name});
-	#UnEquipByType($equipSlot_rlut{$slot});
-
-	# this is not needed, it screws up clips (can be equipped in multiple (two) slots)
-	#if ($equipSlot_rlut{$slot} ^ $self->{type_equip}) {
-		#checks whether item uses multiple slots
-	#	$messageSender->sendEquip($self->{index}, $self->{type_equip});
-	#}
-	#else {
-		$messageSender->sendEquip($self->{index}, $equipSlot_rlut{$slot});
-	#}
+	unless (defined $equipSlot_rlut{$slot}) {
+		error TF("Wrong equip slot specified\n");
+		return 1;
+	}
+	# return if Item is already equipped
+	if ($char->{equipment}{$slot} && $char->{equipment}{$slot}{name} eq $self->{name}) {
+		error TF("Inventory Item: %s is already equipped in slot: %s\n", $self->{name}, $slot);
+		return 1;
+	}
+	$messageSender->sendEquip($self->{index}, $equipSlot_rlut{$slot});
 	queueEquip(1);
+	return 0;
+}
+
+##
+# void $ActorItem->unequipFromSlot(slot dontqueue)
+# slot: where item should be unequipped.
+#
+# Unequips item from $slot.
+sub unequipFromSlot {
+	my ($self,$slot) = @_;
+	unless (defined $equipSlot_rlut{$slot}) {
+		error TF("Wrong equip slot specified\n");
+		return 1;
+	}
+	# return if no Item is equiped in this slot or if the item name does not match the given one
+	if (!$char->{equipment}{$slot} || $char->{equipment}{$slot}{name} ne $self->{name}) {
+		error TF("No such equipped Inventory Item: %s in slot: %s\n", $self->{name}, $slot);
+		return 1;
+	}
+	$messageSender->sendUnequip($self->{index});
 	return 0;
 }
 

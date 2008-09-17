@@ -21,7 +21,7 @@
 #########################################################################
 package Interface::Wx::Input;
 
-use strict;
+# use strict;
 use Wx ':everything';
 use base qw(Wx::TextCtrl);
 use Wx::Event qw(EVT_TEXT_ENTER EVT_KEY_DOWN);
