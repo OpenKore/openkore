@@ -7,7 +7,7 @@
 
 package StartupNotification::CreateSocketException;
 
-use Utils::Core::Exception;
-use base qw(Exception);
+use Utils::Exceptions;
+use base qw(Exceptions);
 
 1;
