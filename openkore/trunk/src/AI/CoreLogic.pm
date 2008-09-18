@@ -1634,21 +1634,19 @@ sub processAutoBuy {
 			return;
 		}
 
-		my $do_route;
-
-		if ($field{name} ne $args->{npc}{map}) {
-			# we definitely need to route if we're on the wrong map
-			$do_route = 1;
+		undef $ai_v{'temp'}{'do_route'};
+		if ($field{'name'} ne $args->{'npc'}{'map'}) {
+			$ai_v{'temp'}{'do_route'} = 1;
 		} else {
-			my $distance = distance($args->{npc}{pos}, $char->{pos_to});
-			# move exactly to the given spot if we specified a standpoint
-			my $talk_distance = ($config{"buyAuto_$args->{index}"."_standpoint"} ? 1 : $config{"buyAuto_$args->{index}"."_distance"});
-			if ($distance > $talk_distance) {
-				$do_route = 1;
+			$ai_v{'temp'}{'distance'} = distance($args->{'npc'}{'pos'}, $chars[$config{'char'}]{'pos_to'});
+			$config{"buyAuto_$args->{index}"."_distance"} = 1 if ($config{"buyAuto_$args->{index}"."_standpoint"});
+			if ($ai_v{'temp'}{'distance'} > $config{"buyAuto_$args->{index}"."_distance"}) {
+				$ai_v{'temp'}{'do_route'} = 1;
 			}
 		}
+
 		my $msgneeditem;
-		if ($do_route) {
+		if ($ai_v{'temp'}{'do_route'}) {
 			if ($args->{warpedToSave} && !$args->{mapChanged}) {
 				undef $args->{warpedToSave};
 			}
