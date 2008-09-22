@@ -99,8 +99,9 @@ sub new {
 ##############################
 
 ##
-# Actor::Item::get(name, notEquipped)
+# Actor::Item::get(name, skipIndex, notEquipped)
 # item: can be either an object itself, an ID or a name.
+# skipIndex: tells this function to not select a certain item (used for getting another item with the same name).
 # notEquipped: 1 = not equipped item; 0 = equipped item; undef = all item
 # Returns: an Actor::Item object, or undef if not found or parameters not matched.
 #
@@ -108,7 +109,7 @@ sub new {
 #
 # See also: Actor::Item::getMultiple()
 sub get {
-	my ($name, $notEquipped) = @_;
+	my ($name, $skipIndex, $notEquipped) = @_;
 
 	return undef if (!defined $name);
 	return $name if UNIVERSAL::isa($name, 'Actor::Item');
@@ -120,11 +121,11 @@ sub get {
 	} else {
 		my $condition;
 		if ($notEquipped) {
-			$condition = sub { $_[0]->{name} eq $name && !$_[0]->{equipped} };
+			$condition = sub { $_[0]->{invIndex} != $skipIndex && $_[0]->{name} eq $name && !$_[0]->{equipped} };
 		} elsif (!$notEquipped && defined($notEquipped)) {
-			$condition = sub { $_[0]->{name} eq $name && $_[0]->{equipped} };
+			$condition = sub { $_[0]->{invIndex} != $skipIndex && $_[0]->{name} eq $name && $_[0]->{equipped} };
 		} else {
-			$condition = sub { $_[0]->{name} eq $name };
+			$condition = sub { $_[0]->{invIndex} != $skipIndex && $_[0]->{name} eq $name };
 		}
 		return $char->inventory->getByCondition($condition);
 	}
@@ -169,12 +170,21 @@ sub getMultiple {
 sub bulkEquip {
 	my $list = $_[0];
 	return unless $list && %{$list};
-	my $item;
+	my ($item, $rightHand, $rightAccessory);
 	foreach (keys %{$list}) {
 		error "Wrong Itemslot specified: $_\n",'Actor::Item' if (!exists $equipSlot_rlut{$_});
-		$item = Actor::Item::get($list->{$_}, 1);
+		
+		my $skipIndex;
+		$skipIndex = $rightHand if ($_ eq 'leftHand');
+		$skipIndex = $rightAccessory if ($_ eq 'leftAccessory');
+		$item = Actor::Item::get($list->{$_}, $skipIndex, 1);
+		
 		next unless $item;
+		
 		$item->equipInSlot($_);
+		
+		$rightHand = $item->{invIndex} if ($_ eq 'rightHand');
+		$rightAccessory = $item->{invIndex} if ($_ eq 'rightAccessory');
 	}
 }
 
@@ -216,7 +226,7 @@ sub scanConfigAndCheck {
 	my $count = 0;
 	foreach my $slot (values %equipSlot_lut) {
 		if (exists $config{"${prefix}_$slot"}){
-			my $item = Actor::Item::get($config{"${prefix}_$slot"}, 1);
+			my $item = Actor::Item::get($config{"${prefix}_$slot"}, undef, 1);
 			if ($item && !($char->{equipment}{$slot} && $char->{equipment}{$slot}{name} eq $item->{name})) {
 				$count++;
 			}
