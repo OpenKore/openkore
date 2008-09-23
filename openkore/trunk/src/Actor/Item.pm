@@ -178,9 +178,9 @@ sub bulkEquip {
 		$skipIndex = $rightHand if ($_ eq 'leftHand');
 		$skipIndex = $rightAccessory if ($_ eq 'leftAccessory');
 		$item = Actor::Item::get($list->{$_}, $skipIndex, 1);
-		
-		next unless $item;
-		
+
+		next unless ($item && $char->{equipment} && ($char->{equipment}{$_}{name} ne $item->{name}));
+
 		$item->equipInSlot($_);
 		
 		$rightHand = $item->{invIndex} if ($_ eq 'rightHand');
@@ -227,9 +227,7 @@ sub scanConfigAndCheck {
 	foreach my $slot (values %equipSlot_lut) {
 		if (exists $config{"${prefix}_$slot"}){
 			my $item = Actor::Item::get($config{"${prefix}_$slot"}, undef, 1);
-			if ($item && !($char->{equipment}{$slot} && $char->{equipment}{$slot}{name} eq $item->{name})) {
-				$count++;
-			}
+			$count++ if ($item && $char->{equipment} && ($char->{equipment}{$slot}{name} ne $item->{name}));
 		}
 	}
 	return $count;
