@@ -78,7 +78,9 @@ sub parseArrayFile {
 	my @lines;
 	my $reader = new Utils::TextReader($file);
 	while (!$reader->eof()) {
-		push @lines, $reader->readLine();
+		my $line = $reader->readLine();
+		$line =~ s/[\r\n\x{FEFF}]//g;
+		push @lines, $line;
 	}
 	@{$r_array} = scalar(@lines) + 1;
 	my $i = 1;
