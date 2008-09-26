@@ -275,6 +275,9 @@ missDamage 0
 
 tankersList
 
+repairAuto 0
+repairAuto_list
+
 removeActorWithDistance
 
 

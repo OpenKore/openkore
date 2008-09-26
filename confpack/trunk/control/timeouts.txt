@@ -121,6 +121,9 @@ ai_cartAutoCheck 2
 ai_avoidcheck 0.5
 ai_shop 4
 
+# delay between repairAuto
+ai_repair 4
+
 # delay before starting escape sequence
 ai_route_escape 8
 
