@@ -4764,7 +4764,7 @@ sub repair_list {
 		my $listID = unpack("C1", substr($args->{RAW_MSG}, $i+12, 1));
 		my $name = itemNameSimple($nameID);
 		$msg .= "$index $name\n";
-		$messageSender->sendRepairItem($index) if ($config{repairAuto} && $i == 4);
+		$messageSender->sendRepairItem($index, $nameID, $status, $status2, $listID) if ($config{repairAuto} && $i == 4);
 	}
 	$msg .= "---------------------------\n";
 	message $msg, "list";
