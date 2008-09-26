@@ -3630,13 +3630,19 @@ sub cmdRepair {
 	if (!$net || $net->getState() != Network::IN_GAME) {
 		error TF("You must be logged in the game to use this command (%s)\n", shift);
 		return;
-	}
-	my (undef, $args) = @_;
-	if ($args =~ /^\d+$/) {
-		$messageSender->sendRepairItem($args);
+	} 
+	my (undef, $listID) = @_;
+	if ($listID =~ /^\d+$/) {
+		if ($repairList{$listID}) {
+			$messageSender->sendRepairItem($repairList{$listID});
+			my $name = itemNameSimple($repairList{$listID}{nameID});
+			message TF("Sending repair item: %s\n", $name);
+		} elsif (!defined $repairList{$listID}) {
+			error TF("Item with index: %s does either not exist in the repair list or the list is empty.\n", $listID);
+		}
 	} else {
 		error T("Syntax Error in function 'repair' (Repair player's items.)\n" .
-			"Usage: repair [item number]\n");
+			"Usage: repair [item index]\n");
 	}
 }
 
