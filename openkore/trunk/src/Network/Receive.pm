@@ -4753,18 +4753,19 @@ sub refine_result {
 
 sub repair_list {
 	my ($self, $args) = @_;
-	my $msg;
-	$msg .= T("--------Repair List--------\n");
+	my $msg = T("--------Repair List--------\n");
+	undef %repairList;
 	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 13) {
-		my $index = unpack("v1", substr($args->{RAW_MSG}, $i, 2));
-		my $nameID = unpack("v1", substr($args->{RAW_MSG}, $i+2, 2));
-		# what are these  two?
-		my $status = unpack("V1", substr($args->{RAW_MSG}, $i+4, 4));
-		my $status2 = unpack("V1", substr($args->{RAW_MSG}, $i+8, 4));
 		my $listID = unpack("C1", substr($args->{RAW_MSG}, $i+12, 1));
-		my $name = itemNameSimple($nameID);
-		$msg .= "$index $name\n";
-		$messageSender->sendRepairItem($index, $nameID, $status, $status2, $listID) if ($config{repairAuto} && $i == 4);
+		$repairList{$listID}{index} = unpack("v1", substr($args->{RAW_MSG}, $i, 2));
+		$repairList{$listID}{nameID} = unpack("v1", substr($args->{RAW_MSG}, $i+2, 2));
+		# what are these  two?
+		$repairList{$listID}{status} = unpack("V1", substr($args->{RAW_MSG}, $i+4, 4));
+		$repairList{$listID}{status2} = unpack("V1", substr($args->{RAW_MSG}, $i+8, 4));
+		$repairList{$listID}{listID} = $listID;
+		
+		my $name = itemNameSimple($repairList{$listID}{nameID});
+		$msg .= "$listID $name\n";
 	}
 	$msg .= "---------------------------\n";
 	message $msg, "list";
@@ -4772,7 +4773,7 @@ sub repair_list {
 
 sub repair_result {
 	my ($self, $args) = @_;
-
+	undef %repairList;
 	my $itemName = itemNameSimple($args->{nameID});
 	if ($args->{flag}) {
 		message TF("Repair of %s failed.\n", $itemName);

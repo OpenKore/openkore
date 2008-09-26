@@ -175,6 +175,7 @@ sub iterate {
 	processAvoid();
 	processSendEmotion();
 	processAutoShopOpen();
+	processRepairAuto();
 	Benchmark::end("AI (part 4)") if DEBUG;
 
 
@@ -3032,6 +3033,23 @@ sub processDcOnPlayer {
 	    && !isSafe() && timeOut($AI::Temp::Teleport_allPlayers, 0.75)) {
 
 		$quit = 1;
+	}
+}
+
+##### REPAIR AUTO #####
+sub processRepairAuto {
+	if ($config{'repairAuto'} && $conState == 5 && timeOut($timeout{ai_repair}) && %repairList) {
+		my ($listID, $name);
+		my $brokenIndex = 0;
+		for $listID ( keys %repairList ) {
+			$name = itemNameSimple($repairList{$listID}{nameID});
+			if (existsInList($config{'repairAuto_gears'}, $name) || !$config{'repairAuto_gears'}) {
+				$brokenIndex = $listID;
+				$messageSender->sendRepairItem($repairList{$brokenIndex});
+				$timeout{ai_repair}{time} = time;
+				return;
+			}
+		}
 	}
 }
 

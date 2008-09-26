@@ -1038,10 +1038,10 @@ sub sendRemoveAttachments {
 }
 
 sub sendRepairItem {
-	my ($self, $index, $nameID, $status, $status2, $listID) = @_;
-	my $msg = pack("C2 v2 V2 C1", 0xFD, 0x01, $index, $nameID, $status, $status2, $listID);
+	my ($self, $args) = @_;
+	my $msg = pack("C2 v2 V2 C1", 0xFD, 0x01, %{$args}->{index}, %{$args}->{nameID}, %{$args}->{status}, %{$args}->{status2}, %{$args}->{listID});
 	$self->sendToServer($msg);
-	debug "Sent repair item: $index\n", "sendPacket", 2;
+	debug ("Sent repair item: ".%{$args}->{index}."\n", "sendPacket", 2);
 }
 
 sub sendRespawn {
