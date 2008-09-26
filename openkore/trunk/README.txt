@@ -2,6 +2,17 @@
 ### OpenKore what-will-become-2.0.7
 =========================
 - Added route_avoidWalls config option.
+- Fixed small, trivial bug that would display a non-fatal warning.
+- More bugfixes, removing warnings.
+- Attached forgotten fields.
+- Fixed route calculation in lockMap bug.
+- Fixed buyauto standpoint & distance.
+- Update translation.
+- Fixed kore trying to equip an already equipped item.
+- Fixed upper, lower, mid headgear from other players not showing up correctly.
+- Fixed Blacksmith repair skill causing disconnection.
+- Added repairAuto_list config option, and restructured repair.
+
 
 =========================
 ### OpenKore 2.0.6.1 (to be released)
