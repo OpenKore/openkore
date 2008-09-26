@@ -1038,9 +1038,8 @@ sub sendRemoveAttachments {
 }
 
 sub sendRepairItem {
-	my $self = shift;
-	my $index = shift;
-	my $msg = pack("C*", 0xFD, 0x01) . pack("v1", $index);
+	my ($self, $index, $nameID, $status, $status2, $listID) = @_;
+	my $msg = pack("C2 v2 V2 C1", 0xFD, 0x01, $index, $nameID, $status, $status2, $listID);
 	$self->sendToServer($msg);
 	debug "Sent repair item: $index\n", "sendPacket", 2;
 }
