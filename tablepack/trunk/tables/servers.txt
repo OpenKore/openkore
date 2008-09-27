@@ -139,6 +139,18 @@ paddedPackets_attackID 0x72
 paddedPackets_skillUseID 0xF5
 recvpackets recvpackets-iro.txt
 
+[International - iRO: Valkyrie]
+ip 38.144.194.21
+port 6900
+master_version 1
+version 18
+serverType 0
+serverEncoding Western
+paddedPackets 0
+paddedPackets_attackID 0x72
+paddedPackets_skillUseID 0xF5
+recvpackets recvpackets-iro.txt
+
 [Japan - jRO: Verdandi]
 ip 61.215.212.13
 port 6900
