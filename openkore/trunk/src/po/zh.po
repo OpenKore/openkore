@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: OpenKore 1.9.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-09-21 10:48+0700\n"
-"PO-Revision-Date: 2008-09-26 17:20+0800\n"
+"PO-Revision-Date: 2008-09-27 11:38+0800\n"
 "Last-Translator: littlewens <littlewens@yahoo.com.tw>\n"
 "Language-Team: littlewens <littlewens@yahoo.com.tw>\n"
 "MIME-Version: 1.0\n"
@@ -3346,7 +3346,7 @@ msgstr "在 %d 秒後重新登入...\n"
 #: ../Misc.pm:2342
 #, perl-format
 msgid "Remove perfectly hidden %s\n"
-msgstr "移除完整地隱藏 %s\n"
+msgstr "消除絕對隱藏 %s\n"
 
 #: ../Misc.pm:2417
 #, perl-format
