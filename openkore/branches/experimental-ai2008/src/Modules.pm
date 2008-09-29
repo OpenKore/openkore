@@ -32,13 +32,15 @@
 package Modules;
 
 use strict;
+use threads;
+use threads::shared;
 use warnings;
 use Config;
 use FindBin;
 use File::Spec;
 
-our %modules;
-our @queue;
+our %modules :shared;
+our @queue :shared;
 
 
 sub import {

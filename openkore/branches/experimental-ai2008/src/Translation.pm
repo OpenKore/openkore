@@ -24,18 +24,20 @@
 package Translation;
 
 use strict;
+use threads;
+use threads::shared;
 use Exporter;
 use base qw(Exporter);
 use FindBin qw($RealBin);
 use XSTools;
 use I18N;
-use encoding 'utf8';
+# use encoding 'utf8'; # Makes unknown Threading Bugs.
 
 XSTools::bootModule("Translation");
 
 
 our @EXPORT = qw(T TF);
-our $_translation;
+our $_translation :shared;
 
 use constant DEFAULT_PODIR => "$RealBin/src/po";
 
@@ -55,7 +57,7 @@ use constant DEFAULT_PODIR => "$RealBin/src/po";
 sub initDefault {
 	my ($podir, $locale) = @_;
 	$podir = DEFAULT_PODIR if (!defined $podir);
-	$_translation = _load(_autodetect($podir, $locale));
+	$_translation = shared_clone(_load(_autodetect($podir, $locale)));
 	return defined $_translation;
 }
 

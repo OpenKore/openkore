@@ -71,8 +71,11 @@
 package CallbackList;
 
 use strict;
+use threads;
+use threads::shared;
 use Carp::Assert;
 use Scalar::Util;
+use Utils::CodeRef;
 
 # Field identifiers for items inside $CallbackList->[CALLBACKS]
 use constant {
@@ -139,8 +142,10 @@ sub add {
 	assert(defined $function) if DEBUG;
 	assert(!defined($object) || Scalar::Util::blessed($object)) if DEBUG;
 
+	lock ($self) if (is_shared($self));
+
 	my @item;
-	$item[FUNCTION] = $function;
+	$item[FUNCTION] = CodeRef->new($function);
 	if (defined $object) {
 		$item[OBJECT] = $object;
 		Scalar::Util::weaken($item[OBJECT]);
@@ -148,7 +153,11 @@ sub add {
 	if (defined $userData) {
 		$item[USERDATA] = $userData;
 	}
-	push @{$self}, \@item;
+	if (is_shared($self)) {
+		push @{$self}, shared_clone(\@item);
+	} else {
+		push @{$self}, \@item;
+	}
 
 	my $index = @{$self} - 1;
 	my $ID = \$index;
@@ -165,6 +174,8 @@ sub add {
 sub remove {
 	my ($self, $ID) = @_;
 	assert(defined $ID) if DEBUG;
+	lock ($self) if (is_shared($self));
+
 	return if (!defined($$ID) || $$ID < 0 || $$ID >= @{$self});
 
 	my $callbacks = $self;
@@ -199,7 +210,7 @@ sub call {
 			push @{$IDsToRemove}, $item->[ID];
 
 		} else {
-			$item->[FUNCTION]->($item->[OBJECT], $_[1], $_[2], $item->[USERDATA]);
+			$item->[FUNCTION]->call($item->[OBJECT], $_[1], $_[2], $item->[USERDATA]);
 		}
 	}
 
@@ -234,6 +245,9 @@ sub empty {
 # Create a deep copy of this CallbackList.
 sub deepCopy {
 	my ($self) = @_;
+
+	lock ($self) if (is_shared($self));
+
 	my $copy = new CallbackList();
 	foreach my $item (@{$self}) {
 		my @callbackItemCopy = @{$item};
@@ -248,6 +262,8 @@ sub deepCopy {
 # Check whether all internal invariants are true.
 sub checkValidity {
 	my ($self) = @_;
+
+	lock ($self) if (is_shared($self));
 
 	for (my $i = 0; $i < @{$self}; $i++) {
 		my $k = $self->[$i];

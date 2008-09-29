@@ -46,6 +46,8 @@
 package Skill;
 
 use strict;
+use threads;
+use threads::shared;
 use Modules 'register';
 use Carp::Assert;
 use Utils::TextReader;
@@ -338,6 +340,8 @@ sub handleToName {
 # is loaded from a file on disk.
 #############################################################
 package Skill::StaticInfo;
+use threads;
+use threads::shared qw(is_shared share shared_clone);
 
 # The following variables contain information about skills, but indexed differently.
 # This allow you to quickly lookup skill information with any skill identifier form.
@@ -371,9 +375,9 @@ package Skill::StaticInfo;
 #     'two-handed sword mastery' => 3,
 #     ...
 # );
-our %ids;
-our %handles;
-our %names;
+our %ids :shared;
+our %handles :shared;
+our %names :shared;
 
 # Contains SP usage information.
 # %sps = (
@@ -391,14 +395,17 @@ our %names;
 #     ],
 #     ...
 # );
-our %sps;
+our %sps :shared;
 
 sub parseSkillsDatabase {
 	my ($file) = @_;
 	my $reader = new Utils::TextReader($file);
-	%ids = ();
-	%handles = ();
-	%names = ();
+	lock (%ids) if (is_shared(%ids));
+	lock (%handles) if (is_shared(%handles));
+	lock (%names) if (is_shared(%names));
+	my $my_ids;
+	my $my_handles;
+	my $my_names;
 
 	while (!$reader->eof()) {
 		my $line = $reader->readLine();
@@ -407,12 +414,33 @@ sub parseSkillsDatabase {
 		$line =~ s/\s+$//g;
 		my ($id, $handle, $name) = split(' ', $line, 3);
 		if ($id && $handle ne "" && $name ne "") {
-			$ids{$id}{handle} = $handle;
-			$ids{$id}{name} = $name;
-			$handles{$handle} = $id;
-			$names{lc($name)} = $id;
+			$my_ids->{$id}{handle} = $handle;
+			$my_ids->{$id}{name} = $name;
+			$my_handles->{$handle} = $id;
+			$my_names->{lc($name)} = $id;
 		}
 	}
+	if (is_shared(%ids)) {
+		undef %ids;
+		%ids = %{shared_clone($my_ids)};
+	} else {
+		undef %ids;
+		%ids = %{$my_ids};
+	};
+	if (is_shared(%handles)) {
+		undef %handles;
+		%handles = %{shared_clone($my_handles)};
+	} else {
+		undef %handles;
+		%handles = %{$my_handles};
+	};
+	if (is_shared(%names)) {
+		undef %names;
+		%names = %{shared_clone($my_names)};
+	} else {
+		undef %names;
+		%names = %{$my_names};
+	};
 	return 1;
 }
 
@@ -420,6 +448,7 @@ sub parseSPDatabase {
 	my ($file) = @_;
 	my $reader = new Utils::TextReader($file);
 	my $ID;
+	lock (%sps);
 
 	while (!$reader->eof()) {
 		my $line = $reader->readLine();
@@ -427,10 +456,10 @@ sub parseSPDatabase {
 			undef $ID;
 		} elsif (!$ID) {
 			($ID) = $line =~ /(.*)#/;
-			$sps{$ID} = [];
+			$sps{$ID} = &share([]);
 		} else {
 			my ($sp) = $line =~ /(\d+)#/;
-			push @{$sps{$ID}}, $sp;
+			push @{$sps{$ID}}, shared_clone($sp);
 		}
 	}
 	return 1;
@@ -442,6 +471,8 @@ sub parseSPDatabase {
 # is sent by the RO server.
 #############################################################
 package Skill::DynamicInfo;
+use threads;
+use threads::shared qw(is_shared share shared_clone);
 
 # The skills information as sent by the RO server. This variable maps a skill IDN
 # to another hash, with the following members:
@@ -450,13 +481,14 @@ package Skill::DynamicInfo;
 # - sp         - The SP usage for the current maximum level.
 # - range      - Skill range.
 # - targetType - The skill's target type.
-our %skills;
+our %skills :shared;
 
 # Maps handle names to skill IDNs.
-our %handles;
+our %handles :shared;
 
 sub add {
-	my ($idn, $handle, $level, $sp, $range, $targetType, $ownerType) = @_;
+	my ($idn, $handle, $level, $sp, $range, $targetType, $ownerType) = @_;\
+	lock (%handles);
 	$skills{$idn} = {
 		handle     => $handle,
 		level      => $level,
@@ -465,12 +497,14 @@ sub add {
 		targetType => $targetType,
 		ownerType  => $ownerType
 	};
-	$handles{$handle} = $idn;
+	$handles{$handle} = shared_clone($idn);
 }
 
 sub clear {
-	%skills = ();
-	%handles = ();
+	lock (%skills);
+	lock (%handles);
+	%skills = &share({});
+	%handles = &share({});
 }
 
 1;

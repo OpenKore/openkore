@@ -21,6 +21,8 @@
 package I18N;
 
 use strict;
+use threads;
+use threads::shared;
 use Globals qw(%config);
 use Exporter;
 use base qw(Exporter);
@@ -58,6 +60,7 @@ define_alias('Thai'                => 'CP874');
 #
 # This symbol is exportable.
 sub bytesToString {
+	lock ($config{serverEncoding});
 	return Encode::decode($config{serverEncoding} || 'Western', $_[0]);
 }
 
@@ -74,6 +77,7 @@ sub bytesToString {
 #
 # This symbol is exportable.
 sub stringToBytes {
+	lock ($config{serverEncoding});
 	return Encode::encode($config{serverEncoding} || 'Western', $_[0]);
 }
 

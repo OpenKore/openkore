@@ -11,6 +11,8 @@
 
 package main;
 use strict;
+use threads;
+use threads::shared;
 use FindBin qw($RealBin);
 use lib "$RealBin";
 use lib "$RealBin/src";
@@ -18,7 +20,6 @@ use lib "$RealBin/src/deps";
 
 use Time::HiRes qw(time usleep);
 use Carp::Assert;
-
 
 sub __start {
 	use ErrorHandler;
@@ -29,74 +30,45 @@ sub __start {
 	##### BASIC INITIALIZATION #####
 
 	use Translation;
-	use Settings qw(%sys);
+	use Settings qw(%sys $interface_name);
 	use Utils::Exceptions;
 
-	eval "use OpenKoreMod;";
-	undef $@;
 	parseArguments();
 	Settings::loadSysConfig();
 	Translation::initDefault(undef, $sys{locale});
 
-	use Globals;
-	use Interface;
-	$interface = Interface->loadInterface($Settings::interface);
-	selfCheck();
-
-
-	##### LOAD OPENKORE MODULES #####
-
-	use Utils::PathFinding;
-	require Utils::Win32 if ($^O eq 'MSWin32');
-	require 'functions.pl';
-
-	use Modules;
+	use Globals qw($log $interface);
 	use Log;
-	use Utils;
-	use Plugins;
-	use FileParsers;
-	use Network::Receive;
-	use Network::Send ();
-	use Commands;
-	use Misc;
-	use AI;
-	use AI::CoreLogic;
-	use AI::Attack;
-	use Actor;
-	use Actor::Player;
-	use Actor::Monster;
-	use Actor::You;
-	use Actor::Party;
-	use Actor::Portal;
-	use Actor::NPC;
-	use Actor::Pet;
-	use Actor::Unknown;
-	use ActorList;
 	use Interface;
-	use ChatQueue;
-	use TaskManager;
-	use Task;
-	use Task::WithSubtask;
-	use Task::TalkNPC;
-	use Utils::Benchmark;
-	use Utils::HttpReader;
-	use Utils::Whirlpool;
-	use Poseidon::Client;
-	Modules::register(qw/Utils FileParsers
-		Network::Receive Network::Send Misc AI AI::CoreLogic
-		AI::Attack AI::Homunculus
-		ChatQueue Actor Actor::Player Actor::Monster Actor::You
-		Actor::Party Actor::Unknown Actor::Item Match Utils::Benchmark/);
+	use KoreStage;
+	
+	# First Init Logging
+	my $log_obj = Log->new();
+	$log = shared_clone($log_obj);
 
+	# Init Interface
+	my $interface_obj = Interface->loadInterface($interface_name);
+	$interface = shared_clone($interface_obj);
+
+	# Init All others
+	KoreStage->loadStage();
+
+	selfCheck();
 
 	##### MAIN LOOP #####
 	# Note: Further initialization is done in the mainLoop() function in functions.pl.
+	# sleep(30);
+	threads->new(\&Interface::mainLoop, $interface);
+	# Interface::mainLoop($interface);
 
-	Benchmark::begin("Real time") if DEBUG;
-	$interface->mainLoop();
-	Benchmark::end("Real time") if DEBUG;
-
-	main::shutdown();
+	foreach my $thr (threads->list) {
+		# Don’t join the main thread or ourselves
+		if ($thr->tid && !threads::equal($thr, threads->self)) {
+			$thr->join;
+		}
+	}
+	exit 1;
+	# shutdown();
 }
 
 # Parse command-line arguments.
@@ -129,15 +101,6 @@ sub selfCheck {
 			"  %s\n" .
 			"to learn how to solve this.",
 			"http://www.visualkore-bot.com/faq.php#tcp"));
-		exit 1;
-	}
-
-	# If Misc.pm is in the same folder as openkore.pl, then the
-	# user is still using the old (pre-CVS cleanup) source tree.
-	# So bail out to prevent weird errors.
-	if (-f "$RealBin/Misc.pm") {
-		$interface->errorDialog(T("You have old files in the OpenKore folder, which may cause conflicts.\n" .
-			"Please delete your entire OpenKore source folder, and redownload everything."));
 		exit 1;
 	}
 
@@ -181,6 +144,13 @@ sub shutdown {
 		close F;
 		print "Benchmark results saved to benchmark-results.txt\n";
 	}
+}
+
+# OpenKore Threads Callings
+
+sub threadInterface {
+	my $self = shift;
+	$self->mainLoop();
 }
 
 if (!defined($ENV{INTERPRETER}) && !$ENV{NO_AUTOSTART}) {

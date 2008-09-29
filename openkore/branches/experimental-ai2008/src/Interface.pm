@@ -25,11 +25,13 @@ package Interface;
 use strict;
 use warnings;
 no warnings 'redefine';
+use threads qw(yield);
 use Time::HiRes qw(usleep);
-use encoding 'utf8';
+# use encoding 'utf8'; # Makes unknown Threading Bugs.
 
 use Modules 'register';
 use Globals qw(%config $quit);
+use Log qw(message warning error debug);
 use Translation qw(T TF);
 use Utils::Exceptions;
 
@@ -70,10 +72,54 @@ sub loadInterface {
 sub mainLoop {
 	my $self = shift;
 	while (!$quit) {
-		usleep($config{sleepTime} || 10000);
-		$self->iterate();
-		main::mainLoop();
+		{ # Just make Unlock quicker.
+			lock ($self);
+			$self->iterate();
+			my $input;
+			if (defined($input = $self->getInput(0))) {
+				$self->parseInput($input);
+			}
+		}
+		yield();
 	}
+}
+
+##
+# void $interface->parseInput()
+#
+# Parse User Input.
+sub parseInput {
+	my $self = shift;
+	my $input = shift;
+	my ($hook, $msg);
+	# We don't have networking yet.
+	# my $printType = shift if ($net && $net->clientAlive); 
+
+	# debug("Input: $input\n", "parseInput", 2);
+
+	# if ($printType) {
+		my $hookOutput = sub {
+			my ($type, $domain, $level, $globalVerbosity, $message, $user_data) = @_;
+			$msg .= $message if ($type ne 'debug' && $level <= $globalVerbosity);
+		};
+		$hook = Log::addHook($hookOutput);
+		# This cause Console to Write Twice. Write to Console, if Interface is not Console.
+		# $self->writeOutput("console", "$input\n");
+	# }
+	# $XKore_dontRedirect = 1;
+
+	# We don't have Command Interface yet.
+	# Commands::run($input);
+
+	# if ($printType) {
+		Log::delHook($hook);
+	#	if (defined $msg && $net->getState() == Network::IN_GAME && $config{XKore_silent}) {
+	#		$msg =~ s/\n*$//s;
+	#		$msg =~ s/\n/\\n/g;
+	#		sendMessage($messageSender, "k", $msg);
+	#	}
+	#}
+	#$XKore_dontRedirect = 0;
 }
 
 ##
@@ -236,6 +282,7 @@ sub errorDialog {
 	my $self = shift;
 	my $message = shift;
 	my $fatal = shift;
+	lock($self);
 	$fatal = 1 unless defined $fatal;
 
 	$self->writeOutput("error", "$message\n", "error");
@@ -245,6 +292,7 @@ sub errorDialog {
 		$self->writeOutput("message", Translation::T("Press ENTER to continue...\n"), "console")
 	}
 	$self->getInput(-1);
+	$quit = 1 if ($fatal);
 }
 
 1;

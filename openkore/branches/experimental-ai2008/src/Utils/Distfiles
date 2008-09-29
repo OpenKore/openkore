@@ -2,13 +2,14 @@ AppLauncher.pm
 Assert.pm
 Benchmark.pm
 CallbackList.pm
+CodeRef.pm
 CRAM.pm
 Crypton.pm
 Daemon.pm
 DataStructures.pm
 Exceptions.pm
-LockFile.pm
 HttpReader.pm
+LockFile.pm
 ObjectList.pm
 PathFinding.pm
 PerlLauncher.pm
