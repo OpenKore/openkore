@@ -20,26 +20,25 @@
 # Writing Tutorial</a> for more information about plugins.
 #
 # NOTE: Do not confuse plugins with modules! See Modules.pm for more information.
-
-# TODO: use events instead of printing log information directly.
-
 package Plugins;
 
 use strict;
+use threads;
+use threads::shared;
 use warnings;
 use Time::HiRes qw(time sleep);
 use Exception::Class ('Plugin::LoadException', 'Plugin::DeniedException');
 use UNIVERSAL qw(isa);
 
-use Modules 'register';
 use Globals;
+use Translation qw(T TF);
+use Settings qw(%sys);
 use Utils qw(stringToQuark quarkToString);
 use Utils::DataStructures qw(binAdd existsInList);
 use Utils::ObjectList;
 use Utils::Exceptions;
 use Log qw(message);
-use Translation qw(T TF);
-use Settings qw(%sys);
+use Modules 'register';
 
 
 #############################
@@ -58,8 +57,8 @@ our $current_plugin;
 # When a plugin is being (re)loaded, the the plugin's folder is set in this variable.
 our $current_plugin_folder;
 
-our @plugins;
-our %hooks;
+our @plugins :shared;
+our %hooks :shared;
 
 use enum qw(HOOKNAME INDEX);
 use enum qw(CALLBACK USER_DATA);
@@ -79,13 +78,15 @@ use enum qw(CALLBACK USER_DATA);
 # Throws Plugin::DeniedException if the plugin system refused to load a plugin. This can
 # happen, for example, if it detects that a plugin is incompatible.
 sub loadAll {
+	lock (%sys);
+
 	if (!exists $sys{'loadPlugins'}) {
 		message T("Loading all plugins (by default)...\n", 'plugins');
 	} elsif (!$sys{'loadPlugins'}) {
 		message T("Automatic loading of plugins disabled\n", 'plugins');
 		return;
 	} elsif ($sys{'loadPlugins'} eq '1') {
-		message T("Loading all plugins...\n", 'plugins');
+		message T("Loading all plugins...\n", 'plugins'); # Die Here!!! What's wrong with it????
 	} elsif ($sys{'loadPlugins'} eq '2') {
 		message T("Selectively loading plugins...\n", 'plugins');
 	} elsif ($sys{'loadPlugins'} eq '3') {
@@ -188,6 +189,9 @@ sub load {
 sub unload {
 	my $name = shift;
 	my $i = 0;
+
+	lock (@plugins);
+
 	foreach my $plugin (@plugins) {
 		if ($plugin && $plugin->{name} eq $name) {
 			$plugin->{unload_callback}->() if (defined $plugin->{unload_callback});
@@ -206,6 +210,9 @@ sub unload {
 # Unloads all registered plugins.
 sub unloadAll {
 	my $name = shift;
+
+	lock (@plugins);
+
 	foreach my $plugin (@plugins) {
 		next if (!$plugin);
 		$plugin->{unload_callback}->() if (defined $plugin->{unload_callback});
@@ -225,6 +232,9 @@ sub unloadAll {
 sub reload {
 	my $name = shift;
 	my $i = 0;
+
+	lock (@plugins);
+
 	foreach my $plugin (@plugins) {
 		if ($plugin && $plugin->{name} eq $name) {
 			my $filename = $plugin->{filename};
@@ -262,6 +272,8 @@ sub reload {
 sub register {
 	my $name = shift;
 	return 0 if registered($name);
+	
+	lock (@plugins);
 
 	my %plugin_info = (
 		name => $name,
@@ -270,7 +282,7 @@ sub register {
 		reload_callback => shift,
 		filename => $current_plugin
 	);
-
+	%plugin_info = shared_clone(%plugin_info);
 	binAdd(\@plugins, \%plugin_info);
 	return 1;
 }
@@ -284,6 +296,9 @@ sub register {
 # Checks whether a plugin is registered.
 sub registered {
 	my $name = shift;
+
+	lock (@plugins);
+
 	foreach (@plugins) {
 		return 1 if ($_ && $_->{name} eq $name);
 	}
@@ -322,6 +337,9 @@ sub registered {
 # }
 sub addHook {
 	my ($hookName, $callback, $user_data) = @_;
+
+	lock (%hooks);
+
 	my $hookList = $hooks{$hookName} ||= new ObjectList();
 
 	my @entry;
@@ -396,6 +414,9 @@ sub delHook {
 
 	} elsif (isa($handle, 'Plugins::HookHandle') && defined $handle->[HOOKNAME]) {
 		my $hookName = quarkToString($handle->[HOOKNAME]);
+	
+		lock (%hooks);
+
 		my $hookList = $hooks{$hookName};
 		if ($hookList) {
 			my $entry = $hookList->get($handle->[INDEX]);
@@ -437,6 +458,9 @@ sub delHooks {
 # See also: Plugins::addHook()
 sub callHook {
 	my ($hookName, $argument) = @_;
+	
+	lock (%hooks);
+
 	my $hookList = $hooks{$hookName};
 	if ($hookList) {
 		my $items = $hookList->getItems();
@@ -452,6 +476,9 @@ sub callHook {
 # Check whether there are any hooks registered for the specified hook name.
 sub hasHook {
 	my ($hookName) = @_;
+
+	lock (%hooks);
+
 	return defined $hooks{$hookName};
 }
 

@@ -52,8 +52,8 @@ our @EXPORT = (
 	urldecode urlencode unShiftPack vocalString wrapText pin_encode)
 );
 
-our %strings;
-our %quarks;
+our %strings :shared;
+our %quarks :shared;
 
 
 
@@ -627,8 +627,10 @@ sub launchScript {
 	my $script = shift;
 	my @interp;
 
-	if (-f $Config{perlpath}) {
-		@interp = ($Config{perlpath});
+	lock ($config{perlpath});
+
+	if (-f $config{perlpath}) {
+		@interp = ($config{perlpath});
 		delete $ENV{INTERPRETER};
 	} else {
 		@interp = ($ENV{INTERPRETER}, '!');
@@ -775,6 +777,8 @@ sub getCoordString {
 	my $nopadding = shift;
 	my $coords = "";
 
+	lock ($config{serverType});
+
 	shiftPack(\$coords, 0x44, 8)
 		unless (($config{serverType} == 0) || ($config{serverType} == 3) || ($config{serverType} == 5) || $nopadding);
 	shiftPack(\$coords, $x, 10);
@@ -789,6 +793,8 @@ sub getCoordString2 {
 	my $y = int(shift);
 	my $nopadding = shift;
 	my $coords = "";
+
+	lock ($config{serverType});
 
 	shiftPack(\$coords, 0x44, 8)
 		unless (($config{serverType} == 0) || ($config{serverType} == 3) || ($config{serverType} == 5) || $nopadding);
@@ -1232,6 +1238,9 @@ sub parseArgs {
 # Convert a quark back into a string. See stringToQuark() for details.
 sub quarkToString {
 	my $quark = $_[0];
+
+	lock ($strings{$quark});
+
 	return $strings{$quark};
 }
 
@@ -1263,6 +1272,9 @@ sub quarkToString {
 # To convert a quark back to a string, use quarkToString().
 sub stringToQuark {
 	my $string = $_[0];
+	
+	lock ($quarks{$string});
+
 	if (exists $quarks{$string}) {
 		return $quarks{$string};
 	} else {
@@ -1299,9 +1311,9 @@ sub swrite {
 sub timeConvert {
 	my $time = shift;
 	my $hours = int($time / 3600);
-	my $time = $time % 3600;
+	$time = $time % 3600;
 	my $minutes = int($time / 60);
-	my $time = $time % 60;
+	$time = $time % 60;
 	my $seconds = $time;
 	my $gathered = '';
 

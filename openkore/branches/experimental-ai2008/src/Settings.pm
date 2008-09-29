@@ -42,20 +42,29 @@
 package Settings;
 
 use strict;
-use lib 'src/deps';
-use lib 'src';
+use threads;
+use threads::shared;
+use FindBin qw($RealBin);
+use lib "$RealBin";
+use lib "$RealBin/src";
+use lib "$RealBin/src/deps";
 use Exporter;
 use base qw(Exporter);
 use Carp::Assert;
 use UNIVERSAL qw(isa);
-use FindBin qw($RealBin);
+use Scalar::Util qw(reftype refaddr blessed);
 use Getopt::Long;
 use File::Spec;
+use Log qw(message warning error debug);
 use Translation qw(T TF);
+use Utils::CodeRef;
 use Utils::ObjectList;
 use Utils::Exceptions;
-
 use enum qw(CONTROL_FILE_TYPE TABLE_FILE_TYPE);
+use Modules 'register';
+
+our @EXPORT_OK = qw(%sys $interface_name);
+
 
 
 ###################################
@@ -74,9 +83,9 @@ use enum qw(CONTROL_FILE_TYPE TABLE_FILE_TYPE);
 
 # Translation Comment: Strings for the name and version of the application
 our $NAME = 'OpenKore';
-our $VERSION = 'what-will-become-2.0.7';
+our $VERSION = 'AI 2008';
 # Translation Comment: Version String
-our $SVN = T(" (SVN Version) ");
+our $SVN = T(" (Dev Version) ");
 our $WEBSITE = 'http://www.openkore.com/';
 # Translation Comment: Version String
 our $versionText = "*** $NAME ${VERSION}${SVN} - " . T("Custom Ragnarok Online client") . " ***\n***   $WEBSITE   ***\n";
@@ -84,43 +93,36 @@ our $welcomeText = TF("Welcome to %s.", $NAME);
 
 
 # Data file folders.
-our @controlFolders;
-our @tablesFolders;
-our @pluginsFolders;
+our @controlFolders :shared;
+our @tablesFolders :shared;
+our @pluginsFolders :shared;
 # The registered data files.
-our $files;
+our $files :shared;
 # System configuration.
-our %sys;
+our %sys :shared;
 
-our $fields_folder;
-our $logs_folder;
+our $fields_folder :shared;
+our $logs_folder :shared;
 
-our $config_file;
-our $mon_control_file;
-our $items_control_file;
-our $shop_file;
-our $recvpackets_name;
+our $config_file :shared;
+our $mon_control_file :shared;
+our $items_control_file :shared;
+our $shop_file :shared;
+our $recvpackets_name :shared;
 
-our $chat_log_file;
-our $storage_log_file;
-our $shop_log_file;
-our $sys_file;
-our $monster_log_file;
-our $item_log_file;
+our $chat_log_file :shared;
+our $storage_log_file :shared;
+our $shop_log_file :shared;
+our $sys_file :shared;
+our $monster_log_file :shared;
+our $item_log_file :shared;
 
-our $interface;
-our $lockdown;
-our $no_connect;
+our $interface_name :shared;
+our $lockdown :shared;
+our $no_connect :shared;
 
 
 my $pathDelimiter = ($^O eq 'MSWin32') ? ';' : ':';
-
-sub MODINIT {
-	$files = new ObjectList();
-}
-use Modules 'register';
-our @EXPORT_OK = qw(%sys);
-
 
 ###################################
 ### CATEGORY: Public functions
@@ -141,6 +143,22 @@ our @EXPORT_OK = qw(%sys);
 sub parseArguments {
 	my %options;
 
+	lock ($fields_folder);
+	lock ($logs_folder);
+	lock ($config_file);
+	lock ($mon_control_file);
+	lock ($items_control_file);
+	lock ($shop_file);
+	lock ($chat_log_file);
+	lock ($storage_log_file);
+	lock ($sys_file);
+	lock ($interface_name);
+	lock ($lockdown);
+	lock ($shop_log_file);
+	lock ($monster_log_file);
+	lock ($item_log_file);
+	lock ($files);
+
 	undef $fields_folder;
 	undef $logs_folder;
 	undef $config_file;
@@ -150,8 +168,10 @@ sub parseArguments {
 	undef $chat_log_file;
 	undef $storage_log_file;
 	undef $sys_file;
-	undef $interface;
+	undef $interface_name;
 	undef $lockdown;
+	
+	$files = shared_clone(ObjectList->new());
 
 	local $SIG{__WARN__} = sub {
 		ArgumentException->throw($_[0]);
@@ -171,7 +191,7 @@ sub parseArguments {
 		'storage-log=s',      \$storage_log_file,
 		'sys=s',              \$sys_file,
 
-		'interface=s',        \$interface,
+		'interface=s',        \$interface_name,
 		'lockdown',           \$lockdown,
 		'help',	              \$options{help},
 
@@ -201,13 +221,29 @@ sub parseArguments {
 	$shop_log_file = File::Spec->catfile($logs_folder, "shop_log.txt");
 	$monster_log_file = File::Spec->catfile($logs_folder, "monster_log.txt");
 	$item_log_file = File::Spec->catfile($logs_folder, "item_log.txt");
-	if (!defined $interface) {
+	if (!defined $interface_name) {
 		if ($ENV{OPENKORE_DEFAULT_INTERFACE} && $ENV{OPENKORE_DEFAULT_INTERFACE} ne "") {
-			$interface = $ENV{OPENKORE_DEFAULT_INTERFACE};
+			$interface_name = $ENV{OPENKORE_DEFAULT_INTERFACE};
 		} else {
-			$interface = "Console"
+			$interface_name = "Console"
 		}
 	}
+
+	$fields_folder = shared_clone($fields_folder);
+	$logs_folder = shared_clone($logs_folder);
+	$config_file = shared_clone($config_file);
+	$mon_control_file = shared_clone($mon_control_file);
+	$items_control_file = shared_clone($items_control_file);
+	$shop_file = shared_clone($shop_file);
+	$chat_log_file = shared_clone($chat_log_file);
+	$storage_log_file = shared_clone($storage_log_file);
+	$sys_file = shared_clone($sys_file);
+	$interface_name = shared_clone($interface_name);
+	$lockdown = shared_clone($lockdown);
+	$shop_log_file = shared_clone($shop_log_file);
+	$monster_log_file = shared_clone($monster_log_file);
+	$item_log_file = shared_clone($item_log_file);
+
 
 	return 0 if ($options{help});
 	if (! -d $logs_folder) {
@@ -262,7 +298,8 @@ sub getUsageText {
 #
 # Set the folders in which to look for control files.
 sub setControlFolders {
-	@controlFolders = @_;
+	lock (@controlFolders);
+	@controlFolders = shared_clone(@_);
 }
 
 sub getControlFolders {
@@ -274,7 +311,8 @@ sub getControlFolders {
 #
 # Set the folders in which to look for table files.
 sub setTablesFolders {
-	@tablesFolders = @_;
+	lock (@tablesFolders);
+	@tablesFolders = shared_clone(@_);
 }
 
 sub getTablesFolders {
@@ -286,7 +324,9 @@ sub getTablesFolders {
 #
 # Set the folders in which to look for plugins.
 sub setPluginsFolders {
-	@pluginsFolders = @_;
+	lock (@pluginsFolders);
+	
+	@pluginsFolders = shared_clone(@_);
 }
 
 ##
@@ -337,6 +377,9 @@ sub addTableFile {
 # or Settings::addTableFile().
 sub removeFile {
 	my ($handle) = @_;
+	
+	lock ($files);
+	
 	$files->remove($files->get($handle));
 }
 
@@ -374,6 +417,11 @@ sub removeFile {
 # </pre>
 sub loadByHandle {
 	my ($handle, $progressHandler) = @_;
+	
+	lock ($files);
+	lock (@controlFolders);
+	lock (@tablesFolders);
+	
 	assert(defined $handle) if DEBUG;
 	my $object = $files->get($handle);
 	assert(defined $object) if DEBUG;
@@ -406,9 +454,9 @@ sub loadByHandle {
 	if (ref($object->{loader}) eq 'ARRAY') {
 		my @array = @{$object->{loader}};
 		my $loader = shift @array;
-		$loader->($filename, @array);
+		$loader->call($filename, @array);
 	} else {
-		$object->{loader}->($filename);
+		$object->{loader}->call($filename);
 	}
 }
 
@@ -422,6 +470,9 @@ sub loadByHandle {
 sub loadByRegexp {
 	my ($regexp, $progressHandler) = @_;
 	my @result;
+	
+	lock ($files);
+	
 	foreach my $object (@{$files->getItems()}) {
 		if ($object->{name} =~ /$regexp/) {
 			loadByHandle($object->{index}, $progressHandler);
@@ -437,6 +488,9 @@ sub loadByRegexp {
 # and exceptions.
 sub loadAll {
 	my ($progressHandler) = @_;
+	
+	lock ($files);
+	
 	foreach my $object (@{$files->getItems()}) {
 		loadByHandle($object->{index}, $progressHandler);
 	}
@@ -488,6 +542,8 @@ sub writeSysConfig {
 # in all possible locations, as specified by earlier calls
 # to Settings::setControlFolders().
 sub getControlFilename {
+	lock (@controlFolders);
+	
 	return _findFileFromFolders($_[0], \@controlFolders);
 }
 
@@ -500,10 +556,14 @@ sub getControlFilename {
 # in all possible locations, as specified by earlier calls
 # to Settings::setTabblesFolders().
 sub getTableFilename {
+	lock (@tablesFolders);
+	
 	return _findFileFromFolders($_[0], \@tablesFolders);
 }
 
 sub getConfigFilename {
+	lock ($config_file);
+	
 	if (defined $config_file) {
 		return $config_file;
 	} else {
@@ -514,16 +574,22 @@ sub getConfigFilename {
 sub setConfigFilename {
 	my ($new_filename) = @_;
 	my $current_filename = getConfigFilename();
+	
+	lock ($files);
+	lock ($config_file);
+	
 	foreach my $object (@{$files->getItems()}) {
 		if ($object->{name} eq $current_filename) {
 			$object->{name} = $new_filename;
 			last;
 		}
 	}
-	$config_file = $new_filename;
+	$config_file = shared_clone($new_filename);
 }
 
 sub getMonControlFilename {
+	lock ($mon_control_file);
+	
 	if (defined $mon_control_file) {
 		return $mon_control_file;
 	} else {
@@ -532,6 +598,8 @@ sub getMonControlFilename {
 }
 
 sub getItemsControlFilename {
+	lock ($items_control_file);
+	
 	if (defined $items_control_file) {
 		return $items_control_file;
 	} else {
@@ -540,6 +608,8 @@ sub getItemsControlFilename {
 }
 
 sub getShopFilename {
+	lock ($shop_file);
+	
 	if (defined $shop_file) {
 		return $shop_file;
 	} else {
@@ -548,6 +618,8 @@ sub getShopFilename {
 }
 
 sub getSysFilename {
+	lock ($sys_file);
+	
 	if (defined $sys_file) {
 		return $sys_file;
 	} else {
@@ -556,11 +628,17 @@ sub getSysFilename {
 }
 
 sub getRecvPacketsFilename {
+	lock ($recvpackets_name);
+	
 	return getTableFilename($recvpackets_name || "recvpackets.txt");
 }
 
 sub setRecvPacketsName {
 	my ($new_name) = @_;
+	
+	lock ($recvpackets_name);
+	lock ($files);
+	
 	if ($recvpackets_name ne $new_name) {
 		my $current_filename = getRecvPacketsFilename();
 		foreach my $object (@{$files->getItems()}) {
@@ -569,7 +647,7 @@ sub setRecvPacketsName {
 				last;
 			}
 		}
-		$recvpackets_name = $new_name;
+		$recvpackets_name = shared_clone($new_name);
 		return 1;
 	} else {
 		return undef;
@@ -604,6 +682,16 @@ sub _addFile {
 	my $name = shift;
 	my $type = shift;
 	my %options = @_;
+	
+	lock ($files);
+	
+	if (defined $options{loader}[0]) {
+		my $data = Utils::CodeRef->new($options{loader}[0]);
+		if ($data->{packagename} ne "") {
+			$options{loader}[0] = $data;
+		};
+	}
+	
 	if (!$options{loader}) {
 		ArgumentException->throw("The 'loader' option must be specified.");
 	}
@@ -614,8 +702,9 @@ sub _addFile {
 		autoSearch => exists($options{autoSearch}) ? $options{autoSearch} : 1,
 		loader     => $options{loader}
 	};
+	# The added item in $files is a shared_clone. So we must set $object->{index} before it go there.
+	$object->{index} = ObjectList::_findEmptyIndex($files->{OL_items});
 	my $index = $files->add(bless($object, 'Settings::Handle'));
-	$object->{index} = $index;
 	return $index;
 }
 
@@ -623,6 +712,9 @@ sub _processSysConfig {
 	my ($writeMode) = @_;
 	my ($f, @lines, %keysNotWritten);
 	my $sysFile = getSysFilename();
+
+	lock (%sys);
+
 	return if (!$sysFile || !open($f, "<:utf8", $sysFile));
 	
 	if ($writeMode) {
@@ -651,7 +743,8 @@ sub _processSysConfig {
 				delete $keysNotWritten{$key};
 			}
 		} else {
-			$sys{$key} = $val;
+			# $sys{$key} = $val;
+			$sys{$key} = shared_clone($val);
 		}
 	}
 	close $f;

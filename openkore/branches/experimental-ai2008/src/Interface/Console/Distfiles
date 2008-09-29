@@ -1,4 +1,4 @@
 Curses.pm
-Win32.pm
-Unix.pm
 Simple.pm
+Unix.pm
+Win32.pm

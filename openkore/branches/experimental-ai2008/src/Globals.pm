@@ -20,44 +20,98 @@
 package Globals;
 
 use strict;
+use threads;
+use threads::shared;
 use Exporter;
 use base qw(Exporter);
 use Modules 'register';
 # Do not use any other Kore modules here. It will create circular dependancies.
 
 our %EXPORT_TAGS = (
-	config  => [qw(%arrowcraft_items %avoid @chatResponses %cities_lut %config %consoleColors %directions_lut %equipTypes_lut %equipSlot_rlut %equipSlot_lut %haircolors @headgears_lut %items_control %items_lut %itemSlotCount_lut %itemsDesc_lut %itemTypes_lut %jobs_lut %maps_lut %masterServers %monsters_lut %npcs_lut %packetDescriptions %portals_lut %responses %sex_lut %shop %skillsDesc_lut %skillsLooks %skillsArea %skillsEncore %skillsSP_lut %spells_lut %emotions_lut %timeout $char %mon_control %priority %routeWeights %pickupitems %rpackets %itemSlots_lut %skillsStatus %portals_los %skillsState %skillsAilments %elements_lut)],
-	ai      => [qw(@ai_seq @ai_seq_args %ai_v $AI $AI_forcedOff %targetTimeout)],
-	state   => [qw($accountID $cardMergeIndex @cardMergeItemsID $charID @chars @chars_old %cart @friendsID %friends %incomingFriend %field $field %homunculus $itemsList @itemsID %items $monstersList @monstersID %monsters @npcsID %npcs $npcsList @playersID %players @portalsID @portalsID_old %portals %portals_old $portalsList @storeList $currentChatRoom @currentChatRoomUsers @chatRoomsID %createdChatRoom %chatRooms @skillsID %storage @storageID @arrowCraftID %guild %incomingGuild @spellsID %spells @unknownPlayers @unknownNPCs $statChanged $skillChanged $useArrowCraft %currentDeal %incomingDeal %outgoingDeal @identifyID @partyUsersID %incomingParty @petsID %pets @venderItemList $venderID @venderListsID @articles $articles %venderLists %monsters_old @monstersID_old %npcs_old %items_old %players_old @playersID_old @servers $sessionID $sessionID2 $accountSex $accountSex2 $map_ip $map_port $KoreStartTime $secureLoginKey $initSync $lastConfChangeTime $petsList $playersList $portalsList @playerNameCacheIDs %playerNameCache %pet $pvp @cashList)],
-	network => [qw($remote_socket $net $messageSender $charServer $conState $conState_tries $encryptVal $ipc $bus $lastPacketTime $masterServer $lastswitch $packetParser $bytesSent $bytesReceived $incomingMessages $outgoingClientMessages $enc_val1 $enc_val2)],
-	interface => [qw($interface)],
-	misc    => [qw($quit $reconnectCount @lastpm %lastpm @privMsgUsers %timeout_ex $shopstarted $dmgpsec $totalelasped $elasped $totaldmg %overallAuth %responseVars %talk $startTime_EXP $startingZenny @monsters_Killed $bExpSwitch $jExpSwitch $totalBaseExp $totalJobExp $shopEarned %itemChange $XKore_dontRedirect $monkilltime $monstarttime $startedattack $firstLoginMap $sentWelcomeMessage $versionSearch $monsterBaseExp $monsterJobExp %descriptions %flags %damageTaken $logAppend @sellList $userSeed $taskManager)],
-	syncs => [qw($syncSync $syncMapSync)],
-	cmdqueue => [qw($cmdQueue @cmdQueueList $cmdQueueStartTime $cmdQueueTime @cmdQueuePriority)],
+	config  => [qw(
+			%arrowcraft_items
+			%avoid
+			@chatResponses
+			%cities_lut
+			%config
+			%consoleColors
+			%directions_lut
+			%equipTypes_lut
+			%equipSlot_rlut
+			%equipSlot_lut
+			%haircolors
+			@headgears_lut
+			%items_control
+			%items_lut
+			%itemSlotCount_lut
+			%itemsDesc_lut
+			%itemTypes_lut
+			%jobs_lut
+			%maps_lut
+			%masterServers
+			%monsters_lut
+			%npcs_lut
+			%packetDescriptions
+			%portals_lut
+			%responses
+			%sex_lut
+			%shop
+			%skillsDesc_lut
+			%skillsLooks
+			%skillsArea
+			%skillsEncore
+			%skillsSP_lut
+			%spells_lut
+			%emotions_lut
+			%timeout
+			$char
+			%mon_control
+			%priority
+			%routeWeights
+			%pickupitems
+			%rpackets
+			%itemSlots_lut
+			%skillsStatus
+			%portals_los
+			%skillsState
+			%skillsAilments
+			%elements_lut
+			%descriptions
+			%overallAuth)],
+	# ai      => [qw(@ai_seq @ai_seq_args %ai_v $AI $AI_forcedOff %targetTimeout)],
+	state   => [qw($accountID %field $field %items $playersList $monstersList $npcsList $petsList $portalsList %players %monsters %portals %pets %npcs @playersID @spellsID %spells)],
+	# state   => [qw($accountID $cardMergeIndex @cardMergeItemsID $charID @chars @chars_old %cart @friendsID %friends %incomingFriend %field $field %homunculus $itemsList @itemsID %items $monstersList @monstersID %monsters @npcsID %npcs $npcsList @playersID %players @portalsID @portalsID_old %portals %portals_old $portalsList @storeList $currentChatRoom @currentChatRoomUsers @chatRoomsID %createdChatRoom %chatRooms @skillsID %storage @storageID @arrowCraftID %guild %incomingGuild @spellsID %spells @unknownPlayers @unknownNPCs $statChanged $skillChanged $useArrowCraft %currentDeal %incomingDeal %outgoingDeal @identifyID @partyUsersID %incomingParty @petsID %pets @venderItemList $venderID @venderListsID @articles $articles %venderLists %monsters_old @monstersID_old %npcs_old %items_old %players_old @playersID_old @servers $sessionID $sessionID2 $accountSex $accountSex2 $map_ip $map_port $KoreStartTime $secureLoginKey $initSync $lastConfChangeTime $petsList $playersList $portalsList @playerNameCacheIDs %playerNameCache %pet $pvp @cashList)],
+	network => [qw($net $masterServer)],
+	# network => [qw($remote_socket $net $messageSender $charServer $conState $conState_tries $encryptVal $ipc $bus $lastPacketTime $masterServer $lastswitch $packetParser $bytesSent $bytesReceived $incomingMessages $outgoingClientMessages $enc_val1 $enc_val2)],
+	interface => [qw($interface $log $quit)],
+	# misc    => [qw($reconnectCount @lastpm %lastpm @privMsgUsers %timeout_ex $shopstarted $dmgpsec $totalelasped $elasped $totaldmg %responseVars %talk $startTime_EXP $startingZenny @monsters_Killed $bExpSwitch $jExpSwitch $totalBaseExp $totalJobExp $shopEarned %itemChange $XKore_dontRedirect $monkilltime $monstarttime $startedattack $firstLoginMap $sentWelcomeMessage $versionSearch $monsterBaseExp $monsterJobExp %flags %damageTaken $logAppend @sellList $userSeed $taskManager)],
+	# syncs => [qw($syncSync $syncMapSync)],
+	# cmdqueue => [qw($cmdQueue @cmdQueueList $cmdQueueStartTime $cmdQueueTime @cmdQueuePriority)],
 );
 
 our @EXPORT = (
 	@{$EXPORT_TAGS{config}},
-	@{$EXPORT_TAGS{ai}},
+	# @{$EXPORT_TAGS{ai}},
 	@{$EXPORT_TAGS{state}},
 	@{$EXPORT_TAGS{network}},
 	@{$EXPORT_TAGS{interface}},
-	@{$EXPORT_TAGS{misc}},
-	@{$EXPORT_TAGS{syncs}},
-	@{$EXPORT_TAGS{cmdqueue}},
+	# @{$EXPORT_TAGS{misc}},
+	# @{$EXPORT_TAGS{syncs}},
+	# @{$EXPORT_TAGS{cmdqueue}},
 );
 
 
 # Configuration variables
-our %arrowcraft_items;
-our %avoid;
-our @chatResponses;
-our $char;
-our %cities_lut;
-our %config;
-our %consoleColors;
-our %equipTypes_lut;
-our %equipSlot_lut = (
+our %arrowcraft_items :shared;
+our %avoid :shared;
+our @chatResponses :shared;
+our $char :shared;
+our %cities_lut :shared;
+our %config :shared;
+our %consoleColors :shared;
+our %equipTypes_lut :shared;
+our %equipSlot_lut :shared;
+%equipSlot_lut = (
 	'0'    => 'Item',
 	'1'    => 'lowHead',
 	'2'    => 'rightHand',
@@ -72,7 +126,8 @@ our %equipSlot_lut = (
 	'1024' => 'carry', #used in messyKore don't know if it actually exists
 	'32768'   => 'arrow' #just use an made up ID since arrow doesn't have any
 );
-our %equipSlot_rlut = (
+our %equipSlot_rlut :shared;
+%equipSlot_rlut = (
 	'Item'           => 0,
 	'lowHead'        => 1,
 	'rightHand'      => 2,
@@ -87,41 +142,44 @@ our %equipSlot_rlut = (
 	'carry' 	 => 1024,
 	'arrow'          => '' #arrow seems not to have any ID
 );
-our %elements_lut;
-our %directions_lut;
-our %haircolors;
-our @headgears_lut;
-our %items_control;
-our %items_lut;
-our %itemSlotCount_lut;
-our %itemsDesc_lut;
-our %itemTypes_lut;
-our %itemSlots_lut;
-our %maps_lut;
-our %masterServers;
-our %mon_control;
-our %monsters_lut;
-our %npcs_lut;
-our %packetDescriptions;
-our %portals_los;
-our %portals_lut;
-our %priority;
-our %responses;
-our %routeWeights;
-our %rpackets;
-our %sex_lut;
-our %shop;
-our %skillsDesc_lut;
-our %skillsSP_lut;
-our %skillsLooks;
-our %skillsAilments;
-our %skillsArea;
-our %skillsEncore;
-our %skillsState;
-our %skillsStatus;
-our %spells_lut;
-our %timeout;
-our %jobs_lut = (
+our %elements_lut :shared;
+our %directions_lut :shared;
+our %haircolors :shared;
+our @headgears_lut :shared;
+our %items_control :shared;
+our %items_lut :shared;
+our %itemSlotCount_lut :shared;
+our %itemsDesc_lut :shared;
+our %itemTypes_lut :shared;
+our %itemSlots_lut :shared;
+our %maps_lut :shared;
+our %masterServers :shared;
+our %mon_control :shared;
+our %monsters_lut :shared;
+our %npcs_lut :shared;
+our %packetDescriptions :shared;
+our %portals_los :shared;
+our %portals_lut :shared;
+our %priority :shared;
+our %responses :shared;
+our %routeWeights :shared;
+our %pickupitems :shared;
+our %rpackets :shared;
+our %sex_lut :shared;
+our %shop :shared;
+our %skillsDesc_lut :shared;
+our %skillsSP_lut :shared;
+our %skillsLooks :shared;
+our %skillsAilments :shared;
+our %skillsArea :shared;
+our %skillsEncore :shared;
+our %skillsState :shared;
+our %skillsStatus :shared;
+our %spells_lut :shared;
+our %emotions_lut :shared;
+our %timeout :shared;
+our %jobs_lut :shared;
+%jobs_lut = (
 	0 => 'Novice',
 	1 => 'Swordsman',
 	2 => 'Mage',
@@ -238,176 +296,177 @@ our %jobs_lut = (
 	6015 => 'High Filir 2',
 	6016 => 'High Vanilmirth 2'
 );
+our %descriptions :shared;
+our %overallAuth :shared;
 
 # AI
-our @ai_seq;
-our @ai_seq_args;
-our %ai_v;
-our %targetTimeout;
-our $AI = 2;
-our $AI_forcedOff;
+# our @ai_seq;
+# our @ai_seq_args;
+# our %ai_v;
+# our %targetTimeout;
+# our $AI = 2;
+# our $AI_forcedOff;
 
 # Game state
-our $accountID;
-our $cardMergeIndex;
-our @cardMergeItemsID;
-our @chars;
-our @chars_old;
-our %cart;
-our %field;
-our $field;
-our @friendsID;
-our %friends;
-our %homunculus;
-our %incomingFriend;
-our $itemsList;
-our @itemsID;
-our %items;
-our $monstersList;
-our @monstersID;
-our %monsters;
-our @npcsID;
-our %npcs;
-our @playersID;
-our %players;
-our @portalsID;
-our @portalsID_old;
-our %portals;
-our %portals_old;
-our @storeList;
-our $currentChatRoom;
-our @currentChatRoomUsers;
-our @chatRoomsID;
-our %createdChatRoom;
-our %chatRooms;
-our @skillsID;
-our %storage;
-our @storageID;
-our @arrowCraftID;
-our %guild;
-our %incomingGuild;
-our @spellsID;
-our %spells;
-our @unknownPlayers;
-our @unknownNPCs;
-our $statChanged;
-our $skillChanged;
-our $useArrowCraft;
-our %currentDeal;
-our %incomingDeal;
-our %outgoingDeal;
-our @identifyID;
-our $playersList;
-our $npcsList;
-our $petsList;
-our $portalsList;
-our @petsID;
-our %pets;
-our $pvp;
-our @venderItemList;
-our $venderID;
-our @venderListsID;
-our @articles;
-our $articles;
-our %monsters_old;
-our @monstersID_old;
-our %npcs_old;
-our %items_old;
-our %players_old;
-our @playersID_old;
-our @servers;
-our $sessionID;
-our $sessionID2;
-our $accountSex;
-our $accountSex2;
-our $map_ip;
-our $map_port;
-our $KoreStartTime;
-our $secureLoginKey;
-our $initSync;
-our $lastConfChangeTime;
-our @playerNameCacheIDs;
-our %playerNameCache;
-our %pet;
-our @cashList;
+our $accountID :shared;
+# our $cardMergeIndex;
+# our @cardMergeItemsID;
+# our @chars;
+# our @chars_old;
+# our %cart;
+our %field :shared;
+our $field :shared;
+# our @friendsID;
+# our %friends;
+# our %homunculus;
+# our %incomingFriend;
+# our $itemsList;
+# our @itemsID;
+our %items :shared;
+our $monstersList :shared;
+# our @monstersID;
+our %monsters :shared;
+# our @npcsID;
+our %npcs :shared;
+our @playersID :shared;
+our %players :shared;
+# our @portalsID;
+# our @portalsID_old;
+our %portals :shared;
+# our %portals_old;
+# our @storeList;
+# our $currentChatRoom;
+# our @currentChatRoomUsers;
+# our @chatRoomsID;
+# our %createdChatRoom;
+# our %chatRooms;
+# our @skillsID;
+# our %storage;
+# our @storageID;
+# our @arrowCraftID;
+# our %guild;
+# our %incomingGuild;
+our @spellsID :shared;
+our %spells :shared;
+# our @unknownPlayers;
+# our @unknownNPCs;
+# our $statChanged;
+# our $skillChanged;
+# our $useArrowCraft;
+# our %currentDeal;
+# our %incomingDeal;
+# our %outgoingDeal;
+# our @identifyID;
+our $playersList :shared;
+our $npcsList :shared;
+our $petsList :shared;
+our $portalsList :shared;
+# our @petsID;
+our %pets :shared;
+# our $pvp;
+# our @venderItemList;
+# our $venderID;
+# our @venderListsID;
+# our @articles;
+# our $articles;
+# our %monsters_old;
+# our @monstersID_old;
+# our %npcs_old;
+# our %items_old;
+# our %players_old;
+# our @playersID_old;
+# our @servers;
+# our $sessionID;
+# our $sessionID2;
+# our $accountSex;
+# our $accountSex2;
+# our $map_ip;
+# our $map_port;
+# our $KoreStartTime;
+# our $secureLoginKey;
+# our $initSync;
+# our $lastConfChangeTime;
+# our @playerNameCacheIDs;
+# our %playerNameCache;
+# our %pet;
+# our @cashList;
 
 # Network
-our $remote_socket;	# Unused, but required for outdated plugins
-our $net;
-our $messageSender;
-our $charServer;
-our $conState;
-our $conState_tries;
-our $encryptVal;
-our $ipc;
-our $bus;
-our $lastPacketTime;
-our $masterServer;
-our $incomingMessages;
-our $outgoingClientMessages;
-our $lastswitch;
-our $enc_val1;
-our $enc_val2;
+# our $remote_socket;	# Unused, but required for outdated plugins
+our $net :shared;
+# our $messageSender;
+# our $charServer;
+# our $conState;
+# our $conState_tries;
+# our $encryptVal;
+# our $ipc;
+# our $bus;
+# our $lastPacketTime;
+our $masterServer :shared;
+# our $incomingMessages;
+# our $outgoingClientMessages;
+# our $lastswitch;
+# our $enc_val1;
+# our $enc_val2;
 
 
 # Interface
-our $interface;
+our $interface :shared;
+our $log :shared;
+our $quit :shared;
 
 # Misc
-our $quit;
-our $reconnectCount;
-our @lastpm;
-our %lastpm;
-our @privMsgUsers;
-our %timeout_ex;
-our %overallAuth;
-our $shopstarted;
-our $dmgpsec;
-our $totalelasped;
-our $elasped;
-our $totaldmg;
-our %responseVars;
-our %talk;
-our $startTime_EXP;
-our $startingZenny;
-our @monsters_Killed;
-our $bExpSwitch;
-our $jExpSwitch;
-our $totalBaseExp;
-our $totalJobExp;
-our $shopEarned;
-our %itemChange;
-our %damageTaken;
-our $XKore_dontRedirect;
-our $monkilltime;
-our $monstarttime;
-our $startedattack;
-our $firstLoginMap;
-our $sentWelcomeMessage;
-our $versionSearch;
-our $monsterBaseExp;
-our $monsterJobExp;
-our %descriptions;
-our %flags;
-our $logAppend;
-our @sellList;
-our $userSeed;
-our $taskManager;
+# our $reconnectCount;
+# our @lastpm;
+# our %lastpm;
+# our @privMsgUsers;
+# our %timeout_ex;
+# our $shopstarted;
+# our $dmgpsec;
+# our $totalelasped;
+# our $elasped;
+# our $totaldmg;
+# our %responseVars;
+# our %talk;
+# our $startTime_EXP;
+# our $startingZenny;
+# our @monsters_Killed;
+# our $bExpSwitch;
+# our $jExpSwitch;
+# our $totalBaseExp;
+# our $totalJobExp;
+# our $shopEarned;
+# our %itemChange;
+# our %damageTaken;
+# our $XKore_dontRedirect;
+# our $monkilltime;
+# our $monstarttime;
+# our $startedattack;
+# our $firstLoginMap;
+# our $sentWelcomeMessage;
+# our $versionSearch;
+# our $monsterBaseExp;
+# our $monsterJobExp;
+# our %flags;
+# our $logAppend;
+# our @sellList;
+# our $userSeed;
+# our $taskManager;
 
-our $bytesSent = 0;
-our $bytesReceived = 0;
+# our $bytesSent = 0;
+# our $bytesReceived = 0;
 
-our $syncSync;
-our $syncMapSync;
+# our $syncSync;
+# our $syncMapSync;
 
-our $cmdQueue = 0;
-our $cmdQueueStartTime;
-our $cmdQueueTime = 0;
-our @cmdQueueList;
-our @cmdQueuePriority = ('ai','aiv','al','debug','chist','dl','exp','friend','g','guild','help','i',
-	'ihist','il','ml','nl','p','party','petl','pl','plugin','relog','pml','portals','quit','rc',
-	'reload','s','skills','spells','st','stat_add','store','vl','weight');
-
+# our $cmdQueue = 0;
+# our $cmdQueueStartTime;
+# our $cmdQueueTime = 0;
+# our @cmdQueueList;
+# our @cmdQueuePriority = ('ai','aiv','al','debug','chist','dl','exp','friend','g','guild','help','i',
+# 	'ihist','il','ml','nl','p','party','petl','pl','plugin','relog','pml','portals','quit','rc',
+# 	'reload','s','skills','spells','st','stat_add','store','vl','weight');
+# 
 END {
 	undef $interface if defined $interface;
 }

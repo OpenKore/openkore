@@ -27,6 +27,9 @@ package Interface::Console::Win32;
 
 use strict;
 use warnings;
+use threads;
+use threads::shared;
+use ErrorHandler;
 
 die "W32 only, this module should never be called on any other OS\n"
 		unless ($^O eq 'MSWin32' || $^O eq 'cygwin');
@@ -36,7 +39,7 @@ use Time::HiRes qw/time sleep/;
 use Text::Wrap;
 use Win32::Console;
 use Utils::Win32;
-use encoding 'utf8';
+# use encoding 'utf8'; # Makes unknown Threading Bugs.
 use Encode;
 use I18N qw(stringToBytes);
 use Translation qw(T);
@@ -46,8 +49,8 @@ use Globals;
 use Settings qw(%sys);
 use base qw(Interface::Console);
 
-our %fgcolors;
-our %bgcolors;
+our %fgcolors :shared;
+our %bgcolors :shared;
 
 sub new {
 	my $class = shift;
@@ -330,7 +333,7 @@ sub writeOutput {
 }
 
 sub setColor {
-	return if (!$consoleColors{''}{'useColors'});
+	return if (!$consoleColors{''} || !$consoleColors{''}{'useColors'});
 	my $self = shift;
 	my ($type, $domain) = @_;
 	my $color;

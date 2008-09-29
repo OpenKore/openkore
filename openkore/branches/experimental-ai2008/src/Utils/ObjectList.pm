@@ -63,6 +63,8 @@
 package ObjectList;
 
 use strict;
+use threads;
+use threads::shared;
 use Carp::Assert;
 use Scalar::Util;
 use Utils::CallbackList;
@@ -80,39 +82,40 @@ use Utils::CallbackList;
 #
 # Construct a new ObjectList.
 sub new {
-	my ($class) = @_;
-	my %self = (
-		# Array<Object> items
-		# The items in this list. May contain empty elements.
-		#
-		# Invariant: defined(items)
-		OL_items => [],
+	my $class = shift;
+	my $self;
 
-		# Array<Object> cItems
-		# Same as $items, but doesn't contain any empty elements.
-		# An index in $items may not refer to the same item in
-		# this array.
-		#
-		# Invariant:
-		#     defined(cItems)
-		#     cItems.size <= items.size
-		#     for all $i in [0 .. cItems.size - 1]:
-		#         exists $cItems[$i]
-		OL_cItems => [],
+	# Array<Object> items
+	# The items in this list. May contain empty elements.
+	#
+	# Invariant: defined(items)
+	$self->{OL_items} = [];
 
-		# Invariant: defined(onAdd)
-		OL_onAdd => new CallbackList(),
+	# Array<Object> cItems
+	# Same as $items, but doesn't contain any empty elements.
+	# An index in $items may not refer to the same item in
+	# this array.
+	#
+	# Invariant:
+	#     defined(cItems)
+	#     cItems.size <= items.size
+	#     for all $i in [0 .. cItems.size - 1]:
+	#         exists $cItems[$i]
+	$self->{OL_cItems} = [];
 
-		# Invariant: defined(onRemove)
-		OL_onRemove => new CallbackList(),
+	# Invariant: defined(onAdd)
+	$self->{OL_onAdd} = CallbackList->new();
 
-		# Invariant: defined(onClearBegin)
-		OL_onClearBegin => new CallbackList(),
+	# Invariant: defined(onRemove)
+	$self->{OL_onRemove} = CallbackList->new();
 
-		# Invariant: defined(onClearEnd)
-		OL_onClearEnd => new CallbackList()
-	);
-	return bless \%self, $class;
+	# Invariant: defined(onClearBegin)
+	$self->{OL_onClearBegin} = CallbackList->new();
+
+	# Invariant: defined(onClearEnd)
+	$self->{OL_onClearEnd} = CallbackList->new();
+	bless $self, $class;
+	return $self;
 }
 
 ##
@@ -134,9 +137,38 @@ sub add {
 	assert(defined $item) if DEBUG;
 	assert(Scalar::Util::blessed $item) if DEBUG;
 
+	lock ($self) if (is_shared($self));
+
 	my $index = _findEmptyIndex($self->{OL_items});
-	$self->{OL_items}[$index] = $item;
-	splice(@{$self->{OL_cItems}}, $index, 0, $item);
+	$self->{OL_items} = &share([]) if ((is_shared($self))&&($index < 1));
+	if (is_shared($self)) {
+		$self->{OL_items}[$index] = shared_clone($item);
+	} else {
+		$self->{OL_items}[$index] = $item;
+	}
+
+        # perl can't splice shared arrays!
+	#splice(@{$self->{OL_cItems}}, $index, 0, $item);
+	{
+        	my @code = @{$self->{OL_cItems}};
+		my $offset = $index;
+		my $len = 0;
+		my $list = $item;
+        	my @head = @code[0 .. $offset - 1];
+		my @middle;
+		for (my $i = 0; $i <= $len; $i++) {
+			next if (not defined $list);
+			if (is_shared($self->{OL_cItems})) {
+				push @middle, shared_clone($list);
+			} else {
+				push @middle, $list;
+			}
+		}
+        	my @tail = @code[$offset+1 .. $#code];
+        	@{$self->{OL_cItems}} = (@head, @middle, @tail);
+	};
+
+
 	$self->{OL_onAdd}->call($self, [$item, $index]);
 	return $index;
 }
@@ -162,6 +194,9 @@ sub _findEmptyIndex {
 # Use getItems() instead. See the overview for more information.
 sub get {
 	my ($self, $index) = @_;
+
+	lock ($self) if (is_shared($self));
+
 	assert($index >= 0) if DEBUG;
 	return $self->{OL_items}[$index];
 }
@@ -178,6 +213,9 @@ sub find {
 	my ($self, $item) = @_;
 	assert(defined $item) if DEBUG;
 	assert(Scalar::Util::blessed $item) if DEBUG;
+
+	lock ($self) if (is_shared($self));
+
 	return _findItem($self->{OL_items}, $item);
 }
 
@@ -205,13 +243,37 @@ sub remove {
 	assert(defined $item) if DEBUG;
 	assert(Scalar::Util::blessed $item) if DEBUG;
 
+	lock ($self) if (is_shared($self));
+
 	my $index = _findItem($self->{OL_items}, $item);
 	if ($index == -1) {
 		return 0;
 	} else {
 		delete $self->{OL_items}[$index];
 		my $cItemIndex = _findItem($self->{OL_cItems}, $item);
-		splice(@{$self->{OL_cItems}}, $cItemIndex, 1);
+
+	        # perl can't splice shared arrays!
+	        #splice(@{$self->{OL_cItems}}, $cItemIndex, 1);
+		{
+			my $array = $self->{OL_cItems};
+        		my @code = @{$array};
+			my $offset = $cItemIndex;
+			my $len = 1;
+			my $list;
+        		my @head = @code[0 .. $offset - 1];
+			my @middle;
+			for (my $i = 0; $i <= $len; $i++) {
+				next if (not defined $list);
+				if (is_shared($array)) {
+					push @middle, shared_clone($list);
+				} else {
+					push @middle, $list;
+				}
+			}
+        		my @tail = @code[$offset+1 .. $#code];
+        		@{$array} = (@head, @middle, @tail);
+		};
+
 		$self->{OL_onRemove}->call($self, [$item, $index]);
 		return 1;
 	}
@@ -228,6 +290,9 @@ sub remove {
 # `l`
 sub clear {
 	my ($self) = @_;
+
+	lock ($self) if (is_shared($self));
+
 	$self->{OL_onClearBegin}->call($self);
 	$self->doClear();
 	$self->{OL_onClearEnd}->call($self);
@@ -243,8 +308,16 @@ sub clear {
 # subclasses that want to implement different clearing behavior.
 sub doClear {
 	my ($self) = @_;
-	$self->{OL_items} = [];
-	$self->{OL_cItems} = [];
+
+	lock ($self) if (is_shared($self));
+	
+	if (is_shared($self)) {
+		$self->{OL_items} = shared([]);
+		$self->{OL_cItems} = shared([]);
+	} else {
+		$self->{OL_items} = [];
+		$self->{OL_cItems} = [];
+	}
 }
 
 ##
@@ -256,6 +329,8 @@ sub doClear {
 # Note: you must not use get() and size() to iterate through the list.
 # Use getItems() instead. See the overview for more information.
 sub size {
+	lock ($_[0]) if (is_shared($_[0]));
+
 	return scalar @{$_[0]->{OL_cItems}};
 }
 
@@ -270,6 +345,8 @@ sub size {
 # Returns a reference to an array, which contains all items in this list.
 # It is safe to remove items during iteration.
 sub getItems {
+	lock ($_[0]) if (is_shared($_[0]));
+
 	return $_[0]->{OL_cItems};
 }
 
@@ -282,6 +359,8 @@ sub getItems {
 # with the 0th element being the item that was added, and the 1st element the
 # index of that item.
 sub onAdd {
+	lock ($_[0]) if (is_shared($_[0]));
+
 	return $_[0]->{OL_onAdd};
 }
 
@@ -296,6 +375,8 @@ sub onAdd {
 #
 # This event is not called when the list is cleared.
 sub onRemove {
+	lock ($_[0]) if (is_shared($_[0]));
+
 	return $_[0]->{OL_onRemove};
 }
 
@@ -305,6 +386,8 @@ sub onRemove {
 #
 # Returns the onClearBegin event callback list.
 sub onClearBegin {
+	lock ($_[0]) if (is_shared($_[0]));
+
 	return $_[0]->{OL_onClearBegin};
 }
 
@@ -314,6 +397,8 @@ sub onClearBegin {
 #
 # Returns the onClearEnd event callback list.
 sub onClearEnd {
+	lock ($_[0]) if (is_shared($_[0]));
+
 	return $_[0]->{OL_onClearEnd};
 }
 
@@ -323,6 +408,9 @@ sub onClearEnd {
 # Check whether the internal invariants are correct.
 sub checkValidity {
 	my ($self) = @_;
+
+	lock ($self) if (is_shared($self));
+
 	my $items = $self->{OL_items};
 	my $cItems = $self->{OL_cItems};
 

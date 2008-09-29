@@ -107,57 +107,19 @@
 package Log;
 
 use strict;
+use threads;
+use threads::shared;
 use Exporter;
-use Time::HiRes;
 use base qw(Exporter);
-
-use Modules 'register';
-use Globals qw(%config $interface %consoleColors %field %cities_lut);
-use Utils::DataStructures qw(binAdd existsInList);
+use Time::HiRes;
+# We don't have Environment yet.
+# use Globals qw(%config $interface %consoleColors %field %cities_lut);
+use Globals qw(%config $interface %consoleColors $log);
 use Utils qw(binAdd existsInList getFormattedDate);
+use Utils::DataStructures qw(binAdd existsInList);
+use Modules 'register';
 
 our @EXPORT_OK = qw(message warning error debug);
-
-
-#################################
-#################################
-# VARIABLES
-#################################
-#################################
-
-
-# The verbosity level for messages. Messages that have a higher verbosity than this will not be printed.
-# Low level = important messages. High level = less important messages.
-# If you set the current verbosity higher, you will see more messages.
-our $warningVerbosity;
-our $errorVerbosity;
-
-# Enable/disable printing certain domains to console.
-# Usage: $messageConsole{$domain} = $enabled
-our %messageConsole;
-our %warningConsole;
-our %errorConsole;
-our %debugConsole;
-
-# Messages can also printed to files. These variables
-# contain filenames of the files to print to.
-# Usage: @{$messageFiles{$domain}} = (list of filenames)
-our %messageFiles;
-our %warningFiles;
-our %errorFiles;
-our %debugFiles;
-
-# Message hooks are stored here
-our @hooks;
-
-# Enable/disable adding a timestamp to log files.
-our $logTimestamp;
-# Enable/disable adding a timestamp to chat logs.
-our $chatTimestamp;
-
-
-# use SelfLoader; 1;
-# __DATA__
 
 
 #################################
@@ -168,13 +130,32 @@ our $chatTimestamp;
 
 
 sub MODINIT {
-	$warningVerbosity = 1;
-	$errorVerbosity = 1;
-	$logTimestamp = 1;
-	$chatTimestamp = 1;
+	use Globals qw($log);
+	$log = shared_clone(Log->new());
+}
+
+sub new {
+	my $class = shift;
+	my $self;
+	$self->{warningVerbosity} = 1;
+	$self->{errorVerbosity} = 1;
+	$self->{logTimestamp} = 1;
+	$self->{chatTimestamp} = 1;
+	$self->{messageConsole} = {};
+	$self->{warningConsole} = {};
+	$self->{errorConsole} = {};
+	$self->{debugConsole} = {};
+	$self->{messageFiles} = {};
+	$self->{warningFiles} = {};
+	$self->{errorFiles} = {};
+	$self->{debugFiles} = {};
+	$self->{hooks} = [];
+	bless $self, $class;
+	return $self;
 }
 
 sub processMsg {
+	my $self = shift;
 	my $type = shift;
 	my $message = shift;
 	my $domain = (shift or "console");
@@ -187,10 +168,11 @@ sub processMsg {
 
 	$currentVerbosity = 1 if ($currentVerbosity eq "");
 
+	# We don't have Environment yet.
 	# Beep on certain domains
-	$interface->beep() if existsInList($config{beepDomains}, $domain) &&
-		!(existsInList($config{beepDomains_notInTown}, $domain) &&
-		  $cities_lut{$field{name}.'.rsw'});
+	# $interface->beep() if existsInList($config{beepDomains}, $domain) &&
+	# 	!(existsInList($config{beepDomains_notInTown}, $domain) &&
+	# 	  $cities_lut{$field{name}.'.rsw'});
 
 	# Add timestamp if domain was specified in config.txt/showTimeDomains
 	if (existsInList($config{showTimeDomains}, $domain)) {
@@ -214,7 +196,9 @@ sub processMsg {
 
 	# Print to console if the current verbosity is high enough
 	if ($level <= $currentVerbosity) {
-		$consoleVar->{$domain} = 1 if (!defined($consoleVar->{$domain}));
+		if (!defined($consoleVar->{$domain})) {
+			$consoleVar->{$domain} = 1;	
+		}
 		if ($consoleVar->{$domain}) {
 			if ($interface) {
 				$message = "[$domain] " . $message if ($config{showDomain});
@@ -241,14 +225,14 @@ sub processMsg {
 	# Print to files
 	foreach my $file (@{$files->{$domain}}) {
 		if (open(F, ">>:utf8", "$Settings::logs_folder/$file")) {
-			print F '['. getFormattedDate(int(time)) .'] ' if ($logTimestamp);
+			print F '['. getFormattedDate(int(time)) .'] ' if ($self->{logTimestamp});
 			print F $message;
 			close(F);
 		}
 	}
 
 	# Call hooks
-	foreach (@hooks) {
+	foreach (@{$self->{hooks}}) {
 		next if (!defined($_));
 		$_->{'func'}->($type, $domain, $level, $currentVerbosity, $message, $_->{'user_data'}, $near, $far);
 	}
@@ -261,7 +245,6 @@ sub processMsg {
 #################################
 #################################
 
-
 ##
 # Log::message(message, [domain], [level])
 # Requires: $message must be encoded in UTF-8.
@@ -270,15 +253,19 @@ sub processMsg {
 # about the parameters.
 sub message {
 	my ($message, $domain, $level) = @_;
+
+	lock ($log);
+	lock (%config);
+
 	$level = 5 if existsInList($config{squelchDomains}, $domain);
 	$level = 0 if existsInList($config{verboseDomains}, $domain);
-	return processMsg("message",	# type
+	return $log->processMsg("message",	# type
 		$message,
 		$domain,
 		$level,
 		$config{'verbose'},			# currentVerbosity
-		\%messageConsole,
-		\%messageFiles);
+		%{$log->{messageConsole}},
+		%{$log->{messageFiles}});
 }
 
 
@@ -288,13 +275,14 @@ sub message {
 # Prints a warning message. It warns the user that a possible non-fatal error has occured or will occur.
 # See the description for Log.pm for more details about the parameters.
 sub warning {
-	return processMsg("warning",
+	lock ($log);
+	return $log->processMsg("warning",
 		$_[0],
 		$_[1],
 		$_[2],
-		$warningVerbosity,
-		\%warningConsole,
-		\%warningFiles);
+		$log->{warningVerbosity},
+		%{$log->{warningConsole}},
+		%{$log->{warningFiles}});
 }
 
 
@@ -316,13 +304,14 @@ sub warning {
 # `l`
 # See the description for Log.pm for more details about the parameters.
 sub error {
-	return processMsg("error",
+	lock ($log);
+	return $log->processMsg("error",
 		$_[0],
 		$_[1],
 		$_[2],
-		$errorVerbosity,
-		\%errorConsole,
-		\%errorFiles);
+		$log->{errorVerbosity},
+		%{$log->{errorConsole}},
+		%{$log->{errorFiles}});
 }
 
 
@@ -333,16 +322,19 @@ sub error {
 # Prints a debugging message. See the description for Log.pm for more details about the parameters.
 sub debug {
 	my $level = $_[2];
+	lock ($log);
+	lock (%config);
+
 	$level = 1 if (!defined $level);
 	$level = 0 if (existsInList($config{debugDomains}, $_[1]));
 	$level = 5 if (existsInList($config{squelchDomains}, $_[1]));
-	return processMsg("debug",
+	return $log->processMsg("debug",
 		$_[0],
 		$_[1],
 		$level,
 		(defined $config{'debug'}) ? $config{'debug'} : 0,
-		\%debugConsole,
-		\%debugFiles);
+		%{$log->{debugConsole}},
+		%{$log->{debugFiles}});
 }
 
 
@@ -390,9 +382,12 @@ sub debug {
 sub addHook {
 	my ($r_func, $user_data) = @_;
 	my %hook;
+	lock ($log);
 	$hook{func} = $r_func;
 	$hook{user_data} = $user_data;
-	return binAdd(\@hooks, \%hook);
+	my $ret = binAdd(@{$log->{hooks}}, \%hook);
+	$log->{hooks} = shared_clone($log->{hooks});
+	return $ret;
 }
 
 ##
@@ -408,7 +403,8 @@ sub addHook {
 # Log::message("Hello World", "MyDomain");	# hook() is NOT called
 sub delHook {
 	my $ID = shift;
-	delete $hooks[$ID];
+	lock ($log);
+	delete $log->{hooks}[$ID];
 }
 
 ##
@@ -427,7 +423,7 @@ sub parseLogToFile {
 	foreach my $domain (@domains) {
 		($domain,$files) = split ('=', $domain);
 		my @filesArray = split (',', $files);
-		$list->{$domain} = [];
+		$list->{$domain} = &share([]);
 		foreach my $file (@filesArray) {
 			push(@{$list->{$domain}}, $file);
 		}
@@ -439,10 +435,12 @@ sub parseLogToFile {
 #
 # This function should be called everytime config.txt is (re)loaded.
 sub initLogFiles {
-	parseLogToFile($config{logToFile_Messages}, \%messageFiles) if $config{logToFile_Messages};
-	parseLogToFile($config{logToFile_Warnings}, \%warningFiles) if $config{logToFile_Warnings};
-	parseLogToFile($config{logToFile_Errors}, \%errorFiles) if $config{logToFile_Errors};
-	parseLogToFile($config{logToFile_Debug}, \%debugFiles) if $config{logToFile_Debug};
+	lock ($log);
+	lock (%config);
+	parseLogToFile($config{logToFile_Messages}, %{$log->{messageFiles}}) if $config{logToFile_Messages};
+	parseLogToFile($config{logToFile_Warnings}, %{$log->{warningFiles}}) if $config{logToFile_Warnings};
+	parseLogToFile($config{logToFile_Errors}, %{$log->{errorFiles}}) if $config{logToFile_Errors};
+	parseLogToFile($config{logToFile_Debug}, %{$log->{debugFiles}}) if $config{logToFile_Debug};
 }
 
 
