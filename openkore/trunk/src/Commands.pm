@@ -2241,7 +2241,7 @@ sub cmdGmunmute {
 	$messageSender->sendToServer($packet);
 }
 
-sub cmdGmremove {
+sub cmdGmwarpto {
 	if (!$net || $net->getState() != Network::IN_GAME) {
 		error TF("You must be logged in the game to use this command (%s)\n", shift);
 		return;
@@ -2257,7 +2257,7 @@ sub cmdGmremove {
 	$messageSender->sendToServer($packet);
 }
 
-sub cmdGmwarpto {
+sub cmdGmrecall {
 	if (!$net || $net->getState() != Network::IN_GAME) {
 		error TF("You must be logged in the game to use this command (%s)\n", shift);
 		return;
@@ -2273,7 +2273,7 @@ sub cmdGmwarpto {
 	$messageSender->sendToServer($packet);
 }
 
-sub cmdGmrecall {
+sub cmdGmremove {
 	if (!$net || $net->getState() != Network::IN_GAME) {
 		error TF("You must be logged in the game to use this command (%s)\n", shift);
 		return;
