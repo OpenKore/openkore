@@ -1148,7 +1148,11 @@ sub cmdConf {
 		if ($arg1 =~ /password/i) {
 			message TF("Config '%s' is not displayed\n", $arg1), "info";
 		} else {
-			message TF("Config '%s' is %s\n", $arg1, $value), "info";
+			if (defined $value) {
+				message TF("Config '%s' is %s\n", $arg1, $value), "info";
+			} else {
+				message TF("Config '%s' is not set\n", $arg1, $value), "info";
+			}
 		}
 
 	} else {
@@ -1475,9 +1479,9 @@ sub cmdEquip {
 	}
 
 	$item = Actor::Item::get(defined $slot ? $arg2 : $arg1, undef, 1);
-
 	if (!$item) {
-		error TF("You don't have %s.\n", $arg1);
+		$args =~ s/^($slot)\s//g if ($slot);
+		error TF("No such non-equipped Inventory Item: %s\n", $args);
 		return;
 	}
 
@@ -1488,8 +1492,7 @@ sub cmdEquip {
 	}
 	if ($slot) {
 		$item->equipInSlot($slot);
-	}
-	else {
+	} else {
 		$item->equip();
 	}
 }
@@ -1608,7 +1611,7 @@ sub cmdExp {
 		for (my $i = 0; $i < @monsters_Killed; $i++) {
 			next if ($monsters_Killed[$i] eq "");
 			message(swrite(
-				"@<< @<<<<< @<<<<<<<<<<<<<<<<<<<<<<<< @<<< ",
+				"@<< @<<<<< @<<<<<<<<<<<<<<<<<<<<<< @<<<<< ",
 				[$i, $monsters_Killed[$i]{nameID}, $monsters_Killed[$i]{name}, $monsters_Killed[$i]{count}]),
 				"list");
 			$total += $monsters_Killed[$i]{count};
@@ -2265,7 +2268,7 @@ sub cmdGmrecall {
 	my (undef, $args) = @_;
 
 	if ($args eq '') {
-		error "Usage: gmremove [<Character Name> | <User Name>]\n";
+		error "Usage: gmrecall [<Character Name> | <User Name>]\n";
 		return;
 	}
 
@@ -2281,7 +2284,7 @@ sub cmdGmremove {
 	my (undef, $args) = @_;
 
 	if ($args eq '') {
-		error "Usage: gmrecall [<Character Name> | <User Name>]\n";
+		error "Usage: gmremove [<Character Name> | <User Name>]\n";
 		return;
 	}
 
@@ -3627,13 +3630,19 @@ sub cmdRepair {
 	if (!$net || $net->getState() != Network::IN_GAME) {
 		error TF("You must be logged in the game to use this command (%s)\n", shift);
 		return;
-	}
-	my (undef, $args) = @_;
-	if ($args =~ /^\d+$/) {
-		$messageSender->sendRepairItem($args);
+	} 
+	my (undef, $listID) = @_;
+	if ($listID =~ /^\d+$/) {
+		if ($repairList{$listID}) {
+			$messageSender->sendRepairItem($repairList{$listID});
+			my $name = itemNameSimple($repairList{$listID}{nameID});
+			message TF("Sending repair item: %s\n", $name);
+		} elsif (!defined $repairList{$listID}) {
+			error TF("Item with index: %s does either not exist in the repair list or the list is empty.\n", $listID);
+		}
 	} else {
 		error T("Syntax Error in function 'repair' (Repair player's items.)\n" .
-			"Usage: repair [item number]\n");
+			"Usage: repair [item index]\n");
 	}
 }
 
@@ -4501,31 +4510,54 @@ sub cmdTop10 {
 }
 
 sub cmdUnequip {
-	if (!$net || $net->getState() != Network::IN_GAME) {
-		error TF("You must be logged in the game to use this command (%s)\n", shift);
-		return;
-	}
+
+	# unequip an item
 	my (undef, $args) = @_;
-	my ($arg1) = $args;
+	my ($arg1,$arg2) = $args =~ /^(\S+)\s*(.*)/;
+	my $slot;
+	my $item;
 
 	if ($arg1 eq "") {
-		error T("You must specify an item to unequip.\n");
+		cmdEquip_list();
 		return;
 	}
 
-	my $item = Match::inventoryItem($arg1);
+	if ($arg1 eq "slots") {
+		# Translation Comment: List of equiped items on each slot
+		message T("Slots:\n") . join("\n", @Actor::Item::slots). "\n", "list";
+		return;
+	}
+
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command (%s)\n", 'eq ' . $args);
+		return;
+	}
+
+	if ($equipSlot_rlut{$arg1}) {
+		$slot = $arg1;
+	} else {
+		$arg1 .= " $arg2" if $arg2;
+	}
+
+	$item = Actor::Item::get(defined $slot ? $arg2 : $arg1, undef, 0);
 
 	if (!$item) {
-		error TF("You don't have %s.\n", $arg1);
+		$args =~ s/^($slot)\s//g if ($slot);
+		$slot = "undefined" unless ($slot);
+		error TF("No such equipped Inventory Item: %s in slot: %s\n", $args, $slot);
 		return;
 	}
 
-	if (!$item->{equipped} && $item->{type} != 10 && $item->{type} != 16) {
-		error TF("Error in function 'unequip' (Unequip Inventory Item)\n" .
-			"Inventory Item %s is not equipped.\n", $arg1);
+	if (!$item->{type_equip} && $item->{type} != 10 && $item->{type} != 16 && $item->{type} != 17) {
+		error TF("Inventory Item %s (%s) can't be unequipped.\n", 
+			$item->{name}, $item->{invIndex});
 		return;
 	}
-	$messageSender->sendUnequip($item->{index});
+	if ($slot) {
+		$item->unequipFromSlot($slot);
+	} else {
+		$item->unequip();
+	}
 }
 
 sub cmdUseItemOnMonster {
