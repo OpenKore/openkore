@@ -138,10 +138,10 @@ sub process_0065 {
 		$client->{session} = $session;
 		$session->{time} = time;
 		$client->send($accountID);
-		if ($config{XKore_altCharServer} == 0){
-		  $client->send(pack('C2 v', 0x6B, 0x00, length($output) + 4) . $output);
-		}else{
+		if ($config{XKore_altCharServer} == 1){
           $client->send(pack('C2 v', 0x72, 0x00, length($output) + 4) . $output);
+		}else{
+		  $client->send(pack('C2 v', 0x6B, 0x00, length($output) + 4) . $output);
         }
 	}
 
