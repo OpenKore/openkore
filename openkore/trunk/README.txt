@@ -12,10 +12,10 @@
 - Fixed upper, lower, mid headgear from other players not showing up correctly.
 - Fixed Blacksmith repair skill causing disconnection.
 - Added repairAuto_list config option, and restructured repair.
-
+- XKore_altCharServer for character servers that sends 0072 instead of 006B
 
 =========================
-### OpenKore 2.0.6.1 (to be released)
+### OpenKore 2.0.6.1
 =========================
 - Dist file wasn't written properly therefore, 2.0.6 doesn't have servertypes 8_1-8_4
   This version is suppose to cover it up.
