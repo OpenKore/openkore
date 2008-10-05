@@ -588,7 +588,7 @@ master_version 0
 version 20
 serverType 0
 serverEncoding Western
-
+recvpackets recvpackets-anthemro.txt
 
 ## http://www.atlantis-ro.net/
 [AtlantisRO Private Server]
