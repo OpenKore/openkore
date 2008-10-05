@@ -8,6 +8,7 @@ use Modules 'register';
 use Base::RagnarokServer;
 use base qw(Base::RagnarokServer);
 use Misc;
+use Globals qw(%config);
 
 use constant SESSION_TIMEOUT => 120;
 use constant DUMMY_CHARACTER => {
@@ -137,7 +138,11 @@ sub process_0065 {
 		$client->{session} = $session;
 		$session->{time} = time;
 		$client->send($accountID);
-		$client->send(pack('C2 v', 0x6B, 0x00, length($output) + 4) . $output);
+		if ($config{XKore_altCharServer} == 0){
+		  $client->send(pack('C2 v', 0x6B, 0x00, length($output) + 4) . $output);
+		}else{
+          $client->send(pack('C2 v', 0x72, 0x00, length($output) + 4) . $output);
+        }
 	}
 
 }
