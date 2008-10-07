@@ -6,8 +6,8 @@ use strict;
 require Exporter;
 our @ISA = qw(Exporter);
 our @EXPORT_OK = qw(ai_isIdle q4rx between cmpr match getArgs refreshGlobal getnpcID getPlayerID
-	getVenderID getItemIDs getInventoryIDs getStorageIDs getSoldOut getInventoryAmount getCartAmount
-	getShopAmount getStorageAmount getRandom getRandomRange getConfig getWord callMacro);
+	getVenderID getItemIDs getItemPrice getInventoryIDs getStorageIDs getSoldOut getInventoryAmount
+	getCartAmount getShopAmount getStorageAmount getRandom getRandomRange getConfig getWord callMacro);
 
 use Utils;
 use Globals;
@@ -157,6 +157,8 @@ sub refreshGlobal {
 	$varStack{".joblvl"} = $char->{lv_job};
 	$varStack{".spirits"} = ($char->{spirits} or 0);
 	$varStack{".zeny"} = $char->{zenny};
+	$varStack{".weight"} = $char->{weight};
+	$varStack{".maxweight"} = $char->{weight_max};
 	
 	my @statuses;
 	if ($char->{muted}) {push @statuses, "muted"}
@@ -216,6 +218,18 @@ sub getItemIDs {
 	}
 	unless (@ids) {push @ids, -1}
 	return @ids
+}
+
+# get item array price
+# works with @venderprice
+sub getItemPrice {
+	my ($item, $pool) = (lc($_[0]), $_[1]);
+	my $price = 0;
+	for (my $id = 0; $id < @{$pool}; $id++) {
+		next unless $$pool[$id];
+		if (lc($$pool[$id]{name}) eq $item) {$price += $$pool[$id]{price}}
+	}
+	return $price
 }
 
 # get storage array index

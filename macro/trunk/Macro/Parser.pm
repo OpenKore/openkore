@@ -12,7 +12,7 @@ use Globals;
 use List::Util qw(max min sum);
 use Log qw(message warning error);
 use Macro::Data;
-use Macro::Utilities qw(refreshGlobal getnpcID getItemIDs getStorageIDs getInventoryIDs
+use Macro::Utilities qw(refreshGlobal getnpcID getItemIDs getItemPrice getStorageIDs getInventoryIDs
 	getPlayerID getVenderID getRandom getRandomRange getInventoryAmount getCartAmount
 	getShopAmount getStorageAmount getConfig getWord q4rx);
 
@@ -190,6 +190,8 @@ sub parseCmd {
 		elsif ($kw eq 'Storage')    {$ret = join ',', getStorageIDs($arg)}
 		elsif ($kw eq 'player')     {$ret = getPlayerID($arg)}
 		elsif ($kw eq 'vender')     {$ret = getVenderID($arg)}
+		elsif ($kw eq 'venderitem') {($ret) = getItemIDs($arg, \@::venderItemList)}
+		elsif ($kw eq 'venderprice'){($ret) = getItemPrice($arg, \@::venderItemList)}
 		elsif ($kw eq 'random')     {$ret = getRandom($arg)}
 		elsif ($kw eq 'rand')       {$ret = getRandomRange($arg)}
 		elsif ($kw eq 'invamount')  {$ret = getInventoryAmount($arg)}
