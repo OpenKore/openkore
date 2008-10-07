@@ -73,6 +73,8 @@ our $macroKeywords =
 	"storage"      . "|" .
 	"player"       . "|" .
 	"vender"       . "|" .
+	"venderitem"   . "|" .
+	"venderprice"  . "|" .
 	"random"       . "|" .
 	"rand"         . "|" .
 	"[Ii]nvamount" . "|" .
