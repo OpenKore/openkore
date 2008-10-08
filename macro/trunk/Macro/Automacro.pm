@@ -343,6 +343,12 @@ sub releaseAM {
 
 # locks an automacro ##################
 sub lockAM {
+	if ($_[0] eq 'all') {
+		foreach (keys %automacro) {
+			$automacro{$_}->{disabled} = 1
+		}
+		return 1
+	}
 	if (defined $automacro{$_[0]}) {
 		$automacro{$_[0]}->{disabled} = 1;
 		return 1
