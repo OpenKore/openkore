@@ -439,8 +439,9 @@ sub main {
 			#    $masterPos, if we have a master.
 			if (
 			    (($config{attackCanSnipe} && checkLineSnipable($spot, $realMonsterPos))
-				 || checkLineWalkable($spot, $realMonsterPos))
+				&& checkLineWalkable($spot, $realMonsterPos))
 				&& $field->isWalkable($spot->{x}, $spot->{y})
+				&& ($realMyPos->{x} != $spot->{x} && $realMyPos->{y} != $spot->{y})
 				&& (!$master || round(distance($spot, $masterPos)) <= $config{followDistanceMax})
 			) {
 				my $dist = distance($realMyPos, $spot);
@@ -455,7 +456,7 @@ sub main {
 		my $msg = "No LOS from ($realMyPos->{x}, $realMyPos->{y}) to target ($realMonsterPos->{x}, $realMonsterPos->{y})";
 		if ($best_spot) {
 			message TF("%s; moving to (%s, %s)\n", $msg, $best_spot->{x}, $best_spot->{y});
-			if ($config{attackChangeTarget} == 2) {
+			if ($config{attackChangeTarget} == 1) {
 				# Restart attack from processAutoAttack
 				AI::dequeue;
 				ai_route($field{name}, $best_spot->{x}, $best_spot->{y}, LOSSubRoute => 1);
@@ -464,7 +465,10 @@ sub main {
 			}
 		} else {
 			warning TF("%s; no acceptable place to stand\n", $msg);
+			$target->{attack_failedLOS} = time;
 			AI::dequeue;
+			AI::dequeue;
+			AI::dequeue if (AI::action eq "attack");
 		}
 
 	} elsif ($config{'runFromTarget'} && ($realMonsterDist < $config{'runFromTarget_dist'} || $hitYou)) {

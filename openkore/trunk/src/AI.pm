@@ -283,6 +283,7 @@ sub ai_getAggressives {
 	foreach my $monster (@{$monstersList->getItems()}) {
 		my $control = Misc::mon_control($monster->name,$monster->{nameID}) if $type || !$wantArray;
 		my $ID = $monster->{ID};
+		next if (!timeOut($monster->{attack_failedLOS}, 6));
 
 		if (($type && ($control->{attack_auto} == 2)) ||
 			(($monster->{dmgToYou} || $monster->{missedYou}) && Misc::checkMonsterCleanness($ID)) ||
