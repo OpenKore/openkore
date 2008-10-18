@@ -971,7 +971,7 @@ sub processDead {
 
 		} else {
 			# Force storage after death
-			if ($config{storageAuto} && !$config{storageAuto_notAfterDeath}) {
+			if ($config{storageAuto} && !$config{storageAuto_notAfterDeath} && ai_storageAutoCheck()) {
 				message T("Auto-storaging due to death\n");
 				AI::queue("storageAuto");
 			}
@@ -1158,7 +1158,7 @@ sub processAutoStorage {
 
 		# Only autostorage when we're on an attack route, or not moving
 		if ((!defined($routeIndex) || $attackOnRoute > 1) && $needitem ne "" &&
-			$char->inventory->size() > 0) {
+			$char->inventory->size() > 0 && ai_storageAutoCheck()) {
 	 		message TF("Auto-storaging due to insufficient %s\n", $needitem);
 			AI::queue("storageAuto");
 		}
