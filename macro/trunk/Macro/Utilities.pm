@@ -7,7 +7,8 @@ require Exporter;
 our @ISA = qw(Exporter);
 our @EXPORT_OK = qw(ai_isIdle q4rx between cmpr match getArgs refreshGlobal getnpcID getPlayerID
 	getVenderID getItemIDs getItemPrice getInventoryIDs getStorageIDs getSoldOut getInventoryAmount
-	getCartAmount getShopAmount getStorageAmount getRandom getRandomRange getConfig getWord callMacro);
+	getCartAmount getShopAmount getStorageAmount getVendAmount getRandom getRandomRange getConfig
+	getWord callMacro getArgFromList getListLenght);
 
 use Utils;
 use Globals;
@@ -220,19 +221,18 @@ sub getItemIDs {
 	return @ids
 }
 
-# get item array price
+# get item price from its index
 # works with @venderprice
+# returns -1 if no shop is being visited
 sub getItemPrice {
-	my ($item, $pool) = (lc($_[0]), $_[1]);
-	my $price = 0;
-	for (my $id = 0; $id < @{$pool}; $id++) {
-		next unless $$pool[$id];
-		if (lc($$pool[$id]{name}) eq $item) {$price += $$pool[$id]{price}}
-	}
+	my ($itemIndex, $pool) = ($_[0], $_[1]);
+	my $price = -1;
+	if ($$pool[$itemIndex]) {$price = $$pool[$itemIndex]{price}}
 	return $price
 }
 
 # get storage array index
+# returns -1 if no matching items in storage
 sub getStorageIDs {
 	my $item = lc($_[0]);
 	my @ids;
@@ -277,7 +277,7 @@ sub getCartAmount {
 	return $amount
 }
 
-# get amount of an item in shop
+# get amount of an item in your shop
 sub getShopAmount {
 	my $arg = lc($_[0]);
 	my $amount = 0;
@@ -301,6 +301,15 @@ sub getStorageAmount {
 	return $amount
 }
 
+# get amount of items for the specifical index in another venders shop
+# returns -1 if no shop is being visited
+sub getVendAmount {
+	my ($itemIndex, $pool) = ($_[0], $_[1]);
+	my $amount = -1;
+	if ($$pool[$itemIndex]) {$amount = $$pool[$itemIndex]{amount}}
+	return $amount
+}
+
 # returns random item from argument list
 sub getRandom {
 	my $arg = $_[0];
@@ -315,6 +324,30 @@ sub getRandom {
 		return
 	}
 	return $items[rand $id-1]
+}
+
+# returns given argument from a comma separated list
+# returns -1 if no such listID exists or when the list is empty or wrong
+sub getArgFromList {
+	my ($listID, $list) = split(/, \s*/, $_[0]);
+	my @items = split(/,\s*/, $list);
+	unless (@items) {
+		warning "[macro] wrong syntax in \@listItem\n", "macro";
+		return -1
+	}
+	if ($items[$listID]) {
+	return $items[$listID]
+		} else {
+		warning "[macro] the $listID number item does not exist in the list\n", "macro";
+		return -1
+	}
+}
+
+# returns the lenght of a comma separated list
+sub getlistLenght {
+	my $list = $_[0];
+	my @items = split(/,\s*/, $list);
+	return scalar(@items)
 }
 
 # returns random number within the given range  ###########

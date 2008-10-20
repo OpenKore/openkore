@@ -75,6 +75,7 @@ our $macroKeywords =
 	"vender"       . "|" .
 	"venderitem"   . "|" .
 	"venderprice"  . "|" .
+	"venderamount" . "|" .
 	"random"       . "|" .
 	"rand"         . "|" .
 	"[Ii]nvamount" . "|" .
@@ -83,7 +84,9 @@ our $macroKeywords =
 	"[Ss]toramount". "|" .
 	"config"       . "|" .
 	"eval"         . "|" .
-	"arg"
+	"arg"          . "|" .
+	"listitem"     . "|" .
+	"listlenght"
 ;
 
 1;
