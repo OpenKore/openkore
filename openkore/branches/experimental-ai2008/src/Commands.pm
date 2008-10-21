@@ -25,6 +25,7 @@ use threads::shared;
 no warnings qw(redefine uninitialized);
 use FindBin qw($RealBin);
 use Time::HiRes qw(time);
+use Scalar::Util qw(reftype refaddr blessed); 
 
 use Modules 'register';
 use Globals qw(%config $interface);
@@ -39,8 +40,8 @@ sub new {
 	my $dir = "$RealBin/src/Commands";
 	my $self  = {};
 	bless $self, $class;
-	$self->{handlers}			= [];
-	$self->{cmdQueue}			= 0;
+	$self->{handlers}		= [];
+	$self->{cmdQueue}		= 0;
 	$self->{cmdQueueStartTime}	= 0;
 	$self->{cmdQueueTime}		= 0;
 	$self->{cmdQueueList}		= [];
@@ -48,7 +49,6 @@ sub new {
 	# Read Directory with Command's.
 	return if ( !opendir( DIR, $dir ) );
 	my @items;
-	my @interpretters;
 	@items = readdir DIR;
 	closedir DIR;
 
@@ -68,7 +68,7 @@ sub new {
 				next;
 			}
 			# call "$module::new($self). So that module can use our functions
-			my $new_stage = $constructor->( $module, $self ); 
+			$constructor->( $module, $self ); 
 		}
 	}
 
@@ -146,7 +146,13 @@ sub parse {
 			push( @{$self->{cmdQueueList}}, $command );
 		} elsif ($handler) {
 			my %params;
-			$handler->{callback}->call( $switch, $args );
+			if ( $handler->{self}) {
+				# New style, to overide nesty global vars
+				$handler->{callback}->call( $handler->{self}, $switch, $args );
+			} else {
+				# Old style
+				$handler->{callback}->call( $switch, $args );
+			}
 			# undef the handler here, this is needed to make sure the other commands in the chain (if any) are run properly.
 			undef $handler;
 		} else {
@@ -163,7 +169,7 @@ sub parse {
 }
 
 ##
-# Commands::register([name, description, callback]...)
+# Commands::register([name, description, callback, selfpointer]...)
 # Returns: an ID for use with Commands::unregister()
 #
 # Register new commands.
@@ -181,12 +187,19 @@ sub register {
 	lock ($self) if (is_shared($self));
 
 	foreach my $cmd (@_) {
+		# Check if called used unknown params.
+		next if (reftype($cmd) ne 'ARRAY');
+
 		my $name = $cmd->[0];
 		my %item = (
-					 desc     => $cmd->[1],
-					 callback => Utils::CodeRef->new( $cmd->[2] )
+					desc     => $cmd->[1],
+					callback => Utils::CodeRef->new( $cmd->[2] ),
+					self     => $cmd->[3]
 		);
-		$self->{handlers}[$name] = \%item;
+		my $item_obj = \%item;
+		$item_obj = shared_clone($item_obj) if (is_shared($self));
+		
+		$self->{handlers}[$name] = $item_obj;
 		push @result, $name;
 	}
 	return \@result;
