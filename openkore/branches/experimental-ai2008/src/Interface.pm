@@ -29,11 +29,12 @@ use threads qw(yield);
 use Time::HiRes qw(usleep);
 # use encoding 'utf8'; # Makes unknown Threading Bugs.
 
-use Modules 'register';
-use Globals qw(%config $quit);
+use Globals qw(%config $command $quit);
+use Commands;
 use Log qw(message warning error debug);
 use Translation qw(T TF);
 use Utils::Exceptions;
+use Modules 'register';
 
 
 ##
@@ -79,6 +80,7 @@ sub mainLoop {
 			if (defined($input = $self->getInput(0))) {
 				$self->parseInput($input);
 			}
+			$command->check_timed_out_cmd();
 		}
 		yield();
 	}
@@ -102,14 +104,14 @@ sub parseInput {
 			my ($type, $domain, $level, $globalVerbosity, $message, $user_data) = @_;
 			$msg .= $message if ($type ne 'debug' && $level <= $globalVerbosity);
 		};
-		$hook = Log::addHook($hookOutput);
+		# $hook = Log::addHook($hookOutput);
 		# This cause Console to Write Twice. Write to Console, if Interface is not Console.
 		# $self->writeOutput("console", "$input\n");
 	# }
 	# $XKore_dontRedirect = 1;
 
 	# We don't have Command Interface yet.
-	# Commands::run($input);
+	$command->parse($input);
 
 	# if ($printType) {
 		Log::delHook($hook);
