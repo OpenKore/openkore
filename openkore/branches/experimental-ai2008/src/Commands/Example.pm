@@ -23,8 +23,10 @@ sub new {
 	bless $self, $class;
 
 	$cmd->register(["example", "Just an Example", \&cmdExample, $self]);
-
 	message T("Command \"example\" registered!!!\n"), "cmd";
+
+	$cmd->register(["example2", "Just an Example", \&cmdExample2, $self]);
+	message T("Command \"example2\" registered!!!\n"), "cmd";
 
 	# Try to register using erronus params
 	$cmd->register("example", "Just an Example", \&cmdExample, $self);
@@ -43,6 +45,15 @@ sub cmdExample {
 	my %args = @_;
 
 	message T("Example command called!!!\n"), "cmd";
+
+	return 1;
+}
+
+sub cmdExample2 {
+	my $self = shift;
+	my %args = @_;
+
+	message T("Example2 command called!!!\n"), "cmd";
 
 	return 1;
 }

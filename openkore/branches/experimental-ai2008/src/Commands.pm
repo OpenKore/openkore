@@ -40,7 +40,7 @@ sub new {
 	my $dir = "$RealBin/src/Commands";
 	my $self  = {};
 	bless $self, $class;
-	$self->{handlers}		= [];
+	$self->{handlers}		= {};
 	$self->{cmdQueue}		= 0;
 	$self->{cmdQueueStartTime}	= 0;
 	$self->{cmdQueueTime}		= 0;
@@ -130,7 +130,7 @@ sub parse {
 	# Loop through all of the commands...
 	foreach my $command (@commands) {
 		my ( $switch, $args ) = split( / +/, $command, 2 );
-		my $handler = $self->{handlers}[$switch] if ( $self->{handlers}[$switch] );
+		my $handler = $self->{handlers}{$switch} if ( $self->{handlers}{$switch} );
 
 		if ( ( $switch eq 'pause' ) && ( !$self->{cmdQueue} ) ) {
 			$self->{cmdQueue}     = 1;
@@ -199,7 +199,7 @@ sub register {
 		my $item_obj = \%item;
 		$item_obj = shared_clone($item_obj) if (is_shared($self));
 		
-		$self->{handlers}[$name] = $item_obj;
+		$self->{handlers}{$name} = $item_obj;
 		push @result, $name;
 	}
 	return \@result;
@@ -222,7 +222,7 @@ sub unregister {
 	lock ($self) if (is_shared($self));
 
 	foreach my $name ( @{$ID} ) {
-		delete $self->{handlers}[$name];
+		delete $self->{handlers}{$name};
 	}
 }
 
