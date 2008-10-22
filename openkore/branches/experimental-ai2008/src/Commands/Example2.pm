@@ -1,4 +1,4 @@
-package Commands::Example;
+package Commands::Example2;
 
 use strict;
 use threads;
@@ -22,15 +22,9 @@ sub new {
 	my $self = {};
 	bless $self, $class;
 
-	my $ID = $cmd->register(["example", "Just an Example", \&cmdExample, $self]);
-	message T("Command \"example\" registered!!!\n"), "cmd";
+	$cmd->register(["example2", "Just an Example", \&cmdExample2, $self]);
 
-	# Try to register using erronus params
-	$cmd->register("example", "Just an Example", \&cmdExample, $self);
-	# If we are here... then all went good.
-	
-	$cmd->unregister($ID);
-	message T("Command \"example\" un-registered!!!\n"), "cmd";
+	message T("Command \"example2\" registered!!!\n"), "cmd";
 	
 	return $self;
 }
@@ -40,11 +34,11 @@ sub DESTROY {
 	$self->SUPER::DESTROY();
 }
 
-sub cmdExample {
+sub cmdExample2 {
 	my $self = shift;
 	my %args = @_;
 
-	message T("Example command called!!!\n"), "cmd";
+	message T("Example2 command called!!!\n"), "cmd";
 
 	return 1;
 }
