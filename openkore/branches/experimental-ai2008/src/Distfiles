@@ -1,10 +1,11 @@
+AI.pm
+Commands.pm
 ErrorHandler.pm
 FastUtils.pm
 Field.pm
 FileParsers.pm
 Globals.pm
 I18N.pm
-Interface
 Interface.pm
 InventoryList.pm
 KoreStage.pm
