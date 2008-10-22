@@ -1612,7 +1612,7 @@ sub processAutoBuy {
 			my $item = $char->inventory->getByName($config{"buyAuto_$i"});
 			$args->{invIndex} = $item ? $item->{invIndex} : undef;
 			if ($config{"buyAuto_$i"."_maxAmount"} ne "" && (!$item || $item->{amount} < $config{"buyAuto_$i"."_maxAmount"})) {
-				next if ($config{"buyAuto_$i"."_price"} && ($char->{zenny} < $config{"buyAuto_$i"."_price"}));
+				next if (($config{"buyAuto_$i"."_price"} && ($char->{zenny} < $config{"buyAuto_$i"."_price"})) || ($config{"buyAuto_$i"."_zeny"} && !inRange($char->{zenny}, $config{"buyAuto_$i"."_zeny"})));
 
 				# get NPC info, use standpoint if provided
 				$args->{npc} = {};
