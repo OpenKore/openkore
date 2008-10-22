@@ -1612,7 +1612,7 @@ sub processAutoBuy {
 			my $item = $char->inventory->getByName($config{"buyAuto_$i"});
 			$args->{invIndex} = $item ? $item->{invIndex} : undef;
 			if ($config{"buyAuto_$i"."_maxAmount"} ne "" && (!$item || $item->{amount} < $config{"buyAuto_$i"."_maxAmount"})) {
-				next if ($config{"buyAuto_$i"."_zeny"} && !inRange($char->{zenny}, $config{"buyAuto_$i"."_zeny"}));
+				next if ($config{"buyAuto_$i"."_price"} && ($char->{zenny} < $config{"buyAuto_$i"."_price"}));
 
 				# get NPC info, use standpoint if provided
 				$args->{npc} = {};
@@ -1713,12 +1713,27 @@ sub processAutoBuy {
 				ai_talkNPC($realpos->{pos}{x}, $realpos->{pos}{y}, 'b e');
 				return;
 			}
+			my $maxbuy;
+			if ($config{"buyAuto_$args->{index}"."_price"}) {
+				$maxbuy = int($char->{zenny}/$config{"buyAuto_$args->{index}"."_price"});
+			} else {$maxbuy = 1000000;}
+
 			if ($args->{invIndex} ne "") {
 				# this item is in the inventory already, get what we need
-				$messageSender->sendBuy($args->{itemID}, $config{"buyAuto_$args->{index}"."_maxAmount"} - $char->inventory->get($args->{invIndex})->{amount});
+				my $needbuy = $config{"buyAuto_$args->{index}"."_maxAmount"} - $char->inventory->get($args->{invIndex})->{amount};
+				if ($maxbuy+1 > $needbuy) {
+					$messageSender->sendBuy($args->{itemID}, $needbuy);
+				} else {
+					$messageSender->sendBuy($args->{itemID}, $maxbuy);
+				}
 			} else {
 				# get the full amount
-				$messageSender->sendBuy($args->{itemID}, $config{"buyAuto_$args->{index}"."_maxAmount"});
+				my $needbuy = $config{"buyAuto_$args->{index}"."_maxAmount"};
+				if ($maxbuy+1 > $needbuy) {
+					$messageSender->sendBuy($args->{itemID}, $needbuy);
+				} else {
+					$messageSender->sendBuy($args->{itemID}, $maxbuy);
+				}
 			}
 			$timeout{ai_buyAuto_wait_buy}{time} = time;
 		}
