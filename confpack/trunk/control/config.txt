@@ -567,6 +567,7 @@ buyAuto {
 	npc
 	standpoint
 	distance 5
+	price
 	minAmount 2
 	maxAmount 3
 }
