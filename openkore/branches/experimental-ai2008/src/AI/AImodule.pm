@@ -52,7 +52,7 @@ use constant EXCLUSIVE    => 0;
 #                   If not specified, the class's name (excluding the "AI::AIModule::" prefix) will be used as name.
 # - <tt>priority</tt> - A priority for this module. $AIModule->getPriority() will return this value.
 #                       The default priority is Task::NORMAL_PRIORITY
-# - <tt>mutex</tt> - A marker, that show whatever module should be blocked before it's task get finished.
+# - <tt>exclusive</tt> - A marker, that show whatever module should be blocked before it's task get finished.
 # - <tt>mutex</tt> - A reference to an array of mutexes. $AIModule->getMutexes() will return this value.
 #                      The default is an empty mutex list.
 # `l`
@@ -134,8 +134,8 @@ sub getMutexes {
 ##
 # int $AImodule->getExclusive()
 #
-# Get the 'exclusive' marker for this AIModule. This priority is guaranteed to never change during a AIModule's
-# life time.
+# Get the 'exclusive' marker for this AIModule.
+# This 'exclusive' marker is guaranteed to never change during a AIModule's life time.
 sub getExclusive {
 	return $_[0]->{T_exclusive};
 }
@@ -174,3 +174,4 @@ sub get_task {
 
 }
 
+1;
