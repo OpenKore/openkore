@@ -1,0 +1,6 @@
+KNOWN BUGS:
+-----------
+-nesting command (by Mucilon):
+This nesting command wasn't work when I try to use it at a Brazilian server, 
+so I had to change it to use, but what I made works just to nesting commands and isn't the one posted in here.
+I can post it further at discussion forum to try make it general, need advanced regexp knowledge!

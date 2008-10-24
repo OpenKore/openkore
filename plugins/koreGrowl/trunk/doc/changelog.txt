@@ -1,0 +1,1 @@
+This plugin now requires SVN revision 6464 or higher. So far there's no support for timeouts in Mac::Growl (that I know of), but for future ease the timeout setting is handled, anyway.

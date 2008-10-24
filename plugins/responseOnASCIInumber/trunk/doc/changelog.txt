@@ -1,0 +1,28 @@
+v.2.2.1 by Windows98SE (08/06/2008)
+- change name&prefix from responseOnASCIInumber to ASCIInumberKiller (b'cus my anti-bot set is name "ACkiller, ActorKiller" ^^")
+- update note (you must read my note in plugin befor use "ASCIInumberKiller")
+- can set background color in config block by regexp or hexcode (can use 'regexp|color1|color2|color3' for fix some color)
+
+v.2.2 by Mucilon (04/06/2008)
+- Add options to the config.txt file
+- Add colorCode, to support more than 1 server color pattern
+
+v.2.1 
+- Fix "Error in function 'talk num' (Respond to NPC) You must specify a number." - fix
+- *resp multi line [ex. img]
+
+v.1.3
+- Fix Regex
+- add %digit
+
+v.1.2
+- Fix Regex
+
+v1.1
+- add note03
+- support 0-9,A-Z
+- add sub onDebug
+- fix some code
+
+v1.0
+- support only digit 0-9 : (if you read my note or the mini tutorial, you can add it by yourself ^^)
