@@ -1,4 +1,0 @@
-<h1>PLEASE LOGIN!</h1>
-And here goes some funky login mechanism ...<br>
-<a href='{skin}/'>Login</a>
-Note: later we would be able to set a variable called $skin$ that would automatically take the user to the skin he chose in config.txt

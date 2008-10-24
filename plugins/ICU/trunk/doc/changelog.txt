@@ -1,0 +1,7 @@
+0.2.2 changes:
+use new hook to detected forced teleports better. Smile
+
+0.2 changes:
+Added DetectSelfSkill
+Added Ground skill detection (NOT TESTED i dont have a char for this Sad )
+Added timeouts on commands

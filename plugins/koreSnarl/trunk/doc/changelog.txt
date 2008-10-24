@@ -1,0 +1,16 @@
+Added the notify console command. Now you can trigger notifications from macros!
+
+One bug to fix: if another player near you gains a level or job level, 
+a notification is displayed for your character.
+
+You can now set a timeout (notify in timeouts.txt or koreNotify_timeout in config.txt) to 
+set how long notifications should be displayed. The default is 5 seconds. 
+This timeout will be global for koreSnarl, koreGrowl (OS X), and koreMumbles (Linux). 
+I've also changed config variable names to koreNotify_* to make them global for all notification plugins.
+
+This plugin now requires SVN revision 6464 or higher.
+
+Turns out Win32::Snarl is on CPAN, so go there to get a newer version. 
+You still need to change "use Win32::GUI;" to "use Win32::GUI();" in that version, too. 
+You must use this version to use the updated plugin. Also, koreSnarl now lets you define a list of items 
+to alert on when found. And I added an on/off toggle.

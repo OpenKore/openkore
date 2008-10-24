@@ -1,0 +1,11 @@
+6/25/2008 (v.2.0.0)
+- Fix compatibility bug for SVN version.
+- Added attribute: delay
+
+5/16/2006 (v.1.1.0)
+- Fix compatibility bug in Openkore v.1.6.x
+
+4/26/2006 (v.1.1.0)
+- Added attribute useColors
+- Added keyword @resp
+- Implemented nested keywords
