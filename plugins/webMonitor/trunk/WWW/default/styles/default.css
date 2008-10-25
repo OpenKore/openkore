@@ -1,0 +1,36 @@
+body {
+ background-color: #29607b;
+}
+
+table.menu {
+ border-collapse: collapse;
+ width: 140px;
+ border: 2px solid #cecece;
+ color: #035d77;
+ font-weight: bold;
+ font-size: 14pt;
+ text-align: center;
+}
+td.odd {
+ background-image: url(../images/menu_bevel.jpg);
+ background-color: #a5b3b9;
+}
+
+td.even {
+ background-color: #7c97a5;
+}
+
+td {
+ height: 35px;
+}
+
+a {
+ text-decoration: none;
+ color: 035d77;
+}
+
+a:hover {
+ color: #006FBC;
+ position: relative;
+ text-decoration: underline;
+}

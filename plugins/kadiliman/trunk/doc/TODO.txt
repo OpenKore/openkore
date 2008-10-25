@@ -1,0 +1,8 @@
+KNOWN BUGS:
+-----------
+About the plugin there is one little issue, 
+the sub check for dupes is disable, 
+so the file keeps a lots of duplicate lines... 
+as I didn't analyze the pm file, 
+I don't know if it uses the duplicate lines to calculate
+the rate of sentences to answer or if it doesn't matter...

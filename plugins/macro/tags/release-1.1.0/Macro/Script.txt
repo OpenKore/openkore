@@ -1,0 +1,83 @@
+macro script syntax (bnf):
+
+
+<letter>  ::= 'a' | 'b' | 'c' | .. | 'z' |
+              'A' | 'B' | 'C' | .. | 'Z'
+<digit>   ::= '0' | '1' | '2' | .. | '9'
+<blank>   ::= ' '
+<undersc> ::= '_'
+<special> ::= '-' | <undersc> | '.'
+<sign>    ::= '+' | '-'
+<cond>    ::= '==' | '!=' | '<' | '>' | '<=' | '>='
+<newline> ::= '\n' [<newline>] | '\r\n' [<newline>]
+
+<u_int>   ::= <digit> [<u_int>]
+<int>     ::= <sign> <u_int>
+
+<ident>   ::= <letter> [<ident> | <digit> | <undersc>]
+<s_ident> ::= '.' <ident>
+
+<s_word>  ::= <letter> [<s_word>] | <digit> [<s_word>]
+<word>    ::= <letter> [<word>] | <digit> [<word>] | <special> [<word>]
+
+<string>  ::= <word> [<blank> [<string>]]
+
+<math>    ::= '+' | '-' | '*' | '/'
+
+<expression> ::= <int> <math> <int> | <int> <math> <expression>
+
+<automacro name> ::= <word>
+
+<macro name> ::= <word>
+
+<keyword> ::= '@npc' | '@cart' | '@inventory' | '@store' | '@storage' |
+              '@player' | '@vender' | '@var' | '@random' | '@invamount' |
+              '@cartamount' | '@shopamount' | '@storamount' | '@eval' |
+              '@arg'
+
+<argument> ::= '(' <string> ')' | '(' <expression> ')'
+
+<parseable> ::= <string> | <keyword> <argument>
+
+<macro command> ::= 'log' <parseable> |
+                    'release' [<automacro name> | 'all' ] |
+                    'pause' [<u_int>] |
+                    'call' <macro name> [<u_int> | <parseable>] |
+                    'stop'
+
+<openkore command> ::= (see openkore manual for console commands)
+
+<command> ::= <macro command> | 'do' <openkore command> <parseable>
+
+<variable> ::= '$' <ident>
+
+<s_variable> ::= '$' <s_ident>
+
+<d_variable> ::= '${' [<variable> | <s_variable>] '}'
+
+<label> ::= <ident>
+
+<script> ::= <open block> <block> <close block>
+
+<block> ::= <statement> <newline> [<block>] | <command> <newline> [<block>]
+
+<open block> ::= 'script' <word'> '{' <newline>
+<close block> ::= '}' <newline>
+
+<statement> ::= <varassign> | <whilestat> | <ifstat> | <gotostat> | <labeldecl>
+
+<varassign> ::= <variable> '=' <parseable> | <variable> '++' | <variable> '--'
+
+<dvarassign> ::= <dvariable> '=' <parseable>
+
+<labeldecl> ::= ':' <label>
+
+<gotostat> ::= 'goto' <label>
+
+<ifstat> ::= 'if' '(' (<variable>|<parseable>) <cond> (<variable>|<parseable>) ')'
+             (<gotostat> | 'stop')
+
+<whilestat> ::= 'while' '(' (<variable>|<parseable>) <cond> (<variable>|<parseable>) ')'
+                'as' <label> <newline>
+                <block>
+                'end' <label>
