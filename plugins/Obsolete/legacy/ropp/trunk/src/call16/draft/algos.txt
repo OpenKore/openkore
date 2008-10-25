@@ -1,0 +1,12 @@
+Finished Looking for Hash algos.
+Here is a result:
+func0-1: "MCG Chiper"
+func2: "RIPEMD-128"
+func3: "SNEFRU"
+func4: "TIGER"
+func5-6: "SAFER"
+func7-8: "CAST-128"
+func9-A: "TURTLE"
+funcB-C: "FEAL8"
+funcD-E: "MYSTY-1"
+funcF: "Seal"

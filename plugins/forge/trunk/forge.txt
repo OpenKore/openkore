@@ -1,0 +1,343 @@
+############# BlackSmiths ###########
+forge Iron {
+	skill Iron Tempering
+	req Mini Furnace
+	item Iron Ore {
+		amount 1
+	}
+}
+forge Steel {
+	skill Steel Tempering
+	req Mini Furnace
+	item Iron {
+		amount 5
+	}
+	item Coal {
+		amount 1
+	}
+}
+forge Star Crumb {
+	skill Enchantedstone Craft
+	req Mini Furnace
+	item Star Dust {
+		amount 10
+	}
+}
+forge Flame Heart {
+	skill Enchantedstone Craft
+	req Mini Furnace
+	item Red Blood {
+		amount 10
+	}
+}
+
+forge Mystic Frozen {
+	skill Enchantedstone Craft
+	req Mini Furnace
+	item Crystal Blue {
+		amount 10
+	}
+}
+forge Great Nature {
+	skill Enchantedstone Craft
+	req Mini Furnace
+	item Green Live {
+		amount 10
+	}
+}
+
+forge Rough Wind {
+	skill Enchantedstone Craft
+	req Mini Furnace
+	item Wind of Verdure {
+		amount 10
+	}
+}
+
+############# ALCHEMISTS ###########
+
+forge Red Potion {
+	skill Pharmacy
+	useSkill 1
+	item Potion Creation Guide {
+		amount 1
+	}
+	item Red Herb {
+		amount 1
+	}
+	item Empty Potion Bottle {
+		amount 1
+	}
+}
+
+forge Yellow Potion {
+	skill Pharmacy
+	useSkill 1
+	item Potion Creation Guide {
+		amount 1
+	}
+	item Yellow Herb {
+		amount 1
+	}
+	item Empty Potion Bottle {
+		amount 1
+	}
+}
+
+forge White Potion {
+	skill Pharmacy
+	useSkill 1
+	item Potion Creation Guide {
+		amount 1
+	}
+	item White Herb {
+		amount 1
+	}
+	item Empty Potion Bottle {
+		amount 1
+	}
+}
+
+forge Blue Potion {
+	skill Pharmacy
+	useSkill 1
+	item Potion Creation Guide {
+		amount 1
+	}
+	item Blue Herb {
+		amount 1
+	}
+	item Empty Potion Bottle {
+		amount 1
+	}
+	item Scell {
+		amount 1
+	}
+}
+
+forge Condensed Red Potion {
+	skill Pharmacy
+	useSkill 1
+	item Condensed Potion Creation Guide {
+		amount 1
+	}
+	item Red Potion {
+		amount 1
+	}
+	item Empty Test Tube {
+		amount 1
+	}
+	item Cactus Needle {
+		amount 1
+	}
+}
+
+forge Condensed Yellow Potion {
+	skill Pharmacy
+	useSkill 1
+	item Condensed Potion Creation Guide {
+		amount 1
+	}
+	item Yellow Potion {
+		amount 1
+	}
+	item Empty Test Tube {
+		amount 1
+	}
+	item Mole Whiskers {
+		amount 1
+	}
+}
+
+forge Condensed White Potion {
+	skill Pharmacy
+	useSkill 1
+	item Condensed Potion Creation Guide {
+		amount 1
+	}
+	item White Potion {
+		amount 1
+	}
+	item Empty Test Tube {
+		amount 1
+	}
+	item Witch Starsand {
+		amount 1
+	}
+}
+
+forge Anodyne {
+	skill Pharmacy
+	useSkill 1
+	item Potion Creation Guide {
+		amount 1
+	}
+	item Ment {
+		amount 1
+	}
+	item Alcohol {
+		amount 1
+	}
+	item Empty Bottle {
+		amount 1
+	}
+}
+
+forge Aloevera {
+	skill Pharmacy
+	useSkill 1
+	item Potion Creation Guide {
+		amount 1
+	}
+	item Aloe {
+		amount 1
+	}
+	item Honey {
+		amount 1
+	}
+	item Empty Bottle {
+		amount 1
+	}
+}
+
+forge Alcohol {
+	skill Pharmacy
+	useSkill 1
+	item Alcohol Creation Guide {
+		amount 1
+	}
+	item Poison Spore {
+		amount 5
+	}
+	item Stem {
+		amount 5
+	}
+	item Empty Test Tube {
+		amount 1
+	}
+}
+
+forge Bottle Grenade {
+	skill Pharmacy
+	useSkill 1
+	item Bottle Grenade Creation Guide {
+		amount 1
+	}
+	item Alcohol {
+		amount 1
+	}
+	item Fabric {
+		amount 1
+	}
+	item Empty Bottle {
+		amount 1
+	}
+}
+
+forge Acid Bottle {
+	skill Pharmacy
+	useSkill 1
+	item Acid Bottle Creation Guide {
+		amount 1
+	}
+	item Immortal Heart {
+		amount 1
+	}
+	item Empty Bottle {
+		amount 1
+	}
+}
+
+forge Plant Bottle {
+	skill Pharmacy
+	useSkill 1
+	item Plant Bottle Creation Guide {
+		amount 1
+	}
+	item Maneater Blossom {
+		amount 2
+	}
+	item Empty Bottle {
+		amount 1
+	}
+}
+
+forge Marine Sphere Bottle {
+	skill Pharmacy
+	useSkill 1
+	item Marine Sphere Bottle Creation Guide {
+		amount 1
+	}
+	item Tendon {
+		amount 1
+	}
+	item Detonator {
+		amount 1
+	}
+	item Empty Bottle {
+		amount 1
+	}
+}
+
+forge Glistening Coat {
+	skill Pharmacy
+	useSkill 1
+	item Glistening Coat Creation Guide {
+		amount 1
+	}
+	item Alcohol {
+		amount 1
+	}
+	item Heart of Mermaid {
+		amount 1
+	}
+	item Zenorc's Fang {
+		amount 1
+	}
+	item Empty Bottle {
+		amount 1
+	}
+}
+
+############# WhiteSmith ###########
+forge Gold Coin {
+	skill Coin Create
+	useSkill 1
+	item Gold Ore {
+		amount 1
+	}
+}
+forge Silver Coin {
+	skill Coin Create
+	useSkill 1
+	item Silver Ore {
+		amount 1
+	}
+}
+forge Mithril Coin {
+	skill Coin Create
+	useSkill 1
+	item Mithril Ore {
+		amount 1
+	}
+}
+#### MASTER ALCHEMIST ####
+forge Poison Bottle {
+	skill Create Deadly Poison
+	useSkill 1
+	item Venom Canine {
+		amount 1
+	}
+	item Bee Sting {
+		amount 1
+	}
+	item Cactus Needle {
+		amount 1
+	}
+	item Poison Spore {
+		amount 1
+	}
+	item Karvodailnirol {
+		amount 1
+	}
+}

@@ -1,0 +1,219 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+<meta http-equiv="refresh" content="10">
+<LINK href="styles/iframe.css" type=text/css rel=stylesheet>
+</HEAD>
+<BODY>
+<div id ="status_table" style = "position:absolute; left:5px; top:5px;"> 
+	<table class="status">
+		<CAPTION>Character Status</CAPTION>
+		<tr>
+			<td class="status">&nbsp;</td>
+			<th class="status">Name:</th>
+			<td class="status">{characterName}</td>
+			<td class="status">&nbsp;</td>
+			<th class="status">HP:</th>
+			<td class="status">{characterHP} / {characterHPMax} ({characterHPPercent}%)</td>
+		</tr>
+		<tr>
+			<td class="status">&nbsp;</td>
+			<th class="status">Job/Sex:</th>
+			<td class="status">{characterJob} {characterSex}</td>
+			<td class="status">&nbsp;</td>
+			<th class="status">SP:</th>
+			<td class="status">{characterSP} / {characterSPMax} ({characterSPPercent}%)</td>
+		</tr>
+		<tr>
+			<td class="status">&nbsp;</td>
+			<th class="status">Base:</th>
+			<td class="status">{characterLevel}</td>
+			<td class="status">&nbsp;</td>
+			<th class="status">Exp:</th>
+			<td class="status">{characterBaseExp} / {characterBaseMax} ({characterBasePercent}%)</td>
+		</tr>
+		<tr>
+			<td class="status">&nbsp;</td>
+			<th class="status">Job:</th>
+			<td class="status">{characterJobLevel}</td>
+			<td class="status">&nbsp;</td>
+			<th class="status">Exp:</th>
+			<td class="status">{characterJobExp} / {characterJobMax} ({characterJobPercent}%)</td>
+		</tr>
+		<tr>
+			<td class="status">&nbsp;</td>
+			<th class="status">Zeny:</th>
+			<td class="status">{characterZeny}</td>
+			<td class="status">&nbsp;</td>
+			<th class="status">Weight:</th>
+			<td class="status">{characterWeight} / {characterWeightMax} ({characterWeightPercent}%)</td>
+		</tr>
+		<tr>
+			<td class="status">&nbsp;</td>
+			<th class="status">Spirits:</th>
+			<td class="status">{characterSpirits}</td>
+		</tr>
+		<tr>
+			<td class="status">&nbsp;</td>
+			<th class="status">Location:</th>
+			<td class="status">{characterLocationMap}</td>
+			<td class="status">&nbsp;</td>
+			<th class="status">Coords:</th>
+			<td class="status">{characterLocationX},{characterLocationY}</td>
+		</tr>
+	</table>
+</div>
+
+<div id ="status_points_table" style = "position:absolute; left:410px; top:5px;">
+	<table class="status">
+		<CAPTION>Character Stats</CAPTION>
+		<tr>
+			<th class="status">STR:</th>
+			<td class="status">{characterStr}</td>
+			<td class="status">+{characterStrBonus}</td>
+			<td class="status"><a href="/handler?command=stat_add+str&page={skin}/status.html"><img src="images/arrow.png"></a></td>
+			<th class="status">&nbsp;</th>
+			<th class="status">#{characterStrPoints}</th>
+			<th class="status">&nbsp;</th>
+			<th class="status">Atk:</th>
+			<td class="status">{characterAttack}+{characterAttackBonus}</td>
+			<td class="status"></td>
+			<th class="status">Def:</th>
+			<td class="status">{characterDef}+{characterDefBonus}</td>
+		</tr>
+		<tr>
+			<th class="status">AGI:</th>
+			<td class="status">{characterAgi}</td>
+			<td class="status">+{characterAgiBonus}</td>
+			<td class="status"><a href="/handler?command=stat_add+agi&page={skin}/status.html"><img src="images/arrow.png"></a></td>
+			<th class="status">&nbsp;</th>
+			<th class="status">#{characterAgiPoints}</th>
+			<th class="status">&nbsp;</th>
+			<th class="status">Matk:</th>
+			<td class="status">{characterAttackMagicMax}+{characterAttackMagicMin}</td>
+			<td class="status">&nbsp;</td>
+			<th class="status">Mdef:</th>
+			<td class="status">{characterDefMagic}+{characterDefMagicBonus}</td>
+		</tr>
+		<tr>
+			<th class="status">VIT:</th>
+			<td class="status">{characterVit}</td>
+			<td class="status">+{characterVitBonus}</td>
+			<td class="status"><a href="/handler?command=stat_add+vit&page={skin}/status.html"><img src="images/arrow.png"></a></td>
+			<th class="status">&nbsp;</th>
+			<th class="status">#{characterVitPoints}</th>
+			<th class="status">&nbsp;</th>
+			<th class="status">Hit:</th>
+			<td class="status">{characterHit}</td>
+			<td class="status">&nbsp;</td>
+			<th class="status">Flee:</th>
+			<td class="status">{characterFlee}+{characterFleeBonus}</td>
+		</tr>
+		<tr>
+			<th class="status">INT:</th>
+			<td class="status">{characterInt}</td>
+			<td class="status">+{characterIntBonus}</td>
+			<td class="status"><a href="/handler?command=stat_add+int&page={skin}/status.html"><img src="images/arrow.png"></a></td>
+			<th class="status">&nbsp;</th>
+			<th class="status">#{characterIntPoints}</th>
+			<th class="status">&nbsp;</th>
+			<th class="status">Crit:</th>
+			<td class="status">{characterCritical}</td>
+			<td class="status">&nbsp;</td>
+			<th class="status">Aspd:</th>
+			<td class="status">{characterAttackSpeed}</td>
+		</tr>
+		<tr>
+			<th class="status">DEX:</th>
+			<td class="status">{characterDex}</td>
+			<td class="status">+{characterDexBonus}</td>
+			<td class="status"><a href="/handler?command=stat_add+dex&page={skin}/status.html"><img src="images/arrow.png"></a></td>
+			<th class="status">&nbsp;</th>
+			<th class="status">#{characterDexPoints}</th>
+			<th class="status">&nbsp;</th>
+			<th class="status">Stat Points:</th>
+			<td class="status">{characterFreePoints}</td>
+		</tr>
+		<tr>
+			<th class="status">LUK:</th>
+			<td class="status">{characterLuk}</td>
+			<td class="status">+{characterLukBonus}</td>
+			<td class="status"><a href="/handler?command=stat_add+luk&page={skin}/status.html"><img src="images/arrow.png"></a></td>
+			<th class="status">&nbsp;</th>
+			<th class="status">#{characterLukPoints}</th>
+			<th class="status">&nbsp;</th>
+		</tr>
+		<tr>
+			<th class="status">Guild:</th>
+			<td class="status" colspan="8">{characterGuildName}</td>
+		</tr>
+	</table>
+</div>
+
+<div id ="status_points_table" style = "position:absolute; left:5px; top:190px;">
+	<table class="status">
+		<CAPTION>Looks/Equipment</CAPTION>
+		<tr>
+			<th class="status">Hair:</th>
+			<td class="status" colspan="4">{characterHairColor}</td>
+		</tr>
+		<tr>
+			<th class="status">Hairstyle:</th>
+			<td class="status">???</td>
+			<td class="status">&nbsp;</td>
+			<th class="status">Arrow:</th>
+			<td class="status">{characterArrow}</td>
+		</tr>
+		<tr>
+			<th class="status">Upper Head:</th>
+			<td class="status">{characterTopHead}</td>
+			<td class="status">&nbsp;</td>
+			<th class="status">Middle Head:</th>
+			<td class="status">{characterMidHead}</td>
+		</tr>
+		<tr>
+			<th class="status">Lower Head:</th>
+			<td class="status">{characterLowHead}</td>
+			<td class="status">&nbsp;</td>
+			<th class="status">Body:</th>
+			<td class="status">{characterArmor}</td>
+		</tr>
+		<tr>
+			<th class="status">Right Hand</th>
+			<td class="status">{characterRightHand}</td>
+			<td class="status">&nbsp;</td>
+			<th class="status">Left Hand</th>
+			<td class="status">{characterLeftHand}</td>
+		</tr>
+		<tr>
+			<th class="status">Robe:</th>
+			<td class="status">{characterRobe}</td>
+			<td class="status">&nbsp;</td>
+			<th class="status">Shoes:</th>
+			<td class="status">{characterShoes}</td>
+		</tr>
+		<tr>
+			<th class="status">Accessory:</th>
+			<td class="status">{characterRightAccessory}</td>
+			<td class="status">&nbsp;</td>
+			<th class="status">Accessory:</th>
+			<td class="status">{characterLeftAccessory}</td>
+		</tr>
+	</table>
+</div>
+
+<div id ="status_points_table" style = "position:absolute; left:5px; top:375px;">
+	<table class="status" width="50%">
+	<CAPTION>Arrays</CAPTION>
+	<tr>
+		<td class="status">characterStatuses:<br>{startLoop}{characterStatuses}<br>{endLoop}</td>
+		<td class="status">inventoryEquipped:<br>{startLoop}{inventoryEquipped}<br>{endLoop}</td>
+		<td class="status">inventoryUnequipped:<br>{startLoop}{inventoryUnequipped}<br>{endLoop}</td>
+		<td class="status">inventoryUnusable:<br>{startLoop}{inventoryUnusable}<br>{endLoop}</td>
+		<td class="status">inventoryUsable:<br>{startLoop}{inventoryUsable}<br>{endLoop}</td>
+	</tr>
+	</table>
+</div>
+
+</BODY>
+</HTML>

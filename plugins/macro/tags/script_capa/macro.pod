@@ -1,0 +1,422 @@
+=head1 NAME
+
+macro.pl - plugin for openkore 1.6.2 and later
+
+=head1 VERSION
+
+This documentation applies to B<macro.pl> version 0.9.0 cvs
+
+Documentation: $Revision: 2513 $ $Date: 2005-06-21 14:22:57 +0200 (di, 21 jun 2005) $
+
+=head1 DESCRIPTION
+
+With this plugin you can predefine command sequences (macros) which are
+run either manually or by situation-dependent triggers.
+
+This document describes the functions and global variables of B<macro.pl>
+
+Please refer to L<http://openkore.sf.net/macro> for a description of
+B<macro>'s configuration file syntax.
+
+=head1 DOCUMENTATION
+
+=head2 variables and hashes
+
+=over 4
+
+=item C<%macro>
+
+Hash containing the macros. Hash structure:
+
+=item C<%automacro>
+
+Hash containing the automacros. Hash structure:
+
+=item C<%varStack>
+
+Variable stack, set with C<setVar(variable, value)> and get with C<getVar(variable)>.
+
+=item C<%launcher>
+
+When an automacro triggers, the hash contains the macro to be called in I<call>, the delay
+settings in I<time>, I<timeout> and whether the macro should override the AI in I<override_ai>.
+
+=item C<@macroQueue>
+
+Queue of macro commands to be executed.
+
+=item C<$cvs>
+
+Debug object. Type C<perldoc cvsdebug.pm> for more information.
+
+=item C<$cfID>
+
+Config file ID, set by Settings::addConfigFile
+
+=back
+
+=head2 functions used by macros
+
+=over 4
+
+=item C<setVar(variable, value)>
+
+Sets a variable with the value given as argument. Can be accessed either
+via C<getVar("I<variable>")> or directly with $varStack{variable}.
+
+Example: C<setVar("foo", "bar")>
+
+Returns: 1
+
+=item C<getVar(variable)>
+
+Gets a variable from %varStack hash.
+
+Example: C<getVar("lastPMnick")>
+
+Returns: value of $varStack{variable} or undef if empty
+
+=item C<getnpcid(position)>
+
+Gets the array index of the NPC located at the given position. The argument
+is a string containing the X and Y coordinates, separated by a whitespace.
+
+Example: C<getnpcid("172 135")>
+
+Returns: array index or -1 if no NPC was found at the given location
+
+=item C<getPlayerID(name, r_pool)>
+
+Gets the array index of the player named by I<name>. It looks at r_pool,
+which is a reference to a variable.
+
+Example: C<getPlayerID("Tom Jones", \@::playersID)>
+
+Returns: array index or -1 if no player was found with that name
+
+=item C<getItemID(item, r_pool)>
+
+Gets the array index of the item I<name>.
+It looks at r_pool, which is a reference to a variable.
+
+Example: C<getItemID("red potion", \@{$cart{inventory})>
+
+Returns: array index or -1 if the item was not found.
+
+=item C<getStorageID(item)>
+
+Gets the array index of the item I<name> in storage.
+
+Example: C<getStorageID("red potion")>
+
+Returns: array index or -1 if the item was not found.
+
+=item C<getInventoryAmount(item)>
+
+Gets the amount of an item I<name> in inventory.
+
+Returns: amount
+
+=item C<getStorageAmount(item)>
+
+Gets the amount of an item I<name> in storage.
+
+Returns: amount or null if storage had not been opened
+
+=item C<getCartAmount(item)>
+
+Gets the amount of an item I<name> in cart.
+
+Returns: amount
+
+=item C<getShopAmount(item)>
+
+Gets the amount of an item I<name> in shop.
+
+Returns: amount
+
+=item C<getSoldOut()>
+
+Gets the amount of shop slots that are sold out.
+
+Returns: amount
+
+=item C<getRandom(items)>
+
+I<items> is a string containing the elements encased by quotes, separated
+by whitespaces or comma.
+
+Example: C<getRandom("\"Element one\", \"Element two\", \"Element three\"")>
+
+Returns: a random element of the list
+
+=item C<pushMacro(name, n)>
+
+Inserts another macro at the current position into the macro queue.
+If I<n> is given, it will insert the macro I<n> times.
+
+Returns: 0 or undef if macro to be inserted was not found.
+
+=item C<logMessage(message)>
+
+Logs I<message> to openkore's console.
+
+=item C<releaseAM(name)>
+
+Removes automacro I<name> from run-once list.
+
+Returns: 1 if succeeded, 0 if I<name> was not found.
+
+=back
+
+=head2 functions used by automacros
+
+=over 4
+
+=item C<refreshGlobal()>
+
+Refreshes global variables on access, such as I<.pos>, I<.time>, I<.datetime>.
+
+=item C<checkCast(spell, r_hash)>
+
+Checks whether I<spell> is casted on or affecting the character.
+r_hash is a reference to a hash containing I<targetID>, I<x>, I<y>,
+I<skillID>.
+
+=item C<checkClass(class)>
+
+Checks whether the current character is of class I<class>.
+
+Returns: 1 (true), 0 (false)
+
+=item C<checkEquip(item)>
+
+Checks whether the character has I<item> equipped.
+
+Example: C<checkEquip("Muffler [Whisper] [1]")>
+
+Returns: 1 (true), 0 (false)
+
+=item C<checkLevel(condition, pool)>
+
+Checks whether either base- or joblevel matches I<condition>.
+I<pool> is either "job" or "base".
+
+Returns: 1 (true), 0 (false)
+
+=item C<checkLoc(location)>
+
+Checks for location. I<location> is a whitespace seperated list
+containing I<map>, I<x>, I<y>, I<x2>, I<y2>, where I<map> is
+mandatory. If I<x> and I<y> are given, it checks whether the
+character is standing at I<map> I<x> I<y>. If I<x2> and I<y2>
+are given, it checks whether the caracter is standing at I<map>
+somewhere between I<x> and I<x2> and I<y> and I<y2>, where
+I<x> < I<x2> and I<y> > I<y2>.
+
+Example: C<checkLoc("prontera 147 125 160 100")>
+
+Returns: 1 (true), 0 (false)
+
+=item C<checkPercent(condition, pool)>
+
+Checks whether either HP or SP matches I<condition>. I<pool> is
+either "sp" or "hp".
+
+Example: C<checkPercent("< 30", "hp")>
+
+Returns: 1 (true), 0 (false)
+
+=item C<checkPerson(name)>
+
+Checks whether I<name> is on our screen.
+
+Returns: 1 (true), 0 (false)
+
+=item C<checkMsg(var, line, r_hash)>
+
+Checks whether the message given by I<r_hash> matches the message (in) I<line>.
+I<line> must contain at least a '/regexp/' or a '"trigger message"'. For public
+message check, you can add a maxmimum distance by appending ',distance' and use
+'.lastpub' as I<var>, for private message check, add the allowed nicks by
+appending ',nick1,nick2,...' and using '.lastpm' as I<var>.
+I<r_hash> is a reference to a hash containing I<MsgUser> and I<Msg>.
+This function sets the variable I<var> to I<$r_hash-E<gt>MsgUser>.
+
+Returns: 1 (true), 0 (false)
+
+=item C<checkStatus(status)>
+
+Checks whether we are I<status>. Allows prepended "not" to negate
+the query.
+
+Example: C<checkStatus("not awaken")>
+
+Returns: 1 (true), 0 (false)
+
+=item C<checkVar(condition)>
+
+Checks if a variable's value matches a certain condition. Variable,
+condition and value are seperated by a whitespace.
+
+Example: C<checkVar("something E<gt>= 100")>
+
+Returns: 1 (true), 0 (false)
+
+=item C<checkItem(pool, item)>
+
+Checks whether I<item> is in I<pool>. I<pool> can be one of the following:
+I<inv> (inventory), I<stor> (storage), I<cart> (cart), I<shop> (shop).
+
+Example: C<checkItem("inv", "Muffler [1]")>
+
+Returns: 1 (true), 0 (false)
+
+=item C<checkCond(obj, condition)>
+
+Checks whether I<obj> matches I<condition>.
+
+Example: C<checkItem($char->{zeny}, "E<lt>= 100000")>
+
+Returns: 1 (true), 0 (false)
+
+=back
+
+=head2 functions used by both
+
+=over 4
+
+=item C<ai_isIdle()>
+
+Checks whether AI is idle.
+
+Returns: 1 if AI is either "macro" or "deal" or $launcher{overrideAI}
+is set, else 0
+
+=item C<findMacroID(name)>
+
+Returns: macro array index for I<name> or -1 if not found.
+
+=item C<loadMacro(id)>
+
+Loads macro with id I<id> into an array.
+
+Returns: this array
+
+=item C<clearMacro()>
+
+Clears macro queue and removes 'macro' from AI queue.
+
+=back
+
+=head2 functions accessed via command line
+
+=over 4
+
+=item C<automacroReset(name)>
+
+If I<name> is given, I<name> will be removed from automacro run-once list,
+else the whole list is cleared.
+
+=item C<usage()>
+
+Sends an usage overview to console.
+
+=item C<showVersion()>
+
+Sends the version number to console.
+
+=item C<list_macros()>
+
+Sends an overview of all available macros and automacros to console.
+
+=item C<runMacro(name, n)>
+
+Runs the macro I<name>, if I<n> is specified, it will run I<n> times.
+
+=item C<cmdSetVar(arg)>
+
+I<arg> is a string with I<var> and I<val> separated by a whitespace. If
+I<val> is omitted, I<var> will be deleted from C<%varStack>.
+
+Example: C<cmdSetVar("kafra 151 29")>
+
+=back
+
+=head2 utility functions
+
+=over 4
+
+=item C<between(arg1, arg2, arg3)>
+
+Checks whether I<arg2> is between (or equal) I<arg1> and I<arg3>.
+
+Returns: 1 (true), 0 (false)
+
+=item C<cmpr(arg1, condition, arg2)>
+
+Checks whether I<arg1> and I<arg2> match I<condition>.
+
+Example: cmpr(12, "E<lt>=", 28).
+
+Returns: 1 (true), 0 (false)
+
+=item C<match(text, keyword)>
+
+Checks whether I<keyword> matches I<text>. If I<keyword> was enclosed by slashes (/) it will be treated as regexp. If it was enclosed by quotes ("), it checks for exact match.
+
+Example: C<match("hello World", "/[Ww]orld$/")>, C<match("hello World", "\"hello World\"")>
+
+Returns: 1 (true), 0 (false)
+
+=item C<parseArgs(string)>
+
+Parses I<string> into it's components where I<string> is either I<arg1 arg2 arg3> or I<"arg1" arg2 arg3>.
+
+Returns: array containing the three arguments.
+
+=item C<parseCmd(string)>
+
+Parses I<string> and replaces all '@'-constructs if possible.
+
+Returns: parsed string, undef if I<string> was @(log|call|release|pause|set) or substitution failed. If the substitution failed, the macro queue is cleared.
+
+=item C<parseMacroFile(filename, r_hash)>
+
+Parses the file I<filename> for macros and automacros and puts them into the hash reference I<r_hash>.
+
+=back
+
+=head2 other internal functions
+
+=over 4
+
+=item C<setDebug()>
+
+Sets the C<$cvs> debug level to whatever was specified in config.txt for I<macro_debug>.
+
+=item C<debuglevel(level)>
+
+This function is called when the user changed the debug level by typing C<conf macro_debug #>.
+
+=item C<Unload()>
+
+Undefines C<$cvs> with the effect that it's destructor is called.
+Then clears all hashes and hooks and removes F<macro.txt> from C<Settings>.
+
+=back
+
+=head1 AVAILABILITY
+
+Get the latest release from L<http://openkore.sf.net/macro/#download>
+or via CVS:
+
+C<cvs -d:pserver:anonymous@cvs.sf.net:/cvsroot/openkore login>
+
+C<cvs -d:pserver:anonymous@cvs.sf.net:/cvsroot/openkore co -P macro>
+
+=head1 AUTHOR
+
+Arachno <arachnophobia at users dot sf dot net>
+
+=cut
