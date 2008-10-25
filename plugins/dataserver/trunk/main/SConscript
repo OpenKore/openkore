@@ -1,0 +1,20 @@
+Import('*')
+
+base_sources = Split(
+	'fileparsers.c linked-list.c string-hash.c threads.c ' +
+	'utils.c network.c processing.c dataserver.c'
+)
+
+sources = base_sources
+if WIN32:
+	sources += ['win-server.c']
+else:
+	sources += ['unix-server.c']
+
+headers = Split (
+	'fileparsers.h linked-list.h string-hash.h threads.h ' +
+	'utils.h client.h  processing.h dataserver.h ' +
+	'unix-server.h win-server.h'
+)
+
+env.Program('dataserver', sources)
