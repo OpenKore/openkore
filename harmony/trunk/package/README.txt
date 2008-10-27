@@ -1,1 +1,0 @@
-Copy the entire content of this folder to your OpenKore folder.
