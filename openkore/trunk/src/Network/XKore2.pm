@@ -48,7 +48,8 @@ sub start {
 		serverType => $config{serverType},
 		rpackets => \%rpackets,
 		mapServer => $mapServer,
-		sessionStore => $sessionStore
+		sessionStore => $sessionStore,
+		name => $config{XKore_ID}
 	);
 	$accountServer = new Network::XKore2::AccountServer(
 		host => $publicIP,

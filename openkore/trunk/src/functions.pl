@@ -453,6 +453,7 @@ sub initMapChangeVars {
 	undef @currentChatRoomUsers;
 	undef @itemsID;
 	undef @identifyID;
+	undef %repairList;
 	undef @spellsID;
 	undef @arrowCraftID;
 	undef %items;
