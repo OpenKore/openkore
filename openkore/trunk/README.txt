@@ -1,6 +1,11 @@
 =========================
 ### OpenKore what-will-become-2.0.7
 =========================
+- Added additional "label" parameter "block" to change config block header. (thanks to vit).
+  Syntax:
+	conf <label_name>.(<block_param> | block) [new_value]
+  Examle:
+	conf label applesEtc.block Meat
 - Added route_avoidWalls config option.
 - Fixed small, trivial bug that would display a non-fatal warning.
 - More bugfixes, removing warnings.
