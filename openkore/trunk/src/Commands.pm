@@ -2584,7 +2584,7 @@ sub cmdIdentify {
 		return;
 	}
 	my (undef, $arg1) = @_;
-	if ($arg1 eq "") {
+	if ($arg1 eq "" && defined @identifyID) {
 		message T("---------Identify List--------\n"), "list";
 		for (my $i = 0; $i < @identifyID; $i++) {
 			next if ($identifyID[$i] eq "");
@@ -2594,7 +2594,8 @@ sub cmdIdentify {
 				"list");
 		}
 		message("------------------------------\n", "list");
-
+	} elsif (!defined @identifyID) {
+		error TF("The identify list is empty, please use the identify skill or a magnifier first.\n");
 	} elsif ($arg1 =~ /^\d+$/) {
 		if ($identifyID[$arg1] eq "") {
 			error TF("Error in function 'identify' (Identify Item)\n" .
