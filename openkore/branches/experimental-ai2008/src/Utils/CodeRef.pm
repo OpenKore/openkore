@@ -62,6 +62,19 @@ sub call {
 	};
 }
 
+##
+# void $CodeRef->call2([argument])
+#
+# Call 'CODE' referance function in this CodeRef.
+# Please note, that this function will conver the CV object back to CodeRef, and call it.
+#
+sub call2 {
+	my $self = shift;
+	use $self->{packagename};
+	my $cv = $self->{cv}->object_2svref();
+	return $cv->(@_);
+}
+
 #################################
 #################################
 # PRIVATE FUNCTIONS
