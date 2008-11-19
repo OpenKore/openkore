@@ -70,7 +70,10 @@ sub call {
 #
 sub call2 {
 	my $self = shift;
-	use $self->{packagename};
+	eval ("use " . $self->{packagename});
+	if ($@) {
+		return $self->call(@_);
+	};
 	my $cv = $self->{cv}->object_2svref();
 	return $cv->(@_);
 }
