@@ -344,7 +344,7 @@ sub getArgFromList {
 }
 
 # returns the lenght of a comma separated list
-sub getlistLenght {
+sub getListLenght {
 	my $list = $_[0];
 	my @items = split(/,\s*/, $list);
 	return scalar(@items)
