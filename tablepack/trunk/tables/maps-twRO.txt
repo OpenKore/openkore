@@ -1,3 +1,25 @@
+//---------------------Ep 12_TW update-------------------
+//EP12 新增地圖
+1@cata.rsw#地下墓穴#
+2@cata.rsw#封印的神殿#
+e_tower.rsw#神秘島#
+1@tower.rsw#魔物終結塔#
+2@tower.rsw#魔物終結塔#
+3@tower.rsw#魔物終結塔#
+4@tower.rsw#魔物終結塔#
+5@tower.rsw#魔物終結塔#
+6@tower.rsw#魔物終結塔（未知的區域）#
+bat_room.rsw#戰場等候室#
+bat_a01.rsw#提耶拉 峽谷#
+bat_a02.rsw#提耶拉 峽谷#
+bat_b01.rsw#瀑拉畢烏斯 (峽谷)#
+bat_b02.rsw#瀑拉畢烏斯 (峽谷)#
+mosk_fild01.rsw#鯨魚島#
+cave.rsw#洞穴村落#
+moc_fild20.rsw#時空的裂縫#
+moc_fild21.rsw#時空的裂縫#
+moc_fild22.rsw#時空的裂縫#
+
 moscovia.rsw#莫斯科比亞#
 mosk_in.rsw#莫斯科比亞 內部#
 mosk_ship.rsw#船舶#
