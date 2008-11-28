@@ -2398,7 +2398,7 @@ sub processPartySkillUse {
 			foreach my $ID (@playersID) {
 				next if ($ID eq "");
 				next if ((!$char->{party} || !$char->{party}{users}{$ID}) && (!$char->{homunculus} || $char->{homunculus}{ID} ne $ID) && !$config{"partySkill_$i"."_notPartyOnly"});
-				next if ($char->{party}{users}{$ID}->{name} ne $playersList->getByID($ID)->name);
+				next if ($char->{party}{users}{$ID}->{name} ne $playersList->getByID($ID)->name) && (!$config{"partySkill_$i"."_notPartyOnly"});
 				my $player = Actor::get($ID);
 				next unless UNIVERSAL::isa($player, 'Actor::Player');
 				if (inRange(distance($char->{pos_to}, $players{$ID}{pos}), $config{partySkillDistance} || "1..8")
