@@ -350,7 +350,7 @@ sub new {
 		'02E8' => ['inventory_items_stackable'],
 		'02E9' => ['cart_items_list'],
 		'02EA' => ['storage_items_stackable'],
-		'02EB' => ['map_loaded', 'V1 a3 v1', [qw(syncMapSync coords unknown)]],
+		'02EB' => ['map_loaded', 'V1 a3 x2 v1', [qw(syncMapSync coords unknown)]],
 		'02EC' => ['actor_display', 'x1 a4 v3 V1 v5 V1 v5 a4 a4 V1 C2 a5 x3 v2', [qw(ID walk_speed param1 param2 param3 type hair_style weapon shield lowhead timestamp tophead midhead hair_color clothes_color head_dir guildID guildEmblem visual_effects stance sex coords lv unknown)]],
 		'02ED' => ['actor_display', 'a4 v3 V1 v10 a4 a4 V1 C2 a3 v v2', [qw(ID walk_speed param1 param2 param3 type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID guildEmblem visual_effects stance sex coords act lv unknown)]],
 		'02EE' => ['actor_display', 'a4 v3 V1 v10 a4 a4 V1 C2 a3 x1 v v2', [qw(ID walk_speed param1 param2 param3 type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID guildEmblem visual_effects stance sex coords act lv unknown)]],
