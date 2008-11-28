@@ -335,6 +335,25 @@ sub new {
 		'02AD' => ['login_pin_code_request', 'v1 V', [qw(flag key)]],
 		# Packet Prefix encryption Support
 		'02AE' => ['initialize_message_id_encryption', 'V1 V1', [qw(param1 param2)]],
+		# tRO new packets (2008-09-16Ragexe12_Th)
+		'02B1' => ['quest_list'],
+		'02B2' => ['objective_info'],
+		'02C5' => ['party_invite_result', 'Z24 V1', [qw(name type)]],
+		'02C9' => ['party_allow_invite', 'C1', [qw(type)]],
+		'02D0' => ['inventory_items_nonstackable'],
+		'02D1' => ['storage_items_nonstackable'],
+		'02D2' => ['cart_equip_list'],
+		'02D4' => ['inventory_item_added', 'v1 v1 v1 C1 C1 C1 a8 v1 C1 C1 a6', [qw(index amount nameID identified broken upgrade cards type_equip type fail unknown)]],
+		'02DA' => ['show_equipment', 'C1', [qw(type)]],
+		# 02E1 packet unsure of param3 needs more testing
+		'02E1' => ['actor_action', 'a4 a4 a4 V2 v1 x2 v1 x2 C1 v1', [qw(sourceID targetID tick src_speed dst_speed damage param2 type param3)]],
+		'02E8' => ['inventory_items_stackable'],
+		'02E9' => ['cart_items_list'],
+		'02EA' => ['storage_items_stackable'],
+		'02EB' => ['map_loaded', 'V1 a3 v1', [qw(syncMapSync coords unknown)]],
+		'02EC' => ['actor_display', 'x1 a4 v3 V1 v5 V1 v5 a4 a4 V1 C2 a5 x3 v2', [qw(ID walk_speed param1 param2 param3 type hair_style weapon shield lowhead timestamp tophead midhead hair_color clothes_color head_dir guildID guildEmblem visual_effects stance sex coords lv unknown)]],
+		'02ED' => ['actor_display', 'a4 v3 V1 v10 a4 a4 V1 C2 a3 v v2', [qw(ID walk_speed param1 param2 param3 type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID guildEmblem visual_effects stance sex coords act lv unknown)]],
+		'02EE' => ['actor_display', 'a4 v3 V1 v10 a4 a4 V1 C2 a3 x1 v v2', [qw(ID walk_speed param1 param2 param3 type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID guildEmblem visual_effects stance sex coords act lv unknown)]],
 	};
 
 	return bless \%self, $class;
@@ -1705,12 +1724,18 @@ sub cart_equip_list {
 
 	# "0122" sends non-stackable item info
 	# "0123" sends stackable item info
-	my $newmsg;
+	my ($newmsg, $psize);
 	my $msg = $args->{RAW_MSG};
 	my $msg_size = $args->{RAW_MSG_SIZE};
 	$self->decrypt(\$newmsg, substr($msg, 4));
 	$msg = substr($msg, 0, 4).$newmsg;
-	my $psize = ($args->{switch} eq '0297') ? 24 : 20;
+	if ($args->{switch} eq '0297') {
+	   $psize = 24;
+	} elsif ($args->{switch} eq '02D2') {
+	   $psize = 26;
+	} else {
+	   $psize = 20;
+	}
 
 	for (my $i = 4; $i < $msg_size; $i += $psize) {
 		my $index = unpack("v1", substr($msg, $i, 2));
@@ -1759,14 +1784,20 @@ sub cart_item_added {
 sub cart_items_list {
 	my ($self, $args) = @_;
 
-	my $newmsg;
+	my ($newmsg, $psize);
 	my $msg = $args->{RAW_MSG};
 	my $msg_size = $args->{RAW_MSG_SIZE};
 	my $switch = $args->{switch};
 
 	$self->decrypt(\$newmsg, substr($msg, 4));
 	$msg = substr($msg, 0, 4).$newmsg;
-	my $psize = ($switch eq "0123") ? 10 : 18;
+	if ($switch eq '0123') {
+	   $psize = 10;
+	} elsif ($switch eq '02E9') {
+	   $psize = 22;
+	} else {
+	   $psize = 18;
+	}
 
 	for (my $i = 4; $i < $msg_size; $i += $psize) {
 		my $index = unpack("v1", substr($msg, $i, 2));
@@ -3338,10 +3369,16 @@ sub revolving_entity {
 sub inventory_items_nonstackable {
 	my ($self, $args) = @_;
 	return unless changeToInGameState();
-	my $newmsg;
+	my ($newmsg, $psize);
 	$self->decrypt(\$newmsg, substr($args->{RAW_MSG}, 4));
 	my $msg = substr($args->{RAW_MSG}, 0, 4) . $newmsg;
-	my $psize = ($args->{switch} eq '0295') ? 24 : 20;
+	if ($args->{switch} eq '0295') {
+	   $psize = 24;
+	} elsif ($args->{switch} eq '02D0') {
+	   $psize = 26;
+	} else {
+	   $psize = 20;
+	}
 
 	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += $psize) {
 		my $index = unpack("v1", substr($msg, $i, 2));
@@ -3385,10 +3422,16 @@ sub inventory_items_nonstackable {
 sub inventory_items_stackable {
 	my ($self, $args) = @_;
 	return unless changeToInGameState();
-	my $newmsg;
+	my ($newmsg, $psize);
 	$self->decrypt(\$newmsg, substr($args->{RAW_MSG}, 4));
 	my $msg = substr($args->{RAW_MSG}, 0, 4).$newmsg;
-	my $psize = ($args->{switch} eq "00A3") ? 10 : 18;
+	if ($args->{switch} eq '00A3') {
+	   $psize = 10;
+	} elsif ($args->{switch} eq '02E8') {
+	   $psize = 22;
+	} else {
+	   $psize = 18;
+	}
 
 	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += $psize) {
 		my $index = unpack("v1", substr($msg, $i, 2));
@@ -4216,6 +4259,35 @@ sub npc_talk_text {
 	$ai_v{npc_talk}{time} = time;
 }
 
+# Structure of packet by eAthena
+sub objective_info {
+   my ($self, $args) = @_;
+   my ($questID, $time, $mobnum, $mobCount, $mobName, $i, $k);
+
+   for ($i = 8; $i < $args->{RAW_MSG_SIZE}; $i += 104) {
+      ($questID, $time, $mobnum) = unpack('V x4 V v', substr($args->{RAW_MSG}, $i, 14));
+
+      # TODO
+
+      for ($k = 14; $k < 104; $k += 30) {
+         ($mobCount, $mobName) = unpack('x4 v Z24', substr($args->{RAW_MSG}, $k, 30));
+         $mobName = bytesToString($mobName);
+
+         # TODO
+      }
+   }
+}
+
+sub party_allow_invite {
+   my ($self, $args) = @_;
+
+   if ($args->{type}) {
+      message T("Not allowed other player invite to Party\n"), "party", 1;
+   } else {
+      message T("Allowed other player invite to Party\n"), "party", 1;
+   }
+}
+
 sub party_chat {
 	my ($self, $args) = @_;
 	my $msg;
@@ -4612,6 +4684,17 @@ sub private_message_sent {
 		warning T("Player doesn't want to receive messages\n");
 	}
 	shift @lastpm;
+}
+
+# Structure of Packet by eAthena
+sub quest_list {
+   my ($self, $args) = @_;
+   my ($questID, $state, $i);
+
+   for ($i = 8; $i < $args->{RAW_MSG_SIZE}; $i += 5) {
+      ($questID, $state) = unpack('V C', substr($args->{RAW_MSG}, $i, 5));
+      # TODO
+   }
 }
 
 # The block size in the received_characters packet varies from server to server.
@@ -5026,6 +5109,16 @@ sub shop_skill {
 	# Used the shop skill.
 	my $number = $args->{number};
 	message TF("You can sell %s items!\n", $number);
+}
+
+sub show_equipment {
+   my ($self, $args) = @_;
+
+   if ($args->{type}) {
+      message T("Allowed other player view Equipment\n");
+   } else {
+      message T("Not allowed other player view Equipment\n");
+   }
 }
 
 sub skill_cast {
@@ -5789,10 +5882,16 @@ sub storage_items_nonstackable {
 	my ($self, $args) = @_;
 	# Retrieve list of non-stackable (weapons & armor) storage items.
 	# This packet is sent immediately after 00A5/01F0.
-	my $newmsg;
+	my ($newmsg, $psize);
 	$self->decrypt(\$newmsg, substr($args->{RAW_MSG}, 4));
 	my $msg = substr($args->{RAW_MSG}, 0, 4).$newmsg;
-	my $psize = ($args->{switch} eq '0296') ? 24 : 20;
+	if ($args->{switch} eq '0296') {
+	   $psize = 24;
+	} elsif ($args->{switch} eq '02D1') {
+	   $psize = 26;
+	} else {
+	   $psize = 20;
+	}
 
 	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += $psize) {
 		my $index = unpack("v1", substr($msg, $i, 2));
@@ -5817,13 +5916,19 @@ sub storage_items_nonstackable {
 sub storage_items_stackable {
 	my ($self, $args) = @_;
 	# Retrieve list of stackable storage items
-	my $newmsg;
+	my ($newmsg, $psize);
 	$self->decrypt(\$newmsg, substr($args->{RAW_MSG}, 4));
 	my $msg = substr($args->{RAW_MSG}, 0, 4).$newmsg;
 	undef %storage;
 	undef @storageID;
 
-	my $psize = ($args->{switch} eq "00A5") ? 10 : 18;
+	if ($args->{switch} eq '00A5') {
+	   $psize = 10;
+	} elsif ($args->{switch} eq '02EA') {
+	   $psize = 22;
+	} else {
+	   $psize = 18;
+	}
 	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += $psize) {
 		my $index = unpack("v1", substr($msg, $i, 2));
 		my $ID = unpack("v1", substr($msg, $i + 2, 2));

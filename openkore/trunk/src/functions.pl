@@ -929,7 +929,7 @@ sub parseOutgoingClientMessage {
 		configModify("char", unpack("C*",substr($msg, 2, 1)));
 
 	} elsif (
-		($switch eq "0072" && $serverType == 0) ||
+		($switch eq "0072" && ($serverType == 0 || $serverType == 21)) ||
 		($switch eq "00F3" && $serverType == 18)
 	) {
 		# Map login

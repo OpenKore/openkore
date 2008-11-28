@@ -391,7 +391,7 @@ sub sendForgeItem {
 sub sendGameLogin {
 	my ($self, $accountID, $sessionID, $sessionID2, $sex) = @_;
 	my $msg = pack("v1", hex($masterServer->{gameLogin_packet}) || 0x65) . $accountID . $sessionID . $sessionID2 . pack("C*", 0, 0, $sex);
-	if (hex($masterServer->{gameLogin_packet}) == 0x0273) {
+	if (hex($masterServer->{gameLogin_packet}) == 0x0273 || hex($masterServer->{gameLogin_packet}) == 0x0275) {
 		my ($serv) = $masterServer->{ip} =~ /\d+\.\d+\.\d+\.(\d+)/;
 		$msg .= pack("x16 C1 x3", $serv);
 	}
@@ -678,7 +678,8 @@ sub sendMapLogin {
 	my $msg;
 	$sex = 0 if ($sex > 1 || $sex < 0); # Sex can only be 0 (female) or 1 (male)
 	
-	if ($self->{serverType} == 0) {
+	if ($self->{serverType} == 0 || $self->{serverType} == 21) {
+		# Server Type 21 is tRO (2008-09-16Ragexe12_Th)
 		$msg = pack("C*", 0x72,0) .
 			$accountID .
 			$charID .
