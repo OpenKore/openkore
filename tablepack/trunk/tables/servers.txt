@@ -293,38 +293,42 @@ ip 61.220.60.11
 port 6900
 master_version 5
 version 211
-serverType 0
+serverType 21
 serverEncoding Traditional Chinese
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+recvpackets recvpackets-twRO.txt
 
 [Taiwan - twRO: Free]
 ip 220.130.113.238
 port 6900
 master_version 5
 version 211
-serverType 0
+serverType 21
 serverEncoding Traditional Chinese
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
 PINEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+recvpackets recvpackets-twRO.txt
 
 [Taiwan - twRO: Muspelheim (Odin, Thor, Iris, Balder, Geiriod, Penril)]
 ip 61.220.56.132
 port 6900
 master_version 5
 version 211
-serverType 0
+serverType 21
 serverEncoding Traditional Chinese
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+recvpackets recvpackets-twRO.txt
 
 [Taiwan - twRO: Test]
 ip 61.220.62.26
 port 6900
 master_version 5
 version 211
-serverType 0
+serverType 21
 serverEncoding Traditional Chinese
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
 PINEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+recvpackets recvpackets-twRO.txt
 
 ## www.ragnarok.in.th/
 [Thailand - tRO Main server (Surtr, Bestla, Magni, Frey, Skadi)]
