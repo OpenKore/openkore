@@ -1223,7 +1223,8 @@ sub actor_display {
 	#### Packet specific ####
 	if ($args->{switch} eq "0078" ||
 		$args->{switch} eq "01D8" ||
-		$args->{switch} eq "022A") {
+		$args->{switch} eq "022A" ||
+		$args->{switch} eq "02EE") {
 		# Actor Exists
 
 		if ($actor->isa('Actor::Player')) {
@@ -1253,6 +1254,7 @@ sub actor_display {
 	} elsif ($args->{switch} eq "0079" ||
 		$args->{switch} eq "01DB" ||
 		$args->{switch} eq "022B" ||
+		$args->{switch} eq "02ED" ||
 		$args->{switch} eq "01D9") {
 		# Actor Connected
 
@@ -1270,6 +1272,7 @@ sub actor_display {
 	} elsif ($args->{switch} eq "007B" ||
 		$args->{switch} eq "01DA" ||
 		$args->{switch} eq "022C" ||
+		$args->{switch} eq "02EC" ||
 		$args->{switch} eq "0086") {
 		# Actor Moved
 
