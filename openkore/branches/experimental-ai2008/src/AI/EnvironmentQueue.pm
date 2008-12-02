@@ -27,16 +27,19 @@ use threads::shared;
 use Thread::Queue::Any;
 
 # Others (Perl Related)
-no warnings qw(redefine uninitialized);
+use warnings;
+no warnings 'redefine';
 use FindBin qw($RealBin);
 use Time::HiRes qw(time);
 use Scalar::Util qw(reftype refaddr blessed); 
 
 # Others (Kore related)
 use Modules 'register';
-use Log qw(message debug error warning);
+use Log qw(message warning error debug);
 use Translation;
 use I18N qw(stringToBytes);
+use Utils::CallbackList;
+use Utils::SmartCallbackList;
 
 ####################################
 ### CATEGORY: Constructor
@@ -51,9 +54,9 @@ sub new {
 	my $class = shift;
 	my %args = @_;
 	my %self;
-
+		
 	$self{listners} = {};			# Registered Listners
-	$self{events} = {};			# Registered Smart Events
+	$self{smart_events} = {};		# Registered Smart Events
 	$self{queue} = Thread::Queue::Any->new;	# Used for Queue
 
 	# TODO: Add loading and registering of all default Environment Queue listners
@@ -76,81 +79,151 @@ sub DESTROY {
 ####################################
 
 ##
+# EnvironmentQueue->queue_add(name, params)
+#
+# Add some structure to Queue.
+#
+sub queue_add {
+	my ($self, $name, $params) = @_;
+	lock ($self) if (is_shared($self));
+	my $obj = {};
+	$obj->{name} = $name;
+	$obj->{params} = $params;
+	$self->{queue}->enqueue(\$obj);
+}
+
+##
 # EnvironmentQueue->itterate()
 #
 # Called Every time (can be called even in infinite loop)
-# Used to check Whatever new 
+# Used to check Whatever new Object apeared in Queue
 #
 sub itterate {
 	my ($self) = @_;
 	lock ($self) if (is_shared($self));
 
-	while ($self->{queue}->pending > 0) {
 		# TODO:
 		# Add parsing Queue by 'name'
 		# Add check for Smart Event mutch
 		# Check if Matched Event registered by some Task, check whatever that Task exists.
 		# Check if Matched Event registered by Plugin, check whatever that Plugin actually Loded.
 		# Add Warning for NonRegistered Environment Queue message
+
+		# my $listner_object_class = blessed($self->{listners}->{$object->{name}})
+
+	while ($self->{queue}->pending > 0) {
+		my $object = $self->{queue}->dequeue;
+		my $full_object;
+		if ((defined $object->{name})&&(defined $object->{params})) {
+			# Check for Environment Listner
+			if (defined $self->{listners}->{$object->{name}}) {
+				$self->{listners}->{$object->{name}}->call($self, $object->{params});
+			} else {
+				warning T("Warning!!! Unknown Environment message found: \"" . $object->{name} . "\".\n");
+				next;
+			};
+			# Check for Smart Events
+			# TODO:
+			# Sometimes, it needs full Object. So decide, How can we get it??? and whatever we whant it.
+			if (defined $self->{smart_events}->{$object->{name}}) {
+				$self->{smart_events}->{$object->{name}}->call($self, $object->{params});
+			};
+		} else {
+			warning T("Warning!!! Unknown Environment Object Received.\n");
+			next;
+		};
 	};
 }
 
 ##
-# EnvironmentQueue->register_listner(name, listner_sub)
+# EnvironmentQueue->register_listner(name, listner_sub, lisner_self, [params, ...])
 # Return: listner ID.
 #
 # Register new Enviromnet Listner object.
 #
+# Example:
+# my $ID = $environmentQueue->register("my_command", \&my_callback, \$self, $params);
 sub register_listner {
-	my ($self, $name, $listner_sub) = @_;
-	lock ($self) if (is_shared($self));
+	my $self = shift;
+	my $name = shift;
+	my $listner_sub = shift;
+	my $lisner_self = shift;
+	my $params = @_;
 
-	# TODO:
-	# Make Registering Queue Listner actually work.
-	
+	lock ($self) if (is_shared($self));
+	lock ($lisner_self) if ((defined $lisner_self) && (is_shared($lisner_self)));
+
+	# There is no such listner yet. So we create it
+	if (!defined $self->{listners}->{$name}) {
+		my $new_listner = CallbackList->new($name);
+		$new_listner = shared_clone($new_listner) if (is_shared($self));
+		$self->{listners}->{$name} = $new_listner;
+	}
+
+	# Now we have an empty listner object, or allready made. So we add our callback there.
+	$lisner_self = undef if (!defined $lisner_self);
+	return $self->{listners}->{$name}->add($lisner_self, $listner_sub, $params); 
 }
 
 ##
-# EnvironmentQueue->unregister_listner(ID)
+# EnvironmentQueue->unregister_listner(name, ID)
 #
-# UnResgister Listner Object by given ID.
+# UnResgister Listner Object by given name and ID.
 #
 sub unregister_listner {
-	my ($self, $name, $listner_sub) = @_;
+	my ($self, $name, $id) = @_;
 	lock ($self) if (is_shared($self));
 	
-	# Make UnRegistering Queue Listner actually work.
+	if (defined $self->{listners}->{$name}) {
+		$self->{listners}->{$name}->remove($id);
+	}
 }
 
 ##
-# EnvironmentQueue->register_event(name, rules, event_sub, params)
+# EnvironmentQueue->register_event(name, rules, event_sub, event_self, [params, ...])
 # Return: event ID
 #
 # Resgister Smart Event Object.
 #
 sub register_event {
-	my ($self, $name, $rules, $event_sub, $params) = @_;
-	lock ($self) if (is_shared($self));
+	my $self = shift;
+	my $name = shift;
+	my $rules= shift;
+	my $event_sub = shift;
+	my $event_self = shift;
+	my $params = @_;
 
 	# TODO:
-	# Decide the rules format
-	# Make Registering Smart Events actually work.
+	# Document rules format
 
+	lock ($self) if (is_shared($self));
+	lock ($event_self) if ((defined $event_self) && (is_shared($event_self)));
+
+	# There is no such smart event yet. So we create it
+	if (!defined $self->{smart_events}->{$name}) {
+		my $new_smart_event = SmartCallbackList->new($name);
+		$new_smart_event = shared_clone($new_smart_event) if (is_shared($self));
+		$self->{smart_events}->{$name} = $new_smart_event;
+	}
+
+	# Now we have an empty smart event object, or allready made. So we add our callback there.
+	$event_self = undef if (!defined $event_self);
+
+	return $self->{smart_events}->{$name}->add($event_self, $rules, $event_sub, $params); 
 }
 
 ##
 # EnvironmentQueue->unregister_event(ID)
-# Return: event ID
 #
 # UnResgister Smart Event Object by given ID.
 #
 sub register_event {
-	my ($self, $name, $rules, $event_sub, $params) = @_;
+	my ($self, $name, $id) = @_;
 	lock ($self) if (is_shared($self));
-
-	# TODO:
-	# Make UnRegistering Smart Events actually work.
-
+	
+	if (defined $self->{smart_events}->{$name}) {
+		$self->{smart_events}->{$name}->remove($id);
+	}
 }
 
 ####################################
