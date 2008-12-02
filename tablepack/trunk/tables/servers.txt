@@ -321,7 +321,7 @@ storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x
 recvpackets recvpackets-twRO.txt
 
 [Taiwan - twRO: Test]
-ip 61.220.62.26
+ip 61.220.56.47
 port 6900
 master_version 5
 version 211
