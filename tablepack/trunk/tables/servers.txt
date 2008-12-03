@@ -65,7 +65,7 @@ ip 202.43.167.66
 port 6900
 master_version 12
 version 2
-serverType 0
+serverType 21
 secureLogin 1
 secureLogin_type 0
 secureLogin_requestCode
@@ -79,7 +79,7 @@ ip 202.43.167.66
 port 6900
 master_version 12
 version 2
-serverType 0
+serverType 21
 secureLogin 1
 secureLogin_type 0
 secureLogin_requestCode
