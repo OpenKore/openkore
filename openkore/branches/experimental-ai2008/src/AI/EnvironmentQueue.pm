@@ -53,15 +53,55 @@ use Utils::SmartCallbackList;
 sub new {
 	my $class = shift;
 	my %args = @_;
-	my %self;
+	my $dir = "$RealBin/src/AI/";
+	my $self  = {};
+	bless $self, $class;
 		
-	$self{listners} = {};			# Registered Listners
-	$self{smart_events} = {};		# Registered Smart Events
-	$self{queue} = Thread::Queue::Any->new;	# Used for Queue
+	$self->{listners} = {};				# Registered Listners
+	$self->{smart_events} = {};			# Registered Smart Events
+	$self->{queue} = Thread::Queue::Any->new;	# Used for Queue
 
-	# TODO: Add loading and registering of all default Environment Queue listners
+	# Read Directory with Command's.
+	return if ( !opendir( DIR, $dir ) );
+	my @items;
+	@items = readdir DIR;
+	closedir DIR;
 
-	return bless \%self, $class;
+	# Add all avalable command interpretters
+	foreach my $file (@items) {
+		if ( -f "$dir/$file" && $file =~ /\.(pm)$/ ) {
+			$file =~ s/\.(pm)$//;
+			my $module = "Environment::$file";
+			eval "use $module;";
+			if ($@) {
+				warning TF("Cannot load Environment parser \"%s\".\nError Message: \n%s", $module, $@ );
+				next;
+			}
+			my $constructor = UNIVERSAL::can( $module, 'new' );
+			if ( !$constructor ) {
+				warning TF( "Environment parser \"%s\" has no constructor.\n", $module );
+				next;
+			}
+			my $parse_msg = UNIVERSAL::can( $module, 'parse_msg' );
+			if ( !$parse_msg ) {
+				warning TF( "Environment parser \"%s\" has no pasing function.\n", $module );
+				next;
+			}
+			# call "$module::new($self). So that module can use our functions
+			my $env_parser = $constructor->( $module, $self );
+
+
+			if (!defined $self->{listners}->{$env_parser->getName()}) {
+				$self->{listners}->{$env_parser->getName()} = $env_parser;
+			} else {
+				warning TF( "Environment parser name \"%s\" allready registered.\n", $env_parser->getName() );
+				next;
+			}
+			
+		}
+	}
+
+	return $self;
 }
 
 ####################################
@@ -117,16 +157,25 @@ sub itterate {
 		if ((defined $object->{name})&&(defined $object->{params})) {
 			# Check for Environment Listner
 			if (defined $self->{listners}->{$object->{name}}) {
-				$self->{listners}->{$object->{name}}->call($self, $object->{params});
+				# Get Listner class.
+				my $class = blessed($self->{listners}->{$object->{name}});
+				$class =~ s/.*:://;
+
+				# If it's registered true "register_listner" then it cannot return $full_object becouse it's CallbackList
+				if ($class eq "CallbackList") {
+					$self->{listners}->{$object->{name}}->call($self, $object->{params});
+				} else {
+					$full_object = $self->{listners}->{$object->{name}}->parse_msg($self, $object->{params});
+				};
 			} else {
 				warning T("Warning!!! Unknown Environment message found: \"" . $object->{name} . "\".\n");
 				next;
 			};
+			# If $full_object is still empty, then we fill it.
+			$full_object = $object->{params} if (!defined $full_object);
 			# Check for Smart Events
-			# TODO:
-			# Sometimes, it needs full Object. So decide, How can we get it??? and whatever we whant it.
 			if (defined $self->{smart_events}->{$object->{name}}) {
-				$self->{smart_events}->{$object->{name}}->call($self, $object->{params});
+				$self->{smart_events}->{$object->{name}}->call($self, $full_object);
 			};
 		} else {
 			warning T("Warning!!! Unknown Environment Object Received.\n");
@@ -153,16 +202,27 @@ sub register_listner {
 	lock ($self) if (is_shared($self));
 	lock ($lisner_self) if ((defined $lisner_self) && (is_shared($lisner_self)));
 
-	# There is no such listner yet. So we create it
+	# There is no such listner yet. So we create it.
+	# If there is one, and it's not registered true 'register_listner'
 	if (!defined $self->{listners}->{$name}) {
 		my $new_listner = CallbackList->new($name);
 		$new_listner = shared_clone($new_listner) if (is_shared($self));
 		$self->{listners}->{$name} = $new_listner;
 	}
 
-	# Now we have an empty listner object, or allready made. So we add our callback there.
-	$lisner_self = undef if (!defined $lisner_self);
-	return $self->{listners}->{$name}->add($lisner_self, $listner_sub, $params); 
+	my $class = blessed($self->{listners}->{$name});
+	$class =~ s/.*:://;
+
+	# If it's registered true "register_listner" then it will be Registered
+	# else we show Warning message!
+	if ($class eq "CallbackList") {
+		# Now we have an empty listner object, or allready made. So we add our callback there.
+		$lisner_self = undef if (!defined $lisner_self);
+		return $self->{listners}->{$name}->add($lisner_self, $listner_sub, $params); 
+	} else {
+		warning TF( "Default Environment parser name \"%s\" cannot be Reregistered.\n", $name );
+	}
+	return undef;
 }
 
 ##
@@ -175,7 +235,16 @@ sub unregister_listner {
 	lock ($self) if (is_shared($self));
 	
 	if (defined $self->{listners}->{$name}) {
-		$self->{listners}->{$name}->remove($id);
+		my $class = blessed($self->{listners}->{$name});
+		$class =~ s/.*:://;
+
+		# If it's registered true "register_listner" then it can be UnRegistered
+		# else we show Warning message!
+		if ($class eq "CallbackList") {
+			$self->{listners}->{$name}->remove($id);
+		} else {
+			warning TF( "Default Environment parser name \"%s\" cannot be UnReregistered.\n", $name );
+		}
 	}
 }
 
