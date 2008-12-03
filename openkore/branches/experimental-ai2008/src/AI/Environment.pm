@@ -74,26 +74,15 @@ sub getName {
 }
 
 #####################################
-### CATEGORY: Events
-#####################################
-
-##
-# CallbackList $Environment->onEnvironmentMsg()
-#
-# This event is triggered when the Environment Queue gets message, that is parsed and interpretted by this module.
-# Users could use this Event to interpret messages by their plugins.
-sub onEnvironmentMsg {
-	return $_[0]->{T_onEnvironmentMsg};
-}
-
-#####################################
 ### CATEGORY: Public commands
 #####################################
 
 ##
-# void $Environment->parse_msg()
+# Hash $Environment->parse_msg(object)
+# object: message form Environment Queue
 #
 # Run the Environment Message parser.
+# Returns a full_object with all the childrens, or undef.
 sub parse_msg {
 	
 }
