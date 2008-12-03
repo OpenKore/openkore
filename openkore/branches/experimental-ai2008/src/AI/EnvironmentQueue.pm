@@ -45,6 +45,10 @@ use Utils::SmartCallbackList;
 ### CATEGORY: Constructor
 ####################################
 
+# TODO:
+# Check if Event is some Task, check whatever that Task exists.
+# Check if Event is some AI module, check whatever that Task exists.
+
 ##
 # EnvironmentQueue->new()
 #
@@ -59,6 +63,8 @@ sub new {
 		
 	$self->{listners} = {};				# Registered Listners
 	$self->{smart_events} = {};			# Registered Smart Events
+	# $self->{smart_ai_events} = {};		# Registered Smart Events by AI
+	# $self->{smart_task_events} = {};		# Registered Smart Events by Tasks
 	$self->{queue} = Thread::Queue::Any->new;	# Used for Queue
 
 	# Read Directory with Command's.
@@ -141,15 +147,6 @@ sub queue_add {
 sub itterate {
 	my ($self) = @_;
 	lock ($self) if (is_shared($self));
-
-		# TODO:
-		# Add parsing Queue by 'name'
-		# Add check for Smart Event mutch
-		# Check if Matched Event registered by some Task, check whatever that Task exists.
-		# Check if Matched Event registered by Plugin, check whatever that Plugin actually Loded.
-		# Add Warning for NonRegistered Environment Queue message
-
-		# my $listner_object_class = blessed($self->{listners}->{$object->{name}})
 
 	while ($self->{queue}->pending > 0) {
 		my $object = $self->{queue}->dequeue;
