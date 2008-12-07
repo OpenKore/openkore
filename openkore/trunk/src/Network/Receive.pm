@@ -339,6 +339,7 @@ sub new {
 		'02B1' => ['quest_list'],
 		'02B2' => ['objective_info'],
 		'02C5' => ['party_invite_result', 'Z24 V1', [qw(name type)]],
+		'02C6' => ['party_invite', 'a4 Z24', [qw(ID name)]],
 		'02C9' => ['party_allow_invite', 'C1', [qw(type)]],
 		'02D0' => ['inventory_items_nonstackable'],
 		'02D1' => ['storage_items_nonstackable'],
