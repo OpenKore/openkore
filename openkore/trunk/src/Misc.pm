@@ -2790,7 +2790,7 @@ sub useTeleport {
 
 			if ($char->{sitting}) {
 				Plugins::callHook('teleport_sent', \%args);
-				main::ai_skillUse($skill->getHandle(), $sk_lvl, 0, 0, $accountID);
+				main::ai_skillUse($skill->getHandle(), $use_lvl, 0, 0, $accountID);
 				return 1;
 			} else {
 				$messageSender->sendSkillUse($skill->getIDN(), $sk_lvl, $accountID);
