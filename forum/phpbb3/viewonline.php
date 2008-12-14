@@ -2,7 +2,7 @@
 /**
 *
 * @package phpBB3
-* @version $Id: viewonline.php 8677 2008-07-03 12:43:49Z acydburn $
+* @version $Id: viewonline.php 8705 2008-07-28 16:55:00Z Kellanved $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -305,7 +305,7 @@ while ($row = $db->sql_fetchrow($result))
 			$location_url = append_sid("{$phpbb_root_path}index.$phpEx");
 		break;
 
-		case 'download':
+		case 'download/file':
 			$location = $user->lang['DOWNLOADING_FILE'];
 			$location_url = append_sid("{$phpbb_root_path}index.$phpEx");
 		break;

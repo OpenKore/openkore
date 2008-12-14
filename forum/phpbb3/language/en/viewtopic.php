@@ -4,7 +4,7 @@
 * viewtopic [English]
 *
 * @package language
-* @version $Id: viewtopic.php,v 1.20 2007/10/29 13:39:34 kellanved Exp $
+* @version $Id: viewtopic.php 8775 2008-08-21 15:41:12Z Kellanved $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -40,6 +40,7 @@ $lang = array_merge($lang, array(
 	'ATTACHMENT_FUNCTIONALITY_DISABLED'	=> 'The attachments feature has been disabled.',
 
 	'BOOKMARK_ADDED'		=> 'Bookmarked topic successfully.',
+	'BOOKMARK_ERR'			=> 'Bookmarking the topic failed. Please try again.',
 	'BOOKMARK_REMOVED'		=> 'Removed bookmarked topic successfully.',
 	'BOOKMARK_TOPIC'		=> 'Bookmark topic',
 	'BOOKMARK_TOPIC_REMOVE'	=> 'Remove from bookmarks',

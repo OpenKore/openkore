@@ -2,7 +2,7 @@
 /**
 *
 * @package acp
-* @version $Id: acp_captcha.php 8655 2008-06-13 19:39:01Z acydburn $
+* @version $Id: acp_captcha.php 8722 2008-07-29 15:13:13Z Kellanved $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 */
@@ -80,7 +80,11 @@ class acp_captcha
 			$captcha_vars = array_keys($captcha_vars);
 			foreach ($captcha_vars as $captcha_var)
 			{
-				set_config($captcha_var, request_var($captcha_var, 0));
+				$value = request_var($captcha_var, 0);
+				if ($value >= 0)
+				{
+					set_config($captcha_var, $value);
+				}
 			}
 			trigger_error($user->lang['CONFIG_UPDATED'] . adm_back_link($this->u_action));
 		}

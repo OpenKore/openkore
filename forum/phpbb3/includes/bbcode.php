@@ -2,7 +2,7 @@
 /**
 *
 * @package phpBB3
-* @version $Id: bbcode.php,v 1.114 2007/10/07 10:34:45 naderman Exp $
+* @version $Id: bbcode.php 8953 2008-09-28 17:08:09Z acydburn $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -134,10 +134,21 @@ class bbcode
 		{
 			$this->template_bitfield = new bitfield($user->theme['bbcode_bitfield']);
 			$this->template_filename = $phpbb_root_path . 'styles/' . $user->theme['template_path'] . '/template/bbcode.html';
-
+			
 			if (!@file_exists($this->template_filename))
 			{
-				trigger_error('The file ' . $this->template_filename . ' is missing.', E_USER_ERROR);
+				if (isset($user->theme['template_inherits_id']) && $user->theme['template_inherits_id'])
+				{
+					$this->template_filename = $phpbb_root_path . 'styles/' . $user->theme['template_inherit_path'] . '/template/bbcode.html';
+					if (!@file_exists($this->template_filename))
+					{
+						trigger_error('The file ' . $this->template_filename . ' is missing.', E_USER_ERROR);
+					}
+				}
+				else
+				{
+					trigger_error('The file ' . $this->template_filename . ' is missing.', E_USER_ERROR);
+				}
 			}
 		}
 

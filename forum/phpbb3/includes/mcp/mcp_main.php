@@ -2,7 +2,7 @@
 /**
 *
 * @package mcp
-* @version $Id: mcp_main.php 8631 2008-06-09 12:36:06Z Kellanved $
+* @version $Id: mcp_main.php 8950 2008-09-27 10:59:25Z toonarmy $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -649,7 +649,7 @@ function mcp_move_topic($topic_ids)
 		{
 			// Get the list of forums to resync, add a log entry
 			$forum_ids[] = $row['forum_id'];
-			add_log('mod', $to_forum_id, $topic_id, 'LOG_MOVE', $row['forum_name']);
+			add_log('mod', $to_forum_id, $topic_id, 'LOG_MOVE', $row['forum_name'], $forum_data['forum_name']);
 
 			// If we have moved a global announcement, we need to correct the topic type
 			if ($row['topic_type'] == POST_GLOBAL)
@@ -667,8 +667,8 @@ function mcp_move_topic($topic_ids)
 					'forum_id'				=>	(int) $row['forum_id'],
 					'icon_id'				=>	(int) $row['icon_id'],
 					'topic_attachment'		=>	(int) $row['topic_attachment'],
-					'topic_approved'		=>	1,
-					'topic_reported'		=>	(int) $row['topic_reported'],
+					'topic_approved'		=>	1, // a shadow topic is always approved
+					'topic_reported'		=>	0, // a shadow topic is never reported
 					'topic_title'			=>	(string) $row['topic_title'],
 					'topic_poster'			=>	(int) $row['topic_poster'],
 					'topic_time'			=>	(int) $row['topic_time'],
@@ -789,7 +789,7 @@ function mcp_delete_topic($topic_ids)
 
 		foreach ($data as $topic_id => $row)
 		{
-			add_log('mod', $row['forum_id'], 0, 'LOG_TOPIC_DELETED', $row['topic_title']);
+			add_log('mod', $row['forum_id'], $topic_id, 'LOG_DELETE_' . ($row['topic_moved_id'] ? 'SHADOW_' : '') . 'TOPIC', $row['topic_title']);
 		}
 
 		$return = delete_topics('topic_id', $topic_ids);
@@ -799,8 +799,17 @@ function mcp_delete_topic($topic_ids)
 		confirm_box(false, (sizeof($topic_ids) == 1) ? 'DELETE_TOPIC' : 'DELETE_TOPICS', $s_hidden_fields);
 	}
 
-	$redirect = request_var('redirect', "index.$phpEx");
-	$redirect = reapply_sid($redirect);
+	if (!isset($_REQUEST['quickmod']))
+	{
+		$redirect = request_var('redirect', "index.$phpEx");
+		$redirect = reapply_sid($redirect);
+		$redirect_message = 'PAGE';
+	}
+	else
+	{
+		$redirect = append_sid("{$phpbb_root_path}viewforum.$phpEx", 'f=' . $forum_id);
+		$redirect_message = 'FORUM';
+	}
 
 	if (!$success_msg)
 	{
@@ -808,9 +817,8 @@ function mcp_delete_topic($topic_ids)
 	}
 	else
 	{
-		$redirect_url = append_sid("{$phpbb_root_path}viewforum.$phpEx", 'f=' . $forum_id);
-		meta_refresh(3, $redirect_url);
-		trigger_error($user->lang[$success_msg] . '<br /><br />' . sprintf($user->lang['RETURN_FORUM'], '<a href="' . $redirect_url . '">', '</a>'));
+		meta_refresh(3, $redirect);
+		trigger_error($user->lang[$success_msg] . '<br /><br />' . sprintf($user->lang['RETURN_' . $redirect_message], '<a href="' . $redirect . '">', '</a>'));
 	}
 }
 

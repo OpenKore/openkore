@@ -2,7 +2,7 @@
 /**
 *
 * @package ucp
-* @version $Id: ucp.php 8655 2008-06-13 19:39:01Z acydburn $
+* @version $Id: ucp.php 8915 2008-09-23 13:30:52Z acydburn $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -36,6 +36,7 @@ $user->setup('ucp');
 $template->assign_var('S_IN_UCP', true);
 
 $module = new p_master();
+$default = false;
 
 // Basic "global" modes
 switch ($mode)
@@ -69,7 +70,6 @@ switch ($mode)
 
 	case 'confirm':
 		$module->load('ucp', 'confirm');
-		exit;
 	break;
 
 	case 'login':
@@ -233,6 +233,16 @@ switch ($mode)
 		trigger_error($message);
 
 	break;
+
+	default:
+		$default = true;
+	break;
+}
+
+// We use this approach because it does not impose large code changes
+if (!$default)
+{
+	return true;
 }
 
 // Only registered users can go beyond this point

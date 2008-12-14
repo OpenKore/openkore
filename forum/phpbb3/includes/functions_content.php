@@ -2,7 +2,7 @@
 /**
 *
 * @package phpBB3
-* @version $Id: functions_content.php 8667 2008-06-21 16:05:02Z acydburn $
+* @version $Id: functions_content.php 9184 2008-12-11 14:46:38Z acydburn $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -41,57 +41,66 @@ if (!defined('IN_PHPBB'))
 /**
 * Generate sort selection fields
 */
-function gen_sort_selects(&$limit_days, &$sort_by_text, &$sort_days, &$sort_key, &$sort_dir, &$s_limit_days, &$s_sort_key, &$s_sort_dir, &$u_sort_param)
+function gen_sort_selects(&$limit_days, &$sort_by_text, &$sort_days, &$sort_key, &$sort_dir, &$s_limit_days, &$s_sort_key, &$s_sort_dir, &$u_sort_param, $def_st = false, $def_sk = false, $def_sd = false)
 {
 	global $user;
 
 	$sort_dir_text = array('a' => $user->lang['ASCENDING'], 'd' => $user->lang['DESCENDING']);
 
-	// Check if the key is selectable. If not, we reset to the first key found.
-	// This ensures the values are always valid.
-	if (!isset($limit_days[$sort_days]))
-	{
-		@reset($limit_days);
-		$sort_days = key($limit_days);
-	}
+	$sorts = array(
+		'st'	=> array(
+			'key'		=> 'sort_days',
+			'default'	=> $def_st,
+			'options'	=> $limit_days,
+			'output'	=> &$s_limit_days,
+		),
 
-	if (!isset($sort_by_text[$sort_key]))
-	{
-		@reset($sort_by_text);
-		$sort_key = key($sort_by_text);
-	}
+		'sk'	=> array(
+			'key'		=> 'sort_key',
+			'default'	=> $def_sk,
+			'options'	=> $sort_by_text,
+			'output'	=> &$s_sort_key,
+		),
 
-	if (!isset($sort_dir_text[$sort_dir]))
-	{
-		@reset($sort_dir_text);
-		$sort_dir = key($sort_dir_text);
-	}
+		'sd'	=> array(
+			'key'		=> 'sort_dir',
+			'default'	=> $def_sd,
+			'options'	=> $sort_dir_text,
+			'output'	=> &$s_sort_dir,
+		),
+	);
+	$u_sort_param  = '';
 
-	$s_limit_days = '<select name="st" id="st">';
-	foreach ($limit_days as $day => $text)
+	foreach ($sorts as $name => $sort_ary)
 	{
-		$selected = ($sort_days == $day) ? ' selected="selected"' : '';
-		$s_limit_days .= '<option value="' . $day . '"' . $selected . '>' . $text . '</option>';
-	}
-	$s_limit_days .= '</select>';
+		$key = $sort_ary['key'];
+		$selected = $$sort_ary['key'];
 
-	$s_sort_key = '<select name="sk" id="sk">';
-	foreach ($sort_by_text as $key => $text)
-	{
-		$selected = ($sort_key == $key) ? ' selected="selected"' : '';
-		$s_sort_key .= '<option value="' . $key . '"' . $selected . '>' . $text . '</option>';
-	}
-	$s_sort_key .= '</select>';
+		// Check if the key is selectable. If not, we reset to the default or first key found.
+		// This ensures the values are always valid. We also set $sort_dir/sort_key/etc. to the
+		// correct value, else the protection is void. ;)
+		if (!isset($sort_ary['options'][$selected]))
+		{
+			if ($sort_ary['default'] !== false)
+			{
+				$selected = $$key = $sort_ary['default'];
+			}
+			else
+			{
+				@reset($sort_ary['options']);
+				$selected = $$key = key($sort_ary['options']);
+			}
+		}
 
-	$s_sort_dir = '<select name="sd" id="sd">';
-	foreach ($sort_dir_text as $key => $value)
-	{
-		$selected = ($sort_dir == $key) ? ' selected="selected"' : '';
-		$s_sort_dir .= '<option value="' . $key . '"' . $selected . '>' . $value . '</option>';
-	}
-	$s_sort_dir .= '</select>';
+		$sort_ary['output'] = '<select name="' . $name . '" id="' . $name . '">';
+		foreach ($sort_ary['options'] as $option => $text)
+		{
+			$sort_ary['output'] .= '<option value="' . $option . '"' . (($selected == $option) ? ' selected="selected"' : '') . '>' . $text . '</option>';
+		}
+		$sort_ary['output'] .= '</select>';
 
-	$u_sort_param = "st=$sort_days&amp;sk=$sort_key&amp;sd=$sort_dir";
+		$u_sort_param .= ($selected !== $sort_ary['default']) ? ((strlen($u_sort_param)) ? '&amp;' : '') . "{$name}={$selected}" : '';
+	}
 
 	return;
 }
@@ -239,7 +248,7 @@ function bump_topic_allowed($forum_id, $topic_bumped, $last_post_time, $topic_po
 function get_context($text, $words, $length = 400)
 {
 	// first replace all whitespaces with single spaces
-	$text = preg_replace('/ +/', ' ', strtr($text, "\t\n\r\x0C ", '     '), $text);
+	$text = preg_replace('/ +/', ' ', strtr($text, "\t\n\r\x0C ", '     '));
 
 	$word_indizes = array();
 	if (sizeof($words))
@@ -492,7 +501,8 @@ function generate_text_for_edit($text, $uid, $flags)
 */
 function make_clickable_callback($type, $whitespace, $url, $relative_url, $class)
 {
-	$orig_url		= $url . $relative_url;
+	$orig_url		= $url;
+	$orig_relative	= $relative_url;
 	$append			= '';
 	$url			= htmlspecialchars_decode($url);
 	$relative_url	= htmlspecialchars_decode($relative_url);
@@ -557,6 +567,12 @@ function make_clickable_callback($type, $whitespace, $url, $relative_url, $class
 				$url = substr($url, 0, -1);
 			}
 		break;
+
+		// set last_char to empty here, so the variable can be used later to
+		// check whether a character was removed
+		default:
+			$last_char = '';
+		break;
 	}
 
 	$short_url = (strlen($url) > 55) ? substr($url, 0, 39) . ' ... ' . substr($url, -10) : $url;
@@ -574,7 +590,7 @@ function make_clickable_callback($type, $whitespace, $url, $relative_url, $class
 			// don't touch it and let MAGIC_URL_FULL take care of it.
 			if (!$relative_url)
 			{
-				return $whitespace . $orig_url . '/'; // slash is taken away by relative url pattern
+				return $whitespace . $orig_url . '/' . $orig_relative; // slash is taken away by relative url pattern
 			}
 		break;
 
@@ -1128,6 +1144,7 @@ function truncate_string($string, $max_length = 60, $max_store_length = 255, $al
 
 /**
 * Get username details for placing into templates.
+* This function caches all modes on first call, except for no_profile and anonymous user - determined by $user_id.
 *
 * @param string $mode Can be profile (for getting an url to the profile), username (for obtaining the username), colour (for obtaining the user colour), full (for obtaining a html string representing a coloured link to the users profile) or no_profile (the same as full but forcing no profile link)
 * @param int $user_id The users id
@@ -1137,12 +1154,30 @@ function truncate_string($string, $max_length = 60, $max_store_length = 255, $al
 * @param string $custom_profile_url optional parameter to specify a profile url. The user id get appended to this url as &amp;u={user_id}
 *
 * @return string A string consisting of what is wanted based on $mode.
+* @author BartVB, Acyd Burn
 */
 function get_username_string($mode, $user_id, $username, $username_colour = '', $guest_username = false, $custom_profile_url = false)
 {
+	static $_profile_cache;
+	static $_base_profile_url;
+
+	$cache_key = $user_id;
+
+	// If the get_username_string() function had been executed once with an (to us) unkown mode, all modes are pre-filled and we can just grab it.
+	if ($user_id && $user_id != ANONYMOUS && isset($_profile_cache[$cache_key][$mode]))
+	{
+		// If the mode is 'no_profile', we simply construct the TPL code due to calls to this mode being very very rare
+		if ($mode == 'no_profile')
+		{
+			$tpl = (!$_profile_cache[$cache_key]['colour']) ? '{USERNAME}' : '<span style="color: {USERNAME_COLOUR};" class="username-coloured">{USERNAME}</span>';
+			return str_replace(array('{USERNAME_COLOUR}', '{USERNAME}'), array($_profile_cache[$cache_key]['colour'], $_profile_cache[$cache_key]['username']), $tpl);
+		}
+
+		return $_profile_cache[$cache_key][$mode];
+	}
+
 	global $phpbb_root_path, $phpEx, $user, $auth;
 
-	$profile_url = '';
 	$username_colour = ($username_colour) ? '#' . $username_colour : '';
 
 	if ($guest_username === false)
@@ -1154,64 +1189,42 @@ function get_username_string($mode, $user_id, $username, $username_colour = '', 
 		$username = ($user_id && $user_id != ANONYMOUS) ? $username : ((!empty($guest_username)) ? $guest_username : $user->lang['GUEST']);
 	}
 
-	// Only show the link if not anonymous
-	if ($mode != 'no_profile' && $user_id && $user_id != ANONYMOUS)
+	// Build cache for all modes
+	$_profile_cache[$cache_key]['colour'] = $username_colour;
+	$_profile_cache[$cache_key]['username'] = $username;
+	$_profile_cache[$cache_key]['no_profile'] = true;
+
+	// Profile url - only show if not anonymous and permission to view profile if registered user
+	// For anonymous the link leads to a login page.
+	if ($user_id && $user_id != ANONYMOUS && ($user->data['user_id'] == ANONYMOUS || $auth->acl_get('u_viewprofile')))
 	{
-		// Do not show the link if the user is already logged in but do not have u_viewprofile permissions (relevant for bots mostly).
-		// For all others the link leads to a login page or the profile.
-		if ($user->data['user_id'] != ANONYMOUS && !$auth->acl_get('u_viewprofile'))
+		if (empty($_base_profile_url))
 		{
-			$profile_url = '';
+			$_base_profile_url = append_sid("{$phpbb_root_path}memberlist.$phpEx", 'mode=viewprofile&amp;u={USER_ID}');
 		}
-		else
-		{
-			$profile_url = ($custom_profile_url !== false) ? $custom_profile_url . '&amp;u=' . (int) $user_id : append_sid("{$phpbb_root_path}memberlist.$phpEx", 'mode=viewprofile&amp;u=' . (int) $user_id);
-		}
+
+		$profile_url = ($custom_profile_url !== false) ? $custom_profile_url . '&amp;u=' . (int) $user_id : str_replace('={USER_ID}', '=' . (int) $user_id, $_base_profile_url);
+		$tpl = (!$username_colour) ? '<a href="{PROFILE_URL}">{USERNAME}</a>' : '<a href="{PROFILE_URL}" style="color: {USERNAME_COLOUR};" class="username-coloured">{USERNAME}</a>';
+		$_profile_cache[$cache_key]['full'] = str_replace(array('{PROFILE_URL}', '{USERNAME_COLOUR}', '{USERNAME}'), array($profile_url, $username_colour, $username), $tpl);
 	}
 	else
 	{
+		$tpl = (!$username_colour) ? '{USERNAME}' : '<span style="color: {USERNAME_COLOUR};" class="username-coloured">{USERNAME}</span>';
+		$_profile_cache[$cache_key]['full'] = str_replace(array('{USERNAME_COLOUR}', '{USERNAME}'), array($username_colour, $username), $tpl);
 		$profile_url = '';
 	}
 
-	switch ($mode)
+	// Use the profile url from above
+	$_profile_cache[$cache_key]['profile'] = $profile_url;
+
+	// If - by any chance - no_profile is called before any other mode, we need to do the calculation here
+	if ($mode == 'no_profile')
 	{
-		case 'profile':
-			return $profile_url;
-		break;
-
-		case 'username':
-			return $username;
-		break;
-
-		case 'colour':
-			return $username_colour;
-		break;
-
-		case 'no_profile':
-		case 'full':
-		default:
-
-			$tpl = '';
-			if (!$profile_url && !$username_colour)
-			{
-				$tpl = '{USERNAME}';
-			}
-			else if (!$profile_url && $username_colour)
-			{
-				$tpl = '<span style="color: {USERNAME_COLOUR};" class="username-coloured">{USERNAME}</span>';
-			}
-			else if ($profile_url && !$username_colour)
-			{
-				$tpl = '<a href="{PROFILE_URL}">{USERNAME}</a>';
-			}
-			else if ($profile_url && $username_colour)
-			{
-				$tpl = '<a href="{PROFILE_URL}" style="color: {USERNAME_COLOUR};" class="username-coloured">{USERNAME}</a>';
-			}
-
-			return str_replace(array('{PROFILE_URL}', '{USERNAME_COLOUR}', '{USERNAME}'), array($profile_url, $username_colour, $username), $tpl);
-		break;
+		$tpl = (!$_profile_cache[$cache_key]['colour']) ? '{USERNAME}' : '<span style="color: {USERNAME_COLOUR};" class="username-coloured">{USERNAME}</span>';
+		return str_replace(array('{USERNAME_COLOUR}', '{USERNAME}'), array($_profile_cache[$cache_key]['colour'], $_profile_cache[$cache_key]['username']), $tpl);
 	}
+
+	return $_profile_cache[$cache_key][$mode];
 }
 
 /**

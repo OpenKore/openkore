@@ -2,7 +2,7 @@
 /**
 *
 * @package phpBB3
-* @version $Id: functions_messenger.php 8479 2008-03-29 00:22:48Z naderman $
+* @version $Id: functions_messenger.php 9078 2008-11-22 19:55:00Z acydburn $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -97,6 +97,12 @@ class messenger
 	*/
 	function im($address, $realname = '')
 	{
+		// IM-Addresses could be empty
+		if (!$address)
+		{
+			return;
+		}
+
 		$pos = isset($this->addresses['im']) ? sizeof($this->addresses['im']) : 0;
 		$this->addresses['im'][$pos]['uid'] = trim($address);
 		$this->addresses['im'][$pos]['name'] = trim($realname);
@@ -443,6 +449,11 @@ class messenger
 			return false;
 		}
 
+		if (empty($this->addresses['im']))
+		{
+			return false;
+		}
+
 		$use_queue = false;
 		if ($config['jab_package_size'] && $this->use_queue)
 		{
@@ -562,7 +573,7 @@ class queue
 
 		$fp = @fopen($this->cache_file . '.lock', 'wb');
 		fclose($fp);
-		@chmod($this->cache_file . '.lock', 0666);
+		@chmod($this->cache_file . '.lock', 0777);
 
 		include($this->cache_file);
 
@@ -683,21 +694,21 @@ class queue
 				break;
 			}
 		}
-	
+
 		if (!sizeof($this->queue_data))
 		{
 			@unlink($this->cache_file);
 		}
 		else
 		{
-			if ($fp = @fopen($this->cache_file, 'w'))
+			if ($fp = @fopen($this->cache_file, 'wb'))
 			{
 				@flock($fp, LOCK_EX);
-				fwrite($fp, "<?php\n\$this->queue_data = " . var_export($this->queue_data, true) . ";\n?>");
+				fwrite($fp, "<?php\n\$this->queue_data = unserialize(" . var_export(serialize($this->queue_data), true) . ");\n\n?>");
 				@flock($fp, LOCK_UN);
 				fclose($fp);
 
-				@chmod($this->cache_file, 0666);
+				phpbb_chmod($this->cache_file, CHMOD_WRITE);
 			}
 		}
 
@@ -713,11 +724,11 @@ class queue
 		{
 			return;
 		}
-		
+
 		if (file_exists($this->cache_file))
 		{
 			include($this->cache_file);
-			
+
 			foreach ($this->queue_data as $object => $data_ary)
 			{
 				if (isset($this->data[$object]) && sizeof($this->data[$object]))
@@ -734,11 +745,11 @@ class queue
 		if ($fp = @fopen($this->cache_file, 'w'))
 		{
 			@flock($fp, LOCK_EX);
-			fwrite($fp, "<?php\n\$this->queue_data = " . var_export($this->data, true) . ";\n?>");
+			fwrite($fp, "<?php\n\$this->queue_data = unserialize(" . var_export(serialize($this->data), true) . ");\n\n?>");
 			@flock($fp, LOCK_UN);
 			fclose($fp);
 
-			@chmod($this->cache_file, 0666);
+			phpbb_chmod($this->cache_file, CHMOD_WRITE);
 		}
 	}
 }
@@ -1047,7 +1058,7 @@ class smtp_class
 			$err_msg .= $message;
 		}
 	}
-	
+
 	/**
 	* Log into server and get possible auth codes if neccessary
 	*/
@@ -1108,7 +1119,7 @@ class smtp_class
 				return false;
 			}
 
-			// If EHLO fails, we try HELO			
+			// If EHLO fails, we try HELO
 			$this->server_send("HELO {$local_host}");
 			if ($err_msg = $this->server_parse('250', __LINE__))
 			{
@@ -1129,7 +1140,7 @@ class smtp_class
 		{
 			return false;
 		}
-		
+
 		if (!isset($this->commands['AUTH']))
 		{
 			return (isset($user->lang['SMTP_NO_AUTH_SUPPORT'])) ? $user->lang['SMTP_NO_AUTH_SUPPORT'] : 'SMTP server does not support authentication';
@@ -1290,7 +1301,7 @@ class smtp_class
 		}
 
 		$md5_challenge = base64_decode($this->responses[0]);
-		
+
 		// Parse the md5 challenge - from AUTH_SASL (PEAR)
 		$tokens = array();
 		while (preg_match('/^([a-z-]+)=("[^"]+(?<!\\\)"|[^,]+)/i', $md5_challenge, $matches))

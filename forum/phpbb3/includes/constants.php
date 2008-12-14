@@ -2,7 +2,7 @@
 /**
 *
 * @package phpBB3
-* @version $Id: constants.php 8554 2008-05-15 13:29:14Z Kellanved $
+* @version $Id: constants.php 9187 2008-12-12 14:47:03Z acydburn $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -23,6 +23,9 @@ if (!defined('IN_PHPBB'))
 * PHPBB_ROOT_PATH
 * PHPBB_ADMIN_PATH
 */
+
+// phpBB Version
+define('PHPBB_VERSION', '3.0.4');
 
 // QA-related
 // define('PHPBB_QA', 1);
@@ -176,6 +179,11 @@ define('REFERER_VALIDATE_NONE', 0);
 define('REFERER_VALIDATE_HOST', 1);
 define('REFERER_VALIDATE_PATH', 2);
 
+// phpbb_chmod() permissions
+@define('CHMOD_ALL', 7);
+@define('CHMOD_READ', 4);
+@define('CHMOD_WRITE', 2);
+@define('CHMOD_EXECUTE', 1);
 
 // Additional constants
 define('VOTE_CONVERTED', 127);

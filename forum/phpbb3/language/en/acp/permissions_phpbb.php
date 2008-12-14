@@ -3,7 +3,7 @@
 * acp_permissions_phpbb (phpBB Permission Set) [English]
 *
 * @package language
-* @version $Id: permissions_phpbb.php 8479 2008-03-29 00:22:48Z naderman $
+* @version $Id: permissions_phpbb.php 8911 2008-09-23 13:03:33Z acydburn $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 */
@@ -111,7 +111,8 @@ $lang = array_merge($lang, array(
 	'acl_u_sig'			=> array('lang' => 'Can use signature', 'cat' => 'post'),
 
 	'acl_u_sendpm'		=> array('lang' => 'Can send private messages', 'cat' => 'pm'),
-	'acl_u_masspm'		=> array('lang' => 'Can send pm to multiple users and groups', 'cat' => 'pm'),
+	'acl_u_masspm'		=> array('lang' => 'Can send messages to multiple users', 'cat' => 'pm'),
+	'acl_u_masspm_group'=> array('lang' => 'Can send messages to groups', 'cat' => 'pm'),
 	'acl_u_readpm'		=> array('lang' => 'Can read private messages', 'cat' => 'pm'),
 	'acl_u_pm_edit'		=> array('lang' => 'Can edit own private messages', 'cat' => 'pm'),
 	'acl_u_pm_delete'	=> array('lang' => 'Can remove private messages from own folder', 'cat' => 'pm'),

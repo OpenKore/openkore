@@ -2,7 +2,7 @@
 /**
 *
 * @package acp
-* @version $Id: acp_groups.php 8634 2008-06-09 13:05:34Z Kellanved $
+* @version $Id: acp_groups.php 9053 2008-11-09 15:10:40Z acydburn $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -88,7 +88,7 @@ class acp_groups
 				// Approve, demote or promote
 				$group_name = ($group_row['group_type'] == GROUP_SPECIAL) ? $user->lang['G_' . $group_row['group_name']] : $group_row['group_name'];
 				$error = group_user_attributes($action, $group_id, $mark_ary, false, $group_name);
-				
+
 				if (!$error)
 				{
 					switch ($action)
@@ -112,7 +112,7 @@ class acp_groups
 				{
 					trigger_error($user->lang[$error] . adm_back_link($this->u_action . '&amp;action=list&amp;g=' . $group_id), E_USER_WARNING);
 				}
-				
+
 			break;
 
 			case 'default':
@@ -180,13 +180,17 @@ class acp_groups
 
 			case 'deleteusers':
 			case 'delete':
+				if (!$group_id)
+				{
+					trigger_error($user->lang['NO_GROUP'] . adm_back_link($this->u_action), E_USER_WARNING);
+				}
+				else if ($action === 'delete' && $group_row['group_type'] == GROUP_SPECIAL)
+				{
+					trigger_error($user->lang['NO_AUTH_OPERATION'] . adm_back_link($this->u_action), E_USER_WARNING);
+				}
+
 				if (confirm_box(true))
 				{
-					if (!$group_id)
-					{
-						trigger_error($user->lang['NO_GROUP'] . adm_back_link($this->u_action), E_USER_WARNING);
-					}
-
 					$error = '';
 
 					switch ($action)
@@ -303,6 +307,7 @@ class acp_groups
 						'receive_pm'		=> isset($_REQUEST['group_receive_pm']) ? 1 : 0,
 						'legend'			=> isset($_REQUEST['group_legend']) ? 1 : 0,
 						'message_limit'		=> request_var('group_message_limit', 0),
+						'max_recipients'	=> request_var('group_max_recipients', 0),
 						'founder_manage'	=> 0,
 					);
 
@@ -395,7 +400,7 @@ class acp_groups
 						// were made.
 
 						$group_attributes = array();
-						$test_variables = array('rank', 'colour', 'avatar', 'avatar_type', 'avatar_width', 'avatar_height', 'receive_pm', 'legend', 'message_limit', 'founder_manage');
+						$test_variables = array('rank', 'colour', 'avatar', 'avatar_type', 'avatar_width', 'avatar_height', 'receive_pm', 'legend', 'message_limit', 'max_recipients', 'founder_manage');
 						foreach ($test_variables as $test)
 						{
 							if (isset($submit_ary[$test]) && ($action == 'add' || $group_row['group_' . $test] != $submit_ary[$test]))
@@ -555,6 +560,7 @@ class acp_groups
 					'GROUP_FOUNDER_MANAGE'	=> (isset($group_row['group_founder_manage']) && $group_row['group_founder_manage']) ? ' checked="checked"' : '',
 					'GROUP_LEGEND'			=> (isset($group_row['group_legend']) && $group_row['group_legend']) ? ' checked="checked"' : '',
 					'GROUP_MESSAGE_LIMIT'	=> (isset($group_row['group_message_limit'])) ? $group_row['group_message_limit'] : 0,
+					'GROUP_MAX_RECIPIENTS'	=> (isset($group_row['group_max_recipients'])) ? $group_row['group_max_recipients'] : 0,
 					'GROUP_COLOUR'			=> (isset($group_row['group_colour'])) ? $group_row['group_colour'] : '',
 
 
@@ -747,14 +753,14 @@ class acp_groups
 			foreach ($row_ary as $group_id => $row)
 			{
 				$group_name = (!empty($user->lang['G_' . $row['group_name']]))? $user->lang['G_' . $row['group_name']] : $row['group_name'];
-				
+
 				$template->assign_block_vars('groups', array(
 					'U_LIST'		=> "{$this->u_action}&amp;action=list&amp;g=$group_id",
 					'U_EDIT'		=> "{$this->u_action}&amp;action=edit&amp;g=$group_id",
 					'U_DELETE'		=> ($auth->acl_get('a_groupdel')) ? "{$this->u_action}&amp;action=delete&amp;g=$group_id" : '',
 
 					'S_GROUP_SPECIAL'	=> ($row['group_type'] == GROUP_SPECIAL) ? true : false,
-					
+
 					'GROUP_NAME'	=> $group_name,
 					'TOTAL_MEMBERS'	=> $row['total_members'],
 					)

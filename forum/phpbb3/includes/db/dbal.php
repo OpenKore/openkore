@@ -2,7 +2,7 @@
 /**
 *
 * @package dbal
-* @version $Id: dbal.php 8479 2008-03-29 00:22:48Z naderman $
+* @version $Id: dbal.php 9178 2008-12-06 11:11:10Z acydburn $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -34,7 +34,7 @@ class dbal
 	var $query_hold = '';
 	var $html_hold = '';
 	var $sql_report = '';
-	
+
 	var $persistency = false;
 	var $user = '';
 	var $server = '';
@@ -47,7 +47,7 @@ class dbal
 	var $sql_error_sql = '';
 	// Holding the error information - only populated if sql_error_triggered is set
 	var $sql_error_returned = array();
-	
+
 	// Holding transaction count
 	var $transactions = 0;
 
@@ -64,6 +64,11 @@ class dbal
 	*/
 	var $any_char;
 	var $one_char;
+
+	/**
+	* Exact version of the DBAL, directly queried
+	*/
+	var $sql_server_version = false;
 
 	/**
 	* Constructor
@@ -137,8 +142,14 @@ class dbal
 		{
 			$this->sql_freeresult($query_id);
 		}
-		
-		return $this->_sql_close();
+
+		// Connection closed correctly. Set db_connect_id to false to prevent errors
+		if ($result = $this->_sql_close())
+		{
+			$this->db_connect_id = false;
+		}
+
+		return $result;
 	}
 
 	/**
@@ -179,7 +190,7 @@ class dbal
 
 			return $result;
 		}
-		
+
 		return false;
 	}
 
@@ -300,7 +311,7 @@ class dbal
 	* Build sql statement from array for insert/update/select statements
 	*
 	* Idea for this from Ikonboard
-	* Possible query values: INSERT, INSERT_SELECT, MULTI_INSERT, UPDATE, SELECT
+	* Possible query values: INSERT, INSERT_SELECT, UPDATE, SELECT
 	*
 	*/
 	function sql_build_array($query, $assoc_ary = false)
@@ -333,24 +344,7 @@ class dbal
 		}
 		else if ($query == 'MULTI_INSERT')
 		{
-			$ary = array();
-			foreach ($assoc_ary as $id => $sql_ary)
-			{
-				// If by accident the sql array is only one-dimensional we build a normal insert statement
-				if (!is_array($sql_ary))
-				{
-					return $this->sql_build_array('INSERT', $assoc_ary);
-				}
-
-				$values = array();
-				foreach ($sql_ary as $key => $var)
-				{
-					$values[] = $this->_sql_validate_value($var);
-				}
-				$ary[] = '(' . implode(', ', $values) . ')';
-			}
-
-			$query = ' (' . implode(', ', array_keys($assoc_ary[0])) . ') VALUES ' . implode(', ', $ary);
+			trigger_error('The MULTI_INSERT query value is no longer supported. Please use sql_multi_insert() instead.', E_USER_ERROR);
 		}
 		else if ($query == 'UPDATE' || $query == 'SELECT')
 		{
@@ -435,7 +429,25 @@ class dbal
 
 		if ($this->multi_insert)
 		{
-			$this->sql_query('INSERT INTO ' . $table . ' ' . $this->sql_build_array('MULTI_INSERT', $sql_ary));
+			$ary = array();
+			foreach ($sql_ary as $id => $_sql_ary)
+			{
+				// If by accident the sql array is only one-dimensional we build a normal insert statement
+				if (!is_array($_sql_ary))
+				{
+					$this->sql_query('INSERT INTO ' . $table . ' ' . $this->sql_build_array('INSERT', $sql_ary));
+					return true;
+				}
+
+				$values = array();
+				foreach ($_sql_ary as $key => $var)
+				{
+					$values[] = $this->_sql_validate_value($var);
+				}
+				$ary[] = '(' . implode(', ', $values) . ')';
+			}
+
+			$this->sql_query('INSERT INTO ' . $table . ' ' . ' (' . implode(', ', array_keys($sql_ary[0])) . ') VALUES ' . implode(', ', $ary));
 		}
 		else
 		{
@@ -488,19 +500,62 @@ class dbal
 
 				$sql = str_replace('_', ' ', $query) . ' ' . $array['SELECT'] . ' FROM ';
 
-				$table_array = array();
+				// Build table array. We also build an alias array for later checks.
+				$table_array = $aliases = array();
+				$used_multi_alias = false;
+
 				foreach ($array['FROM'] as $table_name => $alias)
 				{
 					if (is_array($alias))
 					{
+						$used_multi_alias = true;
+
 						foreach ($alias as $multi_alias)
 						{
 							$table_array[] = $table_name . ' ' . $multi_alias;
+							$aliases[] = $multi_alias;
 						}
 					}
 					else
 					{
 						$table_array[] = $table_name . ' ' . $alias;
+						$aliases[] = $alias;
+					}
+				}
+
+				// We run the following code to determine if we need to re-order the table array. ;)
+				// The reason for this is that for multi-aliased tables (two equal tables) in the FROM statement the last table need to match the first comparison.
+				// DBMS who rely on this: Oracle, PostgreSQL and MSSQL. For all other DBMS it makes absolutely no difference in which order the table is.
+				if (!empty($array['LEFT_JOIN']) && sizeof($array['FROM']) > 1 && $used_multi_alias !== false)
+				{
+					// Take first LEFT JOIN
+					$join = current($array['LEFT_JOIN']);
+
+					// Determine the table used there (even if there are more than one used, we only want to have one
+					preg_match('/(' . implode('|', $aliases) . ')\.[^\s]+/U', str_replace(array('(', ')', 'AND', 'OR', ' '), '', $join['ON']), $matches);
+
+					// If there is a first join match, we need to make sure the table order is correct
+					if (!empty($matches[1]))
+					{
+						$first_join_match = trim($matches[1]);
+						$table_array = $last = array();
+
+						foreach ($array['FROM'] as $table_name => $alias)
+						{
+							if (is_array($alias))
+							{
+								foreach ($alias as $multi_alias)
+								{
+									($multi_alias === $first_join_match) ? $last[] = $table_name . ' ' . $multi_alias : $table_array[] = $table_name . ' ' . $multi_alias;
+								}
+							}
+							else
+							{
+								($alias === $first_join_match) ? $last[] = $table_name . ' ' . $alias : $table_array[] = $table_name . ' ' . $alias;
+							}
+						}
+
+						$table_array = array_merge($table_array, $last);
 					}
 				}
 
@@ -700,7 +755,7 @@ class dbal
 					</tr>
 					</tbody>
 					</table>
-					
+
 					' . $this->html_hold . '
 
 					<p style="text-align: center;">
@@ -728,24 +783,24 @@ class dbal
 			case 'start':
 				$this->query_hold = $query;
 				$this->html_hold = '';
-			
+
 				$this->_sql_report($mode, $query);
 
 				$this->curtime = explode(' ', microtime());
 				$this->curtime = $this->curtime[0] + $this->curtime[1];
 
 			break;
-			
+
 			case 'add_select_row':
 
 				$html_table = func_get_arg(2);
 				$row = func_get_arg(3);
-				
+
 				if (!$html_table && sizeof($row))
 				{
 					$html_table = true;
 					$this->html_hold .= '<table cellspacing="1"><tr>';
-								
+
 					foreach (array_keys($row) as $val)
 					{
 						$this->html_hold .= '<th>' . (($val) ? ucwords(str_replace('_', ' ', $val)) : '&nbsp;') . '</th>';
@@ -761,7 +816,7 @@ class dbal
 					$this->html_hold .= '<td class="' . $class . '">' . (($val) ? $val : '&nbsp;') . '</td>';
 				}
 				$this->html_hold .= '</tr>';
-			
+
 				return $html_table;
 
 			break;
@@ -792,7 +847,7 @@ class dbal
 			break;
 
 			default:
-			
+
 				$this->_sql_report($mode, $query);
 
 			break;
