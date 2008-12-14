@@ -2,7 +2,7 @@
 /**
 *
 * @package acp
-* @version $Id: acp_database.php 8647 2008-06-11 15:29:19Z acydburn $
+* @version $Id: acp_database.php 8814 2008-09-04 12:01:47Z acydburn $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -620,7 +620,7 @@ class mysql_extractor extends base_extractor
 
 		if ($new_extract === null)
 		{
-			if ($db->sql_layer === 'mysqli' || version_compare($db->mysql_version, '3.23.20', '>='))
+			if ($db->sql_layer === 'mysqli' || version_compare($db->sql_server_info(true), '3.23.20', '>='))
 			{
 				$new_extract = true;
 			}

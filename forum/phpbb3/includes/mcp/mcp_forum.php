@@ -2,7 +2,7 @@
 /**
 *
 * @package mcp
-* @version $Id: mcp_forum.php 8482 2008-03-31 14:05:54Z acydburn $
+* @version $Id: mcp_forum.php 9003 2008-10-11 18:23:12Z toonarmy $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -246,7 +246,7 @@ function mcp_forum_view($id, $mode, $action, $forum_info)
 			'LAST_POST_SUBJECT'	=> $row['topic_last_post_subject'],
 			'LAST_VIEW_TIME'	=> $user->format_date($row['topic_last_view_time']),
 
-			'S_TOPIC_REPORTED'		=> (!empty($row['topic_reported']) && $auth->acl_get('m_report', $row['forum_id'])) ? true : false,
+			'S_TOPIC_REPORTED'		=> (!empty($row['topic_reported']) && empty($row['topic_moved_id']) && $auth->acl_get('m_report', $row['forum_id'])) ? true : false,
 			'S_TOPIC_UNAPPROVED'	=> $topic_unapproved,
 			'S_POSTS_UNAPPROVED'	=> $posts_unapproved,
 			'S_UNREAD_TOPIC'		=> $unread_topic,

@@ -2,7 +2,7 @@
 /**
 *
 * @package mcp
-* @version $Id: mcp_post.php,v 1.62 2007/10/05 14:36:33 acydburn Exp $
+* @version $Id: mcp_post.php 8805 2008-09-02 06:36:24Z acydburn $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -415,8 +415,8 @@ function change_poster(&$post_info, $userdata)
 		sync('forum', 'forum_id', $post_info['forum_id'], false, false);
 	}
 
-	// Adjust post counts
-	if ($post_info['post_postcount'])
+	// Adjust post counts... only if the post is approved (else, it was not added the users post count anyway)
+	if ($post_info['post_postcount'] && $post_info['post_approved'])
 	{
 		$sql = 'UPDATE ' . USERS_TABLE . '
 			SET user_posts = user_posts - 1
@@ -470,11 +470,11 @@ function change_poster(&$post_info, $userdata)
 	if (file_exists($phpbb_root_path . 'includes/search/' . $search_type . '.' . $phpEx))
 	{
 		require("{$phpbb_root_path}includes/search/$search_type.$phpEx");
-	
+
 		// We do some additional checks in the module to ensure it can actually be utilised
 		$error = false;
 		$search = new $search_type($error);
-	
+
 		if (!$error && method_exists($search, 'destroy_cache'))
 		{
 			$search->destroy_cache(array(), array($post_info['user_id'], $userdata['user_id']));

@@ -2,7 +2,7 @@
 /**
 *
 * @package acp
-* @version $Id: acp_bbcodes.php 8479 2008-03-29 00:22:48Z naderman $
+* @version $Id: acp_bbcodes.php 8743 2008-08-12 16:03:18Z Kellanved $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -167,6 +167,12 @@ class acp_bbcodes
 				if (strlen($bbcode_match) > 4000)
 				{
 					trigger_error($user->lang['BBCODE_TAG_DEF_TOO_LONG'] . adm_back_link($this->u_action), E_USER_WARNING);
+				}
+				
+				
+				if (strlen($bbcode_helpline) > 255)
+				{
+					trigger_error($user->lang['BBCODE_HELPLINE_TOO_LONG'] . adm_back_link($this->u_action), E_USER_WARNING);
 				}
 
 				$sql_ary = array(

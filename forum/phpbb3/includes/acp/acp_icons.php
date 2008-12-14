@@ -2,7 +2,7 @@
 /**
 *
 * @package acp
-* @version $Id: acp_icons.php 8628 2008-06-09 11:58:57Z Kellanved $
+* @version $Id: acp_icons.php 8974 2008-10-06 13:23:41Z acydburn $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -73,6 +73,13 @@ class acp_icons
 
 			foreach ($imglist as $path => $img_ary)
 			{
+				if (empty($img_ary))
+				{
+					continue;
+				}
+
+				asort($img_ary, SORT_STRING);
+
 				foreach ($img_ary as $img)
 				{
 					$img_size = getimagesize($phpbb_root_path . $img_path . '/' . $path . $img);
@@ -99,6 +106,11 @@ class acp_icons
 					}
 				}
 				closedir($dir);
+
+				if (!empty($_paks))
+				{
+					asort($_paks, SORT_STRING);
+				}
 			}
 		}
 

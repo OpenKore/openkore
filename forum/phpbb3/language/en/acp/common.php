@@ -4,7 +4,7 @@
 * acp_common [English]
 *
 * @package language
-* @version $Id: common.php 8591 2008-06-04 11:40:53Z Kellanved $
+* @version $Id: common.php 9049 2008-11-05 22:03:16Z toonarmy $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -268,7 +268,7 @@ $lang = array_merge($lang, array(
 	'SELECT_OPTION'			=> 'Select option',
 
 	'SETTING_TOO_LOW'		=> 'The entered value for the setting “%1$s” is too low. The minimal allowed value is %2$d.',
-	'SETTING_TOO_BIG'		=> 'The entered value for the setting “%1$s” is too big. The maximal allowed value is %2$d.',	
+	'SETTING_TOO_BIG'		=> 'The entered value for the setting “%1$s” is too big. The maximal allowed value is %2$d.',
 	'SETTING_TOO_LONG'		=> 'The entered value for the setting “%1$s” is too long. The maximal allowed length is %2$d.',
 	'SETTING_TOO_SHORT'		=> 'The entered value for the setting “%1$s” is not long enough. The minimal allowed length is %2$d.',
 
@@ -362,6 +362,7 @@ $lang = array_merge($lang, array(
 	'VIEW_INACTIVE_USERS'	=> 'View inactive users',
 
 	'WELCOME_PHPBB'			=> 'Welcome to phpBB',
+	'WRITABLE_CONFIG'		=> 'Your config file (config.php) is currently world-writable. We strongly encourage you to change the permissions to 640 or at least to 644 (for example: <a href="http://en.wikipedia.org/wiki/Chmod" rel="external">chmod</a> 640 config.php).',
 ));
 
 // Inactive Users
@@ -473,12 +474,13 @@ $lang = array_merge($lang, array(
 	'LOG_APPROVE_TOPIC'			=> '<strong>Approved topic</strong><br />» %s',
 	'LOG_BUMP_TOPIC'			=> '<strong>User bumped topic</strong><br />» %s',
 	'LOG_DELETE_POST'			=> '<strong>Deleted post</strong><br />» %s',
+	'LOG_DELETE_SHADOW_TOPIC'	=> '<strong>Deleted shadow topic</strong><br />» %s',
 	'LOG_DELETE_TOPIC'			=> '<strong>Deleted topic</strong><br />» %s',
 	'LOG_FORK'					=> '<strong>Copied topic</strong><br />» from %s',
 	'LOG_LOCK'					=> '<strong>Locked topic</strong><br />» %s',
 	'LOG_LOCK_POST'				=> '<strong>Locked post</strong><br />» %s',
 	'LOG_MERGE'					=> '<strong>Merged posts</strong> into topic<br />» %s',
-	'LOG_MOVE'					=> '<strong>Moved topic</strong><br />» from %s',
+	'LOG_MOVE'					=> '<strong>Moved topic</strong><br />» from %1$s to %2$s',
 	'LOG_POST_APPROVED'			=> '<strong>Approved post</strong><br />» %s',
 	'LOG_POST_DISAPPROVED'		=> '<strong>Disapproved post “%1$s” with the following reason</strong><br />» %2$s',
 	'LOG_POST_EDITED'			=> '<strong>Edited post “%1$s” written by</strong><br />» %2$s',
@@ -487,7 +489,6 @@ $lang = array_merge($lang, array(
 	'LOG_SPLIT_DESTINATION'		=> '<strong>Moved split posts</strong><br />» to %s',
 	'LOG_SPLIT_SOURCE'			=> '<strong>Split posts</strong><br />» from %s',
 
-	'LOG_TOPIC_DELETED'			=> '<strong>Deleted topic</strong><br />» %s',
 	'LOG_TOPIC_APPROVED'		=> '<strong>Approved topic</strong><br />» %s',
 	'LOG_TOPIC_DISAPPROVED'		=> '<strong>Disapproved topic “%1$s” with the following reason</strong><br />%2$s',
 	'LOG_TOPIC_RESYNC'			=> '<strong>Resynchronised topic counters</strong><br />» %s',

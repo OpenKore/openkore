@@ -2,7 +2,7 @@
 /**
 *
 * @package acp
-* @version $Id: acp_jabber.php,v 1.25 2007/10/05 14:36:32 acydburn Exp $
+* @version $Id: acp_jabber.php 8990 2008-10-09 15:41:19Z acydburn $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -84,6 +84,19 @@ class acp_jabber
 				}
 
 				$jabber->disconnect();
+			}
+			else
+			{
+				// This feature is disabled.
+				// We update the user table to be sure all users that have IM as notify type are set to both  as notify type
+				$sql_ary = array(
+					'user_notify_type'		=> NOTIFY_BOTH,
+				);
+
+				$sql = 'UPDATE ' . USERS_TABLE . '
+					SET ' . $db->sql_build_array('UPDATE', $sql_ary) . '
+					WHERE user_notify_type = ' . NOTIFY_IM;
+				$db->sql_query($sql);
 			}
 
 			set_config('jab_enable', $jab_enable);

@@ -2,7 +2,7 @@
 /**
 *
 * @package ucp
-* @version $Id: ucp_activate.php,v 1.29 2007/10/19 13:10:01 acydburn Exp $
+* @version $Id: ucp_activate.php 9067 2008-11-21 13:21:53Z Kellanved $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -51,7 +51,7 @@ class ucp_activate
 			trigger_error('ALREADY_ACTIVATED');
 		}
 
-		if ($user_row['user_actkey'] != $key)
+		if (($user_row['user_inactive_reason'] ==  INACTIVE_MANUAL) || $user_row['user_actkey'] != $key)
 		{
 			trigger_error('WRONG_ACTIVATION');
 		}
@@ -65,6 +65,7 @@ class ucp_activate
 				'user_password'		=> $user_row['user_newpasswd'],
 				'user_newpasswd'	=> '',
 				'user_pass_convert'	=> 0,
+				'user_login_attempts'	=> 0,
 			);
 
 			$sql = 'UPDATE ' . USERS_TABLE . '

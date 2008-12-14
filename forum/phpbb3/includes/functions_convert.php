@@ -2,7 +2,7 @@
 /**
 *
 * @package install
-* @version $Id: functions_convert.php 8667 2008-06-21 16:05:02Z acydburn $
+* @version $Id: functions_convert.php 8876 2008-09-18 14:26:56Z acydburn $
 * @copyright (c) 2006 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -1744,6 +1744,7 @@ function sync_post_count($offset, $limit)
 	$sql = 'SELECT COUNT(post_id) AS num_posts, poster_id
 			FROM ' . POSTS_TABLE . '
 			WHERE post_postcount = 1
+				AND post_approved = 1
 			GROUP BY poster_id
 			ORDER BY poster_id';
 	$result = $db->sql_query_limit($sql, $limit, $offset);
@@ -1951,7 +1952,7 @@ function update_dynamic_config()
 		FROM ' . ATTACHMENTS_TABLE . '
 		WHERE is_orphan = 0';
 	$result = $db->sql_query($sql);
-	set_config('upload_dir_size', (int) $db->sql_fetchfield('stat'), true);
+	set_config('upload_dir_size', (float) $db->sql_fetchfield('stat'), true);
 	$db->sql_freeresult($result);
 
 	/**

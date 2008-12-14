@@ -2,7 +2,7 @@
 /**
 *
 * @package mcp
-* @version $Id: mcp_warn.php 8621 2008-06-08 10:43:32Z acydburn $
+* @version $Id: mcp_warn.php 9002 2008-10-11 17:01:43Z toonarmy $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -249,6 +249,25 @@ class mcp_warn
 			$this->u_action .= "&amp;f=$forum_id&amp;p=$post_id";
 		}
 
+		// Check if can send a notification
+		if ($config['allow_privmsg'])
+		{
+			$auth2 = new auth();
+			$auth2->acl($user_row);
+			$s_can_notify = ($auth2->acl_get('u_readpm')) ? true : false;
+			unset($auth2);
+		}
+		else
+		{
+			$s_can_notify = false;
+		}
+
+		// Prevent against clever people
+		if ($notify && !$s_can_notify)
+		{
+			$notify = false;
+		}
+
 		if ($warning && $action == 'add_warning')
 		{
 			if (check_form_key('mcp_warn'))
@@ -307,6 +326,8 @@ class mcp_warn
 			'RANK_IMG'			=> $rank_img,
 
 			'L_WARNING_POST_DEFAULT'	=> sprintf($user->lang['WARNING_POST_DEFAULT'], generate_board_url() . "/viewtopic.$phpEx?f=$forum_id&amp;p=$post_id#p$post_id"),
+
+			'S_CAN_NOTIFY'		=> $s_can_notify,
 		));
 	}
 
@@ -351,6 +372,25 @@ class mcp_warn
 			$this->u_action .= "&amp;u=$user_id";
 		}
 
+		// Check if can send a notification
+		if ($config['allow_privmsg'])
+		{
+			$auth2 = new auth();
+			$auth2->acl($user_row);
+			$s_can_notify = ($auth2->acl_get('u_readpm')) ? true : false;
+			unset($auth2);
+		}
+		else
+		{
+			$s_can_notify = false;
+		}
+
+		// Prevent against clever people
+		if ($notify && !$s_can_notify)
+		{
+			$notify = false;
+		}
+
 		if ($warning && $action == 'add_warning')
 		{
 			if (check_form_key('mcp_warn'))
@@ -389,6 +429,8 @@ class mcp_warn
 
 			'AVATAR_IMG'		=> $avatar_img,
 			'RANK_IMG'			=> $rank_img,
+
+			'S_CAN_NOTIFY'		=> $s_can_notify,
 		));
 
 		return $user_id;

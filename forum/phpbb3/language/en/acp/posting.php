@@ -4,7 +4,7 @@
 * acp_posting [English]
 *
 * @package language
-* @version $Id: posting.php 8479 2008-03-29 00:22:48Z naderman $
+* @version $Id: posting.php 8743 2008-08-12 16:03:18Z Kellanved $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -47,6 +47,8 @@ $lang = array_merge($lang, array(
 	'BBCODE_HELPLINE'			=> 'Help line',
 	'BBCODE_HELPLINE_EXPLAIN'	=> 'This field contains the mouse over text of the BBCode.',
 	'BBCODE_HELPLINE_TEXT'		=> 'Help line text',
+	'BBCODE_HELPLINE_TOO_LONG'	=> 'The help line you entered is too long.',
+
 	'BBCODE_INVALID_TAG_NAME'	=> 'The BBCode tag name that you selected already exists.',
 	'BBCODE_INVALID'			=> 'Your BBCode is constructed in an invalid form.',
 	'BBCODE_OPEN_ENDED_TAG'		=> 'Your custom BBCode must contain both an opening and a closing tag.',

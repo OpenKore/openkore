@@ -2,7 +2,7 @@
 /**
 *
 * @package ucp
-* @version $Id: ucp_register.php 8479 2008-03-29 00:22:48Z naderman $
+* @version $Id: ucp_register.php 8782 2008-08-23 17:20:55Z acydburn $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -43,7 +43,7 @@ class ucp_register
 		$submit			= (isset($_POST['submit'])) ? true : false;
 		$change_lang	= request_var('change_lang', '');
 		$user_lang		= request_var('lang', $user->lang_name);
-		
+
 		if ($agreed)
 		{
 			add_form_key('ucp_register');
@@ -58,7 +58,7 @@ class ucp_register
 		{
 			$use_lang = ($change_lang) ? basename($change_lang) : basename($user_lang);
 
-			if (file_exists($phpbb_root_path . 'language/' . $use_lang . '/'))
+			if (file_exists($user->lang_path . $use_lang . '/'))
 			{
 				if ($change_lang)
 				{
@@ -69,7 +69,6 @@ class ucp_register
 				}
 
 				$user->lang_name = $lang = $use_lang;
-				$user->lang_path = $phpbb_root_path . 'language/' . $lang . '/';
 				$user->lang = array();
 				$user->add_lang(array('common', 'ucp'));
 			}
@@ -473,7 +472,7 @@ class ucp_register
 			if (!$change_lang || !$confirm_id)
 			{
 				$user->confirm_gc(CONFIRM_REG);
-					
+
 				$sql = 'SELECT COUNT(session_id) AS attempts
 					FROM ' . CONFIRM_TABLE . "
 					WHERE session_id = '" . $db->sql_escape($user->session_id) . "'

@@ -2,7 +2,7 @@
 /**
 *
 * @package phpBB3
-* @version $Id: common.php 8479 2008-03-29 00:22:48Z naderman $
+* @version $Id: common.php 8760 2008-08-15 19:46:51Z aptx $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -103,7 +103,7 @@ if (version_compare(PHP_VERSION, '6.0.0-dev', '>='))
 }
 else
 {
-	set_magic_quotes_runtime(0);
+	@set_magic_quotes_runtime(0);
 
 	// Be paranoid with passed vars
 	if (@ini_get('register_globals') == '1' || strtolower(@ini_get('register_globals')) == 'on' || !function_exists('ini_get'))

@@ -2,7 +2,7 @@
 /**
 *
 * @package search
-* @version $Id: fulltext_mysql.php 8604 2008-06-04 17:25:50Z naderman $
+* @version $Id: fulltext_mysql.php 8814 2008-09-04 12:01:47Z acydburn $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -704,7 +704,7 @@ class fulltext_mysql extends search_backend
 
 		if (!isset($this->stats['post_subject']))
 		{
-			if ($db->sql_layer == 'mysqli' || version_compare($db->mysql_version, '4.1.3', '>='))
+			if ($db->sql_layer == 'mysqli' || version_compare($db->sql_server_info(true), '4.1.3', '>='))
 			{
 				//$alter[] = 'MODIFY post_subject varchar(100) COLLATE utf8_unicode_ci DEFAULT \'\' NOT NULL';
 			}
@@ -717,7 +717,7 @@ class fulltext_mysql extends search_backend
 
 		if (!isset($this->stats['post_text']))
 		{
-			if ($db->sql_layer == 'mysqli' || version_compare($db->mysql_version, '4.1.3', '>='))
+			if ($db->sql_layer == 'mysqli' || version_compare($db->sql_server_info(true), '4.1.3', '>='))
 			{
 				$alter[] = 'MODIFY post_text mediumtext COLLATE utf8_unicode_ci NOT NULL';
 			}

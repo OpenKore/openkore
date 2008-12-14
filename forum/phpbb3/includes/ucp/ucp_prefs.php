@@ -2,7 +2,7 @@
 /**
 *
 * @package ucp
-* @version $Id: ucp_prefs.php 8479 2008-03-29 00:22:48Z naderman $
+* @version $Id: ucp_prefs.php 8990 2008-10-09 15:41:19Z acydburn $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -52,6 +52,12 @@ class ucp_prefs
 					'popuppm'		=> request_var('popuppm', (bool) $user->optionget('popuppm')),
 					'allowpm'		=> request_var('allowpm', (bool) $user->data['user_allow_pm']),
 				);
+
+				if ($data['notifymethod'] == NOTIFY_IM && (!$config['jab_enable'] || !$user->data['user_jabber'] || !@extension_loaded('xml')))
+				{
+					// Jabber isnt enabled, or no jabber field filled in. Update the users table to be sure its correct.
+					$data['notifymethod'] = NOTIFY_BOTH;
+				}
 
 				if ($submit)
 				{
@@ -294,7 +300,7 @@ class ucp_prefs
 					'bbcode'	=> request_var('bbcode', $user->optionget('bbcode')),
 					'smilies'	=> request_var('smilies', $user->optionget('smilies')),
 					'sig'		=> request_var('sig', $user->optionget('attachsig')),
-					'notify'	=> request_var('notify', $user->data['user_notify']),
+					'notify'	=> request_var('notify', (bool) $user->data['user_notify']),
 				);
 				add_form_key('ucp_prefs_post');
 
