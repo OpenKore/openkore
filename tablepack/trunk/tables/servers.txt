@@ -92,7 +92,7 @@ recvpackets recvpackets-idro.txt
 [Indonesia - idRO Free Server: Fun and Chat]
 ip 202.93.18.250
 port 6900
-master_version 12
+master_version 13
 version 2
 serverType 21
 secureLogin 1
