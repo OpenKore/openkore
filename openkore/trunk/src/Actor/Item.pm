@@ -121,11 +121,12 @@ sub get {
 	} else {
 		my $condition;
 		if ($notEquipped) {
-			$condition = sub { $_[0]->{invIndex} != $skipIndex && $_[0]->{name} eq $name && !$_[0]->{equipped} };
+			# making sure that $skipIndex is defined:  when perl is expecting a number and gets an undef instead, it will transform that value into 0, wich is a possible invIndex here
+			$condition = sub { ($_[0]->{invIndex} != $skipIndex || !defined $skipIndex) && $_[0]->{name} eq $name && !$_[0]->{equipped} };
 		} elsif (!$notEquipped && defined($notEquipped)) {
-			$condition = sub { $_[0]->{invIndex} != $skipIndex && $_[0]->{name} eq $name && $_[0]->{equipped} };
+			$condition = sub { ($_[0]->{invIndex} != $skipIndex || !defined $skipIndex) && $_[0]->{name} eq $name && $_[0]->{equipped} };
 		} else {
-			$condition = sub { $_[0]->{invIndex} != $skipIndex && $_[0]->{name} eq $name };
+			$condition = sub { ($_[0]->{invIndex} != $skipIndex || !defined $skipIndex) && $_[0]->{name} eq $name };
 		}
 		return $char->inventory->getByCondition($condition);
 	}
