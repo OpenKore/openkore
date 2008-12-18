@@ -1484,13 +1484,15 @@ sub processAutoSell {
 			}
 		}
 		if ($ai_v{'temp'}{'do_route'}) {
-			if ($args->{'warpedToSave'} && !$args->{'mapChanged'}) {
+			if ($args->{'warpedToSave'} && !$args->{'mapChanged'} && !timeOut($args->{warpStart}, 8)) {
 				undef $args->{'warpedToSave'};
 			}
 
 			if ($config{'saveMap'} ne "" && $config{'saveMap_warpToBuyOrSell'} && !$args->{'warpedToSave'}
 			&& !$cities_lut{$field{'name'}.'.rsw'} && $config{'saveMap'} ne $field{name}) {
 				$args->{'warpedToSave'} = 1;
+				# If we still haven't warped after a certain amount of time, fallback to walking
+				$args->{warpStart} = time unless $args->{warpStart};
 				message T("Teleporting to auto-sell\n"), "teleport";
 				useTeleport(2);
 				$timeout{'ai_sellAuto'}{'time'} = time;
@@ -1648,7 +1650,7 @@ sub processAutoBuy {
 
 		my $msgneeditem;
 		if ($ai_v{'temp'}{'do_route'}) {
-			if ($args->{warpedToSave} && !$args->{mapChanged}) {
+			if ($args->{warpedToSave} && !$args->{mapChanged} && !timeOut($args->{warpStart}, 8)) {
 				undef $args->{warpedToSave};
 			}
 
@@ -1658,6 +1660,8 @@ sub processAutoBuy {
 				if ($needitem ne "") {
 					$msgneeditem = "Auto-buy: $needitem\n";
 				}
+				# If we still haven't warped after a certain amount of time, fallback to walking
+				$args->{warpStart} = time unless $args->{warpStart};
  				message T($msgneeditem."Teleporting to auto-buy\n"), "teleport";
 				useTeleport(2);
 				$timeout{ai_buyAuto_wait}{time} = time;
