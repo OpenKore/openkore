@@ -3062,7 +3062,7 @@ sub processRepairAuto {
 		my $brokenIndex = 0;
 		for $listID ( keys %repairList ) {
 			$name = itemNameSimple($repairList{$listID}{nameID});
-			if (existsInList($config{'repairAuto_gears'}, $name) || !$config{'repairAuto_gears'}) {
+			if (existsInList($config{'repairAuto_list'}, $name) || !$config{'repairAuto_list'}) {
 				$brokenIndex = $listID;
 				$messageSender->sendRepairItem($repairList{$brokenIndex});
 				$timeout{ai_repair}{time} = time;
