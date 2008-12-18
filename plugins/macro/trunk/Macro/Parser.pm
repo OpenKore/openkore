@@ -1,4 +1,4 @@
-# $Id: Parser.pm 6578 2008-10-20 13:29:45Z technologyguild $
+# $Id: Parser.pm 6340 2008-04-29 18:43:27Z lastclick $
 package Macro::Parser;
 
 use strict;
@@ -11,12 +11,13 @@ our @EXPORT = qw(parseMacroFile parseCmd);
 use Globals;
 use List::Util qw(max min sum);
 use Log qw(message warning error);
+use Text::Balanced qw/extract_bracketed/;
 use Macro::Data;
-use Macro::Utilities qw(refreshGlobal getnpcID getItemIDs getItemPrice getStorageIDs getInventoryIDs
-	getPlayerID getVenderID getRandom getRandomRange getInventoryAmount getCartAmount getShopAmount
-	getStorageAmount getVendAmount getConfig getWord q4rx getArgFromList getListLenght);
+use Macro::Utilities qw(refreshGlobal getnpcID getItemIDs getStorageIDs getInventoryIDs
+	getPlayerID getVenderID getRandom getRandomRange getInventoryAmount getCartAmount
+	getShopAmount getStorageAmount getConfig getWord q4rx);
 
-our ($rev) = q$Revision: 6578 $ =~ /(\d+)/;
+our ($rev) = q$Revision: 6340 $ =~ /(\d+)/;
 
 # adapted config file parser
 sub parseMacroFile {
@@ -128,8 +129,27 @@ sub parseMacroFile {
 
 # parses a text for keywords and returns keyword + argument as array
 # should be an adequate workaround for the parser bug
+#sub parseKw {
+#	my @pair = $_[0] =~ /\@($macroKeywords)\s*\(\s*(.*)\s*\)/i;
+#	return unless @pair;
+#	if ($pair[0] eq 'arg') {
+#		return $_[0] =~ /\@(arg)\s*\(\s*(".*?",\s*\d+)\s*\)/
+#	} elsif ($pair[0] eq 'random') {
+#		return $_[0] =~ /\@(random)\s*\(\s*(".*?")\s*\)/
+#	}
+#	while ($pair[1] =~ /\@($macroKeywords)\s*\(/) {
+#		@pair = $pair[1] =~ /\@($macroKeywords)\s*\((.*)/
+#	}
+#	return @pair
+#}
+
 sub parseKw {
-	my @pair = $_[0] =~ /\@($macroKeywords)\s*\(\s*(.*)\s*\)/i;
+	my @full = $_[0] =~ /@($macroKeywords)s*((s*(.*?)s*).*)$/i;
+	my @pair = ($full[0]);
+	my ($bracketed) = extract_bracketed ($full[1], '()');
+	return unless $bracketed;
+	push @pair, substr ($bracketed, 1, -1);
+
 	return unless @pair;
 	if ($pair[0] eq 'arg') {
 		return $_[0] =~ /\@(arg)\s*\(\s*(".*?",\s*\d+)\s*\)/
@@ -137,7 +157,7 @@ sub parseKw {
 		return $_[0] =~ /\@(random)\s*\(\s*(".*?")\s*\)/
 	}
 	while ($pair[1] =~ /\@($macroKeywords)\s*\(/) {
-		@pair = $pair[1] =~ /\@($macroKeywords)\s*\((.*)/
+		@pair = parseKw ($pair[1])
 	}
 	return @pair
 }
@@ -190,10 +210,6 @@ sub parseCmd {
 		elsif ($kw eq 'Storage')    {$ret = join ',', getStorageIDs($arg)}
 		elsif ($kw eq 'player')     {$ret = getPlayerID($arg)}
 		elsif ($kw eq 'vender')     {$ret = getVenderID($arg)}
-		elsif ($kw eq 'venderitem') {($ret) = getItemIDs($arg, \@::venderItemList)}
-		elsif ($kw eq 'venderItem') {$ret = join ',', getItemIDs($arg, \@::venderItemList)}
-		elsif ($kw eq 'venderprice'){$ret = getItemPrice($arg, \@::venderItemList)}
-		elsif ($kw eq 'venderamount'){$ret = getVendAmount($arg, \@::venderItemList)}
 		elsif ($kw eq 'random')     {$ret = getRandom($arg)}
 		elsif ($kw eq 'rand')       {$ret = getRandomRange($arg)}
 		elsif ($kw eq 'invamount')  {$ret = getInventoryAmount($arg)}
@@ -203,8 +219,6 @@ sub parseCmd {
 		elsif ($kw eq 'config')     {$ret = getConfig($arg)}
 		elsif ($kw eq 'arg')        {$ret = getWord($arg)}
 		elsif ($kw eq 'eval')       {$ret = eval($arg)}
-		elsif ($kw eq 'listitem')   {$ret = getArgFromList($arg)}
-		elsif ($kw eq 'listlenght') {$ret = getListLenght($arg)}
 		return unless defined $ret;
 		return $cmd if $ret eq '_%_';
 		$targ = q4rx $targ;
