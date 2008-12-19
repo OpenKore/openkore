@@ -29,13 +29,14 @@ use base qw(Actor);
 sub new {
 	my ($class, $type) = @_;
 	my $actorType = ($type >= 6001 && $type <= 6016) ? 'Homunculus' : 'Player';
+	$actorType = 'Mercenary' if ($type >= 6017 && $type <= 6046);
 	return $class->SUPER::new($actorType);
 }
 
 sub selfString {
 	my ($self) = @_;
 
-	return ($self->{actorType} eq 'Homunculus') ? 'itself' : ($self->{sex} ? 'himself' : 'herself');
+	return ($self->{actorType} eq 'Homunculus' || $self->{actorType} eq 'Mercenary') ? 'itself' : ($self->{sex} ? 'himself' : 'herself');
 }
 
 ##

@@ -18,6 +18,7 @@
 - Fixed Blacksmith repair skill causing disconnection.
 - Added repairAuto_list config option, and restructured repair.
 - XKore_altCharServer for character servers that sends 0072 instead of 006B
+- Fix Mercenary recognized as Mob. Now Mercenary's are Actor::Mercenary
 
 =========================
 ### OpenKore 2.0.6.1

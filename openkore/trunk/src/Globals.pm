@@ -221,6 +221,7 @@ our %jobs_lut = (
 	4048 => 'Flying Star Gladiator',
 	4049 => 'Soul Linker',
 	
+	# Homunculus
 	6001 => 'Lif',
 	6002 => 'Amistr',
 	6003 => 'Filir',
@@ -236,7 +237,39 @@ our %jobs_lut = (
 	6013 => 'High Lif 2',
 	6014 => 'High Amistr 2',
 	6015 => 'High Filir 2',
-	6016 => 'High Vanilmirth 2'
+	6016 => 'High Vanilmirth 2',
+
+	# Mercenary
+	6017 => 'Mercenary Archer 1',
+	6018 => 'Mercenary Archer 2',
+	6019 => 'Mercenary Archer 3',
+	6020 => 'Mercenary Archer 4',
+	6021 => 'Mercenary Archer 5',
+	6022 => 'Mercenary Archer 6',
+	6023 => 'Mercenary Archer 7',
+	6024 => 'Mercenary Archer 8',
+	6025 => 'Mercenary Archer 9',
+	6026 => 'Mercenary Archer 10',
+	6027 => 'Mercenary Lancer 1',
+	6028 => 'Mercenary Lancer 2',
+	6029 => 'Mercenary Lancer 3',
+	6030 => 'Mercenary Lancer 4',
+	6031 => 'Mercenary Lancer 5',
+	6032 => 'Mercenary Lancer 6',
+	6033 => 'Mercenary Lancer 7',
+	6034 => 'Mercenary Lancer 8',
+	6035 => 'Mercenary Lancer 9',
+	6036 => 'Mercenary Lancer 10',
+	6037 => 'Mercenary Swordman 1',
+	6038 => 'Mercenary Swordman 2',
+	6039 => 'Mercenary Swordman 3',
+	6040 => 'Mercenary Swordman 4',
+	6041 => 'Mercenary Swordman 5',
+	6042 => 'Mercenary Swordman 6',
+	6043 => 'Mercenary Swordman 7',
+	6044 => 'Mercenary Swordman 8',
+	6045 => 'Mercenary Swordman 9',
+	6046 => 'Mercenary Swordman 10'	
 );
 
 # AI
