@@ -257,6 +257,7 @@ sub parseConfigFile {
 				$key = $line;
 				$key =~ s/ *$//;
 			}
+			#$value = $r_hash->{$1} if ($value =~ /^constant\.(.*)/);
 			$key = "${inBlock}_${key}" if (defined $inBlock);
 
 			if ($key eq "!include") {
@@ -385,7 +386,7 @@ sub parseList {
 	my $reader = new Utils::TextReader($file);
 	while (!$reader->eof()) {
 		my $line = $reader->readLine();
-		chomp;
+		chomp($line);
 		$r_hash->{$line} = 1;
 	}
 	return 1;
