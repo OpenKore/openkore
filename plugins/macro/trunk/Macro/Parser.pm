@@ -13,9 +13,9 @@ use List::Util qw(max min sum);
 use Log qw(message warning error);
 use Text::Balanced qw/extract_bracketed/;
 use Macro::Data;
-use Macro::Utilities qw(refreshGlobal getnpcID getItemIDs getStorageIDs getInventoryIDs
-	getPlayerID getVenderID getRandom getRandomRange getInventoryAmount getCartAmount
-	getShopAmount getStorageAmount getConfig getWord q4rx);
+use Macro::Utilities qw(refreshGlobal getnpcID getItemIDs getItemPrice getStorageIDs getInventoryIDs
+	getPlayerID getVenderID getRandom getRandomRange getInventoryAmount getCartAmount getShopAmount
+	getStorageAmount getVendAmount getConfig getWord q4rx getArgFromList getListLenght);
 
 our ($rev) = q$Revision: 6340 $ =~ /(\d+)/;
 
@@ -210,6 +210,10 @@ sub parseCmd {
 		elsif ($kw eq 'Storage')    {$ret = join ',', getStorageIDs($arg)}
 		elsif ($kw eq 'player')     {$ret = getPlayerID($arg)}
 		elsif ($kw eq 'vender')     {$ret = getVenderID($arg)}
+		elsif ($kw eq 'venderitem') {($ret) = getItemIDs($arg, \@::venderItemList)}
+		elsif ($kw eq 'venderItem') {$ret = join ',', getItemIDs($arg, \@::venderItemList)}
+		elsif ($kw eq 'venderprice'){$ret = getItemPrice($arg, \@::venderItemList)}
+		elsif ($kw eq 'venderamount'){$ret = getVendAmount($arg, \@::venderItemList)}
 		elsif ($kw eq 'random')     {$ret = getRandom($arg)}
 		elsif ($kw eq 'rand')       {$ret = getRandomRange($arg)}
 		elsif ($kw eq 'invamount')  {$ret = getInventoryAmount($arg)}
@@ -219,6 +223,8 @@ sub parseCmd {
 		elsif ($kw eq 'config')     {$ret = getConfig($arg)}
 		elsif ($kw eq 'arg')        {$ret = getWord($arg)}
 		elsif ($kw eq 'eval')       {$ret = eval($arg)}
+		elsif ($kw eq 'listitem')   {$ret = getArgFromList($arg)}
+		elsif ($kw eq 'listlenght') {$ret = getListLenght($arg)}
 		return unless defined $ret;
 		return $cmd if $ret eq '_%_';
 		$targ = q4rx $targ;
