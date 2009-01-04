@@ -75,11 +75,14 @@ sub new {
 		$self{T_name} =~ s/.*:://;
 	}
 
-	# Set default empty mutes, if none specifed.
+	# Set default empty mutex, if none specifed.
 	$self{T_mutex} = [] if (!defined $self{T_mutex});
 
 	# Set default exclusive marker, if none specifed
 	$self{T_exclusive} = NON_EXCLUSIVE if (!defined $self{T_exclusive});
+
+	# Set default module ID
+	$self{T_ID} = -1;
 
 	# Set onTaskFinished empty Callback list.
 	$self{T_onTaskFinished} = new CallbackList("onTaskFinished");
@@ -138,6 +141,14 @@ sub getMutexes {
 # This 'exclusive' marker is guaranteed to never change during a AIModule's life time.
 sub getExclusive {
 	return $_[0]->{T_exclusive};
+}
+
+##
+# int $AImodule->getID()
+#
+# Get the ID for this AIModule.
+sub getID {
+	return $_[0]->{T_ID};
 }
 
 #####################################
