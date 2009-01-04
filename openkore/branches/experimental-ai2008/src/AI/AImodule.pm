@@ -31,13 +31,13 @@ package AI::AImodule;
 # AIModule::NON_EXCLUSIVE
 #
 # Indicates that the AIModule must wait before spawning a new task.
-use constant NON_EXCLUSIVE    => 0;
+use constant NON_EXCLUSIVE	=> 0;
 
 ##
 # AIModule::EXCLUSIVE
 #
 # Indicates that the AIModule must not wait before spawning a new task, and can be checked every cycle.
-use constant EXCLUSIVE    => 0;
+use constant EXCLUSIVE		=> 1;
 
 ####################################
 ### CATEGORY: Constructor

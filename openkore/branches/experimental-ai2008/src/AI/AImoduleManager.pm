@@ -39,16 +39,12 @@ sub new {
 		# Array of IDs, that show in witch order to check AI::AIModules
 		modules_list => [],
 
-		# Array of IDs, that show with Index from Set correspond to with ID
-		# Only recalculated when ActiveModules Set changes
-		modules_index_list => {},
-
 		# Whatever there is active AI module with exlusive marker.
-		# If it's not -1, then it's module ID.
+		# If it's not -1, then it's module ID running Exclusive Task.
 		activeExlusiveTask => -1,
 
 		# Last generated ID.
-		lastID => -1
+		lastID => 0
 	);
 	return bless \%self, $class;
 }
@@ -77,15 +73,33 @@ sub add {
 	lock ($self) if (is_shared($self));
 	lock ($module) if (is_shared($module));
 
-	# ToDo
-	# generate new ID
-	# avoid duplicating modules
+	# Avoid adding allready existing module phase 1
+	if ($self->{activeModules}->has($module)) {
+		return 0;
+	};
+
+
+	# Avoid adding allready existing module phase 2
+	if ($module->{T_ID} > 0) {
+		# We do not allow adding allready added modules
+		return 0;
+	}
+
+	# Generate module ID.
+	my $module_id = $self->_gen_id();
+	$module->{T_ID} = $module_id;
+
+	# Add our Event handler, to controll AI modules workflow.
+	$module->onStop->add($self, \&onTaskFinished, $module->{T_ID});
 
 	# Add module to Set
 	$self->{activeModules}->add($module);
 	
 	# Calculate Priorities, and Order all modules
 	$self->_calc_priority();
+
+	# Return module ID
+	return $module_id;
 }
 
 ##
@@ -99,13 +113,17 @@ sub remove {
 	lock ($self) if (is_shared($self));
 
 	# ToDo
-	# determinate, witch module has given ID
 	# check if that module have active Task's
 	# check if that module has Exclusive Task running
 
 	if ($id > 0) {
 		foreach my $module (@{$self->{activeModules}}) {
 	     		if ($module->getID() == $id) {
+				# Check if given module has non finished tasks
+				if ($self->_check_module($id) > 0) {
+					return 0;
+				};
+				
 				# Remove module from Set.
 				$self->{activeModules}->remove($module);
 	
@@ -116,13 +134,8 @@ sub remove {
 				if ($self->{working} != 1) {
 					return 1;
 				};
-			}
-		}
-	}
-
-
-	# Only do stuff, if we have that module inside our Set.
-	if ($self->has($module)) {
+			};
+		};
 	};
 
 	# Callers should take actions, if we return 0.
@@ -156,8 +169,28 @@ sub iterate {
 	my ($self, $module) = @_;
 	assert(defined $module) if DEBUG;
 
-	# ToDo
+	# We have Exclusive Task, So just check it
+	if ($self->{activeExlusiveTask} > -1) {
+		my $id = $self->{activeExlusiveTask};
+		# Check if we Really have it
+		if ($self->has($id) > 0) {
+			# Just whait to finish that module tasks.
+			return;
+		} else {
+			# ToDo
+			# Trow Error
+		};
+	};
 
+	# Check every module, until all modules are checked,
+	# or module with exclusive morker will popup.
+	foreach my $id ($self->{modules_list}) {
+		if ($self->_run_module($id) > 0) {
+			if ($self->{activeExlusiveTask} == $id) {
+				return;
+			};
+		};
+	};
 }
 
 #####################################
@@ -165,10 +198,11 @@ sub iterate {
 #####################################
 
 # calculate witch module to check
-# store their indexes inside $self->{modules_list}
+# store their id's inside $self->{modules_list}
 # block any module remove attemt
 sub _calc_priority {
 	my ($self) = @_;
+
 
 	# ToDo
 }
@@ -180,36 +214,82 @@ sub _gen_id {
 	return $self->{lastID};
 }
 
-# check if module with given ID is still working
-sub _check_module {
+# run module by given id
+sub _run_module {
 	my ($self, $id) = @_;
-	$self->{lastID} = $self->{lastID} + 1;
 
 	foreach my $module (@{$self->{activeModules}}) {
      		if ($module->getID() == $id) {
+			$module->check();
+			
+			my $task = $module->get_task();
+			if (defined $task) {
+				$module->{T_task_count}++;
 
-			# ToDo
-			return 1;
-		}
+				# Add our Event handler, to controll AI modules workflow.
+				$task->onStop->add($self, \&onTaskFinished, $module->{T_ID});
+
+				if ($module->getExclusive() == AI::AIModule::EXCLUSIVE) {
+					$self->{activeExlusiveTask} = $module->{T_ID};
+				};
+
+				# ToDo
+				# Actually add task to TaskManager
+				# $AI->{task_mgr}->add($task);
+
+				# Return 1 becouse that module is running. Weeee!!!
+				return 1;
+			};
+			return 0;
+		};
 	};
 	return 0;
 }
 
+# check if module with given ID is still working
+# return 1 if tasks spawned by module with given ID are still working.
+sub _check_module {
+	my ($self, $id) = @_;
+
+	foreach my $module (@{$self->{activeModules}}) {
+     		if ($module->getID() == $id) {
+			if ($module->{T_task_count} > 0) {
+				return 1;
+			} else {
+				return 0;
+			};
+		};
+	};
+	return 0;
+}
 
 #####################################
 ### CATEGORY: Events
 #####################################
 
 ##
-# CallbackList $AImoduleManager->onTaskFinished()
+# void $AImoduleManager->onTaskFinished()
 #
 # This event is triggered when a task spawned by AI module is finished, either successfully
 # or with an error.
-#
-# The event argument is a hash containing this item:<br>
-# <tt>task</tt> - The task that was finished.
 sub onTaskFinished {
+	my ($self, $id) = @_;
+	foreach my $module (@{$self->{activeModules}}) {
+     		if ($module->getID() == $id) {
+			# Adjust module Tasks counter
+			$module->{T_task_count}--;
+			if ($module->{T_task_count} < 0) $module->{T_task_count} = 0;
 
+			# Adjust Exclusive task marker
+			if ($self->{activeExlusiveTask} == $id) {
+				if ($module->{T_task_count} <= 0) {
+					$self->{activeExlusiveTask} = -1;
+				};
+			};
+			# Do not waste CPU time.
+			return;
+		};
+	};
 }
 
 
