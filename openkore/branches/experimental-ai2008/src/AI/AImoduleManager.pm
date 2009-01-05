@@ -15,11 +15,14 @@
 package AI::AImoduleManager;
 
 use strict;
+use threads;
+use threads::shared;
 use Carp::Assert;
 use Modules 'register';
 use AI::AImodule;
 use Utils::Set;
 use Utils::CallbackList;
+use Utils qw(timeOut);
 
 ####################################
 ### CATEGORY: Constructor
@@ -36,8 +39,15 @@ sub new {
 		# Indexed set of currently active modules.
 		activeModules => new Set(),
 
-		# Array of IDs, that show in witch order to check AI::AIModules
+		# Array of IDs, that show in witch order to check AI::AIModules.
 		modules_list => [],
+
+		# Postponed mutex list
+		# Every mutex has time, to reactivate.
+		pospone_mutex_list => {},
+
+		# Hash of IDs and corresponding index in activeModules Set.
+		cache_modules_id => {},
 
 		# Whatever there is active AI module with exlusive marker.
 		# If it's not -1, then it's module ID running Exclusive Task.
@@ -90,10 +100,13 @@ sub add {
 	$module->{T_ID} = $module_id;
 
 	# Add our Event handler, to controll AI modules workflow.
-	$module->onStop->add($self, \&onTaskFinished, $module->{T_ID});
+	# $module->onStop->add($self, \&onTaskFinished, $module->{T_ID});
 
 	# Add module to Set
 	$self->{activeModules}->add($module);
+	
+	# ReForm our Cache for better performance.
+	$self->_cache_id();
 	
 	# Calculate Priorities, and Order all modules
 	$self->_calc_priority();
@@ -112,12 +125,11 @@ sub remove {
 
 	lock ($self) if (is_shared($self));
 
-	# ToDo
-	# check if that module have active Task's
-	# check if that module has Exclusive Task running
-
 	if ($id > 0) {
-		foreach my $module (@{$self->{activeModules}}) {
+		my $index = $self->_get_index_by_id($id);
+		if ($index >= 0) {
+			my $module = $self->{activeModules}->get($index);
+			# Re check module ID
 	     		if ($module->getID() == $id) {
 				# Check if given module has non finished tasks
 				if ($self->_check_module($id) > 0) {
@@ -126,14 +138,15 @@ sub remove {
 				
 				# Remove module from Set.
 				$self->{activeModules}->remove($module);
-	
+
+				# ReForm our Cache for better performance.
+				$self->_cache_id();
+
 				# Calculate Priorities, and Order all modules.
 				$self->_calc_priority();
 
 				# Return
-				if ($self->{working} != 1) {
-					return 1;
-				};
+				return 1;
 			};
 		};
 	};
@@ -150,13 +163,37 @@ sub has {
 	my ($self, $id) = @_;
 	assert(defined $id) if DEBUG;
 
-	foreach my $module (@{$self->{activeModules}}) {
-     		if ($module->getID() == $id) {
-			return 1;
-		};
+	lock ($self) if (is_shared($self));
+
+	my $index = $self->_get_index_by_id($id);
+	if ($index >= 0) {
+		return 1;
 	};
 	return 0;
 }
+
+##
+# void $AImoduleManager->postpone(String mutex, int timeout)
+#
+# Postpone modules with given mutex name for some time
+sub postpone {
+	my ($self, $mutex, $timeout) = @_;
+	assert(defined $mutex) if DEBUG;
+	assert(defined $timeout) if DEBUG;
+
+	lock ($self) if (is_shared($self));
+
+	my $time = {};
+	$time->{time} = time;
+	$time->{timeout} = $timeout;
+
+	$time = shared_clone($time) if (is_shared($self));
+
+	$self->{pospone_mutex_list}->{$mutex} = $time;
+
+	# Calculate Priorities, and Order all modules.
+	$self->_calc_priority();
+};
 
 ##
 # void $AImoduleManager->iterate() 
@@ -218,29 +255,28 @@ sub _gen_id {
 sub _run_module {
 	my ($self, $id) = @_;
 
-	foreach my $module (@{$self->{activeModules}}) {
-     		if ($module->getID() == $id) {
-			$module->check();
+	my $index = $self->_get_index_by_id($id);
+	if ($index >= 0) {
+		my $module = $self->{activeModules}->get($index);
+		$module->check();
 			
-			my $task = $module->get_task();
-			if (defined $task) {
-				$module->{T_task_count}++;
+		my $task = $module->get_task();
+		if (defined $task) {
+			$module->{T_task_count}++;
 
-				# Add our Event handler, to controll AI modules workflow.
-				$task->onStop->add($self, \&onTaskFinished, $module->{T_ID});
+			# Add our Event handler, to controll AI modules workflow.
+			$task->onStop->add($self, \&onTaskFinished, $module->{T_ID});
 
-				if ($module->getExclusive() == AI::AIModule::EXCLUSIVE) {
-					$self->{activeExlusiveTask} = $module->{T_ID};
-				};
-
-				# ToDo
-				# Actually add task to TaskManager
-				# $AI->{task_mgr}->add($task);
-
-				# Return 1 becouse that module is running. Weeee!!!
-				return 1;
+			if ($module->getExclusive() > 0) {
+				$self->{activeExlusiveTask} = $module->{T_ID};
 			};
-			return 0;
+
+			# ToDo
+			# Actually add task to TaskManager
+			# $AI->{task_mgr}->add($task);
+
+			# Return 1 becouse that module is running. Weeee!!!
+			return 1;
 		};
 	};
 	return 0;
@@ -251,16 +287,54 @@ sub _run_module {
 sub _check_module {
 	my ($self, $id) = @_;
 
-	foreach my $module (@{$self->{activeModules}}) {
-     		if ($module->getID() == $id) {
-			if ($module->{T_task_count} > 0) {
-				return 1;
-			} else {
-				return 0;
-			};
+	my $index = $self->_get_index_by_id($id);
+	if ($index >= 0) {
+		my $module = $self->{activeModules}->get($index);
+		if ($module->{T_task_count} > 0) {
+			return 1;
 		};
 	};
 	return 0;
+}
+
+# Cache all IDs for better performance
+# Should rebuild upon adding or removing dmodule
+sub _cache_id {
+	my ($self, $id) = @_;
+
+	# Empty our Hash
+	$self->{cache_modules_id} = {};
+
+	foreach my $module (@{$self->{activeModules}}) {
+		my $index = $self->{activeModules}->{keys}{$module};
+		my $id = $module->getID();
+		$self->{cache_modules_id}->{$id} = $index;
+	}
+}
+
+# Return index inside Set, or -1 if none found
+sub _get_index_by_id {
+	my ($self, $id) = @_;
+
+	# We have cached our ID?
+	if ((exists $self->{cache_modules_id}->{$id})&&($self->{cache_modules_id}->{$id} >= 0)) {
+		my $module = $self->{activeModules}->get($self->{cache_modules_id}->{$id});
+		# Re check module ID
+     		if ($module->getID() == $id) {
+			my $index = $self->{activeModules}->{keys}{$module};
+			return $index;
+		};
+	};
+
+	# OOps. None found???
+	foreach my $module (@{$self->{activeModules}}) {
+     		if ($module->getID() == $id) {
+			my $index = $self->{activeModules}->{keys}{$module};
+			return $index;
+		};
+	};
+
+	return -1;
 }
 
 #####################################
@@ -274,21 +348,23 @@ sub _check_module {
 # or with an error.
 sub onTaskFinished {
 	my ($self, $id) = @_;
-	foreach my $module (@{$self->{activeModules}}) {
-     		if ($module->getID() == $id) {
-			# Adjust module Tasks counter
-			$module->{T_task_count}--;
-			if ($module->{T_task_count} < 0) $module->{T_task_count} = 0;
 
-			# Adjust Exclusive task marker
-			if ($self->{activeExlusiveTask} == $id) {
-				if ($module->{T_task_count} <= 0) {
-					$self->{activeExlusiveTask} = -1;
-				};
+	my $index = $self->_get_index_by_id($id);
+	if ($index >= 0) {
+		my $module = $self->{activeModules}->get($index);
+
+		# Adjust module Tasks counter
+		$module->{T_task_count}--;
+		$module->{T_task_count} = 0 if ($module->{T_task_count} < 0);
+
+		# Adjust Exclusive task marker
+		if ($self->{activeExlusiveTask} == $id) {
+			if ($module->{T_task_count} <= 0) {
+				$self->{activeExlusiveTask} = -1;
 			};
-			# Do not waste CPU time.
-			return;
 		};
+	} else {
+		# O_o. Something wrong. Why we landed here???
 	};
 }
 

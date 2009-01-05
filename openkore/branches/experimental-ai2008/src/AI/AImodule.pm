@@ -140,7 +140,9 @@ sub getMutexes {
 # Get the 'exclusive' marker for this AIModule.
 # This 'exclusive' marker is guaranteed to never change during a AIModule's life time.
 sub getExclusive {
-	return $_[0]->{T_exclusive};
+	my $exclusive = 0;
+	$exclusive = 1 if ($_[0]->{T_exclusive} == EXCLUSIVE);
+	return $exclusive;
 }
 
 ##
