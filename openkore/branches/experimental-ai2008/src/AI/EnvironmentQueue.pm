@@ -57,7 +57,7 @@ use Utils::SmartCallbackList;
 sub new {
 	my $class = shift;
 	my %args = @_;
-	my $dir = "$RealBin/src/AI/";
+	my $dir = "$RealBin/src/AI/Environment/";
 	my $self  = {};
 	bless $self, $class;
 		
@@ -77,7 +77,7 @@ sub new {
 	foreach my $file (@items) {
 		if ( -f "$dir/$file" && $file =~ /\.(pm)$/ ) {
 			$file =~ s/\.(pm)$//;
-			my $module = "Environment::$file";
+			my $module = "AI::Environment::$file";
 			eval "use $module;";
 			if ($@) {
 				warning TF("Cannot load Environment parser \"%s\".\nError Message: \n%s", $module, $@ );
