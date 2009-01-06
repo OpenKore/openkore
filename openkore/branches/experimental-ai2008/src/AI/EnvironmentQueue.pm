@@ -13,15 +13,14 @@
 # MODULE DESCRIPTION: AI Environment Queue Manager.
 #
 # This is the AI Environment Queue Manager, that autoregisters all the 
-# Envionment Listner's and manages Smart Matching for registered External events.
+# Environment Listener's and manages Smart Matching for registered External events.
 #
-
 package AI::EnvironmentQueue;
 
-# Make all Referances Strict
+# Make all References Strict
 use strict;
 
-# MutiThreading Support
+# MultiThreading Support
 use threads;
 use threads::shared;
 use Thread::Queue::Any;
@@ -61,19 +60,19 @@ sub new {
 	my $self  = {};
 	bless $self, $class;
 		
-	$self->{listners} = {};				# Registered Listners
-	$self->{smart_events} = {};			# Registered Smart Events
-	# $self->{smart_ai_events} = {};		# Registered Smart Events by AI
-	# $self->{smart_task_events} = {};		# Registered Smart Events by Tasks
+	$self->{listeners} = {};					# Registered Listeners
+	$self->{smart_events} = {};					# Registered Smart Events
+	# $self->{smart_ai_events} = {};			# Registered Smart Events by AI
+	# $self->{smart_task_events} = {};			# Registered Smart Events by Tasks
 	$self->{queue} = Thread::Queue::Any->new;	# Used for Queue
 
-	# Read Directory with Command's.
+	# Read Directory with Environment parsers.
 	return if ( !opendir( DIR, $dir ) );
 	my @items;
 	@items = readdir DIR;
 	closedir DIR;
 
-	# Add all avalable command interpretters
+	# Add all available Environment parsers.
 	foreach my $file (@items) {
 		if ( -f "$dir/$file" && $file =~ /\.(pm)$/ ) {
 			$file =~ s/\.(pm)$//;
@@ -90,17 +89,17 @@ sub new {
 			}
 			my $parse_msg = UNIVERSAL::can( $module, 'parse_msg' );
 			if ( !$parse_msg ) {
-				warning TF( "Environment parser \"%s\" has no pasing function.\n", $module );
+				warning TF( "Environment parser \"%s\" has no parsing function.\n", $module );
 				next;
 			}
 			# call "$module::new($self). So that module can use our functions
 			my $env_parser = $constructor->( $module, $self );
 
 
-			if (!defined $self->{listners}->{$env_parser->getName()}) {
-				$self->{listners}->{$env_parser->getName()} = $env_parser;
+			if (!defined $self->{listeners}->{$env_parser->getName()}) {
+				$self->{listeners}->{$env_parser->getName()} = $env_parser;
 			} else {
-				warning TF( "Environment parser name \"%s\" allready registered.\n", $env_parser->getName() );
+				warning TF( "Environment parser name \"%s\" is already registered.\n", $env_parser->getName() );
 				next;
 			}
 			
@@ -139,12 +138,12 @@ sub queue_add {
 }
 
 ##
-# EnvironmentQueue->itterate()
+# EnvironmentQueue->iterate()
 #
 # Called Every time (can be called even in infinite loop)
-# Used to check Whatever new Object apeared in Queue
+# Used to check Whatever new Object appeared in Queue
 #
-sub itterate {
+sub iterate {
 	my ($self) = @_;
 	lock ($self) if (is_shared($self));
 
@@ -152,17 +151,17 @@ sub itterate {
 		my $object = $self->{queue}->dequeue;
 		my $full_object;
 		if ((defined $object->{name})&&(defined $object->{params})) {
-			# Check for Environment Listner
-			if (defined $self->{listners}->{$object->{name}}) {
-				# Get Listner class.
-				my $class = blessed($self->{listners}->{$object->{name}});
+			# Check for Environment Listener
+			if (defined $self->{listeners}->{$object->{name}}) {
+				# Get Listener class.
+				my $class = blessed($self->{listeners}->{$object->{name}});
 				$class =~ s/.*:://;
 
-				# If it's registered true "register_listner" then it cannot return $full_object becouse it's CallbackList
+				# If it's registered true "register_listener" then it cannot return $full_object becouse it's CallbackList
 				if ($class eq "CallbackList") {
-					$self->{listners}->{$object->{name}}->call($self, $object->{params});
+					$self->{listeners}->{$object->{name}}->call($self, $object->{params});
 				} else {
-					$full_object = $self->{listners}->{$object->{name}}->parse_msg($self, $object->{params});
+					$full_object = $self->{listeners}->{$object->{name}}->parse_msg($self, $object->{params});
 				};
 			} else {
 				warning T("Warning!!! Unknown Environment message found: \"" . $object->{name} . "\".\n");
@@ -182,40 +181,41 @@ sub itterate {
 }
 
 ##
-# EnvironmentQueue->register_listner(name, listner_sub, lisner_self, [params, ...])
-# Return: listner ID.
+# EnvironmentQueue->register_listener(name, listener_sub, listener_self, [params, ...])
+# Return: listener ID.
 #
-# Register new Enviromnet Listner object.
+# Register new Environment Listener object.
 #
 # Example:
-# my $ID = $environmentQueue->register("my_command", \&my_callback, \$self, $params);
-sub register_listner {
+# my $ID = $environmentQueue->register("my_listener", \&my_callback, \$self, $params);
+#
+sub register_listener {
 	my $self = shift;
 	my $name = shift;
-	my $listner_sub = shift;
-	my $lisner_self = shift;
+	my $listener_sub = shift;
+	my $listener_self = shift;
 	my $params = @_;
 
 	lock ($self) if (is_shared($self));
-	lock ($lisner_self) if ((defined $lisner_self) && (is_shared($lisner_self)));
+	lock ($listener_self) if ((defined $listener_self) && (is_shared($listener_self)));
 
-	# There is no such listner yet. So we create it.
-	# If there is one, and it's not registered true 'register_listner'
-	if (!defined $self->{listners}->{$name}) {
-		my $new_listner = CallbackList->new($name);
-		$new_listner = shared_clone($new_listner) if (is_shared($self));
-		$self->{listners}->{$name} = $new_listner;
+	# There is no such listener yet. So we create it.
+	# If there is one, and it's not registered trough 'register_listener'
+	if (!defined $self->{listeners}->{$name}) {
+		my $new_listener = CallbackList->new($name);
+		$new_listener = shared_clone($new_listener) if (is_shared($self));
+		$self->{listeners}->{$name} = $new_listener;
 	}
 
-	my $class = blessed($self->{listners}->{$name});
+	my $class = blessed($self->{listeners}->{$name});
 	$class =~ s/.*:://;
 
-	# If it's registered true "register_listner" then it will be Registered
+	# If it's registered true "register_listener" then it will be Registered
 	# else we show Warning message!
 	if ($class eq "CallbackList") {
-		# Now we have an empty listner object, or allready made. So we add our callback there.
-		$lisner_self = undef if (!defined $lisner_self);
-		return $self->{listners}->{$name}->add($lisner_self, $listner_sub, $params); 
+		# Now we have an empty listener object, or already made. So we add our callback there.
+		$listener_self = undef if (!defined $listener_self);
+		return $self->{listeners}->{$name}->add($listener_self, $listener_sub, $params); 
 	} else {
 		warning TF( "Default Environment parser name \"%s\" cannot be Reregistered.\n", $name );
 	}
@@ -223,22 +223,22 @@ sub register_listner {
 }
 
 ##
-# EnvironmentQueue->unregister_listner(name, ID)
+# EnvironmentQueue->unregister_listener(name, ID)
 #
-# UnResgister Listner Object by given name and ID.
+# UnRegister Listener Object by given name and ID.
 #
-sub unregister_listner {
+sub unregister_listener {
 	my ($self, $name, $id) = @_;
 	lock ($self) if (is_shared($self));
 	
-	if (defined $self->{listners}->{$name}) {
-		my $class = blessed($self->{listners}->{$name});
+	if (defined $self->{listeners}->{$name}) {
+		my $class = blessed($self->{listeners}->{$name});
 		$class =~ s/.*:://;
 
-		# If it's registered true "register_listner" then it can be UnRegistered
+		# If it's registered trough "register_listener" then it can be UnRegistered
 		# else we show Warning message!
 		if ($class eq "CallbackList") {
-			$self->{listners}->{$name}->remove($id);
+			$self->{listeners}->{$name}->remove($id);
 		} else {
 			warning TF( "Default Environment parser name \"%s\" cannot be UnReregistered.\n", $name );
 		}
@@ -249,7 +249,7 @@ sub unregister_listner {
 # EnvironmentQueue->register_event(name, rules, event_sub, event_self, [params, ...])
 # Return: event ID
 #
-# Resgister Smart Event Object.
+# Register Smart Event Object.
 #
 sub register_event {
 	my $self = shift;
@@ -272,7 +272,7 @@ sub register_event {
 		$self->{smart_events}->{$name} = $new_smart_event;
 	}
 
-	# Now we have an empty smart event object, or allready made. So we add our callback there.
+	# Now we have an empty smart event object, or already made. So we add our callback there.
 	$event_self = undef if (!defined $event_self);
 
 	return $self->{smart_events}->{$name}->add($event_self, $rules, $event_sub, $params); 
@@ -281,9 +281,9 @@ sub register_event {
 ##
 # EnvironmentQueue->unregister_event(ID)
 #
-# UnResgister Smart Event Object by given ID.
+# UnRegister Smart Event Object by given ID.
 #
-sub register_event {
+sub unregister_event {
 	my ($self, $name, $id) = @_;
 	lock ($self) if (is_shared($self));
 	

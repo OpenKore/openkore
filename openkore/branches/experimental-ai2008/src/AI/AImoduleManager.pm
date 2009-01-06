@@ -14,15 +14,20 @@
 #
 package AI::AImoduleManager;
 
+# Make all References Strict
 use strict;
+
+# MultiThreading Support
 use threads;
 use threads::shared;
+
+# Others (Perl Related)
 use Carp::Assert;
 use FindBin qw($RealBin);
 use List::Util qw(first);
 
+# Others (Kore related)
 use Modules 'register';
-
 use AI::AImodule;
 use Utils::Set;
 use Utils::CallbackList;
@@ -36,6 +41,7 @@ use Utils qw(timeOut);
 # AI::AImoduleManager->new()
 #
 # Create a new AI::AImoduleManager.
+#
 sub new {
 	my ($class) = @_;
 	my $dir = "$RealBin/src/AI/AImodule";
@@ -73,7 +79,7 @@ sub new {
 	@items = readdir DIR;
 	closedir DIR;
 
-	# Add all avalable command interpretters
+	# Add all available command interpreters
 	foreach my $file (@items) {
 		if ( -f "$dir/$file" && $file =~ /\.(pm)$/ ) {
 			$file =~ s/\.(pm)$//;
@@ -120,6 +126,7 @@ sub DESTROY {
 # int $AImoduleManager->add(AI::AImodule module)
 #
 # Add a new AI module to this AI module manager.
+#
 sub add {
 	my ($self, $module) = @_;
 	assert(defined $module) if DEBUG;
@@ -163,6 +170,7 @@ sub add {
 # bool $AImoduleManager->delete(int ID)
 #
 # Remove AI module from AI module manager Modules List by givven ID.
+#
 sub remove {
 	my ($self, $id) = @_;
 	assert(defined $id) if DEBUG;
@@ -203,6 +211,7 @@ sub remove {
 # bool $AImoduleManager->has(int ID)
 #
 # Return 1, if we have that module inside out Set.
+#
 sub has {
 	my ($self, $id) = @_;
 	assert(defined $id) if DEBUG;
@@ -220,6 +229,7 @@ sub has {
 # void $AImoduleManager->postpone(String mutex, int timeout)
 #
 # Postpone modules with given mutex name for some time
+#
 sub postpone {
 	my ($self, $mutex, $timeout) = @_;
 	assert(defined $mutex) if DEBUG;
@@ -246,6 +256,7 @@ sub postpone {
 # If AI::AImodule with Exclusive marker spawn a task
 # it will stop checking other module's until module with
 # that marker, tell that it's finished.
+#
 sub iterate {
 	my ($self, $module) = @_;
 	assert(defined $module) if DEBUG;
@@ -454,6 +465,7 @@ sub _check_mutex_postpone_timeout {
 #
 # This event is triggered when a task spawned by AI module is finished, either successfully
 # or with an error.
+#
 sub onTaskFinished {
 	my ($self, $id) = @_;
 

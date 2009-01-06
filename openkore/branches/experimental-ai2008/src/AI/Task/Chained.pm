@@ -31,18 +31,19 @@
 #     ]
 # );
 # </pre>
+#
 package AI::Task::Chained;
 
 # TODO: handle changing mutexes
 
+# Make all References Strict
 use strict;
 
+# Others (Kore Related)
 use Modules 'register';
 use AI::Task::WithSubTask;
 use base qw(AI::Task::WithSubTask);
-
 use Utils::Exceptions;
-
 
 ##
 # AI::Task::Chained->new(...)

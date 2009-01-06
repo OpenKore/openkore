@@ -26,16 +26,23 @@
 #
 # When you override iterate(), don't forget to check the return value of the
 # super method. See $Task_WithSubTasks->iterate() for more information.
+#
 package AI::Task::WithSubTasks;
 
+# Make all References Strict
 use strict;
+
+# Others (Perl Related)
 use Carp::Assert;
 
+# Others (Kore related)
 use Modules 'register';
 use AI::Task;
 use base qw(AI::Task);
 
-### CATEGORY: Class methods
+####################################
+### CATEGORY: Constructor
+####################################
 
 ##
 # AI::Task::WithSubTaks->new(options...)
@@ -46,15 +53,16 @@ use base qw(AI::Task);
 # `l
 # - All options allowed for Task->new(), except 'mutexes'.
 # `l`
+#
 sub new {
 	my $class = shift;
 	my %args = @_;
 	my $self = $class->SUPER::new(@_);
 
 	# Multiple SubTask support
-	$self->{activeSubTasks} = new Set(); # Set of Active SubTasks
-	$self->{queSubTasks} = new Set(); # Set of Que SubTasks that need to be Activated
-	$self->{unactiveSubTasks} = new Set(); # Set on Non Active SubTasks
+	$self->{activeSubTasks} = new Set();	# Set of Active SubTasks
+	$self->{queSubTasks} = new Set();		# Set of Que SubTasks that need to be Activated
+	$self->{unactiveSubTasks} = new Set();	# Set on Non Active SubTasks
 
 	$self->{activeMutexes} = {};
 	$self->{events} = {};
@@ -66,13 +74,19 @@ sub new {
 	return $self;
 }
 
+####################################
+### CATEGORY: Destructor
+####################################
+
 sub DESTROY {
 	my ($self) = @_;
 	$self->SUPER::DESTROY();
 	# delete $self->{ST_mutexesChangedEvent} if ($self);
 }
 
+####################################
 ### CATEGORY: Overrided methods
+####################################
 
 # Overrided method.
 sub interrupt {
@@ -109,7 +123,8 @@ sub stop {
 # the super call's return value. If the return value is 0 then you should do
 # nothing in the overrided iterate() method.
 #
-# <b>Note:</b> Itterate method will only Itterate one SubTasks a time, to reduce Hi CPU load.
+# <b>Note:</b> Iterate method will only Iterate one SubTasks a time, to reduce high CPU usage.
+#
 sub iterate {
 	my ($self) = @_;
 	$self->SUPER::iterate();
@@ -124,7 +139,7 @@ sub iterate {
 	my $activeSubTasks = $self->{activeSubTasks};
 	my $activeMutexes = $self->{activeMutexes};
 
-	# Itterate only one (Top) SubTask. If none in the list, then just do nothing.
+	# Iterate only one (Top) SubTask. If none in the list, then just do nothing.
 	if ($activeSubTasks->size() > 0) {
 	# for (my $i = 0; $i < @{$activeSubTasks}; $i++) {
 		my $task = $activeSubTasks->get(0);
@@ -141,7 +156,7 @@ sub iterate {
 
 			# Remove the callbacks that we registered in this task.
 			my $IDs = $self->{events}{$task};
-			# Standart events
+			# Standard events
 			$task->onMutexesChanged->remove($IDs->[0]);
 			$task->onStop->remove($IDs->[1]);
 			# Custom events
@@ -166,7 +181,9 @@ sub iterate {
 	}
 }
 
-### CATEGORY: Methods
+####################################
+### CATEGORY: methods
+####################################
 
 ##
 # void $Task_WithSubTasks->addSubTask()
@@ -187,6 +204,7 @@ sub iterate {
 #	onSubTaskResume => &onMoveResume
 #	onSubTaskStop => &onMoveDone
 #	onSubTaskError => &onMoveError );
+#
 sub addSubTask {
 	my $self = shift;
 	my %args = @_;
@@ -225,14 +243,15 @@ sub addSubTask {
 
 ##
 # Task $Task_WithSubTasks->getSubTaskByName()
-# name: (required) The SubTask name you whant to get.
+# name: (required) The SubTask name you want to get.
 #
 # Return SubTask by it's <tt>name</tt>, or undef if there is none.
 #
 # <b>Note:</b> SubTask name must be set, so you could use this method.
 #
 # Example:
-# my $movee_task = $self->getSubTaskByName('move to target');
+# my $move_task = $self->getSubTaskByName('move to target');
+#
 sub getSubTaskByName {
 	my ($self, $name) = @_;
 	foreach my $task (@{$self->{activeSubTasks}}, @{$self->{queSubTasks}}, @{$self->{unactiveSubTasks}}) {
@@ -278,7 +297,7 @@ sub deactivateSubTask {
 	}
 }
 
-# Reshedule All current SubTasks
+# Reschedule All current SubTasks
 # Note: Don't call this procedure directly.
 sub reschedule {
 	my ($self) = @_;
@@ -294,7 +313,7 @@ sub reschedule {
 				if ($task->getStatus() == AI::Task::RUNNING) {
 					# May-be we left some Mutexes???
 					$self->deleteTaskMutexes($task);
-					# We add SubTask to Que List, so It will itterate Next time
+					# We add SubTask to Que List, so It will iterate Next time
 					$self->{queSubTasks}->add($task);
 					$self->{unactiveSubTasks}->remove($task);
 					# Now Update Mutex List
@@ -305,7 +324,7 @@ sub reschedule {
 			} elsif (higherPriority($task, $self->{activeMutexes}, \@conflictingMutexes)) {
 					# May-be we left some Mutexes???
 					$self->deleteTaskMutexes($task);
-					# We add SubTask to Que List, so It will itterate Next time
+					# We add SubTask to Que List, so It will iterate Next time
 					$self->{queSubTasks}->add($task);
 					$self->{unactiveSubTasks}->remove($task);
 					# Now Update Mutex List
@@ -427,6 +446,7 @@ sub recalcActiveSubTaskMutexes {
 #
 # Example:
 # $self->interruptSubTask(task=> $self->getSubTaskByName('move to target'));
+#
 sub interruptSubTask {
 	my ($self, $task) = @_;
 	if (($self->{activeSubTasks}->has($task))||($self->{queSubTasks}->has($task))) {
@@ -458,6 +478,7 @@ sub interruptSubTask {
 #
 # Example:
 # $self->resumeSubTask(task=> $self->getSubTaskByName('move to target'));
+#
 sub resumeSubTask {
 	my ($self, $task) = @_;
 	$task->resume();
@@ -486,6 +507,7 @@ sub resumeSubTask {
 #
 # Example:
 # $self->stopSubTask(task=> $self->getSubTaskByName('move to target'));
+#
 sub stopSubTask {
 	my ($self, $task) = @_;
 	$task->stop();

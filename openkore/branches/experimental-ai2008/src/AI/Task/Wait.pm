@@ -22,11 +22,16 @@
 #         seconds => 3,
 #         inGame => 1);
 # </pre>
+#
 package AI::Task::Wait;
 
+# Make all References Strict
 use strict;
+
+# Others (Perl Related)
 use Time::HiRes qw(time);
 
+# Others (Kore Related)
 use Modules 'register';
 use AI::Task;
 use base qw(Task);
@@ -47,6 +52,7 @@ use Utils qw(timeOut);
 #            If inGame is set to 1 and we're not logged in, then the time we spent while not
 #            being logged in does not count as waiting time.
 # `l`
+#
 sub new {
 	my $class = shift;
 	my %args = @_;

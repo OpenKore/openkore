@@ -26,11 +26,16 @@
 #
 # When you override iterate(), don't forget to check the return value of the
 # super method. See $Task_WithSubTask->iterate() for more information.
+#
 package AI::Task::WithSubTask;
 
+# Make all References Strict
 use strict;
+
+# Others (Perl Related)
 use Carp::Assert;
 
+# Others (Kore Related)
 use Modules 'register';
 use AI::Task;
 use base qw(AI::Task);
@@ -66,6 +71,7 @@ use base qw(AI::Task);
 #   subtaskDone().
 # `l`
 # The default value is true.
+#
 sub new {
 	my $class = shift;
 	my %args = @_;
@@ -119,6 +125,7 @@ sub stop {
 # when a subtask is not running. If you override this method then you must check
 # the super call's return value. If the return value is 0 then you should do
 # nothing in the overrided iterate() method.
+#
 sub iterate {
 	my ($self) = @_;
 	$self->SUPER::iterate();
@@ -168,6 +175,7 @@ sub iterate {
 # Task $Task_WithSubTask->getSubtask()
 #
 # Return the currently set subtask, or undef if there is none.
+#
 sub getSubtask {
 	return $_[0]->{ST_subtask};
 }
@@ -182,6 +190,7 @@ sub getSubtask {
 # we're currently running a subtask.
 #
 # When the subtask is done or stopped, getSubtask() will return undef.
+#
 sub setSubtask {
 	my ($self, $subtask) = @_;
 	assert(!defined($self->getSubtask())) if DEBUG;
@@ -214,6 +223,7 @@ sub setSubtask {
 # - $self->getStatus() == AI::Task::DONE
 # - The return value of $self->getError() is defined.
 # `l`
+#
 sub subtaskDone {
 }
 
@@ -221,6 +231,7 @@ sub subtaskDone {
 # void $Task_WithSubTask->subtaskStopped(Task subtask)
 #
 # Called when a subtask is stopped by AI::Task::WithSubTask.
+#
 sub subtaskStopped {
 }
 
@@ -238,6 +249,7 @@ sub subtaskStopped {
 #
 # This method allows you to specify how a subtask's error should be translated
 # into an error for this task.
+#
 sub translateSubtaskError {
 	my ($self, $task, $error) = @_;
 	return $error;
