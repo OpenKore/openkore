@@ -51,3 +51,14 @@
 /* Puts following code inside the Google namespace */
 #define _START_GOOGLE_NAMESPACE_ namespace google {
 
+#ifndef GCC_VERSION
+#define GCC_VERSION (__GNUC__ * 10000 \
+                   	 + __GNUC_MINOR__ * 100 \
+                   	 + __GNUC_PATCHLEVEL__)
+#endif
+/* the location of <hash_fun.h>/<stl_hash_fun.h> */
+#if GCC_VERSION < 40300
+	#define HASH_FUN_H <ext/hash_fun.h>
+#else
+	#define HASH_FUN_H <backward/hash_fun.h>
+#endif
