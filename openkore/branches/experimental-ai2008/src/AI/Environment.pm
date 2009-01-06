@@ -10,11 +10,10 @@
 #  See http://www.gnu.org/licenses/gpl.html for the full license.
 #########################################################################
 ##
-# MODULE DESCRIPTION: Abstract AI Environment Lisner base class.
+# MODULE DESCRIPTION: Abstract AI Environment Listener base class.
 #
-# This is the abstract base class for all AI Environment Lisner.
+# This is the abstract base class for all AI Environment Listener.
 #
-
 package AI::Environment;
 
 ####################################
@@ -24,11 +23,12 @@ package AI::Environment;
 ##
 # Environment->new(options...)
 #
-# Create a new Environment Lisner object. The following options are allowed:
+# Create a new Environment Listener object. The following options are allowed:
 # `l
-# - <tt>name</tt> - A name of the environment message. $AIModule->getName() will return this name.
+# - <tt>name</tt> - A name of the environment message. $Environment->getName() will return this name.
 #                   If not specified, the class's name (excluding the "AI::Environment::" prefix) will be used as name.
 # `l`
+#
 sub new {
 	my $class = shift;
 	my %args = @_;
@@ -42,7 +42,7 @@ sub new {
 		}
 	}
 
-	# Set default name, if none specifed.
+	# Set default name, if none specified.
 	if (!defined $self{T_msg_name}) {
 		$self{T_msg_name} = $class;
 		$self{T_msg_name} =~ s/.*:://;
@@ -65,10 +65,11 @@ sub DESTROY {
 ####################################
 
 ##
-# String $Environment->getMsgName()
+# String $Environment->getName()
 # Ensures: $result ne ""
 #
-# Returns a human-readable name for this task.
+# Returns a human-readable name for this environment message.
+#
 sub getName {
 	return $_[0]->{T_msg_name};
 }
@@ -79,10 +80,11 @@ sub getName {
 
 ##
 # Hash $Environment->parse_msg(object)
-# object: message form Environment Queue
+# object: message from Environment Queue
 #
 # Run the Environment Message parser.
 # Returns a full_object with all the childrens, or undef.
+#
 sub parse_msg {
 	
 }

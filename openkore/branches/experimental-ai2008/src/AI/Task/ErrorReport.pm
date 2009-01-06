@@ -28,9 +28,13 @@
 # my $task = new AI::Task::ErrorReport(task => $originalTask);
 # $taskManager->add($task);
 # </pre>
+#
 package AI::Task::ErrorReport;
 
+# Make all References Strict
 use strict;
+
+# Others (Kore Related)
 use Modules 'register';
 use AI::Task::WithSubTask;
 use base qw(AI::Task::WithSubTask);
@@ -46,6 +50,7 @@ use Log qw(error);
 # - All options allowed by Task->new(), except 'mutexes'.
 # - task (required) - The Task object to wrap.
 # `l`
+#
 sub new {
 	my $class = shift;
 	my %args = @_;

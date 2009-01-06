@@ -17,10 +17,16 @@
 # the AI subsystem and task framework overview
 # </a>
 # for an overview.
+#
 package AI::TaskManager;
 
+# Make all References Strict
 use strict;
+
+# Others (Perl Related)
 use Carp::Assert;
+
+# Others (Kore related)
 use Modules 'register';
 use AI::Task;
 use Utils::Set;
@@ -30,6 +36,7 @@ use Utils::CallbackList;
 # AI::TaskManager->new()
 #
 # Create a new AI::TaskManager.
+#
 sub new {
 	my ($class) = @_;
 	my %self = (
@@ -97,6 +104,7 @@ sub new {
 # Requires: $task->getStatus() == AI::Task::INACTIVE
 #
 # Add a new task to this task manager.
+#
 sub add {
 	my ($self, $task) = @_;
 	assert(defined $task) if DEBUG;
@@ -223,6 +231,7 @@ sub reschedule {
 # void $TaskManager->checkValidity()
 #
 # Check whether the internal invariants are correct. Dies if that is not the case.
+#
 sub checkValidity {
 	my ($self) = @_;
 	my $activeTasks   = $self->{activeTasks};
@@ -269,6 +278,7 @@ sub checkValidity {
 # void $TaskManager->iterate()
 #
 # Reschedule tasks if necessary, and run one iteration of every active task.
+#
 sub iterate {
 	my ($self) = @_;
 
@@ -309,6 +319,7 @@ sub iterate {
 # void $Taskmanager->stopAll()
 #
 # Tell all tasks (whether active or inactive) to stop.
+#
 sub stopAll {
 	my ($self) = @_;
 	foreach my $task (@{$self->{activeTasks}}, @{$self->{inactiveTasks}}) {
@@ -326,6 +337,7 @@ sub stopAll {
 # Ensures: result >= 0
 #
 # Count the number of tasks that have the specified name.
+#
 sub countTasksByName {
 	my ($self, $name) = @_;
 	my $result = $self->{tasksByName}{$name};
@@ -337,6 +349,7 @@ sub countTasksByName {
 # String $TaskManager->activeTasksString()
 #
 # Returns a string which describes the current active tasks.
+#
 sub activeTasksString {
 	my ($self) = @_;
 	return getTaskSetString($self->{activeTasks});
@@ -346,6 +359,7 @@ sub activeTasksString {
 # String $TaskManager->activeTasksString()
 #
 # Returns a string which describes the currently inactive tasks.
+#
 sub inactiveTasksString {
 	my ($self) = @_;
 	return getTaskSetString($self->{inactiveTasks});
@@ -355,6 +369,7 @@ sub inactiveTasksString {
 # String $TaskManager->activeMutexesString()
 #
 # Returns a string which describes the currently active mutexes.
+#
 sub activeMutexesString {
 	my ($self) = @_;
 	my $activeMutexes = $self->{activeMutexes};
@@ -386,6 +401,7 @@ sub getTaskSetString {
 #
 # The event argument is a hash containing this item:<br>
 # <tt>task</tt> - The task that was finished.
+#
 sub onTaskFinished {
 	return $_[0]->{onTaskFinished};
 }

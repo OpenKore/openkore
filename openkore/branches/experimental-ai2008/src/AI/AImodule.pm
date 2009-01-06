@@ -20,7 +20,7 @@
 # - Each priority constant differ at least a value of 1 from other priority constants.
 # - A higher value means a higher priority.
 # `l`
-
+#
 package AI::AImodule;
 
 ###################################
@@ -31,12 +31,14 @@ package AI::AImodule;
 # AIModule::NON_EXCLUSIVE
 #
 # Indicates that the AIModule must wait before spawning a new task.
+#
 use constant NON_EXCLUSIVE	=> 0;
 
 ##
 # AIModule::EXCLUSIVE
 #
 # Indicates that the AIModule must not wait before spawning a new task, and can be checked every cycle.
+#
 use constant EXCLUSIVE		=> 1;
 
 ####################################
@@ -56,6 +58,7 @@ use constant EXCLUSIVE		=> 1;
 # - <tt>mutex</tt> - A reference to an array of mutexes. $AIModule->getMutexes() will return this value.
 #                      The default is an empty mutex list.
 # `l`
+#
 sub new {
 	my $class = shift;
 	my %args = @_;
@@ -69,16 +72,16 @@ sub new {
 		}
 	}
 
-	# Set default name, if none specifed.
+	# Set default name, if none specified.
 	if (!defined $self{T_name}) {
 		$self{T_name} = $class;
 		$self{T_name} =~ s/.*:://;
 	}
 
-	# Set default empty mutex, if none specifed.
+	# Set default empty mutex, if none specified.
 	$self{T_mutex} = [] if (!defined $self{T_mutex});
 
-	# Set default exclusive marker, if none specifed
+	# Set default exclusive marker, if none specified
 	$self{T_exclusive} = NON_EXCLUSIVE if (!defined $self{T_exclusive});
 
 	# Set default module ID
@@ -108,6 +111,7 @@ sub DESTROY {
 # Ensures: $result ne ""
 #
 # Returns a human-readable name for this task.
+#
 sub getName {
 	return $_[0]->{T_name};
 }
@@ -117,6 +121,7 @@ sub getName {
 #
 # Get the priority for this AIModule. This priority is guaranteed to never change during a AIModule's
 # life time.
+#
 sub getPriority {
 	return $_[0]->{T_priority};
 }
@@ -130,6 +135,7 @@ sub getPriority {
 #
 # If you override this method, then you <b>must</b> ensure that when the mutex list changes,
 # you trigger a onMutexesChanged event. Otherwise the task manager will not behave correctly.
+#
 sub getMutexes {
 	return $_[0]->{T_mutex};
 }
@@ -139,6 +145,7 @@ sub getMutexes {
 #
 # Get the 'exclusive' marker for this AIModule.
 # This 'exclusive' marker is guaranteed to never change during a AIModule's life time.
+#
 sub getExclusive {
 	my $exclusive = 0;
 	$exclusive = 1 if ($_[0]->{T_exclusive} == EXCLUSIVE);
@@ -149,6 +156,7 @@ sub getExclusive {
 # int $AImodule->getID()
 #
 # Get the ID for this AIModule.
+#
 sub getID {
 	return $_[0]->{T_ID};
 }
@@ -161,6 +169,7 @@ sub getID {
 # CallbackList $AIModule->onTaskFinished()
 #
 # This event is triggered when the task's status has been set to Task::STOPPED or Task::DONE.
+#
 sub onTaskFinished {
 	return $_[0]->{T_onTaskFinished};
 }
@@ -174,6 +183,7 @@ sub onTaskFinished {
 #
 # Run one check for spawning Task. AIModule implementors must override this method to
 # implement AIModule code.
+#
 sub check {
 	
 }
@@ -183,6 +193,7 @@ sub check {
 #
 # Get previously spawned Task by check(). AIModule implementors must override this method to
 # implement AIModule code.
+#
 sub get_task {
 
 }

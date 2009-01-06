@@ -44,6 +44,7 @@ our @EXPORT = qw(loadStage);
 # void $stage->loadStage()
 #
 # Load all Stage's, run them
+#
 sub loadStage {
 	my ($self) = @_;
 	my @stage_list;
@@ -58,7 +59,7 @@ sub loadStage {
 	@items = readdir DIR;
 	closedir DIR;
 
-	# Add all avalable stages
+	# Add all available stages
 	foreach my $file (@items) {
 		if (-f "$dir/$file" && $file =~ /\.(pm)$/) {
 			$file =~ s/\.(pm)$//;
