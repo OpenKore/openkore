@@ -45,9 +45,9 @@ use base qw(AI::Task);
 ####################################
 
 ##
-# AI::Task::WithSubTaks->new(options...)
+# AI::Task::WithSubTask->new(options...)
 #
-# Create a new AI::Task::WithSubTaks object.
+# Create a new AI::Task::WithSubTask object.
 #
 # The following options are allowed:
 # `l
@@ -187,7 +187,7 @@ sub iterate {
 
 ##
 # void $Task_WithSubTasks->addSubTask()
-# task: (required) The SubTask you whant to run.
+# task: (required) The SubTask you want to run.
 # onSubTaskInterrupt: Pointer to function witch will be called when <tt>task</tt> is Interrupted.
 # onSubTaskResume: Pointer to function witch will be called when <tt>task</tt> is Resumed.
 # onSubTaskStop: Pointer to function witch will be called when <tt>task</tt> is Stopped/Done without Error.
@@ -440,7 +440,7 @@ sub recalcActiveSubTaskMutexes {
 
 ##
 # void $Task_WithSubTasks->interruptSubTask()
-# task: (required) The SubTask you whant to Interrupt.
+# task: (required) The SubTask you want to Interrupt.
 #
 # Interrupts the given <tt>task</tt>.
 #
@@ -472,7 +472,7 @@ sub interruptSubTask {
 
 ##
 # void $Task_WithSubTasks->resumeSubTask()
-# task: (required) The SubTask you whant to Resume.
+# task: (required) The SubTask you want to Resume.
 #
 # Resumes the given <tt>task</tt>.
 #
@@ -500,8 +500,8 @@ sub resumeSubTask {
 }
 
 ##
-# void $Task_WithSubTasks->stopSubTask()
-# task: (required) The SubTask you whant to Stop.
+# void $Task_WithSubTask->stopSubTask()
+# task: (required) The SubTask you want to Stop.
 #
 # Stop the given <tt>task</tt>.
 #
