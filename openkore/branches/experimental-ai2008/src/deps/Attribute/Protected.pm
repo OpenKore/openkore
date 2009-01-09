@@ -12,6 +12,7 @@ sub UNIVERSAL::Protected : ATTR(CODE) {
     my($package, $symbol, $referent, $attr, $data, $phase) = @_;
     my $meth = *{$symbol}{NAME};
     no warnings 'redefine';
+    no strict 'refs'; 
     *{$symbol} = sub {
 	unless (caller->isa($package)) {
 	    require Carp;
@@ -25,6 +26,7 @@ sub UNIVERSAL::Private : ATTR(CODE) {
     my($package, $symbol, $referent, $attr, $data, $phase) = @_;
     my $meth = *{$symbol}{NAME};
     no warnings 'redefine';
+    no strict 'refs'; 
     *{$symbol} = sub {
 	unless (caller eq $package) {
 	    require Carp;
