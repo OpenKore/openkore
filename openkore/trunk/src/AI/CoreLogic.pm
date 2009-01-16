@@ -1271,7 +1271,7 @@ sub processAutoStorage {
 				$args->{done} = 1;
 				
 				# if storage is full disconnect if it says so in conf
-				if(@storageID >= 300 && $config{'dcOnStorageFull'}) {
+				if(defined $storage{items_max} && @storageID >= $storage{items_max} && $config{'dcOnStorageFull'}) {
 					error T("Disconnecting because storage is full!\n");
 					chatLog("k", T("Disconnecting because storage is full!\n"));
 					quit();
