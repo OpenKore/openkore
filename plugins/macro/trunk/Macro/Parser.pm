@@ -199,6 +199,7 @@ sub parseCmd {
 		$ret = "_%_";
 		# first parse _then_ substitute. slower but more safe
 		$arg = subvars($targ);
+		my $randomized = 0;
 
 		if ($kw eq 'npc')           {$ret = getnpcID($arg)}
 		elsif ($kw eq 'cart')       {($ret) = getItemIDs($arg, $::cart{'inventory'})}
@@ -214,8 +215,8 @@ sub parseCmd {
 		elsif ($kw eq 'venderItem') {$ret = join ',', getItemIDs($arg, \@::venderItemList)}
 		elsif ($kw eq 'venderprice'){$ret = getItemPrice($arg, \@::venderItemList)}
 		elsif ($kw eq 'venderamount'){$ret = getVendAmount($arg, \@::venderItemList)}
-		elsif ($kw eq 'random')     {$ret = getRandom($arg)}
-		elsif ($kw eq 'rand')       {$ret = getRandomRange($arg)}
+		elsif ($kw eq 'random')     {$ret = getRandom($arg); $randomized = 1}
+		elsif ($kw eq 'rand')       {$ret = getRandomRange($arg); $randomized = 1}
 		elsif ($kw eq 'invamount')  {$ret = getInventoryAmount($arg)}
 		elsif ($kw eq 'cartamount') {$ret = getCartAmount($arg)}
 		elsif ($kw eq 'shopamount') {$ret = getShopAmount($arg)}
@@ -228,7 +229,11 @@ sub parseCmd {
 		return unless defined $ret;
 		return $cmd if $ret eq '_%_';
 		$targ = q4rx $targ;
-		$cmd =~ s/\@$kw\s*\(\s*$targ\s*\)/$ret/g
+		unless ($randomized) {
+			$cmd =~ s/\@$kw\s*\(\s*$targ\s*\)/$ret/g
+		} else {
+			$cmd =~ s/\@$kw\s*\(\s*$targ\s*\)/$ret/
+		}
 	}
 
 	$cmd = subvars($cmd);
