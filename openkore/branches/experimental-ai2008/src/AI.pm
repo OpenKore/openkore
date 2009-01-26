@@ -22,7 +22,7 @@ package AI;
 use strict;
 
 # MultiThreading Support
-use threads;
+use threads qw(yield);
 use threads::shared;
 use Thread::Queue::Any;
 
