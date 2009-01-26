@@ -67,6 +67,7 @@ sub __start {
 	# Note: Further initialization is done in the mainLoop() function in functions.pl.
 	# sleep(30);
 	threads->new(\&Interface::mainLoop, $interface);
+	threads->new(\&AI::mainLoop, $AI);
 	# Interface::mainLoop($interface);
 
 	foreach my $thr (threads->list) {
