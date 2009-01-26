@@ -229,6 +229,7 @@ sub has {
 # void $AImoduleManager->postpone(String mutex, int timeout)
 #
 # Postpone modules with given mutex name for some time
+# If timeout == 0 then that mutex will be permanently postponed 
 #
 sub postpone {
 	my ($self, $mutex, $timeout) = @_;
@@ -448,7 +449,7 @@ sub _check_mutex_postpone_timeout {
 
 	foreach my $mutex (keys %{$self->{pospone_mutex_list}}) {
 		my %time = $self->{pospone_mutex_list}->{$mutex};
-		if (timeOut(\%time)) {
+		if (($time{timeout} == 0)||(timeOut(\%time))) {
 			delete $self->{pospone_mutex_list}->{$mutex};
 			$result = 1;
 		};

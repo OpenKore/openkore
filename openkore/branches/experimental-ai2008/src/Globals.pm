@@ -78,6 +78,7 @@ our %EXPORT_TAGS = (
 			%elements_lut
 			%descriptions
 			%overallAuth)],
+	ai      => [qw($AI)],
 	# ai      => [qw(@ai_seq @ai_seq_args %ai_v $AI $AI_forcedOff %targetTimeout)],
 	state   => [qw($accountID %field $field %items $playersList $monstersList $npcsList $petsList $portalsList %players %monsters %portals %pets %npcs @playersID @spellsID %spells)],
 	# state   => [qw($accountID $cardMergeIndex @cardMergeItemsID $charID @chars @chars_old %cart @friendsID %friends %incomingFriend %field $field %homunculus $itemsList @itemsID %items $monstersList @monstersID %monsters @npcsID %npcs $npcsList @playersID %players @portalsID @portalsID_old %portals %portals_old $portalsList @storeList $currentChatRoom @currentChatRoomUsers @chatRoomsID %createdChatRoom %chatRooms @skillsID %storage @storageID @arrowCraftID %guild %incomingGuild @spellsID %spells @unknownPlayers @unknownNPCs $statChanged $skillChanged $useArrowCraft %currentDeal %incomingDeal %outgoingDeal @identifyID @partyUsersID %incomingParty @petsID %pets @venderItemList $venderID @venderListsID @articles $articles %venderLists %monsters_old @monstersID_old %npcs_old %items_old %players_old @playersID_old @servers $sessionID $sessionID2 $accountSex $accountSex2 $map_ip $map_port $KoreStartTime $secureLoginKey $initSync $lastConfChangeTime $petsList $playersList $portalsList @playerNameCacheIDs %playerNameCache %pet $pvp @cashList)],
@@ -91,7 +92,7 @@ our %EXPORT_TAGS = (
 
 our @EXPORT = (
 	@{$EXPORT_TAGS{config}},
-	# @{$EXPORT_TAGS{ai}},
+	@{$EXPORT_TAGS{ai}},
 	@{$EXPORT_TAGS{state}},
 	@{$EXPORT_TAGS{network}},
 	@{$EXPORT_TAGS{interface}},
@@ -300,6 +301,7 @@ our %descriptions :shared;
 our %overallAuth :shared;
 
 # AI
+our $AI :shared;
 # our @ai_seq;
 # our @ai_seq_args;
 # our %ai_v;

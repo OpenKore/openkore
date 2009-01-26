@@ -124,7 +124,7 @@ sub DESTROY {
 ####################################
 
 ##
-# EnvironmentQueue->queue_add(name, params)
+# $EnvironmentQueue->queue_add(name, params)
 #
 # Add some structure to Queue.
 #
@@ -138,7 +138,7 @@ sub queue_add {
 }
 
 ##
-# EnvironmentQueue->iterate()
+# $EnvironmentQueue->iterate()
 #
 # Called Every time (can be called even in infinite loop)
 # Used to check Whatever new Object appeared in Queue
@@ -181,13 +181,13 @@ sub iterate {
 }
 
 ##
-# EnvironmentQueue->register_listener(name, listener_sub, listener_self, [params, ...])
+# $EnvironmentQueue->register_listener(name, listener_sub, listener_self, [params, ...])
 # Return: listener ID.
 #
 # Register new Environment Listener object.
 #
 # Example:
-# my $ID = $environmentQueue->register("my_listener", \&my_callback, \$self, $params);
+# my $ID = $environmentQueue->register_listener("my_listener", \&my_callback, \$self, $params);
 #
 sub register_listener {
 	my $self = shift;
@@ -223,7 +223,7 @@ sub register_listener {
 }
 
 ##
-# EnvironmentQueue->unregister_listener(name, ID)
+# $EnvironmentQueue->unregister_listener(name, ID)
 #
 # UnRegister Listener Object by given name and ID.
 #
@@ -246,7 +246,7 @@ sub unregister_listener {
 }
 
 ##
-# EnvironmentQueue->register_event(name, rules, event_sub, event_self, [params, ...])
+# $EnvironmentQueue->register_event(name, rules, event_sub, event_self, [params, ...])
 # Return: event ID
 #
 # Register Smart Event Object.
@@ -279,7 +279,7 @@ sub register_event {
 }
 
 ##
-# EnvironmentQueue->unregister_event(ID)
+# $EnvironmentQueue->unregister_event(ID)
 #
 # UnRegister Smart Event Object by given ID.
 #
