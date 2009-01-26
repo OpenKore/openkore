@@ -167,7 +167,7 @@ sub add {
 }
 
 ##
-# bool $AImoduleManager->delete(int ID)
+# bool $AImoduleManager->remove(int ID)
 #
 # Remove AI module from AI module manager Modules List by givven ID.
 #
