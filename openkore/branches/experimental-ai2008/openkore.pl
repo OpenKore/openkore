@@ -37,11 +37,12 @@ sub __start {
 	Settings::loadSysConfig();
 	Translation::initDefault(undef, $sys{locale});
 
-	use Globals qw($log $interface $command);
+	use Globals qw($log $interface $command $AI);
 	use Log;
 	use Interface;
 	use KoreStage;
 	use Commands;
+	use AI;
 	
 	# First Init Logging
 	my $log_obj = Log->new();
@@ -58,6 +59,9 @@ sub __start {
 
 	my $command_obj = Commands->new(); 
 	$command = shared_clone($command_obj);
+
+	my $ai_obj = AI->new();
+	$AI = shared_clone($ai_obj);
 
 	##### MAIN LOOP #####
 	# Note: Further initialization is done in the mainLoop() function in functions.pl.

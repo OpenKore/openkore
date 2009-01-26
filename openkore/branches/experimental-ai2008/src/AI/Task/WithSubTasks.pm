@@ -45,9 +45,9 @@ use base qw(AI::Task);
 ####################################
 
 ##
-# AI::Task::WithSubTask->new(options...)
+# AI::Task::WithSubTaks->new(options...)
 #
-# Create a new AI::Task::WithSubTask object.
+# Create a new AI::Task::WithSubTaks object.
 #
 # The following options are allowed:
 # `l
@@ -500,7 +500,7 @@ sub resumeSubTask {
 }
 
 ##
-# void $Task_WithSubTask->stopSubTask()
+# void $Task_WithSubTasks->stopSubTask()
 # task: (required) The SubTask you want to Stop.
 #
 # Stop the given <tt>task</tt>.

@@ -356,7 +356,7 @@ sub activeTasksString {
 }
 
 ##
-# String $TaskManager->activeTasksString()
+# String $TaskManager->inactiveTasksString()
 #
 # Returns a string which describes the currently inactive tasks.
 #
