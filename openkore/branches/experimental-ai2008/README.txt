@@ -25,6 +25,7 @@ Thread-Semaphore-2.09
 Thread-Queue-2.11
 Thread-Queue-Any-0.09
 Bundle-Thread-1.09
+Internals-1.1
  
 WX:
 Alien-wxWidgets
