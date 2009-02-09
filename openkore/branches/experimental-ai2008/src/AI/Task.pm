@@ -189,6 +189,14 @@ sub _assertStatus {
 		"But it's actually: " . _getStatusName($currentStatus) . "\n");
 }
 
+####################################
+### CATEGORY: Destructor
+###################################
+
+sub DESTROY {
+	my ($self) = @_;
+	$self->SUPER::DESTROY() if ($self->can("SUPER::DESTROY"));
+}
 
 ############################
 ### CATEGORY: Queries

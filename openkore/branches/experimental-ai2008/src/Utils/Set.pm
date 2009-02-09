@@ -89,6 +89,11 @@ sub new {
 # Add $item to the set if it isn't already in the set.
 sub add {
 	my ($self, $item) = @_;
+
+	# MultiThreading Support
+	lock ($self) if (is_shared($self));
+	$item = shared_clone($item) if ((is_shared($self)) && (!is_shared($item)));
+
 	if (!$self->has($item)) {
 		push @{$self->{items}}, $item;
 		$self->{keys}{$item} = $#{$self->{items}};
@@ -103,9 +108,34 @@ sub add {
 # Removes $item from the set if it's there.
 sub remove {
 	my ($self, $item) = @_;
+
+	# MultiThreading Support
+	lock ($self) if (is_shared($self));
+	$item = shared_clone($item) if ((is_shared($self)) && (!is_shared($item)));
+
 	if ($self->has($item)) {
 		my $index = $self->{keys}{$item};
-		splice(@{$self->{items}}, $index, 1);
+	        # perl can't splice shared arrays!
+		#splice(@{$self->{items}}, $index, 1);
+		{
+        		my @code = @{$self->{items}};
+			my $offset = $index;
+			my $len = 1;
+			my $list = undef;
+	        	my @head = @code[0 .. $offset - 1];
+			my @middle;
+			for (my $i = 0; $i <= $len; $i++) {
+				next if (not defined $list);
+				if (is_shared($self->{items})) {
+					push @middle, shared_clone($list);
+				} else {
+					push @middle, $list;
+				}
+			}
+        		my @tail = @code[$offset+1 .. $#code];
+        		@{$self->{items}} = (@head, @middle, @tail);
+		};
+
 		delete $self->{keys}{$item};
 		for (my $i = $index; $i < @{$self->{items}}; $i++) {
 			my $item = $self->{items}[$i];
@@ -121,8 +151,16 @@ sub remove {
 # Remove all items in the set.
 sub clear {
 	my ($self) = @_;
-	$self->{items} = [];
-	$self->{keys} = {};
+
+	# MultiThreading Support
+	if (is_shared($self)) {
+		lock ($self);
+		$self->{items} = &share([]);
+		$self->{keys} = &share({});
+	} else {
+		$self->{items} = [];
+		$self->{keys} = {};
+	};
 }
 
 ##
@@ -132,6 +170,11 @@ sub clear {
 # Returns the item at the specified index.
 sub get {
 	my ($self, $index) = @_;
+
+	# MultiThreading Support
+	lock ($self) if (is_shared($self));
+	# assert($index >= 0) if DEBUG;
+
 	return $self->{items}[$index];
 }
 
@@ -141,6 +184,10 @@ sub get {
 # Check whether $item is in the set.
 sub has {
 	my ($self, $item) = @_;
+
+	# MultiThreading Support
+	lock ($self) if (is_shared($self));
+
 	return exists $self->{keys}{$item};
 }
 
@@ -150,7 +197,12 @@ sub has {
 #
 # Returns the number of elements in this set.
 sub size {
-	return scalar(@{$_[0]->{items}});
+	my ($self) = @_;
+
+	# MultiThreading Support
+	lock ($self) if (is_shared($self));
+
+	return scalar(@{$self->{items}});
 }
 
 ##
@@ -161,7 +213,12 @@ sub size {
 #
 # Return the set's internal array. You must not manipulate this array.
 sub getArray {
-	return $_[0]->{items};
+	my ($self) = @_;
+
+	# MultiThreading Support
+	lock ($self) if (is_shared($self));
+
+	return $self->{items};
 }
 
 ##
@@ -171,9 +228,15 @@ sub getArray {
 # Create a deep copy of this set. The items themselves are not copied.
 sub deepCopy {
 	my ($self) = @_;
+
+	# MultiThreading Support
+	lock ($self) if (is_shared($self));
+
 	my $copy = new Set();
 	$copy->{items} = [ @{$self->{items}} ];
 	$copy->{keys} = { %{$self->{keys}} };
+
+	# $copy = shared_clone($copy) if (is_shared($self));
 	return $copy;
 }
 
