@@ -14,6 +14,7 @@ ObjectList.pm
 PathFinding.pm
 PerlLauncher.pm
 Set.pm
+Splice.pm
 StringScanner.pm
 TextReader.pm
 Unix.pm
