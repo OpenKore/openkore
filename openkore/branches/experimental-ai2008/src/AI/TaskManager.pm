@@ -23,6 +23,10 @@ package AI::TaskManager;
 # Make all References Strict
 use strict;
 
+# MultiThreading Support
+use threads;
+use threads::shared;
+
 # Others (Perl Related)
 use Carp::Assert;
 
@@ -99,6 +103,11 @@ sub new {
 	return bless \%self, $class;
 }
 
+sub DESTROY {
+	my ($self) = @_;
+	$self->SUPER::DESTROY() if ($self->can("SUPER::DESTROY"));
+}
+
 ##
 # void $TaskManager->add(AI::Task task)
 # Requires: $task->getStatus() == AI::Task::INACTIVE
@@ -109,6 +118,11 @@ sub add {
 	my ($self, $task) = @_;
 	assert(defined $task) if DEBUG;
 	assert($task->getStatus() == AI::Task::INACTIVE) if DEBUG;
+
+	# MultiThreading Support
+	lock ($self) if (is_shared($self));
+	$task = shared_clone($task) if (is_shared($self));
+
 	$self->{inactiveTasks}->add($task);
 	$self->{tasksByName}{$task->getName()}++;
 	$self->{shouldReschedule} = 1;
@@ -121,6 +135,10 @@ sub add {
 # Reschedule tasks. Do not call this method directly!
 sub reschedule {
 	my ($self) = @_;
+
+	# MultiThreading Support
+	lock ($self) if (is_shared($self));
+
 	my $activeTasks      = $self->{activeTasks};
 	my $inactiveTasks    = $self->{inactiveTasks};
 	my $grayTasks        = $self->{grayTasks};
@@ -234,6 +252,10 @@ sub reschedule {
 #
 sub checkValidity {
 	my ($self) = @_;
+
+	# MultiThreading Support
+	lock ($self) if (is_shared($self));
+
 	my $activeTasks   = $self->{activeTasks};
 	my $inactiveTasks = $self->{inactiveTasks};
 	my $grayTasks     = $self->{grayTasks};
@@ -282,6 +304,9 @@ sub checkValidity {
 sub iterate {
 	my ($self) = @_;
 
+	# MultiThreading Support
+	lock ($self) if (is_shared($self));
+
 	$self->checkValidity() if DEBUG;
 	$self->reschedule() if ($self->{shouldReschedule});
 	$self->checkValidity() if DEBUG;
@@ -322,6 +347,10 @@ sub iterate {
 #
 sub stopAll {
 	my ($self) = @_;
+
+	# MultiThreading Support
+	lock ($self) if (is_shared($self));
+
 	foreach my $task (@{$self->{activeTasks}}, @{$self->{inactiveTasks}}) {
 		$task->stop();
 		if ($task->getStatus() == AI::Task::STOPPED) {
@@ -340,6 +369,10 @@ sub stopAll {
 #
 sub countTasksByName {
 	my ($self, $name) = @_;
+
+	# MultiThreading Support
+	lock ($self) if (is_shared($self));
+
 	my $result = $self->{tasksByName}{$name};
 	$result = 0 if (!defined $result);
 	return $result;
@@ -352,6 +385,10 @@ sub countTasksByName {
 #
 sub activeTasksString {
 	my ($self) = @_;
+
+	# MultiThreading Support
+	lock ($self) if (is_shared($self));
+
 	return getTaskSetString($self->{activeTasks});
 }
 
@@ -362,6 +399,10 @@ sub activeTasksString {
 #
 sub inactiveTasksString {
 	my ($self) = @_;
+
+	# MultiThreading Support
+	lock ($self) if (is_shared($self));
+
 	return getTaskSetString($self->{inactiveTasks});
 }
 
@@ -372,6 +413,10 @@ sub inactiveTasksString {
 #
 sub activeMutexesString {
 	my ($self) = @_;
+
+	# MultiThreading Support
+	lock ($self) if (is_shared($self));
+
 	my $activeMutexes = $self->{activeMutexes};
 	my @entries;
 	foreach my $mutex (keys %{$activeMutexes}) {
@@ -412,6 +457,11 @@ sub onTaskFinished {
 
 sub onMutexesChanged {
 	my ($self, $task) = @_;
+
+	# MultiThreading Support
+	lock ($self) if (is_shared($self));
+	lock ($task) if (is_shared($task));
+
 	if ($task->getStatus() == AI::Task::RUNNING) {
 		$self->{grayTasks}->add($task);
 
@@ -428,6 +478,11 @@ sub onMutexesChanged {
 
 sub onStop {
 	my ($self, $task) = @_;
+
+	# MultiThreading Support
+	lock ($self) if (is_shared($self));
+	lock ($task) if (is_shared($task));
+
 	if ($self->{inactiveTasks}->has($task)) {
 		$self->{shouldReschedule} = 1;
 	}
@@ -458,6 +513,10 @@ sub intersect {
 # Requires: All elements in $mutexes can be successfully mapped by $mutexTaskMapper.
 sub higherPriority {
 	my ($task, $mutexTaskMapper, $mutexes) = @_;
+
+	# MultiThreading Support
+	lock ($task) if (is_shared($task));
+
 	my $priority = $task->getPriority();
 	my $result = 1;
 	for (my $i = 0; $i < @{$mutexes} && $result; $i++) {
@@ -472,6 +531,15 @@ sub higherPriority {
 # completed or stopped, then it will be added to the inactive task list.
 sub deactivateTask {
 	my ($self, $activeTasks, $inactiveTasks, $grayTasks, $activeMutexes, $tasksByName, $task) = @_;
+
+	# MultiThreading Support
+	lock ($self) if (is_shared($self));
+	lock ($activeTasks) if (is_shared($activeTasks));
+	lock ($inactiveTasks) if (is_shared($inactiveTasks));
+	lock ($grayTasks) if (is_shared($grayTasks));
+	lock ($activeMutexes) if (is_shared($activeMutexes));
+	lock ($tasksByName) if (is_shared($tasksByName));
+	lock ($task) if (is_shared($task));
 
 	my $status = $task->getStatus();
 	if ($status != AI::Task::DONE && $status != AI::Task::STOPPED) {

@@ -115,7 +115,7 @@ sub new {
 
 sub DESTROY {
 	my ($self) = @_;
-	$self->SUPER::DESTROY();
+	$self->SUPER::DESTROY() if ($self->can("SUPER::DESTROY"));
 }
 
 #####################################
@@ -167,7 +167,7 @@ sub add {
 }
 
 ##
-# bool $AImoduleManager->remove(int ID)
+# bool $AImoduleManager->delete(int ID)
 #
 # Remove AI module from AI module manager Modules List by givven ID.
 #
@@ -489,4 +489,4 @@ sub onTaskFinished {
 	};
 }
 
-
+1;
