@@ -57,6 +57,12 @@ package Set;
 
 use strict;
 use Scalar::Util;
+
+# MultiThreading Support
+use threads;
+use threads::shared;
+use Utils::Splice;
+
 use overload '@{}' => \&getArray;
 use overload '[]' => \&get;
 use overload '""' => \&_toString;
@@ -115,26 +121,7 @@ sub remove {
 
 	if ($self->has($item)) {
 		my $index = $self->{keys}{$item};
-	        # perl can't splice shared arrays!
-		#splice(@{$self->{items}}, $index, 1);
-		{
-        		my @code = @{$self->{items}};
-			my $offset = $index;
-			my $len = 1;
-			my $list = undef;
-	        	my @head = @code[0 .. $offset - 1];
-			my @middle;
-			for (my $i = 0; $i <= $len; $i++) {
-				next if (not defined $list);
-				if (is_shared($self->{items})) {
-					push @middle, shared_clone($list);
-				} else {
-					push @middle, $list;
-				}
-			}
-        		my @tail = @code[$offset+1 .. $#code];
-        		@{$self->{items}} = (@head, @middle, @tail);
-		};
+		splice(@{$self->{items}}, $index, 1);
 
 		delete $self->{keys}{$item};
 		for (my $i = $index; $i < @{$self->{items}}; $i++) {

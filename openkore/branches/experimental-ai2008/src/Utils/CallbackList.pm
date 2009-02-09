@@ -73,6 +73,7 @@ package CallbackList;
 use strict;
 use threads;
 use threads::shared;
+use Utils::Splice;
 use Carp::Assert;
 use Scalar::Util;
 use Utils::CodeRef;
