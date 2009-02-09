@@ -36,7 +36,7 @@ use Scalar::Util qw(reftype refaddr blessed);
 # Others (Kore related)
 use Modules 'register';
 use Globals qw($quit);
-use AI::AImodule;
+use AI::AImoduleManager;
 use AI::EnvironmentQueue;
 use AI::TaskManager;
 # use Utils::Set;
@@ -60,7 +60,7 @@ sub new {
 	# Warning!!!!
 	# Do not use Internal Varuables in other packages!
 	$self->{state} = 2; # By default, AI is Disabled!
-	$self->{module_manager} = AI::AImodule->new();
+	$self->{module_manager} = AI::AImoduleManager->new();
 	$self->{environment_queue} = AI::EnvironmentQueue->new();
 	$self->{task_manager} = AI::TaskManager->new();
 
