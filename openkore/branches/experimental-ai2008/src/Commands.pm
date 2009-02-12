@@ -16,17 +16,22 @@
 # MODULE DESCRIPTION: Commandline input processing
 #
 # This module processes commandline input.
-
 package Commands;
 
+# Make all References Strict
 use strict;
+
+# MultiThreading Support
 use threads;
 use threads::shared;
+
+# Others (Perl Related)
 no warnings qw(redefine uninitialized);
 use FindBin qw($RealBin);
 use Time::HiRes qw(time);
 use Scalar::Util qw(reftype refaddr blessed); 
 
+# Others (Kore related)
 use Modules 'register';
 use Globals qw(%config $interface);
 use Log qw(message debug error warning);
@@ -34,25 +39,41 @@ use Translation;
 use I18N qw(stringToBytes);
 use Utils qw(timeOut);
 
+# Core commands
+use Misc::Other;
+
+####################################
+### CATEGORY: Constructor
+####################################
+
+##
+# Command->new()
+#
+# Create a new Command object.
 sub new {
 	my $class = shift;
 	my %args  = @_;
 	my $dir = "$RealBin/src/Commands";
 	my $self  = {};
 	bless $self, $class;
-	$self->{handlers}		= {};
-	$self->{cmdQueue}		= 0;
+	$self->{handlers}			= {};
+	$self->{cmdQueue}			= 0;
 	$self->{cmdQueueStartTime}	= 0;
 	$self->{cmdQueueTime}		= 0;
 	$self->{cmdQueueList}		= [];
 
+	# Add all core command interpreters
+	my $ID = $self->register(
+		["quit", "Shuts Kore down.", \&cmdQuit, $class],
+	);
+	
 	# Read Directory with Command's.
 	return if ( !opendir( DIR, $dir ) );
 	my @items;
 	@items = readdir DIR;
 	closedir DIR;
 
-	# Add all avalable command interpretters
+	# Add all available command interpreters
 	foreach my $file (@items) {
 		if ( -f "$dir/$file" && $file =~ /\.(pm)$/ ) {
 			$file =~ s/\.(pm)$//;
@@ -75,13 +96,22 @@ sub new {
 	return $self;
 }
 
+####################################
+### CATEGORY: Destructor
+####################################
+
 sub DESTROY {
 	my ($self) = @_;
+	debug "Destroying: ".__PACKAGE__."!\n";
 	$self->SUPER::DESTROY();
 }
 
-# Exported functions.
+####################################
+### CATEGORY: Public
+####################################
 
+##
+# Commands::check_timed_out_cmd()
 sub check_timed_out_cmd {
 	my ($self) = @_;
 	lock ($self) if (is_shared($self));
@@ -104,7 +134,7 @@ sub check_timed_out_cmd {
 ##
 # Commands::parse(input, force)
 # input: a command.
-# force: force interpretting command in paused state.
+# force: force interpreting command in paused state.
 #
 # Processes $input. See also <a href="http://openkore.sourceforge.net/docs.php">the user documentation</a>
 # for a list of commands.
@@ -224,6 +254,14 @@ sub unregister {
 	foreach my $name ( @{$ID} ) {
 		delete $self->{handlers}{$name};
 	}
+}
+
+####################################
+### CATEGORY: Core Commands
+####################################
+
+sub cmdQuit {
+	Misc::Other::quit();
 }
 
 1;

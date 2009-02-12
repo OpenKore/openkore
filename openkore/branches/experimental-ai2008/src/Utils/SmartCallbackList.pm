@@ -139,7 +139,14 @@ sub remove {
 	for (my $i = $$ID + 1; $i < @{$callbacks}; $i++) {
 		${$callbacks->[$i][ID]}--;
 	}
-	splice(@{$callbacks}, $$ID, 1);
+
+	# perl can't splice shared arrays!
+	if (is_shared(@{$callbacks})) {
+		Utils::Splice::splice_shared($callbacks, $$ID, 1);
+	} else {
+		splice(@{$callbacks}, $$ID, 1);
+	}
+
 	$$ID = undef;
 }
 

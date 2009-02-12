@@ -54,7 +54,6 @@
 # "$a" eq "$b"
 # </pre>
 package Set;
-
 use strict;
 use Scalar::Util;
 
@@ -101,8 +100,8 @@ sub add {
 	$item = shared_clone($item) if ((is_shared($self)) && (!is_shared($item)));
 
 	if (!$self->has($item)) {
-		push @{$self->{items}}, $item;
-		$self->{keys}{$item} = $#{$self->{items}};
+	push @{$self->{items}}, $item;
+	$self->{keys}{$item} = $#{$self->{items}};
 	}
 }
 
@@ -121,7 +120,13 @@ sub remove {
 
 	if ($self->has($item)) {
 		my $index = $self->{keys}{$item};
-		splice(@{$self->{items}}, $index, 1);
+
+		# perl can't splice shared arrays!
+		if (is_shared(@{$self->{items}})) {
+			Utils::Splice::splice_shared($self->{items}, $index, 1);
+		} else {
+			splice(@{$self->{items}}, $index, 1);
+		}
 
 		delete $self->{keys}{$item};
 		for (my $i = $index; $i < @{$self->{items}}; $i++) {

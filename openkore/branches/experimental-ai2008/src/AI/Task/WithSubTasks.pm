@@ -188,10 +188,10 @@ sub iterate {
 ##
 # void $Task_WithSubTasks->addSubTask()
 # task: (required) The SubTask you want to run.
-# onSubTaskInterrupt: Pointer to function witch will be called when <tt>task</tt> is Interrupted.
-# onSubTaskResume: Pointer to function witch will be called when <tt>task</tt> is Resumed.
-# onSubTaskStop: Pointer to function witch will be called when <tt>task</tt> is Stopped/Done without Error.
-# onSubTaskError: Pointer to function witch will be called when <tt>task</tt> is Stopped/Done with Error.
+# onSubTaskInterrupt: Pointer to function which will be called when <tt>task</tt> is Interrupted.
+# onSubTaskResume: Pointer to function which will be called when <tt>task</tt> is Resumed.
+# onSubTaskStop: Pointer to function which will be called when <tt>task</tt> is Stopped/Done without Error.
+# onSubTaskError: Pointer to function which will be called when <tt>task</tt> is Stopped/Done with Error.
 #
 # Adds newly created Task to the list of Que SubTasks.
 #
