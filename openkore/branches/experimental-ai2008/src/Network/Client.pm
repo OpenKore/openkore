@@ -41,15 +41,14 @@ use Log qw(message error);
 
 
 ##
-# Network::Client->new(Network::MessageTokenizer $tokanizer)
+# Network::Client->new(Network::MessageTokenizer $tokenizer)
 #
 # Create a new Network Client main object.
-#
 sub new {
 	my $class = shift;
-	my $tokanizer = shift;
-	return undef if (!defined $tokanizer);
-	return undef if (! $tokanizer->isa("parse"));
+	my $tokenizer = shift;
+	return undef if (!defined $tokenizer);
+	return undef if (! $tokenizer->isa("parse"));
 
 	my %args = @_;
 	my $self = {};
@@ -60,9 +59,9 @@ sub new {
 	# Do not set Internal Varuables in other packages!
 	$self->{send_queue} = Thread::Queue->new();		# Send Queue
 	$self->{receive_queue} = Thread::Queue->new();		# Receive Queue
-	$self->{tokanizer} = $tokanizer;			# Message Tokanizer
-	$self->{host} = "";					# Host to witch we connected
-	$self->{port} = -1;					# Port to witch we connected
+	$self->{tokenizer} = $tokenizer;			# Message tokenizer
+	$self->{host} = "";					# Host to which we connected
+	$self->{port} = -1;					# Port to which we connected
 	$self->{peerhost} = "";					
 	$self->{peerport} = -1;					
 	$self->{connected} = 0;					
@@ -82,7 +81,10 @@ sub new {
 
 sub DESTROY {
 	my ($self) = @_;
-	$self->SUPER::DESTROY if $self->can("SUPER::DESTROY");
+	if $self->can("SUPER::DESTROY") {
+		debug "Destroying: ".__PACKAGE__."!\n";
+		$self->SUPER::DESTROY;
+	}
 }
 
 ####################################
@@ -136,8 +138,8 @@ sub mainLoop {
 					close($socket);
 					return;
 				} else {
-					# Parse Message thru Tokanizer
-					my $parsed_message = $self->{tokanizer}->parse($msg);
+					# Parse Message through tokenizer
+					my $parsed_message = $self->{tokenizer}->parse($msg);
 					$self->{receive_queue}->enqueue(\$parsed_message);
 				};
 			};
@@ -162,9 +164,9 @@ sub connect {
 	my $host = shift;
 	my $port = shift;
 
-	# We are allready connected
+	# We are already connected
 	if ($self->{connected} > 0) {
-		error(TF("Allready connected to: %s:%d\n", $self->{peerhost}, $self->{peerport}), "connection");
+		error(TF("Already connected to: %s:%d\n", $self->{peerhost}, $self->{peerport}), "connection");
 		return 0;
 	};
 
@@ -236,7 +238,7 @@ sub send {
 ##
 # String $net->recv()
 #
-# Receive allready splitted packet by MessageTokanizer from Socket.
+# Receive already splitted packet by Messagetokenizer from Socket.
 # Returns undef if nothing to receive.
 sub recv {
 	my $self = shift;
@@ -253,7 +255,7 @@ sub recv {
 # void $net->close()
 #
 # Close Socket.
-# Note: Soket need some time to close
+# Note: Socket needs some time to close
 sub close {
 	my $self = shift;
 	lock ($self) if (is_shared($self));

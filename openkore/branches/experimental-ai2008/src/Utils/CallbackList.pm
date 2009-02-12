@@ -146,7 +146,7 @@ sub add {
 	lock ($self) if (is_shared($self));
 
 	my @item;
-	$item[FUNCTION] = CodeRef->new($function);
+	$item[FUNCTION] = Utils::CodeRef->new($function);
 	if (defined $object) {
 		$item[OBJECT] = $object;
 		Scalar::Util::weaken($item[OBJECT]);
@@ -183,7 +183,14 @@ sub remove {
 	for (my $i = $$ID + 1; $i < @{$callbacks}; $i++) {
 		${$callbacks->[$i][ID]}--;
 	}
-	splice(@{$callbacks}, $$ID, 1);
+
+	# perl can't splice shared arrays!
+	if (is_shared(@{$callbacks})) {
+		Utils::Splice::splice_shared($callbacks, $$ID, 1);
+	} else {
+		splice(@{$callbacks}, $$ID, 1);
+	}
+
 	$$ID = undef;
 }
 

@@ -11,7 +11,6 @@
 #########################################################################
 ##
 # MODULE DESCRIPTION: AI Module Manager.
-#
 package AI::AImoduleManager;
 
 # Make all References Strict
@@ -32,6 +31,8 @@ use AI::AImodule;
 use Utils::Set;
 use Utils::CallbackList;
 use Utils qw(timeOut);
+use Log qw(warning debug);
+use Translation qw(TF);
 
 ####################################
 ### CATEGORY: Constructor
@@ -41,7 +42,6 @@ use Utils qw(timeOut);
 # AI::AImoduleManager->new()
 #
 # Create a new AI::AImoduleManager.
-#
 sub new {
 	my ($class) = @_;
 	my $dir = "$RealBin/src/AI/AImodule";
@@ -52,7 +52,7 @@ sub new {
 	# Indexed set of currently active modules.
 	$self->{activeModules} = new Set();
 
-	# Array of IDs, that show in witch order to check AI::AIModules.
+	# Array of IDs, that show in which order to check AI::AIModules.
 	$self->{modules_list} = [];
 
 	# Postponed mutex list
@@ -75,11 +75,10 @@ sub new {
 
 	# Read Directory with AI::AIModule's.
 	return if ( !opendir( DIR, $dir ) );
-	my @items;
-	@items = readdir DIR;
+	my @items = readdir DIR;
 	closedir DIR;
 
-	# Add all available command interpreters
+	# Add all available AI::AIModule's.
 	foreach my $file (@items) {
 		if ( -f "$dir/$file" && $file =~ /\.(pm)$/ ) {
 			$file =~ s/\.(pm)$//;
@@ -111,11 +110,14 @@ sub new {
 
 ####################################
 ### CATEGORY: Destructor
-###################################
+####################################
 
 sub DESTROY {
 	my ($self) = @_;
-	$self->SUPER::DESTROY() if ($self->can("SUPER::DESTROY"));
+	if ($self->can("SUPER::DESTROY")) {
+		debug "Destroying: ".__PACKAGE__."!\n";
+		$self->SUPER::DESTROY();
+	}
 }
 
 #####################################
@@ -126,7 +128,6 @@ sub DESTROY {
 # int $AImoduleManager->add(AI::AImodule module)
 #
 # Add a new AI module to this AI module manager.
-#
 sub add {
 	my ($self, $module) = @_;
 	assert(defined $module) if DEBUG;
@@ -134,15 +135,15 @@ sub add {
 	lock ($self) if (is_shared($self));
 	lock ($module) if (is_shared($module));
 
-	# Avoid adding allready existing module phase 1
+	# Avoid adding already existing module phase 1
 	if ($self->{activeModules}->has($module)) {
 		return 0;
 	};
 
 
-	# Avoid adding allready existing module phase 2
+	# Avoid adding already existing module phase 2
 	if ($module->{T_ID} > 0) {
-		# We do not allow adding allready added modules
+		# We do not allow adding already added modules
 		return 0;
 	}
 
@@ -154,7 +155,7 @@ sub add {
 	# $module->onStop->add($self, \&onTaskFinished, $module->{T_ID});
 
 	# Add module to Set
-	$self->{activeModules}->add($module);
+	$self->{activeModules}->Set::add($module);
 	
 	# ReForm our Cache for better performance.
 	$self->_cache_id();
@@ -169,8 +170,7 @@ sub add {
 ##
 # bool $AImoduleManager->delete(int ID)
 #
-# Remove AI module from AI module manager Modules List by givven ID.
-#
+# Remove AI module from AI module manager Modules List by given ID.
 sub remove {
 	my ($self, $id) = @_;
 	assert(defined $id) if DEBUG;
@@ -189,7 +189,7 @@ sub remove {
 				};
 				
 				# Remove module from Set.
-				$self->{activeModules}->remove($module);
+				$self->{activeModules}->Set::remove($module);
 
 				# ReForm our Cache for better performance.
 				$self->_cache_id();
@@ -211,7 +211,6 @@ sub remove {
 # bool $AImoduleManager->has(int ID)
 #
 # Return 1, if we have that module inside out Set.
-#
 sub has {
 	my ($self, $id) = @_;
 	assert(defined $id) if DEBUG;
@@ -230,7 +229,6 @@ sub has {
 #
 # Postpone modules with given mutex name for some time
 # If timeout == 0 then that mutex will be permanently postponed 
-#
 sub postpone {
 	my ($self, $mutex, $timeout) = @_;
 	assert(defined $mutex) if DEBUG;
@@ -253,21 +251,22 @@ sub postpone {
 ##
 # void $AImoduleManager->iterate() 
 #
-# Check all AI::AImodule for spawning Tasks.
-# If AI::AImodule with Exclusive marker spawn a task
-# it will stop checking other module's until module with
-# that marker, tell that it's finished.
-#
+# Check all AI::AImodule's for spawning Tasks.
+# If an AI::AImodule with Exclusive marker spawns a task
+# we will stop checking other module's until the module with
+# the Exclusive marker, tells that it's finished.
 sub iterate {
-	my ($self, $module) = @_;
-	assert(defined $module) if DEBUG;
+	my ($self) = @_;
+	# BUGGED: no $module in parameter
+	# BUGGED: my ($self, $module) = @_;
+	# BUGGED: assert(defined $module) if DEBUG;
 
 	# We have Exclusive Task, So just check it
 	if ($self->{activeExlusiveTask} > -1) {
 		my $id = $self->{activeExlusiveTask};
 		# Check if we Really have it
 		if ($self->has($id) > 0) {
-			# Just whait to finish that module tasks.
+			# Just wait to finish that module's tasks.
 			return;
 		} else {
 			# ToDo
@@ -276,19 +275,19 @@ sub iterate {
 	};
 
 	# Check every module, until all modules are checked,
-	# or module with exclusive morker will popup.
+	# or a module with exclusive marker pops up.
 	my @mutex_lock;
-	foreach my $id ($self->{modules_list}) {
+	foreach my $id (@{$self->{modules_list}}) {
 		my $index = $self->_get_index_by_id($id);
 		my $module = $self->{activeModules}->get($index);
 
 		# Block running module with locked mutexes
-		my $foud_mutex = undef;
+		my $found_mutex = undef;
 		foreach my $mutex (@{$module->getMutex()}) {
-			$foud_mutex = first { $_ eq $mutex } @mutex_lock;
-			last if (defined $foud_mutex);
+			$found_mutex = first { $_ eq $mutex } @mutex_lock;
+			last if (defined $found_mutex);
 		};
-		next if (defined $foud_mutex);
+		next if (defined $found_mutex);
 
 		# run module
 		if ($self->_run_module($id) > 0) {
@@ -313,9 +312,9 @@ sub iterate {
 ### CATEGORY: Private
 #####################################
 
-# calculate witch module to check
+# calculate which module to check
 # store their id's inside $self->{modules_list}
-# block any module remove attemt
+# block any module remove attempt
 sub _calc_priority {
 	my ($self) = @_;
 
@@ -325,17 +324,17 @@ sub _calc_priority {
 	# Place holder for our active modules
 	my @active_modules;
 
-	# add all ID's to out cative id's array	
+	# add all ID's to our cache id's array	
 	foreach my $id (keys %{$self->{cache_modules_id}}) {
 		my $index = $self->_get_index_by_id($id);
 		my $module = $self->{activeModules}->get($index);
 
-		my $foud_mutex = undef;
+		my $found_mutex = undef;
 		foreach my $mutex (@{$module->getMutex()}) {
-			$foud_mutex = 1 if (exists $self->{pospone_mutex_list}->{$mutex});
-			last if (defined $foud_mutex);
+			$found_mutex = 1 if (exists $self->{pospone_mutex_list}->{$mutex});
+			last if (defined $found_mutex);
 		};
-		next if (defined $foud_mutex);
+		next if (defined $found_mutex);
 
 		push(@active_modules, $id);
 	};
@@ -364,8 +363,8 @@ sub _run_module {
 		if (defined $task) {
 			$module->{T_task_count}++;
 
-			# Add our Event handler, to controll AI modules workflow.
-			$task->onStop->add($self, \&onTaskFinished, $module->{T_ID});
+			# Add our Event handler, to control AI modules workflow.
+			$task->onStop->AI::TaskManager::add($self, \&onTaskFinished, $module->{T_ID});
 
 			if ($module->getExclusive() > 0) {
 				$self->{activeExlusiveTask} = $module->{T_ID};
@@ -373,9 +372,9 @@ sub _run_module {
 
 			# ToDo
 			# Actually add task to TaskManager
-			# $AI->{task_mgr}->add($task);
+			# $AI->{task_mgr}->AI::TaskManager::add($task);
 
-			# Return 1 becouse that module is running. Weeee!!!
+			# Return 1 because that module is running. Weeee!!!
 			return 1;
 		};
 	};

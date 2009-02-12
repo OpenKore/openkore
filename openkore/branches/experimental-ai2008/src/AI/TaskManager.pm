@@ -35,6 +35,11 @@ use Modules 'register';
 use AI::Task;
 use Utils::Set;
 use Utils::CallbackList;
+use Log qw(warning debug);
+
+####################################
+### CATEGORY: Constructor
+####################################
 
 ##
 # AI::TaskManager->new()
@@ -105,7 +110,10 @@ sub new {
 
 sub DESTROY {
 	my ($self) = @_;
-	$self->SUPER::DESTROY() if ($self->can("SUPER::DESTROY"));
+	if ($self->can("SUPER::DESTROY")) {
+		debug "Destroying: ".__PACKAGE__."!\n";
+		$self->SUPER::DESTROY();
+	}
 }
 
 ##
@@ -123,13 +131,13 @@ sub add {
 	lock ($self) if (is_shared($self));
 	$task = shared_clone($task) if (is_shared($self));
 
-	$self->{inactiveTasks}->add($task);
+	$self->{inactiveTasks}->Set::add($task);
 	$self->{tasksByName}{$task->getName()}++;
 	$self->{shouldReschedule} = 1;
 
-	my $ID1 = $task->onMutexesChanged->add($self, \&onMutexesChanged);
-	my $ID2 = $task->onStop->add($self, \&onStop);
-	$self->{events}{$task} = [$ID1, $ID2];
+	my $ID1 = $task->onMutexesChanged->CallbackList::add($self, \&onMutexesChanged);
+	my $ID2 = $task->onStop->CallbackList::add($self, \&onStop);
+	$self->{events}{$task} = shared_clone([$ID1, $ID2]);
 }
 
 # Reschedule tasks. Do not call this method directly!
@@ -154,8 +162,10 @@ sub reschedule {
 	# far too much time, but the result should be good enough in most cases.
 
 	# Deactivate gray tasks that conflict with active mutexes.
-	while (@{$grayTasks} > 0) {
-		my $task = $grayTasks->get(0);
+	# BUGGED: while (@{$grayTasks} > 0) {
+	for (my $i = 0; $i < $grayTasks->size(); $i++) {
+		# BUGGED: my $task = $grayTasks->get(0);
+		my $task = $grayTasks->get($i);
 		my $hasConflict = 0;
 		foreach my $mutex (@{$task->getMutexes()}) {
 			if (exists $activeMutexes->{$mutex}) {
@@ -175,26 +185,28 @@ sub reschedule {
 			foreach my $mutex (@{$task->getMutexes()}) {
 				$activeMutexes->{$mutex} = $task;
 			}
-			shift @{$grayTasks};
+			# BUGGED: shift @{$grayTasks};
+			$grayTasks->Set::remove($task);
 		}
 	}
 
 	# Activate inactive tasks such that active tasks don't conflict with each other.
-	for (my $i = 0; $i < @{$inactiveTasks}; $i++) {
+	# BUGGED: for (my $i = 0; $i < @{$inactiveTasks}; $i++) {
+	for (my $i = 0; $i < $inactiveTasks->size(); $i++) {
 		my $task = $inactiveTasks->get($i);
 		my @conflictingMutexes;
 
 		# If this task is stopped then we just throw it away.
 		if ($task->getStatus() == AI::Task::STOPPED) {
-			$inactiveTasks->remove($task);
-			$i--;
+			$inactiveTasks->Set::remove($task);
+			# BUGGED: $i--;
 
 		# Check whether this task conflicts with the currently locked mutexes.
 		} elsif ((@conflictingMutexes = intersect($activeMutexes, $task->getMutexes())) == 0) {
 			# No conflicts, we can activate this task.
-			$activeTasks->add($task);
-			$inactiveTasks->remove($task);
-			$i--;
+			$activeTasks->Set::add($task);
+			$inactiveTasks->Set::remove($task);
+			# BUGGED: $i--;
 			foreach my $mutex (@{$task->getMutexes()}) {
 				$activeMutexes->{$mutex} = $task;
 			}
@@ -205,9 +217,9 @@ sub reschedule {
 			# If yes, let it steal the mutex, activate it and deactivate
 			# the previous mutex owner.
 
-			$activeTasks->add($task);
-			$inactiveTasks->remove($task);
-			$i--;
+			$activeTasks->Set::add($task);
+			$inactiveTasks->Set::remove($task);
+			# BUGGED: $i--;
 
 			foreach my $mutex (@{$task->getMutexes()}) {
 				my $oldTask = $activeMutexes->{$mutex};
@@ -224,7 +236,9 @@ sub reschedule {
 	}
 
 	# Resume/activate newly activated tasks.
-	foreach my $task (@{$activeTasks}) {
+	# BUGGED: foreach my $task (@{$activeTasks}) {
+	for (my $i = 0; $i < $activeTasks->size(); $i++) {
+		my $task = $activeTasks->get($i);
 		if (!$oldActiveTasks->has($task)) {
 			my $status = $task->getStatus();
 			if ($status == AI::Task::INACTIVE) {
@@ -236,7 +250,9 @@ sub reschedule {
 	}
 
 	# Interrupt newly deactivated tasks.
-	foreach my $task (@{$inactiveTasks}) {
+	# BUGGED: foreach my $task (@{$inactiveTasks}) {
+	for (my $i = 0; $i < $inactiveTasks->size(); $i++) {
+		my $task = $inactiveTasks->get($i);
 		if (!$oldInactiveTasks->has($task)) {
 			$task->interrupt();
 		}
@@ -261,7 +277,9 @@ sub checkValidity {
 	my $grayTasks     = $self->{grayTasks};
 	my $activeMutexes = $self->{activeMutexes};
 
-	foreach my $task (@{$activeTasks}) {
+	# BUGGED: foreach my $task (@{$activeTasks}) {
+	for (my $i = 0; $i < $activeTasks->size(); $i++) {
+		my $task = $activeTasks->get($i);
 		assert($task->getStatus() == AI::Task::RUNNING || $task->getStatus() == AI::Task::STOPPED);
 		assert(!$inactiveTasks->has($task));
 		if (!$grayTasks->has($task)) {
@@ -270,7 +288,9 @@ sub checkValidity {
  			}
  		}
 	}
-	foreach my $task (@{$inactiveTasks}) {
+	# BUGGED: foreach my $task (@{$inactiveTasks}) {
+	for (my $i = 0; $i < $inactiveTasks->size(); $i++) {
+		my $task = $inactiveTasks->get($i);
 		my $status = $task->getStatus();
 		assert($status = AI::Task::INTERRUPTED || $status == AI::Task::INACTIVE || $status == AI::Task::STOPPED);
 		assert(!$activeTasks->has($task));
@@ -278,7 +298,9 @@ sub checkValidity {
 			assert($activeMutexes->{$mutex} != $task);
 		}
 	}
-	foreach my $task (@{$grayTasks}) {
+	# BUGGED: foreach my $task (@{$grayTasks}) {
+	for (my $i = 0; $i < $grayTasks->size(); $i++) {
+		my $task = $grayTasks->get($i);
 		assert($activeTasks->has($task));
 		assert(!$inactiveTasks->has($task));
 	}
@@ -309,11 +331,13 @@ sub iterate {
 
 	$self->checkValidity() if DEBUG;
 	$self->reschedule() if ($self->{shouldReschedule});
+	# Technology: this checkValidity fails! see forum: http://forums.openkore.com/viewtopic.php?f=38&t=2807&p=20264#p20264
 	$self->checkValidity() if DEBUG;
 
 	my $activeTasks = $self->{activeTasks};
 	my $activeMutexes = $self->{activeMutexes};
-	for (my $i = 0; $i < @{$activeTasks}; $i++) {
+	# BUGGED: for (my $i = 0; $i < @{$activeTasks}; $i++) {
+	for (my $i = 0; $i < $activeTasks->size(); $i++) {
 		my $task = $activeTasks->get($i);
 		my $status = $task->getStatus();
 		if ($status != AI::Task::STOPPED) {
@@ -330,8 +354,8 @@ sub iterate {
 
 			# Remove the callbacks that we registered in this task.
 			my $IDs = $self->{events}{$task};
-			$task->onMutexesChanged->remove($IDs->[0]);
-			$task->onStop->remove($IDs->[1]);
+			$task->onMutexesChanged->CallbackList::remove($IDs->[0]);
+			$task->onStop->CallbackList::remove($IDs->[1]);
 
 			$i--;
 			$self->{shouldReschedule} = 1;
@@ -351,7 +375,21 @@ sub stopAll {
 	# MultiThreading Support
 	lock ($self) if (is_shared($self));
 
-	foreach my $task (@{$self->{activeTasks}}, @{$self->{inactiveTasks}}) {
+	my $activeTasks = $self->{activeTasks};
+	my $inactiveTasks = $self->{inactiveTasks};
+
+	# BUGGED: foreach my $task (@{$self->{activeTasks}}, @{$self->{inactiveTasks}}) {
+	for (my $i = 0; $i < $activeTasks->size(); $i++) {
+		my $task = $activeTasks->get($i);
+		$task->stop();
+		if ($task->getStatus() == AI::Task::STOPPED) {
+			$self->{shouldReschedule} = 1;
+		}
+		# If the task does not stop immediately, then we'll
+		# be notified by the onStop event once it's stopped.
+	}
+	for (my $i = 0; $i < $inactiveTasks->size(); $i++) {
+		my $task = $inactiveTasks->get($i);
 		$task->stop();
 		if ($task->getStatus() == AI::Task::STOPPED) {
 			$self->{shouldReschedule} = 1;
@@ -389,7 +427,8 @@ sub activeTasksString {
 	# MultiThreading Support
 	lock ($self) if (is_shared($self));
 
-	return getTaskSetString($self->{activeTasks});
+	# BUGGED: return getTaskSetString($self->{activeTasks});
+	return getTaskSetString($self->{activeTasks}->getArray());
 }
 
 ##
@@ -403,7 +442,8 @@ sub inactiveTasksString {
 	# MultiThreading Support
 	lock ($self) if (is_shared($self));
 
-	return getTaskSetString($self->{inactiveTasks});
+	# BUGGED: return getTaskSetString($self->{inactiveTasks});
+	return getTaskSetString($self->{inactiveTasks}->getArray());
 }
 
 ##
@@ -463,7 +503,7 @@ sub onMutexesChanged {
 	lock ($task) if (is_shared($task));
 
 	if ($task->getStatus() == AI::Task::RUNNING) {
-		$self->{grayTasks}->add($task);
+		$self->{grayTasks}->Set::add($task);
 
 		# Release its mutex locks.
 		my $activeMutexes = $self->{activeMutexes};
@@ -543,7 +583,7 @@ sub deactivateTask {
 
 	my $status = $task->getStatus();
 	if ($status != AI::Task::DONE && $status != AI::Task::STOPPED) {
-		$inactiveTasks->add($task);
+		$inactiveTasks->Set::add($task);
 	} else {
 		my $name = $task->getName();
 		$tasksByName->{$name}--;
@@ -554,8 +594,8 @@ sub deactivateTask {
 
 		$self->{onTaskFinished}->call($self, { task => $task });
 	}
-	$activeTasks->remove($task);
-	$grayTasks->remove($task);
+	$activeTasks->Set::remove($task);
+	$grayTasks->Set::remove($task);
 	foreach my $mutex (@{$task->getMutexes()}) {
 		if ($activeMutexes->{$mutex} == $task) {
 			delete $activeMutexes->{$mutex};

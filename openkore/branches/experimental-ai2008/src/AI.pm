@@ -14,8 +14,6 @@
 #
 # This is the main class for AI.
 # Used for accessing AI modules, Environment Queue and Task Manager.
-#
-
 package AI;
 
 # Make all References Strict
@@ -39,8 +37,22 @@ use Globals qw($quit);
 use AI::AImoduleManager;
 use AI::EnvironmentQueue;
 use AI::TaskManager;
+use Log qw(debug);
 # use Utils::Set;
 # use Utils::CallbackList;
+
+###################################
+### CATEGORY: Block flag constants
+###################################
+
+# defining constants
+use constant {
+	STATE_OFF	=> 0,
+	STATE_TASK	=> 1,
+	STATE_ON	=> 2,
+};
+
+use constant STATES	=> ["OFF", "TASK", "ON"];
 
 ####################################
 ### CATEGORY: Constructor
@@ -50,7 +62,6 @@ use AI::TaskManager;
 # AI->new()
 #
 # Create a new AI main object.
-#
 sub new {
 	my $class = shift;
 	my %args = @_;
@@ -58,8 +69,8 @@ sub new {
 	bless $self, $class;
 
 	# Warning!!!!
-	# Do not use Internal Varuables in other packages!
-	$self->{state} = 2; # By default, AI is Disabled!
+	# Do not use Internal Values in other packages!
+	$self->{state} = AI::STATE_OFF; # By default, AI is Disabled!
 	$self->{module_manager} = AI::AImoduleManager->new();
 	$self->{environment_queue} = AI::EnvironmentQueue->new();
 	$self->{task_manager} = AI::TaskManager->new();
@@ -73,7 +84,10 @@ sub new {
 
 sub DESTROY {
 	my ($self) = @_;
-	$self->SUPER::DESTROY() if ($self->can("SUPER::DESTROY"));
+	if ($self->can("SUPER::DESTROY")) {
+		debug "Destroying: ".__PACKAGE__."!\n";
+		$self->SUPER::DESTROY;
+	}
 }
 
 ####################################
@@ -89,9 +103,9 @@ sub mainLoop {
 	while (!$quit) {
 		{ # Just make Unlock quicker.
 			lock ($self) if (is_shared($self));
-			$self->{module_manager}->iterate() if ($self->{state} < 1);
+			$self->{module_manager}->iterate() if ($self->{state} > AI::STATE_TASK);
 			$self->{environment_queue}->iterate();
-			$self->{task_manager}->iterate() if ($self->{state} < 2);
+			$self->{task_manager}->iterate() if ($self->{state}  > AI::STATE_OFF);
 		}
 		yield();
 	}
@@ -101,16 +115,16 @@ sub mainLoop {
 # void $AI->SetState(int State)
 #
 # Set AI State.
-# 0: Fully Working AI 
-# 1: Diable All AI Brain power (all AI Modules)
-# 2: Fully Diable AI
+# AI::STATE_ON		Fully Active AI
+# AI::STATE_TASK		Disable All AI Brain power (all AI Modules)
+# AI::STATE_OFF		Fully Disabled AI
 sub SetState {
 	my ($self, $state) = @_;
 	lock ($self) if (is_shared($self));
-	return if (($state < 0)||($state > 2));
+	return if (($state > AI::STATE_ON)||($state < AI::STATE_OFF));
 	
 	# If Fully Disable AI, then All tasks get killed.
-	if ($state == 2) {
+	if ($state == AI::STATE_OFF) {
 		$self->{task_manager}->stopAll();
 	};
 	$self->{state} = $state;
@@ -133,7 +147,6 @@ sub GetState {
 # int $AI->AImodule_add(AI::AImodule module)
 #
 # Add a new AI module to this AI module manager.
-#
 sub AImodule_add {
 	my $self = shift;
 	lock ($self) if (is_shared($self));
@@ -143,8 +156,7 @@ sub AImodule_add {
 ##
 # bool $AI->AImodule_remove(int ID)
 #
-# Remove AI module from AI module manager Modules List by givven ID.
-#
+# Remove AI module from AI module manager Modules List by given ID.
 sub AImodule_remove {
 	my $self = shift;
 	lock ($self) if (is_shared($self));
@@ -154,8 +166,7 @@ sub AImodule_remove {
 ##
 # bool $AI->AImodule_has(int ID)
 #
-# Return 1, if we have that module inside out Set.
-#
+# Return 1, if we have that module inside our Set.
 sub AImodule_has {
 	my $self = shift;
 	lock ($self) if (is_shared($self));
@@ -167,7 +178,6 @@ sub AImodule_has {
 #
 # Postpone modules with given mutex name for some time
 # If timeout == 0 then that mutex will be permanently postponed 
-#
 sub AImodule_postpone {
 	my $self = shift;
 	lock ($self) if (is_shared($self));
@@ -182,7 +192,6 @@ sub AImodule_postpone {
 # void $AI->AIenvironment_queue_add(String name, Hash* params)
 #
 # Add some structure to Queue.
-#
 sub AIenvironment_queue_add {
 	my $self = shift;
 	lock ($self) if (is_shared($self));
@@ -197,7 +206,6 @@ sub AIenvironment_queue_add {
 #
 # Example:
 # my $ID = $AI->AIenvironment_register_listener("my_listener", \&my_callback, \$self, $params);
-#
 sub AIenvironment_register_listener {
 	my $self = shift;
 	lock ($self) if (is_shared($self));
@@ -208,7 +216,6 @@ sub AIenvironment_register_listener {
 # void $AI->AIenvironment_unregister_listener(String name, int ID)
 #
 # UnRegister Listener Object by given name and ID.
-#
 sub AIenvironment_unregister_listener {
 	my $self = shift;
 	lock ($self) if (is_shared($self));
@@ -220,7 +227,6 @@ sub AIenvironment_unregister_listener {
 # Return: event ID
 #
 # Register Smart Event Object.
-#
 sub AIenvironment_register_event {
 	my $self = shift;
 	lock ($self) if (is_shared($self));
@@ -231,7 +237,6 @@ sub AIenvironment_register_event {
 # void $AI->AIenvironment_unregister_event(int ID)
 #
 # UnRegister Smart Event Object by given ID.
-#
 sub AIenvironment_unregister_event {
 	my $self = shift;
 	lock ($self) if (is_shared($self));
@@ -247,7 +252,6 @@ sub AIenvironment_unregister_event {
 # Requires: $task->getStatus() == AI::Task::INACTIVE
 #
 # Add a new task to this task manager.
-#
 sub TaskManager_add {
 	my $self = shift;
 	lock ($self) if (is_shared($self));
@@ -258,7 +262,6 @@ sub TaskManager_add {
 # void $AI->TaskManager_stopAll()
 #
 # Tell all tasks (whether active or inactive) to stop.
-#
 sub TaskManager_stopAll {
 	my $self = shift;
 	lock ($self) if (is_shared($self));
@@ -270,7 +273,6 @@ sub TaskManager_stopAll {
 # Ensures: result >= 0
 #
 # Count the number of tasks that have the specified name.
-#
 sub TaskManager_countTasksByName {
 	my $self = shift;
 	lock ($self) if (is_shared($self));
@@ -281,7 +283,6 @@ sub TaskManager_countTasksByName {
 # String $AI->TaskManager_activeTasksString()
 #
 # Returns a string which describes the current active tasks.
-#
 sub TaskManager_activeTasksString {
 	my $self = shift;
 	lock ($self) if (is_shared($self));
@@ -292,7 +293,6 @@ sub TaskManager_activeTasksString {
 # String $AI->TaskManager_inactiveTasksString()
 #
 # Returns a string which describes the currently inactive tasks.
-#
 sub TaskManager_inactiveTasksString {
 	my $self = shift;
 	lock ($self) if (is_shared($self));
@@ -303,7 +303,6 @@ sub TaskManager_inactiveTasksString {
 # String $AI->TaskManager_activeMutexesString()
 #
 # Returns a string which describes the currently active Task mutexes.
-#
 sub TaskManager_activeMutexesString {
 	my $self = shift;
 	lock ($self) if (is_shared($self));

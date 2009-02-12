@@ -37,7 +37,8 @@ sub new {
 
 sub DESTROY {
 	my ($self) = @_;
-	$self->SUPER::DESTROY();
+	debug "Destroying: ".__PACKAGE__."!\n";
+	$self->SUPER::DESTROY;
 }
 
 sub cmdExample {

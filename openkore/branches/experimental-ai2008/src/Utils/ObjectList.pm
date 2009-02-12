@@ -148,27 +148,12 @@ sub add {
 		$self->{OL_items}[$index] = $item;
 	}
 
-        # perl can't splice shared arrays!
-	#splice(@{$self->{OL_cItems}}, $index, 0, $item);
-	{
-        	my @code = @{$self->{OL_cItems}};
-		my $offset = $index;
-		my $len = 0;
-		my $list = $item;
-        	my @head = @code[0 .. $offset - 1];
-		my @middle;
-		for (my $i = 0; $i <= $len; $i++) {
-			next if (not defined $list);
-			if (is_shared($self->{OL_cItems})) {
-				push @middle, shared_clone($list);
-			} else {
-				push @middle, $list;
-			}
-		}
-        	my @tail = @code[$offset+1 .. $#code];
-        	@{$self->{OL_cItems}} = (@head, @middle, @tail);
-	};
-
+	# perl can't splice shared arrays!
+	if (is_shared(@{$self->{OL_cItems}})) {
+		Utils::Splice::splice_shared($self->{OL_cItems}, $index, 0, $item);
+	} else {
+		splice(@{$self->{OL_cItems}}, $index, 0, $item);
+	}
 
 	$self->{OL_onAdd}->call($self, [$item, $index]);
 	return $index;
@@ -253,27 +238,12 @@ sub remove {
 		delete $self->{OL_items}[$index];
 		my $cItemIndex = _findItem($self->{OL_cItems}, $item);
 
-	        # perl can't splice shared arrays!
-	        #splice(@{$self->{OL_cItems}}, $cItemIndex, 1);
-		{
-			my $array = $self->{OL_cItems};
-        		my @code = @{$array};
-			my $offset = $cItemIndex;
-			my $len = 1;
-			my $list;
-        		my @head = @code[0 .. $offset - 1];
-			my @middle;
-			for (my $i = 0; $i <= $len; $i++) {
-				next if (not defined $list);
-				if (is_shared($array)) {
-					push @middle, shared_clone($list);
-				} else {
-					push @middle, $list;
-				}
-			}
-        		my @tail = @code[$offset+1 .. $#code];
-        		@{$array} = (@head, @middle, @tail);
-		};
+		# perl can't splice shared arrays!
+		if (is_shared(@{$self->{OL_cItems}})) {
+			Utils::Splice::splice_shared($self->{OL_cItems}, $cItemIndex, 1);
+		} else {
+			splice(@{$self->{OL_cItems}}, $cItemIndex, 1);
+		}
 
 		$self->{OL_onRemove}->call($self, [$item, $index]);
 		return 1;

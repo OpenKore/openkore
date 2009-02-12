@@ -272,7 +272,7 @@ sub countSteps {
 #
 # FIXME: Some things in RO should use block distance instead.
 # Discussion at
-# http://openkore.sourceforge.net/forum/viewtopic.php?t=9176
+# http://bibian.ath.cx/openkore/viewtopic.php?t=9176
 #
 # Example:
 # # Calculates the distance between you and a monster
@@ -1035,6 +1035,7 @@ sub unShiftPack {
 #
 # Create a distance map from raw field data. This distance map data is used by pathfinding
 # for wall avoidance support.
+
 # sub old_makeDistMap {
 # 	# makeDistMap() is now written in C++ (src/auto/XSTools/misc/fastutils.xs)
 # 	# The old Perl function is still here in case anyone wants to read it
