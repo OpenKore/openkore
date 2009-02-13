@@ -65,7 +65,7 @@ package ObjectList;
 use strict;
 use threads;
 use threads::shared;
-use Utils::Splice;
+use Utils::Splice qw(splice_shared);
 use Carp::Assert;
 use Scalar::Util;
 use Utils::CallbackList;
@@ -150,7 +150,7 @@ sub add {
 
 	# perl can't splice shared arrays!
 	if (is_shared(@{$self->{OL_cItems}})) {
-		Utils::Splice::splice_shared($self->{OL_cItems}, $index, 0, $item);
+		splice_shared($self->{OL_cItems}, $index, 0, $item);
 	} else {
 		splice(@{$self->{OL_cItems}}, $index, 0, $item);
 	}
@@ -240,7 +240,7 @@ sub remove {
 
 		# perl can't splice shared arrays!
 		if (is_shared(@{$self->{OL_cItems}})) {
-			Utils::Splice::splice_shared($self->{OL_cItems}, $cItemIndex, 1);
+			splice_shared($self->{OL_cItems}, $cItemIndex, 1);
 		} else {
 			splice(@{$self->{OL_cItems}}, $cItemIndex, 1);
 		}

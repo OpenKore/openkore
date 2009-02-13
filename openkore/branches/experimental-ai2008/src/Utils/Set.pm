@@ -55,12 +55,13 @@
 # </pre>
 package Set;
 use strict;
-use Scalar::Util;
+use Scalar::Util qw(refaddr);
 
 # MultiThreading Support
 use threads;
 use threads::shared;
-use Utils::Splice;
+
+use Utils::Splice qw(splice_shared);
 
 use overload '@{}' => \&getArray;
 use overload '[]' => \&get;
@@ -76,8 +77,6 @@ sub new {
 	my $self = {
 		# The items themselves.
 		items => [],
-		# Maps items to their index in the items array.
-		keys => {}
 	};
 	$self = bless $self, $class;
 	foreach my $item (@_) {
@@ -100,8 +99,7 @@ sub add {
 	$item = shared_clone($item) if ((is_shared($self)) && (!is_shared($item)));
 
 	if (!$self->has($item)) {
-	push @{$self->{items}}, $item;
-	$self->{keys}{$item} = $#{$self->{items}};
+		push @{$self->{items}}, $item;
 	}
 }
 
@@ -116,22 +114,18 @@ sub remove {
 
 	# MultiThreading Support
 	lock ($self) if (is_shared($self));
+	# Grr. This can make bug's with "find" function.
+	# But, if we seek non_shared $item in shared environment then that item might not exist!
 	$item = shared_clone($item) if ((is_shared($self)) && (!is_shared($item)));
 
 	if ($self->has($item)) {
-		my $index = $self->{keys}{$item};
+		my $index = $self->find($item);
 
 		# perl can't splice shared arrays!
 		if (is_shared(@{$self->{items}})) {
-			Utils::Splice::splice_shared($self->{items}, $index, 1);
+			splice_shared($self->{items}, $index, 1);
 		} else {
 			splice(@{$self->{items}}, $index, 1);
-		}
-
-		delete $self->{keys}{$item};
-		for (my $i = $index; $i < @{$self->{items}}; $i++) {
-			my $item = $self->{items}[$i];
-			$self->{keys}{$item}--;
 		}
 	}
 }
@@ -148,10 +142,8 @@ sub clear {
 	if (is_shared($self)) {
 		lock ($self);
 		$self->{items} = &share([]);
-		$self->{keys} = &share({});
 	} else {
 		$self->{items} = [];
-		$self->{keys} = {};
 	};
 }
 
@@ -180,7 +172,30 @@ sub has {
 	# MultiThreading Support
 	lock ($self) if (is_shared($self));
 
-	return exists $self->{keys}{$item};
+	return 1 if ($self->find($item) >= 0);
+	return 0;
+}
+
+##
+# int $set->find(item)
+#
+# Find $item index in "Set" array.
+sub find {
+	my ($self, $item) = @_;
+
+	# MultiThreading Support
+	lock ($self) if (is_shared($self));
+	for (my $i = 0; $i < @{$self->{items}}; $i++) {
+		my $existing_item = $self->{items}[$i];
+		if (is_shared($self)) {
+			# Check by internal shared refaddr
+			return $i if (is_shared($existing_item) == is_shared($item));
+		} else {
+			# Check by normal refaddr
+			return $i if (refaddr($existing_item) == refaddr($item));
+		};
+	}
+	return -1;
 }
 
 ##
@@ -226,7 +241,6 @@ sub deepCopy {
 
 	my $copy = new Set();
 	$copy->{items} = [ @{$self->{items}} ];
-	$copy->{keys} = { %{$self->{keys}} };
 
 	# $copy = shared_clone($copy) if (is_shared($self));
 	return $copy;

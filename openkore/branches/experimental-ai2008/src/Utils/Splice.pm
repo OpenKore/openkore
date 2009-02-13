@@ -17,6 +17,10 @@ use strict;
 # MultiThreading Support
 use threads;
 use threads::shared;
+use Exporter;
+use base qw(Exporter);
+
+our @EXPORT_OK = qw(splice_shared);
 
 sub splice_shared :locked {
 	# Read Array and It's Size

@@ -20,7 +20,7 @@ package SmartCallbackList;
 use strict;
 use threads;
 use threads::shared;
-use Utils::Splice;
+use Utils::Splice qw(splice_shared);
 use Carp::Assert;
 use Scalar::Util;
 use Utils::CodeRef;
@@ -142,7 +142,7 @@ sub remove {
 
 	# perl can't splice shared arrays!
 	if (is_shared(@{$callbacks})) {
-		Utils::Splice::splice_shared($callbacks, $$ID, 1);
+		splice_shared($callbacks, $$ID, 1);
 	} else {
 		splice(@{$callbacks}, $$ID, 1);
 	}
