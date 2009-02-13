@@ -73,7 +73,7 @@ package CallbackList;
 use strict;
 use threads;
 use threads::shared;
-use Utils::Splice;
+use Utils::Splice qw(splice_shared);
 use Carp::Assert;
 use Scalar::Util;
 use Utils::CodeRef;
@@ -174,7 +174,7 @@ sub add {
 # Removes a callback from this CallbackList.
 sub remove {
 	my ($self, $ID) = @_;
-	assert(defined $ID) if DEBUG;
+	# assert(defined $ID) if DEBUG;
 	lock ($self) if (is_shared($self));
 
 	return if (!defined($$ID) || $$ID < 0 || $$ID >= @{$self});
@@ -186,7 +186,7 @@ sub remove {
 
 	# perl can't splice shared arrays!
 	if (is_shared(@{$callbacks})) {
-		Utils::Splice::splice_shared($callbacks, $$ID, 1);
+		splice_shared($callbacks, $$ID, 1);
 	} else {
 		splice(@{$callbacks}, $$ID, 1);
 	}
