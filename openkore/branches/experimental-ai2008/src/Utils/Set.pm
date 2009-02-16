@@ -55,6 +55,7 @@
 # </pre>
 package Set;
 use strict;
+use Attribute::Overload;
 use Scalar::Util qw(refaddr);
 
 # MultiThreading Support
@@ -62,10 +63,7 @@ use threads;
 use threads::shared;
 
 use Utils::Splice qw(splice_shared);
-
-use overload '@{}' => \&getArray;
-use overload '[]' => \&get;
-use overload '""' => \&_toString;
+use Test::Deep::NoTest;
 
 ##
 # Set Set->new([elements...])
@@ -96,9 +94,10 @@ sub add {
 
 	# MultiThreading Support
 	lock ($self) if (is_shared($self));
-	$item = shared_clone($item) if ((is_shared($self)) && (!is_shared($item)));
+	lock ($item) if (is_shared($item));
 
 	if (!$self->has($item)) {
+		$item = shared_clone($item) if ((is_shared($self)) && (!is_shared($item)));
 		push @{$self->{items}}, $item;
 	}
 }
@@ -114,9 +113,7 @@ sub remove {
 
 	# MultiThreading Support
 	lock ($self) if (is_shared($self));
-	# Grr. This can make bug's with "find" function.
-	# But, if we seek non_shared $item in shared environment then that item might not exist!
-	$item = shared_clone($item) if ((is_shared($self)) && (!is_shared($item)));
+	lock ($item) if (is_shared($item));
 
 	if ($self->has($item)) {
 		my $index = $self->find($item);
@@ -152,8 +149,10 @@ sub clear {
 # Requires: 0 <= $index < @{$set}
 #
 # Returns the item at the specified index.
-sub get {
+sub get : Overload([]) {
 	my ($self, $index) = @_;
+
+	message T("Set::Get called!!!\n"), "utils::set";
 
 	# MultiThreading Support
 	lock ($self) if (is_shared($self));
@@ -171,6 +170,7 @@ sub has {
 
 	# MultiThreading Support
 	lock ($self) if (is_shared($self));
+	lock ($item) if (is_shared($item));
 
 	return 1 if ($self->find($item) >= 0);
 	return 0;
@@ -185,15 +185,17 @@ sub find {
 
 	# MultiThreading Support
 	lock ($self) if (is_shared($self));
+	lock ($item) if (is_shared($item));
+
 	for (my $i = 0; $i < @{$self->{items}}; $i++) {
 		my $existing_item = $self->{items}[$i];
 		if (is_shared($self)) {
 			# Check by internal shared refaddr
 			return $i if (is_shared($existing_item) == is_shared($item));
-		} else {
-			# Check by normal refaddr
-			return $i if (refaddr($existing_item) == refaddr($item));
-		};
+		}
+		# Deep Structure Check
+		# Slow but Powerfull
+		return $i if (eq_deeply($existing_item, $item));
 	}
 	return -1;
 }
@@ -219,7 +221,7 @@ sub size {
 #     for all $element in result: defined($element)
 #
 # Return the set's internal array. You must not manipulate this array.
-sub getArray {
+sub getArray : Overload(@{}) {
 	my ($self) = @_;
 
 	# MultiThreading Support
@@ -246,7 +248,7 @@ sub deepCopy {
 	return $copy;
 }
 
-sub _toString {
+sub _toString : Overload("")  {
 	return sprintf("%s(0x%x)",
 		Scalar::Util::blessed($_[0]),
 		Scalar::Util::refaddr($_[0]));
