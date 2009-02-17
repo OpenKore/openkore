@@ -31,6 +31,10 @@ package AI::Task;
 # Make all References Strict
 use strict;
 
+# MultiThreading Support
+use threads;
+use threads::shared;
+
 # Others (Perl Related)
 use Carp;
 use Carp::Assert;
@@ -177,6 +181,10 @@ sub _getStatusName {
 
 sub _assertStatus {
 	my $self = shift;
+
+	# MultiThreading Support
+	lock ($self) if (is_shared($self));
+
 	my $currentStatus = $self->{T_status};
 	foreach my $status (@_) {
 		if ($status == $currentStatus) {
@@ -209,6 +217,9 @@ sub DESTROY {
 # Returns a human-readable name for this task.
 #
 sub getName {
+	# MultiThreading Support
+	lock ($_[0]) if (is_shared($_[0]));
+
 	return $_[0]->{T_name};
 }
 
@@ -218,6 +229,9 @@ sub getName {
 # Returns the task's status. This is one of AI::Task::RUNNING, AI::Task::INTERRUPTED, AI::Task::STOPPED or AI::Task::DONE.
 #
 sub getStatus {
+	# MultiThreading Support
+	lock ($_[0]) if (is_shared($_[0]));
+
 	return $_[0]->{T_status};
 }
 
@@ -236,6 +250,9 @@ sub getStatus {
 # `l`
 #
 sub getError {
+	# MultiThreading Support
+	lock ($_[0]) if (is_shared($_[0]));
+
 	$_[0]->_assertStatus(DONE) if DEBUG;
 	return $_[0]->{T_error};
 }
@@ -251,6 +268,9 @@ sub getError {
 # you trigger a onMutexesChanged event. Otherwise the task manager will not behave correctly.
 #
 sub getMutexes {
+	# MultiThreading Support
+	lock ($_[0]) if (is_shared($_[0]));
+
 	return $_[0]->{T_mutexes};
 }
 
@@ -261,6 +281,9 @@ sub getMutexes {
 # life time.
 #
 sub getPriority {
+	# MultiThreading Support
+	lock ($_[0]) if (is_shared($_[0]));
+
 	return $_[0]->{T_priority};
 }
 
@@ -275,6 +298,9 @@ sub getPriority {
 # This event is triggered when the mutex list for this task has changed.
 #
 sub onMutexesChanged {
+	# MultiThreading Support
+	lock ($_[0]) if (is_shared($_[0]));
+
 	return $_[0]->{T_onMutexesChanged};
 }
 
@@ -284,6 +310,9 @@ sub onMutexesChanged {
 # This event is triggered when the task's status has been set to AI::Task::STOPPED.
 #
 sub onStop {
+	# MultiThreading Support
+	lock ($_[0]) if (is_shared($_[0]));
+
 	return $_[0]->{T_onStop};
 }
 
@@ -306,6 +335,10 @@ sub onStop {
 #
 sub setError {
 	my ($self, $code, $message) = @_;
+
+	# MultiThreading Support
+	lock ($self) if (is_shared($self));
+
 	$self->_assertStatus(INACTIVE, RUNNING) if DEBUG;
 	$self->{T_error} = {
 		code => $code,
@@ -325,6 +358,10 @@ sub setError {
 #
 sub setDone {
 	my ($self) = @_;
+
+	# MultiThreading Support
+	lock ($self) if (is_shared($self));
+
 	$self->_assertStatus(INACTIVE, RUNNING) if DEBUG;
 	$self->{T_status} = DONE;
 }
@@ -340,6 +377,10 @@ sub setDone {
 #
 sub setStopped {
 	my ($self) = @_;
+
+	# MultiThreading Support
+	lock ($self) if (is_shared($self));
+
 	$self->_assertStatus(INACTIVE, RUNNING, INTERRUPTED) if DEBUG;
 	$self->{T_status} = STOPPED;
 	$self->{T_onStop}->call($self);
@@ -356,6 +397,10 @@ sub setStopped {
 #
 sub setMutexes {
 	my $self = shift;
+
+	# MultiThreading Support
+	lock ($self) if (is_shared($self));
+
 	$self->{T_mutexes} = \@_;
 	$self->{T_onMutexesChanged}->call($self);
 }
@@ -377,6 +422,9 @@ sub setMutexes {
 # This method will be called by the task manager.
 #
 sub activate {
+	# MultiThreading Support
+	lock ($_[0]) if (is_shared($_[0]));
+
 	$_[0]->_assertStatus(INACTIVE) if DEBUG;
 	$_[0]->{T_status} = RUNNING;
 }
@@ -395,6 +443,9 @@ sub activate {
 # Task implementors may override this method to implement code for interruption handling.
 #
 sub interrupt {
+	# MultiThreading Support
+	lock ($_[0]) if (is_shared($_[0]));
+
 	$_[0]->_assertStatus(RUNNING) if DEBUG;
 	$_[0]->{T_status} = INTERRUPTED;
 }
@@ -413,6 +464,9 @@ sub interrupt {
 # Task implementors may override this method to implement code for resume handling.
 #
 sub resume {
+	# MultiThreading Support
+	lock ($_[0]) if (is_shared($_[0]));
+
 	$_[0]->_assertStatus(INTERRUPTED) if DEBUG;
 	$_[0]->{T_status} = RUNNING;
 }
@@ -432,6 +486,9 @@ sub resume {
 # This method may be called by anybody, not just the task manager.
 #
 sub stop {
+	# MultiThreading Support
+	lock ($_[0]) if (is_shared($_[0]));
+
 	$_[0]->setStopped();
 }
 
@@ -443,6 +500,9 @@ sub stop {
 # implement task code.
 #
 sub iterate {
+	# MultiThreading Support
+	lock ($_[0]) if (is_shared($_[0]));
+
 	$_[0]->_assertStatus(RUNNING) if DEBUG;
 }
 

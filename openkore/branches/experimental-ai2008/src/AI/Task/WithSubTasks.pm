@@ -32,6 +32,10 @@ package AI::Task::WithSubTasks;
 # Make all References Strict
 use strict;
 
+# MultiThreading Support
+use threads;
+use threads::shared;
+
 # Others (Perl Related)
 use Carp::Assert;
 
@@ -92,6 +96,10 @@ sub DESTROY {
 # Overrided method.
 sub interrupt {
 	my ($self) = @_;
+
+	# MultiThreading Support
+	lock ($self) if (is_shared($self));
+
 	$self->SUPER::interrupt();
 	foreach my $task (@{\%{$self->{activeSubTasks}}}) {
 		$self->interruptSubTask($task);
@@ -101,6 +109,10 @@ sub interrupt {
 # Overrided method.
 sub resume {
 	my ($self) = @_;
+
+	# MultiThreading Support
+	lock ($self) if (is_shared($self));
+
 	$self->SUPER::resume();
 	foreach my $task (@{\%{$self->{activeSubTasks}}}) {
 		$self->resumeSubTask($task);
@@ -110,6 +122,10 @@ sub resume {
 # Overrided method.
 sub stop {
 	my ($self) = @_;
+
+	# MultiThreading Support
+	lock ($self) if (is_shared($self));
+
 	$self->SUPER::stop();
 	foreach my $task (@{\%{$self->{activeSubTasks}}}) {
 		$self->stopSubTask($task);
@@ -128,6 +144,10 @@ sub stop {
 #
 sub iterate {
 	my ($self) = @_;
+
+	# MultiThreading Support
+	lock ($self) if (is_shared($self));
+
 	$self->SUPER::iterate();
 
 	# Move all SubTasks from Que to Active list
@@ -210,8 +230,16 @@ sub addSubTask {
 	my $self = shift;
 	my %args = @_;
 
+	# MultiThreading Support
+	lock ($self) if (is_shared($self));
+
 	if (defined($args{task})) {
 		my $task = $args{task};
+
+		# MultiThreading Support
+		lock ($task) if (is_shared($task));
+		$task = shared_clone($task) if (is_shared($self));
+
 		$self->{allSubTasks}->add($task);
 		# $self->{tasksByName}{$task->getName()}++;
 		
@@ -255,6 +283,10 @@ sub addSubTask {
 #
 sub getSubTaskByName {
 	my ($self, $name) = @_;
+
+	# MultiThreading Support
+	lock ($self) if (is_shared($self));
+
 	foreach my $task (@{\%{$self->{activeSubTasks}}}, @{\%{$self->{queSubTasks}}}, @{\%{$self->{unactiveSubTasks}}}) {
 		my $subtask_name = $task->getName();
 		if ($subtask_name eq $name) {
@@ -270,6 +302,10 @@ sub getSubTaskByName {
 # ###############################################################
 sub deactivateSubTask {
 	my ($self, $task) = @_;
+
+	# MultiThreading Support
+	lock ($self) if (is_shared($self));
+	lock ($task) if (is_shared($task));
 
 	my $activeTasks = \%{$self->{activeTasks}};
 	my $status = $task->getStatus();
@@ -303,6 +339,9 @@ sub deactivateSubTask {
 sub reschedule {
 	my ($self) = @_;
 	my $recalcMutex;
+
+	# MultiThreading Support
+	lock ($self) if (is_shared($self));
 
 	# Activate UnActive SubTasks that don't conflict Anymore
 	foreach my $task (@{\%{$self->{unactiveSubTasks}}}) {
@@ -388,6 +427,9 @@ sub reschedule {
 sub resort {
 	my ($self) = @_;
 
+	# MultiThreading Support
+	lock ($self) if (is_shared($self));
+
 	# Move SubTasks from Que to Active list
 	foreach my $task (@{\%{$self->{queSubTasks}}}) {
 		# Restore Mutexes part 1
@@ -408,6 +450,10 @@ sub resort {
 sub addTaskMutexes {
 	my ($self, $task) = @_;
 
+	# MultiThreading Support
+	lock ($self) if (is_shared($self));
+	lock ($task) if (is_shared($task));
+
 	my $activeMutexes    = $self->{activeMutexes};
 	foreach my $mutex (@{ $task->getMutexes() }) {
 		$activeMutexes->{$mutex} = $task;
@@ -417,11 +463,15 @@ sub addTaskMutexes {
 # Delete Task Mutexes from list of Active Task Mutexes
 # Note: Don't call this procedure directly.
 sub deleteTaskMutexes {
-	my ($self, $subtask) = @_;
+	my ($self, $task) = @_;
+
+	# MultiThreading Support
+	lock ($self) if (is_shared($self));
+	lock ($task) if (is_shared($task));
 
 	my $activeMutexes    = $self->{activeMutexes};
-	foreach my $mutex (@{$subtask->getMutexes()}) {
-		if ($activeMutexes->{$mutex} == $subtask) {
+	foreach my $mutex (@{$task->getMutexes()}) {
+		if ($activeMutexes->{$mutex} == $task) {
 			delete $activeMutexes->{$mutex};
 		}
 	}
@@ -432,6 +482,10 @@ sub deleteTaskMutexes {
 sub recalcActiveSubTaskMutexes {
 	my ($self) = @_;
 	my @activeMutexes;
+
+	# MultiThreading Support
+	lock ($self) if (is_shared($self));
+
 	foreach my $task (@{\%{$self->{activeSubTasks}}}, @{\%{$self->{queSubTasks}}}) {
 		push @activeMutexes, $task->getMutexes();
 	}
@@ -450,6 +504,11 @@ sub recalcActiveSubTaskMutexes {
 #
 sub interruptSubTask {
 	my ($self, $task) = @_;
+
+	# MultiThreading Support
+	lock ($self) if (is_shared($self));
+	lock ($task) if (is_shared($task));
+
 	if (($self->{activeSubTasks}->has($task))||($self->{queSubTasks}->has($task))) {
 		$task->interrupt();
 		if ($task->getStatus() == AI::Task::INTERRUPTED) {
@@ -482,6 +541,11 @@ sub interruptSubTask {
 #
 sub resumeSubTask {
 	my ($self, $task) = @_;
+
+	# MultiThreading Support
+	lock ($self) if (is_shared($self));
+	lock ($task) if (is_shared($task));
+
 	$task->resume();
 	if ($task->getStatus() == AI::Task::RUNNING) {
 		if (! $task->onSubTaskResume->empty()) {
@@ -511,6 +575,11 @@ sub resumeSubTask {
 #
 sub stopSubTask {
 	my ($self, $task) = @_;
+
+	# MultiThreading Support
+	lock ($self) if (is_shared($self));
+	lock ($task) if (is_shared($task));
+
 	$task->stop();
 	if ($task->getStatus() == AI::Task::STOPPED) {
 		if (! $task->onSubTaskStop->empty()) {
@@ -546,6 +615,12 @@ sub intersect {
 # Requires: All elements in $mutexes can be successfully mapped by $mutexTaskMapper.
 sub higherPriority {
 	my ($task, $mutexTaskMapper, $mutexes) = @_;
+
+	# MultiThreading Support
+	lock ($task) if (is_shared($task));
+	lock ($mutexTaskMapper) if (is_shared($mutexTaskMapper));
+	lock ($mutexes) if (is_shared($mutexes));
+
 	my $priority = $task->getPriority();
 	my $result = 1;
 	for (my $i = 0; $i < @{$mutexes} && $result; $i++) {
@@ -558,11 +633,20 @@ sub higherPriority {
 
 sub onSubTaskDone {
 	my ($self, $task) = @_;
+
+	# MultiThreading Support
+	lock ($self) if (is_shared($self));
+	lock ($task) if (is_shared($task));
+
 	$self->deactivateSubTask($task);
 }
 
 sub onMutexChanged {
 	my ($self) = @_;
+
+	# MultiThreading Support
+	lock ($self) if (is_shared($self));
+
 	$self->recalcActiveSubTaskMutexes();
 }
 

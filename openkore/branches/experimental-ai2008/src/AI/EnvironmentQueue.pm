@@ -133,10 +133,17 @@ sub DESTROY {
 #
 sub queue_add {
 	my ($self, $name, $params) = @_;
+
+	# MultiThreading Support
 	lock ($self) if (is_shared($self));
+
 	my $obj = {};
 	$obj->{name} = $name;
 	$obj->{params} = $params;
+
+	# MultiThreading Support
+	$obj = shared_clone($obj) if (is_shared($self));
+
 	$self->{queue}->enqueue(\$obj);
 }
 
@@ -148,6 +155,8 @@ sub queue_add {
 #
 sub iterate {
 	my ($self) = @_;
+
+	# MultiThreading Support
 	lock ($self) if (is_shared($self));
 
 	while ($self->{queue}->pending > 0) {
@@ -199,14 +208,19 @@ sub register_listener {
 	my $listener_self = shift;
 	my $params = @_;
 
+	# MultiThreading Support
 	lock ($self) if (is_shared($self));
 	lock ($listener_self) if ((defined $listener_self) && (is_shared($listener_self)));
+	$listener_self = shared_clone($listener_self) if (is_shared($self));
 
 	# There is no such listener yet. So we create it.
 	# If there is one, and it's not registered trough 'register_listener'
 	if (!defined $self->{listeners}->{$name}) {
 		my $new_listener = CallbackList->new($name);
+
+		# MultiThreading Support
 		$new_listener = shared_clone($new_listener) if (is_shared($self));
+
 		$self->{listeners}->{$name} = $new_listener;
 	}
 
@@ -232,6 +246,8 @@ sub register_listener {
 #
 sub unregister_listener {
 	my ($self, $name, $id) = @_;
+
+	# MultiThreading Support
 	lock ($self) if (is_shared($self));
 	
 	if (defined $self->{listeners}->{$name}) {
@@ -265,13 +281,18 @@ sub register_event {
 	# TODO:
 	# Document rules format
 
+	# MultiThreading Support
 	lock ($self) if (is_shared($self));
 	lock ($event_self) if ((defined $event_self) && (is_shared($event_self)));
+	$event_self = shared_clone($event_self) if (is_shared($self));
 
 	# There is no such smart event yet. So we create it
 	if (!defined $self->{smart_events}->{$name}) {
 		my $new_smart_event = SmartCallbackList->new($name);
+
+		# MultiThreading Support
 		$new_smart_event = shared_clone($new_smart_event) if (is_shared($self));
+
 		$self->{smart_events}->{$name} = $new_smart_event;
 	}
 
@@ -288,6 +309,8 @@ sub register_event {
 #
 sub unregister_event {
 	my ($self, $name, $id) = @_;
+
+	# MultiThreading Support
 	lock ($self) if (is_shared($self));
 	
 	if (defined $self->{smart_events}->{$name}) {

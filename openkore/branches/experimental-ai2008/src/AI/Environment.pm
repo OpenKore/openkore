@@ -16,6 +16,13 @@
 #
 package AI::Environment;
 
+# Make all References Strict
+use strict;
+
+# MultiThreading Support
+use threads;
+use threads::shared;
+
 # Others (Kore related)
 use Utils::Set;
 
@@ -74,6 +81,9 @@ sub DESTROY {
 # Returns a human-readable name for this environment message.
 #
 sub getName {
+	# MultiThreading Support
+	lock ($_[0]) if (is_shared($_[0]));
+
 	return $_[0]->{T_msg_name};
 }
 
