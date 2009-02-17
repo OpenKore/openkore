@@ -21,7 +21,7 @@
 # To manipulate a Set, use its methods. You can access items in a Set
 # just like you access items in an array reference:
 # <pre class="example">
-# my $set = new Set();
+# my $set = new Utils::Set();
 # $set->add("hello");
 # $set->add("world");
 # $set->add("hello");   # Has no effect. "hello" is already in the set.
@@ -53,10 +53,8 @@
 # <pre class="example">
 # "$a" eq "$b"
 # </pre>
-package Set;
+package Utils::Set;
 use strict;
-use Attribute::Overload;
-use Scalar::Util qw(refaddr);
 
 # MultiThreading Support
 use threads;
@@ -64,6 +62,12 @@ use threads::shared;
 
 use Utils::Splice qw(splice_shared);
 use Test::Deep::NoTest;
+
+use overload (
+	q/""/	=> sub { $_[0]->_toString() },	# Overload ""
+	q/[]/	=> sub { $_[0]->get($_[1]) },	# Overload []
+	q/@{}/	=> sub { $_[0]->getArray() },	# Overload @{}
+        'fallback' => 1);
 
 ##
 # Set Set->new([elements...])
@@ -149,10 +153,8 @@ sub clear {
 # Requires: 0 <= $index < @{$set}
 #
 # Returns the item at the specified index.
-sub get : Overload([]) {
+sub get {
 	my ($self, $index) = @_;
-
-	message T("Set::Get called!!!\n"), "utils::set";
 
 	# MultiThreading Support
 	lock ($self) if (is_shared($self));
@@ -187,16 +189,25 @@ sub find {
 	lock ($self) if (is_shared($self));
 	lock ($item) if (is_shared($item));
 
-	for (my $i = 0; $i < @{$self->{items}}; $i++) {
-		my $existing_item = $self->{items}[$i];
-		if (is_shared($self)) {
+	# Quick search by ref's
+	if (is_shared($self)) {
+		for (my $i = 0; $i < @{$self->{items}}; $i++) {
+			my $existing_item = $self->{items}[$i];
 			# Check by internal shared refaddr
 			return $i if (is_shared($existing_item) == is_shared($item));
 		}
+	}
+	
+	# Nothing found??? let's try deep search
+	for (my $i = 0; $i < @{$self->{items}}; $i++) {
+		my $existing_item = $self->{items}[$i];
+
 		# Deep Structure Check
 		# Slow but Powerfull
 		return $i if (eq_deeply($existing_item, $item));
 	}
+
+	# Still Nothing??? so nothing found :P
 	return -1;
 }
 
@@ -221,7 +232,7 @@ sub size {
 #     for all $element in result: defined($element)
 #
 # Return the set's internal array. You must not manipulate this array.
-sub getArray : Overload(@{}) {
+sub getArray {
 	my ($self) = @_;
 
 	# MultiThreading Support
@@ -241,14 +252,14 @@ sub deepCopy {
 	# MultiThreading Support
 	lock ($self) if (is_shared($self));
 
-	my $copy = new Set();
+	my $copy = new Utils::Set();
 	$copy->{items} = [ @{$self->{items}} ];
 
 	# $copy = shared_clone($copy) if (is_shared($self));
 	return $copy;
 }
 
-sub _toString : Overload("")  {
+sub _toString  {
 	return sprintf("%s(0x%x)",
 		Scalar::Util::blessed($_[0]),
 		Scalar::Util::refaddr($_[0]));

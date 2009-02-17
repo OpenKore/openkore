@@ -23,6 +23,9 @@
 #
 package AI::AImodule;
 
+# Others (Kore related)
+use Utils::Set;
+
 ###################################
 ### CATEGORY: Status constants
 ###################################
@@ -64,7 +67,7 @@ sub new {
 	my %args = @_;
 	my %self;
 
-	my $allowed = new Set("name", "priority", "mutex", "exclusive");
+	my $allowed = new Utils::Set("name", "priority", "mutex", "exclusive");
 
 	foreach my $key (keys %args) {
 		if ($allowed->has($key)) {

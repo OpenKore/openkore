@@ -48,9 +48,9 @@ sub new {
 	my $self = {};
 	bless $self, $class;
 
-	# Set<AI::AImodule>
+	# Utils::Set<AI::AImodule>
 	# Indexed set of currently active modules.
-	$self->{activeModules} = new Set();
+	$self->{activeModules} = new Utils::Set();
 
 	# Array of IDs, that show in which order to check AI::AIModules.
 	$self->{modules_list} = [];
@@ -155,7 +155,7 @@ sub add {
 	# $module->onStop->add($self, \&onTaskFinished, $module->{T_ID});
 
 	# Add module to Set
-	$self->{activeModules}->Set::add($module);
+	$self->{activeModules}->add($module);
 	
 	# ReForm our Cache for better performance.
 	$self->_cache_id();
@@ -189,7 +189,7 @@ sub remove {
 				};
 				
 				# Remove module from Set.
-				$self->{activeModules}->Set::remove($module);
+				$self->{activeModules}->remove($module);
 
 				# ReForm our Cache for better performance.
 				$self->_cache_id();
@@ -257,9 +257,6 @@ sub postpone {
 # the Exclusive marker, tells that it's finished.
 sub iterate {
 	my ($self) = @_;
-	# BUGGED: no $module in parameter
-	# BUGGED: my ($self, $module) = @_;
-	# BUGGED: assert(defined $module) if DEBUG;
 
 	# We have Exclusive Task, So just check it
 	if ($self->{activeExlusiveTask} > -1) {
@@ -364,7 +361,7 @@ sub _run_module {
 			$module->{T_task_count}++;
 
 			# Add our Event handler, to control AI modules workflow.
-			$task->onStop->AI::TaskManager::add($self, \&onTaskFinished, $module->{T_ID});
+			$task->onStop->add($self, \&onTaskFinished, $module->{T_ID});
 
 			if ($module->getExclusive() > 0) {
 				$self->{activeExlusiveTask} = $module->{T_ID};
@@ -372,7 +369,7 @@ sub _run_module {
 
 			# ToDo
 			# Actually add task to TaskManager
-			# $AI->{task_mgr}->AI::TaskManager::add($task);
+			# $AI->{task_mgr}->add($task);
 
 			# Return 1 because that module is running. Weeee!!!
 			return 1;
@@ -407,8 +404,8 @@ sub _cache_id {
 	};
 	
 	# Fill our Cache
-	foreach my $module (@{$self->{activeModules}}) {
-		my $index = $self->{activeModules}->{keys}{$module};
+	foreach my $module (@{\%{$self->{activeModules}}}) {
+		my $index = $self->{activeModules}->find($module);
 		my $id = $module->getID();
 		$self->{cache_modules_id}->{$id} = $index;
 	}
@@ -423,15 +420,15 @@ sub _get_index_by_id {
 		my $module = $self->{activeModules}->get($self->{cache_modules_id}->{$id});
 		# Re check module ID
      		if ($module->getID() == $id) {
-			my $index = $self->{activeModules}->{keys}{$module};
+			my $index = $self->{activeModules}->find($module);
 			return $index;
 		};
 	};
 
 	# OOps. None found???
-	foreach my $module (@{$self->{activeModules}}) {
+	foreach my $module (@{\%{$self->{activeModules}}}) {
      		if ($module->getID() == $id) {
-			my $index = $self->{activeModules}->{keys}{$module};
+			my $index = $self->{activeModules}->find($module);
 			return $index;
 		};
 	};

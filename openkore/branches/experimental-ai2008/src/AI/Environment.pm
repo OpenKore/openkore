@@ -16,6 +16,9 @@
 #
 package AI::Environment;
 
+# Others (Kore related)
+use Utils::Set;
+
 ####################################
 ### CATEGORY: Constructor
 ####################################
@@ -34,7 +37,7 @@ sub new {
 	my %args = @_;
 	my %self;
 
-	my $allowed = new Set("msg_name");
+	my $allowed = new Utils::Set("msg_name");
 
 	foreach my $key (keys %args) {
 		if ($allowed->has($key)) {

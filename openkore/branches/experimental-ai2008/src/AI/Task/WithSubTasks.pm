@@ -37,6 +37,7 @@ use Carp::Assert;
 
 # Others (Kore related)
 use Modules 'register';
+use Utils::Set;
 use AI::Task;
 use base qw(AI::Task);
 
@@ -60,9 +61,9 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 
 	# Multiple SubTask support
-	$self->{activeSubTasks} = new Set();	# Set of Active SubTasks
-	$self->{queSubTasks} = new Set();		# Set of Que SubTasks that need to be Activated
-	$self->{unactiveSubTasks} = new Set();	# Set on Non Active SubTasks
+	$self->{activeSubTasks} = new Utils::Set();	# Set of Active SubTasks
+	$self->{queSubTasks} = new Utils::Set();		# Set of Que SubTasks that need to be Activated
+	$self->{unactiveSubTasks} = new Utils::Set();	# Set on Non Active SubTasks
 
 	$self->{activeMutexes} = {};
 	$self->{events} = {};
@@ -92,7 +93,7 @@ sub DESTROY {
 sub interrupt {
 	my ($self) = @_;
 	$self->SUPER::interrupt();
-	foreach my $task (@{ $self->{activeSubTasks} }) {
+	foreach my $task (@{\%{$self->{activeSubTasks}}}) {
 		$self->interruptSubTask($task);
 	}
 }
@@ -101,7 +102,7 @@ sub interrupt {
 sub resume {
 	my ($self) = @_;
 	$self->SUPER::resume();
-	foreach my $task (@{ $self->{activeSubTasks} }) {
+	foreach my $task (@{\%{$self->{activeSubTasks}}}) {
 		$self->resumeSubTask($task);
 	}
 }
@@ -110,7 +111,7 @@ sub resume {
 sub stop {
 	my ($self) = @_;
 	$self->SUPER::stop();
-	foreach my $task (@{ $self->{activeSubTasks} }) {
+	foreach my $task (@{\%{$self->{activeSubTasks}}}) {
 		$self->stopSubTask($task);
 	}
 }
@@ -136,8 +137,8 @@ sub iterate {
 	$self->reschedule() if ($self->{shouldReschedule});
 
 	# Copy of class Vars.
-	my $activeSubTasks = $self->{activeSubTasks};
-	my $activeMutexes = $self->{activeMutexes};
+	my $activeSubTasks = \%{$self->{activeSubTasks}};
+	my $activeMutexes = \%{$self->{activeMutexes}};
 
 	# Iterate only one (Top) SubTask. If none in the list, then just do nothing.
 	if ($activeSubTasks->size() > 0) {
@@ -171,7 +172,7 @@ sub iterate {
 			return 0;
 		} else {
 			# Move SubTask to Que list
-			my $queTasks = $self->{queSubTasks};
+			my $queTasks = \%{$self->{queSubTasks}};
 			$activeSubTasks->remove($task);
 			$queTasks->add($task);
 			return 0;
@@ -254,7 +255,7 @@ sub addSubTask {
 #
 sub getSubTaskByName {
 	my ($self, $name) = @_;
-	foreach my $task (@{$self->{activeSubTasks}}, @{$self->{queSubTasks}}, @{$self->{unactiveSubTasks}}) {
+	foreach my $task (@{\%{$self->{activeSubTasks}}}, @{\%{$self->{queSubTasks}}}, @{\%{$self->{unactiveSubTasks}}}) {
 		my $subtask_name = $task->getName();
 		if ($subtask_name eq $name) {
 			return $task;
@@ -270,7 +271,7 @@ sub getSubTaskByName {
 sub deactivateSubTask {
 	my ($self, $task) = @_;
 
-	my $activeTasks = $self->{activeTasks};
+	my $activeTasks = \%{$self->{activeTasks}};
 	my $status = $task->getStatus();
 	if ($status != AI::Task::DONE && $status != AI::Task::STOPPED) {
 		$self->interruptSubTask($task);
@@ -304,7 +305,7 @@ sub reschedule {
 	my $recalcMutex;
 
 	# Activate UnActive SubTasks that don't conflict Anymore
-	foreach my $task (@{$self->{unactiveSubTasks}}) {
+	foreach my $task (@{\%{$self->{unactiveSubTasks}}}) {
 		if ($task->getStatus() == AI::Task::INTERRUPTED) {
 			# Only Do Restoration if SubTask don't conflict
 			my @conflictingMutexes;
@@ -336,7 +337,7 @@ sub reschedule {
 	}
 
 	# DeActivete SubTasks that conflict Active/Que SubTasks
-	foreach my $task (@{$self->{activeSubTasks}}, @{$self->{queSubTasks}}) {
+	foreach my $task (@{\%{$self->{activeSubTasks}}}, @{\%{$self->{queSubTasks}}}) {
 		# 1st, delete Mutex of Currently checked SubTask
 		$self->deleteTaskMutexes($task);
 
@@ -367,7 +368,7 @@ sub reschedule {
 	}
 
 	# Activate Pending SubTasks
-	foreach my $task (@{$self->{activeSubTasks}}, @{$self->{queSubTasks}}) {
+	foreach my $task (@{\%{$self->{activeSubTasks}}}, @{\%{$self->{queSubTasks}}}) {
 		my $status = $task->getStatus();
 		if ($status == AI::Task::INACTIVE) {
 			$task->activate();
@@ -388,7 +389,7 @@ sub resort {
 	my ($self) = @_;
 
 	# Move SubTasks from Que to Active list
-	foreach my $task (@{$self->{queSubTasks}}) {
+	foreach my $task (@{\%{$self->{queSubTasks}}}) {
 		# Restore Mutexes part 1
 		$self->deleteTaskMutexes($task);
 		# Move Task
@@ -431,7 +432,7 @@ sub deleteTaskMutexes {
 sub recalcActiveSubTaskMutexes {
 	my ($self) = @_;
 	my @activeMutexes;
-	foreach my $task (@{$self->{activeSubTasks}}, @{$self->{queSubTasks}}) {
+	foreach my $task (@{\%{$self->{activeSubTasks}}}, @{\%{$self->{queSubTasks}}}) {
 		push @activeMutexes, $task->getMutexes();
 	}
 	push @activeMutexes, $self->{ST_oldmutexes};
