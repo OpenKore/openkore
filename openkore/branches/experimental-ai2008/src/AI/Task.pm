@@ -135,7 +135,7 @@ use constant DONE        => 4;
 sub new {
 	my $class = shift;
 	my %args = @_;
-	my $allowed = new Set("name", "priority", "mutexes");
+	my $allowed = new Utils::Set("name", "priority", "mutexes");
 	my %self;
 
 	foreach my $key (keys %args) {
