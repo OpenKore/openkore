@@ -132,6 +132,7 @@ sub add {
 	my ($self, $module) = @_;
 	assert(defined $module) if DEBUG;
 
+	# MultiThreading Support
 	lock ($self) if (is_shared($self));
 	lock ($module) if (is_shared($module));
 
@@ -175,6 +176,7 @@ sub remove {
 	my ($self, $id) = @_;
 	assert(defined $id) if DEBUG;
 
+	# MultiThreading Support
 	lock ($self) if (is_shared($self));
 
 	if ($id > 0) {
@@ -215,6 +217,7 @@ sub has {
 	my ($self, $id) = @_;
 	assert(defined $id) if DEBUG;
 
+	# MultiThreading Support
 	lock ($self) if (is_shared($self));
 
 	my $index = $self->_get_index_by_id($id);
@@ -234,12 +237,14 @@ sub postpone {
 	assert(defined $mutex) if DEBUG;
 	assert(defined $timeout) if DEBUG;
 
+	# MultiThreading Support
 	lock ($self) if (is_shared($self));
 
 	my %time;
 	$time{time} = time;
 	$time{timeout} = $timeout;
 
+	# MultiThreading Support
 	%time = shared_clone(%time) if (is_shared($self));
 
 	$self->{pospone_mutex_list}->{$mutex} = %time;
@@ -257,6 +262,9 @@ sub postpone {
 # the Exclusive marker, tells that it's finished.
 sub iterate {
 	my ($self) = @_;
+
+	# MultiThreading Support
+	lock ($self) if (is_shared($self));
 
 	# We have Exclusive Task, So just check it
 	if ($self->{activeExlusiveTask} > -1) {
@@ -315,6 +323,9 @@ sub iterate {
 sub _calc_priority {
 	my ($self) = @_;
 
+	# MultiThreading Support
+	lock ($self) if (is_shared($self));
+
 	# Check out postponed mutexes
 	$self->_check_mutex_postpone_timeout();
 
@@ -343,6 +354,10 @@ sub _calc_priority {
 # generate new module ID
 sub _gen_id {
 	my ($self) = @_;
+
+	# MultiThreading Support
+	lock ($self) if (is_shared($self));
+
 	$self->{lastID} = $self->{lastID} + 1;
 	return $self->{lastID};
 }
@@ -350,6 +365,9 @@ sub _gen_id {
 # run module by given id
 sub _run_module {
 	my ($self, $id) = @_;
+
+	# MultiThreading Support
+	lock ($self) if (is_shared($self));
 
 	my $index = $self->_get_index_by_id($id);
 	if ($index >= 0) {
@@ -383,6 +401,9 @@ sub _run_module {
 sub _check_module {
 	my ($self, $id) = @_;
 
+	# MultiThreading Support
+	lock ($self) if (is_shared($self));
+
 	my $index = $self->_get_index_by_id($id);
 	if ($index >= 0) {
 		my $module = $self->{activeModules}->get($index);
@@ -397,6 +418,9 @@ sub _check_module {
 # Should rebuild upon adding or removing dmodule
 sub _cache_id {
 	my ($self, $id) = @_;
+
+	# MultiThreading Support
+	lock ($self) if (is_shared($self));
 
 	# Empty our Hash
 	foreach my $member (keys %{$self->{cache_modules_id}}) {
@@ -414,6 +438,9 @@ sub _cache_id {
 # Return index inside Set, or -1 if none found
 sub _get_index_by_id {
 	my ($self, $id) = @_;
+
+	# MultiThreading Support
+	lock ($self) if (is_shared($self));
 
 	# We have cached our ID?
 	if ((exists $self->{cache_modules_id}->{$id})&&($self->{cache_modules_id}->{$id} >= 0)) {
@@ -440,6 +467,9 @@ sub _get_index_by_id {
 sub _check_mutex_postpone_timeout {
 	my ($self) = @_;
 
+	# MultiThreading Support
+	lock ($self) if (is_shared($self));
+
 	my $result;
 	$result = 0;
 
@@ -465,6 +495,9 @@ sub _check_mutex_postpone_timeout {
 #
 sub onTaskFinished {
 	my ($self, $id) = @_;
+
+	# MultiThreading Support
+	lock ($self) if (is_shared($self));
 
 	my $index = $self->_get_index_by_id($id);
 	if ($index >= 0) {

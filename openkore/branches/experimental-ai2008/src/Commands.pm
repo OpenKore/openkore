@@ -65,6 +65,7 @@ sub new {
 	# Add all core command interpreters
 	my $ID = $self->register(
 		["quit", "Shuts Kore down.", \&cmdQuit, $class],
+		["exit", "Shuts Kore down.", \&cmdQuit, $class],
 	);
 	
 	# Read Directory with Command's.

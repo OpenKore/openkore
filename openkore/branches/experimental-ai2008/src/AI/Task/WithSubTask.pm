@@ -32,6 +32,10 @@ package AI::Task::WithSubTask;
 # Make all References Strict
 use strict;
 
+# MultiThreading Support
+use threads;
+use threads::shared;
+
 # Others (Perl Related)
 use Carp::Assert;
 
@@ -91,6 +95,10 @@ sub DESTROY {
 # Overrided method.
 sub interrupt {
 	my ($self) = @_;
+
+	# MultiThreading Support
+	lock ($self) if (is_shared($self));
+
 	$self->SUPER::interrupt();
 	$self->{ST_subtask}->interrupt() if ($self->{ST_subtask});
 }
@@ -98,6 +106,10 @@ sub interrupt {
 # Overrided method.
 sub resume {
 	my ($self) = @_;
+
+	# MultiThreading Support
+	lock ($self) if (is_shared($self));
+
 	$self->SUPER::resume();
 	$self->{ST_subtask}->resume() if ($self->{ST_subtask});
 }
@@ -105,6 +117,10 @@ sub resume {
 # Overrided method.
 sub stop {
 	my ($self) = @_;
+
+	# MultiThreading Support
+	lock ($self) if (is_shared($self));
+
 	if ($self->{ST_subtask}) {
 		my $task = $self->{ST_subtask};
 		$task->stop();
@@ -128,6 +144,10 @@ sub stop {
 #
 sub iterate {
 	my ($self) = @_;
+
+	# MultiThreading Support
+	lock ($self) if (is_shared($self));
+
 	$self->SUPER::iterate();
 
 	if ($self->{ST_subtask}) {
@@ -177,6 +197,9 @@ sub iterate {
 # Return the currently set subtask, or undef if there is none.
 #
 sub getSubtask {
+	# MultiThreading Support
+	lock ($_[0]) if (is_shared($_[0]));
+
 	return $_[0]->{ST_subtask};
 }
 
@@ -195,6 +218,12 @@ sub setSubtask {
 	my ($self, $subtask) = @_;
 	assert(!defined($self->getSubtask())) if DEBUG;
 	assert($subtask->getStatus() == AI::Task::INACTIVE) if DEBUG;
+
+	# MultiThreading Support
+	lock ($self) if (is_shared($self));
+	lock ($subtask) if (is_shared($subtask));
+	$subtask = shared_clone($subtask) if (is_shared($self));
+
 	$self->{ST_subtask} = $subtask;
 	if ($subtask) {
 		$subtask->activate();
@@ -252,6 +281,11 @@ sub subtaskStopped {
 #
 sub translateSubtaskError {
 	my ($self, $task, $error) = @_;
+
+	# MultiThreading Support
+	lock ($self) if (is_shared($self));
+	lock ($task) if (is_shared($task));
+
 	return $error;
 }
 
@@ -267,6 +301,10 @@ sub _onSubtaskMutexesChanged {
 # to the subtask.
 sub _restoreMutexes {
 	my ($self) = @_;
+
+	# MultiThreading Support
+	lock ($self) if (is_shared($self));
+
 	if ($self->{ST_manageMutexes}) {
 		$self->{ST_subtask}->onMutexesChanged->remove($self->{ST_mutexesChangedEvent});
 		delete $self->{ST_mutexesChangedEvent};
