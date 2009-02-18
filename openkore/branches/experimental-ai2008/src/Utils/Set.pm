@@ -61,7 +61,7 @@ use threads;
 use threads::shared;
 
 use Utils::Splice qw(splice_shared);
-use Test::Deep::NoTest;
+use Utils::Compare qw(compare);
 
 use overload (
 	q/""/	=> sub { $_[0]->_toString() },	# Overload ""
@@ -204,7 +204,7 @@ sub find {
 
 		# Deep Structure Check
 		# Slow but Powerfull
-		return $i if (eq_deeply($existing_item, $item));
+		return $i if (compare(\$existing_item, \$item));
 	}
 
 	# Still Nothing??? so nothing found :P

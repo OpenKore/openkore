@@ -3,6 +3,7 @@ Assert.pm
 Benchmark.pm
 CallbackList.pm
 CodeRef.pm
+Compare.pm
 CRAM.pm
 Crypton.pm
 Daemon.pm
@@ -14,6 +15,7 @@ ObjectList.pm
 PathFinding.pm
 PerlLauncher.pm
 Set.pm
+SmartCallbackList.pm
 Splice.pm
 StringScanner.pm
 TextReader.pm
