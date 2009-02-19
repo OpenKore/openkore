@@ -94,7 +94,7 @@
 94 BS_IRON Iron Tempering
 95 BS_STEEL Steel Tempering
 96 BS_ENCHANTEDSTONE Enchantedstone Craft
-97 BS_ORIDEOCON Oridecon Research
+97 BS_ORIDEOCON Orideocon Research
 98 BS_DAGGER Smith Dagger
 99 BS_SWORD Smith Sword
 100 BS_TWOHANDSWORD Smith Two-handed Sword
