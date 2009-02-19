@@ -253,7 +253,11 @@ sub deepCopy {
 	lock ($self) if (is_shared($self));
 
 	my $copy = new Utils::Set();
-	$copy->{items} = [ @{$self->{items}} ];
+	$copy->{items} = [];
+	for (my $i = 0; $i < @{$self->{items}}; $i++) {
+		my $existing_item = $self->{items}[$i];
+		push(@{$copy->{items}}, $existing_item);
+	}
 
 	# $copy = shared_clone($copy) if (is_shared($self));
 	return $copy;

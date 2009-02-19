@@ -69,6 +69,9 @@ sub new {
 	# Last generated ID.
 	$self->{lastID} = 0;
 
+	# Free ID's list
+	$self->{freeIDs} = [];
+
 	######
 	#
 	# Load default modules
@@ -190,6 +193,9 @@ sub remove {
 					return 0;
 				};
 				
+				# Free module ID
+				$self->_free_id($id);
+
 				# Remove module from Set.
 				$self->{activeModules}->remove($module);
 
@@ -358,8 +364,19 @@ sub _gen_id {
 	# MultiThreading Support
 	lock ($self) if (is_shared($self));
 
+	# Return Free task ID, so we do not overload "$self->{lastID}"
+	my $id = shift @{$self->{freeIDs}};
+	return $id if (defined $id);
+
 	$self->{lastID} = $self->{lastID} + 1;
 	return $self->{lastID};
+}
+
+# free allready taken module ID
+# Note: this will not destroy task object
+sub _free_id {
+	my ($self, $id) = @_;
+	push @{$self->{freeIDs}}, $id;
 }
 
 # run module by given id
