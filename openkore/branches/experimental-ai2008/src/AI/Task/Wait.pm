@@ -60,7 +60,7 @@ sub new {
 	my %args = @_;
 	my $self = $class->SUPER::new(@_);
 
-	$self->{wait}{timeout} = $args{seconds};
+	$self->{S_timeout} = $args{seconds};
 	$self->{inGame} = defined($args{inGame}) ? $args{inGame} : 1; # TODO
 
 	return $self;
@@ -73,7 +73,7 @@ sub interrupt {
 	lock ($self) if (is_shared($self));
 
 	$self->SUPER::interrupt();
-	$self->{interruptionTime} = time;
+	$self->{S_interruptionTime} = time;
 }
 
 sub resume {
@@ -83,7 +83,7 @@ sub resume {
 	lock ($self) if (is_shared($self));
 
 	$self->SUPER::resume();
-	$self->{wait}{time} += time - $self->{interruptionTime};
+	$self->{S_time} += time - $self->{S_interruptionTime};
 }
 
 sub iterate {
@@ -93,10 +93,16 @@ sub iterate {
 	lock ($self) if (is_shared($self));
 
 	# return unless ($self->SUPER::iterate() && ( !$self->{inGame} || $net->getState() == Network::IN_GAME )); # TODO
-	return unless ($self->SUPER::iterate() && ( !$self->{inGame}) );
+	# return unless ($self->SUPER::iterate() && ( !$self->{inGame}) );
+	$self->SUPER::iterate();
 
-	$self->{wait}{time} = time if (!defined $self->{wait}{time});
-	$self->setDone() if (timeOut($self->{wait}));
+	$self->{S_time} = time if ((!defined $self->{S_time})||($self->{S_time} <= 0));
+
+	my %time;
+	$time{time} = $self->{S_time};
+	$time{timeout} = $self->{S_timeout};
+
+	$self->setDone() if (timeOut(\%time));
 }
 
 1;

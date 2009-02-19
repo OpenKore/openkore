@@ -68,7 +68,7 @@ sub new {
 		#         $task owns none of its mutexes.
 		inactiveTasks => new Utils::Set(),
 
-		# Hash<String, AI::Task>
+		# Hash<String, AI::Task->{T_ID}>
 		#
 		# Currently active mutexes. The keys are the mutex names, and the
 		# values are the tasks that have a lock on the mutex (the mutex owner).
@@ -103,7 +103,14 @@ sub new {
 		# next iteration.
 		shouldReschedule => 0,
 
-		onTaskFinished => new CallbackList()
+		# OnTaskFinished Event List
+		onTaskFinished => new CallbackList(),
+
+		# Last Task ID
+		lastID => 0,
+
+		# List of Free task ID's, SO we do not overload $self->{lastID}
+		freeIDs => []
 	);
 	return bless \%self, $class;
 }
@@ -131,6 +138,20 @@ sub add {
 	lock ($self) if (is_shared($self));
 	$task = shared_clone($task) if (is_shared($self));
 
+	# Avoid adding already existing module phase 1
+	if ($self->{activeTasks}->has($task) || $self->{inactiveTasks}->has($task) || $self->{grayTasks}->has($task)) {
+		return 0;
+	};
+
+	# Avoid adding already existing task phase 2
+	if ($task->{T_ID} > 0) {
+		# We do not allow adding already added modules
+		return 0;
+	}
+
+	# Assign task ID
+	$task->{T_ID} = $self->_gen_id();
+
 	$self->{inactiveTasks}->add($task);
 	$self->{tasksByName}{$task->getName()}++;
 	$self->{shouldReschedule} = 1;
@@ -138,9 +159,9 @@ sub add {
 	my $ID1 = $task->onMutexesChanged->add($self, \&onMutexesChanged);
 	my $ID2 = $task->onStop->add($self, \&onStop);
 	if (is_shared($self)) {
-		$self->{events}{$task} = shared_clone([$ID1, $ID2]);
+		$self->{events}{$task->{T_ID}} = shared_clone([$ID1, $ID2]);
 	} else {
-		$self->{events}{$task} = [$ID1, $ID2];
+		$self->{events}{$task->{T_ID}} = [$ID1, $ID2];
 	}
 }
 
@@ -185,7 +206,7 @@ sub reschedule {
 			# No conflict, so assign mutex locks to this task
 			# and remove its "gray" mark.
 			foreach my $mutex (@{$task->getMutexes()}) {
-				$activeMutexes->{$mutex} = $task;
+				$activeMutexes->{$mutex} = $task->{T_ID};
 			}
 			shift @{$grayTasks};
 		}
@@ -208,10 +229,10 @@ sub reschedule {
 			$inactiveTasks->remove($task);
 			$i--;
 			foreach my $mutex (@{$task->getMutexes()}) {
-				$activeMutexes->{$mutex} = $task;
+				$activeMutexes->{$mutex} = $task->{T_ID};
 			}
 
-		} elsif (higherPriority($task, $activeMutexes, \@conflictingMutexes)) {
+		} elsif ($self->higherPriority($task, $activeMutexes, \@conflictingMutexes)) {
 			# There are conflicts. Does this task have a higher priority
 			# than all tasks specified by the conflicting mutexes?
 			# If yes, let it steal the mutex, activate it and deactivate
@@ -222,7 +243,7 @@ sub reschedule {
 			$i--;
 
 			foreach my $mutex (@{$task->getMutexes()}) {
-				my $oldTask = $activeMutexes->{$mutex};
+				my $oldTask = $self->_find_task_by_id($activeMutexes->{$mutex});
 				if ($oldTask) {
 					# Mutex was locked by lower priority task.
 					# Deactivate old task.
@@ -230,7 +251,7 @@ sub reschedule {
 						$grayTasks, $activeMutexes, $self->{tasksByName},
 						$oldTask);
 				}
-				$activeMutexes->{$mutex} = $task;
+				$activeMutexes->{$mutex} = $task->{T_ID};
 			}
 		}
 	}
@@ -250,7 +271,8 @@ sub reschedule {
 	# Interrupt newly deactivated tasks.
 	foreach my $task (@{$inactiveTasks}) {
 		if (!$oldInactiveTasks->has($task)) {
-			$task->interrupt();
+			my $status = $task->getStatus();
+			$task->interrupt() if ($status != AI::Task::INTERRUPTED && $status != AI::Task::INACTIVE && $status != AI::Task::STOPPED);
 		}
 	}
 
@@ -278,16 +300,16 @@ sub checkValidity {
 		assert(!$inactiveTasks->has($task));
 		if (!$grayTasks->has($task)) {
 	 		foreach my $mutex (@{$task->getMutexes()}) {
-	 			assert($activeMutexes->{$mutex} == $task);
+				assert($activeMutexes->{$mutex} == $task->{T_ID});
  			}
  		}
 	}
 	foreach my $task (@{$inactiveTasks}) {
 		my $status = $task->getStatus();
-		assert($status = AI::Task::INTERRUPTED || $status == AI::Task::INACTIVE || $status == AI::Task::STOPPED);
+		assert($status == AI::Task::INTERRUPTED || $status == AI::Task::INACTIVE || $status == AI::Task::STOPPED);
 		assert(!$activeTasks->has($task));
 		foreach my $mutex (@{$task->getMutexes()}) {
-			assert($activeMutexes->{$mutex} != $task);
+			assert($activeMutexes->{$mutex} != $task->{T_ID});
 		}
 	}
 	foreach my $task (@{$grayTasks}) {
@@ -295,9 +317,11 @@ sub checkValidity {
 		assert(!$inactiveTasks->has($task));
 	}
 
+	# Wrong Mutex Cheking.
 	$activeMutexes = $self->{activeMutexes};
 	foreach my $mutex (keys %{$activeMutexes}) {
-		my $owner = $activeMutexes->{$mutex};
+		my $owner = $self->_find_task_by_id($activeMutexes->{$mutex});
+		next if ($owner == undef);
 		assert($self->{activeTasks}->has($owner));
 	}
 
@@ -336,14 +360,17 @@ sub iterate {
 		# Remove tasks that are stopped or done.
 		$status = $task->getStatus();
 		if ($status == AI::Task::DONE || $status == AI::Task::STOPPED) {
-			$self->deactivateTask($activeTasks, $self->{inactiveTasks},
+			$self->deactivateTask($activeTasks, \%{$self->{inactiveTasks}},
 				$self->{grayTasks}, $activeMutexes, $self->{tasksByName},
 				$task);
 
 			# Remove the callbacks that we registered in this task.
-			my $IDs = $self->{events}{$task};
+			my $IDs = $self->{events}{$task->{T_ID}};
 			$task->onMutexesChanged->remove($IDs->[0]);
 			$task->onStop->remove($IDs->[1]);
+
+			# free taken task ID
+			$self->_free_id($task->{T_ID});
 
 			$i--;
 			$self->{shouldReschedule} = 1;
@@ -432,7 +459,9 @@ sub activeMutexesString {
 	my $activeMutexes = $self->{activeMutexes};
 	my @entries;
 	foreach my $mutex (keys %{$activeMutexes}) {
-		push @entries, "$mutex (<- " . $activeMutexes->{$mutex}->getName . ")";
+		my $task = $self->_find_task_by_id($activeMutexes->{$mutex});
+		next if ($task == undef);
+		push @entries, "$mutex (<- " . $task->getName() . ")";
 	}
 	return join(', ', sort @entries);
 }
@@ -442,7 +471,7 @@ sub getTaskSetString {
 	if (@{$set}) {
 		my @names;
 		foreach my $task (@{$set}) {
-			push @names, $task->getName();
+			push @names, $task->getName() . " (" .  $task->getStatus() . ") ";
 		}
 		return join(', ', @names);
 	} else {
@@ -480,7 +509,7 @@ sub onMutexesChanged {
 		# Release its mutex locks.
 		my $activeMutexes = $self->{activeMutexes};
 		foreach my $mutex (keys %{$activeMutexes}) {
-			if ($activeMutexes->{$mutex} == $task) {
+			if ($activeMutexes->{$mutex} == $task->{T_ID}) {
 				delete $activeMutexes->{$mutex};
 			}
 		}
@@ -524,7 +553,7 @@ sub intersect {
 # mutexes: A list of mutexes to check.
 # Requires: All elements in $mutexes can be successfully mapped by $mutexTaskMapper.
 sub higherPriority {
-	my ($task, $mutexTaskMapper, $mutexes) = @_;
+	my ($self, $task, $mutexTaskMapper, $mutexes) = @_;
 
 	# MultiThreading Support
 	lock ($task) if (is_shared($task));
@@ -532,7 +561,8 @@ sub higherPriority {
 	my $priority = $task->getPriority();
 	my $result = 1;
 	for (my $i = 0; $i < @{$mutexes} && $result; $i++) {
-		my $task2 = $mutexTaskMapper->{$mutexes->[$i]};
+		my $task2 = $self->_find_task_by_id($mutexTaskMapper->{$mutexes->[$i]});
+		next if ($task2 == undef);
 		$result = $result && $priority > $task2->getPriority();
 	}
 	return $result;
@@ -564,15 +594,45 @@ sub deactivateTask {
 			delete $tasksByName->{$name};
 		}
 
-		$self->{onTaskFinished}->call($self, { task => $task });
+		$self->{onTaskFinished}->call($self, { task => \%{$task} });
 	}
 	$activeTasks->remove($task);
 	$grayTasks->remove($task);
 	foreach my $mutex (@{$task->getMutexes()}) {
-		if ($activeMutexes->{$mutex} == $task) {
+		if ($activeMutexes->{$mutex} == $task->{T_ID}) {
 			delete $activeMutexes->{$mutex};
 		}
 	}
+}
+
+# generate new task ID
+sub _gen_id {
+	my ($self) = @_;
+
+	# MultiThreading Support
+	lock ($self) if (is_shared($self));
+
+	# Return Free task ID, so we do not overload "$self->{lastID}"
+	my $id = shift @{$self->{freeIDs}};
+	return $id if (defined $id);
+
+	$self->{lastID} = $self->{lastID} + 1;
+	return $self->{lastID};
+}
+
+# free allready taken task ID
+# Note: this will not destroy task object
+sub _free_id {
+	my ($self, $id) = @_;
+	push @{$self->{freeIDs}}, $id;
+}
+
+sub _find_task_by_id {
+	my ($self, $id) = @_;
+	foreach my $task (@{\%{$self->{activeTasks}}}, @{\%{$self->{inactiveTasks}}}, @{\%{$self->{grayTasks}}}) {
+		return $task if ($task->{T_ID} == $id);
+	}
+	return undef;
 }
 
 # sub printTaskSet {
