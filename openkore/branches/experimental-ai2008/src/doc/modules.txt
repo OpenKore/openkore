@@ -12,6 +12,8 @@ AI::Task::WithSubTasks
 AI::TaskManager
 
 Commands
+Commands::AI
+
 ErrorHandler
 FastUtils
 Field
@@ -39,9 +41,14 @@ Log
 Misc
 Misc::Config
 Misc::Field
+Misc::Other
 Misc::Portals
 
 Modules
+
+Network::Client
+Network::Server
+
 Plugins
 Settings
 Skill
@@ -65,6 +72,7 @@ Utils::PathFinding
 Utils::PerlLauncher
 Utils::Set
 Utils::SmartCallbackList
+Utils::Splice
 Utils::StringScanner
 Utils::TextReader
 Utils::Unix

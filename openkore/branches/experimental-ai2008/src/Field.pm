@@ -1,5 +1,5 @@
 #########################################################################
-#  OpenKore - Field model
+#  OpenKore - Field model v2
 #
 #  This software is open source, licensed under the GNU General Public
 #  License, version 2.
@@ -8,19 +8,19 @@
 #  also distribute the source code.
 #  See http://www.gnu.org/licenses/gpl.html for the full license.
 #
-#  $Revision: 5276 $
-#  $Id: Misc.pm 5276 2006-12-28 21:24:00Z vcl_kore $
+#  $Revision: 6671 $
+#  $Id: Field.pm 6671 2009-03-03 21:12:00Z Technology $
 #
 #########################################################################
 ##
-# MODULE DESCRIPTION: Field model.
+# MODULE DESCRIPTION: Field model v2.
 #
-# The Field class represents a field in the game. A field is a set of blocks.
-# each block has a specific type, like 'walkable', 'not walkable', 'water',
-# 'cliff', etc.
+# The Field class represents a field in the game. A field is a set of tiles (blocks).
+# each tile's properties are represented by a combination of flags
+# flags: TILE_NOWALK, TILE_WALK, TILE_SNIPE, TILE_WATER, TILE_CLIFF
 #
-# This class is closely related to the .fld file, as used by OpenKore.
-# See http://www.openkore.com/wiki/index.php/Field_file_format#The_FLD_file_format
+# This class is closely related to the .fld2 file, as used by OpenKore.
+# See http://www.openkore.com/wiki/index.php/Field2_file_format#The_FLD2_file_format
 # for more information.
 #
 # This class is a hash and has the following hash items:
@@ -29,49 +29,105 @@
 #                   You should not access this item directly; use the $Field->name() method instead.
 # - <tt>baseName</tt> - The name of the field, which is the base name of the file without the extension.
 #             This is not always the same as name: for example, in the newbie grounds,
-#             the field 'new_1-2' has field file 'new_zone01.fld' and thus base name 'new_zone01'.
+#             the field 'new_1-2' has field file 'new_zone01.fld2' and thus base name 'new_zone01'.
 # - <tt>width</tt> - The field's width. You should not access this item directly; use $Field->width() instead.
 # - <tt>height</tt> - The field's height. You should not access this item directly; use $Field->width() instead.
-# - <tt>rawMap</tt> - The raw map data. Contains information about which blocks you can walk on (byte 0),
-#                     and which not (byte 1).
+# - <tt>rawMap</tt> - The raw map data. Contains information about the tile's properties
+#                     ex. TILE_WALK = byte 1; TILE_NOWALK = byte 0; ...
 # - <tt>dstMap</tt> - The distance map data. Used by pathfinding.
 # `l`
 package Field;
 
+# Make all References Strict
 use strict;
+
+# Others (Perl Related)
 use warnings;
 no warnings 'redefine';
 use Compress::Zlib;
 use File::Spec;
 
+# Others (Kore related)
 use Globals qw($masterServer %field);
 use Modules 'register';
 use Settings;
 use FastUtils;
 use Utils::Exceptions;
 
-# Block types.
+# TODO: remove when makeDistMap in .xs is fixed, we now use: Utils::old_makeDistMap
+use Utils;
+
+# TODO: make table for map aliasing and remove the switch
+use Switch;
+
+###################################
+### CATEGORY: Block flag constants
+###################################
+
+##
+# Field::TILE_FLAGTYPE	=> BITFLAG
+# `l
+# - Field::TILE_NOWALK	=> 0
+# - Field::TILE_WALK		=> 1
+# - Field::TILE_WATER		=> 4
+# - Field::TILE_CLIFF		=> 8
+# `l`
+#
+# Basic block flags, the .fld2 format is built up from these.
 use constant {
-	WALKABLE                        => 0,
-	NON_WALKABLE                    => 1,
-	NON_WALKABLE_NON_SNIPABLE_WATER => 2,
-	WALKABLE_WATER                  => 3,
-	NON_WALKABLE_SNIPABLE_WATER     => 4,
-	SNIPABLE_CLIFF                  => 5,
-	NON_SNIPABLE_CLIFF              => 6,
-	UNKNOWN                         => 7
+	TILE_NOWALK	=> 0,
+	TILE_WALK	=> 1,
+	TILE_SNIPE	=> 2,
+	TILE_WATER	=> 4,
+	TILE_CLIFF	=> 8,
+};
+# reserved: 0, 1, 2, 4, 8, 16, 32, 64, 128
+# because : [([([(1+2=3)+4=7]+8=15)+16=31]+32=63)+64=127]+128=255
+
+##
+# Field::TILE_FLAGTYPE	=> BITFLAG
+# `l
+# TILE_LOS		=> TILE_WALK|TILE_SNIPE
+# TILE_WALKWATER	=> TILE_WALK|TILE_WATER
+# `l`
+#
+# The bitwise OR operation: |
+# <pre class="example">
+# TILE_WALK|TILE_SNIPE = 1 | 2 = 3								 
+# TILE_WALK|TILE_WATER = 1 | 4 = 5
+# </pre>
+# When we look at binary for the 1rst example: 001 OR 010 = 011
+# (wich bytes are either in first OR second 1?)
+#
+# The bitwise AND operation: &
+# <pre class="example">
+# TILE_WALKWATER & 13 = 5	water | walkable
+# TILE_WALKWATER & 6 = 4	water
+# TILE_WALK & 11 = 1		walkable
+# 4 & TILE_SNIPE = 0		not snipable
+# </pre>
+# When we look at binary for the 1rst example: 1101 AND 0101 = 0101
+# (wich bytes are both in first AND second 1?)
+#
+# Combined block flags, that are practically usefull to us.
+use constant {
+	TILE_LOS		=> TILE_WALK|TILE_SNIPE,
+	TILE_WALKWATER	=> TILE_WALK|TILE_WATER,
 };
 
+####################################
+### CATEGORY: Constructor
+####################################
 
 ##
 # Field->new(options...)
 #
-# Create a new Load a field (.fld) file. This function also loads an associated .dist file
+# Create a new Load a field (.fld2) file. This function also loads an associated .dist file
 # (the distance map file), which is used by pathfinding (for wall avoidance support).
 # If the associated .dist file does not exist, it will be created.
 #
-# This function also supports gzip-compressed field files (.fld.gz). If the .fld file cannot
-# be found, but the corresponding .fld.gz file can be found, this function will load that
+# This function also supports gzip-compressed field files (.fld2.gz). If the .fld2 file cannot
+# be found, but the corresponding .fld2.gz file can be found, this function will load that
 # instead and decompress its data on-the-fly.
 #
 # Allowed options:
@@ -86,7 +142,7 @@ use constant {
 # ArgumentException will be thrown. For example:
 # <pre class="example">
 # new Field(name => "new_1-1");
-# new Field(file => "/path/to/prontera.fld");
+# new Field(file => "/path/to/prontera.fld2");
 # new Field(); # Error: an ArgumentException will be thrown
 # </pre>
 #
@@ -108,6 +164,10 @@ sub new {
 
 	return $self;
 }
+
+############################
+### CATEGORY: Public Methods (Queries)
+############################
 
 ##
 # String $Field->name()
@@ -136,46 +196,81 @@ sub height {
 ##
 # int $Field->getBlock(int x, int y)
 # x, y: A coordinate on the field.
-# Returns: The type for this block. This is one of the block type constants.
+# Returns: The combination of flags for this block. This is a combination of the block flag constants.
 #
-# Get the type for the block on the specified coordinate. This type is an integer, which
-# corresponds with the values specified in the field file format specification:
-# http://www.openkore.com/wiki/index.php/Field_file_format#The_FLD_file_format
+# Get the combination of flags for the block on the specified coordinate. This combination of flags is an integer,
+# wich is a conversion from the RO tile type information in .gat and .rsw files (gat2fld2.pl)
+# and corresponds with the values specified in the field2 file format specification:
+# http://www.openkore.com/wiki/index.php/Field_file_format#The_FLD2_file_format
 #
 # If you want to check whether the block is walkable, use $field->isWalkable() instead.
 sub getBlock {
 	my ($self, $x, $y) = @_;
-	if ($x < 0 || $x >= $self->{width} || $y < 0 || $y >= $self->{height}) {
-		return NON_WALKABLE;
-	} else {
+	if (&isValid) {
 		return ord(substr($self->{rawMap}, ($y * $self->{width}) + $x, 1));
+	} else {
+		return TILE_NOWALK;
 	}
+}
+
+##
+# boolean $Field->isValid(int x, int y)
+#
+# Check whether coordinate ($x,$y) on this field is valid.
+sub isValid {
+	my ($self, $x, $y) = @_;
+	return ($x >= 0 && $x < $self->{width} && $y >= 0 && $y < $self->{height}) || 0;
 }
 
 ##
 # boolean $Field->isWalkable(int x, int y)
 #
-# Check whether you can walk on ($x,$y) on this field.
+# Check whether block ($x,$y) on this field is walkable.
 sub isWalkable {
-	my $p = &getBlock;
-	return ($p == WALKABLE || $p == WALKABLE_WATER);
+	return (&getBlock & TILE_WALK);
 }
 
 ##
-# boolean $Field->isSnipable(int x, int y)
+# boolean $Field->isWalkableWater(int x, int y)
 #
-# Check whether you can snipe through ($x,$y) on this field.
-sub isSnipable {
-	my $p = &getBlock;
-	return ($p == WALKABLE || $p == WALKABLE_WATER || $p == NON_WALKABLE_SNIPABLE_WATER || $p == SNIPABLE_CLIFF);
+# Check whether block ($x,$y) on this field is walkable AND has water.
+sub isWalkableWater {
+	return ((&getBlock & TILE_WALKWATER) == TILE_WALKWATER) || 0;
 }
+
+##
+# boolean $Field->isWater(int x, int y)
+#
+# Check whether block ($x,$y) on this field has water.
+sub isWater {
+	return (&getBlock & TILE_WATER);
+}
+
+##
+# boolean $Field->isLOS(int x, int y)
+# Returns:
+# `l
+# - 0 : not TILE_WALK, nor TILE_SNIPE
+# - 1 : TILE_WALK
+# - 2 : TILE_SNIPE
+# `l`
+# If tile is LOS, we give reason why tile is LOS.
+# Checks whether block ($x,$y) on this field is walkable OR snipable.
+# 											 is not an obstruction to the line of sight.
+sub isLOS {
+	return (&getBlock & TILE_LOS);
+}
+
+############################
+### CATEGORY: Private Methods
+############################
 
 ##
 # void $Field->loadFile(String filename, [boolean loadDistanceMap = true])
 # filename: The filename of the field file to load.
 # loadDistanceMap: Whether to also load the associated distance map file.
 #
-# Load the specified field file (.fld file). This is like calling the constructor
+# Load the specified field file (.fld2 file). This is like calling the constructor
 # with the 'file' argument, but allows you to load a field inside this Field object.
 #
 # If $loadDistanceMap is set to false, then $self->{dstMap} will be undef.
@@ -229,18 +324,19 @@ sub loadFile {
 
 	($width, $height) = unpack("v v", substr($fieldData, 0, 4, ''));
 
-
 	# Load the associated distance map (.dist file)
 	my $distFile = $filename;
-	$distFile =~ s/\.fld(\.gz)?$/.dist/i;
+	$distFile =~ s/\.fld2(\.gz)?$/.dist/i;
 	if ($loadDistanceMap) {
 		if (!-f $distFile || !$self->loadDistanceMap($distFile, $width, $height)) {
 			# (Re)create the distance map.
 			my $f;
-			$self->{dstMap} = Utils::makeDistMap($fieldData, $width, $height);
+			# TODO: fix makeDistMap in .xs
+			#$self->{dstMap} = makeDistMap($fieldData, $width, $height);
+			$self->{dstMap} = Utils::old_makeDistMap($fieldData, $width, $height);
 			if (open($f, ">", $distFile)) {
 				binmode $f;
-				print $f pack("a2 v1", 'V#', 3);
+				print $f pack("a2 v1", 'V#', 4);
 				print $f pack("v v", $width, $height);
 				print $f $self->{dstMap};
 				close $f;
@@ -254,11 +350,12 @@ sub loadFile {
 	$self->{height} = $height;
 	$self->{rawMap} = $fieldData;
 	(undef, undef, $self->{baseName}) = File::Spec->splitpath($filename);
-	$self->{baseName} =~ s/\.fld$//i;
+	$self->{baseName} =~ s/\.fld2$//i;
 	$self->{name} = $self->{baseName};
 	return 1;
 }
 
+##
 # boolean $Field->loadDistanceMap(String filename, int width, int height)
 # filename: The filename of the distance map.
 # width: The width of the field.
@@ -291,10 +388,11 @@ sub loadDistanceMap {
 		# Version 0 files had a bug when height != width
 		# Version 1 files did not treat walkable water as walkable, all version 0 and 1 maps need to be rebuilt.
 		# Version 2 and greater have no know bugs, so just do a minimum validity check.
-		# Version 3 (the current version) adds better support for walkable water blocks.
-		# If the distance map version is smaller than 3, regenerate the distance map.
+		# Version 3 adds better support for walkable water blocks.
+		# Version 4 (the current version) the rightern & upper tiles are made unwalkable in fld2, so also the .dist changes
+		# If the distance map version is smaller than 4, regenerate the distance map.
 
-		if ($dversion >= 3 && $width == $dw && $height == $dh) {
+		if ($dversion >= 4 && $width == $dw && $height == $dh) {
 			$self->{dstMap} = $distData;
 			return 1;
 		} else {
@@ -361,16 +459,31 @@ sub nameToBaseName {
 			$name = "new_zone0$1";
 		} elsif ($name =~ /^force_\d-(\d)$/) {
 			$name = "force_map$1";
-		} elsif ($name =~ /^pvp_n_\d-2$/) {
-			$name = "job_hunter";
-		} elsif ($name =~ /^pvp_n_\d-3$/) {
-			$name = "job_wizard";
-		} elsif ($name =~ /^pvp_n_\d-5$/) {
-			$name = "job_knight";
+		} elsif ($name =~ /^pvp_([a-z])_\d-(\d)$/) {
+			switch ($1) {
+				case "n" {
+					switch($2) {
+						case 1 { $name = "new_zone03" }
+						case 2 { $name = "job_hunter" }
+						case 3 { $name = "job_wizard" }
+						case 4 { $name = "job_priest" }
+						case 5 { $name = "job_knight" }
+					}
+				}
+				case "y" {
+					switch($2) {
+						case 1 { $name = "prontera" }
+						case 2 { $name = "izlude" }
+						case 3 { $name = "payon" }
+						case 4 { $name = "alberta" }
+						case 5 { $name = "morocc" }
+					}
+				}
+				else {}
+			}
 		}
-		$baseName = "$name.fld";
+		$baseName = "$name.fld2";
 	}
-
 	return $baseName;
 }
 

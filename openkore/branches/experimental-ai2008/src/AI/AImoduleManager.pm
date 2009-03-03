@@ -376,6 +376,10 @@ sub _gen_id {
 # Note: this will not destroy task object
 sub _free_id {
 	my ($self, $id) = @_;
+	
+	# MultiThreading Support
+	lock ($self) if (is_shared($self));
+
 	push @{$self->{freeIDs}}, $id;
 }
 

@@ -75,7 +75,7 @@ drop table if exists [Maps];
 CREATE TABLE [Maps] (
   [FileName] VARCHAR(255) NOT NULL ON CONFLICT ROLLBACK, 
   [Desc] VARCHAR(1024), 
-  [IsCitiy] BOOLEAN);
+  [IsCity] BOOLEAN);
 
 
 

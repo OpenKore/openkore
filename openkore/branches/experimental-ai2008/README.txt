@@ -1,6 +1,7 @@
 =========================
 ### OpenKore AI 2008 Project (what-will-become-3.0)
 =========================
+
 kLabMouse:
 - Almoust Fully Refactored Code base.
 - Fully Multi Thread (the implementation may change a bit).
@@ -11,6 +12,9 @@ kLabMouse:
 - Globals.pm now can share varuables to other threads (Be carefull when you change thouse).
 - Deleted WX and other Interfaces (I'll add them later, when AI and Networking will be done).
 - Also Deleted some not so usefull stuff. (May-be I'll add them Later).
+
+Technology:
+- FLD2 implementation
 
 =========================
 #### Perl Modules that are not Included:

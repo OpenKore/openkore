@@ -85,7 +85,7 @@ sub new {
 sub DESTROY {
 	my ($self) = @_;
 	if ($self->can("SUPER::DESTROY")) {
-		debug "Destroying: ".__PACKAGE__."!\n";
+		debug "Destroying an instance of class: ".__PACKAGE__."!\n";
 		$self->SUPER::DESTROY;
 	}
 }

@@ -624,11 +624,19 @@ sub _gen_id {
 # Note: this will not destroy task object
 sub _free_id {
 	my ($self, $id) = @_;
+	
+	# MultiThreading Support
+	lock ($self) if (is_shared($self));
+	
 	push @{$self->{freeIDs}}, $id;
 }
 
 sub _find_task_by_id {
 	my ($self, $id) = @_;
+	
+	# MultiThreading Support
+	lock ($self) if (is_shared($self));
+	
 	foreach my $task (@{\%{$self->{activeTasks}}}, @{\%{$self->{inactiveTasks}}}, @{\%{$self->{grayTasks}}}) {
 		return $task if ($task->{T_ID} == $id);
 	}
