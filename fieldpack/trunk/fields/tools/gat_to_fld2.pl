@@ -18,8 +18,7 @@ my @TILE_TYPE = (	TILE_WALK,				# 0) Walkable
 					TILE_WALK|TILE_WATER,	# 3) Walkable water
 					TILE_WATER|TILE_SNIPE,	# 4) Non-walkable water (snipable)
 					TILE_CLIFF|TILE_SNIPE,	# 5) Cliff (snipable)
-					TILE_CLIFF,				# 6) Cliff (not snipable)
-					TILE_NOWALK);			# 7) Unknown
+					TILE_CLIFF);			# 6) Cliff (not snipable)
 
 my $i = 0;
 foreach my $name (sort(listMaps("."))) {
@@ -100,8 +99,12 @@ sub gat_to_fld2 {
 		my $type = unpack("C", substr($data, 16, 1));
 		my $averageDepth = ($a + $b + $c + $d) / 4;
 
+		# warn us for unknown/new block types
+		if ($type > $#TILE_TYPE) {
+			print "An unknown blocktype($type) was found, please report this to the OpenKore devs.\n";
+			exit 1;
 		# make upper blocks unwalkable
-		if ($y > $max_Y ) {
+		} elsif ($y > $max_Y ) {
 			print $out pack("C", TILE_NOWALK);
 		# make rightern blocks unwalkable
 		} elsif ($y == $x * $width) {
