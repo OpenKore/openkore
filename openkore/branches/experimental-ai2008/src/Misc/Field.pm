@@ -9,6 +9,7 @@ use Plugins;
 use FileParsers;
 use Exporter;
 use base qw(Exporter);
+use Field;
 
 our %EXPORT_TAGS = (
 	field  => [qw(
@@ -182,9 +183,9 @@ sub checkLineSnipable {
 	for (my $X=$X0;$X<=$X1;$X++) {
 		$E += $dE;
 		if ($steep == 1) {
-			return 0 if (!$field->isSnipable($Y, $X));
+			return 0 if (!$field->isLOS($Y, $X));
 		} else {
-			return 0 if (!$field->isSnipable($X, $Y));
+			return 0 if (!$field->isLOS($X, $Y));
 		}
 		if ($E >= $Erate) {
 			$Y += $stepY;
