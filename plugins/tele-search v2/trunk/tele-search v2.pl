@@ -56,7 +56,7 @@ sub MapLoaded {
 }
 
 sub checkIdle {
-	if (AI::action eq "move" && AI::action(1) eq "route" || AI::action eq "route" && !AI::inQueue("attack","skill_use")) {
+	if (AI::action eq "move" && AI::action(1) eq "route" || AI::action eq "route" && !AI::inQueue("attack","skill_use", "buyAuto", "sellAuto", "storageAuto")) {
 		return 1;
 	} else {
 		return 0;
