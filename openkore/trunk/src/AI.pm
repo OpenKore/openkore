@@ -700,7 +700,9 @@ sub attack {
 	my %args;
 
 	my $target = Actor::get($ID);
-
+	
+	return if (!$target->{'pos_to'} || ! $target->{'pos'});
+	
 	$args{'ai_attack_giveup'}{'time'} = time;
 	$args{'ai_attack_giveup'}{'timeout'} = $timeout{'ai_attack_giveup'}{'timeout'};
 	$args{'ID'} = $ID;
