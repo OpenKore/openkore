@@ -70,19 +70,19 @@ sub handleLogin {
 
 sub process_0072 {
 	my ($self, $client, $message) = @_;
-	if ($self->{serverType} == 0) {
+	if ($self->{serverType} == 0 || $self->{serverType} == 21) {
 		# Map server login.
-      my ($accountID, $charID, $sessionID, $gender) = unpack('x2 a4 a4 V x4 C', $message);
-      $self->handleLogin($client, $accountID, $charID, $sessionID, $gender);
-      return 1;
+		my ($accountID, $charID, $sessionID, $gender) = unpack('x2 a4 a4 V x4 C', $message);
+		$self->handleLogin($client, $accountID, $charID, $sessionID, $gender);
+		return 1;
 	} elsif ($self->getServerType()  == 8) {
 		# packet sendSkillUse
 		$self->unhandledMessage($client, $message);
 		return 0;
 	} else { #oRO and pRO and idRO
 		my ($accountID, $charID, $sessionID, $gender) = unpack('x2 a4 x5 a4 x2 V x4 C', $message);
-      $self->handleLogin($client, $accountID, $charID, $sessionID, $gender);
-      return 1;
+		$self->handleLogin($client, $accountID, $charID, $sessionID, $gender);
+		return 1;
 	}
 }
 
