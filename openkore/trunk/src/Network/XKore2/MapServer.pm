@@ -429,7 +429,8 @@ sub handleSync {
 			$serverType == 0 ||
 			$serverType == 1 ||
 			$serverType == 2 ||
-			$serverType == 6 )
+			$serverType == 6 ||
+			$serverType == 21)
 		)
 		|| ($ID eq "0089" && (
 			$serverType == 3 ||
