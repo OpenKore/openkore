@@ -159,7 +159,7 @@ ip 38.144.194.21
 port 6900
 master_version 1
 version 18
-serverType 0
+serverType 21
 serverEncoding Western
 paddedPackets 0
 paddedPackets_attackID 0x72
