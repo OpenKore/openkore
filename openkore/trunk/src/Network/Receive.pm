@@ -3684,7 +3684,7 @@ sub login_error {
 	my ($self, $args) = @_;
 
 	$net->serverDisconnect();
-	if ($args->{type} == 0 || int(rand(2)) == 1) {
+	if ($args->{type} == 0) {
 		error T("Account name doesn't exist\n"), "connection";
 		if (!$net->clientAlive() && !$config{'ignoreInvalidLogin'} && !UNIVERSAL::isa($net, 'Network::XKoreProxy')) {
 			my $username = $interface->query(T("Enter your Ragnarok Online username again."));
