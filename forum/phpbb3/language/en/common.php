@@ -53,6 +53,8 @@ $lang = array_merge($lang, array(
 	'6_MONTHS'		=> '6 months',
 	'7_DAYS'		=> '7 days',
 
+	'GLOBAL_ANNOUNCEMENT'	=> 'Global announcement', // announcements
+	
 	'ACCOUNT_ALREADY_ACTIVATED'		=> 'Your account has already been activated.',
 	'ACCOUNT_DEACTIVATED'			=> 'Your account has been manually deactivated and is only able to be reactivated by an administrator.',
 	'ACCOUNT_NOT_ACTIVATED'			=> 'Your account has not been activated yet.',
