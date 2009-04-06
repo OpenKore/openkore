@@ -65,7 +65,7 @@ sub new {
 	$self->{peerhost} = "";					
 	$self->{peerport} = -1;					
 	$self->{connected} = 0;					
-	$self->{messages} = Thread::Queue->new();		# Internal messaging system (used for closing socket).
+	$self->{tid} = undef;					# Listener thread ID
 
 	# Set vars ReadOnly flag
 	SetReadOnly(\{$self->{peerhost}});
@@ -81,6 +81,17 @@ sub new {
 
 sub DESTROY {
 	my ($self) = @_;
+	
+	# Kill Listener Thread
+	my $thr = $self->_get_thread();
+	$thr->kill('CLOSE');
+	# Wait for 'CLOSE' signal to work
+	while ($thr->is_running()) {
+		sleep(1);
+		yeld();
+	};
+
+	# Recursivly destroy all Child Objects
 	if $self->can("SUPER::DESTROY") {
 		debug "Destroying: ".__PACKAGE__."!\n";
 		$self->SUPER::DESTROY;
@@ -100,7 +111,16 @@ sub mainLoop {
 	# 
 	my $socket = shift;
 	return if (!defined $socket);
-	while (!$quit) {
+
+	my $should_exit;
+
+	# Handle 'CLOSE' signal.
+	$SIG{'CLOSE'} = sub {
+		$socket->close();
+		$should_exit = 1;
+	};
+
+	while (!$quit && !$should_exit && $socket) {
 		{ # Just make Unlock quicker.
 			lock ($self) if (is_shared($self));
 
@@ -108,14 +128,6 @@ sub mainLoop {
 			SetReadWrite(\{$self->{peerhost}});
 			SetReadWrite(\{$self->{peerport}});
 			SetReadWrite(\{$self->{connected}});
-
-			while ($self->{messages}->pending() > 0) {
-				my $msg = $self->{messages}->dequeue();
-				if ($msg eq 'close') {
-					close($socket);
-					return;
-				};
-			};
 
 			# Set Connected Status
 			$self->{is_connected} = $socket->connected();
@@ -139,8 +151,10 @@ sub mainLoop {
 					return;
 				} else {
 					# Parse Message through tokenizer
-					my $parsed_message = $self->{tokenizer}->parse($msg);
-					$self->{receive_queue}->enqueue(\$parsed_message);
+					my $parsed_message = $self->{tokenizer}->parse(0, $msg); # Client 0 (default for client->server connections)
+					if ($parsed_message != undef) {
+						$self->{receive_queue}->enqueue(\$parsed_message);
+					};
 				};
 			};
 
@@ -186,7 +200,8 @@ sub connect {
 		# Disable Bloking
 		# $socket->blocking(0);
 		# We create Thread that will send and receive data
-		threads->new(\&Network::Client::mainLoop, $self, $socket);
+		my $trd = threads->create(\&Network::Client::mainLoop, $self, $socket);
+		$self->{tid} = $trd->tid();
 		return 1;
 	} else {
 		error(TF("couldn't connect: %s (error code %d)\n", "$!", int($!)), "connection");
@@ -242,7 +257,6 @@ sub send {
 # Returns undef if nothing to receive.
 sub recv {
 	my $self = shift;
-	my $msg = shift;
 	lock ($self) if (is_shared($self));
 	if ($self->{receive_queue}->pending() > 0) {
 		my $msg = $self->{receive_queue}->dequeue();
@@ -259,7 +273,18 @@ sub recv {
 sub close {
 	my $self = shift;
 	lock ($self) if (is_shared($self));
-	$self->{messages}->enqueue('close');
+	$self->_get_thread()->kill('CLOSE');
+}
+
+sub _get_thread {
+	my $self = shift;
+	foreach my $thr (threads->list) {
+		# Don’t join the main thread or ourselves
+		if ($thr->tid && $thr->tid == $self->{tid}) {
+			return $thr;
+		}
+	}
+
 }
 
 1;
