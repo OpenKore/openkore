@@ -468,6 +468,11 @@ sub activeMutexesString {
 
 sub getTaskSetString {
 	my ($set) = @_;
+
+	# MultiThreading Support
+	lock ($set) if (is_shared($set));
+	my $set = \%{$set} if (is_shared($set)); # Restore Utils::Set overloading, we will use it.
+
 	if (@{$set}) {
 		my @names;
 		foreach my $task (@{$set}) {
