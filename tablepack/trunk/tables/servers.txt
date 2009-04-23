@@ -348,45 +348,19 @@ PINEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x0597
 recvpackets recvpackets-twRO.txt
 
 ## www.ragnarok.in.th/
-[Thailand - tRO Main server (Surtr, Bestla, Magni, Frey, Skadi)]
+[Thailand - tRO Main server (Norse)]
 ip 203.144.244.5
 port 6900
 master_version 7
 version 24
-serverType 0
+serverType 21
 secureLogin 3
 secureLogin_type 0
 secureLogin_account 0
 gameLogin_packet 0x275
-gameGuard 1
-pauseCharServer 1
 patchserver wpatch.ragnarok.in.th
 patchpath /patch70
 serverEncoding Thai
-recvpackets recvpackets-tro.txt
-
-# please double check before use this entry
-[Thailand - tRO: Valkyrie2]
-ip 203.144.244.122
-port 6900
-master_version 7
-version 31
-serverType 17
-secureLogin 3
-secureLogin_type 0
-secureLogin_requestCode
-secureLogin_account 3
-pauseCharServer 1
-patchserver wpatch.ragnarok.in.th
-patchpath /patch70
-serverEncoding Thai
-paddedPackets 1
-paddedPackets_attackID 0x193
-paddedPackets_skillUseID 0x89
-# Data for XKore PP mode
-syncID 0x7E
-syncTickOffset 3
-mapLoadedTickOffset 5
 recvpackets recvpackets-tro.txt
 
 [Thailand - tRO Free life server (Alice(new), Poring)]
@@ -394,12 +368,11 @@ ip 203.144.244.121
 port 6900
 master_version 7
 version 24
-serverType 0
+serverType 21
 secureLogin 3
 secureLogin_type 0
 secureLogin_account 0
 gameLogin_packet 0x275
-gameGuard 1
 pauseCharServer 1
 patchserver wpatch.ragnarok.in.th
 patchpath /patch70
@@ -411,13 +384,11 @@ ip 203.144.244.100
 port 6900
 master_version 7
 version 24
-serverType 0
+serverType 21
 secureLogin 3
 secureLogin_type 0
 secureLogin_account 0
 gameLogin_packet 0x275
-gameGuard 1
-pauseCharServer 1
 patchserver wpatch.ragnarok.in.th
 patchpath /patch70
 serverEncoding Thai
