@@ -26,6 +26,7 @@ sub new {
    my ($class) = @_;
    my $self = $class->SUPER::new();
 
+   $self->{packet_list}{'0069'} = ['account_server_info', 'x2 a4 a4 a4 x30 C1 x4 a*', [qw(sessionID accountID sessionID2 accountSex serverInfo)]];
    $self->{packet_list}{'0078'} = ['actor_display', 'x1 a4 v14 a4 v2 x2 C2 a3 x2 C1 v1', [qw(ID walk_speed param1 param2 param3 type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID guildEmblem visual_effects stance sex coords act lv)]];
    $self->{packet_list}{'007C'} = ['actor_display', 'x1 a4 v14 C2 a3', [qw(ID walk_speed param1 param2 param3 hair_style weapon lowhead type shield tophead midhead hair_color clothes_color head_dir stance sex coords)]];
    $self->{packet_list}{'022C'} = ['actor_display', 'x1 a4 v3 V1 v5 V1 v5 a4 a4 V1 C2 a5 x3 v1', [qw(ID walk_speed param1 param2 param3 type hair_style weapon shield lowhead timestamp tophead midhead hair_color clothes_color head_dir guildID guildEmblem visual_effects stance sex coords lv)]];
