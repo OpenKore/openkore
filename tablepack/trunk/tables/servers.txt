@@ -832,7 +832,7 @@ ip koreserver.info
 port 6900 
 master_version 16 
 version 23 
-serverType 8_4 
+serverType 8_5
 private 1 
 serverEncoding Western 
 charBlockSize 108 
