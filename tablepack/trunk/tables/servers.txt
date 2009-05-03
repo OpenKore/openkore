@@ -826,17 +826,17 @@ version 20
 serverType 5
 serverEncoding Western
 
-## http://www.kore-ro.com
-[KoreRO Private Server]
-ip koreserver.info
-port 6900
-master_version 16
-version 20
-serverType 8
-private 1
-serverEncoding Western
-charBlockSize 108
-recvpackets recvpackets-servertype8.txt
+## http://www.kore-ro.com 
+[KoreRO Private Server] 
+ip koreserver.info 
+port 6900 
+master_version 16 
+version 23 
+serverType 8_4 
+private 1 
+serverEncoding Western 
+charBlockSize 108 
+recvpackets recvpackets-kRO-2009-02-25b.txt
 
 ## http://www.mavero.de/
 [MaveRO Private Server]
