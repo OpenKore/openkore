@@ -12,7 +12,7 @@
 # set. Your script should call __start() manually if this environment variable is not
 # set.
 #
-# Example script:
+# example script:
 # our $quit = 0;
 #
 # sub __start {
