@@ -929,7 +929,7 @@ sub parseOutgoingClientMessage {
 		configModify("char", unpack("C*",substr($msg, 2, 1)));
 
 	} elsif (
-		($switch eq "0072" && ($serverType == 0 || $serverType == 21)) ||
+		($switch eq "0072" && ($serverType == 0 || $serverType == 21 || $serverType == 22)) ||
 		($switch eq "00F3" && $serverType == 18)
 	) {
 		# Map login
@@ -990,7 +990,7 @@ sub parseOutgoingClientMessage {
 		}
 		#undef $sendMsg;
 
-	} elsif (($switch eq "008C" && ($masterServer->{serverType} == 0 || $masterServer->{serverType} == 1 || $masterServer->{serverType} == 2 || $masterServer->{serverType} == 6 || $masterServer->{serverType} == 7 || $masterServer->{serverType} == 10 || $masterServer->{serverType} == 11 || $masterServer->{serverType} == 21)) ||
+	} elsif (($switch eq "008C" && ($masterServer->{serverType} == 0 || $masterServer->{serverType} == 1 || $masterServer->{serverType} == 2 || $masterServer->{serverType} == 6 || $masterServer->{serverType} == 7 || $masterServer->{serverType} == 10 || $masterServer->{serverType} == 11 || $masterServer->{serverType} == 21 || $masterServer->{serverType} == 22)) ||
 		($switch eq "00F3" && ($masterServer->{serverType} == 3 || $masterServer->{serverType} == 5 || $masterServer->{serverType} == 8 || $masterServer->{serverType} == 9 || $masterServer->{serverType} == 15)) ||
 		($switch eq "009F" && $masterServer->{serverType} == 4) ||
 		($switch eq "007E" && $masterServer->{serverType} == 12) ||
