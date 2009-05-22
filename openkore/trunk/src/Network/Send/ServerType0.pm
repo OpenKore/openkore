@@ -678,8 +678,8 @@ sub sendMapLogin {
 	my $msg;
 	$sex = 0 if ($sex > 1 || $sex < 0); # Sex can only be 0 (female) or 1 (male)
 	
-	if ($self->{serverType} == 0 || $self->{serverType} == 21) {
-		# Server Type 21 is tRO (2008-09-16Ragexe12_Th)
+	if ($self->{serverType} == 0 || $self->{serverType} == 21 || $self->{serverType} == 22) {
+		# Server Type 21 is tRO (2008-09-16Ragexe12_Th), 22 is idRO
 		$msg = pack("C*", 0x72,0) .
 			$accountID .
 			$charID .
@@ -687,7 +687,7 @@ sub sendMapLogin {
 			pack("V1", getTickCount()) .
 			pack("C*",$sex);
 
-	} else { #oRO and pRO and idRO
+	} else { #oRO and pRO
 		my $key;
 
 		$key = pack("C*", 0xFA, 0x12, 0, 0x50, 0x83);
