@@ -65,7 +65,7 @@ ip 202.43.167.66
 port 6900
 master_version 12
 version 2
-serverType 21
+serverType 22
 secureLogin 1
 secureLogin_type 0
 secureLogin_requestCode
@@ -79,7 +79,7 @@ ip 202.43.167.66
 port 6900
 master_version 12
 version 2
-serverType 21
+serverType 22
 secureLogin 1
 secureLogin_type 0
 secureLogin_requestCode
@@ -94,7 +94,7 @@ ip 202.93.18.250
 port 6900
 master_version 13
 version 2
-serverType 21
+serverType 22
 secureLogin 1
 secureLogin_type 0
 secureLogin_requestCode
@@ -102,19 +102,6 @@ secureLogin_account 0
 serverEncoding Western
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x007D8D6B, 0x08CB9ED9
 gameGuard 1
-recvpackets recvpackets-idro.txt
-
-[Indonesia - idRO: Sakray]
-ip 202.93.18.250
-port 6900
-master_version 13
-version 2
-serverType 21
-secureLogin 1
-secureLogin_type 0
-secureLogin_account 0
-serverEncoding Western
-storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x007D8D6B, 0x08CB9ED9
 recvpackets recvpackets-idro.txt
 
 [Indonesia - idRO: Pvp Server]
