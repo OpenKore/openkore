@@ -2,7 +2,7 @@
 /**
 *
 * @package acp
-* @version $Id: acp_profile.php 9127 2008-11-26 19:58:35Z acydburn $
+* @version $Id: acp_profile.php 9516 2009-05-14 05:15:27Z terrafrost $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -922,7 +922,7 @@ class acp_profile
 
 			case FIELD_TEXT:
 			case FIELD_STRING:
-				if ($cp->vars['lang_default_value'])
+				if (strlen($cp->vars['lang_default_value']))
 				{
 					$options['lang_default_value'] = ($field_type == FIELD_STRING) ? 'string' : 'text';
 				}
@@ -1539,7 +1539,7 @@ class acp_profile
 			case 'firebird':
 
 				// We are defining the biggest common value, because of the possibility to edit the min/max values of each field.
-				$sql = 'ALTER TABLE ' . PROFILE_FIELDS_DATA_TABLE . " ADD \"$field_ident\" ";
+				$sql = 'ALTER TABLE ' . PROFILE_FIELDS_DATA_TABLE . ' ADD "' . strtoupper($field_ident) . '" ';
 
 				switch ($field_type)
 				{

@@ -2,7 +2,7 @@
 /**
 *
 * @package dbal
-* @version $Id: mysql.php 8815 2008-09-04 13:37:01Z acydburn $
+* @version $Id: mysql.php 9378 2009-03-16 17:08:28Z acydburn $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -51,7 +51,7 @@ class dbal_mysql extends dbal
 			if (@mysql_select_db($this->dbname, $this->db_connect_id))
 			{
 				// Determine what version we are using and if it natively supports UNICODE
-				if (version_compare($this->sql_server_info(true), '4.1.3', '>='))
+				if (version_compare($this->sql_server_info(true), '4.1.0', '>='))
 				{
 					@mysql_query("SET NAMES 'utf8'", $this->db_connect_id);
 
@@ -341,7 +341,7 @@ class dbal_mysql extends dbal
 
 		return $data;
 	}
-	
+
 	/**
 	* return sql error array
 	* @access private

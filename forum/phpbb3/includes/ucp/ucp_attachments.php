@@ -2,7 +2,7 @@
 /**
 *
 * @package ucp
-* @version $Id: ucp_attachments.php 8479 2008-03-29 00:22:48Z naderman $
+* @version $Id: ucp_attachments.php 9500 2009-04-30 08:30:01Z acydburn $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -184,7 +184,7 @@ class ucp_attachments
 			'U_SORT_FILESIZE'		=> $this->u_action . "&amp;sk=d&amp;sd=" . (($sort_key == 'd' && $sort_dir == 'a') ? 'd' : 'a'),
 			'U_SORT_DOWNLOADS'		=> $this->u_action . "&amp;sk=e&amp;sd=" . (($sort_key == 'e' && $sort_dir == 'a') ? 'd' : 'a'),
 			'U_SORT_POST_TIME'		=> $this->u_action . "&amp;sk=f&amp;sd=" . (($sort_key == 'f' && $sort_dir == 'a') ? 'd' : 'a'),
-			'U_SORT_TOPIC_TITLE'	=> $this->u_action . "&amp;sk=g&amp;sd=" . (($sort_key == 'f' && $sort_dir == 'a') ? 'd' : 'a'),
+			'U_SORT_TOPIC_TITLE'	=> $this->u_action . "&amp;sk=g&amp;sd=" . (($sort_key == 'g' && $sort_dir == 'a') ? 'd' : 'a'),
 
 			'S_DISPLAY_MARK_ALL'	=> ($num_attachments) ? true : false,
 			'S_DISPLAY_PAGINATION'	=> ($num_attachments) ? true : false,

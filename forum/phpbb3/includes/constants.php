@@ -2,7 +2,7 @@
 /**
 *
 * @package phpBB3
-* @version $Id: constants.php 9187 2008-12-12 14:47:03Z acydburn $
+* @version $Id: constants.php 9521 2009-05-31 10:46:40Z acydburn $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -25,7 +25,7 @@ if (!defined('IN_PHPBB'))
 */
 
 // phpBB Version
-define('PHPBB_VERSION', '3.0.4');
+define('PHPBB_VERSION', '3.0.5');
 
 // QA-related
 // define('PHPBB_QA', 1);
@@ -184,6 +184,10 @@ define('REFERER_VALIDATE_PATH', 2);
 @define('CHMOD_READ', 4);
 @define('CHMOD_WRITE', 2);
 @define('CHMOD_EXECUTE', 1);
+
+// Captcha code length
+define('CAPTCHA_MIN_CHARS', 4);
+define('CAPTCHA_MAX_CHARS', 7);
 
 // Additional constants
 define('VOTE_CONVERTED', 127);

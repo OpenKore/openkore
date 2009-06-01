@@ -2,7 +2,7 @@
 /**
 *
 * @package acp
-* @version $Id: acp_attachments.php 9041 2008-11-02 11:19:12Z acydburn $
+* @version $Id: acp_attachments.php 9398 2009-03-19 17:01:59Z acydburn $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -1003,8 +1003,8 @@ class acp_attachments
 
 						if ($files_added)
 						{
-							set_config('upload_dir_size', $config['upload_dir_size'] + $space_taken, true);
-							set_config('num_files', $config['num_files'] + $files_added, true);
+							set_config_count('upload_dir_size', $space_taken, true);
+							set_config_count('num_files', $files_added, true);
 						}
 					}
 				}

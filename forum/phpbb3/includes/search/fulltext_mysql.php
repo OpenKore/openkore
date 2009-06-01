@@ -2,7 +2,7 @@
 /**
 *
 * @package search
-* @version $Id: fulltext_mysql.php 8814 2008-09-04 12:01:47Z acydburn $
+* @version $Id: fulltext_mysql.php 9438 2009-04-11 11:09:45Z acydburn $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -118,7 +118,7 @@ class fulltext_mysql extends search_backend
 	*/
 	function split_keywords(&$keywords, $terms)
 	{
-		global $config;
+		global $config, $user;
 
 		if ($terms == 'all')
 		{
@@ -165,6 +165,12 @@ class fulltext_mysql extends search_backend
 			$matches = array();
 			preg_match_all('#(?:[^\w*"()]|^)([+\-|]?(?:[\w*"()]+\'?)*[\w*"()])(?:[^\w*"()]|$)#u', $split_keywords, $matches);
 			$this->split_words = $matches[1];
+		}
+
+		// We limit the number of allowed keywords to minimize load on the database
+		if ($config['max_num_search_keywords'] && sizeof($this->split_words) > $config['max_num_search_keywords'])
+		{
+			trigger_error($user->lang('MAX_NUM_SEARCH_KEYWORDS_REFINE', $config['max_num_search_keywords'], sizeof($this->split_words)));
 		}
 
 		// to allow phrase search, we need to concatenate quoted words

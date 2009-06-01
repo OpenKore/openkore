@@ -2,7 +2,7 @@
 /**
 *
 * @package ucp
-* @version $Id: ucp_main.php 9136 2008-11-30 14:36:59Z acydburn $
+* @version $Id: ucp_main.php 9459 2009-04-17 15:08:09Z acydburn $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -633,10 +633,13 @@ class ucp_main
 	*/
 	function assign_topiclist($mode = 'subscribed', $forbidden_forum_ary = array())
 	{
-		global $user, $db, $template, $config, $auth, $phpbb_root_path, $phpEx;
+		global $user, $db, $template, $config, $cache, $auth, $phpbb_root_path, $phpEx;
 
 		$table = ($mode == 'subscribed') ? TOPICS_WATCH_TABLE : BOOKMARKS_TABLE;
 		$start = request_var('start', 0);
+
+		// Grab icons
+		$icons = $cache->obtain_icons();
 
 		$sql_array = array(
 			'SELECT'	=> 'COUNT(t.topic_id) as topics_count',
@@ -776,7 +779,8 @@ class ucp_main
 			$folder_img = $folder_alt = $topic_type = '';
 			topic_status($row, $replies, $unread_topic, $folder_img, $folder_alt, $topic_type);
 
-			$view_topic_url = append_sid("{$phpbb_root_path}viewtopic.$phpEx", "f=$forum_id&amp;t=$topic_id");
+			$view_topic_url_params = "f=$forum_id&amp;t=$topic_id";
+			$view_topic_url = append_sid("{$phpbb_root_path}viewtopic.$phpEx", $view_topic_url_params);
 
 			// Send vars to template
 			$template->assign_block_vars('topicrow', array(
@@ -809,6 +813,7 @@ class ucp_main
 
 				'TOPIC_FOLDER_IMG'		=> $user->img($folder_img, $folder_alt),
 				'TOPIC_FOLDER_IMG_SRC'	=> $user->img($folder_img, $folder_alt, false, '', 'src'),
+				'TOPIC_FOLDER_IMG_ALT'	=> $user->lang[$folder_alt],
 				'TOPIC_ICON_IMG'		=> (!empty($icons[$row['icon_id']])) ? $icons[$row['icon_id']]['img'] : '',
 				'TOPIC_ICON_IMG_WIDTH'	=> (!empty($icons[$row['icon_id']])) ? $icons[$row['icon_id']]['width'] : '',
 				'TOPIC_ICON_IMG_HEIGHT'	=> (!empty($icons[$row['icon_id']])) ? $icons[$row['icon_id']]['height'] : '',
@@ -818,8 +823,8 @@ class ucp_main
 				'S_USER_POSTED'			=> (!empty($row['topic_posted'])) ? true : false,
 				'S_UNREAD_TOPIC'		=> $unread_topic,
 
-				'U_NEWEST_POST'			=> append_sid("{$phpbb_root_path}viewtopic.$phpEx", "f=$forum_id&amp;t=$topic_id&amp;view=unread") . '#unread',
-				'U_LAST_POST'			=> $view_topic_url . '&amp;p=' . $row['topic_last_post_id'] . '#p' . $row['topic_last_post_id'],
+				'U_NEWEST_POST'			=> append_sid("{$phpbb_root_path}viewtopic.$phpEx", $view_topic_url_params . '&amp;view=unread') . '#unread',
+				'U_LAST_POST'			=> append_sid("{$phpbb_root_path}viewtopic.$phpEx", $view_topic_url_params . '&amp;p=' . $row['topic_last_post_id']) . '#p' . $row['topic_last_post_id'],
 				'U_VIEW_TOPIC'			=> $view_topic_url,
 				'U_VIEW_FORUM'			=> append_sid("{$phpbb_root_path}viewforum.$phpEx", 'f=' . $forum_id),
 			));

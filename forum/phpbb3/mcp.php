@@ -2,7 +2,7 @@
 /**
 *
 * @package mcp
-* @version $Id: mcp.php 9015 2008-10-14 18:29:50Z toonarmy $
+* @version $Id: mcp.php 9414 2009-03-30 11:09:51Z acydburn $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -171,6 +171,12 @@ if ($quickmod)
 		break;
 
 		case 'topic_logs':
+			// Reset start parameter if we jumped from the quickmod dropdown
+			if (request_var('start', 0))
+			{
+				$_REQUEST['start'] = 0;
+			}
+
 			$module->set_active('logs', 'topic_logs');
 		break;
 
