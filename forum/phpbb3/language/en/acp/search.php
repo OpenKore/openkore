@@ -4,7 +4,7 @@
 * acp_search [English]
 *
 * @package language
-* @version $Id: search.php 9126 2008-11-26 19:17:52Z naderman $
+* @version $Id: search.php 9438 2009-04-11 11:09:45Z acydburn $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -72,6 +72,8 @@ $lang = array_merge($lang, array(
 
 	'MAX_SEARCH_CHARS'						=> 'Max characters indexed by search',
 	'MAX_SEARCH_CHARS_EXPLAIN'				=> 'Words with no more than this many characters will be indexed for searching.',
+	'MAX_NUM_SEARCH_KEYWORDS'				=> 'Maximum number of allowed keywords',
+	'MAX_NUM_SEARCH_KEYWORDS_EXPLAIN'		=> 'Maximum number of words the user is able to search for. A value of 0 allows an unlimited number of words.',
 	'MIN_SEARCH_CHARS'						=> 'Min characters indexed by search',
 	'MIN_SEARCH_CHARS_EXPLAIN'				=> 'Words with at least this many characters will be indexed for searching.',
 	'MIN_SEARCH_AUTHOR_CHARS'				=> 'Min author name characters',

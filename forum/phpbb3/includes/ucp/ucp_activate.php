@@ -2,7 +2,7 @@
 /**
 *
 * @package ucp
-* @version $Id: ucp_activate.php 9067 2008-11-21 13:21:53Z Kellanved $
+* @version $Id: ucp_activate.php 9520 2009-05-29 19:55:42Z toonarmy $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -56,6 +56,18 @@ class ucp_activate
 			trigger_error('WRONG_ACTIVATION');
 		}
 
+		// Do not allow activating by non administrators when admin activation is on
+		// Only activation type the user should be able to do is INACTIVE_REMIND
+		// or activate a new password which is not an activation state :@
+		if (!$user_row['user_newpasswd'] && $user_row['user_inactive_reason'] != INACTIVE_REMIND && $config['require_activation'] == USER_ACTIVATION_ADMIN && !$auth->acl_get('a_user'))
+		{
+			if (!$user->data['is_registered'])
+			{
+				login_box('', $user->lang['NO_AUTH_OPERATION']);
+			}
+			trigger_error('NO_AUTH_OPERATION');
+		}
+
 		$update_password = ($user_row['user_newpasswd']) ? true : false;
 
 		if ($update_password)
@@ -72,6 +84,8 @@ class ucp_activate
 				SET ' . $db->sql_build_array('UPDATE', $sql_ary) . '
 				WHERE user_id = ' . $user_row['user_id'];
 			$db->sql_query($sql);
+
+			add_log('user', $user_row['user_id'], 'LOG_USER_NEW_PASSWORD', $user_row['username']);
 		}
 
 		if (!$update_password)

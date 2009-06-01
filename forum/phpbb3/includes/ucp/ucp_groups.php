@@ -2,7 +2,7 @@
 /**
 *
 * @package ucp
-* @version $Id: ucp_groups.php 9067 2008-11-21 13:21:53Z Kellanved $
+* @version $Id: ucp_groups.php 9396 2009-03-19 13:28:15Z Kellanved $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -340,7 +340,7 @@ class ucp_groups
 						'S_ROW_COUNT'		=> ${$block . '_count'}++)
 					);
 
-					$group_id_ary[] = $row['group_id'];
+					$group_id_ary[] = (int) $row['group_id'];
 				}
 				$db->sql_freeresult($result);
 

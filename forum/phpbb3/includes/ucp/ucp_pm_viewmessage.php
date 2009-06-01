@@ -2,7 +2,7 @@
 /**
 *
 * @package ucp
-* @version $Id: ucp_pm_viewmessage.php 9174 2008-12-04 19:58:42Z toonarmy $
+* @version $Id: ucp_pm_viewmessage.php 9483 2009-04-24 20:52:00Z toonarmy $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -286,7 +286,7 @@ function get_user_information($user_id, $user_row)
 		$update_time = $config['load_online_time'] * 60;
 		if ($row)
 		{
-			$user_row['online'] = (time() - $update_time < $row['online_time'] && ($row['viewonline'])) ? true : false;
+			$user_row['online'] = (time() - $update_time < $row['online_time'] && ($row['viewonline'] || $auth->acl_get('u_viewonline'))) ? true : false;
 		}
 	}
 

@@ -2,7 +2,7 @@
 /**
 *
 * @package phpBB3
-* @version $Id: functions_profile_fields.php 9127 2008-11-26 19:58:35Z acydburn $
+* @version $Id: functions_profile_fields.php 9504 2009-05-01 10:10:35Z acydburn $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -39,8 +39,8 @@ class custom_profile
 		switch ($mode)
 		{
 			case 'register':
-				// If the field is required we show it on the registration page and do not show hidden fields
-				$sql_where .= ' AND f.field_show_on_reg = 1 AND f.field_no_view = 0';
+				// If the field is required we show it on the registration page
+				$sql_where .= ' AND f.field_show_on_reg = 1';
 			break;
 
 			case 'profile':
@@ -270,8 +270,8 @@ class custom_profile
 		switch ($mode)
 		{
 			case 'register':
-				// If the field is required we show it on the registration page and do not show hidden fields
-				$sql_where .= ' AND f.field_show_on_reg = 1 AND f.field_no_view = 0';
+				// If the field is required we show it on the registration page
+				$sql_where .= ' AND f.field_show_on_reg = 1';
 			break;
 
 			case 'profile':

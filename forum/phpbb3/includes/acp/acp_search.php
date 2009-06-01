@@ -2,7 +2,7 @@
 /**
 *
 * @package acp
-* @version $Id: acp_search.php 8479 2008-03-29 00:22:48Z naderman $
+* @version $Id: acp_search.php 9502 2009-05-01 09:59:57Z acydburn $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -63,6 +63,7 @@ class acp_search
 			'load_search'				=> 'bool',
 			'limit_search_load'			=> 'float',
 			'min_search_author_chars'	=> 'integer',
+			'max_num_search_keywords'	=> 'integer',
 			'search_store_results'		=> 'integer',
 		);
 
@@ -216,6 +217,7 @@ class acp_search
 			'SEARCH_INTERVAL'		=> (float) $config['search_interval'],
 			'SEARCH_GUEST_INTERVAL'	=> (float) $config['search_anonymous_interval'],
 			'SEARCH_STORE_RESULTS'	=> (int) $config['search_store_results'],
+			'MAX_NUM_SEARCH_KEYWORDS'	=> (int) $config['max_num_search_keywords'],
 
 			'S_SEARCH_TYPES'		=> $search_options,
 			'S_YES_SEARCH'			=> (bool) $config['load_search'],
@@ -591,7 +593,7 @@ class acp_search
 
 		ksort($this->state);
 
-		set_config('search_indexing_state', implode(',', $this->state));
+		set_config('search_indexing_state', implode(',', $this->state), true);
 	}
 
 	/**

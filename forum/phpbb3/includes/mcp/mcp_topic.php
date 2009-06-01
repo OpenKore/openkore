@@ -2,7 +2,7 @@
 /**
 *
 * @package mcp
-* @version $Id: mcp_topic.php 9030 2008-10-19 18:32:11Z acydburn $
+* @version $Id: mcp_topic.php 9398 2009-03-19 17:01:59Z acydburn $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -501,7 +501,7 @@ function split_topic($action, $topic_id, $to_forum_id, $subject)
 		$success_msg = 'TOPIC_SPLIT_SUCCESS';
 
 		// Update forum statistics
-		set_config('num_topics', $config['num_topics'] + 1, true);
+		set_config_count('num_topics', 1, true);
 
 		// Link back to both topics
 		$return_link = sprintf($user->lang['RETURN_TOPIC'], '<a href="' . append_sid("{$phpbb_root_path}viewtopic.$phpEx", 'f=' . $post_info['forum_id'] . '&amp;t=' . $post_info['topic_id']) . '">', '</a>') . '<br /><br />' . sprintf($user->lang['RETURN_NEW_TOPIC'], '<a href="' . append_sid("{$phpbb_root_path}viewtopic.$phpEx", 'f=' . $to_forum_id . '&amp;t=' . $to_topic_id) . '">', '</a>');

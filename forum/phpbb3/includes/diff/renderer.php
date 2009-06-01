@@ -2,7 +2,7 @@
 /**
 *
 * @package diff
-* @version $Id: renderer.php 8766 2008-08-16 22:24:54Z aptx $
+* @version $Id: renderer.php 9254 2009-01-13 10:55:04Z acydburn $
 * @copyright (c) 2006 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -17,7 +17,7 @@ if (!defined('IN_PHPBB'))
 }
 
 /**
-* Code from pear.php.net, Text_Diff-1.0.0 package
+* Code from pear.php.net, Text_Diff-1.1.0 package
 * http://pear.php.net/package/Text_Diff/
 *
 * Modified by phpBB Group to meet our coding standards
