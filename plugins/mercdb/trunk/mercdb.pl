@@ -141,7 +141,7 @@ sub Called{
 sub mercDbFill{
 
 	my $itemName;
-	my $datum = strftime("%d.%m.%Y %T", localtime(time));
+	my $datum = strftime("%d.%m.%Y %X", localtime(time));
 	my $map = $::field{name};
 	my $card1ID = 0;
 	my $card2ID = 0;
@@ -175,8 +175,8 @@ sub mercDbFill{
 	my $shopName = $::venderLists{$myItemList->{venderID}}{'title'};
 	$shopName =~ s/\\/\\\\/g;
 	$shopName =~ s/'/\\'/g;
-	my $shopPosX = $::players{$myItemList->{venderID}}{'pos_to'}{'x'};
-	my $shopPosY = $::players{$myItemList->{venderID}}{'pos_to'}{'y'};
+	my $shopPosX = $playerA->{'pos_to'}{'x'};
+	my $shopPosY = $playerA->{'pos_to'}{'y'};
 #	print "Shop-Owner: $shopOwner($shopOwnerID)// Shop: $shopName @ $shopPosX, $shopPosY\n";				
 #	print "Number of Items: " . $#{$myItemList->{itemList}} . "\n";
 	
