@@ -113,6 +113,8 @@ sub hookOnDemand {
 		if (defined $automacro{$a}->{mapchange} && !defined $load{'packet_mapChange'}) {$load{'packet_mapChange'} = 1}
 		if (defined $automacro{$a}->{hook} && !defined $load{$automacro{$a}->{hook}}) {$load{$automacro{$a}->{hook}} = 1}
 		if (defined $automacro{$a}->{console} && !defined $hookToLog) {$hookToLog = 1}
+		if (defined $automacro{$a}->{playerguild} && !defined $load{'player'}) {$load{'player'} = 1}
+		if (defined $automacro{$a}->{playerguild} && !defined $load{'charNameUpdate'}) {$load{'charNameUpdate'} = 1}		
 	}
 	foreach my $l (keys %load) {
 		message "[macro] hooking to $l\n";
@@ -218,11 +220,11 @@ sub commandHandler {
 		message "Macro::Parser ".$Macro::Parser::rev."\n";
 		message "Macro::Utilities ".$Macro::Utilities::rev."\n"
 	### debug
-#	} elsif ($arg eq 'varstack') {
-#		message "varstack\n", "list";
-#		foreach my $v (keys %varStack) {
-#			message "\$varStack{$v} = [".$varStack{$v}."]\n"
-#		}
+	} elsif ($arg eq 'varstack') {
+		message "Varstack List\n", "menu";
+		foreach my $v (keys %varStack) {
+			message "\$varStack{$v} = [".$varStack{$v}."]\n", "menu"
+		}
 	### parameter: probably a macro
 	} else {
 		if (defined $queue) {
