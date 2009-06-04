@@ -114,7 +114,7 @@ sub hookOnDemand {
 		if (defined $automacro{$a}->{hook} && !defined $load{$automacro{$a}->{hook}}) {$load{$automacro{$a}->{hook}} = 1}
 		if (defined $automacro{$a}->{console} && !defined $hookToLog) {$hookToLog = 1}
 		if (defined $automacro{$a}->{playerguild} && !defined $load{'player'}) {$load{'player'} = 1}
-		if (defined $automacro{$a}->{playerguild} && !defined $load{'charNameUpdate'}) {$load{'charNameUpdate'} = 1}		
+		if (defined $automacro{$a}->{playerguild} && !defined $load{'charNameUpdate'}) {$load{'charNameUpdate'} = 1}
 	}
 	foreach my $l (keys %load) {
 		message "[macro] hooking to $l\n";
