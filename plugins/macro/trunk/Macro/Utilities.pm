@@ -64,28 +64,28 @@ sub cmpr {
 		return 0
 	}
 
-   if ($a =~ /^\s*(-?[\d.]+)\s*\.{2}\s*(-?[\d.]+)\s*$/) {
-      my ($a1, $a2) = ($1, $2);
-      if ($b =~ /^-?[\d.]+$/) {
-         if ($cond eq "!=") {return 1 unless $a1 <= $b && $b <= $a2}
-         if ($cond eq "=" || $cond eq "==" || $cond eq "=~" || $cond eq "~") {
-            return 1 if $a1 <= $b && $b <= $a2
-         }
-      }
-      return 0
-   }
+	if ($a =~ /^\s*(-?[\d.]+)\s*\.{2}\s*(-?[\d.]+)\s*$/) {
+		my ($a1, $a2) = ($1, $2);
+		if ($b =~ /^-?[\d.]+$/) {
+			if ($cond eq "!=") {return 1 unless $a1 <= $b && $b <= $a2}
+			if ($cond eq "=" || $cond eq "==" || $cond eq "=~" || $cond eq "~") {
+				return 1 if $a1 <= $b && $b <= $a2
+			}
+		}
+		return 0
+	}
 
-   if ($b =~ /^\s*(-?[\d.]+)\s*\.{2}\s*(-?[\d.]+)\s*$/) {
-      my ($b1, $b2) = ($1, $2);
-      if ($a =~ /^-?[\d.]+$/) {
-         if ($cond eq "!=") {return 1 unless $b1 <= $a && $a <= $b2}
-         if ($cond eq "=" || $cond eq "==" || $cond eq "=~" || $cond eq "~") {
-            return 1 if $b1 <= $a && $a <= $b2
-         }
-      }
-      return 0
-   }
-		
+	if ($b =~ /^\s*(-?[\d.]+)\s*\.{2}\s*(-?[\d.]+)\s*$/) {
+		my ($b1, $b2) = ($1, $2);
+		if ($a =~ /^-?[\d.]+$/) {
+			if ($cond eq "!=") {return 1 unless $b1 <= $a && $a <= $b2}
+			if ($cond eq "=" || $cond eq "==" || $cond eq "=~" || $cond eq "~") {
+				return 1 if $b1 <= $a && $a <= $b2
+			}
+		}
+		return 0
+	}
+
 	if ($a =~ /^-?[\d.]+$/ && $b =~ /^-?[\d.]+$/) {
 		if (($cond eq "=" || $cond eq "==") && $a == $b) {return 1}
 		if ($cond eq ">=" && $a >= $b) {return 1}
@@ -102,6 +102,7 @@ sub cmpr {
 		$a = lc($a);
 		foreach my $e (split(/,/, $b)) {return 1 if $a eq lc($e)}
 	}
+
 	return 0
 }
 

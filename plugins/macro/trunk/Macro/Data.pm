@@ -39,7 +39,7 @@ our %amSingle = (
 	'priority' => 1,     # option: automacro priority
 	'exclusive' => 1,    # option: is macro interruptible
 	'playerguild' => 1,  # check: player guilds
-	'eval' => 1          # check : eval
+	'eval' => 1	         # check : eval
 	
 );
 
@@ -66,7 +66,7 @@ our %amMulti = (
 	'inventory' => 1,    # check: item amount in inventory
 	'storage' => 1,      # check: item amount in storage
 	'shop' => 1,         # check: item amount in shop
-	'cart' => 1          # check: item amount in cart
+	'cart' => 1,         # check: item amount in cart
 	'localtime' => 1     # check: localtime
 );
 
@@ -91,7 +91,7 @@ our $macroKeywords =
 	"eval"         . "|" .
 	"arg"          . "|" .
 	"listitem"     . "|" .
-	"pm"           . "|" .	
+   	"pm"		   . "|" .
 	"listlenght"
 ;
 

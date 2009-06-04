@@ -1,4 +1,4 @@
-# ezza's Latest Patch: 04/06/2009 @ 12:00pm
+# ezza's Latest Patch: 01/06/2009 @ 4:00pm
 # $Id: Script.pm 5939 2007-08-29 12:09:28Z arachnophobia $
 package Macro::Script;
 
@@ -24,36 +24,38 @@ sub new {
 	$repeat = 0 unless ($repeat && $repeat =~ /^\d+$/);
 	return unless defined $macro{$name};
 	my $self = {
-        name => $name,
-        lastname => undef,
-        registered => 0,
-        submacro => 0,
-        macro_delay => $timeout{macro_delay}{timeout},
-        timeout => 0,
-        mainline_delay => undef,
-        subline_delay => undef,
-        result => undef,
-        time => time,
-        finished => 0,
-        overrideAI => 0,
-        line => 0,
-        lastline => undef,
-        label => {scanLabels($macro{$name})},
-        repeat => $repeat,
-        subcall => undef,
-        error => undef,
-        orphan => $::config{macro_orphans},
-        interruptible => 1,
-        macro_block => 0
+			name => $name,
+			lastname => undef,
+			registered => 0,
+			submacro => 0,
+			macro_delay => $timeout{macro_delay}{timeout},
+			timeout => 0,
+			mainline_delay => undef,
+			subline_delay => undef,
+			result => undef,
+			time => time,
+			finished => 0,
+			overrideAI => 0,
+			line => 0,
+			lastline => undef,
+			label => {scanLabels($macro{$name})},
+			repeat => $repeat,
+			subcall => undef,
+			error => undef,
+			orphan => $::config{macro_orphans},
+			interruptible => 1,
+			macro_block => 0
+
 	};
 	if (defined $lastname && defined $lastline) {
 		$self->{lastname} = $lastname;
 		$self->{lastline} = $lastline;
 		$self->{interruptible} = 0;
-	}	
+	}
 	bless ($self, $class);
 	return $self
 }
+
 
 # destructor
 sub DESTROY {
@@ -160,6 +162,10 @@ sub scanLabels {
 # processes next line
 sub next {
 	my $self = $_[0];
+#	unless ($self->{repeat}) {
+#		$self->{finished} = 1;
+#		return ""
+#	}
 	if (defined $self->{subcall}) {
 		my $command = $self->{subcall}->next;
 		if (defined $command) {
@@ -188,9 +194,9 @@ sub next {
 			if ($self->{repeat} > 1) {$self->{repeat}--; $self->{line} = 0}
 			else {$self->{finished} = 1}
 			return ""
-      }
+		}
 	}
-
+	
 	my $errtpl = "error in ".$self->{line};
 	##########################################
 	# jump to label: goto label
@@ -219,7 +225,7 @@ sub next {
 		$self->{line}++
 	##########################################
 	# if statement: if (foo = bar) goto label?
-	# Unlimited If Statement by: ezza @ http://forums.openkore.com/	
+	# Unlimited If Statement by: ezza @ http://forums.openkore.com/
 	} elsif ($line =~ /^if\s/) {
 		my ($text, $then) = $line =~ /^if\s\(\s*(.*)\s*\)\s+(goto\s+.*|call\s+.*|stop)\s*/;
 
@@ -230,7 +236,7 @@ sub next {
 
 		$self->{line}++;
 		$self->{timeout} = 0
-		
+
 	##########################################
 	# while statement: while (foo <= bar) as label
 	} elsif ($line =~ /^while\s/) {
@@ -265,7 +271,7 @@ sub next {
 	# set variable: $variable = value
 	} elsif ($line =~ /^\$[a-z]/i) {
 		my ($var, $val);
-		if ($line =~ /;/) {run_sublines($line, $self)}
+		if ($line =~ /;/) {run_sublines($line, $self)} 
 		else {
 			if (($var, $val) = $line =~ /^\$([a-z][a-z\d]*?)\s+=\s+(.*)/i) {
 				my $pval = parseCmd($val);
@@ -375,8 +381,8 @@ sub next {
 			}
 			else {$self->{timeout} = $self->{macro_delay}}
 		}
-      $self->{line}++;
-      return $self->{result} if $self->{result}
+		$self->{line}++;
+		return $self->{result} if $self->{result}
 	##########################################
 	# stop command
 	} elsif ($line eq "stop") {
@@ -457,7 +463,7 @@ sub next {
 		$self->{line}++;
 		$self->{timeout} = 0 unless defined $self->{mainline_delay} && defined $self->{subline_delay};
 		return $self->{result} if $self->{result}
-	##########################################	
+	##########################################
 	# unrecognized line
 	} else {
 		$self->{error} = "$errtpl: syntax error"
@@ -466,371 +472,372 @@ sub next {
 	if (defined $self->{error}) {return} else {return ""}
 }
 
+
 sub run_sublines {
-   my ($real_line, $self) = @_;
-   my ($i, $real_num, @sub_line) = (0, $self->{line}, undef);
-   my @split = split(/\s*;\s*/, $real_line);
-   my ($dvar, $var, $val, $list);
-   
-   foreach my $e (@split) {
-      next if $e eq "";
-      if (defined $self->{subline_delay} && $i < $self->{subline_delay}) {$i++; next}
-      if (defined $self->{subline_delay} && $i == $self->{subline_delay}) {
-         $self->{timeout} = 0;
-         ($self->{mainline_delay}, $self->{subline_delay}, $self->{result}) = undef;
-         $i++; next
-      }
-      
-      ##########################################
-      # pop value from variable: $var = [$list]
-      if ($e =~ /^\$[a-z][a-z\d]*\s+=\s+\[\s*\$[a-z][a-z\d]*\s*\]$/i) {
-         ($var, $list) = $e =~ /^\$([a-z][a-z\d]*?)\s+=\s+\[\s*\$([a-z][a-z\d]*?)\s*\]$/i;
-         my $listitems = ($varStack{$list} or "");
-         if (($val) = $listitems =~ /^(.*?)(?:,|$)/) {
-            $listitems =~ s/^(?:.*?)(?:,|$)//;
-            $varStack{$list} = $listitems
-         }
-         else {$val = $listitems}
-         $varStack{$var} = $val;
-         $i++; next
-            
-      # set variable: $variable = value
-      } elsif ($e =~ /^\$[a-z]/i) {
-         if (($var, $val) = $e =~ /^\$([a-z][a-z\d]*?)\s+=\s+(.*)/i) {
-            my $pval = parseCmd($val);
-            if (defined $pval) {
-               if ($pval =~ /^\s*(?:undef|unset)\s*$/i && exists $varStack{$var}) {undef $varStack{$var}}
-               else {$varStack{$var} = $pval}
-            }
-            else {$self->{error} = "Error in line $real_num: $real_line\n[macro] $self->{name} error in sub-line $i: $e failed"; last}
-         }
-         elsif (($var, $val) = $e =~ /^\$([a-z][a-z\d]*?)([+-]{2})$/i) {
-            if ($val eq '++') {$varStack{$var} = ($varStack{$var} or 0)+1} else {$varStack{$var} = ($varStack{$var} or 0)-1}
-         }
-         else {$self->{error} = "Error in line $real_num: $real_line\n[macro] $self->{name} error in sub-line $i: unrecognized assignment in ($e)"; last}
-         $i++; next
-            
-      # set doublevar: ${$variable} = value
-      } elsif ($e =~ /^\$\{\$[.a-z]/i) {
-         if (($dvar, $val) = $e =~ /^\$\{\$([.a-z][a-z\d]*?)\}\s+=\s+(.*)/i) {
-            $var = $varStack{$dvar};
-            unless (defined $var) {$self->{error} = "Error in line $real_num: $real_line\n[macro] $self->{name} error in sub-line $i: $dvar not defined in ($e)"; last}
-            else {
-               my $pval = parseCmd($val);
-               unless (defined $pval) {$self->{error} = "Error in line $real_num: $real_line\n[macro] $self->{name} error in sub-line $i: $e failed"; last}
-               else {
-                  if ($pval =~ /^\s*(?:undef|unset)\s*$/i) {undef $varStack{"#$var"}}
-                  else {$varStack{"#$var"} = $pval}
-               }
-            }
-         }
-         elsif (($dvar, $val) = $e =~ /^\$\{\$([.a-z][a-z\d]*?)\}([+-]{2})$/i) {
-            $var = $varStack{$dvar};
-            unless (defined $var) {$self->{error} = "Error in line $real_num: $real_line\n[macro] $self->{name} error in sub-line $i: undefined $dvar in ($e)"; last}
-            else {if ($val eq '++') {$varStack{"#$var"} = ($varStack{"#$var"} or 0)+1} else {$varStack{"#$var"} = ($varStack{"#$var"} or 0)-1}}
-            $i++; next
-         }
-         else {$self->{error} = "Error in line $real_num: $real_line\n[macro] $self->{name} error in sub-line $i: unrecognized assignment in ($e)"; last}
-         $i++; next
-            
-      # stop command
-      } elsif ($e eq "stop") {
-         $self->{finished} = 1; last
-      
-      # set command
-      } elsif (($var, $val) = $e =~ /^set\s+(\w+)\s+(.*)$/) {
-         if ($var eq 'macro_delay' && $val =~ /^[\d\.]*\d+$/) {$self->{macro_delay} = $val}
-         elsif ($var eq 'repeat' && $val =~ /^\d+$/) {$self->{repeat} = $val}
-         elsif ($var eq 'overrideAI' && $val =~ /^[01]$/) {$self->{overrideAI} = $val}
-         elsif ($var eq 'exclusive' && $val =~ /^[01]$/) {$self->{interruptible} = $val?0:1}
-         elsif ($var eq 'orphan' && $val =~ /^(?:terminate|reregister(?:_safe)?)$/) {$self->{orphan} = $val}
-         else {$self->{error} = "Error in line $real_num: $real_line\n[macro] $self->{name} error in sub-line $i: unrecognized key or wrong value in ($e)"; last}
-            
-      # lock command
-      } elsif ($e =~ /^lock\s+/) {
-         my ($tmp) = $e =~ /^lock\s+(.*)/;
-         if (!lockAM(parseCmd($tmp))) {$self->{error} = "Error in line $real_num: $real_line\n[macro] $self->{name} error in sub-line $i: locking $tmp failed in ($e)"; last}
-            
-      # release command
-      } elsif ($e =~ /^release\s+/) {
-         my ($tmp) = $e =~ /^release\s+(.*)/;
-         if (!releaseAM(parseCmd($tmp))) {$self->{error} = "Error in line $real_num: $real_line\n[macro] $self->{name} error in sub-line $i: releasing $tmp failed in ($e)"; last}
-      
-      # pause command
-      } elsif ($e =~ /^pause/) {
-         my ($tmp) = $e =~ /^pause\s*(.*)/;
-         if (defined $tmp) {
-            my $result = parseCmd($tmp);
-            unless (defined $result) {$self->{error} = "Error in line $real_num: $real_line\n[macro] $self->{name} error in sub-line $i: $tmp failed in ($e)"; last}
-            else {$self->{timeout} = $result}
-         }
-         else {$self->{timeout} = $self->{macro_delay}}
-         $self->{mainline_delay} = $real_num;
-         $self->{subline_delay} = $i;
-         last
-      
-      # log command
-      } elsif ($e =~ /^log\s+/) {
-         my ($tmp) = $e =~ /^log\s+(.*)/;
-         my $result = parseCmd($tmp);
-         unless (defined $result) {$self->{error} = "Error in line $real_num: $real_line\n[macro] $self->{name} error in sub-line $i: $tmp failed in ($e)"; last}
-         else {message "[macro log] $result\n", "macro"}
-         $self->{timeout} = $self->{macro_delay};
-         $self->{mainline_delay} = $real_num;
-         $self->{subline_delay} = $i;
-         last
-      }
-      
-      # do command
-      elsif ($e =~ /^do\s/) {
-         my ($tmp) = $e =~ /^do\s+(.*)/;
-         if ($tmp =~ /^macro\s+/) {
-            my ($arg) = $tmp =~ /^macro\s+(.*)/;
-            if ($arg =~ /^reset/) {$self->{error} = "Error in line $real_num: $real_line\n[macro] $self->{name} error in sub-line $i: use 'release' instead of 'macro reset'"}
-            elsif ($arg eq 'pause' || $arg eq 'resume') {$self->{error} = "Error in line $real_num: $real_line\n[macro] $self->{name} error in sub-line $i: do not use 'macro pause' or 'macro resume' within a macro"}
-            elsif ($arg =~ /^set\s/) {$self->{error} = "Error in line $real_num: $real_line\n[macro] $self->{name} error in sub-line $i: do not use 'macro set'. Use \$foo = bar"}
-            elsif ($arg eq 'stop') {$self->{error} = "Error in line $real_num: $real_line\n[macro] $self->{name} error in sub-line $i: use 'stop' instead"}
-            elsif ($arg !~ /^(?:list|status)$/) {$self->{error} = "Error in line $real_num: $real_line\n[macro] $self->{name} error in sub-line $i: use 'call $arg' instead of 'macro $arg'"}
-         }
-         elsif ($tmp =~ /^eval\s+/) {$self->{error} = "Error in line $real_num: $real_line\n[macro] $self->{name} error in sub-line $i: do not mix eval in the sub-line"}
-         elsif ($tmp =~ /^ai\s+clear$/) {$self->{error} = "Error in line $real_num: $real_line\n[macro] $self->{name} error in sub-line $i: do not mess around with ai in macros"}
-         last if defined $self->{error};
-         my $result = parseCmd($tmp);
-         unless (defined $result) {$self->{error} = "Error in line $real_num: $real_line\n[macro] $self->{name} error in sub-line $i: command $tmp failed"; last}
-         $self->{timeout} = $self->{macro_delay};
-         $self->{mainline_delay} = $real_num;
-         $self->{subline_delay} = $i;
-         $self->{result} = $result;
-         last
-                     
-      # "call", "[", "]", ":", "if", "while", "end" and "goto" commands block
-      } elsif ($e =~ /^(?:call|\[|\]|:|if|end|goto|while)\s*/i) {
-         $self->{error} = "Line $real_num sub-line $i\n[Reason:] Use saperate line for HERE --> $e <-- HERE";
-         last
-      
-      # sub-routine
-      } elsif (my ($sub) = $e =~ /^(\w+)\s*\(.*?\)$/) {
-         my $sub_error = 1;
-         foreach my $e (@macro_block) {if ($e eq $sub) {$sub_error = 0; parseCmd($e)}}
-         if ($sub_error)   {
-            $self->{error} = "Line $real_num sub-line $i\n[macro] $self->{name} error in sub-line $i: sub-routine $sub in --> $e <-- not found!!!";
-            last
-         }   
-      
-      ##################### End ##################
-      } else {
-         #$self->{error} = "Error in line $real_num: $real_line\n[macro] $self->{name} error in sub-line $i: unrecognized assignment in ($e)"
-         message "Error in $self->{line}: $real_line\nWarning: Ignoring Unknown Command in sub-line $i: ($e)\n", "menu";
-      }
-      $i++
-   }
+	my ($real_line, $self) = @_;
+	my ($i, $real_num, @sub_line) = (0, $self->{line}, undef);
+	my @split = split(/\s*;\s*/, $real_line);
+	my ($dvar, $var, $val, $list);
+	
+	foreach my $e (@split) {
+		next if $e eq "";
+		if (defined $self->{subline_delay} && $i < $self->{subline_delay}) {$i++; next}
+		if (defined $self->{subline_delay} && $i == $self->{subline_delay}) {
+			$self->{timeout} = 0;
+			($self->{mainline_delay}, $self->{subline_delay}, $self->{result}) = undef;
+			$i++; next
+		}
+		
+		##########################################
+		# pop value from variable: $var = [$list]
+		if ($e =~ /^\$[a-z][a-z\d]*\s+=\s+\[\s*\$[a-z][a-z\d]*\s*\]$/i) {
+			($var, $list) = $e =~ /^\$([a-z][a-z\d]*?)\s+=\s+\[\s*\$([a-z][a-z\d]*?)\s*\]$/i;
+			my $listitems = ($varStack{$list} or "");
+			if (($val) = $listitems =~ /^(.*?)(?:,|$)/) {
+				$listitems =~ s/^(?:.*?)(?:,|$)//;
+				$varStack{$list} = $listitems
+			}
+			else {$val = $listitems}
+			$varStack{$var} = $val;
+			$i++; next
+				
+		# set variable: $variable = value
+		} elsif ($e =~ /^\$[a-z]/i) {
+			if (($var, $val) = $e =~ /^\$([a-z][a-z\d]*?)\s+=\s+(.*)/i) {
+				my $pval = parseCmd($val);
+				if (defined $pval) {
+					if ($pval =~ /^\s*(?:undef|unset)\s*$/i && exists $varStack{$var}) {undef $varStack{$var}}
+					else {$varStack{$var} = $pval}
+				}
+				else {$self->{error} = "Error in line $real_num: $real_line\n[macro] $self->{name} error in sub-line $i: $e failed"; last}
+			}
+			elsif (($var, $val) = $e =~ /^\$([a-z][a-z\d]*?)([+-]{2})$/i) {
+				if ($val eq '++') {$varStack{$var} = ($varStack{$var} or 0)+1} else {$varStack{$var} = ($varStack{$var} or 0)-1}
+			}
+			else {$self->{error} = "Error in line $real_num: $real_line\n[macro] $self->{name} error in sub-line $i: unrecognized assignment in ($e)"; last}
+			$i++; next
+				
+		# set doublevar: ${$variable} = value
+		} elsif ($e =~ /^\$\{\$[.a-z]/i) {
+			if (($dvar, $val) = $e =~ /^\$\{\$([.a-z][a-z\d]*?)\}\s+=\s+(.*)/i) {
+				$var = $varStack{$dvar};
+				unless (defined $var) {$self->{error} = "Error in line $real_num: $real_line\n[macro] $self->{name} error in sub-line $i: $dvar not defined in ($e)"; last}
+				else {
+					my $pval = parseCmd($val);
+					unless (defined $pval) {$self->{error} = "Error in line $real_num: $real_line\n[macro] $self->{name} error in sub-line $i: $e failed"; last}
+					else {
+						if ($pval =~ /^\s*(?:undef|unset)\s*$/i) {undef $varStack{"#$var"}}
+						else {$varStack{"#$var"} = $pval}
+					}
+				}
+			}
+			elsif (($dvar, $val) = $e =~ /^\$\{\$([.a-z][a-z\d]*?)\}([+-]{2})$/i) {
+				$var = $varStack{$dvar};
+				unless (defined $var) {$self->{error} = "Error in line $real_num: $real_line\n[macro] $self->{name} error in sub-line $i: undefined $dvar in ($e)"; last}
+				else {if ($val eq '++') {$varStack{"#$var"} = ($varStack{"#$var"} or 0)+1} else {$varStack{"#$var"} = ($varStack{"#$var"} or 0)-1}}
+				$i++; next
+			}
+			else {$self->{error} = "Error in line $real_num: $real_line\n[macro] $self->{name} error in sub-line $i: unrecognized assignment in ($e)"; last}
+			$i++; next
+				
+		# stop command
+		} elsif ($e eq "stop") {
+			$self->{finished} = 1; last
+		
+		# set command
+		} elsif (($var, $val) = $e =~ /^set\s+(\w+)\s+(.*)$/) {
+			if ($var eq 'macro_delay' && $val =~ /^[\d\.]*\d+$/) {$self->{macro_delay} = $val}
+			elsif ($var eq 'repeat' && $val =~ /^\d+$/) {$self->{repeat} = $val}
+			elsif ($var eq 'overrideAI' && $val =~ /^[01]$/) {$self->{overrideAI} = $val}
+			elsif ($var eq 'exclusive' && $val =~ /^[01]$/) {$self->{interruptible} = $val?0:1}
+			elsif ($var eq 'orphan' && $val =~ /^(?:terminate|reregister(?:_safe)?)$/) {$self->{orphan} = $val}
+			else {$self->{error} = "Error in line $real_num: $real_line\n[macro] $self->{name} error in sub-line $i: unrecognized key or wrong value in ($e)"; last}
+				
+		# lock command
+		} elsif ($e =~ /^lock\s+/) {
+			my ($tmp) = $e =~ /^lock\s+(.*)/;
+			if (!lockAM(parseCmd($tmp))) {$self->{error} = "Error in line $real_num: $real_line\n[macro] $self->{name} error in sub-line $i: locking $tmp failed in ($e)"; last}
+				
+		# release command
+		} elsif ($e =~ /^release\s+/) {
+			my ($tmp) = $e =~ /^release\s+(.*)/;
+			if (!releaseAM(parseCmd($tmp))) {$self->{error} = "Error in line $real_num: $real_line\n[macro] $self->{name} error in sub-line $i: releasing $tmp failed in ($e)"; last}
+		
+		# pause command
+		} elsif ($e =~ /^pause/) {
+			my ($tmp) = $e =~ /^pause\s*(.*)/;
+			if (defined $tmp) {
+				my $result = parseCmd($tmp);
+				unless (defined $result) {$self->{error} = "Error in line $real_num: $real_line\n[macro] $self->{name} error in sub-line $i: $tmp failed in ($e)"; last}
+				else {$self->{timeout} = $result}
+			}
+			else {$self->{timeout} = $self->{macro_delay}}
+			$self->{mainline_delay} = $real_num;
+			$self->{subline_delay} = $i;
+			last
+		
+		# log command
+		} elsif ($e =~ /^log\s+/) {
+			my ($tmp) = $e =~ /^log\s+(.*)/;
+			my $result = parseCmd($tmp);
+			unless (defined $result) {$self->{error} = "Error in line $real_num: $real_line\n[macro] $self->{name} error in sub-line $i: $tmp failed in ($e)"; last}
+			else {message "[macro log] $result\n", "macro"}
+			$self->{timeout} = $self->{macro_delay};
+			$self->{mainline_delay} = $real_num;
+			$self->{subline_delay} = $i;
+			last
+		}
+		
+		# do command
+		elsif ($e =~ /^do\s/) {
+			my ($tmp) = $e =~ /^do\s+(.*)/;
+			if ($tmp =~ /^macro\s+/) {
+				my ($arg) = $tmp =~ /^macro\s+(.*)/;
+				if ($arg =~ /^reset/) {$self->{error} = "Error in line $real_num: $real_line\n[macro] $self->{name} error in sub-line $i: use 'release' instead of 'macro reset'"}
+				elsif ($arg eq 'pause' || $arg eq 'resume') {$self->{error} = "Error in line $real_num: $real_line\n[macro] $self->{name} error in sub-line $i: do not use 'macro pause' or 'macro resume' within a macro"}
+				elsif ($arg =~ /^set\s/) {$self->{error} = "Error in line $real_num: $real_line\n[macro] $self->{name} error in sub-line $i: do not use 'macro set'. Use \$foo = bar"}
+				elsif ($arg eq 'stop') {$self->{error} = "Error in line $real_num: $real_line\n[macro] $self->{name} error in sub-line $i: use 'stop' instead"}
+				elsif ($arg !~ /^(?:list|status)$/) {$self->{error} = "Error in line $real_num: $real_line\n[macro] $self->{name} error in sub-line $i: use 'call $arg' instead of 'macro $arg'"}
+			}
+			elsif ($tmp =~ /^eval\s+/) {$self->{error} = "Error in line $real_num: $real_line\n[macro] $self->{name} error in sub-line $i: do not mix eval in the sub-line"}
+			elsif ($tmp =~ /^ai\s+clear$/) {$self->{error} = "Error in line $real_num: $real_line\n[macro] $self->{name} error in sub-line $i: do not mess around with ai in macros"}
+			last if defined $self->{error};
+			my $result = parseCmd($tmp);
+			unless (defined $result) {$self->{error} = "Error in line $real_num: $real_line\n[macro] $self->{name} error in sub-line $i: command $tmp failed"; last}
+			$self->{timeout} = $self->{macro_delay};
+			$self->{mainline_delay} = $real_num;
+			$self->{subline_delay} = $i;
+			$self->{result} = $result;
+			last
+							
+		# "call", "[", "]", ":", "if", "while", "end" and "goto" commands block
+		} elsif ($e =~ /^(?:call|\[|\]|:|if|end|goto|while)\s*/i) {
+			$self->{error} = "Line $real_num sub-line $i\n[Reason:] Use saperate line for HERE --> $e <-- HERE";
+			last
+		
+		# sub-routine 
+		} elsif (my ($sub) = $e =~ /^(\w+)\s*\(.*?\)$/) {
+			my $sub_error = 1;
+			foreach my $e (@macro_block) {if ($e eq $sub) {$sub_error = 0; parseCmd($e)}}
+			if ($sub_error)	{
+				$self->{error} = "Line $real_num sub-line $i\n[macro] $self->{name} error in sub-line $i: sub-routine $sub in --> $e <-- not found!!!";
+				last
+			}	
+		
+		##################### End ##################
+		} else {
+			#$self->{error} = "Error in line $real_num: $real_line\n[macro] $self->{name} error in sub-line $i: unrecognized assignment in ($e)"
+			message "Error in $self->{line}: $real_line\nWarning: Ignoring Unknown Command in sub-line $i: ($e)\n", "menu";
+		}
+		$i++
+	}
 }
 
 sub newThen {
-   my ($then, $self, $errtpl) = @_;
+	my ($then, $self, $errtpl) = @_;
 
-   if ($then =~ /^goto\s/) {
-      my ($tmp) = $then =~ /^goto\s+([a-zA-Z][a-zA-Z\d]*)$/;
-      if (exists $self->{label}->{$tmp}) {
-         $self->{line} = $self->{label}->{$tmp}
-      }
-      else {$self->{error} = "$errtpl: cannot find label $tmp"}
-   }
-   elsif ($then =~ /^call\s+/) {
-      my ($tmp) = $then =~ /^call\s+(.*)/;
-      if ($tmp =~ /\s/) {
-         my ($name, $times) = $tmp =~ /(.*?)\s+(.*)/;
-         my $ptimes = parseCmd($times);
-         if (defined $ptimes) {
-            if ($ptimes > 1) {
-               $self->{subcall} = new Macro::Script($name, $ptimes)
-            }
-            elsif ($ptimes == 1) {
-               my $lastname = $self->{name};
-               my $lastline = $self->{line};
-               $self->{subcall} = new Macro::Script($name, $ptimes, $lastname, $lastline)
-            }
-            else {
-               $self->{subcall} = new Macro::Script($name)
-            }
-         }
-      }
-      else {$self->{subcall} = new Macro::Script($tmp)}
-      unless (defined $self->{subcall}) {$self->{error} = "$errtpl: failed to call script"}
-      else {
-         $self->{subcall}->regSubmacro;
-         $self->{timeout} = $self->{macro_delay}
-      }
-   }
-   elsif ($then eq "stop") {$self->{finished} = 1}
+	if ($then =~ /^goto\s/) {
+		my ($tmp) = $then =~ /^goto\s+([a-zA-Z][a-zA-Z\d]*)$/;
+		if (exists $self->{label}->{$tmp}) {
+			$self->{line} = $self->{label}->{$tmp}
+		}
+		else {$self->{error} = "$errtpl: cannot find label $tmp"}
+	}
+	elsif ($then =~ /^call\s+/) {
+		my ($tmp) = $then =~ /^call\s+(.*)/;
+		if ($tmp =~ /\s/) {
+			my ($name, $times) = $tmp =~ /(.*?)\s+(.*)/;
+			my $ptimes = parseCmd($times);
+			if (defined $ptimes) {
+				if ($ptimes > 1) {
+					$self->{subcall} = new Macro::Script($name, $ptimes)
+				}
+				elsif ($ptimes == 1) {
+					my $lastname = $self->{name};
+					my $lastline = $self->{line};
+					$self->{subcall} = new Macro::Script($name, $ptimes, $lastname, $lastline)
+				}
+				else {
+					$self->{subcall} = new Macro::Script($name)
+				}
+			}
+		}
+		else {$self->{subcall} = new Macro::Script($tmp)}
+		unless (defined $self->{subcall}) {$self->{error} = "$errtpl: failed to call script"}
+		else {
+			$self->{subcall}->regSubmacro;
+			$self->{timeout} = $self->{macro_delay}
+		}
+	}
+	elsif ($then eq "stop") {$self->{finished} = 1}
 }
 
 
 sub statement {
-   my ($temp_multi, $self, $errtpl) = @_;
-   my ($first, $cond, $last) = $temp_multi =~ /^\s*"?(.*?)"?\s+([<>=!~]+?)\s+"?(.*?)"?\s*$/;
-   if (!defined $first || !defined $cond || !defined $last) {$self->{error} = "$errtpl: syntax error in if statement"}
-   else {
-      my $pfirst = parseCmd(refined_macroKeywords($first)); my $plast = parseCmd(refined_macroKeywords($last));
-      unless (defined $pfirst && defined $plast) {$self->{error} = "$errtpl: either '$first' or '$last' has failed"}
-      elsif (cmpr($pfirst, $cond, $plast)) {return 1}
-   }
-   return 0
+	my ($temp_multi, $self, $errtpl) = @_;
+	my ($first, $cond, $last) = $temp_multi =~ /^\s*"?(.*?)"?\s+([<>=!~]+?)\s+"?(.*?)"?\s*$/;
+	if (!defined $first || !defined $cond || !defined $last) {$self->{error} = "$errtpl: syntax error in if statement"}
+	else {
+		my $pfirst = parseCmd(refined_macroKeywords($first)); my $plast = parseCmd(refined_macroKeywords($last));
+		unless (defined $pfirst && defined $plast) {$self->{error} = "$errtpl: either '$first' or '$last' has failed"}
+		elsif (cmpr($pfirst, $cond, $plast)) {return 1}
+	}
+	return 0
 }
 
 sub particle {
-   # I need to test this main code alot becoz it will be disastrous if something goes wrong
-   # in the if statement block below
+	# I need to test this main code alot becoz it will be disastrous if something goes wrong
+	# in the if statement block below
 
-   my ($text, $self, $errtpl) = @_;
-   my @brkt;
+	my ($text, $self, $errtpl) = @_;
+	my @brkt;
 
-   if ($text =~ /\(/) {
-      @brkt = txtPosition($text, $self, $errtpl);
-      $brkt[0] = multi($brkt[0], $self, $errtpl) if !bracket($brkt[0]) && $brkt[0] =~ /[\(\)]/ eq "";
-      $text = extracted($text, @brkt);
-   }
+	if ($text =~ /\(/) {
+		@brkt = txtPosition($text, $self, $errtpl);
+		$brkt[0] = multi($brkt[0], $self, $errtpl) if !bracket($brkt[0]) && $brkt[0] =~ /[\(\)]/ eq "";
+		$text = extracted($text, @brkt);
+	}
 
-   unless ($text =~ /\(/) {return $text}
-   $text = particle($text, $self, $errtpl)
+	unless ($text =~ /\(/) {return $text}
+	$text = particle($text, $self, $errtpl)
 }
 
 sub multi {
-   my ($text, $self, $errtpl) = @_;
-   my ($i, $n, $ok, $ok2) = (0, 0, 1, 0);
-   my %save;
+	my ($text, $self, $errtpl) = @_;
+	my ($i, $n, $ok, $ok2) = (0, 0, 1, 0);
+	my %save;
 
-   while ($text =~ /(\|{2}|\&{2})/g) {
-      # Check if we put the wrong '&&' or '||' in the statement
-      # Logically, each clean statement(none-bracket statement),
-      # cant use the simbol '&&' or '||' together. Infact, it must be saperated
-      # by using round brackets '(' and ')' in the 1st place
+	while ($text =~ /(\|{2}|\&{2})/g) {
+		# Check if we put the wrong '&&' or '||' in the statement
+		# Logically, each clean statement(none-bracket statement),
+		# cant use the simbol '&&' or '||' together. Infact, it must be saperated
+		# by using round brackets '(' and ')' in the 1st place
 
-      $save{$i} = $1;
-      if ($i > 0) {
-         $n = $i - 1;
-         if ($save{$i} ne $save{$n}) {
-            my $s = $text;
-            $ok = 0;
-            #$s =~ s/($save{$i})/\($1\) <-- HERE/g;    # Later maybe? ;p
-            $self->{error} = "Wrong Conditions: $errtpl ($save{$n} vs $save{$i})"
-         }
-      }
-      $i++
-   }
+		$save{$i} = $1;
+		if ($i > 0) {
+			$n = $i - 1;
+			if ($save{$i} ne $save{$n}) {
+				my $s = $text;
+				$ok = 0;
+				#$s =~ s/($save{$i})/\($1\) <-- HERE/g;    # Later maybe? ;p
+				$self->{error} = "Wrong Conditions: $errtpl ($save{$n} vs $save{$i})"
+			}
+		}
+		$i++
+	}
 
-   if ($save{$n} eq "||" && $ok && $i > 0) {
-      my @split = split(/\s*\|{2}\s*/, $text);
-      foreach my $e (@split) {
-         next if $e eq "0";
-         return 1 if $e eq "1" || $e =~ /^\d+$/;
-         return 1 if statement($e, $self, $errtpl)
-      }
-      return 0
-   }
-   elsif ($save{$n} eq "&&" && $ok && $i > 0) {
-      my @split = split(/\s*\&{2}\s*/, $text);
-      foreach my $e (@split) {
-         if ($e eq "1" || ($e =~ /^\d+$/ && $e > 0)) {next}
-         elsif ($e eq "0") {return 0}
-         next if statement($e, $self, $errtpl);
-         return 0
-      }
-      return 1
-   }
-   elsif ($i == 0) {
-      return $text if $text =~ /^\d+$/;
-      return statement($text, $self, $errtpl)
-   }
+	if ($save{$n} eq "||" && $ok && $i > 0) {
+		my @split = split(/\s*\|{2}\s*/, $text);
+		foreach my $e (@split) {
+			next if $e eq "0";
+			return 1 if $e eq "1" || $e =~ /^\d+$/;
+			return 1 if statement($e, $self, $errtpl)
+		}
+		return 0
+	}
+	elsif ($save{$n} eq "&&" && $ok && $i > 0) {
+		my @split = split(/\s*\&{2}\s*/, $text);
+		foreach my $e (@split) {
+			if ($e eq "1" || ($e =~ /^\d+$/ && $e > 0)) {next}
+			elsif ($e eq "0") {return 0}
+			next if statement($e, $self, $errtpl);
+			return 0
+		}
+		return 1
+	}
+	elsif ($i == 0) {
+		return $text if $text =~ /^\d+$/;
+		return statement($text, $self, $errtpl)
+	}
 }
 
 sub txtPosition {
-   # This sub will deal which bracket is belongs to which statement,
-   # Using this, will capture the most correct statement to be checked 1st before the next statement,
-   # Ex: ((((1st statement)2nd statement)3rd statement)4th statement)
-   # will return: $new[0] = "1st statement", $new[1] = 4, $new[2] = 16
+	# This sub will deal which bracket is belongs to which statement,
+	# Using this, will capture the most correct statement to be checked 1st before the next statement,
+	# Ex: ((((1st statement)2nd statement)3rd statement)4th statement)
+	# will return: $new[0] = "1st statement", $new[1] = 4, $new[2] = 16
    
-   my ($text, $self, $errtpl) = @_;
-   my ($start, $i) = (0, 0);
-   my (@save, @new, $first, $last);
-   my @w = split(//, $text);
+	my ($text, $self, $errtpl) = @_;
+	my ($start, $i) = (0, 0);
+	my (@save, @new, $first, $last);
+	my @w = split(//, $text);
 
-   foreach my $e (@w) {
-      if ($e eq ")" && $start) {
-          $last = $i; last
-      }
-      elsif ($e eq "(") {
-         if ($start) {undef @save; undef $first}
-         $start = 1; $first = $i;
-      }
-      else {if ($start) {push @save, $e}}
-      $i++
-   }
+	foreach my $e (@w) {
+		if ($e eq ")" && $start) {
+			 $last = $i; last
+		}
+		elsif ($e eq "(") {
+			if ($start) {undef @save; undef $first}
+			$start = 1; $first = $i;
+		}
+		else {if ($start) {push @save, $e}}
+		$i++
+	}
 
-   $self->{error} = "$errtpl: You probably missed 1 or more closing round-\nbracket ')' in the statement." if !defined $last;
+	$self->{error} = "$errtpl: You probably missed 1 or more closing round-\nbracket ')' in the statement." if !defined $last;
 
-   $new[0] = join('', @save);
-   $new[1] = $first;
-   $new[2] = $last;
-   return @new
+	$new[0] = join('', @save);
+	$new[1] = $first;
+	$new[2] = $last;
+	return @new
 }
 
 sub extracted {
-   # Normally we just do substract s/// or s///g or using while grouping for s{}{} to delete or replace...
-   # but for some cases, the perl substract is failed... atleast for this text
-   # ex: $text = "(1 || 0) && 1 && 0" (or I might missed some info for the substract function?)
-   # so, below code will simply ignore the (1 || 0) but will replace it with $brkt[0] which is either 1 or 0,
-   # in return, the new $text will be in this format: $text = "1 && 1 && 0" if the $brkt[0] happened to be 1.
+	# Normally we just do substract s/// or s///g or using while grouping for s{}{} to delete or replace...
+	# but for some cases, the perl substract is failed... atleast for this text
+	# ex: $text = "(1 || 0) && 1 && 0" (or I might missed some info for the substract function?)
+	# so, below code will simply ignore the (1 || 0) but will replace it with $brkt[0] which is either 1 or 0,
+	# in return, the new $text will be in this format: $text = "1 && 1 && 0" if the $brkt[0] happened to be 1.
 
-   my ($text, @brkt) = @_;
-   my @save;
-   my @w = split(//, $text);
+	my ($text, @brkt) = @_;
+	my @save;
+	my @w = split(//, $text);
 
-   my $txt_lenght = scalar(@w);
+	my $txt_lenght = scalar(@w);
 
-   for (my $i = 0; $i < $txt_lenght; $i++) {
-      if ($i == $brkt[1]) {push @save, $brkt[0]; next}
-      next if $i > $brkt[1] && $i <= $brkt[2];
-      push @save, $w[$i];
-      next
-   }
-   
-   $text = join('', @save);
-   return $text
+	for (my $i = 0; $i < $txt_lenght; $i++) {
+		if ($i == $brkt[1]) {push @save, $brkt[0]; next}
+		next if $i > $brkt[1] && $i <= $brkt[2];
+		push @save, $w[$i];
+		next
+	}
+	
+	$text = join('', @save);
+	return $text
 }
 
 sub refined_macroKeywords {
-   # To make sure if there is really no more @special keywords
+	# To make sure if there is really no more @special keywords
 
-   my @pair = $_[0] =~ /\@($macroKeywords)\s*\(\s*(.*)\s*\)/i;
-   return $_[0] unless @pair;
+	my @pair = $_[0] =~ /\@($macroKeywords)\s*\(\s*(.*)\s*\)/i;
+	return $_[0] unless @pair;
 
-   $pair[1] = parseCmd($pair[1]);
-   my $new = "@".$pair[0]."(".$pair[1].")";   #sorry! cheap code ;p
-   return $new
+	$pair[1] = parseCmd($pair[1]);
+	my $new = "@".$pair[0]."(".$pair[1].")";	#sorry! cheap code ;p
+	return $new
 }
 
 sub bracket {
-   # Scans $text for @special keywords
+	# Scans $text for @special keywords
 
-   my ($text, $dbg) = @_;
-   my @brkt; my $i = 0;
+	my ($text, $dbg) = @_;
+	my @brkt; my $i = 0;
 
-   while ($text =~ /(\@)?($macroKeywords)?\s*\(\s*([^\)]+)\s*/g) {
-      my ($first, $second, $third) = ($1, $2, $3);
-      unless (defined $first && defined $second && !bracket($third, 1)) {
-         message "Bracket Detected: $text <-- HERE\n", "menu" if $dbg;
-         $brkt[$i] = 1
-      }
-      else {$brkt[$i] = 0}
-      $i++
-   }
+	while ($text =~ /(\@)?($macroKeywords)?\s*\(\s*([^\)]+)\s*/g) {
+		my ($first, $second, $third) = ($1, $2, $3);
+		unless (defined $first && defined $second && !bracket($third, 1)) {
+			message "Bracket Detected: $text <-- HERE\n", "menu" if $dbg;
+			$brkt[$i] = 1
+		}
+		else {$brkt[$i] = 0}
+		$i++
+	}
 
-   foreach my $e (@brkt) {
-      if ($e == 1) {return 1}
-   }
+	foreach my $e (@brkt) {
+		if ($e == 1) {return 1}
+	}
 
-   return 0
+	return 0
 }
 
 1;
