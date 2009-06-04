@@ -21,6 +21,8 @@ our ($rev) = q$Revision: 5939 $ =~ /(\d+)/;
 # constructor
 sub new {
 	my ($class, $name, $repeat, $lastname, $lastline) = @_;
+	
+	#$repeat = 1 unless ($repeat =~ /^\d+$/);
 	$repeat = 0 unless ($repeat && $repeat =~ /^\d+$/);
 	return unless defined $macro{$name};
 	my $self = {
@@ -162,6 +164,7 @@ sub scanLabels {
 # processes next line
 sub next {
 	my $self = $_[0];
+	
 #	unless ($self->{repeat}) {
 #		$self->{finished} = 1;
 #		return ""
