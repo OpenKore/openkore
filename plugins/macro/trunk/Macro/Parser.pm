@@ -7,6 +7,7 @@ use encoding 'utf8';
 require Exporter;
 our @ISA = qw(Exporter);
 our @EXPORT = qw(parseMacroFile parseCmd);
+our @EKSPORT_OK = qw(parseCmd);
 
 use Globals;
 use List::Util qw(max min sum);
@@ -24,17 +25,20 @@ sub parseMacroFile {
 	my ($file, $no_undef) = @_;
 	unless ($no_undef) {
 		undef %macro;
-		undef %automacro
+		undef %automacro;
+		undef @macro_block
 	}
 
 	my %block;
 	my $tempmacro = 0;
+	my $inBlock = 0;
 	open FILE, "<:utf8", $file or return 0;
 	foreach (<FILE>) {
+		s/(.*)[\s\t]+#.*$/$1/;   # remove last comments
 		s/^\s*#.*$//;      # remove comments
-		s/^\s*//;          # remove leading whitespaces
-		s/\s*[\r\n]?$//g;  # remove trailing whitespaces and eol
-		s/  +/ /g;         # trim down spaces
+		s/^\s*//;      # remove leading whitespaces
+		s/\s*[\r\n]?$//g;   # remove trailing whitespaces and eol
+		s/  +/ /g;      # trim down spaces
 		next unless ($_);
 
 		if (!%block && /{$/) {
@@ -44,6 +48,8 @@ sub parseMacroFile {
 				$macro{$value} = []
 			} elsif ($key eq 'automacro') {
 				%block = (name => $value, type => "auto")
+			} elsif ($key eq 'sub') {
+				%block = (name => $value, type => "sub")				
 			} else {
 				%block = (type => "bogus");
 				warning "$file: ignoring line '$_' (munch, munch, strange block)\n"
@@ -90,6 +96,31 @@ sub parseMacroFile {
 			}
 			next
 		}
+
+		if (%block && $block{type} eq "sub") {
+			if ($_ eq "}") {
+				if ($inBlock > 0) {
+				$macro_sub = $macro_sub.$_;
+				$inBlock--;
+				next
+				}
+				$macro_sub = "sub ".$block{name}." {".$macro_sub."}";
+				eval $macro_sub;
+				message "[macro] registering sub $block{name} ...\n", "menu";
+				push(@macro_block, $block{name});
+				undef %block, undef $macro_sub;
+				$inBlock = 0
+			} else {
+				if ($_ =~ /{$/) {$inBlock++}
+				if ($macro_sub eq "") {
+					$macro_sub = $_;
+				}
+				else {
+					$macro_sub = $macro_sub.$_;
+				}
+			}
+         next
+		}	
 		
 		if (%block && $block{type} eq "bogus") {
 			if ($_ eq "}") {undef %block}
@@ -162,6 +193,24 @@ sub parseKw {
 	return @pair
 }
 
+# parses all macro perl sub-routine found in the macro script
+sub parseSub {
+   #Taken from sub parseKw :D
+   my @full = $_[0] =~ /(?:^|\s+)(\w+)s*((s*(.*?)s*).*)$/i;
+   my @pair = ($full[0]);
+   my ($bracketed) = extract_bracketed ($full[1], '()');
+   return unless $bracketed;
+   push @pair, substr ($bracketed, 1, -1);
+
+   return unless @pair;
+
+   while ($pair[1] =~ /(?:^|\s+)(\w+)\s*\(/) {
+      @pair = parseSub ($pair[1])
+   }
+
+   return @pair
+}
+
 # substitute variables
 sub subvars {
 # should be working now
@@ -190,7 +239,7 @@ sub subvars {
 sub parseCmd {
 	return "" unless defined $_[0];
 	my $cmd = $_[0];
-	my ($kw, $arg, $targ, $ret);
+	my ($kw, $arg, $targ, $ret, $sub, $val);
 
 	# refresh global vars only once per command line
 	refreshGlobal();
@@ -236,6 +285,17 @@ sub parseCmd {
 		}
 	}
 
+   # any round bracket(pair) found after parseKw sub-routine were treated as macro perl sub-routine
+   undef $ret; undef $arg;
+   while (($sub, $val) = parseSub($cmd)) {
+      $arg = subvars($val);
+      my $sub1 = $sub."(".$arg.")";
+      $ret = eval($sub1);
+      return unless defined $ret;
+      $val = q4rx $val;      
+      $cmd =~ s/$sub\s*\(\s*$val\s*\)/$ret/g
+   }	
+	
 	$cmd = subvars($cmd);
 	return $cmd
 }

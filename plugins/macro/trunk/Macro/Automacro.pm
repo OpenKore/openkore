@@ -6,7 +6,7 @@ use strict;
 require Exporter;
 our @ISA = qw(Exporter);
 our @EXPORT_OK = qw(releaseAM lockAM automacroCheck consoleCheckWrapper);
-our @EXPORT = qw(checkVar checkVarVar checkLoc checkLevel checkLevel checkClass
+our @EXPORT = qw(checkLocalTime checkVar checkVarVar checkLoc checkPersonGuild checkLevel checkLevel checkClass
 	checkPercent checkStatus checkItem checkPerson checkCond checkCast
 	checkEquip checkMsg checkMonster checkAggressives checkConsole checkMapChange
 	checkNotMonster);
@@ -33,11 +33,8 @@ sub checkVar {
 
 	refreshGlobal($var);
 
-	if (exists $varStack{$var}) {
-		return cmpr($varStack{$var}, $cond, $val)
-	} else {
-		return $cond eq "!="
-	}
+	if (exists $varStack{$var}) {return cmpr($varStack{$var}, $cond, $val)}
+	else {return $cond eq "!="}
 }
 
 # checks for location ######################################
@@ -75,40 +72,163 @@ sub checkLoc {
 	return $not?1:0
 }
 
+# check for pc local time
+sub checkLocalTime {
+	my ($cond, $hr, $min) = $_[0] =~ /([<>=!]+)?\s*(\d{2})?:(\d{2})?$/;
+	return 0 if $cond eq "" || $hr eq "" || $min eq "";
+
+	my $time = $hr * 3600 + $min * 60;
+	my (undef, $lc_min, $lc_hr) = localtime;
+	my $lc_time = $lc_hr * 3600 + $lc_min * 60;
+
+	return cmpr($lc_time, $cond, $time)?1:0;
+}
+
+# check for ($playersList guild) vs (guild.txt or guild list)
+sub checkPersonGuild {
+	my ($guild, $trigger, $arg) = @_;
+	return 0 if !defined $guild || !defined $trigger || !defined $arg;
+   
+	my $actor;
+   
+	if ($trigger eq 'charNameUpdate') {$actor = $arg}
+	else {$actor = $arg->{player}}
+   
+	return 0 unless defined $actor->{guild};
+	my $guildName = $actor->{guild}{name};
+	my $dist = $config{clientSight};
+
+	my $not = 0;
+	if ($guild =~ /^not\s+/) {$not = 1; $guild =~ s/^not +//g}
+	if ($guild =~ /(^.*),\s*(\d+)\s*$/) {$guild = $1; $dist = $2}
+   
+	return 0 unless (distance(calcPosition($char), calcPosition($actor)) <= $dist);
+   
+	$varStack{".lastPlayerID"} = undef;
+	$varStack{".lastGuildName"} = undef;
+	$varStack{".lastGuildNameBinID"} = undef;
+	$varStack{".lastGuildNameBinIDDist"} = undef;
+	$varStack{".lastGuildNameBinIDName"} = undef;
+	$varStack{".lastGuildNameBinIDJobName"} = undef;
+
+   
+	if ($guild eq 'guild.txt') {
+		my @gld;
+		if (open(FILE, "<", Settings::getControlFilename("guild.txt"))) {
+			while (<FILE>) {
+				$_ =~ s/\x{FEFF}//g;
+				chomp($_);
+				next if ($_ =~ /^[\n\r#]/);
+				$_ =~ /^(.*)$/; $_ =~ s/\s+$//; $_ =~ s/^\s+//;
+				push @gld, $_;
+				#$guild = $guild .',' unless ($guild eq ''); #$guild = $guild . $_;
+			}
+			close FILE;
+		}
+		if (@gld) {$guild = join(' , ', @gld)}
+		else {$guild = ''}
+	}
+	   
+	if (defined $guild && existsInList($guild, $guildName)) {
+		return 0 if $not;
+		$varStack{".lastPlayerID"} = unpack("V1", $actor->{ID});
+		$varStack{".lastGuildName"} = $guildName;
+		$varStack{".lastGuildNameBinID"} = $actor->{binID};
+		$varStack{".lastGuildNameBinIDDist"} = sprintf("%.1f", distance(calcPosition($char), calcPosition($actor)));
+		$varStack{".lastGuildNameBinIDName"} = $actor->{name};
+		$varStack{".lastGuildNameBinIDJobName"} = $jobs_lut{$actor->{jobID}};
+		return 1
+	}
+	elsif (defined $guild && $not) {
+		$varStack{".lastPlayerID"} = unpack("V1", $actor->{ID});
+		$varStack{".lastGuildName"} = $guildName;
+		$varStack{".lastGuildNameBinID"} = $actor->{binID};
+		$varStack{".lastGuildNameBinIDDist"} = sprintf("%.1f", distance(calcPosition($char), calcPosition($actor)));
+		$varStack{".lastGuildNameBinIDName"} = $actor->{name};
+		$varStack{".lastGuildNameBinIDJobName"} = $jobs_lut{$actor->{jobID}};
+		return 1;
+	}
+
+   return 0
+}
+
+
 # checks for base/job level ################################
 # uses cmpr (Macro::Utils)
 sub checkLevel {
-	my ($cond, $level) = $_[0] =~ /([<>=!]+)\s*(\d+)/;
+	my ($cond, $level) = $_[0] =~ /([<>=!]+)\s*(\$[a-zA-Z][a-zA-Z\d]*|\d+|\d+\s*\.{2}\s*\d+)\s*$/;
+	if ($level =~ /^\s*\$/) {
+		my ($var) = $level =~ /^\$([a-zA-Z][a-zA-Z\d]*)\s*$/;
+		return 0 unless defined $var;
+		if (exists $varStack{$var}) {$level = $varStack{$var}}
+		else {return 0}
+	}
 	return cmpr($char->{$_[1]}, $cond, $level)
 }
 
 # checks for player's jobclass #############################
 sub checkClass {
 	return 0 unless defined $char->{jobID};
-	return lc($_[0]) eq lc($::jobs_lut{$char->{jobID}})?1:0
+	my $class = $_[0];
+	if ($class =~ /^\s*\$/) {
+		my ($var) = $class =~ /^\$([a-zA-Z][a-zA-Z\d]*)\s*$/;
+		return 0 unless defined $var;
+		if (exists $varStack{$var}) {$class = $varStack{$var}}
+		else {return 0}
+	}
+	return lc($class) eq lc($::jobs_lut{$char->{jobID}})?1:0
 }
 
 # checks for HP/SP/Weight ##################################
 # uses cmpr (Macro::Utils)
 sub checkPercent {
 	my ($arg, $what) = @_;
-	my ($cond, $amount) = $arg =~ /([<>=!]+)\s*(\d+%?)/;
+	my ($cond, $amount) = $arg =~ /([<>=!]+)\s*(\$[a-zA-Z][a-zA-Z\d]*%?|\d+%?|\d+\s*\.{2}\s*\d+%?)\s*$/;
 	if ($what =~ /^(?:hp|sp|weight)$/) {
 		return 0 unless (defined $char->{$what} && defined $char->{$what."_max"});
-		if ($amount =~ /\d+%$/ && $char->{$what."_max"}) {
+		if ($amount =~ /^\s*(?:\d+|\d+\s*\.{2}\s*\d+)%$/ && $char->{$what."_max"}) {
 			$amount =~ s/%$//;
 			return cmpr(($char->{$what} / $char->{$what."_max"} * 100), $cond, $amount)
-		} else {
-			return cmpr($char->{$what}, $cond, $amount)
 		}
-	} elsif ($what eq 'cweight') {
-		return 0 unless (defined $cart{weight} && defined $cart{weight_max});
-		if ($amount =~ /\d+%$/ && $cart{weight_max}) {
-			$amount =~ s/%$//;
-			return cmpr(($cart{weight} / $cart{weight_max} * 100), $cond, $amount)
-		} else {
-			return cmpr($cart{weight}, $cond, $amount)
+		elsif ($amount =~ /^\s*\$/) {
+			my ($var, $percent) = $amount =~ /^\$([a-zA-Z][a-zA-Z\d]*)(%)?\s*/;
+			return 0 unless defined $var;
+			if ((defined $percent || $percent eq "%") && defined $char->{$what."_max"}) {
+				if (exists $varStack{$var}) {
+					$amount = $varStack{$var};
+					return cmpr(($char->{$what} / $char->{$what."_max"} * 100), $cond, $amount)
+				}
+			} else {
+				if (exists $varStack{$var}) {
+					$amount = $varStack{$var};
+					return cmpr($char->{$what}, $cond, $amount)
+				}
+			}
 		}
+		else {return cmpr($char->{$what}, $cond, $amount)}
+	}
+	elsif ($what eq 'cweight') {
+			return 0 unless (defined $cart{weight} && defined $cart{weight_max});
+			if ($amount =~ /^\s*(?:\d+|\d+\s*\.{2}\s*\d+)%$/ && $cart{weight_max}) {
+				$amount =~ s/%$//;
+				return cmpr(($cart{weight} / $cart{weight_max} * 100), $cond, $amount)
+			}
+			elsif ($amount =~ /^\s*\$/) {
+				my ($var, $percent) = $amount =~ /^\$([a-zA-Z][a-zA-Z\d]*)(%)?\s*/;
+				return 0 unless defined $var;
+				if ((defined $percent || $percent eq "%") && defined $cart{weight_max}) {
+					if (exists $varStack{$var}) {
+						$amount = $varStack{$var};
+						return cmpr(($cart{weight} / $cart{weight_max} * 100), $cond, $amount)
+					}
+				} else {
+					if (exists $varStack{$var}) {
+					   $amount = $varStack{$var};
+					   return cmpr($cart{weight}, $cond, $amount)
+					}
+				}
+			}
+		else {return cmpr($cart{weight}, $cond, $amount)}		
 	}
 	return 0
 }
@@ -142,17 +262,23 @@ sub checkItem {
 		return 0
 	}
 	my ($item, $cond, $amount) = getArgs($check);
+	if ($item =~ /^\$/) {
+		my ($var) = $item =~ /^\$([a-zA-Z][a-zA-Z\d]*)\s*/;
+		return 0 unless defined $var;
+		if (exists $varStack{$var}) {$item = $varStack{$var}}
+		else {return 0}
+	}
+	if ($amount =~ /^\$/) {
+		my ($var1) = $amount =~ /^\$([a-zA-Z][a-zA-Z\d]*)\s*/;
+		return 0 unless defined $var1;
+		if (exists $varStack{$var1}) {$amount = $varStack{$var1}}
+		else {return 0}
+	}	
 	my $what;
 	if ($where eq 'inv')  {$what = getInventoryAmount($item)}
 	if ($where eq 'cart') {$what = getCartAmount($item)}
-	if ($where eq 'shop') {
-		return 0 unless $shopstarted;
-		$what = getShopAmount($item)
-	}
-	if ($where eq 'stor') {
-		return 0 unless $::storage{opened};
-		$what = getStorageAmount($item)
-	}
+	if ($where eq 'shop') {return 0 unless $shopstarted; $what = getShopAmount($item)}
+	if ($where eq 'stor') {return 0 unless $::storage{opened}; $what = getStorageAmount($item)}
 	return cmpr($what, $cond, $amount)?1:0
 }
 
@@ -173,7 +299,13 @@ sub checkPerson {
 # checks arg1 for condition in arg3 #######################
 # uses: cmpr (Macro::Utils)
 sub checkCond {
-	my ($cond, $amount) = $_[1] =~ /([<>=!]+)\s*(\d+)/;
+	my ($cond, $amount) = $_[1] =~ /([<>=!]+)\s*(\$[a-zA-Z][a-zA-Z\d]*|\d+|\d+\s*\.{2}\s*\d+)\s*$/;
+	if ($amount =~ /^\s*\$/) {
+		my ($var) = $amount =~ /^\$([a-zA-Z][a-zA-Z\d]*)\s*$/;
+		return 0 unless defined $var;
+		if (exists $varStack{$var}) {$amount = $varStack{$var}}
+		else {return 0}
+	}
 	return cmpr($_[0], $cond, $amount)?1:0
 }
 
@@ -208,16 +340,86 @@ sub checkEquip {
 
 # checks for a spell casted on us #########################
 # uses: distance, judgeSkillArea (Utils?)
+#sub checkCast {
+#   my ($cast, $args) = @_;
+#   $cast = lc($cast);
+#   my $pos = calcPosition($char);
+#   return 0 if $args->{sourceID} eq $accountID;
+#   my $target = (defined $args->{targetID})?$args->{targetID}:0;
+#   if (($target eq $accountID ||
+#      ($pos->{x} == $args->{x} && $pos->{y} == $args->{y}) ||
+#      distance($pos, $args) <= judgeSkillArea($args->{skillID})) &&
+#      existsInList($cast, lc(Skill->new(idn => $args->{skillID})->getName()))) {return 1}
+#   return 0
+#}
 sub checkCast {
 	my ($cast, $args) = @_;
 	$cast = lc($cast);
 	my $pos = calcPosition($char);
 	return 0 if $args->{sourceID} eq $accountID;
 	my $target = (defined $args->{targetID})?$args->{targetID}:0;
-	if (($target eq $accountID ||
-		($pos->{x} == $args->{x} && $pos->{y} == $args->{y}) ||
-		distance($pos, $args) <= judgeSkillArea($args->{skillID})) &&
-		existsInList($cast, lc(Skill->new(idn => $args->{skillID})->getName()))) {return 1}
+	my $source = $args->{sourceID};
+	return 0 if $target eq $source;
+
+	if (($target eq $accountID || ($pos->{x} == $args->{x} && $pos->{y} == $args->{y}) || distance($pos, $args) <= judgeSkillArea($args->{skillID})) && existsInList($cast, lc(Skill->new(idn => $args->{skillID})->getName()))) {
+	  
+		if (my $actor = $monstersList->getByID($source)) {
+			$varStack{".caster"} = "monster";
+			$varStack{".casterName"} = $actor->{name};
+			$varStack{".casterID"} = $actor->{binID};
+			$varStack{".casterLoc"} = "$actor->{pos_to}{x}" . " $actor->{pos_to}{y}";
+			$varStack{".casterDist"} = sprintf("%.1f", distance($pos, calcPosition($actor)))
+
+		} elsif (my $actor = $playersList->getByID($source)) {
+			$varStack{".caster"} = "player";
+			$varStack{".casterName"} = (defined $actor->{name})?$actor->{name}:"Unknown";
+			$varStack{".casterID"} = $actor->{binID};
+			$varStack{".casterLoc"} = "$actor->{pos_to}{x}" . " $actor->{pos_to}{y}";
+			$varStack{".casterDist"} = sprintf("%.1f", distance($pos, calcPosition($actor)));
+
+		} else {return 0}
+
+		$varStack{".casterSkill"} = Skill->new(idn => $args->{skillID})->getName();
+		if (($args->{x} == 0) && ($args->{y} == 0)) {$varStack{".casterTarget"} = "You"}
+		else {$varStack{".casterTarget"} = "$args->{x}" . " $args->{y}"}
+		return 1
+
+	} elsif (existsInList($cast, lc(Skill->new(idn => $args->{skillID})->getName()))) {
+		return 0 if !$char->{'party'} || !%{$char->{'party'}};
+		if (my $actor = $monstersList->getByID($source)) {
+			foreach my Actor::Player $player (@{$playersList->getItems()}) {
+				return 0 unless $player->{'party'}{'name'} eq $char->{'party'}{'name'};
+				if ($target eq $player->{ID} || ($player->{pos_to}{x} == $args->{x} && $player->{pos_to}{y} == $args->{y}) || distance($player->{pos}, $args) <= judgeSkillArea($args->{skillID})) {
+					$varStack{".caster"} = "monster";
+					$varStack{".casterName"} = $actor->{name};
+					$varStack{".casterID"} = $actor->{binID};
+					$varStack{".casterLoc"} = "$actor->{pos_to}{x}" . " $actor->{pos_to}{y}";
+					$varStack{".casterSkill"} = Skill->new(idn => $args->{skillID})->getName();
+					$varStack{".casterTarget"} = "$args->{x}" . " $args->{y}";
+					$varStack{".casterDist"} = sprintf("%.1f", distance($pos, calcPosition($actor)));
+					return 1
+				}
+			}
+
+		} elsif (my $actor = $playersList->getByID($source)) {
+			my $actor_party = (exists $actor->{'party'})?$actor->{'party'}{'name'}:"";
+			return 0 if $actor_party eq $char->{'party'}{'name'};
+			foreach my Actor::Player $player (@{$playersList->getItems()}) {
+				my $player_party = (exists $player->{'party'})?$player->{'party'}{'name'}:"";
+				return 0 unless $player_party eq $char->{'party'}{'name'};
+				if ($target eq $player->{ID} || ($player->{pos_to}{x} == $args->{x} && $player->{pos_to}{y} == $args->{y}) || distance($player->{pos}, $args) <= judgeSkillArea($args->{skillID})) {
+					$varStack{".caster"} = "player";
+					$varStack{".casterName"} = (defined $actor->{name})?$actor->{name}:"Unknown";
+					$varStack{".casterID"} = $actor->{binID};
+					$varStack{".casterLoc"} = "$actor->{pos_to}{x}" . " $actor->{pos_to}{y}";
+					$varStack{".casterSkill"} = Skill->new(idn => $args->{skillID})->getName();
+					$varStack{".casterTarget"} = "$args->{x}" . " $args->{y}";
+					$varStack{".casterDist"} = sprintf("%.1f", distance($pos, calcPosition($actor)));
+					return 1
+				}
+			}
+		} else {return 0}
+	}
 	return 0
 }
 
@@ -260,37 +462,109 @@ sub checkMsg {
 	return 0
 }
 
-# checks for monster, credits to illusionist
+# checks for monster ...
 sub checkMonster {
-	my $monsterList = $_[0];
+	my $line = $_[0];
+	my ($not, $mercenary, $use, $monsterList, $cond);
+	my $mondist = $config{clientSight} || 20;
+
+	if ($line =~ /^\s*(.*),?\s+([<>=!~]+)\s+(\d+|\d+\s+.{2}\s+\d+)\s*$/) {
+		($monsterList, $cond, $mondist) = ($1, $2, $3)
+	} else {
+		$monsterList = $line;
+		$cond = "<="
+	}
+
+	if ($monsterList =~ /^(not|mercenary)\s+(.*)\s*$/) {
+		if ($1 eq "not") {$not = 1; $monsterList = $2}
+		else {$mercenary = 1; $use = 1; $monsterList = $2}
+	}
+
 	foreach (@monstersID) {
 		next unless defined $_;
-		if (existsInList($monsterList, $monsters{$_}->{name})) {
+		if ($mercenary) {
+			#Whose the mercenary's master,
+			#update later ;p
+			my $mypos = calcPosition($char);
 			my $pos = calcPosition($monsters{$_});
-			my $val = sprintf("%d %d %s", $pos->{x}, $pos->{y}, $field->name);
+			my $dist = sprintf("%.1f",distance($pos, $mypos));
+			if (existsInList($monsterList, $monsters{$_}->{name}) && $dist < 3) {$use = 0; last}      
+		}
+		elsif ($not) {
+			next if existsInList($monsterList, $monsters{$_}->{name});
+			my $mypos = calcPosition($char);
+			my $pos = calcPosition($monsters{$_});
+			my $dist = sprintf("%.1f",distance($pos, $mypos));
+			my $val = sprintf("%d %d %s", $pos->{x}, $pos->{y}, $field->{name});
 			$varStack{".lastMonster"} = $monsters{$_}->{name};
 			$varStack{".lastMonsterPos"} = $val;
-			return 1
+			$varStack{".lastMonsterDist"} = $dist;
+			$varStack{".lastMonsterID"} = $monsters{$_}->{binID};
+			return cmpr($dist, $cond, $mondist)
+		} else {
+			if (existsInList($monsterList, $monsters{$_}->{name})) {
+				my $counter;
+				my $mypos = calcPosition($char);
+				my $pos = calcPosition($monsters{$_});
+				my $dist = sprintf("%.1f", distance($mypos, $pos));
+				my $val = sprintf("%d %d %s", $pos->{x}, $pos->{y}, $field->{name});
+				$varStack{".lastMonster"} = $monsters{$_}->{name};
+				$varStack{".lastMonsterPos"} = $val;
+				$varStack{".lastMonsterDist"} = $dist;
+				$varStack{".lastMonsterID"} = $monsters{$_}->{binID};
+				for (my $i = 0; $i < @::monstersID; $i++) {
+					   next if $::monstersID[$i] eq "";
+					   my $monster = Actor::get($::monstersID[$i]);
+					   if ($monster->name eq $monsters{$_}->{name}) {
+							  if ($monster->{binID} eq $monsters{$_}->{binID}) {
+									 $counter++;
+									 next
+							  } else {
+									 my $monsToMonDist = sprintf("%.1f",distance($pos, $monster->{pos_to}));
+									 $counter++ if $monsToMonDist < 12;
+									 next
+							  }
+					   }
+					   next
+				}
+				$varStack{".lastMonsterCount"} = $counter;
+				return cmpr($dist, $cond, $mondist)
+			}
 		}
 	}
+	return 1 if ($use);	
 	return 0
 }
 
 # checks for forbidden monster
 # quick hack, maybe combine it with checkMonster later
 sub checkNotMonster {
+	my $mondist = $config{clientSight};
 	my $monsterList = $_[0];
+	if ($monsterList =~ /,\s+\d+\s*$/) {
+		$mondist = $monsterList =~ /,\s+(\d+)\s*$/;
+		$monsterList = s/, +\d+\s*$//g;
+	}	
 	foreach (@monstersID) {
 		next unless defined $_;
 		next if existsInList($monsterList, $monsters{$_}->{name});
-		return 1
+	  my $mypos = calcPosition($char);
+	  my $pos = calcPosition($monsters{$_});
+	  my $dist = sprintf("%.1f",distance($pos, $mypos));
+	  return $dist <= $mondist ?1:0
 	}
 	return 0
 }
 
 # checks for aggressives
 sub checkAggressives {
-	my ($cond, $amount) = $_[0] =~ /([<>=!]+)\s*(\d+)/;
+	my ($cond, $amount) = $_[0] =~ /([<>=!]+)\s*(\$[a-zA-Z][a-zA-Z\d]*|\d+|\d+\s*\.{2}\s*\d+)\s*$/;
+	if ($amount =~ /^\s*\$/) {
+		  my ($var) = $amount =~ /^\$([a-zA-Z][a-zA-Z\d]*)\s*$/;
+		  return 0 unless defined $var;
+		if (exists $varStack{$var}) {$amount = $varStack{$var}}
+		else {return 0}
+	}
 	return cmpr(scalar ai_getAggressives, $cond, $amount)
 }
 
@@ -322,6 +596,11 @@ sub checkMapChange {
 
 # checks for eval
 sub checkEval {
+	if ($_[0] =~ /;/) {
+		my @eval = split(/\s*;\s*/, $_[0]);
+		foreach my $e (@eval) {return 1 if checkEval($e)}
+		return 0
+	}
 	return eval $_[0];
 }
 
@@ -431,6 +710,10 @@ sub automacroCheck {
 			if ($trigger eq 'packet_mapChange') {
 			next CHKAM unless checkMapChange($automacro{$am}->{mapchange})
 			} else {next CHKAM}
+		} elsif (defined $automacro{$am}->{playerguild}) {
+			if (($trigger eq 'player') || ($trigger eq 'charNameUpdate')) {
+			next CHKAM unless checkPersonGuild($automacro{$am}->{playerguild},$trigger,$args)
+			} else {next CHKAM}			
 		}
 
 		next CHKAM if (defined $automacro{$am}->{map}    && $automacro{$am}->{map} ne $field->name);
@@ -441,6 +724,7 @@ sub automacroCheck {
 		foreach my $i (@{$automacro{$am}->{monster}})    {next CHKAM unless checkMonster($i)}
 		foreach my $i (@{$automacro{$am}->{aggressives}}){next CHKAM unless checkAggressives($i)}
 		foreach my $i (@{$automacro{$am}->{location}})   {next CHKAM unless checkLoc($i)}
+		foreach my $i (@{$automacro{$am}->{localtime}})  {next CHKAM unless checkLocalTime($i, "")}
 		foreach my $i (@{$automacro{$am}->{var}})        {next CHKAM unless checkVar($i, "")}
 		foreach my $i (@{$automacro{$am}->{varvar}})     {next CHKAM unless checkVar($i, "varvar")}
 		foreach my $i (@{$automacro{$am}->{base}})       {next CHKAM unless checkLevel($i, "lv")}

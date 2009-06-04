@@ -5,13 +5,16 @@ use strict;
 
 require Exporter;
 our @ISA = qw(Exporter);
-our @EXPORT = qw(%macro %automacro %varStack $queue $onHold %amSingle %amMulti $macroKeywords);
+our @EXPORT = qw(@macro_block $macro_sub $inBlock %macro %automacro %varStack $queue $onHold %amSingle %amMulti $macroKeywords);
 
+our @macro_block;
+our $macro_sub;
 our %macro;
 our %automacro;
 our %varStack;
 our $queue;
 our $onHold;
+our $inBlock;
 
 our %amSingle = (
 	'map' => 1,          # map check
@@ -34,8 +37,9 @@ our %amSingle = (
 	'macro_delay' => 1,  # option: default macro delay
 	'hook' => 1,         # check: openkore hook
 	'priority' => 1,     # option: automacro priority
-	'exclusive' => 1,     # option: is macro interruptible
-	'eval' => 1	     # check : eval 
+	'exclusive' => 1,    # option: is macro interruptible
+	'playerguild' => 1,  # check: player guilds
+	'eval' => 1          # check : eval
 	
 );
 
@@ -63,6 +67,7 @@ our %amMulti = (
 	'storage' => 1,      # check: item amount in storage
 	'shop' => 1,         # check: item amount in shop
 	'cart' => 1          # check: item amount in cart
+	'localtime' => 1     # check: localtime
 );
 
 our $macroKeywords =
@@ -86,6 +91,7 @@ our $macroKeywords =
 	"eval"         . "|" .
 	"arg"          . "|" .
 	"listitem"     . "|" .
+	"pm"           . "|" .	
 	"listlenght"
 ;
 
