@@ -88,12 +88,12 @@ sub checkLocalTime {
 sub checkPersonGuild {
 	my ($guild, $trigger, $arg) = @_;
 	return 0 if !defined $guild || !defined $trigger || !defined $arg;
-   
+	
 	my $actor;
-   
+	
 	if ($trigger eq 'charNameUpdate') {$actor = $arg}
 	else {$actor = $arg->{player}}
-   
+	
 	return 0 unless defined $actor->{guild};
 	my $guildName = $actor->{guild}{name};
 	my $dist = $config{clientSight};
@@ -101,9 +101,9 @@ sub checkPersonGuild {
 	my $not = 0;
 	if ($guild =~ /^not\s+/) {$not = 1; $guild =~ s/^not +//g}
 	if ($guild =~ /(^.*),\s*(\d+)\s*$/) {$guild = $1; $dist = $2}
-   
+	
 	return 0 unless (distance(calcPosition($char), calcPosition($actor)) <= $dist);
-   
+	
 	$varStack{".lastPlayerID"} = undef;
 	$varStack{".lastGuildName"} = undef;
 	$varStack{".lastGuildNameBinID"} = undef;
@@ -111,7 +111,7 @@ sub checkPersonGuild {
 	$varStack{".lastGuildNameBinIDName"} = undef;
 	$varStack{".lastGuildNameBinIDJobName"} = undef;
 
-   
+	
 	if ($guild eq 'guild.txt') {
 		my @gld;
 		if (open(FILE, "<", Settings::getControlFilename("guild.txt"))) {
@@ -124,11 +124,11 @@ sub checkPersonGuild {
 				#$guild = $guild .',' unless ($guild eq ''); #$guild = $guild . $_;
 			}
 			close FILE;
-		}
-		if (@gld) {$guild = join(' , ', @gld)}
-		else {$guild = ''}
-	}
-	   
+        	}
+        	if (@gld) {$guild = join(' , ', @gld)}
+        	else {$guild = ''}
+        }
+        
 	if (defined $guild && existsInList($guild, $guildName)) {
 		return 0 if $not;
 		$varStack{".lastPlayerID"} = unpack("V1", $actor->{ID});
@@ -149,9 +149,8 @@ sub checkPersonGuild {
 		return 1;
 	}
 
-   return 0
+	return 0
 }
-
 
 # checks for base/job level ################################
 # uses cmpr (Macro::Utils)
@@ -189,7 +188,7 @@ sub checkPercent {
 		if ($amount =~ /^\s*(?:\d+|\d+\s*\.{2}\s*\d+)%$/ && $char->{$what."_max"}) {
 			$amount =~ s/%$//;
 			return cmpr(($char->{$what} / $char->{$what."_max"} * 100), $cond, $amount)
-		}
+		} 
 		elsif ($amount =~ /^\s*\$/) {
 			my ($var, $percent) = $amount =~ /^\$([a-zA-Z][a-zA-Z\d]*)(%)?\s*/;
 			return 0 unless defined $var;
@@ -208,27 +207,27 @@ sub checkPercent {
 		else {return cmpr($char->{$what}, $cond, $amount)}
 	}
 	elsif ($what eq 'cweight') {
-			return 0 unless (defined $cart{weight} && defined $cart{weight_max});
-			if ($amount =~ /^\s*(?:\d+|\d+\s*\.{2}\s*\d+)%$/ && $cart{weight_max}) {
-				$amount =~ s/%$//;
-				return cmpr(($cart{weight} / $cart{weight_max} * 100), $cond, $amount)
-			}
-			elsif ($amount =~ /^\s*\$/) {
-				my ($var, $percent) = $amount =~ /^\$([a-zA-Z][a-zA-Z\d]*)(%)?\s*/;
-				return 0 unless defined $var;
-				if ((defined $percent || $percent eq "%") && defined $cart{weight_max}) {
-					if (exists $varStack{$var}) {
-						$amount = $varStack{$var};
-						return cmpr(($cart{weight} / $cart{weight_max} * 100), $cond, $amount)
-					}
-				} else {
-					if (exists $varStack{$var}) {
-					   $amount = $varStack{$var};
-					   return cmpr($cart{weight}, $cond, $amount)
-					}
+		return 0 unless (defined $cart{weight} && defined $cart{weight_max});
+		if ($amount =~ /^\s*(?:\d+|\d+\s*\.{2}\s*\d+)%$/ && $cart{weight_max}) {
+			$amount =~ s/%$//;
+			return cmpr(($cart{weight} / $cart{weight_max} * 100), $cond, $amount)
+		}
+		elsif ($amount =~ /^\s*\$/) {
+			my ($var, $percent) = $amount =~ /^\$([a-zA-Z][a-zA-Z\d]*)(%)?\s*/;
+			return 0 unless defined $var;
+			if ((defined $percent || $percent eq "%") && defined $cart{weight_max}) {
+				if (exists $varStack{$var}) {
+					$amount = $varStack{$var};
+					return cmpr(($cart{weight} / $cart{weight_max} * 100), $cond, $amount)
+				}
+			} else {
+				if (exists $varStack{$var}) {
+					$amount = $varStack{$var};
+					return cmpr($cart{weight}, $cond, $amount)
 				}
 			}
-		else {return cmpr($cart{weight}, $cond, $amount)}		
+		}
+		else {return cmpr($cart{weight}, $cond, $amount)}
 	}
 	return 0
 }
@@ -249,7 +248,6 @@ sub checkStatus {
 	}
 	return $not?1:0
 }
-
 
 # checks for item conditions ##############################
 # uses: getInventoryAmount, getCartAmount, getShopAmount,
@@ -273,12 +271,13 @@ sub checkItem {
 		return 0 unless defined $var1;
 		if (exists $varStack{$var1}) {$amount = $varStack{$var1}}
 		else {return 0}
-	}	
+	}
 	my $what;
 	if ($where eq 'inv')  {$what = getInventoryAmount($item)}
 	if ($where eq 'cart') {$what = getCartAmount($item)}
 	if ($where eq 'shop') {return 0 unless $shopstarted; $what = getShopAmount($item)}
 	if ($where eq 'stor') {return 0 unless $::storage{opened}; $what = getStorageAmount($item)}
+
 	return cmpr($what, $cond, $amount)?1:0
 }
 
@@ -341,16 +340,16 @@ sub checkEquip {
 # checks for a spell casted on us #########################
 # uses: distance, judgeSkillArea (Utils?)
 #sub checkCast {
-#   my ($cast, $args) = @_;
-#   $cast = lc($cast);
-#   my $pos = calcPosition($char);
-#   return 0 if $args->{sourceID} eq $accountID;
-#   my $target = (defined $args->{targetID})?$args->{targetID}:0;
-#   if (($target eq $accountID ||
-#      ($pos->{x} == $args->{x} && $pos->{y} == $args->{y}) ||
-#      distance($pos, $args) <= judgeSkillArea($args->{skillID})) &&
-#      existsInList($cast, lc(Skill->new(idn => $args->{skillID})->getName()))) {return 1}
-#   return 0
+#	my ($cast, $args) = @_;
+#	$cast = lc($cast);
+#	my $pos = calcPosition($char);
+#	return 0 if $args->{sourceID} eq $accountID;
+#	my $target = (defined $args->{targetID})?$args->{targetID}:0;
+#	if (($target eq $accountID ||
+#		($pos->{x} == $args->{x} && $pos->{y} == $args->{y}) ||
+#		distance($pos, $args) <= judgeSkillArea($args->{skillID})) &&
+#		existsInList($cast, lc(Skill->new(idn => $args->{skillID})->getName()))) {return 1}
+#	return 0
 #}
 sub checkCast {
 	my ($cast, $args) = @_;
@@ -362,7 +361,7 @@ sub checkCast {
 	return 0 if $target eq $source;
 
 	if (($target eq $accountID || ($pos->{x} == $args->{x} && $pos->{y} == $args->{y}) || distance($pos, $args) <= judgeSkillArea($args->{skillID})) && existsInList($cast, lc(Skill->new(idn => $args->{skillID})->getName()))) {
-	  
+		
 		if (my $actor = $monstersList->getByID($source)) {
 			$varStack{".caster"} = "monster";
 			$varStack{".casterName"} = $actor->{name};
@@ -488,8 +487,7 @@ sub checkMonster {
 			my $mypos = calcPosition($char);
 			my $pos = calcPosition($monsters{$_});
 			my $dist = sprintf("%.1f",distance($pos, $mypos));
-			if (existsInList($monsterList, $monsters{$_}->{name}) && $dist < 3) {$use = 0; last}      
-		}
+			if (existsInList($monsterList, $monsters{$_}->{name}) && $dist < 3) {$use = 0; last}		}
 		elsif ($not) {
 			next if existsInList($monsterList, $monsters{$_}->{name});
 			my $mypos = calcPosition($char);
@@ -513,26 +511,26 @@ sub checkMonster {
 				$varStack{".lastMonsterDist"} = $dist;
 				$varStack{".lastMonsterID"} = $monsters{$_}->{binID};
 				for (my $i = 0; $i < @::monstersID; $i++) {
-					   next if $::monstersID[$i] eq "";
-					   my $monster = Actor::get($::monstersID[$i]);
-					   if ($monster->name eq $monsters{$_}->{name}) {
-							  if ($monster->{binID} eq $monsters{$_}->{binID}) {
-									 $counter++;
-									 next
-							  } else {
-									 my $monsToMonDist = sprintf("%.1f",distance($pos, $monster->{pos_to}));
-									 $counter++ if $monsToMonDist < 12;
-									 next
-							  }
-					   }
-					   next
+					next if $::monstersID[$i] eq "";
+					my $monster = Actor::get($::monstersID[$i]);
+					if ($monster->name eq $monsters{$_}->{name}) {
+						if ($monster->{binID} eq $monsters{$_}->{binID}) {
+							$counter++;
+							next
+						} else {
+							my $monsToMonDist = sprintf("%.1f",distance($pos, $monster->{pos_to}));
+							$counter++ if $monsToMonDist < 12;
+							next
+						}
+					}
+					next
 				}
 				$varStack{".lastMonsterCount"} = $counter;
 				return cmpr($dist, $cond, $mondist)
 			}
 		}
 	}
-	return 1 if ($use);	
+	return 1 if ($use);
 	return 0
 }
 
@@ -544,14 +542,14 @@ sub checkNotMonster {
 	if ($monsterList =~ /,\s+\d+\s*$/) {
 		$mondist = $monsterList =~ /,\s+(\d+)\s*$/;
 		$monsterList = s/, +\d+\s*$//g;
-	}	
+	}
 	foreach (@monstersID) {
 		next unless defined $_;
 		next if existsInList($monsterList, $monsters{$_}->{name});
-	  my $mypos = calcPosition($char);
-	  my $pos = calcPosition($monsters{$_});
-	  my $dist = sprintf("%.1f",distance($pos, $mypos));
-	  return $dist <= $mondist ?1:0
+		my $mypos = calcPosition($char);
+		my $pos = calcPosition($monsters{$_});
+		my $dist = sprintf("%.1f",distance($pos, $mypos));
+		return $dist <= $mondist ?1:0
 	}
 	return 0
 }
@@ -560,14 +558,13 @@ sub checkNotMonster {
 sub checkAggressives {
 	my ($cond, $amount) = $_[0] =~ /([<>=!]+)\s*(\$[a-zA-Z][a-zA-Z\d]*|\d+|\d+\s*\.{2}\s*\d+)\s*$/;
 	if ($amount =~ /^\s*\$/) {
-		  my ($var) = $amount =~ /^\$([a-zA-Z][a-zA-Z\d]*)\s*$/;
-		  return 0 unless defined $var;
+		my ($var) = $amount =~ /^\$([a-zA-Z][a-zA-Z\d]*)\s*$/;
+		return 0 unless defined $var;
 		if (exists $varStack{$var}) {$amount = $varStack{$var}}
 		else {return 0}
 	}
 	return cmpr(scalar ai_getAggressives, $cond, $amount)
 }
-
 # checks for console message
 sub checkConsole {
 	my ($msg, $arg) = @_;
@@ -711,9 +708,9 @@ sub automacroCheck {
 			next CHKAM unless checkMapChange($automacro{$am}->{mapchange})
 			} else {next CHKAM}
 		} elsif (defined $automacro{$am}->{playerguild}) {
-			if (($trigger eq 'player') || ($trigger eq 'charNameUpdate')) {
+ 			if (($trigger eq 'player') || ($trigger eq 'charNameUpdate')) {
 			next CHKAM unless checkPersonGuild($automacro{$am}->{playerguild},$trigger,$args)
-			} else {next CHKAM}			
+			} else {next CHKAM}
 		}
 
 		next CHKAM if (defined $automacro{$am}->{map}    && $automacro{$am}->{map} ne $field->name);
