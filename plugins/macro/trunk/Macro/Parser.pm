@@ -108,7 +108,7 @@ sub parseMacroFile {
 				eval $macro_sub;
 				message "[macro] registering sub $block{name} ...\n", "menu";
 				push(@macro_block, $block{name});
-				undef %block, undef $macro_sub;
+				undef %block; undef $macro_sub;
 				$inBlock = 0
 			} else {
 				if ($_ =~ /{$/) {$inBlock++}
