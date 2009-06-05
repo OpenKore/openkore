@@ -106,7 +106,7 @@ sub parseMacroFile {
 					next
 				}
 				sub_execute($block{name}, $macro_sub);
-				push(@macro_block, $block{name});
+				push(@macro_block, $block{name}) unless Utils::existsInList(join(',', @macro_block), $block{name});
 				undef %block; undef $macro_sub;
 				$inBlock = 0
 			} else {
@@ -165,7 +165,7 @@ sub sub_execute {
 	Commands::run($run);		# exporting sub to the &main::sub, becarefull on your sub name
 					# dont name your new sub equal to any &main::sub, you should take
 					# the risk yourself.
-	message "[macro] registering sub $name ...\n", "menu"
+	message "[macro] registering sub $name ...\n", "menu";
 }
 
 # parses a text for keywords and returns keyword + argument as array

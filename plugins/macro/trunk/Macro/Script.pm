@@ -236,8 +236,10 @@ sub next {
 		$text = parseCmd($text, $self);
 		if (defined $self->{error}) {$self->{error} = "$errtpl: $self->{error}"; return}
 		my $savetxt = particle($text, $self, $errtpl);
-		if (multi($savetxt, $self, $errtpl)) {newThen($then, $self, $errtpl)}
-
+		if (multi($savetxt, $self, $errtpl)) {
+			newThen($then, $self, $errtpl);
+			if (defined $self->{error}) {$self->{error} = "$errtpl: $self->{error}"; return}
+		}
 		$self->{line}++;
 		$self->{timeout} = 0
 
@@ -668,7 +670,8 @@ sub newThen {
 		my ($tmp) = $then =~ /^call\s+(.*)/;
 		if ($tmp =~ /\s/) {
 			my ($name, $times) = $tmp =~ /(.*?)\s+(.*)/;
-			my $ptimes = parseCmd($times);
+			my $ptimes = parseCmd($times, $self);
+			if (defined $self->{error}) {$self->{error} = "$errtpl: $self->{error}"; return}
 			if (defined $ptimes) {
 				if ($ptimes > 1) {
 					$self->{subcall} = new Macro::Script($name, $ptimes)
@@ -699,7 +702,8 @@ sub statement {
 	my ($first, $cond, $last) = $temp_multi =~ /^\s*"?(.*?)"?\s+([<>=!~]+?)\s+"?(.*?)"?\s*$/;
 	if (!defined $first || !defined $cond || !defined $last) {$self->{error} = "$errtpl: syntax error in if statement"}
 	else {
-		my $pfirst = parseCmd(refined_macroKeywords($first)); my $plast = parseCmd(refined_macroKeywords($last));
+		my $pfirst = parseCmd(refined_macroKeywords($first), $self); my $plast = parseCmd(refined_macroKeywords($last), $self);
+		if (defined $self->{error}) {$self->{error} = "$errtpl: $self->{error}"; return}
 		unless (defined $pfirst && defined $plast) {$self->{error} = "$errtpl: either '$first' or '$last' has failed"}
 		elsif (cmpr($pfirst, $cond, $plast)) {return 1}
 	}
