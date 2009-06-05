@@ -1,3 +1,4 @@
+# ezza's Latest Patch: 05/06/2009 @ 4:00pm Automacro.pm r6710
 # $Id: Automacro.pm 6573 2008-10-08 10:21:54Z kLabMouse $
 package Macro::Automacro;
 

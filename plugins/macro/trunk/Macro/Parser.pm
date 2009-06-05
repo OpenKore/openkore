@@ -1,3 +1,4 @@
+# ezza's Latest Patch: 05/06/2009 @ 4:00pm Parser.pm r6710
 # $Id: Parser.pm 6340 2008-04-29 18:43:27Z lastclick $
 package Macro::Parser;
 
@@ -246,8 +247,8 @@ sub subvars {
 # command line parser for macro
 # returns undef if something went wrong, else the parsed command or "".
 sub parseCmd {
-	return "" unless defined $_[0];
-	my $cmd = $_[0];
+	my ($cmd, $self) = @_;
+	return "" unless defined $cmd;
 	my ($kw, $arg, $targ, $ret, $sub, $val);
 
 	# refresh global vars only once per command line
@@ -296,8 +297,14 @@ sub parseCmd {
 	
 	# any round bracket(pair) found after parseKw sub-routine were treated as macro perl sub-routine
 	undef $ret; undef $arg;
-	#message "cmd= $cmd\n";
 	while (($sub, $val) = parseSub($cmd)) {
+		my $sub_error = 1;
+		foreach my $e (@macro_block) {
+			if ($e eq $sub) {
+				$sub_error = 0;
+			}
+		}
+		if ($sub_error) {$self->{error} = "Unrecognized --> $sub <-- Sub-Routine"; return ""}
 		$arg = subvars($val);
 		my $sub1 = $sub."(".$arg.")";
 		$ret = eval($sub1);
