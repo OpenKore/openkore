@@ -104,9 +104,7 @@ sub parseMacroFile {
 					$inBlock--;
 					next
 				}
-				$macro_sub = "sub ".$block{name}." {".$macro_sub."}";
-				eval $macro_sub;
-				message "[macro] registering sub $block{name} ...\n", "menu";
+				sub_execute($block{name}, $macro_sub);
 				push(@macro_block, $block{name});
 				undef %block; undef $macro_sub;
 				$inBlock = 0
@@ -156,6 +154,17 @@ sub parseMacroFile {
 	close FILE;
 	return 0 if %block;
 	return 1
+}
+
+sub sub_execute {
+	my ($name, $arg) = @_;
+	my $run = "sub ".$name." {".$arg."}";
+	eval($run);			# cycle the macro sub between macros only
+	$run = "eval ".$run;
+	Commands::run($run);		# exporting sub to the &main::sub, becarefull on your sub name
+					# dont name your new sub equal to any &main::sub, you should take
+					# the risk yourself.
+	message "[macro] registering sub $name ...\n", "menu"
 }
 
 # parses a text for keywords and returns keyword + argument as array
@@ -287,6 +296,7 @@ sub parseCmd {
 	
 	# any round bracket(pair) found after parseKw sub-routine were treated as macro perl sub-routine
 	undef $ret; undef $arg;
+	#message "cmd= $cmd\n";
 	while (($sub, $val) = parseSub($cmd)) {
 		$arg = subvars($val);
 		my $sub1 = $sub."(".$arg.")";
