@@ -1,5 +1,4 @@
-# ezza's Latest Patch: 05/06/2009 @ 4:00pm Data.pm r6710
-# $Id: Data.pm 6578 2008-10-20 13:29:45Z technologyguild $
+# $Id: Data.pm r6712 2009-06-06 12:00:00Z ezza $
 package Macro::Data;
 
 use strict;

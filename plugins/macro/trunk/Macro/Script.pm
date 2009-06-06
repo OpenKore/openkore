@@ -1,5 +1,4 @@
-# ezza's Latest Patch: 05/06/2009 @ 4:00pm Script.pm r6710
-# $Id: Script.pm 5939 2007-08-29 12:09:28Z arachnophobia $
+# $Id: Script.pm r6712 2009-06-06 12:00:00Z ezza $
 package Macro::Script;
 
 use strict;
@@ -627,7 +626,6 @@ sub run_sublines {
 			}
 			elsif ($tmp =~ /^eval\s+/) {$self->{error} = "Error in line $real_num: $real_line\n[macro] $self->{name} error in sub-line $i: do not mix eval in the sub-line"}
 			elsif ($tmp =~ /^ai\s+clear$/) {$self->{error} = "Error in line $real_num: $real_line\n[macro] $self->{name} error in sub-line $i: do not mess around with ai in macros"}
-			if (defined $self->{error}) {$self->{error} = "Error in line $real_num: $real_line\n[macro] $self->{name} error in sub-line $i: ".$self->{error}; last}
 			my $result = parseCmd($tmp, $self);
 			if (defined $self->{error}) {$self->{error} = "Error in line $real_num: $real_line\n[macro] $self->{name} error in sub-line $i: ".$self->{error}; last}
 			unless (defined $result) {$self->{error} = "Error in line $real_num: $real_line\n[macro] $self->{name} error in sub-line $i: command $tmp failed"; last}
@@ -754,8 +752,8 @@ sub multi {
 	if ($save{$n} eq "||" && $ok && $i > 0) {
 		my @split = split(/\s*\|{2}\s*/, $text);
 		foreach my $e (@split) {
-			next if $e eq "0";
-			return 1 if $e eq "1" || $e =~ /^\d+$/;
+			next if $e == 0;
+			return 1 if $e == 1;
 			return 1 if statement($e, $self, $errtpl)
 		}
 		return 0
@@ -763,15 +761,15 @@ sub multi {
 	elsif ($save{$n} eq "&&" && $ok && $i > 0) {
 		my @split = split(/\s*\&{2}\s*/, $text);
 		foreach my $e (@split) {
-			if ($e eq "1" || ($e =~ /^\d+$/ && $e > 0)) {next}
-			elsif ($e eq "0") {return 0}
+			next if $e == 1;
+			return 0 if $e == 0;
 			next if statement($e, $self, $errtpl);
 			return 0
 		}
 		return 1
 	}
 	elsif ($i == 0) {
-		return $text if $text =~ /^\d+$/;
+		return $text if $text =~ /^[0-1]$/;
 		return statement($text, $self, $errtpl)
 	}
 }

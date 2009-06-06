@@ -1,4 +1,4 @@
-# $Id: Utilities.pm 6578 2008-10-20 13:29:45Z technologyguild $
+# $Id: Utilities.pm r6712 2009-06-06 12:00:00Z ezza $
 package Macro::Utilities;
 
 use strict;
