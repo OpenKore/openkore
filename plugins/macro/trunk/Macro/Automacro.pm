@@ -1,5 +1,4 @@
-# ezza's Latest Patch: 05/06/2009 @ 4:00pm Automacro.pm r6710
-# $Id: Automacro.pm 6573 2008-10-08 10:21:54Z kLabMouse $
+# $Id: Automacro.pm r6712 2009-06-06 12:00:00Z ezza $
 package Macro::Automacro;
 
 use strict;

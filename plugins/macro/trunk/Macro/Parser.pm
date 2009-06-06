@@ -1,5 +1,4 @@
-# ezza's Latest Patch: 05/06/2009 @ 4:00pm Parser.pm r6710
-# $Id: Parser.pm 6340 2008-04-29 18:43:27Z lastclick $
+# $Id: Parser.pm r6712 2009-06-06 12:00:00Z ezza $
 package Macro::Parser;
 
 use strict;
