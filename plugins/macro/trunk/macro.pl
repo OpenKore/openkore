@@ -1,6 +1,6 @@
 # macro by Arachno
 #
-# $Id: macro.pl r6712 2009-06-06 12:00:00Z ezza $
+# $Id: macro.pl r6713 2009-06-07 15:00:00Z ezza $
 #
 # This source code is licensed under the
 # GNU General Public License, Version 2.

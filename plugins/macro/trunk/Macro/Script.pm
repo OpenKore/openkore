@@ -1,4 +1,4 @@
-# $Id: Script.pm r6712 2009-06-06 12:00:00Z ezza $
+# $Id: Script.pm r6713 2009-06-07 15:00:00Z ezza $
 package Macro::Script;
 
 use strict;

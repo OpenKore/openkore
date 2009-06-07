@@ -1,11 +1,11 @@
-# $Id: Utilities.pm r6712 2009-06-06 12:00:00Z ezza $
+# $Id: Utilities.pm r6713 2009-06-07 15:00:00Z ezza $
 package Macro::Utilities;
 
 use strict;
 
 require Exporter;
 our @ISA = qw(Exporter);
-our @EXPORT_OK = qw(ai_isIdle q4rx between cmpr match getArgs refreshGlobal getnpcID getPlayerID
+our @EXPORT_OK = qw(ai_isIdle q4rx q4rx2 between cmpr match getArgs refreshGlobal getnpcID getPlayerID
 	getVenderID getItemIDs getItemPrice getInventoryIDs getStorageIDs getSoldOut getInventoryAmount
 	getCartAmount getShopAmount getStorageAmount getVendAmount getRandom getRandomRange getConfig
 	getWord callMacro getArgFromList getListLenght);
@@ -109,6 +109,14 @@ sub cmpr {
 sub q4rx {
 	my $s = $_[0];
 	$s =~ s/([\/*+(){}\[\]\\\$\^?])/\\$1/g;
+	return $s
+}
+
+sub q4rx2 {
+	# We let alone the original q4rx sub routine... 
+	# instead, we use this for our new @nick ;p
+	my $s = $_[0];
+	$s =~ s/([\/*+(){}\[\]\\\$\^?"' ])/\\$1/g;
 	return $s
 }
 
