@@ -1,4 +1,4 @@
-# $Id: Data.pm r6712 2009-06-06 12:00:00Z ezza $
+# $Id: Data.pm r6713 2009-06-07 15:00:00Z ezza $
 package Macro::Data;
 
 use strict;
@@ -91,7 +91,7 @@ our $macroKeywords =
 	"eval"         . "|" .
 	"arg"          . "|" .
 	"listitem"     . "|" .
-   	"pm"		   . "|" .
+   	"nick"         . "|" .
 	"listlenght"
 ;
 

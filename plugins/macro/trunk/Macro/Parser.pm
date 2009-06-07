@@ -1,4 +1,4 @@
-# $Id: Parser.pm r6712 2009-06-06 12:00:00Z ezza $
+# $Id: Parser.pm r6713 2009-06-07 15:00:00Z ezza $
 package Macro::Parser;
 
 use strict;
@@ -16,7 +16,7 @@ use Text::Balanced qw/extract_bracketed/;
 use Macro::Data;
 use Macro::Utilities qw(refreshGlobal getnpcID getItemIDs getItemPrice getStorageIDs getInventoryIDs
 	getPlayerID getVenderID getRandom getRandomRange getInventoryAmount getCartAmount getShopAmount
-	getStorageAmount getVendAmount getConfig getWord q4rx getArgFromList getListLenght);
+	getStorageAmount getVendAmount getConfig getWord q4rx q4rx2 getArgFromList getListLenght);
 
 our ($rev) = q$Revision: 6340 $ =~ /(\d+)/;
 
@@ -284,6 +284,7 @@ sub parseCmd {
 		elsif ($kw eq 'eval')       {$ret = eval($arg)}
 		elsif ($kw eq 'listitem')   {$ret = getArgFromList($arg)}
 		elsif ($kw eq 'listlenght') {$ret = getListLenght($arg)}
+		elsif ($kw eq 'nick')       {$ret = q4rx2($arg)}
 		return unless defined $ret;
 		return $cmd if $ret eq '_%_';
 		$targ = q4rx $targ;
