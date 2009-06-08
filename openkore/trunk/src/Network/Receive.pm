@@ -4839,6 +4839,17 @@ sub refine_result {
 	}
 }
 
+sub blacksmith_points {
+	my ($self, $args) = @_;
+	message TF("[POINT] Blacksmist Ranking Point is increasing by %s. Now, The total is %s points.\n", $args->{points}, $args->{total}, "list");
+}
+
+
+sub alchemist_point {
+	my ($self, $args) = @_;
+	message TF("[POINT] Alchemist Ranking Point is increasing by %s. Now, The total is %s points.\n", $args->{points}, $args->{total}, "list");
+}
+
 sub repair_list {
 	my ($self, $args) = @_;
 	my $msg = T("--------Repair List--------\n");
