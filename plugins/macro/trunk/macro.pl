@@ -105,7 +105,6 @@ sub hookOnDemand {
 		if (defined $automacro{$a}->{spell}) {
 			if (!defined $load{'is_casting'}) {$load{'is_casting'} = 1}
 			if (!defined $load{'packet_skilluse'}) {$load{'packet_skilluse'} = 1}
-			if (!defined $load{'packet_areaSpell'}) {$load{'packet_areaSpell'} = 1}
 		}
 		if (defined $automacro{$a}->{pm} && !defined $load{'packet_privMsg'}) {$load{'packet_privMsg'} = 1}
 		if (defined $automacro{$a}->{pubm} && !defined $load{'packet_pubMsg'}) {$load{'packet_pubMsg'} = 1}
