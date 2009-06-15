@@ -1,4 +1,4 @@
-# $Id: Automacro.pm r6713 2009-06-07 15:00:00Z ezza $
+# $Id: Automacro.pm r6720 2009-06-15 12:00:00Z ezza $
 package Macro::Automacro;
 
 use strict;
@@ -19,7 +19,7 @@ use Log qw(message error warning);
 use Macro::Data;
 use Macro::Utilities qw(between cmpr match getArgs refreshGlobal
 	getPlayerID getSoldOut getInventoryAmount getCartAmount getShopAmount
-	getStorageAmount callMacro);
+	getStorageAmount callMacro sameParty);
 
 our ($rev) = q$Revision: 6573 $ =~ /(\d+)/;
 
@@ -366,14 +366,14 @@ sub checkCast {
 			$varStack{".caster"} = "monster";
 			$varStack{".casterName"} = $actor->{name};
 			$varStack{".casterID"} = $actor->{binID};
-			$varStack{".casterLoc"} = "$actor->{pos_to}{x}" . " $actor->{pos_to}{y}";
+			$varStack{".casterPos"} = "$actor->{pos_to}{x}" . " $actor->{pos_to}{y}";
 			$varStack{".casterDist"} = sprintf("%.1f", distance($pos, calcPosition($actor)))
 
 		} elsif (my $actor = $playersList->getByID($source)) {
 			$varStack{".caster"} = "player";
 			$varStack{".casterName"} = (defined $actor->{name})?$actor->{name}:"Unknown";
 			$varStack{".casterID"} = $actor->{binID};
-			$varStack{".casterLoc"} = "$actor->{pos_to}{x}" . " $actor->{pos_to}{y}";
+			$varStack{".casterPos"} = "$actor->{pos_to}{x}" . " $actor->{pos_to}{y}";
 			$varStack{".casterDist"} = sprintf("%.1f", distance($pos, calcPosition($actor)));
 
 		} else {return 0}
@@ -387,12 +387,12 @@ sub checkCast {
 		return 0 if !$char->{'party'} || !%{$char->{'party'}};
 		if (my $actor = $monstersList->getByID($source)) {
 			foreach my Actor::Player $player (@{$playersList->getItems()}) {
-				return 0 unless $player->{'party'}{'name'} eq $char->{'party'}{'name'};
+				return 0 unless sameParty($player);
 				if ($target eq $player->{ID} || ($player->{pos_to}{x} == $args->{x} && $player->{pos_to}{y} == $args->{y}) || distance($player->{pos}, $args) <= judgeSkillArea($args->{skillID})) {
 					$varStack{".caster"} = "monster";
 					$varStack{".casterName"} = $actor->{name};
 					$varStack{".casterID"} = $actor->{binID};
-					$varStack{".casterLoc"} = "$actor->{pos_to}{x}" . " $actor->{pos_to}{y}";
+					$varStack{".casterPos"} = "$actor->{pos_to}{x}" . " $actor->{pos_to}{y}";
 					$varStack{".casterSkill"} = Skill->new(idn => $args->{skillID})->getName();
 					$varStack{".casterTarget"} = "$args->{x}" . " $args->{y}";
 					$varStack{".casterDist"} = sprintf("%.1f", distance($pos, calcPosition($actor)));
@@ -401,16 +401,14 @@ sub checkCast {
 			}
 
 		} elsif (my $actor = $playersList->getByID($source)) {
-			my $actor_party = (exists $actor->{'party'})?$actor->{'party'}{'name'}:"";
-			return 0 if $actor_party eq $char->{'party'}{'name'};
+			return 0 if sameParty($actor);
 			foreach my Actor::Player $player (@{$playersList->getItems()}) {
-				my $player_party = (exists $player->{'party'})?$player->{'party'}{'name'}:"";
-				return 0 unless $player_party eq $char->{'party'}{'name'};
+				return 0 unless sameParty($player);
 				if ($target eq $player->{ID} || ($player->{pos_to}{x} == $args->{x} && $player->{pos_to}{y} == $args->{y}) || distance($player->{pos}, $args) <= judgeSkillArea($args->{skillID})) {
 					$varStack{".caster"} = "player";
 					$varStack{".casterName"} = (defined $actor->{name})?$actor->{name}:"Unknown";
 					$varStack{".casterID"} = $actor->{binID};
-					$varStack{".casterLoc"} = "$actor->{pos_to}{x}" . " $actor->{pos_to}{y}";
+					$varStack{".casterPos"} = "$actor->{pos_to}{x}" . " $actor->{pos_to}{y}";
 					$varStack{".casterSkill"} = Skill->new(idn => $args->{skillID})->getName();
 					$varStack{".casterTarget"} = "$args->{x}" . " $args->{y}";
 					$varStack{".casterDist"} = sprintf("%.1f", distance($pos, calcPosition($actor)));

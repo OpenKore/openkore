@@ -1,4 +1,4 @@
-# $Id: Utilities.pm r6713 2009-06-07 15:00:00Z ezza $
+# $Id: Utilities.pm r6720 2009-06-15 12:00:00Z ezza $
 package Macro::Utilities;
 
 use strict;
@@ -8,7 +8,7 @@ our @ISA = qw(Exporter);
 our @EXPORT_OK = qw(ai_isIdle q4rx q4rx2 between cmpr match getArgs refreshGlobal getnpcID getPlayerID
 	getVenderID getItemIDs getItemPrice getInventoryIDs getStorageIDs getSoldOut getInventoryAmount
 	getCartAmount getShopAmount getStorageAmount getVendAmount getRandom getRandomRange getConfig
-	getWord callMacro getArgFromList getListLenght);
+	getWord callMacro getArgFromList getListLenght sameParty);
 
 use Utils;
 use Globals;
@@ -379,6 +379,16 @@ sub getListLenght {
 	my $list = $_[0];
 	my @items = split(/,\s*/, $list);
 	return scalar(@items)
+}
+
+# check if player is in party
+sub sameParty {
+	my $player = shift;
+	for (my $i = 0; $i < @partyUsersID; $i++) {
+		next if ($partyUsersID[$i] eq "");
+		return 1 if $char->{'party'}{'users'}{$partyUsersID[$i]}{'name'} eq $player->{name}
+	}
+	return 0
 }
 
 # returns random number within the given range  ###########
