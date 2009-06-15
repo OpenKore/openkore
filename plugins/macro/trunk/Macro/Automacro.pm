@@ -1,4 +1,4 @@
-# $Id: Automacro.pm r6720 2009-06-15 12:00:00Z ezza $
+# $Id: Automacro.pm r6722 2009-06-15 16:19:00Z ezza $
 package Macro::Automacro;
 
 use strict;
@@ -387,7 +387,7 @@ sub checkCast {
 		return 0 if !$char->{'party'} || !%{$char->{'party'}};
 		if (my $actor = $monstersList->getByID($source)) {
 			foreach my Actor::Player $player (@{$playersList->getItems()}) {
-				return 0 unless sameParty($player);
+				next unless sameParty($player);
 				if ($target eq $player->{ID} || ($player->{pos_to}{x} == $args->{x} && $player->{pos_to}{y} == $args->{y}) || distance($player->{pos}, $args) <= judgeSkillArea($args->{skillID})) {
 					$varStack{".caster"} = "monster";
 					$varStack{".casterName"} = $actor->{name};
@@ -403,7 +403,7 @@ sub checkCast {
 		} elsif (my $actor = $playersList->getByID($source)) {
 			return 0 if sameParty($actor);
 			foreach my Actor::Player $player (@{$playersList->getItems()}) {
-				return 0 unless sameParty($player);
+				next unless sameParty($player);
 				if ($target eq $player->{ID} || ($player->{pos_to}{x} == $args->{x} && $player->{pos_to}{y} == $args->{y}) || distance($player->{pos}, $args) <= judgeSkillArea($args->{skillID})) {
 					$varStack{".caster"} = "player";
 					$varStack{".casterName"} = (defined $actor->{name})?$actor->{name}:"Unknown";
