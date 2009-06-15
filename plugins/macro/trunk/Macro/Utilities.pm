@@ -1,4 +1,4 @@
-# $Id: Utilities.pm r6720 2009-06-15 12:00:00Z ezza $
+# $Id: Utilities.pm r6721 2009-06-15 15:55:00Z ezza $
 package Macro::Utilities;
 
 use strict;
@@ -385,7 +385,8 @@ sub getListLenght {
 sub sameParty {
 	my $player = shift;
 	for (my $i = 0; $i < @partyUsersID; $i++) {
-		next if ($partyUsersID[$i] eq "");
+		next if $partyUsersID[$i] eq "";
+		next if $partyUsersID[$i] eq $accountID;
 		return 1 if $char->{'party'}{'users'}{$partyUsersID[$i]}{'name'} eq $player->{name}
 	}
 	return 0
