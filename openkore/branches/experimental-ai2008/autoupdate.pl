@@ -39,20 +39,22 @@ sub upgrade {
 
 	my ($local_ver, $global_ver) = $sa->info();
 
-	if ($local_ver != $global_ver) {
+	if ($local_ver < $global_ver) {
 		print " Updates found.\n";
-	
+
 		# List user modifed files
 		if (@{ $sa->modified } ) {
 			print "  User modification Detected!!!!\n";
 			print "  User modified files:\n";
-			print join('    \n', @{ $sa->modified }) . "\n";
+			print "    "; #initial separator
+			print join("\n    ", @{ $sa->modified }) . "\n";
 		};
 
 		# List Changes
 		if (@{ $sa->added } || @{ $sa->deleted } || @{ $sa->missing } || @{ $sa->changes }) {
-			print "Updating files:\n";
-			print join('    \n', @{ $sa->added }, @{ $sa->deleted }, @{ $sa->missing }, @{ $sa->changes }) . "\n";
+			print "  Updating files:\n";
+			print "    "; #initial separator
+			print join("\n    ", @{ $sa->added }, @{ $sa->deleted }, @{ $sa->missing }, @{ $sa->changes }) . "\n";
 		};
 
 		# Fetching Updates

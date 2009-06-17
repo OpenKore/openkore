@@ -169,7 +169,7 @@ sub iterate {
 				my $class = blessed($self->{listeners}->{$object->{name}});
 				$class =~ s/.*:://;
 
-				# If it's registered true "register_listener" then it cannot return $full_object becouse it's CallbackList
+				# If it's registered trough "register_listener" then it cannot return $full_object because it's CallbackList
 				if ($class eq "CallbackList") {
 					$self->{listeners}->{$object->{name}}->call($self, $object->{params});
 				} else {
@@ -227,7 +227,7 @@ sub register_listener {
 	my $class = blessed($self->{listeners}->{$name});
 	$class =~ s/.*:://;
 
-	# If it's registered true "register_listener" then it will be Registered
+	# If it's registered trough "register_listener" then it will be Registered
 	# else we show Warning message!
 	if ($class eq "CallbackList") {
 		# Now we have an empty listener object, or already made. So we add our callback there.

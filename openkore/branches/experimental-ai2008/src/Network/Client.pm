@@ -88,7 +88,7 @@ sub DESTROY {
 	# Wait for 'CLOSE' signal to work
 	while ($thr->is_running()) {
 		sleep(1);
-		yeld();
+		yield();
 	};
 
 	# Recursivly destroy all Child Objects
@@ -197,7 +197,7 @@ sub connect {
 		message T("connected\n"), "connection";
 		$self->{host} = $host;
 		$self->{port} = $port;
-		# Disable Bloking
+		# Disable Blocking
 		# $socket->blocking(0);
 		# We create Thread that will send and receive data
 		my $trd = threads->create(\&Network::Client::mainLoop, $self, $socket);
