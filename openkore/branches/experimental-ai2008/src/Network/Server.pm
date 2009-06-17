@@ -102,7 +102,7 @@ sub DESTROY {
 	# Wait for 'CLOSE' signal to work
 	while ($thr->is_running()) {
 		sleep(1);
-		yeld();
+		yield();
 	};
 
 	# Recursivly destroy all Child Objects
@@ -138,7 +138,7 @@ sub mainLoop {
 			# Wait for 'CLOSE' signal to work
 			while ($thr->is_running()) {
 				sleep(1);
-				yeld();
+				yield();
 			};
 		}
 		$socket->close();
@@ -394,7 +394,7 @@ sub close {
 	my $clients = \%{$self->{client_list}};
 	foreach my $client (@{$clients }) {
 		if ($client->{tid} == $tid || $tid == 0) {
-			$self->_get_child_thread($tid)->kill('CLOSE')
+			$self->_get_child_thread($tid)->kill('CLOSE');
 		};
 	}
 

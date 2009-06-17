@@ -1,11 +1,17 @@
 package Misc::Other;
 
+# Make all References Strict
 use strict;
+
+# MultiThreading Support
 use threads;
 use threads::shared;
+
+# Others (Perl Related)
 use Exporter;
 use base qw(Exporter);
 
+# Others (Kore related)
 use Globals qw($quit);
 use Log qw(error debug message warning);
 use Translation qw(T TF);
