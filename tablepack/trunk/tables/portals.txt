@@ -17,6 +17,7 @@ aldebaran 223 222 xmas_fild01 78 68 0 c r1 c c n
 moc_fild12 35 303 cmd_fild08 331 319 0 c r0 n
 ayothaya 152 68 alberta 247 42 0 c r0 n
 ama_in02 115 177 ama_dun01 229 10 0 c r1 c r0 n
+moc_fild20 38 183 morocc 156 46 c r1 c c c c r1 c c r1
 
 # Uncomment these fields if you wish to use Kapra warps
 #yuno 142 183 prontera 116 72 1800 c c c c c r0
