@@ -1,4 +1,4 @@
-# $Id: Automacro.pm r6722 2009-06-15 16:19:00Z ezza $
+# $Id: Automacro.pm r6727 2009-06-18 17:19:00Z ezza $
 package Macro::Automacro;
 
 use strict;
@@ -7,7 +7,7 @@ require Exporter;
 our @ISA = qw(Exporter);
 our @EXPORT_OK = qw(releaseAM lockAM automacroCheck consoleCheckWrapper);
 our @EXPORT = qw(checkLocalTime checkVar checkVarVar checkLoc checkPersonGuild checkLevel checkLevel checkClass
-	checkPercent checkStatus checkItem checkPerson checkCond checkCast
+	checkPercent checkStatus checkItem checkPerson checkCond checkCast checkGround
 	checkEquip checkMsg checkMonster checkAggressives checkConsole checkMapChange
 	checkNotMonster);
 
@@ -35,6 +35,15 @@ sub checkVar {
 
 	if (exists $varStack{$var}) {return cmpr($varStack{$var}, $cond, $val)}
 	else {return $cond eq "!="}
+}
+
+# check for ground statuses
+sub checkGround {
+	my $arg = $_[0];
+	my $not = ($arg =~ s/^not +//)?1:0;
+	
+	if (Misc::whenGroundStatus(calcPosition($char), $arg)) {return $not?0:1}
+	return $not?1:0
 }
 
 # checks for location ######################################
@@ -715,7 +724,8 @@ sub automacroCheck {
 		next CHKAM if (defined $automacro{$am}->{class}  && !checkClass($automacro{$am}->{class}));
 		next CHKAM if (defined $automacro{$am}->{notMonster} && !checkNotMonster($automacro{$am}->{notMonster}));
 		next CHKAM if (defined $automacro{$am}->{eval} && !checkEval($automacro{$am}->{eval}));
-
+		next CHKAM if (defined $automacro{$am}->{whenGround} && !checkGround($automacro{$am}->{whenGround}));
+		
 		foreach my $i (@{$automacro{$am}->{monster}})    {next CHKAM unless checkMonster($i)}
 		foreach my $i (@{$automacro{$am}->{aggressives}}){next CHKAM unless checkAggressives($i)}
 		foreach my $i (@{$automacro{$am}->{location}})   {next CHKAM unless checkLoc($i)}
