@@ -1,4 +1,4 @@
-# $Id: Data.pm r6713 2009-06-07 15:00:00Z ezza $
+# $Id: Data.pm r6727 2009-06-18 17:19:00Z ezza $
 package Macro::Data;
 
 use strict;
@@ -39,8 +39,8 @@ our %amSingle = (
 	'priority' => 1,     # option: automacro priority
 	'exclusive' => 1,    # option: is macro interruptible
 	'playerguild' => 1,  # check: player guilds
-	'eval' => 1	         # check : eval
-	
+	'eval' => 1,         # check : eval
+	'whenGround' => 1    # check : when ground statuses	
 );
 
 our %amMulti = (
