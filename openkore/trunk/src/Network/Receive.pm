@@ -3924,8 +3924,6 @@ sub map_loaded {
 
 		# Replies 0166 (Guild Member Titles List) and 0154 (Guild Members List)
 		$messageSender->sendGuildRequest(1);
-		message(T("You are now in the game\n"), "connection");
-		Plugins::callHook('in_game');
 		$messageSender->sendMapLoaded();
 		$messageSender->sendSync(1);
 		debug "Sent initial sync\n", "connection";
@@ -3938,6 +3936,8 @@ sub map_loaded {
 		makeCoords($char->{pos}, $args->{coords});
 		$char->{pos_to} = {%{$char->{pos}}};
 		message(TF("Your Coordinates: %s, %s\n", $char->{pos}{x}, $char->{pos}{y}), undef, 1);
+		message(T("You are now in the game\n"), "connection");
+		Plugins::callHook('in_game');
 	}
 
 	$messageSender->sendIgnoreAll("all") if ($config{ignoreAll});
