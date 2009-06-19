@@ -1,4 +1,4 @@
-# $Id: Script.pm r6713 2009-06-07 15:00:00Z ezza $
+# $Id: Script.pm r6728 2009-06-19 11:42:00Z ezza $
 package Macro::Script;
 
 use strict;
@@ -752,8 +752,8 @@ sub multi {
 	if ($save{$n} eq "||" && $ok && $i > 0) {
 		my @split = split(/\s*\|{2}\s*/, $text);
 		foreach my $e (@split) {
-			next if $e == 0;
-			return 1 if $e == 1;
+			next if $e eq "0";
+			return 1 if $e eq "1";
 			return 1 if statement($e, $self, $errtpl)
 		}
 		return 0
@@ -761,8 +761,8 @@ sub multi {
 	elsif ($save{$n} eq "&&" && $ok && $i > 0) {
 		my @split = split(/\s*\&{2}\s*/, $text);
 		foreach my $e (@split) {
-			next if $e == 1;
-			return 0 if $e == 0;
+			next if $e eq "1";
+			return 0 if $e eq "0";
 			next if statement($e, $self, $errtpl);
 			return 0
 		}
