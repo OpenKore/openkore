@@ -520,7 +520,7 @@ sub run_sublines {
 		} elsif ($e =~ /^\$[a-z]/i) {
 			if (($var, $val) = $e =~ /^\$([a-z][a-z\d]*?)\s+=\s+(.*)/i) {
 				my $pval = parseCmd($val, $self);
-				if (defined $self->{error}) {$self->{error} = "Error in line $real_num: $real_line\n[macro] $self->{name} error in sub-line $i: ".$self->{error}; last}
+				if (defined $self->{error}) {$self->{error} = "Error in line $real_num: $real_line\n[macro] $self->{name} error in sub-line $i: $self->{error}"; last}
 				if (defined $pval) {
 					if ($pval =~ /^\s*(?:undef|unset)\s*$/i && exists $varStack{$var}) {undef $varStack{$var}}
 					else {$varStack{$var} = $pval}
@@ -540,7 +540,7 @@ sub run_sublines {
 				unless (defined $var) {$self->{error} = "Error in line $real_num: $real_line\n[macro] $self->{name} error in sub-line $i: $dvar not defined in ($e)"; last}
 				else {
 					my $pval = parseCmd($val, $self);
-					if (defined $self->{error}) {$self->{error} = "Error in line $real_num: $real_line\n[macro] $self->{name} error in sub-line $i: ".$self->{error}; last}
+					if (defined $self->{error}) {$self->{error} = "Error in line $real_num: $real_line\n[macro] $self->{name} error in sub-line $i: $self->{error}"; last}
 					unless (defined $pval) {$self->{error} = "Error in line $real_num: $real_line\n[macro] $self->{name} error in sub-line $i: $e failed"; last}
 					else {
 						if ($pval =~ /^\s*(?:undef|unset)\s*$/i) {undef $varStack{"#$var"}}
@@ -574,7 +574,7 @@ sub run_sublines {
 		} elsif ($e =~ /^lock\s+/) {
 			my ($tmp) = $e =~ /^lock\s+(.*)/;
 			if (!lockAM(parseCmd($tmp, $self))) {
-				if (defined $self->{error}) {$self->{error} = "Error in line $real_num: $real_line\n[macro] $self->{name} error in sub-line $i: ".$self->{error}; last}
+				if (defined $self->{error}) {$self->{error} = "Error in line $real_num: $real_line\n[macro] $self->{name} error in sub-line $i: $self->{error}"; last}
 				$self->{error} = "Error in line $real_num: $real_line\n[macro] $self->{name} error in sub-line $i: locking $tmp failed in ($e)"; last
 			}
 				
@@ -582,7 +582,7 @@ sub run_sublines {
 		} elsif ($e =~ /^release\s+/) {
 			my ($tmp) = $e =~ /^release\s+(.*)/;
 			if (!releaseAM(parseCmd($tmp, $self))) {
-				if (defined $self->{error}) {$self->{error} = "Error in line $real_num: $real_line\n[macro] $self->{name} error in sub-line $i: ".$self->{error}; last}
+				if (defined $self->{error}) {$self->{error} = "Error in line $real_num: $real_line\n[macro] $self->{name} error in sub-line $i: $self->{error}"; last}
 				$self->{error} = "Error in line $real_num: $real_line\n[macro] $self->{name} error in sub-line $i: releasing $tmp failed in ($e)"; last
 			}
 		
@@ -591,7 +591,7 @@ sub run_sublines {
 			my ($tmp) = $e =~ /^pause\s*(.*)/;
 			if (defined $tmp) {
 				my $result = parseCmd($tmp, $self);
-				if (defined $self->{error}) {$self->{error} = "Error in line $real_num: $real_line\n[macro] $self->{name} error in sub-line $i: ".$self->{error}; last}
+				if (defined $self->{error}) {$self->{error} = "Error in line $real_num: $real_line\n[macro] $self->{name} error in sub-line $i: $self->{error}"; last}
 				unless (defined $result) {$self->{error} = "Error in line $real_num: $real_line\n[macro] $self->{name} error in sub-line $i: $tmp failed in ($e)"; last}
 				else {$self->{timeout} = $result}
 			}
@@ -604,7 +604,7 @@ sub run_sublines {
 		} elsif ($e =~ /^log\s+/) {
 			my ($tmp) = $e =~ /^log\s+(.*)/;
 			my $result = parseCmd($tmp, $self);
-			if (defined $self->{error}) {$self->{error} = "Error in line $real_num: $real_line\n[macro] $self->{name} error in sub-line $i: ".$self->{error}; last}
+			if (defined $self->{error}) {$self->{error} = "Error in line $real_num: $real_line\n[macro] $self->{name} error in sub-line $i: $self->{error}"; last}
 			unless (defined $result) {$self->{error} = "Error in line $real_num: $real_line\n[macro] $self->{name} error in sub-line $i: $tmp failed in ($e)"; last}
 			else {message "[macro log] $result\n", "macro"}
 			$self->{timeout} = $self->{macro_delay};
@@ -627,7 +627,7 @@ sub run_sublines {
 			elsif ($tmp =~ /^eval\s+/) {$self->{error} = "Error in line $real_num: $real_line\n[macro] $self->{name} error in sub-line $i: do not mix eval in the sub-line"}
 			elsif ($tmp =~ /^ai\s+clear$/) {$self->{error} = "Error in line $real_num: $real_line\n[macro] $self->{name} error in sub-line $i: do not mess around with ai in macros"}
 			my $result = parseCmd($tmp, $self);
-			if (defined $self->{error}) {$self->{error} = "Error in line $real_num: $real_line\n[macro] $self->{name} error in sub-line $i: ".$self->{error}; last}
+			if (defined $self->{error}) {$self->{error} = "Error in line $real_num: $real_line\n[macro] $self->{name} error in sub-line $i: $self->{error}"; last}
 			unless (defined $result) {$self->{error} = "Error in line $real_num: $real_line\n[macro] $self->{name} error in sub-line $i: command $tmp failed"; last}
 			$self->{timeout} = $self->{macro_delay};
 			$self->{mainline_delay} = $real_num;
@@ -642,7 +642,7 @@ sub run_sublines {
 		# sub-routine
 		} elsif (my ($sub) = $e =~ /^(\w+)\s*\(.*?\)$/) {
 			parseCmd($e, $self);
-			$self->{error} = "Error in line $real_num: $real_line\n[macro] $self->{name} error in sub-line $i: ".$self->{error} if defined $self->{error};
+			$self->{error} = "Error in line $real_num: $real_line\n[macro] $self->{name} error in sub-line $i: $self->{error}" if defined $self->{error};
 			last	
 		
 		##################### End ##################
