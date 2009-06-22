@@ -1,4 +1,4 @@
-# $Id: Automacro.pm r6731 2009-06-22 14:30:00Z ezza $
+# $Id: Automacro.pm r6734 2009-06-23 1:30:00Z ezza $
 package Macro::Automacro;
 
 use strict;
@@ -10,7 +10,7 @@ our @EXPORT = qw(checkLocalTime checkVar checkVarVar checkLoc checkPersonGuild c
 	checkPercent checkStatus checkItem checkPerson checkCond checkCast checkGround checkSpellsID
 	checkEquip checkMsg checkMonster checkAggressives checkConsole checkMapChange checkNotMonster);
 	
-use Misc;
+use Misc qw(whenGroundStatus getSpellName getActorName);
 use Utils;
 use Globals;
 use Skill;
@@ -42,7 +42,7 @@ sub checkGround {
 	my $arg = $_[0];
 	my $not = ($arg =~ s/^not +//)?1:0;
 	
-	if (Misc::whenGroundStatus(calcPosition($char), $arg)) {return $not?0:1}
+	if (whenGroundStatus(calcPosition($char), $arg)) {return $not?0:1}
 	return $not?1:0
 }
 
@@ -480,9 +480,9 @@ sub checkSpellsID {
 	
 	foreach (@spellsID) {
 		my $spell = $spells{$_};
-		my $type = Misc::getSpellName($spell->{type});
+		my $type = getSpellName($spell->{type});
 		my $dist1 = sprintf("%.1f",distance(calcPosition($char), calcPosition($spell)));
-		my ($actor, $owner, $ID) = Misc::getActorName($spell->{sourceID}) =~ /^(\w+?)\s(.*?)\s\((\d+)\)\s*$/;
+		my ($actor, $owner, $ID) = getActorName($spell->{sourceID}) =~ /^(\w+?)\s(.*?)\s\((\d+)\)\s*$/;
 		if (existsInList($list, $type) &&
 			$args->{x} eq $spell->{'pos'}{'x'} &&
 			$args->{y} eq $spell->{'pos'}{'y'} &&
