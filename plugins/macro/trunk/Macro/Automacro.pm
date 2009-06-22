@@ -470,7 +470,7 @@ sub checkMsg {
 
 # checks for area spell
 sub checkSpellsID {
-	my $line = $_[0];
+	my ($line, $args) = @_;
 	my $dist = $config{clientSight} || 20;
 	my ($list, $cond);
 	if ($line =~ /^\s*(.*),?\s+([<>=!~]+)\s+(\d+|\d+\s+.{2}\s+\d+)\s*$/) {
@@ -483,7 +483,11 @@ sub checkSpellsID {
 		my $type = Misc::getSpellName($spell->{type});
 		my $dist1 = sprintf("%.1f",distance(calcPosition($char), calcPosition($spell)));
 		my ($actor, $owner, $ID) = Misc::getActorName($spell->{sourceID}) =~ /^(\w+?)\s(.*?)\s\((\d+)\)\s*$/;
-		if (existsInList($list, $type)) {
+		if (existsInList($list, $type) &&
+			$args->{x} eq $spell->{'pos'}{'x'} &&
+			$args->{y} eq $spell->{'pos'}{'y'} &&
+			$args->{sourceID} eq $spell->{sourceID}
+		) {
 			$varStack{".areaName"} = $type;
 			$varStack{".areaActor"} = $actor;
 			$varStack{".areaSourceName"} = $owner;
@@ -748,7 +752,7 @@ sub automacroCheck {
 			} else {next CHKAM}
 		} elsif (defined $automacro{$am}->{areaSpell}) {
 			if ($trigger eq 'packet_areaSpell') {
-			next CHKAM unless checkSpellsID($automacro{$am}->{areaSpell})
+			next CHKAM unless checkSpellsID($automacro{$am}->{areaSpell}, $args)
 			} else {next CHKAM}
 		}
 
