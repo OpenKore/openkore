@@ -483,7 +483,7 @@ sub checkSpellsID {
 		my $type = Misc::getSpellName($spell->{type});
 		my $dist1 = sprintf("%.1f",distance(calcPosition($char), calcPosition($spell)));
 		my ($actor, $owner, $ID) = Misc::getActorName($spell->{sourceID}) =~ /^(\w+?)\s(.*?)\s\((\d+)\)\s*$/;
-		if (existsInList($list, $type) && $dist1 <= $dist) {
+		if (existsInList($list, $type)) {
 			$varStack{".areaName"} = $type;
 			$varStack{".areaActor"} = $actor;
 			$varStack{".areaSourceName"} = $owner;
