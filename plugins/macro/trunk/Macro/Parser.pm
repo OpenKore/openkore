@@ -1,4 +1,4 @@
-# $Id: Parser.pm r6713 2009-06-07 15:00:00Z ezza $
+# $Id: Parser.pm r6734 2009-06-23 1:30:00Z ezza $
 package Macro::Parser;
 
 use strict;
@@ -10,6 +10,7 @@ our @EXPORT = qw(parseMacroFile parseCmd);
 our @EKSPORT_OK = qw(parseCmd);
 
 use Globals;
+use Utils qw/existsInList/;
 use List::Util qw(max min sum);
 use Log qw(message warning error);
 use Text::Balanced qw/extract_bracketed/;
@@ -105,7 +106,7 @@ sub parseMacroFile {
 					next
 				}
 				sub_execute($block{name}, $macro_sub);
-				push(@macro_block, $block{name}) unless Utils::existsInList(join(',', @macro_block), $block{name});
+				push(@macro_block, $block{name}) unless existsInList(join(',', @macro_block), $block{name});
 				undef %block; undef $macro_sub;
 				$inBlock = 0
 			} else {
