@@ -1,4 +1,4 @@
-# $Id: Automacro.pm r6727 2009-06-18 17:19:00Z ezza $
+# $Id: Automacro.pm r6731 2009-06-22 14:30:00Z ezza $
 package Macro::Automacro;
 
 use strict;
@@ -7,10 +7,10 @@ require Exporter;
 our @ISA = qw(Exporter);
 our @EXPORT_OK = qw(releaseAM lockAM automacroCheck consoleCheckWrapper);
 our @EXPORT = qw(checkLocalTime checkVar checkVarVar checkLoc checkPersonGuild checkLevel checkLevel checkClass
-	checkPercent checkStatus checkItem checkPerson checkCond checkCast checkGround
-	checkEquip checkMsg checkMonster checkAggressives checkConsole checkMapChange
-	checkNotMonster);
-
+	checkPercent checkStatus checkItem checkPerson checkCond checkCast checkGround checkSpellsID
+	checkEquip checkMsg checkMonster checkAggressives checkConsole checkMapChange checkNotMonster);
+	
+use Misc;
 use Utils;
 use Globals;
 use Skill;
@@ -468,6 +468,34 @@ sub checkMsg {
 	return 0
 }
 
+# checks for area spell
+sub checkSpellsID {
+	my $line = $_[0];
+	my $dist = $config{clientSight} || 20;
+	my ($list, $cond);
+	if ($line =~ /^\s*(.*),?\s+([<>=!~]+)\s+(\d+|\d+\s+.{2}\s+\d+)\s*$/) {
+		($list, $cond, $dist) = ($1, $2, $3)
+	}
+	else {$list = $line; $cond = "<="}
+	
+	foreach (@spellsID) {
+		my $spell = $spells{$_};
+		my $type = Misc::getSpellName($spell->{type});
+		my $dist1 = sprintf("%.1f",distance(calcPosition($char), calcPosition($spell)));
+		my ($actor, $owner, $ID) = Misc::getActorName($spell->{sourceID}) =~ /^(\w+?)\s(.*?)\s\((\d+)\)\s*$/;
+		if (existsInList($list, $type) && $dist1 <= $dist) {
+			$varStack{".areaName"} = $type;
+			$varStack{".areaActor"} = $actor;
+			$varStack{".areaSourceName"} = $owner;
+			$varStack{".areaSourceID"} = $ID;
+			$varStack{".areaPos"} = sprintf("%d %d %s", $spell->{'pos'}{'x'}, $spell->{'pos'}{'y'}, $field->{name});
+			$varStack{".areaDist"} = $dist1;
+			return cmpr($dist1, $cond, $dist)
+		}
+	}
+	return 0
+}
+
 # checks for monster ...
 sub checkMonster {
 	my $line = $_[0];
@@ -717,6 +745,10 @@ sub automacroCheck {
 		} elsif (defined $automacro{$am}->{playerguild}) {
  			if (($trigger eq 'player') || ($trigger eq 'charNameUpdate')) {
 			next CHKAM unless checkPersonGuild($automacro{$am}->{playerguild},$trigger,$args)
+			} else {next CHKAM}
+		} elsif (defined $automacro{$am}->{areaSpell}) {
+			if ($trigger eq 'packet_areaSpell') {
+			next CHKAM unless checkSpellsID($automacro{$am}->{areaSpell})
 			} else {next CHKAM}
 		}
 
