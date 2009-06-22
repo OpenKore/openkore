@@ -1,6 +1,6 @@
 # macro by Arachno
 #
-# $Id: macro.pl r6713 2009-06-07 15:00:00Z ezza $
+# $Id: macro.pl r6731 2009-06-22 14:30:00Z ezza $
 #
 # This source code is licensed under the
 # GNU General Public License, Version 2.
@@ -106,6 +106,7 @@ sub hookOnDemand {
 			if (!defined $load{'is_casting'}) {$load{'is_casting'} = 1}
 			if (!defined $load{'packet_skilluse'}) {$load{'packet_skilluse'} = 1}
 		}
+		if (defined $automacro{$a}->{areaSpell} && !defined $load{'packet_areaSpell'}) {$load{'packet_areaSpell'} = 1}
 		if (defined $automacro{$a}->{pm} && !defined $load{'packet_privMsg'}) {$load{'packet_privMsg'} = 1}
 		if (defined $automacro{$a}->{pubm} && !defined $load{'packet_pubMsg'}) {$load{'packet_pubMsg'} = 1}
 		if (defined $automacro{$a}->{party} && !defined $load{'packet_partyMsg'}) {$load{'packet_partyMsg'} = 1}
