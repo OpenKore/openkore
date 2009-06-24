@@ -1,4 +1,4 @@
-# $Id: Automacro.pm r6734 2009-06-23 1:30:00Z ezza $
+# $Id: Automacro.pm r6735 2009-06-23 1:30:00Z ezza $
 package Macro::Automacro;
 
 use strict;
@@ -83,10 +83,17 @@ sub checkLoc {
 
 # check for pc local time
 sub checkLocalTime {
-	my ($cond, $hr, $min) = $_[0] =~ /([<>=!]+)?\s*(\d{2})?:(\d{2})?$/;
-	return 0 if $cond eq "" || $hr eq "" || $min eq "";
-
-	my $time = $hr * 3600 + $min * 60;
+	my ($cond, $val) = $_[0] =~ /^\s*([<>=!]+)\s+(\$[a-zA-Z][a-zA-Z\d]*|\d{2}:\d{2})\s*$/;
+	return 0 if !defined $cond || !defined $val;
+	my ($time, $hr, $min);
+	if ($val =~ /^\$/) {
+		my ($var) = $val =~ /^\$([a-zA-Z][a-zA-Z\d]*)\s*$/;
+		if (exists $varStack{$var}) {$val = $varStack{$var}}
+		else {return 0}
+	}
+	if ($val =~ /^\d{2}:\d{2}$/) {($hr, $min) = split(/:/, $val, 2)}
+	else {message "Wrong time format: dd:dd\n", "menu"; return 0}
+	$time = $hr * 3600 + $min * 60;
 	my (undef, $lc_min, $lc_hr) = localtime;
 	my $lc_time = $lc_hr * 3600 + $lc_min * 60;
 
