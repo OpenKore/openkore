@@ -1,4 +1,4 @@
-# $Id: Automacro.pm r6735 2009-06-23 1:30:00Z ezza $
+# $Id: Automacro.pm r6737 2009-06-24 23:14:00Z ezza $
 package Macro::Automacro;
 
 use strict;
@@ -21,7 +21,7 @@ use Macro::Utilities qw(between cmpr match getArgs refreshGlobal
 	getPlayerID getSoldOut getInventoryAmount getCartAmount getShopAmount
 	getStorageAmount callMacro sameParty);
 
-our ($rev) = q$Revision: 6573 $ =~ /(\d+)/;
+our ($rev) = q$Revision: 6737 $ =~ /(\d+)/;
 
 # check for variable #######################################
 sub checkVar {
@@ -83,7 +83,7 @@ sub checkLoc {
 
 # check for pc local time
 sub checkLocalTime {
-	my ($cond, $val) = $_[0] =~ /^\s*([<>=!]+)\s+(\$[a-zA-Z][a-zA-Z\d]*|\d{2}:\d{2})\s*$/;
+	my ($cond, $val) = $_[0] =~ /^\s*([<>=!]+)\s*(\$[a-zA-Z][a-zA-Z\d]*|\d{2}:\d{2})\s*$/;
 	return 0 if !defined $cond || !defined $val;
 	my ($time, $hr, $min);
 	if ($val =~ /^\$/) {
