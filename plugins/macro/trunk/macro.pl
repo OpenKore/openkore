@@ -1,6 +1,6 @@
 # macro by Arachno
 #
-# $Id: macro.pl r6736 2009-06-24 23:05:00Z ezza $
+# $Id: macro.pl r6738 2009-06-24 23:05:00Z ezza $
 #
 # This source code is licensed under the
 # GNU General Public License, Version 2.
@@ -8,7 +8,7 @@
 
 package macro;
 my $Version = "2.0.3-svn";
-my ($rev) = q$Revision: 6736 $ =~ /(\d+)/;
+my ($rev) = q$Revision: 6738 $ =~ /(\d+)/;
 
 use strict;
 use Plugins;
@@ -221,7 +221,8 @@ sub commandHandler {
 		message "Macro::Automacro ".$Macro::Automacro::rev."\n";
 		message "Macro::Script ".$Macro::Script::rev."\n";
 		message "Macro::Parser ".$Macro::Parser::rev."\n";
-		message "Macro::Utilities ".$Macro::Utilities::rev."\n"
+		message "Macro::Utilities ".$Macro::Utilities::rev."\n";
+		message "Macro::Data ".$Macro::Data::rev."\n"
 	### debug
 	} elsif ($arg eq 'varstack') {
 		message "Varstack List\n", "menu";
