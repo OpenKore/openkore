@@ -1,4 +1,4 @@
-# $Id: Utilities.pm r6739 2009-06-25 10:40:00Z ezza $
+# $Id: Utilities.pm r6741 2009-06-26 03:30:00Z ezza $
 package Macro::Utilities;
 
 use strict;
@@ -16,7 +16,7 @@ use AI;
 use Log qw(warning error);
 use Macro::Data;
 
-our ($rev) = q$Revision: 6739 $ =~ /(\d+)/;
+our ($rev) = q$Revision: 6741 $ =~ /(\d+)/;
 
 # own ai_Isidle check that excludes deal
 sub ai_isIdle {
@@ -67,22 +67,24 @@ sub cmpr {
 	if ($a =~ /^\s*(-?[\d.]+)\s*\.{2}\s*(-?[\d.]+)\s*$/) {
 		my ($a1, $a2) = ($1, $2);
 		if ($b =~ /^-?[\d.]+$/) {
-			if ($cond eq "!=") {return 1 unless $a1 <= $b && $b <= $a2}
+			if ($cond eq "!=") {return (between($a1, $b, $a2))?0:1}
 			if ($cond eq "=" || $cond eq "==" || $cond eq "=~" || $cond eq "~") {
-				return 1 if $a1 <= $b && $b <= $a2
+				return between($a1, $b, $a2)
 			}
 		}
+		error "cmpr: wrong # of arguments ($a) ($cond) ($b)\n--> ($b) <-- maybe should be numeric?\n", "macro";
 		return 0
 	}
 
 	if ($b =~ /^\s*(-?[\d.]+)\s*\.{2}\s*(-?[\d.]+)\s*$/) {
 		my ($b1, $b2) = ($1, $2);
 		if ($a =~ /^-?[\d.]+$/) {
-			if ($cond eq "!=") {return 1 unless $b1 <= $a && $a <= $b2}
+			if ($cond eq "!=") {return (between($b1, $a, $b2))?0:1}
 			if ($cond eq "=" || $cond eq "==" || $cond eq "=~" || $cond eq "~") {
-				return 1 if $b1 <= $a && $a <= $b2
+				return between($b1, $a, $b2)
 			}
 		}
+		error "cmpr: wrong # of arguments ($a) ($cond) ($b)\n--> ($a) <-- maybe should be numeric?\n", "macro";
 		return 0
 	}
 
