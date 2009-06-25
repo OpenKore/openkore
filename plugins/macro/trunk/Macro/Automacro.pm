@@ -1,4 +1,4 @@
-# $Id: Automacro.pm r6737 2009-06-24 23:14:00Z ezza $
+# $Id: Automacro.pm r6739 2009-06-25 10:40:00Z ezza $
 package Macro::Automacro;
 
 use strict;
@@ -21,7 +21,7 @@ use Macro::Utilities qw(between cmpr match getArgs refreshGlobal
 	getPlayerID getSoldOut getInventoryAmount getCartAmount getShopAmount
 	getStorageAmount callMacro sameParty);
 
-our ($rev) = q$Revision: 6737 $ =~ /(\d+)/;
+our ($rev) = q$Revision: 6739 $ =~ /(\d+)/;
 
 # check for variable #######################################
 sub checkVar {
@@ -370,6 +370,7 @@ sub checkEquip {
 sub checkCast {
 	my ($cast, $args) = @_;
 	$cast = lc($cast);
+	my $party = ($cast =~ s/^party +//)?1:0;
 	my $pos = calcPosition($char);
 	return 0 if $args->{sourceID} eq $accountID;
 	my $target = (defined $args->{targetID})?$args->{targetID}:0;
@@ -399,11 +400,11 @@ sub checkCast {
 		else {$varStack{".casterTarget"} = "$args->{x}" . " $args->{y}"}
 		return 1
 
-	} elsif (existsInList($cast, lc(Skill->new(idn => $args->{skillID})->getName()))) {
+	} elsif ($party && existsInList($cast, lc(Skill->new(idn => $args->{skillID})->getName()))) {
 		return 0 if !$char->{'party'} || !%{$char->{'party'}};
 		if (my $actor = $monstersList->getByID($source)) {
 			foreach my Actor::Player $player (@{$playersList->getItems()}) {
-				next unless sameParty($player);
+				next unless sameParty($player->{name});
 				if ($target eq $player->{ID} || ($player->{pos_to}{x} == $args->{x} && $player->{pos_to}{y} == $args->{y}) || distance($player->{pos}, $args) <= judgeSkillArea($args->{skillID})) {
 					$varStack{".caster"} = "monster";
 					$varStack{".casterName"} = $actor->{name};
@@ -417,9 +418,9 @@ sub checkCast {
 			}
 
 		} elsif (my $actor = $playersList->getByID($source)) {
-			return 0 if sameParty($actor);
+			return 0 if sameParty($actor->{name});
 			foreach my Actor::Player $player (@{$playersList->getItems()}) {
-				next unless sameParty($player);
+				next unless sameParty($player->{name});
 				if ($target eq $player->{ID} || ($player->{pos_to}{x} == $args->{x} && $player->{pos_to}{y} == $args->{y}) || distance($player->{pos}, $args) <= judgeSkillArea($args->{skillID})) {
 					$varStack{".caster"} = "player";
 					$varStack{".casterName"} = (defined $actor->{name})?$actor->{name}:"Unknown";

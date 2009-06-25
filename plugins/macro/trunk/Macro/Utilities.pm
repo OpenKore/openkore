@@ -1,4 +1,4 @@
-# $Id: Utilities.pm r6721 2009-06-15 15:55:00Z ezza $
+# $Id: Utilities.pm r6739 2009-06-25 10:40:00Z ezza $
 package Macro::Utilities;
 
 use strict;
@@ -16,7 +16,7 @@ use AI;
 use Log qw(warning error);
 use Macro::Data;
 
-our ($rev) = q$Revision: 6578 $ =~ /(\d+)/;
+our ($rev) = q$Revision: 6739 $ =~ /(\d+)/;
 
 # own ai_Isidle check that excludes deal
 sub ai_isIdle {
@@ -196,7 +196,8 @@ sub refreshGlobal {
 	if ($char->{muted}) {push @statuses, "muted"}
 	if ($char->{dead}) {push @statuses, "dead"}
 	foreach (keys %{$char->{statuses}}) {push @statuses, $_}
-	$varStack{".status"} = join ',', @statuses
+	if (@{\@statuses} > 0) {$varStack{".status"} = join ',', @statuses}
+	else {$varStack{".status"} = "none"}
 }
 
 # get NPC array index
@@ -387,7 +388,7 @@ sub sameParty {
 	for (my $i = 0; $i < @partyUsersID; $i++) {
 		next if $partyUsersID[$i] eq "";
 		next if $partyUsersID[$i] eq $accountID;
-		return 1 if $char->{'party'}{'users'}{$partyUsersID[$i]}{'name'} eq $player->{name}
+		return 1 if $char->{'party'}{'users'}{$partyUsersID[$i]}{'name'} eq $player
 	}
 	return 0
 }
