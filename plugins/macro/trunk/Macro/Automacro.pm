@@ -1,4 +1,4 @@
-# $Id: Automacro.pm r6740 2009-06-25 16:40:00Z ezza $
+# $Id: Automacro.pm r6741 2009-06-26 03:30:00Z ezza $
 package Macro::Automacro;
 
 use strict;
@@ -21,7 +21,7 @@ use Macro::Utilities qw(between cmpr match getArgs refreshGlobal
 	getPlayerID getSoldOut getInventoryAmount getCartAmount getShopAmount
 	getStorageAmount callMacro sameParty);
 
-our ($rev) = q$Revision: 6740 $ =~ /(\d+)/;
+our ($rev) = q$Revision: 6741 $ =~ /(\d+)/;
 
 # check for variable #######################################
 sub checkVar {
@@ -83,7 +83,7 @@ sub checkLoc {
 
 # check for pc local time
 sub checkLocalTime {
-	my ($cond, $val) = $_[0] =~ /^\s*([<>=!]+)\s*(\$[a-zA-Z][a-zA-Z\d]*|\d{2}:\d{2})\s*$/;
+	my ($cond, $val) = $_[0] =~ /^\s*([<>=!]+)\s+(\$[a-zA-Z][a-zA-Z\d]*|\d{2}:\d{2})\s*$/;
 	return 0 if !defined $cond || !defined $val;
 	my ($time, $hr, $min);
 	if ($val =~ /^\$/) {
@@ -127,7 +127,6 @@ sub checkPersonGuild {
 	$varStack{".lastGuildNameBinIDName"} = undef;
 	$varStack{".lastGuildNameBinIDJobName"} = undef;
 
-	
 	if ($guild eq 'guild.txt') {
 		my @gld;
 		if (open(FILE, "<", Settings::getControlFilename("guild.txt"))) {
@@ -171,7 +170,7 @@ sub checkPersonGuild {
 # checks for base/job level ################################
 # uses cmpr (Macro::Utils)
 sub checkLevel {
-	my ($cond, $level) = $_[0] =~ /([<>=!]+)\s*(\$[a-zA-Z][a-zA-Z\d]*|\d+|\d+\s*\.{2}\s*\d+)\s*$/;
+	my ($cond, $level) = $_[0] =~ /([<>=!]+)\s+(\$[a-zA-Z][a-zA-Z\d]*|\d+|\d+\s*\.{2}\s*\d+)\s*$/;
 	if ($level =~ /^\s*\$/) {
 		my ($var) = $level =~ /^\$([a-zA-Z][a-zA-Z\d]*)\s*$/;
 		return 0 unless defined $var;
@@ -198,7 +197,7 @@ sub checkClass {
 # uses cmpr (Macro::Utils)
 sub checkPercent {
 	my ($arg, $what) = @_;
-	my ($cond, $amount) = $arg =~ /([<>=!]+)\s*(\$[a-zA-Z][a-zA-Z\d]*%?|\d+%?|\d+\s*\.{2}\s*\d+%?)\s*$/;
+	my ($cond, $amount) = $arg =~ /([<>=!]+)\s+(\$[a-zA-Z][a-zA-Z\d]*%?|\d+%?|\d+\s*\.{2}\s*\d+%?)\s*$/;
 	if ($what =~ /^(?:hp|sp|weight)$/) {
 		return 0 unless (defined $char->{$what} && defined $char->{$what."_max"});
 		if ($amount =~ /^\s*(?:\d+|\d+\s*\.{2}\s*\d+)%$/ && $char->{$what."_max"}) {
@@ -314,7 +313,7 @@ sub checkPerson {
 # checks arg1 for condition in arg3 #######################
 # uses: cmpr (Macro::Utils)
 sub checkCond {
-	my ($cond, $amount) = $_[1] =~ /([<>=!]+)\s*(\$[a-zA-Z][a-zA-Z\d]*|\d+|\d+\s*\.{2}\s*\d+)\s*$/;
+	my ($cond, $amount) = $_[1] =~ /([<>=!]+)\s+(\$[a-zA-Z][a-zA-Z\d]*|\d+|\d+\s*\.{2}\s*\d+)\s*$/;
 	if ($amount =~ /^\s*\$/) {
 		my ($var) = $amount =~ /^\$([a-zA-Z][a-zA-Z\d]*)\s*$/;
 		return 0 unless defined $var;
@@ -608,7 +607,7 @@ sub checkNotMonster {
 
 # checks for aggressives
 sub checkAggressives {
-	my ($cond, $amount) = $_[0] =~ /([<>=!]+)\s*(\$[a-zA-Z][a-zA-Z\d]*|\d+|\d+\s*\.{2}\s*\d+)\s*$/;
+	my ($cond, $amount) = $_[0] =~ /([<>=!]+)\s+(\$[a-zA-Z][a-zA-Z\d]*|\d+|\d+\s*\.{2}\s*\d+)\s*$/;
 	if ($amount =~ /^\s*\$/) {
 		my ($var) = $amount =~ /^\$([a-zA-Z][a-zA-Z\d]*)\s*$/;
 		return 0 unless defined $var;
