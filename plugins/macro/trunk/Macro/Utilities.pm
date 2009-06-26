@@ -1,4 +1,4 @@
-# $Id: Utilities.pm r6741 2009-06-26 03:30:00Z ezza $
+# $Id: Utilities.pm r6742 2009-06-26 10:30:00Z ezza $
 package Macro::Utilities;
 
 use strict;
@@ -16,7 +16,7 @@ use AI;
 use Log qw(warning error);
 use Macro::Data;
 
-our ($rev) = q$Revision: 6741 $ =~ /(\d+)/;
+our ($rev) = q$Revision: 6742 $ =~ /(\d+)/;
 
 # own ai_Isidle check that excludes deal
 sub ai_isIdle {
@@ -185,6 +185,8 @@ sub refreshGlobal {
 	my $pos = calcPosition($char); $varStack{".pos"} = sprintf("%d %d", $pos->{x}, $pos->{y});
 	$varStack{".time"} = time;
 	$varStack{".datetime"} = scalar localtime;
+	my @time = split(/ /, $varStack{".datetime"});
+	($varStack{".hour"}, $varStack{".minute"}, $varStack{".second"}) = split(/:/, $time[3], 3);
 	$varStack{".hp"} = $char->{hp};
 	$varStack{".sp"} = $char->{sp};
 	$varStack{".lvl"} = $char->{lv};
