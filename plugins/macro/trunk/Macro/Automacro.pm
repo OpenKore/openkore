@@ -1,4 +1,4 @@
-# $Id: Automacro.pm r6741 2009-06-26 03:30:00Z ezza $
+# $Id: Automacro.pm r6742 2009-06-26 10:30:00Z ezza $
 package Macro::Automacro;
 
 use strict;
@@ -21,7 +21,7 @@ use Macro::Utilities qw(between cmpr match getArgs refreshGlobal
 	getPlayerID getSoldOut getInventoryAmount getCartAmount getShopAmount
 	getStorageAmount callMacro sameParty);
 
-our ($rev) = q$Revision: 6741 $ =~ /(\d+)/;
+our ($rev) = q$Revision: 6742 $ =~ /(\d+)/;
 
 # check for variable #######################################
 sub checkVar {
@@ -83,19 +83,22 @@ sub checkLoc {
 
 # check for pc local time
 sub checkLocalTime {
-	my ($cond, $val) = $_[0] =~ /^\s*([<>=!]+)\s+(\$[a-zA-Z][a-zA-Z\d]*|\d{2}:\d{2})\s*$/;
+	my ($cond, $val) = $_[0] =~ /^\s*([<>=!]+)\s+(\$[a-zA-Z][a-zA-Z\d]*|\d{2}:\d{2}(?::\d{2})?)\s*$/;
 	return 0 if !defined $cond || !defined $val;
-	my ($time, $hr, $min);
+	my ($time, $hr, $min, $sec);
 	if ($val =~ /^\$/) {
 		my ($var) = $val =~ /^\$([a-zA-Z][a-zA-Z\d]*)\s*$/;
 		if (exists $varStack{$var}) {$val = $varStack{$var}}
 		else {return 0}
 	}
-	if ($val =~ /^\d{2}:\d{2}$/) {($hr, $min) = split(/:/, $val, 2)}
-	else {message "Wrong time format: dd:dd\n", "menu"; return 0}
-	$time = $hr * 3600 + $min * 60;
-	my (undef, $lc_min, $lc_hr) = localtime;
-	my $lc_time = $lc_hr * 3600 + $lc_min * 60;
+	if ($val =~ /^\d{2}:\d{2}(?::\d{2})?\s*$/) {
+		($hr, $min, $sec) = split(/:/, $val, 3);
+		$sec = 0 if !defined $sec;
+	}
+	else {message "Wrong time format: hh:mm:ss\n", "menu"; return 0}
+	$time = $hr * 3600 + $min * 60 + $sec;
+	my ($lc_sec, $lc_min, $lc_hr) = localtime;
+	my $lc_time = $lc_hr * 3600 + $lc_min * 60 + $lc_sec;
 
 	return cmpr($lc_time, $cond, $time)?1:0;
 }
