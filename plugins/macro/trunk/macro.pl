@@ -1,6 +1,6 @@
 # macro by Arachno
 #
-# $Id: macro.pl r6738 2009-06-24 23:05:00Z ezza $
+# $Id: macro.pl r6744 2009-06-28 20:05:00Z ezza $
 #
 # This source code is licensed under the
 # GNU General Public License, Version 2.
@@ -8,7 +8,7 @@
 
 package macro;
 my $Version = "2.0.3-svn";
-my ($rev) = q$Revision: 6738 $ =~ /(\d+)/;
+my ($rev) = q$Revision: 6744 $ =~ /(\d+)/;
 
 use strict;
 use Plugins;
@@ -165,7 +165,7 @@ sub commandHandler {
 			($automacro{$a}->{priority} or 0) <=> ($automacro{$b}->{priority} or 0)
 		} keys %automacro) {message "$a\n"}
 		message(sprintf("%sPerl Sub%s\n", "-"x9, "-"x8), "list");
-		foreach my $s (@macro_block) {message "$s\n"}
+		foreach my $s (@perl_name) {message "$s\n"}
 		message(sprintf("%s\n","-"x25), "list");
 	### parameter: status
 	} elsif ($arg eq 'status') {
