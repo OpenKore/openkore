@@ -1,4 +1,4 @@
-# $Id: Parser.pm r6742 2009-06-28 19:30:00Z ezza $
+# $Id: Parser.pm r6744 2009-06-28 20:05:00Z ezza $
 package Macro::Parser;
 
 use strict;
@@ -19,7 +19,7 @@ use Macro::Utilities qw(refreshGlobal getnpcID getItemIDs getItemPrice getStorag
 	getPlayerID getVenderID getRandom getRandomRange getInventoryAmount getCartAmount getShopAmount
 	getStorageAmount getVendAmount getConfig getWord q4rx q4rx2 getArgFromList getListLenght);
 
-our ($rev) = q$Revision: 6742 $ =~ /(\d+)/;
+our ($rev) = q$Revision: 6744 $ =~ /(\d+)/;
 
 # adapted config file parser
 sub parseMacroFile {
@@ -27,12 +27,13 @@ sub parseMacroFile {
 	unless ($no_undef) {
 		undef %macro;
 		undef %automacro;
-		undef @macro_block
+		undef @perl_name
 	}
 
 	my %block;
 	my $tempmacro = 0;
 	my $inBlock = 0;
+	my ($macro_subs, @perl_lines);
 	open FILE, "<:utf8", $file or return 0;
 	foreach (<FILE>) {
 		s/(.*)[\s\t]+#.*$/$1/;	# remove last comments
@@ -101,24 +102,19 @@ sub parseMacroFile {
 		if (%block && $block{type} eq "sub") {
 			if ($_ eq "}") {
 				if ($inBlock > 0) {
-					$macro_sub = $macro_sub.$_;
+					push(@perl_lines, $_);
 					$inBlock--;
 					next
 				}
-				sub_execute($block{name}, $macro_sub);
-				push(@macro_block, $block{name}) unless existsInList(join(',', @macro_block), $block{name});
-				undef %block; undef $macro_sub;
+				$macro_subs = join('', @perl_lines);
+				sub_execute($block{name}, $macro_subs);
+				push(@perl_name, $block{name}) unless existsInList(join(',', @perl_name), $block{name});
+				undef %block; undef @perl_lines; undef $macro_subs;
 				$inBlock = 0
-			} else {
-				if ($_ =~ /^}.*?{$/ && $inBlock > 0) {$macro_sub = $macro_sub.$_; next}
-				if ($_ =~ /{$/) {$inBlock++}
-				if ($macro_sub eq "") {
-					$macro_sub = $_
-				}
-				else {
-					$macro_sub = $macro_sub.$_
-				}
 			}
+			elsif ($_ =~ /^}.*?{$/ && $inBlock > 0) {push(@perl_lines, $_)}
+			elsif ($_ =~ /{$/) {$inBlock++;	push(@perl_lines, $_)}
+			else {push(@perl_lines, $_)}
 			next
 		}
 		
@@ -301,7 +297,7 @@ sub parseCmd {
 	undef $ret; undef $arg;
 	while (($sub, $val) = parseSub($cmd)) {
 		my $sub_error = 1;
-		foreach my $e (@macro_block) {
+		foreach my $e (@perl_name) {
 			if ($e eq $sub) {
 				$sub_error = 0;
 			}

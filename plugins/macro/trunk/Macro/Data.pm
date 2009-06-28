@@ -1,15 +1,14 @@
-# $Id: Data.pm r6738 2009-06-23 23:21:00Z ezza $
+# $Id: Data.pm r6744 2009-06-28 20:05:00Z ezza $
 package Macro::Data;
 
 use strict;
 
 require Exporter;
-our ($rev) = q$Revision: 6738 $ =~ /(\d+)/;
+our ($rev) = q$Revision: 6744 $ =~ /(\d+)/;
 our @ISA = qw(Exporter);
-our @EXPORT = qw(@macro_block $macro_sub $inBlock %macro %automacro %varStack $queue $onHold %amSingle %amMulti $macroKeywords);
+our @EXPORT = qw(@perl_name %macro %automacro %varStack $queue $onHold %amSingle %amMulti $macroKeywords);
 
-our @macro_block;
-our $macro_sub;
+our @perl_name;
 our %macro;
 our %automacro;
 our %varStack;
