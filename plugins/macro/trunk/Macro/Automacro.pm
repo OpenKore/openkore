@@ -1,4 +1,4 @@
-# $Id: Automacro.pm r6742 2009-06-26 10:30:00Z ezza $
+# $Id: Automacro.pm r6745 2009-06-29 10:30:00Z ezza $
 package Macro::Automacro;
 
 use strict;
@@ -21,7 +21,7 @@ use Macro::Utilities qw(between cmpr match getArgs refreshGlobal
 	getPlayerID getSoldOut getInventoryAmount getCartAmount getShopAmount
 	getStorageAmount callMacro sameParty);
 
-our ($rev) = q$Revision: 6742 $ =~ /(\d+)/;
+our ($rev) = q$Revision: 6745 $ =~ /(\d+)/;
 
 # check for variable #######################################
 sub checkVar {
@@ -137,9 +137,8 @@ sub checkPersonGuild {
 				$_ =~ s/\x{FEFF}//g;
 				chomp($_);
 				next if ($_ =~ /^[\n\r#]/);
-				$_ =~ /^(.*)$/; $_ =~ s/\s+$//; $_ =~ s/^\s+//;
+				$_ =~ /^(.*)$/; $_ =~ s/  +$/ /; $_ =~ s/^  +/ /;
 				push @gld, $_;
-				#$guild = $guild .',' unless ($guild eq ''); #$guild = $guild . $_;
 			}
 			close FILE;
         	}
@@ -355,20 +354,8 @@ sub checkEquip {
 	return 0
 }
 
-# checks for a spell casted on us #########################
+# checks for a spell casted on us/party members #########################
 # uses: distance, judgeSkillArea (Utils?)
-#sub checkCast {
-#	my ($cast, $args) = @_;
-#	$cast = lc($cast);
-#	my $pos = calcPosition($char);
-#	return 0 if $args->{sourceID} eq $accountID;
-#	my $target = (defined $args->{targetID})?$args->{targetID}:0;
-#	if (($target eq $accountID ||
-#		($pos->{x} == $args->{x} && $pos->{y} == $args->{y}) ||
-#		distance($pos, $args) <= judgeSkillArea($args->{skillID})) &&
-#		existsInList($cast, lc(Skill->new(idn => $args->{skillID})->getName()))) {return 1}
-#	return 0
-#}
 sub checkCast {
 	my ($cast, $args) = @_;
 	return 0 if $args->{sourceID} eq $accountID;
@@ -541,7 +528,8 @@ sub checkMonster {
 			my $mypos = calcPosition($char);
 			my $pos = calcPosition($monsters{$_});
 			my $dist = sprintf("%.1f",distance($pos, $mypos));
-			if (existsInList($monsterList, $monsters{$_}->{name}) && $dist < 3) {$use = 0; last}		}
+			if (existsInList($monsterList, $monsters{$_}->{name}) && $dist < 3) {$use = 0; last}
+		}
 		elsif ($not) {
 			next if existsInList($monsterList, $monsters{$_}->{name});
 			my $mypos = calcPosition($char);
