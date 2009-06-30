@@ -118,7 +118,7 @@ sub q4rx2 {
 	# We let alone the original q4rx sub routine... 
 	# instead, we use this for our new @nick ;p
 	my $s = $_[0];
-	$s =~ s/([\/*+(){}\[\]\\\$\^?"' ])/\\$1/g;
+	$s =~ s/([\/*+(){}\[\]\\\$\^?"'\. ])/\\$1/g;
 	return $s
 }
 
@@ -304,11 +304,11 @@ sub getInventoryAmount {
 # get amount of an item in cart
 sub getCartAmount {
 	my $arg = lc($_[0]);
-	return 0 unless $cart{inventory};
+	return 0 unless $cart{'inventory'};
 	my $amount = 0;
 	for (my $id = 0; $id < @{$cart{'inventory'}}; $id++) {
 		next unless $cart{'inventory'}[$id];
-		if (lc($cart{'inventory'}[$id]{name}) eq $arg) {$amount += $cart{'inventory'}[$id]{amount}}
+		if (lc($cart{'inventory'}[$id]{'name'}) eq $arg) {$amount += $cart{'inventory'}[$id]{amount}}
 	}
 	return $amount
 }
