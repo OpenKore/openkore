@@ -59,9 +59,11 @@ sub query {
 
 	for (my $i = 0; $i < @{$clients}; $i++) {
 		if ($clients->[$i]) {
-			$clients->[$i]->send($packet);
-			$self->{state} = 'requesting';
-			return;
+			if ($clients->[$i]{connectedToMap}) {
+                		$clients->[$i]->send($packet);
+                		$self->{state} = 'requesting';
+                		return;
+			}
 		}
 	}
 	print "Error: no Ragnarok Online client connected.\n";
@@ -792,6 +794,7 @@ sub mapLogin {
 			pack("v2 x2 v3 a24 C1", 28, 16, 10, 40, 9, "AL_HEAL", 0); # target skill test
 	}
 	$client->send($data);
+	$client->{connectedToMap} = 1;
 }
 
 1;
