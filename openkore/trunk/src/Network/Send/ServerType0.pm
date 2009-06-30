@@ -150,7 +150,7 @@ sub sendCharCreate {
 	my $msg = pack("C*", 0x67, 0x00) .
 		pack("a24", stringToBytes($name)) .
 		pack("C*", $str, $agi, $vit, $int, $dex, $luk, $slot) .
-		pack("v*", $hair_style, $hair_color);
+		pack("v*", $hair_color, $hair_style);
 	$self->sendToServer($msg);
 }
 
