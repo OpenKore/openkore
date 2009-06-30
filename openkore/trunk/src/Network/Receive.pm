@@ -257,7 +257,7 @@ sub new {
 		'01C3' => ['local_broadcast', 'x2 a3 x9 Z*', [qw(color message)]],
 		'01C4' => ['storage_item_added', 'v1 V1 v1 C1 C1 C1 C1 a8', [qw(index amount ID type identified broken upgrade cards)]],
 		'01C5' => ['cart_item_added', 'v1 V1 v1 x C1 C1 C1 a8', [qw(index amount ID identified broken upgrade cards)]],
-		'01C8' => ['item_used', 'v1 v1 a4 v1', [qw(index itemID ID remaining)]],
+		'01C8' => ['item_used', 'v1 v1 a4 v1 C1', [qw(index itemID ID remaining success)]],
 		'01C9' => ['area_spell', 'a4 a4 v2 C2 C Z80', [qw(ID sourceID x y type fail scribbleLen scribbleMsg)]],
 		'01CD' => ['sage_autospell'],
 		'01CF' => ['devotion', 'a4 a20', [qw(sourceID data)]],
@@ -3305,37 +3305,45 @@ sub inventory_item_removed {
 sub item_used {
 	my ($self, $args) = @_;
 
-	my ($index, $itemID, $ID, $remaining) =
-		@{$args}{qw(index itemID ID remaining)};
+	my ($index, $itemID, $ID, $remaining, $success) =
+		@{$args}{qw(index itemID ID remaining success)};
 	my %hook_args = (
 		serverIndex => $index,
 		itemID => $itemID,
 		userID => $ID,
-		remaining => $remaining
+		remaining => $remaining,
+		success => $success
 	);
 
 	if ($ID eq $accountID) {
 		my $item = $char->inventory->getByServerIndex($index);
 		if ($item) {
-			my $amount = $item->{amount} - $remaining;
-			$item->{amount} -= $amount;
+			if ($success == 1) {
+				my $amount = $item->{amount} - $remaining;
+				$item->{amount} -= $amount;
 
-			message TF("You used Item: %s (%d) x %d - %d left\n", $item->{name}, $item->{invIndex},
-				$amount, $remaining), "useItem", 1;
-			$itemChange{$item->{name}}--;
-			if ($item->{amount} <= 0) {
-				$char->inventory->remove($item);
+				message TF("You used Item: %s (%d) x %d - %d left\n", $item->{name}, $item->{invIndex},
+					$amount, $remaining), "useItem", 1;
+				$itemChange{$item->{name}}--;
+				if ($item->{amount} <= 0) {
+					$char->inventory->remove($item);
+				}
+
+				$hook_args{item} = $item;
+				$hook_args{invIndex} = $item->{invIndex};
+				$hook_args{name} => $item->{name};
+				$hook_args{amount} = $amount;
+
+			} else {
+				message TF("You failed to use item: %s (%d)\n", $item ? $item->{name} : "#$itemID", $remaining), "useItem", 1;
 			}
-
-			$hook_args{item} = $item;
-			$hook_args{invIndex} = $item->{invIndex};
-			$hook_args{name} => $item->{name};
-			$hook_args{amount} = $amount;
-
-		} else {
-			message TF("You used unknown item #%d - %d left\n", $itemID, $remaining), "useItem", 1;
+ 		} else {
+			if ($success == 1) {
+				message TF("You used unknown item #%d - %d left\n", $itemID, $remaining), "useItem", 1;
+			} else {
+				message TF("You failed to use unknown item #%d - %d left\n", $itemID, $remaining), "useItem", 1;
+			}
 		}
-
 	} else {
 		my $actor = Actor::get($ID);
 		my $itemDisplay = itemNameSimple($itemID);
