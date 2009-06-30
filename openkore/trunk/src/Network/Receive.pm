@@ -3309,7 +3309,7 @@ sub item_used {
 		@{$args}{qw(index itemID ID remaining)};
 	my %hook_args = (
 		serverIndex => $index,
-		itemID => $ID,
+		itemID => $itemID,
 		userID => $ID,
 		remaining => $remaining
 	);
