@@ -1,10 +1,10 @@
-# $Id: Data.pm r6744 2009-06-28 20:05:00Z ezza $
+# $Id: Data.pm r6753 2009-07-02 00:43:00Z ezza $
 package Macro::Data;
 
 use strict;
 
 require Exporter;
-our ($rev) = q$Revision: 6744 $ =~ /(\d+)/;
+our ($rev) = q$Revision: 6753 $ =~ /(\d+)/;
 our @ISA = qw(Exporter);
 our @EXPORT = qw(@perl_name %macro %automacro %varStack $queue $onHold %amSingle %amMulti $macroKeywords);
 
@@ -73,21 +73,21 @@ our %amMulti = (
 
 our $macroKeywords =
 	"npc"          . "|" .
-	"cart"         . "|" .
-	"inventory"    . "|" .
 	"store"        . "|" .
-	"storage"      . "|" .
 	"player"       . "|" .
-	"vender"       . "|" .
 	"venderitem"   . "|" .
 	"venderprice"  . "|" .
 	"venderamount" . "|" .
 	"random"       . "|" .
 	"rand"         . "|" .
-	"[Ii]nvamount" . "|" .
-	"[Cc]artamount". "|" .
-	"[Ss]hopamount". "|" .
-	"[Ss]toramount". "|" .
+	"invamount"    . "|" .
+	"cartamount"   . "|" .
+	"shopamount"   . "|" .
+	"storamount"   . "|" .
+	"[Ii]nventory" . "|" .
+	"[Ss]torage"   . "|" .
+	"[Cc]art"      . "|" .
+	"vender"       . "|" .
 	"config"       . "|" .
 	"eval"         . "|" .
 	"arg"          . "|" .
