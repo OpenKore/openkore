@@ -1,4 +1,4 @@
-# $Id: Automacro.pm r6745 2009-06-29 10:30:00Z ezza $
+# $Id: Automacro.pm r6752 2009-07-01 11:42:00Z ezza $
 package Macro::Automacro;
 
 use strict;
@@ -21,7 +21,7 @@ use Macro::Utilities qw(between cmpr match getArgs refreshGlobal
 	getPlayerID getSoldOut getInventoryAmount getCartAmount getShopAmount
 	getStorageAmount callMacro sameParty);
 
-our ($rev) = q$Revision: 6745 $ =~ /(\d+)/;
+our ($rev) = q$Revision: 6752 $ =~ /(\d+)/;
 
 # check for variable #######################################
 sub checkVar {
@@ -135,9 +135,10 @@ sub checkPersonGuild {
 		if (open(FILE, "<", Settings::getControlFilename("guild.txt"))) {
 			while (<FILE>) {
 				$_ =~ s/\x{FEFF}//g;
-				chomp($_);
+				#chomp($_);
 				next if ($_ =~ /^[\n\r#]/);
-				$_ =~ /^(.*)$/; $_ =~ s/  +$/ /; $_ =~ s/^  +/ /;
+				#$_ =~ /^(.*)$/;
+				$_ =~ s/  +$/ /; $_ =~ s/^  +/ /;
 				push @gld, $_;
 			}
 			close FILE;
@@ -630,7 +631,7 @@ sub consoleCheckWrapper {
 
 # checks for map change
 sub checkMapChange {
-	return ($_[0] eq '*' || existsInList($_[0], $field->name))?1:0
+	return ($_[0] eq 'any' || $_[0] eq '*' || existsInList($_[0], $field->name))?1:0
 }
 
 # checks for eval
