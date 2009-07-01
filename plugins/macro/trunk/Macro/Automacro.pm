@@ -1,4 +1,4 @@
-# $Id: Automacro.pm r6752 2009-07-01 11:42:00Z ezza $
+# $Id: Automacro.pm r6754 2009-07-01 11:42:00Z ezza $
 package Macro::Automacro;
 
 use strict;
@@ -21,7 +21,7 @@ use Macro::Utilities qw(between cmpr match getArgs refreshGlobal
 	getPlayerID getSoldOut getInventoryAmount getCartAmount getShopAmount
 	getStorageAmount callMacro sameParty);
 
-our ($rev) = q$Revision: 6752 $ =~ /(\d+)/;
+our ($rev) = q$Revision: 6754 $ =~ /(\d+)/;
 
 # check for variable #######################################
 sub checkVar {
@@ -135,7 +135,7 @@ sub checkPersonGuild {
 		if (open(FILE, "<", Settings::getControlFilename("guild.txt"))) {
 			while (<FILE>) {
 				$_ =~ s/\x{FEFF}//g;
-				#chomp($_);
+				chomp($_);
 				next if ($_ =~ /^[\n\r#]/);
 				#$_ =~ /^(.*)$/;
 				$_ =~ s/  +$/ /; $_ =~ s/^  +/ /;
