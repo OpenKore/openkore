@@ -1,4 +1,4 @@
-# $Id: Parser.pm r6744 2009-06-28 20:05:00Z ezza $
+# $Id: Parser.pm r6755 2009-07-02 11:05:00Z ezza $
 package Macro::Parser;
 
 use strict;
@@ -19,7 +19,7 @@ use Macro::Utilities qw(refreshGlobal getnpcID getItemIDs getItemPrice getStorag
 	getPlayerID getVenderID getRandom getRandomRange getInventoryAmount getCartAmount getShopAmount
 	getStorageAmount getVendAmount getConfig getWord q4rx q4rx2 getArgFromList getListLenght);
 
-our ($rev) = q$Revision: 6744 $ =~ /(\d+)/;
+our ($rev) = q$Revision: 6755 $ =~ /(\d+)/;
 
 # adapted config file parser
 sub parseMacroFile {
@@ -226,9 +226,11 @@ sub subvars {
 
 	# variables
 	while (($var) = $pre =~ /(?:^|[^\\])\$(\.?[a-z][a-z\d]*)/i) {
+		my $temp = $pre;
 		$tmp = (defined $varStack{$var})?$varStack{$var}:"";
 		$var = q4rx $var;
 		$pre =~ s/(^|[^\\])\$$var([^a-zA-Z\d]|$)/$1$tmp$2/g;
+		last if $temp =~ /\$\.lastMatch\d+/i
 	}
 
 	# doublevars
