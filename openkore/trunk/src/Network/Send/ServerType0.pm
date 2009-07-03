@@ -22,7 +22,7 @@ use Digest::MD5;
 use Network::Send ();
 use base qw(Network::Send);
 use Plugins;
-use Globals qw($accountID $sessionID $sessionID2 $accountSex $char $charID %config %guild @chars $masterServer $syncSync);
+use Globals qw($accountID $sessionID $sessionID2 $accountSex $char $charID %config %guild @chars $masterServer $syncSync $inboxList);
 use Log qw(debug);
 use Translation qw(T TF);
 use I18N qw(stringToBytes);
@@ -1382,6 +1382,64 @@ sub sendMessageIDEncryptionInitialized {
 	my $msg = pack("C*", 0xAF, 0x02);
 	$self->sendToServer($msg);
 	debug "Sent Message ID Encryption Initialized\n", "sendPacket", 2;
+}
+
+sub sendMailboxOpen {
+	my $self = $_[0];
+	my $msg = pack("C*", 0x3F, 0x02);
+	$self->sendToServer($msg);
+	debug "Sent mailbox open.\n", "sendPacket", 2;
+}
+
+sub sendMailRead {
+	my ($self, $mailID) = @_;
+	my $msg = pack("C2 V1", 0x41, 0x02, $mailID);
+	$self->sendToServer($msg);
+	debug "Sent read mail.\n", "sendPacket", 2;
+}
+
+sub sendMailDelete {
+	my ($self, $index) = @_;
+	my $msg = pack("C2 V1", 0x43, 0x02, $inboxList->[$index]->{mailID});
+	$self->sendToServer($msg);
+	debug "Sent delete mail.\n", "sendPacket", 2;
+}
+
+sub sendMailReturn {
+	my ($self, $index) = @_;
+	my $msg = pack("C2 V1 Z24", 0x73, 0x02, $inboxList->[$index]->{mailID}, $inboxList->[$index]->{sender});
+	$self->sendToServer($msg);
+	debug "Sent return mail.\n", "sendPacket", 2;
+}
+
+sub sendMailOperateWindow {
+	my ($self, $window) = @_;
+	my $msg = pack("C2 C1 x1", 0x46, 0x02, $window);
+	$self->sendToServer($msg);
+	debug "Sent mail window.\n", "sendPacket", 2;
+}
+
+sub sendMailGetAttach {
+	my ($self, $index) = @_;
+	my $msg = pack("C2 V1", 0x44, 0x02, $inboxList->[$index]->{mailID});
+	$self->sendToServer($msg);
+	debug "Sent mail get attachment.\n", "sendPacket", 2;
+}
+
+sub sendMailSetAttach {
+	my $self = $_[0];
+	my $amount = $_[1];
+	my $index = (defined $_[2]) ? $_[2] : 0;	# 0 for zeny
+	my $msg = pack("C2 v1 V1", 0x47, 0x02, $index, $amount);
+	$self->sendToServer($msg);
+	debug "Sent mail set attachment.\n", "sendPacket", 2;
+}
+
+sub sendMailSend {
+	my ($self, $length, $receiver, $title, $msglength, $mailmsg) = @_;
+	my $msg = pack("C2 v1 Z24 a40 C1 Z*", 0x48, 0x02, $length, $receiver, $title, $msglength, $mailmsg);
+	$self->sendToServer($msg);
+	debug "Sent mail send.\n", "sendPacket", 2;
 }
 
 1;

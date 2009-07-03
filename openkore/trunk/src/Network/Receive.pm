@@ -319,8 +319,17 @@ sub new {
 		'023A' => ['storage_password_request', 'v1', [qw(flag)]],
 		'023C' => ['storage_password_result', 'v1 v1', [qw(type val)]],
 		'023E' => ['storage_password_request', 'v1', [qw(flag)]],
+		'0240' => ['mail_refreshinbox'],
+		'0242' => ['mail_read', 'v1 v1 x2 Z40 Z28 V1 V1 v1 C1 x1 C1 C1 C1 v1 v1 v1 v1 x1 Z*', [qw(lenght mailID title sender zeny itemAmount itemIndex itemType itemIdentified itemAttribute itemRefine itemCard1 itemCard2 itemCard3 itemCard4 message)]],
+		'0245' => ['mail_getattachment', 'C1', [qw(fail)]],
+		'0249' => ['mail_send', 'C1', [qw(fail)]],
+		'024A' => ['mail_new', 'V1 Z24 Z24', [qw(mailID sender title)]],
+		'0255' => ['mail_setattachment', 'v1 C1', [qw(index fail)]],
+		'0257' => ['mail_delete', 'V1 v1', [qw(mailID fail)]],
 		'0259' => ['gameguard_grant', 'C1', [qw(server)]],
-		'0274' => ['account_server_info', 'x2 a4 a4 a4 x30 C1 x4 a*', [qw(sessionID accountID sessionID2 accountSex serverInfo)]],
+		'0260' => ['mail_window', 'v1', [qw(flag)]],
+		'0274' => ['mail_return', 'V1 v1', [qw(mailID fail)]],
+		# mail_return packet: '0274' => ['account_server_info', 'x2 a4 a4 a4 x30 C1 x4 a*', [qw(sessionID accountID sessionID2 accountSex serverInfo)]],
 		# tRO new packets, need some work on them
 		'0283' => ['account_id', 'V1', [qw(accountID)]],
 		'0287' => ['cash_dealer'],
@@ -6475,6 +6484,94 @@ sub warp_portal_list {
 			"list");
 	}
 	message("--------------------------------------------------\n", "list");
+}
+
+sub mail_refreshinbox {
+	my ($self, $args) = @_;
+	undef $inboxList;
+	
+	my $amount = unpack('V1', substr($args->{RAW_MSG}, 4, 4));
+	# TODO: my $amount = $args->{amount};
+
+	if (!$amount) {
+		message T("There is no mail in your inbox.\n"), "info";
+		return;
+	}
+	message TF("You've got Mail! (%s)\n", $amount), "info";
+	my $msg = T ("--------------------------------- Inbox ----------------------------------\n" .
+		"# mailID  Title                  Read Sender          Time\n");
+	$msg .= "--------------------------------------------------------------------------\n";
+
+	my $j = 0;
+	for (my $i = 8; $i < $args->{RAW_MSG_SIZE}; $i+=73) {
+		$inboxList->[$j]->{mailID} = unpack("V1", substr($args->{RAW_MSG}, $i, 4));
+		$inboxList->[$j]->{title} = unpack("a40", substr($args->{RAW_MSG}, $i+4, 40));
+		$inboxList->[$j]->{read} = unpack("C1", substr($args->{RAW_MSG}, $i+44, 1));
+		$inboxList->[$j]->{sender} = unpack("Z24", substr($args->{RAW_MSG}, $i+45, 24));
+		$inboxList->[$j]->{timestamp} = unpack("V1", substr($args->{RAW_MSG}, $i+69, 4));
+		$msg .= swrite(
+		TF("%s \@<<<<<< \@<<<<<<<<<<<<<<<<<<<<< \@<<< \@<<<<<<<<<<<<<< \@<<<<<<<<<<<<<<<<<<<", $j),
+		[$inboxList->[$j]->{mailID}, $inboxList->[$j]->{title}, $inboxList->[$j]->{read},
+			$inboxList->[$j]->{sender}, getFormattedDate(int($inboxList->[$j]->{timestamp}))]);
+
+		$j++;
+	}
+
+	$msg .= ("--------------------------------------------------------------------------\n");
+	message $msg, "list";
+}
+
+sub mail_read {
+	my ($self, $args) = @_;
+	# TODO: need better display format
+	foreach (qw(lenght mailID title sender zeny itemAmount itemIndex itemType itemIdentified itemAttribute itemRefine itemCard1 itemCard2 itemCard3 itemCard4 message)) {
+		message ("".$_.": ".$args->{$_}."\n"), "info";
+	}
+}
+
+sub mail_getattachment {
+	my ($self, $args) = @_;
+	if (!$args->{fail}) {
+		message T("Successfully added attachment to inventory.\n"), "info";
+	} elsif ($args->{fail} == 2) {
+		error T("Failed to get the attachment to inventory due to your weight.\n"), "info";
+	} else {
+		error T("Failed to get the attachment to inventory.\n"), "info";
+	}
+}
+
+sub mail_send {
+	my ($self, $args) = @_;
+	($args->{fail}) ?
+		error T("Failed to send mail, the recipient does not exist.\n"), "info" :
+		message T("Mail sent succesfully.\n"), "info";
+}
+
+sub mail_new {
+	my ($self, $args) = @_;
+	message TF("New mail from sender: %s titled: %s.\n", $args->{sender}, $args->{title}), "info";
+}
+
+sub mail_setattachment {
+	my ($self, $args) = @_;
+	message TF("%s to attach %s.\n", ($args->{fail}) ? "Failed" : "Succeeded", ($args->{index}) ? "item: ".$char->inventory->getByServerIndex($args->{index}) : "zeny"), "info";
+}
+
+sub mail_delete {
+	my ($self, $args) = @_;
+	message TF("%s to delete mail with ID: %s.\n", ($args->{fail}) ? "Failed" : "Succeeded", $args->{mailID}), "info";
+}
+
+sub mail_window {
+	my ($self, $args) = @_;
+	message TF("Mail window is now %s.\n", ($args->{flag}) ? "closed" : "opened"), "info";
+}
+
+sub mail_return {
+	my ($self, $args) = @_;
+	($args->{fail}) ?
+		error TF("The mail with ID: %s does not exist.\n", $args->{mailID}), "info" :
+		message TF("The mail with ID: %s is returned to the sender.\n", $args->{mailID}), "info";
 }
 
 1;
