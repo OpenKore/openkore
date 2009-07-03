@@ -1,4 +1,4 @@
-# $Id: Parser.pm r6755 2009-07-02 11:05:00Z ezza $
+# $Id: Parser.pm r6757 2009-07-04 02:05:00Z ezza $
 package Macro::Parser;
 
 use strict;
@@ -19,7 +19,7 @@ use Macro::Utilities qw(refreshGlobal getnpcID getItemIDs getItemPrice getStorag
 	getPlayerID getVenderID getRandom getRandomRange getInventoryAmount getCartAmount getShopAmount
 	getStorageAmount getVendAmount getConfig getWord q4rx q4rx2 getArgFromList getListLenght);
 
-our ($rev) = q$Revision: 6755 $ =~ /(\d+)/;
+our ($rev) = q$Revision: 6757 $ =~ /(\d+)/;
 
 # adapted config file parser
 sub parseMacroFile {
@@ -221,16 +221,15 @@ sub parseSub {
 # substitute variables
 sub subvars {
 # should be working now
-	my $pre = $_[0];
+	my ($pre, $nick) = @_;
 	my ($var, $tmp);
 
 	# variables
 	while (($var) = $pre =~ /(?:^|[^\\])\$(\.?[a-z][a-z\d]*)/i) {
-		my $temp = $pre;
 		$tmp = (defined $varStack{$var})?$varStack{$var}:"";
 		$var = q4rx $var;
 		$pre =~ s/(^|[^\\])\$$var([^a-zA-Z\d]|$)/$1$tmp$2/g;
-		last if $temp =~ /\$\.lastMatch\d+/i
+		last if defined $nick
 	}
 
 	# doublevars
@@ -256,7 +255,7 @@ sub parseCmd {
 	while (($kw, $targ) = parseKw($cmd)) {
 		$ret = "_%_";
 		# first parse _then_ substitute. slower but more safe
-		$arg = subvars($targ);
+		$arg = subvars($targ) unless $kw eq 'nick';
 		my $randomized = 0;
 
 		if ($kw eq 'npc')           {$ret = getnpcID($arg)}
@@ -284,7 +283,7 @@ sub parseCmd {
 		elsif ($kw eq 'eval')       {$ret = eval($arg)}
 		elsif ($kw eq 'listitem')   {$ret = getArgFromList($arg)}
 		elsif ($kw eq 'listlenght') {$ret = getListLenght($arg)}
-		elsif ($kw eq 'nick')       {$ret = q4rx2($arg)}
+		elsif ($kw eq 'nick')       {$arg = subvars($targ, 1); $ret = q4rx2($arg)}
 		return unless defined $ret;
 		return $cmd if $ret eq '_%_';
 		$targ = q4rx $targ;
