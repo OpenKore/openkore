@@ -185,6 +185,15 @@ sub initHandlers {
 	who                => \&cmdWho,
 	whoami             => \&cmdWhoAmI,
 
+	m                  => \&cmdMail,
+	ms                 => \&cmdMail,
+	mi                 => \&cmdMail,
+	mo                 => \&cmdMail,
+	md                 => \&cmdMail,
+	mw                 => \&cmdMail,
+	mr                 => \&cmdMail,
+	ma                 => \&cmdMail,
+
 	north              => \&cmdManualMove,
 	south              => \&cmdManualMove,
 	east               => \&cmdManualMove,
@@ -192,7 +201,7 @@ sub initHandlers {
 	northeast          => \&cmdManualMove,
 	northwest          => \&cmdManualMove,
 	southeast          => \&cmdManualMove,
-	southwest          => \&cmdManualMove
+	southwest          => \&cmdManualMove,
 	);
 }
 
@@ -4917,6 +4926,122 @@ sub cmdWhoAmI {
 		"Acct ID: %s\n", 
 		$char->{name}, $char->{lv}, $sex_lut{$char->{sex}}, $jobs_lut{$char->{jobID}}, 
 		$GID, $AID), "list";
+}
+
+sub cmdMail {
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command (%s)\n", shift);
+		return;
+	}
+
+	my ($cmd, $args_string) = @_;
+	my @args = parseArgs($args_string, 4);
+
+	# mail send
+	if ($cmd eq 'ms') {
+		unless ($args[0] && $args[1] && $args[2]) {
+			message T("Usage: ms <receiver> <title> <message>\n"), "info";
+		} else {
+			my ($receiver, $title, $msg) = ($args[0], $args[1], $args[2]);
+			$messageSender->sendMailSend((70+length($msg)), $receiver, $title, length($msg), $msg);
+		}
+
+	# mail open
+	} elsif ($cmd eq 'mo') {
+	
+		unless ($args[0] =~ /^\d+$/) {
+			message T("Usage: mo <mail #>\n"), "info";
+		} elsif (!$inboxList->[$args[0]]) {
+			if (@{$inboxList}) {
+					message TF("No mail found with index: %s. (might need to re-open mailbox)\n", $args[0]), "info";
+			} else {
+					message T("Mailbox has not been opened or is empty.\n"), "info";
+			}
+		} else {
+			$messageSender->sendMailRead($inboxList->[$args[0]]->{mailID});
+		}
+
+	# mail inbox => set on begin as standard?
+	} elsif ($cmd eq 'mi') {
+		# if mail not already opened needed?
+		$messageSender->sendMailboxOpen();
+
+	# mail window (almost useless?)
+	} elsif ($cmd eq 'mw') {
+		unless (defined $args[0]) {
+			message T("Usage: mw [0|1|2] (0:write, 1:take item back, 2:zenny input ok)\n"), "info";
+		} elsif ($args[0] =~ /^[0-2]$/) {
+			$messageSender->sendMailOperateWindow($args[0]);
+		} else {
+			error T("Syntax error in function 'mw' (mailbox window)\n" .
+			"Usage: mw [0|1|2] (0:write, 1:take item back, 2:zenny input ok)\n");
+		}
+
+	# mail attachment control
+	} elsif ($cmd eq 'ma') {
+		if ($args[0] eq "get" && $args[1] =~ /^\d+$/) {
+			unless ($inboxList->[$args[1]]->{mailID}) {
+				if (@{$inboxList}) {
+						message TF("No mail found with index: %s. (might need to re-open mailbox)\n", $args[1]), "info";
+				} else {
+						message T("Mailbox has not been opened or is empty.\n"), "info";
+				}
+			} else {
+				$messageSender->sendMailGetAttach($args[1]);
+			}
+		} elsif ($args[0] eq "add") {
+			unless ($args[2] =~ /^\d+$/) {
+				message T("Usage: ma add [zeny <amount>]|[item <amount> (<item #>|<item name>)]\n"), "info";
+			} elsif ($args[1] eq "zeny") {
+				$messageSender->sendMailSetAttach($args[2], undef);
+			} elsif ($args[1] eq "item" && defined $args[3]) {
+				my $item = Actor::Item::get($args[3]);
+				if ($item) {
+					my $serverIndex = $item->{index};
+					$messageSender->sendMailSetAttach($args[2], $serverIndex);
+				} else {
+					message TF("Item with index or name: %s does not exist in inventory.\n", $args[3]), "info";
+				}
+			} else {
+				error T("Syntax error in function 'ma' (mail attachment control)\n" .
+				"Usage: ma add [zeny <amount>]|[item <amount> (<item #>|<item name>)]\n");
+			}
+		} else {
+			message T("Usage: ma (get <mail #>)|(add [zeny <amount>]|[item <amount> (<item #>|<item name>)])\n"), "info";
+		}
+
+	# mail delete (can't delete mail without removing attachment/zeny first)
+	} elsif ($cmd eq 'md') {
+		unless ($args[0] =~ /^\d+$/) {
+			message T("Usage: md <mail #>\n"), "info";
+		} elsif (!$inboxList->[$args[0]]) {
+			if (@{$inboxList}) {
+				message TF("No mail found with index: %s. (might need to re-open mailbox)\n", $args[0]), "info";
+			} else {
+				message T("Mailbox has not been opened or is empty.\n"), "info";
+			}
+		} else {
+			$messageSender->sendMailDelete($args[0]);
+		}
+
+	# mail return
+	} elsif ($cmd eq 'mr') {
+		unless ($args[0] =~ /^\d+$/) {
+			message T("Usage: mr <mail #>\n"), "info";
+		} elsif (!$inboxList->[$args[0]]) {
+			if (@{$inboxList}) {
+				message TF("No mail found with index: %s. (might need to re-open mailbox)\n", $args[1]), "info";
+			} else {
+				message T("Mailbox has not been opened or is empty.\n"), "info";
+			}
+		} else {
+			$messageSender->sendMailReturn($args[0]);
+		}
+
+	# with command mail, list of possebilities: $cmd eq 'm'
+	} else {
+		message T("Mail commands: ms, mi, mo, md, mw, mr, ma\n"), "info";
+	}
 }
 
 return 1;
