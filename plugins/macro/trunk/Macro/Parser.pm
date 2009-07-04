@@ -1,4 +1,4 @@
-# $Id: Parser.pm r6757 2009-07-04 02:05:00Z ezza $
+# $Id: Parser.pm r6759 2009-07-05 04:00:00Z ezza $
 package Macro::Parser;
 
 use strict;
@@ -19,7 +19,7 @@ use Macro::Utilities qw(refreshGlobal getnpcID getItemIDs getItemPrice getStorag
 	getPlayerID getVenderID getRandom getRandomRange getInventoryAmount getCartAmount getShopAmount
 	getStorageAmount getVendAmount getConfig getWord q4rx q4rx2 getArgFromList getListLenght);
 
-our ($rev) = q$Revision: 6757 $ =~ /(\d+)/;
+our ($rev) = q$Revision: 6759 $ =~ /(\d+)/;
 
 # adapted config file parser
 sub parseMacroFile {
@@ -190,7 +190,7 @@ sub parseKw {
 
 	return unless @pair;
 	if ($pair[0] eq 'arg') {
-		return $_[0] =~ /\@(arg)\s*\(\s*(".*?",\s*\d+)\s*\)/
+		return $_[0] =~ /\@(arg)\s*\(\s*(".*?",\s*(\d+|\$[a-zA-Z][a-zA-Z\d]*))\s*\)/
 	} elsif ($pair[0] eq 'random') {
 		return $_[0] =~ /\@(random)\s*\(\s*(".*?")\s*\)/
 	}
