@@ -1,4 +1,4 @@
-# $Id: Utilities.pm r6742 2009-06-26 10:30:00Z ezza $
+# $Id: Utilities.pm r6759 2009-07-05 04:00:00Z ezza $
 package Macro::Utilities;
 
 use strict;
@@ -16,7 +16,7 @@ use AI;
 use Log qw(warning error);
 use Macro::Data;
 
-our ($rev) = q$Revision: 6742 $ =~ /(\d+)/;
+our ($rev) = q$Revision: 6759 $ =~ /(\d+)/;
 
 # own ai_Isidle check that excludes deal
 sub ai_isIdle {
@@ -160,9 +160,16 @@ sub getArgs {
 
 # gets word from message
 sub getWord {
-	my ($message, $wordno) = $_[0] =~ /^"(.*?)",\s?(\d+)$/s;
+	my ($message, $wordno) = $_[0] =~ /^"(.*?)",\s?(\d+|\$[a-zA-Z][a-zA-Z\d]*)$/s;
 	my @words = split(/[ ,.:;\"\'!?\r\n]/, $message);
 	my $no = 1;
+	if ($wordno =~ /^\$/) {
+		my ($val) = $wordno =~ /^\$([a-zA-Z][a-zA-Z\d]*)\s*$/;
+		return "" unless defined $val;
+		if (exists $varStack{$val} && $varStack{$val} =~ /^[1-9][0-9]*$/) {$wordno = $varStack{$val}}
+		else {return ""}
+	
+	}
 	foreach (@words) {
 		next if /^$/;
 		return $_ if $no == $wordno;
