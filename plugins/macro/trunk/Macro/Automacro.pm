@@ -1,4 +1,4 @@
-# $Id: Automacro.pm r6754 2009-07-01 11:42:00Z ezza $
+# $Id: Automacro.pm r6760 2009-07-06 02:23:00Z ezza $
 package Macro::Automacro;
 
 use strict;
@@ -21,7 +21,7 @@ use Macro::Utilities qw(between cmpr match getArgs refreshGlobal
 	getPlayerID getSoldOut getInventoryAmount getCartAmount getShopAmount
 	getStorageAmount callMacro sameParty);
 
-our ($rev) = q$Revision: 6754 $ =~ /(\d+)/;
+our ($rev) = q$Revision: 6760 $ =~ /(\d+)/;
 
 # check for variable #######################################
 sub checkVar {
@@ -61,6 +61,12 @@ sub checkLoc {
 	}
 	my $not = ($arg =~ s/^not +//)?1:0;
 	my ($map, $x1, $y1, $x2, $y2) = split(/ /, $arg);
+	if ($map =~ /^\s*\$/) {
+		my ($var) = $map =~ /^\$([a-zA-Z][a-zA-Z\d]*)\s*$/;
+		return 0 unless defined $var;
+		return 0 unless exists $varStack{$var};
+		$map = $varStack{$var}
+	}
 	if ($map eq $field->name) {
 		if ($x1 && $y1) {
 			my $pos = calcPosition($char);
@@ -137,7 +143,6 @@ sub checkPersonGuild {
 				$_ =~ s/\x{FEFF}//g;
 				chomp($_);
 				next if ($_ =~ /^[\n\r#]/);
-				#$_ =~ /^(.*)$/;
 				$_ =~ s/  +$/ /; $_ =~ s/^  +/ /;
 				push @gld, $_;
 			}
@@ -476,7 +481,7 @@ sub checkSpellsID {
 	my ($line, $args) = @_;
 	my $dist = $config{clientSight} || 20;
 	my ($list, $cond);
-	if ($line =~ /^\s*(.*),?\s+([<>=!~]+)\s+(\d+|\d+\s+.{2}\s+\d+)\s*$/) {
+	if ($line =~ /^\s*(.*),?\s+([<>=!~]+)\s+(\d+|\d+\s*.{2}\s*\d+)\s*$/) {
 		($list, $cond, $dist) = ($1, $2, $3)
 	}
 	else {$list = $line; $cond = "<="}
@@ -509,7 +514,7 @@ sub checkMonster {
 	my ($not, $mercenary, $use, $monsterList, $cond);
 	my $mondist = $config{clientSight} || 20;
 
-	if ($line =~ /^\s*(.*),?\s+([<>=!~]+)\s+(\d+|\d+\s+.{2}\s+\d+)\s*$/) {
+	if ($line =~ /^\s*(.*),?\s+([<>=!~]+)\s+(\d+|\d+\s*.{2}\s*\d+)\s*$/) {
 		($monsterList, $cond, $mondist) = ($1, $2, $3)
 	} else {
 		$monsterList = $line;
@@ -580,11 +585,14 @@ sub checkMonster {
 # checks for forbidden monster
 # quick hack, maybe combine it with checkMonster later
 sub checkNotMonster {
+	my $line = $_[0];
 	my $mondist = $config{clientSight};
-	my $monsterList = $_[0];
-	if ($monsterList =~ /,\s+\d+\s*$/) {
-		$mondist = $monsterList =~ /,\s+(\d+)\s*$/;
-		$monsterList = s/, +\d+\s*$//g;
+	my ($monsterList, $cond);
+	if ($line =~ /^\s*(.*),?\s+([<>=!~]+)\s+(\d+|\d+\s*.{2}\s*\d+)\s*$/) {
+		($monsterList, $cond, $mondist) = ($1, $2, $3)
+	} else {
+		$monsterList = $line;
+		$cond = "<="
 	}
 	foreach (@monstersID) {
 		next unless defined $_;
@@ -592,7 +600,7 @@ sub checkNotMonster {
 		my $mypos = calcPosition($char);
 		my $pos = calcPosition($monsters{$_});
 		my $dist = sprintf("%.1f",distance($pos, $mypos));
-		return $dist <= $mondist ?1:0
+		return cmpr($dist, $cond, $mondist)
 	}
 	return 0
 }
@@ -636,11 +644,11 @@ sub checkMapChange {
 
 # checks for eval
 sub checkEval {
-	if ($_[0] =~ /;/) {
-		my @eval = split(/\s*;\s*/, $_[0]);
-		foreach my $e (@eval) {return 1 if checkEval($e)}
-		return 0
-	}
+	#if ($_[0] =~ /;/) {
+	#	my @eval = split(/\s*;\s*/, $_[0]);
+	#	foreach my $e (@eval) {return 1 if checkEval($e)}
+	#	return 0
+	#}
 	return eval $_[0];
 }
 
