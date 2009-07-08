@@ -49,6 +49,7 @@ sub new {
 	$self->{monsterBrush} = new Wx::Brush(new Wx::Colour(215, 0, 0), wxSOLID);
 	$self->{npcBrush}     = new Wx::Brush(new Wx::Colour(180, 0, 255), wxSOLID);
 	$self->{portalBrush}  = new Wx::Brush(new Wx::Colour(255, 128, 64), wxSOLID);
+	$self->{slaveBrush}     = new Wx::Brush(new Wx::Colour(0, 0, 215), wxSOLID);
 # vcl code 	EVT_PAINT($self, \&_handlePaintEvent);
 # vcl code 	EVT_LEFT_DOWN($self, \&_handleLeftDownEvent);
 # vcl code 	EVT_MOTION($self, \&_handleMotionEvent);
@@ -223,6 +224,28 @@ sub setNPCs {
 		if ($pos1->{x} != $pos2->{x} && $pos1->{y} != $pos2->{y}) {
 			$self->{needUpdate} = 1;
 			$self->{npcs} = $npcs;
+			return;
+		}
+	}
+}
+
+sub setSlaves {
+	my $self = shift;
+	my $slaves = shift;
+	my $old = $self->{slaves};
+
+	if (!$old || @{$slaves} != @{$old}) {
+		$self->{needUpdate} = 1;
+		$self->{slaves} = $slaves;
+		return;
+	}
+
+	for (my $i = 0; $i < @{$slaves}; $i++) {
+		my $pos1 = $slaves->[$i]{pos_to};
+		my $pos2 = $old->[$i]{pos_to};
+		if ($pos1->{x} != $pos2->{x} && $pos1->{y} != $pos2->{y}) {
+			$self->{needUpdate} = 1;
+			$self->{slaves} = $slaves;
 			return;
 		}
 	}
@@ -462,6 +485,14 @@ sub _onPaint {
 		}
 	}
 
+	if ($self->{slaves} && @{$self->{slaves}}) {
+		$dc->SetBrush($self->{slaveBrush});
+		foreach my $pos (@{$self->{slaves}}) {
+			($x, $y) = $self->_posXYToView($pos->{pos_to}{x}, $pos->{pos_to}{y});
+			$dc->DrawEllipse($x - 2, $y - 2, 4, 4);
+		}
+	}
+	
 	if ($self->{dest}) {
 		$dc->SetPen(wxWHITE_PEN);
 		$dc->SetBrush($self->{destBrush});

@@ -351,7 +351,8 @@ sub finalInitialization {
 	$petsList = new ActorList('Actor::Pet');
 	$npcsList = new ActorList('Actor::NPC');
 	$portalsList = new ActorList('Actor::Portal');
-	foreach my $list ($itemsList, $monstersList, $playersList, $petsList, $npcsList, $portalsList) {
+	$slavesList = new ActorList('Actor::Slave');
+	foreach my $list ($itemsList, $monstersList, $playersList, $petsList, $npcsList, $portalsList, $slavesList) {
 		$list->onAdd()->add(undef, \&actorAdded);
 		$list->onRemove()->add(undef, \&actorRemoved);
 		$list->onClearBegin()->add(undef, \&actorListClearing);
@@ -481,6 +482,7 @@ sub initMapChangeVars {
 	$petsList->clear();
 	$portalsList->clear();
 	$npcsList->clear();
+	$slavesList->clear();
 
 	@unknownPlayers = ();
 	@unknownNPCs = ();
@@ -493,7 +495,7 @@ sub initMapChangeVars {
 	$timeout{ai_shop}{time} = time;
 
 	AI::clear("attack", "move");
-	AI::Homunculus::clear("attack", "route", "move");
+	AI::SlaveManager::clear("attack", "route", "move");
 	ChatQueue::clear;
 
 	Plugins::callHook('packet_mapChange');
@@ -594,7 +596,7 @@ sub mainLoop_initialized {
 		AI::CoreLogic::iterate();
 		Benchmark::end("ai") if DEBUG;
 		Benchmark::begin("ai_homunculus") if DEBUG;
-		AI::Homunculus::iterate();
+		AI::SlaveManager::iterate();
 		Benchmark::end("ai_homunculus") if DEBUG;
 		Misc::checkValidity("AI");
 		return if $quit;
@@ -628,7 +630,7 @@ sub mainLoop_initialized {
 		$timeout_ex{'master'}{'time'} = time;
 		$KoreStartTime = time + $timeout_ex{'master'}{'timeout'};
 		AI::clear();
-		AI::Homunculus::clear();
+		AI::SlaveManager::clear();
 		undef %ai_v;
 		$net->serverDisconnect;
 		$net->setState(Network::NOT_CONNECTED);
@@ -680,11 +682,11 @@ sub mainLoop_initialized {
 			 || $oldUsername ne $config{'username'}
 			 || $oldChar ne $config{'char'}) {
 				AI::clear;
-				AI::Homunculus::clear();
+				AI::SlaveManager::clear();
 				relog();
 			} else {
 				AI::clear("move", "route", "mapRoute");
-				AI::Homunculus::clear("move", "route", "mapRoute");
+				AI::SlaveManager::clear("move", "route", "mapRoute");
 			}
 
 			initConfChange();
@@ -712,7 +714,7 @@ sub mainLoop_initialized {
 				y => $pos->{y}
 			);
 			$state{actors} = {};
-			foreach my $actor (@{$npcsList->getItems()}, @{$playersList->getItems()}, @{$monstersList->getItems()}) {
+			foreach my $actor (@{$npcsList->getItems()}, @{$playersList->getItems()}, @{$monstersList->getItems()}, @{$slavesList->getItems()}) {
 				my $actorType = $actor->{actorType};
 				$state{actors}{$actorType} ||= [];
 				push @{$state{actors}{$actorType}}, {

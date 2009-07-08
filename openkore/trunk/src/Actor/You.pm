@@ -69,6 +69,7 @@ sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new('You');
 	$self->{__inventory} = new InventoryList();
+
 	return $self;
 }
 

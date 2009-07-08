@@ -702,6 +702,8 @@ sub updateMapViewer {
 	$map->setMonsters(\@monsters);
 	my @npcs = values %npcs;
 	$map->setNPCs(\@npcs);
+	my @slaves = values %slaves;
+	$map->setSlaves(\@slaves);
 
 	$map->update;
 	$self->{mapViewTimeout}{time} = time;
@@ -957,6 +959,7 @@ sub onTargetBoxKeyDown {
 sub onInitialized {
 	my ($self) = @_;
 	$self->{itemList}->init($npcsList, new Wx::Colour(103, 0, 162),
+			$slavesList, new Wx::Colour(200, 100, 0),
 			$playersList, undef,
 			$monstersList, new Wx::Colour(200, 0, 0),
 			$itemsList, new Wx::Colour(0, 0, 200));

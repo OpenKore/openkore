@@ -91,7 +91,8 @@ sub initHandlers {
 	falcon             => \&cmdFalcon,
 	follow             => \&cmdFollow,
 	friend             => \&cmdFriend,
-	homun              => \&cmdHomunculus,
+	homun              => \&cmdSlave,
+	merc               => \&cmdSlave,
 	g                  => \&cmdGuildChat,
 	getplayerinfo      => \&cmdGetPlayerInfo,
 	# GM Commands - Start
@@ -1799,176 +1800,229 @@ sub cmdFriend {
 	}
 }
 
-sub cmdHomunculus {
- 	my (undef, $subcmd) = @_;
+sub cmdSlave {
+	my ($cmd, $subcmd) = @_;
 	my @args = parseArgs($subcmd);
-
+	
 	if (!$char) {
-		error T("Error: Can't detect homunculus - character is not yet ready\n");
+		error T("Error: Can't detect slaves - character is not yet ready\n");
 		return;
 	}
-	if (!$char->{homunculus} || !$char->{homunculus}{appear_time} || ($char->{homunculus}{state} & 2) || ($char->{homunculus}{state} & 4)) {
-		error T("Error: No Homunculus detected.\n");
+	
+	my $slave;
+	if ($cmd eq 'homun') {
+		$slave = $char->{homunculus};
+	} elsif ($cmd eq 'merc') {
+		$slave = $char->{mercenary};
+	} else {
+		error T("Error: Unknown command in cmdSlave\n");
+	}
+	
+	if (
+		!$slave || !$slave->{appear_time} || (
+			$slave->{actorType} eq 'Homunculus' and $slave->{state} & 2 || $slave->{state} & 4
+		)
+	) {
+		error T("Error: No slave detected.\n");
 
 	} elsif ($subcmd eq "s" || $subcmd eq "status") {
-		my $hp_string = $char->{'homunculus'}{'hp'}. '/' .$char->{'homunculus'}{'hp_max'} . ' (' . sprintf("%.2f",$char->{'homunculus'}{'hpPercent'}) . '%)';
-		my $sp_string = $char->{'homunculus'}{'sp'}."/".$char->{'homunculus'}{'sp_max'}." (".sprintf("%.2f",$char->{'homunculus'}{'spPercent'})."%)";
-		my $exp_string = formatNumber($char->{'homunculus'}{'exp'})."/".formatNumber($char->{'homunculus'}{'exp_max'})." (".sprintf("%.2f",$char->{'homunculus'}{'expPercent'})."%)";
+		my $hp_string = $slave->{'hp'}. '/' .$slave->{'hp_max'} . ' (' . sprintf("%.2f",$slave->{'hpPercent'}) . '%)';
+		my $sp_string = $slave->{'sp'}."/".$slave->{'sp_max'}." (".sprintf("%.2f",$slave->{'spPercent'})."%)";
+		my $exp_string = (
+			defined $slave->{'exp'}
+			? formatNumber($slave->{'exp'})."/".formatNumber($slave->{'exp_max'})." (".sprintf("%.2f",$slave->{'expPercent'})."%)"
+			: (
+				defined $slave->{kills}
+				? formatNumber($slave->{kills})
+				: ''
+			)
+		);
+		
+		my ($intimacy_label, $intimacy_string) = (
+			defined $slave->{intimacy}
+			? ('Intimacy:', $slave->{intimacy})
+			: (
+				defined $slave->{faith}
+				? ('Faith:', $slave->{faith})
+				: ('', '')
+			)
+		);
+		
+		my $hunger_string = defined $slave->{hunger} ? $slave->{hunger} : 'N/A';
+		my $accessory_string = defined $slave->{accessory} ? $slave->{accessory} : 'N/A';
+		my $faith_string = defined $slave->{faith} ? $slave->{faith} : 'N/A';
+		my $summons_string = defined $slave->{summons} ? $slave->{summons} : 'N/A';
 		
 		my $msg = swrite(
-		T("----------------- Homunculus Status --------------------\n" .
+		T("-------------------- Slave Status ----------------------\n" .
 		"Name: \@<<<<<<<<<<<<<<<<<<<<<<<<< HP: \@>>>>>>>>>>>>>>>>>>\n" .
-		"                                 SP: \@>>>>>>>>>>>>>>>>>>\n" .
+		"Type: \@<<<<<<<<<<<<<<<<<<<<<<<<< SP: \@>>>>>>>>>>>>>>>>>>\n" .
 		"Level: \@<<   \@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n" .
 		"--------------------------------------------------------\n" .
 		"Atk: \@>>>    Matk:     \@>>>    Hunger:    \@>>>\n" .
-		"Hit: \@>>>    Critical: \@>>>    Intimacy:  \@>>>\n" .
+		"Hit: \@>>>    Critical: \@>>>    \@<<<<<<<<< \@>>>\n" .
 		"Def: \@>>>    Mdef:     \@>>>    Accessory: \@>>>\n" .
-		"Flee:\@>>>    Aspd:     \@>>>\n" .
+		"Flee:\@>>>    Aspd:     \@>>>    Summons:   \@>>>\n" .
 		"--------------------------------------------------------"),
-		[$char->{'homunculus'}{'name'}, $hp_string, $sp_string,
-		$char->{'homunculus'}{'level'}, $exp_string, $char->{'homunculus'}{'atk'}, $char->{'homunculus'}{'matk'}, $char->{'homunculus'}{'hunger'},
-		$char->{'homunculus'}{'hit'}, $char->{'homunculus'}{'critical'}, $char->{'homunculus'}{'intimacy'},
-		$char->{'homunculus'}{'def'}, $char->{'homunculus'}{'mdef'}, $char->{'homunculus'}{'accessory'},
-		$char->{'homunculus'}{'flee'}, $char->{'homunculus'}{'aspdDisp'}]);
-			
+		[$slave->{'name'}, $hp_string,
+		$slave->{actorType}, $sp_string,
+		$slave->{'level'}, $exp_string, $slave->{'atk'}, $slave->{'matk'}, $hunger_string,
+		$slave->{'hit'}, $slave->{'critical'}, $intimacy_label, $intimacy_string,
+		$slave->{'def'}, $slave->{'mdef'}, $accessory_string,
+		$slave->{'flee'}, $slave->{'aspdDisp'}, $summons_string]);
+		
 		message($msg, "info");
 
 	} elsif ($subcmd eq "feed") {
-		if (!$net || $net->getState() != Network::IN_GAME) {
-			error TF("You must be logged in the game to use this command (%s)\n", 'homun ' . $subcmd);
+		unless (defined $slave->{hunger}) {
+			error T("This slave can not be feeded\n");
 			return;
 		}
-		if ($char->{homunculus}{hunger} >= 76) {
+		if (!$net || $net->getState() != Network::IN_GAME) {
+			error TF("You must be logged in the game to use this command (%s)\n", $cmd . ' ' . $subcmd);
+			return;
+		}
+		if ($slave->{hunger} >= 76) {
 			message T("Your homunculus is not yet hungry. Feeding it now will lower intimacy.\n"), "homunculus";
 		} else {
 			$messageSender->sendHomunculusFeed();
 			message T("Feeding your homunculus.\n"), "homunculus";
 		}
 
+	} elsif ($subcmd eq "fire") {
+		unless ($slave->{actorType} eq 'Mercenary') {
+			error T("This slave can not be fired\n");
+			return;
+		}
+		if (!$net || $net->getState() != Network::IN_GAME) {
+			error TF("You must be logged in the game to use this command (%s)\n", $cmd . ' ' . $subcmd);
+			return;
+		}
+		$messageSender->sendMercenaryCommand (2);
+
 	} elsif ($args[0] eq "move") {
 		if (!$net || $net->getState() != Network::IN_GAME) {
-			error TF("You must be logged in the game to use this command (%s)\n", 'homun ' . $subcmd);
+			error TF("You must be logged in the game to use this command (%s)\n", $cmd . ' ' . $subcmd);
 			return;
 		}
 		if (!($args[1] =~ /^\d+$/) || !($args[2] =~ /^\d+$/)) {
-			error TF("Error in function 'homun move' (Homunculus Move)\n" .
-				"Invalid coordinates (%s, %s) specified.\n", $args[1], $args[2]);
+			error TF("Error in function '%s move' (Slave Move)\n" .
+				"Invalid coordinates (%s, %s) specified.\n", $cmd, $args[1], $args[2]);
 			return;
 		} else {
 			# max distance that homunculus can follow: 17
-			$messageSender->sendHomunculusMove($char->{homunculus}{ID}, $args[1], $args[2]);
+			$messageSender->sendHomunculusMove($slave->{ID}, $args[1], $args[2]);
 		}
 
 	} elsif ($subcmd eq "standby") {
 		if (!$net || $net->getState() != Network::IN_GAME) {
-			error TF("You must be logged in the game to use this command (%s)\n", 'homun ' . $subcmd);
+			error TF("You must be logged in the game to use this command (%s)\n", $cmd . ' ' . $subcmd);
 			return;
 		}
-		$messageSender->sendHomunculusStandBy($char->{homunculus}{ID});
+		$messageSender->sendHomunculusStandBy($slave->{ID});
 
 	} elsif ($args[0] eq 'ai') {
 		if ($args[1] eq 'clear') {
-			AI::Homunculus::clear();
-			message T("Homunculus AI sequences cleared\n"), "success";
+			$slave->clear();
+			message T("Slave AI sequences cleared\n"), "success";
 
 		} elsif ($args[1] eq 'print') {
 			# Display detailed info about current AI sequence
-			message T("------ Homunculus AI Sequence ----------\n"), "list";
+			message T("--------- Slave AI Sequence ------------\n"), "list";
 			my $index = 0;
-			foreach (@AI::Homunculus::homun_ai_seq) {
-				message("$index: $_ " . dumpHash(\%{$ai_seq_args[$index]}) . "\n\n", "list");
+			foreach (@{$slave->{slave_ai_seq}}) {
+				message("$index: $_ " . dumpHash(\%{$slave->{slave_ai_seq_args}[$index]}) . "\n\n", "list");
 				$index++;
 			}
 
-			message T("------ Homunculus AI Sequence ----------\n"), "list";
+			message T("--------- Slave AI Sequence ------------\n"), "list";
 
 		} elsif ($args[1] eq 'on' || $args[1] eq 'auto') {
 			# Set AI to auto mode
-			if ($AI::Homunculus::homun_AI == 2) {
-				message T("Homunculus AI is already set to auto mode\n"), "success";
+			if ($slave->{slave_AI} == 2) {
+				message T("Slave AI is already set to auto mode\n"), "success";
 			} else {
-				$AI::Homunculus::homun_AI = 2;
-				undef $AI::Homunculus::homun_AI_forcedOff;
-				message T("Homunculus AI set to auto mode\n"), "success";
+				$slave->{slave_AI} = 2;
+				undef $slave->{slave_AI_forcedOff};
+				message T("Slave AI set to auto mode\n"), "success";
 			}
 		} elsif ($args[1] eq 'manual') {
 			# Set AI to manual mode
-			if ($AI::Homunculus::homun_AI == 1) {
-				message T("Homunculus AI is already set to manual mode\n"), "success";
+			if ($slave->{slave_AI} == 1) {
+				message T("Slave AI is already set to manual mode\n"), "success";
 			} else {
-				$AI::Homunculus::homun_AI = 1;
-				$AI::Homunculus::homun_AI_forcedOff = 1;
-				message T("Homunculus AI set to manual mode\n"), "success";
+				$slave->{slave_AI} = 1;
+				$slave->{slave_AI_forcedOff} = 1;
+				message T("Slave AI set to manual mode\n"), "success";
 			}
 		} elsif ($args[1] eq 'off') {
 			# Turn AI off
-			if ($AI::Homunculus::homun_AI) {
-				undef $AI::Homunculus::homun_AI;
-				$AI::Homunculus::homun_AI_forcedOff = 1;
-				message T("Homunculus AI turned off\n"), "success";
+			if ($slave->{slave_AI}) {
+				undef $slave->{slave_AI};
+				$slave->{slave_AI_forcedOff} = 1;
+				message T("Slave AI turned off\n"), "success";
 			} else {
-				message T("Homunculus AI is already off\n"), "success";
+				message T("Slave AI is already off\n"), "success";
 			}
 
 		} elsif ($args[1] eq '') {
 			# Toggle AI
-			if ($AI::Homunculus::homun_AI == 2) {
-				undef $AI::Homunculus::homun_AI;
-				$AI::Homunculus::homun_AI_forcedOff = 1;
-				message T("Homunculus AI turned off\n"), "success";
-			} elsif (!$AI::Homunculus::homun_AI) {
-				$AI::Homunculus::homun_AI = 1;
-				$AI::Homunculus::homun_AI_forcedOff = 1;
-				message T("Homunculus AI set to manual mode\n"), "success";
-			} elsif ($AI::Homunculus::homun_AI == 1) {
-				$AI::Homunculus::homun_AI = 2;
-				undef $AI::Homunculus::homun_AI_forcedOff;
-				message T("Homunculus AI set to auto mode\n"), "success";
+			if ($slave->{slave_AI} == 2) {
+				undef $slave->{slave_AI};
+				$slave->{slave_AI_forcedOff} = 1;
+				message T("Slave AI turned off\n"), "success";
+			} elsif (!$slave->{slave_AI}) {
+				$slave->{slave_AI} = 1;
+				$slave->{slave_AI_forcedOff} = 1;
+				message T("Slave AI set to manual mode\n"), "success";
+			} elsif ($slave->{slave_AI} == 1) {
+				$slave->{slave_AI} = 2;
+				undef $slave->{slave_AI_forcedOff};
+				message T("Slave AI set to auto mode\n"), "success";
 			}
 
 		} else {
-			error T("Syntax Error in function 'homun ai' (Homunculus AI Commands)\n" .
+			error T("Syntax Error in function 'slave ai' (Slave AI Commands)\n" .
 				"Usage: homun ai [ clear | print | auto | manual | off ]\n");
 		}
 
 	} elsif ($subcmd eq "aiv") {
-		if (!$AI::Homunculus::homun_AI) {
-			message TF("ai_seq (off) = %s\n", "@AI::Homunculus::homun_ai_seq"), "list";
-		} elsif ($AI::Homunculus::homun_AI == 1) {
-			message TF("ai_seq (manual) = %s\n", "@AI::Homunculus::homun_ai_seq"), "list";
-		} elsif ($AI::Homunculus::homun_AI == 2) {
-			message TF("ai_seq (auto) = %s\n", "@AI::Homunculus::homun_ai_seq"), "list";
+		if (!$slave->{slave_AI}) {
+			message TF("ai_seq (off) = %s\n", "@{$slave->{slave_ai_seq}}"), "list";
+		} elsif ($slave->{slave_AI} == 1) {
+			message TF("ai_seq (manual) = %s\n", "@{$slave->{slave_ai_seq}}"), "list";
+		} elsif ($slave->{slave_AI} == 2) {
+			message TF("ai_seq (auto) = %s\n", "@{$slave->{slave_ai_seq}}"), "list";
 		}
-		message T("solution\n"), "list" if (AI::Homunculus::args()->{'solution'});
+		message T("solution\n"), "list" if ($slave->args()->{'solution'});
 
 	} elsif ($args[0] eq "skills") {
 		if ($args[1] eq '') {
-			my $msg = T("-----Homunculus Skill List-----\n" .
+			my $msg = T("--------Slave Skill List-------\n" .
 				"   # Skill Name                     Lv      SP\n");
-			foreach my $handle (@AI::Homunculus::homun_skillsID) {
+			foreach my $handle (@{$slave->{slave_skillsID}}) {
 				my $skill = new Skill(handle => $handle);
 				my $sp = $char->{skills}{$handle}{sp} || '';
 				$msg .= swrite(
 					"@>>> @<<<<<<<<<<<<<<<<<<<<<<<<<<<< @>>    @>>>",
 					[$skill->getIDN(), $skill->getName(), $char->getSkillLevel($skill), $sp]);
 			}
-			$msg .= TF("\nSkill Points: %d\n", $char->{homunculus}{points_skill});
+			$msg .= TF("\nSkill Points: %d\n", $slave->{points_skill}) if defined $slave->{points_skill};
 			$msg .= "-------------------------------\n";
 			message($msg, "list");
 
 		} elsif ($args[1] eq "add" && $args[2] =~ /\d+/) {
 			if (!$net || $net->getState() != Network::IN_GAME) {
-				error TF("You must be logged in the game to use this command (%s)\n", 'homun ' . $subcmd);
+				error TF("You must be logged in the game to use this command (%s)\n", $cmd . ' ' . $subcmd);
 				return;
 			}
 			my $skill = new Skill(idn => $args[2]);
 			if (!$skill->getIDN() || !$char->{skills}{$skill->getHandle()}) {
-				error TF("Error in function 'homun skills add' (Add Skill Point)\n" .
-					"Skill %s does not exist.\n", $args[2]);
-			} elsif ($char->{homunculus}{points_skill} < 1) {
-				error TF("Error in function 'homun skills add' (Add Skill Point)\n" .
-					"Not enough skill points to increase %s\n", $skill->getName());
+				error TF("Error in function '%s skills add' (Add Skill Point)\n" .
+					"Skill %s does not exist.\n", $cmd, $args[2]);
+			} elsif ($slave->{points_skill} < 1) {
+				error TF("Error in function '%s skills add' (Add Skill Point)\n" .
+					"Not enough skill points to increase %s\n", $cmd, $skill->getName());
 			} else {
 				$messageSender->sendAddSkillPoint($skill->getIDN());
 			}
@@ -1976,8 +2030,8 @@ sub cmdHomunculus {
 		} elsif ($args[1] eq "desc" && $args[2] =~ /\d+/) {
 			my $skill = new Skill(idn => $args[2]);
 			if (!$skill->getIDN()) {
-				error TF("Error in function 'homun skills desc' (Skill Description)\n" .
-					"Skill %s does not exist.\n", $args[2]);
+				error TF("Error in function '%s skills desc' (Skill Description)\n" .
+					"Skill %s does not exist.\n", $cmd, $args[2]);
 			} else {
 				my $description = $skillsDesc_lut{$skill->getHandle()} || T("Error: No description available.\n");
 				message TF("===============Skill Description===============\n" .
@@ -1987,12 +2041,12 @@ sub cmdHomunculus {
 			}
 
 		} else {
-			error T("Syntax Error in function 'homun skills' (Homunculus Skills Functions)\n" .
+			error T("Syntax Error in function 'slave skills' (Slave Skills Functions)\n" .
 				"Usage: homun skills [(<add | desc>) [<skill #>]]\n");
 		}
 
  	} else {
-		error T("Usage: homun < feed | s | status | move | standby | ai | aiv | skills>\n");
+		error T("Usage: slave < feed | s | status | move | standby | ai | aiv | skills>\n");
 	}
 }
 

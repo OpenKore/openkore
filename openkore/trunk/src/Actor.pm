@@ -117,7 +117,7 @@ sub get {
 	} elsif ($items{$ID}) {
 		return $items{$ID};
 	} else {
-		foreach my $list ($playersList, $monstersList, $npcsList, $petsList, $portalsList) {
+		foreach my $list ($playersList, $monstersList, $npcsList, $petsList, $portalsList, $slavesList) {
 			my $actor = $list->getByID($ID);
 			if ($actor) {
 				return $actor;

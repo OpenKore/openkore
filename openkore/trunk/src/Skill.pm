@@ -71,7 +71,7 @@ use constant {
 };
 
 # Owner type constants. See $Skill->getOwnerType() for description.
-use enum qw(OWNER_CHAR OWNER_HOMUN);
+use enum qw(OWNER_CHAR OWNER_HOMUN OWNER_MERC);
 
 
 ##
@@ -279,6 +279,7 @@ sub getTargetType {
 # `l
 # - Skill::OWNER_CHAR  - This skill belongs to the character.
 # - Skill::OWNER_HOMUN - This skill belongs to the character's homunculus.
+# - Skill::OWNER_MERC - This skill belongs to the character's mercenary.
 # `l`
 sub getOwnerType {
 	my ($self) = @_;

@@ -27,6 +27,7 @@ DIRS=(.
 	src/test
 	src/Actor
 	src/AI
+	src/AI/Slave
 	src/Base
 	src/Base/Server
 	src/Base/Ragnarok

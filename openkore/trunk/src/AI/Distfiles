@@ -1,3 +1,4 @@
 Attack.pm
 CoreLogic.pm
-Homunculus.pm
+SlaveManager.pm
+Slave.pm
