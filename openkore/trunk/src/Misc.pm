@@ -49,6 +49,7 @@ use Actor::Party;
 use Actor::NPC;
 use Actor::Portal;
 use Actor::Pet;
+use Actor::Slave;
 use Actor::Unknown;
 use Time::HiRes qw(time usleep);
 use Translation;
@@ -759,7 +760,6 @@ sub objectIsMovingTowardsPlayer {
 			my $ID = $player->{ID};
 			next if (
 			     ($ignore_party_members && $char->{party} && $char->{party}{users}{$ID})
-			  || ($ID eq $char->{homunculus}{ID})
 			  || (defined($player->{name}) && existsInList($config{tankersList}, $player->{name}))
 			  || $player->{statuses}{"GM Perfect Hide"});
 			if (checkMovementDirection($obj->{pos}, \%vec, $player->{pos}, 15)) {
@@ -898,6 +898,27 @@ EOF
 #######################################
 #######################################
 
+sub actorAddedRemovedVars {
+	my ($source) = @_;
+	# returns (type, list, hash)
+	if ($source == $itemsList) {
+		return ('item', \@itemsID, \%items);
+	} elsif ($source == $playersList) {
+		return ('player', \@playersID, \%players);
+	} elsif ($source == $monstersList) {
+		return ('monster', \@monstersID, \%monsters);
+	} elsif ($source == $portalsList) {
+		return ('portal', \@portalsID, \%portals);
+	} elsif ($source == $petsList) {
+		return ('pet', \@petsID, \%pets);
+	} elsif ($source == $npcsList) {
+		return ('npc', \@npcsID, \%npcs);
+	} elsif ($source == $slavesList) {
+		return ('slave', \@slavesID, \%slaves);
+	} else {
+		return (undef, undef, undef);
+	}
+}
 
 sub actorAdded {
 	my (undef, $source, $arg) = @_;
@@ -905,32 +926,7 @@ sub actorAdded {
 
 	$actor->{binID} = $index;
 
-	my ($type, $list, $hash);
-	if ($source == $itemsList) {
-		$type = "item";
-		$list = \@itemsID;
-		$hash = \%items;
-	} elsif ($source == $playersList) {
-		$type = "player";
-		$list = \@playersID;
-		$hash = \%players;
-	} elsif ($source == $monstersList) {
-		$type = "monster";
-		$list = \@monstersID;
-		$hash = \%monsters;
-	} elsif ($source == $portalsList) {
-		$type = "portal";
-		$list = \@portalsID;
-		$hash = \%portals;
-	} elsif ($source == $petsList) {
-		$type = "pet";
-		$list = \@petsID;
-		$hash = \%pets;
-	} elsif ($source == $npcsList) {
-		$type = "npc";
-		$list = \@npcsID;
-		$hash = \%npcs;
-	}
+	my ($type, $list, $hash) = actorAddedRemovedVars ($source);
 
 	if (defined $type) {
 		if (DEBUG && scalar(keys %{$hash}) + 1 != $source->size()) {
@@ -965,32 +961,7 @@ sub actorRemoved {
 	my (undef, $source, $arg) = @_;
 	my ($actor, $index) = @{$arg};
 
-	my ($type, $list, $hash);
-	if ($source == $itemsList) {
-		$type = "item";
-		$list = \@itemsID;
-		$hash = \%items;
-	} elsif ($source == $playersList) {
-		$type = "player";
-		$list = \@playersID;
-		$hash = \%players;
-	} elsif ($source == $monstersList) {
-		$type = "monster";
-		$list = \@monstersID;
-		$hash = \%monsters;
-	} elsif ($source == $portalsList) {
-		$type = "portal";
-		$list = \@portalsID;
-		$hash = \%portals;
-	} elsif ($source == $petsList) {
-		$type = "pet";
-		$list = \@petsID;
-		$hash = \%pets;
-	} elsif ($source == $npcsList) {
-		$type = "npc";
-		$list = \@npcsID;
-		$hash = \%npcs;
-	}
+	my ($type, $list, $hash) = actorAddedRemovedVars ($source);
 
 	if (defined $type) {
 		if (DEBUG && scalar(keys %{$hash}) - 1 != $source->size()) {
@@ -1033,12 +1004,14 @@ sub actorListClearing {
 	undef %portals;
 	undef %npcs;
 	undef %pets;
+	undef %slaves;
 	undef @itemsID;
 	undef @playersID;
 	undef @monstersID;
 	undef @portalsID;
 	undef @npcsID;
 	undef @petsID;
+	undef @slavesID;
 }
 
 sub avoidGM_talk {
@@ -1970,7 +1943,7 @@ sub meetingPosition {
 sub objectAdded {
 	my ($type, $ID, $obj) = @_;
 
-	if ($type eq 'player') {
+	if ($type eq 'player' || $type eq 'slave') {
 		# Try to retrieve the player name from cache.
 		if (!getPlayerNameFromCache($obj)) {
 			push @unknownPlayers, $ID;
@@ -2050,7 +2023,6 @@ sub positionNearPlayer {
 		my $ID = $player->{ID};
 		next if ($char->{party} && $char->{party}{users} &&
 			$char->{party}{users}{$ID});
-		next if ($ID eq $char->{homunculus}{ID});
 		next if (defined($player->{name}) && existsInList($config{tankersList}, $player->{name}));
 		return 1 if (distance($r_hash, $player->{pos_to}) <= $dist);
 	}
@@ -2082,11 +2054,15 @@ sub printItemDesc {
 }
 
 sub processNameRequestQueue {
-	my ($queue, $actorList, $foo) = @_;
+	my ($queue, $actorLists, $foo) = @_;
 
 	while (@{$queue}) {
 		my $ID = $queue->[0];
-		my $actor = $actorList->getByID($ID);
+		
+		my $actor;
+		foreach my $actorList (@$actorLists) {
+			last if $actor = $actorList->getByID($ID);
+		}
 
 		# Some private servers ban you if you request info for an object with
 		# GM Perfect Hide status
@@ -2582,7 +2558,7 @@ sub updateDamageTables {
 		}
 
 	} elsif ((my $monster = $monstersList->getByID($ID1))) {
-		if ((my $player = $playersList->getByID($ID2))) {
+		if ((my $player = $playersList->getByID($ID2) || $slavesList->getByID($ID2))) {
 			# Monster attacks player
 			$monster->{dmgFrom} += $damage;
 			$monster->{dmgToPlayer}{$ID2} += $damage;
@@ -2591,7 +2567,8 @@ sub updateDamageTables {
 				$monster->{missedToPlayer}{$ID2}++;
 				$player->{missedFromMonster}{$ID1}++;
 			}
-			if (existsInList($config{tankersList}, $player->{name}) || ($char->{homunculus} && $ID2 eq $char->{homunculus}{ID}) ||
+			if (existsInList($config{tankersList}, $player->{name}) ||
+			    ($char->{slaves} && %{$char->{slaves}} && $char->{slaves}{$ID2} && %{$char->{slaves}{$ID2}}) ||
 			    ($char->{party} && %{$char->{party}} && $char->{party}{users}{$ID2} && %{$char->{party}{users}{$ID2}})) {
 				# Monster attacks party member
 				$monster->{dmgToParty} += $damage;
@@ -2600,84 +2577,85 @@ sub updateDamageTables {
 			$monster->{target} = $ID2;
 			OpenKoreMod::updateDamageTables($monster) if (defined &OpenKoreMod::updateDamageTables);
 
-			if ($AI == 2 && $char->{homunculus} && $ID2 eq $char->{homunculus}{ID}) {
+			if ($AI == 2 && ($char->{slaves} && $char->{slaves}{$ID2})) {
 				my $teleport = 0;
 				if (mon_control($monster->{name},$monster->{nameID})->{teleport_auto} == 2 && $damage){
-					message TF("Homunculus teleporting due to attack from %s\n",
+					message TF("Slave teleporting due to attack from %s\n",
 						$monster->{name}), "teleport";
 					$teleport = 1;
 
-				} elsif ($config{homunculus_teleportAuto_deadly} && $damage >= $char->{homunculus}{hp}
+				} elsif ($config{$char->{slaves}{$ID2}{slave_configPrefix}.'teleportAuto_deadly'} && $damage >= $char->{slaves}{$ID2}{hp}
 				      && !whenStatusActive("Hallucination")) {
-					message TF("Next %d dmg could kill your homunculus. Teleporting...\n",
+					message TF("Next %d dmg could kill your slave. Teleporting...\n",
 						$damage), "teleport";
 					$teleport = 1;
 
-				} elsif ($config{homunculus_teleportAuto_maxDmg} && $damage >= $config{homunculus_teleportAuto_maxDmg}
+				} elsif ($config{$char->{slaves}{$ID2}{slave_configPrefix}.'teleportAuto_maxDmg'} && $damage >= $config{$char->{slaves}{$ID2}{slave_configPrefix}.'teleportAuto_maxDmg'}
 				      && !whenStatusActive("Hallucination")
-				      && !($config{homunculus_teleportAuto_maxDmgInLock} && $field{name} eq $config{lockMap})) {
-					message TF("%s hit your homunculus for more than %d dmg. Teleporting...\n",
-						$monster->{name}, $config{homunculus_teleportAuto_maxDmg}), "teleport";
+				      && !($config{$char->{slaves}{$ID2}{slave_configPrefix}.'teleportAuto_maxDmgInLock'} && $field{name} eq $config{lockMap})) {
+					message TF("%s hit your slave for more than %d dmg. Teleporting...\n",
+						$monster->{name}, $config{$char->{slaves}{$ID2}{slave_configPrefix}.'teleportAuto_maxDmg'}), "teleport";
 					$teleport = 1;
 
-				} elsif ($config{homunculus_teleportAuto_maxDmgInLock} && $field{name} eq $config{lockMap}
-				      && $damage >= $config{homunculus_teleportAuto_maxDmgInLock}
+				} elsif ($config{$char->{slaves}{$ID2}{slave_configPrefix}.'teleportAuto_maxDmgInLock'} && $field{name} eq $config{lockMap}
+				      && $damage >= $config{$char->{slaves}{$ID2}{slave_configPrefix}.'teleportAuto_maxDmgInLock'}
 				      && !whenStatusActive("Hallucination")) {
-					message TF("%s hit your homunculus for more than %d dmg in lockMap. Teleporting...\n",
-						$monster->{name}, $config{homunculus_teleportAuto_maxDmgInLock}), "teleport";
+					message TF("%s hit your slave for more than %d dmg in lockMap. Teleporting...\n",
+						$monster->{name}, $config{$char->{slaves}{$ID2}{slave_configPrefix}.'teleportAuto_maxDmgInLock'}), "teleport";
 					$teleport = 1;
 
-				} elsif ($config{homunculus_teleportAuto_totalDmg}
-				      && $monster->{dmgToPlayer}{$char->{homunculus}{ID}} >= $config{homunculus_teleportAuto_totalDmg}
+				} elsif ($config{$char->{slaves}{$ID2}{slave_configPrefix}.'teleportAuto_totalDmg'}
+				      && $monster->{dmgToPlayer}{$ID2} >= $config{$char->{slaves}{$ID2}{slave_configPrefix}.'teleportAuto_totalDmg'}
 				      && !whenStatusActive("Hallucination")
-				      && !($config{homunculus_teleportAuto_totalDmgInLock} && $field{name} eq $config{lockMap})) {
-					message TF("%s hit your homunculus for a total of more than %d dmg. Teleporting...\n",
-						$monster->{name}, $config{homunculus_teleportAuto_totalDmg}), "teleport";
+				      && !($config{$char->{slaves}{$ID2}{slave_configPrefix}.'teleportAuto_totalDmgInLock'} && $field{name} eq $config{lockMap})) {
+					message TF("%s hit your slave for a total of more than %d dmg. Teleporting...\n",
+						$monster->{name}, $config{$char->{slaves}{$ID2}{slave_configPrefix}.'teleportAuto_totalDmg'}), "teleport";
 					$teleport = 1;
 
-				} elsif ($config{homunculus_teleportAuto_totalDmgInLock} && $field{name} eq $config{lockMap}
-				      && $monster->{dmgToPlayer}{$char->{homunculus}{ID}} >= $config{homunculus_teleportAuto_totalDmgInLock}
+				} elsif ($config{$char->{slaves}{$ID2}{slave_configPrefix}.'teleportAuto_totalDmgInLock'} && $field{name} eq $config{lockMap}
+				      && $monster->{dmgToPlayer}{$ID2} >= $config{$char->{slaves}{$ID2}{slave_configPrefix}.'teleportAuto_totalDmgInLock'}
 				      && !whenStatusActive("Hallucination")) {
-					message TF("%s hit your homunculus for a total of more than %d dmg in lockMap. Teleporting...\n",
-						$monster->{name}, $config{homunculus_teleportAuto_totalDmgInLock}), "teleport";
+					message TF("%s hit your slave for a total of more than %d dmg in lockMap. Teleporting...\n",
+						$monster->{name}, $config{$char->{slaves}{$ID2}{slave_configPrefix}.'teleportAuto_totalDmgInLock'}), "teleport";
 					$teleport = 1;
 
-				} elsif ($config{homunculus_teleportAuto_hp} && $char->{homunculus}{hpPercent} <= $config{homunculus_teleportAuto_hp}) {
-					message TF("%s hit your homunculus when your homunculus' HP is too low. Teleporting...\n",
+				} elsif ($config{$char->{slaves}{$ID2}{slave_configPrefix}.'teleportAuto_hp'} && $char->{slaves}{$ID2}{hpPercent} <= $config{$char->{slaves}{$ID2}{slave_configPrefix}.'teleportAuto_hp'}) {
+					message TF("%s hit your slave when your homunculus' HP is too low. Teleporting...\n",
 						$monster->{name}), "teleport";
 					$teleport = 1;
 
-				} elsif ($config{homunculus_attackChangeTarget} && ((AI::Homunculus::action() eq "route" && AI::Homunculus::action(1) eq "attack") || (AI::Homunculus::action() eq "move" && AI::Homunculus::action(2) eq "attack"))
-				   && AI::Homunculus::args()->{attackID} && AI::Homunculus::args()->{attackID} ne $ID1) {
-					my $attackTarget = Actor::get(AI::Homunculus::args()->{attackID});
-					my $attackSeq = (AI::Homunculus::action() eq "route") ? AI::Homunculus::args(1) : AI::Homunculus::args(2);
-					if (!$attackTarget->{dmgToPlayer}{$char->{homunculus}{ID}} && !$attackTarget->{dmgFromPlayer}{$char->{homunculus}{ID}} && distance($monster->{pos_to}, calcPosition($char->{homunculus})) <= $attackSeq->{attackMethod}{distance}) {
-						my $ignore = 0;
-						# Don't attack ignored monsters
-						if ((my $control = mon_control($monster->{name},$monster->{nameID}))) {
-							$ignore = 1 if ( ($control->{attack_auto} == -1)
-								|| ($control->{attack_lvl} ne "" && $control->{attack_lvl} > $char->{lv})
-								|| ($control->{attack_jlvl} ne "" && $control->{attack_jlvl} > $char->{lv_job})
-								|| ($control->{attack_hp}  ne "" && $control->{attack_hp} > $char->{hp})
-								|| ($control->{attack_sp}  ne "" && $control->{attack_sp} > $char->{sp})
-								);
-						}
-						if (!$ignore) {
-							# Change target to closer aggressive monster
-							message TF("Homunculus change target to aggressive : %s (%s)\n", $monster->name, $monster->{binID});
-							AI::Homunculus::homunculus_stopAttack();
-							AI::Homunculus::dequeue();
-							AI::Homunculus::dequeue() if (AI::Homunculus::action() eq "route");
-							AI::Homunculus::dequeue();
-							AI::Homunculus::homunculus_attack($ID1);
-						}
-					}
+## this needs to be rewritten to support slaves
+# 				} elsif ($config{homunculus_attackChangeTarget} && ((AI::Homunculus::action() eq "route" && AI::Homunculus::action(1) eq "attack") || (AI::Homunculus::action() eq "move" && AI::Homunculus::action(2) eq "attack"))
+# 				   && AI::Homunculus::args()->{attackID} && AI::Homunculus::args()->{attackID} ne $ID1) {
+# 					my $attackTarget = Actor::get(AI::Homunculus::args()->{attackID});
+# 					my $attackSeq = (AI::Homunculus::action() eq "route") ? AI::Homunculus::args(1) : AI::Homunculus::args(2);
+# 					if (!$attackTarget->{dmgToPlayer}{$char->{homunculus}{ID}} && !$attackTarget->{dmgFromPlayer}{$char->{homunculus}{ID}} && distance($monster->{pos_to}, calcPosition($char->{homunculus})) <= $attackSeq->{attackMethod}{distance}) {
+# 						my $ignore = 0;
+# 						# Don't attack ignored monsters
+# 						if ((my $control = mon_control($monster->{name},$monster->{nameID}))) {
+# 							$ignore = 1 if ( ($control->{attack_auto} == -1)
+# 								|| ($control->{attack_lvl} ne "" && $control->{attack_lvl} > $char->{lv})
+# 								|| ($control->{attack_jlvl} ne "" && $control->{attack_jlvl} > $char->{lv_job})
+# 								|| ($control->{attack_hp}  ne "" && $control->{attack_hp} > $char->{hp})
+# 								|| ($control->{attack_sp}  ne "" && $control->{attack_sp} > $char->{sp})
+# 								);
+# 						}
+# 						if (!$ignore) {
+# 							# Change target to closer aggressive monster
+# 							message TF("Homunculus change target to aggressive : %s (%s)\n", $monster->name, $monster->{binID});
+# 							AI::Homunculus::homunculus_stopAttack();
+# 							AI::Homunculus::dequeue();
+# 							AI::Homunculus::dequeue() if (AI::Homunculus::action() eq "route");
+# 							AI::Homunculus::dequeue();
+# 							AI::Homunculus::homunculus_attack($ID1);
+# 						}
+# 					}
 				}
 				useTeleport(1, undef, 1) if ($teleport);
 			}
 		}
 
-	} elsif ((my $player = $playersList->getByID($ID1))) {
+	} elsif ((my $player = $playersList->getByID($ID1) || $slavesList->getByID($ID1))) {
 		if ((my $monster = $monstersList->getByID($ID2))) {
 			# Player attacks monster
 			$monster->{dmgTo} += $damage;
@@ -2690,7 +2668,7 @@ sub updateDamageTables {
 				$player->{missedToMonster}{$ID2}++;
 			}
 
-			if (existsInList($config{tankersList}, $player->{name}) || ($char->{homunculus} && $ID1 eq $char->{homunculus}{ID}) ||
+			if (existsInList($config{tankersList}, $player->{name}) || ($char->{slaves} && $char->{slaves}{$ID1}) ||
 			    ($char->{party} && %{$char->{party}} && $char->{party}{users}{$ID1} && %{$char->{party}{users}{$ID1}})) {
 				$monster->{dmgFromParty} += $damage;
 			}
@@ -3257,6 +3235,9 @@ sub skillUse_string {
 		} elsif ($target->isa('Actor::Monster')) {
 			return TF("You use %s on monster %s (%d) %s(delay %s)\n", $skillName,
 				$target->name, $target->{binID}, $damage, $delay);
+		} elsif ($target->isa('Actor::Slave')) {
+			return TF("You use %s on slave %s (%d) %s(delay %s)\n", $skillName,
+				$target->name, $target->{binID}, $damage, $delay);
 		} elsif ($target->isa('Actor::Unknown')) {
 			return TF("You use %s on Unknown #%s (%d) %s(delay %s)\n", $skillName,
 				$target->{nameID}, $target->{binID}, $damage, $delay);
@@ -3281,6 +3262,9 @@ sub skillUse_string {
 		} elsif ($target->isa('Actor::Monster')) {
 			return TF("Player %s (%d) uses %s on monster %s (%d) %s(delay %s)\n", $source->name,
 				$source->{binID}, $skillName, $target->name, $target->{binID}, $damage, $delay);
+		} elsif ($target->isa('Actor::Slave')) {
+			return TF("Player %s (%d) uses %s on slave %s (%d) %s(delay %s)\n", $source->name,
+				$source->{binID}, $skillName, $target->name, $target->{binID}, $damage, $delay);
 		} elsif ($target->isa('Actor::Unknown')) {
 			return TF("Player %s (%d) uses %s on Unknown #%s (%d) %s(delay %s)\n", $source->name,
 				$source->{binID}, $skillName, $target->{nameID}, $target->{binID}, $damage, $delay);
@@ -3301,12 +3285,39 @@ sub skillUse_string {
 				return TF("Monster %s (%d) uses %s on itself %s(delay %s)\n", $source->name,
 					$source->{binID}, $skillName, $damage, $delay);
 			}
+		} elsif ($target->isa('Actor::Slave')) {
+			return TF("Monster %s (%d) uses %s on slave %s (%d) %s(delay %s)\n", $source->name,
+				$source->{binID}, $skillName, $target->name, $target->{binID}, $damage, $delay);
 		} elsif ($target->isa('Actor::Unknown')) {
 			return TF("Monster %s (%d) uses %s on Unknown #%s (%d) %s(delay %s)\n", $source->name,
 				$source->{binID}, $skillName, $target->{nameID}, $target->{binID}, $damage, $delay);
 		}
+	# Slave
+	} elsif ($source->isa('Actor::Slave')) {
+		if ($target->isa('Actor::You')) {
+			return TF("Slave %s (%d) uses %s on you %s(delay %s)\n", $source->name,
+				$source->{binID}, $skillName, $damage, $delay);
+		} elsif ($target->isa('Actor::Player')) {
+			return TF("Slave %s (%d) uses %s on player %s (%d) %s(delay %s)\n", $source->name,
+				$source->{binID}, $skillName, $target->name, $target->{binID}, $damage, $delay);
+		} elsif ($target->isa('Actor::Monster')) {
+			return TF("Slave %s (%d) uses %s on monster %s (%d) %s(delay %s)\n", $source->name,
+				$source->{binID}, $skillName, $target->name, $target->{binID}, $damage, $delay);
+		} elsif ($target->isa('Actor::Slave')) {
+			if ($source ne $target) {
+				return TF("Slave %s (%d) uses %s on slave %s (%d) %s(delay %s)\n", $source->name,
+					$source->{binID}, $skillName, $target->name, $target->{binID}, $damage, $delay);
+			} else {
+				return TF("Slave %s (%d) uses %s on itself %s(delay %s)\n", $source->name,
+					$source->{binID}, $skillName, $damage, $delay);
+			}
+		} elsif ($target->isa('Actor::Unknown')) {
+			return TF("Slave %s (%d) uses %s on Unknown #%s (%d) %s(delay %s)\n", $source->name,
+				$source->{binID}, $skillName, $target->{nameID}, $target->{binID}, $damage, $delay);
+		}
 	# Unknown
 	} elsif ($source->isa('Actor::Unknown')) {
+		message "test2\n";
 		if ($target->isa('Actor::You')) {
 			return TF("Unknown #%s (%d) uses %s on you %s(delay %s)\n", $source->{nameID},
 				$source->{binID}, $skillName, $damage, $delay);
@@ -3315,6 +3326,9 @@ sub skillUse_string {
 				$source->{binID}, $skillName, $target->name, $target->{binID}, $damage, $delay);
 		} elsif ($target->isa('Actor::Monster')) {
 			return TF("Unknown #%s (%d) uses %s on monster %s (%d) %s(delay %s)\n", $source->{nameID},
+				$source->{binID}, $skillName, $target->name, $target->{binID}, $damage, $delay);
+		} elsif ($target->isa('Actor::Slave')) {
+			return TF("Unknown #%s (%d) uses %s on slave %s (%d) %s(delay %s)\n", $source->{nameID},
 				$source->{binID}, $skillName, $target->name, $target->{binID}, $damage, $delay);
 		} elsif ($target->isa('Actor::Unknown')) {
 			if ($source ne $target) {
@@ -3896,6 +3910,31 @@ sub checkSelfCondition {
 		}
 	}
 
+	if ($char->{mercenary}) {
+		if ($config{$prefix . "_mercenary_hp"}) {
+			if ($config{$prefix."_mercenary_hp"} =~ /^(.*)\%$/) {
+				return 0 if (!inRange($char->{mercenary}{hpPercent}, $1));
+			} else {
+				return 0 if (!inRange($char->{mercenary}{hp}, $config{$prefix."_mercenary_hp"}));
+			}
+		}
+
+		if ($config{$prefix."_mercenary_sp"}) {
+			if ($config{$prefix."_mercenary_sp"} =~ /^(.*)\%$/) {
+				return 0 if (!inRange($char->{mercenary}{spPercent}, $1));
+			} else {
+				return 0 if (!inRange($char->{mercenary}{sp}, $config{$prefix."_mercenary_sp"}));
+			}
+		}
+	}
+	
+	if ($config{$prefix."_mercenary_on"}) {
+		return 0 unless $char->{mercenary};
+	}
+	if ($config{$prefix."_mercenary_off"}) {
+		return 0 if $char->{mercenary};
+	}
+	
 	# check skill use SP if this is a 'use skill' condition
 	if ($prefix =~ /skill/i) {
 		my $skill_handle = Skill->new(name => lc($config{$prefix}))->getHandle();

@@ -312,7 +312,7 @@ sub new {
 		'022E' => ['homunculus_stats', 'Z24 C v16 V2 v2', [qw(name state lvl hunger intimacy accessory atk matk hit critical def mdef flee aspd hp hp_max sp sp_max exp exp_max points_skill unknown)]],
 		'022F' => ['homunculus_food', 'C1 v1', [qw(success foodID)]],
 		'0230' => ['homunculus_info', 'x1 C1 a4 V1',[qw(type ID val)]],
-		'0235' => ['homunculus_skills'],
+		'0235' => ['skills_list'], # homunculus skills
 		'0238' => ['top10_pk_rank'],
 		# homunculus skill update
 		'0239' => ['skill_update', 'v1 v1 v1 v1 C1', [qw(skillID lv sp range up)]], # range = skill range, up = this skill can be leveled up further
@@ -333,10 +333,15 @@ sub new {
 		# tRO new packets, need some work on them
 		'0283' => ['account_id', 'V1', [qw(accountID)]],
 		'0287' => ['cash_dealer'],
+		'0291' => ['message_string', 'v1', [qw(msg_id)]],
 		'0295' => ['inventory_items_nonstackable'],
 		'0296' => ['storage_items_nonstackable'],
 		'0297' => ['cart_equip_list'],
 		'029A' => ['inventory_item_added', 'v1 v1 v1 C1 C1 C1 a8 v1 C1 C1 a4', [qw(index amount nameID identified broken upgrade cards type_equip type fail cards_ext)]],
+		# mercenaries
+		'029B' => ['homunculus_stats', 'a4 v8 Z24 v5 V1 v2', [qw(ID atk matk hit critical def mdef flee aspd name lvl hp hp_max sp sp_max contract_end faith summons)]], # mercenary stats
+		'029D' => ['skills_list'], # mercenary skills
+		'02A2' => ['mercenary_param_change', 'v1 V1', [qw(type param)]],
 		# tRO HShield packet challenge. 
 		# Borrow sub gameguard_request because it use the same mechanic.
 		'02A6' => ['gameguard_request'],
@@ -855,11 +860,11 @@ sub actor_action {
 				$damageTaken{$source->{name}}{attack} += $args->{damage};
 			}
 
-		} elsif ($char->{homunculus} && $args->{sourceID} eq $char->{homunculus}{ID}) {
-			message(sprintf("[%3d/%3d]", $char->{homunculus}{hpPercent}, $char->{homunculus}{spPercent}) . " $msg", $totalDamage > 0 ? "attackMon" : "attackMonMiss");
+		} elsif ($char->{slaves} && $char->{slaves}{$args->{sourceID}}) {
+			message(sprintf("[%3d/%3d]", $char->{slaves}{$args->{sourceID}}{hpPercent}, $char->{slaves}{$args->{sourceID}}{spPercent}) . " $msg", $totalDamage > 0 ? "attackMon" : "attackMonMiss");
 
-		} elsif ($char->{homunculus} && $args->{targetID} eq $char->{homunculus}{ID}) {
-			message(sprintf("[%3d/%3d]", $char->{homunculus}{hpPercent}, $char->{homunculus}{spPercent}) . " $msg", $args->{damage} > 0 ? "attacked" : "attackedMiss");
+		} elsif ($char->{slaves} && $char->{slaves}{$args->{targetID}}) {
+			message(sprintf("[%3d/%3d]", $char->{slaves}{$args->{targetID}}{hpPercent}, $char->{slaves}{$args->{targetID}}{spPercent}) . " $msg", $args->{damage} > 0 ? "attacked" : "attackedMiss");
 
 		} else {
 			debug("$msg", 'parseMsg_damage');
@@ -980,6 +985,31 @@ sub actor_died_or_disappeared {
 		$pet->{gone_time} = time;
 		$petsList->remove($pet);
 
+	} elsif (defined $slavesList->getByID($ID)) {
+		my $slave = $slavesList->getByID($ID);
+		if ($args->{type} == 1) {
+			message TF("Slave Died: %s (%d) %s\n", $slave->name, $slave->{binID}, $slave->{actorType});
+		} else {
+			if ($args->{type} == 0) {
+				debug "Slave Disappeared: " . $slave->name . " ($slave->{binID}) $slave->{actorType} ($slave->{pos_to}{x}, $slave->{pos_to}{y})\n", "parseMsg_presence";
+				$slave->{disappeared} = 1;
+			} elsif ($args->{type} == 2) {
+				debug "Slave Disconnected: ".$slave->name." ($slave->{binID}) $slave->{actorType} ($slave->{pos_to}{x}, $slave->{pos_to}{y})\n", "parseMsg_presence";
+				$slave->{disconnected} = 1;
+			} elsif ($args->{type} == 3) {
+				debug "Slave Teleported: ".$slave->name." ($slave->{binID}) $slave->{actorType} ($slave->{pos_to}{x}, $slave->{pos_to}{y})\n", "parseMsg_presence";
+				$slave->{teleported} = 1;
+			} else {
+				debug "Slave Disappeared in an unknown way: ".$slave->name." ($slave->{binID}) $slave->{actorType}\n", "parseMsg_presence";
+				$slave->{disappeared} = 1;
+			}
+
+			$slave->{gone_time} = time;
+			Plugins::callHook('slave_disappeared', {slave => $slave});
+		}
+		
+		$slavesList->remove($slave);
+
 	} else {
 		debug "Unknown Disappeared: ".getHex($ID)."\n", "parseMsg";
 	}
@@ -1039,14 +1069,27 @@ sub actor_display {
 	#### Step 1: create/get the correct actor object ####
 
 	if ($jobs_lut{$args->{type}}) {
-		# Actor is a player (homunculus are considered players for now)
-		$actor = $playersList->getByID($args->{ID});
-		if (!defined $actor) {
-			$actor = ($char->{homunculus} && $args->{ID} eq $char->{homunculus}{ID}) ? $char->{homunculus} : new Actor::Player($args->{type});
-			$actor->{appear_time} = time;
-			$mustAdd = 1;
+		unless ($args->{type} > 6000) {
+			# Actor is a player
+			$actor = $playersList->getByID($args->{ID});
+			if (!defined $actor) {
+				$actor = new Actor::Player($args->{type});
+				$actor->{appear_time} = time;
+				$mustAdd = 1;
+			}
+			$actor->{nameID} = $nameID;
+		} else {
+			# Actor is a homunculus or a mercenary
+			$actor = $slavesList->getByID($args->{ID});
+			if (!defined $actor) {
+				$actor = $char->{slaves} && $char->{slaves}{$args->{ID}}
+				? $char->{slaves}{$args->{ID}} : new Actor::Slave ($args->{type});
+				
+				$actor->{appear_time} = time;
+				$mustAdd = 1;
+			}
+			$actor->{nameID} = $nameID;
 		}
-		$actor->{nameID} = $nameID;
 
 	} elsif ($args->{type} == 45) {
 		# Actor is a portal
@@ -1068,7 +1111,6 @@ sub actor_display {
 		}
 		$actor->{nameID} = $nameID;
 
-	#} elsif ($args->{type} >= 1000 || ($args->{type} >= 6000 && $pvp == 0)) {
 	} elsif ($args->{type} >= 1000) {
 		# Actor might be a monster
 		if ($args->{hair_style} == 0x64) {
@@ -1226,6 +1268,10 @@ sub actor_display {
 				$actor->setName($npcs_lut{$location});
 			}
 			$npcsList->add($actor);
+
+		} elsif (UNIVERSAL::isa($actor, "Actor::Slave")) {
+			$slavesList->add($actor);
+
 		}
 	}
 
@@ -1256,6 +1302,9 @@ sub actor_display {
 
 		} elsif ($actor->isa('Actor::Pet')) {
 			debug sprintf("Pet Exists: %s (%d)\n", $actor->name, $actor->{binID}), "parseMsg_presence", 1;
+
+		} elsif ($actor->isa('Actor::Slave')) {
+			debug sprintf("Slave Exists: %s (%d)\n", $actor->name, $actor->{binID}), "parseMsg_presence", 1;
 
 		} else {
 			debug sprintf("Unknown Actor Exists: %s (%d)\n", $actor->name, $actor->{binID}), "parseMsg_presence", 1;
@@ -1303,6 +1352,9 @@ sub actor_display {
 		} elsif ($actor->isa('Actor::Pet')) {
 			debug "Pet Moved: " . $actor->nameIdx . " - ($coordsFrom{x}, $coordsFrom{y}) -> ($coordsTo{x}, $coordsTo{y})\n", "parseMsg";
 
+		} elsif ($actor->isa('Actor::Slave')) {
+			debug "Slave Moved: " . $actor->nameIdx . " - ($coordsFrom{x}, $coordsFrom{y}) -> ($coordsTo{x}, $coordsTo{y})\n", "parseMsg";
+
 		} elsif ($actor->isa('Actor::Portal')) {
 			# This can never happen of course.
 			debug "Portal Moved: " . $actor->nameIdx . " - ($coordsFrom{x}, $coordsFrom{y}) -> ($coordsTo{x}, $coordsTo{y})\n", "parseMsg";
@@ -1321,6 +1373,8 @@ sub actor_display {
 			debug "Player Spawned: " . $actor->nameIdx . " $sex_lut{$actor->{sex}} $jobs_lut{$actor->{jobID}}\n", "parseMsg";
 		} elsif ($actor->isa('Actor::Monster')) {
 			debug "Monster Spawned: " . $actor->nameIdx . "\n", "parseMsg";
+		} elsif ($actor->isa('Actor::Slave')) {
+			debug "Slave Spawned: " . $actor->nameIdx . "\n", "parseMsg";
 		} elsif ($actor->isa('NPC')) {
 			debug "NPC Spawned: " . $actor->nameIdx . "\n", "parseMsg";
 		} else {
@@ -1381,6 +1435,17 @@ sub actor_info {
 			debug "Pet Info: $pet->{name_given} ($binID)\n", "parseMsg", 2;
 		}
 	}
+
+	my $slave = $slavesList->getByID($args->{ID});
+	if ($slave) {
+		my $name = bytesToString($args->{name});
+		#$slave->{name_given} = $name;
+		$slave->setName($name);
+		my $binID = binFind(\@slavesID, $args->{ID});
+		debug "Slave Info: $name ($binID)\n", "parseMsg_presence", 2;
+		updatePlayerNameCache($slave);
+	}
+
 }
 
 sub actor_look_at {
@@ -2411,12 +2476,12 @@ sub emoticon {
 				AI::queue("sendEmotion", \%args);
 			}
 		}
-	} elsif (my $monster = $monstersList->getByID($args->{ID})) {
+	} elsif (my $monster = $monstersList->getByID($args->{ID}) || $slavesList->getByID($args->{ID})) {
 		my $dist = distance($char->{pos_to}, $monster->{pos_to});
 		$dist = sprintf("%.1f", $dist) if ($dist =~ /\./);
 
 		# Translation Comment: "[dist=$dist] $monster->name ($monster->{binID}): $emotion\n"
-		message TF("[dist=%s] Monster %s (%d): %s\n", $dist, $monster->name, $monster->{binID}, $emotion), "emotion";
+		message TF("[dist=%s] %s %s (%d): %s\n", $dist, $monster->{actorType}, $monster->name, $monster->{binID}, $emotion), "emotion";
 
 	} else {
 		my $actor = Actor::get($args->{ID});
@@ -2724,6 +2789,9 @@ sub homunculus_info {
 		$char->{homunculus} = Actor::get($args->{ID});
 		$char->{homunculus}{state} = $state if (defined $state);
 		$char->{homunculus}{map} = $field{name};
+		unless ($char->{slaves}{$char->{homunculus}{ID}}) {
+			AI::SlaveManager::addSlave ($char->{homunculus});
+		}
 	} elsif ($args->{type} == 1) {
 		$char->{homunculus}{intimacy} = $args->{val};
 	} elsif ($args->{type} == 2) {
@@ -2731,103 +2799,87 @@ sub homunculus_info {
 	}
 }
 
-sub homunculus_skills {
+sub homunculus_stats { # homunculus and mercenary stats
 	my ($self, $args) = @_;
-
-	# Character skill list
-	return unless changeToInGameState();
-	my $newmsg;
-	my $msg = $args->{RAW_MSG};
-	my $msg_size = $args->{RAW_MSG_SIZE};
-
-	undef @AI::Homunculus::homun_skillsID;
-	for (my $i = 4; $i < $msg_size; $i += 37) {
-		my $skillID = unpack("v1", substr($msg, $i, 2));
-		# target type is 0 for novice skill, 1 for enemy, 2 for place, 4 for immediate invoke, 16 for party member
-		my $targetType = unpack("v1", substr($msg, $i+2, 2)); # we don't use this yet
-		my $level = unpack("v1", substr($msg, $i + 6, 2));
-		my $sp = unpack("v1", substr($msg, $i + 8, 2));
-		my $range = unpack("v1", substr($msg, $i + 10, 2));
-		my ($handle) = unpack("Z*", substr($msg, $i + 12, 24));
-		my $up = unpack("C1", substr($msg, $i+36, 1));
-		if (!$handle) {
-			$handle = Skill->new(idn => $skillID)->getHandle();
+	
+	if ($args->{switch} eq '029B') {
+		# Mercenary
+		$char->{mercenary} = Actor::get ($args->{ID});
+		$char->{mercenary}{map} = $field{name};
+		unless ($char->{slaves}{$char->{mercenary}{ID}}) {
+			AI::SlaveManager::addSlave ($char->{mercenary});
 		}
-
-		$char->{skills}{$handle}{ID} = $skillID;
-		$char->{skills}{$handle}{sp} = $sp;
-		$char->{skills}{$handle}{range} = $range;
-		$char->{skills}{$handle}{up} = $up;
-		$char->{skills}{$handle}{targetType} = $targetType;
-		if (!$char->{skills}{$handle}{lv}) {
-			$char->{skills}{$handle}{lv} = $level;
-		}
-		binAdd(\@AI::Homunculus::homun_skillsID, $handle) if (!binFind(\@AI::Homunculus::homun_skillsID, $handle));
-		Skill::DynamicInfo::add($skillID, $handle, $level, $sp, $range, $targetType, Skill::OWNER_HOMUN);
-
-		Plugins::callHook('packet_homunSkills', {
-			ID => $skillID,
-			handle => $handle,
-			level => $level,
-		});
 	}
-}
-
-sub homunculus_stats {
-	my ($self, $args) = @_;
-	my $homunculus = $char->{homunculus};
-	$homunculus->{name} = bytesToString($args->{name});
-
-	# Homunculus states:
-	# 0 - alive
-	# 2 - rest
-	# 4 - dead
-
-	if (($args->{state} & ~8) > 1) {
-		foreach my $handle (@AI::Homunculus::homun_skillsID) {
-			delete $char->{skills}{$handle};
-		}
-		AI::Homunculus::clear();
-		undef @AI::Homunculus::homun_skillsID;
-		if ($homunculus->{state} != $args->{state}) {
-			if ($args->{state} & 2) {
-				message T("Your Homunculus was vaporized!\n"), 'homunculus';
-			} elsif ($args->{state} & 4) {
-				message T("Your Homunculus died!\n"), 'homunculus';
+	
+	my $slave;
+	if ($args->{switch} eq '022E') {
+		$slave = $char->{homunculus};
+	} elsif ($args->{switch} eq '029B') {
+		$slave = $char->{mercenary};
+	}
+	
+	$slave->{name} = bytesToString ($args->{name});
+	
+	if ($args->{switch} eq '022E') {
+		# Homunculus states:
+		# 0 - alive
+		# 2 - rest
+		# 4 - dead
+		
+		if (($args->{state} & ~8) > 1) {
+			foreach my $handle (@{$char->{homunculus}{slave_skillsID}}) {
+				delete $char->{skills}{$handle};
+			}
+			$char->{homunculus}->clear();
+			undef @{$char->{homunculus}{slave_skillsID}};
+			if ($slave->{state} != $args->{state}) {
+				if ($args->{state} & 2) {
+					message T("Your Homunculus was vaporized!\n"), 'homunculus';
+				} elsif ($args->{state} & 4) {
+					message T("Your Homunculus died!\n"), 'homunculus';
+				}
+			}
+		} elsif ($slave->{state} != $args->{state}) {
+			if ($slave->{state} & 2) {
+				message T("Your Homunculus was recalled!\n"), 'homunculus';
+			} elsif ($slave->{state} & 4) {
+				message T("Your Homunculus was resurrected!\n"), 'homunculus';
 			}
 		}
-	} elsif ($homunculus->{state} != $args->{state}) {
-		if ($homunculus->{state} & 2) {
-			message T("Your Homunculus was recalled!\n"), 'homunculus';
-		} elsif ($char->{homunculus}{state} & 4) {
-			message T("Your Homunculus was resurrected!\n"), 'homunculus';
-		}
 	}
-
-	$homunculus->{state}     = $args->{state};
-	$homunculus->{level}     = $args->{lvl};
-	$homunculus->{hunger}    = $args->{hunger};
-	$homunculus->{intimacy}  = $args->{intimacy};
-	$homunculus->{accessory} = $args->{accessory};
-	$homunculus->{atk}       = $args->{atk};
-	$homunculus->{matk}      = $args->{matk};
-	$homunculus->{hit}       = $args->{hit};
-	$homunculus->{critical}  = $args->{critical};
-	$homunculus->{def}       = $args->{def};
-	$homunculus->{mdef}      = $args->{mdef};
-	$homunculus->{flee}      = $args->{flee};
-	$homunculus->{aspd}      = $args->{aspd};
-	$homunculus->{aspdDisp}  = int (200 - (($args->{aspd} < 10) ? 10 : ($args->{aspd} / 10)));
-	$homunculus->{hp}        = $args->{hp};
-	$homunculus->{hp_max}    = $args->{hp_max};
-	$homunculus->{sp}        = $args->{sp};
-	$homunculus->{sp_max}    = $args->{sp_max};
-	$homunculus->{exp}       = $args->{exp};
-	$homunculus->{exp_max}   = $args->{exp_max};
-	$homunculus->{hpPercent} = ($args->{hp} / $args->{hp_max}) * 100;
-	$homunculus->{spPercent} = ($args->{sp} / $args->{sp_max}) * 100;
-	$homunculus->{expPercent}   = ($args->{exp_max}) ? ($args->{exp} / $args->{exp_max}) * 100 : 0;
-	$homunculus->{points_skill} = $args->{points_skill};
+	
+	$slave->{level}        = $args->{lvl};
+	$slave->{atk}          = $args->{atk};
+	$slave->{matk}         = $args->{matk};
+	$slave->{hit}          = $args->{hit};
+	$slave->{critical}     = $args->{critical};
+	$slave->{def}          = $args->{def};
+	$slave->{mdef}         = $args->{mdef};
+	$slave->{flee}         = $args->{flee};
+	$slave->{aspd}         = $args->{aspd};
+	$slave->{hp}           = $args->{hp};
+	$slave->{hp_max}       = $args->{hp_max};
+	$slave->{sp}           = $args->{sp};
+	$slave->{sp_max}       = $args->{sp_max};
+	
+	$slave->{aspdDisp}     = int (200 - (($args->{aspd} < 10) ? 10 : ($args->{aspd} / 10)));
+	$slave->{hpPercent}    = ($args->{hp} / $args->{hp_max}) * 100;
+	$slave->{spPercent}    = ($args->{sp} / $args->{sp_max}) * 100;
+	
+	if ($args->{switch} eq '022E') {
+		$slave->{state}        = $args->{state};
+		$slave->{hunger}       = $args->{hunger};
+		$slave->{intimacy}     = $args->{intimacy};
+		$slave->{accessory}    = $args->{accessory};
+		$slave->{exp}          = $args->{exp};
+		$slave->{exp_max}      = $args->{exp_max};
+		$slave->{expPercent}   = ($args->{exp_max}) ? ($args->{exp} / $args->{exp_max}) * 100 : 0;
+		$slave->{points_skill} = $args->{points_skill};
+	} elsif ($args->{switch} eq '029B') {
+		#$slave->{contract_end} = $args->{contract_end}
+		$slave->{faith}        = $args->{faith};
+		$slave->{summons}      = $args->{summons};
+	}
 }
 
 sub gameguard_grant {
@@ -3785,16 +3837,14 @@ sub map_change {
 
 	if ($ai_v{temp}{clear_aiQueue}) {
 		AI::clear;
-		AI::Homunculus::clear();
+		AI::SlaveManager::clear();
 	}
 
 	main::initMapChangeVars();
 	for (my $i = 0; $i < @ai_seq; $i++) {
 		ai_setMapChanged($i);
 	}
-	for (my $i = 0; $i < @AI::Homunculus::homun_ai_seq; $i++) {
-		AI::Homunculus::homunculus_setMapChanged($i);
-	}
+	AI::SlaveManager::setMapChanged ();
 	if ($net->version == 0) {
 		$ai_v{portalTrace_mapChanged} = time;
 	}
@@ -3851,9 +3901,7 @@ sub map_changed {
 	for (my $i = 0; $i < @ai_seq; $i++) {
 		ai_setMapChanged($i);
 	}
-	for (my $i = 0; $i < @AI::Homunculus::homun_ai_seq; $i++) {
-		AI::Homunculus::homunculus_setMapChanged($i);
-	}
+	AI::SlaveManager::setMapChanged ();
 	$ai_v{portalTrace_mapChanged} = time;
 
 	$map_ip = makeIP($args->{IP});
@@ -3966,6 +4014,69 @@ sub memo_success {
 		warning T("Memo Failed\n");
 	} else {
 		message T("Memo Succeeded\n"), "success";
+	}
+}
+
+{
+	my %mercenaryParam = (
+		0x05 => 'hp',
+		0x06 => 'hp_max',
+		0x07 => 'sp',
+		0x08 => 'sp_max',
+		0x29 => 'atk',
+		0x31 => 'hit',
+		0x35 => 'aspd',
+		0xA5 => 'flee',
+		0xBD => 'kills',
+		0xBE => 'faith',
+	);
+	
+	sub mercenary_param_change {
+		my ($self, $args) = @_;
+		
+		return unless $char->{mercenary};
+		
+		if (my $type = $mercenaryParam{$args->{type}}) {
+			$char->{mercenary}{$type} = $args->{param};
+			
+			$char->{mercenary}{aspdDisp} = int (200 - (($char->{mercenary}{aspd} < 10) ? 10 : ($char->{mercenary}{aspd} / 10)));
+			$char->{mercenary}{hpPercent}    = ($char->{mercenary}{hp} / $char->{mercenary}{hp_max}) * 100;
+			$char->{mercenary}{spPercent}    = ($char->{mercenary}{sp} / $char->{mercenary}{sp_max}) * 100;
+			
+			debug "Mercenary: $type = $args->{param}\n";
+		} else {
+			message "Unknown mercenary param received ($args->{type})\n";
+		}
+	}
+}
+
+# +message_string
+sub mercenary_off {
+	delete $char->{mercenary};
+}
+# -message_string
+
+sub message_string {
+	my ($self, $args) = @_;
+	
+	if ($args->{msg_id} == 0x04F2) {
+		message "Mercenary soldier's duty hour is over.\n";
+		$self->mercenary_off ();
+		
+	} elsif ($args->{msg_id} == 0x04F3) {
+		message "Your mercenary soldier has been killed.\n";
+		$self->mercenary_off ();
+		
+	} elsif ($args->{msg_id} == 0x04F4) {
+		message "Your mercenary soldier has been fired.\n";
+		$self->mercenary_off ();
+		
+	} elsif ($args->{msg_id} == 0x04F5) {
+		message "Your mercenary soldier has ran away.\n";
+		$self->mercenary_off ();
+		
+	} else {
+		message "Unknown message received ($args->{msg_id})\n";
 	}
 }
 
@@ -5346,9 +5457,11 @@ sub skill_use {
 	    (($args->{sourceID} ne $accountID) && ($args->{targetID} eq $accountID))) {
 		my $status = sprintf("[%3d/%3d] ", $char->hp_percent, $char->sp_percent);
 		$disp = $status.$disp;
-	} elsif ($char->{homunculus} && ((($args->{sourceID} eq $char->{homunculus}{ID}) && ($args->{targetID} ne $char->{homunculus}{ID})) ||
-	    (($args->{sourceID} ne $char->{homunculus}{ID}) && ($args->{targetID} eq $char->{homunculus}{ID})))) {
-		my $status = sprintf("[%3d/%3d] ", $char->{homunculus}{hpPercent}, $char->{homunculus}{spPercent});
+	} elsif ($char->{slaves} && $char->{slaves}{$args->{sourceID}} && !$char->{slaves}{$args->{targetID}}) {
+		my $status = sprintf("[%3d/%3d] ", $char->{slaves}{$args->{sourceID}}{hpPercent}, $char->{slaves}{$args->{sourceID}}{spPercent});
+		$disp = $status.$disp;
+	} elsif ($char->{slaves} && !$char->{slaves}{$args->{sourceID}} && $char->{slaves}{$args->{targetID}}) {
+		my $status = sprintf("[%3d/%3d] ", $char->{slaves}{$args->{targetID}}{hpPercent}, $char->{slaves}{$args->{targetID}}{spPercent});
 		$disp = $status.$disp;
 	}
 	$target->{sitting} = 0 unless $args->{type} == 4 || $args->{type} == 9 || $args->{damage} == 0;
@@ -5363,7 +5476,6 @@ sub skill_use {
 			'y' => 0,
 			'disp' => \$disp
 		});
-
 	message $disp, $domain, 1;
 
 	if ($args->{targetID} eq $accountID && $args->{damage} > 0) {
@@ -5509,51 +5621,49 @@ sub skill_used_no_damage {
 
 sub skills_list {
 	my ($self, $args) = @_;
-
-	# Character skill list
-	return unless changeToInGameState();
-	my $newmsg;
-	my $msg = $args->{RAW_MSG};
-	my $msg_size = $args->{RAW_MSG_SIZE};
-
-	$self->decrypt(\$newmsg, substr($msg, 4));
-	$msg = substr($msg, 0, 4).$newmsg;
-
-	undef @skillsID;
-	delete $char->{skills};
-	Skill::DynamicInfo::clear();
-	for (my $i = 4; $i < $msg_size; $i += 37) {
-		my $skillID = unpack("v1", substr($msg, $i, 2));
-		# target type is 0 for novice skill, 1 for enemy, 2 for place, 4 for immediate invoke, 16 for party member
-		my $targetType = unpack("v1", substr($msg, $i+2, 2)); # we don't use this yet
-		my $level = unpack("v1", substr($msg, $i + 6, 2));
-		my $sp = unpack("v1", substr($msg, $i + 8, 2));
-		my $range = unpack("v1", substr($msg, $i + 10, 2));
-		my ($handle) = unpack("Z*", substr($msg, $i + 12, 24));
-		my $up = unpack("C1", substr($msg, $i+36, 1));
-		if (!$handle) {
-			$handle = Skill->new(idn => $skillID)->getHandle();
-		}
-
+	
+	return unless changeToInGameState;
+	
+	my ($slave, $owner, $hook, $msg, $newmsg);
+	
+	$msg = $args->{RAW_MSG};
+	$self->decrypt(\$newmsg, substr $msg, 4);
+	$msg = substr ($msg, 0, 4) . $newmsg;
+	
+	if ($args->{switch} eq '010F') {
+		$hook = 'packet_charSkills'; $owner = Skill::OWNER_CHAR;
+		
+		undef @skillsID;
+		delete $char->{skills};
+		Skill::DynamicInfo::clear();
+		
+	} elsif ($args->{switch} eq '0235') {
+		$slave = $char->{homunculus}; $hook = 'packet_homunSkills'; $owner = Skill::OWNER_HOMUN;
+		
+	} elsif ($args->{switch} eq '029D') {
+		$slave = $char->{mercenary}; $hook = 'packet_mercSkills'; $owner = Skill::OWNER_MERC;
+	}
+	
+	my $skillsIDref = $slave ? \@{$slave->{slave_skillsID}} : \@skillsID;
+	
+	undef @{$slave->{slave_skillsID}};
+	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 37) {
+		my ($skillID, $targetType, $level, $sp, $range, $handle, $up)
+		= unpack 'v1 V1 v3 Z24 C1', substr $msg, $i, 37;
+		
+		$handle = Skill->new (idn => $skillID)->getHandle unless $handle;
+		
 		$char->{skills}{$handle}{ID} = $skillID;
 		$char->{skills}{$handle}{sp} = $sp;
 		$char->{skills}{$handle}{range} = $range;
 		$char->{skills}{$handle}{up} = $up;
 		$char->{skills}{$handle}{targetType} = $targetType;
-		if (!$char->{skills}{$handle}{lv}) {
-			$char->{skills}{$handle}{lv} = $level;
-		}
-		##
-		# I have no idea what the importance of this line (original) is:
-		#     $skillsID_lut{$skillID} = $skills_lut{$skillName};
-		# translated to new Skill syntax:
-		#     $Skills::skills{id}{$skillID}{name} = Skills->new(handle => lc($skillName))->name;
-		# commented out
-		binAdd(\@skillsID, $handle);
-
-		Skill::DynamicInfo::add($skillID, $handle, $level, $sp, $range, $targetType, Skill::OWNER_CHAR);
-
-		Plugins::callHook('packet_charSkills', {
+		$char->{skills}{$handle}{lv} = $level unless $char->{skills}{$handle}{lv};
+		
+		binAdd ($skillsIDref, $handle) unless binFind ($skillsIDref, $handle);
+		Skill::DynamicInfo::add($skillID, $handle, $level, $sp, $range, $targetType, $owner);
+		
+		Plugins::callHook($hook, {
 			ID => $skillID,
 			handle => $handle,
 			level => $level,

@@ -29,7 +29,7 @@ use Log qw(message warning error debug);
 use Network::Send ();
 use Settings;
 use AI;
-use AI::Homunculus;
+use AI::SlaveManager;
 use ChatQueue;
 use Utils;
 use Misc;
@@ -87,7 +87,7 @@ sub iterate {
 		}
 	});
 	processTake();
-	processMove();
+	# processMove();
 	Benchmark::end("AI (part 1.3)") if DEBUG;
 
 	Benchmark::begin("AI (part 1.4)") if DEBUG;
@@ -257,8 +257,8 @@ sub processWipeOldActors {
 
 sub processGetPlayerInfo {
 	if (timeOut($timeout{ai_getInfo})) {
-		processNameRequestQueue(\@unknownPlayers, $playersList);
-		processNameRequestQueue(\@unknownNPCs, $npcsList);
+		processNameRequestQueue(\@unknownPlayers, [$playersList, $slavesList]);
+		processNameRequestQueue(\@unknownNPCs, [$npcsList]);
 
 		foreach (keys %monsters) {
 			if ($monsters{$_}{'name'} =~ /Unknown/) {
@@ -812,40 +812,6 @@ sub processTake {
 			$messageSender->sendLook($direction, 0) if ($direction != $char->{look}{body});
 			$messageSender->sendTake($ID);
 			$timeout{ai_take}{time} = time;
-		}
-	}
-}
-
-##### MOVE #####
-sub processMove {
-	if (AI::action eq "move") {
-		AI::args->{ai_move_giveup}{time} = time unless AI::args->{ai_move_giveup}{time};
-
-		# Wait until we've stand up, if we're sitting
-		if ($char->{sitting}) {
-			AI::args->{ai_move_giveup}{time} = 0;
-			stand();
-
-		# Stop if the map changed
-		} elsif (AI::args->{mapChanged}) {
-			debug "Move - map change detected\n", "ai_move";
-			AI::dequeue;
-
-		# Stop if we've moved
-		} elsif (AI::args->{time_move} != $char->{time_move}) {
-			debug "Move - moving\n", "ai_move";
-			AI::dequeue;
-
-		# Stop if we've timed out
-		} elsif (timeOut(AI::args->{ai_move_giveup})) {
-			debug "Move - timeout\n", "ai_move";
-			AI::dequeue;
-
-		} elsif (timeOut($AI::Timeouts::move_retry, 0.5)) {
-			# No update yet, send move request again.
-			# We do this every 0.5 secs
-			$AI::Timeouts::move_retry = time;
-			$messageSender->sendMove(AI::args->{move_to}{x}, AI::args->{move_to}{y});
 		}
 	}
 }
@@ -1961,7 +1927,7 @@ sub processAutoSkillsRaise {
 
 ##### RANDOM WALK #####
 sub processRandomWalk {
-	if (AI::isIdle && (!$char->{homunculus} || AI::Homunculus::isIdle()) && $config{route_randomWalk} && !$ai_v{sitAuto_forcedBySitCommand}
+	if (AI::isIdle && (AI::SlaveManager::isIdle()) && $config{route_randomWalk} && !$ai_v{sitAuto_forcedBySitCommand}
 		&& (!$cities_lut{$field{name}.'.rsw'} || $config{route_randomWalk_inTown})
 		&& length($field{rawMap}) ) {
 		my ($randX, $randY);
@@ -2401,7 +2367,7 @@ sub processPartySkillUse {
 			next if (!$config{"partySkill_$i"});
 			foreach my $ID (@playersID) {
 				next if ($ID eq "");
-				next if ((!$char->{party} || !$char->{party}{users}{$ID}) && (!$char->{homunculus} || $char->{homunculus}{ID} ne $ID) && !$config{"partySkill_$i"."_notPartyOnly"});
+				next if ((!$char->{party} || !$char->{party}{users}{$ID}) && !$config{"partySkill_$i"."_notPartyOnly"});
 				next if ($char->{party}{users}{$ID}->{name} ne $playersList->getByID($ID)->name) && (!$config{"partySkill_$i"."_notPartyOnly"});
 				my $player = Actor::get($ID);
 				next unless UNIVERSAL::isa($player, 'Actor::Player');
@@ -2925,7 +2891,7 @@ sub processAutoTeleport {
 
 
 	##### TELEPORT IDLE / PORTAL #####
-	if ($config{teleportAuto_idle} && (AI::action ne "" || ($char->{homunculus} && AI::Homunculus::action() ne ""))) {
+	if ($config{teleportAuto_idle} && (AI::action ne "" || AI::SlaveManager::isIdle)) {
 		$timeout{ai_teleport_idle}{time} = time;
 	}
 

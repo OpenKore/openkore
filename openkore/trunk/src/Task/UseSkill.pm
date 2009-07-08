@@ -175,7 +175,8 @@ sub casterIsCorrect {
 	my ($self, $actorID) = @_;
 	my $skill = $self->{skill};
 	return ($skill->getOwnerType() == Skill::OWNER_CHAR && $actorID eq $char->{ID})
-	    || ($skill->getOwnerType() == Skill::OWNER_HOMUN && $char->{homunculus} && $actorID eq $char->{homunculus}{ID});
+	    || ($skill->getOwnerType() == Skill::OWNER_HOMUN && $char->{homunculus} && $actorID eq $char->{homunculus}{ID})
+	    || ($skill->getOwnerType() == Skill::OWNER_MERC && $char->{mercenary} && $actorID eq $char->{mercenary}{ID});
 }
 
 # Called when a skill has started casting.

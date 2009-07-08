@@ -258,6 +258,15 @@ sub sendCloseShop {
 	debug "Shop Closed\n", "sendPacket", 2;
 }
 
+sub sendCommandMercenary {
+	my ($self, $command, $type) = @_;
+	# $type is ignored, $command can be 0, 1 or 2
+	
+	my $msg = pack ('v2 C1', 0x022D, $type, $command);
+	$self->sendToServer ($msg);
+	debug "Sent MercenaryCommand", "sendPacket", 2;
+}
+
 sub sendCompanionRelease {
 	my $msg = pack("C*", 0x2A, 0x01);
 	$_[0]->sendToServer($msg);
@@ -604,6 +613,14 @@ sub sendHomunculusStandBy {
 	debug "Sent Homunculus standby\n", "sendPacket", 2;
 }
 
+sub sendHomunculusName {
+	my $self = shift;
+	my $name = shift;
+	my $msg = pack("v1 a24", 0x0231, stringToBytes($name));
+	$self->sendToServer($msg);
+	debug "Sent Homunculus Rename: $name\n", "sendPacket", 2;
+}
+
 sub sendIdentify {
 	my $self = shift;
 	my $index = shift;
@@ -805,6 +822,15 @@ sub sendMemo {
 	my $msg = pack("C*", 0x1D, 0x01);
 	$self->sendToServer($msg);
 	debug "Sent Memo\n", "sendPacket", 2;
+}
+
+sub sendMercenaryCommand {
+	my ($self, $command) = @_;
+	# $command can be 1 or 2
+	
+	my $msg = pack ('v1 C1', 0x029F, $command);
+	$self->sendToServer ($msg);
+	debug "Sent MercenaryCommand", "sendPacket", 2;
 }
 
 sub sendMove {
@@ -1029,6 +1055,22 @@ sub sendRaw {
 	}
 	$self->sendToServer($msg);
 	debug "Sent Raw Packet: @raw\n", "sendPacket", 2;
+}
+
+sub sendRequestMakingHomunculus {
+	# WARNING: If you don't really know, what are you doing - don't touch this
+	my ($self, $make_homun) = @_;
+	
+	my $skill = new Skill (idn => 241);
+	
+	if (
+		Actor::Item::get (997) && Actor::Item::get (998) && Actor::Item::get (999)
+		&& ($char->getSkillLevel ($skill) > 0)
+	) {
+		my $msg = pack ('v1 C1', 0x01CA, $make_homun);
+		$self->sendToServer($msg);
+		debug "Sent RequestMakingHomunculus\n", "sendPacket", 2;
+	}
 }
 
 sub sendRemoveAttachments {
