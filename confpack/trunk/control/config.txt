@@ -280,6 +280,37 @@ repairAuto_list
 
 removeActorWithDistance
 
+######## Mercenary Support ########
+
+mercenary_attackAuto 2
+mercenary_attackAuto_party 1
+mercenary_attackAuto_notInTown 1
+mercenary_attackAuto_onlyWhenSafe 0
+mercenary_attackDistance 1.5
+mercenary_attackMaxDistance 2.5
+mercenary_attackMaxRouteTime 4
+mercenary_attackCanSnipe 0
+mercenary_attackCheckLOS 0
+mercenary_attackNoGiveup 0
+mercenary_attackChangeTarget 1
+
+mercenary_followDistanceMax 10
+mercenary_followDistanceMin 3
+
+mercenary_route_step 15
+
+mercenary_tankMode 0
+mercenary_tankModeTarget
+
+mercenary_teleportAuto_hp 10
+mercenary_teleportAuto_maxDmg 500
+mercenary_teleportAuto_maxDmgInLock 0
+mercenary_teleportAuto_deadly 1
+mercenary_teleportAuto_unstuck 0
+mercenary_teleportAuto_dropTarget 0
+mercenary_teleportAuto_dropTargetKS 0
+mercenary_teleportAuto_totalDmg 0
+mercenary_teleportAuto_totalDmgInLock 0
 
 ######## Homunculus Support ########
 
