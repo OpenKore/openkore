@@ -2858,13 +2858,13 @@ sub homunculus_stats { # homunculus and mercenary stats
 	$slave->{flee}         = $args->{flee};
 	$slave->{aspd}         = $args->{aspd};
 	$slave->{hp}           = $args->{hp};
-	$slave->{hp_max}       = $args->{hp_max};
+	$slave->{hp_max}       = ($args->{hp_max} > 0) ? $args->{hp_max} : $args->{hp};
 	$slave->{sp}           = $args->{sp};
-	$slave->{sp_max}       = $args->{sp_max};
+	$slave->{sp_max}       = ($args->{sp_max} > 0) ? $args->{sp_max} : $args->{sp};
 	
 	$slave->{aspdDisp}     = int (200 - (($args->{aspd} < 10) ? 10 : ($args->{aspd} / 10)));
-	$slave->{hpPercent}    = ($args->{hp} / $args->{hp_max}) * 100;
-	$slave->{spPercent}    = ($args->{sp} / $args->{sp_max}) * 100;
+	$slave->{hpPercent}    = ($slave->{hp} / $slave->{hp_max}) * 100;
+	$slave->{spPercent}    = ($slave->{sp} / $slave->{sp_max}) * 100;
 	
 	if ($args->{switch} eq '022E') {
 		$slave->{state}        = $args->{state};
