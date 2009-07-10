@@ -1,4 +1,4 @@
-# $Id: Script.pm r6728 2009-06-19 11:42:00Z ezza $
+# $Id: Script.pm r6764 2009-07-10 10:00:00Z ezza $
 package Macro::Script;
 
 use strict;
@@ -15,13 +15,12 @@ use Macro::Utilities qw(cmpr);
 use Macro::Automacro qw(releaseAM lockAM);
 use Log qw(message warning);
 
-our ($rev) = q$Revision: 5939 $ =~ /(\d+)/;
+our ($rev) = q$Revision: 6764 $ =~ /(\d+)/;
 
 # constructor
 sub new {
 	my ($class, $name, $repeat, $lastname, $lastline) = @_;
 	
-	#$repeat = 1 unless ($repeat =~ /^\d+$/);
 	$repeat = 0 unless ($repeat && $repeat =~ /^\d+$/);
 	return unless defined $macro{$name};
 	my $self = {
@@ -164,10 +163,6 @@ sub scanLabels {
 sub next {
 	my $self = $_[0];
 	
-#	unless ($self->{repeat}) {
-#		$self->{finished} = 1;
-#		return ""
-#	}
 	if (defined $self->{subcall}) {
 		my $command = $self->{subcall}->next;
 		if (defined $command) {
@@ -175,8 +170,8 @@ sub next {
 			$self->{timeout} = $tmptime{timeout};
 			$self->{time} = $tmptime{time};
 			if ($self->{subcall}->finished) {
-				undef $self->{subcall};
-				$self->{line}++
+				if ($self->{subcall}->{repeat} == 0) {$self->{finished} = 1}
+				undef $self->{subcall};	$self->{line}++
 			}
 			return $command
 		}
@@ -187,10 +182,14 @@ sub next {
 	my $line = ${$macro{$self->{name}}}[$self->{line}];
 	if (!defined $line) {
 		if (defined $self->{lastname} && defined $self->{lastline}) {
-			$self->{line} = $self->{lastline} + 1;
-			$self->{name} = $self->{lastname};
-			$line = ${$macro{$self->{name}}}[$self->{line}];
-			($self->{lastline}, $self->{lastname}) = undef
+			if ($self->{repeat} > 1) {$self->{repeat}--; $line = ${$macro{$self->{name}}}[0]}
+			else {
+				$self->{line} = $self->{lastline} + 1;
+				$self->{name} = $self->{lastname};
+				$line = ${$macro{$self->{name}}}[$self->{line}];
+				($self->{lastline}, $self->{lastname}) = undef;
+				$self->{finished} = 1
+			}
 		}
 		else {
 			if ($self->{repeat} > 1) {$self->{repeat}--; $self->{line} = 0}
@@ -438,7 +437,7 @@ sub next {
 			if (defined $ptimes && $ptimes =~ /\d+/) {$self->{subcall} = new Macro::Script($name, $ptimes)}
 			else {$self->{subcall} = new Macro::Script($name)}
 		}
-		else {$self->{subcall} = new Macro::Script($tmp)}
+		else {$self->{subcall} = new Macro::Script($tmp, 1)}
 		unless (defined $self->{subcall}) {$self->{error} = "$errtpl: failed to call script"}
 		else {
 			$self->{subcall}->regSubmacro;
@@ -670,19 +669,15 @@ sub newThen {
 			my ($name, $times) = $tmp =~ /(.*?)\s+(.*)/;
 			my $ptimes = parseCmd($times, $self);
 			if (defined $self->{error}) {$self->{error} = "$errtpl: $self->{error}"; return}
-			if (defined $ptimes) {
-				if ($ptimes > 1) {
-					$self->{subcall} = new Macro::Script($name, $ptimes)
-				}
-				elsif ($ptimes == 1) {
+			if (defined $ptimes && $ptimes =~ /^\d+$/) {
+				if ($ptimes > 0) {
 					my $lastname = $self->{name};
 					my $lastline = $self->{line};
 					$self->{subcall} = new Macro::Script($name, $ptimes, $lastname, $lastline)
 				}
-				else {
-					$self->{subcall} = new Macro::Script($name)
-				}
+				else {$self->{subcall} = new Macro::Script($name, 0)}
 			}
+			else {$self->{error} = "$errtpl: $ptimes must be numeric"}
 		}
 		else {$self->{subcall} = new Macro::Script($tmp)}
 		unless (defined $self->{subcall}) {$self->{error} = "$errtpl: failed to call script"}
