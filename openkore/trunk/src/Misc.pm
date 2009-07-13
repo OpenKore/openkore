@@ -3940,11 +3940,8 @@ sub checkSelfCondition {
 		if ($config{$prefix . "_mercenary_whenStatusInactive"}) { return 0 if (whenStatusActiveSL($char->{mercenary}, $config{$prefix . "_mercenary_whenStatusInactive"})); }
 	}
 	
-	if ($config{$prefix."_mercenary_on"}) {
-		return 0 unless $char->{mercenary};
-	}
-	if ($config{$prefix."_mercenary_off"}) {
-		return 0 if $char->{mercenary};
+	if ($config{$prefix."_mercenary"} =~ /\S/) {
+		return 0 if (!!$config{$prefix."_mercenary"}) ^ (!!$char->{mercenary});
 	}
 	
 	# check skill use SP if this is a 'use skill' condition
