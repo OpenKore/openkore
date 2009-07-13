@@ -489,7 +489,7 @@ sub onClientData {
 		### Check if packet 0228 got tangled up with the sync packet
 		if (uc(unpack("H2", substr($msg, 7, 1))) . uc(unpack("H2", substr($msg, 6, 1))) eq '0228') {
 			# queue the response (thanks abt123)
-			$self->{response} = substr($msg, 6, 18);
+			$self->{response} = substr($msg, 6, length($msg));
 			$self->{state} = 'requested';
 		}
 
@@ -511,7 +511,7 @@ sub onClientData {
 		# Don't allow other packet's (like Sync) to get to RO server.
 		my $length = unpack("v",substr($msg,2,2));
 		if ($length > 0) {
-			$self->{response} = substr($msg,0,$length);
+			$self->{response} = substr($msg,0,$length+2);
 		} else {
 			$self->{response} = $msg;
 		};
