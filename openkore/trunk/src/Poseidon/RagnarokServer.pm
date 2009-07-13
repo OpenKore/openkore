@@ -508,7 +508,13 @@ sub onClientData {
 
 	} elsif ($switch eq '0228') { # client sends game guard sync
 		# Queue the response
-		$self->{response} = $msg;
+		# Don't allow other packet's (like Sync) to get to RO server.
+		my $length = unpack("v",substr($msg,2,2));
+		if ($length > 0) {
+			$self->{response} = substr($msg,0,$length);
+		} else {
+			$self->{response} = $msg;
+		};
 		$self->{state} = 'requested';
 	
 	} elsif ($switch eq '02A7') { # client sends hShield response
