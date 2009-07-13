@@ -2928,6 +2928,15 @@ sub whenStatusActiveMon {
 	return 0;
 }
 
+sub whenStatusActiveSL {
+	my ($slave, $statuses) = @_;
+	my @arr = split /\s*,\s*/, $statuses;
+	foreach (@arr) {
+		return 1 if $slave->{statuses}{$_};
+	}
+	return 0;
+}
+
 sub whenStatusActivePL {
 	my ($ID, $statuses) = @_;
 	
@@ -3926,6 +3935,9 @@ sub checkSelfCondition {
 				return 0 if (!inRange($char->{mercenary}{sp}, $config{$prefix."_mercenary_sp"}));
 			}
 		}
+		
+		if ($config{$prefix . "_mercenary_whenStatusActive"}) { return 0 unless (whenStatusActiveSL($char->{mercenary}, $config{$prefix . "_mercenary_whenStatusActive"})); }
+		if ($config{$prefix . "_mercenary_whenStatusInactive"}) { return 0 if (whenStatusActiveSL($char->{mercenary}, $config{$prefix . "_mercenary_whenStatusInactive"})); }
 	}
 	
 	if ($config{$prefix."_mercenary_on"}) {
