@@ -1,4 +1,4 @@
-﻿1 NV_BASIC Basic Skill
+1 NV_BASIC Basic Skill
 2 SM_SWORD Sword Mastery
 3 SM_TWOHAND Two-Handed Sword Mastery
 4 SM_RECOVERY Increase HP Recovery
@@ -609,7 +609,7 @@
 8233 MER_AUTOBERSERK Merc_Auto Berserk
 8234 MER_DECAGI Merc_Decrease Agility
 8235 MER_SCAPEGOAT Merc_Scapegoat
-8236 MER_LEXDIVINA Merc_Lex_Divina
+8236 MER_LEXDIVINA Merc_Lex Divina
 8237 MER_ESTIMATION Merc_Monster Property
 10000 GD_APPROVAL Approval
 10001 GD_KAFRACONTRACT Kafra Contract
