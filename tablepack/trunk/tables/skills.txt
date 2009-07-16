@@ -568,12 +568,15 @@
 8005 HAMI_CASTLE Castling
 8006 HAMI_DEFENCE Amistr Bulwark
 8007 HAMI_SKIN Adamantium Skin
+8008 HAMI_BLOODLUST Blood Lust
 8009 HFLI_MOON Moonlight
 8010 HFLI_FLEET Flitting
 8011 HFLI_SPEED Accelerated Flight
+8012 HFLI_SBR44 S.B.R.44
 8013 HVAN_CAPRICE Caprice
 8014 HVAN_CHAOTIC Chaotic Blessing
 8015 HVAN_INSTRUCT Instruction Change
+8016 HVAN_EXPLOSION Vanilmirth Self Destruction
 8201 MS_BASH Merc_Bash
 8202 MS_MAGNUM Merc_Magnum Break
 8203 MS_BOWLINGBASH Merc_Bowling Bash
