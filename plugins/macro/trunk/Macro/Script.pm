@@ -1,4 +1,4 @@
-# $Id: Script.pm r6774 2009-07-17 13:00:00Z ezza $
+# $Id: Script.pm r6775 2009-07-17 13:00:00Z ezza $
 package Macro::Script;
 
 use strict;
@@ -15,7 +15,7 @@ use Macro::Utilities qw(cmpr);
 use Macro::Automacro qw(releaseAM lockAM);
 use Log qw(message warning);
 
-our ($rev) = q$Revision: 6774 $ =~ /(\d+)/;
+our ($rev) = q$Revision: 6775 $ =~ /(\d+)/;
 
 # constructor
 sub new {
@@ -675,11 +675,11 @@ sub newThen {
 				if ($ptimes > 0) {
 					$self->{subcall} = new Macro::Script($name, $ptimes, $self->{name}, $self->{line}, $self->{interruptible})
 				}
-				else {$self->{subcall} = new Macro::Script($name, 0, undef, undef, $interruptible)}
+				else {$self->{subcall} = new Macro::Script($name, 0, undef, undef, $self->{interruptible})}
 			}
 			else {$self->{error} = "$errtpl: $ptimes must be numeric"}
 		}
-		else {$self->{subcall} = new Macro::Script($tmp, 1, undef, undef, $interruptible)}
+		else {$self->{subcall} = new Macro::Script($tmp, 1, undef, undef, $self->{interruptible})}
 		unless (defined $self->{subcall}) {$self->{error} = "$errtpl: failed to call script"}
 		else {
 			$self->{subcall}->regSubmacro;
