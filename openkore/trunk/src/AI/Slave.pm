@@ -702,6 +702,7 @@ sub processAttack {
 		} elsif ($config{$slave->{slave_configPrefix}.'tankMode'}) {
 			if ($args->{'dmgTo_last'} != $target->{dmgFromPlayer}{$slave->{ID}}) {
 				$args->{'ai_attack_giveup'}{'time'} = time;
+				$slave->slave_stopAttack ();
 			}
 			$args->{'dmgTo_last'} = $target->{dmgFromPlayer}{$slave->{ID}};
 		}

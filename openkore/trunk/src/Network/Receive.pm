@@ -1553,14 +1553,14 @@ sub actor_status_active {
 			$char->{party}{users}{$ID}{statuses}{$skillName} = 1;
 		}
 		my $disp = status_string($actor, $skillName, $again);
-		message $disp, "parseMsg_statuslook", $ID eq $accountID ? 1 : 2;
+		message $disp, "parseMsg_statuslook", ($ID eq $accountID or $char->{slaves} && $char->{slaves}{$ID}) ? 1 : 2;
 
 	} else {
 		# Skill de-activated (expired)
 		delete $actor->{statuses}{$skillName} if $actor;
 		delete $char->{party}{users}{$ID}{statuses}{$skillName} if ($char->{party}{users}{$ID}{name});
 		my $disp = status_string($actor, $skillName, 'no longer');
-		message $disp, "parseMsg_statuslook", $ID eq $accountID ? 1 : 2;
+		message $disp, "parseMsg_statuslook", ($ID eq $accountID or $char->{slaves} && $char->{slaves}{$ID}) ? 1 : 2;
 	}
 }
 
@@ -2781,9 +2781,17 @@ sub homunculus_food {
 	}
 }
 
+use constant {
+	HO_PRE_INIT => 0x0,
+	HO_RELATIONSHIP_CHANGED => 0x1,
+	HO_FULLNESS_CHANGED => 0x2,
+	HO_ACCESSORY_CHANGED => 0x3,
+	HO_HEADTYPE_CHANGED => 0x4,
+};
+
 sub homunculus_info {
 	my ($self, $args) = @_;
-	if ($args->{type} == 0) {
+	if ($args->{type} == HO_PRE_INIT) {
 		my $state = $char->{homunculus}{state}
 			if ($char->{homunculus} && $char->{homunculus}{ID} && $char->{homunculus}{ID} ne $args->{ID});
 		$char->{homunculus} = Actor::get($args->{ID});
@@ -2792,10 +2800,14 @@ sub homunculus_info {
 		unless ($char->{slaves}{$char->{homunculus}{ID}}) {
 			AI::SlaveManager::addSlave ($char->{homunculus});
 		}
-	} elsif ($args->{type} == 1) {
+	} elsif ($args->{type} == HO_RELATIONSHIP_CHANGED) {
 		$char->{homunculus}{intimacy} = $args->{val};
-	} elsif ($args->{type} == 2) {
+	} elsif ($args->{type} == HO_FULLNESS_CHANGED) {
 		$char->{homunculus}{hunger} = $args->{val};
+	} elsif ($args->{type} == HO_ACCESSORY_CHANGED) {
+		$char->{homunculus}{accessory} = $args->{val};
+	} elsif ($args->{type} == HO_HEADTYPE_CHANGED) {
+		#
 	}
 }
 
@@ -2832,14 +2844,14 @@ sub homunculus_stats { # homunculus and mercenary stats
 			}
 			$char->{homunculus}->clear();
 			undef @{$char->{homunculus}{slave_skillsID}};
-			if ($slave->{state} != $args->{state}) {
+			if (defined $slave->{state} && $slave->{state} != $args->{state}) {
 				if ($args->{state} & 2) {
 					message T("Your Homunculus was vaporized!\n"), 'homunculus';
 				} elsif ($args->{state} & 4) {
 					message T("Your Homunculus died!\n"), 'homunculus';
 				}
 			}
-		} elsif ($slave->{state} != $args->{state}) {
+		} elsif (defined $slave->{state} && $slave->{state} != $args->{state}) {
 			if ($slave->{state} & 2) {
 				message T("Your Homunculus was recalled!\n"), 'homunculus';
 			} elsif ($slave->{state} & 4) {
@@ -4040,12 +4052,12 @@ sub memo_success {
 			$char->{mercenary}{$type} = $args->{param};
 			
 			$char->{mercenary}{aspdDisp} = int (200 - (($char->{mercenary}{aspd} < 10) ? 10 : ($char->{mercenary}{aspd} / 10)));
-			$char->{mercenary}{hpPercent}    = ($char->{mercenary}{hp} / $char->{mercenary}{hp_max}) * 100;
-			$char->{mercenary}{spPercent}    = ($char->{mercenary}{sp} / $char->{mercenary}{sp_max}) * 100;
+			$char->{mercenary}{hpPercent}    = $char->{mercenary}{hp_max} ? 100 * $char->{mercenary}{hp} / $char->{mercenary}{hp_max} : 0;
+			$char->{mercenary}{spPercent}    = $char->{mercenary}{sp_max} ? 100 * $char->{mercenary}{sp} / $char->{mercenary}{sp_max} : 0;
 			
 			debug "Mercenary: $type = $args->{param}\n";
 		} else {
-			message "Unknown mercenary param received ($args->{type})\n";
+			message "Unknown mercenary param received (type: $args->{type}; param: $args->{param}; raw: " . unpack ('H*', $args->{RAW_MSG}) . ")\n";
 		}
 	}
 }
@@ -5425,9 +5437,15 @@ sub skill_use {
 		$args->{damage} = intToSignedInt($args->{damage});
 	}
 	updateDamageTables($args->{sourceID}, $args->{targetID}, $args->{damage}) if ($args->{damage} != -30000);
-	setSkillUseTimer($args->{skillID}, $args->{targetID}) if ($args->{sourceID} eq $accountID);
-	setPartySkillTimer($args->{skillID}, $args->{targetID}) if
-		$args->{sourceID} eq $accountID or $args->{sourceID} eq $args->{targetID};
+	setSkillUseTimer($args->{skillID}, $args->{targetID}) if (
+		$args->{sourceID} eq $accountID
+		or $char->{slaves} && $char->{slaves}{$args->{sourceID}}
+	);
+	setPartySkillTimer($args->{skillID}, $args->{targetID}) if (
+		$args->{sourceID} eq $accountID
+		or $char->{slaves} && $char->{slaves}{$args->{sourceID}}
+		or $args->{sourceID} eq $args->{targetID} # wtf?
+	);
 	countCastOn($args->{sourceID}, $args->{targetID}, $args->{skillID});
 
 	# Resolve source and target names

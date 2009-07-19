@@ -155,6 +155,7 @@ sub initHandlers {
 	send               => \&cmdSendRaw,
 	sit                => \&cmdSit,
 	skills             => \&cmdSkills,
+	sll                => \&cmdSlaveList,
 	spells             => \&cmdSpells,
 	storage            => \&cmdStorage,
 	store              => \&cmdStore,
@@ -1862,8 +1863,7 @@ sub cmdSlave {
 		"Atk: \@>>>    Matk:     \@>>>    Hunger:    \@>>>\n" .
 		"Hit: \@>>>    Critical: \@>>>    \@<<<<<<<<< \@>>>\n" .
 		"Def: \@>>>    Mdef:     \@>>>    Accessory: \@>>>\n" .
-		"Flee:\@>>>    Aspd:     \@>>>    Summons:   \@>>>\n" .
-		"--------------------------------------------------------"),
+		"Flee:\@>>>    Aspd:     \@>>>    Summons:   \@>>>\n"),
 		[$slave->{'name'}, $hp_string,
 		$slave->{actorType}, $sp_string,
 		$slave->{'level'}, $exp_string, $slave->{'atk'}, $slave->{'matk'}, $hunger_string,
@@ -1871,7 +1871,17 @@ sub cmdSlave {
 		$slave->{'def'}, $slave->{'mdef'}, $accessory_string,
 		$slave->{'flee'}, $slave->{'aspdDisp'}, $summons_string]);
 		
-		message($msg, "info");
+#############################################################
+#Statuses
+#############################################################
+		my $statuses = 'none';
+		if (defined $slave->{statuses} && %{$slave->{statuses}}) {
+			$statuses = join(", ", keys %{$slave->{statuses}});
+		}
+		$msg .= TF("Statuses: %s \n", $statuses);
+		$msg .= "-------------------------------------------------\n";
+		
+		message $msg, "info";
 
 	} elsif ($subcmd eq "feed") {
 		unless (defined $slave->{hunger}) {
@@ -3905,6 +3915,29 @@ sub cmdSkills {
 		error T("Syntax Error in function 'skills' (Skills Functions)\n" .
 			"Usage: skills [<add | desc>] [<skill #>]\n");
 	}
+}
+
+sub cmdSlaveList {
+	my ($dist, $pos, $name, $slaves);
+	message TF("-----------Slave List-----------\n" .
+		"#   Name                        Type                   Distance    Coordinates\n"),	"list";
+
+	$slaves = $slavesList->getItems() if ($slavesList);
+	foreach my $slave (@{$slaves}) {
+		$dist = distance($char->{pos_to}, $slave->{pos_to});
+		$dist = sprintf("%.1f", $dist) if (index($dist, '.') > -1);
+		$pos = '(' . $slave->{pos_to}{x} . ', ' . $slave->{pos_to}{y} . ')';
+		$name = $slave->name;
+		if ($name ne $slave->{name_given}) {
+			$name .= '[' . $slave->{name_given} . ']';
+		}
+
+		message(swrite(
+			"@<< @<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<<<<<    @<<<<<      @<<<<<<<<<<",
+			[$slave->{binID}, $name, $slave->{actorType}, $dist, $pos]),
+			"list");
+	}
+	message("----------------------------------\n", "list");
 }
 
 sub cmdSpells {
