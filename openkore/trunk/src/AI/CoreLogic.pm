@@ -2344,7 +2344,9 @@ sub processAutoSkillUse {
 		for (my $i = 0; exists $config{"useSelf_skill_$i"}; $i++) {
 			if ($config{"useSelf_skill_$i"} && checkSelfCondition("useSelf_skill_$i")) {
 				$ai_v{"useSelf_skill_$i"."_time"} = time;
-				$self_skill{ID} = Skill->new(name => lc($config{"useSelf_skill_$i"}))->getHandle();
+				$self_skill{skillObject} = Skill->new(name => lc($config{"useSelf_skill_$i"}));
+				$self_skill{ID} = $self_skill{skillObject}->getHandle();
+				$self_skill{owner} = $self_skill{skillObject}->getOwner();
 				unless ($self_skill{ID}) {
 					error "Unknown skill name '".$config{"useSelf_skill_$i"}."' in useSelf_skill_$i\n";
 					configModify("useSelf_skill_${i}_disabled", 1);
@@ -2385,9 +2387,9 @@ sub processAutoSkillUse {
 		if ($self_skill{lvl} > 0) {
 			debug qq~Auto-skill on self: $config{$self_skill{prefix}} (lvl $self_skill{lvl})\n~, "ai";
 			if (!ai_getSkillUseType($self_skill{ID})) {
-				ai_skillUse($self_skill{ID}, $self_skill{lvl}, $self_skill{maxCastTime}, $self_skill{minCastTime}, $accountID, undef, undef, undef, undef, $self_skill{prefix});
+				ai_skillUse($self_skill{ID}, $self_skill{lvl}, $self_skill{maxCastTime}, $self_skill{minCastTime}, $self_skill{owner}{ID}, undef, undef, undef, undef, $self_skill{prefix});
 			} else {
-				ai_skillUse($self_skill{ID}, $self_skill{lvl}, $self_skill{maxCastTime}, $self_skill{minCastTime}, $char->{pos_to}{x}, $char->{pos_to}{y}, undef, undef, undef, $self_skill{prefix});
+				ai_skillUse($self_skill{ID}, $self_skill{lvl}, $self_skill{maxCastTime}, $self_skill{minCastTime}, $self_skill{owner}{pos_to}{x}, $self_skill{owner}{pos_to}{y}, undef, undef, undef, $self_skill{prefix});
 			}
 		}
 	}
@@ -2399,17 +2401,43 @@ sub processPartySkillUse {
 		my %party_skill;
 		for (my $i = 0; exists $config{"partySkill_$i"}; $i++) {
 			next if (!$config{"partySkill_$i"});
-			foreach my $ID (@playersID) {
-				next if ($ID eq "");
-				next if ((!$char->{party} || !$char->{party}{users}{$ID}) && !$config{"partySkill_$i"."_notPartyOnly"});
-				next if ($char->{party}{users}{$ID}->{name} ne $playersList->getByID($ID)->name) && (!$config{"partySkill_$i"."_notPartyOnly"});
+			$party_skill{owner} = Skill->new(name => lc($config{"partySkill_$i"}))->getOwner();
+			
+			foreach my $ID ($accountID, @slavesID, @playersID) {
+				next if $ID eq '' || $ID eq $party_skill{owner}{ID};
+				
+				if ($ID eq $accountID) {
+					#
+				} elsif ($slavesList->getByID($ID)) {
+					next if ((!$char->{slaves} || !$char->{slaves}{$ID}) && !$config{"partySkill_$i"."_notPartyOnly"});
+					next if ($char->{slaves}{$ID}->{name} ne $slavesList->getByID($ID)->name) && (!$config{"partySkill_$i"."_notPartyOnly"});
+				} elsif ($playersList->getByID($ID)) {
+					next if ((!$char->{party} || !$char->{party}{users}{$ID}) && !$config{"partySkill_$i"."_notPartyOnly"});
+					next if ($char->{party}{users}{$ID}->{name} ne $playersList->getByID($ID)->name) && (!$config{"partySkill_$i"."_notPartyOnly"});
+				}
+				
 				my $player = Actor::get($ID);
-				next unless UNIVERSAL::isa($player, 'Actor::Player');
-				if (inRange(distance($char->{pos_to}, $players{$ID}{pos}), $config{partySkillDistance} || "1..8")
-					&& (!$config{"partySkill_$i"."_target"} || existsInList($config{"partySkill_$i"."_target"}, $player->{name}))
+				next unless (
+					UNIVERSAL::isa($player, 'Actor::You')
+					|| UNIVERSAL::isa($player, 'Actor::Player')
+					|| UNIVERSAL::isa($player, 'Actor::Slave')
+				);
+				
+				if (
+					( # range check
+						$party_skill{owner}{ID} eq $player->{ID}
+						|| inRange(distance($party_skill{owner}{pos_to}, $player->{pos}), $config{partySkillDistance} || "0..8")
+					)
+					&& ( # target check
+						!$config{"partySkill_$i"."_target"}
+						or existsInList($config{"partySkill_$i"."_target"}, $player->{name})
+						or $player->{ID} eq $char->{ID} && existsInList($config{"partySkill_$i"."_target"}, '@main')
+						or $player->{ID} eq $char->{homunculus}{ID} && existsInList($config{"partySkill_$i"."_target"}, '@homunculus')
+						or $player->{ID} eq $char->{mercenary}{ID} && existsInList($config{"partySkill_$i"."_target"}, '@mercenary')
+					)
 					&& checkPlayerCondition("partySkill_$i"."_target", $ID)
 					&& checkSelfCondition("partySkill_$i")
-					){
+				){
 					$party_skill{ID} = Skill->new(name => lc($config{"partySkill_$i"}))->getHandle();
 					$party_skill{lvl} = $config{"partySkill_$i"."_lvl"};
 					$party_skill{target} = $player->{name};
@@ -2438,7 +2466,9 @@ sub processPartySkillUse {
 			if ($char->{party} && $char->{party}{users}{$party_skill{targetID}} && $char->{party}{users}{$party_skill{targetID}}{hp}) {
 				$hp_diff = $char->{party}{users}{$party_skill{targetID}}{hp_max} - $char->{party}{users}{$party_skill{targetID}}{hp};
 			} else {
-				$hp_diff = -$players{$party_skill{targetID}}{deltaHp};
+				if ($players{$party_skill{targetID}}) {
+					$hp_diff = -$players{$party_skill{targetID}}{deltaHp};
+				}
 			}
 			for (my $i = 1; $i <= $char->{skills}{$party_skill{ID}}{lv}; $i++) {
 				my ($sp_req, $amount);
@@ -2462,14 +2492,14 @@ sub processPartySkillUse {
 					$party_skill{lvl},
 					$party_skill{maxCastTime},
 					$party_skill{minCastTime},
-					$party_skill{isSelfSkill} ? $accountID : $party_skill{targetID},
+					$party_skill{isSelfSkill} ? $party_skill{owner}{ID} : $party_skill{targetID},
 					undef,
 					undef,
 					undef,
 					undef,
 					$party_skill{prefix});
 			} else {
-				my $pos = ($party_skill{isSelfSkill}) ? $char->{pos_to} : \%party_skill;
+				my $pos = ($party_skill{isSelfSkill}) ? $party_skill{owner}{pos_to} : \%party_skill;
 				ai_skillUse(
 					$party_skill{ID},
 					$party_skill{lvl},
@@ -2925,7 +2955,7 @@ sub processAutoTeleport {
 
 
 	##### TELEPORT IDLE / PORTAL #####
-	if ($config{teleportAuto_idle} && (AI::action ne "" || AI::SlaveManager::isIdle)) {
+	if ($config{teleportAuto_idle} && (AI::action ne "" || !AI::SlaveManager::isIdle)) {
 		$timeout{ai_teleport_idle}{time} = time;
 	}
 

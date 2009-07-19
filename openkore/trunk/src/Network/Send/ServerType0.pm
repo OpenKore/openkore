@@ -826,7 +826,10 @@ sub sendMemo {
 
 sub sendMercenaryCommand {
 	my ($self, $command) = @_;
-	# $command can be 1 or 2
+	
+	# 0x0 => COMMAND_REQ_NONE
+	# 0x1 => COMMAND_REQ_PROPERTY
+	# 0x2 => COMMAND_REQ_DELETE
 	
 	my $msg = pack ('v1 C1', 0x029F, $command);
 	$self->sendToServer ($msg);

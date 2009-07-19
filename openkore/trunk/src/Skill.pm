@@ -291,6 +291,18 @@ sub getOwnerType {
 	return OWNER_CHAR;
 }
 
+sub getOwner {
+	my ($self) = @_;
+	
+	my $type = $self->getOwnerType ();
+	
+	if ($Globals::char) {
+		return $Globals::char->{homunculus} if $type == OWNER_HOMUN && $Globals::char->{homunculus};
+		return $Globals::char->{mercenary} if $type == OWNER_MERC && $Globals::char->{mercenary};
+	}
+	return $Globals::char;
+}
+
 # Lookup an IDN by skill handle.
 sub lookupIDNByHandle {
 	my ($handle) = @_;
