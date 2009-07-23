@@ -1,4 +1,4 @@
-# $Id: Utilities.pm r6759 2009-07-05 04:00:00Z ezza $
+# $Id: Utilities.pm r6778 2009-07-23 09:00:00Z ezza $
 package Macro::Utilities;
 
 use strict;
@@ -16,7 +16,7 @@ use AI;
 use Log qw(warning error);
 use Macro::Data;
 
-our ($rev) = q$Revision: 6759 $ =~ /(\d+)/;
+our ($rev) = q$Revision: 6778 $ =~ /(\d+)/;
 
 # own ai_Isidle check that excludes deal
 sub ai_isIdle {
@@ -103,6 +103,11 @@ sub cmpr {
 	if ($cond eq "~") {
 		$a = lc($a);
 		foreach my $e (split(/,/, $b)) {return 1 if $a eq lc($e)}
+	}
+	if ($cond eq "=~") {
+		if ($b =~ /^\/(.*?)\/(\w?)\s*$/) {
+				if ($a =~ /$1/ || ($2 eq 'i' && $a =~ /$1/i)) {return 1}
+		}
 	}
 
 	return 0
