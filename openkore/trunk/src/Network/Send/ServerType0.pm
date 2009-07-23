@@ -22,7 +22,7 @@ use Digest::MD5;
 use Network::Send ();
 use base qw(Network::Send);
 use Plugins;
-use Globals qw($accountID $sessionID $sessionID2 $accountSex $char $charID %config %guild @chars $masterServer $syncSync $inboxList);
+use Globals qw($accountID $sessionID $sessionID2 $accountSex $char $charID %config %guild @chars $masterServer $syncSync);
 use Log qw(debug);
 use Translation qw(T TF);
 use I18N qw(stringToBytes);
@@ -1444,15 +1444,15 @@ sub sendMailRead {
 }
 
 sub sendMailDelete {
-	my ($self, $index) = @_;
-	my $msg = pack("C2 V1", 0x43, 0x02, $inboxList->[$index]->{mailID});
+	my ($self, $mailID) = @_;
+	my $msg = pack("C2 V1", 0x43, 0x02, $mailID);
 	$self->sendToServer($msg);
 	debug "Sent delete mail.\n", "sendPacket", 2;
 }
 
 sub sendMailReturn {
-	my ($self, $index) = @_;
-	my $msg = pack("C2 V1 Z24", 0x73, 0x02, $inboxList->[$index]->{mailID}, $inboxList->[$index]->{sender});
+	my ($self, $mailID, $sender) = @_;
+	my $msg = pack("C2 V1 Z24", 0x73, 0x02, $mailID, $sender);
 	$self->sendToServer($msg);
 	debug "Sent return mail.\n", "sendPacket", 2;
 }
@@ -1465,8 +1465,8 @@ sub sendMailOperateWindow {
 }
 
 sub sendMailGetAttach {
-	my ($self, $index) = @_;
-	my $msg = pack("C2 V1", 0x44, 0x02, $inboxList->[$index]->{mailID});
+	my ($self, $mailID) = @_;
+	my $msg = pack("C2 V1", 0x44, 0x02, $mailID);
 	$self->sendToServer($msg);
 	debug "Sent mail get attachment.\n", "sendPacket", 2;
 }
@@ -1485,6 +1485,63 @@ sub sendMailSend {
 	my $msg = pack("C2 v1 Z24 a40 C1 Z*", 0x48, 0x02, $length, $receiver, $title, $msglength, $mailmsg);
 	$self->sendToServer($msg);
 	debug "Sent mail send.\n", "sendPacket", 2;
+}
+
+sub sendAuctionAddItemCancel {
+	my ($self) = @_;
+	my $msg = pack("C2 v1", 0x4B, 0x02, 1);
+	$self->sendToServer($msg);
+	debug "Sent Auction Add Item Cancel.\n", "sendPacket", 2;
+}
+
+sub sendAuctionAddItem {
+	my ($self, $index, $amount) = @_;
+	my $msg = pack("C2 v1 V1", 0x4C, 0x02, $index, $amount);
+	$self->sendToServer($msg);
+	debug "Sent Auction Add Item.\n", "sendPacket", 2;
+}
+
+sub sendAuctionCreate {
+	my ($self, $price, $buynow, $hours) = @_;
+	my $msg = pack("C2 V1 V1 v1", 0x4D, 0x02, $price, $buynow, $hours);
+	$self->sendToServer($msg);
+	debug "Sent Auction Create.\n", "sendPacket", 2;
+}
+
+sub sendAuctionCancel {
+	my ($self, $id) = @_;
+	my $msg = pack("C2 V1", 0x4E, 0x02, $id);
+	$self->sendToServer($msg);
+	debug "Sent Auction Cancel.\n", "sendPacket", 2;
+}
+
+sub sendAuctionBuy {
+	my ($self, $id, $bid) = @_;
+	my $msg = pack("C2 V1 V1", 0x4F, 0x02, $id, $bid);
+	$self->sendToServer($msg);
+	debug "Sent Auction Buy.\n", "sendPacket", 2;
+}
+
+sub sendAuctionItemSearch {
+	my ($self, $type, $price, $text, $page) = @_;
+	$page = (defined $page) ? $page : 1;
+	my $msg = pack("C2 v1 V1 Z24 v1", 0x51, 0x02, $type, $price, $text, $page);
+	$self->sendToServer($msg);
+	debug "Sent Auction Item Search.\n", "sendPacket", 2;
+}
+
+sub sendAuctionReqMyInfo {
+	my ($self, $type) = @_;
+	my $msg = pack("C2 v1", 0x5C, 0x02, $type);
+	$self->sendToServer($msg);
+	debug "Sent Auction Request My Info.\n", "sendPacket", 2;
+}
+
+sub sendAuctionMySellStop {
+	my ($self, $id) = @_;
+	my $msg = pack("C2 V1", 0x5D, 0x02, $id);
+	$self->sendToServer($msg);
+	debug "Sent My Sell Stop.\n", "sendPacket", 2;
 }
 
 1;
