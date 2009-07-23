@@ -319,14 +319,19 @@ sub new {
 		'023A' => ['storage_password_request', 'v1', [qw(flag)]],
 		'023C' => ['storage_password_result', 'v1 v1', [qw(type val)]],
 		'023E' => ['storage_password_request', 'v1', [qw(flag)]],
-		'0240' => ['mail_refreshinbox'],
-		'0242' => ['mail_read', 'v1 v1 x2 Z40 Z28 V1 V1 v1 C1 x1 C1 C1 C1 v1 v1 v1 v1 x1 Z*', [qw(lenght mailID title sender zeny itemAmount itemIndex itemType itemIdentified itemAttribute itemRefine itemCard1 itemCard2 itemCard3 itemCard4 message)]],
+		'0240' => ['mail_refreshinbox', 'v1 V1', [qw(size  count)]],
+		'0242' => ['mail_read', 'v1 V1 Z40 Z24 x4 V2 v1 C1 x1 C3 a8 x1 Z*', [qw(lenght mailID title sender zeny amount nameID type identified broken upgrade cards message)]],
 		'0245' => ['mail_getattachment', 'C1', [qw(fail)]],
 		'0249' => ['mail_send', 'C1', [qw(fail)]],
 		'024A' => ['mail_new', 'V1 Z24 Z24', [qw(mailID sender title)]],
+		'0250' => ['auction_result', 'C1', [qw(flag)]],
+		'0252' => ['auction_item_request_search', 'v1 V1 V1', [qw(size pages count)]],
 		'0255' => ['mail_setattachment', 'v1 C1', [qw(index fail)]],
+		'0256' => ['auction_add_item', 'v1 C1', [qw(index fail)]],
 		'0257' => ['mail_delete', 'V1 v1', [qw(mailID fail)]],
 		'0259' => ['gameguard_grant', 'C1', [qw(server)]],
+		'025D' => ['auction_my_sell_stop', 'V1', [qw(flag)]],
+		'025F' => ['auction_windows', 'V1 C1 C1 C1 C1 v1', [qw(flag unknown1 unknown2 unknown3 unknown4 unknown5)]],
 		'0260' => ['mail_window', 'v1', [qw(flag)]],
 		'0274' => ['mail_return', 'V1 v1', [qw(mailID fail)]],
 		# mail_return packet: '0274' => ['account_server_info', 'x2 a4 a4 a4 x30 C1 x4 a*', [qw(sessionID accountID sessionID2 accountSex serverInfo)]],
@@ -6616,45 +6621,63 @@ sub warp_portal_list {
 
 sub mail_refreshinbox {
 	my ($self, $args) = @_;
-	undef $inboxList;
-	
-	my $amount = unpack('V1', substr($args->{RAW_MSG}, 4, 4));
-	# TODO: my $amount = $args->{amount};
+	undef $mailList;
 
-	if (!$amount) {
+	my $count = $args->{count};
+
+	if (!$count) {
 		message T("There is no mail in your inbox.\n"), "info";
 		return;
 	}
-	message TF("You've got Mail! (%s)\n", $amount), "info";
-	my $msg = T ("--------------------------------- Inbox ----------------------------------\n" .
-		"# mailID  Title                  Read Sender          Time\n");
-	$msg .= "--------------------------------------------------------------------------\n";
+
+	message TF("You've got Mail! (%s)\n", $count), "info";
+	my $msg;
+	$msg .= center(" " . T("Inbox") . " ", 79, '-') . "\n";
+	# truncating the title from 39 to 35, the user will be able to read the full title when reading the mail
+	# truncating the date with precision of minutes and leave year out
+	$msg .=	swrite(TF("# R \@%s \@%s \@%s", ('<'x35), ('<'x24), ('<'x11)),
+			["Title", "Sender", "Date"]);
+	$msg .= ("%s\n", ('-'x79));
 
 	my $j = 0;
-	for (my $i = 8; $i < $args->{RAW_MSG_SIZE}; $i+=73) {
-		$inboxList->[$j]->{mailID} = unpack("V1", substr($args->{RAW_MSG}, $i, 4));
-		$inboxList->[$j]->{title} = unpack("a40", substr($args->{RAW_MSG}, $i+4, 40));
-		$inboxList->[$j]->{read} = unpack("C1", substr($args->{RAW_MSG}, $i+44, 1));
-		$inboxList->[$j]->{sender} = unpack("Z24", substr($args->{RAW_MSG}, $i+45, 24));
-		$inboxList->[$j]->{timestamp} = unpack("V1", substr($args->{RAW_MSG}, $i+69, 4));
+	for (my $i = 8; $i < 8 + $count * 73; $i+=73) {
+		$mailList->[$j]->{mailID} = unpack("V1", substr($args->{RAW_MSG}, $i, 4));
+		$mailList->[$j]->{title} = unpack("Z40", substr($args->{RAW_MSG}, $i+4, 40));
+		$mailList->[$j]->{read} = unpack("C1", substr($args->{RAW_MSG}, $i+44, 1));
+		$mailList->[$j]->{sender} = unpack("Z24", substr($args->{RAW_MSG}, $i+45, 24));
+		$mailList->[$j]->{timestamp} = unpack("V1", substr($args->{RAW_MSG}, $i+69, 4));
 		$msg .= swrite(
-		TF("%s \@<<<<<< \@<<<<<<<<<<<<<<<<<<<<< \@<<< \@<<<<<<<<<<<<<< \@<<<<<<<<<<<<<<<<<<<", $j),
-		[$inboxList->[$j]->{mailID}, $inboxList->[$j]->{title}, $inboxList->[$j]->{read},
-			$inboxList->[$j]->{sender}, getFormattedDate(int($inboxList->[$j]->{timestamp}))]);
-
+		TF("%s %s \@%s \@%s \@%s", $j, $mailList->[$j]->{read}, ('<'x35), ('<'x24), ('<'x11)),
+		[$mailList->[$j]->{title}, $mailList->[$j]->{sender}, getFormattedDate(int($mailList->[$j]->{timestamp}))]);
 		$j++;
 	}
 
-	$msg .= ("--------------------------------------------------------------------------\n");
-	message $msg, "list";
+	$msg .= ("%s\n", ('-'x79));
+	message($msg . "\n", "list");
 }
 
 sub mail_read {
 	my ($self, $args) = @_;
-	# TODO: need better display format
-	foreach (qw(lenght mailID title sender zeny itemAmount itemIndex itemType itemIdentified itemAttribute itemRefine itemCard1 itemCard2 itemCard3 itemCard4 message)) {
-		message ("".$_.": ".$args->{$_}."\n"), "info";
-	}
+
+	my $item = new Actor::Item();
+	$item->{nameID} = $args->{nameID};
+	$item->{upgrade} = $args->{upgrade};
+	$item->{cards} = $args->{cards};
+	$item->{broken} = $args->{broken};
+	$item->{name} = itemName($item);
+
+	my $msg;
+	$msg .= center(" " . T("Mail") . " ", 79, '-') . "\n";
+	$msg .= swrite(TF("Title: \@%s Sender: \@%s", ('<'x39), ('<'x24)),
+			[$args->{title}, $args->{sender}]);
+	$msg .= TF("Message: %s\n", $args->{message});
+	$msg .= ("%s\n", ('-'x79));
+	$msg .= TF( "Item: %s %s\n" .
+				"Zeny: %sz\n",
+				$item->{name}, ($args->{amount}) ? "x " . $args->{amount} : "", formatNumber($args->{zeny}));
+	$msg .= ("%s\n", ('-'x79));
+
+	message($msg . "\n", "info");
 }
 
 sub mail_getattachment {
@@ -6700,6 +6723,113 @@ sub mail_return {
 	($args->{fail}) ?
 		error TF("The mail with ID: %s does not exist.\n", $args->{mailID}), "info" :
 		message TF("The mail with ID: %s is returned to the sender.\n", $args->{mailID}), "info";
+}
+
+sub auction_result {
+	my ($self, $args) = @_;
+	my $flag = $args->{flag};
+
+	if ($flag == 0) {
+     	message T("You have failed to bid into the auction.\n"), "info";
+	} elsif ($flag == 1) {
+		message T("You have successfully bid in the auction.\n"), "info";
+	} elsif ($flag == 2) {
+		message T("The auction has been canceled.\n"), "info";
+	} elsif ($flag == 3) {
+		message T("An auction with at least one bidder cannot be canceled.\n"), "info";
+	} elsif ($flag == 4) {
+		message T("You cannot register more than 5 items in an auction at a time.\n"), "info";
+	} elsif ($flag == 5) {
+		message T("You do not have enough Zeny to pay the Auction Fee.\n"), "info";
+	} elsif ($flag == 6) {
+		message T("You have won the auction.\n"), "info";
+	} elsif ($flag == 7) {
+		message T("You have failed to win the auction.\n"), "info";
+	} elsif ($flag == 8) {
+		message T("You do not have enough Zeny.\n"), "info";
+	} elsif ($flag == 9) {
+		message T("You cannot place more than 5 bids at a time.\n"), "info";
+	}
+}
+
+sub auction_item_request_search {
+	my ($self, $args) = @_;
+
+	#$pages = $args->{pages};$size = $args->{size};
+	my $count = $args->{count};
+	undef $auctionList;
+
+	if (!$count) {
+		message T("No item in auction.\n"), "info";
+		return;
+	}
+
+	message TF("Found %s items in auction.\n", $count), "info";
+	my $msg;
+	$msg .= center(" " . T("Auction") . " ", 79, '-') . "\n";
+	$msg .=	swrite(TF("# \@%s \@%s \@%s \@%s", ('<'x39), ('<'x10), ('<'x10), ('<'x11)),
+			["Item", "High Bid", "Purchase", "End Date"]);
+	$msg .= ("%s\n", ('-'x79));
+
+	my $j = 0;
+	for (my $i = 12; $i < 12 + $count * 83; $i += 83) {
+		$auctionList->[$j]->{ID} = unpack("V1", substr($args->{RAW_MSG}, $i, 4));
+		$auctionList->[$j]->{seller} = unpack("Z24", substr($args->{RAW_MSG}, $i+4, 24));
+		$auctionList->[$j]->{nameID} = unpack("v1", substr($args->{RAW_MSG}, $i+28, 2));
+		$auctionList->[$j]->{type} = unpack("v1", substr($args->{RAW_MSG}, $i+30, 2));
+		$auctionList->[$j]->{unknown} = unpack("v1", substr($args->{RAW_MSG}, $i+32, 2));
+		$auctionList->[$j]->{amount} = unpack("v1", substr($args->{RAW_MSG}, $i+34, 2));
+		$auctionList->[$j]->{identified} = unpack("C1", substr($args->{RAW_MSG}, $i+36, 1));
+		$auctionList->[$j]->{broken} = unpack("C1", substr($args->{RAW_MSG}, $i+37, 1));
+		$auctionList->[$j]->{upgrade} = unpack("C1", substr($args->{RAW_MSG}, $i+38, 1));
+		# TODO
+		#$auctionList->[$j]->{card}->[0] = unpack("v1", substr($args->{RAW_MSG}, $i+39, 2));
+		#$auctionList->[$j]->{card}->[1] = unpack("v1", substr($args->{RAW_MSG}, $i+41, 2));
+		#$auctionList->[$j]->{card}->[2] = unpack("v1", substr($args->{RAW_MSG}, $i+43, 2));
+		#$auctionList->[$j]->{card}->[3] = unpack("v1", substr($args->{RAW_MSG}, $i+45, 2));
+		$auctionList->[$j]->{cards} = unpack("a8", substr($args->{RAW_MSG}, $i+39, 8));
+		$auctionList->[$j]->{price} = unpack("V1", substr($args->{RAW_MSG}, $i+47, 4));
+		$auctionList->[$j]->{buynow} = unpack("V1", substr($args->{RAW_MSG}, $i+51, 4));
+		$auctionList->[$j]->{buyer} = unpack("Z24", substr($args->{RAW_MSG}, $i+55, 24));
+		$auctionList->[$j]->{timestamp} = unpack("V1", substr($args->{RAW_MSG}, $i+79, 4));
+
+		my $item = new Actor::Item();
+		$item->{nameID} = $auctionList->[$j]->{nameID};
+		$item->{upgrade} = $auctionList->[$j]->{upgrade};
+		$item->{cards} = $auctionList->[$j]->{cards};
+		$item->{broken} = $auctionList->[$j]->{broken};
+		$item->{name} = itemName($item);
+		
+		$msg .= swrite(TF("%s \@%s \@%s \@%s \@%s", $j, ('<'x39), ('<'x10), ('<'x10), ('<'x11)),
+				[$item->{name}, formatNumber($auctionList->[$j]->{price}),
+					formatNumber($auctionList->[$j]->{buynow}), getFormattedDate(int($auctionList->[$j]->{timestamp}))]);
+	}
+
+	$msg .= ("%s\n", ('-'x79));
+	message($msg . "\n", "list");
+}
+
+sub auction_my_sell_stop {
+	my ($self, $args) = @_;
+	my $flag = $args->{flag};
+
+	if ($flag == 0) {
+     	message T("You have ended the auction.\n"), "info";
+	} elsif ($flag == 1) {
+		message T("You cannot end the auction.\n"), "info";
+	} elsif ($flag == 2) {
+		message T("Bid number is incorrect.\n"), "info";
+	}
+}
+
+sub auction_windows {
+	my ($self, $args) = @_;
+	message TF("Auction window is now %s.\n", ($args->{flag}) ? "closed" : "opened"), "info";
+}
+
+sub auction_add_item {
+	my ($self, $args) = @_;
+	message TF("%s to add item with index: %s.\n", ($args->{fail}) ? "Failed (note: usable items can't be auctioned)" : "Succeeded", $args->{index}), "info";
 }
 
 1;

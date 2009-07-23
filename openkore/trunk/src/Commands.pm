@@ -187,14 +187,24 @@ sub initHandlers {
 	who                => \&cmdWho,
 	whoami             => \&cmdWhoAmI,
 
-	m                  => \&cmdMail,
-	ms                 => \&cmdMail,
-	mi                 => \&cmdMail,
-	mo                 => \&cmdMail,
-	md                 => \&cmdMail,
-	mw                 => \&cmdMail,
-	mr                 => \&cmdMail,
-	ma                 => \&cmdMail,
+	m                  => \&cmdMail,	# see commands
+	ms                 => \&cmdMail,	# send
+	mi                 => \&cmdMail,	# inbox
+	mo                 => \&cmdMail,	# open
+	md                 => \&cmdMail,	# delete
+	mw                 => \&cmdMail,	# window
+	mr                 => \&cmdMail,	# return
+	ma                 => \&cmdMail,	# attachement
+	
+	au                 => \&cmdAuction,	# see commands
+	aua                => \&cmdAuction,	# add item
+	aur                => \&cmdAuction, # remove item
+	auc                => \&cmdAuction,	# create auction
+	aue                => \&cmdAuction,	# auction end
+	aus                => \&cmdAuction,	# search auction
+	aub                => \&cmdAuction, # make bid
+	aui                => \&cmdAuction, # info on buy/sell
+	aud                => \&cmdAuction, # delete auction
 
 	north              => \&cmdManualMove,
 	south              => \&cmdManualMove,
@@ -5038,14 +5048,14 @@ sub cmdMail {
 	
 		unless ($args[0] =~ /^\d+$/) {
 			message T("Usage: mo <mail #>\n"), "info";
-		} elsif (!$inboxList->[$args[0]]) {
-			if (@{$inboxList}) {
+		} elsif (!$mailList->[$args[0]]) {
+			if (@{$mailList}) {
 					message TF("No mail found with index: %s. (might need to re-open mailbox)\n", $args[0]), "info";
 			} else {
 					message T("Mailbox has not been opened or is empty.\n"), "info";
 			}
 		} else {
-			$messageSender->sendMailRead($inboxList->[$args[0]]->{mailID});
+			$messageSender->sendMailRead($mailList->[$args[0]]->{mailID});
 		}
 
 	# mail inbox => set on begin as standard?
@@ -5067,14 +5077,14 @@ sub cmdMail {
 	# mail attachment control
 	} elsif ($cmd eq 'ma') {
 		if ($args[0] eq "get" && $args[1] =~ /^\d+$/) {
-			unless ($inboxList->[$args[1]]->{mailID}) {
-				if (@{$inboxList}) {
+			unless ($mailList->[$args[1]]->{mailID}) {
+				if (@{$mailList}) {
 						message TF("No mail found with index: %s. (might need to re-open mailbox)\n", $args[1]), "info";
 				} else {
 						message T("Mailbox has not been opened or is empty.\n"), "info";
 				}
 			} else {
-				$messageSender->sendMailGetAttach($args[1]);
+				$messageSender->sendMailGetAttach($mailList->[$args[1]]->{mailID});
 			}
 		} elsif ($args[0] eq "add") {
 			unless ($args[2] =~ /^\d+$/) {
@@ -5101,33 +5111,149 @@ sub cmdMail {
 	} elsif ($cmd eq 'md') {
 		unless ($args[0] =~ /^\d+$/) {
 			message T("Usage: md <mail #>\n"), "info";
-		} elsif (!$inboxList->[$args[0]]) {
-			if (@{$inboxList}) {
+		} elsif (!$mailList->[$args[0]]) {
+			if (@{$mailList}) {
 				message TF("No mail found with index: %s. (might need to re-open mailbox)\n", $args[0]), "info";
 			} else {
 				message T("Mailbox has not been opened or is empty.\n"), "info";
 			}
 		} else {
-			$messageSender->sendMailDelete($args[0]);
+			$messageSender->sendMailDelete($mailList->[$args[0]]->{mailID});
 		}
 
 	# mail return
 	} elsif ($cmd eq 'mr') {
 		unless ($args[0] =~ /^\d+$/) {
 			message T("Usage: mr <mail #>\n"), "info";
-		} elsif (!$inboxList->[$args[0]]) {
-			if (@{$inboxList}) {
+		} elsif (!$mailList->[$args[0]]) {
+			if (@{$mailList}) {
 				message TF("No mail found with index: %s. (might need to re-open mailbox)\n", $args[1]), "info";
 			} else {
 				message T("Mailbox has not been opened or is empty.\n"), "info";
 			}
 		} else {
-			$messageSender->sendMailReturn($args[0]);
+			$messageSender->sendMailReturn($mailList->[$args[0]]->{mailID}, $mailList->[$args[0]]->{sender});
 		}
 
 	# with command mail, list of possebilities: $cmd eq 'm'
 	} else {
 		message T("Mail commands: ms, mi, mo, md, mw, mr, ma\n"), "info";
+	}
+}
+
+sub cmdAuction {
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command (%s)\n", shift);
+		return;
+	}
+
+	my ($cmd, $args_string) = @_;
+	my @args = parseArgs($args_string, 4);
+
+	# auction add item
+	# TODO: it doesn't seem possible to add more than 1 item?
+	if ($cmd eq 'aua') {
+		unless (defined $args[0] && $args[1] =~ /^\d+$/) {
+			message T("Usage: aua (<item #>|<item name>) <amount>\n"), "info";
+		} elsif (my $item = Actor::Item::get($args[0])) {
+			my $serverIndex = $item->{index};
+			$messageSender->sendAuctionAddItem($serverIndex, $args[1]);
+		}
+	# auction remove item
+	} elsif ($cmd eq 'aur') {
+			$messageSender->sendAuctionAddItemCancel();
+	# auction create (add item first)
+	} elsif ($cmd eq 'auc') {
+		unless ($args[0] && $args[1] && $args[2]) {
+			message T("Usage: auc <current price> <instant buy price> <hours>\n"), "info";
+		} else {
+			my ($price, $buynow, $hours) = ($args[0], $args[1], $args[2]);
+			$messageSender->sendAuctionCreate($price, $buynow, $hours);
+		}
+		# auction create (add item first)
+	} elsif ($cmd eq 'aub') {
+		unless (defined $args[0] && $args[1] =~ /^\d+$/) {
+			message T("Usage: aub <id> <price>\n"), "info";
+		} else {
+			unless ($auctionList->[$args[0]]->{ID}) {
+				if (@{$auctionList}) {
+						message TF("No auction item found with index: %s. (might need to re-open auction window)\n", $args[0]), "info";
+				} else {
+						message T("Auction window has not been opened or is empty.\n"), "info";
+				}
+			} else {
+				$messageSender->sendAuctionBuy($auctionList->[$args[0]]->{ID}, $args[1]);
+			}
+		}
+	# auction info (my)
+	} elsif ($cmd eq 'aui') {
+		# funny thing is, we can access this info trough 'aus' aswell
+		unless ($args[0] eq "selling" || $args[0] eq "buying") {
+			message T("Usage: aui (selling|buying)\n"), "info";
+		} else {
+			$args[0] = ($args[0] eq "selling") ? 0 : 1;
+			$messageSender->sendAuctionReqMyInfo($args[0]);
+		}
+	# auction delete
+	} elsif ($cmd eq 'aud') {
+		unless ($args[0] =~ /^\d+$/) {
+			message T("Usage: aud <index>\n"), "info";
+		} else {
+			unless ($auctionList->[$args[0]]->{ID}) {
+				if (@{$auctionList}) {
+					message TF("No auction item found with index: %s. (might need to re-open auction window)\n", $args[0]), "info";
+				} else {
+					message T("Auction window has not been opened or is empty.\n"), "info";
+				}
+			} else {
+				$messageSender->sendAuctionCancel($auctionList->[$args[0]]->{ID});
+			}
+		}
+	# auction end (item gets sold to highest bidder?)
+	} elsif ($cmd eq 'aue') {
+		unless ($args[0] =~ /^\d+$/) {
+			message T("Usage: aue <index>\n"), "info";
+		} else {
+			unless ($auctionList->[$args[0]]->{ID}) {
+				if (@{$auctionList}) {
+					message TF("No auction item found with index: %s. (might need to re-open auction window)\n", $args[0]), "info";
+				} else {
+					message T("Auction window has not been opened or is empty.\n"), "info";
+				}
+			} else {
+				$messageSender->sendAuctionMySellStop($auctionList->[$args[0]]->{ID});
+			}
+		}
+	# auction search
+	} elsif ($cmd eq 'aus') {
+		# TODO: can you in official servers do a query on both a category AND price/text? (eA doesn't allow you to)
+		unless (defined $args[0]) {
+			message T("Usage: aus <type> [<price>|<text>]\n" .
+			"      types (0:Armor 1:Weapon 2:Card 3:Misc 4:By Text 5:By Price 6:Sell 7:Buy)\n"), "info";
+		# armor, weapon, card, misc, sell, buy
+		} elsif ($args[0] =~ /^[0-3]$/ || $args[0] =~ /^[6-7]$/) {
+			$messageSender->sendAuctionItemSearch($args[0]);
+		# by text
+		} elsif ($args[0] == 5) {
+			unless (defined $args[1]) {
+				message T("Usage: aus 5 <text>\n"), "info";
+			} else {
+				$messageSender->sendAuctionItemSearch($args[0], undef, $args[1]);
+			}
+		# by price
+		} elsif ($args[0] == 6) {
+			unless ($args[1] =~ /^\d+$/) {
+				message T("Usage: aus 6 <price>\n"), "info";
+			} else {
+				$messageSender->sendAuctionItemSearch($args[0], $args[1]);
+			}
+		} else {
+			error T("Possible value's for the <type> parameter are:\n" .
+					"(0:Armor 1:Weapon 2:Card 3:Misc 4:By Text 5:By Price 6:Sell 7:Buy)\n");
+		}
+	# with command auction, list of possebilities: $cmd eq 'au'
+	} else {
+		message T("Auction commands: aua, aur, auc, aub, aui, aud, aue, aus\n"), "info";
 	}
 }
 
