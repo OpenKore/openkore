@@ -71,7 +71,7 @@ sub new {
 		'0069' => ['account_server_info', 'x2 a4 a4 a4 x30 C1 a*', [qw(sessionID accountID sessionID2 accountSex serverInfo)]],
 		'006A' => ['login_error', 'C1', [qw(type)]],
 		'006B' => ['received_characters'],
-		'0072' => ['received_characters'],		
+		'0072' => ['received_characters'],
 		'006C' => ['login_error_game_login_server'],
 		'006D' => ['character_creation_successful', 'a4 x4 V1 x62 Z24 C1 C1 C1 C1 C1 C1 C1', [qw(ID zenny name str agi vit int dex luk slot)]],
 		'006E' => ['character_creation_failed'],
@@ -282,6 +282,7 @@ sub new {
 		'01EE' => ['inventory_items_stackable'],
 		'01EF' => ['cart_items_list'],
 		'01F2' => ['guild_member_online_status', 'a4 a4 V1 v3', [qw(ID charID online sex hair_style hair_color)]],
+		# weather/misceffect2 packet
 		'01F3' => ['npc_effect', 'a4 a4', [qw(ID effect)]],
 		'01F4' => ['deal_request', 'Z24 x4 v1', [qw(user level)]],
 		'01F5' => ['deal_begin', 'C1 a4 v1', [qw(type targetID level)]],
@@ -345,6 +346,7 @@ sub new {
 		'029A' => ['inventory_item_added', 'v1 v1 v1 C1 C1 C1 a8 v1 C1 C1 a4', [qw(index amount nameID identified broken upgrade cards type_equip type fail cards_ext)]],
 		# mercenaries
 		'029B' => ['homunculus_stats', 'a4 v8 Z24 v5 V1 v2', [qw(ID atk matk hit critical def mdef flee aspd name lvl hp hp_max sp sp_max contract_end faith summons)]], # mercenary stats
+		# TODO: test on officials: '029B' => ['homunculus_stats', 'a4 v8 Z24 v1 V5 v1 V2 v1', [qw(ID atk matk hit critical def mdef flee aspd name lvl hp hp_max sp sp_max contract_end faith summons killcount range)]], # mercenary stats
 		'029D' => ['skills_list'], # mercenary skills
 		'02A2' => ['mercenary_param_change', 'v1 V1', [qw(type param)]],
 		# tRO HShield packet challenge. 
@@ -357,6 +359,7 @@ sub new {
 		# tRO new packets (2008-09-16Ragexe12_Th)
 		'02B1' => ['quest_list'],
 		'02B2' => ['objective_info'],
+		'02B9' => ['hotkeys'],
 		'02C5' => ['party_invite_result', 'Z24 V1', [qw(name type)]],
 		'02C6' => ['party_invite', 'a4 Z24', [qw(ID name)]],
 		'02C9' => ['party_allow_invite', 'C1', [qw(type)]],
@@ -4497,6 +4500,10 @@ sub party_invite_result {
 		warning TF("Join request failed: %s denied request\n", $name);
 	} elsif ($args->{type} == 2) {
 		message TF("%s accepted your request\n", $name), "info";
+	} elsif ($args->{type} == 3) {
+		message T("Join request failed: Party is full.\n"), "info";
+	} elsif ($args->{type} == 4) {
+		message TF("Join request failed: same account of %s allready joined the party.\n", $name), "info";
 	}
 }
 
@@ -5192,6 +5199,9 @@ sub pvp_mode2 {
 	} elsif ($type == 8) {
 		message T("GvG Display Mode\n"), "map_event";
 		$pvp = 2;
+	} elsif ($type == 19) {
+		message T("Battleground Display Mode\n"), "map_event";
+		$pvp = 3;
 	}
 	
 	if ($pvp) {
@@ -5673,7 +5683,6 @@ sub skills_list {
 	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 37) {
 		my ($skillID, $targetType, $level, $sp, $range, $handle, $up)
 		= unpack 'v1 V1 v3 Z24 C1', substr $msg, $i, 37;
-		
 		$handle = Skill->new (idn => $skillID)->getHandle unless $handle;
 		
 		$char->{skills}{$handle}{ID} = $skillID;
@@ -6621,8 +6630,8 @@ sub warp_portal_list {
 
 sub mail_refreshinbox {
 	my ($self, $args) = @_;
-	undef $mailList;
 
+	undef $mailList;
 	my $count = $args->{count};
 
 	if (!$count) {
@@ -6633,22 +6642,22 @@ sub mail_refreshinbox {
 	message TF("You've got Mail! (%s)\n", $count), "info";
 	my $msg;
 	$msg .= center(" " . T("Inbox") . " ", 79, '-') . "\n";
-	# truncating the title from 39 to 35, the user will be able to read the full title when reading the mail
+	# truncating the title from 39 to 34, the user will be able to read the full title when reading the mail
 	# truncating the date with precision of minutes and leave year out
-	$msg .=	swrite(TF("# R \@%s \@%s \@%s", ('<'x35), ('<'x24), ('<'x11)),
-			["Title", "Sender", "Date"]);
-	$msg .= ("%s\n", ('-'x79));
-
+	$msg .=	swrite(TF("\@> R \@%s \@%s \@%s", ('<'x34), ('<'x24), ('<'x11)),
+			["#", "Title", "Sender", "Date"]);
+	$msg .= sprintf("%s\n", ('-'x79));
+	
 	my $j = 0;
 	for (my $i = 8; $i < 8 + $count * 73; $i+=73) {
 		$mailList->[$j]->{mailID} = unpack("V1", substr($args->{RAW_MSG}, $i, 4));
-		$mailList->[$j]->{title} = unpack("Z40", substr($args->{RAW_MSG}, $i+4, 40));
+		$mailList->[$j]->{title} = bytesToString(unpack("Z40", substr($args->{RAW_MSG}, $i+4, 40)));
 		$mailList->[$j]->{read} = unpack("C1", substr($args->{RAW_MSG}, $i+44, 1));
-		$mailList->[$j]->{sender} = unpack("Z24", substr($args->{RAW_MSG}, $i+45, 24));
+		$mailList->[$j]->{sender} = bytesToString(unpack("Z24", substr($args->{RAW_MSG}, $i+45, 24)));
 		$mailList->[$j]->{timestamp} = unpack("V1", substr($args->{RAW_MSG}, $i+69, 4));
 		$msg .= swrite(
-		TF("%s %s \@%s \@%s \@%s", $j, $mailList->[$j]->{read}, ('<'x35), ('<'x24), ('<'x11)),
-		[$mailList->[$j]->{title}, $mailList->[$j]->{sender}, getFormattedDate(int($mailList->[$j]->{timestamp}))]);
+		TF("\@> %s \@%s \@%s \@%s", $mailList->[$j]->{read}, ('<'x34), ('<'x24), ('<'x11)),
+		[$j, $mailList->[$j]->{title}, $mailList->[$j]->{sender}, getFormattedDate(int($mailList->[$j]->{timestamp}))]);
 		$j++;
 	}
 
@@ -6669,15 +6678,15 @@ sub mail_read {
 	my $msg;
 	$msg .= center(" " . T("Mail") . " ", 79, '-') . "\n";
 	$msg .= swrite(TF("Title: \@%s Sender: \@%s", ('<'x39), ('<'x24)),
-			[$args->{title}, $args->{sender}]);
-	$msg .= TF("Message: %s\n", $args->{message});
+			[bytesToString($args->{title}), bytesToString($args->{sender})]);
+	$msg .= TF("Message: %s\n", bytesToString($args->{message}));
 	$msg .= ("%s\n", ('-'x79));
 	$msg .= TF( "Item: %s %s\n" .
 				"Zeny: %sz\n",
 				$item->{name}, ($args->{amount}) ? "x " . $args->{amount} : "", formatNumber($args->{zeny}));
-	$msg .= ("%s\n", ('-'x79));
+	$msg .= sprintf("%s\n", ('-'x79));
 
-	message($msg . "\n", "info");
+	message($msg, "info");
 }
 
 sub mail_getattachment {
@@ -6756,8 +6765,8 @@ sub auction_item_request_search {
 	my ($self, $args) = @_;
 
 	#$pages = $args->{pages};$size = $args->{size};
-	my $count = $args->{count};
 	undef $auctionList;
+	my $count = $args->{count};
 
 	if (!$count) {
 		message T("No item in auction.\n"), "info";
@@ -6767,14 +6776,14 @@ sub auction_item_request_search {
 	message TF("Found %s items in auction.\n", $count), "info";
 	my $msg;
 	$msg .= center(" " . T("Auction") . " ", 79, '-') . "\n";
-	$msg .=	swrite(TF("# \@%s \@%s \@%s \@%s", ('<'x39), ('<'x10), ('<'x10), ('<'x11)),
-			["Item", "High Bid", "Purchase", "End Date"]);
-	$msg .= ("%s\n", ('-'x79));
+	$msg .=	swrite(TF("\@%s \@%s \@%s \@%s \@%s", ('>'x2), ('<'x37), ('>'x10), ('>'x10), ('<'x11)),
+			["#", "Item", "High Bid", "Purchase", "End-Date"]);
+	$msg .= sprintf("%s\n", ('-'x79));
 
 	my $j = 0;
 	for (my $i = 12; $i < 12 + $count * 83; $i += 83) {
 		$auctionList->[$j]->{ID} = unpack("V1", substr($args->{RAW_MSG}, $i, 4));
-		$auctionList->[$j]->{seller} = unpack("Z24", substr($args->{RAW_MSG}, $i+4, 24));
+		$auctionList->[$j]->{seller} = bytesToString(unpack("Z24", substr($args->{RAW_MSG}, $i+4, 24)));
 		$auctionList->[$j]->{nameID} = unpack("v1", substr($args->{RAW_MSG}, $i+28, 2));
 		$auctionList->[$j]->{type} = unpack("v1", substr($args->{RAW_MSG}, $i+30, 2));
 		$auctionList->[$j]->{unknown} = unpack("v1", substr($args->{RAW_MSG}, $i+32, 2));
@@ -6790,7 +6799,7 @@ sub auction_item_request_search {
 		$auctionList->[$j]->{cards} = unpack("a8", substr($args->{RAW_MSG}, $i+39, 8));
 		$auctionList->[$j]->{price} = unpack("V1", substr($args->{RAW_MSG}, $i+47, 4));
 		$auctionList->[$j]->{buynow} = unpack("V1", substr($args->{RAW_MSG}, $i+51, 4));
-		$auctionList->[$j]->{buyer} = unpack("Z24", substr($args->{RAW_MSG}, $i+55, 24));
+		$auctionList->[$j]->{buyer} = bytesToString(unpack("Z24", substr($args->{RAW_MSG}, $i+55, 24)));
 		$auctionList->[$j]->{timestamp} = unpack("V1", substr($args->{RAW_MSG}, $i+79, 4));
 
 		my $item = new Actor::Item();
@@ -6800,13 +6809,14 @@ sub auction_item_request_search {
 		$item->{broken} = $auctionList->[$j]->{broken};
 		$item->{name} = itemName($item);
 		
-		$msg .= swrite(TF("%s \@%s \@%s \@%s \@%s", $j, ('<'x39), ('<'x10), ('<'x10), ('<'x11)),
-				[$item->{name}, formatNumber($auctionList->[$j]->{price}),
+		$msg .= swrite(TF("\@%s \@%s \@%s \@%s \@%s", ('>'x2),, ('<'x37), ('>'x10), ('>'x10), ('<'x11)),
+				[$j, $item->{name}, formatNumber($auctionList->[$j]->{price}),
 					formatNumber($auctionList->[$j]->{buynow}), getFormattedDate(int($auctionList->[$j]->{timestamp}))]);
+		$j++;
 	}
 
-	$msg .= ("%s\n", ('-'x79));
-	message($msg . "\n", "list");
+	$msg .= sprintf("%s\n", ('-'x79));
+	message($msg, "list");
 }
 
 sub auction_my_sell_stop {
@@ -6830,6 +6840,30 @@ sub auction_windows {
 sub auction_add_item {
 	my ($self, $args) = @_;
 	message TF("%s to add item with index: %s.\n", ($args->{fail}) ? "Failed (note: usable items can't be auctioned)" : "Succeeded", $args->{index}), "info";
+}
+
+# this info will be sent to xkore 2 clients
+sub hotkeys {
+	my ($self, $args) = @_;
+	my $msg;
+	$msg .= center(" " . T("Hotkeys") . " ", 79, '-') . "\n";
+	$msg .=	swrite(TF("\@%s \@%s \@%s \@%s", ('>'x3), ('<'x30), ('<'x5), ('>'x3)),
+			["#", "Name", "Type", "Lv"]);
+	$msg .= sprintf("%s\n", ('-'x79));
+	my $j = 0;
+	for (my $i = 2; $i < $args->{RAW_MSG_SIZE}; $i+=7) {
+		$hotkeyList->[$j]->{type} = unpack("C1", substr($args->{RAW_MSG}, $i, 1));
+		$hotkeyList->[$j]->{ID} = unpack("V1", substr($args->{RAW_MSG}, $i+1, 4));
+		$hotkeyList->[$j]->{lvl} = unpack("v1", substr($args->{RAW_MSG}, $i+5, 2));
+
+		$msg .= swrite(TF("\@%s \@%s \@%s \@%s", ('>'x3), ('<'x30), ('<'x5), ('>'x3)),
+			[$j, $hotkeyList->[$j]->{type} ? Skill->new(idn => $hotkeyList->[$j]->{ID})->getName() : itemNameSimple($hotkeyList->[$j]->{ID}),
+			$hotkeyList->[$j]->{type} ? "skill" : "item",
+			$hotkeyList->[$j]->{lvl}]);
+		$j++;
+	}
+	$msg .= sprintf("%s\n", ('-'x79));
+	debug($msg, "list");
 }
 
 1;
