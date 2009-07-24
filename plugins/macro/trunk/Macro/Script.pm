@@ -1,4 +1,4 @@
-# $Id: Script.pm r6781 2009-07-24 12:00:00Z ezza $
+# $Id: Script.pm r6782 2009-07-24 16:36:00Z ezza $
 package Macro::Script;
 
 use strict;
@@ -15,7 +15,7 @@ use Macro::Utilities qw(cmpr);
 use Macro::Automacro qw(releaseAM lockAM);
 use Log qw(message warning);
 
-our ($rev) = q$Revision: 6781 $ =~ /(\d+)/;
+our ($rev) = q$Revision: 6782 $ =~ /(\d+)/;
 
 # constructor
 sub new {
@@ -184,7 +184,7 @@ sub next {
 	my $line = ${$macro{$self->{name}}}[$self->{line}];
 	if (!defined $line) {
 		if (defined $self->{lastname} && defined $self->{lastline}) {
-			if ($self->{repeat} > 1) {$self->{repeat}--; $line = ${$macro{$self->{name}}}[0]}
+			if ($self->{repeat} > 1) {$self->{repeat}--; $self->{line} = 0; $line = ${$macro{$self->{name}}}[0]}
 			else {
 				$self->{line} = $self->{lastline} + 1;
 				$self->{name} = $self->{lastname};
