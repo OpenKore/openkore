@@ -32,6 +32,7 @@ sub new {
    $self->{packet_list}{'007C'} = ['actor_display', 'x1 a4 v14 C2 a3', [qw(ID walk_speed param1 param2 param3 hair_style weapon lowhead type shield tophead midhead hair_color clothes_color head_dir stance sex coords)]];
    $self->{packet_list}{'022C'} = ['actor_display', 'x1 a4 v3 V1 v5 V1 v5 a4 a4 V1 C2 a5 x3 v1', [qw(ID walk_speed param1 param2 param3 type hair_style weapon shield lowhead timestamp tophead midhead hair_color clothes_color head_dir guildID guildEmblem visual_effects stance sex coords lv)]];
    $self->{packet_list}{'009A'} = ['system_chat', 'x2 A*', [qw(message)]];
+   $self->{packet_list}{'029B'} = ['homunculus_stats', 'a4 v8 Z24 v1 V5 v1 V2 v1', [qw(ID atk matk hit critical def mdef flee aspd name lvl hp hp_max sp sp_max contract_end faith summons kills range)]]; # mercenary stats
 
    return $self;
 }
