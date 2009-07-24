@@ -1,4 +1,4 @@
-# $Id: Utilities.pm r6778 2009-07-23 09:00:00Z ezza $
+# $Id: Utilities.pm r6781 2009-07-24 12:00:00Z ezza $
 package Macro::Utilities;
 
 use strict;
@@ -16,7 +16,7 @@ use AI;
 use Log qw(warning error);
 use Macro::Data;
 
-our ($rev) = q$Revision: 6778 $ =~ /(\d+)/;
+our ($rev) = q$Revision: 6781 $ =~ /(\d+)/;
 
 # own ai_Isidle check that excludes deal
 sub ai_isIdle {
@@ -104,10 +104,8 @@ sub cmpr {
 		$a = lc($a);
 		foreach my $e (split(/,/, $b)) {return 1 if $a eq lc($e)}
 	}
-	if ($cond eq "=~") {
-		if ($b =~ /^\/(.*?)\/(\w?)\s*$/) {
-				if ($a =~ /$1/ || ($2 eq 'i' && $a =~ /$1/i)) {return 1}
-		}
+	if ($cond eq "=~" && $b =~ /^\/.*?\/\w?\s*$/) {
+		return match($a, $b, 1)
 	}
 
 	return 0
@@ -128,7 +126,7 @@ sub q4rx2 {
 }
 
 sub match {
-	my ($text, $kw) = @_;
+	my ($text, $kw, $cmpr) = @_;
 
 	unless (defined $text && defined $kw) {
 		# this produces a warning but that's what we want
@@ -142,9 +140,11 @@ sub match {
 
 	if ($kw =~ /^\/(.*?)\/(\w?)/) {
 		if ($text =~ /$1/ || ($2 eq 'i' && $text =~ /$1/i)) {
-			no strict;
-			foreach my $idx (1..$#-) {$varStack{".lastMatch$idx"} = ${$idx}}
-			use strict;
+			if (!defined $cmpr) {
+				no strict;
+				foreach my $idx (1..$#-) {$varStack{".lastMatch$idx"} = ${$idx}}
+				use strict;
+			}
 			return 1
 		}
 	}
