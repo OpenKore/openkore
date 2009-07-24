@@ -1,4 +1,4 @@
-# $Id: Script.pm r6775 2009-07-17 13:00:00Z ezza $
+# $Id: Script.pm r6781 2009-07-24 12:00:00Z ezza $
 package Macro::Script;
 
 use strict;
@@ -15,7 +15,7 @@ use Macro::Utilities qw(cmpr);
 use Macro::Automacro qw(releaseAM lockAM);
 use Log qw(message warning);
 
-our ($rev) = q$Revision: 6775 $ =~ /(\d+)/;
+our ($rev) = q$Revision: 6781 $ =~ /(\d+)/;
 
 # constructor
 sub new {
@@ -230,7 +230,7 @@ sub next {
 	# if statement: if (foo = bar) goto label?
 	# Unlimited If Statement by: ezza @ http://forums.openkore.com/
 	} elsif ($line =~ /^if\s/) {
-		my ($text, $then) = $line =~ /^if\s\(\s*(.*)\s*\)\s+(goto\s+.*|call\s+.*|stop)\s*/;
+		my ($text, $then) = $line =~ /^if\s+\(\s*(.*)\s*\)\s+(goto\s+.*|call\s+.*|stop)\s*/;
 
 		# The main trick is parse all the @special keyword and vars 1st,
 		$text = parseCmd($text, $self);
