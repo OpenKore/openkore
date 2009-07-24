@@ -19,13 +19,15 @@ use Globals qw(
 	$char $field %skillsStatus @skillsID @itemsID %items
 	$portalsList $npcsList $monstersList $playersList $petsList
 	@friendsID %friends %pet @partyUsersID %spells
-	@chatRoomsID %chatRooms @venderListsID %venderLists
+	@chatRoomsID %chatRooms @venderListsID %venderLists $hotkeyList
 );
 use Base::Ragnarok::MapServer;
 use base qw(Base::Ragnarok::MapServer);
 use Network::MessageTokenizer;
 use I18N qw(stringToBytes);
 use Utils qw(shiftPack);
+
+use Log qw(debug);
 
 
 # Overrided method.
@@ -79,7 +81,6 @@ sub handleMapLoaded {
 	# Do this just in case $client->{session}{dummy} was set after
 	# the user logs in.
 	$char->{ID} = $client->{session}{accountID};
-
 
 	my $output = '';
 
@@ -165,6 +166,14 @@ sub handleMapLoaded {
 			$char->{skills}{$ID}{range}, $ID, $char->{skills}{$ID}{up});
 	}
 	$output = pack('C2 v', 0x0F, 0x01, length($output) + 4) . $output;
+	$client->send($output);
+	
+	# Send Hotkeys
+	$output = '';
+	$output .=  pack('C2', 0xB9, 0x02);
+	for (my $i = 0; $i < @{$hotkeyList}; $i++) {
+		$output .= pack('C1 V1 v1', $hotkeyList->[$i]->{type}, $hotkeyList->[$i]->{ID}, $hotkeyList->[$i]->{lvl});
+	}
 	$client->send($output);
 
 	# Sort items into stackable and non-stackable

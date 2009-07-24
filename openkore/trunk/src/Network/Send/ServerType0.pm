@@ -1452,7 +1452,7 @@ sub sendMailDelete {
 
 sub sendMailReturn {
 	my ($self, $mailID, $sender) = @_;
-	my $msg = pack("C2 V1 Z24", 0x73, 0x02, $mailID, $sender);
+	my $msg = pack("C2 V1 Z24", 0x73, 0x02, $mailID, stringToBytes($sender));
 	$self->sendToServer($msg);
 	debug "Sent return mail.\n", "sendPacket", 2;
 }
@@ -1482,7 +1482,7 @@ sub sendMailSetAttach {
 
 sub sendMailSend {
 	my ($self, $length, $receiver, $title, $msglength, $mailmsg) = @_;
-	my $msg = pack("C2 v1 Z24 a40 C1 Z*", 0x48, 0x02, $length, $receiver, $title, $msglength, $mailmsg);
+	my $msg = pack("C2 v1 Z24 a40 C1 Z*", 0x48, 0x02, $length, stringToBytes($receiver), stringToBytes($title), $msglength, stringToBytes($mailmsg));
 	$self->sendToServer($msg);
 	debug "Sent mail send.\n", "sendPacket", 2;
 }
@@ -1525,7 +1525,7 @@ sub sendAuctionBuy {
 sub sendAuctionItemSearch {
 	my ($self, $type, $price, $text, $page) = @_;
 	$page = (defined $page) ? $page : 1;
-	my $msg = pack("C2 v1 V1 Z24 v1", 0x51, 0x02, $type, $price, $text, $page);
+	my $msg = pack("C2 v1 V1 Z24 v1", 0x51, 0x02, $type, $price, stringToBytes($text), $page);
 	$self->sendToServer($msg);
 	debug "Sent Auction Item Search.\n", "sendPacket", 2;
 }
