@@ -291,6 +291,7 @@ patchserver web.raggame.ru
 patchpath /patch02
 recvpackets recvpackets-rro.txt
 field_morocc morocc-old.fld
+gameGuard 1
 
 [Taiwan - twRO: Alfheim (Chaos, Loki, Lidia, Sakray, Aegir, Isa, Idun)]
 ip 61.220.60.11
