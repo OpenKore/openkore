@@ -15,10 +15,8 @@ package Network::Server;
 # Make all References Strict
 use strict;
 
-# MultiThreading Support
-use threads qw(yield);
-use threads::shared;
-use Thread::Queue::Any;
+# Coro Support
+use Coro;
 
 # Others (Perl Related)
 use warnings;
@@ -156,7 +154,7 @@ sub mainLoop {
 			$connection->{peerport} = -1;					# Connected peer port
 			$connection->{connected} = 0;					# Is connected ???
 			$connection->{tid} = undef;					# SubThread id.
-			$connection = shared_clone($connection) if (is_shared($self));
+			$connection = $connection;
 
 			# Return vars ReadOnly flag
 			SetReadOnly(\{$connection->{peerhost}});

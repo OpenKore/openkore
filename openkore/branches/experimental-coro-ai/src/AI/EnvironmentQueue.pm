@@ -20,10 +20,8 @@ package AI::EnvironmentQueue;
 # Make all References Strict
 use strict;
 
-# MultiThreading Support
-use threads;
-use threads::shared;
-use Thread::Queue::Any;
+# Coro Support
+use Coro;
 
 # Others (Perl Related)
 use warnings;
@@ -39,6 +37,7 @@ use Translation;
 use I18N qw(stringToBytes);
 use Utils::CallbackList;
 use Utils::SmartCallbackList;
+use Utils::Queue;
 
 ####################################
 ### CATEGORY: Constructor
@@ -64,7 +63,7 @@ sub new {
 	$self->{smart_events} = {};					# Registered Smart Events
 	# $self->{smart_ai_events} = {};			# Registered Smart Events by AI
 	# $self->{smart_task_events} = {};			# Registered Smart Events by Tasks
-	$self->{queue} = Thread::Queue::Any->new;	# Used for Queue
+	$self->{queue} = Utils::Queue->new;	# Used for Queue
 
 	# Read Directory with Environment parsers.
 	return if ( !opendir( DIR, $dir ) );
@@ -141,9 +140,6 @@ sub queue_add {
 	$obj->{name} = $name;
 	$obj->{params} = $params;
 
-	# MultiThreading Support
-	$obj = shared_clone($obj) if (is_shared($self));
-
 	$self->{queue}->enqueue(\$obj);
 }
 
@@ -208,19 +204,10 @@ sub register_listener {
 	my $listener_self = shift;
 	my $params = @_;
 
-	# MultiThreading Support
-	lock ($self) if (is_shared($self));
-	lock ($listener_self) if ((defined $listener_self) && (is_shared($listener_self)));
-	$listener_self = shared_clone($listener_self) if (is_shared($self));
-
 	# There is no such listener yet. So we create it.
 	# If there is one, and it's not registered trough 'register_listener'
 	if (!defined $self->{listeners}->{$name}) {
 		my $new_listener = CallbackList->new($name);
-
-		# MultiThreading Support
-		$new_listener = shared_clone($new_listener) if (is_shared($self));
-
 		$self->{listeners}->{$name} = $new_listener;
 	}
 
@@ -281,18 +268,9 @@ sub register_event {
 	# TODO:
 	# Document rules format
 
-	# MultiThreading Support
-	lock ($self) if (is_shared($self));
-	lock ($event_self) if ((defined $event_self) && (is_shared($event_self)));
-	$event_self = shared_clone($event_self) if (is_shared($self));
-
 	# There is no such smart event yet. So we create it
 	if (!defined $self->{smart_events}->{$name}) {
 		my $new_smart_event = SmartCallbackList->new($name);
-
-		# MultiThreading Support
-		$new_smart_event = shared_clone($new_smart_event) if (is_shared($self));
-
 		$self->{smart_events}->{$name} = $new_smart_event;
 	}
 

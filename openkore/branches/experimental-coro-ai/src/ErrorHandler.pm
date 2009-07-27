@@ -22,6 +22,7 @@ package ErrorHandler;
 use strict;
 use Carp;
 use Scalar::Util;
+use Settings;
 # use encoding 'utf8'; # Makes unknown Threading Bugs.
 
 sub T {

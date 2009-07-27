@@ -16,9 +16,8 @@ package AI::AImoduleManager;
 # Make all References Strict
 use strict;
 
-# MultiThreading Support
-use threads;
-use threads::shared;
+# Coro Support
+use Coro;
 
 # Others (Perl Related)
 use Carp::Assert;
@@ -249,9 +248,6 @@ sub postpone {
 	my %time;
 	$time{time} = time;
 	$time{timeout} = $timeout;
-
-	# MultiThreading Support
-	%time = shared_clone(%time) if (is_shared($self));
 
 	$self->{pospone_mutex_list}->{$mutex} = %time;
 

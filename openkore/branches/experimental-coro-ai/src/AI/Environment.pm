@@ -19,9 +19,8 @@ package AI::Environment;
 # Make all References Strict
 use strict;
 
-# MultiThreading Support
-use threads;
-use threads::shared;
+# Coro Support
+use Coro;
 
 # Others (Kore related)
 use Utils::Set;

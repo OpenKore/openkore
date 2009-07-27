@@ -21,8 +21,7 @@
 package FileParsers;
 
 use strict;
-use threads;
-use threads::shared;
+use Coro;
 use File::Spec;
 use Exporter;
 use base qw(Exporter);
@@ -75,9 +74,6 @@ sub parseArrayFile {
 	my $file = shift;
 	my $r_array = shift;
 
-	lock ($file) if (is_shared($file));
-	lock ($r_array) if (is_shared($r_array));
-
 	my @lines;
 	my $reader = new Utils::TextReader($file);
 	while (!$reader->eof()) {
@@ -88,11 +84,7 @@ sub parseArrayFile {
 	@{$r_array} = scalar(@lines) + 1;
 	my $i = 1;
 	foreach (@lines) {
-		if (is_shared($r_array)) {
-			$r_array->[$i] = shared_clone($_);
-		} else {
-			$r_array->[$i] = $_;
-		}
+		$r_array->[$i] = $_;
 		$i++;
 	}
 	return 1;
@@ -101,10 +93,6 @@ sub parseArrayFile {
 sub parseAvoidControl {
 	my $file = shift;
 	my $r_hash = shift;
-	my $my_r_hash;
-
-	lock ($file) if (is_shared($file));
-	lock ($r_hash) if (is_shared($r_hash));
 
 	my ($key,@args,$args);
 	my $reader = new Utils::TextReader($file);
@@ -127,28 +115,18 @@ sub parseAvoidControl {
 			($key, $args) = lc($line) =~ /([\s\S]+?)[\s]+(\d+[\s\S]*)/;
 			@args = split / /,$args;
 			if ($key ne "") {
-				$my_r_hash->{$section}{$key}{disconnect_on_sight} = $args[0];
-				$my_r_hash->{$section}{$key}{teleport_on_sight} = $args[1];
-				$my_r_hash->{$section}{$key}{disconnect_on_chat} = $args[2];
+				$r_hash->{$section}{$key}{disconnect_on_sight} = $args[0];
+				$r_hash->{$section}{$key}{teleport_on_sight} = $args[1];
+				$r_hash->{$section}{$key}{disconnect_on_chat} = $args[2];
 			}
 		}
 	}
-	if (is_shared($r_hash)) {
-		undef %{$r_hash};
-		%{$r_hash} = %{shared_clone($my_r_hash)};
-	} else {
-		undef %{$r_hash};
-		%{$r_hash} = %{$my_r_hash};
-	};
 	return 1;
 }
 
 sub parseChatResp {
 	my $file = shift;
 	my $r_array = shift;
-
-	lock ($file) if (is_shared($file));
-	lock ($r_array) if (is_shared($r_array));
 
 	my $reader = new Utils::TextReader($file);
 	while (!$reader->eof()) {
@@ -169,11 +147,7 @@ sub parseChatResp {
 				word => $word,
 				responses => \@responses
 			);
-			if (is_shared($r_array)) {
-				push @{$r_array}, shared_clone(\%args);
-			} else {
-				push @{$r_array}, \%args;
-			}
+			push @{$r_array}, \%args;
 		}
 	}
 	return 1;
@@ -183,10 +157,6 @@ sub parseCommandsDescription {
 	my $file = shift;
 	my $r_hash = shift;
 	my $no_undef = shift;
-
-	lock ($file) if (is_shared($file));
-	lock ($r_hash) if (is_shared($r_hash));
-	lock ($no_undef) if (is_shared($no_undef));
 
 	my $my_r_hash;
 
@@ -226,13 +196,8 @@ sub parseCommandsDescription {
 			push @{$my_r_hash->{$key}}, [$1, $2];
 		}
 	}
-	if (is_shared($r_hash)) {
-		undef %{$r_hash} unless $no_undef;
-		$r_hash = shared_clone($my_r_hash);
-	} else {
-		undef %{$r_hash} unless $no_undef;
-		%{$r_hash} = %{$my_r_hash};
-	};
+	undef %{$r_hash} unless $no_undef;
+	%{$r_hash} = %{$my_r_hash};
 	return 1;
 }
 
@@ -240,10 +205,6 @@ sub parseConfigFile {
 	my $file = shift;
 	my $r_hash = shift;
 	my $no_undef = shift;
-
-	lock ($file) if (is_shared($file));
-	lock ($r_hash) if (is_shared($r_hash));
-	lock ($no_undef) if (is_shared($no_undef));
 
 	my $my_r_hash;
 
@@ -328,13 +289,8 @@ sub parseConfigFile {
 		}
 	}
 
-	if (is_shared($r_hash)) {
-		undef %{$r_hash} unless $no_undef;
-		$r_hash = shared_clone($my_r_hash);
-	} else {
-		undef %{$r_hash} unless $no_undef;
-		%{$r_hash} = %{$my_r_hash};
-	};
+	undef %{$r_hash} unless $no_undef;
+	%{$r_hash} = %{$my_r_hash};
 
 	if ($inBlock) {
 		error Translation::TF("%s: Unclosed { at EOF\n", $file);
@@ -347,9 +303,6 @@ sub parseEmotionsFile {
 	my $file = shift;
 	my $r_hash = shift;
 	my $my_r_hash;
-
-	lock ($file) if (is_shared($file));
-	lock ($r_hash) if (is_shared($r_hash));
 
 	my ($key, $word, $name);
 	my $reader = new Utils::TextReader($file);
@@ -367,13 +320,8 @@ sub parseEmotionsFile {
 			$my_r_hash->{$key}{display} = $name;
 		}
 	}
-	if (is_shared($r_hash)) {
-		undef %{$r_hash};
-		$r_hash = shared_clone($my_r_hash);
-	} else {
-		undef %{$r_hash};
-		%{$r_hash} = %{$my_r_hash};
-	};
+	undef %{$r_hash};
+	%{$r_hash} = %{$my_r_hash};
 	return 1;
 }
 
@@ -381,9 +329,6 @@ sub parseDataFile {
 	my $file = shift;
 	my $r_hash = shift;
 	my $my_r_hash;
-
-	lock ($file) if (is_shared($file));
-	lock ($r_hash) if (is_shared($r_hash));
 
 	my ($key,$value);
 	my $reader = new Utils::TextReader($file);
@@ -398,13 +343,8 @@ sub parseDataFile {
 			$my_r_hash->{$key} = $value;
 		}
 	}
-	if (is_shared($r_hash)) {
-		undef %{$r_hash};
-		$r_hash = shared_clone($my_r_hash);
-	} else {
-		undef %{$r_hash};
-		%{$r_hash} = %{$my_r_hash};
-	};
+	undef $r_hash;
+	$r_hash = $my_r_hash;
 	return 1;
 }
 
@@ -412,9 +352,6 @@ sub parseDataFile_lc {
 	my $file = shift;
 	my $r_hash = shift;
 	my $my_r_hash;
-
-	lock ($file) if (is_shared($file));
-	lock ($r_hash) if (is_shared($r_hash));
 
 	my ($key,$value);
 	my $reader = new Utils::TextReader($file);
@@ -429,22 +366,13 @@ sub parseDataFile_lc {
 			$my_r_hash->{lc($key)} = $value;
 		}
 	}
-	if (is_shared($r_hash)) {
-		undef %{$r_hash};
-		$r_hash = shared_clone($my_r_hash);
-	} else {
-		undef %{$r_hash};
-		%{$r_hash} = %{$my_r_hash};
-	};
+	$r_hash = $my_r_hash;
 	return 1;
 }
 
 sub parseDataFile2 {
 	my ($file, $r_hash) = @_;
 	my $my_r_hash;
-
-	lock ($file) if (is_shared($file));
-	lock ($r_hash) if (is_shared($r_hash));
 
 	my $reader = new Utils::TextReader($file);
 	while (!$reader->eof()) {
@@ -458,13 +386,8 @@ sub parseDataFile2 {
 		$my_r_hash->{$key} = $value;
 	}
 	close FILE;
-	if (is_shared($r_hash)) {
-		undef %{$r_hash};
-		$r_hash = shared_clone($my_r_hash);
-	} else {
-		undef %{$r_hash};
-		%{$r_hash} = %{$my_r_hash};
-	};
+	undef %{$r_hash};
+	%{$r_hash} = %{$my_r_hash};
 	return 1;
 }
 
@@ -473,22 +396,14 @@ sub parseList {
 	my $r_hash = shift;
 	my $my_r_hash;
 
-	lock ($file) if (is_shared($file));
-	lock ($r_hash) if (is_shared($r_hash));
-
 	my $reader = new Utils::TextReader($file);
 	while (!$reader->eof()) {
 		my $line = $reader->readLine();
 		chomp;
 		$my_r_hash->{$line} = 1;
 	}
-	if (is_shared($r_hash)) {
-		undef %{$r_hash};
-		$r_hash = shared_clone($my_r_hash);
-	} else {
-		undef %{$r_hash};
-		$%{$r_hash} = %{$my_r_hash};
-	};
+	undef %{$r_hash};
+	$%{$r_hash} = %{$my_r_hash};
 	return 1;
 }
 
@@ -512,22 +427,10 @@ sub parseList {
 sub parseShopControl {
 	my ($file, $shop) = @_;
 
-	lock ($file) if (is_shared($file));
-	lock ($shop) if (is_shared($shop));
-	
-	if (is_shared($shop)) {
-		%{$shop} = &share({});
-	} else {
-		%{$shop} = {};
-	};
+	%{$shop} = {};
 	my $reader = new Utils::TextReader($file);
+	$shop->{items} = [];
 
-	# Read shop items
-	if (is_shared($shop)) {
-		$shop->{items} = &share([]);
-	} else {
-		$shop->{items} = [];
-	}
 	my $linenum = 0;
 	my @errors = ();
 	my $line;
@@ -564,11 +467,7 @@ sub parseShopControl {
 		if ($amount > 30000) {
 			push(@errors, Translation::TF("%s has amount over 30,000: %s", $loc, $amount));
 		}
-		if (is_shared($shop)) {
-			push(@{$shop->{items}}, shared_clone({name => $name, price => $real_price, amount => $amount}));
-		} else {
-			push(@{$shop->{items}}, {name => $name, price => $real_price, amount => $amount});
-		}
+		push(@{$shop->{items}}, {name => $name, price => $real_price, amount => $amount});
 	}
 
 	if (@errors) {
@@ -584,9 +483,6 @@ sub parseItemsControl {
 	my $file = shift;
 	my $r_hash = shift;
 	my $my_r_hash;
-
-	lock ($file) if (is_shared($file));
-	lock ($r_hash) if (is_shared($r_hash));
 
 	my ($key, $args_text, %cache);
 
@@ -615,13 +511,8 @@ sub parseItemsControl {
 			$my_r_hash->{$key} = $cache{$args_text} = \%item;
 		}
 	}
-	if (is_shared($r_hash)) {
-		undef %{$r_hash};
-		$r_hash = shared_clone($my_r_hash);
-	} else {
-		undef %{$r_hash};
-		%{$r_hash} = %{$my_r_hash};
-	};
+	undef %{$r_hash};
+	%{$r_hash} = %{$my_r_hash};
 	return 1;
 }
 
@@ -629,9 +520,6 @@ sub parseNPCs {
 	my $file = shift;
 	my $r_hash = shift;
 	my $my_r_hash;
-
-	lock ($file) if (is_shared($file));
-	lock ($r_hash) if (is_shared($r_hash));
 
 	my ($i, $string);
 	my ($key, $value, @args);
@@ -646,13 +534,7 @@ sub parseNPCs {
 		next unless $name;
 		$my_r_hash->{"$map $x $y"} = $name;
 	}
-	if (is_shared($r_hash)) {
-		undef %{$r_hash};
-		$r_hash = shared_clone($my_r_hash);
-	} else {
-		undef %{$r_hash};
-		%{$r_hash} = %{$my_r_hash};
-	};
+	$r_hash = $my_r_hash;
 	return 1;
 }
 
@@ -660,9 +542,6 @@ sub parseMonControl {
 	my $file = shift;
 	my $r_hash = shift;
 	my $my_r_hash;
-
-	lock ($file) if (is_shared($file));
-	lock ($r_hash) if (is_shared($r_hash));
 
 	my ($key,@args,$args);
 
@@ -693,13 +572,8 @@ sub parseMonControl {
 			$my_r_hash->{$key}{weight} = $args[8];
 		}
 	}
-	if (is_shared($r_hash)) {
-		undef %{$r_hash};
-		$r_hash = shared_clone($my_r_hash);
-	} else {
-		undef %{$r_hash};
-		%{$r_hash} = %{$my_r_hash};
-	};
+	undef %{$r_hash};
+	%{$r_hash} = %{$my_r_hash};
 	return 1;
 }
 
@@ -707,9 +581,6 @@ sub parsePortals {
 	my $file = shift;
 	my $r_hash = shift;
 	my $my_r_hash;
-
-	lock ($file) if (is_shared($file));
-	lock ($r_hash) if (is_shared($r_hash));
 
 	open FILE, "<", $file;
 	while (my $line = <FILE>) {
@@ -732,13 +603,8 @@ sub parsePortals {
 		}
 	}
 	close FILE;
-	if (is_shared($r_hash)) {
-		undef %{$r_hash};
-		%{$r_hash} = %{shared_clone($my_r_hash)};
-	} else {
-		undef %{$r_hash};
-		%{$r_hash} = %{$my_r_hash};
-	};
+	undef %{$r_hash};
+	%{$r_hash} = %{$my_r_hash};
 	return 1;
 }
 
@@ -746,9 +612,6 @@ sub parsePortalsLOS {
 	my $file = shift;
 	my $r_hash = shift;
 	my $my_r_hash;
-
-	lock ($file) if (is_shared($file));
-	lock ($r_hash) if (is_shared($r_hash));
 
 	my $key;
 	open FILE, "<", $file;
@@ -769,13 +632,8 @@ sub parsePortalsLOS {
 		}
 	}
 	close FILE;
-	if (is_shared($r_hash)) {
-		undef %{$r_hash};
-		%{$r_hash} = %{shared_clone($my_r_hash)};
-	} else {
-		undef %{$r_hash};
-		%{$r_hash} = %{$my_r_hash};
-	};
+	undef %{$r_hash};
+	%{$r_hash} = %{$my_r_hash};
 	return 1;
 }
 
@@ -783,9 +641,6 @@ sub parsePriority {
 	my $file = shift;
 	my $r_hash = shift;
 	my $my_r_hash;
-
-	lock ($file) if (is_shared($file));
-	lock ($r_hash) if (is_shared($r_hash));
 
 	return unless my $reader = new Utils::TextReader($file);
 
@@ -801,13 +656,7 @@ sub parsePriority {
 		$my_r_hash->{lc($_)} = $pri + 1;
 		$pri--;
 	}
-	if (is_shared($r_hash)) {
-		undef %{$r_hash};
-		$r_hash = shared_clone($my_r_hash);
-	} else {
-		undef %{$r_hash};
-		%{$r_hash} = %{$my_r_hash};
-	};
+	$r_hash = $my_r_hash;
 	return 1;
 }
 
@@ -815,9 +664,6 @@ sub parseResponses {
 	my $file = shift;
 	my $r_hash = shift;
 	my $my_r_hash;
-
-	lock ($file) if (is_shared($file));
-	lock ($r_hash) if (is_shared($r_hash));
 
 	my ($i, $key,$value);
 	my $reader = new Utils::TextReader($file);
@@ -835,13 +681,8 @@ sub parseResponses {
 			$my_r_hash->{"$key\_$i"} = $value;
 		}
 	}
-	if (is_shared($r_hash)) {
-		undef %{$r_hash};
-		$r_hash = shared_clone($my_r_hash);
-	} else {
-		undef %{$r_hash};
-		%{$r_hash} = %{$my_r_hash};
-	};
+	undef %{$r_hash};
+	%{$r_hash} = %{$my_r_hash};
 	return 1;
 }
 
@@ -849,20 +690,13 @@ sub parseROLUT {
 	my ($file, $r_hash) = @_;
 	my $my_r_hash;
 
-	lock ($file) if (is_shared($file));
-	lock ($r_hash) if (is_shared($r_hash));
-
 	my %ret = (
 		file => $file,
 		hash => $my_r_hash
 	    );
 	Plugins::callHook("FileParsers::ROLUT", \%ret);
 	if ($ret{return}) {
-		if (is_shared($r_hash)) {
-			$r_hash = shared_clone($my_r_hash);
-		} else {
-			%{$r_hash} = %{$my_r_hash};
-		};
+		%{$r_hash} = %{$my_r_hash};
 		return;
 	};
 
@@ -879,13 +713,8 @@ sub parseROLUT {
 			$my_r_hash->{$id} = $name;
 		}
 	}
-	if (is_shared($r_hash)) {
-		undef %{$r_hash};
-		$r_hash = shared_clone($my_r_hash);
-	} else {
-		undef %{$r_hash};
-		%{$r_hash} = %{$my_r_hash};
-	};
+	undef %{$r_hash};
+	%{$r_hash} = %{$my_r_hash};
 	return 1;
 }
 
@@ -893,20 +722,13 @@ sub parseRODescLUT {
 	my ($file, $r_hash) = @_;
 	my $my_r_hash;
 
-	lock ($file) if (is_shared($file));
-	lock ($r_hash) if (is_shared($r_hash));
-
 	my %ret = (
 		file => $file,
 		hash => $my_r_hash
 	    );
 	Plugins::callHook("FileParsers::RODescLUT", \%ret);
 	if ($ret{return}) {
-		if (is_shared($r_hash)) {
-			$r_hash = shared_clone($my_r_hash);
-		} else {
-			%{$r_hash} = %{$my_r_hash};
-		};
+		%{$r_hash} = %{$my_r_hash};
 		return;
 	};
 
@@ -928,13 +750,8 @@ sub parseRODescLUT {
 		}
 	}
 	close FILE;
-	if (is_shared($r_hash)) {
-		undef %{$r_hash};
-		$r_hash = shared_clone($my_r_hash);
-	} else {
-		undef %{$r_hash};
-		%{$r_hash} = %{$my_r_hash};
-	};
+	undef %{$r_hash};
+	%{$r_hash} = %{$my_r_hash};
 	return 1;
 }
 
@@ -942,9 +759,6 @@ sub parseROSlotsLUT {
 	my $file = shift;
 	my $r_hash = shift;
 	my $my_r_hash;
-
-	lock ($file) if (is_shared($file));
-	lock ($r_hash) if (is_shared($r_hash));
 
 	my $ID;
 	open FILE, $file;
@@ -957,13 +771,8 @@ sub parseROSlotsLUT {
 		}
 	}
 	close FILE;
-	if (is_shared($r_hash)) {
-		undef %{$r_hash};
-		$r_hash = shared_clone($my_r_hash);
-	} else {
-		undef %{$r_hash};
-		%{$r_hash} = %{$my_r_hash};
-	};
+	undef %{$r_hash};
+	%{$r_hash} = %{$my_r_hash};
 	return 1;
 }
 
@@ -971,9 +780,6 @@ sub parseSectionedFile {
 	my $file = shift;
 	my $r_hash = shift;
 	my $my_r_hash;
-
-	lock ($file) if (is_shared($file));
-	lock ($r_hash) if (is_shared($r_hash));
 
 	my $reader = new Utils::TextReader($file);
 
@@ -999,13 +805,8 @@ sub parseSectionedFile {
 			$my_r_hash->{$section}{$key} = $value;
 		}
 	}
-	if (is_shared($r_hash)) {
-		undef %{$r_hash};
-		$r_hash = shared_clone($my_r_hash);
-	} else {
-		undef %{$r_hash};
-		%{$r_hash} = %{$my_r_hash};
-	};
+	undef %{$r_hash};
+	%{$r_hash} = %{$my_r_hash};
 	return 1;
 }
 
@@ -1013,9 +814,6 @@ sub parseSkillsSPLUT {
 	my $file = shift;
 	my $r_hash = shift;
 	my $my_r_hash;
-
-	lock ($file) if (is_shared($file));
-	lock ($r_hash) if (is_shared($r_hash));
 
 	my $ID;
 	my $i;
@@ -1032,13 +830,8 @@ sub parseSkillsSPLUT {
 		}
 	}
 	close FILE;
-	if (is_shared($r_hash)) {
-		undef %{$r_hash};
-		$r_hash = shared_clone($my_r_hash);
-	} else {
-		undef %{$r_hash};
-		%{$r_hash} = %{$my_r_hash};
-	};
+	undef %{$r_hash};
+	%{$r_hash} = %{$my_r_hash};
 	return 1;
 }
 
@@ -1046,9 +839,6 @@ sub parseTimeouts {
 	my $file = shift;
 	my $r_hash = shift;
 	my $my_r_hash;
-
-	lock ($file) if (is_shared($file));
-	lock ($r_hash) if (is_shared($r_hash));
 
 	my $reader = new Utils::TextReader($file);
 	while (!$reader->eof()) {
@@ -1063,13 +853,8 @@ sub parseTimeouts {
 			$my_r_hash->{$key}{'timeout'} = $args[0];
 		}
 	}
-	if (is_shared($r_hash)) {
-		undef %{$r_hash};
-		%{$r_hash} = %{shared_clone($my_r_hash)};
-	} else {
-		undef %{$r_hash};
-		%{$r_hash} = %{$my_r_hash};
-	};
+	undef %{$r_hash};
+	%{$r_hash} = %{$my_r_hash};
 	return 1;
 }
 
@@ -1077,10 +862,6 @@ sub parseWaypoint {
 	my $file = shift;
 	my $r_array = shift;
 	my @my_r_array;
-
-	lock ($file) if (is_shared($file));
-	lock ($r_array) if (is_shared($r_array));
-
 
 	open FILE, "< $file";
 	foreach (<FILE>) {
@@ -1097,13 +878,8 @@ sub parseWaypoint {
 		push @my_r_array, \%point;
 	}
 	close FILE;
-	if (is_shared($r_array)) {
-		@{$r_array} = ();
-		@{$r_array} = shared_clone(${@my_r_array});
-	} else {
-		@{$r_array} = ();
-		@{$r_array} = @my_r_array;
-	};
+	@{$r_array} = ();
+	@{$r_array} = @my_r_array;
 	return 1;
 }
 
@@ -1149,11 +925,6 @@ sub processUltimate {
 	my $secname = '';
 	my ($section, $rule, @lines, %written, %sectionsWritten);
 
-	lock ($file) if (is_shared($file));
-	lock ($hash) if (is_shared($hash));
-	lock ($rules) if (is_shared($rules));
-	lock ($writeMode) if (is_shared($writeMode));
-	
 	undef %{$hash} if (!$writeMode);
 	if (-f $file) {
 		my $reader = new Utils::TextReader($file);
@@ -1296,8 +1067,6 @@ sub processUltimate {
 sub writeDataFile {
 	my $file = shift;
 	my $r_hash = shift;
-	lock ($file) if (is_shared($file));
-	lock ($r_hash) if (is_shared($r_hash));
 
 	my ($key,$value);
 	open(FILE, ">>:utf8", $file);
@@ -1315,10 +1084,6 @@ sub writeDataFileIntact {
 	my $file = shift;
 	my $r_hash = shift;
 	my $no_undef = shift;
-
-	lock ($file) if (is_shared($file));
-	lock ($r_hash) if (is_shared($r_hash));
-	lock ($no_undef) if (is_shared($no_undef));
 
 	my (@lines, $key, $value, $inBlock, $commentBlock, %blocks);
 	my $reader = new Utils::TextReader($file);
@@ -1405,9 +1170,6 @@ sub writeDataFileIntact2 {
 	my $data;
 	my $key;
 
-	lock ($file) if (is_shared($file));
-	lock ($r_hash) if (is_shared($r_hash));
-
 	my $reader = new Utils::TextReader($file);
 	while (!$reader->eof()) {
 		my $line = $reader->readLine();
@@ -1431,9 +1193,6 @@ sub writePortalsLOS {
 	my $file = shift;
 	my $r_hash = shift;
 
-	lock ($file) if (is_shared($file));
-	lock ($r_hash) if (is_shared($r_hash));
-
 	open(FILE, "+> $file");
 	foreach my $key (sort keys %{$r_hash}) {
 		next if (!$$r_hash{$key} || !(keys %{$$r_hash{$key}}));
@@ -1451,9 +1210,6 @@ sub writeSectionedFileIntact {
 	my $r_hash = shift;
 	my $section = "";
 	my @lines;
-
-	lock ($file) if (is_shared($file));
-	lock ($r_hash) if (is_shared($r_hash));
 
 	my $reader = new Utils::TextReader($file);
 	while (!$reader->eof()) {
@@ -1490,10 +1246,6 @@ sub updateMonsterLUT {
 	my $ID = shift;
 	my $name = shift;
 
-	lock ($file) if (is_shared($file));
-	lock ($ID) if (is_shared($ID));
-	lock ($name) if (is_shared($name));
-
 	open FILE, ">>:utf8", $file;
 	print FILE "$ID $name\n";
 	close FILE;
@@ -1502,14 +1254,6 @@ sub updateMonsterLUT {
 sub updatePortalLUT {
 	my ($file, $src, $x1, $y1, $dest, $x2, $y2) = @_;
 
-	lock ($file) if (is_shared($file));
-	lock ($src) if (is_shared($src));
-	lock ($x1) if (is_shared($x1));
-	lock ($y1) if (is_shared($y1));
-	lock ($dest) if (is_shared($dest));
-	lock ($x2) if (is_shared($x2));
-	lock ($y2) if (is_shared($y2));
-
 	open FILE, ">> $file";
 	print FILE "$src $x1 $y1 $dest $x2 $y2\n";
 	close FILE;
@@ -1517,11 +1261,6 @@ sub updatePortalLUT {
 
 sub updateNPCLUT {
 	my ($file, $location, $name) = @_;
-
-	lock ($file) if (is_shared($file));
-	lock ($location) if (is_shared($location));
-	lock ($name) if (is_shared($name));
-
 	return unless $name;
 	open FILE, ">>:utf8", $file;
 	print FILE "$location $name\n";

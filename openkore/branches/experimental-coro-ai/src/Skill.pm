@@ -46,8 +46,7 @@
 package Skill;
 
 use strict;
-use threads;
-use threads::shared;
+use Coro;
 use Modules 'register';
 use Carp::Assert;
 use Utils::TextReader;
@@ -340,8 +339,8 @@ sub handleToName {
 # is loaded from a file on disk.
 #############################################################
 package Skill::StaticInfo;
-use threads;
-use threads::shared qw(is_shared share shared_clone);
+use Coro;
+
 
 # The following variables contain information about skills, but indexed differently.
 # This allow you to quickly lookup skill information with any skill identifier form.
@@ -400,9 +399,6 @@ our %sps :shared;
 sub parseSkillsDatabase {
 	my ($file) = @_;
 	my $reader = new Utils::TextReader($file);
-	lock (%ids) if (is_shared(%ids));
-	lock (%handles) if (is_shared(%handles));
-	lock (%names) if (is_shared(%names));
 	my $my_ids;
 	my $my_handles;
 	my $my_names;
@@ -420,27 +416,12 @@ sub parseSkillsDatabase {
 			$my_names->{lc($name)} = $id;
 		}
 	}
-	if (is_shared(%ids)) {
-		undef %ids;
-		%ids = %{shared_clone($my_ids)};
-	} else {
-		undef %ids;
-		%ids = %{$my_ids};
-	};
-	if (is_shared(%handles)) {
-		undef %handles;
-		%handles = %{shared_clone($my_handles)};
-	} else {
-		undef %handles;
-		%handles = %{$my_handles};
-	};
-	if (is_shared(%names)) {
-		undef %names;
-		%names = %{shared_clone($my_names)};
-	} else {
-		undef %names;
-		%names = %{$my_names};
-	};
+	undef %ids;
+	undef %handles;
+	undef %names;
+	%ids = %{$my_ids};
+	%handles = %{$my_handles};
+	%names = %{$my_names};
 	return 1;
 }
 
@@ -448,7 +429,6 @@ sub parseSPDatabase {
 	my ($file) = @_;
 	my $reader = new Utils::TextReader($file);
 	my $ID;
-	lock (%sps);
 
 	while (!$reader->eof()) {
 		my $line = $reader->readLine();
@@ -456,10 +436,10 @@ sub parseSPDatabase {
 			undef $ID;
 		} elsif (!$ID) {
 			($ID) = $line =~ /(.*)#/;
-			$sps{$ID} = &share([]);
+			$sps{$ID} = [];
 		} else {
 			my ($sp) = $line =~ /(\d+)#/;
-			push @{$sps{$ID}}, shared_clone($sp);
+			push @{$sps{$ID}}, $sp;
 		}
 	}
 	return 1;
@@ -471,8 +451,8 @@ sub parseSPDatabase {
 # is sent by the RO server.
 #############################################################
 package Skill::DynamicInfo;
-use threads;
-use threads::shared qw(is_shared share shared_clone);
+use Coro;
+
 
 # The skills information as sent by the RO server. This variable maps a skill IDN
 # to another hash, with the following members:
@@ -497,7 +477,7 @@ sub add {
 		targetType => $targetType,
 		ownerType  => $ownerType
 	};
-	$handles{$handle} = shared_clone($idn);
+	$handles{$handle} = $idn;
 }
 
 sub clear {

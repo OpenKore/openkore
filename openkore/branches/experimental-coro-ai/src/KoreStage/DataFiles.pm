@@ -1,8 +1,10 @@
 package KoreStage::DataFiles;
 
 use strict;
-use threads;
-use threads::shared;
+
+# Coro Support
+use Coro;
+
 
 use Globals qw(
 		$interface

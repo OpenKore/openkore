@@ -1,8 +1,9 @@
 package Commands::Example2;
 
 use strict;
-use threads;
-use threads::shared;
+
+# Coro Support
+use Coro;
 
 use Globals qw($interface);
 use Settings qw(%sys);

@@ -15,10 +15,8 @@ package Network::Client;
 # Make all References Strict
 use strict;
 
-# MultiThreading Support
-use threads qw(yield);
-use threads::shared;
-use Thread::Queue::Any;
+# Coro Support
+use Coro;
 
 # Others (Perl Related)
 use warnings;

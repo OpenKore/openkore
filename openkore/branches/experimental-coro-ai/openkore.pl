@@ -11,8 +11,7 @@
 
 package main;
 use strict;
-use threads;
-use threads::shared;
+use Coro;
 use FindBin qw($RealBin);
 use lib "$RealBin";
 use lib "$RealBin/src";
@@ -45,37 +44,27 @@ sub __start {
 	use AI;
 	
 	# First Init Logging
-	my $log_obj = Log->new();
-	$log = shared_clone($log_obj);
+	$log = Log->new();
 
 	# Init Interface
-	my $interface_obj = Interface->loadInterface($interface_name);
-	$interface = shared_clone($interface_obj);
+	$interface = Interface->loadInterface($interface_name);
 
 	# Init All others
 	KoreStage->loadStage();
 
 	selfCheck();
 
-	my $command_obj = Commands->new(); 
-	$command = shared_clone($command_obj);
-
-	my $ai_obj = AI->new();
-	$AI = shared_clone($ai_obj);
+	$command = Commands->new();
+	$AI = AI->new();
 
 	##### MAIN LOOP #####
-	# Note: Further initialization is done in the mainLoop() function in functions.pl.
-	# sleep(30);
-	threads->new(\&Interface::mainLoop, $interface);
-	threads->new(\&AI::mainLoop, $AI);
-	# Interface::mainLoop($interface);
+	my $coro_interface = Coro->new(\&Interface::mainLoop, $interface);
+	my $coro_ai = Coro->new(\&AI::mainLoop, $AI);
 
-	foreach my $thr (threads->list) {
-		# Don’t join the main thread or ourselves
-		if ($thr->tid && !threads::equal($thr, threads->self)) {
-			$thr->join;
-		}
-	}
+	$coro_interface->join;
+	Coro::cede_notself();
+	$coro_ai->join;
+
 	exit 1;
 	# shutdown();
 }

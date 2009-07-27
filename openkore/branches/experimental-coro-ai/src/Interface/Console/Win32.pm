@@ -27,8 +27,10 @@ package Interface::Console::Win32;
 
 use strict;
 use warnings;
-use threads;
-use threads::shared;
+
+# Coro Support
+use Coro;
+
 use ErrorHandler;
 
 die "W32 only, this module should never be called on any other OS\n"

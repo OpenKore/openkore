@@ -20,8 +20,7 @@
 package Globals;
 
 use strict;
-use threads;
-use threads::shared;
+use Coro;
 use Exporter;
 use base qw(Exporter);
 use Modules 'register';

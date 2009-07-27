@@ -23,8 +23,7 @@
 package Plugins;
 
 use strict;
-use threads;
-use threads::shared;
+use Coro;
 use warnings;
 use Time::HiRes qw(time sleep);
 use Exception::Class ('Plugin::LoadException', 'Plugin::DeniedException');
@@ -282,7 +281,6 @@ sub register {
 		reload_callback => shift,
 		filename => $current_plugin
 	);
-	%plugin_info = shared_clone(%plugin_info);
 	binAdd(\@plugins, \%plugin_info);
 	return 1;
 }

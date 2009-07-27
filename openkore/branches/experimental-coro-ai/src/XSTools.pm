@@ -13,8 +13,7 @@
 package XSTools;
 
 use strict;
-use threads;
-use threads::shared;
+use Coro;
 use FindBin qw($RealBin);
 use File::Spec;
 use Cwd 'abs_path', 'realpath';

@@ -19,10 +19,8 @@ package AI;
 # Make all References Strict
 use strict;
 
-# MultiThreading Support
-use threads qw(yield);
-use threads::shared;
-use Thread::Queue::Any;
+# Coro Support
+use Coro;
 
 # Others (Perl Related)
 use warnings;
@@ -101,13 +99,10 @@ sub DESTROY {
 sub mainLoop {
 	my $self = shift;
 	while (!$quit) {
-		{ # Just make Unlock quicker.
-			lock ($self) if (is_shared($self));
-			$self->{module_manager}->iterate() if ($self->{state} > AI::STATE_TASK);
-			$self->{environment_queue}->iterate();
-			$self->{task_manager}->iterate() if ($self->{state}  > AI::STATE_OFF);
-		}
-		yield();
+		$self->{module_manager}->iterate() if ($self->{state} > AI::STATE_TASK);
+		$self->{environment_queue}->iterate();
+		$self->{task_manager}->iterate() if ($self->{state}  > AI::STATE_OFF);
+		cede;
 	}
 }
 

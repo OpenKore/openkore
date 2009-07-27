@@ -27,9 +27,8 @@
 package Utils::Compare;
 use strict;
 
-# MultiThreading Support
-use threads;
-use threads::shared;
+# Coro Support
+use Coro;
 
 use Exporter;
 use base qw(Exporter);

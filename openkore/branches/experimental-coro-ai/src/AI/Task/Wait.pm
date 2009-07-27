@@ -27,9 +27,9 @@ package AI::Task::Wait;
 # Make all References Strict
 use strict;
 
-# MultiThreading Support
-use threads;
-use threads::shared;
+# Coro Support
+use Coro;
+
 
 # Others (Perl Related)
 use Time::HiRes qw(time);
@@ -68,29 +68,18 @@ sub new {
 
 sub interrupt {
 	my ($self) = @_;
-
-	# MultiThreading Support
-	lock ($self) if (is_shared($self));
-
 	$self->SUPER::interrupt();
 	$self->{S_interruptionTime} = time;
 }
 
 sub resume {
 	my ($self) = @_;
-
-	# MultiThreading Support
-	lock ($self) if (is_shared($self));
-
 	$self->SUPER::resume();
 	$self->{S_time} += time - $self->{S_interruptionTime};
 }
 
 sub iterate {
 	my ($self) = @_;
-
-	# MultiThreading Support
-	lock ($self) if (is_shared($self));
 
 	# return unless ($self->SUPER::iterate() && ( !$self->{inGame} || $net->getState() == Network::IN_GAME )); # TODO
 	# return unless ($self->SUPER::iterate() && ( !$self->{inGame}) );

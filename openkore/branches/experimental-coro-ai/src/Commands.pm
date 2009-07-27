@@ -21,9 +21,8 @@ package Commands;
 # Make all References Strict
 use strict;
 
-# MultiThreading Support
-use threads;
-use threads::shared;
+# Coro Support
+use Coro;
 
 # Others (Perl Related)
 no warnings qw(redefine uninitialized);
@@ -215,8 +214,6 @@ sub register {
 	my $self = shift;
 	my @result;
 
-	lock ($self) if (is_shared($self));
-
 	foreach my $cmd (@_) {
 		# Check if called used unknown params.
 		next if (reftype($cmd) ne 'ARRAY');
@@ -224,13 +221,10 @@ sub register {
 		my $name = $cmd->[0];
 		my %item = (
 					desc     => $cmd->[1],
-					callback => Utils::CodeRef->new( $cmd->[2] ),
+					callback => $cmd->[2],
 					self     => $cmd->[3]
 		);
-		my $item_obj = \%item;
-		$item_obj = shared_clone($item_obj) if (is_shared($self));
-		
-		$self->{handlers}{$name} = $item_obj;
+		$self->{handlers}{$name} = \%item;
 		push @result, $name;
 	}
 	return \@result;
@@ -249,8 +243,6 @@ sub register {
 # $command->unregister($ID);
 sub unregister {
 	my ( $self, $ID ) = @_;
-
-	lock ($self) if (is_shared($self));
 
 	foreach my $name ( @{$ID} ) {
 		delete $self->{handlers}{$name};

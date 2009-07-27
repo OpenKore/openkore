@@ -2,8 +2,8 @@ package Commands::AI;
 
 use strict;
 
-use threads;
-use threads::shared;
+# Coro Support
+use Coro;
 
 use Utils::Exceptions;
 use Commands;
