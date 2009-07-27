@@ -3,9 +3,8 @@ package Misc::Other;
 # Make all References Strict
 use strict;
 
-# MultiThreading Support
-use threads;
-use threads::shared;
+# Coro Support
+use Coro;
 
 # Others (Perl Related)
 use Exporter;

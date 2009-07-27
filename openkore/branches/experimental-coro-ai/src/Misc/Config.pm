@@ -1,8 +1,10 @@
 package Misc::Config;
 
 use strict;
-use threads;
-use threads::shared;
+
+# Coro Support
+use Coro;
+
 use Globals qw(%overallAuth %config %timeout);
 use Log qw(message warning error debug);
 use Plugins;
@@ -40,7 +42,7 @@ sub auth {
 	} else {
 		message TF("Revoked admin privilages for user '%s'\n", $user), "success";
 	}
-	$overallAuth{$user} = shared_clone($flag);
+	$overallAuth{$user} = $flag;
 	writeDataFile(Settings::getControlFilename("overallAuth.txt"), \%overallAuth);
 }
 
@@ -100,7 +102,7 @@ sub configModify {
 			close($f);
 		}
 	}
-	$config{$key} = shared_clone($val);
+	$config{$key} = $val;
 	saveConfigFile();
 }
 
@@ -126,7 +128,7 @@ sub bulkConfigModify {
 
 		$oldval = $config{$key};
 
-		$config{$key} = shared_clone($r_hash->{$key});
+		$config{$key} = $r_hash->{$key};
 
 		if ($key =~ /password/i) {
 			message TF("Config '%s' set to %s (was *not-displayed*)\n", $key, $r_hash->{$key}), "info" unless ($silent);

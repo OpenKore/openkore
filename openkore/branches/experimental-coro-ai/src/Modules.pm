@@ -32,8 +32,7 @@
 package Modules;
 
 use strict;
-use threads;
-use threads::shared;
+use Coro;
 use warnings;
 use Config;
 use FindBin;

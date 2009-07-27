@@ -1,8 +1,10 @@
 package Misc::Field;
 
 use strict;
-use threads;
-use threads::shared;
+
+# Coro Support
+use Coro;
+
 use Globals qw(%config %field $field @spellsID %spells $char $accountID @playersID $playersList);
 use Log qw(message warning error debug);
 use Plugins;

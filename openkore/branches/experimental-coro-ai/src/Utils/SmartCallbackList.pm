@@ -18,12 +18,10 @@
 package SmartCallbackList;
 
 use strict;
-use threads;
-use threads::shared;
+use Coro;
 use Utils::Splice qw(splice_shared);
 use Carp::Assert;
 use Scalar::Util;
-use Utils::CodeRef;
 
 # Field identifiers for items inside $CallbackList->[CALLBACKS]
 use constant {
@@ -110,11 +108,7 @@ sub add {
 	if (defined $userData) {
 		$item[USERDATA] = $userData;
 	}
-	if (is_shared($self)) {
-		push @{$self}, shared_clone(\@item);
-	} else {
-		push @{$self}, \@item;
-	}
+	push @{$self}, \@item;
 
 	my $index = @{$self} - 1;
 	my $ID = \$index;

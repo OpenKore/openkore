@@ -23,9 +23,8 @@ package AI::TaskManager;
 # Make all References Strict
 use strict;
 
-# MultiThreading Support
-use threads;
-use threads::shared;
+# Coro Support
+use Coro;
 
 # Others (Perl Related)
 use Carp::Assert;
@@ -134,10 +133,6 @@ sub add {
 	assert(defined $task) if DEBUG;
 	assert($task->getStatus() == AI::Task::INACTIVE) if DEBUG;
 
-	# MultiThreading Support
-	lock ($self) if (is_shared($self));
-	$task = shared_clone($task) if (is_shared($self));
-
 	# Avoid adding already existing module phase 1
 	if ($self->{activeTasks}->has($task) || $self->{inactiveTasks}->has($task) || $self->{grayTasks}->has($task)) {
 		return 0;
@@ -158,11 +153,7 @@ sub add {
 
 	my $ID1 = $task->onMutexesChanged->add($self, \&onMutexesChanged);
 	my $ID2 = $task->onStop->add($self, \&onStop);
-	if (is_shared($self)) {
-		$self->{events}{$task->{T_ID}} = shared_clone([$ID1, $ID2]);
-	} else {
-		$self->{events}{$task->{T_ID}} = [$ID1, $ID2];
-	}
+	$self->{events}{$task->{T_ID}} = [$ID1, $ID2];
 }
 
 # Reschedule tasks. Do not call this method directly!

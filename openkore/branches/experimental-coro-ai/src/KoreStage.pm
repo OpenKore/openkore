@@ -20,8 +20,7 @@
 package KoreStage;
 
 use strict;
-use threads;
-use threads::shared;
+use Coro;
 use warnings;
 use FindBin qw($RealBin);
 use lib "$RealBin";

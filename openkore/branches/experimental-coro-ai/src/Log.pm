@@ -107,8 +107,7 @@
 package Log;
 
 use strict;
-use threads;
-use threads::shared;
+use Coro;
 use Exporter;
 use base qw(Exporter);
 use Time::HiRes;
@@ -131,7 +130,7 @@ our @EXPORT_OK = qw(message warning error debug);
 
 sub MODINIT {
 	use Globals qw($log);
-	$log = shared_clone(Log->new());
+	$log = Log->new();
 }
 
 sub new {
@@ -386,7 +385,6 @@ sub addHook {
 	$hook{func} = $r_func;
 	$hook{user_data} = $user_data;
 	my $ret = binAdd(@{$log->{hooks}}, \%hook);
-	$log->{hooks} = shared_clone($log->{hooks});
 	return $ret;
 }
 

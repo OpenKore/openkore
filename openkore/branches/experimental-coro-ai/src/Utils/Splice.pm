@@ -14,9 +14,7 @@ package Utils::Splice;
 
 use strict;
 
-# MultiThreading Support
-use threads;
-use threads::shared;
+use Coro;
 use Exporter;
 use base qw(Exporter);
 
@@ -45,7 +43,7 @@ sub splice_shared :locked {
 	my @result = @{$obj}[$off .. $off + $len - 1];
 
 	# Put list elements on middle
-	my @middle = shared_clone(@_) if @_;
+	my @middle = @_ if @_;
 
 	# Output
 	@{$obj} = (@head, @middle, @tail);

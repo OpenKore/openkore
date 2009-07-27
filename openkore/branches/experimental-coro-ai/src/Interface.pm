@@ -24,8 +24,8 @@ package Interface;
 
 use strict;
 use warnings;
-no warnings 'redefine';
-use threads qw(yield);
+# no warnings 'redefine';
+use Coro;
 use Time::HiRes qw(usleep);
 # use encoding 'utf8'; # Makes unknown Threading Bugs.
 
@@ -73,16 +73,13 @@ sub loadInterface {
 sub mainLoop {
 	my $self = shift;
 	while (!$quit) {
-		{ # Just make Unlock quicker.
-			lock ($self);
-			$self->iterate();
-			my $input;
-			if (defined($input = $self->getInput(0))) {
-				$self->parseInput($input);
-			}
-			$command->check_timed_out_cmd();
+		$self->iterate();
+		my $input;
+		if (defined($input = $self->getInput(0))) {
+			$self->parseInput($input);
 		}
-		yield();
+		$command->check_timed_out_cmd();
+		cede;
 	}
 }
 

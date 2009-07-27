@@ -56,9 +56,8 @@
 package Utils::Set;
 use strict;
 
-# MultiThreading Support
-use threads;
-use threads::shared;
+# Coro Support
+use Coro;
 
 use Utils::Splice qw(splice_shared);
 use Utils::Compare qw(compare);
@@ -101,7 +100,6 @@ sub add {
 	lock ($item) if (is_shared($item));
 
 	if (!$self->has($item)) {
-		$item = shared_clone($item) if ((is_shared($self)) && (!is_shared($item)));
 		push @{$self->{items}}, $item;
 	}
 }
@@ -249,9 +247,6 @@ sub getArray {
 sub deepCopy {
 	my ($self) = @_;
 
-	# MultiThreading Support
-	lock ($self) if (is_shared($self));
-
 	my $copy = new Utils::Set();
 	$copy->{items} = [];
 	for (my $i = 0; $i < @{$self->{items}}; $i++) {
@@ -259,7 +254,6 @@ sub deepCopy {
 		push(@{$copy->{items}}, $existing_item);
 	}
 
-	# $copy = shared_clone($copy) if (is_shared($self));
 	return $copy;
 }
 

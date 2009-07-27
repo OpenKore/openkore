@@ -21,14 +21,7 @@ Technology:
 =========================
 B
 
-threads:
-threads-1.71
-threads-shared-1.26
-Thread-Suspend-1.19
-Thread-Semaphore-2.09
-Thread-Queue-2.11
-Thread-Queue-Any-0.09
-Bundle-Thread-1.09
+Coro 5.161
 Internals-1.1
 
  

@@ -24,8 +24,7 @@
 package Translation;
 
 use strict;
-use threads;
-use threads::shared;
+use Coro;
 use Exporter;
 use base qw(Exporter);
 use FindBin qw($RealBin);
@@ -57,7 +56,7 @@ use constant DEFAULT_PODIR => "$RealBin/src/po";
 sub initDefault {
 	my ($podir, $locale) = @_;
 	$podir = DEFAULT_PODIR if (!defined $podir);
-	$_translation = shared_clone(_load(_autodetect($podir, $locale)));
+	$_translation = _load(_autodetect($podir, $locale));
 	return defined $_translation;
 }
 

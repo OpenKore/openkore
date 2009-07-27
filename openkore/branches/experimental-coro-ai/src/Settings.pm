@@ -42,8 +42,7 @@
 package Settings;
 
 use strict;
-use threads;
-use threads::shared;
+use Coro;
 use FindBin qw($RealBin);
 use lib "$RealBin";
 use lib "$RealBin/src";
@@ -57,7 +56,6 @@ use Getopt::Long;
 use File::Spec;
 use Log qw(message warning error debug);
 use Translation qw(T TF);
-use Utils::CodeRef;
 use Utils::ObjectList;
 use Utils::Exceptions;
 use enum qw(CONTROL_FILE_TYPE TABLE_FILE_TYPE);
@@ -171,7 +169,7 @@ sub parseArguments {
 	undef $interface_name;
 	undef $lockdown;
 	
-	$files = shared_clone(ObjectList->new());
+	$files = ObjectList->new();
 
 	local $SIG{__WARN__} = sub {
 		ArgumentException->throw($_[0]);
@@ -229,22 +227,6 @@ sub parseArguments {
 		}
 	}
 
-	$fields_folder = shared_clone($fields_folder);
-	$logs_folder = shared_clone($logs_folder);
-	$config_file = shared_clone($config_file);
-	$mon_control_file = shared_clone($mon_control_file);
-	$items_control_file = shared_clone($items_control_file);
-	$shop_file = shared_clone($shop_file);
-	$chat_log_file = shared_clone($chat_log_file);
-	$storage_log_file = shared_clone($storage_log_file);
-	$sys_file = shared_clone($sys_file);
-	$interface_name = shared_clone($interface_name);
-	$lockdown = shared_clone($lockdown);
-	$shop_log_file = shared_clone($shop_log_file);
-	$monster_log_file = shared_clone($monster_log_file);
-	$item_log_file = shared_clone($item_log_file);
-
-
 	return 0 if ($options{help});
 	if (! -d $logs_folder) {
 		if (!mkdir($logs_folder)) {
@@ -299,7 +281,7 @@ sub getUsageText {
 # Set the folders in which to look for control files.
 sub setControlFolders {
 	lock (@controlFolders);
-	@controlFolders = shared_clone(@_);
+	@controlFolders = @_;
 }
 
 sub getControlFolders {
@@ -312,7 +294,7 @@ sub getControlFolders {
 # Set the folders in which to look for table files.
 sub setTablesFolders {
 	lock (@tablesFolders);
-	@tablesFolders = shared_clone(@_);
+	@tablesFolders = @_;
 }
 
 sub getTablesFolders {
@@ -326,7 +308,7 @@ sub getTablesFolders {
 sub setPluginsFolders {
 	lock (@pluginsFolders);
 	
-	@pluginsFolders = shared_clone(@_);
+	@pluginsFolders = @_;
 }
 
 ##
@@ -418,10 +400,6 @@ sub removeFile {
 sub loadByHandle {
 	my ($handle, $progressHandler) = @_;
 	
-	lock ($files);
-	lock (@controlFolders);
-	lock (@tablesFolders);
-	
 	assert(defined $handle) if DEBUG;
 	my $object = $files->get($handle);
 	assert(defined $object) if DEBUG;
@@ -454,9 +432,9 @@ sub loadByHandle {
 	if (ref($object->{loader}) eq 'ARRAY') {
 		my @array = @{$object->{loader}};
 		my $loader = shift @array;
-		$loader->call($filename, @array);
+		$loader->($filename, @array);
 	} else {
-		$object->{loader}->call($filename);
+		$object->{loader}->($filename);
 	}
 }
 
@@ -584,7 +562,7 @@ sub setConfigFilename {
 			last;
 		}
 	}
-	$config_file = shared_clone($new_filename);
+	$config_file = $new_filename;
 }
 
 sub getMonControlFilename {
@@ -647,7 +625,7 @@ sub setRecvPacketsName {
 				last;
 			}
 		}
-		$recvpackets_name = shared_clone($new_name);
+		$recvpackets_name = $new_name;
 		return 1;
 	} else {
 		return undef;
@@ -683,15 +661,6 @@ sub _addFile {
 	my $type = shift;
 	my %options = @_;
 	
-	lock ($files);
-	
-	if (defined $options{loader}[0]) {
-		my $data = Utils::CodeRef->new($options{loader}[0]);
-		if ($data->{packagename} ne "") {
-			$options{loader}[0] = $data;
-		};
-	}
-	
 	if (!$options{loader}) {
 		ArgumentException->throw("The 'loader' option must be specified.");
 	}
@@ -702,7 +671,6 @@ sub _addFile {
 		autoSearch => exists($options{autoSearch}) ? $options{autoSearch} : 1,
 		loader     => $options{loader}
 	};
-	# The added item in $files is a shared_clone. So we must set $object->{index} before it go there.
 	$object->{index} = ObjectList::_findEmptyIndex($files->{OL_items});
 	my $index = $files->add(bless($object, 'Settings::Handle'));
 	return $index;
@@ -743,8 +711,7 @@ sub _processSysConfig {
 				delete $keysNotWritten{$key};
 			}
 		} else {
-			# $sys{$key} = $val;
-			$sys{$key} = shared_clone($val);
+			$sys{$key} = $val;
 		}
 	}
 	close $f;

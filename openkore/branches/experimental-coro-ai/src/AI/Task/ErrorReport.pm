@@ -34,9 +34,8 @@ package AI::Task::ErrorReport;
 # Make all References Strict
 use strict;
 
-# MultiThreading Support
-use threads;
-use threads::shared;
+# Coro Support
+use Coro;
 
 # Others (Kore Related)
 use Modules 'register';
@@ -75,11 +74,6 @@ sub new {
 
 sub subtaskDone {
 	my ($self, $task) = @_;
-
-	# MultiThreading Support
-	lock ($self) if (is_shared($self));
-	lock ($task) if (is_shared($task));
-
 	if ($task->getError()) {
 		my $error = $task->getError();
 		error "$error->{message}\n";

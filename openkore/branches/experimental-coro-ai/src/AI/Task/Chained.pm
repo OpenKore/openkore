@@ -39,9 +39,8 @@ package AI::Task::Chained;
 # Make all References Strict
 use strict;
 
-# MultiThreading Support
-use threads;
-use threads::shared;
+# Coro Support
+use Coro;
 
 # Others (Kore Related)
 use Modules 'register';
@@ -80,19 +79,12 @@ sub new {
 sub activate {
 	my ($self) = @_;
 
-	# MultiThreading Support
-	lock ($self) if (is_shared($self));
-
 	$self->SUPER::activate();
 	$self->activateNextTask(0);
 }
 
 sub iterate {
 	my ($self) = @_;
-
-	# MultiThreading Support
-	lock ($self) if (is_shared($self));
-
 	return 0 if (!$self->SUPER::iterate());
 
 	# No more tasks left, so we're done.
@@ -107,10 +99,6 @@ sub iterate {
 
 sub activateNextTask {
 	my ($self, $assignMutexes) = @_;
-
-	# MultiThreading Support
-	lock ($self) if (is_shared($self));
-
 	if (@{$self->{tasks}}) {
 		my $task = shift @{$self->{tasks}};
 		$self->setSubtask($task);

@@ -21,8 +21,7 @@
 package I18N;
 
 use strict;
-use threads;
-use threads::shared;
+use Coro;
 use Globals qw(%config);
 use Exporter;
 use base qw(Exporter);

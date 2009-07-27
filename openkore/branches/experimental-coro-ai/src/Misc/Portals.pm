@@ -1,8 +1,10 @@
 package Misc::Portals;
 
 use strict;
-use threads;
-use threads::shared;
+
+# Coro Support
+use Coro;
+
 use Globals qw(%portals_lut %portals_los );
 use Log qw(message warning error debug);
 use Translation qw(T TF);
@@ -42,9 +44,6 @@ sub compilePortals {
 	my @solution;
 	my $field;
 
-	lock (%portals_lut);
-	lock (%portals_los);
-
 	# Collect portal source and destination coordinates per map
 	foreach my $portal (keys %portals_lut) {
 		$mapPortals{$portals_lut{$portal}{'source'}{'map'}}{$portal}{'x'} = $portals_lut{$portal}{'source'}{'x'};
@@ -64,11 +63,7 @@ sub compilePortals {
 		foreach my $spawn (keys %{$mapSpawns{$map}}) {
 			foreach my $portal (keys %{$mapPortals{$map}}) {
 				if (not defined $portals_los{$spawn}) {
-					if (is_shared(%portals_los)) {
-						$portals_los{$spawn} = &share({});
-					} else {
-						$portals_los{$spawn} = {};
-					}
+					$portals_los{$spawn} = {};
 				}
 				next if $spawn eq $portal;
 				next if $portals_los{$spawn}{$portal} ne '';
