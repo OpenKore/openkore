@@ -34,6 +34,7 @@ use Commands;
 use Log qw(message warning error debug);
 use Translation qw(T TF);
 use Utils::Exceptions;
+use ErrorHandler;
 use Modules 'register';
 
 
@@ -79,7 +80,7 @@ sub mainLoop {
 			$self->parseInput($input);
 		}
 		$command->check_timed_out_cmd();
-		cede;
+		Coro::cede();
 	}
 }
 

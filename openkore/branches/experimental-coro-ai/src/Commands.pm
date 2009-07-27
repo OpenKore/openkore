@@ -114,7 +114,6 @@ sub DESTROY {
 # Commands::check_timed_out_cmd()
 sub check_timed_out_cmd {
 	my ($self) = @_;
-	lock ($self) if (is_shared($self));
 
 	if ($self->{cmdQueue} && timeOut($self->{cmdQueueStartTime}, $self->{cmdQueueTime})) {
 		my $execCommand = '';

@@ -12,6 +12,7 @@
 package main;
 use strict;
 use Coro;
+use Coro::State;
 use FindBin qw($RealBin);
 use lib "$RealBin";
 use lib "$RealBin/src";
@@ -58,12 +59,12 @@ sub __start {
 	$AI = AI->new();
 
 	##### MAIN LOOP #####
-	my $coro_interface = Coro->new(\&Interface::mainLoop, $interface);
-	my $coro_ai = Coro->new(\&AI::mainLoop, $AI);
-
-	$coro_interface->join;
-	Coro::cede_notself();
-	$coro_ai->join;
+	async { $interface->mainLoop(); };
+	async { $AI->mainLoop(); };
+ 
+    while ((scalar Coro::State::list()) > 1) {
+    	Coro::cede();
+    }
 
 	exit 1;
 	# shutdown();
