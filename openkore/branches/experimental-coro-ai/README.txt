@@ -21,12 +21,16 @@ Technology:
 =========================
 B
 
+AnyEvent 4.86
+common-sense 0.03
+EV 3.7
+Event 1.11
+Guard 1.021
 Coro 5.161
-Internals-1.1
-
+Internals 1.1
  
 WX:
 Alien-wxWidgets
-Wx-Perl-Packager-0.03
-wxWidgets-2.8.8
+Wx-Perl-Packager 0.03
+wxWidgets 2.8.8
 
