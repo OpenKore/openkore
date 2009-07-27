@@ -152,9 +152,6 @@ sub queue_add {
 sub iterate {
 	my ($self) = @_;
 
-	# MultiThreading Support
-	lock ($self) if (is_shared($self));
-
 	while ($self->{queue}->pending > 0) {
 		my $object = $self->{queue}->dequeue;
 		my $full_object;
