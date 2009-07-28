@@ -1,0 +1,31 @@
+#
+# Map routing weights
+#
+# This control file allows you to modify Kore's map routing by specifying
+# weights for maps that Kore is walking through to reach the destination.
+# Kore generally tries to use the shortest path to get to the desired
+# destination map. The path is counted in number of steps (tiles) the
+# character would have to walk.
+# Map routing weights can be seen as additional steps that Kore thinks
+# it would have to do on a specific map. Positive weights makes Kore
+# avoid a map, negative weights makes it prefer a map.
+#
+# Example:
+# Specifying a weight of 500 for prt_fild08 makes Kore avoid walking
+# through prt_fild08, as long as there is an alternative path that has
+# not more than 500 additional steps.
+# Therefore you could say Kore prefers to walk up to 500 additional steps
+# rather than walking through prt_fild08
+#
+# Using a weight of 10000 makes it pretty sure to completely avoid a map.
+#
+
+# Portal weight. This can be used to make Kore avoid/prefer walking through
+# map portals. Only change this, if you exactly know what you're doing!
+PORTAL 20
+
+# NPC weight. This can be used to avoid/prefer going to the destination
+# by using a NPC. Only change this, if you exactly know what you're doing!
+NPC 200
+
+# Add your map weights here. Format: <mapname> <weight>

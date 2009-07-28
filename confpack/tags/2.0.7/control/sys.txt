@@ -1,0 +1,56 @@
+###### Localization settings ######
+locale
+
+
+###### Wx interface settings ######
+wxHideConsole 1
+
+
+###### Bus system settings ######
+# Whether to enable the bus system.
+bus 0
+
+# If you want to connect to an already running bus server on a different
+# computer, specify the host and port here.
+bus_server_host
+bus_server_port
+
+
+###### Vx interface settings ######
+panelTwo_domains publicchat, pm, guildchat, partychat, pm/sent, list, info, selfchat, schat, error, warning
+panelOne_lineLimit 900
+panelTwo_lineLimit 100
+panelFont Verdana
+menuFont Lucida Console
+sbarFont Arial
+panelOne_height 8
+panelOne_width 60
+panelOne_side top
+panelOne_fontsize 8
+panelTwo_height 4
+panelTwo_width 40
+panelTwo_side bottom
+panelTwo_fontsize 8
+
+
+###### Plugin settings ######
+# loadPlugins <0|1|2|3>
+#   this option controls loading of plugins at startup or when the "plugin load all" command is used.
+#   0 : do not load plugins
+#   1 : load all plugins
+#   2 : only load plugins that are listed in loadPlugins_list
+#   3 : load all plugins except those listed in skipPlugins_list
+loadPlugins 1
+
+# loadPlugins_list <list>
+#   if loadPlugins is set to 2, this comma-separated list of plugin names (filename without the extension)
+#   specifies which plugin files to load at startup or when the "plugin load all" command is used.
+loadPlugins_list macro
+
+# skipPlugins_list <list>
+#   if loadPlugins is set to 3, this comma-separated list of plugin names (filename without the extension)
+#   specifies which plugin files to skip at startup or when the "plugin load all" command is used.
+skipPlugins_list
+
+###### Miscellaneous ######
+sendAnonymousStatisticReport 1

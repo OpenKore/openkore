@@ -1,0 +1,51 @@
+# avoid.txt: Avoid certain players
+# WARNING: This avoid txt is made for iRo therefore, if you are playing another server, 
+# 		please remove them.
+
+# Format: <name> (TAB(s)) <disconnect when in sight> <teleport when in sight> <disconnect on chat>
+[Players]
+Sir Kills A Lot		1 0 1
+GOD-POING		1 0 1
+Petite Christy		1 0 1
+My Christy		1 0 1
+pusher			1 0 1
+Aerok			1 0 1
+Newbie			1 0 1
+Queenstown		1 0 1
+karlina			1 0 1
+Style			1 0 1
+-Aerok-			1 0 1
+Kross			1 0 1
+~Jinx~			1 0 1
+Rose			1 0 1
+Ebi-chu			1 0 1
+MeloColmECA		1 0 1
+Leileil			1 0 1
+Angel			1 0 1
+
+[ID]
+# Same as above, but uses player IDs instead of names
+# There is no disconnect on chat for this section.
+100001		1 0
+100002		1 0
+100003		1 0
+231656		1 0
+483461		1 0
+483502		1 0
+483527		1 0
+527195		1 0
+527197		1 0
+527198		1 0
+527199		1 0
+527206		1 0
+527207		1 0
+527210		1 0
+543887		1 0
+650874		1 0
+650882		1 0
+650884		1 0
+650886		1 0
+650887		1 0
+527205		1 0
+483471		1 0
+527211		1 0
