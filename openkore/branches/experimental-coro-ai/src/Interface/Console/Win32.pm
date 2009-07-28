@@ -50,8 +50,8 @@ use Globals;
 use Settings qw(%sys);
 use base qw(Interface::Console);
 
-our %fgcolors :shared;
-our %bgcolors :shared;
+our %fgcolors;
+our %bgcolors;
 
 sub new {
 	my $class = shift;

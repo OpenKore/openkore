@@ -46,7 +46,6 @@
 package Skill;
 
 use strict;
-use Coro;
 use Modules 'register';
 use Carp::Assert;
 use Utils::TextReader;
@@ -72,7 +71,7 @@ use constant {
 };
 
 # Owner type constants. See $Skill->getOwnerType() for description.
-use enum qw(OWNER_CHAR OWNER_HOMUN);
+use enum qw(OWNER_CHAR OWNER_HOMUN OWNER_MERC);
 
 
 ##
@@ -280,6 +279,7 @@ sub getTargetType {
 # `l
 # - Skill::OWNER_CHAR  - This skill belongs to the character.
 # - Skill::OWNER_HOMUN - This skill belongs to the character's homunculus.
+# - Skill::OWNER_MERC - This skill belongs to the character's mercenary.
 # `l`
 sub getOwnerType {
 	my ($self) = @_;
@@ -289,6 +289,18 @@ sub getOwnerType {
 	}
 	# Just assume that this is a character skill. This is usually the case.
 	return OWNER_CHAR;
+}
+
+sub getOwner {
+	my ($self) = @_;
+	
+	my $type = $self->getOwnerType ();
+	
+	if ($Globals::char) {
+		return $Globals::char->{homunculus} if $type == OWNER_HOMUN && $Globals::char->{homunculus};
+		return $Globals::char->{mercenary} if $type == OWNER_MERC && $Globals::char->{mercenary};
+	}
+	return $Globals::char;
 }
 
 # Lookup an IDN by skill handle.
@@ -339,8 +351,6 @@ sub handleToName {
 # is loaded from a file on disk.
 #############################################################
 package Skill::StaticInfo;
-use Coro;
-
 
 # The following variables contain information about skills, but indexed differently.
 # This allow you to quickly lookup skill information with any skill identifier form.
@@ -374,9 +384,9 @@ use Coro;
 #     'two-handed sword mastery' => 3,
 #     ...
 # );
-our %ids :shared;
-our %handles :shared;
-our %names :shared;
+our %ids;
+our %handles;
+our %names;
 
 # Contains SP usage information.
 # %sps = (
@@ -394,14 +404,14 @@ our %names :shared;
 #     ],
 #     ...
 # );
-our %sps :shared;
+our %sps;
 
 sub parseSkillsDatabase {
 	my ($file) = @_;
 	my $reader = new Utils::TextReader($file);
-	my $my_ids;
-	my $my_handles;
-	my $my_names;
+	%ids = ();
+	%handles = ();
+	%names = ();
 
 	while (!$reader->eof()) {
 		my $line = $reader->readLine();
@@ -410,18 +420,12 @@ sub parseSkillsDatabase {
 		$line =~ s/\s+$//g;
 		my ($id, $handle, $name) = split(' ', $line, 3);
 		if ($id && $handle ne "" && $name ne "") {
-			$my_ids->{$id}{handle} = $handle;
-			$my_ids->{$id}{name} = $name;
-			$my_handles->{$handle} = $id;
-			$my_names->{lc($name)} = $id;
+			$ids{$id}{handle} = $handle;
+			$ids{$id}{name} = $name;
+			$handles{$handle} = $id;
+			$names{lc($name)} = $id;
 		}
 	}
-	undef %ids;
-	undef %handles;
-	undef %names;
-	%ids = %{$my_ids};
-	%handles = %{$my_handles};
-	%names = %{$my_names};
 	return 1;
 }
 
@@ -451,8 +455,6 @@ sub parseSPDatabase {
 # is sent by the RO server.
 #############################################################
 package Skill::DynamicInfo;
-use Coro;
-
 
 # The skills information as sent by the RO server. This variable maps a skill IDN
 # to another hash, with the following members:
@@ -461,14 +463,13 @@ use Coro;
 # - sp         - The SP usage for the current maximum level.
 # - range      - Skill range.
 # - targetType - The skill's target type.
-our %skills :shared;
+our %skills;
 
 # Maps handle names to skill IDNs.
-our %handles :shared;
+our %handles;
 
 sub add {
-	my ($idn, $handle, $level, $sp, $range, $targetType, $ownerType) = @_;\
-	lock (%handles);
+	my ($idn, $handle, $level, $sp, $range, $targetType, $ownerType) = @_;
 	$skills{$idn} = {
 		handle     => $handle,
 		level      => $level,
@@ -481,10 +482,8 @@ sub add {
 }
 
 sub clear {
-	lock (%skills);
-	lock (%handles);
-	%skills = &share({});
-	%handles = &share({});
+	%skills = ();
+	%handles = ();
 }
 
 1;

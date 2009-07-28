@@ -64,7 +64,6 @@ package ObjectList;
 
 use strict;
 use Coro;
-use Utils::Splice qw(splice_shared);
 use Carp::Assert;
 use Scalar::Util;
 use Utils::CallbackList;

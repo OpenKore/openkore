@@ -54,8 +54,8 @@ our @EXPORT = (
 	urldecode urlencode unShiftPack vocalString wrapText pin_encode)
 );
 
-our %strings :shared;
-our %quarks :shared;
+our %strings;
+our %quarks;
 
 
 
@@ -629,8 +629,6 @@ sub launchScript {
 	my $script = shift;
 	my @interp;
 
-	lock ($config{perlpath});
-
 	if (-f $config{perlpath}) {
 		@interp = ($config{perlpath});
 		delete $ENV{INTERPRETER};
@@ -779,8 +777,6 @@ sub getCoordString {
 	my $nopadding = shift;
 	my $coords = "";
 
-	lock ($config{serverType});
-
 	shiftPack(\$coords, 0x44, 8)
 		unless (($config{serverType} == 0) || ($config{serverType} == 3) || ($config{serverType} == 5) || $nopadding);
 	shiftPack(\$coords, $x, 10);
@@ -795,8 +791,6 @@ sub getCoordString2 {
 	my $y = int(shift);
 	my $nopadding = shift;
 	my $coords = "";
-
-	lock ($config{serverType});
 
 	shiftPack(\$coords, 0x44, 8)
 		unless (($config{serverType} == 0) || ($config{serverType} == 3) || ($config{serverType} == 5) || $nopadding);
@@ -1242,8 +1236,6 @@ sub parseArgs {
 sub quarkToString {
 	my $quark = $_[0];
 
-	lock ($strings{$quark});
-
 	return $strings{$quark};
 }
 
@@ -1276,8 +1268,6 @@ sub quarkToString {
 sub stringToQuark {
 	my $string = $_[0];
 	
-	lock ($quarks{$string});
-
 	if (exists $quarks{$string}) {
 		return $quarks{$string};
 	} else {

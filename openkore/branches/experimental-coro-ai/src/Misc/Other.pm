@@ -31,7 +31,6 @@ our @EXPORT = (
 #######################################
 
 sub quit {
-	lock ($quit);
 	$quit = 1;
 	message T("Exiting...\n"), "system";
 }

@@ -59,7 +59,6 @@ use strict;
 # Coro Support
 use Coro;
 
-use Utils::Splice qw(splice_shared);
 use Utils::Compare qw(compare);
 
 use overload (
@@ -155,8 +154,7 @@ sub find {
 	# Quick search by ref's
 	for (my $i = 0; $i < @{$self->{items}}; $i++) {
 		my $existing_item = $self->{items}[$i];
-		# Check by internal shared refaddr
-		return $i if ($existing_item == $item);
+		return $i if (refaddr $existing_item == refaddr $item);
 	}
 	
 	# Nothing found??? let's try deep search
