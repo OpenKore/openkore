@@ -252,7 +252,7 @@ sub checkValidity {
 		assert(!$inactiveTasks->has($task));
 	}
 
-	my $activeMutexes = $self->{activeMutexes};
+	$activeMutexes = $self->{activeMutexes};
 	foreach my $mutex (keys %{$activeMutexes}) {
 		my $owner = $activeMutexes->{$mutex};
 		assert($self->{activeTasks}->has($owner));
@@ -287,7 +287,7 @@ sub iterate {
 		}
 
 		# Remove tasks that are stopped or done.
-		my $status = $task->getStatus();
+		$status = $task->getStatus();
 		if ($status == AI::Task::DONE || $status == AI::Task::STOPPED) {
 			$self->deactivateTask($activeTasks, $self->{inactiveTasks},
 				$self->{grayTasks}, $activeMutexes, $self->{tasksByName},

@@ -122,16 +122,13 @@ sub add {
 sub remove {
 	my ($self, $ID) = @_;
 	assert(defined $ID) if DEBUG;
-
 	return if (!defined($$ID) || $$ID < 0 || $$ID >= @{$self});
 
 	my $callbacks = $self;
 	for (my $i = $$ID + 1; $i < @{$callbacks}; $i++) {
 		${$callbacks->[$i][ID]}--;
 	}
-
 	splice(@{$callbacks}, $$ID, 1);
-
 	$$ID = undef;
 }
 
@@ -163,7 +160,7 @@ sub call {
 			# Check for rules against $_[2]
 			if ( _check_rule($_[2], $item->[RULES]) == 1) {
 				$item->[FUNCTION]->($item->[OBJECT], $_[1], $_[3], $item->[USERDATA]);
-			};
+			}
 		}
 	}
 
@@ -199,7 +196,7 @@ sub empty {
 sub deepCopy {
 	my ($self) = @_;
 
-	my $copy = new CallbackList();
+	my $copy = new SmartCallbackList();
 	foreach my $item (@{$self}) {
 		my @callbackItemCopy = @{$item};
 		push @{$copy}, \@callbackItemCopy;
@@ -219,6 +216,7 @@ sub checkValidity {
 		assert defined($k);
 		assert defined($k->[FUNCTION]);
 		assert defined($k->[ID]);
+		assert defined($k->[RULES]);
 		assert ${$k->[ID]} == $i;
 	}
 }
