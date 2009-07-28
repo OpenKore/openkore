@@ -40,7 +40,7 @@
 39 Berserk Potion
 41 Walking Speed Up
 42 Speed Up
-46 Action Delay 
+46 Action Delay
 49 Barrier
 50 Strip Weapon
 51 Strip Shield
