@@ -1,24 +1,62 @@
 =========================
-### OpenKore what-will-become-2.0.7
+### OpenKore 2.0.7
 =========================
-- Added additional "label" parameter "block" to change config block header. (thanks to vit).
-  Syntax:
-	conf <label_name>.(<block_param> | block) [new_value]
-  Examle:
-	conf label applesEtc.block Meat
-- Added route_avoidWalls config option.
-- Fixed small, trivial bug that would display a non-fatal warning.
-- More bugfixes, removing warnings.
-- Attached forgotten fields.
-- Fixed route calculation in lockMap bug.
-- Fixed buyauto standpoint & distance.
-- Update translation.
-- Fixed kore trying to equip an already equipped item.
-- Fixed upper, lower, mid headgear from other players not showing up correctly.
-- Fixed Blacksmith repair skill causing disconnection.
-- Added repairAuto_list config option, and restructured repair.
-- XKore_altCharServer for character servers that sends 0072 instead of 006B
-- Fix Mercenary recognized as Mob. Now Mercenary's are Actor::Mercenary
+- Feature: additional "label" parameter "block" to change config block header. (thanks to vit).
+  	Syntax:
+		conf <label_name>.(<block_param> | block) [new_value]
+  	Examle:
+		conf label applesEtc.block Meat
+- Feature: route_avoidWalls config option.
+- Fixed: Pets are no longer being seen as monsters, support for extended pet packet(Technology)
+- Feature: Mercenary&Homun controlling (EternalHarvest)
+- Feature: Mercenary&Homun handling (EternalHarvest)
+- Fixed: Monster-based mercenaries detection (EternalHarvest)
+- Fixed: status timer support (Technology)
+- Fixed: XKore 2 on 8_5 (Technology)
+- Feature: Hotkey support for XKore 2 (Technology)
+- Feature: Ingame auction support (Technology)
+- Feature: Ingame mail support (Technology)
+- Fixed: itemID === userID in packet_useitem hook (kLabMouse)
+- Fixed: Kore can't connect to euRO (bibian)
+- Fixed: 3rd class jobs recognition (Technology)
+- Translations: (h4rry84 + Littlewens)
+- Feature: SVN AutoUpdater tool (kLabMouse)
+- Fixed: Posseidon HackShit support (kLabMouse)
+- Fixed: stuck when itemTake/Gather (EternalHarvest )
+- Fixed: in_game hook (ezza)
+- Fixed: alchemist and blacksmith ranking points (h4rry84)
+- Fixed: Hairstyle and haircolor were messed up in character creation (EternalHarvest )
+- Fixed: skill usage for serverType 8 using xkore 2 (Technology)
+- Fixed: walking speed not being sent to the client on xkore 2 (bibian)
+- Fixed: send weapon/shield apearance to client on xkore 2 (bibian)
+- Fixed: Let xkore2 handle Sync'ing for serverType 8, 8_1, 8_2, 8_3, 8_4 instead of the RO client. (Technology)
+- Fixed: fix Homunculus sub processFeeding. (lastclick + thx to: Aib0)
+- Fixed: sendHomunculusMove causing disconnection on serverType 8 family servers (Technology)
+- Feature: Added loadPlugins 3 for skipping plugins. (sli)
+- Fixed: fix Monster Killed Count if count > 9999 (lastclick)
+- Fixed: kore trying to equip an already equipped item (Technology)
+- Fixed: lockMap_randY, lockMap_randX (Technology)
+- Fixed: fix buyauto standpoint & distance (lastclick)
+- Fixed: fix for: upper, lower, mid headgear from other players not showing up correctly. (Technology)
+- Fixed: Blacksmith repair skill causes disconnect (Technology)
+- Feature: new config variable repairAuto_list (Technology)
+- Fixed: 0072 can also mean 006B (isieo)
+- Fixed: fix bugs range attack. (lastclick + thx to: Rumata)
+- Fixed: minStorageZeny (lastclick)
+- Fixed: Optimisation autoBuy (lastclick)
+- Fixed: notPartyOnly not working properly in partySkill block (heero74 + thx to: )
+- Fixed: Added ServerType 21 support for Demise of Morroc update (code by UltimaWeapon and small fixes by heero)
+- Fixed: added a missing packet prefix affecting party invite (heero74)
+- Fixed: couldn't execute console command started with ; from client with serverType 21 (UltimaWeapon)
+- Fixed: Teleport skill level fix for players with teleport level 2. (freegoods)
+- Fixed: config option: storageAuto_useChatCommand (Technology)
+- Fixed: loop if Butterfly Wing is not present (lastclick + tnx to: [GM]#05)
+- Fixed: sub parseList was not removing the endline's,causing skillsencore.txt not to get parsed correctly. (Technology)
+- Fixed: GCC compiling (thanks to technology)
+- Fixed: Fixed the full storage bug. Now uses the detected storage size. (sli)
+- Fixed: ServerType 21 in xKore 2 mode (kLabMouse)
+- Fixed: ServerType 8_5 to be compatible with eA's pv 23. (bibian)
+- Fixed: added ServerType 22 for idRO's Fix System Chat and for since idRO can't use anymore ServerType 21 because it's counterfeit with tRO update. (h4rry84)
 
 =========================
 ### OpenKore 2.0.6.1
