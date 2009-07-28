@@ -97,7 +97,7 @@ sub add {
 	if (defined $rules) {
 		$item[RULES] = $rules;
 	}
-	$item[FUNCTION] = CodeRef->new($function);
+	$item[FUNCTION] = $function;
 	if (defined $object) {
 		$item[OBJECT] = $object;
 		Scalar::Util::weaken($item[OBJECT]);
@@ -162,7 +162,7 @@ sub call {
 		} else {
 			# Check for rules against $_[2]
 			if ( _check_rule($_[2], $item->[RULES]) == 1) {
-				$item->[FUNCTION]->call($item->[OBJECT], $_[1], $_[3], $item->[USERDATA]);
+				$item->[FUNCTION]->($item->[OBJECT], $_[1], $_[3], $item->[USERDATA]);
 			};
 		}
 	}

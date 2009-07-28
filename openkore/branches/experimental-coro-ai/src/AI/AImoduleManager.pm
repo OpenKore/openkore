@@ -49,7 +49,7 @@ sub new {
 
 	# Utils::Set<AI::AImodule>
 	# Indexed set of currently active modules.
-	$self->{activeModules} = new Utils::Set();
+	$self->{activeModules} = new Set();
 
 	# Array of IDs, that show in which order to check AI::AIModules.
 	$self->{modules_list} = [];

@@ -25,20 +25,11 @@
 #   That is, <tt>abs(c1 - c2) >= 300</tt> if c1 and c2 are two random priority constants.
 # - A higher value means a higher priority.
 # `l`
-#
 package AI::Task;
 
-# Make all References Strict
 use strict;
-
-# Coro Support
-use Coro;
-
-# Others (Perl Related)
 use Carp;
 use Carp::Assert;
-
-# Others (Kore related)
 use Modules 'register';
 use Utils::CallbackList;
 use Utils::Set;
@@ -52,28 +43,24 @@ use Utils::Set;
 # Task::LOW_PRIORITY
 #
 # Indicates a low task priority.
-#
 use constant LOW_PRIORITY    => 100;
 
 ##
 # Task::NORMAL_PRIORITY
 #
 # Indicates a normal task priority.
-#
 use constant NORMAL_PRIORITY => 500;
 
 ##
 # Task::HIGH_PRIORITY
 #
 # Indicates a high task priority.
-#
 use constant HIGH_PRIORITY   => 1000;
 
 ##
 # Task::USER_PRIORITY
 #
 # Priority used for user-invoked commands.
-#
 use constant USER_PRIORITY   => 5000;
 
 
@@ -85,47 +72,42 @@ use constant USER_PRIORITY   => 5000;
 # Task::INACTIVE
 #
 # Indicates that the task has just been created.
-#
 use constant INACTIVE    => 0;
 
 ##
 # Task::RUNNING
 #
 # Indicates that the task is running.
-#
 use constant RUNNING     => 1;
 
 ##
 # Task::INTERRUPTED
 #
 # Indicates that the task is interrupted, and not running.
-#
 use constant INTERRUPTED => 2;
 
 ##
 # Task::STOPPED
 #
 # Indicates that the task is stopped. A stopped task cannot resume.
-#
 use constant STOPPED     => 3;
 
 ##
 # Task::DONE
 #
 # Indicates that the task is completed. A completed task cannot be stopped or interrupted.
-#
 use constant DONE        => 4;
 
 
 ####################################
 ### CATEGORY: Constructor
-####################################
+###################################
 
 ##
-# Task->new(options...)
-# Ensures: result->getStatus() == Task::INACTIVE
+# AI::Task->new(options...)
+# Ensures: result->getStatus() == AI::Task::INACTIVE
 #
-# Create a new Task object. The following options are allowed:
+# Create a new AI::Task object. The following options are allowed:
 # `l
 # - <tt>name</tt> - A name for this task. $Task->getName() will return this name.
 #                   If not specified, the class's name (excluding the "Task::" prefix) will be used as name.
@@ -134,11 +116,10 @@ use constant DONE        => 4;
 # - <tt>mutexes</tt> - A reference to an array of mutexes. $Task->getMutexes() will return this value.
 #                      The default is an empty mutex list.
 # `l`
-#
 sub new {
 	my $class = shift;
 	my %args = @_;
-	my $allowed = new Utils::Set("name", "priority", "mutexes");
+	my $allowed = new Set("name", "priority", "mutexes");
 	my %self;
 
 	foreach my $key (keys %args) {
@@ -180,7 +161,6 @@ sub _getStatusName {
 
 sub _assertStatus {
 	my $self = shift;
-
 	my $currentStatus = $self->{T_status};
 	foreach my $status (@_) {
 		if ($status == $currentStatus) {
@@ -193,14 +173,6 @@ sub _assertStatus {
 		"But it's actually: " . _getStatusName($currentStatus) . "\n");
 }
 
-####################################
-### CATEGORY: Destructor
-###################################
-
-sub DESTROY {
-	my ($self) = @_;
-	$self->SUPER::DESTROY() if ($self->can("SUPER::DESTROY"));
-}
 
 ############################
 ### CATEGORY: Queries
@@ -211,7 +183,6 @@ sub DESTROY {
 # Ensures: $result ne ""
 #
 # Returns a human-readable name for this task.
-#
 sub getName {
 	return $_[0]->{T_name};
 }
@@ -220,7 +191,6 @@ sub getName {
 # $Task->getStatus()
 #
 # Returns the task's status. This is one of AI::Task::RUNNING, AI::Task::INTERRUPTED, AI::Task::STOPPED or AI::Task::DONE.
-#
 sub getStatus {
 	return $_[0]->{T_status};
 }
@@ -238,7 +208,6 @@ sub getStatus {
 # - code - The error code.
 # - message - The error message.
 # `l`
-#
 sub getError {
 	$_[0]->_assertStatus(DONE) if DEBUG;
 	return $_[0]->{T_error};
@@ -249,11 +218,10 @@ sub getError {
 # Ensures: defined(result)
 #
 # Returns a reference to an array of mutexes for this task. Note that the mutex list may
-# change during a Task's life time. This list must not be modified outside the AI::Task object.
+# change during a Task's life time. This list must not be modified outside the Task object.
 #
 # If you override this method, then you <b>must</b> ensure that when the mutex list changes,
 # you trigger a onMutexesChanged event. Otherwise the task manager will not behave correctly.
-#
 sub getMutexes {
 	return $_[0]->{T_mutexes};
 }
@@ -263,7 +231,6 @@ sub getMutexes {
 #
 # Get the priority for this task. This priority is guaranteed to never change during a Task's
 # life time.
-#
 sub getPriority {
 	return $_[0]->{T_priority};
 }
@@ -277,7 +244,6 @@ sub getPriority {
 # CallbackList $Task->onMutexesChanged()
 #
 # This event is triggered when the mutex list for this task has changed.
-#
 sub onMutexesChanged {
 	return $_[0]->{T_onMutexesChanged};
 }
@@ -286,7 +252,6 @@ sub onMutexesChanged {
 # CallbackList $Task->onStop()
 #
 # This event is triggered when the task's status has been set to AI::Task::STOPPED.
-#
 sub onStop {
 	return $_[0]->{T_onStop};
 }
@@ -307,11 +272,9 @@ sub onStop {
 # the error information passed to this method.
 #
 # Do not call this method outside $Task->iterate(), or bad things will happen!
-#
 sub setError {
 	my ($self, $code, $message) = @_;
 	$self->_assertStatus(INACTIVE, RUNNING) if DEBUG;
-
 	$self->{T_error} = {
 		code => $code,
 		message => $message
@@ -327,11 +290,9 @@ sub setError {
 # status will be set to AI::Task::DONE.
 #
 # Do not call this method outside $Task->iterate(), or bad things will happen!
-#
 sub setDone {
 	my ($self) = @_;
 	$self->_assertStatus(INACTIVE, RUNNING) if DEBUG;
-
 	$self->{T_status} = DONE;
 }
 
@@ -343,11 +304,9 @@ sub setDone {
 # Set the task's status to AI::Task::STOPPED and trigger an onStop event.
 # This is useful for tasks that cannot stop immediately
 # when stop() is called: they can mark the task as stopped when appropriate.
-#
 sub setStopped {
 	my ($self) = @_;
 	$self->_assertStatus(INACTIVE, RUNNING, INTERRUPTED) if DEBUG;
-
 	$self->{T_status} = STOPPED;
 	$self->{T_onStop}->call($self);
 }
@@ -360,7 +319,6 @@ sub setStopped {
 #
 # You should only call this method inside the class's iterate() method,
 # or during initialization. Otherwise you may confuse the task manager.
-#
 sub setMutexes {
 	my $self = shift;
 	$self->{T_mutexes} = \@_;
@@ -382,10 +340,8 @@ sub setMutexes {
 # This allows the task to perform initialization.
 #
 # This method will be called by the task manager.
-#
 sub activate {
 	$_[0]->_assertStatus(INACTIVE) if DEBUG;
-
 	$_[0]->{T_status} = RUNNING;
 }
 
@@ -396,15 +352,13 @@ sub activate {
 #
 # Notify a (running) task that it is about to be interrupted. The task may take necessary actions
 # (like updating internal timers) in preparation for interruption. The task must immediately
-# cease all actions, and set the status to Task::INTERRUPTED.
+# cease all actions, and set the status to AI::Task::INTERRUPTED.
 #
 # This method should only be called by the task manager.
 #
 # Task implementors may override this method to implement code for interruption handling.
-#
 sub interrupt {
 	$_[0]->_assertStatus(RUNNING) if DEBUG;
-
 	$_[0]->{T_status} = INTERRUPTED;
 }
 
@@ -420,10 +374,8 @@ sub interrupt {
 # This method should only be called by the task manager.
 #
 # Task implementors may override this method to implement code for resume handling.
-#
 sub resume {
 	$_[0]->_assertStatus(INTERRUPTED) if DEBUG;
-
 	$_[0]->{T_status} = RUNNING;
 }
 
@@ -440,7 +392,6 @@ sub resume {
 # You may choose to stop the task after a period of time, instead of immediately.
 #
 # This method may be called by anybody, not just the task manager.
-#
 sub stop {
 	$_[0]->setStopped();
 }
@@ -451,7 +402,6 @@ sub stop {
 #
 # Run one iteration of this task. Task implementors must override this method to
 # implement task code.
-#
 sub iterate {
 	$_[0]->_assertStatus(RUNNING) if DEBUG;
 }

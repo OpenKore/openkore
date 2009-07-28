@@ -27,20 +27,16 @@ package AI::Task::Wait;
 # Make all References Strict
 use strict;
 
-# Coro Support
-use Coro;
-
-
 # Others (Perl Related)
 use Time::HiRes qw(time);
 
 # Others (Kore Related)
-use Modules 'register';
 use AI::Task;
 use base qw(AI::Task);
 # use Globals qw($net); # TODO
 use Utils qw(timeOut);
 # use Network; # TODO
+use Modules 'register';
 
 
 ##
@@ -62,6 +58,7 @@ sub new {
 
 	$self->{S_timeout} = $args{seconds};
 	$self->{inGame} = defined($args{inGame}) ? $args{inGame} : 1; # TODO
+	$self->{T_mutexes} = ["wait"];
 
 	return $self;
 }
