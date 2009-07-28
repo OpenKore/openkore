@@ -94,8 +94,6 @@ sub add {
 	assert(defined $function) if DEBUG;
 	assert(!defined($object) || Scalar::Util::blessed($object)) if DEBUG;
 
-	lock ($self) if (is_shared($self));
-
 	my @item;
 	if (defined $rules) {
 		$item[RULES] = $rules;
@@ -125,7 +123,6 @@ sub add {
 sub remove {
 	my ($self, $ID) = @_;
 	assert(defined $ID) if DEBUG;
-	lock ($self) if (is_shared($self));
 
 	return if (!defined($$ID) || $$ID < 0 || $$ID >= @{$self});
 
@@ -134,12 +131,7 @@ sub remove {
 		${$callbacks->[$i][ID]}--;
 	}
 
-	# perl can't splice shared arrays!
-	if (is_shared(@{$callbacks})) {
-		splice_shared($callbacks, $$ID, 1);
-	} else {
-		splice(@{$callbacks}, $$ID, 1);
-	}
+	splice(@{$callbacks}, $$ID, 1);
 
 	$$ID = undef;
 }
@@ -208,8 +200,6 @@ sub empty {
 sub deepCopy {
 	my ($self) = @_;
 
-	lock ($self) if (is_shared($self));
-
 	my $copy = new CallbackList();
 	foreach my $item (@{$self}) {
 		my @callbackItemCopy = @{$item};
@@ -224,8 +214,6 @@ sub deepCopy {
 # Check whether all internal invariants are true.
 sub checkValidity {
 	my ($self) = @_;
-
-	lock ($self) if (is_shared($self));
 
 	for (my $i = 0; $i < @{$self}; $i++) {
 		my $k = $self->[$i];

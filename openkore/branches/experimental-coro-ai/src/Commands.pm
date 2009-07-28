@@ -145,8 +145,6 @@ sub parse {
 	my $self  = shift;
 	my $input = shift;
 
-	lock ($self) if (is_shared($self));
-
 	# Resolve command aliases
 	my ( $switch, $args ) = split( / +/, $input, 2 );
 	if ( my $alias = $config{"alias_$switch"} ) {
@@ -177,10 +175,10 @@ sub parse {
 			my %params;
 			if ( $handler->{self}) {
 				# New style, to overide nesty global vars
-				$handler->{callback}->call( $handler->{self}, $switch, $args );
+				$handler->{callback}->( $handler->{self}, $switch, $args );
 			} else {
 				# Old style
-				$handler->{callback}->call( $switch, $args );
+				$handler->{callback}->( $switch, $args );
 			}
 			# undef the handler here, this is needed to make sure the other commands in the chain (if any) are run properly.
 			undef $handler;

@@ -217,14 +217,7 @@ sub remove {
 	} else {
 		delete $self->{OL_items}[$index];
 		my $cItemIndex = _findItem($self->{OL_cItems}, $item);
-
-		# perl can't splice shared arrays!
-		if (is_shared(@{$self->{OL_cItems}})) {
-			splice_shared($self->{OL_cItems}, $cItemIndex, 1);
-		} else {
-			splice(@{$self->{OL_cItems}}, $cItemIndex, 1);
-		}
-
+		splice(@{$self->{OL_cItems}}, $cItemIndex, 1);
 		$self->{OL_onRemove}->call($self, [$item, $index]);
 		return 1;
 	}

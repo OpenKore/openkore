@@ -63,7 +63,7 @@ sub new {
 	$self->{smart_events} = {};					# Registered Smart Events
 	# $self->{smart_ai_events} = {};			# Registered Smart Events by AI
 	# $self->{smart_task_events} = {};			# Registered Smart Events by Tasks
-	$self->{queue} = Utils::Queue->new;	# Used for Queue
+	$self->{queue} = Utils::Queue->new();	# Used for Queue
 
 	# Read Directory with Environment parsers.
 	return if ( !opendir( DIR, $dir ) );
@@ -132,9 +132,6 @@ sub DESTROY {
 #
 sub queue_add {
 	my ($self, $name, $params) = @_;
-
-	# MultiThreading Support
-	lock ($self) if (is_shared($self));
 
 	my $obj = {};
 	$obj->{name} = $name;
@@ -230,9 +227,6 @@ sub register_listener {
 #
 sub unregister_listener {
 	my ($self, $name, $id) = @_;
-
-	# MultiThreading Support
-	lock ($self) if (is_shared($self));
 	
 	if (defined $self->{listeners}->{$name}) {
 		my $class = blessed($self->{listeners}->{$name});
@@ -284,9 +278,6 @@ sub register_event {
 #
 sub unregister_event {
 	my ($self, $name, $id) = @_;
-
-	# MultiThreading Support
-	lock ($self) if (is_shared($self));
 	
 	if (defined $self->{smart_events}->{$name}) {
 		$self->{smart_events}->{$name}->remove($id);

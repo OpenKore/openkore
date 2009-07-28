@@ -115,7 +115,6 @@ sub mainLoop {
 # AI::STATE_OFF		Fully Disabled AI
 sub SetState {
 	my ($self, $state) = @_;
-	lock ($self) if (is_shared($self));
 	return if (($state > AI::STATE_ON)||($state < AI::STATE_OFF));
 	
 	# If Fully Disable AI, then All tasks get killed.
@@ -131,7 +130,6 @@ sub SetState {
 # Get AI State.
 sub GetState {
 	my $self = shift;
-	lock ($self) if (is_shared($self));
 	return $self->{state};
 }
 ####################################
@@ -144,7 +142,6 @@ sub GetState {
 # Add a new AI module to this AI module manager.
 sub AImodule_add {
 	my $self = shift;
-	lock ($self) if (is_shared($self));
 	return $self->{module_manager}->add(@_);
 }
 
@@ -154,7 +151,6 @@ sub AImodule_add {
 # Remove AI module from AI module manager Modules List by given ID.
 sub AImodule_remove {
 	my $self = shift;
-	lock ($self) if (is_shared($self));
 	return $self->{module_manager}->remove(@_);
 }
 
@@ -164,7 +160,6 @@ sub AImodule_remove {
 # Return 1, if we have that module inside our Set.
 sub AImodule_has {
 	my $self = shift;
-	lock ($self) if (is_shared($self));
 	return $self->{module_manager}->has(@_);
 }
 
@@ -175,7 +170,6 @@ sub AImodule_has {
 # If timeout == 0 then that mutex will be permanently postponed 
 sub AImodule_postpone {
 	my $self = shift;
-	lock ($self) if (is_shared($self));
 	$self->{module_manager}->postpone(@_);
 }
 
@@ -189,7 +183,6 @@ sub AImodule_postpone {
 # Add some structure to Queue.
 sub AIenvironment_queue_add {
 	my $self = shift;
-	lock ($self) if (is_shared($self));
 	$self->{environment_queue}->queue_add(@_);
 }
 
@@ -203,7 +196,6 @@ sub AIenvironment_queue_add {
 # my $ID = $AI->AIenvironment_register_listener("my_listener", \&my_callback, \$self, $params);
 sub AIenvironment_register_listener {
 	my $self = shift;
-	lock ($self) if (is_shared($self));
 	return $self->{environment_queue}->register_listener(@_);
 }
 
@@ -213,7 +205,6 @@ sub AIenvironment_register_listener {
 # UnRegister Listener Object by given name and ID.
 sub AIenvironment_unregister_listener {
 	my $self = shift;
-	lock ($self) if (is_shared($self));
 	$self->{environment_queue}->unregister_listener(@_);
 }
 
@@ -224,7 +215,6 @@ sub AIenvironment_unregister_listener {
 # Register Smart Event Object.
 sub AIenvironment_register_event {
 	my $self = shift;
-	lock ($self) if (is_shared($self));
 	return $self->{environment_queue}->register_event(@_);
 }
 
@@ -234,7 +224,6 @@ sub AIenvironment_register_event {
 # UnRegister Smart Event Object by given ID.
 sub AIenvironment_unregister_event {
 	my $self = shift;
-	lock ($self) if (is_shared($self));
 	$self->{environment_queue}->unregister_event(@_);
 }
 
@@ -249,7 +238,6 @@ sub AIenvironment_unregister_event {
 # Add a new task to this task manager.
 sub TaskManager_add {
 	my $self = shift;
-	lock ($self) if (is_shared($self));
 	$self->{task_manager}->add(@_);
 }
 
@@ -259,7 +247,6 @@ sub TaskManager_add {
 # Tell all tasks (whether active or inactive) to stop.
 sub TaskManager_stopAll {
 	my $self = shift;
-	lock ($self) if (is_shared($self));
 	$self->{task_manager}->stopAll();
 }
 
@@ -270,7 +257,6 @@ sub TaskManager_stopAll {
 # Count the number of tasks that have the specified name.
 sub TaskManager_countTasksByName {
 	my $self = shift;
-	lock ($self) if (is_shared($self));
 	return $self->{task_manager}->countTasksByName(@_);
 }
 
@@ -280,7 +266,6 @@ sub TaskManager_countTasksByName {
 # Returns a string which describes the current active tasks.
 sub TaskManager_activeTasksString {
 	my $self = shift;
-	lock ($self) if (is_shared($self));
 	return $self->{task_manager}->activeTasksString();
 }
 
@@ -290,7 +275,6 @@ sub TaskManager_activeTasksString {
 # Returns a string which describes the currently inactive tasks.
 sub TaskManager_inactiveTasksString {
 	my $self = shift;
-	lock ($self) if (is_shared($self));
 	return $self->{task_manager}->inactiveTasksString();
 }
 
@@ -300,7 +284,6 @@ sub TaskManager_inactiveTasksString {
 # Returns a string which describes the currently active Task mutexes.
 sub TaskManager_activeMutexesString {
 	my $self = shift;
-	lock ($self) if (is_shared($self));
 	return $self->{task_manager}->activeMutexesString();
 }
 

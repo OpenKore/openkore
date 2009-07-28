@@ -94,11 +94,6 @@ sub new {
 # Add $item to the set if it isn't already in the set.
 sub add {
 	my ($self, $item) = @_;
-
-	# MultiThreading Support
-	lock ($self) if (is_shared($self));
-	lock ($item) if (is_shared($item));
-
 	if (!$self->has($item)) {
 		push @{$self->{items}}, $item;
 	}
@@ -112,20 +107,9 @@ sub add {
 # Removes $item from the set if it's there.
 sub remove {
 	my ($self, $item) = @_;
-
-	# MultiThreading Support
-	lock ($self) if (is_shared($self));
-	lock ($item) if (is_shared($item));
-
 	if ($self->has($item)) {
 		my $index = $self->find($item);
-
-		# perl can't splice shared arrays!
-		if (is_shared(@{$self->{items}})) {
-			splice_shared($self->{items}, $index, 1);
-		} else {
-			splice(@{$self->{items}}, $index, 1);
-		}
+		splice(@{$self->{items}}, $index, 1);
 	}
 }
 
@@ -136,14 +120,7 @@ sub remove {
 # Remove all items in the set.
 sub clear {
 	my ($self) = @_;
-
-	# MultiThreading Support
-	if (is_shared($self)) {
-		lock ($self);
-		$self->{items} = &share([]);
-	} else {
-		$self->{items} = [];
-	};
+	$self->{items} = [];
 }
 
 ##
@@ -153,9 +130,6 @@ sub clear {
 # Returns the item at the specified index.
 sub get {
 	my ($self, $index) = @_;
-
-	# MultiThreading Support
-	lock ($self) if (is_shared($self));
 	# assert($index >= 0) if DEBUG;
 
 	return $self->{items}[$index];
@@ -167,11 +141,6 @@ sub get {
 # Check whether $item is in the set.
 sub has {
 	my ($self, $item) = @_;
-
-	# MultiThreading Support
-	lock ($self) if (is_shared($self));
-	lock ($item) if (is_shared($item));
-
 	return 1 if ($self->find($item) >= 0);
 	return 0;
 }
@@ -183,17 +152,11 @@ sub has {
 sub find {
 	my ($self, $item) = @_;
 
-	# MultiThreading Support
-	lock ($self) if (is_shared($self));
-	lock ($item) if (is_shared($item));
-
 	# Quick search by ref's
-	if (is_shared($self)) {
-		for (my $i = 0; $i < @{$self->{items}}; $i++) {
-			my $existing_item = $self->{items}[$i];
-			# Check by internal shared refaddr
-			return $i if (is_shared($existing_item) == is_shared($item));
-		}
+	for (my $i = 0; $i < @{$self->{items}}; $i++) {
+		my $existing_item = $self->{items}[$i];
+		# Check by internal shared refaddr
+		return $i if ($existing_item == $item);
 	}
 	
 	# Nothing found??? let's try deep search
@@ -216,10 +179,6 @@ sub find {
 # Returns the number of elements in this set.
 sub size {
 	my ($self) = @_;
-
-	# MultiThreading Support
-	lock ($self) if (is_shared($self));
-
 	return scalar(@{$self->{items}});
 }
 
@@ -232,10 +191,6 @@ sub size {
 # Return the set's internal array. You must not manipulate this array.
 sub getArray {
 	my ($self) = @_;
-
-	# MultiThreading Support
-	lock ($self) if (is_shared($self));
-
 	return $self->{items};
 }
 

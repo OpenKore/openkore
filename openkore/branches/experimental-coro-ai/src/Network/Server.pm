@@ -145,8 +145,6 @@ sub mainLoop {
 
 	while (!$quit && !$should_exit && $socket && (my $client = $socket->accept())) {
 		{ # Just make Unlock quicker.
-			lock ($self) if (is_shared($self));
-
 			my $connection = {};
 			$connection->{send_queue} = Thread::Queue->new();		# Send Queue
 			$connection->{receive_queue} = Thread::Queue->new();		# Receive Queue
@@ -191,8 +189,6 @@ sub subLoop {
 
 	while (!$quit && !$should_exit && $socket) {
 		{ # Just make Unlock quicker.
-			lock ($self) if (is_shared($self));
-
 			# Set vars ReadWrite flag
 			SetReadWrite(\{$self->{peerhost}});
 			SetReadWrite(\{$self->{peerport}});
@@ -238,7 +234,6 @@ sub subLoop {
 
 	# Client Disconnected.
 	{ # Just to Unlock quicker.
-		lock ($main) if (is_shared($main));
 		$main->{onDisconnected}->call($self->{tid});
 	};
 }
@@ -292,7 +287,6 @@ sub connect {
 # Return $tid Socket status.
 sub connected {
 	my ($self, $tid) = @_;
-	lock ($self) if (is_shared($self));
 
 	my $clients = \%{$self->{client_list}};
 	foreach my $client (@{$clients }) {
@@ -310,7 +304,6 @@ sub connected {
 # Return $tid Socket peer host.
 sub peerhost {
 	my ($self, $tid) = @_;
-	lock ($self) if (is_shared($self));
 
 	my $clients = \%{$self->{client_list}};
 	foreach my $client (@{$clients }) {
@@ -328,7 +321,6 @@ sub peerhost {
 # Return $tid Socket peer port.
 sub peerport {
 	my ($self, $tid) = @_;
-	lock ($self) if (is_shared($self));
 
 	my $clients = \%{$self->{client_list}};
 	foreach my $client (@{$clients }) {
@@ -347,7 +339,6 @@ sub peerport {
 # If $tid == 0, then broadcast to all clients.
 sub send {
 	my ($self, $msg, $tid) = @_;
-	lock ($self) if (is_shared($self));
 
 	my $clients = \%{$self->{client_list}};
 	foreach my $client (@{$clients }) {
@@ -365,7 +356,6 @@ sub send {
 sub recv {
 	my $self = shift;
 	my $msg = shift;
-	lock ($self) if (is_shared($self));
 
 	my $clients = \%{$self->{client_list}};
 	foreach my $client (@{$clients }) {
@@ -387,7 +377,6 @@ sub recv {
 # Note: Socket needs some time to close
 sub close {
 	my ($self, $tid) = shift;
-	lock ($self) if (is_shared($self));
 
 	my $clients = \%{$self->{client_list}};
 	foreach my $client (@{$clients }) {

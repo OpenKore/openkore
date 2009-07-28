@@ -160,9 +160,6 @@ sub add {
 sub reschedule {
 	my ($self) = @_;
 
-	# MultiThreading Support
-	lock ($self) if (is_shared($self));
-
 	my $activeTasks      = \%{$self->{activeTasks}};
 	my $inactiveTasks    = \%{$self->{inactiveTasks}};
 	my $grayTasks        = \%{$self->{grayTasks}};
@@ -278,9 +275,6 @@ sub reschedule {
 sub checkValidity {
 	my ($self) = @_;
 
-	# MultiThreading Support
-	lock ($self) if (is_shared($self));
-
 	my $activeTasks   = \%{$self->{activeTasks}};
 	my $inactiveTasks = \%{$self->{inactiveTasks}};
 	my $grayTasks     = \%{$self->{grayTasks}};
@@ -331,9 +325,6 @@ sub checkValidity {
 sub iterate {
 	my ($self) = @_;
 
-	# MultiThreading Support
-	lock ($self) if (is_shared($self));
-
 	$self->checkValidity() if DEBUG;
 	$self->reschedule() if ($self->{shouldReschedule});
 	$self->checkValidity() if DEBUG;
@@ -378,9 +369,6 @@ sub iterate {
 sub stopAll {
 	my ($self) = @_;
 
-	# MultiThreading Support
-	lock ($self) if (is_shared($self));
-
 	foreach my $task (@{\%{$self->{activeTasks}}}, @{\%{$self->{inactiveTasks}}}) {
 		$task->stop();
 		if ($task->getStatus() == AI::Task::STOPPED) {
@@ -400,9 +388,6 @@ sub stopAll {
 sub countTasksByName {
 	my ($self, $name) = @_;
 
-	# MultiThreading Support
-	lock ($self) if (is_shared($self));
-
 	my $result = $self->{tasksByName}{$name};
 	$result = 0 if (!defined $result);
 	return $result;
@@ -416,9 +401,6 @@ sub countTasksByName {
 sub activeTasksString {
 	my ($self) = @_;
 
-	# MultiThreading Support
-	lock ($self) if (is_shared($self));
-
 	return getTaskSetString(\%{$self->{activeTasks}});
 }
 
@@ -430,9 +412,6 @@ sub activeTasksString {
 sub inactiveTasksString {
 	my ($self) = @_;
 
-	# MultiThreading Support
-	lock ($self) if (is_shared($self));
-
 	return getTaskSetString(\%{$self->{inactiveTasks}});
 }
 
@@ -443,9 +422,6 @@ sub inactiveTasksString {
 #
 sub activeMutexesString {
 	my ($self) = @_;
-
-	# MultiThreading Support
-	lock ($self) if (is_shared($self));
 
 	my $activeMutexes = $self->{activeMutexes};
 	my @entries;
@@ -459,10 +435,6 @@ sub activeMutexesString {
 
 sub getTaskSetString {
 	my ($set) = @_;
-
-	# MultiThreading Support
-	lock ($set) if (is_shared($set));
-	my $set = \%{$set} if (is_shared($set)); # Restore Utils::Set overloading, we will use it.
 
 	if (@{$set}) {
 		my @names;
@@ -495,10 +467,6 @@ sub onTaskFinished {
 sub onMutexesChanged {
 	my ($self, $task) = @_;
 
-	# MultiThreading Support
-	lock ($self) if (is_shared($self));
-	lock ($task) if (is_shared($task));
-
 	if ($task->getStatus() == AI::Task::RUNNING) {
 		$self->{grayTasks}->add($task);
 
@@ -515,10 +483,6 @@ sub onMutexesChanged {
 
 sub onStop {
 	my ($self, $task) = @_;
-
-	# MultiThreading Support
-	lock ($self) if (is_shared($self));
-	lock ($task) if (is_shared($task));
 
 	if ($self->{inactiveTasks}->has($task)) {
 		$self->{shouldReschedule} = 1;
@@ -551,9 +515,6 @@ sub intersect {
 sub higherPriority {
 	my ($self, $task, $mutexTaskMapper, $mutexes) = @_;
 
-	# MultiThreading Support
-	lock ($task) if (is_shared($task));
-
 	my $priority = $task->getPriority();
 	my $result = 1;
 	for (my $i = 0; $i < @{$mutexes} && $result; $i++) {
@@ -569,15 +530,6 @@ sub higherPriority {
 # completed or stopped, then it will be added to the inactive task list.
 sub deactivateTask {
 	my ($self, $activeTasks, $inactiveTasks, $grayTasks, $activeMutexes, $tasksByName, $task) = @_;
-
-	# MultiThreading Support
-	lock ($self) if (is_shared($self));
-	lock ($activeTasks) if (is_shared($activeTasks));
-	lock ($inactiveTasks) if (is_shared($inactiveTasks));
-	lock ($grayTasks) if (is_shared($grayTasks));
-	lock ($activeMutexes) if (is_shared($activeMutexes));
-	lock ($tasksByName) if (is_shared($tasksByName));
-	lock ($task) if (is_shared($task));
 
 	my $status = $task->getStatus();
 	if ($status != AI::Task::DONE && $status != AI::Task::STOPPED) {
@@ -605,9 +557,6 @@ sub deactivateTask {
 sub _gen_id {
 	my ($self) = @_;
 
-	# MultiThreading Support
-	lock ($self) if (is_shared($self));
-
 	# Return Free task ID, so we do not overload "$self->{lastID}"
 	my $id = shift @{$self->{freeIDs}};
 	return $id if (defined $id);
@@ -620,19 +569,11 @@ sub _gen_id {
 # Note: this will not destroy task object
 sub _free_id {
 	my ($self, $id) = @_;
-	
-	# MultiThreading Support
-	lock ($self) if (is_shared($self));
-	
 	push @{$self->{freeIDs}}, $id;
 }
 
 sub _find_task_by_id {
 	my ($self, $id) = @_;
-	
-	# MultiThreading Support
-	lock ($self) if (is_shared($self));
-	
 	foreach my $task (@{\%{$self->{activeTasks}}}, @{\%{$self->{inactiveTasks}}}, @{\%{$self->{grayTasks}}}) {
 		return $task if ($task->{T_ID} == $id);
 	}
