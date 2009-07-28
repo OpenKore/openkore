@@ -120,8 +120,6 @@ sub mainLoop {
 
 	while (!$quit && !$should_exit && $socket) {
 		{ # Just make Unlock quicker.
-			lock ($self) if (is_shared($self));
-
 			# Set vars ReadWrite flag
 			SetReadWrite(\{$self->{peerhost}});
 			SetReadWrite(\{$self->{peerport}});
@@ -213,7 +211,6 @@ sub connect {
 # Return Socket status.
 sub connected {
 	my $self = shift;
-	lock ($self) if (is_shared($self));
 	return $self->{is_connected};
 }
 
@@ -223,7 +220,6 @@ sub connected {
 # Return peer host.
 sub peerhost {
 	my $self = shift;
-	lock ($self) if (is_shared($self));
 	return $self->{peerhost};
 }
 
@@ -233,7 +229,6 @@ sub peerhost {
 # Return peer port.
 sub peerport {
 	my $self = shift;
-	lock ($self) if (is_shared($self));
 	return $self->{peerport};
 }
 
@@ -244,7 +239,6 @@ sub peerport {
 sub send {
 	my $self = shift;
 	my $msg = shift;
-	lock ($self) if (is_shared($self));
 	$self->{send_queue}->enqueue(\$msg);
 }
 
@@ -255,7 +249,6 @@ sub send {
 # Returns undef if nothing to receive.
 sub recv {
 	my $self = shift;
-	lock ($self) if (is_shared($self));
 	if ($self->{receive_queue}->pending() > 0) {
 		my $msg = $self->{receive_queue}->dequeue();
 		return $msg;
@@ -270,7 +263,6 @@ sub recv {
 # Note: Socket needs some time to close
 sub close {
 	my $self = shift;
-	lock ($self) if (is_shared($self));
 	$self->_get_thread()->kill('CLOSE');
 }
 

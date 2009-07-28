@@ -40,7 +40,6 @@ use Carp;
 use Time::HiRes qw/time sleep/;
 use Text::Wrap;
 use Win32::Console;
-use Utils::Win32;
 # use encoding 'utf8'; # Makes unknown Threading Bugs.
 use Encode;
 use I18N qw(stringToBytes);
@@ -219,7 +218,7 @@ sub readEvents {
 					$self->{in_pos} = length($self->{input_part});
 				}
 				$self->{out_con}->Cursor($self->{in_pos}, $self->{in_line});
-				Utils::Win32::printConsole($char);
+				$self->{out_con}->Write($char);
 				substr($self->{input_part}, $self->{in_pos}, 0, $char) if ($self->{in_pos} <= length($self->{input_part}));
 				$self->{in_pos}++;
 #			} elsif ($event[3] == 33) {
@@ -249,7 +248,7 @@ sub readEvents {
 				$self->{out_con}->Write(' ' x length($self->{input_part}));
 				$self->{out_con}->Cursor(0, $self->{in_line});
 				$self->{input_part} = $self->{input_list}[$self->{input_offset}];
-				Utils::Win32::printConsole($self->{input_part});
+				$self->{out_con}->Write($self->{input_part});
 				$self->{in_pos} = length($self->{input_part});
 			##Right Arrow
 			} elsif ($event[3] == 39) {
@@ -270,7 +269,7 @@ sub readEvents {
 				$self->{out_con}->Write(' ' x length($self->{input_part}));
 				$self->{out_con}->Cursor(0, $self->{in_line});
 				$self->{input_part} = $self->{input_list}[$self->{input_offset}];
-				Utils::Win32::printConsole($self->{input_part});
+				$self->{out_con}->Write($self->{input_part});
 				$self->{in_pos} = length($self->{input_part});
 			##Insert
 #			} elsif ($event[3] == 45) {
@@ -326,8 +325,7 @@ sub writeOutput {
 	my ($ocx, $ocy) = $self->{out_con}->Cursor();
 	$self->{out_con}->Cursor($self->{out_col}, $self->{out_line} - $lines);
 	$self->setColor($type, $domain);
-	#$self->{out_con}->Write($message);
-	Utils::Win32::printConsole($message);
+	$self->{out_con}->Write($message);
 	$self->color('reset');
 	($self->{out_col}, $self->{out_line}) = $self->{out_con}->Cursor();
 	$self->{out_line} -= $self->{last_line_end} - 1;
@@ -361,7 +359,7 @@ sub title {
 
 	if (defined $title) {
 		if (!defined $self->{currentTitle} || $self->{currentTitle} ne $title) {
-			Utils::Win32::setConsoleTitle($title);
+			$self->{out_con}->Title($title);
 			$self->{currentTitle} = $title;
 		}
 	} else {

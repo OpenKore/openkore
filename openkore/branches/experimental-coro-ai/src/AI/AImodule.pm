@@ -122,9 +122,6 @@ sub DESTROY {
 # Returns a human-readable name for this task.
 #
 sub getName {
-	# MultiThreading Support
-	lock ($_[0]) if (is_shared($_[0]));
-
 	return $_[0]->{T_name};
 }
 
@@ -135,9 +132,6 @@ sub getName {
 # life time.
 #
 sub getPriority {
-	# MultiThreading Support
-	lock ($_[0]) if (is_shared($_[0]));
-
 	return $_[0]->{T_priority};
 }
 
@@ -152,9 +146,6 @@ sub getPriority {
 # you trigger a onMutexesChanged event. Otherwise the task manager will not behave correctly.
 #
 sub getMutexes {
-	# MultiThreading Support
-	lock ($_[0]) if (is_shared($_[0]));
-
 	return $_[0]->{T_mutex};
 }
 
@@ -165,9 +156,6 @@ sub getMutexes {
 # This 'exclusive' marker is guaranteed to never change during a AIModule's life time.
 #
 sub getExclusive {
-	# MultiThreading Support
-	lock ($_[0]) if (is_shared($_[0]));
-
 	my $exclusive = 0;
 	$exclusive = 1 if ($_[0]->{T_exclusive} == EXCLUSIVE);
 	return $exclusive;
@@ -192,9 +180,6 @@ sub getID {
 # This event is triggered when the task's status has been set to Task::STOPPED or Task::DONE.
 #
 sub onTaskFinished {
-	# MultiThreading Support
-	lock ($_[0]) if (is_shared($_[0]));
-
 	return $_[0]->{T_onTaskFinished};
 }
 
