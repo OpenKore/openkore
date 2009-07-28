@@ -102,15 +102,15 @@ our @EXPORT = (
 
 
 # Configuration variables
-our %arrowcraft_items :shared;
-our %avoid :shared;
-our @chatResponses :shared;
-our $char :shared;
-our %cities_lut :shared;
-our %config :shared;
-our %consoleColors :shared;
-our %equipTypes_lut :shared;
-our %equipSlot_lut :shared;
+our %arrowcraft_items;
+our %avoid;
+our @chatResponses;
+our $char;
+our %cities_lut;
+our %config;
+our %consoleColors;
+our %equipTypes_lut;
+our %equipSlot_lut;
 %equipSlot_lut = (
 	'0'    => 'Item',
 	'1'    => 'lowHead',
@@ -126,7 +126,7 @@ our %equipSlot_lut :shared;
 	'1024' => 'carry', #used in messyKore don't know if it actually exists
 	'32768'   => 'arrow' #just use an made up ID since arrow doesn't have any
 );
-our %equipSlot_rlut :shared;
+our %equipSlot_rlut;
 %equipSlot_rlut = (
 	'Item'           => 0,
 	'lowHead'        => 1,
@@ -142,43 +142,43 @@ our %equipSlot_rlut :shared;
 	'carry' 	 => 1024,
 	'arrow'          => '' #arrow seems not to have any ID
 );
-our %elements_lut :shared;
-our %directions_lut :shared;
-our %haircolors :shared;
-our @headgears_lut :shared;
-our %items_control :shared;
-our %items_lut :shared;
-our %itemSlotCount_lut :shared;
-our %itemsDesc_lut :shared;
-our %itemTypes_lut :shared;
-our %itemSlots_lut :shared;
-our %maps_lut :shared;
-our %masterServers :shared;
-our %mon_control :shared;
-our %monsters_lut :shared;
-our %npcs_lut :shared;
-our %packetDescriptions :shared;
-our %portals_los :shared;
-our %portals_lut :shared;
-our %priority :shared;
-our %responses :shared;
-our %routeWeights :shared;
-our %pickupitems :shared;
-our %rpackets :shared;
-our %sex_lut :shared;
-our %shop :shared;
-our %skillsDesc_lut :shared;
-our %skillsSP_lut :shared;
-our %skillsLooks :shared;
-our %skillsAilments :shared;
-our %skillsArea :shared;
-our %skillsEncore :shared;
-our %skillsState :shared;
-our %skillsStatus :shared;
-our %spells_lut :shared;
-our %emotions_lut :shared;
-our %timeout :shared;
-our %jobs_lut :shared;
+our %elements_lut;
+our %directions_lut;
+our %haircolors;
+our @headgears_lut;
+our %items_control;
+our %items_lut;
+our %itemSlotCount_lut;
+our %itemsDesc_lut;
+our %itemTypes_lut;
+our %itemSlots_lut;
+our %maps_lut;
+our %masterServers;
+our %mon_control;
+our %monsters_lut;
+our %npcs_lut;
+our %packetDescriptions;
+our %portals_los;
+our %portals_lut;
+our %priority;
+our %responses;
+our %routeWeights;
+our %pickupitems;
+our %rpackets;
+our %sex_lut;
+our %shop;
+our %skillsDesc_lut;
+our %skillsSP_lut;
+our %skillsLooks;
+our %skillsAilments;
+our %skillsArea;
+our %skillsEncore;
+our %skillsState;
+our %skillsStatus;
+our %spells_lut;
+our %emotions_lut;
+our %timeout;
+our %jobs_lut;
 %jobs_lut = (
 	0 => 'Novice',
 	1 => 'Swordsman',
@@ -296,11 +296,11 @@ our %jobs_lut :shared;
 	6015 => 'High Filir 2',
 	6016 => 'High Vanilmirth 2'
 );
-our %descriptions :shared;
-our %overallAuth :shared;
+our %descriptions;
+our %overallAuth;
 
 # AI
-our $AI :shared;
+our $AI;
 # our @ai_seq;
 # our @ai_seq_args;
 # our %ai_v;
@@ -309,31 +309,31 @@ our $AI :shared;
 # our $AI_forcedOff;
 
 # Game state
-our $accountID :shared;
+our $accountID;
 # our $cardMergeIndex;
 # our @cardMergeItemsID;
 # our @chars;
 # our @chars_old;
 # our %cart;
-our %field :shared;
-our $field :shared;
+our %field;
+our $field;
 # our @friendsID;
 # our %friends;
 # our %homunculus;
 # our %incomingFriend;
 # our $itemsList;
 # our @itemsID;
-our %items :shared;
-our $monstersList :shared;
+our %items;
+our $monstersList;
 # our @monstersID;
-our %monsters :shared;
+our %monsters;
 # our @npcsID;
-our %npcs :shared;
-our @playersID :shared;
-our %players :shared;
+our %npcs;
+our @playersID;
+our %players;
 # our @portalsID;
 # our @portalsID_old;
-our %portals :shared;
+our %portals;
 # our %portals_old;
 # our @storeList;
 # our $currentChatRoom;
@@ -347,8 +347,8 @@ our %portals :shared;
 # our @arrowCraftID;
 # our %guild;
 # our %incomingGuild;
-our @spellsID :shared;
-our %spells :shared;
+our @spellsID;
+our %spells;
 # our @unknownPlayers;
 # our @unknownNPCs;
 # our $statChanged;
@@ -358,12 +358,12 @@ our %spells :shared;
 # our %incomingDeal;
 # our %outgoingDeal;
 # our @identifyID;
-our $playersList :shared;
-our $npcsList :shared;
-our $petsList :shared;
-our $portalsList :shared;
+our $playersList;
+our $npcsList;
+our $petsList;
+our $portalsList;
 # our @petsID;
-our %pets :shared;
+our %pets;
 # our $pvp;
 # our @venderItemList;
 # our $venderID;
@@ -394,7 +394,7 @@ our %pets :shared;
 
 # Network
 # our $remote_socket;	# Unused, but required for outdated plugins
-our $net :shared;
+our $net;
 # our $messageSender;
 # our $charServer;
 # our $conState;
@@ -403,7 +403,7 @@ our $net :shared;
 # our $ipc;
 # our $bus;
 # our $lastPacketTime;
-our $masterServer :shared;
+our $masterServer;
 # our $incomingMessages;
 # our $outgoingClientMessages;
 # our $lastswitch;
@@ -412,10 +412,10 @@ our $masterServer :shared;
 
 
 # Interface
-our $interface :shared;
-our $command :shared;
-our $log :shared;
-our $quit :shared;
+our $interface;
+our $command;
+our $log;
+our $quit;
 
 # Misc
 # our $reconnectCount;

@@ -13,6 +13,7 @@ package main;
 use strict;
 use Coro;
 use Coro::State;
+use Data::Dumper;
 use FindBin qw($RealBin);
 use lib "$RealBin";
 use lib "$RealBin/src";
@@ -62,9 +63,9 @@ sub __start {
 	async { $interface->mainLoop(); };
 	async { $AI->mainLoop(); };
  
-    while ((scalar Coro::State::list()) > 1) {
-    	Coro::cede();
-    }
+ 	while ((scalar Coro::State::list()) > 1) {
+		Coro::cede();
+   	}
 
 	exit 1;
 	# shutdown();

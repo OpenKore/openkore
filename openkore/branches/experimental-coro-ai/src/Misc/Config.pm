@@ -35,8 +35,6 @@ sub auth {
 	my $user = shift;
 	my $flag = shift;
 
-	lock (%overallAuth);
-
 	if ($flag) {
 		message TF("Authorized user '%s' for admin\n", $user), "success";
 	} else {
@@ -67,8 +65,6 @@ sub configModify {
 	my $key = shift;
 	my $val = shift;
 	my %args;
-
-	lock (%config);
 
 	if (@_ == 1) {
 		$args{silent} = $_[0];
@@ -117,8 +113,6 @@ sub bulkConfigModify {
 	my $silent = shift;
 	my $oldval;
 
-	lock (%config);
-
 	foreach my $key (keys %{$r_hash}) {
 		Plugins::callHook('configModify', {
 			key => $key,
@@ -144,15 +138,12 @@ sub bulkConfigModify {
 #
 # Writes %config to config.txt.
 sub saveConfigFile {
-	lock (%config);
 	FileParsers::writeDataFileIntact(Settings::getConfigFilename(), \%config);
 }
 
 sub setTimeout {
 	my $timeout = shift;
 	my $time = shift;
-
-	lock (%timeout);
 
 	message TF("Timeout '%s' set to %s (was %s)\n", $timeout, $time, $timeout{$timeout}{timeout}), "info";
 	$timeout{$timeout}{'timeout'} = $time;

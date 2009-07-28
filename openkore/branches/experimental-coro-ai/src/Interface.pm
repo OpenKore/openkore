@@ -82,6 +82,7 @@ sub mainLoop {
 		$command->check_timed_out_cmd();
 		Coro::cede();
 	}
+	message T("Exiting Interface...\n"), "system";
 }
 
 ##
@@ -282,7 +283,6 @@ sub errorDialog {
 	my $self = shift;
 	my $message = shift;
 	my $fatal = shift;
-	lock($self);
 	$fatal = 1 unless defined $fatal;
 
 	$self->writeOutput("error", "$message\n", "error");

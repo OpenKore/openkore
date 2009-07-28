@@ -91,33 +91,33 @@ our $welcomeText = TF("Welcome to %s.", $NAME);
 
 
 # Data file folders.
-our @controlFolders :shared;
-our @tablesFolders :shared;
-our @pluginsFolders :shared;
+our @controlFolders;
+our @tablesFolders;
+our @pluginsFolders;
 # The registered data files.
-our $files :shared;
+our $files;
 # System configuration.
-our %sys :shared;
+our %sys;
 
-our $fields_folder :shared;
-our $logs_folder :shared;
+our $fields_folder;
+our $logs_folder;
 
-our $config_file :shared;
-our $mon_control_file :shared;
-our $items_control_file :shared;
-our $shop_file :shared;
-our $recvpackets_name :shared;
+our $config_file;
+our $mon_control_file;
+our $items_control_file;
+our $shop_file;
+our $recvpackets_name;
 
-our $chat_log_file :shared;
-our $storage_log_file :shared;
-our $shop_log_file :shared;
-our $sys_file :shared;
-our $monster_log_file :shared;
-our $item_log_file :shared;
+our $chat_log_file;
+our $storage_log_file;
+our $shop_log_file;
+our $sys_file;
+our $monster_log_file;
+our $item_log_file;
 
-our $interface_name :shared;
-our $lockdown :shared;
-our $no_connect :shared;
+our $interface_name;
+our $lockdown;
+our $no_connect;
 
 
 my $pathDelimiter = ($^O eq 'MSWin32') ? ';' : ':';
@@ -140,22 +140,6 @@ my $pathDelimiter = ($^O eq 'MSWin32') ? ';' : ':';
 # If the arguments are not correct, then an ArgumentException is thrown.
 sub parseArguments {
 	my %options;
-
-	lock ($fields_folder);
-	lock ($logs_folder);
-	lock ($config_file);
-	lock ($mon_control_file);
-	lock ($items_control_file);
-	lock ($shop_file);
-	lock ($chat_log_file);
-	lock ($storage_log_file);
-	lock ($sys_file);
-	lock ($interface_name);
-	lock ($lockdown);
-	lock ($shop_log_file);
-	lock ($monster_log_file);
-	lock ($item_log_file);
-	lock ($files);
 
 	undef $fields_folder;
 	undef $logs_folder;
@@ -280,7 +264,6 @@ sub getUsageText {
 #
 # Set the folders in which to look for control files.
 sub setControlFolders {
-	lock (@controlFolders);
 	@controlFolders = @_;
 }
 
@@ -293,7 +276,6 @@ sub getControlFolders {
 #
 # Set the folders in which to look for table files.
 sub setTablesFolders {
-	lock (@tablesFolders);
 	@tablesFolders = @_;
 }
 
@@ -306,8 +288,6 @@ sub getTablesFolders {
 #
 # Set the folders in which to look for plugins.
 sub setPluginsFolders {
-	lock (@pluginsFolders);
-	
 	@pluginsFolders = @_;
 }
 
@@ -359,9 +339,6 @@ sub addTableFile {
 # or Settings::addTableFile().
 sub removeFile {
 	my ($handle) = @_;
-	
-	lock ($files);
-	
 	$files->remove($files->get($handle));
 }
 
@@ -449,8 +426,6 @@ sub loadByRegexp {
 	my ($regexp, $progressHandler) = @_;
 	my @result;
 	
-	lock ($files);
-	
 	foreach my $object (@{$files->getItems()}) {
 		if ($object->{name} =~ /$regexp/) {
 			loadByHandle($object->{index}, $progressHandler);
@@ -466,8 +441,6 @@ sub loadByRegexp {
 # and exceptions.
 sub loadAll {
 	my ($progressHandler) = @_;
-	
-	lock ($files);
 	
 	foreach my $object (@{$files->getItems()}) {
 		loadByHandle($object->{index}, $progressHandler);
@@ -520,8 +493,6 @@ sub writeSysConfig {
 # in all possible locations, as specified by earlier calls
 # to Settings::setControlFolders().
 sub getControlFilename {
-	lock (@controlFolders);
-	
 	return _findFileFromFolders($_[0], \@controlFolders);
 }
 
@@ -534,14 +505,10 @@ sub getControlFilename {
 # in all possible locations, as specified by earlier calls
 # to Settings::setTabblesFolders().
 sub getTableFilename {
-	lock (@tablesFolders);
-	
 	return _findFileFromFolders($_[0], \@tablesFolders);
 }
 
 sub getConfigFilename {
-	lock ($config_file);
-	
 	if (defined $config_file) {
 		return $config_file;
 	} else {
@@ -553,9 +520,6 @@ sub setConfigFilename {
 	my ($new_filename) = @_;
 	my $current_filename = getConfigFilename();
 	
-	lock ($files);
-	lock ($config_file);
-	
 	foreach my $object (@{$files->getItems()}) {
 		if ($object->{name} eq $current_filename) {
 			$object->{name} = $new_filename;
@@ -566,8 +530,6 @@ sub setConfigFilename {
 }
 
 sub getMonControlFilename {
-	lock ($mon_control_file);
-	
 	if (defined $mon_control_file) {
 		return $mon_control_file;
 	} else {
@@ -576,8 +538,6 @@ sub getMonControlFilename {
 }
 
 sub getItemsControlFilename {
-	lock ($items_control_file);
-	
 	if (defined $items_control_file) {
 		return $items_control_file;
 	} else {
@@ -586,8 +546,6 @@ sub getItemsControlFilename {
 }
 
 sub getShopFilename {
-	lock ($shop_file);
-	
 	if (defined $shop_file) {
 		return $shop_file;
 	} else {
@@ -596,8 +554,6 @@ sub getShopFilename {
 }
 
 sub getSysFilename {
-	lock ($sys_file);
-	
 	if (defined $sys_file) {
 		return $sys_file;
 	} else {
@@ -606,16 +562,11 @@ sub getSysFilename {
 }
 
 sub getRecvPacketsFilename {
-	lock ($recvpackets_name);
-	
 	return getTableFilename($recvpackets_name || "recvpackets.txt");
 }
 
 sub setRecvPacketsName {
 	my ($new_name) = @_;
-	
-	lock ($recvpackets_name);
-	lock ($files);
 	
 	if ($recvpackets_name ne $new_name) {
 		my $current_filename = getRecvPacketsFilename();
@@ -680,8 +631,6 @@ sub _processSysConfig {
 	my ($writeMode) = @_;
 	my ($f, @lines, %keysNotWritten);
 	my $sysFile = getSysFilename();
-
-	lock (%sys);
 
 	return if (!$sysFile || !open($f, "<:utf8", $sysFile));
 	

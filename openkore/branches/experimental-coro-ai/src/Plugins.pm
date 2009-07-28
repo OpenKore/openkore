@@ -56,8 +56,8 @@ our $current_plugin;
 # When a plugin is being (re)loaded, the the plugin's folder is set in this variable.
 our $current_plugin_folder;
 
-our @plugins :shared;
-our %hooks :shared;
+our @plugins;
+our %hooks;
 
 use enum qw(HOOKNAME INDEX);
 use enum qw(CALLBACK USER_DATA);
@@ -77,8 +77,6 @@ use enum qw(CALLBACK USER_DATA);
 # Throws Plugin::DeniedException if the plugin system refused to load a plugin. This can
 # happen, for example, if it detects that a plugin is incompatible.
 sub loadAll {
-	lock (%sys);
-
 	if (!exists $sys{'loadPlugins'}) {
 		message T("Loading all plugins (by default)...\n", 'plugins');
 	} elsif (!$sys{'loadPlugins'}) {
@@ -189,8 +187,6 @@ sub unload {
 	my $name = shift;
 	my $i = 0;
 
-	lock (@plugins);
-
 	foreach my $plugin (@plugins) {
 		if ($plugin && $plugin->{name} eq $name) {
 			$plugin->{unload_callback}->() if (defined $plugin->{unload_callback});
@@ -209,8 +205,6 @@ sub unload {
 # Unloads all registered plugins.
 sub unloadAll {
 	my $name = shift;
-
-	lock (@plugins);
 
 	foreach my $plugin (@plugins) {
 		next if (!$plugin);
@@ -231,8 +225,6 @@ sub unloadAll {
 sub reload {
 	my $name = shift;
 	my $i = 0;
-
-	lock (@plugins);
 
 	foreach my $plugin (@plugins) {
 		if ($plugin && $plugin->{name} eq $name) {
@@ -272,8 +264,6 @@ sub register {
 	my $name = shift;
 	return 0 if registered($name);
 	
-	lock (@plugins);
-
 	my %plugin_info = (
 		name => $name,
 		description => shift,
@@ -294,8 +284,6 @@ sub register {
 # Checks whether a plugin is registered.
 sub registered {
 	my $name = shift;
-
-	lock (@plugins);
 
 	foreach (@plugins) {
 		return 1 if ($_ && $_->{name} eq $name);
@@ -335,8 +323,6 @@ sub registered {
 # }
 sub addHook {
 	my ($hookName, $callback, $user_data) = @_;
-
-	lock (%hooks);
 
 	my $hookList = $hooks{$hookName} ||= new ObjectList();
 
@@ -413,8 +399,6 @@ sub delHook {
 	} elsif (isa($handle, 'Plugins::HookHandle') && defined $handle->[HOOKNAME]) {
 		my $hookName = quarkToString($handle->[HOOKNAME]);
 	
-		lock (%hooks);
-
 		my $hookList = $hooks{$hookName};
 		if ($hookList) {
 			my $entry = $hookList->get($handle->[INDEX]);
@@ -457,8 +441,6 @@ sub delHooks {
 sub callHook {
 	my ($hookName, $argument) = @_;
 	
-	lock (%hooks);
-
 	my $hookList = $hooks{$hookName};
 	if ($hookList) {
 		my $items = $hookList->getItems();
@@ -474,9 +456,6 @@ sub callHook {
 # Check whether there are any hooks registered for the specified hook name.
 sub hasHook {
 	my ($hookName) = @_;
-
-	lock (%hooks);
-
 	return defined $hooks{$hookName};
 }
 

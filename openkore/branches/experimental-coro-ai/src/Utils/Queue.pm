@@ -91,7 +91,7 @@ sub insert {
     }
 
     # Add new items to the queue
-    push(@$queue, map { shared_clone($_) } @_);
+    push(@$queue, map { $_ } @_);
 
     # Add previous items back onto the queue
     push(@$queue, @tmp);

@@ -19,7 +19,6 @@ package SmartCallbackList;
 
 use strict;
 use Coro;
-use Utils::Splice qw(splice_shared);
 use Carp::Assert;
 use Scalar::Util;
 

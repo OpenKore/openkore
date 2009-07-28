@@ -36,7 +36,7 @@ XSTools::bootModule("Translation");
 
 
 our @EXPORT = qw(T TF);
-our $_translation :shared;
+our $_translation;
 
 use constant DEFAULT_PODIR => "$RealBin/src/po";
 

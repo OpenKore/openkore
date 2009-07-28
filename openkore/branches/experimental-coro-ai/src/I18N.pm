@@ -59,7 +59,6 @@ define_alias('Thai'                => 'CP874');
 #
 # This symbol is exportable.
 sub bytesToString {
-	lock ($config{serverEncoding});
 	return Encode::decode($config{serverEncoding} || 'Western', $_[0]);
 }
 
@@ -76,7 +75,6 @@ sub bytesToString {
 #
 # This symbol is exportable.
 sub stringToBytes {
-	lock ($config{serverEncoding});
 	return Encode::encode($config{serverEncoding} || 'Western', $_[0]);
 }
 

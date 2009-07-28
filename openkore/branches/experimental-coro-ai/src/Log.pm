@@ -253,9 +253,6 @@ sub processMsg {
 sub message {
 	my ($message, $domain, $level) = @_;
 
-	lock ($log);
-	lock (%config);
-
 	$level = 5 if existsInList($config{squelchDomains}, $domain);
 	$level = 0 if existsInList($config{verboseDomains}, $domain);
 	return $log->processMsg("message",	# type
@@ -274,7 +271,6 @@ sub message {
 # Prints a warning message. It warns the user that a possible non-fatal error has occured or will occur.
 # See the description for Log.pm for more details about the parameters.
 sub warning {
-	lock ($log);
 	return $log->processMsg("warning",
 		$_[0],
 		$_[1],
@@ -303,7 +299,6 @@ sub warning {
 # `l`
 # See the description for Log.pm for more details about the parameters.
 sub error {
-	lock ($log);
 	return $log->processMsg("error",
 		$_[0],
 		$_[1],
@@ -321,8 +316,6 @@ sub error {
 # Prints a debugging message. See the description for Log.pm for more details about the parameters.
 sub debug {
 	my $level = $_[2];
-	lock ($log);
-	lock (%config);
 
 	$level = 1 if (!defined $level);
 	$level = 0 if (existsInList($config{debugDomains}, $_[1]));
@@ -381,7 +374,7 @@ sub debug {
 sub addHook {
 	my ($r_func, $user_data) = @_;
 	my %hook;
-	lock ($log);
+
 	$hook{func} = $r_func;
 	$hook{user_data} = $user_data;
 	my $ret = binAdd(@{$log->{hooks}}, \%hook);
@@ -401,7 +394,6 @@ sub addHook {
 # Log::message("Hello World", "MyDomain");	# hook() is NOT called
 sub delHook {
 	my $ID = shift;
-	lock ($log);
 	delete $log->{hooks}[$ID];
 }
 
@@ -421,7 +413,7 @@ sub parseLogToFile {
 	foreach my $domain (@domains) {
 		($domain,$files) = split ('=', $domain);
 		my @filesArray = split (',', $files);
-		$list->{$domain} = &share([]);
+		$list->{$domain} = [];
 		foreach my $file (@filesArray) {
 			push(@{$list->{$domain}}, $file);
 		}
@@ -433,8 +425,6 @@ sub parseLogToFile {
 #
 # This function should be called everytime config.txt is (re)loaded.
 sub initLogFiles {
-	lock ($log);
-	lock (%config);
 	parseLogToFile($config{logToFile_Messages}, %{$log->{messageFiles}}) if $config{logToFile_Messages};
 	parseLogToFile($config{logToFile_Warnings}, %{$log->{warningFiles}}) if $config{logToFile_Warnings};
 	parseLogToFile($config{logToFile_Errors}, %{$log->{errorFiles}}) if $config{logToFile_Errors};

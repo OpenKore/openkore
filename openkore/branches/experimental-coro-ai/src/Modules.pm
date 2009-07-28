@@ -38,8 +38,8 @@ use Config;
 use FindBin;
 use File::Spec;
 
-our %modules :shared;
-our @queue :shared;
+our %modules;
+our @queue;
 
 
 sub import {

@@ -32,6 +32,8 @@ use Scalar::Util qw(reftype refaddr blessed);
 # Others (Kore related)
 use Modules 'register';
 use Globals qw($quit);
+use Log qw(message warning error debug);
+use Translation qw(T TF);
 use AI::AImoduleManager;
 use AI::EnvironmentQueue;
 use AI::TaskManager;
@@ -104,6 +106,7 @@ sub mainLoop {
 		$self->{task_manager}->iterate() if ($self->{state}  > AI::STATE_OFF);
 		cede;
 	}
+	message T("Exiting AI...\n"), "system";
 }
 
 ##

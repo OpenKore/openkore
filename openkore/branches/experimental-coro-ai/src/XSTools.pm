@@ -30,7 +30,7 @@ import Exception::Class (
 	'XSTools::MakefileNotFound'
 );
 
-our @makefilePaths :shared;
+our @makefilePaths;
 
 ##
 # void XSTools::bootstrap()
