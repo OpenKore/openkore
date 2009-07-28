@@ -1,0 +1,40 @@
+Introduction
+------------
+This folder contains the parts of OpenKore that are written in C and C++,
+as well as Perl XS wrappers which allows Perl programs to be able to use
+those C and C++ APIs.
+
+
+Subfolders
+----------
+PathFinding/
+	Contains:
+	- C and C++ source files for the OpenKore pathfinding algorithm.
+	- Perl XS wrapper for the C/C++ pathfinding API.
+
+Translation/
+	Code for internationalization and localization (translation)
+	support in OpenKore.
+
+PaddedPackets/
+	Padded packets emulator. See README.TXT in this folder for more
+	information.
+
+utils/
+	Contains:
+	- HttpReader, an asynchronous HTTP client.
+	- The Whirlpool hashing function.
+	- Rijndael (AES) encryption.
+
+unix/
+	Contains Unix-specific functions and their associated Perl XS
+	wrappers.
+
+win32/
+	Contains:
+	- Win32-specific functions.
+	- Their associated Perl XS wrappers.
+	- The source code for NetRedirect.dll
+
+misc/
+	Contains all kinds of misc functions.
