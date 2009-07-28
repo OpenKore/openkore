@@ -1,0 +1,57 @@
+alb_ship.rsw#Alberta Ship#
+alberta.rsw#Alberta#
+alberta_in.rsw#Inside Alberta#
+alb2trea.rsw# Alberta Island#
+aldebaran.rsw# Al De Baran#
+aldeba_in.rsw#Inside Al De Baran#
+gef_tower.rsw#Geffen Tower#
+geffen.rsw#Geffen#
+geffen_in.rsw#Inside Geffen#
+moc_castle.rsw#Morroc Castle#
+moc_ruins.rsw#Morroc Ruins#
+morocc.rsw#Morroc Town#
+morocc_in.rsw#Inside Morroc#
+pay_arche.rsw#Archer Village#
+payon.rsw#Payon Town#
+payon_in01.rsw#Inside Payon#
+payon_in02.rsw#Inside Payon#
+prontera.rsw#Prontera City#
+prt_in.rsw#Inside Prontera#
+prt_castle.rsw#Prontera Castle#
+prt_church.rsw#the Santuary#
+izlude.rsw#Izlude Town#
+izlude_in.rsw#Inside Izlude#
+izlu2dun.rsw#Byalan Island#
+monk_in.rsw#Inside St.Abbey#
+prt_are_in.rsw#Waiting room#
+arena_room.rsw#Waiting room#
+prt_arena01.rsw#ARENA#
+prt_are01.rsw#ARENA#
+comodo.rsw#Comodo#
+cmd_in01.rsw#Inside Comodo#
+cmd_in02.rsw#Inside Comodo#
+yuno.rsw#Yuno, the capital of Schwarzwald Republic#
+yuno_in01.rsw#Inside Yuno#
+yuno_in02.rsw#Inside the Sage Castle#
+yuno_in03.rsw#Inside Yuno#
+yuno_in04.rsw#Republic Library#
+yuno_in05.rsw#Power Plant of Ymir's Heart#
+amatsu.rsw#Amatsu, the Land of Destiny#
+ama_in01.rsw#Inside Amatsu#
+ama_in02.rsw#Inside Himezi Castle#
+gonryun.rsw#Gonryun, the Hermit Land#
+gon_in.rsw#Inside Gonryun#
+sec_in01.rsw#Inside Valhalla#
+sec_in02.rsw#Inside Valhalla#
+sec_pri.rsw#Room of Meditation (Valhalla Prison)#
+payo1.rsw#Neo Payon Town#
+umbala.rsw#Utan Tribe Umbala#
+louyang.rsw#Castle of Dragon#
+lou_in02.rsw#Inside Castle of Dragon#
+lou_in01.rsw#Inside Castle of Dragon#
+rachel.rsw#Rachel#
+ra_in01.rsw#Inside Rachel#
+lighthalzen.rsw#Lightharlzen, the City-State of Prosperity#
+lhz_in01.rsw#Rekenber Corporation Headquarters#
+lhz_in02.rsw#Inside Lighthalzen#
+lhz_in03.rsw#Inside Lighthalzen#

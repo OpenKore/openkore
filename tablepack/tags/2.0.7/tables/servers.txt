@@ -1,0 +1,1295 @@
+# This file contains information about master servers.
+
+#####################
+# Official RO Servers
+
+[Brazil - bRO: Odin]
+ip 200.229.49.10
+port 6900
+master_version 22
+version 1
+serverType 0
+secureLogin 1
+secureLogin_type 0
+secureLogin_requestCode
+secureLogin_account 0
+serverEncoding Western
+gameGuard 2
+storageEncryptKey 0x050B6F79, 0x0202C179, 0x0E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+
+[Brazil - bRO: Thor]
+ip 200.229.49.39
+port 6900
+master_version 22
+version 1
+serverType 0
+secureLogin 1
+secureLogin_type 0
+secureLogin_requestCode
+secureLogin_account 0
+serverEncoding Western
+gameGuard 2
+storageEncryptKey 0x050B6F79, 0x0202C179, 0x0E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+
+[Europe - euRO]
+ip 217.68.157.42
+port 6900
+master_version 20
+version 1
+chatLangCode 1
+patchserver wpatch.euro-ro.net
+patchpath /patch02
+serverType 22
+serverEncoding Western
+storageEncryptKey 0x050B6F79, 0x0202C179, 0x0E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+paddedPackets 0
+paddedPackets_attackID 0x89
+paddedPackets_skillUseID 0x113
+recvpackets recvpackets-euro.txt
+
+[India - inRO]
+ip 202.92.9.35
+port 6900
+version 1
+master_version 21
+serverType 0
+secureLogin 1
+secureLogin_type 0
+secureLogin_requestCode
+secureLogin_account 0
+serverEncoding Western
+gameGuard 1
+
+[Indonesia - idRO: Thor]
+ip 202.43.167.66
+port 6900
+master_version 12
+version 2
+serverType 22
+secureLogin 1
+secureLogin_type 0
+secureLogin_requestCode
+secureLogin_account 0
+serverEncoding Western
+storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x007D8D6B, 0x08CB9ED9
+recvpackets recvpackets-idro.txt
+
+[Indonesia - idRO Free Server: Legend]
+ip 202.43.167.66
+port 6900
+master_version 12
+version 2
+serverType 22
+secureLogin 1
+secureLogin_type 0
+secureLogin_requestCode
+secureLogin_account 0
+serverEncoding Western
+storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x007D8D6B, 0x08CB9ED9
+gameGuard 1
+recvpackets recvpackets-idro.txt
+
+[Indonesia - idRO Free Server: Fun and Chat]
+ip 202.93.18.250
+port 6900
+master_version 13
+version 2
+serverType 22
+secureLogin 1
+secureLogin_type 0
+secureLogin_requestCode
+secureLogin_account 0
+serverEncoding Western
+storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x007D8D6B, 0x08CB9ED9
+gameGuard 1
+recvpackets recvpackets-idro.txt
+
+[Indonesia - idRO: Pvp Server]
+ip 202.93.18.251
+port 6900
+master_version 34
+version 2
+serverType 21
+secureLogin 1
+secureLogin_type 0
+secureLogin_account 0
+serverEncoding Western
+storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x007D8D6B, 0x08CB9ED9
+recvpackets recvpackets-idro.txt
+
+[International - iRO: Chaos/Loki/Iris]
+ip 38.144.194.2
+port 6900
+master_version 1
+version 18
+serverType 22
+serverEncoding Western
+paddedPackets 0
+paddedPackets_attackID 0x72
+paddedPackets_skillUseID 0xF5
+recvpackets recvpackets-iro.txt
+
+[International - iRO: Sakray]
+ip 38.144.194.2
+port 6900
+master_version 14
+version 18
+serverType 22
+serverEncoding Western
+paddedPackets 0
+paddedPackets_attackID 0x72
+paddedPackets_skillUseID 0xF5
+recvpackets recvpackets-iro.txt
+
+[International - iRO: Valkyrie]
+ip 38.144.194.21
+port 6900
+master_version 1
+version 18
+serverType 22
+serverEncoding Western
+paddedPackets 0
+paddedPackets_attackID 0x72
+paddedPackets_skillUseID 0xF5
+recvpackets recvpackets-iro.txt
+
+[Japan - jRO: Verdandi]
+ip 61.215.212.13
+port 6900
+master_version 3
+version 10
+serverType 7
+secureLogin 1
+serverEncoding Japanese
+
+[Korea - kRO]
+ip 211.172.247.192
+port 6900
+master_version 0
+version 19
+serverType 8_1
+serverEncoding Korean
+
+[Malaysia - mRO: Main Server: Balder]
+ip 202.71.105.21
+port 6900
+master_version 16
+version 1004
+serverType 0
+serverEncoding Western
+storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+
+[Malaysia - mRO (English): Aegir/Idun]
+ip 202.71.105.23
+port 6900
+master_version 17
+version 1004
+serverType 0
+serverEncoding Western
+storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+
+[Malaysia - mRO (English Free Server): Prontera]
+ip 202.71.105.29
+port 6900
+master_version 17
+version 211
+serverType 0
+serverEncoding Western
+storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+PINEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+recvpackets recvpackets-iro.txt
+
+[Malaysia - mRO: Sakray]
+ip 202.71.105.27
+port 6900
+master_version 16
+version 102
+serverType 0
+serverEncoding Western
+storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+
+[Philippines - pRO: New Chaos]
+ip 202.57.118.232
+port 6900
+master_version 15
+version 1
+secureLogin 1
+secureLogin_type 0
+secureLogin_requestCode
+secureLogin_account 0
+serverType 22
+patchserver wpatch.ragnarok.com.ph
+patchpath /patch50
+storageEncryptKey 0x050B6F79, 0x0202C179, 0x0E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+serverEncoding Tagalog
+charBlockSize 108
+recvpackets recvpackets-pro.txt
+
+[Philippines - pRO: Valhalla]
+ip 202.57.118.234
+port 6900
+master_version 18
+version 1
+secureLogin 1
+secureLogin_type 0
+secureLogin_requestCode
+secureLogin_account 0
+serverType 22
+patchserver wpatch.ragnarok.com.ph
+patchpath /patch50
+storageEncryptKey 0x050B6F79, 0x0202C179, 0x0E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+serverEncoding Tagalog
+charBlockSize 108
+gameGuard 1
+recvpackets recvpackets-pro.txt
+
+[Philippines - pRO: Valkyrie]
+ip 202.57.118.235
+port 6900
+master_version 15
+version 1
+secureLogin 1
+secureLogin_type 0
+secureLogin_requestCode
+secureLogin_account 0
+serverType 22
+patchserver wpatch.ragnarok.com.ph
+patchpath /patch50
+storageEncryptKey 0x050B6F79, 0x0202C179, 0x0E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+serverEncoding Tagalog
+charBlockSize 108
+gameGuard 1
+recvpackets recvpackets-pro.txt
+
+[Philippines - pRO: Sakray]
+ip 202.57.118.232
+port 6900
+master_version 18
+version 1
+secureLogin 1
+secureLogin_type 0
+secureLogin_requestCode
+secureLogin_account 0
+serverType 22
+patchserver wpatch.ragnarok.com.ph
+patchpath /patch50
+storageEncryptKey 0x050B6F79, 0x0202C179, 0x0E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+serverEncoding Tagalog
+charBlockSize 108
+recvpackets recvpackets-pro-sakray.txt
+
+## http://www.raggame.ru/
+[Russia - rRO]
+ip 81.177.13.7
+port 6900
+master_version 25
+version 112112
+serverType 0
+serverEncoding Russian
+pauseCharServer 1
+patchserver web.raggame.ru
+patchpath /patch02
+recvpackets recvpackets-rro.txt
+field_morocc morocc-old.fld
+gameGuard 1
+
+[Taiwan - twRO: Alfheim (Chaos, Loki, Lidia, Sakray, Aegir, Isa, Idun)]
+ip 61.220.60.11
+port 6900
+master_version 5
+version 211
+serverType 21
+serverEncoding Traditional Chinese
+storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+recvpackets recvpackets-twRO.txt
+
+[Taiwan - twRO: Free]
+ip 220.130.113.238
+port 6900
+master_version 5
+version 211
+serverType 22
+serverEncoding Traditional Chinese
+storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+PINEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+recvpackets recvpackets-twRO.txt
+
+[Taiwan - twRO: Muspelheim (Odin, Thor, Iris, Balder, Geiriod, Penril)]
+ip 61.220.56.132
+port 6900
+master_version 5
+version 211
+serverType 21
+serverEncoding Traditional Chinese
+storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+recvpackets recvpackets-twRO.txt
+
+[Taiwan - twRO: Test]
+ip 61.220.56.47
+port 6900
+master_version 5
+version 211
+serverType 22
+serverEncoding Traditional Chinese
+storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+PINEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+recvpackets recvpackets-twRO.txt
+
+## www.ragnarok.in.th/
+[Thailand - tRO Main server (Norse)]
+ip 203.144.244.5
+port 6900
+master_version 7
+version 24
+serverType 21
+secureLogin 3
+secureLogin_type 0
+secureLogin_account 0
+gameLogin_packet 0x275
+patchserver wpatch.ragnarok.in.th
+patchpath /patch70
+serverEncoding Thai
+recvpackets recvpackets-tro.txt
+
+[Thailand - tRO Free life server (Alice(new), Poring)]
+ip 203.144.244.121
+port 6900
+master_version 7
+version 24
+serverType 21
+secureLogin 3
+secureLogin_type 0
+secureLogin_account 0
+gameLogin_packet 0x275
+pauseCharServer 1
+patchserver wpatch.ragnarok.in.th
+patchpath /patch70
+serverEncoding Thai
+recvpackets recvpackets-tro.txt
+
+[Thailand - tRO Free life server (Yoyo, Picky)]
+ip 203.144.244.100
+port 6900
+master_version 7
+version 24
+serverType 21
+secureLogin 3
+secureLogin_type 0
+secureLogin_account 0
+gameLogin_packet 0x275
+patchserver wpatch.ragnarok.in.th
+patchpath /patch70
+serverEncoding Thai
+recvpackets recvpackets-tro.txt
+
+## http://www.rovietnam.com.vn/
+[Vietnam - vRO: SD]
+ip 222.255.122.36
+port 6900
+master_version 26
+version 1
+serverType 12
+secureLogin 1
+secureLogin_type 0
+secureLogin_requestCode
+secureLogin_account 0
+serverEncoding Western
+paddedPackets 1
+paddedPackets_attackID 0x0190
+paddedPackets_skillUseID 0x0085
+
+## http://www.rovietnam.com.vn/
+[Vietnam - vRO: Thu Thach]
+ip 222.255.122.20
+port 6900
+master_version 32
+version 1
+serverType 13
+secureLogin 1
+secureLogin_type 0
+secureLogin_requestCode
+secureLogin_account 0
+serverEncoding Western
+paddedPackets 1
+paddedPackets_attackID 0x0193
+paddedPackets_skillUseID 0x0089
+
+####################
+# Private RO Servers
+
+[Localhost]
+ip 127.0.0.1
+port 6900
+master_version 1
+version 20
+serverType 0
+serverEncoding Western
+
+## http://acro.animeconnection.net/
+[acRO Private Server]
+ip 203.116.44.98
+port 6900
+master_version 0
+version 20
+serverType 3
+serverEncoding Western
+
+## http://www.aerogaming.net/
+[aeRO Private Server]
+ip 72.36.236.2
+port 5000
+master_version 1
+version 20
+serverType 0
+serverEncoding Western
+
+## http://aero2.nu/
+[aeRO2 Private Server]
+ip 72.20.3.62
+port 2485
+master_version 0
+version 20
+serverType 4
+serverEncoding Western
+
+[AgonyRO]
+ip 72.29.77.223
+port 6901
+master_version 1
+version 20
+serverType 4
+serverEncoding Western
+
+## http://www.ancientro.com/
+[AncientRO (Low Rate) Private Server]
+ip 64.62.141.102
+port 16425
+master_version 18
+version 20
+serverType 9
+serverEncoding Western
+charBlockSize 108
+
+[AncientRO (Mid Rate) Private Server]
+ip 64.62.141.134
+master_version 18
+port 16742
+serverEncoding Western
+serverType 9
+version 20
+charBlockSize 108
+
+## http://www.ancientro.com/
+[AncientRO (High Rate) Private Server]
+ip ancientro.no-ip.info
+port 6900
+master_version 18
+version 20
+serverType 9
+serverEncoding Western
+
+## http://www.andzro.org/
+[ViciousRO Private Server]
+ip viciousro.no-ip.org
+port 6904
+master_version 1
+version 20
+serverType 9
+serverEncoding Western
+
+## http://angelusonline.net/
+[AngelusRO Private Server]
+ip 66.240.252.14
+port 6900
+master_version 20
+version 20
+serverType 5
+serverEncoding Western
+
+## http://animaro.com/
+[AnimaRO Private Server]
+ip 75.126.157.82
+port 6900
+master_version 0
+version 20
+serverType 0
+serverEncoding Western
+
+## http://www.anthemro.com/
+[AnthemRO Private Server]
+ip 70.38.11.218
+port 6900
+master_version 0
+version 20
+serverType 0
+serverEncoding Western
+recvpackets recvpackets-anthemro.txt
+
+## http://www.atlantis-ro.net/
+[AtlantisRO Private Server]
+ip 209.190.27.146
+master_version 18
+port 6900
+private 1
+serverEncoding Western
+serverType 9
+version 20
+
+## http://excalibur-ro.com/
+[AvalonRO Private Server]
+ip 206.222.29.186
+port 6900
+master_version 0
+version 0
+serverType 0
+serverEncoding Western
+
+## http://www.aiyumi-ro.com/
+[AyumiRO (Low Rate) Private Server]
+ip tbgro.no-ip.org
+port 5111
+master_version 20
+version 0
+serverType 5
+serverEncoding Western
+
+## http://baka-gaming.net
+[BakaRO Private Server]
+ip 72.36.225.26
+port 1069
+master_version 14
+version 20
+serverType 9
+serverEncoding Western
+
+## http://celestialro.net/
+[CelestiaRO Private Server]
+ip celestiaro.no-ip.info
+port 6575
+master_version 16
+version 70326
+serverEncoding Western
+serverType 9
+charBlockSize 108
+
+## http://www.ceres-ro.net/
+[CeresRO (Low Rate Server Mahoro) Private Server]
+ip 72.232.216.90
+port 9601
+master_version 18
+version 20
+serverType 9
+serverEncoding Western
+
+## http://www.ceres-ro.net/
+[CeresRO (High Rate Server Minawa) Private Server]
+ip 72.232.216.90
+port 8601
+master_version 18
+version 20
+serverType 9
+serverEncoding Western
+
+## http://cp.crescendo-ro.com/
+[Crescendo Private Server]
+ip 206.51.224.5
+port 6990
+master_version 14
+version 18
+serverType 9
+serverEncoding Western
+
+## http://www.crossworld2.com/
+[Crossworld2 RO Private Server]
+ip 64.71.161.17
+port 6900
+master_Version 18
+version 20
+serverType 0
+serverEncoding Western
+
+## http://dark-ro.net/
+[DarkRO (Force) Private Server]
+ip 208.101.47.26
+port 6925
+master_version 16
+version 0
+serverType 9
+serverEncoding Western
+
+## http://www.deliverance-online.com/invision/index.php
+[DeliveranceRO Private Server]
+ip 206.116.63.79
+port 6901
+master_version 18
+version 20
+serverType 0
+serverEncoding Western
+
+## http://www.dutchro.tk/
+[dutchRO Private Server]
+ip 195.64.88.248
+port 6900
+master_version 21
+version 20
+serverType 7
+private 1
+chatLangCode 1
+serverEncoding Western
+
+## http://www.devilish-ro.org
+[DevilishRO Private Server]
+ip 65.110.44.150
+port 6900
+master_version 0
+version 1337
+serverType 8
+serverEncoding Western
+
+## http://ebilro.nu/
+[EbilRO Private Server]
+ip 89.106.69.194
+port 6900
+version 20
+master_version 16
+serverType 3
+serverEncoding Western
+
+## http://www.envyro.com/
+[EnvyRO Private Server]
+ip 209.30.173.93
+port 4022
+version 20
+master_version 16
+serverType 5
+serverEncoding Western
+
+## http://www.ethereal-revenge.com/
+[EtherealRO Private Server]
+ip 72.232.218.138
+port 5001
+version 0
+master_version 18
+serverType 0
+serverEncoding Western
+charBlockSize 108
+
+## http://www.euphro.com/
+[EuphRO Private Server]
+ip game.euphrogame.com
+port 3872
+charBlockSize 108
+master_version 14
+serverEncoding Western
+serverType 9
+version 20
+
+# http://www.equilibriumro.com/
+[EquilibriumRO Private Server]
+ip equilibriumro.game-server.cc
+port 6908
+master_version 1
+version 18
+serverType 0
+charBlockSize 108
+
+## http://excalibur-ro.com/
+[ExcaliburRO Private Server]
+ip 206.222.28.58
+port 6900
+master_version 0
+version 0
+serverType 0
+serverEncoding Western
+
+## http://www.faithro.com/
+[FaithRO (Low Rate) Private Server]
+ip 72.232.69.18
+port 9005
+master_version 18
+version 0
+serverType 5
+serverEncoding Western
+
+## http://www.faithro.com/
+[FaithRO (High Rate) Private Server]
+ip 72.232.69.34
+port 6910
+master_version 0
+version 0
+servertype 5
+serverEncoding Western
+
+## http://www.f-ro.com/mainsite/
+[FancyRO Private Server]
+ip 209.190.23.122
+port 6900
+master_version 18
+version 122
+serverType 5
+serverEncoding Western
+
+## http://www.hellraiser.mu/
+[FunRO (Hellraiser) Private Server]
+ip www.hellraiser.mu
+port 7000
+master_version 16
+version 0
+serverType 9
+charBlockSize 108
+serverEncoding Western
+
+## http://www.pulse-ro.mu/
+[FunRO (Pulse RO) Private Server]
+ip www.pulse-ro.mu
+port 8000
+master_version 16
+version 0
+serverType 9
+charBlockSize 108
+serverEncoding Western
+
+## http://www.funro.mu/
+[FunRO (Nemesis) Private Server]
+ip www.funro.mu
+port 6000
+master_version 16
+version 0
+serverType 9
+charBlockSize 108
+serverEncoding Western
+
+## http://www.funro.mu/
+[FunRO (Taranis) Private Server]
+ip www.funro.mu
+port 5000
+master_version 16
+version 0
+serverType 9
+charBlockSize 108
+serverEncoding Western
+
+## http://utopianz.net/ro/main.php
+[Hikayu Private Server]
+ip 202.71.104.197
+port 6900
+master_version 2
+version 18
+serverType 5
+serverEncoding Western
+
+## http://www.hititro.com/
+[HititRO Private Server]
+ip 72.36.231.100
+port 6900
+master_version 7
+version 20
+serverType 4
+serverEncoding Western
+
+## http://www.freewebs.com/ipiro/
+[IpiRO Private Server]
+ip 82.42.48.136
+port 6900
+master_version 16
+version number 20
+serverType 5
+serverEncoding Western
+
+## http://k3ro.com/
+[K3RO (Dynasty) Private Server]
+ip 206.225.95.57
+port 6900
+master_version 18
+version 20
+serverType 4
+serverEncoding Western
+
+## http://kitakro.ath.cx
+[Kitakro private server]
+ip kitakro.ath.cx
+port 6900
+master_version 13
+version 20
+serverType 5
+serverEncoding Western
+
+## http://www.kore-ro.com 
+[KoreRO Private Server] 
+ip koreserver.info 
+port 6900 
+master_version 16 
+version 23 
+serverType 8_5
+private 1 
+serverEncoding Western 
+charBlockSize 108 
+recvpackets recvpackets-kRO-2009-02-25b.txt
+
+## http://www.mavero.de/
+[MaveRO Private Server]
+ip 62.75.165.110
+port 6900
+master_version 17
+version 254833758
+serverType 0
+
+## http://minorityro.com/
+[MinorityRO Private Server]
+ip 85.214.60.32
+port 6900
+master_version 0
+version 20
+secureLogin 0
+chatLangCode 0
+serverType 0
+
+## http://www.mysticalro.tk/
+[MysticalRO Private Server]
+ip mro.no-ip.org
+port 6900
+master_version 18
+version 20
+serverType 5
+serverEncoding Western
+
+## http://nlro.net/index.php
+[NamelessRO: Eclipse Private Server]
+ip 72.29.76.150
+port 6900
+master_version 14
+version 18
+serverType 4
+serverEncoding Western
+
+## http://nlro.net/index.php
+[NamelessRO: Sunrise Private Server]
+ip 72.29.76.150
+port 6901
+master_version 14
+version 18
+serverType 4
+serverEncoding Western
+
+## http://subwaytovenus.free.fr/
+[NiktoutRO (Chaos) Private Server]
+ip 208.53.156.16
+port 5100
+version 20
+master_version 14
+serverType 0
+private 1
+serverEncoding Western
+
+## http://subwaytovenus.free.fr/
+[NiktoutRO (Loki) Private Server]
+ip 66.90.73.241
+port 6904
+version 20
+master_version 14
+serverType 5
+private 1
+serverEncoding Western
+
+## http://subwaytovenus.free.fr/
+[NiktoutRO (Sakray) Private Server]
+ip 66.90.73.241
+port 6903
+version 5120
+master_version 14
+serverType 0
+private 1
+serverEncoding Western
+
+## http://www.pbro.com.br/
+[pbRO (Private Brazil: FuN Rate) Private Server]
+ip 208.101.49.238
+port 6600
+master_version 12
+version 208
+serverType 5
+private 1
+gameGuard 0
+
+[pbRO (Private Brazil: Low Rate) Private Server]
+ip 208.101.2.7
+port 6600
+master_version 12
+version 208
+serverType 9
+private 1
+gameGuard 0
+
+[pbRO (Private Brazil: High Rate) Private Server]
+ip 208.101.49.234
+port 6600
+master_version 12
+version 208
+serverType 9
+private 1
+gameGuard 0
+
+## http://q-ro.net/qro/web/
+[qRO (Low Rate) Private Server]
+ip 74.52.102.34
+port 6828
+version 20
+master_version 18
+serverType 5
+private 1
+serverEncoding Western
+
+## http://q-ro.net/qro/web/
+[qRO (High Rate) Private Server]
+ip 74.52.102.146
+port 6828
+version 20
+master_version 18
+serverType 5
+private 1
+serverEncoding Western
+
+## http://www.ragmaniacos.net/include/
+[RagnaManiacos Private Server]
+ip 72.232.11.18
+port 6901
+master_version 7
+version 20
+serverType 5
+serverEncoding Western
+
+## http://www.rebirthro.com/
+[RebirthRO Private Server]
+ip 193.138.205.124
+port 6900
+master_version 16
+version 21
+serverEncoding Western
+serverType 5
+charBlockSize 108
+
+## http://www.roforever.com/
+[RoForever Private Server]
+ip 69.125.34.102
+port 6000
+master_version 1
+version 0
+severType 0
+serverEncoding Western
+
+## http://www.rusro.com/index_eng.php
+[RusRO Private Server]
+ip 209.97.213.90
+port 6957
+version 2349
+master_version 0
+serverType 9
+private 1
+serverEncoding Russian
+
+## http://spectro.nunaze.info/
+[Spectro Private Server]
+ip 72.36.236.18
+port 6900
+master_version 14
+version 31966772
+serverType 0
+private 1
+serverEncoding Western
+charBlockSize 108
+
+## http://www.speedro.de/speedro.html
+[SpeedRO Private Server]
+ip 205.177.72.106
+port 6900
+version 0
+master_version 16
+serverType 9
+serverEncoding Western
+
+## http://www.sukiro.com/
+[SukiRO (Silk) Private Server]
+ip 72.36.162.101
+port 13371
+master_version 16
+version 2
+serverType 5
+serverEncoding Western
+
+## http://www.sunbbs.co.uk
+[SunRO Private Server]
+ip 70.86.136.88
+port 6900
+version 60101
+master_version 4
+serverType 5
+serverEncoding Traditional Chinese
+
+## http://www.titanro.com
+[TitanRO (High Rate) Private Server]
+ip titanro.systeminplace.net
+port 6900
+master_version 18
+version 20
+serverType 0
+serverEncoding Western
+
+## http://ti-server.com/
+[TrinityRO Private Server]
+ip 218.208.91.34
+port 6900
+master_version 10
+version 7
+serverType 4
+serverEncoding Western
+charBlockSize 108
+
+## http://www.tsunamiro.com/
+[TsunamiRO Private Server]
+ip tsunamiro.no-ip.info
+port 6900
+master_version 1
+version 20
+serverType 4
+private 1
+serverEncoding Western
+
+[UndergroundRO (Low Rate) Private Server]
+ip 84.16.234.162
+port 7900
+master_version 17
+version 20
+serverType 4
+serverEncoding Western
+
+## http://www.utopiaro.com/
+[UtopiaRO (Jupiter) Private Server]
+ip 216.55.159.15
+port 6900
+master_version 2
+version 18
+serverType 5
+serverEncoding Western
+
+## http://www.valhallaro.org/
+[ValhallaRO Private Server]
+ip valhalla.servegame.com
+port 6080
+version 30
+master_version 16
+serverType 9
+masterLogin_packet 0061
+serverEncoding Western
+
+## http://www.vanserver.com/
+[VanRO: Medium Rate Private Server]
+ip 66.111.51.160
+port 6800
+master_version 20
+version 18
+serverType 4
+clientSight 20
+serverEncoding Western
+
+## http://www.vanserver.com/
+[VanRO: High Rate Private Server]
+ip 74.52.137.116
+port 6800
+master_version 18
+version 20
+serverType 4
+serverEncoding Western
+
+## http://vendetta-online.net/
+[VendettaRO Private Server]
+ip 64.71.161.23
+port 6900
+version 18
+master_version 18
+serverType 5
+
+## http://www.wafflenet.net/
+[WaffleRO2 (Gold) Private Server]
+ip 66.240.239.24
+port 6900
+master_version 14
+version 20
+serverType 5
+serverEncoding Western
+
+## http://www.xilero.net/
+[XiLeRO EX Private Server]
+ip 66.197.156.53
+port 6901
+master_version 1
+version 20
+serverType 4
+serverEncoding Western
+
+## http://www.xilero.net/
+[XiLeRO EZ Private Server]
+ip 66.197.215.245
+port 6901
+master_version 17
+version 20
+serverType 3
+serverEncoding Western
+
+## http://www.xilero.net/
+[XileRO Main Private Server]
+ip 208.101.22.20
+port 6901
+master_version 1
+version 20
+serverType 4
+serverEncoding Western
+
+## http://www.xilero.net/
+[XileRO PK Private Server]
+ip 208.101.22.18
+port 6901
+master_version 17
+version 20
+serverType 3
+private 1
+serverEncoding Western
+
+## http://www.xilero.net/
+[XileRO PKx Private Server]
+ip 208.101.22.19
+port 6901
+master_version 1
+version 20
+serverType 4
+serverEncoding Western
+
+## http://www.xilero.net/
+[XiLeRO TE Private Server]
+ip 72.29.77.223
+port 6901
+master_version 1
+version 20
+serverType 4
+serverEncoding Western
+
+## http://zeonro.no-ip.org/vote.html
+[ZeonRO (Medium Rate) Private Server]
+ip zeonro.no-ip.org
+port 6900
+master_version 14
+version 24
+serverType 4
+serverEncoding Western
+
+
+
+##### The server details below needs verification
+
+
+## http://anti-gravity.cc/
+[Anti-GravityRO Private Server]
+ip 63.246.131.80
+port 6900
+master_version 18
+version 0
+serverType 0
+serverEncoding Western
+
+## http://www.cakero.net/
+[CakeRO (High Rate) Private Server]
+ip 72.232.3.66
+port 6901
+master_version 14
+version 1
+serverType 5
+private 1
+serverEncoding Western
+
+## http://mobro.mob-games.com/
+[DiscoveryRO: Low Rate Private Server]
+ip 72.36.206.226
+port 6901
+version 0
+master_version 18
+serverType 3
+serverEncoding Western
+
+## http://mobro.mob-games.com/
+[DiscoveryRO: Revolution Private Server]
+ip 66.111.53.60
+port 6900
+version 0
+master_version 18
+serverType 3
+serverEncoding Western
+
+## http://www.hopero.net
+[HopeRO Private Server]
+ip 66.199.253.146
+port 6900
+master_version 1
+version 20
+serverType 4
+serverEncoding Western
+
+## http://ro.psiblade.net/
+[PSIBlade Online Private Server]
+ip 72.36.139.114
+port 6900
+master_version 2
+version 0
+serverType 3
+serverEncoding Western
+
+## http://ro.gxzone.com/
+[GamersX Ragnarok Online Server]
+ip 200.43.229.37
+port 6900
+master_version 20
+version 2
+serverType 5
+serverEncoding Western
+
+## http://www.tsume-online.com/
+[Tsume Online Private Server]
+ip 213.251.152.27
+port 6900
+master_version 20
+version 21
+serverType 5
+serverEncoding Western
+
+## http://www.kawaii-ro.net/
+[Kawaii-RO Private Server]
+ip 194.146.226.57
+port 5121
+master_version 14
+version 1
+serverType 5
+private 1
+serverEncoding Western
+
+## http://www.eternityro.net/
+[EternityRO Private Server]
+ip eternityro.no-ip.org
+port 6937
+master_version 1
+version 85726
+serverType 9
+secureLogin 1
+secureLogin_requestCode DA 01 
+serverEncoding Western
+private 1
+recvpackets recvpackets-eternityRO.txt
+charBlock 108
+
+[Legacy RO]
+ip 74.86.240.226
+port 6900
+master_version 14
+version 10
+serverType 8_4
+private 1
+serverEncoding Western
+charBlockSize 108
+#storageEncryptKey 0x050B6F79,0x0202C179,0x00E20120,0x04FA43E3,0x0179B6C8,0x05973DF2,0x007D8D6B,0x08CB9ED9
