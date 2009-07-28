@@ -38,7 +38,7 @@ sub __start {
 	Settings::loadSysConfig();
 	Translation::initDefault(undef, $sys{locale});
 
-	use Globals qw($log $interface $command $AI);
+	use Globals qw($log $interface $command $AI $quit);
 	use Log;
 	use Interface;
 	use KoreStage;
@@ -60,13 +60,14 @@ sub __start {
 	$AI = AI->new();
 
 	##### MAIN LOOP #####
-	async { $interface->mainLoop(); };
-	async { $AI->mainLoop(); };
+	my $coro_interface = async { $interface->mainLoop(); };
+	my $coro_ai = async { $AI->mainLoop(); };
  
- 	while ((scalar Coro::State::list()) > 1) {
-		Coro::cede();
-   	}
-
+ 	foreach ($coro_interface, $coro_ai) {
+ 		$_->join();
+ 		cede;
+ 	}
+	
 	exit 1;
 	# shutdown();
 }
