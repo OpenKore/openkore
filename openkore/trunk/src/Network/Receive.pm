@@ -380,6 +380,12 @@ sub new {
 		'02EC' => ['actor_display', 'x1 a4 v3 V1 v5 V1 v5 a4 a4 V1 C2 a5 x3 v2', [qw(ID walk_speed param1 param2 param3 type hair_style weapon shield lowhead timestamp tophead midhead hair_color clothes_color head_dir guildID guildEmblem visual_effects stance sex coords lv unknown)]],
 		'02ED' => ['actor_display', 'a4 v3 V1 v10 a4 a4 V1 C2 a3 v v2', [qw(ID walk_speed param1 param2 param3 type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID guildEmblem visual_effects stance sex coords act lv unknown)]],
 		'02EE' => ['actor_display', 'a4 v3 V1 v10 a4 a4 V1 C2 a3 x1 v v2', [qw(ID walk_speed param1 param2 param3 type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID guildEmblem visual_effects stance sex coords act lv unknown)]],
+
+		# status timers (eA has 12 unknown bytes)
+		'043F' => ['actor_status_active', 'v1 a4 C1 V4', [qw(type ID flag tick unknown1 unknown2 unknown3)]],
+
+		# HackShield alarm
+		'0449' => ['hack_shield_alarm'],
 	};
 
 	return bless \%self, $class;
@@ -1546,6 +1552,9 @@ sub actor_status_active {
 	return unless changeToInGameState();
 	my ($type, $ID, $flag) = @{$args}{qw(type ID flag)};
 
+	my $tick = 0;
+	$tick = $args->{tick} if ($args->{switch} eq "043F");
+
 	my $skillName = (defined($skillsStatus{$type})) ? $skillsStatus{$type} : "Unknown $type";
 	$args->{skillName} = $skillName;
 	my $actor = Actor::get($ID);
@@ -1564,6 +1573,9 @@ sub actor_status_active {
 			$char->{party}{users}{$ID}{statuses}{$skillName} = 1;
 		}
 		my $disp = status_string($actor, $skillName, $again);
+		if ($tick > 0) {
+			$disp = status_string($actor, $skillName, $again, $tick/1000);
+		};
 		message $disp, "parseMsg_statuslook", ($ID eq $accountID or $char->{slaves} && $char->{slaves}{$ID}) ? 1 : 2;
 
 	} else {
@@ -6867,6 +6879,11 @@ sub hotkeys {
 	}
 	$msg .= sprintf("%s\n", ('-'x79));
 	debug($msg, "list");
+}
+
+sub hack_shield_alarm {
+	error T("Error: You have been forced to disconnect by a Hack Shield.\n Please check Poseidon.\n"), "connection";
+	Commands::run('relog 100000000');
 }
 
 1;

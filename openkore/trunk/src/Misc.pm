@@ -3539,12 +3539,16 @@ sub skillUseNoDamage_string {
 }
 
 sub status_string {
-	my ($source, $statusName, $mode) = @_;
+	my ($source, $statusName, $mode, $seconds) = @_;
 	assert(UNIVERSAL::isa($source, 'Actor')) if DEBUG;
 
 	if ($mode eq 'now') {
 		if ($source->isa('Actor::You')) {
-			return TF("You are now: %s\n", $statusName);
+			if (($seconds)&&($seconds > 0)) {
+				return TF("You are now: %s for: %s seconds.\n", $statusName, $seconds || "N/A");
+			} else {
+				return TF("You are now: %s\n", $statusName);
+			}
 		} elsif ($source->isa('Actor::Player')) {
 			return TF("Player %s (%d) is now: %s\n", $source->name, $source->{binID}, $statusName);
 		} elsif ($source->isa('Actor::Monster')) {
@@ -3556,7 +3560,11 @@ sub status_string {
 		}
 	} elsif ($mode eq 'again') {
 		if ($source->isa('Actor::You')) {
-			return TF("You are again: %s\n", $statusName);
+			if (($seconds)&&($seconds > 0)) {
+				return TF("You are again: %s for: %s seconds.\n", $statusName, $seconds || "N/A");
+			} else {
+				return TF("You are again: %s\n", $statusName);
+			}
 		} elsif ($source->isa('Actor::Player')) {
 			return TF("Player %s (%d) is again: %s\n", $source->name, $source->{binID}, $statusName);
 		} elsif ($source->isa('Actor::Monster')) {
