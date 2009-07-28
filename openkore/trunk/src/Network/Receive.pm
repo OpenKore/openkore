@@ -345,7 +345,10 @@ sub new {
 		'0297' => ['cart_equip_list'],
 		'029A' => ['inventory_item_added', 'v1 v1 v1 C1 C1 C1 a8 v1 C1 C1 a4', [qw(index amount nameID identified broken upgrade cards type_equip type fail cards_ext)]],
 		# mercenaries
-		'029B' => ['homunculus_stats', 'a4 v8 Z24 v5 V1 v2', [qw(ID atk matk hit critical def mdef flee aspd name lvl hp hp_max sp sp_max contract_end faith summons)]], # mercenary stats
+		'029B' => ($rpackets{'029B'} == 72 # mercenary stats
+			? ['homunculus_stats', 'a4 v8 Z24 v5 V1 v2', [qw(ID atk matk hit critical def mdef flee aspd name lvl hp hp_max sp sp_max contract_end faith summons)]]
+			: ['homunculus_stats', 'a4 v8 Z24 v1 V5 v1 V2 v1', [qw(ID atk matk hit critical def mdef flee aspd name lvl hp hp_max sp sp_max contract_end faith summons kills range)]]
+		),
 		# TODO: test on officials: '029B' => ['homunculus_stats', 'a4 v8 Z24 v1 V5 v1 V2 v1', [qw(ID atk matk hit critical def mdef flee aspd name lvl hp hp_max sp sp_max contract_end faith summons killcount range)]], # mercenary stats
 		'029D' => ['skills_list'], # mercenary skills
 		'02A2' => ['mercenary_param_change', 'v1 V1', [qw(type param)]],
