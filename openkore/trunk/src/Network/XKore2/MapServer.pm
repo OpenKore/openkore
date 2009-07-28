@@ -174,7 +174,7 @@ sub handleMapLoaded {
 	for (my $i = 0; $i < @{$hotkeyList}; $i++) {
 		$output .= pack('C1 V1 v1', $hotkeyList->[$i]->{type}, $hotkeyList->[$i]->{ID}, $hotkeyList->[$i]->{lvl});
 	}
-	$client->send($output);
+	$client->send($output) if (@{$hotkeyList});
 
 	# Sort items into stackable and non-stackable
 	if (UNIVERSAL::isa($char, 'Actor::You')) {

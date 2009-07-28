@@ -85,7 +85,11 @@ sub new {
 		'0079' => ['actor_display', 'a4 v14 a4 x7 C1 a3 x2 v1',    [qw(ID walk_speed param1 param2 param3 type hair_style weapon lowhead shield tophead midhead hair_color clothes_color head_dir guildID sex coords lv)]],
 		'007A' => ['changeToInGameState'],
 		'007B' => ['actor_display', 'a4 v8 x4 v6 a4 x7 C1 a5 x3 v1',     [qw(ID walk_speed param1 param2 param3 type hair_style weapon lowhead shield tophead midhead hair_color clothes_color head_dir guildID sex coords lv)]],
-		'007C' => ['actor_display', 'a4 v1 v1 v1 v1 x6 v1 C1 x12 C1 a3', [qw(ID walk_speed param1 param2 param3 type pet sex coords)]],
+		#OLD '007C' => ['actor_display', 'a4 v1 v1 v1 v1 x6 v1 C1 x12 C1 a3', [qw(ID walk_speed param1 param2 param3 type pet sex coords)]],
+		'007C' => ($rpackets{'007C'} == 41	# or 42
+			? ['actor_display', 'x1 a4 v13 C2 a3 C1', [qw(ID walk_speed param1 param2 param3 hair_style weapon lowhead type shield tophead midhead hair_color clothes_color head_dir karma sex coords unknown1)]]
+			: ['actor_display', 'x1 a4 v13 C2 a3 C2', [qw(ID walk_speed param1 param2 param3 hair_style weapon lowhead type shield tophead midhead hair_color clothes_color head_dir karma sex coords unknown1 unknown2)]]
+		),
 		'007F' => ['received_sync', 'V1', [qw(time)]],
 		'0080' => ['actor_died_or_disappeared', 'a4 C1', [qw(ID type)]],
 		'0081' => ['errors', 'C1', [qw(type)]],
@@ -240,8 +244,11 @@ sub new {
 		'0199' => ['pvp_mode1', 'v1', [qw(type)]],
 		'019A' => ['pvp_rank', 'x2 V1 V1 V1', [qw(ID rank num)]],
 		'019B' => ['unit_levelup', 'a4 V1', [qw(ID type)]],
-		'01A0' => ['pet_capture_result', 'C1', [qw(type)]],
-		'01A2' => ['pet_info', 'Z24 C1 v4', [qw(name nameflag level hungry friendly accessory)]],
+		'01A0' => ['pet_capture_result', 'C1', [qw(type)]],	
+		'01A2' => ($rpackets{'01A2'} == 35 # or 37
+			? ['pet_info', 'Z24 C1 v4', [qw(name nameflag level hungry friendly accessory)]]
+			: ['pet_info', 'Z24 C1 v5', [qw(name nameflag level hungry friendly accessory type)]]
+		),
 		'01A3' => ['pet_food', 'C1 v1', [qw(success foodID)]],
 		'01A4' => ['pet_info2', 'C a4 V', [qw(type ID value)]],
 		'01A6' => ['egg_list'],
@@ -345,7 +352,7 @@ sub new {
 		'0297' => ['cart_equip_list'],
 		'029A' => ['inventory_item_added', 'v1 v1 v1 C1 C1 C1 a8 v1 C1 C1 a4', [qw(index amount nameID identified broken upgrade cards type_equip type fail cards_ext)]],
 		# mercenaries
-		'029B' => ($rpackets{'029B'} == 72 # mercenary stats
+		'029B' => ($rpackets{'029B'} == 72 # or 80 # mercenary stats
 			? ['homunculus_stats', 'a4 v8 Z24 v5 V1 v2', [qw(ID atk matk hit critical def mdef flee aspd name lvl hp hp_max sp sp_max contract_end faith summons)]]
 			: ['homunculus_stats', 'a4 v8 Z24 v1 V5 v1 V2 v1', [qw(ID atk matk hit critical def mdef flee aspd name lvl hp hp_max sp sp_max contract_end faith summons kills range)]]
 		),
@@ -4658,7 +4665,8 @@ sub pet_info {
 	$pet{hungry} = $args->{hungry};
 	$pet{friendly} = $args->{friendly};
 	$pet{accessory} = $args->{accessory};
-	debug "Pet status: name: $pet{name} name set?: ". ($pet{nameflag} ? 'yes' : 'no') ." level=$pet{level} hungry=$pet{hungry} intimacy=$pet{friendly} accessory=".itemNameSimple($pet{accessory})."\n", "pet";
+	$pet{type} = $args->{type} if $args->{type};
+	debug "Pet status: name: $pet{name} name set?: ". ($pet{nameflag} ? 'yes' : 'no') ." level=$pet{level} hungry=$pet{hungry} intimacy=$pet{friendly} accessory=".itemNameSimple($pet{accessory})." type=".$pet{type}||"N/A"."\n", "pet";
 }
 
 sub pet_info2 {
