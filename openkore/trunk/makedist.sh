@@ -19,9 +19,12 @@ DIRS=(.
 	src/scons-local-0.98.5/SCons/Variables
 	src/deps
 	src/deps/Carp
+	src/deps/Class
+	src/deps/Class/Accessor
 	src/deps/Class/Data
 	src/deps/Devel
 	src/deps/Exception
+	src/deps/SVN
 	src/deps/Data/YAML
 	src/po
 	src/test
