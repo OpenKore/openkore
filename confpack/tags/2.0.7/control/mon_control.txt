@@ -1,0 +1,177 @@
+# This file allows specific AI control for certain monsters
+#
+# Syntax:
+# <monster> <attack> <teleport> <search> <skillcancel> <lv> <joblv> <hp> <sp> <weight>
+#
+# <monster>:  Name of monster as found in monsters.txt (not case sensitive)
+#
+# <attack>:
+# -1 means to leave the monster alone, even if it attacks you.
+#  0 means to leave the monster alone, unless it attacks you.
+#  1 means to always auto-attack this monster.
+#  2 means always aggressive, auto-attack this monster when it appears, even if sitting.
+#  3 means to attack the monster once (provoke) then leave it, useful for mobbing.
+#
+# <teleport>:
+# < 0 (-1, -2, etc.) to set exact critical distance for this monster. Teleport, if the monster reaches it.
+# 1 to teleport if the monster is on the screen.
+# 2 to teleport if the monster attacks you.
+# 3 to disconnect if the monster is on your screen.
+# This is only used in auto-attack mode.
+#
+# <search>: Put a 1 to only attack the monster in the search mode.
+# This is only used in auto-attack mode.
+#
+# <skillcancel>: Set to 1 if you want to interrupt spells casted by this
+# monster.
+#
+# <lv>: Only auto-attack this monster if your level is higher than the
+# specified level.
+#
+# <joblv>: Only auto-attack this monster if your job level is higher than
+# the specified level.
+#
+# <hp>: Only auto-attack this monster if your HP is higher than the
+# specified amount. The HP is not specified in percentage.
+#
+# <sp>: Only auto-attack this monster if your SP is higher than the
+# specified amount. The SP is not specified in percentage.
+#
+# <weight>: Counts this monster as the specified amount aggressives. Supports floating point numbers (eg 1.8237402).
+# Example:
+#	(config.txt)
+#	teleportAuto_minAggressives 6
+#	teleportAuto_minAggressivesInLock 6
+#
+#	(mon_control.txt)
+#	Hydra 1 0 0 0 0 0 0 0 0.2
+#	Merman 1 0 0 0 0 0 0 0 2
+#
+#	If there's five hydras and two sword fish attacks the bot, it won't
+#	teleport away since the aggressives are counted as 5*0.2 + 2*1 = 3
+#	However, two marcs and two merman will make it tele away because
+#	it sees 2*1* + 2*2 = 6 aggressives.
+#
+#
+# Monsters not found in this file, or flags not specified will default to:
+# <attack> = 1
+
+
+##### Eggs #####
+Ant's Egg 0 0 0
+PecoPeco's Egg 0 0 0
+Pupa 0 0 0
+Thief Bug's Egg 0 0 0
+
+##### Alchemist Summons ####
+# Summoned Parasite
+1555 0 0 0 
+
+# Summoned Flora
+1575 0 0 0 
+
+# Summoned Hydra
+1579 0 0 0 
+
+# Summoned Mandragora
+1589 0 0 0 
+
+# Summoned Geographer
+1590 0 0 0 
+
+##### Plants #####
+Black Mushroom 0 0 0
+Blue Plant 0 0 0
+Green Plant 0 0 0
+Red Mushroom 0 0 0
+Red Plant 0 0 0
+Shining Plant 0 0 0
+White Plant 0 0 0
+Yellow Plant 0 0 0
+
+
+##### Homunculus #####
+6001 -1 0 0
+6002 -1 0 0
+6003 -1 0 0
+6004 -1 0 0
+6005 -1 0 0
+6006 -1 0 0
+6007 -1 0 0
+6008 -1 0 0
+6009 -1 0 0
+6010 -1 0 0
+6011 -1 0 0
+6012 -1 0 0
+6013 -1 0 0
+6014 -1 0 0
+6015 -1 0 0
+6016 -1 0 0
+
+##### Mercenary #####
+6017 -1 0 0
+6018 -1 0 0
+6019 -1 0 0
+6020 -1 0 0
+6021 -1 0 0
+6022 -1 0 0
+6023 -1 0 0
+6024 -1 0 0
+6025 -1 0 0
+6026 -1 0 0
+6027 -1 0 0
+6028 -1 0 0
+6029 -1 0 0
+6030 -1 0 0
+6031 -1 0 0
+6032 -1 0 0
+6033 -1 0 0
+6034 -1 0 0
+6035 -1 0 0
+6036 -1 0 0
+6037 -1 0 0
+6038 -1 0 0
+6039 -1 0 0
+6040 -1 0 0
+6041 -1 0 0
+6042 -1 0 0
+6043 -1 0 0
+6044 -1 0 0
+6045 -1 0 0
+6046 -1 0 0
+
+##### MVPs and Dangerous Monsters #####
+Amon Ra 0 1 0
+Archangeling 0 1 0
+Baphomet 0 1 0
+Bacsojin 0 1 0
+Dark Illusion 0 1 0
+Dark Lord 0 1 0
+Detale 0 1 0
+Doppelganger 0 1 0
+Dracula 0 1 0
+Drake 0 1 0
+Eddga 0 1 0
+Dark Snake Lord 0 1 0
+Garm 0 1 0
+Egnigem Cenia 0 1 0
+Golden Thief Bug 0 2 0
+Incantation Samurai 0 1 0
+Lady Tany 0 1 0
+Lord of Death 0 1 0
+Maya 0 1 0
+Maya Purple 0 1 0
+Mistress 0 1 0
+Moonlight 0 1 0
+Mutant Dragon 0 1 0
+Orc Hero 0 1 0
+Orc Lord 0 1 0
+Osiris 0 1 0
+Pharaoh 0 1 0
+Phreeoni 0 1 0
+RSX-0806 0 1 0
+Stormy Knight 0 1 0
+Tao Gunka 0 1 0
+Thanatos 0 1 0
+Turtle General 0 1 0
+Vesper 0 1 0
