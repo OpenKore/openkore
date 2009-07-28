@@ -908,6 +908,10 @@ sub parseOutgoingClientMessage {
 			visualDump($sendMsg, $switch . $label);
 		} elsif ($config{debugPacket_include_dumpMethod} == 3) {
 			dumpData($msg,1);
+		} elsif ($config{debugPacket_include_dumpMethod} == 4) {
+			open DUMP, ">> DUMP_lines.txt";
+			print DUMP sprintf(unpack('H*', $msg) . "\n");
+			close DUMP;
 		}
 	}
 
@@ -1179,8 +1183,12 @@ sub parseIncomingMessage {
 			debug "Packet: $switch$label\n", "parseMsg", 0;
 		} elsif ($config{debugPacket_include_dumpMethod} == 2) {
 			visualDump($msg, "$switch$label");
-		} else {
-			dumpData($msg, 1);
+		} elsif ($config{debugPacket_include_dumpMethod} == 3) {
+			dumpData($msg,1);
+		} elsif ($config{debugPacket_include_dumpMethod} == 4) {
+			open DUMP, ">> DUMP_lines.txt";
+			print DUMP sprintf(unpack('H*', $msg) . "\n");
+			close DUMP;
 		}
 	}
 
