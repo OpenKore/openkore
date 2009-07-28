@@ -21,7 +21,7 @@
 # To manipulate a Set, use its methods. You can access items in a Set
 # just like you access items in an array reference:
 # <pre class="example">
-# my $set = new Utils::Set();
+# my $set = new Set();
 # $set->add("hello");
 # $set->add("world");
 # $set->add("hello");   # Has no effect. "hello" is already in the set.
@@ -53,19 +53,13 @@
 # <pre class="example">
 # "$a" eq "$b"
 # </pre>
-package Utils::Set;
+package Set;
+
 use strict;
-
-# Coro Support
-use Coro;
-
-use Utils::Compare qw(compare);
-
-use overload (
-	q/""/	=> sub { $_[0]->_toString() },	# Overload ""
-	q/[]/	=> sub { $_[0]->get($_[1]) },	# Overload []
-	q/@{}/	=> sub { $_[0]->getArray() },	# Overload @{}
-        'fallback' => 1);
+use Scalar::Util;
+use overload '@{}' => \&getArray;
+use overload '[]' => \&get;
+use overload '""' => \&_toString;
 
 ##
 # Set Set->new([elements...])
@@ -77,6 +71,8 @@ sub new {
 	my $self = {
 		# The items themselves.
 		items => [],
+		# Maps items to their index in the items array.
+		keys => {}
 	};
 	$self = bless $self, $class;
 	foreach my $item (@_) {
@@ -95,6 +91,7 @@ sub add {
 	my ($self, $item) = @_;
 	if (!$self->has($item)) {
 		push @{$self->{items}}, $item;
+		$self->{keys}{$item} = $#{$self->{items}};
 	}
 }
 
@@ -107,8 +104,13 @@ sub add {
 sub remove {
 	my ($self, $item) = @_;
 	if ($self->has($item)) {
-		my $index = $self->find($item);
+		my $index = $self->{keys}{$item};
 		splice(@{$self->{items}}, $index, 1);
+		delete $self->{keys}{$item};
+		for (my $i = $index; $i < @{$self->{items}}; $i++) {
+			my $item = $self->{items}[$i];
+			$self->{keys}{$item}--;
+		}
 	}
 }
 
@@ -120,6 +122,7 @@ sub remove {
 sub clear {
 	my ($self) = @_;
 	$self->{items} = [];
+	$self->{keys} = {};
 }
 
 ##
@@ -129,8 +132,6 @@ sub clear {
 # Returns the item at the specified index.
 sub get {
 	my ($self, $index) = @_;
-	# assert($index >= 0) if DEBUG;
-
 	return $self->{items}[$index];
 }
 
@@ -140,34 +141,7 @@ sub get {
 # Check whether $item is in the set.
 sub has {
 	my ($self, $item) = @_;
-	return 1 if ($self->find($item) >= 0);
-	return 0;
-}
-
-##
-# int $set->find(item)
-#
-# Find $item index in "Set" array.
-sub find {
-	my ($self, $item) = @_;
-
-	# Quick search by ref's
-	for (my $i = 0; $i < @{$self->{items}}; $i++) {
-		my $existing_item = $self->{items}[$i];
-		return $i if (refaddr $existing_item == refaddr $item);
-	}
-	
-	# Nothing found??? let's try deep search
-	for (my $i = 0; $i < @{$self->{items}}; $i++) {
-		my $existing_item = $self->{items}[$i];
-
-		# Deep Structure Check
-		# Slow but Powerfull
-		return $i if (compare(\$existing_item, \$item));
-	}
-
-	# Still Nothing??? so nothing found :P
-	return -1;
+	return exists $self->{keys}{$item};
 }
 
 ##
@@ -176,8 +150,7 @@ sub find {
 #
 # Returns the number of elements in this set.
 sub size {
-	my ($self) = @_;
-	return scalar(@{$self->{items}});
+	return scalar(@{$_[0]->{items}});
 }
 
 ##
@@ -188,8 +161,7 @@ sub size {
 #
 # Return the set's internal array. You must not manipulate this array.
 sub getArray {
-	my ($self) = @_;
-	return $self->{items};
+	return $_[0]->{items};
 }
 
 ##
@@ -199,18 +171,13 @@ sub getArray {
 # Create a deep copy of this set. The items themselves are not copied.
 sub deepCopy {
 	my ($self) = @_;
-
-	my $copy = new Utils::Set();
-	$copy->{items} = [];
-	for (my $i = 0; $i < @{$self->{items}}; $i++) {
-		my $existing_item = $self->{items}[$i];
-		push(@{$copy->{items}}, $existing_item);
-	}
-
+	my $copy = new Set();
+	$copy->{items} = [ @{$self->{items}} ];
+	$copy->{keys} = { %{$self->{keys}} };
 	return $copy;
 }
 
-sub _toString  {
+sub _toString {
 	return sprintf("%s(0x%x)",
 		Scalar::Util::blessed($_[0]),
 		Scalar::Util::refaddr($_[0]));

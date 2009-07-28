@@ -71,7 +71,6 @@
 package CallbackList;
 
 use strict;
-use Coro;
 use Carp::Assert;
 use Scalar::Util;
 
@@ -141,7 +140,7 @@ sub add {
 	assert(!defined($object) || Scalar::Util::blessed($object)) if DEBUG;
 
 	my @item;
-	$item[FUNCTION] = Utils::CodeRef->new($function);
+	$item[FUNCTION] = $function;
 	if (defined $object) {
 		$item[OBJECT] = $object;
 		Scalar::Util::weaken($item[OBJECT]);
@@ -165,17 +164,14 @@ sub add {
 # Removes a callback from this CallbackList.
 sub remove {
 	my ($self, $ID) = @_;
-	# assert(defined $ID) if DEBUG;
-
+	assert(defined $ID) if DEBUG;
 	return if (!defined($$ID) || $$ID < 0 || $$ID >= @{$self});
 
 	my $callbacks = $self;
 	for (my $i = $$ID + 1; $i < @{$callbacks}; $i++) {
 		${$callbacks->[$i][ID]}--;
 	}
-
 	splice(@{$callbacks}, $$ID, 1);
-
 	$$ID = undef;
 }
 
@@ -203,7 +199,7 @@ sub call {
 			push @{$IDsToRemove}, $item->[ID];
 
 		} else {
-			$item->[FUNCTION]->call($item->[OBJECT], $_[1], $_[2], $item->[USERDATA]);
+			$item->[FUNCTION]->($item->[OBJECT], $_[1], $_[2], $item->[USERDATA]);
 		}
 	}
 
@@ -238,7 +234,6 @@ sub empty {
 # Create a deep copy of this CallbackList.
 sub deepCopy {
 	my ($self) = @_;
-
 	my $copy = new CallbackList();
 	foreach my $item (@{$self}) {
 		my @callbackItemCopy = @{$item};
