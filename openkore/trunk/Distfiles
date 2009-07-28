@@ -4,5 +4,7 @@ openkore.pl
 start.pl
 mapview.pl
 OpenKore Help & Support.url
+start-autoupdate.exe
 start-poseidon.exe
+start-wx_autoupdate.exe
 Makefile
