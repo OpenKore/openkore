@@ -3366,7 +3366,6 @@ sub skillUse_string {
 		}
 	# Unknown
 	} elsif ($source->isa('Actor::Unknown')) {
-		message "test2\n";
 		if ($target->isa('Actor::You')) {
 			return TF("Unknown #%s (%d) uses %s on you %s(delay %s)\n", $source->{nameID},
 				$source->{binID}, $skillName, $damage, $delay);
