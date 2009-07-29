@@ -34,43 +34,19 @@ sub check_svn_util {
 
 sub upgrade {
 	my ($path, $repos_name) = @_;
-	print "Checking " . $repos_name . " for updates...\n";
+	print "Chenking " . $repos_name . " for updates...\n";
 	my $sa = SVN::Updater->load({ path => $path });
 
-	my ($local_ver, $global_ver) = $sa->info();
-
-	if ($local_ver < $global_ver) {
-		print " Updates found.\n";
-
-		# List user modifed files
-		if (@{ $sa->modified } ) {
-			print "  User modification Detected!!!!\n";
-			print "  User modified files:\n";
-			print "    "; #initial separator
-			print join("\n    ", @{ $sa->modified }) . "\n";
-		};
-
-		# List Changes
-		if (@{ $sa->added } || @{ $sa->deleted } || @{ $sa->missing } || @{ $sa->changes }) {
-			print "  Updating files:\n";
-			print "    "; #initial separator
-			print join("\n    ", @{ $sa->added }, @{ $sa->deleted }, @{ $sa->missing }, @{ $sa->changes }) . "\n";
-		};
-
-		# Fetching Updates
-		print "  Fetching updates...\n";
-		$sa->update("--force", "--accept theirs-conflict");
-		print " Done updating " . $repos_name . "\n";
-	} else {
-		print " No Updates Needed.\n";
-	};
+	print "  Fetching updates...\n";
+	$sa->update("--force", "--accept theirs-conflict");
+	print " Done updating " . $repos_name . "\n";
 };
 
 print "-===================== OpenKore Auto Update tool =====================-\n";
 if (check_svn_util() == 1) {
-	upgrade(".", "OpenKore core files") if ((-d "src")&&(-d "src/.svn"));
-	upgrade("tables", "OpenKore table data files") if ((-d "tables")&&(-d "tables/.svn"));
-	upgrade("fields", "OpenKore map data files") if ((-d "fields")&&(-d "fields/.svn"));
+	upgrade(".", "OpenKore core files") if (-d "src/.svn");
+	upgrade("./tables", "OpenKore table data files") if (-d "tables/.svn");
+	upgrade("./fields", "OpenKore map data files") if (-d "fields/.svn");
 };
 print "-=========================== Done Updating ===========================-\n\n\n";
 
