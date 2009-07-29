@@ -34,7 +34,7 @@ sub check_svn_util {
 
 sub upgrade {
 	my ($path, $repos_name) = @_;
-	print "Chenking " . $repos_name . " for updates...\n";
+	print "Checking " . $repos_name . " for updates...\n";
 	my $sa = SVN::Updater->load({ path => $path });
 
 	my ($local_ver, $global_ver) = $sa->info();
