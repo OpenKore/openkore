@@ -1,4 +1,4 @@
-# $Id: Utilities.pm r6781 2009-07-24 12:00:00Z ezza $
+# $Id: Utilities.pm r6812 2009-07-29 14:00:00Z ezza $
 package Macro::Utilities;
 
 use strict;
@@ -16,7 +16,7 @@ use AI;
 use Log qw(warning error);
 use Macro::Data;
 
-our ($rev) = q$Revision: 6781 $ =~ /(\d+)/;
+our ($rev) = q$Revision: 6812 $ =~ /(\d+)/;
 
 # own ai_Isidle check that excludes deal
 sub ai_isIdle {
@@ -218,10 +218,23 @@ sub refreshGlobal {
 
 # get NPC array index
 sub getnpcID {
-	my ($tmpx, $tmpy) = split(/ /,$_[0]);
+	my $arg = $_[0];
+	my ($what, $a, $b);
+
+	if (($a, $b) = $arg =~ /^\s*(\d+) (\d+)\s*$/) {$what = 1}
+	elsif (($a, $b) = $arg =~ /^\s*\/(.+?)\/(\w?)\s*$/) {$what = 2}
+	elsif (($a) = $arg =~ /^\s*"(.*?)"\s*$/) {$what = 3}
+	else {return -1}
+	
+	my @ids;	
 	foreach my $npc (@{$npcsList->getItems()}) {
-		return $npc->{binID} if ($npc->{pos}{x} == $tmpx && $npc->{pos}{y} == $tmpy)
+		if ($what == 1) {return $npc->{binID} if ($npc->{pos}{x} == $a && $npc->{pos}{y} == $b)}
+		elsif ($what == 2) {
+			if ($npc->{name} =~ /$a/ || ($b eq "i" && $npc->{name} =~ /$a/i)) {push @ids, $npc->{binID}}
+		}
+		else {return $npc->{binID} if $npc->{name} eq $a}
 	}
+	if (@ids) {return join ',', @ids}
 	return -1
 }
 
