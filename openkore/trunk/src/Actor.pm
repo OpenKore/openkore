@@ -109,7 +109,7 @@ sub get {
 	my ($ID) = @_;
 	assert(defined $ID) if DEBUG;
 
-	if ($ID eq $accountID || $ID eq "\000\000\000\000") {
+	if ($ID eq $accountID) {
 		# I put assertions here because $char seems to be unblessed sometimes.
 		assert(defined $char, '$char must be defined') if DEBUG;
 		assert(UNIVERSAL::isa($char, 'Actor::You'), '$char must be of class Actor::You') if DEBUG;
