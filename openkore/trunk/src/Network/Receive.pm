@@ -87,8 +87,8 @@ sub new {
 		'007B' => ['actor_display', 'a4 v8 x4 v6 a4 x7 C1 a5 x3 v1',     [qw(ID walk_speed param1 param2 param3 type hair_style weapon lowhead shield tophead midhead hair_color clothes_color head_dir guildID sex coords lv)]],
 		#OLD '007C' => ['actor_display', 'a4 v1 v1 v1 v1 x6 v1 C1 x12 C1 a3', [qw(ID walk_speed param1 param2 param3 type pet sex coords)]],
 		'007C' => ($rpackets{'007C'} == 41	# or 42
-			? ['actor_display', 'x1 a4 v13 C2 a3 C1', [qw(ID walk_speed param1 param2 param3 hair_style weapon lowhead type shield tophead midhead hair_color clothes_color head_dir karma sex coords unknown1)]]
-			: ['actor_display', 'x1 a4 v13 C2 a3 C2', [qw(ID walk_speed param1 param2 param3 hair_style weapon lowhead type shield tophead midhead hair_color clothes_color head_dir karma sex coords unknown1 unknown2)]]
+			? ['actor_display', 'x1 a4 v14 C2 a3 C1', [qw(ID walk_speed param1 param2 param3 hair_style weapon lowhead type shield tophead midhead hair_color clothes_color head_dir karma sex coords unknown1)]]
+			: ['actor_display', 'x1 a4 v14 C2 a3 C2', [qw(ID walk_speed param1 param2 param3 hair_style weapon lowhead type shield tophead midhead hair_color clothes_color head_dir karma sex coords unknown1 unknown2)]]
 		),
 		'007F' => ['received_sync', 'V1', [qw(time)]],
 		'0080' => ['actor_died_or_disappeared', 'a4 C1', [qw(ID type)]],
