@@ -1,0 +1,81 @@
+0 ! *！*
+1 ? *？*
+2 ho *高興*
+3 lv *愛心*
+4 swt *流冷汗*
+5 ic *靈感*
+6 an *生氣*
+7 ag *鬱悶*
+8 $ *金錢*
+9 ... *無言*
+10 pea *剪刀*
+11 fst *石頭*
+12 wav *布*
+13 flg *韓國旗*
+14 lv2 *大愛心*
+15 thx *感謝*
+16 wah *無奈*
+17 sry *抱歉*
+18 heh *歡笑*
+19 swt2 *噴汗*
+20 hmm *迷惑*
+21 no1 *一級棒*
+22 ?? *尋找*
+23 omg *天哪！*
+24 o,oh *Ｏ*
+25 x *Ｘ*
+26 hp *救命*
+27 go *出發*
+28 sob *哭泣*
+29 gg *奸笑*
+30 kis *接吻*
+31 kis2 *輕吻*
+32 pif *呼*
+33 ok *嗯*
+34 *禁言*
+35 flg2 *印尼旗*
+36 e1,bzz *火大*
+37 e2,rice *嘴饞*
+38 e3,awsm *漂亮*
+39 e4,meh *開玩笑*
+40 e5,shy *害羞*
+41 e6,pat *摸摸*
+42 e7,mp *補SP*
+43 e8,slur *流口水*
+44 e9,com *過來*
+45 e10,yawn *好睏*
+46 e11,grat *祝賀*
+47 e12 *補hp*
+48 flg3 *菲律賓旗*
+49 flg4 *美國旗*
+50 flg5 *新加坡旗*
+51 flg6 *巴西旗*
+52 fsh *FlashEyes(?!)*
+53 spin *SpinEyes(?!)*
+54 sigh *'o'(?!)*
+55 dum *Dumb(?!)*
+56 crwd *( . )(?!)*
+57 desp *Down(?!)*
+58 dice1 *骰子#1*
+59 dice2 *骰子#2*
+60 dice3 *骰子#3*
+61 dice4 *骰子#4*
+62 dice5 *骰子#5*
+63 dice6 *骰子#6*
+64 flg7 *Flag 7*
+65 e20,here *PointingHand*
+66 flg8 *Flag 8*
+67 flg9 *Flag 9*
+68 phone *CellPhone(?!)*
+69 mail *E-Mail(?!)*
+70 rh *Unknown(RedHieroglyphs)*
+71 sp1 *Cell signal power 1/3(?!)*
+72 sp2 *Cell signal power 2/3(?!)*
+73 sp3 *Cell signal power 3/3(?!)*
+74 e27,hum *Unknown(Face w/lines)*
+75 e28,abs *Fear!(?!)*
+76 e29,oops *Oops*
+77 e30,spit *Boooring(?!)*
+78 e31,ene *BlessingLight*
+79 e32,panic *Panic!*
+80 e33,whisp *Whisp*
