@@ -47,6 +47,17 @@ paddedPackets_attackID 0x89
 paddedPackets_skillUseID 0x113
 recvpackets recvpackets-euro.txt
 
+## http://www.ragnarokonline.fr
+[France - fRO]
+ip 84.14.101.102
+port 6900
+master_version 31
+version 1
+serverType 0
+serverEncoding Western
+secureLogin 1
+secureLogin_type 0
+
 [India - inRO]
 ip 202.92.9.35
 port 6900
