@@ -4265,8 +4265,10 @@ sub npc_store_info {
 		debug "Item added to Store: $store->{name} - $price z\n", "parseMsg", 2;
 		$storeList++;
 	}
-
-	my $name = getNPCName($talk{ID});
+	
+	# Real RO client can be receive this message without NPC Information. We should mimic this behavior.
+	my $name = (defined $talk{ID}) ? getNPCName($talk{ID}) : 'Unknown';
+ 
 	$ai_v{npc_talk}{talk} = 'store';
 	# continue talk sequence now
 	$ai_v{'npc_talk'}{'time'} = time;
