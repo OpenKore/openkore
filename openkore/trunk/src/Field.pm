@@ -44,7 +44,7 @@ no warnings 'redefine';
 use Compress::Zlib;
 use File::Spec;
 
-use Globals qw($masterServer %field);
+use Globals qw($masterServer %field %mapAlias_lut);
 use Modules 'register';
 use Settings;
 use FastUtils;
@@ -325,7 +325,7 @@ sub loadDistanceMap {
 # and/or the distance map file.
 sub loadByName {
 	my ($self, $name, $loadDistanceMap) = @_;
-	my $file = $self->nameToBaseName($name);
+	my $file = $self->nameToBaseName($name) . ".fld";
 
 	if ($Settings::fields_folder) {
 		$file = File::Spec->catfile($Settings::fields_folder, $file);
@@ -345,30 +345,18 @@ sub loadByName {
 # Map a field name to its field file's base name.
 sub nameToBaseName {
 	my ($self, $name) = @_;
-	my ($fieldFolder, $baseName);
 
-	$fieldFolder = $Settings::fields_folder || ".";
-	if ($masterServer && $masterServer->{"field_$name"}) {
-		# Handle server-specific versions of the field.
-		$baseName = $masterServer->{"field_$name"};
-
-	} else {
+	my $baseName;
+	if ($baseName = $masterServer->{"field_$name"}) {
+		# Handle server-specific versions of the field from servers.txt
+	} elsif ($baseName = $mapAlias_lut{"$name"}) {
 		# Some fields have multiple names, but have the same field data nevertheless.
 		# For example, the newbie grounds (new_1-1, new_2-1, etc.) all look the same,
 		# even though they're different fields and may have different monsters.
 		# Take care of that.
-		if ($name =~ /^new_\d-(\d)$/) {
-			$name = "new_zone0$1";
-		} elsif ($name =~ /^force_\d-(\d)$/) {
-			$name = "force_map$1";
-		} elsif ($name =~ /^pvp_n_\d-2$/) {
-			$name = "job_hunter";
-		} elsif ($name =~ /^pvp_n_\d-3$/) {
-			$name = "job_wizard";
-		} elsif ($name =~ /^pvp_n_\d-5$/) {
-			$name = "job_knight";
-		}
-		$baseName = "$name.fld";
+	} else {
+		# The field name is already the base name.
+		$baseName = $name;
 	}
 
 	return $baseName;

@@ -172,6 +172,7 @@ sub loadDataFiles {
 	Settings::addTableFile('itemslots.txt',   loader => [\&parseROSlotsLUT, \%itemSlots_lut]);
 	Settings::addTableFile('itemslotcounttable.txt',  loader => [\&parseROLUT, \%itemSlotCount_lut]);
 	Settings::addTableFile('itemtypes.txt',   loader => [\&parseDataFile2, \%itemTypes_lut]);
+	Settings::addTableFile('resnametable.txt',loader => [\&parseROLUT, \%mapAlias_lut, 1, ".gat"]);
 	Settings::addTableFile('maps.txt',        loader => [\&parseROLUT, \%maps_lut]);
 	Settings::addTableFile('monsters.txt',    loader => [\&parseDataFile2, \%monsters_lut]);
 	Settings::addTableFile('npcs.txt',        loader => [\&parseNPCs, \%npcs_lut]);
