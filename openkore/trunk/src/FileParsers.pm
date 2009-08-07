@@ -654,7 +654,7 @@ sub parseResponses {
 }
 
 sub parseROLUT {
-	my ($file, $r_hash) = @_;
+	my ($file, $r_hash, $flag, $ext) = @_;
 
 	my %ret = (
 		file => $file,
@@ -668,11 +668,11 @@ sub parseROLUT {
 	while (!$reader->eof()) {
 		my $line = $reader->readLine();
 		$line =~ s/[\r\n\x{FEFF}]//g;
-		next if (length($line) == 0 || $line =~ /^\/\//);
+		next if (length($line) == 0 || $line =~ /^\/\// || ($ext && $line !~ /$ext#/));
 
-		my ($id, $name) = split /#/, $line, 3;
+		my ($id, $name) = split /$ext#/, $line, 3;
 		if ($id ne "" && $name ne "") {
-			$name =~ s/_/ /g;
+			$name =~ s/_/ /g unless ($flag == 1);
 			$r_hash->{$id} = $name;
 		}
 	}
