@@ -1917,16 +1917,15 @@ sub cmdSlave {
 		}
 
 	} elsif ($subcmd eq "fire") {
-		unless ($slave->{actorType} eq 'Mercenary') {
-			error T("This slave can not be fired\n");
-			return;
-		}
 		if (!$net || $net->getState() != Network::IN_GAME) {
 			error TF("You must be logged in the game to use this command (%s)\n", $cmd . ' ' . $subcmd);
-			return;
+			return;	
 		}
-		$messageSender->sendMercenaryCommand (2);
-
+		if ($slave->{actorType} eq 'Mercenary') {
+			$messageSender->sendMercenaryCommand (2);
+		} elsif ($slave->{actorType} eq 'Homunculus') {
+			$messageSender->sendHomunculusCommand (2);
+		}
 	} elsif ($args[0] eq "move") {
 		if (!$net || $net->getState() != Network::IN_GAME) {
 			error TF("You must be logged in the game to use this command (%s)\n", $cmd . ' ' . $subcmd);
