@@ -2258,6 +2258,7 @@ sub setPartySkillTimer {
 sub setStatus {
 	my ($actor, $param1, $param2, $param3) = @_;
 	my $verbosity = $actor->{ID} eq $accountID ? 1 : 2;
+	assert(UNIVERSAL::isa($actor, 'Actor')) if DEBUG;
 	my $are = $actor->verb('are', 'is');
 	my $have = $actor->verb('have', 'has');
 	my $changed = 0;
@@ -4031,9 +4032,9 @@ sub checkSelfCondition {
 				return 0 if (!inRange($char->{mercenary}{sp}, $config{$prefix."_mercenary_sp"}));
 			}
 		}
-		
-		if ($config{$prefix . "_mercenary_whenStatusActive"}) { return 0 unless (whenStatusActivePL($char->{mercenary}, $config{$prefix . "_mercenary_whenStatusActive"})); }
-		if ($config{$prefix . "_mercenary_whenStatusInactive"}) { return 0 if (whenStatusActivePL($char->{mercenary}, $config{$prefix . "_mercenary_whenStatusInactive"})); }
+
+		if ($config{$prefix . "_mercenary_whenStatusActive"}) { return 0 unless (whenStatusActivePL($char->{mercenary}{ID}, $config{$prefix . "_mercenary_whenStatusActive"})); }
+		if ($config{$prefix . "_mercenary_whenStatusInactive"}) { return 0 if (whenStatusActivePL($char->{mercenary}{ID}, $config{$prefix . "_mercenary_whenStatusInactive"})); }
 	}
 
 	# check skill use SP if this is a 'use skill' condition

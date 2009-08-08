@@ -1828,6 +1828,7 @@ sub cmdSlave {
 	} else {
 		error T("Error: Unknown command in cmdSlave\n");
 	}
+	my $string = $cmd;
 	
 	if (
 		!$slave || !$slave->{appear_time} || (
@@ -1841,10 +1842,10 @@ sub cmdSlave {
 		my $sp_string = $slave->{'sp'}."/".$slave->{'sp_max'}." (".sprintf("%.2f",$slave->{'spPercent'})."%)";
 		my $exp_string = (
 			defined $slave->{'exp'}
-			? formatNumber($slave->{'exp'})."/".formatNumber($slave->{'exp_max'})." (".sprintf("%.2f",$slave->{'expPercent'})."%)"
+			? "Exp: " . formatNumber($slave->{'exp'})."/".formatNumber($slave->{'exp_max'})." (".sprintf("%.2f",$slave->{'expPercent'})."%)"
 			: (
 				defined $slave->{kills}
-				? formatNumber($slave->{kills})
+				? "Kills: " . formatNumber($slave->{kills})
 				: ''
 			)
 		);
@@ -1863,6 +1864,9 @@ sub cmdSlave {
 		my $accessory_string = defined $slave->{accessory} ? $slave->{accessory} : 'N/A';
 		my $faith_string = defined $slave->{faith} ? $slave->{faith} : 'N/A';
 		my $summons_string = defined $slave->{summons} ? $slave->{summons} : 'N/A';
+		my $skillpt_string = defined $slave->{points_skill} ? $slave->{points_skill} : 'N/A';
+		my $range_string = defined $slave->{attack_range} ? $slave->{attack_range} : 'N/A';
+		my $contractend_string = defined $slave->{contract_end} ? getFormattedDate(int($slave->{contract_end})) : 'N/A';
 		
 		my $msg = swrite(
 		T("-------------------- Slave Status ----------------------\n" .
@@ -1873,13 +1877,16 @@ sub cmdSlave {
 		"Atk: \@>>>    Matk:     \@>>>    Hunger:    \@>>>\n" .
 		"Hit: \@>>>    Critical: \@>>>    \@<<<<<<<<< \@>>>\n" .
 		"Def: \@>>>    Mdef:     \@>>>    Accessory: \@>>>\n" .
-		"Flee:\@>>>    Aspd:     \@>>>    Summons:   \@>>>\n"),
+		"Flee:\@>>>    Aspd:     \@>>>    Summons:   \@>>>\n" .
+		"Range: \@<<   Skill pt: \@>>>    Contract End: \@>>>>>>>>>>\n"),
 		[$slave->{'name'}, $hp_string,
 		$slave->{actorType}, $sp_string,
-		$slave->{'level'}, $exp_string, $slave->{'atk'}, $slave->{'matk'}, $hunger_string,
+		$slave->{'level'}, $exp_string, 
+		$slave->{'atk'}, $slave->{'matk'}, $hunger_string,
 		$slave->{'hit'}, $slave->{'critical'}, $intimacy_label, $intimacy_string,
 		$slave->{'def'}, $slave->{'mdef'}, $accessory_string,
-		$slave->{'flee'}, $slave->{'aspdDisp'}, $summons_string]);
+		$slave->{'flee'}, $slave->{'aspdDisp'}, $summons_string,
+		$range_string, $skillpt_string, $contractend_string]);
 		
 #############################################################
 #Statuses
@@ -1889,7 +1896,7 @@ sub cmdSlave {
 			$statuses = join(", ", keys %{$slave->{statuses}});
 		}
 		$msg .= TF("Statuses: %s \n", $statuses);
-		$msg .= "-------------------------------------------------\n";
+		$msg .= "--------------------------------------------------------\n";
 		
 		message $msg, "info";
 
@@ -2002,8 +2009,8 @@ sub cmdSlave {
 			}
 
 		} else {
-			error T("Syntax Error in function 'slave ai' (Slave AI Commands)\n" .
-				"Usage: homun ai [ clear | print | auto | manual | off ]\n");
+			error TF("Syntax Error in function 'slave ai' (Slave AI Commands)\n" .
+				"Usage: %s ai [ clear | print | auto | manual | off ]\n", $string);
 		}
 
 	} elsif ($subcmd eq "aiv") {
@@ -2061,12 +2068,12 @@ sub cmdSlave {
 			}
 
 		} else {
-			error T("Syntax Error in function 'slave skills' (Slave Skills Functions)\n" .
-				"Usage: homun skills [(<add | desc>) [<skill #>]]\n");
+			error TF("Syntax Error in function 'slave skills' (Slave Skills Functions)\n" .
+				"Usage: %s skills [(<add | desc>) [<skill #>]]\n", $string);
 		}
 
  	} else {
-		error T("Usage: slave < feed | s | status | move | standby | ai | aiv | skills>\n");
+		error TF("Usage: %s <feed | s | status | move | standby | ai | aiv | skills | fire>\n", $string);
 	}
 }
 
