@@ -258,13 +258,13 @@ sub sendCloseShop {
 	debug "Shop Closed\n", "sendPacket", 2;
 }
 
-sub sendCommandMercenary {
+sub sendHomunculusCommand {
 	my ($self, $command, $type) = @_;
 	# $type is ignored, $command can be 0, 1 or 2
 	
 	my $msg = pack ('v2 C1', 0x022D, $type, $command);
 	$self->sendToServer ($msg);
-	debug "Sent MercenaryCommand", "sendPacket", 2;
+	debug "Sent Homunculus Command", "sendPacket", 2;
 }
 
 sub sendCompanionRelease {
