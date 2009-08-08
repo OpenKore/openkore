@@ -1097,7 +1097,7 @@ sub actor_display {
 			# Actor is a player
 			$actor = $playersList->getByID($args->{ID});
 			if (!defined $actor) {
-				$actor = new Actor::Player($args->{type});
+				$actor = new Actor::Player();
 				$actor->{appear_time} = time;
 				$mustAdd = 1;
 			}
@@ -1106,9 +1106,9 @@ sub actor_display {
 			# Actor is a homunculus or a mercenary
 			$actor = $slavesList->getByID($args->{ID});
 			if (!defined $actor) {
-				$actor = $char->{slaves} && $char->{slaves}{$args->{ID}}
+				$actor = ($char->{slaves} && $char->{slaves}{$args->{ID}})
 				? $char->{slaves}{$args->{ID}} : new Actor::Slave ($args->{type});
-				
+
 				$actor->{appear_time} = time;
 				$mustAdd = 1;
 			}
@@ -1311,7 +1311,7 @@ sub actor_display {
 			my $domain = existsInList($config{friendlyAID}, unpack("V1", $actor->{ID})) ? 'parseMsg_presence' : 'parseMsg_presence/player';
 			debug "Player Exists: " . $actor->name . " ($actor->{binID}) Level $actor->{lv} $sex_lut{$actor->{sex}} $jobs_lut{$actor->{jobID}} ($coordsFrom{x}, $coordsFrom{y})\n", $domain;
 
-			Plugins::callHook('player', {player => $actor});  #backwards compatibailty
+			Plugins::callHook('player', {player => $actor});  #backwards compatibility
 
 			Plugins::callHook('player_exist', {player => $actor});
 
@@ -1369,24 +1369,18 @@ sub actor_display {
 
 		if ($actor->isa('Actor::Player')) {
 			debug "Player Moved: " . $actor->name . " ($actor->{binID}) Level $actor->{lv} $sex_lut{$actor->{sex}} $jobs_lut{$actor->{jobID}} - ($coordsFrom{x}, $coordsFrom{y}) -> ($coordsTo{x}, $coordsTo{y})\n", "parseMsg";
-
 		} elsif ($actor->isa('Actor::Monster')) {
 			debug "Monster Moved: " . $actor->nameIdx . " - ($coordsFrom{x}, $coordsFrom{y}) -> ($coordsTo{x}, $coordsTo{y})\n", "parseMsg";
-
 		} elsif ($actor->isa('Actor::Pet')) {
 			debug "Pet Moved: " . $actor->nameIdx . " - ($coordsFrom{x}, $coordsFrom{y}) -> ($coordsTo{x}, $coordsTo{y})\n", "parseMsg";
-
 		} elsif ($actor->isa('Actor::Slave')) {
 			debug "Slave Moved: " . $actor->nameIdx . " - ($coordsFrom{x}, $coordsFrom{y}) -> ($coordsTo{x}, $coordsTo{y})\n", "parseMsg";
-
 		} elsif ($actor->isa('Actor::Portal')) {
 			# This can never happen of course.
 			debug "Portal Moved: " . $actor->nameIdx . " - ($coordsFrom{x}, $coordsFrom{y}) -> ($coordsTo{x}, $coordsTo{y})\n", "parseMsg";
-
 		} elsif ($actor->isa('Actor::NPC')) {
 			# Neither can this.
-			debug "Monster Moved: " . $actor->nameIdx . " - ($coordsFrom{x}, $coordsFrom{y}) -> ($coordsTo{x}, $coordsTo{y})\n", "parseMsg";
-
+			debug "NPC Moved: " . $actor->nameIdx . " - ($coordsFrom{x}, $coordsFrom{y}) -> ($coordsTo{x}, $coordsTo{y})\n", "parseMsg";
 		} else {
 			debug "Unknown Actor Moved: " . $actor->nameIdx . " - ($coordsFrom{x}, $coordsFrom{y}) -> ($coordsTo{x}, $coordsTo{y})\n", "parseMsg";
 		}
@@ -1397,8 +1391,13 @@ sub actor_display {
 			debug "Player Spawned: " . $actor->nameIdx . " $sex_lut{$actor->{sex}} $jobs_lut{$actor->{jobID}}\n", "parseMsg";
 		} elsif ($actor->isa('Actor::Monster')) {
 			debug "Monster Spawned: " . $actor->nameIdx . "\n", "parseMsg";
+		} elsif ($actor->isa('Actor::Pet')) {
+			debug "Pet Spawned: " . $actor->nameIdx . "\n", "parseMsg";
 		} elsif ($actor->isa('Actor::Slave')) {
 			debug "Slave Spawned: " . $actor->nameIdx . "\n", "parseMsg";
+		} elsif ($actor->isa('Actor::Portal')) {
+			# Can this happen?
+			debug "Portal Spawned: " . $actor->nameIdx . "\n", "parseMsg";
 		} elsif ($actor->isa('NPC')) {
 			debug "NPC Spawned: " . $actor->nameIdx . "\n", "parseMsg";
 		} else {
@@ -2918,9 +2917,16 @@ sub homunculus_stats { # homunculus and mercenary stats
 		$slave->{expPercent}   = ($args->{exp_max}) ? ($args->{exp} / $args->{exp_max}) * 100 : 0;
 		$slave->{points_skill} = $args->{points_skill};
 	} elsif ($args->{switch} eq '029B') {
-		#$slave->{contract_end} = $args->{contract_end}
+		$slave->{contract_end} = $args->{contract_end};
 		$slave->{faith}        = $args->{faith};
 		$slave->{summons}      = $args->{summons};
+		$slave->{kills}        = $args->{kills} if (exists $args->{kills});
+		$slave->{attack_range} = $args->{range} if (exists $args->{range});
+		if ($config{mercenary_attackDistanceAuto} && $config{attackDistance} != $slave->{attack_range} && exists $slave->{attack_range}) {
+			message TF("Autodetected attackDistance for mercenary = %s\n", $slave->{attack_range}), "success";
+			configModify('mercenary_attackDistance', $slave->{attack_range}, 1);
+			configModify('mercenary_attackMaxDistance', $slave->{attack_range}, 1);
+		}
 	}
 }
 
@@ -4066,6 +4072,7 @@ sub memo_success {
 		0x07 => 'sp',
 		0x08 => 'sp_max',
 		0x29 => 'atk',
+		0x2B => 'matk',
 		0x31 => 'hit',
 		0x35 => 'aspd',
 		0xA5 => 'flee',
@@ -4087,13 +4094,15 @@ sub memo_success {
 			
 			debug "Mercenary: $type = $args->{param}\n";
 		} else {
-			message "Unknown mercenary param received (type: $args->{type}; param: $args->{param}; raw: " . unpack ('H*', $args->{RAW_MSG}) . ")\n";
+			warning "Unknown mercenary param received (type: $args->{type}; param: $args->{param}; raw: " . unpack ('H*', $args->{RAW_MSG}) . ")\n";
 		}
 	}
 }
 
 # +message_string
 sub mercenary_off {
+	$slavesList->removeByID($char->{mercenary}{ID});
+	delete $char->{slaves}{$char->{mercenary}{ID}};
 	delete $char->{mercenary};
 }
 # -message_string
@@ -4102,23 +4111,23 @@ sub message_string {
 	my ($self, $args) = @_;
 	
 	if ($args->{msg_id} == 0x04F2) {
-		message "Mercenary soldier's duty hour is over.\n";
+		message "Mercenary soldier's duty hour is over.\n", "info";
 		$self->mercenary_off ();
 		
 	} elsif ($args->{msg_id} == 0x04F3) {
-		message "Your mercenary soldier has been killed.\n";
+		message "Your mercenary soldier has been killed.\n", "info";
 		$self->mercenary_off ();
 		
 	} elsif ($args->{msg_id} == 0x04F4) {
-		message "Your mercenary soldier has been fired.\n";
+		message "Your mercenary soldier has been fired.\n", "info";
 		$self->mercenary_off ();
 		
 	} elsif ($args->{msg_id} == 0x04F5) {
-		message "Your mercenary soldier has ran away.\n";
+		message "Your mercenary soldier has ran away.\n", "info";
 		$self->mercenary_off ();
 		
 	} else {
-		message "Unknown message received ($args->{msg_id})\n";
+		warning "Unknown message received ($args->{msg_id})\n";
 	}
 }
 

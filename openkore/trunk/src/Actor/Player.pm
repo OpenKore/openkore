@@ -27,7 +27,7 @@ use Globals;
 use base qw(Actor);
 
 sub new {
-	my ($class, $type) = @_;
+	my ($class) = @_;
 	return $class->SUPER::new('Player');
 }
 

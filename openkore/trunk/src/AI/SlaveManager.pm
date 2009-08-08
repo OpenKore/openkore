@@ -14,12 +14,12 @@ use AI::Slave;
 
 sub addSlave {
 	my $actor = shift;
-	
+
 	$actor->{slave_ai_seq} = [];
 	$actor->{slave_ai_seq_args} = [];
 	$actor->{slave_skillsID} = [];
 	$actor->{slave_AI} = 2;
-	
+
 	if ($actor->{actorType} eq 'Homunculus') {
 		$actor->{slave_configPrefix} = 'homunculus_';
 		bless $actor, 'AI::Slave::Homunculus';
@@ -32,7 +32,7 @@ sub addSlave {
 		$actor->{slave_configPrefix} = 'slave_';
 		bless $actor, 'AI::Slave';
 	}
-	
+
 	$char->{slaves}{$actor->{ID}} = $actor;
 }
 
@@ -49,12 +49,10 @@ sub clear {
 sub iterate {
 	return unless defined $char;
 	return unless $char->{slaves};
-	
-	my $i = 0;
+
 	foreach my $slave (values %{$char->{slaves}}) {
 		if ($slave && %{$slave} && $slave->isa ('AI::Slave')) {
 			$slave->iterate;
-			$i++;
 		}
 	}
 }
