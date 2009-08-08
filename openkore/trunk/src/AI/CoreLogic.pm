@@ -2465,6 +2465,8 @@ sub processPartySkillUse {
 			my $hp_diff;
 			if ($char->{party} && $char->{party}{users}{$party_skill{targetID}} && $char->{party}{users}{$party_skill{targetID}}{hp}) {
 				$hp_diff = $char->{party}{users}{$party_skill{targetID}}{hp_max} - $char->{party}{users}{$party_skill{targetID}}{hp};
+			} elsif($char->{mercenary} && $char->{mercenary}{hp} && $char->{mercenary}{hp_max}) {
+				$hp_diff = $char->{mercenary}{hp_max} - $char->{mercenary}{hp};
 			} else {
 				if ($players{$party_skill{targetID}}) {
 					$hp_diff = -$players{$party_skill{targetID}}{deltaHp};
