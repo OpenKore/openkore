@@ -4067,6 +4067,7 @@ sub memo_success {
 
 {
 	my %mercenaryParam = (
+		0x00 => 'walk_speed',
 		0x05 => 'hp',
 		0x06 => 'hp_max',
 		0x07 => 'sp',
@@ -4091,6 +4092,7 @@ sub memo_success {
 			$char->{mercenary}{aspdDisp} = int (200 - (($char->{mercenary}{aspd} < 10) ? 10 : ($char->{mercenary}{aspd} / 10)));
 			$char->{mercenary}{hpPercent}    = $char->{mercenary}{hp_max} ? 100 * $char->{mercenary}{hp} / $char->{mercenary}{hp_max} : 0;
 			$char->{mercenary}{spPercent}    = $char->{mercenary}{sp_max} ? 100 * $char->{mercenary}{sp} / $char->{mercenary}{sp_max} : 0;
+			$char->{mercenary}{walk_speed}    = $char->{mercenary}{walk_speed} ? $char->{mercenary}{walk_speed}/1000 : 0.15;
 			
 			debug "Mercenary: $type = $args->{param}\n";
 		} else {
