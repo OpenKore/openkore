@@ -2463,13 +2463,13 @@ sub processPartySkillUse {
 		if ($config{useSelf_skill_smartHeal} && $party_skill{ID} eq "AL_HEAL" && !$config{$party_skill{prefix}."_noSmartHeal"}) {
 			my $smartHeal_lv = 1;
 			my $hp_diff;
-			my $meditatioBonus = 1;
-			$meditatioBonus = 1 + int(($char->{skills}{HP_MEDITATIO}{lv} * 2) / 100) if ($char->{skills}{HP_MEDITATIO});
+			my $modifier = 1 + int(($char->{skills}{HP_MEDITATIO}{lv} * 2) / 100);
 			
 			if ($char->{party} && $char->{party}{users}{$party_skill{targetID}} && $char->{party}{users}{$party_skill{targetID}}{hp}) {
 				$hp_diff = $char->{party}{users}{$party_skill{targetID}}{hp_max} - $char->{party}{users}{$party_skill{targetID}}{hp};
 			} elsif($char->{mercenary} && $char->{mercenary}{hp} && $char->{mercenary}{hp_max}) {
 				$hp_diff = $char->{mercenary}{hp_max} - $char->{mercenary}{hp};
+				$modifier /= 2;
 			} else {
 				if ($players{$party_skill{targetID}}) {
 					$hp_diff = -$players{$party_skill{targetID}}{deltaHp};
@@ -2480,7 +2480,7 @@ sub processPartySkillUse {
 
 				$smartHeal_lv = $i;
 				$sp_req = 10 + ($i * 3);
-				$amount = (int(($char->{lv} + $char->{int}) / 8) * (4 + $i * 8)) * $meditatioBonus;
+				$amount = (int(($char->{lv} + $char->{int}) / 8) * (4 + $i * 8)) * $modifier;
 				if ($char->{sp} < $sp_req) {
 					$smartHeal_lv--;
 					last;

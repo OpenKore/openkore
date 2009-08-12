@@ -290,7 +290,7 @@ sub new {
 		'01EF' => ['cart_items_list'],
 		'01F2' => ['guild_member_online_status', 'a4 a4 V1 v3', [qw(ID charID online sex hair_style hair_color)]],
 		# weather/misceffect2 packet
-		'01F3' => ['npc_effect', 'a4 a4', [qw(ID effect)]],
+		'01F3' => ['misc_effect', 'a4 V1', [qw(ID effect)]],
 		'01F4' => ['deal_request', 'Z24 x4 v1', [qw(user level)]],
 		'01F5' => ['deal_begin', 'C1 a4 v1', [qw(type targetID level)]],
 		#'01F6' => ['adopt_unknown'], # clif_parse_ReqAdopt
@@ -3195,13 +3195,9 @@ sub guild_member_online_status {
 	}
 }
 
-sub npc_effect {
+sub misc_effect {
 	my ($self, $args) = @_;
-	my $effect = unpack("V1", $args->{effect});
-	my $ID = $args->{ID};
-	my $name = getNPCName($ID);
-	
-	message TF("%s: *%s*\n", $name, ''), "npc";
+	message TF("%s uses effect: %s\n", Actor::get($args->{ID})->nameString(), $args->{effect}), "effect";
 }
 
 sub guild_members_title_list {
@@ -4092,7 +4088,7 @@ sub memo_success {
 			$char->{mercenary}{aspdDisp} = int (200 - (($char->{mercenary}{aspd} < 10) ? 10 : ($char->{mercenary}{aspd} / 10)));
 			$char->{mercenary}{hpPercent}    = $char->{mercenary}{hp_max} ? 100 * $char->{mercenary}{hp} / $char->{mercenary}{hp_max} : 0;
 			$char->{mercenary}{spPercent}    = $char->{mercenary}{sp_max} ? 100 * $char->{mercenary}{sp} / $char->{mercenary}{sp_max} : 0;
-			$char->{mercenary}{walk_speed}    = $char->{mercenary}{walk_speed} ? $char->{mercenary}{walk_speed}/1000 : 0.15;
+			$char->{mercenary}{walk_speed}   = $char->{mercenary}{walk_speed} ? $char->{mercenary}{walk_speed}/1000 : 0.15;
 			
 			debug "Mercenary: $type = $args->{param}\n";
 		} else {
