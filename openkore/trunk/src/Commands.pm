@@ -2398,13 +2398,22 @@ sub cmdGuild {
 			return;
 		}
 		message	T("Requesting guild information...\n"), "info";
-		$messageSender->sendGuildInfoRequest();
+		$messageSender->sendGuildMasterMemberCheck();
 
 		# Replies 01B6 (Guild Info) and 014C (Guild Ally/Enemy List)
-		$messageSender->sendGuildRequest(0);
+		$messageSender->sendGuildRequestInfo(0);
 
 		# Replies 0166 (Guild Member Titles List) and 0154 (Guild Members List)
-		$messageSender->sendGuildRequest(1);
+		$messageSender->sendGuildRequestInfo(1);
+
+		# Replies 0166 (Guild Member Titles List) and 0160 (Guild Member Titles Info List)
+		$messageSender->sendGuildRequestInfo(2);
+
+		# Replies 0162 (Guild Skill Info List)
+		$messageSender->sendGuildRequestInfo(3);
+
+		# Replies 015C (Guild Expulsion List)
+		$messageSender->sendGuildRequestInfo(4);
 
 		if ($arg1 eq "") {
 			message T("Enter command to view guild information: guild <info | member>\n"), "info";
@@ -3949,7 +3958,7 @@ sub cmdSlaveList {
 		}
 
 		message(swrite(
-			"@<< @<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<<<<<    @<<<<<      @<<<<<<<<<<",
+			"@<< @<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<<<<<      @<<<<<      @<<<<<<<<<<",
 			[$slave->{binID}, $name, $slave->{actorType}, $dist, $pos]),
 			"list");
 	}
@@ -5046,7 +5055,7 @@ sub cmdMail {
 			message T("Usage: ms <receiver> <title> <message>\n"), "info";
 		} else {
 			my ($receiver, $title, $msg) = ($args[0], $args[1], $args[2]);
-			$messageSender->sendMailSend((70+length($msg)), $receiver, $title, length($msg), $msg);
+			$messageSender->sendMailSend($receiver, $title, $msg);
 		}
 
 	# mail open

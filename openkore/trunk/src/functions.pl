@@ -476,6 +476,7 @@ sub initMapChangeVars {
 	undef %createdChatRoom;
 	undef @lastpm;
 	undef %incomingFriend;
+	undef $devotionList;
 
 	$itemsList->clear();
 	$monstersList->clear();

@@ -479,11 +479,11 @@ sub sendGuildCreate {
 	debug "Sent Guild Create: $name\n", "sendPacket", 2;
 }
 
-sub sendGuildInfoRequest {
-	my $self = shift;
-	my $msg = pack("C*", 0x4d, 0x01);
+sub sendGuildMasterMemberCheck {
+	my ($self, $ID) = @_;
+	my $msg = pack("v", 0x014D);
 	$self->sendToServer($msg);
-	debug "Sent Guild Information Request\n", "sendPacket";
+	debug "Sent Guild Master/Member Check.\n", "sendPacket";
 }
 
 sub sendGuildJoin {
@@ -549,11 +549,18 @@ sub sendGuildRankChange {
 	debug "Sent Set Guild title: $index $title\n", "sendPacket", 2;
 }
 
-sub sendGuildRequest {
-	my ($self, $page) = @_;
+sub sendGuildRequestInfo {
+	my ($self, $page) = @_; # page 0-4
 	my $msg = pack("C*", 0x4f, 0x01).pack("V1", $page);
 	$self->sendToServer($msg);
 	debug "Sent Guild Request Page : ".$page."\n", "sendPacket";
+}
+
+sub sendGuildRequestEmblem {
+	my ($self, $guildID) = @_;
+	my $msg = pack("v V", 0x0151, $guildID);
+	$self->sendToServer($msg);
+	debug "Sent Guild Request Emblem.\n", "sendPacket";
 }
 
 sub sendGuildSetAlly {
@@ -822,18 +829,6 @@ sub sendMemo {
 	my $msg = pack("C*", 0x1D, 0x01);
 	$self->sendToServer($msg);
 	debug "Sent Memo\n", "sendPacket", 2;
-}
-
-sub sendMercenaryCommand {
-	my ($self, $command) = @_;
-	
-	# 0x0 => COMMAND_REQ_NONE
-	# 0x1 => COMMAND_REQ_PROPERTY
-	# 0x2 => COMMAND_REQ_DELETE
-	
-	my $msg = pack ('v1 C1', 0x029F, $command);
-	$self->sendToServer ($msg);
-	debug "Sent MercenaryCommand", "sendPacket", 2;
 }
 
 sub sendMove {
@@ -1381,28 +1376,28 @@ sub sendTeleport {
 
 sub sendTop10Alchemist {
 	my $self = shift;
-	my $msg = pack("C*", 0x18, 0x02);
+	my $msg = pack("v", 0x0218);
 	$self->sendToServer($msg);
 	debug "Sent Top 10 Alchemist request\n", "sendPacket", 2;
 }
 
 sub sendTop10Blacksmith {
 	my $self = shift;
-	my $msg = pack("C*", 0x17, 0x02);
+	my $msg = pack("v", 0x0217);
 	$self->sendToServer($msg);
 	debug "Sent Top 10 Blacksmith request\n", "sendPacket", 2;
 }	
 
 sub sendTop10PK {
 	my $self = shift;
-	my $msg = pack("C*", 0x37, 0x02);
+	my $msg = pack("v", 0x0237);
 	$self->sendToServer($msg);
 	debug "Sent Top 10 PK request\n", "sendPacket", 2;	
 }
 
 sub sendTop10Taekwon {
 	my $self = shift;
-	my $msg = pack("C*", 0x25, 0x02);
+	my $msg = pack("v", 0x0225);
 	$self->sendToServer($msg);
 	debug "Sent Top 10 Taekwon request\n", "sendPacket", 2;
 }
@@ -1410,114 +1405,114 @@ sub sendTop10Taekwon {
 sub sendUnequip {
 	my $self = shift;
 	my $index = shift;
-	my $msg = pack("C*", 0xAB, 0x00) . pack("v*", $index);
+	my $msg = pack("v", 0x00AB) . pack("v*", $index);
 	$self->sendToServer($msg);
 	debug "Sent Unequip: $index\n", "sendPacket", 2;
 }
 
 sub sendWho {
 	my $self = shift;
-	my $msg = pack("C*", 0xC1, 0x00);
+	my $msg = pack("v", 0x00C1);
 	$self->sendToServer($msg);
 	debug "Sent Who\n", "sendPacket", 2;
 }
 
-sub sendMessageIDEncryptionInitialized {
-	my $self = shift;
-	my $msg = pack("C*", 0xAF, 0x02);
+sub SendAdoptReply {
+	my ($self, $parentID1, $parentID2, $result) = @_;
+	my $msg = pack("v V3", 0x01F7, $parentID1, $parentID2, $result);
 	$self->sendToServer($msg);
-	debug "Sent Message ID Encryption Initialized\n", "sendPacket", 2;
+	debug "Sent Adoption Reply.\n", "sendPacket", 2;
+}
+
+sub SendAdoptRequest {
+	my ($self, $ID) = @_;
+	my $msg = pack("v V", 0x01F9, $ID);
+	$self->sendToServer($msg);
+	debug "Sent Adoption Request.\n", "sendPacket", 2;
 }
 
 sub sendMailboxOpen {
 	my $self = $_[0];
-	my $msg = pack("C*", 0x3F, 0x02);
+	my $msg = pack("v", 0x023F);
 	$self->sendToServer($msg);
 	debug "Sent mailbox open.\n", "sendPacket", 2;
 }
 
 sub sendMailRead {
 	my ($self, $mailID) = @_;
-	my $msg = pack("C2 V1", 0x41, 0x02, $mailID);
+	my $msg = pack("v V", 0x0241, $mailID);
 	$self->sendToServer($msg);
 	debug "Sent read mail.\n", "sendPacket", 2;
 }
 
 sub sendMailDelete {
 	my ($self, $mailID) = @_;
-	my $msg = pack("C2 V1", 0x43, 0x02, $mailID);
+	my $msg = pack("v V", 0x0243, $mailID);
 	$self->sendToServer($msg);
 	debug "Sent delete mail.\n", "sendPacket", 2;
 }
 
-sub sendMailReturn {
-	my ($self, $mailID, $sender) = @_;
-	my $msg = pack("C2 V1 Z24", 0x73, 0x02, $mailID, stringToBytes($sender));
+sub sendMailGetAttach {
+	my ($self, $mailID) = @_;
+	my $msg = pack("v V", 0x0244, $mailID);
 	$self->sendToServer($msg);
-	debug "Sent return mail.\n", "sendPacket", 2;
+	debug "Sent mail get attachment.\n", "sendPacket", 2;
 }
 
 sub sendMailOperateWindow {
 	my ($self, $window) = @_;
-	my $msg = pack("C2 C1 x1", 0x46, 0x02, $window);
+	my $msg = pack("v C x", 0x0246, $window);
 	$self->sendToServer($msg);
 	debug "Sent mail window.\n", "sendPacket", 2;
-}
-
-sub sendMailGetAttach {
-	my ($self, $mailID) = @_;
-	my $msg = pack("C2 V1", 0x44, 0x02, $mailID);
-	$self->sendToServer($msg);
-	debug "Sent mail get attachment.\n", "sendPacket", 2;
 }
 
 sub sendMailSetAttach {
 	my $self = $_[0];
 	my $amount = $_[1];
 	my $index = (defined $_[2]) ? $_[2] : 0;	# 0 for zeny
-	my $msg = pack("C2 v1 V1", 0x47, 0x02, $index, $amount);
+	my $msg = pack("v2 V", 0x0247, $index, $amount);
 	$self->sendToServer($msg);
 	debug "Sent mail set attachment.\n", "sendPacket", 2;
 }
 
 sub sendMailSend {
-	my ($self, $length, $receiver, $title, $msglength, $mailmsg) = @_;
-	my $msg = pack("C2 v1 Z24 a40 C1 Z*", 0x48, 0x02, $length, stringToBytes($receiver), stringToBytes($title), $msglength, stringToBytes($mailmsg));
+	my ($self, $receiver, $title, $message) = @_;
+	my $msg = pack("v2 Z24 a40 C Z*", 0x0248, length($message)+70 , stringToBytes($receiver), stringToBytes($title), length($message), stringToBytes($message));
 	$self->sendToServer($msg);
 	debug "Sent mail send.\n", "sendPacket", 2;
 }
 
 sub sendAuctionAddItemCancel {
 	my ($self) = @_;
-	my $msg = pack("C2 v1", 0x4B, 0x02, 1);
+	my $msg = pack("v2", 0x024B, 1);
 	$self->sendToServer($msg);
 	debug "Sent Auction Add Item Cancel.\n", "sendPacket", 2;
 }
 
 sub sendAuctionAddItem {
 	my ($self, $index, $amount) = @_;
-	my $msg = pack("C2 v1 V1", 0x4C, 0x02, $index, $amount);
+	my $msg = pack("v2 V", 0x024C, $index, $amount);
 	$self->sendToServer($msg);
 	debug "Sent Auction Add Item.\n", "sendPacket", 2;
 }
 
 sub sendAuctionCreate {
 	my ($self, $price, $buynow, $hours) = @_;
-	my $msg = pack("C2 V1 V1 v1", 0x4D, 0x02, $price, $buynow, $hours);
+	my $msg = pack("v V2 v", 0x024D, $price, $buynow, $hours);
 	$self->sendToServer($msg);
 	debug "Sent Auction Create.\n", "sendPacket", 2;
 }
 
 sub sendAuctionCancel {
 	my ($self, $id) = @_;
-	my $msg = pack("C2 V1", 0x4E, 0x02, $id);
+	my $msg = pack("v V", 0x024E, $id);
 	$self->sendToServer($msg);
 	debug "Sent Auction Cancel.\n", "sendPacket", 2;
 }
 
 sub sendAuctionBuy {
 	my ($self, $id, $bid) = @_;
-	my $msg = pack("C2 V1 V1", 0x4F, 0x02, $id, $bid);
+	my $msg = pack("v V2", 0x024F, $id, $bid);
 	$self->sendToServer($msg);
 	debug "Sent Auction Buy.\n", "sendPacket", 2;
 }
@@ -1525,23 +1520,85 @@ sub sendAuctionBuy {
 sub sendAuctionItemSearch {
 	my ($self, $type, $price, $text, $page) = @_;
 	$page = (defined $page) ? $page : 1;
-	my $msg = pack("C2 v1 V1 Z24 v1", 0x51, 0x02, $type, $price, stringToBytes($text), $page);
+	my $msg = pack("v2 V Z24 v", 0x0251, $type, $price, stringToBytes($text), $page);
 	$self->sendToServer($msg);
 	debug "Sent Auction Item Search.\n", "sendPacket", 2;
 }
 
 sub sendAuctionReqMyInfo {
 	my ($self, $type) = @_;
-	my $msg = pack("C2 v1", 0x5C, 0x02, $type);
+	my $msg = pack("v2", 0x025C, $type);
 	$self->sendToServer($msg);
 	debug "Sent Auction Request My Info.\n", "sendPacket", 2;
 }
 
 sub sendAuctionMySellStop {
 	my ($self, $id) = @_;
-	my $msg = pack("C2 V1", 0x5D, 0x02, $id);
+	my $msg = pack("v V", 0x025D, $id);
 	$self->sendToServer($msg);
 	debug "Sent My Sell Stop.\n", "sendPacket", 2;
+}
+
+sub sendMailReturn {
+	my ($self, $mailID, $sender) = @_;
+	my $msg = pack("v V Z24", 0x0273, $mailID, stringToBytes($sender));
+	$self->sendToServer($msg);
+	debug "Sent return mail.\n", "sendPacket", 2;
+}
+
+sub sendCashShopBuy {
+	my ($self, $ID, $amount, $points) = @_;
+	my $msg = pack("v V2", 0x0288, $ID, $amount, $points);
+	$self->sendToServer($msg);
+	debug "Sent My Sell Stop.\n", "sendPacket", 2;
+}
+
+sub sendMercenaryCommand {
+	my ($self, $command) = @_;
+	
+	# 0x0 => COMMAND_REQ_NONE
+	# 0x1 => COMMAND_REQ_PROPERTY
+	# 0x2 => COMMAND_REQ_DELETE
+	
+	my $msg = pack ('v C', 0x029F, $command);
+	$self->sendToServer ($msg);
+	debug "Sent MercenaryCommand", "sendPacket", 2;
+}
+
+sub sendMessageIDEncryptionInitialized {
+	my $self = shift;
+	my $msg = pack("v", 0x02AF);
+	$self->sendToServer($msg);
+	debug "Sent Message ID Encryption Initialized\n", "sendPacket", 2;
+}
+
+sub sendQuestState {
+	my ($self, $questID, $state) = @_;
+	my $msg = pack("v V C", 0x02B6, $questID, $state);
+	$self->sendToServer($msg);
+	debug "Sent Quest State.\n", "sendPacket", 2;
+}
+
+sub sendShowEquipPlayer {
+	my ($self, $ID) = @_;
+	my $msg = pack("v V", 0x02D6, $ID);
+	$self->sendToServer($msg);
+	debug "Sent Show Equip Player.\n", "sendPacket", 2;
+}
+
+sub sendShowEquipTickbox {
+	my ($self, $flag) = @_;
+	my $msg = pack("v V2", 0x02D8, 0, $flag);
+	$self->sendToServer($msg);
+	debug "Sent Show Equip Tickbox: flag.\n", "sendPacket", 2;
+}
+
+sub sendBattlegroundChat {
+	my ($self, $message) = @_;
+	$message = "|00$message" if ($config{chatLangCode} && $config{chatLangCode} ne "none");
+	my $msg = pack("v2 Z*", 0x02DB, length($message)+4, stringToBytes($message));
+	$self->sendToServer($msg);
+	debug "Sent Battleground chat.\n", "sendPacket", 2;
 }
 
 1;

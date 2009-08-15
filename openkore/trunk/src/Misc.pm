@@ -136,6 +136,7 @@ our @EXPORT = (
 	items_control
 	pickupitems
 	mon_control
+	monsterName
 	positionNearPlayer
 	positionNearPortal
 	printItemDesc
@@ -1654,6 +1655,17 @@ sub cardName {
 	return $card;
 }
 
+# Resolve the name of a monster
+# This function will only look at the data in monsters.txt
+# DO NOT USE THIS FUNCTION when you want to get the real name of a monster,
+# servers can change this name internally use getNPCName instead.
+sub monsterName {
+	my $ID = shift;
+	return 'Unknown' unless defined($ID);
+	return 'None' unless $ID;
+	return $monsters_lut{$ID} || "Unknown #$ID";
+}
+
 # Resolve the name of a simple item
 sub itemNameSimple {
 	my $ID = shift;
@@ -2257,8 +2269,9 @@ sub setPartySkillTimer {
 # Does not include skillsstatus.txt items.
 sub setStatus {
 	my ($actor, $param1, $param2, $param3) = @_;
-	my $verbosity = $actor->{ID} eq $accountID ? 1 : 2;
+	assert(defined $actor) if DEBUG;
 	assert(UNIVERSAL::isa($actor, 'Actor')) if DEBUG;
+	my $verbosity = $actor->{ID} eq $accountID ? 1 : 2;
 	my $are = $actor->verb('are', 'is');
 	my $have = $actor->verb('have', 'has');
 	my $changed = 0;
