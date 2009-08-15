@@ -1229,7 +1229,7 @@ sub actor_display {
 	$actor->{lv} = $args->{lv};
 	$actor->{pos} = {%coordsFrom};
 	$actor->{pos_to} = {%coordsTo};
-	$actor->{walk_speed} = $args->{walk_speed} / 1000 if (exists $args->{walk_speed});
+	$actor->{walk_speed} = $args->{walk_speed} / 1000 if (exists $args->{walk_speed} && $args->{switch} ne "0086");
 	$actor->{time_move} = time;
 	$actor->{time_move_calc} = distance(\%coordsFrom, \%coordsTo) * $actor->{walk_speed};
 
