@@ -894,23 +894,24 @@ sub parseOutgoingClientMessage {
 		Network::Receive->decrypt(\$msg, $msg);
 	}
 	my $switch = Network::MessageTokenizer::getMessageID($msg);
-	if ($config{'debugPacket_ro_sent'} && !existsInList($config{'debugPacket_exclude'}, $switch)
-	   || $config{debugPacket_include_dumpMethod} && existsInList($config{'debugPacket_include'}, $switch)) {
+	if ($config{'debugPacket_ro_sent'} && !existsInList($config{'debugPacket_exclude'}, $switch) ||
+		$config{'debugPacket_include_dumpMethod'} && existsInList($config{'debugPacket_include'}, $switch))
+	{
 		my $label = $packetDescriptions{Send}{$switch} ?
 			" - $packetDescriptions{Send}{$switch}" : '';
 		
-		if ($config{debugPacket_ro_sent} == 1) {
-			debug "Packet SENT_BY_CLIENT: $switch$label\n", "parseSendMsg", 0;
-		} elsif ($config{debugPacket_ro_sent} == 2) {
-			visualDump($sendMsg, $switch . $label);
+		if ($config{'debugPacket_ro_sent'} == 1) {
+			debug sprintf("Sent by RO client packet: %-4s    [%2d bytes]  %s\n", $switch, length($msg), $label), "parseMsg", 0;
+		} elsif ($config{'debugPacket_ro_sent'} == 2) {
+			visualDump($sendMsg, "<< Received packet (RO): $switch  $label");
 		}
-		if ($config{debugPacket_include_dumpMethod} == 1) {
+		if ($config{'debugPacket_include_dumpMethod'} == 1) {
 			debug "Packet: $switch$label\n", "parseMsg", 0;
-		} elsif ($config{debugPacket_include_dumpMethod} == 2) {
+		} elsif ($config{'debugPacket_include_dumpMethod'} == 2) {
 			visualDump($sendMsg, $switch . $label);
-		} elsif ($config{debugPacket_include_dumpMethod} == 3) {
+		} elsif ($config{'debugPacket_include_dumpMethod'} == 3) {
 			dumpData($msg,1);
-		} elsif ($config{debugPacket_include_dumpMethod} == 4) {
+		} elsif ($config{'debugPacket_include_dumpMethod'} == 4) {
 			open DUMP, ">> DUMP_lines.txt";
 			print DUMP sprintf(unpack('H*', $msg) . "\n");
 			close DUMP;
@@ -1167,27 +1168,24 @@ sub parseIncomingMessage {
 	}
 
 	$lastswitch = $switch;
-	if ($config{debugPacket_received} && !existsInList($config{'debugPacket_exclude'}, $switch)) {
+	if ($config{'debugPacket_received'} && !existsInList($config{'debugPacket_exclude'}, $switch) ||
+		$config{'debugPacket_include_dumpMethod'} && existsInList($config{'debugPacket_include'}, $switch))
+	{
 		my $label = $packetDescriptions{Recv}{$switch} ?
 			"[$packetDescriptions{Recv}{$switch}]" : '';
-		if ($config{debugPacket_received} == 1) {
-			debug sprintf("Received packet: %-4s    [%2d bytes]  %s\n", $switch, length($msg), $label),
-				"parseMsg", 0;
-		} else {
-			visualDump($msg, "<< Received packet: $switch  $label");
-		}
-	}
 
-	if ($config{debugPacket_include_dumpMethod} && existsInList($config{'debugPacket_include'}, $switch)) {
-		my $label = $packetDescriptions{Recv}{$switch} ?
-			" ($packetDescriptions{Recv}{$switch})" : '';
-		if ($config{debugPacket_include_dumpMethod} == 1) {
+		if ($config{'debugPacket_received'} == 1) {
+			debug sprintf("Received packet: %-4s    [%2d bytes]  %s\n", $switch, length($msg), $label), "parseMsg", 0;
+		} elsif ($config{'debugPacket_received'} == 2) {
+			visualDump($msg, "<< Received packet (server): $switch  $label");
+		}
+		if ($config{'debugPacket_include_dumpMethod'} == 1) {
 			debug "Packet: $switch$label\n", "parseMsg", 0;
-		} elsif ($config{debugPacket_include_dumpMethod} == 2) {
+		} elsif ($config{'debugPacket_include_dumpMethod'} == 2) {
 			visualDump($msg, "$switch$label");
-		} elsif ($config{debugPacket_include_dumpMethod} == 3) {
+		} elsif ($config{'debugPacket_include_dumpMethod'} == 3) {
 			dumpData($msg,1);
-		} elsif ($config{debugPacket_include_dumpMethod} == 4) {
+		} elsif ($config{'debugPacket_include_dumpMethod'} == 4) {
 			open DUMP, ">> DUMP_lines.txt";
 			print DUMP sprintf(unpack('H*', $msg) . "\n");
 			close DUMP;
@@ -1205,8 +1203,8 @@ sub parseIncomingMessage {
 	if ($packetParser &&
 		(my $args = $packetParser->parse($msg))) {
 		# Use the new object-oriented packet parser
-		if ($config{debugPacket_received} > 2 &&
-		    !existsInList($config{'debugPacket_exclude'}, $switch)) {
+		if ($config{debugPacket_received} == 3 &&
+		    existsInList($config{'debugPacket_include'}, $switch)) {
 			my $switch = $args->{switch};
 			my $packet = $packetParser->{packet_list}{$switch};
 			my ($name, $packString, $varNames) = @{$packet};
