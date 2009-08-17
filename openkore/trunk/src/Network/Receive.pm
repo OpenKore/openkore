@@ -1341,10 +1341,6 @@ sub actor_display {
 		$args->{switch} eq "01D8" ||
 		$args->{switch} eq "022A" ||
 		$args->{switch} eq "02EE") {
-		if ($args->{switch} eq "022A") {
-			
-		}
-		
 		# Actor Exists
 
 		if ($actor->isa('Actor::Player')) {
