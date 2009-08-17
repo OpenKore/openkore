@@ -68,164 +68,164 @@ sub new {
 	# 'packetSwitch' => ['handler function','unpack string',[qw(argument names)]]
 
 	$self{packet_list} = {
-		'0069' => ['account_server_info', 'x2 a4 a4 a4 x30 C1 a*', [qw(sessionID accountID sessionID2 accountSex serverInfo)]],
-		'006A' => ['login_error', 'C1', [qw(type)]],
+		'0069' => ['account_server_info', 'x2 a4 a4 a4 x30 C a*', [qw(sessionID accountID sessionID2 accountSex serverInfo)]],
+		'006A' => ['login_error', 'C', [qw(type)]],
 		'006B' => ['received_characters'],
 		'0072' => ['received_characters'],
 		'006C' => ['login_error_game_login_server'],
-		'006D' => ['character_creation_successful', 'a4 x4 V1 x62 Z24 C1 C1 C1 C1 C1 C1 C1', [qw(ID zenny name str agi vit int dex luk slot)]],
+		'006D' => ['character_creation_successful', 'a4 x4 V x62 Z24 C7', [qw(ID zenny name str agi vit int dex luk slot)]],
 		'006E' => ['character_creation_failed'],
 		'006F' => ['character_deletion_successful'],
 		'0070' => ['character_deletion_failed'],
-		'0071' => ['received_character_ID_and_Map', 'a4 Z16 a4 v1', [qw(charID mapName mapIP mapPort)]],
+		'0071' => ['received_character_ID_and_Map', 'a4 Z16 a4 v', [qw(charID mapName mapIP mapPort)]],
 		'0073' => ['map_loaded', 'V a3', [qw(syncMapSync coords)]],
 		'0075' => ['changeToInGameState'],
 		'0077' => ['changeToInGameState'],
-		'0078' => ['actor_display', 'a4 v14 a4 x7 C1 a3 x2 C1 v1', [qw(ID walk_speed param1 param2 param3 type hair_style weapon lowhead shield tophead midhead hair_color clothes_color head_dir guildID sex coords act lv)]],
-		'0079' => ['actor_display', 'a4 v14 a4 x7 C1 a3 x2 v1',    [qw(ID walk_speed param1 param2 param3 type hair_style weapon lowhead shield tophead midhead hair_color clothes_color head_dir guildID sex coords lv)]],
+		'0078' => ['actor_display',		'a4 v14 a4 x7 C a3 x2 C v',		[qw(ID walk_speed param1 param2 param3 type hair_style weapon lowhead shield tophead midhead hair_color clothes_color head_dir guildID sex coords act lv)]],
+		'0079' => ['actor_display',		'a4 v14 a4 x7 C a3 x2 v',		[qw(ID walk_speed param1 param2 param3 type hair_style weapon lowhead shield tophead midhead hair_color clothes_color head_dir guildID sex coords lv)]],
 		'007A' => ['changeToInGameState'],
-		'007B' => ['actor_display', 'a4 v8 x4 v6 a4 x7 C1 a5 x3 v1',     [qw(ID walk_speed param1 param2 param3 type hair_style weapon lowhead shield tophead midhead hair_color clothes_color head_dir guildID sex coords lv)]],
+		'007B' => ['actor_display',		'a4 v8 x4 v6 a4 x7 C a5 x3 v',	[qw(ID walk_speed param1 param2 param3 type hair_style weapon lowhead shield tophead midhead hair_color clothes_color head_dir guildID sex coords lv)]],
 		#OLD '007C' => ['actor_display', 'a4 v1 v1 v1 v1 x6 v1 C1 x12 C1 a3', [qw(ID walk_speed param1 param2 param3 type pet sex coords)]],
 		'007C' => ($rpackets{'007C'} == 41	# or 42
-			? ['actor_display', 'x1 a4 v14 C2 a3 C1', [qw(ID walk_speed param1 param2 param3 hair_style weapon lowhead type shield tophead midhead hair_color clothes_color head_dir karma sex coords unknown1)]]
-			: ['actor_display', 'x1 a4 v14 C2 a3 C2', [qw(ID walk_speed param1 param2 param3 hair_style weapon lowhead type shield tophead midhead hair_color clothes_color head_dir karma sex coords unknown1 unknown2)]]
+			? ['actor_display',			'x a4 v14 C2 a3 C',				[qw(ID walk_speed param1 param2 param3 hair_style weapon lowhead type shield tophead midhead hair_color clothes_color head_dir karma sex coords unknown1)]]
+			: ['actor_display',			'x a4 v14 C2 a3 C2',			[qw(ID walk_speed param1 param2 param3 hair_style weapon lowhead type shield tophead midhead hair_color clothes_color head_dir karma sex coords unknown1 unknown2)]]
 		),
-		'007F' => ['received_sync', 'V1', [qw(time)]],
-		'0080' => ['actor_died_or_disappeared', 'a4 C1', [qw(ID type)]],
+		'007F' => ['received_sync', 'V', [qw(time)]],
+		'0080' => ['actor_died_or_disappeared', 'a4 C', [qw(ID type)]],
 		'0081' => ['errors', 'C1', [qw(type)]],
 		'0086' => ['actor_display', 'a4 a5', [qw(ID coords)]],
-		'0087' => ['character_moves', 'x4 a5 C1', [qw(coords unknown)]],
-		'0088' => ['actor_movement_interrupted', 'a4 v1 v1', [qw(ID x y)]],
-		'008A' => ['actor_action', 'a4 a4 a4 V2 v1 v1 C1 v1', [qw(sourceID targetID tick src_speed dst_speed damage param2 type param3)]],
-		'008D' => ['public_chat', 'v1 a4 Z*', [qw(len ID message)]],
+		'0087' => ['character_moves', 'x4 a5 C', [qw(coords unknown)]],
+		'0088' => ['actor_movement_interrupted', 'a4 v2', [qw(ID x y)]],
+		'008A' => ['actor_action', 'a4 a4 a4 V2 v2 C v', [qw(sourceID targetID tick src_speed dst_speed damage param2 type param3)]],
+		'008D' => ['public_chat', 'v a4 Z*', [qw(len ID message)]],
 		'008E' => ['self_chat', 'x2 Z*', [qw(message)]],
-		'0091' => ['map_change', 'Z16 v1 v1', [qw(map x y)]],
-		'0092' => ['map_changed', 'Z16 x4 a4 v1', [qw(map IP port)]],
+		'0091' => ['map_change', 'Z16 v2', [qw(map x y)]],
+		'0092' => ['map_changed', 'Z16 x4 a4 v', [qw(map IP port)]],
 		'0095' => ['actor_info', 'a4 Z24', [qw(ID name)]],
-		'0097' => ['private_message', 'v1 Z24 Z*', [qw(len privMsgUser privMsg)]],
-		'0098' => ['private_message_sent', 'C1', [qw(type)]],
+		'0097' => ['private_message', 'v Z24 Z*', [qw(len privMsgUser privMsg)]],
+		'0098' => ['private_message_sent', 'C', [qw(type)]],
 		'009A' => ['system_chat', 'x2 Z*', [qw(message)]], #maybe use a* instead and $message =~ /\000$//; if there are problems
-		'009C' => ['actor_look_at', 'a4 C1 x1 C1', [qw(ID head body)]],
-		'009D' => ['item_exists', 'a4 v1 C v3 C2', [qw(ID type identify x y amount subx suby)]],
-		'009E' => ['item_appeared', 'a4 v1 x1 v1 v1 x2 v1', [qw(ID type x y amount)]],
-		'00A0' => ['inventory_item_added', 'v3 C3 a8 v1 C2', [qw(index amount nameID identified broken upgrade cards type_equip type fail)]],
+		'009C' => ['actor_look_at', 'a4 C x C', [qw(ID head body)]],
+		'009D' => ['item_exists', 'a4 v C v3 C2', [qw(ID nameID identified x y amount subx suby)]],
+		'009E' => ['item_appeared', 'a4 v C v2 C2 v', [qw(ID nameID identified x y subx suby amount)]],
+		'00A0' => ['inventory_item_added', 'v3 C3 a8 v C2', [qw(index amount nameID identified broken upgrade cards type_equip type fail)]],
 		'00A1' => ['item_disappeared', 'a4', [qw(ID)]],
 		'00A3' => ['inventory_items_stackable'],
 		'00A4' => ['inventory_items_nonstackable'],
 		'00A5' => ['storage_items_stackable'],
 		'00A6' => ['storage_items_nonstackable'],
-		'00A8' => ['use_item', 'v1 x2 C1', [qw(index amount)]],
-		'00AA' => ['equip_item', 'v1 v1 C1', [qw(index type success)]],
-		'00AC' => ['unequip_item', 'v1 v1', [qw(index type)]],
-		'00AF' => ['inventory_item_removed', 'v1 v1', [qw(index amount)]],
-		'00B0' => ['stat_info', 'v1 V1', [qw(type val)]],
-		'00B1' => ['exp_zeny_info', 'v1 V1', [qw(type val)]],
+		'00A8' => ['use_item', 'v x2 C', [qw(index amount)]],
+		'00AA' => ['equip_item', 'v2 C', [qw(index type success)]],
+		'00AC' => ['unequip_item', 'v2', [qw(index type)]],
+		'00AF' => ['inventory_item_removed', 'v2', [qw(index amount)]],
+		'00B0' => ['stat_info', 'v V', [qw(type val)]],
+		'00B1' => ['exp_zeny_info', 'v V', [qw(type val)]],
 		'00B3' => ['switch_character'],
 		'00B4' => ['npc_talk'],
 		'00B5' => ['npc_talk_continue'],
 		'00B6' => ['npc_talk_close', 'a4', [qw(ID)]],
 		'00B7' => ['npc_talk_responses'],
-		'00BC' => ['stats_added', 'v1 x1 C1', [qw(type val)]],
-		'00BD' => ['stats_info', 'v1 C1 C1 C1 C1 C1 C1 C1 C1 C1 C1 C1 C1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1', [qw(points_free str points_str agi points_agi vit points_vit int points_int dex points_dex luk points_luk attack attack_bonus attack_magic_min attack_magic_max def def_bonus def_magic def_magic_bonus hit flee flee_bonus critical)]],
-		'00BE' => ['stats_points_needed', 'v1 C1', [qw(type val)]],
-		'00C0' => ['emoticon', 'a4 C1', [qw(ID type)]],
-		'00CA' => ['buy_result', 'C1', [qw(fail)]],
-		'00C2' => ['users_online', 'V1', [qw(users)]],
-		'00C3' => ['job_equipment_hair_change', 'a4 C1 C1', [qw(ID part number)]],
+		'00BC' => ['stats_added', 'v x C', [qw(type val)]],
+		'00BD' => ['stats_info', 'v C12 v12', [qw(points_free str points_str agi points_agi vit points_vit int points_int dex points_dex luk points_luk attack attack_bonus attack_magic_min attack_magic_max def def_bonus def_magic def_magic_bonus hit flee flee_bonus critical)]],
+		'00BE' => ['stats_points_needed', 'v C', [qw(type val)]],
+		'00C0' => ['emoticon', 'a4 C', [qw(ID type)]],
+		'00CA' => ['buy_result', 'C', [qw(fail)]],
+		'00C2' => ['users_online', 'V', [qw(users)]],
+		'00C3' => ['job_equipment_hair_change', 'a4 C2', [qw(ID part number)]],
 		'00C4' => ['npc_store_begin', 'a4', [qw(ID)]],
 		'00C6' => ['npc_store_info'],
 		'00C7' => ['npc_sell_list'],
 		'00D1' => ['ignore_player_result', 'C2', [qw(type error)]],
 		'00D2' => ['ignore_all_result', 'C2', [qw(type error)]],
 		'00D6' => ['chat_created'],
-		'00D7' => ['chat_info', 'x2 a4 a4 v1 v1 C1 a*', [qw(ownerID ID limit num_users public title)]],
-		'00DA' => ['chat_join_result', 'C1', [qw(type)]],
+		'00D7' => ['chat_info', 'x2 a4 a4 v2 C a*', [qw(ownerID ID limit num_users public title)]],
+		'00DA' => ['chat_join_result', 'C', [qw(type)]],
 		'00D8' => ['chat_removed', 'a4', [qw(ID)]],
 		'00DB' => ['chat_users'],
-		'00DC' => ['chat_user_join', 'v1 Z24', [qw(num_users user)]],
-		'00DD' => ['chat_user_leave', 'v1 Z24', [qw(num_users user)]],
-		'00DF' => ['chat_modified', 'x2 a4 a4 v1 v1 C1 a*', [qw(ownerID ID limit num_users public title)]],
-		'00E1' => ['chat_newowner', 'C1 x3 Z24', [qw(type user)]],
+		'00DC' => ['chat_user_join', 'v Z24', [qw(num_users user)]],
+		'00DD' => ['chat_user_leave', 'v Z24', [qw(num_users user)]],
+		'00DF' => ['chat_modified', 'x2 a4 a4 v2 C a*', [qw(ownerID ID limit num_users public title)]],
+		'00E1' => ['chat_newowner', 'C x3 Z24', [qw(type user)]],
 		'00E5' => ['deal_request', 'Z24', [qw(user)]],
-		'00E7' => ['deal_begin', 'C1', [qw(type)]],
-		'00E9' => ['deal_add_other', 'V1 v1 C1 C1 C1 a8', [qw(amount nameID identified broken upgrade cards)]],
-		'00EA' => ['deal_add_you', 'v1 C1', [qw(index fail)]],
-		'00EC' => ['deal_finalize', 'C1', [qw(type)]],
+		'00E7' => ['deal_begin', 'C', [qw(type)]],
+		'00E9' => ['deal_add_other', 'V v C3 a8', [qw(amount nameID identified broken upgrade cards)]],
+		'00EA' => ['deal_add_you', 'v C', [qw(index fail)]],
+		'00EC' => ['deal_finalize', 'C', [qw(type)]],
 		'00EE' => ['deal_cancelled'],
 		'00F0' => ['deal_complete'],
-		'00F2' => ['storage_opened', 'v1 v1', [qw(items items_max)]],
-		'00F4' => ['storage_item_added', 'v1 V1 v1 C1 C1 C1 a8', [qw(index amount ID identified broken upgrade cards)]],
-		'00F6' => ['storage_item_removed', 'v1 V1', [qw(index amount)]],
+		'00F2' => ['storage_opened', 'v2', [qw(items items_max)]],
+		'00F4' => ['storage_item_added', 'v V v C3 a8', [qw(index amount nameID identified broken upgrade cards)]],
+		'00F6' => ['storage_item_removed', 'v V', [qw(index amount)]],
 		'00F8' => ['storage_closed'],
-		'00FA' => ['party_organize_result', 'C1', [qw(fail)]],
+		'00FA' => ['party_organize_result', 'C', [qw(fail)]],
 		'00FB' => ['party_users_info', 'x2 Z24', [qw(party_name)]],
-		'00FD' => ['party_invite_result', 'Z24 C1', [qw(name type)]],
+		'00FD' => ['party_invite_result', 'Z24 C', [qw(name type)]],
 		'00FE' => ['party_invite', 'a4 Z24', [qw(ID name)]],
-		'0101' => ['party_exp', 'C1', [qw(type)]],
-		'0104' => ['party_join', 'a4 x4 v1 v1 C1 Z24 Z24 Z16', [qw(ID x y type name user map)]],
+		'0101' => ['party_exp', 'C', [qw(type)]],
+		'0104' => ['party_join', 'a4 x4 v2 C Z24 Z24 Z16', [qw(ID x y type name user map)]],
 		'0105' => ['party_leave', 'a4 Z24', [qw(ID name)]],
-		'0106' => ['party_hp_info', 'a4 v1 v1', [qw(ID hp hp_max)]],
-		'0107' => ['party_location', 'a4 v1 v1', [qw(ID x y)]],
-		'0108' => ['item_upgrade', 'v1 v1 v1', [qw(type index upgrade)]],
+		'0106' => ['party_hp_info', 'a4 v2', [qw(ID hp hp_max)]],
+		'0107' => ['party_location', 'a4 v2', [qw(ID x y)]],
+		'0108' => ['item_upgrade', 'v3', [qw(type index upgrade)]],
 		'0109' => ['party_chat', 'x2 a4 Z*', [qw(ID message)]],
-		'0110' => ['skill_use_failed', 'v1 v1 v1 C1 C1', [qw(skillID btype unknown fail type)]],
-		'010A' => ['mvp_item', 'v1', [qw(itemID)]],
-		'010B' => ['mvp_you', 'V1', [qw(expAmount)]],
+		'0110' => ['skill_use_failed', 'v3 C2', [qw(skillID btype unknown fail type)]],
+		'010A' => ['mvp_item', 'v', [qw(itemID)]],
+		'010B' => ['mvp_you', 'V', [qw(expAmount)]],
 		'010C' => ['mvp_other', 'a4', [qw(ID)]],
-		'010E' => ['skill_update', 'v1 v1 v1 v1 C1', [qw(skillID lv sp range up)]], # range = skill range, up = this skill can be leveled up further
+		'010E' => ['skill_update', 'v4 C', [qw(skillID lv sp range up)]], # range = skill range, up = this skill can be leveled up further
 		'010F' => ['skills_list'],
 		'0111' => ['linker_skill', 'v2 x2 v3 Z24', [qw(skillID target lv sp range name)]],
-		'0114' => ['skill_use', 'v1 a4 a4 V1 V1 V1 v1 v1 v1 C1', [qw(skillID sourceID targetID tick src_speed dst_speed damage level param3 type)]],
-		'0117' => ['skill_use_location', 'v1 a4 v1 v1 v1', [qw(skillID sourceID lv x y)]],
+		'0114' => ['skill_use', 'v a4 a4 V3 v3 C', [qw(skillID sourceID targetID tick src_speed dst_speed damage level param3 type)]],
+		'0117' => ['skill_use_location', 'v a4 v3', [qw(skillID sourceID lv x y)]],
 		'0119' => ['character_status', 'a4 v3 x', [qw(ID param1 param2 param3)]],
-		'011A' => ['skill_used_no_damage', 'v1 v1 a4 a4 C1', [qw(skillID amount targetID sourceID fail)]],
-		'011C' => ['warp_portal_list', 'v1 Z16 Z16 Z16 Z16', [qw(type memo1 memo2 memo3 memo4)]],
-		'011E' => ['memo_success', 'C1', [qw(fail)]],
+		'011A' => ['skill_used_no_damage', 'v2 a4 a4 C', [qw(skillID amount targetID sourceID fail)]],
+		'011C' => ['warp_portal_list', 'v Z16 Z16 Z16 Z16', [qw(type memo1 memo2 memo3 memo4)]],
+		'011E' => ['memo_success', 'C', [qw(fail)]],
 		'011F' => ['area_spell', 'a4 a4 v2 C2', [qw(ID sourceID x y type fail)]],
 		'0120' => ['area_spell_disappears', 'a4', [qw(ID)]],
-		'0121' => ['cart_info', 'v1 v1 V1 V1', [qw(items items_max weight weight_max)]],
+		'0121' => ['cart_info', 'v2 V2', [qw(items items_max weight weight_max)]],
 		'0122' => ['cart_items_nonstackable'],
 		'0123' => ['cart_items_stackable'],
-		'0124' => ['cart_item_added', 'v1 V1 v1 x C1 C1 C1 a8', [qw(index amount ID identified broken upgrade cards)]],
-		'0125' => ['cart_item_removed', 'v1 V1', [qw(index amount)]],
-		'012C' => ['cart_add_failed', 'C1', [qw(fail)]],
-		'012D' => ['shop_skill', 'v1', [qw(number)]],
+		'0124' => ['cart_item_added', 'v V v C3 a8', [qw(index amount nameID identified broken upgrade cards)]],
+		'0125' => ['cart_item_removed', 'v V', [qw(index amount)]],
+		'012C' => ['cart_add_failed', 'C', [qw(fail)]],
+		'012D' => ['shop_skill', 'v', [qw(number)]],
 		'0131' => ['vender_found', 'a4 A30', [qw(ID title)]],
 		'0132' => ['vender_lost', 'a4', [qw(ID)]],
 		'0133' => ['vender_items_list'],
-		'0135' => ['vender_buy_fail', 'v1 v1 C1', [qw(index amount fail)]],
+		'0135' => ['vender_buy_fail', 'v2 C', [qw(index amount fail)]],
 		'0136' => ['vending_start'],
-		'0137' => ['shop_sold', 'v1 v1', [qw(number amount)]],
-		'0139' => ['monster_ranged_attack', 'a4 v1 v1 v1 v1 C1', [qw(ID sourceX sourceY targetX targetY type)]],
-		'013A' => ['attack_range', 'v1', [qw(type)]],
-		'013B' => ['arrow_none', 'v1', [qw(type)]],
-		'013D' => ['hp_sp_changed', 'v1 v1', [qw(type amount)]],
-		'013E' => ['skill_cast', 'a4 a4 v1 v1 v1 v1 v1 V1', [qw(sourceID targetID x y skillID unknown type wait)]],		
-		'013C' => ['arrow_equipped', 'v1', [qw(index)]],
-		'0141' => ['stat_info2', 'v1 x2 v1 x2 v1', [qw(type val val2)]],
+		'0137' => ['shop_sold', 'v2', [qw(number amount)]],
+		'0139' => ['monster_ranged_attack', 'a4 v4 C', [qw(ID sourceX sourceY targetX targetY type)]],
+		'013A' => ['attack_range', 'v', [qw(type)]],
+		'013B' => ['arrow_none', 'v', [qw(type)]],
+		'013D' => ['hp_sp_changed', 'v2', [qw(type amount)]],
+		'013E' => ['skill_cast', 'a4 a4 v5 V', [qw(sourceID targetID x y skillID unknown type wait)]],		
+		'013C' => ['arrow_equipped', 'v', [qw(index)]],
+		'0141' => ['stat_info2', 'v x2 v x2 v', [qw(type val val2)]],
 		'0142' => ['npc_talk_number', 'a4', [qw(ID)]],
 		'0144' => ['minimap_indicator', 'a4 V3 C5', [qw(npcID type x y ID blue green red alpha)]],
-		'0147' => ['item_skill', 'v1 v1 v1 v1 v1 v1 A*', [qw(skillID targetType unknown skillLv sp unknown2 skillName)]],
-		'0148' => ['resurrection', 'a4 v1', [qw(targetID type)]],
+		'0147' => ['item_skill', 'v6 A*', [qw(skillID targetType unknown skillLv sp unknown2 skillName)]],
+		'0148' => ['resurrection', 'a4 v', [qw(targetID type)]],
 		'014C' => ['guild_allies_enemy_list'],
 		'014E' => ['guild_master_member', 'V', [qw(type)]],
 		'014A' => ['manner_message', 'V', [qw(type)]],
 		'014A' => ['GM_silence', 'C Z24', [qw(type name)]],
-		'0152' => ['guild_emblem', 'v1 a4 a4 Z*', [qw(len guildID emblemID emblem)]],
+		'0152' => ['guild_emblem', 'v a4 a4 Z*', [qw(len guildID emblemID emblem)]],
 		'0154' => ['guild_members_list'],
 		'0156' => ['guild_member_position_changed', 'v V3', [qw(unknown accountID charID position)]],
 		'015A' => ['guild_leave', 'Z24 Z40', [qw(name message)]],
 		'015C' => ['guild_expulsion', 'Z24 Z40 Z24', [qw(name message unknown)]],
-		'015E' => ['guild_broken', 'V1', [qw(flag)]], # clif_guild_broken
+		'015E' => ['guild_broken', 'V', [qw(flag)]], # clif_guild_broken
 		'0160' => ['guild_member_setting_list'],
 		'0162' => ['guild_skills_list'],
 		'0163' => ['guild_expulsionlist'],
 		'0166' => ['guild_members_title_list'],
-		'0167' => ['guild_create_result', 'C1', [qw(type)]],
-		'0169' => ['guild_invite_result', 'C1', [qw(type)]],
+		'0167' => ['guild_create_result', 'C', [qw(type)]],
+		'0169' => ['guild_invite_result', 'C', [qw(type)]],
 		'016A' => ['guild_request', 'a4 Z24', [qw(ID name)]],
 		'016C' => ['guild_name', 'a4 a4 V x5 Z24', [qw(guildID emblemID mode guildName)]],
-		'016D' => ['guild_member_online_status', 'a4 a4 V1', [qw(ID charID online)]],
+		'016D' => ['guild_member_online_status', 'a4 a4 V', [qw(ID charID online)]],
 		'016F' => ['guild_notice'],
 		'0171' => ['guild_ally_request', 'a4 Z24', [qw(ID name)]],
 		'0173' => ['guild_alliance', 'V', [qw(flag)]],
@@ -233,149 +233,149 @@ sub new {
 		'0177' => ['identify_list'],
 		'0179' => ['identify', 'v*', [qw(index)]],
 		'017B' => ['card_merge_list'],
-		'017D' => ['card_merge_status', 'v1 v1 C1', [qw(item_index card_index fail)]],
+		'017D' => ['card_merge_status', 'v2 C', [qw(item_index card_index fail)]],
 		'017F' => ['guild_chat', 'x2 Z*', [qw(message)]],
-		'0181' => ['guild_opposition_result', 'C1', [qw(flag)]], # clif_guild_oppositionack
+		'0181' => ['guild_opposition_result', 'C', [qw(flag)]], # clif_guild_oppositionack
 		'0184' => ['guild_unally', 'a4 V', [qw(guildID flag)]], # clif_guild_delalliance
 		'0185' => ['guild_alliance_added', 'a4 a4 Z24', [qw(opposition alliance_guildID name)]], # clif_guild_allianceadded
 		'0187' => ['sync_request', 'a4', [qw(ID)]],
-		'0188' => ['item_upgrade', 'v1 v1 v1', [qw(type index upgrade)]],
-		'0189' => ['no_teleport', 'v1', [qw(fail)]],
-		'018C' => ['sense_result', 'v1 v1 v1 V1 v1 v1 v1 v1 C1 C1 C1 C1 C1 C1 C1 C1 C1', [qw(nameID level size hp def race mdef element ice earth fire wind poison holy dark spirit undead)]],
+		'0188' => ['item_upgrade', 'v3', [qw(type index upgrade)]],
+		'0189' => ['no_teleport', 'v', [qw(fail)]],
+		'018C' => ['sense_result', 'v3 V v4 C9', [qw(nameID level size hp def race mdef element ice earth fire wind poison holy dark spirit undead)]],
 		'018D' => ['forge_list'],
-		'018F' => ['refine_result', 'v1 v1', [qw(fail nameID)]],
+		'018F' => ['refine_result', 'v2', [qw(fail nameID)]],
 		'0191' => ['talkie_box', 'a4 Z80', [qw(ID message)]], # talkie box message
 		'0192' => ['change_map_cell', 'v3', [qw(x y type)]], # ex. due to ice wall
 		'0194' => ['character_name', 'a4 Z24', [qw(ID name)]],
 		'0195' => ['actor_name_received', 'a4 Z24 Z24 Z24 Z24', [qw(ID name partyName guildName guildTitle)]],
-		'0196' => ['actor_status_active', 'v1 a4 C1', [qw(type ID flag)]],
+		'0196' => ['actor_status_active', 'v a4 C', [qw(type ID flag)]],
 		'0199' => ['pvp_mode1', 'v1', [qw(type)]],
-		'019A' => ['pvp_rank', 'x2 V1 V1 V1', [qw(ID rank num)]],
-		'019B' => ['unit_levelup', 'a4 V1', [qw(ID type)]],
+		'019A' => ['pvp_rank', 'x2 V3', [qw(ID rank num)]],
+		'019B' => ['unit_levelup', 'a4 V', [qw(ID type)]],
 		'019E' => ['pet_capture_process'],
-		'01A0' => ['pet_capture_result', 'C1', [qw(type)]],	
+		'01A0' => ['pet_capture_result', 'C', [qw(type)]],	
 		'01A2' => ($rpackets{'01A2'} == 35 # or 37
-			? ['pet_info', 'Z24 C1 v4', [qw(name nameflag level hungry friendly accessory)]]
-			: ['pet_info', 'Z24 C1 v5', [qw(name nameflag level hungry friendly accessory type)]]
+			? ['pet_info', 'Z24 C v4', [qw(name nameflag level hungry friendly accessory)]]
+			: ['pet_info', 'Z24 C v5', [qw(name nameflag level hungry friendly accessory type)]]
 		),
-		'01A3' => ['pet_food', 'C1 v1', [qw(success foodID)]],
+		'01A3' => ['pet_food', 'C v', [qw(success foodID)]],
 		'01A4' => ['pet_info2', 'C a4 V', [qw(type ID value)]],
 		'01A6' => ['egg_list'],
-		'01AA' => ['pet_emotion', 'a4 V1', [qw(ID type)]],
-		'01AB' => ['actor_muted', 'x2 a4 x2 L1', [qw(ID duration)]],
+		'01AA' => ['pet_emotion', 'a4 V', [qw(ID type)]],
+		'01AB' => ['actor_muted', 'x2 a4 x2 L', [qw(ID duration)]],
 		'01AC' => ['actor_trapped', 'a4', [qw(ID)]],
 		'01AD' => ['arrowcraft_list'],
-		'01B0' => ['monster_typechange', 'a4 a1 V1', [qw(ID unknown type)]],
-		'01B3' => ['npc_image', 'Z63 C1', [qw(npc_image type)]],
-		'01B4' => ['guild_emblem_update', 'a4 a4 v1', [qw(ID guildID emblemID)]],
-		'01B5' => ['account_payment_info', 'V1 V1', [qw(D_minute H_minute)]],
+		'01B0' => ['monster_typechange', 'a4 a V', [qw(ID unknown type)]],
+		'01B3' => ['npc_image', 'Z63 C', [qw(npc_image type)]],
+		'01B4' => ['guild_emblem_update', 'a4 a4 v', [qw(ID guildID emblemID)]],
+		'01B5' => ['account_payment_info', 'V2', [qw(D_minute H_minute)]],
 		'01B6' => ['guild_info', 'a4 V11 Z24 Z24 Z20', [qw(ID lvl conMember maxMember average exp next_exp tax tendency_left_right tendency_down_up name master castles_string)]],
 		'01B9' => ['cast_cancelled', 'a4', [qw(ID)]],
 		'01C3' => ['local_broadcast', 'x2 a3 x9 Z*', [qw(color message)]],
-		'01C4' => ['storage_item_added', 'v1 V1 v1 C1 C1 C1 C1 a8', [qw(index amount ID type identified broken upgrade cards)]],
-		'01C5' => ['cart_item_added', 'v1 V1 v1 x C1 C1 C1 a8', [qw(index amount ID identified broken upgrade cards)]],
-		'01C8' => ['item_used', 'v1 v1 a4 v1 C1', [qw(index itemID ID remaining success)]],
+		'01C4' => ['storage_item_added', 'v V v C4 a8', [qw(index amount nameID type identified broken upgrade cards)]],
+		'01C5' => ['cart_item_added', 'v V v C4 a8', [qw(index amount nameID type identified broken upgrade cards)]],
+		'01C8' => ['item_used', 'v2 a4 v C', [qw(index itemID ID remaining success)]],
 		'01C9' => ['area_spell', 'a4 a4 v2 C2 C Z80', [qw(ID sourceID x y type fail scribbleLen scribbleMsg)]],
 		'01CD' => ['sage_autospell'],
 		'01CF' => ['devotion', 'a4 a20 v', [qw(sourceID targetIDs range)]],
 		'01D0' => ['revolving_entity', 'a4 v', [qw(sourceID entity)]],
 		'01D1' => ['blade_stop', 'a4 a4 v', [qw(sourceID targetID active)]],
-		'01D2' => ['combo_delay', 'a4 V1', [qw(ID delay)]],
+		'01D2' => ['combo_delay', 'a4 V', [qw(ID delay)]],
 		'01D3' => ['sound_effect', 'Z24 C V a4', [qw(name type unknown ID)]],
 		'01D4' => ['npc_talk_text', 'a4', [qw(ID)]],
-		'01D7' => ['player_equipment', 'a4 C1 v2', [qw(sourceID type ID1 ID2)]],
-		'01D8' => ['actor_display', 'a4 v14 a4 x4 v1 x1 C1 a3 x2 C1 v1', [qw(ID walk_speed param1 param2 param3 type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID skillstatus sex coords act lv)]],
-		'01D9' => ['actor_display', 'a4 v14 a4 x4 v1 x1 C1 a3 x2 v1',    [qw(ID walk_speed param1 param2 param3 type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID skillstatus sex coords lv)]],
-		'01DA' => ['actor_display', 'a4 v5 C1 x1 v3 x4 v5 a4 x4 v1 x1 C1 a5 x3 v1', [qw(ID walk_speed param1 param2 param3 type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID skillstatus sex coords lv)]],
+		'01D7' => ['player_equipment', 'a4 C v2', [qw(sourceID type ID1 ID2)]],
+		'01D8' => ['actor_display', 'a4 v14 a4 x4 v x C a3 x2 C v',				[qw(ID walk_speed param1 param2 param3 type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID skillstatus sex coords act lv)]],
+		'01D9' => ['actor_display', 'a4 v14 a4 x4 v x C a3 x2 v',				[qw(ID walk_speed param1 param2 param3 type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID skillstatus sex coords lv)]],
+		'01DA' => ['actor_display', 'a4 v5 C x v3 x4 v5 a4 x4 v x C a5 x3 v',	[qw(ID walk_speed param1 param2 param3 type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID skillstatus sex coords lv)]],
 		'01DC' => ['secure_login_key', 'x2 a*', [qw(secure_key)]],
-		'01D6' => ['pvp_mode2', 'v1', [qw(type)]],
-		'01DE' => ['skill_use', 'v1 a4 a4 V1 V1 V1 V1 v1 v1 C1', [qw(skillID sourceID targetID tick src_speed dst_speed damage level param3 type)]],
-		'01E1' => ['revolving_entity', 'a4 v1', [qw(sourceID entity)]],
+		'01D6' => ['pvp_mode2', 'v', [qw(type)]],
+		'01DE' => ['skill_use', 'v a4 a4 V4 v2 C', [qw(skillID sourceID targetID tick src_speed dst_speed damage level param3 type)]],
+		'01E1' => ['revolving_entity', 'a4 v', [qw(sourceID entity)]],
 		#'01E2' => ['marriage_unknown'], clif_parse_ReqMarriage
 		#'01E4' => ['marriage_unknown'], clif_marriage_process
 		##
 		#01E6 26 Some Player Name.
-		'01E9' => ['party_join', 'a4 x4 v1 v1 C1 Z24 Z24 Z16 v C2', [qw(ID x y type name user map lv item_pickup item_share)]],
-		'01EB' => ['guild_location', 'a4 v1 v1', [qw(ID x y)]],
+		'01E9' => ['party_join', 'a4 x4 v2 C Z24 Z24 Z16 v C2', [qw(ID x y type name user map lv item_pickup item_share)]],
+		'01EB' => ['guild_location', 'a4 v2', [qw(ID x y)]],
 		'01EA' => ['married', 'a4', [qw(ID)]],
 		'01EE' => ['inventory_items_stackable'],
 		'01EF' => ['cart_items_stackable'],
-		'01F2' => ['guild_member_online_status', 'a4 a4 V1 v3', [qw(ID charID online sex hair_style hair_color)]],
-		'01F3' => ['misc_effect', 'a4 V1', [qw(ID effect)]], # weather/misceffect2 packet
-		'01F4' => ['deal_request', 'Z24 a4 v1', [qw(user ID level)]],
-		'01F5' => ['deal_begin', 'C1 a4 v1', [qw(type targetID level)]],
+		'01F2' => ['guild_member_online_status', 'a4 a4 V v3', [qw(ID charID online sex hair_style hair_color)]],
+		'01F3' => ['misc_effect', 'a4 V', [qw(ID effect)]], # weather/misceffect2 packet
+		'01F4' => ['deal_request', 'Z24 a4 v', [qw(user ID level)]],
+		'01F5' => ['deal_begin', 'C a4 v', [qw(type targetID level)]],
 		'01F6' => ['adopt_request', 'a4 a4 Z24', [qw(sourceID targetID name)]],
 		#'01F8' => ['adopt_unknown'], # clif_adopt_process
 		'01F0' => ['storage_items_stackable'],
 		'01FC' => ['repair_list'],
-		'01FE' => ['repair_result', 'v1 C1', [qw(nameID flag)]],
+		'01FE' => ['repair_result', 'v C', [qw(nameID flag)]],
 		'0201' => ['friend_list'],
 		'0205' => ['divorced', 'Z24', [qw(name)]], # clif_divorced
-		'0206' => ['friend_logon', 'a4 a4 C1', [qw(friendAccountID friendCharID isNotOnline)]],
+		'0206' => ['friend_logon', 'a4 a4 C', [qw(friendAccountID friendCharID isNotOnline)]],
 		'0207' => ['friend_request', 'a4 a4 Z24', [qw(accountID charID name)]],
-		'0209' => ['friend_response', 'C1 Z24', [qw(type name)]],
+		'0209' => ['friend_response', 'C Z24', [qw(type name)]],
 		'020A' => ['friend_removed', 'a4 a4', [qw(friendAccountID friendCharID)]],
 		'020E' => ['teakwon_packets', 'Z24 a4 C2', [qw(name ID value flag)]],
 		'0215' => ['gospel_buff_aligned', 'a4', [qw(ID)]],
 		'0216' => ['adopt_reply', 'V', [qw(type)]],
 		'0219' => ['top10_blacksmith_rank'],
 		'021A' => ['top10_alchemist_rank'],
-		'021B' => ['blacksmith_points', 'V1 V1', [qw(points total)]],
-		'021C' => ['alchemist_point', 'V1 V1', [qw(points total)]],
+		'021B' => ['blacksmith_points', 'V2', [qw(points total)]],
+		'021C' => ['alchemist_point', 'V2', [qw(points total)]],
 		'0221' => ['upgrade_list'],
-		'0223' => ['upgrade_message', 'a4 v1', [qw(result itemID)]],
-		'0224' => ['taekwon_rank', 'c1 x3 c1', [qw(type rank)]],
+		'0223' => ['upgrade_message', 'a4 v', [qw(result itemID)]],
+		'0224' => ['taekwon_rank', 'c x3 c', [qw(type rank)]],
 		'0226' => ['top10_taekwon_rank'],
 		'0227' => ['gameguard_request'],
-		'0229' => ['character_status', 'a4 v1 v1 v1', [qw(ID param1 param2 param3)]],
-		'022A' => ['actor_display', 'a4 v4 x2 v8 x2 v a4 a4 v x2 C2 a3 x2 C v', [qw(ID walk_speed param1 param2 param3 type hair_style weapon shield lowhead tophead midhead hair_color head_dir guildID guildEmblem visual_effects stance sex coords act lv)]],
-		'022B' => ['actor_display', 'a4 v4 x2 v8 x2 v a4 a4 v x2 C2 a3 x2 v', [qw(ID walk_speed param1 param2 param3 type hair_style weapon shield lowhead tophead midhead hair_color head_dir guildID guildEmblem visual_effects stance sex coords lv)]],
-		'022C' => ['actor_display', 'a4 v4 x2 v5 V1 v3 x4 a4 a4 v x2 C2 a5 x3 v', [qw(ID walk_speed param1 param2 param3 type hair_style weapon shield lowhead timestamp tophead midhead hair_color guildID guildEmblem visual_effects stance sex coords lv)]],
+		'0229' => ['character_status', 'a4 v3', [qw(ID param1 param2 param3)]],
+		'022A' => ['actor_display', 'a4 v4 x2 v8 x2 v a4 a4 v x2 C2 a3 x2 C v',		[qw(ID walk_speed param1 param2 param3 type hair_style weapon shield lowhead tophead midhead hair_color head_dir guildID guildEmblem visual_effects stance sex coords act lv)]],
+		'022B' => ['actor_display', 'a4 v4 x2 v8 x2 v a4 a4 v x2 C2 a3 x2 v',		[qw(ID walk_speed param1 param2 param3 type hair_style weapon shield lowhead tophead midhead hair_color head_dir guildID guildEmblem visual_effects stance sex coords lv)]],
+		'022C' => ['actor_display', 'a4 v4 x2 v5 V v3 x4 a4 a4 v x2 C2 a5 x3 v',	[qw(ID walk_speed param1 param2 param3 type hair_style weapon shield lowhead timestamp tophead midhead hair_color guildID guildEmblem visual_effects stance sex coords lv)]],
 		'022E' => ['homunculus_stats', 'Z24 C v16 V2 v2', [qw(name state lvl hunger intimacy accessory atk matk hit critical def mdef flee aspd hp hp_max sp sp_max exp exp_max points_skill unknown)]],
-		'022F' => ['homunculus_food', 'C1 v1', [qw(success foodID)]],
-		'0230' => ['homunculus_info', 'x1 C1 a4 V1',[qw(type ID val)]],
+		'022F' => ['homunculus_food', 'C v', [qw(success foodID)]],
+		'0230' => ['homunculus_info', 'x C a4 V',[qw(type ID val)]],
 		'0235' => ['skills_list'], # homunculus skills
 		'0238' => ['top10_pk_rank'],
 		# homunculus skill update
-		'0239' => ['skill_update', 'v1 v1 v1 v1 C1', [qw(skillID lv sp range up)]], # range = skill range, up = this skill can be leveled up further
-		'023A' => ['storage_password_request', 'v1', [qw(flag)]],
-		'023C' => ['storage_password_result', 'v1 v1', [qw(type val)]],
-		'023E' => ['storage_password_request', 'v1', [qw(flag)]],
-		'0240' => ['mail_refreshinbox', 'v1 V1', [qw(size  count)]],
-		'0242' => ['mail_read', 'v1 V1 Z40 Z24 x4 V2 v1 C1 x1 C3 a8 x1 Z*', [qw(lenght mailID title sender zeny amount nameID type identified broken upgrade cards message)]],
-		'0245' => ['mail_getattachment', 'C1', [qw(fail)]],
-		'0249' => ['mail_send', 'C1', [qw(fail)]],
-		'024A' => ['mail_new', 'V1 Z24 Z24', [qw(mailID sender title)]],
-		'0250' => ['auction_result', 'C1', [qw(flag)]],
-		'0252' => ['auction_item_request_search', 'v1 V1 V1', [qw(size pages count)]],
-		'0255' => ['mail_setattachment', 'v1 C1', [qw(index fail)]],
-		'0256' => ['auction_add_item', 'v1 C1', [qw(index fail)]],
-		'0257' => ['mail_delete', 'V1 v1', [qw(mailID fail)]],
-		'0259' => ['gameguard_grant', 'C1', [qw(server)]],
+		'0239' => ['skill_update', 'v4 C', [qw(skillID lv sp range up)]], # range = skill range, up = this skill can be leveled up further
+		'023A' => ['storage_password_request', 'v', [qw(flag)]],
+		'023C' => ['storage_password_result', 'v2', [qw(type val)]],
+		'023E' => ['storage_password_request', 'v', [qw(flag)]],
+		'0240' => ['mail_refreshinbox', 'v V', [qw(size  count)]],
+		'0242' => ['mail_read', 'v V Z40 Z24 x4 V2 v C x C3 a8 x Z*', [qw(lenght mailID title sender zeny amount nameID type identified broken upgrade cards message)]],
+		'0245' => ['mail_getattachment', 'C', [qw(fail)]],
+		'0249' => ['mail_send', 'C', [qw(fail)]],
+		'024A' => ['mail_new', 'V Z24 Z24', [qw(mailID sender title)]],
+		'0250' => ['auction_result', 'C', [qw(flag)]],
+		'0252' => ['auction_item_request_search', 'v V2', [qw(size pages count)]],
+		'0255' => ['mail_setattachment', 'v C', [qw(index fail)]],
+		'0256' => ['auction_add_item', 'v C', [qw(index fail)]],
+		'0257' => ['mail_delete', 'V v', [qw(mailID fail)]],
+		'0259' => ['gameguard_grant', 'C', [qw(server)]],
 		'025A' => ['cooking_list'],
-		'025D' => ['auction_my_sell_stop', 'V1', [qw(flag)]],
-		'025F' => ['auction_windows', 'V1 C1 C1 C1 C1 v1', [qw(flag unknown1 unknown2 unknown3 unknown4 unknown5)]],
-		'0260' => ['mail_window', 'v1', [qw(flag)]],
-		'0274' => ['mail_return', 'V1 v1', [qw(mailID fail)]],
+		'025D' => ['auction_my_sell_stop', 'V', [qw(flag)]],
+		'025F' => ['auction_windows', 'V C4 v', [qw(flag unknown1 unknown2 unknown3 unknown4 unknown5)]],
+		'0260' => ['mail_window', 'v', [qw(flag)]],
+		'0274' => ['mail_return', 'V v', [qw(mailID fail)]],
 		# mail_return packet: '0274' => ['account_server_info', 'x2 a4 a4 a4 x30 C1 x4 a*', [qw(sessionID accountID sessionID2 accountSex serverInfo)]],
 		# tRO new packets, need some work on them
 		'0283' => ['account_id', 'V', [qw(accountID)]],
 		'0287' => ['cash_dealer'],
 		'0289' => ['cash_buy_fail', 'V2 v', [qw(cash_points kafra_points fail)]],
 		'028A' => ['character_status', 'a4 V3', [qw(ID param3 lvl visual_effects)]],
-		'0291' => ['message_string', 'v1', [qw(msg_id)]],
+		'0291' => ['message_string', 'v', [qw(msg_id)]],
 		'0293' => ['boss_map_info', 'C V2 v2 x4 Z24', [qw(flag x y hours minutes name)]],
 		'0294' => ['book_read', 'a4 a4', [qw(bookID page)]],
 		'0295' => ['inventory_items_nonstackable'],
 		'0296' => ['storage_items_nonstackable'],
 		'0297' => ['cart_items_nonstackable'],
-		'0298' => ['rental_time', 'v1 a4', [qw(nameID seconds)]],
-		'0299' => ['rental_expired', 'v1 v1', [qw(unknown nameID)]],
-		'029A' => ['inventory_item_added', 'v3 C3 a8 v1 C2 a4', [qw(index amount nameID identified broken upgrade cards type_equip type fail cards_ext)]],
+		'0298' => ['rental_time', 'v a4', [qw(nameID seconds)]],
+		'0299' => ['rental_expired', 'v2', [qw(unknown nameID)]],
+		'029A' => ['inventory_item_added', 'v3 C3 a8 v C2 a4', [qw(index amount nameID identified broken upgrade cards type_equip type fail cards_ext)]],
 		# mercenaries
 		'029B' => ($rpackets{'029B'} == 72 # or 80 # mercenary stats
-			? ['homunculus_stats', 'a4 v8 Z24 v5 V1 v2', [qw(ID atk matk hit critical def mdef flee aspd name lvl hp hp_max sp sp_max contract_end faith summons)]]
-			: ['homunculus_stats', 'a4 v8 Z24 v1 V5 v1 V2 v1', [qw(ID atk matk hit critical def mdef flee aspd name lvl hp hp_max sp sp_max contract_end faith summons kills range)]]
+			? ['homunculus_stats', 'a4 v8 Z24 v5 V v2',		[qw(ID atk matk hit critical def mdef flee aspd name lvl hp hp_max sp sp_max contract_end faith summons)]]
+			: ['homunculus_stats', 'a4 v8 Z24 v V5 v V2 v',	[qw(ID atk matk hit critical def mdef flee aspd name lvl hp hp_max sp sp_max contract_end faith summons kills range)]]
 		),
 		# TODO: test on officials: '029B' => ['homunculus_stats', 'a4 v8 Z24 v1 V5 v1 V2 v1', [qw(ID atk matk hit critical def mdef flee aspd name lvl hp hp_max sp sp_max contract_end faith summons killcount range)]], # mercenary stats
 		'029D' => ['skills_list'], # mercenary skills
@@ -384,9 +384,9 @@ sub new {
 		# Borrow sub gameguard_request because it use the same mechanic.
 		'02A6' => ['gameguard_request'],
 		# mRO PIN code Check
-		'02AD' => ['login_pin_code_request', 'v1 V', [qw(flag key)]],
+		'02AD' => ['login_pin_code_request', 'v V', [qw(flag key)]],
 		# Packet Prefix encryption Support
-		'02AE' => ['initialize_message_id_encryption', 'V1 V1', [qw(param1 param2)]],
+		'02AE' => ['initialize_message_id_encryption', 'V2', [qw(param1 param2)]],
 		# tRO new packets (2008-09-16Ragexe12_Th)
 		'02B1' => ['quest_list', 'v V', [qw(len amount)]],
 		'02B2' => ['quest_objective_info', 'v V', [qw(len amount)]],
@@ -395,12 +395,12 @@ sub new {
 		'02B7' => ['quest_status', 'a4 C', [qw(questID active)]],
 		'02B8' => ['party_show_picker', 'V v C3 a4 C3', [qw(ID nameID identified broken upgrade cards unknown1 unknown2 unknown3)]],
 		'02B9' => ['hotkeys'],
-		'02C5' => ['party_invite_result', 'Z24 V1', [qw(name type)]],
+		'02C5' => ['party_invite_result', 'Z24 V', [qw(name type)]],
 		'02C6' => ['party_invite', 'a4 Z24', [qw(ID name)]],
-		'02C9' => ['party_allow_invite', 'C1', [qw(type)]],
+		'02C9' => ['party_allow_invite', 'C', [qw(type)]],
 		'02CB' => ['instance_window_start', 'Z61 C', [qw(name flag)]],
 		'02CC' => ['instance_window_queue', 'C', [qw(flag)]],
-		'02CD' => ['instance_window_join', 'Z61 V1 V1', [qw(name time_remaining time_close)]],
+		'02CD' => ['instance_window_join', 'Z61 V2', [qw(name time_remaining time_close)]],
 		'02CE' => ['instance_window_leave', 'C', [qw(flag)]],
 		'02D0' => ['inventory_items_nonstackable'],
 		'02D1' => ['storage_items_nonstackable'],
@@ -413,14 +413,14 @@ sub new {
 		'02DD' => ['battleground_emblem', 'a4 Z24 v', [qw(emblemID name ID)]],
 		'02DE' => ['battleground_score', 'v2', [qw(score_lion score_eagle)]],
 		# 02E1 packet unsure of param3 needs more testing
-		'02E1' => ['actor_action', 'a4 a4 a4 V2 v1 x2 v1 x2 C1 v1', [qw(sourceID targetID tick src_speed dst_speed damage param2 type param3)]],
+		'02E1' => ['actor_action', 'a4 a4 a4 V2 v x2 v x2 C v', [qw(sourceID targetID tick src_speed dst_speed damage param2 type param3)]],
 		'02E8' => ['inventory_items_stackable'],
 		'02E9' => ['cart_items_stackable'],
 		'02EA' => ['storage_items_stackable'],
-		'02EB' => ['map_loaded', 'V1 a3 x2 v1', [qw(syncMapSync coords unknown)]],
-		'02EC' => ['actor_display', 'x1 a4 v3 V1 v5 V1 v5 a4 a4 V1 C2 a5 x3 v2', [qw(ID walk_speed param1 param2 param3 type hair_style weapon shield lowhead timestamp tophead midhead hair_color clothes_color head_dir guildID guildEmblem visual_effects stance sex coords lv unknown)]],
-		'02ED' => ['actor_display', 'a4 v3 V1 v10 a4 a4 V1 C2 a3 v v2', [qw(ID walk_speed param1 param2 param3 type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID guildEmblem visual_effects stance sex coords act lv unknown)]],
-		'02EE' => ['actor_display', 'a4 v3 V1 v10 a4 a4 V1 C2 a3 x1 v v2', [qw(ID walk_speed param1 param2 param3 type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID guildEmblem visual_effects stance sex coords act lv unknown)]],
+		'02EB' => ['map_loaded', 'V a3 x2 v', [qw(syncMapSync coords unknown)]],
+		'02EC' => ['actor_display', 'x a4 v3 V v5 V v5 a4 a4 V C2 a5 x3 v2',[qw(ID walk_speed param1 param2 param3 type hair_style weapon shield lowhead timestamp tophead midhead hair_color clothes_color head_dir guildID guildEmblem visual_effects stance sex coords lv unknown)]],
+		'02ED' => ['actor_display', 'a4 v3 V v10 a4 a4 V C2 a3 v3',			[qw(ID walk_speed param1 param2 param3 type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID guildEmblem visual_effects stance sex coords act lv unknown)]],
+		'02EE' => ['actor_display', 'a4 v3 V v10 a4 a4 V C2 a3 x v3',		[qw(ID walk_speed param1 param2 param3 type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID guildEmblem visual_effects stance sex coords act lv unknown)]],
 		'02EF' => ['font', 'a4 v', [qw(ID fontID)]],
 
 		# status timers (eA has 12 unknown bytes)
@@ -512,7 +512,8 @@ sub parse {
 		$self->$callback(\%args);
 		Misc::checkValidity("Packet: " . $handler->[0]);
 	} else {
-		debug "Packet Parser: Unhandled Packet: $switch Handler: $handler->[0]\n", "packetParser", 2;
+		#OLD debug "Packet Parser: Unhandled Packet: $switch Handler: $handler->[0]\n", "packetParser", 2;
+		warning "Packet Parser: Unhandled Packet: $switch Handler: $handler->[0]\n";
 	}
 
 	Plugins::callHook("packet/$handler->[0]", \%args);
@@ -1340,6 +1341,10 @@ sub actor_display {
 		$args->{switch} eq "01D8" ||
 		$args->{switch} eq "022A" ||
 		$args->{switch} eq "02EE") {
+		if ($args->{switch} eq "022A") {
+			
+		}
+		
 		# Actor Exists
 
 		if ($actor->isa('Actor::Player')) {
@@ -1894,11 +1899,13 @@ sub cart_items_nonstackable {
 		$item->{index} = $index;
 		$item->{identified} = unpack("C1", substr($msg, $i+5, 1));
 		$item->{type_equip} = unpack("v1", substr($msg, $i+6, 2));
+		$item->{equip} = unpack("v1", substr($msg, $i+8, 2));
 		$item->{broken} = unpack("C1", substr($msg, $i+10, 1));
 		$item->{upgrade} = unpack("C1", substr($msg, $i+11, 1));
-		$item->{cards} = ($psize == 24) ? substr($msg, $i+12, 12) : substr($msg, $i+12, 8);
+		$item->{cards} = ($psize == 24) ? unpack("a12", substr($msg, $i+12, 12)) : unpack("a8", substr($msg, $i+12, 8));
 		if ($psize == 26) {
-			$item->{expire} = unpack("a4", substr($msg, $i + 20, 4)); #a4 or V1 unpacking?
+			my $expire =  unpack("a4", substr($msg, $i + 20, 4)); #a4 or V1 unpacking?
+			$item->{expire} = $expire if (defined $expire);
 			#$item->{unknown} = unpack("v1", substr($msg, $i + 24, 2));
 		}
 		$item->{name} = itemName($item);
@@ -1919,12 +1926,13 @@ sub cart_item_added {
 		$item->{amount} += $args->{amount};
 	} else {
 		$item->{index} = $args->{index};
-		$item->{nameID} = $args->{ID};
+		$item->{nameID} = $args->{nameID};
 		$item->{amount} = $args->{amount};
 		$item->{identified} = $args->{identified};
 		$item->{broken} = $args->{broken};
 		$item->{upgrade} = $args->{upgrade};
 		$item->{cards} = $args->{cards};
+		$item->{type} = $args->{type} if (exists $args->{type});
 		$item->{name} = itemName($item);
 	}
 	message TF("Cart Item Added: %s (%d) x %s\n", $item->{name}, $args->{index}, $args->{amount});
@@ -1961,17 +1969,19 @@ sub cart_items_stackable {
 		if ($item->{amount}) {
 			$item->{amount} += $amount;
 		} else {
+			$item->{type} = unpack("C1", substr($msg, $i+4, 1));
+			$item->{identified} = unpack("C1", substr($msg, $i+5, 1));
 			$item->{index} = $index;
 			$item->{nameID} = $ID;
 			$item->{amount} = $amount;
 			if ($psize == 18) {
-				$item->{cards} = substr($msg, $i + 10, 8);
+				$item->{cards} = unpack("a8", substr($msg, $i + 10, 8));
 			} elsif ($psize == 22) {
-				$item->{cards} = substr($msg, $i + 10, 8);
-				$item->{expire} = unpack("a4", substr($msg, $i + 18, 4)); #a4 or V1 unpacking?
+				$item->{cards} = unpack("a8", substr($msg, $i + 10, 8));
+				my $expire = unpack("a4", substr($msg, $i + 20, 4)); #a4 or V1 unpacking?
+				$item->{expire} = $expire if (defined $expire);
 			}
 			$item->{name} = itemName($item);
-			$item->{identified} = 1;
 		}
 		debug "Stackable Cart Item: $item->{name} ($index) x $amount\n", "parseMsg";
 		Plugins::callHook('packet_cart', {index => $index});
@@ -3418,7 +3428,7 @@ sub inventory_item_added {
 			if ($args->{switch} eq '029A') {
 				$args->{cards} .= $args->{cards_ext};
 			} elsif ($args->{switch} eq '02D4') {
-				$item->{expire} = $args->{expire}; #a4 or V1 unpacking?
+				$item->{expire} = $args->{expire} if (exists $args->{expire}); #a4 or V1 unpacking?
 			}
 			$item->{name} = itemName($item);
 			$char->inventory->add($item);
@@ -3583,9 +3593,10 @@ sub inventory_items_nonstackable {
 		$item->{equipped} = unpack("v1", substr($msg, $i + 8, 2));
 		$item->{broken} = unpack("C1", substr($msg, $i + 10, 1));
 		$item->{upgrade} = unpack("C1", substr($msg, $i + 11, 1));
-		$item->{cards} = ($psize == 24) ? substr($msg, $i + 12, 12) : substr($msg, $i + 12, 8);
+		$item->{cards} = ($psize == 24) ? unpack("a12", substr($msg, $i + 12, 12)) : unpack("a8", substr($msg, $i + 12, 8));
 		if ($psize == 26) {
-			$item->{expire} = unpack("a4", substr($msg, $i + 20, 4)); #a4 or V1 unpacking?
+			my $expire =  unpack("a4", substr($msg, $i + 20, 4)); #a4 or V1 unpacking?
+			$item->{expire} = $expire if (defined $expire);
 			#$item->{unknown} = unpack("v1", substr($msg, $i + 24, 2));
 		}
 		$item->{name} = itemName($item);
@@ -3635,14 +3646,15 @@ sub inventory_items_stackable {
 		}
 		$item->{index} = $index;
 		$item->{nameID} = $ID;
-		$item->{amount} = unpack("v1", substr($msg, $i + 6, 2));
 		$item->{type} = unpack("C1", substr($msg, $i + 4, 1));
+		$item->{amount} = unpack("v1", substr($msg, $i + 6, 2));
 		$item->{identified} = 1;
-		if ($psize = 18) {
-			$item->{cards} = substr($msg, $i + 10, 8);
-		} elsif ($psize = 22) {
-			$item->{cards} = substr($msg, $i + 10, 8);
-			$item->{expire} = unpack("a4", substr($msg, $i + 18, 4)); #a4 or V1 unpacking?
+		if ($psize == 18) {
+			$item->{cards} = unpack("a8", substr($msg, $i + 10, 8));
+		} elsif ($psize == 22) {
+			$item->{cards} = unpack("a8", substr($msg, $i + 10, 8));
+			my $expire =  unpack("a4", substr($msg, $i + 18, 4)); #a4 or V1 unpacking?
+			$item->{expire} = $expire if (defined $expire);
 		}
 		if (defined $char->{arrow} && $index == $char->{arrow}) {
 			$item->{equipped} = 32768;
@@ -3671,7 +3683,8 @@ sub item_appeared {
 		$item = new Actor::Item();
 		$item->{appear_time} = time;
 		$item->{amount} = $args->{amount};
-		$item->{nameID} = $args->{type};
+		$item->{nameID} = $args->{nameID};
+		$item->{identified} = $args->{identified};
 		$item->{name} = itemName($item);
 		$item->{ID} = $args->{ID};
 		$mustAdd = 1;
@@ -3704,8 +3717,9 @@ sub item_exists {
 		$item = new Actor::Item();
 		$item->{appear_time} = time;
 		$item->{amount} = $args->{amount};
-		$item->{nameID} = $args->{type};
+		$item->{nameID} = $args->{nameID};
 		$item->{ID} = $args->{ID};
+		$item->{identified} = $args->{identified};
 		$item->{name} = itemName($item);
 		$mustAdd = 1;
 	}
@@ -6138,7 +6152,7 @@ sub storage_item_added {
 		$item->{amount} += $amount;
 	} else {
 		binAdd(\@storageID, $index);
-		$item->{nameID} = $args->{ID};
+		$item->{nameID} = $args->{nameID};
 		$item->{index} = $index;
 		$item->{amount} = $amount;
 		$item->{type} = $args->{type};
@@ -6202,7 +6216,8 @@ sub storage_items_nonstackable {
 		$item->{upgrade} = unpack("C1", substr($msg, $i + 11, 1));
 		$item->{cards} = ($psize == 24) ? substr($msg, $i + 12, 12) : substr($msg, $i + 12, 8);
 		if ($psize == 26) {
-			$item->{expire} = unpack("a4", substr($msg, $i + 20, 4)); #a4 or V1 unpacking?
+			my $expire =  unpack("a4", substr($msg, $i + 20, 4)); #a4 or V1 unpacking?
+			$item->{expire} = $expire if (defined $expire);
 			#$item->{unknown} = unpack("v1", substr($msg, $i + 24, 2));
 		}
 		$item->{name} = itemName($item);
@@ -6239,11 +6254,14 @@ sub storage_items_stackable {
 		$item->{nameID} = $ID;
 		$item->{type} = unpack("C1", substr($msg, $i + 4, 1));
 		$item->{amount} = unpack("V1", substr($msg, $i + 6, 4)) & ~0x80000000;
+		# $item->{amount} = unpack("v1", substr($msg, $i + 6, 2));
+		# $item->{ammo} = unpack("v1", substr($msg, $i + 8, 2));
 		if ($psize == 18) {
-			$item->{cards} = substr($msg, $i + 10, 8);
+			$item->{cards} = unpack("a8", substr($msg, $i + 10, 8));
 		} elsif ($psize == 22) {
-			$item->{cards} = substr($msg, $i + 10, 8);
-			$item->{expire} = unpack("a4", substr($msg, $i + 18, 4)); #a4 or V1 unpacking?
+			$item->{cards} = unpack("a8", substr($msg, $i + 10, 8));
+			my $expire =  unpack("a4", substr($msg, $i + 18, 4)); #a4 or V1 unpacking?
+			$item->{expire} = $expire if (defined $expire);
 		}
 		$item->{name} = itemName($item);
 		$item->{binID} = binFind(\@storageID, $index);
@@ -7010,15 +7028,15 @@ sub hack_shield_alarm {
 sub guild_alliance {
 	my ($self, $args) = @_;
 	if ($args->{flag} == 0) {
-		message T("Already allied.\n");
+		message T("Already allied.\n"), "info";
 	} elsif ($args->{flag} == 1) {
-		message T("You rejected the offer.\n");
+		message T("You rejected the offer.\n"), "info";
 	} elsif ($args->{flag} == 2) {
-		message T("You accepted the offer.\n");
+		message T("You accepted the offer.\n"), "info";
 	} elsif ($args->{flag} == 3) {
-		message T("They have too any alliances\n");
+		message T("They have too any alliances\n"), "info";
 	} elsif ($args->{flag} == 4) {
-		message T("You have too many alliances.\n");
+		message T("You have too many alliances.\n"), "info";
 	} else {
 		warning TF("flag: %s gave unknown results in: %s\n", $args->{flag}, $self->{packet_list}{$args->{switch}}->[0]);
 	}
@@ -7026,19 +7044,19 @@ sub guild_alliance {
 
 sub talkie_box {
 	my ($self, $args) = @_;
-	message TF("%s's talkie box message: %s.\n", Actor::get($args->{ID})->nameString(), $args->{message});
+	message TF("%s's talkie box message: %s.\n", Actor::get($args->{ID})->nameString(), $args->{message}), "info";
 }
 
 sub manner_message {
 	my ($self, $args) = @_;
 	if ($args->{flag} == 0) {
-		message T("A manner point has been successfully aligned.\n");
+		message T("A manner point has been successfully aligned.\n"), "info";
 	} elsif ($args->{flag} == 3) {
-		message T("Chat Block has been applied by GM due to your ill-mannerous action.\n");
+		message T("Chat Block has been applied by GM due to your ill-mannerous action.\n"), "info";
 	} elsif ($args->{flag} == 4) {
-		message T("Automated Chat Block has been applied due to Anti-Spam System.\n");
+		message T("Automated Chat Block has been applied due to Anti-Spam System.\n"), "info";
 	} elsif ($args->{flag} == 5) {
-		message T("You got a good point.\n");
+		message T("You got a good point.\n"), "info";
 	} else {
 		warning TF("flag: %s gave unknown results in: %s\n", $args->{flag}, $self->{packet_list}{$args->{switch}}->[0]);
 	}
@@ -7047,7 +7065,7 @@ sub manner_message {
 sub GM_silence {
 	my ($self, $args) = @_;
 	my $action = $args->{flag} ? "muted" : "unmuted";
-	message TF("You have been: %s by %s.\n", $action, $args->{name});
+	message TF("You have been: %s by %s.\n", $action, $args->{name}), "info";
 }
 
 sub teakwon_packets {
@@ -7057,15 +7075,15 @@ sub teakwon_packets {
 	if ($args->{flag} == 0) {
 		# Info about Star Gladiator save map: Map registered
 		my $string = ($args->{value} == 1) ? "Sun" : ($args->{value} == 2) ? "Moon" : ($args->{value} == 3) ? "Stars" : "unknown";
-		message TF("You have now marked: %s as Place of the %s.\n", $args->{name}, $string);
+		message TF("You have now marked: %s as Place of the %s.\n", $args->{name}, $string), "info";
 	} elsif ($args->{flag} == 1) {
 		# Info about Star Gladiator save map: Information
 		my $string = ($args->{value} == 1) ? "Sun" : ($args->{value} == 2) ? "Moon" : ($args->{value} == 3) ? "Stars" : "unknown";
-		message TF("%s is marked as Place of the %s.\n", $args->{name}, $string);
+		message TF("%s is marked as Place of the %s.\n", $args->{name}, $string), "info";
 	} elsif ($args->{flag} == 10) {
 		# Info about Star Gladiator hate mob: Register mob
 		my $string = ($args->{value} == 1) ? "Sun" : ($args->{value} == 2) ? "Moon" : ($args->{value} == 3) ? "Stars" : "unknown";
-		message TF("You have now marked %s as Target of the %s.\n", $args->{name}, $string);
+		message TF("You have now marked %s as Target of the %s.\n", $args->{name}, $string), "info";
 	} elsif ($args->{flag} == 11) {
 		# Info about Star Gladiator hate mob: Information
 		my $string = ($args->{value} == 1) ? "Sun" : ($args->{value} == 2) ? "Moon" : ($args->{value} == 3) ? "Stars" : "unknown";
