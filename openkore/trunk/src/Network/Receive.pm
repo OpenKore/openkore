@@ -266,7 +266,7 @@ sub new {
 		#	? ['pet_info', 'Z24 C v4', [qw(name renameflag level hungry friendly accessory)]]
 		#	: ['pet_info', 'Z24 C v5', [qw(name renameflag level hungry friendly accessory type)]]
 		#),
-		'01A2' => ['pet_info', 'Z24 C v4', [qw(name renameflag level hungry friendly accessory)]],
+		'01A2' => ['pet_info', 'Z24 C v5', [qw(name renameflag level hungry friendly accessory type)]],
 		'01A3' => ['pet_food', 'C v', [qw(success foodID)]],
 		'01A4' => ['pet_info2', 'C a4 V', [qw(type ID value)]],
 		'01A6' => ['egg_list'],
