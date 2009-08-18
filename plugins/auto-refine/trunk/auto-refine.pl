@@ -84,7 +84,7 @@ sub main {
 
 sub selectItem {
 	if ($config{"autoRefine_0"} && !$config{"autoRefine_0_disabled"} && $config{"autoRefine_0_refineStone"} && 
-		$config{"autoRefine_0_refineNpc"} && $config{"autoRefine_0_npcSequence"} && $config{"autoRefine_0_zenny"} < $char->{zenny}) {
+		$config{"autoRefine_0_refineNpc"} && $config{"autoRefine_0_npcSequence"} && $config{"autoRefine_0_zeny"} < $char->{zeny}) {
 			
 			$item = $char->inventory->getByName($config{"autoRefine_0"});
 			$metal = $char->inventory->getByName($config{"autoRefine_0_refineStone"});
