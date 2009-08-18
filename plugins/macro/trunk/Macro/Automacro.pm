@@ -788,7 +788,7 @@ sub automacroCheck {
 		foreach my $i (@{$automacro{$am}->{weight}})     {next CHKAM unless checkPercent($i, "weight")}
 		foreach my $i (@{$automacro{$am}->{cartweight}}) {next CHKAM unless checkPercent($i, "cweight")}
 		foreach my $i (@{$automacro{$am}->{soldout}})    {next CHKAM unless checkCond(getSoldOut(), $i)}
-		foreach my $i (@{$automacro{$am}->{zeny}})       {next CHKAM unless checkCond($char->{zenny}, $i)}
+		foreach my $i (@{$automacro{$am}->{zeny}})       {next CHKAM unless checkCond($char->{zeny}, $i)}
 		foreach my $i (@{$automacro{$am}->{player}})     {next CHKAM unless checkPerson($i)}
 		foreach my $i (@{$automacro{$am}->{equipped}})   {next CHKAM unless checkEquip($i)}
 		foreach my $i (@{$automacro{$am}->{status}})     {next CHKAM unless checkStatus($i)}
