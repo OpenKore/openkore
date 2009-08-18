@@ -1,5 +1,8 @@
 1 Poisoned
 2 Cursed
 4 Silenced
+8 Signum Crisis
 16 Blinded
-34 Chaos
+32 Angelus
+64 Bleeding
+128 Deadly Poison
