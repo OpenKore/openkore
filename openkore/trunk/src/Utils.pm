@@ -47,7 +47,7 @@ our @EXPORT = (
 	# Other stuff
 	qw(dataWaiting dumpHash formatNumber getCoordString getCoordString2
 	getFormattedDate getHex giveHex getRange getTickCount
-	inRange judgeSkillArea makeCoords makeCoords2 makeDistMap makeIP encodeIP parseArgs
+	inRange judgeSkillArea makeCoords makeCoords2 makeCoords3 makeDistMap makeIP encodeIP parseArgs
 	quarkToString stringToQuark shiftPack swrite timeConvert timeOut
 	urldecode urlencode unShiftPack vocalString wrapText pin_encode)
 );

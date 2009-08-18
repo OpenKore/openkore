@@ -869,7 +869,7 @@ sub processDeal {
 				(!$config{dealAuto_names} || existsInList($config{dealAuto_names}, $currentDeal{name})) &&
 			    ($config{dealAuto} == 2 ||
 				 $config{dealAuto} == 3 && $currentDeal{other_finalize})) {
-				$messageSender->sendDealAddItem(0, $currentDeal{'you_zenny'});
+				$messageSender->sendDealAddItem(0, $currentDeal{'you_zeny'});
 				$messageSender->sendDealFinalize();
 				$timeout{ai_dealAuto}{time} = time;
 			} elsif ($currentDeal{other_finalize} && $currentDeal{you_finalize} &&timeOut($timeout{ai_dealAuto}) && $config{dealAuto} >= 2 &&
@@ -1614,7 +1614,7 @@ sub processAutoBuy {
 			my $item = $char->inventory->getByName($config{"buyAuto_$i"});
 			$args->{invIndex} = $item ? $item->{invIndex} : undef;
 			if ($config{"buyAuto_$i"."_maxAmount"} ne "" && (!$item || $item->{amount} < $config{"buyAuto_$i"."_maxAmount"})) {
-				next if (($config{"buyAuto_$i"."_price"} && ($char->{zenny} < $config{"buyAuto_$i"."_price"})) || ($config{"buyAuto_$i"."_zeny"} && !inRange($char->{zenny}, $config{"buyAuto_$i"."_zeny"})));
+				next if (($config{"buyAuto_$i"."_price"} && ($char->{zeny} < $config{"buyAuto_$i"."_price"})) || ($config{"buyAuto_$i"."_zeny"} && !inRange($char->{zeny}, $config{"buyAuto_$i"."_zeny"})));
 
 				# get NPC info, use standpoint if provided
 				$args->{npc} = {};
@@ -1719,7 +1719,7 @@ sub processAutoBuy {
 			}
 			my $maxbuy;
 			if ($config{"buyAuto_$args->{index}"."_price"}) {
-				$maxbuy = int($char->{zenny}/$config{"buyAuto_$args->{index}"."_price"});
+				$maxbuy = int($char->{zeny}/$config{"buyAuto_$args->{index}"."_price"});
 			} else {$maxbuy = 1000000;}
 
 			if ($args->{invIndex} ne "") {

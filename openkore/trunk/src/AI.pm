@@ -390,14 +390,14 @@ sub ai_mapRoute_searchStep {
 	#foreach my $parent (keys %{$$r_args{'openlist'}})
 	{
 		my ($portal,$dest) = split /=/, $parent;
-		if ($$r_args{'budget'} ne '' && $$r_args{'openlist'}{$parent}{'zenny'} > $$r_args{'budget'}) {
+		if ($$r_args{'budget'} ne '' && $$r_args{'openlist'}{$parent}{'zeny'} > $$r_args{'budget'}) {
 			#This link is too expensive
 			delete $$r_args{'openlist'}{$parent};
 			next;
 		} else {
 			#MOVE this entry into the CLOSELIST
 			$$r_args{'closelist'}{$parent}{'walk'}   = $$r_args{'openlist'}{$parent}{'walk'};
-			$$r_args{'closelist'}{$parent}{'zenny'}  = $$r_args{'openlist'}{$parent}{'zenny'};
+			$$r_args{'closelist'}{$parent}{'zeny'}  = $$r_args{'openlist'}{$parent}{'zeny'};
 			$$r_args{'closelist'}{$parent}{'parent'} = $$r_args{'openlist'}{$parent}{'parent'};
 			#Then delete in from OPENLIST
 			delete $$r_args{'openlist'}{$parent};
@@ -416,7 +416,7 @@ sub ai_mapRoute_searchStep {
 					($arg{'map'},$arg{'pos'}{'x'},$arg{'pos'}{'y'}) = split / /,$from;
 					($arg{dest_map}, $arg{dest_pos}{x}, $arg{dest_pos}{y}) = split(' ', $to);
 					$arg{'walk'} = $$r_args{'closelist'}{$this}{'walk'};
-					$arg{'zenny'} = $$r_args{'closelist'}{$this}{'zenny'};
+					$arg{'zeny'} = $$r_args{'closelist'}{$this}{'zeny'};
 					$arg{'steps'} = $portals_lut{$from}{'dest'}{$to}{'steps'};
 					unshift @{$$r_args{'mapSolution'}},\%arg;
 					$this = $$r_args{'closelist'}{$this}{'parent'};
@@ -426,7 +426,7 @@ sub ai_mapRoute_searchStep {
 				my $walk = "$$r_args{'dest'}{'map'} $$r_args{'dest'}{'pos'}{'x'} $$r_args{'dest'}{'pos'}{'y'}=$$r_args{'dest'}{'map'} $$r_args{'dest'}{'pos'}{'x'} $$r_args{'dest'}{'pos'}{'y'}";
 				$$r_args{'closelist'}{$walk}{'walk'} = scalar @{$$r_args{'solution'}} + $$r_args{'closelist'}{$parent}{$dest}{'walk'};
 				$$r_args{'closelist'}{$walk}{'parent'} = $parent;
-				$$r_args{'closelist'}{$walk}{'zenny'} = $$r_args{'closelist'}{$parent}{'zenny'};
+				$$r_args{'closelist'}{$walk}{'zeny'} = $$r_args{'closelist'}{$parent}{'zeny'};
 				$$r_args{'found'} = $walk;
 				$$r_args{'done'} = 1;
 				undef @{$$r_args{'mapSolution'}};
@@ -437,7 +437,7 @@ sub ai_mapRoute_searchStep {
 					my ($from,$to) = split /=/, $this;
 					($arg{'map'},$arg{'pos'}{'x'},$arg{'pos'}{'y'}) = split / /,$from;
 					$arg{'walk'} = $$r_args{'closelist'}{$this}{'walk'};
-					$arg{'zenny'} = $$r_args{'closelist'}{$this}{'zenny'};
+					$arg{'zeny'} = $$r_args{'closelist'}{$this}{'zeny'};
 					$arg{'steps'} = $portals_lut{$from}{'dest'}{$to}{'steps'};
 					unshift @{$$r_args{'mapSolution'}},\%arg;
 					$this = $$r_args{'closelist'}{$this}{'parent'};
@@ -458,7 +458,7 @@ sub ai_mapRoute_searchStep {
 					if ( !exists $$r_args{'openlist'}{"$child=$subchild"} || $$r_args{'openlist'}{"$child=$subchild"}{'walk'} > $thisWalk ) {
 						$$r_args{'openlist'}{"$child=$subchild"}{'parent'} = $parent;
 						$$r_args{'openlist'}{"$child=$subchild"}{'walk'} = $thisWalk;
-						$$r_args{'openlist'}{"$child=$subchild"}{'zenny'} = $$r_args{'closelist'}{$parent}{'zenny'} + $portals_lut{$child}{'dest'}{$subchild}{'cost'};
+						$$r_args{'openlist'}{"$child=$subchild"}{'zeny'} = $$r_args{'closelist'}{$parent}{'zeny'} + $portals_lut{$child}{'dest'}{$subchild}{'cost'};
 					}
 				}
 			}
@@ -601,7 +601,7 @@ sub ai_skillUse2 {
 sub ai_storageAutoCheck {
 	return 0 if ($char->getSkillLevel(new Skill(handle => 'NV_BASIC')) < 6);
 	if ($config{minStorageZeny}) {
-		return 0 if ($char->{zenny} < $config{minStorageZeny});
+		return 0 if ($char->{zeny} < $config{minStorageZeny});
 	}
 	foreach my $item (@{$char->inventory->getItems()}) {
 		next if ($item->{equipped});

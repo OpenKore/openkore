@@ -1102,13 +1102,13 @@ sub charSelectScreen {
 				"Exp:  \@<<<<<<<      Vit: \@<<<<<<<<\n" .
 				"HP:   \@||||/\@||||   Int: \@<<<<<<<<\n" .
 				"SP:   \@||||/\@||||   Dex: \@<<<<<<<<\n" .
-				"Zenny: \@<<<<<<<<<<  Luk: \@<<<<<<<<\n" .
+				"zeny: \@<<<<<<<<<<  Luk: \@<<<<<<<<\n" .
 				"-------------------------------"),
 				$num, $chars[$num]{'name'}, $jobs_lut{$chars[$num]{'jobID'}}, $chars[$num]{'exp_job'},
 				$chars[$num]{'lv'}, $chars[$num]{'str'}, $chars[$num]{'lv_job'}, $chars[$num]{'agi'},
 				$chars[$num]{'exp'}, $chars[$num]{'vit'}, $chars[$num]{'hp'}, $chars[$num]{'hp_max'},
 				$chars[$num]{'int'}, $chars[$num]{'sp'}, $chars[$num]{'sp_max'}, $chars[$num]{'dex'},
-				$chars[$num]{'zenny'}, $chars[$num]{'luk'});
+				$chars[$num]{'zeny'}, $chars[$num]{'luk'});
 		}
 		push @charNames, TF("Slot %d: %s (%s, level %d/%d)",
 			$num,
@@ -2259,16 +2259,16 @@ sub setPartySkillTimer {
 
 
 ##
-# boolean setStatus(Actor actor, param1, param2, param3)
-# param1: the state information of the actor.
-# param2: the ailment information of the actor.
-# param3: the "look" information of the actor.
+# boolean setStatus(Actor actor, opt1, opt2, option)
+# opt1: the state information of the actor.
+# opt2: the ailment information of the actor.
+# option: the "look" information of the actor.
 # Returns: Whether the actor should be removed from the actor list.
 #
 # Sets the state, ailment, and "look" statuses of the actor.
 # Does not include skillsstatus.txt items.
 sub setStatus {
-	my ($actor, $param1, $param2, $param3) = @_;
+	my ($actor, $opt1, $opt2, $option) = @_;
 	assert(defined $actor) if DEBUG;
 	assert(UNIVERSAL::isa($actor, 'Actor')) if DEBUG;
 	my $verbosity = $actor->{ID} eq $accountID ? 1 : 2;
@@ -2277,7 +2277,7 @@ sub setStatus {
 	my $changed = 0;
 
 	foreach (keys %skillsState) {
-		if ($param1 == $_) {
+		if ($opt1 == $_) {
 			if (!$actor->{statuses}{$skillsState{$_}}) {
 				$actor->{statuses}{$skillsState{$_}} = 1;
 				message "$actor $are in $skillsState{$_} state\n", "parseMsg_statuslook", $verbosity;
@@ -2291,7 +2291,7 @@ sub setStatus {
 	}
 
 	foreach (keys %skillsAilments) {
-		if (($param2 & $_) == $_) {
+		if (($opt2 & $_) == $_) {
 			if (!$actor->{statuses}{$skillsAilments{$_}}) {
 				$actor->{statuses}{$skillsAilments{$_}} = 1;
 				message "$actor $have ailments: $skillsAilments{$_}\n", "parseMsg_statuslook", $verbosity;
@@ -2305,7 +2305,7 @@ sub setStatus {
 	}
 
 	foreach (keys %skillsLooks) {
-		if (($param3 & $_) == $_) {
+		if (($option & $_) == $_) {
 			if (!$actor->{statuses}{$skillsLooks{$_}}) {
 				$actor->{statuses}{$skillsLooks{$_}} = 1;
 				debug "$actor $have look: $skillsLooks{$_}\n", "parseMsg_statuslook", $verbosity;
@@ -3137,139 +3137,15 @@ sub skillCast_string {
 	my ($source, $target, $x, $y, $skillName, $delay) = @_;
 	assert(UNIVERSAL::isa($source, 'Actor')) if DEBUG;
 	assert(UNIVERSAL::isa($target, 'Actor')) if DEBUG;
-
-	# Location
-	if ($x != 0 || $y != 0) {
-		if ($source->isa('Actor::You')) {
-			return TF("You are casting %s on location (%d, %d) - (time %sms)\n", $skillName, $x, $y, $delay);
-		} elsif ($source->isa('Actor::Player')) {
-			return TF("Player %s (%d) is casting %s on location (%d, %d) - (time %sms)\n", $source->name, 
-				$source->{binID}, $skillName, $x, $y, $delay);
-		} elsif ($source->isa('Actor::Monster')) {
-			return TF("Monster %s (%d) is casting %s on location (%d, %d) - (time %sms)\n", $source->name, 
-				$source->{binID}, $skillName, $x, $y, $delay);
-		} elsif ($source->isa('Actor::Slave')) {
-			return TF("Slave %s (%d) is casting %s on location (%d, %d) - (time %sms)\n", $source->name, 
-				$source->{binID}, $skillName, $x, $y, $delay);
-		} elsif ($source->isa('Actor::Unknown')) {
-			return TF("Unknown #%s (%d) is casting %s on location (%d, %d) - (time %sms)\n", $source->{nameID},	
-				$source->{binID}, $skillName, $x, $y, $delay);
-		}
-
-	# You
-	} elsif ($source->isa('Actor::You')) {
-		if ($target->isa('Actor::You')) {
-			return TF("You are casting %s on yourself (time %sms)\n", $skillName, $delay);
-		} elsif ($target->isa('Actor::Player')) {
-			return TF("You are casting %s on player %s (%d) (time %sms)\n", $skillName,
-				$target->name, $target->{binID}, $delay);
-		} elsif ($target->isa('Actor::Monster')) {
-			return TF("You are casting %s on monster %s (%d) (time %sms)\n", $skillName,
-				$target->name, $target->{binID}, $delay);
-		} elsif ($target->isa('Actor::Slave')) {
-			return TF("You are casting %s on slave %s (%d) (time %sms)\n", $skillName,
-				$target->name, $target->{binID}, $delay);
-		} elsif ($target->isa('Actor::Unknown')) {
-			return TF("You are casting %s on Unknown #%s (%d) (time %sms)\n", $skillName,
-				$target->{nameID}, $target->{binID}, $delay);
-		}
-	# Player
-	} elsif ($source->isa('Actor::Player')) {
-		if ($target->isa('Actor::You')) {
-			return TF("Player %s (%d) is casting %s on you (time %sms)\n", $source->name, $source->{binID},
-				$skillName, $delay);
-		} elsif ($target->isa('Actor::Player')) {
-			# consider gender
-			if ($source ne $target) {
-				return TF("Player %s (%d) is casting %s on player %s (%d) (time %sms)\n", $source->name,
-					$source->{binID}, $skillName, $target->name, $target->{binID}, $delay);
-			} elsif ($source->{sex}) {
-				return TF("Player %s (%d) is casting %s on himself (time %sms)\n", $source->name,
-					$source->{binID}, $skillName, $delay);
-			} else {
-				return TF("Player %s (%d) is casting %s on herself (time %sms)\n", $source->name,
-					$source->{binID}, $skillName, $delay);
-			}
-		} elsif ($target->isa('Actor::Monster')) {
-			return TF("Player %s (%d) is casting %s on monster %s (%d) (time %sms)\n", $source->name,
-				$source->{binID}, $skillName, $target->name, $target->{binID}, $delay);
-		} elsif ($target->isa('Actor::Slave')) {
-			return TF("Player %s (%d) is casting %s on slave %s (%d) (time %sms)\n", $source->name,
-				$source->{binID}, $skillName, $target->name, $target->{binID}, $delay);
-		} elsif ($target->isa('Actor::Unknown')) {
-			return TF("Player %s (%d) is casting %s on Unknown #%s (%d) (time %sms)\n", $source->name,
-				$source->{binID}, $skillName, $target->{nameID}, $target->{binID}, $delay);
-		}
-	# Monster
-	} elsif ($source->isa('Actor::Monster')) {
-		if ($target->isa('Actor::You')) {
-			return TF("Monster %s (%d) is casting %s on you (time %sms)\n", $source->name,
-				$source->{binID}, $skillName, $delay);
-		} elsif ($target->isa('Actor::Player')) {
-			return TF("Monster %s (%d) is casting %s on player %s (%d) (time %sms)\n", $source->name,
-				$source->{binID}, $skillName, $target->name, $target->{binID}, $delay);
-		} elsif ($target->isa('Actor::Monster')) {
-			if ($source ne $target) {
-				return TF("Monster %s (%d) is casting %s on monster %s (%d) (time %sms)\n", $source->name,
-					$source->{binID}, $skillName, $target->name, $target->{binID}, $delay);
-			} else {
-				return TF("Monster %s (%d) is casting %s on itself (time %sms)\n", $source->name,
-					$source->{binID}, $skillName, $delay);
-			}
-		} elsif ($target->isa('Actor::Slave')) {
-			return TF("Monster %s (%d) is casting %s on slave %s (%d) (time %sms)\n", $source->name,
-				$source->{binID}, $skillName, $target->name, $target->{binID}, $delay);
-		} elsif ($target->isa('Actor::Unknown')) {
-			return TF("Monster %s (%d) is casting %s on Unknown #%s (%d) (time %sms)\n", $source->name,
-				$source->{binID}, $skillName, $target->{nameID}, $target->{binID}, $delay);
-		}
-	# Slave
-	} elsif ($source->isa('Actor::Slave')) {
-		if ($target->isa('Actor::You')) {
-			return TF("Slave %s (%d) is casting %s on you (time %sms)\n", $source->name,
-				$source->{binID}, $skillName, $delay);
-		} elsif ($target->isa('Actor::Player')) {
-			return TF("Slave %s (%d) is casting %s on player %s (%d) (time %sms)\n", $source->name,
-				$source->{binID}, $skillName, $target->name, $target->{binID}, $delay);
-		} elsif ($target->isa('Actor::Monster')) {
-			return TF("Slave %s (%d) is casting %s on monster %s (%d) (time %sms)\n", $source->name,
-				$source->{binID}, $skillName, $target->name, $target->{binID}, $delay);
-		} elsif ($target->isa('Actor::Slave')) {
-			if ($source ne $target) {
-				return TF("Slave %s (%d) is casting %s on slave %s (%d) (time %sms)\n", $source->name,
-					$source->{binID}, $skillName, $target->name, $target->{binID}, $delay);
-			} else {
-				return TF("Slave %s (%d) is casting %s on itself (time %sms)\n", $source->name,
-					$source->{binID}, $skillName, $delay);
-			}
-		} elsif ($target->isa('Actor::Unknown')) {
-			return TF("Slave %s (%d) is casting %s on Unknown #%s (%d) (time %sms)\n", $source->name,
-				$source->{binID}, $skillName, $target->{nameID}, $target->{binID}, $delay);
-		}
-	# Unknown
-	} elsif ($source->isa('Actor::Unknown')) {
-		if ($target->isa('Actor::You')) {
-			return TF("Unknown #%s (%d) is casting %s on you (time %sms)\n", $source->{nameID},
-				$source->{binID}, $skillName, $delay);
-		} elsif ($target->isa('Actor::Player')) {
-			return TF("Unknown #%s (%d) is casting %s on player %s (%d) (time %sms)\n", $source->{nameID},
-				$source->{binID}, $skillName, $target->name, $target->{binID}, $delay);
-		} elsif ($target->isa('Actor::Monster')) {
-			return TF("Unknown #%s (%d) is casting %s on monster %s (%d) (time %sms)\n", $source->{nameID},
-				$source->{binID}, $skillName, $target->name, $target->{binID}, $delay);
-		} elsif ($target->isa('Actor::Slave')) {
-			return TF("Unknown #%s (%d) is casting %s on slave %s (%d) (time %sms)\n", $source->{nameID},
-				$source->{binID}, $skillName, $target->name, $target->{binID}, $delay);
-		} elsif ($target->isa('Actor::Unknown')) {
-			if ($source ne $target) {
-				return TF("Unknown #%s (%d) is casting %s on Unknown #%s (%d) (time %sms)\n", $source->{nameID},
-					$source->{binID}, $skillName, $target->{nameID}, $target->{binID}, $delay);
-			} else {
-				return TF("Unknown #%s (%d) is casting %s on himself (time %sms)\n", $source->{nameID},
-					$source->{binID}, $skillName, $delay);
-			}
-		}
-	}
+	
+	return sprintf("%s %s %s %s %s %s %s\n",
+		$source->nameString(),
+		$source->verb(T('are'), T('is')),
+		T('casting'),
+		$skillName,
+		T('on'),
+		($x || $y) ? TF("location (%d, %d)", $x, $y) : $target->nameString($source),
+		TF("(delay: %sms)", $delay));
 }
 
 sub skillUse_string {
@@ -3277,155 +3153,29 @@ sub skillUse_string {
 	assert(UNIVERSAL::isa($source, 'Actor')) if DEBUG;
 	assert(UNIVERSAL::isa($target, 'Actor')) if DEBUG;
 
-	$damage ||= "Miss!";
-	if ($damage != -30000) {
-		# Translation Comment: Ammount of Damage on Skill
-		$damage = "- " . TF("Dmg: %s", $damage) . " ";
-	} else {
-		$damage = '';
-	}
-
-	# Translation Comment: Skill name + level
-	$skillName = TF("%s (lvl %s)", $skillName, $level) unless $level == 65535;
-
-	# You
-	if ($source->isa('Actor::You')) {
-		if ($target->isa('Actor::You')) {
-			return TF("You use %s on yourself %s(delay %s)\n", $skillName, $damage, $delay);
-		} elsif ($target->isa('Actor::Player')) {
-			return TF("You use %s on player %s (%d) %s(delay %s)\n", $skillName,
-				$target->name, $target->{binID}, $damage, $delay);
-		} elsif ($target->isa('Actor::Monster')) {
-			return TF("You use %s on monster %s (%d) %s(delay %s)\n", $skillName,
-				$target->name, $target->{binID}, $damage, $delay);
-		} elsif ($target->isa('Actor::Slave')) {
-			return TF("You use %s on slave %s (%d) %s(delay %s)\n", $skillName,
-				$target->name, $target->{binID}, $damage, $delay);
-		} elsif ($target->isa('Actor::Unknown')) {
-			return TF("You use %s on Unknown #%s (%d) %s(delay %s)\n", $skillName,
-				$target->{nameID}, $target->{binID}, $damage, $delay);
-		}
-	# Player
-	} elsif ($source->isa('Actor::Player')) {
-		if ($target->isa('Actor::You')) {
-			return TF("Player %s (%d) uses %s on you %s(delay %s)\n", $source->name, $source->{binID},
-				$skillName, $damage, $delay);
-		} elsif ($target->isa('Actor::Player')) {
-			# consider gender
-			if ($source ne $target) {
-				return TF("Player %s (%d) uses %s on player %s (%d) %s(delay %s)\n", $source->name,
-					$source->{binID}, $skillName, $target->name, $target->{binID}, $damage, $delay);
-			} elsif ($source->{sex}) {
-				return TF("Player %s (%d) uses %s on himself %s(delay %s)\n", $source->name,
-					$source->{binID}, $skillName, $damage, $delay);
-			} else {
-				return TF("Player %s (%d) uses %s on herself %s(delay %s)\n", $source->name,
-					$source->{binID}, $skillName, $damage, $delay);
-			}
-		} elsif ($target->isa('Actor::Monster')) {
-			return TF("Player %s (%d) uses %s on monster %s (%d) %s(delay %s)\n", $source->name,
-				$source->{binID}, $skillName, $target->name, $target->{binID}, $damage, $delay);
-		} elsif ($target->isa('Actor::Slave')) {
-			return TF("Player %s (%d) uses %s on slave %s (%d) %s(delay %s)\n", $source->name,
-				$source->{binID}, $skillName, $target->name, $target->{binID}, $damage, $delay);
-		} elsif ($target->isa('Actor::Unknown')) {
-			return TF("Player %s (%d) uses %s on Unknown #%s (%d) %s(delay %s)\n", $source->name,
-				$source->{binID}, $skillName, $target->{nameID}, $target->{binID}, $damage, $delay);
-		}
-	# Monster
-	} elsif ($source->isa('Actor::Monster')) {
-		if ($target->isa('Actor::You')) {
-			return TF("Monster %s (%d) uses %s on you %s(delay %s)\n", $source->name,
-				$source->{binID}, $skillName, $damage, $delay);
-		} elsif ($target->isa('Actor::Player')) {
-			return TF("Monster %s (%d) uses %s on player %s (%d) %s(delay %s)\n", $source->name,
-				$source->{binID}, $skillName, $target->name, $target->{binID}, $damage, $delay);
-		} elsif ($target->isa('Actor::Monster')) {
-			if ($source ne $target) {
-				return TF("Monster %s (%d) uses %s on monster %s (%d) %s(delay %s)\n", $source->name,
-					$source->{binID}, $skillName, $target->name, $target->{binID}, $damage, $delay);
-			} else {
-				return TF("Monster %s (%d) uses %s on itself %s(delay %s)\n", $source->name,
-					$source->{binID}, $skillName, $damage, $delay);
-			}
-		} elsif ($target->isa('Actor::Slave')) {
-			return TF("Monster %s (%d) uses %s on slave %s (%d) %s(delay %s)\n", $source->name,
-				$source->{binID}, $skillName, $target->name, $target->{binID}, $damage, $delay);
-		} elsif ($target->isa('Actor::Unknown')) {
-			return TF("Monster %s (%d) uses %s on Unknown #%s (%d) %s(delay %s)\n", $source->name,
-				$source->{binID}, $skillName, $target->{nameID}, $target->{binID}, $damage, $delay);
-		}
-	# Slave
-	} elsif ($source->isa('Actor::Slave')) {
-		if ($target->isa('Actor::You')) {
-			return TF("Slave %s (%d) uses %s on you %s(delay %s)\n", $source->name,
-				$source->{binID}, $skillName, $damage, $delay);
-		} elsif ($target->isa('Actor::Player')) {
-			return TF("Slave %s (%d) uses %s on player %s (%d) %s(delay %s)\n", $source->name,
-				$source->{binID}, $skillName, $target->name, $target->{binID}, $damage, $delay);
-		} elsif ($target->isa('Actor::Monster')) {
-			return TF("Slave %s (%d) uses %s on monster %s (%d) %s(delay %s)\n", $source->name,
-				$source->{binID}, $skillName, $target->name, $target->{binID}, $damage, $delay);
-		} elsif ($target->isa('Actor::Slave')) {
-			if ($source ne $target) {
-				return TF("Slave %s (%d) uses %s on slave %s (%d) %s(delay %s)\n", $source->name,
-					$source->{binID}, $skillName, $target->name, $target->{binID}, $damage, $delay);
-			} else {
-				return TF("Slave %s (%d) uses %s on itself %s(delay %s)\n", $source->name,
-					$source->{binID}, $skillName, $damage, $delay);
-			}
-		} elsif ($target->isa('Actor::Unknown')) {
-			return TF("Slave %s (%d) uses %s on Unknown #%s (%d) %s(delay %s)\n", $source->name,
-				$source->{binID}, $skillName, $target->{nameID}, $target->{binID}, $damage, $delay);
-		}
-	# Unknown
-	} elsif ($source->isa('Actor::Unknown')) {
-		if ($target->isa('Actor::You')) {
-			return TF("Unknown #%s (%d) uses %s on you %s(delay %s)\n", $source->{nameID},
-				$source->{binID}, $skillName, $damage, $delay);
-		} elsif ($target->isa('Actor::Player')) {
-			return TF("Unknown #%s (%d) uses %s on player %s (%d) %s(delay %s)\n", $source->{nameID},
-				$source->{binID}, $skillName, $target->name, $target->{binID}, $damage, $delay);
-		} elsif ($target->isa('Actor::Monster')) {
-			return TF("Unknown #%s (%d) uses %s on monster %s (%d) %s(delay %s)\n", $source->{nameID},
-				$source->{binID}, $skillName, $target->name, $target->{binID}, $damage, $delay);
-		} elsif ($target->isa('Actor::Slave')) {
-			return TF("Unknown #%s (%d) uses %s on slave %s (%d) %s(delay %s)\n", $source->{nameID},
-				$source->{binID}, $skillName, $target->name, $target->{binID}, $damage, $delay);
-		} elsif ($target->isa('Actor::Unknown')) {
-			if ($source ne $target) {
-				return TF("Unknown #%s (%d) uses %s on Unknown #%s (%d) %s(delay %s)\n", $source->{nameID},
-					$source->{binID}, $skillName, $target->{nameID}, $target->{binID}, $damage, $delay);
-			} else {
-				return TF("Unknown #%s (%d) uses %s on himself %s(delay %s)\n", $source->{nameID},
-					$source->{binID}, $skillName, $damage, $delay);
-			}
-		}
-	}
+	return sprintf("%s %s %s%s %s %s%s%s\n",
+		$source->nameString(),
+		$source->verb(T('use'), T('uses')),
+		$skillName,
+		($level != 65535) ? ' ' . TF("(Lv: %s)", $level) : '',
+		T('on'),
+		$target->nameString($source),
+		($damage != -30000) ? ' ' . TF("(Dmg: %s)", $damage || T('Miss')) : '',
+		($delay) ? ' ' . TF("(delay: %s)", $delay) : '');
 }
 
 sub skillUseLocation_string {
 	my ($source, $skillName, $args) = @_;
 	assert(UNIVERSAL::isa($source, 'Actor')) if DEBUG;
-
-	# Translation Comment: Skill name + level
-	$skillName = TF("%s (lvl %s)", $skillName, $args->{lv}) unless $args->{lv} == 65535;
-
-	if ($source->isa('Actor::You')) {
-		return TF("You use %s on location (%d, %d)\n", $skillName, $args->{x}, $args->{y});
-	} elsif ($source->isa('Actor::Player')) {
-		return TF("Player %s (%d) uses %s on location (%d, %d)\n", $source->name,
-			$source->{binID}, $skillName, $args->{x}, $args->{y});
-	} elsif ($source->isa('Actor::Monster')) {
-		return TF("Monster %s (%d) uses %s on location (%d, %d)\n", $source->name,
-			$source->{binID}, $skillName, $args->{x}, $args->{y});
-	} elsif ($source->isa('Actor::Slave')) {
-		return TF("Slave %s (%d) uses %s on location (%d, %d)\n", $source->name,
-			$source->{binID}, $skillName, $args->{x}, $args->{y});
-	} elsif ($source->isa('Actor::Unknown')) {
-		return TF("Unknown #%s (%d) uses %s on location (%d, %d)\n", $source->{nameID},
-			$source->{binID}, $skillName, $args->{x}, $args->{y});
-	}
+	
+	return sprintf("%s %s %s%s %s (%d, %d)\n",
+		$source->nameString(),
+		$source->verb(T('use'), T('uses')),
+		$skillName,
+		($args->{lv} != 65535) ? ' ' . TF("(Lv: %s)", $args->{lv}) : '',
+		T('on location'),
+		$args->{x},
+		$args->{y});
 }
 
 sub skillUseNoDamage_string {
@@ -3433,173 +3183,25 @@ sub skillUseNoDamage_string {
 	assert(UNIVERSAL::isa($source, 'Actor')) if DEBUG;
 	assert(UNIVERSAL::isa($target, 'Actor')) if DEBUG;
 
-	if ($skillID == 28) {
-		# Translation Comment: used Healing skill
-		$amount = ': ' . TF("%s hp gained", $amount);
-	} else {
-		if ($amount) {
-			# Translation Comment: used non-Healing skill - displays skill level
-			$amount = ': ' . TF("Lv %s", $amount);
-		} else {
-			$amount = '';
-		}
-	}
-
-	if ($source->isa('Actor::You')) {
-		if ($target->isa('Actor::You')) {
-			return TF("You use %s on yourself %s\n", $skillName, $amount);
-		} else {
-			# Translation Comment: You use a certain skill on an actor.
-			return TF("You use %s on %s %s\n", $skillName, $target->nameString, $amount);
-		}
-	# Player
-	} elsif ($source->isa('Actor::Player')) {
-		if ($target->isa('Actor::You')) {
-			return TF("Player %s uses %s on you %s\n", $source->name,
-				$skillName, $amount);
-		} elsif ($target->isa('Actor::Player')) {
-			# consider gender
-			if ($source ne $target) {
-				return TF("Player %s (%d) uses %s on player %s (%d) %s\n", $source->name,
-					$source->{binID}, $skillName, $target->name, $target->{binID}, $amount);
-			} elsif ($source->{sex}) {
-				return TF("Player %s (%d) uses %s on himself %s\n", $source->name,
-					$source->{binID}, $skillName, $amount);
-			} else {
-				return TF("Player %s (%d) uses %s on herself %s\n", $source->name,
-					$source->{binID}, $skillName, $amount);
-			}
-		} elsif ($target->isa('Actor::Monster')) {
-			return TF("Player %s (%d) uses %s on monster %s (%d) %s\n", $source->name,
-				$source->{binID}, $skillName, $target->name, $target->{binID}, $amount);
-		} elsif ($target->isa('Actor::Slave')) {
-			return TF("Player %s (%d) uses %s on slave %s (%d) %s\n", $source->name,
-				$source->{binID}, $skillName, $target->name, $target->{binID}, $amount);
-		} elsif ($target->isa('Actor::Unknown')) {
-			return TF("Player %s (%d) uses %s on Unknown #%s (%d) %s\n", $source->name,
-				$source->{binID}, $skillName, $target->{nameID}, $target->{binID}, $amount);
-		}
-	# Monster
-	} elsif ($source->isa('Actor::Monster')) {
-		if ($target->isa('Actor::You')) {
-			return TF("Monster %s (%d) uses %s on you %s\n", $source->name,
-				$source->{binID}, $skillName, $amount);
-		} elsif ($target->isa('Actor::Player')) {
-			return TF("Monster %s (%d) uses %s on player %s (%d) %s\n", $source->name,
-				$source->{binID}, $skillName, $target->name, $target->{binID}, $amount);
-		} elsif ($target->isa('Actor::Monster')) {
-			if ($source ne $target) {
-				return TF("Monster %s (%d) uses %s on monster %s (%d) %s\n", $source->name,
-					$source->{binID}, $skillName, $target->name, $target->{binID}, $amount);
-			} else {
-				return TF("Monster %s (%d) uses %s on itself %s\n", $source->name,
-					$source->{binID}, $skillName, $amount);
-			}
-		} elsif ($target->isa('Actor::Slave')) {
-			return TF("Monster %s (%d) uses %s on slave %s (%d) %s\n", $source->name,
-				$source->{binID}, $skillName, $target->name, $target->{binID}, $amount);
-		} elsif ($target->isa('Actor::Unknown')) {
-			return TF("Monster %s (%d) uses %s on Unknown #%s (%d) %s\n", $source->name,
-				$source->{binID}, $skillName, $target->{nameID}, $target->{binID}, $amount);
-		}
-	# Slave
-	} elsif ($source->isa('Actor::Slave')) {
-		if ($target->isa('Actor::You')) {
-			return TF("Slave %s (%d) uses %s on you %s\n", $source->name,
-				$source->{binID}, $skillName, $amount);
-		} elsif ($target->isa('Actor::Player')) {
-			return TF("Slave %s (%d) uses %s on player %s (%d) %s\n", $source->name,
-				$source->{binID}, $skillName, $target->name, $target->{binID}, $amount);
-		} elsif ($target->isa('Actor::Monster')) {
-			return TF("Slave %s (%d) uses %s on monster %s (%d) %s\n", $source->name,
-				$source->{binID}, $skillName, $target->name, $target->{binID}, $amount);
-		} elsif ($target->isa('Actor::Slave')) {
-			if ($source ne $target) {
-				return TF("Slave %s (%d) uses %s on slave %s (%d) %s\n", $source->name,
-					$source->{binID}, $skillName, $target->name, $target->{binID}, $amount);
-			} else {
-				return TF("Slave %s (%d) uses %s on itself %s\n", $source->name,
-					$source->{binID}, $skillName, $amount);
-			}
-		} elsif ($target->isa('Actor::Unknown')) {
-			return TF("Slave %s (%d) uses %s on Unknown #%s (%d) %s\n", $source->name,
-				$source->{binID}, $skillName, $target->{nameID}, $target->{binID}, $amount);
-		}
-	# Unknown
-	} elsif ($source->isa('Actor::Unknown')) {
-		if ($target->isa('Actor::You')) {
-			return TF("Unknown #%s (%d) uses %s on you %s\n", $source->{nameID},
-				$source->{binID}, $skillName, $amount);
-		} elsif ($target->isa('Actor::Player')) {
-			return TF("Unknown #%s (%d) uses %s on player %s (%d) %s\n", $source->{nameID},
-				$source->{binID}, $skillName, $target->name, $target->{binID}, $amount);
-		} elsif ($target->isa('Actor::Monster')) {
-			return TF("Unknown #%s (%d) uses %s on monster %s (%d) %s\n", $source->{nameID},
-				$source->{binID}, $skillName, $target->name, $target->{binID}, $amount);
-		} elsif ($target->isa('Actor::Slave')) {
-			return TF("Unknown #%s (%d) uses %s on slave %s (%d) %s\n", $source->{nameID},
-				$source->{binID}, $skillName, $target->name, $target->{binID}, $amount);
-		} elsif ($target->isa('Actor::Unknown')) {
-			if ($source ne $target) {
-				return TF("Unknown #%s (%d) uses %s on Unknown #%s (%d) %s\n", $source->{nameID},
-					$source->{binID}, $skillName, $target->{nameID}, $target->{binID}, $amount);
-			} else {
-				return TF("Unknown #%s (%d) uses %s on himself %s\n", $source->{nameID},
-					$source->{binID}, $skillName, $amount);
-			}
-		}
-	}
+	return sprintf("%s %s %s %s %s%s\n",
+		$source->nameString(),
+		$source->verb(T('use'), T('uses')),
+		$skillName,
+		T('on'),
+		$target->nameString($source),
+		($skillID == 28) ? ' ' . TF("(gained: %s hp)", $amount) : ($amount) ? ' ' . TF("(Lv: %s)", $amount) : '');
 }
 
 sub status_string {
 	my ($source, $statusName, $mode, $seconds) = @_;
 	assert(UNIVERSAL::isa($source, 'Actor')) if DEBUG;
 
-	if ($mode eq 'now') {
-		if ($source->isa('Actor::You')) {
-			if (($seconds)&&($seconds > 0)) {
-				return TF("You are now: %s for: %s seconds.\n", $statusName, $seconds || "N/A");
-			} else {
-				return TF("You are now: %s\n", $statusName);
-			}
-		} elsif ($source->isa('Actor::Player')) {
-			return TF("Player %s (%d) is now: %s\n", $source->name, $source->{binID}, $statusName);
-		} elsif ($source->isa('Actor::Monster')) {
-			return TF("Monster %s (%d) is now: %s\n", $source->name, $source->{binID}, $statusName);
-		} elsif ($source->isa('Actor::Slave')) {
-			return TF("Slave %s (%d) is now: %s\n", $source->name, $source->{binID}, $statusName);
-		} elsif ($source->isa('Actor::Unknown')) {
-			return TF("Unknown #%s (%d) is now: %s\n", $source->{nameID}, $source->{binID}, $statusName);
-		}
-	} elsif ($mode eq 'again') {
-		if ($source->isa('Actor::You')) {
-			if (($seconds)&&($seconds > 0)) {
-				return TF("You are again: %s for: %s seconds.\n", $statusName, $seconds || "N/A");
-			} else {
-				return TF("You are again: %s\n", $statusName);
-			}
-		} elsif ($source->isa('Actor::Player')) {
-			return TF("Player %s (%d) is again: %s\n", $source->name, $source->{binID}, $statusName);
-		} elsif ($source->isa('Actor::Monster')) {
-			return TF("Monster %s (%d) is again: %s\n", $source->name, $source->{binID}, $statusName);
-		} elsif ($source->isa('Actor::Slave')) {
-			return TF("Slave %s (%d) is again: %s\n", $source->name, $source->{binID}, $statusName);
-		} elsif ($source->isa('Actor::Unknown')) {
-			return TF("Unknown #%s (%d) is again: %s\n", $source->{nameID}, $source->{binID}, $statusName);
-		}
-	} elsif ($mode eq 'no longer') {
-		if ($source->isa('Actor::You')) {
-			return TF("You are no longer: %s\n", $statusName);
-		} elsif ($source->isa('Actor::Player')) {
-			return TF("Player %s (%d) is no longer: %s\n", $source->name, $source->{binID}, $statusName);
-		} elsif ($source->isa('Actor::Monster')) {
-			return TF("Monster %s (%d) is no longer: %s\n", $source->name, $source->{binID}, $statusName);
-		} elsif ($source->isa('Actor::Slave')) {
-			return TF("Slave %s (%d) is no longer: %s\n", $source->name, $source->{binID}, $statusName);
-		} elsif ($source->isa('Actor::Unknown')) {
-			return TF("Unknown #%s (%d) is no longer: %s\n", $source->{nameID}, $source->{binID}, $statusName);
-		}
-	}
+	return sprintf("%s %s %s: %s%s\n",
+		$source->nameString(),
+		$source->verb(T('are'), T('is')),
+		($mode eq 'now') ? T('now') : ($mode eq 'again') ? T('again') : ($mode eq 'no longer') ? T('no longer') : $mode,
+		$statusName,
+		$seconds ? ' ' . TF("(duration: %ss).", $seconds) : '');
 }
 
 #######################################
@@ -4188,7 +3790,7 @@ sub checkSelfCondition {
 	}
 
 	if ($config{$prefix."_zeny"}) {
-		return 0 if (!inRange($char->{zenny}, $config{$prefix."_zeny"}));
+		return 0 if (!inRange($char->{zeny}, $config{$prefix."_zeny"}));
 	}
 
 	# not working yet

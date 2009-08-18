@@ -81,8 +81,8 @@ sub new {
 	if ($args{budget} ne '') {
 		$self->{budget} = $args{budget};
 	} elsif ($config{route_maxWarpFee} ne '') {
-		if ($config{route_maxWarpFee} > $char->{zenny}) {
-			$self->{budget} = $char->{zenny};
+		if ($config{route_maxWarpFee} > $char->{zeny}) {
+			$self->{budget} = $char->{zeny};
 		} else {
 			$self->{budget} = $config{route_maxWarpFee};
 		}
@@ -134,7 +134,7 @@ sub iterate {
 				foreach my $dest (keys %{$entry->{dest}}) {
 					my $penalty = int(($entry->{dest}{$dest}{steps} ne '') ? $routeWeights{NPC} : $routeWeights{PORTAL});
 					$openlist->{"$portal=$dest"}{walk} = $penalty + scalar @{$self->{solution}};
-					$openlist->{"$portal=$dest"}{zenny} = $entry->{dest}{$dest}{cost};
+					$openlist->{"$portal=$dest"}{zeny} = $entry->{dest}{$dest}{cost};
 				}
 			}
 		}
@@ -208,14 +208,14 @@ sub searchStep {
 	#foreach my $parent (keys %{$openlist})
 	{
 		my ($portal, $dest) = split /=/, $parent;
-		if ($self->{budget} ne '' && $openlist->{$parent}{zenny} > $self->{budget}) {
+		if ($self->{budget} ne '' && $openlist->{$parent}{zeny} > $self->{budget}) {
 			# This link is too expensive
 			delete $openlist->{$parent};
 			next;
 		} else {
 			# MOVE this entry into the CLOSELIST
 			$closelist->{$parent}{walk}   = $openlist->{$parent}{walk};
-			$closelist->{$parent}{zenny}  = $openlist->{$parent}{zenny};
+			$closelist->{$parent}{zeny}  = $openlist->{$parent}{zeny};
 			$closelist->{$parent}{parent} = $openlist->{$parent}{parent};
 			# Then delete in from OPENLIST
 			delete $openlist->{$parent};
@@ -234,7 +234,7 @@ sub searchStep {
 					($arg{map}, $arg{pos}{x}, $arg{pos}{y}) = split / /, $from;
 					($arg{dest_map}, $arg{dest_pos}{x}, $arg{dest_pos}{y}) = split(' ', $to);
 					$arg{walk} = $closelist->{$this}{walk};
-					$arg{zenny} = $closelist->{$this}{zenny};
+					$arg{zeny} = $closelist->{$this}{zeny};
 					$arg{steps} = $portals_lut{$from}{dest}{$to}{steps};
 
 					unshift @{$self->{mapSolution}}, \%arg;
@@ -246,7 +246,7 @@ sub searchStep {
 				my $walk = "$self->{dest}{map} $self->{dest}{pos}{x} $self->{dest}{pos}{y}=$self->{dest}{map} $self->{dest}{pos}{x} $self->{dest}{pos}{y}";
 				$closelist->{$walk}{walk} = scalar @{$self->{solution}} + $closelist->{$parent}{$dest}{walk};
 				$closelist->{$walk}{parent} = $parent;
-				$closelist->{$walk}{zenny} = $closelist->{$parent}{zenny};
+				$closelist->{$walk}{zeny} = $closelist->{$parent}{zeny};
 				$self->{found} = $walk;
 				$self->{done} = 1;
 				$self->{mapSolution} = [];
@@ -257,7 +257,7 @@ sub searchStep {
 					my ($from, $to) = split /=/, $this;
 					($arg{map}, $arg{pos}{x}, $arg{pos}{y}) = split / /, $from;
 					$arg{walk} = $closelist->{$this}{walk};
-					$arg{zenny} = $closelist->{$this}{zenny};
+					$arg{zeny} = $closelist->{$this}{zeny};
 					$arg{steps} = $portals_lut{$from}{dest}{$to}{steps};
 
 					unshift @{$self->{mapSolution}}, \%arg;
@@ -281,7 +281,7 @@ sub searchStep {
 					if ( !exists $openlist->{"$child=$subchild"} || $openlist->{"$child=$subchild"}{walk} > $thisWalk ) {
 						$openlist->{"$child=$subchild"}{parent} = $parent;
 						$openlist->{"$child=$subchild"}{walk} = $thisWalk;
-						$openlist->{"$child=$subchild"}{zenny} = $closelist->{$parent}{zenny} + $portals_lut{$child}{dest}{$subchild}{cost};
+						$openlist->{"$child=$subchild"}{zeny} = $closelist->{$parent}{zeny} + $portals_lut{$child}{dest}{$subchild}{cost};
 					}
 				}
 			}

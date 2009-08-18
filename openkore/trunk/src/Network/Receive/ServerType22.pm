@@ -25,15 +25,15 @@ use I18N qw(bytesToString);
 use Utils qw(getHex swrite makeIP makeCoords);
 
 sub new {
-   my ($class) = @_;
-   my $self = $class->SUPER::new();
+	my ($class) = @_;
+	my $self = $class->SUPER::new();
 
-   $self->{packet_list}{'0078'} = ['actor_display', 'x1 a4 v14 a4 v2 x2 C2 a3 x2 C1 v1', [qw(ID walk_speed param1 param2 param3 type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID guildEmblem visual_effects stance sex coords act lv)]];
-   $self->{packet_list}{'007C'} = ['actor_display', 'x1 a4 v14 C2 a3', [qw(ID walk_speed param1 param2 param3 hair_style weapon lowhead type shield tophead midhead hair_color clothes_color head_dir stance sex coords)]];
-   $self->{packet_list}{'022C'} = ['actor_display', 'x1 a4 v3 V1 v5 V1 v5 a4 a4 V1 C2 a5 x3 v1', [qw(ID walk_speed param1 param2 param3 type hair_style weapon shield lowhead timestamp tophead midhead hair_color clothes_color head_dir guildID guildEmblem visual_effects stance sex coords lv)]];
-   $self->{packet_list}{'009A'} = ['system_chat', 'x2 A*', [qw(message)]];
+	$self->{packet_list}{'0078'} = ['actor_display', 'x a4 v14 a4 a2 v2 C2 a3 C3 v', [qw(ID walk_speed opt1 opt2 option type hair_style weapon lowhead shield tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 karma sex coords unknown1 unknown2 act lv)]]; #standing
+	$self->{packet_list}{'007C'} = ['actor_display', 'x a4 v14 C2 a3 C2', [qw(ID walk_speed opt1 opt2 option hair_style weapon lowhead type shield tophead midhead hair_color clothes_color head_dir karma sex coords unknown1 unknown2)]]; #spawning
+	$self->{packet_list}{'022C'} = ['actor_display', 'x a4 v3 V v5 V v5 a4 a2 v V C2 a5 x C2 v', [qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 karma sex coords unknown1 unknown2 lv)]]; # walking
+	$self->{packet_list}{'009A'} = ['system_chat', 'x2 A*', [qw(message)]];
 
-   return $self;
+	return $self;
 }
 
 sub system_chat {

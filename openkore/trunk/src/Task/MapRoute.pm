@@ -174,7 +174,7 @@ sub iterate {
 
 		} elsif (distance($char->{pos_to}, $self->{mapSolution}[0]{pos}) <= 10) {
 			my ($from,$to) = split /=/, $self->{mapSolution}[0]{portal};
-			if ($char->{zenny} >= $portals_lut{$from}{dest}{$to}{cost}) {
+			if ($char->{zeny} >= $portals_lut{$from}{dest}{$to}{cost}) {
 				# We have enough money for this service.
 				$self->{substage} = 'Waiting for Warp';
 				$self->{old_x} = $char->{pos_to}{x};
@@ -186,7 +186,7 @@ sub iterate {
 					sequence => $self->{mapSolution}[0]{steps});
 				$self->setSubtask($task);
 			} else {
-				error TF("Insufficient zenny to pay for service at %s (%s,%s).\n",
+				error TF("Insufficient zeny to pay for service at %s (%s,%s).\n",
 					$field->name(), $self->{mapSolution}[0]{pos}{x},
 					$self->{mapSolution}[0]{pos}{y}), "route";
 				$self->initMapCalculator(); # Redo MAP router

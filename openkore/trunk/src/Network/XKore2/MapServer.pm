@@ -134,7 +134,7 @@ sub handleMapLoaded {
 	# Send weapon/shield appearance
 	$output .= pack('C2 a4 C v2', 0xD7, 0x01, $char->{ID}, 2, $char->{weapon}, $char->{shield});
 	# Send status info
-	$output .= pack('C2 a4 v3 x', 0x19, 0x01, $char->{ID}, $char->{param1}, $char->{param2}, $char->{param3});
+	$output .= pack('C2 a4 v3 x', 0x19, 0x01, $char->{ID}, $char->{opt1}, $char->{opt2}, $char->{option});
 	$client->send($output);
 
 
@@ -172,7 +172,7 @@ sub handleMapLoaded {
 	$output = '';
 	$output .=  pack('C2', 0xB9, 0x02);
 	for (my $i = 0; $i < @{$hotkeyList}; $i++) {
-		$output .= pack('C1 V1 v1', $hotkeyList->[$i]->{type}, $hotkeyList->[$i]->{ID}, $hotkeyList->[$i]->{lvl});
+		$output .= pack('C1 V1 v1', $hotkeyList->[$i]->{type}, $hotkeyList->[$i]->{ID}, $hotkeyList->[$i]->{lv});
 	}
 	$client->send($output) if (@{$hotkeyList});
 
@@ -248,7 +248,7 @@ sub handleMapLoaded {
 		shiftPack(\$coords, $npc->{look}{body}, 4);
 		$output .= pack('C2 a4 x2 v4 x30 a3 x5',
 			0x78, 0x00, $npc->{ID},
-			$npc->{param1}, $npc->{param2}, $npc->{param3},
+			$npc->{opt1}, $npc->{opt2}, $npc->{option},
 			$npc->{type}, $coords);
 	}
 	$client->send($output) if (length($output) > 0);
@@ -262,7 +262,7 @@ sub handleMapLoaded {
 		shiftPack(\$coords, $monster->{look}{body}, 4);
 		$output .= pack('C2 a4 v5 x30 a3 x3 v1',
 			0x78, 0x00, $monster->{ID}, $monster->{walk_speed} * 1000,
-			$monster->{param1}, $monster->{param2}, $monster->{param3},
+			$monster->{opt1}, $monster->{opt2}, $monster->{option},
 			$monster->{nameID}, $coords, $monster->{lv});
 	}
 	$client->send($output) if (length($output) > 0);
@@ -289,11 +289,11 @@ sub handleMapLoaded {
 		shiftPack(\$coords, $player->{look}{body}, 4);
 		$output .= pack('C2 a4 v4 x2 v8 x2 v a4 a4 v x2 C2 a3 x2 C v',
 			0x2A, 0x02, $player->{ID}, $player->{walk_speed} * 1000,
-			$player->{param1}, $player->{param2}, $player->{param3},
+			$player->{opt1}, $player->{opt2}, $player->{option},
 			$player->{jobID}, $player->{hair_style}, $player->{weapon}, $player->{shield},
 			$player->{headgear}{low}, $player->{headgear}{top}, $player->{headgear}{mid},
-			$player->{hair_color}, $player->{look}{head}, $player->{guildID}, $player->{guildEmblem},
-			$player->{visual_effects}, $player->{stance}, $player->{sex}, $coords,
+			$player->{hair_color}, $player->{look}{head}, $player->{guildID}, $player->{emblemID},
+			$player->{opt3}, $player->{karma}, $player->{sex}, $coords,
 			($player->{dead}? 1 : ($player->{sitting}? 2 : 0)), $player->{lv});
 	}
 	$client->send($output) if (length($output) > 0);
@@ -379,7 +379,7 @@ sub handleMapLoaded {
 		$output  = pack('C2 C a4 V', 0xA4, 0x01, 0, $pet{ID}, 0);
 		$output .= pack('C2 C a4 V', 0xA4, 0x01, 5, $pet{ID}, 0x64);
 		$output .= pack('C2 Z24 C v4', 0xA2, 0x01,
-			stringToBytes($pet{name}), $pet{nameflag}, $pet{level},
+			stringToBytes($pet{name}), $pet{renameflag}, $pet{level},
 			$pet{hungry}, $pet{friendly}, $pet{accessory});
 		$client->send($output);
 	}
