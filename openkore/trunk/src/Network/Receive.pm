@@ -51,6 +51,9 @@ use Utils::Crypton;
 use Translation;
 use I18N qw(bytesToString);
 
+# to test zealotus bug
+#use Data::Dumper;
+
 
 ######################################
 ### Public methods
@@ -73,30 +76,35 @@ sub new {
 		'006B' => ['received_characters'],
 		'0072' => ['received_characters'],
 		'006C' => ['login_error_game_login_server'],
-		'006D' => ['character_creation_successful', 'a4 x4 V x62 Z24 C7', [qw(ID zenny name str agi vit int dex luk slot)]],
-		'006E' => ['character_creation_failed'],
+		# OLD '006D' => ['character_creation_successful', 'a4 x4 V x62 Z24 C7', [qw(ID zeny name str agi vit int dex luk slot)]],
+		'006D' => ['character_creation_successful', 'a4 V9 v17 Z24 C6 v2', [qw(ID exp zeny exp_job lv_job opt1 opt2 option karma manner points_free hp hp_max sp sp_max walk_speed type hair_style weapon lv points_skill lowhead shield tophead midhead hair_color clothes_color name str agi vit int dex luk slot renameflag)]],
+		'006E' => ['character_creation_failed', 'C' ,[qw(type)]],
 		'006F' => ['character_deletion_successful'],
 		'0070' => ['character_deletion_failed'],
 		'0071' => ['received_character_ID_and_Map', 'a4 Z16 a4 v', [qw(charID mapName mapIP mapPort)]],
 		'0073' => ['map_loaded', 'V a3', [qw(syncMapSync coords)]],
 		'0075' => ['changeToInGameState'],
 		'0077' => ['changeToInGameState'],
-		'0078' => ['actor_display',		'a4 v14 a4 x7 C a3 x2 C v',		[qw(ID walk_speed param1 param2 param3 type hair_style weapon lowhead shield tophead midhead hair_color clothes_color head_dir guildID sex coords act lv)]],
-		'0079' => ['actor_display',		'a4 v14 a4 x7 C a3 x2 v',		[qw(ID walk_speed param1 param2 param3 type hair_style weapon lowhead shield tophead midhead hair_color clothes_color head_dir guildID sex coords lv)]],
+		# OLD '0078' => ['actor_display', 'a4 v14 a4 x7 C a3 x2 C v',		[qw(ID walk_speed opt1 opt2 option type hair_style weapon lowhead shield tophead midhead hair_color clothes_color head_dir guildID sex coords act lv)]],
+		'0078' => ['actor_display',	'a4 v14 a4 a2 v2 C2 a3 C3 v',		[qw(ID walk_speed opt1 opt2 option type hair_style weapon lowhead shield tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 karma sex coords unknown1 unknown2 act lv)]], #standing
+		# OLD'0079' => ['actor_display', 'a4 v14 a4 x7 C a3 x2 v',			[qw(ID walk_speed opt1 opt2 option type hair_style weapon lowhead shield tophead midhead hair_color clothes_color head_dir guildID sex coords lv)]],
+		'0079' => ['actor_display',	'a4 v14 a4 a2 v2 C2 a3 C2 v',		[qw(ID walk_speed opt1 opt2 option type hair_style weapon lowhead shield tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 karma sex coords unknown1 unknown2 lv)]], #spawning
 		'007A' => ['changeToInGameState'],
-		'007B' => ['actor_display',		'a4 v8 x4 v6 a4 x7 C a5 x3 v',	[qw(ID walk_speed param1 param2 param3 type hair_style weapon lowhead shield tophead midhead hair_color clothes_color head_dir guildID sex coords lv)]],
-		#OLD '007C' => ['actor_display', 'a4 v1 v1 v1 v1 x6 v1 C1 x12 C1 a3', [qw(ID walk_speed param1 param2 param3 type pet sex coords)]],
-		'007C' => ($rpackets{'007C'} == 41	# or 42
-			? ['actor_display',			'x a4 v14 C2 a3 C',				[qw(ID walk_speed param1 param2 param3 hair_style weapon lowhead type shield tophead midhead hair_color clothes_color head_dir karma sex coords unknown1)]]
-			: ['actor_display',			'x a4 v14 C2 a3 C2',			[qw(ID walk_speed param1 param2 param3 hair_style weapon lowhead type shield tophead midhead hair_color clothes_color head_dir karma sex coords unknown1 unknown2)]]
-		),
+		# OLD '007B' => ['actor_display', 'a4 v8 x4 v6 a4 x7 C a5 x3 v',	[qw(ID walk_speed opt1 opt2 option type hair_style weapon lowhead shield tophead midhead hair_color clothes_color head_dir guildID sex coords lv)]], #walking
+		'007B' => ['actor_display',	'a4 v8 V v6 a4 a2 v2 C2 a5 x C2 v',	[qw(ID walk_speed opt1 opt2 option type hair_style weapon lowhead tick shield tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 karma sex coords unknown1 unknown2 lv)]], #walking
+		#VERY OLD '007C' => ['actor_display', 'a4 v1 v1 v1 v1 x6 v1 C1 x12 C1 a3', [qw(ID walk_speed opt1 opt2 option type pet sex coords)]],
+		#OLD '007C' => ($rpackets{'007C'} == 41	# or 42
+		#OLD 	? ['actor_display',			'x a4 v14 C2 a3 C',				[qw(ID walk_speed opt1 opt2 option hair_style weapon lowhead type shield tophead midhead hair_color clothes_color head_dir karma sex coords unknown1)]]
+		#OLD	: ['actor_display',			'x a4 v14 C2 a3 C2',			[qw(ID walk_speed opt1 opt2 option hair_style weapon lowhead type shield tophead midhead hair_color clothes_color head_dir karma sex coords unknown1 unknown2)]]
+		#OLD),
+		'007C' => ['actor_display',	'a4 v14 C2 a3 C2',					[qw(ID walk_speed opt1 opt2 option hair_style weapon lowhead type shield tophead midhead hair_color clothes_color head_dir karma sex coords unknown1 unknown2)]], #spawning
 		'007F' => ['received_sync', 'V', [qw(time)]],
 		'0080' => ['actor_died_or_disappeared', 'a4 C', [qw(ID type)]],
 		'0081' => ['errors', 'C1', [qw(type)]],
-		'0086' => ['actor_display', 'a4 a5', [qw(ID coords)]],
+		'0086' => ['actor_display', 'a4 a5 x V', [qw(ID coords tick)]],
 		'0087' => ['character_moves', 'x4 a5 C', [qw(coords unknown)]],
 		'0088' => ['actor_movement_interrupted', 'a4 v2', [qw(ID x y)]],
-		'008A' => ['actor_action', 'a4 a4 a4 V2 v2 C v', [qw(sourceID targetID tick src_speed dst_speed damage param2 type param3)]],
+		'008A' => ['actor_action', 'a4 a4 a4 V2 v2 C v', [qw(sourceID targetID tick src_speed dst_speed damage div type dual_wield_damage)]],
 		'008D' => ['public_chat', 'v a4 Z*', [qw(len ID message)]],
 		'008E' => ['self_chat', 'x2 Z*', [qw(message)]],
 		'0091' => ['map_change', 'Z16 v2', [qw(map x y)]],
@@ -175,9 +183,9 @@ sub new {
 		'010E' => ['skill_update', 'v4 C', [qw(skillID lv sp range up)]], # range = skill range, up = this skill can be leveled up further
 		'010F' => ['skills_list'],
 		'0111' => ['linker_skill', 'v2 x2 v3 Z24', [qw(skillID target lv sp range name)]],
-		'0114' => ['skill_use', 'v a4 a4 V3 v3 C', [qw(skillID sourceID targetID tick src_speed dst_speed damage level param3 type)]],
+		'0114' => ['skill_use', 'v a4 a4 V3 v3 C', [qw(skillID sourceID targetID tick src_speed dst_speed damage level option type)]],
 		'0117' => ['skill_use_location', 'v a4 v3', [qw(skillID sourceID lv x y)]],
-		'0119' => ['character_status', 'a4 v3 x', [qw(ID param1 param2 param3)]],
+		'0119' => ['character_status', 'a4 v3 x', [qw(ID opt1 opt2 option)]],
 		'011A' => ['skill_used_no_damage', 'v2 a4 a4 C', [qw(skillID amount targetID sourceID fail)]],
 		'011C' => ['warp_portal_list', 'v Z16 Z16 Z16 Z16', [qw(type memo1 memo2 memo3 memo4)]],
 		'011E' => ['memo_success', 'C', [qw(fail)]],
@@ -254,10 +262,11 @@ sub new {
 		'019B' => ['unit_levelup', 'a4 V', [qw(ID type)]],
 		'019E' => ['pet_capture_process'],
 		'01A0' => ['pet_capture_result', 'C', [qw(type)]],	
-		'01A2' => ($rpackets{'01A2'} == 35 # or 37
-			? ['pet_info', 'Z24 C v4', [qw(name nameflag level hungry friendly accessory)]]
-			: ['pet_info', 'Z24 C v5', [qw(name nameflag level hungry friendly accessory type)]]
-		),
+		#'01A2' => ($rpackets{'01A2'} == 35 # or 37
+		#	? ['pet_info', 'Z24 C v4', [qw(name renameflag level hungry friendly accessory)]]
+		#	: ['pet_info', 'Z24 C v5', [qw(name renameflag level hungry friendly accessory type)]]
+		#),
+		'01A2' => ['pet_info', 'Z24 C v4', [qw(name renameflag level hungry friendly accessory)]],
 		'01A3' => ['pet_food', 'C v', [qw(success foodID)]],
 		'01A4' => ['pet_info2', 'C a4 V', [qw(type ID value)]],
 		'01A6' => ['egg_list'],
@@ -269,7 +278,7 @@ sub new {
 		'01B3' => ['npc_image', 'Z63 C', [qw(npc_image type)]],
 		'01B4' => ['guild_emblem_update', 'a4 a4 v', [qw(ID guildID emblemID)]],
 		'01B5' => ['account_payment_info', 'V2', [qw(D_minute H_minute)]],
-		'01B6' => ['guild_info', 'a4 V11 Z24 Z24 Z20', [qw(ID lvl conMember maxMember average exp next_exp tax tendency_left_right tendency_down_up name master castles_string)]],
+		'01B6' => ['guild_info', 'a4 V11 Z24 Z24 Z20', [qw(ID lv conMember maxMember average exp next_exp tax tendency_left_right tendency_down_up name master castles_string)]],
 		'01B9' => ['cast_cancelled', 'a4', [qw(ID)]],
 		'01C3' => ['local_broadcast', 'x2 a3 x9 Z*', [qw(color message)]],
 		'01C4' => ['storage_item_added', 'v V v C4 a8', [qw(index amount nameID type identified broken upgrade cards)]],
@@ -284,12 +293,15 @@ sub new {
 		'01D3' => ['sound_effect', 'Z24 C V a4', [qw(name type unknown ID)]],
 		'01D4' => ['npc_talk_text', 'a4', [qw(ID)]],
 		'01D7' => ['player_equipment', 'a4 C v2', [qw(sourceID type ID1 ID2)]],
-		'01D8' => ['actor_display', 'a4 v14 a4 x4 v x C a3 x2 C v',				[qw(ID walk_speed param1 param2 param3 type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID skillstatus sex coords act lv)]],
-		'01D9' => ['actor_display', 'a4 v14 a4 x4 v x C a3 x2 v',				[qw(ID walk_speed param1 param2 param3 type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID skillstatus sex coords lv)]],
-		'01DA' => ['actor_display', 'a4 v5 C x v3 x4 v5 a4 x4 v x C a5 x3 v',	[qw(ID walk_speed param1 param2 param3 type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID skillstatus sex coords lv)]],
+		# OLD' 01D8' => ['actor_display', 'a4 v14 a4 x4 v x C a3 x2 C v',			[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID skillstatus sex coords act lv)]],
+		'01D8' => ['actor_display', 'a4 v14 a4 a2 v2 C2 a3 C3 v',		[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 karma sex coords unknown1 unknown2 act lv)]], # standing
+		# OLD '01D9' => ['actor_display', 'a4 v14 a4 x4 v x C a3 x2 v',				[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID skillstatus sex coords lv)]],
+		'01D9' => ['actor_display', 'a4 v14 a4 a2 v2 C2 a3 C2 v',		[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 karma sex coords unknown1 unknown2 lv)]], # spawning
+		# OLD '01DA' => ['actor_display', 'a4 v5 C x v3 x4 v5 a4 x4 v x C a5 x3 v',	[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID skillstatus sex coords lv)]],
+		'01DA' => ['actor_display', 'a4 v9 V v5 a4 a2 v2 C2 a5 x C2 v',		[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 karma sex coords unknown1 unknown2 lv)]], # walking
 		'01DC' => ['secure_login_key', 'x2 a*', [qw(secure_key)]],
 		'01D6' => ['pvp_mode2', 'v', [qw(type)]],
-		'01DE' => ['skill_use', 'v a4 a4 V4 v2 C', [qw(skillID sourceID targetID tick src_speed dst_speed damage level param3 type)]],
+		'01DE' => ['skill_use', 'v a4 a4 V4 v2 C', [qw(skillID sourceID targetID tick src_speed dst_speed damage level option type)]],
 		'01E1' => ['revolving_entity', 'a4 v', [qw(sourceID entity)]],
 		#'01E2' => ['marriage_unknown'], clif_parse_ReqMarriage
 		#'01E4' => ['marriage_unknown'], clif_marriage_process
@@ -327,11 +339,14 @@ sub new {
 		'0224' => ['taekwon_rank', 'c x3 c', [qw(type rank)]],
 		'0226' => ['top10_taekwon_rank'],
 		'0227' => ['gameguard_request'],
-		'0229' => ['character_status', 'a4 v3', [qw(ID param1 param2 param3)]],
-		'022A' => ['actor_display', 'a4 v4 x2 v8 x2 v a4 a4 v x2 C2 a3 x2 C v',		[qw(ID walk_speed param1 param2 param3 type hair_style weapon shield lowhead tophead midhead hair_color head_dir guildID guildEmblem visual_effects stance sex coords act lv)]],
-		'022B' => ['actor_display', 'a4 v4 x2 v8 x2 v a4 a4 v x2 C2 a3 x2 v',		[qw(ID walk_speed param1 param2 param3 type hair_style weapon shield lowhead tophead midhead hair_color head_dir guildID guildEmblem visual_effects stance sex coords lv)]],
-		'022C' => ['actor_display', 'a4 v4 x2 v5 V v3 x4 a4 a4 v x2 C2 a5 x3 v',	[qw(ID walk_speed param1 param2 param3 type hair_style weapon shield lowhead timestamp tophead midhead hair_color guildID guildEmblem visual_effects stance sex coords lv)]],
-		'022E' => ['homunculus_stats', 'Z24 C v16 V2 v2', [qw(name state lvl hunger intimacy accessory atk matk hit critical def mdef flee aspd hp hp_max sp sp_max exp exp_max points_skill unknown)]],
+		'0229' => ['character_status', 'a4 v3', [qw(ID opt1 opt2 option)]],
+		# OLD '022A' => ['actor_display', 'a4 v4 x2 v8 x2 v a4 a4 v x2 C2 a3 x2 C v',	[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color head_dir guildID emblemID visual_effects stance sex coords act lv)]],
+		'022A' => ['actor_display', 'a4 v3 V v10 a4 a2 v V C2 a3 C3 v',		[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 karma sex coords unknown1 unknown2 act lv)]], # standing
+		# OLD '022B' => ['actor_display', 'a4 v4 x2 v8 x2 v a4 a4 v x2 C2 a3 x2 v',		[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color head_dir guildID emblemID visual_effects stance sex coords lv)]],
+		'022B' => ['actor_display', 'a4 v3 V v10 a4 a2 v V C2 a3 C2 v',		[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 karma sex coords unknown1 unknown2 lv)]], # spawning
+		# OLD '022C' => ['actor_display', 'a4 v4 x2 v5 V v3 x4 a4 a4 v x2 C2 a5 x3 v',	[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead timestamp tophead midhead hair_color guildID emblemID visual_effects stance sex coords lv)]],
+		'022C' => ['actor_display', 'a4 v3 V v5 V v5 a4 a2 v V C2 a5 x C2 v',			[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 karma sex coords unknown1 unknown2 lv)]], # walking
+		'022E' => ['homunculus_stats', 'Z24 C v16 V2 v2', [qw(name state lv hunger intimacy accessory atk matk hit critical def mdef flee aspd hp hp_max sp sp_max exp exp_max points_skill unknown)]],
 		'022F' => ['homunculus_food', 'C v', [qw(success foodID)]],
 		'0230' => ['homunculus_info', 'x C a4 V',[qw(type ID val)]],
 		'0235' => ['skills_list'], # homunculus skills
@@ -362,7 +377,7 @@ sub new {
 		'0283' => ['account_id', 'V', [qw(accountID)]],
 		'0287' => ['cash_dealer'],
 		'0289' => ['cash_buy_fail', 'V2 v', [qw(cash_points kafra_points fail)]],
-		'028A' => ['character_status', 'a4 V3', [qw(ID param3 lvl visual_effects)]],
+		'028A' => ['character_status', 'a4 V3', [qw(ID option lv opt3)]],
 		'0291' => ['message_string', 'v', [qw(msg_id)]],
 		'0293' => ['boss_map_info', 'C V2 v2 x4 Z24', [qw(flag x y hours minutes name)]],
 		'0294' => ['book_read', 'a4 a4', [qw(bookID page)]],
@@ -374,8 +389,8 @@ sub new {
 		'029A' => ['inventory_item_added', 'v3 C3 a8 v C2 a4', [qw(index amount nameID identified broken upgrade cards type_equip type fail cards_ext)]],
 		# mercenaries
 		'029B' => ($rpackets{'029B'} == 72 # or 80 # mercenary stats
-			? ['homunculus_stats', 'a4 v8 Z24 v5 V v2',		[qw(ID atk matk hit critical def mdef flee aspd name lvl hp hp_max sp sp_max contract_end faith summons)]]
-			: ['homunculus_stats', 'a4 v8 Z24 v V5 v V2 v',	[qw(ID atk matk hit critical def mdef flee aspd name lvl hp hp_max sp sp_max contract_end faith summons kills range)]]
+			? ['homunculus_stats', 'a4 v8 Z24 v5 V v2',		[qw(ID atk matk hit critical def mdef flee aspd name lv hp hp_max sp sp_max contract_end faith summons)]]
+			: ['homunculus_stats', 'a4 v8 Z24 v V5 v V2 v',	[qw(ID atk matk hit critical def mdef flee aspd name lv hp hp_max sp sp_max contract_end faith summons kills range)]]
 		),
 		# TODO: test on officials: '029B' => ['homunculus_stats', 'a4 v8 Z24 v1 V5 v1 V2 v1', [qw(ID atk matk hit critical def mdef flee aspd name lvl hp hp_max sp sp_max contract_end faith summons killcount range)]], # mercenary stats
 		'029D' => ['skills_list'], # mercenary skills
@@ -412,15 +427,16 @@ sub new {
 		'02DC' => ['battleground_message', 'v a4 Z24 Z*', [qw(len ID name message)]],
 		'02DD' => ['battleground_emblem', 'a4 Z24 v', [qw(emblemID name ID)]],
 		'02DE' => ['battleground_score', 'v2', [qw(score_lion score_eagle)]],
-		# 02E1 packet unsure of param3 needs more testing
-		'02E1' => ['actor_action', 'a4 a4 a4 V2 v x2 v x2 C v', [qw(sourceID targetID tick src_speed dst_speed damage param2 type param3)]],
+		# 02E1 packet unsure of dual_wield_damage needs more testing
+		'02E1' => ['actor_action', 'a4 a4 a4 V2 v x2 v x2 C v', [qw(sourceID targetID tick src_speed dst_speed damage div type dual_wield_damage)]],
 		'02E8' => ['inventory_items_stackable'],
 		'02E9' => ['cart_items_stackable'],
 		'02EA' => ['storage_items_stackable'],
 		'02EB' => ['map_loaded', 'V a3 x2 v', [qw(syncMapSync coords unknown)]],
-		'02EC' => ['actor_display', 'x a4 v3 V v5 V v5 a4 a4 V C2 a5 x3 v2',[qw(ID walk_speed param1 param2 param3 type hair_style weapon shield lowhead timestamp tophead midhead hair_color clothes_color head_dir guildID guildEmblem visual_effects stance sex coords lv unknown)]],
-		'02ED' => ['actor_display', 'a4 v3 V v10 a4 a4 V C2 a3 v3',			[qw(ID walk_speed param1 param2 param3 type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID guildEmblem visual_effects stance sex coords act lv unknown)]],
-		'02EE' => ['actor_display', 'a4 v3 V v10 a4 a4 V C2 a3 x v3',		[qw(ID walk_speed param1 param2 param3 type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID guildEmblem visual_effects stance sex coords act lv unknown)]],
+		# note: in the next 3 packets we have an argument called 'stance', is this correct or is it 'karma'?
+		'02EC' => ['actor_display', 'x a4 v3 V v5 V v5 a4 a4 V C2 a5 x3 v2',[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir guildID emblemID opt3 karma sex coords lv unknown)]], # Moving
+		'02ED' => ['actor_display', 'a4 v3 V v10 a4 a4 V C2 a3 v3',			[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID opt3 karma sex coords act lv unknown)]], # Spawning
+		'02EE' => ['actor_display', 'a4 v3 V v10 a4 a4 V C2 a3 x v3',		[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID opt3 karma sex coords act lv unknown)]], # Standing
 		'02EF' => ['font', 'a4 v', [qw(ID fontID)]],
 
 		# status timers (eA has 12 unknown bytes)
@@ -826,6 +842,14 @@ sub account_server_info {
 	}
 }
 
+# type=01 pick up item
+# type=02 sit down
+# type=03 stand up
+# type=04 reflected/absorbed damage?
+# type=08 double attack
+# type=09 don't display flinch animation (endure)
+# type=0a critical hit
+# type=0b lucky dodge
 sub actor_action {
 	my ($self,$args) = @_;
 	return unless changeToInGameState();
@@ -874,14 +898,14 @@ sub actor_action {
 	} else {
 		# Attack
 		my $dmgdisplay;
-		my $totalDamage = $args->{damage} + $args->{param3};
+		my $totalDamage = $args->{damage} + $args->{dual_wield_damage};
 		if ($totalDamage == 0) {
 			$dmgdisplay = "Miss!";
-			$dmgdisplay .= "!" if ($args->{type} == 11);
+			$dmgdisplay .= "!" if ($args->{type} == 11); # lucky dodge
 		} else {
 			$dmgdisplay = $args->{damage};
-			$dmgdisplay .= "!" if ($args->{type} == 10);
-			$dmgdisplay .= " + $args->{param3}" if $args->{param3};
+			$dmgdisplay .= "!" if ($args->{type} == 10); # critical hit
+			$dmgdisplay .= " + $args->{dual_wield_damage}" if $args->{dual_wield_damage};
 		}
 
 		Misc::checkValidity("actor_action (attack 1)");
@@ -1084,8 +1108,30 @@ sub actor_display {
 
 	#### Initialize ####
 
-	my $nameID = unpack("V1", $args->{ID});
+	my $nameID = unpack("V", $args->{ID});
 
+	if ($args->{switch} eq "0086") {
+		# Message 0086 contains less information about the actor than other similar
+		# messages. So we use the existing actor information.
+		my $coordsArg = $args->{coords};
+		my $tickArg = $args->{tick};
+		$args = Actor::get($args->{ID})->deepCopy();
+		# Here we overwrite the $args data with the 0086 packet data.
+		$args->{switch} = "0086";
+		$args->{coords} = $coordsArg;
+		$args->{tick} = $tickArg; # lol tickcount what do we do with that? debug "tick: " . $tickArg/1000/3600/24 . "\n";
+	}
+
+	my (%coordsFrom, %coordsTo);
+	if (length($args->{coords}) < 5) {
+		makeCoords(\%coordsTo, $args->{coords});
+		%coordsFrom = %coordsTo;
+	} elsif (length($args->{coords}) >= 5) {
+		my $coordsArg = $args->{coords};
+		makeCoords3(\%coordsFrom, \%coordsTo, $coordsArg);
+	}
+
+=pod
 	my (%coordsFrom, %coordsTo);
 	if ($args->{switch} eq "007C") {
 		makeCoords(\%coordsTo, $args->{coords});
@@ -1106,28 +1152,28 @@ sub actor_display {
 		unShiftPack(\$coordsArg, \$coordsTo{x}, 10);
 		%coordsFrom = %coordsTo;
 	}
-
-	if ($args->{switch} eq "0086") {
-		# Message 0086 contains less information about the actor than other similar
-		# messages. So we use the existing actor information.
-		$args = Actor::get($args->{ID})->deepCopy();
-		$args->{switch} = "0086";
-	}
+=cut
 
 	# Remove actors with a distance greater than removeActorWithDistance. Useful for vending (so you don't spam
 	# too many packets in prontera and cause server lag). As a side effect, you won't be able to "see" actors
 	# beyond removeActorWithDistance.
 	if ($config{removeActorWithDistance}) {
 		if ((my $block_dist = blockDistance($char->{pos_to}, \%coordsTo)) > ($config{removeActorWithDistance})) {
-			my $nameIdTmp = unpack("V1", $args->{ID});
+			my $nameIdTmp = unpack("V", $args->{ID});
 			debug "Removed out of sight actor $nameIdTmp at ($coordsTo{x}, $coordsTo{y}) (distance: $block_dist)\n";
 			return;
 		}
 	}
-
-
+=pod
+	# Zealotus bug
+	if ($args->{type} == 1200) {
+		open DUMP, ">> test_Zealotus.txt";
+		print DUMP "Zealotus: " . $nameID . "\n";
+		print DUMP Dumper($args);
+		close DUMP;
+	}
+=cut
 	#### Step 1: create/get the correct actor object ####
-
 	if ($jobs_lut{$args->{type}}) {
 		unless ($args->{type} > 6000) {
 			# Actor is a player
@@ -1175,7 +1221,6 @@ sub actor_display {
 		# Actor might be a monster
 		if ($args->{hair_style} == 0x64) {
 			# Actor is a pet
-
 			$actor = $petsList->getByID($args->{ID});
 			if (!defined $actor) {
 				$actor = new Actor::Pet();
@@ -1223,7 +1268,6 @@ sub actor_display {
 
 
 	#### Step 2: update actor information ####
-
 	$actor->{ID} = $args->{ID};
 	$actor->{jobID} = $args->{type};
 	$actor->{type} = $args->{type};
@@ -1235,13 +1279,13 @@ sub actor_display {
 	$actor->{time_move_calc} = distance(\%coordsFrom, \%coordsTo) * $actor->{walk_speed};
 
 	if (UNIVERSAL::isa($actor, "Actor::Player")) {
-		# None of this stuff should matter if the actor isn't a player...
+		# None of this stuff should matter if the actor isn't a player... => does matter for a guildflag npc!
 
-		# Interesting note about guildEmblem. If it is 0 (or none), the Ragnarok
+		# Interesting note about emblemID. If it is 0 (or none), the Ragnarok
 		# client will display "Send (Player) a guild invitation" (assuming one has
 		# invitation priveledges), regardless of whether or not guildID is set.
 		# I bet that this is yet another brilliant "feature" by GRAVITY's good programmers.
-		$actor->{guildEmblem} = $args->{guildEmblem} if (exists $args->{guildEmblem});
+		$actor->{emblemID} = $args->{emblemID} if (exists $args->{emblemID});
 		$actor->{guildID} = $args->{guildID} if (exists $args->{guildID});
 
 		if (exists $args->{lowhead}) {
@@ -1262,19 +1306,26 @@ sub actor_display {
 
 		# Monsters don't have hair colors or heads to look around...
 		$actor->{hair_color} = $args->{hair_color} if (exists $args->{hair_color});
+
+	} elsif (UNIVERSAL::isa($actor, "Actor::NPC") && $args->{type} == 722) { # guild flag has emblem
+		# odd fact: "this data can also be found in a strange place:
+		# (shield OR lowhead) + midhead = emblemID		(either shield or lowhead depending on the packet)
+		# tophead = guildID
+		$actor->{emblemID} = $args->{emblemID};
+		$actor->{guildID} = $args->{guildID};
 	}
 
 	# But hair_style is used for pets, and their bodies can look different ways...
 	$actor->{hair_style} = $args->{hair_style} if (exists $args->{hair_style});
-	$actor->{look}{body} = $args->{body_dir} if (exists $args->{body_dir});
+	#$actor->{look}{body} = $args->{body_dir} if (exists $args->{body_dir});
 	$actor->{look}{head} = $args->{head_dir} if (exists $args->{head_dir});
 
 	# When stance is non-zero, character is bobbing as if they had just got hit,
 	# but the cursor also turns to a sword when they are mouse-overed.
-	$actor->{stance} = $args->{stance} if (exists $args->{stance});
+	#$actor->{stance} = $args->{stance} if (exists $args->{stance});
 
-	# Visual effects are a set of flags
-	$actor->{visual_effects} = $args->{visual_effects} if (exists $args->{visual_effects});
+	# Visual effects are a set of flags (some of the packets don't have this argument)
+	$actor->{opt3} = $args->{opt3} if (exists $args->{opt3}); # stackable
 
 	# Known visual effects:
 	# 0x0001 = Yellow tint (eg, a quicken skill)
@@ -1296,18 +1347,17 @@ sub actor_display {
 	# Example: 0x000C (0x0008 & 0x0004) = gray tint with slow lightning
 
 	# Save these parameters ...
-	$actor->{param1} = $args->{param1};
-	$actor->{param2} = $args->{param2};
-	$actor->{param3} = $args->{param3};
+	$actor->{opt1} = $args->{opt1}; # nonstackable
+	$actor->{opt2} = $args->{opt2}; # stackable
+	$actor->{option} = $args->{option}; # stackable
 
 	# And use them to set status flags.
-	if (setStatus($actor, $args->{param1}, $args->{param2}, $args->{param3})) {
+	if (setStatus($actor, $args->{opt1}, $args->{opt2}, $args->{option})) {
 		$mustAdd = 0;
 	}
 
 
 	#### Step 3: Add actor to actor list ####
-
 	if ($mustAdd) {
 		if (UNIVERSAL::isa($actor, "Actor::Player")) {
 			$playersList->add($actor);
@@ -1331,7 +1381,6 @@ sub actor_display {
 
 		} elsif (UNIVERSAL::isa($actor, "Actor::Slave")) {
 			$slavesList->add($actor);
-
 		}
 	}
 
@@ -1498,7 +1547,7 @@ sub actor_info {
 	my $slave = $slavesList->getByID($args->{ID});
 	if ($slave) {
 		my $name = bytesToString($args->{name});
-		#$slave->{name_given} = $name;
+		$slave->{name_given} = $name;
 		$slave->setName($name);
 		my $binID = binFind(\@slavesID, $args->{ID});
 		debug "Slave Info: $name ($binID)\n", "parseMsg_presence", 2;
@@ -2078,12 +2127,21 @@ sub changeToInGameState {
 }
 
 sub character_creation_failed {
-	message T("Character creation failed. " .
-		"If you didn't make any mistake, then the name you chose already exists.\n"), "info";
+	my ($self, $args) = @_;
+	if ($args->{flag} == 0x0) {
+		message T("Charname already exists.\n"), "info";
+	} elsif ($args->{flag} == 0xFF) {
+		message T("Char creation denied.\n"), "info";
+	} elsif ($args->{flag} == 0x01) {
+		message T("You are underaged.\n"), "info";
+	} else {
+		message T("Character creation failed. " .
+			"If you didn't make any mistake, then the name you chose already exists.\n"), "info";
+	}
 	if (charSelectScreen() == 1) {
 		$net->setState(3);
 		$firstLoginMap = 1;
-		$startingZenny = $chars[$config{'char'}]{'zenny'} unless defined $startingZenny;
+		$startingzeny = $chars[$config{'char'}]{'zeny'} unless defined $startingzeny;
 		$sentWelcomeMessage = 1;
 	}
 }
@@ -2092,28 +2150,21 @@ sub character_creation_successful {
 	my ($self, $args) = @_;
 
 	my $char = new Actor::You;
-	$char->{ID} = $args->{ID};
+	foreach (@{$self->{packet_list}{$args->{switch}}->[2]}) {
+		$char->{$_} = $args->{$_} if (exists $args->{$_});
+	}
 	$char->{name} = bytesToString($args->{name});
-	$char->{zenny} = $args->{zenny};
 	$char->{jobID} = 0;
-	$char->{str} = $args->{str};
-	$char->{agi} = $args->{agi};
-	$char->{vit} = $args->{vit};
-	$char->{int} = $args->{int};
-	$char->{dex} = $args->{dex};
-	$char->{luk} = $args->{luk};
-	my $slot = $args->{slot};
-
-	$char->{lv} = 1;
-	$char->{lv_job} = 1;
+	#$char->{lv} = 1;
+	#$char->{lv_job} = 1;
 	$char->{sex} = $accountSex2;
-	$chars[$slot] = $char;
+	$chars[$char->{slot}] = $char;
 
 	$net->setState(3);
-	message TF("Character %s (%d) created.\n", $char->{name}, $slot), "info";
+	message TF("Character %s (%d) created.\n", $char->{name}, $char->{slot}), "info";
 	if (charSelectScreen() == 1) {
 		$firstLoginMap = 1;
-		$startingZenny = $chars[$config{'char'}]{'zenny'} unless defined $startingZenny;
+		$startingzeny = $chars[$config{'char'}]{'zeny'} unless defined $startingzeny;
 		$sentWelcomeMessage = 1;
 	}
 }
@@ -2133,7 +2184,7 @@ sub character_deletion_successful {
 	if (charSelectScreen() == 1) {
 		$net->setState(3);
 		$firstLoginMap = 1;
-		$startingZenny = $chars[$config{'char'}]{'zenny'} unless defined $startingZenny;
+		$startingzeny = $chars[$config{'char'}]{'zeny'} unless defined $startingzeny;
 		$sentWelcomeMessage = 1;
 	}
 }
@@ -2144,7 +2195,7 @@ sub character_deletion_failed {
 	if (charSelectScreen() == 1) {
 		$net->setState(3);
 		$firstLoginMap = 1;
-		$startingZenny = $chars[$config{'char'}]{'zenny'} unless defined $startingZenny;
+		$startingzeny = $chars[$config{'char'}]{'zeny'} unless defined $startingzeny;
 		$sentWelcomeMessage = 1;
 	}
 }
@@ -2197,15 +2248,15 @@ sub character_status {
 	
 	if ($args->{switch} eq '028A') {
 		$actor->{lv} = $args->{lv}; # TODO: test if it is ok to use this piece of information
-		$actor->{visual_effects} = $args->{visual_effects};
+		$actor->{opt3} = $args->{opt3};
 	} elsif ($args->{switch} eq '0229' || $args->{switch} eq '0119') {
-		$actor->{param1} = $args->{param1};
-		$actor->{param2} = $args->{param2};
+		$actor->{opt1} = $args->{opt1};
+		$actor->{opt2} = $args->{opt2};
 	}
 
-	$actor->{param3} = $args->{param3};
+	$actor->{option} = $args->{option};
 
-	setStatus($actor, $args->{param1}, $args->{param2}, $args->{param3});
+	setStatus($actor, $args->{opt1}, $args->{opt2}, $args->{option});
 }
 
 sub chat_created {
@@ -2401,7 +2452,7 @@ sub deal_add_other {
 		$item->{name} = itemName($item);
 		message TF("%s added Item to Deal: %s x %s\n", $currentDeal{name}, $item->{name}, $args->{amount}), "deal";
 	} elsif ($args->{amount} > 0) {
-		$currentDeal{other_zenny} += $args->{amount};
+		$currentDeal{other_zeny} += $args->{amount};
 		my $amount = formatNumber($args->{amount});
 		message TF("%s added %s z to Deal\n", $currentDeal{name}, $amount), "deal";
 	}
@@ -2485,7 +2536,7 @@ sub deal_finalize {
 	} else {
 		$currentDeal{you_finalize} = 1;
 		# FIXME: shouldn't we do this when we actually complete the deal?
-		$char->{zenny} -= $currentDeal{you_zenny};
+		$char->{zeny} -= $currentDeal{you_zeny};
 		message T("You finalized the Deal\n"), "deal";
 	}
 }
@@ -2730,7 +2781,7 @@ sub exp_zeny_info {
 		Plugins::callHook('exp_gained');
 
 	} elsif ($args->{type} == 20) {
-		my $change = $args->{val} - $char->{zenny};
+		my $change = $args->{val} - $char->{zeny};
 		if ($change > 0) {
 			message TF("You gained %s zeny.\n", formatNumber($change));
 		} elsif ($change < 0) {
@@ -2740,8 +2791,8 @@ sub exp_zeny_info {
 				$quit = 1;
 			}
 		}
-		$char->{zenny} = $args->{val};
-		debug "Zenny: $args->{val}\n", "parseMsg";
+		$char->{zeny} = $args->{val};
+		debug "zeny: $args->{val}\n", "parseMsg";
 	} elsif ($args->{type} == 22) {
 		$char->{exp_max_last} = $char->{exp_max};
 		$char->{exp_max} = $args->{val};
@@ -2954,7 +3005,7 @@ sub homunculus_stats { # homunculus and mercenary stats
 		}
 	}
 	
-	$slave->{level}        = $args->{lvl};
+	$slave->{level}        = $args->{lv};
 	$slave->{atk}          = $args->{atk};
 	$slave->{matk}         = $args->{matk};
 	$slave->{hit}          = $args->{hit};
@@ -3168,7 +3219,7 @@ sub guild_expulsionlist {
 sub guild_info {
 	my ($self, $args) = @_;
 	# Guild Info
-	foreach (qw(ID lvl conMember maxMember average exp next_exp tax tendency_left_right tendency_down_up name master castles_string)) {
+	foreach (qw(ID lv conMember maxMember average exp next_exp tax tendency_left_right tendency_down_up name master castles_string)) {
 		$guild{$_} = $args->{$_};
 	}
 	$guild{name} = bytesToString($args->{name});
@@ -3239,7 +3290,7 @@ sub guild_members_list {
 			$jobID += 60;
 		}
 		$guild{member}[$c]{jobID} = $jobID;
-		$guild{member}[$c]{lvl}   = unpack("v1", substr($msg, $i + 16, 2));
+		$guild{member}[$c]{lv}   = unpack("v1", substr($msg, $i + 16, 2));
 		$guild{member}[$c]{contribution} = unpack("V1", substr($msg, $i + 18, 4));
 		$guild{member}[$c]{online} = unpack("v1", substr($msg, $i + 22, 2));
 		my $gtIndex = unpack("V1", substr($msg, $i + 26, 4));
@@ -4742,13 +4793,13 @@ sub pet_food {
 sub pet_info {
 	my ($self, $args) = @_;
 	$pet{name} = bytesToString($args->{name});
-	$pet{nameflag} = $args->{nameflag};
+	$pet{renameflag} = $args->{renameflag};
 	$pet{level} = $args->{level};
 	$pet{hungry} = $args->{hungry};
 	$pet{friendly} = $args->{friendly};
 	$pet{accessory} = $args->{accessory};
-	$pet{type} = $args->{type} if $args->{type};
-	debug "Pet status: name: $pet{name} name set?: ". ($pet{nameflag} ? 'yes' : 'no') ." level=$pet{level} hungry=$pet{hungry} intimacy=$pet{friendly} accessory=".itemNameSimple($pet{accessory})." type=".$pet{type}||"N/A"."\n", "pet";
+	$pet{type} = $args->{type} if (exists $args->{type});
+	debug "Pet status: name: $pet{name} name set?: ". ($pet{renameflag} ? 'yes' : 'no') ." level=$pet{level} hungry=$pet{hungry} intimacy=$pet{friendly} accessory=".itemNameSimple($pet{accessory})." type=".$pet{type}||"N/A"."\n", "pet";
 }
 
 sub pet_info2 {
@@ -4983,7 +5034,7 @@ sub received_characters {
 		$chars[$num]{charID} = substr($args->{RAW_MSG}, $i, 4);
 		$chars[$num]{nameID} = unpack("V", $chars[$num]{ID});
 		$chars[$num]{exp} = unpack("V", substr($args->{RAW_MSG}, $i + 4, 4));
-		$chars[$num]{zenny} = unpack("V", substr($args->{RAW_MSG}, $i + 8, 4));
+		$chars[$num]{zeny} = unpack("V", substr($args->{RAW_MSG}, $i + 8, 4));
 		$chars[$num]{exp_job} = unpack("V", substr($args->{RAW_MSG}, $i + 12, 4));
 		$chars[$num]{lv_job} = unpack("v", substr($args->{RAW_MSG}, $i + 16, 2));
 		$chars[$num]{hp} = unpack("v", substr($args->{RAW_MSG}, $i + 42, 2));
@@ -5015,7 +5066,7 @@ sub received_characters {
 	$messageSender->sendBanCheck($accountID) if (!$net->clientAlive && $config{serverType} == 2);
 	if (charSelectScreen(1) == 1) {
 		$firstLoginMap = 1;
-		$startingZenny = $chars[$config{'char'}]{'zenny'} unless defined $startingZenny;
+		$startingzeny = $chars[$config{'char'}]{'zeny'} unless defined $startingzeny;
 		$sentWelcomeMessage = 1;
 	}
 }
@@ -7004,12 +7055,12 @@ sub hotkeys {
 	for (my $i = 2; $i < $args->{RAW_MSG_SIZE}; $i+=7) {
 		$hotkeyList->[$j]->{type} = unpack("C1", substr($args->{RAW_MSG}, $i, 1));
 		$hotkeyList->[$j]->{ID} = unpack("V1", substr($args->{RAW_MSG}, $i+1, 4));
-		$hotkeyList->[$j]->{lvl} = unpack("v1", substr($args->{RAW_MSG}, $i+5, 2));
+		$hotkeyList->[$j]->{lv} = unpack("v1", substr($args->{RAW_MSG}, $i+5, 2));
 
 		$msg .= swrite(TF("\@%s \@%s \@%s \@%s", ('>'x3), ('<'x30), ('<'x5), ('>'x3)),
 			[$j, $hotkeyList->[$j]->{type} ? Skill->new(idn => $hotkeyList->[$j]->{ID})->getName() : itemNameSimple($hotkeyList->[$j]->{ID}),
 			$hotkeyList->[$j]->{type} ? "skill" : "item",
-			$hotkeyList->[$j]->{lvl}]);
+			$hotkeyList->[$j]->{lv}]);
 		$j++;
 	}
 	$msg .= sprintf("%s\n", ('-'x79));

@@ -94,7 +94,7 @@ sub process_0065 {
 			substr($charStructure, 0, 18) = pack('a4 V3 v',
 				$char->{charID},	# character ID
 				$char->{exp},		# base experience
-				$char->{zenny},		# zeny
+				$char->{zeny},		# zeny
 				$char->{exp_job},	# job experience
 				$char->{lv_job}		# job level
 			);

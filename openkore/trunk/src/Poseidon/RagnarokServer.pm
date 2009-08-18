@@ -441,7 +441,7 @@ sub onClientData {
 		$data .= pack("v2 a32", 0x9A, 36, "Welcome to the Poseidon Server!");
 
 		# Show an NPC
-		# '0078' => ['actor_display', 'a4 v14 a4 x7 C1 a3 x2 C1 v1', [qw(ID walk_speed param1 param2 param3 type hair_style weapon lowhead shield tophead midhead hair_color clothes_color head_dir guildID sex coords act lv)]],	
+		# '0078' => ['actor_display', 'a4 v14 a4 x7 C1 a3 x2 C1 v1', [qw(ID walk_speed opt1 opt2 option type hair_style weapon lowhead shield tophead midhead hair_color clothes_color head_dir guildID sex coords act lv)]],	
 		$data .= pack("v1 a4 v1 x6 v1 x30", 0x78, $npcID0, 300, 86) . getCoordString($posX + 3, $posY + 4, 1) . pack("C2 x3", 0x05, 0x05);
 		$data .= pack('v1 a4 C1 x1 C1', 0x9C, $npcID0, 0, 3);
 
@@ -457,12 +457,12 @@ sub onClientData {
 				pack("v2 C2 v1 x10", 4, 909, 3, 1, 144);
 
 			# Show a kafra NPC
-			# '0078' => ['actor_display', 'a4 v14 a4 x7 C1 a3 x2 C1 v1', [qw(ID walk_speed param1 param2 param3 type hair_style weapon lowhead shield tophead midhead hair_color clothes_color head_dir guildID sex coords act lv)]],	
+			# '0078' => ['actor_display', 'a4 v14 a4 x7 C1 a3 x2 C1 v1', [qw(ID walk_speed opt1 opt2 option type hair_style weapon lowhead shield tophead midhead hair_color clothes_color head_dir guildID sex coords act lv)]],	
 			$data .= pack("v1 a4 v1 x6 v1 x30", 0x78, $npcID1, 300, 114) . getCoordString($posX + 5, $posY + 3, 1) . pack("C2 x3", 0x05, 0x05);
 			$data .= pack('v1 a4 C1 x1 C1', 0x9C, $npcID1, 0, 3);
 			
 			# Show a monster
-			# '0078' => ['actor_display', 'a4 v14 a4 x7 C1 a3 x2 C1 v1', [qw(ID walk_speed param1 param2 param3 type hair_style weapon lowhead shield tophead midhead hair_color clothes_color head_dir guildID sex coords act lv)]],	
+			# '0078' => ['actor_display', 'a4 v14 a4 x7 C1 a3 x2 C1 v1', [qw(ID walk_speed opt1 opt2 option type hair_style weapon lowhead shield tophead midhead hair_color clothes_color head_dir guildID sex coords act lv)]],	
 			$data .= pack("v1 a4 v1 x6 v1 x30", 0x78, $monsterID, 1000, 1002) . getCoordString($posX - 2, $posY - 1, 1) . pack("x3 v1", 3);
 			$data .= pack('v1 a4 C1 x1 C1', 0x9C, $monsterID, 0, 5);
 

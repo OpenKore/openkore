@@ -31,7 +31,7 @@ our %EXPORT_TAGS = (
 	state   => [qw($accountID $cardMergeIndex @cardMergeItemsID $charID @chars @chars_old %cart @friendsID %friends %incomingFriend %field $field %homunculus $itemsList @itemsID %items $monstersList @monstersID %monsters @npcsID %npcs $npcsList @playersID %players @portalsID @portalsID_old %portals %portals_old $portalsList @storeList $currentChatRoom @currentChatRoomUsers @chatRoomsID %createdChatRoom %chatRooms @skillsID %storage @storageID @arrowCraftID %guild %incomingGuild @spellsID %spells @unknownPlayers @unknownNPCs $statChanged $skillChanged $useArrowCraft %currentDeal %incomingDeal %outgoingDeal @identifyID @partyUsersID %incomingParty @petsID %pets @venderItemList $venderID @venderListsID @articles $articles %venderLists %monsters_old @monstersID_old %npcs_old %items_old %players_old @playersID_old @servers $sessionID $sessionID2 $accountSex $accountSex2 $map_ip $map_port $KoreStartTime $secureLoginKey $initSync $lastConfChangeTime $petsList $playersList $portalsList @playerNameCacheIDs %playerNameCache %pet $pvp @cashList %repairList $slavesList @slavesID %slaves)],
 	network => [qw($remote_socket $net $messageSender $charServer $conState $conState_tries $encryptVal $ipc $bus $lastPacketTime $masterServer $lastswitch $packetParser $bytesSent $bytesReceived $incomingMessages $outgoingClientMessages $enc_val1 $enc_val2)],
 	interface => [qw($interface)],
-	misc    => [qw($quit $reconnectCount @lastpm %lastpm @privMsgUsers %timeout_ex $shopstarted $dmgpsec $totalelasped $elasped $totaldmg %overallAuth %responseVars %talk $startTime_EXP $startingZenny @monsters_Killed $bExpSwitch $jExpSwitch $totalBaseExp $totalJobExp $shopEarned %itemChange $XKore_dontRedirect $monkilltime $monstarttime $startedattack $firstLoginMap $sentWelcomeMessage $versionSearch $monsterBaseExp $monsterJobExp %descriptions %flags %damageTaken $logAppend @sellList $userSeed $taskManager $mailList $auctionList $hotkeyList $devotionList)],
+	misc    => [qw($quit $reconnectCount @lastpm %lastpm @privMsgUsers %timeout_ex $shopstarted $dmgpsec $totalelasped $elasped $totaldmg %overallAuth %responseVars %talk $startTime_EXP $startingzeny @monsters_Killed $bExpSwitch $jExpSwitch $totalBaseExp $totalJobExp $shopEarned %itemChange $XKore_dontRedirect $monkilltime $monstarttime $startedattack $firstLoginMap $sentWelcomeMessage $versionSearch $monsterBaseExp $monsterJobExp %descriptions %flags %damageTaken $logAppend @sellList $userSeed $taskManager $mailList $auctionList $hotkeyList $devotionList)],
 	syncs => [qw($syncSync $syncMapSync)],
 	cmdqueue => [qw($cmdQueue @cmdQueueList $cmdQueueStartTime $cmdQueueTime @cmdQueuePriority)],
 );
@@ -84,7 +84,7 @@ our %equipSlot_rlut = (
 	'leftAccessory'  => 128,
 	'topHead'        => 256,
 	'midHead'        => 512,
-	'carry' 	 => 1024,
+	'carry'			 => 1024,
 	'arrow'          => '' #arrow seems not to have any ID
 );
 our %elements_lut;
@@ -149,6 +149,8 @@ our %jobs_lut = (
 	23 => 'Super Novice',
 	24 => 'Gunslinger',
 	25 => 'Ninja',
+	26 => 'Xmas',
+	27 => 'Summer',
 
 	161 => 'High Novice',
 	162 => 'High Swordsman',
@@ -440,7 +442,7 @@ our $totaldmg;
 our %responseVars;
 our %talk;
 our $startTime_EXP;
-our $startingZenny;
+our $startingzeny;
 our @monsters_Killed;
 our $bExpSwitch;
 our $jExpSwitch;

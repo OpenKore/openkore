@@ -345,7 +345,7 @@ sub processChatCommand {
 		$vars->{char_exp_job_max} = formatNumber($char->{exp_job_max});
 		$vars->{char_weight} = $char->{weight};
 		$vars->{char_weight_max} = $char->{weight_max};
-		$vars->{zenny} = formatNumber($char->{zenny});
+		$vars->{zeny} = formatNumber($char->{zeny});
 		sendMessage($messageSender, $type, getResponse("statusS"), $user) if $config{verbose};
 
 	} elsif ($switch eq "tank") {

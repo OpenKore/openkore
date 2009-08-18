@@ -1264,7 +1264,7 @@ sub cmdDeal {
 		$currentDeal{'final'} = 1;
 		message T("You accepted the final Deal\n"), "deal";
 	} elsif ($arg[0] eq "" && %currentDeal) {
-		$messageSender->sendDealAddItem(0, $currentDeal{'you_zenny'});
+		$messageSender->sendDealAddItem(0, $currentDeal{'you_zeny'});
 		$messageSender->sendDealFinalize();
 
 	} elsif ($arg[0] eq "add" && !%currentDeal) {
@@ -1291,10 +1291,10 @@ sub cmdDeal {
 			error T("You can't add any more items to the deal\n"), "deal";
 		}
 	} elsif ($arg[0] eq "add" && $arg[1] eq "z") {
-		if (!$arg[2] && !($arg[2] eq "0") || $arg[2] > $char->{'zenny'}) {
-			$arg[2] = $char->{'zenny'};
+		if (!$arg[2] && !($arg[2] eq "0") || $arg[2] > $char->{'zeny'}) {
+			$arg[2] = $char->{'zeny'};
 		}
-		$currentDeal{'you_zenny'} = $arg[2];
+		$currentDeal{'you_zeny'} = $arg[2];
 		message TF("You put forward %sz to Deal\n", formatNumber($arg[2])), "deal";
 
 	} else {
@@ -1358,10 +1358,10 @@ sub cmdDealList {
 				[$display, $display2]),
 				"list");
 		}
-		$you_string = ($currentDeal{'you_zenny'} ne "") ? $currentDeal{'you_zenny'} : 0;
-		$other_string = ($currentDeal{'other_zenny'} ne "") ? $currentDeal{'other_zenny'} : 0;
+		$you_string = ($currentDeal{'you_zeny'} ne "") ? $currentDeal{'you_zeny'} : 0;
+		$other_string = ($currentDeal{'other_zeny'} ne "") ? $currentDeal{'other_zeny'} : 0;
 
-		message TF("Zenny: %-25s Zenny: %-14s", 
+		message TF("zeny: %-25s zeny: %-14s", 
 			formatNumber($you_string), formatNumber($other_string)), "list";
 		message("----------------------------------\n", "list");
 	}
@@ -1562,7 +1562,7 @@ sub cmdExp {
 		$knownArg = 1;
 		($bExpSwitch,$jExpSwitch,$totalBaseExp,$totalJobExp) = (2,2,0,0);
 		$startTime_EXP = time;
-		$startingZenny = $char->{zenny} if $char;
+		$startingzeny = $char->{zeny} if $char;
 		undef @monsters_Killed;
 		$dmgpsec = 0;
 		$totaldmg = 0;
@@ -1582,14 +1582,14 @@ sub cmdExp {
 
 	if (($arg1 eq "") || ($arg1 eq "report")) {
 		$knownArg = 1;
-		my ($endTime_EXP, $w_sec, $bExpPerHour, $jExpPerHour, $EstB_sec, $percentB, $percentJ, $zennyMade, $zennyPerHour, $EstJ_sec, $percentJhr, $percentBhr);
+		my ($endTime_EXP, $w_sec, $bExpPerHour, $jExpPerHour, $EstB_sec, $percentB, $percentJ, $zenyMade, $zenyPerHour, $EstJ_sec, $percentJhr, $percentBhr);
 		$endTime_EXP = time;
 		$w_sec = int($endTime_EXP - $startTime_EXP);
 		if ($w_sec > 0) {
-			$zennyMade = $char->{zenny} - $startingZenny;
+			$zenyMade = $char->{zeny} - $startingzeny;
 			$bExpPerHour = int($totalBaseExp / $w_sec * 3600);
 			$jExpPerHour = int($totalJobExp / $w_sec * 3600);
-			$zennyPerHour = int($zennyMade / $w_sec * 3600);
+			$zenyPerHour = int($zenyMade / $w_sec * 3600);
 			if ($char->{exp_max} && $bExpPerHour){
 				$percentB = "(".sprintf("%.2f",$totalBaseExp * 100 / $char->{exp_max})."%)";
 				$percentBhr = "(".sprintf("%.2f",$bExpPerHour * 100 / $char->{exp_max})."%)";
@@ -1608,8 +1608,8 @@ sub cmdExp {
 					"JobExp       : %s %s\n" .
 					"BaseExp/Hour : %s %s\n" .
 					"JobExp/Hour  : %s %s\n" .
-					"Zenny        : %s\n" .
-					"Zenny/Hour   : %s\n" .
+					"zeny        : %s\n" .
+					"zeny/Hour   : %s\n" .
 					"Base Levelup Time Estimation : %s\n" .
 					"Job Levelup Time Estimation  : %s\n" .
 					"Died : %s\n" .
@@ -1617,7 +1617,7 @@ sub cmdExp {
 					"Bytes Rcvd   : %s\n",
 			timeConvert($w_sec), formatNumber($totalBaseExp), $percentB, formatNumber($totalJobExp), $percentJ,
 			formatNumber($bExpPerHour), $percentBhr, formatNumber($jExpPerHour), $percentJhr,
-			formatNumber($zennyMade), formatNumber($zennyPerHour), timeConvert($EstB_sec), timeConvert($EstJ_sec), 
+			formatNumber($zenyMade), formatNumber($zenyPerHour), timeConvert($EstB_sec), timeConvert($EstJ_sec), 
 			$char->{'deathCount'}, formatNumber($bytesSent), formatNumber($bytesReceived)), "info";
 			
 		if ($arg1 eq "") {
@@ -1819,7 +1819,7 @@ sub cmdSlave {
 		error T("Error: Can't detect slaves - character is not yet ready\n");
 		return;
 	}
-	
+
 	my $slave;
 	if ($cmd eq 'homun') {
 		$slave = $char->{homunculus};
@@ -1829,7 +1829,7 @@ sub cmdSlave {
 		error T("Error: Unknown command in cmdSlave\n");
 	}
 	my $string = $cmd;
-	
+
 	if (
 		!$slave || !$slave->{appear_time} || (
 			$slave->{actorType} eq 'Homunculus' and $slave->{state} & 2 || $slave->{state} & 4
@@ -2428,7 +2428,7 @@ sub cmdGuild {
 			"Exp     : \@>>>>>>>>>/\@<<<<<<<<<<\n" .
 			"Master  : \@<<<<<<<<<<<<<<<<<<<<<<<<\n" .
 			"Connect : \@>>/\@<<"),
-			[$guild{name}, $guild{lvl}, $guild{exp}, $guild{next_exp}, $guild{master}, 
+			[$guild{name}, $guild{lv}, $guild{exp}, $guild{next_exp}, $guild{master}, 
 			$guild{conMember}, $guild{maxMember}]),	"info";
 		for my $ally (keys %{$guild{ally}}) {
 			# Translation Comment: List of allies. Keep the same spaces of the - Guild Information - tag.
@@ -2452,7 +2452,7 @@ sub cmdGuild {
 			next if (!defined $name);
 
 			$job   = $jobs_lut{$guild{member}[$i]{jobID}};
-			$lvl   = $guild{member}[$i]{lvl};
+			$lvl   = $guild{member}[$i]{lv};
 			$title = $guild{member}[$i]{title};
  			# Translation Comment: Guild member online
 			$online = $guild{member}[$i]{online} ? T("Yes") : T("No");
@@ -3305,14 +3305,23 @@ sub cmdPet {
 }
 
 sub cmdPetList {
-	message T("-----------Pet List-----------\n" .
-		"#    Type                     Name\n"), "list";
-	for (my $i = 0; $i < @petsID; $i++) {
-		next if ($petsID[$i] eq "");
+	my ($dist, $pos, $name, $pets);
+	message TF("------------Pet List------------\n" .
+		"#   Name                                               Distance    Coordinates\n"),	"list";
+
+	$pets = $petsList->getItems() if ($petsList);
+	foreach my $pet (@{$pets}) {
+		$dist = distance($char->{pos_to}, $pet->{pos_to});
+		$dist = sprintf("%.1f", $dist) if (index($dist, '.') > -1);
+		$pos = '(' . $pet->{pos_to}{x} . ', ' . $pet->{pos_to}{y} . ')';
+		$name = $pet->name;
+		if ($name ne monsterName($pet->{type})) {
+			$name .= ' [' . monsterName($pet->{type}) . ']';
+		}
+
 		message(swrite(
-			"@<<< @<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<<<<<<<<<<<<<",
-			[$i, $pets{$petsID[$i]}{'name'}, $pets{$petsID[$i]}{'name_given'}]),
-			"list");
+			"@<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<      @<<<<<      @<<<<<<<<<<",
+			[$pet->{binID}, $name, $dist, $pos]), "list");
 	}
 	message("----------------------------------\n", "list");
 }
@@ -3867,8 +3876,8 @@ sub cmdShopInfoSelf {
 		"Current zeny:    %sz.\n" .
 		"Maximum earned:  %sz.\n" .
 		"Maximum zeny:    %sz.\n",
-		('-'x79), formatNumber($shopEarned), formatNumber($char->{zenny}), 
-		formatNumber($priceAfterSale), formatNumber($priceAfterSale + $char->{zenny})), "list";
+		('-'x79), formatNumber($shopEarned), formatNumber($char->{zeny}), 
+		formatNumber($priceAfterSale), formatNumber($priceAfterSale + $char->{zeny})), "list";
 }
 
 sub cmdSit {
@@ -3945,22 +3954,20 @@ sub cmdSkills {
 sub cmdSlaveList {
 	my ($dist, $pos, $name, $slaves);
 	message TF("-----------Slave List-----------\n" .
-		"#   Name                        Type                   Distance    Coordinates\n"),	"list";
-
+		"#   Name                                   Type        Distance    Coordinates\n"),	"list";
 	$slaves = $slavesList->getItems() if ($slavesList);
 	foreach my $slave (@{$slaves}) {
 		$dist = distance($char->{pos_to}, $slave->{pos_to});
 		$dist = sprintf("%.1f", $dist) if (index($dist, '.') > -1);
 		$pos = '(' . $slave->{pos_to}{x} . ', ' . $slave->{pos_to}{y} . ')';
 		$name = $slave->name;
-		if ($name ne $slave->{name_given}) {
-			$name .= '[' . $slave->{name_given} . ']';
+		if ($name ne $jobs_lut{$slave->{type}}) {
+			$name .= ' [' . $jobs_lut{$slave->{type}} . ']';
 		}
 
 		message(swrite(
-			"@<< @<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<<<<<      @<<<<<      @<<<<<<<<<<",
-			[$slave->{binID}, $name, $slave->{actorType}, $dist, $pos]),
-			"list");
+			"@<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<< @<<<<<      @<<<<<<<<<<",
+			[$slave->{binID}, $name, $slave->{actorType}, $dist, $pos]), "list");
 	}
 	message("----------------------------------\n", "list");
 }
@@ -4113,7 +4120,7 @@ sub cmdStatus {
 		. "%)"
 		if $char->{'weight_max'};
 	$job_name_string = "$jobs_lut{$char->{'jobID'}} $sex_lut{$char->{'sex'}}";
-	$zeny_string = formatNumber($char->{'zenny'}) if (defined($char->{'zenny'}));
+	$zeny_string = formatNumber($char->{'zeny'}) if (defined($char->{'zeny'}));
 
 	# Translation Comment: No status effect on player		
 	my $statuses = 'none';
@@ -5081,12 +5088,12 @@ sub cmdMail {
 	# mail window (almost useless?)
 	} elsif ($cmd eq 'mw') {
 		unless (defined $args[0]) {
-			message T("Usage: mw [0|1|2] (0:write, 1:take item back, 2:zenny input ok)\n"), "info";
+			message T("Usage: mw [0|1|2] (0:write, 1:take item back, 2:zeny input ok)\n"), "info";
 		} elsif ($args[0] =~ /^[0-2]$/) {
 			$messageSender->sendMailOperateWindow($args[0]);
 		} else {
 			error T("Syntax error in function 'mw' (mailbox window)\n" .
-			"Usage: mw [0|1|2] (0:write, 1:take item back, 2:zenny input ok)\n");
+			"Usage: mw [0|1|2] (0:write, 1:take item back, 2:zeny input ok)\n");
 		}
 
 	# mail attachment control
