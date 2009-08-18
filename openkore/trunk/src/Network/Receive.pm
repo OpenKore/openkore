@@ -185,7 +185,7 @@ sub new {
 		'0111' => ['linker_skill', 'v2 x2 v3 Z24', [qw(skillID target lv sp range name)]],
 		'0114' => ['skill_use', 'v a4 a4 V3 v3 C', [qw(skillID sourceID targetID tick src_speed dst_speed damage level option type)]],
 		'0117' => ['skill_use_location', 'v a4 v3', [qw(skillID sourceID lv x y)]],
-		'0119' => ['character_status', 'a4 v3 x', [qw(ID opt1 opt2 option)]],
+		'0119' => ['character_status', 'a4 v3 C', [qw(ID opt1 opt2 option karma)]],
 		'011A' => ['skill_used_no_damage', 'v2 a4 a4 C', [qw(skillID amount targetID sourceID fail)]],
 		'011C' => ['warp_portal_list', 'v Z16 Z16 Z16 Z16', [qw(type memo1 memo2 memo3 memo4)]],
 		'011E' => ['memo_success', 'C', [qw(fail)]],
@@ -339,7 +339,7 @@ sub new {
 		'0224' => ['taekwon_rank', 'c x3 c', [qw(type rank)]],
 		'0226' => ['top10_taekwon_rank'],
 		'0227' => ['gameguard_request'],
-		'0229' => ['character_status', 'a4 v3', [qw(ID opt1 opt2 option)]],
+		'0229' => ['character_status', 'a4 v2 V C', [qw(ID opt1 opt2 option karma)]],
 		# OLD '022A' => ['actor_display', 'a4 v4 x2 v8 x2 v a4 a4 v x2 C2 a3 x2 C v',	[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color head_dir guildID emblemID visual_effects stance sex coords act lv)]],
 		'022A' => ['actor_display', 'a4 v3 V v10 a4 a2 v V C2 a3 C3 v',		[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 karma sex coords unknown1 unknown2 act lv)]], # standing
 		# OLD '022B' => ['actor_display', 'a4 v4 x2 v8 x2 v a4 a4 v x2 C2 a3 x2 v',		[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color head_dir guildID emblemID visual_effects stance sex coords lv)]],
