@@ -12,3 +12,8 @@
 2048 Orc Head
 4096 Wedding Sprites
 8192 Ruwach
+16384 Chase Walk
+32768 Flying
+65536 Xmas
+131072 Transform
+262144 Summer

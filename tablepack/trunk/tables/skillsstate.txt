@@ -2,4 +2,5 @@
 2 Frozen
 3 Stunned
 4 Sleeping
+5 Undead
 6 Petrifying
