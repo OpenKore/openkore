@@ -221,7 +221,7 @@ sub new {
 		'014A' => ['GM_silence', 'C Z24', [qw(type name)]],
 		'0152' => ['guild_emblem', 'v a4 a4 Z*', [qw(len guildID emblemID emblem)]],
 		'0154' => ['guild_members_list'],
-		'0156' => ['guild_member_position_changed', 'v V3', [qw(unknown accountID charID position)]],
+		'0156' => ['guild_member_position_changed', 'v V3', [qw(unknown accountID charID positionID)]],
 		'015A' => ['guild_leave', 'Z24 Z40', [qw(name message)]],
 		'015C' => ['guild_expulsion', 'Z24 Z40 Z24', [qw(name message unknown)]],
 		'015E' => ['guild_broken', 'V', [qw(flag)]], # clif_guild_broken
@@ -232,14 +232,14 @@ sub new {
 		'0167' => ['guild_create_result', 'C', [qw(type)]],
 		'0169' => ['guild_invite_result', 'C', [qw(type)]],
 		'016A' => ['guild_request', 'a4 Z24', [qw(ID name)]],
-		'016C' => ['guild_name', 'a4 a4 V x5 Z24', [qw(guildID emblemID mode guildName)]],
+		'016C' => ['guild_name', 'a4 a4 a4 x5 Z24', [qw(guildID emblemID mode guildName)]],
 		'016D' => ['guild_member_online_status', 'a4 a4 V', [qw(ID charID online)]],
 		'016F' => ['guild_notice'],
-		'0171' => ['guild_ally_request', 'a4 Z24', [qw(ID name)]],
+		'0171' => ['guild_ally_request', 'a4 Z24', [qw(ID guildName)]],
 		'0173' => ['guild_alliance', 'V', [qw(flag)]],
-		'0174' => ['guild_position_changed', 'v V4 Z20', [qw(unknown ID mode sameID exp position_name)]],
+		'0174' => ['guild_position_changed', 'v a4 a4 a4 V Z20', [qw(unknown ID mode sameID exp position_name)]],
 		'0177' => ['identify_list'],
-		'0179' => ['identify', 'v*', [qw(index)]],
+		'0179' => ['identify', 'v C', [qw(index flag)]],
 		'017B' => ['card_merge_list'],
 		'017D' => ['card_merge_status', 'v2 C', [qw(item_index card_index fail)]],
 		'017F' => ['guild_chat', 'x2 Z*', [qw(message)]],
@@ -335,7 +335,7 @@ sub new {
 		'021B' => ['blacksmith_points', 'V2', [qw(points total)]],
 		'021C' => ['alchemist_point', 'V2', [qw(points total)]],
 		'0221' => ['upgrade_list'],
-		'0223' => ['upgrade_message', 'a4 v', [qw(result itemID)]],
+		'0223' => ['upgrade_message', 'a4 v', [qw(type itemID)]],
 		'0224' => ['taekwon_rank', 'c x3 c', [qw(type rank)]],
 		'0226' => ['top10_taekwon_rank'],
 		'0227' => ['gameguard_request'],
@@ -384,7 +384,7 @@ sub new {
 		'0295' => ['inventory_items_nonstackable'],
 		'0296' => ['storage_items_nonstackable'],
 		'0297' => ['cart_items_nonstackable'],
-		'0298' => ['rental_time', 'v a4', [qw(nameID seconds)]],
+		'0298' => ['rental_time', 'v V', [qw(nameID seconds)]],
 		'0299' => ['rental_expired', 'v2', [qw(unknown nameID)]],
 		'029A' => ['inventory_item_added', 'v3 C3 a8 v C2 a4', [qw(index amount nameID identified broken upgrade cards type_equip type fail cards_ext)]],
 		# mercenaries
@@ -3106,7 +3106,7 @@ sub guild_ally_request {
 	my ($self, $args) = @_;
 
 	my $ID = $args->{ID}; # is this a guild ID or account ID? Freya calls it an account ID
-	my $name = bytesToString($args->{name}); # Type: String
+	my $name = bytesToString($args->{guildName}); # Type: String
 
 	message TF("Incoming Request to Ally Guild '%s'\n", $name);
 	$incomingGuild{ID} = $ID;
@@ -3349,9 +3349,9 @@ sub guild_name {
 	$char->{guild}{emblem} = $emblemID;
 
 	$messageSender->sendGuildMasterMemberCheck();	# Is this necessary?? (requests for guild info packet 014E)
-
 	$messageSender->sendGuildRequestInfo(0);	#requests for guild info packet 01B6 and 014C
 	$messageSender->sendGuildRequestInfo(1);	#requests for guild member packet 0166 and 0154
+	debug "guild name: $guildName\n";
 }
 
 sub guild_notice {
@@ -3400,12 +3400,14 @@ sub guild_request {
 
 sub identify {
 	my ($self, $args) = @_;
-
-	my $index = $args->{index};
-	my $item = $char->inventory->getByServerIndex($index);
-	$item->{identified} = 1;
-	$item->{type_equip} = $itemSlots_lut{$item->{nameID}};
-	message TF("Item Identified: %s (%d)\n", $item->{name}, $item->{invIndex}), "info";
+	if ($args->{flag} == 0) {
+		my $item = $char->inventory->getByServerIndex($args->{index});
+		$item->{identified} = 1;
+		$item->{type_equip} = $itemSlots_lut{$item->{nameID}};
+		message TF("Item Identified: %s (%d)\n", $item->{name}, $item->{invIndex}), "info";
+	} else {
+		message T("Item Appraisal has failed.\n");
+	}
 	undef @identifyID;
 }
 
@@ -6865,7 +6867,7 @@ sub mail_refreshinbox {
 sub mail_read {
 	my ($self, $args) = @_;
 
-	my $item = new Actor::Item();
+	my $item = {};
 	$item->{nameID} = $args->{nameID};
 	$item->{upgrade} = $args->{upgrade};
 	$item->{cards} = $args->{cards};
@@ -7001,7 +7003,7 @@ sub auction_item_request_search {
 		$auctionList->[$j]->{buyer} = bytesToString(unpack("Z24", substr($args->{RAW_MSG}, $i+55, 24)));
 		$auctionList->[$j]->{timestamp} = unpack("V1", substr($args->{RAW_MSG}, $i+79, 4));
 
-		my $item = new Actor::Item();
+		my $item = {};
 		$item->{nameID} = $auctionList->[$j]->{nameID};
 		$item->{upgrade} = $auctionList->[$j]->{upgrade};
 		$item->{cards} = $auctionList->[$j]->{cards};
@@ -7115,10 +7117,9 @@ sub GM_silence {
 	message TF("You have been: %s by %s.\n", $action, $args->{name}), "info";
 }
 
+# TODO test if we must use ID to know if the packets are meant for us.
 sub teakwon_packets {
 	my ($self, $args) = @_;
-
-	# TODO test if we must use ID to know if the packets are meant for us.
 	if ($args->{flag} == 0) {
 		# Info about Star Gladiator save map: Map registered
 		my $string = ($args->{value} == 1) ? "Sun" : ($args->{value} == 2) ? "Moon" : ($args->{value} == 3) ? "Stars" : "unknown";
@@ -7148,7 +7149,6 @@ sub teakwon_packets {
 
 sub guild_master_member {
 	my ($self, $args) = @_;
-	
 	my $string;
 	if ($args->{type} == 0xd7) {
 	} elsif ($args->{type} == 0x57) {
@@ -7160,36 +7160,55 @@ sub guild_master_member {
 	message TF("You are %sa guildmaster.\n", $string), "info";
 }
 
+# 0152
+sub guild_emblem {
+	my ($self, $args) = @_;
+	# TODO
+}
+
+# 0156
+sub guild_member_position_changed {
+	my ($self, $args) = @_;
+	# TODO
+}
+
+# 01B4
 sub guild_emblem_update {
 	my ($self, $args) = @_;
 	# TODO
 }
 
+# 0174
 sub guild_position_changed {
 	my ($self, $args) = @_;
 	# TODO
 }
 
+# 0184
 sub guild_unally {
 	my ($self, $args) = @_;
 	# TODO
 }
 
+# 0181
 sub guild_opposition_result {
 	my ($self, $args) = @_;
 	# TODO
 }
 
+# 0185
 sub guild_alliance_added {
 	my ($self, $args) = @_;
 	# TODO
 }
 
+# 0192
 sub change_map_cell {
 	my ($self, $args) = @_;
 	# TODO
 }
 
+# 01D1
 sub blade_stop {
 	my ($self, $args) = @_;
 	# TODO
@@ -7197,54 +7216,87 @@ sub blade_stop {
 
 sub divorced {
 	my ($self, $args) = @_;
-	# TODO
+	message TF("%s and %s have divorced from each other.\n", $char->{name}, $args->{name}), "info"; # is it $char->{name} or is this packet also used for other players?
 }
 
+# 0221
 sub upgrade_list {
 	my ($self, $args) = @_;
 	# TODO
 }
 
+# 0223
+# TODO: can we use itemName? and why is type 0 equal to type 1?
 sub upgrade_message {
 	my ($self, $args) = @_;
-	# TODO
+	if($args->{type} == 0) {
+		message TF("Weapon upgraded: %s\n", itemName(Actor::Item::get($args->{nameID}))), "info";
+	} elsif($args->{type} == 1) {
+		message TF("Weapon upgraded: %s\n", itemName(Actor::Item::get($args->{nameID}))), "info";
+	} elsif($args->{type} == 2) {
+		message TF("Cannot upgrade %s until you level up the upgrade weapon skill.\n", itemName(Actor::Item::get($args->{nameID}))), "info";
+	} elsif($args->{type} == 3) {
+		message TF("You lack item %s to upgrade the weapon.\n", itemNameSimple($args->{nameID})), "info";
+	}
 }
 
+# 025A
 sub cooking_list {
 	my ($self, $args) = @_;
 	# TODO
 }
 
+# TODO: test whether the message is correct: tech: i haven't seen this in action yet
 sub party_show_picker {
 	my ($self, $args) = @_;
-	# TODO
+	my $player = $playersList->getByID($args->{sourceID}); # also sent for Actor::Party objects? then we also need to include those.
+	my $item = {};
+	$item->{nameID} = $args->{nameID};
+	$item->{identified} = $args->{identified};
+	$item->{upgrade} = $args->{upgrade};
+	$item->{cards} = $args->{cards};
+	$item->{broken} = $args->{broken};
+	message TF("Party member %s has gained item %s.\n", $player->name(), itemName($item)), "info";
 }
 
+# 02CB
+# Required to start the instancing information window on Client
+# This window re-appear each "refresh" of client automatically until 02CD is send to client.
 sub instance_window_start {
 	my ($self, $args) = @_;
 	# TODO
 }
 
+# 02CC
+# To announce Instancing queue creation if no maps available
 sub instance_window_queue {
 	my ($self, $args) = @_;
 	# TODO
 }
 
+# 02CD
 sub instance_window_join {
 	my ($self, $args) = @_;
 	# TODO
 }
 
+# 02CE
+#1 = The Memorial Dungeon expired; it has been destroyed
+#2 = The Memorial Dungeon's entry time limit expired; it has been destroyed
+#3 = The Memorial Dungeon has been removed.
+#4 = Just remove the window, maybe party/guild leave
 sub instance_window_leave {
 	my ($self, $args) = @_;
 	# TODO
 }
 
+# 02DC
 sub battleground_message {
 	my ($self, $args) = @_;
 	# TODO
 }
 
+# 02DD
 sub battleground_emblem {
 	my ($self, $args) = @_;
 	# TODO
@@ -7252,39 +7304,46 @@ sub battleground_emblem {
 
 sub battleground_score {
 	my ($self, $args) = @_;
-	# TODO
+	message TF("Battleground score - Lions: '%d' VS Eagles: '%d'\n", $args->{score_lion}, $args->{score_eagle}), "info";
 }
 
+# 02EF
 sub font {
 	my ($self, $args) = @_;
 	# TODO
 }
 
+# 01D3
 sub sound_effect {
 	my ($self, $args) = @_;
-	# TODO: name type unknown ID
+	# TODO
 }
 
+# 019E
 sub pet_capture_process {
 	my ($self, $args) = @_;
 	# TODO
 }
 
+# 0294
 sub book_read {
 	my ($self, $args) = @_;
 	# TODO
 }
 
+# TODO can we use itemName($actor)? -> tech: don't think so because it seems that this packet is received before the inventory list
 sub rental_time {
 	my ($self, $args) = @_;
-	# TODO
+	message TF("The '%s' item will disappear in %d minutes.\n", itemNameSimple($args->{nameID}), $args->{seconds}/60), "info";
 }
 
+# TODO can we use itemName($actor)? -> tech: don't think so because the item might be removed from inventory before this packet is sent -> untested
 sub rental_expired {
 	my ($self, $args) = @_;
-	# TODO
+	message TF("Rental item '%s' has expired!\n", itemNameSimple($args->{nameID})), "info";
 }
 
+# 0289
 sub cash_buy_fail {
 	my ($self, $args) = @_;
 	# TODO
@@ -7292,19 +7351,28 @@ sub cash_buy_fail {
 
 sub adopt_reply {
 	my ($self, $args) = @_;
-	# TODO
+	if($args->{type} == 0) {
+		message T("You cannot adopt more than 1 child.\n"), "info";
+	} elsif($args->{type} == 1) {
+		message T("You must be at least character level 70 in order to adopt someone.\n"), "info";
+	} elsif($args->{type} == 2) {
+		message T("You cannot adopt a married person.\n"), "info";
+	}
 }
 
 sub adopt_request {
 	my ($self, $args) = @_;
-	# TODO
+	# TODO do something with sourceID, targetID? -> tech: maybe your spouses adopt_request will also display this message for you.
+	message TF("%s wishes to adopt you. Do you accept?\n", $args->{name}), "info";
 }
 
+# 0293
 sub boss_map_info {
 	my ($self, $args) = @_;
 	# TODO
 }
 
+# 02B1
 # Structure of Packet by eAthena
 sub quest_list {
    my ($self, $args) = @_;
@@ -7316,6 +7384,7 @@ sub quest_list {
    }
 }
 
+# 02B2
 # Structure of packet by eAthena
 sub quest_objective_info {
    my ($self, $args) = @_;
@@ -7335,15 +7404,19 @@ sub quest_objective_info {
    }
 }
 
+# 02B3
 sub quest_objective_update {
 	my ($self, $args) = @_;
 	# TODO
 }
+
+# 02B4
 sub quest_delete {
 	my ($self, $args) = @_;
 	# TODO
 }
 
+# 02B7
 sub quest_status {
 	my ($self, $args) = @_;
 	# TODO
