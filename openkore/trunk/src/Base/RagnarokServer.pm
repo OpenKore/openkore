@@ -10,6 +10,7 @@ use Network::MessageTokenizer;
 use Utils::Exceptions;
 use Globals qw($masterServer);
 use Misc;
+use Log qw(debug);
 
 sub new {
 	my ($class, $host, $port, $serverType, $rpackets) = @_;
@@ -53,7 +54,7 @@ sub onClientData {
 	while (my $message = $client->{tokenizer}->readNext(\$type)) {
 		if ($type == Network::MessageTokenizer::KNOWN_MESSAGE) {
 			my $ID = Network::MessageTokenizer::getMessageID($message);
-			my $handler = $self->can('process_' . ($ID eq $masterServer->{masterLogin_packet}) ? '0064' : $ID); # temporary fix for servers that changed the masterLogin_packet switch
+			my $handler = $self->can('process_' . (($ID eq $masterServer->{masterLogin_packet}) ? '0064' : $ID)); # temporary fix for servers that changed the masterLogin_packet switch
 			if ($handler) {
 				$handler->($self, $client, $message);
 			} else {
