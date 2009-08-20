@@ -8,6 +8,7 @@ use Base::Server;
 use base qw(Base::Server);
 use Network::MessageTokenizer;
 use Utils::Exceptions;
+use Globals qw($masterServer);
 use Misc;
 
 sub new {
@@ -52,7 +53,7 @@ sub onClientData {
 	while (my $message = $client->{tokenizer}->readNext(\$type)) {
 		if ($type == Network::MessageTokenizer::KNOWN_MESSAGE) {
 			my $ID = Network::MessageTokenizer::getMessageID($message);
-			my $handler = $self->can('process_' . $ID);
+			my $handler = $self->can('process_' . ($ID eq $masterServer->{masterLogin_packet}) ? '0064' : $ID); # temporary fix for servers that changed the masterLogin_packet switch
 			if ($handler) {
 				$handler->($self, $client, $message);
 			} else {
