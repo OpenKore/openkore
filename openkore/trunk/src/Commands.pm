@@ -205,6 +205,11 @@ sub initHandlers {
 	aub                => \&cmdAuction, # make bid
 	aui                => \&cmdAuction, # info on buy/sell
 	aud                => \&cmdAuction, # delete auction
+	
+	quest			   => \&cmdQuest,
+	se				   => \&cmdShowEquip,
+	cook			   => \&cmdCooking,
+	refine			   => \&cmdWeaponRefine,
 
 	north              => \&cmdManualMove,
 	south              => \&cmdManualMove,
@@ -3744,16 +3749,16 @@ sub cmdRepair {
 	} 
 	my (undef, $listID) = @_;
 	if ($listID =~ /^\d+$/) {
-		if ($repairList{$listID}) {
-			$messageSender->sendRepairItem($repairList{$listID});
-			my $name = itemNameSimple($repairList{$listID}{nameID});
-			message TF("Sending repair item: %s\n", $name);
-		} elsif (!defined $repairList{$listID}) {
-			error TF("Item with index: %s does either not exist in the repair list or the list is empty.\n", $listID);
+		if ($repairList->[$listID]) {
+			$messageSender->sendRepairItem($repairList->[$listID]);
+			my $name = itemNameSimple($repairList->[$listID]);
+			message TF("Attempting to repair item: %s\n", $name);
+		} else {
+			error TF("Item with index: %s does either not exist in the 'Repair List' or the list is empty.\n", $listID);
 		}
 	} else {
 		error T("Syntax Error in function 'repair' (Repair player's items.)\n" .
-			"Usage: repair [item index]\n");
+			"Usage: repair [Repair List index]\n");
 	}
 }
 
@@ -5277,6 +5282,66 @@ sub cmdAuction {
 	} else {
 		message T("Auction commands: aua, aur, auc, aub, aui, aud, aue, aus\n"), "info";
 	}
+}
+
+# TODO, we need $questList so we can get ID from index
+sub cmdQuest {
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command (%s)\n", shift);
+		return;
+	}
+	my ($cmd, $args_string) = @_;
+	my @args = parseArgs($args_string, 2);
+	if ($args[0] =~ /^\d+/) {
+		$messageSender->sendQuestState($args[0], ($args[1] eq 'on'));
+	} else {
+		message T("Usage: quest <questIndex> <on|off>\n"), "info";
+	}
+}
+
+sub cmdShowEquip {
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command (%s)\n", shift);
+		return;
+	}
+	my ($cmd, $args_string) = @_;
+	my @args = parseArgs($args_string, 2);
+	if ($args[0] eq 'p') {
+		if (my $actor = Match::player($args[1], 1)) {
+			$messageSender->sendShowEquipPlayer($actor->{ID});
+			message TF("Requesting equipment information for: %s\n", $actor->name), "info";
+		} elsif ($args[1]) {
+			message TF("No player found with specified information: %s\n", $args[1]), "info";
+		} else {
+			message T("Usage: se p <index|name|partialname>\n");
+		}
+	} elsif ($args[0] eq 'me') {
+		$messageSender->sendShowEquipTickbox($args[1] eq 'on');
+	} else {
+		message T("Usage: se [p <index|name|partialname>] | [me <on|off>]\n"), "info";
+	}
+}
+
+sub cmdCooking {
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command (%s)\n", shift);
+		return;
+	}
+	my ($cmd, $arg) = @_;
+	if ($arg =~ /^\d+/ && defined $cookingList->[$arg]) { # viewID/nameID can be 0
+		$messageSender->sendCooking(1, $cookingList->[$arg]); # type 1 is for cooking
+	} else {
+		message TF("Item with 'Cooking List' index: %s not found.\n", $arg), "info";
+	}
+}
+
+sub cmdWeaponRefine {
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command (%s)\n", shift);
+		return;
+	}
+	my ($cmd, $arg) = @_;
+	$messageSender->sendWeaponRefine($char->inventory->get($arg)->{index});
 }
 
 return 1;

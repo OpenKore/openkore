@@ -387,14 +387,14 @@ sub sendFriendRemove {
 	debug "Sent Remove a friend\n", "sendPacket";
 }
 
-sub sendForgeItem {
+sub sendProduceMix {
 	my ($self, $ID,
 		# nameIDs for added items such as Star Crumb or Flame Heart
 		$item1, $item2, $item3) = @_;
 
-	my $msg = pack("C*", 0x8E, 0x01) . pack("v1 v1 v1 v1", $ID, $item1, $item2, $item3);
+	my $msg = pack("v5", 0x018E, $ID, $item1, $item2, $item3);
 	$self->sendToServer($msg);
-	debug "Sent Forge Item: $ID\n" , 2;
+	debug "Sent Forge, Produce Item: $ID\n" , 2;
 }
 
 sub sendGameLogin {
@@ -1065,7 +1065,7 @@ sub sendRequestMakingHomunculus {
 		Actor::Item::get (997) && Actor::Item::get (998) && Actor::Item::get (999)
 		&& ($char->getSkillLevel ($skill) > 0)
 	) {
-		my $msg = pack ('v1 C1', 0x01CA, $make_homun);
+		my $msg = pack ('v C', 0x01CA, $make_homun);
 		$self->sendToServer($msg);
 		debug "Sent RequestMakingHomunculus\n", "sendPacket", 2;
 	}
@@ -1080,9 +1080,9 @@ sub sendRemoveAttachments {
 
 sub sendRepairItem {
 	my ($self, $args) = @_;
-	my $msg = pack("C2 v2 V2 C1", 0xFD, 0x01, %{$args}->{index}, %{$args}->{nameID}, %{$args}->{status}, %{$args}->{status2}, %{$args}->{listID});
+	my $msg = pack("C2 v2 V2 C1", 0xFD, 0x01, $args->{index}, $args->{nameID}, $args->{status}, $args->{status2}, $args->{listID});
 	$self->sendToServer($msg);
-	debug ("Sent repair item: ".%{$args}->{index}."\n", "sendPacket", 2);
+	debug ("Sent repair item: ".$args->{index}."\n", "sendPacket", 2);
 }
 
 sub sendRespawn {
@@ -1285,6 +1285,7 @@ sub sendSuperNoviceDoriDori {
 	debug "Sent Super Novice dori dori\n", "sendPacket", 2;
 }
 
+# TODO: is this the sn mental ingame triggered trough the poem?
 sub sendSuperNoviceExplosion {
 	my $msg = pack("C*", 0xED, 0x01);
 	$_[0]->sendToServer($msg);
@@ -1431,6 +1432,8 @@ sub SendAdoptRequest {
 	debug "Sent Adoption Request.\n", "sendPacket", 2;
 }
 
+# 0x0213 has no info on eA
+
 sub sendMailboxOpen {
 	my $self = $_[0];
 	my $msg = pack("v", 0x023F);
@@ -1553,6 +1556,13 @@ sub sendCashShopBuy {
 	debug "Sent My Sell Stop.\n", "sendPacket", 2;
 }
 
+sub sendAutoRevive {
+	my ($self, $ID, $amount, $points) = @_;
+	my $msg = pack("v", 0x0292);
+	$self->sendToServer($msg);
+	debug "Sent Auto Revive.\n", "sendPacket", 2;
+}
+
 sub sendMercenaryCommand {
 	my ($self, $command) = @_;
 	
@@ -1572,6 +1582,7 @@ sub sendMessageIDEncryptionInitialized {
 	debug "Sent Message ID Encryption Initialized\n", "sendPacket", 2;
 }
 
+# has the same effects as rightclicking in quest window
 sub sendQuestState {
 	my ($self, $questID, $state) = @_;
 	my $msg = pack("v V C", 0x02B6, $questID, $state);
@@ -1581,7 +1592,7 @@ sub sendQuestState {
 
 sub sendShowEquipPlayer {
 	my ($self, $ID) = @_;
-	my $msg = pack("v V", 0x02D6, $ID);
+	my $msg = pack("v a4", 0x02D6, $ID);
 	$self->sendToServer($msg);
 	debug "Sent Show Equip Player.\n", "sendPacket", 2;
 }
@@ -1599,6 +1610,21 @@ sub sendBattlegroundChat {
 	my $msg = pack("v2 Z*", 0x02DB, length($message)+4, stringToBytes($message));
 	$self->sendToServer($msg);
 	debug "Sent Battleground chat.\n", "sendPacket", 2;
+}
+
+sub sendCooking {
+	my ($self, $type, $nameID) = @_;
+	my $msg = pack("v3", 0x025B, $type, $nameID);
+	$self->sendToServer($msg);
+	debug "Sent Cooking.\n", "sendPacket", 2;
+}
+
+sub sendWeaponRefine {
+	my ($self, $index) = @_;
+	my $msg = pack("v V", 0x0222, $index);
+	$self->sendToServer($msg);
+	debug unpack('H*', $msg) . "\n";
+	debug "Sent Weapon Refine.\n", "sendPacket", 2;
 }
 
 1;

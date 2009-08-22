@@ -455,7 +455,6 @@ sub initMapChangeVars {
 	undef @currentChatRoomUsers;
 	undef @itemsID;
 	undef @identifyID;
-	undef %repairList;
 	undef @spellsID;
 	undef @arrowCraftID;
 	undef %items;
@@ -476,7 +475,9 @@ sub initMapChangeVars {
 	undef %createdChatRoom;
 	undef @lastpm;
 	undef %incomingFriend;
+	undef $repairList;
 	undef $devotionList;
+	undef $cookingList;
 
 	$itemsList->clear();
 	$monstersList->clear();

@@ -3092,14 +3092,13 @@ sub processDcOnPlayer {
 
 ##### REPAIR AUTO #####
 sub processRepairAuto {
-	if ($config{'repairAuto'} && $conState == 5 && timeOut($timeout{ai_repair}) && %repairList) {
+	if ($config{'repairAuto'} && $conState == 5 && timeOut($timeout{ai_repair}) && $repairList) {
 		my ($listID, $name);
 		my $brokenIndex = 0;
-		for $listID ( keys %repairList ) {
-			$name = itemNameSimple($repairList{$listID}{nameID});
+		foreach my $repairListItem (@{$repairList}) {
+			$name = itemNameSimple($repairListItem->{nameID});
 			if (existsInList($config{'repairAuto_list'}, $name) || !$config{'repairAuto_list'}) {
-				$brokenIndex = $listID;
-				$messageSender->sendRepairItem($repairList{$brokenIndex});
+				$messageSender->sendRepairItem($repairListItem);
 				$timeout{ai_repair}{time} = time;
 				return;
 			}
