@@ -97,7 +97,7 @@ sub new {
 		#OLD 	? ['actor_display',			'x a4 v14 C2 a3 C',				[qw(ID walk_speed opt1 opt2 option hair_style weapon lowhead type shield tophead midhead hair_color clothes_color head_dir karma sex coords unknown1)]]
 		#OLD	: ['actor_display',			'x a4 v14 C2 a3 C2',			[qw(ID walk_speed opt1 opt2 option hair_style weapon lowhead type shield tophead midhead hair_color clothes_color head_dir karma sex coords unknown1 unknown2)]]
 		#OLD),
-		'007C' => ['actor_display',	'a4 v14 C2 a3 C2',					[qw(ID walk_speed opt1 opt2 option hair_style weapon lowhead type shield tophead midhead hair_color clothes_color head_dir karma sex coords unknown1 unknown2)]], #spawning
+		'007C' => ['actor_display',	'a4 v14 C2 a3 C2',					[qw(ID walk_speed opt1 opt2 option hair_style weapon lowhead type shield tophead midhead hair_color clothes_color head_dir karma sex coords unknown1 unknown2)]], #spawning: eA does not send this for players
 		'007F' => ['received_sync', 'V', [qw(time)]],
 		'0080' => ['actor_died_or_disappeared', 'a4 C', [qw(ID type)]],
 		'0081' => ['errors', 'C1', [qw(type)]],
@@ -232,7 +232,7 @@ sub new {
 		'0167' => ['guild_create_result', 'C', [qw(type)]],
 		'0169' => ['guild_invite_result', 'C', [qw(type)]],
 		'016A' => ['guild_request', 'a4 Z24', [qw(ID name)]],
-		'016C' => ['guild_name', 'a4 a4 a4 x5 Z24', [qw(guildID emblemID mode guildName)]],
+		'016C' => ['guild_name', 'a4 a4 V x5 Z24', [qw(guildID emblemID mode guildName)]],
 		'016D' => ['guild_member_online_status', 'a4 a4 V', [qw(ID charID online)]],
 		'016F' => ['guild_notice'],
 		'0171' => ['guild_ally_request', 'a4 Z24', [qw(ID guildName)]],
@@ -253,7 +253,7 @@ sub new {
 		'018D' => ['forge_list'],
 		'018F' => ['refine_result', 'v2', [qw(fail nameID)]],
 		'0191' => ['talkie_box', 'a4 Z80', [qw(ID message)]], # talkie box message
-		'0192' => ['change_map_cell', 'v3', [qw(x y type)]], # ex. due to ice wall
+		'0192' => ['map_change_cell', 'v3', [qw(x y type)]], # ex. due to ice wall
 		'0194' => ['character_name', 'a4 Z24', [qw(ID name)]],
 		'0195' => ['actor_name_received', 'a4 Z24 Z24 Z24 Z24', [qw(ID name partyName guildName guildTitle)]],
 		'0196' => ['actor_status_active', 'v a4 C', [qw(type ID flag)]],
@@ -276,7 +276,7 @@ sub new {
 		'01AD' => ['arrowcraft_list'],
 		'01B0' => ['monster_typechange', 'a4 a V', [qw(ID unknown type)]],
 		'01B3' => ['npc_image', 'Z63 C', [qw(npc_image type)]],
-		'01B4' => ['guild_emblem_update', 'a4 a4 v', [qw(ID guildID emblemID)]],
+		'01B4' => ['guild_emblem_update', 'a4 a4 a4', [qw(ID guildID emblemID)]],
 		'01B5' => ['account_payment_info', 'V2', [qw(D_minute H_minute)]],
 		'01B6' => ['guild_info', 'a4 V11 Z24 Z24 Z20', [qw(ID lv conMember maxMember average exp next_exp tax tendency_left_right tendency_down_up name master castles_string)]],
 		'01B9' => ['cast_cancelled', 'a4', [qw(ID)]],
@@ -367,7 +367,7 @@ sub new {
 		'0256' => ['auction_add_item', 'v C', [qw(index fail)]],
 		'0257' => ['mail_delete', 'V v', [qw(mailID fail)]],
 		'0259' => ['gameguard_grant', 'C', [qw(server)]],
-		'025A' => ['cooking_list'],
+		'025A' => ['cooking_list', 'v', [qw(type)]],
 		'025D' => ['auction_my_sell_stop', 'V', [qw(flag)]],
 		'025F' => ['auction_windows', 'V C4 v', [qw(flag unknown1 unknown2 unknown3 unknown4 unknown5)]],
 		'0260' => ['mail_window', 'v', [qw(flag)]],
@@ -404,11 +404,11 @@ sub new {
 		'02AE' => ['initialize_message_id_encryption', 'V2', [qw(param1 param2)]],
 		# tRO new packets (2008-09-16Ragexe12_Th)
 		'02B1' => ['quest_list', 'v V', [qw(len amount)]],
-		'02B2' => ['quest_objective_info', 'v V', [qw(len amount)]],
-		'02B3' => ['quest_objective_update', 'a4 V', [qw(questID state time amount)]],
-		'02B4' => ['quest_delete', 'a4', [qw(questID)]],
-		'02B7' => ['quest_status', 'a4 C', [qw(questID active)]],
-		'02B8' => ['party_show_picker', 'V v C3 a4 C3', [qw(ID nameID identified broken upgrade cards unknown1 unknown2 unknown3)]],
+		'02B2' => ['quest_objective_info', 'v V', [qw(len amount)]],							# var len
+		'02B3' => ['quest_objective_update', 'V C x4 V v', [qw(questID state time amount)]],	# var len
+		'02B4' => ['quest_delete', 'V', [qw(questID)]],
+		'02B7' => ['quest_status', 'V C', [qw(questID active)]],
+		'02B8' => ['party_show_picker', 'a4 v C3 a4 C3', [qw(sourceID nameID identified broken upgrade cards unknown1 unknown2 unknown3)]],
 		'02B9' => ['hotkeys'],
 		'02C5' => ['party_invite_result', 'Z24 V', [qw(name type)]],
 		'02C6' => ['party_invite', 'a4 Z24', [qw(ID name)]],
@@ -1477,9 +1477,9 @@ sub actor_display {
 		} elsif ($actor->isa('Actor::Monster')) {
 			debug "Monster Spawned: " . $actor->nameIdx . "\n", "parseMsg";
 		} elsif ($actor->isa('Actor::Pet')) {
-			debug "Pet Spawned: " . $actor->nameIdx . "\n", "parseMsg";
+			debug "Pet Spawned: " . $actor->nameIdx . "monsterName($actor->nameIdx)\n", "parseMsg";
 		} elsif ($actor->isa('Actor::Slave')) {
-			debug "Slave Spawned: " . $actor->nameIdx . "\n", "parseMsg";
+			debug "Slave Spawned: " . $actor->nameIdx . " $jobs_lut{$actor->{jobID}}\n", "parseMsg";
 		} elsif ($actor->isa('Actor::Portal')) {
 			# Can this happen?
 			debug "Portal Spawned: " . $actor->nameIdx . "\n", "parseMsg";
@@ -1643,11 +1643,9 @@ sub actor_status_active {
 	return unless changeToInGameState();
 	my ($type, $ID, $flag) = @{$args}{qw(type ID flag)};
 
-	my $tick = 0;
-	$tick = $args->{tick} if ($args->{switch} eq "043F");
-
-	my $skillName = (defined($skillsStatus{$type})) ? $skillsStatus{$type} : "Unknown $type";
-	$args->{skillName} = $skillName;
+	my $tick = ($args->{switch} eq "043F") ? $args->{tick} : undef;
+	my $status = (defined($skillsStatus{$type})) ? $skillsStatus{$type} : "Unknown $type";
+	$args->{skillName} = $status;
 	my $actor = Actor::get($ID);
 	$args->{actor} = $actor;
 
@@ -1656,24 +1654,21 @@ sub actor_status_active {
 		# Skill activated
 		my $again = 'now';
 		if ($actor) {
-			$again = 'again' if $actor->{statuses}{$skillName};
-			$actor->{statuses}{$skillName} = 1;
+			$again = 'again' if $actor->{statuses}{$status};
+			$actor->{statuses}{$status} = 1;
 		}
 		if ($char->{party}{users}{$ID}{name}) {
-			$again = 'again' if $char->{party}{users}{$ID}{statuses}{$skillName};
-			$char->{party}{users}{$ID}{statuses}{$skillName} = 1;
+			$again = 'again' if $char->{party}{users}{$ID}{statuses}{$status};
+			$char->{party}{users}{$ID}{statuses}{$status} = 1;
 		}
-		my $disp = status_string($actor, $skillName, $again);
-		if ($tick > 0) {
-			$disp = status_string($actor, $skillName, $again, $tick/1000);
-		};
+		my $disp = status_string($actor, $status, $again, $tick/1000);
 		message $disp, "parseMsg_statuslook", ($ID eq $accountID or $char->{slaves} && $char->{slaves}{$ID}) ? 1 : 2;
 
 	} else {
 		# Skill de-activated (expired)
-		delete $actor->{statuses}{$skillName} if $actor;
-		delete $char->{party}{users}{$ID}{statuses}{$skillName} if ($char->{party}{users}{$ID}{name});
-		my $disp = status_string($actor, $skillName, 'no longer');
+		delete $actor->{statuses}{$status} if $actor;
+		delete $char->{party}{users}{$ID}{statuses}{$status} if ($char->{party}{users}{$ID}{name});
+		my $disp = status_string($actor, $status, 'no longer');
 		message $disp, "parseMsg_statuslook", ($ID eq $accountID or $char->{slaves} && $char->{slaves}{$ID}) ? 1 : 2;
 	}
 }
@@ -5152,17 +5147,17 @@ sub alchemist_point {
 sub repair_list {
 	my ($self, $args) = @_;
 	my $msg = T("--------Repair List--------\n");
-	undef %repairList;
+	undef $repairList;
 	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 13) {
 		my $listID = unpack("C1", substr($args->{RAW_MSG}, $i+12, 1));
-		$repairList{$listID}{index} = unpack("v1", substr($args->{RAW_MSG}, $i, 2));
-		$repairList{$listID}{nameID} = unpack("v1", substr($args->{RAW_MSG}, $i+2, 2));
+		$repairList->[$listID]->{index} = unpack("v1", substr($args->{RAW_MSG}, $i, 2));
+		$repairList->[$listID]->{nameID} = unpack("v1", substr($args->{RAW_MSG}, $i+2, 2));
 		# what are these  two?
-		$repairList{$listID}{status} = unpack("V1", substr($args->{RAW_MSG}, $i+4, 4));
-		$repairList{$listID}{status2} = unpack("V1", substr($args->{RAW_MSG}, $i+8, 4));
-		$repairList{$listID}{listID} = $listID;
+		$repairList->[$listID]->{status} = unpack("V1", substr($args->{RAW_MSG}, $i+4, 4));
+		$repairList->[$listID]->{status2} = unpack("V1", substr($args->{RAW_MSG}, $i+8, 4));
+		$repairList->[$listID]->{listID} = $listID;
 		
-		my $name = itemNameSimple($repairList{$listID}{nameID});
+		my $name = itemNameSimple($repairList->[$listID]->{nameID});
 		$msg .= "$listID $name\n";
 	}
 	$msg .= "---------------------------\n";
@@ -5171,7 +5166,7 @@ sub repair_list {
 
 sub repair_result {
 	my ($self, $args) = @_;
-	undef %repairList;
+	undef $repairList;
 	my $itemName = itemNameSimple($args->{nameID});
 	if ($args->{flag}) {
 		message TF("Repair of %s failed.\n", $itemName);
@@ -5442,10 +5437,7 @@ sub show_eq {
 			$ID, $type, $identified, $type_equip, $equipped, $broken, $upgrade, # typical for nonstackables
 			$cards,
 			$expire) = unpack($unpack_string, substr($args->{RAW_MSG}, $i));
-		debug "$index,
-			$ID, $type, $identified, $type_equip, $equipped, $broken, $upgrade, # typical for nonstackables
-			$cards,
-			$expire\n";
+		debug "$index, $ID, $type, $identified, $type_equip, $equipped, $broken, $upgrade, $cards, $expire\n";
 	}
 }
 
@@ -7048,10 +7040,11 @@ sub auction_add_item {
 # this info will be sent to xkore 2 clients
 sub hotkeys {
 	my ($self, $args) = @_;
+	undef $hotkeyList;
 	my $msg;
 	$msg .= center(" " . T("Hotkeys") . " ", 79, '-') . "\n";
-	$msg .=	swrite(TF("\@%s \@%s \@%s \@%s", ('>'x3), ('<'x30), ('<'x5), ('>'x3)),
-			["#", "Name", "Type", "Lv"]);
+	$msg .=	swrite(sprintf("\@%s \@%s \@%s \@%s", ('>'x3), ('<'x30), ('<'x5), ('>'x3)),
+			["#", T("Name"), T("Type"), T("Lv")]);
 	$msg .= sprintf("%s\n", ('-'x79));
 	my $j = 0;
 	for (my $i = 2; $i < $args->{RAW_MSG_SIZE}; $i+=7) {
@@ -7161,57 +7154,70 @@ sub guild_master_member {
 }
 
 # 0152
+# TODO
 sub guild_emblem {
 	my ($self, $args) = @_;
-	# TODO
+	debug $self->{packet_list}{$args->{switch}}->[0] . " " . join(', ', @{$args}{@{$self->{packet_list}{$args->{switch}}->[2]}}) . "\n";
 }
 
 # 0156
+# TODO
 sub guild_member_position_changed {
 	my ($self, $args) = @_;
-	# TODO
+	debug $self->{packet_list}{$args->{switch}}->[0] . " " . join(', ', @{$args}{@{$self->{packet_list}{$args->{switch}}->[2]}}) . "\n";
 }
 
 # 01B4
+# TODO
 sub guild_emblem_update {
 	my ($self, $args) = @_;
-	# TODO
+	debug $self->{packet_list}{$args->{switch}}->[0] . " " . join(', ', @{$args}{@{$self->{packet_list}{$args->{switch}}->[2]}}) . "\n";
 }
 
 # 0174
+# TODO
 sub guild_position_changed {
 	my ($self, $args) = @_;
-	# TODO
+	debug $self->{packet_list}{$args->{switch}}->[0] . " " . join(', ', @{$args}{@{$self->{packet_list}{$args->{switch}}->[2]}}) . "\n";
 }
 
 # 0184
+# TODO
 sub guild_unally {
 	my ($self, $args) = @_;
-	# TODO
+	debug $self->{packet_list}{$args->{switch}}->[0] . " " . join(', ', @{$args}{@{$self->{packet_list}{$args->{switch}}->[2]}}) . "\n";
 }
 
 # 0181
+# TODO
 sub guild_opposition_result {
 	my ($self, $args) = @_;
-	# TODO
+	debug $self->{packet_list}{$args->{switch}}->[0] . " " . join(', ', @{$args}{@{$self->{packet_list}{$args->{switch}}->[2]}}) . "\n";
 }
 
 # 0185
+# TODO: this packet doesn't exist in eA
 sub guild_alliance_added {
 	my ($self, $args) = @_;
-	# TODO
+	debug $self->{packet_list}{$args->{switch}}->[0] . " " . join(', ', @{$args}{@{$self->{packet_list}{$args->{switch}}->[2]}}) . "\n";
 }
 
 # 0192
-sub change_map_cell {
+# TODO: add actual functionality, maybe alter field?
+sub map_change_cell {
 	my ($self, $args) = @_;
-	# TODO
+	debug "Cell on ($args->{x}, $args->{y}) has been changed to $args->{type}\n", "info";
 }
 
 # 01D1
+# TODO: the actual status is sent to us in opt3
 sub blade_stop {
 	my ($self, $args) = @_;
-	# TODO
+	if($args->{active} == 0) {
+		message TF("Blade Stop by %s on %s is deactivated.\n", Actor::get($args->{sourceID})->nameString(), Actor::get($args->{targetID})->nameString()), "info";
+	} elsif($args->{active} == 1) {
+		message TF("Blade Stop by %s on %s is active.\n", Actor::get($args->{sourceID})->nameString(), Actor::get($args->{targetID})->nameString()), "info";
+	}
 }
 
 sub divorced {
@@ -7220,13 +7226,23 @@ sub divorced {
 }
 
 # 0221
+# TODO
 sub upgrade_list {
 	my ($self, $args) = @_;
-	# TODO
+	my $msg;
+	$msg .= center(" " . T("Upgrade List") . " ", 79, '-') . "\n";
+	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 13) {
+		my ($index, $nameID) = unpack('v x6 C', substr($args->{RAW_MSG}, $i, 13));
+		my $item = $char->inventory->getByServerIndex($index);
+		$msg .= swrite(sprintf("\@%s \@%s", ('>'x2), ('<'x50)), [$item->{invIndex}, itemName($item)]);
+	}
+	$msg .= sprintf("%s\n", ('-'x79));
+	message($msg, "list");
 }
 
 # 0223
 # TODO: can we use itemName? and why is type 0 equal to type 1?
+# doesn't seem to be used by eA
 sub upgrade_message {
 	my ($self, $args) = @_;
 	if($args->{type} == 0) {
@@ -7241,15 +7257,29 @@ sub upgrade_message {
 }
 
 # 025A
+# TODO
 sub cooking_list {
 	my ($self, $args) = @_;
-	# TODO
+	undef $cookingList;
+	my $k = 0;
+	my $msg;
+	$msg .= center(" " . T("Cooking List") . " ", 79, '-') . "\n";
+	for (my $i = 6; $i < $args->{RAW_MSG_SIZE}; $i += 2) {
+		my $nameID = unpack('v', substr($args->{RAW_MSG}, $i, 2));
+		$cookingList->[$k] = $nameID;
+		$msg .= swrite(sprintf("\@%s \@%s", ('>'x2), ('<'x50)), [$k, itemNameSimple($nameID)]);
+		$k++;
+	}
+	$msg .= sprintf("%s\n", ('-'x79));
+	message($msg, "list");
+	message T("You can now use the 'cook' command.\n"), "info";
 }
 
 # TODO: test whether the message is correct: tech: i haven't seen this in action yet
 sub party_show_picker {
 	my ($self, $args) = @_;
-	my $player = $playersList->getByID($args->{sourceID}); # also sent for Actor::Party objects? then we also need to include those.
+	#my $player = $playersList->getByID($args->{sourceID}); # also sent for Actor::Party objects? then we also need to include those.
+	my $player =  $char->{party}{users}{$args->{sourceID}};
 	my $item = {};
 	$item->{nameID} = $args->{nameID};
 	$item->{identified} = $args->{identified};
@@ -7260,24 +7290,27 @@ sub party_show_picker {
 }
 
 # 02CB
+# TODO
 # Required to start the instancing information window on Client
 # This window re-appear each "refresh" of client automatically until 02CD is send to client.
 sub instance_window_start {
 	my ($self, $args) = @_;
-	# TODO
+	debug $self->{packet_list}{$args->{switch}}->[0] . " " . join(', ', @{$args}{@{$self->{packet_list}{$args->{switch}}->[2]}}) . "\n";
 }
 
 # 02CC
+# TODO
 # To announce Instancing queue creation if no maps available
 sub instance_window_queue {
 	my ($self, $args) = @_;
-	# TODO
+	debug $self->{packet_list}{$args->{switch}}->[0] . " " . join(', ', @{$args}{@{$self->{packet_list}{$args->{switch}}->[2]}}) . "\n";
 }
 
 # 02CD
+# TODO
 sub instance_window_join {
 	my ($self, $args) = @_;
-	# TODO
+	debug $self->{packet_list}{$args->{switch}}->[0] . " " . join(', ', @{$args}{@{$self->{packet_list}{$args->{switch}}->[2]}}) . "\n";
 }
 
 # 02CE
@@ -7285,21 +7318,34 @@ sub instance_window_join {
 #2 = The Memorial Dungeon's entry time limit expired; it has been destroyed
 #3 = The Memorial Dungeon has been removed.
 #4 = Just remove the window, maybe party/guild leave
+# TODO: test if correct message displays, no type == 0 ?
 sub instance_window_leave {
 	my ($self, $args) = @_;
-	# TODO
+	if($args->{type} == 1) {
+		message T("The Memorial Dungeon expired it has been destroyed.\n"), "info";
+	} elsif($args->{type} == 2) {
+		message T("The Memorial Dungeon's entry time limit expired it has been destroyed.\n"), "info";
+	} elsif($args->{type} == 3) {
+		message T("The Memorial Dungeon has been removed.\n"), "info";
+	} elsif ($args->{type} == 4) {
+		message T("The instance windows has been removed, possibly due to party/guild leave.\n"), "info";
+	} else {
+		warning TF("flag: %s gave unknown results in: %s\n", $args->{flag}, $self->{packet_list}{$args->{switch}}->[0]);
+	}
 }
 
 # 02DC
+# TODO
 sub battleground_message {
 	my ($self, $args) = @_;
-	# TODO
+	debug $self->{packet_list}{$args->{switch}}->[0] . " " . join(', ', @{$args}{@{$self->{packet_list}{$args->{switch}}->[2]}}) . "\n";
 }
 
 # 02DD
+# TODO
 sub battleground_emblem {
 	my ($self, $args) = @_;
-	# TODO
+	debug $self->{packet_list}{$args->{switch}}->[0] . " " . join(', ', @{$args}{@{$self->{packet_list}{$args->{switch}}->[2]}}) . "\n";
 }
 
 sub battleground_score {
@@ -7308,27 +7354,32 @@ sub battleground_score {
 }
 
 # 02EF
+# TODO
 sub font {
 	my ($self, $args) = @_;
-	# TODO
+	debug "Account: $args->{ID} is using fontID: $args->{fontID}\n", "info";
 }
 
 # 01D3
+# TODO
 sub sound_effect {
 	my ($self, $args) = @_;
-	# TODO
+	debug "$args->{name} $args->{type} $args->{unknown} $args->{ID}\n", "info";
 }
 
 # 019E
+# TODO
+# note: this is probably the trigger for the client's slotmachine effect or so.
 sub pet_capture_process {
 	my ($self, $args) = @_;
-	# TODO
+	message T("Attempting to capture pet.\n"), "info";
 }
 
 # 0294
+# TODO -> maybe add table file?
 sub book_read {
 	my ($self, $args) = @_;
-	# TODO
+	debug "Reading book: $args->{bookID} page: $args->{page}\n", "info";
 }
 
 # TODO can we use itemName($actor)? -> tech: don't think so because it seems that this packet is received before the inventory list
@@ -7344,9 +7395,10 @@ sub rental_expired {
 }
 
 # 0289
+# TODO
 sub cash_buy_fail {
 	my ($self, $args) = @_;
-	# TODO
+	debug "cash_buy_fail $args->{cash_points} $args->{kafra_points} $args->{fail}\n";
 }
 
 sub adopt_reply {
@@ -7360,66 +7412,80 @@ sub adopt_reply {
 	}
 }
 
+# TODO do something with sourceID, targetID? -> tech: maybe your spouses adopt_request will also display this message for you.
 sub adopt_request {
 	my ($self, $args) = @_;
-	# TODO do something with sourceID, targetID? -> tech: maybe your spouses adopt_request will also display this message for you.
 	message TF("%s wishes to adopt you. Do you accept?\n", $args->{name}), "info";
 }
 
 # 0293
 sub boss_map_info {
 	my ($self, $args) = @_;
-	# TODO
+
+	if ($args->{flag} == 1) {
+		message TF("MVP Boss %s is now on location: (%d, %d)\n", $args->{name}, $args->{x}, $args->{y}), "info";
+	} elsif ($args->{flag} == 2) {
+		message TF("MVP Boss %s has been detected on this map!\n", $args->{name}), "info";
+	} elsif ($args->{flag} == 3) {
+		message TF("MVP Boss %s is dead, but will spawn again in %d hour(s) and %d minutes(s).\n", $args->{name}, $args->{hours}, $args->{minutes}), "info";
+	} else {
+		debug $self->{packet_list}{$args->{switch}}->[0] . " " . join(', ', @{$args}{@{$self->{packet_list}{$args->{switch}}->[2]}}) . "\n";
+		warning TF("flag: %s gave unknown results in: %s\n", $args->{flag}, $self->{packet_list}{$args->{switch}}->[0]);
+	}
 }
 
 # 02B1
-# Structure of Packet by eAthena
+# TODO
 sub quest_list {
-   my ($self, $args) = @_;
-   my ($questID, $state, $i);
-
-   for ($i = 8; $i < $args->{RAW_MSG_SIZE}; $i += 5) {
-      ($questID, $state) = unpack('V C', substr($args->{RAW_MSG}, $i, 5));
-      # TODO
-   }
+	my ($self, $args) = @_;
+	for (my $i = 8; $i < $args->{amount}*5+8; $i += 5) {
+		my ($questID, $state) = unpack('V C', substr($args->{RAW_MSG}, $i, 5));
+		debug "$questID $state\n", "info";
+	}
 }
 
 # 02B2
-# Structure of packet by eAthena
+# TODO
+# note: this packet shows all quests, objectives and has variable length
 sub quest_objective_info {
-   my ($self, $args) = @_;
-   my ($questID, $time, $mobnum, $mobCount, $mobName, $i, $k);
-
-   for ($i = 8; $i < $args->{RAW_MSG_SIZE}; $i += 104) {
-      ($questID, $time, $mobnum) = unpack('V x4 V v', substr($args->{RAW_MSG}, $i, 14));
-
-      # TODO
-
-      for ($k = 14; $k < 104; $k += 30) {
-         ($mobCount, $mobName) = unpack('x4 v Z24', substr($args->{RAW_MSG}, $k, 30));
-         $mobName = bytesToString($mobName);
-
-         # TODO
-      }
-   }
+	my ($self, $args) = @_;
+	debug $self->{packet_list}{$args->{switch}}->[0] . " " . join(', ', @{$args}{@{$self->{packet_list}{$args->{switch}}->[2]}}) ."\n";
+	for (my $i = 8; $i < $args->{amount}*104+8; $i += 104) {
+		my ($questID, $time, $objectives) = unpack('V x4 V v', substr($args->{RAW_MSG}, $i, 14));
+		debug "$questID $time $objectives\n", "info";
+		for (my $j = 0; $j < $objectives; $j++) {
+			my ($count, $mobName) = unpack('x4 v Z24', substr($args->{RAW_MSG}, 26+$i+$j*30, 30));
+			$mobName = bytesToString($mobName);
+			debug "- $count $mobName\n", "info";
+		}
+	}
 }
 
 # 02B3
+# TODO
+# note: this packet shows all objectives for 1 quest and has fixed length
 sub quest_objective_update {
 	my ($self, $args) = @_;
-	# TODO
+	debug $self->{packet_list}{$args->{switch}}->[0] . " " . join(', ', @{$args}{@{$self->{packet_list}{$args->{switch}}->[2]}}) ."\n";
+	for (my $i = 0; $i < $args->{amount}; $i++) {
+		my ($count, $mobName) = unpack('x4 v Z24', substr($args->{RAW_MSG}, 17+$i*30, 30));
+		$mobName = bytesToString($mobName);
+		debug "- $count $mobName\n", "info";
+	}
 }
 
 # 02B4
+# TODO
 sub quest_delete {
 	my ($self, $args) = @_;
-	# TODO
-}
+	message TF("Quest: %s has been deleted.\n", $args->{questID}), "info";}
 
 # 02B7
+# TODO questID -> questName with a new table file
 sub quest_status {
 	my ($self, $args) = @_;
-	# TODO
+	my $string = $args->{active} ? T ("activated") : T("de-activated");
+	message TF("Quest: %s is now %s.\n", $args->{questID}, $string), "info";
 }
 
 1;

@@ -2280,12 +2280,12 @@ sub setStatus {
 		if ($opt1 == $_) {
 			if (!$actor->{statuses}{$skillsState{$_}}) {
 				$actor->{statuses}{$skillsState{$_}} = 1;
-				message "$actor $are in $skillsState{$_} state\n", "parseMsg_statuslook", $verbosity;
+				message TF("%s %s in %s state.\n", $actor->nameString(), $are, $skillsState{$_}), "parseMsg_statuslook", $verbosity;
 				$changed = 1;
 			}
 		} elsif ($actor->{statuses}{$skillsState{$_}}) {
 			delete $actor->{statuses}{$skillsState{$_}};
-			message "$actor $are out of $skillsState{$_} state\n", "parseMsg_statuslook", $verbosity;
+			message TF("%s %s out of %s state.\n", $actor->nameString(), $are, $skillsState{$_}), "parseMsg_statuslook", $verbosity;
 			$changed = 1;
 		}
 	}
@@ -2294,12 +2294,12 @@ sub setStatus {
 		if (($opt2 & $_) == $_) {
 			if (!$actor->{statuses}{$skillsAilments{$_}}) {
 				$actor->{statuses}{$skillsAilments{$_}} = 1;
-				message "$actor $have ailments: $skillsAilments{$_}\n", "parseMsg_statuslook", $verbosity;
+				message TF("%s %s ailment: %s.\n", $actor->nameString(), $have, $skillsAilments{$_}), "parseMsg_statuslook", $verbosity;
 				$changed = 1;
 			}
 		} elsif ($actor->{statuses}{$skillsAilments{$_}}) {
 			delete $actor->{statuses}{$skillsAilments{$_}};
-			message "$actor $are out of ailments: $skillsAilments{$_}\n", "parseMsg_statuslook", $verbosity;
+			message TF("%s %s out of ailment: %s.\n", $actor->nameString(), $are, $skillsAilments{$_}), "parseMsg_statuslook", $verbosity;
 			$changed = 1;
 		}
 	}
@@ -2308,12 +2308,12 @@ sub setStatus {
 		if (($option & $_) == $_) {
 			if (!$actor->{statuses}{$skillsLooks{$_}}) {
 				$actor->{statuses}{$skillsLooks{$_}} = 1;
-				debug "$actor $have look: $skillsLooks{$_}\n", "parseMsg_statuslook", $verbosity;
+				message TF("%s %s look: %s.\n", $actor->nameString(), $have, $skillsLooks{$_}), "parseMsg_statuslook", $verbosity;
 				$changed = 1;
 			}
 		} elsif ($actor->{statuses}{$skillsLooks{$_}}) {
 			delete $actor->{statuses}{$skillsLooks{$_}};
-			debug "$actor $are out of look: $skillsLooks{$_}\n", "parseMsg_statuslook", $verbosity;
+			message TF("%s %s out of look: %s.\n", $actor->nameString(), $are, $skillsLooks{$_}), "parseMsg_statuslook", $verbosity;
 			$changed = 1;
 		}
 	}
@@ -2323,19 +2323,23 @@ sub setStatus {
 	# Remove perfectly hidden objects
 	if ($actor->{statuses}{'GM Perfect Hide'}) {
 		if (UNIVERSAL::isa($actor, "Actor::Player")) {
-			message TF("Remove perfectly hidden %s\n", $actor);
+			message TF("Remove perfectly hidden %s\n", $actor->nameString());
 			$playersList->remove($actor);
 			# Call the hook when a perfectly hidden player is detected
 			Plugins::callHook('perfect_hidden_player',undef);
-			
+
 		} elsif (UNIVERSAL::isa($actor, "Actor::Monster")) {
-			message TF("Remove perfectly hidden %s\n", $actor);
+			message TF("Remove perfectly hidden %s\n", $actor->nameString());
 			$monstersList->remove($actor);
 
 		# NPCs do this on purpose (who knows why)
 		} elsif (UNIVERSAL::isa($actor, "Actor::NPC")) {
-			message "Remove perfectly hidden $actor\n";
+			message TF("Remove perfectly hidden %s\n", $actor->nameString());
 			$npcsList->remove($actor);
+
+		} elsif (UNIVERSAL::isa($actor, "Actor::Pet")) {
+			message TF("Remove perfectly hidden %s\n", $actor->nameString());
+			$petsList->remove($actor);
 		}
 		return 1;
 	} else {
@@ -3126,7 +3130,7 @@ sub attack_string {
 	assert(UNIVERSAL::isa($source, 'Actor')) if DEBUG;
 	assert(UNIVERSAL::isa($target, 'Actor')) if DEBUG;
 
-	return TF("%s %s %s - Dmg: %s (delay %s)\n",
+	return TF("%s %s %s (Dmg: %s) (Delay: %s)\n",
 		$source->nameString,
 		$source->verb('attack', 'attacks'),
 		$target->nameString($source),
@@ -3144,8 +3148,8 @@ sub skillCast_string {
 		T('casting'),
 		$skillName,
 		T('on'),
-		($x || $y) ? TF("location (%d, %d)", $x, $y) : $target->nameString($source),
-		TF("(delay: %sms)", $delay));
+		(defined $x && defined $y) ? TF("location (%d, %d)", $x, $y) : $target->nameString($source),
+		TF("(Delay: %sms)", $delay));
 }
 
 sub skillUse_string {
@@ -3178,6 +3182,7 @@ sub skillUseLocation_string {
 		$args->{y});
 }
 
+# TODO: maybe add other healing skill ID's?
 sub skillUseNoDamage_string {
 	my ($source, $target, $skillID, $skillName, $amount) = @_;
 	assert(UNIVERSAL::isa($source, 'Actor')) if DEBUG;
@@ -3189,7 +3194,7 @@ sub skillUseNoDamage_string {
 		$skillName,
 		T('on'),
 		$target->nameString($source),
-		($skillID == 28) ? ' ' . TF("(gained: %s hp)", $amount) : ($amount) ? ' ' . TF("(Lv: %s)", $amount) : '');
+		($skillID == 28) ? ' ' . TF("(Gained: %s hp)", $amount) : ($amount) ? ' ' . TF("(Lv: %s)", $amount) : '');
 }
 
 sub status_string {
@@ -3201,7 +3206,7 @@ sub status_string {
 		$source->verb(T('are'), T('is')),
 		($mode eq 'now') ? T('now') : ($mode eq 'again') ? T('again') : ($mode eq 'no longer') ? T('no longer') : $mode,
 		$statusName,
-		$seconds ? ' ' . TF("(duration: %ss).", $seconds) : '');
+		$seconds ? ' ' . TF("(Duration: %ss)", $seconds) : '');
 }
 
 #######################################
