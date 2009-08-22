@@ -1623,7 +1623,6 @@ sub sendWeaponRefine {
 	my ($self, $index) = @_;
 	my $msg = pack("v V", 0x0222, $index);
 	$self->sendToServer($msg);
-	debug unpack('H*', $msg) . "\n";
 	debug "Sent Weapon Refine.\n", "sendPacket", 2;
 }
 

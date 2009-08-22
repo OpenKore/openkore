@@ -5341,7 +5341,11 @@ sub cmdWeaponRefine {
 		return;
 	}
 	my ($cmd, $arg) = @_;
-	$messageSender->sendWeaponRefine($char->inventory->get($arg)->{index});
+	if(my $item = Match::inventoryItem($arg, 1)) {
+		$messageSender->sendWeaponRefine($item->{index});
+	} else {
+		message TF("Item with name or id: %s not found.\n", $arg), "info";
+	}
 }
 
 return 1;
