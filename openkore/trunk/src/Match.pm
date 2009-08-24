@@ -79,8 +79,12 @@ sub inventoryItem {
 		return UNIVERSAL::isa($item, 'Actor::Item') ? $item : undef;
 	}
 
-	# A name was provided; match it
-	return $char->inventory->getByName($name);
+	# A name was provided, match it
+	if (defined $name) {
+		return $char->inventory->getByName($name);
+	} else {
+		return undef;
+	}
 }
 
 ##
@@ -125,7 +129,7 @@ sub storageItem {
 		my $item = $storage{$ID};
 		return $item if lc($item->{name}) eq $name;
 	}
-	return; # Not found
+	return undef; # Not found
 }
 
 1;
