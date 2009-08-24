@@ -207,7 +207,7 @@ sub initHandlers {
 	aud                => \&cmdAuction, # delete auction
 	
 	quest			   => \&cmdQuest,
-	se				   => \&cmdShowEquip,
+	showeq			   => \&cmdShowEquip,
 	cook			   => \&cmdCooking,
 	refine			   => \&cmdWeaponRefine,
 
@@ -5284,18 +5284,36 @@ sub cmdAuction {
 	}
 }
 
-# TODO, we need $questList so we can get ID from index
 sub cmdQuest {
 	if (!$net || $net->getState() != Network::IN_GAME) {
 		error TF("You must be logged in the game to use this command (%s)\n", shift);
 		return;
 	}
 	my ($cmd, $args_string) = @_;
-	my @args = parseArgs($args_string, 2);
-	if ($args[0] =~ /^\d+/) {
-		$messageSender->sendQuestState($args[0], ($args[1] eq 'on'));
+	my @args = parseArgs($args_string, 3);
+	if ($args[0] eq 'set') {
+		if ($args[1] =~ /^\d+/) {
+			$messageSender->sendQuestState($args[1], ($args[2] eq 'on'));
+		} else {
+			message T("Usage: quest set <questIndex> <on|off>\n"), "info";
+		}
+	} elsif ($args[0] eq 'list') {
+		my $k = 0;
+		my $msg;
+		$msg .= center(" " . T("Quest List") . " ", 79, '-') . "\n";
+		foreach my $questID (keys %{$questList}) {
+			$msg .= swrite(sprintf("\@%s \@%s \@%s \@%s", ('>'x2), ('<'x30), ('<'x20), ('<'x20)),
+				[$k, $questID, $questList->{$questID}->{state} ? T("on") : T("off"), $questList->{$questID}->{time}]);
+			foreach my $objective (@{$questList->{$questID}->{objectives}}) {
+				$msg .= swrite(sprintf("\@%s \@%s \@%s", ('>'x2), ('<'x30), ('<'x30)),
+					[" -", $objective->{mobname}, $objective->{count}]);
+			}
+			$k++;
+		}
+		$msg .= sprintf("%s\n", ('-'x79));
+		message($msg, "list");
 	} else {
-		message T("Usage: quest <questIndex> <on|off>\n"), "info";
+		message T("Quest commands: set, list\n"), "info";
 	}
 }
 
@@ -5313,12 +5331,12 @@ sub cmdShowEquip {
 		} elsif ($args[1]) {
 			message TF("No player found with specified information: %s\n", $args[1]), "info";
 		} else {
-			message T("Usage: se p <index|name|partialname>\n");
+			message T("Usage: showeq p <index|name|partialname>\n");
 		}
 	} elsif ($args[0] eq 'me') {
 		$messageSender->sendShowEquipTickbox($args[1] eq 'on');
 	} else {
-		message T("Usage: se [p <index|name|partialname>] | [me <on|off>]\n"), "info";
+		message T("Usage: showeq [p <index|name|partialname>] | [me <on|off>]\n"), "info";
 	}
 }
 
@@ -5341,7 +5359,7 @@ sub cmdWeaponRefine {
 		return;
 	}
 	my ($cmd, $arg) = @_;
-	if(my $item = Match::inventoryItem($arg, 1)) {
+	if(my $item = Match::inventoryItem($arg)) {
 		$messageSender->sendWeaponRefine($item->{index});
 	} else {
 		message TF("Item with name or id: %s not found.\n", $arg), "info";

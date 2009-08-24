@@ -1551,7 +1551,7 @@ sub sendMailReturn {
 
 sub sendCashShopBuy {
 	my ($self, $ID, $amount, $points) = @_;
-	my $msg = pack("v V2", 0x0288, $ID, $amount, $points);
+	my $msg = pack("v v2 V", 0x0288, $ID, $amount, $points);
 	$self->sendToServer($msg);
 	debug "Sent My Sell Stop.\n", "sendPacket", 2;
 }

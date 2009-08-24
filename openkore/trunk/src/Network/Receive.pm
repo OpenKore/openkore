@@ -302,6 +302,7 @@ sub new {
 		'01DC' => ['secure_login_key', 'x2 a*', [qw(secure_key)]],
 		'01D6' => ['pvp_mode2', 'v', [qw(type)]],
 		'01DE' => ['skill_use', 'v a4 a4 V4 v2 C', [qw(skillID sourceID targetID tick src_speed dst_speed damage level option type)]],
+		'01E0' => ['GM_req_acc_name', 'a4 Z24', [qw(targetID accountName)]],
 		'01E1' => ['revolving_entity', 'a4 v', [qw(sourceID entity)]],
 		#'01E2' => ['marriage_unknown'], clif_parse_ReqMarriage
 		#'01E4' => ['marriage_unknown'], clif_marriage_process
@@ -5006,6 +5007,14 @@ sub received_characters_blockSize {
 	}
 }
 
+sub received_characters_unpackString {
+	if ($masterServer && $masterServer->{charBlockSize} == 112) {
+		return 'a4 V9 v V2 v14 Z24 C6 v2';
+	} else {
+		return 'a4 V9 v17 Z24 C6 v2';
+	}
+}
+
 sub received_characters {
 	return if ($net->getState() == Network::IN_GAME);
 	my ($self, $args) = @_;
@@ -5021,40 +5030,46 @@ sub received_characters {
 		$charServer = $net->serverPeerHost . ":" . $net->serverPeerPort;
 	}
 
-	my $num;
+
 	my $blockSize = $self->received_characters_blockSize();
 	for (my $i = $args->{RAW_MSG_SIZE} % $blockSize; $i < $args->{RAW_MSG_SIZE}; $i += $blockSize) {
 		#exp display bugfix - chobit andy 20030129
-		$num = unpack("C1", substr($args->{RAW_MSG}, $i + 104, 1));
-		$chars[$num] = new Actor::You;
-		$chars[$num]{ID} = $accountID;
-		$chars[$num]{charID} = substr($args->{RAW_MSG}, $i, 4);
-		$chars[$num]{nameID} = unpack("V", $chars[$num]{ID});
-		$chars[$num]{exp} = unpack("V", substr($args->{RAW_MSG}, $i + 4, 4));
-		$chars[$num]{zeny} = unpack("V", substr($args->{RAW_MSG}, $i + 8, 4));
-		$chars[$num]{exp_job} = unpack("V", substr($args->{RAW_MSG}, $i + 12, 4));
-		$chars[$num]{lv_job} = unpack("v", substr($args->{RAW_MSG}, $i + 16, 2));
-		$chars[$num]{hp} = unpack("v", substr($args->{RAW_MSG}, $i + 42, 2));
-		$chars[$num]{hp_max} = unpack("v", substr($args->{RAW_MSG}, $i + 44, 2));
-		$chars[$num]{sp} = unpack("v", substr($args->{RAW_MSG}, $i + 46, 2));
-		$chars[$num]{sp_max} = unpack("v", substr($args->{RAW_MSG}, $i + 48, 2));
-		$chars[$num]{jobID} = unpack("v", substr($args->{RAW_MSG}, $i + 52, 2));
-		$chars[$num]{hair_style} = unpack("v", substr($args->{RAW_MSG}, $i + 54, 2));
-		$chars[$num]{lv} = unpack("v", substr($args->{RAW_MSG}, $i + 58, 2));
-		$chars[$num]{headgear}{low} = unpack("v", substr($args->{RAW_MSG}, $i + 62, 2));
-		$chars[$num]{headgear}{top} = unpack("v", substr($args->{RAW_MSG}, $i + 66, 2));
-		$chars[$num]{headgear}{mid} = unpack("v", substr($args->{RAW_MSG}, $i + 68, 2));
-		$chars[$num]{hair_color} = unpack("v", substr($args->{RAW_MSG}, $i + 70, 2));
-		$chars[$num]{clothes_color} = unpack("v", substr($args->{RAW_MSG}, $i + 72, 2));
-		($chars[$num]{name}) = unpack("Z*", substr($args->{RAW_MSG}, $i + 74, 24));
-		$chars[$num]{str} = unpack("C1", substr($args->{RAW_MSG}, $i + 98, 1));
-		$chars[$num]{agi} = unpack("C1", substr($args->{RAW_MSG}, $i + 99, 1));
-		$chars[$num]{vit} = unpack("C1", substr($args->{RAW_MSG}, $i + 100, 1));
-		$chars[$num]{int} = unpack("C1", substr($args->{RAW_MSG}, $i + 101, 1));
-		$chars[$num]{dex} = unpack("C1", substr($args->{RAW_MSG}, $i + 102, 1));
-		$chars[$num]{luk} = unpack("C1", substr($args->{RAW_MSG}, $i + 103, 1));
-		$chars[$num]{sex} = $accountSex2;
-		$chars[$num]{name} = bytesToString($chars[$num]{name});
+        my $unpack_string = received_characters_unpackString();
+		my ($cID,$exp,$zeny,$jobExp,$jobLevel, $opt1, $opt2, $option, $karma, $manner, $statpt,
+			$hp,$maxHp,$sp,$maxSp, $walkspeed, $jobId,$hairstyle, $weapon, $level, $skillpt,$headLow, $shield,$headTop,$headMid,$hairColor,
+			$clothesColor,$name,$str,$agi,$vit,$int,$dex,$luk,$slot, $rename) =
+			unpack($unpack_string, substr($args->{RAW_MSG}, $i));
+
+		$chars[$slot] = new Actor::You;
+		$chars[$slot]{ID} = $accountID;
+		$chars[$slot]{charID} = $cID;
+		$chars[$slot]{exp} = $exp;
+		$chars[$slot]{zeny} = $zeny;
+		$chars[$slot]{exp_job} = $jobExp;
+		$chars[$slot]{lv_job} = $jobLevel;
+		$chars[$slot]{hp} = $hp;
+		$chars[$slot]{hp_max} = $maxHp;
+		$chars[$slot]{sp} = $sp;
+		$chars[$slot]{sp_max} = $maxSp;
+		$chars[$slot]{jobID} = $jobId;
+		$chars[$slot]{hair_style} = $hairstyle;
+		$chars[$slot]{lv} = $level;
+		$chars[$slot]{headgear}{low} = $headLow;
+		$chars[$slot]{headgear}{top} = $headTop;
+		$chars[$slot]{headgear}{mid} = $headMid;
+		$chars[$slot]{hair_color} = $hairColor;
+		$chars[$slot]{clothes_color} = $clothesColor;
+		$chars[$slot]{name} = $name;
+		$chars[$slot]{str} = $str;
+		$chars[$slot]{agi} = $agi;
+		$chars[$slot]{vit} = $vit;
+		$chars[$slot]{int} = $int;
+		$chars[$slot]{dex} = $dex;
+		$chars[$slot]{luk} = $luk;
+		$chars[$slot]{sex} = $accountSex2;
+
+		$chars[$slot]{nameID} = unpack("V", $chars[$slot]{ID});
+		$chars[$slot]{name} = bytesToString($chars[$slot]{name});
 	}
 
 	# gradeA says it's supposed to send this packet here, but
@@ -7054,7 +7069,7 @@ sub hotkeys {
 
 		$msg .= swrite(TF("\@%s \@%s \@%s \@%s", ('>'x3), ('<'x30), ('<'x5), ('>'x3)),
 			[$j, $hotkeyList->[$j]->{type} ? Skill->new(idn => $hotkeyList->[$j]->{ID})->getName() : itemNameSimple($hotkeyList->[$j]->{ID}),
-			$hotkeyList->[$j]->{type} ? "skill" : "item",
+			$hotkeyList->[$j]->{type} ? T("skill") : T("item"),
 			$hotkeyList->[$j]->{lv}]);
 		$j++;
 	}
@@ -7422,7 +7437,9 @@ sub adopt_request {
 sub boss_map_info {
 	my ($self, $args) = @_;
 
-	if ($args->{flag} == 1) {
+	if ($args->{flag} == 0) {
+		message T("You cannot find any trace of a Boss Monster in this area.\n"), "info";
+	} elsif ($args->{flag} == 1) {
 		message TF("MVP Boss %s is now on location: (%d, %d)\n", $args->{name}, $args->{x}, $args->{y}), "info";
 	} elsif ($args->{flag} == 2) {
 		message TF("MVP Boss %s has been detected on this map!\n", $args->{name}), "info";
@@ -7438,8 +7455,10 @@ sub boss_map_info {
 # TODO
 sub quest_list {
 	my ($self, $args) = @_;
+	undef $questList;
 	for (my $i = 8; $i < $args->{amount}*5+8; $i += 5) {
 		my ($questID, $state) = unpack('V C', substr($args->{RAW_MSG}, $i, 5));
+		$questList->{$questID}->{state} = $state;
 		debug "$questID $state\n", "info";
 	}
 }
@@ -7449,13 +7468,17 @@ sub quest_list {
 # note: this packet shows all quests, objectives and has variable length
 sub quest_objective_info {
 	my ($self, $args) = @_;
+	undef $questList;
 	debug $self->{packet_list}{$args->{switch}}->[0] . " " . join(', ', @{$args}{@{$self->{packet_list}{$args->{switch}}->[2]}}) ."\n";
 	for (my $i = 8; $i < $args->{amount}*104+8; $i += 104) {
 		my ($questID, $time, $objectives) = unpack('V x4 V v', substr($args->{RAW_MSG}, $i, 14));
+		$questList->{$questID}->{time} = $time;
 		debug "$questID $time $objectives\n", "info";
 		for (my $j = 0; $j < $objectives; $j++) {
 			my ($count, $mobName) = unpack('x4 v Z24', substr($args->{RAW_MSG}, 26+$i+$j*30, 30));
 			$mobName = bytesToString($mobName);
+			$questList->{$questID}->{objectives}->[$j]->{count} = $count;
+			$questList->{$questID}->{objectives}->[$j]->{mobname} = $mobName;
 			debug "- $count $mobName\n", "info";
 		}
 	}
@@ -7466,10 +7489,13 @@ sub quest_objective_info {
 # note: this packet shows all objectives for 1 quest and has fixed length
 sub quest_objective_update {
 	my ($self, $args) = @_;
+	my $questID = $args->{questID};
 	debug $self->{packet_list}{$args->{switch}}->[0] . " " . join(', ', @{$args}{@{$self->{packet_list}{$args->{switch}}->[2]}}) ."\n";
 	for (my $i = 0; $i < $args->{amount}; $i++) {
 		my ($count, $mobName) = unpack('x4 v Z24', substr($args->{RAW_MSG}, 17+$i*30, 30));
 		$mobName = bytesToString($mobName);
+		$questList->{$questID}->{objectives}->[$i]->{count} = $count;
+		$questList->{$questID}->{objectives}->[$i]->{mobname} = $mobName;
 		debug "- $count $mobName\n", "info";
 	}
 }
@@ -7478,7 +7504,9 @@ sub quest_objective_update {
 # TODO
 sub quest_delete {
 	my ($self, $args) = @_;
-	message TF("Quest: %s has been deleted.\n", $args->{questID}), "info";}
+	message TF("Quest: %s has been deleted.\n", $args->{questID}), "info";
+	delete $questList->{$args->{questID}};
+}
 
 # 02B7
 # TODO questID -> questName with a new table file
@@ -7486,6 +7514,12 @@ sub quest_status {
 	my ($self, $args) = @_;
 	my $string = $args->{active} ? T ("activated") : T("de-activated");
 	message TF("Quest: %s is now %s.\n", $args->{questID}, $string), "info";
+	$questList->{$args->{questID}}->{state} = $args->{active};
+}
+
+sub GM_req_acc_name {
+	my ($self, $args) = @_;
+	message TF("The accountName for ID %s is %s.\n", $args->{accountName}, $args->{targetID}), "info";
 }
 
 1;
