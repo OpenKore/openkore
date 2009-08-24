@@ -77,10 +77,7 @@ sub inventoryItem {
 		# A number was provided
 		my $item = $char->inventory->get($name);
 		return UNIVERSAL::isa($item, 'Actor::Item') ? $item : undef;
-	}
-
-	# A name was provided, match it
-	if (defined $name) {
+	} elsif (defined $name) { # A name was provided, match it
 		return $char->inventory->getByName($name);
 	} else {
 		return undef;

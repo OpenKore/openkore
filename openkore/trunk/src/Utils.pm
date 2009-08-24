@@ -863,6 +863,7 @@ sub inRange {
 	my $param = shift;
 
 	return 1 if (!defined $param);
+	return 0 if (!defined $value);
 	my ($min, $max, $inclusive) = getRange($param);
 
 	if (defined $min && defined $max) {

@@ -5303,7 +5303,7 @@ sub cmdQuest {
 		$msg .= center(" " . T("Quest List") . " ", 79, '-') . "\n";
 		foreach my $questID (keys %{$questList}) {
 			$msg .= swrite(sprintf("\@%s \@%s \@%s \@%s", ('>'x2), ('<'x30), ('<'x20), ('<'x20)),
-				[$k, $questID, $questList->{$questID}->{state} ? T("on") : T("off"), $questList->{$questID}->{time}]);
+				[$k, $questID, $questList->{$questID}->{state} ? T("active") : T("non-active"), $questList->{$questID}->{time}]);
 			foreach my $objective (@{$questList->{$questID}->{objectives}}) {
 				$msg .= swrite(sprintf("\@%s \@%s \@%s", ('>'x2), ('<'x30), ('<'x30)),
 					[" -", $objective->{mobname}, $objective->{count}]);

@@ -3240,7 +3240,7 @@ sub lineIntersection {
 sub percent_hp {
 	my $r_hash = shift;
 	if (!$$r_hash{'hp_max'}) {
-		return 0;
+		return undef;
 	} else {
 		return ($$r_hash{'hp'} / $$r_hash{'hp_max'} * 100);
 	}
