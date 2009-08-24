@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: openkore 2.0.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-08-24 22:55+0700\n"
-"PO-Revision-Date: 2009-08-24 23:28+0700\n"
+"PO-Revision-Date: 2009-08-24 23:38+0700\n"
 "Last-Translator: Richard Samuel <dewa5227@gmail.com>\n"
 "Language-Team: Indonesian <dewa5227@yahoo.com>\n"
 "MIME-Version: 1.0\n"
@@ -3157,7 +3157,7 @@ msgstr "List Quest"
 #: ../Misc.pm:3150
 #: ../Misc.pm:3165
 msgid "on"
-msgstr "aktif"
+msgstr "pada"
 
 #: ../Commands.pm:5306
 msgid "off"
