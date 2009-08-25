@@ -18,15 +18,15 @@
 package Network::Send::kRO::Sakexe_0;
 
 use strict;
-# TODO: maybe we should try to not use globals in here at all but instead pass them on?
-use Globals qw($accountID $sessionID $sessionID2 $accountSex $char $charID %config %guild @chars $masterServer $syncSync $net);
-
 use Network::Send::kRO ();
 use base qw(Network::Send::kRO);
 
 use Log qw(message warning error debug);
 use I18N qw(stringToBytes);
 use Utils qw(getTickCount getHex getCoordString);
+
+# TODO: maybe we should try to not use globals in here at all but instead pass them on?
+use Globals qw($accountID $sessionID $sessionID2 $accountSex $char $charID %config %guild @chars $masterServer $syncSync $net);
 
 sub new {
 	my ($class) = @_;
@@ -836,6 +836,12 @@ sub sendPetHatch {
 }
 
 # 0x01a9,6,sendemotion,2
+sub sendPetEmotion{
+	my ($self, $emoticon) = @_;
+	my $msg = pack('v V', 0x01A9, $emoticon);
+	$self->sendToServer($msg);
+	debug "Sent Pet Emotion.\n", "sendPacket", 2;
+}
 
 # 0x01ae,4,selectarrow,2
 sub sendArrowCraft {
@@ -846,7 +852,12 @@ sub sendArrowCraft {
 }
 
 # 0x01af,4,changecart,2
-
+sub sendChangeCart { # lvl: 1, 2, 3, 4, 5
+	my ($self, $lvl) = @_;
+	my $msg = pack('v2', 0x01AF, $lvl);
+	$self->sendToServer($msg);
+	debug "Sent Cart Change to : $lvl\n", "sendPacket", 2;
+}
 
 # NOTE: complex packet structure
 # 0x01b2,-1,openvending,2:4:84:85
@@ -859,7 +870,6 @@ sub sendOpenShop {
 	}
 	$self->sendToServer($msg);
 }
-
 
 # 0x01ba,26,remove,2
 

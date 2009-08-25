@@ -29,6 +29,9 @@ use I18N qw(stringToBytes);
 use Utils;
 use Utils::Exceptions;
 
+# to test zealotus bug
+#use Data::Dumper;
+
 
 sub new {
 	my ($class) = @_;
@@ -354,16 +357,11 @@ sub sendEquip {
 	debug "Sent Equip: $index Type: $type\n" , 2;
 }
 
-sub sendFriendAccept {
-	my ($self, $accountID, $charID) = @_;
-	my $msg = pack("C*", 0x08, 0x02) . $accountID . $charID . pack("C*", 0x01, 0x00, 0x00, 0x00);
-	$self->sendToServer($msg);
-	debug "Sent Accept friend request\n", "sendPacket";
-}
-
-sub sendFriendReject {
-	my ($self, $accountID, $charID) = @_;
-	my $msg = pack("C*", 0x08, 0x02) . $accountID . $charID . pack("C*", 0x00, 0x00, 0x00, 0x00);
+# 0x0208,11,friendslistreply,2:6:10
+# Reject:0/Accept:1
+sub sendFriendListReply {
+	my ($self, $accountID, $charID, $flag) = @_;
+	my $msg = pack('v a4 a4 C', 0x0208, $accountID, $charID, $flag);
 	$self->sendToServer($msg);
 	debug "Sent Reject friend request\n", "sendPacket";
 }
@@ -947,62 +945,40 @@ sub sendPartyShareEXP {
 }
 
 sub sendPetCapture {
-	my $self = shift;
-	my $monID = shift;
-	my $msg = pack("C*", 0x9F, 0x01) . $monID . pack("C*", 0x00, 0x00);
+	my ($self, $monID) = @_;
+	my $msg = pack('v a4', 0x019F, $monID);
 	$self->sendToServer($msg);
 	debug "Sent pet capture: ".getHex($monID)."\n", "sendPacket", 2;
 }
 
-sub sendPetFeed {
-	my $self = shift;
-	my $msg = pack("C*", 0xA1, 0x01, 0x01);
+# 0x01a1,3,petmenu,2
+sub sendPetMenu {
+	my ($self, $type) = @_; # 0:info, 1:feed, 2:performance, 3:to egg, 4:uneq item
+	my $msg = pack('v C', 0x01A1, $type);
 	$self->sendToServer($msg);
-	debug "Sent Pet Feed\n", "sendPacket", 2;
-}
-
-sub sendPetGetInfo {
-	my $self = shift;
-	my $msg = pack("C*", 0xA1, 0x01, 0x00);
-	$self->sendToServer($msg);
-	debug "Sent Pet Get Info\n", "sendPacket", 2;
+	debug "Sent Pet Menu\n", "sendPacket", 2;
 }
 
 sub sendPetHatch {
-	my $self = shift;
-	my $index = shift;
-	my $msg = pack("C*", 0xA7, 0x01) . pack("v1", $index);
+	my ($self, $index) = @_;
+	my $msg = pack('v2', 0x01A7, $index);
 	$self->sendToServer($msg);
 	debug "Sent Incubator hatch: $index\n", "sendPacket", 2;
 }
 
 sub sendPetName {
-	my $self = shift;
-	my $name = shift;
-	my $msg = pack("C1 C1 a24", 0xA5, 0x01, stringToBytes($name));
+	my ($self, $name) = @_;
+	my $msg = pack('v a24', 0x01A5, stringToBytes($name));
 	$self->sendToServer($msg);
 	debug "Sent Pet Rename: $name\n", "sendPacket", 2;
 }
 
-sub sendPetPerformance {
-	my $self = shift;
-	my $msg = pack("C*", 0xA1, 0x01, 0x02);
+# 0x01af,4,changecart,2
+sub sendChangeCart { # lvl: 1, 2, 3, 4, 5
+	my ($self, $lvl) = @_;
+	my $msg = pack('v2', 0x01AF, $lvl);
 	$self->sendToServer($msg);
-	debug "Sent Pet Performance\n", "sendPacket", 2;
-}
-
-sub sendPetReturnToEgg {
-	my $self = shift;
-	my $msg = pack("C*", 0xA1, 0x01, 0x03);
-	$self->sendToServer($msg);
-	debug "Sent Pet Return to Egg\n", "sendPacket", 2;
-}
-
-sub sendPetUnequipItem {
-	my $self = shift;
-	my $msg = pack("C*", 0xA1, 0x01, 0x04);
-	$self->sendToServer($msg);
-	debug "Sent Pet Unequip Item\n", "sendPacket", 2;
+	debug "Sent Cart Change to : $lvl\n", "sendPacket", 2;
 }
 
 sub sendPreLoginCode {

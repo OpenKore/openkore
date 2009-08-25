@@ -98,40 +98,39 @@ sub new {
 # Throws Network::Send::CreationException if the server type is supported, but the
 # message sender object cannot be created.
 sub create {
-	my (undef, $net, $serverType) = @_;
+	my (undef, $net, $type) = @_;
 
 	my $mode = 0; # Mode is Old by Default
 	my $class = "Network::Send::ServerType0";
 	my $param;
 
 	# Remove Blanks
-	$serverType =~ s/^\s//;
-	$serverType =~ s/\s$//;
+	$type =~ s/^\s//;
+	$type =~ s/\s$//;
 
-	$serverType = 0 if $serverType eq '';
+	$type = 0 if $type eq '';
 
 	# Type checking
-	if ($serverType =~ /^([0-9_]+)/) {
+	if ($type =~ /^([0-9_]+)/) {
 		# Old ServerType
-		($serverType) = $serverType =~ /([0-9_]+)/;
-		$serverType = 0 if $serverType eq '';
-		$class = "Network::Send::ServerType" . $serverType;
+		($type) = $type =~ /([0-9_]+)/;
+		$type = 0 if $type eq '';
+		$class = "Network::Send::ServerType" . $type;
 	} else {
 		# New ServerType based on Server name
-		my $real_type = $serverType;
-		my $real_version = $serverType;
-		($serverType) = $serverType =~ /^([a-zA-Z0-9_]+)/;
-		$class = "Network::Send::" . $serverType;
-		($real_version) = $real_version =~ /\s([a-zA-Z0-9_]+)/;
-		$serverType = $real_type;
+		my ($real_type) = $type =~ /^([a-zA-Z0-9]+)_/;
+		$class = "Network::Send::" . $real_type;
+		my ($real_version) = $type =~ /_([a-zA-Z0-9_]+)/;
+		#debug "$real_type <-> $real_version\n";
+		$type = $real_type;
 		$param = $real_version;
 		$param = undef if ($real_version eq '');
 		$mode = 1;
 	}
-	
+
 	eval("use $class;");
 	if ($@ =~ /Can\'t locate/) {
-		Network::Send::ServerTypeNotSupported->throw(error => "Server type '$serverType' not supported.");
+		Network::Send::ServerTypeNotSupported->throw(error => "Server type '$type' not supported.");
 	} elsif ($@) {
 		die $@;
 	}
@@ -144,11 +143,11 @@ sub create {
 	}
 	if (!$instance) {
 		Network::Send::CreationException->throw(
-			error => "Cannot create message sender object for server type '$serverType'.");
+			error => "Cannot create message sender object for server type '$type'.");
 	}
 
 	$instance->{net} = $net;
-	$instance->{serverType} = $serverType;
+	$instance->{serverType} = $type;
 	Modules::register($class);
 
 	return $instance;

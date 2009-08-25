@@ -20,9 +20,8 @@ package Network::Send::kRO::Sakexe_2005_08_08a;
 use strict;
 use Network::Send::kRO::Sakexe_2005_08_01a;
 use base qw(Network::Send::kRO::Sakexe_2005_08_01a);
+
 use Log qw(message warning error debug);
-use I18N qw(stringToBytes);
-use Utils qw(getTickCount getHex getCoordString);
 
 sub new {
 	my ($class) = @_;
