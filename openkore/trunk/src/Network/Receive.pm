@@ -5761,7 +5761,7 @@ sub skill_use_location {
 		'y' => $y
 	});
 }
-
+# TODO: a skill can fail, do something with $args->{fail} == 0 (this means that the skill failed)
 sub skill_used_no_damage {
 	my ($self, $args) = @_;
 	return unless changeToInGameState();
