@@ -2553,12 +2553,11 @@ sub devotion {
 	my $msg = '';
 	my $source = Actor::get($args->{sourceID});
 
-	undef $devotionList;
+	undef $devotionList->{$args->{sourceID}};
 	for (my $i = 0; $i < 5; $i++) {
 		my $ID = substr($args->{targetIDs}, $i*4, 4);
-		$devotionList->{$args->{sourceID}}->{targetIDs}->{$ID} = $i;
 		last if unpack("V", $ID) == 0;
-		
+		$devotionList->{$args->{sourceID}}->{targetIDs}->{$ID} = $i;
 		my $actor = Actor::get($ID);
 		$msg .= skillUseNoDamage_string($source, $actor, 0, 'devotion');
 	}
@@ -4690,6 +4689,7 @@ sub party_join {
 	$char->{party}{users}{$ID}{pos}{y} = $y;
 	$char->{party}{users}{$ID}{map} = $map;
 	$char->{party}{users}{$ID}{name} = $user;
+	$char->{party}{users}{$ID}->{ID} = $ID;
 
 	if ($config{partyAutoShare} && $char->{party} && $char->{party}{users}{$accountID}{admin}) {
 		$messageSender->sendPartyShareEXP(1);
@@ -4750,6 +4750,7 @@ sub party_users_info {
 		$char->{party}{users}{$ID}{map} = unpack("Z16", substr($msg, $i + 28, 16));
 		$char->{party}{users}{$ID}{admin} = !(unpack("C1", substr($msg, $i + 44, 1)));
 		$char->{party}{users}{$ID}{online} = !(unpack("C1",substr($msg, $i + 45, 1)));
+		$char->{party}{users}{$ID}->{ID} = $ID;
 	}
 
 	if ($config{partyAutoShare} && $char->{party} && %{$char->{party}}) {
