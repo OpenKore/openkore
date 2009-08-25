@@ -90,8 +90,8 @@ sub create {
 	my $param;
 
 	# Remove Blanks
-	$type =~ s/^ +//;
-	$type =~ s/ +$//;
+	$type =~ s/^\s//;
+	$type =~ s/\s$//;
 
 	$type = 0 if $type eq '';
 
@@ -106,7 +106,7 @@ sub create {
 		my $real_version = $type;
 		($type) = $type =~ /^([a-zA-Z0-9_]+)/;
 		$class = "Network::Receive::" . $type;
-		($real_version) = $real_version =~ / ([a-zA-Z0-9_]+)/;
+		($real_version) = $real_version =~ /\s([a-zA-Z0-9_]+)/;
 		$type = $real_type;
 		$param = $real_version;
 		$param = undef if ($real_version eq '');
