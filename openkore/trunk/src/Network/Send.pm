@@ -27,10 +27,7 @@ use strict;
 use encoding 'utf8';
 use Carp::Assert;
 
-use Exception::Class (
-	'Network::Send::ServerTypeNotSupported',
-	'Network::Send::CreationException'
-);
+use Exception::Class ('Network::Send::ServerTypeNotSupported', 'Network::Send::CreationException');
 
 use Globals qw(%config $encryptVal $bytesSent $conState %packetDescriptions $enc_val1 $enc_val2);
 use I18N qw(stringToBytes);
@@ -102,6 +99,9 @@ sub new {
 # message sender object cannot be created.
 sub create {
 	my (undef, $net, $serverType) = @_;
+
+	require Network::Send::kRO; # ADDED FOR KRO TESTING
+	return Network::Send::kRO->create($net, $serverType) if ($config{kRO_testing}); # ADDED FOR KRO TESTING
 
 	($serverType) = $serverType =~ /([0-9_]+)/;
 	$serverType = 0 if ($serverType eq '');

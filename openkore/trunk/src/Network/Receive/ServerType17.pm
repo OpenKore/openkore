@@ -14,8 +14,8 @@
 package Network::Receive::ServerType17;
 
 use strict;
-use Network::Receive;
-use base qw(Network::Receive);
+use Network::Receive::ServerType0 ();
+use base qw(Network::Receive::ServerType0);
 use Log qw(message warning error debug);
 use AI;
 use Translation;

@@ -3,8 +3,8 @@
 package Network::Receive::ServerType8_2;
 
 use strict;
-use Network::Receive;
-use base qw(Network::Receive);
+use Network::Receive::ServerType0 ();
+use base qw(Network::Receive::ServerType0);
 
 sub new {
 	my ($class) = @_;

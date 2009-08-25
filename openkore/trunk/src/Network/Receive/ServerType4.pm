@@ -2,7 +2,7 @@
 package Network::Receive::ServerType4;
 
 use strict;
-use base qw(Network::Receive);
+use base qw(Network::Receive::ServerType0);
 
 sub new {
 	my ($class) = @_;

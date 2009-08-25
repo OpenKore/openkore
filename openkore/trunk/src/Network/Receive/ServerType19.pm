@@ -3,8 +3,8 @@
 package Network::Receive::ServerType19;
 
 use strict;
-use Network::Receive ();
-use base qw(Network::Receive);
+use Network::Receive::ServerType0 ();
+use base qw(Network::Receive::ServerType0);
 use Time::HiRes qw(time usleep);
 
 use AI;
