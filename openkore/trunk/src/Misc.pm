@@ -3148,7 +3148,7 @@ sub skillCast_string {
 		T('casting'),
 		$skillName,
 		T('on'),
-		(defined $x && defined $y) ? TF("location (%d, %d)", $x, $y) : $target->nameString($source),
+		($x != 0 || $y != 0) ? TF("location (%d, %d)", $x, $y) : $target->nameString($source),
 		TF("(Delay: %sms)", $delay));
 }
 
@@ -3903,6 +3903,10 @@ sub checkPlayerCondition {
 
 	if ($config{$prefix."_dist"}) {
 		return 0 unless inRange(distance(calcPosition($char), calcPosition($player)), $config{$prefix."_dist"});
+	}
+	
+	if ($config{$prefix."_isNotMyDevotee"}) {
+		return 0 if (defined $devotionList->{$accountID}->{targetIDs}->{$id});
 	}
 
 	my %args = (
