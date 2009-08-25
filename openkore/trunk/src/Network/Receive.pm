@@ -85,15 +85,36 @@ sub new {
 sub create {
 	my ($self, $type) = @_;
 	
-	require Network::Receive::kRO; # ADDED FOR KRO TESTING
-	return Network::Receive::kRO->create($type) if ($config{kRO_testing}); # ADDED FOR KRO TESTING
-	
-	($type) = $type =~ /([0-9_]+)/;
-	$type = 0 if $type eq '';
-	my $class = "Network::Receive::ServerType" . $type;
+	my $mode = 0; # Mode is Old by Default
+	my $class = "Network::Receive::ServerType0";
+	my $param;
 
+	# Remove Blanks
+	$type =~ s/^ +//;
+	$type =~ s/ +$//;
+
+	$type = 0 if $type eq '';
+
+	# Type checking
+	if ($type =~ /^([0-9_]+)/) {
+		# Old ServerType
+		($type) = $type =~ /^([0-9_]+)/;
+		$class = "Network::Receive::ServerType" . $type;
+	} else {
+		# New ServerType based on Server name
+		my $real_type = $type;
+		my $real_version = $type;
+		($type) = $type =~ /^([a-zA-Z0-9_]+)/;
+		$class = "Network::Receive::" . $type;
+		($real_version) = $real_version =~ / ([a-zA-Z0-9_]+)/;
+		$type = $real_type;
+		$param = $real_version;
+		$param = undef if ($real_version eq '');
+		$mode = 1;
+	}
+	
 	undef $@;
-	eval "use $class;";
+	eval("use $class;");
 	if ($@ =~ /^Can't locate /s) {
 		Network::Receive::InvalidServerType->throw(
 			TF("Cannot load server message parser for server type '%s'.", $type)
@@ -104,7 +125,13 @@ sub create {
 				$type, $@)
 		);
 	} else {
-		return $class->new();
+		if ($mode == 1) {
+			# New ServerType
+			return $class->create($param);
+		} else {
+			# Old ServerType
+			return $class->new();
+		}
 	}
 }
 

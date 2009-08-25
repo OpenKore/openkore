@@ -100,13 +100,35 @@ sub new {
 sub create {
 	my (undef, $net, $serverType) = @_;
 
-	require Network::Send::kRO; # ADDED FOR KRO TESTING
-	return Network::Send::kRO->create($net, $serverType) if ($config{kRO_testing}); # ADDED FOR KRO TESTING
+	my $mode = 0; # Mode is Old by Default
+	my $class = "Network::Send::ServerType0";
+	my $param;
 
-	($serverType) = $serverType =~ /([0-9_]+)/;
-	$serverType = 0 if ($serverType eq '');
-	my $class = "Network::Send::ServerType" . $serverType;
+	# Remove Blanks
+	$serverType =~ s/^ +//;
+	$serverType =~ s/ +$//;
 
+	$serverType = 0 if $serverType eq '';
+
+	# Type checking
+	if ($serverType =~ /^([0-9_]+)/) {
+		# Old ServerType
+		($serverType) = $serverType =~ /([0-9_]+)/;
+		$serverType = 0 if $serverType eq '';
+		$class = "Network::Send::ServerType" . $serverType;
+	} else {
+		# New ServerType based on Server name
+		my $real_type = $serverType;
+		my $real_version = $serverType;
+		($serverType) = $serverType =~ /^([a-zA-Z0-9_]+)/;
+		$class = "Network::Send::" . $serverType;
+		($real_version) = $real_version =~ / ([a-zA-Z0-9_]+)/;
+		$serverType = $real_type;
+		$param = $real_version;
+		$param = undef if ($real_version eq '');
+		$mode = 1;
+	}
+	
 	eval("use $class;");
 	if ($@ =~ /Can\'t locate/) {
 		Network::Send::ServerTypeNotSupported->throw(error => "Server type '$serverType' not supported.");
@@ -114,7 +136,12 @@ sub create {
 		die $@;
 	}
 
-	my $instance = eval("new $class;");
+	my $instance;
+	if ($mode == 1) {
+		$instance = $class->create($param);
+	} else {
+		$instance = $class->new();
+	}
 	if (!$instance) {
 		Network::Send::CreationException->throw(
 			error => "Cannot create message sender object for server type '$serverType'.");
