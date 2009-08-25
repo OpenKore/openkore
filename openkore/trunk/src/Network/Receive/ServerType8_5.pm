@@ -3,8 +3,8 @@
 package Network::Receive::ServerType8_5;
 
 use strict;
-use Network::Receive;
-use base qw(Network::Receive);
+use Network::Receive::ServerType0 ();
+use base qw(Network::Receive::ServerType0);
 use Globals qw($masterServer);
 
 sub new {
