@@ -2410,10 +2410,10 @@ sub processPartySkillUse {
 					#
 				} elsif ($slavesList->getByID($ID)) {
 					next if ((!$char->{slaves} || !$char->{slaves}{$ID}) && !$config{"partySkill_$i"."_notPartyOnly"});
-					next if (($char->{slaves}{$ID}->{name} ne $slavesList->getByID($ID)->name) && !$config{"partySkill_$i"."_notPartyOnly"});
+					next if (($char->{slaves}{$ID} ne $slavesList->getByID($ID)) && !$config{"partySkill_$i"."_notPartyOnly"});
 				} elsif ($playersList->getByID($ID)) {
 					next if ((!$char->{party} || !$char->{party}{users}{$ID}) && !$config{"partySkill_$i"."_notPartyOnly"});
-					next if (($char->{party}{users}{$ID}->{name} ne $playersList->getByID($ID)->name) && !$config{"partySkill_$i"."_notPartyOnly"});
+					next if (($char->{party}{users}{$ID} ne $playersList->getByID($ID)) && !$config{"partySkill_$i"."_notPartyOnly"});
 				}
 				
 				my $player = Actor::get($ID);
