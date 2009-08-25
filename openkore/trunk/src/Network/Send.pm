@@ -105,8 +105,8 @@ sub create {
 	my $param;
 
 	# Remove Blanks
-	$serverType =~ s/^ +//;
-	$serverType =~ s/ +$//;
+	$serverType =~ s/^\s//;
+	$serverType =~ s/\s$//;
 
 	$serverType = 0 if $serverType eq '';
 
@@ -122,7 +122,7 @@ sub create {
 		my $real_version = $serverType;
 		($serverType) = $serverType =~ /^([a-zA-Z0-9_]+)/;
 		$class = "Network::Send::" . $serverType;
-		($real_version) = $real_version =~ / ([a-zA-Z0-9_]+)/;
+		($real_version) = $real_version =~ /\s([a-zA-Z0-9_]+)/;
 		$serverType = $real_type;
 		$param = $real_version;
 		$param = undef if ($real_version eq '');

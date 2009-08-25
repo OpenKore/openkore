@@ -318,6 +318,10 @@ sub checkConnection {
 					'paddedPackets', 'paddedPackets_attackID', 'paddedPackets_skillUseID',
 					'mapServer_ip', 'mapServer_port') {
 			if ($master->{$serverOption} ne '' && $config{$serverOption} ne $master->{$serverOption}) {
+				# Delete Wite Space
+				$master->{$serverOption} =~ s/^\s//;
+				$master->{$serverOption} =~ s/\s$//;
+				# Set config
 				main::configModify($serverOption, $master->{$serverOption});
 			}
 		}
