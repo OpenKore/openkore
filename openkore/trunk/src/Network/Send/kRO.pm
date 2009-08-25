@@ -45,7 +45,7 @@ sub new {
 # Throws Network::Send::CreationException if the server type is supported, but the
 # message sender object cannot be created.
 sub create {
-	my (undef, $net, $serverType) = @_;
+	my (undef, $serverType) = @_;
 
 	my $class = "Network::Send::kRO::" . $serverType;
 
@@ -62,9 +62,9 @@ sub create {
 			error => "Cannot create message sender object for server type '$serverType'.");
 	}
 
-	$instance->{net} = $net;
-	$instance->{serverType} = $serverType;
-	Modules::register($class);
+	# $instance->{net} = $net;
+	# $instance->{serverType} = $serverType;
+	# Modules::register($class);
 
 	return $instance;
 }
