@@ -20,6 +20,7 @@ package Network::Send::kRO::Sakexe_2006_03_27a;
 use strict;
 use Network::Send::kRO::Sakexe_2006_03_13a;
 use base qw(Network::Send::kRO::Sakexe_2006_03_13a);
+
 use Log qw(message warning error debug);
 use I18N qw(stringToBytes);
 use Utils qw(getTickCount getHex getCoordString);

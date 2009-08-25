@@ -137,7 +137,7 @@ sub initHandlers {
 	p                  => \&cmdPartyChat,
 	party              => \&cmdParty,
 	pecopeco           => \&cmdPecopeco,  
-	#pet               => \&cmdPet,
+	pet                => \&cmdPet,
 	petl               => \&cmdPetList,
 	pl                 => \&cmdPlayerList,
 	plugin             => \&cmdPlugin,
@@ -855,7 +855,16 @@ sub cmdCart {
 			message T("Cart released.\n"), "success";
 			$cart{exists} = 0;
 		}
-	
+	} elsif ($arg1 eq "change") {
+		if (!$net || $net->getState() != Network::IN_GAME) {
+			error TF("You must be logged in the game to use this command (%s)\n", 'cart ' . $arg1);
+			return;
+		}
+		if ($arg2 =~ m/^[1-5]$/) {
+			$messageSender->sendChangeCart($arg2);
+		} else {
+			error T("Usage: cart change <1-5>\n");
+		}
 	} else {
 		error TF("Error in function 'cart'\n" .
 			"Command '%s' is not a known command.\n", $arg1);
@@ -1784,7 +1793,7 @@ sub cmdFriend {
 			error T("Can't accept the friend request, no incoming request\n");
 		} else {
 			message TF("Accepting the friend request from %s\n", $incomingFriend{'name'});
-			$messageSender->sendFriendAccept($incomingFriend{'accountID'}, $incomingFriend{'charID'});
+			$messageSender->sendFriendListReply($incomingFriend{'accountID'}, $incomingFriend{'charID'}, 1);
 			undef %incomingFriend;
 		}
 
@@ -1793,7 +1802,7 @@ sub cmdFriend {
 			error T("Can't reject the friend request - no incoming request\n");
 		} else {
 			message TF("Rejecting the friend request from %s\n", $incomingFriend{'name'});
-			$messageSender->sendFriendReject($incomingFriend{'accountID'}, $incomingFriend{'charID'});
+			$messageSender->sendFriendListReply($incomingFriend{'accountID'}, $incomingFriend{'charID'}, 0);
 			undef %incomingFriend;
 		}
 
@@ -3298,14 +3307,20 @@ sub cmdPet {
 		error TF("You must be logged in the game to use this command (%s)\n", 'pet ' . $subcmd);
 		return;
 
+	} elsif ($subcmd eq "i" || $subcmd eq "info") {
+		$messageSender->sendPetMenu(0);
+
+	} elsif ($subcmd eq "f" || $subcmd eq "feed") {
+		$messageSender->sendPetMenu(1);
+		
 	} elsif ($subcmd eq "p" || $subcmd eq "performance") {
-		$messageSender->sendPetPerformance();
+		$messageSender->sendPetMenu(2);
 
 	} elsif ($subcmd eq "r" || $subcmd eq "return") {
-		$messageSender->sendPetReturnToEgg();
+		$messageSender->sendPetMenu(3);
 
 	} elsif ($subcmd eq "u" || $subcmd eq "unequip") {
-		$messageSender->sendPetUnequipItem();
+		$messageSender->sendPetMenu(4);
 	}
 }
 

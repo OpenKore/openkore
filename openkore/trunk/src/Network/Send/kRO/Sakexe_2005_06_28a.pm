@@ -20,8 +20,8 @@ package Network::Send::kRO::Sakexe_2005_06_28a;
 use strict;
 use Network::Send::kRO::Sakexe_2005_06_22a;
 use base qw(Network::Send::kRO::Sakexe_2005_06_22a);
+
 use Log qw(message warning error debug);
-use I18N qw(stringToBytes);
 use Utils qw(getTickCount getHex getCoordString);
 
 # TODO: maybe we should try to not use globals in here at all but instead pass them on?

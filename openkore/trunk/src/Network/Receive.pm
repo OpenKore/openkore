@@ -20,39 +20,25 @@
 package Network::Receive;
 
 use strict;
-use Time::HiRes qw(time usleep);
 use encoding 'utf8';
 use Carp::Assert;
 use Scalar::Util;
+
 use Exception::Class ('Network::Receive::InvalidServerType', 'Network::Receive::CreationError');
 
 use Globals;
-use Actor;
-use Actor::You;
-use Actor::Player;
-use Actor::Monster;
-use Actor::Party;
-use Actor::Item;
-use Actor::Unknown;
 use Settings;
 use Log qw(message warning error debug);
 use FileParsers;
 use Interface;
 use Network;
 use Network::MessageTokenizer;
-use Network::Send ();
 use Misc;
 use Plugins;
 use Utils;
-use Skill;
-use AI;
 use Utils::Exceptions;
 use Utils::Crypton;
 use Translation;
-use I18N qw(bytesToString);
-
-# to test zealotus bug
-#use Data::Dumper;
 
 ######################################
 ### Public methods
@@ -102,11 +88,10 @@ sub create {
 		$class = "Network::Receive::ServerType" . $type;
 	} else {
 		# New ServerType based on Server name
-		my $real_type = $type;
-		my $real_version = $type;
-		($type) = $type =~ /^([a-zA-Z0-9_]+)/;
-		$class = "Network::Receive::" . $type;
-		($real_version) = $real_version =~ /\s([a-zA-Z0-9_]+)/;
+		my ($real_type) = $type =~ /^([a-zA-Z0-9]+)_/;
+		$class = "Network::Receive::" . $real_type;
+		my ($real_version) = $type =~ /_([a-zA-Z0-9_]+)/;
+		#debug "$real_type <-> $real_version\n";
 		$type = $real_type;
 		$param = $real_version;
 		$param = undef if ($real_version eq '');

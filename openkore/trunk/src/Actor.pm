@@ -39,6 +39,7 @@ use Utils;
 use Utils::CallbackList;
 use Log qw(message error debug);
 use Misc;
+use Actor::Unknown;
 
 # Make it so that
 #     print $actor;
