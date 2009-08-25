@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-08-24 22:55+0700\n"
+"POT-Creation-Date: 2009-08-25 10:05+0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2538,12 +2538,12 @@ msgstr ""
 msgid "Quest List"
 msgstr ""
 
-#: ../Commands.pm:5306 ../Misc.pm:3150 ../Misc.pm:3165
-msgid "on"
+#: ../Commands.pm:5306
+msgid "active"
 msgstr ""
 
 #: ../Commands.pm:5306
-msgid "off"
+msgid "non-active"
 msgstr ""
 
 #: ../Commands.pm:5316
@@ -3121,6 +3121,10 @@ msgstr ""
 
 #: ../Misc.pm:3148
 msgid "casting"
+msgstr ""
+
+#: ../Misc.pm:3150 ../Misc.pm:3165
+msgid "on"
 msgstr ""
 
 #: ../Misc.pm:3151
