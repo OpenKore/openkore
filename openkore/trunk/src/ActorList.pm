@@ -31,6 +31,16 @@ use Utils::ObjectList;
 use base qw(ObjectList);
 
 use Actor;
+use Actor::Item;
+use Actor::You;
+use Actor::Player;
+use Actor::Monster;
+use Actor::Party;
+use Actor::NPC;
+use Actor::Portal;
+use Actor::Pet;
+use Actor::Slave;
+use Actor::Unknown;
 
 ### CATEGORY: Class ActorList
 
