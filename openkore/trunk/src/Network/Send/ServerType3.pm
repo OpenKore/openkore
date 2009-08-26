@@ -32,6 +32,52 @@ sub sendGetCharacterName {
 	debug "Sent get character name: ID - ".getHex($ID)."\n", "sendPacket", 2;
 }
 
+
+# 0x0190,20,actionrequest,9:19
+sub sendAction { # flag: 0 attack (once), 7 attack (continuous), 2 sit, 3 stand
+	my ($self, $monID, $flag) = @_;
+
+	my %args;
+	$args{monID} = $monID;
+	$args{flag} = $flag;
+	# eventually we'll trow this hooking out so...
+	Plugins::callHook('packet_pre/sendAttack', \%args) if ($flag == 0 || $flag == 7);
+	Plugins::callHook('packet_pre/sendSit', \%args) if ($flag == 2 || $flag == 3);
+	if ($args{return}) {
+		$self->sendToServer($args{msg});
+		return;
+	}
+
+	my $msg = pack('v x7 a4 x6 C', 0x0190, $monID, $flag);
+	$self->sendToServer($msg);
+	debug "Sent Action: " .$flag. " on: " .getHex($monID)."\n", "sendPacket", 2;
+}
+
+=pod
+sub sendStand {
+	my $self = shift;
+	my $msg;
+	
+	$msg = pack("C*", 0x90, 0x01, 0x00, 0x00, 0x00, 0x00 ,0x00 ,0x00,
+		0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+		0x00, 0x00, 0x00, 0x03);
+	
+	$self->sendToServer($msg);
+	debug "Standing\n", "sendPacket", 2;
+}
+
+sub sendSit {
+	my $self = shift;
+	my $msg;
+
+	$msg = pack("C*", 0x90, 0x01, 0x00, 0x00, 0x00, 0x00 ,0x00 ,0x00,
+  	0x00, 0x00, 0x00, 0x00, 0x00, 0x00 ,0x00 ,0x00,
+		0x00, 0x00, 0x00, 0x02);
+
+	$self->sendToServer($msg);
+	debug "Sitting\n", "sendPacket", 2;
+}
+
 sub sendAttack {
 	my ($self, $monID, $flag) = @_;
 	my $msg;
@@ -43,6 +89,7 @@ sub sendAttack {
  	$self->sendToServer($msg);
 	debug "Sent attack: ".getHex($monID)."\n", "sendPacket", 2;
 }
+=cut
 
 sub sendChat {
 	my ($self, $message) = @_;
@@ -141,18 +188,6 @@ sub sendMove {
 	debug "Sent move to: $x, $y\n", "sendPacket", 2;
 }
 
-sub sendSit {
-	my $self = shift;
-	my $msg;
-
-	$msg = pack("C*", 0x90, 0x01, 0x00, 0x00, 0x00, 0x00 ,0x00 ,0x00,
-  	0x00, 0x00, 0x00, 0x00, 0x00, 0x00 ,0x00 ,0x00,
-		0x00, 0x00, 0x00, 0x02);
-
-	$self->sendToServer($msg);
-	debug "Sitting\n", "sendPacket", 2;
-}
-
 sub sendSkillUse {
 	my ($self, $ID, $lv, $targetID) = @_;
 	my $msg;
@@ -211,18 +246,6 @@ sub sendStorageGet {
 	
 	$self->sendToServer($msg);
 	debug "Sent Storage Get: $index x $amount\n", "sendPacket", 2;
-}
-
-sub sendStand {
-	my $self = shift;
-	my $msg;
-	
-	$msg = pack("C*", 0x90, 0x01, 0x00, 0x00, 0x00, 0x00 ,0x00 ,0x00,
-		0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-		0x00, 0x00, 0x00, 0x03);
-	
-	$self->sendToServer($msg);
-	debug "Standing\n", "sendPacket", 2;
 }
 
 sub sendSync {

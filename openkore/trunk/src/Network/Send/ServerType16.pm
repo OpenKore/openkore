@@ -26,11 +26,24 @@ sub new {
 	return $class->SUPER::new(@_);
 }
 
-sub sendAttack {
+sub sendAction {
 	my ($self, $monID, $flag) = @_;
 	$self->sendToServer(Network::PaddedPackets::generateAtk($monID, $flag));
-	debug "Sent attack: ".getHex($monID)."\n", "sendPacket", 2;
+	debug "Sent Action: " .$flag. " on: " .getHex($monID)."\n", "sendPacket", 2;
 }
+=pod
+sub sendSit {
+	my ($self) = @_;
+	$self->sendToServer(Network::PaddedPackets::generateSitStand(1));
+	debug "Sitting\n", "sendPacket", 2;
+}
+
+sub sendStand {
+	my ($self) = @_;
+	$self->sendToServer(Network::PaddedPackets::generateSitStand(0));
+	debug "Standing\n", "sendPacket", 2;
+}
+=cut
 
 sub sendDrop {
 	my ($self, $index, $amount) = @_;
@@ -150,18 +163,6 @@ sub sendTake {
 	my $msg = pack("C*", 0x9F, 0x00, 0x5D, 0x03) . $itemID;
 	$self->sendToServer($msg);
 	debug "Sent take\n", "sendPacket", 2;
-}
-
-sub sendSit {
-	my ($self) = @_;
-	$self->sendToServer(Network::PaddedPackets::generateSitStand(1));
-	debug "Sitting\n", "sendPacket", 2;
-}
-
-sub sendStand {
-	my ($self) = @_;
-	$self->sendToServer(Network::PaddedPackets::generateSitStand(0));
-	debug "Standing\n", "sendPacket", 2;
 }
 
 sub sendSkillUse {

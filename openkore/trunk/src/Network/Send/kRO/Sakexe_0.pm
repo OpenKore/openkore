@@ -64,27 +64,29 @@ sub sendMove {
 	my $self = shift;
 	my $x = int scalar shift;
 	my $y = int scalar shift;
-	my $msg = pack('v a3', 0x00A7, getCoordString($x, $y, 1));
+	my $msg = pack('v a3', 0x0085, getCoordString($x, $y, 1));
 	$self->sendToServer($msg);
 	debug "Sent move to: $x, $y\n", "sendPacket", 2;
 }
 
 # 0x0089,7,actionrequest,2:6
-sub sendAttack {
+sub sendAction { # flag: 0 attack (once), 7 attack (continuous), 2 sit, 3 stand
 	my ($self, $monID, $flag) = @_;
-	my %args;
 
+	my %args;
 	$args{monID} = $monID;
 	$args{flag} = $flag;
-	Plugins::callHook('packet_pre/sendAttack', \%args);
+	# eventually we'll trow this hooking out so...
+	Plugins::callHook('packet_pre/sendAttack', \%args) if ($flag == 0 || $flag == 7);
+	Plugins::callHook('packet_pre/sendSit', \%args) if ($flag == 2 || $flag == 3);
 	if ($args{return}) {
 		$self->sendToServer($args{msg});
 		return;
 	}
 
-	my $msg = pack('v a4 C', 0x0190, $monID, $flag);
+	my $msg = pack('v a4 C', 0x0089, $monID, $flag);
 	$self->sendToServer($msg);
-	debug "Sent attack: ".getHex($monID)."\n", "sendPacket", 2;
+	debug "Sent Action: " .$flag. " on: " .getHex($monID)."\n", "sendPacket", 2;
 }
 
 # 0x008c,-1,globalmessage,2:4

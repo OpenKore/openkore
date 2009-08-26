@@ -101,9 +101,9 @@ sub iterate {
 
 	} elsif (timeOut($self->{wait}) && timeOut($self->{retry})) {
 		if ($self->{mode} eq 'stand') {
-			$messageSender->sendStand();
+			$messageSender->sendAction(undef, 3);
 		} else {
-			$messageSender->sendSit();
+			$messageSender->sendAction(undef, 2);
 		}
 		$self->{retry}{time} = time;
 	}

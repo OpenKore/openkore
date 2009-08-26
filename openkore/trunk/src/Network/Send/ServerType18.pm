@@ -37,11 +37,24 @@ sub createRandomBytes {
 	return $str;
 }
 
-sub sendAttack {
+sub sendAction {
 	my ($self, $monID, $flag) = @_;
 	$self->sendToServer(Network::PaddedPackets::generateAtk($monID, $flag));
-	debug "Sent attack: ".getHex($monID)."\n", "sendPacket", 2;
+	debug "Sent Action: " .$flag. " on: " .getHex($monID)."\n", "sendPacket", 2;
 }
+=pod
+sub sendSit {
+	my ($self) = @_;
+	$self->sendToServer(Network::PaddedPackets::generateSitStand(1));
+	debug "Sitting\n", "sendPacket", 2;
+}
+
+sub sendStand {
+	my ($self) = @_;
+	$self->sendToServer(Network::PaddedPackets::generateSitStand(0));
+	debug "Standing\n", "sendPacket", 2;
+}
+=cut
 
 sub sendChat {
 	my ($self, $message) = @_;
@@ -120,12 +133,6 @@ sub sendMove {
 	debug "Sent move to: $x, $y\n", "sendPacket", 2;
 }
 
-sub sendSit {
-	my ($self) = @_;
-	$self->sendToServer(Network::PaddedPackets::generateSitStand(1));
-	debug "Sitting\n", "sendPacket", 2;
-}
-
 sub sendSkillUse {
 	my ($self, $ID, $lv, $targetID) = @_;
 	$self->sendToServer(Network::PaddedPackets::generateSkillUse($ID, $lv,  $targetID));
@@ -142,12 +149,6 @@ sub sendSkillUseLoc {
 			pack("v*", $y);
 	$self->sendToServer($msg);
 	debug "Skill Use on Location: $ID, ($x, $y)\n", "sendPacket", 2;
-}
-
-sub sendStand {
-	my ($self) = @_;
-	$self->sendToServer(Network::PaddedPackets::generateSitStand(0));
-	debug "Standing\n", "sendPacket", 2;
 }
 
 sub sendStorageAdd {

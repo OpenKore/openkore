@@ -195,7 +195,7 @@ sub iterate {
 			if (!$self->{target}->isa('Actor::Monster')) {
 				$messageSender->sendTalk($self->{ID});
 			} else {
-				$messageSender->sendAttack($self->{ID}, 0);
+				$messageSender->sendAction($self->{ID}, 0);
 			}
 
 		} elsif ( $step =~ /c/i ) {

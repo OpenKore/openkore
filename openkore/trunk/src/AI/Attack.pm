@@ -581,7 +581,7 @@ sub main {
 				#check if item needs to be equipped
 				Actor::Item::scanConfigAndEquip("attackEquip");
 			} else {
-				$messageSender->sendAttack($ID,
+				$messageSender->sendAction($ID,
 					($config{'tankMode'}) ? 0 : 7);
 				$timeout{ai_attack}{time} = time;
 				delete $args->{attackMethod};
