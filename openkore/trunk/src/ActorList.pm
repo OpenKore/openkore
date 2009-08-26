@@ -30,6 +30,8 @@ use Carp::Assert;
 use Utils::ObjectList;
 use base qw(ObjectList);
 
+use Actor;
+
 ### CATEGORY: Class ActorList
 
 ##
@@ -42,6 +44,8 @@ use base qw(ObjectList);
 sub new {
 	my ($class, $type) = @_;
 	assert(defined $type) if DEBUG;
+	# Note: we pass a string to ActorList's new method, not an object: http://stackoverflow.com/questions/204316/why-shouldnt-i-use-universalisa
+	#		this might cause problems
 	assert(UNIVERSAL::isa($type, "Actor")) if DEBUG;
 
 	my $self = $class->SUPER::new();

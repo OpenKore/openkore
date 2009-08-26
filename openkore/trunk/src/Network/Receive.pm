@@ -27,9 +27,9 @@ use Scalar::Util;
 use Exception::Class ('Network::Receive::InvalidServerType', 'Network::Receive::CreationError');
 
 use Globals;
-use Settings;
+#use Settings;
 use Log qw(message warning error debug);
-use FileParsers;
+#use FileParsers;
 use Interface;
 use Network;
 use Network::MessageTokenizer;

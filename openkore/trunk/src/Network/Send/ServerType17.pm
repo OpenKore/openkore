@@ -28,20 +28,12 @@ sub new {
 	return $class->SUPER::new(@_);
 }
 
-sub sendAttack {
+sub sendAction {
 	my ($self, $monID, $flag) = @_;
 	$self->sendToServer(Network::PaddedPackets::generateAtk($monID, $flag));
-	debug "Sent attack: ".getHex($monID)."\n", "sendPacket", 2;
+	debug "Sent Action: " .$flag. " on: " .getHex($monID)."\n", "sendPacket", 2;
 }
-
-sub sendGameLogin { # 0275
-	my ($self, $accountID, $sessionID, $sessionID2, $sex) = @_;
-	my ($serv) = $masterServer->{ip} =~ /\d+\.\d+\.\d+\.(\d+)/;
-	my $msg = pack("C2", 0x75, 0x02) . $accountID . $sessionID . $sessionID2 . pack("C*", 0, 0, $sex) . pack("x16 C1 x3", $serv);
-	$self->sendToServer($msg);
-	debug "Sent sendGameLogin\n", "sendPacket", 2;
-}
-
+=pod
 sub sendSit {
 	my ($self) = @_;
 	$self->sendToServer(Network::PaddedPackets::generateSitStand(1));
@@ -52,6 +44,15 @@ sub sendStand {
 	my ($self) = @_;
 	$self->sendToServer(Network::PaddedPackets::generateSitStand(0));
 	debug "Standing\n", "sendPacket", 2;
+}
+=cut
+
+sub sendGameLogin { # 0275
+	my ($self, $accountID, $sessionID, $sessionID2, $sex) = @_;
+	my ($serv) = $masterServer->{ip} =~ /\d+\.\d+\.\d+\.(\d+)/;
+	my $msg = pack("C2", 0x75, 0x02) . $accountID . $sessionID . $sessionID2 . pack("C*", 0, 0, $sex) . pack("x16 C1 x3", $serv);
+	$self->sendToServer($msg);
+	debug "Sent sendGameLogin\n", "sendPacket", 2;
 }
 
 sub sendSkillUse {

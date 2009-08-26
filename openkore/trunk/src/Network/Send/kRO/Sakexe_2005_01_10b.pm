@@ -183,13 +183,15 @@ sub sendDrop {
 }
 
 # 0x0190,20,actionrequest,9:19
-sub sendAttack {
+sub sendAction { # flag: 0 attack (once), 7 attack (continuous), 2 sit, 3 stand
 	my ($self, $monID, $flag) = @_;
-	my %args;
 
+	my %args;
 	$args{monID} = $monID;
 	$args{flag} = $flag;
-	Plugins::callHook('packet_pre/sendAttack', \%args);
+	# eventually we'll trow this hooking out so...
+	Plugins::callHook('packet_pre/sendAttack', \%args) if ($flag == 0 || $flag == 7);
+	Plugins::callHook('packet_pre/sendSit', \%args) if ($flag == 2 || $flag == 3);
 	if ($args{return}) {
 		$self->sendToServer($args{msg});
 		return;
@@ -197,7 +199,7 @@ sub sendAttack {
 
 	my $msg = pack('v x7 a4 x6 C', 0x0190, $monID, $flag);
 	$self->sendToServer($msg);
-	debug "Sent attack: ".getHex($monID)."\n", "sendPacket", 2;
+	debug "Sent Action: " .$flag. " on: " .getHex($monID)."\n", "sendPacket", 2;
 }
 
 # 0x0193,2,closekafra,0

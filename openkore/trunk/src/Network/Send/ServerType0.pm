@@ -64,16 +64,24 @@ sub sendArrowCraft {
 	debug "Sent Arrowmake: $index\n", "sendPacket", 2;
 }
 
-sub sendAttack {
+# 0x0089,7,actionrequest,2:6
+sub sendAction { # flag: 0 attack (once), 7 attack (continuous), 2 sit, 3 stand
 	my ($self, $monID, $flag) = @_;
-	my $msg;
 
-	$msg = pack("C*", 0x89, 0x00) .
-		$monID .
-		pack("C*", $flag);
+	my %args;
+	$args{monID} = $monID;
+	$args{flag} = $flag;
+	# eventually we'll trow this hooking out so...
+	Plugins::callHook('packet_pre/sendAttack', \%args) if ($flag == 0 || $flag == 7);
+	Plugins::callHook('packet_pre/sendSit', \%args) if ($flag == 2 || $flag == 3);
+	if ($args{return}) {
+		$self->sendToServer($args{msg});
+		return;
+	}
 
+	my $msg = pack('v a4 C', 0x0089, $monID, $flag);
 	$self->sendToServer($msg);
-	debug "Sent attack: ".getHex($monID)."\n", "sendPacket", 2;
+	debug "Sent Action: " .$flag. " on: " .getHex($monID)."\n", "sendPacket", 2;
 }
 
 sub sendAttackStop {
@@ -1091,16 +1099,6 @@ sub sendSellBulk {
 	$self->sendToServer($msg);
 }
 
-sub sendSit {
-	my $self = shift;
-	my $msg;
-
-	$msg = pack("C*", 0x89, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02);
-
-	$self->sendToServer($msg);
-	debug "Sitting\n", "sendPacket", 2;
-}
-
 sub sendSkillUse {
 	my ($self, $ID, $lv, $targetID) = @_;
 	my $msg;
@@ -1243,16 +1241,6 @@ sub sendLoginPinCode {
 	} else {
 		ArgumentException->throw("The 'type' argument has invalid value ($type).");
 	}
-}
-
-sub sendStand {
-	my $self = shift;
-	my $msg;
-
-	$msg = pack("C*", 0x89, 0x00, 0x00, 0x00, 0x00, 0x00, 0x03);
-
-	$self->sendToServer($msg);
-	debug "Standing\n", "sendPacket", 2;
 }
 
 sub sendSuperNoviceDoriDori {
