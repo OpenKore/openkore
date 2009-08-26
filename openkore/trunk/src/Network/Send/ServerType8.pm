@@ -39,6 +39,63 @@ sub sendMove {
 	debug "Sent move to: $x, $y\n", "sendPacket", 2;
 }
 
+# 0x0190,21,actionrequest,7:20
+sub sendAction { # flag: 0 attack (once), 7 attack (continuous), 2 sit, 3 stand
+	my ($self, $monID, $flag) = @_;
+
+	my %args;
+	$args{monID} = $monID;
+	$args{flag} = $flag;
+	# eventually we'll trow this hooking out so...
+	Plugins::callHook('packet_pre/sendAttack', \%args) if ($flag == 0 || $flag == 7);
+	Plugins::callHook('packet_pre/sendSit', \%args) if ($flag == 2 || $flag == 3);
+	if ($args{return}) {
+		$self->sendToServer($args{msg});
+		return;
+	}
+
+	my $msg = pack('v x3 a4 x9 C', 0x0190, $monID, $flag);
+	$self->sendToServer($msg);
+	debug "Sent Action: " .$flag. " on: " .getHex($monID)."\n", "sendPacket", 2;
+}
+
+=pod
+sub sendAttack {
+	my ($self, $monID, $flag) = @_;
+	my $msg;
+
+	my %args;
+	$args{monID} = $monID;
+	$args{flag} = $flag;
+	Plugins::callHook('packet_pre/sendAttack', \%args);
+	if ($args{return}) {
+		$self->sendToServer($args{msg});
+		return;
+	}
+	
+	$msg = pack("C*", 0x90, 0x01, 0x00, 0x00, 0x00) . 
+		$monID . pack("C*",0x00, 0x00, 0x00, 0x00, 0x37, 0x66, 0x61, 0x32, 0x00, $flag);
+	$self->sendToServer($msg);
+	debug "Sent attack: ".getHex($monID)."\n", "sendPacket", 2;
+}
+
+sub sendStand {
+	my $self = shift;
+	my $msg;
+
+	my %args;
+	$args{flag} = 3;
+	Plugins::callHook('packet_pre/sendStand', \%args);
+	if ($args{return}) {
+		$self->sendToServer($args{msg});
+		return;
+	}
+	
+	$msg = pack("C2 x16 C1", 0x90, 0x01, 0x03);
+	$self->sendToServer($msg);
+	debug "Standing\n", "sendPacket", 2;
+}
+
 sub sendSit {
 	my $self = shift;
 	my $msg;
@@ -55,6 +112,7 @@ sub sendSit {
 	$self->sendToServer($msg);
 	debug "Sitting\n", "sendPacket", 2;
 }
+=cut
 
 sub sendSkillUse {
 	my ($self, $ID, $lv, $targetID) = @_;
@@ -73,25 +131,6 @@ sub sendSkillUse {
 	$msg = pack("v1 x4 v1 x2 v1 x9", 0x72, $lv, $ID) . $targetID;
 	$self->sendToServer($msg);
 	debug "Skill Use: $ID\n", "sendPacket", 2;
-}
-
-sub sendAttack {
-	my ($self, $monID, $flag) = @_;
-	my $msg;
-
-	my %args;
-	$args{monID} = $monID;
-	$args{flag} = $flag;
-	Plugins::callHook('packet_pre/sendAttack', \%args);
-	if ($args{return}) {
-		$self->sendToServer($args{msg});
-		return;
-	}
-	
-	$msg = pack("C*", 0x90, 0x01, 0x00, 0x00, 0x00) . 
-		$monID . pack("C*",0x00, 0x00, 0x00, 0x00, 0x37, 0x66, 0x61, 0x32, 0x00, $flag);
-	$self->sendToServer($msg);
-	debug "Sent attack: ".getHex($monID)."\n", "sendPacket", 2;
 }
 
 sub sendChat {
@@ -187,23 +226,6 @@ sub sendStorageGet {
 	my $msg = pack("v1 x12 v1 x2 V1", 0xf7, $index, $amount);
 	$self->sendToServer($msg);
 	debug "Sent Storage Get: $index x $amount\n", "sendPacket", 2;
-}
-
-sub sendStand {
-	my $self = shift;
-	my $msg;
-
-	my %args;
-	$args{flag} = 3;
-	Plugins::callHook('packet_pre/sendStand', \%args);
-	if ($args{return}) {
-		$self->sendToServer($args{msg});
-		return;
-	}
-	
-	$msg = pack("C2 x16 C1", 0x90, 0x01, 0x03);
-	$self->sendToServer($msg);
-	debug "Standing\n", "sendPacket", 2;
 }
 
 sub sendSync {
