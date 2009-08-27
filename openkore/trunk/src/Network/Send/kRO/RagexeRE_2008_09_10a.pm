@@ -24,6 +24,10 @@ use base qw(Network::Send::kRO::RagexeRE_2008_08_27a);
 use Log qw(message warning error debug);
 use Utils qw(getTickCount);
 
+sub version {
+	return 24;
+}
+
 sub new {
 	my ($class) = @_;
 	return $class->SUPER::new(@_);

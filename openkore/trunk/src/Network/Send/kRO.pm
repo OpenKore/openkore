@@ -69,33 +69,4 @@ sub create {
 	return $instance;
 }
 
-# SEEMS LIKE LOGIN PACKETS ARE MISSING!! SO I HAVE PUT THEM HERE
-use Globals qw($masterServer);
-# missing packets
-sub sendMasterLogin {
-	my ($self, $username, $password, $master_version, $version) = @_;
-	my $msg = pack("v1 V", hex($masterServer->{masterLogin_packet}) || 0x64, $version) .
-			pack("a24", $username) .
-			pack("a24", $password) .
-			pack("C*", $master_version);
-	$self->sendToServer($msg);
-}
-
-sub sendGameLogin {
-	my ($self, $accountID, $sessionID, $sessionID2, $sex) = @_;
-	my $msg = pack("v1", hex($masterServer->{gameLogin_packet}) || 0x65) . $accountID . $sessionID . $sessionID2 . pack("C*", 0, 0, $sex);
-	if (hex($masterServer->{gameLogin_packet}) == 0x0273 || hex($masterServer->{gameLogin_packet}) == 0x0275) {
-		my ($serv) = $masterServer->{ip} =~ /\d+\.\d+\.\d+\.(\d+)/;
-		$msg .= pack("x16 C1 x3", $serv);
-	}
-	$self->sendToServer($msg);
-	debug "Sent sendGameLogin\n", "sendPacket", 2;
-}
-
-sub sendCharLogin {
-	my ($self, $char) = @_;
-	my $msg = pack("C*", 0x66,0) . pack("C*",$char);
-	$self->sendToServer($msg);
-}
-
 1;

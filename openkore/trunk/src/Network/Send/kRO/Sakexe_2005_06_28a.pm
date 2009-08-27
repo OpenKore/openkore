@@ -27,6 +27,9 @@ use Utils qw(getTickCount getHex getCoordString);
 # TODO: maybe we should try to not use globals in here at all but instead pass them on?
 use Globals qw($char);
 
+sub version {
+	return 17;
+}
 
 sub new {
 	my ($class) = @_;
