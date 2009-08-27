@@ -25,15 +25,18 @@ use Log qw(message warning error debug);
 
 sub new {
 	my ($class) = @_;
-	my $self = $class->SUPER::new();
-	$self->{packet_list} = {
+	my $self = $class->SUPER::new(@_);
+	my %packets = (
+		# 0x0224,10
+		# 0x0226,282
+	);
+	
+	foreach my $switch (keys %packets) {
+		$self->{packet_list}{$switch} = $packets{$switch};
+	}
 
-	};
 	return $self;
 }
-
-# 0x0224,10
-# 0x0226,282
 
 =pod
 //2005-03-28aSakexe

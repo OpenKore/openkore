@@ -23,14 +23,19 @@ use base qw(Network::Receive::kRO::Sakexe_2008_01_02a);
 
 sub new {
 	my ($class) = @_;
-	my $self = $class->SUPER::new();
-	$self->{packet_list} = {
+	my $self = $class->SUPER::new(@_);
+	my %packets = (
 		# 0x02bf,0
 		# 0x02c0,0
 		# 0x02f0,10
 		# 0x02f1,2
 		# 0x02f2,2
-	};
+	);
+	
+	foreach my $switch (keys %packets) {
+		$self->{packet_list}{$switch} = $packets{$switch};
+	}
+
 	return $self;
 }
 

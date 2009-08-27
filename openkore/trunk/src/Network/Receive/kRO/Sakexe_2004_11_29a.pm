@@ -31,11 +31,16 @@ use Globals qw($char %config);
 
 sub new {
 	my ($class) = @_;
-	my $self = $class->SUPER::new();
-	$self->{packet_list} = {
+	my $self = $class->SUPER::new(@_);
+	my %packets = (
 		'0221' => ['upgrade_list'], # -1
 		'0223' => ['upgrade_message', 'a4 v', [qw(type itemID)]], # 8
-	};
+	);
+	
+	foreach my $switch (keys %packets) {
+		$self->{packet_list}{$switch} = $packets{$switch};
+	}
+
 	return $self;
 }
 

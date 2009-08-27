@@ -31,8 +31,8 @@ use Globals qw($char);
 
 sub new {
 	my ($class) = @_;
-	my $self = $class->SUPER::new();
-	$self->{packet_list} = {
+	my $self = $class->SUPER::new(@_);
+	my %packets = (
 		'0216' => ['adopt_reply', 'V', [qw(type)]], # 6
 
 		'0240' => ['mail_refreshinbox', 'v V', [qw(size  count)]], # 8
@@ -50,7 +50,12 @@ sub new {
 		'0250' => ['auction_result', 'C', [qw(flag)]], # 3
 		# 0x0251,2
 		'0252' => ['auction_item_request_search', 'v V2', [qw(size pages count)]], # -1
-	};
+	);
+	
+	foreach my $switch (keys %packets) {
+		$self->{packet_list}{$switch} = $packets{$switch};
+	}
+
 	return $self;
 }
 

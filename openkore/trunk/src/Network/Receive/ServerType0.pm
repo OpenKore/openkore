@@ -245,7 +245,7 @@ sub new {
 		'018D' => ['forge_list'],
 		'018F' => ['refine_result', 'v2', [qw(fail nameID)]],
 		'0191' => ['talkie_box', 'a4 Z80', [qw(ID message)]], # talkie box message
-		'0192' => ['map_change_cell', 'v3', [qw(x y type)]], # ex. due to ice wall
+		'0192' => ['map_change_cell', 'v3 Z16', [qw(x y type map_name)]], # ex. due to ice wall
 		'0194' => ['character_name', 'a4 Z24', [qw(ID name)]],
 		'0195' => ['actor_name_received', 'a4 Z24 Z24 Z24 Z24', [qw(ID name partyName guildName guildTitle)]],
 		'0196' => ['actor_status_active', 'v a4 C', [qw(type ID flag)]],
@@ -512,6 +512,7 @@ sub account_server_info {
 	my $msg_size = length($msg);
 
 	$net->setState(2);
+
 	undef $conState_tries;
 	$sessionID = $args->{sessionID};
 	$accountID = $args->{accountID};
@@ -6871,27 +6872,18 @@ sub GM_silence {
 # TODO test if we must use ID to know if the packets are meant for us.
 sub teakwon_packets {
 	my ($self, $args) = @_;
-	if ($args->{flag} == 0) {
-		# Info about Star Gladiator save map: Map registered
-		my $string = ($args->{value} == 1) ? "Sun" : ($args->{value} == 2) ? "Moon" : ($args->{value} == 3) ? "Stars" : "unknown";
+	my $string = ($args->{value} == 1) ? "Sun" : ($args->{value} == 2) ? "Moon" : ($args->{value} == 3) ? "Stars" : "unknown";
+	if ($args->{flag} == 0) { # Info about Star Gladiator save map: Map registered
 		message TF("You have now marked: %s as Place of the %s.\n", $args->{name}, $string), "info";
-	} elsif ($args->{flag} == 1) {
-		# Info about Star Gladiator save map: Information
-		my $string = ($args->{value} == 1) ? "Sun" : ($args->{value} == 2) ? "Moon" : ($args->{value} == 3) ? "Stars" : "unknown";
+	} elsif ($args->{flag} == 1) { # Info about Star Gladiator save map: Information
 		message TF("%s is marked as Place of the %s.\n", $args->{name}, $string), "info";
-	} elsif ($args->{flag} == 10) {
-		# Info about Star Gladiator hate mob: Register mob
-		my $string = ($args->{value} == 1) ? "Sun" : ($args->{value} == 2) ? "Moon" : ($args->{value} == 3) ? "Stars" : "unknown";
+	} elsif ($args->{flag} == 10) { # Info about Star Gladiator hate mob: Register mob
 		message TF("You have now marked %s as Target of the %s.\n", $args->{name}, $string), "info";
-	} elsif ($args->{flag} == 11) {
-		# Info about Star Gladiator hate mob: Information
-		my $string = ($args->{value} == 1) ? "Sun" : ($args->{value} == 2) ? "Moon" : ($args->{value} == 3) ? "Stars" : "unknown";
+	} elsif ($args->{flag} == 11) { # Info about Star Gladiator hate mob: Information
 		message TF("%s is marked as Target of the %s.\n", $args->{name}, $string);
-	} elsif ($args->{flag} == 20) {
-		#Info about TaeKwon Do TK_MISSION mob
+	} elsif ($args->{flag} == 20) { #Info about TaeKwon Do TK_MISSION mob
 		message TF("TaeKwon Mission : %s (%)"."\n", monsterName($args->{ID}), $args->{value}), "info";
-	} elsif ($args->{flag} == 30) {
-		#Feel/Hate reset
+	} elsif ($args->{flag} == 30) { #Feel/Hate reset
 		message T("Your Hate and Feel targets have been resetted.\n"), "info";
 	} else {
 		warning TF("flag: %s gave unknown results in: %s\n", $args->{flag}, $self->{packet_list}{$args->{switch}}->[0]);
@@ -6964,7 +6956,7 @@ sub guild_alliance_added {
 # TODO: add actual functionality, maybe alter field?
 sub map_change_cell {
 	my ($self, $args) = @_;
-	debug "Cell on ($args->{x}, $args->{y}) has been changed to $args->{type}\n", "info";
+	debug "Cell on ($args->{x}, $args->{y}) has been changed to $args->{type} on $args->{map_name}\n", "info";
 }
 
 # 01D1

@@ -23,13 +23,18 @@ use base qw(Network::Receive::kRO::Sakexe_2007_01_22a);
 
 sub new {
 	my ($class) = @_;
-	my $self = $class->SUPER::new();
-	$self->{packet_list} = {
+	my $self = $class->SUPER::new(@_);
+	my %packets = (
 		'029B' => ['homunculus_stats', 'a4 v8 Z24 v5 V v2', [qw(ID atk matk hit critical def mdef flee aspd name lv hp hp_max sp sp_max contract_end faith summons)]], # 72
 		# 0x02a3,0
 		# 0x02a4,0
 		# 0x02a5,8
-	};
+	);
+	
+	foreach my $switch (keys %packets) {
+		$self->{packet_list}{$switch} = $packets{$switch};
+	}
+
 	return $self;
 }
 

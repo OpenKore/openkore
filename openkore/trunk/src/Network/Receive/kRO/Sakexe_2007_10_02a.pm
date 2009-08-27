@@ -29,8 +29,8 @@ use Globals qw(%config);
 
 sub new {
 	my ($class) = @_;
-	my $self = $class->SUPER::new();
-	$self->{packet_list} = {
+	my $self = $class->SUPER::new(@_);
+	my %packets = (
 		'0289' => ['cash_buy_fail', 'V2 v', [qw(cash_points kafra_points fail)]], # 12
 
 		'02A6' => ['gameguard_request'], # 22
@@ -86,7 +86,12 @@ sub new {
 
 		# 0x02df,36
 		# 0x02e0,34
-	};
+	);
+	
+	foreach my $switch (keys %packets) {
+		$self->{packet_list}{$switch} = $packets{$switch};
+	}
+
 	return $self;
 }
 

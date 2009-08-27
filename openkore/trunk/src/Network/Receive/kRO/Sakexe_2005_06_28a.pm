@@ -30,12 +30,17 @@ use Globals qw($char);
 
 sub new {
 	my ($class) = @_;
-	my $self = $class->SUPER::new();
-	$self->{packet_list} = {
+	my $self = $class->SUPER::new(@_);
+	my %packets = (
 		# 0x0216,0
 		# 0x023d,-1
 		'023E' => ['storage_password_request', 'v', [qw(flag)]], # 4
-	};
+	);
+	
+	foreach my $switch (keys %packets) {
+		$self->{packet_list}{$switch} = $packets{$switch};
+	}
+
 	return $self;
 }
 

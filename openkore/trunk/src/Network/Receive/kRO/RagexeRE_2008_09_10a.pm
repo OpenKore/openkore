@@ -26,7 +26,13 @@ use Utils qw(getTickCount);
 
 sub new {
 	my ($class) = @_;
-	my $self = $class->SUPER::new();
+	my $self = $class->SUPER::new(@_);
+	my %packets = ();
+
+	foreach my $switch (keys %packets) {
+		$self->{packet_list}{$switch} = $packets{$switch};
+	}
+
 	return $self;
 }
 

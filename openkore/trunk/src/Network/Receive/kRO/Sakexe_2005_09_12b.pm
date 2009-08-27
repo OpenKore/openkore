@@ -23,12 +23,17 @@ use base qw(Network::Receive::kRO::Sakexe_2005_08_29a);
 
 sub new {
 	my ($class) = @_;
-	my $self = $class->SUPER::new();
-	$self->{packet_list} = {
+	my $self = $class->SUPER::new(@_);
+	my %packets = (
 		'0256' => ['auction_add_item', 'v C', [qw(index fail)]], # 5
 		# 0x0258,2
 		'0259' => ['gameguard_grant', 'C', [qw(server)]], # 3
-	};
+	);
+	
+	foreach my $switch (keys %packets) {
+		$self->{packet_list}{$switch} = $packets{$switch};
+	}
+
 	return $self;
 }
 
