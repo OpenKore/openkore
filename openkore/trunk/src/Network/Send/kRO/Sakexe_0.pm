@@ -367,7 +367,7 @@ sub sendChatRoomChange {
 # 0x00e0,30,changechatowner,2:6
 sub sendChatRoomBestow {
 	my ($self, $name) = @_;
-	my $msg = pack('v V Z24', 0, 0x00E0, stringToBytes($name));
+	my $msg = pack('v x4 Z24', 0x00E0, stringToBytes($name));
 	$self->sendToServer($msg);
 	debug "Sent Chat Room Bestow: $name\n", "sendPacket", 2;
 }
