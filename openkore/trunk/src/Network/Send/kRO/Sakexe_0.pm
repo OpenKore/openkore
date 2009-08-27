@@ -28,9 +28,58 @@ use Utils qw(getTickCount getHex getCoordString);
 # TODO: maybe we should try to not use globals in here at all but instead pass them on?
 use Globals qw($accountID $sessionID $sessionID2 $accountSex $char $charID %config %guild @chars $masterServer $syncSync $net);
 
+sub version {
+	return 5;
+}
+
 sub new {
 	my ($class) = @_;
 	return $class->SUPER::new(@_);
+}
+
+# 0x0064,55
+# NOTE: we support private servers that alter the packetswitch with: $masterServer->{masterLogin_packet}
+# NOTE: we support private server that alter the version number by passing on $version
+sub sendMasterLogin {
+	my ($self, $username, $password, $master_version, $version) = @_;
+	my $msg = pack('v V a24 a24 C', hex($masterServer->{masterLogin_packet}) || 0x0064, $version || version(), $username, $password, $master_version);
+	$self->sendToServer($msg);
+}
+
+# 0x0065,17
+# TODO: move 0273 and 0275 to appropriate Sakexe version
+sub sendGameLogin {
+	my ($self, $accountID, $sessionID, $sessionID2, $sex) = @_;
+	my $msg = pack("v a4 a4 a4 x2 C", hex($masterServer->{gameLogin_packet}) || 0x0065, $accountID, $sessionID, $sessionID2, $sex);
+	if (hex($masterServer->{gameLogin_packet}) == 0x0273 || hex($masterServer->{gameLogin_packet}) == 0x0275) {
+		my ($serv) = $masterServer->{ip} =~ /\d+\.\d+\.\d+\.(\d+)/;
+		$msg .= pack("x16 C x3", $serv);
+	}
+	$self->sendToServer($msg);
+	debug "Sent sendGameLogin\n", "sendPacket", 2;
+}
+
+# 0x0066,6
+sub sendCharLogin {
+	my ($self, $char) = @_;
+	my $msg = pack('v C', 0x0066, $char);
+	$self->sendToServer($msg);
+}
+
+# 0x0067,37
+sub sendCharCreate {
+	my ($self, $slot, $name, $str, $agi, $vit, $int, $dex, $luk, $hair_style, $hair_color) = @_;
+	$hair_color ||= 1;
+
+	my $msg = pack('v a24 C7 v2', 0x0067, stringToBytes($name), $str, $agi, $vit, $int, $dex, $luk, $slot, $hair_color, $hair_style);
+	$self->sendToServer($msg);
+}
+
+# 0x0068,46
+sub sendCharDelete {
+	my ($self, $charID, $email) = @_;
+	my $msg = pack('v a4 a40', 0x0068, $charID, stringToBytes($email));
+	$self->sendToServer($msg);
 }
 
 # 0x0072,19,wanttoconnection,2:6:10:14:18

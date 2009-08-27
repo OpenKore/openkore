@@ -47,7 +47,7 @@ sub create {
 	my ($self, $type) = @_;
 
 	# TODO we don't have the receive part yet, so use the old
-	#my $class = "Network::Receive::kRO" . $type;
+	#my $class = "Network::Receive::kRO::" . $type;
 	my $class = "Network::Receive::ServerType8_5";
 
 	undef $@;

@@ -24,6 +24,10 @@ use base qw(Network::Send::kRO::Sakexe_0);
 use Log qw(message warning error debug);
 use Utils qw(getTickCount getCoordString);
 
+sub version {
+	return 6;
+}
+
 sub new {
 	my ($class) = @_;
 	return $class->SUPER::new(@_);
