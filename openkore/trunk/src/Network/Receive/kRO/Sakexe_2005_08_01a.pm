@@ -23,12 +23,15 @@ use base qw(Network::Receive::kRO::Sakexe_2005_07_19b);
 
 sub new {
 	my ($class) = @_;
-	my $self = $class->SUPER::new();
-	$self->{packet_list} = {
+	my $self = $class->SUPER::new(@_);
+	my %packets = (
 		'0245' => ['mail_getattachment', 'C', [qw(fail)]], # 3
+	);
+	
+	foreach my $switch (keys %packets) {
+		$self->{packet_list}{$switch} = $packets{$switch};
+	}
 
-		# 0x0251,4
-	};
 	return $self;
 }
 

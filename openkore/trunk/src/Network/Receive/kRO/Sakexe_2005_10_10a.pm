@@ -25,11 +25,16 @@ use Log qw(message warning error debug);
 
 sub new {
 	my ($class) = @_;
-	my $self = $class->SUPER::new();
-	$self->{packet_list} = {
+	my $self = $class->SUPER::new(@_);
+	my %packets = (
 		'020E' => ['teakwon_packets', 'Z24 a4 C2', [qw(name ID value flag)]], # 32
 		'025A' => ['cooking_list', 'v', [qw(type)]], # -1
-	};
+	);
+	
+	foreach my $switch (keys %packets) {
+		$self->{packet_list}{$switch} = $packets{$switch};
+	}
+
 	return $self;
 }
 

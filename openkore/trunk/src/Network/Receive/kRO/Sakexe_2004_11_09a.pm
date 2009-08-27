@@ -25,8 +25,8 @@ use Log qw(message warning error debug);
 
 sub new {
 	my ($class) = @_;
-	my $self = $class->SUPER::new();
-	$self->{packet_list} = {
+	my $self = $class->SUPER::new(@_);
+	my %packets = (
 		# 0x0084,2
 		'0216' => ['adopt_reply', 'V', [qw(type)]], # 6
 
@@ -34,7 +34,12 @@ sub new {
 		'021A' => ['top10_alchemist_rank'], # 282
 		'021B' => ['blacksmith_points', 'V2', [qw(points total)]], # 10
 		'021C' => ['alchemist_point', 'V2', [qw(points total)]], # 10
-	};
+	);
+	
+	foreach my $switch (keys %packets) {
+		$self->{packet_list}{$switch} = $packets{$switch};
+	}
+
 	return $self;
 }
 

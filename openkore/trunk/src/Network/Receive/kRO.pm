@@ -21,7 +21,7 @@ use encoding 'utf8';
 use Carp::Assert;
 
 use Network::Receive ();
-use base qw(Network::Receive::ServerType0);
+use base qw(Network::Receive);
 
 use Exception::Class ('Network::Receive::kRO::InvalidServerType', 'Network::Receive::kRO::CreationError');
 
@@ -32,7 +32,9 @@ use Translation;
 
 sub new {
 	my ($class) = @_;
-	return $class->SUPER::new(@_);
+	my $self = $class->SUPER::new(@_);
+	
+	return $self;
 }
 
 ##
@@ -46,12 +48,11 @@ sub new {
 sub create {
 	my ($self, $type) = @_;
 
-	# TODO we don't have the receive part yet, so use the old
-	#my $class = "Network::Receive::kRO::" . $type;
-	my $class = "Network::Receive::ServerType8_5";
+	my $class = "Network::Receive::kRO::" . $type;
+	#my $class = "Network::Receive::ServerType8_5"; #-> we don't need this anymore! yay
 
 	undef $@;
-	eval "use $class;";
+	eval ("use $class;");
 	if ($@ =~ /^Can't locate /s) {
 		Network::Receive::kRO::InvalidServerType->throw(
 			TF("Cannot load server message parser for server type '%s'.", $type)

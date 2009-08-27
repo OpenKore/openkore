@@ -23,11 +23,16 @@ use base qw(Network::Receive::kRO::Sakexe_2007_10_02a);
 
 sub new {
 	my ($class) = @_;
-	my $self = $class->SUPER::new();
-	$self->{packet_list} = {
+	my $self = $class->SUPER::new(@_);
+	my %packets = (
 		'02CB' => ['instance_window_start', 'Z61 v', [qw(name flag)]], # 65
 		'02CD' => ['instance_window_join', 'Z61 V2', [qw(name time_remaining time_close)]], # 71
-	};
+	);
+	
+	foreach my $switch (keys %packets) {
+		$self->{packet_list}{$switch} = $packets{$switch};
+	}
+
 	return $self;
 }
 

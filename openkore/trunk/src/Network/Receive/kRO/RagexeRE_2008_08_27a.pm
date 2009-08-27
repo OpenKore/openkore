@@ -29,14 +29,19 @@ use Globals qw($char);
 
 sub new {
 	my ($class) = @_;
-	my $self = $class->SUPER::new();
-	$self->{packet_list} = {
+	my $self = $class->SUPER::new(@_);
+	my %packets = (
 		'007C' => ['actor_display',	'a4 v14 C2 a3 C5', [qw(ID walk_speed opt1 opt2 option hair_style weapon lowhead type shield tophead midhead hair_color clothes_color head_dir karma sex coords unknown1 unknown2 unknown3 unknown4 unknown5)]], #spawning (eA does not send this for players) # 41
 		# 0x02e2,20
 		# 0x02e3,22
 		# 0x02e4,11
 		# 0x02e5,9
-	};
+	);
+	
+	foreach my $switch (keys %packets) {
+		$self->{packet_list}{$switch} = $packets{$switch};
+	}
+
 	return $self;
 }
 

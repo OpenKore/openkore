@@ -25,8 +25,8 @@ use Log qw(message warning error debug);
 
 sub new {
 	my ($class) = @_;
-	my $self = $class->SUPER::new();
-	$self->{packet_list} = {
+	my $self = $class->SUPER::new(@_);
+	my %packets = (
 		'02E8' => ['inventory_items_stackable'], # -1
 		'02E9' => ['cart_items_stackable'], # -1
 		'02EA' => ['storage_items_stackable'], # -1
@@ -35,7 +35,12 @@ sub new {
 		'02ED' => ['actor_display', 'a4 v3 V v10 a4 a4 V C2 a3 v3',			[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID opt3 karma sex coords act lv unknown)]], # 59 # Spawning
 		'02EE' => ['actor_display', 'a4 v3 V v10 a4 a4 V C2 a3 x v3',		[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID opt3 karma sex coords act lv unknown)]], # 60 # Standing
 		'02EF' => ['font', 'a4 v', [qw(ID fontID)]], # 8
-	};
+	);
+	
+	foreach my $switch (keys %packets) {
+		$self->{packet_list}{$switch} = $packets{$switch};
+	}
+
 	return $self;
 }
 

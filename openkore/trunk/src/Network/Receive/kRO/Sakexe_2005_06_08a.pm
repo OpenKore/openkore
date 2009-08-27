@@ -26,14 +26,19 @@ use I18N qw(stringToBytes);
 
 sub new {
 	my ($class) = @_;
-	my $self = $class->SUPER::new();
-	$self->{packet_list} = {
+	my $self = $class->SUPER::new(@_);
+	my %packets = (
 		'0216' => ['adopt_reply', 'V', [qw(type)]], # 6
 		'022F' => ['homunculus_food', 'C v', [qw(success foodID)]], # 5
 		'023A' => ['storage_password_request', 'v', [qw(flag)]], # 4
 		'023C' => ['storage_password_result', 'v2', [qw(type val)]], # 6
-	};
-	return $self;
+	);
+	
+	foreach my $switch (keys %packets) {
+		$self->{packet_list}{$switch} = $packets{$switch};
+	}
+
+	return $self;;
 }
 
 =pod

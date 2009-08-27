@@ -25,8 +25,8 @@ use Log qw(message warning error debug);
 
 sub new {
 	my ($class) = @_;
-	my $self = $class->SUPER::new();
-	$self->{packet_list} = {
+	my $self = $class->SUPER::new(@_);
+	my %packets = (
 		# 0x023e,8
 		# 0x0277,84
 		# 0x0278,2
@@ -71,7 +71,12 @@ sub new {
 		# 0x02a0,0
 		# 0x02a1,0
 		# 0x02a2,8
-	};
+	);
+	
+	foreach my $switch (keys %packets) {
+		$self->{packet_list}{$switch} = $packets{$switch};
+	}
+
 	return $self;
 }
 
