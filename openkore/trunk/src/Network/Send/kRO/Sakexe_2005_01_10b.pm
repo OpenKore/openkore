@@ -207,7 +207,7 @@ sub sendAction { # flag: 0 attack (once), 7 attack (continuous), 2 sit, 3 stand
 
 # 0x0193,2,closekafra,0
 sub sendStorageClose {
-	$_[0]->sendToServer(('v', 0x0193));
+	$_[0]->sendToServer(pack('v', 0x0193));
 	debug "Sent Storage Done\n", "sendPacket", 2;
 }
 
