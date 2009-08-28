@@ -1944,7 +1944,7 @@ sub changeToInGameState {
 
 sub character_creation_failed {
 	my ($self, $args) = @_;
-	if ($args->{flag} == 0x0) {
+	if ($args->{flag} == 0x00) {
 		message T("Charname already exists.\n"), "info";
 	} elsif ($args->{flag} == 0xFF) {
 		message T("Char creation denied.\n"), "info";
