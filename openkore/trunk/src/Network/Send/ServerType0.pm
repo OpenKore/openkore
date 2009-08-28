@@ -867,13 +867,6 @@ sub sendOpenShop {
 	$self->sendToServer($msg);
 }
 
-sub sendOpenWarp {
-	my ($self, $map) = @_;
-	my $msg = pack("C*", 0x1b, 0x01, 0x1b, 0x00) . $map .
-		chr(0) x (16 - length($map));
-	$self->sendToServer($msg);
-}
-
 sub sendPartyChat {
 	my $self = shift;
 	my $message = shift;
@@ -1329,6 +1322,14 @@ sub sendTalkText {
 	debug "Sent talk text: ".getHex($ID).", $input\n", "sendPacket", 2;
 }
 
+# 0x011b,20,useskillmap,2:4
+sub sendWarpTele { # type: 26=tele, 27=warp
+	my ($self, $skillID, $map) = @_;
+	my $msg = pack('v2 Z16', 0x011B, $skillID, stringToBytes($map));
+	$self->sendToServer($msg);
+	debug "Sent ". ($skillID == 26 ? "Teleport" : "Open Warp") . "\n", "sendPacket", 2
+}
+=pod
 sub sendTeleport {
 	my $self = shift;
 	my $location = shift;
@@ -1338,6 +1339,14 @@ sub sendTeleport {
 	$self->sendToServer($msg);
 	debug "Sent Teleport: $location\n", "sendPacket", 2;
 }
+
+sub sendOpenWarp {
+	my ($self, $map) = @_;
+	my $msg = pack("C*", 0x1b, 0x01, 0x1b, 0x00) . $map .
+		chr(0) x (16 - length($map));
+	$self->sendToServer($msg);
+}
+=cut
 
 sub sendTop10Alchemist {
 	my $self = shift;

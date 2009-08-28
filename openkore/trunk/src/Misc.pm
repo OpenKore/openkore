@@ -2811,7 +2811,7 @@ sub useTeleport {
 		debug "Sending Teleport using Level $use_lvl\n", "useTeleport";
 		if ($use_lvl == 1) {
 			Plugins::callHook('teleport_sent', \%args);
-			$messageSender->sendTeleport("Random");
+			$messageSender->sendTeleport(26, "Random");
 			return 1;
 		} elsif ($use_lvl == 2) {
 			# check for possible skill level abuse
@@ -2823,7 +2823,7 @@ sub useTeleport {
 			my $telemap = "prontera.gat";
 			$telemap = "$config{saveMap}.gat" if ($config{saveMap} ne "");
 			Plugins::callHook('teleport_sent', \%args);
-			$messageSender->sendTeleport($telemap);
+			$messageSender->sendTeleport(26, $telemap);
 			return 1;
 		}
 	}

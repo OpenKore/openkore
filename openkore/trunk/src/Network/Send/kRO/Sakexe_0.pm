@@ -545,10 +545,11 @@ sub sendAttackStop {
 }
 
 # 0x011b,20,useskillmap,2:4
-sub sendOpenWarp {
-	my ($self, $map) = @_;
-	my $msg = pack('v Z16 x2', 0x011B, stringToBytes($map));
+sub sendWarpTele { # type: 26=tele, 27=warp
+	my ($self, $skillID, $map) = @_;
+	my $msg = pack('v2 Z16', 0x011B, $skillID, stringToBytes($map));
 	$self->sendToServer($msg);
+	debug "Sent ". ($skillID == 26 ? "Teleport" : "Open Warp") . "\n", "sendPacket", 2
 }
 
 # 0x011d,2,requestmemo,0
