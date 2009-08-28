@@ -613,7 +613,8 @@ sub sendEnteringVender {
 # 0x0134,-1,purchasereq,2:4:8
 sub sendBuyVender {
 	my ($self, $venderID, $ID, $amount) = @_;
-	my $msg = pack('v a4 v2', 0x0134, $venderID, $amount, $ID);
+	my $len = 12; #temporary, this is a complex packet
+	my $msg = pack('v2 a4 v2', 0x0134, $len, $venderID, $amount, $ID);
 	$self->sendToServer($msg);
 	debug "Sent Vender Buy: ".getHex($ID)."\n", "sendPacket";
 }
@@ -916,7 +917,7 @@ sub sendChangeCart { # lvl: 1, 2, 3, 4, 5
 sub sendOpenShop {
 	my ($self, $title, $items) = @_;
 	my $length = 0x55 + 0x08 * @{$items};
-	my $msg = pack('v2 a80 C', 0x01B2, $length, stringToBytes($title));
+	my $msg = pack('v2 a80 C', 0x01B2, $length, stringToBytes($title), 1);
 	foreach my $item (@{$items}) {
 		$msg .= pack('v2 V', $item->{index}, $item->{amount}, $item->{price});
 	}
