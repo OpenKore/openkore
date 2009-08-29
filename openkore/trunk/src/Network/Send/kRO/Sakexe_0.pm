@@ -277,11 +277,11 @@ sub sendWho {
 }
 
 # 0x00c5,7,npcbuysellselected,2:6
-sub sendGetSellList {
-	my ($self, $ID) = @_;
+sub sendNPCBuySellList { # type:0 get store list, type:1 get sell list
+	my ($self, $ID, $type) = @_;
 	my $msg = pack('v a4 C', 0x00C5, $ID , 1);
 	$self->sendToServer($msg);
-	debug "Sent sell to NPC: ".getHex($ID)."\n", "sendPacket", 2;
+	debug "Sent get ".($type ? "buy" : "sell")." list to NPC: ".getHex($ID)."\n", "sendPacket", 2;
 }
 
 # 0x00c8,-1,npcbuylistsend,2:4
@@ -621,9 +621,19 @@ sub sendBuyVender {
 
 # 0x013f,26,itemmonster,2
 # clif_parse_GM_Monster_Item
+sub sendGmMonsterItem {
+	my ($self, $name) = @_;
+	my $packet = pack('v a24', 0x013F, stringToBytes($name));
+	$self->sendToServer($packet);
+}
 
 # 0x0140,22,mapmove,2:18:20
 # clif_parse_MapMove
+sub sendGmMapMove {
+	my ($self, $name, $x, $y) = @_;
+	my $packet = pack('v Z16 v2', 0x013F, stringToBytes($name), $x, $y);
+	$self->sendToServer($packet);
+}
 
 # 0x0143,10,npcamountinput,2:6
 sub sendTalkNumber {
@@ -846,15 +856,32 @@ sub sendGetCharacterName {
 }
 
 # 0x0197,4,resetchar,2
+sub sendGmResetChar { # type:0 status, type:1 skills
+	my ($self, $type) = @_;
+	my $msg = pack('v2', 0x0197, $type);
+	$self->sendToServer($msg);
+	debug "Sent GM Reset State.\n", "sendPacket", 2;
+}
 
 # 0x0198,8,changemaptype,2:4:6
-
+sub sendGmChangeMapType { # type is of .gat format
+	my ($self, $x, $y, $type) = @_;
+	my $msg = pack('v4', 0x0198, $x, $y, $type);
+	$self->sendToServer($msg);
+	debug "Sent GM Change Map Type.\n", "sendPacket", 2;
+}
 
 # 0x019c,-1,lgmmessage,2:4
 
 
 # 0x019d,6,gmhide,0
-
+# TODO: test this
+sub sendGmHide {
+	my ($self) = @_;
+	my $msg = pack('v x4', 0x019D);
+	$self->sendToServer($msg);
+	debug "Sent GM Hide.\n", "sendPacket", 2;
+}
 
 # 0x019f,6,catchpet,2
 sub sendPetCapture {
@@ -925,10 +952,25 @@ sub sendOpenShop {
 }
 
 # 0x01ba,26,remove,2
+sub sendGmRemove {
+	my ($self, $playerName) = @_;
+	my $packet = pack('v a24', 0x01BA, stringToBytes($playerName));
+	$self->sendToServer($packet);
+}
 
 # 0x01bb,26,shift,2
+sub sendGmShift {
+	my ($self, $playerName) = @_;
+	my $packet = pack('v a24', 0x01BB, stringToBytes($playerName));
+	$self->sendToServer($packet);
+}
 
 # 0x01bc,26,recall,2
+sub sendGmRecall {
+	my ($self, $playerName) = @_;
+	my $packet = pack('v a24', 0x01BC, stringToBytes($playerName));
+	$self->sendToServer($packet);
+}
 
 # 0x01bd,26,summon,2
 sub sendGmSummon {

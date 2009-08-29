@@ -22,9 +22,7 @@ use Network::Send::kRO::Sakexe_2004_08_09a;
 use base qw(Network::Send::kRO::Sakexe_2004_08_09a);
 
 use Log qw(message warning error debug);
-# maybe needed for unfinished packets
 use I18N qw(stringToBytes);
-use Utils qw(getTickCount getHex getCoordString);
 
 sub new {
 	my ($class) = @_;
@@ -32,8 +30,18 @@ sub new {
 }
 
 # 0x0212,26,rc,2
-# 0x0213,26,check,2
+sub sendGmRc{
+	my ($self, $playerName) = @_;
+	my $packet = pack('v a24', 0x0212, stringToBytes($playerName));
+	$self->sendToServer($packet);
+}
 
+# 0x0213,26,check,2
+sub sendGmCheck {
+	my ($self, $playerName) = @_;
+	my $packet = pack('v a24', 0x0213, stringToBytes($playerName));
+	$self->sendToServer($packet);
+}
 =pod
 //2004-08-16aSakexe
 0x0212,26,rc,2

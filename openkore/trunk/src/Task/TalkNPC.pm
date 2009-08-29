@@ -249,11 +249,11 @@ sub iterate {
 
 		} elsif ( $step =~ /b/i ) {
 			# Get the shop's item list.
-			$messageSender->sendGetStoreList($self->{ID});
+			$messageSender->sendNPCBuySellList($self->{ID}, 0);
 
 		} elsif ( $step =~ /s/i ) {
 			# Get the sell list in a shop.
-			$messageSender->sendGetSellList($self->{ID});
+			$messageSender->sendNPCBuySellList($self->{ID}, 1);
 
 		} elsif ( $step =~ /e/i ) {
 			# ? Pretend like the conversation was stopped by the NPC?
