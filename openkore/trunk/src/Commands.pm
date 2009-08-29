@@ -4998,7 +4998,7 @@ sub cmdWarp {
 		my $rsw = "$map.rsw";
 		message TF("Attempting to open a warp portal to %s (%s)\n", 
 			$maps_lut{$rsw}, $map), "info";
-		$messageSender->sendOpenWarp("$map.gat");
+		$messageSender->sendWarpTele(27,"$map.gat");
 	}
 }
 
