@@ -3797,7 +3797,7 @@ sub cmdSell {
 	my @args = parseArgs($_[1]);
 
 	if ($args[0] eq "" && $talk{buyOrSell}) {
-		$messageSender->sendGetSellList($talk{ID});
+		$messageSender->sendNPCBuySellList($talk{ID}, 1);
 
 	} elsif ($args[0] eq "list") {
 		if (@sellList == 0) {
@@ -4397,7 +4397,7 @@ sub cmdStore {
 		message("-------------------------------\n", "list");
 	} elsif ($arg1 eq "" && $talk{'buyOrSell'}
 	 && ($net && $net->getState() == Network::IN_GAME)) {
-		$messageSender->sendGetStoreList($talk{'ID'});
+		$messageSender->sendNPCBuySellList($talk{'ID'}, 0);
 
 	} elsif ($arg1 eq "desc" && $arg2 =~ /\d+/ && !$storeList[$arg2]) {
 		error TF("Error in function 'store desc' (Store Item Description)\n" .
