@@ -279,7 +279,7 @@ sub sendWho {
 # 0x00c5,7,npcbuysellselected,2:6
 sub sendNPCBuySellList { # type:0 get store list, type:1 get sell list
 	my ($self, $ID, $type) = @_;
-	my $msg = pack('v a4 C', 0x00C5, $ID , 1);
+	my $msg = pack('v a4 C', 0x00C5, $ID , $type);
 	$self->sendToServer($msg);
 	debug "Sent get ".($type ? "buy" : "sell")." list to NPC: ".getHex($ID)."\n", "sendPacket", 2;
 }
