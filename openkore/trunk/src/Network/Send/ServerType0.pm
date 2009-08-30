@@ -431,13 +431,13 @@ sub sendGetPlayerInfo {
 
 sub sendNPCBuySellList { # type:0 get store list, type:1 get sell list
 	my ($self, $ID, $type) = @_;
-	my $msg = pack('v a4 C', 0x00C5, $ID , 1);
+	my $msg = pack('v a4 C', 0x00C5, $ID , $type);
 	$self->sendToServer($msg);
 	debug "Sent get ".($type ? "buy" : "sell")." list to NPC: ".getHex($ID)."\n", "sendPacket", 2;
 }
 
 =pod
-sub sendNPCBuySellList {
+sub sendGetStoreList {
 	my ($self, $ID, $type) = @_;
 	my $msg = pack("C*", 0xC5, 0x00) . $ID . pack("C*",0x00);
 	$self->sendToServer($msg);

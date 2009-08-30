@@ -6745,6 +6745,7 @@ sub mail_new {
 
 sub mail_setattachment {
 	my ($self, $args) = @_;
+	# todo, maybe we need to store this index into a var which we delete the item from upon succesful mail sending
 	message TF("%s to attach %s.\n", ($args->{fail}) ? "Failed" : "Succeeded", ($args->{index}) ? "item: ".$char->inventory->getByServerIndex($args->{index}) : "zeny"), "info";
 }
 
