@@ -287,7 +287,9 @@ sub sendNPCBuySellList { # type:0 get store list, type:1 get sell list
 # 0x00c8,-1,npcbuylistsend,2:4
 sub sendBuy {
 	my ($self, $ID, $amount) = @_;
-	my $msg = pack('v3', 0x00C8, $amount, $ID);
+	# TODO: this is a variable length message, we could buy multiple items at once.
+	my $len = 8;
+	my $msg = pack('v4', 0x00C8, $len, $amount, $ID);
 	$self->sendToServer($msg);
 	debug "Sent buy: ".getHex($ID)."\n", "sendPacket", 2;
 }
