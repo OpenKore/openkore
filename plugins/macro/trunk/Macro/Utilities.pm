@@ -198,7 +198,8 @@ sub refreshGlobal {
 	$varStack{".time"} = time;
 	$varStack{".datetime"} = scalar localtime;
 	my @time = split(/ /, $varStack{".datetime"});
-	($varStack{".hour"}, $varStack{".minute"}, $varStack{".second"}) = split(/:/, $time[3], 3);
+	($varStack{".hour"}, $varStack{".minute"}, $varStack{".second"}) = split(/:/, $time[4], 3);
+	
 	$varStack{".hp"} = $char->{hp};
 	$varStack{".sp"} = $char->{sp};
 	$varStack{".lvl"} = $char->{lv};
