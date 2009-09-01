@@ -184,14 +184,14 @@ sub next {
 	my $line = ${$macro{$self->{name}}}[$self->{line}];
 	if (!defined $line) {
 		if (defined $self->{lastname} && defined $self->{lastline}) {
-			if ($self->{repeat} > 1) {$self->{repeat}--; $self->{line} = 0; $line = ${$macro{$self->{name}}}[0]}
+			if ($self->{repeat} > 1) {$self->{repeat}--; $self->{line} = 0}
 			else {
 				$self->{line} = $self->{lastline} + 1;
 				$self->{name} = $self->{lastname};
-				$line = ${$macro{$self->{name}}}[$self->{line}];
 				($self->{lastline}, $self->{lastname}) = undef;
 				$self->{finished} = 1
 			}
+			$line = ${$macro{$self->{name}}}[$self->{line}]
 		}
 		else {
 			if ($self->{repeat} > 1) {$self->{repeat}--; $self->{line} = 0}
