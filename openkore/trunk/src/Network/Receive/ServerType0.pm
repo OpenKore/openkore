@@ -2823,7 +2823,7 @@ sub guild_allies_enemy_list {
 	$guild{enemy} = $guild{ally} = {};
 
 	for (my $i = 4; $i < $len; $i += 32) {
-		my ($type, $guildID, $guildName) = unpack("V1 V1 Z24", substr($msg, $i, 32));
+		my ($type, $guildID, $guildName) = unpack('V2 Z24', substr($msg, $i, 32));
 		$guildName = bytesToString($guildName);
 		if ($type) {
 			# Enemy guild
@@ -3006,8 +3006,7 @@ sub guild_expulsion {
 sub guild_members_list {
 	my ($self, $args) = @_;
 
-	my $newmsg;
-	my $jobID;
+	my ($newmsg, $jobID);
 	my $msg = $args->{RAW_MSG};
 	my $msg_size = $args->{RAW_MSG_SIZE};
 	$self->decrypt(\$newmsg, substr($msg, 4, length($msg) - 4));
@@ -3018,18 +3017,20 @@ sub guild_members_list {
 	for (my $i = 4; $i < $msg_size; $i+=104){
 		$guild{member}[$c]{ID}    = substr($msg, $i, 4);
 		$guild{member}[$c]{charID}	  = substr($msg, $i+4, 4);
-		$jobID = unpack("v1", substr($msg, $i + 14, 2));
-		if ($jobID =~ /^40/) {
-			$jobID =~ s/^40/1/;
-			$jobID += 60;
-		}
+		$jobID = unpack('v', substr($msg, $i + 14, 2));
+		# wtf? i guess this was a 'hack' for when the 40xx jobs weren't added to the globals yet...
+		#if ($jobID =~ /^40/) {
+		#	$jobID =~ s/^40/1/;
+		#	$jobID += 60;
+		#}
 		$guild{member}[$c]{jobID} = $jobID;
-		$guild{member}[$c]{lv}   = unpack("v1", substr($msg, $i + 16, 2));
-		$guild{member}[$c]{contribution} = unpack("V1", substr($msg, $i + 18, 4));
-		$guild{member}[$c]{online} = unpack("v1", substr($msg, $i + 22, 2));
-		my $gtIndex = unpack("V1", substr($msg, $i + 26, 4));
-		$guild{member}[$c]{title} = $guild{title}[$gtIndex];
-		$guild{member}[$c]{name} = bytesToString(unpack("Z24", substr($msg, $i + 80, 24)));
+		$guild{member}[$c]{lv}   = unpack('v', substr($msg, $i + 16, 2));
+		$guild{member}[$c]{contribution} = unpack('V', substr($msg, $i + 18, 4));
+		$guild{member}[$c]{online} = unpack('v', substr($msg, $i + 22, 2));
+		# TODO: we shouldn't store the guildtitle of a guildmember both in $guild{positions} and $guild{member}, instead we should just store the rank index of the guildmember and get the title from the $guild{positions}
+		my $gtIndex = unpack('V', substr($msg, $i + 26, 4));
+		$guild{member}[$c]{title} = $guild{positions}[$gtIndex]{title};
+		$guild{member}[$c]{name} = bytesToString(unpack('Z24', substr($msg, $i + 80, 24)));
 		$c++;
 	}
 
@@ -3066,8 +3067,8 @@ sub guild_members_title_list {
 	$msg = substr($msg, 0, 4) . $newmsg;
 	my $gtIndex;
 	for (my $i = 4; $i < $msg_size; $i+=28) {
-		$gtIndex = unpack("V1", substr($msg, $i, 4));
-		$guild{positions}[$gtIndex]{title} = bytesToString(unpack("Z24", substr($msg, $i + 4, 24)));
+		$gtIndex = unpack('V', substr($msg, $i, 4));
+		$guild{positions}[$gtIndex]{title} = bytesToString(unpack('Z24', substr($msg, $i + 4, 24)));
 	}
 }
 
