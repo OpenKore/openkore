@@ -2442,7 +2442,7 @@ sub cmdGuild {
 			"Exp     : \@>>>>>>>>>/\@<<<<<<<<<<\n" .
 			"Master  : \@<<<<<<<<<<<<<<<<<<<<<<<<\n" .
 			"Connect : \@>>/\@<<"),
-			[$guild{name}, $guild{lv}, $guild{exp}, $guild{next_exp}, $guild{master}, 
+			[$guild{name}, $guild{lv}, $guild{exp}, $guild{exp_next}, $guild{master}, 
 			$guild{conMember}, $guild{maxMember}]),	"info";
 		for my $ally (keys %{$guild{ally}}) {
 			# Translation Comment: List of allies. Keep the same spaces of the - Guild Information - tag.
