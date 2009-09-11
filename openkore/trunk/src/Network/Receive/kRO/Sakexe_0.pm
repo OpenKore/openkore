@@ -7271,7 +7271,7 @@ sub boss_map_info {
 
 # 02B1
 # TODO
-sub quest_list {
+sub quest_all_list {
 	my ($self, $args) = @_;
 	undef $questList;
 	for (my $i = 8; $i < $args->{amount}*5+8; $i += 5) {
@@ -7283,38 +7283,42 @@ sub quest_list {
 
 # 02B2
 # TODO
-# note: this packet shows all quests, objectives and has variable length
-sub quest_objective_info {
+# note: this packet shows all quests + their missions and has variable length
+sub quest_all_mission {
 	my ($self, $args) = @_;
 	undef $questList;
 	debug $self->{packet_list}{$args->{switch}}->[0] . " " . join(', ', @{$args}{@{$self->{packet_list}{$args->{switch}}->[2]}}) ."\n";
 	for (my $i = 8; $i < $args->{amount}*104+8; $i += 104) {
-		my ($questID, $time, $objectives) = unpack('V x4 V v', substr($args->{RAW_MSG}, $i, 14));
-		$questList->{$questID}->{time} = $time;
-		debug "$questID $time $objectives\n", "info";
-		for (my $j = 0; $j < $objectives; $j++) {
-			my ($count, $mobName) = unpack('x4 v Z24', substr($args->{RAW_MSG}, 26+$i+$j*30, 30));
-			$mobName = bytesToString($mobName);
-			$questList->{$questID}->{objectives}->[$j]->{count} = $count;
-			$questList->{$questID}->{objectives}->[$j]->{mobname} = $mobName;
-			debug "- $count $mobName\n", "info";
+		my ($questID, $active, $time, $mission_amount) = unpack('V3 v', substr($args->{RAW_MSG}, $i, 14));
+		my $quest = $questList->{$questID};
+		$quest->{time} = $time;
+		$quest->{active} = $active;
+		debug "$questID $time $active $mission_amount\n", "info";
+		for (my $j = 0; $j < $mission_amount; $j++) {
+			my ($mobID, $count, $mobName) = unpack('V v Z24', substr($args->{RAW_MSG}, 14+$i+$j*30, 30));
+			my $mission = $questList->{$questID}->{missions}->{$mobID};
+			$mission->{mobID} = $mobID;
+			$mission->{count} = $count;
+			$mission->{mobName} = bytesToString($mobName);
+			debug "- $mobID $count $mobName\n", "info";
 		}
 	}
 }
 
 # 02B3
 # TODO
-# note: this packet shows all objectives for 1 quest and has fixed length
-sub quest_objective_update {
+# note: this packet shows all missions for 1 quest and has fixed length
+sub quest_add {
 	my ($self, $args) = @_;
 	my $questID = $args->{questID};
 	debug $self->{packet_list}{$args->{switch}}->[0] . " " . join(', ', @{$args}{@{$self->{packet_list}{$args->{switch}}->[2]}}) ."\n";
 	for (my $i = 0; $i < $args->{amount}; $i++) {
-		my ($count, $mobName) = unpack('x4 v Z24', substr($args->{RAW_MSG}, 17+$i*30, 30));
-		$mobName = bytesToString($mobName);
-		$questList->{$questID}->{objectives}->[$i]->{count} = $count;
-		$questList->{$questID}->{objectives}->[$i]->{mobname} = $mobName;
-		debug "- $count $mobName\n", "info";
+		my ($mobID, $count, $mobName) = unpack('V v Z24', substr($args->{RAW_MSG}, 17+$i*30, 30));
+		my $mission = $questList->{$questID}->{missions}->{$mobID};
+		$mission->{mobID} = $mobID;
+		$mission->{count} = $count;
+		$mission->{mobName} = bytesToString($mobName);
+		debug "- $mobID $count $mobName\n", "info";
 	}
 }
 
@@ -7322,30 +7326,33 @@ sub quest_objective_update {
 # TODO
 sub quest_delete {
 	my ($self, $args) = @_;
-	message TF("Quest: %s has been deleted.\n", $args->{questID}), "info";
-	delete $questList->{$args->{questID}};
+	my $questID = $args->{questID};
+	message TF("Quest: %s has been deleted.\n", $questID), "info";
+	delete $questList->{$questID};
 }
 
 # 02B5
 # TODO: i'm not sure if the order here is the same as the order in quest_objective_update for the objectives, i sure do hope so
+# TODO: nvm previous todo, now we use 
 # note: this packet updates the objectives counters
-sub quest_objective_update_counter {
+sub quest_update_mission_hunt {
 	my ($self, $args) = @_;
 	for (my $i = 0; $i < $args->{amount}; $i++) {
 		my ($questID, $mobID, $count) = unpack('V2 v', substr($args->{RAW_MSG}, 6+$i*10, 10));
-		$questList->{$questID}->{objectives}->[$i]->{count} = $count;
-		$questList->{$questID}->{objectives}->[$i]->{mobid} = $mobID; # maybe this is better than to store the mobname
+		my $mission = $questList->{$questID}->{missions}->{$mobID};
+		$mission->{count} = $count;
+		$mission->{mobID} = $mobID;
 		debug ("questID (%s) - mob(%s) count(%s) \n", $questID, monsterName($mobID), $count), "info";
 	}
 }
 
 # 02B7
 # TODO questID -> questName with a new table file
-sub quest_status {
+sub quest_active {
 	my ($self, $args) = @_;
 	my $string = $args->{active} ? T ("activated") : T("de-activated");
 	message TF("Quest: %s is now %s.\n", $args->{questID}, $string), "info";
-	$questList->{$args->{questID}}->{state} = $args->{active};
+	$questList->{$args->{questID}}->{active} = $args->{active};
 }
 
 sub GM_req_acc_name {
