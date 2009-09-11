@@ -5316,11 +5316,11 @@ sub cmdQuest {
 		my $k = 0;
 		my $msg;
 		$msg .= center(" " . T("Quest List") . " ", 79, '-') . "\n";
-		foreach my $questID (%{$questList}) {
+		foreach my $questID (keys %{$questList}) {
 			my $quest = $questList->{$questID};
 			$msg .= swrite(sprintf("\@%s \@%s \@%s \@%s", ('>'x2), ('<'x30), ('<'x20), ('<'x20)),
 				[$k, $questID, $quest->{state} ? T("active") : T("non-active"), $quest->{time}]);
-			foreach my $mobID (%{$quest->{missions}}) {
+			foreach my $mobID (keys %{$quest->{missions}}) {
 				my $mission = $quest->{missions}->{$mobID};
 				$msg .= swrite(sprintf("\@%s \@%s \@%s", ('>'x2), ('<'x30), ('<'x30)),
 					[" -", $mission->{mobName}, $mission->{count}]);
