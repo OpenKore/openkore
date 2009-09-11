@@ -7215,7 +7215,7 @@ sub quest_all_mission {
 		debug "$questID $time $active $mission_amount\n", "info";
 		for (my $j = 0; $j < $mission_amount; $j++) {
 			my ($mobID, $count, $mobName) = unpack('V v Z24', substr($args->{RAW_MSG}, 14+$i+$j*30, 30));
-			my $mission = $questList->{$questID}->{missions}->{$mobID};
+			my $mission = $quest->{missions}->{$mobID};
 			$mission->{mobID} = $mobID;
 			$mission->{count} = $count;
 			$mission->{mobName} = bytesToString($mobName);
@@ -7269,7 +7269,7 @@ sub quest_update_mission_hunt {
 # TODO questID -> questName with a new table file
 sub quest_active {
 	my ($self, $args) = @_;
-	my $string = $args->{active} ? T ("activated") : T("de-activated");
+	my $string = $args->{active} ? T ("active") : T("inactive");
 	message TF("Quest: %s is now %s.\n", $args->{questID}, $string), "info";
 	$questList->{$args->{questID}}->{active} = $args->{active};
 }

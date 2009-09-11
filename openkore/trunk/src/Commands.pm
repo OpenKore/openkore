@@ -5319,7 +5319,7 @@ sub cmdQuest {
 		foreach my $questID (keys %{$questList}) {
 			my $quest = $questList->{$questID};
 			$msg .= swrite(sprintf("\@%s \@%s \@%s \@%s", ('>'x2), ('<'x30), ('<'x20), ('<'x20)),
-				[$k, $questID, $quest->{state} ? T("active") : T("non-active"), $quest->{time}]);
+				[$k, $questID, $quest->{active} ? T("active") : T("inactive"), $quest->{time}]);
 			foreach my $mobID (keys %{$quest->{missions}}) {
 				my $mission = $quest->{missions}->{$mobID};
 				$msg .= swrite(sprintf("\@%s \@%s \@%s", ('>'x2), ('<'x30), ('<'x30)),
