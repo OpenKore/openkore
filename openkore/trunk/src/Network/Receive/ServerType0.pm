@@ -7192,7 +7192,6 @@ sub boss_map_info {
 # TODO
 sub quest_all_list {
 	my ($self, $args) = @_;
-	undef $questList;
 	for (my $i = 8; $i < $args->{amount}*5+8; $i += 5) {
 		my ($questID, $state) = unpack('V C', substr($args->{RAW_MSG}, $i, 5));
 		$questList->{$questID}->{state} = $state;
@@ -7205,7 +7204,6 @@ sub quest_all_list {
 # note: this packet shows all quests + their missions and has variable length
 sub quest_all_mission {
 	my ($self, $args) = @_;
-	undef $questList;
 	debug $self->{packet_list}{$args->{switch}}->[0] . " " . join(', ', @{$args}{@{$self->{packet_list}{$args->{switch}}->[2]}}) ."\n";
 	for (my $i = 8; $i < $args->{amount}*104+8; $i += 104) {
 		my ($questID, $active, $time, $mission_amount) = unpack('V3 v', substr($args->{RAW_MSG}, $i, 14));
