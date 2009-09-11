@@ -1298,7 +1298,7 @@ sub actor_display {
 		} elsif ($actor->isa('Actor::Monster')) {
 			debug "Monster Spawned: " . $actor->nameIdx . "\n", "parseMsg";
 		} elsif ($actor->isa('Actor::Pet')) {
-			debug "Pet Spawned: " . $actor->nameIdx . "monsterName($actor->nameIdx)\n", "parseMsg";
+			debug "Pet Spawned: " . $actor->nameIdx . "\n", "parseMsg";
 		} elsif ($actor->isa('Actor::Slave')) {
 			debug "Slave Spawned: " . $actor->nameIdx . " $jobs_lut{$actor->{jobID}}\n", "parseMsg";
 		} elsif ($actor->isa('Actor::Portal')) {
@@ -7324,6 +7324,19 @@ sub quest_delete {
 	my ($self, $args) = @_;
 	message TF("Quest: %s has been deleted.\n", $args->{questID}), "info";
 	delete $questList->{$args->{questID}};
+}
+
+# 02B5
+# TODO: i'm not sure if the order here is the same as the order in quest_objective_update for the objectives, i sure do hope so
+# note: this packet updates the objectives counters
+sub quest_objective_update_counter {
+	my ($self, $args) = @_;
+	for (my $i = 0; $i < $args->{amount}; $i++) {
+		my ($questID, $mobID, $count) = unpack('V2 v', substr($args->{RAW_MSG}, 6+$i*10, 10));
+		$questList->{$questID}->{objectives}->[$i]->{count} = $count;
+		$questList->{$questID}->{objectives}->[$i]->{mobid} = $mobID; # maybe this is better than to store the mobname
+		debug ("questID (%s) - mob(%s) count(%s) \n", $questID, monsterName($mobID), $count), "info";
+	}
 }
 
 # 02B7
