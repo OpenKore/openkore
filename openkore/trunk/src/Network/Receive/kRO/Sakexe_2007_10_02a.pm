@@ -40,13 +40,13 @@ sub new {
 
 		'02AD' => ['login_pin_code_request', 'v V', [qw(flag key)]], # 8
 
-		'02B1' => ['quest_list', 'v V', [qw(len amount)]], # -1
-		'02B2' => ['quest_objective_info', 'v V', [qw(len amount)]], # -1
-		'02B3' => ['quest_objective_update', 'V C x4 V v', [qw(questID state time amount)]], # 107
+		'02B1' => ['quest_all_list', 'v V', [qw(len amount)]], # -1
+		'02B2' => ['quest_all_mission', 'v V', [qw(len amount)]], # -1
+		'02B3' => ['quest_add', 'V C V2 v', [qw(questID active time amount)]], # 107
 		'02B4' => ['quest_delete', 'V', [qw(questID)]], # 6
-		'02B5' => ['quest_objective_update_counter', 'v2', [qw(len amount)]], # -1
-
-		'02B7' => ['quest_status', 'V C', [qw(questID active)]], # 7
+		'02B5' => ['quest_update_mission_hunt', 'v2', [qw(len amount)]], # -1
+		# 0x02b6 is sent packet
+		'02B7' => ['quest_active', 'V C', [qw(questID active)]], # 7
 		'02B8' => ['party_show_picker', 'a4 v C3 a8 C3', [qw(sourceID nameID identified broken upgrade cards unknown1 unknown2 unknown3)]], # 22
 		'02B9' => ['hotkeys'], #191
 
