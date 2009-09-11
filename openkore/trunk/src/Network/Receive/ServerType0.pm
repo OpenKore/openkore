@@ -7192,10 +7192,11 @@ sub boss_map_info {
 # TODO
 sub quest_all_list {
 	my ($self, $args) = @_;
+	$questList = {};
 	for (my $i = 8; $i < $args->{amount}*5+8; $i += 5) {
-		my ($questID, $state) = unpack('V C', substr($args->{RAW_MSG}, $i, 5));
-		$questList->{$questID}->{state} = $state;
-		debug "$questID $state\n", "info";
+		my ($questID, $active) = unpack('V C', substr($args->{RAW_MSG}, $i, 5));
+		$questList->{$questID}->{active} = $active;
+		debug "$questID $active\n", "info";
 	}
 }
 
@@ -7207,13 +7208,13 @@ sub quest_all_mission {
 	debug $self->{packet_list}{$args->{switch}}->[0] . " " . join(', ', @{$args}{@{$self->{packet_list}{$args->{switch}}->[2]}}) ."\n";
 	for (my $i = 8; $i < $args->{amount}*104+8; $i += 104) {
 		my ($questID, $active, $time, $mission_amount) = unpack('V3 v', substr($args->{RAW_MSG}, $i, 14));
-		my $quest = $questList->{$questID};
+		my $quest = \%{$questList->{$questID}};
 		$quest->{time} = $time;
 		$quest->{active} = $active;
 		debug "$questID $time $active $mission_amount\n", "info";
 		for (my $j = 0; $j < $mission_amount; $j++) {
 			my ($mobID, $count, $mobName) = unpack('V v Z24', substr($args->{RAW_MSG}, 14+$i+$j*30, 30));
-			my $mission = $quest->{missions}->{$mobID};
+			my $mission = \%{$quest->{missions}->{$mobID}};
 			$mission->{mobID} = $mobID;
 			$mission->{count} = $count;
 			$mission->{mobName} = bytesToString($mobName);
@@ -7231,7 +7232,7 @@ sub quest_add {
 	debug $self->{packet_list}{$args->{switch}}->[0] . " " . join(', ', @{$args}{@{$self->{packet_list}{$args->{switch}}->[2]}}) ."\n";
 	for (my $i = 0; $i < $args->{amount}; $i++) {
 		my ($mobID, $count, $mobName) = unpack('V v Z24', substr($args->{RAW_MSG}, 17+$i*30, 30));
-		my $mission = $questList->{$questID}->{missions}->{$mobID};
+		my $mission = \%{$questList->{$questID}->{missions}->{$mobID}};
 		$mission->{mobID} = $mobID;
 		$mission->{count} = $count;
 		$mission->{mobName} = bytesToString($mobName);
@@ -7256,10 +7257,10 @@ sub quest_update_mission_hunt {
 	my ($self, $args) = @_;
 	for (my $i = 0; $i < $args->{amount}; $i++) {
 		my ($questID, $mobID, $count) = unpack('V2 v', substr($args->{RAW_MSG}, 6+$i*10, 10));
-		my $mission = $questList->{$questID}->{missions}->{$mobID};
+		my $mission = \%{$questList->{$questID}->{missions}->{$mobID}};
 		$mission->{count} = $count;
 		$mission->{mobID} = $mobID;
-		debug ("questID (%s) - mob(%s) count(%s) \n", $questID, monsterName($mobID), $count), "info";
+		debug sprintf ("questID (%d) - mob(%s) count(%d) \n", $questID, monsterName($mobID), $count), "info";
 	}
 }
 

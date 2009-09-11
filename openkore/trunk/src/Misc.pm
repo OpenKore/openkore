@@ -1082,6 +1082,9 @@ sub charSelectScreen {
 	# An array which maps an index in @charNames to an index in @chars
 	my @charNameIndices;
 	my $mode;
+	
+	# the client also does this
+	$questList = {};
 
 	TOP: {
 		undef $mode;
