@@ -7310,10 +7310,13 @@ sub quest_all_mission {
 sub quest_add {
 	my ($self, $args) = @_;
 	my $questID = $args->{questID};
+	my $quest = \%{$questList->{$questID}};
+	$quest->{time} = $args->{time};
+	$quest->{active} = $args->{active};
 	debug $self->{packet_list}{$args->{switch}}->[0] . " " . join(', ', @{$args}{@{$self->{packet_list}{$args->{switch}}->[2]}}) ."\n";
 	for (my $i = 0; $i < $args->{amount}; $i++) {
 		my ($mobID, $count, $mobName) = unpack('V v Z24', substr($args->{RAW_MSG}, 17+$i*30, 30));
-		my $mission = \%{$questList->{$questID}->{missions}->{$mobID}};
+		my $mission = \%{$quest->{missions}->{$mobID}};
 		$mission->{mobID} = $mobID;
 		$mission->{count} = $count;
 		$mission->{mobName} = bytesToString($mobName);
