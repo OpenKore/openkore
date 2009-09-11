@@ -248,19 +248,19 @@ CODE:
 		// 'push' wall distance right and up
 		for (y = 0; y < height; y++) {
 			for (x = 0; x < width; x++) {
-				i = y * width + x;
-				dist = data[i];
-				if (x != width - 1) {
-					int ir = y * width + x + 1;
-					int distr = (int) data[ir];
-					int comp = dist - distr;
-					if (comp > 1) {
+				i = y * width + x; // i: cell to examine
+				dist = data[i]; // dist: initial dist of i from walkable/nonwalkable check above
+				if (x != width - 1) { // ignore the width-1 because this is marked walkable in .gat but its not
+					int ir = y * width + x + 1; // ir: cell to the right
+					int distr = (int) data[ir]; // distr: initial dist of ir from walkable/nonwalkable check above
+					int comp = dist - distr; // comp: 
+					if (comp > 1) { // dist > distr: real dist is distr + 1
 						val = distr + 1;
 						if (val > 255)
 							val = 255;
 						data[i] = val;
 						done = false;
-					} else if (comp < -1) {
+					} else if (comp < -1) { // dist < distr: real distr is dist + 1
 						val = dist + 1;
 						if (val > 255)
 							val = 255;
