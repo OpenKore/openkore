@@ -261,6 +261,7 @@ sub processGetPlayerInfo {
 		processNameRequestQueue(\@unknownNPCs, [$npcsList]);
 
 		foreach (keys %monsters) {
+			last if (isSafeActorQuery($_) != 1); # Do not Query GM hidden Monster names
 			if ($monsters{$_}{'name'} =~ /Unknown/) {
 				$messageSender->sendGetPlayerInfo($_);
 				last;
@@ -272,6 +273,7 @@ sub processGetPlayerInfo {
 		}
 		foreach (keys %pets) {
 			if ($pets{$_}{'name_given'} =~ /Unknown/) {
+				last if (isSafeActorQuery($_) != 1); # Do not Query GM hidden Pet names
 				$messageSender->sendGetPlayerInfo($_);
 				last;
 			}
