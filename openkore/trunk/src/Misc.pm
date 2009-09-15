@@ -161,7 +161,8 @@ our @EXPORT = (
 	whenStatusActivePL
 	writeStorageLog
 	getBestTarget
-	isSafe/,
+	isSafe
+	isSafeActorQuery/,
 
 	# Actor's Actions Text
 	qw/attack_string
@@ -2095,7 +2096,7 @@ sub processNameRequestQueue {
 			next;
 		}
 
-		$messageSender->sendGetPlayerInfo($ID);
+		$messageSender->sendGetPlayerInfo($ID) if (isSafeActorQuery($ID) == 1); # Do not Query GM's
 		$actor = shift @{$queue};
 		push @{$queue}, $actor if ($actor);
 		last;
@@ -2326,23 +2327,28 @@ sub setStatus {
 	# Remove perfectly hidden objects
 	if ($actor->{statuses}{'GM Perfect Hide'}) {
 		if (UNIVERSAL::isa($actor, "Actor::Player")) {
-			message TF("Remove perfectly hidden %s\n", $actor->nameString());
-			$playersList->remove($actor);
+			message TF("Found perfectly hidden %s\n", $actor->nameString());
+			# message TF("Remove perfectly hidden %s\n", $actor->nameString());
+			# $playersList->remove($actor);
 			# Call the hook when a perfectly hidden player is detected
-			Plugins::callHook('perfect_hidden_player',undef);
+			# Plugins::callHook('perfect_hidden_player',undef);
+			Plugins::callHook('perfect_hidden_player',{actor => $actor, changed => $changed});
 
 		} elsif (UNIVERSAL::isa($actor, "Actor::Monster")) {
-			message TF("Remove perfectly hidden %s\n", $actor->nameString());
-			$monstersList->remove($actor);
+			message TF("Found perfectly hidden %s\n", $actor->nameString());
+			# message TF("Remove perfectly hidden %s\n", $actor->nameString());
+			# $monstersList->remove($actor);
 
 		# NPCs do this on purpose (who knows why)
 		} elsif (UNIVERSAL::isa($actor, "Actor::NPC")) {
-			message TF("Remove perfectly hidden %s\n", $actor->nameString());
-			$npcsList->remove($actor);
+			message TF("Found perfectly hidden %s\n", $actor->nameString());
+			# message TF("Remove perfectly hidden %s\n", $actor->nameString());
+			# $npcsList->remove($actor);
 
 		} elsif (UNIVERSAL::isa($actor, "Actor::Pet")) {
-			message TF("Remove perfectly hidden %s\n", $actor->nameString());
-			$petsList->remove($actor);
+			message TF("Found perfectly hidden %s\n", $actor->nameString());
+			# message TF("Remove perfectly hidden %s\n", $actor->nameString());
+			# $petsList->remove($actor);
 		}
 		return 1;
 	} else {
@@ -3118,6 +3124,24 @@ sub isSafe {
 	return 1;
 }
 
+##
+# Returns 1 if we are safe to query actor name by given actor ID.
+sub isSafeActorQuery {
+	my ($ID) = @_;
+	foreach my $list ($playersList, $monstersList, $npcsList, $petsList, $slavesList) {
+		my $actor = $list->getByID($ID);
+		if ($actor) {
+			# Do not AutoVivify here!
+			if (defined $actor->{statuses} && %{$actor->{statuses}}) {
+				if ($actor->{statuses}{'GM Perfect Hide'}) {
+					return 0;
+				}
+			}
+		}
+	}
+	return 1;
+}
+
 #######################################
 #######################################
 ###CATEGORY: Actor's Actions Text
@@ -3693,7 +3717,7 @@ sub checkSelfCondition {
 
 	if ($config{$prefix . "_onAction"}) { return 0 unless (existsInList($config{$prefix . "_onAction"}, AI::action())); }
 	if ($config{$prefix . "_notOnAction"}) { return 0 if (existsInList($config{$prefix . "_notOnAction"}, AI::action())); }
-	if ($config{$prefix . "_spirit"}) {return 0 unless (inRange($char->{spirits}, $config{$prefix . "_spirit"})); }
+	if ($config{$prefix . "_spirit"}) {return 0 unless (inRange(defined $char->{spirits} ? $char->{spirits} : 0, $config{$prefix . "_spirit"})); }
 
 	if ($config{$prefix . "_timeout"}) { return 0 unless timeOut($ai_v{$prefix . "_time"}, $config{$prefix . "_timeout"}) }
 	if ($config{$prefix . "_inLockOnly"} > 0) { return 0 unless ($field{name} eq $config{lockMap}); }

@@ -2096,6 +2096,7 @@ sub cmdGetPlayerInfo {
 		return;
 	}
 	my (undef, $args) = @_;
+	return 0 if (isSafeActorQuery(pack("V", $args)) != 1); # Do not Query GM's
 	$messageSender->sendGetPlayerInfo(pack("V", $args));
 }
 
