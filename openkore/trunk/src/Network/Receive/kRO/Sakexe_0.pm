@@ -96,7 +96,6 @@ sub new {
 		'0075' => ['changeToInGameState'], # -1
 		# 0x0076,9
 		'0077' => ['changeToInGameState'], # 5
-		# 0x0077,5
 		'0078' => ['actor_display',	'a4 v14 a4 a2 v2 C2 a3 C3 v', 		[qw(ID walk_speed opt1 opt2 option type hair_style weapon lowhead shield tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 karma sex coords unknown1 unknown2 act lv)]], #standing # 54
 		'0079' => ['actor_display',	'a4 v14 a4 a2 v2 C2 a3 C2 v',		[qw(ID walk_speed opt1 opt2 option type hair_style weapon lowhead shield tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 karma sex coords unknown1 unknown2 lv)]], #spawning # 53
 		'007A' => ['changeToInGameState'], # 58
@@ -4588,9 +4587,9 @@ sub pet_capture_result {
 	my ($self, $args) = @_;
 
 	if ($args->{success}) {
-		message T("Pet capture success\n");
+		message T("Pet capture success\n"), "info";
 	} else {
-		message T("Pet capture failed\n");
+		message T("Pet capture failed\n"), "info";
 	}
 }
 
@@ -4623,7 +4622,7 @@ sub pet_info {
 	$pet{friendly} = $args->{friendly};
 	$pet{accessory} = $args->{accessory};
 	$pet{type} = $args->{type} if (exists $args->{type});
-	debug "Pet status: name: $pet{name} name set?: ". ($pet{renameflag} ? 'yes' : 'no') ." level=$pet{level} hungry=$pet{hungry} intimacy=$pet{friendly} accessory=".itemNameSimple($pet{accessory})." type=".$pet{type}||"N/A"."\n", "pet";
+	debug "Pet status: name=$pet{name} name_set=". ($pet{renameflag} ? 'yes' : 'no') ." level=$pet{level} hungry=$pet{hungry} intimacy=$pet{friendly} accessory=".itemNameSimple($pet{accessory})." type=".($pet{type}||"N/A")."\n", "pet";
 }
 
 sub pet_info2 {

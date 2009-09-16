@@ -3296,32 +3296,64 @@ sub cmdPecopeco {
 }
 
 sub cmdPet {
-	my (undef, $subcmd) = @_;
+	my (undef, $args_string) = @_;
+	my @args = parseArgs($args_string, 2);
 	if (!%pet) {
-		error T("Error in function 'pet' (Pet Management)\n" .
-			"You don't have a pet.\n");
-
-	} elsif ($subcmd eq "s" || $subcmd eq "status") {
-		message TF("-----------Pet Status-----------\nName: %-23s Accessory: %s", $pet{name}, itemNameSimple($pet{accessory})), "list";
+		if ($args[0] eq "c" || $args[0] eq "capture") {
+			# todo: maybe make a match function for monsters?
+			if ($args[1] =~ /^\d+$/) {
+				if ($monstersID[$args[1]] eq "") {
+					error TF("Error in function 'pet capture|c' (Capture Pet)\n" . 
+						"Monster %s does not exist.\n", $args[1]);
+				} else {
+					$messageSender->sendPetCapture($monstersID[$args[1]]);
+				}
+			} else {
+				error TF("Error in function 'pet capture|c' (Capture Pet)\n" . 
+					"%s must be a monster index.\n", $args[1]);
+			}
+		} elsif ($args[0] eq "h" || $args[0] eq "hatch") {
+			if(my $item = Match::inventoryItem($args[1])) {
+				# beware, you must first use the item "Pet Incubator", else you will get disconnected
+				$messageSender->sendPetHatch($item->{index});
+			} else {
+				error TF("Error in function 'pet hatch|h' (Hatch Pet)\n" . 
+					"Egg: %s could not be found.\n", $args[1]);
+			}
+		} elsif ($args[0]) {
+			error T("Error in function 'pet' (Pet Management)\n" .
+				"You don't have a pet.\n");
+		} else {
+			message T("Usage: pet [capture <monsterIndex>] | [hatch <itemIndex|itemName>]\n"), "info";
+		}
+	} elsif ($args[0] eq "s" || $args[0] eq "status") {
+		message TF("-----------Pet Status-----------\nName: %-23s Accessory: %s\n", $pet{name}, itemNameSimple($pet{accessory})), "list";
 
 	} elsif (!$net || $net->getState() != Network::IN_GAME) {
-		error TF("You must be logged in the game to use this command (%s)\n", 'pet ' . $subcmd);
+		error TF("You must be logged in the game to use this command (%s)\n", 'pet ' . $args[0]);
 		return;
 
-	} elsif ($subcmd eq "i" || $subcmd eq "info") {
+	} elsif ($args[0] eq "i" || $args[0] eq "info") {
 		$messageSender->sendPetMenu(0);
 
-	} elsif ($subcmd eq "f" || $subcmd eq "feed") {
+	} elsif ($args[0] eq "f" || $args[0] eq "feed") {
 		$messageSender->sendPetMenu(1);
 		
-	} elsif ($subcmd eq "p" || $subcmd eq "performance") {
+	} elsif ($args[0] eq "p" || $args[0] eq "performance") {
 		$messageSender->sendPetMenu(2);
 
-	} elsif ($subcmd eq "r" || $subcmd eq "return") {
+	} elsif ($args[0] eq "r" || $args[0] eq "return") {
 		$messageSender->sendPetMenu(3);
+		# todo: instead undef %pet when the actor (our pet) dissapears, this is safer (xkore)
+		undef %pet;
 
-	} elsif ($subcmd eq "u" || $subcmd eq "unequip") {
+	} elsif ($args[0] eq "u" || $args[0] eq "unequip") {
 		$messageSender->sendPetMenu(4);
+
+	} elsif (($args[0] eq "n" || $args[0] eq "name") && $args[1]) {
+		$messageSender->sendPetName($args[1]);
+	} else {
+		message T("Usage: pet [status|info|feed|performance|return|unequip|name <name>]\n"), "info";
 	}
 }
 

@@ -66,7 +66,6 @@ sub new {
 		'0069' => ['account_server_info', 'x2 a4 a4 a4 x30 C a*', [qw(sessionID accountID sessionID2 accountSex serverInfo)]],
 		'006A' => ['login_error', 'C', [qw(type)]],
 		'006B' => ['received_characters'],
-		'0072' => ['received_characters'],
 		'006C' => ['login_error_game_login_server'],
 		# OLD '006D' => ['character_creation_successful', 'a4 x4 V x62 Z24 C7', [qw(ID zeny name str agi vit int dex luk slot)]],
 		'006D' => ['character_creation_successful', 'a4 V9 v17 Z24 C6 v2', [qw(ID exp zeny exp_job lv_job opt1 opt2 option karma manner points_free hp hp_max sp sp_max walk_speed type hair_style weapon lv points_skill lowhead shield tophead midhead hair_color clothes_color name str agi vit int dex luk slot renameflag)]],
@@ -74,6 +73,7 @@ sub new {
 		'006F' => ['character_deletion_successful'],
 		'0070' => ['character_deletion_failed'],
 		'0071' => ['received_character_ID_and_Map', 'a4 Z16 a4 v', [qw(charID mapName mapIP mapPort)]],
+		'0072' => ['received_characters'],
 		'0073' => ['map_loaded', 'V a3', [qw(syncMapSync coords)]],
 		'0075' => ['changeToInGameState'],
 		'0077' => ['changeToInGameState'],
@@ -4508,9 +4508,9 @@ sub pet_capture_result {
 	my ($self, $args) = @_;
 
 	if ($args->{success}) {
-		message T("Pet capture success\n");
+		message T("Pet capture success\n"), "info";
 	} else {
-		message T("Pet capture failed\n");
+		message T("Pet capture failed\n"), "info";
 	}
 }
 
@@ -4543,7 +4543,7 @@ sub pet_info {
 	$pet{friendly} = $args->{friendly};
 	$pet{accessory} = $args->{accessory};
 	$pet{type} = $args->{type} if (exists $args->{type});
-	debug "Pet status: name: $pet{name} name set?: ". ($pet{renameflag} ? 'yes' : 'no') ." level=$pet{level} hungry=$pet{hungry} intimacy=$pet{friendly} accessory=".itemNameSimple($pet{accessory})." type=".$pet{type}||"N/A"."\n", "pet";
+	debug "Pet status: name=$pet{name} name_set=". ($pet{renameflag} ? 'yes' : 'no') ." level=$pet{level} hungry=$pet{hungry} intimacy=$pet{friendly} accessory=".itemNameSimple($pet{accessory})." type=".($pet{type}||"N/A")."\n", "pet";
 }
 
 sub pet_info2 {
