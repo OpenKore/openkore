@@ -7204,7 +7204,7 @@ sub sound_effect {
 # note: this is probably the trigger for the client's slotmachine effect or so.
 sub pet_capture_process {
 	my ($self, $args) = @_;
-	message T("Attempting to capture pet.\n"), "info";
+	message T("Attempting to capture pet (slot machine).\n"), "info";
 }
 
 # 0294

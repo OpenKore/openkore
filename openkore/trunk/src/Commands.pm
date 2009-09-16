@@ -1523,7 +1523,7 @@ sub cmdEquip {
 		return;
 	}
 
-	if (!$item->{type_equip} && $item->{type} != 10 && $item->{type} != 16 && $item->{type} != 17) {
+	if (!$item->{type_equip} && $item->{type} != 10 && $item->{type} != 16 && $item->{type} != 17 && $item->{type} != 8) {
 		error TF("Inventory Item %s (%s) can't be equipped.\n", 
 			$item->{name}, $item->{invIndex});
 		return;
@@ -3309,7 +3309,7 @@ sub cmdPet {
 					$messageSender->sendPetCapture($monstersID[$args[1]]);
 				}
 			} else {
-				error TF("Error in function 'pet capture|c' (Capture Pet)\n" . 
+				error TF("Error in function 'pet [capture|c]' (Capture Pet)\n" . 
 					"%s must be a monster index.\n", $args[1]);
 			}
 		} elsif ($args[0] eq "h" || $args[0] eq "hatch") {
@@ -3317,7 +3317,7 @@ sub cmdPet {
 				# beware, you must first use the item "Pet Incubator", else you will get disconnected
 				$messageSender->sendPetHatch($item->{index});
 			} else {
-				error TF("Error in function 'pet hatch|h' (Hatch Pet)\n" . 
+				error TF("Error in function 'pet [hatch|h]' (Hatch Pet)\n" . 
 					"Egg: %s could not be found.\n", $args[1]);
 			}
 		} elsif ($args[0]) {
