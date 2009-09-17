@@ -7207,10 +7207,10 @@ sub quest_all_mission {
 	my ($self, $args) = @_;
 	debug $self->{packet_list}{$args->{switch}}->[0] . " " . join(', ', @{$args}{@{$self->{packet_list}{$args->{switch}}->[2]}}) ."\n";
 	for (my $i = 8; $i < $args->{amount}*104+8; $i += 104) {
-		my ($questID, $active, $time, $mission_amount) = unpack('V3 v', substr($args->{RAW_MSG}, $i, 14));
+		my ($questID, $time_start, $time, $mission_amount) = unpack('V3 v', substr($args->{RAW_MSG}, $i, 14));
 		my $quest = \%{$questList->{$questID}};
+		$quest->{time_start} = $time_start;
 		$quest->{time} = $time;
-		$quest->{active} = $active;
 		debug "$questID $time $active $mission_amount\n", "info";
 		for (my $j = 0; $j < $mission_amount; $j++) {
 			my ($mobID, $count, $mobName) = unpack('V v Z24', substr($args->{RAW_MSG}, 14+$i+$j*30, 30));
@@ -7230,6 +7230,7 @@ sub quest_add {
 	my ($self, $args) = @_;
 	my $questID = $args->{questID};
 	my $quest = \%{$questList->{$questID}};
+	$quest->{time_start} = $args->{time_start};
 	$quest->{time} = $args->{time};
 	$quest->{active} = $args->{active};
 	debug $self->{packet_list}{$args->{switch}}->[0] . " " . join(', ', @{$args}{@{$self->{packet_list}{$args->{switch}}->[2]}}) ."\n";
