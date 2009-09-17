@@ -5341,9 +5341,10 @@ sub cmdQuest {
 	my @args = parseArgs($args_string, 3);
 	if ($args[0] eq 'set') {
 		if ($args[1] =~ /^\d+/) {
+			# note: we need the questID here now, might be better if we could make it so you only have to insert some questIndex
 			$messageSender->sendQuestState($args[1], ($args[2] eq 'on'));
 		} else {
-			message T("Usage: quest set <questIndex> <on|off>\n"), "info";
+			message T("Usage: quest set <questID> <on|off>\n"), "info";
 		}
 	} elsif ($args[0] eq 'list') {
 		my $k = 0;
