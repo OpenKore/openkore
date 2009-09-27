@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: OpenKore 1.9.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-08-25 22:56+0700\n"
-"PO-Revision-Date: 2009-08-30 13:52+0800\n"
+"PO-Revision-Date: 2009-09-27 09:11+0800\n"
 "Last-Translator: littlewens <littlewens@yahoo.com.tw>\n"
 "Language-Team: littlewens <littlewens@yahoo.com.tw>\n"
 "MIME-Version: 1.0\n"
@@ -5697,24 +5697,20 @@ msgid "You can sell %s items!\n"
 msgstr "您可以賣 %s 個物品!\n"
 
 #: ../Network/Receive/ServerType0.pm:5207
-#, fuzzy
 msgid "Allowed to view the other player's Equipment.\n"
-msgstr "允許其他玩家觀看自己的裝備\n"
+msgstr "允許觀看其他玩家的裝備.\n"
 
 #: ../Network/Receive/ServerType0.pm:5209
-#, fuzzy
 msgid "Not allowed to view the other player's Equipment.\n"
-msgstr "不允許其他玩家觀看自己的裝備\n"
+msgstr "不允許觀看其他玩家的裝備.\n"
 
 #: ../Network/Receive/ServerType0.pm:5216
-#, fuzzy
 msgid "Other players are allowed to view your Equipment.\n"
 msgstr "允許其他玩家觀看自己的裝備\n"
 
 #: ../Network/Receive/ServerType0.pm:5218
-#, fuzzy
 msgid "Other players are not allowed to view your Equipment.\n"
-msgstr "允許其他玩家觀看自己的裝備\n"
+msgstr "不允許其他玩家觀看自己的裝備\n"
 
 #: ../Network/Receive/ServerType0.pm:5302
 #, perl-format
