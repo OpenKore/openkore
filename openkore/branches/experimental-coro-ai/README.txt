@@ -17,6 +17,20 @@ Technology:
 - FLD2 implementation
 
 =========================
+### TODO:
+=========================
+1) Finish and Test SmartMatch system. (Use overloading of '~~' operator)
+2) Implement basic Networking (client/server), not protocol specific.
+3) Implement Environment Objects based on known RO data.
+4) Implement RO Networking Protocol (xKore mode's too).
+5) Implement Basic Tasks
+6) Implement Complex Tasks
+7) Implement AI Modules
+8) Implement build in Macro language (may-be base on Parse::Gnaw ???)
+9) Anything I've forgot???
+
+
+=========================
 #### Perl Modules that are not Included:
 =========================
 B
