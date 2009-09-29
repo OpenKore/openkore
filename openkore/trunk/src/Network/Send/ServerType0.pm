@@ -488,8 +488,8 @@ sub sendGuildChat {
 
 sub sendGuildCreate {
 	my ($self, $name) = @_;
-	my $msg = pack("C*", 0x65, 0x01, 0x4D, 0x8B, 0x01, 0x00) .
-		pack("a24", stringToBytes($name));
+	# By Default, the second param is our CharID. which indicate the Guild Master Char ID
+	my $msg = pack('v a4 a24', 0x0165, $charID, stringToBytes($name));
 	$self->sendToServer($msg);
 	debug "Sent Guild Create: $name\n", "sendPacket", 2;
 }
