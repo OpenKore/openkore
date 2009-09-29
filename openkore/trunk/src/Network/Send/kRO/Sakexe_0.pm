@@ -740,6 +740,8 @@ sub sendGuildRankChange { # change the title for a certain index, i would  guess
 # 0x0165,30,createguild,6
 sub sendGuildCreate {
 	my ($self, $name) = @_;
+	# TODO: Check what is used. Analisis show that the param is CharID, not AccID.
+	# my $msg = pack('v a4 a24', 0x0165, $charID, stringToBytes($name));
 	my $msg = pack('v a4 a24', 0x0165, $accountID, stringToBytes($name));
 	$self->sendToServer($msg);
 	debug "Sent Guild Create: $name\n", "sendPacket", 2;
