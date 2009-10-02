@@ -2938,7 +2938,7 @@ sub processAutoTeleport {
 		foreach (@monstersID) {
 			next unless $_;
 			my $teleAuto = mon_control($monsters{$_}{name},$monsters{$_}{nameID})->{teleport_auto};
-			if ($teleAuto == 1) {
+			if (($teleAuto == 1)&& !$char->{dead}) {
 				message TF("Teleporting to avoid %s\n", $monsters{$_}{name}), "teleport";
 				$ai_v{temp}{clear_aiQueue} = 1 if (useTeleport(1));
 				$timeout{ai_teleport_away}{time} = time;
