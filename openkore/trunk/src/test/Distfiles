@@ -12,6 +12,5 @@ SkillTest.pm
 TaskChainedTest.pm
 TaskManagerTest.pm
 TaskWithSubtaskTest.pm
-test_rijndael.pl
 unittests.pl
 WhirlpoolTest.pm
