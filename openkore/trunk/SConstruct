@@ -280,7 +280,8 @@ if win32:
 	perlenv['CCFLAGS'] += Split('-Wno-comments -include stdint.h')
 	perlenv['CPPDEFINES'] += Split('__MINGW32__ WIN32IO_IS_STDIO ' +
 		'_UINTPTR_T_DEFINED CHECK_FORMAT')
-	perlenv['LIBS'] += ['perl58']
+	#perlenv['LIBS'] += ['perl58']
+	perlenv['LIBS'] += ['perl510']
 	perlenv['LIBPATH'] += [perlconfig['coredir']]
 elif not darwin:
 	# Unix (except MacOS X)

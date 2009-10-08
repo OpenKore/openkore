@@ -7195,6 +7195,7 @@ sub quest_all_list {
 	$questList = {};
 	for (my $i = 8; $i < $args->{amount}*5+8; $i += 5) {
 		my ($questID, $active) = unpack('V C', substr($args->{RAW_MSG}, $i, 5));
+		# make a set/array with questID's here
 		$questList->{$questID}->{active} = $active;
 		debug "$questID $active\n", "info";
 	}
@@ -7228,6 +7229,7 @@ sub quest_all_mission {
 # note: this packet shows all missions for 1 quest and has fixed length
 sub quest_add {
 	my ($self, $args) = @_;
+	# add to the set/array with questID's here
 	my $questID = $args->{questID};
 	my $quest = \%{$questList->{$questID}};
 	$quest->{time_start} = $args->{time_start};
@@ -7248,6 +7250,7 @@ sub quest_add {
 # TODO
 sub quest_delete {
 	my ($self, $args) = @_;
+	# remove from set/array with questID's here
 	my $questID = $args->{questID};
 	message TF("Quest: %s has been deleted.\n", $questID), "info";
 	delete $questList->{$questID};
@@ -7279,7 +7282,7 @@ sub quest_active {
 
 sub GM_req_acc_name {
 	my ($self, $args) = @_;
-	message TF("The accountName for ID %s is %s.\n", $args->{accountName}, $args->{targetID}), "info";
+	message TF("The accountName for ID %s is %s.\n", $args->{targetID}, $args->{accountName}), "info";
 }
 
 1;

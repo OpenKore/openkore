@@ -698,7 +698,7 @@ sub mainLoop_initialized {
 		$AI::Timeouts::autoConfChangeTime = time;
 	}
 
-	processStatisticsReporting() unless ($sys{sendAnonymousStatisticReport} eq "0");
+	#processStatisticsReporting() unless ($sys{sendAnonymousStatisticReport} eq "0");
 
 	# Update state.yml
 	if (timeOut($AI::Timeouts::stateUpdate, 0.5)) {
@@ -779,6 +779,7 @@ sub mainLoop_initialized {
 	Benchmark::end("mainLoop_part3") if DEBUG;
 }
 
+=pod
 # Anonymous statistics reporting. This gives us insight about
 # servers that our users bot on.
 sub processStatisticsReporting {
@@ -846,6 +847,7 @@ sub processStatisticsReporting {
 		}
 	}
 }
+=cut
 
 sub parseInput {
 	my $input = shift;

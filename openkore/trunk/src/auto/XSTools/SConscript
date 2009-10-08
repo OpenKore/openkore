@@ -93,6 +93,9 @@ sources += [
 
 	'utils/whirlpool-algorithm.c',
 	'utils/perl/Whirlpool.c',
+	
+	'utils/Rijndael.cpp',
+	'utils/perl/Rijndael.xs.cpp',
 
 	'utils/rijndael-alg-fst.c',
 	'utils/rijndael-api-fst.c',
@@ -102,6 +105,8 @@ sources += [
 XS_sources['utils/perl/Benchmark.xs'] = 'utils/perl/Benchmark.cpp'
 XS_sources['utils/perl/HttpReader.xs'] = 'utils/perl/HttpReader.cpp'
 XS_sources['utils/perl/Whirlpool.xs'] = 'utils/perl/Whirlpool.c'
+XS_sources['utils/perl/Rijndael.xs'] = 'utils/perl/Rijndael.xs.cpp'
+
 if not win32:
 	perlenv.ParseConfig('curl-config --cflags --libs')
 

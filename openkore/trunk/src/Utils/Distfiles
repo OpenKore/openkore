@@ -7,11 +7,12 @@ Crypton.pm
 Daemon.pm
 DataStructures.pm
 Exceptions.pm
-LockFile.pm
 HttpReader.pm
+LockFile.pm
 ObjectList.pm
 PathFinding.pm
 PerlLauncher.pm
+Rijndael.pm
 Set.pm
 StringScanner.pm
 TextReader.pm

@@ -23,6 +23,7 @@ use Carp::Assert;
 sub __start {
 	use ErrorHandler;
 	use XSTools;
+	use Utils::Rijndael;
 	srand();
 
 
@@ -42,7 +43,6 @@ sub __start {
 	use Interface;
 	$interface = Interface->loadInterface($Settings::interface);
 	selfCheck();
-
 
 	##### LOAD OPENKORE MODULES #####
 
@@ -145,7 +145,7 @@ sub selfCheck {
 		$interface->errorDialog(TF("Your version of the XSTools library is too old.\n" .
 			"Please read %s", "http://www.openkore.com/aliases/xstools.php"));
 		exit 1;
-	} elsif (XSTools::majorVersion() != 4) {
+	} elsif (XSTools::majorVersion() != 5) {
 		my $error;
 		if (defined $ENV{INTERPRETER}) {
 			$error = TF("Your version of (wx)start.exe is incompatible.\n" .
