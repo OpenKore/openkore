@@ -7359,7 +7359,7 @@ sub quest_active {
 
 sub GM_req_acc_name {
 	my ($self, $args) = @_;
-	message TF("The accountName for ID %s is %s.\n", $args->{accountName}, $args->{targetID}), "info";
+	message TF("The accountName for ID %s is %s.\n", $args->{targetID}, $args->{accountName}), "info";
 }
 
 1;

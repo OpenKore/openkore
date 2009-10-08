@@ -18,3 +18,5 @@ dense_hash_map.h
 densehashtable.h
 google_type_traits.h
 sparseconfig.h
+Rijndael.h
+Rijndael.cpp
