@@ -320,7 +320,7 @@ sub new {
 		'0207' => ['friend_request', 'a4 a4 Z24', [qw(accountID charID name)]],
 		'0209' => ['friend_response', 'C Z24', [qw(type name)]],
 		'020A' => ['friend_removed', 'a4 a4', [qw(friendAccountID friendCharID)]],
-		'020E' => ['teakwon_packets', 'Z24 a4 C2', [qw(name ID value flag)]],
+		'020E' => ['taekwon_packets', 'Z24 a4 C2', [qw(name ID value flag)]],
 		'0215' => ['gospel_buff_aligned', 'a4', [qw(ID)]],
 		'0216' => ['adopt_reply', 'V', [qw(type)]],
 		'0219' => ['top10_blacksmith_rank'],
@@ -6868,11 +6868,11 @@ sub manner_message {
 sub GM_silence {
 	my ($self, $args) = @_;
 	my $action = $args->{flag} ? "muted" : "unmuted";
-	message TF("You have been: %s by %s.\n", $action, $args->{name}), "info";
+	message TF("You have been: %s by %s.\n", $action, bytesToString($args->{name})), "info";
 }
 
 # TODO test if we must use ID to know if the packets are meant for us.
-sub teakwon_packets {
+sub taekwon_packets {
 	my ($self, $args) = @_;
 	my $string = ($args->{value} == 1) ? "Sun" : ($args->{value} == 2) ? "Moon" : ($args->{value} == 3) ? "Stars" : "unknown";
 	if ($args->{flag} == 0) { # Info about Star Gladiator save map: Map registered
@@ -6884,7 +6884,7 @@ sub teakwon_packets {
 	} elsif ($args->{flag} == 11) { # Info about Star Gladiator hate mob: Information
 		message TF("%s is marked as Target of the %s.\n", $args->{name}, $string);
 	} elsif ($args->{flag} == 20) { #Info about TaeKwon Do TK_MISSION mob
-		message TF("TaeKwon Mission : %s (%)"."\n", monsterName($args->{ID}), $args->{value}), "info";
+		message TF("[TaeKwon Mission] Target Monster : %s (%d%)"."\n", $args->{name}, $args->{value}), "info";
 	} elsif ($args->{flag} == 30) { #Feel/Hate reset
 		message T("Your Hate and Feel targets have been resetted.\n"), "info";
 	} else {
