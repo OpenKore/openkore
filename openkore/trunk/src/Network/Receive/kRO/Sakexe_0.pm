@@ -6948,23 +6948,23 @@ sub manner_message {
 sub GM_silence {
 	my ($self, $args) = @_;
 	my $action = $args->{flag} ? "muted" : "unmuted";
-	message TF("You have been: %s by %s.\n", $action, $args->{name}), "info";
+	message TF("You have been: %s by %s.\n", $action, bytesToString($args->{name})), "info";
 }
 
 # TODO test if we must use ID to know if the packets are meant for us.
-sub teakwon_packets {
+sub taekwon_packets {
 	my ($self, $args) = @_;
 	my $string = ($args->{value} == 1) ? "Sun" : ($args->{value} == 2) ? "Moon" : ($args->{value} == 3) ? "Stars" : "unknown";
 	if ($args->{flag} == 0) { # Info about Star Gladiator save map: Map registered
-		message TF("You have now marked: %s as Place of the %s.\n", $args->{name}, $string), "info";
+		message TF("You have now marked: %s as Place of the %s.\n", bytesToString($args->{name}), $string), "info";
 	} elsif ($args->{flag} == 1) { # Info about Star Gladiator save map: Information
-		message TF("%s is marked as Place of the %s.\n", $args->{name}, $string), "info";
+		message TF("%s is marked as Place of the %s.\n", bytesToString($args->{name}), $string), "info";
 	} elsif ($args->{flag} == 10) { # Info about Star Gladiator hate mob: Register mob
-		message TF("You have now marked %s as Target of the %s.\n", $args->{name}, $string), "info";
+		message TF("You have now marked %s as Target of the %s.\n", bytesToString($args->{name}), $string), "info";
 	} elsif ($args->{flag} == 11) { # Info about Star Gladiator hate mob: Information
-		message TF("%s is marked as Target of the %s.\n", $args->{name}, $string);
+		message TF("%s is marked as Target of the %s.\n", bytesToString($args->{name}), $string);
 	} elsif ($args->{flag} == 20) { #Info about TaeKwon Do TK_MISSION mob
-		message TF("TaeKwon Mission : %s (%)"."\n", monsterName($args->{ID}), $args->{value}), "info";
+		message TF("[TaeKwon Mission] Target Monster : %s (%d%)"."\n", $args->{name}, $args->{value}), "info";
 	} elsif ($args->{flag} == 30) { #Feel/Hate reset
 		message T("Your Hate and Feel targets have been resetted.\n"), "info";
 	} else {

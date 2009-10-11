@@ -27,7 +27,7 @@ sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
 	my %packets = (
-		'020E' => ['teakwon_packets', 'Z24 a4 C2', [qw(name ID value flag)]], # 32
+		'020E' => ['taekwon_packets', 'Z24 a4 C2', [qw(name ID value flag)]], # 32
 		'025A' => ['cooking_list', 'v', [qw(type)]], # -1
 	);
 	
