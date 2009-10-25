@@ -430,29 +430,27 @@ sub checkConnection {
 
 		$timeout{'master'}{'time'} = time;
 		
-	} elsif ($conState == 1 && $masterServer->{secureLogin} >= 1 && $secureLoginKey ne ""
-	   && !timeOut($timeout{'master'}) && $conState_tries) {
+	} elsif ($conState == 1) {
+		if($masterServer->{secureLogin} >= 1 && $secureLoginKey ne "" && !timeOut($timeout{'master'}) && $conState_tries) {
+			my $master = $masterServer;
+			message T("Sending encoded password...\n"), "connection";
+			$messageSender->sendMasterSecureLogin($config{'username'}, $config{'password'}, $secureLoginKey,
+					$master->{version}, $master->{master_version},
+					$master->{secureLogin}, $master->{secureLogin_account});
+			undef $secureLoginKey;
 
-		my $master = $masterServer;
-		message T("Sending encoded password...\n"), "connection";
-		$messageSender->sendMasterSecureLogin($config{'username'}, $config{'password'}, $secureLoginKey,
-				$master->{version}, $master->{master_version},
-				$master->{secureLogin}, $master->{secureLogin_account});
-		undef $secureLoginKey;
-
-	} elsif ($conState == 1 && timeOut($timeout{'master'}) && timeOut($timeout_ex{'master'})) {
-		if ($config{dcOnMaxReconnections} && $config{dcOnMaxReconnections} <= $reconnectCount) {
-			$quit = 1;
-			return;
+		} elsif (timeOut($timeout{'master'}) && timeOut($timeout_ex{'master'})) {
+			if ($config{dcOnMaxReconnections} && $config{dcOnMaxReconnections} <= $reconnectCount) {
+				$quit = 1;
+				return;
+			}
+			error T("Timeout on Account Server, reconnecting...\n"), "connection";
+			$timeout_ex{'master'}{'time'} = time;
+			$timeout_ex{'master'}{'timeout'} = $timeout{'reconnect'}{'timeout'};
+			$self->serverDisconnect;
+			undef $conState_tries;
 		}
-		error T("Timeout on Account Server, reconnecting...\n"), "connection";
-		$timeout_ex{'master'}{'time'} = time;
-		$timeout_ex{'master'}{'timeout'} = $timeout{'reconnect'}{'timeout'};
-		$self->serverDisconnect;
-		undef $conState_tries;
-
 	} elsif ($conState == 1.5) {
-		
 		if (!$self->serverAlive) {
 			$self->setState(Network::NOT_CONNECTED);
 			undef $conState_tries;
@@ -462,146 +460,160 @@ sub checkConnection {
 		# on this special stage, the plugin will know what to do next.
 		Plugins::callHook("Network::serverConnect/special");
 		
-	} elsif ($conState == 2 && !$self->serverAlive()
-	  && ($config{'server'} ne "" || $masterServer->{charServer_ip})
-	  && !$conState_tries) {
-		if ($config{pauseCharServer}) {
-			message "Pausing for $config{pauseCharServer} second(s)...\n", "system";
-			sleep $config{pauseCharServer};
-		}
-		my $master = $masterServer;
-		message T("Connecting to Character Server...\n"), "connection";
-		$conState_tries++;
-
-		if ($master->{charServer_ip}) {
-			$self->serverConnect($master->{charServer_ip}, $master->{charServer_port});
-		} elsif ($servers[$config{'server'}]) {
-			$self->serverConnect($servers[$config{'server'}]{'ip'}, $servers[$config{'server'}]{'port'});
-		} else {
-			error TF("Invalid server specified, server %s does not exist...\n", $config{server}), "connection";
-
-			my @serverList;
-			foreach my $server (@servers) {
-				push @serverList, $server->{name};
+	} elsif ($conState == 2) {
+		if(!$self->serverAlive() && ($config{'server'} ne "" || $masterServer->{charServer_ip}) && !$conState_tries) {
+			if ($config{pauseCharServer}) {
+				message "Pausing for $config{pauseCharServer} second(s)...\n", "system";
+				sleep $config{pauseCharServer};
 			}
-			my $ret = $interface->showMenu(
-					T("Please select your login server."),
-					\@serverList,
-					title => T("Select Login Server"));
-			if ($ret == -1) {
-				quit();
+			my $master = $masterServer;
+			message T("Connecting to Character Server...\n"), "connection";
+			$conState_tries++;
+
+			if ($master->{charServer_ip}) {
+				$self->serverConnect($master->{charServer_ip}, $master->{charServer_port});
+			} elsif ($servers[$config{'server'}]) {
+				$self->serverConnect($servers[$config{'server'}]{'ip'}, $servers[$config{'server'}]{'port'});
 			} else {
-				main::configModify('server', $ret, 1);
-				undef $conState_tries;
+				error TF("Invalid server specified, server %s does not exist...\n", $config{server}), "connection";
+
+				my @serverList;
+				foreach my $server (@servers) {
+					push @serverList, $server->{name};
+				}
+				my $ret = $interface->showMenu(
+						T("Please select your login server."),
+						\@serverList,
+						title => T("Select Login Server"));
+				if ($ret == -1) {
+					quit();
+				} else {
+					main::configModify('server', $ret, 1);
+					undef $conState_tries;
+				}
+				return;
 			}
-			return;
+
+			# call plugin's hook to determine if we can continue the connection
+			if ($self->serverAlive) {
+				Plugins::callHook("Network::serverConnect/char");
+				if($masterServer->{captcha}) {
+					$messageSender->sendCaptchaInitiate();
+				}
+				$reconnectCount = 0;
+				return if ($conState == 1.5);
+			}
+			# TODO: the connect code needs a major rewrite =/
+			unless($masterServer->{captcha}) {
+				$messageSender->sendGameLogin($accountID, $sessionID, $sessionID2, $accountSex);
+				$timeout{'gamelogin'}{'time'} = time;
+			}
+		} elsif($self->serverAlive() && $conState_tries == 1 && $masterServer->{captcha}) {
+			if ($captcha_done) {
+				$conState_tries++;
+				$messageSender->sendGameLogin($accountID, $sessionID, $sessionID2, $accountSex);
+				$timeout{'gamelogin'}{'time'} = time;
+			} else {
+				return;
+			}
+		} elsif (timeOut($timeout{'gamelogin'}) && ($config{'server'} ne "" || $masterServer->{'charServer_ip'})) {
+			error T("Timeout on Character Server, reconnecting...\n"), "connection";
+			$timeout_ex{'master'}{'time'} = time;
+			$timeout_ex{'master'}{'timeout'} = $timeout{'reconnect'}{'timeout'};
+			$self->serverDisconnect;
+			undef $conState_tries;
+			$self->setState(Network::NOT_CONNECTED);
 		}
+	} elsif ($conState == 3) {
+		if(!$self->serverAlive() && $config{'char'} ne "" && !$conState_tries) {
+			message T("Connecting to Character Select Server...\n"), "connection";
+			$conState_tries++;
+			$self->serverConnect($servers[$config{'server'}]{'ip'}, $servers[$config{'server'}]{'port'});
 
-		# call plugin's hook to determine if we can continue the connection
-		if ($self->serverAlive) {
-			Plugins::callHook("Network::serverConnect/char");
-			$reconnectCount = 0;
-			return if ($conState == 1.5);
-		}
-		
-		$messageSender->sendGameLogin($accountID, $sessionID, $sessionID2, $accountSex);
-		$timeout{'gamelogin'}{'time'} = time;
+			# call plugin's hook to determine if we can continue the connection
+			if ($self->serverAlive) {
+				Plugins::callHook("Network::serverConnect/charselect");
+				return if ($conState == 1.5);
+			}
+					
+			$messageSender->sendCharLogin($config{'char'});
+			$timeout{'charlogin'}{'time'} = time;
 
-	} elsif ($conState == 2 && timeOut($timeout{'gamelogin'})
-	  && ($config{'server'} ne "" || $masterServer->{'charServer_ip'})) {
-		error T("Timeout on Character Server, reconnecting...\n"), "connection";
-		$timeout_ex{'master'}{'time'} = time;
-		$timeout_ex{'master'}{'timeout'} = $timeout{'reconnect'}{'timeout'};
-		$self->serverDisconnect;
-		undef $conState_tries;
-		$self->setState(Network::NOT_CONNECTED);
-
-	} elsif ($conState == 3 && !$self->serverAlive() && $config{'char'} ne "" && !$conState_tries) {
-		message T("Connecting to Character Select Server...\n"), "connection";
-		$conState_tries++;
-		$self->serverConnect($servers[$config{'server'}]{'ip'}, $servers[$config{'server'}]{'port'});
-
-		# call plugin's hook to determine if we can continue the connection
-		if ($self->serverAlive) {
-			Plugins::callHook("Network::serverConnect/charselect");
-			return if ($conState == 1.5);
-		}
-				
-		$messageSender->sendCharLogin($config{'char'});
-		$timeout{'charlogin'}{'time'} = time;
-
-	} elsif ($conState == 3 && timeOut($timeout{'charlogin'}) && $config{'char'} ne "") {
-		error T("Timeout on Character Select Server, reconnecting...\n"), "connection";
-		$timeout_ex{'master'}{'time'} = time;
-		$timeout_ex{'master'}{'timeout'} = $timeout{'reconnect'}{'timeout'};
-		$self->serverDisconnect;
-		$self->setState(Network::NOT_CONNECTED);
-		undef $conState_tries;
-
-	} elsif ($conState == 4 && !$self->serverAlive() && !$conState_tries) {
-		if ($config{pauseMapServer}) {
-			message "Pausing for $config{pauseMapServer} second(s)...\n", "system";
-			sleep($config{pauseMapServer});
-		}
-		message T("Connecting to Map Server...\n"), "connection";
-		$conState_tries++;
-		main::initConnectVars();
-		my $master = $masterServer;
-		my ($ip, $port);
-		if ($master->{private}) {
-			$ip = $config{forceMapIP} || $master->{ip};
-			$port = $map_port;
-		} else {
-			$ip = $master->{mapServer_ip} || $config{forceMapIP} || $map_ip;
-			$port = $master->{mapServer_port} || $map_port;
-		}
-		$self->serverConnect($ip, $port);
-
-		# call plugin's hook to determine if we can continue the connection
-		if ($self->serverAlive) {
-			Plugins::callHook("Network::serverConnect/mapserver");
-			return if ($conState == 1.5);
-		}
-
-		$messageSender->sendMapLogin($accountID, $charID, $sessionID, $accountSex2);
-		$timeout_ex{master}{time} = time;
-		$timeout_ex{master}{timeout} = $timeout{reconnect}{timeout};
-		$timeout{maplogin}{time} = time;
-
-	} elsif ($conState == 4 && timeOut($timeout{maplogin})) {
-		message T("Timeout on Map Server, connecting to Account Server...\n"), "connection";
-		$timeout_ex{master}{timeout} = $timeout{reconnect}{timeout};
-		$self->serverDisconnect;
-		$self->setState(Network::NOT_CONNECTED);
-		undef $conState_tries;
-
-	} elsif ($conState == 5 && !$self->serverAlive()) {
-		Plugins::callHook('disconnected');
-		if ($config{dcOnDisconnect}) {
-			chatLog("k", T("*** You disconnected, auto quit! ***\n"));
-			error T("Disconnected from Map Server, exiting...\n"), "connection";
-			$quit = 1;
-		} else {
-			error TF("Disconnected from Map Server, connecting to Account Server in %s seconds...\n", $timeout{reconnect}{timeout}), "connection";
-			$timeout_ex{master}{time} = time;
-			$timeout_ex{master}{timeout} = $timeout{reconnect}{timeout};
+		} elsif (timeOut($timeout{'charlogin'}) && $config{'char'} ne "") {
+			error T("Timeout on Character Select Server, reconnecting...\n"), "connection";
+			$timeout_ex{'master'}{'time'} = time;
+			$timeout_ex{'master'}{'timeout'} = $timeout{'reconnect'}{'timeout'};
+			$self->serverDisconnect;
 			$self->setState(Network::NOT_CONNECTED);
 			undef $conState_tries;
 		}
+	} elsif ($conState == 4) {
+		if(!$self->serverAlive() && !$conState_tries) {
+			if ($config{pauseMapServer}) {
+				message "Pausing for $config{pauseMapServer} second(s)...\n", "system";
+				sleep($config{pauseMapServer});
+			}
+			message T("Connecting to Map Server...\n"), "connection";
+			$conState_tries++;
+			main::initConnectVars();
+			my $master = $masterServer;
+			my ($ip, $port);
+			if ($master->{private}) {
+				$ip = $config{forceMapIP} || $master->{ip};
+				$port = $map_port;
+			} else {
+				$ip = $master->{mapServer_ip} || $config{forceMapIP} || $map_ip;
+				$port = $master->{mapServer_port} || $map_port;
+			}
+			$self->serverConnect($ip, $port);
 
-	} elsif ($conState == 5 && timeOut($timeout{play})) {
-		error T("Timeout on Map Server, "), "connection";
-		Plugins::callHook('disconnected');
-		if ($config{dcOnDisconnect}) {
-			error T("exiting...\n"), "connection";
-			$quit = 1;
-		} else {
-			error TF("connecting to Account Server in %s seconds...\n", $timeout{reconnect}{timeout}), "connection";
+			# call plugin's hook to determine if we can continue the connection
+			if ($self->serverAlive) {
+				Plugins::callHook("Network::serverConnect/mapserver");
+				return if ($conState == 1.5);
+			}
+
+			$messageSender->sendMapLogin($accountID, $charID, $sessionID, $accountSex2);
 			$timeout_ex{master}{time} = time;
+			$timeout_ex{master}{timeout} = $timeout{reconnect}{timeout};
+			$timeout{maplogin}{time} = time;
+
+		} elsif (timeOut($timeout{maplogin})) {
+			message T("Timeout on Map Server, connecting to Account Server...\n"), "connection";
 			$timeout_ex{master}{timeout} = $timeout{reconnect}{timeout};
 			$self->serverDisconnect;
 			$self->setState(Network::NOT_CONNECTED);
 			undef $conState_tries;
+		}
+	} elsif ($conState == 5) {
+		if(!$self->serverAlive()) {
+			Plugins::callHook('disconnected');
+			if ($config{dcOnDisconnect}) {
+				chatLog("k", T("*** You disconnected, auto quit! ***\n"));
+				error T("Disconnected from Map Server, exiting...\n"), "connection";
+				$quit = 1;
+			} else {
+				error TF("Disconnected from Map Server, connecting to Account Server in %s seconds...\n", $timeout{reconnect}{timeout}), "connection";
+				$timeout_ex{master}{time} = time;
+				$timeout_ex{master}{timeout} = $timeout{reconnect}{timeout};
+				$self->setState(Network::NOT_CONNECTED);
+				undef $conState_tries;
+			}
+
+		} elsif (timeOut($timeout{play})) {
+			error T("Timeout on Map Server, "), "connection";
+			Plugins::callHook('disconnected');
+			if ($config{dcOnDisconnect}) {
+				error T("exiting...\n"), "connection";
+				$quit = 1;
+			} else {
+				error TF("connecting to Account Server in %s seconds...\n", $timeout{reconnect}{timeout}), "connection";
+				$timeout_ex{master}{time} = time;
+				$timeout_ex{master}{timeout} = $timeout{reconnect}{timeout};
+				$self->serverDisconnect;
+				$self->setState(Network::NOT_CONNECTED);
+				undef $conState_tries;
+			}
 		}
 	}
 }

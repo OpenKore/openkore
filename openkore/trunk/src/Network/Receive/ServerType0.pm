@@ -7032,6 +7032,7 @@ sub party_show_picker {
 	my ($self, $args) = @_;
 	#my $player = $playersList->getByID($args->{sourceID}); # also sent for Actor::Party objects? then we also need to include those.
 	my $player =  $char->{party}{users}{$args->{sourceID}};
+	assert(UNIVERSAL::isa($player, 'Actor::Party'));
 	my $item = {};
 	$item->{nameID} = $args->{nameID};
 	$item->{identified} = $args->{identified};
