@@ -131,12 +131,15 @@ secureLogin 1
 serverEncoding Japanese
 
 [Korea - kRO]
-ip 211.172.247.192
+ip 112.175.128.138
 port 6900
-master_version 0
-version 19
-serverType 8_1
+master_version 2
+version 29
+serverType kRO_RagexeRE_0
 serverEncoding Korean
+charBlockSize 112
+captcha 1
+recvpackets recvpackets-kRO-2009-09-23aRagexeRE.txt
 
 [Malaysia - mRO: Main Server: Balder]
 ip 202.71.105.21
