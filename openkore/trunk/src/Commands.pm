@@ -219,6 +219,7 @@ sub initHandlers {
 	northwest          => \&cmdManualMove,
 	southeast          => \&cmdManualMove,
 	southwest          => \&cmdManualMove,
+	captcha			   => \&cmdAnswerCaptcha
 	);
 }
 
@@ -5415,6 +5416,10 @@ sub cmdWeaponRefine {
 	} else {
 		message TF("Item with name or id: %s not found.\n", $arg), "info";
 	}
+}
+
+sub cmdAnswerCaptcha {
+	$messageSender->sendCaptchaAnswer($_[1]);
 }
 
 return 1;

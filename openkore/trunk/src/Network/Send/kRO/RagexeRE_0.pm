@@ -23,6 +23,7 @@ use base qw(Network::Send::kRO::RagexeRE_2009_01_21a);
 
 use Log qw(message warning error debug);
 use Utils::Rijndael qw(normal_rijndael);
+use Globals qw($accountID);
 
 sub new {
 	my ($class) = @_;
@@ -43,7 +44,7 @@ sub sendClientMD5Hash {
 # 0x002B0
 sub sendMasterLogin {
 	my ($self, $username, $password, $master_version, $version) = @_;
-	$self->sendClientMD5Hash(); 						# this is a hack, just for testing purposes
+	$self->sendClientMD5Hash(); 						# this is a hack, just for testing purposes, it should be moved to the login algo later on
 	my $key = pack('C24', (6, 169, 33, 64, 54, 184, 161, 91, 81, 46, 3, 213, 52, 18, 0, 6, 61, 175, 186, 66, 157, 158, 180, 48));
 	my $chain = pack('C24', (61, 175, 186, 66, 157, 158, 180, 48, 180, 34, 218, 128, 44, 159, 172, 65, 1, 2, 4, 8, 16, 32, 128));
 	my $in = pack('a24', $password);
@@ -54,6 +55,20 @@ sub sendMasterLogin {
 	my $mac = "31313131313131313131313100";				# gibberish
 	my $isGravityID = 0;
 	my $msg = pack('v V a24 a24 C H32 H26 C', 0x02B0, version(), $username, $password, $master_version, $ip, $mac, $isGravityID);
+	$self->sendToServer($msg);
+}
+
+sub sendCaptchaInitiate {
+	my ($self) = @_;
+	my $msg = pack('v2 a4', 0x07E5, 0x12, $accountID);
+	$self->sendToServer($msg);
+	debug "Sending Captcha Initiate\n";
+}
+
+# 0x20 = 32 = len?
+sub sendCaptchaAnswer {
+	my ($self, $answer) = @_;
+	my $msg = pack('v2 a4 a24', 0x07E7, 0x20, $accountID, $answer);
 	$self->sendToServer($msg);
 }
 
@@ -70,6 +85,12 @@ b002													 2
 31313131313131313131313100								13
 00														 1
 														85
+
+07E5 8
+07E6 8
+07E7 32
+07E8 0
+07E9 5
 =cut
 
 1;
