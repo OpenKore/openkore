@@ -5,3 +5,4 @@ compile-wx.bat
 autoload.pl
 dos2unix.pl
 unix2dos.pl
+compile-wx-readme.txt

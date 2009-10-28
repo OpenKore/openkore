@@ -78,6 +78,10 @@ if (0) {
 	require Win32::Process;
 	require XSTools;
 	require Encode;
+	require Encode::KR;
+	require Encode::TW;
+	require Encode::JP;
+	require Encode::CN;
 	require encoding;
 	require Storable;
 	require Compress::Zlib;
