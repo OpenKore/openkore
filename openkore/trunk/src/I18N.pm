@@ -24,21 +24,20 @@ use strict;
 use Globals qw(%config);
 use Exporter;
 use base qw(Exporter);
-use Encode;
-use Encode::Alias;
+use Encode qw(encode decode);
+use Encode::Alias qw(define_alias);
 
 our @EXPORT_OK = qw(bytesToString stringToBytes stringToUTF8 UTF8ToString isUTF8);
 
-define_alias('Western'             => 'CP1252');
-define_alias('Tagalog'             => 'CP1252');
-define_alias('Simplified Chinese'  => 'GBK');
-define_alias('Traditional Chinese' => 'Big5');
-define_alias('Korean'              => 'CP949');
-define_alias('Russian'             => 'CP1251');
-define_alias('Cyrillic'            => 'CP1251');
-define_alias('Japanese'            => 'Shift_JIS');
-define_alias('Thai'                => 'CP874');
-
+define_alias("Western"				=> "cp1252");
+define_alias("Tagalog"				=> "cp1252");
+define_alias("Simplified Chinese"	=> "GBK");
+define_alias("Traditional Chinese"	=> "Big5");
+define_alias("Korean"				=> "cp949");
+define_alias("Russian"				=> "cp1251");
+define_alias("Cyrillic"				=> "cp1251");
+define_alias("Japanese"				=> "Shift_JIS");
+define_alias("Thai"					=> "cp874");
 
 ##
 # String I18N::bytesToString(Bytes data)
@@ -58,7 +57,7 @@ define_alias('Thai'                => 'CP874');
 #
 # This symbol is exportable.
 sub bytesToString {
-	return Encode::decode($config{serverEncoding} || 'Western', $_[0]);
+	return decode($config{serverEncoding} || "Western", $_[0]);
 }
 
 ##
@@ -74,7 +73,7 @@ sub bytesToString {
 #
 # This symbol is exportable.
 sub stringToBytes {
-	return Encode::encode($config{serverEncoding} || 'Western', $_[0]);
+	return encode($config{serverEncoding} || "Western", $_[0]);
 }
 
 ##
@@ -88,7 +87,7 @@ sub stringToBytes {
 #
 # This symbol is exportable.
 sub stringToUTF8 {
-	return Encode::encode("UTF-8", $_[0]);
+	return encode("UTF-8", $_[0]);
 }
 
 ##
@@ -102,7 +101,7 @@ sub stringToUTF8 {
 #
 # This symbol is exportable.
 sub UTF8ToString {
-	return Encode::decode("UTF-8", $_[0]);
+	return decode("UTF-8", $_[0]);
 }
 
 ##
