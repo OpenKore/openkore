@@ -2463,3 +2463,15 @@ mosk_in 99 126 mosk_in 21 116
 moscovia 256 138 mosk_in 96 61
 moscovia 256 179 mosk_in 211 114
 mosk_in 89 180 moscovia 204 169
+
+einbroch 218 198 einbroch 181 196 10 c c c c r0
+einbroch 173 229 einbroch 179 204 10 c c c c r0
+einbroch 176 172 einbroch 181 196 10 c c c c r0
+# 175 196 have several destinations, all in einbroch
+einbroch 175 196 einbroch 216 188 0 c c r0
+einbroch 137 199 que_ng 138 167
+que_ng 130 166 einbroch 130 197
+que_ng 178 162 que_ng 176 86
+que_ng 170 85 que_ng 182 161
+que_ng 165 137 que_ng 177 41
+que_ng 172 42 que_ng 160 139
