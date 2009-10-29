@@ -52,6 +52,7 @@ use Interface::Wx::Input;
 use Interface::Wx::ItemList;
 use Interface::Wx::DockNotebook;
 use Interface::Wx::PasswordDialog;
+use Interface::Wx::CaptchaDialog;
 use AI;
 use Settings qw(%sys);
 use Plugins;
@@ -81,7 +82,8 @@ sub OnInit {
 		['packet_selfChat',         $onChat],
 		['packet_privMsg',          $onChat],
 		['packet_sentPM',           $onChat],
-		['mainLoop_pre',            sub { $self->onUpdateUI(); }]
+		['mainLoop_pre',            sub { $self->onUpdateUI(); }],
+		['captcha_file',            sub { $self->onCaptcha(@_) }],
 	);
 
 	$self->{history} = [];
@@ -1045,6 +1047,22 @@ sub onMap_MapChange {
 	my ($mapDock) = @_;
 	$mapDock->title($field->name());
 	$mapDock->Fit;
+}
+
+sub onCaptcha {
+	my ($self, undef, $args) = @_;
+	
+	my $dialog = new Interface::Wx::CaptchaDialog ($self->{frame}, $args->{file});
+	my $result;
+	if ($dialog->ShowModal == wxID_OK) {
+		$result = $dialog->GetValue;
+	}
+	$dialog->Destroy;
+	return unless defined $result && $result ne '';
+	
+	$messageSender->sendCaptchaAnswer ($result);
+	
+	$args->{return} = 1;
 }
 
 1;

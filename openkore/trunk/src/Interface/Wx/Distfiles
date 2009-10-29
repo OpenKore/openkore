@@ -11,3 +11,4 @@ PasswordDialog.pm
 Utils.pm
 close.png
 window.png
+CaptchaDialog.pm

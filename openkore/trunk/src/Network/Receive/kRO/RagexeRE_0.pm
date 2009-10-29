@@ -49,9 +49,20 @@ sub captcha_session_ID {
 sub captcha_image {
 	my ($self, $args) = @_;
 	debug $self->{packet_list}{$args->{switch}}->[0] . " " . join(', ', @{$args}{@{$self->{packet_list}{$args->{switch}}->[2]}}) . "\n";
-	open DUMP, '>', ($Settings::logs_folder . "/captcha.bmp");
-	print DUMP $args->{image};
-	close DUMP;
+	
+	my $hookArgs = {image => $args->{image}};
+	Plugins::callHook ('captcha_image', $hookArgs);
+	return 1 if $hookArgs->{return};
+	
+	my $file = $Settings::logs_folder . "/captcha.bmp";
+	open my $DUMP, '>', $file;
+	print $DUMP $args->{image};
+	close $DUMP;
+	
+	$hookArgs = {file => $file};
+	Plugins::callHook ('captcha_file', $hookArgs);
+	return 1 if $hookArgs->{return};
+	
 	warning "captcha.bmp has been saved to: " . $Settings::logs_folder . ", open it, solve it and use the command: captcha <text>\n";
 }
 
@@ -60,6 +71,8 @@ sub captcha_answer {
 	debug $self->{packet_list}{$args->{switch}}->[0] . " " . join(', ', @{$args}{@{$self->{packet_list}{$args->{switch}}->[2]}}) . "\n";
 	debug ($args->{flag} ? "good" : "bad") . " answer\n";
 	$captcha_done = $args->{flag};
+	
+	Plugins::callHook ('captcha_answer', {flag => $args->{flag}});
 }
 
 =pod
