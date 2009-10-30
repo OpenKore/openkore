@@ -24,7 +24,7 @@ package Interface::Wx::MapViewer;
 use strict;
 use Wx ':everything';
 # vcl code use Wx::Event qw(EVT_PAINT EVT_LEFT_DOWN EVT_MOTION EVT_ERASE_BACKGROUND);
-use Wx::Event qw(EVT_PAINT EVT_LEFT_DOWN EVT_RIGHT_DOWN EVT_MOTION EVT_ERASE_BACKGROUND);
+use Wx::Event qw(EVT_SIZE EVT_PAINT EVT_LEFT_DOWN EVT_RIGHT_DOWN EVT_MOTION EVT_MOUSEWHEEL EVT_ERASE_BACKGROUND);
 use File::Spec;
 use base qw(Wx::Panel);
 use FastUtils;
@@ -33,9 +33,9 @@ use Log qw(message);
 use Globals;
 use Translation qw(TF);
 
+use constant PI => 3.14;
 
 our %addedHandlers;
-
 
 sub new {
 	my $class = shift;
@@ -43,46 +43,33 @@ sub new {
 	$self->{mapDir} = 'map';
 	$self->{points} = [];
 	$self->SetBackgroundColour(new Wx::Colour(0, 0, 0));
-
+	
 	$self->{destBrush}    = new Wx::Brush(new Wx::Colour(255, 110, 245), wxSOLID);
 	$self->{playerBrush}  = new Wx::Brush(new Wx::Colour(0, 200, 0), wxSOLID);
 	$self->{monsterBrush} = new Wx::Brush(new Wx::Colour(215, 0, 0), wxSOLID);
 	$self->{npcBrush}     = new Wx::Brush(new Wx::Colour(180, 0, 255), wxSOLID);
 	$self->{portalBrush}  = new Wx::Brush(new Wx::Colour(255, 128, 64), wxSOLID);
 	$self->{slaveBrush}     = new Wx::Brush(new Wx::Colour(0, 0, 215), wxSOLID);
-# vcl code 	EVT_PAINT($self, \&_handlePaintEvent);
-# vcl code 	EVT_LEFT_DOWN($self, \&_handleLeftDownEvent);
-# vcl code 	EVT_MOTION($self, \&_handleMotionEvent);
-# vcl code 	EVT_ERASE_BACKGROUND($self, \&_handleEraseEvent);
-
+	
+	$self->{portalSize} = 3;
+	$self->{actorSize} = 2;
+	
+	$self->{zoom} = 1;
+	$self->{view}{x} = 0;
+	$self->{view}{y} = 0;
+	
+	EVT_SIZE($self, \&_onResize);
 	EVT_PAINT($self, \&_onPaint);
 	EVT_LEFT_DOWN($self, \&_onClick);
 	EVT_RIGHT_DOWN($self, \&_onRightClick);
 	EVT_MOTION($self, \&_onMotion);
+	EVT_MOUSEWHEEL($self, \&_onWheel);
 	EVT_ERASE_BACKGROUND($self, \&_onErase);
-
-
-# vcl code 	$self->{onClick} = new CallbackList();
-# vcl code 	$self->{onMouseMove} = new CallbackList();
-# vcl code 	$self->{onMapChange} = new CallbackList();
-
+	
 	return $self;
 }
 
-
 #### Events ####
-
-# vcl code sub onClick {
-# vcl code 	return $_[0]->{onClick};
-# vcl code }
-
-# vcl code sub onMouseMove {
-# vcl code 	return $_[0]->{onMouseMove};
-# vcl code }
-
-# vcl code sub onMapChange {
-# vcl code 	return $_[0]->{onMapChange};
-# vcl code }
 
 sub onClick {
 	my $self = shift;
@@ -118,23 +105,16 @@ sub set {
 
 	if ($map && $map ne $self->{field}{name}) {
 		# Map changed
-		undef $self->{bitmap};
 		$self->{field}{name} = $map;
 		$self->{field}{x} = $x;
 		$self->{field}{y} = $y;
-
-		my $bitmap = $self->{bitmap} = $self->_loadMapImage($field);
-		return unless $bitmap;
-		$self->SetSizeHints($bitmap->GetWidth, $bitmap->GetHeight);
-		if ($self->GetParent && $self->GetParent->GetSizer) {
-			my $sizer = $self->GetParent->GetSizer;
-			$sizer->SetItemMinSize($self, $bitmap->GetWidth, $bitmap->GetHeight);
-		}
-
-# vcl code 		$self->{onMapChange}->call($self);
+		
+		$self->{field}{object} = $field;
+		return unless $self->_updateBitmap;
+		
 		$self->{mapChangeCb}->($self->{mapChangeData}) if ($self->{mapChangeCb});
 		$self->{needUpdate} = 1;
-
+		
 	} elsif ($x ne $self->{field}{x} || $y ne $self->{field}{y}) {
 		# Position changed
 		$self->{field}{x} = $x;
@@ -287,45 +267,40 @@ sub parsePortals {
 		my @args = split /\s/, $line, 8;
 		if (@args > 5) {
 			$self->{portals}->{$args[0]} = [] unless defined $self->{portals}->{$args[0]};
-			push (@{$self->{portals}->{$args[0]}},{x=>$args[1],y=>$args[2]});
+			push (@{$self->{portals}->{$args[0]}}, {
+				x => $args[1],
+				y => $args[2],
+				destination => {
+					field => $args[3],
+					x => $args[4],
+					y => $args[5],
+				},
+				zeny => $args[7],
+			});
 		}
 	}
 	close FILE;
 }
 
-
 #### Private ####
 
-
-# vcl code sub _handleLeftDownEvent {
-sub _onClick {
+sub _onResize {
 	my $self = shift;
-	my $event = shift;
-# vcl code 	if (!$self->{onClick}->empty() && $self->{field}{width} && $self->{field}{height}) {
-		if ($self->{clickCb} && $self->{field}{width} && $self->{field}{height}) {
-		my ($x, $y, $xscale, $yscale);
-		$xscale = $self->{field}{width} / $self->{bitmap}->GetWidth();
-		$yscale = $self->{field}{height} / $self->{bitmap}->GetHeight();
-		$x = $event->GetX * $xscale;
-		$y = $self->{field}{height} - ($event->GetY * $yscale);
+	$self->{needUpdate} = 1;
+}
 
-# vcl code 		$self->{onClick}->call($self, [int $x, int $y]);
-		$self->{clickCb}->($self->{clickData}, int $x, int $y);
+sub _onClick {
+	my ($self, $event) = @_;
+	if ($self->{clickCb} && $self->{field}{width} && $self->{field}{height}) {
+		$self->{clickCb}->($self->{clickData}, $self->_viewToPosXY ($event->GetX, $event->GetY));
 	}
 }
 
-# vcl code sub _handleMotionEvent {
 sub _onRightClick {
-	my $self = shift;
-	my $event = shift;
-# vcl code 	if (!$self->{onMouseMove}->empty() && $self->{field}{width} && $self->{field}{height}) {
+	my ($self, $event) = @_;
 	if ($self->{clickCb} && $self->{field}{width} && $self->{field}{height}) {
-		my ($x, $y, $xscale, $yscale);
-		$xscale = $self->{field}{width} / $self->{bitmap}->GetWidth();
-		$yscale = $self->{field}{height} / $self->{bitmap}->GetHeight();
-		$x = $event->GetX * $xscale;
-		$y = $self->{field}{height} - ($event->GetY * $yscale);
-
+		my ($x, $y) = $self->_viewToPosXY ($event->GetX, $event->GetY);
+		
 		my $coord = "$x $y";
 		my $map = $field{name};
 		AI::clear(qw/move route mapRoute/);
@@ -338,33 +313,59 @@ sub _onRightClick {
 }
 
 sub _onMotion {
-	my $self = shift;
-	my $event = shift;
+	my ($self, $event) = @_;
 	if ($self->{mouseMoveCb} && $self->{field}{width} && $self->{field}{height}) {
-		my ($x, $y, $xscale, $yscale);
-		$xscale = $self->{field}{width} / $self->{bitmap}->GetWidth;
-		$yscale = $self->{field}{height} / $self->{bitmap}->GetHeight;
-		$x = $event->GetX * $xscale;
-		$y = $self->{field}{height} - ($event->GetY * $yscale);
-
-# vcl code 			$self->{onMouseMove}->call($self, [int $x, int $y]);
-		$self->{mouseMoveCb}->($self->{mouseMoveData}, int $x, int $y);
+		$self->{mouseMoveCb}->($self->{mouseMoveData}, $self->_viewToPosXY ($event->GetX, $event->GetY));
 	}
 }
 
-# vcl code sub _handleEraseEvent {
+sub _onWheel {
+	my ($self, $event) = @_;
+	
+	$self->{zoom} *= 2 ** ($event->GetWheelRotation <=> 0);
+	$self->_updateBitmap;
+	$self->{needUpdate} = 1;
+}
+
 sub _onErase {
-	my $self = shift;
+	my ($self, $event) = @_;
 	if ($self->{bitmap}) {
 		# Do nothing; prevent flickering when drawing
 	} else {
-		my $event = shift;
 		$event->Skip;
 	}
 }
 
+sub _updateBitmap {
+	my ($self) = @_;
+	
+	undef $self->{bitmap};
+	$self->{bitmap} = $self->_loadMapImage ($self->{field}{object});
+	return unless $self->{bitmap};
+	
+	my ($w, $h) = ($self->{bitmap}->GetWidth, $self->{bitmap}->GetHeight);
+	my $maxAutoSize = $config{wx_map_maxAutoSize} || 300;
+	$w = $maxAutoSize if $w > $maxAutoSize;
+	$h = $maxAutoSize if $h > $maxAutoSize;
+	
+	$self->SetSizeHints ($w, $h);
+	
+	if ($self->GetParent && $self->GetParent->GetSizer) {
+		my $sizer = $self->GetParent->GetSizer;
+		$sizer->SetItemMinSize ($self, $w, $h);
+	}
+	
+	($self->{view}{xscale}, $self->{view}{yscale}) = (
+		$self->{bitmap}->GetWidth / $self->{field}{width},
+		$self->{bitmap}->GetHeight / $self->{field}{height},
+	);
+	
+	return 1;
+}
+
 sub _loadImage {
 	my $file = shift;
+	my $scale = shift;
 	my ($ext) = $file =~ /.*(\..*?)$/;
 	my ($handler, $mime);
 
@@ -387,6 +388,11 @@ sub _loadImage {
 	}
 
 	my $image = Wx::Image->newNameType($file, wxBITMAP_TYPE_ANY);
+	
+	if ($scale && $scale != 1) {
+		$image->Rescale ($image->GetWidth * $scale, $image->GetHeight * $scale);
+	}
+	
 	my $bitmap = new Wx::Bitmap($image);
 	return ($bitmap && $bitmap->Ok()) ? $bitmap : undef;
 }
@@ -406,11 +412,11 @@ sub _loadMapImage {
 	my $name = $field->{baseName};
 
 	if (-f $self->_map("$name.jpg")) {
-		return _loadImage($self->_map("$name.jpg"));
+		return _loadImage($self->_map("$name.jpg"), $self->{zoom});
 	} elsif (-f $self->_map("$name.png")) {
-		return _loadImage($self->_map("$name.png"));
+		return _loadImage($self->_map("$name.png"), $self->{zoom});
 	} elsif (-f $self->_map("$name.bmp")) {
-		return _loadImage($self->_map("$name.bmp"));
+		return _loadImage($self->_map("$name.bmp"), $self->{zoom});
 
 	} else {
 		my $file = _f(File::Spec->tmpdir(), "map.xpm");
@@ -418,70 +424,160 @@ sub _loadMapImage {
 		binmode F;
 		print F Utils::xpmmake($field->width(), $field->height(), $field->{rawMap});
 		close F;
-		my $bitmap = _loadImage($file);
+		my $bitmap = _loadImage($file, $self->{zoom});
 		unlink $file;
 		return $bitmap;
 	}
 }
 
+sub _drawArrow {
+	my ($self, $dc, $x1, $y1, $x2, $y2, $size) = @_;
+	
+	my $a = atan2 $y2 - $y1, $x2 - $x1;
+	my ($a1, $a2) = ($a - PI / 8, $a + PI / 8);
+	
+	$dc->DrawLine ($x1, $y1, $x2, $y2);
+	$dc->DrawLine ($x2, $y2, $x2 - $size * cos $a1, $y2 - $size * sin $a1);
+	$dc->DrawLine ($x2, $y2, $x2 - $size * cos $a2, $y2 - $size * sin $a2);
+}
+
+sub _drawText {
+	my ($self, $dc, $text, $x, $y) = @_;
+	
+	my ($w, $h, $descent, $externalLeading) = $dc->GetTextExtent ($text);
+	
+	$dc->DrawText ($text, $x - $w / 2, $y);
+}
+
 sub _posXYToView {
 	my ($self, $x, $y) = @_;
-	my ($xscale, $yscale);
-	$xscale = $self->{bitmap}->GetWidth / $self->{field}{width};
-	$yscale = $self->{bitmap}->GetHeight / $self->{field}{height};
-	$x *= $xscale;
-	$y = ($self->{field}{height} - $y) * $yscale;
-	return ($x, $y);
+	return (
+		$x * $self->{view}{xscale} - $self->{view}{x},
+		($self->{field}{height} - $y) * $self->{view}{yscale} - $self->{view}{y},
+	);
+}
+
+sub _viewToPosXY {
+	my ($self, $x, $y) = @_;
+	return (
+		int (($x + $self->{view}{x}) / $self->{view}{xscale}),
+		int ($self->{field}{height} - ($y + $self->{view}{y}) / $self->{view}{yscale}),
+	);
+}
+
+sub _viewCharacter {
+	my ($self) = @_;
+	($self->{view}{x}, $self->{view}{y}) = (
+		$self->{field}{x} * $self->{view}{xscale} - $self->{view}{width} / 2,
+		($self->{field}{height} - $self->{field}{y}) * $self->{view}{yscale} - $self->{view}{height} / 2,
+	);
+}
+
+sub _viewFix {
+	my ($self) = @_;
+	
+	$self->{view}{x} = $self->{field}{width} * $self->{view}{xscale} - $self->{view}{width}
+	if $self->{view}{x} + $self->{view}{width} > $self->{field}{width} * $self->{view}{xscale};
+	
+	$self->{view}{x} = 0 if $self->{view}{x} < 0;
+	
+	$self->{view}{y} = $self->{field}{height} * $self->{view}{yscale} - $self->{view}{height}
+	if $self->{view}{y} + $self->{view}{height} > $self->{field}{height} * $self->{view}{yscale};
+	
+	$self->{view}{y} = 0 if $self->{view}{y} < 0;
 }
 
 # vcl code sub _handlePaintEvent {
 sub _onPaint {
 	my $self = shift;
-	my $dc = new Wx::PaintDC($self);
 	return unless ($self->{bitmap});
-
-	my ($x, $y);
-
+	
+	my $dc = new Wx::PaintDC ($self);
+	
+	my ($portal_r, $actor_r) = ($self->{portalSize}, $self->{actorSize});
+	my ($portal_d, $actor_d) = map {$_ * 2} ($portal_r, $actor_r);
+	
+	# viewport
+	
+	($self->{view}{width}, $self->{view}{height}) = ($self->GetSize->GetWidth, $self->GetSize->GetHeight);
+	$self->_viewCharacter;
+	$self->_viewFix;
+	
+	# field
+	
 	$dc->SetPen(wxBLACK_PEN);
 	$dc->SetBrush(wxBLACK_BRUSH);
-
+	
+	my ($x, $y) = $self->_posXYToView(0, $self->{field}{height});
 	my ($h, $w) = ($self->{bitmap}->GetHeight, $self->{bitmap}->GetWidth);
-	$dc->DrawRectangle($w, 0,
-		$self->GetSize->GetWidth - $w,
-		$self->GetSize->GetHeight);
-	$dc->DrawRectangle(0, $h,
-		$w, $self->GetSize->GetHeight - $h);
-	$dc->DrawBitmap($self->{bitmap}, 0, 0, 1);
-
+	
+	$dc->DrawRectangle (0, 0, $x, $self->{view}{height}) if $x > 0;
+	$dc->DrawRectangle ($x + $w, 0, $self->{view}{width}, $self->{view}{height}) if $x + $w < $self->{view}{width};
+	$dc->DrawRectangle (0, 0, $self->{view}{width}, $y) if $y > 0;
+	$dc->DrawRectangle (0, $y + $h, $self->{view}{width}, $self->{view}{height}) if $y + $h < $self->{view}{height};
+	$dc->DrawBitmap ($self->{bitmap}, $x, $y, 1);
+	
+	# portals
+	
 	if ($self->{portals} && $self->{portals}->{$self->{field}{name}} && @{$self->{portals}->{$self->{field}{name}}}) {
+		if ($config{wx_map_portalDestinations}) {
+			$dc->SetPen(wxRED_PEN);
+			foreach my $pos (@{$self->{portals}->{$self->{field}{name}}}) {
+				if ($self->{field}{name} eq $pos->{destination}{field}) {
+#					if (
+#						(abs $pos->{x} - $self->{field}{x}) <= $config{clientSight}
+#						and (abs $pos->{y} - $self->{field}{y}) <= $config{clientSight}
+#					) {
+						($x, $y) = $self->_posXYToView($pos->{x}, $pos->{y});
+						my ($dest_x, $dest_y) = $self->_posXYToView($pos->{destination}{x}, $pos->{destination}{y});
+						$self->_drawArrow($dc, $x, $y, $dest_x, $dest_y, 8);
+#					}
+				}
+			}
+			$dc->SetPen(wxBLACK_PEN);
+		}
+		
 		$dc->SetBrush($self->{portalBrush});
 		foreach my $pos (@{$self->{portals}->{$self->{field}{name}}}) {
 			($x, $y) = $self->_posXYToView($pos->{x}, $pos->{y});
-			$dc->DrawEllipse($x - 3, $y - 3, 6, 6);
+			$dc->DrawEllipse($x - $portal_r, $y - $portal_r, $portal_d, $portal_d);
 		}
 	}
-
+	
+	$dc->SetTextForeground (new Wx::Colour (0, 127, 0));
 	if ($self->{players} && @{$self->{players}}) {
 		$dc->SetBrush($self->{playerBrush});
 		foreach my $pos (@{$self->{players}}) {
 			($x, $y) = $self->_posXYToView($pos->{pos_to}{x}, $pos->{pos_to}{y});
-			$dc->DrawEllipse($x - 2, $y - 2, 4, 4);
+			$dc->DrawEllipse($x - $actor_r, $y - $actor_r, $actor_d, $actor_d);
+			if ($self->{zoom} >= ($config{wx_map_namesDetail} || 8)) {
+				$self->_drawText ($dc, $pos->name, $x, $y);
+			}
 		}
 	}
 
+	$dc->SetTextForeground (new Wx::Colour (127, 0, 0));
 	if ($self->{monsters} && @{$self->{monsters}}) {
 		$dc->SetBrush($self->{monsterBrush});
 		foreach my $pos (@{$self->{monsters}}) {
 			($x, $y) = $self->_posXYToView($pos->{pos_to}{x}, $pos->{pos_to}{y});
-			$dc->DrawEllipse($x - 2, $y - 2, 4, 4);
+			$dc->DrawEllipse($x - $actor_r, $y - $actor_r, $actor_d, $actor_d);
+			if ($self->{zoom} >= ($config{wx_map_namesDetail} || 8)) {
+				$self->_drawText ($dc, $pos->name, $x, $y);
+			}
 		}
 	}
 
+	$dc->SetTextForeground (new Wx::Colour (127, 0, 127));
 	if ($self->{npcs} && @{$self->{npcs}}) {
 		$dc->SetBrush($self->{npcBrush});
 		foreach my $pos (@{$self->{npcs}}) {
 			($x, $y) = $self->_posXYToView($pos->{pos}{x}, $pos->{pos}{y});
-			$dc->DrawEllipse($x - 2, $y - 2, 4, 4);
+			$dc->DrawEllipse($x - $actor_r, $y - $actor_r, $actor_d, $actor_d);
+			if ($self->{zoom} >= ($config{wx_map_namesDetail} || 8)) {
+				my $name = $pos->name; $name =~ s/#.*$//;
+				$self->_drawText ($dc, $name, $x, $y);
+			}
 		}
 	}
 
@@ -489,7 +585,7 @@ sub _onPaint {
 		$dc->SetBrush($self->{slaveBrush});
 		foreach my $pos (@{$self->{slaves}}) {
 			($x, $y) = $self->_posXYToView($pos->{pos_to}{x}, $pos->{pos_to}{y});
-			$dc->DrawEllipse($x - 2, $y - 2, 4, 4);
+			$dc->DrawEllipse($x - $actor_r, $y - $actor_r, $actor_d, $actor_d);
 		}
 	}
 	
@@ -497,15 +593,14 @@ sub _onPaint {
 		$dc->SetPen(wxWHITE_PEN);
 		$dc->SetBrush($self->{destBrush});
 		($x, $y) = $self->_posXYToView($self->{dest}{x}, $self->{dest}{y});
-		$dc->DrawEllipse($x - 3, $y - 3, 6, 6);
+		$dc->DrawEllipse($x - $portal_r, $y - $portal_r, $portal_d, $portal_d);
 	}
-
-
+	
 	if (!$self->{selfDot}) {
 		my $file = $self->_map("kore.png");
 		$self->{selfDot} = _loadImage($file) if (-f $file);
 	}
-
+	
 	($x, $y) = $self->_posXYToView($self->{field}{x}, $self->{field}{y});
 	if ($self->{selfDot}) {
 		$dc->DrawBitmap($self->{selfDot},

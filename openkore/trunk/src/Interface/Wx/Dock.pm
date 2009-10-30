@@ -26,6 +26,7 @@ use Wx ':everything';
 use Wx::Event qw(EVT_BUTTON EVT_CLOSE EVT_TIMER);
 use Interface::Wx::TitleBar;
 use base qw(Wx::Panel);
+use Globals;
 use File::Spec;
 
 
@@ -112,6 +113,9 @@ sub Fit {
 			my ($w, $h);
 			if ($self->{control}->can('mapSize')) {
 				($w, $h) = $self->{control}->mapSize;
+				my $maxAutoSize = $config{wx_map_maxAutoSize} || 300;
+				$w = $maxAutoSize if $w > $maxAutoSize;
+				$h = $maxAutoSize if $h > $maxAutoSize;
 			} else {
 				my $size = $self->{control}->GetBestSize;
 				$w = $size->GetWidth;
