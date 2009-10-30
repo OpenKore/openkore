@@ -87,7 +87,7 @@ sub missing {
 sub update {
 	my ($self, @params) = @_;
 	$self->_svn_command('cleanup'); # Cleaup Repos, if something go wrong
-	return $self->_svn_command('update', @params);
+	return $self->_svn_command('update ', @params);
 }
 
 # Diffs the file against the repository.
