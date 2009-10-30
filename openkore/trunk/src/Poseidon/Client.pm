@@ -24,7 +24,7 @@ use Utils qw(dataWaiting);
 use Plugins;
 
 use constant DEFAULT_POSEIDON_SERVER_PORT => 24390;
-use constant POSEIDON_SUPPORT_URL => 'http://www.openkore.com/aliases/poseidon.php';
+use constant POSEIDON_SUPPORT_URL => 'http://wiki.openkore.com/index.php?title=Poseidon';
 
 our $instance;
 

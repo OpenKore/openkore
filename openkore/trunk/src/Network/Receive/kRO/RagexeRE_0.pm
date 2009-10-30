@@ -23,7 +23,7 @@ use base qw(Network::Receive::kRO::RagexeRE_2009_01_21a);
 
 use Log qw(message warning error debug);
 
-use Globals qw($captcha_done);
+use Globals qw($captcha_state);
 
 sub new {
 	my ($class) = @_;
@@ -70,7 +70,7 @@ sub captcha_answer {
 	my ($self, $args) = @_;
 	debug $self->{packet_list}{$args->{switch}}->[0] . " " . join(', ', @{$args}{@{$self->{packet_list}{$args->{switch}}->[2]}}) . "\n";
 	debug ($args->{flag} ? "good" : "bad") . " answer\n";
-	$captcha_done = $args->{flag};
+	$captcha_state = $args->{flag};
 	
 	Plugins::callHook ('captcha_answer', {flag => $args->{flag}});
 }
