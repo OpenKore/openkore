@@ -25,7 +25,7 @@ use Poseidon::RagnarokServer;
 use Poseidon::QueryServer;
 
 
-use constant POSEIDON_SUPPORT_URL => 'http://www.openkore.com/aliases/poseidon.php';
+use constant POSEIDON_SUPPORT_URL => 'http://wiki.openkore.com/index.php?title=Poseidon';
 
 use constant RAGNAROK_SERVER_HOST => '127.0.0.1';
 use constant RAGNAROK_SERVER_PORT => 6900;

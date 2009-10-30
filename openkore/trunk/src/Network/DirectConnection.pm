@@ -401,7 +401,7 @@ sub checkConnection {
 	# we skipped some required connection operations while waiting for the server to allow as to login,
 	# after we have successfully sent in the reply to the game guard challenge (using the poseidon server)
 	# this conState will allow us to continue from where we left off.
-	} elsif ($conState == 1.3) {
+	} elsif ($self->getState() == 1.3) {
 		$conState = 1;
 		my $master = $masterServer = $masterServers{$config{'master'}};
 		if ($master->{secureLogin} >= 1) {
@@ -430,7 +430,7 @@ sub checkConnection {
 
 		$timeout{'master'}{'time'} = time;
 		
-	} elsif ($conState == 1) {
+	} elsif ($self->getState() == Network::NOT_CONNECTED) {
 		if($masterServer->{secureLogin} >= 1 && $secureLoginKey ne "" && !timeOut($timeout{'master'}) && $conState_tries) {
 			my $master = $masterServer;
 			message T("Sending encoded password...\n"), "connection";
@@ -450,7 +450,7 @@ sub checkConnection {
 			$self->serverDisconnect;
 			undef $conState_tries;
 		}
-	} elsif ($conState == 1.5) {
+	} elsif ($self->getState() == 1.5) {
 		if (!$self->serverAlive) {
 			$self->setState(Network::NOT_CONNECTED);
 			undef $conState_tries;
@@ -460,7 +460,7 @@ sub checkConnection {
 		# on this special stage, the plugin will know what to do next.
 		Plugins::callHook("Network::serverConnect/special");
 		
-	} elsif ($conState == 2) {
+	} elsif ($self->getState() == Network::CONNECTED_TO_MASTER_SERVER) {
 		if(!$self->serverAlive() && ($config{'server'} ne "" || $masterServer->{charServer_ip}) && !$conState_tries) {
 			if ($config{pauseCharServer}) {
 				message "Pausing for $config{pauseCharServer} second(s)...\n", "system";
@@ -469,6 +469,7 @@ sub checkConnection {
 			my $master = $masterServer;
 			message T("Connecting to Character Server...\n"), "connection";
 			$conState_tries++;
+			$captcha_state = 0;
 
 			if ($master->{charServer_ip}) {
 				$self->serverConnect($master->{charServer_ip}, $master->{charServer_port});
@@ -497,9 +498,6 @@ sub checkConnection {
 			# call plugin's hook to determine if we can continue the connection
 			if ($self->serverAlive) {
 				Plugins::callHook("Network::serverConnect/char");
-				if($masterServer->{captcha}) {
-					$messageSender->sendCaptchaInitiate();
-				}
 				$reconnectCount = 0;
 				return if ($conState == 1.5);
 			}
@@ -508,11 +506,14 @@ sub checkConnection {
 				$messageSender->sendGameLogin($accountID, $sessionID, $sessionID2, $accountSex);
 				$timeout{'gamelogin'}{'time'} = time;
 			}
-		} elsif($self->serverAlive() && $conState_tries == 1 && $masterServer->{captcha}) {
-			if ($captcha_done) {
-				$conState_tries++;
+		} elsif($self->serverAlive() && $masterServer->{captcha}) {
+			if ($captcha_state == 0) { # send initiate once, then wait for servers captcha_answer packet
+				$messageSender->sendCaptchaInitiate();
+				$captcha_state = -1;
+			} elsif ($captcha_state == 1) { # captcha answer was correct, sent sendGameLogin once, then wait for servers 
 				$messageSender->sendGameLogin($accountID, $sessionID, $sessionID2, $accountSex);
 				$timeout{'gamelogin'}{'time'} = time;
+				$captcha_state = -1;
 			} else {
 				return;
 			}
@@ -524,7 +525,7 @@ sub checkConnection {
 			undef $conState_tries;
 			$self->setState(Network::NOT_CONNECTED);
 		}
-	} elsif ($conState == 3) {
+	} elsif ($self->getState() == Network::CONNECTED_TO_LOGIN_SERVER) {
 		if(!$self->serverAlive() && $config{'char'} ne "" && !$conState_tries) {
 			message T("Connecting to Character Select Server...\n"), "connection";
 			$conState_tries++;
@@ -547,7 +548,7 @@ sub checkConnection {
 			$self->setState(Network::NOT_CONNECTED);
 			undef $conState_tries;
 		}
-	} elsif ($conState == 4) {
+	} elsif ($self->getState() == Network::CONNECTED_TO_CHAR_SERVER) {
 		if(!$self->serverAlive() && !$conState_tries) {
 			if ($config{pauseMapServer}) {
 				message "Pausing for $config{pauseMapServer} second(s)...\n", "system";
@@ -585,7 +586,7 @@ sub checkConnection {
 			$self->setState(Network::NOT_CONNECTED);
 			undef $conState_tries;
 		}
-	} elsif ($conState == 5) {
+	} elsif ($self->getState() == Network::IN_GAME) {
 		if(!$self->serverAlive()) {
 			Plugins::callHook('disconnected');
 			if ($config{dcOnDisconnect}) {

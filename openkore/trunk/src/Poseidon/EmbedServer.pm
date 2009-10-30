@@ -25,7 +25,7 @@ my $CLASS = "Poseidon::EmbedServer";
 
 use constant QUERY_SERVER_HOST => '127.0.0.1';
 use constant QUERY_SERVER_PORT => 24390;
-use constant POSEIDON_SUPPORT_URL => 'http://www.openkore.com/aliases/poseidon.php';
+use constant POSEIDON_SUPPORT_URL => 'http://wiki.openkore.com/index.php?title=Poseidon';
 
 
 ##
