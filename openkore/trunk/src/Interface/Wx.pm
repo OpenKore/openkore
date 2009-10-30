@@ -940,7 +940,7 @@ sub onItemListActivate {
 		main::take($actor->{ID});
 
 	} elsif ($actor->isa('Actor::NPC')) {
-		Commands::run("nl " . $actor->{binID});
+		Commands::run("talk " . $actor->{binID});
 	}
 
 	$self->{inputBox}->SetFocus;
@@ -1020,13 +1020,14 @@ sub onMapClick {
 #vcl code	my ($x, $y) = @{$args};
 	my ($self, $x, $y) = @_;
 	my $checkPortal = 0;
+	my $noMove = 0;
 	delete $self->{mouseMapText};
 	if ($self->{mapViewer} && $self->{mapViewer}->{portals}
 		&& $self->{mapViewer}->{portals}->{$field->name()}
 		&& @{$self->{mapViewer}->{portals}->{$field->name()}}){
 
 		foreach my $portal (@{$self->{mapViewer}->{portals}->{$field->name()}}){
-			if (distance($portal,{x=>$x,y=>$y}) <= 5) {
+			if (distance($portal,{x=>$x,y=>$y}) <= ($config{wx_map_portalSticking} || 5)) {
 				$x = $portal->{x};
 				$y = $portal->{y};
 				$self->writeOutput("message", "Moving to Portal $x, $y\n", "info");
@@ -1034,11 +1035,29 @@ sub onMapClick {
 				last;
 			}
 		}
+		
+		foreach my $monster (@{$self->{mapViewer}->{monsters}}){
+			if (distance($monster->{pos},{x=>$x,y=>$y}) <= ($config{wx_map_monsterSticking} || 1)) {
+				main::attack($monster->{ID});
+				$noMove = 1;
+				last;
+			}
+		}
+		
+		foreach my $npc (@{$self->{mapViewer}->{npcs}}){
+			if (distance($npc->{pos},{x=>$x,y=>$y}) <= ($config{wx_map_npcSticking} || 1)) {
+				Commands::run("talk " . $npc->{binID});
+				$noMove = 1;
+				last;
+			}
+		}
 	}
-
-	$self->writeOutput("message", "Moving to $x, $y\n", "info") unless $checkPortal;
-	AI::clear("mapRoute", "route", "move");
-	main::ai_route($field->name(), $x, $y, attackOnRoute => 1);
+	
+	unless ($noMove) {
+		$self->writeOutput("message", "Moving to $x, $y\n", "info") unless $checkPortal;
+		AI::clear("mapRoute", "route", "move");
+		main::ai_route($field->name(), $x, $y, attackOnRoute => 1);
+	}
 	$self->{inputBox}->SetFocus;
 }
 
