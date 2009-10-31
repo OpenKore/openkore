@@ -82,35 +82,26 @@ sub OnInit {
 		['packet_sentPM',            $onChat],
 		['mainLoop_pre',             sub { $self->onUpdateUI(); }],
 		['captcha_file',             sub { $self->onCaptcha(@_) }],
+		['packet/npc_image',         sub {
+			if (my $npcTalk = $self->onNpcTalk) { $npcTalk->{child}->npcImage (@_); }
+		}],
 		['npc_talk',                 sub {
-			if (my $npcTalk = $self->onNpcTalk) {
-				$npcTalk->{child}->npcTalk (@_);
-			}
+			if (my $npcTalk = $self->onNpcTalk) { $npcTalk->{child}->npcTalk (@_); }
 		}],
 		['packet/npc_talk_continue', sub {
-			if (my $npcTalk = $self->onNpcTalk) {
-				$npcTalk->{child}->npcContinue (@_);
-			}
+			if (my $npcTalk = $self->onNpcTalk) { $npcTalk->{child}->npcContinue (@_); }
 		}],
 		['npc_talk_responses',       sub {
-			if (my $npcTalk = $self->onNpcTalk) {
-				$npcTalk->{child}->npcResponses (@_);
-			}
+			if (my $npcTalk = $self->onNpcTalk) { $npcTalk->{child}->npcResponses (@_); }
 		}],
 		['packet/npc_talk_number', sub {
-			if (my $npcTalk = $self->onNpcTalk) {
-				$npcTalk->{child}->npcNumber (@_);
-			}
+			if (my $npcTalk = $self->onNpcTalk) { $npcTalk->{child}->npcNumber (@_); }
 		}],
 		['packet/npc_talk_text', sub {
-			if (my $npcTalk = $self->onNpcTalk) {
-				$npcTalk->{child}->npcText (@_);
-			}
+			if (my $npcTalk = $self->onNpcTalk) { $npcTalk->{child}->npcText (@_); }
 		}],
 		['npc_talk_done',            sub {
-			if (my $npcTalk = $self->onNpcTalk) {
-				$npcTalk->{child}->npcClose (@_);
-			}
+			if (my $npcTalk = $self->onNpcTalk) { $npcTalk->{child}->npcClose (@_); }
 		}],
 	);
 
