@@ -32,7 +32,7 @@ use constant DEFAULT_WIDTH => 250;
 sub new {
 	my ($class, $parent, $message, $title) = @_;
 	$title = 'Enter password' if (!defined($title));
-	my $self = $class->SUPER::new($parent, -1, $title);
+	my $self = $class->SUPER::new($parent, wxID_ANY, $title);
 	$self->_buildGUI($message);
 	return $self;
 }
@@ -51,10 +51,10 @@ sub _buildGUI {
 	my ($sizer, $label, $text, $buttonSizer, $ok, $cancel);
 
 	$sizer = new Wx::BoxSizer(wxVERTICAL);
-	$label = new Wx::StaticText($self, -1, $message);
+	$label = new Wx::StaticText($self, wxID_ANY, $message);
 	$sizer->Add($label, 0, wxALL, 8);
 
-	$text = new Wx::TextCtrl($self, -1, '', wxDefaultPosition,
+	$text = new Wx::TextCtrl($self, wxID_ANY, '', wxDefaultPosition,
 		[DEFAULT_WIDTH, -1], wxTE_PASSWORD | wxTE_PROCESS_ENTER);
 	$sizer->Add($text, 0, wxLEFT | wxRIGHT | wxGROW, 8);
 	EVT_TEXT_ENTER($self, $text->GetId, \&_onTextEnter);
@@ -64,12 +64,12 @@ sub _buildGUI {
 	$buttonSizer = new Wx::BoxSizer(wxHORIZONTAL);
 	$sizer->Add($buttonSizer, 0, wxALIGN_CENTER | wxLEFT | wxRIGHT | wxBOTTOM, 8);
 
-	$ok = new Wx::Button($self, -1, 'OK', wxDefaultPosition, wxDefaultSize);
+	$ok = new Wx::Button($self, wxID_ANY, 'OK', wxDefaultPosition, wxDefaultSize);
 	$ok->SetDefault();
 	$buttonSizer->Add($ok, 1, wxRIGHT, 8);
 	EVT_BUTTON($self, $ok->GetId, \&_onOK);
 
-	$cancel = new Wx::Button($self, -1, 'Cancel');
+	$cancel = new Wx::Button($self, wxID_ANY, 'Cancel');
 	$buttonSizer->Add($cancel, 1);
 	EVT_BUTTON($self, $cancel->GetId, \&_onCancel);
 

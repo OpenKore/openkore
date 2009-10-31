@@ -73,9 +73,9 @@ sub detach {
 	if (!$self->{dialog}) {
 		my $dialog;
 		if ($^O eq 'MSWin32') {
-			$dialog = new Wx::MiniFrame($self->{frame}, -1, $self->{titleBar}->title);
+			$dialog = new Wx::MiniFrame($self->{frame}, wxID_ANY, $self->{titleBar}->title);
 		} else {
-			$dialog = new Wx::Dialog($self->{frame}, -1, $self->{titleBar}->title);
+			$dialog = new Wx::Dialog($self->{frame}, wxID_ANY, $self->{titleBar}->title);
 		}
 
 		if ($self->{control}) {

@@ -99,7 +99,7 @@ sub newPage {
 		# We have multiple children.
 		if (!$self->{notebook}) {
 			# Create a notebook if we haven't done so already
-			$self->{notebook} = new Wx::Notebook($self, -1);
+			$self->{notebook} = new Wx::Notebook($self, wxID_ANY);
 			$self->{sizer}->Add($self->{notebook}, 1, wxGROW);
 
 			# Reparent the first page
