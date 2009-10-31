@@ -6,6 +6,7 @@ use Wx::Event qw/EVT_BUTTON EVT_LISTBOX EVT_LISTBOX_DCLICK EVT_TEXT EVT_TEXT_ENT
 use base 'Wx::Panel';
 
 use Globals;
+use I18N qw/bytesToString/;
 use Log qw/message/;
 use Misc qw/configModify/;
 
@@ -14,29 +15,50 @@ sub new {
 	
 	my $self = $class->SUPER::new ($parent, $id);
 	
+	$self->{illustDir} = 'bitmaps/illust/';
+	
+	Wx::Image::AddHandler (new Wx::PNGHandler);
+	
 	my $sizer = new Wx::BoxSizer (wxVERTICAL);
 	$self->SetSizer ($sizer);
 	
 	$self->{nameLabel} = new Wx::StaticText ($self, wxID_ANY, 'NPC');
 	$sizer->Add ($self->{nameLabel}, 0, wxGROW | wxALL, 4);
 	
+	my $hsizer2 = new Wx::BoxSizer (wxHORIZONTAL);
+	$sizer->Add ($hsizer2, 1, wxGROW);
+	
+	my $vsizer = new Wx::BoxSizer (wxVERTICAL);
+	$hsizer2->Add ($vsizer, 1, wxGROW);
+	
 	$self->{chatLog} = new Interface::Wx::LogView ($self);
-	$sizer->Add ($self->{chatLog}, 1, wxGROW | wxALL, 4);
+	$vsizer->Add ($self->{chatLog}, 1, wxGROW | wxALL, 4);
 	
 	$self->{hintLabel} = new Wx::StaticText ($self, wxID_ANY, '');
-	$sizer->Add ($self->{hintLabel}, 0, wxGROW | wxALL, 4);
+	$vsizer->Add ($self->{hintLabel}, 0, wxGROW | wxALL, 4);
 	
 	$self->{listResponses} = new Wx::ListBox ($self, wxID_ANY);
 	$self->{listResponses}->Show (0);
 	EVT_LISTBOX ($self, $self->{listResponses}->GetId, sub { $self->{value} = $self->{listResponses}->GetSelection; });
 	EVT_LISTBOX_DCLICK ($self, $self->{listResponses}->GetId, sub { $self->_onOk; });
-	$sizer->Add ($self->{listResponses}, 0, wxGROW | wxALL, 4);
+	$vsizer->Add ($self->{listResponses}, 0, wxGROW | wxALL, 4);
 	
 	$self->{inputBox} = new Wx::TextCtrl ($self, wxID_ANY, '', wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER);
 	$self->{inputBox}->Show (0);
 	EVT_TEXT ($self, $self->{inputBox}->GetId, sub { $self->{value} = $self->{inputBox}->GetValue; });
 	EVT_TEXT_ENTER ($self, $self->{inputBox}->GetId, sub { $self->_onOk; });
-	$sizer->Add ($self->{inputBox}, 0, wxGROW | wxALL, 4);
+	$vsizer->Add ($self->{inputBox}, 0, wxGROW | wxALL, 4);
+	
+	my $vsizer2 = new Wx::BoxSizer (wxVERTICAL);
+	$hsizer2->Add ($vsizer2, 0, wxGROW);
+	
+	$self->{imageLabel} = new Wx::StaticText ($self, wxID_ANY, 'Image');
+	$self->{imageLabel}->Show (0);
+	$vsizer2->Add ($self->{imageLabel}, 0, wxGROW | wxALL, 4);
+	
+	$self->{imageView} = new Wx::StaticBitmap ($self, wxID_ANY, new Wx::Bitmap (0, 0, -1));
+	$self->{imageView}->Show (0);
+	$vsizer2->Add ($self->{imageView}, 1, wxGROW | wxALL, 4);
 	
 	my $hsizer = new Wx::BoxSizer (wxHORIZONTAL);
 	$sizer->Add ($hsizer, 0, wxGROW | wxALL, 4);
@@ -112,30 +134,75 @@ sub _onAction {
 	$self->{listResponses}->Show (defined $self->{action} && $self->{action} eq 'responses');
 	
 	$self->GetSizer->Layout;
-	
-	# scroll chat log to bottom
 	$self->{chatLog}->AppendText ('');
-	
 	$self->Thaw;
 }
 
+sub _updateImage {
+	my ($self) = @_;
+	
+	$self->Freeze;
+	
+	if ($self->{image}) {
+		$self->{imageLabel}->SetLabel ($self->{image});
+		$self->{imageLabel}->Show (1);
+		
+		my $imageFile = $self->{illustDir} . $self->{image} . '.png';
+		if (-f $imageFile) {
+			$self->{imageView}->SetBitmap (new Wx::Bitmap (new Wx::Image ($imageFile, wxBITMAP_TYPE_ANY)));
+			$self->{imageView}->Show (1);
+		} else {
+			$self->{imageView}->Show (0);
+		}
+	} else {
+		$self->{imageLabel}->Show (0);
+		$self->{imageView}->Show (0);
+	}
+	
+	$self->GetSizer->Layout;
+	$self->{chatLog}->AppendText ('');
+	$self->Thaw;
+}
+
+sub _checkBefore {
+	my ($self) = @_;
+	
+	if ($self->{closed}) {
+		$self->{nameLabel}->SetLabel ('NPC');
+		$self->{chatLog}->Clear;
+		$self->{closed} = undef;
+		if ($self->{image}) {
+			$self->{image} = undef;
+			$self->_updateImage;
+		}
+	}
+}
+
 sub npcImage {
-	# TODO
+	my ($self, undef, $args) = @_;
+	
+	if ($args->{type} == 2) {
+		$self->_checkBefore;
+		
+		$self->{image} = bytesToString ($args->{npc_image});
+		$self->{image} =~ s/\.\w{3}$//;
+		$self->_updateImage;
+	} elsif ($args->{type} == 255) {
+		#$self->{image} = undef;
+	}
 }
 
 sub npcTalk {
 	my ($self, undef, $args) = @_;
 	
-	if ($self->{closed}) {
-		$self->{chatLog}->Clear;
-		$self->{closed} = undef;
+	$self->_checkBefore;
+	
+	if ($args->{msg} =~ /^\[(.+)\]$/) {
+		#$self->{nameLabel}->SetLabel ($1);
+		return;
 	}
 	
 	my $nameDisplay = $self->_nameDisplay ($args->{name});
-	
-	if ($args->{msg} =~ /^\[(.+)\]$/) {
-		return if $nameDisplay =~ /^$1/;
-	}
 	
 	$self->{nameLabel}->SetLabel ($nameDisplay);
 	$self->{chatLog}->add ($args->{msg} . "\n");
