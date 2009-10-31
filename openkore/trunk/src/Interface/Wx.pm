@@ -60,30 +60,59 @@ use Misc;
 use Commands;
 use Utils;
 
-
 our $CVS;
 our ($iterationTime, $updateUITime, $updateUITime2);
 
 
 sub OnInit {
 	my $self = shift;
-
+	
 	$CVS = ($Settings::SVN =~ /SVN/);
 	$self->createInterface;
 	$self->iterate;
-
+	
 	my $onChat = sub { $self->onChatAdd(@_); };
 	$self->{hooks} = Plugins::addHooks(
-		['loadfiles',               sub { $self->onLoadFiles(@_); }],
-		['postloadfiles',           sub { $self->onLoadFiles(@_); }],
-		['parseMsg/addPrivMsgUser', sub { $self->onAddPrivMsgUser(@_); }],
-		['initialized',             sub { $self->onInitialized(@_); }],
-		['ChatQueue::add',          $onChat],
-		['packet_selfChat',         $onChat],
-		['packet_privMsg',          $onChat],
-		['packet_sentPM',           $onChat],
-		['mainLoop_pre',            sub { $self->onUpdateUI(); }],
-		['captcha_file',            sub { $self->onCaptcha(@_) }],
+		['loadfiles',                sub { $self->onLoadFiles(@_); }],
+		['postloadfiles',            sub { $self->onLoadFiles(@_); }],
+		['parseMsg/addPrivMsgUser',  sub { $self->onAddPrivMsgUser(@_); }],
+		['initialized',              sub { $self->onInitialized(@_); }],
+		['ChatQueue::add',           $onChat],
+		['packet_selfChat',          $onChat],
+		['packet_privMsg',           $onChat],
+		['packet_sentPM',            $onChat],
+		['mainLoop_pre',             sub { $self->onUpdateUI(); }],
+		['captcha_file',             sub { $self->onCaptcha(@_) }],
+		['npc_talk',                 sub {
+			if (my $npcTalk = $self->onNpcTalk) {
+				$npcTalk->{child}->npcTalk (@_);
+			}
+		}],
+		['packet/npc_talk_continue', sub {
+			if (my $npcTalk = $self->onNpcTalk) {
+				$npcTalk->{child}->npcContinue (@_);
+			}
+		}],
+		['npc_talk_responses',       sub {
+			if (my $npcTalk = $self->onNpcTalk) {
+				$npcTalk->{child}->npcResponses (@_);
+			}
+		}],
+		['packet/npc_talk_number', sub {
+			if (my $npcTalk = $self->onNpcTalk) {
+				$npcTalk->{child}->npcNumber (@_);
+			}
+		}],
+		['packet/npc_talk_text', sub {
+			if (my $npcTalk = $self->onNpcTalk) {
+				$npcTalk->{child}->npcText (@_);
+			}
+		}],
+		['npc_talk_done',            sub {
+			if (my $npcTalk = $self->onNpcTalk) {
+				$npcTalk->{child}->npcClose (@_);
+			}
+		}],
 	);
 
 	$self->{history} = [];
@@ -913,6 +942,33 @@ sub onChatLogToggle {
 	} else {
 		$self->{notebook}->switchPage('Chat Log');
 	}
+}
+
+sub onNpcTalk {
+	my $self = shift;
+	my $page;
+	
+	return unless $config{wx_npcTalk};
+	
+	if ($page = $self->{notebook}->hasPage('NPC Talk')) {
+		$self->{notebook}->switchPage('NPC Talk');
+		return $page;
+	}
+	
+	$page = $self->{notebook}->newPage(1, 'NPC Talk');
+	
+	require Interface::Wx::NpcTalk;
+	my $npcTalk = new Interface::Wx::NpcTalk ($page, -1);
+	
+	$npcTalk->onContinue (sub { Commands::run ('talk cont'); });
+	$npcTalk->onResponses (sub { Commands::run ('talk resp ' . shift); });
+	$npcTalk->onNumber (sub { Commands::run ('talk num ' . shift); });
+	$npcTalk->onText (sub { Commands::run ('talk text ' . shift); });
+	$npcTalk->onCancel (sub { Commands::run ('talk no'); });
+	
+	$page->set ($npcTalk);
+	
+	return $page;
 }
 
 sub onManual {
