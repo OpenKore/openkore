@@ -20,7 +20,7 @@ use constant DEFAULT_WIDTH => 250;
 
 sub new {
 	my ($class, $parent, $imageFile) = @_;
-	my $self = $class->SUPER::new($parent, -1, 'Captcha');
+	my $self = $class->SUPER::new($parent, wxID_ANY, 'Captcha');
 	$self->_buildGUI ($imageFile);
 	return $self;
 }
@@ -40,11 +40,11 @@ sub _buildGUI {
 
 	$sizer = new Wx::BoxSizer(wxVERTICAL);
 	
-	$image = new Wx::StaticBitmap ($self, -1, new Wx::Bitmap (new Wx::Image ($imageFile, wxBITMAP_TYPE_BMP)));
+	$image = new Wx::StaticBitmap ($self, wxID_ANY, new Wx::Bitmap (new Wx::Image ($imageFile, wxBITMAP_TYPE_ANY)));
 	
 	$sizer->Add ($image, 1, wxALL, 8);
 	
-	$text = new Wx::TextCtrl($self, -1, '', wxDefaultPosition,
+	$text = new Wx::TextCtrl($self, wxID_ANY, '', wxDefaultPosition,
 		[DEFAULT_WIDTH, -1], wxTE_PROCESS_ENTER);
 	$sizer->Add($text, 0, wxLEFT | wxRIGHT | wxGROW, 8);
 	EVT_TEXT_ENTER($self, $text->GetId, \&_onTextEnter);
@@ -54,12 +54,12 @@ sub _buildGUI {
 	$buttonSizer = new Wx::BoxSizer(wxHORIZONTAL);
 	$sizer->Add($buttonSizer, 0, wxALIGN_CENTER | wxLEFT | wxRIGHT | wxBOTTOM, 8);
 
-	$ok = new Wx::Button($self, -1, 'OK', wxDefaultPosition, wxDefaultSize);
+	$ok = new Wx::Button($self, wxID_ANY, 'OK', wxDefaultPosition, wxDefaultSize);
 	$ok->SetDefault();
 	$buttonSizer->Add($ok, 1, wxRIGHT, 8);
 	EVT_BUTTON($self, $ok->GetId, \&_onOK);
 
-	$cancel = new Wx::Button($self, -1, 'Cancel');
+	$cancel = new Wx::Button($self, wxID_ANY, 'Cancel');
 	$buttonSizer->Add($cancel, 1);
 	EVT_BUTTON($self, $cancel->GetId, \&_onCancel);
 

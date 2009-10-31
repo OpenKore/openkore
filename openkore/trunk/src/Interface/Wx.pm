@@ -52,7 +52,6 @@ use Interface::Wx::Input;
 use Interface::Wx::ItemList;
 use Interface::Wx::DockNotebook;
 use Interface::Wx::PasswordDialog;
-use Interface::Wx::CaptchaDialog;
 use AI;
 use Settings qw(%sys);
 use Plugins;
@@ -341,7 +340,7 @@ sub createInterface {
 	my $self = shift;
 
 	### Main window
-	my $frame = $self->{frame} = new Wx::Frame(undef, -1, $Settings::NAME);
+	my $frame = $self->{frame} = new Wx::Frame(undef, wxID_ANY, $Settings::NAME);
 	$self->{title} = $frame->GetTitle();
 
 
@@ -369,7 +368,7 @@ sub createInterface {
 	$self->createInputField;
 
 	### Status bar
-	my $statusbar = $self->{statusbar} = new Wx::StatusBar($frame, -1, wxST_SIZEGRIP);
+	my $statusbar = $self->{statusbar} = new Wx::StatusBar($frame, wxID_ANY, wxST_SIZEGRIP);
 	$statusbar->SetFieldsCount(3);
 	$statusbar->SetStatusWidths(-1, 65, 175);
 	$frame->SetStatusBar($statusbar);
@@ -443,6 +442,8 @@ sub createMenuBar {
 		'&Info Bar',		\&onInfoBarToggle, 'Show or hide the information bar.');
 	$self->{chatLogToggle} = $self->addCheckMenu($viewMenu,
 		'Chat &Log',		\&onChatLogToggle, 'Show or hide the chat log.');
+	$self->addMenu ($viewMenu,
+		'&Emotions	Ctrl+L', \&onEmotionsToggle, 'Show emotions');
 	$viewMenu->AppendSeparator;
 	$self->addMenu($viewMenu,
 		'&Font...',		\&onFontChange, 'Change console font');
@@ -469,46 +470,46 @@ sub createInfoPanel {
 	my $self = shift;
 	my $frame = $self->{frame};
 	my $vsizer = $self->{vsizer};
-	my $infoPanel = $self->{infoPanel} = new Wx::Panel($frame, -1);
+	my $infoPanel = $self->{infoPanel} = new Wx::Panel($frame, wxID_ANY);
 
 	my $hsizer = new Wx::BoxSizer(wxHORIZONTAL);
-	my $label = new Wx::StaticText($infoPanel, -1, "HP: ");
+	my $label = new Wx::StaticText($infoPanel, wxID_ANY, "HP: ");
 	$hsizer->Add($label, 0, wxLEFT, 3);
 
 
 	## HP
-	my $hpBar = $self->{hpBar} = new Wx::Gauge($infoPanel, -1, 100,
+	my $hpBar = $self->{hpBar} = new Wx::Gauge($infoPanel, wxID_ANY, 100,
 		wxDefaultPosition, [0, $label->GetBestSize->GetHeight + 2],
 		wxGA_HORIZONTAL | wxGA_SMOOTH);
 	$hsizer->Add($hpBar, 1, wxRIGHT, 8);
 
-	$label = new Wx::StaticText($infoPanel, -1, "SP: ");
+	$label = new Wx::StaticText($infoPanel, wxID_ANY, "SP: ");
 	$hsizer->Add($label, 0);
 
 	## SP
-	my $spBar = $self->{spBar} = new Wx::Gauge($infoPanel, -1, 100,
+	my $spBar = $self->{spBar} = new Wx::Gauge($infoPanel, wxID_ANY, 100,
 		wxDefaultPosition, [0, $label->GetBestSize->GetHeight + 2],
 		wxGA_HORIZONTAL | wxGA_SMOOTH);
 	$hsizer->Add($spBar, 1, wxRIGHT, 8);
 
-	$label = new Wx::StaticText($infoPanel, -1, "Exp: ");
+	$label = new Wx::StaticText($infoPanel, wxID_ANY, "Exp: ");
 	$hsizer->Add($label, 0);
 
 	## Exp and job exp
-	my $expBar = $self->{expBar} = new Wx::Gauge($infoPanel, -1, 100,
+	my $expBar = $self->{expBar} = new Wx::Gauge($infoPanel, wxID_ANY, 100,
 		wxDefaultPosition, [0, $label->GetBestSize->GetHeight + 2],
 		wxGA_HORIZONTAL | wxGA_SMOOTH);
 	$hsizer->Add($expBar, 1);
-	my $jobExpBar = $self->{jobExpBar} = new Wx::Gauge($infoPanel, -1, 100,
+	my $jobExpBar = $self->{jobExpBar} = new Wx::Gauge($infoPanel, wxID_ANY, 100,
 		wxDefaultPosition, [0, $label->GetBestSize->GetHeight + 2],
 		wxGA_HORIZONTAL | wxGA_SMOOTH);
 	$hsizer->Add($jobExpBar, 1, wxRIGHT, 8);
 
-	$label = new Wx::StaticText($infoPanel, -1, "Weight: ");
+	$label = new Wx::StaticText($infoPanel, wxID_ANY, "Weight: ");
 	$hsizer->Add($label, 0);
 
 	## Weight
-	my $weightBar = $self->{weightBar} = new Wx::Gauge($infoPanel, -1, 100,
+	my $weightBar = $self->{weightBar} = new Wx::Gauge($infoPanel, wxID_ANY, 100,
 		wxDefaultPosition, [0, $label->GetBestSize->GetHeight + 2],
 		wxGA_HORIZONTAL | wxGA_SMOOTH);
 	$hsizer->Add($weightBar, 1);
@@ -526,7 +527,7 @@ sub createInputField {
 	my $hsizer = new Wx::BoxSizer(wxHORIZONTAL);
 	$vsizer->Add($hsizer, 0, wxGROW);
 
-	my $targetBox = $self->{targetBox} = new Wx::ComboBox($frame, -1, "", wxDefaultPosition,
+	my $targetBox = $self->{targetBox} = new Wx::ComboBox($frame, wxID_ANY, "", wxDefaultPosition,
 		[115, 0]);
 	$targetBox->SetName('targetBox');
 	$hsizer->Add($targetBox, 0, wxGROW);
@@ -549,7 +550,7 @@ sub createSplitterContent {
 	my $frame = $self->{frame};
 
 	## Dockable notebook with console and chat log
-	my $notebook = $self->{notebook} = new Interface::Wx::DockNotebook($splitter, -1);
+	my $notebook = $self->{notebook} = new Interface::Wx::DockNotebook($splitter, wxID_ANY);
 	$notebook->SetName('notebook');
 	my $page = $notebook->newPage(0, 'Console');
 	my $console = $self->{console} = new Interface::Wx::Console($page);
@@ -578,7 +579,7 @@ sub createSplitterContent {
 
 
 	# Dock
-	my $mapDock = $self->{mapDock} = new Interface::Wx::Dock($subSplitter, -1, 'Map');
+	my $mapDock = $self->{mapDock} = new Interface::Wx::Dock($subSplitter, wxID_ANY, 'Map');
 	$mapDock->Show(0);
 	$mapDock->setHideFunc($self, sub {
 		$subSplitter->Unsplit($mapDock);
@@ -742,12 +743,34 @@ sub updateMapViewer {
 
 sub updateItemList {
 	my $self = shift;
+	my $value;
+	
 	if ($conState == 5) {
-		$self->{hpBar}->SetValue($char->{hp} / $char->{hp_max} * 100) if ($char->{hp_max});
-		$self->{spBar}->SetValue($char->{sp} / $char->{sp_max} * 100) if ($char->{sp_max});
-		$self->{expBar}->SetValue($char->{exp} / $char->{exp_max} * 100) if ($char->{exp_max});
-		$self->{jobExpBar}->SetValue($char->{exp_job} / $char->{exp_job_max} * 100) if ($char->{exp_job_max});
-		$self->{weightBar}->SetValue($char->{weight} / $char->{weight_max} * 100) if ($char->{weight_max});
+		if ($char->{hp_max}) {
+			$value = $char->{hp} / $char->{hp_max} * 100;
+			$self->{hpBar}->SetValue ($value);
+			$self->{hpBar}->SetToolTip (sprintf '%d / %d (%.2f%)', $char->{hp}, $char->{hp_max}, $value);
+		}
+		if ($char->{sp_max}) {
+			$value = $char->{sp} / $char->{sp_max} * 100;
+			$self->{spBar}->SetValue ($value);
+			$self->{spBar}->SetToolTip (sprintf '%d / %d (%.2f%)', $char->{sp}, $char->{sp_max}, $value);
+		}
+		if ($char->{exp_max}) {
+			$value = $char->{exp} / $char->{exp_max} * 100;
+			$self->{expBar}->SetValue ($value);
+			$self->{expBar}->SetToolTip (sprintf '%d / %d (%.2f%)', $char->{exp}, $char->{exp_max}, $value);
+		}
+		if ($char->{exp_job_max}) {
+			$char->{exp_job} / $char->{exp_job_max} * 100;
+			$self->{jobExpBar}->SetValue ($value);
+			$self->{jobExpBar}->SetToolTip (sprintf '%d / %d (%.2f%)', $char->{exp_job}, $char->{exp_job_max}, $value);
+		}
+		if ($char->{weight_max}) {
+			$char->{weight} / $char->{weight_max} * 100;
+			$self->{weightBar}->SetValue ($value);
+			$self->{weightBar}->SetToolTip (sprintf '%d / %d (%.2f%)', $char->{weight}, $char->{weight_max}, $value);
+		}
 	}
 }
 
@@ -856,13 +879,13 @@ sub onAdvancedConfig {
 	}
 
 	my $page = $self->{notebook}->newPage(1, 'Advanced Configuration');
-	my $panel = new Wx::Panel($page, -1);
+	my $panel = new Wx::Panel($page, wxID_ANY);
 
 	my $vsizer = new Wx::BoxSizer(wxVERTICAL);
 	$panel->SetSizer($vsizer);
 
 	require Interface::Wx::ConfigEditor;
-	my $cfg = new Interface::Wx::ConfigEditor($panel, -1);
+	my $cfg = new Interface::Wx::ConfigEditor($panel, wxID_ANY);
 	$cfg->setConfig(\%config);
 	$cfg->addCategory('All', 'Grid');
 	$cfg->addCategory('server', 'Grid', ['master', 'server', 'username', 'password', 'char', 'serverType']);
@@ -898,7 +921,7 @@ sub onAdvancedConfig {
 		$revert->Enable($_[0]);
 	});
 
-	my $pad = new Wx::Window($panel, -1);
+	my $pad = new Wx::Window($panel, wxID_ANY);
 	$sizer->Add($pad, 1);
 
 	my $close = new Wx::Button($panel, 47, '&Close');
@@ -944,6 +967,30 @@ sub onChatLogToggle {
 	}
 }
 
+sub onEmotionsToggle {
+	my $self = shift;
+	my $page;
+	
+	if ($page = $self->{notebook}->hasPage('Emotions')) {
+		$self->{notebook}->switchPage('Emotions');
+		return $page;
+	}
+	
+	$page = $self->{notebook}->newPage(1, 'Emotions');
+	
+	require Interface::Wx::EmotionList;
+	my $emotionList = new Interface::Wx::EmotionList ($page, wxID_ANY);
+	
+	$emotionList->onEmotion (sub {
+		Commands::run ('e ' . shift);
+		$self->{inputBox}->SetFocus;
+	});
+	$emotionList->setEmotions (\%emotions_lut);
+	
+	$page->set ($emotionList);
+	return $page;
+}
+
 sub onNpcTalk {
 	my $self = shift;
 	my $page;
@@ -958,16 +1005,15 @@ sub onNpcTalk {
 	$page = $self->{notebook}->newPage(1, 'NPC Talk');
 	
 	require Interface::Wx::NpcTalk;
-	my $npcTalk = new Interface::Wx::NpcTalk ($page, -1);
+	my $npcTalk = new Interface::Wx::NpcTalk ($page, wxID_ANY);
 	
-	$npcTalk->onContinue (sub { Commands::run ('talk cont'); });
+	$npcTalk->onContinue  (sub { Commands::run ('talk cont'); });
 	$npcTalk->onResponses (sub { Commands::run ('talk resp ' . shift); });
-	$npcTalk->onNumber (sub { Commands::run ('talk num ' . shift); });
-	$npcTalk->onText (sub { Commands::run ('talk text ' . shift); });
-	$npcTalk->onCancel (sub { Commands::run ('talk no'); });
+	$npcTalk->onNumber    (sub { Commands::run ('talk num ' . shift); });
+	$npcTalk->onText      (sub { Commands::run ('talk text ' . shift); });
+	$npcTalk->onCancel    (sub { Commands::run ('talk no'); });
 	
 	$page->set ($npcTalk);
-	
 	return $page;
 }
 
@@ -1127,6 +1173,7 @@ sub onMap_MapChange {
 sub onCaptcha {
 	my ($self, undef, $args) = @_;
 	
+	require Interface::Wx::CaptchaDialog;
 	my $dialog = new Interface::Wx::CaptchaDialog ($self->{frame}, $args->{file});
 	my $result;
 	if ($dialog->ShowModal == wxID_OK) {

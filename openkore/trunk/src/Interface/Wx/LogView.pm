@@ -57,7 +57,7 @@ sub new {
 		}
 	}
 
-	my $self = $class->SUPER::new($parent, -1, '',
+	my $self = $class->SUPER::new($parent, wxID_ANY, '',
 		wxDefaultPosition, wxDefaultSize,
 		wxTE_MULTILINE | wxTE_RICH | wxTE_NOHIDESEL);
 	$self->SetEditable(0);

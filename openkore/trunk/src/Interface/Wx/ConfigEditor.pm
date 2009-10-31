@@ -21,7 +21,7 @@ sub new {
 	my $vsizer = new Wx::BoxSizer(wxVERTICAL);
 	$hsizer->Add($vsizer, 0, wxGROW | wxRIGHT, 8);
 
-	my $label = new Wx::StaticText($self, -1, 'Categories:');
+	my $label = new Wx::StaticText($self, wxID_ANY, 'Categories:');
 	$vsizer->Add($label, 0);
 
 	my $list = $self->{list} = new Wx::ListBox($self, 81, wxDefaultPosition, wxDefaultSize,
@@ -71,7 +71,7 @@ sub onRevertEnable {
 
 sub _displayIntro {
 	my $self = shift;
-	my $label = $self->{intro} = new Wx::StaticText($self, -1,
+	my $label = $self->{intro} = new Wx::StaticText($self, wxID_ANY,
 		'Click on one of the categories on the left to begin.',
 		wxDefaultPosition, wxDefaultSize, wxALIGN_CENTRE);
 	$self->{hsizer}->Add($label, 1, wxALIGN_CENTER);
@@ -86,10 +86,10 @@ sub _selectCategory {
 	my $editorName = $self->{categories}{$name}{editor};
 	my $editor;
 	if ($editorName) {
-		$editor = eval "Interface::Wx::ConfigEditor::${editorName}->new(\$self, -1);";
+		$editor = eval "Interface::Wx::ConfigEditor::${editorName}->new(\$self, wxID_ANY);";
 	}
 	if (!$editor) {
-		$editor = Interface::Wx::ConfigEditor::Grid->new($self, -1);
+		$editor = Interface::Wx::ConfigEditor::Grid->new($self, wxID_ANY);
 	}
 
 	if ($self->{intro}) {
@@ -151,11 +151,11 @@ sub new {
 	my $sizer = new Wx::BoxSizer(wxVERTICAL);
 	$self->SetSizer($sizer);
 
-	my $splitter = new Wx::SplitterWindow($self, -1, wxDefaultPosition, wxDefaultSize,
+	my $splitter = new Wx::SplitterWindow($self, wxID_ANY, wxDefaultPosition, wxDefaultSize,
 		wxSP_3D | wxSP_LIVE_UPDATE);
 	$sizer->Add($splitter, 1, wxGROW);
 
-	my $grid = $self->{grid} = new Wx::Grid($splitter, -1);
+	my $grid = $self->{grid} = new Wx::Grid($splitter, wxID_ANY);
 	$grid->CreateGrid(0, 2);
 	$grid->SetRowLabelSize(0);
 	$grid->SetColLabelSize(22);
@@ -169,7 +169,7 @@ sub new {
 		$self->downloadManual($parent);
 	}
 
-	my $html = $self->{html} = new Wx::HtmlWindow($splitter, -1);
+	my $html = $self->{html} = new Wx::HtmlWindow($splitter, wxID_ANY);
 	if ($^O ne 'MSWin32') {
 		$html->SetFonts('Bitstream Vera Sans', 'Bitstream Vera Sans Mono',
 			[10, 10, 10, 10, 10, 10, 10]);
@@ -196,11 +196,11 @@ sub downloadManual {
 		close $f;
 
 	} else {
-		my $dialog = new Wx::Dialog($parent->GetGrandParent, -1, "Downloading");
+		my $dialog = new Wx::Dialog($parent->GetGrandParent, wxID_ANY, "Downloading");
 		my $sizer = new Wx::BoxSizer(wxVERTICAL);
-		my $label = new Wx::StaticText($dialog, -1, "Downloading manual, please wait...");
+		my $label = new Wx::StaticText($dialog, wxID_ANY, "Downloading manual, please wait...");
 		$sizer->Add($label, 1, wxGROW | wxALL, 8);
-		my $gauge = new Wx::Gauge($dialog, -1, 100, wxDefaultPosition,
+		my $gauge = new Wx::Gauge($dialog, wxID_ANY, 100, wxDefaultPosition,
 			[0, 16], wxGA_SMOOTH | wxGA_HORIZONTAL);
 		$sizer->Add($gauge, 0, wxGROW | wxLEFT | wxRIGHT, 8);
 		my $button = new Wx::Button($dialog, 475, '&Cancel');

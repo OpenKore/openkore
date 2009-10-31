@@ -49,7 +49,7 @@ our %fgcolors;
 sub new {
 	my ($class, $parent) = @_;
 
-	my $self = $class->SUPER::new($parent, -1, '',
+	my $self = $class->SUPER::new($parent, wxID_ANY, '',
 		wxDefaultPosition, wxDefaultSize,
 		wxTE_MULTILINE | wxVSCROLL | wxTE_NOHIDESEL);
 	$self->SetEditable(0);

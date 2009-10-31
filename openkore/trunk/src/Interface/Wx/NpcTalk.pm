@@ -7,7 +7,7 @@ use base 'Wx::Panel';
 
 use Globals;
 use Log qw/message/;
-use Utils qw/binFind/;
+use Misc qw/configModify/;
 
 sub new {
 	my ($class, $parent, $id) = @_;
@@ -17,46 +17,50 @@ sub new {
 	my $sizer = new Wx::BoxSizer (wxVERTICAL);
 	$self->SetSizer ($sizer);
 	
-	$self->{nameLabel} = new Wx::StaticText ($self, -1, 'NPC');
+	$self->{nameLabel} = new Wx::StaticText ($self, wxID_ANY, 'NPC');
 	$sizer->Add ($self->{nameLabel}, 0, wxGROW | wxALL, 4);
 	
 	$self->{chatLog} = new Interface::Wx::LogView ($self);
 	$sizer->Add ($self->{chatLog}, 1, wxGROW | wxALL, 4);
 	
-	$self->{hintLabel} = new Wx::StaticText ($self, -1, '');
+	$self->{hintLabel} = new Wx::StaticText ($self, wxID_ANY, '');
 	$sizer->Add ($self->{hintLabel}, 0, wxGROW | wxALL, 4);
 	
-	$self->{listResponses} = new Wx::ListBox ($self, 2211);
+	$self->{listResponses} = new Wx::ListBox ($self, wxID_ANY);
 	$self->{listResponses}->Show (0);
-	EVT_LISTBOX ($self, 2211, sub { $self->{value} = $self->{listResponses}->GetSelection; });
-	EVT_LISTBOX_DCLICK ($self, 2211, sub { $self->_onOk; });
+	EVT_LISTBOX ($self, $self->{listResponses}->GetId, sub { $self->{value} = $self->{listResponses}->GetSelection; });
+	EVT_LISTBOX_DCLICK ($self, $self->{listResponses}->GetId, sub { $self->_onOk; });
 	$sizer->Add ($self->{listResponses}, 0, wxGROW | wxALL, 4);
 	
-	$self->{inputBox} = new Wx::TextCtrl ($self, 2213, '', wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER);
+	$self->{inputBox} = new Wx::TextCtrl ($self, wxID_ANY, '', wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER);
 	$self->{inputBox}->Show (0);
-	EVT_TEXT ($self, 2213, sub { $self->{value} = $self->{inputBox}->GetValue; });
-	EVT_TEXT_ENTER ($self, 2213, sub { $self->_onOk; });
+	EVT_TEXT ($self, $self->{inputBox}->GetId, sub { $self->{value} = $self->{inputBox}->GetValue; });
+	EVT_TEXT_ENTER ($self, $self->{inputBox}->GetId, sub { $self->_onOk; });
 	$sizer->Add ($self->{inputBox}, 0, wxGROW | wxALL, 4);
 	
 	my $hsizer = new Wx::BoxSizer (wxHORIZONTAL);
 	$sizer->Add ($hsizer, 0, wxGROW | wxALL, 4);
 	
-	$self->{okButton} = new Wx::Button ($self, 2212, '&OK');
+	$self->{okButton} = new Wx::Button ($self, wxID_ANY, '&OK');
 	$self->{okButton}->SetToolTip ('Continue talking / submit response');
 	$self->{okButton}->Enable (0);
-	EVT_BUTTON ($self, 2212, sub { $self->_onOk; });
-	$hsizer->Add ($self->{okButton}, 0);
+	EVT_BUTTON ($self, $self->{okButton}->GetId, sub { $self->_onOk; });
+	$hsizer->Add ($self->{okButton}, 0, wxRIGHT, 4);
 	
-	my $pad = new Wx::Window ($self, -1);
+	$self->{autoButton} = new Wx::Button ($self, wxID_ANY, '&Auto');
+	$self->{autoButton}->SetToolTip ('Auto-continuing talking');
+	$self->{autoButton}->Enable (0);
+	EVT_BUTTON ($self, $self->{autoButton}->GetId, sub { $self->_onAuto; });
+	$hsizer->Add ($self->{autoButton}, 0, wxRIGHT, 4);
+	
+	my $pad = new Wx::Window ($self, wxID_ANY);
 	$hsizer->Add ($pad, 1);
 	
-	$self->{cancelButton} = new Wx::Button ($self, 2213, '&Cancel');
+	$self->{cancelButton} = new Wx::Button ($self, wxID_ANY, '&Cancel');
 	$self->{cancelButton}->SetToolTip ('Cancel talking');
 	$self->{cancelButton}->Enable (0);
-	EVT_BUTTON ($self, 2213, sub { $self->_onCancel; });
+	EVT_BUTTON ($self, $self->{cancelButton}->GetId, sub { $self->_onCancel; });
 	$hsizer->Add ($self->{cancelButton}, 0);
-	
-	$self->{sizer} = $sizer;
 	
 	return $self;
 }
@@ -71,6 +75,16 @@ sub _onOk {
 	$self->_onAction (undef);
 }
 
+sub _onAuto {
+	my ($self) = @_;
+	
+	configModify ('autoTalkCont', 1, 1);
+	$self->{auto} = 1;
+	
+	# assert: action eq 'continue'
+	$self->_onOk;
+}
+
 sub _onCancel {
 	my ($self) = @_;
 	
@@ -83,16 +97,26 @@ sub _onAction {
 	
 	$self->{action} = $action;
 	
+	if (defined $self->{action} && $self->{action} ne 'continue' && $self->{auto}) {
+		configModify ('autoTalkCont', 0, 1);
+		$self->{auto} = undef;
+	}
+	
+	$self->Freeze;
+	
 	$self->{okButton}->Enable (defined $self->{action});
-	$self->{cancelButton}->Enable (defined $self->{action});# && $self->{action} eq 'responses');
+	$self->{autoButton}->Enable (defined $self->{action} && $self->{action} eq 'continue');
+	$self->{cancelButton}->Enable (defined $self->{action} && $self->{action} ne 'continue');
 	$self->{hintLabel}->SetLabel ($hint);
 	$self->{hintLabel}->Show (defined $hint && $hint ne '');
 	$self->{listResponses}->Show (defined $self->{action} && $self->{action} eq 'responses');
 	
-	$self->{sizer}->Layout;
+	$self->GetSizer->Layout;
 	
 	# scroll chat log to bottom
 	$self->{chatLog}->AppendText ('');
+	
+	$self->Thaw;
 }
 
 sub npcImage {

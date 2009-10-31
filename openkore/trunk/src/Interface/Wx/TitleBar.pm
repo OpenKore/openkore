@@ -34,7 +34,7 @@ our ($detachBitmap, $closeBitmap);
 
 sub new {
 	my ($class, $parent, $title, $no_buttons) = @_;
-	my $self = $class->SUPER::new($parent, -1, wxDefaultPosition,
+	my $self = $class->SUPER::new($parent, wxID_ANY, wxDefaultPosition,
 		wxDefaultSize, wxFULL_REPAINT_ON_RESIZE);
 
 	$self->SetBackgroundColour(new Wx::Colour(98, 165, 241));
@@ -64,7 +64,7 @@ sub new {
 			$closeBitmap = new Wx::Bitmap($image);
 		}
 
-		my $toolbar = new Wx::ToolBar($self, -1, wxDefaultPosition, [-1, $size],
+		my $toolbar = new Wx::ToolBar($self, wxID_ANY, wxDefaultPosition, [-1, $size],
 			wxTB_HORIZONTAL | wxNO_BORDER | wxTB_3DBUTTONS | wxTB_FLAT);
 		$toolbar->SetBackgroundColour(Wx::SystemSettings::GetColour(wxSYS_COLOUR_BTNFACE));
 		$toolbar->SetToolBitmapSize(new Wx::Size(12, 12));
