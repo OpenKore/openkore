@@ -108,7 +108,10 @@ sub npcTalk {
 	}
 	
 	my $nameDisplay = $self->_nameDisplay ($args->{name});
-	return if $args->{msg} eq "[$nameDisplay]";
+	
+	if ($args->{msg} =~ /^\[(.+)\]$/) {
+		return if $nameDisplay =~ /^$1/;
+	}
 	
 	$self->{nameLabel}->SetLabel ($nameDisplay);
 	$self->{chatLog}->add ($args->{msg} . "\n");
