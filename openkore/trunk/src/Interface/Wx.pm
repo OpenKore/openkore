@@ -1059,7 +1059,7 @@ sub openNpcTalk {
 
 sub onManual {
 	my $self = shift;
-	launchURL('http://openkore.sourceforge.net/manual/');
+	launchURL('http://wiki.openkore.com/index.php?title=Manual');
 }
 
 sub onForum {
