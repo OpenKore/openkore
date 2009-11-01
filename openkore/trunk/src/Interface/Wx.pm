@@ -1254,7 +1254,6 @@ sub onNpcImage {
 sub onNpcTalk {
 	my ($self, undef, $args) = @_;
 	
-	Log::message "test1\n";
 	if (my $npcTalk = $self->openNpcTalk) {
 		$npcTalk->{child}->npcTalk ($args->{ID}, $args->{name}, $args->{msg});
 	}
