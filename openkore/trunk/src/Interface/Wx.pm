@@ -445,6 +445,39 @@ sub createMenuBar {
 	$menu->Append($helpMenu, '&Help');
 }
 
+sub createSettingsMenu {
+	my ($self, $parentMenu) = @_;
+	
+# 	foreach my $menuData (@{$data}) {
+# 		my $subMenu = new Wx::Menu;
+# 		
+# 		foreach my $itemData (@{$menuData->{items}}) {
+# 			if ($itemData->{type} eq 'boolean') {
+# 				$self->{mBooleanSetting}{$itemData->{key}} = $self->addCheckMenu (
+# 					$subMenu, $itemData->{title} || $itemData->{key}, sub { $self->onBooleanSetting ($itemData->{key}); },
+# 					"$itemData->{help} [$itemData->{key}]"
+# 				);
+# 			} elsif ($itemData->{type} eq 'separator') {
+# 				$subMenu->AppendSeparator;
+# 			}
+# 		}
+# 		
+# 		$self->addSubMenu ($parentMenu, $menuData->{title}, $subMenu, $menuData->{help});
+# 	}
+	
+	$self->{mBooleanSetting}{'wx_npcTalk'} = $self->addCheckMenu (
+		$parentMenu, 'Use Wx NPC Talk', sub { $self->onBooleanSetting ('wx_npcTalk'); },
+		'Open a dialog when talking with NPCs'
+	);
+	
+	$self->{mBooleanSetting}{'wx_captcha'} = $self->addCheckMenu (
+		$parentMenu, 'Use Wx captcha', sub { $self->onBooleanSetting ('wx_captcha'); },
+		'Open a dialog when receiving a captcha'
+	);
+	
+	$parentMenu->AppendSeparator;
+}
+
 sub createInfoPanel {
 	my $self = shift;
 	my $frame = $self->{frame};
@@ -603,6 +636,15 @@ sub addMenu {
 	my $item = new Wx::MenuItem(undef, $self->{menuIDs}, $label, $help);
 	$menu->Append($item);
 	EVT_MENU($self->{frame}, $self->{menuIDs}, sub { $callback->($self); });
+	return $item;
+}
+
+sub addSubMenu {
+	my ($self, $menu, $label, $subMenu, $help) = @_;
+
+	$self->{menuIDs}++;
+	my $item = new Wx::MenuItem(undef, $self->{menuIDs}, $label, $help, wxITEM_NORMAL, $subMenu);
+	$menu->Append($item);
 	return $item;
 }
 
@@ -805,6 +847,10 @@ sub onMenuOpen {
 	$self->{mResume}->Enable($AI != 2);
 	$self->{infoBarToggle}->Check($self->{infoPanel}->IsShown);
 	$self->{chatLogToggle}->Check(defined $self->{notebook}->hasPage('Chat Log') ? 1 : 0);
+	
+	while (my ($setting, $menu) = each (%{$self->{mBooleanSetting}})) {
+		$menu->Check ($config{$setting} ? 1 : 0);
+	}
 }
 
 sub onLoadFiles {
@@ -857,6 +903,12 @@ sub onClose {
 sub onFontChange {
 	my $self = shift;
 	$self->{console}->selectFont($self->{frame});
+}
+
+sub onBooleanSetting {
+	my ($self, $setting) = @_;
+	
+	configModify ($setting, !$config{$setting}, 1);
 }
 
 sub onAdvancedConfig {
@@ -1158,8 +1210,12 @@ sub onMap_MapChange {
 	$mapDock->Fit;
 }
 
+### Captcha ###
+
 sub onCaptcha {
 	my ($self, undef, $args) = @_;
+	
+	return unless $config{wx_captcha};
 	
 	require Interface::Wx::CaptchaDialog;
 	my $dialog = new Interface::Wx::CaptchaDialog ($self->{frame}, $args->{file});
