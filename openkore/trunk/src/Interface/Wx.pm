@@ -44,6 +44,7 @@ use Interface;
 use base qw(Wx::App Interface);
 use Modules;
 use Field;
+use I18N qw/bytesToString/;
 use Interface::Wx::Dock;
 use Interface::Wx::MapViewer;
 use Interface::Wx::LogView;
@@ -81,28 +82,15 @@ sub OnInit {
 		['packet_privMsg',           $onChat],
 		['packet_sentPM',            $onChat],
 		['mainLoop_pre',             sub { $self->onUpdateUI(); }],
-		['captcha_file',             sub { $self->onCaptcha(@_) }],
-		['packet/npc_image',         sub {
-			if (my $npcTalk = $self->onNpcTalk) { $npcTalk->{child}->npcImage (@_); }
-		}],
-		['npc_talk',                 sub {
-			if (my $npcTalk = $self->onNpcTalk) { $npcTalk->{child}->npcTalk (@_); }
-		}],
-		['packet/npc_talk_continue', sub {
-			if (my $npcTalk = $self->onNpcTalk) { $npcTalk->{child}->npcContinue (@_); }
-		}],
-		['npc_talk_responses',       sub {
-			if (my $npcTalk = $self->onNpcTalk) { $npcTalk->{child}->npcResponses (@_); }
-		}],
-		['packet/npc_talk_number', sub {
-			if (my $npcTalk = $self->onNpcTalk) { $npcTalk->{child}->npcNumber (@_); }
-		}],
-		['packet/npc_talk_text', sub {
-			if (my $npcTalk = $self->onNpcTalk) { $npcTalk->{child}->npcText (@_); }
-		}],
-		['npc_talk_done',            sub {
-			if (my $npcTalk = $self->onNpcTalk) { $npcTalk->{child}->npcClose (@_); }
-		}],
+		['captcha_file',             sub { $self->onCaptcha(@_); }],
+		['packet/minimap_indicator', sub { $self->onMapIndicator (@_); }],		
+		['packet/npc_image',         sub { $self->onNpcImage (@_); }],
+		['npc_talk',                 sub { $self->onNpcTalk (@_); }],
+		['packet/npc_talk_continue', sub { $self->onNpcContinue (@_); }],
+		['npc_talk_responses',       sub { $self->onNpcResponses (@_); }],
+		['packet/npc_talk_number',   sub { $self->onNpcNumber (@_); }],
+		['packet/npc_talk_text',     sub { $self->onNpcText (@_); }],
+		['npc_talk_done',            sub { $self->onNpcClose (@_); }],
 	);
 
 	$self->{history} = [];
@@ -740,27 +728,36 @@ sub updateItemList {
 		if ($char->{hp_max}) {
 			$value = $char->{hp} / $char->{hp_max} * 100;
 			$self->{hpBar}->SetValue ($value);
-			$self->{hpBar}->SetToolTip (sprintf '%d / %d (%.2f%)', $char->{hp}, $char->{hp_max}, $value);
+			$self->{hpBar}->SetToolTip (sprintf '%s / %s (%.2f%)', formatNumber ($char->{hp}), formatNumber ($char->{hp_max}), $value);
+			$self->{hpBar}->SetForegroundColour (new Wx::Colour ((100 - $value) * 2.55, $value * 1.27, 50));
 		}
 		if ($char->{sp_max}) {
 			$value = $char->{sp} / $char->{sp_max} * 100;
 			$self->{spBar}->SetValue ($value);
-			$self->{spBar}->SetToolTip (sprintf '%d / %d (%.2f%)', $char->{sp}, $char->{sp_max}, $value);
+			$self->{spBar}->SetToolTip (sprintf '%s / %s (%.2f%)', formatNumber ($char->{sp}), formatNumber ($char->{sp_max}), $value);
+			$self->{spBar}->SetForegroundColour (new Wx::Colour ((100 - $value) * 2.55, $value * 1.27, 50));
 		}
 		if ($char->{exp_max}) {
 			$value = $char->{exp} / $char->{exp_max} * 100;
 			$self->{expBar}->SetValue ($value);
-			$self->{expBar}->SetToolTip (sprintf '%d / %d (%.2f%)', $char->{exp}, $char->{exp_max}, $value);
+			$self->{expBar}->SetToolTip (sprintf '%s / %s (%.2f%)', formatNumber ($char->{exp}), formatNumber ($char->{exp_max}), $value);
 		}
 		if ($char->{exp_job_max}) {
-			$char->{exp_job} / $char->{exp_job_max} * 100;
+			$value = $char->{exp_job} / $char->{exp_job_max} * 100;
 			$self->{jobExpBar}->SetValue ($value);
-			$self->{jobExpBar}->SetToolTip (sprintf '%d / %d (%.2f%)', $char->{exp_job}, $char->{exp_job_max}, $value);
+			$self->{jobExpBar}->SetToolTip (sprintf '%s / %s (%.2f%)', formatNumber ($char->{exp_job}), formatNumber ($char->{exp_job_max}), $value);
 		}
 		if ($char->{weight_max}) {
-			$char->{weight} / $char->{weight_max} * 100;
+			$value = $char->{weight} / $char->{weight_max} * 100;
 			$self->{weightBar}->SetValue ($value);
-			$self->{weightBar}->SetToolTip (sprintf '%d / %d (%.2f%)', $char->{weight}, $char->{weight_max}, $value);
+			$self->{weightBar}->SetToolTip (sprintf '%s / %s (%.2f%)', formatNumber ($char->{weight}), formatNumber ($char->{weight_max}), $value);
+			if (whenStatusActive ('Owg 90%')) {
+				$self->{weightBar}->SetForegroundColour (new Wx::Colour (255, 0, 50));
+			} elsif (whenStatusActive ('Owg 50%')) {
+				$self->{weightBar}->SetForegroundColour (new Wx::Colour (127, 63, 50));
+			} else {
+				$self->{weightBar}->SetForegroundColour (new Wx::Colour (0, 127, 50));
+			}
 		}
 	}
 }
@@ -982,7 +979,7 @@ sub onEmotionsToggle {
 	return $page;
 }
 
-sub onNpcTalk {
+sub openNpcTalk {
 	my $self = shift;
 	my $page;
 	
@@ -1176,6 +1173,75 @@ sub onCaptcha {
 	$messageSender->sendCaptchaAnswer ($result);
 	
 	$args->{return} = 1;
+}
+
+### Map ###
+
+sub onMapIndicator {
+	my ($self, undef, $args) = @_;
+	
+	if ($self->{mapViewer}) {
+		$self->{mapViewer}->mapIndicator ($args->{type} != 2, $args->{x}, $args->{y}, $args->{red}, $args->{green}, $args->{blue}, $args->{alpha});
+	}
+}
+
+### NPC Talk ###
+
+sub onNpcImage {
+	my ($self, undef, $args) = @_;
+	
+	if (my $npcTalk = $self->openNpcTalk) {
+		$npcTalk->{child}->npcImage ($args->{type} == 2, bytesToString ($args->{npc_image}));
+	}
+}
+
+sub onNpcTalk {
+	my ($self, undef, $args) = @_;
+	
+	Log::message "test1\n";
+	if (my $npcTalk = $self->openNpcTalk) {
+		$npcTalk->{child}->npcTalk ($args->{ID}, $args->{name}, $args->{msg});
+	}
+}
+
+sub onNpcContinue {
+	my ($self, undef, $args) = @_;
+	
+	if (my $npcTalk = $self->openNpcTalk) {
+		$npcTalk->{child}->npcContinue unless $config{autoTalkCont};
+	}
+}
+
+sub onNpcResponses {
+	my ($self, undef, $args) = @_;
+	
+	if (my $npcTalk = $self->openNpcTalk) {
+		$npcTalk->{child}->npcResponses ($args->{responses});
+	}
+}
+
+sub onNpcNumber {
+	my ($self) = @_;
+	
+	if (my $npcTalk = $self->openNpcTalk) {
+		$npcTalk->{child}->npcNumber;
+	}
+}
+
+sub onNpcText {
+	my ($self) = @_;
+	
+	if (my $npcTalk = $self->openNpcTalk) {
+		$npcTalk->{child}->npcText;
+	}
+}
+
+sub onNpcClose {
+	my ($self) = @_;
+	
+	if (my $npcTalk = $self->openNpcTalk) {
+		$npcTalk->{child}->npcClose;
+	}
 }
 
 1;
