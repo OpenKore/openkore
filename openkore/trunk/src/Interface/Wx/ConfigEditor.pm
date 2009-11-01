@@ -211,7 +211,7 @@ sub downloadManual {
 		$dialog->SetSizerAndFit($sizer);
 
 		my $timer = new Wx::Timer($dialog, 476);
-		my $downloader = new StdHttpReader('http://openkore.sourceforge.net/manual/config/');
+		my $downloader = new StdHttpReader('http://wiki.openkore.com/index.php?title=Config.txt');
 		EVT_TIMER($dialog, 476, sub {
 			if ($downloader->getStatus() != HttpReader::CONNECTING) {
 				my $size = $downloader->getSize();
@@ -326,8 +326,7 @@ sub _help {
 	if ($manual eq '') {
 		return 'Unable to download the manual.';
 	} else {
-		my $tmp = quotemeta "<dt class=\"item\"><b>$name";
-		my ($found) = $manual =~ /<a name=\"$name\"><\/a>.*?<dl class=\"primaryList\">\n(${tmp}.*?)<\/dl>/s;
+		my ($found) = $manual =~ /(<span class=\"mw-headline\">$name<\/span><\/h3>.*?)<hr \/>/s;
 		$found = "No help available for \"$name\"." if ($found eq '');
 		return $found;
 	}

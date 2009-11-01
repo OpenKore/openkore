@@ -23,7 +23,7 @@ use base qw(Network::Send::kRO::RagexeRE_2009_01_21a);
 
 use Log qw(message warning error debug);
 use Utils::Rijndael qw(normal_rijndael);
-use Globals qw($accountID);
+use Globals qw($accountID $incomingMessages);
 
 sub new {
 	my ($class) = @_;
@@ -70,6 +70,12 @@ sub sendCaptchaAnswer {
 	my ($self, $answer) = @_;
 	my $msg = pack('v2 a4 a24', 0x07E7, 0x20, $accountID, $answer);
 	$self->sendToServer($msg);
+}
+
+sub sendGameLogin {
+	my ($self) = shift;
+	$self->SUPER::sendGameLogin(@_);
+	$incomingMessages->nextMessageMightBeAccountID();
 }
 
 =pod
