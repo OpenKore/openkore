@@ -6,8 +6,6 @@ use Wx::Event qw/EVT_BUTTON EVT_LISTBOX EVT_LISTBOX_DCLICK EVT_TEXT EVT_TEXT_ENT
 use base 'Wx::Panel';
 
 use Globals;
-use I18N qw/bytesToString/;
-use Log qw/message/;
 use Misc qw/configModify/;
 
 sub new {
@@ -22,8 +20,14 @@ sub new {
 	my $sizer = new Wx::BoxSizer (wxVERTICAL);
 	$self->SetSizer ($sizer);
 	
-	$self->{nameLabel} = new Wx::StaticText ($self, wxID_ANY, 'NPC');
-	$sizer->Add ($self->{nameLabel}, 0, wxGROW | wxALL, 4);
+	my $hsizer3 = new Wx::BoxSizer (wxHORIZONTAL);
+	$sizer->Add ($hsizer3, 0, wxGROW);
+	
+	$self->{nameLabel} = new Wx::StaticText ($self, wxID_ANY, '');
+	$hsizer3->Add ($self->{nameLabel}, 1, wxGROW | wxALL, 4);
+	
+	$self->{mapLabel} = new Wx::StaticText ($self, wxID_ANY, '');
+	$hsizer3->Add ($self->{mapLabel}, 0, wxGROW | wxALL, 4);
 	
 	my $hsizer2 = new Wx::BoxSizer (wxHORIZONTAL);
 	$sizer->Add ($hsizer2, 1, wxGROW);
@@ -52,13 +56,15 @@ sub new {
 	my $vsizer2 = new Wx::BoxSizer (wxVERTICAL);
 	$hsizer2->Add ($vsizer2, 0, wxGROW);
 	
-	$self->{imageLabel} = new Wx::StaticText ($self, wxID_ANY, 'Image');
+	$self->{imageLabel} = new Wx::StaticText ($self, wxID_ANY, '');
 	$self->{imageLabel}->Show (0);
 	$vsizer2->Add ($self->{imageLabel}, 0, wxGROW | wxALL, 4);
 	
 	$self->{imageView} = new Wx::StaticBitmap ($self, wxID_ANY, new Wx::Bitmap (0, 0, -1));
 	$self->{imageView}->Show (0);
-	$vsizer2->Add ($self->{imageView}, 1, wxGROW | wxALL, 4);
+	$vsizer2->Add ($self->{imageView}, 0, wxGROW | wxALL, 4);
+	
+	$vsizer2->Add (new Wx::Window ($self, wxID_ANY), 1);
 	
 	my $hsizer = new Wx::BoxSizer (wxHORIZONTAL);
 	$sizer->Add ($hsizer, 0, wxGROW | wxALL, 4);
@@ -75,8 +81,7 @@ sub new {
 	EVT_BUTTON ($self, $self->{autoButton}->GetId, sub { $self->_onAuto; });
 	$hsizer->Add ($self->{autoButton}, 0, wxRIGHT, 4);
 	
-	my $pad = new Wx::Window ($self, wxID_ANY);
-	$hsizer->Add ($pad, 1);
+	$hsizer->Add (new Wx::Window ($self, wxID_ANY), 1);
 	
 	$self->{cancelButton} = new Wx::Button ($self, wxID_ANY, '&Cancel');
 	$self->{cancelButton}->SetToolTip ('Cancel talking');
@@ -132,6 +137,10 @@ sub _onAction {
 	$self->{hintLabel}->SetLabel ($hint);
 	$self->{hintLabel}->Show (defined $hint && $hint ne '');
 	$self->{listResponses}->Show (defined $self->{action} && $self->{action} eq 'responses');
+	if (defined $self->{action} && $self->{action} eq 'responses') {
+		$self->{listResponses}->SetSelection (0);
+		$self->{value} = 0;
+	}
 	
 	$self->GetSizer->Layout;
 	$self->{chatLog}->AppendText ('');
@@ -168,7 +177,8 @@ sub _checkBefore {
 	my ($self) = @_;
 	
 	if ($self->{closed}) {
-		$self->{nameLabel}->SetLabel ('NPC');
+		$self->{nameLabel}->SetLabel ('');
+		$self->{nameLabel}->SetLabel ('');
 		$self->{chatLog}->Clear;
 		$self->{closed} = undef;
 		if ($self->{image}) {
@@ -179,44 +189,45 @@ sub _checkBefore {
 }
 
 sub npcImage {
-	my ($self, undef, $args) = @_;
+	my ($self, $show, $image) = @_;
 	
-	if ($args->{type} == 2) {
+	if ($show) {
 		$self->_checkBefore;
 		
-		$self->{image} = bytesToString ($args->{npc_image});
+		$self->{image} = $image;
 		$self->{image} =~ s/\.\w{3}$//;
 		$self->_updateImage;
-	} elsif ($args->{type} == 255) {
-		#$self->{image} = undef;
 	}
 }
 
 sub npcTalk {
-	my ($self, undef, $args) = @_;
+	my ($self, $ID, $name, $msg) = @_;
 	
 	$self->_checkBefore;
 	
-	if ($args->{msg} =~ /^\[(.+)\]$/) {
-		#$self->{nameLabel}->SetLabel ($1);
-		return;
+	return if $msg =~ /^\[(.+)\]$/;
+	
+	my $nameDisplay = $self->_nameDisplay ($name);
+	
+	my $mapDisplay = '';
+	if (my $npc = $npcsList->getByID ($ID)) {
+		$mapDisplay = join ' ', $field->name, $npc->{pos}{x}, $npc->{pos}{y};
 	}
 	
-	my $nameDisplay = $self->_nameDisplay ($args->{name});
-	
 	$self->{nameLabel}->SetLabel ($nameDisplay);
-	$self->{chatLog}->add ($args->{msg} . "\n");
+	$self->{mapLabel}->SetLabel ($mapDisplay);
+	$self->{chatLog}->add ($msg . "\n");
 }
 
 sub npcContinue {
-	$_[0]->_onAction ('continue', 'Continue talking') unless $config{autoTalkCont};
+	$_[0]->_onAction ('continue', 'Continue talking');
 }
 
 sub npcResponses {
-	my ($self, undef, $args) = @_;
+	my ($self, $responses) = @_;
 	
 	$self->{listResponses}->Clear;
-	$self->{listResponses}->Append ($_) foreach $args->{responses};
+	$self->{listResponses}->Append ($_) foreach $responses;
 	
 	$self->_onAction ('responses', 'Choose a response');
 }

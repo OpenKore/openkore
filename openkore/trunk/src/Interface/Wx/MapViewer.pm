@@ -44,11 +44,11 @@ sub new {
 	$self->{points} = [];
 	$self->SetBackgroundColour(new Wx::Colour(0, 0, 0));
 	
-	$self->{destBrush}    = new Wx::Brush(new Wx::Colour(255, 110, 245), wxSOLID);
-	$self->{playerBrush}  = new Wx::Brush(new Wx::Colour(0, 200, 0), wxSOLID);
-	$self->{monsterBrush} = new Wx::Brush(new Wx::Colour(215, 0, 0), wxSOLID);
-	$self->{npcBrush}     = new Wx::Brush(new Wx::Colour(180, 0, 255), wxSOLID);
-	$self->{portalBrush}  = new Wx::Brush(new Wx::Colour(255, 128, 64), wxSOLID);
+	$self->{destBrush}      = new Wx::Brush(new Wx::Colour(255, 110, 245), wxSOLID);
+	$self->{playerBrush}    = new Wx::Brush(new Wx::Colour(0, 200, 0), wxSOLID);
+	$self->{monsterBrush}   = new Wx::Brush(new Wx::Colour(215, 0, 0), wxSOLID);
+	$self->{npcBrush}       = new Wx::Brush(new Wx::Colour(180, 0, 255), wxSOLID);
+	$self->{portalBrush}    = new Wx::Brush(new Wx::Colour(255, 128, 64), wxSOLID);
 	$self->{slaveBrush}     = new Wx::Brush(new Wx::Colour(0, 0, 215), wxSOLID);
 	
 	$self->{portalSize} = 3;
@@ -229,6 +229,20 @@ sub setSlaves {
 			return;
 		}
 	}
+}
+
+sub mapIndicator {
+	my ($self, $show, $x, $y, $r, $g, $b, $a) = @_;
+	
+	if ($show) {
+		$self->{indicators}{$self->{field}{name}}{"$x $y"} = {
+			x => $x, y => $y, color => [$r, $g, $b, $a],
+		};
+	} elsif ($self->{indicators}{$self->{field}{name}}) {
+		delete $self->{indicators}{$self->{field}{name}}{"$x $y"};
+	}
+	
+	$self->{needUpdate} = 1;
 }
 
 sub update {
@@ -516,6 +530,28 @@ sub _onPaint {
 	$dc->DrawRectangle (0, 0, $self->{view}{width}, $y) if $y > 0;
 	$dc->DrawRectangle (0, $y + $h, $self->{view}{width}, $self->{view}{height}) if $y + $h < $self->{view}{height};
 	$dc->DrawBitmap ($self->{bitmap}, $x, $y, 1);
+	
+	if ($self->{indicators}{$self->{field}{name}}) {
+		foreach my $item (values %{$self->{indicators}{$self->{field}{name}}}) {
+			my $color = new Wx::Colour (@{$item->{color}});
+			$dc->SetBrush (new Wx::Brush ($color, wxSOLID));
+			($x, $y) = $self->_posXYToView($item->{x}, $item->{y});
+			$dc->DrawPolygon ([
+				[$x - 2, $y - 2],
+				[$x - 2, $y - 6],
+				[$x + 2, $y - 6],
+				[$x + 2, $y - 2],
+				[$x + 6, $y - 2],
+				[$x + 6, $y + 2],
+				[$x + 2, $y + 2],
+				[$x + 2, $y + 6],
+				[$x - 2, $y + 6],
+				[$x - 2, $y + 2],
+				[$x - 6, $y + 2],
+				[$x - 6, $y - 2],
+			], 0, 0, wxODDEVEN_RULE);
+		}
+	}
 	
 	# portals
 	
