@@ -2147,8 +2147,8 @@ y_airport 160 14 y_airport 48 20
 y_airport 48 18 y_airport 162 14
 yuno 53 214 y_airport 143 23
 y_airport 143 16 yuno 52 207
-yuno 52 238 y_airport 143 60
-yuno 55 238 y_airport 143 60
+yuno 47 240 y_airport 143 54
+yuno 59 240 y_airport 143 54
 airplane 208 53 airplane 239 160
 airplane 245 160 airplane 214 54
 airplane_01 254 54 airplane_01 91 67
@@ -2475,3 +2475,8 @@ que_ng 178 162 que_ng 176 86
 que_ng 170 85 que_ng 182 161
 que_ng 165 137 que_ng 177 41
 que_ng 172 42 que_ng 160 139
+
+y_airport 143 43 y_airport 148 51 1200 c r0 c r0
+y_airport 143 49 y_airport 142 40 0 c r0 c r0
+y_airport 140 63 yuno 47 244 0 c r0
+y_airport 145 63 yuno 59 244 0 c r0 
