@@ -6,7 +6,7 @@ use Wx::Event qw/EVT_SIZE EVT_BUTTON/;
 use base 'Wx::Panel';
 
 use constant {
-	BUTTON_SIZE => 28,
+	BUTTON_SIZE => 26,
 	BUTTON_BORDER => 2,
 };
 
@@ -16,20 +16,13 @@ sub new {
 	my $self = $class->SUPER::new ($parent, $id);
 	
 	$self->{bitmapDir} = 'bitmaps/emotions/';
-	
 	Wx::Image::AddHandler (new Wx::GIFHandler);
 	
 	EVT_SIZE ($self, \&_onSize);
 	
-	my $sizer = new Wx::BoxSizer (wxVERTICAL);
-	
-	$self->{emotionSizer} = new Wx::BoxSizer (wxVERTICAL);
-	$sizer->Add ($self->{emotionSizer}, 0);
-	
-	my $pad = new Wx::Window ($self, wxID_ANY);
-	$sizer->Add ($pad, 1);
-	
-	$self->SetSizer ($sizer);
+	$self->SetSizer (my $sizer = new Wx::BoxSizer (wxVERTICAL));
+	$sizer->Add ($self->{grid} = new Wx::GridSizer (0, 0, BUTTON_BORDER, BUTTON_BORDER), 0);
+	$sizer->Add (new Wx::Window ($self, wxID_ANY), 1);
 	
 	return $self;
 }
@@ -37,33 +30,31 @@ sub new {
 sub _onSize {
 	my ($self) = @_;
 	
-	my $cols = int $self->GetSize->GetWidth / (BUTTON_SIZE + 2 * BUTTON_BORDER);
+	my $cols = int + ($self->GetSize->GetWidth + BUTTON_BORDER) / (BUTTON_SIZE + BUTTON_BORDER);
+	
 	unless (defined $self->{cols} && $self->{cols} == $cols) {
-		$self->{cols} = $cols;
-		$self->_createButtons;
+		$self->{grid}->SetCols ($self->{cols} = $cols);
+		$self->GetSizer->Layout;
 	}
 }
 
 sub _createButtons {
 	my ($self) = @_;
 	
-	return unless $self->{emotions} && $self->{cols};
+	return unless $self->{emotions};
 	
 	$self->Freeze;
-	$self->{emotionSizer}->Clear (1);
+	$self->{grid}->Clear (1);
 	
-	my $total = keys %{$self->{emotions}};
-	
-	if ($total) {
-		my ($button, $hsizer);
+	if (my $total = keys %{$self->{emotions}}) {		
+		my $button;
 		for (my ($i, $e) = (0, 0); $i < $total; $e++) {
 			next unless defined $self->{emotions}{$e};
 			
 			my $imageFile = $self->{bitmapDir} . "$e.gif";
 			if (-f $imageFile) {
 				$button = new Wx::BitmapButton (
-					$self, wxID_ANY,
-					new Wx::Bitmap (new Wx::Image ($imageFile, wxBITMAP_TYPE_ANY)),
+					$self, wxID_ANY, new Wx::Bitmap (new Wx::Image ($imageFile, wxBITMAP_TYPE_ANY)),
 					wxDefaultPosition, [BUTTON_SIZE, BUTTON_SIZE], wxBU_AUTODRAW
 				);
 			} else {
@@ -77,17 +68,15 @@ sub _createButtons {
 				EVT_BUTTON ($self, $button->GetId, sub {$self->_onEmotion ($cmd)});
 			}
 			
-			unless ($i++ % $self->{cols}) {
-				$hsizer = new Wx::BoxSizer (wxHORIZONTAL);
-				$self->{emotionSizer}->Add ($hsizer, 0);
-			}
-			$hsizer->Add ($button, 0, wxALL, BUTTON_BORDER);
-		}
+ 			$self->{grid}->Add ($button);
+			$i++;
+		};
 	} else {
-		$self->{emotionSizer}->Add (
+		$self->{grid}->Add (my $sizer = new Wx::BoxSizer (wxVERTICAL));
+		$sizer->Add (
 			new Wx::StaticText ($self, wxID_ANY, 'No emotions (emotions.txt is empty or not loaded yet?)'), 0, wxALL, BUTTON_BORDER
 		);
-		$self->{emotionSizer}->Add (
+		$sizer->Add (
 			my $refreshButton = new Wx::Button ($self, wxID_ANY, 'Refresh'), 0, wxALL, BUTTON_BORDER
 		);
 		EVT_BUTTON ($self, $refreshButton->GetId, sub { $self->_createButtons; });
@@ -100,9 +89,7 @@ sub _createButtons {
 sub _onEmotion {
 	my ($self, $key) = @_;
 	
-	if ($self->{callback}{emotion}) {
-		$self->{callback}{emotion}->($key);
-	}
+	$self->{callback}{emotion}->($key) if $self->{callback}{emotion};
 }
 
 sub setEmotions {

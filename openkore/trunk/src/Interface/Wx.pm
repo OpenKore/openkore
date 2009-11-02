@@ -421,8 +421,8 @@ sub createMenuBar {
 		'&Info Bar',		\&onInfoBarToggle, 'Show or hide the information bar.');
 	$self->{chatLogToggle} = $self->addCheckMenu($viewMenu,
 		'Chat &Log',		\&onChatLogToggle, 'Show or hide the chat log.');
-	$self->addMenu ($viewMenu,
-		'&Emotions	Ctrl+L', \&onEmotionsToggle, 'Show emotions');
+	#$self->addMenu ($viewMenu, '&Status	Alt+A', \&openStats, 'Show status');
+	$self->addMenu ($viewMenu, '&Emotions	Alt+L', \&openEmotions, 'Show emotions');
 	$viewMenu->AppendSeparator;
 	$self->addMenu($viewMenu,
 		'&Font...',		\&onFontChange, 'Change console font');
@@ -1007,53 +1007,66 @@ sub onChatLogToggle {
 	}
 }
 
-sub onEmotionsToggle {
-	my $self = shift;
-	my $page;
+sub openWindow {
+	my ($self, $title, $class) = @_;
+	my ($page, $window);
 	
-	if ($page = $self->{notebook}->hasPage('Emotions')) {
-		$self->{notebook}->switchPage('Emotions');
-		return $page;
+	if ($page = $self->{notebook}->hasPage ($title)) {
+		$self->{notebook}->switchPage ($title);
+	} else {
+		$page = $self->{notebook}->newPage (1, $title, 0);
+		eval "require $class";
+		if ($@) {
+			$self->{notebook}->closePage ($page);
+			$self->{notebook}->switchPage ('Console');
+			Log::warning "Unable to load $class\n$@\n";
+			return;
+		}
+		$page->set ($window = $class->new ($page, wxID_ANY));
+		$self->{notebook}->switchPage ($title);
 	}
 	
-	$page = $self->{notebook}->newPage(1, 'Emotions');
+	return ($page, $window);
+}
+
+sub openStats {
+	my ($self) = @_;
+	my ($page, $window) = $self->openWindow ('Status', 'Interface::Wx::StatView::You');
 	
-	require Interface::Wx::EmotionList;
-	my $emotionList = new Interface::Wx::EmotionList ($page, wxID_ANY);
+	if ($window) {
+	}
 	
-	$emotionList->onEmotion (sub {
-		Commands::run ('e ' . shift);
-		$self->{inputBox}->SetFocus;
-	});
-	$emotionList->setEmotions (\%emotions_lut);
+	return $page;
+}
+
+sub openEmotions {
+	my ($self) = @_;
+	my ($page, $window) = $self->openWindow ('Emotions', 'Interface::Wx::EmotionList');
 	
-	$page->set ($emotionList);
+	if ($window) {
+		$window->onEmotion (sub {
+			Commands::run ('e ' . shift);
+			$self->{inputBox}->SetFocus;
+		});
+		$window->setEmotions (\%emotions_lut);
+	}
+	
 	return $page;
 }
 
 sub openNpcTalk {
-	my $self = shift;
-	my $page;
-	
+	my ($self) = @_;
 	return unless $config{wx_npcTalk};
+	my ($page, $window) = $self->openWindow ('NPC Talk', 'Interface::Wx::NpcTalk');
 	
-	if ($page = $self->{notebook}->hasPage('NPC Talk')) {
-		$self->{notebook}->switchPage('NPC Talk');
-		return $page;
+	if ($window) {
+		$window->onContinue  (sub { Commands::run ('talk cont'); });
+		$window->onResponses (sub { Commands::run ('talk resp ' . shift); });
+		$window->onNumber    (sub { Commands::run ('talk num ' . shift); });
+		$window->onText      (sub { Commands::run ('talk text ' . shift); });
+		$window->onCancel    (sub { Commands::run ('talk no'); });
 	}
 	
-	$page = $self->{notebook}->newPage(1, 'NPC Talk');
-	
-	require Interface::Wx::NpcTalk;
-	my $npcTalk = new Interface::Wx::NpcTalk ($page, wxID_ANY);
-	
-	$npcTalk->onContinue  (sub { Commands::run ('talk cont'); });
-	$npcTalk->onResponses (sub { Commands::run ('talk resp ' . shift); });
-	$npcTalk->onNumber    (sub { Commands::run ('talk num ' . shift); });
-	$npcTalk->onText      (sub { Commands::run ('talk text ' . shift); });
-	$npcTalk->onCancel    (sub { Commands::run ('talk no'); });
-	
-	$page->set ($npcTalk);
 	return $page;
 }
 
