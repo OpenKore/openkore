@@ -15,6 +15,8 @@
 # Korea (kRO)
 # The majority of private servers use eAthena, this is a clone of kRO
 
+# This is the most experimental of the whole kRO tree
+
 package Network::Send::kRO::RagexeRE_0;
 
 use strict;
@@ -23,7 +25,7 @@ use base qw(Network::Send::kRO::RagexeRE_2009_01_21a);
 
 use Log qw(message warning error debug);
 use Utils::Rijndael qw(normal_rijndael);
-use Globals qw($accountID $incomingMessages);
+use Globals qw($accountID $incomingMessages $masterServer);
 
 sub new {
 	my ($class) = @_;
@@ -31,20 +33,23 @@ sub new {
 }
 
 sub version {
-	return 29;
+	return $masterServer->{version} || 29;
 }
 
+# TODO: move to the right location
 # 0x00204
 sub sendClientMD5Hash {
 	my ($self) = @_;
-	my $msg = pack('v H32', 0x0204, "82d12c914f5ad48fd96fcf7ef4cc492d");
+	#my $msg = pack('v H32', 0x0204, "82d12c914f5ad48fd96fcf7ef4cc492d"); -> kRO sakray, but not kRO main
+	my $msg = pack('v H32', 0x0204, $masterServer->{clientHash});
 	$self->sendToServer($msg);
 }
 
+# TODO: move to the right location
 # 0x002B0
 sub sendMasterLogin {
 	my ($self, $username, $password, $master_version, $version) = @_;
-	$self->sendClientMD5Hash(); 						# this is a hack, just for testing purposes, it should be moved to the login algo later on
+	$self->sendClientMD5Hash() if ($masterServer->{clientHash} != ''); 						# this is a hack, just for testing purposes, it should be moved to the login algo later on
 	my $key = pack('C24', (6, 169, 33, 64, 54, 184, 161, 91, 81, 46, 3, 213, 52, 18, 0, 6, 61, 175, 186, 66, 157, 158, 180, 48));
 	my $chain = pack('C24', (61, 175, 186, 66, 157, 158, 180, 48, 180, 34, 218, 128, 44, 159, 172, 65, 1, 2, 4, 8, 16, 32, 128));
 	my $in = pack('a24', $password);
