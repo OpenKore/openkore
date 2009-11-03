@@ -498,7 +498,7 @@ sub getControlFilename {
 #
 # Get a table file by its name. This file will be looked up
 # in all possible locations, as specified by earlier calls
-# to Settings::setTabblesFolders().
+# to Settings::setTablesFolders().
 sub getTableFilename {
 	return _findFileFromFolders($_[0], \@tablesFolders);
 }
