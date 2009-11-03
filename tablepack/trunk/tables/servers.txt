@@ -144,7 +144,7 @@ serverEncoding Korean
 charBlockSize 112
 storageEncryptKey 0x050B6F79,0x0202C179,0x00E20120,0x04FA43E3,0x0179B6C8,0x05973DF2,0x007D8D6B,0x08CB9ED9
 recvpackets recvpackets-kRO-2009-09-29aRagexe.txt
-gameGuard 2
+gameGuard 1
 
 [Korea - kRO: Sakray]
 ip 112.175.128.138
