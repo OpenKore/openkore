@@ -26,7 +26,7 @@ use Wx ':everything';
 # vcl code use Wx::Event qw(EVT_PAINT EVT_LEFT_DOWN EVT_MOTION EVT_ERASE_BACKGROUND);
 use Wx::Event qw(EVT_SIZE EVT_PAINT EVT_LEFT_DOWN EVT_RIGHT_DOWN EVT_MOTION EVT_MOUSEWHEEL EVT_ERASE_BACKGROUND);
 use File::Spec;
-use base qw(Wx::Panel);
+use base 'Wx::Panel';
 use FastUtils;
 # vcl code use Utils::CallbackList;
 use Log qw(message);
@@ -44,12 +44,22 @@ sub new {
 	$self->{points} = [];
 	$self->SetBackgroundColour(new Wx::Colour(0, 0, 0));
 	
-	$self->{destBrush}      = new Wx::Brush(new Wx::Colour(255, 110, 245), wxSOLID);
-	$self->{playerBrush}    = new Wx::Brush(new Wx::Colour(0, 200, 0), wxSOLID);
-	$self->{monsterBrush}   = new Wx::Brush(new Wx::Colour(215, 0, 0), wxSOLID);
-	$self->{npcBrush}       = new Wx::Brush(new Wx::Colour(180, 0, 255), wxSOLID);
-	$self->{portalBrush}    = new Wx::Brush(new Wx::Colour(255, 128, 64), wxSOLID);
-	$self->{slaveBrush}     = new Wx::Brush(new Wx::Colour(0, 0, 215), wxSOLID);
+	$self->{brush}{text}        = new Wx::Brush(new Wx::Colour(0, 255, 0), wxSOLID);
+	$self->{brush}{dest}        = new Wx::Brush(new Wx::Colour(255, 110, 245), wxSOLID);
+	$self->{brush}{party}       = new Wx::Brush(new Wx::Colour(0, 0, 255), wxSOLID);
+	$self->{textColor}{party}   = new Wx::Colour (0, 0, 255);
+	$self->{brush}{player}      = new Wx::Brush(new Wx::Colour(0, 200, 0), wxSOLID);
+	$self->{textColor}{player}  = new Wx::Colour (0, 127, 0);
+	$self->{brush}{monster}     = new Wx::Brush(new Wx::Colour(215, 0, 0), wxSOLID);
+	$self->{textColor}{monster} = new Wx::Colour (127, 0, 0);
+	$self->{brush}{npc}         = new Wx::Brush(new Wx::Colour(180, 0, 255), wxSOLID);
+	$self->{textColor}{npc}     = new Wx::Colour (127, 0, 127);
+	$self->{brush}{portal}      = new Wx::Brush(new Wx::Colour(255, 128, 64), wxSOLID);
+	$self->{brush}{slave}       = new Wx::Brush(new Wx::Colour(0, 0, 127), wxSOLID);
+	
+	$self->{brush}{gaugeBg}     = new Wx::Brush(new Wx::Colour(63, 63, 63), wxSOLID);
+	$self->{brush}{gaugeFg}     = new Wx::Brush(new Wx::Colour(0, 255, 0), wxSOLID);
+	$self->{size}{gauge}        = {w => 10, h => 2};
 	
 	$self->{portalSize} = 3;
 	$self->{actorSize} = 2;
@@ -98,7 +108,7 @@ sub onMapChange {
 #### Public methods ####
 
 sub set {
-	my ($self, $map, $x, $y, $field) = @_;
+	my ($self, $map, $x, $y, $field, $look) = @_;
 
 	$self->{field}{width} = $field->width() if ($field && $field->width());
 	$self->{field}{height} = $field->height() if ($field && $field->height());
@@ -108,6 +118,7 @@ sub set {
 		$self->{field}{name} = $map;
 		$self->{field}{x} = $x;
 		$self->{field}{y} = $y;
+		$self->{field}{look} = $look;
 		
 		$self->{field}{object} = $field;
 		return unless $self->_updateBitmap;
@@ -119,6 +130,7 @@ sub set {
 		# Position changed
 		$self->{field}{x} = $x;
 		$self->{field}{y} = $y;
+		$self->{field}{look} = $look;
 		$self->{needUpdate} = 1;
 	}
 }
@@ -183,6 +195,29 @@ sub setPlayers {
 			$self->{needUpdate} = 1;
 			$self->{players} = $players;
 			return;
+		}
+	}
+}
+
+sub setParty {
+	my ($self, $players) = @_;
+	
+	unless ($self->{party} and @$players == @{$self->{party}}) {
+		$self->{needUpdate} = 1;
+		$self->{party} = $players;
+	} else {
+		for (my $i = 0; $i < @$players; $i++) {
+			next if $players->[$i]{ID} eq $accountID
+			or $players->[$i]{map} ne $self->{party}[$i]{map}
+			or $players->[$i]{online} == $self->{party}[$i]{online}
+			&& $players->[$i]{pos}{x} == $self->{party}[$i]{pos}{x}
+			&& $players->[$i]{pos}{y} == $self->{party}[$i]{pos}{y}
+			&& $players->[$i]{hp} == $self->{party}[$i]{hp}
+			&& $players->[$i]{hp_max} == $self->{party}[$i]{hp_max};
+			
+			$self->{needUpdate} = 1;
+			$self->{party} = $players;
+			last;
 		}
 	}
 }
@@ -315,7 +350,6 @@ sub _onRightClick {
 	if ($self->{clickCb} && $self->{field}{width} && $self->{field}{height}) {
 		my ($x, $y) = $self->_viewToPosXY ($event->GetX, $event->GetY);
 		
-		my $coord = "$x $y";
 		my $map = $field{name};
 		AI::clear(qw/move route mapRoute/);
 		message TF("Walking to waypoint: $x, $y\n"), "success";
@@ -378,28 +412,29 @@ sub _updateBitmap {
 }
 
 sub _loadImage {
-	my $file = shift;
-	my $scale = shift;
+	my ($file, $scale) = @_;
+	
 	my ($ext) = $file =~ /.*(\..*?)$/;
 	my ($handler, $mime);
 
-	# Initialize required image handler
-	if (!$addedHandlers{$ext}) {
-		$ext = lc $ext;
-		if ($ext eq '.png') {
-			$handler = new Wx::PNGHandler();
-		} elsif ($ext eq '.jpg' || $ext eq '.jpeg') {
-			$handler = new Wx::JPEGHandler();
-		} elsif ($ext eq '.bmp') {
-			$handler = new Wx::BMPHandler();
-		} elsif ($ext eq '.xpm') {
-			$handler = new Wx::XPMHandler();
-		}
-
-		return unless $handler;
-		Wx::Image::AddHandler($handler);
-		$addedHandlers{$ext} = 1;
-	}
+	# handlers moved to Wx.pm OnInit
+# 	# Initialize required image handler
+# 	if (!$addedHandlers{$ext}) {
+# 		$ext = lc $ext;
+# 		if ($ext eq '.png') {
+# 			$handler = new Wx::PNGHandler();
+# 		} elsif ($ext eq '.jpg' || $ext eq '.jpeg') {
+# 			$handler = new Wx::JPEGHandler();
+# 		} elsif ($ext eq '.bmp') {
+# 			$handler = new Wx::BMPHandler();
+# 		} elsif ($ext eq '.xpm') {
+# 			$handler = new Wx::XPMHandler();
+# 		}
+# 
+# 		return unless $handler;
+# 		Wx::Image::AddHandler($handler);
+# 		$addedHandlers{$ext} = 1;
+# 	}
 
 	my $image = Wx::Image->newNameType($file, wxBITMAP_TYPE_ANY);
 	
@@ -460,7 +495,46 @@ sub _drawText {
 	
 	my ($w, $h, $descent, $externalLeading) = $dc->GetTextExtent ($text);
 	
+	my $brush = $dc->GetBrush;
+	$dc->SetBrush ($self->{brush}{text});
 	$dc->DrawText ($text, $x - $w / 2, $y);
+	$dc->SetBrush ($brush);
+}
+
+sub _drawGauge {
+	my ($self, $dc, $value, $x, $y) = @_;
+	
+	my ($pen, $brush) = ($dc->GetPen, $dc->GetBrush);
+	
+	my ($cx, $cy, $cw, $ch) = (
+		$x - $self->{size}{gauge}{w},
+		$y - $self->{size}{gauge}{h} * 3,
+		2 * $self->{size}{gauge}{w},
+		2 * $self->{size}{gauge}{h}
+	);
+	
+	$dc->SetPen (wxBLACK_PEN);
+	$dc->SetBrush ($self->{brush}{gaugeBg});
+	$dc->DrawRectangle ($cx, $cy, $cw, $ch);
+	$dc->SetPen (wxTRANSPARENT_PEN);
+	$dc->SetBrush ($self->{brush}{gaugeFg});
+	$dc->DrawRectangle ($cx + 1, $cy + 1, ($cw - 2) * $value, $ch - 2);
+	
+	$dc->SetPen ($pen); $dc->SetBrush ($brush);
+}
+
+sub _drawLook {
+	my ($self, $dc, $look, $x, $y, $r) = @_;
+	
+	return unless defined $look->{body};
+	
+	my $ar = PI / 4 * ($look->{body} + 2);
+	
+	$dc->DrawPolygon ([
+		[$x - $r * (sin $ar), $y - $r * cos $ar],
+		[$x + $r * (sin $ar), $y + $r * cos $ar],
+		[$x + 2 * $r * (cos $ar), $y - 2 * $r * sin $ar],
+	], 0, 0, wxODDEVEN_RULE);
 }
 
 sub _posXYToView {
@@ -573,40 +647,83 @@ sub _onPaint {
 			$dc->SetPen(wxBLACK_PEN);
 		}
 		
-		$dc->SetBrush($self->{portalBrush});
+		$dc->SetBrush($self->{brush}{portal});
 		foreach my $pos (@{$self->{portals}->{$self->{field}{name}}}) {
 			($x, $y) = $self->_posXYToView($pos->{x}, $pos->{y});
 			$dc->DrawEllipse($x - $portal_r, $y - $portal_r, $portal_d, $portal_d);
 		}
 	}
 	
-	$dc->SetTextForeground (new Wx::Colour (0, 127, 0));
+# 			my $admin_string = ($char->{'party'}{'users'}{$partyUsersID[$i]}{'admin'}) ? "(A)" : "";
+# 			if ($partyUsersID[$i] eq $accountID) {
+# 				# Translation Comment: Is the party user on list online?
+# #				$online_string = T("Yes");
+# 				($map_string) = $field{name};
+# 				$coord_string = $char->{'pos'}{'x'}. ", ".$char->{'pos'}{'y'};
+# 				$hp_string = $char->{'hp'}."/".$char->{'hp_max'}
+# 						." (".int($char->{'hp'}/$char->{'hp_max'} * 100)
+# 						."%)";
+# 			} else {
+# #				$online_string = ($char->{'party'}{'users'}{$partyUsersID[$i]}{'online'}) ? T("Yes") : T("No");
+# 				($map_string) = $char->{'party'}{'users'}{$partyUsersID[$i]}{'map'} =~ /([\s\S]*)\.gat/;
+# 		my $hpper = "".int($char->{'party'}{'users'}{$partyUsersID[$i]}{'hp'}/$char->{'party'}{'users'}{$partyUsersID[$i]}{'hp_max'} * 100).""  if ($char->{'party'}{'users'}{$partyUsersID[$i]}{'hp_max'} && $char->{'party'}{'users'}{$partyUsersID[$i]}{'online'});
+# }
+# 
+# 				$hp_string = $char->{'party'}{'users'}{$partyUsersID[$i]}{'hp'}."/".$char->{'party'}{'users'}{$partyUsersID[$i]}{'hp_max'}
+# 					." (".int($char->{'party'}{'users'}{$partyUsersID[$i]}{'hp'}/$char->{'party'}{'users'}{$partyUsersID[$i]}{'hp_max'} * 100)
+# 					."%)" if ($char->{'party'}{'users'}{$partyUsersID[$i]}{'hp_max'} && $char->{'party'}{'users'}{$partyUsersID[$i]}{'online'});
+
+	
+	# players
+	
+	$dc->SetTextForeground ($self->{textColor}{player});
 	if ($self->{players} && @{$self->{players}}) {
-		$dc->SetBrush($self->{playerBrush});
+		$dc->SetBrush($self->{brush}{player});
 		foreach my $pos (@{$self->{players}}) {
 			($x, $y) = $self->_posXYToView($pos->{pos_to}{x}, $pos->{pos_to}{y});
+			$self->_drawLook ($dc, $pos->{look}, $x, $y, $actor_r);
 			$dc->DrawEllipse($x - $actor_r, $y - $actor_r, $actor_d, $actor_d);
-			if ($self->{zoom} >= ($config{wx_map_namesDetail} || 8)) {
+			if ($self->{zoom} >= ($config{wx_map_playerNameZoom} || 8)) {
 				$self->_drawText ($dc, $pos->name, $x, $y);
 			}
 		}
 	}
-
-	$dc->SetTextForeground (new Wx::Colour (127, 0, 0));
+	
+	# party
+	
+	if ($self->{party} && @{$self->{party}}) {
+		$dc->SetBrush($self->{brush}{party});
+		$dc->SetTextForeground ($self->{textColor}{party});
+		foreach my $pos (@{$self->{party}}) {
+			next unless $pos->{ID} ne $accountID && $pos->{map} eq $self->{field}{name}.'.gat' && $pos->{online} && $pos->{pos}{x};
+			
+			($x, $y) = $self->_posXYToView($pos->{pos}{x}, $pos->{pos}{y});
+			$dc->DrawEllipse($x - $actor_r, $y - $actor_r, $actor_d, $actor_d);
+			if ($self->{zoom} >= ($config{wx_map_partyNameZoom} || 1)) {
+				$self->_drawText ($dc, $pos->{name}, $x, $y);
+				$self->_drawGauge ($dc, $pos->{hp} / $pos->{hp_max}, $x, $y) if $pos->{hp_max};
+			}
+		}
+	}
+	
+	# monsters
+	
+	$dc->SetTextForeground ($self->{textColor}{monster});
 	if ($self->{monsters} && @{$self->{monsters}}) {
-		$dc->SetBrush($self->{monsterBrush});
+		$dc->SetBrush($self->{brush}{monster});
 		foreach my $pos (@{$self->{monsters}}) {
 			($x, $y) = $self->_posXYToView($pos->{pos_to}{x}, $pos->{pos_to}{y});
+			$self->_drawLook ($dc, $pos->{look}, $x, $y, $actor_r);
 			$dc->DrawEllipse($x - $actor_r, $y - $actor_r, $actor_d, $actor_d);
 			if ($self->{zoom} >= ($config{wx_map_namesDetail} || 8)) {
 				$self->_drawText ($dc, $pos->name, $x, $y);
 			}
 		}
 	}
-
-	$dc->SetTextForeground (new Wx::Colour (127, 0, 127));
+	
+	$dc->SetTextForeground ($self->{textColor}{npc});
 	if ($self->{npcs} && @{$self->{npcs}}) {
-		$dc->SetBrush($self->{npcBrush});
+		$dc->SetBrush($self->{brush}{npc});
 		foreach my $pos (@{$self->{npcs}}) {
 			($x, $y) = $self->_posXYToView($pos->{pos}{x}, $pos->{pos}{y});
 			$dc->DrawEllipse($x - $actor_r, $y - $actor_r, $actor_d, $actor_d);
@@ -616,9 +733,9 @@ sub _onPaint {
 			}
 		}
 	}
-
+	
 	if ($self->{slaves} && @{$self->{slaves}}) {
-		$dc->SetBrush($self->{slaveBrush});
+		$dc->SetBrush($self->{brush}{slave});
 		foreach my $pos (@{$self->{slaves}}) {
 			($x, $y) = $self->_posXYToView($pos->{pos_to}{x}, $pos->{pos_to}{y});
 			$dc->DrawEllipse($x - $actor_r, $y - $actor_r, $actor_d, $actor_d);
@@ -627,9 +744,10 @@ sub _onPaint {
 	
 	if ($self->{dest}) {
 		$dc->SetPen(wxWHITE_PEN);
-		$dc->SetBrush($self->{destBrush});
+		$dc->SetBrush($self->{brush}{dest});
 		($x, $y) = $self->_posXYToView($self->{dest}{x}, $self->{dest}{y});
 		$dc->DrawEllipse($x - $portal_r, $y - $portal_r, $portal_d, $portal_d);
+		$dc->SetPen(wxBLACK_PEN);
 	}
 	
 	if (!$self->{selfDot}) {
@@ -645,6 +763,7 @@ sub _onPaint {
 			1);
 	} else {
 		$dc->SetBrush(wxCYAN_BRUSH);
+		$self->_drawLook ($dc, $self->{field}{look}, $x, $y, 5);
 		$dc->DrawEllipse($x - 5, $y - 5, 10, 10);
 	}
 }

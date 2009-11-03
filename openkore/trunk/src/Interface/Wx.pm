@@ -73,31 +73,49 @@ sub OnInit {
 	
 	my $onChat = sub { $self->onChatAdd(@_); };
 	$self->{hooks} = Plugins::addHooks(
-		['loadfiles',                sub { $self->onLoadFiles(@_); }],
-		['postloadfiles',            sub { $self->onLoadFiles(@_); }],
-		['parseMsg/addPrivMsgUser',  sub { $self->onAddPrivMsgUser(@_); }],
-		['initialized',              sub { $self->onInitialized(@_); }],
-		['ChatQueue::add',           $onChat],
-		['packet_selfChat',          $onChat],
-		['packet_privMsg',           $onChat],
-		['packet_sentPM',            $onChat],
-		['mainLoop_pre',             sub { $self->onUpdateUI(); }],
-		['captcha_file',             sub { $self->onCaptcha(@_); }],
-		['packet/minimap_indicator', sub { $self->onMapIndicator (@_); }],		
-		['packet/npc_image',         sub { $self->onNpcImage (@_); }],
-		['npc_talk',                 sub { $self->onNpcTalk (@_); }],
-		['packet/npc_talk_continue', sub { $self->onNpcContinue (@_); }],
-		['npc_talk_responses',       sub { $self->onNpcResponses (@_); }],
-		['packet/npc_talk_number',   sub { $self->onNpcNumber (@_); }],
-		['packet/npc_talk_text',     sub { $self->onNpcText (@_); }],
-		['npc_talk_done',            sub { $self->onNpcClose (@_); }],
+		['loadfiles',                  sub { $self->onLoadFiles(@_); }],
+		['postloadfiles',              sub { $self->onLoadFiles(@_); }],
+		['parseMsg/addPrivMsgUser',    sub { $self->onAddPrivMsgUser(@_); }],
+		['initialized',                sub { $self->onInitialized(@_); }],
+		['ChatQueue::add',             $onChat],
+		['packet_selfChat',            $onChat],
+		['packet_privMsg',             $onChat],
+		['packet_sentPM',              $onChat],
+		['mainLoop_pre',               sub { $self->onUpdateUI(); }],
+		['captcha_file',               sub { $self->onCaptcha(@_); }],
+		['packet/minimap_indicator',   sub { $self->onMapIndicator (@_); }],
+		
+		# stat changes
+		['packet/hp_sp_changed',       sub { $self->onSelfStatUpdate (@_); }],
+		['packet/stat_info',           sub { $self->onSelfStatUpdate (@_); }],
+		['packet/stat_info2',          sub { $self->onSelfStatUpdate (@_); }],
+		['packet/stats_points_needed', sub { $self->onSelfStatUpdate (@_); }],
+		
+		# status changes
+		['packet/map_changed',         sub { $self->onSelfStatUpdate (@_); }],
+		['changed_status',             sub { $self->onSelfStatUpdate (@_); }],
+		
+		# npc
+		['packet/npc_image',           sub { $self->onNpcImage (@_); }],
+		['npc_talk',                   sub { $self->onNpcTalk (@_); }],
+		['packet/npc_talk_continue',   sub { $self->onNpcContinue (@_); }],
+		['npc_talk_responses',         sub { $self->onNpcResponses (@_); }],
+		['packet/npc_talk_number',     sub { $self->onNpcNumber (@_); }],
+		['packet/npc_talk_text',       sub { $self->onNpcText (@_); }],
+		['npc_talk_done',              sub { $self->onNpcClose (@_); }],
 	);
 
 	$self->{history} = [];
 	$self->{historyIndex} = -1;
 
 	$self->{frame}->Update;
-
+	
+	Wx::Image::AddHandler (new Wx::XPMHandler);
+	Wx::Image::AddHandler (new Wx::BMPHandler);
+	Wx::Image::AddHandler (new Wx::PNGHandler);
+	Wx::Image::AddHandler (new Wx::GIFHandler);
+	Wx::Image::AddHandler (new Wx::JPEGHandler);
+	
 	return 1;
 }
 
@@ -421,8 +439,8 @@ sub createMenuBar {
 		'&Info Bar',		\&onInfoBarToggle, 'Show or hide the information bar.');
 	$self->{chatLogToggle} = $self->addCheckMenu($viewMenu,
 		'Chat &Log',		\&onChatLogToggle, 'Show or hide the chat log.');
-	#$self->addMenu ($viewMenu, '&Status	Alt+A', \&openStats, 'Show status');
-	$self->addMenu ($viewMenu, '&Emotions	Alt+L', \&openEmotions, 'Show emotions');
+	$self->addMenu ($viewMenu, '&Status	Alt+A', sub { $self->openStats (1) }, 'Show status');
+	$self->addMenu ($viewMenu, '&Emotions	Alt+L', sub { $self->openEmotions (1) }, 'Show emotions');
 	$viewMenu->AppendSeparator;
 	$self->addMenu($viewMenu,
 		'&Font...',		\&onFontChange, 'Change console font');
@@ -740,7 +758,7 @@ sub updateMapViewer {
 	my $myPos;
 	$myPos = calcPosition($char);
 
-	$map->set($field->name(), $myPos->{x}, $myPos->{y}, $field);
+	$map->set($field->name(), $myPos->{x}, $myPos->{y}, $field, $char->{look});
 	my $i = AI::findAction("route");
 	my $args;
 	if (defined $i && ($args = AI::args($i)) && $args->{dest} && $args->{dest}{pos}) {
@@ -748,16 +766,13 @@ sub updateMapViewer {
 	} else {
 		$map->setDest;
 	}
-
-	my @players = values %players;
-	$map->setPlayers(\@players);
-	my @monsters = values %monsters;
-	$map->setMonsters(\@monsters);
-	my @npcs = values %npcs;
-	$map->setNPCs(\@npcs);
-	my @slaves = values %slaves;
-	$map->setSlaves(\@slaves);
-
+	
+	$map->setPlayers ([values %players]);
+	$map->setParty ([values %{$char->{party}{users}}]) if $char->{party} && $char->{party}{users};
+	$map->setMonsters ([values %monsters]);
+	$map->setNPCs ([values %npcs]);
+	$map->setSlaves ([values %slaves]);
+	
 	$map->update;
 	$self->{mapViewTimeout}{time} = time;
 }
@@ -1008,12 +1023,12 @@ sub onChatLogToggle {
 }
 
 sub openWindow {
-	my ($self, $title, $class) = @_;
+	my ($self, $title, $class, $create) = @_;
 	my ($page, $window);
 	
 	if ($page = $self->{notebook}->hasPage ($title)) {
-		$self->{notebook}->switchPage ($title);
-	} else {
+		$window = $page->{child};
+	} elsif ($create) {
 		$page = $self->{notebook}->newPage (1, $title, 0);
 		eval "require $class";
 		if ($@) {
@@ -1023,25 +1038,23 @@ sub openWindow {
 			return;
 		}
 		$page->set ($window = $class->new ($page, wxID_ANY));
-		$self->{notebook}->switchPage ($title);
 	}
+	
+	$self->{notebook}->switchPage ($title) if $page && $create;
 	
 	return ($page, $window);
 }
 
 sub openStats {
-	my ($self) = @_;
-	my ($page, $window) = $self->openWindow ('Status', 'Interface::Wx::StatView::You');
+	my ($self, $create) = @_;
+	my ($page, $window) = $self->openWindow ('Status', 'Interface::Wx::StatView::You', $create);
 	
-	if ($window) {
-	}
-	
-	return $page;
+	return ($page, $window);
 }
 
 sub openEmotions {
-	my ($self) = @_;
-	my ($page, $window) = $self->openWindow ('Emotions', 'Interface::Wx::EmotionList');
+	my ($self, $create) = @_;
+	my ($page, $window) = $self->openWindow ('Emotions', 'Interface::Wx::EmotionList', $create);
 	
 	if ($window) {
 		$window->onEmotion (sub {
@@ -1051,13 +1064,13 @@ sub openEmotions {
 		$window->setEmotions (\%emotions_lut);
 	}
 	
-	return $page;
+	return ($page, $window);
 }
 
 sub openNpcTalk {
-	my ($self) = @_;
+	my ($self, $create) = @_;
 	return unless $config{wx_npcTalk};
-	my ($page, $window) = $self->openWindow ('NPC Talk', 'Interface::Wx::NpcTalk');
+	my ($page, $window) = $self->openWindow ('NPC Talk', 'Interface::Wx::NpcTalk', $create);
 	
 	if ($window) {
 		$window->onContinue  (sub { Commands::run ('talk cont'); });
@@ -1067,7 +1080,7 @@ sub openNpcTalk {
 		$window->onCancel    (sub { Commands::run ('talk no'); });
 	}
 	
-	return $page;
+	return ($page, $window);
 }
 
 sub onManual {
@@ -1254,12 +1267,23 @@ sub onMapIndicator {
 	}
 }
 
+### Stat View ###
+
+sub onSelfStatUpdate {
+	my ($self, $hook, $args) = @_;
+	
+	return if $hook eq 'changed_status' && $args->{actor}{ID} ne $accountID;
+	
+	my (undef, $window) = $self->openStats;
+	$window->update if $window;
+}
+
 ### NPC Talk ###
 
 sub onNpcImage {
 	my ($self, undef, $args) = @_;
 	
-	if (my $npcTalk = $self->openNpcTalk) {
+	if (my ($npcTalk) = $self->openNpcTalk (1)) {
 		$npcTalk->{child}->npcImage ($args->{type} == 2, bytesToString ($args->{npc_image}));
 	}
 }
@@ -1267,7 +1291,7 @@ sub onNpcImage {
 sub onNpcTalk {
 	my ($self, undef, $args) = @_;
 	
-	if (my $npcTalk = $self->openNpcTalk) {
+	if (my ($npcTalk) = $self->openNpcTalk (1)) {
 		$npcTalk->{child}->npcTalk ($args->{ID}, $args->{name}, $args->{msg});
 	}
 }
@@ -1275,7 +1299,7 @@ sub onNpcTalk {
 sub onNpcContinue {
 	my ($self, undef, $args) = @_;
 	
-	if (my $npcTalk = $self->openNpcTalk) {
+	if (my ($npcTalk) = $self->openNpcTalk (1)) {
 		$npcTalk->{child}->npcContinue unless $config{autoTalkCont};
 	}
 }
@@ -1283,7 +1307,7 @@ sub onNpcContinue {
 sub onNpcResponses {
 	my ($self, undef, $args) = @_;
 	
-	if (my $npcTalk = $self->openNpcTalk) {
+	if (my ($npcTalk) = $self->openNpcTalk (1)) {
 		$npcTalk->{child}->npcResponses ($args->{responses});
 	}
 }
@@ -1291,7 +1315,7 @@ sub onNpcResponses {
 sub onNpcNumber {
 	my ($self) = @_;
 	
-	if (my $npcTalk = $self->openNpcTalk) {
+	if (my ($npcTalk) = $self->openNpcTalk (1)) {
 		$npcTalk->{child}->npcNumber;
 	}
 }
@@ -1299,7 +1323,7 @@ sub onNpcNumber {
 sub onNpcText {
 	my ($self) = @_;
 	
-	if (my $npcTalk = $self->openNpcTalk) {
+	if (my ($npcTalk) = $self->openNpcTalk (1)) {
 		$npcTalk->{child}->npcText;
 	}
 }
@@ -1307,7 +1331,7 @@ sub onNpcText {
 sub onNpcClose {
 	my ($self) = @_;
 	
-	if (my $npcTalk = $self->openNpcTalk) {
+	if (my ($npcTalk) = $self->openNpcTalk (1)) {
 		$npcTalk->{child}->npcClose;
 	}
 }
