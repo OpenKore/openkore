@@ -139,6 +139,18 @@ sub set {
 				} else {
 					$self->{display}{$key}{value}->SetForegroundColour (new Wx::Colour (0, 127, 50));
 				}
+			} elsif ($self->{stats}{$key}{color} eq 'hunger') {
+				if ($percent > 90) {
+					$self->{display}{$key}{value}->SetForegroundColour (new Wx::Colour (255, 0, 50));
+				} elsif ($percent > 75) {
+					$self->{display}{$key}{value}->SetForegroundColour (new Wx::Colour (255, 0, 50));
+				} elsif ($percent > 25) {
+					$self->{display}{$key}{value}->SetForegroundColour (new Wx::Colour (127, 63, 50));
+				} elsif ($percent > 10) {
+					$self->{display}{$key}{value}->SetForegroundColour (new Wx::Colour (0, 127, 50));
+				} else {
+					$self->{display}{$key}{value}->SetForegroundColour (new Wx::Colour (255, 0, 50));
+				}
 			}
 		}
 	} else {
@@ -174,8 +186,6 @@ sub setImage {
 	} else {
 		$self->{image}->Show (0);
 	}
-	
-	$self->GetSizer->Layout;
 }
 
 sub _onIncrement {}

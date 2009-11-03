@@ -53,8 +53,8 @@ sub update {
 	$self->Freeze;
 	
 	$self->set ('name', $char->name);
-	$self->set ('level', $char->{'lv'});
-	$self->set ('jobLevel', $char->{'lv_job'});
+	$self->set ('level', $char->{lv});
+	$self->set ('jobLevel', $char->{lv_job});
 	$self->set ('type', $jobs_lut{$char->{jobID}} // $char->{jobID});
 	$self->set ('sex', $sex_lut{$char->{sex}} // $char->{sex});
 	$self->set ('hp', [$char->{hp}, $char->{hp_max}]) if $char->{hp_max};
@@ -82,6 +82,8 @@ sub update {
 	$self->setStatus (defined $char->{statuses} && %{$char->{statuses}} ? join ', ', keys %{$char->{statuses}} : undef);
 	
 	$self->setImage ('bitmaps/heads/' . $char->{sex} . '/' . $char->{hair_style} . '.gif', {x => 1, y => $char->{hair_color}, w => 8, h => 9});
+	
+	$self->GetSizer->Layout;
 	
 	$self->Thaw;
 }

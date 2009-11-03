@@ -95,6 +95,9 @@ sub OnInit {
 		['packet/map_changed',         sub { $self->onSelfStatUpdate (@_); }],
 		['changed_status',             sub { $self->onSelfStatUpdate (@_); }],
 		
+		# slave stat changes
+		['packet/homunculus_stats',    sub { $self->onSlaveStatUpdate (@_); }],
+		
 		# npc
 		['packet/npc_image',           sub { $self->onNpcImage (@_); }],
 		['npc_talk',                   sub { $self->onNpcTalk (@_); }],
@@ -440,6 +443,7 @@ sub createMenuBar {
 	$self->{chatLogToggle} = $self->addCheckMenu($viewMenu,
 		'Chat &Log',		\&onChatLogToggle, 'Show or hide the chat log.');
 	$self->addMenu ($viewMenu, '&Status	Alt+A', sub { $self->openStats (1) }, 'Show status');
+	$self->addMenu ($viewMenu, '&Homunculus	Alt+R', sub { $self->openHomunculus (1) }, 'Show homunculus status');
 	$self->addMenu ($viewMenu, '&Emotions	Alt+L', sub { $self->openEmotions (1) }, 'Show emotions');
 	$viewMenu->AppendSeparator;
 	$self->addMenu($viewMenu,
@@ -1052,6 +1056,13 @@ sub openStats {
 	return ($page, $window);
 }
 
+sub openHomunculus {
+	my ($self, $create) = @_;
+	my ($page, $window) = $self->openWindow ('Homunculus', 'Interface::Wx::StatView::Homunculus', $create);
+	
+	return ($page, $window);
+}
+
 sub openEmotions {
 	my ($self, $create) = @_;
 	my ($page, $window) = $self->openWindow ('Emotions', 'Interface::Wx::EmotionList', $create);
@@ -1275,6 +1286,17 @@ sub onSelfStatUpdate {
 	return if $hook eq 'changed_status' && $args->{actor}{ID} ne $accountID;
 	
 	my (undef, $window) = $self->openStats;
+	$window->update if $window;
+}
+
+sub onSlaveStatUpdate {
+	my ($self, $hook, $args) = @_;
+	my $window;
+	
+	if ($args->{switch} eq '022E') {
+		(undef, $window) = $self->openHomunculus;
+	}
+	
 	$window->update if $window;
 }
 
