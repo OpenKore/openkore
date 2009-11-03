@@ -15,8 +15,6 @@ sub new {
 	
 	$self->{illustDir} = 'bitmaps/illust/';
 	
-	Wx::Image::AddHandler (new Wx::PNGHandler);
-	
 	my $sizer = new Wx::BoxSizer (wxVERTICAL);
 	$self->SetSizer ($sizer);
 	
@@ -64,7 +62,7 @@ sub new {
 	$self->{imageView}->Show (0);
 	$vsizer2->Add ($self->{imageView}, 0, wxGROW | wxALL, 4);
 	
-	$vsizer2->Add (new Wx::Window ($self, wxID_ANY), 1);
+	$vsizer2->AddStretchSpacer;
 	
 	my $hsizer = new Wx::BoxSizer (wxHORIZONTAL);
 	$sizer->Add ($hsizer, 0, wxGROW | wxALL, 4);
@@ -81,7 +79,7 @@ sub new {
 	EVT_BUTTON ($self, $self->{autoButton}->GetId, sub { $self->_onAuto; });
 	$hsizer->Add ($self->{autoButton}, 0, wxRIGHT, 4);
 	
-	$hsizer->Add (new Wx::Window ($self, wxID_ANY), 1);
+	$hsizer->AddStretchSpacer;
 	
 	$self->{cancelButton} = new Wx::Button ($self, wxID_ANY, '&Cancel');
 	$self->{cancelButton}->SetToolTip ('Cancel talking');

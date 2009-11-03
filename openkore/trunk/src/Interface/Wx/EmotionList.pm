@@ -16,13 +16,12 @@ sub new {
 	my $self = $class->SUPER::new ($parent, $id);
 	
 	$self->{bitmapDir} = 'bitmaps/emotions/';
-	Wx::Image::AddHandler (new Wx::GIFHandler);
 	
 	EVT_SIZE ($self, \&_onSize);
 	
 	$self->SetSizer (my $sizer = new Wx::BoxSizer (wxVERTICAL));
 	$sizer->Add ($self->{grid} = new Wx::GridSizer (0, 0, BUTTON_BORDER, BUTTON_BORDER), 0);
-	$sizer->Add (new Wx::Window ($self, wxID_ANY), 1);
+	$sizer->AddStretchSpacer;
 	
 	return $self;
 }
