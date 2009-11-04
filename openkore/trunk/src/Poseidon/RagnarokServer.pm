@@ -13,6 +13,11 @@
 # periodically sends a GameGuard query to the RO client,
 # and saves the RO client's response.
 ###########################################################
+
+# TODO:
+# 1) make use of unpack strings to pack our packets depending on serverType
+# 2) make plugin like connection algorithms for each serverType or 1 main algo on which serverTypes have hooks
+
 package Poseidon::RagnarokServer;
 
 use strict;
@@ -143,6 +148,8 @@ sub onClientData {
 
 	my $switch = uc(unpack("H2", substr($msg, 1, 1))) . uc(unpack("H2", substr($msg, 0, 1)));
 	my $packed_switch = quotemeta substr($msg, 0, 2);
+	
+	#print $switch . "\n";
 
 	# Note:
 	# The switch packets are pRO specific and assumes the use of secureLogin 1. It may or may not work with other
@@ -175,7 +182,7 @@ sub onClientData {
 			$clientdata{$index}{secureLogin_requestCode} = getHex($code);
 		}
 
-	} elsif (($switch eq '01DD') || ($switch eq '01FA') || ($switch eq '0064') || ($switch eq '0060') || ($switch eq '0277')) { # 0064 packet thanks to abt123
+	} elsif (($switch eq '01DD') || ($switch eq '01FA') || ($switch eq '0064') || ($switch eq '0060') || ($switch eq '0277') || ($switch eq '02B0')) { # 0064 packet thanks to abt123
 
 #		my $data = pack("C*", 0xAD, 0x02, 0x00, 0x00, 0x1E, 0x0A, 0x00, 0x00);
 #		$client->send($data);
@@ -222,6 +229,11 @@ sub onClientData {
 			undef $clientdata{$index}{masterLogin_packet};
 		}
 
+		if($switch eq '02B0') {	# kRO uses 02B2 as masterLogin packet when we have <langtype>0</langtype> in the clientinfo.xml
+								# if other servers do use this packet too that will be a problem.
+			$clientdata{$index}{kRO} = 1;
+		}
+
 	} elsif (($switch eq '0065') || ($switch eq '0275') || ($msg =~ /^$packed_switch$accountID$sessionID$sessionID2\x0\x0.$/)) { # client sends server choice packet
 
 		my $exp = pack("V", 0);
@@ -244,25 +256,33 @@ sub onClientData {
 		my $charName2 = pack("a24", "Poseidon Dev");
 		my ($str, $agi, $vit, $int, $dex, $luk) = (99, 99, 99, 99, 99, 99);
 		my $charStats = pack("C*", $str, $agi, $vit, $int, $dex, $luk);
-		my $data = $accountID .
-			pack("v2 x20", 0x6b, 0xEC) .
-			$charID . $exp . $zeny . $exp_job . $lvl_job .
-			pack("x24") . $hp . $hp_max . $sp . $sp_max .
-			pack("x2") . $job_id1 . $hairStyle .
-			pack("x2") . $level .
-			#pack("x2") . $head_low . pack("x2") . $head_top . $head_mid . $hairColor .
-			pack("C*", 0x01, 0x00, 0x38, 0x00, 0x00, 0x00, 0xA0, 0x00, 0x9E, 0x00, 0x06, 0x00) .
-			#pack("C*", 0x01, 0x00, 0x38, 0x00, 0x00, 0x00, 0x46, 0x00, 0x03, 0x00, 0x06, 0x00) .
-			pack("x2") . $charName1 . $charStats . pack("v1", 0) .
-			$charID . $exp . $zeny . $exp_job . $lvl_job .
-			pack("x24") . $hp . $hp_max . $sp . $sp_max .
-			pack("x2") . $job_id2 . $hairStyle .
-			pack("x2") . $level .
-			#pack("x2") . $head_low . pack("x2") . $head_top . $head_mid . $hairColor .
-			pack("C*", 0x01, 0x00, 0x39, 0x00, 0x00, 0x00, 0x9F, 0x00, 0x98, 0x00, 0x06, 0x00) .
-			pack("x2") . $charName2 . $charStats . pack("v1", 1);
-		# NOTE: ideally, all character slots are filled with the same character, for idiot-proofing
-		# NOTE: also, the character's appearance may be made to be modifiable
+		my $data;
+
+		if($clientdata{$index}{kRO}) {	#Packet 006B of kRO differs from that of other servers
+			$client->send($accountID);
+			$data = pack ("H272", "6b0088000100000064000000007fffffbc000000000000004cf1d00080020000000000002300000001000000000000000000000000000000000000000000000002004c0000004c00000016001600960006001700000006000000000000000000000001000000b1e2beefbcd3b1d7c0dabdc42100000000000000000000000c0901010c0100000100");
+		} else {
+			$data = $accountID .
+				pack("v2 x20", 0x6b, 0xEC) .
+				$charID . $exp . $zeny . $exp_job . $lvl_job .
+				pack("x24") . $hp . $hp_max . $sp . $sp_max .
+				pack("x2") . $job_id1 . $hairStyle .
+				pack("x2") . $level .
+				#pack("x2") . $head_low . pack("x2") . $head_top . $head_mid . $hairColor .
+				pack("C*", 0x01, 0x00, 0x38, 0x00, 0x00, 0x00, 0xA0, 0x00, 0x9E, 0x00, 0x06, 0x00) .
+				#pack("C*", 0x01, 0x00, 0x38, 0x00, 0x00, 0x00, 0x46, 0x00, 0x03, 0x00, 0x06, 0x00) .
+				pack("x2") . $charName1 . $charStats . pack("v1", 0) .
+				$charID . $exp . $zeny . $exp_job . $lvl_job .
+				pack("x24") . $hp . $hp_max . $sp . $sp_max .
+				pack("x2") . $job_id2 . $hairStyle .
+				pack("x2") . $level .
+				#pack("x2") . $head_low . pack("x2") . $head_top . $head_mid . $hairColor .
+				pack("C*", 0x01, 0x00, 0x39, 0x00, 0x00, 0x00, 0x9F, 0x00, 0x98, 0x00, 0x06, 0x00) .
+				pack("x2") . $charName2 . $charStats . pack("v1", 1);
+				# NOTE: ideally, all character slots are filled with the same character, for idiot-proofing
+				# NOTE: also, the character's appearance may be made to be modifiable
+		}
+
 		$client->send($data);
 
 		# save servers.txt info
@@ -413,6 +433,18 @@ sub onClientData {
 		mapLogin($self, $client, $msg, $index);
 		# save servers.txt info
 		$clientdata{$index}{serverType} = "1 or 2";
+
+	} elsif ($switch eq '0436' &&
+		(length($msg) == 19) &&
+		(substr($msg, 2, 4) eq $accountID) &&
+		(substr($msg, 6, 4) eq $charID) &&
+		(substr($msg, 10, 4) eq $sessionID)
+		) { # client sends the maplogin packet
+
+		$client->send(pack("v a4", 0x0283, $accountID));
+		# mapLogin packet
+		$client->send(pack("H536", "eb0206ad09222b56c0050500000f012c010100000000000900000001004e565f42415349430000000000000000080000000f0000000030000000000000000000010054465f444f55424c4500000000000000090000000f0000000131000000000000000000010054465f4d495353000000000000000000070000000f0000000132000100000000000a00010054465f535445414c0000000000000000080000000f0000000133000400000000000a00010054465f484944494e4700000000000000090000000f0000000034000100000000000c00020054465f504f49534f4e00000000000000090000000f0000000135001000000000000a00090054465f4445544f5849465900000000000b0000000f000000008e00040000000100030001004e565f464952535441494400000000000b0000000f00000000d701df145a000200000000d701df145a0003000000003a010100d701df145a0002f13200003a010100b0001900d06b0000b0001800b2110000b102080000000000b202080000000000b0002a003f000000b0002b0000000000b0002e002d000000b000300000000000d9070039020000000000000000000000000000000000000000000000000000233000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"));
+		$client->{connectedToMap} = 1;
 
 	} elsif ($msg =~ /^$packed_switch/
 		&& $msg =~ /$accountID/
