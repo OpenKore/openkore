@@ -31,6 +31,7 @@ sub new {
 	
 	$hsizer->Add ($self->{sizer}{stat} = new Wx::FlexGridSizer (0, 9, BORDER, BORDER), 1, wxGROW);
 	$hsizer->Add ($self->{sizer}{substat} = new Wx::FlexGridSizer (0, 9, BORDER, BORDER), 1, wxGROW | wxLEFT, BORDER);
+	$hsizer->Add ($self->{sizer}{control} = new Wx::FlexGridSizer (0, 1, BORDER, BORDER), 0, wxGROW | wxLEFT, BORDER);
 	$hsizer->Add (my $vsizer2 = new Wx::BoxSizer (wxVERTICAL), 0, wxGROW | wxLEFT, BORDER);
 	
 	$vsizer2->Add ($self->{image} = new Wx::StaticBitmap ($self, wxID_ANY, new Wx::Bitmap (0, 0, -1)));
@@ -66,8 +67,23 @@ sub new {
 			$sizer2->Add ($self->{display}{$stat->{key}}{label} = new Wx::StaticText (
 				$self, wxID_ANY, ''
 			), 0, wxGROW | wxTOP, BORDER);
+		} elsif ($stat->{type} eq 'control') {
+			$label->Destroy;
+			$sizer->Add ($self->{display}{$stat->{key}}{value} = new Wx::Button ($self, wxID_ANY, $stat->{title}));
+			$self->{display}{$stat->{key}}{value}->Enable (0);
+			{
+				my $key = $stat->{key};
+				EVT_BUTTON ($self, $self->{display}{$stat->{key}}{value}->GetId, sub {
+					$self->_onControl ($key);
+					$Globals::interface->{inputBox}->SetFocus;
+				});
+			}
 		} else {
-			$sizer->Add ($label) if $stat->{title};
+			if ($stat->{title}) {
+				$sizer->Add ($label);
+			} else {
+				$label->Destroy;
+			}
 			$sizer->Add ($self->{display}{$stat->{key}}{value} = new Wx::StaticText ($self, wxID_ANY, ''));
 		}
 		
@@ -96,12 +112,15 @@ sub new {
 				$sizer->Add (new Wx::StaticText ($self, wxID_ANY, '#'));
 				$sizer->Add ($self->{display}{$stat->{key}}{points} = new Wx::StaticText ($self, wxID_ANY, ''));
 				$sizer->Add ($self->{display}{$stat->{key}}{increment} = new Wx::Button (
-					$self, wxID_ANY, '++', wxDefaultPosition, [0, $label->GetBestSize->GetHeight + 2], wxBU_EXACTFIT
+					$self, wxID_ANY, '+', wxDefaultPosition, [-1, $label->GetBestSize->GetHeight + 2], wxBU_EXACTFIT
 				));
 				$self->{display}{$stat->{key}}{increment}->Enable (0);
 				{
 					my $key = $stat->{key};
-					EVT_BUTTON ($self, $self->{display}{$stat->{key}}{increment}->GetId, sub { $self->_onIncrement ($key); });
+					EVT_BUTTON ($self, $self->{display}{$stat->{key}}{increment}->GetId, sub {
+						$self->_onIncrement ($key);
+						$Globals::interface->{inputBox}->SetFocus;
+					});
 				}
 			} else {
 				$sizer->AddSpacer (0);
@@ -122,7 +141,7 @@ sub set {
 	
 	return unless $self->{display}{$key};
 	
-	if ($self->{display}{$key}{value}->isa ('Wx::Gauge')) {
+	if ($self->{stats}{$key}{type} eq 'gauge') {
 		my ($current, $max) = @$value;
 		my $percent = 100 * $current / $max;
 		$self->{display}{$key}{value}->SetValue ($percent);
@@ -153,6 +172,8 @@ sub set {
 				}
 			}
 		}
+	} elsif ($self->{stats}{$key}{type} eq 'control') {
+		$self->{display}{$key}{value}->Enable ($value ? 1 : 0);
 	} else {
 		$self->{display}{$key}{value}->SetLabel ($value);
 	}
@@ -187,7 +208,5 @@ sub setImage {
 		$self->{image}->Show (0);
 	}
 }
-
-sub _onIncrement {}
 
 1;

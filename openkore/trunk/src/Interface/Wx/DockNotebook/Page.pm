@@ -80,12 +80,24 @@ sub getDock {
 sub onDetach {
 	my $self = shift;
 	my $dock = $self->getDock;
-
-	my $dialog = $self->{dialog} = new Wx::Dialog($self->GetGrandParent, -1, $self->{title},
-		wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
+	
+	my $dialog;
+	if ($^O eq 'MSWin32') {
+		$dialog = $self->{dialog} = new Wx::MiniFrame($self->GetGrandParent, -1, $self->{title});
+	} else {
+		$dialog = $self->{dialog} = new Wx::Dialog($self->GetGrandParent, -1, $self->{title},
+			wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
+	}
+	
 	$self->{dialog} = $dialog;
-	EVT_CLOSE($dialog, sub { $self->onDialogClose($dock); });
+	
+	# this was to close detached dialogs on system close button
+	# EVT_CLOSE($dialog, sub { $self->onDialogClose($dock); });
+	
+	EVT_CLOSE($dialog, sub { $self->onAttach($dock); });
+	
 	$self->{child}->Reparent($dialog);
+	# isn't there need to call $self->{vbox}->Detach($self->{child}) ?
 	$dialog->Layout;
 	$dialog->Show(1);
 
@@ -101,6 +113,26 @@ sub onDetach {
 		$w = 150 if ($w < 150);
 		$h = 150 if ($h < 150);
 		$dialog->SetClientSize($w, $h);
+	}
+}
+
+sub onAttach {
+	my ($self, $dock) = @_;
+	
+	$self->{dialog}->Show(0);
+	
+	my $page = $dock->newPage (1, $self->{title});
+	$self->{child}->Reparent ($page);
+	$page->set ($self->{child});
+	delete $self->{child};
+	
+	$self->{dialog}->Destroy;
+	
+	for (my $i = 0; $i < @{$dock->{dialogs}}; $i++) {
+		if ($dock->{dialogs}[$i] eq $self) {
+			delete $dock->{dialogs}[$i];
+			return;
+		}
 	}
 }
 

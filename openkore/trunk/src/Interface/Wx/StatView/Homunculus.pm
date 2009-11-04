@@ -5,6 +5,18 @@ use base 'Interface::Wx::StatView';
 
 use Globals;
 
+use constant {
+	HO_STATE_ALIVE => 0,
+	HO_STATE_REST => 2,
+	HO_STATE_DEAD => 4,
+};
+
+use constant {
+	HO_SKILL_VAPORIZE => 'AM_REST',
+	HO_SKILL_CALL => 'AM_CALLHOMUN',
+	HO_SKILL_RESURRECT => 'AM_RESURRECTHOMUN',
+};
+
 sub new {
 	my ($class, $parent, $id) = @_;
 	
@@ -26,8 +38,11 @@ sub new {
 			{key => 'mdef', title => 'Mdef', type => 'stat'},
 			{key => 'flee', title => 'Flee', type => 'stat'},
 			{key => 'aspd', title => 'Aspd', type => 'stat'},
-			{key => 'speed', title => 'Walk speed', type => 'substat'},
+			#{key => 'speed', title => 'Walk speed', type => 'substat'},
 			{key => 'skillPoint', title => 'Skill point', type => 'substat'},
+			{key => 'vaporize', title => 'Vaporize', type => 'control'},
+			{key => 'call', title => 'Call', type => 'control'},
+			{key => 'resurrect', title => 'Resurrect', type => 'control'},
 		],
 	);
 	
@@ -39,7 +54,28 @@ sub new {
 sub update {
 	my ($self) = @_;
 	
-	return unless $char && $char->{homunculus} && $conState == Network::IN_GAME;
+	return unless $conState == Network::IN_GAME;
+	
+	$self->set ('vaporize',
+		$char->{homunculus} && (
+			$char->{homunculus}{state} == HO_STATE_ALIVE
+			and $char->{skills}{(HO_SKILL_VAPORIZE)} && $char->{skills}{(HO_SKILL_VAPORIZE)}{lv}
+		)
+	);
+	$self->set ('call',
+		!$char->{homunculus} || (
+			!defined $char->{homunculus}{state} || $char->{homunculus}{state} == HO_STATE_REST
+			and $char->{skills}{(HO_SKILL_CALL)} && $char->{skills}{(HO_SKILL_CALL)}{lv}
+		)
+	);
+	$self->set ('resurrect',
+		!$char->{homunculus} || (
+			!defined $char->{homunculus}{state} && $char->{homunculus}{state} == HO_STATE_DEAD
+			and $char->{skills}{(HO_SKILL_RESURRECT)} && $char->{skills}{(HO_SKILL_RESURRECT)}{lv}
+		)
+	);
+	
+	return unless $char->{homunculus};
 	
 	$self->Freeze;
 	
@@ -69,6 +105,18 @@ sub update {
 	$self->GetSizer->Layout;
 	
 	$self->Thaw;
+}
+
+sub _onControl {
+	my ($self, $key) = @_;
+	
+	if ($key eq 'call') {
+		Commands::run ('ss ' . Skill::lookupIDNByHandle (HO_SKILL_CALL));
+	} elsif ($key eq 'vaporize') {
+		Commands::run ('ss ' . Skill::lookupIDNByHandle (HO_SKILL_VAPORIZE));
+	} elsif ($key eq 'resurrect') {
+		Commands::run ('ss ' . Skill::lookupIDNByHandle (HO_SKILL_RESURRECT));
+	}
 }
 
 1;
