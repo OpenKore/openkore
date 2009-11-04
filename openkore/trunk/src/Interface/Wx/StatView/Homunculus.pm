@@ -40,6 +40,7 @@ sub new {
 			{key => 'aspd', title => 'Aspd', type => 'stat'},
 			#{key => 'speed', title => 'Walk speed', type => 'substat'},
 			{key => 'skillPoint', title => 'Skill point', type => 'substat'},
+			{key => 'feed', title => 'Feed', type => 'control'},
 			{key => 'vaporize', title => 'Vaporize', type => 'control'},
 			{key => 'call', title => 'Call', type => 'control'},
 			{key => 'resurrect', title => 'Resurrect', type => 'control'},
@@ -56,23 +57,20 @@ sub update {
 	
 	return unless $conState == Network::IN_GAME;
 	
+	$self->set ('feed',
+		$char->{homunculus} && $char->{homunculus}{state} == HO_STATE_ALIVE
+	);
 	$self->set ('vaporize',
-		$char->{homunculus} && (
-			$char->{homunculus}{state} == HO_STATE_ALIVE
-			and $char->{skills}{(HO_SKILL_VAPORIZE)} && $char->{skills}{(HO_SKILL_VAPORIZE)}{lv}
-		)
+		$char->{homunculus} && $char->{homunculus}{state} == HO_STATE_ALIVE
+		&& $char->{skills}{(HO_SKILL_VAPORIZE)} && $char->{skills}{(HO_SKILL_VAPORIZE)}{lv}
 	);
 	$self->set ('call',
-		!$char->{homunculus} || (
-			!defined $char->{homunculus}{state} || $char->{homunculus}{state} == HO_STATE_REST
-			and $char->{skills}{(HO_SKILL_CALL)} && $char->{skills}{(HO_SKILL_CALL)}{lv}
-		)
+		(!$char->{homunculus} || !defined $char->{homunculus}{state} || $char->{homunculus}{state} == HO_STATE_REST)
+		&& $char->{skills}{(HO_SKILL_CALL)} && $char->{skills}{(HO_SKILL_CALL)}{lv}
 	);
 	$self->set ('resurrect',
-		!$char->{homunculus} || (
-			!defined $char->{homunculus}{state} && $char->{homunculus}{state} == HO_STATE_DEAD
-			and $char->{skills}{(HO_SKILL_RESURRECT)} && $char->{skills}{(HO_SKILL_RESURRECT)}{lv}
-		)
+		(!$char->{homunculus} || (!defined $char->{homunculus}{state} && $char->{homunculus}{state} == HO_STATE_DEAD))
+		&& $char->{skills}{(HO_SKILL_RESURRECT)} && $char->{skills}{(HO_SKILL_RESURRECT)}{lv}
 	);
 	
 	return unless $char->{homunculus};
@@ -110,7 +108,9 @@ sub update {
 sub _onControl {
 	my ($self, $key) = @_;
 	
-	if ($key eq 'call') {
+	if ($key eq 'feed') {
+		Commands::run ('homun feed');
+	} elsif ($key eq 'call') {
 		Commands::run ('ss ' . Skill::lookupIDNByHandle (HO_SKILL_CALL));
 	} elsif ($key eq 'vaporize') {
 		Commands::run ('ss ' . Skill::lookupIDNByHandle (HO_SKILL_VAPORIZE));
