@@ -88,4 +88,10 @@ sub update {
 	$self->Thaw;
 }
 
+sub _onIncrement {
+	my ($self, $key) = @_;
+	
+	Commands::run ("stat_add $key");
+}
+
 1;

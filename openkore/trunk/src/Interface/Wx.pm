@@ -73,39 +73,39 @@ sub OnInit {
 	
 	my $onChat = sub { $self->onChatAdd(@_); };
 	$self->{hooks} = Plugins::addHooks(
-		['loadfiles',                  sub { $self->onLoadFiles(@_); }],
-		['postloadfiles',              sub { $self->onLoadFiles(@_); }],
-		['parseMsg/addPrivMsgUser',    sub { $self->onAddPrivMsgUser(@_); }],
-		['initialized',                sub { $self->onInitialized(@_); }],
-		['ChatQueue::add',             $onChat],
-		['packet_selfChat',            $onChat],
-		['packet_privMsg',             $onChat],
-		['packet_sentPM',              $onChat],
-		['mainLoop_pre',               sub { $self->onUpdateUI(); }],
-		['captcha_file',               sub { $self->onCaptcha(@_); }],
-		['packet/minimap_indicator',   sub { $self->onMapIndicator (@_); }],
+		['loadfiles',                     sub { $self->onLoadFiles(@_); }],
+		['postloadfiles',                 sub { $self->onLoadFiles(@_); }],
+		['parseMsg/addPrivMsgUser',       sub { $self->onAddPrivMsgUser(@_); }],
+		['initialized',                   sub { $self->onInitialized(@_); }],
+		['ChatQueue::add',                $onChat],
+		['packet_selfChat',               $onChat],
+		['packet_privMsg',                $onChat],
+		['packet_sentPM',                 $onChat],
+		['mainLoop_pre',                  sub { $self->onUpdateUI(); }],
+		['captcha_file',                  sub { $self->onCaptcha(@_); }],
+		['packet/minimap_indicator',      sub { $self->onMapIndicator (@_); }],
 		
 		# stat changes
-		['packet/hp_sp_changed',       sub { $self->onSelfStatUpdate (@_); }],
-		['packet/stat_info',           sub { $self->onSelfStatUpdate (@_); }],
-		['packet/stat_info2',          sub { $self->onSelfStatUpdate (@_); }],
-		['packet/stats_points_needed', sub { $self->onSelfStatUpdate (@_); }],
-		
-		# status changes
-		['packet/map_changed',         sub { $self->onSelfStatUpdate (@_); }],
-		['changed_status',             sub { $self->onSelfStatUpdate (@_); }],
-		
-		# slave stat changes
-		['packet/homunculus_stats',    sub { $self->onSlaveStatUpdate (@_); }],
+		['packet/map_changed',            sub { $self->onSelfStatUpdate (@_); $self->onSlaveStatUpdate (@_); }],
+		['packet/hp_sp_changed',          sub { $self->onSelfStatUpdate (@_); }],
+		['packet/stat_info',              sub { $self->onSelfStatUpdate (@_); }],
+		['packet/stat_info2',             sub { $self->onSelfStatUpdate (@_); }],
+		['packet/stats_points_needed',    sub { $self->onSelfStatUpdate (@_); }],
+		['changed_status',                sub { $self->onSelfStatUpdate (@_); }],
+		['packet/homunculus_info',        sub { $self->onSlaveStatUpdate (@_); }],
+		['packet/homunculus_stats',       sub { $self->onSlaveStatUpdate (@_); }],
+		['packet/mercenary_param_change', sub { $self->onSlaveStatUpdate (@_); }],
+		['packet/mercenary_off',          sub { $self->onSlaveStatUpdate (@_); }],
+		['packet/message_string',         sub { $self->onSlaveStatUpdate (@_); }],
 		
 		# npc
-		['packet/npc_image',           sub { $self->onNpcImage (@_); }],
-		['npc_talk',                   sub { $self->onNpcTalk (@_); }],
-		['packet/npc_talk_continue',   sub { $self->onNpcContinue (@_); }],
-		['npc_talk_responses',         sub { $self->onNpcResponses (@_); }],
-		['packet/npc_talk_number',     sub { $self->onNpcNumber (@_); }],
-		['packet/npc_talk_text',       sub { $self->onNpcText (@_); }],
-		['npc_talk_done',              sub { $self->onNpcClose (@_); }],
+		['packet/npc_image',              sub { $self->onNpcImage (@_); }],
+		['npc_talk',                      sub { $self->onNpcTalk (@_); }],
+		['packet/npc_talk_continue',      sub { $self->onNpcContinue (@_); }],
+		['npc_talk_responses',            sub { $self->onNpcResponses (@_); }],
+		['packet/npc_talk_number',        sub { $self->onNpcNumber (@_); }],
+		['packet/npc_talk_text',          sub { $self->onNpcText (@_); }],
+		['npc_talk_done',                 sub { $self->onNpcClose (@_); }],
 	);
 
 	$self->{history} = [];
@@ -442,9 +442,10 @@ sub createMenuBar {
 		'&Info Bar',		\&onInfoBarToggle, 'Show or hide the information bar.');
 	$self->{chatLogToggle} = $self->addCheckMenu($viewMenu,
 		'Chat &Log',		\&onChatLogToggle, 'Show or hide the chat log.');
-	$self->addMenu ($viewMenu, '&Status	Alt+A', sub { $self->openStats (1) }, 'Show status');
-	$self->addMenu ($viewMenu, '&Homunculus	Alt+R', sub { $self->openHomunculus (1) }, 'Show homunculus status');
-	$self->addMenu ($viewMenu, '&Emotions	Alt+L', sub { $self->openEmotions (1) }, 'Show emotions');
+	$self->addMenu ($viewMenu, 'Status	Alt+A', sub { $self->openStats (1) }, 'Show status');
+	$self->addMenu ($viewMenu, 'Homunculus	Alt+R', sub { $self->openHomunculus (1) }, 'Show homunculus status');
+	$self->addMenu ($viewMenu, 'Mercenary	Ctrl+R', sub { $self->openMercenary (1) }, 'Show mercenary status');
+	$self->addMenu ($viewMenu, 'Emotions	Alt+L', sub { $self->openEmotions (1) }, 'Show emotions');
 	$viewMenu->AppendSeparator;
 	$self->addMenu($viewMenu,
 		'&Font...',		\&onFontChange, 'Change console font');
@@ -1063,6 +1064,13 @@ sub openHomunculus {
 	return ($page, $window);
 }
 
+sub openMercenary {
+	my ($self, $create) = @_;
+	my ($page, $window) = $self->openWindow ('Mercenary', 'Interface::Wx::StatView::Mercenary', $create);
+	
+	return ($page, $window);
+}
+
 sub openEmotions {
 	my ($self, $create) = @_;
 	my ($page, $window) = $self->openWindow ('Emotions', 'Interface::Wx::EmotionList', $create);
@@ -1293,10 +1301,10 @@ sub onSlaveStatUpdate {
 	my ($self, $hook, $args) = @_;
 	my $window;
 	
-	if ($args->{switch} eq '022E') {
-		(undef, $window) = $self->openHomunculus;
-	}
+	(undef, $window) = $self->openHomunculus;
+	$window->update if $window;
 	
+	(undef, $window) = $self->openMercenary;
 	$window->update if $window;
 }
 
