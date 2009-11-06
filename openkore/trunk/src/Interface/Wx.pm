@@ -86,7 +86,7 @@ sub OnInit {
 		['packet/minimap_indicator',      sub { $self->onMapIndicator (@_); }],
 		
 		# stat changes
-		['packet/map_changed',            sub { $self->onSelfStatUpdate (@_); $self->onSlaveStatUpdate (@_); }],
+		['packet/map_changed',            sub { $self->onSelfStatUpdate (@_); $self->onSlaveStatUpdate (@_); $self->onPetStatUpdate (@_); }],
 		['packet/hp_sp_changed',          sub { $self->onSelfStatUpdate (@_); }],
 		['packet/stat_info',              sub { $self->onSelfStatUpdate (@_); }],
 		['packet/stat_info2',             sub { $self->onSelfStatUpdate (@_); }],
@@ -97,6 +97,10 @@ sub OnInit {
 		['packet/mercenary_param_change', sub { $self->onSlaveStatUpdate (@_); }],
 		['packet/mercenary_off',          sub { $self->onSlaveStatUpdate (@_); }],
 		['packet/message_string',         sub { $self->onSlaveStatUpdate (@_); }],
+		['packet/pet_info',               sub { $self->onPetStatUpdate (@_); }],
+		['packet/pet_info2',              sub { $self->onPetStatUpdate (@_); }],
+		
+		['packet/map_loaded',             sub { $self->onMapLoaded (@_); }],
 		
 		# npc
 		['packet/npc_image',              sub { $self->onNpcImage (@_); }],
@@ -107,7 +111,7 @@ sub OnInit {
 		['packet/npc_talk_text',          sub { $self->onNpcText (@_); }],
 		['npc_talk_done',                 sub { $self->onNpcClose (@_); }],
 	);
-
+	
 	$self->{history} = [];
 	$self->{historyIndex} = -1;
 
@@ -431,7 +435,7 @@ sub createMenuBar {
 	$self->addMenu($infoMenu, '&Monsters	Alt-M',	sub { Commands::run("ml"); });
 	$self->addMenu($infoMenu, '&NPCs',		sub { Commands::run("nl"); });
 	$infoMenu->AppendSeparator;
-	$self->addMenu($infoMenu, '&Experience Report	Alt+E',	sub { Commands::run("exp"); });
+	$self->addMenu($infoMenu, '&Experience Report',	sub { Commands::run("exp"); });
 	$menu->Append($infoMenu, 'I&nfo');
 
 	# View menu
@@ -445,6 +449,10 @@ sub createMenuBar {
 	$self->addMenu ($viewMenu, 'Status	Alt+A', sub { $self->openStats (1) }, 'Show status');
 	$self->addMenu ($viewMenu, 'Homunculus	Alt+R', sub { $self->openHomunculus (1) }, 'Show homunculus status');
 	$self->addMenu ($viewMenu, 'Mercenary	Ctrl+R', sub { $self->openMercenary (1) }, 'Show mercenary status');
+	$self->addMenu ($viewMenu, 'Pet	Alt+J', sub { $self->openPet (1) }, 'Show pet status');
+	$viewMenu->AppendSeparator;
+	$self->addMenu ($viewMenu, 'Inventory	Alt+E', sub { $self->openInventory (1) }, 'Show inventory');
+	$viewMenu->AppendSeparator;
 	$self->addMenu ($viewMenu, 'Emotions	Alt+L', sub { $self->openEmotions (1) }, 'Show emotions');
 	$viewMenu->AppendSeparator;
 	$self->addMenu($viewMenu,
@@ -1034,15 +1042,19 @@ sub openWindow {
 	if ($page = $self->{notebook}->hasPage ($title)) {
 		$window = $page->{child};
 	} elsif ($create) {
-		$page = $self->{notebook}->newPage (1, $title, 0);
 		eval "require $class";
 		if ($@) {
-			$self->{notebook}->closePage ($page);
-			$self->{notebook}->switchPage ('Console');
-			Log::warning "Unable to load $class\n$@\n";
+			Log::warning "Unable to load $class\n$@", 'interface';
 			return;
 		}
+		unless ($class->can ('new')) {
+			Log::warning "Unable to create instance of $class\n", 'interface';
+			return;
+		}
+		$page = $self->{notebook}->newPage (1, $title, 0);
 		$page->set ($window = $class->new ($page, wxID_ANY));
+		
+		$window->init if $conState == Network::IN_GAME && $window->can ('init');
 	}
 	
 	$self->{notebook}->switchPage ($title) if $page && $create;
@@ -1067,6 +1079,20 @@ sub openHomunculus {
 sub openMercenary {
 	my ($self, $create) = @_;
 	my ($page, $window) = $self->openWindow ('Mercenary', 'Interface::Wx::StatView::Mercenary', $create);
+	
+	return ($page, $window);
+}
+
+sub openPet {
+	my ($self, $create) = @_;
+	my ($page, $window) = $self->openWindow ('Pet', 'Interface::Wx::StatView::Pet', $create);
+	
+	return ($page, $window);
+}
+
+sub openInventory {
+	my ($self, $create) = @_;
+	my ($page, $window) = $self->openWindow ('Inventory', 'Interface::Wx::List::ItemList::Inventory', $create);
 	
 	return ($page, $window);
 }
@@ -1152,6 +1178,13 @@ sub onInitialized {
 			$playersList, undef,
 			$monstersList, new Wx::Colour(200, 0, 0),
 			$itemsList, new Wx::Colour(0, 0, 200));
+}
+
+sub onMapLoaded {
+	my ($self) = @_;
+	
+	my (undef, $window) = $self->openInventory;
+	$window->init if $window && $window->can ('init');
 }
 
 sub onAddPrivMsgUser {
@@ -1305,6 +1338,14 @@ sub onSlaveStatUpdate {
 	$window->update if $window;
 	
 	(undef, $window) = $self->openMercenary;
+	$window->update if $window;
+}
+
+sub onPetStatUpdate {
+	my ($self, $hook, $args) = @_;
+	my $window;
+	
+	(undef, $window) = $self->openPet;
 	$window->update if $window;
 }
 

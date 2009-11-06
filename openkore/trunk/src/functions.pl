@@ -368,6 +368,8 @@ sub finalInitialization {
 	$timeout{'injectSync'}{'time'} = time;
 
 	Log::message("\n");
+	
+	Log::message("Initialized, use 'connect' to continue\n") if $Settings::no_connect;
 
 	Plugins::callHook('initialized');
 	XSTools::initVersion();
