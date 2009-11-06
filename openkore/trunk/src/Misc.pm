@@ -3868,6 +3868,14 @@ sub checkPlayerCondition {
 				return 0 if (!inRange($char->{homunculus}{hp}, $config{$prefix . "_hp"}));
 			}
 		}
+	} elsif ($char->{mercenary} && $char->{mercenary}{ID} eq $id) {
+		if ($config{$prefix . "_hp"}) {
+			if ($config{$prefix."_hp"} =~ /^(.*)\%$/) {
+				return 0 if (!inRange(percent_hp($char->{mercenary}), $1));
+			} else {
+				return 0 if (!inRange($char->{mercenary}{hp}, $config{$prefix . "_hp"}));
+			}
+		}
 	}
 
 	if ($config{$prefix."_deltaHp"}){

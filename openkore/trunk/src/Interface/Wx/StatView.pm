@@ -69,7 +69,7 @@ sub new {
 			), 0, wxGROW | wxTOP, BORDER);
 		} elsif ($stat->{type} eq 'control') {
 			$label->Destroy;
-			$sizer->Add ($self->{display}{$stat->{key}}{value} = new Wx::Button ($self, wxID_ANY, $stat->{title}));
+			$sizer->Add ($self->{display}{$stat->{key}}{value} = new Wx::Button ($self, wxID_ANY, $stat->{title}), 0, wxGROW);
 			$self->{display}{$stat->{key}}{value}->Enable (0);
 			{
 				my $key = $stat->{key};
@@ -130,8 +130,7 @@ sub new {
 		}
 	}
 	
-	my @children = $self->{sizer}{gauge}->GetChildren;
-	$self->{sizer}{gauge}->SetCols (scalar @children);
+	$self->{sizer}{gauge}->SetCols (scalar (() = $self->{sizer}{gauge}->GetChildren));
 	
 	return $self;
 }

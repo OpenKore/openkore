@@ -76,6 +76,7 @@ sub initHandlers {
 	cl                 => \&cmdChatLogClear,
 	closeshop          => \&cmdCloseShop,
 	conf               => \&cmdConf,
+	connect            => \&cmdConnect,
 	damage             => \&cmdDamage,
 	deal               => \&cmdDeal,
 	debug              => \&cmdDebug,
@@ -1203,6 +1204,10 @@ sub cmdConf {
 		configModify($arg1, $arg2);
 		Log::initLogFiles();
 	}
+}
+
+sub cmdConnect {
+	$Settings::no_connect = 0;
 }
 
 sub cmdDamage {
