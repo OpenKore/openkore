@@ -71,36 +71,56 @@ sub OnInit {
 	$self->createInterface;
 	$self->iterate;
 	
-	my $onChat = sub { $self->onChatAdd(@_); };
+	my $onChat =            sub { $self->onChatAdd(@_); };
+	my $onSelfStatChange  = sub { $self->onSelfStatChange (@_); };
+	my $onSlaveStatChange = sub { $self->onSlaveStatChange (@_); };
+	my $onPetStatChange   = sub { $self->onPetStatChange (@_); };
+	my $onInventoryChange = sub { $self->onInventoryChange (@_); };
+	
 	$self->{hooks} = Plugins::addHooks(
-		['loadfiles',                     sub { $self->onLoadFiles(@_); }],
-		['postloadfiles',                 sub { $self->onLoadFiles(@_); }],
-		['parseMsg/addPrivMsgUser',       sub { $self->onAddPrivMsgUser(@_); }],
-		['initialized',                   sub { $self->onInitialized(@_); }],
-		['ChatQueue::add',                $onChat],
-		['packet_selfChat',               $onChat],
-		['packet_privMsg',                $onChat],
-		['packet_sentPM',                 $onChat],
-		['mainLoop_pre',                  sub { $self->onUpdateUI(); }],
-		['captcha_file',                  sub { $self->onCaptcha(@_); }],
-		['packet/minimap_indicator',      sub { $self->onMapIndicator (@_); }],
+		['loadfiles',                           sub { $self->onLoadFiles(@_); }],
+		['postloadfiles',                       sub { $self->onLoadFiles(@_); }],
+		['parseMsg/addPrivMsgUser',             sub { $self->onAddPrivMsgUser(@_); }],
+		['initialized',                         sub { $self->onInitialized(@_); }],
+		['ChatQueue::add',                      $onChat],
+		['packet_selfChat',                     $onChat],
+		['packet_privMsg',                      $onChat],
+		['packet_sentPM',                       $onChat],
+		['mainLoop_pre',                        sub { $self->onUpdateUI(); }],
+		['captcha_file',                        sub { $self->onCaptcha(@_); }],
+		['packet/minimap_indicator',            sub { $self->onMapIndicator (@_); }],
 		
 		# stat changes
-		['packet/map_changed',            sub { $self->onSelfStatUpdate (@_); $self->onSlaveStatUpdate (@_); $self->onPetStatUpdate (@_); }],
-		['packet/hp_sp_changed',          sub { $self->onSelfStatUpdate (@_); }],
-		['packet/stat_info',              sub { $self->onSelfStatUpdate (@_); }],
-		['packet/stat_info2',             sub { $self->onSelfStatUpdate (@_); }],
-		['packet/stats_points_needed',    sub { $self->onSelfStatUpdate (@_); }],
-		['changed_status',                sub { $self->onSelfStatUpdate (@_); }],
-		['packet/homunculus_info',        sub { $self->onSlaveStatUpdate (@_); }],
-		['packet/homunculus_stats',       sub { $self->onSlaveStatUpdate (@_); }],
-		['packet/mercenary_param_change', sub { $self->onSlaveStatUpdate (@_); }],
-		['packet/mercenary_off',          sub { $self->onSlaveStatUpdate (@_); }],
-		['packet/message_string',         sub { $self->onSlaveStatUpdate (@_); }],
-		['packet/pet_info',               sub { $self->onPetStatUpdate (@_); }],
-		['packet/pet_info2',              sub { $self->onPetStatUpdate (@_); }],
+		['packet/map_changed',                  sub { $self->onSelfStatChange (@_); $self->onSlaveStatChange (@_); $self->onPetStatChange (@_); }],
+		['packet/hp_sp_changed',                $onSelfStatChange],
+		['packet/stat_info',                    $onSelfStatChange],
+		['packet/stat_info2',                   $onSelfStatChange],
+		['packet/stats_points_needed',          $onSelfStatChange],
+		['changed_status',                      $onSelfStatChange],
+		['packet/homunculus_info',              $onSlaveStatChange],
+		['packet/homunculus_stats',             $onSlaveStatChange],
+		['packet/mercenary_param_change',       $onSlaveStatChange],
+		['packet/mercenary_off',                $onSlaveStatChange],
+		['packet/message_string',               $onSlaveStatChange],
+		['packet/pet_info',                     $onPetStatChange],
+		['packet/pet_info2',                    $onPetStatChange],
 		
-		['packet/map_loaded',             sub { $self->onMapLoaded (@_); }],
+		['packet/map_loaded',                   sub { $self->onMapLoaded (@_); }],
+		
+		# inventory changes
+		['packet/arrow_equipped',               $onInventoryChange],
+		['packet/card_merge_status',            $onInventoryChange],
+		['packet/deal_add_you',                 $onInventoryChange],
+		['packet/equip_item',                   $onInventoryChange],
+		['packet/identify',                     $onInventoryChange],
+		['item_gathered',                       $onInventoryChange],
+		['packet/inventory_item_removed',       $onInventoryChange],
+		['packet_useitem',                      $onInventoryChange],
+		['packet/inventory_items_nonstackable', $onInventoryChange],
+		['packet/inventory_items_stackable',    $onInventoryChange],
+		['packet/item_upgrade',                 $onInventoryChange],
+		['packet/unequip_item',                 $onInventoryChange],
+		['packet/use_item',                     $onInventoryChange],
 		
 		# npc
 		['packet/npc_image',              sub { $self->onNpcImage (@_); }],
@@ -1321,7 +1341,7 @@ sub onMapIndicator {
 
 ### Stat View ###
 
-sub onSelfStatUpdate {
+sub onSelfStatChange {
 	my ($self, $hook, $args) = @_;
 	
 	return if $hook eq 'changed_status' && $args->{actor}{ID} ne $accountID;
@@ -1330,7 +1350,7 @@ sub onSelfStatUpdate {
 	$window->update if $window;
 }
 
-sub onSlaveStatUpdate {
+sub onSlaveStatChange {
 	my ($self, $hook, $args) = @_;
 	my $window;
 	
@@ -1341,11 +1361,19 @@ sub onSlaveStatUpdate {
 	$window->update if $window;
 }
 
-sub onPetStatUpdate {
+sub onPetStatChange {
 	my ($self, $hook, $args) = @_;
-	my $window;
 	
-	(undef, $window) = $self->openPet;
+	my (undef, $window) = $self->openPet;
+	$window->update if $window;
+}
+
+### Inventory ###
+
+sub onInventoryChange {
+	my ($self, $hook, $args) = @_;
+	
+	my (undef, $window) = $self->openInventory;
 	$window->update if $window;
 }
 
