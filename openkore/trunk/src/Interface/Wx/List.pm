@@ -9,28 +9,6 @@ use constant {
 	BORDER => 2,
 };
 
-# these wx constants are missing for a mysterious reason
-use constant {
-	wxLIST_NEXT_ABOVE => 0,
-	wxLIST_NEXT_ALL => 1,
-	wxLIST_NEXT_BELOW => 2,
-	wxLIST_NEXT_LEFT => 3,
-	wxLIST_NEXT_RIGHT => 4,
-};
-
-use constant {
-	wxLIST_STATE_DONTCARE       => 0x0000,
-	wxLIST_STATE_DROPHILITED    => 0x0001,      # MSW only
-	wxLIST_STATE_FOCUSED        => 0x0002,
-	wxLIST_STATE_SELECTED       => 0x0004,
-	wxLIST_STATE_CUT            => 0x0008,      # MSW only
-	wxLIST_STATE_DISABLED       => 0x0010,      # OS2 only
-	wxLIST_STATE_FILTERED       => 0x0020,      # OS2 only
-	wxLIST_STATE_INUSE          => 0x0040,      # OS2 only
-	wxLIST_STATE_PICKED         => 0x0080,      # OS2 only
-	wxLIST_STATE_SOURCE         => 0x0100,      # OS2 only
-};
-
 sub new {
 	my ($class, $parent, $id) = @_;
 	
