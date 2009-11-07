@@ -76,6 +76,7 @@ sub OnInit {
 	my $onSlaveStatChange = sub { $self->onSlaveStatChange (@_); };
 	my $onPetStatChange   = sub { $self->onPetStatChange (@_); };
 	my $onInventoryChange = sub { $self->onInventoryChange (@_); };
+#	my $onCartChange      = sub { $self->onCartChange (@_); };
 	
 	$self->{hooks} = Plugins::addHooks(
 		['loadfiles',                           sub { $self->onLoadFiles(@_); }],
@@ -121,6 +122,11 @@ sub OnInit {
 		['packet/item_upgrade',                 $onInventoryChange],
 		['packet/unequip_item',                 $onInventoryChange],
 		['packet/use_item',                     $onInventoryChange],
+# 		['packet/cart_info',                    $onCartChange],
+# 		['packet/cart_items_nonstackable',      $onCartChange],
+# 		['packet/cart_item_added',              $onCartChange],
+# 		['packet/cart_items_stackable',         $onCartChange],
+# 		['packet/cart_item_removed',            $onCartChange],
 		
 		# npc
 		['packet/npc_image',              sub { $self->onNpcImage (@_); }],
