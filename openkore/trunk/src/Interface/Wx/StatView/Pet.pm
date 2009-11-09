@@ -3,7 +3,7 @@ package Interface::Wx::StatView::Pet;
 use strict;
 use base 'Interface::Wx::StatView';
 
-use Globals;
+use Globals qw/$char %pet %jobs_lut $conState/;
 use Misc qw/itemNameSimple monsterName/;
 
 sub new {

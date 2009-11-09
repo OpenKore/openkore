@@ -25,6 +25,8 @@ package Interface::Wx;
 
 # Note: don't use wxTimer for anything important. It's known to cause reentrancy issues!
 
+# Note: some wx constants are defined by Wx::Event only if corresponding events are imported
+
 BEGIN {
 	require Wx::Perl::Packager if ($^O eq 'MSWin32');
 }
@@ -45,6 +47,7 @@ use base qw(Wx::App Interface);
 use Modules;
 use Field;
 use I18N qw/bytesToString/;
+
 use Interface::Wx::Dock;
 use Interface::Wx::MapViewer;
 use Interface::Wx::LogView;
@@ -59,6 +62,7 @@ use Plugins;
 use Misc;
 use Commands;
 use Utils;
+use Translation qw/T TF/;
 
 our $CVS;
 our ($iterationTime, $updateUITime, $updateUITime2);
@@ -76,7 +80,8 @@ sub OnInit {
 	my $onSlaveStatChange = sub { $self->onSlaveStatChange (@_); };
 	my $onPetStatChange   = sub { $self->onPetStatChange (@_); };
 	my $onInventoryChange = sub { $self->onInventoryChange (@_); };
-#	my $onCartChange      = sub { $self->onCartChange (@_); };
+	my $onCartChange      = sub { $self->onCartChange (@_); };
+#	my $onStorageChange   = sub { $self->onStorageChange (@_); };
 	
 	$self->{hooks} = Plugins::addHooks(
 		['loadfiles',                           sub { $self->onLoadFiles(@_); }],
@@ -122,11 +127,17 @@ sub OnInit {
 		['packet/item_upgrade',                 $onInventoryChange],
 		['packet/unequip_item',                 $onInventoryChange],
 		['packet/use_item',                     $onInventoryChange],
-# 		['packet/cart_info',                    $onCartChange],
-# 		['packet/cart_items_nonstackable',      $onCartChange],
-# 		['packet/cart_item_added',              $onCartChange],
-# 		['packet/cart_items_stackable',         $onCartChange],
-# 		['packet/cart_item_removed',            $onCartChange],
+		['packet/cart_info',                    $onCartChange],
+		['packet/cart_items_nonstackable',      $onCartChange],
+		['packet/cart_item_added',              $onCartChange],
+		['packet/cart_items_stackable',         $onCartChange],
+		['packet/cart_item_removed',            $onCartChange],
+# 		['packet/storage_closed',               $onStorageChange],
+# 		['packet/storage_item_added'            $onStorageChange],
+# 		['packet/storage_item_removed'          $onStorageChange],
+# 		['packet/storage_items_nonstackable'    $onStorageChange],
+# 		['packet/storage_items_stackable'       $onStorageChange],
+# 		['packet/storage_opened'                $onStorageChange],
 		
 		# npc
 		['packet/npc_image',              sub { $self->onNpcImage (@_); }],
@@ -440,15 +451,15 @@ sub createMenuBar {
 
 	# Program menu
 	my $opMenu = new Wx::Menu;
-	$self->{mPause}  = $self->addMenu($opMenu, '&Pause Botting', \&onDisableAI, 'Pause all automated botting activity');
-	$self->{mManual} = $self->addMenu($opMenu, '&Manual Botting', \&onManualAI, 'Pause automated botting and allow manual control');
-	$self->{mResume} = $self->addMenu($opMenu, '&Automatic Botting', \&onEnableAI, 'Resume all automated botting activity');
+	$self->{mPause}  = $self->addMenu($opMenu, T('&Pause Botting'), \&onDisableAI, T('Pause all automated botting activity'));
+	$self->{mManual} = $self->addMenu($opMenu, T('&Manual Botting'), \&onManualAI, T('Pause automated botting and allow manual control'));
+	$self->{mResume} = $self->addMenu($opMenu, T('&Automatic Botting'), \&onEnableAI, T('Resume all automated botting activity'));
 	$opMenu->AppendSeparator;
-	$self->addMenu($opMenu, 'Copy Last 100 Lines of Text', \&onCopyLastOutput);
-	$self->addMenu($opMenu, 'Minimize to &Tray', \&onMinimizeToTray, 'Minimize to a small task bar tray icon');
+	$self->addMenu($opMenu, T('Copy Last 100 Lines of Text'), \&onCopyLastOutput);
+	$self->addMenu($opMenu, T('Minimize to &Tray'), \&onMinimizeToTray, T('Minimize to a small task bar tray icon'));
 	$opMenu->AppendSeparator;
-	$self->addMenu($opMenu, 'E&xit	Ctrl-W', \&quit, 'Exit this program');
-	$menu->Append($opMenu, 'P&rogram');
+	$self->addMenu($opMenu, T('E&xit') . "\tCtrl-W", \&quit, T('Exit this program'));
+	$menu->Append($opMenu, T('P&rogram'));
 
 	# Info menu
 	my $infoMenu = new Wx::Menu;
@@ -462,44 +473,55 @@ sub createMenuBar {
 	$self->addMenu($infoMenu, '&NPCs',		sub { Commands::run("nl"); });
 	$infoMenu->AppendSeparator;
 	$self->addMenu($infoMenu, '&Experience Report',	sub { Commands::run("exp"); });
-	$menu->Append($infoMenu, 'I&nfo');
+	$menu->Append($infoMenu, T('I&nfo'));
 
 	# View menu
 	my $viewMenu = $self->{viewMenu} = new Wx::Menu;
-	$self->addMenu($viewMenu,
-		'&Map	Ctrl-M',	\&onMapToggle, 'Show where you are on the current map');
-	$self->{infoBarToggle} = $self->addCheckMenu($viewMenu,
-		'&Info Bar',		\&onInfoBarToggle, 'Show or hide the information bar.');
-	$self->{chatLogToggle} = $self->addCheckMenu($viewMenu,
-		'Chat &Log',		\&onChatLogToggle, 'Show or hide the chat log.');
-	$self->addMenu ($viewMenu, 'Status	Alt+A', sub { $self->openStats (1) }, 'Show status');
-	$self->addMenu ($viewMenu, 'Homunculus	Alt+R', sub { $self->openHomunculus (1) }, 'Show homunculus status');
-	$self->addMenu ($viewMenu, 'Mercenary	Ctrl+R', sub { $self->openMercenary (1) }, 'Show mercenary status');
-	$self->addMenu ($viewMenu, 'Pet	Alt+J', sub { $self->openPet (1) }, 'Show pet status');
+	$self->addMenu (
+		$viewMenu, T('&Map') . "\tCtrl-M", \&onMapToggle, T('Show where you are on the current map')
+	);
+	$self->{infoBarToggle} = $self->addCheckMenu (
+		$viewMenu, T('&Info Bar'), \&onInfoBarToggle, T('Show or hide the information bar.')
+	);
+	$self->{chatLogToggle} = $self->addCheckMenu (
+		$viewMenu, T('Chat &Log'), \&onChatLogToggle, T('Show or hide the chat log.')
+	);
+	$self->addMenu ($viewMenu, T('Status') . "\tAlt+A", sub { $self->openStats (1) });
+	$self->addMenu ($viewMenu, T('Homunculus') . "\tAlt+R", sub { $self->openHomunculus (1) });
+	$self->addMenu ($viewMenu, T('Mercenary') . "\tCtrl+R", sub { $self->openMercenary (1) });
+	$self->addMenu ($viewMenu, T('Pet') . "\tAlt+J", sub { $self->openPet (1) });
+	
 	$viewMenu->AppendSeparator;
-	$self->addMenu ($viewMenu, 'Inventory	Alt+E', sub { $self->openInventory (1) }, 'Show inventory');
+	
+	$self->addMenu ($viewMenu, T('Inventory') . "\tAlt+E", sub { $self->openInventory (1) });
+	$self->addMenu ($viewMenu, T('Cart') . "\tAlt+W", sub { $self->openCart (1) });
+	
 	$viewMenu->AppendSeparator;
-	$self->addMenu ($viewMenu, 'Emotions	Alt+L', sub { $self->openEmotions (1) }, 'Show emotions');
+	
+	$self->addMenu ($viewMenu, T('Emotions'). "\tAlt+L", sub { $self->openEmotions (1) });
+	
 	$viewMenu->AppendSeparator;
-	$self->addMenu($viewMenu,
-		'&Font...',		\&onFontChange, 'Change console font');
+	
+	$self->addMenu ($viewMenu, T('&Font...'), \&onFontChange, T('Change console font'));
+	
 	$viewMenu->AppendSeparator;
-	$self->addMenu($viewMenu, 'Clear Console', sub {my $self = shift; $self->{console}->Remove(0, 40000)}, 'Clear content of console');
-	$menu->Append($viewMenu, '&View');
-
+	
+	$self->addMenu($viewMenu, T('Clear Console'), sub {my $self = shift; $self->{console}->Remove(0, 40000)}, T('Clear content of console'));
+	$menu->Append($viewMenu, T('&View'));
+	
 	# Settings menu
 	my $settingsMenu = new Wx::Menu;
 	$self->createSettingsMenu($settingsMenu) if ($self->can('createSettingsMenu'));
-	$self->addMenu($settingsMenu, '&Advanced...', \&onAdvancedConfig, 'Edit advanced configuration options.');
-	$menu->Append($settingsMenu, '&Settings');
+	$self->addMenu($settingsMenu, T('&Advanced...'), \&onAdvancedConfig, T('Edit advanced configuration options.'));
+	$menu->Append($settingsMenu, T('&Settings'));
 	$self->createSettingsMenu2($settingsMenu) if ($self->can('createSettingsMenu2'));
-
+	
 	# Help menu
 	my $helpMenu = new Wx::Menu();
-	$self->addMenu($helpMenu, '&Manual	F1',		\&onManual, 'Read the manual');
-	$self->addMenu($helpMenu, '&Forum	Shift-F1',	\&onForum, 'Visit the forum');
+	$self->addMenu($helpMenu, T('&Manual') . "\tF1", \&onManual, T('Read the manual'));
+	$self->addMenu($helpMenu, T('&Forum') . "\tShift-F1", \&onForum, T('Visit the forum'));
 	$self->createHelpMenu($helpMenu) if ($self->can('createHelpMenu'));
-	$menu->Append($helpMenu, '&Help');
+	$menu->Append($helpMenu, T('&Help'));
 }
 
 sub createSettingsMenu {
@@ -914,6 +936,8 @@ sub onLoadFiles {
 	} else {
 		delete $self->{loadingFiles};
 	}
+	
+	$self->updateStatusBar;
 }
 
 sub onEnableAI {
@@ -1119,6 +1143,13 @@ sub openPet {
 sub openInventory {
 	my ($self, $create) = @_;
 	my ($page, $window) = $self->openWindow ('Inventory', 'Interface::Wx::List::ItemList::Inventory', $create);
+	
+	return ($page, $window);
+}
+
+sub openCart {
+	my ($self, $create) = @_;
+	my ($page, $window) = $self->openWindow ('Cart', 'Interface::Wx::List::ItemList::Cart', $create);
 	
 	return ($page, $window);
 }
@@ -1381,6 +1412,13 @@ sub onInventoryChange {
 	
 	my (undef, $window) = $self->openInventory;
 	$window->update if $window;
+}
+
+sub onCartChange {
+	my $self = shift;
+	
+	my (undef, $window) = $self->openCart;
+	$window->update (@_) if $window;
 }
 
 ### NPC Talk ###
