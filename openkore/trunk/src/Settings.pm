@@ -437,9 +437,17 @@ sub loadByRegexp {
 # and exceptions.
 sub loadAll {
 	my ($progressHandler) = @_;
+	
+	Plugins::callHook('preloadfiles', {files => \@{$files->getItems}});
+	
+	my $i = 1;
 	foreach my $object (@{$files->getItems()}) {
+		Plugins::callHook('loadfiles', {files => \@{$files->getItems}, current => $i});
 		loadByHandle($object->{index}, $progressHandler);
+		$i++;
 	}
+	
+	Plugins::callHook('postloadfiles', {files => \@{$files->getItems}});
 }
 
 ##

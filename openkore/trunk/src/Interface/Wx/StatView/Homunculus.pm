@@ -3,7 +3,7 @@ package Interface::Wx::StatView::Homunculus;
 use strict;
 use base 'Interface::Wx::StatView';
 
-use Globals;
+use Globals qw/$char %jobs_lut $conState/;
 
 use constant {
 	HO_STATE_ALIVE => 0,

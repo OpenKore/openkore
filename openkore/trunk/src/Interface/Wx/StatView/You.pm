@@ -3,7 +3,7 @@ package Interface::Wx::StatView::You;
 use strict;
 use base 'Interface::Wx::StatView';
 
-use Globals;
+use Globals qw/$char %config %jobs_lut %sex_lut $conState/;
 
 sub new {
 	my ($class, $parent, $id) = @_;

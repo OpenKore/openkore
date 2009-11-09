@@ -3,7 +3,7 @@ package Interface::Wx::StatView::Mercenary;
 use strict;
 use base 'Interface::Wx::StatView';
 
-use Globals;
+use Globals qw/$char %jobs_lut $conState/;
 use Utils qw/getFormattedDate/;
 
 sub new {
