@@ -203,10 +203,11 @@ sub parseConfigFile {
 	my $file = shift;
 	my $r_hash = shift;
 	my $no_undef = shift;
+	my $blocks = shift // {};
 
 	undef %{$r_hash} unless $no_undef;
-	my ($key, $value, $inBlock, $commentBlock, %blocks);
-
+	my ($key, $value, $inBlock, $commentBlock);
+	
 	my $reader = new Utils::TextReader($file);
 	while (!$reader->eof()) {
 		my $line = $reader->readLine();
@@ -234,13 +235,13 @@ sub parseConfigFile {
 			($key, $value) = $line =~ /^(.*?) (.*)/;
 			$key = $line if ($key eq '');
 
-			if (!exists $blocks{$key}) {
-				$blocks{$key} = 0;
+			if (!exists $blocks->{$key}) {
+				$blocks->{$key} = 0;
 			} else {
-				$blocks{$key}++;
+				$blocks->{$key}++;
 			}
 			if ($key ne 'teleportAuto'){
-				$inBlock = "${key}_$blocks{$key}";
+				$inBlock = "${key}_$blocks->{$key}";
 			} else {
 				$inBlock = "${key}";
 			}
@@ -274,7 +275,7 @@ sub parseConfigFile {
 					}
 				}
 				if (-f $f) {
-					my $ret = parseConfigFile($f, $r_hash, 1);
+					my $ret = parseConfigFile($f, $r_hash, 1, $blocks);
 					return $ret unless $ret;
 				} else {
 					error Translation::TF("%s: Include file not found: %s\n", $file, $f);
@@ -1023,8 +1024,9 @@ sub writeDataFileIntact {
 	my $file = shift;
 	my $r_hash = shift;
 	my $no_undef = shift;
+	my $blocks = shift // {};
 
-	my (@lines, $key, $value, $inBlock, $commentBlock, %blocks);
+	my (@lines, $key, $value, $inBlock, $commentBlock);
 	my $reader = new Utils::TextReader($file);
 	while (!$reader->eof()) {
 		my $lines = $reader->readLine();
@@ -1032,6 +1034,28 @@ sub writeDataFileIntact {
 		$lines =~ s/[\r\n]//g;	# Remove line endings
 		if ($lines =~ /^[\s\t]*#/ || $lines =~ /^[\s\t]*$/ || $lines =~ /^\!include( |$)/) {
 			push @lines, $lines;
+			
+			if ($lines =~ /^\!include( |$)/) {
+				($key, $value) = $lines =~ /^(.*?) (.*)/;
+				my $f = $value;
+				if (!File::Spec->file_name_is_absolute($value) && $value !~ /^\//) {
+					if ($file =~ /[\/\\]/) {
+						$f = $file;
+						$f =~ s/(.*)[\/\\].*/$1/;
+						$f = File::Spec->catfile($f, $value);
+					} else {
+						$f = $value;
+					}
+				}
+				if (-f $f) {
+					my $ret = writeDataFileIntact($f, $r_hash, 1, $blocks);
+					return $ret unless $ret;
+				} else {
+					error Translation::TF("%s: Include file not found: %s\n", $file, $f);
+					return 0;
+				}
+			}
+			
 			next;
 		}
 		$lines =~ s/^[\t\s]*//;	# Remove leading tabs and whitespace
@@ -1057,13 +1081,13 @@ sub writeDataFileIntact {
 			($key, $value) = $lines =~ /^(.*?) (.*)/;
 			$key = $lines if ($key eq '');
 
-			if (!exists $blocks{$key}) {
-				$blocks{$key} = 0;
+			if (!exists $blocks->{$key}) {
+				$blocks->{$key} = 0;
 			} else {
-				$blocks{$key}++;
+				$blocks->{$key}++;
 			}
 			if ($key ne 'teleportAuto'){
-				$inBlock = "${key}_$blocks{$key}";
+				$inBlock = "${key}_$blocks->{$key}";
 			} else {
 				$inBlock = "${key}";
 			}
