@@ -92,7 +92,7 @@ sub gamma_tau {
 sub rotl {
 	my ($x, $bit) = @_;
 
-	$x = ($x << $bit) | ($x >> (32 - $bit)) if ($bit > 0 && $bit < 32);
+	$x = ($x << $bit & 0xffffffff) | ($x >> (32 - $bit)) if ($bit > 0 && $bit < 32);
 	return $x;
 }
 
