@@ -10,6 +10,8 @@ use Utils;
 use Misc;
 use Translation;
 
+sub checkSkillOwnership { $_[1]->getOwnerType == Skill::OWNER_HOMUN }
+
 sub iterate {
 	my $slave = shift;
 	

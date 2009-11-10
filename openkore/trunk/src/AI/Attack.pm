@@ -357,7 +357,8 @@ sub main {
 			}
 
 			my $skill = new Skill(name => $config{"attackSkillSlot_$i"});
-			if (checkSelfCondition("attackSkillSlot_$i")
+			if ($skill->getOwnerType == Skill::OWNER_CHAR
+				&& checkSelfCondition("attackSkillSlot_$i")
 				&& (!$config{"attackSkillSlot_$i"."_maxUses"} ||
 				    $target->{skillUses}{$skill->getHandle()} < $config{"attackSkillSlot_$i"."_maxUses"})
 				&& (!$config{"attackSkillSlot_$i"."_maxAttempts"} || $args->{attackSkillSlot_attempts}{$i} < $config{"attackSkillSlot_$i"."_maxAttempts"})
