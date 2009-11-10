@@ -16,6 +16,8 @@ use AI::Slave::Mercenary;
 # if the homunculus is within this range
 use constant MAX_DISTANCE => 17;
 
+sub checkSkillOwnership {}
+
 sub action {
 	my $slave = shift;
 	
@@ -518,6 +520,29 @@ sub processAttack {
 		$args->{missedFromYou_last} = $target->{missedFromPlayer}{$slave->{ID}};
 
 		$args->{attackMethod}{type} = "weapon";
+		
+		### attackSkillSlot begin
+		for (my ($i, $prefix) = (0, 'attackSkillSlot_0'); $prefix = "attackSkillSlot_$i" and exists $config{$prefix}; $i++) {
+			next unless $config{$prefix};
+			if (checkSelfCondition($prefix) && checkMonsterCondition("${prefix}_target", $target)) {
+				my $skill = new Skill(name => $config{$prefix});
+				next unless $slave->checkSkillOwnership ($skill);
+				
+				next if $config{"${prefix}_maxUses"} && $target->{skillUses}{$skill->getHandle()} >= $config{"${prefix}_maxUses"};
+				next if $config{"${prefix}_target"} && !existsInList($config{"${prefix}_target"}, $target->{name});
+				
+				my $lvl = $config{"${prefix}_lvl"};
+				my $maxCastTime = $config{"${prefix}_maxCastTime"};
+				my $minCastTime = $config{"${prefix}_minCastTime"};
+				debug "Slave attackSkillSlot on $target->{name} ($target->{binID}): ".$skill->getName()." (lvl $lvl)\n", "monsterSkill";
+				my $skillTarget = $config{"${prefix}_isSelfSkill"} ? $slave : $target;
+				ai_skillUse2($skill, $lvl, $maxCastTime, $minCastTime, $skillTarget, $prefix);
+				$ai_v{$prefix . "_time"}{$ID} = time;
+				last;
+			}
+		}
+		### attackSkillSlot end
+		
 		$args->{attackMethod}{maxDistance} = $config{$slave->{slave_configPrefix}.'attackMaxDistance'};
 		$args->{attackMethod}{distance} = ($config{$slave->{slave_configPrefix}.'runFromTarget'} && $config{$slave->{slave_configPrefix}.'runFromTarget_dist'} > $config{$slave->{slave_configPrefix}.'attackDistance'}) ? $config{$slave->{slave_configPrefix}.'runFromTarget_dist'} : $config{$slave->{slave_configPrefix}.'attackDistance'};
 		if ($args->{attackMethod}{maxDistance} < $args->{attackMethod}{distance}) {
