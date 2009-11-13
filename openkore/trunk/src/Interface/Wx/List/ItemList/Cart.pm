@@ -13,71 +13,53 @@ sub new {
 		{key => 'weight', title => 'Weight', max => %cart && $cart{weight_max} ? $cart{weight_max} : '100'},
 	]);
 	
+	$self->{hooks} = Plugins::addHooks (
+		['packet/map_loaded',              sub { $self->clear }],
+		['packet/cart_info',               sub { $self->onInfo }],
+		['packet/cart_items_stackable',    sub { $self->update }],
+		['packet/cart_items_nonstackable', sub { $self->update }],
+		['packet/cart_item_added',         sub { $self->onItemsChanged ($_[1]{index}) }],
+		['packet/cart_item_removed',       sub { $self->onItemsChanged ($_[1]{index}) }],
+	);
+	
+	$self->onInfo;
+	$self->update;
+	
 	return $self;
 }
 
-sub init { $_[0]->update; }
+sub unload {
+	my ($self) = @_;
+	
+	Plugins::delHooks ($self->{hooks});
+}
+
+sub onInfo {
+	my ($self) = @_;
+	
+	if ($cart{exists} or $char && $char->{statuses} && scalar grep /^Level \d Cart$/, keys %{$char->{statuses}}) {
+		$self->setStat ('count', $cart{items}, $cart{items_max});
+		$self->setStat ('weight', $cart{weight}, $cart{weight_max});
+	} else {
+		$self->clear;
+	}
+}
+
+sub onItemsChanged {
+	my $self = shift;
+	
+	$self->setItem ($_->[0], $_->[1]) foreach map { [$_, $cart{inventory}[$_]] } @_;
+}
 
 sub update {
 	my ($self, $handler, $args) = @_;
 	
-	my $hasCart = $cart{exists};
-	if (!$hasCart && $char && $char->{statuses}) {
-		foreach (keys %{$char->{statuses}}) {
-			if ($_ =~ /^Level \d Cart$/) {
-				$hasCart = 1;
-				last;
-			}
-		}
-	}
-	
-	if ($hasCart) {
-		$self->Freeze;
-		
-		if (!$handler || $handler eq 'packet/cart_items_stackable' || $handler eq 'packet/cart_items_nonstackable') {
-			$self->setItem ($_) foreach (grep defined, @{$cart{inventory}});
-		}
-		
-		if ($handler eq 'packet/cart_item_added') {
-			$self->setItem ($cart{inventory}[$args->{index}]);
-		}
-		
-		if ($handler eq 'packet/cart_item_removed') {
-			if (defined $cart{inventory}[$args->{index}]{index}) {
-				$self->setItem ($cart{inventory}[$args->{index}]);
-			} else {
-				$self->{list}->DeleteItem ($self->{list}->FindItemData (-1, $args->{index}));
-			}
-		}
-		
-		if (!$handler || $handler eq 'packet/cart_info') {
-			$self->setStat ('count', $cart{items}, $cart{items_max});
-			$self->setStat ('weight', $cart{weight}, $cart{weight_max});
-		}
-		
-		$self->Thaw;
-	} else {
-		$self->{list}->DeleteAllItems;
-	}
+	$self->Freeze;
+	$self->setItem ($_->{index}, $_) foreach (grep defined, @{$cart{inventory}});
+	$self->Thaw;
 }
 
-sub setItem {
-	my ($self, $item) = @_;
-	
-	my $i;
-	if (-1 == ($i = $self->{list}->FindItemData (-1, $item->{index}))) {
-	 	my $listItem = new Wx::ListItem;
-	 	$listItem->SetData ($item->{index});
-		$i = $self->{list}->InsertItem ($listItem);
-	}
-	
-	$self->{list}->SetItemText ($i, $item->{index});
-	$self->{list}->SetItem ($i, 1, $item->{amount});
-	$self->{list}->SetItem ($i, 2,
-		$item->{name}
-		. ($item->{identified} ? '' : ' (Not identified)')
-	);
-}
+sub clear { $_[0]->removeAllItems }
 
 sub getSelection { map { $cart{inventory}[$_] } @{$_[0]{selection}} }
 

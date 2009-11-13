@@ -3,42 +3,69 @@ package Interface::Wx::List::ItemList::Inventory;
 use strict;
 use base 'Interface::Wx::List::ItemList';
 
-use Globals qw/$char %storage %cart %equipTypes_lut/;
+use Globals qw/$char %cart %storage %equipTypes_lut/;
 
 sub new {
 	my ($class, $parent, $id) = @_;
 	
 	my $self = $class->SUPER::new ($parent, $id);
 	
+	$self->{hooks} = Plugins::addHooks (
+		['packet/map_loaded', sub {
+			$self->clear
+		}],
+		['packet/arrow_equipped', sub {
+			$self->onItemsChanged ($_[1]{index})
+		}],
+		['packet/card_merge_status', sub {
+			$self->onItemsChanged ($_[1]{item_index}, $_[1]{card_index}) unless $_[1]{fail}
+		}],
+		['packet/deal_add_you', sub {
+			$self->onItemsChanged ($_[1]{index}) unless $_[1]{fail}
+		}],
+		['packet/equip_item', sub {
+			$self->onItemsChanged ($_[1]{index}) if $_[1]{success}
+		}],
+		['packet/identify', sub {
+			$self->onItemsChanged ($_[1]{index}) unless $_[1]{flag}
+		}],
+		['packet/inventory_item_added', sub {
+			$self->onItemsChanged ($_[1]{index}) unless $_[1]{fail}
+		}],
+		['packet/inventory_item_removed', sub {
+			$self->onItemsChanged ($_[1]{index})
+		}],
+		['packet_useitem', sub {
+			$self->onItemsChanged ($_[1]{serverIndex}) if $_[1]{success}
+		}],
+		['packet/inventory_items_nonstackable', sub {
+			$self->update
+		}],
+		['packet/inventory_items_stackable', sub {
+			$self->update
+		}],
+		['packet/item_upgrade', sub {
+			$self->onItemsChanged ($_[1]{index})
+		}],
+		['packet/unequip_item', sub {
+			$self->onItemsChanged ($_[1]{index})
+		}],
+		['packet/use_item', sub {
+			$self->onItemsChanged ($_[1]{index})
+		}],
+	);
+	
+	$self->_addCallbacks;
+	$self->update;
+	
 	return $self;
 }
 
-sub init {
+sub unload {
 	my ($self) = @_;
 	
 	$self->_removeCallbacks;
-	$self->_addCallbacks;
-	
-	foreach (@{$char->inventory->getItems}) {
-		$self->onInventoryAdd (undef, [$_, $_->{invIndex}]);
-	}
-}
-
-sub update {
-	my ($self) = @_;
-	
-	my $i = -1;
-	while (1) {
-		last if -1 == ($i = $self->{list}->GetNextItem ($i, Interface::Wx::List::wxLIST_NEXT_ALL, Interface::Wx::List::wxLIST_STATE_DONTCARE));
-		next unless my $item = $char->inventory->get ($self->{list}->GetItemData ($i));
-		$self->setItem ($i, $item);
-	}
-}
-
-sub DESTROY {
-	my ($self) = @_;
-	
-	$self->_removeCallbacks;
+	Plugins::delHooks ($self->{hooks});
 }
 
 sub _addCallbacks {
@@ -46,57 +73,19 @@ sub _addCallbacks {
 	
 	return if $self->{ids};
 	
-	return unless $char && $char->inventory;
+	return unless $char;
 	
-	$self->{ids}{onAdd} = $char->inventory->onAdd->add ($self, \&onInventoryAdd);
-	$self->{ids}{onRemove} = $char->inventory->onRemove->add ($self, \&onInventoryRemove);
-	$self->{ids}{onClear} = $char->inventory->onClearBegin->add ($self, \&onInventoryClear);
+	$self->{ids}{onRemove} = $char->inventory->onRemove->add ($self, \&onInventoryListRemove);
 }
 
 sub _removeCallbacks {
 	my ($self) = @_;
 	
-	return unless $self->{ids};
+	return unless $char && $self->{ids};
 	
-	$char->inventory->onAdd->remove ($self->{ids}{onAdd});
 	$char->inventory->onRemove->remove ($self->{ids}{onRemove});
-	$char->inventory->onClearBegin->remove ($self->{ids}{onClear});
 	
 	delete $self->{ids}
-}
-
-sub setItem {
-	my ($self, $i, $item) = @_;
-	
-	$self->{list}->SetItemText ($i, $item->{invIndex});
-	$self->{list}->SetItem ($i, 1, $item->{amount});
-	$self->{list}->SetItem ($i, 2,
-		$item->{name}
-		. ($item->{equipped} ? ($equipTypes_lut{$item->{equipped}} ? ' ('.$equipTypes_lut{$item->{equipped}}.')' : ' (Equipped)') : '')
-		. ($item->{identified} ? '' : ' (Not identified)')
-	);
-}
-
-sub onInventoryAdd {
-	my ($self, undef, $args) = @_;
-	my ($item, $index) = @$args;
-	
- 	my $listItem = new Wx::ListItem;
- 	$listItem->SetData ($index);
- 	$self->setItem ($self->{list}->InsertItem ($listItem), $item);
-}
-
-sub onInventoryRemove {
-	my ($self, undef, $args) = @_;
-	my ($item, $index) = @$args;
-	
-	$self->{list}->DeleteItem ($self->{list}->FindItemData (-1, $index));
-}
-
-sub onInventoryClear {
-	my ($self) = @_;
-	
-	$self->{list}->DeleteAllItems;
 }
 
 sub isUsable { $_[-1]{type} <= 2 }
@@ -104,6 +93,28 @@ sub isEquip { (0, 0, 0, 0, 1, 1, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1) [$_[-1]{typ
 sub isCard { $_[-1]{type} == 6 }
 
 sub getSelection { map { $char->inventory->get ($_) } @{$_[0]{selection}} }
+
+sub onInventoryListRemove { $_[0]->setItem ($_[2][1]) }
+
+sub onItemsChanged {
+	my $self = shift;
+	
+	$self->setItem ($_->{invIndex}, $_) foreach map { $char->inventory->getByServerIndex ($_) } @_;
+}
+
+sub update {
+	return unless $char;
+	
+	$_[0]->Freeze;
+	$_[0]->setItem ($_->{invIndex}, $_) foreach (@{$char->inventory->getItems});
+	$_[0]->Thaw;
+}
+
+sub clear {
+	$_[0]->removeAllItems;
+	$_[0]->_removeCallbacks;
+	$_[0]->_addCallbacks;
+}
 
 sub _onRightClick {
 	my ($self) = @_;
