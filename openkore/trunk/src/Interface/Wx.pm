@@ -79,9 +79,6 @@ sub OnInit {
 	my $onSelfStatChange  = sub { $self->onSelfStatChange (@_); };
 	my $onSlaveStatChange = sub { $self->onSlaveStatChange (@_); };
 	my $onPetStatChange   = sub { $self->onPetStatChange (@_); };
-	my $onInventoryChange = sub { $self->onInventoryChange (@_); };
-	my $onCartChange      = sub { $self->onCartChange (@_); };
-#	my $onStorageChange   = sub { $self->onStorageChange (@_); };
 	
 	$self->{hooks} = Plugins::addHooks(
 		['loadfiles',                           sub { $self->onLoadFiles(@_); }],
@@ -110,34 +107,6 @@ sub OnInit {
 		['packet/message_string',               $onSlaveStatChange],
 		['packet/pet_info',                     $onPetStatChange],
 		['packet/pet_info2',                    $onPetStatChange],
-		
-		['packet/map_loaded',                   sub { $self->onMapLoaded (@_); }],
-		
-		# inventory changes
-		['packet/arrow_equipped',               $onInventoryChange],
-		['packet/card_merge_status',            $onInventoryChange],
-		['packet/deal_add_you',                 $onInventoryChange],
-		['packet/equip_item',                   $onInventoryChange],
-		['packet/identify',                     $onInventoryChange],
-		['item_gathered',                       $onInventoryChange],
-		['packet/inventory_item_removed',       $onInventoryChange],
-		['packet_useitem',                      $onInventoryChange],
-		['packet/inventory_items_nonstackable', $onInventoryChange],
-		['packet/inventory_items_stackable',    $onInventoryChange],
-		['packet/item_upgrade',                 $onInventoryChange],
-		['packet/unequip_item',                 $onInventoryChange],
-		['packet/use_item',                     $onInventoryChange],
-		['packet/cart_info',                    $onCartChange],
-		['packet/cart_items_nonstackable',      $onCartChange],
-		['packet/cart_item_added',              $onCartChange],
-		['packet/cart_items_stackable',         $onCartChange],
-		['packet/cart_item_removed',            $onCartChange],
-# 		['packet/storage_closed',               $onStorageChange],
-# 		['packet/storage_item_added'            $onStorageChange],
-# 		['packet/storage_item_removed'          $onStorageChange],
-# 		['packet/storage_items_nonstackable'    $onStorageChange],
-# 		['packet/storage_items_stackable'       $onStorageChange],
-# 		['packet/storage_opened'                $onStorageChange],
 		
 		# npc
 		['packet/npc_image',              sub { $self->onNpcImage (@_); }],
@@ -495,6 +464,7 @@ sub createMenuBar {
 	
 	$self->addMenu ($viewMenu, T('Inventory') . "\tAlt+E", sub { $self->openInventory (1) });
 	$self->addMenu ($viewMenu, T('Cart') . "\tAlt+W", sub { $self->openCart (1) });
+	$self->addMenu ($viewMenu, T('Storage'), sub { $self->openStorage (1) });
 	
 	$viewMenu->AppendSeparator;
 	
@@ -1154,6 +1124,13 @@ sub openCart {
 	return ($page, $window);
 }
 
+sub openStorage {
+	my ($self, $create) = @_;
+	my ($page, $window) = $self->openWindow ('Storage', 'Interface::Wx::List::ItemList::Storage', $create);
+	
+	return ($page, $window);
+}
+
 sub openEmotions {
 	my ($self, $create) = @_;
 	my ($page, $window) = $self->openWindow ('Emotions', 'Interface::Wx::EmotionList', $create);
@@ -1235,13 +1212,6 @@ sub onInitialized {
 			$playersList, undef,
 			$monstersList, new Wx::Colour(200, 0, 0),
 			$itemsList, new Wx::Colour(0, 0, 200));
-}
-
-sub onMapLoaded {
-	my ($self) = @_;
-	
-	my (undef, $window) = $self->openInventory;
-	$window->init if $window && $window->can ('init');
 }
 
 sub onAddPrivMsgUser {
@@ -1403,22 +1373,6 @@ sub onPetStatChange {
 	
 	my (undef, $window) = $self->openPet;
 	$window->update if $window;
-}
-
-### Inventory ###
-
-sub onInventoryChange {
-	my ($self, $hook, $args) = @_;
-	
-	my (undef, $window) = $self->openInventory;
-	$window->update if $window;
-}
-
-sub onCartChange {
-	my $self = shift;
-	
-	my (undef, $window) = $self->openCart;
-	$window->update (@_) if $window;
 }
 
 ### NPC Talk ###

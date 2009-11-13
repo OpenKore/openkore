@@ -151,6 +151,9 @@ sub onDialogClose {
 
 sub onClose {
 	my $self = shift;
+	
+	$self->{child}->unload if $self->{child}->can ('unload');
+	
 	$self->getDock->closePage($self);
 }
 
