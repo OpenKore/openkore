@@ -7362,6 +7362,11 @@ sub GM_req_acc_name {
 	message TF("The accountName for ID %s is %s.\n", $args->{targetID}, $args->{accountName}), "info";
 }
 
+sub hack_shield_alarm {
+	error T("Error: You have been forced to disconnect by a Hack Shield.\n Please check Poseidon.\n"), "connection";
+	Commands::run('relog 100000000');
+}
+
 1;
 
 =pod
