@@ -29,6 +29,9 @@ sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
 	my %packets = (
+		# HackShield alarm
+		'0449' => ['hack_shield_alarm'],
+	
 		'07E6' => ['captcha_session_ID', 'v V', [qw(ID generation_time)]], # 8
 		'07E8' => ['captcha_image', 'v a*', [qw(len image)]], # 0
 		'07E9' => ['captcha_answer', 'v C', [qw(code flag)]], # 5
