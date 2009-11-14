@@ -558,7 +558,7 @@ sub mainLoop_initialized {
 					# Unknown message - ignore it
 					my $messageID = Network::MessageTokenizer::getMessageID($data);
 					if (!existsInList($config{debugPacket_exclude}, $messageID)) {
-						warning TF("Unknown packet - %s\n", $messageID), "connection";
+						warning TF("Packet Tokenizer: Unknown switch: %s\n", $messageID), "connection";
 						visualDump($data, "<< Received unknown packet") if ($config{debugPacket_unparsed});
 					}
 				} elsif ($config{debugPacket_received}) {

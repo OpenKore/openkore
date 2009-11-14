@@ -145,7 +145,10 @@ sub parse {
 	my $switch = Network::MessageTokenizer::getMessageID($msg);
 	my $handler = $self->{packet_list}{$switch};
 
-	return undef unless $handler;
+	unless ($handler) {
+		warning "Packet Parser: Unknown switch: $switch\n";
+		return undef;
+	}
 
 	debug "Received packet: $switch Handler: $handler->[0]\n", "packetParser", 2;
 

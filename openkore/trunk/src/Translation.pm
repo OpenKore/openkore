@@ -19,7 +19,7 @@
 # <b>Notes:</b>
 # `l
 # - Translation files MUST be encoded in UTF-8 (without BOM).
-# - We use short locale names, as defined by http://www.loc.gov/standards/iso639-2/englangn.html
+# - We use short locale names, as defined by http://www.loc.gov/standards/iso639-2/php/English_list.php
 # `l`
 package Translation;
 
