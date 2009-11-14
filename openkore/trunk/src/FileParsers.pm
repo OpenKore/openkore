@@ -203,7 +203,7 @@ sub parseConfigFile {
 	my $file = shift;
 	my $r_hash = shift;
 	my $no_undef = shift;
-	my $blocks = shift // {};
+	my $blocks = (shift) // {};
 
 	undef %{$r_hash} unless $no_undef;
 	my ($key, $value, $inBlock, $commentBlock);
