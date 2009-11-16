@@ -389,6 +389,8 @@ sub loadByHandle {
 		$filename = $object->{name};
 	}
 	if (!defined($filename) || ! -f $filename) {
+		return unless $object->{mustExist};
+		
 		$filename = $object->{name} if (!defined $filename);
 		if ($object->{type} == CONTROL_FILE_TYPE) {
 			FileNotFoundException->throw(
