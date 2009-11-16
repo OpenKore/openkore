@@ -2480,3 +2480,5 @@ y_airport 143 43 y_airport 148 51 1200 c r0 c r0
 y_airport 143 49 y_airport 142 40 0 c r0 c r0
 y_airport 140 63 yuno 47 244 0 c r0
 y_airport 145 63 yuno 59 244 0 c r0 
+
+izlude 206 55 airplane_01 244 58 1200 c r0 c r0
