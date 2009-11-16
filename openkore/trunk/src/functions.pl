@@ -192,6 +192,7 @@ sub loadDataFiles {
 	Settings::addTableFile('skillslooks.txt', loader => [\&parseDataFile2, \%skillsLooks]);
 	Settings::addTableFile('skillsarea.txt',  loader => [\&parseDataFile2, \%skillsArea]);
 	Settings::addTableFile('skillsencore.txt',        loader => [\&parseList, \%skillsEncore]);
+	Settings::addTableFile('quests.txt', loader => [\&parseROQuestsLUT, \%quests_lut]);
 
 	use encoding 'utf8';
 
