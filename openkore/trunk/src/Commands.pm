@@ -5369,8 +5369,22 @@ sub cmdQuest {
 		}
 		$msg .= sprintf("%s\n", ('-'x79));
 		message($msg, "list");
+	} elsif ($args[0] eq 'info') {
+		if ($args[1] =~ /^\d+/) {
+			# note: we need the questID here now, might be better if we could make it so you only have to insert some questIndex
+			if ($quests_lut{$args[1]}) {
+				my $msg = center (' ' . ($quests_lut{$args[1]}{title} || T('Quest Info')) . ' ', 79, '-') . "\n";
+				$msg .= TF("Summary: %s\n", $quests_lut{$args[1]}{summary}) if $quests_lut{$args[1]}{summary};
+				$msg .= TF("Objective: %s\n", $quests_lut{$args[1]}{objective}) if $quests_lut{$args[1]}{objective};
+				message $msg;
+			} else {
+				message T("Unknown quest\n"), "info";
+			}
+		} else {
+			message T("Usage: quest info <questID>\n"), "info";
+		}
 	} else {
-		message T("Quest commands: set, list\n"), "info";
+		message T("Quest commands: set, list, info\n"), "info";
 	}
 }
 

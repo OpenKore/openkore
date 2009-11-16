@@ -53,6 +53,7 @@ our @EXPORT = qw(
 	parseROLUT
 	parseRODescLUT
 	parseROSlotsLUT
+	parseROQuestsLUT
 	parseSectionedFile
 	parseShopControl
 	parseSkillsSPLUT
@@ -727,6 +728,47 @@ sub parseROSlotsLUT {
 		}
 	}
 	close FILE;
+	return 1;
+}
+
+sub parseROQuestsLUT {
+	my ($file, $r_hash) = @_;
+	
+	my %ret = (
+		file => $file,
+		hash => $r_hash,
+	);
+	Plugins::callHook ('FileParsers::ROQuestsLUT', \%ret);
+	return if $ret{return};
+	
+	undef %{$r_hash};
+	my ($data, $flag);
+	open my $fp, '<', $file;
+	foreach (<$fp>) {
+		s/\r//g;
+		if (/^(\d+)#([^#]*)#([A-Z_]*)#([A-Z_]*)#/) {
+			$data = {
+				id => $1,
+				title => $2,
+				image => $3,
+				unknown1 => $4,
+			};
+		} elsif (defined $data and /^([^#]*)#/) {
+			unless (defined $data->{summary}) {
+				$data->{summary} = $1;
+				$data->{summary} =~ s/\^......//g;
+			} else {
+				$data->{objective} = $1;
+				$flag = 1;
+			}
+		}
+		
+		if ($flag) {
+			$$r_hash{$data->{id}} = $data;
+			undef $data; undef $flag;
+		}
+	}
+	
 	return 1;
 }
 
