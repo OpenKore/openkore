@@ -88,7 +88,7 @@ ama_in02 115 177 ama_dun01 229 10 0 c r1 c r0 n
 #izlude 134 88 morocc 156 47 1200 c r2 c r2
 #izlude 134 88 aldebaran 168 112 1800 c r2 c r3
 
-# Morroc fields (before Episode 12)
+# Morroc area (before Episode 12)
 #anthell01 35 267 moc_fild04 219 327
 #anthell02 171 169 moc_fild15 258 253
 #moc_fild01 68 16 moc_fild04 314 381
@@ -143,7 +143,7 @@ ama_in02 115 177 ama_dun01 229 10 0 c r1 c r0 n
 #prt_fild09 246 16 moc_fild04 92 381
 #prt_fild10 263 20 moc_fild05 144 375
 
-# Morroc fields (Episode 12)
+# Morroc area (Episode 12)
 anthell01 35 267 moc_fild20 161 144
 anthell02 171 170 moc_fild20 333 315
 moc_fild01 84 19 moc_fild20 209 333
@@ -168,8 +168,72 @@ prt_fild09 95 19 moc_fild20 209 333
 prt_fild09 246 17 moc_fild20 209 333
 prt_fild10 263 23 moc_fild20 209 333
 
-# The New World (Episode 13.1)
+# Dimensional Gorge (Episode 12)
+# moc_fild20 -> moc_fild21 npcs are only available with the quest and a party with at least two members online
+moc_fild20 38 174 moc_fild21 38 193 0 c r1 c c c
+moc_fild20 38 183 moc_fild21 38 193 0 c r1 c c c
+moc_fild20 189 21 moc_fild21 38 193 0 c r1 c c c
+moc_fild20 200 21 moc_fild21 38 193 0 c r1 c c c
+moc_fild20 354 183 moc_fild21 38 193 0 c r1 c c c
+moc_fild20 354 174 moc_fild21 38 193 0 c r1 c c c
+moc_fild20 203 336 moc_fild21 38 193 0 c r1 c c c
+moc_fild20 215 336 moc_fild21 38 193 0 c r1 c c c
+moc_fild21 26 196 moc_fild20 349 179
+moc_fild22 32 196 moc_fild20 349 179
+
+# Battlegrounds (Episode 12)
+aldebaran 146 109 bat_room 154 150 0 c c r0 c
+geffen 109 66 bat_room 154 150 0 c c r0 c
+lighthalzen 153 86 bat_room 154 150 0 c c r0 c
+moc_ruins 75 162 bat_room 154 150 0 c c r0 c
+payon 189 105 bat_room 154 150 0 c c r0 c
+prontera 123 83 bat_room 154 150 0 c c r0 c
+rachel 149 138 bat_room 154 150 0 c c r0 c
+#bat_room 148 150 aldebaran 168 112 0 c r0 c
+#bat_room 148 150 geffen 120 39 0 c r0 c
+#bat_room 148 150 lighthalzen 159 93 0 c r0 c
+#bat_room 148 150 moc_ruins 152 48 0 c r0 c
+#bat_room 148 150 payon 161 58 0 c r0 c
+#bat_room 148 150 prontera 116 72 0 c r0 c
+#bat_room 148 150 rachel 115 124 0 c r0 c
+# following bat_room npcs are only available with base lvl 80
+# Tierra 1 Blue
+bat_room 124 178 bat_room 57 223 0 c r0 c
+bat_room 57 220 bat_room 154 150
+# Tierra 1 Red
+bat_room 125 121 bat_room 57 207 0 c r0 c
+bat_room 57 211 bat_room 154 150
+# Flavius 1 Blue
+bat_room 133 178 bat_room 85 223 0 c r0 c
+bat_room 85 220 bat_room 154 150
+# Flavius 1 Red
+bat_room 133 121 bat_room 85 207 0 c r0 c
+bat_room 85 211 bat_room 154 150
+# Tierra 2 Blue
+bat_room 140 178 bat_room 114 223 0 c r0 c
+bat_room 113 220 bat_room 154 150
+# Tierra 2 Red
+bat_room 140 121 bat_room 114 207 0 c r0 c
+bat_room 113 211 bat_room 154 150
+# Flavius 2 Blue
+bat_room 148 178 bat_room 141 224 0 c r0 c
+bat_room 141 220 bat_room 154 150
+bat_b02 10 293 bat_room 154 150 0 c
+# Flavius 2 Red
+bat_room 148 121 bat_room 
+bat_room  bat_room 154 150
+bat_b02 189 14 bat_room 154 150 0 c
+
+# The New World (Episode 13)
 mid_camp 213 286 moc_fild20 342 179 0 c c r0
+
+# Battlegrounds (Episode 13)
+# KVM Blue
+bat_room 164 178 bat_room 169 223 0 c r0 c
+bat_room 169 220 bat_room 154 150
+# KVM Red
+bat_room 164 121 bat_room 169 207 0 c r0 c
+bat_room 169 211 bat_room 154 150
 
 alb_ship 26 166 alberta 170 170
 alb_ship 37 174 alb_ship 68 99
