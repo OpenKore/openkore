@@ -155,14 +155,14 @@ moc_fild16 124 381 moc_fild20 197 24
 moc_fild16 333 380 moc_fild20 197 24
 moc_fild20 156 143 anthell01 35 263
 moc_fild20 337 315 anthell02 168 170
-moc_fild20 38 174 morocc 160 61 c r2 c
-moc_fild20 38 183 morocc 160 61 c r2 c
-moc_fild20 189 21 morocc 160 61 c r2 c
-moc_fild20 200 21 morocc 160 61 c r2 c
-moc_fild20 354 183 morocc 160 61 c r2 c
-moc_fild20 354 174 morocc 160 61 c r2 c
-moc_fild20 203 336 morocc 160 61 c r2 c
-moc_fild20 215 336 morocc 160 61 c r2 c
+moc_fild20 38 174 morocc 160 61 0 c r2 c
+moc_fild20 38 183 morocc 160 61 0 c r2 c
+moc_fild20 189 21 morocc 160 61 0 c r2 c
+moc_fild20 200 21 morocc 160 61 0 c r2 c
+moc_fild20 354 183 morocc 160 61 0 c r2 c
+moc_fild20 354 174 morocc 160 61 0 c r2 c
+moc_fild20 203 336 morocc 160 61 0 c r2 c
+moc_fild20 215 336 morocc 160 61 0 c r2 c
 morocc 299 207 moc_fild20 36 177
 prt_fild09 95 19 moc_fild20 209 333
 prt_fild09 246 17 moc_fild20 209 333
