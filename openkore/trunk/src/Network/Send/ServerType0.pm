@@ -907,15 +907,28 @@ sub sendPartyJoinRequest {
 	debug "Sent Request Join Party: ".getHex($ID)."\n", "sendPacket", 2;
 }
 
+sub _binName {
+	my $name = shift;
+	
+	$name = stringToBytes ($name);
+	$name = substr ($name, 0, 24) if 24 < length $name;
+	$name .= "\x00" x (24 - length $name);
+	return $name;
+}
+
+sub sendPartyJoinRequestByName {
+	my $self = shift;
+	my $name = shift;
+	my $msg = pack ('C*', 0xc4, 0x02) . _binName ($name);
+	$self->sendToServer ($msg);
+	debug "Sent Request Join Party (by name): $name\n", "sendPacket", 2;
+}
+
 sub sendPartyKick {
 	my $self = shift;
 	my $ID = shift;
 	my $name = shift;
-
-	my $binName = stringToBytes($name);
-	$binName = substr($binName, 0, 24) if (length($binName) > 24);
-	$binName .= chr(0) x (24 - length($binName));
-	my $msg = pack("C*", 0x03, 0x01) . $ID . $binName;
+	my $msg = pack("C*", 0x03, 0x01) . $ID . _binName ($name);
 	$self->sendToServer($msg);
 	debug "Sent Kick Party: ".getHex($ID).", $name\n", "sendPacket", 2;
 }

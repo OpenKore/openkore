@@ -4402,6 +4402,8 @@ sub party_invite_result {
 		message T("Join request failed: Party is full.\n"), "info";
 	} elsif ($args->{type} == 4) {
 		message TF("Join request failed: same account of %s allready joined the party.\n", $name), "info";
+	} elsif ($args->{type} == 7) {
+		message TF("Join request failed: the character is not currently online or does not exist.\n", $name), "info";
 	}
 }
 

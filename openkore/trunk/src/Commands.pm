@@ -3143,7 +3143,7 @@ sub cmdOpenShop {
 sub cmdParty {
 	my (undef, $args) = @_;
 	my ($arg1) = $args =~ /^(\w*)/;
-	my ($arg2) = $args =~ /^\w* (\d+)\b/;
+	my ($arg2) = $args =~ /^\w* (\S+)\b/;
 
 	if ($arg1 eq "" && (!$char || !$char->{'party'} || !%{$char->{'party'}} )) {
 		error T("Error in function 'party' (Party Functions)\n" .
@@ -3214,11 +3214,17 @@ sub cmdParty {
 	} elsif ($arg1 eq "request" && ( !$char->{'party'} || !%{$char->{'party'}} )) {
 		error T("Error in function 'party request' (Request to Join Party)\n" .
 			"Can't request a join - you're not in a party.\n");
-	} elsif ($arg1 eq "request" && $playersID[$arg2] eq "") {
-		error TF("Error in function 'party request' (Request to Join Party)\n" .
-			"Can't request to join party - player %s does not exist.\n", $arg2);
 	} elsif ($arg1 eq "request") {
-		$messageSender->sendPartyJoinRequest($playersID[$arg2]);
+		unless ($arg2 =~ /\D/) {
+			if ($playersID[$arg2] eq "") {
+				error TF("Error in function 'party request' (Request to Join Party)\n" .
+					"Can't request to join party - player %s does not exist.\n", $arg2);
+			} else {
+				$messageSender->sendPartyJoinRequest($playersID[$arg2]);
+			}
+		} else {
+			$messageSender->sendPartyJoinRequestByName ($arg2);
+		}
 
 	} elsif ($arg1 eq "leave" && (!$char->{'party'} || !%{$char->{'party'}} ) ) {
 		error T("Error in function 'party leave' (Leave Party)\n" .
