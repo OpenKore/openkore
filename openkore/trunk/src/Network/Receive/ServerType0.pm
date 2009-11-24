@@ -162,8 +162,8 @@ sub new {
 		'00FD' => ['party_invite_result', 'Z24 C', [qw(name type)]],
 		'00FE' => ['party_invite', 'a4 Z24', [qw(ID name)]],
 		'0101' => ['party_exp', 'v x2', [qw(type)]],
-		'0104' => ['party_join', 'a4 x4 v2 C Z24 Z24 Z16', [qw(ID x y type name user map)]],
-		'0105' => ['party_leave', 'a4 Z24', [qw(ID name)]],
+		'0104' => ['party_join', 'a4 V1 v2 C Z24 Z24 Z16', [qw(ID role x y type name user map)]],
+		'0105' => ['party_leave', 'a4 Z24 C', [qw(ID name result)]],
 		'0106' => ['party_hp_info', 'a4 v2', [qw(ID hp hp_max)]],
 		'0107' => ['party_location', 'a4 v2', [qw(ID x y)]],
 		'0108' => ['item_upgrade', 'v3', [qw(type index upgrade)]],
@@ -300,7 +300,7 @@ sub new {
 		#'01E4' => ['marriage_unknown'], clif_marriage_process
 		##
 		#01E6 26 Some Player Name.
-		'01E9' => ['party_join', 'a4 x4 v2 C Z24 Z24 Z16 v C2', [qw(ID x y type name user map lv item_pickup item_share)]],
+		'01E9' => ['party_join', 'a4 V1 v2 C Z24 Z24 Z16 v C2', [qw(ID role x y type name user map lv item_pickup item_share)]],
 		'01EA' => ['married', 'a4', [qw(ID)]],
 		'01EB' => ['guild_location', 'a4 v2', [qw(ID x y)]],
 		'01EE' => ['inventory_items_stackable'],
@@ -314,6 +314,7 @@ sub new {
 		#'01F8' => ['adopt_unknown'], # clif_adopt_process
 		'01FC' => ['repair_list'],
 		'01FE' => ['repair_result', 'v C', [qw(nameID flag)]],
+		'01FF' => ['high_jump', 'a4 v2', [qw(ID x y)]],
 		'0201' => ['friend_list'],
 		'0205' => ['divorced', 'Z24', [qw(name)]], # clif_divorced
 		'0206' => ['friend_logon', 'a4 a4 C', [qw(friendAccountID friendCharID isNotOnline)]],
@@ -402,7 +403,7 @@ sub new {
 		'02B4' => ['quest_delete', 'V', [qw(questID)]],
 		'02B5' => ['quest_update_mission_hunt', 'v2', [qw(len amount)]],		# var len
 		'02B7' => ['quest_active', 'V C', [qw(questID active)]],
-		'02B8' => ['party_show_picker', 'a4 v C3 a8 C3', [qw(sourceID nameID identified broken upgrade cards unknown1 unknown2 unknown3)]],
+		'02B8' => ['party_show_picker', 'a4 v C3 a8 v c', [qw(sourceID nameID identified broken upgrade cards location type)]],
 		'02B9' => ['hotkeys'],
 		'02C5' => ['party_invite_result', 'Z24 V', [qw(name type)]],
 		'02C6' => ['party_invite', 'a4 Z24', [qw(ID name)]],
@@ -867,7 +868,7 @@ sub actor_display {
 	if (length($args->{coords}) < 5) {
 		makeCoords(\%coordsTo, $args->{coords});
 		%coordsFrom = %coordsTo;
-	} elsif (length($args->{coords}) >= 5) {
+	} elsif (length($args->{coords}) >= 5) { # maybe just "else" here?
 		my $coordsArg = $args->{coords};
 		makeCoords3(\%coordsFrom, \%coordsTo, $coordsArg);
 	}
@@ -1192,7 +1193,7 @@ sub actor_display {
 
 		$actor->{look}{body} = $direction;
 		$actor->{look}{head} = 0;
-
+		
 		if ($actor->isa('Actor::Player')) {
 			debug "Player Moved: " . $actor->name . " ($actor->{binID}) Level $actor->{lv} $sex_lut{$actor->{sex}} $jobs_lut{$actor->{jobID}} - ($coordsFrom{x}, $coordsFrom{y}) -> ($coordsTo{x}, $coordsTo{y})\n", "parseMsg";
 		} elsif ($actor->isa('Actor::Monster')) {
@@ -3650,6 +3651,31 @@ sub job_equipment_hair_change {
 
 }
 
+sub high_jump {
+	my ($self, $args) = @_;
+	return unless changeToInGameState();
+	
+	my $actor = Actor::get ($args->{ID});
+	if (!defined $actor) {
+		$actor = new Actor::Unknown;
+		$actor->{appear_time} = time;
+		$actor->{nameID} = unpack ('V', $args->{ID});
+	} elsif ($actor->{pos_to}{x} == $args->{x} && $actor->{pos_to}{y} == $args->{y}) {
+		message TF("%s failed to Jump\n", $actor->nameString), 'skill';
+		return;
+	}
+	
+	$actor->{pos} = {x => $args->{x}, y => $args->{y}};
+	$actor->{pos_to} = {x => $args->{x}, y => $args->{y}};
+	
+	message TF("%s Jumped: %d, %d\n", $actor->nameString, $actor->{pos_to}{x}, $actor->{pos_to}{y}), 'skill';
+	
+	if ($args->{ID} eq $accountID) {
+		$char->{time_move} = time;
+		$char->{time_move_calc} = 0;
+	}
+}
+
 sub hp_sp_changed {
 	my ($self, $args) = @_;
 	return unless changeToInGameState();
@@ -4389,21 +4415,39 @@ sub party_invite {
 	$timeout{ai_partyAutoDeny}{time} = time;
 }
 
+use constant {
+  ANSWER_ALREADY_OTHERGROUPM => 0x0,
+  ANSWER_JOIN_REFUSE => 0x1,
+  ANSWER_JOIN_ACCEPT => 0x2,
+  ANSWER_MEMBER_OVERSIZE => 0x3,
+  ANSWER_DUPLICATE => 0x4,
+  ANSWER_JOINMSG_REFUSE => 0x5,
+  ANSWER_UNKNOWN_ERROR => 0x6,
+  ANSWER_UNKNOWN_CHARACTER => 0x7,
+  ANSWER_INVALID_MAPPROPERTY => 0x8,
+};
+
 sub party_invite_result {
 	my ($self, $args) = @_;
 	my $name = bytesToString($args->{name});
-	if ($args->{type} == 0) {
+	if ($args->{type} == ANSWER_ALREADY_OTHERGROUPM) {
 		warning TF("Join request failed: %s is already in a party\n", $name);
-	} elsif ($args->{type} == 1) {
+	} elsif ($args->{type} == ANSWER_JOIN_REFUSE) {
 		warning TF("Join request failed: %s denied request\n", $name);
-	} elsif ($args->{type} == 2) {
+	} elsif ($args->{type} == ANSWER_JOIN_ACCEPT) {
 		message TF("%s accepted your request\n", $name), "info";
-	} elsif ($args->{type} == 3) {
+	} elsif ($args->{type} == ANSWER_MEMBER_OVERSIZE) {
 		message T("Join request failed: Party is full.\n"), "info";
-	} elsif ($args->{type} == 4) {
+	} elsif ($args->{type} == ANSWER_DUPLICATE) {
 		message TF("Join request failed: same account of %s allready joined the party.\n", $name), "info";
-	} elsif ($args->{type} == 7) {
+	} elsif ($args->{type} == ANSWER_JOINMSG_REFUSE) {
+		message TF("Join request failed: ANSWER_JOINMSG_REFUSE.\n", $name), "info";
+	} elsif ($args->{type} == ANSWER_UNKNOWN_ERROR) {
+		message TF("Join request failed: unknown error.\n", $name), "info";
+	} elsif ($args->{type} == ANSWER_UNKNOWN_CHARACTER) {
 		message TF("Join request failed: the character is not currently online or does not exist.\n", $name), "info";
+	} elsif ($args->{type} == ANSWER_INVALID_MAPPROPERTY) {
+		message TF("Join request failed: ANSWER_INVALID_MAPPROPERTY.\n", $name), "info";
 	}
 }
 
@@ -4411,7 +4455,7 @@ sub party_join {
 	my ($self, $args) = @_;
 
 	return unless changeToInGameState();
-	my ($ID, $x, $y, $type, $name, $user, $map) = @{$args}{qw(ID x y type name user map)};
+	my ($ID, $role, $x, $y, $type, $name, $user, $map) = @{$args}{qw(ID role x y type name user map)};
 	$name = bytesToString($name);
 	$user = bytesToString($user);
 
@@ -4425,6 +4469,7 @@ sub party_join {
 		}
 	}
 	$char->{party}{users}{$ID} = new Actor::Party if ($char->{party}{users}{$ID}{name});
+	$char->{party}{users}{$ID}{admin} = !$role;
 	if ($type == 0) {
 		$char->{party}{users}{$ID}{online} = 1;
 	} elsif ($type == 1) {
@@ -4445,16 +4490,20 @@ sub party_join {
 
 sub party_leave {
 	my ($self, $args) = @_;
-
-	my $ID = $args->{ID};
-	delete $char->{party}{users}{$ID};
-	binRemove(\@partyUsersID, $ID);
-	if ($ID eq $accountID) {
-		message T("You left the party\n");
-		delete $char->{party};
-		undef @partyUsersID;
+	
+	unless ($args->{result}) {
+		my $ID = $args->{ID};
+		delete $char->{party}{users}{$ID};
+		binRemove(\@partyUsersID, $ID);
+		if ($ID eq $accountID) {
+			message T("You left the party\n");
+			delete $char->{party};
+			undef @partyUsersID;
+		} else {
+			message TF("%s left the party\n", bytesToString($args->{name}));
+		}
 	} else {
-		message TF("%s left the party\n", bytesToString($args->{name}));
+		message TF("%s failed to leave party (%d)\n", bytesToString($args->{name}), $args->{result});
 	}
 }
 
@@ -6874,6 +6923,7 @@ sub GM_silence {
 }
 
 # TODO test if we must use ID to know if the packets are meant for us.
+# ID is monster's?
 sub taekwon_packets {
 	my ($self, $args) = @_;
 	my $string = ($args->{value} == 1) ? "Sun" : ($args->{value} == 2) ? "Moon" : ($args->{value} == 3) ? "Stars" : "unknown";
