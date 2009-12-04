@@ -140,6 +140,14 @@ Yellow Plant 0 0 0
 6045 -1 0 0
 6046 -1 0 0
 
+##### Monster Mercenary #####
+1191 -1 0 0
+1506 -1 0 0
+1275 -1 0 0
+1965 -1 0 0
+1966 -1 0 0
+1967 -1 0 0
+
 ##### MVPs and Dangerous Monsters #####
 Amon Ra 0 1 0
 Archangeling 0 1 0
