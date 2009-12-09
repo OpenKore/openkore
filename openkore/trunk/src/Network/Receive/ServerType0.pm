@@ -6255,7 +6255,7 @@ sub login_pin_code_request {
 
 	if ($args->{flag} == 0) {
 		# PIN code has never been set before, so set it.
-		return if ($config{loginPinCode} eq '' && !queryAndSaveLoginPinCode());
+		return if ($config{loginPinCode} eq '' && !($self->queryAndSaveLoginPinCode()));
 		my @key = split /[, ]+/, $masterServer->{PINEncryptKey};
 		if (!@key) {
 			$interface->errorDialog(T("Unable to send PIN code. You must set the 'PINEncryptKey' option in servers.txt."));
@@ -6266,7 +6266,7 @@ sub login_pin_code_request {
 
 	} elsif ($args->{flag} == 1) {
 		# PIN code query request.
-		return if ($config{loginPinCode} eq '' && !queryAndSaveLoginPinCode());
+		return if ($config{loginPinCode} eq '' && !($self->queryAndSaveLoginPinCode()));
 		my @key = split /[, ]+/, $masterServer->{PINEncryptKey};
 		if (!@key) {
 			$interface->errorDialog(T("Unable to send PIN code. You must set the 'PINEncryptKey' option in servers.txt."));
@@ -6304,7 +6304,7 @@ sub login_pin_code_request {
 	} elsif ($args->{flag} == 4) {
 		# PIN code incorrect.
 		configModify('loginPinCode', '', 1);
-		return if (!queryAndSaveLoginPinCode(T("The login PIN code that you entered is incorrect. Please re-enter your login PIN code.")));
+		return if (!($self->queryAndSaveLoginPinCode(T("The login PIN code that you entered is incorrect. Please re-enter your login PIN code."))));
 
 		my @key = split /[, ]+/, $masterServer->{PINEncryptKey};
 		if (!@key) {
