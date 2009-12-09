@@ -369,7 +369,7 @@ sub queryLoginPinCode {
 }
 
 sub queryAndSaveLoginPinCode {
-	my ($message) = @_;
+	my ($self, $message) = @_;
 	my $pin = queryLoginPinCode($message);
 	if (defined $pin) {
 		configModify('loginPinCode', $pin, silent => 1);
