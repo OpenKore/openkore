@@ -889,12 +889,12 @@ sub processDealAuto {
 	# dealAuto 1=refuse 2,3=accept
 	if ($config{'dealAuto'} && %incomingDeal) {
 		if ($config{'dealAuto'} == 1 && timeOut($timeout{ai_dealAutoCancel})) {
-			$messageSender->sendDealCancel();
+			$messageSender->sendDealReply(4);
 			$timeout{'ai_dealAuto'}{'time'} = time;
 		} elsif ($config{'dealAuto'} >= 2 &&
 			(!$config{dealAuto_names} || existsInList($config{dealAuto_names}, $incomingDeal{name})) &&
 			timeOut($timeout{ai_dealAuto})) {
-			$messageSender->sendDealAccept();
+			$messageSender->sendDealReply(3);
 			$timeout{'ai_dealAuto'}{'time'} = time;
 		}
 	}
