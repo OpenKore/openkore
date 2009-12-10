@@ -397,8 +397,18 @@ sub sendDeal {
 }
 
 # 0x00e6,3,tradeack,2
-sub sendDealAccept {
-	my $msg = pack('v C', 0x00E6, 3);
+sub sendDealReply {
+	#Reply to a trade-request.
+	# Type values:
+	# 0: Char is too far
+	# 1: Character does not exist
+	# 2: Trade failed
+	# 3: Accept
+	# 4: Cancel
+	# Weird enough, the client should only send 3/4
+	# and the server is the one that can reply 0~2
+	my ($self, $action) = @_;
+	my $msg = pack('v C', 0x00E6, $action);
 	$_[0]->sendToServer($msg);
 	debug "Sent Accept Deal\n", "sendPacket", 2;
 }

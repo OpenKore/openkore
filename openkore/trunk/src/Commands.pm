@@ -1264,7 +1264,7 @@ sub cmdDeal {
 		error T("Error in function 'deal' (Deal a Player)\n" .
 			"There is no incoming/current deal to cancel\n");
 	} elsif ($arg[0] eq "no" && (%incomingDeal || %outgoingDeal)) {
-		$messageSender->sendDealCancel();
+		$messageSender->sendDealReply(4);
 	} elsif ($arg[0] eq "no" && %currentDeal) {
 		$messageSender->sendCurrentDealCancel();
 
@@ -1278,7 +1278,7 @@ sub cmdDeal {
 		error T("Error in function 'deal' (Deal a Player)\n" .
 			"You already accepted the final deal\n");
 	} elsif ($arg[0] eq "" && %incomingDeal) {
-		$messageSender->sendDealAccept();
+		$messageSender->sendDealReply(3);
 	} elsif ($arg[0] eq "" && $currentDeal{'you_finalize'} && $currentDeal{'other_finalize'}) {
 		$messageSender->sendDealTrade();
 		$currentDeal{'final'} = 1;

@@ -297,10 +297,32 @@ sub sendDeal {
 	debug "Sent Initiate Deal: ".getHex($ID)."\n", "sendPacket", 2;
 }
 
-sub sendDealAccept {
-	my $msg = pack("C*", 0xE6, 0x00, 0x03);
+sub sendDealReply {
+	#Reply to a trade-request.
+	# Type values:
+	# 0: Char is too far
+	# 1: Character does not exist
+	# 2: Trade failed
+	# 3: Accept
+	# 4: Cancel
+	# Weird enough, the client should only send 3/4
+	# and the server is the one that can reply 0~2
+	my ($self, $action) = @_;
+	my $msg = pack('v C', 0x00E6, $action);
 	$_[0]->sendToServer($msg);
-	debug "Sent Accept Deal\n", "sendPacket", 2;
+	debug "Sent " . ($action == 3 ? "Accept": ($action == 4 ? "Cancel" : "action: " . $action)) . " Deal\n", "sendPacket", 2;
+}
+
+# legacy plugin support, remove later
+sub sendDealAccept {
+	$_[0]->sendDealReply(3);
+	debug "Sent Cancel Deal\n", "sendPacket", 2;
+}
+
+# legacy plugin support, remove later
+sub sendDealCancel {
+	$_[0]->sendDealReply(4);
+	debug "Sent Cancel Deal\n", "sendPacket", 2;
 }
 
 sub sendDealAddItem {
@@ -308,12 +330,6 @@ sub sendDealAddItem {
 	my $msg = pack("C*", 0xE8, 0x00) . pack("v*", $index) . pack("V*",$amount);
 	$_[0]->sendToServer($msg);
 	debug "Sent Deal Add Item: $index, $amount\n", "sendPacket", 2;
-}
-
-sub sendDealCancel {
-	my $msg = pack("C*", 0xE6, 0x00, 0x04);
-	$_[0]->sendToServer($msg);
-	debug "Sent Cancel Deal\n", "sendPacket", 2;
 }
 
 sub sendDealFinalize {

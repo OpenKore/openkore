@@ -85,12 +85,12 @@ sub add {
 
 sub accept {
 	my ($self,$args) = @_;
-	$messageSender->sendDealAccept();
+	$messageSender->sendDealReply(3);
 }
 
 sub cancel {
 	my ($self,$args) = @_;	
-	$messageSender->sendDealCancel();
+	$messageSender->sendDealReply(4);
 }
 
 sub finalize {
