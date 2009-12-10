@@ -410,7 +410,7 @@ sub sendDealReply {
 	my ($self, $action) = @_;
 	my $msg = pack('v C', 0x00E6, $action);
 	$_[0]->sendToServer($msg);
-	debug "Sent Accept Deal\n", "sendPacket", 2;
+	debug "Sent " . ($action == 3 ? "Accept": ($action == 4 ? "Cancel" : "action: " . $action)) . " Deal\n", "sendPacket", 2;
 }
 
 # 0x00e8,8,tradeadditem,2:4
