@@ -15,11 +15,11 @@
 # Korea (kRO)
 # The majority of private servers use eAthena, this is a clone of kRO
 
-package Network::Send::kRO::Sakexe_2005_04_09a;
+package Network::Send::kRO::Sakexe_2005_05_09a;
 
 use strict;
-use Network::Send::kRO::Sakexe_2005_04_11a;
-use base qw(Network::Send::kRO::Sakexe_2005_04_11a);
+use Network::Send::kRO::Sakexe_2005_04_25a;
+use base qw(Network::Send::kRO::Sakexe_2005_04_25a);
 
 use Log qw(message warning error debug);
 use Utils qw(getTickCount getHex getCoordString);
