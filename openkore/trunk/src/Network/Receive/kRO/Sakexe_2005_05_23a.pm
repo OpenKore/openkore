@@ -19,7 +19,7 @@ package Network::Receive::kRO::Sakexe_2005_05_23a;
 
 use strict;
 use Network::Receive::kRO::Sakexe_2005_05_09a;
-use base qw(Network::Receive::kRO::Sakexe_2005_04_09a);
+use base qw(Network::Receive::kRO::Sakexe_2005_05_09a);
 
 sub new {
 	my ($class) = @_;
