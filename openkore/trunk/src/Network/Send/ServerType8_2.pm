@@ -14,6 +14,7 @@
 #  Modified by skseo, Jan-24-2007, Fixed bugs.
 ########################################################################
 # Some eAthena servers after Feb 26th 2008
+# kRO 2008-3-26 (eA packet version 9)
 # Servertype overview: http://www.openkore.com/wiki/index.php/ServerType
 package Network::Send::ServerType8_2;
 

@@ -49,7 +49,7 @@ sub create {
 	my ($self, $type) = @_;
 
 	my $class = "Network::Receive::kRO::" . $type;
-	#my $class = "Network::Receive::ServerType8_5"; #-> we don't need this anymore! yay
+	#my $class = "Network::Receive::ServerType8_4"; #-> we don't need this anymore! yay
 
 	undef $@;
 	eval ("use $class;");
