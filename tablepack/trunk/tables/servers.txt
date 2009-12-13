@@ -799,7 +799,7 @@ ip koreserver.info
 port 6900 
 master_version 16 
 version 23 
-serverType 8_4
+serverType 8_5
 private 1 
 serverEncoding Western 
 charBlockSize 108 
@@ -1267,7 +1267,7 @@ ip 74.86.240.226
 port 6900
 master_version 14
 version 10
-serverType 8_2
+serverType 8_4
 private 1
 serverEncoding Western
 charBlockSize 108
