@@ -1,4 +1,5 @@
 # Some eAthena servers after Feb 26th 2008
+#  kRO Client 2008-3-26 (eA packet version 9)
 # Servertype overview: http://www.openkore.com/wiki/index.php/ServerType
 package Network::Receive::ServerType8_2;
 

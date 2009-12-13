@@ -51,7 +51,7 @@ sub handleLogin {
 
 		my $output;
 		#Note: in perl 8 == "8_4" == '8_4',  so to separate them you need to use a regular expression
-		$output = pack("C2",0x83, 0x02) if ($self->getServerType() =~ m/^8(_[1-5])$/);
+		$output = pack("C2",0x83, 0x02) if ($self->getServerType() =~ m/^8(_[1-4])$/);
 		$output .= $accountID;
 
 		my $charInfo = $self->getCharInfo($session);
@@ -125,7 +125,7 @@ sub process_009B {
 sub process_0436 {
 	my ($self, $client, $message) = @_;
 
-	if ($self->getServerType() =~ m/^8_5$/) {
+	if ($self->getServerType() =~ m/^8_4$/) {
 		# Map server login.
 		my ($accountID , $charID, $sessionID, $gender) = unpack('x2 a4 a4 V x4 C', $message);
 		$self->handleLogin($client, $accountID, $charID, $sessionID, $gender);
