@@ -2900,7 +2900,7 @@ sub guild_allies_enemy_list {
 	my $len = unpack("v", substr($msg, 2, 2));
 
 	# clear $guild{enemy} and $guild{ally} otherwise bot will misremember alliances -zdivpsa
-	$guild{enemy} = $guild{ally} = {};
+	$guild{enemy} = {}; $guild{ally} = {};
 
 	for (my $i = 4; $i < $len; $i += 32) {
 		my ($type, $guildID, $guildName) = unpack('V2 Z24', substr($msg, $i, 32));
