@@ -2455,6 +2455,10 @@ sub cmdGuild {
 			# Translation Comment: List of allies. Keep the same spaces of the - Guild Information - tag.
 			message TF("Ally    : %s (%s)\n", $guild{ally}{$ally}, $ally), "info";
 		}
+		for my $ally (keys %{$guild{enemy}}) {
+			# Translation Comment: List of enemies. Keep the same spaces of the - Guild Information - tag.
+			message TF("Enemy   : %s (%s)\n", $guild{enemy}{$ally}, $ally), "info";
+		}
 		message("---------------------------------------\n", "info");
 
 	} elsif ($arg1 eq "member") {
