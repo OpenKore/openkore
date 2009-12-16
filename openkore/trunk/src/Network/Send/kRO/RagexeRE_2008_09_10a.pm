@@ -22,7 +22,7 @@ use Network::Send::kRO::RagexeRE_2008_08_27a;
 use base qw(Network::Send::kRO::RagexeRE_2008_08_27a);
 
 use Log qw(message warning error debug);
-use Utils qw(getTickCount);
+use Utils qw(getTickCount getHex);
 
 sub version {
 	return 25; # looks a lot like 23, except that 25 inherits from 24
