@@ -27,7 +27,6 @@ sub new {
 }
 
 =pod
-
 //2008-03-25bSakexe
 0x02f3,-1
 0x02f4,-1

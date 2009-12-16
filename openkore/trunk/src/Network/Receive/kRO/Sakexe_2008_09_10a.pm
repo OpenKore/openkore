@@ -15,24 +15,36 @@
 # Korea (kRO)
 # The majority of private servers use eAthena, this is a clone of kRO
 
-package Network::Send::kRO::Sakexe_2008_03_18a;
+package Network::Receive::kRO::Sakexe_2008_09_10a;
 
 use strict;
-use Network::Send::kRO::Sakexe_2008_01_02a;
-use base qw(Network::Send::kRO::Sakexe_2008_01_02a);
+#use Network::Receive::kRO::Sakexe_2008_08_20a;
+use base qw(Network::Receive::kRO::Sakexe_2008_08_20a);
 
 sub new {
 	my ($class) = @_;
-	return $class->SUPER::new(@_);
+	my $self = $class->SUPER::new(@_);
+	my %packets = (
+		# 0x0436 is sent packet
+		# 0x0437 is sent packet
+		# 0x0438 is sent packet
+		# 0x0439 is sent packet
+	);
+	
+	foreach my $switch (keys %packets) {
+		$self->{packet_list}{$switch} = $packets{$switch};
+	}
+
+	return $self;
 }
 
 =pod
-//2008-03-18aSakexe
-0x02bf,0
-0x02c0,0
-0x02f0,10
-0x02f1,2,progressbar,0
-0x02f2,2
+//2008-09-10aSakexe
+packet_ver: 23
+0x0436,19,wanttoconnection,2:6:10:14:18
+0x0437,7,actionrequest,2:6
+0x0438,10,useskilltoid,2:4:6
+0x0439,8,useitem,2:4
 =cut
 
 1;

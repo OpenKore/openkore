@@ -15,13 +15,15 @@
 # Korea (kRO)
 # The majority of private servers use eAthena, this is a clone of kRO
 
-# This is the most experimental of the whole kRO tree
+# this is an experimental class
+# this serverType is used for kRO Sakray RE
+# basically when we don't know where to put a new packet, we put it here and move it to the right class later
 
 package Network::Send::kRO::RagexeRE_0;
 
 use strict;
-use Network::Send::kRO::RagexeRE_2009_01_21a;
-use base qw(Network::Send::kRO::RagexeRE_2009_01_21a);
+use Network::Send::kRO::RagexeRE_2009_10_27a;
+use base qw(Network::Send::kRO::RagexeRE_2009_10_27a);
 
 use Log qw(message warning error debug);
 use Utils::Rijndael qw(normal_rijndael);
@@ -63,21 +65,7 @@ sub sendMasterLogin {
 	$self->sendToServer($msg);
 }
 
-sub sendCaptchaInitiate {
-	my ($self) = @_;
-	my $msg = pack('v2 a4', 0x07E5, 0x12, $accountID);
-	$self->sendToServer($msg);
-	debug "Sending Captcha Initiate\n";
-}
-
-# 0x20 = 32 = len?
-sub sendCaptchaAnswer {
-	my ($self, $answer) = @_;
-	my $msg = pack('v2 a4 a24', 0x07E7, 0x20, $accountID, $answer);
-	$self->sendToServer($msg);
-}
-
-sub sendGameLogin {
+sub sendGameLogin { # we hack on the sendGameLogin and add the nextMessageMightBeAccountID after it
 	my ($self) = shift;
 	$self->SUPER::sendGameLogin(@_);
 	$incomingMessages->nextMessageMightBeAccountID();

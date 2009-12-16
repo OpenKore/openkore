@@ -15,24 +15,45 @@
 # Korea (kRO)
 # The majority of private servers use eAthena, this is a clone of kRO
 
-package Network::Send::kRO::Sakexe_2008_03_18a;
+package Network::Send::kRO::RagexeRE_2009_09_22a;
 
 use strict;
-use Network::Send::kRO::Sakexe_2008_01_02a;
-use base qw(Network::Send::kRO::Sakexe_2008_01_02a);
+use Network::Send::kRO::RagexeRE_2009_08_25a;
+use base qw(Network::Send::kRO::RagexeRE_2009_08_25a);
+
+use Globals qw($accountID);
+
+use Log qw(message warning error debug);
 
 sub new {
 	my ($class) = @_;
 	return $class->SUPER::new(@_);
 }
 
+# 0x07e5,8
+# TODO: what is 0x12?
+sub sendCaptchaInitiate {
+	my ($self) = @_;
+	my $msg = pack('v2 a4', 0x07E5, 0x12, $accountID);
+	$self->sendToServer($msg);
+	debug "Sending Captcha Initiate\n";
+}
+
+#0x07e7,32
+# TODO: what is 0x20?
+sub sendCaptchaAnswer {
+	my ($self, $answer) = @_;
+	my $msg = pack('v2 a4 a24', 0x07E7, 0x20, $accountID, $answer);
+	$self->sendToServer($msg);
+}
+
 =pod
-//2008-03-18aSakexe
-0x02bf,0
-0x02c0,0
-0x02f0,10
-0x02f1,2,progressbar,0
-0x02f2,2
+//2009-09-22aRagexeRE
+0x07e5,8
+//0x07e6,8
+0x07e7,32
+0x07e8,-1
+0x07e9,5
 =cut
 
 1;
