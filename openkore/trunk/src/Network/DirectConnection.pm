@@ -330,8 +330,13 @@ sub checkConnection {
 		} elsif ($config{serverEncoding} eq '') {
 			main::configModify('serverEncoding', 'Western');
 		}
+
+		if($masterServer->{addTableFolders}) {
+			Settings::addTablesFolders($masterServer->{addTableFolders});
+		}
+
 		if (Settings::setRecvPacketsName($masterServer->{recvpackets})) {
-			my (undef, undef, $basename) = File::Spec->splitpath(Settings::getRecvPacketsFilename());
+			my (undef, undef,$basename) = File::Spec->splitpath(Settings::getRecvPacketsFilename());
 			Settings::loadByRegexp(quotemeta $basename, sub {
 				my ($filename) = @_;
 				message TF("Loading %s...\n", $filename);

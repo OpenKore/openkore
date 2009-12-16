@@ -61,6 +61,11 @@ sub new {
 	if ($config{serverType} != $masterServer->{serverType}) {
 		Misc::configModify('serverType', $masterServer->{serverType});
 	}
+	
+	if($masterServer->{addTableFolders}) {
+		Settings::addTablesFolders($masterServer->{addTableFolders});
+	}
+	
 	if (Settings::setRecvPacketsName($masterServer->{recvpackets})) {
 		my (undef, undef, $basename) = File::Spec->splitpath(Settings::getRecvPacketsFilename());
 		Settings::loadByRegexp(quotemeta $basename, sub {
