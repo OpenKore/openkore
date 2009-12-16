@@ -456,7 +456,7 @@ sub new {
 		'01D3' => ['sound_effect', 'Z24 C V a4', [qw(name type unknown ID)]], # 35
 		'01D4' => ['npc_talk_text', 'a4', [qw(ID)]], # 6
 		# 0x01d5 is sent packet
-		# 0x01d6,4
+		'01D6' => ['pvp_mode2', 'v', [qw(type)]], # 4
 		'01D7' => ['player_equipment', 'a4 C v2', [qw(sourceID type ID1 ID2)]], # 11
 		'01D8' => ['actor_display', 'a4 v14 a4 a2 v2 C2 a3 C3 v',	[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 karma sex coords unknown1 unknown2 act lv)]], # 54 # standing
 		'01D9' => ['actor_display', 'a4 v14 a4 a2 v2 C2 a3 C2 v',		[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 karma sex coords unknown1 unknown2 lv)]], # 53 # spawning
@@ -4520,7 +4520,7 @@ sub party_join {
 	$char->{party}{users}{$ID}->{ID} = $ID;
 
 	if ($config{partyAutoShare} && $char->{party} && $char->{party}{users}{$accountID}{admin}) {
-		$messageSender->sendPartyShareEXP(1);
+		$messageSender->sendPartyOption(1, 0);
 	}
 }
 
@@ -4582,7 +4582,7 @@ sub party_users_info {
 	}
 
 	if ($config{partyAutoShare} && $char->{party} && %{$char->{party}}) {
-		$messageSender->sendPartyShareEXP(1);
+		$messageSender->sendPartyOption(1, 0);
 	}
 
 }
@@ -5152,6 +5152,7 @@ sub no_teleport {
 	}
 }
 
+# TODO: pvp_mode1 = pvp_mode2?
 sub pvp_mode1 {
 	my ($self, $args) = @_;
 	my $type = $args->{type};
@@ -6893,9 +6894,10 @@ sub hotkeys {
 	$msg .= sprintf("%s\n", ('-'x79));
 	my $j = 0;
 	for (my $i = 2; $i < $args->{RAW_MSG_SIZE}; $i+=7) {
-		$hotkeyList->[$j]->{type} = unpack("C1", substr($args->{RAW_MSG}, $i, 1));
-		$hotkeyList->[$j]->{ID} = unpack("V1", substr($args->{RAW_MSG}, $i+1, 4));
-		$hotkeyList->[$j]->{lv} = unpack("v1", substr($args->{RAW_MSG}, $i+5, 2));
+		($hotkeyList->[$j]->{type}, $hotkeyList->[$j]->{ID},$hotkeyList->[$j]->{lv}) = unpack('C V v', substr($args->{RAW_MSG}, $i, 7));
+		#$hotkeyList->[$j]->{type} = unpack("C1", substr($args->{RAW_MSG}, $i, 1));
+		#$hotkeyList->[$j]->{ID} = unpack("V1", substr($args->{RAW_MSG}, $i+1, 4));
+		#$hotkeyList->[$j]->{lv} = unpack("v1", substr($args->{RAW_MSG}, $i+5, 2));
 
 		$msg .= swrite(TF("\@%s \@%s \@%s \@%s", ('>'x3), ('<'x30), ('<'x5), ('>'x3)),
 			[$j, $hotkeyList->[$j]->{type} ? Skill->new(idn => $hotkeyList->[$j]->{ID})->getName() : itemNameSimple($hotkeyList->[$j]->{ID}),

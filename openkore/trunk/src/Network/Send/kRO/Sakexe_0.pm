@@ -466,7 +466,7 @@ sub sendPartyOrganize {
 	my ($self, $name) = @_;
 	my $msg = pack('v Z24', 0x00F9, stringToBytes($name));
 	$self->sendToServer($msg);
-	debug "Sent Organize Party: $name\n", "sendPacket", 2;
+	debug "Sent Party Organize: $name\n", "sendPacket", 2;
 }
 
 # 0x00fc,6,partyinvite,2
@@ -474,7 +474,7 @@ sub sendPartyJoinRequest {
 	my ($self, $ID) = @_;
 	my $msg = pack('v a4', 0x00FC, $ID);
 	$self->sendToServer($msg);
-	debug "Sent Request Join Party: ".getHex($ID)."\n", "sendPacket", 2;
+	debug "Sent Party Request Join: ".getHex($ID)."\n", "sendPacket", 2;
 }
 
 # 0x00ff,10,replypartyinvite,2:6
@@ -482,21 +482,22 @@ sub sendPartyJoin {
 	my ($self, $ID, $flag) = @_;
 	my $msg = pack('v a4 V', 0x00FF, $ID, $flag);
 	$self->sendToServer($msg);
-	debug "Sent Join Party: ".getHex($ID).", $flag\n", "sendPacket", 2;
+	debug "Sent Party Join: ".getHex($ID).", $flag\n", "sendPacket", 2;
 }
 
 # 0x0100,2,leaveparty,0
 sub sendPartyLeave {
 	$_[0]->sendToServer(pack('v', 0x0100));
-	debug "Sent Leave Party\n", "sendPacket", 2;
+	debug "Sent Party Leave\n", "sendPacket", 2;
 }
 
 # 0x0102,6,partychangeoption,2:4
+# note: item share changing seems disabled in newest clients
 sub sendPartyOption {
 	my ($self, $exp, $item) = @_;
 	my $msg = pack('v3', 0x0102, $exp, $item);
 	$self->sendToServer($msg);
-	debug "Sent Leave Party\n", "sendPacket", 2;
+	debug "Sent Party 0ption\n", "sendPacket", 2;
 }
 
 # 0x0103,30,removepartymember,2:6
@@ -504,7 +505,7 @@ sub sendPartyKick {
 	my ($self, $ID, $name) = @_;
 	my $msg = pack('v a4 Z24', 0x0103, $ID, stringToBytes($name));
 	$self->sendToServer($msg);
-	debug "Sent Kick Party: ".getHex($ID).", $name\n", "sendPacket", 2;
+	debug "Sent Party Kick: ".getHex($ID).", $name\n", "sendPacket", 2;
 }
 
 # 0x0108,-1,partymessage,2:4

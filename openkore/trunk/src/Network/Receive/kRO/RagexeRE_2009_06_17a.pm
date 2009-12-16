@@ -25,7 +25,7 @@ sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
 	my %packets = (
-		# 0x07d9,268
+		'07D9' => ['hotkeys'], # 268 # hotkeys:38
 		# //0x07dc,6
 		# //0x07dd,54
 		# //0x07de,30
@@ -38,7 +38,6 @@ sub new {
 
 	return $self;
 }
-
 
 =pod
 //2009-06-17aRagexeRE

@@ -170,9 +170,13 @@ sub handleMapLoaded {
 	
 	# Send Hotkeys
 	$output = '';
-	$output .=  pack('C2', 0xB9, 0x02);
+	if(@{$hotkeyList} > 28) { # todo: there is also 07D9,254
+		$output .=  pack('v', 0x02B9); # old interface (28 hotkeys)
+	} else {
+		$output .=  pack('v', 0x07D9); # renewal interface as of: RagexeRE_2009_06_10a (38 hotkeys)
+	}
 	for (my $i = 0; $i < @{$hotkeyList}; $i++) {
-		$output .= pack('C1 V1 v1', $hotkeyList->[$i]->{type}, $hotkeyList->[$i]->{ID}, $hotkeyList->[$i]->{lv});
+		$output .= pack('C V v', $hotkeyList->[$i]->{type}, $hotkeyList->[$i]->{ID}, $hotkeyList->[$i]->{lv});
 	}
 	$client->send($output) if (@{$hotkeyList});
 

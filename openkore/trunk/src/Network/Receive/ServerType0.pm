@@ -4484,7 +4484,7 @@ sub party_join {
 	$char->{party}{users}{$ID}->{ID} = $ID;
 
 	if ($config{partyAutoShare} && $char->{party} && $char->{party}{users}{$accountID}{admin}) {
-		$messageSender->sendPartyShareEXP(1);
+		$messageSender->sendPartyOption(1, 0);
 	}
 }
 
@@ -4550,7 +4550,7 @@ sub party_users_info {
 	}
 
 	if ($config{partyAutoShare} && $char->{party} && %{$char->{party}}) {
-		$messageSender->sendPartyShareEXP(1);
+		$messageSender->sendPartyOption(1, 0);
 	}
 
 }

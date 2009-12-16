@@ -48,7 +48,7 @@ sub new {
 		# 0x02b6 is sent packet
 		'02B7' => ['quest_active', 'V C', [qw(questID active)]], # 7
 		'02B8' => ['party_show_picker', 'a4 v C3 a8 C3', [qw(sourceID nameID identified broken upgrade cards unknown1 unknown2 unknown3)]], # 22
-		'02B9' => ['hotkeys'], #191
+		'02B9' => ['hotkeys'], # 191 # hotkeys:27
 
 		# 0x02bb,8
 		# 0x02bc,6

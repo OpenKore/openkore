@@ -61,7 +61,7 @@ sub sendPartyJoinRequestByName {
 	my ($self, $name) = @_;
 	my $msg = pack('v Z24', 0x02C2, $name);
 	$self->sendToServer($msg);
-	debug "Sent Party Invite.\n", "sendPacket", 2;
+	debug "Sent Party Invite to: $name\n", "sendPacket", 2;
 }
 
 # 0x02c7,7,replypartyinvite2,2:6
