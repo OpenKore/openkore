@@ -172,7 +172,7 @@ sub sendGetPlayerInfo {
 sub sendPrivateMsg {
 	my ($self, $user, $message) = @_;
 	$message = "|00$message" if ($config{chatLangCode} && $config{chatLangCode} ne "none");
-	my $msg = pack('v3 Z24 Z*', 0x0096, length($message) + 29, stringToBytes($user), stringToBytes($message));
+	my $msg = pack('v2 Z24 Z*', 0x0096, length($message) + 29, stringToBytes($user), stringToBytes($message));
 	$self->sendToServer($msg);
 }
 
