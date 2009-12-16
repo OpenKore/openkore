@@ -277,6 +277,10 @@ sub setTablesFolders {
 	@tablesFolders = @_;
 }
 
+sub addTablesFolders {
+	return @tablesFolders = (@tablesFolders, split($pathDelimiter, shift));
+}
+
 sub getTablesFolders {
 	return @tablesFolders;
 }
@@ -423,7 +427,6 @@ sub loadByHandle {
 # and exceptions.
 sub loadByRegexp {
 	my ($regexp, $progressHandler) = @_;
-	my @result;
 	foreach my $object (@{$files->getItems()}) {
 		if ($object->{name} =~ /$regexp/) {
 			loadByHandle($object->{index}, $progressHandler);
