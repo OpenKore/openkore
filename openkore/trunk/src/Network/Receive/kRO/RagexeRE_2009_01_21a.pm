@@ -22,7 +22,6 @@ use Network::Receive::kRO::RagexeRE_2008_12_17b;
 use base qw(Network::Receive::kRO::RagexeRE_2008_12_17b);
 
 use Log qw(message warning error debug);
-use Utils qw(getTickCount);
 
 sub new {
 	my ($class) = @_;

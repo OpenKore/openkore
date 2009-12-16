@@ -15,11 +15,11 @@
 # Korea (kRO)
 # The majority of private servers use eAthena, this is a clone of kRO
 
-package Network::Send::kRO::Sakexe_2008_03_18a;
+package Network::Send::kRO::Sakexe_2008_11_13a;
 
 use strict;
-use Network::Send::kRO::Sakexe_2008_01_02a;
-use base qw(Network::Send::kRO::Sakexe_2008_01_02a);
+#use Network::Send::kRO::Sakexe_2008_09_10a;
+use base qw(Network::Send::kRO::Sakexe_2008_09_10a);
 
 sub new {
 	my ($class) = @_;
@@ -27,12 +27,10 @@ sub new {
 }
 
 =pod
-//2008-03-18aSakexe
-0x02bf,0
-0x02c0,0
-0x02f0,10
-0x02f1,2,progressbar,0
-0x02f2,2
+//2008-11-13aSakexe
+0x043d,8
+0x043e,-1
+0x043f,8
 =cut
 
 1;

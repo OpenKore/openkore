@@ -28,7 +28,7 @@ sub new {
 		# 0x02bf,0
 		# 0x02c0,0
 		# 0x02f0,10
-		# 0x02f1,2
+		# 0x02f1,2,progressbar,0
 		# 0x02f2,2
 	);
 	
@@ -44,7 +44,7 @@ sub new {
 0x02bf,0
 0x02c0,0
 0x02f0,10
-0x02f1,2
+0x02f1,2,progressbar,0
 0x02f2,2
 =cut
 

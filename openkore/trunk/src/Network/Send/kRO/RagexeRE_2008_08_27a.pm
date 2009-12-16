@@ -18,8 +18,8 @@
 package Network::Send::kRO::RagexeRE_2008_08_27a;
 
 use strict;
-use Network::Send::kRO::Sakexe_2008_05_27a;
-use base qw(Network::Send::kRO::Sakexe_2008_05_27a);
+use Network::Send::kRO::Sakexe_2008_09_10a;
+use base qw(Network::Send::kRO::Sakexe_2008_09_10a); #looks weird, inheriting from a newer file... but this is what eA has and we want to be able to play on eA servers
 
 use Log qw(message warning error debug);
 use Utils qw(getTickCount getHex getCoordString);
@@ -28,7 +28,7 @@ use Utils qw(getTickCount getHex getCoordString);
 use Globals qw($char);
 
 sub version {
-	return 23;
+	return 24;
 }
 
 sub new {
@@ -56,7 +56,7 @@ sub sendSkillUse {
 	debug "Skill Use: $ID\n", "sendPacket", 2;
 }
 
-# 0x007e,105,useskilltoposinfo,10:14:18:23:25	//Test
+# 0x007e,105,useskilltoposinfo,10:14:18:23:25
 sub sendSkillUseLocInfo {
 	my ($self, $ID, $lv, $x, $y, $moreinfo) = @_;
 
@@ -193,10 +193,10 @@ sub sendAction { # flag: 0 attack (once), 7 attack (continuous), 2 sit, 3 stand
 
 =pod
 //2008-08-27aRagexeRE
-packet_ver: 23
+packet_ver: 24
 0x0072,22,useskilltoid,9:15:18
 0x007c,44
-0x007e,105,useskilltoposinfo,10:14:18:23:25	//Test
+0x007e,105,useskilltoposinfo,10:14:18:23:25
 0x0085,10,changedir,4:9
 0x0089,11,ticksend,7
 0x008c,14,getcharnamerequest,10

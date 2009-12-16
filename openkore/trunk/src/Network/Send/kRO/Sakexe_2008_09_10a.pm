@@ -15,17 +15,18 @@
 # Korea (kRO)
 # The majority of private servers use eAthena, this is a clone of kRO
 
-package Network::Send::kRO::RagexeRE_2008_09_10a;
+package Network::Send::kRO::Sakexe_2008_09_10a;
 
 use strict;
-use Network::Send::kRO::RagexeRE_2008_08_27a;
-use base qw(Network::Send::kRO::RagexeRE_2008_08_27a);
+#use Network::Send::kRO::Sakexe_2008_08_20a;
+use base qw(Network::Send::kRO::Sakexe_2008_08_20a);
 
 use Log qw(message warning error debug);
 use Utils qw(getTickCount);
 
 sub version {
-	return 25; # looks a lot like 23, except that 25 inherits from 24
+	return 23; # looks a lot like 25, except that 25 inherits from 24
+
 }
 
 sub new {
@@ -41,7 +42,7 @@ sub sendMapLogin {
 	$self->sendToServer($msg);
 }
 
-# 0x0437,7,actionrequest,2:6
+#0x0437,7,actionrequest,2:6
 sub sendAction { # flag: 0 attack (once), 7 attack (continuous), 2 sit, 3 stand
 	my ($self, $monID, $flag) = @_;
 
@@ -90,8 +91,8 @@ sub sendItemUse {
 }
 
 =pod
-//2008-09-10aRagexeRE
-packet_ver: 25
+//2008-09-10aSakexe
+packet_ver: 23
 0x0436,19,wanttoconnection,2:6:10:14:18
 0x0437,7,actionrequest,2:6
 0x0438,10,useskilltoid,2:4:6
