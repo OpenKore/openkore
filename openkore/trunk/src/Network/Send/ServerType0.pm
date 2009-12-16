@@ -313,13 +313,13 @@ sub sendDealReply {
 	debug "Sent " . ($action == 3 ? "Accept": ($action == 4 ? "Cancel" : "action: " . $action)) . " Deal\n", "sendPacket", 2;
 }
 
-# legacy plugin support, remove later
+# TODO: legacy plugin support, remove later
 sub sendDealAccept {
 	$_[0]->sendDealReply(3);
 	debug "Sent Cancel Deal\n", "sendPacket", 2;
 }
 
-# legacy plugin support, remove later
+# TODO: legacy plugin support, remove later
 sub sendDealCancel {
 	$_[0]->sendDealReply(4);
 	debug "Sent Cancel Deal\n", "sendPacket", 2;
@@ -975,12 +975,19 @@ sub sendPartyOrganize {
 	debug "Sent Organize Party: $name\n", "sendPacket", 2;
 }
 
+# legacy plugin support, remove later
 sub sendPartyShareEXP {
-	my $self = shift;
-	my $flag = shift;
-	my $msg = pack("C*", 0x02, 0x01).pack("V", $flag);
+	my ($self, $exp) = @_;
+	$self->sendPartyOption($exp, 0);
+}
+
+# 0x0102,6,partychangeoption,2:4
+# note: item share changing seems disabled in newest clients
+sub sendPartyOption {
+	my ($self, $exp, $item) = @_;
+	my $msg = pack('v3', 0x0102, $exp, $item);
 	$self->sendToServer($msg);
-	debug "Sent Party Share: $flag\n", "sendPacket", 2;
+	debug "Sent Party 0ption\n", "sendPacket", 2;
 }
 
 sub sendPetCapture {

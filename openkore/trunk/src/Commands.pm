@@ -3244,7 +3244,7 @@ sub cmdParty {
 		error T("Syntax Error in function 'party share' (Set Party Share EXP)\n" .
 			"Usage: party share <flag>\n");
 	} elsif ($arg1 eq "share") {
-		$messageSender->sendPartyShareEXP($arg2);
+		$messageSender->sendPartyOption($arg2, 0);
 
 
 	} elsif ($arg1 eq "kick" && ( !$char->{'party'} || !%{$char->{'party'}} )) {
