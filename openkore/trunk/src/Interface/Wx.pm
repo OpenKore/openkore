@@ -515,13 +515,18 @@ sub createSettingsMenu {
 # 	}
 	
 	$self->{mBooleanSetting}{'wx_npcTalk'} = $self->addCheckMenu (
-		$parentMenu, 'Use Wx NPC Talk', sub { $self->onBooleanSetting ('wx_npcTalk'); },
-		'Open a dialog when talking with NPCs'
+		$parentMenu, T('Use Wx NPC Talk'), sub { $self->onBooleanSetting ('wx_npcTalk'); },
+		T('Open a dialog when talking with NPCs')
 	);
 	
 	$self->{mBooleanSetting}{'wx_captcha'} = $self->addCheckMenu (
-		$parentMenu, 'Use Wx captcha', sub { $self->onBooleanSetting ('wx_captcha'); },
-		'Open a dialog when receiving a captcha'
+		$parentMenu, T('Use Wx captcha'), sub { $self->onBooleanSetting ('wx_captcha'); },
+		T('Open a dialog when receiving a captcha')
+	);
+	
+	$self->{mBooleanSetting}{'wx_map_route'} = $self->addCheckMenu (
+		$parentMenu, T('Show route on map'), sub { $self->onBooleanSetting ('wx_map_route'); },
+		T('Show route solution steps')
 	);
 	
 	$parentMenu->AppendSeparator;
@@ -790,12 +795,18 @@ sub updateMapViewer {
 	$myPos = calcPosition($char);
 
 	$map->set($field->name(), $myPos->{x}, $myPos->{y}, $field, $char->{look});
-	my $i = AI::findAction("route");
-	my $args;
-	if (defined $i && ($args = AI::args($i)) && $args->{dest} && $args->{dest}{pos}) {
-		$map->setDest($args->{dest}{pos}{x}, $args->{dest}{pos}{y});
+	
+	my ($i, $args, $routeTask, $solution);
+	if (
+		defined ($i = AI::findAction ('route')) && ($args = AI::args ($i)) && (
+			($routeTask = $args->getSubtask) && %{$routeTask} && ($solution = $routeTask->{solution}) && @$solution
+			||
+			$args->{dest} && $args->{dest}{pos} && ($solution = [{x => $args->{dest}{pos}{x}, y => $args->{dest}{pos}{y}}])
+		)
+	) {
+		$map->setRoute ([@$solution]);
 	} else {
-		$map->setDest;
+		$map->setRoute;
 	}
 	
 	$map->setPlayers ([values %players]);

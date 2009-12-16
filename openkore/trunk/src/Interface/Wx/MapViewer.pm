@@ -55,6 +55,7 @@ sub new {
 	$self->{brush}{npc}         = new Wx::Brush(new Wx::Colour(180, 0, 255), wxSOLID);
 	$self->{textColor}{npc}     = new Wx::Colour (127, 0, 127);
 	$self->{brush}{portal}      = new Wx::Brush(new Wx::Colour(255, 128, 64), wxSOLID);
+	$self->{textColor}{portal}  = new Wx::Colour (191, 95, 47);
 	$self->{brush}{slave}       = new Wx::Brush(new Wx::Colour(0, 0, 127), wxSOLID);
 	
 	$self->{brush}{gaugeBg}     = new Wx::Brush(new Wx::Colour(63, 63, 63), wxSOLID);
@@ -135,6 +136,7 @@ sub set {
 	}
 }
 
+=pod
 sub setDest {
 	my ($self, $x, $y) = @_;
 	if (defined $x) {
@@ -145,6 +147,19 @@ sub setDest {
 		}
 	} elsif (defined $self->{dest}) {
 		undef $self->{dest};
+		$self->{needUpdate} = 1;
+	}
+}
+=cut
+
+sub setRoute {
+	my ($self, $solution) = @_;
+	
+	if (defined $solution) {
+		$self->{route} = $solution;
+		$self->{needUpdate} = 1;
+	} elsif (defined $self->{route}) {
+		undef $self->{route};
 		$self->{needUpdate} = 1;
 	}
 }
@@ -580,7 +595,9 @@ sub _onPaint {
 	my $self = shift;
 	return unless ($self->{bitmap});
 	
-	my $dc = new Wx::PaintDC ($self);
+	my $paintDC = new Wx::PaintDC ($self);
+	my $dc = new Wx::MemoryDC ();
+	$dc->SelectObject (new Wx::Bitmap ($paintDC->GetSizeWH));
 	
 	my ($portal_r, $actor_r) = ($self->{portalSize}, $self->{actorSize});
 	my ($portal_d, $actor_d) = map {$_ * 2} ($portal_r, $actor_r);
@@ -648,31 +665,19 @@ sub _onPaint {
 		}
 		
 		$dc->SetBrush($self->{brush}{portal});
+		$dc->SetTextForeground ($self->{textColor}{portal});
 		foreach my $pos (@{$self->{portals}->{$self->{field}{name}}}) {
 			($x, $y) = $self->_posXYToView($pos->{x}, $pos->{y});
 			$dc->DrawEllipse($x - $portal_r, $y - $portal_r, $portal_d, $portal_d);
+			if ($self->{zoom} >= ($config{wx_map_namesDetail} || 8)) {
+				$self->_drawText (
+					$dc,
+					$self->{field}{name} ne $pos->{destination}{field} ? $pos->{destination}{field} : "($pos->{destination}{x}, $pos->{destination}{y})",
+					$x, $y
+				);
+			}
 		}
 	}
-	
-# 			my $admin_string = ($char->{'party'}{'users'}{$partyUsersID[$i]}{'admin'}) ? "(A)" : "";
-# 			if ($partyUsersID[$i] eq $accountID) {
-# 				# Translation Comment: Is the party user on list online?
-# #				$online_string = T("Yes");
-# 				($map_string) = $field{name};
-# 				$coord_string = $char->{'pos'}{'x'}. ", ".$char->{'pos'}{'y'};
-# 				$hp_string = $char->{'hp'}."/".$char->{'hp_max'}
-# 						." (".int($char->{'hp'}/$char->{'hp_max'} * 100)
-# 						."%)";
-# 			} else {
-# #				$online_string = ($char->{'party'}{'users'}{$partyUsersID[$i]}{'online'}) ? T("Yes") : T("No");
-# 				($map_string) = $char->{'party'}{'users'}{$partyUsersID[$i]}{'map'} =~ /([\s\S]*)\.gat/;
-# 		my $hpper = "".int($char->{'party'}{'users'}{$partyUsersID[$i]}{'hp'}/$char->{'party'}{'users'}{$partyUsersID[$i]}{'hp_max'} * 100).""  if ($char->{'party'}{'users'}{$partyUsersID[$i]}{'hp_max'} && $char->{'party'}{'users'}{$partyUsersID[$i]}{'online'});
-# }
-# 
-# 				$hp_string = $char->{'party'}{'users'}{$partyUsersID[$i]}{'hp'}."/".$char->{'party'}{'users'}{$partyUsersID[$i]}{'hp_max'}
-# 					." (".int($char->{'party'}{'users'}{$partyUsersID[$i]}{'hp'}/$char->{'party'}{'users'}{$partyUsersID[$i]}{'hp_max'} * 100)
-# 					."%)" if ($char->{'party'}{'users'}{$partyUsersID[$i]}{'hp_max'} && $char->{'party'}{'users'}{$partyUsersID[$i]}{'online'});
-
 	
 	# players
 	
@@ -742,11 +747,21 @@ sub _onPaint {
 		}
 	}
 	
-	if ($self->{dest}) {
+	if ($self->{route} && @{$self->{route}}) {
 		$dc->SetPen(wxWHITE_PEN);
 		$dc->SetBrush($self->{brush}{dest});
-		($x, $y) = $self->_posXYToView($self->{dest}{x}, $self->{dest}{y});
-		$dc->DrawEllipse($x - $portal_r, $y - $portal_r, $portal_d, $portal_d);
+		
+		if ($config{wx_map_route}) {
+			my $i = 0;
+			for (grep {not $i++ % ($portal_d * 2)} reverse @{$self->{route}}) {
+				($x, $y) = $self->_posXYToView ($_->{x}, $_->{y});
+				$dc->DrawEllipse($x - $portal_r, $y - $portal_r, $portal_d, $portal_d);
+			}
+		} else {
+			($x, $y) = $self->_posXYToView ($self->{route}[-1]{x}, $self->{route}[-1]{y});
+			$dc->DrawEllipse($x - $portal_r, $y - $portal_r, $portal_d, $portal_d);
+		}
+		
 		$dc->SetPen(wxBLACK_PEN);
 	}
 	
@@ -766,6 +781,8 @@ sub _onPaint {
 		$self->_drawLook ($dc, $self->{field}{look}, $x, $y, 5);
 		$dc->DrawEllipse($x - 5, $y - 5, 10, 10);
 	}
+	
+	$paintDC->Blit (0, 0, $paintDC->GetSizeWH, $dc, 0, 0);
 }
 
 1;
