@@ -177,8 +177,8 @@ sub new {
 		'00C7' => ['npc_sell_list'], # -1
 		# 0x00c8 is sent packet
 		# 0x00c9 is sent packet
-		# 0x00ca,3
-		# 0x00cb,3
+		'00CA' => ['buy_result', 'C', [qw(fail)]], # 3
+		'00CB' => ['sell_result', 'C', [qw(fail)]], # 3
 		# 0x00cc is sent packet
 		# 0x00cd,3
 		# 0x00d0 is sent packet
@@ -379,6 +379,7 @@ sub new {
 		'0188' => ['item_upgrade', 'v3', [qw(type index upgrade)]], # 8
 		'0189' => ['no_teleport', 'v', [qw(fail)]], # 4
 		# 0x018a is sent packet
+		'018B' => ['quit_response', 'v', [qw(fail)]], # 4
 		'018C' => ['sense_result', 'v3 V v4 C9', [qw(nameID level size hp def race mdef element ice earth fire wind poison holy dark spirit undead)]], # 29
 		'018D' => ['forge_list'], # -1
 		# 0x018e is sent packet
@@ -7365,6 +7366,29 @@ sub GM_req_acc_name {
 sub hack_shield_alarm {
 	error T("Error: You have been forced to disconnect by a Hack Shield.\n Please check Poseidon.\n"), "connection";
 	Commands::run('relog 100000000');
+}
+
+#newly added in Sakexe_0.pm
+
+# 00CB
+sub sell_result {
+	my ($self, $args) = @_;
+	if ($args->{fail}) {
+		error T("Sell failed.\n");
+	} else {
+		message T("Sell completed.\n"), "success";
+	}
+}
+
+# 018B
+# TODO: add real client messages
+sub quit_response {
+	my ($self, $args) = @_;
+	if ($args->{fail}) {
+		error T("You can't logout, retry in 10 sec.\n");
+	} else {
+		message T("Logged out from the server succesfully.\n"), "success";
+	}
 }
 
 1;

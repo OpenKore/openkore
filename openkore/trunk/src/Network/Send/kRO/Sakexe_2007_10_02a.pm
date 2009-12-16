@@ -57,7 +57,7 @@ sub sendHotkey {
 }
 
 # 0x02c4,26,partyinvite2,2
-sub sendPartyInvite2 {
+sub sendPartyJoinRequestByName {
 	my ($self, $name) = @_;
 	my $msg = pack('v Z24', 0x02C2, $name);
 	$self->sendToServer($msg);
@@ -65,7 +65,7 @@ sub sendPartyInvite2 {
 }
 
 # 0x02c7,7,replypartyinvite2,2:6
-sub sendPartyReplyInvite2 {
+sub sendPartyJoinRequestByNameReply { # long name lol
 	my ($self, $accountID, $flag) = @_;
 	my $msg = pack('v a4 C', 0x02C7, $accountID, $flag);
 	$self->sendToServer($msg);

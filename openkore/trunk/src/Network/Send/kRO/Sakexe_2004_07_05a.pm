@@ -96,8 +96,7 @@ sub sendSkillUseLocInfo {
 }
 
 # 0x0208,14,friendslistreply,2:6:10
-# TODO ST0 has sendFriendReject, sendFriendAccept
-sub sendFriendRequestReply { # 1 accept, 0 deny
+sub sendFriendListReply { # 1 accept, 0 deny
 	my ($self, $accountID, $charID, $flag) = @_;
 	my $msg = pack('v a4 a4 V', 0x0208, $accountID, $charID, $flag);
 	$self->sendToServer($msg);

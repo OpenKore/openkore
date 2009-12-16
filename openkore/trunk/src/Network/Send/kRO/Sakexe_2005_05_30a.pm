@@ -30,9 +30,7 @@ sub new {
 
 # 0x0237,2,rankingpk,0
 sub sendTop10PK {
-	my $self = shift;
-	my $msg = pack('v', 0x0237);
-	$self->sendToServer($msg);
+	$_[0]->sendToServer(pack('v', 0x0237));
 	debug "Sent Top 10 PK request\n", "sendPacket", 2;	
 }
 
