@@ -1210,8 +1210,9 @@ sub actor_display {
 	if ($args->{switch} eq "0078" ||
 		$args->{switch} eq "01D8" ||
 		$args->{switch} eq "022A" ||
-		$args->{switch} eq "02EE") {
-		# Actor Exists
+		$args->{switch} eq "02EE" ||
+		$args->{switch} eq "07F9") {
+		# Actor Exists (standing)
 
 		if ($actor->isa('Actor::Player')) {
 			my $domain = existsInList($config{friendlyAID}, unpack("V1", $actor->{ID})) ? 'parseMsg_presence' : 'parseMsg_presence/player';
@@ -1244,8 +1245,9 @@ sub actor_display {
 		$args->{switch} eq "01DB" ||
 		$args->{switch} eq "022B" ||
 		$args->{switch} eq "02ED" ||
-		$args->{switch} eq "01D9") {
-		# Actor Connected
+		$args->{switch} eq "01D9" ||
+		$args->{switch} eq "07F8") {
+		# Actor Connected (new)
 
 		if ($actor->isa('Actor::Player')) {
 			my $domain = existsInList($config{friendlyAID}, unpack("V1", $args->{ID})) ? 'parseMsg_presence' : 'parseMsg_presence/player';
@@ -1262,7 +1264,8 @@ sub actor_display {
 		$args->{switch} eq "01DA" ||
 		$args->{switch} eq "022C" ||
 		$args->{switch} eq "02EC" ||
-		$args->{switch} eq "0086") {
+		$args->{switch} eq "0086" ||
+		$args->{switch} eq "07F7") {
 		# Actor Moved
 
 		# Correct the direction in which they're looking
