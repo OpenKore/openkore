@@ -1278,7 +1278,7 @@
 7141#Morning_Dew_of_Yggdrasil#
 7142#Embryo#
 7143#Glass_Tube#
-7144#Potion_Creation_Gude#
+7144#Potion_Creation_Guide#
 545#Condensed_Red_Potion#
 546#Condensed_Yellow_Potion#
 547#Condensed_White_Potion#

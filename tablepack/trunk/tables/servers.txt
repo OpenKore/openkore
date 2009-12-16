@@ -143,7 +143,8 @@ serverType kRO_RagexeRE_0
 serverEncoding Korean
 charBlockSize 112
 storageEncryptKey 0x050B6F79,0x0202C179,0x00E20120,0x04FA43E3,0x0179B6C8,0x05973DF2,0x007D8D6B,0x08CB9ED9
-recvpackets recvpackets-kRO-2009-11-04aRagexe.txt
+addTableFolders tables\kRO\2009-12-15aRagexeRE
+recvpackets recvpackets_.txt
 gameGuard 1
 
 [Korea - kRO: Sakray]
@@ -157,7 +158,8 @@ charBlockSize 112
 storageEncryptKey 0x050B6F79,0x0202C179,0x00E20120,0x04FA43E3,0x0179B6C8,0x05973DF2,0x007D8D6B,0x08CB9ED9
 captcha 1
 clientHash 82d12c914f5ad48fd96fcf7ef4cc492d
-recvpackets recvpackets-kRO-2009-11-10aRagexeRE.txt
+addTableFolders tables\kRO\2009-12-15aRagexeRE
+recvpackets recvpackets_.txt
 
 [Malaysia - mRO: Main Server: Balder]
 ip 202.71.105.21

@@ -2,11 +2,11 @@
 1 Usable
 2 Usable
 3 Non-usable
-4 Armour
-5 Weapon
+4 Weapon
+5 Armor
 6 Card
 7 Egg
-8 Weapon
+8 Pet Armor
 9 Weapon
 10 Arrows
 11 Helmet
