@@ -4,7 +4,7 @@
 4 Cape
 8 Right Accessory
 10 Arrow
-16 Armour
+16 Armor
 32 Shield
 34 Two-Handed Weapon
 64 Foot Wear
