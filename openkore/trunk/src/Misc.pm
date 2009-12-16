@@ -3117,7 +3117,7 @@ sub getBestTarget {
 # Returns 1 if there is a player nearby (except party and homunculus) or 0 if not
 sub isSafe {
 	foreach (@playersID) {
-		if (!$char->{party}{users}{$_} && (!$char->{homunculus} || $_ ne $char->{homunculus}{ID})) {
+		if (!$char->{party}{users}{$_}) {
 			return 0;
 		}
 	}
