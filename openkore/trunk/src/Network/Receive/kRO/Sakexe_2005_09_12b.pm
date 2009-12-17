@@ -26,7 +26,7 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 	my %packets = (
 		'0256' => ['auction_add_item', 'v C', [qw(index fail)]], # 5
-		# 0x0258,2
+		# 0x0258 is sent packet
 		'0259' => ['gameguard_grant', 'C', [qw(server)]], # 3
 	);
 	

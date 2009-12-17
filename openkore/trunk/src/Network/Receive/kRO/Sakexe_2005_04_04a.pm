@@ -25,8 +25,8 @@ sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
 	my %packets = (
-		# 0x0227,18
-		# 0x0228,18
+		'0227' => ['gameguard_request'], # 18
+		# 0x0228 is sent packet
 	);
 	
 	foreach my $switch (keys %packets) {

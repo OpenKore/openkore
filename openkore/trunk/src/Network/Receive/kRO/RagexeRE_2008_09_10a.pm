@@ -27,7 +27,12 @@ use Utils qw(getTickCount);
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
-	my %packets = ();
+	my %packets = (
+		# 0x0436 is sent packet
+		# 0x0437 is sent packet
+		# 0x0438 is sent packet
+		# 0x0439 is sent packet
+	);
 
 	foreach my $switch (keys %packets) {
 		$self->{packet_list}{$switch} = $packets{$switch};

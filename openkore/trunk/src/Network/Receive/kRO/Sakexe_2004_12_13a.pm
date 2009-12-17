@@ -25,15 +25,15 @@ sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
 	my %packets = (
-		# 0x0066,3
+		# 0x0066 is sent packet
 
-		'0070' => ['character_deletion_failed', 'x'], # 3
+		'0070' => ['character_deletion_failed', 'C', [qw(flag)]], # 3
 
-		# 0x01ca,3
+		# 0x01ca is sent packet
 
-		# 0x021e,6
-		# 0x021f,66
-		# 0x0220,10
+		'021E' => ['less_effect', 'V', [qw(flag)]], # 6
+		'021F' => ['pk_info', 'V2 Z24 Z24 a4 a4', [qw(win_point lose_point killer_name killed_name dwLowDateTime dwHighDateTime)]], # 66
+		'0220' => ['crazy_killer', 'a4 V', [qw(ID flag)]], # 10
 	);
 	
 	foreach my $switch (keys %packets) {

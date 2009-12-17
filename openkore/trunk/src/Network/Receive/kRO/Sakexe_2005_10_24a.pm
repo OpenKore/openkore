@@ -25,8 +25,8 @@ sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
 	my %packets = (
-		# 0x025f,6
-		'0260' => ['mail_window', 'v', [qw(flag)]], # 6
+		'025F' => ['auction_window', 'V', [qw(flag)]], # 6
+		'0260' => ['mail_window', 'V', [qw(flag)]], # 6
 	);
 	
 	foreach my $switch (keys %packets) {

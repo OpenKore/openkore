@@ -215,7 +215,7 @@ sub clientSend {
 	my $msg = shift;
 	
 	my $switch = uc(unpack("H2", substr($msg, 1, 1))) . uc(unpack("H2", substr($msg, 0, 1)));
-	if ($switch eq "02AE") {
+	if ($switch eq "02AE") { #initialize_message_id_encryption
 		$msg = "";
 	}
 	

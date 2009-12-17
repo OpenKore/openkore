@@ -25,7 +25,7 @@ sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
 	my %packets = (
-		# 0x0446,14
+		'0446' => ['quest_npc_effect', 'a4 v4', [qw(npcID xPos yPos effect type)]], # 14
 	);
 	
 	foreach my $switch (keys %packets) {

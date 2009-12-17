@@ -26,8 +26,8 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 		
 	my %packets = (
-		# 0x020f,10
-		# 0x0210,22
+		# 0x020f is sent packet
+		'0210' => ['pvppoint_result', 'a4 a4 V3', [qw(ID guildID win_point lose_point point)]], # 22
 	);
 	
 	foreach my $switch (keys %packets) {

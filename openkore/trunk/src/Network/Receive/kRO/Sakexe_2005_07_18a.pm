@@ -45,7 +45,7 @@ sub new {
 		'0249' => ['mail_send', 'C', [qw(fail)]], # 3
 		'024A' => ['mail_new', 'V Z24 Z40', [qw(mailID sender title)]], # 70
 		
-		# 0x024d,14
+		# 0x024d is sent packet
 
 		'0250' => ['auction_result', 'C', [qw(flag)]], # 3
 		# 0x0251,2

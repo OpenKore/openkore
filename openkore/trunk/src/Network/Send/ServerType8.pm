@@ -39,7 +39,7 @@ sub sendMove {
 	debug "Sent move to: $x, $y\n", "sendPacket", 2;
 }
 
-# 0x0190,21,actionrequest,7:20
+# 0x0190,19,actionrequest,5:18
 sub sendAction { # flag: 0 attack (once), 7 attack (continuous), 2 sit, 3 stand
 	my ($self, $monID, $flag) = @_;
 

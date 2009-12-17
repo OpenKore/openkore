@@ -25,9 +25,9 @@ sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
 	my %packets = (
-		# 0x02aa,4
-		# 0x02ab,36
-		# 0x02ac,6
+		'02AA' => ['cash_request_password', 'v', [qw(info)]], # 4
+		# 0x02ab is sent packet
+		'02AC' => ['cash_result_password', 'v2', [qw(result error_count)]], # 6
 	);
 	
 	foreach my $switch (keys %packets) {
