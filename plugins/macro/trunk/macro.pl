@@ -9,6 +9,7 @@
 package macro;
 my $Version = "2.0.3-svn";
 my ($rev) = q$Revision: 6744 $ =~ /(\d+)/;
+our $plugin_folder = $Plugins::current_plugin_folder;
 
 use strict;
 use Plugins;
@@ -17,6 +18,7 @@ use Globals;
 use Utils;
 use Misc;
 use Log qw(message error warning);
+use Translation qw/T TF/;
 use lib $Plugins::current_plugin_folder;
 use Macro::Data;
 use Macro::Script;
@@ -56,6 +58,17 @@ sub onstart3 {
 	&checkConfig;
 	$cfID = Settings::addControlFile($macro_file,loader => [\&parseAndHook,\%macro]);
 	Settings::loadByHandle($cfID);
+	
+	if (
+		$interface->isa ('Interface::Wx')
+		&& $interface->{viewMenu}
+		&& $interface->can ('addMenu')
+		&& $interface->can ('openWindow')
+	) {
+		$interface->addMenu ($interface->{viewMenu}, T('Macro debugger'), sub {
+			$interface->openWindow (T('Macro'), 'Macro::Wx::Debugger', 1);
+		}, T('Interactive debugger for macro plugin'));
+	}
 }
 
 # onReload
@@ -88,7 +101,10 @@ sub cleanup {
 # onFile(Re)load
 sub parseAndHook {
 	my $file = shift;
-	if (parseMacroFile($file, 0)) {&hookOnDemand; return 1}
+	if (parseMacroFile($file, 0)) {
+		Plugins::callHook ('macro/parseAndHook');
+		&hookOnDemand; return 1
+	}
 	error "error loading $file.\n";
 	return 0
 }

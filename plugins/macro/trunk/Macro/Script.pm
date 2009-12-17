@@ -110,9 +110,23 @@ sub interruptible {
 
 # sets or gets macro block flag
 sub macro_block {
+	my $script = $_[0];
+	do {
+		if (defined $_[1]) {
+			$script->{macro_block} = $_[1];
+		} else {
+			return $script->{macro_block} if $script->{macro_block};
+		}
+	} while $script = $script->{subcall};
+	
+	return $_[1];
+}
+=pod
+sub macro_block {
 	if (defined $_[1]) {$_[0]->{macro_block} = $_[1]}
 	return $_[0]->{macro_block}
 }
+=cut
 
 # returns whether or not the macro finished
 sub finished {
