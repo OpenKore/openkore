@@ -4558,6 +4558,7 @@ sub party_organize_result {
 	}
 }
 
+# TODO: optimize unpacking
 sub party_users_info {
 	my ($self, $args) = @_;
 	return unless changeToInGameState();
@@ -4988,21 +4989,23 @@ sub alchemist_point {
 	message TF("[POINT] Alchemist Ranking Point is increasing by %s. Now, The total is %s points.\n", $args->{points}, $args->{total}, "list");
 }
 
+# TODO: test code optimization
 sub repair_list {
 	my ($self, $args) = @_;
 	my $msg = T("--------Repair List--------\n");
 	undef $repairList;
 	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 13) {
-		my $listID = unpack("C1", substr($args->{RAW_MSG}, $i+12, 1));
-		$repairList->[$listID]->{index} = unpack("v1", substr($args->{RAW_MSG}, $i, 2));
-		$repairList->[$listID]->{nameID} = unpack("v1", substr($args->{RAW_MSG}, $i+2, 2));
-		# what are these  two?
-		$repairList->[$listID]->{status} = unpack("V1", substr($args->{RAW_MSG}, $i+4, 4));
-		$repairList->[$listID]->{status2} = unpack("V1", substr($args->{RAW_MSG}, $i+8, 4));
-		$repairList->[$listID]->{listID} = $listID;
-		
-		my $name = itemNameSimple($repairList->[$listID]->{nameID});
-		$msg .= "$listID $name\n";
+		my $item = {};
+
+		($item->{index},
+		$item->{nameID},
+		$item->{status},	# what is this?
+		$item->{status2},	# what is this?
+		$item->{index}) = unpack('v2 V2 C', substr($args->{RAW_MSG}, $i, 13));
+
+		$repairList->[$item->{index}] = $item;
+		my $name = itemNameSimple($item->{nameID});
+		$msg .= $item->{index} . " $name\n";
 	}
 	$msg .= "---------------------------\n";
 	message $msg, "list";
@@ -6070,6 +6073,7 @@ sub storage_item_removed {
 	}
 }
 
+# TODO: extract unpack string
 sub storage_items_nonstackable {
 	my ($self, $args) = @_;
 	# Retrieve list of non-stackable (weapons & armor) storage items.
@@ -6112,6 +6116,7 @@ sub storage_items_nonstackable {
 	}
 }
 
+# TODO: extract unpack string
 sub storage_items_stackable {
 	my ($self, $args) = @_;
 	# Retrieve list of stackable storage items
@@ -6528,25 +6533,28 @@ sub vender_items_list {
 	message TF("%s\n" .
 		"#  Name                                       Type           Amount       Price\n",
 		center(' Vender: ' . $player->nameIdx . ' ', 79, '-')), "list";
-	for (my $i = 8; $i < $msg_size; $i+=22) {
-		my $number = unpack("v1", substr($msg, $i + 6, 2));
-
-		my $item = $venderItemList[$number] = {};
-		$item->{price} = unpack("V1", substr($msg, $i, 4));
-		$item->{amount} = unpack("v1", substr($msg, $i + 4, 2));
-		$item->{type} = unpack("C1", substr($msg, $i + 8, 1));
-		$item->{nameID} = unpack("v1", substr($msg, $i + 9, 2));
-		$item->{identified} = unpack("C1", substr($msg, $i + 11, 1));
-		$item->{broken} = unpack("C1", substr($msg, $i + 12, 1));
-		$item->{upgrade} = unpack("C1", substr($msg, $i + 13, 1));
-		$item->{cards} = substr($msg, $i + 14, 8);
+	for (my $i = 8; $i < $args->{RAW_MSG_SIZE}; $i+=22) {
+		my $item = {};
+		my $index;
+		
+		($item->{price},
+		$item->{amount},
+		$index,
+		$item->{type},
+		$item->{nameID},
+		$item->{identified},
+		$item->{broken},
+		$item->{upgrade},
+		$item->{cards})	= unpack('V v2 C v C3 a8', substr($args->{RAW_MSG}, $i, 22));
+		
 		$item->{name} = itemName($item);
+		$venderItemList[$index] = $item;
 
 		debug("Item added to Vender Store: $item->{name} - $item->{price} z\n", "vending", 2);
 
 		Plugins::callHook('packet_vender_store', {
 			venderID => $venderID,
-			number => $number,
+			number => $index,
 			name => $item->{name},
 			amount => $item->{amount},
 			price => $item->{price},
@@ -6557,7 +6565,7 @@ sub vender_items_list {
 
 		message(swrite(
 			"@< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<< @>>>>> @>>>>>>>>>z",
-			[$number, $item->{name}, $itemTypes_lut{$item->{type}}, $item->{amount}, formatNumber($item->{price})]),
+			[$index, $item->{name}, $itemTypes_lut{$item->{type}}, $item->{amount}, formatNumber($item->{price})]),
 			"list");
 	}
 	message("-------------------------------------------------------------------------------\n", "list");
@@ -6589,11 +6597,11 @@ sub vender_buy_fail {
 	}
 }
 
+# TODO:
+# add item objects instead of hashes in a list
+# test optimized code
 sub vending_start {
 	my ($self, $args) = @_;
-
-	my $msg = $args->{RAW_MSG};
-	my $msg_size = unpack("v1",substr($msg, 2, 2));
 
 	#started a shop.
 	@articles = ();
@@ -6605,18 +6613,22 @@ sub vending_start {
 	message TF("%s\n" .
 		"#  Name                                          Type        Amount       Price\n",
 		center(" $shop{title} ", 79, '-')), "list";
-	for (my $i = 8; $i < $msg_size; $i += 22) {
-		my $number = unpack("v1", substr($msg, $i + 4, 2));
-		my $item = $articles[$number] = {};
-		$item->{nameID} = unpack("v1", substr($msg, $i + 9, 2));
-		$item->{quantity} = unpack("v1", substr($msg, $i + 6, 2));
-		$item->{type} = unpack("C1", substr($msg, $i + 8, 1));
-		$item->{identified} = unpack("C1", substr($msg, $i + 11, 1));
-		$item->{broken} = unpack("C1", substr($msg, $i + 12, 1));
-		$item->{upgrade} = unpack("C1", substr($msg, $i + 13, 1));
-		$item->{cards} = substr($msg, $i + 14, 8);
-		$item->{price} = unpack("V1", substr($msg, $i, 4));
+	for (my $i = 8; $i < $args->{RAW_MSG_SIZE}; $i += 22) {
+		my $item = {};
+		my $index;
+
+		($item->{price},
+		$index,
+		$item->{quantity},
+		$item->{type},
+		$item->{nameID},
+		$item->{identified},
+		$item->{broken},
+		$item->{upgrade},
+		$item->{cards}) = unpack('V v2 C v C3 a8', substr($args->{RAW_MSG}, $i, 22));
+		
 		$item->{name} = itemName($item);
+		$articles[$index] = $item;
 		$articles++;
 
 		debug("Item added to Vender Store: $item->{name} - $item->{price} z\n", "vending", 2);
@@ -6686,11 +6698,15 @@ sub mail_refreshinbox {
 	
 	my $j = 0;
 	for (my $i = 8; $i < 8 + $count * 73; $i+=73) {
-		$mailList->[$j]->{mailID} = unpack("V1", substr($args->{RAW_MSG}, $i, 4));
-		$mailList->[$j]->{title} = bytesToString(unpack("Z40", substr($args->{RAW_MSG}, $i+4, 40)));
-		$mailList->[$j]->{read} = unpack("C1", substr($args->{RAW_MSG}, $i+44, 1));
-		$mailList->[$j]->{sender} = bytesToString(unpack("Z24", substr($args->{RAW_MSG}, $i+45, 24)));
-		$mailList->[$j]->{timestamp} = unpack("V1", substr($args->{RAW_MSG}, $i+69, 4));
+		($mailList->[$j]->{mailID},
+		$mailList->[$j]->{title},
+		$mailList->[$j]->{read},
+		$mailList->[$j]->{sender},
+		$mailList->[$j]->{timestamp}) =	unpack('V Z40 C Z24 V', substr($args->{RAW_MSG}, $i, 73));
+
+		$mailList->[$j]->{title} = bytesToString($mailList->[$j]->{title});
+		$mailList->[$j]->{sender} = bytesToString($mailList->[$j]->{sender});
+
 		$msg .= swrite(
 		TF("\@> %s \@%s \@%s \@%s", $mailList->[$j]->{read}, ('<'x34), ('<'x24), ('<'x11)),
 		[$j, $mailList->[$j]->{title}, $mailList->[$j]->{sender}, getFormattedDate(int($mailList->[$j]->{timestamp}))]);
@@ -6800,6 +6816,7 @@ sub auction_result {
 	}
 }
 
+# TODO: test the latest code optimization
 sub auction_item_request_search {
 	my ($self, $args) = @_;
 
@@ -6821,25 +6838,23 @@ sub auction_item_request_search {
 
 	my $j = 0;
 	for (my $i = 12; $i < 12 + $count * 83; $i += 83) {
-		$auctionList->[$j]->{ID} = unpack("V1", substr($args->{RAW_MSG}, $i, 4));
-		$auctionList->[$j]->{seller} = bytesToString(unpack("Z24", substr($args->{RAW_MSG}, $i+4, 24)));
-		$auctionList->[$j]->{nameID} = unpack("v1", substr($args->{RAW_MSG}, $i+28, 2));
-		$auctionList->[$j]->{type} = unpack("v1", substr($args->{RAW_MSG}, $i+30, 2));
-		$auctionList->[$j]->{unknown} = unpack("v1", substr($args->{RAW_MSG}, $i+32, 2));
-		$auctionList->[$j]->{amount} = unpack("v1", substr($args->{RAW_MSG}, $i+34, 2));
-		$auctionList->[$j]->{identified} = unpack("C1", substr($args->{RAW_MSG}, $i+36, 1));
-		$auctionList->[$j]->{broken} = unpack("C1", substr($args->{RAW_MSG}, $i+37, 1));
-		$auctionList->[$j]->{upgrade} = unpack("C1", substr($args->{RAW_MSG}, $i+38, 1));
-		# TODO
-		#$auctionList->[$j]->{card}->[0] = unpack("v1", substr($args->{RAW_MSG}, $i+39, 2));
-		#$auctionList->[$j]->{card}->[1] = unpack("v1", substr($args->{RAW_MSG}, $i+41, 2));
-		#$auctionList->[$j]->{card}->[2] = unpack("v1", substr($args->{RAW_MSG}, $i+43, 2));
-		#$auctionList->[$j]->{card}->[3] = unpack("v1", substr($args->{RAW_MSG}, $i+45, 2));
-		$auctionList->[$j]->{cards} = unpack("a8", substr($args->{RAW_MSG}, $i+39, 8));
-		$auctionList->[$j]->{price} = unpack("V1", substr($args->{RAW_MSG}, $i+47, 4));
-		$auctionList->[$j]->{buynow} = unpack("V1", substr($args->{RAW_MSG}, $i+51, 4));
-		$auctionList->[$j]->{buyer} = bytesToString(unpack("Z24", substr($args->{RAW_MSG}, $i+55, 24)));
-		$auctionList->[$j]->{timestamp} = unpack("V1", substr($args->{RAW_MSG}, $i+79, 4));
+		($auctionList->[$j]->{ID},
+		$auctionList->[$j]->{seller},
+		$auctionList->[$j]->{nameID},
+		$auctionList->[$j]->{type},
+		$auctionList->[$j]->{unknown},
+		$auctionList->[$j]->{amount},
+		$auctionList->[$j]->{identified},
+		$auctionList->[$j]->{broken},
+		$auctionList->[$j]->{upgrade},
+		$auctionList->[$j]->{cards},
+		$auctionList->[$j]->{price},
+		$auctionList->[$j]->{buynow},
+		$auctionList->[$j]->{buyer},
+		$auctionList->[$j]->{timestamp}) = unpack('V Z24 v4 C3 a8 V2 Z24 V', substr($args->{RAW_MSG}, $i, 83));
+		
+		$auctionList->[$j]->{seller} = bytesToString($auctionList->[$j]->{seller});
+		$auctionList->[$j]->{buyer} = bytesToString($auctionList->[$j]->{buyer});
 
 		my $item = {};
 		$item->{nameID} = $auctionList->[$j]->{nameID};
@@ -6894,10 +6909,9 @@ sub hotkeys {
 	$msg .= sprintf("%s\n", ('-'x79));
 	my $j = 0;
 	for (my $i = 2; $i < $args->{RAW_MSG_SIZE}; $i+=7) {
-		($hotkeyList->[$j]->{type}, $hotkeyList->[$j]->{ID},$hotkeyList->[$j]->{lv}) = unpack('C V v', substr($args->{RAW_MSG}, $i, 7));
-		#$hotkeyList->[$j]->{type} = unpack("C1", substr($args->{RAW_MSG}, $i, 1));
-		#$hotkeyList->[$j]->{ID} = unpack("V1", substr($args->{RAW_MSG}, $i+1, 4));
-		#$hotkeyList->[$j]->{lv} = unpack("v1", substr($args->{RAW_MSG}, $i+5, 2));
+		($hotkeyList->[$j]->{type},
+		$hotkeyList->[$j]->{ID},
+		$hotkeyList->[$j]->{lv}) = unpack('C V v', substr($args->{RAW_MSG}, $i, 7));
 
 		$msg .= swrite(TF("\@%s \@%s \@%s \@%s", ('>'x3), ('<'x30), ('<'x5), ('>'x3)),
 			[$j, $hotkeyList->[$j]->{type} ? Skill->new(idn => $hotkeyList->[$j]->{ID})->getName() : itemNameSimple($hotkeyList->[$j]->{ID}),
