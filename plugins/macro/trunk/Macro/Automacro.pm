@@ -31,6 +31,8 @@ sub checkVar {
 
 	if ($cond eq "unset") {return exists $varStack{$var}?0:1}
 
+	# TODO: seems like this is not needed, because automacroCheck does it
+	# and refreshGlobal ignores args
 	refreshGlobal($var);
 
 	if (exists $varStack{$var}) {return cmpr($varStack{$var}, $cond, $val)}

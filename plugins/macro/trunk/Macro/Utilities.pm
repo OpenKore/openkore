@@ -434,7 +434,17 @@ sub processCmd {
 	if (defined $_[0]) {
 		if ($_[0] ne '') {
 			unless (Commands::run($command)) {
-				error(sprintf("[macro] %s failed with %s\n", $queue->name, $command), "macro");
+				my $errorMsg = sprintf("[macro] %s failed with %s\n", $queue->name, $command);
+				
+				my $hookArgs = {
+					'message' => $errorMsg,
+					'name' => $queue->name,
+					'error' => 'Commands::run failed',
+				};
+				Plugins::callHook ('macro/error', $hookArgs);
+				return $hookArgs->{continue} if $hookArgs->{return};
+				
+				error $errorMsg, "macro";
 				undef $queue;
 				return
 			}
@@ -442,13 +452,28 @@ sub processCmd {
 		$queue->ok;
 		if (defined $queue && $queue->finished) {undef $queue}
 	} else {
-		error(sprintf("[macro] %s error: %s\n", (defined $queue->{subcall})?$queue->{subcall}->name:$queue->name, $queue->error), "macro");
-		undef $queue
+		my $name = (defined $queue->{subcall}) ? $queue->{subcall}->name : $queue->name;
+		my $error = $queue->error;
+		my $errorMsg = sprintf("[macro] %s error: %s\n", $name, $error);
+		
+		my $hookArgs = {
+			'message' => $errorMsg,
+			'name' => $name,
+			'error' => $error,
+		};
+		Plugins::callHook ('macro/error', $hookArgs);
+		return $hookArgs->{continue} if $hookArgs->{return};
+		
+		error $errorMsg, "macro";
+		undef $queue;
+		return
 	}
+	
+	return 1;
 }
 
 # macro/script
-sub callMacro {
+sub callMacro {	
 	return unless defined $queue;
 	return if $onHold;
 	my %tmptime = $queue->timeout;
@@ -457,6 +482,13 @@ sub callMacro {
 		else {return}
 	}
 	if (timeOut(\%tmptime) && ai_isIdle()) {
+		do {
+			last unless processCmd $queue->next;
+			Plugins::callHook ('macro/callMacro/process');
+		} while !$onHold && $queue && $queue->macro_block;
+		
+=pod
+		# crashes when error inside macro_block encountered and $queue becomes undefined
 		my $command = $queue->next;
 		if ($queue->macro_block) {
 			while ($queue->macro_block) {
@@ -466,6 +498,7 @@ sub callMacro {
 		} else {
 			processCmd($command)
 		}
+=cut
 	}
 }
 
