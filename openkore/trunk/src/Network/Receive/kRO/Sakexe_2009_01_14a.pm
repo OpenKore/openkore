@@ -27,7 +27,7 @@ sub new {
 	my %packets = (
 		# 0x043f,25
 		# 0x0444,-1
-		# 0x0445,10
+		# 0x0445 is sent packet
 	);
 	
 	foreach my $switch (keys %packets) {

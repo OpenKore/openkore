@@ -50,7 +50,7 @@ sub new {
 		'02B8' => ['party_show_picker', 'a4 v C3 a8 C3', [qw(sourceID nameID identified broken upgrade cards unknown1 unknown2 unknown3)]], # 22
 		'02B9' => ['hotkeys'], # 191 # hotkeys:27
 
-		# 0x02bb,8
+		'02BB' => ['equipitem_damaged', 'v a4', [qw(slot ID)]], # 8
 		# 0x02bc,6
 		# 0x02bf,10
 		# 0x02c0,2
@@ -60,21 +60,21 @@ sub new {
 		'02C5' => ['party_invite_result', 'Z24 V', [qw(name type)]], # 30
 		'02C6' => ['party_invite', 'a4 Z24', [qw(ID name)]], # 30
 
-		# 0x02c8,3
+		# 0x02c8 is sent packet
 		'02C9' => ['party_allow_invite', 'C', [qw(type)]], # 3
 		# 0x02ca,3
 		# 0x02cb,20
 		'02CC' => ['instance_window_queue', 'C', [qw(flag)]], # 4
 		# 0x02cd,26
-		# 0x02ce,10
+		'02CE' => ['instance_window_leave', 'V a4', [qw(flag enter_limit_date)]], # 10
 
-		# 0x02cf,6
+		# 0x02cf is sent packet
 		'02D0' => ['inventory_items_nonstackable'], # -1
 		'02D1' => ['storage_items_nonstackable'], # -1
 		'02D2' => ['cart_items_nonstackable'], # -1
-		# 0x02d3,4
+		'02D3' => ['bind_on_equip', 'v', [qw(index)]], # 4
 		'02D4' => ['inventory_item_added', 'v3 C3 a8 v C2 a4 v', [qw(index amount nameID identified broken upgrade cards type_equip type fail expire unknown)]], # 29
-		# 0x02d5,2
+		'02D5' => ['isvr_disconnect'], # 2
 		
 		'02D7' => ['show_eq', 'v Z24 v7 C', [qw(len type hair_style tophead midhead lowhead hair_color clothes_color sex)]], # -1 #type is job
 		
@@ -83,9 +83,8 @@ sub new {
 		'02DC' => ['battleground_message', 'v a4 Z24 Z*', [qw(len ID name message)]], # -1
 		'02DD' => ['battleground_emblem', 'a4 Z24 v', [qw(emblemID name ID)]], # 32
 		'02DE' => ['battleground_score', 'v2', [qw(score_lion score_eagle)]], # 6
-
-		# 0x02df,36
-		# 0x02e0,34
+		'02DF' => ['battleground_position', 'a4 Z24 v3', [qw(ID name job x y)]], # 36
+		'02E0' => ['battleground_hp', 'a4 Z24 v2', [qw(ID name hp max_hp)]], # 34
 	);
 	
 	foreach my $switch (keys %packets) {

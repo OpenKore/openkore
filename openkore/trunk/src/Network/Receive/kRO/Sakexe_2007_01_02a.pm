@@ -28,7 +28,7 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 	my %packets = (
 		# 0x023e,8
-		# 0x0277,84
+		# 0x0277 is sent packet (login or so)
 		# 0x0278,2
 		# 0x0279,2
 		# 0x027a,-1
@@ -45,15 +45,15 @@ sub new {
 		# 0x0285,6
 		# 0x0286,4
 		'0287' => ['cash_dealer'], # -1
-		# 0x0288,6
+		# 0x0288 is sent packet
 		# 0x0289,8
 		'028A' => ['character_status', 'a4 V3', [qw(ID option lv opt3)]], # 18
 		# 0x028b,-1
-		# 0x028c,46
-		# 0x028d,34
-		# 0x028e,4
-		# 0x028f,6
-		# 0x0290,4
+		# 0x028c is sent packet
+		# 0x028d is sent packet
+		'028E' => ['charname_is_valid', 'v', [qw(result)]], # 4
+		# 0x028f is sent packet
+		'0290' => ['charname_change_result', 'v', [qw(result)]], # 4
 		'0291' => ['message_string', 'v', [qw(msg_id)]], # 4
 
 		'0293' => ['boss_map_info', 'C V2 v2 x4 Z40 C11', [qw(flag x y hours minutes name unknown)]], # 70
@@ -64,13 +64,14 @@ sub new {
 		'0298' => ['rental_time', 'v V', [qw(nameID seconds)]], # 8
 		'0299' => ['rental_expired', 'v2', [qw(unknown nameID)]], # 6
 		'029A' => ['inventory_item_added', 'v3 C3 a8 v C2 a4', [qw(index amount nameID identified broken upgrade cards type_equip type fail cards_ext)]], # 27
-		# 0x029c,66
+
+		'029C' => ['mercenary_property', 'v8 Z24 v5 a4 v V2', [qw(atk matk hit crit def mdef flee aspd name lv hp max_hp sp max_sp contract_end faith summons kills)]], # 66
 		'029D' => ['skills_list'], # -1 # mercenary skills
 		# 0x029e,11
 
 		# 0x02a0,0
 		# 0x02a1,0
-		# 0x02a2,8
+		'02A2' => ['mercenary_param_change', 'v V', [qw(type param)]], # 8
 	);
 	
 	foreach my $switch (keys %packets) {

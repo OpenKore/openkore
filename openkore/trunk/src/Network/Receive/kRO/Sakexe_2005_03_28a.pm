@@ -27,10 +27,11 @@ sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
 	my %packets = (
-		# 0x0224,10
-		# 0x0226,282
+		'0224' => ['taekwon_rank', 'V2', [qw(type rank)]], # 10 # TODO: test if this gives the right results
+		# 0225 is sent packet
+		'0226' => ['top10_taekwon_rank'], # 282 # TODO: check if len matches the unpacking
 	);
-	
+
 	foreach my $switch (keys %packets) {
 		$self->{packet_list}{$switch} = $packets{$switch};
 	}

@@ -27,7 +27,7 @@ sub new {
 	my %packets = (
 		# 0x07d7 is sent packet
 		# 0x07d8,8
-		# 0x07d9,254
+		'07D9' => ['hotkeys'], # 254 # hotkeys:36
 		# 0x07da is sent packet
 	);
 

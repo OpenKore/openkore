@@ -25,7 +25,7 @@ sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
 	my %packets = (
-		# 0x021d,6
+		# 0x021d is sent packet
 	);
 	
 	foreach my $switch (keys %packets) {

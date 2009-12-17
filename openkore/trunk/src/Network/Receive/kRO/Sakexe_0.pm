@@ -90,7 +90,7 @@ sub new {
 		'006F' => ['character_deletion_successful'], # 2
 		'0070' => ['character_deletion_failed', 'x4'], # 6
 		'0071' => ['received_character_ID_and_Map', 'a4 Z16 a4 v', [qw(charID mapName mapIP mapPort)]], # 28
-		# 0x0072 is send packet
+		# 0x0072 is sent packet
 		'0073' => ['map_loaded', 'V a3 x2', [qw(syncMapSync coords)]], # 11
 		# 0x0074,3
 		'0075' => ['changeToInGameState'], # -1
@@ -233,15 +233,11 @@ sub new {
 		'0101' => ['party_exp', 'v x2', [qw(type)]], # 6
 		# 0x0102 is sent packet
 		# 0x0103 is sent packet
-		# 0x0104,79
-		# 0x0105,31
-		# 0x0106,10
-		# 0x0107,10
 		'0104' => ['party_join', 'a4 x4 v2 C Z24 Z24 Z16', [qw(ID x y type name user map)]], # 79
 		'0105' => ['party_leave', 'a4 Z24 C', [qw(ID name flag)]], # 31
 		'0106' => ['party_hp_info', 'a4 v2', [qw(ID hp hp_max)]], # 10
 		'0107' => ['party_location', 'a4 v2', [qw(ID x y)]], # 10
-		# 0x0108 is sent packet -> ST0 has-> '0108' => ['item_upgrade', 'v3', [qw(type index upgrade)]],
+		# 0x0108 is sent packet TODO: ST0 has-> '0108' => ['item_upgrade', 'v3', [qw(type index upgrade)]],
 		'0109' => ['party_chat', 'x2 a4 Z*', [qw(ID message)]], # -1
 		'0110' => ['skill_use_failed', 'v3 C2', [qw(skillID btype unknown fail type)]], # 10
 		'010A' => ['mvp_item', 'v', [qw(itemID)]], # 4
@@ -257,7 +253,6 @@ sub new {
 		'0114' => ['skill_use', 'v a4 a4 V3 v3 C', [qw(skillID sourceID targetID tick src_speed dst_speed damage level option type)]], # 31
 		# 0x0115,35
 		# 0x0116 is sent packet
-		# 0x0117,18
 		'0117' => ['skill_use_location', 'v a4 v3 V', [qw(skillID sourceID lv x y tick)]], # 18
 		# 0x0118 is sent packet
 		'0119' => ['character_status', 'a4 v3 C', [qw(ID opt1 opt2 option karma)]], # 13
@@ -284,10 +279,8 @@ sub new {
 		# 0x012e is sent packet
 		# 0x012f,-1
 		# 0x0130 is sent packet
-		# 0x0131,86
-		# 0x0132,6
-		'0131' => ['vender_found', 'a4 A30', [qw(ID title)]], # wtf A30? this message is 80 long -> test this
-		'0132' => ['vender_lost', 'a4', [qw(ID)]],
+		'0131' => ['vender_found', 'a4 A30', [qw(ID title)]], # TODO: # 0x0131,86 # wtf A30? this message is 80 long -> test this
+		'0132' => ['vender_lost', 'a4', [qw(ID)]], # 6
 		'0133' => ['vender_items_list'], # -1
 		# 0x0134 is sent packet
 		'0135' => ['vender_buy_fail', 'v2 C', [qw(index amount fail)]], # 7
@@ -302,8 +295,6 @@ sub new {
 		'013E' => ['skill_cast', 'a4 a4 v5 V', [qw(sourceID targetID x y skillID unknown type wait)]], # 24
 		# 0x013f is sent packet
 		# 0x0140 is sent packet
-		# 0x0141,14
-		# 0x0142,6
 		'0141' => ['stat_info2', 'V3', [qw(type val val2)]], # 14
 		'0142' => ['npc_talk_number', 'a4', [qw(ID)]], # 6
 		# 0x0143 is sent packet
@@ -385,9 +376,8 @@ sub new {
 		# 0x018e is sent packet
 		'018F' => ['refine_result', 'v2', [qw(fail nameID)]], # 6
 		# 0x0190 is sent packet
-		# 0x0192,24
 		'0191' => ['talkie_box', 'a4 Z80', [qw(ID message)]], # 86 # talkie box message
-		'0192' => ['map_change_cell', 'v3 Z16', [qw(x y type map_name)]], # ex. due to ice wall
+		'0192' => ['map_change_cell', 'v3 Z16', [qw(x y type map_name)]], # 24 # ex. due to ice wall
 		# 0x0193 is sent packet
 		'0194' => ['character_name', 'a4 Z24', [qw(ID name)]], # 30
 		'0195' => ['actor_name_received', 'a4 Z24 Z24 Z24 Z24', [qw(ID name partyName guildName guildTitle)]], # 102
@@ -411,14 +401,10 @@ sub new {
 		# 0x01a7 is sent packet
 		# 0x01a8,4
 		# 0x01a9 is sent packet
-		# 0x01aa,10
-		# 0x01ab,12
-		# 0x01ac,6
-		# 0x01ad,-1
 		'01AA' => ['pet_emotion', 'a4 V', [qw(ID type)]], # 10
 		'01AB' => ['actor_muted', 'a4 v V', [qw(ID duration)]], # 12
-		'01AC' => ['actor_trapped', 'a4', [qw(ID)]],
-		'01AD' => ['arrowcraft_list'],
+		'01AC' => ['actor_trapped', 'a4', [qw(ID)]], # 6
+		'01AD' => ['arrowcraft_list'], # -1
 		# 0x01ae is sent packet
 		# 0x01af is sent packet
 		'01B0' => ['monster_typechange', 'a4 C V', [qw(ID unknown type)]], # 11 -> unknown is type and type is class
@@ -427,11 +413,14 @@ sub new {
 		'01B3' => ['npc_image', 'Z64 C', [qw(npc_image type)]], # 67
 		'01B4' => ['guild_emblem_update', 'a4 a4 a2', [qw(ID guildID emblemID)]], # 12
 		'01B5' => ['account_payment_info', 'V2', [qw(D_minute H_minute)]], # 18
-		'01B6' => ['guild_info', 'a4 V9 a4 Z24 Z24 Z20', [qw(ID lv conMember maxMember average exp exp_next tax tendency_left_right tendency_down_up emblemID name master castles_string)]],
-		# 0x01b6,114
+		'01B6' => ['guild_info', 'a4 V9 a4 Z24 Z24 Z20', [qw(ID lv conMember maxMember average exp exp_next tax tendency_left_right tendency_down_up emblemID name master castles_string)]], # 144 TODO: unpackstring len is wrong
+		
 		# 0x01b8,3
 		'01B9' => ['cast_cancelled', 'a4', [qw(ID)]], # 6
 		# 0x01ba is sent packet
+		
+		
+		
 		# 0x01be,2
 		# 0x01bf,3
 		# 0x01c0,2
@@ -588,6 +577,7 @@ sub account_payment_info {
 	message  T("-------------------------------------------------------\n"), "info";
 }
 
+# TODO: optimize unpacking
 sub account_server_info {
 	my ($self, $args) = @_;
 	my $msg = $args->{serverInfo};
@@ -1736,6 +1726,7 @@ sub cart_add_failed {
 	error TF("Can't Add Cart Item (%s)\n", $reason);
 }
 
+# TODO: extract unpack string
 sub cart_items_nonstackable {
 	my ($self, $args) = @_;
 	my ($newmsg, $psize);
@@ -1804,6 +1795,7 @@ sub cart_item_added {
 	$args->{item} = $item;
 }
 
+# TODO: extract unpack string
 sub cart_items_stackable {
 	my ($self, $args) = @_;
 
@@ -2200,6 +2192,7 @@ sub chat_user_leave {
 	}
 }
 
+# TODO: optimize unpacking
 sub chat_users {
 	my ($self, $args) = @_;
 
@@ -2632,7 +2625,7 @@ sub forge_list {
 
 	message T("========Forge List========\n");
 	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 8) {
-		my $viewID = unpack("v1", substr($args->{RAW_MSG}, $i, 2));
+		my $viewID = unpack('v', substr($args->{RAW_MSG}, $i, 2));
 		message "$viewID $items_lut{$viewID}\n";
 		# always 0x0012
 		#my $unknown = unpack("v1", substr($args->{RAW_MSG}, $i+2, 2));
@@ -2642,6 +2635,7 @@ sub forge_list {
 	message "=========================\n";
 }
 
+# TODO: optimize unpacking
 sub friend_list {
 	my ($self, $args) = @_;
 
@@ -2942,6 +2936,7 @@ sub guild_broken {
 	undef %guild;
 }
 
+# TODO: optimize unpacking
 sub guild_member_setting_list {
 	my ($self, $args) = @_;
 	my $newmsg;
@@ -2958,6 +2953,7 @@ sub guild_member_setting_list {
 	}
 }
 
+# TODO: optimize unpacking
 sub guild_skills_list {
 	my ($self, $args) = @_;
 	my $msg = $args->{RAW_MSG};
@@ -3022,6 +3018,7 @@ sub guild_create_result {
 	}
 }
 
+# TODO: optimize unpacking
 sub guild_expulsionlist {
 	my ($self, $args) = @_;
 
@@ -3087,6 +3084,7 @@ sub guild_expulsion {
 		"Reason: %s\n", bytesToString($args->{name}), bytesToString($args->{message})), "schat";
 }
 
+# TODO: optizmize unpacking
 sub guild_members_list {
 	my ($self, $args) = @_;
 
@@ -3241,7 +3239,7 @@ sub identify_list {
 
 	undef @identifyID;
 	for (my $i = 4; $i < $msg_size; $i += 2) {
-		my $index = unpack("v1", substr($msg, $i, 2));
+		my $index = unpack('v', substr($msg, $i, 2));
 		my $item = $char->inventory->getByServerIndex($index);
 		binAdd(\@identifyID, $item->{invIndex});
 	}
@@ -3426,6 +3424,7 @@ sub revolving_entity {
 
 }
 
+# TODO: extract unpack string
 sub inventory_items_nonstackable {
 	my ($self, $args) = @_;
 	return unless changeToInGameState();
@@ -3487,6 +3486,7 @@ sub inventory_items_nonstackable {
 	$ai_v{'cart_time'} = time + 1;
 }
 
+# TODO: extract unpack string
 sub inventory_items_stackable {
 	my ($self, $args) = @_;
 	return unless changeToInGameState();

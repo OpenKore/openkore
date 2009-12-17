@@ -28,7 +28,7 @@ sub new {
 		'029B' => ['homunculus_stats', 'a4 v8 Z24 v5 V v2', [qw(ID atk matk hit critical def mdef flee aspd name lv hp hp_max sp sp_max contract_end faith summons)]], # 72
 		# 0x02a3,0
 		# 0x02a4,0
-		# 0x02a5,8
+		# 0x02a5 is sent packet
 	);
 	
 	foreach my $switch (keys %packets) {

@@ -27,7 +27,8 @@ sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
 	my %packets = (
-		# 0x0084,2
+		'0084' => ['quit_refuse'], # 2
+
 		'0216' => ['adopt_reply', 'V', [qw(type)]], # 6
 
 		'0219' => ['top10_blacksmith_rank'], #282
