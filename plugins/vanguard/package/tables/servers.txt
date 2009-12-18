@@ -1,0 +1,36 @@
+# This file contains information about master servers.
+
+####################
+# Private RO Servers
+
+[Localhost]
+ip 127.0.0.1
+port 6900
+master_version 1
+version 20
+serverType 0
+serverEncoding Western
+
+[IntenseRO]
+ip 216.83.36.53
+port 6900
+private 1
+master_version 18
+version 24
+serverType kRO_RagexeRE_2009_11_03a
+serverEncoding Western
+charBlockSize 112
+recvpackets recvpackets_intenseRO.txt
+vanguard_key 987FB6E0904E83C6F629C2E0BD228AEA
+
+[LimitRO]
+ip 188.40.107.78
+port 6900
+private 1
+master_version 14
+version 20
+serverType kRO_RagexeRE_2009_11_03a
+serverEncoding Western
+charBlockSize 112
+recvpackets recvpackets_limitRO.txt
+vanguard_key B6E0904E83C6F629C2E0BD228AEA679C
