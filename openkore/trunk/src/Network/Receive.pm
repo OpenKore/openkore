@@ -174,6 +174,7 @@ sub parse {
 		Misc::checkValidity("Packet: " . $handler->[0]);
 	} else {
 		warning "Packet Parser: Unhandled Packet: $switch Handler: $handler->[0]\n";
+		debug join(', ', @{\%args}{@{$handler->[2]}}) . "\n", "packetParser", 2;
 	}
 
 	Plugins::callHook("packet/$handler->[0]", \%args);

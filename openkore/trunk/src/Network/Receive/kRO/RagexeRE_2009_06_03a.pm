@@ -26,7 +26,7 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 	my %packets = (
 		# 0x07d7 is sent packet
-		# 0x07d8,8
+		'07D8' => ['party_exp', 'V C2', [qw(type item_pickup item_division)]], # 8 # TODO: add last 2 to the function
 		'07D9' => ['hotkeys'], # 254 # hotkeys:36
 		# 0x07da is sent packet
 	);

@@ -26,7 +26,7 @@ use Network::Send::kRO::RagexeRE_2009_11_03a;
 use base qw(Network::Send::kRO::RagexeRE_2009_11_03a);
 
 use Log qw(message warning error debug);
-use Utils::Rijndael qw(normal_rijndael);
+use Utils::Rijndael;
 use Globals qw($accountID $incomingMessages $masterServer);
 
 sub new {

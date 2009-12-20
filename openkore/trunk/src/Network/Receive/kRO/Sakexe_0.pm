@@ -92,9 +92,9 @@ sub new {
 		'0071' => ['received_character_ID_and_Map', 'a4 Z16 a4 v', [qw(charID mapName mapIP mapPort)]], # 28
 		# 0x0072 is sent packet
 		'0073' => ['map_loaded', 'V a3 x2', [qw(syncMapSync coords)]], # 11
-		# 0x0074,3
+		'0074' => ['map_load_error', 'C', [qw(error)]], # 3
 		'0075' => ['changeToInGameState'], # -1
-		# 0x0076,9
+		'0076' => ['update_char', 'a4 v C', [qw(ID style item)]], # 9
 		'0077' => ['changeToInGameState'], # 5
 		'0078' => ['actor_display',	'a4 v14 a4 a2 v2 C2 a3 C3 v', 		[qw(ID walk_speed opt1 opt2 option type hair_style weapon lowhead shield tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 karma sex coords unknown1 unknown2 act lv)]], #standing # 54
 		'0079' => ['actor_display',	'a4 v14 a4 a2 v2 C2 a3 C2 v',		[qw(ID walk_speed opt1 opt2 option type hair_style weapon lowhead shield tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 karma sex coords unknown1 unknown2 lv)]], #spawning # 53
@@ -104,9 +104,9 @@ sub new {
 		'007F' => ['received_sync', 'V', [qw(time)]], # 6
 		'0080' => ['actor_died_or_disappeared', 'a4 C', [qw(ID type)]], # 7
 		'0081' => ['errors', 'C1', [qw(type)]], # 3
-		# 0x0082,2
-		# 0x0083,2
-		# 0x0084,2
+		# 0x0082 is sent packet
+		'0083' => ['quit_accept'], # 2
+		'0084' => ['quit_refuse'], # 2
 		# 0x0085 is sent packet
 		'0086' => ['actor_display', 'a4 a5 x V', [qw(ID coords tick)]], # 16
 		'0087' => ['character_moves', 'x4 a5 C', [qw(coords unknown)]], # 12
@@ -121,7 +121,7 @@ sub new {
 		# 0x0090 is sent packet
 		'0091' => ['map_change', 'Z16 v2', [qw(map x y)]], # 22
 		'0092' => ['map_changed', 'Z16 x4 a4 v', [qw(map IP port)]], # 28
-		# 0x0093,2
+		'0093' => ['npc_ack_enable'], # 2
 		# 0x0094 is sent packet
 		'0095' => ['actor_info', 'a4 Z24', [qw(ID name)]], # 30
 		# 0x0096 is sent packet
@@ -153,15 +153,14 @@ sub new {
 		'00B0' => ['stat_info', 'v V', [qw(type val)]], # 8
 		'00B1' => ['exp_zeny_info', 'v V', [qw(type val)]], # 8
 		# 0x00b2 is sent packet
-		# 0x00b3,3
-		'00B3' => ['switch_character', 'x'], # 3
+		'00B3' => ['respawn_result', 'C', [qw(result)]], # 3
 		'00B4' => ['npc_talk'], # -1
 		'00B5' => ['npc_talk_continue', 'a4', [qw(ID)]], # 6
 		'00B6' => ['npc_talk_close', 'a4', [qw(ID)]], # 6
 		'00B7' => ['npc_talk_responses'], # -1
 		# 0x00b8 is sent packet
 		# 0x00b9 is sent packet
-		# 0x00ba,2
+		# 0x00ba is sent packet
 		# 0x00bb is sent packet
 		'00BC' => ['stats_added', 'v x C', [qw(type val)]], # 6
 		'00BD' => ['stats_info', 'v C12 v14', [qw(points_free str points_str agi points_agi vit points_vit int points_int dex points_dex luk points_luk attack attack_bonus attack_magic_min attack_magic_max def def_bonus def_magic def_magic_bonus hit flee flee_bonus critical karma manner)]],
@@ -180,12 +179,12 @@ sub new {
 		'00CA' => ['buy_result', 'C', [qw(fail)]], # 3
 		'00CB' => ['sell_result', 'C', [qw(fail)]], # 3
 		# 0x00cc is sent packet
-		# 0x00cd,3
+		'00CD' => ['disconnect_character', 'C', [qw(result)]], # 3
 		# 0x00d0 is sent packet
 		'00D1' => ['ignore_player_result', 'C2', [qw(type error)]], # 4
 		'00D2' => ['ignore_all_result', 'C2', [qw(type error)]], # 4
 		# 0x00d3 is sent packet
-		# 0x00d4,-1
+		'00D4' => ['whisper_list', 'v', [qw(len)]], # -1
 		# 0x00d5 is sent packet
 		'00D6' => ['chat_created', 'x'], # 3
 		'00D7' => ['chat_info', 'x2 a4 a4 v2 C a*', [qw(ownerID ID limit num_users public title)]], # -1
@@ -214,7 +213,7 @@ sub new {
 		'00EE' => ['deal_cancelled'], # 2
 		# 0x00ef is sent packet
 		'00F0' => ['deal_complete', 'C', [qw(fail)]], # 3
-		# 0x00f1,2
+		'00F1' => ['deal_undo'], # 2
 		'00F2' => ['storage_opened', 'v2', [qw(items items_max)]], # 6
 		# 0x00f3 is sent packet
 		'00F4' => ['storage_item_added', 'v V v C3 a8', [qw(index amount nameID identified broken upgrade cards)]], # 21
@@ -230,7 +229,7 @@ sub new {
 		'00FE' => ['party_invite', 'a4 Z24', [qw(ID name)]], # 30
 		# 0x00ff is sent packet
 		# 0x0100 is sent packet
-		'0101' => ['party_exp', 'v x2', [qw(type)]], # 6
+		'0101' => ['party_exp', 'V', [qw(type)]], # 6
 		# 0x0102 is sent packet
 		# 0x0103 is sent packet
 		'0104' => ['party_join', 'a4 x4 v2 C Z24 Z24 Z16', [qw(ID x y type name user map)]], # 79
@@ -243,7 +242,7 @@ sub new {
 		'010A' => ['mvp_item', 'v', [qw(itemID)]], # 4
 		'010B' => ['mvp_you', 'V', [qw(expAmount)]], # 6
 		'010C' => ['mvp_other', 'a4', [qw(ID)]], # 6
-		# 0x010d,2
+		'010D' => ['mvp_item_trow'], # 2
 		'010E' => ['skill_update', 'v4 C', [qw(skillID lv sp range up)]], # 11 # range = skill range, up = this skill can be leveled up further
 		'010F' => ['skills_list'], # -1
 		# 0x0110 is sent packet
@@ -251,7 +250,7 @@ sub new {
 		# 0x0112 is sent packet
 		# 0x0113 is sent packet
 		'0114' => ['skill_use', 'v a4 a4 V3 v3 C', [qw(skillID sourceID targetID tick src_speed dst_speed damage level option type)]], # 31
-		# 0x0115,35
+		'0115' => ['skill_use_position', 'v a4 a4 V3 v5 C', [qw(skillID sourceID targetID tick src_speed dst_speed x y damage level option type)]], # 35
 		# 0x0116 is sent packet
 		'0117' => ['skill_use_location', 'v a4 v3 V', [qw(skillID sourceID lv x y tick)]], # 18
 		# 0x0118 is sent packet
@@ -273,11 +272,11 @@ sub new {
 		# 0x0128 is sent packet
 		# 0x0129 is sent packet
 		# 0x012a is sent packet
-		# 0x012b,2
-		'012C' => ['cart_add_failed', 'C', [qw(fail)]],
-		'012D' => ['shop_skill', 'v', [qw(number)]],
+		'012B' => ['cart_off'], # 2
+		'012C' => ['cart_add_failed', 'C', [qw(fail)]], # 3
+		'012D' => ['shop_skill', 'v', [qw(number)]], # 4
 		# 0x012e is sent packet
-		# 0x012f,-1
+		# 0x012f is sent packet
 		# 0x0130 is sent packet
 		'0131' => ['vender_found', 'a4 A30', [qw(ID title)]], # TODO: # 0x0131,86 # wtf A30? this message is 80 long -> test this
 		'0132' => ['vender_lost', 'a4', [qw(ID)]], # 6
@@ -286,7 +285,7 @@ sub new {
 		'0135' => ['vender_buy_fail', 'v2 C', [qw(index amount fail)]], # 7
 		'0136' => ['vending_start'], # -1
 		'0137' => ['shop_sold', 'v2', [qw(number amount)]], # 6
-		# 0x0138,3
+		# 0x0138 is sent packet
 		'0139' => ['monster_ranged_attack', 'a4 v5', [qw(ID sourceX sourceY targetX targetY range)]], # 16
 		'013A' => ['attack_range', 'v', [qw(type)]], # 4
 		'013B' => ['arrow_none', 'v', [qw(type)]], # 4
@@ -299,7 +298,7 @@ sub new {
 		'0142' => ['npc_talk_number', 'a4', [qw(ID)]], # 6
 		# 0x0143 is sent packet
 		'0144' => ['minimap_indicator', 'a4 V3 C5', [qw(npcID type x y ID blue green red alpha)]], # 23
-		# 0x0145,19
+		'0145' => ['image_show', 'Z16 C', [qw(name type)]], # 19
 		# 0x0146 is sent packet
 		'0147' => ['item_skill', 'v6 A*', [qw(skillID targetType unknown skillLv sp unknown2 skillName)]], # 39
 		'0148' => ['resurrection', 'a4 v', [qw(targetID type)]], # 8
@@ -310,23 +309,22 @@ sub new {
 		# 0x014d is sent packet
 		'014E' => ['guild_master_member', 'V', [qw(type)]], # 6
 		# 0x014f is sent packet
-		# 0x0150,110
+		'0150' => ['guild_info', 'a4 V9 a4 Z24 Z24 Z16', [qw(ID lv conMember maxMember average exp exp_next tax tendency_left_right tendency_down_up emblemID name master castles_string)]], # 110
 		# 0x0151 is sent packet
 		'0152' => ['guild_emblem', 'v a4 a4 Z*', [qw(len guildID emblemID emblem)]], # -1
 		# 0x0153 is sent packet
 		'0154' => ['guild_members_list'], # -1
 		# 0x0155 is sent packet
-		# 0x0156,-1
-		'0156' => ['guild_member_position_changed', 'v V3', [qw(unknown accountID charID positionID)]], # -1 -> why?
-		# 0x0157,6
+		'0156' => ['guild_member_position_changed', 'v V3', [qw(len accountID charID positionID)]], # -1 -> why?
+		# 0x0157 is sent packet
 		# 0x0158,-1
 		# 0x0159 is sent packet
 		'015A' => ['guild_leave', 'Z24 Z40', [qw(name message)]], # 66
 		# 0x015b is sent packet
-		'015C' => ['guild_expulsion', 'Z24 Z40 Z24', [qw(name message unknown)]], # 90
+		'015C' => ['guild_expulsion', 'Z24 Z40 Z24', [qw(name message account)]], # 90
 		# 0x015d is sent packet
 		'015E' => ['guild_broken', 'V', [qw(flag)]], # 6 # clif_guild_broken
-		# 0x015f,42
+		'015F' => ['guild_disband', 'Z40', [qw(reason)]], # 42
 		'0160' => ['guild_member_setting_list'], # -1
 		# 0x0161 is sent packet
 		'0162' => ['guild_skills_list'], # -1
@@ -339,17 +337,17 @@ sub new {
 		'0169' => ['guild_invite_result', 'C', [qw(type)]], # 3
 		'016A' => ['guild_request', 'a4 Z24', [qw(ID name)]], # 30
 		# 0x016b is sent packet
-		'016C' => ['guild_name', 'a4 a4 V x5 Z24', [qw(guildID emblemID mode guildName)]], # 43
+		'016C' => ['guild_name', 'a4 a4 V C a4 Z24', [qw(guildID emblemID mode is_master interSID guildName)]], # 43
 		'016D' => ['guild_member_online_status', 'a4 a4 V', [qw(ID charID online)]], # 14
 		# 0x016e is sent packet
-		'016F' => ['guild_notice'], # 182 -> TODO: fixed len, can be unpacked by unpackstring
+		'016F' => ['guild_notice', 'Z60 Z120', [qw(subject notice)]], # 182
 		# 0x0170 is sent packet
 		'0171' => ['guild_ally_request', 'a4 Z24', [qw(ID guildName)]], # 30
 		# 0x0172 is sent packet
 		'0173' => ['guild_alliance', 'V', [qw(flag)]], # 3
 		'0174' => ['guild_position_changed', 'v a4 a4 a4 V Z20', [qw(unknown ID mode sameID exp position_name)]], # -1
-		# 0x0175,6
-		# 0x0176,106
+		# 0x0175 is sent packet
+		'0176' => ['guild_member_info', 'a4 a4 v5 V3 Z50 Z24', [qw(AID GID head_type head_color sex job lv contribution_exp current_state positionID intro name)]], # 106 # TODO: rename the vars and add sub		
 		'0177' => ['identify_list'], # -1
 		# 0x0178 is sent packet
 		'0179' => ['identify', 'v C', [qw(index flag)]], # 5
@@ -361,7 +359,7 @@ sub new {
 		'017F' => ['guild_chat', 'x2 Z*', [qw(message)]], # -1
 		# 0x0180 is sent packet
 		'0181' => ['guild_opposition_result', 'C', [qw(flag)]], # 3 # clif_guild_oppositionack
-		# 0x0182,106
+		'0182' => ['guild_member_add', 'a4 a4 v5 V3 Z50 Z24', [qw(AID GID head_type head_color sex job lv contribution_exp current_state positionID intro name)]], # 106 # TODO: rename the vars and add sub
 		# 0x0183 is sent packet
 		'0184' => ['guild_unally', 'a4 V', [qw(guildID flag)]], # 10 # clif_guild_delalliance
 		'0185' => ['guild_alliance_added', 'a4 a4 Z24', [qw(opposition alliance_guildID name)]], # 34 # clif_guild_allianceadded
@@ -399,7 +397,7 @@ sub new {
 		# 0x01a5 is sent packet
 		'01A6' => ['egg_list'], # -1
 		# 0x01a7 is sent packet
-		# 0x01a8,4
+		# 0x01a8 is sent packet
 		# 0x01a9 is sent packet
 		'01AA' => ['pet_emotion', 'a4 V', [qw(ID type)]], # 10
 		'01AB' => ['actor_muted', 'a4 v V', [qw(ID duration)]], # 12
@@ -407,35 +405,35 @@ sub new {
 		'01AD' => ['arrowcraft_list'], # -1
 		# 0x01ae is sent packet
 		# 0x01af is sent packet
-		'01B0' => ['monster_typechange', 'a4 C V', [qw(ID unknown type)]], # 11 -> unknown is type and type is class
-		# 0x01b1,7
+		'01B0' => ['monster_typechange', 'a4 C V', [qw(ID type nameID)]], # 11
+		'01B1' => ['show_digit', 'C V', [qw(type value)]], # 7
 		# 0x01b2 is sent packet
 		'01B3' => ['npc_image', 'Z64 C', [qw(npc_image type)]], # 67
 		'01B4' => ['guild_emblem_update', 'a4 a4 a2', [qw(ID guildID emblemID)]], # 12
 		'01B5' => ['account_payment_info', 'V2', [qw(D_minute H_minute)]], # 18
-		'01B6' => ['guild_info', 'a4 V9 a4 Z24 Z24 Z20', [qw(ID lv conMember maxMember average exp exp_next tax tendency_left_right tendency_down_up emblemID name master castles_string)]], # 144 TODO: unpackstring len is wrong
-		
-		# 0x01b8,3
+		'01B6' => ['guild_info', 'a4 V9 a4 Z24 Z24 Z16 V', [qw(ID lv conMember maxMember average exp exp_next tax tendency_left_right tendency_down_up emblemID name master castles_string zeny)]], # 114
+		# 0x01b7 is sent packet
+		'01B8' => ['guild_zeny', 'C', [qw(result)]], # 3
 		'01B9' => ['cast_cancelled', 'a4', [qw(ID)]], # 6
 		# 0x01ba is sent packet
-		
-		
-		
-		# 0x01be,2
-		# 0x01bf,3
-		# 0x01c0,2
-		# 0x01c1,14
-		# 0x01c2,10
+		# 0x01bb is sent packet
+		# 0x01bc is sent packet
+		# 0x01bd is sent packet		
+		'01BE' => ['ask_pngameroom'], # 2
+		# 0x01bf is sent packet
+		# 0x01c0 is sent packet
+		'01C1' => ['remaintime_reply', 'V3', [qw(result expire_date remain_time)]], # 14
+		'01C2' => ['remaintime_info', 'V2', [qw(type remain_time)]], # 10
 		'01C3' => ['local_broadcast', 'x2 a3 x9 Z*', [qw(color message)]], # -1
 		'01C4' => ['storage_item_added', 'v V v C4 a8', [qw(index amount nameID type identified broken upgrade cards)]], # 22
 		'01C5' => ['cart_item_added', 'v V v C4 a8', [qw(index amount nameID type identified broken upgrade cards)]], # 22
-		# 0x01c6,4
-		# 0x01c7,2
+		# 0x01c6 is sent packet
+		'01C7' => ['encryption_acknowledge'], # 2
 		'01C8' => ['item_used', 'v2 a4 v C', [qw(index itemID ID remaining success)]], # 13
 		'01C9' => ['area_spell', 'a4 a4 v2 C2 C Z80', [qw(ID sourceID x y type fail scribbleLen scribbleMsg)]], # 97
 		# // 0x01ca,0
-		# 0x01cb,9
-		# 0x01cc,9
+		# 0x01cb is sent packet
+		'01CC' => ['monster_talk', 'a4 C3', [qw(ID stateID skillID arg)]], # 9
 		'01CD' => ['sage_autospell'], # 30
 		# 0x01ce is sent packet
 		'01CF' => ['devotion', 'a4 a20 v', [qw(sourceID targetIDs range)]], # 28
@@ -446,28 +444,28 @@ sub new {
 		'01D4' => ['npc_talk_text', 'a4', [qw(ID)]], # 6
 		# 0x01d5 is sent packet
 		'01D6' => ['pvp_mode2', 'v', [qw(type)]], # 4
-		'01D7' => ['player_equipment', 'a4 C v2', [qw(sourceID type ID1 ID2)]], # 11
-		'01D8' => ['actor_display', 'a4 v14 a4 a2 v2 C2 a3 C3 v',	[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 karma sex coords unknown1 unknown2 act lv)]], # 54 # standing
+		'01D7' => ['player_equipment', 'a4 C v2', [qw(sourceID type ID1 ID2)]], # 11 # TODO: inconsistent with C structs
+		'01D8' => ['actor_display', 'a4 v14 a4 a2 v2 C2 a3 C3 v',		[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 karma sex coords unknown1 unknown2 act lv)]], # 54 # standing
 		'01D9' => ['actor_display', 'a4 v14 a4 a2 v2 C2 a3 C2 v',		[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 karma sex coords unknown1 unknown2 lv)]], # 53 # spawning
 		'01DA' => ['actor_display', 'a4 v9 V v5 a4 a2 v2 C2 a5 x C2 v',	[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 karma sex coords unknown1 unknown2 lv)]], # 60 # walking
-		# 0x01db,2
+		# 0x01db is sent packet
 		# 0x01dc,-1
-		# 0x01dd,47
+		# 0x01dd is sent packet
 		'01DE' => ['skill_use', 'v a4 a4 V4 v2 C', [qw(skillID sourceID targetID tick src_speed dst_speed damage level option type)]], # 33
 		# 0x01df is sent packet
 		'01E0' => ['GM_req_acc_name', 'a4 Z24', [qw(targetID accountName)]], # 30
 		'01E1' => ['revolving_entity', 'a4 v', [qw(sourceID entity)]], # 8
-		# 0x01e2,34
-		# 0x01e3,14
-		# 0x01e4,2
-		# 0x01e5,6
-		# 0x01e6,26
+		'01E2' => ['marriage_req', 'a4 a4 Z24', [qw(AID GID name)]], # 34 # TODO: rename vars?
+		# 0x01e3 is sent packet
+		'01E4' => ['marriage_start'], # 2
+		# 0x01e5 is sent packet
+		'01E6' => ['marriage_partner_name', 'Z24', [qw(name)]],  # 26
 		# 0x01e7 is sent packet
 		# 0x01e8 is sent packet
 		'01E9' => ['party_join', 'a4 x4 v2 C Z24 Z24 Z16 v C2', [qw(ID x y type name user map lv item_pickup item_share)]], # 81
 		'01EA' => ['married', 'a4', [qw(ID)]], # 6
 		'01EB' => ['guild_location', 'a4 v2', [qw(ID x y)]], # 10
-		# 0x01ec,26
+		'01EC' => ['guild_member_map_change', 'a4 a4 Z16', [qw(GDID AID mapName)]], # 26 # TODO: change vars, add sub
 		# 0x01ed is sent packet
 		'01EE' => ['inventory_items_stackable'], # -1
 		'01EF' => ['cart_items_stackable'], # -1
@@ -479,19 +477,19 @@ sub new {
 		'01F5' => ['deal_begin', 'C a4 v', [qw(type targetID level)]], # 9
 		'01F6' => ['adopt_request', 'a4 a4 Z24', [qw(sourceID targetID name)]], # 34
 		# 0x01f7 is sent packet
-		# 0x01f8,2
+		'01F8' => ['adopt_start'], # 2
 		# 0x01e9 is sent packet
-		# 0x01fa,48
-		# 0x01fb,56
+		# 0x01fa is sent packet
+		# 0x01fb is sent packet
 		'01FC' => ['repair_list'], # -1
 		# 0x01fd is sent packet
 		'01FE' => ['repair_result', 'v C', [qw(nameID flag)]], # 5
-		# 0x01ff,10
-		# 0x0200,26
+		'01FF' => ['high_jump', 'a4 v2', [qw(AID x y)]], # 10
+		# 0x0200 is sent packet
 		'0201' => ['friend_list'], # -1
 		# 0x0202 is sent packet
 		# 0x0203 is sent packet
-		# 0x0204,18
+		# 0x0204 is sent packet
 		'0205' => ['divorced', 'Z24', [qw(name)]], # 26 # clif_divorced
 		'0206' => ['friend_logon', 'a4 a4 C', [qw(friendAccountID friendCharID isNotOnline)]], # 11
 		'0207' => ['friend_request', 'a4 a4 Z24', [qw(accountID charID name)]], # 34
@@ -3173,34 +3171,23 @@ sub guild_name {
 
 sub guild_notice {
 	my ($self, $args) = @_;
-
-	my $msg = $args->{RAW_MSG};
-	my ($address) = unpack("Z*", substr($msg, 2, 60));
-	my ($message) = unpack("Z*", substr($msg, 62, 120));
-	stripLanguageCode(\$address);
-	stripLanguageCode(\$message);
-	$address = bytesToString($address);
-	$message = bytesToString($message);
-
+	stripLanguageCode(\$args->{subject});
+	stripLanguageCode(\$args->{notice});
 	# don't show the huge guildmessage notice if there is none
 	# the client does something similar to this...
-	if ($address || $message) {
+	if ($args->{subject} || $args->{notice}) {
 		my $msg = TF("---Guild Notice---\n"	.
 			"%s\n\n" .
 			"%s\n" .
-			"------------------\n", $address, $message);
+			"------------------\n", $args->{subject}, $args->{notice});
 		message $msg, "guildnotice";
 	}
-
 	#message	T("Requesting guild information...\n"), "info"; # Lets Disable this, its kinda useless.
 	$messageSender->sendGuildMasterMemberCheck();
-
 	# Replies 01B6 (Guild Info) and 014C (Guild Ally/Enemy List)
 	$messageSender->sendGuildRequestInfo(0);
-
 	# Replies 0166 (Guild Member Titles List) and 0154 (Guild Members List)
 	$messageSender->sendGuildRequestInfo(1);
-
 }
 
 sub guild_request {
@@ -4117,16 +4104,16 @@ sub monster_typechange {
 	# Class change / monster type change
 	# 01B0 : long ID, byte WhateverThisIs, long type
 	my $ID = $args->{ID};
-	my $type = $args->{type};
+	my $nameID = $args->{nameID};
 	my $monster = $monstersList->getByID($ID);
 	if ($monster) {
 		my $oldName = $monster->name;
-		if ($monsters_lut{$type}) {
-			$monster->setName($monsters_lut{$type});
+		if ($monsters_lut{$nameID}) {
+			$monster->setName($monsters_lut{$nameID});
 		} else {
 			$monster->setName(undef);
 		}
-		$monster->{nameID} = $type;
+		$monster->{nameID} = $nameID;
 		$monster->{dmgToParty} = 0;
 		$monster->{dmgFromParty} = 0;
 		$monster->{missedToParty} = 0;
@@ -4445,7 +4432,8 @@ sub party_chat {
 	});
 }
 
-# TODO: test if this packet also gives us the item share options
+# TODO: test if this packet also gives us the item share options => 07D8 does this
+# TODO: add 07D8 strings for rules: item_pickup, item_division
 sub party_exp {
 	my ($self, $args) = @_;
 	$char->{party}{share} = $args->{type};

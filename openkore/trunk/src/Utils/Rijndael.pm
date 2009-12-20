@@ -25,7 +25,7 @@ use XSTools;
 use Exporter;
 use base qw(Exporter);
 
-our @EXPORT_OK = qw(normal_rijndael give_hex);
+our @EXPORT_OK = qw(give_hex);
 
 XSTools::bootModule('Utils::Rijndael');
 
