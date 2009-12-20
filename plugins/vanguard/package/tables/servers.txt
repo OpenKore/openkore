@@ -34,3 +34,17 @@ serverEncoding Western
 charBlockSize 112
 recvpackets recvpackets_limitRO.txt
 vanguard_key B6E0904E83C6F629C2E0BD228AEA679C
+
+
+[EternityRO]
+#ip 208.43.73.90
+ip game.eternityro.net
+port 6025
+private 1
+master_version 16
+version 24
+serverType kRO_RagexeRE_2009_11_03a
+serverEncoding Western
+charBlockSize 112
+recvpackets recvpackets_eternityRO.txt
+vanguard_key 228AEA679CE01E2DE00EED9EE0B7F6E0
