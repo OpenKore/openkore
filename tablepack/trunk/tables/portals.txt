@@ -88,6 +88,92 @@ ama_in02 115 177 ama_dun01 229 10 0 c r1 c r0 n
 #izlude 134 88 morocc 156 47 1200 c r2 c r2
 #izlude 134 88 aldebaran 168 112 1800 c r2 c r3
 
+# Training Grounds
+new_1-1 148 112 new_1-2 100 9
+new_2-1 148 112 new_2-2 100 9
+new_3-1 148 112 new_3-2 100 9
+new_4-1 148 112 new_4-2 100 9
+new_5-1 148 112 new_5-2 100 9
+new_1-2 100 6 new_1-1 144 112
+new_2-2 100 6 new_2-1 144 112
+new_3-2 100 6 new_3-1 144 112
+new_4-2 100 6 new_4-1 144 112
+new_5-2 100 6 new_5-1 144 112
+
+# Training Grounds entrance (not iRO)
+new_1-2 100 29 new_1-2 100 70 0 c r0 c c
+new_2-2 100 29 new_2-2 100 70 0 c r0 c c
+new_3-2 100 29 new_3-2 100 70 0 c r0 c c
+new_4-2 100 29 new_4-2 100 70 0 c r0 c c
+new_5-2 100 29 new_5-2 100 70 0 c r0 c c
+# Training Grounds entrance (iRO)
+#new_1-2 100 29 new_1-2 100 70 0 c a="eval Commands::run ('talk text ' . $Globals::char->name)" c c r0 c c
+#new_2-2 100 29 new_2-2 100 70 0 c a="eval Commands::run ('talk text ' . $Globals::char->name)" c c r0 c c
+#new_3-2 100 29 new_3-2 100 70 0 c a="eval Commands::run ('talk text ' . $Globals::char->name)" c c r0 c c
+#new_4-2 100 29 new_4-2 100 70 0 c a="eval Commands::run ('talk text ' . $Globals::char->name)" c c r0 c c
+#new_5-2 100 29 new_5-2 100 70 0 c a="eval Commands::run ('talk text ' . $Globals::char->name)" c c r0 c c
+
+# Training Grounds Kafra (not iRO)
+new_1-2 118 108 prontera 150 50 0 c c c r0 c c c r0 c
+new_2-2 118 108 prontera 150 50 0 c c c r0 c c c r0 c
+new_3-2 118 108 prontera 150 50 0 c c c r0 c c c r0 c
+new_4-2 118 108 prontera 150 50 0 c c c r0 c c c r0 c
+new_5-2 118 108 prontera 150 50 0 c c c r0 c c c r0 c
+new_1-2 118 108 morocc 155 110 0 c c c r0 c c c r1 c
+new_2-2 118 108 morocc 155 110 0 c c c r0 c c c r1 c
+new_3-2 118 108 morocc 155 110 0 c c c r0 c c c r1 c
+new_4-2 118 108 morocc 155 110 0 c c c r0 c c c r1 c
+new_5-2 118 108 morocc 155 110 0 c c c r0 c c c r1 c
+new_1-2 118 108 payon 166 67 0 c c c r0 c c c r2 c
+new_2-2 118 108 payon 166 67 0 c c c r0 c c c r2 c
+new_3-2 118 108 payon 166 67 0 c c c r0 c c c r2 c
+new_4-2 118 108 payon 166 67 0 c c c r0 c c c r2 c
+new_5-2 118 108 payon 166 67 0 c c c r0 c c c r2 c
+new_1-2 118 108 alberta 114 58 0 c c c r0 c c c r3 c
+new_2-2 118 108 alberta 114 58 0 c c c r0 c c c r3 c
+new_3-2 118 108 alberta 114 58 0 c c c r0 c c c r3 c
+new_4-2 118 108 alberta 114 58 0 c c c r0 c c c r3 c
+new_5-2 118 108 alberta 114 58 0 c c c r0 c c c r3 c
+new_1-2 118 108 geffen 122 65 0 c c c r0 c c c r4 c
+new_2-2 118 108 geffen 122 65 0 c c c r0 c c c r4 c
+new_3-2 118 108 geffen 122 65 0 c c c r0 c c c r4 c
+new_4-2 118 108 geffen 122 65 0 c c c r0 c c c r4 c
+new_5-2 118 108 geffen 122 65 0 c c c r0 c c c r4 c
+
+new_1-2 126 106 new_1-2 160 171
+new_2-2 126 106 new_2-2 160 171
+new_3-2 126 106 new_3-2 160 171
+new_4-2 126 106 new_4-2 160 171
+new_5-2 126 106 new_5-2 160 171
+new_1-2 156 171 new_1-2 123 106
+new_2-2 156 171 new_2-2 123 106
+new_3-2 156 171 new_3-2 123 106
+new_4-2 156 171 new_4-2 123 106
+new_5-2 156 171 new_5-2 123 106
+new_1-2 73 106 new_1-2 41 172
+new_2-2 73 106 new_2-2 41 172
+new_3-2 73 106 new_3-2 41 172
+new_4-2 73 106 new_4-2 41 172
+new_5-2 73 106 new_5-2 41 172
+new_1-2 46 172 new_1-2 78 106
+new_2-2 46 172 new_2-2 78 106
+new_3-2 46 172 new_3-2 78 106
+new_4-2 46 172 new_4-2 78 106
+new_5-2 46 172 new_5-2 78 106
+
+new_1-3 96 174 new_1-4 99 10 0 c r0 c
+new_2-3 96 174 new_2-4 99 10 0 c r0 c
+new_3-3 96 174 new_3-4 99 10 0 c r0 c
+new_4-3 96 174 new_4-4 99 10 0 c r0 c
+new_5-3 96 174 new_5-4 99 10 0 c r0 c
+
+# Training Grounds exit (not iRO)
+new_1-4 100 29 moc_ruins 155 44 0 c c c c c r0 c c c c r1 r0 r0 r0 r1 r1 c c r0 c r0 c r0 c r1 c c r0 c r1 c r1 c r1 c c r2 c r2 c r2 c r0 c r2 c r2 c r0 c r1 c c c c c c c c c c r0 c c c c c c c c
+new_2-4 100 29 moc_ruins 155 44 0 c c c c c r0 c c c c r1 r0 r0 r0 r1 r1 c c r0 c r0 c r0 c r1 c c r0 c r1 c r1 c r1 c c r2 c r2 c r2 c r0 c r2 c r2 c r0 c r1 c c c c c c c c c c r0 c c c c c c c c
+new_3-4 100 29 moc_ruins 155 44 0 c c c c c r0 c c c c r1 r0 r0 r0 r1 r1 c c r0 c r0 c r0 c r1 c c r0 c r1 c r1 c r1 c c r2 c r2 c r2 c r0 c r2 c r2 c r0 c r1 c c c c c c c c c c r0 c c c c c c c c
+new_4-4 100 29 moc_ruins 155 44 0 c c c c c r0 c c c c r1 r0 r0 r0 r1 r1 c c r0 c r0 c r0 c r1 c c r0 c r1 c r1 c r1 c c r2 c r2 c r2 c r0 c r2 c r2 c r0 c r1 c c c c c c c c c c r0 c c c c c c c c
+new_5-4 100 29 moc_ruins 155 44 0 c c c c c r0 c c c c r1 r0 r0 r0 r1 r1 c c r0 c r0 c r0 c r1 c c r0 c r1 c r1 c r1 c c r2 c r2 c r2 c r0 c r2 c r2 c r0 c r1 c c c c c c c c c c r0 c c c c c c c c
+
 # Morroc area (before Episode 12)
 #anthell01 35 267 moc_fild04 219 327
 #anthell02 171 169 moc_fild15 258 253
@@ -189,6 +275,7 @@ moc_ruins 75 162 bat_room 154 150 0 c c r0 c
 payon 189 105 bat_room 154 150 0 c c r0 c
 prontera 123 83 bat_room 154 150 0 c c r0 c
 rachel 149 138 bat_room 154 150 0 c c r0 c
+# following is a single warp, depends of battleground entrance npc used
 #bat_room 148 150 aldebaran 168 112 0 c r0 c
 #bat_room 148 150 geffen 120 39 0 c r0 c
 #bat_room 148 150 lighthalzen 159 93 0 c r0 c
@@ -231,9 +318,13 @@ mid_camp 213 286 moc_fild20 342 179 0 c c r0
 # KVM Blue
 bat_room 164 178 bat_room 169 223 0 c r0 c
 bat_room 169 220 bat_room 154 150
+#(chatroom) bat_room 169 226 bat_c01 53 131
+bat_c01 51 130 bat_room 154 150 0 c
 # KVM Red
 bat_room 164 121 bat_room 169 207 0 c r0 c
 bat_room 169 211 bat_room 154 150
+#(chatroom) bat_room 169 205 bat_c01 147 56
+bat_c01 148 54 bat_room 154 150 0 c
 
 alb_ship 26 166 alberta 170 170
 alb_ship 37 174 alb_ship 68 99
@@ -1178,18 +1269,6 @@ morocc_in 174 122 morocc_in 174 109
 morocc_in 174 151 morocc_in 174 166
 morocc_in 174 166 morocc_in 174 151
 morocc_in 183 65 morocc 52 259
-new_1-1 148 112 new_1-2 100 9
-new_1-2 100 6 new_1-1 148 112
-new_2-1 148 112 new_2-2 100 9
-new_2-2 100 6 new_2-1 148 112
-new_3-1 148 112 new_3-2 100 9
-new_3-2 100 6 new_3-1 148 112
-new_4-1 148 112 new_4-2 100 9
-new_4-2 100 6 new_4-1 148 112
-new_4-2 46 172 new_4-2 73 106
-new_4-2 73 106 new_4-2 41 172
-new_5-1 148 112 new_5-2 100 9
-new_5-2 100 6 new_5-1 148 112
 nif_in 88 29 nif_in 34 34
 nif_in 34 34 nif_in 88 29
 nif_in 23 11 niflheim 189 210
@@ -2578,3 +2657,6 @@ y_airport 145 63 yuno 59 244 0 c r0
 
 # Izlude airship
 izlude 206 55 airplane_01 244 58 1200 c r0 c r0
+
+# Rachel airship
+#(portal with dialog) ra_fild12 295 208 airplane_01 245 60 1200 c r0
