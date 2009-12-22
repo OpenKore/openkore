@@ -3146,8 +3146,11 @@ sub cmdOpenShop {
 
 sub cmdParty {
 	my (undef, $args) = @_;
+	my ($arg1, $arg2) = $args =~ /^(\w*)(?: (.+))?$/;
+=pod
 	my ($arg1) = $args =~ /^(\w*)/;
 	my ($arg2) = $args =~ /^\w* (\S+)\b/;
+=cut
 
 	if ($arg1 eq "" && (!$char || !$char->{'party'} || !%{$char->{'party'}} )) {
 		error T("Error in function 'party' (Party Functions)\n" .
@@ -3197,7 +3200,9 @@ sub cmdParty {
 		return;
 
 	} elsif ($arg1 eq "create") {
+=pod
 		my ($arg2) = $args =~ /^\w* ([\s\S]*)/;
+=cut
 		if ($arg2 eq "") {
 			error T("Syntax Error in function 'party create' (Organize Party)\n" .
 				"Usage: party create <party name>\n");
