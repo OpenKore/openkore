@@ -146,7 +146,7 @@ sub set {
 		$self->{display}{$key}{value}->SetValue ($percent);
 		$self->{display}{$key}{label}->SetLabel (sprintf '%s / %s', formatNumber ($current), formatNumber ($max));
 		
-		if ($self->{stats}{$key}{color}) {
+		if ($^O eq 'MSWin32' && $self->{stats}{$key}{color}) {
 			if ($self->{stats}{$key}{color} eq 'smooth') {
 				$self->{display}{$key}{value}->SetForegroundColour (new Wx::Colour ((100 - $percent) * 2.55, $percent * 1.27, 50));
 			} elsif ($self->{stats}{$key}{color} eq 'weight') {
