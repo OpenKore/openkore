@@ -38,20 +38,20 @@ sub upgrade {
 	my $sa = SVN::Updater->load({ path => $path });
 
 	print "  Fetching updates...\n";
-	$sa->update("--force", "--accept theirs-conflict");
+	$sa->update("--force", "--accept", "theirs-conflict");
 	print " Done updating " . $repos_name . "\n";
 };
 
 print "-===================== OpenKore Auto Update tool =====================-\n";
 if (check_svn_util() == 1) {
-	upgrade(".", "OpenKore core files") if (-d "src/.svn");
-	upgrade("./tables", "OpenKore table data files") if (-d "tables/.svn");
-	upgrade("./fields", "OpenKore map data files") if (-d "fields/.svn");
+	upgrade("$RealBin", "OpenKore core files") if (-d "$RealBin/src/.svn");
+	upgrade("$RealBin/tables", "OpenKore table data files") if (-d "$RealBin/tables/.svn");
+	upgrade("$RealBin/fields", "OpenKore map data files") if (-d "$RealBin/fields/.svn");
 };
 print "-=========================== Done Updating ===========================-\n\n\n";
 
 # Run main App
-my $file = "openkore.pl";
+my $file = "$RealBin/openkore.pl";
 $0 = $file;
 FindBin::again();
 {
