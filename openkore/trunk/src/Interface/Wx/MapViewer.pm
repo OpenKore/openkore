@@ -593,9 +593,12 @@ sub _viewFix {
 # vcl code sub _handlePaintEvent {
 sub _onPaint {
 	my $self = shift;
-	return unless ($self->{bitmap});
 	
+	# must be before return
 	my $paintDC = new Wx::PaintDC ($self);
+	
+	return unless $self->{bitmap};
+	
 	my $dc = new Wx::MemoryDC ();
 	$dc->SelectObject (new Wx::Bitmap ($paintDC->GetSizeWH));
 	
