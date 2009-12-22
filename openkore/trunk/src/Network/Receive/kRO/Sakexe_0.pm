@@ -5102,30 +5102,28 @@ sub taekwon_mission_receive {
 
 sub gospel_buff_aligned {
 	my ($self, $args) = @_;
-	my $status = unpack("V1", $args->{ID});
-	
-	if ($status == 21) {
+	if ($args->{ID} == 21) {
      		message T("All abnormal status effects have been removed.\n"), "info";
-	} elsif ($status == 22) {
+	} elsif ($args->{ID} == 22) {
      		message T("You will be immune to abnormal status effects for the next minute.\n"), "info";
-	} elsif ($status == 23) {
+	} elsif ($args->{ID} == 23) {
      		message T("Your Max HP will stay increased for the next minute.\n"), "info";
-	} elsif ($status == 24) {
+	} elsif ($args->{ID} == 24) {
      		message T("Your Max SP will stay increased for the next minute.\n"), "info";
-	} elsif ($status == 25) {
+	} elsif ($args->{ID} == 25) {
      		message T("All of your Stats will stay increased for the next minute.\n"), "info";
-	} elsif ($status == 28) {
+	} elsif ($args->{ID} == 28) {
      		message T("Your weapon will remain blessed with Holy power for the next minute.\n"), "info";
-	} elsif ($status == 29) {
+	} elsif ($args->{ID} == 29) {
      		message T("Your armor will remain blessed with Holy power for the next minute.\n"), "info";
-	} elsif ($status == 30) {
+	} elsif ($args->{ID} == 30) {
      		message T("Your Defense will stay increased for the next 10 seconds.\n"), "info";
-	} elsif ($status == 31) {
+	} elsif ($args->{ID} == 31) {
      		message T("Your Attack strength will stay increased for the next minute.\n"), "info";
-	} elsif ($status == 32) {
+	} elsif ($args->{ID} == 32) {
      		message T("Your Accuracy and Flee Rate will stay increased for the next minute.\n"), "info";
 	} else {
-     		#message T("Unknown buff from Gospel: " . $status . "\n"), "info";
+     		warning T("Unknown buff from Gospel: " . $args->{ID} . "\n"), "info";
 	}
 }
 

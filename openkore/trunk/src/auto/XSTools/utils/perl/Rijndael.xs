@@ -36,3 +36,14 @@ CODE:
 	RETVAL = newSVpv(result, n);
 OUTPUT:
 	RETVAL
+
+
+SV *
+CRijndael::Decrypt(char* in, char* not_used, size_t n, int iMode)
+INIT:
+	char result[n];
+CODE:
+	THIS->Decrypt(in, result, n, iMode);
+	RETVAL = newSVpv(result, n);
+OUTPUT:
+	RETVAL

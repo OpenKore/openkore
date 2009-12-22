@@ -16,7 +16,7 @@
 #
 # <h3>Example:</h3>
 # <pre class="example">
-# use Utils::Rijndael qw(normal_rijndael);
+# use Utils::Rijndael qw(give_hex);
 # </pre>
 package Utils::Rijndael;
 
@@ -61,6 +61,20 @@ XSTools::bootModule('Utils::Rijndael');
 # `l`
 #
 # Returns: the encrypted string
+
+
+##
+# $Rijndael->Decrypt(char* in, char* not_used, size_t n, int iMode)
+#
+# Required arguments:
+# `l
+# - in: the to be decrypted string<br>
+# - not_used: we don't use this<br>
+# - n: the size of the to be decrypted string<br>
+# - iMode: The mode of Rijndael(AES) decryption<br>
+# `l`
+#
+# Returns: the decrypted string
 
 sub give_hex {
 	return uc unpack("H*", shift);
