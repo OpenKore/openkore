@@ -59,7 +59,7 @@ sub sendHotkey {
 # 0x02c4,26,partyinvite2,2
 sub sendPartyJoinRequestByName {
 	my ($self, $name) = @_;
-	my $msg = pack('v Z24', 0x02C2, $name);
+	my $msg = pack('v Z24', 0x02C4, stringToBytes($name));
 	$self->sendToServer($msg);
 	debug "Sent Party Invite to: $name\n", "sendPacket", 2;
 }
