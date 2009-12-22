@@ -901,21 +901,21 @@ EOF
 #######################################
 
 sub actorAddedRemovedVars {
-	my ($source) = @_;
+	my ($actor) = @_;
 	# returns (type, list, hash)
-	if ($source == $itemsList) {
+	if ($actor->isa ('Actor::Item')) {
 		return ('item', \@itemsID, \%items);
-	} elsif ($source == $playersList) {
+	} elsif ($actor->isa ('Actor::Player')) {
 		return ('player', \@playersID, \%players);
-	} elsif ($source == $monstersList) {
+	} elsif ($actor->isa ('Actor::Monster')) {
 		return ('monster', \@monstersID, \%monsters);
-	} elsif ($source == $portalsList) {
+	} elsif ($actor->isa ('Actor::Portal')) {
 		return ('portal', \@portalsID, \%portals);
-	} elsif ($source == $petsList) {
+	} elsif ($actor->isa ('Actor::Pet')) {
 		return ('pet', \@petsID, \%pets);
-	} elsif ($source == $npcsList) {
+	} elsif ($actor->isa ('Actor::NPC')) {
 		return ('npc', \@npcsID, \%npcs);
-	} elsif ($source == $slavesList) {
+	} elsif ($actor->isa ('Actor::Slave')) {
 		return ('slave', \@slavesID, \%slaves);
 	} else {
 		return (undef, undef, undef);
@@ -928,7 +928,7 @@ sub actorAdded {
 
 	$actor->{binID} = $index;
 
-	my ($type, $list, $hash) = actorAddedRemovedVars ($source);
+	my ($type, $list, $hash) = actorAddedRemovedVars ($actor);
 
 	if (defined $type) {
 		if (DEBUG && scalar(keys %{$hash}) + 1 != $source->size()) {
@@ -963,7 +963,7 @@ sub actorRemoved {
 	my (undef, $source, $arg) = @_;
 	my ($actor, $index) = @{$arg};
 
-	my ($type, $list, $hash) = actorAddedRemovedVars ($source);
+	my ($type, $list, $hash) = actorAddedRemovedVars ($actor);
 
 	if (defined $type) {
 		if (DEBUG && scalar(keys %{$hash}) - 1 != $source->size()) {
