@@ -27,6 +27,7 @@ sub new {
 	
 	my %packets = (
 		# 0x0084,-1
+		'0215' => ['gospel_buff_aligned', 'V', [qw(ID)]], # 6
 	);
 	
 	foreach my $switch (keys %packets) {
