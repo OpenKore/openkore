@@ -1469,7 +1469,7 @@ sub actor_status_active {
 			$again = 'again' if $actor->{statuses}{$status};
 			$actor->{statuses}{$status} = 1;
 		}
-		if ($char->{party}{users}{$ID}{name}) {
+		if ($char->{party}{users}{$ID} && $char->{party}{users}{$ID}{name}) {
 			$again = 'again' if $char->{party}{users}{$ID}{statuses}{$status};
 			$char->{party}{users}{$ID}{statuses}{$status} = 1;
 		}
@@ -1479,7 +1479,7 @@ sub actor_status_active {
 	} else {
 		# Skill de-activated (expired)
 		delete $actor->{statuses}{$status} if $actor;
-		delete $char->{party}{users}{$ID}{statuses}{$status} if ($char->{party}{users}{$ID}{name});
+		delete $char->{party}{users}{$ID}{statuses}{$status} if ($char->{party}{users}{$ID} && $char->{party}{users}{$ID}{name});
 		my $disp = status_string($actor, $status, 'no longer');
 		message $disp, "parseMsg_statuslook", ($ID eq $accountID or $char->{slaves} && $char->{slaves}{$ID}) ? 1 : 2;
 	}
@@ -4449,8 +4449,11 @@ sub party_exp {
 sub party_hp_info {
 	my ($self, $args) = @_;
 	my $ID = $args->{ID};
-	$char->{party}{users}{$ID}{hp} = $args->{hp};
-	$char->{party}{users}{$ID}{hp_max} = $args->{hp_max};
+	
+	if ($char->{party}{users}{$ID}) {
+		$char->{party}{users}{$ID}{hp} = $args->{hp};
+		$char->{party}{users}{$ID}{hp_max} = $args->{hp_max};
+	}
 }
 
 sub party_invite {
@@ -4531,10 +4534,13 @@ sub party_location {
 	my ($self, $args) = @_;
 
 	my $ID = $args->{ID};
-	$char->{party}{users}{$ID}{pos}{x} = $args->{x};
-	$char->{party}{users}{$ID}{pos}{y} = $args->{y};
-	$char->{party}{users}{$ID}{online} = 1;
-	debug "Party member location: $char->{party}{users}{$ID}{name} - $args->{x}, $args->{y}\n", "parseMsg";
+	
+	if ($char->{party}{users}{$ID}) {
+		$char->{party}{users}{$ID}{pos}{x} = $args->{x};
+		$char->{party}{users}{$ID}{pos}{y} = $args->{y};
+		$char->{party}{users}{$ID}{online} = 1;
+		debug "Party member location: $char->{party}{users}{$ID}{name} - $args->{x}, $args->{y}\n", "parseMsg";
+	}
 }
 
 sub party_organize_result {
@@ -4542,7 +4548,7 @@ sub party_organize_result {
 	if ($args->{fail}) {
 		warning T("Can't organize party - party name exists\n");
 	} else {
-		$char->{party}{users}{$accountID}{admin} = 1;
+		$char->{party}{users}{$accountID}{admin} = 1 if $char->{party}{users}{$accountID};
 	}
 }
 
