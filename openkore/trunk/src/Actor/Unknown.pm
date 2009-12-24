@@ -24,7 +24,7 @@ package Actor::Unknown;
 use strict;
 use Actor;
 
-our @ISA = qw(Actor);
+use base qw(Actor);
 
 sub new {
 	my ($class, $ID) = @_;

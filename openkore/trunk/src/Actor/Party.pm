@@ -25,7 +25,7 @@ package Actor::Party;
 use strict;
 use Actor;
 
-our @ISA = qw(Actor);
+use base qw(Actor);
 
 sub new {
 	my ($class) = @_;
