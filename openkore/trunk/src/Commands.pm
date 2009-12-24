@@ -2254,7 +2254,7 @@ sub cmdGmsummon {
 		error "Usage: gmsummon <player name>\n" .
 			"Summon a player.\n";
 	} else {
-		$messageSender->sendGmSummon($args);
+		$messageSender->sendGMSummon($args);
 	}
 }
 

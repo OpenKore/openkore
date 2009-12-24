@@ -162,7 +162,7 @@ sub new {
 		'00FD' => ['party_invite_result', 'Z24 C', [qw(name type)]],
 		'00FE' => ['party_invite', 'a4 Z24', [qw(ID name)]],
 		'0101' => ['party_exp', 'v x2', [qw(type)]],
-		'0104' => ['party_join', 'a4 V1 v2 C Z24 Z24 Z16', [qw(ID role x y type name user map)]],
+		'0104' => ['party_join', 'a4 V v2 C Z24 Z24 Z16', [qw(ID role x y type name user map)]],
 		'0105' => ['party_leave', 'a4 Z24 C', [qw(ID name result)]],
 		'0106' => ['party_hp_info', 'a4 v2', [qw(ID hp hp_max)]],
 		'0107' => ['party_location', 'a4 v2', [qw(ID x y)]],
@@ -300,7 +300,7 @@ sub new {
 		#'01E4' => ['marriage_unknown'], clif_marriage_process
 		##
 		#01E6 26 Some Player Name.
-		'01E9' => ['party_join', 'a4 V1 v2 C Z24 Z24 Z16 v C2', [qw(ID role x y type name user map lv item_pickup item_share)]],
+		'01E9' => ['party_join', 'a4 V v2 C Z24 Z24 Z16 v C2', [qw(ID role x y type name user map lv item_pickup item_share)]],
 		'01EA' => ['married', 'a4', [qw(ID)]],
 		'01EB' => ['guild_location', 'a4 v2', [qw(ID x y)]],
 		'01EE' => ['inventory_items_stackable'],

@@ -322,4 +322,15 @@ sub sendToServer {
 	}
 }
 
+sub sendRaw {
+	my ($self, $raw) = @_;
+	my $msg;
+	my @raw = split / /, $raw;
+	foreach (@raw) {
+		$msg .= pack("C", hex($_));
+	}
+	$self->sendToServer($msg);
+	debug "Sent Raw Packet: @raw\n", "sendPacket", 2;
+}
+
 1;

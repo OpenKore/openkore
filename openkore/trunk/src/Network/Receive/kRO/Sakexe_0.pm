@@ -82,9 +82,9 @@ sub new {
 
 	my %packets = (
 		'0069' => ['account_server_info', 'x2 a4 a4 a4 x30 C a*', [qw(sessionID accountID sessionID2 accountSex serverInfo)]], # -1
-		'006A' => ['login_error', 'C x20', [qw(type)]], # 23
+		'006A' => ['login_error', 'C Z20', [qw(type block_date)]], # 23
 		'006B' => ['received_characters'], # -1
-		'006C' => ['connection_refused', 'x'], # 3
+		'006C' => ['connection_refused', 'C', [qw(error)]], # 3
 		'006D' => ['character_creation_successful', 'a4 V9 v17 Z24 C6 v', [qw(ID exp zeny exp_job lv_job opt1 opt2 option karma manner points_free hp hp_max sp sp_max walk_speed type hair_style weapon lv points_skill lowhead shield tophead midhead hair_color clothes_color name str agi vit int dex luk slot)]], # 108
 		'006E' => ['character_creation_failed', 'C' ,[qw(type)]], # 3
 		'006F' => ['character_deletion_successful'], # 2
@@ -232,7 +232,7 @@ sub new {
 		'0101' => ['party_exp', 'V', [qw(type)]], # 6
 		# 0x0102 is sent packet
 		# 0x0103 is sent packet
-		'0104' => ['party_join', 'a4 x4 v2 C Z24 Z24 Z16', [qw(ID x y type name user map)]], # 79
+		'0104' => ['party_join', 'a4 V v2 C Z24 Z24 Z16', [qw(ID role x y type name user map)]], # 79
 		'0105' => ['party_leave', 'a4 Z24 C', [qw(ID name flag)]], # 31
 		'0106' => ['party_hp_info', 'a4 v2', [qw(ID hp hp_max)]], # 10
 		'0107' => ['party_location', 'a4 v2', [qw(ID x y)]], # 10
@@ -245,7 +245,7 @@ sub new {
 		'010D' => ['mvp_item_trow'], # 2
 		'010E' => ['skill_update', 'v4 C', [qw(skillID lv sp range up)]], # 11 # range = skill range, up = this skill can be leveled up further
 		'010F' => ['skills_list'], # -1
-		# 0x0110 is sent packet
+		# 0x0110 # TODO
 		'0111' => ['linker_skill', 'v2 x2 v3 Z24 x', [qw(skillID target lv sp range name)]], # 39
 		# 0x0112 is sent packet
 		# 0x0113 is sent packet
@@ -329,7 +329,7 @@ sub new {
 		# 0x0161 is sent packet
 		'0162' => ['guild_skills_list'], # -1
 		'0163' => ['guild_expulsionlist'], # -1
-		# 0x0164,-1
+		'0164' => ['guild_other_list'], # -1
 		# 0x0165 is sent packet
 		'0166' => ['guild_members_title_list'], # -1
 		'0167' => ['guild_create_result', 'C', [qw(type)]], # 3
@@ -449,7 +449,7 @@ sub new {
 		'01D9' => ['actor_display', 'a4 v14 a4 a2 v2 C2 a3 C2 v',		[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 karma sex coords unknown1 unknown2 lv)]], # 53 # spawning
 		'01DA' => ['actor_display', 'a4 v9 V v5 a4 a2 v2 C2 a5 x C2 v',	[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 karma sex coords unknown1 unknown2 lv)]], # 60 # walking
 		# 0x01db is sent packet
-		# 0x01dc,-1
+		# 0x01dc,-1 # TODO
 		# 0x01dd is sent packet
 		'01DE' => ['skill_use', 'v a4 a4 V4 v2 C', [qw(skillID sourceID targetID tick src_speed dst_speed damage level option type)]], # 33
 		# 0x01df is sent packet
@@ -462,7 +462,7 @@ sub new {
 		'01E6' => ['marriage_partner_name', 'Z24', [qw(name)]],  # 26
 		# 0x01e7 is sent packet
 		# 0x01e8 is sent packet
-		'01E9' => ['party_join', 'a4 x4 v2 C Z24 Z24 Z16 v C2', [qw(ID x y type name user map lv item_pickup item_share)]], # 81
+		'01E9' => ['party_join', 'a4 V v2 C Z24 Z24 Z16 v C2', [qw(ID role x y type name user map lv item_pickup item_share)]], # 81
 		'01EA' => ['married', 'a4', [qw(ID)]], # 6
 		'01EB' => ['guild_location', 'a4 v2', [qw(ID x y)]], # 10
 		'01EC' => ['guild_member_map_change', 'a4 a4 Z16', [qw(GDID AID mapName)]], # 26 # TODO: change vars, add sub
@@ -470,7 +470,7 @@ sub new {
 		'01EE' => ['inventory_items_stackable'], # -1
 		'01EF' => ['cart_items_stackable'], # -1
 		'01F0' => ['storage_items_stackable'], # -1
-		# 0x01f1,-1
+		# 0x01f1,-1 # TODO
 		'01F2' => ['guild_member_online_status', 'a4 a4 V v3', [qw(ID charID online sex hair_style hair_color)]], # 20
 		'01F3' => ['misc_effect', 'a4 V', [qw(ID effect)]], # 10 # weather/misceffect2 packet
 		'01F4' => ['deal_request', 'Z24 a4 v', [qw(user ID level)]], # 32
@@ -498,7 +498,7 @@ sub new {
 		'020A' => ['friend_removed', 'a4 a4', [qw(friendAccountID friendCharID)]], # 10
 		# // 0x020b,0
 		# // 0x020c,0
-		# 0x020d,-1
+		# 0x020d,-1 # TODO
 	);
 
 	foreach my $switch (keys %packets) {
@@ -4483,7 +4483,7 @@ sub party_join {
 	my ($self, $args) = @_;
 
 	return unless changeToInGameState();
-	my ($ID, $x, $y, $type, $name, $user, $map) = @{$args}{qw(ID x y type name user map)};
+	my ($ID, $role, $x, $y, $type, $name, $user, $map) = @{$args}{qw(ID role x y type name user map)};
 	$name = bytesToString($name);
 	$user = bytesToString($user);
 

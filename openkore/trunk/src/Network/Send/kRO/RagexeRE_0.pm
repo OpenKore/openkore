@@ -39,15 +39,6 @@ sub version {
 }
 
 # TODO: move to the right location
-# 0x00204
-sub sendClientMD5Hash {
-	my ($self) = @_;
-	#my $msg = pack('v H32', 0x0204, "82d12c914f5ad48fd96fcf7ef4cc492d"); -> kRO sakray, but not kRO main
-	my $msg = pack('v H32', 0x0204, $masterServer->{clientHash});
-	$self->sendToServer($msg);
-}
-
-# TODO: move to the right location
 # 0x002B0
 sub sendMasterLogin {
 	my ($self, $username, $password, $master_version, $version) = @_;
