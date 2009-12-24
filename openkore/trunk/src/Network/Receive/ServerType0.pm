@@ -403,7 +403,7 @@ sub new {
 		'02B4' => ['quest_delete', 'V', [qw(questID)]],
 		'02B5' => ['quest_update_mission_hunt', 'v2', [qw(len amount)]],		# var len
 		'02B7' => ['quest_active', 'V C', [qw(questID active)]],
-		'02B8' => ['party_show_picker', 'a4 v C3 a8 v c', [qw(sourceID nameID identified broken upgrade cards location type)]],
+		'02B8' => ['party_show_picker', 'a4 v C3 a8 v C', [qw(sourceID nameID identified broken upgrade cards location type)]],
 		'02B9' => ['hotkeys'],
 		'02C5' => ['party_invite_result', 'Z24 V', [qw(name type)]],
 		'02C6' => ['party_invite', 'a4 Z24', [qw(ID name)]],
@@ -5093,12 +5093,6 @@ sub taekwon_rank {
 	message T("TaeKwon Mission Rank : ".$args->{rank}."\n"), "info";
 }
 
-
-sub taekwon_mission_receive {
-	my ($self, $args) = @_;
-	message T("TaeKwon Mission : ".$args->{monName}."(".$args->{value}."\%)"."\n"), "info";
-}
-
 sub gospel_buff_aligned {
 	my ($self, $args) = @_;
 	my $status = unpack("V1", $args->{ID});
@@ -6950,15 +6944,15 @@ sub taekwon_packets {
 	my ($self, $args) = @_;
 	my $string = ($args->{value} == 1) ? "Sun" : ($args->{value} == 2) ? "Moon" : ($args->{value} == 3) ? "Stars" : "unknown";
 	if ($args->{flag} == 0) { # Info about Star Gladiator save map: Map registered
-		message TF("You have now marked: %s as Place of the %s.\n", $args->{name}, $string), "info";
+		message TF("You have now marked: %s as Place of the %s.\n", bytesToString($args->{name}), $string), "info";
 	} elsif ($args->{flag} == 1) { # Info about Star Gladiator save map: Information
-		message TF("%s is marked as Place of the %s.\n", $args->{name}, $string), "info";
+		message TF("%s is marked as Place of the %s.\n", bytesToString($args->{name}), $string), "info";
 	} elsif ($args->{flag} == 10) { # Info about Star Gladiator hate mob: Register mob
-		message TF("You have now marked %s as Target of the %s.\n", $args->{name}, $string), "info";
+		message TF("You have now marked %s as Target of the %s.\n", bytesToString($args->{name}), $string), "info";
 	} elsif ($args->{flag} == 11) { # Info about Star Gladiator hate mob: Information
-		message TF("%s is marked as Target of the %s.\n", $args->{name}, $string);
+		message TF("%s is marked as Target of the %s.\n", bytesToString($args->{name}), $string);
 	} elsif ($args->{flag} == 20) { #Info about TaeKwon Do TK_MISSION mob
-		message TF("[TaeKwon Mission] Target Monster : %s (%d%)"."\n", $args->{name}, $args->{value}), "info";
+		message TF("[TaeKwon Mission] Target Monster : %s (%d%)"."\n", bytesToString($args->{name}), $args->{value}), "info";
 	} elsif ($args->{flag} == 30) { #Feel/Hate reset
 		message T("Your Hate and Feel targets have been resetted.\n"), "info";
 	} else {
@@ -7104,16 +7098,14 @@ sub cooking_list {
 # TODO: test whether the message is correct: tech: i haven't seen this in action yet
 sub party_show_picker {
 	my ($self, $args) = @_;
-	#my $player = $playersList->getByID($args->{sourceID}); # also sent for Actor::Party objects? then we also need to include those.
-	my $player =  $char->{party}{users}{$args->{sourceID}};
-	assert(UNIVERSAL::isa($player, 'Actor::Party'));
+	my $string = ($char->{party}{users}{$args->{sourceID}} && %{$char->{party}{users}{$args->{sourceID}}}) ? $char->{party}{users}{$args->{sourceID}}->name() : $args->{sourceID};
 	my $item = {};
 	$item->{nameID} = $args->{nameID};
 	$item->{identified} = $args->{identified};
 	$item->{upgrade} = $args->{upgrade};
 	$item->{cards} = $args->{cards};
 	$item->{broken} = $args->{broken};
-	message TF("Party member %s has gained item %s.\n", $player->name(), itemName($item)), "info";
+	message TF("Party member %s has picked up item %s.\n", $string, itemName($item)), "info";
 }
 
 # 02CB

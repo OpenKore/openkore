@@ -5117,12 +5117,6 @@ sub taekwon_rank {
 	message T("TaeKwon Mission Rank : ".$args->{rank}."\n"), "info";
 }
 
-
-sub taekwon_mission_receive {
-	my ($self, $args) = @_;
-	message T("TaeKwon Mission : ".$args->{monName}."(".$args->{value}."\%)"."\n"), "info";
-}
-
 sub gospel_buff_aligned {
 	my ($self, $args) = @_;
 	if ($args->{ID} == 21) {
@@ -6993,7 +6987,7 @@ sub taekwon_packets {
 	} elsif ($args->{flag} == 11) { # Info about Star Gladiator hate mob: Information
 		message TF("%s is marked as Target of the %s.\n", bytesToString($args->{name}), $string);
 	} elsif ($args->{flag} == 20) { #Info about TaeKwon Do TK_MISSION mob
-		message TF("[TaeKwon Mission] Target Monster : %s (%d%)"."\n", $args->{name}, $args->{value}), "info";
+		message TF("[TaeKwon Mission] Target Monster : %s (%d%)"."\n", bytesToString($args->{name}), $args->{value}), "info";
 	} elsif ($args->{flag} == 30) { #Feel/Hate reset
 		message T("Your Hate and Feel targets have been resetted.\n"), "info";
 	} else {
@@ -7139,15 +7133,14 @@ sub cooking_list {
 # TODO: test whether the message is correct: tech: i haven't seen this in action yet
 sub party_show_picker {
 	my ($self, $args) = @_;
-	#my $player = $playersList->getByID($args->{sourceID}); # also sent for Actor::Party objects? then we also need to include those.
-	my $player =  $char->{party}{users}{$args->{sourceID}};
+	my $string = ($char->{party}{users}{$args->{sourceID}} && %{$char->{party}{users}{$args->{sourceID}}}) ? $char->{party}{users}{$args->{sourceID}}->name() : $args->{sourceID};
 	my $item = {};
 	$item->{nameID} = $args->{nameID};
 	$item->{identified} = $args->{identified};
 	$item->{upgrade} = $args->{upgrade};
 	$item->{cards} = $args->{cards};
 	$item->{broken} = $args->{broken};
-	message TF("Party member %s has gained item %s.\n", $player->name(), itemName($item)), "info";
+	message TF("Party member %s has picked up item %s.\n", $string, itemName($item)), "info";
 }
 
 # 02CB
