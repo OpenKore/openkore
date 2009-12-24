@@ -23,7 +23,7 @@ package Actor::Monster;
 
 use strict;
 
-our @ISA = qw(Actor);
+use base qw(Actor);
 
 sub new {
 	my ($class) = @_;
