@@ -130,10 +130,8 @@ sub sendGetCharacterName {
 
 # 0x00a7,11,walktoxy,8
 sub sendMove {
-	my $self = shift;
-	my $x = int scalar shift;
-	my $y = int scalar shift;
-	my $msg = pack('v x6 a3', 0x00A7, getCoordString($x, $y, 1));
+	my ($self, $x, $y) = @_;
+	my $msg = pack('v x6 a3', 0x00A7, getCoordString(int $x, int $y, 1));
 	$self->sendToServer($msg);
 	debug "Sent move to: $x, $y\n", "sendPacket", 2;
 }

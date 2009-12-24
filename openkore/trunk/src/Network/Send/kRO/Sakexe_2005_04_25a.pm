@@ -32,7 +32,6 @@ sub new {
 # 0x022d,5,hommenu,4
 sub sendHomunculusCommand {
 	my ($self, $command, $type) = @_; # $type is ignored, $command can be 0, 1 or 2
-	
 	my $msg = pack ('v2 C', 0x022D, $type, $command);
 	$self->sendToServer ($msg);
 	debug "Sent Homunculus Command", "sendPacket", 2;
@@ -40,21 +39,15 @@ sub sendHomunculusCommand {
 
 # 0x0232,9,hommoveto,6
 sub sendHomunculusMove {
-	my $self = shift;
-	my $homunID = shift;
-	my $x = int scalar shift;
-	my $y = int scalar shift;
-	my $msg = pack('v a4 a3', 0x0232, $homunID, getCoordString($x, $y, 1));
+	my ($self, $homunID, $x, $y) = @_;
+	my $msg = pack('v a4 a3', 0x0232, $homunID, getCoordString(int $x, int $y, 1));
 	$self->sendToServer($msg);
 	debug "Sent Homunculus move to: $x, $y\n", "sendPacket", 2;
 }
 
 # 0x0233,11,homattack,0
 sub sendHomunculusAttack {
-	my $self = shift;
-	my $homunID = shift;
-	my $targetID = shift;
-	my $flag = shift;
+	my ($self, $homunID, $targetID, $flag) = @_;
 	my $msg = pack('v a4 a4 C', 0x0233, $homunID, $targetID, $flag);
 	$self->sendToServer($msg);
 	debug "Sent Homunculus attack: ".getHex($targetID)."\n", "sendPacket", 2;
@@ -62,8 +55,7 @@ sub sendHomunculusAttack {
 
 # 0x0234,6,hommovetomaster,0
 sub sendHomunculusStandBy {
-	my $self = shift;
-	my $homunID = shift;
+	my ($self, $homunID) = @_;
 	my $msg = pack('v a4', 0x0234, $homunID);
 	$self->sendToServer($msg);
 	debug "Sent Homunculus standby\n", "sendPacket", 2;

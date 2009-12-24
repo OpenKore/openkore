@@ -468,7 +468,7 @@ sub sendGetSellList {
 }
 =cut
 
-sub sendGmSummon {
+sub sendGMSummon {
 	my ($self, $playerName) = @_;
 	my $packet = pack("C*", 0xBD, 0x01) . pack("a24", stringToBytes($playerName));
 	$self->sendToServer($packet);
@@ -624,11 +624,8 @@ sub sendHomunculusGetStats {
 }
 
 sub sendHomunculusMove {
-	my $self = shift;
-	my $homunID = shift;
-	my $x = int scalar shift;
-	my $y = int scalar shift;
-	my $msg = pack("C*", 0x32, 0x02) . $homunID . getCoordString($x, $y);
+	my ($self, $homunID, $x, $y) = @_;
+	my $msg = pack("C*", 0x32, 0x02) . $homunID . getCoordString(int $x, int $y);
 	$self->sendToServer($msg);
 	debug "Sent Homunculus move to: $x, $y\n", "sendPacket", 2;
 }
@@ -863,13 +860,8 @@ sub sendMemo {
 }
 
 sub sendMove {
-	my $self = shift;
-	my $x = int scalar shift;
-	my $y = int scalar shift;
-	my $msg;
-
-	$msg = pack("C*", 0x85, 0x00) . getCoordString($x, $y);
-
+	my ($self, $x, $y) = @_;
+	my $msg = pack("C*", 0x85, 0x00) . getCoordString(int $x, int $y);
 	$self->sendToServer($msg);
 	debug "Sent move to: $x, $y\n", "sendPacket", 2;
 }

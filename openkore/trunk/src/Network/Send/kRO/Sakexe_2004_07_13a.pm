@@ -48,12 +48,8 @@ sub sendMapLogin {
 
 # 0x0085,9,walktoxy,6
 sub sendMove {
-	my $self = shift;
-	my $x = int scalar shift;
-	my $y = int scalar shift;
-
-	my $msg = pack('v x4 a3', 0x0085, getCoordString($x, $y));
-
+	my ($self, $x, $y) = @_;
+	my $msg = pack('v x4 a3', 0x0085, getCoordString(int $x, int $y));
 	$self->sendToServer($msg);
 	debug "Sent move to: $x, $y\n", "sendPacket", 2;
 }

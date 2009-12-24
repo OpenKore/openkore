@@ -95,10 +95,8 @@ sub sendTake {
 
 # 0x009b,15,walktoxy,12
 sub sendMove {
-	my $self = shift;
-	my $x = int scalar shift;
-	my $y = int scalar shift;
-	my $msg = pack('v x10 a3', 0x009B, getCoordString($x, $y, 1));
+	my ($self, $x, $y) = @_;
+	my $msg = pack('v x10 a3', 0x009B, getCoordString(int $x, int $y, 1));
 	$self->sendToServer($msg);
 	debug "Sent move to: $x, $y\n", "sendPacket", 2;
 }
