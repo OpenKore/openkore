@@ -4496,20 +4496,37 @@ sub party_join {
 			message TF("%s joined your party '%s'\n", $user, $name), undef, 1;
 		}
 	}
+	
+	my $actor = $char->{party}{users}{$ID} && %{$char->{party}{users}{$ID}} ? $char->{party}{users}{$ID} : new Actor::Party;
+	
+	$actor->{admin} = !$role;
+	delete $actor->{statuses} unless $actor->{online} = !$type;
+	$actor->{pos}{x} = $x;
+	$actor->{pos}{y} = $y;
+	$actor->{map} = $map;
+	$actor->{name} = $user;
+	$actor->{ID} = $ID;
+	$char->{party}{users}{$ID} = $actor;
+	
+=pod
 	$char->{party}{users}{$ID} = new Actor::Party if ($char->{party}{users}{$ID}{name});
+	$char->{party}{users}{$ID}{admin} = !$role;
 	if ($type == 0) {
 		$char->{party}{users}{$ID}{online} = 1;
 	} elsif ($type == 1) {
 		$char->{party}{users}{$ID}{online} = 0;
 		delete $char->{party}{users}{$ID}{statuses};
 	}
+=cut
 	$char->{party}{name} = $name;
+=pod
 	$char->{party}{users}{$ID}{pos}{x} = $x;
 	$char->{party}{users}{$ID}{pos}{y} = $y;
 	$char->{party}{users}{$ID}{map} = $map;
 	$char->{party}{users}{$ID}{name} = $user;
 	$char->{party}{users}{$ID}->{ID} = $ID;
-
+=cut
+	
 	if ($config{partyAutoShare} && $char->{party} && $char->{party}{users}{$accountID}{admin}) {
 		$messageSender->sendPartyOption(1, 0);
 	}
