@@ -47,7 +47,7 @@ sub new {
 		'02B5' => ['quest_update_mission_hunt', 'v2', [qw(len amount)]], # -1
 		# 0x02b6 is sent packet
 		'02B7' => ['quest_active', 'V C', [qw(questID active)]], # 7
-		'02B8' => ['party_show_picker', 'a4 v C3 a8 C3', [qw(sourceID nameID identified broken upgrade cards unknown1 unknown2 unknown3)]], # 22
+		'02B8' => ['party_show_picker', 'a4 v C3 a8 v C', [qw(sourceID nameID identified broken upgrade cards location type)]], # 22
 		'02B9' => ['hotkeys'], # 191 # hotkeys:27
 
 		'02BB' => ['equipitem_damaged', 'v a4', [qw(slot ID)]], # 8
