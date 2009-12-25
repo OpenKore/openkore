@@ -400,7 +400,7 @@ Fluff 0 0 1
 Fragment 0 0 1
 Frill 0 0 1
 Frozen Rose 0 0 1
-Garlet 0 0 1
+#Garlet 0 0 1
 Gill 0 0 1
 Glass Bead 0 0 1
 Glitter Shell 0 0 1
@@ -494,7 +494,7 @@ Rouge 0 0 1
 Round Shell 0 0 1
 Sand Clump 0 0 1
 Scale Shell 0 0 1
-Scell 0 0 1
+#Scell 0 0 1
 Scorpion Claw 0 0 1
 Scorpion Nipper 0 0 1
 Scorpion Tail 0 0 1
@@ -560,5 +560,5 @@ Yellow Plate 0 0 1
 Young Twig 0 0 1
 Yoyo Doll 0 0 1
 Yoyo Tail 0 0 1
-Zargon 0 0 1
+#Zargon 0 0 1
 Zenorc's Fang 0 0 1
