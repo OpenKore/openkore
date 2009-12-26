@@ -1,4 +1,60 @@
 =========================
+### OpenKore what-will-become-2.1
+=========================
+
+Features:
+- A lot of changes and additions in network, kRO ServerType tree (Technology)
+- Additions in Wx interface, including captcha input dialog (EternalHarvest)
+- "party request PlayerName" (EternalHarvest)
+- Messages about unknown and unhandled packets (Technology)
+- Captcha support (Technology)
+- Pet system improvements: capture, hatch, info, feed; equip armors trough eq (Technology)
+- target_isNotMyDevotee config option (Technology)
+- Quest system: quest command; tables/quests.txt (Technology, kLabMouse, obsc)
+- Cooking: cook command (Technology)
+- Refining: refine command (Technology)
+- Show Equip: se command (Technology)
+- Deleting homunculus: homun fire (Technology)
+- Map aliases (Technology)
+
+Translation updates by:
+- h4rry_84
+- littlewens (Traditional Chinese)
+- Mushroom (Portuguese)
+
+Fixes:
+- Monster name and points in Taekwon Mission (Technology, woozc)
+- Private message packet structure for ST11 (UltimaWeapon)
+- "Deal cancelled" spam (EternalHarvest)
+- SVN AutoUpdater (kLabMouse, EternalHarvest)
+- Guild allies and enemies (EternalHarvest)
+- Crash with loginPinCode (kLabMouse)
+- Incorrect storage password on BSD, Linux (EternalHarvest)
+- Write to all !included config files, not only main one (EternalHarvest)
+- Config blocks of the same type in different files (EternalHarvest)
+- target_hp for mercenaries (EternalHarvest)
+- Encoding (Technology)
+- Do not teleport to avoid monster when already dead (BMP)
+- Guild creation (kLabMouse)
+- Do not query GMs with getplayerinfo (kLabMouse)
+- Exp, member titles and jobs display in guild info (Technology)
+- Assert in ActorList (Technology)
+- Crash in partySkill_notPartyOnly (Technology)
+- Hp percent assumed to be 0 when max hp is undefined (Technology)
+- Configured charBlockSize had no effect for some STs (kaliwanagan)
+- masterLogin_packet with XKore 1 (Technology)
+- Some statuses couldn't be recognized (johnny)
+- Original names in sll and petl (Technology)
+- Rental items (Technology)
+- Walk speed (Technology)
+- smartHeal interaction with Meditatio and mercenaries (Technology)
+- Matk and walk speed for mercenaries (Technology)
+- mercenary_whenStatusActive self condition (Technology)
+- Mercenary was not removed when it's duty is over (Technology)
+- Crash when receiving NPC buy list after NPC cancel (UltimaWeapon)
+- Heal target display for Potion Pither (EternalHarvest)
+
+=========================
 ### OpenKore 2.0.7
 =========================
 - Feature: additional "label" parameter "block" to change config block header. (thanks to vit).
