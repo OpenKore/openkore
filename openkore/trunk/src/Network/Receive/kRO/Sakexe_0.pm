@@ -484,7 +484,7 @@ sub new {
 		'01FC' => ['repair_list'], # -1
 		# 0x01fd is sent packet
 		'01FE' => ['repair_result', 'v C', [qw(nameID flag)]], # 5
-		'01FF' => ['high_jump', 'a4 v2', [qw(AID x y)]], # 10
+		'01FF' => ['high_jump', 'a4 v2', [qw(ID x y)]], # 10
 		# 0x0200 is sent packet
 		'0201' => ['friend_list'], # -1
 		# 0x0202 is sent packet
@@ -963,6 +963,15 @@ sub actor_display {
 	}
 =cut
 
+	# Remove actors that are located on unwalkable parts of the map (or outside)
+	# This may be caused by:
+	#  - server sending us unreal actors
+	#  - actor packets not being parsed correctly
+	if (!$field->isWalkable($coordsFrom{x}, $coordsFrom{y}) || !$field->isWalkable($coordsTo{x}, $coordsTo{y})) {
+		warning "Removed actor at unwalkable coordinates: ($coordsFrom{x}, $coordsFrom{y}) -> ($coordsTo{x}, $coordsTo{y}), field max: (" .$field->width(). "," .$field->height(). ")\n";
+		return;
+	}
+
 	# Remove actors with a distance greater than removeActorWithDistance. Useful for vending (so you don't spam
 	# too many packets in prontera and cause server lag). As a side effect, you won't be able to "see" actors
 	# beyond removeActorWithDistance.
@@ -1203,7 +1212,7 @@ sub actor_display {
 		# Actor Exists (standing)
 
 		if ($actor->isa('Actor::Player')) {
-			my $domain = existsInList($config{friendlyAID}, unpack("V1", $actor->{ID})) ? 'parseMsg_presence' : 'parseMsg_presence/player';
+			my $domain = existsInList($config{friendlyAID}, unpack("V", $actor->{ID})) ? 'parseMsg_presence' : 'parseMsg_presence/player';
 			debug "Player Exists: " . $actor->name . " ($actor->{binID}) Level $actor->{lv} $sex_lut{$actor->{sex}} $jobs_lut{$actor->{jobID}} ($coordsFrom{x}, $coordsFrom{y})\n", $domain;
 
 			Plugins::callHook('player', {player => $actor});  #backwards compatibility
@@ -1238,7 +1247,7 @@ sub actor_display {
 		# Actor Connected (new)
 
 		if ($actor->isa('Actor::Player')) {
-			my $domain = existsInList($config{friendlyAID}, unpack("V1", $args->{ID})) ? 'parseMsg_presence' : 'parseMsg_presence/player';
+			my $domain = existsInList($config{friendlyAID}, unpack("V", $args->{ID})) ? 'parseMsg_presence' : 'parseMsg_presence/player';
 			debug "Player Connected: ".$actor->name." ($actor->{binID}) Level $args->{lv} $sex_lut{$actor->{sex}} $jobs_lut{$actor->{jobID}} ($coordsTo{x}, $coordsTo{y})\n", $domain;
 
 			Plugins::callHook('player', {player => $actor});  #backwards compatibailty
@@ -1588,7 +1597,7 @@ sub arrowcraft_list {
 
 	undef @arrowCraftID;
 	for (my $i = 4; $i < $msg_size; $i += 2) {
-		my $ID = unpack("v1", substr($msg, $i, 2));
+		my $ID = unpack('v', substr($msg, $i, 2));
 		my $item = $char->inventory->getByNameID($ID);
 		binAdd(\@arrowCraftID, $item->{invIndex});
 	}
@@ -1642,7 +1651,7 @@ sub card_merge_list {
 
 	my $index;
 	for (my $i = 4; $i < $len; $i += 2) {
-		$index = unpack("v1", substr($msg, $i, 2));
+		$index = unpack('v', substr($msg, $i, 2));
 		my $item = $char->inventory->getByServerIndex($index);
 		binAdd(\@cardMergeItemsID, $item->{invIndex});
 		$display .= "$item->{invIndex} $item->{name}\n";
@@ -1685,7 +1694,7 @@ sub card_merge_status {
 			if (unpack("v", $cardData)) {
 				$newcards .= $cardData;
 			} elsif (!$addedcard) {
-				$newcards .= pack("v", $card->{nameID});
+				$newcards .= pack('v', $card->{nameID});
 				$addedcard = 1;
 			} else {
 				$newcards .= pack("v", 0);
@@ -3720,7 +3729,32 @@ sub job_equipment_hair_change {
 
 }
 
-# TODO: port high_jump from ST0
+# 01FF
+# TODO: test
+sub high_jump {
+	my ($self, $args) = @_;
+	return unless changeToInGameState();
+	
+	my $actor = Actor::get ($args->{ID});
+	if (!defined $actor) {
+		$actor = new Actor::Unknown;
+		$actor->{appear_time} = time;
+		$actor->{nameID} = unpack ('V', $args->{ID});
+	} elsif ($actor->{pos_to}{x} == $args->{x} && $actor->{pos_to}{y} == $args->{y}) {
+		message TF("%s failed to Jump\n", $actor->nameString), 'skill';
+		return;
+	}
+	
+	$actor->{pos} = {x => $args->{x}, y => $args->{y}};
+	$actor->{pos_to} = {x => $args->{x}, y => $args->{y}};
+	
+	message TF("%s Jumped: %d, %d\n", $actor->nameString, $actor->{pos_to}{x}, $actor->{pos_to}{y}), 'skill';
+	
+	if ($args->{ID} eq $accountID) {
+		$char->{time_move} = time;
+		$char->{time_move_calc} = 0;
+	}
+}
 
 sub hp_sp_changed {
 	my ($self, $args) = @_;
