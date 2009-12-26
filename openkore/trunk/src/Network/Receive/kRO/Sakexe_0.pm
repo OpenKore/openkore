@@ -3720,6 +3720,8 @@ sub job_equipment_hair_change {
 
 }
 
+# TODO: port high_jump from ST0
+
 sub hp_sp_changed {
 	my ($self, $args) = @_;
 	return unless changeToInGameState();
