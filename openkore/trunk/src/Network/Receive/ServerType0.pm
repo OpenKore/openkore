@@ -896,6 +896,15 @@ sub actor_display {
 	}
 =cut
 
+	# Remove actors that are located on unwalkable parts of the map (or outside)
+	# This may be caused by:
+	#  - server sending us unreal actors
+	#  - actor packets not being parsed correctly
+	if (!$field->isWalkable($coordsFrom{x}, $coordsFrom{y}) || !$field->isWalkable($coordsTo{x}, $coordsTo{y})) {
+		warning "Removed actor with unreal/unwalkable coordinates: ($coordsFrom{x}, $coordsFrom{y}) -> ($coordsTo{x}, $coordsTo{y}), field max: (" .$field->width(). "," .$field->height(). ")\n";
+		return;
+	}
+
 	# Remove actors with a distance greater than removeActorWithDistance. Useful for vending (so you don't spam
 	# too many packets in prontera and cause server lag). As a side effect, you won't be able to "see" actors
 	# beyond removeActorWithDistance.
