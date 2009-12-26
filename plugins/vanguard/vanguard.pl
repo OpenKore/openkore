@@ -27,18 +27,16 @@ package Vanguard;
 use strict;
 
 # openkore
-use Utils::Rijndael;
+use Utils::Rijndael qw(give_hex);
 use Utils qw(getTickCount);
 use Globals qw($net %config %masterServers);
 use Plugins;
 use Network::Send;
 use Log qw(message warning error debug);
+use Misc qw(configModify);
 
 # globally used vars
 my $hddserial;
-for(my $i = 0; $i < 8; $i++) {
-	$hddserial .= pack('C', rand() * getTickCount() % 0xFF);
-}
 my $rijndael = Utils::Rijndael->new();
 my $packet_count = 0;
 my $encrypt = 0;
@@ -59,11 +57,28 @@ sub onUnload {
 
 sub init_encryption_key {
 	my $key = pack('H32', $masterServers{$config{'master'}}->{'vanguard_key'});
-	#my $key = pack('C16', (0x98, 0x7F, 0xB6, 0xE0, 0x90, 0x4E, 0x83, 0xC6, 0xF6, 0x29, 0xC2, 0xE0, 0xBD, 0x22, 0x8A, 0xEA)); # Elecom Shield: Vanguard v3.8.5.0 # intenseRO:	vanguard_key 987FB6E0904E83C6F629C2E0BD228AEA
-	#my $key = pack('C16', (0xB6, 0xE0, 0x90, 0x4E, 0x83, 0xC6, 0xF6, 0x29, 0xC2, 0xE0, 0xBD, 0x22, 0x8A, 0xEA, 0x67, 0x9C)); # Elecom Shield; Vanguard v4.1.0.0 # limitRO:		vanguard_key B6E0904E83C6F629C2E0BD228AEA679C
-	#my $key = pack('C16', (0x8A, 0xEA, 0x67, 0x9C, 0xE0, 0x1E, 0x2D, 0xE0, 0x0E, 0xED, 0x9E, 0xE0, 0xB7, 0xF6, 0xE0, 0xBC)); # Elecom Shield: Vanguard v3.8.5.0 # some server: vanguard_key 8AEA679CE01E2DE00EED9EE0B7F6E0BC
 	my $chain = "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0";
 	$rijndael->MakeKey($key, $chain, 16, 16);
+	
+	# TODO: maybe the hddserial key is not per acc but per ip, in that case we need to save it in servers.txt instead
+	if ($masterServers{$config{'master'}}->{'vanguard_hddserial_static'}) {
+		if ($config{'vanguard_hddserial'}) {
+			$hddserial = pack('H16', $config{'vanguard_hddserial'});
+		} else {
+			generate_hddserial();
+			message "VANGUARD: SAVING HDDSERIAL TO CONFIG.TXT: " . give_hex($hddserial) . "\n", "info";
+			configModify('vanguard_hddserial', give_hex($hddserial));
+		}
+	} else {
+		generate_hddserial();
+	}
+}
+
+sub generate_hddserial {
+	$hddserial = '';
+	for(my $i = 0; $i < 8; $i++) {
+		$hddserial .= pack('C', rand() * getTickCount() % 0xFF);
+	}
 }
 
 sub reset_encryption {
@@ -72,7 +87,7 @@ sub reset_encryption {
 }
 
 sub start_encryption {
-	message "STARTING VANGUARD ENCRYPTION\n", "info";
+	message "VANGUARD: START ENCRYPTION\n", "info";
 	$encrypt = 1;
 }
 
@@ -89,15 +104,15 @@ sub encrypt {
 		$len += 4; # 4 bytes sent packet count
 	} else { # initial encrypted packet
 		$new_packet = pack('V v', $packet_count, 0xDEAD) . $hddserial . $$old_packet;
-		$len += 14; # 4 bytes for sent packet count, 10 for hdd serial
-		$olen += 10; # 10 bytes for hdd serial
+		$len += 14; # 4 bytes for sent packet count, 10 for hdd serial and 0xDEAD
+		$olen += 10; # 10 bytes for hdd serial and 0xDEAD
 	}
 	$len = (int($len / 16) + 1) * 16; # set length to the multiple of blocksize 16 >= len
 	$new_packet = $rijndael->Encrypt($new_packet, undef, $len, 0);
 	$len += 6;
 	$$old_packet = pack('v3', $len, $olen, 0xFACE) . $new_packet;
 	
-	$packet_count++;	
+	$packet_count++;
 }
 
 1;

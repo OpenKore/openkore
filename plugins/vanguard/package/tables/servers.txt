@@ -46,5 +46,7 @@ version 24
 serverType kRO_RagexeRE_2009_11_03a
 serverEncoding Western
 charBlockSize 112
+chatLangCode 1
 recvpackets recvpackets_eternityRO.txt
 vanguard_key 228AEA679CE01E2DE00EED9EE0B7F6E0
+vanguard_hddserial_static 1
