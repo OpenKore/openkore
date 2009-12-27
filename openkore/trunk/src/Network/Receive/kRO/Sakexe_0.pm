@@ -81,7 +81,7 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 
 	my %packets = (
-		'0069' => ['account_server_info', 'x2 a4 a4 a4 x30 C a*', [qw(sessionID accountID sessionID2 accountSex serverInfo)]], # -1
+		'0069' => ['account_server_info', 'v a4 a4 a4 a4 a26 C a*', [qw(len sessionID accountID sessionID2 lastLoginIP lastLoginTime accountSex serverInfo)]], # -1
 		'006A' => ['login_error', 'C Z20', [qw(type block_date)]], # 23
 		'006B' => ['received_characters'], # -1
 		'006C' => ['connection_refused', 'C', [qw(error)]], # 3
@@ -91,7 +91,7 @@ sub new {
 		'0070' => ['character_deletion_failed', 'x4'], # 6
 		'0071' => ['received_character_ID_and_Map', 'a4 Z16 a4 v', [qw(charID mapName mapIP mapPort)]], # 28
 		# 0x0072 is sent packet
-		'0073' => ['map_loaded', 'V a3 x2', [qw(syncMapSync coords)]], # 11
+		'0073' => ['map_loaded', 'V a3 C2', [qw(syncMapSync coords xSize ySize)]], # 11
 		'0074' => ['map_load_error', 'C', [qw(error)]], # 3
 		'0075' => ['changeToInGameState'], # -1
 		'0076' => ['update_char', 'a4 v C', [qw(ID style item)]], # 9
@@ -109,18 +109,18 @@ sub new {
 		'0084' => ['quit_refuse'], # 2
 		# 0x0085 is sent packet
 		'0086' => ['actor_display', 'a4 a5 x V', [qw(ID coords tick)]], # 16
-		'0087' => ['character_moves', 'x4 a5 C', [qw(coords unknown)]], # 12
+		'0087' => ['character_moves', 'a4 a5 x', [qw(move_start_time coords unknown)]], # 12
 		'0088' => ['actor_movement_interrupted', 'a4 v2', [qw(ID x y)]], # 10
 		# 0x0089 is sent packet
 		'008A' => ['actor_action', 'a4 a4 a4 V2 v2 C v', [qw(sourceID targetID tick src_speed dst_speed damage div type dual_wield_damage)]], # 29
 		# 0x008b,2
 		# 0x008c is sent packet
 		'008D' => ['public_chat', 'v a4 Z*', [qw(len ID message)]], # -1
-		'008E' => ['self_chat', 'x2 Z*', [qw(message)]], # -1
+		'008E' => ['self_chat', 'v Z*', [qw(len message)]], # -1
 		# // 0x008f,0
 		# 0x0090 is sent packet
 		'0091' => ['map_change', 'Z16 v2', [qw(map x y)]], # 22
-		'0092' => ['map_changed', 'Z16 x4 a4 v', [qw(map IP port)]], # 28
+		'0092' => ['map_changed', 'Z16 v2 a4 v', [qw(map xPos yPos IP port)]], # 28
 		'0093' => ['npc_ack_enable'], # 2
 		# 0x0094 is sent packet
 		'0095' => ['actor_info', 'a4 Z24', [qw(ID name)]], # 30
@@ -128,9 +128,9 @@ sub new {
 		'0097' => ['private_message', 'v Z24 Z*', [qw(len privMsgUser privMsg)]], # -1
 		'0098' => ['private_message_sent', 'C', [qw(type)]], # 3
 		# 0x0099 is sent packet
-		'009A' => ['system_chat', 'x2 Z*', [qw(message)]], # -1
+		'009A' => ['system_chat', 'v Z*', [qw(len message)]], # -1
 		# 0x009B is sent packet
-		'009C' => ['actor_look_at', 'a4 C x C', [qw(ID head body)]], # 9
+		'009C' => ['actor_look_at', 'a4 v C', [qw(ID head body)]], # 9
 		'009D' => ['item_exists', 'a4 v C v3 C2', [qw(ID nameID identified x y amount subx suby)]], # 17
 		'009E' => ['item_appeared', 'a4 v C v2 C2 v', [qw(ID nameID identified x y subx suby amount)]], # 17
 		# 0x009F is sent packet
@@ -162,7 +162,7 @@ sub new {
 		# 0x00b9 is sent packet
 		# 0x00ba is sent packet
 		# 0x00bb is sent packet
-		'00BC' => ['stats_added', 'v x C', [qw(type val)]], # 6
+		'00BC' => ['stats_added', 'v C C', [qw(type result val)]], # 6
 		'00BD' => ['stats_info', 'v C12 v14', [qw(points_free str points_str agi points_agi vit points_vit int points_int dex points_dex luk points_luk attack attack_bonus attack_magic_min attack_magic_max def def_bonus def_magic def_magic_bonus hit flee flee_bonus critical karma manner)]],
 		'00BE' => ['stats_points_needed', 'v C', [qw(type val)]], # 5
 		# 0x00bf is sent packet
@@ -187,7 +187,7 @@ sub new {
 		'00D4' => ['whisper_list', 'v', [qw(len)]], # -1
 		# 0x00d5 is sent packet
 		'00D6' => ['chat_created', 'x'], # 3
-		'00D7' => ['chat_info', 'x2 a4 a4 v2 C a*', [qw(ownerID ID limit num_users public title)]], # -1
+		'00D7' => ['chat_info', 'v a4 a4 v2 C a*', [qw(len ownerID ID limit num_users public title)]], # -1
 		'00D8' => ['chat_removed', 'a4', [qw(ID)]],
 		# 0x00d9 is sent packet
 		'00DA' => ['chat_join_result', 'C', [qw(type)]], # 3
@@ -195,7 +195,7 @@ sub new {
 		'00DC' => ['chat_user_join', 'v Z24', [qw(num_users user)]], # 28
 		'00DD' => ['chat_user_leave', 'v Z24 C', [qw(num_users user flag)]], # 29
 		# 0x00de is sent packet
-		'00DF' => ['chat_modified', 'x2 a4 a4 v2 C a*', [qw(ownerID ID limit num_users public title)]], # -1
+		'00DF' => ['chat_modified', 'v a4 a4 v2 C a*', [qw(len ownerID ID limit num_users public title)]], # -1
 		# 0x00e0 is sent packet
 		'00E1' => ['chat_newowner', 'C x3 Z24', [qw(type user)]], # 30
 		# 0x00e2 is sent packet
@@ -223,7 +223,7 @@ sub new {
 		'00F8' => ['storage_closed'], # 2
 		# 0x00f9 is sent packet
 		'00FA' => ['party_organize_result', 'C', [qw(fail)]], # 3
-		'00FB' => ['party_users_info', 'x2 Z*', [qw(party_name)]], # -1
+		'00FB' => ['party_users_info', 'v Z*', [qw(len party_name)]], # -1
 		# 0x00fc is sent packet
 		'00FD' => ['party_invite_result', 'Z24 C', [qw(name type)]], # 27
 		'00FE' => ['party_invite', 'a4 Z24', [qw(ID name)]], # 30
@@ -237,7 +237,7 @@ sub new {
 		'0106' => ['party_hp_info', 'a4 v2', [qw(ID hp hp_max)]], # 10
 		'0107' => ['party_location', 'a4 v2', [qw(ID x y)]], # 10
 		# 0x0108 is sent packet TODO: ST0 has-> '0108' => ['item_upgrade', 'v3', [qw(type index upgrade)]],
-		'0109' => ['party_chat', 'x2 a4 Z*', [qw(ID message)]], # -1
+		'0109' => ['party_chat', 'v a4 Z*', [qw(len ID message)]], # -1
 		'0110' => ['skill_use_failed', 'v3 C2', [qw(skillID btype unknown fail type)]], # 10
 		'010A' => ['mvp_item', 'v', [qw(itemID)]], # 4
 		'010B' => ['mvp_you', 'V', [qw(expAmount)]], # 6
@@ -356,7 +356,7 @@ sub new {
 		# 0x017c is sent packet
 		'017D' => ['card_merge_status', 'v2 C', [qw(item_index card_index fail)]], # 7
 		# 0x017e is sent packet
-		'017F' => ['guild_chat', 'x2 Z*', [qw(message)]], # -1
+		'017F' => ['guild_chat', 'v Z*', [qw(len message)]], # -1
 		# 0x0180 is sent packet
 		'0181' => ['guild_opposition_result', 'C', [qw(flag)]], # 3 # clif_guild_oppositionack
 		'0182' => ['guild_member_add', 'a4 a4 v5 V3 Z50 Z24', [qw(AID GID head_type head_color sex job lv contribution_exp current_state positionID intro name)]], # 106 # TODO: rename the vars and add sub
@@ -424,7 +424,7 @@ sub new {
 		# 0x01c0 is sent packet
 		'01C1' => ['remaintime_reply', 'V3', [qw(result expire_date remain_time)]], # 14
 		'01C2' => ['remaintime_info', 'V2', [qw(type remain_time)]], # 10
-		'01C3' => ['local_broadcast', 'x2 a3 x9 Z*', [qw(color message)]], # -1
+		'01C3' => ['local_broadcast', 'v a4 v4 Z*', [qw(len color font_type font_size font_align font_y message)]], # -1
 		'01C4' => ['storage_item_added', 'v V v C4 a8', [qw(index amount nameID type identified broken upgrade cards)]], # 22
 		'01C5' => ['cart_item_added', 'v V v C4 a8', [qw(index amount nameID type identified broken upgrade cards)]], # 22
 		# 0x01c6 is sent packet
@@ -575,11 +575,9 @@ sub account_payment_info {
 	message  T("-------------------------------------------------------\n"), "info";
 }
 
-# TODO: optimize unpacking
+# TODO: test optimized unpacking
 sub account_server_info {
 	my ($self, $args) = @_;
-	my $msg = $args->{serverInfo};
-	my $msg_size = length($msg);
 
 	$net->setState(2);
 	undef $conState_tries;
@@ -600,17 +598,19 @@ sub account_server_info {
 		"Session ID: \@<<<<<<<<< \@<<<<<<<<<<\n" .
 		"            \@<<<<<<<<< \@<<<<<<<<<<\n" .
 		"-----------------------------------"),
-		[unpack("V1",$accountID), getHex($accountID), $sex_lut{$accountSex}, unpack("V1",$sessionID), getHex($sessionID),
-		unpack("V1",$sessionID2), getHex($sessionID2)]), 'connection';
+		[unpack('V',$accountID), getHex($accountID), $sex_lut{$accountSex}, unpack('V',$sessionID), getHex($sessionID),
+		unpack('V',$sessionID2), getHex($sessionID2)]), 'connection';
 
 	my $num = 0;
 	undef @servers;
-	for (my $i = 0; $i < $msg_size; $i+=32) {
-		$servers[$num]{ip} = makeIP(substr($msg, $i, 4));
-		$servers[$num]{ip} = $masterServer->{ip} if ($masterServer && $masterServer->{private});
-		$servers[$num]{port} = unpack("v1", substr($msg, $i+4, 2));
-		($servers[$num]{name}) = bytesToString(unpack("Z*", substr($msg, $i + 6, 20)));
-		$servers[$num]{users} = unpack("V",substr($msg, $i + 26, 4));
+	for (my $i = 0; $i < length($args->{serverInfo}); $i+=32) {
+		($servers[$num]{ip},
+		$servers[$num]{port},
+		$servers[$num]{name},
+		$servers[$num]{users}) = unpack('a4 v Z20 V x2', substr($args->{serverInfo}, $i, 32)); # TODO: what is x2?
+		
+		$servers[$num]{ip} = ($masterServer && $masterServer->{private}) ? $masterServer->{ip} : makeIP($servers[$num]{ip});
+		$servers[$num]{name} = bytesToString($servers[$num]{name});
 		$num++;
 	}
 
@@ -2199,7 +2199,7 @@ sub chat_user_leave {
 	}
 }
 
-# TODO: optimize unpacking
+# TODO: test optimized unpacking
 sub chat_users {
 	my ($self, $args) = @_;
 
@@ -2214,8 +2214,8 @@ sub chat_users {
 
 	$chat->{num_users} = 0;
 	for (my $i = 8; $i < $args->{RAW_MSG_SIZE}; $i += 28) {
-		my $type = unpack("C1",substr($msg,$i,1));
-		my ($chatUser) = unpack("Z*", substr($msg,$i + 4,24));
+		my ($type, $chatUser) = unpack('C Z24', substr($msg, $i, 28));
+
 		$chatUser = bytesToString($chatUser);
 
 		if ($chat->{users}{$chatUser} eq "") {
@@ -2642,22 +2642,23 @@ sub forge_list {
 	message "=========================\n";
 }
 
-# TODO: optimize unpacking
+# TODO: test optimized unpacking
 sub friend_list {
 	my ($self, $args) = @_;
 
 	# Friend list
 	undef @friendsID;
 	undef %friends;
-	my $msg = $args->{RAW_MSG};
-	my $msg_size = $args->{RAW_MSG_SIZE};
 
 	my $ID = 0;
-	for (my $i = 4; $i < $msg_size; $i += 32) {
+	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 32) {
 		binAdd(\@friendsID, $ID);
-		$friends{$ID}{'accountID'} = substr($msg, $i, 4);
-		$friends{$ID}{'charID'} = substr($msg, $i + 4, 4);
-		$friends{$ID}{'name'} = bytesToString(unpack("Z24", substr($msg, $i + 8 , 24)));
+		
+		($friends{$ID}{'accountID'},
+		$friends{$ID}{'charID'},
+		$friends{$ID}{'name'}) = unpack('a4 a4 Z24', substr($args->{RAW_MSG}, $i, 32));
+		
+		$friends{$ID}{'name'} = bytesToString($friends{$ID}{'name'});
 		$friends{$ID}{'online'} = 0;
 		$ID++;
 	}
@@ -2943,7 +2944,7 @@ sub guild_broken {
 	undef %guild;
 }
 
-# TODO: optimize unpacking
+# TODO: test optimized unpacking
 sub guild_member_setting_list {
 	my ($self, $args) = @_;
 	my $newmsg;
@@ -2951,28 +2952,26 @@ sub guild_member_setting_list {
 	my $msg_size = $args->{RAW_MSG_SIZE};
 	$self->decrypt(\$newmsg, substr($msg, 4, length($msg)-4));
 	$msg = substr($msg, 0, 4).$newmsg;
-	my $gtIndex;
+
 	for (my $i = 4; $i < $msg_size; $i += 16) {
-		$gtIndex = unpack("V1", substr($msg, $i, 4));
-		$guild{positions}[$gtIndex]{invite} = (unpack("C1", substr($msg, $i + 4, 1)) & 0x01) ? 1 : '';
-		$guild{positions}[$gtIndex]{punish} = (unpack("C1", substr($msg, $i + 4, 1)) & 0x10) ? 1 : '';
-		$guild{positions}[$gtIndex]{feeEXP} = unpack("V1", substr($msg, $i + 12, 4));
+		my ($gtIndex, $invite_punish, $freeEXP) = unpack('V C x7 V', substr($msg, $i, 16)); # TODO: what are the missing x's?
+		# TODO: isn't there a nyble unpack or something and is this even correct?
+		$guild{positions}[$gtIndex]{invite} = ($invite_punish & 0x01) ? 1 : '';
+		$guild{positions}[$gtIndex]{punish} = ($invite_punish & 0x10) ? 1 : '';
+		$guild{positions}[$gtIndex]{feeEXP} = $freeEXP;
 	}
 }
 
-# TODO: optimize unpacking
+# TODO: test optimized unpacking
 sub guild_skills_list {
 	my ($self, $args) = @_;
 	my $msg = $args->{RAW_MSG};
 	my $msg_size = $args->{RAW_MSG_SIZE};
-	for (my $i = 6; $i < $msg_size; $i += 37) {
-		my $skillID = unpack("v1", substr($msg, $i, 2));
-		my $targetType = unpack("v1", substr($msg, $i+2, 2));
-		my $level = unpack("v1", substr($msg, $i + 6, 2));
-		my $sp = unpack("v1", substr($msg, $i + 8, 2));
-		my ($skillName) = unpack("Z*", substr($msg, $i + 12, 24));
+	for (my $i = 6; $i < $args->{RAW_MSG_SIZE}; $i += 37) {
 
-		my $up = unpack("C1", substr($msg, $i+36, 1));
+		my ($skillID, $targetType, $level, $sp,	$skillName, $up) = unpack('v4 x4 Z24 C', substr($msg, $i, 37)); # TODO: what is x4?
+		
+		$skillName = bytesToString($skillName);
 		$guild{skills}{$skillName}{ID} = $skillID;
 		$guild{skills}{$skillName}{sp} = $sp;
 		$guild{skills}{$skillName}{up} = $up;
@@ -3025,14 +3024,12 @@ sub guild_create_result {
 	}
 }
 
-# TODO: optimize unpacking
 sub guild_expulsionlist {
 	my ($self, $args) = @_;
-
 	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 88) {
-		my ($name)  = unpack("Z24", substr($args->{'RAW_MSG'}, $i, 24));
-		my $acc     = unpack("Z24", substr($args->{'RAW_MSG'}, $i + 24, 24));
-		my ($cause) = unpack("Z44", substr($args->{'RAW_MSG'}, $i + 48, 44));
+		
+		my ($name, $acc, $cause) = unpack('Z24 Z24 Z40', substr($args->{RAW_MSG}, $i, 88));
+		
 		$guild{expulsion}{$acc}{name} = bytesToString($name);
 		$guild{expulsion}{$acc}{cause} = bytesToString($cause);
 	}
@@ -3091,7 +3088,7 @@ sub guild_expulsion {
 		"Reason: %s\n", bytesToString($args->{name}), bytesToString($args->{message})), "schat";
 }
 
-# TODO: optizmize unpacking
+# TODO: test optimized unpacking
 sub guild_members_list {
 	my ($self, $args) = @_;
 
@@ -3101,25 +3098,23 @@ sub guild_members_list {
 	$self->decrypt(\$newmsg, substr($msg, 4, length($msg) - 4));
 	$msg = substr($msg, 0, 4) . $newmsg;
 
-	my $c = 0;
 	delete $guild{member};
+	
+	my $c = 0;
+	my $gtIndex;
 	for (my $i = 4; $i < $msg_size; $i+=104){
-		$guild{member}[$c]{ID}    = substr($msg, $i, 4);
-		$guild{member}[$c]{charID}	  = substr($msg, $i+4, 4);
-		$jobID = unpack('v', substr($msg, $i + 14, 2));
-		# wtf? i guess this was a 'hack' for when the 40xx jobs weren't added to the globals yet...
-		#if ($jobID =~ /^40/) {
-		#	$jobID =~ s/^40/1/;
-		#	$jobID += 60;
-		#}
-		$guild{member}[$c]{jobID} = $jobID;
-		$guild{member}[$c]{lv}   = unpack('v', substr($msg, $i + 16, 2));
-		$guild{member}[$c]{contribution} = unpack('V', substr($msg, $i + 18, 4));
-		$guild{member}[$c]{online} = unpack('v', substr($msg, $i + 22, 2));
+		($guild{member}[$c]{ID},
+		$guild{member}[$c]{charID},
+		$guild{member}[$c]{jobID},
+		$guild{member}[$c]{lv},
+		$guild{member}[$c]{contribution},
+		$guild{member}[$c]{online},
+		$gtIndex,
+		$guild{member}[$c]{name}) = unpack('a4 a4 x6 v2 V v x2 V x50 Z24', substr($msg, $i, 104)); # TODO: what are the unknown x's?
+		
 		# TODO: we shouldn't store the guildtitle of a guildmember both in $guild{positions} and $guild{member}, instead we should just store the rank index of the guildmember and get the title from the $guild{positions}
-		my $gtIndex = unpack('V', substr($msg, $i + 26, 4));
 		$guild{member}[$c]{title} = $guild{positions}[$gtIndex]{title};
-		$guild{member}[$c]{name} = bytesToString(unpack('Z24', substr($msg, $i + 80, 24)));
+		$guild{member}[$c]{name} = bytesToString($guild{member}[$c]{name});
 		$c++;
 	}
 
@@ -4625,7 +4620,6 @@ sub party_users_info {
 
 	for (my $i = 28; $i < $args->{RAW_MSG_SIZE}; $i += 46) {
 		my ($ID, $name, $map, $admin, $online) = unpack 'a4 Z24 Z16 C2', substr $msg, $i, 46;
-		#my $ID = substr($msg, $i, 4);
 		if (binFind(\@partyUsersID, $ID) eq "") {
 			binAdd(\@partyUsersID, $ID);
 		}
@@ -5045,7 +5039,7 @@ sub alchemist_point {
 	message TF("[POINT] Alchemist Ranking Point is increasing by %s. Now, The total is %s points.\n", $args->{points}, $args->{total}, "list");
 }
 
-# TODO: test code optimization
+# TODO: test optimized unpacking
 sub repair_list {
 	my ($self, $args) = @_;
 	my $msg = T("--------Repair List--------\n");
