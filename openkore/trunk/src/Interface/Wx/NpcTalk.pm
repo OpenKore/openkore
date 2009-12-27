@@ -198,12 +198,10 @@ sub npcImage {
 	}
 }
 
-sub npcTalk {
-	my ($self, $ID, $name, $msg) = @_;
+sub npcName {
+	my ($self, $ID, $name) = @_;
 	
 	$self->_checkBefore;
-	
-	return if $msg =~ /^\[(.+)\]$/;
 	
 	my $nameDisplay = $self->_nameDisplay ($name);
 	
@@ -214,7 +212,27 @@ sub npcTalk {
 	
 	$self->{nameLabel}->SetLabel ($nameDisplay);
 	$self->{mapLabel}->SetLabel ($mapDisplay);
-	$self->{chatLog}->add ($msg . "\n");
+}
+
+sub npcTalk {
+	my ($self, $msg) = @_;
+	
+	#$self->_checkBefore;
+	
+	return if $msg =~ /^\[(.+)\]$/;
+	
+	my @items = split /(?=\^[a-fA-F0-9]{6})/, $msg;
+	
+	my $style;
+	for (@items) {
+		if (s/^\^([a-fA-F0-9]{2})([a-fA-F0-9]{2})([a-fA-F0-9]{2})//) {
+			$style = "$1$2$3";
+			$self->{chatLog}->addColor ($style, (hex $1), (hex $2), (hex $3)) unless $self->{chatLog}{styles}{$style};
+		}
+		$self->{chatLog}->add ($_, $style);
+	}
+	
+	$self->{chatLog}->add ("\n");
 }
 
 sub npcContinue {
