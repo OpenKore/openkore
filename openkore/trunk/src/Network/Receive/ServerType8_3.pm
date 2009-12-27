@@ -5,6 +5,7 @@ package Network::Receive::ServerType8_3;
 use strict;
 use Network::Receive::ServerType0 ();
 use base qw(Network::Receive::ServerType0);
+use Globals qw($masterServer);
 
 sub new {
 	my ($class) = @_;
@@ -14,7 +15,11 @@ sub new {
 
 # Overrided method.
 sub received_characters_blockSize {
-	return 108;
+	if ($masterServer && $masterServer->{charBlockSize}) {
+		return $masterServer->{charBlockSize};
+	} else {
+		return 108;
+	}
 }
 
 1;
