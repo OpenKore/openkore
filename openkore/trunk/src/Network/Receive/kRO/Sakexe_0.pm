@@ -1877,17 +1877,17 @@ sub cash_dealer {
 	# continue talk sequence now
 	$ai_v{npc_talk}{time} = time;
 
-	message TF("-----------CashList (Cash Point: %-5d)------------\n" .
-		"#  Name                    Type               Price\n", $char->{cashpoint}), "list";
+	message TF("------------CashList (Cash Point: %-5d)-------------\n" .
+		"#    Name                    Type               Price\n", $char->{cashpoint}), "list";
 	my $display;
 	for (my $i = 0; $i < @cashList; $i++) {
 		$display = $cashList[$i]{name};
 		message(swrite(
-			"@< @<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<< @>>>>>>>p",
+			"@<<< @<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<< @>>>>>>>p",
 			[$i, $display, $itemTypes_lut{$cashList[$i]{type}}, $cashList[$i]{price}]),
 			"list");
 	}
-	message("---------------------------------------------------\n", "list");
+	message("-----------------------------------------------------\n", "list");
 }
 
 sub combo_delay {
