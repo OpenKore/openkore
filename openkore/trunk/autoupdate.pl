@@ -34,12 +34,18 @@ sub check_svn_util {
 
 sub upgrade {
 	my ($path, $repos_name) = @_;
-	print "Checking " . $repos_name . " for updates...\n";
+	print "Checking " . $repos_name . " for updates...";
 	my $sa = SVN::Updater->load({ path => $path });
 
-	print "  Fetching updates...\n";
+	my (undef, $old_version) = $sa->info;
 	$sa->update("--force", "--accept", "theirs-conflict");
-	print " Done updating " . $repos_name . "\n";
+	my (undef, $new_version) = $sa->info;
+	
+	if ($old_version == $new_version) {
+		print " no updates available\n";
+	} else {
+		print " updated to r$new_version\n";
+	}
 };
 
 print "-===================== OpenKore Auto Update tool =====================-\n";
