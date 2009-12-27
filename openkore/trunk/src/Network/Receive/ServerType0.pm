@@ -121,7 +121,7 @@ sub new {
 		'00B0' => ['stat_info', 'v V', [qw(type val)]],
 		'00B1' => ['exp_zeny_info', 'v V', [qw(type val)]],
 		'00B3' => ['switch_character'],
-		'00B4' => ['npc_talk'],
+		'00B4' => ['npc_talk', 'v a4 Z*', [qw(len ID msg)]],
 		'00B5' => ['npc_talk_continue', 'a4', [qw(ID)]],
 		'00B6' => ['npc_talk_close', 'a4', [qw(ID)]],
 		'00B7' => ['npc_talk_responses'],
@@ -4217,6 +4217,12 @@ sub npc_store_info {
 
 sub npc_talk {
 	my ($self, $args) = @_;
+	
+	$talk{ID} = $args->{ID};
+	$talk{nameID} = unpack 'V', $args->{ID};
+	$talk{msg} = bytesToString ($args->{msg});
+	
+=pod
 	my $newmsg;
 	$self->decrypt(\$newmsg, substr($args->{RAW_MSG}, 8));
 
@@ -4226,15 +4232,17 @@ sub npc_talk {
 	$talk{ID} = $ID;
 	$talk{nameID} = unpack("V1", $ID);
 	$talk{msg} = bytesToString($talkMsg);
+=cut
+	
 	# Remove RO color codes
 	$talk{msg} =~ s/\^[a-fA-F0-9]{6}//g;
 
 	$ai_v{npc_talk}{talk} = 'initiated';
 	$ai_v{npc_talk}{time} = time;
 
-	my $name = getNPCName($ID);
+	my $name = getNPCName($talk{ID});
 	Plugins::callHook('npc_talk', {
-						ID => $ID,
+						ID => $talk{ID},
 						nameID => $talk{nameID},
 						name => $name,
 						msg => $talk{msg},
