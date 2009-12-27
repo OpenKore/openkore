@@ -4613,7 +4613,7 @@ sub party_organize_result {
 	}
 }
 
-# TODO: optimize unpacking
+# TODO: TEST optimized unpacking
 sub party_users_info {
 	my ($self, $args) = @_;
 	return unless changeToInGameState();
@@ -4624,16 +4624,17 @@ sub party_users_info {
 	$char->{party}{name} = bytesToString($args->{party_name});
 
 	for (my $i = 28; $i < $args->{RAW_MSG_SIZE}; $i += 46) {
-		my $ID = substr($msg, $i, 4);
+		my ($ID, $name, $map, $admin, $online) = unpack 'a4 Z24 Z16 C2', substr $msg, $i, 46;
+		#my $ID = substr($msg, $i, 4);
 		if (binFind(\@partyUsersID, $ID) eq "") {
 			binAdd(\@partyUsersID, $ID);
 		}
 		$char->{party}{users}{$ID} = new Actor::Party();
-		$char->{party}{users}{$ID}{name} = bytesToString(unpack("Z24", substr($msg, $i + 4, 24)));
+		$char->{party}{users}{$ID}{name} = bytesToString($name); #bytesToString(unpack("Z24", substr($msg, $i + 4, 24)));
 		message TF("Party Member: %s\n", $char->{party}{users}{$ID}{name}), "party", 1;
-		$char->{party}{users}{$ID}{map} = unpack("Z16", substr($msg, $i + 28, 16));
-		$char->{party}{users}{$ID}{admin} = !(unpack("C1", substr($msg, $i + 44, 1)));
-		$char->{party}{users}{$ID}{online} = !(unpack("C1",substr($msg, $i + 45, 1)));
+		$char->{party}{users}{$ID}{map} = $map; #unpack("Z16", substr($msg, $i + 28, 16));
+		$char->{party}{users}{$ID}{admin} = !$admin; #!(unpack("C1", substr($msg, $i + 44, 1)));
+		$char->{party}{users}{$ID}{online} = !$online; #!(unpack("C1",substr($msg, $i + 45, 1)));
 		$char->{party}{users}{$ID}->{ID} = $ID;
 	}
 
