@@ -24,7 +24,7 @@ Translation updates by:
 
 Fixes:
 - Monster name and points in Taekwon Mission (Technology, woozc)
-- Private message packet structure for ST11 (UltimaWeapon)
+- Private message packet structure for ST22 (UltimaWeapon)
 - "Deal cancelled" spam (EternalHarvest)
 - SVN AutoUpdater (kLabMouse, EternalHarvest)
 - Guild allies and enemies (EternalHarvest)
