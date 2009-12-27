@@ -896,12 +896,12 @@ sub actor_display {
 	}
 =cut
 
-	# Remove actors that are located on unwalkable parts of the map (or outside)
+	# Remove actors that are located outside the map
 	# This may be caused by:
-	#  - server sending us unreal actors
+	#  - server sending us false actors
 	#  - actor packets not being parsed correctly
-	if (!$field->isWalkable($coordsFrom{x}, $coordsFrom{y}) || !$field->isWalkable($coordsTo{x}, $coordsTo{y})) {
-		warning "Removed actor with unreal/unwalkable coordinates: ($coordsFrom{x}, $coordsFrom{y}) -> ($coordsTo{x}, $coordsTo{y}), field max: (" .$field->width(). "," .$field->height(). ")\n";
+	if ($field->isOffMap($coordsFrom{x}, $coordsFrom{y}) || $field->isOffMap($coordsTo{x}, $coordsTo{y})) {
+		warning "Removed actor with off map coordinates: ($coordsFrom{x},$coordsFrom{y})->($coordsTo{x},$coordsTo{y}), field max: (" .$field->width(). "," .$field->height(). ")\n";
 		return;
 	}
 

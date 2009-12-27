@@ -27,7 +27,7 @@ sub new {
 	my %packets = (
 		'01A2' => ['pet_info', 'Z24 C v5', [qw(name renameflag level hungry friendly accessory type)]], # 37
 		'0440' => ['millenium_shield', 'a4 v2', [qw(ID num state)]], # 10 # TODO: use
-		'0441' => ['skillinfo_delete', 'a2', [qw(skillID)]], # 10 # TODO: use
+		'0441' => ['skillinfo_delete', 'v', [qw(skillID)]], # 10 # TODO: use
 	);
 	
 	foreach my $switch (keys %packets) {

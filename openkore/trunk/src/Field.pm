@@ -145,11 +145,16 @@ sub height {
 # If you want to check whether the block is walkable, use $field->isWalkable() instead.
 sub getBlock {
 	my ($self, $x, $y) = @_;
-	if ($x < 0 || $x >= $self->{width} || $y < 0 || $y >= $self->{height}) {
+	if ($self->isOffMap($x, $y)) {
 		return NON_WALKABLE;
 	} else {
 		return ord(substr($self->{rawMap}, ($y * $self->{width}) + $x, 1));
 	}
+}
+
+sub isOffMap {
+	my ($self, $x, $y) = @_;
+	return ($x < 0 || $x >= $self->{width} || $y < 0 || $y >= $self->{height});
 }
 
 ##
