@@ -111,6 +111,7 @@ sub OnInit {
 		# npc
 		['packet/npc_image',              sub { $self->onNpcImage (@_); }],
 		['npc_talk',                      sub { $self->onNpcTalk (@_); }],
+		['packet/npc_talk',               sub { $self->onNpcTalkPacket (@_); }],
 		['packet/npc_talk_continue',      sub { $self->onNpcContinue (@_); }],
 		['npc_talk_responses',            sub { $self->onNpcResponses (@_); }],
 		['packet/npc_talk_number',        sub { $self->onNpcNumber (@_); }],
@@ -1400,7 +1401,15 @@ sub onNpcTalk {
 	my ($self, undef, $args) = @_;
 	
 	if (my ($npcTalk) = $self->openNpcTalk (1)) {
-		$npcTalk->{child}->npcTalk ($args->{ID}, $args->{name}, $args->{msg});
+		$npcTalk->{child}->npcName ($args->{ID}, $args->{name});
+	}
+}
+
+sub onNpcTalkPacket {
+	my ($self, undef, $args) = @_;
+	
+	if (my ($npcTalk) = $self->openNpcTalk (1)) {
+		$npcTalk->{child}->npcTalk (bytesToString ($args->{msg}));
 	}
 }
 
