@@ -142,7 +142,8 @@ sub new {
 		['is_casting',       \&onSkillCast, \@holder],
 		['packet_skilluse',  \&onSkillUse,  \@holder],
 		['packet_skillfail', \&onSkillFail, \@holder],
-		['packet_castCancelled', \&onSkillCancelled, \@holder]
+		['packet_castCancelled', \&onSkillCancelled, \@holder],
+		['Network::Receive::map_changed', \&onMapChanged, \@holder],
 	);
 
 	return $self;
@@ -219,6 +220,16 @@ sub onSkillCancelled {
 	my $self = $holder->[0];
 	if ($self->getStatus() == Task::RUNNING && $self->casterIsCorrect($args->{sourceID})) {
 		$self->{castingCancelled} = 1;
+	}
+}
+
+# Called when map changed (maybe teleported)
+sub onMapChanged {
+	my (undef, $args, $holder) = @_;
+	my $self = $holder->[0];
+	if ($self->getStatus() == Task::RUNNING && $self->{skill}->getHandle eq 'AL_TELEPORT') {
+		$self->setDone();
+		debug "UseSkill - Done (Teleport).\n", "Task::UseSkill" if DEBUG;
 	}
 }
 
