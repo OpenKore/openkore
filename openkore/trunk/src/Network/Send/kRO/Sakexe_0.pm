@@ -381,7 +381,7 @@ sub sendNPCBuySellList { # type:0 get store list, type:1 get sell list
 # 0x00c6,-1
 # 0x00c7,-1
 
-# 0x00c8,-1,npcbuylistsend,2:4
+=pod
 # TODO: this is a variable length message, we could buy multiple types of items at once!!!!
 sub sendBuy {
 	my ($self, $ID, $amount) = @_;
@@ -389,6 +389,17 @@ sub sendBuy {
 	my $msg = pack('v4', 0x00C8, $len, $amount, $ID);
 	$self->sendToServer($msg);
 	debug "Sent buy: ".getHex($ID)."\n", "sendPacket", 2;
+}
+=cut
+# 0x00c8,-1,npcbuylistsend,2:4
+sub sendBuyBulk {
+	my ($self, $r_array) = @_;
+	my $msg = pack('v2', 0x00C8, 4+4*@{$r_array});
+	for (my $i = 0; $i < @{$r_array}; $i++) {
+		$msg .= pack('v2', $r_array->[$i]{amount}, $r_array->[$i]{itemID});
+		debug "Sent bulk buy: $r_array->[$i]{itemID} x $r_array->[$i]{amount}\n", "d_sendPacket", 2;
+	}
+	$self->sendToServer($msg);
 }
 
 # 0x00c9,-1,npcselllistsend,2:4
@@ -815,7 +826,7 @@ sub sendEnteringVender {
 # 0x0132,6
 # 0x0133,-1
 
-# 0x0134,-1,purchasereq,2:4:8
+=pod
 # TODO: this is a dynamic len packet, we could buy more types of items at once!!!
 sub sendBuyVender {
 	my ($self, $venderID, $ID, $amount) = @_;
@@ -823,6 +834,17 @@ sub sendBuyVender {
 	my $msg = pack('v2 a4 v2', 0x0134, $len, $venderID, $amount, $ID);
 	$self->sendToServer($msg);
 	debug "Sent Vender Buy: ".getHex($ID)."\n", "sendPacket";
+}
+=cut
+# 0x0134,-1,purchasereq,2:4:8
+sub sendBuyBulkVender {
+	my ($self, $venderID, $r_array) = @_;
+	my $msg = pack('v2 a4', 0x0134, 8+4*@{$r_array}, $venderID);
+	for (my $i = 0; $i < @{$r_array}; $i++) {
+		$msg .= pack('v2', $r_array->[$i]{amount}, $r_array->[$i]{itemIndex});
+		debug "Sent bulk buy vender: $r_array->[$i]{itemIndex} x $r_array->[$i]{amount}\n", "d_sendPacket", 2;
+	}
+	$self->sendToServer($msg);
 }
 
 # 0x0135,7
@@ -935,12 +957,25 @@ sub sendGuildChangeEmblem {
 
 # 0x0154,-1
 
-# 0x0155,-1,guildchangememberposition,2
+=pod
+# TODO: this is a variable len packet, we can change multiple positionchanges at once
 sub sendGuildMemberTitleSelect { # set the title for a member
 	my ($self, $accountID, $charID, $index) = @_;
-	my $msg = pack('v a4 a4 V', 0x0155, $accountID, $charID ,$index);
+	my $len = 16;
+	my $msg = pack('v2 a4 a4 V', 0x0155, $len, $accountID, $charID ,$index);
 	$self->sendToServer($msg);
 	debug "Sent Change Guild title: ".getHex($charID)." $index\n", "sendPacket", 2;
+}
+=cut
+# 0x0155,-1,guildchangememberposition,2
+sub sendGuildMemberPositions {
+	my ($self, $r_array) = @_;
+	my $msg = pack('v2', 0x0155, 4+12*@{$r_array});
+	for (my $i = 0; $i < @{$r_array}; $i++) {
+		$msg .= pack('a4 a4 V', $r_array->[$i]{accountID}, $r_array->[$i]{charID}, $r_array->[$i]{index});
+		debug "Sent GuildChangeMemberPositions: $r_array->[$i]{accountID} $r_array->[$i]{charID} $r_array->[$i]{index}\n", "d_sendPacket", 2;
+	}
+	$self->sendToServer($msg);
 }
 
 # 0x0156,-1
@@ -982,18 +1017,30 @@ sub sendGuildBreak {
 # 0x015f,42
 # 0x0160,-1
 
-# 0x0161,-1,guildchangepositioninfo,2
-# TODO: 2x index?
+=pod
+# TODO: this is a variable len packet, we can send multiple titles at once
 sub sendGuildRankChange { # change the title for a certain index, i would  guess 0 is the top rank, but i dont know
 	my ($self, $index, $permissions, $tax, $title) = @_;
-	my $msg = pack('v2 V4 a24', 0x0161, 44, $index, $permissions, $index, $tax, stringToBytes($title));
-		# packet length, we can actually send multiple titles in the same packet if we wanted to
-		# index of this rank in the list
-		# this is their abilities, not sure what format
-		#pack("V1", $index) . # isnt even used on emulators, but leave in case Aegis wants this
-		# guild tax amount, not sure what format
+	my $len = 44;
+	my $msg = pack('v2 V4 a24', 0x0161, $len, $index, $permissions, $index, $tax, stringToBytes($title));
+		# len: we can actually send multiple titles in the same packet if we wanted to
+		# index: index of this rank in the list
+		# permissions: this is their abilities, not sure what format: //Mode 0x01 <- Invite	//Mode 0x10 <- Expel.
+		# index: isnt even used on emulators, but leave in case Aegis wants this
+		# tax: guild tax amount, not sure what format: 0-100?
 	$self->sendToServer($msg);
 	debug "Sent Set Guild title: $index $title\n", "sendPacket", 2;
+}
+=cut
+# 0x0161,-1,guildchangepositioninfo,2
+sub sendGuildPositionInfo {
+	my ($self, $r_array) = @_;
+	my $msg = pack('v2', 0x0161, 4+44*@{$r_array});
+	for (my $i = 0; $i < @{$r_array}; $i++) {
+		$msg .= pack('v2 V4 a24', $r_array->[$i]{index}, $r_array->[$i]{permissions}, $r_array->[$i]{index}, $r_array->[$i]{tax}, stringToBytes($r_array->[$i]{title}));
+		debug "Sent GuildPositionInfo: $r_array->[$i]{index}, $r_array->[$i]{permissions}, $r_array->[$i]{index}, $r_array->[$i]{tax}, ".stringToBytes($r_array->[$i]{title})."\n", "d_sendPacket", 2;
+	}
+	$self->sendToServer($msg);
 }
 
 # 0x0162,-1
@@ -1285,7 +1332,7 @@ sub sendChangeCart { # lvl: 1, 2, 3, 4, 5
 # 0x01b1,7
 
 # 0x01b2,-1,openvending,2:4:84:85
-# TODO : NOTE: complex packet structure
+# NOTE: complex packet structure
 sub sendOpenShop {
 	my ($self, $title, $items) = @_;
 	my $length = 0x55 + 0x08 * @{$items};

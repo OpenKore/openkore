@@ -679,7 +679,7 @@ sub cmdBuy {
 		if ($arg2 <= 0) {
 			$arg2 = 1;
 		}
-		$messageSender->sendBuy($storeList[$arg1]{'nameID'}, $arg2);
+		$messageSender->sendBuyBulk([{itemID  => $storeList[$arg1]{'nameID'}, amount => $arg2}]); # TODO: we could buy more types of items at once
 	}
 }
 
@@ -4969,7 +4969,7 @@ sub cmdVender {
 		if ($arg3 <= 0) {
 			$arg3 = 1;
 		}
-		$messageSender->sendBuyVender($venderID, $arg2, $arg3);
+		$messageSender->sendBuyBulkVender($venderID, [{itemIndex  => $arg2, amount => $arg3}]);
 	}
 }
 

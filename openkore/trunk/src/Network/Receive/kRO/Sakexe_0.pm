@@ -109,7 +109,7 @@ sub new {
 		'0084' => ['quit_refuse'], # 2
 		# 0x0085 is sent packet
 		'0086' => ['actor_display', 'a4 a5 x V', [qw(ID coords tick)]], # 16
-		'0087' => ['character_moves', 'a4 a5 x', [qw(move_start_time coords unknown)]], # 12
+		'0087' => ['character_moves', 'a4 a5 x', [qw(move_start_time coords)]], # 12
 		'0088' => ['actor_movement_interrupted', 'a4 v2', [qw(ID x y)]], # 10
 		# 0x0089 is sent packet
 		'008A' => ['actor_action', 'a4 a4 a4 V2 v2 C v', [qw(sourceID targetID tick src_speed dst_speed damage div type dual_wield_damage)]], # 29
@@ -317,7 +317,7 @@ sub new {
 		# 0x0155 is sent packet
 		'0156' => ['guild_member_position_changed', 'v V3', [qw(len accountID charID positionID)]], # -1 -> why?
 		# 0x0157 is sent packet
-		# 0x0158,-1
+		# 0x0158,-1 # TODO
 		# 0x0159 is sent packet
 		'015A' => ['guild_leave', 'Z24 Z40', [qw(name message)]], # 66
 		# 0x015b is sent packet

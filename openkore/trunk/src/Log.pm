@@ -288,10 +288,11 @@ sub message {
 # Prints a warning message. It warns the user that a possible non-fatal error has occured or will occur.
 # See the description for Log.pm for more details about the parameters.
 sub warning {
+	my ($message, $domain, $level) = @_;
 	return processMsg("warning",
-		$_[0],
-		$_[1],
-		$_[2],
+		$message,
+		$domain,
+		$level,
 		$warningVerbosity,
 		\%warningConsole,
 		\%warningFiles);
@@ -316,10 +317,11 @@ sub warning {
 # `l`
 # See the description for Log.pm for more details about the parameters.
 sub error {
+	my ($message, $domain, $level) = @_;
 	return processMsg("error",
-		$_[0],
-		$_[1],
-		$_[2],
+		$message,
+		$domain,
+		$level,
 		$errorVerbosity,
 		\%errorConsole,
 		\%errorFiles);
@@ -332,13 +334,13 @@ sub error {
 #
 # Prints a debugging message. See the description for Log.pm for more details about the parameters.
 sub debug {
-	my $level = $_[2];
+	my ($message, $domain, $level) = @_;
 	$level = 1 if (!defined $level);
 	$level = 0 if (existsInList($config{debugDomains}, $_[1]));
 	$level = 5 if (existsInList($config{squelchDomains}, $_[1]));
 	return processMsg("debug",
-		$_[0],
-		$_[1],
+		$message,
+		$domain,
 		$level,
 		(defined $config{'debug'}) ? $config{'debug'} : 0,
 		\%debugConsole,
