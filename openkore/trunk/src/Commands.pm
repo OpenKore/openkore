@@ -4609,8 +4609,8 @@ sub cmdTank {
 	$arg =~ s/ .*//;
 
 	if ($arg eq "") {
-		error T("Syntax Error in function 'tank' (Tank for a Player)\n" .
-			"Usage: tank <player #|player name>\n");
+		error T("Syntax Error in function 'tank' (Tank for a Player/Slave)\n" .
+			"Usage: tank <player #|player name|\@homunculus|\@mercenary>\n");
 
 	} elsif ($arg eq "stop") {
 		configModify("tankMode", 0);
@@ -4625,21 +4625,25 @@ sub cmdTank {
 		}
 
 	} else {
-		my $found;
-		foreach my $ID (@playersID) {
+		my $name;
+		foreach my $ID (@playersID, @slavesID) {
 			next if !$ID;
 			if (lc $players{$ID}{name} eq lc $arg) {
-				$found = $ID;
+				$name = $players{$ID}{name};
+				last;
+			} elsif($ID eq $char->{homunculus}{ID} && $arg eq '@homunculus' ||
+					$ID eq $char->{mercenary}{ID} && $arg eq '@mercenary') {
+				$name = $arg;
 				last;
 			}
 		}
 
-		if ($found) {
+		if ($name) {
 			configModify("tankMode", 1);
-			configModify("tankModeTarget", $players{$found}{name});
+			configModify("tankModeTarget", $name);
 		} else {
-			error TF("Error in function 'tank' (Tank for a Player)\n" .
-				"Player %s does not exist.\n", $arg);
+			error TF("Error in function 'tank' (Tank for a Player/Slave)\n" .
+				"Player/Slave %s does not exist.\n", $arg);
 		}
 	}
 }
