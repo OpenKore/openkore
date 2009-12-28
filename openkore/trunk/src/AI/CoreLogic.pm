@@ -2605,9 +2605,12 @@ sub processAutoAttack {
 		# If we're in tanking mode, only attack something if the person we're tanking for is on screen.
 		my $foundTankee;
 		if ($config{'tankMode'}) {
-			foreach (@playersID) {
+			foreach (@playersID, @slavesID) {
 				next if (!$_);
-				if ($config{'tankModeTarget'} eq $players{$_}{'name'}) {
+				if ($config{'tankModeTarget'} eq $players{$_}{'name'} ||
+					$config{'tankModeTarget'} eq '@homunculus' && $_ eq $char->{homunculus}{ID} ||
+					$config{'tankModeTarget'} eq '@mercenary' && $_ eq $char->{mercenary}{ID})
+				{
 					$foundTankee = 1;
 					last;
 				}
