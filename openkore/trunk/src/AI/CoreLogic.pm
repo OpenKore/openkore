@@ -1678,7 +1678,7 @@ sub processAutoBuy {
 			}
 		} else {
 			if ($args->{lastIndex} eq "" || $args->{lastIndex} != $args->{index}) {
-				# sendBuy automatically terminates the shopping
+				# sendBuyBulk automatically terminates the shopping
 				# to the seller NPC for each item bought.
 				undef $args->{itemID};
 				undef $args->{sentBuy};
@@ -1719,28 +1719,12 @@ sub processAutoBuy {
 				ai_talkNPC($realpos->{pos}{x}, $realpos->{pos}{y}, 'b e');
 				return;
 			}
-			my $maxbuy;
-			if ($config{"buyAuto_$args->{index}"."_price"}) {
-				$maxbuy = int($char->{zeny}/$config{"buyAuto_$args->{index}"."_price"});
-			} else {$maxbuy = 1000000;}
 
-			if ($args->{invIndex} ne "") {
-				# this item is in the inventory already, get what we need
-				my $needbuy = $config{"buyAuto_$args->{index}"."_maxAmount"} - $char->inventory->get($args->{invIndex})->{amount};
-				if ($maxbuy+1 > $needbuy) {
-					$messageSender->sendBuy($args->{itemID}, $needbuy);
-				} else {
-					$messageSender->sendBuy($args->{itemID}, $maxbuy);
-				}
-			} else {
-				# get the full amount
-				my $needbuy = $config{"buyAuto_$args->{index}"."_maxAmount"};
-				if ($maxbuy+1 > $needbuy) {
-					$messageSender->sendBuy($args->{itemID}, $needbuy);
-				} else {
-					$messageSender->sendBuy($args->{itemID}, $maxbuy);
-				}
-			}
+			my $maxbuy = ($config{"buyAuto_$args->{index}"."_price"}) ? int($char->{zeny}/$config{"buyAuto_$args->{index}"."_price"}) : 1000000; # we assume we can buy 1000000, when price of the item is set to 0 or undef
+			my $needbuy = $config{"buyAuto_$args->{index}"."_maxAmount"};
+			$needbuy -= $char->inventory->get($args->{invIndex})->{amount} if ($args->{invIndex} ne ""); # we don't need maxAmount if we already have a certain amount of the item in our inventory
+			$messageSender->sendBuyBulk([{itemID  => $args->{itemID}, amount => ($maxbuy > $needbuy) ? $needbuy : $maxbuy}]); # TODO: we could buy more types of items at once
+
 			$timeout{ai_buyAuto_wait_buy}{time} = time;
 		}
 	}

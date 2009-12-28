@@ -109,18 +109,42 @@ sub sendBanCheck {
 	debug "Sent Account Ban Check Request : " . getHex($ID) . "\n", "sendPacket", 2;
 }
 
+=pod
 sub sendBuy {
 	my ($self, $ID, $amount) = @_;
 	my $msg = pack("C*", 0xC8, 0x00, 0x08, 0x00) . pack("v*", $amount, $ID);
 	$self->sendToServer($msg);
 	debug "Sent buy: ".getHex($ID)."\n", "sendPacket", 2;
 }
+=cut
+# 0x00c8,-1,npcbuylistsend,2:4
+sub sendBuyBulk {
+	my ($self, $r_array) = @_;
+	my $msg = pack('v2', 0x00C8, 4+4*@{$r_array});
+	for (my $i = 0; $i < @{$r_array}; $i++) {
+		$msg .= pack('v2', $r_array->[$i]{amount}, $r_array->[$i]{itemID});
+		debug "Sent bulk buy: $r_array->[$i]{itemID} x $r_array->[$i]{amount}\n", "d_sendPacket", 2;
+	}
+	$self->sendToServer($msg);
+}
 
+=pod
 sub sendBuyVender {
 	my ($self, $venderID, $ID, $amount) = @_;
 	my $msg = pack("C*", 0x34, 0x01, 0x0C, 0x00) . $venderID . pack("v*", $amount, $ID);
 	$self->sendToServer($msg);
 	debug "Sent Vender Buy: ".getHex($ID)."\n", "sendPacket";
+}
+=cut
+# 0x0134,-1,purchasereq,2:4:8
+sub sendBuyBulkVender {
+	my ($self, $venderID, $r_array) = @_;
+	my $msg = pack('v2 a4', 0x0134, 8+4*@{$r_array}, $venderID);
+	for (my $i = 0; $i < @{$r_array}; $i++) {
+		$msg .= pack('v2', $r_array->[$i]{amount}, $r_array->[$i]{itemIndex});
+		debug "Sent bulk buy vender: $r_array->[$i]{itemIndex} x $r_array->[$i]{amount}\n", "d_sendPacket", 2;
+	}
+	$self->sendToServer($msg);
 }
 
 sub sendCardMerge {
@@ -546,6 +570,7 @@ sub sendGuildMemberKick {
 	debug "Sent Guild Kick: ".getHex($charID)."\n", "sendPacket";
 }
 
+=pod
 sub sendGuildMemberTitleSelect {
 	# set the title for a member
 	my ($self, $accountID, $charID, $index) = @_;
@@ -553,6 +578,17 @@ sub sendGuildMemberTitleSelect {
 	my $msg = pack("C*", 0x55, 0x01).pack("v1",16).$accountID.$charID.pack("V1",$index);
 	$self->sendToServer($msg);
 	debug "Sent Change Guild title: ".getHex($charID)." $index\n", "sendPacket", 2;
+}
+=cut
+# 0x0155,-1,guildchangememberposition,2
+sub sendGuildMemberPositions {
+	my ($self, $r_array) = @_;
+	my $msg = pack('v2', 0x0155, 4+12*@{$r_array});
+	for (my $i = 0; $i < @{$r_array}; $i++) {
+		$msg .= pack('a4 a4 V', $r_array->[$i]{accountID}, $r_array->[$i]{charID}, $r_array->[$i]{index});
+		debug "Sent GuildChangeMemberPositions: $r_array->[$i]{accountID} $r_array->[$i]{charID} $r_array->[$i]{index}\n", "d_sendPacket", 2;
+	}
+	$self->sendToServer($msg);
 }
 
 sub sendGuildNotice {
@@ -564,6 +600,7 @@ sub sendGuildNotice {
 	debug "Sent Change Guild Notice: $notice\n", "sendPacket", 2;
 }
 
+=pod
 sub sendGuildRankChange {
 	# change the title for a certain index
 	# i would  guess 0 is the top rank, but i dont know
@@ -578,6 +615,17 @@ sub sendGuildRankChange {
 		pack("a24", $title);
 	$self->sendToServer($msg);
 	debug "Sent Set Guild title: $index $title\n", "sendPacket", 2;
+}
+=cut
+# 0x0161,-1,guildchangepositioninfo,2
+sub sendGuildPositionInfo {
+	my ($self, $r_array) = @_;
+	my $msg = pack('v2', 0x0161, 4+44*@{$r_array});
+	for (my $i = 0; $i < @{$r_array}; $i++) {
+		$msg .= pack('v2 V4 a24', $r_array->[$i]{index}, $r_array->[$i]{permissions}, $r_array->[$i]{index}, $r_array->[$i]{tax}, stringToBytes($r_array->[$i]{title}));
+		debug "Sent GuildPositionInfo: $r_array->[$i]{index}, $r_array->[$i]{permissions}, $r_array->[$i]{index}, $r_array->[$i]{tax}, ".stringToBytes($r_array->[$i]{title})."\n", "d_sendPacket", 2;
+	}
+	$self->sendToServer($msg);
 }
 
 sub sendGuildRequestInfo {
