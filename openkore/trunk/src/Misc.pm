@@ -2794,7 +2794,7 @@ sub useTeleport {
 	if ($sk_lvl > 0 && $internal > 0 && ($use_lvl == 1 || !$config{'teleportAuto_useItemForRespawn'})) {
 		# We have the teleport skill, and should use it
 		my $skill = new Skill(handle => 'AL_TELEPORT');
-		if ($use_lvl == 2 || $internal == 1 || ($internal == 2 && !isSafe())) {
+		if ($use_lvl == 2 || $internal == 1 || ($internal == 2 && !isSafe()) || $config{teleportAuto_alwaysSendSkillUse}) {
 			# Send skill use packet to appear legitimate
 			# (Always send skill use packet for level 2 so that saveMap
 			# autodetection works)
