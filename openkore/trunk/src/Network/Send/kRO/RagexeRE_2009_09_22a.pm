@@ -18,7 +18,6 @@
 package Network::Send::kRO::RagexeRE_2009_09_22a;
 
 use strict;
-use Network::Send::kRO::RagexeRE_2009_08_25a;
 use base qw(Network::Send::kRO::RagexeRE_2009_08_25a);
 
 use Globals qw($accountID);

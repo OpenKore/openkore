@@ -18,7 +18,6 @@
 package Network::Send::kRO::Sakexe_2005_04_25a;
 
 use strict;
-use Network::Send::kRO::Sakexe_2005_04_11a;
 use base qw(Network::Send::kRO::Sakexe_2005_04_11a);
 
 use Log qw(message warning error debug);
@@ -40,7 +39,7 @@ sub sendHomunculusCommand {
 # 0x0232,9,hommoveto,6
 sub sendHomunculusMove {
 	my ($self, $homunID, $x, $y) = @_;
-	my $msg = pack('v a4 a3', 0x0232, $homunID, getCoordString(int $x, int $y, 1));
+	my $msg = pack('v a4 a3', 0x0232, $homunID, getCoordString($x = int $x, $y = int $y, 1));
 	$self->sendToServer($msg);
 	debug "Sent Homunculus move to: $x, $y\n", "sendPacket", 2;
 }

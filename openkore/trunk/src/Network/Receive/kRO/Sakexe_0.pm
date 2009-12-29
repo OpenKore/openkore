@@ -33,7 +33,7 @@ use Globals qw($accountID $sessionID $sessionID2 $accountSex $char $charID %conf
 use Time::HiRes qw(time usleep);
 
 use AI;
-use Globals qw($char %timeout $net %config @chars $conState $conState_tries $messageSender);
+use Globals qw($char %timeout $net %config @chars $conState $conState_tries $messageSender $field);
 use Log qw(message warning error debug);
 use Translation;
 use Network;
@@ -55,6 +55,7 @@ use Actor::Monster;
 use Actor::Party;
 use Actor::Item;
 use Actor::Unknown;
+use Field;
 use Settings;
 use Log qw(message warning error debug);
 use FileParsers;
@@ -5745,7 +5746,7 @@ sub skills_list {
 	undef @{$slave->{slave_skillsID}};
 	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 37) {
 		my ($skillID, $targetType, $level, $sp, $range, $handle, $up)
-		= unpack 'v1 V1 v3 Z24 C1', substr $msg, $i, 37;
+		= unpack 'v V v3 Z24 C', substr $msg, $i, 37;
 		$handle = Skill->new (idn => $skillID)->getHandle unless $handle;
 		
 		$char->{skills}{$handle}{ID} = $skillID;
@@ -5753,7 +5754,7 @@ sub skills_list {
 		$char->{skills}{$handle}{range} = $range;
 		$char->{skills}{$handle}{up} = $up;
 		$char->{skills}{$handle}{targetType} = $targetType;
-		$char->{skills}{$handle}{lv} = $level unless $char->{skills}{$handle}{lv};
+		$char->{skills}{$handle}{lv} = $level unless $char->{skills}{$handle}{lv}; # TODO: why is this unless here? it seems useless
 		
 		binAdd ($skillsIDref, $handle) unless binFind ($skillsIDref, $handle);
 		Skill::DynamicInfo::add($skillID, $handle, $level, $sp, $range, $targetType, $owner);

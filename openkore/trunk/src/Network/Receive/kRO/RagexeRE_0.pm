@@ -22,8 +22,7 @@
 package Network::Receive::kRO::RagexeRE_0;
 
 use strict;
-use Network::Receive::kRO::RagexeRE_2009_11_03a;
-use base qw(Network::Receive::kRO::RagexeRE_2009_11_03a);
+use base qw(Network::Receive::kRO::RagexeRE_2009_11_04a);
 
 use Log qw(message warning error debug);
 
@@ -38,6 +37,7 @@ sub new {
 	
 		'07E6' => ['captcha_session_ID', 'v V', [qw(ID generation_time)]], # 8
 	
+		# TODO: weapon gives weird results on other actors
 		# note: the first x in the actor_display packets is actually C:object_type (look at the C structs)
 		'07F7' => ['actor_display', 'v C a4 v3 V v2 V v a4 v5 a4 a2 v V C2 a5 x C3 v2 Z*',	[qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon lowhead tick tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 karma sex coords unknown1 unknown2 act lv font name)]], # -1 # walking
 		'07F8' => ['actor_display', 'v C a4 v3 V v2 V v6 a4 a2 v V C2 a3 C3 v2 Z*',			[qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 karma sex coords unknown1 unknown2 act lv font name)]], # -1 # spawning

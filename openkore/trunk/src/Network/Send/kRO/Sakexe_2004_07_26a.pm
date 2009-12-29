@@ -18,7 +18,6 @@
 package Network::Send::kRO::Sakexe_2004_07_26a;
 
 use strict;
-use Network::Send::kRO::Sakexe_2004_07_13a;
 use base qw(Network::Send::kRO::Sakexe_2004_07_13a);
 
 use Log qw(message warning error debug);
@@ -97,7 +96,7 @@ sub sendTake {
 # 0x009b,6,walktoxy,3
 sub sendMove {
 	my ($self, $x, $y) = @_;
-	my $msg = pack('v x a3', 0x009B, getCoordString(int $x, int $y, 1));
+	my $msg = pack('v x a3', 0x009B, getCoordString($x = int $x, $y = int $y, 1));
 	$self->sendToServer($msg);
 	debug "Sent move to: $x, $y\n", "sendPacket", 2;
 }

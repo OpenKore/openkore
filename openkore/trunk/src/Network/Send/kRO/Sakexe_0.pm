@@ -18,7 +18,6 @@
 package Network::Send::kRO::Sakexe_0;
 
 use strict;
-use Network::Send::kRO ();
 use base qw(Network::Send::kRO);
 
 use Log qw(message warning error debug);
@@ -142,7 +141,7 @@ sub sendSync {
 # 0x0085,5,walktoxy,2
 sub sendMove {
 	my ($self, $x, $y) = @_;
-	my $msg = pack('v a3', 0x0085, getCoordString(int $x, int $y, 1));
+	my $msg = pack('v a3', 0x0085, getCoordString($x = int $x, $y = int $y, 1));
 	$self->sendToServer($msg);
 	debug "Sent move to: $x, $y\n", "sendPacket", 2;
 }

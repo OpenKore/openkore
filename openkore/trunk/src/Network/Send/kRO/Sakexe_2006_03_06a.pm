@@ -18,7 +18,6 @@
 package Network::Send::kRO::Sakexe_2006_03_06a;
 
 use strict;
-use Network::Send::kRO::Sakexe_2006_01_26a;
 use base qw(Network::Send::kRO::Sakexe_2006_01_26a);
 
 sub new {
