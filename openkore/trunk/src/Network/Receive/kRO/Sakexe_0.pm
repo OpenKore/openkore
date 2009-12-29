@@ -5756,7 +5756,7 @@ sub skills_list {
 		$char->{skills}{$handle}{targetType} = $targetType;
 		$char->{skills}{$handle}{lv} = $level unless $char->{skills}{$handle}{lv}; # TODO: why is this unless here? it seems useless
 		
-		binAdd ($skillsIDref, $handle) unless binFind ($skillsIDref, $handle);
+		binAdd ($skillsIDref, $handle) unless defined binFind ($skillsIDref, $handle);
 		Skill::DynamicInfo::add($skillID, $handle, $level, $sp, $range, $targetType, $owner);
 		
 		Plugins::callHook($hook, {
