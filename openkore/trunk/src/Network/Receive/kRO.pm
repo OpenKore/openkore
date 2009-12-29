@@ -20,7 +20,6 @@ use strict;
 use encoding 'utf8';
 use Carp::Assert;
 
-use Network::Receive ();
 use base qw(Network::Receive);
 
 use Exception::Class ('Network::Receive::kRO::InvalidServerType', 'Network::Receive::kRO::CreationError');

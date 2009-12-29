@@ -18,7 +18,6 @@
 package Network::Receive::kRO::Sakexe_2004_10_25a;
 
 use strict;
-use Network::Receive::kRO::Sakexe_2004_10_05a;
 use base qw(Network::Receive::kRO::Sakexe_2004_10_05a);
 
 use Log qw(message warning error debug);

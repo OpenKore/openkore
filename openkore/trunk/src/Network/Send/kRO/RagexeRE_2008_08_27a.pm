@@ -18,7 +18,6 @@
 package Network::Send::kRO::RagexeRE_2008_08_27a;
 
 use strict;
-use Network::Send::kRO::Sakexe_2008_09_10a;
 use base qw(Network::Send::kRO::Sakexe_2008_09_10a); #looks weird, inheriting from a newer file... but this is what eA has and we want to be able to play on eA servers
 
 use Log qw(message warning error debug);
@@ -131,7 +130,7 @@ sub sendGetCharacterName {
 # 0x00a7,9,walktoxy,6
 sub sendMove {
 	my ($self, $x, $y) = @_;
-	my $msg = pack('v x4 a3', 0x00A7, getCoordString(int $x, int $y, 1));
+	my $msg = pack('v x4 a3', 0x00A7, getCoordString($x = int $x, $y = int $y, 1));
 	$self->sendToServer($msg);
 	debug "Sent move to: $x, $y\n", "sendPacket", 2;
 }

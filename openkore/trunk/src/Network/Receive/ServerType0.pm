@@ -18,7 +18,7 @@ use base qw(Network::Receive);
 use Time::HiRes qw(time usleep);
 
 use AI;
-use Globals qw($char %timeout $net %config @chars $conState $conState_tries $messageSender);
+use Globals qw($char %timeout $net %config @chars $conState $conState_tries $messageSender $field);
 use Log qw(message warning error debug);
 use Translation;
 use Network;
@@ -40,6 +40,7 @@ use Actor::Monster;
 use Actor::Party;
 use Actor::Item;
 use Actor::Unknown;
+use Field;
 use Settings;
 use Log qw(message warning error debug);
 use FileParsers;

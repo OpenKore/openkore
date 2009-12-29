@@ -18,7 +18,6 @@
 package Network::Send::kRO::RagexeRE_2009_07_08a;
 
 use strict;
-use Network::Send::kRO::RagexeRE_2009_07_01a;
 use base qw(Network::Send::kRO::RagexeRE_2009_07_01a);
 
 sub new {

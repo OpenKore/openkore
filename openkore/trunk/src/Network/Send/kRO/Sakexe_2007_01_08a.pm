@@ -18,7 +18,6 @@
 package Network::Send::kRO::Sakexe_2007_01_08a;
 
 use strict;
-use Network::Send::kRO::Sakexe_2007_01_02a;
 use base qw(Network::Send::kRO::Sakexe_2007_01_02a);
 
 use Log qw(message warning error debug);
@@ -132,7 +131,7 @@ sub sendGetCharacterName {
 # 0x00a7,8,walktoxy,5
 sub sendMove {
 	my ($self, $x, $y) = @_;
-	my $msg = pack('v x3 a3', 0x00A7, getCoordString(int $x, int $y, 1));
+	my $msg = pack('v x3 a3', 0x00A7, getCoordString($x = int $x, $y = int $y, 1));
 	$self->sendToServer($msg);
 	debug "Sent move to: $x, $y\n", "sendPacket", 2;
 }

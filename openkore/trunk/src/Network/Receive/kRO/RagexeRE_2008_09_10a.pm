@@ -18,7 +18,6 @@
 package Network::Receive::kRO::RagexeRE_2008_09_10a;
 
 use strict;
-use Network::Receive::kRO::RagexeRE_2008_08_27a;
 use base qw(Network::Receive::kRO::RagexeRE_2008_08_27a);
 
 use Log qw(message warning error debug);
