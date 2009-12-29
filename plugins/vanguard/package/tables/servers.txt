@@ -43,7 +43,7 @@ port 6025
 private 1
 master_version 16
 version 24
-serverType kRO_RagexeRE_2009_11_03a
+serverType kRO_RagexeRE_2009_11_04a
 serverEncoding Western
 charBlockSize 112
 chatLangCode 1
