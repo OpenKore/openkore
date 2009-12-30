@@ -170,7 +170,7 @@ sub handleMapLoaded {
 	
 	# Send Hotkeys
 	$output = '';
-	if(@{$hotkeyList} > 28) { # todo: there is also 07D9,254
+	if(@{$hotkeyList} <= 28) { # todo: there is also 07D9,254
 		$output .=  pack('v', 0x02B9); # old interface (28 hotkeys)
 	} else {
 		$output .=  pack('v', 0x07D9); # renewal interface as of: RagexeRE_2009_06_10a (38 hotkeys)
