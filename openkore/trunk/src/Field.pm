@@ -369,6 +369,8 @@ sub nameToBaseName {
 	}
 
 	return $baseName;
+	
+	# tl;dr $name =~ s/^\d{3}(?=\d@)//; return $masterServer->{"field_$name"} || $mapAlias_lut{$name} || $name;
 }
 
 1;
