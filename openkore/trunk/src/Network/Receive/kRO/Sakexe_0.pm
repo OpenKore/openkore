@@ -968,7 +968,7 @@ sub actor_display {
 	# This may be caused by:
 	#  - server sending us false actors
 	#  - actor packets not being parsed correctly
-	if ($field->isOffMap($coordsFrom{x}, $coordsFrom{y}) || $field->isOffMap($coordsTo{x}, $coordsTo{y})) {
+	if (defined $field && ($field->isOffMap($coordsFrom{x}, $coordsFrom{y}) || $field->isOffMap($coordsTo{x}, $coordsTo{y}))) {
 		warning "Removed actor with off map coordinates: ($coordsFrom{x},$coordsFrom{y})->($coordsTo{x},$coordsTo{y}), field max: (" .$field->width(). "," .$field->height(). ")\n";
 		return;
 	}
@@ -4976,7 +4976,7 @@ sub received_character_ID_and_Map {
 		$masterServer = $masterServers{$config{master}} if ($config{master} ne "");
 	}
 
-	my ($map) = $args->{mapName} =~ /([\s\S]*)\./;
+	my ($map) = $args->{mapName} =~ /([\s\S]*)\./; # cut off .gat
 	if (!$field || $map ne $field->name()) {
 		eval {
 			$field = new Field(name => $map);
