@@ -931,6 +931,8 @@ sub actorAdded {
 	my ($type, $list, $hash) = actorAddedRemovedVars ($actor);
 
 	if (defined $type) {
+		debug TF("actorAdded: %s %s (%s), size %s\n", $type, (unpack 'V', $actor->{ID}), $actor->{binID}, $source->size), 'actorlist', 3;
+		
 		if (DEBUG && scalar(keys %{$hash}) + 1 != $source->size()) {
 			use Data::Dumper;
 
@@ -956,6 +958,8 @@ sub actorAdded {
 
 		assert(scalar(keys %{$hash}) == $source->size()) if DEBUG;
 		assert(binSize($list) == $source->size()) if DEBUG;
+	} else {
+		warning "Unknown actor type in actorAdded\n", 'actorlist' if DEBUG;
 	}
 }
 
@@ -966,6 +970,8 @@ sub actorRemoved {
 	my ($type, $list, $hash) = actorAddedRemovedVars ($actor);
 
 	if (defined $type) {
+		debug TF("actorRemoved: %s %s (%s), size %s\n", $type, (unpack 'V', $actor->{ID}), $actor->{binID}, $source->size), 'actorlist', 3;
+		
 		if (DEBUG && scalar(keys %{$hash}) - 1 != $source->size()) {
 			use Data::Dumper;
 
@@ -996,6 +1002,8 @@ sub actorRemoved {
 
 		assert(scalar(keys %{$hash}) == $source->size()) if DEBUG;
 		assert(binSize($list) == $source->size()) if DEBUG;
+	} else {
+		warning "Unknown actor type in actorRemoved\n", 'actorlist' if DEBUG;
 	}
 }
 
