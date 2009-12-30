@@ -351,6 +351,10 @@ sub loadByName {
 sub nameToBaseName {
 	my ($self, $name) = @_;
 
+	if ($name =~ /^\d{3}(\d@.*)/) { # instanced maps, ex: 0021@cata
+		$name = $1;
+	}
+
 	my $baseName;
 	if ($baseName = $masterServer->{"field_$name"}) {
 		# Handle server-specific versions of the field from servers.txt
