@@ -143,7 +143,7 @@ serverType kRO_RagexeRE_0
 serverEncoding Korean
 charBlockSize 112
 storageEncryptKey 0x050B6F79,0x0202C179,0x00E20120,0x04FA43E3,0x0179B6C8,0x05973DF2,0x007D8D6B,0x08CB9ED9
-addTableFolders tables\kRO\2009-12-15aRagexeRE
+addTableFolders tables\kRO\2009-12-29aRagexeRE
 recvpackets recvpackets_.txt
 gameGuard 1
 
@@ -158,7 +158,7 @@ charBlockSize 112
 storageEncryptKey 0x050B6F79,0x0202C179,0x00E20120,0x04FA43E3,0x0179B6C8,0x05973DF2,0x007D8D6B,0x08CB9ED9
 captcha 1
 clientHash 82d12c914f5ad48fd96fcf7ef4cc492d
-addTableFolders tables\kRO\2009-12-15aRagexeRE
+addTableFolders tables\kRO\2009-12-29aRagexeRE
 recvpackets recvpackets_.txt
 
 [Malaysia - mRO: Main Server: Balder]
@@ -401,7 +401,19 @@ paddedPackets_skillUseID 0x0089
 [Localhost]
 ip 127.0.0.1
 port 6900
+private 1
 master_version 1
 version 20
-serverType 0
+serverType kRO_RagexeRE_2009_11_04a
 serverEncoding Western
+
+[RMS]
+ip 69.197.158.197
+port 6900
+private 1
+master_version 16
+version 20
+serverType kRO_Sakexe_2009_04_08a # rmsserver-2009-06-17a.exe
+serverEncoding Western
+charBlockSize 112
+recvpackets recvpackets_RMS.txt
