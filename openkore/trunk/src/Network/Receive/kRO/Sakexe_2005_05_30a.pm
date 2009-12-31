@@ -20,13 +20,16 @@ package Network::Receive::kRO::Sakexe_2005_05_30a;
 use strict;
 use base qw(Network::Receive::kRO::Sakexe_2005_05_23a);
 
+use Globals qw(%config $char);
+use Misc qw(configModify);
+
 use Log qw(message warning error debug);
 
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
 	my %packets = (
-		'022E' => ['homunculus_stats', 'Z24 C v16 V2 v2', [qw(name state lv hunger intimacy accessory atk matk hit critical def mdef flee aspd hp hp_max sp sp_max exp exp_max points_skill unknown)]], # 71
+		'022E' => ['homunculus_property', 'Z24 C v16 V2 v2', [qw(name state level hunger intimacy accessory atk matk hit critical def mdef flee aspd hp hp_max sp sp_max exp exp_max points_skill attack_range)]], # 71
 		'0235' => ['skills_list'], # -1 # homunculus skills
 		# 0x0236,10
 		'0238' => ['top10_pk_rank'], #  282
@@ -37,6 +40,21 @@ sub new {
 	}
 
 	return $self;
+}
+
+# 022E
+sub homunculus_property {	# attack_range param was added
+	my ($self, $args) = @_;
+	$self->SUPER::homunculus_property($args);
+	
+	my $slave = $char->{homunculus};
+
+	# TODO: we do this for homunculus, mercenary and our char... make 1 function and pass actor and attack range?
+	if ($config{homunculus_attackDistanceAuto} && $config{attackDistance} != $slave->{attack_range}) {
+		message TF("Autodetected attackDistance for homunculus = %s\n", $slave->{attack_range}), "success";
+		configModify('homunculus_attackDistance', $slave->{attack_range}, 1);
+		configModify('homunculus_attackMaxDistance', $slave->{attack_range}, 1);
+	}
 }
 
 =pod

@@ -52,7 +52,6 @@ sub new {
 }
 
 # 07E6
-# TODO: move to right class
 sub captcha_session_ID {
 	my ($self, $args) = @_;
 	debug $self->{packet_list}{$args->{switch}}->[0] . " " . join(', ', @{$args}{@{$self->{packet_list}{$args->{switch}}->[2]}}) . "\n";

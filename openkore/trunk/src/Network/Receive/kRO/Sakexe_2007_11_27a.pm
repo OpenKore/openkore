@@ -24,9 +24,9 @@ sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
 	my %packets = (
-		# 0x02e7,-1 # TODO
+		'02E7' => ['pvp_mode', 'v2 a*', [qw(len type mapInfoTable)]], # -1 # int[] mapInfoTable
 	);
-	
+
 	foreach my $switch (keys %packets) {
 		$self->{packet_list}{$switch} = $packets{$switch};
 	}

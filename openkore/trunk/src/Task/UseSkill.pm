@@ -27,7 +27,6 @@ use Carp::Assert;
 use Task::WithSubtask;
 use base qw(Task::WithSubtask);
 use Task::Chained;
-use Task::Function;
 use Task::SitStand;
 
 use Globals qw($net $char %skillsArea $messageSender $accountID %timeout);

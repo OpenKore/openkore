@@ -43,7 +43,7 @@ sub sendMercenaryCommand {
 	
 	my $msg = pack ('v C', 0x029F, $command);
 	$self->sendToServer ($msg);
-	debug "Sent MercenaryCommand", "sendPacket", 2;
+	debug "Sent Mercenary Command $command", "sendPacket", 2;
 }
 
 =pod

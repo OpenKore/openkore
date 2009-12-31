@@ -383,7 +383,7 @@ sub new {
 		'0196' => ['actor_status_active', 'v a4 C', [qw(type ID flag)]], # 9
 		# 0x0197 is sent packet
 		# 0x0198 is sent packet
-		'0199' => ['pvp_mode1', 'v', [qw(type)]], #4
+		'0199' => ['pvp_mode', 'v', [qw(type)]], #4
 		'019A' => ['pvp_rank', 'V3', [qw(ID rank num)]], # 14
 		'019B' => ['unit_levelup', 'a4 V', [qw(ID type)]], # 10
 		# 0x019c is sent packet
@@ -444,7 +444,7 @@ sub new {
 		'01D3' => ['sound_effect', 'Z24 C V a4', [qw(name type unknown ID)]], # 35
 		'01D4' => ['npc_talk_text', 'a4', [qw(ID)]], # 6
 		# 0x01d5 is sent packet
-		'01D6' => ['pvp_mode2', 'v', [qw(type)]], # 4
+		'01D6' => ['pvp_mode', 'v', [qw(type)]], # 4
 		'01D7' => ['player_equipment', 'a4 C v2', [qw(sourceID type ID1 ID2)]], # 11 # TODO: inconsistent with C structs
 		'01D8' => ['actor_display', 'a4 v14 a4 a2 v2 C2 a3 C3 v',		[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 karma sex coords unknown1 unknown2 act lv)]], # 54 # standing
 		'01D9' => ['actor_display', 'a4 v14 a4 a2 v2 C2 a3 C2 v',		[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 karma sex coords unknown1 unknown2 lv)]], # 53 # spawning
@@ -2755,9 +2755,12 @@ use constant {
 	HO_HEADTYPE_CHANGED => 0x4,
 };
 
+# 0230
+# TODO: what is type?
 sub homunculus_info {
 	my ($self, $args) = @_;
-	if ($args->{type} == HO_PRE_INIT) {
+	debug "homunculus_info type: $args->{type}\n";
+	if ($args->{state} == HO_PRE_INIT) {
 		my $state = $char->{homunculus}{state}
 			if ($char->{homunculus} && $char->{homunculus}{ID} && $char->{homunculus}{ID} ne $args->{ID});
 		$char->{homunculus} = Actor::get($args->{ID});
@@ -2766,105 +2769,91 @@ sub homunculus_info {
 		unless ($char->{slaves}{$char->{homunculus}{ID}}) {
 			AI::SlaveManager::addSlave ($char->{homunculus});
 		}
-	} elsif ($args->{type} == HO_RELATIONSHIP_CHANGED) {
+	} elsif ($args->{state} == HO_RELATIONSHIP_CHANGED) {
 		$char->{homunculus}{intimacy} = $args->{val};
-	} elsif ($args->{type} == HO_FULLNESS_CHANGED) {
+	} elsif ($args->{state} == HO_FULLNESS_CHANGED) {
 		$char->{homunculus}{hunger} = $args->{val};
-	} elsif ($args->{type} == HO_ACCESSORY_CHANGED) {
+	} elsif ($args->{state} == HO_ACCESSORY_CHANGED) {
 		$char->{homunculus}{accessory} = $args->{val};
-	} elsif ($args->{type} == HO_HEADTYPE_CHANGED) {
+	} elsif ($args->{state} == HO_HEADTYPE_CHANGED) {
 		#
 	}
 }
 
-sub homunculus_stats { # homunculus and mercenary stats
+# 029B
+sub mercenary_init {
 	my ($self, $args) = @_;
-	
-	if ($args->{switch} eq '029B') {
-		# Mercenary
-		$char->{mercenary} = Actor::get ($args->{ID});
-		$char->{mercenary}{map} = $field{name};
-		unless ($char->{slaves}{$char->{mercenary}{ID}}) {
-			AI::SlaveManager::addSlave ($char->{mercenary});
-		}
+
+	$char->{mercenary} = Actor::get ($args->{ID}); # TODO: was it added to an actorList yet?
+	$char->{mercenary}{map} = $field{name};
+	unless ($char->{slaves}{$char->{mercenary}{ID}}) {
+		AI::SlaveManager::addSlave ($char->{mercenary});
+	}
+
+	my $slave = $char->{mercenary};
+
+	foreach (@{$args->{KEYS}}) {
+		$slave->{$_} = $args->{$_};
 	}
 	
-	my $slave;
-	if ($args->{switch} eq '022E') {
-		$slave = $char->{homunculus};
-	} elsif ($args->{switch} eq '029B') {
-		$slave = $char->{mercenary};
+	slave_calcproperty_handler($slave, $args);
+	$slave->{expPercent}   = ($args->{exp_max}) ? ($args->{exp} / $args->{exp_max}) * 100 : 0;
+}
+
+# 022E
+sub homunculus_property {
+	my ($self, $args) = @_;
+
+	my $slave = $char->{homunculus};
+
+	foreach (@{$args->{KEYS}}) {
+		$slave->{$_} = $args->{$_};
 	}
-	
 	$slave->{name} = bytesToString ($args->{name});
 	
-	if ($args->{switch} eq '022E') {
-		# Homunculus states:
-		# 0 - alive
-		# 2 - rest
-		# 4 - dead
-		
-		if (($args->{state} & ~8) > 1) {
-			foreach my $handle (@{$char->{homunculus}{slave_skillsID}}) {
-				delete $char->{skills}{$handle};
-			}
-			$char->{homunculus}->clear();
-			undef @{$char->{homunculus}{slave_skillsID}};
-			if (defined $slave->{state} && $slave->{state} != $args->{state}) {
-				if ($args->{state} & 2) {
-					message T("Your Homunculus was vaporized!\n"), 'homunculus';
-				} elsif ($args->{state} & 4) {
-					message T("Your Homunculus died!\n"), 'homunculus';
-				}
-			}
-		} elsif (defined $slave->{state} && $slave->{state} != $args->{state}) {
-			if ($slave->{state} & 2) {
-				message T("Your Homunculus was recalled!\n"), 'homunculus';
-			} elsif ($slave->{state} & 4) {
-				message T("Your Homunculus was resurrected!\n"), 'homunculus';
+	slave_calcproperty_handler($slave, $args);
+	homunculus_state_handler($slave, $args);
+}
+
+sub homunculus_state_handler {
+	my ($slave, $args) = @_;
+	# Homunculus states:
+	# 0 - alive
+	# 2 - rest
+	# 4 - dead
+
+	if (($args->{state} & ~8) > 1) {
+		foreach my $handle (@{$char->{homunculus}{slave_skillsID}}) {
+			delete $char->{skills}{$handle};
+		}
+		$char->{homunculus}->clear();
+		undef @{$char->{homunculus}{slave_skillsID}};
+		if (defined $slave->{state} && $slave->{state} != $args->{state}) {
+			if ($args->{state} & 2) {
+				message T("Your Homunculus was vaporized!\n"), 'homunculus';
+			} elsif ($args->{state} & 4) {
+				message T("Your Homunculus died!\n"), 'homunculus';
 			}
 		}
+	} elsif (defined $slave->{state} && $slave->{state} != $args->{state}) {
+		if ($slave->{state} & 2) {
+			message T("Your Homunculus was recalled!\n"), 'homunculus';
+		} elsif ($slave->{state} & 4) {
+			message T("Your Homunculus was resurrected!\n"), 'homunculus';
+		}
 	}
-	
-	$slave->{level}        = $args->{lv};
-	$slave->{atk}          = $args->{atk};
-	$slave->{matk}         = $args->{matk};
-	$slave->{hit}          = $args->{hit};
-	$slave->{critical}     = $args->{critical};
-	$slave->{def}          = $args->{def};
-	$slave->{mdef}         = $args->{mdef};
-	$slave->{flee}         = $args->{flee};
-	$slave->{aspd}         = $args->{aspd};
-	$slave->{hp}           = $args->{hp};
+}
+
+# TODO: wouldn't it be better if we calculated these only at (first) request after a change in value, if requested at all?
+sub slave_calcproperty_handler {
+	my ($slave, $args) = @_;
+	# so we don't devide by 0
 	$slave->{hp_max}       = ($args->{hp_max} > 0) ? $args->{hp_max} : $args->{hp};
-	$slave->{sp}           = $args->{sp};
 	$slave->{sp_max}       = ($args->{sp_max} > 0) ? $args->{sp_max} : $args->{sp};
-	
+
 	$slave->{aspdDisp}     = int (200 - (($args->{aspd} < 10) ? 10 : ($args->{aspd} / 10)));
 	$slave->{hpPercent}    = ($slave->{hp} / $slave->{hp_max}) * 100;
 	$slave->{spPercent}    = ($slave->{sp} / $slave->{sp_max}) * 100;
-	
-	if ($args->{switch} eq '022E') {
-		$slave->{state}        = $args->{state};
-		$slave->{hunger}       = $args->{hunger};
-		$slave->{intimacy}     = $args->{intimacy};
-		$slave->{accessory}    = $args->{accessory};
-		$slave->{exp}          = $args->{exp};
-		$slave->{exp_max}      = $args->{exp_max};
-		$slave->{expPercent}   = ($args->{exp_max}) ? ($args->{exp} / $args->{exp_max}) * 100 : 0;
-		$slave->{points_skill} = $args->{points_skill};
-	} elsif ($args->{switch} eq '029B') {
-		$slave->{contract_end} = $args->{contract_end};
-		$slave->{faith}        = $args->{faith};
-		$slave->{summons}      = $args->{summons};
-		$slave->{kills}        = $args->{kills} if (exists $args->{kills});
-		$slave->{attack_range} = $args->{range} if (exists $args->{range});
-		if ($config{mercenary_attackDistanceAuto} && $config{attackDistance} != $slave->{attack_range} && exists $slave->{attack_range}) {
-			message TF("Autodetected attackDistance for mercenary = %s\n", $slave->{attack_range}), "success";
-			configModify('mercenary_attackDistance', $slave->{attack_range}, 1);
-			configModify('mercenary_attackMaxDistance', $slave->{attack_range}, 1);
-		}
-	}
 }
 
 sub gameguard_grant {
@@ -5199,33 +5188,23 @@ sub no_teleport {
 }
 
 # TODO: pvp_mode1 = pvp_mode2?
-sub pvp_mode1 {
+sub pvp_mode {
 	my ($self, $args) = @_;
 	my $type = $args->{type};
 
 	if ($type == 0) {
 		$pvp = 0;
-	} elsif ($type == 1) {
+	} elsif ($type == 1 || $type == 5) {
 		message T("PvP Display Mode\n"), "map_event";
 		$pvp = 1;
+	} elsif ($type == 2) {
+		message T("unknown Mode (pk?)\n"), "map_event";
 	} elsif ($type == 3) {
 		message T("GvG Display Mode\n"), "map_event";
 		$pvp = 2;
-	}
-	
-	if ($pvp) {
-		Plugins::callHook('pvp_mode', {
-			pvp => $pvp # If set to 1 its PvP and if set to 2 its GvG
-		});
-	}
-}
-
-sub pvp_mode2 {
-	my ($self, $args) = @_;
-	my $type = $args->{type};
-
-	if ($type == 0) {
-		$pvp = 0;
+	} elsif ($type == 4) {
+		message T("You are in a PK area. Please beware of sudden attacks.\n"), "map_event";
+		$pvp = 1;
 	} elsif ($type == 6) {
 		message T("PvP Display Mode\n"), "map_event";
 		$pvp = 1;
@@ -5239,7 +5218,7 @@ sub pvp_mode2 {
 	
 	if ($pvp) {
 		Plugins::callHook('pvp_mode', {
-			pvp => $pvp # If set to 1 its PvP and if set to 2 its GvG
+			pvp => $pvp # 1 PvP, 2 GvG, 3 Battleground
 		});
 	}
 }

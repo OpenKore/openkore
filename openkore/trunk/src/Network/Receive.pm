@@ -156,12 +156,12 @@ sub parse {
 	my %args = (
 		switch => $switch,
 		RAW_MSG => $msg,
-		RAW_MSG_SIZE => length($msg)
+		RAW_MSG_SIZE => length($msg),
+		KEYS => $handler->[2],
 	);
 	if ($handler->[1]) {
 		my @unpacked_data = unpack("x2 $handler->[1]", $msg);
-		my $keys = $handler->[2];
-		foreach my $key (@{$keys}) {
+		foreach my $key (@{$handler->[2]}) {
 			$args{$key} = shift @unpacked_data;
 		}
 	}
