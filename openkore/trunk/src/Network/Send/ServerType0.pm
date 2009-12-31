@@ -293,13 +293,12 @@ sub sendCloseShop {
 	debug "Shop Closed\n", "sendPacket", 2;
 }
 
+# 0x022d,5,hommenu,4
 sub sendHomunculusCommand {
-	my ($self, $command, $type) = @_;
-	# $type is ignored, $command can be 0, 1 or 2
-	
-	my $msg = pack ('v2 C1', 0x022D, $type, $command);
+	my ($self, $command, $type) = @_; # $type is ignored, $command can be 0:get stats, 1:feed or 2:fire
+	my $msg = pack ('v2 C', 0x022D, $type, $command);
 	$self->sendToServer ($msg);
-	debug "Sent Homunculus Command", "sendPacket", 2;
+	debug "Sent Homunculus Command $command", "sendPacket", 2;
 }
 
 sub sendCompanionRelease {
@@ -655,20 +654,6 @@ sub sendGuildSetAlly {
 			$charID;
 	$self->sendToServer($msg);
 
-}
-
-sub sendHomunculusFeed {
-	my $self = shift;
-	my $msg = pack("C*", 0x2D, 0x02, 0x00, 0x00, 0x01);
-	$self->sendToServer($msg);
-	debug "Sent Feed Homunculus\n", "sendPacket", 2;
-}
-
-sub sendHomunculusGetStats {
-	my $self = shift;
-	my $msg = pack("C*", 0x2D, 0x02, 0x00, 0x00, 0x00);
-	$self->sendToServer($msg);
-	debug "Sent Get Homunculus Stats\n", "sendPacket", 2;
 }
 
 sub sendHomunculusMove {
@@ -1630,7 +1615,7 @@ sub sendMercenaryCommand {
 	
 	my $msg = pack ('v C', 0x029F, $command);
 	$self->sendToServer ($msg);
-	debug "Sent MercenaryCommand", "sendPacket", 2;
+	debug "Sent Mercenary Command $command", "sendPacket", 2;
 }
 
 sub sendMessageIDEncryptionInitialized {

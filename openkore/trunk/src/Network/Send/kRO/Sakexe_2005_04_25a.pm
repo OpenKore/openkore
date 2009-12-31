@@ -30,10 +30,10 @@ sub new {
 
 # 0x022d,5,hommenu,4
 sub sendHomunculusCommand {
-	my ($self, $command, $type) = @_; # $type is ignored, $command can be 0, 1 or 2
+	my ($self, $command, $type) = @_; # $type is ignored, $command can be 0:get stats, 1:feed or 2:fire
 	my $msg = pack ('v2 C', 0x022D, $type, $command);
 	$self->sendToServer ($msg);
-	debug "Sent Homunculus Command", "sendPacket", 2;
+	debug "Sent Homunculus Command $command", "sendPacket", 2;
 }
 
 # 0x0232,9,hommoveto,6

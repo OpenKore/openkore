@@ -47,7 +47,7 @@ sub iterate {
 			
 			$slave->processFeeding();
 			message T("Auto-feeding your Homunculus (".$slave->{hunger}." hunger).\n"), 'slave';
-			$messageSender->sendHomunculusFeed();
+			$messageSender->sendHomunculusCommand(1);
 			message ("Next feeding at: ".$slave->{hungerThreshold}." hunger.\n"), 'slave';
 		
 		# No random value at initial start of Kore, lets make a few =)

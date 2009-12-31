@@ -404,13 +404,11 @@ sub sendBuyBulk {
 # 0x00c9,-1,npcselllistsend,2:4
 sub sendSellBulk {
 	my ($self, $r_array) = @_;
-	my $sellMsg;
+	my $msg = pack('v2', 0x00C9, 4+4*@{$r_array});
 	for (my $i = 0; $i < @{$r_array}; $i++) {
-		$sellMsg .= pack('v*', $r_array->[$i]{index}, $r_array->[$i]{amount});
+		$msg .= pack('v2', $r_array->[$i]{index}, $r_array->[$i]{amount});
 		debug "Sent bulk sell: $r_array->[$i]{index} x $r_array->[$i]{amount}\n", "d_sendPacket", 2;
 	}
-
-	my $msg = pack('v2', 0x00C9, length($sellMsg) + 4) . $sellMsg;
 	$self->sendToServer($msg);
 }
 

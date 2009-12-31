@@ -1932,7 +1932,7 @@ sub cmdSlave {
 		if ($slave->{hunger} >= 76) {
 			message T("Your homunculus is not yet hungry. Feeding it now will lower intimacy.\n"), "homunculus";
 		} else {
-			$messageSender->sendHomunculusFeed();
+			$messageSender->sendHomunculusCommand(1);
 			message T("Feeding your homunculus.\n"), "homunculus";
 		}
 
