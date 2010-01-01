@@ -250,7 +250,7 @@ sub new {
 		'0194' => ['character_name', 'a4 Z24', [qw(ID name)]],
 		'0195' => ['actor_name_received', 'a4 Z24 Z24 Z24 Z24', [qw(ID name partyName guildName guildTitle)]],
 		'0196' => ['actor_status_active', 'v a4 C', [qw(type ID flag)]],
-		'0199' => ['pvp_mode', 'v', [qw(type)]],
+		'0199' => ['pvp_mode1', 'v', [qw(type)]],
 		'019A' => ['pvp_rank', 'V3', [qw(ID rank num)]],
 		'019B' => ['unit_levelup', 'a4 V', [qw(ID type)]],
 		'019E' => ['pet_capture_process'],
@@ -293,7 +293,7 @@ sub new {
 		# OLD '01DA' => ['actor_display', 'a4 v5 C x v3 x4 v5 a4 x4 v x C a5 x3 v',	[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID skillstatus sex coords lv)]],
 		'01DA' => ['actor_display', 'a4 v9 V v5 a4 a2 v2 C2 a5 x C2 v',		[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 karma sex coords unknown1 unknown2 lv)]], # walking
 		'01DC' => ['secure_login_key', 'x2 a*', [qw(secure_key)]],
-		'01D6' => ['pvp_mode', 'v', [qw(type)]],
+		'01D6' => ['pvp_mode2', 'v', [qw(type)]],
 		'01DE' => ['skill_use', 'v a4 a4 V4 v2 C', [qw(skillID sourceID targetID tick src_speed dst_speed damage level option type)]],
 		'01E0' => ['GM_req_acc_name', 'a4 Z24', [qw(targetID accountName)]],
 		'01E1' => ['revolving_entity', 'a4 v', [qw(sourceID entity)]],
@@ -2718,7 +2718,8 @@ sub mercenary_init {
 	foreach (@{$args->{KEYS}}) {
 		$slave->{$_} = $args->{$_};
 	}
-	
+	$slave->{name} = bytesToString($args->{name});
+
 	slave_calcproperty_handler($slave, $args);
 	$slave->{expPercent}   = ($args->{exp_max}) ? ($args->{exp} / $args->{exp_max}) * 100 : 0;
 	
@@ -2740,8 +2741,8 @@ sub homunculus_property {
 	foreach (@{$args->{KEYS}}) {
 		$slave->{$_} = $args->{$_};
 	}
-	$slave->{name} = bytesToString ($args->{name});
-	
+	$slave->{name} = bytesToString($args->{name});
+
 	slave_calcproperty_handler($slave, $args);
 	homunculus_state_handler($slave, $args);
 	
@@ -5157,24 +5158,36 @@ sub no_teleport {
 	}
 }
 
-# TODO: pvp_mode1 = pvp_mode2?
-sub pvp_mode {
+# TODO: add unknown modes
+sub pvp_mode1 {
 	my ($self, $args) = @_;
 	my $type = $args->{type};
 
 	if ($type == 0) {
 		$pvp = 0;
-	} elsif ($type == 1 || $type == 5) {
+	} elsif ($type == 1) {
 		message T("PvP Display Mode\n"), "map_event";
 		$pvp = 1;
-	} elsif ($type == 2) {
-		message T("unknown Mode (pk?)\n"), "map_event";
 	} elsif ($type == 3) {
 		message T("GvG Display Mode\n"), "map_event";
 		$pvp = 2;
-	} elsif ($type == 4) {
-		message T("You are in a PK area. Please beware of sudden attacks.\n"), "map_event";
-		$pvp = 1;
+	} else {
+		debug "pvp_mode1: Unknown mode: $type\n";
+	}
+	
+	if ($pvp) {
+		Plugins::callHook('pvp_mode', {
+			pvp => $pvp # 1 PvP, 2 GvG
+		});
+	}
+}
+
+sub pvp_mode2 {
+	my ($self, $args) = @_;
+	my $type = $args->{type};
+
+	if ($type == 0) {
+		$pvp = 0;
 	} elsif ($type == 6) {
 		message T("PvP Display Mode\n"), "map_event";
 		$pvp = 1;
@@ -5184,6 +5197,8 @@ sub pvp_mode {
 	} elsif ($type == 19) {
 		message T("Battleground Display Mode\n"), "map_event";
 		$pvp = 3;
+	} else {
+		debug "pvp_mode2: Unknown mode: $type\n";
 	}
 	
 	if ($pvp) {
