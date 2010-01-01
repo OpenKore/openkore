@@ -383,7 +383,7 @@ sub new {
 		'0196' => ['actor_status_active', 'v a4 C', [qw(type ID flag)]], # 9
 		# 0x0197 is sent packet
 		# 0x0198 is sent packet
-		'0199' => ['pvp_mode', 'v', [qw(type)]], #4
+		'0199' => ['pvp_mode1', 'v', [qw(type)]], #4
 		'019A' => ['pvp_rank', 'V3', [qw(ID rank num)]], # 14
 		'019B' => ['unit_levelup', 'a4 V', [qw(ID type)]], # 10
 		# 0x019c is sent packet
@@ -444,7 +444,7 @@ sub new {
 		'01D3' => ['sound_effect', 'Z24 C V a4', [qw(name type unknown ID)]], # 35
 		'01D4' => ['npc_talk_text', 'a4', [qw(ID)]], # 6
 		# 0x01d5 is sent packet
-		'01D6' => ['pvp_mode', 'v', [qw(type)]], # 4
+		'01D6' => ['pvp_mode2', 'v', [qw(type)]], # 4
 		'01D7' => ['player_equipment', 'a4 C v2', [qw(sourceID type ID1 ID2)]], # 11 # TODO: inconsistent with C structs
 		'01D8' => ['actor_display', 'a4 v14 a4 a2 v2 C2 a3 C3 v',		[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 karma sex coords unknown1 unknown2 act lv)]], # 54 # standing
 		'01D9' => ['actor_display', 'a4 v14 a4 a2 v2 C2 a3 C2 v',		[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 karma sex coords unknown1 unknown2 lv)]], # 53 # spawning
@@ -2795,6 +2795,7 @@ sub mercenary_init {
 	foreach (@{$args->{KEYS}}) {
 		$slave->{$_} = $args->{$_};
 	}
+	$slave->{name} = bytesToString($args->{name});
 	
 	slave_calcproperty_handler($slave, $args);
 	$slave->{expPercent}   = ($args->{exp_max}) ? ($args->{exp} / $args->{exp_max}) * 100 : 0;
@@ -2809,7 +2810,7 @@ sub homunculus_property {
 	foreach (@{$args->{KEYS}}) {
 		$slave->{$_} = $args->{$_};
 	}
-	$slave->{name} = bytesToString ($args->{name});
+	$slave->{name} = bytesToString($args->{name});
 	
 	slave_calcproperty_handler($slave, $args);
 	homunculus_state_handler($slave, $args);
@@ -5187,24 +5188,36 @@ sub no_teleport {
 	}
 }
 
-# TODO: pvp_mode1 = pvp_mode2?
-sub pvp_mode {
+# TODO: add unknown modes
+sub pvp_mode1 {
 	my ($self, $args) = @_;
 	my $type = $args->{type};
 
 	if ($type == 0) {
 		$pvp = 0;
-	} elsif ($type == 1 || $type == 5) {
+	} elsif ($type == 1) {
 		message T("PvP Display Mode\n"), "map_event";
 		$pvp = 1;
-	} elsif ($type == 2) {
-		message T("unknown Mode (pk?)\n"), "map_event";
 	} elsif ($type == 3) {
 		message T("GvG Display Mode\n"), "map_event";
 		$pvp = 2;
-	} elsif ($type == 4) {
-		message T("You are in a PK area. Please beware of sudden attacks.\n"), "map_event";
-		$pvp = 1;
+	} else {
+		debug "pvp_mode1: Unknown mode: $type\n";
+	}
+	
+	if ($pvp) {
+		Plugins::callHook('pvp_mode', {
+			pvp => $pvp # 1 PvP, 2 GvG, 3 Battleground
+		});
+	}
+}
+
+sub pvp_mode2 {
+	my ($self, $args) = @_;
+	my $type = $args->{type};
+
+	if ($type == 0) {
+		$pvp = 0;
 	} elsif ($type == 6) {
 		message T("PvP Display Mode\n"), "map_event";
 		$pvp = 1;
@@ -5214,6 +5227,8 @@ sub pvp_mode {
 	} elsif ($type == 19) {
 		message T("Battleground Display Mode\n"), "map_event";
 		$pvp = 3;
+	} else {
+		debug "pvp_mode2: Unknown mode: $type\n";
 	}
 	
 	if ($pvp) {
