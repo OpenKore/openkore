@@ -215,6 +215,7 @@ sub determineFontStyle {
 		color => Wx::Colour->newRGB ($fg->[0], $fg->[1], $fg->[2]),
 		bold => $fg->[3],
 	}
+	# implied: return $fg->[STYLE_SLOT]
 }
 
 sub isAtBottom {
