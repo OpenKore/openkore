@@ -39,6 +39,38 @@ use constant STYLE_SLOT => 4;
 use constant MAX_LINES => 1000;
 
 our %fgcolors;
+# Maps color names to color codes and font weights.
+# Format: [R, G, B, bold]
+%fgcolors = (
+	'reset'		=> [255, 255, 255],
+	'default'	=> [255, 255, 255],
+
+	'black'		=> [0, 0, 0],
+	'darkgray'	=> [85, 85, 85],
+	'darkgrey'	=> [85, 85, 85],
+
+	'darkred'	=> [170, 0, 0],
+	'red'		=> [255, 0, 0, 1],
+
+	'darkgreen'	=> [0, 170, 0],
+	'green'		=> [0, 255, 0],
+
+	'brown'		=> [170, 85, 0],
+	'yellow'	=> [255, 255, 85],
+
+	'darkblue'	=> [85, 85, 255],
+	'blue'		=> [122, 154, 225],
+
+	'darkmagenta'	=> [170, 0, 170],
+	'magenta'	=> [255, 85, 255],
+
+	'darkcyan'	=> [0, 170, 170],
+	'cyan'		=> [85, 255, 255],
+
+	'gray'		=> [170, 170, 170],
+	'grey'		=> [170, 170, 170],
+	'white'		=> [255, 255, 255, 1],
+);
 
 
 ##
@@ -148,7 +180,7 @@ sub determineFontStyle {
 				$result = $fgcolors{$colorName}[STYLE_SLOT];
 			} else {
 				$result = {
-					color => new Wx::Colour(
+					color => Wx::Colour->newRGB (
 						$fgcolors{$colorName}[0],
 						$fgcolors{$colorName}[1],
 						$fgcolors{$colorName}[2]),
@@ -156,13 +188,12 @@ sub determineFontStyle {
 				};
 				$fgcolors{$colorName}[STYLE_SLOT] = $result;
 			}
+		} else {
+			$result = {
+				color => Wx::Colour->newRGB (255, 255, 255)
+			};
+			$fgcolors{$colorName}[STYLE_SLOT] = $result;
 		}
-				else {
-				$result = {
-					color => new Wx::Colour(255, 255, 255)
-				};
-				$fgcolors{$colorName}[STYLE_SLOT] = $result;
-			}
 		return $result;
 	}
 }
@@ -251,37 +282,6 @@ sub addColoredText {
 
 #####################################
 
-# Maps color names to color codes and font weights.
-# Format: [R, G, B, bold]
-%fgcolors = (
-	'reset'		=> [255, 255, 255],
-	'default'	=> [255, 255, 255],
 
-	'black'		=> [0, 0, 0],
-	'darkgray'	=> [85, 85, 85],
-	'darkgrey'	=> [85, 85, 85],
-
-	'darkred'	=> [170, 0, 0],
-	'red'		=> [255, 0, 0, 1],
-
-	'darkgreen'	=> [0, 170, 0],
-	'green'		=> [0, 255, 0],
-
-	'brown'		=> [170, 85, 0],
-	'yellow'	=> [255, 255, 85],
-
-	'darkblue'	=> [85, 85, 255],
-	'blue'		=> [122, 154, 225],
-
-	'darkmagenta'	=> [170, 0, 170],
-	'magenta'	=> [255, 85, 255],
-
-	'darkcyan'	=> [0, 170, 170],
-	'cyan'		=> [85, 255, 255],
-
-	'gray'		=> [170, 170, 170],
-	'grey'		=> [170, 170, 170],
-	'white'		=> [255, 255, 255, 1],
-);
 
 1;
