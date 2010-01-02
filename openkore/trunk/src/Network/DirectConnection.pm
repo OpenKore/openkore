@@ -343,7 +343,7 @@ sub checkConnection {
 			});
 		}
 
-		message T("Connecting to Account Server...\n", "connection");
+		message T("Connecting to Account Server...\n"), "connection";
 		$shopstarted = 1;
 		$conState_tries++;
 		$initSync = 1;
