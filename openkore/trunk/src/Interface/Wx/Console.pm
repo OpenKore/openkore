@@ -44,6 +44,7 @@ our %fgcolors;
 %fgcolors = (
 	'reset'		=> [255, 255, 255],
 	'default'	=> [255, 255, 255],
+	'input'   => [200, 200, 200],
 
 	'black'		=> [0, 0, 0],
 	'darkgray'	=> [85, 85, 85],
@@ -101,9 +102,11 @@ sub new {
 	}
 	$self->setFont($font);
 
+=pod
 	$self->{inputStyle} = {
 		color => new Wx::Colour(200, 200, 200)
 	};
+=cut
 
 	return $self;
 }
@@ -165,6 +168,7 @@ sub copyLastLines {
 	$self->Copy();
 }
 
+=pod
 sub determineFontStyle {
 	my ($self, $type, $domain) = @_;
 
@@ -195,6 +199,19 @@ sub determineFontStyle {
 			$fgcolors{$colorName}[STYLE_SLOT] = $result;
 		}
 		return $result;
+	}
+}
+=cut
+
+sub determineFontStyle {
+	my ($self, $type, $domain) = @_;
+
+	return unless $consoleColors{$type};
+	
+	my $fg = $fgcolors{$consoleColors{$type}{$domain}} || $fgcolors{default};
+	$fg->[STYLE_SLOT] ||= {
+		color => Wx::Colour->newRGB ($fg->[0], $fg->[1], $fg->[2]),
+		bold => $fg->[3],
 	}
 }
 
