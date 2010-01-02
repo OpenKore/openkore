@@ -7167,6 +7167,10 @@ sub cooking_list {
 # TODO: test whether the message is correct: tech: i haven't seen this in action yet
 sub party_show_picker {
 	my ($self, $args) = @_;
+	
+	# wtf the server sends this packet for your own character? (rRo)
+	return if $args->{sourceID} eq $accountID;
+	
 	my $string = ($char->{party}{users}{$args->{sourceID}} && %{$char->{party}{users}{$args->{sourceID}}}) ? $char->{party}{users}{$args->{sourceID}}->name() : $args->{sourceID};
 	my $item = {};
 	$item->{nameID} = $args->{nameID};
