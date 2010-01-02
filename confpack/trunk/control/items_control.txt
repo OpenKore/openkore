@@ -562,3 +562,36 @@ Yoyo Doll 0 0 1
 Yoyo Tail 0 0 1
 #Zargon 0 0 1
 Zenorc's Fang 0 0 1
+
+##### UNSTORAGEABLE ITEMS #####
+
+# Archer Mercenary Summon Scroll Level 1
+# Archer Mercenary Summon Scroll Level 2
+# Archer Mercenary Summon Scroll Level 3
+# Archer Mercenary Summon Scroll Level 4
+# Archer Mercenary Summon Scroll Level 5
+# Archer Mercenary Summon Scroll Level 6
+# Archer Mercenary Summon Scroll Level 7
+# Archer Mercenary Summon Scroll Level 8
+# Archer Mercenary Summon Scroll Level 9
+# Archer Mercenary Summon Scroll Level 10
+# Swordsman Mercenary Summon Scroll Level 1
+# Swordsman Mercenary Summon Scroll Level 2
+# Swordsman Mercenary Summon Scroll Level 3
+# Swordsman Mercenary Summon Scroll Level 4
+# Swordsman Mercenary Summon Scroll Level 5
+# Swordsman Mercenary Summon Scroll Level 6
+# Swordsman Mercenary Summon Scroll Level 7
+# Swordsman Mercenary Summon Scroll Level 8
+# Swordsman Mercenary Summon Scroll Level 9
+# Swordsman Mercenary Summon Scroll Level 10
+# Spearman Mercenary Summon Scroll Level 1
+# Spearman Mercenary Summon Scroll Level 2
+# Spearman Mercenary Summon Scroll Level 3
+# Spearman Mercenary Summon Scroll Level 4
+# Spearman Mercenary Summon Scroll Level 5
+# Spearman Mercenary Summon Scroll Level 6
+# Spearman Mercenary Summon Scroll Level 7
+# Spearman Mercenary Summon Scroll Level 8
+# Spearman Mercenary Summon Scroll Level 9
+# Spearman Mercenary Summon Scroll Level 10
