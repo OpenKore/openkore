@@ -210,8 +210,8 @@ sub determineFontStyle {
 
 	return unless $consoleColors{$type};
 	
-	my $fg = $fgcolors{$consoleColors{$type}{$domain}} || $fgcolors{default};
-	$fg->[STYLE_SLOT] ||= {
+	my $fg = $fgcolors{$consoleColors{$type}{$domain} || $consoleColors{$type}{default}} || $fgcolors{default};
+	return $fg->[STYLE_SLOT] ||= {
 		color => Wx::Colour->newRGB ($fg->[0], $fg->[1], $fg->[2]),
 		bold => $fg->[3],
 	}
