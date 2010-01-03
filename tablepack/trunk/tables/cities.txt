@@ -46,6 +46,7 @@ sec_in02.rsw#Inside Valhalla#
 sec_pri.rsw#Room of Meditation (Valhalla Prison)#
 payo1.rsw#Neo Payon Town#
 umbala.rsw#Utan Tribe Umbala#
+um_in.rsw#Inside Umbala#
 louyang.rsw#Castle of Dragon#
 lou_in02.rsw#Inside Castle of Dragon#
 lou_in01.rsw#Inside Castle of Dragon#
@@ -55,3 +56,20 @@ lighthalzen.rsw#Lightharlzen, the City-State of Prosperity#
 lhz_in01.rsw#Rekenber Corporation Headquarters#
 lhz_in02.rsw#Inside Lighthalzen#
 lhz_in03.rsw#Inside Lighthalzen#
+einbroch.rsw#Einbroch, the City of Steel#
+ein_in01.rsw#Inside Einbroch#
+jawaii.rsw#Jawaii, the Honeymoon Island#
+jawaii_in.rsw#Inside Jawaii#
+moscovia.rsw#Moscovia#
+mosk_in.rsw#Inside Moscovia#
+ayothaya.rsw#Ayothaya#
+ayo_in01.rsw#Inside Ayothaya#
+ayo_in02.rsw#Inside Ayothaya#
+hugel.rsw#Hugel, the Quaint Garden Village#
+hu_in01.rsw#Inside Hugel#
+veins.rsw#Veins, the Desert Village#
+ve_in.rsw#Inside Veins#
+ve_in02.rsw#Inside Veins#
+xmas_in.rsw#Inside Lutie#
+xmas.rsw#Lutie, Snow Village#
+xmas_x.rsw#Lutie, the Snow Village#
