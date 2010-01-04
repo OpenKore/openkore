@@ -242,6 +242,7 @@ sub new {
 		'0187' => ['sync_request', 'a4', [qw(ID)]],
 		'0188' => ['item_upgrade', 'v3', [qw(type index upgrade)]],
 		'0189' => ['no_teleport', 'v', [qw(fail)]],
+		'018B' => ['quit_response', 'v', [qw(fail)]], # 4 # ported from kRO_Sakexe_0
 		'018C' => ['sense_result', 'v3 V v4 C9', [qw(nameID level size hp def race mdef element ice earth fire wind poison holy dark spirit undead)]],
 		'018D' => ['forge_list'],
 		'018F' => ['refine_result', 'v2', [qw(fail nameID)]],
@@ -7376,6 +7377,18 @@ sub quest_active {
 	my $string = $args->{active} ? T ("active") : T("inactive");
 	message TF("Quest: %s is now %s.\n", $args->{questID}, $string), "info";
 	$questList->{$args->{questID}}->{active} = $args->{active};
+}
+
+# ported from kRO_Sakexe_0
+# 018B
+# TODO: add real client messages
+sub quit_response {
+	my ($self, $args) = @_;
+	if ($args->{fail}) {
+		error T("You can't logout, retry in 10 sec.\n");
+	} else {
+		message T("Logged out from the server succesfully.\n"), "success";
+	}
 }
 
 sub GM_req_acc_name {
