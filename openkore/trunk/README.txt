@@ -27,7 +27,6 @@ Fixes:
 - Hotkey packets in XKore 2 (Zloba)
 - tankMode for homunculi and mercenaries (Technology)
 - Indexes were truncated in long cash store list (EternalHarvest)
-- Configured charBlockSize was not used in ST8 (EternalHarvest)
 - Invalid arguments assertion when attacking - ignore actors outside of map (Technology)
 - Monster name and points in Taekwon Mission (Technology, woozc)
 - Private message packet structure for ST22 (UltimaWeapon)
