@@ -70,6 +70,7 @@ sub initHandlers {
 	c                  => \&cmdChat,
 	card               => \&cmdCard,
 	cart               => \&cmdCart,
+	charselect         => \&cmdCharSelect,
 	chat               => \&cmdChatRoom,
 	chist              => \&cmdChist,
 	cil                => \&cmdItemLogClear,
@@ -930,6 +931,14 @@ sub cmdCart_get {
 	$messageSender->sendCartGet($item->{index}, $amount);
 }
 
+sub cmdCharSelect {
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command (%s)\n", shift);
+		return;
+	}
+	
+	$messageSender->sendQuitToCharSelect;
+}
 
 sub cmdChat {
 	if (!$net || $net->getState() != Network::IN_GAME) {
@@ -4631,8 +4640,8 @@ sub cmdTank {
 			if (lc $players{$ID}{name} eq lc $arg) {
 				$name = $players{$ID}{name};
 				last;
-			} elsif($ID eq $char->{homunculus}{ID} && $arg eq '@homunculus' ||
-					$ID eq $char->{mercenary}{ID} && $arg eq '@mercenary') {
+			} elsif($char->{homunculus} && $ID eq $char->{homunculus}{ID} && $arg eq '@homunculus' ||
+					$char->{mercenary} && $ID eq $char->{mercenary}{ID} && $arg eq '@mercenary') {
 				$name = $arg;
 				last;
 			}
@@ -5393,7 +5402,7 @@ sub cmdQuest {
 			# note: we need the questID here now, might be better if we could make it so you only have to insert some questIndex
 			if ($quests_lut{$args[1]}) {
 				my $msg = center (' ' . ($quests_lut{$args[1]}{title} || T('Quest Info')) . ' ', 79, '-') . "\n";
-				$msg .= TF("Summary: %s\n", $quests_lut{$args[1]}{summary}) if $quests_lut{$args[1]}{summary};
+				$msg .= TF("%s\n", $quests_lut{$args[1]}{summary}) if $quests_lut{$args[1]}{summary};
 				$msg .= TF("Objective: %s\n", $quests_lut{$args[1]}{objective}) if $quests_lut{$args[1]}{objective};
 				message $msg;
 			} else {

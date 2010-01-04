@@ -438,7 +438,7 @@ sub initMapChangeVars {
 		delete $char->{dead};
 		delete $char->{warp};
 		delete $char->{casting};
-		delete $char->{homunculus}{appear_time};
+		delete $char->{homunculus}{appear_time} if $char->{homunculus};
 		$char->inventory->clear();
 	}
 	$timeout{play}{time} = time;
