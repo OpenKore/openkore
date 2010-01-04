@@ -86,7 +86,7 @@ sub new {
 		'006A' => ['login_error', 'C Z20', [qw(type block_date)]], # 23
 		'006B' => ['received_characters'], # -1
 		'006C' => ['connection_refused', 'C', [qw(error)]], # 3
-		'006D' => ['character_creation_successful', 'a4 V9 v17 Z24 C6 v', [qw(ID exp zeny exp_job lv_job opt1 opt2 option karma manner points_free hp hp_max sp sp_max walk_speed type hair_style weapon lv points_skill lowhead shield tophead midhead hair_color clothes_color name str agi vit int dex luk slot)]], # 108
+		'006D' => ['character_creation_successful', 'a4 V9 v17 Z24 C6 v', [qw(ID exp zeny exp_job lv_job opt1 opt2 option karma manner points_free hp hp_max sp sp_max walk_speed type hair_style weapon lv points_skill lowhead shield tophead midhead hair_color clothes_color name str agi vit int dex luk slot)]], # packet(108) = switch(2) + charblock(106)
 		'006E' => ['character_creation_failed', 'C' ,[qw(type)]], # 3
 		'006F' => ['character_deletion_successful'], # 2
 		'0070' => ['character_deletion_failed', 'x4'], # 6
@@ -104,7 +104,7 @@ sub new {
 		'007C' => ['actor_display',	'a4 v14 C2 a3 C2',					[qw(ID walk_speed opt1 opt2 option hair_style weapon lowhead type shield tophead midhead hair_color clothes_color head_dir karma sex coords unknown1 unknown2)]], #spawning (eA does not send this for players) # 41
 		'007F' => ['received_sync', 'V', [qw(time)]], # 6
 		'0080' => ['actor_died_or_disappeared', 'a4 C', [qw(ID type)]], # 7
-		'0081' => ['errors', 'C1', [qw(type)]], # 3
+		'0081' => ['errors', 'C', [qw(type)]], # 3
 		# 0x0082 is sent packet
 		'0083' => ['quit_accept'], # 2
 		'0084' => ['quit_refuse'], # 2
@@ -143,7 +143,7 @@ sub new {
 		'00A5' => ['storage_items_stackable'], # -1
 		'00A6' => ['storage_items_nonstackable'], # -1
 		# 0x00a7 is sent packet
-		'00A8' => ['use_item', 'v x2 C', [qw(index amount)]], # 7
+		'00A8' => ['use_item', 'v x2 C', [qw(index amount)]], # 7 # TODO: conflicts with structs
 		# 0x00a9 is sent packet
 		'00AA' => ['equip_item', 'v2 C', [qw(index type success)]], # 7
 		# 0x00ab is sent packet
@@ -187,7 +187,7 @@ sub new {
 		# 0x00d3 is sent packet
 		'00D4' => ['whisper_list', 'v', [qw(len)]], # -1
 		# 0x00d5 is sent packet
-		'00D6' => ['chat_created', 'x'], # 3
+		'00D6' => ['chat_created', 'C', [qw(result)]], # 3
 		'00D7' => ['chat_info', 'v a4 a4 v2 C a*', [qw(len ownerID ID limit num_users public title)]], # -1
 		'00D8' => ['chat_removed', 'a4', [qw(ID)]],
 		# 0x00d9 is sent packet
@@ -1969,7 +1969,7 @@ sub character_creation_successful {
 	my ($self, $args) = @_;
 
 	my $char = new Actor::You;
-	foreach (@{$self->{packet_list}{$args->{switch}}->[2]}) {
+	foreach (@{$args->{KEYS}}) {
 		$char->{$_} = $args->{$_} if (exists $args->{$_});
 	}
 	$char->{name} = bytesToString($args->{name});
@@ -2739,7 +2739,7 @@ sub homunculus_food {
 	} else {
 		error TF("Failed to feed homunculus with %s: no food in inventory.\n", itemNameSimple($args->{foodID})), "homunculus";
 		# auto-vaporize
-		if ($char->{homunculus}{hunger} <= 11 && timeOut($char->{homunculus}{vaporize_time}, 5)) {
+		if ($char->{homunculus} && $char->{homunculus}{hunger} <= 11 && timeOut($char->{homunculus}{vaporize_time}, 5)) {
 			$messageSender->sendSkillUse(244, 1, $accountID);
 			$char->{homunculus}{vaporize_time} = time;
 			error "Critical hunger level reached. Homunculus is put to rest.\n", "homunculus";
@@ -2770,11 +2770,11 @@ sub homunculus_info {
 			AI::SlaveManager::addSlave ($char->{homunculus});
 		}
 	} elsif ($args->{state} == HO_RELATIONSHIP_CHANGED) {
-		$char->{homunculus}{intimacy} = $args->{val};
+		$char->{homunculus}{intimacy} = $args->{val} if $char->{homunculus};
 	} elsif ($args->{state} == HO_FULLNESS_CHANGED) {
-		$char->{homunculus}{hunger} = $args->{val};
+		$char->{homunculus}{hunger} = $args->{val} if $char->{homunculus};
 	} elsif ($args->{state} == HO_ACCESSORY_CHANGED) {
-		$char->{homunculus}{accessory} = $args->{val};
+		$char->{homunculus}{accessory} = $args->{val} if $char->{homunculus};
 	} elsif ($args->{state} == HO_HEADTYPE_CHANGED) {
 		#
 	}
@@ -2805,7 +2805,7 @@ sub mercenary_init {
 sub homunculus_property {
 	my ($self, $args) = @_;
 
-	my $slave = $char->{homunculus};
+	my $slave = $char->{homunculus} or return;
 
 	foreach (@{$args->{KEYS}}) {
 		$slave->{$_} = $args->{$_};
@@ -2822,6 +2822,8 @@ sub homunculus_state_handler {
 	# 0 - alive
 	# 2 - rest
 	# 4 - dead
+	
+	return unless $char->{homunculus};
 
 	if (($args->{state} & ~8) > 1) {
 		foreach my $handle (@{$char->{homunculus}{slave_skillsID}}) {
@@ -4880,10 +4882,11 @@ sub received_characters_blockSize {
 
 sub received_characters_unpackString {
 	if ($masterServer && $masterServer->{charBlockSize} == 112) {
-		return 'a4 V9 v V2 v14 Z24 C6 v2';
+		return 'a4 V9 v V2 v14 Z24 C6 v2'; # 112
 	} else {
-		return 'a4 V9 v17 Z24 C6 v2';
+		return 'a4 V9 v17 Z24 C6 v2'; # 108
 	}
+	# a4 V9 v17 Z24 C6 v # 106
 }
 
 sub received_characters {
