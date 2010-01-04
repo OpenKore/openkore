@@ -242,7 +242,8 @@ sub iterate {
 			if ($storeList[$index]) {
 				my $itemID = $storeList[$index]{nameID};
 				$ai_v{npc_talk}{itemID} = $itemID;
-				$messageSender->sendBuy($itemID, $amount);
+				#$messageSender->sendBuy($itemID, $amount);
+				$messageSender->sendBuyBulk([{itemID  => $itemID, amount => $amount}]); # TODO: we could buy more types of items at once
 			} else {
 				$self->setError(NO_SHOP_ITEM, TF("Shop item %d not found.", $index));
 			}
