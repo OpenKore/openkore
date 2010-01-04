@@ -2663,7 +2663,7 @@ sub homunculus_food {
 	} else {
 		error TF("Failed to feed homunculus with %s: no food in inventory.\n", itemNameSimple($args->{foodID})), "homunculus";
 		# auto-vaporize
-		if ($char->{homunculus}{hunger} <= 11 && timeOut($char->{homunculus}{vaporize_time}, 5)) {
+		if ($char->{homunculus} && $char->{homunculus}{hunger} <= 11 && timeOut($char->{homunculus}{vaporize_time}, 5)) {
 			$messageSender->sendSkillUse(244, 1, $accountID);
 			$char->{homunculus}{vaporize_time} = time;
 			error "Critical hunger level reached. Homunculus is put to rest.\n", "homunculus";
@@ -2694,11 +2694,11 @@ sub homunculus_info {
 			AI::SlaveManager::addSlave ($char->{homunculus});
 		}
 	} elsif ($args->{state} == HO_RELATIONSHIP_CHANGED) {
-		$char->{homunculus}{intimacy} = $args->{val};
+		$char->{homunculus}{intimacy} = $args->{val} if $char->{homunculus};
 	} elsif ($args->{state} == HO_FULLNESS_CHANGED) {
-		$char->{homunculus}{hunger} = $args->{val};
+		$char->{homunculus}{hunger} = $args->{val} if $char->{homunculus};
 	} elsif ($args->{state} == HO_ACCESSORY_CHANGED) {
-		$char->{homunculus}{accessory} = $args->{val};
+		$char->{homunculus}{accessory} = $args->{val} if $char->{homunculus};
 	} elsif ($args->{state} == HO_HEADTYPE_CHANGED) {
 		#
 	}
@@ -2737,7 +2737,7 @@ sub mercenary_init {
 sub homunculus_property {
 	my ($self, $args) = @_;
 
-	my $slave = $char->{homunculus};
+	my $slave = $char->{homunculus} or return;
 
 	foreach (@{$args->{KEYS}}) {
 		$slave->{$_} = $args->{$_};
@@ -2762,6 +2762,8 @@ sub homunculus_state_handler {
 	# 0 - alive
 	# 2 - rest
 	# 4 - dead
+	
+	return unless $char->{homunculus};
 
 	if (($args->{state} & ~8) > 1) {
 		foreach my $handle (@{$char->{homunculus}{slave_skillsID}}) {

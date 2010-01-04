@@ -2418,8 +2418,8 @@ sub processPartySkillUse {
 						!$config{"partySkill_$i"."_target"}
 						or existsInList($config{"partySkill_$i"."_target"}, $player->{name})
 						or $player->{ID} eq $char->{ID} && existsInList($config{"partySkill_$i"."_target"}, '@main')
-						or $player->{ID} eq $char->{homunculus}{ID} && existsInList($config{"partySkill_$i"."_target"}, '@homunculus')
-						or $player->{ID} eq $char->{mercenary}{ID} && existsInList($config{"partySkill_$i"."_target"}, '@mercenary')
+						or $char->{homunculus} && $player->{ID} eq $char->{homunculus}{ID} && existsInList($config{"partySkill_$i"."_target"}, '@homunculus')
+						or $char->{mercenary} && $player->{ID} eq $char->{mercenary}{ID} && existsInList($config{"partySkill_$i"."_target"}, '@mercenary')
 					)
 					&& checkPlayerCondition("partySkill_$i"."_target", $ID)
 					&& checkSelfCondition("partySkill_$i")
@@ -2608,8 +2608,8 @@ sub processAutoAttack {
 			foreach (@playersID, @slavesID) {
 				next if (!$_);
 				if ($config{'tankModeTarget'} eq $players{$_}{'name'} ||
-					$config{'tankModeTarget'} eq '@homunculus' && $_ eq $char->{homunculus}{ID} ||
-					$config{'tankModeTarget'} eq '@mercenary' && $_ eq $char->{mercenary}{ID})
+					$char->{homunculus} && $config{'tankModeTarget'} eq '@homunculus' && $_ eq $char->{homunculus}{ID} ||
+					$char->{mercenary} && $config{'tankModeTarget'} eq '@mercenary' && $_ eq $char->{mercenary}{ID})
 				{
 					$foundTankee = 1;
 					last;
