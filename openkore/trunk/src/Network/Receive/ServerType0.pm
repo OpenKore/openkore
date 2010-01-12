@@ -7333,6 +7333,11 @@ sub quest_add {
 	# add to the set/array with questID's here
 	my $questID = $args->{questID};
 	my $quest = \%{$questList->{$questID}};
+	
+	unless (%$quest) {
+		message TF("Quest: %s has been added.\n", $quests_lut{$questID} ? "$quests_lut{$questID}{title} ($questID)" : $questID), "info";
+	}
+	
 	$quest->{time_start} = $args->{time_start};
 	$quest->{time} = $args->{time};
 	$quest->{active} = $args->{active};
@@ -7353,7 +7358,7 @@ sub quest_delete {
 	my ($self, $args) = @_;
 	# remove from set/array with questID's here
 	my $questID = $args->{questID};
-	message TF("Quest: %s has been deleted.\n", $questID), "info";
+	message TF("Quest: %s has been deleted.\n", $quests_lut{$questID} ? "$quests_lut{$questID}{title} ($questID)" : $questID), "info";
 	delete $questList->{$questID};
 }
 
