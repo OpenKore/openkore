@@ -30,7 +30,8 @@ use Carp;
 use Utils;
 use Utils::TextReader;
 use Plugins;
-use Log qw(warning error);
+use Log qw(warning error debug);
+use Translation qw/T TF/;
 
 our @EXPORT = qw(
 	parseArrayFile
@@ -1065,8 +1066,11 @@ sub writeDataFile {
 sub writeDataFileIntact {
 	my $file = shift;
 	my $r_hash = shift;
-	my $no_undef = shift;
+	my $no_undef = shift; # ?
+	# following args for recursive call (!include)
 	my $blocks = shift // {};
+	my $diffs = shift // {};
+	my $readOnly = shift;
 
 	my (@lines, $key, $value, $inBlock, $commentBlock);
 	my $reader = new Utils::TextReader($file);
@@ -1090,7 +1094,7 @@ sub writeDataFileIntact {
 					}
 				}
 				if (-f $f) {
-					my $ret = writeDataFileIntact($f, $r_hash, 1, $blocks);
+					my $ret = writeDataFileIntact($f, $r_hash, 1, $blocks, $diffs, 1);
 					return $ret unless $ret;
 				} else {
 					error Translation::TF("%s: Include file not found: %s\n", $file, $f);
@@ -1159,10 +1163,22 @@ sub writeDataFileIntact {
 				my $line = $key;
 				$line .= " $r_hash->{$key}" if ($r_hash->{$key} ne '');
 				push @lines, $line;
+				
+				$diffs->{$key} = $r_hash->{$key} if $readOnly && $r_hash->{$key} ne $value;
 			}
 		}
 	}
 	close FILE;
+
+	return 1 if $readOnly;
+	debug TF("Saving %s...\n", $file), 'writeFile';
+
+	# options that are different in memory and file data, but defined in !include'd (read only) files
+	if (%$diffs) {
+		push @lines, map { $diffs->{$_} ne '' ? "$_ $r_hash->{$_}" : "$_" } keys %$diffs;
+		debug TF("Creating overrides for %s\n", (join ', ', keys %$diffs)), 'writeFile';
+		$diffs = {};
+	}
 
 	open FILE, ">:utf8", $file;
 	print FILE join("\n", @lines) . "\n";

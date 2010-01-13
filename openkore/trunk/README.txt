@@ -35,7 +35,6 @@ Fixes:
 - Guild allies and enemies (EternalHarvest)
 - Crash with loginPinCode (kLabMouse)
 - Incorrect storage password on BSD, Linux (EternalHarvest)
-- Write to all !included config files, not only main one (EternalHarvest)
 - Config blocks of the same type in different files (EternalHarvest)
 - target_hp for mercenaries (EternalHarvest)
 - Encoding (Technology)
