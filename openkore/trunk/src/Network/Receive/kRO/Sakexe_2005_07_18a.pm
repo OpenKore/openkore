@@ -36,13 +36,13 @@ sub new {
 
 		'0240' => ['mail_refreshinbox', 'v V', [qw(size  count)]], # 8
 
-		'0242' => ['mail_read', 'v V Z40 Z24 x4 V2 v C x C3 a8 x Z*', [qw(lenght mailID title sender zeny amount nameID type identified broken upgrade cards message)]], # -1
+		'0242' => ['mail_read', 'v V Z40 Z24 V3 v2 C3 a8 C Z*', [qw(len mailID title sender delete_time zeny amount nameID type identified broken upgrade cards msg_len message)]], # -1
 
 		# 0x0245,7
 
 		# 0x0248,68
 		'0249' => ['mail_send', 'C', [qw(fail)]], # 3
-		'024A' => ['mail_new', 'V Z24 Z40', [qw(mailID sender title)]], # 70
+		'024A' => ['mail_new', 'V Z40 Z24', [qw(mailID title sender)]], # 70
 		
 		# 0x024d is sent packet
 

@@ -89,7 +89,7 @@ sub new {
 		'006D' => ['character_creation_successful', 'a4 V9 v17 Z24 C6 v', [qw(ID exp zeny exp_job lv_job opt1 opt2 option karma manner points_free hp hp_max sp sp_max walk_speed type hair_style weapon lv points_skill lowhead shield tophead midhead hair_color clothes_color name str agi vit int dex luk slot)]], # packet(108) = switch(2) + charblock(106)
 		'006E' => ['character_creation_failed', 'C' ,[qw(type)]], # 3
 		'006F' => ['character_deletion_successful'], # 2
-		'0070' => ['character_deletion_failed', 'x4'], # 6
+		'0070' => ['character_deletion_failed', 'C',[qw(error_code)]], # 6
 		'0071' => ['received_character_ID_and_Map', 'a4 Z16 a4 v', [qw(charID mapName mapIP mapPort)]], # 28
 		# 0x0072 is sent packet
 		'0073' => ['map_loaded', 'V a3 C2', [qw(syncMapSync coords xSize ySize)]], # 11
@@ -198,7 +198,7 @@ sub new {
 		# 0x00de is sent packet
 		'00DF' => ['chat_modified', 'v a4 a4 v2 C a*', [qw(len ownerID ID limit num_users public title)]], # -1
 		# 0x00e0 is sent packet
-		'00E1' => ['chat_newowner', 'C x3 Z24', [qw(type user)]], # 30
+		'00E1' => ['chat_newowner', 'V Z24', [qw(type user)]], # 30 # type = role
 		# 0x00e2 is sent packet
 		# 0x00e3 is sent packet
 		# 0x00e4 is sent packet
@@ -247,7 +247,7 @@ sub new {
 		'010E' => ['skill_update', 'v4 C', [qw(skillID lv sp range up)]], # 11 # range = skill range, up = this skill can be leveled up further
 		'010F' => ['skills_list'], # -1
 		# 0x0110 # TODO
-		'0111' => ['linker_skill', 'v2 x2 v3 Z24 x', [qw(skillID target lv sp range name)]], # 39
+		'0111' => ['linker_skill', 'v V v3 Z24 C', [qw(skillID target lv sp range name upgradable)]], # 39
 		# 0x0112 is sent packet
 		# 0x0113 is sent packet
 		'0114' => ['skill_use', 'v a4 a4 V3 v3 C', [qw(skillID sourceID targetID tick src_speed dst_speed damage level option type)]], # 31
@@ -1542,7 +1542,6 @@ sub area_spell {
 
 sub area_spell_disappears {
 	my ($self, $args) = @_;
-
 	# The area effect spell with ID dissappears
 	my $ID = $args->{ID};
 	my $spell = $spells{$ID};
@@ -5325,7 +5324,25 @@ sub show_eq {
 			$ID, $type, $identified, $type_equip, $equipped, $broken, $upgrade, # typical for nonstackables
 			$cards,
 			$expire) = unpack($unpack_string, substr($args->{RAW_MSG}, $i));
-		debug "$index, $ID, $type, $identified, $type_equip, $equipped, $broken, $upgrade, $cards, $expire\n";
+
+		my $item = {};
+		$item->{index} = $index;
+
+		$item->{nameID} = $ID;
+		$item->{type} = $type;
+
+		$item->{identified} = $identified;
+		$item->{type_equip} = $type_equip;
+		$item->{equipped} = $equipped;
+		$item->{broken} = $broken;
+		$item->{upgrade} = $upgrade;
+
+		$item->{cards} = $cards;
+
+		$item->{expire} = $expire;
+
+		message sprintf("%-15s: %s\n", $equipSlot_lut{$item->{equipped}}, itemName($item)), "list";
+		debug "$index, $ID, $type, $identified, $type_equip, $equipped, $broken, $upgrade, $cards, $expire\n"; 
 	}
 }
 
@@ -6801,7 +6818,7 @@ sub mail_send {
 
 sub mail_new {
 	my ($self, $args) = @_;
-	message TF("New mail from sender: %s titled: %s.\n", $args->{sender}, $args->{title}), "info";
+	message TF("New mail from sender: %s titled: %s.\n", bytesToString($args->{sender}), bytesToString($args->{title})), "info";
 }
 
 sub mail_setattachment {

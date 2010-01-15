@@ -353,10 +353,10 @@ sub new {
 		'023C' => ['storage_password_result', 'v2', [qw(type val)]],
 		'023E' => ['storage_password_request', 'v', [qw(flag)]],
 		'0240' => ['mail_refreshinbox', 'v V', [qw(size  count)]],
-		'0242' => ['mail_read', 'v V Z40 Z24 x4 V2 v C x C3 a8 x Z*', [qw(lenght mailID title sender zeny amount nameID type identified broken upgrade cards message)]],
+		'0242' => ['mail_read', 'v V Z40 Z24 V3 v2 C3 a8 C Z*', [qw(len mailID title sender delete_time zeny amount nameID type identified broken upgrade cards msg_len message)]],
 		'0245' => ['mail_getattachment', 'C', [qw(fail)]],
 		'0249' => ['mail_send', 'C', [qw(fail)]],
-		'024A' => ['mail_new', 'V Z24 Z40', [qw(mailID sender title)]],
+		'024A' => ['mail_new', 'V Z40 Z24', [qw(mailID title sender)]],
 		'0250' => ['auction_result', 'C', [qw(flag)]],
 		'0252' => ['auction_item_request_search', 'v V2', [qw(size pages count)]],
 		'0255' => ['mail_setattachment', 'v C', [qw(index fail)]],
@@ -416,7 +416,7 @@ sub new {
 		'02D1' => ['storage_items_nonstackable'],
 		'02D2' => ['cart_items_nonstackable'],
 		'02D4' => ['inventory_item_added', 'v3 C3 a8 v C2 a4 v', [qw(index amount nameID identified broken upgrade cards type_equip type fail expire unknown)]],
-		'02D7' => ['show_eq', 'v Z24 v7 C', [qw(len type hair_style tophead midhead lowhead hair_color clothes_color sex)]], #type is job
+		'02D7' => ['show_eq', 'v Z24 v7 C', [qw(len name type hair_style tophead midhead lowhead hair_color clothes_color sex)]], #type is job
 		'02D9' => ['show_eq_msg_other', 'V2', [qw(unknown flag)]],
 		'02DA' => ['show_eq_msg_self', 'C', [qw(type)]],
 		'02DC' => ['battleground_message', 'v a4 Z24 Z*', [qw(len ID name message)]],
@@ -6758,7 +6758,7 @@ sub mail_send {
 
 sub mail_new {
 	my ($self, $args) = @_;
-	message TF("New mail from sender: %s titled: %s.\n", $args->{sender}, $args->{title}), "info";
+	message TF("New mail from sender: %s titled: %s.\n", bytesToString($args->{sender}), bytesToString($args->{title})), "info";
 }
 
 sub mail_setattachment {

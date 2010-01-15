@@ -5159,9 +5159,9 @@ sub cmdMail {
 			message T("Usage: mo <mail #>\n"), "info";
 		} elsif (!$mailList->[$args[0]]) {
 			if (@{$mailList}) {
-					message TF("No mail found with index: %s. (might need to re-open mailbox)\n", $args[0]), "info";
+				message TF("No mail found with index: %s. (might need to re-open mailbox)\n", $args[0]), "info";
 			} else {
-					message T("Mailbox has not been opened or is empty.\n"), "info";
+				message T("Mailbox has not been opened or is empty.\n"), "info";
 			}
 		} else {
 			$messageSender->sendMailRead($mailList->[$args[0]]->{mailID});
@@ -5188,9 +5188,9 @@ sub cmdMail {
 		if ($args[0] eq "get" && $args[1] =~ /^\d+$/) {
 			unless ($mailList->[$args[1]]->{mailID}) {
 				if (@{$mailList}) {
-						message TF("No mail found with index: %s. (might need to re-open mailbox)\n", $args[1]), "info";
+					message TF("No mail found with index: %s. (might need to re-open mailbox)\n", $args[1]), "info";
 				} else {
-						message T("Mailbox has not been opened or is empty.\n"), "info";
+					message T("Mailbox has not been opened or is empty.\n"), "info";
 				}
 			} else {
 				$messageSender->sendMailGetAttach($mailList->[$args[1]]->{mailID});
