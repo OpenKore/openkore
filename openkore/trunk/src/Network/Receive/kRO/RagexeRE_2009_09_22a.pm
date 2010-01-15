@@ -29,7 +29,7 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 	my %packets = (
 		# 0x07e5 is sent packet
-		# //0x07e6,8
+		'07E6' => ['captcha_session_ID', 'v V', [qw(ID generation_time)]], # 8
 		# 0x07e7 is sent packet
 		'07E8' => ['captcha_image', 'v a*', [qw(len image)]], # -1
 		'07E9' => ['captcha_answer', 'v C', [qw(code flag)]], # 5	
@@ -40,6 +40,12 @@ sub new {
 	}
 
 	return $self;
+}
+
+# 07E6
+sub captcha_session_ID {
+	my ($self, $args) = @_;
+	debug $self->{packet_list}{$args->{switch}}->[0] . " " . join(', ', @{$args}{@{$self->{packet_list}{$args->{switch}}->[2]}}) . "\n";
 }
 
 # 0x07e8,-1
