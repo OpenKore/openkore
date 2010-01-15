@@ -239,8 +239,7 @@ sub parseServerType {
 		$class = "ServerType" . $type;
 	} else {
 		# New ServerType based on Server name
-		my ($type, $param) = $type =~ /^([a-zA-Z0-9]+)(?:_([a-zA-Z0-9_]+))?/;
-		$class = $type;
+		($class, $param) = $type =~ /^([a-zA-Z0-9]+)(?:_([a-zA-Z0-9_]+))?/;
 		$mode = 1;
 	}
 	
