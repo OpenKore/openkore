@@ -69,34 +69,10 @@ sub new {
 # not exist.
 # Throws Network::Receive::CreationError if some other error occured.
 sub create {
-	my ($self, $type) = @_;
+	my ($self, $serverType) = @_;
 	
-	my $mode = 0; # Mode is Old by Default
-	my $class = "Network::Receive::ServerType0";
-	my $param;
-
-	# Remove Blanks
-	$type =~ s/^\s//;
-	$type =~ s/\s$//;
-
-	$type = 0 if $type eq '';
-
-	# Type checking
-	if ($type =~ /^([0-9_]+)/) {
-		# Old ServerType
-		($type) = $type =~ /^([0-9_]+)/;
-		$class = "Network::Receive::ServerType" . $type;
-	} else {
-		# New ServerType based on Server name
-		my ($real_type) = $type =~ /^([a-zA-Z0-9]+)_/;
-		$class = "Network::Receive::" . $real_type;
-		my ($real_version) = $type =~ /_([a-zA-Z0-9_]+)/;
-		#debug "$real_type <-> $real_version\n";
-		$type = $real_type;
-		$param = $real_version;
-		$param = undef if ($real_version eq '');
-		$mode = 1;
-	}
+	my ($mode, $type, $param) = Settings::parseServerType ($serverType);
+	my $class = "Network::Receive::$type";
 	
 	undef $@;
 	eval("use $class;");

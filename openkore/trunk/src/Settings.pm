@@ -219,6 +219,35 @@ sub parseArguments {
 }
 
 ##
+sub parseServerType {
+	my $type = shift;
+	
+	my $mode = 0; # Mode is Old by Default
+	my $class = "ServerType0";
+	my $param;
+
+	# Remove Blanks
+	$type =~ s/^\s*//;
+	$type =~ s/\s*$//;
+
+	$type = 0 if $type eq '';
+
+	# Type checking
+	if ($type =~ /^([0-9_]+)/) {
+		# Old ServerType
+		($type) = $type =~ /^([0-9_]+)/;
+		$class = "ServerType" . $type;
+	} else {
+		# New ServerType based on Server name
+		my ($type, $param) = $type =~ /^([a-zA-Z0-9]+)(?:_([a-zA-Z0-9_]+))?/;
+		$class = $type;
+		$mode = 1;
+	}
+	
+	return ($mode, $class, $param);
+}
+
+##
 # String Settings::getUsageText()
 #
 # Return the usage text that should be displayed.
@@ -588,7 +617,6 @@ sub setRecvPacketsName {
 		return undef;
 	}
 }
-
 
 ##########################
 # Private methods
