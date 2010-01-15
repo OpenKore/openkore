@@ -5295,7 +5295,25 @@ sub show_eq {
 			$ID, $type, $identified, $type_equip, $equipped, $broken, $upgrade, # typical for nonstackables
 			$cards,
 			$expire) = unpack($unpack_string, substr($args->{RAW_MSG}, $i));
-		debug "$index, $ID, $type, $identified, $type_equip, $equipped, $broken, $upgrade, $cards, $expire\n";
+
+		my $item = {};
+		$item->{index} = $index;
+
+		$item->{nameID} = $ID;
+		$item->{type} = $type;
+
+		$item->{identified} = $identified;
+		$item->{type_equip} = $type_equip;
+		$item->{equipped} = $equipped;
+		$item->{broken} = $broken;
+		$item->{upgrade} = $upgrade;
+
+		$item->{cards} = $cards;
+
+		$item->{expire} = $expire;
+
+		message sprintf("%-15s: %s\n", $equipSlot_lut{$item->{equipped}}, itemName($item)), "list";
+		debug "$index, $ID, $type, $identified, $type_equip, $equipped, $broken, $upgrade, $cards, $expire\n"; 
 	}
 }
 
