@@ -14,7 +14,6 @@
 package Network::Receive::bRO::Thor;
 
 use strict;
-use Network::Receive::bRO ();
 use base qw(Network::Receive::bRO);
 use Log qw(message warning error debug);
 use Translation;
@@ -22,20 +21,26 @@ use Globals;
 use Plugins;
 use Misc;
 use I18N qw(bytesToString);
-use Utils qw(getHex swrite makeIP makeCoords);
 
 sub new {
 	my ($class) = @_;
-	my $self = $class->SUPER::new();
+	my $self = $class->SUPER::new(@_);
+	my %packets = (
+		'0078' => ['actor_display',	'C a4 v14 a4 a2 v2 C2 a3 C3 v',				[qw(object_type ID walk_speed opt1 opt2 option type hair_style weapon lowhead shield tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 karma sex coords unknown1 unknown2 act lv)]], # 55 # standing
+		'007C' => ['actor_display',	'C a4 v14 C2 a3 C2',						[qw(object_type ID walk_speed opt1 opt2 option hair_style weapon lowhead type shield tophead midhead hair_color clothes_color head_dir karma sex coords unknown1 unknown2)]], # 42 # spawning 
+		'0097' => ['private_message', 'v Z24 V Z*', [qw(len privMsgUser flag privMsg)]], # -1
+		'009A' => ['system_chat', 'v A*', [qw(len message)]], # -1 # TODO: this entry is obsolete imo (tech)
+		'022C' => ['actor_display', 'C a4 v3 V v5 V v5 a4 a2 v V C2 a5 x C2 v',	[qw(object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 karma sex coords unknown1 unknown2 lv)]], # 65 # walking 
+	);
 
-	$self->{packet_list}{'0078'} = ['actor_display', 'x a4 v14 a4 a2 v2 C2 a3 C3 v', [qw(ID walk_speed opt1 opt2 option type hair_style weapon lowhead shield tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 karma sex coords unknown1 unknown2 act lv)]]; #standing
-	$self->{packet_list}{'007C'} = ['actor_display', 'x a4 v14 C2 a3 C2', [qw(ID walk_speed opt1 opt2 option hair_style weapon lowhead type shield tophead midhead hair_color clothes_color head_dir karma sex coords unknown1 unknown2)]]; #spawning
-	$self->{packet_list}{'022C'} = ['actor_display', 'x a4 v3 V v5 V v5 a4 a2 v V C2 a5 x C2 v', [qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 karma sex coords unknown1 unknown2 lv)]]; # walking
-	$self->{packet_list}{'009A'} = ['system_chat', 'x2 A*', [qw(message)]];
+	foreach my $switch (keys %packets) {
+		$self->{packet_list}{$switch} = $packets{$switch};
+	}
 
 	return $self;
 }
 
+# TODO: all that is different with the system_chat in ST0 is the micc part and possibly the A* vs Z*
 sub system_chat {
    my ($self, $args) = @_;
 

@@ -281,7 +281,7 @@ sub new {
 		# 0x0130 is sent packet
 		'0131' => ['vender_found', 'a4 A30', [qw(ID title)]], # TODO: # 0x0131,86 # wtf A30? this message is 80 long -> test this
 		'0132' => ['vender_lost', 'a4', [qw(ID)]], # 6
-		'0133' => ['vender_items_list'], # -1
+		'0133' => ['vender_items_list', 'v a4', [qw(len venderID)]], # -1
 		# 0x0134 is sent packet
 		'0135' => ['vender_buy_fail', 'v2 C', [qw(index amount fail)]], # 7
 		'0136' => ['vending_start'], # -1
@@ -6581,16 +6581,24 @@ sub vender_items_list {
 
 	my $msg = $args->{RAW_MSG};
 	my $msg_size = $args->{RAW_MSG_SIZE};
+	my $headerlen;
+	
+	# a hack, but the best we can do now
+	if ($args->{switch} eq "0133") {
+		$headerlen = 8;
+	} else { # switch 0800
+		$headerlen = 12; # there's an unknown field
+	}
 
 	undef @venderItemList;
 	undef $venderID;
-	$venderID = substr($msg,4,4);
+	$venderID = $args->{venderID};
 	my $player = Actor::get($venderID);
 
 	message TF("%s\n" .
 		"#  Name                                       Type           Amount       Price\n",
 		center(' Vender: ' . $player->nameIdx . ' ', 79, '-')), "list";
-	for (my $i = 8; $i < $args->{RAW_MSG_SIZE}; $i+=22) {
+	for (my $i = $headerlen; $i < $args->{RAW_MSG_SIZE}; $i+=22) {
 		my $item = {};
 		my $index;
 		

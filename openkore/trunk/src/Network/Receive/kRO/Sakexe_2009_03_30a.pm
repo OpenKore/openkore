@@ -24,7 +24,7 @@ sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
 	my %packets = (
-		# 0x0449,4
+		'0449' => ['hack_shield_alarm', 'x2', [qw(unknown)]], # 4
 	);
 	
 	foreach my $switch (keys %packets) {

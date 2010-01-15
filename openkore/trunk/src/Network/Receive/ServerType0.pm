@@ -105,7 +105,7 @@ sub new {
 		'0095' => ['actor_info', 'a4 Z24', [qw(ID name)]],
 		'0097' => ['private_message', 'v Z24 Z*', [qw(len privMsgUser privMsg)]],
 		'0098' => ['private_message_sent', 'C', [qw(type)]],
-		'009A' => ['system_chat', 'x2 Z*', [qw(message)]], #maybe use a* instead and $message =~ /\000$//; if there are problems
+		'009A' => ['system_chat', 'v Z*', [qw(len message)]], #maybe use a* instead and $message =~ /\000$//; if there are problems
 		'009C' => ['actor_look_at', 'a4 C x C', [qw(ID head body)]],
 		'009D' => ['item_exists', 'a4 v C v3 C2', [qw(ID nameID identified x y amount subx suby)]],
 		'009E' => ['item_appeared', 'a4 v C v2 C2 v', [qw(ID nameID identified x y subx suby amount)]],
@@ -193,7 +193,7 @@ sub new {
 		'012D' => ['shop_skill', 'v', [qw(number)]],
 		'0131' => ['vender_found', 'a4 A30', [qw(ID title)]],
 		'0132' => ['vender_lost', 'a4', [qw(ID)]],
-		'0133' => ['vender_items_list'],
+		'0133' => ['vender_items_list', 'v a4', [qw(len venderID)]],
 		'0135' => ['vender_buy_fail', 'v2 C', [qw(index amount fail)]],
 		'0136' => ['vending_start'],
 		'0137' => ['shop_sold', 'v2', [qw(number amount)]],
@@ -439,6 +439,8 @@ sub new {
 
 		# HackShield alarm
 		'0449' => ['hack_shield_alarm'],
+		
+		'0800' => ['vender_items_list', 'v a4 x4', [qw(len venderID unknown)]], # -1
 	};
 	return $self;
 }
@@ -6550,34 +6552,45 @@ sub vender_items_list {
 
 	my $msg = $args->{RAW_MSG};
 	my $msg_size = $args->{RAW_MSG_SIZE};
+	my $headerlen;
+
+	# a hack, but the best we can do now
+	if ($args->{switch} eq "0133") {
+		$headerlen = 8;
+	} else { # switch 0800
+		$headerlen = 12; # there's an unknown field
+	}
 
 	undef @venderItemList;
 	undef $venderID;
-	$venderID = substr($msg,4,4);
+	$venderID = $args->{venderID};
 	my $player = Actor::get($venderID);
 
 	message TF("%s\n" .
 		"#  Name                                       Type           Amount       Price\n",
 		center(' Vender: ' . $player->nameIdx . ' ', 79, '-')), "list";
-	for (my $i = 8; $i < $msg_size; $i+=22) {
-		my $number = unpack("v1", substr($msg, $i + 6, 2));
-
-		my $item = $venderItemList[$number] = {};
-		$item->{price} = unpack("V1", substr($msg, $i, 4));
-		$item->{amount} = unpack("v1", substr($msg, $i + 4, 2));
-		$item->{type} = unpack("C1", substr($msg, $i + 8, 1));
-		$item->{nameID} = unpack("v1", substr($msg, $i + 9, 2));
-		$item->{identified} = unpack("C1", substr($msg, $i + 11, 1));
-		$item->{broken} = unpack("C1", substr($msg, $i + 12, 1));
-		$item->{upgrade} = unpack("C1", substr($msg, $i + 13, 1));
-		$item->{cards} = substr($msg, $i + 14, 8);
+	for (my $i = $headerlen; $i < $args->{RAW_MSG_SIZE}; $i+=22) {
+		my $item = {};
+		my $index;
+		
+		($item->{price},
+		$item->{amount},
+		$index,
+		$item->{type},
+		$item->{nameID},
+		$item->{identified},
+		$item->{broken},
+		$item->{upgrade},
+		$item->{cards})	= unpack('V v2 C v C3 a8', substr($args->{RAW_MSG}, $i, 22));
+		
 		$item->{name} = itemName($item);
+		$venderItemList[$index] = $item;
 
 		debug("Item added to Vender Store: $item->{name} - $item->{price} z\n", "vending", 2);
 
 		Plugins::callHook('packet_vender_store', {
 			venderID => $venderID,
-			number => $number,
+			number => $index,
 			name => $item->{name},
 			amount => $item->{amount},
 			price => $item->{price},
@@ -6588,7 +6601,7 @@ sub vender_items_list {
 
 		message(swrite(
 			"@< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<< @>>>>> @>>>>>>>>>z",
-			[$number, $item->{name}, $itemTypes_lut{$item->{type}}, $item->{amount}, formatNumber($item->{price})]),
+			[$index, $item->{name}, $itemTypes_lut{$item->{type}}, $item->{amount}, formatNumber($item->{price})]),
 			"list");
 	}
 	message("-------------------------------------------------------------------------------\n", "list");
