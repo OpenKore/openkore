@@ -306,7 +306,7 @@ sub setTablesFolders {
 }
 
 sub addTablesFolders {
-	return @tablesFolders = (@tablesFolders, split($pathDelimiter, shift));
+	return @tablesFolders = (reverse(split($pathDelimiter, shift)), @tablesFolders);
 }
 
 sub getTablesFolders {
