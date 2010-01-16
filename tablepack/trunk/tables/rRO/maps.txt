@@ -1,0 +1,655 @@
+bossnia_01.rsw#Босния #
+bossnia_02.rsw#Босния #
+bossnia_03.rsw#Босния #
+bossnia_04.rsw#Босния #
+itemmall.rsw#Рынок #
+poring_w01.rsw#Приемная Поринга #
+poring_w02.rsw#Война Поринга #
+que_moon.rsw#Лунный Холм #
+nameless_i.rsw#Безымянный остров #
+nameless_n.rsw#Безымянный остров #
+nameless_in.rsw#Безымянный остров #
+abbey01.rsw#Монастырь #
+abbey02.rsw#Монастырь #
+abbey03.rsw#Монастырь #
+que_temsky.rsw#Небесный сад #
+z_agit.rsw#Бандитский притон #
+evt_zombie.rsw#город зомби#
+que_qsch01.rsw#Экелнир#
+que_qsch02.rsw#Экелнир#
+que_qsch03.rsw#Экелнир#
+que_qsch04.rsw#Экелнир#
+que_qsch05.rsw#Экелнир#
+que_qaru01.rsw#Экелнир#
+que_qaru02.rsw#Экелнир#
+que_qaru03.rsw#Экелнир#
+que_qaru04.rsw#Экелнир#
+que_qaru05.rsw#Экелнир#
+arug_cas01.rsw#Мардол #
+arug_cas02.rsw#Шейт #
+arug_cas03.rsw#Хорн #
+arug_cas04.rsw#Гелун#
+arug_cas05.rsw#Ванадис#
+aru_gld.rsw#Валфрейя #
+schg_cas01.rsw#Химин#
+schg_cas02.rsw#Андлеран #
+schg_cas03.rsw#Бидлинд#
+schg_cas04.rsw#Гэлид#
+schg_cas05.rsw#Шантри #
+sch_gld.rsw#Нидхёгг#
+veins.rsw#Вейнс#
+ve_in.rsw#Вейнс#
+ve_in02.rsw#Вейнс#
+ve_fild01.rsw#Окрестности Вейнса #
+ve_fild02.rsw#Окрестности Вейнса #
+ve_fild03.rsw#Окрестности Вейнса #
+ve_fild04.rsw#Окрестности Вейнса #
+ve_fild05.rsw#Окрестности Вейнса #
+ve_fild06.rsw#Окрестности Вейнса #
+ve_fild07.rsw#Окрестности Вейнса #
+thor_camp.rsw#Вулкан Тора #
+que_thor.rsw#Вулкан Тора #
+thor_v01.rsw#Вулкан Тора #
+thor_v02.rsw#Вулкан Тора #
+thor_v03.rsw#Вулкан Тора #
+06guild_r.rsw#Арена Гильдий - Зал ожидания #
+06guild_01.rsw#Арена Гильдий #
+06guild_02.rsw#Арена Гильдий #
+06guild_03.rsw#Арена Гильдий #
+06guild_04.rsw#Арена Гильдий #
+06guild_05.rsw#Арена Гильдий #
+06guild_06.rsw#Арена Гильдий #
+06guild_07.rsw#Арена Гильдий #
+06guild_08.rsw#Арена Гильдий #
+rachel.rsw#Рашель, столица государства Арунафельц #
+ra_in01.rsw#Рашель #
+ra_temple.rsw#Сессрумнир, Храм богини Фрейи #
+ra_temin.rsw#В Храме Фрейи #
+que_rachel.rsw#В Храме Фрейи #
+ra_temsky.rsw#Райский Сад #
+ra_fild01.rsw#Луга Аудумлы #
+ra_fild02.rsw#Каньон Одина #
+ra_fild03.rsw#Равнина Идун #
+ra_fild04.rsw#Луга Аудумлы #
+ra_fild05.rsw#Луга Аудумлы #
+ra_fild06.rsw#Врата Луны #
+ra_fild07.rsw#Каньон Одина #
+ra_fild08.rsw#Равнина Идун #
+ra_fild09.rsw#Луга Аудумлы #
+ra_fild10.rsw#Каньон Одина #
+ra_fild11.rsw#Равнина Идун #
+ra_fild12.rsw#Равнина Идун #
+ra_fild13.rsw#Берег Слез#
+ra_san01.rsw#Святые Земли #
+ra_san02.rsw#Святые Земли #
+ra_san03.rsw#Святые Земли #
+ra_san04.rsw#Святые Земли #
+ra_san05.rsw#Святые Земли #
+ice_dun01.rsw#Ледяная Пещера #
+ice_dun02.rsw#Ледяная Пещера #
+ice_dun03.rsw#Ледяная Пещера #
+ice_dun04.rsw#Ледяная Пещера #
+moscovia.rsw#Московия #
+mosk_in.rsw#Московия #
+mosk_ship.rsw#Корабль #
+mosk_fild01.rsw#Окрестности Московии #
+mosk_fild02.rsw#Окрестности Московии #
+mosk_dun01.rsw#Лес #
+mosk_dun02.rsw#Темный лес #
+mosk_dun03.rsw#Дремучий лес #
+hugel.rsw#Хугель, цветущий городок #
+hu_in01.rsw#Хугель #
+que_bingo.rsw#Игровой зал #
+que_hugel.rsw#Катакомбы Храма Одина #
+p_track01.rsw#Ипподром #
+p_track02.rsw#Ипподром #
+odin_tem01.rsw#Храм Одина #
+odin_tem02.rsw#Храм Одина #
+odin_tem03.rsw#Храм Одина #
+hu_fild02.rsw#Окрестности Хугеля #
+hu_fild03.rsw#Окрестности Хугеля #
+hu_fild06.rsw#Окрестности Хугеля #
+ein_fild01.rsw#Окрестности Эйнброха #
+ein_fild02.rsw#Окрестности Эйнброха #
+ein_fild05.rsw#Окрестности Эйнброха #
+yuno_fild10.rsw#Окрестности Юно #
+kh_kiehl02.rsw#Комната Киеля #
+kh_kiehl01.rsw#Комната Киеля #
+kh_dun02.rsw#Завод роботов, 2-ой уровень #
+kh_dun01.rsw#Завод роботов, 1-ый уровень #
+kh_mansion.rsw#Особняк Киеля Кайра #
+kh_rossi.rsw#Особняк семьи Розимьер #
+kh_school.rsw#Академия Киеля Кайра #
+kh_vila.rsw#Домик Киеля Кайра #
+auction_01.rsw#Аукцион #
+auction_02.rsw#Аукцион #
+que_job01.rsw#Частная таверна #
+abyss_01.rsw#Пещера под Бездонным озером #
+abyss_02.rsw#Пещера под Бездонным озером #
+abyss_03.rsw#Пещера под Бездонным озером #
+tha_t01.rsw#Башня Танатос - Нижний уровень #
+tha_t02.rsw#Башня Танатос - Нижний уровень #
+tha_t03.rsw#Башня Танатос - Нижний уровень #
+tha_t04.rsw#Башня Танатос - Нижний уровень #
+tha_t05.rsw#Башня Танатос - Верхние этажи #
+tha_t06.rsw#Башня Танатос - Верхние этажи #
+tha_t07.rsw#Башня Танатос - Верхние этажи #
+tha_t08.rsw#Башня Танатос - Верхние этажи #
+tha_t09.rsw#Башня Танатос - Верхние этажи #
+tha_t10.rsw#Башня Танатос - Верхние этажи #
+tha_t11.rsw#Башня Танатос - Верхние этажи #
+tha_t12.rsw#Башня Танатос - Верхние этажи #
+thana_step.rsw#Башня Танатос - Верхние этажи #
+thana_boss.rsw#Башня Танатос - Неизвестная зона #
+thana_scene01.rsw#Вход в Башню Танатос #
+job_soul.rsw#Ваше сердце #
+job_star.rsw#Солнце, Луна и Звезды #
+hu_fild07.rsw#Окрестности Хугеля #
+hu_fild05.rsw#Бездонное озеро #
+hu_fild04.rsw#Окрестности Хугеля #
+hu_fild01.rsw#Башня Танатос #
+yuno_fild06.rsw#Плато Эльмес #
+quiz_02.rsw#Арена #
+jupe_cave.rsw#Вход в подземелье Юперос #
+juperos_01.rsw#Развалины Юпероса #
+juperos_02.rsw#Развалины Юпероса #
+jupe_gate.rsw#Юперос, запретная зона #
+jupe_area1.rsw#Юперос, запретная зона #
+jupe_area2.rsw#Юперос, запретная зона #
+jupe_ele.rsw#Лифт Юпероса #
+jupe_ele_r.rsw#Лифт Юпероса #
+jupe_core.rsw#Центр Юпероса #
+lighthalzen.rsw#Лайтхайзен, Город корпораций #
+lhz_in01.rsw#Штаб-квартира Корпорации 'Рекенбер' #
+lhz_in02.rsw#Лайтхайзен #
+lhz_in03.rsw#Лайтхайзен #
+lhz_cube.rsw#Кубическая комната #
+lhz_que01.rsw#Лайтхайзен #
+lhz_airport.rsw#Аэропорт Лайтхайзена #
+airplane_01.rsw#Дирижабль #
+lhz_dun01.rsw#Соматологическая лаборатория #
+lhz_dun02.rsw#Соматологическая лаборатория #
+lhz_dun03.rsw#Соматологическая лаборатория #
+lhz_fild01.rsw#Окрестности Лайтхайзена #
+yuno_pre.rsw#Дворец правительства Шварцвальта #
+y_airport.rsw#Аэропорт Юно #
+lhz_fild03.rsw#Окрестности Лайтхайзена #
+lhz_fild02.rsw#Окрестности Лайтхайзена (Долина Жнецов) #
+ein_fild04.rsw#Окрестности Эйнброха #
+ein_fild03.rsw#Окрестности Эйнброха #
+ein_dun02.rsw#Старый рудник #
+ein_dun01.rsw#Старый рудник #
+ein_fild10.rsw#Окрестности Эйнброха #
+ein_fild09.rsw#Окрестности Эйнброха #
+ein_fild08.rsw#Окрестности Эйнброха #
+ein_fild07.rsw#Окрестности Эйнброха #
+ein_fild06.rsw#Окрестности Эйнброха #
+airplane.rsw#Дирижабль #
+airport.rsw#Аэропорт #
+ein_in01.rsw#Эйнброх #
+einbech.rsw#Эйнбех, деревня шахтеров #
+einbroch.rsw#Эйнброх, Железный Город #
+turbo_e_16.rsw#Гоночная трасса #
+turbo_e_8.rsw#Гоночная трасса #
+turbo_e_4.rsw#Гоночная трасса #
+turbo_n_16.rsw#Гоночная трасса #
+turbo_n_8.rsw#Гоночная трасса #
+turbo_n_4.rsw#Гоночная трасса #
+turbo_n_1.rsw#Гоночная трасса #
+turbo_room.rsw#Зал ожидания #
+yuno_fild12.rsw#Пограничная застава #
+yuno_fild11.rsw#Окрестности Юно #
+yuno_fild09.rsw#Военный лагерь #
+yuno_fild08.rsw#Академия Киеля Кайра #
+yuno_fild07.rsw#Каньон Эльмес #
+yuno_fild05.rsw#Плато Эльмес #
+ayo_in02.rsw#Аотайя #
+ayo_in01.rsw#Аотайя #
+ayo_dun02.rsw#Древняя часовня #
+ayo_dun01.rsw#Древний лабиринт #
+ayo_fild02.rsw#Окрестности Аотайи #
+ayo_fild01.rsw#Окрестности Аотайи #
+ayothaya.rsw#Аотайя #
+que_god02.rsw#Комната испытаний #
+que_god01.rsw#Комната испытаний #
+quiz_test.rsw#Зал испытаний #
+gefenia04.rsw#Геффения #
+gefenia03.rsw#Геффения #
+gefenia02.rsw#Геффения #
+gefenia01.rsw#Геффения #
+himinn.rsw#Зал Валькирий #
+jawaii_in.rsw#Яваи #
+jawaii.rsw#Яваи, Рай для молодоженов #
+lou_in02.rsw#Лоянг #
+lou_in01.rsw#Лоянг #
+lou_dun03.rsw#Дворец Шэнь Ян #
+lou_dun02.rsw#Королевская гробница #
+lou_dun01.rsw#Королевская гробница #
+lou_fild01.rsw#Окрестности Лоянга #
+louyang.rsw#Лоянг #
+valkyrie.rsw#Зал Славы #
+nif_in.rsw#Нифльхейм #
+yggdrasil01.rsw#Корень Ясеня Иггдрасиль #
+nif_fild02.rsw#Призрачный кратер #
+nif_fild01.rsw#Деревня скелетов #
+niflheim.rsw#Нифльхейм #
+um_dun01.rsw#Столярная мастерская #
+um_dun02.rsw#Путь в другой мир #
+um_in.rsw#Умбала #
+um_fild01.rsw#Лес Рурука #
+um_fild02.rsw#Лес Хумга #
+um_fild03.rsw#Болото Карара #
+um_fild04.rsw#Джунгли Хумга #
+umbala.rsw#Умбала, деревня племени вутанов #
+sec_in01.rsw#Вальгалла #
+sec_in02.rsw#Вальгалла #
+sec_pri.rsw#Зал для медитаций (Тюрьма Вальгаллы) #
+gon_test.rsw#Боевая арена #
+gon_dun01.rsw#Святилище Си Ван Му #
+gon_dun02.rsw#Доска для игры в го #
+gon_dun03.rsw#Аркадия #
+gon_fild01.rsw#Окрестности Кунлуна #
+gon_in.rsw#Кунлун #
+gonryun.rsw#Кунлун, остров отшельников #
+ama_test.rsw#Путешествие Момотаро #
+ama_dun03.rsw#Подземная часовня Амацу #
+ama_dun02.rsw#Подземный лес #
+ama_dun01.rsw#Лабиринт Татами #
+ama_fild01.rsw#Окрестности Амацу #
+ama_in02.rsw#Дворец правителя Амацу #
+ama_in01.rsw#Амацу #
+amatsu.rsw#Амацу, страна Тэнгу #
+alde_alche.rsw#Гильдия Алхимиков #
+yuno_in05.rsw#Комната двигателя Сердца Имира #
+yuno_in04.rsw#Республиканская библиотека #
+job_duncer.rsw#Театр Комодо #
+job_sage.rsw#Экзаменационная Мудрецов #
+job_cru.rsw#Экзаменационная Крестоносцев #
+job_monk.rsw#Монастырь Св. Катарины #
+monk_test.rsw#Монастырь Св. Катарины #
+in_rogue.rsw#Гильдия Разбойников #
+mag_dun02.rsw#Муспельхейм #
+mag_dun01.rsw#Муспельхейм #
+yuno_fild04.rsw#Плато Эльмес #
+yuno_fild03.rsw#Плато Эльмес #
+yuno_fild02.rsw#Усадьба Килл #
+yuno_fild01.rsw#Пограничный пост #
+yuno_in03.rsw#Юно #
+yuno_in02.rsw#Замок Мудрецов #
+yuno_in01.rsw#Юно #
+yuno.rsw#Юно, столица республики Шварцвальт #
+job_wiz.rsw#Экзаменационная Волшебников #
+job_prist.rsw#Экзаменационная Священников #
+job_knt.rsw#Экзаменационная Рыцарей #
+job_hunte.rsw#Экзаменационная Охотников #
+gld_dun04.rsw#Подземелье замков #
+gld_dun03.rsw#Подземелье замков #
+gld_dun02.rsw#Подземелье замков #
+gld_dun01.rsw#Подземелье замков #
+payg_cas05.rsw#Бамбуковый лес #
+payg_cas04.rsw#Красная башня #
+payg_cas03.rsw#Тень Будды #
+payg_cas02.rsw#Небесный мост #
+payg_cas01.rsw#Алый дом #
+pay_gld.rsw#Чунгрим #
+aldeg_cas05.rsw#Роденбург #
+aldeg_cas04.rsw#Кардиф #
+aldeg_cas03.rsw#Неленберг #
+aldeg_cas02.rsw#Хиделбург #
+aldeg_cas01.rsw#Верденберг #
+alde_gld.rsw#Луина, город-спутник Альдебарана #
+gefg_cas05.rsw#Мельсдеч #
+gefg_cas04.rsw#Бергель #
+gefg_cas03.rsw#Иснельф #
+gefg_cas02.rsw#Юльбриго #
+gefg_cas01.rsw#Рефрион #
+prtg_cas05.rsw#Гвендл #
+prtg_cas04.rsw#Линдерхоф #
+prtg_cas03.rsw#Ладрикс #
+prtg_cas02.rsw#Сбанхилт #
+prtg_cas01.rsw#Кримхилт #
+prt_gld.rsw#Царство Валькирий #
+tur_dun01.rsw#Черепаший остров #
+tur_dun02.rsw#Подземелье Черепашьего острова #
+tur_dun03.rsw#Деревня Черепахи #
+tur_dun04.rsw#Дворец Черепахи #
+tur_dun05.rsw#Подземное болото #
+tur_dun06.rsw#Подземное болото #
+guild_vs3.rsw#Арена #
+guild_vs2.rsw#Арена #
+guild_vs1.rsw#Арена #
+guild_room.rsw#Зал ожидания #
+quiz_00.rsw#Зал состязаний #
+quiz_01.rsw#Зал состязаний #
+gef_fild12.rsw#Лес Корд #
+gef_fild13.rsw#Бретония #
+gef_fild14.rsw#Западная деревня орков #
+cmd_in02.rsw#Комодо #
+cmd_in01.rsw#Комодо #
+comodo.rsw#Комодо, прибрежный город #
+beach_dun.rsw#Кару, западная пещера Комодо #
+beach_dun2.rsw#Руанд, северная пещера Комодо #
+beach_dun3.rsw#Мао, восточная пещера Комодо #
+cmd_fild01.rsw#Лес Папучико #
+cmd_fild02.rsw#Пляж Кокомо #
+cmd_fild03.rsw#Болота Зенаи #
+cmd_fild04.rsw#Пляж Кокомо #
+cmd_fild05.rsw#Опушка леса Папучико #
+cmd_fild06.rsw#Крепость Сандаруман (запад) #
+cmd_fild07.rsw#Маяк Фарос #
+cmd_fild08.rsw#Крепость Сандаруман (восток) #
+cmd_fild09.rsw#Крепость Сандаруман (юг) #
+xmas_in.rsw#Люти #
+xmas_dun02.rsw#Склад игрушек #
+xmas_dun01.rsw#Фабрика игрушек #
+xmas_fild01.rsw#Окрестности Люти #
+xmas.rsw#Люти, заснеженная деревня #
+mjolnir_01.rsw#Горная гряда Мьелльнир #
+mjolnir_02.rsw#Горная гряда Мьелльнир #
+mjolnir_03.rsw#Горная гряда Мьелльнир #
+mjolnir_04.rsw#Горная гряда Мьелльнир #
+mjolnir_05.rsw#Горная гряда Мьелльнир #
+mjolnir_06.rsw#Горная гряда Мьелльнир #
+mjolnir_07.rsw#Горная гряда Мьелльнир #
+mjolnir_08.rsw#Горная гряда Мьелльнир #
+mjolnir_09.rsw#Горная гряда Мьелльнир #
+mjolnir_10.rsw#Горная гряда Мьелльнир #
+mjolnir_11.rsw#Горная гряда Мьелльнир #
+mjolnir_12.rsw#Горная гряда Мьелльнир #
+prt_fild00.rsw#Окрестности Пронтеры #
+prt_fild01.rsw#Окрестности Пронтеры #
+prt_fild02.rsw#Окрестности Пронтеры #
+prt_fild03.rsw#Окрестности Пронтеры #
+prt_fild04.rsw#Окрестности Пронтеры #
+prt_fild05.rsw#Окрестности Пронтеры #
+prt_fild06.rsw#Окрестности Пронтеры #
+prt_fild07.rsw#Окрестности Пронтеры #
+prt_fild08.rsw#Окрестности Пронтеры #
+prt_fild09.rsw#Окрестности Пронтеры #
+prt_fild10.rsw#Окрестности Пронтеры #
+prt_fild11.rsw#Окрестности Пронтеры #
+prt_monk.rsw#Монастырь Св. Катарины #
+gef_fild00.rsw#Окрестности Геффена #
+gef_fild01.rsw#Окрестности Геффена #
+gef_fild02.rsw#Окрестности Геффена #
+gef_fild03.rsw#Окрестности Геффена #
+gef_fild04.rsw#Окрестности Геффена #
+gef_fild05.rsw#Окрестности Геффена #
+gef_fild06.rsw#Окрестности Геффена #
+gef_fild07.rsw#Окрестности Геффена #
+gef_fild08.rsw#Окрестности Геффена #
+gef_fild09.rsw#Окрестности Геффена #
+gef_fild10.rsw#Окрестности Геффена #
+in_orcs01.rsw#Деревня орков #
+gef_fild11.rsw#Окрестности Геффена #
+moc_fild01.rsw#Пустыня Сограт #
+moc_fild02.rsw#Пустыня Сограт #
+moc_fild03.rsw#Пустыня Сограт #
+moc_fild04.rsw#Пустыня Сограт #
+moc_fild05.rsw#Пустыня Сограт #
+moc_fild06.rsw#Пустыня Сограт #
+moc_fild07.rsw#Пустыня Сограт #
+moc_fild08.rsw#Пустыня Сограт #
+moc_fild09.rsw#Пустыня Сограт #
+moc_fild10.rsw#Пустыня Сограт #
+moc_fild11.rsw#Пустыня Сограт #
+moc_fild12.rsw#Пустыня Сограт #
+moc_fild13.rsw#Пустыня Сограт #
+moc_fild14.rsw#Пустыня Сограт #
+moc_fild15.rsw#Пустыня Сограт #
+moc_fild16.rsw#Пустыня Сограт #
+in_moc_16.rsw#Гильдия Убийц #
+moc_fild17.rsw#Пустыня Сограт #
+moc_fild18.rsw#Пустыня Сограт #
+moc_fild19.rsw#Пустыня Сограт #
+pay_fild01.rsw#Леса Пайона #
+pay_fild02.rsw#Леса Пайона #
+pay_fild03.rsw#Леса Пайона #
+pay_fild04.rsw#Пустыня Сограт #
+pay_fild05.rsw#Леса Пайона #
+pay_fild06.rsw#Леса Пайона #
+pay_fild07.rsw#Леса Пайона #
+pay_fild08.rsw#Леса Пайона #
+pay_fild09.rsw#Леса Пайона #
+pay_fild10.rsw#Леса Пайона #
+pay_fild11.rsw#Леса Пайона #
+new_1-1.rsw#Тренировочный центр #
+new_2-1.rsw#Тренировочный центр #
+new_3-1.rsw#Тренировочный центр #
+new_4-1.rsw#Тренировочный центр #
+new_5-1.rsw#Тренировочный центр #
+new_1-2.rsw#Тренировочный центр #
+new_2-2.rsw#Тренировочный центр #
+new_3-2.rsw#Тренировочный центр #
+new_4-2.rsw#Тренировочный центр #
+new_5-2.rsw#Тренировочный центр #
+new_1-3.rsw#Тренировочный центр #
+new_2-3.rsw#Тренировочный центр #
+new_3-3.rsw#Тренировочный центр #
+new_4-3.rsw#Тренировочный центр #
+new_5-3.rsw#Тренировочный центр #
+new_1-4.rsw#Тренировочный центр #
+new_2-4.rsw#Тренировочный центр #
+new_3-4.rsw#Тренировочный центр #
+new_4-4.rsw#Тренировочный центр #
+new_5-4.rsw#Тренировочный центр #
+anthell01.rsw#Муравейник #
+anthell02.rsw#Муравейник #
+gef_dun00.rsw#Подземелье Геффена #
+gef_dun01.rsw#Подземелье Геффена #
+gef_dun02.rsw#Геффения #
+gef_dun03.rsw#Геффения #
+iz_dun00.rsw#Подземелье Байлана #
+iz_dun01.rsw#Подземелье Байлана #
+iz_dun02.rsw#Подземелье Байлана #
+iz_dun03.rsw#Подземелье Байлана #
+iz_dun04.rsw#Подземелье Байлана #
+iz_dun05.rsw#Подземелье Байлана #
+in_sphinx1.rsw#Сфинкс #
+in_sphinx2.rsw#Сфинкс #
+in_sphinx3.rsw#Сфинкс #
+in_sphinx4.rsw#Сфинкс #
+in_sphinx5.rsw#Сфинкс #
+moc_pryd01.rsw#Пирамида #
+moc_pryd02.rsw#Пирамида #
+moc_pryd03.rsw#Пирамида #
+moc_pryd04.rsw#Пирамида #
+moc_pryd05.rsw#Пирамида #
+moc_pryd06.rsw#Пирамида #
+moc_prydb1.rsw#Гильдия Воров #
+mjo_dun01.rsw#Заброшенная шахта #
+mjo_dun02.rsw#Заброшенная шахта #
+mjo_dun03.rsw#Заброшенная шахта #
+orcsdun01.rsw#Подземелье орков #
+orcsdun02.rsw#Подземелье орков #
+pay_dun00.rsw#Пещеры Пайона #
+pay_dun01.rsw#Пещеры Пайона #
+pay_dun02.rsw#Пещеры Пайона #
+pay_dun03.rsw#Пещеры Пайона #
+pay_dun04.rsw#Пещеры Пайона #
+prt_maze01.rsw#Лес-Лабиринт #
+prt_maze02.rsw#Лес-Лабиринт #
+prt_maze03.rsw#Лес-Лабиринт #
+prt_sewb1.rsw#Канализация Пронтеры #
+prt_sewb2.rsw#Канализация Пронтеры #
+prt_sewb3.rsw#Канализация Пронтеры #
+prt_sewb4.rsw#Канализация Пронтеры #
+treasure01.rsw#Затонувший корабль #
+treasure02.rsw#Затонувший корабль #
+hunter_1-1.rsw#Гильдия Охотников #
+hunter_2-1.rsw#Гильдия Охотников #
+hunter_3-1.rsw#Гильдия Охотников #
+in_hunter.rsw#Гильдия Охотников #
+knight_1-1.rsw#Рыцарский Орден #
+knight_2-1.rsw#Рыцарский Орден #
+knight_3-1.rsw#Рыцарский Орден #
+priest_1-1.rsw#Святилище #
+priest_2-1.rsw#Святилище #
+priest_3-1.rsw#Святилище #
+sword_1-1.rsw#Экзаменационная Мечников #
+sword_2-1.rsw#Экзаменационная Мечников #
+sword_3-1.rsw#Экзаменационная Мечников #
+job_thief1.rsw#Грибная ферма #
+wizard_1-1.rsw#Академия Волшебников #
+wizard_2-1.rsw#Академия Волшебников #
+wizard_3-1.rsw#Академия Волшебников #
+force_1-1.rsw#Арена для боев на время #
+force_2-1.rsw#Арена для боев на время #
+force_3-1.rsw#Арена для боев на время #
+force_1-2.rsw#Арена для боев на время #
+force_2-2.rsw#Арена для боев на время #
+force_3-2.rsw#Арена для боев на время #
+force_1-3.rsw#Арена для боев на время #
+force_2-3.rsw#Арена для боев на время #
+force_3-3.rsw#Арена для боев на время #
+ordeal_1-1.rsw#Арена боевого крещения #
+ordeal_2-1.rsw#Арена боевого крещения #
+ordeal_3-1.rsw#Арена боевого крещения #
+ordeal_1-2.rsw#Арена боевого крещения #
+ordeal_2-2.rsw#Арена боевого крещения #
+ordeal_3-2.rsw#Арена боевого крещения #
+ordeal_1-3.rsw#Арена боевого крещения #
+ordeal_2-3.rsw#Арена боевого крещения #
+ordeal_3-3.rsw#Арена боевого крещения #
+ordeal_1-4.rsw#Арена боевого крещения #
+ordeal_2-4.rsw#Арена боевого крещения #
+ordeal_3-4.rsw#Арена боевого крещения #
+alb_ship.rsw#Корабль #
+alberta.rsw#Альберта #
+alberta_in.rsw#Альберта #
+alb2trea.rsw#Остров рядом с Альбертой #
+aldebaran.rsw#Альдебаран #
+aldeba_in.rsw#Альдебаран #
+gef_tower.rsw#Башня Геффена #
+geffen.rsw#Геффен #
+geffen_in.rsw#Геффен #
+moc_castle.rsw#Замок Моррока #
+moc_ruins.rsw#Руины #
+morocc.rsw#Моррок #
+morocc_in.rsw#Моррок #
+pay_arche.rsw#Деревня лучников #
+payon.rsw#Пайон #
+payon_in01.rsw#Пайон #
+payon_in02.rsw#Пайон #
+prontera.rsw#Пронтера #
+prt_in.rsw#Пронтера #
+prt_castle.rsw#Замок Пронтеры #
+prt_church.rsw#Церковь Пронтеры #
+izlude.rsw#Излюд #
+izlude_in.rsw#Излюд #
+izlu2dun.rsw#Остров Байлан #
+monk_in.rsw#Монастырь #
+prt_are_in.rsw#Зал ожидания  #
+arena_room.rsw#Зал ожидания  #
+prt_arena01.rsw#Арена #
+prt_are01.rsw#Арена #
+glast_01.rsw#Гластхейм #
+alde_dun01.rsw#Подземелье Альдебарана (1-ый этаж) #
+alde_dun02.rsw#Подземелье Альдебарана (2-ой этаж) #
+alde_dun03.rsw#Подземелье Альдебарана (3-ий этаж) #
+alde_dun04.rsw#Подземелье Альдебарана (4-ый этаж) #
+c_tower1.rsw#Часовая башня (1-ый этаж) #
+c_tower2.rsw#Часовая башня (2-ой этаж) #
+c_tower3.rsw#Часовая башня (3-ий этаж #
+c_tower4.rsw#Часовая башня (4-ый этаж) #
+gl_cas01.rsw#Гластхейм (1-ый этаж) #
+gl_cas02.rsw#Гластхейм (2-ой этаж) #
+gl_church.rsw#Монастырь Гластхейма #
+gl_chyard.rsw#Кладбище Гластхейма #
+gl_dun01.rsw#Подземелье Гластхейма #
+gl_dun02.rsw#Подземелье Гластхейма #
+gl_in01.rsw#Гластхейм #
+gl_knt01.rsw#Казармы Гластхейма #
+gl_knt02.rsw#Казармы Гластхейма #
+gl_prison.rsw#Подземная тюрьма Гластхейма #
+gl_prison1.rsw#Подземная тюрьма Гластхейма #
+gl_sew01.rsw#Канализация Гластхейма #
+gl_sew02.rsw#Канализация Гластхейма #
+gl_sew03.rsw#Канализация Гластхейма #
+gl_sew04.rsw#Канализация Гластхейма #
+gl_step.rsw#Подземелье Гластхейма #
+pvp_y_room.rsw#Арена: Зал ожидания  #
+pvp_n_room.rsw#Арена: Зал ожидания  #
+pvp_c_room.rsw#Арена: Зал ожидания  #
+pvp_n_1-1.rsw#Арена #
+pvp_n_2-1.rsw#Арена #
+pvp_n_3-1.rsw#Арена #
+pvp_n_4-1.rsw#Арена #
+pvp_n_5-1.rsw#Арена #
+pvp_n_6-1.rsw#Арена #
+pvp_n_7-1.rsw#Арена #
+pvp_n_8-1.rsw#Арена #
+pvp_n_1-2.rsw#Арена #
+pvp_n_2-2.rsw#Арена #
+pvp_n_3-2.rsw#Арена #
+pvp_n_4-2.rsw#Арена #
+pvp_n_5-2.rsw#Арена #
+pvp_n_6-2.rsw#Арена #
+pvp_n_7-2.rsw#Арена #
+pvp_n_8-2.rsw#Арена #
+pvp_n_1-3.rsw#Арена #
+pvp_n_2-3.rsw#Арена #
+pvp_n_3-3.rsw#Арена #
+pvp_n_4-3.rsw#Арена #
+pvp_n_5-3.rsw#Арена #
+pvp_n_6-3.rsw#Арена #
+pvp_n_7-3.rsw#Арена #
+pvp_n_8-3.rsw#Арена #
+pvp_n_1-4.rsw#Арена #
+pvp_n_2-4.rsw#Арена #
+pvp_n_3-4.rsw#Арена #
+pvp_n_4-4.rsw#Арена #
+pvp_n_5-4.rsw#Арена #
+pvp_n_6-4.rsw#Арена #
+pvp_n_7-4.rsw#Арена #
+pvp_n_8-4.rsw#Арена #
+pvp_n_1-5.rsw#Арена #
+pvp_n_2-5.rsw#Арена #
+pvp_n_3-5.rsw#Арена #
+pvp_n_4-5.rsw#Арена #
+pvp_n_5-5.rsw#Арена #
+pvp_n_6-5.rsw#Арена #
+pvp_n_7-5.rsw#Арена #
+pvp_n_8-5.rsw#Арена #
+pvp_y_1-1.rsw#Арена #
+pvp_y_2-1.rsw#Арена #
+pvp_y_3-1.rsw#Арена #
+pvp_y_4-1.rsw#Арена #
+pvp_y_5-1.rsw#Арена #
+pvp_y_6-1.rsw#Арена #
+pvp_y_7-1.rsw#Арена #
+pvp_y_8-1.rsw#Арена #
+pvp_y_1-2.rsw#Арена #
+pvp_y_2-2.rsw#Арена #
+pvp_y_3-2.rsw#Арена #
+pvp_y_4-2.rsw#Арена #
+pvp_y_5-2.rsw#Арена #
+pvp_y_6-2.rsw#Арена #
+pvp_y_7-2.rsw#Арена #
+pvp_y_8-2.rsw#Арена #
+pvp_y_1-3.rsw#Арена #
+pvp_y_2-3.rsw#Арена #
+pvp_y_3-3.rsw#Арена #
+pvp_y_4-3.rsw#Арена #
+pvp_y_5-3.rsw#Арена #
+pvp_y_6-3.rsw#Арена #
+pvp_y_7-3.rsw#Арена #
+pvp_y_8-3.rsw#Арена #
+pvp_y_1-4.rsw#Арена #
+pvp_y_2-4.rsw#Арена #
+pvp_y_3-4.rsw#Арена #
+pvp_y_4-4.rsw#Арена #
+pvp_y_5-4.rsw#Арена #
+pvp_y_6-4.rsw#Арена #
+pvp_y_7-4.rsw#Арена #
+pvp_y_8-4.rsw#Арена #
+pvp_y_1-5.rsw#Арена #
+pvp_y_2-5.rsw#Арена #
+pvp_y_3-5.rsw#Арена #
+pvp_y_4-5.rsw#Арена #
+pvp_y_5-5.rsw#Арена #
+pvp_y_6-5.rsw#Арена #
+pvp_y_7-5.rsw#Арена #
+pvp_y_8-5.rsw#Арена #
+pvp_2vs2.rsw#Арена #
+//-------------------------file end
