@@ -444,6 +444,14 @@ sub loadByHandle {
 	} else {
 		$object->{loader}->($filename);
 	}
+
+	# Call onLoaded Handler after file beeng loaded without exceptions.
+	# onLoaded must be REF to CODE (sub, function, etc.)
+	if (defined $object->{onLoaded}) {
+		if (ref($object->{onLoaded}) eq 'CODE') {
+			$object->{onLoaded}->($filename);
+		}
+	}
 }
 
 ##
@@ -597,7 +605,7 @@ sub getSysFilename {
 }
 
 sub getRecvPacketsFilename {
-	return getTableFilename($recvpackets_name || "recvpackets.txt");
+	return ($recvpackets_name || "recvpackets.txt");
 }
 
 sub setRecvPacketsName {
@@ -606,15 +614,14 @@ sub setRecvPacketsName {
 		my $current_filename = getRecvPacketsFilename();
 		foreach my $object (@{$files->getItems()}) {
 			if ($object->{name} eq $current_filename) {
-				$object->{name} = getTableFilename($new_name || "recvpackets.txt");
-				last;
+				$object->{name} = ($new_name || "recvpackets.txt");
+				$recvpackets_name = $object->{name};
+				return 1;
+				# last;
 			}
 		}
-		$recvpackets_name = $new_name;
-		return 1;
-	} else {
-		return undef;
 	}
+	return undef;
 }
 
 ##########################
@@ -652,6 +659,7 @@ sub _addFile {
 		name => $name,
 		mustExist  => exists($options{mustExist}) ? $options{mustExist} : 1,
 		autoSearch => exists($options{autoSearch}) ? $options{autoSearch} : 1,
+		onLoaded => exists($options{onLoaded}) ? $options{onLoaded} : undef,
 		loader     => $options{loader}
 	};
 	my $index = $files->add(bless($object, 'Settings::Handle'));
