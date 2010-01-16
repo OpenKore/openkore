@@ -9,8 +9,8 @@
 #  also distribute the source code.
 #  See http://www.gnu.org/licenses/gpl.html for the full license.
 #
-#  $Revision: 5249 $
-#  $Id: Network.pm 5249 2006-12-25 14:40:58Z vcl_kore $
+#  $Revision: 7069 $
+#  $Id: Network.pm 7069 2010-01-16 02:23:00Z klabmouse $
 #
 #########################################################################
 ##
@@ -313,36 +313,7 @@ sub checkConnection {
 
 	if ($self->getState() == Network::NOT_CONNECTED && (!$self->{remote_socket} || !$self->{remote_socket}->connected) && timeOut($timeout_ex{'master'}) && !$conState_tries) {
 		my $master = $masterServer = $masterServers{$config{master}};
-
-		foreach my $serverOption ('serverType', 'chatLangCode', 'storageEncryptKey', 'gameGuard', 'charBlockSize',
-					'paddedPackets', 'paddedPackets_attackID', 'paddedPackets_skillUseID',
-					'mapServer_ip', 'mapServer_port') {
-			if ($master->{$serverOption} ne '' && $config{$serverOption} ne $master->{$serverOption}) {
-				# Delete Wite Space
-				$master->{$serverOption} =~ s/^\s//;
-				$master->{$serverOption} =~ s/\s$//;
-				# Set config
-				main::configModify($serverOption, $master->{$serverOption});
-			}
-		}
-		if ($master->{serverEncoding} ne '' && $config{serverEncoding} ne $master->{serverEncoding}) {
-			main::configModify('serverEncoding', $master->{serverEncoding});
-		} elsif ($config{serverEncoding} eq '') {
-			main::configModify('serverEncoding', 'Western');
-		}
-
-		if($masterServer->{addTableFolders}) {
-			Settings::addTablesFolders($masterServer->{addTableFolders});
-		}
-
-		if (Settings::setRecvPacketsName($masterServer->{recvpackets})) {
-			my (undef, undef,$basename) = File::Spec->splitpath(Settings::getRecvPacketsFilename());
-			Settings::loadByRegexp(quotemeta $basename, sub {
-				my ($filename) = @_;
-				message TF("Loading %s...\n", $filename);
-			});
-		}
-
+		
 		message T("Connecting to Account Server...\n"), "connection";
 		$shopstarted = 1;
 		$conState_tries++;

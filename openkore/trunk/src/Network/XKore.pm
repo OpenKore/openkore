@@ -58,21 +58,6 @@ sub new {
 	$self->{clientPackets} = "";
 
 	$masterServer = $masterServers{$config{master}};
-	if ($config{serverType} != $masterServer->{serverType}) {
-		Misc::configModify('serverType', $masterServer->{serverType});
-	}
-	
-	if($masterServer->{addTableFolders}) {
-		Settings::addTablesFolders($masterServer->{addTableFolders});
-	}
-	
-	if (Settings::setRecvPacketsName($masterServer->{recvpackets})) {
-		my (undef, undef, $basename) = File::Spec->splitpath(Settings::getRecvPacketsFilename());
-		Settings::loadByRegexp(quotemeta $basename, sub {
-			my ($filename) = @_;
-			message TF("Loading %s...\n", $filename);
-		});
-	}
 	$packetParser = Network::Receive->create($masterServer->{serverType});
 	$messageSender = Network::Send->create($self, $masterServer->{serverType});
 	

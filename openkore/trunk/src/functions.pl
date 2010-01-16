@@ -133,6 +133,7 @@ sub loadDataFiles {
 	# non-ASCII characters.
 	no encoding 'utf8';
 
+	# Add loading of Control files
 	Settings::addControlFile(Settings::getConfigFilename(),
 		loader => [\&parseConfigFile, \%config],
 		autoSearch => 0);
@@ -145,54 +146,103 @@ sub loadDataFiles {
 	Settings::addControlFile(Settings::getShopFilename(),
 		loader => [\&parseShopControl, \%shop],
 		autoSearch => 0);
-	Settings::addControlFile('overallAuth.txt', loader => [\&parseDataFile, \%overallAuth]);
-	Settings::addControlFile('pickupitems.txt', loader => [\&parseDataFile_lc, \%pickupitems]);
-	Settings::addControlFile('responses.txt',   loader => [\&parseResponses, \%responses]);
-	Settings::addControlFile('timeouts.txt',    loader => [\&parseTimeouts, \%timeout]);
-	Settings::addControlFile('chat_resp.txt',   loader => [\&parseChatResp, \@chatResponses]);
-	Settings::addControlFile('avoid.txt',       loader => [\&parseAvoidControl, \%avoid]);
-	Settings::addControlFile('priority.txt',    loader => [\&parsePriority, \%priority]);
-	Settings::addControlFile('consolecolors.txt', loader => [\&parseSectionedFile, \%consoleColors]);
-	Settings::addControlFile('routeweights.txt',  loader => [\&parseDataFile, \%routeWeights]);
-	Settings::addControlFile('arrowcraft.txt',  loader => [\&parseDataFile_lc, \%arrowcraft_items]);
+	Settings::addControlFile('overallAuth.txt',
+		loader => [\&parseDataFile, \%overallAuth]);
+	Settings::addControlFile('pickupitems.txt',
+		loader => [\&parseDataFile_lc, \%pickupitems]);
+	Settings::addControlFile('responses.txt',
+		loader => [\&parseResponses, \%responses]);
+	Settings::addControlFile('timeouts.txt',
+		loader => [\&parseTimeouts, \%timeout]);
+	Settings::addControlFile('chat_resp.txt',
+		loader => [\&parseChatResp, \@chatResponses]);
+	Settings::addControlFile('avoid.txt',
+		loader => [\&parseAvoidControl, \%avoid]);
+	Settings::addControlFile('priority.txt',
+		loader => [\&parsePriority, \%priority]);
+	Settings::addControlFile('consolecolors.txt',
+		loader => [\&parseSectionedFile, \%consoleColors]);
+	Settings::addControlFile('routeweights.txt',
+		loader => [\&parseDataFile, \%routeWeights]);
+	Settings::addControlFile('arrowcraft.txt',
+		loader => [\&parseDataFile_lc, \%arrowcraft_items]);
 
-	Settings::addTableFile(Settings::getRecvPacketsFilename(),
-		loader => [\&parseDataFile2, \%rpackets],
-		autoSearch => 0);
-	Settings::addTableFile('cities.txt',      loader => [\&parseROLUT, \%cities_lut]);
-	Settings::addTableFile('commanddescriptions.txt', loader => [\&parseCommandsDescription, \%descriptions]);
-	Settings::addTableFile('directions.txt',  loader => [\&parseDataFile2, \%directions_lut]);
-	Settings::addTableFile('elements.txt',    loader => [\&parseROLUT, \%elements_lut]);
-	Settings::addTableFile('emotions.txt',    loader => [\&parseEmotionsFile, \%emotions_lut]);
-	Settings::addTableFile('equiptypes.txt',  loader => [\&parseDataFile2, \%equipTypes_lut]);
-	Settings::addTableFile('haircolors.txt',  loader => [\&parseDataFile2, \%haircolors]);
-	Settings::addTableFile('headgears.txt',   loader => [\&parseArrayFile, \@headgears_lut]);
-	Settings::addTableFile('items.txt',       loader => [\&parseROLUT, \%items_lut]);
-	Settings::addTableFile('itemsdescriptions.txt',   loader => [\&parseRODescLUT, \%itemsDesc_lut]);
-	Settings::addTableFile('itemslots.txt',   loader => [\&parseROSlotsLUT, \%itemSlots_lut]);
-	Settings::addTableFile('itemslotcounttable.txt',  loader => [\&parseROLUT, \%itemSlotCount_lut]);
-	Settings::addTableFile('itemtypes.txt',   loader => [\&parseDataFile2, \%itemTypes_lut]);
-	Settings::addTableFile('resnametable.txt',loader => [\&parseROLUT, \%mapAlias_lut, 1, ".gat"]);
-	Settings::addTableFile('maps.txt',        loader => [\&parseROLUT, \%maps_lut]);
-	Settings::addTableFile('monsters.txt',    loader => [\&parseDataFile2, \%monsters_lut]);
-	Settings::addTableFile('npcs.txt',        loader => [\&parseNPCs, \%npcs_lut]);
-	Settings::addTableFile('packetdescriptions.txt',  loader => [\&parseSectionedFile, \%packetDescriptions]);
-	Settings::addTableFile('portals.txt',     loader => [\&parsePortals, \%portals_lut]);
-	Settings::addTableFile('portalsLOS.txt',  loader => [\&parsePortalsLOS, \%portals_los]);
-	Settings::addTableFile('servers.txt',     loader => [\&parseSectionedFile, \%masterServers]);
-	Settings::addTableFile('sex.txt',         loader => [\&parseDataFile2, \%sex_lut]);
-	Settings::addTableFile('skills.txt',      loader => \&Skill::StaticInfo::parseSkillsDatabase);
-	Settings::addTableFile('spells.txt',      loader => [\&parseDataFile2, \%spells_lut]);
-	Settings::addTableFile('skillsdescriptions.txt',  loader => [\&parseRODescLUT, \%skillsDesc_lut]);
-	Settings::addTableFile('skillssp.txt',    loader => [\&parseSkillsSPLUT, \%skillsSP_lut]);
-	Settings::addTableFile('skillssp.txt',    loader => \&Skill::StaticInfo::parseSPDatabase);
-	Settings::addTableFile('skillsstatus.txt',        loader => [\&parseDataFile2, \%skillsStatus]);
-	Settings::addTableFile('skillsailments.txt',      loader => [\&parseDataFile2, \%skillsAilments]);
-	Settings::addTableFile('skillsstate.txt', loader => [\&parseDataFile2, \%skillsState]);
-	Settings::addTableFile('skillslooks.txt', loader => [\&parseDataFile2, \%skillsLooks]);
-	Settings::addTableFile('skillsarea.txt',  loader => [\&parseDataFile2, \%skillsArea]);
-	Settings::addTableFile('skillsencore.txt',        loader => [\&parseList, \%skillsEncore]);
-	Settings::addTableFile('quests.txt', loader => [\&parseROQuestsLUT, \%quests_lut], mustExist => 0);
+	# Loading of Table files
+	# Load Servers.txt first
+	Settings::addTableFile('servers.txt',
+		loader => [\&parseSectionedFile, \%masterServers],
+		onLoaded => \&processServerSettings );
+	# Load RecvPackets.txt second
+ 	Settings::addTableFile(Settings::getRecvPacketsFilename(),
+ 		loader => [\&parseDataFile2, \%rpackets]);
+	# Load all other tables
+	Settings::addTableFile('cities.txt',
+		loader => [\&parseROLUT, \%cities_lut]);
+	Settings::addTableFile('commanddescriptions.txt',
+		loader => [\&parseCommandsDescription, \%descriptions]);
+	Settings::addTableFile('directions.txt',
+		loader => [\&parseDataFile2, \%directions_lut]);
+	Settings::addTableFile('elements.txt',
+		loader => [\&parseROLUT, \%elements_lut]);
+	Settings::addTableFile('emotions.txt',
+		loader => [\&parseEmotionsFile, \%emotions_lut]);
+	Settings::addTableFile('equiptypes.txt',
+		loader => [\&parseDataFile2, \%equipTypes_lut]);
+	Settings::addTableFile('haircolors.txt',
+		loader => [\&parseDataFile2, \%haircolors]);
+	Settings::addTableFile('headgears.txt',
+		loader => [\&parseArrayFile, \@headgears_lut]);
+	Settings::addTableFile('items.txt',
+		loader => [\&parseROLUT, \%items_lut]);
+	Settings::addTableFile('itemsdescriptions.txt',
+		loader => [\&parseRODescLUT, \%itemsDesc_lut]);
+	Settings::addTableFile('itemslots.txt',
+		loader => [\&parseROSlotsLUT, \%itemSlots_lut]);
+	Settings::addTableFile('itemslotcounttable.txt',
+		loader => [\&parseROLUT, \%itemSlotCount_lut]);
+	Settings::addTableFile('itemtypes.txt',
+		loader => [\&parseDataFile2, \%itemTypes_lut]);
+	Settings::addTableFile('resnametable.txt',
+		loader => [\&parseROLUT, \%mapAlias_lut, 1, ".gat"]);
+	Settings::addTableFile('maps.txt',
+		loader => [\&parseROLUT, \%maps_lut]);
+	Settings::addTableFile('monsters.txt',
+		loader => [\&parseDataFile2, \%monsters_lut]);
+	Settings::addTableFile('npcs.txt',
+		loader => [\&parseNPCs, \%npcs_lut]);
+	Settings::addTableFile('packetdescriptions.txt',
+		loader => [\&parseSectionedFile, \%packetDescriptions]);
+	Settings::addTableFile('portals.txt',
+		loader => [\&parsePortals, \%portals_lut]);
+	Settings::addTableFile('portalsLOS.txt',
+		loader => [\&parsePortalsLOS, \%portals_los]);
+	Settings::addTableFile('sex.txt',
+		loader => [\&parseDataFile2, \%sex_lut]);
+	Settings::addTableFile('skills.txt',
+		loader => \&Skill::StaticInfo::parseSkillsDatabase);
+	Settings::addTableFile('spells.txt',
+		loader => [\&parseDataFile2, \%spells_lut]);
+	Settings::addTableFile('skillsdescriptions.txt',
+		loader => [\&parseRODescLUT, \%skillsDesc_lut]);
+	Settings::addTableFile('skillssp.txt',
+		loader => [\&parseSkillsSPLUT, \%skillsSP_lut]);
+	Settings::addTableFile('skillssp.txt',
+		loader => \&Skill::StaticInfo::parseSPDatabase);
+	Settings::addTableFile('skillsstatus.txt',
+		loader => [\&parseDataFile2, \%skillsStatus]);
+	Settings::addTableFile('skillsailments.txt',
+		loader => [\&parseDataFile2, \%skillsAilments]);
+	Settings::addTableFile('skillsstate.txt',
+		loader => [\&parseDataFile2, \%skillsState]);
+	Settings::addTableFile('skillslooks.txt',
+		loader => [\&parseDataFile2, \%skillsLooks]);
+	Settings::addTableFile('skillsarea.txt',
+		loader => [\&parseDataFile2, \%skillsArea]);
+	Settings::addTableFile('skillsencore.txt',
+		loader => [\&parseList, \%skillsEncore]);
+	Settings::addTableFile('quests.txt',
+		loader => [\&parseROQuestsLUT, \%quests_lut],
+		mustExist => 0);
 
 	use encoding 'utf8';
 
@@ -318,6 +368,11 @@ sub promptFirstTimeInformation {
 			configModify('password', $msg, 1);
 		}
 	}
+}
+
+sub processServerSettings {
+	my $filename = shift;
+	# Select Master server on Demand
 
 	if ($config{master} eq "" || $config{master} =~ /^\d+$/ || !exists $masterServers{$config{master}}) {
 		my @servers = sort { lc($a) cmp lc($b) } keys(%masterServers);
@@ -331,6 +386,52 @@ sub promptFirstTimeInformation {
 			configModify('master', $servers[$choice], 1);
 		}
 	}
+
+	# Parse server settings
+	my $master = $masterServer = $masterServers{$config{master}};
+	foreach my $serverOption ('serverType', 'chatLangCode', 'storageEncryptKey', 'gameGuard', 'charBlockSize',
+				'paddedPackets', 'paddedPackets_attackID', 'paddedPackets_skillUseID',
+				'mapServer_ip', 'mapServer_port') {
+		if ($master->{$serverOption} ne '' && $config{$serverOption} ne $master->{$serverOption}) {
+			# Delete Wite Space
+			$master->{$serverOption} =~ s/^\s//;
+			$master->{$serverOption} =~ s/\s$//;
+			# Set config
+			configModify($serverOption, $master->{$serverOption});
+		}
+	}
+
+	if ($master->{serverEncoding} ne '' && $config{serverEncoding} ne $master->{serverEncoding}) {
+		configModify('serverEncoding', $master->{serverEncoding});
+	} elsif ($config{serverEncoding} eq '') {
+		configModify('serverEncoding', 'Western');
+	}
+
+	# Process adding ServerType specific table folders
+	my ($st_mode, $st_type, $st_param) = Settings::parseServerType($masterServer->{serverType}) if ($master->{serverType} && $master->{serverType} ne '') ;
+	if ($st_mode == 1) {
+		# Holder for new path
+		my @new_tables;
+		# for each table folders path we add our own, whatever it exist or not
+		foreach my $dir ( Settings::getTablesFolders() ) {
+			# If the ServerType is with sub type
+			if (defined($st_param) && $st_param ne '') {
+				push @new_tables, $dir . '\\' . $st_type . '\\' . $st_param;
+			}
+			push @new_tables, $dir . '\\' . $st_type;
+		}
+		# now set up new path to table folders
+		@new_tables = (@new_tables, Settings::getTablesFolders());
+		Settings::setTablesFolders( @new_tables );
+	}
+	
+	# Process adding Custom Table folders
+	if($masterServer->{addTableFolders}) {
+		Settings::addTablesFolders($masterServer->{addTableFolders});
+	}
+	
+	# Process setting custom recvpackets option
+	Settings::setRecvPacketsName($masterServer->{recvpackets} && $masterServer->{recvpackets} ne '' ? $masterServer->{recvpackets} : Settings::getRecvPacketsFilename() );
 }
 
 sub finalInitialization {
