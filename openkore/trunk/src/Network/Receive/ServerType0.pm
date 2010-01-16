@@ -6418,18 +6418,21 @@ sub switch_character {
 }
 
 sub system_chat {
-	my ($self, $args) = @_;
+   my ($self, $args) = @_;
 
-	my $message = bytesToString($args->{message});
-	stripLanguageCode(\$message);
-	chatLog("s", "$message\n") if ($config{logSystemChat});
-	# Translation Comment: System/GM chat
-	message TF("[GM] %s\n", $message), "schat";
-	ChatQueue::add('gm', undef, undef, $message);
+   my $message = bytesToString($args->{message});
+   if (substr($message,0,4) eq 'micc') {
+      $message = bytesToString(substr($args->{message},34));
+   }
+   stripLanguageCode(\$message);
+   chatLog("s", "$message\n") if ($config{logSystemChat});
+   # Translation Comment: System/GM chat
+   message TF("[GM] %s\n", $message), "schat";
+   ChatQueue::add('gm', undef, undef, $message);
 
-	Plugins::callHook('packet_sysMsg', {
-		Msg => $message
-	});
+   Plugins::callHook('packet_sysMsg', {
+      Msg => $message
+   });
 }
 
 sub top10_alchemist_rank {
