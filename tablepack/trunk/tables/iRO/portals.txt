@@ -101,11 +101,11 @@ new_4-2 100 6 new_4-1 144 112
 new_5-2 100 6 new_5-1 144 112
 
 # Training Grounds entrance (iRO)
-#new_1-2 100 29 new_1-2 100 70 0 c a="eval Commands::run ('talk text ' . $Globals::char->name)" c c r0 c c
-#new_2-2 100 29 new_2-2 100 70 0 c a="eval Commands::run ('talk text ' . $Globals::char->name)" c c r0 c c
-#new_3-2 100 29 new_3-2 100 70 0 c a="eval Commands::run ('talk text ' . $Globals::char->name)" c c r0 c c
-#new_4-2 100 29 new_4-2 100 70 0 c a="eval Commands::run ('talk text ' . $Globals::char->name)" c c r0 c c
-#new_5-2 100 29 new_5-2 100 70 0 c a="eval Commands::run ('talk text ' . $Globals::char->name)" c c r0 c c
+new_1-2 100 29 new_1-2 100 70 0 c a="eval Commands::run ('talk text ' . $Globals::char->name)" c c r0 c c
+new_2-2 100 29 new_2-2 100 70 0 c a="eval Commands::run ('talk text ' . $Globals::char->name)" c c r0 c c
+new_3-2 100 29 new_3-2 100 70 0 c a="eval Commands::run ('talk text ' . $Globals::char->name)" c c r0 c c
+new_4-2 100 29 new_4-2 100 70 0 c a="eval Commands::run ('talk text ' . $Globals::char->name)" c c r0 c c
+new_5-2 100 29 new_5-2 100 70 0 c a="eval Commands::run ('talk text ' . $Globals::char->name)" c c r0 c c
 
 new_1-2 126 106 new_1-2 160 171
 new_2-2 126 106 new_2-2 160 171
@@ -137,61 +137,6 @@ new_5-3 96 174 new_5-4 99 10 0 c r0 c
 # Izlude Arena
 arena_room 105 93 prt_are_in 60 14 0 c r0
 prt_are_in 54 13 arena_room 100 77
-
-# Morroc area (before Episode 12)
-#anthell01 35 267 moc_fild04 219 327
-#anthell02 171 169 moc_fild15 258 253
-#moc_fild01 68 16 moc_fild04 314 381
-#moc_fild01 101 16 moc_fild04 314 381
-#moc_fild04 14 122 moc_fild05 384 126
-#moc_fild04 19 206 moc_fild05 378 208
-#moc_fild04 92 381 prt_fild09 246 16
-#moc_fild04 175 18 moc_fild08 170 383
-#moc_fild04 219 327 anthell01 35 267
-#moc_fild04 314 381 moc_fild01 68 16
-#moc_fild04 336 381 moc_fild01 68 16
-#moc_fild05 18 136 moc_fild06 377 316
-#moc_fild05 18 154 moc_fild06 377 316
-#moc_fild05 82 16 moc_fild09 80 369
-#moc_fild05 144 375 prt_fild10 263 20
-#moc_fild05 268 18 moc_fild09 267 371
-#moc_fild05 325 382 prt_fild09 95 16
-#moc_fild05 378 208 moc_fild04 19 206
-#moc_fild05 384 126 moc_fild04 14 122
-#moc_fild06 18 198 moc_fild07 381 201
-#moc_fild06 207 18 moc_fild10 208 298
-#moc_fild06 377 316 moc_fild05 18 154
-#moc_fild07 381 201 moc_fild06 18 198
-#moc_fild08 16 207 moc_fild09 374 195
-#moc_fild08 170 383 moc_fild04 175 18
-#moc_fild08 204 16 moc_fild14 196 382
-#moc_fild08 383 211 moc_fild13 29 171
-#moc_fild09 30 162 moc_fild10 384 258
-#moc_fild09 80 369 moc_fild05 82 16
-#moc_fild09 126 20 moc_fild15 158 363
-#moc_fild09 267 371 moc_fild05 268 18
-#moc_fild09 374 195 moc_fild08 16 207
-#moc_fild10 19 207 morocc 302 207
-#moc_fild10 189 23 moc_fild11 189 363
-#moc_fild10 208 298 moc_fild06 207 18
-#moc_fild10 384 258 moc_fild09 30 162
-#moc_fild11 189 363 moc_fild10 189 23
-#moc_fild11 379 197 moc_fild15 38 105
-#moc_fild13 29 171 moc_fild08 383 211
-#moc_fild14 16 278 moc_fild15 367 276
-#moc_fild14 196 382 moc_fild08 204 16
-#moc_fild15 38 105 moc_fild11 379 197
-#moc_fild15 104 16 moc_fild16 125 383
-#moc_fild15 158 363 moc_fild09 126 20
-#moc_fild15 258 253 anthell01 35 267
-#moc_fild15 348 18 moc_fild16 334 382
-#moc_fild15 367 276 moc_fild14 16 278
-#moc_fild16 125 383 moc_fild15 104 16
-#moc_fild16 334 382 moc_fild15 348 18
-#morocc 302 207 moc_fild10 19 207
-#prt_fild09 95 16 moc_fild05 325 382
-#prt_fild09 246 16 moc_fild04 92 381
-#prt_fild10 263 20 moc_fild05 144 375
 
 # Morroc area (Episode 12)
 anthell01 35 267 moc_fild20 161 144
