@@ -469,7 +469,7 @@ sub onClientData {
 		# '0095' => ['actor_info', 'a4 Z24', [qw(ID name)]],
 		$data .= pack("v1 a4 a24", 0x95, $accountID, 'Poseidon' . (($clientdata{$index}{mode} ? ' Dev' : '')));
 
-		# '009A' => ['system_chat', 'x2 Z*', [qw(message)]],
+		# '009A' => ['system_chat', 'v Z*', [qw(len message)]],
 		$data .= pack("v2 a32", 0x9A, 36, "Welcome to the Poseidon Server!");
 
 		# Show an NPC
