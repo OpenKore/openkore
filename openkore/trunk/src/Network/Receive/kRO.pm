@@ -15,54 +15,8 @@
 # Korea (kRO)
 # The majority of private servers use eAthena, this is a clone of kRO
 package Network::Receive::kRO;
-
 use strict;
-use encoding 'utf8';
-use Carp::Assert;
 
-use base qw(Network::Receive);
-
-use Exception::Class ('Network::Receive::kRO::InvalidServerType', 'Network::Receive::kRO::CreationError');
-
-use Misc;
-use Log qw(debug);
-
-use Translation;
-
-sub new {
-	my ($class) = @_;
-	my $self = $class->SUPER::new(@_);
-	
-	return $self;
-}
-
-##
-# Network::Receive->create(String serverType)
-#
-# Create a new server message parsing object for the specified server type.
-#
-# Throws Network::Receive::InvalidServerType if the specified server type does
-# not exist.
-# Throws Network::Receive::CreationError if some other error occured.
-sub create {
-	my ($self, $type) = @_;
-
-	my $class = "Network::Receive::kRO::" . $type;
-
-	undef $@;
-	eval ("use $class;");
-	if ($@ =~ /^Can't locate /s) {
-		Network::Receive::kRO::InvalidServerType->throw(
-			TF("Cannot load server message parser for server type '%s'.", $type)
-		);
-	} elsif ($@) {
-		Network::Receive::kRO::CreationError->throw(
-			TF("An error occured while loading the server message parser for server type '%s':\n%s",
-				$type, $@)
-		);
-	} else {
-		return $class->new();
-	}
-}
+use base 'Network::Receive';
 
 1;

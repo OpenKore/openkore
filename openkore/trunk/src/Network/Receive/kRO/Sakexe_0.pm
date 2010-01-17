@@ -129,7 +129,7 @@ sub new {
 		'0097' => ['private_message', 'v Z24 Z*', [qw(len privMsgUser privMsg)]], # -1
 		'0098' => ['private_message_sent', 'C', [qw(type)]], # 3
 		# 0x0099 is sent packet
-		'009A' => ['system_chat', 'v Z*', [qw(len message)]], # -1
+		'009A' => ['system_chat', 'v a*', [qw(len message)]], # -1
 		# 0x009B is sent packet
 		'009C' => ['actor_look_at', 'a4 v C', [qw(ID head body)]], # 9
 		'009D' => ['item_exists', 'a4 v C v3 C2', [qw(ID nameID identified x y amount subx suby)]], # 17
@@ -6446,6 +6446,7 @@ sub switch_character {
 	$net->serverDisconnect();
 }
 
+# TODO: known prefixes (chat domains): micc | ssss | ...
 sub system_chat {
    my ($self, $args) = @_;
 

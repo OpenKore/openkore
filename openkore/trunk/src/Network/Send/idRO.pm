@@ -14,8 +14,9 @@
 package Network::Send::idRO;
 
 use strict;
+use base 'Network::Send::ServerType0';
+
 use Globals;
-use base qw(Network::Send::ServerType0);
 use Log qw(error debug);
 use I18N qw(stringToBytes);
 use Utils qw(getTickCount getHex getCoordString);

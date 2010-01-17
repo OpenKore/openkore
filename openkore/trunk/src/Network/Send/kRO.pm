@@ -17,56 +17,7 @@
 package Network::Send::kRO;
 
 use strict;
-use encoding 'utf8';
-use Carp::Assert;
 
-use Network::Send ();
-use base qw(Network::Send);
-
-use Exception::Class ('Network::Send::kRO::ServerTypeNotSupported', 'Network::Send::kRO::CreationException');
-
-use Misc;
-use Log qw(debug);
-
-sub new {
-	my ($class) = @_;
-	return $class->SUPER::new(@_);
-}
-
-##
-# Network::Send->create(net, serverType)
-# net: An object compatible with the '@MODULE(Network)' class.
-# serverType: A server type.
-#
-# Create a new message sender object for the specified server type.
-#
-# Throws Network::Send::ServerTypeNotSupported if the specified server type
-# is not supported.
-# Throws Network::Send::CreationException if the server type is supported, but the
-# message sender object cannot be created.
-sub create {
-	my (undef, $serverType) = @_;
-
-	my $class = "Network::Send::kRO::" . $serverType;
-
-	eval("use $class;");
-	if ($@ =~ /Can\'t locate/) {
-		Network::Send::kRO::ServerTypeNotSupported->throw(error => "Server type '$serverType' not supported.");
-	} elsif ($@) {
-		die $@;
-	}
-
-	my $instance = eval("new $class;");
-	if (!$instance) {
-		Network::Send::kRO::CreationException->throw(
-			error => "Cannot create message sender object for server type '$serverType'.");
-	}
-
-	# $instance->{net} = $net;
-	# $instance->{serverType} = $serverType;
-	# Modules::register($class);
-
-	return $instance;
-}
+use base 'Network::Send';
 
 1;

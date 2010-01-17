@@ -14,7 +14,7 @@
 package Network::Receive::idRO;
 
 use strict;
-use base qw(Network::Receive::ServerType0);
+use base 'Network::Receive::ServerType0';
 
 sub new {
 	my ($class) = @_;

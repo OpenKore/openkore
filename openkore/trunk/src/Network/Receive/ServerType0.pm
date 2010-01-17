@@ -105,7 +105,7 @@ sub new {
 		'0095' => ['actor_info', 'a4 Z24', [qw(ID name)]],
 		'0097' => ['private_message', 'v Z24 Z*', [qw(len privMsgUser privMsg)]],
 		'0098' => ['private_message_sent', 'C', [qw(type)]],
-		'009A' => ['system_chat', 'v Z*', [qw(len message)]], #maybe use a* instead and $message =~ /\000$//; if there are problems
+		'009A' => ['system_chat', 'v a*', [qw(len message)]], #maybe use a* instead and $message =~ /\000$//; if there are problems
 		'009C' => ['actor_look_at', 'a4 C x C', [qw(ID head body)]],
 		'009D' => ['item_exists', 'a4 v C v3 C2', [qw(ID nameID identified x y amount subx suby)]],
 		'009E' => ['item_appeared', 'a4 v C v2 C2 v', [qw(ID nameID identified x y subx suby amount)]],
@@ -6417,6 +6417,7 @@ sub switch_character {
 	$net->serverDisconnect();
 }
 
+# TODO: known prefixes (chat domains): micc | ssss | ...
 sub system_chat {
    my ($self, $args) = @_;
 
