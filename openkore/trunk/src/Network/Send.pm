@@ -101,7 +101,9 @@ sub create {
 	my (undef, $net, $serverType) = @_;
 
 	my ($mode, $type, $param) = Settings::parseServerType ($serverType);
-	my $class = "Network::Send::$type";
+	my $class = "Network::Send::$type" . ($param ? "::$param" : ""); #param like Thor in bRO_Thor
+	
+	debug "[ST send] $class ". " (mode: " . ($mode ? "new" : "old") .")\n";
 
 	eval("use $class;");
 	if ($@ =~ /Can\'t locate/) {
@@ -110,12 +112,8 @@ sub create {
 		die $@;
 	}
 
-	my $instance;
-	if ($mode == 1) {
-		$instance = $class->create($param);
-	} else {
-		$instance = $class->new();
-	}
+	my $instance = $class->new();
+
 	if (!$instance) {
 		Network::Send::CreationException->throw(
 			error => "Cannot create message sender object for server type '$type'.");

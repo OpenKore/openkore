@@ -72,8 +72,10 @@ sub create {
 	my ($self, $serverType) = @_;
 	
 	my ($mode, $type, $param) = Settings::parseServerType ($serverType);
-	my $class = "Network::Receive::$type";
+	my $class = "Network::Receive::$type" . ($param ? "::$param" : ""); #param like Thor in bRO_Thor
 	
+	debug "[ST recv] $class ". " (mode: " . ($mode ? "new" : "old") .")\n";
+
 	undef $@;
 	eval("use $class;");
 	if ($@ =~ /^Can't locate /s) {
@@ -86,13 +88,7 @@ sub create {
 				$type, $@)
 		);
 	} else {
-		if ($mode == 1) {
-			# New ServerType
-			return $class->create($param);
-		} else {
-			# Old ServerType
-			return $class->new();
-		}
+		return $class->new();
 	}
 }
 
