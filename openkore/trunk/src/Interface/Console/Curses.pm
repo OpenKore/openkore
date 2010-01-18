@@ -295,6 +295,16 @@ sub printw {
 	my @text = split(/{([^}]+)}/, $^A);
 	move $win, $line, $col;
 	for (my $i = 0; $i < @text; $i += 2) {
+		if (grep { exists $attrtable{$_} } split /\|/, $text[$i+1]) {
+			addstr $win, $text[$i];
+			attrset $win, A_NORMAL;
+			foreach my $attr (split(/\|/, $text[$i+1])) {
+				attron $win, $attrtable{$attr} if $attrtable{$attr};
+			}
+		} else {
+			addstr $win, $text[$i] . (defined $text[$i+1] ? "{$text[$i+1]}" : '');
+		}
+=pod
 		addstr $win, $text[$i];
 		if ($text[$i+1] ne "") {
 			attrset $win, A_NORMAL;
@@ -302,6 +312,7 @@ sub printw {
 				attron $win, $attrtable{$attr} if $attrtable{$attr};
 			}
 		}
+=cut
 	}
 }
 
