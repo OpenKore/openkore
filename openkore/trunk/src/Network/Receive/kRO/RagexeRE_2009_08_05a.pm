@@ -24,7 +24,7 @@ sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
 	my %packets = (
-		# //0x07e2,8
+		'07E2' => ['message_string', 'v V', [qw(msg_id num)]], # //0x07e2,8
 	);
 
 	foreach my $switch (keys %packets) {

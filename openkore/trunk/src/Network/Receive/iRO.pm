@@ -9,9 +9,9 @@
 #  also distribute the source code.
 #  See http://www.gnu.org/licenses/gpl.html for the full license.
 #########################################################################
-# euRO (Europe)
+# iRO (International)
 # Servertype overview: http://www.openkore.com/wiki/index.php/ServerType
-package Network::Receive::euRO;
+package Network::Receive::iRO;
 
 use strict;
 use base qw(Network::Receive::ServerType0);

@@ -247,7 +247,7 @@ sub new {
 		'010E' => ['skill_update', 'v4 C', [qw(skillID lv sp range up)]], # 11 # range = skill range, up = this skill can be leveled up further
 		'010F' => ['skills_list'], # -1
 		# 0x0110 # TODO
-		'0111' => ['linker_skill', 'v V v3 Z24 C', [qw(skillID target lv sp range name upgradable)]], # 39
+		'0111' => ['skill_add', 'v V v3 Z24 C', [qw(skillID target lv sp range name upgradable)]], # 39
 		# 0x0112 is sent packet
 		# 0x0113 is sent packet
 		'0114' => ['skill_use', 'v a4 a4 V3 v3 C', [qw(skillID sourceID targetID tick src_speed dst_speed damage level option type)]], # 31
@@ -5781,7 +5781,7 @@ sub skills_list {
 	}
 }
 
-sub linker_skill {
+sub skill_add {
 	my ($self, $args) = @_;
 
 	return unless changeToInGameState();
@@ -5805,6 +5805,19 @@ sub linker_skill {
 		handle => $handle,
 		level => $args->{lv},
 	});
+}
+
+# TODO: test (ex. with a rogue using plagiarism)
+sub skill_delete {
+	my ($self, $args) = @_;
+
+	return unless changeToInGameState();
+	my $handle = Skill->new(idn => $args->{skillID})->getName();
+
+	delete $char->{skills}{$handle};
+	binRemove(\@skillsID, $handle);
+	
+	# i guess we don't have to remove it from Skill::DynamicInfo
 }
 
 sub stats_added {
