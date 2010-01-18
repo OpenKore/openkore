@@ -52,7 +52,7 @@ ip 84.14.101.102
 port 6900
 master_version 31
 version 1
-serverType 0
+serverType fRO
 serverEncoding Western
 secureLogin 1
 secureLogin_type 0
@@ -62,7 +62,7 @@ ip 202.92.9.35
 port 6900
 version 1
 master_version 21
-serverType 0
+serverType inRO
 secureLogin 1
 secureLogin_type 0
 secureLogin_requestCode
@@ -90,12 +90,11 @@ ip 38.144.194.2
 port 6900
 master_version 1
 version 18
-serverType 22
+serverType iRO
 serverEncoding Western
 paddedPackets 0
 paddedPackets_attackID 0x72
 paddedPackets_skillUseID 0xF5
-recvpackets recvpackets-iro.txt
 patchserver ewpatch.ragnarok.co.kr
 patchpath /patch02
 
@@ -104,24 +103,22 @@ ip 38.144.194.2
 port 6900
 master_version 14
 version 18
-serverType 22
+serverType iRO
 serverEncoding Western
 paddedPackets 0
 paddedPackets_attackID 0x72
 paddedPackets_skillUseID 0xF5
-recvpackets recvpackets-iro.txt
 
 [International - iRO: Valkyrie]
 ip valkyrie-login.ragnarok.games.gravityus.com
 port 6900
 master_version 1
 version 18
-serverType 22
+serverType iRO
 serverEncoding Western
 paddedPackets 0
 paddedPackets_attackID 0x72
 paddedPackets_skillUseID 0xF5
-recvpackets recvpackets-iro.txt
 patchserver ewpatch.ragnarok.co.kr
 patchpath /patch02
 
@@ -162,7 +159,7 @@ ip 202.71.105.21
 port 6900
 master_version 16
 version 1004
-serverType 22
+serverType mRO
 serverEncoding Western
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
 
@@ -171,7 +168,7 @@ ip 202.71.105.23
 port 6900
 master_version 17
 version 1004
-serverType 22
+serverType mRO
 serverEncoding Western
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
 
@@ -180,18 +177,17 @@ ip 202.71.105.29
 port 6900
 master_version 17
 version 211
-serverType 22
+serverType mRO
 serverEncoding Western
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
 PINEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
-recvpackets recvpackets-iro.txt
 
 [Malaysia - mRO: Sakray]
 ip 202.71.105.27
 port 6900
 master_version 16
 version 102
-serverType 22
+serverType mRO
 serverEncoding Western
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
 
@@ -210,7 +206,6 @@ patchpath /patch50
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x0E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
 serverEncoding Tagalog
 charBlockSize 108
-recvpackets recvpackets-pro.txt
 
 [Philippines - pRO: Valhalla]
 ip 202.57.118.234
@@ -228,7 +223,6 @@ storageEncryptKey 0x050B6F79, 0x0202C179, 0x0E20120, 0x04FA43E3, 0x0179B6C8, 0x0
 serverEncoding Tagalog
 charBlockSize 108
 gameGuard 1
-recvpackets recvpackets-pro.txt
 
 [Philippines - pRO: Valkyrie]
 ip 202.57.118.235
@@ -246,7 +240,6 @@ storageEncryptKey 0x050B6F79, 0x0202C179, 0x0E20120, 0x04FA43E3, 0x0179B6C8, 0x0
 serverEncoding Tagalog
 charBlockSize 108
 gameGuard 1
-recvpackets recvpackets-pro.txt
 
 [Philippines - pRO: Sakray]
 ip 202.57.118.232
@@ -257,13 +250,13 @@ secureLogin 1
 secureLogin_type 0
 secureLogin_requestCode
 secureLogin_account 0
-serverType 22
+serverType pRO
 patchserver wpatch.ragnarok.com.ph
 patchpath /patch50
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x0E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
 serverEncoding Tagalog
 charBlockSize 108
-recvpackets recvpackets-pro-sakray.txt
+recvpackets recvpackets-sakray.txt
 
 ## http://www.raggame.ru/
 [Russia - rRO]
@@ -284,7 +277,7 @@ ip 61.220.60.11
 port 6900
 master_version 5
 version 211
-serverType 21
+serverType twRO
 serverEncoding Traditional Chinese
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
 recvpackets recvpackets-twRO-office.txt
@@ -294,7 +287,7 @@ ip 220.130.113.238
 port 6900
 master_version 5
 version 211
-serverType 22
+serverType twRO
 serverEncoding Traditional Chinese
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
 PINEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
@@ -305,7 +298,7 @@ ip 61.220.56.47
 port 6900
 master_version 5
 version 211
-serverType 22
+serverType twRO
 serverEncoding Traditional Chinese
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
 PINEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
@@ -317,7 +310,7 @@ ip 203.144.244.5
 port 6900
 master_version 7
 version 24
-serverType 21
+serverType tRO
 secureLogin 3
 secureLogin_type 0
 secureLogin_account 0
@@ -325,14 +318,13 @@ gameLogin_packet 0x275
 patchserver wpatch.ragnarok.in.th
 patchpath /patch70
 serverEncoding Thai
-recvpackets recvpackets-tro.txt
 
 [Thailand - tRO Free life server (Alice(new), Poring)]
 ip 203.144.244.121
 port 6900
 master_version 7
 version 24
-serverType 21
+serverType tRO
 secureLogin 3
 secureLogin_type 0
 secureLogin_account 0
@@ -341,14 +333,13 @@ pauseCharServer 1
 patchserver wpatch.ragnarok.in.th
 patchpath /patch70
 serverEncoding Thai
-recvpackets recvpackets-tro.txt
 
 [Thailand - tRO Free life server (Yoyo, Picky)]
 ip 203.144.244.100
 port 6900
 master_version 7
 version 24
-serverType 21
+serverType tRO
 secureLogin 3
 secureLogin_type 0
 secureLogin_account 0
@@ -356,7 +347,6 @@ gameLogin_packet 0x275
 patchserver wpatch.ragnarok.in.th
 patchpath /patch70
 serverEncoding Thai
-recvpackets recvpackets-tro.txt
 
 ## http://www.rovietnam.com.vn/
 [Vietnam - vRO: SD]
@@ -411,4 +401,4 @@ version 20
 serverType kRO_Sakexe_2009_04_08a # rmsserver-2009-06-17a.exe
 serverEncoding Western
 charBlockSize 112
-recvpackets recvpackets_RMS.txt
+addTableFolders tables\pserver\RMS
