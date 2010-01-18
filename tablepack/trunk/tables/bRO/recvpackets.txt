@@ -1,5 +1,5 @@
 #Generated using JCV's Packet-Extractor v.1.0.35        
-#Packets Extracted last [1/18/2010] - 1:35:01 AM
+#Packets Extracted last [1/18/2010] - 12:45:42 PM
 0064 55
 0065 17
 0066 3
@@ -266,7 +266,7 @@
 0169 3
 0169 3
 016A 30
-016B 43
+016B 10
 016C 43
 016D 14
 016E 186
@@ -1019,3 +1019,10 @@
 07F8 0
 07F9 0
 07FA 8
+07FB 25
+07FC 10
+07FD 0
+07FE 26
+07FF 0
+0800 0
+0801 0
