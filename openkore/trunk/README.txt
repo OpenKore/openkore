@@ -3,6 +3,7 @@
 =========================
 
 Features:
+- New ServerTypes and localized tables for official servers (kLabMouse, Technology, h4rry_84, EternalHarvest)
 - A lot of changes and additions in network, kRO ServerType tree (Technology)
 - Additions in Wx interface, including captcha input dialog (EternalHarvest)
 - "party request PlayerName" (EternalHarvest)
@@ -23,6 +24,9 @@ Translation updates by:
 - Mushroom (Portuguese)
 
 Fixes:
+- New vender packet (Technology)
+- Incoming ingame mail message (Technology)
+- cities.txt update (help_us)
 - Crash after font change in Wx (Technology)
 - Hotkey packets in XKore 2 (Zloba)
 - tankMode for homunculi and mercenaries (Technology)
