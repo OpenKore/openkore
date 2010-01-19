@@ -30,6 +30,7 @@ use Globals;
 use Utils;
 use base qw(Interface::Console);
 use Modules;
+use Settings qw/%sys/;
 
 use constant MAXHISTORY => 50;
 
@@ -490,6 +491,29 @@ sub updateObjects {
 	my $namelen = $self->{winObjectsWidth} - 8;
 	erase $self->{winObjects};
 
+	for (split /\s*,\s*/, ($sys{curses_objects} || 'players, monsters, items, npcs')) {
+		my ($objectsID, $objects, $style);
+		if (/^players$/) {
+			($objectsID, $objects, $style) = (\@playersID, \%players, 'cyan');
+		} elsif (/^monsters$/) {
+			($objectsID, $objects, $style) = (\@monstersID, \%monsters, 'red');
+		} elsif (/^items$/) {
+			($objectsID, $objects, $style) = (\@itemsID, \%items, 'green');
+		} elsif (/^npcs$/) {
+			($objectsID, $objects, $style) = (\@npcsID, \%npcs, 'blue');
+		} else {
+			next;
+		}
+		for (my $i = 0; $i < @$objectsID && $line < $self->{winObjectsHeight}; $i++) {
+			my $id = $objectsID->[$i];
+			next if ($id eq "");
+			$self->printw($self->{winObjects}, $line++, 0, "{bold|$style}@# {$style}@".("<"x$namelen)." {normal}@#",
+				$i, $objects->{$id}->name, distance($char->{pos}, $objects->{$id}{pos})
+			);
+		}
+	}
+
+=pod
 	# Players
 	for (my $i = 0; $i < @playersID && $line < $self->{winObjectsHeight}; $i++) {
 		my $id = $playersID[$i];
@@ -525,6 +549,7 @@ sub updateObjects {
 		my $dist = distance($char->{pos}, $npcs{$id}{pos});
 		$self->printw($self->{winObjects}, $line++, 0, "{bold|blue}@# {blue}@".("<"x$namelen)." {normal}@#", $i, $name, $dist);
 	}
+=cut
 
 	noutrefresh $self->{winObjects};
 }
