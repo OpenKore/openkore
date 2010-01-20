@@ -32,7 +32,7 @@ gameGuard 2
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x0E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
 
 [Europe - euRO]
-ip 217.68.157.42
+ip accsrv.euro-ro.net
 port 6900
 master_version 20
 version 1
@@ -86,7 +86,7 @@ serverEncoding Western
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x007D8D6B, 0x08CB9ED9
 
 [International - iRO: Chaos/Loki/Iris]
-ip 38.144.194.2
+ip main-login.ragnarok.games.gravityus.com
 port 6900
 master_version 1
 version 18
@@ -384,7 +384,7 @@ paddedPackets_skillUseID 0x0089
 # Private RO Servers
 
 [Localhost]
-ip 127.0.0.1
+ip localhost
 port 6900
 private 1
 master_version 1
@@ -393,7 +393,7 @@ serverType kRO_RagexeRE_2009_11_04a
 serverEncoding Western
 
 [RMS]
-ip 69.197.158.197
+ip da4.ratemyserver.net
 port 6900
 private 1
 master_version 16
