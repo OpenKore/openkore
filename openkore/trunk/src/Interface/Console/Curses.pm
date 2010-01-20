@@ -68,6 +68,20 @@ sub new {
 
 	$self->{time_start} = time;
 
+	$self->{revision} = Settings::getSVNRevision;
+	$self->{revision} = " (r$self->{revision})" if defined $self->{revision};
+
+	$self->{loading} = {
+		current => 0,
+		total => 1,
+		text => 'Initializing',
+	};
+
+	$self->{loadingHooks} = Plugins::addHooks (
+		['loadfiles', sub { $self->loadfiles (@_); }],
+		['postloadfiles', sub { $self->loadfiles (@_); }],
+	);
+
 	return \%interface;
 }
 
@@ -454,7 +468,27 @@ sub updatePopups {
 sub updateStatus {
 	my $self = shift;
 
-	return if (!$char || !$self->{winStatus});
+	return unless $self->{winStatus};
+
+	if ($self->{loading} && $self->{loading}{finish} != 2) {
+		erase $self->{winStatus};
+		my $width = int($self->{winStatusWidth});
+		my $title = "$Settings::NAME ${Settings::VERSION}$self->{revision}";
+		$self->printw($self->{winStatus}, 0, 0, "{bold|yellow}          @*{bold|blue} @".(">"x($width - length ($title) - 20)),
+			$title, $Settings::WEBSITE);
+		my $loadingbar = $self->makeBar($width-18, $self->{loading}{current}, $self->{loading}{total});
+		$self->printw($self->{winStatus}, 1, 0, " {bold|green}Loading: $loadingbar (@##%)",
+			$self->{loading}{current} ? $self->{loading}{current} / $self->{loading}{total} * 100 : 0);
+		$self->printw($self->{winStatus}, 2, 0, "{green}          @*",
+			$self->{loading}{text});
+		
+		$self->{loading}{finish} = 2 if $self->{loading}{finish};
+		
+		noutrefresh $self->{winStatus};
+		return;
+	}
+
+	return unless $char;
 
 	erase $self->{winStatus};
 	my $width = int($self->{winStatusWidth} / 2);
@@ -467,8 +501,30 @@ sub updateStatus {
 	my $jexpbar = $self->makeBar($width-24, $char->{exp_job}, $char->{exp_job_max});
 	$self->printw($self->{winStatus}, 2, 0, "{bold|yellow}    Job:{normal} @<< $jexpbar (@#.##%)",
 		$char->{lv_job}, $char->{exp_job_max} ? $char->{exp_job} / $char->{exp_job_max} * 100 : 0);
-	$self->printw($self->{winStatus}, 3, 0, "{bold|yellow}    Map:{normal} @* (@*,@*)",
-		$field{name}, $char->{pos}{x}, $char->{pos}{y});
+	
+	my ($i, $args);
+	for (reverse 0 .. @AI::ai_seq - 1) {
+		if ($AI::ai_seq[$_] eq 'route') {
+			$i = $_;
+			$args = AI::args ($i);
+			last;
+		}
+	}
+	if ($char && defined $i) {
+		if ($args->{dest}{map} eq $field{name}) {
+			$self->printw($self->{winStatus}, 3, 0, "{bold|yellow}    Map:{normal} @* (@*,@*) => (@*,@*)",
+				$field{name}, $char->{pos}{x}, $char->{pos}{y}, $args->{dest}{pos}{x}, $args->{dest}{pos}{y});
+		} elsif (!defined $args->{dest}{pos}{x}) {
+			$self->printw($self->{winStatus}, 3, 0, "{bold|yellow}    Map:{normal} @* (@*,@*) => @*",
+				$field{name}, $char->{pos}{x}, $char->{pos}{y}, $args->{dest}{map});
+		} else {
+			$self->printw($self->{winStatus}, 3, 0, "{bold|yellow}    Map:{normal} @* (@*,@*) => @* (@*,@*)",
+				$field{name}, $char->{pos}{x}, $char->{pos}{y}, $args->{dest}{map}, $args->{dest}{pos}{x}, $args->{dest}{pos}{y});
+		}
+	} else {
+		$self->printw($self->{winStatus}, 3, 0, "{bold|yellow}    Map:{normal} @* (@*,@*)",
+			$field{name}, $char->{pos}{x}, $char->{pos}{y});
+	}
 
 	vline $self->{winStatus}, 0, $width-1, 0, $self->{winStatusHeight};
 	my $hpbar = $self->makeBar($width-29, $char->{hp}, $char->{hp_max}, "bold|red", 15, "bold|green");
@@ -633,6 +689,29 @@ sub setCursor {
 	move $LINES - 1, $pos;
 	noutrefresh;
 	doupdate;
+}
+
+sub loadfiles {
+	my ($self, $hook, $param) = @_;
+	
+	if ($hook eq 'loadfiles') {
+		$self->{loading} = {
+			current => $param->{current},
+			total => scalar @{$param->{files}},
+			text => $param->{files}[$param->{current} - 1]{name},
+		};
+	} else {
+		Plugins::delHooks ($self->{loadingHooks});
+		delete $self->{loadingHooks};
+		$self->{loading} = {
+			current => 1,
+			total => 1,
+			text => 'Ready',
+			finish => 1,
+		};
+	}
+	
+	$self->updateStatus;
 }
 
 1;
