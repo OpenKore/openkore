@@ -248,6 +248,14 @@ sub readEvents {
 			# Toggle chat window
 			$self->toggleWindow("Chat");
 			$self->updateLayout;
+		} elsif (ord($ch) == 18) {
+			# Ctrl+R
+			# Display skills
+			$self->{objectsMode} = $self->{objectsMode} eq 'skills' ? undef : 'skills';
+		} elsif (ord($ch) == 5) {
+			# Ctrl+E
+			# Display inventory
+			$self->{objectsMode} = $self->{objectsMode} eq 'inventory' ? undef : 'inventory';
 		} elsif (ord($ch) >= 32 && ord($ch) <= 126) {
 			# Normal character
 			$self->{inputBuffer} = substr($self->{inputBuffer}, 0, $self->{inputPos}) . $ch . substr($self->{inputBuffer}, $self->{inputPos});
@@ -486,29 +494,64 @@ sub updateObjects {
 	my $self = shift;
 
 	return if (!$self->{winObjects});
+	return unless $char;
 
 	my $line = 0;
-	my $namelen = $self->{winObjectsWidth} - 8;
+	my $namelen = $self->{winObjectsWidth} - 9;
 	erase $self->{winObjects};
 
-	for (split /\s*,\s*/, ($sys{curses_objects} || 'players, monsters, items, npcs')) {
-		my ($objectsID, $objects, $style);
-		if (/^players$/) {
+	my $display = $self->{objectsMode} ? $self->{objectsMode} : $sys{curses_objects} || 'players, monsters, items, npcs';
+	
+	for (split /\s*,\s*/, $display) {
+		my ($objectsID, $objects, $style) = ([], {}, 'normal');
+		if ($_ eq 'players') {
 			($objectsID, $objects, $style) = (\@playersID, \%players, 'cyan');
-		} elsif (/^monsters$/) {
+		} elsif ($_ eq 'monsters') {
 			($objectsID, $objects, $style) = (\@monstersID, \%monsters, 'red');
-		} elsif (/^items$/) {
+		} elsif ($_ eq 'items') {
 			($objectsID, $objects, $style) = (\@itemsID, \%items, 'green');
-		} elsif (/^npcs$/) {
+		} elsif ($_ eq 'npcs') {
 			($objectsID, $objects, $style) = (\@npcsID, \%npcs, 'blue');
+		} elsif ($_ eq 'skills') {
+			($objectsID, $objects, $style) = (\@skillsID, $char->{skills}, 'cyan');
+		} elsif ($_ eq 'inventory') {
+			for my $item (@{$char->inventory->getItems}) {
+				$objectsID->[$item->{invIndex}] = $item->{invIndex};
+				$objects->{$item->{invIndex}} = $item;
+			}
+			$style = 'normal';
 		} else {
 			next;
 		}
 		for (my $i = 0; $i < @$objectsID && $line < $self->{winObjectsHeight}; $i++) {
 			my $id = $objectsID->[$i];
 			next if ($id eq "");
-			$self->printw($self->{winObjects}, $line++, 0, "{bold|$style}@# {$style}@".("<"x$namelen)." {normal}@#",
-				$i, $objects->{$id}->name, distance($char->{pos}, $objects->{$id}{pos})
+			
+			my $lineStyle = $style;
+			if ($_ eq 'players') {
+				$lineStyle = 'yellow' if $char->{party}{users}{$id};
+			} elsif ($_ eq 'skills') {
+				$lineStyle = 'normal' unless $objects->{$id}{sp};
+				$lineStyle = 'blue' unless $objects->{$id}{lv} || $objects->{$id}{up};
+			} elsif ($_ eq 'inventory') {
+				if ($objects->{$id}{type} <= 2) {
+					$lineStyle = 'green';
+				} elsif ($objects->{$id}{equipped}) {
+					$lineStyle = 'cyan';
+				} elsif ($objects->{$id}{type} !~ /^3|6|10|16|17$/) {
+					$lineStyle = 'blue';
+				}
+			}
+			
+			$self->printw($self->{winObjects}, $line++, 0, "{bold|$lineStyle}@## {$lineStyle}@".("<"x$namelen)." {normal}@#",
+				$_ eq 'skills' ? ($objects->{$id}{ID}, Skill->new (handle => $id)->getName, $objects->{$id}{lv})
+				: $_ eq 'inventory' ? ($i, $objects->{$id}{name}, $objects->{$id}{amount})
+				: ($i, $objects->{$id}->name, distance($char->{pos}, $objects->{$id}{pos}))
+			);
+		}
+		if ($_ eq 'skills' && $line < $self->{winObjectsHeight}) {
+			$self->printw($self->{winObjects}, $line++, 0, "    {red}@".("<"x$namelen)." {bold|red}@#",
+				'Skill Points', $char->{points_skill}
 			);
 		}
 	}
