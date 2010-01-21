@@ -3639,11 +3639,13 @@ sub cmdPlugin {
 
 		} elsif ($args[1] eq 'all') {
 			foreach my $plugin (@Plugins::plugins) {
+				next unless $plugin;
 				push @names, $plugin->{name};
 			}
 
 		} else {
 			foreach my $plugin (@Plugins::plugins) {
+				next unless $plugin;
 				if ($plugin->{name} =~ /$args[1]/i) {
 					push @names, $plugin->{name};
 				}
@@ -3690,6 +3692,7 @@ sub cmdPlugin {
 
 		} else {
 			foreach my $plugin (@Plugins::plugins) {
+				next unless $plugin;
 				if ($plugin->{name} =~ /$args[1]/i) {
 					my $name = $plugin->{name};
 					Plugins::unload($name);
