@@ -53,6 +53,9 @@ sub new {
 		['packet/use_item', sub {
 			$self->onItemsChanged ($_[1]{index})
 		}],
+		['packet/mail_send', sub {
+			$self->update
+		}],
 	);
 	
 	$self->_addCallbacks;
@@ -164,6 +167,7 @@ sub _onRightClick {
 	
 	push @menu, {title => 'Move all to cart', callback => sub { $self->_onCart; }} if $canCart;
 	push @menu, {title => 'Move all to storage', callback => sub { $self->_onStorage; }} if $canStorage;
+	push @menu, {title => 'Sell all', callback => sub { $self->_onSell; }};
 	
 	$self->contextMenu (\@menu);
 }
@@ -200,6 +204,12 @@ sub _onStorage {
 	foreach ($self->getSelection) {
 		Commands::run ('storage add ' . $_->{invIndex});
 	}
+}
+
+sub _onSell {
+	my ($self) = @_;
+	
+	Commands::run ('sell ' . (join ',', map { $_->{invIndex} } $self->getSelection) . ';;sell done');
 }
 
 sub _onDropOne {
