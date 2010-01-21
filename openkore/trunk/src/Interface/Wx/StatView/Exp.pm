@@ -94,42 +94,6 @@ sub update {
 	$self->Thaw;
 }
 
-=pod
-	if (($arg1 eq "monster") || ($arg1 eq "report")) {
-		my $total;
- 
-		$knownArg = 1;
-
-		message T("-[Monster Killed Count]-----------------------\n" .
-			"#   ID     Name                      Count\n"), "list";
-		for (my $i = 0; $i < @monsters_Killed; $i++) {
-			next if ($monsters_Killed[$i] eq "");
-			message(swrite(
-				"@<< @<<<<< @<<<<<<<<<<<<<<<<<<<<<< @<<<<< ",
-				[$i, $monsters_Killed[$i]{nameID}, $monsters_Killed[$i]{name}, $monsters_Killed[$i]{count}]),
-				"list");
-			$total += $monsters_Killed[$i]{count};
-		}
-		message("----------------------------------------------\n" .
-			TF("Total number of killed monsters: %s\n", $total) .
-			"----------------------------------------------\n",
-			"list");
-	}
-
-	if (($arg1 eq "item") || ($arg1 eq "report")) {
-		$knownArg = 1;
-
-		message T("-[Item Change Count]--------------------------\n" .
-			"Name                                    Count\n"), "list";
-		for my $item (sort keys %itemChange) {
-			next unless $itemChange{$item};
-			message(sprintf("%-40s %5d\n", $item, $itemChange{$item}), "list");
-		}
-		message("----------------------------------------------\n", "list");
-
-	}
-=cut
-
 sub _onControl {
 	my ($self, $key) = @_;
 	
