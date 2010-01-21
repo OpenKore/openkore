@@ -429,6 +429,12 @@ sub createMenuBar {
 	$self->addMenu($opMenu, T('Copy Last 100 Lines of Text'), \&onCopyLastOutput);
 	$self->addMenu($opMenu, T('Minimize to &Tray'), \&onMinimizeToTray, T('Minimize to a small task bar tray icon'));
 	$opMenu->AppendSeparator;
+	$self->addMenu($opMenu, T('Respawn'), sub { Commands::run ("respawn") }, T('Teleport to save point'));
+	$self->addMenu($opMenu, T('&Relog'), sub { Commands::run ("relog") }, T('Disconnect and reconnect'));
+	$self->addMenu($opMenu, T('&Character Select'), sub {
+		configModify ('char', undef, 1);
+		Commands::run ("charselect");
+	}, T('Exit to the character selection screen'));
 	$self->addMenu($opMenu, T('E&xit') . "\tCtrl-W", \&quit, T('Exit this program'));
 	$menu->Append($opMenu, T('P&rogram'));
 
@@ -474,12 +480,19 @@ sub createMenuBar {
 	
 	$viewMenu->AppendSeparator;
 	
-	$self->addMenu ($viewMenu, T('&Font...'), \&onFontChange, T('Change console font'));
+	$self->addMenu($viewMenu, T('&Experience Report') . "\tCtrl+E", sub {
+		$self->openWindow ('Report', 'Interface::Wx::StatView::Exp', 1) 
+	});
 	
 	$viewMenu->AppendSeparator;
 	
+	$self->addMenu ($viewMenu, T('&Font...'), \&onFontChange, T('Change console font'));
 	$self->addMenu($viewMenu, T('Clear Console'), sub {my $self = shift; $self->{console}->Remove(0, 40000)}, T('Clear content of console'));
+	
 	$menu->Append($viewMenu, T('&View'));
+	
+	$self->{aliasMenu} = new Wx::Menu;
+	$menu->Append ($self->{aliasMenu}, T('&Alias'));
 	
 	# Settings menu
 	my $settingsMenu = new Wx::Menu;
@@ -909,6 +922,15 @@ sub onMenuOpen {
 	
 	while (my ($setting, $menu) = each (%{$self->{mBooleanSetting}})) {
 		$menu->Check ($config{$setting} ? 1 : 0);
+	}
+	
+	my $menu;
+	while ($menu = $self->{aliasMenu}->FindItemByPosition (0)) {
+		$self->{aliasMenu}->Delete ($menu);
+	}
+	
+	for $menu (sort map {/^alias_(.+)$/} keys %config) {
+		$self->addMenu ($self->{aliasMenu}, $menu, sub { Commands::run ($menu) });
 	}
 }
 
