@@ -502,28 +502,31 @@ sub updateStatus {
 	$self->printw($self->{winStatus}, 2, 0, "{bold|yellow}    Job:{normal} @<< $jexpbar (@#.##%)",
 		$char->{lv_job}, $char->{exp_job_max} ? $char->{exp_job} / $char->{exp_job_max} * 100 : 0);
 	
+	my $mapTitle = $cities_lut{$field{name}.'.rsw'} ? 'City' : 'Map';
+	
 	my ($i, $args);
-	for (reverse 0 .. @AI::ai_seq - 1) {
-		if ($AI::ai_seq[$_] eq 'route') {
-			$i = $_;
-			$args = AI::args ($i);
-			last;
-		}
-	}
-	if ($char && defined $i) {
-		if ($args->{dest}{map} eq $field{name}) {
-			$self->printw($self->{winStatus}, 3, 0, "{bold|yellow}    Map:{normal} @* (@*,@*) => (@*,@*)",
-				$field{name}, $char->{pos}{x}, $char->{pos}{y}, $args->{dest}{pos}{x}, $args->{dest}{pos}{y});
-		} elsif (!defined $args->{dest}{pos}{x}) {
-			$self->printw($self->{winStatus}, 3, 0, "{bold|yellow}    Map:{normal} @* (@*,@*) => @*",
-				$field{name}, $char->{pos}{x}, $char->{pos}{y}, $args->{dest}{map});
-		} else {
-			$self->printw($self->{winStatus}, 3, 0, "{bold|yellow}    Map:{normal} @* (@*,@*) => @* (@*,@*)",
-				$field{name}, $char->{pos}{x}, $char->{pos}{y}, $args->{dest}{map}, $args->{dest}{pos}{x}, $args->{dest}{pos}{y});
-		}
+	if ('' ne ($i = AI::findAction ('attack')) and $args = AI::args ($i) and $args = Actor::get ($args->{ID})) {
+		$self->printw($self->{winStatus}, 3, 0, "{bold|yellow} @>>>>>:{normal} @* (@*,@*) => {red}@*{normal}",
+			$mapTitle, $field{name}, $char->{pos}{x}, $char->{pos}{y}, $args->name);
+	} elsif ('' ne ($i = AI::findAction ('follow')) and $args = AI::args ($i) and $args->{following} || $args->{ai_follow_lost}) {
+		$self->printw($self->{winStatus}, 3, 0, "{bold|yellow} @>>>>>:{normal} @* (@*,@*) => {cyan}@*{normal}",
+			$mapTitle, $field{name}, $char->{pos}{x}, $char->{pos}{y}, $args->{name});
 	} else {
-		$self->printw($self->{winStatus}, 3, 0, "{bold|yellow}    Map:{normal} @* (@*,@*)",
-			$field{name}, $char->{pos}{x}, $char->{pos}{y});
+		if ('' ne ($i = Utils::DataStructures::binFindReverse (\@AI::ai_seq, 'route')) and $args = AI::args ($i)) {
+			if ($args->{dest}{map} eq $field{name}) {
+				$self->printw($self->{winStatus}, 3, 0, "{bold|yellow} @>>>>>:{normal} @* (@*,@*) => (@*,@*)",
+					$mapTitle, $field{name}, $char->{pos}{x}, $char->{pos}{y}, $args->{dest}{pos}{x}, $args->{dest}{pos}{y});
+			} elsif (!defined $args->{dest}{pos}{x}) {
+				$self->printw($self->{winStatus}, 3, 0, "{bold|yellow} @>>>>>:{normal} @* (@*,@*) => @*",
+					$mapTitle, $field{name}, $char->{pos}{x}, $char->{pos}{y}, $args->{dest}{map});
+			} else {
+				$self->printw($self->{winStatus}, 3, 0, "{bold|yellow} @>>>>>:{normal} @* (@*,@*) => @* (@*,@*)",
+					$mapTitle, $field{name}, $char->{pos}{x}, $char->{pos}{y}, $args->{dest}{map}, $args->{dest}{pos}{x}, $args->{dest}{pos}{y});
+			}
+		} else {
+			$self->printw($self->{winStatus}, 3, 0, "{bold|yellow} @>>>>>:{normal} @* (@*,@*)",
+				$mapTitle, $field{name}, $char->{pos}{x}, $char->{pos}{y});
+		}
 	}
 
 	vline $self->{winStatus}, 0, $width-1, 0, $self->{winStatusHeight};
