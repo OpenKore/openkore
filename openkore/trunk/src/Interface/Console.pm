@@ -33,7 +33,28 @@ use Modules;
 sub new {
 	# Automatically load the correct module for
 	# the current operating system
+	
+	my $mod = 'Interface::Console::Simple';
+	
+	if ($^O eq 'MSWin32') {
+		$mod = 'Interface::Console::Win32';
+	} elsif ($^O eq 'linux' || $^O eq 'darwin') {
+		$mod = 'Interface::Console::Unix';
+	} else {
+		# Other Unix. For some reason Readline doesn't work correctly
+		# on FreeBSD.
+		
+		# Load Curses, if available, because Simple has bad keyboard input handling
+		eval 'use Curses';
+		$mod = 'Interface::Console::Curses' unless $@;
+	}
+	
+	eval "use $mod";
+	die $@ if $@;
+	Modules::register ($mod);
+	return $mod->new;
 
+=pod
 	if ($^O eq 'MSWin32') {
 		eval "use Interface::Console::Win32;";
 		die $@ if $@;
@@ -58,6 +79,7 @@ sub new {
 		Modules::register($mod);
 		return new Interface::Console::Simple();
 	}
+=cut
 }
 
 sub beep {
