@@ -83,6 +83,9 @@ sub loadAll {
 	if (!exists $sys{'loadPlugins'}) {
 		message T("Loading all plugins (by default)...\n", 'plugins');
 		$condition = \&c_loadAll;
+	} elsif (!$sys{'loadPlugins'}) {
+		message T("Automatic loading of plugins disabled\n", 'plugins');
+		return;
 	} elsif ($sys{'loadPlugins'} eq '1') {
 		message T("Loading all plugins...\n", 'plugins');
 		$condition = \&c_loadAll;
@@ -92,9 +95,6 @@ sub loadAll {
 	} elsif ($sys{'loadPlugins'} eq '3') {
 		message T("Selectively skipping plugins...\n", 'plugins');
 		$condition = \&c_loadNotSelected;
-	} elsif (!$sys{'loadPlugins'}) {
-		message T("Automatic loading of plugins disabled\n", 'plugins');
-		return;
 	}
 
 	my @folders = Settings::getPluginsFolders();
