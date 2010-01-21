@@ -37,7 +37,7 @@ use Utils qw(stringToQuark quarkToString);
 use Utils::DataStructures qw(binAdd existsInList);
 use Utils::ObjectList;
 use Utils::Exceptions;
-use Log qw(message);
+use Log qw(message warning);
 use Translation qw(T TF);
 use Settings qw(%sys);
 
@@ -79,68 +79,52 @@ use enum qw(CALLBACK USER_DATA);
 # Throws Plugin::DeniedException if the plugin system refused to load a plugin. This can
 # happen, for example, if it detects that a plugin is incompatible.
 sub loadAll {
+	my $condition;
 	if (!exists $sys{'loadPlugins'}) {
 		message T("Loading all plugins (by default)...\n", 'plugins');
+		$condition = \&c_loadAll;
+	} elsif ($sys{'loadPlugins'} eq '1') {
+		message T("Loading all plugins...\n", 'plugins');
+		$condition = \&c_loadAll;
+	} elsif ($sys{'loadPlugins'} eq '2') {
+		message T("Selectively loading plugins...\n", 'plugins');
+		$condition = \&c_loadSelected;
+	} elsif ($sys{'loadPlugins'} eq '3') {
+		message T("Selectively skipping plugins...\n", 'plugins');
+		$condition = \&c_loadNotSelected;
 	} elsif (!$sys{'loadPlugins'}) {
 		message T("Automatic loading of plugins disabled\n", 'plugins');
 		return;
-	} elsif ($sys{'loadPlugins'} eq '1') {
-		message T("Loading all plugins...\n", 'plugins');
-	} elsif ($sys{'loadPlugins'} eq '2') {
-		message T("Selectively loading plugins...\n", 'plugins');
-	} elsif ($sys{'loadPlugins'} eq '3') {
-		message T("Selectively skipping plugins...\n", 'plugins');
-	}
-	
-	my (@plugins, @subdirs, @names);
-
-	my @pluginsFolders;
-	@pluginsFolders = Settings::getPluginsFolders() if (defined &Settings::getPluginsFolders);
-
-	foreach my $dir (@pluginsFolders) {
-		my @items;
-
-		next if (!opendir(DIR, $dir));
-		@items = readdir DIR;
-		closedir DIR;
-
-		foreach my $file (@items) {
-			if (-f "$dir/$file" && $file =~ /\.(pl|lp)$/) {
-				next if (exists $sys{'loadPlugins'} && $sys{'loadPlugins'} eq '3' && existsInList($sys{'skipPlugins_list'}, substr($file, 0, -3)));
-
-				push @plugins, "$dir/$file";
-				push @names, substr($file, 0, -3) if (exists $sys{'loadPlugins'} && $sys{'loadPlugins'} eq '2');
-			} elsif (-d "$dir/$file" && $file !~ /^(\.|CVS$)/i) {
-				push @subdirs, "$dir/$file";
-			}
-		}
 	}
 
-	foreach my $dir (@subdirs) {
-		my @items;
-
-		next if (!opendir(DIR, $dir));
-		@items = readdir DIR;
-		closedir DIR;
-
-		foreach my $file (@items) {
-			if (-f "$dir/$file" && $file =~ /\.(pl|lp)$/) {
-				push @plugins, "$dir/$file";
-				push @names, substr($file, 0, -3) if (exists $sys{'loadPlugins'} && $sys{'loadPlugins'} eq '2');
-			}
-		}
-	}
-
-	while (@plugins) {
-		my $plugin = shift(@plugins);
-		if (exists $sys{'loadPlugins'} && $sys{'loadPlugins'} eq '2') {
-			my $file = shift(@names);
-			next if (exists $sys{'loadPlugins_list'} && !existsInList($sys{'loadPlugins_list'}, $file));
-		}
-		load($plugin);
+	my @folders = Settings::getPluginsFolders();
+	foreach my $file (getFilesFromDirs(\@folders, 'pl|lp', 'cvs', 1)) {
+		load("$file->{dir}/$file->{name}$file->{ext}") if (&$condition($file->{name}));
 	}
 }
 
+sub c_loadAll { return 1 };
+sub c_loadSelected { return existsInList($sys{'loadPlugins_list'}, shift)};
+sub c_loadNotSelected { return !existsInList($sys{'skipPlugins_list'}, shift)};
+
+sub getFilesFromDirs {
+	my ($dirs, $f_exts, $d_ignores, $recurse_lv) = @_;
+	my @files;
+	foreach my $dir (@{$dirs}) {
+		next if (!opendir(DIR, $dir));
+		my @items = readdir DIR;
+		closedir DIR;
+		foreach my $item (@items) {
+			if (-f "$dir/$item" && $item =~ /(.*)(\.($f_exts))$/) {
+				push @files, {dir => $dir, name => $1, ext => $2};
+				#message "dir:$dir file:$1 ext:$2\n";
+			} elsif (-d "$dir/$item" && $item !~ /^(\.|$d_ignores$)/i && $recurse_lv) {
+				push @files, getFilesFromDirs(["$dir/$item"], $f_exts, $d_ignores, $recurse_lv-1);
+			}
+		}
+	}
+	return @files;
+}
 
 ##
 # void Plugins::load(String file)
@@ -155,25 +139,25 @@ sub load {
 	my $file = shift;
 	message(TF("Loading plugin %s...\n", $file), "plugins");
 
-	$current_plugin = $file;
-	$current_plugin_folder = $file;
-	$current_plugin_folder =~ s/(.*)[\/\\].*/$1/;
-
 	if (! -f $file) {
-		Plugin::LoadException->throw(TF("File %s does not exist.", $file));
+		warning TF("File %s does not exist. (usage ex: plugin load plugins/macro/macro.pl)\n", $file);
 	} elsif ($file =~ /(^|\/)ropp\.pl$/i) {
 		Plugin::DeniedException->throw(TF("The ROPP plugin (ropp.pl) is obsolete and is " .
 			"no longer necessary. Please remove it, or %s will not work correctly.",
 			$Settings::NAME || "OpenKore"));
-	}
+	} else {
+		$current_plugin = $file;
+		$current_plugin_folder = $file;
+		$current_plugin_folder =~ s/(.*)[\/\\].*/$1/;
 
-	undef $!;
-	undef $@;
-	if (!defined(do $file)) {
-		if ($@) {
-			Plugin::LoadException->throw(TF("Plugin contains syntax errors:\n%s", $@));
-		} else {
-			Plugin::LoadException->throw("$!");
+		undef $!;
+		undef $@;
+		if (!defined(do $file)) {
+			if ($@) {
+				Plugin::LoadException->throw(TF("Plugin contains syntax errors:\n%s", $@));
+			} else {
+				Plugin::LoadException->throw("$!");
+			}
 		}
 	}
 }
@@ -187,9 +171,10 @@ sub load {
 # Unloads a registered plugin.
 sub unload {
 	my $name = shift;
+	return 0 if (!defined $name);
 	my $i = 0;
 	foreach my $plugin (@plugins) {
-		if ($plugin && $plugin->{name} eq $name) {
+		if ($plugin && $plugin->{name} && $plugin->{name} eq $name) {
 			$plugin->{unload_callback}->() if (defined $plugin->{unload_callback});
 			delete $plugins[$i];
 			return 1;
@@ -205,7 +190,6 @@ sub unload {
 #
 # Unloads all registered plugins.
 sub unloadAll {
-	my $name = shift;
 	foreach my $plugin (@plugins) {
 		next if (!$plugin);
 		$plugin->{unload_callback}->() if (defined $plugin->{unload_callback});
@@ -224,9 +208,10 @@ sub unloadAll {
 # Throws Plugin::LoadException if it failed to load.
 sub reload {
 	my $name = shift;
+	return 0 if(!defined $name);
 	my $i = 0;
 	foreach my $plugin (@plugins) {
-		if ($plugin && $plugin->{name} eq $name) {
+		if ($plugin && $plugin->{name} && $plugin->{name} eq $name) {
 			my $filename = $plugin->{filename};
 
 			if (defined $plugin->{reload_callback}) {
@@ -284,12 +269,12 @@ sub register {
 # Checks whether a plugin is registered.
 sub registered {
 	my $name = shift;
+	return 0 if (!defined $name);
 	foreach (@plugins) {
-		return 1 if ($_ && $_->{name} eq $name);
+		return 1 if ($_ && $_->{name} && $_->{name} eq $name);
 	}
 	return 0;
 }
-
 
 ##
 # Plugins::addHook(String hookname, callback, [user_data])
@@ -393,6 +378,7 @@ sub delHook {
 		foreach my $singleHandle (@{$handle}) {
 			delHook($singleHandle);
 		}
+		undef @{$handle};
 
 	} elsif (isa($handle, 'Plugins::HookHandle') && defined $handle->[HOOKNAME]) {
 		my $hookName = quarkToString($handle->[HOOKNAME]);
@@ -403,6 +389,7 @@ sub delHook {
 		}
 		delete $handle->[HOOKNAME];
 		delete $handle->[INDEX];
+		undef $handle;
 
 		if ($hookList && $hookList->size() == 0) {
 			delete $hooks{$hookName};

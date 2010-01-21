@@ -3615,14 +3615,14 @@ sub cmdPlugin {
 	if (@args == 0) {
 		message T("--------- Currently loaded plugins ---------\n" .
 			"#   Name              Description\n"), "list";
-		my $i = 0;
+		my $i = -1;
 		foreach my $plugin (@Plugins::plugins) {
+			$i++;
 			next unless $plugin;
 			message(swrite(
 				"@<< @<<<<<<<<<<<<<<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
 				[$i, $plugin->{name}, $plugin->{description}]
 			), "list");
-			$i++;
 		}
 		message("--------------------------------------------\n", "list");
 
