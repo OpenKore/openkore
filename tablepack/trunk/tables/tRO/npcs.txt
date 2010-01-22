@@ -1,0 +1,4 @@
+﻿morocc 164 255 Pcbangbuff
+morocc 160 258 Kafra Staff
+morocc 168 262 Mailbox
+morocc 168 265 Sign

@@ -306,7 +306,7 @@ recvpackets recvpackets-twRO-test.txt
 
 ## www.ragnarok.in.th/
 [Thailand - tRO Main server (Norse)]
-ip 203.144.244.5
+ip 122.155.11.240
 port 6900
 master_version 7
 version 24
@@ -320,7 +320,7 @@ patchpath /patch70
 serverEncoding Thai
 
 [Thailand - tRO Free life server (Alice(new), Poring)]
-ip 203.144.244.121
+ip 122.155.11.242
 port 6900
 master_version 7
 version 24
@@ -335,7 +335,7 @@ patchpath /patch70
 serverEncoding Thai
 
 [Thailand - tRO Free life server (Yoyo, Picky)]
-ip 203.144.244.100
+ip 122.155.11.241
 port 6900
 master_version 7
 version 24
