@@ -87,8 +87,43 @@ sub create {
 			TF("An error occured while loading the server message parser for server type '%s':\n%s",
 				$type, $@)
 		);
-	} else {
-		return $class->new();
+	}
+	
+	my $self = $class->new;
+	
+	if ($Settings::sys{devel_networkReceiveHooks}) {
+		# hook all handlers from Network::Receive::* for compatibility
+		# (if/when all handlers will be moved out of Network, this could be removed)
+		
+		# TODO: some way of handling only packets that are not handled by any plugins?
+		my @handlers = grep { $self->can ($_) } keys %{{map { $_->[0] => 1 } values %{$self->{packet_list}}}};
+		
+		if (@handlers) {
+			debug TF("Adding hooks for packet handlers in %s: %s\n", $class, join ', ', @handlers), 'network_compatibility';
+			
+			Scalar::Util::weaken (my $weakSelf = $self);
+			
+			my $handler = sub {
+				my (undef, $args, $callback) = @_;
+				
+				$weakSelf->$callback ($args);
+				$args->{return} = 1;
+			};
+			
+			$self->{recvpacketHandleHooks} = Plugins::addHooks (map { ["packet_handle/$_", $handler, $_] } @handlers);
+		}
+	}
+	
+	return $self;
+}
+
+sub DESTROY {
+	my ($self) = @_;
+	
+	if ($Settings::sys{devel_networkReceiveHooks} && $self->{recvpacketHandleHooks}) {
+		debug T("Removing hooks for packet handlers in Network::Receive\n"), 'network_compatibility';
+		
+		Plugins::delHooks ($self->{recvpacketHandleHooks});
 	}
 }
 
@@ -138,15 +173,29 @@ sub parse {
 		}
 	}
 
-	my $callback = $self->can($handler->[0]);
-	if ($callback) {
+	if ($Settings::sys{devel_networkReceiveHooks}) {
 		Plugins::callHook("packet_pre/$handler->[0]", \%args);
 		Misc::checkValidity("Packet: " . $handler->[0] . " (pre)");
-		$self->$callback(\%args);
-		Misc::checkValidity("Packet: " . $handler->[0]);
+		unless ($args{return}) {
+			if (Plugins::hasHook("packet_handle/$handler->[0]", \%args)) {
+				Plugins::callHook("packet_handle/$handler->[0]", \%args);
+				Misc::checkValidity("Packet: " . $handler->[0]);
+			} else {
+				warning "Packet Parser: Unhandled Packet: $switch Handler: $handler->[0]\n";
+				debug ("Unpacked: " . join(', ', @{\%args}{@{$handler->[2]}}) . "\n"), "packetParser", 2;
+			}
+		}
 	} else {
-		warning "Packet Parser: Unhandled Packet: $switch Handler: $handler->[0]\n";
-		debug ("Unpacked: " . join(', ', @{\%args}{@{$handler->[2]}}) . "\n"), "packetParser", 2;
+		my $callback = $self->can($handler->[0]);
+		if ($callback) {
+			Plugins::callHook("packet_pre/$handler->[0]", \%args);
+			Misc::checkValidity("Packet: " . $handler->[0] . " (pre)");
+			$self->$callback(\%args);
+			Misc::checkValidity("Packet: " . $handler->[0]);
+		} else {
+			warning "Packet Parser: Unhandled Packet: $switch Handler: $handler->[0]\n";
+			debug ("Unpacked: " . join(', ', @{\%args}{@{$handler->[2]}}) . "\n"), "packetParser", 2;
+		}
 	}
 
 	Plugins::callHook("packet/$handler->[0]", \%args);
