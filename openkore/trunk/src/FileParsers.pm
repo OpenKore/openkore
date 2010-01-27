@@ -205,7 +205,7 @@ sub parseConfigFile {
 	my $file = shift;
 	my $r_hash = shift;
 	my $no_undef = shift;
-	my $blocks = (shift) // {};
+	my $blocks = (shift) || {};
 
 	undef %{$r_hash} unless $no_undef;
 	my ($key, $value, $inBlock, $commentBlock);
@@ -1068,8 +1068,8 @@ sub writeDataFileIntact {
 	my $r_hash = shift;
 	my $no_undef = shift; # ?
 	# following args for recursive call (!include)
-	my $blocks = shift // {};
-	my $diffs = shift // {};
+	my $blocks = shift || {};
+	my $diffs = shift || {};
 	my $readOnly = shift;
 
 	my (@lines, $key, $value, $inBlock, $commentBlock);
