@@ -51,7 +51,7 @@ sub update {
 	
 	$self->set ('name', $char->{mercenary}->name);
 	$self->set ('level', $char->{mercenary}{level});
-	$self->set ('type', $jobs_lut{$char->{mercenary}{jobID}} // $char->{mercenary}{jobID});
+	$self->set ('type', $jobs_lut{$char->{mercenary}{jobID}} || $char->{mercenary}{jobID});
 	$self->set ('hp', [$char->{mercenary}{hp}, $char->{mercenary}{hp_max}]) if $char->{mercenary}{hp_max};
 	$self->set ('sp', [$char->{mercenary}{sp}, $char->{mercenary}{sp_max}]) if $char->{mercenary}{sp_max};
 	$self->set ('loyalty', [$char->{mercenary}{faith}, 1000]);

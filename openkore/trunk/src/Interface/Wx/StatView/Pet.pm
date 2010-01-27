@@ -45,7 +45,7 @@ sub update {
 	
 	$self->set ('name', $pet{name});
 	$self->set ('level', $pet{level});
-	$self->set ('type', monsterName ($pet{type}) // $pet{type});
+	$self->set ('type', monsterName ($pet{type}) || $pet{type});
 	$self->set ('intimacy', [$pet{friendly}, 1000]);
 	$self->set ('hunger', [$pet{hungry}, 100]);
 	$self->set ('accessory', itemNameSimple ($pet{accessory}));

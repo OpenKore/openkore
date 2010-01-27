@@ -79,7 +79,7 @@ sub update {
 	
 	$self->set ('name', $char->{homunculus}->name);
 	$self->set ('level', $char->{homunculus}{level});
-	$self->set ('type', $jobs_lut{$char->{homunculus}{jobID}} // $char->{homunculus}{jobID});
+	$self->set ('type', $jobs_lut{$char->{homunculus}{jobID}} || $char->{homunculus}{jobID});
 	$self->set ('hp', [$char->{homunculus}{hp}, $char->{homunculus}{hp_max}]) if $char->{homunculus}{hp_max};
 	$self->set ('sp', [$char->{homunculus}{sp}, $char->{homunculus}{sp_max}]) if $char->{homunculus}{sp_max};
 	$self->set ('exp', [$char->{homunculus}{exp}, $char->{homunculus}{exp_max}]) if $char->{homunculus}{exp_max};

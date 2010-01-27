@@ -55,8 +55,8 @@ sub update {
 	$self->set ('name', $char->name);
 	$self->set ('level', $char->{lv});
 	$self->set ('jobLevel', $char->{lv_job});
-	$self->set ('type', $jobs_lut{$char->{jobID}} // $char->{jobID});
-	$self->set ('sex', $sex_lut{$char->{sex}} // $char->{sex});
+	$self->set ('type', $jobs_lut{$char->{jobID}} || $char->{jobID});
+	$self->set ('sex', $sex_lut{$char->{sex}} || $char->{sex});
 	$self->set ('hp', [$char->{hp}, $char->{hp_max}]) if $char->{hp_max};
 	$self->set ('sp', [$char->{sp}, $char->{sp_max}]) if $char->{sp_max};
 	$self->set ('exp', [$char->{exp}, $char->{exp_max}]) if $char->{exp_max};
