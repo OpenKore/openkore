@@ -1,0 +1,1868 @@
+//
+1000#Transcendent#SG_FEEL#QUE_NOIMAGE#
+You could become a hero through the Book of Ymir. Find the Hall of Honor in Valkyrie, you will be a new hero of Valkyrie.#
+#
+
+1001#Job Changes to Acolyte#SG_FEEL#QUE_NOIMAGE#
+Talked with Father Mareusis to become an Acolyte. He ordered to visit ^000077 Father Rubalkabara ^000000, who has been Practicing Asceticism near the Relics, Northeast of Prontera City.#
+Talk with Father Rubalkabara.#
+
+1002#Job Changes to Acolyte#SG_FEEL#QUE_NOIMAGE#
+Talked with Father Mareusis to become an Acolyte. He ordered to visit ^000077 Mother Mathilda ^000000, who has been Practicing Asceticism near Morroc Town, located Southwest of Prontera City.#
+Talk with Mother Mathilda#
+
+1003#Job Changes to Acolyte#SG_FEEL#QUE_NOIMAGE#
+Talked with Father Mareusis to become an Acolyte. He ordered to visit ^000077 Father Yosuke ^000000, who has been Practicing Asceticism near a bridge, located Northwest of Prontera.#
+Talk with Father Yosuke#
+
+1004#Job Changes to Archer#SG_FEEL#QUE_NOIMAGE#
+Archer Guildsman ordered to bring Trunk to become an Archer. Trunk can get from a 'Willow' monster.#
+Collect Trunks.#
+
+1005#Job Changes to Mage#SG_FEEL#QUE_NOIMAGE#
+Mage Guildsman ordered to make Mixed Solution No.1 to become a Mage. Related information on solution making is on the bookshelf at the right side.#
+Mixed Solution No.1#
+
+1006#Job Changes to Mage#SG_FEEL#QUE_NOIMAGE#
+Mage Guildsman ordered to make Mixed Solution No.2 to become a Mage. Related information on solution making is on the bookshelf at the right side.#
+Mixed Solution No.2#
+
+1007#Job Changes to Mage#SG_FEEL#QUE_NOIMAGE#
+Mage Guildsman ordered to make Mixed Solution No.3 to become a Mage. Related information on solution making is on the bookshelf at the right side.#
+Mixed Solution No.3#
+
+1008#Job Changes to Mage#SG_FEEL#QUE_NOIMAGE#
+Mage Guildsman ordered to make Mixed Solution No.4 to become a Mage. Related information on solution making is on the bookshelf at the right side.#
+Mixed Solution No.4#
+
+1009#Job Changes to Merchant#SG_FEEL#QUE_NOIMAGE#
+Got a job changing test after paid 1000 zeny for Merchant Membership Fee. For the test, player needs to get the product from the Storehouse, go to the former Swordman Association in Prontera, and then give it to the Prontera Chapter Representative of Kafra Corp.Product Serial Numbers are given from Chief Mahnsoo. #
+Deliver product to Prontera.#
+
+1010#Job Changes to Merchant#SG_FEEL#QUE_NOIMAGE#
+Got a job changing test after paid 1000 zeny for Merchant Membership Fee. For the test, player needs to get the product from the Storehouse, go to the Mage Guild in Geffen, and then give it to the Guild Staff. Product Serial Numbers are given from Chief Mahnsoo.#
+Deliver product to Mage Guild in Geffen#
+
+1011#Job Changes to Merchant#SG_FEEL#QUE_NOIMAGE#
+Got a job changing test after paid 1000 zeny for Merchant Membership Fee. For the test, player needs to get the product from the Storehouse, give it to Java Dullihan, the Dyemaker in Morroc. Product Serial Numbers are given from Chief Mahnsoo.#
+Deliver product to the Dyemaker in Morroc.#
+
+1012#Job Changes to Merchant#SG_FEEL#QUE_NOIMAGE#
+Got a job changing test after paid 1000 zeny for Merchant Membership Fee. For the test, player needs to get the product from the Storehouse, deliver it to the Kafra Girl on Byalan island. Product Serial Numbers are given from Chief Mahnsoo. Chief Mahnsoo requested to deliver a message to the Kafra Girl.#
+Deliver product and message to the Kafra Girl on Byalan island.#
+
+1013#Job Changes to Thief#SG_FEEL#QUE_NOIMAGE#
+Got a job changing test after pass the interview with Thief Guide. For the test, player needs to steal Mushrooms from a Farm. Gather 2 kinds of Mushrooms: ^0000FFOrange Net Mushroom^000000 and  ^0000FFOrange Gooey Mushroom^000000. Gathered Mushrooms will be rated by the point, and if the player reaches certain point, player will pass the test. Mushrooms farm wil be located the opposite direction of the Pyramids and there will be Thief Guide between two columns.#
+Gather Orange Net Mushroom and Orange Gooey Mushroom#
+
+1014#Job Changes to Swordman#SG_FEEL#QUE_NOIMAGE#
+Sign up on the swordman application. For the test, player needs to get a success messages from the manager located at the last check point after pass the all of test courses.#
+Pass the all test courses.#
+
+//
+
+2000#Job Changes to Blacksmith#SG_FEEL#QUE_NOIMAGE#
+We want to check the dedication and eagerness of Merchants who apply to us to become Blacksmiths. For the first test, go to Einbech and help one of our guild members Getsufenst.#
+Meet Getsufenst, Blacksmith of Einbech.#
+
+2001#Job Changes to Blacksmith#SG_FEEL#QUE_NOIMAGE#
+Sorry, but you didn't do so well. You need to learn a bit more.#
+Study a bit more about Blacksmith and try again.#
+
+2002#Job Changes to Blacksmith#SG_FEEL#QUE_NOIMAGE#
+You did it well!! Good work! I'll give you some work to do! I'll prepare from now, come back in a little while.#
+Talk with Getsufenst#
+
+2003#Job Changes to Blacksmith#SG_FEEL#QUE_NOIMAGE#
+I need some materials to manage so many orders. Could you bring those materials? This is just for a test, don't even think Blacksmiths are poor. Hum.#
+Bring Steel 2, Rotten Bandage 1, Blue Gemstone 2 and an Arc Wand from the shop. Then go back to Getsufenst.#
+
+2004#Job Changes to Blacksmith#SG_FEEL#QUE_NOIMAGE#
+I need some materials to manage so many orders. Could you bring those materials? This is just for a test, don't even think Blacksmiths are poor. Hum.#
+Bring Star Dust 2, Skel Bone 1, Zargon 1 and a Gladius from the shop. Then go back to Getsufenst.#
+
+2005#Job Changes to Blacksmith#SG_FEEL#QUE_NOIMAGE#
+I need some materials to manage so many orders. Could you bring those materials? This is just for a test, don't even think Blacksmiths are poor. Hum.#
+Bring Coal 2, Shell 2, Red Blood 2 and a Tsurugi from the shop. Then go back to Getsufenst.#
+
+2006#Job Changes to Blacksmith#SG_FEEL#QUE_NOIMAGE#
+I need some materials to manage so many orders. Could you bring those materials? This is just for a test, don't even think Blacksmiths are poor. Hum.#
+Bring Iron Ore 8, Eye Patch 1, Blue Gemstone 2 and an Arbalest from the shop. Then go back to Getsufenst.#
+
+2007#Job Changes to Blacksmith#SG_FEEL#QUE_NOIMAGE#
+I need some materials to manage so many orders. Could you bring those materials? This is just for a test, don't even think Blacksmiths are poor. Hum.#
+Bring Iron 8, Green Herb 20, Animal's Skin 2 and a Ring Pommel Saber from the shop. Then go back to Getsufenst.#
+
+2008#Job Changes to Blacksmith#SG_FEEL#QUE_NOIMAGE#
+All done! Okay. Give this Arc Wand to Blister who is currently in Geffen of Rune-Midgarts Kingdom. Be sure to bring the reciept back to me.#
+Deliver Arc Wand to Blister in Geffen.#
+
+2009#Job Changes to Blacksmith#SG_FEEL#QUE_NOIMAGE#
+All done! Okay. Give this Gladius to Whichebain in Morroc of Rune-Midgarts Kingdom. Be sure to bring the reciept back to me.#
+Deliver Gladius to Whichebain in Morroc.#
+
+2010#Job Changes to Blacksmith#SG_FEEL#QUE_NOIMAGE#
+All done! Okay. Give this Tsurugi to Grongast who is in Lighthalzen. Be sure to bring the reciept back to me.#
+Deliver Tsurugi to Grongast in Lighthalzen.#
+
+2011#Job Changes to Blacksmith#SG_FEEL#QUE_NOIMAGE#
+All done! Okay. Give this Arbalest to Telpitz who is in Payon of Rune-Midgarts Kingdom. Be sure to bring the reciept back to me.#
+Deliver Arbalest to Telpitz in Payon.#
+
+2012#Job Changes to Blacksmith#SG_FEEL#QUE_NOIMAGE#
+All done! Okay. Give this Ring Pommel Saber to Bismark who is in Hugel. Be sure to bring the reciept back to me.#
+Deliver Ring Pommel Saber to Bismark in Hugel.#
+
+2013#Job Changes to Blacksmith#SG_FEEL#QUE_NOIMAGE#
+Well done! You're a great merchant indeed! Okay, go to Altazen in Geffen!#
+Go back to Altazen#
+
+2014#Job Changes to Blacksmith#SG_FEEL#QUE_NOIMAGE#
+Some other Blacksmiths have ill manners and are scammers and overpricers. They bring us shame! So we make the Job changing test more difficult. You should talk with inside Guildsman#
+Talk with Mitmair, Guildsman of Blacksmith.#
+
+2015#Job Changes to Blacksmith#SG_FEEL#QUE_NOIMAGE#
+Congratulations! You passed the second test! I'll give you this Hammer of Blacksmith as a certificate.#
+Go back to Altazen#
+
+2016#Job Changes to Blacksmith#SG_FEEL#QUE_NOIMAGE#
+Congratulations! You passed all the test! I give permission to use the art of Fire Craftsmanship.#
+#
+
+2017#Job Changes to Rogue#SG_FEEL#QUE_NOIMAGE#
+You passed the first test to become a Rogue. 'Mr. Smithrato' will administer the next test.#
+Talk with Smithrato#
+
+2018#Job Changes to Rogue#SG_FEEL#QUE_NOIMAGE#
+There is a registration fee to become a Rogue. I will tell you what you need to gather and how much the registration fee is.#
+10000zeny, 10 skel bones, 6 blue herbs, 10 decayed nails, 10 horrendous mouths.#
+
+2019#Job Changes to Rogue#SG_FEEL#QUE_NOIMAGE#
+There is a registration fee to become a Rogue. I will tell you what you need to gather and how much the registration fee is.#
+10000zeny, 10 green herbs, 10 crab shells, 10 snake scales, 10 garlets.#
+
+2020#Job Changes to Rogue#SG_FEEL#QUE_NOIMAGE#
+There is a registration fee to become a Rogue. I will tell you what you need to gather and how much the registration fee is.#
+10000zeny, 10 yellow herbs, 10 shells, 10 grasshopper's legs, 10 bear's foot.#
+
+2021#Job Changes to Rogue#SG_FEEL#QUE_NOIMAGE#
+10000zeny, 5 chrysalis, 5 empty bottles, 5 iron ores, 5 stone hearts, 5 red herbs, 5 animal's skins, 5 yellow gemstones, 5 teeth of bat, 5 scorpion's tails, 5 yoyo tails, 5 monsters feed, 5 fluff, 5 clovers, 5 feathers of bird, 5 talon, 5 spawn, 10 raccoon leaves!! Do not come to me until you are prepared!!#
+Give all gathered items to Mr. Smithrato#
+
+2022#Job Changes to Rogue#SG_FEEL#QUE_NOIMAGE#
+Go East from here and find Aragham Jr. He lives at the South side of the Fortress Saint Darmain. The password is: ^0000FF'Aragham didn't steal refining material.'^000000#
+Talk with Aragham Jr.#
+
+2023#Job Changes to Rogue#SG_FEEL#QUE_NOIMAGE#
+Go to visit Antonio Jr. who is living near the Kokomo beach in Comodo. The password is: ^0000FF'Antonio doesn't like breaking refining material.'^000000#
+Talk with Antonio Jr.#
+
+2024#Job Changes to Rogue#SG_FEEL#QUE_NOIMAGE#
+Go to Visit Holgren Jr. who is in the South building of Fortress Saint Darmain. He will let you know proper Rogue test. The password is: ^0000FF'My father did not steal refining material.'^000000#
+Talk with Holgren Jr.#
+
+2025#Job Changes to Rogue#SG_FEEL#QUE_NOIMAGE#
+Go to visit Hermanthorn Jr. who is living in Beacon Island, Pharos. But please do not talk about refining in front of him. Keep in mind!#
+Talk with Hermanthorn Jr.#
+
+2026#Job Changes to Rogue#SG_FEEL#QUE_NOIMAGE#
+You just need to walk to the Rogue Guild from an underground passage, simple test! But I can't guarantee it is totally safe.#
+Walk through the underground passage to the Rogue Guild.#
+
+2027#Job Changes to Rogue#SG_FEEL#QUE_NOIMAGE#
+Congratulations! You have become a Rogue!#
+#
+
+2028#Job Changes to Alchemist#SG_FEEL#QUE_NOIMAGE#
+You need to bring some items before you can begin your formal training to become an Alchemist.#
+7 Berserk Potions#
+
+2029#Job Changes to Alchemist#SG_FEEL#QUE_NOIMAGE#
+You need to bring some items before you can begin your formal training to become an Alchemist.#
+100 Mini Furnaces#
+
+2030#Job Changes to Alchemist#SG_FEEL#QUE_NOIMAGE#
+You need to bring some items before you can begin your formal training to become an Alchemist.#
+500 Fire Arrows#
+
+2031#Job Changes to Alchemist#SG_FEEL#QUE_NOIMAGE#
+Raspuchin is calling you. Go to speak to him. I'm not really sure what you'll be talking about with him...#
+Talk with fastidious alchemist Raspuchin.#
+
+2032#Job Changes to Alchemist#SG_FEEL#QUE_NOIMAGE#
+I can tell you're smart from your eyes. Ok, Excellent. Now go to Darwin. He'll teach you how to do the experiments.#
+Talk with Studying Man, Darwin.#
+
+2033#Job Changes to Alchemist#SG_FEEL#QUE_NOIMAGE#
+I will teach you how to make simple medicine. So please bring the following materials right away.#
+3 Medicine Bowls, 3 Empty Bottles, 1 Red Herb, 1 Yellow Herb, 1 White Herb#
+
+2034#Job Changes to Alchemist#SG_FEEL#QUE_NOIMAGE#
+You are now an Alchemist!! Go to the Union and cast away the last vestiges of Merchant life!#
+Talk with Master Alchemist#
+
+2035#Job Changes to Alchemist#SG_FEEL#QUE_NOIMAGE#
+Go into the next room and speak to Van Helmont to continue your training.#
+Talk with experiment expert, Van Helmont#
+
+2036#Job Changes to Alchemist#SG_FEEL#QUE_NOIMAGE#
+I'll give you an assignment. Learn something new and come back. Let's see. Go learn how to make a Counteragent and Mixture from Molgenstein.#
+Learn how to make a Counteragent and Mixture.#
+
+2037#Job Changes to Alchemist#SG_FEEL#QUE_NOIMAGE#
+Okay, now you know something about experimentation. Go out and find the room next to this one and talk to Nicholas. He'll continue your training.#
+Talk with chief researcher Nicholas.#
+
+2038#Job Changes to Alchemist#SG_FEEL#QUE_NOIMAGE#
+1 Mixture, 5 Burnt Tree, 5 Fine Sand, 3 Rough Oridecon and 3 Rough Elunium. Bain and Bajin will need all of these items to continue their experiments.#
+Talk with Bain and Bajin.#
+
+2039#Job Changes to Alchemist#SG_FEEL#QUE_NOIMAGE#
+I just got a message from Bain and Bajin. They let me know that they were very happy with your assistance. All you have to do now is speak to the Union Leader on the 2nd floor! Congratulations, you'll become an Alchemist very soon!#
+Talk with Master Alchemist#
+
+2040#Job Changes to Alchemist#SG_FEEL#QUE_NOIMAGE#
+You are now a member of our illustrious Union. I hope you learn a lot and remember to carry yourself with pride as an Alchemist!#
+#
+
+2041#Job Changes to Sage#SG_FEEL#QUE_NOIMAGE#
+For taking the entrance examination, you need to talk to Professor Claytoss. He is in the left room.#
+Talk with written tester, Claytoss.#
+
+2042#Job Changes to Sage#SG_FEEL#QUE_NOIMAGE#
+Don't you have enough zeny for the registration fee? Then I will give you a special opportunity! I will accept 30,000 zeny as registration fee if you bring me some items. Also you can bring 70,000 zeny as a rule or bring an Old Magic Book and a Necklace of Wisdom as registration fee instead.#
+Bring 50 Feathers of Bird, 50 Fluff, 25 Iron Ores and talk to Meteous Silf.#
+
+2043#Job Changes to Sage#SG_FEEL#QUE_NOIMAGE#
+I will accept 30,000 zeny as registration fee if you bring me some items. Also you can bring 70,000 zeny as a rule or bring an Old Magic Book and a Necklace of Wisdom as registration fee instead.#
+Bring 30,000zeny, 50 Feathers of Bird, 50 Fluff, 25 Iron Ores and talk to Meteous Silf.#
+
+2044#Job Changes to Sage#SG_FEEL#QUE_NOIMAGE#
+I will accept 30,000 zeny as registration fee if you bring me some items. Also you can bring 70,000 zeny as a rule or bring an Old Magic Book and a Necklace of Wisdom as registration fee instead.#
+Bring 30,000zeny, 50 Clovers, 50 Feathers, 25 Squid Ink and talk to Meteous Silf.#
+
+2045#Job Changes to Sage#SG_FEEL#QUE_NOIMAGE#
+I will accept 30,000 zeny as registration fee if you bring me some items. Also you can bring 70,000 zeny as a rule or bring an Old Magic Book and a Necklace of Wisdom as registration fee instead.#
+Bring 30,000zeny, 50 Feathers of Bird, 50 Fluff, 50 Clovers, 50 Feathers and talk to Meteous Silf.#
+
+2046#Job Changes to Sage#SG_FEEL#QUE_NOIMAGE#
+You have passed the written test. Now, why don't you go to Professor Hermes and take the practical test?#
+Talk with practical tester Hermes.#
+
+2047#Job Changes to Sage#SG_FEEL#QUE_NOIMAGE#
+Let's see how you did on the written test and the practical test. Okay...from your score. I suggest you to research about the Yggdrasil. Get help from Professor Sapien Lylees in the Academic Lecture Room.#
+Talk with Professor Sapien Lylees in the Academic Lecture Room.#
+
+2048#Job Changes to Sage#SG_FEEL#QUE_NOIMAGE#
+Let's see how you did on the written test and the practical test. Okay...from your score. I suggest you to study on the various monsters that spread throughout this world. Get help from Professor Ruthy Celsus in Monster Museum.#
+Talk with Professor Ruthy Celsus in Monster Museum.#
+
+2049#Job Changes to Sage#SG_FEEL#QUE_NOIMAGE#
+Let's see how you did on the written test and the practical test. Okay...from your score. I suggest you to study the properties of magic. Get help from Professor Evecy Georgy in Somatology Lab.#
+Talk with Professor Evecy Georgy in Somatology Lab.#
+
+2050#Job Changes to Sage#SG_FEEL#QUE_NOIMAGE#
+Find any item related to the Yggdrasil. I will prefer a seed or a fruit. They are rare but find one of them.#
+Find item related to the Yggdrasil.#
+
+2051#Job Changes to Sage#SG_FEEL#QUE_NOIMAGE#
+Next time, you will need to write a paper on your own, please be prepared.#
+1 Feather of birds, 1 Animal's skin, 1 Trunk, 1 Squid ink, 1 Empty bottle.#
+
+2052#Job Changes to Sage#SG_FEEL#QUE_NOIMAGE#
+If you are finished with the paper, bring it to the President#
+Talk with the president of Academy.#
+
+2053#Job Changes to Sage#SG_FEEL#QUE_NOIMAGE#
+I am a Professor Ruthy Celsus and don't forget that my class has many field trips. So I need you to find these things first.#
+5 Tentacle, 5 Single cell, 5 Fish tail#
+
+2054#Job Changes to Sage#SG_FEEL#QUE_NOIMAGE#
+I am a Professor Ruthy Celsus and don't forget that my class has many field trips. So I need you to find these things first.#
+5 Nipper, 5 Clam flesh, 5 Heart of mermaid#
+
+2055#Job Changes to Sage#SG_FEEL#QUE_NOIMAGE#
+I am a Professor Ruthy Celsus and don't forget that my class has many field trips. So I need you to find these things first.#
+5 Tendon, 5 Nipper, 5 Sharp scale#
+
+2056#Job Changes to Sage#SG_FEEL#QUE_NOIMAGE#
+Well, shall we learn about the insects this time? I'll begin the class as soon as you bring these items to me.#
+Bring 5 Cobweb, 5 Shell, 5 Insect feeler and go back to Professor Ruthy Celsus.#
+
+2057#Job Changes to Sage#SG_FEEL#QUE_NOIMAGE#
+Well, shall we learn about the insects this time? I'll begin the class as soon as you bring these items to me.#
+Bring 5 Horn, 5 Snail's shell, 5 Moth dust and go back to Professor Ruthy Celsus.#
+
+2058#Job Changes to Sage#SG_FEEL#QUE_NOIMAGE#
+Well, shall we learn about the insects this time? I'll begin the class as soon as you bring these items to me.#
+Bring 5 Mantis scythe, 5 Worm peelings, 5 Rainbow shell and go back to Professor Ruthy Celsus.#
+
+2059#Job Changes to Sage#SG_FEEL#QUE_NOIMAGE#
+Well, shall we learn about the insects this time? I'll begin the class as soon as you bring these items to me.#
+Bring 5 Cobweb, 5 Mantis scythe, 5 Solid shell and go back to Professor Ruthy Celsus.#
+
+2060#Job Changes to Sage#SG_FEEL#QUE_NOIMAGE#
+Before begin the class, you need to help me with something. It's not hard. You will do it for me, right?#
+Bring 30 stones and go back to Professor Evecy Georgy#
+
+2061#Job Changes to Sage#SG_FEEL#QUE_NOIMAGE#
+I will give you these ores. But they are not gifts! Make arrows out of these ores. If you have archer friends, they will help you make arrows.#
+Bring 50 Crystal arrows, 50 Stone arrows, 50 Arrow of winds and go back to Professor Evecy Georgy#
+
+2062#Job Changes to Sage#SG_FEEL#QUE_NOIMAGE#
+Bring 1 Holy water for the next class. Do you have a priest friend? If you don't, make one. Hohoho.#
+Bring 1 Holy water to Professor Evecy Georgy#
+
+2063#The Crow of the Fate#SG_FEEL#QUE_NOIMAGE#
+I accept Benjamin's request to bring the book from Library.#
+Talk with Library Curator.#
+
+2064#The Crow of the Fate#SG_FEEL#QUE_NOIMAGE#
+Can't find the book in Prontera. I need to go back to Juno Library.#
+travelling back to JunoLibrary.#
+
+2065#The Crow of the Fate#SG_FEEL#QUE_NOIMAGE#
+The books was telling the exact scene that I have seen in my dream. I want to read news articles about fires.#
+Find the news articles about fires#
+
+2066#The Crow of the Fate#SG_FEEL#QUE_NOIMAGE#
+I discovered the fire on laboratory was actually happened. I decide to find the Cave village.#
+Discover Cave village in Schwaltzvalt field.#
+
+2067#The Crow of the Fate#SG_FEEL#QUE_NOIMAGE#
+Zid told me to be better wake up from the dream, and move on with my real life. Frustrated by the conversation with Zid, I have decided to go back to Morroc and forget everything.#
+Talk with Benjamin in Morroc#
+
+2068#The Crow of the Fate#SG_FEEL#QUE_NOIMAGE#
+I decided to read the <The Trace of the Fate> as Benjamin suggested.#
+Go back to Juno Library#
+
+//
+
+3000#Job Changes to Bard - Beautiful Song#SG_FEEL#QUE_NOIMAGE#
+I have met a beautiful singer Bard. I want to be a Bard...Should I ask him about becoming Bard?#
+  #
+
+3001#Job Changes to Bard - Pay by Flower?#SG_FEEL#QUE_NOIMAGE#
+Bard Ayealo asks to bring flower for paying to learn a song. But he wants a special flower.#
+Bring special flower for Ayealo.#
+
+3002#Job Changes to Bard - The first step of becoming a Bard#SG_FEEL#QUE_NOIMAGE#
+Bard Ayealo asks to find a talking snowman in Lutie and receive a present from him.#
+  #
+  
+3003#Job Changes to Bard - Following a song#SG_FEEL#QUE_NOIMAGE#
+Bard Ayealo asks me to follow a song after him. If I am following to sing exactly, I could be a Bard...#
+  #
+
+3004#Job Changes to Bard - Final test#SG_FEEL#QUE_NOIMAGE#
+Bard Ayealo asks to collect 60 Trunks for the last test. If I bring them I will become a bard and get a souvenir from him.#
+Bring 60 Trunks# 
+
+
+3006#Job Changes to Crusader - Qualification#SG_FEEL#QUE_NOIMAGE#
+"I will see through your effort and decide whether you are qualified or not. You shall bring ^3355FFDecayed Nail, Stinky Scale, Worn Out Prison Uniform, Daenggie^000000"#
+10 Decayed Nail, 10 Stinky Scale, 10 Worn Out Prison Uniform, 10 Daenggie#
+
+3007#Job Changes to Crusader - Qualification#SG_FEEL#QUE_NOIMAGE#
+"I will see through your effort and decide whether you are qualified or not. You shall bring ^3355FFSkel Bone, Orc Claw, Manacles, Short Daenggie^000000"#
+10 Skel Bone, 10 Orc Claw, 10 Manacles, 10 Short Daenggie#
+
+3008#Job Changes to Crusader - Qualification#SG_FEEL#QUE_NOIMAGE#
+"I will see through your effort and decide whether you are qualified or not. You shall bring ^3355FFHorrendous Mouth, Rotten Bandage, Lantern, Pumpkin Head^000000"#
+10 Horrendous Mouth, 10 Rotten Bandage, 10 Lantern, 10 Pumpkin Head#
+
+3009#Job Changes to Crusader - Murnak Myjol#SG_FEEL#QUE_NOIMAGE#
+"I can see you potential as a crusader. Meet with ^0000FFMurnak Myjol^000000. He is in the underground prison of Prontera Palace. Talk to him first."#
+  #
+
+3010#Job Changes to Crusader - Test of endurance.#SG_FEEL#QUE_NOIMAGE#
+"To a crusader, endurance and patience are most important. You just need to walk down the hallway until you reach the end. But do not kill a single monster, even if they attack you."#
+  #
+  
+3011#Job Changes to Crusader - Continue to Test#SG_FEEL#QUE_NOIMAGE#
+"Meet Gabriel Valentine in Prontera Holy Hall. She will give you the next test... Get going now."#
+  #
+
+3012#Job Changes to Crusader - Knowledge Test#SG_FEEL#QUE_NOIMAGE#
+"You need to have enough knowledge to qualify for the job. Sorry, but I feel you have to study more. Come back when you're ready."#
+  #  
+
+3013#Job Changes to Crusader - Continue to Test2#SG_FEEL#QUE_NOIMAGE#
+"Very good. Go take the next test at once. Go to Prontera Palace and meet Briten Pyrod. I will tell him to prepare the next test."#
+  #
+
+3014#Job Changes to Crusader - Final test#SG_FEEL#QUE_NOIMAGE#
+"This is the last test you need to take. The last test is a combat test. Only people with good battle skills are fit to become crusaders. Bring 1 Holy Water before you take the combat test."#
+1 Holy Water#
+
+3015#Job Changes to Crusader - Finish the test#SG_FEEL#QUE_NOIMAGE#
+"Congratulations. You have finished all the test. Talk to our leader inside. You are now chosen to prepare for the Holy War."#
+  #
+
+
+
+
+3016#Job Changes to Monk - The first step of becoming a Monk#SG_FEEL#QUE_NOIMAGE#
+"Do you want to be a Monk? Well, then get yourself inside and talk to the Pastor ^0000FFMuhae^000000. He'll guide you."#
+  #
+
+3017#Job Changes to Monk - Qualification and Preparation#SG_FEEL#QUE_NOIMAGE#
+"I will see through your effort and decide whether you are qualified or not. You shall bring ^3355FFSticky Mucus, Earthworm Peeling, Green Herb^000000."#
+5 Sticky Mucus, 10 Earthworm Peeling, 20 Green Herb#
+
+3018#Job Changes to Monk - Qualification and Preparation#SG_FEEL#QUE_NOIMAGE#
+"I will see through your effort and decide whether you are qualified or not. You shall bring ^3355FFYoyo Tail, Iron Ore, Blue Herb^000000."#
+20 Yoyo Tail, 5 Iron Ore, 3 Blue Herb#
+
+3019#Job Changes to Monk - Qualification and Preparation#SG_FEEL#QUE_NOIMAGE#
+"I will see through your effort and decide whether you are qualified or not. You shall bring ^3355FFStem, Jellopy, Worm Peelings^000000."#
+30 Stem, 5 Jellopy, 10 Worm Peelings#
+
+3020#Job Changes to Monk - Qualification and Preparation#SG_FEEL#QUE_NOIMAGE#
+"I will see through your effort and decide whether you are qualified or not. You shall bring ^3355FFSolid Shell, Shell, Zargon^000000."#
+5 Solid Shell, 20 Shell, 5 Zargon#
+
+3021#Job Changes to Monk - Qualification and Preparation#SG_FEEL#QUE_NOIMAGE#
+"I will see through your effort and decide whether you are qualified or not. You shall bring ^3355FFCyfar, White Herb, Yellow Herb^000000."#
+5 Cyfar, 10 White Herb, 10 Yellow Herb#
+
+3022#Job Changes to Monk - Qualification and Preparation#SG_FEEL#QUE_NOIMAGE#
+"I will see through your effort and decide whether you are qualified or not. You shall bring ^3355FFTooth of Bat, Bear's Footskin, Poison Spore^000000."#
+10 Tooth of Bat, 5 Bear's Footskin, 20 Poison Spore#
+
+3023#Job Changes to Monk - Qualification and Preparation#SG_FEEL#QUE_NOIMAGE#
+"I will see through your effort and decide whether you are qualified or not. You shall bring ^3355FFPorcupine Quill, Cobweb, Bug Leg^000000."#
+5 Porcupine Quill, 20 Cobweb, 10 Bug Leg#
+
+3024#Job Changes to Monk - Meet 'Douha'.#SG_FEEL#QUE_NOIMAGE#
+"Well, the next monk you have to meet is...OH! Go to 'Douha'. Go North from here and you'll meet her at the graveyard."#
+  #
+
+3025#Job Changes to Monk - Dogma Test#SG_FEEL#QUE_NOIMAGE#
+"I'll teach you the way of the monk -- the mental attitude required and our dogma. You just need to remember what I'll tell you and memorize it. Are you ready?"#
+  #
+
+3026#Job Changes to Monk - Meet 'Puhae'#SG_FEEL#QUE_NOIMAGE#
+"Great!! Perfect! You have passed my test. Bit still you need to take another test. Please go to Sir 'Puhae' next. Good luck!"#
+  #
+  
+3027#Job Changes to Monk - Gathering Mushroom#SG_FEEL#QUE_NOIMAGE#
+"The mushroom gathering test is a test of patience. At the center of the abbey is a building. Go there."#
+  #
+
+3028#Job Changes to Monk - Marathon#SG_FEEL#QUE_NOIMAGE#
+"The marathon test is about overcoming your limitation. At the center of the abbey is a building. Go there. You need to run a couple of lapses."#
+  #
+
+3029#Job Changes to Monk - Final test#SG_FEEL#QUE_NOIMAGE#
+"Congratulation!! Now, go to the monk 'Taomoon'. He is in the deepest place of the building at the center of the abbey."#
+  #
+
+3031#Job Changes to Monk - Practicing Exorcism#SG_FEEL#QUE_NOIMAGE#
+"The last test is a Practicing Exorcism! Attack and slash all enemies that stand in your way! Now! Make a fist! Stand up! It's the time!"#
+  #
+  
+3032#Job Changes to Monk - Become a Monk#SG_FEEL#QUE_NOIMAGE#
+"Well done!! Now... I will give you a special potion. If you drink it, you will have enough chi to be able to change into a monk! Go back to the Pastor, 'Muhae'!#
+  #
+
+
+// ===================== Memorial Baphomet   ========================
+3040#The curse of Baphomet - Fatigue of Grave#SG_FEEL#QUE_NOIMAGE#
+"You cannot enter because the curse of Baphomet still remains. The curse of Baphomet disappears after 12 hours after you entered."#
+ #
+ 
+3041#The curse of Baphomet - Dearth of magical power#SG_FEEL#QUE_NOIMAGE#
+You can't put your magical power during 3 minutes because you spent your SP on the altar."#
+ #
+
+3042#The identity of the Cursed Baphomet Doll#SG_FEEL#QUE_NOIMAGE#
+Friar Patrick suggests meeting Rust Blackhand who is near the main building of the Monastery. He says Rust Blackhand will make the Cursed Baphomet Doll very helpful.#
+ #
+
+3043#The true Gigantic Magestic Goat#SG_FEEL#QUE_NOIMAGE#
+Rust Blackhand says he could make the Magestic Goat with a true power if you bring him all the materials he needs.#
+Cursed Baphomet Doll, Magestic Goat, 30 Dark Crystal, 50 Dark Debris, and 990000Zeny#
+
+//===== 12.1 Resurrection of Satan Morocc
+3050#Resurrection of Satan Morocc - News about Morocc Village#SG_FEEL#QUE_NOIMAGE#
+"Satan Morroc has resurrected and broke out of Morroc Village, and now he has moved to the Sograt Desert. If you consider yourself as a brave advanturer, please go find Chief Balrog of Continental Guards at Morocc Village."#
+ #
+
+3051#Resurrection of Satan Morocc - Test of Quealification#SG_FEEL#QUE_NOIMAGE#
+"If you have to join the Continental Guard, you need to prove your ability. I guess it's only fair that I acknowledge your strength if you can handle something for me. Bring back 30 Live Coals!"#
+30 Live Coals#
+
+3052#Resurrection of Satan Morocc - Test of Quealification2#SG_FEEL#QUE_NOIMAGE#
+"I'm still not convinced that you're good enough to join us. The test is not over yet. If you insist on giving it a try, then... I'll need at least 50 of Glacial Hearts."#
+50 Glacial Hearts#
+
+3053#Resurrection of Satan Morocc - Joining Continental Guard#SG_FEEL#QUE_NOIMAGE#
+"I admit that I'm impressed by your skills and gumption. Welcome to the Continental Guard, my friend. Are you ready to risk your life for the sake of peace in the world?"#
+ #
+
+3054#Resurrection of Satan Morocc - Defeating Satan Morocc!#SG_FEEL#QUE_NOIMAGE#
+Satan Morocc was finally driven out of Rune-Midgards and disappeared through the time-space gap. You can see the fragments floating in the gap.#
+ #
+
+3055#Resurrection of Satan Morocc - Time-Space Gap#SG_FEEL#QUE_NOIMAGE#
+You stretch your hand and pick up a lusterless fragment. It's a piece of the Satan Morocc's skin. This will be the decisive proof of defeating Satan Morocc.#
+ #
+
+3056#Resurrection of Satan Morocc - Rewards#SG_FEEL#QUE_NOIMAGE#
+"Congratulations, soldier. You just saved this world and people from being consumed by destruction and evil. I have three items. Which one do you like to receive?"#
+ #
+
+//---------------------------------------------------
+3060#Kids in Veins - Where's the Little Sis?#SG_FEEL#QUE_NOIMAGE#
+A kid name Karyn has lost his little sister when they went to Thor Volcano in Veins. You must help him finding his sis Curdie.#
+ #
+
+3061#Kids in Veins - Find a way to unlock the shackles!#SG_FEEL#QUE_NOIMAGE#
+Karyn's sister has been shakled down. You must get back to the town in Veins to find the way to free her.#
+ #
+
+3062#Kids in Veins - Find the Locksmith!#SG_FEEL#QUE_NOIMAGE#
+Karyn's sister has been shakled down. You must get back to the town in Veins to find the way to free her.#
+ #
+
+3063#Kids in Veins - Mr. Lockenlock?#SG_FEEL#QUE_NOIMAGE#
+Find the expert named Locksmith Lockenlock. This Mr. Lockenlock's supposed to be sitting in the market street, drunk. You must bring 1 Yellow Potion with you.#
+ #
+
+3064#Kids in Veins - Organic Chamelepu Soap#SG_FEEL#QUE_NOIMAGE#
+Mr. Lockenlock says he needs a Chamelepu Soap to make a mold of a key.  You can purchase the soap from the soap maker, Ms. Ivory at the market.#
+ #
+
+3065#Kids in Veins - Soap Ingredients#SG_FEEL#QUE_NOIMAGE#
+Chamelepu Soap is all sold out at the moment. She can however make the soap if you bring the ingredients.#
+ 10 Milk, 100 Green Herbs, 50 Jellopies, 5 Empty Bottles#
+
+3066#Kids in Veins - To make a Chamelepu Soap...#SG_FEEL#QUE_NOIMAGE#
+Go visit Mr. Saraman, the Camel Farm owner with the ingredients.  He'll tell you what to do with the ingredients. Let's get going!#
+ #
+
+3067#Kids in Veins - Camel Appetite Stimulants#SG_FEEL#QUE_NOIMAGE#
+In order to obtain the lumps of camel dung, you first need to feed the Camel with food that stimulates its appetite. Get the appetite stimulating food!#
+ 5 Monster's Feed, 1 Unripe Apple, 1 Yellow Potion, 1 Empty Bottle#
+
+3068#Kids in Veins - Getting the Camel Dung#SG_FEEL#QUE_NOIMAGE#
+You've successfully gathered the appetite stimulants.  Feed the camel with what you've gathered and get 5 lumps of camel dung.#
+ #
+
+3069#Kids in Veins - Where's the Silk Sand Camel?#SG_FEEL#QUE_NOIMAGE#
+Weird... Camels are not responding to the stimulants. Let's go back to Mr. Saraman and find out what's going on.#
+ #
+
+3070#Kids in Veins - Silk Sand Camel is gone!#SG_FEEL#QUE_NOIMAGE#
+The Silk Sand Camel has escaped the farm and disappeared.  Let's go find the Silk Sand Camel for Mr. Saraman and get 5 lumps of camel dung.  The camel shouldn't have gone so far.#
+ #
+
+3071#Kids in Veins - Silk Sand Camel is found!#SG_FEEL#QUE_NOIMAGE#
+Silk Sand Camel is finally found. Let's get 5 lumps of camel dung. Each lump of dung would take up some ingredients.#
+ 2 Milk, 20 Green Herbs, 10 Jellopies, 1 Empty Bottle#
+
+3072#Kids in Veins - 1 lump of Camel dung obtained#SG_FEEL#QUE_NOIMAGE#
+1 lump of Silk Sand Camel's dung is obtained. You need 4 more of this. Each lump of dung would take up some ingredients.#
+  2 Milk, 20 Green Herbs, 10 Jellopies, 1 Empty Bottle#
+
+3073#Kids in Veins - 2 lumps of Camel dung obtained#SG_FEEL#QUE_NOIMAGE#
+2 lumps of Silk Sand Camel's dung is obtained. You need 3 more of these. Each lump of dung would take up some ingredients.#
+  2 Milk, 20 Green Herbs, 10 Jellopies, 1 Empty Bottle#
+
+3074#Kids in Veins - 3 lumps of Camel dung obtained#SG_FEEL#QUE_NOIMAGE#
+3 lumps of Silk Sand Camel's dung is obtained. You need 2 more of these. Each lump of dung would take up some ingredients.#
+  2 Milk, 20 Green Herbs, 10 Jellopies, 1 Empty Bottle#
+
+3075#Kids in Veins - 4 lumps of Camel dung obtained#SG_FEEL#QUE_NOIMAGE#
+4 lumps of Silk Sand Camel's dung is obtained. You need 1 more of these. Each lump of dung would take up some ingredients.#
+  2 Milk, 20 Green Herbs, 10 Jellopies, 1 Empty Bottle#
+
+3076#Kids in Veins - 5 lumps of Camel dung obtained#SG_FEEL#QUE_NOIMAGE#
+You're finally done with collecting lumps of camel dung. Let's go back to Mr. Saraman and tell him the location of the Camel's whereabouts.#
+  #
+
+3077#Kids in Veins - Go to Ms. Ivory#SG_FEEL#QUE_NOIMAGE#
+You told Mr. Saraman where his camel was.  Now, let's go back to Ms. Ivory.#
+  #
+
+3078#Kids in Veins - Chamalepu Soap is completed!#SG_FEEL#QUE_NOIMAGE#
+Go to Mr. Lockenlock with Chamalepu Soap.#
+  #
+
+3079#Kids in Veins - Making the key mold#SG_FEEL#QUE_NOIMAGE#
+Mr. Lockenlock teaches you how to make the key mold from the lock. You pour the soap into the keyhole and pour it back to the bottle. He could make the key out of the mold.  Let's get going!#
+  #
+
+3080#Kids in Veins - Bringing the key mold#SG_FEEL#QUE_NOIMAGE#
+Little Curdie is still shackled and losing her strength.  You must go back to Mr. Lockenlock with the mold ASAP, so he could make the key.#
+  #
+
+3081#Kids in Veins - All you need is Steel!#SG_FEEL#QUE_NOIMAGE#
+Mr. Lockenlock asks you to get 1 Steel for him to make the key.#
+1 Steel#
+
+3082#Kids in Veins - The Key is Made!#SG_FEEL#QUE_NOIMAGE#
+You've got the master key after listening to the behind story of the lock. You must rescue Curdie and then throw the key away.#
+  #
+
+3083#Kids in Veins - Mr. Lockenlock's key#SG_FEEL#QUE_NOIMAGE#
+Curdie is now safely back to town.  Whatever it is, this place is hiding something big, something related to the Rachel Army. Let's go back to town and meet the kids.#
+  #
+
+
+// 
+//------------------------------------------------
+4000#Shelin's Job Interview#SG_FEEL#QUE_NOIMAGE#
+You've got to pass Shelin's test to take a step forward.#
+#
+
+4001#Job Chages to Hunter#SG_FEEL#QUE_NOIMAGE#
+Meet the Hunter Guildsman to continue the test.#
+#
+
+4002#Job Chages to Hunter - Collecting Items#SG_FEEL#QUE_NOIMAGE#
+Collect the tiems that the Demon Hunter says.  - 5 Claw of Desert Wolf, 5 Trunk, 3 White Herb#
+#
+
+4003#Job Chages to Hunter - Collecting Items#SG_FEEL#QUE_NOIMAGE#
+Collect the tiems that the Demon Hunter says. - 3 Bill of Birds, 5 Skel-bone, 3 Green Herbs#
+#
+
+4004#Job Chages to Hunter - Collecting Items#SG_FEEL#QUE_NOIMAGE#
+Collect the tiems that the Demon Hunter says. - 3 Venom Canine, 3 Animal Skin, 5 Red Herb#
+#
+
+4005#Job Chages to Hunter - Collecting Items#SG_FEEL#QUE_NOIMAGE#
+Collect the tiems that the Demon Hunter says. - 3 Dokkaebi Horn, 3 Pieces of Egg Shell, 10 Fluff#
+#
+
+4006#Job Chages to Hunter - Collecting Items#SG_FEEL#QUE_NOIMAGE#
+Collect the tiems that the Demon Hunter says. - 9 Shell, 9 Worm Peeling, 9 Yellow Herb#
+#
+
+4007#Job Chages to Hunter - Collecting Items#SG_FEEL#QUE_NOIMAGE#
+Collect the tiems that the Demon Hunter says. - 3 Tooth of Bat, 1 Sticky Mucus, 1 Bear's Footskin#
+#
+
+4008#Job Chages to Hunter - Collecting Items#SG_FEEL#QUE_NOIMAGE#
+Collect the tiems that the Demon Hunter says. - 2 Porcupine Quill, 1 Yoyo Tail, 1 Acorn#
+#
+
+4009#Job Chages to Hunter#SG_FEEL#QUE_NOIMAGE#
+Go to the Guildsmaster who is in Payon middle palace#
+#
+
+4010#Job Chages to Hunter#SG_FEEL#QUE_NOIMAGE#
+Go talk to our Guildsmaster who is at the Archer Guild.#
+#
+
+4011#Job Chages to Hunter - Test#SG_FEEL#QUE_NOIMAGE#
+Kill all ^ff0000Job change monsters^000000 and the switch will appear.  Destroy the switch and escape through the exit in the direction of 12 o'clock.#
+#
+
+4012#Job Chages to Hunter#SG_FEEL#QUE_NOIMAGE#
+Report to the Hunter Guild Master that you've passed the exam.#
+#
+
+4013#Job Chages to Hunter#SG_FEEL#QUE_NOIMAGE#
+Go back to the Hunter Guild and report that you've passed the exam.#
+Penetration#
+
+
+//----------------------------------------------
+4015#Becoming an Adventurer Appraiser#SG_FEEL##
+Meet the inspector of the kingdom and become an advanturer appraiser##
+
+4016#Proof of Qualification#SG_FEEL##
+Prove your strength by bringing 2 Reins.##
+
+4017#Qualification Test#SG_FEEL##
+Pass the aptitude test and get yourself fully qualified.##
+
+4018#Preparations for Meeting Princes#SG_FEEL##
+Talk to the inspector again and get ready to meet the princes.##
+
+4020#Interview with the Prince#SG_FEEL##
+Talk to the prince from the Gaebolg Family.##
+
+4021#Interview with the Prince#SG_FEEL##
+Talk to the prince from the Walter Family.##
+
+4022#Interview with the Prince#SG_FEEL##
+Talk to the prince from the Richard Family.##
+
+4023#Interview with the Prince#SG_FEEL##
+Talk to the prince from the Heine Family.##
+
+4024#Interview with the Prince#SG_FEEL##
+Talk to the prince from the Wigner Family.##
+
+4025#Interview with the Prince#SG_FEEL##
+Talk to the prince from the Roewenburg Family.##
+
+4026#Interview with the Prince#SG_FEEL##
+Talk to the prince from the Nerius Family.##
+
+4027#Interview with the Prince#SG_FEEL##
+Listen to the story a bit more.##
+
+4028#The prince, Peter's Favor#SG_FEEL##
+Find the girl who wrote the letter to the prince Peter and give her flowers.##
+
+4029#The Girl's Favor#SG_FEEL##
+Deliver the flower from the girl to Peter.##
+
+4030#The Story of Ahrum and Ernst#SG_FEEL##
+Listen to the story of Ahrum and Ernst.##
+
+4031#The Story of Ahrum and Ernst#SG_FEEL##
+You heard the news that a person from Walter Family is here. How come?##
+
+4032#Conspiracy of the two families#SG_FEEL##
+There's a conspiracy between Walter and Richard Family. You must report to someone.##
+
+4033#Death of Ahrum#SG_FEEL##
+The prince Ahrum is killed by Ernst. You need to report ASAP.##
+
+
+// 
+
+
+
+//
+
+6000#Job Changes to Taekwon#SG_FEEL#QUE_NOIMAGE#
+You've chosen you're path to become a Taekwon. You must increase your base level and talk to Phoenix.#
+#
+
+6001#Job Changes to Taekwon#SG_FEEL#QUE_NOIMAGE#
+You've chosen you're path to become a Taekwon. You must take the mental aptitude exam from Phoenix.#
+#
+
+6002#Job Changes to Taekwon#SG_FEEL#QUE_NOIMAGE#
+You finally can become a Taekwon by having a conversation with Phoenix.#
+#
+
+
+
+
+//
+
+6005#Job Changes to Soul-Linker#SG_FEEL#QUE_NOIMAGE#
+If you want to rule the power of spirits, you need to proceed a ceremony using some materials. You must gather 1 Witherless Rose, 3 Carat Diamond and 1 Immortal Heart.#
+1 Witherless Rose, 3 Carat Diamond, 1 Immortal Heart#
+
+6006#Job Changes to Soul-Linker#SG_FEEL#QUE_NOIMAGE#
+You must perform the ceremony with Maia.#
+#
+
+6007#Job Changes to Soul-Linker#SG_FEEL#QUE_NOIMAGE#
+Maia wishes to speak with the spirits.#
+#
+
+6008#Job Changes to Soul-Linker#SG_FEEL#QUE_NOIMAGE#
+The acho of the spirits are remaining in your heart. Talk with Maia again.#
+#
+
+
+
+
+//
+6010#Job Changes to Super Novice#SG_FEEL#QUE_NOIMAGE#
+If you really want to enjoy the ordinary life of Novice, you must gather 2 kinds of very ordinary items.#
+30 Sticky Mucus, 30 Resin#
+
+
+
+
+//
+6015#A favor from Cougar#SG_FEEL#QUE_NOIMAGE#
+Go find Wildcat Joe in Einbroch and talk to him.#
+#
+
+6016#A favor from a Suspicious Man#SG_FEEL#QUE_NOIMAGE#
+Go through the South Gate of Einbroch City and find the Seal near the red tree seen from the Westside over the Bridge.#
+#
+
+6017#Red Leopard Joe's Reply#SG_FEEL#QUE_NOIMAGE#
+Go back to Cougar guy with Red Leopard Joe's recommendation.#
+#
+
+6018#Cougar's Madness#SG_FEEL#QUE_NOIMAGE#
+Hurry and bring 5 Cyfars and 1 Phracon to Cougar.#
+#
+
+
+
+
+//
+6020#Master Miller's Letter#SG_FEEL#QUE_NOIMAGE#
+Take the letter to Mr. Wise Bull Horn in Payon.#
+#
+
+6021#Wise Bull Horn's voucher#SG_FEEL#QUE_NOIMAGE#
+"I can make a voucher that will demonstrate your desire to become a warrior of the earth for you to present to Gunslinger drillmasters."#
+3 Zargons, 10 Shells, 3 Fluffs, 1 Trunk, 3 Rainbow Shells, 3 Green Herbs#
+
+6022#Making a voucher#SG_FEEL#QUE_NOIMAGE#
+It's going to take a little while. Talk to him again a bit later.#
+#
+
+6023#Wise Bull Horn's Favor#SG_FEEL#QUE_NOIMAGE#
+"I'm thirsty, and would like a cold glass of Milk. Would you please bring me some?"#
+#
+
+6024#Job Changes to Gunslinger!#SG_FEEL#QUE_NOIMAGE#
+"Eeh~Yeah~Eeh~Hooom, Maaaaarrraaa Neeey~ Yippee Yippee Yai Yocaiyay~ Take this to Miller, the Black Fox."#
+#
+
+
+
+// 
+//---------------------
+
+7000#Job Changes to Dancer! Fill out the Application!#SG_FEEL#QUE_NOIMAGE#
+You went to Comodo Dance School to become a Dancer. You've filled out the application form..#
+Conversation with Ale#
+
+7001#Job Changes to Dancer! Let's be prepared!#SG_FEEL#QUE_NOIMAGE#
+Certain materials are to be prepared before starting the dance lesson.  Confirm the gathered materials from Ale.#
+Tuition fee of 10,000 Zeny, 20 Sticky Mucus, 5 Red Potions, 3 Jellopy, 1 pair of Shoes#
+
+7002#Job Changes to Dancer! Let's be prepared!#SG_FEEL#QUE_NOIMAGE#
+Certain materials are to be prepared before starting the dance lesson.  Confirm the gathered materials from Ale.#
+Tuition fee of 10,000 Zeny, 5 Earthworm Peelings, 1 pair of Boots#
+
+7003#Job Changes to Dancer! Let's be prepared!#SG_FEEL#QUE_NOIMAGE#
+Certain materials are to be prepared before starting the dance lesson.  Confirm the gathered materials from Ale.#
+Tuition fee of 10,000 Zeny, 2 Clam Shells, 5 Yellow Potions, 20 Jellopy, 10 Black Hairs, 1 pair of Sandals#
+
+7004#Job Changes to Dancer! A Job Interview!#SG_FEEL#QUE_NOIMAGE#
+Be prepared with all the materials you need. A job interview with Borwaju is waiting for you! You must pass the interview!#
+Interview with Borwaju#
+
+7005#Job Changes to Dancer! Finally on the Stage!#SG_FEEL#QUE_NOIMAGE#
+Finally, it's time to take the Dance Test! You must dance with the given steps during the limited time.  Don't be too nervous!#
+Lst's Dance!#
+
+7006#Job Changes to Dancer! Successful Debut!#SG_FEEL#QUE_NOIMAGE#
+Your steps and body waves were fantastic! The instructor, Borwaju must be so impressed. Let's find out what she really thinks..#
+Conversation with Borwaju#
+
+//------ 
+7007#Warrior of the Sun, the Moon, and the Stars#SG_FEEL#QUE_NOIMAGE#
+You can find 'Moogang' in Comodo, supposedly at the place that's closest tot he sky.#
+Conversation with 'Moogang'#
+
+7008#Warrior of the Sun, the Moon, and the Stars - Nature#SG_FEEL#QUE_NOIMAGE#
+Go forth and gather the power of nature scattered around the world. Bring me pieces of the blustery wind, solid earth, freezing ice, and burning flame.#
+Rough Wind, Great Nature, Mystic Frozen, Flame Heart#
+
+7009#Warrior of the Sun, the Moon, and the Stars - the Altar#SG_FEEL#QUE_NOIMAGE#
+"I shall guide you to the altar. At the altar, speak to Daru, who will serve as your guide for that test. After you complete the test, come talk to me."#
+Altar of the Sun, Moon and Stars#
+
+7010#Warrior of the Sun, the Moon, and the Stars - Stars?#SG_FEEL#QUE_NOIMAGE#
+"Bring me a piece of a star and the sand of a star..."#
+A piece of a star, the sand of a star#
+
+7011#Warrior of the Sun, the Moon, and the Stars#SG_FEEL#QUE_NOIMAGE#
+If you are all done and satisfied, please go back to 'Moogang.'#
+Conversation with 'Moogang'#
+
+// 
+//---------------------------------------------------
+8000#Quitting Job Changes to Assassin#SG_FEEL#QUE_NOIMAGE#
+Give up to change the job to Assassin and go back to town. #
+Quitting Job Changes to Assassin#
+
+8001#Applying for Job Changes to Assassin#SG_FEEL#QUE_NOIMAGE#
+Fill out the form to apply for the job of Assassin and take the test.#
+Applying for Job Changes to Assassin#
+
+8002#Written Test for Job Changes to Assassin#SG_FEEL#QUE_NOIMAGE#
+You must get at least 9 out of 10 questions to pass the test.#
+Written Test for Job Changes to Assassin#
+
+8003#Practical Test for Job Changes to Assassin#SG_FEEL#QUE_NOIMAGE#
+You must catch 6 'Sample for the Jobchange Test' to pass the test.#
+Catch all 6 Sample for the Jobchange Test!#
+
+8004#Practical Test for Job Changes to Assassin#SG_FEEL#QUE_NOIMAGE#
+Your Hiding skill is to be tested. You must use your hiding skills with potion until you reach the other side of the room without killing any monsters.#
+No monsters should be killed.#
+
+8005#Practical Test for Job Changes to Assassin#SG_FEEL#QUE_NOIMAGE#
+Go to the final testing hall.#
+Go to the final testing hall#
+
+8006#Find the Guild Master!#SG_FEEL#QUE_NOIMAGE#
+You must go through the maze and find the Guild Master.#
+Find the Guild Master!#
+
+8007#Acceptance from the Guild Master#SG_FEEL#QUE_NOIMAGE#
+Bring the Necklace from the Guild Master and go meet the Assassin Expert 'Hyuie'.#
+Delivery of the nacklace from the Guildmaster#
+
+8008#Job Changes to Assassin#SG_FEEL#QUE_NOIMAGE#
+You've now become an Assassin !!#
+Job Changes to Assassin#
+
+
+//
+
+8009#Applying for Job Change to Priest#SG_FEEL#QUE_NOIMAGE#
+Accept the Three Trials of Priesthood to change the job.#
+Applying for Job Change to Priest#
+
+8010#1st trial, a Pilgrimage#SG_FEEL#QUE_NOIMAGE#
+You must make a pilgrimage.
+First, visit Rubalkabara who is Northeast Prontera Ruins. Second, visit Sister Mathilda who is near Morroc, Southwest of Prontera. Finally, visit Father Yosuke in a field Northwest of Prontesra.#
+1st trial, a Pilgrimage#
+
+8011#2nd trial, the Spiritual Training#SG_FEEL#QUE_NOIMAGE#
+Move to the place where the Spiritual Training takes place. Talk to Peter S. Alberto.#
+2nd trial, the Spiritual Training#
+
+8012#2nd trial, the Spiritual Training#SG_FEEL#QUE_NOIMAGE#
+Start training. Kill all the monsters! Show no mercy to the creatures of darkness!#
+2nd trial, the Spiritual Training#
+
+
+8013#Job Changes to Priest#SG_FEEL#QUE_NOIMAGE#
+You've completed the Spiritual Training! Go see the Sister Cecille.#
+Job change test to Priest#
+
+
+8014#3rd trial, your Devotion to God#SG_FEEL#QUE_NOIMAGE#
+Make a promise to devote yourself to God.#
+3rd trial, your Devotion to God#
+
+
+8015#Applying for Job Change to Priest#SG_FEEL#QUE_NOIMAGE#
+You have completed all 3 missions as you made the oath of Priesthood. Go back to the Bishop Paul.#
+Applying for Job Change to Priest#	
+
+
+8016#Job Changes to Priest#SG_FEEL#QUE_NOIMAGE#
+You've now become a Priest!!#
+You've now become a Priest!#
+
+// 
+
+8017#Inspecting Einbroch Factory#SG_FEEL#QUE_NOIMAGE#
+If you would, please inspect the 2nd control panel that seems to have been broken for a while...#
+Inspect the 2nd control panel#
+
+8018#Inspecting Einbroch Factory#SG_FEEL#QUE_NOIMAGE#
+It looks totally broken: screws are missing, and the iron cover has been bent open, revealing a tangled mess of wires inside.#
+Report the status to Zelmeto.#
+
+8019#Inspecting Einbroch Factory#SG_FEEL#QUE_NOIMAGE#
+There are 3 automatic pressure governors which hammer the bent iron plates from above to flatten them. It seems that one of them may have some kind of problem.#
+Inspect the automatic pressure governors.#
+
+8020#Inspecting Einbroch Factory#SG_FEEL#QUE_NOIMAGE#
+It's making strange grinding noises and a few of the surface screws are loose.#
+Report the status to Zelmeto.#
+
+8021#Inspecting Einbroch Factory#SG_FEEL#QUE_NOIMAGE#
+I want you to check a ^FF0000control panel^000000. It's the same kind as the one you just inspected, but bigger in size.#
+Inspect the control panel.#
+
+8022#Inspecting Einbroch Factory#SG_FEEL#QUE_NOIMAGE#
+after tapping on its surface, you hear a disheartening hollow sound. It looks like it's missing some parts....#
+Report the status to Zelmeto.#
+
+8023#Inspecting Einbroch Factory#SG_FEEL#QUE_NOIMAGE#
+The machine which I want you to inspect this time is a small sized conveyor.  Be sure that you inspect the small one, since we also have a large conveyor in the factory as well.#
+Inspect the small sized conveyor.#
+
+8024#Inspecting Einbroch Factory#SG_FEEL#QUE_NOIMAGE#
+Its movements are awkward, erratic and weak, and almost all of its screws are rusted.#
+Report the status to Zelmeto.#
+
+8025#Inspecting Einbroch Factory#SG_FEEL#QUE_NOIMAGE#
+Now, the pipe I want you to inspect is located near those large caultrons of molten metal. You should be able to find it pretty easily.#
+Inspect the pipe.#
+
+8026#Inspecting Einbroch Factory#SG_FEEL#QUE_NOIMAGE#
+It's bloated and worn out from long durations of being overloaded with pressure. It's a wonder it hasn't exploded yet.#
+Report the status to Zelmeto.#
+
+8027#Inspecting Einbroch Factory#SG_FEEL#QUE_NOIMAGE#
+The last thing that you need to inspect is a ^FF0000large converyor^000000. It's similar to the one you inspected before, but it's bigger and more powerful.#
+Inspect the large sized conveyor.#
+
+8028#Inspecting Einbroch Factory#SG_FEEL#QUE_NOIMAGE#
+This conveyor seems to have similar problems as its smaller version. Its movements are awkward, erratic and weak, and almost all of its screws are rusted.#
+Report the status to Zelmeto.#
+
+8029#Inspecting Einbroch Factory#SG_FEEL#QUE_NOIMAGE#
+Thank you so much for your help. I've got to make sure we have enough materials to make the repairs so that the machines will be safely functioning again. First, I better hurry and request an increase for the Factory Repair budget from our superintendant.#
+Request an increase for the Factory Repair budget.#
+
+8030#Inspecting Einbroch Factory#SG_FEEL#QUE_NOIMAGE#
+What...? Factory Repair budget? No way! Why waste money? Look, everything's fine! Why are you exaggerating such small details?#
+The request is rejected.#
+
+8031#Repair works of Einbroch Factory#SG_FEEL#QUE_NOIMAGE#
+We need at least 20 ^FF0000Flexible Tubes^000000, 10 ^FF0000Rusty Screw^000000 and 10 ^FF0000Used Iron Plate^000000 to repair this factory.#
+20 Flexible Tubes, 10 Rusty Screw, 10 Used Iron Plate#
+
+
+
+//
+
+8032#Tarlock's Favor#SG_FEEL#QUE_NOIMAGE#
+I have a younger brother who I rarely see since he's also an Airship Captain that's always traveling. Would you bring this letter to my brother, Ferlock? Also, please make sure that you come back with his reply, alright?#
+Deliver Tarlock's letter to his brother.#
+
+8033#Ferlock's Favor#SG_FEEL#QUE_NOIMAGE#
+he mentioned that he was hoping to finally return a few things he borrowed from me. However, he lost them... If you're willing to help me, would you get my ^FF00002 Will of the Darkness^000000 and ^FF00002 Prickly Fruit^000000 back for me?#
+Bring 2 Will of the Darkness and Prickly Fruit back to Ferlock.#
+
+8034#Ferlock's Favor#SG_FEEL#QUE_NOIMAGE#
+Would you please take this reply to Tarlock for me?#
+Deliver the letter from Ferlock to his brother, Tarlock.#
+
+8035#Delivering the letter to Tarlock#SG_FEEL#QUE_NOIMAGE#
+Oh, so you've delivered my letter? Great, and you've even brought back a reply. Hmm, give me a moment, I've been waiting to read what my brother wrote.#
+ #
+
+
+//
+
+8036#Hallen's Favor#SG_FEEL#QUE_NOIMAGE#
+Would you go and deliver this letter to Kaci for me? It's from some guy named Mr. Mawong, her mentor or something like that.#
+Deliver the letter to Kaci.#
+
+8037#Delivering letter to Kaci#SG_FEEL#QUE_NOIMAGE#
+Oh, Hallen must have asked you to deliver this. He should be doing this sort of thing himself, instead of asking customers for favors! If you ever need a little favor from me, feel free to ask me, alright?#
+ #
+
+8038#Delivering letter to Kaci#SG_FEEL#QUE_NOIMAGE#
+By the way, if Hallen bothers you with another request, please refuse to help him next time, okay? I won't allow him to get spoiled! Ho ho ho ho~#
+ #
+
+8039#Secret of Airships#SG_FEEL#QUE_NOIMAGE#
+These Airships are so huge and heavy, and I can scarcely believe that they can fly. How is it even possible? you could find out for me, Well, if it'd be a really big help.#
+ #
+
+8040#Secret of Airships#SG_FEEL#QUE_NOIMAGE#
+Really...? Are you serious? An imitation of Ymir's Heart Piece. Now where have I heard about that before? Mm, let me think... #
+ #
+
+8041#Secret of Airships#SG_FEEL#QUE_NOIMAGE#
+Kaci told me about a drunkard that always mentions Ymir's Heart when he plays the Dice game for Apples!#
+ #
+
+8042#Secret of Airships#SG_FEEL#QUE_NOIMAGE#
+I met that guy when I was helping Shinokas. He was one of the directors of the Einbroch Laboratory that had a piece of Ymir's Heart. It's worth investigating...#
+ #
+
+8043#Secret of Airships#SG_FEEL#QUE_NOIMAGE#
+You were asking me about the Airship's flight mechanics. So you're not an employee... You better get out of here. The guards patrol this place regularly, so you're almost sure to get caught. Hmm, come and see me later at the Airship, alright? Now hurry!#
+You must go and see Ferlock.#
+
+
+//
+
+8044#Euslan's Fiancee#SG_FEEL#QUE_NOIMAGE#
+...Are you really willing to go out and look for Thierry for me? Oh, thank you so much! You don't know how much your kind offer means to me. Thierry went on a trip, traveling on one of the Airships, to find some medicine that the doctors say I need for my illness.#
+ #
+
+8045#Tips from Kaci#SG_FEEL#QUE_NOIMAGE#
+Ah, I know! I'll ask the Airship Captain to help you: he's got the list of passengers and their destinations.#
+Check out the passengers list from the captain.#
+
+8046#Ferlock's Passengers list#SG_FEEL#QUE_NOIMAGE#
+According to this, he last took an Airship to Hugel. That's all that this says.#
+ #
+
+8047#Euslan's Favor#SG_FEEL#QUE_NOIMAGE#
+If you get the chance, please visit my brother Eukran in Hugel, and ask him where my Thierry might be.#
+ #
+
+8048#Eukran's Testimony#SG_FEEL#QUE_NOIMAGE#
+You see, Thierry passed by here about a month ago, and told me that he had to visit the Odin Shrine. I wasn't sure then, but now I think he's trying to help my sister.#
+ #
+
+8049#Thierry's Favor#SG_FEEL#QUE_NOIMAGE#
+I can't really go into the details, but I'm doing this work to find a cure for Euslan's disease. It's not curable by modern medicine...#
+ #
+
+8050#Danger coming on to Thierry#SG_FEEL#QUE_NOIMAGE#
+Thierry seems to have caught on to what we're really up to. I think that's why he's slowing down on his research. We better get rid of him before it's too late.#
+ #
+
+8051#Euslan's Medicine#SG_FEEL#QUE_NOIMAGE#
+It doesn't matter what happens to me, but I must save Euslan. I only need 5 Runes of the Darkness to finish that medicine. Please help me get them, adventurer...#
+Gather 5 Runes of the Darkness#
+
+8052#Thierry's Favor#SG_FEEL#QUE_NOIMAGE#
+Please understand that I want to see her as soon as I can, but I have to wait until those Rekenber agents stop searching for me. Please give that medicine to Euslan as soon as you can: her life depends on it.#
+Deliver the medicine to Euslan.#
+
+
+// (hg_herv.sc)
+
+8053#Allen's Medicine#SG_FEEL#QUE_NOIMAGE#
+I need you to find my son Postell and to tell him to bring my medicine! Please head east, go outside of town, and you should be able to find Postell.#
+ #
+
+8054#Message from Postell#SG_FEEL#QUE_NOIMAGE#
+I'll try to get it to him soon. Hey, would you do me a favor and make sure that my dad doesn't get himself into any more trouble?#
+Go back to Allen#
+
+8055#Nursing Allen#SG_FEEL#QUE_NOIMAGE#
+Wh-what if I have another ulcer attack before Postell can bring my meds?! I might not survive! A-adventurer, would you please stay by my side until my son arrives?#
+Take care of Allen.#
+
+8056#Little something in return#SG_FEEL#QUE_NOIMAGE#
+Please take a look inside the medicine drawer, and help yourself to whatever you like~#
+Look inside the medicine drawer.#
+
+
+//(hg_memo.sc)
+
+8057#Grumbling Manainne#SG_FEEL#QUE_NOIMAGE#
+This tree means so much to everyone in this town, and we all have special memories of this place. But that El Schatt fellow plans to chop it down for his shop...#
+ #
+
+8058#Conversation with El Schatt#SG_FEEL#QUE_NOIMAGE#
+Look, memories are nice and all, but I don't dwell on the past. Hey, I've got some great memories of this place too, but you know what? I've decided to let go of them before they get too painful. That's life. My father's been wanting to build a shop here for so long, and now, I think it's about time.#
+ #
+
+8059#Conversation with Perfitz#SG_FEEL#QUE_NOIMAGE#
+I'm pleased that my son has finally set his mind on the family business. It's funny... He used to deperately fight me when it came to building shops where that tree has planted. I get this gut feeling that something's not right, like he's too excited about cutting that tree down. Maybe this old man is just too suspcious~#
+ #
+
+8060#Stubborn El Schatt#SG_FEEL#QUE_NOIMAGE#
+It's true that I used to think differently... I'd protect that old tree with my life, I won't deny it. But that's an old story that should be buried in the past..#
+ #
+
+8061#Grumbling Manainne#SG_FEEL#QUE_NOIMAGE#
+Now El Schatt is just a heartless, money grubbing...! He's completely changed. My sister would be rolling in her grave, seeing him now...#
+ #
+
+8062#Kanainne's spirit#SG_FEEL#QUE_NOIMAGE#
+I... I can borrow my sister's body? Yes, if she cooperates, maybe... Maybe it will work. I must... must do something before he... he... he hurts himself even more...#
+Go back to Hugel#
+
+8063#Kanainne meets El Schatt#SG_FEEL#QUE_NOIMAGE#
+...El Schatt... Listen to me.  Look at me. It's really your Kanainne. You wrote this song just for me. But I died before you could finish it.#
+ #
+
+
+// (hg_odeng.sc)
+
+8064#Cellette's Fish Cake Soup#SG_FEEL#QUE_NOIMAGE#
+Please take this order of Fish Cake Soup to my friend Neha. I'm grateful that she's a regular customer..#
+Deliver the order to Neha.#
+
+8065#Cellette's Fish Cake Soup#SG_FEEL#QUE_NOIMAGE#
+Take this next order of Fish Cake Soup to Maewan, another one of my regulars.#
+Deliver the order to Maewan.#
+
+8066#Cellette's Fish Cake Soup#SG_FEEL#QUE_NOIMAGE#
+Please take it to my roommate Layoma. But... Be careful. She's got a thing about punctuality. Just try not to be late...#
+Deliver the order to Layoma.#
+
+8067#Cellette's Fish Cake Soup#SG_FEEL#QUE_NOIMAGE#
+Quick, take this Fish Paste Soup to Erjan. Um, but be careful, he's really nitpicky...#
+Deliver the order to Erjan.#
+
+8068#Cellette's Fish Cake Soup#SG_FEEL#QUE_NOIMAGE#
+You're late! Don't you know this soup isn't good if it isn't steaming hot? But... You're a handsome fellow, so I'll forgive you... On one condition. Bring me ^FF00001 Whip^000000 with which to spank you. You better hurry, boy.#
+Bring one Whip to Neha.#
+
+8069#Cellette's Fish Cake Soup#SG_FEEL#QUE_NOIMAGE#
+Well, I'm satisfied. I'll go ahead and tell Celette that you did a good job... I hope you come deliver my soup again~#
+You've successfully delivered the Fish Soup.#
+
+8070#Cellette's Fish Cake Soup#SG_FEEL#QUE_NOIMAGE#
+You're late! This is your fault, you know that, right? I can forgive you if you help me with my collection. Just bring me 1 Bookclip in Memory, alright? #
+Bring Maewan 1 Bookclip in Memory.#
+
+8071#Cellette's Fish Cake Soup#SG_FEEL#QUE_NOIMAGE#
+Thanks for delivering~ #
+You've successfully delivered the Fish Soup.#
+
+8072#Cellette's Fish Cake Soup#SG_FEEL#QUE_NOIMAGE#
+I can't let you continue delivering for Cellette unless you prove that you're dependable to me. Erm, bring me ^FF00001 Mushroom Spore^000000, and I'll forget this whole thing.#
+Bring 1 Mushroom Spore to Layoma.#
+
+8073#Cellette's Fish Cake Soup#SG_FEEL#QUE_NOIMAGE#
+Alright, maybe I can count on you to work for my roommate Cellette a little while longer.#
+You've successfully delivered the Fish Soup.#
+
+8074#Cellette's Fish Cake Soup#SG_FEEL#QUE_NOIMAGE#
+Bring me my ^FF0000Fish Cake Soup^000000 with ^FF00001 China^000000 so that I may properly enjoy my meal.#
+Bring 1 China to Erjan.#
+
+8075#Cellette's Fish Cake Soup#SG_FEEL#QUE_NOIMAGE#
+You are dismissed. Please take your leave, and return to Cellette with my noble thanks.#
+You've successfully delivered the Fish Soup.#
+
+
+//(ein_ryu.sc)
+
+8076#Clitzer and Calla#SG_FEEL#QUE_NOIMAGE#
+I know I'm acting like a complete idiot. But I'd give anything to see Calla... Just don't listen to anything I say. I'm just a poor fool in love with the wrong person. That has to be it....#
+ #
+
+8077#Clitzer and Calla#SG_FEEL#QUE_NOIMAGE#
+Well, maybe I can't see him, but would you give my violin to Clitzer for me? I used to play this for him all the time...#
+Take Calla's Violin to Clitzer.#
+
+8078#Clitzer and Calla#SG_FEEL#QUE_NOIMAGE#
+That's my daughter's Violin. I gave that to her for her sweet sixteen... You've crossed the line, punk! Guards! Get over here!#
+Calla's Violin is taken away.#
+
+8079#Clitzer and Calla#SG_FEEL#QUE_NOIMAGE#
+All you need to do is just give her ^FF00001 Flower^000000. I don't have the zeny and I don't think I'm welcome at Kapellthaine Manor.#
+Bring 1 Flower to Calla.#
+
+8080#Clitzer and Calla#SG_FEEL#QUE_NOIMAGE#
+Oh, if you pass by Einbroch, would you thank Clitzer for the flower for me please? A-and... And... Please tell him that I really miss him a lot.#
+Deliver Calla's message to Clitzer.#
+
+8081#Clitzer and Calla#SG_FEEL#QUE_NOIMAGE#
+I feel so much better now. Oh! When you have the time, why don't you talk to my mother? She always likes meeting my friends.#
+Meet Clitzer's mother.#
+
+8082#Clitzer and Calla#SG_FEEL#QUE_NOIMAGE#
+I can't bear to see the petty hatred between our two towns stop my son from seeing the woman he loves...#
+ #
+
+8083#Clitzer and Calla#SG_FEEL#QUE_NOIMAGE#
+Why don't you bring me ^990000Coals^000000? It's not impossible for someone like yourself, but this kind of task will require some effort on your part.#
+Bring Coals to Satra.#
+
+8084#Clitzer and Calla#SG_FEEL#QUE_NOIMAGE#
+Well, I shall try to find some use for these. I'm afraid the gift I've asked from you isn't very practical. How is Coal usually used? Ah, I have a novel idea!#
+You must bring Coals to Satra.#
+
+8085#Clitzer and Calla#SG_FEEL#QUE_NOIMAGE#
+Anyway, when you next meet Clitzer, please tell him to pay me a visit soon. Oh, and remind him to dress appropriately for this special occasion. Ho ho ho ho ho~!#
+Deliver the message to Clitzer.#
+
+8086#Clitzer and Calla#SG_FEEL#QUE_NOIMAGE#
+Eh...?  What did you just say? Did you just say that Calla's mother wants me to have tea with her? Holy moley...!!#
+ #
+
+8087#Clitzer and Calla#SG_FEEL#QUE_NOIMAGE#
+Thank you for helping my son Clitzer. Sadly, the little fool doesn't have any clue when it comes to certain things like choosing clothing. A man should wear nice clothes, like a Formal Suit or a Tuxedo, for important meetings and special occasions. #
+Get Clitzer a nice outfit.#
+
+8088#Clitzer and Calla#SG_FEEL#QUE_NOIMAGE#
+You've really opened my eyes. From now on, I'll do my best to earn the approval of Calla's parents and become worthy of Calla's love.#
+ #
+
+
+//(rachel_wonjumin.sc)
+
+8089#Stolen Gemstone#SG_FEEL#QUE_NOIMAGE#
+I don't have any proof, but I suspect it was stolen by Phobe, a servant that disappeared about the same time the gem disappeared. You might want to question the other servants of her whereabouts.#
+Get some information on Phobe's whereabouts.#
+
+8090#Stolen Gemstone#SG_FEEL#QUE_NOIMAGE#
+Truth be told, I don't know much since I just started working here. Why don't you ask the senior employees? You could ask Mr. Manson inside the mansion.#
+Go find Mr. Manson.#
+
+8091#Stolen Gemstone#SG_FEEL#QUE_NOIMAGE#
+Ah, our gardener Jenny was the one that introduced me to him. She's worked for Sir Zhed for a long time, and she loves kids. You know, if you want to know more about that kid, you should talk to Jenny.#
+Go find Jenny#
+
+8092#Stolen Gemstone#SG_FEEL#QUE_NOIMAGE#
+Alright, I guess I can go to the market and ask around.#
+Go to the Market.#
+
+8093#Stolen Gemstone#SG_FEEL#QUE_NOIMAGE#
+So yeah, last night, some guy asked me to tell anyone looking for this guy named Phobe to give you a message. Basically, he wants you to come to the 'ice cave.' Let's see, his name was... Logan? Nogan? Something like that.#
+Go to the Ice Cave.#
+
+8094#Stolen Gemstone#SG_FEEL#QUE_NOIMAGE#
+Vincent's instructions were to kill anyone that asked about Rogan, some name he made up. It looks like he set us up, dude. Sorry, if I had known, I wouldn't have done it.#
+Go back to Vincent.#
+
+8095#Stolen Gemstone#SG_FEEL#QUE_NOIMAGE#
+You won't get in trouble if I can find the jewel and Phobe before Sir Zhed returns, so I'll try to find them for you as soon as I can.#
+Try finding Phobe.#
+
+8096#Stolen Gemstone#SG_FEEL#QUE_NOIMAGE#
+Just so you know, I don't plan on going back home! Well, just not this second anyway. But let my mom know that I'm fine and not to worry.#
+Go back to Vincent.#
+
+8097#Stolen Gemstone#SG_FEEL#QUE_NOIMAGE#
+While I return this jewel, would you please tell my wife Jenny that our boy is okay? She's been very worried about him, so...#
+Give her son's regard to Jenny.#
+
+8098#Stolen Gemstone#SG_FEEL#QUE_NOIMAGE#
+Thank you for all of your help, adventurer~#
+Go back to Vincent.#
+
+8099#Stolen Gemstone#SG_FEEL#QUE_NOIMAGE#
+This note is a letter of recommendation hat I have written for you. Please deliver it to Sir Zhed as soon as possible. Good bye, and thank you for everything.#
+Go see Sir Zhed.#
+
+
+//(rachel_ma1.sc)
+
+8100#Recommendation from High Priest Zhed#SG_FEEL#QUE_NOIMAGE#
+While I finish writing this recommendation, let me tell you how to get to the pope's office where you must go once you gather 40 Glacial Hearts.#
+Gather 40 Glacial Hearts and go see the Pope.#
+
+8101#Recommendation from High Priest Zhed#SG_FEEL#QUE_NOIMAGE#
+I really want to thank you for coming to speak to me. I had a great time learning. Now I have to go officiate services, so... This is goodbye for now...#
+Go back to Zhed.#
+
+8102#Recommendation from High Priest Zhed#SG_FEEL#QUE_NOIMAGE#
+I'm sorry, but we're not quite finished with our discussion. Why don't you wait and relax in the next room over there in the meantime?#
+ #
+
+8103#Recommendation from High Priest Zhed#SG_FEEL#QUE_NOIMAGE#
+I want to give you a bit of advice. Don't get too close to High Priest Zhed. If you do, you might end up getting yourself in trouble...#
+Go back to Zhed.#
+
+8104#Recommendation from High Priest Zhed#SG_FEEL#QUE_NOIMAGE#
+Ah, but before you go, let me warn you not to ^FF0000go near the Holy Ground^000000. I repeat, stay away from the Holy Ground.#
+ #
+
+8105#Recommendation from High Priest Zhed#SG_FEEL#QUE_NOIMAGE#
+I warned Bekento that he might cause trouble for you, but it seems that you've caused trouble for him. Understand this: most intruders are severely punished, but because of my friendship with Bekento, I'm letting you off easy. Remember that...#
+Go back to Zhed.#
+
+
+//(rachel_ryu.sc)
+
+8106#Bruspetti's Whereabouts#SG_FEEL#QUE_NOIMAGE#
+I just found out that my precious daughter has been going out with someone. She went to some other town for this boy, and I haven't heard a word from her since! Probably on some lovey dovey trip with whoever that boy is.#
+Go meet Lachellen.#
+
+8107#Lachellen's Testimony#SG_FEEL#QUE_NOIMAGE#
+Ooh, I'm so jealous of Bruspetti! She's been spending so much time with her new boyfriend recently... But she still refuses to tell me what his name is. Let's see... He grew up in Lighthalzen? That's all she knows.#
+Find a foreigner in town.#
+
+8108#A Foreigner, Katinshuell#SG_FEEL#QUE_NOIMAGE#
+Geez... I know you guys go around solving problems, but this is one thing you can't handle. Me and my girlfriend are history now. It's over between us.#
+Go back to Mr. Shendar.#
+
+8109#Bruspetti's scent#SG_FEEL#QUE_NOIMAGE#
+I miss my daughter. Yes, the house smells different without her around. It's a little weird to be talking about this, but Bruspetti always did smell nice, just like her mother.#
+Search for Bruspetti's scent in Lighthalzen.#
+
+8110#Bruspetti's scent#SG_FEEL#QUE_NOIMAGE#
+This... This smell... It smells so nice! Like rose petals riding on a gentle breeze... Wait, could this be the scent that Bruspetti's father mentioned earlier?#
+Go back to Rachel and meet Lachellen.#
+
+8111#Lachellen's Testimony#SG_FEEL#QUE_NOIMAGE#
+If she's in Lighthalzen, she's probably gone there to learn more about her boyfriend. Hmm, maybe if you check the place where she and her boyfriend usually went on dates, you might be able to find something.#
+Find Freya's Spring.#
+
+8112#Freya's Spring#SG_FEEL#QUE_NOIMAGE#
+I'm sorry if I startled you, but the ground that you're standing on is very slippery, you know.#
+Go back to Mr. Shendar.#
+
+8113#Bruspetti's Diary#SG_FEEL#QUE_NOIMAGE#
+As a loving father, I can't allow myself to invade my precious daughter's privacy. Even if she did carelessly leave her diary on top of her drawer.#
+Search for the diary on top of the drawer.#
+
+8114#Bruspetti's Diary#SG_FEEL#QUE_NOIMAGE#
+I can't allow myself to invade my precious daughter's privacy. Even if she did carelessly leave her diary on top of her drawer.#
+Search for the diary.#
+
+8115#Bruspetti's Diary#SG_FEEL#QUE_NOIMAGE#
+This must be Bruspetti's diary! But... reading it would make you feel like a real creep. So don't touch it.#
+Go meet Katinshuell#
+
+8116#Suspicious Katinshuell#SG_FEEL#QUE_NOIMAGE#
+I just told you that I broke up with my girlfriend. You know, I kinda sorta wanna be left alone. Go away...#
+Go meet Lachellen.#
+
+8117#Lachellen's Testimony#SG_FEEL#QUE_NOIMAGE#
+Freya's Spring? Oh, I like that place! Speaking of which, I know someone named Katinshuell that went there pretty often. Usually men don't go alone...#
+Go to Freya's Spring.#
+
+8118#Freya's Spring#SG_FEEL#QUE_NOIMAGE#
+See the edge of the spring? The same young man frequently comes to that spot, and stares into the water, just dripping with sadness. Someone so young shouldn't be feeling like that.#
+Go back to Mr. Shendar.#
+
+8119#Conversation with Mr. Shendar" 4_M_MIDDLE 250 19 3 0 0
+OnClick:#SG_FEEL#QUE_NOIMAGE#
+Wait, wait... So someone has been sneaking around here? That's weird. Wait, that guy, the one that might be Bruspetti's boyfriend..#
+Use Bruspetti's Diary to find Katinshuell.#
+
+8120#Conversation with Katinshuell#SG_FEEL#QUE_NOIMAGE#
+Tell me the truth! Actually, you know what? Why don't we look at the truth together? How's that?#
+Keep talking to Katinshuell.#
+
+8121#Conversation with Katinshuell#SG_FEEL#QUE_NOIMAGE#
+He's still resisting me... How can I get him to reveal the truth? Maybe there's something I could use to make him confess...#
+ #
+
+8122#Conversation with Katinshuell#SG_FEEL#QUE_NOIMAGE#
+... Please just leave me alone. I've lost the woman I love because of something stupid I did in the past. If you want to turn me in, go ahead...#
+Go to Freya's Spring.#
+
+
+//
+
+//========================================================================
+
+//------------------------------------
+
+9000#Job Changes to Knight#SG_FEEL#QUE_NOIMAGE#
+The Chivalry Captain 'Herman' says you need to get approvals by other Knights in order to become a Knight. #
+Talk to other members of Chivalry.#
+
+//-------------------------------------
+
+// 1st test - 1
+9001#Loyalty of a Knight#SG_FEEL#QUE_NOIMAGE#
+The first test by Sir Andrew!#
+5 of each Elder Pixie's Moustache, Wing of Red Bat, Orcish Voucher, Moth Dust, Reptile Tongue and Mane should be gathered and reported back to Andrew.#
+
+// 1st test - 2
+9002#Loyalty of a Knight#SG_FEEL#QUE_NOIMAGE#
+The first test by Sir Andrew!#
+5 of each Bug Leg, Heart of Mermaid, Maneater Blossom, Clam Flesh, Old Frying Pan and Snail's Shell should be gathered and reported back to Andrew.#
+
+// 1st test- Pass
+9003#The Honor of a Knight#SG_FEEL#QUE_NOIMAGE#
+Sir Andrew tells you to visit Sir James to continue the tests.#
+Conversation with 'Sir James'#
+
+//-----------------------------------------
+
+// 2nd test
+9004#The Honor of a Knight#SG_FEEL#QUE_NOIMAGE#
+'James Scythe' tells you to visit Sir Windser to continue the tests.#
+Conversation with 'Sir Windser'#
+
+//-------------------------------------
+
+// 3rd test
+9005#Tenacity of a Knight#SG_FEEL#QUE_NOIMAGE#
+'Sir Windser' only orders you to follow him....#
+Conversation with 'Sir Windser'#
+
+
+// 3rd test
+9006#Tenacity of a Knight#SG_FEEL#QUE_NOIMAGE#
+'Sir Windser' never talks much.  He orders you to kill all the monsters inside the testing hall.#
+Kill all monsters in 3 minutes#
+
+
+// 3rd test
+9007#The Honor of a Knight#SG_FEEL#QUE_NOIMAGE#
+'Sir Windser' tells you to visit 'Amy Beatrice' for the next test.#
+Conversation with 'Amy Beatrice'#
+
+//-----------------------------------------
+
+
+// 3rd test
+9008#Etiquette as a Knight#SG_FEEL#QUE_NOIMAGE#
+A proud Lady Knight of the Prontera Chivalry, 'Amy' tells you to answer her questions as a Knight.#
+Conversation with 'Amy Beatrice'#
+
+
+
+// 3rd test
+9009#Life as a Knight#SG_FEEL#QUE_NOIMAGE#
+'Amy Beatrice' tells you to visit 'Sir Edmond' for the next test.#
+Conversation with 'Sir Edmond'#
+
+
+//--------------------------------------
+
+// 4th test
+9010#Quality of reverence#SG_FEEL#QUE_NOIMAGE#
+'Sir Edmond' gives advices on the attitude of mind and tells you to be patient.#
+Meditation#
+
+// 4th test
+9011#Life as a Knight#SG_FEEL#QUE_NOIMAGE#
+'Sir Edmond' tells you to find 'Sir Grey' for the final test.#
+Conversation with 'Sir Grey'#
+
+//------------------------------------------
+
+// 6th test
+9012#Glory of a Knight!#SG_FEEL#QUE_NOIMAGE#
+'Sir Grey' tells you to change your job by seeing the captain, since you've talked to every other member. It is finally the time to become a Knight!# 
+Conversation with 'Sir Grey'#
+
+//==========================================================
+
+
+
+
+//= ================================================
+
+//--------------------------------------------------------
+9013#Let's become a Wizard!#SG_FEEL#QUE_NOIMAGE#
+The Wizard Guildman, Cartrin's first test is to gather Gemstones.#
+Collect 3 of each Red, Blue, Yellow Gemstone.#
+
+
+9014#Let's become a Wizard!#SG_FEEL#QUE_NOIMAGE#
+The Wizard Guildman, Cartrin's first test is to gather some property stones.#
+Collect 5 of each 'Crystal Blue, Green Live, Red Blood, Wind of Verdure'#
+
+
+9015#Dismal Wizard?#SG_FEEL#QUE_NOIMAGE#
+You passed the first test by 'Cartrin.'  She says you should go see the Dismal Wizard.#
+Find and have a conversation with 'Dismal Wizard.'#
+
+
+//----------------------------------------------------------
+
+9016#Understanding of Magic and Matter#SG_FEEL#QUE_NOIMAGE#
+The second step of the Job Change test is to give correct answers to the questions given by 'Laurel.'#
+Conversation with 'Dismal Wizard'#
+
+9017#Application of the Magic#SG_FEEL#QUE_NOIMAGE#
+The 3rd stage of the Job Change test is to understand 3 different properties of Magic.#
+Practical test using 3 different properties#
+
+9018#Certified as a Wizard!#SG_FEEL#QUE_NOIMAGE#
+You have passed all the tests given by 'Laurel.' Talk to Cartrin for the last!#
+Conversation with 'Cartrin'#
+
+//-------------------------------------------------------
+2069#Tierra Gorge Battle#SG_FEEL#QUE_NOIMAGE#
+You have received an indicator showing that you've participated in the Battle at Tierra Gorge.  Guillaume Army wouldn't let you participate in any ather battles until the indicator goes off.#
+Stand-by for Tierra Gorge Battle until the time recorded on Limited.#
+
+2070#Flavius Battle#SG_FEEL#QUE_NOIMAGE#
+You have received an indicator showing that you've participated in the Flavius Battle.  Croix Army Officer wouldn't let you participate in any other battles until the indicator goes off.#
+Stand-by for Flavius Battle until the time recorded on Limited.#
+
+//---------------------------Endless tower------------------------------
+12000#Infiltrating Endless tower#SG_FEEL#QUE_NOIMAGE#
+Defeat Entweihen Crothen on the 100th floor of Endless tower and obtain the key.#
+#
+
+12001#Entering the highest flooer of Endless tower#SG_FEEL#QUE_NOIMAGE#
+Defeat Nacht Sieger on the 102nd floor of Endless tower.#
+#
+
+12002#The Curse of Endless tower#SG_FEEL#QUE_NOIMAGE#
+Due to the death inside the tower, it is not possible to enter until the regeneration of the tower.#
+#
+
+//---------------------------------------------------------
+10000#To the Prontera Royal Court#SG_FEEL#QUE_NOIMAGE#
+As the messenger says, go to the Prontera Royal Court and talk to the Inspector.#
+#
+
+10001#Qualification Test#SG_FEEL#QUE_NOIMAGE#
+Bring 2 Reins to the inspector in order to prove yourself as an experience advanturer.#
+#
+
+10002#Qualification Review#SG_FEEL#QUE_NOIMAGE#
+Let the inspector evaluate your ability and review your qualification as an advanturer.#
+#
+
+10003#Instruction on what to do#SG_FEEL#QUE_NOIMAGE#
+You've passed the test. Let's confirm what to do next.#
+#
+
+10004#Interim Report#SG_FEEL#QUE_NOIMAGE#
+You're done talking to all 7 princes. Go to the inspector to report the progress.#
+#
+
+10005#Prince Eigen Ahrum#SG_FEEL#QUE_NOIMAGE#
+Meet the prince of the Walter family and find out about him.#
+#
+
+10006#Prince Ernst#SG_FEEL#QUE_NOIMAGE#
+Meet the prince of the Gaebolg family and find out about him.#
+#
+
+10007#Prince Poe#SG_FEEL#QUE_NOIMAGE#
+Meet the prince of the Richard family and find out about him.#
+#
+
+10008#Prince Peter#SG_FEEL#QUE_NOIMAGE#
+Meet the prince of the Heine family and find out about him.#
+#
+
+10009#Prince Urugen#SG_FEEL#QUE_NOIMAGE#
+Meet the prince of the Wigner family and find out about him.#
+#
+
+10010#Prince Helmut#SG_FEEL#QUE_NOIMAGE#
+Meet the prince of the Roewenburg family and find out about him.#
+#
+
+10011#Prince Erich#SG_FEEL#QUE_NOIMAGE#
+Meet the prince of the Nerius family and find out about him.#
+#
+
+10012#Conversation of the two princes#SG_FEEL#QUE_NOIMAGE#
+Watch the princes of Walter and Gaebolg having conversation with each other.#
+#
+
+10013#Searching for the unknown girl#SG_FEEL#QUE_NOIMAGE#
+Bring the flowers to the girl in Al de Baran, in favor of Peter.#
+#
+
+10014#Back to Peter#SG_FEEL#QUE_NOIMAGE#
+Go back to Peter and report him that the quest has completed.#
+#
+
+10015#Test 15#SG_FEEL#QUE_NOIMAGE#
+Test 15#
+#
+
+10016#A Guest from the Walter Family#SG_FEEL#QUE_NOIMAGE#
+Find the guest from the Walter Family somewhere inside the castle.#
+#
+
+10017#Conspiracy#SG_FEEL#QUE_NOIMAGE#
+Talk about the conspiracy that you've just found out.#
+#
+
+10018#Villainous Ahrum - Poe#SG_FEEL#QUE_NOIMAGE#
+Let's pay attention to Ahrum's villainous speech and behavior toward Poe.#
+#
+
+10019#Villainous Ahrum - Peter#SG_FEEL#QUE_NOIMAGE#
+Let's pay attention to Ahrum's villainous speech and behavior toward Peter.#
+#
+
+10020#Villainous Ahrum - Erich#SG_FEEL#QUE_NOIMAGE#
+Let's pay attention to Ahrum's villainous speech and behavior toward Erich.#
+#
+
+10021#Villainous Ahrum - Urugen#SG_FEEL#QUE_NOIMAGE#
+Let's pay attention to Ahrum's villainous speech and behavior toward Urugen.#
+#
+
+10022#Villainous Ahrum - Helmut#SG_FEEL#QUE_NOIMAGE#
+Let's pay attention to Ahrum's villainous speech and behavior toward Helmut.#
+#
+
+10023#Eigen Ahrum and Ernst -Former-#SG_FEEL#QUE_NOIMAGE#
+Let's put a special focus on the conversation between Eigen Ahrum and Ernst.#
+#
+
+10024#Eigen Ahrum and Ernst -Latter-#SG_FEEL#QUE_NOIMAGE#
+Let's make sure to remember the last conversation of the two princes.#
+#
+
+10025#Good-bye, dear!#SG_FEEL#QUE_NOIMAGE#
+Report to the inspector about all you have gone through.#
+#
+
+
+//
+// ----------
+11000#Inspection of Odin Shrine#SG_FEEL#QUE_NOIMAGE#
+Anyway, if you'd like to help us, please take a look around the shrine and see if you'd want to work for us. Please talk to the Boatman to travel to the shrine, okay?#
+Talk to Alex again after investigating the Shrine.#
+
+11001#Inspection of Odin Shrine#SG_FEEL#QUE_NOIMAGE#
+Your first assignment is to bring me ^3355FF5 Runes of the Darkness^000000 from the shrine. Don't worry, I'll make sure that you're rewarded for your efforts.#
+Bring 5 Runes of Darkness to Alex.#
+
+11002#Inspection of Odin Shrine#SG_FEEL#QUE_NOIMAGE#
+Alex is murmuring about the grey haired woman as he receives the Runes of Darkness.#
+Should I talk to her?#
+
+11003#Inspection of Odin Shrine#SG_FEEL#QUE_NOIMAGE#
+Now, you first need to go to the shrine and survey the area for your own benefit. Talk to the Boatman, and he'll take you there, okay?#
+Talk with Laura after surveying.#
+
+11004#Inspection of Odin Shrine#SG_FEEL#QUE_NOIMAGE#
+Alright, please fetch me ^3355FF5 Runes of the Darkness^000000 from the Odin Shrine.#
+Bring 5 Runes of Darkness to Laura.#
+
+11005#Inspection of Odin Shrine#SG_FEEL#QUE_NOIMAGE#
+Your first mission is completed. Would there be anything else to help?#
+#
+
+11006#Inspection of Odin Shrine#SG_FEEL#QUE_NOIMAGE#
+Laura is wondered what those guys in the other room are up to.#
+Sneak to overhear Alex's conversation and go back to Laura.#
+
+11007#Inspection of Odin Shrine#SG_FEEL#QUE_NOIMAGE#
+I want you to check the inner island, and see what you can find.#
+Investigate the inner island of Odin Shrine which is built on two connected islands.#
+
+11008#Inspection of Odin Shrine#SG_FEEL#QUE_NOIMAGE#
+I've got a favor of my own to ask you. Would you please bring this file to Morroc?#
+Bring the file to Ashe's comrade over at the South Gate of Morocc.#
+
+11009#Bio-researcher#SG_FEEL#QUE_NOIMAGE#
+Morriphen is caughing up blood.#
+He's in very serious condition. Go to his house located in Hugel and get some medicine from his wife, Siria.#
+
+11010#Bio-researcher#SG_FEEL#QUE_NOIMAGE#
+We just ran out of the medicine.#
+Go to Lighthalzen and get the medicine from Morriphen's friend, Dono.#
+
+11011#Bio-researcher#SG_FEEL#QUE_NOIMAGE#
+You must bring ^3355FF15 Coal, 5 Brigan, 5 Cyfar, 1 Unripe Apple, 3 Detrimindexta, 20 Shells, 1 of each Red, Blue, Green, White and Yellow Herb.^000000#
+Gather the materials and go to Dono.#
+
+11012#Bio-researcher#SG_FEEL#QUE_NOIMAGE#
+Something's missing. The medicine cannot be made.#
+Find Makkie inside the pub across the street and get some ^ff0000Red Plant Stem Powder^000000.#
+
+11013#Bio-researcher#SG_FEEL#QUE_NOIMAGE#
+You've found out that Morriphen and Dono used to work at Rekenber before.#
+First, bring Red Plant Stem Powder to Dono.#
+
+11014#Bio-researcher#SG_FEEL#QUE_NOIMAGE#
+The Medicine is finally ready! Bring it to Morriphen at once!#
+#
+
+11015#Bio-researcher#SG_FEEL#QUE_NOIMAGE#
+Siria gets weaker without medicine also.#
+Go back to Hugel asap and deliver the rest of the medicine to Siria.#
+
+11016#Bio-researcher#SG_FEEL#QUE_NOIMAGE#
+Luckly, Siria is recovered.#
+Go back to Morriphen and tell him Siria is ok. Let's ask Morriphen about the talk that Dono stopped telling and find out what's really going on between Siria and Morriphen.#
+
+
+11017#Exploring Juperos#SG_FEEL#QUE_NOIMAGE#
+If you happen to travel through Juperos and find any ancient documents, would you bring them to me?#
+Bring something might be helpful for her research from Juperos.#
+
+11018#Exploring Juperos#SG_FEEL#QUE_NOIMAGE#
+There's a peculiar engraving on the Bronze Statue's rod.#
+Go and see Feyruz in the Juno Library and tell her about the inscription.#
+
+11019#Exploring Juperos#SG_FEEL#QUE_NOIMAGE#
+Ah, usually, descriptions of the ''vain and extravagant one'' refer to the mad scientist rumored to have lived in that ancient era. But if this is true, I may have to rework my thesis...#
+Bring something might be helpful for her research from Juperos.#
+
+11020#Exploring Juperos#SG_FEEL#QUE_NOIMAGE#
+Fayruz took the Transparent Plate you got from Juperos and started to tell you some tales about Juperos.#
+Find if there's another Transparent Plate.#
+
+11021#Exploring Juperos#SG_FEEL#QUE_NOIMAGE#
+Fayruz took the 2nd Transparent Plate you found in Juperos and started to tell you some tales about Juperos.#
+Find if there's another Transparent Plate.#
+
+11022#Exploring Juperos#SG_FEEL#QUE_NOIMAGE#
+Fayruz took the 3rd Transparent Plate you found in Juperos and started to tell you some tales about Juperos.#
+Find if there's another Transparent Plate.#
+
+11023#Wincing Old Man#SG_FEEL#QUE_NOIMAGE#
+If you can't find Absar in the Tool Shop, then you might want to stop by the Tavern. A-auuugh!#
+Find the Absar to help this old man you ran into on the street.#
+
+11024#Wincing Old Man#SG_FEEL#QUE_NOIMAGE#
+Bring 5 Maneater Roots, 2 Glacial Hearts and 5 Steel. Come back soon, or I won't help you.#
+Bring Absar the materials he needs.#
+
+11025#Wincing Old Man#SG_FEEL#QUE_NOIMAGE#
+You've got the item you needed.#
+Go back to Zabaroo.#
+
+11026#Wincing Old Man#SG_FEEL#QUE_NOIMAGE#
+Would you just deliver the stones I gathered to the factory in town? It's near the airport or airship or something. It won't take long.#
+Deliver the stones to the factory in town.#
+
+11027#Wincing Old Man#SG_FEEL#QUE_NOIMAGE#
+Bring those rocks over to Bahed over there.#
+Bring the rocks to Bahed.#
+
+11028#Wincing Old Man#SG_FEEL#QUE_NOIMAGE#
+Those rocks were called 'Hetarium' which are sold to Rekenber.#
+Go back to Zabaroo.#
+
+//
+//------------------------------------
+12000#Friends:Dissonant#SG_FEEL#QUE_NOIMAGE#
+Find Maku's another friend and talk with him.#
+Meet Maku's another friend.#
+
+12001#Friends:So close, yet far¡¦#SG_FEEL#QUE_NOIMAGE#
+Go back to Maku and have a conversation with him.#
+Go back to Maku.#
+
+12002#Friends:Messanger of Friendship#SG_FEEL#QUE_NOIMAGE#
+Become a messanger between Maku and Digotz for their abiding friendship.#
+Go back and forth to deliver the messages.#
+
+12003#Friends:Another friend#SG_FEEL#QUE_NOIMAGE#
+Meet Benkaistein living in Yuno.#
+Find Benkaistein.#
+
+12004#Friends:Journal#SG_FEEL#QUE_NOIMAGE#
+Find Benkaistein's Journal and bring it to him.#
+Find Benkaistein's Journal.#
+
+12005#Friends:Thoughts in Mind#SG_FEEL#QUE_NOIMAGE#
+Show what's written in the Journal to Maku and Digotz.#
+Show the Journal to Maku and Digotz.#
+
+12006#Friends:Eternal Secret#SG_FEEL#QUE_NOIMAGE#
+Notify Benkaistein that Digotz has been stabbed.#
+Go to Benkaistein.#
+
+12007#Weapon Supply-1#SG_FEEL#QUE_NOIMAGE#
+Talk with Kazien.#
+Find Kazien.#
+
+12008#Weapon Supply-2#SG_FEEL#QUE_NOIMAGE#
+You must have a conversation with a person named by Garins who's working at Einbroch Laboratory. You are not supposed to let anyone know about what you're up to. If failed, go back to Kazien.#
+Find Garins.#
+
+12009#Weapon Supply-Failed#SG_FEEL#QUE_NOIMAGE#
+You seem to be failed. You must find the way whatever it takes.#
+Stupid stubbornness#
+
+12010#Weapon Supply-3#SG_FEEL#QUE_NOIMAGE#
+You must get the next mission from Lyozien at the air ship.#
+Meet Lyozien.#
+
+12011#Weapon Supply-4#SG_FEEL#QUE_NOIMAGE#
+Complete the mission by meeting Mr. Ahman at Izlude Airport and come back to Lyozien.#
+Meet Mr. Ahman#
+
+12012#Weapon Supply-5#SG_FEEL#QUE_NOIMAGE#
+Unless you're given with any special mission after you go back to Kazien, you must repeatedly perform your job to protect the packages.#
+Protect Packages.#
+
+12013#Weapon Supply-6#SG_FEEL#QUE_NOIMAGE#
+Find out what those packages really are by talking to Lyozien.#
+Discussion over packages#
+
+9020#Cargo Delivery Quest#SG_FEEL#QUE_NOIMAGE#
+You have completed Cargo Delivery Quest.#
+Cargo Delivery Quest#
+
+4034#Message Delivery quest#SG_FEEL#QUE_NOIMAGE#
+Need to deliver this letter to ^000077Donovan^000000 who is around in the north of Alberta.#
+Deliver the letter to him.#
+
+4035#Message Delivery quest#SG_FEEL#QUE_NOIMAGE#
+Need to deliver this letter to ^000077Richard^000000 who is around in Treasure Island.#
+Deliver the letter to him.#
+
+4036#Message Delivery quest#SG_FEEL#QUE_NOIMAGE#
+Need to deliver this letter to ^000077Lion^000000 who is around in Prontera.#
+Deliver the letter to him.#
+
+4037#Message Delivery quest#SG_FEEL#QUE_NOIMAGE#
+Need to deliver this letter to ^000077Midetz^000000 who is around in Izlude.#
+Deliver the letter to him.#
+
+4038#Message Delivery quest#SG_FEEL#QUE_NOIMAGE#
+Need to deliver this letter to ^000077Greivous^000000 who is around in Turtle Island.#
+Deliver the letter to him.#
+
+4100#Complete Message Delivery quest#SG_FEEL#QUE_NOIMAGE#
+I have completed Message Delivery quest for today. Need to wait till 20 hours pass.#
+Come back 20 hours later.#
