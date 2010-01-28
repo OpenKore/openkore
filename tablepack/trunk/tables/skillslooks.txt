@@ -17,11 +17,11 @@
 65536 Xmas
 131072 Transform
 262144 Summer
-524288 Riding Dragon
+524288 Riding Dragon (Default)
 1048576 Support Warg
 2097152 Riding Warg
 4194304 Madogear
-# 8388608 TODO
-# 16777216 TODO
-# 33554432 TODO
-# 67108864 TODO
+8388608 Riding Dragon (Black)
+16777216 Riding Dragon (White)
+33554432 Riding Dragon (Blue)
+67108864 Riding Dragon (Red)

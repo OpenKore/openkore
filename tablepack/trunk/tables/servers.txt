@@ -80,7 +80,7 @@ patchpath /patch02
 serverType idRO
 secureLogin 1
 secureLogin_type 0
-secureLogin_requestCode
+secureLogin_requestCode 04 02 B0 5C 1B 4B C2 73 ED 9C 39 26 F3 51 01 E4 A2 DC
 secureLogin_account 0
 serverEncoding Western
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x007D8D6B, 0x08CB9ED9
