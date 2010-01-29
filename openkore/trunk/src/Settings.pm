@@ -423,7 +423,7 @@ sub loadByHandle {
 	if (!defined($filename) || ! -f $filename) {
 		return unless $object->{mustExist};
 		
-		$filename = $object->{name} if (!defined $filename);
+		$filename = $object->{name} || $object->{internalName} if (!defined $filename);
 		if ($object->{type} == CONTROL_FILE_TYPE) {
 			FileNotFoundException->throw(
 				message => TF("Cannot load control file %s", $filename),
@@ -660,6 +660,7 @@ sub _addFile {
 		mustExist  => exists($options{mustExist}) ? $options{mustExist} : 1,
 		autoSearch => exists($options{autoSearch}) ? $options{autoSearch} : 1,
 		onLoaded => exists($options{onLoaded}) ? $options{onLoaded} : undef,
+		internalName => exists($options{internalName}) ? $options{internalName} : undef,
 		loader     => $options{loader}
 	};
 	my $index = $files->add(bless($object, 'Settings::Handle'));
