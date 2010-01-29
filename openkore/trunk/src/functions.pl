@@ -136,15 +136,19 @@ sub loadDataFiles {
 	# Add loading of Control files
 	Settings::addControlFile(Settings::getConfigFilename(),
 		loader => [\&parseConfigFile, \%config],
+		internalName => 'config.txt',
 		autoSearch => 0);
 	Settings::addControlFile(Settings::getMonControlFilename(),
 		loader => [\&parseMonControl, \%mon_control],
+		internalName => 'mon_control.txt',
 		autoSearch => 0);
 	Settings::addControlFile(Settings::getItemsControlFilename(),
 		loader => [\&parseItemsControl, \%items_control],
+		internalName => 'items_control.txt',
 		autoSearch => 0);
 	Settings::addControlFile(Settings::getShopFilename(),
 		loader => [\&parseShopControl, \%shop],
+		internalName => 'shop.txt',
 		autoSearch => 0);
 	Settings::addControlFile('overallAuth.txt',
 		loader => [\&parseDataFile, \%overallAuth]);
