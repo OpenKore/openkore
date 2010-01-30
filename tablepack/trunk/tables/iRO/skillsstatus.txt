@@ -197,12 +197,20 @@
 251 Life Insurance
 252 Bubble Gum
 253 Convex Mirror
-# cash food
 271 Steamed Tongue
 272 Steamed Desert Scorpions
 273 Immortal Stew
 274 Hwergelmir's Tonic
 275 Dragon Breath Cocktail
 276 Cooked Nine Tail's Tails
-286 Critical Wound
+277 Flee Up
+278 Atk Up
+279 HP Up
+280 SP Up
+281 Hit Up
+282 Slow Cast
+283 Magic Mirror
+284 Stone Skin
+304 Hell's Power
+286 Critical Wounds
 312 Job Manual
