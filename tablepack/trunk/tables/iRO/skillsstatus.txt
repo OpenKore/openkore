@@ -1,0 +1,208 @@
+0 Provoke
+1 Endure
+2 Twohand Quicken
+3 Improve Concentration
+4 Hiding
+5 Cloaking
+6 Enchant Poison
+7 Poison React
+8 Quagmire
+9 Angelus
+10 Blessing
+11 Signum Crucis
+12 Increase AGI
+13 Decrease AGI
+14 Slow Poison
+15 Impositio Manus
+16 Suffragium
+17 Aspersio
+18 B.S Sacramenti
+19 Kyrie Eleison
+20 Magnificat
+21 Gloria
+22 Lex Aeterna
+23 Adrenaline Rush
+24 Weapon Perfection
+25 Power-Thrust
+26 Power Maximize
+27 Pecopeco
+28 Falcon
+29 Play Dead
+30 Crazy Uproar
+31 Energy Coat
+32 Armor Damaged
+33 Weapon Damaged
+34 Hallucination
+35 Owg 50%
+36 Owg 90%
+37 Concentration Potion
+38 Awakening Potion
+39 Berserk Potion
+41 Walking Speed Up
+42 Speed Up
+45 Ankle Snare
+46 Action Delay
+49 Barrier
+50 Divest Weapon
+51 Divest Shield
+52 Divest Armor
+53 Divest Helm
+54 Alchemical Weapon
+55 Synthesized Shield
+56 Synthetic Armor
+57 Biochemical Helm
+58 Auto Guard
+59 Reflect Shield
+60 Devotion
+61 Providence
+62 Defender
+63 Magic Rod
+64 Element Enchanted
+65 Hindsight
+67 Orc Head
+68 Spear Quicken
+71 Impressive Riff
+72 Magic Strings
+73 Song of Lutie
+74 Humming
+#74 Focus Ballet?
+75 Slow Grace
+76 Lady Luck
+77 Gypsy's Kiss
+78 Mental Sensing
+79 Down Tempo
+80 Battle Theme
+81 Harmonic Lick
+82 Classical Pluck
+83 Power Cord
+84 Acoustic Rhythm
+85 Root
+86 Fury
+87 Mental Strength
+89 Raging Trifecta Blow Delay
+90 Endow Blaze
+91 Endow Tsunami
+92 Endow Tornado
+93 Endow Quake
+95 Stop
+97 Property Change (Undead)
+100 Muted
+103 Aura Blade
+104 Parry
+105 Concentration
+106 Relax
+107 Berserk
+108 Fury
+#108 Fury (Unimplemented)?
+109 Battle Chant
+110 Assumptio
+111 Basilica
+112 Land Change
+113 Magic Power
+114 Enchant Deadly Poison
+115 True Sight
+116 Wind Walker
+117 Meltdown
+118 Cart Boost
+119 Chase Walk
+120 Reject Sword
+121 Marionette Control
+122 Marionette Control
+123 Sheltering Bliss
+124 Head Crush
+125 Joint Beat
+126 Mind Breaker
+127 Memorize
+#127 Foresight?
+128 Blinding Mist
+129 Fiber Lock
+130 Mom, Dad, I love you!
+131 Magnum Break
+132 Auto Berserk
+133 Run
+134 Ready Spurt
+135 Tornado Stance
+136 Tornado Stance Delay
+137 Heel Drop Stance
+138 Heel Drop Stance Delay
+139 Roundhouse Stance
+140 Roundhouse Stance Delay
+141 Counter Kick Stance
+142 Counter Kick Stance Delay
+143 Tumbling
+144 Tumbling Delay
+145 Spurt
+146 Mild Wind (Dark)
+147 Adrenaline All
+148 Mild Wind (Ghost)
+149 Spirit
+150 Increase Atk
+151 Increase Matk
+152 Solar, Lunar and Stellar Shadow
+153 Kaite
+154 Eswoo
+156 Kaizel
+157 Kaahi
+158 Kaupe
+159 Esma
+160 Night
+161 Sword Quicken
+164 Solar, Lunar and Stellar Heat
+165 Solar Heat
+166 Lunar Heat
+167 Stellar Heat
+169 Solar Protection
+170 Lunar Protection
+171 Stellar Protection
+173 Battle Orders
+174 Regeneration
+175 Guild Delay
+181 Preserve
+182 Battle Command
+184 Invisible Detect
+185 Walking Speed Down
+186 Lucky Cast
+187 Gravitational Field
+188 Maximum Power-Thrust
+189 Longing for Freedom
+190 Hermode's Rod
+191 Tarot Card of Fate
+192 Urgent Escape
+193 Flitting
+194 Accelerated Flight
+195 Mental Change
+196 Blood Lust
+197 Shrink
+198 Sight Blaster
+199 Charming Wink
+200 Close Confine
+201 Close Confine
+203 Madness Canceller
+204 Gatling Fever
+205 Happy Break
+206 Utsusemi
+207 Bunshin No Jutsu
+208 Nen
+209 Adjustment
+210 Increase Accuracy
+241 Steamed Tongue
+242 Steamed Desert Scorpions
+243 Immortal Stew
+244 Hwergelmir's Tonic
+245 Dragon Breath Cocktail
+246 Cooked Nine Tail's Tails
+247 Honey Pastry
+248 Sesame Pastry
+250 Battle Manual
+251 Life Insurance
+252 Bubble Gum
+253 Convex Mirror
+# cash food
+271 Steamed Tongue
+272 Steamed Desert Scorpions
+273 Immortal Stew
+274 Hwergelmir's Tonic
+275 Dragon Breath Cocktail
+276 Cooked Nine Tail's Tails
+286 Critical Wound
+312 Job Manual
