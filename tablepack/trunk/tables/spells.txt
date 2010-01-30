@@ -49,7 +49,8 @@
 175 At Your Service
 176 Graffiti
 177 Demonstration
-178 Pink Warp Portal Wind # Wedding skills
+# Wedding skills
+178 Pink Warp Portal Wind
 179 Gospel
 180 Basilica
 181 Moonlit Water Mill
@@ -58,9 +59,11 @@
 183 Spider Web
 184 Gravitation Field
 185 Wand of Hermode
-187 Suiton #Water Escape Technique
+#Water Escape Technique
+187 Suiton
 188 Reverse Tatami
-189 Kaensin #Crimson Fire Formation
+#Crimson Fire Formation
+189 Kaensin
 190 Ground Drift
 #199 NPC_EVILLAND ?
 202 Epiclesis
@@ -70,6 +73,7 @@
 206 Chaos Panic
 207 Maelstrom
 208 Blood Lust
+209 Feint Bomb
 210 Magenta Trap
 211 Cobalt Trap
 212 Maize Trap

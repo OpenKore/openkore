@@ -38,9 +38,15 @@
 37 Concentration Potion
 38 Awakening Potion
 39 Berserk Potion
+#40 ASPDPOTIONINFINITY
 41 Walking Speed Up
 42 Speed Up
+43 Counter Attack
+44 Venom Splasher
+45 Ankle Snare
 46 Action Delay
+#47 NOACTION
+#48 IMPOSSIBLEPICKUP
 49 Barrier
 50 Strip Weapon
 51 Strip Shield
@@ -55,26 +61,56 @@
 60 Devotion
 61 Providence
 62 Defender
+63 Magic Rod
 64 Element Enchanted
 65 Auto Spell
+#66 SPECIALZONE
 67 Orc Head
 68 Spear Quicken
-77 Sleeping
+#69 BDPLAYING
+70 Whistle
+71 Assassin Cross at Sunset
+72 Bragi's Poem
+73 Idun's Apple
+74 Humming
+75 Forget Me Not
+76 Fortune's Kiss
+#Sleeping
+77 At Your Service
+78 Rich Man Mr.Kim
+79 Eternal Chaos
+80 Drum Sound on Battlefield
+81 Ring of Nibelungen
+82 Roki's Weil
+83 Into Abyss
+84 Invulnerable Siegfried
+85 Stop Blade
 86 Vigor Explosion
 87 Steel Body
-89 Triple Attack Delay
+88 Extremity Fist
+#Old: Triple Attack Delay (since idk if it's correct, i just left commented)
+89 Combo Attack
 90 Flame Weapon
 91 Frost Weapon
 92 Lightning Loader
 93 Seismic Weapon
+#94 MAGICATTACK 
 95 Stop
-100 Muted
+#96 WEAPONBRAKER 
+#97 UNDEAD
+#98 POWERUP
+#99 AGIUP
+#Muted
+100 Siege Mode
+101 Turn Invisible
+#102 STATUSONE
 103 Aura Blade
 104 Parrying
 105 Concentration
 106 Tension Relax
 107 Berserk
-108 Fury
+#Old: Fury
+108 Sacrifice
 109 Gospel
 110 Assumptio
 111 Basilica
@@ -90,19 +126,30 @@
 121 Marionette Control
 122 Marionette Control
 123 Moonlit Water Mill
-124 Head Crush
+#Old: Head Crush
+124 Bleeding
 125 Joint Beat
+126 Mind Breaker
 127 Memorize
+128 Wall of Fog
+129 Spider Web
 130 Mom, Dad, I love you!
+#New: SUB_WEAPONPROPERTY - unknown
 131 Magnum Break
 132 Auto Berserk
 133 Run
+#New: BUMP - unknown
 134 Ready Spurt
 135 Ready Storm
+#136 STORMKICK_READY
 137 Ready Down
+#138 DOWNKICK_READY
 139 Ready Turn
+#140 TURNKICK_READY
 141 Ready Counter
+#142 COUNTER_READY
 143 TK Dodge
+#144 DODGE_READY
 145 Spurt
 146 Dark Weapon
 147 Adrenaline All
@@ -112,35 +159,96 @@
 151 Increase Matk
 152 Devil
 153 Kaite
+154 Swoo
+#155 STAR2
 156 Kaizel
 157 Kaahi
 158 Kaupe
 159 Esma
 160 Night
 161 Sword Quicken
+162 Friend
+#163 FRIENDUP
+#164 SG_WARM
 165 Warmth of Sun
+166 Warmth of Moon
+167 Warmth of Star
+168 Show Emotion
 169 Comfort of Sun
 170 Comfort of Moon
 171 Comfort of Star
+#172 EXPUP
+173 Battle Orders
+174 Regeneration
+#175 POSTDELAY
+#176 RESISTHANDICAP
+#177 MAXHPPERCENT
+#178 MAXSPPERCENT
+179 Amistr Bulwark
+#180 SLOWDOWN
 181 Preserve
+#New: INCSTR -unknown
 182 Battle Command
+#183 NOT_EXTREMITYFIST
+#New: INTRAVISION -unknown
 184 Invisible Detect
 185 Walking Speed Down
 186 Lucky Cast
+187 Gravity Field
 188 Maximum Power Thrust
+#189 LONGING
+190 Wand of Hermod
+191 Tarot Card of Fate
+192 Urgent Escape
+193 Flitting
+194 Accelerated Flight
+195 Mental Change
+196 Blood Lust
 197 Shrink
 198 Sight Blaster
 199 Wink of Charm
 200 Close Confine
 201 Close Confine
+#202 DISABLEMOVE
 203 Madness Canceller
 204 Gatling Fever
+#New: EARTHSCROLL -unknown
 205 Happy Break
 206 Utsusemi
 207 Bunshin No Jutsu
 208 Nen
 209 Adjustment
 210 Increase Accuracy
+211 Suiton
+#212 PET
+#213 MENTAL
+#214 EXPMEMORY
+#215 PERFORMANCE
+#216 GAIN
+#217 GRIFFON
+#218 DRIFT
+#219 WALLSHIFT
+#220 REINCARNATION
+#221 PATTACK
+#222 PSPEED
+#223 PDEFENSE
+#224 PCRITICAL
+#225 RANKING
+#226 PTRIPLE
+#227 DENERGY
+#228 WAVE1
+#229 WAVE2
+#230 WAVE3
+#231 WAVE4
+#232 DAURA
+#233 DFREEZER
+#234 DPUNISH
+#235 DBARRIER
+#236 DWARNING
+#237 MOUSEWHEEL
+#238 DGAUGE
+#239 DACCEL
+#240 DBLOCK
 241 Steamed Tongue
 242 Steamed Scorpion
 243 Stew Of Immortality
@@ -149,9 +257,153 @@
 246 Cooked Nine Tail's Tails
 247 Honey Pastry
 248 Sesame Pastry
+#249 FOODCRI - food that gives critical?
 250 Field Manual
 251 Life Insurance
 252 Bubble Gum
 253 Convex Mirror
+#254 DA_ENERGY
+#255 DA_FIRSTSLOT
+#256 DA_HEADDEF
+#257 DA_SPACE
+#258 DA_TRANSFORM
+#259 DA_ITEMREBUILD
+#260 DA_ILLUSION
+#261 DA_DARKPOWER
+#262 DA_EARPLUG
+#263 DA_CONTRACT
+#264 DA_BLACK
+#265 DA_MAGICCART
+#266 CRYSTAL
+#267 DA_REBUILD
+#268 DA_EDARKNESS
+#269 DA_EGUARDIAN
+#270 DA_TIMEOUT
+#271 FOOD_STR_CASH
+#272 FOOD_AGI_CASH
+#273 FOOD_VIT_CASH
+#274 FOOD_DEX_CASH
+#275 FOOD_INT_CASH
+#276 FOOD_LUK_CASH
+#277 MERC_FLEEUP - Mercenary Increase Flee or maybe Increase Mercenary Flee?
+#278 MERC_ATKUP
+#279 MERC_HPUP
+#280 MERC_SPUP
+#281 MERC_HITUP
+#282 SLOWCAST
+283 Magic Mirror
+#284 STONESKIN
+285 Anti-Magic
 286 Critical Wound
+287 NPC Defender
+#288 NOACTION_WAIT
+#289 MOVHASTE_HORSE
+290 Defense Rate
+291 Magic Defense Rate
+292 Increase Heal Rate
+293 Small Life Potion
+294 Medium Life Potion 
+295 Increase Critical
+#296 PLUSAVOIDVALUE
+#297 ATKER_ASPD
+#298 TARGET_ASPD
+#299 ATKER_MOVESPEED
+#300 ATKER_BLOOD
+#301 TARGET_BLOOD
+#302 ARMOR_PROPERTY
+#303 REUSE_LIMIT_A
+#304 HELLPOWER - See  Death Guidance [2] weapon description/script
+#305 STEAMPACK
+#306 REUSE_LIMIT_B
+#307 REUSE_LIMIT_C
+#308 REUSE_LIMIT_D
+#309 REUSE_LIMIT_E
+#310 REUSE_LIMIT_F
+#311 INVINCIBLE
 312 Job Manual
+313 Increase Party Flee
+#314 ANGEL_PROTECT - Super novice angel?
+
+# 3rd Jobs
+316 Enchant Blade
+318 Nauthiz Rune
+319 Thurisaz Rune
+320 Hagalaz Rune
+322 Othila Rune
+323 Uruz Rune
+328 Venom Impress
+330 Oratio
+332 Cloaking Exceed
+333 Poison Smoke
+334 Hallucination Walk
+336 Renovatio
+337 Weapon Blocking
+339 Counter Slash
+341 Paralize
+342 Toxin
+343 Poisoning Weapon
+344 Venombleed
+345 Magic Mushroom
+346 Disheart
+347 Pyrexia
+348 Oblivioncurse
+349 Leechend
+350 Duple Light
+351 Freezing
+352 Fear Breeze
+354 Marsh Of Abyss
+355 Recognize Spell
+357 Warg Rider
+360 Camouflage
+361 Acceleration
+362 Hovering
+#363 SPHERE_1
+#364 SPHERE_2
+#365 SPHERE_3
+#366 SPHERE_4
+#367 SPHERE_5
+373 Overheat
+#377 DEFMODE
+#379 HIDEMODE
+385 Reproduce
+390 Reflect Damage
+393 Auto Shadow Spell
+394 Shadow Form
+401 Strip Accessory
+402 Prestige
+403 Invisibility
+404 Deadly Infect
+405 Banding
+413 Lightning Walk
+#414 SHADOWSPELL
+407 Overbrand
+410 Raising Dragon
+419 Reproduce
+422 Man Hole
+423 Deadly Infect
+425 Gentle Touch - Gain
+426 Gentle Touch - Change
+427 Gentle Touch - Revitalize
+429 Swing Dance
+430 Symphony of Lover
+433 Lullaby Deep Sleep
+434 Voice of Siren
+436 Circle of Nature
+#437 COLDMODE
+438 Gloomy Day
+441 Dance With Wug 
+442 Rush Windmill
+443 Echo Song
+444 Harmonize
+#445 STRIKING
+446 Warmer
+447 Moonlit Serenade
+451 Lerad's Dew
+452 Melody of Sink
+453 Beyond of Warcry
+#454 HUMMING_VOICE
+461 Cart Boost
+463 Thorn Trap
+464 Blood Sucker
+472 Sacrament
+472 Sacrament
