@@ -240,6 +240,7 @@ storageEncryptKey 0x050B6F79, 0x0202C179, 0x0E20120, 0x04FA43E3, 0x0179B6C8, 0x0
 serverEncoding Tagalog
 charBlockSize 108
 gameGuard 1
+recvpackets recvpackets-valkyrie.txt
 
 [Philippines - pRO: Sakray]
 ip 202.57.118.232

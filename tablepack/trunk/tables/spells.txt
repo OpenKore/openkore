@@ -1,4 +1,4 @@
-126 Safety Wall
+﻿126 Safety Wall
 127 Fire Wall
 128 Warp Portal Opening
 129 Warp Portal
@@ -27,9 +27,11 @@
 155 Deluge
 156 Violent Gale
 157 Land Protector
-158 Zeny Mark
+#158 Zeny Mark
+158 Lullaby
 159 Rich Man Mr.Kim
-160 Revolving Green Wheel
+#160 Revolving Green Wheel
+160 Eternal Chaos
 161 Drum Sound on Battlefield
 162 Ring of Nibelungen
 163 Roki's Weil
@@ -47,8 +49,45 @@
 175 At Your Service
 176 Graffiti
 177 Demonstration
-178 Pink Warp Portal Wind
+178 Pink Warp Portal Wind # Wedding skills
 179 Gospel
 180 Basilica
-182 a black cross rises three-dimensionally
+181 Moonlit Water Mill
+#182 a black cross rises three-dimensionally 
+182 Wall of Fog
 183 Spider Web
+184 Gravitation Field
+185 Wand of Hermode
+187 Suiton #Water Escape Technique
+188 Reverse Tatami
+189 Kaensin #Crimson Fire Formation
+190 Ground Drift
+#199 NPC_EVILLAND ?
+202 Epiclesis
+203 Earth Strain
+204 Man Hole
+205 Dimension Door
+206 Chaos Panic
+207 Maelstrom
+208 Blood Lust
+210 Magenta Trap
+211 Cobalt Trap
+212 Maize Trap
+213 Verdure Trap
+214 Firing Trap
+215 Ice Bound Trap
+216 Electric Shocker
+217 Cluster Bomb
+218 Reverberation
+219 Severe Rainstorm
+220 Fire Walk
+221 Electric Walk
+224 Cloud Kill
+228 Warmer
+229 Thorn Trap
+230 Wall of Thorns
+231 Demonic Fire
+#232 ???
+#233 ???
+234 Hell's Plant  
+235 Vacuum Extreme
