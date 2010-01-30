@@ -146,6 +146,7 @@
 158 Kaupe
 159 Esma
 160 Night
+# Night is TaeKwon Master's Miracle?
 161 Sword Quicken
 164 Solar, Lunar and Stellar Heat
 165 Solar Heat
@@ -177,12 +178,12 @@
 199 Charming Wink
 200 Close Confine
 201 Close Confine
-203 Madness Canceller
+203 Last Stand
 204 Gatling Fever
 205 Happy Break
-206 Utsusemi
-207 Bunshin No Jutsu
-208 Nen
+206 Cicada Skin Shed
+207 Mirror Image
+208 Ninja Aura
 209 Adjustment
 210 Increase Accuracy
 241 Steamed Tongue
