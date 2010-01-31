@@ -24,8 +24,8 @@ sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
 	my %packets = (
-		'0800' => ['vender_items_list', 'v a4 x4', [qw(len venderID unknown)]], # -1
-		#//0x0801,-1
+		'0800' => ['vender_items_list', 'v a4 a4', [qw(len venderID venderCID)]], # -1 # TODO: test if it is correct: venderAID venderCID
+		# 0x0801 is sent packet
 	);
 
 	foreach my $switch (keys %packets) {
@@ -37,8 +37,8 @@ sub new {
 
 =pod
 //2009-12-08aRagexeRE
-//0x0800,-1
-//0x0801,-1
+0x0800,-1
+0x0801,-1
 =cut
 
 1;

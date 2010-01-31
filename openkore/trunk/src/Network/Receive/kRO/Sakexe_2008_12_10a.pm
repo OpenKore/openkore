@@ -20,12 +20,14 @@ package Network::Receive::kRO::Sakexe_2008_12_10a;
 use strict;
 use base qw(Network::Receive::kRO::Sakexe_2008_11_26a);
 
+use Log qw(debug);
+
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
 	my %packets = (
-		# 0x0442,-1
-		# 0x0443,8
+		'0442' => ['skills_list_autoshadowspell', 'v V a*', [qw(len amount skillIDs)]], # -1 # TODO: use
+		# 0x0443 is sent packet # TODO: add
 	);
 	
 	foreach my $switch (keys %packets) {
@@ -33,6 +35,15 @@ sub new {
 	}
 
 	return $self;
+}
+
+sub skills_list_autoshadowspell {
+	my ($self, $args) = @_;
+	return unless changeToInGameState();
+	for (my $i = 0; $i < $args->{count}; $i++) {
+		my ($skillID) = unpack('v', substr($args->{skillIDs}, $i*2, 2));
+		debug "$skillID\n";
+	}
 }
 
 =pod

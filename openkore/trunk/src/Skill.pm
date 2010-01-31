@@ -124,6 +124,10 @@ sub new {
 			$args{name} = $args{auto};
 		}
 	}
+	
+	if($args{name} =~ /\((.*)\)/) { # skillname (HANDLE)
+		$args{handle} = $1;
+	}
 
 	if (defined $args{idn}) {
 		$self{idn} = $args{idn};
@@ -317,7 +321,17 @@ sub lookupIDNByHandle {
 # Lookup an IDN by full skill name.
 sub lookupIDNByName {
 	my ($name) = @_;
-	my $idn = $Skill::StaticInfo::names{lc($name)};
+	my $idn;
+	if (ref($Skill::StaticInfo::names{lc($name)}) eq 'ARRAY') {	# we have multiple ID's for the skillname
+		foreach (@{$Skill::StaticInfo::names{lc($name)}}) {
+			if (exists $Skill::DynamicInfo::skills{$_}) {		# look up the skill that we own
+				$idn = $_;
+				last;
+			}
+		}
+	} else {
+		$idn = $Skill::StaticInfo::names{lc($name)};
+	}
 	if (defined $idn) {
 		return $idn;
 	} else {
@@ -406,11 +420,34 @@ our %names;
 # );
 our %sps;
 
-sub parseSkillsDatabase {
+# load first
+# id <-> handle
+sub parseSkillsDatabase_id2handle {
 	my ($file) = @_;
 	my $reader = new Utils::TextReader($file);
 	%ids = ();
 	%handles = ();
+
+	while (!$reader->eof()) {
+		my $line = $reader->readLine();
+		next if ($line =~ /^\/\//);
+		$line =~ s/[\r\n]//g;
+		$line =~ s/\s+$//g;
+		my ($id, $handle) = split(' ', $line, 2);
+		#Log::debug "$id $handle\n";
+		if ($id && $handle ne "") {
+			$ids{$id}{handle} = $handle;
+			$handles{$handle} = $id;
+		}
+	}
+	return 1;
+}
+
+# load second
+# id <-> name
+sub parseSkillsDatabase_handle2name {
+	my ($file) = @_;
+	my $reader = new Utils::TextReader($file);
 	%names = ();
 
 	while (!$reader->eof()) {
@@ -418,12 +455,33 @@ sub parseSkillsDatabase {
 		next if ($line =~ /^\/\//);
 		$line =~ s/[\r\n]//g;
 		$line =~ s/\s+$//g;
-		my ($id, $handle, $name) = split(' ', $line, 3);
+		my ($handle, $name) = split('#', $line, 3);
+		$name =~ s/_/ /g;
+		#Log::debug "$handle $name\n";
+		my $id = $handles{$handle};
 		if ($id && $handle ne "" && $name ne "") {
-			$ids{$id}{handle} = $handle;
-			$ids{$id}{name} = $name;
-			$handles{$handle} = $id;
-			$names{lc($name)} = $id;
+			$name = lc($name);
+			if (!exists $names{$name}) {				# doesn't exist yet
+				$names{$name} = $id;
+				$ids{$id}{name} = $name;
+			} else {
+				$ids{$id}{name} = $name . ' (' . $handle . ')';
+				if (ref($names{$name}) eq 'ARRAY') {	# is an array
+					push @{$names{$name}}, $id;
+					#Log::warning "pushed $id $name\n";
+				} else {								# exists but is not an array
+					$names{$name} = [$names{$name}, $id];
+					#Log::warning "start array $id $name\n";
+				}
+			}
+=pod
+			if(exists $names{lc($name)}) { # skillname is not an unique identifier, there could already be an entry with given skillname
+				Log::warning("Duplicate skillname: $id $handle $name\n");
+				$names{lc($name)} = @{$names{lc($name)}};
+			} else {
+				$names{lc($name)} = $id;
+			}
+=cut
 		}
 	}
 	return 1;
