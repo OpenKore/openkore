@@ -525,7 +525,7 @@ sub processAttack {
 		for (my ($i, $prefix) = (0, 'attackSkillSlot_0'); $prefix = "attackSkillSlot_$i" and exists $config{$prefix}; $i++) {
 			next unless $config{$prefix};
 			if (checkSelfCondition($prefix) && checkMonsterCondition("${prefix}_target", $target)) {
-				my $skill = new Skill(name => $config{$prefix});
+				my $skill = new Skill(auto => $config{$prefix});
 				next unless $slave->checkSkillOwnership ($skill);
 				
 				next if $config{"${prefix}_maxUses"} && $target->{skillUses}{$skill->getHandle()} >= $config{"${prefix}_maxUses"};
