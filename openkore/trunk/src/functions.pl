@@ -222,8 +222,10 @@ sub loadDataFiles {
 		loader => [\&parsePortalsLOS, \%portals_los]);
 	Settings::addTableFile('sex.txt',
 		loader => [\&parseDataFile2, \%sex_lut]);
-	Settings::addTableFile('skills.txt',
-		loader => \&Skill::StaticInfo::parseSkillsDatabase);
+	Settings::addTableFile('SKILL_id_handle.txt',
+		loader => \&Skill::StaticInfo::parseSkillsDatabase_id2handle);
+	Settings::addTableFile('skillnametable.txt',
+		loader => \&Skill::StaticInfo::parseSkillsDatabase_handle2name);
 	Settings::addTableFile('spells.txt',
 		loader => [\&parseDataFile2, \%spells_lut]);
 	Settings::addTableFile('skillsdescriptions.txt',
@@ -574,6 +576,7 @@ sub initMapChangeVars {
 	$cart{inventory} = [];
 	undef @venderItemList;
 	undef $venderID;
+	undef $venderCID;
 	undef @venderListsID;
 	undef %venderLists;
 	undef %incomingGuild;

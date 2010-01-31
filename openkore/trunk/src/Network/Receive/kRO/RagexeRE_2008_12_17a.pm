@@ -28,8 +28,8 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 	my %packets = (
 		'01A2' => ['pet_info', 'Z24 C v5', [qw(name renameflag level hungry friendly accessory type)]], # 37
-		#//# 0x0440,10
-		#//# 0x0441,4
+		'0440' => ['millenium_shield', 'a4 v2', [qw(ID num state)]], # 10 # TODO: use
+		'0441' => ['skill_delete', 'v', [qw(skillID)]], # 4 # TODO: use (ex. rogue can copy a skill)
 		#//# 0x0442,8
 		#//# 0x0443,8
 	);

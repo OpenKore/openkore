@@ -30,7 +30,7 @@ sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
 	my %packets = (
-		'007C' => ['actor_display',	'a4 v14 C2 a3 C5', [qw(ID walk_speed opt1 opt2 option hair_style weapon lowhead type shield tophead midhead hair_color clothes_color head_dir karma sex coords unknown1 unknown2 unknown3 unknown4 unknown5)]], #spawning (eA does not send this for players) # 44
+		'007C' => ['actor_display',	'a4 v14 C2 a3 C3 v', [qw(ID walk_speed opt1 opt2 option hair_style weapon lowhead type shield tophead midhead hair_color clothes_color head_dir karma sex coords xSize ySize act lv)]], #spawning (eA does not send this for players) # 44
 		# 0x02e2,20
 		# 0x02e3,22
 		# 0x02e4,11

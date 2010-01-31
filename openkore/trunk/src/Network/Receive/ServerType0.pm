@@ -440,7 +440,7 @@ sub new {
 		# HackShield alarm
 		'0449' => ['hack_shield_alarm'],
 		
-		'0800' => ['vender_items_list', 'v a4 x4', [qw(len venderID unknown)]], # -1
+		'0800' => ['vender_items_list', 'v a4 a4', [qw(len venderID venderCID)]], # -1
 	};
 	return $self;
 }
@@ -5061,7 +5061,7 @@ sub resurrection {
 sub sage_autospell {
 	# Sage Autospell - list of spells availible sent from server
 	if ($config{autoSpell}) {
-		my $skill = new Skill(name => $config{autoSpell});
+		my $skill = new Skill(auto => $config{autoSpell});
 		$messageSender->sendAutoSpell($skill->getIDN());
 	}
 }
@@ -6562,12 +6562,14 @@ sub vender_items_list {
 	if ($args->{switch} eq "0133") {
 		$headerlen = 8;
 	} else { # switch 0800
-		$headerlen = 12; # there's an unknown field
+		$headerlen = 12;
 	}
 
 	undef @venderItemList;
 	undef $venderID;
+	undef $venderCID;
 	$venderID = $args->{venderID};
+	$venderCID = $args->{venderCID} if exists $args->{venderCID};
 	my $player = Actor::get($venderID);
 
 	message TF("%s\n" .

@@ -129,7 +129,7 @@ sub new {
 		'0097' => ['private_message', 'v Z24 Z*', [qw(len privMsgUser privMsg)]], # -1
 		'0098' => ['private_message_sent', 'C', [qw(type)]], # 3
 		# 0x0099 is sent packet
-		'009A' => ['system_chat', 'v a*', [qw(len message)]], # -1
+		'009A' => ['system_chat', 'v a4 a*', [qw(len domain message)]], # -1
 		# 0x009B is sent packet
 		'009C' => ['actor_look_at', 'a4 v C', [qw(ID head body)]], # 9
 		'009D' => ['item_exists', 'a4 v C v3 C2', [qw(ID nameID identified x y amount subx suby)]], # 17
@@ -5090,7 +5090,7 @@ sub resurrection {
 sub sage_autospell {
 	# Sage Autospell - list of spells availible sent from server
 	if ($config{autoSpell}) {
-		my $skill = new Skill(name => $config{autoSpell});
+		my $skill = new Skill(auto => $config{autoSpell});
 		$messageSender->sendAutoSpell($skill->getIDN());
 	}
 }
@@ -6459,23 +6459,38 @@ sub switch_character {
 	$net->serverDisconnect();
 }
 
-# TODO: known prefixes (chat domains): micc | ssss | ...
+# TODO: known prefixes (chat domains): micc | ssss | blue | tool
 sub system_chat {
-   my ($self, $args) = @_;
+	my ($self, $args) = @_;
 
-   my $message = bytesToString($args->{message});
-   if (substr($message,0,4) eq 'micc') {
-      $message = bytesToString(substr($args->{message},34));
-   }
-   stripLanguageCode(\$message);
-   chatLog("s", "$message\n") if ($config{logSystemChat});
-   # Translation Comment: System/GM chat
-   message TF("[GM] %s\n", $message), "schat";
-   ChatQueue::add('gm', undef, undef, $message);
+	my $domain = bytesToString($args->{domain});
+	my ($name, $message, $color);
 
-   Plugins::callHook('packet_sysMsg', {
-      Msg => $message
-   });
+	if ($domain eq 'micc') {
+		($name, $color, $message) = unpack('Z24 a6 a*', $args->{message});
+		$name = bytesToString($name);
+		$color = bytesToString($color);
+		$message = bytesToString($message);
+	} elsif ($domain eq 'ssss') { # forces color yellow?
+		$message = bytesToString($args->{message});
+	} elsif ($domain eq 'blue') { # forces color blue?
+		$message = bytesToString($args->{message});
+	} elsif ($domain eq 'tool') { # not seen before?
+		$message = bytesToString($args->{message});
+	} else { # possible?
+		$message = $domain . bytesToString($args->{message});
+	}
+
+	# TODO: hande different types of messages
+	stripLanguageCode(\$message);
+	chatLog("s", "$message\n") if ($config{logSystemChat});
+	# Translation Comment: System/GM chat
+	message TF("[GM] %s\n", $message), "schat";
+	ChatQueue::add('gm', undef, undef, $message);
+
+	Plugins::callHook('packet_sysMsg', {
+		Msg => $message
+	});
 }
 
 sub top10_alchemist_rank {
@@ -6609,7 +6624,9 @@ sub vender_items_list {
 
 	undef @venderItemList;
 	undef $venderID;
+	undef $venderCID;
 	$venderID = $args->{venderID};
+	$venderCID = $args->{venderCID} if exists $args->{venderCID};
 	my $player = Actor::get($venderID);
 
 	message TF("%s\n" .
