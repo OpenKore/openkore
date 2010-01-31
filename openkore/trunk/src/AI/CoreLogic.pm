@@ -2520,7 +2520,7 @@ sub processMonsterSkillUse {
 				my $monster = $monsters{$monsterID};
 				if (checkSelfCondition($prefix)
 				    && checkMonsterCondition("${prefix}_target", $monster)) {
-					my $skill = new Skill(name => $config{$prefix});
+					my $skill = new Skill(auto => $config{$prefix});
 
 					next if $config{"${prefix}_maxUses"} && $monster->{skillUses}{$skill->getHandle()} >= $config{"${prefix}_maxUses"};
 					next if $config{"${prefix}_target"} && !existsInList($config{"${prefix}_target"}, $monster->{name});

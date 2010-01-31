@@ -356,7 +356,7 @@ sub main {
 				next;
 			}
 
-			my $skill = new Skill(name => $config{"attackSkillSlot_$i"});
+			my $skill = new Skill(auto => $config{"attackSkillSlot_$i"});
 			if ($skill->getOwnerType == Skill::OWNER_CHAR
 				&& checkSelfCondition("attackSkillSlot_$i")
 				&& (!$config{"attackSkillSlot_$i"."_maxUses"} ||
@@ -592,7 +592,7 @@ sub main {
 			delete $args->{attackMethod};
 
 			ai_setSuspend(0);
-			my $skill = new Skill(name => lc($config{"attackSkillSlot_$slot"}));
+			my $skill = new Skill(auto => lc($config{"attackSkillSlot_$slot"}));
 			if (!ai_getSkillUseType($skill->getHandle())) {
 				ai_skillUse(
 					$skill->getHandle(),
