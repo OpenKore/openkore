@@ -2,13 +2,16 @@
 127 Fire Wall
 128 Warp Portal Opening
 129 Warp Portal
-130 Holy Communion?
+130 B.S Sacramenti
 131 Sanctuary
 132 Magnus Exorcismus
 133 Pneuma
 134 Big Magic
 135 Fire Pillar (standby)
 136 Fire Pillar (detonating)
+#137 JT_HIDDEN_TRAP
+#138 JT_TRAP
+#139 JT_HIDDEN_WARP_NPC
 140 Talkie Box (hatsudou-chuu)
 141 Ice Wall
 142 Quagmire
@@ -27,7 +30,6 @@
 155 Deluge
 156 Whirlwind
 157 Magnetic Earth
-#158 Zeny Mark
 158 Lullaby
 159 Mental Sensing
 160 Down Tempo
@@ -37,20 +39,19 @@
 164 Power Cord
 165 Acoustic Rhythm
 166 Unchained Serenade
-167 Whistle
-#167 Perfect Tabulature?
+167 Perfect Tabulature
 168 Impressive Riff
 169 Magic Strings
 170 Song of Lutie
 171 Hip Shaker
-172 Humming
-#172 Focus Ballet?
+172 Focus Ballet
 173 Slow Grace
 174 Lady Luck
 175 Gypsy's Kiss
 176 Scribble
 177 Bomb
-178 Pink Warp Portal Wind # Wedding skills
+# Wedding skills
+178 Pink Warp Portal Wind
 179 Battle Chant
 180 Basilica
 181 Sheltering Bliss
@@ -58,6 +59,7 @@
 183 Fiber Lock
 184 Gravitational Field
 185 Hermode's Rod
+186 Blaze Shield
 187 Watery Evasion
 188 Flip Tatami
 189 Blaze Shield
