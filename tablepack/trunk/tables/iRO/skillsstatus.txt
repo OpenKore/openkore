@@ -1,17 +1,25 @@
+# Swordman
 0 Provoke
 1 Endure
+# Knight
 2 Twohand Quicken
+# Archer
 3 Improve Concentration
+# Thief
 4 Hiding
+# Assassin
 5 Cloaking
 6 Enchant Poison
 7 Poison React
+# Wizard
 8 Quagmire
+# Acolyte
 9 Angelus
 10 Blessing
 11 Signum Crucis
 12 Increase AGI
 13 Decrease AGI
+# Priest
 14 Slow Poison
 15 Impositio Manus
 16 Suffragium
@@ -21,15 +29,22 @@
 20 Magnificat
 21 Gloria
 22 Lex Aeterna
+# Blacksmith
 23 Adrenaline Rush
 24 Weapon Perfection
 25 Power-Thrust
 26 Power Maximize
-27 Pecopeco
+# Knight
+27 Peco Peco
+# Hunter
 28 Falcon
+# Novice
 29 Play Dead
+# Merchant
 30 Crazy Uproar
+# Mage
 31 Energy Coat
+
 32 Armor Damaged
 33 Weapon Damaged
 34 Hallucination
@@ -38,34 +53,52 @@
 37 Concentration Potion
 38 Awakening Potion
 39 Berserk Potion
-41 Walking Speed Up
+40 ASPD Up
+41 Speed Potion
 42 Speed Up
+# Knight
+43 Counter Attack
+# Assassin
+44 Venom Splasher
+# Hunter
 45 Ankle Snare
+
 46 Action Delay
+#47 EFST_IMPOSSIBLEPICKUP
+#48 EFST_BARRIER
+
 49 Barrier
+# Rogue
 50 Divest Weapon
 51 Divest Shield
 52 Divest Armor
 53 Divest Helm
+# Alchemist
 54 Alchemical Weapon
 55 Synthesized Shield
 56 Synthetic Armor
 57 Biochemical Helm
-58 Auto Guard
-59 Reflect Shield
-60 Devotion
-61 Providence
-62 Defender
+# Crusader
+58 Guard
+59 Shield Reflect
+60 Sacrifice
+61 Resistant Souls
+62 Defending Aura
+# Sage
 63 Magic Rod
 64 Element Enchanted
 65 Hindsight
-67 Orc Head
+#66 EFST_SPECIALZONE
+67 Reverse Orcish
+# Crusader
 68 Spear Quicken
+# Bard & Dancer
+#69 EFST_BDPLAYING
+70 Perfect Tablature
 71 Impressive Riff
 72 Magic Strings
 73 Song of Lutie
-74 Humming
-#74 Focus Ballet?
+74 Focus Ballet
 75 Slow Grace
 76 Lady Luck
 77 Gypsy's Kiss
@@ -76,142 +109,210 @@
 82 Classical Pluck
 83 Power Cord
 84 Acoustic Rhythm
+# Monk
 85 Root
 86 Fury
 87 Mental Strength
+#88 EFST_EXTREMITYFIST - Guillotine Fist?
 89 Raging Trifecta Blow Delay
+# Sage
 90 Endow Blaze
 91 Endow Tsunami
 92 Endow Tornado
 93 Endow Quake
+
+#94 EFST_MAGICATTACK
 95 Stop
+#96 EFST_WEAPONBRAKER
 97 Property Change (Undead)
-100 Muted
+98 Power Up
+99 AGI Up
+#100 EFST_SIEGEMODE
+#101 EFST_INVISIBLE
+#102 EFST_STATUSONE
+# Lord Knight
 103 Aura Blade
 104 Parry
 105 Concentration
 106 Relax
-107 Berserk
-108 Fury
-#108 Fury (Unimplemented)?
+107 Frenzy
+# Paladin
+108 Martyr's Reckoning
 109 Battle Chant
+# High Priest
 110 Assumptio
 111 Basilica
+
+#112 EFST_GROUNDMAGIC
 112 Land Change
-113 Magic Power
+# High Wizard
+113 Mystical Amplification
+# Assassin Cross
 114 Enchant Deadly Poison
+
 115 True Sight
+# Sniper
 116 Wind Walker
-117 Meltdown
+# Mastersmith
+117 Shattering Strike
 118 Cart Boost
-119 Chase Walk
-120 Reject Sword
+# Stalker
+119 Stealth
+120 Counter Instinct
+# Minstrel & Gypsy
 121 Marionette Control
 122 Marionette Control
 123 Sheltering Bliss
-124 Head Crush
-125 Joint Beat
+
+124 Bleeding
+# Lord Knight
+125 Vital Strike
+# Scholar
 126 Mind Breaker
-127 Memorize
-#127 Foresight?
+127 Foresight
 128 Blinding Mist
 129 Fiber Lock
-130 Mom, Dad, I love you!
+# Baby
+130 Mom, Dad. I love you!
+# Swordman
 131 Magnum Break
-132 Auto Berserk
-133 Run
+
+132 Berserk
+# TaeKwon Kid
+133 Sprint
 134 Ready Spurt
 135 Tornado Stance
-136 Tornado Stance Delay
+136 Tornado Kick
 137 Heel Drop Stance
-138 Heel Drop Stance Delay
+138 Heel Drop
 139 Roundhouse Stance
-140 Roundhouse Stance Delay
+140 Roundhouse
 141 Counter Kick Stance
-142 Counter Kick Stance Delay
+142 Counter Kick
 143 Tumbling
-144 Tumbling Delay
+144 Flying Kick
 145 Spurt
 146 Mild Wind (Dark)
-147 Adrenaline All
+# Blacksmith
+147 Advanced Adrenaline Rush
+# TaeKwon Kid
 148 Mild Wind (Ghost)
-149 Spirit
-150 Increase Atk
-151 Increase Matk
+
+149 Soul Link
+150 Atk Up
+151 Matk Up
+# TaeKwon Master
 152 Solar, Lunar and Stellar Shadow
+# Soul Linker
 153 Kaite
 154 Eswoo
+#155 EFST_STAR2
 156 Kaizel
 157 Kaahi
 158 Kaupe
 159 Esma
-160 Night
-# Night is TaeKwon Master's Miracle?
-161 Sword Quicken
-164 Solar, Lunar and Stellar Heat
+160 Eske
+# Knight
+161 One-Hand Quicken
+
+#162 EFST_FRIEND
+#163 EFST_FRIENDUP
+# TaeKwon Master
+#164 EFST_SG_WARM - Solar, Lunar and Stellar Heat?
 165 Solar Heat
 166 Lunar Heat
 167 Stellar Heat
 169 Solar Protection
 170 Lunar Protection
 171 Stellar Protection
+
+#172 EFST_EXPUP - SLS Blessings?
+# Guild
 173 Battle Orders
 174 Regeneration
 175 Guild Delay
+
+#176 EFST_RESISTHANDICAP
+#177 EFST_MAXHPPERCENT
+#178 EFST_MAXSPPERCENT
+#179 EFST_DEFENCE - Amistr Bulwark?
+#180 EFST_SLOWDOWN
+# Stalker
 181 Preserve
-182 Battle Command
+
+#182 EFST_CHASEWALK2
+#183 NOT_EXTREMITYFIST
 184 Invisible Detect
-185 Walking Speed Down
-186 Lucky Cast
+185 Slow Potion
+# Scholar
+186 Double Bolt
+# High Wizard
 187 Gravitational Field
+# Mastersmith
 188 Maximum Power-Thrust
+# Minstrel & Gypsy
 189 Longing for Freedom
 190 Hermode's Rod
 191 Tarot Card of Fate
+# Homunculi
 192 Urgent Escape
 193 Flitting
 194 Accelerated Flight
 195 Mental Change
 196 Blood Lust
+# Crusader
 197 Shrink
 198 Sight Blaster
+# Dancer
 199 Charming Wink
+# Stalker
 200 Close Confine
 201 Close Confine
+#202 EFST_DISABLEMOVE
+# Gunslinger
 203 Last Stand
 204 Gatling Fever
 205 Happy Break
+# Ninja
 206 Cicada Skin Shed
 207 Mirror Image
 208 Ninja Aura
 209 Adjustment
 210 Increase Accuracy
+# Food from Cooking
 241 Steamed Tongue
 242 Steamed Desert Scorpions
 243 Immortal Stew
 244 Hwergelmir's Tonic
 245 Dragon Breath Cocktail
 246 Cooked Nine Tail's Tails
+
 247 Honey Pastry
 248 Sesame Pastry
+#249 EFST_FOOD_CRITICALSUCCESSVALUE - Abrasive?
 250 Battle Manual
 251 Life Insurance
 252 Bubble Gum
 253 Convex Mirror
+# 254-270 - Unimplemented (Jiangshi)
+# Food from Cash
 271 Steamed Tongue
 272 Steamed Desert Scorpions
 273 Immortal Stew
 274 Hwergelmir's Tonic
 275 Dragon Breath Cocktail
 276 Cooked Nine Tail's Tails
+# Mercenary
 277 Flee Up
 278 Atk Up
 279 HP Up
 280 SP Up
 281 Hit Up
+
 282 Slow Cast
 283 Magic Mirror
 284 Stone Skin
-304 Hell's Power
+#285 EFST_ANTIMAGIC
 286 Critical Wounds
+304 Hell's Power
 312 Job Manual
