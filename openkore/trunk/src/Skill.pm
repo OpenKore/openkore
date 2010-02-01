@@ -460,17 +460,17 @@ sub parseSkillsDatabase_handle2name {
 		#Log::debug "$handle $name\n";
 		my $id = $handles{$handle};
 		if ($id && $handle ne "" && $name ne "") {
-			$name = lc($name);
-			if (!exists $names{$name}) {				# doesn't exist yet
-				$names{$name} = $id;
+			my $name_lc = lc($name);
+			if (!exists $names{$name_lc}) {				# doesn't exist yet
+				$names{$name_lc} = $id;
 				$ids{$id}{name} = $name;
 			} else {
 				$ids{$id}{name} = $name . ' (' . $handle . ')';
-				if (ref($names{$name}) eq 'ARRAY') {	# is an array
-					push @{$names{$name}}, $id;
+				if (ref($names{$name_lc}) eq 'ARRAY') {	# is an array
+					push @{$names{$name_lc}}, $id;
 					#Log::warning "pushed $id $name\n";
 				} else {								# exists but is not an array
-					$names{$name} = [$names{$name}, $id];
+					$names{$name_lc} = [$names{$name_lc}, $id];
 					#Log::warning "start array $id $name\n";
 				}
 			}
