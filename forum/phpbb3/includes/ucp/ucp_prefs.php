@@ -2,7 +2,7 @@
 /**
 *
 * @package ucp
-* @version $Id: ucp_prefs.php 8990 2008-10-09 15:41:19Z acydburn $
+* @version $Id: ucp_prefs.php 9734 2009-07-08 13:03:43Z nickvergessen $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -282,7 +282,7 @@ class ucp_prefs
 					'S_AVATARS'			=> $data['avatars'],
 					'S_DISABLE_CENSORS'	=> $data['wordcensor'],
 
-					'S_CHANGE_CENSORS'		=> ($auth->acl_get('u_chgcensors')) ? true : false,
+					'S_CHANGE_CENSORS'		=> ($auth->acl_get('u_chgcensors') && $config['allow_nocensors']) ? true : false,
 
 					'S_TOPIC_SORT_DAYS'		=> $s_limit_topic_days,
 					'S_TOPIC_SORT_KEY'		=> $s_sort_topic_key,

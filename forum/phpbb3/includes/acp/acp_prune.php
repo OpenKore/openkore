@@ -2,7 +2,7 @@
 /**
 *
 * @package acp
-* @version $Id: acp_prune.php 8479 2008-03-29 00:22:48Z naderman $
+* @version $Id: acp_prune.php 9754 2009-07-14 12:02:11Z rxu $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -406,7 +406,12 @@ class acp_prune
 			$where_sql .= (sizeof($joined)) ? " AND user_regdate " . $key_match[$joined_select] . ' ' . gmmktime(0, 0, 0, (int) $joined[1], (int) $joined[2], (int) $joined[0]) : '';
 			$where_sql .= ($count !== '') ? " AND user_posts " . $key_match[$count_select] . ' ' . (int) $count . ' ' : '';
 
-			if (sizeof($active) && $active_select != 'lt')
+			// First handle pruning of users who never logged in, last active date is 0000-00-00
+			if (sizeof($active) && (int) $active[0] == 0 && (int) $active[1] == 0 && (int) $active[2] == 0)
+			{
+				$where_sql .= ' AND user_lastvisit = 0';
+			}			
+			else if (sizeof($active) && $active_select != 'lt')
 			{
 				$where_sql .= ' AND user_lastvisit ' . $key_match[$active_select] . ' ' . gmmktime(0, 0, 0, (int) $active[1], (int) $active[2], (int) $active[0]);
 			}

@@ -4,7 +4,7 @@
 * acp_profile [English]
 *
 * @package language
-* @version $Id: profile.php 9342 2009-02-26 23:46:46Z terrafrost $
+* @version $Id: profile.php 9916 2009-08-03 15:46:56Z Kellanved $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -66,6 +66,8 @@ $lang = array_merge($lang, array(
 	'DISPLAY_AT_PROFILE_EXPLAIN'	=> 'The user is able to change this profile field within the user control panel.',
 	'DISPLAY_AT_REGISTER'			=> 'Display on registration screen',
 	'DISPLAY_AT_REGISTER_EXPLAIN'	=> 'If this option is enabled, the field will be displayed on registration.',
+	'DISPLAY_ON_VT'					=> 'Display on viewtopic screen',
+	'DISPLAY_ON_VT_EXPLAIN'			=> 'If this option is enabled, the field will be displayed in the mini-profile on the topic screen.',
 	'DISPLAY_PROFILE_FIELD'			=> 'Publicly display profile field',
 	'DISPLAY_PROFILE_FIELD_EXPLAIN'	=> 'The profile field will be shown in all locations allowed within the load settings. Setting this to “no” will hide the field from topic pages, profiles and the memberlist.',
 	'DROPDOWN_ENTRIES_EXPLAIN'		=> 'Enter your options now, every option in one line.',

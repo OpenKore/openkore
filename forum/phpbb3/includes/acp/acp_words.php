@@ -2,7 +2,7 @@
 /**
 *
 * @package acp
-* @version $Id: acp_words.php,v 1.16 2007/10/05 14:36:32 acydburn Exp $
+* @version $Id: acp_words.php 10039 2009-08-21 09:44:55Z bantu $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -88,7 +88,7 @@ class acp_words
 				$word			= utf8_normalize_nfc(request_var('word', '', true));
 				$replacement	= utf8_normalize_nfc(request_var('replacement', '', true));
 				
-				if (!$word || !$replacement)
+				if ($word === '' || $replacement === '')
 				{
 					trigger_error($user->lang['ENTER_WORD'] . adm_back_link($this->u_action), E_USER_WARNING);
 				}

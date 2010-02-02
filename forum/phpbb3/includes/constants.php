@@ -2,7 +2,7 @@
 /**
 *
 * @package phpBB3
-* @version $Id: constants.php 9521 2009-05-31 10:46:40Z acydburn $
+* @version $Id: constants.php 10268 2009-11-14 20:15:50Z acydburn $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -25,7 +25,7 @@ if (!defined('IN_PHPBB'))
 */
 
 // phpBB Version
-define('PHPBB_VERSION', '3.0.5');
+define('PHPBB_VERSION', '3.0.6');
 
 // QA-related
 // define('PHPBB_QA', 1);
@@ -91,6 +91,11 @@ define('FORUM_FLAG_PRUNE_ANNOUNCE', 4);
 define('FORUM_FLAG_PRUNE_STICKY', 8);
 define('FORUM_FLAG_ACTIVE_TOPICS', 16);
 define('FORUM_FLAG_POST_REVIEW', 32);
+define('FORUM_FLAG_QUICK_REPLY', 64);
+
+// Forum Options... sequential order. Modifications should begin at number 10 (number 29 is maximum)
+define('FORUM_OPTION_FEED_NEWS', 1);
+define('FORUM_OPTION_FEED_EXCLUDE', 2);
 
 // Optional text flags
 define('OPTION_FLAG_BBCODE', 1);
@@ -160,6 +165,9 @@ define('BBCODE_UID_LEN', 8);
 // Number of core BBCodes
 define('NUM_CORE_BBCODES', 12);
 
+// Smiley hard limit
+define('SMILEY_LIMIT', 1000);
+
 // Magic url types
 define('MAGIC_URL_EMAIL', 1);
 define('MAGIC_URL_FULL', 2);
@@ -214,7 +222,7 @@ define('FORUMS_ACCESS_TABLE',		$table_prefix . 'forums_access');
 define('FORUMS_TRACK_TABLE',		$table_prefix . 'forums_track');
 define('FORUMS_WATCH_TABLE',		$table_prefix . 'forums_watch');
 define('GROUPS_TABLE',				$table_prefix . 'groups');
-define('ICONS_TABLE',				$table_prefix . 'icons'); 
+define('ICONS_TABLE',				$table_prefix . 'icons');
 define('LANG_TABLE',				$table_prefix . 'lang');
 define('LOG_TABLE',					$table_prefix . 'log');
 define('MODERATOR_CACHE_TABLE',		$table_prefix . 'moderator_cache');

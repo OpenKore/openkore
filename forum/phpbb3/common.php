@@ -15,7 +15,7 @@ if (!defined('IN_PHPBB'))
 {
 	exit;
 }
-
+date_default_timezone_set('America/Toronto');
 $starttime = explode(' ', microtime());
 $starttime = $starttime[1] + $starttime[0];
 

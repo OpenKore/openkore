@@ -4,7 +4,7 @@
 * acp_database [English]
 *
 * @package language
-* @version $Id: database.php,v 1.25 2007/10/04 15:07:24 acydburn Exp $
+* @version $Id: database.php 9765 2009-07-17 10:11:10Z bantu $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -54,6 +54,7 @@ $lang = array_merge($lang, array(
 	'DOWNLOAD_BACKUP'	=> 'Download backup',
 
 	'FILE_TYPE'			=> 'File type',
+	'FILE_WRITE_FAIL'	=> 'Unable to write file to storage folder.',
 	'FULL_BACKUP'		=> 'Full',
 
 	'RESTORE_FAILURE'		=> 'The backup file may be corrupt.',

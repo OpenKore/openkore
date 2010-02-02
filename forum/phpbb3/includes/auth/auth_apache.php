@@ -5,7 +5,7 @@
 * Authentication plug-ins is largely down to Sergey Kanareykin, our thanks to him.
 *
 * @package login
-* @version $Id: auth_apache.php 9311 2009-01-29 13:08:44Z acydburn $
+* @version $Id: auth_apache.php 9636 2009-06-20 18:45:16Z acydburn $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -217,6 +217,7 @@ function user_row_apache($username, $password)
 		'group_id'		=> (int) $row['group_id'],
 		'user_type'		=> USER_NORMAL,
 		'user_ip'		=> $user->ip,
+		'user_new'		=> ($config['new_member_post_limit']) ? 1 : 0,
 	);
 }
 
