@@ -2,8 +2,8 @@
 /**
 *
 * @package VC
-* @version $Id: ucp_confirm.php 8655 2008-06-13 19:39:01Z acydburn $
-* @copyright (c) 2005 phpBB Group
+* @version $Id: ucp_confirm.php 9524 2009-06-02 14:12:23Z Kellanved $
+* @copyright (c) 2005 2008 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
@@ -37,42 +37,10 @@ class ucp_confirm
 	{
 		global $db, $user, $phpbb_root_path, $config, $phpEx;
 
-		// Do we have an id? No, then just exit
-		$confirm_id = request_var('id', '');
-		$type = request_var('type', 0);
-
-		if (!$confirm_id || !$type)
-		{
-			exit;
-		}
-
-		// Try and grab code for this id and session
-		$sql = 'SELECT code, seed
-			FROM ' . CONFIRM_TABLE . "
-			WHERE session_id = '" . $db->sql_escape($user->session_id) . "'
-				AND confirm_id = '" . $db->sql_escape($confirm_id) . "'
-				AND confirm_type = $type";
-		$result = $db->sql_query($sql);
-		$row = $db->sql_fetchrow($result);
-		$db->sql_freeresult($result);
-
-		// If we have a row then grab data else create a new id
-		if (!$row)
-		{
-			exit;
-		}
-
-		if ($config['captcha_gd'])
-		{
-			include($phpbb_root_path . 'includes/captcha/captcha_gd.' . $phpEx);
-		}
-		else
-		{
-			include($phpbb_root_path . 'includes/captcha/captcha_non_gd.' . $phpEx);
-		}
-
-		$captcha = new captcha();
-		$captcha->execute($row['code'], $row['seed']);
+		include($phpbb_root_path . 'includes/captcha/captcha_factory.' . $phpEx);
+		$captcha = phpbb_captcha_factory::get_instance($config['captcha_plugin']);
+		$captcha->init(request_var('type', 0));
+		$captcha->execute();
 
 		garbage_collection();
 		exit_handler();

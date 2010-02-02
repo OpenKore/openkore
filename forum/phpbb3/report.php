@@ -2,7 +2,7 @@
 /**
 *
 * @package phpBB3
-* @version $Id: report.php,v 1.39 2007/10/05 14:30:06 acydburn Exp $
+* @version $Id: report.php 10164 2009-09-19 10:46:19Z acydburn $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -24,18 +24,29 @@ $user->setup('mcp');
 
 $forum_id		= request_var('f', 0);
 $post_id		= request_var('p', 0);
+$pm_id			= request_var('pm', 0);
 $reason_id		= request_var('reason_id', 0);
 $report_text	= utf8_normalize_nfc(request_var('report_text', '', true));
 $user_notify	= ($user->data['is_registered']) ? request_var('notify', 0) : false;
 
 $submit = (isset($_POST['submit'])) ? true : false;
 
-if (!$post_id)
+if (!$post_id && (!$pm_id || !$config['allow_pm_report']))
 {
 	trigger_error('NO_POST_SELECTED');
 }
 
+if ($post_id)
+{
 $redirect_url = append_sid("{$phpbb_root_path}viewtopic.$phpEx", "f=$forum_id&amp;p=$post_id") . "#p$post_id";
+	$pm_id = 0;
+}
+else
+{
+	$redirect_url = append_sid("{$phpbb_root_path}ucp.$phpEx", "i=pm&mode=view&p=$pm_id");
+	$post_id = 0;
+	$forum_id = 0;
+}
 
 // Has the report been cancelled?
 if (isset($_POST['cancel']))
@@ -43,6 +54,8 @@ if (isset($_POST['cancel']))
 	redirect($redirect_url);
 }
 
+if ($post_id)
+{
 // Grab all relevant data
 $sql = 'SELECT t.*, p.*
 	FROM ' . POSTS_TABLE . ' p, ' . TOPICS_TABLE . " t
@@ -89,6 +102,32 @@ if ($report_data['post_reported'])
 	$message = $user->lang['ALREADY_REPORTED'];
 	$message .= '<br /><br />' . sprintf($user->lang['RETURN_TOPIC'], '<a href="' . $redirect_url . '">', '</a>');
 	trigger_error($message);
+	}
+}
+else
+{
+	// Grab all relevant data
+	$sql = 'SELECT p.*, pt.*
+		FROM ' . PRIVMSGS_TABLE . ' p, ' . PRIVMSGS_TO_TABLE . " pt
+		WHERE p.msg_id = $pm_id
+			AND p.msg_id = pt.msg_id
+			AND (p.author_id = " . $user->data['user_id'] . " OR pt.user_id = " . $user->data['user_id'] . ")";
+	$result = $db->sql_query($sql);
+	$report_data = $db->sql_fetchrow($result);
+	$db->sql_freeresult($result);
+
+	if (!$report_data)
+	{
+		$user->add_lang('ucp');
+		trigger_error('NO_MESSAGE');
+	}
+
+	if ($report_data['message_reported'])
+	{
+		$message = $user->lang['ALREADY_REPORTED_PM'];
+		$message .= '<br /><br />' . sprintf($user->lang['RETURN_PM'], '<a href="' . $redirect_url . '">', '</a>');
+		trigger_error($message);
+	}
 }
 
 // Submit report?
@@ -109,6 +148,7 @@ if ($submit && $reason_id)
 	$sql_ary = array(
 		'reason_id'		=> (int) $reason_id,
 		'post_id'		=> $post_id,
+		'pm_id'			=> $pm_id,
 		'user_id'		=> (int) $user->data['user_id'],
 		'user_notify'	=> (int) $user_notify,
 		'report_closed'	=> 0,
@@ -120,13 +160,12 @@ if ($submit && $reason_id)
 	$db->sql_query($sql);
 	$report_id = $db->sql_nextid();
 
-	if (!$report_data['post_reported'])
+	if ($post_id)
 	{
 		$sql = 'UPDATE ' . POSTS_TABLE . '
 			SET post_reported = 1
 			WHERE post_id = ' . $post_id;
 		$db->sql_query($sql);
-	}
 
 	if (!$report_data['topic_reported'])
 	{
@@ -135,11 +174,41 @@ if ($submit && $reason_id)
 			WHERE topic_id = ' . $report_data['topic_id'] . '
 				OR topic_moved_id = ' . $report_data['topic_id'];
 		$db->sql_query($sql);
+		}
+
+		$lang_return = $user->lang['RETURN_TOPIC'];
+		$lang_success = $user->lang['POST_REPORTED_SUCCESS'];
+	}
+	else
+	{
+		$sql = 'UPDATE ' . PRIVMSGS_TABLE . '
+			SET message_reported = 1
+			WHERE msg_id = ' . $pm_id;
+		$db->sql_query($sql);
+
+		$sql_ary = array(
+			'msg_id'		=> $pm_id,
+			'user_id'		=> ANONYMOUS,
+			'author_id'		=> (int) $report_data['author_id'],
+			'pm_deleted'	=> 0,
+			'pm_new'		=> 0,
+			'pm_unread'		=> 0,
+			'pm_replied'	=> 0,
+			'pm_marked'		=> 0,
+			'pm_forwarded'	=> 0,
+			'folder_id'		=> PRIVMSGS_INBOX,
+		);
+
+		$sql = 'INSERT INTO ' . PRIVMSGS_TO_TABLE . ' ' . $db->sql_build_array('INSERT', $sql_ary);
+		$db->sql_query($sql);
+
+		$lang_return = $user->lang['RETURN_PM'];
+		$lang_success = $user->lang['PM_REPORTED_SUCCESS'];
 	}
 
 	meta_refresh(3, $redirect_url);
 
-	$message = $user->lang['POST_REPORTED_SUCCESS'] . '<br /><br />' . sprintf($user->lang['RETURN_TOPIC'], '<a href="' . $redirect_url . '">', '</a>');
+	$message = $lang_success . '<br /><br />' . sprintf($lang_return, '<a href="' . $redirect_url . '">', '</a>');
 	trigger_error($message);
 }
 
@@ -147,8 +216,9 @@ if ($submit && $reason_id)
 display_reasons($reason_id);
 
 $template->assign_vars(array(
+	'S_REPORT_POST'		=> ($pm_id) ? false : true,
 	'REPORT_TEXT'		=> $report_text,
-	'S_REPORT_ACTION'	=> append_sid("{$phpbb_root_path}report.$phpEx", 'f=' . $forum_id . '&amp;p=' . $post_id),
+	'S_REPORT_ACTION'	=> append_sid("{$phpbb_root_path}report.$phpEx", 'f=' . $forum_id . '&amp;p=' . $post_id . '&amp;pm=' . $pm_id),
 
 	'S_NOTIFY'			=> $user_notify,
 	'S_CAN_NOTIFY'		=> ($user->data['is_registered']) ? true : false)

@@ -2,7 +2,7 @@
 /**
 *
 * @package acp
-* @version $Id: acp_language.php,v 1.59 2007/10/14 15:46:07 acydburn Exp $
+* @version $Id: acp_language.php 9669 2009-06-24 13:31:04Z leviatan21 $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -181,7 +181,7 @@ class acp_language
 			case 'submit_file':
 			case 'download_file':
 			case 'upload_data':
-				
+
 				if (!$submit || !check_form_key($form_name))
 				{
 					trigger_error($user->lang['FORM_INVALID']. adm_back_link($this->u_action), E_USER_WARNING);
@@ -261,16 +261,16 @@ class acp_language
 				if (!$safe_mode)
 				{
 					$mkdir_ary = array('language', 'language/' . $row['lang_iso']);
-					
+
 					if ($this->language_directory)
 					{
 						$mkdir_ary[] = 'language/' . $row['lang_iso'] . '/' . $this->language_directory;
 					}
-				
+
 					foreach ($mkdir_ary as $dir)
 					{
 						$dir = $phpbb_root_path . 'store/' . $dir;
-			
+
 						if (!is_dir($dir))
 						{
 							if (!@mkdir($dir, 0777))
@@ -316,7 +316,7 @@ class acp_language
 							}
 
 							$entry = "\tarray(\n";
-							
+
 							foreach ($value as $_key => $_value)
 							{
 								$entry .= "\t\t" . (int) $_key . "\t=> '" . $this->prepare_lang_entry($_value) . "',\n";
@@ -433,7 +433,7 @@ class acp_language
 				{
 					trigger_error($user->lang['NO_LANG_ID'] . adm_back_link($this->u_action), E_USER_WARNING);
 				}
-				
+
 				$this->page_title = 'LANGUAGE_PACK_DETAILS';
 
 				$sql = 'SELECT *
@@ -442,7 +442,7 @@ class acp_language
 				$result = $db->sql_query($sql);
 				$lang_entries = $db->sql_fetchrow($result);
 				$db->sql_freeresult($result);
-				
+
 				$lang_iso = $lang_entries['lang_iso'];
 				$missing_vars = $missing_files = array();
 
@@ -488,7 +488,7 @@ class acp_language
 							trigger_error($user->lang['WRONG_LANGUAGE_FILE'] . adm_back_link($this->u_action . '&amp;action=details&amp;id=' . $lang_id), E_USER_WARNING);
 						}
 				}
-				
+
 				if (isset($_POST['remove_store']))
 				{
 					$store_filename = $this->get_filename($lang_iso, $this->language_directory, $this->language_file, true, true);
@@ -532,7 +532,7 @@ class acp_language
 						if (file_exists($phpbb_root_path . $this->get_filename($lang_iso, '', $file)))
 						{
 							$missing_vars[$file] = $this->compare_language_files($config['default_lang'], $lang_iso, '', $file);
-							
+
 							if (sizeof($missing_vars[$file]))
 							{
 								$is_missing_var = true;
@@ -550,7 +550,7 @@ class acp_language
 						if (file_exists($phpbb_root_path . $this->get_filename($lang_iso, 'acp', $file)))
 						{
 							$missing_vars['acp/' . $file] = $this->compare_language_files($config['default_lang'], $lang_iso, 'acp', $file);
-							
+
 							if (sizeof($missing_vars['acp/' . $file]))
 							{
 								$is_missing_var = true;
@@ -569,7 +569,7 @@ class acp_language
 							if (file_exists($phpbb_root_path . $this->get_filename($lang_iso, 'mods', $file)))
 							{
 								$missing_vars['mods/' . $file] = $this->compare_language_files($config['default_lang'], $lang_iso, 'mods', $file);
-								
+
 								if (sizeof($missing_vars['mods/' . $file]))
 								{
 									$is_missing_var = true;
@@ -581,7 +581,7 @@ class acp_language
 							}
 						}
 					}
-				
+
 					// More missing files... for example email templates?
 					foreach ($email_files as $file)
 					{
@@ -766,6 +766,8 @@ class acp_language
 					trigger_error($user->lang['NO_REMOVE_DEFAULT_LANG'] . adm_back_link($this->u_action), E_USER_WARNING);
 				}
 
+				if (confirm_box(true))
+				{
 				$db->sql_query('DELETE FROM ' . LANG_TABLE . ' WHERE lang_id = ' . $lang_id);
 
 				$sql = 'UPDATE ' . USERS_TABLE . "
@@ -788,6 +790,17 @@ class acp_language
 				add_log('admin', 'LOG_LANGUAGE_PACK_DELETED', $row['lang_english_name']);
 
 				trigger_error(sprintf($user->lang['LANGUAGE_PACK_DELETED'], $row['lang_english_name']) . adm_back_link($this->u_action));
+				}
+				else
+				{
+					$s_hidden_fields = array(
+						'i'			=> $id,
+						'mode'		=> $mode,
+						'action'	=> $action,
+						'id'		=> $lang_id,
+					);
+					confirm_box(false, $user->lang['CONFIRM_OPERATION'], build_hidden_fields($s_hidden_fields));
+				}
 			break;
 
 			case 'install':
@@ -1046,7 +1059,7 @@ class acp_language
 				$compress->add_data('', 'language/' . $row['lang_iso'] . '/index.html');
 				$compress->add_data('', 'language/' . $row['lang_iso'] . '/email/index.html');
 				$compress->add_data('', 'language/' . $row['lang_iso'] . '/acp/index.html');
-				
+
 				if (sizeof($mod_files))
 				{
 					$compress->add_data('', 'language/' . $row['lang_iso'] . '/mods/index.html');
@@ -1208,7 +1221,7 @@ $lang = array_merge($lang, array(
 	function get_filename($lang_iso, $directory, $filename, $check_store = false, $only_return_filename = false)
 	{
 		global $phpbb_root_path, $safe_mode;
-		
+
 		$check_filename = "language/$lang_iso/" . (($directory) ? $directory . '/' : '') . $filename;
 
 		if ($check_store)
@@ -1254,7 +1267,7 @@ $lang = array_merge($lang, array(
 		$keys = func_get_args();
 
 		$non_static		= array_shift($keys);
-		$value			= array_shift($keys);
+		$value			= utf8_normalize_nfc(array_shift($keys));
 
 		if (!$non_static)
 		{

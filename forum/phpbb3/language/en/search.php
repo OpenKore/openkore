@@ -4,7 +4,7 @@
 * search [English]
 *
 * @package language
-* @version $Id: search.php 9438 2009-04-11 11:09:45Z acydburn $
+* @version $Id: search.php 10004 2009-08-17 13:25:04Z rxu $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -53,6 +53,7 @@ $lang = array_merge($lang, array(
 	'JUMP_TO_POST'			=> 'Jump to post',
 
 	'LOGIN_EXPLAIN_EGOSEARCH'	=> 'The board requires you to be registered and logged in to view your own posts.',
+	'LOGIN_EXPLAIN_UNREADSEARCH'=> 'The board requires you to be registered and logged in to view your unread posts.',
 
 	'MAX_NUM_SEARCH_KEYWORDS_REFINE'	=> 'You specified too many words to search for. Please do not enter more than %1$d words.',
 

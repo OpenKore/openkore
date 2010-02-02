@@ -1,7 +1,7 @@
 <?php
 /**
 * @package ucp
-* @version $Id: ucp_pm.php 8521 2008-04-21 13:20:13Z acydburn $
+* @version $Id: ucp_pm.php 10204 2009-10-04 11:08:12Z acydburn $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -119,7 +119,14 @@ class ucp_pm
 
 				if (!$auth->acl_get('u_sendpm'))
 				{
-					trigger_error('NO_AUTH_SEND_MESSAGE');
+					// trigger_error('NO_AUTH_SEND_MESSAGE');
+					$template->assign_vars(array(
+						'S_NO_AUTH_SEND_MESSAGE'	=> true,
+						'S_COMPOSE_PM_VIEW'			=> true,
+					));
+
+					$tpl_file = 'ucp_pm_viewfolder';
+					break;
 				}
 
 				include($phpbb_root_path . 'includes/ucp/ucp_pm_compose.' . $phpEx);

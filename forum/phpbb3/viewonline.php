@@ -2,7 +2,7 @@
 /**
 *
 * @package phpBB3
-* @version $Id: viewonline.php 9428 2009-04-08 17:33:51Z acydburn $
+* @version $Id: viewonline.php 9566 2009-06-09 15:52:03Z bantu $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -187,7 +187,7 @@ while ($row = $db->sql_fetchrow($result))
 		continue;
 	}
 
-	preg_match('#^([a-z/_]+)#i', $row['session_page'], $on_page);
+	preg_match('#^([a-z0-9/_-]+)#i', $row['session_page'], $on_page);
 	if (!sizeof($on_page))
 	{
 		$on_page[1] = '';

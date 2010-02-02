@@ -2,7 +2,7 @@
 /**
 *
 * @package acp
-* @version $Id: acp_database.php 9417 2009-03-30 13:52:58Z acydburn $
+* @version $Id: acp_database.php 10174 2009-09-21 17:59:39Z acydburn $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -142,7 +142,7 @@ class acp_database
 									break;
 
 									case 'oracle':
-										$extractor->flush('TRUNCATE TABLE ' . $table_name . "\\\n");
+										$extractor->flush('TRUNCATE TABLE ' . $table_name . "/\n");
 									break;
 
 									default:
@@ -548,7 +548,7 @@ class base_extractor
 
 			if (!$this->fp)
 			{
-				trigger_error('Unable to write temporary file to storage folder', E_USER_ERROR);
+				trigger_error('FILE_WRITE_FAIL', E_USER_ERROR);
 			}
 		}
 	}
@@ -1157,16 +1157,17 @@ class postgres_extractor extends base_extractor
 					AND (c.oid = d.adrelid)
 					AND d.adnum = " . $row['attnum'];
 			$def_res = $db->sql_query($sql_get_default);
+			$def_row = $db->sql_fetchrow($def_res);
+			$db->sql_freeresult($def_res);
 
-			if (!$def_res)
+			if (empty($def_row))
 			{
 				unset($row['rowdefault']);
 			}
 			else
 			{
-				$row['rowdefault'] = $db->sql_fetchfield('rowdefault', false, $def_res);
+				$row['rowdefault'] = $def_row['rowdefault'];
 			}
-			$db->sql_freeresult($def_res);
 
 			if ($row['type'] == 'bpchar')
 			{
@@ -1715,8 +1716,7 @@ class oracle_extractor extends base_extractor
 	{
 		global $db;
 		$sql_data = '-- Table: ' . $table_name . "\n";
-		$sql_data .= "DROP TABLE $table_name;\n";
-		$sql_data .= '\\' . "\n";
+		$sql_data .= "DROP TABLE $table_name\n/\n";
 		$sql_data .= "\nCREATE TABLE $table_name (\n";
 
 		$sql = "SELECT COLUMN_NAME, DATA_TYPE, DATA_PRECISION, DATA_LENGTH, NULLABLE, DATA_DEFAULT
@@ -1731,7 +1731,7 @@ class oracle_extractor extends base_extractor
 
 			if ($row['data_type'] !== 'CLOB')
 			{
-				if ($row['data_type'] !== 'VARCHAR2')
+				if ($row['data_type'] !== 'VARCHAR2' && $row['data_type'] !== 'CHAR')
 				{
 					$line .= '(' . $row['data_precision'] . ')';
 				}
@@ -1761,11 +1761,19 @@ class oracle_extractor extends base_extractor
 				AND A.TABLE_NAME = '{$table_name}'";
 		$result = $db->sql_query($sql);
 
+		$primary_key = array();
+		$contraint_name = '';
 		while ($row = $db->sql_fetchrow($result))
 		{
-			$rows[] = "  CONSTRAINT {$row['constraint_name']} PRIMARY KEY ({$row['column_name']})";
+			$constraint_name = '"' . $row['constraint_name'] . '"';
+			$primary_key[] = '"' . $row['column_name'] . '"';
 		}
 		$db->sql_freeresult($result);
+
+		if (sizeof($primary_key))
+		{
+			$rows[] = "  CONSTRAINT {$constraint_name} PRIMARY KEY (" . implode(', ', $primary_key) . ')';
+		}
 
 		$sql = "SELECT A.CONSTRAINT_NAME, A.COLUMN_NAME
 			FROM USER_CONS_COLUMNS A, USER_CONSTRAINTS B
@@ -1774,24 +1782,44 @@ class oracle_extractor extends base_extractor
 				AND A.TABLE_NAME = '{$table_name}'";
 		$result = $db->sql_query($sql);
 
+		$unique = array();
+		$contraint_name = '';
 		while ($row = $db->sql_fetchrow($result))
 		{
-			$rows[] = "  CONSTRAINT {$row['constraint_name']} UNIQUE ({$row['column_name']})";
+			$constraint_name = '"' . $row['constraint_name'] . '"';
+			$unique[] = '"' . $row['column_name'] . '"';
 		}
 		$db->sql_freeresult($result);
 
-		$sql_data .= implode(",\n", $rows);
-		$sql_data .= "\n)\n\\";
+		if (sizeof($unique))
+		{
+			$rows[] = "  CONSTRAINT {$constraint_name} UNIQUE (" . implode(', ', $unique) . ')';
+		}
 
-		$sql = "SELECT A.REFERENCED_NAME
-			FROM USER_DEPENDENCIES A, USER_TRIGGERS B
+		$sql_data .= implode(",\n", $rows);
+		$sql_data .= "\n)\n/\n";
+
+		$sql = "SELECT A.REFERENCED_NAME, C.*
+			FROM USER_DEPENDENCIES A, USER_TRIGGERS B, USER_SEQUENCES C
 			WHERE A.REFERENCED_TYPE = 'SEQUENCE'
 				AND A.NAME = B.TRIGGER_NAME
-				AND B. TABLE_NAME = '{$table_name}'";
+				AND B.TABLE_NAME = '{$table_name}'
+				AND C.SEQUENCE_NAME = A.REFERENCED_NAME";
 		$result = $db->sql_query($sql);
+
+		$type = request_var('type', '');
+
 		while ($row = $db->sql_fetchrow($result))
 		{
-			$sql_data .= "\nCREATE SEQUENCE {$row['referenced_name']}\\\n";
+			$sql_data .= "\nDROP SEQUENCE \"{$row['referenced_name']}\"\n/\n";
+			$sql_data .= "\nCREATE SEQUENCE \"{$row['referenced_name']}\"";
+
+			if ($type == 'full')
+			{
+				$sql_data .= ' START WITH ' . $row['last_number'];
+			}
+
+			$sql_data .= "\n/\n";
 		}
 		$db->sql_freeresult($result);
 
@@ -1801,7 +1829,7 @@ class oracle_extractor extends base_extractor
 		$result = $db->sql_query($sql);
 		while ($row = $db->sql_fetchrow($result))
 		{
-			$sql_data .= "\nCREATE OR REPLACE TRIGGER {$row['description']}WHEN ({$row['when_clause']})\n{$row['trigger_body']}\\";
+			$sql_data .= "\nCREATE OR REPLACE TRIGGER {$row['description']}WHEN ({$row['when_clause']})\n{$row['trigger_body']}\n/\n";
 		}
 		$db->sql_freeresult($result);
 
@@ -1821,7 +1849,7 @@ class oracle_extractor extends base_extractor
 
 		foreach ($index as $index_name => $column_names)
 		{
-			$sql_data .= "\nCREATE INDEX $index_name ON $table_name(" . implode(', ', $column_names) . ")\n\\";
+			$sql_data .= "\nCREATE INDEX $index_name ON $table_name(" . implode(', ', $column_names) . ")\n/\n";
 		}
 		$db->sql_freeresult($result);
 		$this->flush($sql_data);
@@ -1854,9 +1882,10 @@ class oracle_extractor extends base_extractor
 			// Build the SQL statement to recreate the data.
 			for ($i = 0; $i < $i_num_fields; $i++)
 			{
-				$str_val = $row[$ary_name[$i]];
+				// Oracle uses uppercase - we use lowercase
+				$str_val = $row[strtolower($ary_name[$i])];
 
-				if (preg_match('#char|text|bool|raw#i', $ary_type[$i]))
+				if (preg_match('#char|text|bool|raw|clob#i', $ary_type[$i]))
 				{
 					$str_quote = '';
 					$str_empty = "''";
@@ -1885,12 +1914,12 @@ class oracle_extractor extends base_extractor
 				}
 
 				$schema_vals[$i] = $str_quote . $str_val . $str_quote;
-				$schema_fields[$i] = '"' . $ary_name[$i] . "'";
+				$schema_fields[$i] = '"' . $ary_name[$i] . '"';
 			}
 
 			// Take the ordered fields and their associated data and build it
 			// into a valid sql statement to recreate that field in the data.
-			$sql_data = "INSERT INTO $table_name (" . implode(', ', $schema_fields) . ') VALUES (' . implode(', ', $schema_vals) . ");\n";
+			$sql_data = "INSERT INTO $table_name (" . implode(', ', $schema_fields) . ') VALUES (' . implode(', ', $schema_vals) . ")\n/\n";
 
 			$this->flush($sql_data);
 		}
@@ -2209,8 +2238,10 @@ function sanitize_data_mssql($text)
 
 function sanitize_data_oracle($text)
 {
-	$data = preg_split('/[\0\n\t\r\b\f\'"\\\]/', $text);
-	preg_match_all('/[\0\n\t\r\b\f\'"\\\]/', $text, $matches);
+//	$data = preg_split('/[\0\n\t\r\b\f\'"\/\\\]/', $text);
+//	preg_match_all('/[\0\n\t\r\b\f\'"\/\\\]/', $text, $matches);
+	$data = preg_split('/[\0\b\f\'\/]/', $text);
+	preg_match_all('/[\0\r\b\f\'\/]/', $text, $matches);
 
 	$val = array();
 

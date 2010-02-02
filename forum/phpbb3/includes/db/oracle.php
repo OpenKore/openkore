@@ -2,7 +2,7 @@
 /**
 *
 * @package dbal
-* @version $Id: oracle.php 9175 2008-12-05 11:18:59Z acydburn $
+* @version $Id: oracle.php 10247 2009-10-30 17:21:20Z acydburn $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -136,7 +136,7 @@ class dbal_oracle extends dbal
 	*/
 	function _rewrite_where($where_clause)
 	{
-		preg_match_all('/\s*(AND|OR)?\s*([\w_.]++)\s*(?:(=|<[=>]?|>=?)\s*((?>\'(?>[^\']++|\'\')*+\'|[\d-.]+))|((NOT )?IN\s*\((?>\'(?>[^\']++|\'\')*+\',? ?|[\d-.]+,? ?)*+\)))/', $where_clause, $result, PREG_SET_ORDER);
+		preg_match_all('/\s*(AND|OR)?\s*([\w_.()]++)\s*(?:(=|<[=>]?|>=?|LIKE)\s*((?>\'(?>[^\']++|\'\')*+\'|[\d-.()]+))|((NOT )?IN\s*\((?>\'(?>[^\']++|\'\')*+\',? ?|[\d-.]+,? ?)*+\)))/', $where_clause, $result, PREG_SET_ORDER);
 		$out = '';
 		foreach ($result as $val)
 		{
@@ -255,12 +255,61 @@ class dbal_oracle extends dbal
 				// We overcome Oracle's 4000 char limit by binding vars
 				if (strlen($query) > 4000)
 				{
-					if (preg_match('/^(INSERT INTO[^(]++)\\(([^()]+)\\) VALUES[^(]++\\((.*?)\\)$/s', $query, $regs))
+					if (preg_match('/^(INSERT INTO[^(]++)\\(([^()]+)\\) VALUES[^(]++\\((.*?)\\)$/sU', $query, $regs))
 					{
 						if (strlen($regs[3]) > 4000)
 						{
 							$cols = explode(', ', $regs[2]);
+
 							preg_match_all('/\'(?:[^\']++|\'\')*+\'|[\d-.]+/', $regs[3], $vals, PREG_PATTERN_ORDER);
+
+							if (sizeof($cols) !== sizeof($vals))
+							{
+								// Try to replace some common data we know is from our restore script or from other sources
+								$regs[3] = str_replace("'||chr(47)||'", '/', $regs[3]);
+								$_vals = explode(', ', $regs[3]);
+
+								$vals = array();
+								$is_in_val = false;
+								$i = 0;
+								$string = '';
+
+								foreach ($_vals as $value)
+								{
+									if (strpos($value, "'") === false && !$is_in_val)
+									{
+										$vals[$i++] = $value;
+										continue;
+									}
+
+									if (substr($value, -1) === "'")
+									{
+										$vals[$i] = $string . (($is_in_val) ? ', ' : '') . $value;
+										$string = '';
+										$is_in_val = false;
+
+										if ($vals[$i][0] !== "'")
+										{
+											$vals[$i] = "''" . $vals[$i];
+										}
+										$i++;
+										continue;
+									}
+									else
+									{
+										$string .= (($is_in_val) ? ', ' : '') . $value;
+										$is_in_val = true;
+									}
+								}
+
+								if ($string)
+								{
+									// New value if cols != value
+									$vals[(sizeof($cols) !== sizeof($vals)) ? $i : $i - 1] .= $string;
+								}
+
+								$vals = array(0 => $vals);
+							}
 
 							$inserts = $vals[0];
 							unset($vals);
@@ -566,6 +615,11 @@ class dbal_oracle extends dbal
 	function _sql_custom_build($stage, $data)
 	{
 		return $data;
+	}
+
+	function _sql_bit_and($column_name, $bit, $compare = '')
+	{
+		return 'BITAND(' . $column_name . ', ' . (1 << $bit) . ')' . (($compare) ? ' ' . $compare : '');
 	}
 
 	/**

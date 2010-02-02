@@ -4,7 +4,7 @@
 * help_faq [English]
 *
 * @package language
-* @version $Id: help_faq.php 8896 2008-09-19 16:59:40Z acydburn $
+* @version $Id: help_faq.php 9623 2009-06-18 18:12:28Z nickvergessen $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -201,6 +201,11 @@ $help = array(
 	array(
 		0 => 'What are topic icons?',
 		1 => 'Topic icons are author chosen images associated with posts to indicate their content. The ability to use topic icons depends on the permissions set by the board administrator.'
+	),
+	// This block will switch the FAQ-Questions to the second template column
+	array(
+		0 => '--',
+		1 => '--'
 	),
 	array(
 		0 => '--',

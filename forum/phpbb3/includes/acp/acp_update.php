@@ -2,7 +2,7 @@
 /**
 *
 * @package acp
-* @version $Id: acp_update.php,v 1.9 2007/11/19 17:00:13 acydburn Exp $
+* @version $Id: acp_update.php 10195 2009-09-29 14:48:24Z acydburn $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -37,17 +37,18 @@ class acp_update
 		$errstr = '';
 		$errno = 0;
 
-		$info = get_remote_file('www.phpbb.com', '/updatecheck', ((defined('PHPBB_QA')) ? '30x_qa.txt' : '30x.txt'), $errstr, $errno);
+		$info = obtain_latest_version_info(request_var('versioncheck_force', false), true);
 
 		if ($info === false)
 		{
-			trigger_error($errstr, E_USER_WARNING);
+			trigger_error('VERSIONCHECK_FAIL', E_USER_WARNING);
 		}
 
 		$info = explode("\n", $info);
 		$latest_version = trim($info[0]);
 
 		$announcement_url = trim($info[1]);
+		$announcement_url = (strpos($announcement_url, '&amp;') === false) ? str_replace('&', '&amp;', $announcement_url) : $announcement_url;
 		$update_link = append_sid($phpbb_root_path . 'install/index.' . $phpEx, 'mode=update');
 
 		// Determine automatic update...
@@ -68,6 +69,7 @@ class acp_update
 			'S_UP_TO_DATE_AUTO'	=> $up_to_date_automatic,
 			'S_VERSION_CHECK'	=> true,
 			'U_ACTION'			=> $this->u_action,
+			'U_VERSIONCHECK_FORCE' => append_sid($this->u_action . '&amp;versioncheck_force=1'),
 
 			'LATEST_VERSION'	=> $latest_version,
 			'CURRENT_VERSION'	=> $config['version'],

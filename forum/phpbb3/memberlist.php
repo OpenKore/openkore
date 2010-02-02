@@ -2,7 +2,7 @@
 /**
 *
 * @package phpBB3
-* @version $Id: memberlist.php 9482 2009-04-24 17:27:10Z terrafrost $
+* @version $Id: memberlist.php 10257 2009-11-07 15:11:40Z acydburn $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -500,7 +500,31 @@ switch ($mode)
 
 		$poster_avatar = get_user_avatar($member['user_avatar'], $member['user_avatar_type'], $member['user_avatar_width'], $member['user_avatar_height']);
 
-		$template->assign_vars(show_profile($member));
+		// We need to check if the modules 'zebra' ('friends' & 'foes' mode),  'notes' ('user_notes' mode) and  'warn' ('warn_user' mode) are accessible to decide if we can display appropriate links
+		$zebra_enabled = $friends_enabled = $foes_enabled = $user_notes_enabled = $warn_user_enabled = false;
+
+		// Only check if the user is logged in
+		if ($user->data['is_registered'])
+		{
+			if (!class_exists('p_master'))
+			{
+				include($phpbb_root_path . 'includes/functions_module.' . $phpEx);
+			}
+			$module = new p_master();
+
+			$module->list_modules('ucp');
+			$module->list_modules('mcp');
+
+			$user_notes_enabled = ($module->loaded('notes', 'user_notes')) ? true : false;
+			$warn_user_enabled = ($module->loaded('warn', 'warn_user')) ? true : false;
+			$zebra_enabled = ($module->loaded('zebra')) ? true : false;
+			$friends_enabled = ($module->loaded('zebra', 'friends')) ? true : false;
+			$foes_enabled = ($module->loaded('zebra', 'foes')) ? true : false;
+
+			unset($module);
+		}
+
+		$template->assign_vars(show_profile($member, $user_notes_enabled, $warn_user_enabled));
 
 		// Custom Profile Fields
 		$profile_fields = array();
@@ -510,21 +534,6 @@ switch ($mode)
 			$cp = new custom_profile();
 			$profile_fields = $cp->generate_profile_fields_template('grab', $user_id);
 			$profile_fields = (isset($profile_fields[$user_id])) ? $cp->generate_profile_fields_template('show', false, $profile_fields[$user_id]) : array();
-		}
-
-		// We need to check if the module 'zebra' is accessible
-		$zebra_enabled = false;
-
-		if ($user->data['user_id'] != $user_id && $user->data['is_registered'])
-		{
-			include_once($phpbb_root_path . 'includes/functions_module.' . $phpEx);
-			$module = new p_master();
-			$module->list_modules('ucp');
-			$module->set_active('zebra');
-
-			$zebra_enabled = ($module->active_module === false) ? false : true;
-
-			unset($module);
 		}
 
 		// If the user has m_approve permission or a_user permission, then list then display unapproved posts
@@ -573,13 +582,15 @@ switch ($mode)
 			'U_USER_BAN'			=> ($auth->acl_get('m_ban') && $user_id != $user->data['user_id']) ? append_sid("{$phpbb_root_path}mcp.$phpEx", 'i=ban&amp;mode=user&amp;u=' . $user_id, true, $user->session_id) : '',
 			'U_MCP_QUEUE'			=> ($auth->acl_getf_global('m_approve')) ? append_sid("{$phpbb_root_path}mcp.$phpEx", 'i=queue', true, $user->session_id) : '',
 
-			'U_SWITCH_PERMISSIONS'	=> ($auth->acl_get('a_switchperm') && $user->data['user_id'] != $user_id) ? append_sid("{$phpbb_root_path}ucp.$phpEx", "mode=switch_perm&amp;u={$user_id}") : '',
+			'U_SWITCH_PERMISSIONS'	=> ($auth->acl_get('a_switchperm') && $user->data['user_id'] != $user_id) ? append_sid("{$phpbb_root_path}ucp.$phpEx", "mode=switch_perm&amp;u={$user_id}&amp;hash=" . generate_link_hash('switchperm')) : '',
 
+			'S_USER_NOTES'		=> ($user_notes_enabled) ? true : false,
+			'S_WARN_USER'		=> ($warn_user_enabled) ? true : false,
 			'S_ZEBRA'			=> ($user->data['user_id'] != $user_id && $user->data['is_registered'] && $zebra_enabled) ? true : false,
-			'U_ADD_FRIEND'		=> (!$friend) ? append_sid("{$phpbb_root_path}ucp.$phpEx", 'i=zebra&amp;add=' . urlencode(htmlspecialchars_decode($member['username']))) : '',
-			'U_ADD_FOE'			=> (!$foe) ? append_sid("{$phpbb_root_path}ucp.$phpEx", 'i=zebra&amp;mode=foes&amp;add=' . urlencode(htmlspecialchars_decode($member['username']))) : '',
-			'U_REMOVE_FRIEND'	=> ($friend) ? append_sid("{$phpbb_root_path}ucp.$phpEx", 'i=zebra&amp;remove=1&amp;usernames[]=' . $user_id) : '',
-			'U_REMOVE_FOE'		=> ($foe) ? append_sid("{$phpbb_root_path}ucp.$phpEx", 'i=zebra&amp;remove=1&amp;mode=foes&amp;usernames[]=' . $user_id) : '',
+			'U_ADD_FRIEND'		=> (!$friend && !$foe && $friends_enabled) ? append_sid("{$phpbb_root_path}ucp.$phpEx", 'i=zebra&amp;add=' . urlencode(htmlspecialchars_decode($member['username']))) : '',
+			'U_ADD_FOE'			=> (!$friend && !$foe && $foes_enabled) ? append_sid("{$phpbb_root_path}ucp.$phpEx", 'i=zebra&amp;mode=foes&amp;add=' . urlencode(htmlspecialchars_decode($member['username']))) : '',
+			'U_REMOVE_FRIEND'	=> ($friend && $friends_enabled) ? append_sid("{$phpbb_root_path}ucp.$phpEx", 'i=zebra&amp;remove=1&amp;usernames[]=' . $user_id) : '',
+			'U_REMOVE_FOE'		=> ($foe && $foes_enabled) ? append_sid("{$phpbb_root_path}ucp.$phpEx", 'i=zebra&amp;remove=1&amp;mode=foes&amp;usernames[]=' . $user_id) : '',
 		));
 
 		if (!empty($profile_fields['row']))
@@ -965,9 +976,11 @@ switch ($mode)
 			$jabber		= request_var('jabber', '');
 			$search_group_id	= request_var('search_group_id', 0);
 
+			// when using these, make sure that we actually have values defined in $find_key_match
 			$joined_select	= request_var('joined_select', 'lt');
 			$active_select	= request_var('active_select', 'lt');
 			$count_select	= request_var('count_select', 'eq');
+
 			$joined			= explode('-', request_var('joined', ''));
 			$active			= explode('-', request_var('active', ''));
 			$count			= (request_var('count', '') !== '') ? request_var('count', 0) : '';
@@ -1005,9 +1018,9 @@ switch ($mode)
 			$sql_where .= ($yahoo) ? ' AND u.user_yim ' . $db->sql_like_expression(str_replace('*', $db->any_char, $yahoo)) . ' ' : '';
 			$sql_where .= ($msn) ? ' AND u.user_msnm ' . $db->sql_like_expression(str_replace('*', $db->any_char, $msn)) . ' ' : '';
 			$sql_where .= ($jabber) ? ' AND u.user_jabber ' . $db->sql_like_expression(str_replace('*', $db->any_char, $jabber)) . ' ' : '';
-			$sql_where .= (is_numeric($count)) ? ' AND u.user_posts ' . $find_key_match[$count_select] . ' ' . (int) $count . ' ' : '';
-			$sql_where .= (sizeof($joined) > 1) ? " AND u.user_regdate " . $find_key_match[$joined_select] . ' ' . gmmktime(0, 0, 0, intval($joined[1]), intval($joined[2]), intval($joined[0])) : '';
-			$sql_where .= ($auth->acl_get('u_viewonline') && sizeof($active) > 1) ? " AND u.user_lastvisit " . $find_key_match[$active_select] . ' ' . gmmktime(0, 0, 0, $active[1], intval($active[2]), intval($active[0])) : '';
+			$sql_where .= (is_numeric($count) && isset($find_key_match[$count_select])) ? ' AND u.user_posts ' . $find_key_match[$count_select] . ' ' . (int) $count . ' ' : '';
+			$sql_where .= (sizeof($joined) > 1 && isset($find_key_match[$joined_select])) ? " AND u.user_regdate " . $find_key_match[$joined_select] . ' ' . gmmktime(0, 0, 0, intval($joined[1]), intval($joined[2]), intval($joined[0])) : '';
+			$sql_where .= ($auth->acl_get('u_viewonline') && sizeof($active) > 1 && isset($find_key_match[$active_select])) ? " AND u.user_lastvisit " . $find_key_match[$active_select] . ' ' . gmmktime(0, 0, 0, $active[1], intval($active[2]), intval($active[0])) : '';
 			$sql_where .= ($search_group_id) ? " AND u.user_id = ug.user_id AND ug.group_id = $search_group_id AND ug.user_pending = 0 " : '';
 
 			if ($search_group_id)
@@ -1238,7 +1251,7 @@ switch ($mode)
 			'joined'		=> array('joined', ''),
 			'active'		=> array('active', ''),
 			'count'			=> (request_var('count', '') !== '') ? array('count', 0) : array('count', ''),
-			'ipdomain'		=> array('ip', ''),
+			'ip'			=> array('ip', ''),
 			'first_char'	=> array('first_char', ''),
 		);
 
@@ -1522,7 +1535,7 @@ switch ($mode)
 }
 
 // Output the page
-page_header($page_title);
+page_header($page_title, false);
 
 $template->set_filenames(array(
 	'body' => $template_html)
@@ -1534,7 +1547,7 @@ page_footer();
 /**
 * Prepare profile data
 */
-function show_profile($data)
+function show_profile($data, $user_notes_enabled = false, $warn_user_enabled = false)
 {
 	global $config, $auth, $template, $user, $phpEx, $phpbb_root_path;
 
@@ -1620,9 +1633,11 @@ function show_profile($data)
 		'ICQ_STATUS_IMG'	=> (!empty($data['user_icq'])) ? '<img src="http://web.icq.com/whitepages/online?icq=' . $data['user_icq'] . '&amp;img=5" width="18" height="18" />' : '',
 		'S_JABBER_ENABLED'	=> ($config['jab_enable']) ? true : false,
 
+		'S_WARNINGS'	=> ($auth->acl_getf_global('m_') || $auth->acl_get('m_warn')) ? true : false,
+
 		'U_SEARCH_USER'	=> ($auth->acl_get('u_search')) ? append_sid("{$phpbb_root_path}search.$phpEx", "author_id=$user_id&amp;sr=posts") : '',
-		'U_NOTES'		=> $auth->acl_getf_global('m_') ? append_sid("{$phpbb_root_path}mcp.$phpEx", 'i=notes&amp;mode=user_notes&amp;u=' . $user_id, true, $user->session_id) : '',
-		'U_WARN'		=> $auth->acl_get('m_warn') ? append_sid("{$phpbb_root_path}mcp.$phpEx", 'i=warn&amp;mode=warn_user&amp;u=' . $user_id, true, $user->session_id) : '',
+		'U_NOTES'		=> ($user_notes_enabled && $auth->acl_getf_global('m_')) ? append_sid("{$phpbb_root_path}mcp.$phpEx", 'i=notes&amp;mode=user_notes&amp;u=' . $user_id, true, $user->session_id) : '',
+		'U_WARN'		=> ($warn_user_enabled && $auth->acl_get('m_warn')) ? append_sid("{$phpbb_root_path}mcp.$phpEx", 'i=warn&amp;mode=warn_user&amp;u=' . $user_id, true, $user->session_id) : '',
 		'U_PM'			=> ($config['allow_privmsg'] && $auth->acl_get('u_sendpm') && ($data['user_allow_pm'] || $auth->acl_gets('a_', 'm_') || $auth->acl_getf_global('m_'))) ? append_sid("{$phpbb_root_path}ucp.$phpEx", 'i=pm&amp;mode=compose&amp;u=' . $user_id) : '',
 		'U_EMAIL'		=> $email,
 		'U_WWW'			=> (!empty($data['user_website'])) ? $data['user_website'] : '',

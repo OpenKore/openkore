@@ -2,7 +2,7 @@
 /**
 *
 * @package phpBB3
-* @version $Id: file.php 9460 2009-04-17 15:18:03Z acydburn $
+* @version $Id: file.php 9905 2009-08-01 12:28:50Z acydburn $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -249,7 +249,7 @@ if (!$attachment)
 	trigger_error('ERROR_NO_ATTACHMENT');
 }
 
-$attachment['physical_filename'] = basename($attachment['physical_filename']);
+$attachment['physical_filename'] = utf8_basename($attachment['physical_filename']);
 $display_cat = $extensions[$attachment['extension']]['display_cat'];
 
 if (($display_cat == ATTACHMENT_CATEGORY_IMAGE || $display_cat == ATTACHMENT_CATEGORY_THUMB) && !$user->optionget('viewimg'))

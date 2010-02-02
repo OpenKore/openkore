@@ -2,7 +2,7 @@
 /**
 *
 * @package acp
-* @version $Id: acp_users.php,v 1.4 2007/10/04 15:05:50 acydburn Exp $
+* @version $Id: acp_users.php 9758 2009-07-14 20:35:53Z nickvergessen $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -22,6 +22,7 @@ class acp_users_info
 			'modes'		=> array(
 				'overview'		=> array('title' => 'ACP_MANAGE_USERS', 'auth' => 'acl_a_user', 'cat' => array('ACP_CAT_USERS')),
 				'feedback'		=> array('title' => 'ACP_USER_FEEDBACK', 'auth' => 'acl_a_user', 'display' => false, 'cat' => array('ACP_CAT_USERS')),
+				'warnings'		=> array('title' => 'ACP_USER_WARNINGS', 'auth' => 'acl_a_user', 'display' => false, 'cat' => array('ACP_CAT_USERS')),
 				'profile'		=> array('title' => 'ACP_USER_PROFILE', 'auth' => 'acl_a_user', 'display' => false, 'cat' => array('ACP_CAT_USERS')),
 				'prefs'			=> array('title' => 'ACP_USER_PREFS', 'auth' => 'acl_a_user', 'display' => false, 'cat' => array('ACP_CAT_USERS')),
 				'avatar'		=> array('title' => 'ACP_USER_AVATAR', 'auth' => 'acl_a_user', 'display' => false, 'cat' => array('ACP_CAT_USERS')),

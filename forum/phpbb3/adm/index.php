@@ -2,7 +2,7 @@
 /**
 *
 * @package acp
-* @version $Id: index.php 9369 2009-03-16 12:08:38Z acydburn $
+* @version $Id: index.php 10200 2009-09-30 15:07:40Z acydburn $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -263,6 +263,12 @@ function build_cfg_template($tpl_type, $key, &$new, $config_key, $vars)
 	$tpl = '';
 	$name = 'config[' . $config_key . ']';
 
+	// Make sure there is no notice printed out for non-existent config options (we simply set them)
+	if (!isset($new[$config_key]))
+	{
+		$new[$config_key] = '';
+	}
+
 	switch ($tpl_type[0])
 	{
 		case 'text':
@@ -301,7 +307,6 @@ function build_cfg_template($tpl_type, $key, &$new, $config_key, $vars)
 		break;
 
 		case 'select':
-		case 'select_multiple':
 		case 'custom':
 
 			$return = '';
@@ -340,21 +345,12 @@ function build_cfg_template($tpl_type, $key, &$new, $config_key, $vars)
 			}
 			else
 			{
-				if ($tpl_type[0] == 'select_multiple')
-				{
-					$new[$config_key] = @unserialize(trim($new[$config_key]));
-				}
-
 				$args = array($new[$config_key], $key);
 			}
 
 			$return = call_user_func_array($call, $args);
 
-			if ($tpl_type[0] == 'select_multiple')
-			{
-				$tpl = '<select id="' . $key . '" name="' . $name . '[]" multiple="multiple">' . $return . '</select>';
-			}
-			else if ($tpl_type[0] == 'select')
+			if ($tpl_type[0] == 'select')
 			{
 				$tpl = '<select id="' . $key . '" name="' . $name . '">' . $return . '</select>';
 			}

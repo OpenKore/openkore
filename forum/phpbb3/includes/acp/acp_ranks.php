@@ -2,7 +2,7 @@
 /**
 *
 * @package acp
-* @version $Id: acp_ranks.php,v 1.18 2007/10/14 10:07:52 kellanved Exp $
+* @version $Id: acp_ranks.php 9698 2009-06-27 20:56:49Z naderman $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -39,7 +39,7 @@ class acp_ranks
 		$this->tpl_name = 'acp_ranks';
 		$this->page_title = 'ACP_MANAGE_RANKS';
 
-		$form_name = 'acp_prune';
+		$form_name = 'acp_ranks';
 		add_form_key($form_name);
 
 		switch ($action)
@@ -168,8 +168,6 @@ class acp_ranks
 					{
 						$img = $path . $img;
 
-						if (!in_array($img, $existing_imgs) || $action == 'edit')
-						{
 							if ($ranks && $img == $ranks['rank_image'])
 							{
 								$selected = ' selected="selected"';
@@ -185,8 +183,7 @@ class acp_ranks
 								continue;
 							}
 
-							$filename_list .= '<option value="' . htmlspecialchars($img) . '"' . $selected . '>' . $img . '</option>';
-						}
+						$filename_list .= '<option value="' . htmlspecialchars($img) . '"' . $selected . '>' . $img . ((in_array($img, $existing_imgs)) ? ' ' . $user->lang['RANK_IMAGE_IN_USE'] : '') . '</option>';
 					}
 				}
 

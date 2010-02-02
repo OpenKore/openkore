@@ -2,7 +2,7 @@
 /**
 *
 * @package phpBB3
-* @version $Id: style.php 9366 2009-03-11 17:47:31Z acydburn $
+* @version $Id: style.php 10056 2009-08-25 12:19:57Z acydburn $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -91,8 +91,9 @@ if ($id)
 	$recompile = $config['load_tplcompile'];
 	if (!$user)
 	{
-		$id			= $config['default_style'];
-		$recompile	= false;
+		$id			= ($id) ? $id : $config['default_style'];
+//		Commented out because calls do not always include the SID anymore
+//		$recompile	= false;
 		$user		= array('user_id' => ANONYMOUS);
 	}
 

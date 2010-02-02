@@ -74,7 +74,6 @@ class dbal_mysqli extends dbal
 			}
 			return $this->db_connect_id;
 		}
-
 		return $this->sql_error('');
 	}
 

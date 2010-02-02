@@ -7,7 +7,7 @@
 * This is for authentication via the integrated user table
 *
 * @package login
-* @version $Id: auth_db.php 9312 2009-02-06 14:51:26Z Kellanved $
+* @version $Id: auth_db.php 10143 2009-09-15 09:08:37Z Kellanved $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -67,11 +67,12 @@ function login_db(&$username, &$password)
 	// Every auth module is able to define what to do by itself...
 	if ($config['max_login_attempts'] && $row['user_login_attempts'] >= $config['max_login_attempts'])
 	{
-		$confirm_id = request_var('confirm_id', '');
-		$confirm_code = request_var('confirm_code', '');
-
 		// Visual Confirmation handling
-		if (!$confirm_id)
+
+		$captcha =& phpbb_captcha_factory::get_instance($config['captcha_plugin']);
+		$captcha->init(CONFIRM_LOGIN);
+		$vc_response = $captcha->validate();
+		if ($vc_response)
 		{
 			return array(
 				'status'		=> LOGIN_ERROR_ATTEMPTS,
@@ -79,47 +80,7 @@ function login_db(&$username, &$password)
 				'user_row'		=> $row,
 			);
 		}
-		else
-		{
-			global $user;
-
-			$sql = 'SELECT code
-				FROM ' . CONFIRM_TABLE . "
-				WHERE confirm_id = '" . $db->sql_escape($confirm_id) . "'
-					AND session_id = '" . $db->sql_escape($user->session_id) . "'
-					AND confirm_type = " . CONFIRM_LOGIN;
-			$result = $db->sql_query($sql);
-			$confirm_row = $db->sql_fetchrow($result);
-			$db->sql_freeresult($result);
-
-			if ($confirm_row)
-			{
-				if (strcasecmp($confirm_row['code'], $confirm_code) === 0)
-				{
-					$sql = 'DELETE FROM ' . CONFIRM_TABLE . "
-						WHERE confirm_id = '" . $db->sql_escape($confirm_id) . "'
-							AND session_id = '" . $db->sql_escape($user->session_id) . "'
-							AND confirm_type = " . CONFIRM_LOGIN;
-					$db->sql_query($sql);
-				}
-				else
-				{
-					return array(
-						'status'		=> LOGIN_ERROR_ATTEMPTS,
-						'error_msg'		=> 'CONFIRM_CODE_WRONG',
-						'user_row'		=> $row,
-					);
-				}
-			}
-			else
-			{
-				return array(
-					'status'		=> LOGIN_ERROR_ATTEMPTS,
-					'error_msg'		=> 'CONFIRM_CODE_WRONG',
-					'user_row'		=> $row,
-				);
-			}
-		}
+		
 	}
 
 	// If the password convert flag is set we need to convert it
@@ -157,7 +118,7 @@ function login_db(&$username, &$password)
 				$row['user_pass_convert'] = 0;
 				$row['user_password'] = $hash;
 			}
-			else 
+			else
 			{
 				// Although we weren't able to convert this password we have to
 				// increase login attempt count to make sure this cannot be exploited

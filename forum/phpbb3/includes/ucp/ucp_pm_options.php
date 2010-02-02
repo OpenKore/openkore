@@ -2,7 +2,7 @@
 /**
 *
 * @package ucp
-* @version $Id: ucp_pm_options.php,v 1.35 2007/10/05 14:36:34 acydburn Exp $
+* @version $Id: ucp_pm_options.php 9612 2009-06-18 10:44:38Z nickvergessen $
 * @copyright (c) 2005 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -108,6 +108,10 @@ function message_options($id, $mode, $global_privmsgs_rules, $global_rule_condit
 				);
 				$db->sql_query($sql);
 				$msg = $user->lang['FOLDER_ADDED'];
+			}
+			else
+			{
+				$msg = $user->lang['FOLDER_NAME_EMPTY'];
 			}
 		}
 		else
