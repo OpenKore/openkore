@@ -1,0 +1,409 @@
+0 Provoke
+1 Endure
+2 Twohand Quicken
+3 Improve Concentration
+4 Hiding
+5 Cloaking
+6 Enchant Poison
+7 Poison React
+8 Quagmire
+9 Angelus
+10 Blessing
+11 Signum Crucis
+12 Increase AGI
+13 Decrease AGI
+14 Slow Poison
+15 Impositio Manus
+16 Suffragium
+17 Aspersio
+18 B.S Sacramenti
+19 Kyrie Eleison
+20 Magnificat
+21 Gloria
+22 Lex Aeterna
+23 Adrenaline Rush
+24 Weapon Perfection
+25 Power-Thrust
+26 Maximize Power
+27 Pecopeco
+28 Falcon
+29 Play Dead
+30 Crazy Uproar
+31 Energy Coat
+32 Armor Damaged
+33 Weapon Damaged
+34 Hallucination
+35 Owg 50%
+36 Owg 90%
+37 Concentration Potion
+38 Awakening Potion
+39 Berserk Potion
+#40 ASPDPOTIONINFINITY
+41 Walking Speed Up
+42 Speed Up
+43 Counter Attack
+44 Venom Splasher
+45 Ankle Snare
+46 Action Delay
+#47 NOACTION
+#48 IMPOSSIBLEPICKUP
+49 Barrier
+50 Strip Weapon
+51 Strip Shield
+52 Strip Armor
+53 Strip Helm
+54 Chemical Protection Weapon
+55 Chemical Protection Shield
+56 Chemical Protection Armor
+57 Chemical Protection Helm
+58 Auto Guard
+59 Reflect Shield
+60 Devotion
+61 Providence
+62 Defender
+63 Magic Rod
+64 Element Enchanted
+65 Auto Spell
+#66 SPECIALZONE
+67 Orc Head
+68 Spear Quicken
+#69 BDPLAYING
+70 Whistle
+71 Assassin Cross of Sunset
+72 Bragi's Poem
+73 Idun's Apple
+74 Humming
+75 Don't Forget Me
+76 Kiss of Fortune
+#Sleeping
+77 Service for You
+78 Rich Man Mr. Kim
+79 Eternal Chaos
+80 Drum Sound on Battlefield
+81 Ring of Nibelungen
+82 Roki's Weil
+83 Into Abyss
+84 Invulnerable Siegfried
+85 Stop Blade
+86 Vigor Explosion
+87 Steel Body
+88 Extremity Fist
+#Old: Triple Attack Delay (since idk if it's correct, i just left commented)
+89 Combo Attack
+90 Flame Launcher
+91 Frost Weapon
+92 Lightning Loader
+93 Seismic Weapon
+#94 MAGICATTACK 
+95 Stop
+96 Break Weapon
+97 Change Undead
+#98 Power up
+#99 Agi up
+#Muted
+100 Siege Mode
+101 Turn Invisible
+#102 STATUSONE
+103 Aura Blade
+104 Parrying
+105 Concentration
+106 Tension Relax
+107 Berserk
+#Old: Fury
+108 Sacrifice
+109 Battle Chant
+110 Assumptio
+111 Basilica
+112 Land Protector
+113 Magic Power
+114 Enchant Deadly Poison
+115 True Sight
+116 Wind Walk
+117 Melt Down
+118 Cart Boost
+119 Chase Walk
+120 Counter Instinct
+121 Marionette Control
+122 Marionette Control
+123 Moonlit Water Mill
+#Old: Head Crush
+124 Bleeding
+125 Joint Beat
+126 Mind Breaker
+127 Memorize
+128 Fog Wall
+129 Spider Web
+130 Mom, Dad, I love you!
+#New: SUB WEAPONPROPERTY - unknown
+131 Magnum Break
+132 Auto Berserk
+133 Running
+#New: BUMP - unknown
+134 Ready Spurt
+135 Prepare Whirlwind Kick
+136 Whirlwind Kick
+137 Prepare Axe Kick
+138 Axe Kick
+139 Prepare Round Kick
+140 Round Kick
+141 Prepare Counter Kick
+142 Counter Kick
+143 Break Fall
+#144 DODGE READY
+145 Spurt
+146 Dark Weapon
+147 Full Adrenaline Rush
+148 Ghost Weapon
+149 Spirit
+150 Increase Atk
+151 Increase Matk
+152 Devil
+153 Kaite
+154 Eswoo
+#155 STAR2
+156 Kaizel
+157 Kaahi
+158 Kaupe
+159 Esma
+160 Night
+161 One-Hand Quicken
+162 Friend
+#163 FRIENDUP
+#164 SG WARM
+165 Warmth of Sun
+166 Warmth of Moon
+167 Warmth of Star
+168 Show Emotion
+169 Comfort of the Sun
+170 Comfort of the Moon
+171 Comfort of the Star
+#172 EXPUP
+173 Battle Orders
+174 Regeneration
+#175 POSTDELAY
+#176 RESISTHANDICAP
+#177 MAXHPPERCENT
+#178 MAXSPPERCENT
+179 Defense
+#180 SLOWDOWN
+181 Preserve
+#New: INCSTR -unknown
+182 Battle Command
+183 Not Asura Strike
+#New: INTRAVISION -unknown
+184 Invisible Detect
+185 Walking Speed Down
+186 Double Bolt
+187 Gravitation Field
+188 Maximum Power-Thrust
+189 Longing for Freedom
+190 Hermode's Rod
+191 Tarot Card of Fate
+192 Emergency Avoid
+193 Fleet Move
+194 Over Speed
+195 Mental Change
+196 Blood Lust
+197 Shrink
+198 Sight Blaster
+199 Charming Wink
+200 Close Confine
+201 Close Confine
+#202 DISABLEMOVE
+203 Madness Canceller
+204 Gatling Fever
+#New: EARTHSCROLL -unknown
+205 Happy Break
+206 Cast-off Ciceda Shell
+207 Illusionary Shadow
+208 Soul
+209 Adjustment
+210 Increasing Accuracy
+211 Water Escape Technique
+#212 PET
+213 Ordering Mental
+#214 EXPMEMORY
+#215 PERFORMANCE
+#216 Bongun Gain or Munak Gain
+#217 GRIFFON
+218 Bongun Drift
+219 Bongun Wall Shift
+220 Munak Reincarnation
+221 Death Passive Attack
+222 Death Passive Speed
+223 Death Passive Defense
+224 Death Passive Critical
+225 Death Passive Ranking
+226 Death Passive Triple
+227 Death Energy
+#228 WAVE1 - Death Wave??
+#229 WAVE2
+#230 WAVE3
+#231 WAVE4
+232 Death Aura
+233 Death Freezer
+234 Death Punish
+235 Death Instant Barrier
+236 Death Warning
+#237 MOUSEWHEEL
+238 Mighty Gauge
+239 Dead Acceleration
+#240 DBLOCK - Dead Double Blocking or Dead Near(Melee) Blocking or Dead Distance(Range) Blocking
+241 Steamed Tongue
+242 Steamed Scorpion
+243 Stew Of Immortality
+244 Hwergelmir's Tonic
+245 Dragon Breath Cocktail
+246 Cooked Nine Tail's Tails
+247 Honey Pastry
+248 Sesame Pastry
+#249 FOODCRI - food that gives critical?
+250 Field Manual
+251 Life Insurance
+252 Bubble Gum
+253 Convex Mirror
+254 Dark Energy
+255 Dark First Fantasy
+256 Dark Head Defense
+257 Dark Twilight
+258 Dark Transform
+259 Dark Item Re - Build
+260 Dark Illusion
+261 Dark Soul Power
+262 Dark Ear Plug
+263 Black Gemstone Contract
+264 Black Gemstone Magic
+265 Collector Magic Cart
+266 Collector Crystal
+267 Collector Human Re - Build
+268 Collector Emperium Darkness
+269 Collector Emperium Guardian
+270 Collector Time Out
+271 Bomber Steak
+272 Tentacle Cheese Gratin
+273 Clam Soup
+274 Fruit Mix
+275 Honey Herbal Tea
+276 Fried Sweet Potato
+#277 MERC FLEEUP - Mercenary Increase Flee or maybe Increase Mercenary Flee?
+#278 MERC ATKUP
+#279 MERC HPUP
+#280 MERC SPUP
+#281 MERC HITUP
+#282 Slow Cast
+283 Magic Mirror
+#284 Stone Skin
+285 Anti-Magic
+286 Critical Wound
+287 Defender
+#288 NOACTION WAIT
+#289 MOVHASTE HORSE
+290 Defense Rate
+291 Magic Defense Rate
+292 Increase Heal Rate
+293 Small Life Potion
+294 Medium Life Potion 
+295 Abrasive
+296 Glass of Illusion
+#297 ATKER ASPD
+298 Mental Potion
+#299 ATKER MOVESPEED
+#300 ATKER BLOOD
+#301 TARGET BLOOD
+#302 ARMOR PROPERTY
+303 Glass of Illusion Delay
+304 Hellpower
+#305 STEAMPACK
+#306 REUSE LIMIT B
+#307 REUSE LIMIT C
+#308 REUSE LIMIT D
+#309 REUSE LIMIT E
+#310 REUSE LIMIT F
+#311 INVINCIBLE
+312 Job Manual
+313 Increase Party Flee
+314 Thank You
+
+# 3rd Jobs
+316 Enchant Blade
+318 Nauthiz Rune
+319 Thurisaz Rune
+320 Hagalaz Rune
+322 Othila Rune
+323 Uruz Rune
+328 Venom Impress
+330 Oratio
+332 Cloaking Exceed
+333 Poison Smoke
+334 Hallucination Walk
+336 Renovatio
+337 Weapon Blocking
+339 Counter Slash
+341 Paralize
+342 Toxin
+343 Poisoning Weapon
+344 Venombleed
+345 Magic Mushroom
+346 Disheart
+347 Pyrexia
+348 Oblivioncurse
+349 Leechend
+350 Duple Light
+351 Freezing
+352 Fear Breeze
+354 Marsh Of Abyss
+355 Recognize Spell
+357 Warg Rider
+360 Camouflage
+361 Acceleration
+362 Hovering
+#363 SPHERE 1
+#364 SPHERE 2
+#365 SPHERE 3
+#366 SPHERE 4
+#367 SPHERE 5
+373 Overheat
+#377 DEFMODE
+#379 HIDEMODE
+385 Reproduce
+390 Reflect Damage
+392 Buche De Noel
+393 Auto Shadow Spell
+394 Shadow Form
+401 Strip Accessory
+402 Prestige
+403 Invisibility
+404 Deadly Infect
+405 Banding
+413 Lightning Walk
+414 Akaraje
+407 Overbrand
+410 Raising Dragon
+419 Reproduce
+422 Man Hole
+423 Deadly Infect
+425 Gentle Touch - Gain
+426 Gentle Touch - Change
+427 Gentle Touch - Revitalize
+429 Swing Dance
+430 Symphony of Lover
+433 Lullaby Deep Sleep
+434 Voice of Siren
+436 Circle of Nature
+#437 COLDMODE
+438 Gloomy Day
+441 Dance With Wug 
+442 Rush Windmill
+443 Echo Song
+444 Harmonize
+445 Striking
+446 Warmer
+447 Moonlit Serenade
+451 Lerad's Dew
+452 Melody of Sink
+453 Beyond of Warcry
+454 Humming Voice
+461 Cart Boost
+463 Thorn Trap
+464 Blood Sucker
+475 Odins Recall Delay
