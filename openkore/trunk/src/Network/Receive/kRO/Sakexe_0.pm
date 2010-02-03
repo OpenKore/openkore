@@ -97,11 +97,11 @@ sub new {
 		'0075' => ['changeToInGameState'], # -1
 		'0076' => ['update_char', 'a4 v C', [qw(ID style item)]], # 9
 		'0077' => ['changeToInGameState'], # 5
-		'0078' => ['actor_display',	'a4 v14 a4 a2 v2 C2 a3 C3 v', 		[qw(ID walk_speed opt1 opt2 option type hair_style weapon lowhead shield tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 karma sex coords unknown1 unknown2 act lv)]], #standing # 54
-		'0079' => ['actor_display',	'a4 v14 a4 a2 v2 C2 a3 C2 v',		[qw(ID walk_speed opt1 opt2 option type hair_style weapon lowhead shield tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 karma sex coords unknown1 unknown2 lv)]], #spawning # 53
+		'0078' => ['actor_display',	'a4 v14 a4 a2 v2 C2 a3 C3 v', 		[qw(ID walk_speed opt1 opt2 option type hair_style weapon lowhead shield tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 karma sex coords xSize ySize act lv)]], #standing # 54
+		'0079' => ['actor_display',	'a4 v14 a4 a2 v2 C2 a3 C2 v',		[qw(ID walk_speed opt1 opt2 option type hair_style weapon lowhead shield tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 karma sex coords xSize ySize lv)]], #spawning # 53
 		'007A' => ['changeToInGameState'], # 58
-		'007B' => ['actor_display',	'a4 v8 V v6 a4 a2 v2 C2 a5 x C2 v',	[qw(ID walk_speed opt1 opt2 option type hair_style weapon lowhead tick shield tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 karma sex coords unknown1 unknown2 lv)]], #walking # 60
-		'007C' => ['actor_display',	'a4 v14 C2 a3 C2',					[qw(ID walk_speed opt1 opt2 option hair_style weapon lowhead type shield tophead midhead hair_color clothes_color head_dir karma sex coords unknown1 unknown2)]], #spawning (eA does not send this for players) # 41
+		'007B' => ['actor_display',	'a4 v8 V v6 a4 a2 v2 C2 a5 x C2 v',	[qw(ID walk_speed opt1 opt2 option type hair_style weapon lowhead tick shield tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 karma sex coords xSize ySize lv)]], #walking # 60
+		'007C' => ['actor_display',	'a4 v14 C2 a3 C2',					[qw(ID walk_speed opt1 opt2 option hair_style weapon lowhead type shield tophead midhead hair_color clothes_color head_dir karma sex coords xSize ySize)]], #spawning (eA does not send this for players) # 41
 		'007F' => ['received_sync', 'V', [qw(time)]], # 6
 		'0080' => ['actor_died_or_disappeared', 'a4 C', [qw(ID type)]], # 7
 		'0081' => ['errors', 'C', [qw(type)]], # 3
@@ -446,9 +446,9 @@ sub new {
 		# 0x01d5 is sent packet
 		'01D6' => ['pvp_mode2', 'v', [qw(type)]], # 4
 		'01D7' => ['player_equipment', 'a4 C v2', [qw(sourceID type ID1 ID2)]], # 11 # TODO: inconsistent with C structs
-		'01D8' => ['actor_display', 'a4 v14 a4 a2 v2 C2 a3 C3 v',		[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 karma sex coords unknown1 unknown2 act lv)]], # 54 # standing
-		'01D9' => ['actor_display', 'a4 v14 a4 a2 v2 C2 a3 C2 v',		[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 karma sex coords unknown1 unknown2 lv)]], # 53 # spawning
-		'01DA' => ['actor_display', 'a4 v9 V v5 a4 a2 v2 C2 a5 x C2 v',	[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 karma sex coords unknown1 unknown2 lv)]], # 60 # walking
+		'01D8' => ['actor_display', 'a4 v14 a4 a2 v2 C2 a3 C3 v',		[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 karma sex coords xSize ySize act lv)]], # 54 # standing
+		'01D9' => ['actor_display', 'a4 v14 a4 a2 v2 C2 a3 C2 v',		[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 karma sex coords xSize ySize lv)]], # 53 # spawning
+		'01DA' => ['actor_display', 'a4 v9 V v5 a4 a2 v2 C2 a5 x C2 v',	[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 karma sex coords xSize ySize lv)]], # 60 # walking
 		# 0x01db is sent packet
 		# 0x01dc,-1 # TODO
 		# 0x01dd is sent packet
@@ -992,6 +992,22 @@ sub actor_display {
 		close DUMP;
 	}
 =cut
+	# TODO: use object_type? this this the table?
+	# i figure, if the players homunculus/mercenary can differentiate between npc/monster, so can kore
+	# and i think this might have something to do with it
+=pod
+  PC_TYPE =  0x0,
+  NPC_TYPE =  0x1,
+  ITEM_TYPE =  0x2,
+  SKILL_TYPE =  0x3,
+  UNKNOWN_TYPE =  0x4,
+  NPC_MOB_TYPE =  0x5,
+  NPC_EVT_TYPE =  0x6,
+  NPC_PET_TYPE =  0x7,
+  NPC_HO_TYPE =  0x8,
+  NPC_MERSOL_TYPE =  0x9,
+  NPC_ELEMENTAL_TYPE =  0xa,
+=cut
 	#### Step 1: create/get the correct actor object ####
 	if ($jobs_lut{$args->{type}}) {
 		unless ($args->{type} > 6000) {
@@ -1036,7 +1052,7 @@ sub actor_display {
 		}
 		$actor->{nameID} = $nameID;
 
-	} elsif ($args->{type} >= 1000) {
+	} elsif ($args->{type} >= 1000) { # FIXME: in rare cases RO uses a monster sprite for NPC's (JT_ZHERLTHSH = 0x4b0 = 1200) ==> use object_type ?
 		# Actor might be a monster
 		if ($args->{hair_style} == 0x64) {
 			# Actor is a pet
@@ -2386,7 +2402,7 @@ sub devotion {
 	}
 	$devotionList->{$args->{sourceID}}->{range} = $args->{range};
 
-	message "$msg";
+	message "$msg", "devotion";
 }
 
 sub egg_list {

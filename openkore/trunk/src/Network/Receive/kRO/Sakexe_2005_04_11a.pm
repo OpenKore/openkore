@@ -25,9 +25,9 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 	my %packets = (
 		'0229' => ['character_status', 'a4 v2 V C', [qw(ID opt1 opt2 option karma)]], # 15
-		'022A' => ['actor_display', 'a4 v3 V v10 a4 a2 v V C2 a3 C3 v',			[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 karma sex coords unknown1 unknown2 act lv)]], # 58 # standing
-		'022B' => ['actor_display', 'a4 v3 V v10 a4 a2 v V C2 a3 C2 v',			[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 karma sex coords unknown1 unknown2 lv)]], # 57 # spawning
-		'022C' => ['actor_display', 'a4 v3 V v5 V v5 a4 a2 v V C2 a5 x C2 v',	[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 karma sex coords unknown1 unknown2 lv)]], # 64 # walking
+		'022A' => ['actor_display', 'a4 v3 V v10 a4 a2 v V C2 a3 C3 v',			[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 karma sex coords xSize ySize act lv)]], # 58 # standing
+		'022B' => ['actor_display', 'a4 v3 V v10 a4 a2 v V C2 a3 C2 v',			[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 karma sex coords xSize ySize lv)]], # 57 # spawning
+		'022C' => ['actor_display', 'a4 v3 V v5 V v5 a4 a2 v V C2 a5 x C2 v',	[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 karma sex coords xSize ySize lv)]], # 64 # walking
 	);
 	
 	foreach my $switch (keys %packets) {

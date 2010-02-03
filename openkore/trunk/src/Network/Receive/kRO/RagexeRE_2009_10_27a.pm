@@ -25,7 +25,7 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 	my %packets = (
 		# //0x07f5,6
-		# //0x07f6,14
+		'07F6' => ['exp', 'a4 V v2', [qw(ID val type negative)]], # 14 # TODO: use. I think this replaces the exp gained message trough guildchat hack
 	);
 
 	foreach my $switch (keys %packets) {
@@ -39,7 +39,7 @@ sub new {
 =pod
 //2009-10-27aRagexeRE
 //0x07f5,6
-//0x07f6,14
+0x07f6,14
 =cut
 
 1;
