@@ -30,9 +30,9 @@ sub new {
 		'02E9' => ['cart_items_stackable'], # -1
 		'02EA' => ['storage_items_stackable'], # -1
 		'02EB' => ['map_loaded', 'V a3 x2 v', [qw(syncMapSync coords unknown)]], # 13
-		'02EC' => ['actor_display', 'C a4 v3 V v5 V v5 a4 a4 V C2 a5 x3 v2',[qw(object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir guildID emblemID opt3 karma sex coords lv unknown)]], # 67 # Moving # TODO: C struct is different
-		'02ED' => ['actor_display', 'a4 v3 V v10 a4 a4 V C2 a3 v3',			[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID opt3 karma sex coords act lv unknown)]], # 59 # Spawning
-		'02EE' => ['actor_display', 'a4 v3 V v10 a4 a4 V C2 a3 x v3',		[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID opt3 karma sex coords act lv unknown)]], # 60 # Standing
+		'02EC' => ['actor_display', 'C a4 v3 V v5 V v5 a4 a4 V C2 a5 x C2 v2',	[qw(object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir guildID emblemID opt3 karma sex coords xSize ySize lv font)]], # 67 # Moving # TODO: C struct is different
+		'02ED' => ['actor_display', 'a4 v3 V v10 a4 a4 V C2 a3 C2 v2',			[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID opt3 karma sex coords xSize ySize lv font)]], # 59 # Spawning
+		'02EE' => ['actor_display', 'a4 v3 V v10 a4 a4 V C2 a3 C3 v2',			[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID opt3 karma sex coords xSize ySize act lv font)]], # 60 # Standing
 		'02EF' => ['font', 'a4 v', [qw(ID fontID)]], # 8
 	);
 	
