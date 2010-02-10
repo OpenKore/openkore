@@ -1,0 +1,21 @@
+0 Usable
+1 Usable
+2 Usable
+3 Non-usable
+4 Armor
+5 Weapon
+6 Card
+7 Egg
+8 Pet Armor
+9 Weapon
+10 Arrows
+11 Helmet
+12 Unknown_Type_12
+13 Mask
+14 Headgear
+15 Gun
+16 Bullet
+17 Shuriken
+18 Cash Item
+19 Unknown_Type_19
+20 Unknown_Type_20

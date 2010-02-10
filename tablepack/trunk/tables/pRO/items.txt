@@ -4369,7 +4369,7 @@
 14307#RWC_Limited_Scroll#		
 14308#Ardor_Scroll#		
 // ------------ 2008 ｴ・ｸ 11ｿ・ｽｺﾅｩｷﾑ -----------		
-14363#Heart_Scroll#		
+14363#Happy_Valentines_Scroll#		
 14298#New_Year_Scroll#		
 // ---------- ｴ・ｸｹﾟｷｻﾅｸﾀﾎ ｽｺﾅｩｷﾑ -------------		
 13941#Valentine_Scroll#		
@@ -4481,6 +4481,9 @@
 12317#Powder_Snow#
 //---------2010ｳ・ﾇﾊｸｮﾇﾉ ｽｺﾅｩｷﾑ -------------------------------
 16564#Dragon_Scroll#
+16578#Steam_Scroll#
+16579#Phoenix_Scroll#
+
 // ------------- ﾇﾑｱｹ ﾀﾌｺ･ﾆｮ ﾆ・ｰ・ﾃ --------------
 9055#Succubus_Egg#
 9056#Imp_Egg#
@@ -4537,7 +4540,9 @@
 12751#Armor_Scroll#
 12752#Prayer_Scroll#
 12753#Soul_Scroll#
-
+//----------------- ｻ｡ｰ｣ﾅ莎｢ｸﾓｸｮｶ・2010ｳ・2ｿ・9ﾀﾏ------------------
+5763#Red_Bunny_Band#
+16582#Red_Bunny_Band_Box#
 
 
 //file end
