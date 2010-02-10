@@ -1,0 +1,232 @@
+1002 Poring
+1004 Hornet
+1005 Familiar
+1007 Fabre
+1008 Pupa
+1010 Willow
+1011 Chonchon
+1013 Wolf
+1014 Spore
+1015 Zombie
+1016 Archer Skeleton
+1018 Creamy
+1019 Pecopeco
+1023 Orc Warrior
+1024 Worm Tail
+1025 Snake
+1029 Isis
+1031 Poporing
+1032 Verit
+1034 Thara Frog
+1035 Hunter Fly
+1036 Ghoul
+1037 Side Winder
+1039 Baphomet
+1040 Golem
+1041 Mummy
+1042 Steel Chonchon
+1044 Obeaune
+1045 Marc
+1049 Picky
+1051 Thief Bug
+1052 Rocker
+1053 Thief Bug Female
+1054 Thief Bug Male
+1055 Muka
+1056 Smokie
+1057 Yoyo
+1060 Bigfoot
+1062 Poring Xmas
+1063 Lunatic
+1065 Strouf
+1067 Cornutus
+1068 Hydra
+1069 Sword Fish
+1070 Kukre
+1071 Pirate Skel
+1072 Kaho
+1076 Skeleton
+1077 Poison Spore
+1079 Blue Plant
+1080 Green Plant
+1083 Shining Plant
+1084 Black Mushroom
+1085 Red Mushroom
+1091 Dragon Fly
+1092 Vagabond Wolf
+1094 Ambernite
+1095 Andre
+1096 Angeling
+1098 Anubis
+1100 Argos
+1101 Baphomet Jr.
+1102 Bathory
+1103 Caramel
+1104 Coco
+1105 Deniro
+1107 Desert Wolf Babe
+1108 Deviace
+1109 Deviruchi
+1110 Dokebi
+1111 Drainliar
+1113 Drops
+1114 Dustiness
+1117 Evil Druid
+1119 Frilldora
+1121 Giearth
+1122 Goblin Knife
+1123 Goblin Mace
+1124 Goblin Axe
+1125 Goblin Hammer
+1126 Goblin Club
+1128 Horn
+1132 Khalitzburg
+1133 Kobold-1
+1134 Kobold-2
+1135 Kobold-3
+1136 Kobold-4
+1137 Kobold-5
+1139 Mantis
+1140 Marduk
+1141 Marina
+1142 Marine Spere
+1144 Marse
+1145 Martin
+1146 Matyr
+1149 Minorous
+1151 Myst
+1153 Orc Zombie
+1154 Pasana
+1156 Petit Dragon
+1158 Phen
+1160 Piere
+1164 Requiem
+1166 Savage
+1167 Savage Babe
+1170 Sohee
+1170 TisayKaBa
+1177 Zenorc
+1178 Zerom
+1180 Nine Tail
+1188 Bon Gun
+1191 Mimic
+1192 Wraith
+1193 Alarm
+1195 Rideword
+1196 Skel Prisoner
+1197 Zombie Prisoner
+1199 Punk
+1200 Zherlthsh
+1203 Mysteltainn
+1204 Tirfing
+1205 Executioner
+1206 Anolian
+1207 Sting
+1208 Wander Man
+1209 Cramp
+1211 Brilight
+1212 Iron Fist
+1213 High Orc
+1215 Stem Worm
+1219 Knight of Abyss
+1242 Marin
+1246 Cookie Xmas
+1248 Cruiser
+1249 Mystcase
+1253 Gargoyle
+1256 Pest
+1260 Dark Frame
+1261 Wild Rose
+1264 Merman
+1265 Cookie
+1268 Bloody Knight
+1270 Clock Tower Manager
+1271 Alligator
+1272 Dark Lord
+1273 Orc Lady
+1278 Stalactic Golem
+1279 Tri Joint
+1280 Steam Goblin
+1281 Sageworm
+1282 Kobold Archer
+1283 Chimera
+1289 Maya Purple
+1292 Mini Demon
+1293 Cremy Fear
+1295 Owlbaron
+1299 Goblin Leader
+1302 Dark Illusion
+1315 Assulter
+1317 Fur Seal
+1319 Freezer
+1320 Owl Duke
+1321 Dragon Tail
+1370 Succubus
+1371 Fake Angel
+1374 Incubus
+1376 Harpy
+1377 Elder
+1378 Demon Pungus
+1379 Nightmare Terror
+1380 Driller
+1381 Grizzly
+1382 Adam Lambert
+1383 Explosion
+1387 Gig
+1390 Violy
+1404 Miyabi Ningyo
+1412 Evil Cloud Hermit
+1413 Wild Ginseng
+1416 Wicked Nymph
+1431 Barphomet
+1494 Beetle
+1497 Wooden Golem
+1498 Wootan Shooter
+1499 Wootan Fighter
+1500 Parasite
+1505 Loli Ruri
+1506 Disguise
+1508 Quve
+1509 Lude
+1510 Hylozoist
+1513 Cat Official
+1515 Garm Babe
+1517 Tiger Guised Fiend
+1520 Dumpling
+1605 Dark Illusion
+1615 Obsidian
+1619 Porcellio
+1620 Noxious
+1622 Teddy Bear
+1632 Gremlin
+1633 Beholder
+1634 Seyren Windsor
+1638 Cecil Damon
+1652 Egnigem Cenia
+1653 Wickebine Tres
+1654 Armeyer Dinze
+1692 Breeze
+1703 Lady Solace
+1705 Despero of Thanatos
+1721 Dragon Egg
+1736 Aliot
+1737 Aliza
+1753 Frus
+1754 Skeggiold
+1761 Skogul
+1763 Skeggiold
+1773 Hodremlin
+1775 Snowier
+1777 Ice Titan
+1782 Roween
+1784 Stapo
+1815 Hot Rice cake
+1829 Sword Guardian
+1838 Knocker
+1867 Banshee
+1872 Hell Fly
+1882 Vavayaga
+1883 Uzhas
+1919 Incarnation of Morocc
+1966 Doppelganger
+2057 Sticky Rat

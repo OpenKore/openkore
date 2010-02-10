@@ -31072,6 +31072,14 @@ A scroll that imbued with Drangon spirit.
 ^ff0000This item is not refundable.^000000
 Weight : ^7777771^000000
 #
+16578#
+A scroll that imbued with burning passion heart.
+Weight : ^7777771^000000
+#
+16579#
+A scroll that imbued with spirit of legendary Phoenix from Rune-Midgard Kingdom.
+Weight : ^7777771^000000
+#
 
 // ------------- ﾇﾑｱｹ ﾀﾌｺ･ﾆｮ ﾆ・ｰ・ﾃ --------------
 9055#
@@ -31231,7 +31239,7 @@ Jobs : ^777777All Jobs^000000
 A diadem that represents Pisces which is the 12th sign of Zodiac. An aquamarine, the birthstone, is embedded on it.				
 INT + 1, MDEF + 3, Increase resistance against water property attack by 5%.				
  If refined higher than +7 MDEF + 1, MATK + 2%.				
-Item Class : ^777777Headgear^000000    Defense : ^7777773^000000				
+Item Class : ^777777Headgear^000000    Defense : ^7777770^000000				
 Location : ^777777Upper^000000    Weight : ^77777730^000000				
 Required Level : ^77777770^000000				
 Jobs : ^777777All Jobs^000000				
@@ -31240,7 +31248,7 @@ Jobs : ^777777All Jobs^000000
 A crown that represents Pisces which is the 12th sign of Zodiac. An aquamarine, the birthstone, is embedded on it.				
 STR + 1, DEF + 2, Increase resistance against water property attack by 5%.				
 If refined higher than +7 DEF + 1, ATK + 2%.				
-Item Class : ^777777Headgear^000000    Defense : ^7777773^000000				
+Item Class : ^777777Headgear^000000    Defense : ^7777772^000000				
 Location : ^777777Upper^000000    Weight : ^77777730^000000				
 Required Level : ^77777770^000000				
 Jobs : ^777777All Jobs^000000				
@@ -31467,3 +31475,18 @@ Use this item to increase your MaxHP by 5% and MaxSP by 5% for 30 minutes. This 
 Weight : ^7777771^000000
 #
 
+//----------------- ｻ｡ｰ｣ﾅ莎｢ｸﾓｸｮｶ・2010ｳ・2ｿ・9ﾀﾏ------------------
+5763#
+A hairband that attracts men.
+You can wear it when you want to look sexy.
+Your sexyness increases to 100 %
+AGI + 2, MDEF+3
+Class : ^777777Headgear^000000    Defense : ^7777772^000000
+Location : ^777777Upper^000000    Weight : ^77777720^000000
+Jobs : ^777777All Jobs^000000
+#
+16582#
+A box contains 1 Red Bunny Band in it.
+^ff0000This item is not refundable.^000000
+Weight : ^7777771^000000
+#
