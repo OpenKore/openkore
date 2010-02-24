@@ -11,9 +11,11 @@
 1016 Archer Skeleton
 1018 Creamy
 1019 Pecopeco
+1020 Mandragora
 1023 Orc Warrior
 1024 Worm Tail
 1025 Snake
+1026 Munak
 1029 Isis
 1031 Poporing
 1032 Verit
@@ -35,9 +37,11 @@
 1055 Muka
 1056 Smokie
 1057 Yoyo
+1058 Metaller
 1060 Bigfoot
 1062 Poring Xmas
 1063 Lunatic
+1064 Megalodon
 1065 Strouf
 1067 Cornutus
 1068 Hydra
@@ -45,6 +49,7 @@
 1070 Kukre
 1071 Pirate Skel
 1072 Kaho
+1074 Shellfish
 1076 Skeleton
 1077 Poison Spore
 1079 Blue Plant
@@ -86,6 +91,7 @@
 1135 Kobold-3
 1136 Kobold-4
 1137 Kobold-5
+1138 Magnolia
 1139 Mantis
 1140 Marduk
 1141 Marina
@@ -97,6 +103,8 @@
 1151 Myst
 1153 Orc Zombie
 1154 Pasana
+1155 Green Leafy
+1155 Petit Dragon
 1156 Petit Dragon
 1158 Phen
 1160 Piere
@@ -134,16 +142,19 @@
 1248 Cruiser
 1249 Mystcase
 1253 Gargoyle
+1255 Neraid
 1256 Pest
 1260 Dark Frame
 1261 Wild Rose
 1264 Merman
 1265 Cookie
+1266 Aster
 1268 Bloody Knight
 1270 Clock Tower Manager
 1271 Alligator
 1272 Dark Lord
 1273 Orc Lady
+1277 Greatest General
 1278 Stalactic Golem
 1279 Tri Joint
 1280 Steam Goblin
@@ -156,8 +167,10 @@
 1295 Owlbaron
 1299 Goblin Leader
 1302 Dark Illusion
+1305 Ancient Worm
 1315 Assulter
 1317 Fur Seal
+1318 Heater
 1319 Freezer
 1320 Owl Duke
 1321 Dragon Tail
@@ -193,6 +206,7 @@
 1515 Garm Babe
 1517 Tiger Guised Fiend
 1520 Dumpling
+1579 StrawberryJuice
 1605 Dark Illusion
 1615 Obsidian
 1619 Porcellio
@@ -205,6 +219,7 @@
 1652 Egnigem Cenia
 1653 Wickebine Tres
 1654 Armeyer Dinze
+1671 Dimik
 1692 Breeze
 1703 Lady Solace
 1705 Despero of Thanatos
