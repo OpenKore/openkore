@@ -50,6 +50,7 @@ use Carp::Assert;
 use UNIVERSAL qw(isa);
 use FindBin qw($RealBin);
 use Getopt::Long;
+use File::Path qw/make_path/;
 use File::Spec;
 use Translation qw(T TF);
 use Utils::ObjectList;
@@ -211,7 +212,8 @@ sub parseArguments {
 
 	return 0 if ($options{help});
 	if (! -d $logs_folder) {
-		if (!mkdir($logs_folder)) {
+		#if (!mkdir($logs_folder)) {
+		if (! make_path($logs_folder)) {
 			IOException->throw("Unable to create folder $logs_folder ($!)");
 		}
 	}
