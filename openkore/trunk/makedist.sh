@@ -24,6 +24,7 @@ DIRS=(.
 	src/deps/Class/Data
 	src/deps/Devel
 	src/deps/Exception
+	src/deps/File
 	src/deps/SVN
 	src/deps/Data/YAML
 	src/po
