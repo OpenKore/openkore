@@ -121,8 +121,10 @@ sub onSkillInfo {
 sub onMapChanged {
 	my (undef, $args, $holder) = @_;
 	my $self = $holder->[0];
-	debug "RaiseSkill - onMapChanged\n", "Task::RaiseSkill" if DEBUG;
-	$self->{passed} = 1;
+	if ($self->{state} == AWAIT_ANSWER) {
+		debug "RaiseSkill - onMapChanged - AWAIT_ANSWER\n", "Task::RaiseSkill" if DEBUG;
+		$self->{passed} = 1;
+	}
 }
 
 sub iterate {
