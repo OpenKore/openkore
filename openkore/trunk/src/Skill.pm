@@ -324,9 +324,11 @@ sub lookupIDNByName {
 	my $idn;
 	if (ref($Skill::StaticInfo::names{lc($name)}) eq 'ARRAY') {	# we have multiple ID's for the skillname
 		foreach (@{$Skill::StaticInfo::names{lc($name)}}) {
-			if (exists $Skill::DynamicInfo::skills{$_}) {		# look up the skill that we own
+			if (exists $Skill::DynamicInfo::skills{$_}) {		# search in dynamic
 				$idn = $_;
 				last;
+			} else {
+				$idn = $_ unless defined $idn;					# if in the end no dynamic was found, use first static
 			}
 		}
 	} else {

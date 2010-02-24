@@ -47,7 +47,7 @@ our @EXPORT = (
 	# Other stuff
 	qw(dataWaiting dumpHash formatNumber getCoordString getCoordString2
 	getFormattedDate getHex giveHex getRange getTickCount
-	inRange judgeSkillArea makeCoords makeCoords2 makeCoords3 makeDistMap makeIP encodeIP parseArgs
+	inRange judgeSkillArea makeCoordsDir makeCoordsXY makeCoordsFromTo makeDistMap makeIP encodeIP parseArgs
 	quarkToString stringToQuark shiftPack swrite timeConvert timeOut
 	urldecode urlencode unShiftPack vocalString wrapText pin_encode)
 );
@@ -902,31 +902,55 @@ sub judgeSkillArea {
 }
 
 ##
-# makeCoords(r_hash, rawCoords)
+# makeCoords()
 #
-# The maximum value for either coordinate (x or y) is 1023, 
-# thus making the number of bits for each coordinate 10. 
-# When both coordinates are packed together, 
-# the bit usage becomes double that, 20 -- or 2.5 bytes
-sub makeCoords {
-	my ($r_hash, $rawCoords) = @_;
-	unShiftPack(\$rawCoords, undef, 4);
-	makeCoords2($r_hash, $rawCoords);
+# The maximum value for either coordinate (x or y) is 1023,
+# thus making the number of bits for each coordinate 10.
+#
+# When both coordinates are packed together,
+# the bit usage becomes double that, 20 bits or 2.5 bytes.
+#
+# Note: so we don't have to repeat documentation
+
+##
+# makeCoordsDir(r_hash, rawCoords, bodyDir)
+# Read makeCoords()
+# Another 0.5 bytes or 4 bits are reserved for body direction.
+#
+# ex. stand/spawn packet (4 + 10 + 10 = 24 bits = 3 bytes = a3)
+sub makeCoordsDir {
+	my ($r_hash, $rawCoords, $bodyDir) = @_;
+	unShiftPack(\$rawCoords, $bodyDir, 4);
+	makeCoordsXY($r_hash, \$rawCoords);
 }
- 
-sub makeCoords2 {
-	my ($r_hash, $rawCoords) = @_;
-	unShiftPack(\$rawCoords, \$r_hash->{y}, 10);
-	unShiftPack(\$rawCoords, \$r_hash->{x}, 10);
-}
- 
-sub makeCoords3 {
+
+##
+# makeCoordsFromTo(r_hashFrom, r_hashTo, rawCoords)
+# Read makeCoords()
+# Coordinates for From & To packed together require 5 bytes.
+#
+# Another 1 byte or 2*4 bits are reserved for a clientside feature:
+# x0+=sx0*0.0625-0.5 and y0+=sy0*0.0625-0.5
+# Note: if sx0/sy0 is 8, this will respectively add 0 to x0/y0
+#
+# ex. walk packet (4 + 4 + 10 + 10 + 10 + 10 = 48 bits = 6 bytes = a6)
+sub makeCoordsFromTo {
 	my ($r_hashFrom, $r_hashTo, $rawCoords) = @_;
- 
-	unShiftPack(\$rawCoords, \$$r_hashTo{'y'}, 10);
-	unShiftPack(\$rawCoords, \$$r_hashTo{'x'}, 10);
-	unShiftPack(\$rawCoords, \$$r_hashFrom{'y'}, 10);
-	unShiftPack(\$rawCoords, \$$r_hashFrom{'x'}, 10);
+	unShiftPack(\$rawCoords, undef, 4); # seems to be returning 8 (always?)
+	unShiftPack(\$rawCoords, undef, 4); # seems to be returning 8 (always?)
+	makeCoordsXY($r_hashTo, \$rawCoords);
+	makeCoordsXY($r_hashFrom, \$rawCoords);
+}
+
+##
+# makeCoordsXY(r_hashFrom, r_hashRawCoords)
+# Read makeCoords()
+#
+# Note: this function is used as a help function for: makeCoordsDir, makeCoordsFromTo
+sub makeCoordsXY {
+	my ($r_hash, $r_hashRawCoords) = @_;
+	unShiftPack($r_hashRawCoords, \$r_hash->{y}, 10);
+	unShiftPack($r_hashRawCoords, \$r_hash->{x}, 10);
 }
  
 ##

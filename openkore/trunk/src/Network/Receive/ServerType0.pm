@@ -22,7 +22,7 @@ use Globals qw($char %timeout $net %config @chars $conState $conState_tries $mes
 use Log qw(message warning error debug);
 use Translation;
 use Network;
-use Utils qw(makeCoords);
+use Utils qw(makeCoordsDir makeCoordsXY makeCoordsFromTo);
 
 
 # from old receive.pm
@@ -84,7 +84,7 @@ sub new {
 		'0079' => ['actor_display',	'a4 v14 a4 a2 v2 C2 a3 C2 v',		[qw(ID walk_speed opt1 opt2 option type hair_style weapon lowhead shield tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 karma sex coords unknown1 unknown2 lv)]], #spawning
 		'007A' => ['changeToInGameState'],
 		# OLD '007B' => ['actor_display', 'a4 v8 x4 v6 a4 x7 C a5 x3 v',	[qw(ID walk_speed opt1 opt2 option type hair_style weapon lowhead shield tophead midhead hair_color clothes_color head_dir guildID sex coords lv)]], #walking
-		'007B' => ['actor_display',	'a4 v8 V v6 a4 a2 v2 C2 a5 x C2 v',	[qw(ID walk_speed opt1 opt2 option type hair_style weapon lowhead tick shield tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 karma sex coords unknown1 unknown2 lv)]], #walking
+		'007B' => ['actor_display',	'a4 v8 V v6 a4 a2 v2 C2 a6 C2 v',	[qw(ID walk_speed opt1 opt2 option type hair_style weapon lowhead tick shield tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 karma sex coords unknown1 unknown2 lv)]], #walking
 		#VERY OLD '007C' => ['actor_display', 'a4 v1 v1 v1 v1 x6 v1 C1 x12 C1 a3', [qw(ID walk_speed opt1 opt2 option type pet sex coords)]],
 		#OLD '007C' => ($rpackets{'007C'} == 41	# or 42
 		#OLD 	? ['actor_display',			'x a4 v14 C2 a3 C',				[qw(ID walk_speed opt1 opt2 option hair_style weapon lowhead type shield tophead midhead hair_color clothes_color head_dir karma sex coords unknown1)]]
@@ -94,7 +94,7 @@ sub new {
 		'007F' => ['received_sync', 'V', [qw(time)]],
 		'0080' => ['actor_died_or_disappeared', 'a4 C', [qw(ID type)]],
 		'0081' => ['errors', 'C', [qw(type)]],
-		'0086' => ['actor_display', 'a4 a5 x V', [qw(ID coords tick)]],
+		'0086' => ['actor_display', 'a4 a6 V', [qw(ID coords tick)]],
 		'0087' => ['character_moves', 'x4 a5 C', [qw(coords unknown)]],
 		'0088' => ['actor_movement_interrupted', 'a4 v2', [qw(ID x y)]],
 		'008A' => ['actor_action', 'a4 a4 a4 V2 v2 C v', [qw(sourceID targetID tick src_speed dst_speed damage div type dual_wield_damage)]],
@@ -292,7 +292,7 @@ sub new {
 		# OLD '01D9' => ['actor_display', 'a4 v14 a4 x4 v x C a3 x2 v',				[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID skillstatus sex coords lv)]],
 		'01D9' => ['actor_display', 'a4 v14 a4 a2 v2 C2 a3 C2 v',		[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 karma sex coords unknown1 unknown2 lv)]], # spawning
 		# OLD '01DA' => ['actor_display', 'a4 v5 C x v3 x4 v5 a4 x4 v x C a5 x3 v',	[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID skillstatus sex coords lv)]],
-		'01DA' => ['actor_display', 'a4 v9 V v5 a4 a2 v2 C2 a5 x C2 v',		[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 karma sex coords unknown1 unknown2 lv)]], # walking
+		'01DA' => ['actor_display', 'a4 v9 V v5 a4 a2 v2 C2 a6 C2 v',		[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 karma sex coords unknown1 unknown2 lv)]], # walking
 		'01DC' => ['secure_login_key', 'x2 a*', [qw(secure_key)]],
 		'01D6' => ['pvp_mode2', 'v', [qw(type)]],
 		'01DE' => ['skill_use', 'v a4 a4 V4 v2 C', [qw(skillID sourceID targetID tick src_speed dst_speed damage level option type)]],
@@ -341,7 +341,7 @@ sub new {
 		# OLD '022B' => ['actor_display', 'a4 v4 x2 v8 x2 v a4 a4 v x2 C2 a3 x2 v',		[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color head_dir guildID emblemID visual_effects stance sex coords lv)]],
 		'022B' => ['actor_display', 'a4 v3 V v10 a4 a2 v V C2 a3 C2 v',		[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 karma sex coords unknown1 unknown2 lv)]], # spawning
 		# OLD '022C' => ['actor_display', 'a4 v4 x2 v5 V v3 x4 a4 a4 v x2 C2 a5 x3 v',	[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead timestamp tophead midhead hair_color guildID emblemID visual_effects stance sex coords lv)]],
-		'022C' => ['actor_display', 'a4 v3 V v5 V v5 a4 a2 v V C2 a5 x C2 v',			[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 karma sex coords unknown1 unknown2 lv)]], # walking
+		'022C' => ['actor_display', 'a4 v3 V v5 V v5 a4 a2 v V C2 a6 C2 v',			[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 karma sex coords unknown1 unknown2 lv)]], # walking
 		'022E' => ['homunculus_property', 'Z24 C v16 V2 v2', [qw(name state level hunger intimacy accessory atk matk hit critical def mdef flee aspd hp hp_max sp sp_max exp exp_max points_skill attack_range)]],
 		'022F' => ['homunculus_food', 'C v', [qw(success foodID)]],
 		'0230' => ['homunculus_info', 'C2 a4 V',[qw(type state ID val)]],
@@ -429,7 +429,7 @@ sub new {
 		'02EA' => ['storage_items_stackable'],
 		'02EB' => ['map_loaded', 'V a3 x2 v', [qw(syncMapSync coords unknown)]],
 		# note: in the next 3 packets we have an argument called 'stance', is this correct or is it 'karma'?
-		'02EC' => ['actor_display', 'x a4 v3 V v5 V v5 a4 a4 V C2 a5 x3 v2',[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir guildID emblemID opt3 karma sex coords lv unknown)]], # Moving
+		'02EC' => ['actor_display', 'x a4 v3 V v5 V v5 a4 a4 V C2 a6 x2 v2',[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir guildID emblemID opt3 karma sex coords lv unknown)]], # Moving
 		'02ED' => ['actor_display', 'a4 v3 V v10 a4 a4 V C2 a3 v3',			[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID opt3 karma sex coords act lv unknown)]], # Spawning
 		'02EE' => ['actor_display', 'a4 v3 V v10 a4 a4 V C2 a3 x v3',		[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID opt3 karma sex coords act lv unknown)]], # Standing
 		'02EF' => ['font', 'a4 v', [qw(ID fontID)]],
@@ -476,7 +476,7 @@ sub map_loaded {
 	}
 
 	$char->{pos} = {};
-	makeCoords($char->{pos}, $args->{coords});
+	makeCoordsDir($char->{pos}, $args->{coords}, \$char->{look}{body});
 	$char->{pos_to} = {%{$char->{pos}}};
 	message(TF("Your Coordinates: %s, %s\n", $char->{pos}{x}, $char->{pos}{y}), undef, 1);
 
@@ -867,36 +867,19 @@ sub actor_display {
 	}
 
 	my (%coordsFrom, %coordsTo);
-	if (length($args->{coords}) < 5) {
-		makeCoords(\%coordsTo, $args->{coords});
-		%coordsFrom = %coordsTo;
-	} elsif (length($args->{coords}) >= 5) { # maybe just "else" here?
-		my $coordsArg = $args->{coords};
-		makeCoords3(\%coordsFrom, \%coordsTo, $coordsArg);
-	}
-
-=pod
-	my (%coordsFrom, %coordsTo);
-	if ($args->{switch} eq "007C") {
-		makeCoords(\%coordsTo, $args->{coords});
-		%coordsFrom = %coordsTo;
-	} elsif ($args->{switch} eq "01DA") {
-		makeCoords(\%coordsFrom, substr($args->{RAW_MSG}, 50, 3));
-		makeCoords2(\%coordsTo, substr($args->{RAW_MSG}, 52, 3));
-	} elsif (length($args->{coords}) >= 5) {
-		my $coordsArg = $args->{coords};
-		unShiftPack(\$coordsArg, \$coordsTo{y}, 10);
-		unShiftPack(\$coordsArg, \$coordsTo{x}, 10);
-		unShiftPack(\$coordsArg, \$coordsFrom{y}, 10);
-		unShiftPack(\$coordsArg, \$coordsFrom{x}, 10);
+	if ($args->{switch} eq "007B" ||
+		$args->{switch} eq "0086" ||
+		$args->{switch} eq "01DA" ||
+		$args->{switch} eq "022C" ||
+		$args->{switch} eq "02EC" ||
+		$args->{switch} eq "07F7") {
+		# Actor Moved
+		makeCoordsFromTo(\%coordsFrom, \%coordsTo, $args->{coords}); # body dir will be calculated using the vector
 	} else {
-		my $coordsArg = $args->{coords};
-		unShiftPack(\$coordsArg, \$args->{body_dir}, 4);
-		unShiftPack(\$coordsArg, \$coordsTo{y}, 10);
-		unShiftPack(\$coordsArg, \$coordsTo{x}, 10);
+		# Actor Spawned/Exists
+		makeCoordsDir(\%coordsTo, $args->{coords}, \$args->{body_dir});
 		%coordsFrom = %coordsTo;
 	}
-=cut
 
 	# Remove actors that are located outside the map
 	# This may be caused by:
@@ -1952,10 +1935,9 @@ sub character_moves {
 	my ($self, $args) = @_;
 
 	return unless changeToInGameState();
-	makeCoords($char->{pos}, substr($args->{RAW_MSG}, 6, 3));
-	makeCoords2($char->{pos_to}, substr($args->{RAW_MSG}, 8, 3));
+	makeCoordsFromTo($char->{pos}, $char->{pos_to}, $args->{coords});
 	my $dist = sprintf("%.1f", distance($char->{pos}, $char->{pos_to}));
-	debug "You're moving from ($char->{pos}{x}, $char->{pos}{y}) to ($char->{pos_to}{x}, $char->{pos_to}{y}) - distance $dist, unknown $args->{unknown}\n", "parseMsg_move";
+	debug "You're moving from ($char->{pos}{x}, $char->{pos}{y}) to ($char->{pos_to}{x}, $char->{pos_to}{y}) - distance $dist\n", "parseMsg_move";
 	$char->{time_move} = time;
 	$char->{time_move_calc} = distance($char->{pos}, $char->{pos_to}) * ($char->{walk_speed} || 0.12);
 
@@ -3968,7 +3950,7 @@ sub map_loaded {
 	if ($char && changeToInGameState()) {
 		$net->setState(Network::IN_GAME) if ($net->getState() != Network::IN_GAME);
 		$char->{pos} = {};
-		makeCoords($char->{pos}, $args->{coords});
+		makeCoordsDir($char->{pos}, $args->{coords});
 		$char->{pos_to} = {%{$char->{pos}}};
 		message(TF("Your Coordinates: %s, %s\n", $char->{pos}{x}, $char->{pos}{y}), undef, 1);
 		message(T("You are now in the game\n"), "connection");
@@ -5467,11 +5449,13 @@ sub skill_update {
 	$char->{skills}{$handle}{up} = $up;
 
 	Skill::DynamicInfo::add($ID, $handle, $lv, $sp, $range, $skill->getTargetType(), Skill::OWNER_CHAR);
-
-	# Set $skillchanged to 2 so it knows to unset it when skill points are updated
-	if ($skillChanged eq $handle) {
-		$skillChanged = 2;
-	}
+	
+	Plugins::callHook('packet_charSkills', {
+		ID => $ID,
+		handle => $handle,
+		level => $lv,
+		upgradable => $up,
+	});
 
 	debug "Skill $name: $lv\n", "parseMsg";
 }
@@ -5927,10 +5911,6 @@ sub stat_info {
 	} elsif ($args->{type} == 12) {
 		$char->{points_skill} = $args->{val};
 		debug "Skill Points: $args->{val}\n", "parseMsg", 2;
-		# Reset $skillChanged back to 0 to tell kore that a skill can be auto-raised again
-		if ($skillChanged == 2) {
-			$skillChanged = 0;
-		}
 	} elsif ($args->{type} == 24) {
 		$char->{weight} = $args->{val} / 10;
 		debug "Weight: $char->{weight}\n", "parseMsg", 2;

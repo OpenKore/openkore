@@ -452,6 +452,9 @@ sub finalInitialization {
 	$totalJobExp = 0;
 	$startTime_EXP = time;
 	$taskManager = new TaskManager();
+	# run 'permanent' tasks
+	require Task::RaiseSkill;
+	AI::queue("skill_raise", new Task::RaiseSkill());
 
 	$itemsList = new ActorList('Actor::Item');
 	$monstersList = new ActorList('Actor::Monster');
@@ -634,7 +637,6 @@ sub initStatVars {
 	$elasped = 0;
 	$totalelasped = 0;
 	$statChanged = 0;
-	$skillChanged = 0;
 }
 
 
@@ -1097,7 +1099,7 @@ sub parseOutgoingClientMessage {
 		#if ($masterServer->{serverType} == 0 || $masterServer->{serverType} == 1 || $masterServer->{serverType} == 2) {
 		#	#Move
 		#	AI::clear("clientSuspend");
-		#	makeCoords(\%coords, substr($msg, 2, 3));
+		#	makeCoordsDir(\%coords, substr($msg, 2, 3));
 		#	ai_clientSuspend($switch, (distance($char->{'pos'}, \%coords) * $char->{walk_speed}) + 4);
 		#}
 

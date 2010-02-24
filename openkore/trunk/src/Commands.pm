@@ -3539,7 +3539,6 @@ sub cmdPlayerList {
 			"Body direction: %-19s Head direction:  %-19s\n" .
 			"Weapon: %s\n" .
 			"Shield: %s\n" .
-			"Shoes : %s\n" .
 			"Upper headgear: %-19s Middle headgear: %-19s\n" .
 			"Lower headgear: %-19s Hair color:      %-19s\n" .
 			"Walk speed: %s secs per block\n", 
@@ -3552,7 +3551,7 @@ sub cmdPlayerList {
 		"$directions_lut{$body} ($body)", "$directions_lut{$head} ($head)",
 		itemName({nameID => $player->{weapon}}),
 		itemName({nameID => $player->{shield}}),
-		itemName({nameID => $player->{shoes}}), $headTop, $headMid, 
+		$headTop, $headMid, 
 			  $headLow, "$haircolors{$player->{hair_color}} ($player->{hair_color})",
 			  $player->{walk_speed});
 		if ($player->{dead}) {

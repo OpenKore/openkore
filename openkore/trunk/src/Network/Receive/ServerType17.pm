@@ -21,7 +21,7 @@ use AI;
 use Translation;
 use Globals;
 use I18N qw(bytesToString);
-use Utils qw(getHex swrite makeIP makeCoords);
+use Utils qw(getHex swrite makeIP makeCoordsDir makeCoordsXY makeCoordsFromTo);
  
 sub new {
 	my ($class) = @_;

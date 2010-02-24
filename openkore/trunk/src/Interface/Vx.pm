@@ -908,7 +908,7 @@ sub packet {
 	#	#0073 <server tick> l <coordinate> 3B? 2B 
 	#	#Game connection success & server side 1ms clock & appearance position
 	#	my %pos;
-	#	makeCoords(\%pos, substr($msg, 6, 3));
+	#	makeCoordsDir(\%pos, substr($msg, 6, 3));
 	#	$self->updatePos($pos{x},$pos{y});
 
 	} elsif ($switch eq "0078" || $switch eq "01D8") {
@@ -920,7 +920,7 @@ sub packet {
 		my $type = unpack("v*",substr($msg, 14,  2));
 		my $pet = unpack("C*",substr($msg, 16,  1));
 		my %coords;
-		makeCoords(\%coords, substr($msg, 46, 3));
+		makeCoordsDir(\%coords, substr($msg, 46, 3));
 
 		if ($jobs_lut{$type}) {
 			if (!$players{$ID}) {
@@ -947,7 +947,7 @@ sub packet {
 		#For boiling Character inside the indicatory range of teleport and the like, it faces and is not attached Character information? 
 		my $ID = substr($msg, 2, 4);
 		my %coords;
-		makeCoords(\%coords, substr($msg, 46, 3));
+		makeCoordsDir(\%coords, substr($msg, 46, 3));
 		$self->moveObj($ID,"p",$coords{x},$coords{y});
 
 	} elsif ($switch eq "007B" || $switch eq "01DA" || $switch eq "0086") {
@@ -955,10 +955,8 @@ sub packet {
 		#01da <ID>.l <speed>.w <opt1>.w <opt2>.w <option>.w <class>.w <hair>.<item id1>.w <item id2>.w <head option bottom>.w <server tick>.l <head option top>.w <head option mid>.w <hair color>.w ?.w <head dir>.w <guild>.l <emblem>.l <manner>.w <karma>.B <sex>.B <X_Y_X_Y>.5B ?.B ?.B ?.B <Lv>.B ?.B
 		#Information of Character movement inside indicatory range
 		my $ID = substr($msg, 2, 4);
-		my %coordsFrom;
-		makeCoords(\%coordsFrom, substr($msg, 50, 3));
-		my %coordsTo;
-		makeCoords2(\%coordsTo, substr($msg, 52, 3));
+		my (%coordsFrom, %coordsTo);
+		makeCoordsFromTo(\%coordsFrom, \%coordsTo, $args->{coords});
 		my $type = unpack("v1",substr($msg, 14,  2));
 		my $pet = unpack("C1",substr($msg, 16,  1));
 
@@ -984,7 +982,7 @@ sub packet {
 		#Character information inside the indicatory range for NPC
 		my $ID = substr($msg, 2, 4);
 		my %coords;
-		makeCoords(\%coords, substr($msg, 36, 3));
+		makeCoordsDir(\%coords, substr($msg, 36, 3));
 		my $type = unpack("v*",substr($msg, 20,  2));
 		if ($jobs_lut{$type}) {
 				$self->addObj($ID,"p");
@@ -1003,9 +1001,9 @@ sub packet {
 	#	#0087 <server tick> l <X_Y_X_Y> 5B? B 
 	#	#Movement response 
 	#	my %coordsFrom;
-	#	makeCoords(\%coordsFrom, substr($msg, 6, 3));
+	#	makeCoordsDir(\%coordsFrom, substr($msg, 6, 3));
 	#	my %coordsTo;
-	#	makeCoords2(\%coordsTo, substr($msg, 8, 3));
+	#	makeCoordsXY(\%coordsTo, substr($msg, 8, 3));
 	#	$self->updatePos($coordsTo{x},$coordsTo{y});
 
 	} elsif ($switch eq "0091") {

@@ -37,7 +37,7 @@ use Globals qw($char %timeout $net %config @chars $conState $conState_tries $mes
 use Log qw(message warning error debug);
 use Translation;
 use Network;
-use Utils qw(makeCoords);
+use Utils qw(makeCoordsDir makeCoordsXY makeCoordsFromTo);
 
 
 # from old receive.pm
@@ -100,7 +100,7 @@ sub new {
 		'0078' => ['actor_display',	'a4 v14 a4 a2 v2 C2 a3 C3 v', 		[qw(ID walk_speed opt1 opt2 option type hair_style weapon lowhead shield tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 karma sex coords xSize ySize act lv)]], #standing # 54
 		'0079' => ['actor_display',	'a4 v14 a4 a2 v2 C2 a3 C2 v',		[qw(ID walk_speed opt1 opt2 option type hair_style weapon lowhead shield tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 karma sex coords xSize ySize lv)]], #spawning # 53
 		'007A' => ['changeToInGameState'], # 58
-		'007B' => ['actor_display',	'a4 v8 V v6 a4 a2 v2 C2 a5 x C2 v',	[qw(ID walk_speed opt1 opt2 option type hair_style weapon lowhead tick shield tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 karma sex coords xSize ySize lv)]], #walking # 60
+		'007B' => ['actor_display',	'a4 v8 V v6 a4 a2 v2 C2 a6 C2 v',	[qw(ID walk_speed opt1 opt2 option type hair_style weapon lowhead tick shield tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 karma sex coords xSize ySize lv)]], #walking # 60
 		'007C' => ['actor_display',	'a4 v14 C2 a3 C2',					[qw(ID walk_speed opt1 opt2 option hair_style weapon lowhead type shield tophead midhead hair_color clothes_color head_dir karma sex coords xSize ySize)]], #spawning (eA does not send this for players) # 41
 		'007F' => ['received_sync', 'V', [qw(time)]], # 6
 		'0080' => ['actor_died_or_disappeared', 'a4 C', [qw(ID type)]], # 7
@@ -109,8 +109,8 @@ sub new {
 		'0083' => ['quit_accept'], # 2
 		'0084' => ['quit_refuse'], # 2
 		# 0x0085 is sent packet
-		'0086' => ['actor_display', 'a4 a5 x V', [qw(ID coords tick)]], # 16
-		'0087' => ['character_moves', 'a4 a5 x', [qw(move_start_time coords)]], # 12
+		'0086' => ['actor_display', 'a4 a6 V', [qw(ID coords tick)]], # 16
+		'0087' => ['character_moves', 'a4 a6', [qw(move_start_time coords)]], # 12
 		'0088' => ['actor_movement_interrupted', 'a4 v2', [qw(ID x y)]], # 10
 		# 0x0089 is sent packet
 		'008A' => ['actor_action', 'a4 a4 a4 V2 v2 C v', [qw(sourceID targetID tick src_speed dst_speed damage div type dual_wield_damage)]], # 29
@@ -143,7 +143,7 @@ sub new {
 		'00A5' => ['storage_items_stackable'], # -1
 		'00A6' => ['storage_items_nonstackable'], # -1
 		# 0x00a7 is sent packet
-		'00A8' => ['use_item', 'v x2 C', [qw(index amount)]], # 7 # TODO: conflicts with structs
+		'00A8' => ['use_item', 'v2 C', [qw(index amount success)]], # 7
 		# 0x00a9 is sent packet
 		'00AA' => ['equip_item', 'v2 C', [qw(index type success)]], # 7
 		# 0x00ab is sent packet
@@ -239,7 +239,7 @@ sub new {
 		'0107' => ['party_location', 'a4 v2', [qw(ID x y)]], # 10
 		# 0x0108 is sent packet TODO: ST0 has-> '0108' => ['item_upgrade', 'v3', [qw(type index upgrade)]],
 		'0109' => ['party_chat', 'v a4 Z*', [qw(len ID message)]], # -1
-		'0110' => ['skill_use_failed', 'v3 C2', [qw(skillID btype unknown fail type)]], # 10
+		'0110' => ['skill_use_failed', 'v V C2', [qw(skillID btype fail type)]], # 10
 		'010A' => ['mvp_item', 'v', [qw(itemID)]], # 4
 		'010B' => ['mvp_you', 'V', [qw(expAmount)]], # 6
 		'010C' => ['mvp_other', 'a4', [qw(ID)]], # 6
@@ -279,7 +279,7 @@ sub new {
 		# 0x012e is sent packet
 		# 0x012f is sent packet
 		# 0x0130 is sent packet
-		'0131' => ['vender_found', 'a4 A30', [qw(ID title)]], # TODO: # 0x0131,86 # wtf A30? this message is 80 long -> test this
+		'0131' => ['vender_found', 'a4 a80', [qw(ID title)]], # TODO: # 0x0131,86 # wtf A30? this message is 80 long -> test this
 		'0132' => ['vender_lost', 'a4', [qw(ID)]], # 6
 		'0133' => ['vender_items_list', 'v a4', [qw(len venderID)]], # -1
 		# 0x0134 is sent packet
@@ -292,7 +292,7 @@ sub new {
 		'013B' => ['arrow_none', 'v', [qw(type)]], # 4
 		'013C' => ['arrow_equipped', 'v', [qw(index)]], # 4
 		'013D' => ['hp_sp_changed', 'v2', [qw(type amount)]], # 6
-		'013E' => ['skill_cast', 'a4 a4 v5 V', [qw(sourceID targetID x y skillID unknown type wait)]], # 24
+		'013E' => ['skill_cast', 'a4 a4 v3 V2', [qw(sourceID targetID x y skillID type wait)]], # 24
 		# 0x013f is sent packet
 		# 0x0140 is sent packet
 		'0141' => ['stat_info2', 'V3', [qw(type val val2)]], # 14
@@ -301,7 +301,7 @@ sub new {
 		'0144' => ['minimap_indicator', 'a4 V3 C5', [qw(npcID type x y ID blue green red alpha)]], # 23
 		'0145' => ['image_show', 'Z16 C', [qw(name type)]], # 19
 		# 0x0146 is sent packet
-		'0147' => ['item_skill', 'v6 A*', [qw(skillID targetType unknown skillLv sp unknown2 skillName)]], # 39
+		'0147' => ['item_skill', 'v V v3 Z24 C', [qw(skillID targetType skillLv sp range skillName upgradable)]], # 39
 		'0148' => ['resurrection', 'a4 v', [qw(targetID type)]], # 8
 		# 0x0149 is sent packet
 		'014A' => ['manner_message', 'V', [qw(type)]], # 6
@@ -316,7 +316,7 @@ sub new {
 		# 0x0153 is sent packet
 		'0154' => ['guild_members_list'], # -1
 		# 0x0155 is sent packet
-		'0156' => ['guild_member_position_changed', 'v V3', [qw(len accountID charID positionID)]], # -1 -> why?
+		'0156' => ['guild_member_position_changed', 'v V3', [qw(len accountID charID positionID)]], # -1 # FIXME: this is a variable len message, can hold multiple entries
 		# 0x0157 is sent packet
 		# 0x0158,-1 # TODO
 		# 0x0159 is sent packet
@@ -346,7 +346,7 @@ sub new {
 		'0171' => ['guild_ally_request', 'a4 Z24', [qw(ID guildName)]], # 30
 		# 0x0172 is sent packet
 		'0173' => ['guild_alliance', 'V', [qw(flag)]], # 3
-		'0174' => ['guild_position_changed', 'v a4 a4 a4 V Z20', [qw(unknown ID mode sameID exp position_name)]], # -1
+		'0174' => ['guild_position_changed', 'v a4 a4 a4 V Z20', [qw(len ID mode sameID exp position_name)]], # -1 # FIXME: this is a var len message!!!
 		# 0x0175 is sent packet
 		'0176' => ['guild_member_info', 'a4 a4 v5 V3 Z50 Z24', [qw(AID GID head_type head_color sex job lv contribution_exp current_state positionID intro name)]], # 106 # TODO: rename the vars and add sub		
 		'0177' => ['identify_list'], # -1
@@ -441,14 +441,14 @@ sub new {
 		'01D0' => ['revolving_entity', 'a4 v', [qw(sourceID entity)]], # 8
 		'01D1' => ['blade_stop', 'a4 a4 V', [qw(sourceID targetID active)]], # 14
 		'01D2' => ['combo_delay', 'a4 V', [qw(ID delay)]], # 10
-		'01D3' => ['sound_effect', 'Z24 C V a4', [qw(name type unknown ID)]], # 35
+		'01D3' => ['sound_effect', 'Z24 C V a4', [qw(name type term ID)]], # 35
 		'01D4' => ['npc_talk_text', 'a4', [qw(ID)]], # 6
 		# 0x01d5 is sent packet
 		'01D6' => ['pvp_mode2', 'v', [qw(type)]], # 4
 		'01D7' => ['player_equipment', 'a4 C v2', [qw(sourceID type ID1 ID2)]], # 11 # TODO: inconsistent with C structs
 		'01D8' => ['actor_display', 'a4 v14 a4 a2 v2 C2 a3 C3 v',		[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 karma sex coords xSize ySize act lv)]], # 54 # standing
 		'01D9' => ['actor_display', 'a4 v14 a4 a2 v2 C2 a3 C2 v',		[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 karma sex coords xSize ySize lv)]], # 53 # spawning
-		'01DA' => ['actor_display', 'a4 v9 V v5 a4 a2 v2 C2 a5 x C2 v',	[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 karma sex coords xSize ySize lv)]], # 60 # walking
+		'01DA' => ['actor_display', 'a4 v9 V v5 a4 a2 v2 C2 a6 C2 v',	[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 karma sex coords xSize ySize lv)]], # 60 # walking
 		# 0x01db is sent packet
 		# 0x01dc,-1 # TODO
 		# 0x01dd is sent packet
@@ -542,7 +542,7 @@ sub map_loaded {
 	}
 
 	$char->{pos} = {};
-	makeCoords($char->{pos}, $args->{coords});
+	makeCoordsDir($char->{pos}, $args->{coords}, \$char->{look}{body});
 	$char->{pos_to} = {%{$char->{pos}}};
 	message(TF("Your Coordinates: %s, %s\n", $char->{pos}{x}, $char->{pos}{y}), undef, 1);
 
@@ -608,7 +608,9 @@ sub account_server_info {
 		($servers[$num]{ip},
 		$servers[$num]{port},
 		$servers[$num]{name},
-		$servers[$num]{users}) = unpack('a4 v Z20 V x2', substr($args->{serverInfo}, $i, 32)); # TODO: what is x2?
+		$servers[$num]{users},
+		$servers[$num]{state},
+		$servers[$num]{property}) = unpack('a4 v Z20 v3', substr($args->{serverInfo}, $i, 32));
 		
 		$servers[$num]{ip} = ($masterServer && $masterServer->{private}) ? $masterServer->{ip} : makeIP($servers[$num]{ip});
 		$servers[$num]{name} = bytesToString($servers[$num]{name});
@@ -933,36 +935,19 @@ sub actor_display {
 	}
 
 	my (%coordsFrom, %coordsTo);
-	if (length($args->{coords}) < 5) {
-		makeCoords(\%coordsTo, $args->{coords});
-		%coordsFrom = %coordsTo;
-	} elsif (length($args->{coords}) >= 5) {
-		my $coordsArg = $args->{coords};
-		makeCoords3(\%coordsFrom, \%coordsTo, $coordsArg);
-	}
-
-=pod
-	my (%coordsFrom, %coordsTo);
-	if ($args->{switch} eq "007C") {
-		makeCoords(\%coordsTo, $args->{coords});
-		%coordsFrom = %coordsTo;
-	} elsif ($args->{switch} eq "01DA") {
-		makeCoords(\%coordsFrom, substr($args->{RAW_MSG}, 50, 3));
-		makeCoords2(\%coordsTo, substr($args->{RAW_MSG}, 52, 3));
-	} elsif (length($args->{coords}) >= 5) {
-		my $coordsArg = $args->{coords};
-		unShiftPack(\$coordsArg, \$coordsTo{y}, 10);
-		unShiftPack(\$coordsArg, \$coordsTo{x}, 10);
-		unShiftPack(\$coordsArg, \$coordsFrom{y}, 10);
-		unShiftPack(\$coordsArg, \$coordsFrom{x}, 10);
+	if ($args->{switch} eq "007B" ||
+		$args->{switch} eq "0086" ||
+		$args->{switch} eq "01DA" ||
+		$args->{switch} eq "022C" ||
+		$args->{switch} eq "02EC" ||
+		$args->{switch} eq "07F7") {
+		# Actor Moved
+		makeCoordsFromTo(\%coordsFrom, \%coordsTo, $args->{coords}); # body dir will be calculated using the vector
 	} else {
-		my $coordsArg = $args->{coords};
-		unShiftPack(\$coordsArg, \$args->{body_dir}, 4);
-		unShiftPack(\$coordsArg, \$coordsTo{y}, 10);
-		unShiftPack(\$coordsArg, \$coordsTo{x}, 10);
+		# Actor Spawned/Exists
+		makeCoordsDir(\%coordsTo, $args->{coords}, \$args->{body_dir});
 		%coordsFrom = %coordsTo;
 	}
-=cut
 
 	# Remove actors that are located outside the map
 	# This may be caused by:
@@ -1152,7 +1137,7 @@ sub actor_display {
 
 	# But hair_style is used for pets, and their bodies can look different ways...
 	$actor->{hair_style} = $args->{hair_style} if (exists $args->{hair_style});
-	#$actor->{look}{body} = $args->{body_dir} if (exists $args->{body_dir});
+	$actor->{look}{body} = $args->{body_dir} if (exists $args->{body_dir});
 	$actor->{look}{head} = $args->{head_dir} if (exists $args->{head_dir});
 
 	# When stance is non-zero, character is bobbing as if they had just got hit,
@@ -1275,10 +1260,10 @@ sub actor_display {
 		}
 
 	} elsif ($args->{switch} eq "007B" ||
+		$args->{switch} eq "0086" ||
 		$args->{switch} eq "01DA" ||
 		$args->{switch} eq "022C" ||
 		$args->{switch} eq "02EC" ||
-		$args->{switch} eq "0086" ||
 		$args->{switch} eq "07F7") {
 		# Actor Moved
 
@@ -2038,10 +2023,9 @@ sub character_moves {
 	my ($self, $args) = @_;
 
 	return unless changeToInGameState();
-	makeCoords($char->{pos}, substr($args->{RAW_MSG}, 6, 3));
-	makeCoords2($char->{pos_to}, substr($args->{RAW_MSG}, 8, 3));
+	makeCoordsFromTo($char->{pos}, $char->{pos_to}, $args->{coords});
 	my $dist = sprintf("%.1f", distance($char->{pos}, $char->{pos_to}));
-	debug "You're moving from ($char->{pos}{x}, $char->{pos}{y}) to ($char->{pos_to}{x}, $char->{pos_to}{y}) - distance $dist, unknown $args->{unknown}\n", "parseMsg_move";
+	debug "You're moving from ($char->{pos}{x}, $char->{pos}{y}) to ($char->{pos_to}{x}, $char->{pos_to}{y}) - distance $dist\n", "parseMsg_move";
 	$char->{time_move} = time;
 	$char->{time_move_calc} = distance($char->{pos}, $char->{pos_to}) * ($char->{walk_speed} || 0.12);
 
@@ -2230,7 +2214,7 @@ sub chat_users {
 
 	$chat->{num_users} = 0;
 	for (my $i = 8; $i < $args->{RAW_MSG_SIZE}; $i += 28) {
-		my ($type, $chatUser) = unpack('C Z24', substr($msg, $i, 28));
+		my ($type, $chatUser) = unpack('V Z24', substr($msg, $i, 28));
 
 		$chatUser = bytesToString($chatUser);
 
@@ -2962,7 +2946,7 @@ sub guild_member_setting_list {
 	$msg = substr($msg, 0, 4).$newmsg;
 
 	for (my $i = 4; $i < $msg_size; $i += 16) {
-		my ($gtIndex, $invite_punish, $freeEXP) = unpack('V C x7 V', substr($msg, $i, 16)); # TODO: what are the missing x's?
+		my ($gtIndex, $invite_punish, $ranking, $freeEXP) = unpack('V4', substr($msg, $i, 16)); # TODO: use ranking
 		# TODO: isn't there a nyble unpack or something and is this even correct?
 		$guild{positions}[$gtIndex]{invite} = ($invite_punish & 0x01) ? 1 : '';
 		$guild{positions}[$gtIndex]{punish} = ($invite_punish & 0x10) ? 1 : '';
@@ -2977,7 +2961,7 @@ sub guild_skills_list {
 	my $msg_size = $args->{RAW_MSG_SIZE};
 	for (my $i = 6; $i < $args->{RAW_MSG_SIZE}; $i += 37) {
 
-		my ($skillID, $targetType, $level, $sp,	$skillName, $up) = unpack('v4 x4 Z24 C', substr($msg, $i, 37)); # TODO: what is x4?
+		my ($skillID, $targetType, $level, $sp, $range,	$skillName, $up) = unpack('v V v3 Z24 C', substr($msg, $i, 37)); # TODO: use range
 		
 		$skillName = bytesToString($skillName);
 		$guild{skills}{$skillName}{ID} = $skillID;
@@ -4032,7 +4016,7 @@ sub map_loaded {
 	if ($char && changeToInGameState()) {
 		$net->setState(Network::IN_GAME) if ($net->getState() != Network::IN_GAME);
 		$char->{pos} = {};
-		makeCoords($char->{pos}, $args->{coords});
+		makeCoordsDir($char->{pos}, $args->{coords});
 		$char->{pos_to} = {%{$char->{pos}}};
 		message(TF("Your Coordinates: %s, %s\n", $char->{pos}{x}, $char->{pos}{y}), undef, 1);
 		message(T("You are now in the game\n"), "connection");
@@ -5510,11 +5494,13 @@ sub skill_update {
 	$char->{skills}{$handle}{up} = $up;
 
 	Skill::DynamicInfo::add($ID, $handle, $lv, $sp, $range, $skill->getTargetType(), Skill::OWNER_CHAR);
-
-	# Set $skillchanged to 2 so it knows to unset it when skill points are updated
-	if ($skillChanged eq $handle) {
-		$skillChanged = 2;
-	}
+	
+	Plugins::callHook('packet_charSkills', {
+		ID => $ID,
+		handle => $handle,
+		level => $lv,
+		upgradable => $up,
+	});
 
 	debug "Skill $name: $lv\n", "parseMsg";
 }
@@ -5793,6 +5779,7 @@ sub skills_list {
 			ID => $skillID,
 			handle => $handle,
 			level => $level,
+			upgradable => $up,
 		});
 	}
 }
@@ -5806,7 +5793,7 @@ sub skill_add {
 	$char->{skills}{$handle}{ID} = $args->{skillID};
 	$char->{skills}{$handle}{sp} = $args->{sp};
 	$char->{skills}{$handle}{range} = $args->{range};
-	$char->{skills}{$handle}{up} = 0;
+	$char->{skills}{$handle}{up} = $args->{upgradable};
 	$char->{skills}{$handle}{targetType} = $args->{target};
 	$char->{skills}{$handle}{lv} = $args->{lv};
 	$char->{skills}{$handle}{new} = 1;
@@ -5820,6 +5807,7 @@ sub skill_add {
 		ID => $args->{skillID},
 		handle => $handle,
 		level => $args->{lv},
+		upgradable => $args->{upgradable},
 	});
 }
 
@@ -5983,10 +5971,6 @@ sub stat_info {
 	} elsif ($args->{type} == 12) {
 		$char->{points_skill} = $args->{val};
 		debug "Skill Points: $args->{val}\n", "parseMsg", 2;
-		# Reset $skillChanged back to 0 to tell kore that a skill can be auto-raised again
-		if ($skillChanged == 2) {
-			$skillChanged = 0;
-		}
 	} elsif ($args->{type} == 24) {
 		$char->{weight} = $args->{val} / 10;
 		debug "Weight: $char->{weight}\n", "parseMsg", 2;
@@ -6592,9 +6576,9 @@ sub unit_levelup {
 	}
 }
 
+# TODO: only used to report failure? $args->{success}
 sub use_item {
 	my ($self, $args) = @_;
-
 	return unless changeToInGameState();
 	my $item = $char->inventory->getByServerIndex($args->{index});
 	if ($item) {
@@ -6608,7 +6592,6 @@ sub use_item {
 
 sub users_online {
 	my ($self, $args) = @_;
-
 	message TF("There are currently %s users online\n", $args->{users}), "info";
 }
 
