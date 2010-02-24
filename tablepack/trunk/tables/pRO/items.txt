@@ -4543,6 +4543,32 @@
 //----------------- ｻ｡ｰ｣ﾅ莎｢ｸﾓｸｮｶ・2010ｳ・2ｿ・9ﾀﾏ------------------
 5763#Red_Bunny_Band#
 16582#Red_Bunny_Band_Box#
-
+//-------------- ﾇﾊｸｮﾇﾉ ｻ邉ﾉﾀﾌｺ･ﾆｮ 1ｿ・-----------------------------
+5830#Siege_Sakkat#
+5831#Siege_Big_Ribbon#
+5832#Siege_Vane_Hairpin#
+5833#Siege_Sunday_Hat#
+5834#Siege_Crown#
+5835#Siege_Tiara#
+5836#Siege_Boy's_Cap#
+5837#Siege_Shades#
+5838#Siege_Fin_Helm#
+5839#Siege_Blush#
+5840#Siege_Elven_Ears#
+7977#Mercenary_Badge#
+// -------------- 2006 ﾇﾁｶ釭ｺﾀﾌｺ･ﾆｮ -----------------
+5180#Holiday_Hat#
+//-----------2010ｳ・2ｿ・ﾃﾟﾃｵ ﾄｳｽｬｾﾆﾀﾌﾅﾛ-------------
+5545#Aries_Diadem#
+5546#Aries_Crown#
+16226#Aries_Diadem_Box#
+16227#Aries_Crown_Box#
+5595#Eye_Of_Juno#
+16371#Phantasm_Scroll#
+5548#Scarlet_Rose#
+16229#Scarlet_Rose_Box#
+5654#Holy_Marching_Hat#
+5364#Dark_Snake_Lord_Hat#
+5535#Military_Cap#
 
 //file end

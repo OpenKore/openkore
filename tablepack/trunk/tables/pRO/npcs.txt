@@ -64,7 +64,23 @@ aldebaran 152 97 Noischvanstein
 aldebaran 165 107 Chef Assistant
 aru_gld 80 41 Scheit
 aru_gld 80 52 Scheit
+cmd_fild01 55 160 Heap of Earth
+comodo 167 146 Stylist
+comodo 170 137 Raede
+comodo 171 137 Heis
+comodo 180 153 Snowtora#1
 comodo 185 153 Kafra Employee#pRO_Prem
+comodo 187 153 Hu La Hoop Lady
+comodo 193 151 Bor Roben#1
+comodo 195 150 Kafra Employee
+comodo 204 148 Devellin
+comodo 210 148 Bulletin Board#comodo
+comodo 210 154 Suspicious Guy
+comodo 211 155 Wandering bard
+comodo 219 158 Kachua
+comodo 225 164 Chef Assistant
+comodo 228 159 Hair Band Girl
+comodo 322 178 Comodo Tour Leader
 e_tower 69 117 Purification Stone#102t
 e_tower 81 105 Tower Protection Stone
 einbroch 162 256 Bulletin Board#einbroch
@@ -83,6 +99,7 @@ geffen 109 123 Lefrion
 geffen 109 66 Maroll Battle Recruiter
 geffen 110 117 Ford#11
 geffen 110 200 Sage Welshyun
+geffen 111 104 Cindy#geffen
 geffen 111 48 Woman
 geffen 112 129 Youlvriger
 geffen 117 37 Cool Event Voting Staff
@@ -112,6 +129,8 @@ geffen 146 148 Backalley Merchant
 geffen 151 44 Young Man
 geffen 154 143 Dequ'ee
 geffen 156 190 Young Man
+geffen 165 84 [Quest] Gloria#HardenAr
+geffen 165 89 New refining machine#Ha
 geffen 168 175 Sign
 geffen 172 52 Goodman
 geffen 173 88 Merchant#geff
@@ -181,6 +200,7 @@ lighthalzen 307 224 Guide
 lighthalzen 312 233 Beggar#lhz_02
 lighthalzen 313 301 Sewer Pipe#lt
 moc_fild19 107 101 Bulletin Board#sphinx
+moc_prydb1 39 129 Thief Guide
 moc_ruins 115 147 #ForeignMerchant4
 moc_ruins 118 170 Pet Groomer
 moc_ruins 123 154 Young Man#07rhea_14
@@ -206,6 +226,7 @@ moc_ruins 77 167 Foreign Merchant#aru1
 moc_ruins 86 149 #ForeignMerchant1
 moc_ruins 90 149 Trader
 moc_ruins 91 150 Part-timer
+morocc 102 298 Man
 morocc 106 83 Ibrahim
 morocc 116 39 Rogue Guild Agent#nd4
 morocc 132 111 Little Girl#Jorti
@@ -235,6 +256,7 @@ morocc 223 102 Volunteer-Morroc#07rhea
 morocc 226 102 Volunteer-Morroc#07rhea
 morocc 240 72 Hans
 morocc 248 159 Young Man#magum1
+morocc 268 287 Volunteer-Morroc#07rhea
 morocc 27 112 Whichebain#BLS
 morocc 273 79 The alleged traveler
 morocc 281 178 Shaze
@@ -248,6 +270,11 @@ morocc 54 97 Guide
 morocc 60 42 Young Man#moc
 morocc 82 292 Muetro
 morocc 88 133 Volunteer-Morroc#07rhea
+pay_gld 133 151 Hong-Roo
+pay_gld 137 160 Hong-Roo
+pay_gld 153 166 Hong-Roo
+pay_gld 199 268 Jukk-Rim-Hyun
+pay_gld 291 135 Chun-Dan
 payon 103 113 Ledrion#payon
 payon 103 63 Gaeho
 payon 115 131 KoneKone
@@ -294,6 +321,7 @@ payon 215 102 Moohyun#job_star
 payon 239 56 Dried Fish#paypuzz3
 payon 244 62 Moonho Ahn
 payon 65 119 Broom Grandma#07russia_
+payon 69 65 Kimeunbang
 payon 82 109 Pile of Stone#paypuzz2
 payon 91 77 Bag Merchant
 payon_in01 132 62 Inn Employee
@@ -390,6 +418,7 @@ prontera 54 240 Terno
 prontera 73 134 Vendor from Milk Ranch
 prontera 73 140 Milk Vendor
 prontera 78 150 Dairenne
+prontera 92 94 Special item mall guide
 prt_castle 107 58 Soldier#s11
 prt_castle 117 163 Inspector#prince
 prt_castle 121 168 #arm
@@ -423,6 +452,9 @@ prt_fild08 159 371 Warrior Recruiter#wop
 prt_fild08 175 374 Bard#brising
 prt_gld 147 136 Lazreagues
 prt_gld 147 140 Lazreagues
+pvp_n_room 70 85 Fight Square Reception 
+pvp_n_room 78 85 Fight Square Reception 
+pvp_n_room 86 85 Fight Square Reception 
 pvp_y_room 70 85 Fight Square Reception 
 pvp_y_room 77 85 Guild Battle Guide
 pvp_y_room 78 85 Fight Square Reception 

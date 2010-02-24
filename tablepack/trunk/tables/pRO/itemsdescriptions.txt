@@ -31490,3 +31490,187 @@ A box contains 1 Red Bunny Band in it.
 ^ff0000This item is not refundable.^000000
 Weight : ^7777771^000000
 #
+//-------------- ﾇﾊｸｮﾇﾉ ｻ邉ﾉﾀﾌｺ･ﾆｮ 1ｿ・-----------------------------
+5830#
+Enhanced version of Sakkat from the Midgard Crowd Control event.
+Reduce damage from Demi-Human by 10%
+Item Class : ^777777Headgear^000000 Defense : ^7777770^000000
+Location : ^777777Upper^000000 Weight : ^7777771^000000
+Required Level : ^77777760^000000
+Jobs : ^777777All Jobs^000000
+#
+5831#
+Enhanced version of Big Ribbon from the Midgard Crowd Control event.
+Reduce damage from Demi-Human by 10%
+Item Class : ^777777Headgear^000000 Defense : ^7777770^000000
+Location : ^777777Upper^000000 Weight : ^7777771^000000
+Required Level : ^77777760^000000
+Jobs : ^777777All Jobs^000000
+#
+5832#
+Enhanced version of Vane Hairpin from the Midgard Crowd Control event.
+Reduce damage from Demi-Human by 10%
+Item Class : ^777777Headgear^000000 Defense : ^7777770^000000
+Location : ^777777Upper^000000 Weight : ^7777771^000000
+Required Level : ^77777760^000000
+Jobs : ^777777All Jobs^000000
+#
+5833#
+Enhanced version of Sunday Hat from the Midgard Crowd Control event.
+Reduce damage from Demi-Human by 10%
+Item Class : ^777777Headgear^000000 Defense : ^7777770^000000
+Location : ^777777Upper^000000 Weight : ^7777771^000000
+Required Level : ^77777760^000000
+Jobs : ^777777All Jobs^000000
+#
+5834#
+Enhanced version of Crown from the Midgard Crowd Control event.
+Reduce damage from Demi-Human by 10%
+Item Class : ^777777Headgear^000000 Defense : ^7777770^000000
+Location : ^777777Upper^000000 Weight : ^7777771^000000
+Required Level : ^77777760^000000
+Jobs : ^777777All Jobs^000000
+#
+5835#
+Enhanced version of Tiara from the Midgard Crowd Control event.
+Reduce damage from Demi-Human by 10%
+Item Class : ^777777Headgear^000000 Defense : ^7777770^000000
+Location : ^777777Upper^000000 Weight : ^7777771^000000
+Required Level : ^77777760^000000
+Jobs : ^777777All Jobs^000000
+#
+5836#
+Enhanced version of Boy's Cap from the Midgard Crowd Control event.
+Reduce damage from Demi-Human by 10%
+Item Class : ^777777Headgear^000000 Defense : ^7777770^000000
+Location : ^777777Upper^000000 Weight : ^7777771^000000
+Required Level : ^77777760^000000
+Jobs : ^777777All Jobs^000000
+#
+5837#
+Enhanced version of Sunglasses from the Midgard Crowd Control event.
+Reduce damage from Demi-Human by 2%
+Item Class : ^777777Headgear^000000 Defense : ^7777770^000000
+Location : ^777777Mid ^000000 Weight : ^7777771^000000
+Required Level : ^77777770^000000
+Jobs : ^777777All Jobs^000000
+#
+5838#
+Enhanced version of Fin Helm from the Midgard Crowd Control event.
+Reduce damage from Demi-Human by 2%
+Item Class : ^777777Headgear^000000 Defense : ^7777770^000000
+Location : ^777777Mid ^000000 Weight : ^7777771^000000
+Required Level : ^77777770^000000
+Jobs : ^777777All Jobs^000000
+#
+5839#
+Enhanced version of Blush from the Midgard Crowd Control event.
+Reduce damage from Demi-Human by 2%
+Item Class : ^777777Headgear^000000 Defense : ^7777770^000000
+Location : ^777777Mid ^000000 Weight : ^7777771^000000
+Required Level : ^77777770^000000
+Jobs : ^777777All Jobs^000000
+#
+5840#
+Enhanced version of Elven Ears from the Midgard Crowd Control event.
+Reduce damage from Demi-Human by 2%
+Item Class : ^777777Headgear^000000 Defense : ^7777770^000000
+Location : ^777777Mid ^000000 Weight : ^7777771^000000
+Required Level : ^77777770^000000
+Jobs : ^777777All Jobs^000000
+#
+7977#
+Mercenary Badge given out during the Midgard Crowd Control Event. 
+Save this up to trade for headgears with the quest NPC.
+Weight : ^7777770^000000
+#
+// -------------- 2006 ﾇﾁｶ釭ｺﾀﾌｺ･ﾆｮ -----------------
+5180#
+A hat made for a national holiday of somewhere in western country.
+VIT + 1.
+Item Class : ^777777Headgear^000000 Defense : ^7777772^000000
+Location : ^777777Upper^000000 Weight :^77777710^000000
+Jobs : ^777777All Jobs^000000
+#
+//-----------2010ｳ・2ｿ・ﾃﾟﾃｵ ﾄｳｽｬｾﾆﾀﾌﾅﾛ-------------
+5545#
+A diadem that represents Aries which is the 1st sign of Zodiac.  A diamond, the birtstone, is embedded on it.
+VIT + 2, Increse resistance against fire property attack by 5%.
+If refined more than +7 level, DEF + 2, VIT + 1.
+Item Class : ^777777Headgear^000000 Defense : ^7777772^000000
+Location : ^777777Upper^000000 Weight : ^77777740^000000
+Required Level : ^77777771^000000
+Jobs : ^777777All Jobs^000000
+#
+5546#
+A diadem that represents Aries which is the 1st sign of Zodiac.  A diamond, the birtstone, is embedded on it.
+LUK + 2, Increse resistance against fire property attack by 5%.
+If refined more than +7 level, Perfect dodge + 2, LUK + 1.
+Item Class : ^777777Headgear^000000 Defense : ^7777772^000000
+Location : ^777777Upper^000000 Weight : ^77777740^000000
+Required Level : ^77777770^000000
+Jobs : ^777777All Jobs^000000
+#
+
+5595#
+A horn imbued with spirit of devil. Could feel full of vital force from it.
+MDEF + 2.
+If worn by Swordman/Merchant/Thief Class, AGI + 2, decrease damage of Neutral , Water property by (Job Lv / 14), increase VIT.
+If worn by Wizard/Acolyte/Archer Class, INT + 2, DEX + 2, damage of Neutral , Water property by (Job Lv / 14).
+Item Class : ^777777Headgear^000000 Defense : ^7777772^000000
+Location : ^777777Upper^000000 Weight : ^77777740^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All Jobs^000000
+#
+16371#
+A Phantasm Scroll.
+Weight : ^7777771^000000
+#
+5548#
+Scarlet rose in a mouth. Did they even remove the thorns?
+When you defeated a monster, the monster drops a Witherless Rose at a certain rate. DEX + 1.
+Item Class : ^777777Headgear^000000 Defense : ^7777770^000000
+Location : ^777777Upper^000000 Weight : ^77777710^000000
+Required Level : ^77777750^000000
+Jobs : ^777777All Jobs^000000
+#
+16229#
+A box contains 1 Scarlet Rose in it.
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+5654#
+A marcher's hat that has sacred energy.
+When do physical attack, holy property is given to the weapon for 90 seconds at a certain rate. 
+Item Class : ^777777Headgear^000000 Defense : ^7777772^000000
+Location : ^777777Upper^000000 Weight : ^77777720^000000
+Required Level : ^77777710^000000
+Jobs : ^777777All Jobs^000000
+#
+5364#
+A hat that Dark Snake Lord wears. Feels like being a king when wear this. 
+STR + 1, INT + 1, AGI + 2
+When do magical attack, have some chance of decreasing the casting time by 50% for 5 seconds. FLEE + 30.
+Item Class : ^777777Headgear^000000    Defense : ^7777772^000000
+Location : ^777777Upper^000000 Weight : ^77777750^000000
+Required Level : ^77777760^000000
+Jobs : ^777777All Jobs^000000
+#
+16226#
+A box contains 1 Aries Diadem in it.
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+16227#
+A box contains 1 Aries Crown in it.
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+5535#
+A Military Cap designed classic shape for military purpose.
+STR + 1, VIT + 1, AGI + 1, MSP + 50.
+Item Class : ^777777Headgear^000000    Defense :  ^7777775^000000
+Location : ^777777Upper^000000 Weight : ^77777750^000000
+Required Level : ^7777770^000000
+Jobs : ^777777All Jobs^000000
+#
