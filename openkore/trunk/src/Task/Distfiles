@@ -13,6 +13,7 @@ Testing.pm
 UseSkill.pm
 Wait.pm
 WithSubtask.pm
+RaiseSkill.pm
 
 UseSkill.png
 UseSkill.zargo
