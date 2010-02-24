@@ -43,6 +43,7 @@ sub sendMasterLogin {
 	my ($self, $username, $password, $master_version, $version) = @_;
 	my $msg = pack('v V a24 a24 C', hex($masterServer->{masterLogin_packet}) || 0x0064, $version || version(), $username, $password, $master_version);
 	$self->sendToServer($msg);
+	debug "Sent sendMasterLogin\n", "sendPacket", 2;
 }
 
 # 0x0065,17
@@ -63,6 +64,7 @@ sub sendCharLogin {
 	my ($self, $char) = @_;
 	my $msg = pack('v C', 0x0066, $char);
 	$self->sendToServer($msg);
+	debug "Sent sendCharLogin\n", "sendPacket", 2;
 }
 
 # 0x0067,37
@@ -72,6 +74,7 @@ sub sendCharCreate {
 
 	my $msg = pack('v a24 C7 v2', 0x0067, stringToBytes($name), $str, $agi, $vit, $int, $dex, $luk, $slot, $hair_color, $hair_style);
 	$self->sendToServer($msg);
+	debug "Sent sendCharCreate\n", "sendPacket", 2;
 }
 
 # 0x0068,46
@@ -79,6 +82,7 @@ sub sendCharDelete {
 	my ($self, $charID, $email) = @_;
 	my $msg = pack('v a4 a40', 0x0068, $charID, stringToBytes($email));
 	$self->sendToServer($msg);
+	debug "Sent sendCharDelete\n", "sendPacket", 2;
 }
 
 # 0x0069,-1
@@ -97,6 +101,7 @@ sub sendMapLogin {
 	$sex = 0 if ($sex > 1 || $sex < 0); # Sex can only be 0 (female) or 1 (male)
 	my $msg = pack('v a4 a4 a4 V C', 0x0072, $accountID, $charID, $sessionID, getTickCount(), $sex);
 	$self->sendToServer($msg);
+	debug "Sent sendMapLogin\n", "sendPacket", 2;
 }
 
 # 0x0073,11
@@ -133,7 +138,11 @@ sub sendSync {
 # 0x0081,3
 
 # 0x0082,2
-# TODO
+# TODO: implement
+sub sendQuitRequest {
+	$_[0]->sendToServer(pack('v', 0x0082));
+	debug "Sent Quit Request\n", "sendPacket", 2;
+}
 
 # 0x0083,2
 # 0x0084,2
@@ -225,9 +234,10 @@ sub sendPrivateMsg {
 # 0x0098,3
 
 # 0x0099,-1,gmmessage,2:4
+# TODO: implement + test
 sub sendGMMessage {
-	my ($self, $color, $message) = @_;
-	my $msg = pack('v2 Z*', 0x0099, length($message) + 29, stringToBytes($color.$message));
+	my ($self, $message) = @_; # to colorize, add in front of message: micc | ssss | blue | tool ?
+	my $msg = pack('v2 Z*', 0x0099, length($message) + 4, stringToBytes($message));
 	$self->sendToServer($msg);
 }
 
@@ -276,7 +286,7 @@ sub sendItemUse {
 	my ($self, $ID, $targetID) = @_;
 	my $msg = pack('v2 a4', 0x00A7, $ID, $targetID);
 	$self->sendToServer($msg);
-	debug "Item Use: $ID\n", "sendPacket", 2;
+	debug "Sent Item Use: $ID\n", "sendPacket", 2;
 }
 
 # 0x00a8,7
@@ -458,7 +468,7 @@ sub sendIgnoreListGet {
 # 0x00d5,-1,createchatroom,2:4:6:7:15
 sub sendChatRoomCreate {
 	my ($self, $title, $limit, $public, $password) = @_;
-	my $msg = pack('v3 C Z8 Z*', 0x00D5, length($title) + 15, $limit, $public, stringToBytes($password), stringToBytes($title));
+	my $msg = pack('v3 C Z8 a*', 0x00D5, length($title) + 15, $limit, $public, stringToBytes($password), stringToBytes($title));
 	$self->sendToServer($msg);
 	debug "Sent Create Chat Room: $title, $limit, $public, $password\n", "sendPacket", 2;
 }
@@ -483,7 +493,7 @@ sub sendChatRoomJoin {
 # 0x00de,-1,chatroomstatuschange,2:4:6:7:15
 sub sendChatRoomChange {
 	my ($self, $title, $limit, $public, $password) = @_;
-	my $msg = pack('v3 C Z8 Z*', 0x00DE, length($title) + 15, $limit, $public, stringToBytes($password), stringToBytes($title));
+	my $msg = pack('v3 C Z8 a*', 0x00DE, length($title) + 15, $limit, $public, stringToBytes($password), stringToBytes($title));
 	$self->sendToServer($msg);
 	debug "Sent Change Chat Room: $title, $limit, $public, $password\n", "sendPacket", 2;
 }
@@ -491,6 +501,7 @@ sub sendChatRoomChange {
 # 0x00df,-1
 
 # 0x00e0,30,changechatowner,2:6
+# x4 is the role, 0 is admin?
 sub sendChatRoomBestow {
 	my ($self, $name) = @_;
 	my $msg = pack('v x4 Z24', 0x00E0, stringToBytes($name));
@@ -1241,7 +1252,12 @@ sub sendGMChangeMapType { # type is of .gat format
 # 0x019b,10
 
 # 0x019c,-1,lgmmessage,2:4
-# TODO
+# TODO: implement + test
+sub sendGMLMessage { # local?
+	my ($self, $message) = @_; # to colorize, add in front of message: micc | ssss | blue | tool ?
+	my $msg = pack('v2 Z*', 0x019c, length($message) + 4, stringToBytes($message));
+	$self->sendToServer($msg);
+}
 
 # 0x019d,6,gmhide,0
 # TODO: test this

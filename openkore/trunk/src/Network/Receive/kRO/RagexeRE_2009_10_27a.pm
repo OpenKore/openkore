@@ -25,7 +25,7 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 	my %packets = (
 		# //0x07f5,6
-		'07F6' => ['exp', 'a4 V v2', [qw(ID val type negative)]], # 14 # TODO: use. I think this replaces the exp gained message trough guildchat hack
+		'07F6' => ['exp', 'a4 V v2', [qw(ID val type flag)]], # 14 # type: 1 base, 2 job; flag: 0 normal, 1 quest # TODO: use. I think this replaces the exp gained message trough guildchat hack
 	);
 
 	foreach my $switch (keys %packets) {

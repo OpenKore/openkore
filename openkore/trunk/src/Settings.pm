@@ -463,13 +463,21 @@ sub loadByHandle {
 # This method follows the same contract as
 # Settings::loadByHandle(), so see that method for parameter descriptions
 # and exceptions.
-sub loadByRegexp {
+sub loadByRegexp {	# FIXME: only hook those that match the regexp?
 	my ($regexp, $progressHandler) = @_;
+	
+	Plugins::callHook('preloadfiles', {files => \@{$files->getItems}});
+
+	my $i = 1;
 	foreach my $object (@{$files->getItems()}) {
+		Plugins::callHook('loadfiles', {files => \@{$files->getItems}, current => $i});
 		if ($object->{name} =~ /$regexp/) {
 			loadByHandle($object->{index}, $progressHandler);
 		}
+		$i++;
 	}
+
+	Plugins::callHook('postloadfiles', {files => \@{$files->getItems}});
 }
 
 ##

@@ -12,7 +12,7 @@ use Globals qw($char %timeout $net %config @chars $conState $conState_tries $mes
 use Log qw(message warning error debug);
 use Translation;
 use Network;
-use Utils qw(makeCoords);
+use Utils qw(makeCoordsDir makeCoordsXY makeCoordsFromTo);
 
 sub new {
 	my ($class) = @_;
@@ -49,7 +49,7 @@ sub map_loaded {
 	}
 
 	$char->{pos} = {};
-	makeCoords($char->{pos}, $args->{coords});
+	makeCoordsDir($char->{pos}, $args->{coords});
 	$char->{pos_to} = {%{$char->{pos}}};
 	message(TF("Your Coordinates: %s, %s\n", $char->{pos}{x}, $char->{pos}{y}), undef, 1);
 

@@ -19,7 +19,7 @@ package Network::XKore2;
 
 use strict;
 use Globals qw(%config %rpackets $masterServer $char);
-use Utils qw(makeCoords calcPosition);
+use Utils qw(makeCoordsDir makeCoordsXY makeCoordsFromTo calcPosition);
 use Plugins;
 use Base::Ragnarok::SessionStore;
 use Network;

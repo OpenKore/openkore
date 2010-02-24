@@ -146,7 +146,8 @@ sub iterate {
 	Benchmark::begin("AI (part 3.2)") if DEBUG;
 	processLockMap();
 	processAutoStatsRaise();
-	processAutoSkillsRaise();
+	#processAutoSkillsRaise(); moved to a task
+	processTask("skill_raise");
 	processRandomWalk();
 	processFollow();
 	Benchmark::end("AI (part 3.2)") if DEBUG;
@@ -1906,6 +1907,7 @@ sub processAutoStatsRaise {
 	}
 }
 
+=pod moved to task
 ##### AUTO SKILLS RAISE #####
 sub processAutoSkillsRaise {
 	if (!$skillChanged && $config{skillsAddAuto}) {
@@ -1944,6 +1946,7 @@ sub processAutoSkillsRaise {
 		}
 	}
 }
+=cut
 
 ##### RANDOM WALK #####
 sub processRandomWalk {
