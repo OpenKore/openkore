@@ -401,5 +401,5 @@ master_version 16
 version 20
 serverType kRO_Sakexe_2009_04_08a # rmsserver-2009-06-17a.exe
 serverEncoding Western
-charBlockSize 112
+charBlockSize 108
 addTableFolders tables\pserver\RMS
