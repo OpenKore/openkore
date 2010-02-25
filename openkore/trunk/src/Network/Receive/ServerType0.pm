@@ -203,7 +203,7 @@ sub new {
 		'013C' => ['arrow_equipped', 'v', [qw(index)]],
 		'013D' => ['hp_sp_changed', 'v2', [qw(type amount)]],
 		'013E' => ['skill_cast', 'a4 a4 v5 V', [qw(sourceID targetID x y skillID unknown type wait)]],
-		'0141' => ['stat_info2', 'V3', [qw(type val val2)]],
+		'0141' => ['stat_info2', 'V2 l', [qw(type val val2)]],
 		'0142' => ['npc_talk_number', 'a4', [qw(ID)]],
 		'0144' => ['minimap_indicator', 'a4 V3 C5', [qw(npcID type x y ID blue green red alpha)]],
 		'0147' => ['item_skill', 'v6 A*', [qw(skillID targetType unknown skillLv sp unknown2 skillName)]],
