@@ -112,7 +112,7 @@ sub onSkillInfo {
 			$self->{passed} = 1;
 		}
 	} elsif ($self->{state} == IDLE && $char->{points_skill} > 0 && @{$self->{skills}}) {
-		debug "RaiseSkill - onSkillInfo - UPGRADE_SKILL\n", "Task::RaiseSkill" if DEBUG;
+		debug "RaiseSkill - onSkillInfo - IDLE\n", "Task::RaiseSkill" if DEBUG;
 		$self->{state} = UPGRADE_SKILL;
 	}
 }

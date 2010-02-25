@@ -295,7 +295,7 @@ sub new {
 		'013E' => ['skill_cast', 'a4 a4 v3 V2', [qw(sourceID targetID x y skillID type wait)]], # 24
 		# 0x013f is sent packet
 		# 0x0140 is sent packet
-		'0141' => ['stat_info2', 'V3', [qw(type val val2)]], # 14
+		'0141' => ['stat_info2', 'V2 l', [qw(type val val2)]], # 14
 		'0142' => ['npc_talk_number', 'a4', [qw(ID)]], # 6
 		# 0x0143 is sent packet
 		'0144' => ['minimap_indicator', 'a4 V3 C5', [qw(npcID type x y ID blue green red alpha)]], # 23
