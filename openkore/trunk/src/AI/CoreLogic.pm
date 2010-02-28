@@ -147,7 +147,7 @@ sub iterate {
 	processLockMap();
 	processAutoStatsRaise();
 	#processAutoSkillsRaise(); moved to a task
-	processTask("skill_raise");
+	#processTask("skill_raise");
 	processRandomWalk();
 	processFollow();
 	Benchmark::end("AI (part 3.2)") if DEBUG;
