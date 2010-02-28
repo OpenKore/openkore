@@ -453,7 +453,7 @@ sub finalInitialization {
 	$taskManager = new TaskManager();
 	# run 'permanent' tasks
 	require Task::RaiseSkill;
-	AI::queue("skill_raise", new Task::RaiseSkill());
+	$taskManager->add(new Task::RaiseSkill());
 
 	$itemsList = new ActorList('Actor::Item');
 	$monstersList = new ActorList('Actor::Monster');
