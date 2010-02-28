@@ -1,0 +1,4 @@
+NV_BASIC#Basic Skill#
+SM_BASH#Bash#
+AL_BLESSING#Blessing#
+DUP_BLESSING#Blessing#
