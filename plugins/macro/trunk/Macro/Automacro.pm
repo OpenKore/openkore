@@ -646,6 +646,8 @@ sub checkMapChange {
 
 # checks for eval
 sub checkEval {
+	return if $Settings::lockdown;
+	
 	#if ($_[0] =~ /;/) {
 	#	my @eval = split(/\s*;\s*/, $_[0]);
 	#	foreach my $e (@eval) {return 1 if checkEval($e)}
