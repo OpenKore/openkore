@@ -155,6 +155,8 @@ sub parseMacroFile {
 }
 
 sub sub_execute {
+	return if $Settings::lockdown;
+	
 	my ($name, $arg) = @_;
 	my $run = "sub ".$name." {".$arg."}";
 	eval($run);			# cycle the macro sub between macros only
@@ -280,7 +282,7 @@ sub parseCmd {
 		elsif ($kw eq 'storamount') {$ret = getStorageAmount($arg)}
 		elsif ($kw eq 'config')     {$ret = getConfig($arg)}
 		elsif ($kw eq 'arg')        {$ret = getWord($arg)}
-		elsif ($kw eq 'eval')       {$ret = eval($arg)}
+		elsif ($kw eq 'eval')       {$ret = eval($arg) unless $Settings::lockdown}
 		elsif ($kw eq 'listitem')   {$ret = getArgFromList($arg)}
 		elsif ($kw eq 'listlenght') {$ret = getListLenght($arg)}
 		elsif ($kw eq 'nick')       {$arg = subvars($targ, 1); $ret = q4rx2($arg)}
@@ -294,22 +296,24 @@ sub parseCmd {
 		}
 	}
 	
-	# any round bracket(pair) found after parseKw sub-routine were treated as macro perl sub-routine
-	undef $ret; undef $arg;
-	while (($sub, $val) = parseSub($cmd)) {
-		my $sub_error = 1;
-		foreach my $e (@perl_name) {
-			if ($e eq $sub) {
-				$sub_error = 0;
+	unless ($Settings::lockdown) {
+		# any round bracket(pair) found after parseKw sub-routine were treated as macro perl sub-routine
+		undef $ret; undef $arg;
+		while (($sub, $val) = parseSub($cmd)) {
+			my $sub_error = 1;
+			foreach my $e (@perl_name) {
+				if ($e eq $sub) {
+					$sub_error = 0;
+				}
 			}
+			if ($sub_error) {$self->{error} = "Unrecognized --> $sub <-- Sub-Routine"; return ""}
+			$arg = subvars($val);
+			my $sub1 = $sub."(".$arg.")";
+			$ret = eval($sub1);
+			return unless defined $ret;
+			$val = q4rx $val;		
+			$cmd =~ s/$sub\s*\(\s*$val\s*\)/$ret/g
 		}
-		if ($sub_error) {$self->{error} = "Unrecognized --> $sub <-- Sub-Routine"; return ""}
-		$arg = subvars($val);
-		my $sub1 = $sub."(".$arg.")";
-		$ret = eval($sub1);
-		return unless defined $ret;
-		$val = q4rx $val;		
-		$cmd =~ s/$sub\s*\(\s*$val\s*\)/$ret/g
 	}
 
 	$cmd = subvars($cmd);
