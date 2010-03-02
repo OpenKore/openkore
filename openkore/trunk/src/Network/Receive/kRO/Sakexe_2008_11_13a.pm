@@ -24,7 +24,7 @@ sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
 	my %packets = (
-		'043D' => ['skill_postdelay', 'v a4', [qw(skillID delay)]], # 8 # TODO: use
+		'043D' => ['skill_postdelay', 'S L', [qw(skillID delay)]], # 8 # TODO: use
 		# 0x043e,-1
 		# 0x043f,8
 	);

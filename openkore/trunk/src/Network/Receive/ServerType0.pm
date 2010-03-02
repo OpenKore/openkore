@@ -95,7 +95,7 @@ sub new {
 		'0080' => ['actor_died_or_disappeared', 'a4 C', [qw(ID type)]],
 		'0081' => ['errors', 'C', [qw(type)]],
 		'0086' => ['actor_display', 'a4 a6 V', [qw(ID coords tick)]],
-		'0087' => ['character_moves', 'x4 a5 C', [qw(coords unknown)]],
+		'0087' => ['character_moves', 'a4 a6', [qw(move_start_time coords)]], # 12
 		'0088' => ['actor_movement_interrupted', 'a4 v2', [qw(ID x y)]],
 		'008A' => ['actor_action', 'a4 a4 a4 V2 v2 C v', [qw(sourceID targetID tick src_speed dst_speed damage div type dual_wield_damage)]],
 		'008D' => ['public_chat', 'v a4 Z*', [qw(len ID message)]],

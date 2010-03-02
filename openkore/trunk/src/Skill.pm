@@ -175,7 +175,7 @@ sub getName {
 	my $idn = $self->{idn};
 	if (defined $idn) {
 		my $entry = $Skill::StaticInfo::ids{$idn};
-		if ($entry) {
+		if ($entry && $entry->{name} ne "") {
 			return $entry->{name};
 		} else {
 			my $handle = $self->getHandle();
