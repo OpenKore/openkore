@@ -3989,12 +3989,12 @@ sub cmdSkills {
 	my ($arg2) = $args =~ /^\w+ (\d+)/;
 	if ($arg1 eq "") {
 		my $msg = T("----------Skill List-----------\n" .
-			"   # Skill Name                     Lv      SP\n");
+			"   # Skill Name                          Lv      SP\n");
 		for my $handle (@skillsID) {
 			my $skill = new Skill(handle => $handle);
 			my $sp = $char->{skills}{$handle}{sp} || '';
 			$msg .= swrite(
-				"@>>> @<<<<<<<<<<<<<<<<<<<<<<<<<<<< @>>    @>>>",
+				"@>>> @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @>>    @>>>",
 				[$skill->getIDN(), $skill->getName(), $char->getSkillLevel($skill), $sp]);
 		}
 		$msg .= TF("\nSkill Points: %d\n", $char->{points_skill});

@@ -7176,13 +7176,14 @@ sub divorced {
 }
 
 # 0221
-# TODO
+# TODO: test new unpack string
 sub upgrade_list {
 	my ($self, $args) = @_;
 	my $msg;
 	$msg .= center(" " . T("Upgrade List") . " ", 79, '-') . "\n";
 	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 13) {
-		my ($index, $nameID) = unpack('v x6 C', substr($args->{RAW_MSG}, $i, 13));
+		#my ($index, $nameID) = unpack('v x6 C', substr($args->{RAW_MSG}, $i, 13));
+		my ($index, $nameID, $upgrade, $cards) = unpack('v2 C a8', substr($args->{RAW_MSG}, $i, 13));
 		my $item = $char->inventory->getByServerIndex($index);
 		$msg .= swrite(sprintf("\@%s \@%s", ('>'x2), ('<'x50)), [$item->{invIndex}, itemName($item)]);
 	}
