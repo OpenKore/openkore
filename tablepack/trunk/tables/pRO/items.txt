@@ -2358,18 +2358,18 @@
 7483#Key_of_the_Seal#
 
 //package item
-5137#Alice_Doll#	
-5138#Magiceyes#	
-5139#Hibiscus#	
-5140#Charming_Ribbon#	
-5142#Crescent_Helm#	
-5143#Kabuki_Mask#	
-5181#Helm_Of_Darkness#	
-5182#Puppy_Hat#	
-5183#Bird_Nest_Hat#	
-5185#Laurel_Wreath#	
-5186#Geographer_Band#	
-5187#Twin_Ribbon#	
+5137#Alice_Doll#
+5138#Magiceyes#
+5139#Hibiscus#
+5140#Charming_Ribbon#
+5142#Crescent_Helm#
+5143#Kabuki_Mask#
+5181#Helm_Of_Darkness#
+5182#Puppy_Hat#
+5183#Bird_Nest_Hat#
+5185#Laurel_Wreath#
+5186#Geographer_Band#
+5187#Twin_Ribbon#
 5149#Tiara_Of_Champions#
 5148#Guildmaster's_Cap#
 5146#Elephant_Hat#
@@ -3924,52 +3924,52 @@
 5817#Valentine's_Emblem#
 // ｸｶﾁｦｽｺﾆｽ ｰ暠・ｮ 2
 5518#Large_Baphomet_Horns#
-// --------------3ｿ・ﾃﾟﾃｵ ﾄｳｽｬﾅﾛ-----------------	
-	
-13905#Hardcore_Set_Box#	
-13906#Kitty_Set_Box#	
-13907#Softcore_Set_Box#	
-13908#Deviruchi_Set_Box#	
-13909#Mvphunt_Set_Box#	
-13910#Brewing_Set_Box#	
-14317#White_Lady_Scroll#	
-2753#Neutral_Ring#	
-2754#Hallow_Ring#	
-2755#Clamorous_Ring#	
-2756#Chemical_Ring#	
-2757#Insecticide_Ring#	
-2758#Fisher_Ring#	
-2759#Decussate_Ring#	
-2760#Bloody_Ring#	
-2761#Satanic_Ring#	
-2762#Dragon_Ring#	
-14242#Neutral_Ring_Box#	
-14243#Hallow_Ring_Box#	
-14244#Clamorous_Ring_Box#	
-14245#Chemical_Ring_Box#	
-14246#Insecticide_Ring_Box#	
-14247#Fisher_Ring_Box#	
-14248#Decussate_Ring_Box#	
-14249#Bloody_Ring_Box#	
-14250#Satanic_Ring_Box#	
-14251#Dragon_Ring_Box#	
-14252#Neutral_Ring_Box2#	
-14253#Hallow_Ring_Box2#	
-14254#Clamorous_Ring_Box2#	
-14255#Chemical_Ring_Box2#	
-14256#Insecticide_Ring_Box2#	
-14257#Fisher_Ring_Box2#	
-14258#Decussate_Ring_Box2#	
-14259#Bloody_Ring_Box2#	
-14260#Satanic_Ring_Box2#	
-14261#Dragon_Ring_Box2#	
-5385#Yoyo_Hat#	
-5478#Classic_Hat#	
-// ID 14317 ｴ・ｸｹ鮠ﾒﾁｺﾅｩｷﾑ ｳｻ ｾﾆﾀﾌﾅﾛ	
-12188#Grace_Moon_Cake#	
-12190#Moon_Cake#	
-12191#Special_Moon_Cake#	
-12259#Miracle_Tonic#	
+// --------------3ｿ・ﾃﾟﾃｵ ﾄｳｽｬﾅﾛ-----------------
+
+13905#Hardcore_Set_Box#
+13906#Kitty_Set_Box#
+13907#Softcore_Set_Box#
+13908#Deviruchi_Set_Box#
+13909#Mvphunt_Set_Box#
+13910#Brewing_Set_Box#
+14317#White_Lady_Scroll#
+2753#Neutral_Ring#
+2754#Hallow_Ring#
+2755#Clamorous_Ring#
+2756#Chemical_Ring#
+2757#Insecticide_Ring#
+2758#Fisher_Ring#
+2759#Decussate_Ring#
+2760#Bloody_Ring#
+2761#Satanic_Ring#
+2762#Dragon_Ring#
+14242#Neutral_Ring_Box#
+14243#Hallow_Ring_Box#
+14244#Clamorous_Ring_Box#
+14245#Chemical_Ring_Box#
+14246#Insecticide_Ring_Box#
+14247#Fisher_Ring_Box#
+14248#Decussate_Ring_Box#
+14249#Bloody_Ring_Box#
+14250#Satanic_Ring_Box#
+14251#Dragon_Ring_Box#
+14252#Neutral_Ring_Box2#
+14253#Hallow_Ring_Box2#
+14254#Clamorous_Ring_Box2#
+14255#Chemical_Ring_Box2#
+14256#Insecticide_Ring_Box2#
+14257#Fisher_Ring_Box2#
+14258#Decussate_Ring_Box2#
+14259#Bloody_Ring_Box2#
+14260#Satanic_Ring_Box2#
+14261#Dragon_Ring_Box2#
+5385#Yoyo_Hat#
+5478#Classic_Hat#
+// ID 14317 ｴ・ｸｹ鮠ﾒﾁｺﾅｩｷﾑ ｳｻ ｾﾆﾀﾌﾅﾛ
+12188#Grace_Moon_Cake#
+12190#Moon_Cake#
+12191#Special_Moon_Cake#
+12259#Miracle_Tonic#
 //----- ｿ｣ｵ蟶ｮｽｺ ﾅｸﾀﾌｸﾓ ｸｮｼﾂ----
 6127#Purification_Stone#
 //---- Jro ﾆﾐﾅｰﾁ・ｾﾆﾀﾌﾅﾛ --------
@@ -4233,33 +4233,33 @@
 7515#Prize_Medal#
 
 //-----ﾇﾊｸｮﾇﾉ ｿ菘ｻ 6ﾁｾ ﾇ・螻篝・2009 04 29------
-5411#White_Snake_Hat#	
-5393#Lover's_Hat#	
-5316#Umbrella_Hat#	
-5346#Gf_Recruiter_Hat#	
-5339#Friend_Recruiter_Hat#	
-5338#Bf_Recruiter_Hat#	
+5411#White_Snake_Hat#
+5393#Lover's_Hat#
+5316#Umbrella_Hat#
+5346#Gf_Recruiter_Hat#
+5339#Friend_Recruiter_Hat#
+5338#Bf_Recruiter_Hat#
 //----------2009ｳ・5ｿ・ﾃﾟﾃｵ ﾄｳｽｬｾﾆﾀﾌﾅﾛ-------------------
-14469#Cow_Tail_Scroll#		
+14469#Cow_Tail_Scroll#
 13517#Yggdrasilberry_Box#
-13420#Honglyun's_Sword#		
-5495#Power_Of_Thor#		
-5496#Dice_Hat#		
-5497#King_Tiger_Doll_Hat#		
-5498#Wolf_King_Helm#		
-14438#Honglyun's_Sword_Box#		
-14439#Power_Of_Thor_Box#		
-14440#Dice_Hat_Box#		
-14441#King_Tiger_Doll_Hat_Box#		
-14442#Wolf_King_Helm_Box#		
-5504#Chinese_Wedding_Veil#		
-5505#Asara_Fairy_Hat#		
-5503#Rabbit_Magic_Hat#		
-14459#Rabbit_Magic_Hat_Box#		
-14460#Chinese_Wedding_Veil_Box#		
-14461#Asara_Fairy_Hat_Box#		
-5499#Pizza_Hat#		
-14443#Pizza_Hat_Box#		
+13420#Honglyun's_Sword#
+5495#Power_Of_Thor#
+5496#Dice_Hat#
+5497#King_Tiger_Doll_Hat#
+5498#Wolf_King_Helm#
+14438#Honglyun's_Sword_Box#
+14439#Power_Of_Thor_Box#
+14440#Dice_Hat_Box#
+14441#King_Tiger_Doll_Hat_Box#
+14442#Wolf_King_Helm_Box#
+5504#Chinese_Wedding_Veil#
+5505#Asara_Fairy_Hat#
+5503#Rabbit_Magic_Hat#
+14459#Rabbit_Magic_Hat_Box#
+14460#Chinese_Wedding_Veil_Box#
+14461#Asara_Fairy_Hat_Box#
+5499#Pizza_Hat#
+14443#Pizza_Hat_Box#
 //------ﾇﾊｸｮﾇﾉ ｿ菘ｻ BRO ｾﾆﾀﾌﾅﾛｵ・2009 05 20---------------
 5519#Peacock_Feather#
 14499#Peacock_Feather_Box#
@@ -4270,64 +4270,64 @@
 5489#Love_Daddy#
 14379#Love_Daddy_Box#
 //-----------2009ｳ・6ｿ・ﾃﾟﾃｵ ﾄｳｽｬｾﾆﾀﾌﾅﾛ------------------
-5508#Shark_Hat#	
-14490#Shark_Hat_Box#	
-5537#Quati_Hat#	
-5538#Tucan_Hat#	
-16192#Quati_Hat_Box#	
-16193#Tuca_Hat_Box#	
-13870#New_Style_Coupon_Box#	
-7622#New_Style_Coupon#	
+5508#Shark_Hat#
+14490#Shark_Hat_Box#
+5537#Quati_Hat#
+5538#Tucan_Hat#
+16192#Quati_Hat_Box#
+16193#Tuca_Hat_Box#
+13870#New_Style_Coupon_Box#
+7622#New_Style_Coupon#
 //---20090708 ｹ霤ｻｼﾒ ﾀﾏﾀﾏ ﾄｺﾆｮ-----
 5578#Voyage_Hat#
 6221#Mystic_Leaf_Cat_Ball#
 6222#Shiny_Bead#
 12408#Leaf_Cat_Ball#
 //-----2009ｳ・7ｿ・ﾃﾟﾃｵ ﾄｳｽｬﾅﾛ --------
-5363#Abyss_Knight_Helm#	
-5500#Ice_Cream_Hat#	
-14444#Ice_Cream_Hat_Box#	
-5528#King_Frog_Hat#	
-5529#Satan's_Bone_Hat#	
-16134#King_Frog_Hat_Box#	
-16135#Satan's_Bone_Hat_Box#	
-5526#Lady_Tanee_Doll#	
-16131#Lady_Tanee_Doll_Box#	
-5527#Lunatic_Hat#	
-16132#Lunatic_Hat_Box#	
-2006#Sunshine_Staff#	
-16133#Sunshine_Staff_Box#	
-5509#Sting_Hat#	
-14493#Sting_Hat_Box#	
+5363#Abyss_Knight_Helm#
+5500#Ice_Cream_Hat#
+14444#Ice_Cream_Hat_Box#
+5528#King_Frog_Hat#
+5529#Satan's_Bone_Hat#
+16134#King_Frog_Hat_Box#
+16135#Satan's_Bone_Hat_Box#
+5526#Lady_Tanee_Doll#
+16131#Lady_Tanee_Doll_Box#
+5527#Lunatic_Hat#
+16132#Lunatic_Hat_Box#
+2006#Sunshine_Staff#
+16133#Sunshine_Staff_Box#
+5509#Sting_Hat#
+14493#Sting_Hat_Box#
 
 //--------2009ｳ・8ｿ・ﾃﾟﾃｵ ﾄｳｽｬﾅﾛ --------
-5395#Tiraya_Bonnet#	
-5464#Zaha_Doll_Hat#	
-5558#Saci's_Hat#	
-16239#Saci's_Hat_Box#	
-5563#Dolor_Hat#	
-16244#Dolor_Hat_Box#	
-5554#Octopus_Hat#	
-5555#Leaf_Cat_Hat#	
-5556#Fur_Seal_Hat#	
-5557#Wild_Rose_Hat#	
-16235#Octopus_Hat_Box#	
-16236#Leaf_Cat_Hat_Box#	
-16237#Fur_Seal_Hat_Box#	
-16238#Wild_Rose_Hat_Box#	
+5395#Tiraya_Bonnet#
+5464#Zaha_Doll_Hat#
+5558#Saci's_Hat#
+16239#Saci's_Hat_Box#
+5563#Dolor_Hat#
+16244#Dolor_Hat_Box#
+5554#Octopus_Hat#
+5555#Leaf_Cat_Hat#
+5556#Fur_Seal_Hat#
+5557#Wild_Rose_Hat#
+16235#Octopus_Hat_Box#
+16236#Leaf_Cat_Hat_Box#
+16237#Fur_Seal_Hat_Box#
+16238#Wild_Rose_Hat_Box#
 
 //--------2009ｳ・ﾇﾁｸｮｹﾌｾ・ｼｭｺｺ_ｿﾀｵﾇ ｸｮﾄﾝ ｾﾆﾀﾌﾅﾛ --------
 2833#Odin's_Recall#
 16376#Odin's_Recall_7days_Box#
 16377#Odin's_Recall_30days_Box#
 //----- 2009 ｺｽｸﾂﾀﾌ ﾀﾌｺ･ﾆｮ ------
-12310#Spray_Of_Flowers#		
-12311#Huge_Spray_Of_Flowers#		
-6009#Big_Fan_Of_Magic#		
-// ------------- 2008 ｴ・ｸ RWC ｿ・ﾂﾀﾚ ﾀ・・ｸ ---------------					
-5451#RPC_Gold_Dragon_Helm#					
-5452#RPC_Silver_Dragon_Helm#					
-5453#RPC_Bronze_Dragon_Helm#					
+12310#Spray_Of_Flowers#
+12311#Huge_Spray_Of_Flowers#
+6009#Big_Fan_Of_Magic#
+// ------------- 2008 ｴ・ｸ RWC ｿ・ﾂﾀﾚ ﾀ・・ｸ ---------------
+5451#RPC_Gold_Dragon_Helm#
+5452#RPC_Silver_Dragon_Helm#
+5453#RPC_Bronze_Dragon_Helm#
 // ------------ 2008 ｴ・ｸ 10ｿ・ｽｺﾅｩｷﾑ -----------
 14345#Animal_Scroll#
 //-------2009 ﾃﾟｼｮ ﾀﾌｺ･ﾆｮ ----------------
@@ -4346,51 +4346,215 @@
 12396#Gift_Box?#
 12397#Gift_Box?#
 //--------2009ｳ・10ｿ・ﾃﾟﾃｵ ﾄｳｽｬﾅﾛ-----------
-6220#Mysterious_Dyestuff#		
-5574#Pencil_In_Mouth#		
-5581#Cancer_Diadem#		
-5582#Cancer_Crown#		
-16269#Cancer_Diadem_Box#		
-16270#Cancer_Crown_Box#		
-5579#Wanderer_Sakkat#		
-5564#Crown_Of_Deceit#		
-16246#Crown_Of_Deceit_Box#		
-5530#Raven_Cap#		
-5531#Baby_Dragon_Hat#		
-16185#Raven_Cap_Box#		
-16186#Baby_Dragon_Hat_Box#		
-5568#Rabbit_Bonnet#		
-16253#Rabbit_Scroll#		
+6220#Mysterious_Dyestuff#
+5574#Pencil_In_Mouth#
+5581#Cancer_Diadem#
+5582#Cancer_Crown#
+16269#Cancer_Diadem_Box#
+16270#Cancer_Crown_Box#
+5579#Wanderer_Sakkat#
+5564#Crown_Of_Deceit#
+16246#Crown_Of_Deceit_Box#
+5530#Raven_Cap#
+5531#Baby_Dragon_Hat#
+16185#Raven_Cap_Box#
+16186#Baby_Dragon_Hat_Box#
+5568#Rabbit_Bonnet#
+16253#Rabbit_Scroll#
 //------3ｿ・ｴ・ｸ ｽｺﾅｩｷﾑ---------
 14232#Yggdrasilberry10_Box#
 16195#Halloween_Scroll#
-// ------------ ｴ・ｸ 7ｿ・ｽｺﾅｩｷﾑ -----------		
-14306#RWC_Special_Scroll#		
-14307#RWC_Limited_Scroll#		
-14308#Ardor_Scroll#		
-// ------------ 2008 ｴ・ｸ 11ｿ・ｽｺﾅｩｷﾑ -----------		
-14363#Happy_Valentines_Scroll#		
-14298#New_Year_Scroll#		
-// ---------- ｴ・ｸｹﾟｷｻﾅｸﾀﾎ ｽｺﾅｩｷﾑ -------------		
-13941#Valentine_Scroll#		
-// ------- ｴ・ｸ 2008 ｻﾘ ｽｺﾅｩｷﾑ -----------		
-13925#Mouse_Scroll#		
-// ------------ 2008 ｴ・ｸ 8ｿ・ｽｺﾅｩｷﾑ -----------		
-14316#Love_Scroll#		
-// ------------ 2008 ｴ・ｸ 12ｿ・1ｿ・ｽｺﾅｩｷﾑ -----------		
-14407#Xmas_Scroll#		
-14408#Solar_Scroll#		
-// ---------- ﾀﾏｺｻ ｸｮｺｻ 2006 --------------	
-5191#Black_Ribbon#	
-5192#Yellow_Ribbon#	
-5193#Green_Ribbon#	
-5194#Pink_Ribbon#	
-5195#Red_Ribbon#	
-5196#Orange_Ribbon#	
-5197#White_Ribbon#	
-12706#Fortune_Cookie#	
-12707#Fortune_Cookie#	
-12708#Fortune_Cookie#	
+// ------------ ｴ・ｸ 7ｿ・ｽｺﾅｩｷﾑ -----------
+14306#RWC_Special_Scroll#
+14307#RWC_Limited_Scroll#
+14308#Ardor_Scroll#
+// ------------ 2008 ｴ・ｸ 11ｿ・ｽｺﾅｩｷﾑ -----------
+14363#Happy_Valentines_Scroll#
+14298#New_Year_Scroll#
+// ---------- ｴ・ｸｹﾟｷｻﾅｸﾀﾎ ｽｺﾅｩｷﾑ -------------
+13941#Valentine_Scroll#
+// ------- ｴ・ｸ 2008 ｻﾘ ｽｺﾅｩｷﾑ -----------
+13925#Mouse_Scroll#
+// ------------ 2008 ｴ・ｸ 8ｿ・ｽｺﾅｩｷﾑ -----------
+14316#Love_Scroll#
+// ------------ 2008 ｴ・ｸ 12ｿ・1ｿ・ｽｺﾅｩｷﾑ -----------
+14407#Xmas_Scroll#
+14408#Solar_Scroll#
+// ---------- ﾀﾏｺｻ ｸｮｺｻ 2006 --------------
+5191#Black_Ribbon#
+5192#Yellow_Ribbon#
+5193#Green_Ribbon#
+5194#Pink_Ribbon#
+5195#Red_Ribbon#
+5196#Orange_Ribbon#
+5197#White_Ribbon#
+12706#Fortune_Cookie#
+12707#Fortune_Cookie#
+12708#Fortune_Cookie#
+//-------Ep13.2----------------
+// ----------- Ep 13.2 Reward Items ------------
+
+2782#Ring_Of_Wise_King#
+6073#Dragon's_Mane#
+6074#Bazett's_Order#
+6075#Crystalized_Teardrop#
+6076#Portable_Toolbox#
+6077#Rough_Mineral#
+6078#Stone_Fragment#
+6079#Flower_Of_Alfheim#
+6080#Manuk_Coin#
+6081#Splandide_Coin#
+6082#Spirit_Of_Alfheim#
+6084#Bradium_Fragments#
+6085#Shaggy_Muffler#
+11018#Splendide_Selling_Item#
+11019#Manuk_Selling_Item#
+12342#Manuk's_Opportunity#
+12343#Manuk's_Courage#
+12344#Pinguicula's_fruit_Jam#
+12345#Luciola's_Honey_Jam#
+12346#Unripe_Acorn#
+12347#Acorn_Jelly#
+12348#Manuk's_Faith#
+12349#Cornus'_Tears#
+
+// ----------- New Combination Headgear Items ------------
+
+5436#Bride's_Corolla#
+5437#Fairy_Flower#
+5438#Green_Fillet#
+5439#Red_Fillet#
+5440#Blue_Fillet#
+5441#White_Fillet#
+5442#Necktie#
+5443#Status_Of_Baby_Angel#
+5444#Hair_Brush#
+5445#Cany_Cane_In_The_Mouth#
+5446#Catfoot_Hairpin#
+5447#Frog_Hat#
+5448#Soloplay_Box1#
+5449#Soloplay_Box2#
+
+// ----------- Newly added Ep 13.2 Items ------------
+
+1643#Dead_Tree_CaneStaff#
+2783#Eye_Stone_Ring#
+6086#Withered_Flower#
+6087#Spiritual_Crystal#
+6088#Spiritual_Crystal#
+6089#Dark_Piece#
+6090#Refined_Bradium#
+6091#Darkred_Scale_Piecd#
+12353#Small_Bottle#
+6093#Draco's_Egg#
+
+// ----------- EP13.2 Newly Added Items ------------
+
+1188#Veteran_Sword#
+1384#Veteran_Axe#
+1385#Bradium_Stonehammer#
+1548#Veteran_Hammer#
+2138#Bradium_Shield#
+2399#Dragon_Vest#
+2450#Vital_Tree_Shoes#
+2553#Dragon_Manteau#
+2554#Piece_Of_Angent_Skin#
+2787#Waterdrop_Brooch#
+2788#Bradium_Earing#
+2789#Bradium_Ring#
+2790#Bradium_Brooch#
+15000#Bone_Plate#
+
+// -----------  Ep 13.2 additional equipment items ------------
+
+1189#Krasnaya#
+1284#Krishna#
+1285#Cakram#
+1311#Vecer_Axe#
+1387#Giant_Axe#
+1646#Staff#
+1647#Staff#
+1648#Staff#
+1745#Bow#
+2004#Kronos#
+2005#Dea_Staff#
+13046#Krieg#
+13047#Weihna#
+13421#Ruber#
+16000#Erde#
+16001#Red_Square_Bag#
+// ------------------------Indonesia Jewel Event-------------------------
+7575#Red_Jewel#
+7576#Blue_Jewel#
+7577#Yellow_Jewel#
+// ----------- ﾆ・ppl ｾﾆﾀﾌﾅﾛ -----------
+6083#Dolly_Capsule#
+// ----------- 2008-12-12 ｿ｡ﾇﾇｼﾒｵ・ppl ｾﾆﾀﾌﾅﾛ -----------
+6101#Attendance_Card#
+6102#Report_On_Splendide#
+6103#Report_On_Manuk#
+// -------- 2009-02-20 ----------
+//HiddenSocket
+4700#STR+1#
+4701#STR+2#
+4702#STR+3#
+4703#STR+4#
+4704#STR+5#
+4705#STR+6#
+4706#STR+7#
+4707#STR+8#
+4708#STR+9#
+4709#STR+10#
+4710#INT+1#
+4711#INT+2#
+4712#INT+3#
+4713#INT+4#
+4714#INT+5#
+4715#INT+6#
+4716#INT+7#
+4717#INT+8#
+4718#INT+9#
+4719#INT+10#
+4720#DEX+1#
+4721#DEX+2#
+4722#DEX+3#
+4723#DEX+4#
+4724#DEX+5#
+4725#DEX+6#
+4726#DEX+7#
+4727#DEX+8#
+4728#DEX+9#
+4729#DEX+10#
+4730#AGI+1#
+4731#AGI+2#
+4732#AGI+3#
+4733#AGI+4#
+4734#AGI+5#
+4735#AGI+6#
+4736#AGI+7#
+4737#AGI+8#
+4738#AGI+9#
+4739#AGI+10#
+4740#VIT+1#
+4741#VIT+2#
+4742#VIT+3#
+4743#VIT+4#
+4744#VIT+5#
+4745#VIT+6#
+4746#VIT+7#
+4747#VIT+8#
+4748#VIT+9#
+4749#VIT+10#
+4750#LUK+1#
+4751#LUK+2#
+4752#LUK+3#
+4753#LUK+4#
+4754#LUK+5#
+4755#LUK+6#
+4756#LUK+7#
+4757#LUK+8#
+4758#LUK+9#
+4759#LUK+10#
 13525#Zeny_Pet_Egg_Scroll_Box#
 //----------2009ｳ・11ｿ・ﾃﾟﾃｵ ﾄｳｽｬﾅﾛ----------
 16257#Buddha_Scroll#
@@ -4506,21 +4670,21 @@
 16410#Chung_Hairpin_Box#
 16412#Ice_Ear_Wing_Box#
 16414#Turtle_Hat_Box#
-5512#Aquarius_Diadem#	
-5513#Aquarius_Crown#	
-5514#Pisces_Diadem#	
-5515#Pisces_Crown#	
-14495#Aquarius_Diadem_Box#	
-14496#Aquarius_Crown_Box#	
-14497#Pisces_Diadem_Box#	
-14498#Pisces_Crown_Box#	
+5512#Aquarius_Diadem#
+5513#Aquarius_Crown#
+5514#Pisces_Diadem#
+5515#Pisces_Crown#
+14495#Aquarius_Diadem_Box#
+14496#Aquarius_Crown_Box#
+14497#Pisces_Diadem_Box#
+14498#Pisces_Crown_Box#
 //-----ﾇﾊｸｮﾇﾉ ｿ菘ｻ ﾄｳｽｬﾅﾛ from Bro 2010ｳ・01ｿ・20ﾀﾏ---------------
-2751#Academy_Badge#		
-5406#Clergyman_Grad_Hat#		
-5407#Magician_Grad_Hat#		
-14485#Academy_Badge_Box#		
-14486#Clergyman_Grad_Hat_Box#		
-14487#Magician_Grad_Hat_Box#		
+2751#Academy_Badge#
+5406#Clergyman_Grad_Hat#
+5407#Magician_Grad_Hat#
+14485#Academy_Badge_Box#
+14486#Clergyman_Grad_Hat_Box#
+14487#Magician_Grad_Hat_Box#
 5476#Grandpeco_Hairband#
 5384#Cute_Santa_Hat#
 14394#Cute_Santa_Hat_Box#
@@ -4564,11 +4728,14 @@
 16226#Aries_Diadem_Box#
 16227#Aries_Crown_Box#
 5595#Eye_Of_Juno#
-16371#Phantasm_Scroll#
+16371#Unknown_Scroll#
 5548#Scarlet_Rose#
 16229#Scarlet_Rose_Box#
 5654#Holy_Marching_Hat#
-5364#Dark_Snake_Lord_Hat#
+5655#Dark_Snake_Lord_Hat#
 5535#Military_Cap#
+//-----Ep13.2 ﾀﾎﾃｦﾆｮ ﾀｯｷ睚ｭ -------------
+6242#Rune-Midgard_Coin#
+16405#Rune-Midgard_Coin_Box#
 
 //file end

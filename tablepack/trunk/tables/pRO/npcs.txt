@@ -47,27 +47,42 @@ alberta 91 70 Bad food boy
 alberta 97 51 Merchant
 alberta_in 53 43 Merchant
 alberta_in 70 51 Guarnien
+aldebaran 127 138 Promotional staff
+aldebaran 128 97 Lotenbruek
 aldebaran 131 97 Virchbruek
 aldebaran 133 108 Soldier
 aldebaran 133 116 An event usher#xmas_02
 aldebaran 134 97 Nuirenbergk
+aldebaran 135 113 Odin's Cash manager#phi
 aldebaran 135 116 Second_Cash_Seller
 aldebaran 135 119 First_Cash_Seller
+aldebaran 135 128 Continental Messenger#a
+aldebaran 136 133 Bulletin Board#clocktow
+aldebaran 136 135 Smile Helper
 aldebaran 137 119 Kafra Employee#pRO_Prem
 aldebaran 138 102 Cool Event Voting Staff
 aldebaran 143 119 Kafra Employee
+aldebaran 143 136 Benjamin Hole 
 aldebaran 145 102 Kafra Voting Staff#alde
 aldebaran 146 106 Bulletin Board#alde
 aldebaran 146 109 Maroll Battle Recruiter
+aldebaran 146 124 Village Girl
 aldebaran 149 97 Hohenshweingaw
 aldebaran 152 97 Noischvanstein
 aldebaran 165 107 Chef Assistant
 aru_gld 80 41 Scheit
 aru_gld 80 52 Scheit
 cmd_fild01 55 160 Heap of Earth
+comodo 112 182 Munak's grandma
+comodo 135 299 Young Man#sch
+comodo 139 184 Scholar
+comodo 152 184 Bafhail#comodo
+comodo 163 280 Comodo alcohol
+comodo 164 291  Comodo people
 comodo 167 146 Stylist
 comodo 170 137 Raede
 comodo 171 137 Heis
+comodo 176 350 Comodo Tour Leader
 comodo 180 153 Snowtora#1
 comodo 185 153 Kafra Employee#pRO_Prem
 comodo 187 153 Hu La Hoop Lady
@@ -142,6 +157,7 @@ geffen 196 167 Young Woman#sch
 geffen 203 116 Guide
 geffen 203 123 Kafra Employee
 geffen 203 146 Citizen
+geffen 46 164 Bysliter#BLS
 geffen 59 143 Lady
 geffen 61 174 Sign#M
 geffen 67 180 New_Mage_Manager#M
@@ -199,6 +215,10 @@ lighthalzen 297 239 Pilia#lhz_01
 lighthalzen 307 224 Guide
 lighthalzen 312 233 Beggar#lhz_02
 lighthalzen 313 301 Sewer Pipe#lt
+mjo_dun02 78 298 Fearsome Demon#ppl1
+mjolnir_02 76 362 Bulletin Board#coal
+mjolnir_02 82 362 Kafra Employee
+mjolnir_02 85 362 Blacksmith Miner
 moc_fild19 107 101 Bulletin Board#sphinx
 moc_prydb1 39 129 Thief Guide
 moc_ruins 115 147 #ForeignMerchant4
@@ -236,6 +256,7 @@ morocc 143 63 Ragged Man#nd
 morocc 147 101 Odin's Cash manager#phi
 morocc 149 105 First_Cash_Seller
 morocc 150 108 Second_Cash_Seller
+morocc 150 120 Soldier - Morroc#07rhea
 morocc 152 110 Bulletin Board#morroc
 morocc 153 286 Guide
 morocc 153 53 Kafra Employee#pRO_Prem
@@ -395,6 +416,7 @@ prontera 172 282 Cherry Blossom#08spring
 prontera 172 294 Cherry Blossom#08spring
 prontera 174 328 Yong Man#bard_q1
 prontera 179 192 #suprise_1
+prontera 183 333 Aelle#qsk_dan02
 prontera 202 122 Kid#sch
 prontera 218 211 Pet Groomer
 prontera 223 99 Soldier
@@ -408,8 +430,11 @@ prontera 232 313 Nun#sim02
 prontera 232 318 Pecopeco Trainer
 prontera 234 309 Soldier#sim02
 prontera 244 169 Leablem
+prontera 247 129 Jayon
 prontera 248 153 Doll Supplier
 prontera 248 212 Busy Boy#prt
+prontera 260 354 Woman#rosa ellenen
+prontera 262 353 Gravestone
 prontera 269 326 Clanux Heffron#hellion
 prontera 282 200 Kafra Employee
 prontera 282 208 East Gate-Guide
@@ -438,6 +463,8 @@ prt_church 103 76 Karna
 prt_church 108 124 Nun
 prt_church 111 112 Sister Linus
 prt_church 113 103 Praying Man
+prt_church 16 41 High Priest
+prt_church 27 24  Sacrificing Nun
 prt_church 87 127 Pastor#1011
 prt_church 89 108 Bard#sch
 prt_church 95 127 Knight of Temple
@@ -460,6 +487,11 @@ pvp_y_room 77 85 Guild Battle Guide
 pvp_y_room 78 85 Fight Square Reception 
 pvp_y_room 86 85 Fight Square Reception 
 ra_fild01 245 325 Suspicious Man#ra_in01
+schg_cas03 266 197 Bidblind
+schg_cas03 266 206 Bidblind
+schg_cas03 273 205 control device03#sch03_
+schg_cas03 283 197 Bidblind
+schg_cas03 320 283 Bidblind
 valkyrie 44 33 Teleporter
 valkyrie 44 39 Lord Knight#Valkyrie#
 valkyrie 44 42 High Priest#Valkyrie#
@@ -486,6 +518,7 @@ yuno 152 187 Kafra Employee
 yuno 153 113 Bulletin Board#juno
 yuno 153 191 Cool Event Voting Staff
 yuno 157 205 A craftsman of Juno
+yuno 158 183 Odin's Cash manager#phi
 yuno 162 191 Kafra Voting Staff#yuno
 yuno 163 187 Magic Tool Dealer
 yuno 164 183 First_Cash_Seller

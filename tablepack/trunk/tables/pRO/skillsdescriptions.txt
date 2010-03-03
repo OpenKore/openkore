@@ -618,7 +618,8 @@ an amount of zeny determined^FFFFFF   ^777777 by level of skill that is cast.^00
 [Lv 6]: ^777777Atk 400%, 600 zeny^000000
 [Lv 7]: ^777777Atk 450%, 700 zeny^000000
 [Lv 8]: ^777777Atk 500%, 800 zeny^000000
-[Lv 9]: ^777777Atk 550%, 900 zeny      ^000000[Lv 10]: ^777777Atk 600%, 1,000 zeny^000000
+[Lv 9]: ^777777Atk 550%, 900 zeny^000000
+[Lv 10]: ^777777Atk 600%, 1,000 zeny^000000
 #
 AC_OWL#
 Owl's Eye
@@ -8521,7 +8522,6 @@ ALL_WEWISH#
 Sing along with the Singing Crystal's tune:
 We wish you a Merry Christmas, and a Happy New Year!
 #
-
 ALL_ODINS_RECALL#
 Odin's Recall
 Description: ^777777Returns character to save point. Leaves debuff that will last 30 minutes. Skill cannot be used until debuff is gone.^000000

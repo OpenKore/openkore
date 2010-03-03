@@ -1,4 +1,16 @@
-﻿//Ep13
+﻿//-------------Ep13.2----------
+1@nyd.rsw#Nydhogg Nest#
+2@nyd.rsw#Nydhogg Nest#
+nyd_dun01.rsw#The violent's Wound#
+nyd_dun02.rsw#The violent's Wound#
+manuk.rsw#Mining town Manuk#
+man_fild02.rsw#Manuk Field#
+man_in01.rsw#Inside Manuk#
+splendide.rsw#Rapine Basecamp, Splandid#
+spl_fild01.rsw#Splandid Field#
+spl_in01.rsw#Inside the command post in Splandid#
+spl_in02.rsw#Inside Splandid#
+//Ep13
 bat_c01.rsw#Krieger von Midgards#
 bat_c02.rsw#Krieger von Midgards#
 bat_c03.rsw#Krieger von Midgards#
