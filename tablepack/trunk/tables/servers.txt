@@ -71,7 +71,7 @@ serverEncoding Western
 gameGuard 1
 
 [Indonesia - idRO: Thor - Legend - Fnc - Heroes]
-ip 202.43.167.66
+ip 202.43.167.67
 port 6900
 master_version 12
 version 2
@@ -393,13 +393,29 @@ version 20
 serverType kRO_RagexeRE_2009_11_04a
 serverEncoding Western
 
+
+# clientside: kRO_Sakexe_2009_06_17a (rmsserver-2009-06-17a.exe)
+# serverside: kRO_Sakexe_2009_04_08a (eA's latest Sakexe entry)
 [RMS]
 ip da4.ratemyserver.net
 port 6900
 private 1
 master_version 16
 version 20
-serverType kRO_Sakexe_2009_04_08a # rmsserver-2009-06-17a.exe
+serverType kRO_Sakexe_2009_04_08a
 serverEncoding Western
 charBlockSize 108
 addTableFolders tables\pserver\RMS
+
+
+# clientside: ? (2010-01-26aRagexeRE.exe)
+# serverside: ?
+[KoreRO]
+ip kronos.sca-gaming.net
+port 6900
+private 1
+master_version 20
+version 23
+serverType kRO_RagexeRE_2009_12_22a
+serverEncoding Western
+charBlockSize 112
