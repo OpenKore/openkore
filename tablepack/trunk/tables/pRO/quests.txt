@@ -581,36 +581,36 @@ Talk with a guard captain of Midgard Alliance#
 You find a tree giant. You find a new creature. You think that you should report this to the alliance.#
 Talk with a guard captain of Midgard Alliance#
 
-2179#Continuous Research#SG_FEEL#QUE_NOIMAGE#
-ｸｶｴｩﾅｩﾀﾇ ｰ戓ﾐﾀﾚ ｸｮﾆ莢｡ｵ蟠ﾂ ｹﾌｵ蟆｡ｸ｣ｵ蠡ﾇ ｱ､ｼｮﾀｻ ｿﾏｸ・ ｱﾗｰﾍﾀｺ ﾅｽｻ篋ｦ ﾅ・ﾘ ｷ・ｹﾌｵ蟆｡ﾃ・ｿﾕｱｹﾀﾇ ｹｦｸ｣ｴﾒ ｻ・ﾆｿ｡ｼｭ ｹﾟｰﾟﾇﾒ ｼ・ﾀﾖｴﾙｰ・ﾇﾏｿｴｴﾙ.#
-ﾁ､ﾁｦｵﾇﾁ・ｾﾊﾀｺ ｱ､ｼｮ 20ｰｳ#
+2179#Research Continues#SG_FEEL#QUE_NOIMAGE#
+Scientist from Manuk, Repegard wants to bring him a Mineral of the Midgards. The Mineral can be found in Mt. Mjolnir by using a radar.#
+10 Rough Minerals#
 
-2180#Continuous Research#SG_FEEL#QUE_NOIMAGE#
-ｸｶｴｩﾅｩﾀﾇ ｰ戓ﾐﾀﾚ ｸｮﾆ莢｡ｵ蟠ﾂ ｹﾌｵ蟆｡ｸ｣ｵ蠡ﾇ ｱ､ｼｮﾀｻ ｿﾏｸ・ ｱﾗｰﾍﾀｺ ﾅｽｻ篋ｦ ﾅ・ﾘ ｽｴｹﾟﾃ・ｹﾟｵ蠡ﾇ ｿ・鯊ﾌ ｻ邏ﾂ ｰ・ﾁﾖｺｯｿ｡ｼｭ ｹﾟｰﾟﾇﾒ ｼ・ﾀﾖｴﾙｰ・ﾇﾏｿｴｴﾙ.#
-ﾁ､ﾁｦｵﾇﾁ・ｾﾊﾀｺ ｱ､ｼｮ 5ｰｳ#
+2180#Research Continues#SG_FEEL#QUE_NOIMAGE#
+Scientist from Manuk, Repegard wants to bring him a Mineral of the Midgards. The Mineral can be found in the Schubaltzwald, where a dragon dwells by using a radar.#
+5 Rough Minerals#
 
-2181#Continuous Research#SG_FEEL#QUE_NOIMAGE#
-ｸｶｴｩﾅｩﾀﾇ ｰ戓ﾐﾀﾚ ｸｮﾆ莢｡ｵ蟠ﾂ ｹﾌｵ蟆｡ｸ｣ｵ蠡ﾇ ｱ､ｼｮﾀｻ ｿﾏｸ・ ｱﾗｰﾍﾀｺ ﾅｽｻ篋ｦ ﾅ・ﾘ ｾﾆｷ邉ｪﾆ酖ﾇ ﾅ荳｣ ﾈｭｻ・ﾁﾖｺｯｿ｡ｼｭ ｹﾟｰﾟﾇﾒ ｼ・ﾀﾖｴﾙｰ・ﾇﾏｿｴｴﾙ.#
-ﾁ､ﾁｦｵﾇﾁ・ｾﾊﾀｺ ｱ､ｼｮ 5ｰｳ#
+2181#Research Continues#SG_FEEL#QUE_NOIMAGE#
+Scientist from Manuk, Repegard wants to bring him a Mineral of the Midgards. The Mineral can be found in the Arunafelts, near the Thor Vocano, by using a radar.#
+5 Rough Minerals#
 
-2182#Continuous Research#SG_FEEL#QUE_NOIMAGE#
-ｰ戓ﾐﾀﾚ ｸｮﾆ莢｡ｵ蟠ﾂ ｴ鄂ﾅｿ｡ｰﾔ ｰｨｻ邵ｦ ﾇ･ﾇﾏｸ・ｾﾕﾀｸｷﾎｵｵ ｸｹﾀｺ ｵｵｿｻ ｹﾙｶﾙｰ・ﾀ・ﾟｴﾙ.#
+2182#Research Continues#SG_FEEL#QUE_NOIMAGE#
+Scientis Repegard is thankful for your help and look forward to have your assistance soon after.#
 #
 
 2183#Perfume#SG_FEEL#QUE_NOIMAGE#
-ｱﾗｷ邏ｩﾀﾌｴﾂ ﾇﾃｶｮｷﾎｺﾎﾅﾍ ｾﾋﾇﾁﾇ・ﾓ ｲﾉｾｾｸｦ ｹﾞｾﾆ ﾈｯｰ戝､ﾈｭ ﾀ蠧｡ｸｦ ﾅ・ﾘ ｲﾉﾀｻ ﾇﾇｿﾀｶ・ﾇﾟｴﾙ.# 
-ｱﾗｷ邏ｩﾀﾌｿ｡ｰﾔ ｾﾋﾇﾁﾇ・ﾓﾀﾇ ｲﾉ ﾀ・ﾞ#
+Grunui told me to get a Alfheim flower seed from Flowery and use the Environment Purification Equipment to bloom the flower.# 
+Deliver the Alfheim Flower to Grunui#
 
 2184#Perfume#SG_FEEL#QUE_NOIMAGE#
-ｱﾗｷ邏ｩﾀﾌｴﾂ Perfumeｸｦ ｸｸｵ魏ﾚｳ・・ﾀ眇ﾃ ｱ箒ﾙｷﾁ ｴﾞｶ・ﾇﾟｴﾙ.#
+Grunui told me to wait while he's making a perfume.#
 #
 
 2185#Perfume#SG_FEEL#QUE_NOIMAGE#
-ｱﾗｷ邏ｩﾀﾌｴﾂ Perfumeｸｦ ｰﾇｳﾗｸ・ｺｴｻ邨鯊ｻ ﾄ｡ｷ睇ﾏｰ・ｰ皺弴ｦ ｾﾋｷﾁｴﾞｶ・ｸｻﾇﾟｴﾙ.#
-ﾁﾄﾀﾖｴﾂ ﾀ・ｴ 5ｸ暠｡ｰﾔ Perfume ｻ鄙・
+Grunui handed over the perfume and told me to use it to cure soldiers and come back with the result.#
+Use the perfume on 5 exhausted soldiers.#
 
 2186#Perfume#SG_FEEL#QUE_NOIMAGE#
-ｽｺﾇﾃｶ遧蠡ﾇ ｱﾗｷ邏ｩﾀﾌｴﾂ ｴ鄂ﾅｿ｡ｰﾔ ｰｨｻ邵ｦ ﾇ･ﾇﾟｴﾙ.#
+Grunui in Splendide showed his gratitude.#
 #
 
 // ｱ霏ｺｵｿ
@@ -1077,9 +1077,10 @@ So this is the Agit? Let's find Z Gang members and beat'em up!#
 You captured Z Gang and obtained the Book of Forbidden Mystery. Go back to the Retired Soldier in Prontera.#
   #
 
-3135#ｼｼｰ霈ﾇ ｼﾕｻ・- ｵﾕﾁﾇ ｾﾈﾁ､ﾈｭ#SG_FEEL#QUE_NOIMAGE#
-ｴﾏｵ衒｣ｱﾗﾀﾇ ｱﾗｸｲﾀﾚｷﾎ ﾀﾎﾇﾘ ﾀﾌｱﾗｵ蠍ﾇ ｳｪｹｫｴﾂ ｽｱｰﾔ ｳｴﾁ・ｾﾊﾀｻ ｻｳｸｦ ｾ嶸ﾙ. ｼｼｰ霈ﾇ ﾀﾚﾁ､ｴﾉｷﾂﾀｺ ｾ・3ﾀﾏｵｿｾﾈ ﾁﾓ ｵﾉ ｿｹﾁ､ﾀﾌｴﾙ.#
+3135#Yggdrasil damaged - Stabilization of the Lair#SG_FEEL#QUE_NOIMAGE#
+Yggdrasil Tree is critically wounded by the Shadow of Nydhogg. Yggdrasil's self-purification power will last for approximately 3days.#
   #
+
 
 // ｿﾀｳｲｰ・
 //----------------------ﾇ蠻ﾍﾀ・・-----------------------------
@@ -1528,81 +1529,122 @@ Search for another seal inside the tower#
 When the 4th key was found, you also found Varmunt's journal. Maybe this journal could be the one that Rekenber was looking for! I must tell Burled about this.#
 Deliver Varmunt's journal to Burled#
 
-//--- ｽﾅｱﾔｸﾚ ﾁｦﾀﾛ 2008ｳ・ｰ暙鄲ﾌｹﾟｸﾓｸｮﾇﾉ
+//--- New Hat Making 2008 Cat Foot Hairpin
 
-7054#Mue's Favor - Teach them a lesson!#SG_FEEL#QUE_NOIMAGE#
-You've got a mission to warn the Kobold Archer to protect the Wild Rose's home.#
-Beat up 1000 Kobold Archers.#
+7054#Mu's Request - Nemesis#SG_FEEL#QUE_NOIMAGE#
+I've accept Mu's request to warn Kobold Archers to protect the Wild Rose's Home. But that 'Warning' was... .. ?#
+Punish 1,000 Kobold Archers.#
 
-7055#Mue's Favor - Not the cat!#SG_FEEL#QUE_NOIMAGE#
-Mue's asking for one more favor! Since you're protecting Wild Rose, you are never to hit Wild Rose....#
-Don't hit the Wild Rose!#
+7055#Mu's Request - Not the CAT!#SG_FEEL#QUE_NOIMAGE#
+One more request from Mu! You are punishing Kobold Archers for Wild Rose. Of course, you shouldn't harm any Wild Rose. If you break the rule....#
+Do not hit any Wild Rose!#
 
-//--- ep13.2 [ｸﾞｽﾅﾀ褜
+//--- ep13.2 [Messenger]
 
-7056#Messenger - Arch's Favor#SG_FEEL#QUE_NOIMAGE#
-At the Raffine's post called, 'Splendide,' you met a Raffine, 'Arch' who asked you to find the friend, 'Terra.'  He says Terra usually leaves traces by plaiting straws.#
-Find the traces of Terra.#
+7056#Messenger - Arc's Request#SG_FEEL#QUE_NOIMAGE#
+Arc' from the Laphine's Outpost, 'Splendide' have requested the search of his friend 'Terra'. Terra has a habit of leaving traces by tying leaves as she moves.#
+Look for Terra's traces.#
 
-7057#Messenger - Arch's Favor#SG_FEEL#QUE_NOIMAGE#
-You've found a trace near Splendide. Looks like the traces are taking the direction of South. Let's keep looking.#
-Find the traces of Terra.#
+7057#Messenger - Arc's Request#SG_FEEL#QUE_NOIMAGE#
+Found some traces of Terra near the Splendide. Traces lead to the South. Let's keep searching.#
+Look for Terra's traces.#
 
-7058#Messenger - Arch's Favor#SG_FEEL#QUE_NOIMAGE#
-You fell on the place between giant roots of a tree. You've found a giant tribe called 'Sapa,' hard as rocks and big as mountain. Seems like there's no more traces left for Terra.#
-Report to Arch#
+7058#Messenger - Arc's Request#SG_FEEL#QUE_NOIMAGE#
+Fell through the huge tree's root during the search for the traces of Terra. In the huge underground cave, I found a petrified giant called 'Sapha'. There's no more traces of Terra..#
+Go back to Arc and report the progress.#
 
 7059#Messenger - Terra's Whereabouts#SG_FEEL#QUE_NOIMAGE#
-Arch's worrying about Terra went off with Bradium from the Lab without permission. Terra could have gone to 'Sapa' in that 'Cave' with Bradium.#
-Go find Terra..#
+Arc is worried about Terra who took a bradium sample from the research facility without permission. Terra might have gone to that 'Sapha' in the 'Cave' with .#
+In search for Terra..#
 
 7060#Messenger - Terra's Whereabouts#SG_FEEL#QUE_NOIMAGE#
-When you arrived to see Sapa, Terra has already long gone. Very bright pieces of mineral were scattered around the hardened giant. These pieces must be the Bradium.#
-If Bradium is related.. would it be Sapa?#
+Terra was already gone when I arrived at the Cave. Bright fragments of an ore was scattered around the petrified Sapha.#
+Should it be Sapha related to the bradium｡ｦ?#
 
 7061#Messenger - Terra's Whereabouts#SG_FEEL#QUE_NOIMAGE#
-In the town of 'Sapa,' you overheard something at 'Manuk,' that a 'Raffine' is captured.#
-You must find the captured Raffine.#
+Manuk' the Giant Tribe 'Sapha's village. I overheard Saphas talking about 'Laphine' captive in a prison.#
+Look for the captured Laphine.#
 
 7062#Messenger - Terra's Whereabouts#SG_FEEL#QUE_NOIMAGE#
-You heard that this Raffine captured in Manuk is injured.  Maybe you'll be able to see her if you get some remedy.#
-Ask Arch#
+Captive Laphine in the town of Manuk is injured. Looks like if I come back with the method to cure her, I might be able to see her.#
+Ask Arc about the cure.#
 
 7063#Messenger - Terra's Whereabouts#SG_FEEL#QUE_NOIMAGE#
-You found out that 'Yggdrasil berry' is the best remedy for the Raffine. You should collect some Yggdrasil berries around the gigantic tree.#
-Collect at least 6 Yggdrasil berries#
+Yggdrasilberry'is the ultimate cure for Laphine. I should collect some Yggdrasilberries near the Huge Tree.#
+Collect more than 6 Yggdrasilberries.#
 
 7064#Messenger - Terra's Whereabouts#SG_FEEL#QUE_NOIMAGE#
-You've collected the last Yggdrasil berry. You must deliver these to Snorren at Manuk.#
-Deliver the Yggdrasil berries to Snorren#
+Last Yggdrasilberry collected. Let's bring these cures to Snorren at Manuk.#
+Deliver Yggdrasilberries to Snorren#
 
 7065#Messenger - Terra's Whereabouts#SG_FEEL#QUE_NOIMAGE#
-You could talk to the captured Raffine through Snorren's help. You must interpret the conversation with the Raffine to Snorren and Luik.#
-Conversation with Raffine#
+Now I can talk to captive Laphine thanks to Snorren. I have to interpret between captive Laphine and Snorren & Luik.#
+Talk with Laphine#
 
 7066#Messenger - Prove the Truth#SG_FEEL#QUE_NOIMAGE#
-Luik doubts Terra's story about discovering the gigantic cave inside the roots of gigantic tree and the dying Sapa. Snorren suspects that the hardened Sapa might be his friend, 'Ogen' and requests to see the evidence.#
-Go back to the cave and find some evidences#
+Luik doubts Terra's story about discovering a huge cave under roots of the tree, and dying Sapha. He said that that petrified Sapha may be his friend 'Ogen' and he demanded a solid evidence to prove herself.#
+Go back to the Cave and look for an evidence.#
 
 7067#Messenger - Prove the Truth#SG_FEEL#QUE_NOIMAGE#
-You've got some 'Bradium's  fragments' from the hardened body of Sapa and a 'Shabby Muffler.' These will just do!#
-Show the evidences to Luik and Snorren#
+Obtained 'Fragments of Bradium' and 'Shaggy Muffler' from the body of petrified Sapha. Let's go back to Manuk and show these as the evidence.#
+Show a piece of evidence to Luik and Snorren.#
 
 7068#Messenger - Prove the Truth#SG_FEEL#QUE_NOIMAGE#
-Looks like the 'Shabby Muffler' is the one from a friend of Snorren's. It was also proved that Terra was really trying to save 'Ogen' with 'Bradium's fragments'. You and Snorren decided to go save Ogen.#
-Go to Ogen before it's too late#
+It looks like the 'Shaggy Muffler' does belong to Snorren's friend, 'Ogen'. Now it has been proved that Terra was trying to save Ogen. I decided to go back to the Cave with Snorren to save Ogen.#
+Get back to Ogen before it's too late.#
 
-7069#Messenger - Too late!#SG_FEEL#QUE_NOIMAGE#
-Looks like you're too late for saving Ogen. Snorren turned his back and started to walk back to the town. You should pick up Terra.#
+7069#Messenger - Too Late!!#SG_FEEL#QUE_NOIMAGE#
+It looks like we were too late to save Ogen. Snorren was in great grief and went back to the town. I should go too to bring Terra back.#
 #
 
-7070#Messenger - Terra's Return#SG_FEEL#QUE_NOIMAGE#
-You heard from Snorren that Terra has been released.#
+7070#Messenger - Return of Terra#SG_FEEL#QUE_NOIMAGE#
+Snorren spoke of Terra freed just before I arrive at the town.#
 #
 
 7071#Messenger - Invitation#SG_FEEL#QUE_NOIMAGE#
-Arch invited you to Terra's residence to talk about the details. Terra's home is one of hundreds of Yai hanging on the leaves, located at the South-East area of the post.#
-Go to Terra's Yai.#
+Arc invited me to Terra's home. Terra's home is one of many Yais hanging on the leaf. It's located Southern-East direction of Splendide.#
+Let's head for the Terra's Yai.#
+
+//----Manuk Galten - Hunt down Lata and Duneir.
+7074#Proof of Bravery - Lata#SG_FEEL#QUE_NOIMAGE#
+To prove my bravery to the Galten of Manuk, 'Strumm', I decided to go and hunt down 'Lata'. Lata can be found in the deep cave called the Wound of the Rampage.#
+Kill 1 Lata#
+
+7075#Prook of Bravery - Duneir#SG_FEEL#QUE_NOIMAGE#
+To prove my bravery to the Galten of Manuk, 'Strumm', I decided to go and hunt down 'Duneir'. Duneir can be found in the deep cave called the Wound of the Rampage.#
+Kill 1 Duneir#
+
+//---Expedition Camp Wanted
+7076#Wanted - Mop-up the Remnants#SG_FEEL#QUE_NOIMAGE#
+Wanted by Lyn to mop-up the Remnants of Dandellion whom ran off to Ash Vacuum. Runaway Dandellion should be hiding inside of the Wound of the Rampage.#
+Kill all the Remnants of Dandellion and report back to Pinedel.#
+
+//---Expedition Camp Cute Pet Research
+7077#For the Cute Pet - Collect the egg of Draco#SG_FEEL#QUE_NOIMAGE#
+Collect the egg of Draco for 'Pinedel'.#
+Collect 10 Eggs of Draco#
+
+7078#For the Cute Pet - See you again next time#SG_FEEL#QUE_NOIMAGE#
+Pinedel requires lots of experimental samples for his research on Cute Pets. Let's go back after a day passed.#
+#
+
+//---Manuk - Collect purified bradium
+7079#Mysterious Mineral - Purified Bradium#SG_FEEL#QUE_NOIMAGE#
+Help the Engineer of Manuk to get rid of Bradium Golems and collect 'Purified Bradium'.#
+Collect 20 Purified Bradiums from the Bradium Golem.#
+
+7080#Mysterious Mineral - See you again next time#SG_FEEL#QUE_NOIMAGE#
+Bradium is essential for Sapha people. Let's go back to Engineer of Manuk after a day passed.#
+#
+
+//--- Splendide - Collect materials for a Yai
+7081#Craftmanship - Decoration materials for a Yai#SG_FEEL#QUE_NOIMAGE#
+Help the Yai Craftman of Splendide to collect decoration materials.#
+Collect 15 Fluorescent Liquids, 15 Crystalized Teardrops.#
+
+7082#Craftmanship - See you again next time#SG_FEEL#QUE_NOIMAGE#
+Decoration of Yai is very important for Laphine people whom values beauty. Let's go back to Craftman of Splendide after a day passed.#
+#
 
 // ﾀﾌｰ貍・
 //--------------------ｾ鋻・ﾅﾀ・・-------------------------------
@@ -2537,181 +2579,180 @@ Participate in the meeting#
 // ﾆｩﾅ荳ｮｾ・ﾄｺﾆｮ : ｰﾋｻ・(tu_sword.sc)
 
 8211#Shurank's Lecture#SG_FEEL#QUE_NOIMAGE#
-"Have you been learning the art of using Bash? I fervently believe that the Bash skill is the essense of Swordmanship!"#
-Master the skill, Bash, and return to Shurank#
+You haven't learned Bash yet. You are not ready for｡ｦOh well, you still have bright days ahead of you. But, you should learn Bash first. ^FF0000Bash^000000 is the basic of Swordmanship. Don't forget!!#
+Go back to Shurank after learning the Skill [Bash].#
 
 8212#Shurank's Lecture#SG_FEEL#QUE_NOIMAGE#
-"I see that you understand a little bit about the Bash skill. But still, it's not enough."#
-Master the skill, Bash, and return to Shurank#
+Hmm, You've finally learned Bash, but still naive. Keep training! I will be here always.#
+Go back to Shurank after learning the higher level of the Skill [Bash].#
 
 8213#Shurank's Lecture#SG_FEEL#QUE_NOIMAGE#
-"I see that you've gained some proficiency with the Bash skill. But still, it's not enough."#
-Master the skill, Bash, and return to Shurank#
+Ho.. Now you are pretty good at Bash huh? However, it's still not enough. Keep up with the training! I will be here always.#
+Go bak to Shurank after mastring the skill [Bash].#
 
 8214#Shurank's Lecture#SG_FEEL#QUE_NOIMAGE#
-"Those calluses...! Only a master of the Bash skill has those kinds of hands. Great work, Swordman. I'm very impressed."#
+Ho.. You've mastered [Bash]! Impressive. However, do not get cocky. Keep Training! You've just finished the basics and you have long way to go.#
 Listen to Shurank's Lecture#
 
 8215#Shurank's Lecture#SG_FEEL#QUE_NOIMAGE#
-"By now, I believe that you know enough about the Increase HP Recovery skill. Next time, I shall teach you what I know about the Provoke skill."#
+Let's finish talking about Improved HP Recovery, and｡ｦwhat did I try to tell you? Oh right, Provoke! Let's begin with the lecture on Provoke. Before that, I need some preparation for the lecture. Please talk to me again.#
 Listen to Shurank's Lecture#
 
-8216#Shurank's Order#SG_FEEL#QUE_NOIMAGE#
-"I wish for you to find a Knight named ^5D478BDequ'ee^000000 in ^5D478BGeffen^000000. Listen carefully, this is the message: ^0000FFWhat happened to the murderer?^000000 ^0000FFDid you find out who he is? If you did, what are we supposed to do now?^000000"#
-Deliver Shurank's message to Dequ'ee in Geffen#
+8216#Shurank's Errands#SG_FEEL#QUE_NOIMAGE#
+Find the Knight  ^FF0000 DeQuey^000000 who went off to ^FF0000Geffen^000000 to investigate and deliver my words. ^0000FF How is your investigation on the matter with Assassin? Did you find out who he/she is? If you did, what should we do now?^000000 ..is my message.#
+Find DeQuey in Geffen and deliver Shurank's message.#
 
-8217#Dequ'eeﾀﾇ Message#SG_FEEL#QUE_NOIMAGE#
-"So Shurank is asking, 'What happened to the murderer? Did you find out who he is? If you did, what are we supposed to do now?' We haven't found out who the murderer is for sure. However, we have a list of suspects and we'll figure it out soon.?#
-Deliver Dequ'ee's message to Shurank in Izlude#
+8217#DeQuey's Message#SG_FEEL#QUE_NOIMAGE#
+So that's what Shurank asked huh? I see｡ｦ tell him this, Not yet, but it won't take long, I look forward to your help when the time comes. over!#
+Deliver DeQuey's message to Shurank in Izlude.#
 
 8218#Shurank's Lecture#SG_FEEL#QUE_NOIMAGE#
-You haven't learned Provoke yet? Now I ask that you train yourself in the use of Provoke.#
-Master the skill, Provoke, and return to Shurank#
+Hmm｡ｦYou haven't learned Provoke yet. Basics are good, but you should be able to use such practical skills to be a true swordman! From now on, concentrate on training Provoke.#
+Learn the skill [Provoke] and go back to Shurank#
 
 8219#Shurank's Lecture#SG_FEEL#QUE_NOIMAGE#
-"Hm. You seem to have a basic understanding of Provoke, but let me give you a few details so that you can better understand the use of that skill."#
-Master the skill, Provoke, and return to Shurank#
+Hmm. So you've learned Provoke... But it's not enough. Concentrate on training Provoke further more.#
+Learn the higher level of the skill [Provoke] and go back to Shurank#
 
 8220#Shurank's Lecture#SG_FEEL#QUE_NOIMAGE#
-"Ah, I see that you have a fairly good understanding of the Provoke skill. Next time we speak, I will tell you what I know about the ^5D478BEndure^000000 skill. When you're ready to learn, come back to me."#
-Listen to Shurank's Lecture#
+Hmm｡ｦwell then for the next lecture｡ｦhmm Right, I will teach you ^FF0000 Endure^00000. Go outside and get some fresh air, then come back to talk to me again.#
+Listen to Shurank's lecture#
 
 8221#Shurank's Lecture#SG_FEEL#QUE_NOIMAGE#
-"Activating Endure enables you to shrug off attacks. You'll receive damage, but enemy attacks will not impede you as much. This means you can counter enemy attacks or escape if you need to. Alright. Now I want you to train in the use of the Endure skill. You can become a great Swordman."#
-Master the skill, Endure, and return to Shurank#
+Skill Endure is basically a skill to tolerate enemy's attack. In other words, this skill will make you able say 'I'm fine!' even you are hardly beaten by your enemies. From now on, concentrate on training Endure!!#
+Learn the skill [Endure] and go back to Shurank#
 
-8222#Shurank's order#SG_FEEL#QUE_NOIMAGE#
-"Ah, once again, I have another task for you to perform. Please visit Dequ'ee in Geffen since it seems he has something to ask of you. Hurry and meet with Dequ'ee and return to me when you complete whatever it is that he wishes for you to do."#
-Go to Dequ'ee#
+8222#Shurank's Errands#SG_FEEL#QUE_NOIMAGE#
+Lecture put on hold for now. You have a work to do. It's similar to what you've done for me last time. You remember DeQuey from the last time? He need your help. Make haste. Come back to me after you are done helping him with his work...#
+Go see DeQuey.#
 
-8223#Dequ'ee's order#SG_FEEL#QUE_NOIMAGE#
-"Now, I want you to go to Morroc and interrogate four suspects. Their names are ^5D478BMuetro^000000, ^5D478BGeil^000000, ^5D478BHans^000000 and ^5D478BBankley^000000. It shouldn't be too difficult. After you speak to all of them, come back and report to me."#
-Return to Dequ'ee after finding the evidence in Morocc#
+8223#DeQuey's Errands#SG_FEEL#QUE_NOIMAGE#
+Go to ^FF0000 Morocc. And find these people, Mutro, Gale, Hans, and Bangkley^000000. Then find out who is the real assassin! That's the mission given to you. Talk to those four guys and come back to me.#
+Find the evidence of Assassin and go back to DeQuey.#
 
-8224#The clue#SG_FEEL#QUE_NOIMAGE#
-TheisWesomeof...,Alright, great. Now all we have to do is figure out what all of this means. This is going to be really difficult. We have to figure this out, it's the only clue that we have....#
+8224#Evidence of Criminal#SG_FEEL#QUE_NOIMAGE#
+Jakledaisajeungmyutgyuneum, basasodahechiwhoukra, euibaenomsalneumga, yongneunleeguearmlaguhgaeduh...  This sure is strange words. What does this mean? Figure something out. I don't have a clue. But I understand that this is the important clue to find the criminal.#
  #
 
-8225#Dequ'ee's Reasoning#SG_FEEL#QUE_NOIMAGE#
-"Alright! It looks like Bankley is the murderer! Although we can't trust this 100%, this evidence is pretty conclusive. Hurry over to Morroc and monitor Bankley in case he does anything desperate. If something happens, report to me right away!"#
-Watch Bankley closely in Morocc#
+8225#DeQuey's Inference#SG_FEEL#QUE_NOIMAGE#
+Bangkley is the one!!! He is the Assassin!! Go to Morocc right away and watch over him! Report to me if anything happens!#
+Keep an eye on the movements of Bangkley in Morocc.#
 
-8226#Bankley's Death#SG_FEEL#QUE_NOIMAGE#
--He's dead!  Bankley had a sad, pitiable expression on his face. Since the color is still fresh in his cheeks, he died only a little while ago. here is a long, deep wound in his chest, and a blood drenched knife is clenched in his right hand.-#
-Report Bankley's Death to Dequ'ee#
+8226#Death of Bangkley#SG_FEEL#QUE_NOIMAGE#
+He's dead. His face shows resentment and sorrow as if he is falsely accused. By the look of his spilling blood, he seems like he hasn't been dead for a long time. There's deep stabbing wound on his chest and his right hand is holding a knife covered with bloods.-#
+Report DeQuey of Bangkley's death.#
 
 8227#Return to Shurank#SG_FEEL#QUE_NOIMAGE#
-"Suicide...? Something shady's going on here! As for the other three suspects, I'll make sure that they're monitored by members of the Swordman Association. It looks like this case is closed for now. Once again, thanks for your help. Why don't you report back to Shurank now? I guess he still wants to show you the ropes of Swordmanship."#
-Return to Shurank#
+There's some concelaed circumstances behind this, but we can't do anything for now｡ｦOkey then. You were in middle of the lecture, aren't you? Go back to Shurank. You did a great job. Thank you.#
+Go back to Shurank#
 
 8228#Shurank's Lecture#SG_FEEL#QUE_NOIMAGE#
-"This will be my final lecture to you. Please listen carefully as I tell you all about Magnum Break."#
+I will explain on Magnum Break for the last time. I need some preparation, so talk to me again.#
 Listen to Shurank's Lecture#
 
 // ﾆｩﾅ荳ｮｾ・ﾄｺﾆｮ : ｻﾎ (tu_merchant.sc)
 
-8229#Guarnien's Lecture#SG_FEEL#QUE_NOIMAGE#
-"You can't really be a Merchant if you can't even carry around goods to sell. Increase Weight Limit skill up to Level 4. After that, we can talk more about becoming a true Merchant."#
-Return to Guarnien after mastering the skill, Increase Weight Limit#
+8229#Garning's Lecture#SG_FEEL#QUE_NOIMAGE#
+You are not ready to learn the way of Merchant. The Basics of Merchant is.. ^FF0000 Enlarge Weight Limit^000000 Skill! Level up your [Enlarge Weight Limit] Skill to Lv. 4. and we will start with your study.#
+Learn the [Enlarge Weight Limit] skill upto Lv. 4 and go back to Garning.#
 
-8230#Guarnien's Lecture#SG_FEEL#QUE_NOIMAGE#
-"Item Appraisalｰ・I'll talk about the Mammonite skill, just a basic skill as Item Appraisal. For now, let me take a little bit of a break from all of this arduous lecture."#
-Listen to Guarnien's Lecture#
+8230#Garning's Lecture#SG_FEEL#QUE_NOIMAGE#
+Next time, I will explain how to appraise items and the basic skill, Mammonite. Till then, take a break! Come back when you are ready.#
+Listen to Garning's lecture.#
 
-8231#Guarnien's Lecture#SG_FEEL#QUE_NOIMAGE#
-"Now, I was going to tell you about ^FF0000Discount^000000 skill, right?"#
-Listen to Guarnien's Lecture#
+8231#Garning's Lecture#SG_FEEL#QUE_NOIMAGE#
+Next time, I will teach you ^FF0000 Discout^000000 skill! Stay tuned!#
+Listen to Garning's lecture#
 
-8232#Guarnien's Lecture#SG_FEEL#QUE_NOIMAGE#
-"Alright! Now, in order to become closer towards becoming a true Merchant, I want you to learn the Discount skill up to Level 4."#
-Return to Guarnien after mastering the skill,  Discount#
+8232#Garning's Lecture#SG_FEEL#QUE_NOIMAGE#
+Come back after learning Discount skill upto Lv.4! I would like you to master the skill, but we have a lot of things to cover... So.. Lv. 4!!! It's ok if you go beyond Lv.4, but not less!#
+Learn the skill [Discount] beyond Lv. 4 and go back to Garning.#
 
-8233#Guarnien's Lecture#SG_FEEL#QUE_NOIMAGE#
-"Alright, my next lesson will hopefully offer you a bit more of a challenge. Come back when you think you're ready, alright?"#
-Listen to Guarnien's Lecture#
+8233#Garning's Lecture#SG_FEEL#QUE_NOIMAGE#
+You've gotten this far, I will give you some test. It's a simple one..don't worry. Come back after you are ready..HuHuHu.#
+Listen to Garning's lecture#
 
 8234#Prontera Market Research#SG_FEEL#QUE_NOIMAGE#
-"You'll find some NPCs selling 10 Red Potions in Prontera. Your task is to buy the potions for the cheapest price."#
-Buy 10 bottles of the cheapeast Red Potion in Prontera and return to Guarnien#
+Go to the City of Prontera and buy 10 Red potions! I don't mean just buy them from anywere, you have to find cheapest price and buy them. Of course, you have to buy them from NPC, not players.#
+Buy 10 Red Potions at the cheapest price and go back to Garning.#
 
-8235#Guarnien's Lecture#SG_FEEL#QUE_NOIMAGE#
-"Let me tell you about ^871F78Over Charge^000000."#
-Listen to Guarnien's Lecture#
+8235#Garning's Lecture#SG_FEEL#QUE_NOIMAGE#
+Ok, then next time, I will lecture on  ^FF0000 Overcharge^000000 skill. hahaha.#
+Listen to Garning's lecture#
 
-8236#Guarnien's Lecture#SG_FEEL#QUE_NOIMAGE#
-"Like Discount, Over Charge is a Passive skill that can be mastered at Skill Level 10. Personally, I think you should learn this skill for sure! For your next assignment, learn Over Charge up to Level 4. It shouldn't be too difficult to do."#
-Return to Guarnien after mastering the skill,  Over Charge#
+8236#Garning's Lecture#SG_FEEL#QUE_NOIMAGE#
+Overcharge is the skill which makes you able to sell items at higher price to NPC shops. It is an important skill for Merchants. So you should learn this skill up to certain level. Hmm｡ｦhow about level 4??#
+Learn the skill [Overchage] upto Lv.4 and go back to Garning.#
 
-8237#Guarnien's Lecture#SG_FEEL#QUE_NOIMAGE#
-"Push Cart skill. Be ready for this lecture, as Push Cart is one of the more important skills for a Merchant."#
-Listen to Guarnien's Lecture#
+8237#Garning's Lecture#SG_FEEL#QUE_NOIMAGE#
+Next time I will teach you about the Push Cart skill. This also is the essential skill for Merchants. So be prepared!...Oh well, come to think of it, there's no not-important skills...#
+Listen to Garning's lecture#
 
-8238#Guarnien's Lecture#SG_FEEL#QUE_NOIMAGE#
-"First off, you need to know Level 5 Increase Weight Limit before you can even learn the Push Cart skill. As you can see, this skill is an advanced form of the Increase Weight Limit skill. You can procure a PushCart from most Kafra Ladies for a certain fee. For now, why don't you learn the Push Cart skill up to Level 4?"#
-Return to Guarnien after mastering the Cart Skill#
+8238#Garning's Lecture#SG_FEEL#QUE_NOIMAGE#
+^FF0000 Push Cart^000000 skill will appear when you reach Lv.5 of [Enlarge Weight Limit] skill. It is not related with overchage or discount. Anyways, come back after you've reached Lv. 4 and beyond of this important skill!#
+Learn the skill [Push Cart] upto Lv.4 and go back to Garning.#
 
-8239#Guarnien's Lecture#SG_FEEL#QUE_NOIMAGE#
-"I believe it's time for my final lecture. I'll discuss the definitive skill of the Merchant: ^871F78Vending^000000."#
-Listen to Guarnien's Lecture#
+8239#Garning's Lecture#SG_FEEL#QUE_NOIMAGE#
+Hmm, then for the last time, I will teach you about the Vending skill. Come back when you are ready.#
+Listen to Garning's lecture.#
 
-8240#Guarnien's Lecture#SG_FEEL#QUE_NOIMAGE#
-"For your final assignment, I will ask you to learn the Vending skill up to Skill Level 4. Of course, once you do, I'll give you a little reward. I'll be waiting, so do your best~"#
-Return to Guarnien after mastering the Vending Skill#
+8240#Garning's Lecture#SG_FEEL#QUE_NOIMAGE#
+Last assignment for you. Learn the [Vending]skill beyond Lv. 4 and come back. I would like to give you a little present｡ｦanyways, come back after you've learned the skill.#
+Learn the skill [Vending] upto Lv.4 and go back to Garning.#
 
+// ep13 : Translator Quest (ep13_2_rhea.sc)
 
-// ep13 : ﾅ・ｪｱ・ﾄｺﾆｮ (ep13_2_rhea.sc)
+8241#Retrieve the Red Gem#SG_FEEL#QUE_NOIMAGE#
+Retrieved the Red Gem from a round pile of earth! #
+Bring back the Gem to the Rune Midgards Magical Scholar in Ash Vacuum.#
 
-8241#Collection of Red Jewel#SG_FEEL#QUE_NOIMAGE#
-You collected red jewel from a grave which stores voice on it!#
-You bring this stone to Magic scholar in Ash-Vacuum on Rune-Midgarts.#
+8242#Retrieve the Blue Gem#SG_FEEL#QUE_NOIMAGE#
+Retrieved the Blue Gem from a round pile of earth! #
+Bring back the Gem to the Rune Midgards Magical Scholar in Ash Vacuum.#
 
-8242#Collection of blue Jewel#SG_FEEL#QUE_NOIMAGE#
-You collected blue jewel from a grave which stores voice on it!#
-You bring this stone to Magic scholar in Ash-Vacuum on Rune-Midgarts.#
-
-8243#Otherworld language#SG_FEEL#QUE_NOIMAGE#
-There's an rach which use quite special language which isn't used in the Midgard. Three of kingdoms are all together investigating that language by ^0000ffthe language scholar in Arunafeltz^000000. We don't know how it progresses untill now.#
+8243#Language of the Other World#SG_FEEL#QUE_NOIMAGE#
+Outside of the Ash Vacuum, there's tribes which uses strange languages which are not used in the Midgards. Triple Alliance Investigation Committee is working together to research on those languages.... I wonder how is ^0000ff the Arunafeltz's Linguist^000000 is doing on his decoding process.#
  #
 
-8244#Fairy and Tree Giant#SG_FEEL#QUE_NOIMAGE#
-Just leave the united midgard and meet fairy and tree giant outside there. And then let me know what they're saying exactly.#
-Come back to the language scholar in Arunafeltz.#
+8244#Fairy and Wooden Giant#SG_FEEL#QUE_NOIMAGE#
+Go outside of the Expedition Camp, and meet the Fairy and the Giant and tell me exactly! I mean EXACTLY! What they've said.#
+Meet the Fairy and the Wooden Giant and go back to the Arunafeltz Linguist#
 
-8245#Language sample investigation#SG_FEEL#QUE_NOIMAGE#
-^0000ffMagic scholar in Rune-Midgarts^000000 said that he knows the way to investigate it, can you go to meet him then get the way? It's considerably difficult studies.Can you get my favor?#
+8245#Research on the Sample of Language#SG_FEEL#QUE_NOIMAGE#
+I heard that ^0000ffthe Rune Midgards Magical Scholar^000000 know the way to research on the samples of language, would you go see him and find out what it is? It's hard to continue with the research without proper samples of their language.#
 #
 
-8246#Language sample investigation#SG_FEEL#QUE_NOIMAGE#
-Did you meet two of races in otherworld? Assassin buired jewels around there. But be careful when you collect them, since they have some traps on them.#
-Come back to magic scholar with collected jewels.#
+8246#Research on the Sample of Language#SG_FEEL#QUE_NOIMAGE#
+So, you've met those two races of the Other World. Our assassins secretly buried gems near their villages. You need to be careful when retrieving the gem. Assassins installed some boobitraps along with the gems.#
+Retrieve the Gems and go back to the Rune Midgards Magical Scholar.#
 
-8247#Research progress#SG_FEEL#QUE_NOIMAGE#
-I would forward the extracted voice from jewels to the language scholar in Arunafeltz. If you are not that busy, can you check the language scholar's research progress.#
+8247#Check on the Research Progress#SG_FEEL#QUE_NOIMAGE#
+I will abstract the voices stored in these Gems and deliver them to the Arunafeltz Linguist. If you have time, please visit the Linguist and check on his progress.#
 #
 
-8248#Research progress#SG_FEEL#QUE_NOIMAGE#
-My research is going well now. The problem is,,how come we can produce the translation device which contains huge amount of info...Can you ask the opinion of engineering scholar in Schwartzvald?#
+8248#Check on the Research Progress#SG_FEEL#QUE_NOIMAGE#
+Decoding process is going just fine. But the problem is, how are you going to store all these information?... Would you go see the Schubaltzwald Mechanical Engineer and find out if he has any idea?#
 #
 
-8249#The save of info#SG_FEEL#QUE_NOIMAGE#
-Through the magic of the Rune-Midgarts, the info transformed into the magical power to be saved in jewels...Can I get the advice from the Magic scholar in Rune-Midgarts?#
+8249#How to store the information#SG_FEEL#QUE_NOIMAGE#
+I heard that though the power of the Magic spell of the Rune Midgards, we can convert an information into a magical power and store it inside of a Gem... I would like to hear the Rune Midgards Magical Scholar's sugguestion. Would you go ask him?#
 #
 
-8250#The stone in otherworld#SG_FEEL#QUE_NOIMAGE#
-Outside of Ash-Vacuum, there are ^0000ffconsiderably mysterious stones not found in the Midgard^000000. Can you bring me one of them?#
-You bring the Rune-Midgarts Magic scholar the unconfirmed stone.#
+8250#Mineral of the Other World#SG_FEEL#QUE_NOIMAGE#
+I heard that you can find a ^0000ff Mysterious Mineral which can not be found in the Midgards^000000 outside of the Expedition Camp, cold side of the field. I might be able to pull out something if I had that mineral｡ｦWould you go and find one mysterious mineral for me?#
+Obtain a Mysterious Unidentified Mineral and go back to the Rune Midgards Magical Scholar#
 
-8251#Injection of magic#SG_FEEL#QUE_NOIMAGE#
-Please wait for a while. After working stones into jewels, just get rested during putting magical info into them. You look so tired..#
+8251#Magical Power Insertion#SG_FEEL#QUE_NOIMAGE#
+Please wait for a while. I will craft this mineral into a gem, and inscript the magical information. You look exhausted...#
 #
 
-8252#Handworked jewels#SG_FEEL#QUE_NOIMAGE#
-This is the last request. Please bring this worked jewels to engineering scholar in Schwartzvald.#
+8252#Crafted Gem#SG_FEEL#QUE_NOIMAGE#
+Please do me this favor for the last time. Deliver this crafted gem to the Schubaltzwald Mechanical Engineer.#
 #
 
-8253#Language translation device#SG_FEEL#QUE_NOIMAGE#
-I need to make out the device which can read the magic code from jewels. I am ready for it, so it would take one hour.#
-After one hour, you would go back to engineering scholar in Schwartzvald.#
+8253#Other World's Language Translator#SG_FEEL#QUE_NOIMAGE#
+I should make a machine which would read the magical power inscripted in this gem and use it right away. I've done all the preparations, so it'd take about a hour.#
+Go back to the Schubaltzwald Mechanical Engineer after a hour#
 
 
 // ｹﾚｼｱｱｸ
@@ -3339,49 +3380,49 @@ Just speak to Munkenro.#
 Just get passed test by Munkenro.#
 Defeat the alliance members to go to the otherworld.#
 
-10079#Escape from the reality, into the broad world#SG_FEEL#QUE_NOIMAGE#
-The mother worries about her son staying at home for whole day.#
-Just speak to Iromo.#
+10079#Break away form the reality, Out to the Big World#SG_FEEL#QUE_NOIMAGE#
+the Mother worried about his son who wouldn't go outside of his house.#
+Try talking to Eromo.#
 
-10080#Escape from the reality, into the broad world#SG_FEEL#QUE_NOIMAGE#
-His only complaint is that he can't find out his favorite food.#
-Is there anyone who knows his taste?#
+10080#Break away form the reality, Out to the Big World#SG_FEEL#QUE_NOIMAGE#
+Eromo is not feeling good because he's not having his favorite food.#
+There should be someone in the town who knows Eromo's taste.#
 
-10081#Escape from the reality, into the broad world#SG_FEEL#QUE_NOIMAGE#
-You found out his buddy!#
-You should buy banana for Iromo's buddy to proceed this quest.#
+10081#Break away form the reality, Out to the Big World#SG_FEEL#QUE_NOIMAGE#
+Found Eromo's childhood friend!#
+I should get him some banana.#
 
-10082#Escape from the reality, into the broad world#SG_FEEL#QUE_NOIMAGE#
-He eat out sweet banana.#
-Just speak to him again.#
+10082#Break away form the reality, Out to the Big World#SG_FEEL#QUE_NOIMAGE#
+Eromo's friend is eating banana.#
+Let's try talk to him again.#
 
-10083#Escape from the reality, into the broad world#SG_FEEL#QUE_NOIMAGE#
-You finally get to know Iromo's taste.#
-Let's go to him with Monster's Feed and Red Potion.#
+10083#Break away form the reality, Out to the Big World#SG_FEEL#QUE_NOIMAGE#
+Finally I've got a clue to figure out Eromo's taste!#
+Prepare some monster's feed and red potion and go back to Eromo.#
 
-10084#Escape from the reality, into the broad world#SG_FEEL#QUE_NOIMAGE#
-We found out why he always stayed at home.#
-If there are no Wild Rose aroung him, he would go outside.#
+10084#Break away form the reality, Out to the Big World#SG_FEEL#QUE_NOIMAGE#
+I found out why Eromo does not want to go outside of his house.#
+If I get rid of the Wild Rose, Eromo might step outside of his house.#
 
-10085#Escape from the reality, into the broad world#SG_FEEL#QUE_NOIMAGE#
-Though we defeat all of wild roses, we can't proceed well.#
-Let's follow his mother's advice.#
+10085#Break away form the reality, Out to the Big World#SG_FEEL#QUE_NOIMAGE#
+I've gotten rid of all the Wild Roses, but it's not easy to talk Eromo out to his house.#
+Let's do as what Eromo's mother said.#
 
-10086#Escape from the reality, into the broad world#SG_FEEL#QUE_NOIMAGE#
-We've gotten an useful info! He hopes to have his own brother!#
-Just tell him about brotherhood story. If you don't know the story, just go to the brothers and take time with them. Then you can tell him a story.#
+10086#Break away form the reality, Out to the Big World#SG_FEEL#QUE_NOIMAGE#
+Information acquired! Eromo wants a brother. #
+Tell him about the Brothers you know of. If you do not have any story to tell, find a story of brothers and experience it, then come back and tell Eromo about it.#
 
-10087#Escape from the reality, into the broad world#SG_FEEL#QUE_NOIMAGE#
-You tell him a story, but he became sulky again. No more progress! #
-Time heals all wounds. Let's just follow his mothers' advice.#
+10087#Break away form the reality, Out to the Big World#SG_FEEL#QUE_NOIMAGE#
+I told him the story, but it didn't work. Story won't proceed. #
+Patience is the virtue. Let's do as what Eromo's mother said.#
 
-10088#Escape from the reality, into the broad world#SG_FEEL#QUE_NOIMAGE#
-He is quite pessimistic toward friendship.#
-Tell him about your friend. If you don't know about any stories about friends, just go and experience it.#
+10088#Break away form the reality, Out to the Big World#SG_FEEL#QUE_NOIMAGE#
+He is very pessimistic about friendship. #
+Tell him about the Friends you know of. If you do not have any story to tell, find a story of friends and experience it, then come back and tell Eromo about it.#
 
-10089#Escape from the reality, into the broad world#SG_FEEL#QUE_NOIMAGE#
-Your story seems quite influential to him.#
-You experienced of things to tell him, just tell all of things you felt from the experience.#
+10089#Break away form the reality, Out to the Big World#SG_FEEL#QUE_NOIMAGE#
+it looks like he's shaking a bit. #
+What's left there is not the stories of other people, but your own story from the experience. Tell him about the pleasant sensation of adventure.#
 
 // ｼﾛｼﾛﾀﾌ
 // ----------ｿﾀｵﾅﾀ・ ｻﾃｼｿｬｱｸ, ｵｵｼｭｰ・ ｵｹﾁﾝｴﾂｳ・ﾎ
@@ -3792,25 +3833,25 @@ Best regards to Otto and bring him Lugen's letter.#
 Otto said he is ok now and he would visit Lugen soon.#
 Just bring Lugen Atto's letter.#
 
-11101#Secret note of Bazet#SG_FEEL#QUE_NOIMAGE#
-Let's help Bazet conducts studies of fairy and giant.#
-Let's start for research with the prepared stuffs.#
+11101#Bazet's Secret Note#SG_FEEL#QUE_NOIMAGE#
+Help Bazet's research on a Fairy and a Giant.#
+Depart after receiving materials for the examination.#
 
-11102#Secret note of Bazet#SG_FEEL#QUE_NOIMAGE#
-Go for research of the giants.#
-Submit the note after investigation.#
+11102#Bazet's Secret Note#SG_FEEL#QUE_NOIMAGE#
+Examine Giants of the East.#
+Turn in the note after an examination.#
 
-11103#Secret note of Bazet#SG_FEEL#QUE_NOIMAGE#
+11103#Bazet's Secret Note#SG_FEEL#QUE_NOIMAGE#
 #
 #
 
-11104#Resting time#SG_FEEL#QUE_NOIMAGE#
-Investigation is done! You'd better get rested enough fot next investigation.#
-Just get rested.#
+11104#Vacation#SG_FEEL#QUE_NOIMAGE#
+Investigation completed safely. I should get some rest for the next investigation.#
+Get some rest.#
 
-11105#Tendrilrion skin#SG_FEEL#QUE_NOIMAGE#
-We are in need of leather for covering the camp. You can get leather from ^0000FFTendrilrion^000000. We need ^0000FF20^000000 of them.#
-Just get Leather Of Tendrilion.#
+11105#Hillsrion's Horn#SG_FEEL#QUE_NOIMAGE#
+I need some nails to fix this tent, those nails can be obtained from the animal called ^0000FFHillsrion^000000. ^0000FF30 Nails^000000 would do it.#
+Obtain 30 Hillsrion's Horn.#
 
 // ｹﾚﾀﾏｿ・
 //---------------ﾄ｣ｱｸ, ｹｫｱ箍ﾞ------------------------
@@ -4067,9 +4108,13 @@ Behave!#
 No lighting is allowed until 24 hours pass.#
 That's it for today~#
 
-12070#Limited time for enter#SG_FEEL#QUE_NOIMAGE#
-Only allowed to enter endless tower with limited time.#
-Limited time for entering the tower.#
+12070#Limited time for Access#SG_FEEL#QUE_NOIMAGE#
+Able to enter the Endless Tower which is open for a limited time.#
+Limited time for access#
+
+12071#Limited time for Access#SG_FEEL#QUE_NOIMAGE#
+Received a table of attendance and checked an attendance. Stated details separately.#
+Check for the attendance#
 
 //----20090708 ｹ霤ｻｼﾒ ﾀﾏﾀﾏ ﾄｺﾆｮ----------
 9025#Swab the Deck: Sticky Rats#SG_FEEL#QUE_NOIMAGE#
@@ -4150,3 +4195,15 @@ Refine ^0000FFGloria's^000000 ^006400Ordinary Armor^000000 up to ^0000FF+5 level
 9045#Gloria's Study: Present#SG_FEEL#QUE_NOIMAGE#
 I have completed helping Gloria for today.Need to wait till 20 hours have passed.#
 Come back 20 hours later.#
+//---- ﾇﾊｸｮﾇﾉ ｻ邉ﾉ ﾀﾌｺ･ﾆｮ 1ｿ・--------
+9049#Midgard Crowd Control event#SG_FEEL#QUE_NOIMAGE#
+^0000FFElite Mercenary^000000 : ^404040Visit Mercenary Scout^000000#
+Find ^FF0000Mercenary Scout^000000 in the ^8B4513Glast Heim Prison^000000!!#
+
+9050#Midgard Crowd Control event#SG_FEEL#QUE_NOIMAGE#
+^0000FFMercenary Scout^000000 : ^404040Defeat 150 Zombie Prisoners^000000#
+Kill 150 ^FF0000Zombie Prisoners^000000, then you can get rewards from ^FF0000Mercenary Scout^000000!!#
+
+9051#Midgard Crowd Control event#SG_FEEL#QUE_NOIMAGE#
+^0000FFElite Mercenary^000000, ^0000FFMercenary Scout^000000 : ^404040Well done! You did a good job^000000#
+Defeated ^FF0000Zombie Prisoners^000000. Now, ^8B4513Glast Heim Prison^000000 is in a peace.#

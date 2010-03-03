@@ -566,3 +566,5 @@ ALL_WEWISH#Oh!_Holy_Night#
 NPC_DRAGONFEAR#Dragon_Fear#
 ALL_ODINS_RECALL#Odin's_Recall#
 ALL_PARTYFLEE#Blow_Flowerwind#
+ALL_REVERSEORCISH#Reverse_Orchish#
+ALL_WEWISH#Holy_Knight#

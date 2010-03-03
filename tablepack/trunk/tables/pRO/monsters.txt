@@ -54,6 +54,7 @@
 1077 Poison Spore
 1079 Blue Plant
 1080 Green Plant
+1081 Yellow Plant
 1083 Shining Plant
 1084 Black Mushroom
 1085 Red Mushroom
@@ -77,6 +78,7 @@
 1113 Drops
 1114 Dustiness
 1117 Evil Druid
+1118 Flora
 1119 Frilldora
 1121 Giearth
 1122 Goblin Knife
@@ -103,23 +105,27 @@
 1151 Myst
 1153 Orc Zombie
 1154 Pasana
-1155 Green Leafy
 1155 Petit Dragon
 1156 Petit Dragon
 1158 Phen
 1160 Piere
+1163 Raydric
 1164 Requiem
 1166 Savage
 1167 Savage Babe
+1169 Skel Worker
 1170 Sohee
 1170 TisayKaBa
+1175 Tarou
 1177 Zenorc
 1178 Zerom
 1180 Nine Tail
 1188 Bon Gun
+1189 Orc Archer
 1191 Mimic
 1192 Wraith
 1193 Alarm
+1194 Arclouse
 1195 Rideword
 1196 Skel Prisoner
 1197 Zombie Prisoner
@@ -150,10 +156,14 @@
 1265 Cookie
 1266 Aster
 1268 Bloody Knight
+1269 Clock
 1270 Clock Tower Manager
 1271 Alligator
 1272 Dark Lord
 1273 Orc Lady
+1274 Megalith
+1275 Alice
+1276 Raydric Archer
 1277 Greatest General
 1278 Stalactic Golem
 1279 Tri Joint
@@ -187,11 +197,13 @@
 1383 Explosion
 1387 Gig
 1390 Violy
+1392 Rotar Zairo
 1404 Miyabi Ningyo
 1412 Evil Cloud Hermit
 1413 Wild Ginseng
 1416 Wicked Nymph
 1431 Barphomet
+1493 Dryad
 1494 Beetle
 1497 Wooden Golem
 1498 Wootan Shooter
@@ -206,7 +218,6 @@
 1515 Garm Babe
 1517 Tiger Guised Fiend
 1520 Dumpling
-1579 StrawberryJuice
 1605 Dark Illusion
 1615 Obsidian
 1619 Porcellio
@@ -215,6 +226,7 @@
 1632 Gremlin
 1633 Beholder
 1634 Seyren Windsor
+1635 Eremes Guile
 1638 Cecil Damon
 1652 Egnigem Cenia
 1653 Wickebine Tres
