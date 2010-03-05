@@ -35,7 +35,11 @@ sub parseMacroFile {
 	my $inBlock = 0;
 	my ($macro_subs, @perl_lines);
 	open FILE, "<:utf8", $file or return 0;
-	foreach (<FILE>) {
+	while (<FILE>) {
+		if ($. == 1 && /^\x{FEFF}/) {
+			error "$file: UTF-8 should be without BOM\n";
+			return 0;
+		}
 		s/(.*)[\s\t]+#.*$/$1/;	# remove last comments
 		s/^\s*#.*$//;		# remove comments
 		s/^\s*//;		# remove leading whitespaces
