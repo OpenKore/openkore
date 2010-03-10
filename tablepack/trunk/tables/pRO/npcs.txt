@@ -107,6 +107,7 @@ einbroch 239 205 First_Cash_Seller
 einbroch 242 205 Kafra Employee#ein2
 einbroch 245 205 Second_Cash_Seller
 einbroch 253 203 Bulletin Board
+gef_fild05 80 149 Myu#08_hat
 gef_fild13 290 243 Jyolbriger
 gef_fild13 297 242 Soldier#277
 gef_fild13 303 243 Jyolbriger
@@ -219,6 +220,10 @@ mjo_dun02 78 298 Fearsome Demon#ppl1
 mjolnir_02 76 362 Bulletin Board#coal
 mjolnir_02 82 362 Kafra Employee
 mjolnir_02 85 362 Blacksmith Miner
+moc_fild12 160 365 Ashe#3
+moc_fild12 160 372 Hit
+moc_fild12 166 369 battle_traces#1
+moc_fild12 35 303 Bastion City Santoleman
 moc_fild19 107 101 Bulletin Board#sphinx
 moc_prydb1 39 129 Thief Guide
 moc_ruins 115 147 #ForeignMerchant4
@@ -348,8 +353,12 @@ payon 91 77 Bag Merchant
 payon_in01 132 62 Inn Employee
 payon_in01 140 53 Gate Keeper#5
 payon_in01 142 50 PVPNarrator#5
+payon_in01 15 119 Weapon Dealer
 payon_in01 180 7 Waitress
+payon_in01 5 129 Weapon Dealer
+payon_in01 5 134 Inventor Jaax
 payon_in01 5 49 Tool Dealer
+payon_in01 7 119 Armor Dealer
 prontera 102 75 First_Cash_Merchant
 prontera 102 77 Second_Cash_Merchant
 prontera 102 81 Odin's Cash manager#phi
@@ -410,6 +419,7 @@ prontera 164 304 Continental Messenger#p
 prontera 165 191 Church Worker#
 prontera 165 194 Goyindle
 prontera 165 232 Night Phya
+prontera 165 60 Apprentice Craftsman
 prontera 167 203 Squegle
 prontera 167 281 New Guild Master#tu
 prontera 172 282 Cherry Blossom#08spring
@@ -422,6 +432,7 @@ prontera 218 211 Pet Groomer
 prontera 223 99 Soldier
 prontera 224 307 Girl#sim
 prontera 225 303 Young man#sim
+prontera 228 279 Wanderer#07russia_24
 prontera 228 315 Soldier#sim01
 prontera 229 104 Soldier
 prontera 229 310 Ingacio#sim01

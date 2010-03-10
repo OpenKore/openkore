@@ -1,10 +1,13 @@
+1001 Scorpion
 1002 Poring
 1004 Hornet
 1005 Familiar
 1007 Fabre
 1008 Pupa
+1009 Condor
 1010 Willow
 1011 Chonchon
+1012 Roda Frog
 1013 Wolf
 1014 Spore
 1015 Zombie
@@ -16,9 +19,12 @@
 1024 Worm Tail
 1025 Snake
 1026 Munak
+1028 Soldier Skeleton
 1029 Isis
+1030 Anacondaq
 1031 Poporing
 1032 Verit
+1033 Elder Willow
 1034 Thara Frog
 1035 Hunter Fly
 1036 Ghoul
@@ -29,7 +35,9 @@
 1042 Steel Chonchon
 1044 Obeaune
 1045 Marc
+1047 Pecopeco Egg
 1049 Picky
+1050 Super Picky
 1051 Thief Bug
 1052 Rocker
 1053 Thief Bug Female
@@ -39,37 +47,49 @@
 1057 Yoyo
 1058 Metaller
 1060 Bigfoot
+1061 Nightmare
 1062 Poring Xmas
 1063 Lunatic
 1064 Megalodon
 1065 Strouf
+1066 Vadon
 1067 Cornutus
 1068 Hydra
 1069 Sword Fish
 1070 Kukre
 1071 Pirate Skel
 1072 Kaho
+1073 Crab
 1074 Shellfish
 1076 Skeleton
 1077 Poison Spore
+1078 Red Plant
 1079 Blue Plant
 1080 Green Plant
 1081 Yellow Plant
+1082 White Plant
 1083 Shining Plant
 1084 Black Mushroom
 1085 Red Mushroom
+1088 Vocal
+1089 Toad
+1090 Mastering
 1091 Dragon Fly
 1092 Vagabond Wolf
+1093 Eclipse
 1094 Ambernite
 1095 Andre
 1096 Angeling
+1097 Ant Egg
 1098 Anubis
+1099 Argiope
 1100 Argos
 1101 Baphomet Jr.
 1102 Bathory
 1103 Caramel
 1104 Coco
 1105 Deniro
+1106 Desert Wolf
 1107 Desert Wolf Babe
 1108 Deviace
 1109 Deviruchi
@@ -77,16 +97,22 @@
 1111 Drainliar
 1113 Drops
 1114 Dustiness
+1116 Eggyra
 1117 Evil Druid
 1118 Flora
 1119 Frilldora
+1120 Ghostring
 1121 Giearth
 1122 Goblin Knife
 1123 Goblin Mace
 1124 Goblin Axe
 1125 Goblin Hammer
 1126 Goblin Club
+1127 Hode
 1128 Horn
+1129 Horong
+1130 Jakk
+1131 Joker
 1132 Khalitzburg
 1133 Kobold-1
 1134 Kobold-2
@@ -98,28 +124,39 @@
 1140 Marduk
 1141 Marina
 1142 Marine Spere
+1143 Marionette
 1144 Marse
 1145 Martin
 1146 Matyr
+1148 Medusa
 1149 Minorous
 1151 Myst
+1152 Orc Skeleton
 1153 Orc Zombie
 1154 Pasana
 1155 Petit Dragon
 1156 Petit Dragon
 1158 Phen
 1160 Piere
+1161 Plankton
 1163 Raydric
 1164 Requiem
+1165 Sand Man
 1166 Savage
 1167 Savage Babe
 1169 Skel Worker
 1170 Sohee
 1170 TisayKaBa
+1174 Stainer
 1175 Tarou
+1176 Vitata
 1177 Zenorc
 1178 Zerom
+1179 Whisper
 1180 Nine Tail
+1182 Thief Mushroom
+1185 Whisper
+1186 Whisper Boss
 1188 Bon Gun
 1189 Orc Archer
 1191 Mimic
@@ -131,6 +168,8 @@
 1197 Zombie Prisoner
 1199 Punk
 1200 Zherlthsh
+1201 Rybio
+1202 Phendark
 1203 Mysteltainn
 1204 Tirfing
 1205 Executioner
@@ -141,20 +180,31 @@
 1211 Brilight
 1212 Iron Fist
 1213 High Orc
+1214 Choco
 1215 Stem Worm
 1219 Knight of Abyss
 1242 Marin
+1243 Sasquatch
+1245 Gobline Xmas
 1246 Cookie Xmas
 1248 Cruiser
 1249 Mystcase
+1250 Chepet
 1253 Gargoyle
+1254 Raggler
 1255 Neraid
 1256 Pest
+1257 Injustice
+1258 Goblin Archer
+1259 Gryphon
 1260 Dark Frame
 1261 Wild Rose
+1262 Mutant Dragon
+1263 Wind Ghost
 1264 Merman
 1265 Cookie
 1266 Aster
+1267 Carat
 1268 Bloody Knight
 1269 Clock
 1270 Clock Tower Manager
@@ -172,21 +222,46 @@
 1282 Kobold Archer
 1283 Chimera
 1289 Maya Purple
+1290 Skeleton General
 1292 Mini Demon
 1293 Cremy Fear
+1294 Killer Mantis
 1295 Owlbaron
+1296 Kobold Leader
+1298 Zombie Master
 1299 Goblin Leader
+1300 Caterpillar
+1301 Am Mut#Monster
 1302 Dark Illusion
+1303 Giant Honet
+1304 Giant Spider
 1305 Ancient Worm
+1306 Leib Olmai
+1307 Cat O Nine Tail
+1308 Panzer Goblin
+1309 Gajomart
+1310 Majoruros
+1311 Gullinbursti
+1313 Mobster
+1314 Permeter
 1315 Assulter
+1316 Solider
 1317 Fur Seal
 1318 Heater
 1319 Freezer
 1320 Owl Duke
 1321 Dragon Tail
+1322 Spring Rabbit
+1323 Sea Otter
+1365 Apocalypse
+1366 Lava Golem
+1367 Blazzer
+1368 Geographer
+1369 Grand Peco
 1370 Succubus
 1371 Fake Angel
 1374 Incubus
+1375 The Paper
 1376 Harpy
 1377 Elder
 1378 Demon Pungus
@@ -195,65 +270,181 @@
 1381 Grizzly
 1382 Adam Lambert
 1383 Explosion
+1384 Deleter
+1385 Deleter
+1386 Sleeper
 1387 Gig
 1390 Violy
+1391 Galapago
 1392 Rotar Zairo
+1400 Karakasa
+1401 Shinobi
+1402 Poison Toad
+1403 Ancient Firelock
 1404 Miyabi Ningyo
+1405 Tengu
+1406 Kapha
+1408 Blood Butterfly
+1409 Rice Cake Boy
+1410 Live Peach Tree
 1412 Evil Cloud Hermit
 1413 Wild Ginseng
+1415 Baby Leopard
 1416 Wicked Nymph
+1417 Zipper Bear
 1431 Barphomet
+1433 Deviruchi
 1493 Dryad
 1494 Beetle
+1495 Stone Shooter
 1497 Wooden Golem
 1498 Wootan Shooter
 1499 Wootan Fighter
 1500 Parasite
+1503 Gibbet
+1504 Dullahan
 1505 Loli Ruri
 1506 Disguise
+1507 Bloody Murderer
 1508 Quve
 1509 Lude
 1510 Hylozoist
+1512 Hyegun
 1513 Cat Official
+1514 Dancing Dragon
 1515 Garm Babe
+1516 Enchanted Soil
 1517 Tiger Guised Fiend
+1519 Green Maiden
 1520 Dumpling
+1582 Deviling
+1584 Tamruan
+1586 Leaf Cat
+1587 Kraben
+1595 Marin
+1599 Giant Whisper
 1605 Dark Illusion
+1613 Metaling
+1614 Mineral
 1615 Obsidian
+1616 Pitman
+1617 Waste Stove
+1618 Ungoliant
 1619 Porcellio
 1620 Noxious
+1621 Venomous
 1622 Teddy Bear
+1625 Porcellio
+1627 Anopheles
+1628 Holden
+1629 Hill Wind
+1631 Green Maiden
 1632 Gremlin
 1633 Beholder
 1634 Seyren Windsor
 1635 Eremes Guile
+1636 Howard Alt-Eisen
+1637 Margaretha Sorin
 1638 Cecil Damon
+1639 Kathryne Keyron
 1652 Egnigem Cenia
 1653 Wickebine Tres
 1654 Armeyer Dinze
+1655 Errende Ebecee
+1656 Kavach Icarus
+1657 Laurell Weinder
+1664 Photon Cannon
+1665 Photon Cannon
+1666 Photon Cannon
+1667 Photon Cannon
+1668 Archdam
+1669 Dimik
+1670 Dimik
 1671 Dimik
+1672 Dimik
+1673 Dimik
+1675 Venatu
+1676 Venatu
+1677 Venatu
+1678 Venatu
+1679 Venatu
+1680 Hill Wind
+1681 Gemini-S58
+1682 Remover
+1686 Orc Baby
+1687 Grove
 1692 Breeze
+1693 Plasma
+1694 Plasma
+1696 Plasma
+1699 Ancient Mimic
 1703 Lady Solace
+1704 Odium of Thanatos
 1705 Despero of Thanatos
+1706 Maero of Thanatos
+1707 Dolor of Thanatos
+1713 Acidus
+1714 Ferus
+1715 Novus
+1717 Ferus
+1718 Novus
+1720 Hydrolancer
 1721 Dragon Egg
 1736 Aliot
 1737 Aliza
+1752 Skogul
 1753 Frus
 1754 Skeggiold
+1755 Skeggiold
+1757 Acidus
+1758 Ferus
+1759 Acidus
+1760 Ferus
 1761 Skogul
+1762 Frus
 1763 Skeggiold
+1764 Skeggiold
+1769 Agav
+1770 Echio
+1771 Vanberk
+1772 Isilla
 1773 Hodremlin
+1774 Seeker
 1775 Snowier
+1776 Siroma
 1777 Ice Titan
+1778 Gazeti
+1780 Muscipular
+1781 Drosera
 1782 Roween
+1783 Galion
 1784 Stapo
+1789 Iceicle
+1794 Roween
 1815 Hot Rice cake
 1829 Sword Guardian
+1830 Bow Guardian
+1831 Salamander
+1833 Kasa
+1836 Magmaring
+1837 Imp
 1838 Knocker
+1839 Byorgue
+1864 Zombie Slaughter
+1865 Ragged Zombie
+1866 Hellhound
 1867 Banshee
+1869 Flame Skull
+1870 Necromancer
 1872 Hell Fly
+1880 Wood Goblin
+1881 Les
 1882 Vavayaga
 1883 Uzhas
+1884 Mavka
+1918 Incarnation of Morocc
 1919 Incarnation of Morocc
+1920 Incarnation of Morocc
+1921 Incarnation of Morocc
 1966 Doppelganger
 2057 Sticky Rat
