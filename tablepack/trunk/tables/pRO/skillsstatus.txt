@@ -239,12 +239,12 @@
 238 Mighty Gauge
 239 Dead Acceleration
 240 DBLOCK
-241 Steamed Tongue
-242 Steamed Desert Scorpions
-243 Stew Of Immortality
-244 Hwergelmir's Tonic
-245 Dragon Breath Cocktail
-246 Cooked Nine Tail's Tails
+241 STR Food
+242 AGI Food
+243 VIT Food
+244 INT Food
+245 DEX Food
+246 LUK Food
 247 Honey Pastry
 248 Sesame Pastry
 249 FOODCRI
@@ -269,12 +269,12 @@
 268 Collector Emperium Darkness
 269 Collector Emperium Guardian
 270 Collector Time Out
-271 FOOD STR CASH
-272 FOOD AGI CASH
-273 FOOD VIT CASH
-274 FOOD DEX CASH
-275 FOOD INT CASH
-276 FOOD LUK CASH
+271 STR Food 60
+272 AGI Food 60
+273 VIT Food 60
+274 DEX Food 60
+275 INT Food 60
+276 LUK Food 60
 277 Mercenary Increase Flee
 278 Mercenary Increase Atk
 279 Mercenary Increase Hp
