@@ -142,6 +142,10 @@ sub new {
 	return bless \%self, $class;
 }
 
+sub DESTROY {
+	my ($self) = @_;
+}
+
 sub _getStatusName {
 	my ($status) = @_;
 	if ($status == INACTIVE) {

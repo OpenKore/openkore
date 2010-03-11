@@ -279,7 +279,7 @@ sub new {
 		# 0x012e is sent packet
 		# 0x012f is sent packet
 		# 0x0130 is sent packet
-		'0131' => ['vender_found', 'a4 a80', [qw(ID title)]], # TODO: # 0x0131,86 # wtf A30? this message is 80 long -> test this
+		'0131' => ['vender_found', 'a4 A80', [qw(ID title)]], # TODO: # 0x0131,86 # wtf A30? this message is 80 long -> test this
 		'0132' => ['vender_lost', 'a4', [qw(ID)]], # 6
 		'0133' => ['vender_items_list', 'v a4', [qw(len venderID)]], # -1
 		# 0x0134 is sent packet
@@ -6676,7 +6676,7 @@ sub vender_items_list {
 	if ($args->{switch} eq "0133") {
 		$headerlen = 8;
 	} else { # switch 0800
-		$headerlen = 12; # there's an unknown field
+		$headerlen = 12;
 	}
 
 	undef @venderItemList;
