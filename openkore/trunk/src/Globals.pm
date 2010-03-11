@@ -218,7 +218,7 @@ our %jobs_lut = (
 	4042 => 'Baby Bard',
 	4043 => 'Baby Dancer',
 	4044 => 'Baby Peco Crusader',
-	4045 => 'Super Baby', # or Baby Super Novice, I like the way eAthena calls it though
+	4045 => 'Super Baby',
 	4046 => 'Taekwon',
 	4047 => 'Star Gladiator',
 	4048 => 'Flying Star Gladiator',
@@ -226,6 +226,7 @@ our %jobs_lut = (
 	4050 => 'Munak',
 	4051 => 'Death Knight',
 	4052 => 'Dark Collector',
+
 	4054 => 'Rune Knight',
 	4055 => 'Warlock',
 	4056 => 'Ranger',
@@ -256,6 +257,31 @@ our %jobs_lut = (
 	4081 => 'Rune Knight',
 	4082 => 'Royal Guard',
 	4083 => 'Royal Guard',
+	4084 => 'Ranger',
+	4085 => 'Ranger',
+	4086 => 'Mechanic',
+	4087 => 'Mechanic',
+	4088 => 'Rune Knight',
+	4089 => 'Rune Knight',
+	4090 => 'Rune Knight',
+	4091 => 'Rune Knight',
+	4092 => 'Rune Knight',
+	4093 => 'Rune Knight',
+	4094 => 'Rune Knight',
+	4095 => 'Rune Knight',
+	4096 => 'Baby Rune',
+	4097 => 'Baby Warlock',
+	4098 => 'Baby Ranger',
+	4099 => 'Baby Bishop',
+	4100 => 'Baby Mechanic',
+	4101 => 'Baby Cross',
+	4102 => 'Baby Guard',
+	4103 => 'Baby Sorcerer',
+	4104 => 'Baby Minstrel',
+	4105 => 'Baby Wanderer',
+	4106 => 'Baby Sura',
+	4107 => 'Baby Genetic',
+	4108 => 'Baby Chaser',
 
 	# Homunculus
 	6001 => 'Lif',
@@ -305,7 +331,7 @@ our %jobs_lut = (
 	6043 => 'Mercenary Swordman 7',
 	6044 => 'Mercenary Swordman 8',
 	6045 => 'Mercenary Swordman 9',
-	6046 => 'Mercenary Swordman 10'	
+	6046 => 'Mercenary Swordman 10',
 );
 
 # AI

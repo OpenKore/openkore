@@ -511,7 +511,7 @@ sub calcRectArea {
 		}
 	}
 	for (my $y = $bottomRight{y} + 1; $y < $topRight{y}; $y++) {
-		if ($field->isWalkable($topLeft{x}, $y)) {
+		if ($field->isWalkable($topRight{x}, $y)) {
 			push @walkableBlocks, {x => $topRight{x}, y => $y};
 		}
 	}
