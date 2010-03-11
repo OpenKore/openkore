@@ -2507,13 +2507,13 @@ sub updateDamageTables {
 					$teleport = 1;
 
 				} elsif ($config{teleportAuto_deadly} && $damage >= $char->{hp}
-				      && !whenStatusActive("Hallucination")) {
+				      && !whenStatusActive($skillsStatus{'34'})) { # Hallucination
 					message TF("Next %d dmg could kill you. Teleporting...\n",
 						$damage), "teleport";
 					$teleport = 1;
 
 				} elsif ($config{teleportAuto_maxDmg} && $damage >= $config{teleportAuto_maxDmg}
-				      && !whenStatusActive("Hallucination")
+				      && !whenStatusActive($skillsStatus{'34'})  # Hallucination
 				      && !($config{teleportAuto_maxDmgInLock} && $field{name} eq $config{lockMap})) {
 					message TF("%s hit you for more than %d dmg. Teleporting...\n",
 						$monster->{name}, $config{teleportAuto_maxDmg}), "teleport";
@@ -2521,7 +2521,7 @@ sub updateDamageTables {
 
 				} elsif ($config{teleportAuto_maxDmgInLock} && $field{name} eq $config{lockMap}
 				      && $damage >= $config{teleportAuto_maxDmgInLock}
-				      && !whenStatusActive("Hallucination")) {
+				      && !whenStatusActive($skillsStatus{'34'})) {  # Hallucination
 					message TF("%s hit you for more than %d dmg in lockMap. Teleporting...\n",
 						$monster->{name}, $config{teleportAuto_maxDmgInLock}), "teleport";
 					$teleport = 1;
@@ -2534,7 +2534,7 @@ sub updateDamageTables {
 
 				} elsif ($config{teleportAuto_totalDmg}
 				      && $monster->{dmgToYou} >= $config{teleportAuto_totalDmg}
-				      && !whenStatusActive("Hallucination")
+				      && !whenStatusActive($skillsStatus{'34'})  # Hallucination
 				      && !($config{teleportAuto_totalDmgInLock} && $field{name} eq $config{lockMap})) {
 					message TF("%s hit you for a total of more than %d dmg. Teleporting...\n",
 						$monster->{name}, $config{teleportAuto_totalDmg}), "teleport";
@@ -2542,7 +2542,7 @@ sub updateDamageTables {
 
 				} elsif ($config{teleportAuto_totalDmgInLock} && $field{name} eq $config{lockMap}
 				      && $monster->{dmgToYou} >= $config{teleportAuto_totalDmgInLock}
-				      && !whenStatusActive("Hallucination")) {
+				      && !whenStatusActive($skillsStatus{'34'})) {  # Hallucination
 					message TF("%s hit you for a total of more than %d dmg in lockMap. Teleporting...\n",
 						$monster->{name}, $config{teleportAuto_totalDmgInLock}), "teleport";
 					$teleport = 1;
@@ -2620,13 +2620,13 @@ sub updateDamageTables {
 					$teleport = 1;
 
 				} elsif ($config{$char->{slaves}{$ID2}{slave_configPrefix}.'teleportAuto_deadly'} && $damage >= $char->{slaves}{$ID2}{hp}
-				      && !whenStatusActive("Hallucination")) {
+				      && !whenStatusActive($skillsStatus{'34'})) {  # Hallucination
 					message TF("Next %d dmg could kill your slave. Teleporting...\n",
 						$damage), "teleport";
 					$teleport = 1;
 
 				} elsif ($config{$char->{slaves}{$ID2}{slave_configPrefix}.'teleportAuto_maxDmg'} && $damage >= $config{$char->{slaves}{$ID2}{slave_configPrefix}.'teleportAuto_maxDmg'}
-				      && !whenStatusActive("Hallucination")
+				      && !whenStatusActive($skillsStatus{'34'})  # Hallucination
 				      && !($config{$char->{slaves}{$ID2}{slave_configPrefix}.'teleportAuto_maxDmgInLock'} && $field{name} eq $config{lockMap})) {
 					message TF("%s hit your slave for more than %d dmg. Teleporting...\n",
 						$monster->{name}, $config{$char->{slaves}{$ID2}{slave_configPrefix}.'teleportAuto_maxDmg'}), "teleport";
@@ -2634,14 +2634,14 @@ sub updateDamageTables {
 
 				} elsif ($config{$char->{slaves}{$ID2}{slave_configPrefix}.'teleportAuto_maxDmgInLock'} && $field{name} eq $config{lockMap}
 				      && $damage >= $config{$char->{slaves}{$ID2}{slave_configPrefix}.'teleportAuto_maxDmgInLock'}
-				      && !whenStatusActive("Hallucination")) {
+				      && !whenStatusActive($skillsStatus{'34'})) {  # Hallucination
 					message TF("%s hit your slave for more than %d dmg in lockMap. Teleporting...\n",
 						$monster->{name}, $config{$char->{slaves}{$ID2}{slave_configPrefix}.'teleportAuto_maxDmgInLock'}), "teleport";
 					$teleport = 1;
 
 				} elsif ($config{$char->{slaves}{$ID2}{slave_configPrefix}.'teleportAuto_totalDmg'}
 				      && $monster->{dmgToPlayer}{$ID2} >= $config{$char->{slaves}{$ID2}{slave_configPrefix}.'teleportAuto_totalDmg'}
-				      && !whenStatusActive("Hallucination")
+				      && !whenStatusActive($skillsStatus{'34'})  # Hallucination
 				      && !($config{$char->{slaves}{$ID2}{slave_configPrefix}.'teleportAuto_totalDmgInLock'} && $field{name} eq $config{lockMap})) {
 					message TF("%s hit your slave for a total of more than %d dmg. Teleporting...\n",
 						$monster->{name}, $config{$char->{slaves}{$ID2}{slave_configPrefix}.'teleportAuto_totalDmg'}), "teleport";
@@ -2649,7 +2649,7 @@ sub updateDamageTables {
 
 				} elsif ($config{$char->{slaves}{$ID2}{slave_configPrefix}.'teleportAuto_totalDmgInLock'} && $field{name} eq $config{lockMap}
 				      && $monster->{dmgToPlayer}{$ID2} >= $config{$char->{slaves}{$ID2}{slave_configPrefix}.'teleportAuto_totalDmgInLock'}
-				      && !whenStatusActive("Hallucination")) {
+				      && !whenStatusActive($skillsStatus{'34'})) {  # Hallucination
 					message TF("%s hit your slave for a total of more than %d dmg in lockMap. Teleporting...\n",
 						$monster->{name}, $config{$char->{slaves}{$ID2}{slave_configPrefix}.'teleportAuto_totalDmgInLock'}), "teleport";
 					$teleport = 1;
@@ -2867,11 +2867,15 @@ sub useTeleport {
 
 	# could lead to problems if the ItemID would be different on some servers
 	# 1 Jan 2006 - instead of nameID, search for *wing in the inventory
+	# could lead to problems if the name is different on some servers
+	# 11 Mar 2010 - instead of name, use nameID, names can be different for different servers
 	my $item;
 	if ($use_lvl == 1) {
-		$item = $char->inventory->getByName("Fly Wing");
+		#$item = $char->inventory->getByName("Fly Wing");
+		$item = $char->inventory->getByNameID(601);
 	} elsif ($use_lvl == 2) {
-		$item = $char->inventory->getByName("Butterfly Wing");
+		#$item = $char->inventory->getByName("Butterfly Wing");
+		$item = $char->inventory->getByNameID(602);
 	}
 
 	if ($item) {
