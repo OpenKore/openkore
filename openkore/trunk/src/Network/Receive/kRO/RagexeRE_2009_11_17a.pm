@@ -24,7 +24,7 @@ sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
 	my %packets = (
-		'07FA' => ['storage_opened', 'v2 x2', [qw(items items_max unknown)]], #//0x07fa,8
+		'07FA' => ['inventory_item_removed', 'v3', [qw(unknown index amount)]], #//0x07fa,8
 	);
 
 	foreach my $switch (keys %packets) {
