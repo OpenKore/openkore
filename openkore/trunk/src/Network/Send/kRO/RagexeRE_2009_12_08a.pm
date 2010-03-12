@@ -26,6 +26,7 @@ sub new {
 	return $class->SUPER::new(@_);
 }
 
+# TODO: exact location packet?
 # 0x0801,-1,purchasereq,2:4:8:12
 sub sendBuyBulkVender {
 	my ($self, $venderID, $r_array, $venderCID) = @_;
