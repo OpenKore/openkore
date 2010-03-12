@@ -9,6 +9,9 @@
 134 Big Magic
 135 Fire Pillar (standby)
 136 Fire Pillar (detonating)
+137 Hidden Trap
+138 Trap
+139 Hidden Warp NPC
 140 Talkie Box (hatsudou-chuu)
 141 Ice Wall
 142 Quagmire
@@ -27,10 +30,8 @@
 155 Deluge
 156 Violent Gale
 157 Land Protector
-#158 Zeny Mark
 158 Lullaby
 159 Rich Man Mr.Kim
-#160 Revolving Green Wheel
 160 Eternal Chaos
 161 Drum Sound on Battlefield
 162 Ring of Nibelungen
@@ -54,18 +55,26 @@
 179 Gospel
 180 Basilica
 181 Moonlit Water Mill
-#182 a black cross rises three-dimensionally 
 182 Wall of Fog
 183 Spider Web
 184 Gravitation Field
 185 Wand of Hermode
-#Water Escape Technique
+186 JT_KAENSIN
 187 Suiton
 188 Reverse Tatami
-#Crimson Fire Formation
 189 Kaensin
 190 Ground Drift
-#199 NPC_EVILLAND ?
+191 JT_BLIND_S
+192 Death Poison Slash
+193 Death Freezer
+194 JT_FLARE_S
+195 Death Wave
+196 Dead Water Attack
+197 Dead Storm Attack
+198 Earth Quake
+199 Evil Land
+200 Dark Runner
+201 Dark Transfer
 202 Epiclesis
 203 Earth Strain
 204 Man Hole
@@ -86,12 +95,17 @@
 219 Severe Rainstorm
 220 Fire Walk
 221 Electric Walk
+222 Poem of the Netherworld
+223 Psychic Wave
 224 Cloud Kill
+225 Poison Smoke
+226 Neutral Barrier
+227 Stealth Field
 228 Warmer
 229 Thorn Trap
 230 Wall of Thorns
 231 Demonic Fire
-#232 ???
-#233 ???
+232 Fire Expansion Smoke Powder
+233 Fire Expansion Tear Gas
 234 Hell's Plant  
 235 Vacuum Extreme
