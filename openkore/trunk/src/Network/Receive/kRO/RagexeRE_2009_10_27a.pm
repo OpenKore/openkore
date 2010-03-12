@@ -24,7 +24,7 @@ sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
 	my %packets = (
-		# //0x07f5,6
+		# 0x07f5 is sent packet
 		'07F6' => ['exp', 'a4 V v2', [qw(ID val type flag)]], # 14 # type: 1 base, 2 job; flag: 0 normal, 1 quest # TODO: use. I think this replaces the exp gained message trough guildchat hack
 	);
 
@@ -38,7 +38,7 @@ sub new {
 
 =pod
 //2009-10-27aRagexeRE
-//0x07f5,6
+0x07f5,6
 0x07f6,14
 =cut
 
