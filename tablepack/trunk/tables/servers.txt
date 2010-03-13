@@ -99,7 +99,7 @@ patchserver ewpatch.ragnarok.co.kr
 patchpath /patch02
 
 [International - iRO: Sakray]
-ip 38.144.194.2
+ip 128.241.92.162
 port 6900
 master_version 14
 version 18
