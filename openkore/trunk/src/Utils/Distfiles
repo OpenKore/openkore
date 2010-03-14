@@ -10,6 +10,7 @@ Exceptions.pm
 HttpReader.pm
 LockFile.pm
 ObjectList.pm
+PackageDefender.pm
 PathFinding.pm
 PerlLauncher.pm
 Rijndael.pm
