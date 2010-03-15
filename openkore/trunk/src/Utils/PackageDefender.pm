@@ -50,7 +50,7 @@ my $PROTECTED_FIELD_IDENTIFIER = qr/^[a-zA-Z][a-zA-Z0-9_]+/;
 my $PRIVATE_FIELD_IDENTIFIER   = qr/^_/;
 
 my $NO_SCRICT_BLESS = qr(^@{[join '|', __PACKAGE__, qw/utf8/]}$);
-my $GLOBAL_ALLOWED_PACKAGE = qr(^@{[join '|', qw/Exporter Utils Settings/]}$);
+my $GLOBAL_ALLOWED_PACKAGE = qr(^@{[join '|', qw/Exporter/]}$); # Utils Settings
 
 sub handleError {
 	my ($error, $other_params) = @_;
@@ -78,6 +78,8 @@ sub import {
 # Do not Tie where overloading used ( optional ??? )
 sub strict_bless {
 	my ($hash, $class) = @_;
+	
+	$class ||= [caller(1)]->[0]; # one-arg bless
 	
 	# use it only for ObjectLists for now
 	if (ref $hash eq 'HASH' && $class->isa('ObjectList')) {
