@@ -35,6 +35,8 @@ package Utils::PackageDefender;
 use strict;
 use warnings;
 
+use Data::Dumper ();
+
 ## ----------------------------------------------------------------------------
 ## package variables
 ## ----------------------------------------------------------------------------
@@ -47,10 +49,14 @@ my $KEY_CREATION_ACCESS_REGEX  = qr/^new$/;
 my $PROTECTED_FIELD_IDENTIFIER = qr/^[a-zA-Z][a-zA-Z0-9_]+/;
 my $PRIVATE_FIELD_IDENTIFIER   = qr/^_/;
 
+my $NO_SCRICT_BLESS = qr(^@{[join '|', __PACKAGE__, qw/utf8/]}$);
+my $GLOBAL_ALLOWED_PACKAGE = qr(^@{[join '|', qw/Exporter Utils Settings/]}$);
+
 sub handleError {
-    my ($error, $other_params) = @_;
-	# TODO
-	# Make Normal Error Handling using Kore main error handler.
+	my ($error, $other_params) = @_;
+	
+	# this can be called too early, ErrorHandler will provide normal error report if loaded
+	die $error;
 }    
 
 ## ----------------------------------------------------------------------------
@@ -72,15 +78,18 @@ sub import {
 # Do not Tie where overloading used ( optional ??? )
 sub strict_bless {
 	my ($hash, $class) = @_;
-	tie(%{$_[0]}, "Utils::PackageDefender", $class, %{$hash}) unless ($class eq "Utils::PackageDefender");
+	
+	# use it only for ObjectLists for now
+	if (ref $hash eq 'HASH' && $class->isa('ObjectList')) {
+	#if (ref $hash eq 'HASH' && $class !~ $NO_SCRICT_BLESS) {
+		tie(%{$_[0]}, "Utils::PackageDefender", $class, %{$hash});
+	}
 	return CORE::bless($_[0], $class);
 }
 
 ## ----------------------------------------------------------------------------
 ## class methods
 ## ----------------------------------------------------------------------------
-
-use Data::Dumper ();
 
 # TODO
 # Improve Dump function
@@ -173,30 +182,39 @@ sub _check_access {
 	my ($self, $key) = @_;
 	my ($calling_package, undef, undef, $hash_action) = caller(1); 
     ($calling_package ne "main") || handleError "Illegal Operation : hashes cannot be accessed directly";
+	
+	$hash_action =~ s/^.*:://;
+	
 	my (undef, undef, undef, $_calling_subroutine) = caller(2);	
     my ($calling_subroutine) = ($_calling_subroutine =~ /\:\:([a-zA-Z0-9_]+)$/);
     return if $calling_subroutine =~ /DESTROY/;
-	unless (exists $self->{fields}->{$key}) {
-		($calling_subroutine =~ /$KEY_CREATION_ACCESS_REGEX/) || handleError "Illegal Operation : attempt to create non-existant key ($key) in method '$calling_subroutine'";
+	unless (exists $self->{fields}->{$key} || $hash_action eq 'DELETE') {
+		$calling_package =~ $GLOBAL_ALLOWED_PACKAGE
+		or $self->{blessed_class}->isa($calling_package)
+		or $calling_subroutine =~ /$KEY_CREATION_ACCESS_REGEX/
+		or handleError "Illegal Operation : attempt to create non-existant key ($key) in $calling_package ($calling_subroutine)";
+		
 		$self->{fields_init_in}->{$key} = $calling_package;
 	} else {
-		if ($key =~ /$PRIVATE_FIELD_IDENTIFIER/) {	
-			if ($calling_subroutine =~ /$KEY_CREATION_ACCESS_REGEX/
-				&& $hash_action =~ /\:\:STORE$/
-				&& $calling_package ne $self->{fields_init_in}->{$key}) {
-					if ($self->{fields_init_in}->{$key}->isa($calling_package)) {
-						handleError "Illegal Operation : It seems that " . $self->{fields_init_in}->{$key} . " maybe stepping on one of ${calling_package}'s private fields ($key)";
-					} elsif ($calling_package->isa($self->{fields_init_in}->{$key})) {
-						handleError "Illegal Operation : $calling_package is stepping on a private field ($key) that belongs to " . $self->{fields_init_in}->{$key};
-					} else {
-						handleError "Illegal Operation : attempting to set a private field ($key) in $calling_subroutine, field was already set by " . $self->{fields_init_in}->{$key};
-					}
+		unless ($calling_package =~ $GLOBAL_ALLOWED_PACKAGE) {
+			if ($key =~ /$PRIVATE_FIELD_IDENTIFIER/) {	
+				if ($calling_subroutine =~ /$KEY_CREATION_ACCESS_REGEX/
+					&& $hash_action eq 'STORE'
+					&& $calling_package ne $self->{fields_init_in}->{$key}) {
+						if ($self->{fields_init_in}->{$key}->isa($calling_package)) {
+							handleError "Illegal Operation : It seems that " . $self->{fields_init_in}->{$key} . " maybe stepping on one of ${calling_package}'s private fields ($key)";
+						} elsif ($calling_package->isa($self->{fields_init_in}->{$key})) {
+							handleError "Illegal Operation : $calling_package is stepping on a private field ($key) that belongs to " . $self->{fields_init_in}->{$key};
+						} else {
+							handleError "Illegal Operation : attempting to set a private field ($key) in $calling_subroutine, field was already set by " . $self->{fields_init_in}->{$key};
+						}
+				}
+				unless ($calling_package eq $self->{fields_init_in}->{$key}) { 
+					($calling_subroutine =~ /^$self->{fields_init_in}->{$key}\:\:/) || handleError "Illegal Operation : $calling_package ($calling_subroutine) attempted to access private field ($key) for " . $self->{fields_init_in}->{$key}; 
+				}
+			} elsif ($key =~ /$PROTECTED_FIELD_IDENTIFIER/) {	        
+				($self->{blessed_class}->isa($calling_package)) || handleError "Illegal Operation : $calling_package attempted to access protected field ($key) for " . $self->{blessed_class};
 			}
-			unless ($calling_package eq $self->{fields_init_in}->{$key}) { 
-				($calling_subroutine =~ /^$self->{fields_init_in}->{$key}\:\:/) || handleError "Illegal Operation : $calling_package ($calling_subroutine) attempted to access private field ($key) for " . $self->{fields_init_in}->{$key}; 
-			}
-		} elsif ($key =~ /$PROTECTED_FIELD_IDENTIFIER/) {	        
-			($self->{blessed_class}->isa($calling_package)) || handleError "Illegal Operation : $calling_package attempted to access protected field ($key) for " . $self->{blessed_class}; 
 		}
 	}
 }
