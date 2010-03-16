@@ -71,7 +71,7 @@ sub update {
 			$char->{exp_max} ? sprintf(" (%.2f\%)", $value * 100 / $char->{exp_max}) : ''
 		));
 		$self->set ('baseEstimation', $char->{exp_max} && $value ? timeConvert (
-			int + ($char->{exp_max} - $char->{exp}) / ($value / 3600)
+			int (($char->{exp_max} - $char->{exp}) / ($value / 3600))
 		) : '');
 		$self->set ('jobExp', formatNumber ($totalJobExp) . (
 			$char->{exp_job_max} ? sprintf(" (%.2f\%)", $totalJobExp * 100 / $char->{exp_job_max}) : ''
@@ -81,7 +81,7 @@ sub update {
 			$char->{exp_job_max} ? sprintf(" (%.2f\%)", $value * 100 / $char->{exp_job_max}) : ''
 		));
 		$self->set ('jobEstimation', $char->{exp_job_max} && $value ? timeConvert (
-			int + ($char->{exp_job_max} - $char->{exp_job}) / ($value / 3600)
+			int (($char->{exp_job_max} - $char->{exp_job}) / ($value / 3600))
 		) : '');
 		$self->set ('zeny', formatNumber ($value = $char->{zeny} - $startingzeny));
 		$self->set ('zenyPerHour', formatNumber (int $value / $bottingHours));

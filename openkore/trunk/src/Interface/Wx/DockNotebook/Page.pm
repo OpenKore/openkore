@@ -119,6 +119,9 @@ sub onDetach {
 sub onAttach {
 	my ($self, $dock) = @_;
 	
+	# double call?
+	return unless $self->{child};
+	
 	$self->{dialog}->Show(0);
 	
 	my $page = $dock->newPage (1, $self->{title});
