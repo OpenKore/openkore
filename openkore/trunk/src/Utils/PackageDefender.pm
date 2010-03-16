@@ -144,6 +144,7 @@ sub DELETE {
 	my ($self, $key) = @_;
 	$self->_check_access($key);	
 	delete $self->{fields}->{$key};
+	delete $self->{fields_init_in}{$key};
 }
 
 # TODO
