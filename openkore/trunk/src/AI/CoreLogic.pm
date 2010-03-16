@@ -65,7 +65,7 @@ sub iterate {
 	return if processClientSuspend();
 	Benchmark::begin("AI (part 1.1)") if DEBUG;
 	processLook();
-	processNPCTalk();
+	processTask('NPC');
 	processEquip();
 	processDrop();
 	processEscapeUnknownMaps();
@@ -369,6 +369,7 @@ sub processLook {
 	}
 }
 
+=pod
 ##### TALK WITH NPC ######
 sub processNPCTalk {
 	return if (AI::action ne "NPC");
@@ -393,6 +394,7 @@ sub processNPCTalk {
 		}
 	}
 }
+=cut
 
 ##### DROPPING #####
 # Drop one or more items from inventory.

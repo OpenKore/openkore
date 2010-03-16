@@ -22,7 +22,7 @@ use Modules 'register';
 use Task;
 use base qw(Task);
 use Globals qw($char %timeout $npcsList $monstersList %ai_v $messageSender %config @storeList $net %talk);
-use Log qw(debug);
+use Log qw(message debug);
 use Utils;
 use Commands;
 use Network;
@@ -141,6 +141,7 @@ sub iterate {
 		# we could get disconnected.
 		#$messageSender->sendTalkCancel($self->{ID}) if ($npcsList->getByID($self->{ID}));
 		$self->setDone();
+		message TF("Done talking with %s.\n", $self->{target}->name), "ai_npcTalk";
 
 	} elsif (timeOut($self->{time}, $timeResponse)) {
 		# If NPC does not respond before timing out, then by default, it's
