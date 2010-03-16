@@ -670,29 +670,10 @@ sub cartAdd {
 # x, y: the position of the NPC to talk to.
 # sequence: A string containing the NPC talk sequences.
 #
-# Talks to an NPC. You can specify an NPC position, or an NPC ID.
-#
-# $sequence is a list of whitespace-separated commands:
-# ~l
-# c       : Continue
-# r#      : Select option # from menu.
-# n       : Stop talking to NPC.
-# b       : Send the "Show shop item list" (Buy) packet.
-# w#      : Wait # seconds.
-# x       : Initialize conversation with NPC. Useful to perform multiple transaction with a single NPC.
-# t="str" : send the text str to NPC, double quote is needed only if the string contains space
-# ~l~
-#
-# Example:
-# # Sends "Continue", "Select option 0" to the NPC at (102, 300)
-# ai_talkNPC(102, 300, "c r0");
+# Talks to an NPC.
 sub ai_talkNPC {
-	my %args;
-	$args{'pos'}{'x'} = shift;
-	$args{'pos'}{'y'} = shift;
-	$args{'sequence'} = shift;
-	$args{'sequence'} =~ s/^ +| +$//g;
-	AI::queue("NPC", \%args);
+	require Task::TalkNPC;
+	AI::queue("NPC", new Task::TalkNPC(x => $_[0], y => $_[1], sequence => $_[2]));
 }
 
 sub attack {
