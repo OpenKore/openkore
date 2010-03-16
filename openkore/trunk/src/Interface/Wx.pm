@@ -130,6 +130,12 @@ sub OnInit {
 	Wx::Image::AddHandler (new Wx::PNGHandler);
 	Wx::Image::AddHandler (new Wx::GIFHandler);
 	Wx::Image::AddHandler (new Wx::JPEGHandler);
+	Wx::Image::AddHandler (new Wx::ICOHandler);
+	
+	{
+		my $icon = [$0 =~ m{^(.*?)((\w|\.)*)$}]->[0] . 'src/build/openkore.ico';
+		$self->{frame}->SetIcon(new Wx::Icon($icon, wxBITMAP_TYPE_ANY)) if -f $icon;
+	}
 	
 	return 1;
 }
@@ -966,7 +972,7 @@ sub onMinimizeToTray {
 	my $self = shift;
 	my $tray = new Wx::TaskBarIcon;
 	my $title = ($char) ? "$char->{name} - $Settings::NAME" : "$Settings::NAME";
-	$tray->SetIcon(Wx::GetWxPerlIcon, $title);
+	$tray->SetIcon($self->{frame}->GetIcon, $title);
 	EVT_TASKBAR_LEFT_DOWN($tray, sub {
 		$tray->RemoveIcon;
 		undef $tray;
