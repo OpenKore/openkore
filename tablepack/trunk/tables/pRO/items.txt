@@ -4737,5 +4737,14 @@
 //-----Ep13.2 ﾀﾎﾃｦﾆｮ ﾀｯｷ睚ｭ -------------
 6242#Rune-Midgard_Coin#
 16405#Rune-Midgard_Coin_Box#
+//------- 2010 ｺ・弴ｮｽｺ ﾆﾐﾄ｡ -------------
+6237#Guarana_Fruit#
+11515#coconut#
+11516#Asai_Fruit#
+11517#Puri_Potion#
+12414#Guarana_Candy#
+//------2010 ｸｸｿ・---------
+5848#Robin_Eyepatch#
+5849#Doctor_Hairband#
 
 //file end

@@ -10,6 +10,18 @@ splendide.rsw#Rapine Basecamp, Splandid#
 spl_fild01.rsw#Splandid Field#
 spl_in01.rsw#Inside the command post in Splandid#
 spl_in02.rsw#Inside Splandid#
+//2009 RWC
+2009rwc_r.rsw#RWC Arena#
+2009rwc_01.rsw#RWC Arena#
+2009rwc_02.rsw#RWC Arena#
+2009rwc_03.rsw#RWC Arena#
+2009rwc_04.rsw#RWC Arena#
+2009rwc_05.rsw#RWC Arena#
+2009rwc_06.rsw#RWC Arena#
+2009rwc_07.rsw#RWC Arena#
+2009rwc_08.rsw#RWC Arena#
+2009rwc_f01.rsw#RWC Arena#
+2009rwc_f02.rsw#RWC Arena#
 //Ep13
 bat_c01.rsw#Krieger von Midgards#
 bat_c02.rsw#Krieger von Midgards#
@@ -774,3 +786,9 @@ moc_fild22.rsw#Crack of dimension#
 evt_zombie.rsw#Run_From_Zombie#
 itemmall_p.rsw#Item mall#
 itemmall_s.rsw#Item mall#
+//--2010 ｺ・弴ｮｽｺ-----
+brasilis.rsw#Brasilis#
+bra_in01.rsw#Inside Brasilis#
+bra_fild01.rsw#Brasilis Field#
+bra_dun01.rsw#Cave behind Waterfall#
+bra_dun02.rsw#Cave behind Waterfall#
