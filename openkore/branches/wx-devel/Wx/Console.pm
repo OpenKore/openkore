@@ -98,7 +98,7 @@ sub new {
 	if (Wx::wxMSW()) {
 		$font = new Wx::Font(9, wxMODERN, wxNORMAL, wxNORMAL, 0, 'Courier New');
 	} elsif ($^O eq 'freebsd') {
-		$font = new Wx::Font(9, wxMODERN, wxNORMAL, wxNORMAL, 0, 'Monospace');
+		$font = new Wx::Font(10, wxMODERN, wxNORMAL, wxNORMAL, 0, 'Monospace');
 	} else {
 		$font = new Wx::Font(10, wxMODERN, wxNORMAL, wxNORMAL, 0, 'MiscFixed');
 	}

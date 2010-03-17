@@ -3,7 +3,7 @@ package Interface::Wx::StatView::You;
 use strict;
 use base 'Interface::Wx::StatView';
 
-use Globals qw/$char %config %jobs_lut %sex_lut $conState/;
+use Globals qw/$char %config %jobs_lut %sex_lut $conState $accountID/;
 
 sub new {
 	my ($class, $parent, $id) = @_;
@@ -26,7 +26,7 @@ sub new {
 			{key => 'int', title => 'Int', type => 'stat', bonus => 1, increment => 1},
 			{key => 'dex', title => 'Dex', type => 'stat', bonus => 1, increment => 1},
 			{key => 'luk', title => 'Luk', type => 'stat', bonus => 1, increment => 1},
-			{key => 'speed', title => 'Walk speed', type => 'stat'},
+			{key => 'speed', title => 'Speed', type => 'stat'},
 			{key => 'atk', title => 'Atk', type => 'substat', bonus => 1},
 			{key => 'matk', title => 'Matk', type => 'substat', range => 1},
 			{key => 'hit', title => 'Hit', type => 'substat'},
@@ -35,14 +35,34 @@ sub new {
 			{key => 'mdef', title => 'Mdef', type => 'substat', bonus => 1},
 			{key => 'flee', title => 'Flee', type => 'substat', bonus => 1},
 			{key => 'aspd', title => 'Aspd', type => 'substat'},
-			{key => 'statPoint', title => 'Status point', type => 'substat'},
-			{key => 'skillPoint', title => 'Skill point', type => 'substat'},
+			{key => 'statPoint', title => 'Status P.', type => 'substat'},
+			{key => 'skillPoint', title => 'Skill P.', type => 'substat'},
 		],
+	);
+	
+	my $hook = sub {
+		my ($hook, $args) = @_;
+		
+		$self->update unless $hook eq 'changed_status' && $args->{actor}{ID} ne $accountID;
+	};
+	$self->{hooks} = Plugins::addHooks (
+		['packet/map_changed',         $hook],
+		['packet/hp_sp_changed',       $hook],
+		['packet/stat_info',           $hook],
+		['packet/stat_info2',          $hook],
+		['packet/stats_points_needed', $hook],
+		['changed_status',             $hook],
 	);
 	
 	$self->update;
 	
 	return $self;
+}
+
+sub DESTROY {
+	my ($self) = @_;
+	
+	Plugins::delHooks ($self->{hooks});
 }
 
 sub update {

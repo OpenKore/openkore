@@ -19,8 +19,8 @@ sub new {
 			{key => 'jobExpPerHour', title => T('JobExp/Hour'), type => 'stat'},
 			{key => 'zeny', title => T('Zeny'), type => 'stat'},
 			{key => 'zenyPerHour', title => T('Zeny/Hour'), type => 'stat'},
-			{key => 'baseEstimation', title => T('Base Levelup Time Estimation'), type => 'stat'},
-			{key => 'jobEstimation', title => T('Job Levelup Time Estimation'), type => 'stat'},
+			{key => 'baseEstimation', title => T('Base Levelup Est.'), type => 'stat'},
+			{key => 'jobEstimation', title => T('Job Levelup Est.'), type => 'stat'},
 			{key => 'deaths', title => T('Died'), type => 'stat'},
 			{key => 'bytesSent', title => T('Bytes Sent'), type => 'stat'},
 			{key => 'bytesReceived', title => T('Bytes Received'), type => 'stat'},
@@ -40,7 +40,7 @@ sub new {
 	return $self;
 }
 
-sub unload {
+sub DESTROY {
 	my ($self) = @_;
 	
 	Plugins::delHooks ($self->{hooks});
