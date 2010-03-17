@@ -36,6 +36,7 @@
 1044 Obeaune
 1045 Marc
 1047 Pecopeco Egg
+1048 Thief Bug Egg
 1049 Picky
 1050 Super Picky
 1051 Thief Bug
@@ -134,8 +135,8 @@
 1152 Orc Skeleton
 1153 Orc Zombie
 1154 Pasana
-1155 Petit Dragon
-1156 Petit Dragon
+1155 Earth Petit Dragon
+1156 Sky Petit Dragon
 1158 Phen
 1160 Piere
 1161 Plankton
@@ -146,7 +147,6 @@
 1167 Savage Babe
 1169 Skel Worker
 1170 Sohee
-1170 TisayKaBa
 1174 Stainer
 1175 Tarou
 1176 Vitata
@@ -182,6 +182,7 @@
 1213 High Orc
 1214 Choco
 1215 Stem Worm
+1216 Penomena
 1219 Knight of Abyss
 1242 Marin
 1243 Sasquatch
@@ -223,11 +224,13 @@
 1283 Chimera
 1289 Maya Purple
 1290 Skeleton General
+1291 Wraith Dead
 1292 Mini Demon
 1293 Cremy Fear
 1294 Killer Mantis
 1295 Owlbaron
 1296 Kobold Leader
+1297 Ancient Mummy
 1298 Zombie Master
 1299 Goblin Leader
 1300 Caterpillar
@@ -253,6 +256,7 @@
 1321 Dragon Tail
 1322 Spring Rabbit
 1323 Sea Otter
+1364 Assulter
 1365 Apocalypse
 1366 Lava Golem
 1367 Blazzer
@@ -260,6 +264,7 @@
 1369 Grand Peco
 1370 Succubus
 1371 Fake Angel
+1372 Goat
 1374 Incubus
 1375 The Paper
 1376 Harpy
@@ -268,10 +273,9 @@
 1379 Nightmare Terror
 1380 Driller
 1381 Grizzly
-1382 Adam Lambert
 1383 Explosion
-1384 Deleter
-1385 Deleter
+1384 Sky Deleter
+1385 Earth Deleter
 1386 Sleeper
 1387 Gig
 1390 Violy
@@ -353,30 +357,32 @@
 1655 Errende Ebecee
 1656 Kavach Icarus
 1657 Laurell Weinder
-1664 Photon Cannon
-1665 Photon Cannon
-1666 Photon Cannon
-1667 Photon Cannon
+1664 Red Photon Cannon
+1665 Yellow Photon Cannon
+1666 Green Photon Cannon 
+1667 Blue Photon Cannon 
 1668 Archdam
-1669 Dimik
-1670 Dimik
-1671 Dimik
-1672 Dimik
-1673 Dimik
-1675 Venatu
-1676 Venatu
-1677 Venatu
-1678 Venatu
-1679 Venatu
+1669 Grey Dimik 
+1670 Green Dimik
+1671 Blue Dimik
+1672 Yellow Dimik
+1673 Red Dimik
+1675 Red Venatu
+1676 Grey Venatu
+1677 Green Venatu
+1678 Yellow Venatu
+1679 Blue Venatu
 1680 Hill Wind
 1681 Gemini-S58
 1682 Remover
 1686 Orc Baby
 1687 Grove
 1692 Breeze
-1693 Plasma
-1694 Plasma
-1696 Plasma
+1693 Yellow Plasma
+1694 Red Plasma
+1695 Green Plasma
+1696 Purple Plasma
+1697 Blue Plasma
 1699 Ancient Mimic
 1703 Lady Solace
 1704 Odium of Thanatos
@@ -402,8 +408,8 @@
 1760 Ferus
 1761 Skogul
 1762 Frus
-1763 Skeggiold
-1764 Skeggiold
+1763 Skeggiold Mob
+1764 Skeggiold Mob
 1769 Agav
 1770 Echio
 1771 Vanberk
@@ -419,8 +425,9 @@
 1782 Roween
 1783 Galion
 1784 Stapo
+1791 Galion Mob
 1789 Iceicle
-1794 Roween
+1794 Roween Mob
 1815 Hot Rice cake
 1829 Sword Guardian
 1830 Bow Guardian
@@ -442,9 +449,9 @@
 1882 Vavayaga
 1883 Uzhas
 1884 Mavka
-1918 Incarnation of Morocc
-1919 Incarnation of Morocc
-1920 Incarnation of Morocc
-1921 Incarnation of Morocc
+1918 Incarnation of Morocc Angel
+1919 Incarnation of Morocc Golem
+1920 Incarnation of Morocc Human
+1921 Incarnation of Morocc Ghost
 1966 Doppelganger
 2057 Sticky Rat

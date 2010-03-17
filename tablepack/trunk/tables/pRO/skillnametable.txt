@@ -67,7 +67,7 @@ PR_SUFFRAGIUM#Suffragium#
 PR_ASPERSIO#Aspersio#
 PR_BENEDICTIO#B.S_Sacramenti#
 PR_SANCTUARY#Sanctuary#
-PR_STRECOVERY#Status_Recovery_#
+PR_STRECOVERY#Status_Recovery#
 PR_SLOWPOISON#Slow_Poison#
 ALL_RESURRECTION#Resurrection#
 PR_KYRIE#Kyrie_Eleison#
@@ -394,7 +394,7 @@ SL_ROGUE#Spirit_of_Rogue#
 SL_ASSASIN#Spirit_of_Assassin#
 SL_BLACKSMITH#Spirit_of_Blacksmith#
 BS_ADRENALINE2#Advanced_Adrenaline_Rush#
-SL_HUNTER#Spirit_of_Hunter_#
+SL_HUNTER#Spirit_of_Hunter#
 SL_SOULLINKER#Spirit_of_Soul_Linker#
 SL_HIGH#2-1_Class_Spirit#
 SL_KAIZEL#Kaizel#

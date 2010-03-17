@@ -9,7 +9,7 @@
 8 Quagmire
 9 Angelus
 10 Blessing
-11 Signum Crucis
+11 Signum Crusis
 12 Increase AGI
 13 Decrease AGI
 14 Slow Poison
@@ -59,7 +59,7 @@
 58 Auto Guard
 59 Reflect Shield
 60 Devotion
-61 Providence
+61 Divine Providence
 62 Defender
 63 Magic Rod
 64 Element Enchanted
@@ -69,13 +69,13 @@
 68 Spear Quicken
 69 BDPLAYING
 70 Whistle
-71 Assassin Cross of Sunset
+71 Assassin Cross at Sunset
 72 Bragi's Poem
 73 Idun's Apple
 74 Humming
 75 Don't Forget Me
 76 Kiss of Fortune
-77 Service for You
+77 Service For You
 78 Rich Man Mr. Kim
 79 Eternal Chaos
 80 Drum Sound on Battlefield
@@ -121,9 +121,9 @@
 120 Counter Instinct
 121 Marionette Control
 122 Marionette Control
-123 Moonlit Water Mill
-124 Head Crush Bleeding
-125 Joint Beat
+123 Sheltering Bliss
+124 Traumatic Blow Bleeding
+125 Vital Strike
 126 Mind Breaker
 127 Memorize
 128 Fog Wall
@@ -131,17 +131,17 @@
 130 Mom, Dad, I love you!
 131 Magnum Break
 132 Auto Berserk
-133 Running
+133 Sprint
 134 Ready Spurt
-135 Prepare Whirlwind Kick
-136 Whirlwind Kick
-137 Prepare Axe Kick
-138 Axe Kick
-139 Prepare Round Kick
-140 Round Kick
+135 Prepare Tornado Kick
+136 Tornado Kick
+137 Prepare Heel Drop Kick
+138 Heel Drop Kick
+139 Prepare Roundhouse Kick
+140 Roundhouse Kick
 141 Prepare Counter Kick
 142 Counter Kick
-143 Prepare Break Fall
+143 Tumbling
 144 Flying Side Kick
 145 Spurt
 146 Dark Weapon
@@ -163,13 +163,13 @@
 162 Friend
 163 Increase Friend
 164 Warmth
-165 Warmth of Sun
-166 Warmth of Moon
-167 Warmth of Star
+165 Solar Heat
+166 Lunar Heat
+167 Stellar Heat
 168 Show Emotion
-169 Comfort of the Sun
-170 Comfort of the Moon
-171 Comfort of the Star
+169 Solar Protection
+170 Lunar Protection
+171 Stellar Protection
 172 EXPUP
 173 Battle Orders
 174 Regeneration
@@ -193,7 +193,7 @@
 192 Emergency Avoid
 193 Fleet Move
 194 Over Speed
-195 Mental Change
+195 Mental Charge
 196 Blood Lust
 197 Shrink
 198 Sight Blaster
@@ -201,7 +201,7 @@
 200 Close Confine
 201 Close Confine
 202 DISABLEMOVE
-203 Madness Canceller
+203 Last Stand
 204 Gatling Fever
 205 Happy Break
 206 Cast-off Ciceda Shell

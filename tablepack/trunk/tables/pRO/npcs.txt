@@ -47,6 +47,10 @@ alberta 91 70 Bad food boy
 alberta 97 51 Merchant
 alberta_in 53 43 Merchant
 alberta_in 70 51 Guarnien
+alde_alche 24 188 Guild Dealer
+alde_alche 27 185 Alchemist Guildsman
+alde_alche 38 184 Material Seller#alche
+aldebaran 114 56 Rogue Agent#nd0
 aldebaran 127 138 Promotional staff
 aldebaran 128 97 Lotenbruek
 aldebaran 131 97 Virchbruek
@@ -61,6 +65,7 @@ aldebaran 136 133 Bulletin Board#clocktow
 aldebaran 136 135 Smile Helper
 aldebaran 137 119 Kafra Employee#pRO_Prem
 aldebaran 138 102 Cool Event Voting Staff
+aldebaran 139 63 Soldier 
 aldebaran 143 119 Kafra Employee
 aldebaran 143 136 Benjamin Hole 
 aldebaran 145 102 Kafra Voting Staff#alde
@@ -68,10 +73,20 @@ aldebaran 146 106 Bulletin Board#alde
 aldebaran 146 109 Maroll Battle Recruiter
 aldebaran 146 124 Village Girl
 aldebaran 149 97 Hohenshweingaw
+aldebaran 152 63 Merchant#alde
 aldebaran 152 97 Noischvanstein
 aldebaran 165 107 Chef Assistant
+aldebaran 46 129 Canal Young Man 
+aldebaran 49 93 Weapon Level Young Man 
+aldebaran 60 70 Lady
+aldebaran 64 104 Mr Quaetro
+aldebaran 67 154 Young Mountaineer 
+aldebaran 81 61 Clam-picking Girl 
+aldebaran 90 170 Slots Young Man
+aldebaran 93 80 Long-leg Youth 
 aru_gld 80 41 Scheit
 aru_gld 80 52 Scheit
+c_tower3 10 249 Gatekeeper#Riku
 cmd_fild01 55 160 Heap of Earth
 comodo 112 182 Munak's grandma
 comodo 135 299 Young Man#sch
@@ -108,6 +123,8 @@ einbroch 242 205 Kafra Employee#ein2
 einbroch 245 205 Second_Cash_Seller
 einbroch 253 203 Bulletin Board
 gef_fild05 80 149 Myu#08_hat
+gef_fild08 182 182 #CallGhost
+gef_fild08 182 185 The Wanderer
 gef_fild13 290 243 Jyolbriger
 gef_fild13 297 242 Soldier#277
 gef_fild13 303 243 Jyolbriger
@@ -172,6 +189,7 @@ in_orcs01 20 109 Stylist
 in_sphinx2 13 146 Stone Statue#2
 in_sphinx2 13 163 Stone Statue#1
 in_sphinx2 212 267 Old Coffin#2
+in_sphinx2 259 213 Old Coffin#1
 izlu2dun 104 91 Bulletin Board#izlude
 izlu2dun 106 58 Kafra Employee
 izlu2dun 108 27 Sailor
@@ -207,8 +225,22 @@ lighthalzen 154 100 Guide
 lighthalzen 154 83 First_Cash_Seller
 lighthalzen 162 109 moonfestivalstaff#09_mo
 lighthalzen 163 83 Second_Cash_Seller
+lighthalzen 163 86 Odin's Cash manager#phi
 lighthalzen 164 100 Kafra Employee
 lighthalzen 164 87 Kafra Employee#pRO_Prem
+lighthalzen 182 102 Lucius#zen5
+lighthalzen 182 89 Relaxed-Looking Lady
+lighthalzen 190 134 Joyce
+lighthalzen 191 134 Dan Song#zen2
+lighthalzen 205 208 Greedy Looking Man#li_0
+lighthalzen 205 284 Harrison#gun
+lighthalzen 207 310 Guide
+lighthalzen 220 169 Suspicious Guy#lhz_02
+lighthalzen 220 244 Samnang#zen2
+lighthalzen 220 292 Guide
+lighthalzen 220 311 Guide
+lighthalzen 222 191 Pet Groomer
+lighthalzen 226 210 Nannan
 lighthalzen 294 223 Guard
 lighthalzen 295 227 #kiz05
 lighthalzen 296 239 Berru#lhz_01
@@ -220,6 +252,15 @@ mjo_dun02 78 298 Fearsome Demon#ppl1
 mjolnir_02 76 362 Bulletin Board#coal
 mjolnir_02 82 362 Kafra Employee
 mjolnir_02 85 362 Blacksmith Miner
+mjolnir_06 275 50 #mj06_find_2
+mjolnir_06 371 78 #mj06_find_3
+mjolnir_07 157 25 #mj07_find_6
+mjolnir_07 214 373 #mj07_find_2
+mjolnir_07 26 373 #mj07_find_1
+mjolnir_07 26 78 #mj07_find_5
+mjolnir_07 372 355 #mj07_find_3
+mjolnir_07 375 233 #mj07_find_4
+mjolnir_08 39 239 #mj08_find_1
 moc_fild12 160 365 Ashe#3
 moc_fild12 160 372 Hit
 moc_fild12 166 369 battle_traces#1
@@ -498,6 +539,18 @@ pvp_y_room 77 85 Guild Battle Guide
 pvp_y_room 78 85 Fight Square Reception 
 pvp_y_room 86 85 Fight Square Reception 
 ra_fild01 245 325 Suspicious Man#ra_in01
+rachel 120 47 Idle Merchant#ra_in01
+rachel 124 120 Mardol
+rachel 125 33 Rachel Guard
+rachel 127 117 Child Follower#2
+rachel 132 117 Rhehe Ravies#god_se_fes
+rachel 136 120 Syr
+rachel 138 126 Horn
+rachel 138 73 Idle Merchant#ra_in01
+rachel 152 131 Sakjul
+rachel 197 137 Bard#aru
+rachel 245 132 Bafhail#rachel
+rachel 268 120 Rachel Guard
 schg_cas03 266 197 Bidblind
 schg_cas03 266 206 Bidblind
 schg_cas03 273 205 control device03#sch03_
@@ -512,6 +565,7 @@ valkyrie 53 39 Paladin#Valkyrie#
 valkyrie 53 42 Champion#Valkyrie#
 valkyrie 53 47 Scholar#Valkyrie#
 valkyrie 53 50 Biochemist#Valkyrie#
+ve_fild03 351 219 #ve_find_1
 yuno 109 167 Heemin
 yuno 110 171 Andlerangh
 yuno 111 156 Euslan#02
@@ -529,6 +583,7 @@ yuno 152 187 Kafra Employee
 yuno 153 113 Bulletin Board#juno
 yuno 153 191 Cool Event Voting Staff
 yuno 157 205 A craftsman of Juno
+yuno 157 87 a Juno resident
 yuno 158 183 Odin's Cash manager#phi
 yuno 162 191 Kafra Voting Staff#yuno
 yuno 163 187 Magic Tool Dealer
