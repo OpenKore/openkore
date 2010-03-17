@@ -75,7 +75,7 @@ sub new {
 				my $key = $stat->{key};
 				EVT_BUTTON ($self, $self->{display}{$stat->{key}}{value}->GetId, sub {
 					$self->_onControl ($key);
-					$Globals::interface->{inputBox}->SetFocus;
+					Plugins::callHook('interface/defaultFocus');
 				});
 			}
 		} else {
@@ -119,7 +119,7 @@ sub new {
 					my $key = $stat->{key};
 					EVT_BUTTON ($self, $self->{display}{$stat->{key}}{increment}->GetId, sub {
 						$self->_onIncrement ($key);
-						$Globals::interface->{inputBox}->SetFocus;
+						Plugins::callHook('interface/defaultFocus');
 					});
 				}
 			} else {
