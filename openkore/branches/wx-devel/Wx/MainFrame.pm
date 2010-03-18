@@ -85,7 +85,9 @@ sub new {
 	});
 	
 	$self->{hooks} = Plugins::addHooks(
-		['loadfiles', \&onLoadFiles, $self],
+		['loadfiles',     \&onLoadFiles, $self],
+		['postloadfiles', \&onLoadFiles, $self],
+		['mainLoop_pre',  \&onUpdate, $self],
 	);
 	
 	# initialize default windows
@@ -105,7 +107,7 @@ sub new {
 	
 	my $input = new Interface::Wx::Window::Input($self);
 	$self->{aui}->AddPane($input,
-		Wx::AuiPaneInfo->new->ToolbarPane->Bottom->BestSize($input->GetSize)->CloseButton(0)->Resizable->LeftDockable(0)->RightDockable(0)
+		Wx::AuiPaneInfo->new->ToolbarPane->Bottom->BestSize($input->GetBestSize)->CloseButton(0)->Resizable->LeftDockable(0)->RightDockable(0)
 	);
 	
 	$self->{aui}->AddPane(new Interface::Wx::StatView::You($self),
@@ -125,18 +127,34 @@ sub DESTROY {
 	my ($self) = @_;
 	
 	$self->{aui}->UnInit;
+	
+	Plugins::delHooks($self->{hooks});
 }
 
 sub onLoadFiles {
 	my ($hook, $args, $self) = @_;
 	if ($hook eq 'loadfiles') {
-		$self->{loadingFiles}{percent} = $args->{current} / scalar @{$args->{files}};
+		$self->{loadingFiles}{percent} = $args->{current} / (1 + scalar @{$args->{files}});
 		$self->{loadingFiles}{file} = $args->{files}[$args->{current} - 1]
 	} else {
 		delete $self->{loadingFiles};
 	}
 	
 	$self->updateStatusBar;
+}
+
+sub onUpdate {
+	my (undef, undef, $self) = @_;
+	
+	if (timeOut($updateUITime, 0.15)) {
+		$self->updateStatusBar;
+		#$self->updateMapViewer;
+		$updateUITime = time;
+	}
+	if (timeOut($updateUITime2, 0.35)) {
+		#$self->updateItemList;
+		$updateUITime2 = time;
+	}
 }
 
 sub createStatusBar {
@@ -152,12 +170,12 @@ sub updateStatusBar {
 	my ($statText, $xyText, $aiText) = ('', '', '');
 
 	if ($self->{loadingFiles}) {
-		$statText = sprintf(T("Loading files... %.0f%%"), $self->{loadingFiles}{percent} * 100);
+		$statText = sprintf(T("Loading files... %.0f%% (%s)"), $self->{loadingFiles}{percent} * 100, $self->{loadingFiles}{file}{name});
 	} elsif (!$conState) {
 		$statText = T("Initializing...");
-	} elsif ($conState == 1) {
+	} elsif ($conState == Network::NOT_CONNECTED) {
 		$statText = T("Not connected");
-	} elsif ($conState > 1 && $conState < 5) {
+	} elsif ($conState > Network::NOT_CONNECTED && $conState < Network::IN_GAME) {
 		$statText = T("Connecting...");
 	} elsif ($self->{mouseMapText}) {
 		$statText = $self->{mouseMapText};
@@ -213,7 +231,6 @@ sub OnInit {
 	$self->{hooks} = Plugins::addHooks(
 		['parseMsg/addPrivMsgUser',             sub { $self->onAddPrivMsgUser(@_); }],
 		['initialized',                         sub { $self->onInitialized(@_); }],
-		['mainLoop_pre',                        sub { $self->onUpdateUI(); }],
 		['captcha_file',                        sub { $self->onCaptcha(@_); }],
 		['packet/minimap_indicator',            sub { $self->onMapIndicator (@_); }],
 		
@@ -259,215 +276,6 @@ sub OnInit {
 	return 1;
 }
 
-sub DESTROY {
-	my $self = shift;
-	Plugins::delHooks($self->{hooks});
-}
-
-
-######################
-## METHODS
-######################
-
-
-sub mainLoop {
-	my ($self) = @_;
-	my $timer = new Wx::Timer($self, 246);
-	# Start the real main loop in 100 msec, so that the UI has
-	# the chance to layout correctly.
-	EVT_TIMER($self, 246, sub { $self->realMainLoop(); });
-	$timer->Start(100, 1);
-	$self->MainLoop;
-}
-
-sub realMainLoop {
-	my ($self) = @_;
-	my $timer = new Wx::Timer($self, 247);
-	my $sleepTime = $config{sleepTime};
-	my $quitting;
-	my $sub = sub {
-		return if ($quitting);
-		if ($quit) {
-			$quitting = 1;
-			$self->ExitMainLoop;
-			$timer->Stop;
-			return;
-		} elsif ($self->{iterating}) {
-			return;
-		}
-
-		$self->{iterating}++;
-
-		if ($sleepTime ne $config{sleepTime}) {
-			$sleepTime = $config{sleepTime};
-			$timer->Start(($sleepTime / 1000) > 0
-				? ($sleepTime / 1000)
-				: 10);
-		}
-		main::mainLoop();
-
-		$self->{iterating}--;
-	};
-
-	EVT_TIMER($self, 247, $sub);
-	$timer->Start(($sleepTime / 1000) > 0
-		? ($sleepTime / 1000)
-		: 10);
-}
-
-sub iterate {
-	my $self = shift;
-
-	if ($self->{iterating} == 0) {
-		$self->{console}->Refresh;
-		$self->{console}->Update;
-	}
-	$self->Yield();
-	$iterationTime = time;
-}
-
-sub getInput {
-	my $self = shift;
-	my $timeout = shift;
-	my $msg;
-
-	if ($timeout < 0) {
-		while (!defined $self->{input} && !$quit) {
-			$self->iterate;
-			sleep 0.01;
-		}
-		$msg = $self->{input};
-
-	} elsif ($timeout == 0) {
-		$msg = $self->{input};
-
-	} else {
-		my $begin = time;
-		until (defined $self->{input} || time - $begin > $timeout || $quit) {
-			$self->iterate;
-			sleep 0.01;
-		}
-		$msg = $self->{input};
-	}
-
-	undef $self->{input};
-	undef $msg if (defined($msg) && $msg eq "");
-
-	# Make sure we update the GUI. This is to work around the effect
-	# of functions that block for a while
-	$self->iterate if (timeOut($iterationTime, 0.05));
-
-	return $msg;
-}
-
-sub query {
-	my $self = shift;
-	my $message = shift;
-	my %args = @_;
-
-	$args{title} = "Query" if (!defined $args{title});
-	$args{cancelable} = 1 if (!exists $args{cancelable});
-
-	$message = wrapText($message, 70);
-	$message =~ s/\n$//s;
-	my $dialog;
-	if ($args{isPassword}) {
-		# WxPerl doesn't support wxPasswordEntryDialog :(
-		$dialog = new Interface::Wx::PasswordDialog($self->{frame}, $message, $args{title});
-	} else {
-		$dialog = new Wx::TextEntryDialog($self->{frame}, $message, $args{title});
-	}
-	while (1) {
-		my $result;
-		if ($dialog->ShowModal == wxID_OK) {
-			$result = $dialog->GetValue;
-		}
-		if (!defined($result) || $result eq '') {
-			if ($args{cancelable}) {
-				$dialog->Destroy;
-				return undef;
-			}
-		} else {
-			$dialog->Destroy;
-			return $result;
-		}
-	}
-}
-
-sub showMenu {
-	my $self = shift;
-	my $message = shift;
-	my $choices = shift;
-	my %args = @_;
-
-	$args{title} = "Menu" if (!defined $args{title});
-	$args{cancelable} = 1 if (!exists $args{cancelable});
-
-	$message = wrapText($message, 70);
-	$message =~ s/\n$//s;
-	my $dialog = new Wx::SingleChoiceDialog($self->{frame},
-		$message, $args{title}, $choices);
-	while (1) {
-		my $result;
-		if ($dialog->ShowModal == wxID_OK) {
-			$result = $dialog->GetSelection;
-		}
-		if (!defined($result)) {
-			if ($args{cancelable}) {
-				$dialog->Destroy;
-				return -1;
-			}
-		} else {
-			$dialog->Destroy;
-			return $result;
-		}
-	}
-}
-
-sub writeOutput {
-	my $self = shift;
-	$self->{console}->add(@_);
-	# Make sure we update the GUI. This is to work around the effect
-	# of functions that block for a while
-	$self->iterate if (timeOut($iterationTime, 0.05));
-}
-
-sub title {
-	my $self = shift;
-	my $title = shift;
-
-	if (defined $title) {
-		if ($title ne $self->{title}) {
-			$self->{frame}->SetTitle($title);
-			$self->{title} = $title;
-		}
-	} else {
-		return $self->{title};
-	}
-}
-
-sub displayUsage {
-	my $self = shift;
-	my $text = shift;
-	print $text;
-}
-
-sub errorDialog {
-	my $self = shift;
-	my $msg = shift;
-	my $fatal = shift;
-
-	my $title = ($fatal) ? "Fatal error" : "Error";
-	$self->{iterating}++;
-	Wx::MessageBox($msg, "$title - $Settings::NAME", wxICON_ERROR, $self->{frame});
-	$self->{iterating}--;
-}
-
-sub beep {
-	Wx::Bell();
-}
-
-
 #########################
 ## INTERFACE CREATION
 #########################
@@ -499,31 +307,6 @@ sub createInterface {
 	$vsizer->Add($splitter, 1, wxGROW);
 #	$splitter->SetMinimumPaneSize(50);
 	$self->createSplitterContent;
-
-	#################
-
-	$frame->SetSizeHints(300, 250);
-	$frame->SetClientSize(730, 400);
-	$frame->SetIcon(Wx::GetWxPerlIcon);
-	$frame->Show(1);
-	EVT_CLOSE($frame, \&onClose);
-
-	# For some reason the input box doesn't get focus even if
-	# I call SetFocus(), so do it in 100 msec.
-	# And the splitter window's sash position is placed incorrectly
-	# if I call SetSashGravity immediately.
-	my $timer = new Wx::Timer($self, 73289);
-	EVT_TIMER($self, 73289, sub {
-		$self->{inputBox}->SetFocus;
-		$self->{notebook}->switchPage('Console');
-#		$splitter->SetSashGravity(1);
-	});
-	$timer->Start(500, 1);
-
-	# Hide console on Win32
-	if ($^O eq 'MSWin32' && $sys{wxHideConsole}) {
-		eval 'use Win32::Console; Win32::Console->new(STD_OUTPUT_HANDLE)->Free();';
-	}
 }
 
 
@@ -805,20 +588,6 @@ sub addCheckMenu {
 ##########################
 
 
-sub onUpdateUI {
-	my $self = shift;
-
-	if (timeOut($updateUITime, 0.15)) {
-		$self->updateStatusBar;
-		$self->updateMapViewer;
-		$updateUITime = time;
-	}
-	if (timeOut($updateUITime2, 0.35)) {
-		$self->updateItemList;
-		$updateUITime2 = time;
-	}
-}
-
 sub updateStatusBar {
 	my $self = shift;
 
@@ -1004,17 +773,6 @@ sub onMenuOpen {
 	for $menu (sort map {/^alias_(.+)$/} keys %config) {
 		$self->addMenu ($self->{aliasMenu}, $menu, sub { Commands::run ($menu) });
 	}
-}
-
-sub onLoadFiles {
-	my ($self, $hook, $param) = @_;
-	if ($hook eq 'loadfiles') {
-		$self->{loadingFiles}{percent} = $param->{current} / scalar(@{$param->{files}});
-	} else {
-		delete $self->{loadingFiles};
-	}
-	
-	$self->updateStatusBar;
 }
 
 sub onEnableAI {
