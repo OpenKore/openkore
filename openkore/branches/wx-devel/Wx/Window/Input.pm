@@ -61,6 +61,13 @@ sub new {
 		}, undef]
 	);
 	
+	# For some reason the input box doesn't get focus even if
+	# I call SetFocus(), so do it in 100 msec.
+	EVT_TIMER($self, (my $timer = new Wx::Timer($self, wxID_ANY))->GetId, sub {
+		$inputBox->SetFocus;
+	});
+	$timer->Start(500, 1);
+	
 	return $self;
 }
 

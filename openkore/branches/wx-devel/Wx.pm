@@ -69,6 +69,11 @@ sub mainLoop {
 	
 	$self->{app} = new Interface::Wx::App;
 	
+	# Hide console on Win32
+	if ($^O eq 'MSWin32' && $sys{wxHideConsole}) {
+		eval 'use Win32::Console; Win32::Console->new(STD_OUTPUT_HANDLE)->Free();';
+	}
+	
 	# Start the real main loop in 100 msec, so that the UI has
 	# the chance to layout correctly.
 	EVT_TIMER($self->{app}{mainFrame}, (
