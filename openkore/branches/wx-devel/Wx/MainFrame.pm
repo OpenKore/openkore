@@ -23,7 +23,7 @@
 #########################################################################
 package Interface::Wx::MainFrame;
 use strict;
-use base qw(Wx::Frame);
+use base 'Wx::Frame';
 
 use Wx ':everything';
 use Wx::AUI;
@@ -40,11 +40,13 @@ use Modules;
 use Field;
 use I18N qw/bytesToString/;
 
+use Interface::Wx::Window::Input;
+use Interface::Wx::Window::Console;
+use Interface::Wx::Window::ChatLog;
 #use Interface::Wx::Dock;
 #use Interface::Wx::MapViewer;
 #use Interface::Wx::LogView;
 use Interface::Wx::Console;
-use Interface::Wx::Input;
 #use Interface::Wx::ItemList;
 #use Interface::Wx::DockNotebook;
 #use Interface::Wx::PasswordDialog;
@@ -59,78 +61,6 @@ use Commands;
 use Utils;
 use Translation qw/T TF/;
 
-{
-	package Interface::Wx::Temp::InputWindow;
-	use strict;
-	
-	use base 'Wx::Window';
-	
-	use Wx ':everything';
-	
-	sub new {
-		my ($class, $parent, $id, @args) = @_;
-		
-		my $self = $class->SUPER::new($parent, $id || wxID_ANY);
-		
-		$self->SetSizer(my $sizer = new Wx::BoxSizer(wxHORIZONTAL));
-		
-		$sizer->Add(my $inputBox = new Interface::Wx::Input($self), 1, wxGROW);
-		$inputBox->onEnter($self, sub {
-			my ($self, $text) = @_;
-			
-			Plugins::callHook('interface/writeOutput', ['input', "$text\n"]);
-			$inputBox->Remove(0, -1);
-			$Globals::interface->{input} = $text;
-		});
-		
-		$self->{hooks} = Plugins::addHooks(
-			['interface/defaultFocus', sub {
-				my (undef, $args) = @_;
-				return if $args->{return};
-				
-				$inputBox->SetFocus;
-				$args->{return} = 1;
-			}, undef]
-		);
-		
-		return $self;
-	}
-	
-	sub DESTROY {
-		my ($self) = @_;
-		
-		Plugins::delHooks($self->{hooks});
-	}
-}
-
-{
-	package Interface::Wx::Temp::ConsoleWindow;
-	use strict;
-	
-	use base 'Interface::Wx::Console';
-	
-	sub new {
-		my ($class, $parent, $id, @args) = @_;
-		
-		my $self = $class->SUPER::new($parent, $id);
-		
-		$self->{hooks} = Plugins::addHooks(
-			['interface/writeOutput', sub {
-				my (undef, $args) = @_;
-				$self->add(@$args);
-			}, undef],
-		);
-		
-		return $self;
-	}
-	
-	sub DESTROY {
-		my ($self) = @_;
-		
-		Plugins::delHooks($self->{hooks});
-	}
-}
-
 our ($iterationTime, $updateUITime, $updateUITime2);
 
 sub new {
@@ -138,10 +68,10 @@ sub new {
 	
 	my $self = $class->SUPER::new($parent, $id || wxID_ANY, $title || $Settings::NAME);
 	
-	$self->{statusBar} = $self->CreateStatusBar(3, wxST_SIZEGRIP | wxFULL_REPAINT_ON_RESIZE, wxID_ANY);
+	$self->createStatusBar;
 	
 	#$self->SetSizeHints(300, 250);
-	$self->SetClientSize(730, 400);
+	$self->SetClientSize(950, 680);
 	if (-f (my $icon = "$RealBin/src/build/openkore.ico")) {
 		$self->SetIcon(new Wx::Icon($icon, wxBITMAP_TYPE_ANY));
 	}
@@ -154,22 +84,36 @@ sub new {
 		}
 	});
 	
+	$self->{hooks} = Plugins::addHooks(
+		['loadfiles', \&onLoadFiles, $self],
+	);
+	
+	# initialize default windows
+	
 	($self->{aui} = new Wx::AuiManager)->SetManagedWindow($self);
 	
-	$self->{aui}->AddPane(new Interface::Wx::Temp::ConsoleWindow($self),
+	$self->{aui}->AddPane(
+		$self->{notebook} = new Wx::AuiNotebook(
+			$self, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxAUI_NB_DEFAULT_STYLE | wxAUI_NB_CLOSE_ON_ALL_TABS
+		),
 		Wx::AuiPaneInfo->new->CenterPane
 	);
 	
-	$self->{aui}->AddPane(new Interface::Wx::Temp::InputWindow($self),
-		Wx::AuiPaneInfo->new->ToolbarPane->Bottom->CloseButton(0)->Resizable->LeftDockable(0)->RightDockable(0)
+	$self->{notebook}->AddPage(new Interface::Wx::Window::Console($self), T('Console'), 1);
+	
+	$self->{notebook}->AddPage(new Interface::Wx::Window::ChatLog($self), T('Chat log'), 0);
+	
+	my $input = new Interface::Wx::Window::Input($self);
+	$self->{aui}->AddPane($input,
+		Wx::AuiPaneInfo->new->ToolbarPane->Bottom->BestSize($input->GetSize)->CloseButton(0)->Resizable->LeftDockable(0)->RightDockable(0)
 	);
 	
 	$self->{aui}->AddPane(new Interface::Wx::StatView::You($self),
-		Wx::AuiPaneInfo->new->Right
+		Wx::AuiPaneInfo->new->Caption(T('Character'))->Right->BestSize(250, 250)
 	);
 	
 	$self->{aui}->AddPane(new Interface::Wx::StatView::Exp($self),
-		Wx::AuiPaneInfo->new->Right
+		Wx::AuiPaneInfo->new->Caption(T('Experience report'))->Right->BestSize(250, 250)
 	);
 	
 	$self->{aui}->Update;
@@ -183,6 +127,79 @@ sub DESTROY {
 	$self->{aui}->UnInit;
 }
 
+sub onLoadFiles {
+	my ($hook, $args, $self) = @_;
+	if ($hook eq 'loadfiles') {
+		$self->{loadingFiles}{percent} = $args->{current} / scalar @{$args->{files}};
+		$self->{loadingFiles}{file} = $args->{files}[$args->{current} - 1]
+	} else {
+		delete $self->{loadingFiles};
+	}
+	
+	$self->updateStatusBar;
+}
+
+sub createStatusBar {
+	my ($self) = @_;
+	
+	$self->{statusBar} = $self->CreateStatusBar(3, wxST_SIZEGRIP | wxFULL_REPAINT_ON_RESIZE, wxID_ANY);
+	$self->{statusBar}->SetStatusWidths(-1, 65, 175);
+}
+
+sub updateStatusBar {
+	my $self = shift;
+
+	my ($statText, $xyText, $aiText) = ('', '', '');
+
+	if ($self->{loadingFiles}) {
+		$statText = sprintf(T("Loading files... %.0f%%"), $self->{loadingFiles}{percent} * 100);
+	} elsif (!$conState) {
+		$statText = T("Initializing...");
+	} elsif ($conState == 1) {
+		$statText = T("Not connected");
+	} elsif ($conState > 1 && $conState < 5) {
+		$statText = T("Connecting...");
+	} elsif ($self->{mouseMapText}) {
+		$statText = $self->{mouseMapText};
+	}
+
+	if ($conState == Network::IN_GAME) {
+		$xyText = "$char->{pos_to}{x}, $char->{pos_to}{y}";
+
+		if ($AI) {
+			if (@ai_seq) {
+				my @seqs = @ai_seq;
+				foreach (@seqs) {
+					s/^route_//;
+					s/_/ /g;
+					s/([a-z])([A-Z])/$1 $2/g;
+					$_ = lc $_;
+				}
+				substr($seqs[0], 0, 1) = uc substr($seqs[0], 0, 1);
+				$aiText = join(', ', @seqs);
+			} else {
+				$aiText = "";
+			}
+		} else {
+			$aiText = T("Paused");
+		}
+	}
+
+	# Only set status bar text if it has changed
+	my $i = 0;
+	my $setStatus = sub {
+		if (defined $_[1] && $self->{$_[0]} ne $_[1]) {
+			$self->{$_[0]} = $_[1];
+			$self->{statusBar}->SetStatusText($_[1], $i);
+		}
+		$i++;
+	};
+
+	$setStatus->('statText', $statText);
+	$setStatus->('xyText', $xyText);
+	$setStatus->('aiText', $aiText);
+}
+
 =pod
 sub OnInit {
 	my $self = shift;
@@ -190,31 +207,18 @@ sub OnInit {
 	$self->createInterface;
 	$self->iterate;
 	
-	my $onChat =            sub { $self->onChatAdd(@_); };
-	my $onSelfStatChange  = sub { $self->onSelfStatChange (@_); };
 	my $onSlaveStatChange = sub { $self->onSlaveStatChange (@_); };
 	my $onPetStatChange   = sub { $self->onPetStatChange (@_); };
 	
 	$self->{hooks} = Plugins::addHooks(
-		['loadfiles',                           sub { $self->onLoadFiles(@_); }],
-		['postloadfiles',                       sub { $self->onLoadFiles(@_); }],
 		['parseMsg/addPrivMsgUser',             sub { $self->onAddPrivMsgUser(@_); }],
 		['initialized',                         sub { $self->onInitialized(@_); }],
-		['ChatQueue::add',                      $onChat],
-		['packet_selfChat',                     $onChat],
-		['packet_privMsg',                      $onChat],
-		['packet_sentPM',                       $onChat],
 		['mainLoop_pre',                        sub { $self->onUpdateUI(); }],
 		['captcha_file',                        sub { $self->onCaptcha(@_); }],
 		['packet/minimap_indicator',            sub { $self->onMapIndicator (@_); }],
 		
 		# stat changes
-		['packet/map_changed',                  sub { $self->onSelfStatChange (@_); $self->onSlaveStatChange (@_); $self->onPetStatChange (@_); }],
-		['packet/hp_sp_changed',                $onSelfStatChange],
-		['packet/stat_info',                    $onSelfStatChange],
-		['packet/stat_info2',                   $onSelfStatChange],
-		['packet/stats_points_needed',          $onSelfStatChange],
-		['changed_status',                      $onSelfStatChange],
+		['packet/map_changed',                  sub { $self->onSlaveStatChange (@_); $self->onPetStatChange (@_); }],
 		['packet/homunculus_info',              $onSlaveStatChange],
 		['packet/mercenary_init',               $onSlaveStatChange],
 		['packet/homunculus_property',          $onSlaveStatChange],
@@ -496,17 +500,6 @@ sub createInterface {
 #	$splitter->SetMinimumPaneSize(50);
 	$self->createSplitterContent;
 
-
-	### Input field
-	$self->createInputField;
-
-	### Status bar
-	my $statusbar = $self->{statusbar} = new Wx::StatusBar($frame, wxID_ANY, wxST_SIZEGRIP);
-	$statusbar->SetFieldsCount(3);
-	$statusbar->SetStatusWidths(-1, 65, 175);
-	$frame->SetStatusBar($statusbar);
-
-
 	#################
 
 	$frame->SetSizeHints(300, 250);
@@ -721,52 +714,10 @@ sub createInfoPanel {
 	$vsizer->Add($infoPanel, 0, wxGROW);
 }
 
-sub createInputField {
-	my $self = shift;
-	my $vsizer = $self->{vsizer};
-	my $frame = $self->{frame};
-
-	my $hsizer = new Wx::BoxSizer(wxHORIZONTAL);
-	$vsizer->Add($hsizer, 0, wxGROW);
-
-	my $targetBox = $self->{targetBox} = new Wx::ComboBox($frame, wxID_ANY, "", wxDefaultPosition,
-		[115, 0]);
-	$targetBox->SetName('targetBox');
-	$hsizer->Add($targetBox, 0, wxGROW);
-	EVT_KEY_DOWN($self, \&onTargetBoxKeyDown);
-
-	my $inputBox = $self->{inputBox} = new Interface::Wx::Input($frame);
-	$inputBox->onEnter($self, \&onInputEnter);
-	$hsizer->Add($inputBox, 1, wxGROW);
-
-	my $choice = $self->{inputType} = new Wx::Choice($frame, 456, wxDefaultPosition, wxDefaultSize,
-			['Command', 'Public chat', 'Party chat', 'Guild chat']);
-	$choice->SetSelection(0);
-	EVT_CHOICE($self, 456, sub { $inputBox->SetFocus; });
-	$hsizer->Add($choice, 0, wxGROW);
-}
-
 sub createSplitterContent {
 	my $self = shift;
 	my $splitter = $self->{splitter};
 	my $frame = $self->{frame};
-
-	## Dockable notebook with console and chat log
-	my $notebook = $self->{notebook} = new Interface::Wx::DockNotebook($splitter, wxID_ANY);
-	$notebook->SetName('notebook');
-	my $page = $notebook->newPage(0, 'Console');
-	my $console = $self->{console} = new Interface::Wx::Console($page);
-	$page->set($console);
-
-	$page = $notebook->newPage(1, 'Chat Log', 0);
-	my $chatLog = $self->{chatLog} = new Interface::Wx::LogView($page);
-	$page->set($chatLog);
-	$chatLog->addColor("selfchat", 0, 148, 0);
-	$chatLog->addColor("pm", 142, 120, 0);
-	$chatLog->addColor("p", 164, 0, 143);
-	$chatLog->addColor("g", 0, 177, 108);
-	$chatLog->addColor("warning", 214, 93, 0);
-
 
 	## Parallel to the notebook is another sub-splitter
 	my $subSplitter = new Wx::SplitterWindow($splitter, 583,
@@ -1349,18 +1300,6 @@ sub onItemListActivate {
 	$self->{inputBox}->SetFocus;
 }
 
-sub onTargetBoxKeyDown {
-	my $self = shift;
-	my $event = shift;
-
-	if ($event->GetKeyCode == WXK_TAB && !$event->ShiftDown) {
-		$self->{inputBox}->SetFocus;
-
-	} else {
-		$event->Skip;
-	}
-}
-
 sub onInitialized {
 	my ($self) = @_;
 	$self->{itemList}->init($npcsList, new Wx::Colour(103, 0, 162),
@@ -1374,31 +1313,6 @@ sub onAddPrivMsgUser {
 	my $self = shift;
 	my $param = $_[1];
 	$self->{targetBox}->Append($param->{user});
-}
-
-sub onChatAdd {
-	my ($self, $hook, $params) = @_;
-	my @tmpdate = localtime();
-	if ($tmpdate[1] < 10) {$tmpdate[1] = "0".$tmpdate[1]};
-	if ($tmpdate[2] < 10) {$tmpdate[2] = "0".$tmpdate[2]};
-
-	return if (!$self->{notebook}->hasPage('Chat Log'));
-	if ($hook eq "ChatQueue::add" && $params->{type} ne "pm") {
-		my $msg = '';
-		if ($params->{type} ne "c") {
-			$msg = "[$params->{type}] ";
-		}
-		$msg .= "[$tmpdate[2]:$tmpdate[1]] $params->{user}: $params->{msg}\n";
-		$self->{chatLog}->add($msg, $params->{type});
-
-	} elsif ($hook eq "packet_selfChat") {
-		# only display this message if it's a real self-chat
-		$self->{chatLog}->add("[$tmpdate[2]:$tmpdate[1]] $params->{user}: $params->{msg}\n", "selfchat") if ($params->{user});
-	} elsif ($hook eq "packet_privMsg") {
-		$self->{chatLog}->add("([$tmpdate[2]:$tmpdate[1]] From: $params->{privMsgUser}): $params->{privMsg}\n", "pm");
-	} elsif ($hook eq "packet_sentPM") {
-		$self->{chatLog}->add("([$tmpdate[2]:$tmpdate[1]] To: $params->{to}): $params->{msg}\n", "pm");
-	}
 }
 
 sub onMapMouseMove {
