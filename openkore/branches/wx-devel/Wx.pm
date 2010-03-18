@@ -27,6 +27,8 @@ package Interface::Wx;
 
 # Note: some wx constants are defined by Wx::Event only if corresponding events are imported
 
+# Note: segfault can be triggered by creating Wx::Windows's with wrong parent (or without one at all)
+
 BEGIN {
 	require Wx::Perl::Packager if ($^O eq 'MSWin32');
 }
@@ -41,7 +43,7 @@ use FindBin qw($RealBin);
 
 use Globals;
 use Interface;
-use base qw(Interface);
+use base 'Interface';
 use Modules;
 use Field;
 use I18N qw/bytesToString/;
@@ -59,7 +61,7 @@ our ($iterationTime, $updateUITime, $updateUITime2);
 
 sub new { bless {
 	title => '',
-	iterating => '',
+	iterating => 0,
 }, $_[0] }
 
 sub mainLoop {
@@ -261,8 +263,6 @@ sub displayUsage { print $_[1] }
 
 sub errorDialog {
 	my ($self, $msg, $fatal) = @_;
-	
-	$self->beep;
 	
 	$self->{iterating}++;
 	Wx::MessageBox(

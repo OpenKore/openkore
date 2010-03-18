@@ -23,7 +23,7 @@
 #########################################################################
 package Interface::Wx::App;
 use strict;
-use base qw(Wx::App);
+use base 'Wx::App';
 
 use Wx ':everything';
 use Wx::Event ':everything';
