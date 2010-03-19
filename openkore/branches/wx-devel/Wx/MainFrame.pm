@@ -97,9 +97,7 @@ sub new {
 	($self->{aui} = new Wx::AuiManager)->SetManagedWindow($self);
 	
 	$self->{aui}->AddPane(
-		$self->{notebook} = new Wx::AuiNotebook(
-			$self, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxAUI_NB_DEFAULT_STYLE | wxAUI_NB_CLOSE_ON_ALL_TABS
-		),
+		$self->{notebook} = new Wx::AuiNotebook($self),
 		Wx::AuiPaneInfo->new->CenterPane
 	);
 	
@@ -167,7 +165,7 @@ sub createStatusBar {
 	my ($self) = @_;
 	
 	$self->{statusBar} = $self->CreateStatusBar(3, wxST_SIZEGRIP | wxFULL_REPAINT_ON_RESIZE, wxID_ANY);
-	$self->{statusBar}->SetStatusWidths(-1, 65, 175);
+	$self->{statusBar}->SetStatusWidths(-1, 65, 350);
 }
 
 sub updateStatusBar {
