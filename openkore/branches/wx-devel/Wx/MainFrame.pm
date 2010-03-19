@@ -722,37 +722,6 @@ sub updateItemList {
 ## Callbacks
 ##################
 
-
-sub onInputEnter {
-	my $self = shift;
-	my $text = shift;
-	my $command;
-
-	my $n = $self->{inputType}->GetSelection;
-	if ($n == 0 || $text =~ /^\/(.*)/) {
-		my $command = ($n == 0) ? $text : $1;
-		$self->{console}->add("input", "$command\n");
-		$self->{inputBox}->Remove(0, -1);
-		$self->{input} = $command;
-		return;
-	}
-
-	if ($conState != 5) {
-		$self->{console}->add("error", "You're not logged in.\n");
-		return;
-	}
-
-	if ($self->{targetBox}->GetValue ne "") {
-		sendMessage($messageSender, "pm", $text, $self->{targetBox}->GetValue);
-	} elsif ($n == 1) { # Public chat
-		sendMessage($messageSender, "c", $text);
-	} elsif ($n == 2) { # Party chat
-		sendMessage($messageSender, "p", $text);
-	} else { # Guild chat
-		sendMessage($messageSender, "g", $text);
-	}
-}
-
 sub onMenuOpen {
 	my $self = shift;
 	$self->{mPause}->Enable($AI);

@@ -66,6 +66,7 @@ sub initHandlers {
 	auth               => \&cmdAuthorize,
 	bangbang           => \&cmdBangBang,
 	bingbing           => \&cmdBingBing,
+	bg                 => \&cmdChat,
 	buy                => \&cmdBuy,
 	c                  => \&cmdChat,
 	card               => \&cmdCard,
@@ -95,7 +96,7 @@ sub initHandlers {
 	friend             => \&cmdFriend,
 	homun              => \&cmdSlave,
 	merc               => \&cmdSlave,
-	g                  => \&cmdGuildChat,
+	g                  => \&cmdChat,
 	getplayerinfo      => \&cmdGetPlayerInfo,
 	# GM Commands - Start
 	gmb                => \&cmdGmb,
@@ -136,7 +137,7 @@ sub initHandlers {
 	move               => \&cmdMove,
 	nl                 => \&cmdNPCList,
 	openshop           => \&cmdOpenShop,
-	p                  => \&cmdPartyChat,
+	p                  => \&cmdChat,
 	party              => \&cmdParty,
 	pecopeco           => \&cmdPecopeco,  
 	pet                => \&cmdPet,
@@ -940,18 +941,20 @@ sub cmdCharSelect {
 	$messageSender->sendQuitToCharSelect;
 }
 
+# chat, party chat, guild chat, battlegrounds chat
 sub cmdChat {
+	my ($command, $arg1) = @_;
+	
 	if (!$net || $net->getState() != Network::IN_GAME) {
-		error TF("You must be logged in the game to use this command (%s)\n", shift);
+		error TF("You must be logged in the game to use this command (%s)\n", $command);
 		return;
 	}
-
-	my (undef, $arg1) = @_;
+	
 	if ($arg1 eq "") {
-		error T("Syntax Error in function 'c' (Chat)\n" .
-			"Usage: c <message>\n");
+		error TF("Syntax Error in function '%1\$s' (Chat)\n" .
+			"Usage: %1\$s <message>\n", $command);
 	} else {
-		sendMessage($messageSender, "c", $arg1);
+		sendMessage($messageSender, $command, $arg1);
 	}
 }
 
@@ -2594,20 +2597,6 @@ sub cmdGuild {
 	}
 }
 
-sub cmdGuildChat {
-	if (!$net || $net->getState() != Network::IN_GAME) {
-		error TF("You must be logged in the game to use this command (%s)\n", shift);
-		return;
-	}
-	my (undef, $arg1) = @_;
-	if ($arg1 eq "") {
-		error T("Syntax Error in function 'g' (Guild Chat)\n" .
-			"Usage: g <message>\n");
-	} else {
-		sendMessage($messageSender, "g", $arg1);
-	}
-}
-
 sub cmdHelp {
 	# Display help message
 	my (undef, $args) = @_;
@@ -3276,20 +3265,6 @@ sub cmdParty {
 	} else {
 		error T("Syntax Error in function 'party' (Party Management)\n" .
 			"Usage: party [<create|join|request|leave|share|kick>]\n");
-	}
-}
-
-sub cmdPartyChat {
-	if (!$net || $net->getState() != Network::IN_GAME) {
-		error TF("You must be logged in the game to use this command (%s)\n", shift);
-		return;
-	}
-	my (undef, $arg1) = @_;
-	if ($arg1 eq "") {
-		error T("Syntax Error in function 'p' (Party Chat)\n" .
-			"Usage: p <message>\n");
-	} else {
-		sendMessage($messageSender, "p", $arg1);
 	}
 }
 

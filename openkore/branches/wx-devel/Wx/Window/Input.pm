@@ -6,6 +6,8 @@ use base 'Wx::Panel';
 use Wx ':everything';
 use Wx::Event ':everything';
 
+use Globals qw/$conState $messageSender/;
+use Misc qw/sendMessage/;
 use Translation qw/T TF/;
 
 use Interface::Wx::Input;
@@ -18,7 +20,7 @@ sub new {
 	$self->SetSizer(my $sizer = new Wx::BoxSizer(wxHORIZONTAL));
 	
 	# player name combobox for private chat
-	$sizer->Add(my $targetBox = new Wx::ComboBox(
+	$sizer->Add($self->{targetBox} = new Wx::ComboBox(
 		$self, wxID_ANY, '', wxDefaultPosition, [155, 0], [], 0, wxDefaultValidator, 'targetBox'
 	), 0, wxGROW);
 	
@@ -33,38 +35,44 @@ sub new {
 	});
 	
 	# input field
-	$sizer->Add(my $inputBox = new Interface::Wx::Input($self), 1, wxGROW);
+	$sizer->Add($self->{inputBox} = new Interface::Wx::Input($self), 1, wxGROW);
 	
-	$inputBox->onEnter($self, sub {
-		my ($self, $text) = @_;
-		
-		Plugins::callHook('interface/writeOutput', ['input', "$text\n"]);
-		$inputBox->Remove(0, -1);
-		$Globals::interface->{input} = $text;
-	});
+	$self->{inputBox}->onEnter($self, \&onInputEnter);
 	
 	# command / chat type field
 	# TODO: add battleground chat
-	$sizer->Add(my $choice = new Wx::Choice($self, wxID_ANY, wxDefaultPosition, wxDefaultSize, [
-		T('Command'), T('Public chat'), T('Party chat'), T('Guild chat'),
-	]), 0, wxGROW);
+	$sizer->Add($self->{inputType} = new Wx::Choice($self), 0, wxGROW);
 	
-	$choice->SetSelection(0);
-	EVT_CHOICE($self, $choice->GetId, sub { $inputBox->SetFocus });
+	$self->{inputType}->Append(@$_) for (
+		[T('Command'), ''],
+		[T('Public chat'), 'c'],
+		[T('Party chat'), 'p'],
+		[T('Guild chat'), 'g'],
+		[T('Battleground chat'), 'bg'],
+	);
+	
+	$self->{inputType}->SetSelection(0);
+	EVT_CHOICE($self, $self->{inputType}->GetId, sub {
+		my ($self) = @_;
+		
+		$self->{inputBox}->SetFocus 
+	});
 	
 	$self->{hooks} = Plugins::addHooks(
 		# call this hook after clicking on buttons etc to change focus to input field
 		['interface/defaultFocus', sub {
-			my (undef, $args) = @_;
+			my (undef, $args, $self) = @_;
 			
-			$inputBox->SetFocus, $args->{return} = 1 unless $args->{return};
-		}, undef]
+			$self->{inputBox}->SetFocus, $args->{return} = 1 unless $args->{return};
+		}, $self]
 	);
 	
 	# For some reason the input box doesn't get focus even if
 	# I call SetFocus(), so do it in 100 msec.
 	EVT_TIMER($self, (my $timer = new Wx::Timer($self, wxID_ANY))->GetId, sub {
-		$inputBox->SetFocus;
+		my ($self) = @_;
+		
+		$self->{inputBox}->SetFocus 
 	});
 	$timer->Start(500, 1);
 	
@@ -75,6 +83,30 @@ sub DESTROY {
 	my ($self) = @_;
 	
 	Plugins::delHooks($self->{hooks});
+}
+
+sub onInputEnter {
+	my ($self, $text) = @_;
+	
+	my $n = $self->{inputType}->GetSelection;
+	if ($n == 0 || $text =~ /^\/(.*)/) {
+		my $text = ($n == 0) ? $text : $1;
+		$self->{inputBox}->Remove(0, -1);
+		Plugins::callHook('interface/output', ['input', "$text\n"]);
+		Plugins::callHook('interface/input', {text => $text});
+		return;
+	}
+	
+	if ($conState != Network::IN_GAME) {
+		Plugins::callHook('interface/output', ['error', T("You're not logged in.\n")]);
+		return;
+	}
+	
+	if ($self->{targetBox}->GetValue ne "") {
+		sendMessage($messageSender, "pm", $text, $self->{targetBox}->GetValue);
+	} else {
+		sendMessage($messageSender, $self->{inputType}->GetClientData($n), $text);
+	}
 }
 
 1;

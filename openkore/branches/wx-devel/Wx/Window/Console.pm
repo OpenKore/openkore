@@ -9,7 +9,7 @@ sub new {
 	my $self = $class->SUPER::new($parent, $id);
 	
 	$self->{hooks} = Plugins::addHooks(
-		['interface/writeOutput', sub { $self->add(@{$_[1]}) }, undef],
+		['interface/output', sub { $self->add(@{$_[1]}) }, undef],
 	);
 	
 	return $self;
