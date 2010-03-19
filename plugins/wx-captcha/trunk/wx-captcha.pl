@@ -11,9 +11,8 @@
 package Interface::Wx::CaptchaDialog;
 use strict;
 
-use base 'Wx::Dialog';
-
 use Wx ':everything';
+use base 'Wx::Dialog';
 use Wx::Event ':everything';
 
 use Globals qw/%config $messageSender/;
