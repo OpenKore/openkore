@@ -8,8 +8,6 @@ use Wx::Event ':everything';
 
 use Translation qw/T TF/;
 
-# TODO: add battleground chat
-
 sub new {
 	my ($class, $parent, $id) = @_;
 	

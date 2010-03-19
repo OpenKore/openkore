@@ -9,29 +9,29 @@
 #  GNU General Public License for more details.
 #########################################################################
 package Interface::Wx::CaptchaDialog;
-
 use strict;
+
+use base 'Wx::Dialog';
+
 use Wx ':everything';
-use Wx::Event qw(EVT_TEXT_ENTER EVT_BUTTON);
-use base qw(Wx::Dialog);
+use Wx::Event ':everything';
+
+use Globals qw/%config $messageSender/;
+use Translation qw/T TF/;
 
 use constant DEFAULT_WIDTH => 250;
 
+my $hooks = Plugins::addHooks(
+	['captcha_file', \&onCaptcha],
+);
+
+Plugins::register('wx-captcha', 'GUI captcha dialog for Wx', sub { Plugins::delHooks($hooks) });
 
 sub new {
 	my ($class, $parent, $imageFile) = @_;
-	my $self = $class->SUPER::new($parent, wxID_ANY, 'Captcha');
-	$self->_buildGUI ($imageFile);
+	my $self = $class->SUPER::new($parent, wxID_ANY, T('Captcha'));
+	$self->_buildGUI($imageFile);
 	return $self;
-}
-
-sub getValue {
-	my ($self) = @_;
-	return $self->{text}->GetValue;
-}
-
-sub GetValue {
-	&getValue;
 }
 
 sub _buildGUI {
@@ -47,39 +47,43 @@ sub _buildGUI {
 	$text = new Wx::TextCtrl($self, wxID_ANY, '', wxDefaultPosition,
 		[DEFAULT_WIDTH, -1], wxTE_PROCESS_ENTER);
 	$sizer->Add($text, 0, wxLEFT | wxRIGHT | wxGROW, 8);
-	EVT_TEXT_ENTER($self, $text->GetId, \&_onTextEnter);
+	EVT_TEXT_ENTER($self, $text->GetId, sub { $_[0]->EndModal(wxID_OK) });
 
 	$sizer->AddSpacer(12);
 
 	$buttonSizer = new Wx::BoxSizer(wxHORIZONTAL);
 	$sizer->Add($buttonSizer, 0, wxALIGN_CENTER | wxLEFT | wxRIGHT | wxBOTTOM, 8);
 
-	$ok = new Wx::Button($self, wxID_ANY, 'OK', wxDefaultPosition, wxDefaultSize);
+	$ok = new Wx::Button($self, wxID_ANY, T('OK'), wxDefaultPosition, wxDefaultSize);
 	$ok->SetDefault();
 	$buttonSizer->Add($ok, 1, wxRIGHT, 8);
-	EVT_BUTTON($self, $ok->GetId, \&_onOK);
+	EVT_BUTTON($self, $ok->GetId, sub { $_[0]->EndModal(wxID_OK) });
 
-	$cancel = new Wx::Button($self, wxID_ANY, 'Cancel');
+	$cancel = new Wx::Button($self, wxID_ANY, T('Cancel'));
 	$buttonSizer->Add($cancel, 1);
-	EVT_BUTTON($self, $cancel->GetId, \&_onCancel);
+	EVT_BUTTON($self, $cancel->GetId, sub { $_[0]->EndModal(wxID_CANCEL) });
 
 	$self->SetSizerAndFit($sizer);
 	$self->{text} = $text;
 }
 
-sub _onTextEnter {
-	my ($self) = @_;
-	$self->EndModal(wxID_OK);
-}
+sub GetValue { $_[0]->{text}->GetValue }
 
-sub _onOK {
-	my ($self) = @_;
-	$self->EndModal(wxID_OK);
-}
+# static
 
-sub _onCancel {
-	my ($self) = @_;
-	$self->EndModal(wxID_CANCEL);
+sub onCaptcha {
+	my (undef, $args) = @_;
+	
+	return unless $config{wx_captcha};
+	
+	my $dialog = new Interface::Wx::CaptchaDialog(undef, $args->{file});
+	my $result = ($dialog->ShowModal == wxID_OK) ? $dialog->GetValue : '';
+	$dialog->Destroy;
+	
+	unless ($result eq '') {
+		$messageSender->sendCaptchaAnswer($result);
+		$args->{return} = 1;
+	}
 }
 
 1;
