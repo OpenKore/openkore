@@ -67,12 +67,15 @@ sub new { bless {
 sub mainLoop {
 	my ($self) = @_;
 	
-	$self->{app} = new Interface::Wx::App;
+	$self->{hooks} = Plugins::addHooks(
+		['interface/input', sub {
+			my (undef, $args, $self) = @_;
+			
+			$self->{input} = $args->{text};
+		}, $self],
+	);
 	
-	# Hide console on Win32
-	if ($^O eq 'MSWin32' && $sys{wxHideConsole}) {
-		eval 'use Win32::Console; Win32::Console->new(STD_OUTPUT_HANDLE)->Free();';
-	}
+	$self->{app} = new Interface::Wx::App;
 	
 	# Start the real main loop in 100 msec, so that the UI has
 	# the chance to layout correctly.
@@ -81,7 +84,18 @@ sub mainLoop {
 	)->GetId, sub { $self->realMainLoop });
 	$timer->Start(100, 1);
 	
+	# Hide console on Win32
+	if ($^O eq 'MSWin32' && $sys{wxHideConsole}) {
+		eval 'use Win32::Console; Win32::Console->new(STD_OUTPUT_HANDLE)->Free();';
+	}
+	
 	$self->{app}->MainLoop;
+}
+
+sub DESTROY {
+	my ($self) = @_;
+	
+	Plugins::delHooks($self->{hooks});
 }
 
 sub realMainLoop {
@@ -248,7 +262,7 @@ sub showMenu {
 sub writeOutput {
 	my ($self, @args) = @_;
 	
-	Plugins::callHook('interface/writeOutput', \@args);
+	Plugins::callHook('interface/output', \@args);
 	# Make sure we update the GUI. This is to work around the effect
 	# of functions that block for a while
 	$self->iterate if (timeOut($iterationTime, 0.05));

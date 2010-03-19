@@ -2164,22 +2164,7 @@ sub sendMessage {
 						$amount = $config{'message_length_max'};
 						$msg .= substr($msg[$i], 0, $amount);
 					}
-					if ($type eq "c") {
-						$sender->sendChat($msg);
-					} elsif ($type eq "g") {
-						$sender->sendGuildChat($msg);
-					} elsif ($type eq "p") {
-						$sender->sendPartyChat($msg);
-					} elsif ($type eq "pm") {
-						$sender->sendPrivateMsg($user, $msg);
-						%lastpm = (
-							msg => $msg,
-							user => $user
-						);
-						push @lastpm, {%lastpm};
-					} elsif ($type eq "k") {
-						$sender->injectMessage($msg);
-	 				}
+					sendMessage_send($sender, $type, $msg, $user);
 					$msg[$i] = substr($msg[$i], $amount - length($oldmsg), length($msg[$i]) - $amount - length($oldmsg));
 					undef $msg;
 				}
@@ -2196,43 +2181,36 @@ sub sendMessage {
 					$msg .= $msg[$i];
 				}
 			} else {
-				if ($type eq "c") {
-					$sender->sendChat($msg);
-				} elsif ($type eq "g") {
-					$sender->sendGuildChat($msg);
-				} elsif ($type eq "p") {
-					$sender->sendPartyChat($msg);
-				} elsif ($type eq "pm") {
-					$sender->sendPrivateMsg($user, $msg);
-					%lastpm = (
-						msg => $msg,
-						user => $user
-					);
-					push @lastpm, {%lastpm};
-				} elsif ($type eq "k") {
-					$sender->injectMessage($msg);
-				}
+				sendMessage_send($sender, $type, $msg, $user);
 				$msg = $msg[$i];
 			}
 			if (length($msg) && $i == @msg - 1) {
-				if ($type eq "c") {
-					$sender->sendChat($msg);
-				} elsif ($type eq "g") {
-					$sender->sendGuildChat($msg);
-				} elsif ($type eq "p") {
-					$sender->sendPartyChat($msg);
-				} elsif ($type eq "pm") {
-					$sender->sendPrivateMsg($user, $msg);
-					%lastpm = (
-						msg => $msg,
-						user => $user
-					);
-					push @lastpm, {%lastpm};
-				} elsif ($type eq "k") {
-					$sender->injectMessage($msg);
-				}
+				sendMessage_send($sender, $type, $msg, $user);
 			}
 		}
+	}
+}
+
+sub sendMessage_send {
+	my ($sender, $type, $msg, $user) = @_;
+	
+	if ($type eq "c") {
+		$sender->sendChat($msg);
+	} elsif ($type eq "g") {
+		$sender->sendGuildChat($msg);
+	} elsif ($type eq "p") {
+		$sender->sendPartyChat($msg);
+	} elsif ($type eq "bg") {
+		$sender->sendBattlegroundChat($msg);
+	} elsif ($type eq "pm") {
+		$sender->sendPrivateMsg($user, $msg);
+		%lastpm = (
+			msg => $msg,
+			user => $user
+		);
+		push @lastpm, {%lastpm};
+	} elsif ($type eq "k") {
+		$sender->injectMessage($msg);
 	}
 }
 
