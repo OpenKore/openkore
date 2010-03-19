@@ -164,9 +164,6 @@ sub onAddMenuItem {
 sub onRemoveMenuItem {
 	my (undef, $args, $self) = @_;
 	
-	use Data::Dumper;
-	print Dumper $args;
-	
 	if ($args->{key} and my $item = $self->{items}{$args->{key}}) {
 		if ($item->isa('Wx::MenuItem') and my $menu = $item->GetMenu) {
 			$menu->Remove($item);
