@@ -40,7 +40,6 @@ sub new {
 	$self->{inputBox}->onEnter($self, \&onInputEnter);
 	
 	# command / chat type field
-	# TODO: add battleground chat
 	$sizer->Add($self->{inputType} = new Wx::Choice($self), 0, wxGROW);
 	
 	$self->{inputType}->Append(@$_) for (
@@ -59,6 +58,8 @@ sub new {
 	});
 	
 	$self->{hooks} = Plugins::addHooks(
+		['parseMsg/addPrivMsgUser', sub { $_[2]->{targetBox}->Append($_[1]->{user}) }, $self],
+		
 		# call this hook after clicking on buttons etc to change focus to input field
 		['interface/defaultFocus', sub {
 			my (undef, $args, $self) = @_;

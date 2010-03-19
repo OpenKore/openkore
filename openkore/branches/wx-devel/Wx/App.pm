@@ -33,9 +33,9 @@ use Interface::Wx::MainFrame;
 sub OnInit {
 	my $self = shift;
 	
-	Wx::Image::AddHandler (new $_) for qw(
-		Wx::XPMHandler Wx::BMPHandler Wx::PNGHandler Wx::GIFHandler Wx::JPEGHandler Wx::ICOHandler
-	);
+	$self->SetAppName($Settings::NAME);
+	
+	Wx::InitAllImageHandlers;
 	
 	($self->{mainFrame} = new Interface::Wx::MainFrame)->Show;
 	

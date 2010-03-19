@@ -179,37 +179,21 @@ sub getInput {
 }
 
 sub query {
-	my $self = shift;
-	my $message = shift;
-	my %args = @_;
-
-	$args{title} = "Query" if (!defined $args{title});
-	$args{cancelable} = 1 if (!exists $args{cancelable});
+	my ($self, $message, %args) = @_;
+	
+	$args{title} = T('Query') unless defined $args{title};
+	$args{cancelable} = 1 unless exists $args{cancelable};
 
 	$message = wrapText($message, 70);
-	$message =~ s/\n$//s;
-	my $dialog;
-	if ($args{isPassword}) {
-		# WxPerl doesn't support wxPasswordEntryDialog :(
-		$dialog = new Interface::Wx::PasswordDialog($self->{frame}, $message, $args{title});
-	} else {
-		$dialog = new Wx::TextEntryDialog($self->{frame}, $message, $args{title});
-	}
-	while (1) {
-		my $result;
-		if ($dialog->ShowModal == wxID_OK) {
-			$result = $dialog->GetValue;
-		}
-		if (!defined($result) || $result eq '') {
-			if ($args{cancelable}) {
-				$dialog->Destroy;
-				return undef;
-			}
-		} else {
-			$dialog->Destroy;
-			return $result;
-		}
-	}
+	chomp $message;
+	
+	my $result;
+	do {
+		$result = ($args{isPassword} ? \&Wx::GetPasswordFromUser : \&Wx::GetTextFromUser)
+		->($message, $args{title});
+	} until (defined $result && $result ne '' or $args{cancelable});
+	
+	return $result;
 }
 
 sub showMenu {
@@ -224,41 +208,11 @@ sub showMenu {
 	my $result;
 	do {
 		$result = Wx::GetSingleChoiceIndex($message, $args{title}, $choices, $self->{app}{mainFrame})
-	} until $result != -1 || $args{cancelable};
+	} until ($result != -1 or $args{cancelable});
 	
 	return $result;
 }
-=pod
-sub showMenu {
-	my $self = shift;
-	my $message = shift;
-	my $choices = shift;
-	my %args = @_;
 
-	$args{title} = "Menu" if (!defined $args{title});
-	$args{cancelable} = 1 if (!exists $args{cancelable});
-
-	$message = wrapText($message, 70);
-	$message =~ s/\n$//s;
-	my $dialog = new Wx::SingleChoiceDialog($self->{frame},
-		$message, $args{title}, $choices);
-	while (1) {
-		my $result;
-		if ($dialog->ShowModal == wxID_OK) {
-			$result = $dialog->GetSelection;
-		}
-		if (!defined($result)) {
-			if ($args{cancelable}) {
-				$dialog->Destroy;
-				return -1;
-			}
-		} else {
-			$dialog->Destroy;
-			return $result;
-		}
-	}
-}
-=cut
 sub writeOutput {
 	my ($self, @args) = @_;
 	

@@ -32,7 +32,6 @@ use Time::HiRes qw(time sleep);
 use File::Spec;
 use FindBin qw($RealBin);
 
-
 use Globals;
 use Interface;
 use base qw(Wx::App Interface);
@@ -40,14 +39,15 @@ use Modules;
 use Field;
 use I18N qw/bytesToString/;
 
+use Interface::Wx::MainMenu;
 use Interface::Wx::Window::Input;
 use Interface::Wx::Window::Console;
 use Interface::Wx::Window::ChatLog;
+use Interface::Wx::List::ItemList::Inventory;
 #use Interface::Wx::Dock;
 #use Interface::Wx::MapViewer;
 #use Interface::Wx::LogView;
 use Interface::Wx::Console;
-#use Interface::Wx::ItemList;
 #use Interface::Wx::DockNotebook;
 #use Interface::Wx::PasswordDialog;
 use Interface::Wx::StatView::You;
@@ -67,6 +67,8 @@ sub new {
 	my ($class, $parent, $id, $title, @args) = @_;
 	
 	my $self = $class->SUPER::new($parent, $id || wxID_ANY, $title || $Settings::NAME);
+	
+	$self->{menu} = new Interface::Wx::MainMenu($self);
 	
 	$self->createStatusBar;
 	
@@ -108,6 +110,10 @@ sub new {
 	my $input = new Interface::Wx::Window::Input($self);
 	$self->{aui}->AddPane($input,
 		Wx::AuiPaneInfo->new->ToolbarPane->Bottom->BestSize($input->GetBestSize)->CloseButton(0)->Resizable->LeftDockable(0)->RightDockable(0)
+	);
+	
+	$self->{aui}->AddPane(new Interface::Wx::List::ItemList::Inventory($self),
+		Wx::AuiPaneInfo->new->Caption(T('Inventory'))->Right->BestSize(250, 250)
 	);
 	
 	$self->{aui}->AddPane(new Interface::Wx::StatView::You($self),
@@ -229,9 +235,7 @@ sub OnInit {
 	my $onPetStatChange   = sub { $self->onPetStatChange (@_); };
 	
 	$self->{hooks} = Plugins::addHooks(
-		['parseMsg/addPrivMsgUser',             sub { $self->onAddPrivMsgUser(@_); }],
 		['initialized',                         sub { $self->onInitialized(@_); }],
-		['captcha_file',                        sub { $self->onCaptcha(@_); }],
 		['packet/minimap_indicator',            sub { $self->onMapIndicator (@_); }],
 		
 		# stat changes
@@ -261,241 +265,12 @@ sub OnInit {
 
 	$self->{frame}->Update;
 	
-	Wx::Image::AddHandler (new Wx::XPMHandler);
-	Wx::Image::AddHandler (new Wx::BMPHandler);
-	Wx::Image::AddHandler (new Wx::PNGHandler);
-	Wx::Image::AddHandler (new Wx::GIFHandler);
-	Wx::Image::AddHandler (new Wx::JPEGHandler);
-	Wx::Image::AddHandler (new Wx::ICOHandler);
-	
-	{
-		my $icon = [$0 =~ m{^(.*?)((\w|\.)*)$}]->[0] . 'src/build/openkore.ico';
-		$self->{frame}->SetIcon(new Wx::Icon($icon, wxBITMAP_TYPE_ANY)) if -f $icon;
-	}
-	
 	return 1;
 }
 
 #########################
 ## INTERFACE CREATION
 #########################
-
-
-sub createInterface {
-	my $self = shift;
-
-	### Main window
-	my $frame = $self->{frame} = new Wx::Frame(undef, wxID_ANY, $Settings::NAME);
-	$self->{title} = $frame->GetTitle();
-
-
-	### Menu bar
-	$self->createMenuBar;
-
-	### Vertical box sizer
-	my $vsizer = $self->{vsizer} = new Wx::BoxSizer(wxVERTICAL);
-	$frame->SetSizer($vsizer);
-
-	### Horizontal panel with HP/SP/Exp box
-	$self->createInfoPanel;
-
-
-	## Splitter with console and another splitter
-	my $splitter = new Wx::SplitterWindow($frame, 928, wxDefaultPosition, wxDefaultSize,
-		wxSP_LIVE_UPDATE);
-	$self->{splitter} = $splitter;
-	$vsizer->Add($splitter, 1, wxGROW);
-#	$splitter->SetMinimumPaneSize(50);
-	$self->createSplitterContent;
-}
-
-
-sub createMenuBar {
-	my $self = shift;
-	my $menu = $self->{menu} = new Wx::MenuBar;
-	my $frame = $self->{frame};
-	$frame->SetMenuBar($menu);
-	EVT_MENU_OPEN($self->{frame}, sub { $self->onMenuOpen; });
-
-	# Program menu
-	my $opMenu = new Wx::Menu;
-	$self->{mPause}  = $self->addMenu($opMenu, T('&Pause Botting'), \&onDisableAI, T('Pause all automated botting activity'));
-	$self->{mManual} = $self->addMenu($opMenu, T('&Manual Botting'), \&onManualAI, T('Pause automated botting and allow manual control'));
-	$self->{mResume} = $self->addMenu($opMenu, T('&Automatic Botting'), \&onEnableAI, T('Resume all automated botting activity'));
-	$opMenu->AppendSeparator;
-	$self->addMenu($opMenu, T('Copy Last 100 Lines of Text'), \&onCopyLastOutput);
-	$self->addMenu($opMenu, T('Minimize to &Tray'), \&onMinimizeToTray, T('Minimize to a small task bar tray icon'));
-	$opMenu->AppendSeparator;
-	$self->addMenu($opMenu, T('Respawn'), sub { Commands::run ("respawn") }, T('Teleport to save point'));
-	$self->addMenu($opMenu, T('&Relog'), sub { Commands::run ("relog") }, T('Disconnect and reconnect'));
-	$self->addMenu($opMenu, T('&Character Select'), sub {
-		configModify ('char', undef, 1);
-		Commands::run ("charselect");
-	}, T('Exit to the character selection screen'));
-	$self->addMenu($opMenu, T('E&xit') . "\tCtrl-W", \&quit, T('Exit this program'));
-	$menu->Append($opMenu, T('P&rogram'));
-
-	# Info menu
-	my $infoMenu = new Wx::Menu;
-	$self->addMenu($infoMenu, '&Status	Alt-S',	sub { Commands::run("s"); });
-	$self->addMenu($infoMenu, 'S&tatistics',	sub { Commands::run("st"); });
-	$self->addMenu($infoMenu, '&Inventory	Alt-I',	sub { Commands::run("i"); });
-	$self->addMenu($infoMenu, 'S&kills',		sub { Commands::run("skills"); });
-	$infoMenu->AppendSeparator;
-	$self->addMenu($infoMenu, '&Players	Alt-P',	sub { Commands::run("pl"); });
-	$self->addMenu($infoMenu, '&Monsters	Alt-M',	sub { Commands::run("ml"); });
-	$self->addMenu($infoMenu, '&NPCs',		sub { Commands::run("nl"); });
-	$infoMenu->AppendSeparator;
-	$self->addMenu($infoMenu, '&Experience Report',	sub { Commands::run("exp"); });
-	$menu->Append($infoMenu, T('I&nfo'));
-
-	# View menu
-	my $viewMenu = $self->{viewMenu} = new Wx::Menu;
-	$self->addMenu (
-		$viewMenu, T('&Map') . "\tCtrl-M", \&onMapToggle, T('Show where you are on the current map')
-	);
-	$self->{infoBarToggle} = $self->addCheckMenu (
-		$viewMenu, T('&Info Bar'), \&onInfoBarToggle, T('Show or hide the information bar.')
-	);
-	$self->{chatLogToggle} = $self->addCheckMenu (
-		$viewMenu, T('Chat &Log'), \&onChatLogToggle, T('Show or hide the chat log.')
-	);
-	$self->addMenu ($viewMenu, T('Status') . "\tAlt+A", sub { $self->openStats (1) });
-	$self->addMenu ($viewMenu, T('Homunculus') . "\tAlt+R", sub { $self->openHomunculus (1) });
-	$self->addMenu ($viewMenu, T('Mercenary') . "\tCtrl+R", sub { $self->openMercenary (1) });
-	$self->addMenu ($viewMenu, T('Pet') . "\tAlt+J", sub { $self->openPet (1) });
-	
-	$viewMenu->AppendSeparator;
-	
-	$self->addMenu ($viewMenu, T('Inventory') . "\tAlt+E", sub { $self->openInventory (1) });
-	$self->addMenu ($viewMenu, T('Cart') . "\tAlt+W", sub { $self->openCart (1) });
-	$self->addMenu ($viewMenu, T('Storage'), sub { $self->openStorage (1) });
-	
-	$viewMenu->AppendSeparator;
-	
-	$self->addMenu ($viewMenu, T('Emotions'). "\tAlt+L", sub { $self->openEmotions (1) });
-	
-	$viewMenu->AppendSeparator;
-	
-	$self->addMenu($viewMenu, T('&Experience Report') . "\tCtrl+E", sub {
-		$self->openWindow ('Report', 'Interface::Wx::StatView::Exp', 1) 
-	});
-	
-	$viewMenu->AppendSeparator;
-	
-	$self->addMenu ($viewMenu, T('&Font...'), \&onFontChange, T('Change console font'));
-	$self->addMenu($viewMenu, T('Clear Console'), sub {my $self = shift; $self->{console}->Remove(0, 40000)}, T('Clear content of console'));
-	
-	$menu->Append($viewMenu, T('&View'));
-	
-	$self->{aliasMenu} = new Wx::Menu;
-	$menu->Append ($self->{aliasMenu}, T('&Alias'));
-	
-	# Settings menu
-	my $settingsMenu = new Wx::Menu;
-	$self->createSettingsMenu($settingsMenu) if ($self->can('createSettingsMenu'));
-	$self->addMenu($settingsMenu, T('&Advanced...'), \&onAdvancedConfig, T('Edit advanced configuration options.'));
-	$menu->Append($settingsMenu, T('&Settings'));
-	$self->createSettingsMenu2($settingsMenu) if ($self->can('createSettingsMenu2'));
-	
-	# Help menu
-	my $helpMenu = new Wx::Menu();
-	$self->addMenu($helpMenu, T('&Manual') . "\tF1", \&onManual, T('Read the manual'));
-	$self->addMenu($helpMenu, T('&Forum') . "\tShift-F1", \&onForum, T('Visit the forum'));
-	$self->createHelpMenu($helpMenu) if ($self->can('createHelpMenu'));
-	$menu->Append($helpMenu, T('&Help'));
-}
-
-sub createSettingsMenu {
-	my ($self, $parentMenu) = @_;
-	
-# 	foreach my $menuData (@{$data}) {
-# 		my $subMenu = new Wx::Menu;
-# 		
-# 		foreach my $itemData (@{$menuData->{items}}) {
-# 			if ($itemData->{type} eq 'boolean') {
-# 				$self->{mBooleanSetting}{$itemData->{key}} = $self->addCheckMenu (
-# 					$subMenu, $itemData->{title} || $itemData->{key}, sub { $self->onBooleanSetting ($itemData->{key}); },
-# 					"$itemData->{help} [$itemData->{key}]"
-# 				);
-# 			} elsif ($itemData->{type} eq 'separator') {
-# 				$subMenu->AppendSeparator;
-# 			}
-# 		}
-# 		
-# 		$self->addSubMenu ($parentMenu, $menuData->{title}, $subMenu, $menuData->{help});
-# 	}
-	
-	$self->{mBooleanSetting}{'wx_npcTalk'} = $self->addCheckMenu (
-		$parentMenu, T('Use Wx NPC Talk'), sub { $self->onBooleanSetting ('wx_npcTalk'); },
-		T('Open a dialog when talking with NPCs')
-	);
-	
-	$self->{mBooleanSetting}{'wx_captcha'} = $self->addCheckMenu (
-		$parentMenu, T('Use Wx captcha'), sub { $self->onBooleanSetting ('wx_captcha'); },
-		T('Open a dialog when receiving a captcha')
-	);
-	
-	$self->{mBooleanSetting}{'wx_map_route'} = $self->addCheckMenu (
-		$parentMenu, T('Show route on map'), sub { $self->onBooleanSetting ('wx_map_route'); },
-		T('Show route solution steps')
-	);
-	
-	$parentMenu->AppendSeparator;
-}
-
-sub createInfoPanel {
-	my $self = shift;
-	my $frame = $self->{frame};
-	my $vsizer = $self->{vsizer};
-	my $infoPanel = $self->{infoPanel} = new Wx::Panel($frame, wxID_ANY);
-
-	my $hsizer = new Wx::BoxSizer(wxHORIZONTAL);
-	my $label = new Wx::StaticText($infoPanel, wxID_ANY, "HP: ");
-	$hsizer->Add($label, 0, wxLEFT, 3);
-
-
-	## HP
-	my $hpBar = $self->{hpBar} = new Wx::Gauge($infoPanel, wxID_ANY, 100,
-		wxDefaultPosition, [0, $label->GetBestSize->GetHeight + 2],
-		wxGA_HORIZONTAL | wxGA_SMOOTH);
-	$hsizer->Add($hpBar, 1, wxRIGHT, 8);
-
-	$label = new Wx::StaticText($infoPanel, wxID_ANY, "SP: ");
-	$hsizer->Add($label, 0);
-
-	## SP
-	my $spBar = $self->{spBar} = new Wx::Gauge($infoPanel, wxID_ANY, 100,
-		wxDefaultPosition, [0, $label->GetBestSize->GetHeight + 2],
-		wxGA_HORIZONTAL | wxGA_SMOOTH);
-	$hsizer->Add($spBar, 1, wxRIGHT, 8);
-
-	$label = new Wx::StaticText($infoPanel, wxID_ANY, "Exp: ");
-	$hsizer->Add($label, 0);
-
-	## Exp and job exp
-	my $expBar = $self->{expBar} = new Wx::Gauge($infoPanel, wxID_ANY, 100,
-		wxDefaultPosition, [0, $label->GetBestSize->GetHeight + 2],
-		wxGA_HORIZONTAL | wxGA_SMOOTH);
-	$hsizer->Add($expBar, 1);
-	my $jobExpBar = $self->{jobExpBar} = new Wx::Gauge($infoPanel, wxID_ANY, 100,
-		wxDefaultPosition, [0, $label->GetBestSize->GetHeight + 2],
-		wxGA_HORIZONTAL | wxGA_SMOOTH);
-	$hsizer->Add($jobExpBar, 1, wxRIGHT, 8);
-
-	$label = new Wx::StaticText($infoPanel, wxID_ANY, "Weight: ");
-	$hsizer->Add($label, 0);
-
-	## Weight
-	my $weightBar = $self->{weightBar} = new Wx::Gauge($infoPanel, wxID_ANY, 100,
-		wxDefaultPosition, [0, $label->GetBestSize->GetHeight + 2],
-		wxGA_HORIZONTAL | wxGA_SMOOTH);
-	$hsizer->Add($weightBar, 1);
-
-
-	$infoPanel->SetSizerAndFit($hsizer);
-	$vsizer->Add($infoPanel, 0, wxGROW);
-}
 
 sub createSplitterContent {
 	my $self = shift;
@@ -587,61 +362,6 @@ sub addCheckMenu {
 ## INTERFACE UPDATING
 ##########################
 
-
-sub updateStatusBar {
-	my $self = shift;
-
-	my ($statText, $xyText, $aiText) = ('', '', '');
-
-	if ($self->{loadingFiles}) {
-		$statText = sprintf("Loading files... %.0f%%", $self->{loadingFiles}{percent} * 100);
-	} elsif (!$conState) {
-		$statText = "Initializing...";
-	} elsif ($conState == 1) {
-		$statText = "Not connected";
-	} elsif ($conState > 1 && $conState < 5) {
-		$statText = "Connecting...";
-	} elsif ($self->{mouseMapText}) {
-		$statText = $self->{mouseMapText};
-	}
-
-	if ($conState == 5) {
-		$xyText = "$char->{pos_to}{x}, $char->{pos_to}{y}";
-
-		if ($AI) {
-			if (@ai_seq) {
-				my @seqs = @ai_seq;
-				foreach (@seqs) {
-					s/^route_//;
-					s/_/ /g;
-					s/([a-z])([A-Z])/$1 $2/g;
-					$_ = lc $_;
-				}
-				substr($seqs[0], 0, 1) = uc substr($seqs[0], 0, 1);
-				$aiText = join(', ', @seqs);
-			} else {
-				$aiText = "";
-			}
-		} else {
-			$aiText = "Paused";
-		}
-	}
-
-	# Only set status bar text if it has changed
-	my $i = 0;
-	my $setStatus = sub {
-		if (defined $_[1] && $self->{$_[0]} ne $_[1]) {
-			$self->{$_[0]} = $_[1];
-			$self->{statusbar}->SetStatusText($_[1], $i);
-		}
-		$i++;
-	};
-
-	$setStatus->('statText', $statText);
-	$setStatus->('xyText', $xyText);
-	$setStatus->('aiText', $aiText);
-}
-
 sub updateMapViewer {
 	my $self = shift;
 	my $map = $self->{mapViewer};
@@ -675,117 +395,9 @@ sub updateMapViewer {
 	$self->{mapViewTimeout}{time} = time;
 }
 
-sub updateItemList {
-	my $self = shift;
-	my $value;
-	
-	if ($conState == 5) {
-		if ($char->{hp_max}) {
-			$value = $char->{hp} / $char->{hp_max} * 100;
-			$self->{hpBar}->SetValue ($value);
-			$self->{hpBar}->SetToolTip (sprintf '%s / %s (%.2f%)', formatNumber ($char->{hp}), formatNumber ($char->{hp_max}), $value);
-			$self->{hpBar}->SetForegroundColour (new Wx::Colour ((100 - $value) * 2.55, $value * 1.27, 50));
-		}
-		if ($char->{sp_max}) {
-			$value = $char->{sp} / $char->{sp_max} * 100;
-			$self->{spBar}->SetValue ($value);
-			$self->{spBar}->SetToolTip (sprintf '%s / %s (%.2f%)', formatNumber ($char->{sp}), formatNumber ($char->{sp_max}), $value);
-			$self->{spBar}->SetForegroundColour (new Wx::Colour ((100 - $value) * 2.55, $value * 1.27, 50));
-		}
-		if ($char->{exp_max}) {
-			$value = $char->{exp} / $char->{exp_max} * 100;
-			$self->{expBar}->SetValue ($value);
-			$self->{expBar}->SetToolTip (sprintf '%s / %s (%.2f%)', formatNumber ($char->{exp}), formatNumber ($char->{exp_max}), $value);
-		}
-		if ($char->{exp_job_max}) {
-			$value = $char->{exp_job} / $char->{exp_job_max} * 100;
-			$self->{jobExpBar}->SetValue ($value);
-			$self->{jobExpBar}->SetToolTip (sprintf '%s / %s (%.2f%)', formatNumber ($char->{exp_job}), formatNumber ($char->{exp_job_max}), $value);
-		}
-		if ($char->{weight_max}) {
-			$value = $char->{weight} / $char->{weight_max} * 100;
-			$self->{weightBar}->SetValue ($value);
-			$self->{weightBar}->SetToolTip (sprintf '%s / %s (%.2f%)', formatNumber ($char->{weight}), formatNumber ($char->{weight_max}), $value);
-			if (whenStatusActive ('Owg 90%')) {
-				$self->{weightBar}->SetForegroundColour (new Wx::Colour (255, 0, 50));
-			} elsif (whenStatusActive ('Owg 50%')) {
-				$self->{weightBar}->SetForegroundColour (new Wx::Colour (127, 63, 50));
-			} else {
-				$self->{weightBar}->SetForegroundColour (new Wx::Colour (0, 127, 50));
-			}
-		}
-	}
-}
-
-
 ##################
 ## Callbacks
 ##################
-
-sub onMenuOpen {
-	my $self = shift;
-	$self->{mPause}->Enable($AI);
-	$self->{mManual}->Enable($AI != 1);
-	$self->{mResume}->Enable($AI != 2);
-	$self->{infoBarToggle}->Check($self->{infoPanel}->IsShown);
-	$self->{chatLogToggle}->Check(defined $self->{notebook}->hasPage('Chat Log') ? 1 : 0);
-	
-	while (my ($setting, $menu) = each (%{$self->{mBooleanSetting}})) {
-		$menu->Check ($config{$setting} ? 1 : 0);
-	}
-	
-	my $menu;
-	while ($menu = $self->{aliasMenu}->FindItemByPosition (0)) {
-		$self->{aliasMenu}->Delete ($menu);
-	}
-	
-	for $menu (sort map {/^alias_(.+)$/} keys %config) {
-		$self->addMenu ($self->{aliasMenu}, $menu, sub { Commands::run ($menu) });
-	}
-}
-
-sub onEnableAI {
-	$AI = 2;
-}
-
-sub onManualAI {
-	$AI = 1;
-}
-
-sub onDisableAI {
-	$AI = 0;
-}
-
-sub onCopyLastOutput {
-	my ($self) = @_;
-	$self->{console}->copyLastLines(100);
-}
-
-sub onMinimizeToTray {
-	my $self = shift;
-	my $tray = new Wx::TaskBarIcon;
-	my $title = ($char) ? "$char->{name} - $Settings::NAME" : "$Settings::NAME";
-	$tray->SetIcon($self->{frame}->GetIcon, $title);
-	EVT_TASKBAR_LEFT_DOWN($tray, sub {
-		$tray->RemoveIcon;
-		undef $tray;
-		$self->{frame}->Show(1);
-	});
-	$self->{frame}->Show(0);
-}
-
-sub onClose {
-	my ($self, $event) = @_;
-	quit();
-	if ($event->CanVeto) {
-		$self->Show(0);
-	}
-}
-
-sub onFontChange {
-	my $self = shift;
-	$self->{console}->selectFont($self->{frame});
-}
 
 sub onBooleanSetting {
 	my ($self, $setting) = @_;
@@ -1036,12 +648,6 @@ sub onInitialized {
 			$itemsList, new Wx::Colour(0, 0, 200));
 }
 
-sub onAddPrivMsgUser {
-	my $self = shift;
-	my $param = $_[1];
-	$self->{targetBox}->Append($param->{user});
-}
-
 sub onMapMouseMove {
 	# Mouse moved over the map viewer control
 #vcl code	my ($self, undef, $args) = @_;
@@ -1113,25 +719,6 @@ sub onMap_MapChange {
 }
 
 ### Captcha ###
-
-sub onCaptcha {
-	my ($self, undef, $args) = @_;
-	
-	return unless $config{wx_captcha};
-	
-	require Interface::Wx::CaptchaDialog;
-	my $dialog = new Interface::Wx::CaptchaDialog ($self->{frame}, $args->{file});
-	my $result;
-	if ($dialog->ShowModal == wxID_OK) {
-		$result = $dialog->GetValue;
-	}
-	$dialog->Destroy;
-	return unless defined $result && $result ne '';
-	
-	$messageSender->sendCaptchaAnswer ($result);
-	
-	$args->{return} = 1;
-}
 
 ### Map ###
 
