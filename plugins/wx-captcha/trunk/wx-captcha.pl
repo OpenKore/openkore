@@ -15,7 +15,7 @@ use Wx ':everything';
 use base 'Wx::Dialog';
 use Wx::Event ':everything';
 
-use Globals qw/%config $messageSender/;
+use Globals qw/$messageSender/;
 use Translation qw/T TF/;
 
 use constant DEFAULT_WIDTH => 250;
@@ -24,7 +24,7 @@ my $hooks = Plugins::addHooks(
 	['captcha_file', \&onCaptcha],
 );
 
-Plugins::register('wx-captcha', 'GUI captcha dialog for Wx', sub { Plugins::delHooks($hooks) });
+Plugins::register('wx-captcha', 'Wx captcha dialog', sub { Plugins::delHooks($hooks) });
 
 sub new {
 	my ($class, $parent, $imageFile) = @_;
@@ -72,8 +72,6 @@ sub GetValue { $_[0]->{text}->GetValue }
 
 sub onCaptcha {
 	my (undef, $args) = @_;
-	
-	return unless $config{wx_captcha};
 	
 	my $dialog = new Interface::Wx::CaptchaDialog(undef, $args->{file});
 	my $result = ($dialog->ShowModal == wxID_OK) ? $dialog->GetValue : '';
