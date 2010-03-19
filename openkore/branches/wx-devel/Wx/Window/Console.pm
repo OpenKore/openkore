@@ -8,11 +8,11 @@ sub new {
 	
 	my $self = $class->SUPER::new($parent, $id);
 	
-	$self->{hooks} = Plugins::addHooks(
-		['interface/output', sub { $self->add(@{$_[1]}) }],
-	);
-	
 	Scalar::Util::weaken (my $weak = $self);
+	
+	$self->{hooks} = Plugins::addHooks(
+		['interface/output', sub { $weak->add(@{$_[1]}) }],
+	);
 	
 	Plugins::callHook('interface/addMenuItem', {
 		key => 'console_copy',

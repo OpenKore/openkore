@@ -13,17 +13,20 @@ sub new {
 	
 	my $self = $class->SUPER::new($parent, $id);
 	
+	Scalar::Util::weaken (my $weak = $self);
+	
 	$self->addColor("selfchat", 0, 148, 0);
 	$self->addColor("pm", 142, 120, 0);
 	$self->addColor("p", 164, 0, 143);
 	$self->addColor("g", 0, 177, 108);
 	$self->addColor("warning", 214, 93, 0);
 	
+	my $hook = sub { $weak->onChatAdd(@_) };
 	$self->{hooks} = Plugins::addHooks(
-		['ChatQueue::add',  \&onChatAdd, $self],
-		['packet_selfChat', \&onChatAdd, $self],
-		['packet_privMsg',  \&onChatAdd, $self],
-		['packet_sentPM',   \&onChatAdd, $self],
+		['ChatQueue::add',  $hook],
+		['packet_selfChat', $hook],
+		['packet_privMsg',  $hook],
+		['packet_sentPM',   $hook],
 	);
 	
 	return $self;
@@ -36,7 +39,7 @@ sub DESTROY {
 }
 
 sub onChatAdd {
-	my ($hook, $params, $self) = @_;
+	my ($self, $hook, $params) = @_;
 	my @tmpdate = localtime();
 	if ($tmpdate[1] < 10) {$tmpdate[1] = "0".$tmpdate[1]};
 	if ($tmpdate[2] < 10) {$tmpdate[2] = "0".$tmpdate[2]};

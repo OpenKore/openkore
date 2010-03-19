@@ -110,6 +110,10 @@ sub new {
 		Wx::AuiPaneInfo->new->ToolbarPane->Bottom->BestSize($input->GetBestSize)->CloseButton(0)->Resizable->LeftDockable(0)->RightDockable(0)
 	);
 	
+	#$self->{aui}->AddPane(new Interface::Wx::Window::Console($self),
+	#	Wx::AuiPaneInfo->new->Caption(T('Console'))->Top->BestSize(250, 250)->DestroyOnClose
+	#);
+	
 	$self->{aui}->AddPane(new Interface::Wx::List::ItemList::Inventory($self),
 		Wx::AuiPaneInfo->new->Caption(T('Inventory'))->Right->BestSize(250, 250)
 	);
