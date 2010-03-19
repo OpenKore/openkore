@@ -3,6 +3,8 @@ use strict;
 
 use base 'Interface::Wx::Console';
 
+use Translation qw/T TF/;
+
 sub new {
 	my ($class, $parent, $id, @args) = @_;
 	
@@ -12,6 +14,7 @@ sub new {
 	
 	$self->{hooks} = Plugins::addHooks(
 		['interface/output', sub { $weak->add(@{$_[1]}) }],
+		['interface/updateConsole', sub { $weak->Refresh; $weak->Update }],
 	);
 	
 	Plugins::callHook('interface/addMenuItem', {
@@ -19,6 +22,20 @@ sub new {
 		menu => 'program',
 		title => 'Copy Last 100 Lines of Text',
 		sub => sub { $weak->copyLastLines(100) },
+	});
+	
+	Plugins::callHook('interface/addMenuItem', {
+		key => 'console_selectFont',
+		menu => 'view',
+		title => T('&Font'), help => T('Change console font'),
+		sub => sub { $weak->selectFont },
+	});
+	
+	Plugins::callHook('interface/addMenuItem', {
+		key => 'console_clear',
+		menu => 'view',
+		title => T('Clear Console'), help => T('Clear content of console'),
+		sub => sub { $weak->Remove(0, 40000) },
 	});
 	
 	return $self;
@@ -30,13 +47,8 @@ sub DESTROY {
 	Plugins::delHooks($self->{hooks});
 	
 	Plugins::callHook('interface/removeMenuItem', {key => 'console_copy'});
+	Plugins::callHook('interface/removeMenuItem', {key => 'console_selectFont'});
+	Plugins::callHook('interface/removeMenuItem', {key => 'console_clear'});
 }
-
-=pod
-sub onFontChange {
-	my $self = shift;
-	$self->{console}->selectFont($self->{frame});
-}
-=cut
 
 1;
