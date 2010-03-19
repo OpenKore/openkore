@@ -860,6 +860,8 @@ sub launchURL {
 EOF
 
 		my ($r, $w, $desktop);
+		
+		# WHY it depends on bash? Fails if it's not installed
 		my $pid = IPC::Open2::open2($r, $w, '/bin/bash');
 		print $w $detectionScript;
 		close $w;
