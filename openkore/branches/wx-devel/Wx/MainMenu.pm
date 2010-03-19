@@ -262,11 +262,6 @@ __END__
 		$self->openWindow ('Report', 'Interface::Wx::StatView::Exp', 1) 
 	});
 	
-	$viewMenu->AppendSeparator;
-	
-	$self->addMenu ($viewMenu, T('&Font...'), \&onFontChange, T('Change console font'));
-	$self->addMenu($viewMenu, T('Clear Console'), sub {my $self = shift; $self->{console}->Remove(0, 40000)}, T('Clear content of console'));
-	
 	$menu->Append($viewMenu, T('&View'));
 	
 	$self->{aliasMenu} = new Wx::Menu;

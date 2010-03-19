@@ -137,8 +137,7 @@ sub iterate {
 	my $self = shift;
 
 	if ($self->{iterating} == 0) {
-		$self->{app}{mainFrame}->Refresh; # for console it was
-		$self->{app}{mainFrame}->Update;
+		Plugins::callHook('interface/updateConsole');
 	}
 	$self->{app}{mainFrame}->Yield();
 	$iterationTime = time;
