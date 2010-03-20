@@ -92,7 +92,52 @@ sub new {
 		{title => T('Account information'), command => 'whoami'},
 	], 'info'), T('I&nfo'));
 	
-	$self->{menuBar}->Append($self->createMenu([], 'view'), T('&View'));
+	$self->{menuBar}->Append($self->createMenu([
+		{
+			key => 'toggleWindow_chatLog', title => T('Chat &log'), type => 'check',
+			sub => sub { $self->{frame}->toggleWindow('chatLog', T('Chat log'), 'Interface::Wx::Window::ChatLog', 'notebook') },
+		},
+		{},
+		{
+			key => 'toggleWindow_character', title => T('Character'), type => 'check',
+			sub => sub { $self->{frame}->toggleWindow('character', T('Character'), 'Interface::Wx::StatView::You', 'right') },
+		},
+		{
+			key => 'toggleWindow_homunculus', title => T('Homunculus'), type => 'check',
+			sub => sub { $self->{frame}->toggleWindow('homunculus', T('Homunculus'), 'Interface::Wx::StatView::Homunculus', 'right') },
+		},
+		{
+			key => 'toggleWindow_mercenary', title => T('Mercenary'), type => 'check',
+			sub => sub { $self->{frame}->toggleWindow('mercenary', T('Mercenary'), 'Interface::Wx::StatView::Mercenary', 'right') },
+		},
+		{
+			key => 'toggleWindow_pet', title => T('Pet'), type => 'check',
+			sub => sub { $self->{frame}->toggleWindow('pet', T('Pet'), 'Interface::Wx::StatView::Pet', 'right') },
+		},
+		{},
+		{
+			key => 'toggleWindow_inventory', title => T('Inventory'), type => 'check',
+			sub => sub { $self->{frame}->toggleWindow('inventory', T('Inventory'), 'Interface::Wx::List::ItemList::Inventory', 'right') },
+		},
+		{
+			key => 'toggleWindow_cart', title => T('Cart'), type => 'check',
+			sub => sub { $self->{frame}->toggleWindow('cart', T('Cart'), 'Interface::Wx::List::ItemList::Cart', 'right') },
+		},
+		{
+			key => 'toggleWindow_storage', title => T('Storage'), type => 'check',
+			sub => sub { $self->{frame}->toggleWindow('storage', T('Storage'), 'Interface::Wx::List::ItemList::Storage', 'right') },
+		},
+		{},
+		{
+			key => 'toggleWindow_emotion', title => T('Emotions'), type => 'check',
+			sub => sub { $self->{frame}->toggleWindow('emotion', T('Emotions'), 'Interface::Wx::EmotionList', 'right') },
+		},
+		{},
+		{
+			key => 'toggleWindow_exp', title => T('Experience report'), type => 'check',
+			sub => sub { $self->{frame}->toggleWindow('exp', T('Experience report'), 'Interface::Wx::StatView::Exp', 'right') },
+		},
+	], 'view'), T('&View'));
 	
 	$self->{menuBar}->Append($self->createMenu([], 'settings'), T('&Settings'));
 	
@@ -178,6 +223,9 @@ sub onMenuOpen {
 	$self->{items}{"ai_$_"}->Check($AI == $_) for (0 .. 2);
 	$self->{items}{charselect}->Enable($conState == Network::IN_GAME);
 	
+	$self->{items}{"toggleWindow_$_"}->Check(!!$self->{frame}{windows}{$_})
+	for map /^toggleWindow_(.+)$/, keys %{$self->{items}};
+	
 =pod
 	$self->{infoBarToggle}->Check($self->{infoPanel}->IsShown);
 	$self->{chatLogToggle}->Check(defined $self->{notebook}->hasPage('Chat Log') ? 1 : 0);
@@ -206,6 +254,11 @@ sub onMinimizeToTray {
 		$tray->RemoveIcon;
 		undef $tray;
 		$self->{frame}->Show(1);
+	});
+	EVT_TASKBAR_RIGHT_DOWN($tray, sub {
+		my $menu = new Wx::Menu(); #($Settings::NAME);
+		EVT_MENU($tray, $menu->Append(wxID_ANY, T('E&xit'))->GetId, sub { Commands::run('quit') });
+		$_[0]->PopupMenu($menu);
 	});
 	$self->{frame}->Show(0);
 }
@@ -238,29 +291,6 @@ __END__
 	$self->{infoBarToggle} = $self->addCheckMenu (
 		$viewMenu, T('&Info Bar'), \&onInfoBarToggle, T('Show or hide the information bar.')
 	);
-	$self->{chatLogToggle} = $self->addCheckMenu (
-		$viewMenu, T('Chat &Log'), \&onChatLogToggle, T('Show or hide the chat log.')
-	);
-	$self->addMenu ($viewMenu, T('Status') . "\tAlt+A", sub { $self->openStats (1) });
-	$self->addMenu ($viewMenu, T('Homunculus') . "\tAlt+R", sub { $self->openHomunculus (1) });
-	$self->addMenu ($viewMenu, T('Mercenary') . "\tCtrl+R", sub { $self->openMercenary (1) });
-	$self->addMenu ($viewMenu, T('Pet') . "\tAlt+J", sub { $self->openPet (1) });
-	
-	$viewMenu->AppendSeparator;
-	
-	$self->addMenu ($viewMenu, T('Inventory') . "\tAlt+E", sub { $self->openInventory (1) });
-	$self->addMenu ($viewMenu, T('Cart') . "\tAlt+W", sub { $self->openCart (1) });
-	$self->addMenu ($viewMenu, T('Storage'), sub { $self->openStorage (1) });
-	
-	$viewMenu->AppendSeparator;
-	
-	$self->addMenu ($viewMenu, T('Emotions'). "\tAlt+L", sub { $self->openEmotions (1) });
-	
-	$viewMenu->AppendSeparator;
-	
-	$self->addMenu($viewMenu, T('&Experience Report') . "\tCtrl+E", sub {
-		$self->openWindow ('Report', 'Interface::Wx::StatView::Exp', 1) 
-	});
 	
 	$menu->Append($viewMenu, T('&View'));
 	
@@ -281,11 +311,6 @@ sub createSettingsMenu {
 	$self->{mBooleanSetting}{'wx_npcTalk'} = $self->addCheckMenu (
 		$parentMenu, T('Use Wx NPC Talk'), sub { $self->onBooleanSetting ('wx_npcTalk'); },
 		T('Open a dialog when talking with NPCs')
-	);
-	
-	$self->{mBooleanSetting}{'wx_captcha'} = $self->addCheckMenu (
-		$parentMenu, T('Use Wx captcha'), sub { $self->onBooleanSetting ('wx_captcha'); },
-		T('Open a dialog when receiving a captcha')
 	);
 	
 	$self->{mBooleanSetting}{'wx_map_route'} = $self->addCheckMenu (

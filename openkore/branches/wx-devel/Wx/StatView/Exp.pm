@@ -29,8 +29,10 @@ sub new {
 		],
 	);
 	
+	Scalar::Util::weaken(my $weak = $self);
+	
 	$self->{hooks} = Plugins::addHooks (
-		['mainLoop_post', sub { $self->update }],
+		['mainLoop_post', sub { $weak->update }],
 	);
 	
 	$self->set ('reset', 1);

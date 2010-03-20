@@ -40,10 +40,12 @@ sub new {
 		],
 	);
 	
+	Scalar::Util::weaken(my $weak = $self);
+	
 	my $hook = sub {
 		my ($hook, $args) = @_;
 		
-		$self->update unless $hook eq 'changed_status' && $args->{actor}{ID} ne $accountID;
+		$weak->update unless $hook eq 'changed_status' && $args->{actor}{ID} ne $accountID;
 	};
 	$self->{hooks} = Plugins::addHooks (
 		['packet/map_changed',         $hook],

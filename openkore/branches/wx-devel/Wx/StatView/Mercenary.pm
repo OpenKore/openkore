@@ -6,6 +6,26 @@ use base 'Interface::Wx::StatView';
 use Globals qw/$char %jobs_lut $conState/;
 use Utils qw/getFormattedDate/;
 
+=pod
+		['packet/map_changed',                  sub { $self->onSlaveStatChange (@_); $self->onPetStatChange (@_); }],
+		['packet/homunculus_info',              $onSlaveStatChange],
+		['packet/mercenary_init',               $onSlaveStatChange],
+		['packet/homunculus_property',          $onSlaveStatChange],
+		['packet/mercenary_param_change',       $onSlaveStatChange],
+		['packet/mercenary_off',                $onSlaveStatChange],
+		['packet/message_string',               $onSlaveStatChange],
+sub onSlaveStatChange {
+	my ($self, $hook, $args) = @_;
+	my $window;
+	
+	(undef, $window) = $self->openHomunculus;
+	$window->update if $window;
+	
+	(undef, $window) = $self->openMercenary;
+	$window->update if $window;
+}
+=cut
+
 sub new {
 	my ($class, $parent, $id) = @_;
 	
