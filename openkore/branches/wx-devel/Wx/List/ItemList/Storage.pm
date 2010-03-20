@@ -13,14 +13,16 @@ sub new {
 		{key => 'count', max => %cart && $cart{items_max} ? $cart{items_max} : '100'},
 	]);
 	
+	Scalar::Util::weaken(my $weak = $self);
+	
 	$self->{hooks} = Plugins::addHooks (
- 		['packet/map_loaded',                 sub { $self->clear }],
-		['packet/storage_opened',             sub { $self->onInfo; }],
-		['packet/storage_closed',             sub { $self->onInfo; }],
-		['packet/storage_items_stackable',    sub { $self->update; }],
-		['packet/storage_items_nonstackable', sub { $self->update; }],
-		['packet/storage_item_added',         sub { $self->onItemsChanged ($_[1]{index}); }],
-		['packet/storage_item_removed',       sub { $self->onItemsChanged ($_[1]{index}); }],
+ 		['packet/map_loaded',                 sub { $weak->clear }],
+		['packet/storage_opened',             sub { $weak->onInfo; }],
+		['packet/storage_closed',             sub { $weak->onInfo; }],
+		['packet/storage_items_stackable',    sub { $weak->update; }],
+		['packet/storage_items_nonstackable', sub { $weak->update; }],
+		['packet/storage_item_added',         sub { $weak->onItemsChanged ($_[1]{index}); }],
+		['packet/storage_item_removed',       sub { $weak->onItemsChanged ($_[1]{index}); }],
 	);
 	
 	$self->onInfo;
@@ -29,7 +31,7 @@ sub new {
 	return $self;
 }
 
-sub unload {
+sub DESTROY {
 	my ($self) = @_;
 	
 	Plugins::delHooks ($self->{hooks});

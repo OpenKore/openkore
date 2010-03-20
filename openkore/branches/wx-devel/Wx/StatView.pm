@@ -7,7 +7,7 @@ use Wx::Event qw/EVT_BUTTON/;
 use Utils qw/formatNumber/;
 
 use constant {
-	BORDER => 2,
+	BORDER => 1,
 };
 
 sub new {

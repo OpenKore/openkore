@@ -6,7 +6,7 @@ use base 'Wx::Panel';
 use Wx ':everything';
 use Wx::Event ':everything';
 
-use Globals qw/$conState $messageSender/;
+use Globals qw/$conState $messageSender $interface/;
 use Misc qw/sendMessage/;
 use Translation qw/T TF/;
 
@@ -94,7 +94,7 @@ sub onInputEnter {
 		my $text = ($n == 0) ? $text : $1;
 		$self->{inputBox}->Remove(0, -1);
 		Plugins::callHook('interface/output', ['input', "$text\n"]);
-		Plugins::callHook('interface/input', {text => $text});
+		$interface->{input} = $text;
 		return;
 	}
 	

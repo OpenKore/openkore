@@ -13,13 +13,15 @@ sub new {
 		{key => 'weight', title => 'Weight', max => %cart && $cart{weight_max} ? $cart{weight_max} : '100'},
 	]);
 	
+	Scalar::Util::weaken(my $weak = $self);
+	
 	$self->{hooks} = Plugins::addHooks (
-		['packet/map_loaded',              sub { $self->clear }],
-		['packet/cart_info',               sub { $self->onInfo }],
-		['packet/cart_items_stackable',    sub { $self->update }],
-		['packet/cart_items_nonstackable', sub { $self->update }],
-		['packet/cart_item_added',         sub { $self->onItemsChanged ($_[1]{index}) }],
-		['packet/cart_item_removed',       sub { $self->onItemsChanged ($_[1]{index}) }],
+		['packet/map_loaded',              sub { $weak->clear }],
+		['packet/cart_info',               sub { $weak->onInfo }],
+		['packet/cart_items_stackable',    sub { $weak->update }],
+		['packet/cart_items_nonstackable', sub { $weak->update }],
+		['packet/cart_item_added',         sub { $weak->onItemsChanged ($_[1]{index}) }],
+		['packet/cart_item_removed',       sub { $weak->onItemsChanged ($_[1]{index}) }],
 	);
 	
 	$self->onInfo;
@@ -28,7 +30,7 @@ sub new {
 	return $self;
 }
 
-sub unload {
+sub DESTROY {
 	my ($self) = @_;
 	
 	Plugins::delHooks ($self->{hooks});

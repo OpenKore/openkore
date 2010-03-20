@@ -10,51 +10,53 @@ sub new {
 	
 	my $self = $class->SUPER::new ($parent, $id);
 	
+	Scalar::Util::weaken(my $weak = $self);
+	
 	$self->{hooks} = Plugins::addHooks (
 		['packet/map_loaded', sub {
-			$self->clear
+			$weak->clear
 		}],
 		['packet/arrow_equipped', sub {
-			$self->onItemsChanged ($_[1]{index})
+			$weak->onItemsChanged ($_[1]{index})
 		}],
 		['packet/card_merge_status', sub {
-			$self->onItemsChanged ($_[1]{item_index}, $_[1]{card_index}) unless $_[1]{fail}
+			$weak->onItemsChanged ($_[1]{item_index}, $_[1]{card_index}) unless $_[1]{fail}
 		}],
 		['packet/deal_add_you', sub {
-			$self->onItemsChanged ($_[1]{index}) unless $_[1]{fail}
+			$weak->onItemsChanged ($_[1]{index}) unless $_[1]{fail}
 		}],
 		['packet/equip_item', sub {
-			$self->onItemsChanged ($_[1]{index}) if $_[1]{success}
+			$weak->onItemsChanged ($_[1]{index}) if $_[1]{success}
 		}],
 		['packet/identify', sub {
-			$self->onItemsChanged ($_[1]{index}) unless $_[1]{flag}
+			$weak->onItemsChanged ($_[1]{index}) unless $_[1]{flag}
 		}],
 		['packet/inventory_item_added', sub {
-			$self->onItemsChanged ($_[1]{index}) unless $_[1]{fail}
+			$weak->onItemsChanged ($_[1]{index}) unless $_[1]{fail}
 		}],
 		['packet/inventory_item_removed', sub {
-			$self->onItemsChanged ($_[1]{index})
+			$weak->onItemsChanged ($_[1]{index})
 		}],
 		['packet_useitem', sub {
-			$self->onItemsChanged ($_[1]{serverIndex}) if $_[1]{success}
+			$weak->onItemsChanged ($_[1]{serverIndex}) if $_[1]{success}
 		}],
 		['packet/inventory_items_nonstackable', sub {
-			$self->update
+			$weak->update
 		}],
 		['packet/inventory_items_stackable', sub {
-			$self->update
+			$weak->update
 		}],
 		['packet/item_upgrade', sub {
-			$self->onItemsChanged ($_[1]{index})
+			$weak->onItemsChanged ($_[1]{index})
 		}],
 		['packet/unequip_item', sub {
-			$self->onItemsChanged ($_[1]{index})
+			$weak->onItemsChanged ($_[1]{index})
 		}],
 		['packet/use_item', sub {
-			$self->onItemsChanged ($_[1]{index})
+			$weak->onItemsChanged ($_[1]{index})
 		}],
 		['packet/mail_send', sub {
-			$self->update
+			$weak->update
 		}],
 	);
 	
@@ -64,7 +66,7 @@ sub new {
 	return $self;
 }
 
-sub unload {
+sub DESTROY {
 	my ($self) = @_;
 	
 	$self->_removeCallbacks;

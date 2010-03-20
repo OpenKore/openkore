@@ -43,14 +43,7 @@ use Interface::Wx::MainMenu;
 use Interface::Wx::Window::Input;
 use Interface::Wx::Window::Console;
 use Interface::Wx::Window::ChatLog;
-use Interface::Wx::List::ItemList::Inventory;
-#use Interface::Wx::Dock;
-#use Interface::Wx::MapViewer;
-#use Interface::Wx::LogView;
 use Interface::Wx::Console;
-#use Interface::Wx::DockNotebook;
-#use Interface::Wx::PasswordDialog;
-use Interface::Wx::StatView::You;
 use Interface::Wx::StatView::Exp;
 
 use AI;
@@ -69,7 +62,6 @@ sub new {
 	my $self = $class->SUPER::new($parent, $id || wxID_ANY, $title || $Settings::NAME);
 	
 	$self->{menu} = new Interface::Wx::MainMenu($self);
-	
 	$self->createStatusBar;
 	
 	#$self->SetSizeHints(300, 250);
@@ -92,41 +84,31 @@ sub new {
 		['mainLoop_pre',  \&onUpdate, $self],
 	);
 	
-	# initialize default windows
+	$self->{windows} = {};
 	
 	($self->{aui} = new Wx::AuiManager)->SetManagedWindow($self);
 	
 	$self->{aui}->AddPane(
-		$self->{notebook} = new Wx::AuiNotebook($self),
+		$self->{notebook} = new Wx::AuiNotebook($self, wxID_ANY, wxDefaultPosition, wxDefaultSize,
+			# no close buttons for tabs
+			wxAUI_NB_TOP | wxAUI_NB_TAB_SPLIT | wxAUI_NB_TAB_MOVE | wxAUI_NB_SCROLL_BUTTONS
+		),
 		Wx::AuiPaneInfo->new->CenterPane
 	);
-	
-	$self->{notebook}->AddPage(new Interface::Wx::Window::Console($self), T('Console'), 1);
-	
-	$self->{notebook}->AddPage(new Interface::Wx::Window::ChatLog($self), T('Chat log'), 0);
 	
 	my $input = new Interface::Wx::Window::Input($self);
 	$self->{aui}->AddPane($input,
 		Wx::AuiPaneInfo->new->ToolbarPane->Bottom->BestSize($input->GetBestSize)->CloseButton(0)->Resizable->LeftDockable(0)->RightDockable(0)
 	);
 	
-	#$self->{aui}->AddPane(new Interface::Wx::Window::Console($self),
-	#	Wx::AuiPaneInfo->new->Caption(T('Console'))->Top->BestSize(250, 250)->DestroyOnClose
-	#);
-	
-	$self->{aui}->AddPane(new Interface::Wx::List::ItemList::Inventory($self),
-		Wx::AuiPaneInfo->new->Caption(T('Inventory'))->Right->BestSize(250, 250)
-	);
-	
-	$self->{aui}->AddPane(new Interface::Wx::StatView::You($self),
-		Wx::AuiPaneInfo->new->Caption(T('Character'))->Right->BestSize(250, 250)
-	);
-	
-	$self->{aui}->AddPane(new Interface::Wx::StatView::Exp($self),
-		Wx::AuiPaneInfo->new->Caption(T('Experience report'))->Right->BestSize(250, 250)
-	);
+	$self->toggleWindow('console', T('Console'), 'Interface::Wx::Window::Console', 'notebook');
+	$self->toggleWindow('chatLog', T('Chat log'), 'Interface::Wx::Window::ChatLog', 'notebook');
+	$self->toggleWindow('exp', T('Experience report'), 'Interface::Wx::StatView::Exp', 'right');
 	
 	$self->{aui}->Update;
+	
+	#$self->{notebook}->Split(1, wxBOTTOM);
+	$self->{notebook}->SetSelection(0);
 	
 	return $self;
 }
@@ -226,6 +208,48 @@ sub updateStatusBar {
 	$setStatus->('aiText', $aiText);
 }
 
+sub toggleWindow {
+	my ($self, $key, $title, $class, $target) = @_;
+	
+	unless ($self->{windows}{$key}) {
+		eval "require $class";
+		if ($@) {
+			Log::warning "Unable to load $class\n$@", 'interface';
+			return;
+		}
+		unless ($class->can('new')) {
+			Log::warning "Unable to create instance of $class\n", 'interface';
+			return;
+		}
+		
+		my $window = $class->new($self);
+		
+		if (my $pos = {
+			'float' => wxAUI_DOCK_NONE,
+			'top' => wxAUI_DOCK_TOP,
+			'right' => wxAUI_DOCK_RIGHT,
+			'bottom' => wxAUI_DOCK_BOTTOM,
+			'left' => wxAUI_DOCK_LEFT,
+		}->{$target}) {
+			$self->{aui}->AddPane($window,
+				Wx::AuiPaneInfo->new->Caption($title)->Direction($pos)->BestSize(250, 250)->DestroyOnClose
+			);
+			$self->{aui}->Update;
+		} elsif ($target eq 'notebook') {
+			$self->{notebook}->AddPage($window, $title, 1);
+		}
+		
+		Scalar::Util::weaken($self->{windows}{$key} = $window);
+	} else {
+		if ($self->{aui}->GetPane($self->{windows}{$key})->IsOk) {
+			# TODO: close window in AuiManager
+		} else {
+			ref $self->{notebook}->GetPage($_) eq ref $self->{windows}{$key} && $self->{notebook}->DeletePage($_)
+			for (0 .. $self->{notebook}->GetPageCount-1);
+		}
+	}
+}
+
 =pod
 sub OnInit {
 	my $self = shift;
@@ -233,23 +257,9 @@ sub OnInit {
 	$self->createInterface;
 	$self->iterate;
 	
-	my $onSlaveStatChange = sub { $self->onSlaveStatChange (@_); };
-	my $onPetStatChange   = sub { $self->onPetStatChange (@_); };
-	
 	$self->{hooks} = Plugins::addHooks(
 		['initialized',                         sub { $self->onInitialized(@_); }],
 		['packet/minimap_indicator',            sub { $self->onMapIndicator (@_); }],
-		
-		# stat changes
-		['packet/map_changed',                  sub { $self->onSlaveStatChange (@_); $self->onPetStatChange (@_); }],
-		['packet/homunculus_info',              $onSlaveStatChange],
-		['packet/mercenary_init',               $onSlaveStatChange],
-		['packet/homunculus_property',          $onSlaveStatChange],
-		['packet/mercenary_param_change',       $onSlaveStatChange],
-		['packet/mercenary_off',                $onSlaveStatChange],
-		['packet/message_string',               $onSlaveStatChange],
-		['packet/pet_info',                     $onPetStatChange],
-		['packet/pet_info2',                    $onPetStatChange],
 		
 		# npc
 		['packet/npc_image',              sub { $self->onNpcImage (@_); }],
@@ -476,109 +486,6 @@ sub onMapToggle {
 	$self->{mapDock}->attach;
 }
 
-sub onInfoBarToggle {
-	my $self = shift;
-	$self->{vsizer}->Show($self->{infoPanel}, $self->{infoBarToggle}->IsChecked);
-	$self->{frame}->Layout;
-}
-
-sub onChatLogToggle {
-	my $self = shift;
-	if (!$self->{chatLogToggle}->IsChecked) {
-		$self->{notebook}->closePage('Chat Log');
-
-	} elsif (!$self->{notebook}->hasPage('Chat Log')) {
-		my $page = $self->{notebook}->newPage(1, 'Chat Log', 0);
-		my $chatLog = $self->{chatLog} = new Interface::Wx::LogView($page);
-		$page->set($chatLog);
-		$chatLog->addColor("selfchat", 0, 148, 0);
-		$chatLog->addColor("pm", 142, 120, 0);
-		$chatLog->addColor("p", 164, 0, 143);
-		$chatLog->addColor("g", 0, 177, 108);
-		$chatLog->addColor("warning", 214, 93, 0);
-		$page->set($chatLog);
-
-	} else {
-		$self->{notebook}->switchPage('Chat Log');
-	}
-}
-
-sub openWindow {
-	my ($self, $title, $class, $create) = @_;
-	my ($page, $window);
-	
-	if ($page = $self->{notebook}->hasPage ($title)) {
-		$window = $page->{child};
-	} elsif ($create) {
-		eval "require $class";
-		if ($@) {
-			Log::warning "Unable to load $class\n$@", 'interface';
-			return;
-		}
-		unless ($class->can ('new')) {
-			Log::warning "Unable to create instance of $class\n", 'interface';
-			return;
-		}
-		$page = $self->{notebook}->newPage (1, $title, 0);
-		$page->set ($window = $class->new ($page, wxID_ANY));
-		
-		$window->init if $conState == Network::IN_GAME && $window->can ('init');
-	}
-	
-	$self->{notebook}->switchPage ($title) if $page && $create;
-	
-	return ($page, $window);
-}
-
-sub openStats {
-	my ($self, $create) = @_;
-	my ($page, $window) = $self->openWindow ('Status', 'Interface::Wx::StatView::You', $create);
-	
-	return ($page, $window);
-}
-
-sub openHomunculus {
-	my ($self, $create) = @_;
-	my ($page, $window) = $self->openWindow ('Homunculus', 'Interface::Wx::StatView::Homunculus', $create);
-	
-	return ($page, $window);
-}
-
-sub openMercenary {
-	my ($self, $create) = @_;
-	my ($page, $window) = $self->openWindow ('Mercenary', 'Interface::Wx::StatView::Mercenary', $create);
-	
-	return ($page, $window);
-}
-
-sub openPet {
-	my ($self, $create) = @_;
-	my ($page, $window) = $self->openWindow ('Pet', 'Interface::Wx::StatView::Pet', $create);
-	
-	return ($page, $window);
-}
-
-sub openInventory {
-	my ($self, $create) = @_;
-	my ($page, $window) = $self->openWindow ('Inventory', 'Interface::Wx::List::ItemList::Inventory', $create);
-	
-	return ($page, $window);
-}
-
-sub openCart {
-	my ($self, $create) = @_;
-	my ($page, $window) = $self->openWindow ('Cart', 'Interface::Wx::List::ItemList::Cart', $create);
-	
-	return ($page, $window);
-}
-
-sub openStorage {
-	my ($self, $create) = @_;
-	my ($page, $window) = $self->openWindow ('Storage', 'Interface::Wx::List::ItemList::Storage', $create);
-	
-	return ($page, $window);
-}
-
 sub openEmotions {
 	my ($self, $create) = @_;
 	my ($page, $window) = $self->openWindow ('Emotions', 'Interface::Wx::EmotionList', $create);
@@ -608,16 +515,6 @@ sub openNpcTalk {
 	}
 	
 	return ($page, $window);
-}
-
-sub onManual {
-	my $self = shift;
-	launchURL('http://wiki.openkore.com/index.php?title=Manual');
-}
-
-sub onForum {
-	my $self = shift;
-	launchURL('http://forums.openkore.com/');
 }
 
 sub onItemListActivate {
@@ -720,8 +617,6 @@ sub onMap_MapChange {
 	$mapDock->Fit;
 }
 
-### Captcha ###
-
 ### Map ###
 
 sub onMapIndicator {
@@ -730,35 +625,6 @@ sub onMapIndicator {
 	if ($self->{mapViewer}) {
 		$self->{mapViewer}->mapIndicator ($args->{type} != 2, $args->{x}, $args->{y}, $args->{red}, $args->{green}, $args->{blue}, $args->{alpha});
 	}
-}
-
-### Stat View ###
-
-sub onSelfStatChange {
-	my ($self, $hook, $args) = @_;
-	
-	return if $hook eq 'changed_status' && $args->{actor}{ID} ne $accountID;
-	
-	my (undef, $window) = $self->openStats;
-	$window->update if $window;
-}
-
-sub onSlaveStatChange {
-	my ($self, $hook, $args) = @_;
-	my $window;
-	
-	(undef, $window) = $self->openHomunculus;
-	$window->update if $window;
-	
-	(undef, $window) = $self->openMercenary;
-	$window->update if $window;
-}
-
-sub onPetStatChange {
-	my ($self, $hook, $args) = @_;
-	
-	my (undef, $window) = $self->openPet;
-	$window->update if $window;
 }
 
 ### NPC Talk ###

@@ -6,7 +6,7 @@ use Wx ':everything';
 use Wx::Event qw/EVT_MENU EVT_LIST_ITEM_SELECTED EVT_LIST_ITEM_DESELECTED EVT_LIST_ITEM_ACTIVATED EVT_LIST_ITEM_RIGHT_CLICK/;
 
 use constant {
-	BORDER => 2,
+	BORDER => 1,
 };
 
 sub new {

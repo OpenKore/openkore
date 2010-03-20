@@ -67,14 +67,6 @@ sub new { bless {
 sub mainLoop {
 	my ($self) = @_;
 	
-	$self->{hooks} = Plugins::addHooks(
-		['interface/input', sub {
-			my (undef, $args, $self) = @_;
-			
-			$self->{input} = $args->{text};
-		}, $self],
-	);
-	
 	$self->{app} = new Interface::Wx::App;
 	
 	# Start the real main loop in 100 msec, so that the UI has
@@ -90,12 +82,6 @@ sub mainLoop {
 	}
 	
 	$self->{app}->MainLoop;
-}
-
-sub DESTROY {
-	my ($self) = @_;
-	
-	Plugins::delHooks($self->{hooks});
 }
 
 sub realMainLoop {

@@ -6,6 +6,24 @@ use base 'Interface::Wx::StatView';
 use Globals qw/$char %pet %jobs_lut $conState/;
 use Misc qw/itemNameSimple monsterName/;
 
+=pod
+		['packet/map_changed',                  sub { $self->onSlaveStatChange (@_); $self->onPetStatChange (@_); }],
+		['packet/homunculus_info',              $onSlaveStatChange],
+		['packet/mercenary_init',               $onSlaveStatChange],
+		['packet/homunculus_property',          $onSlaveStatChange],
+		['packet/mercenary_param_change',       $onSlaveStatChange],
+		['packet/mercenary_off',                $onSlaveStatChange],
+		['packet/message_string',               $onSlaveStatChange],
+		['packet/pet_info',                     $onPetStatChange],
+		['packet/pet_info2',                    $onPetStatChange],
+sub onPetStatChange {
+	my ($self, $hook, $args) = @_;
+	
+	my (undef, $window) = $self->openPet;
+	$window->update if $window;
+}
+=cut
+
 sub new {
 	my ($class, $parent, $id) = @_;
 	
