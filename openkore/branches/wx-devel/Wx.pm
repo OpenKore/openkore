@@ -139,7 +139,7 @@ sub iterate {
 	if ($self->{iterating} == 0) {
 		Plugins::callHook('interface/updateConsole');
 	}
-	$self->{app}{mainFrame}->Yield();
+	$self->{app}->Yield();
 	$iterationTime = time;
 }
 
