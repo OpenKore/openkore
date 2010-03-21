@@ -1,10 +1,9 @@
 package Interface::Wx::Window::Input;
 use strict;
 
-use base 'Wx::Panel';
-
 use Wx ':everything';
 use Wx::Event ':everything';
+use base 'Wx::Panel';
 
 use Globals qw/$conState $messageSender $interface/;
 use Misc qw/sendMessage/;

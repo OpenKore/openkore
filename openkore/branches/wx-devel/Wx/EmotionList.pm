@@ -5,6 +5,8 @@ use Wx ':everything';
 use Wx::Event qw/EVT_SIZE EVT_BUTTON/;
 use base 'Wx::Panel';
 
+use Globals qw/%emotions_lut/;
+
 use constant {
 	BUTTON_SIZE => 26,
 	BUTTON_BORDER => 2,
@@ -17,13 +19,39 @@ sub new {
 	
 	$self->{bitmapDir} = 'bitmaps/emotions/';
 	
+	Scalar::Util::weaken(my $weak = $self);
+
+	$self->{hooks} = Plugins::addHooks (
+		['loadfiles',
+			sub {
+				my (undef, $args) = @_;
+				if ($args->{files}->[$args->{current} - 1]->{name} eq 'emotions.txt') {
+					$weak->setEmotions(\%emotions_lut);
+				}
+			}
+		],
+	);
+
 	EVT_SIZE ($self, \&_onSize);
-	
+
 	$self->SetSizer (my $sizer = new Wx::BoxSizer (wxVERTICAL));
 	$sizer->Add ($self->{grid} = new Wx::GridSizer (0, 0, BUTTON_BORDER, BUTTON_BORDER), 0);
 	$sizer->AddStretchSpacer;
 	
+	$self->setEmotions(\%emotions_lut) if scalar keys %emotions_lut;
+	
+	$self->onEmotion (sub {
+		Commands::run ('e ' . shift);
+		#$self->{inputBox}->SetFocus; # TODO: plugin hook setfocus on inputbox?
+	});
+	
 	return $self;
+}
+
+sub DESTROY {
+	my ($self) = @_;
+	
+	Plugins::delHooks ($self->{hooks});
 }
 
 sub _onSize {
