@@ -23,9 +23,9 @@
 #########################################################################
 package Interface::Wx::App;
 use strict;
-use base 'Wx::App';
 
 use Wx ':everything';
+use base 'Wx::App';
 use Wx::Event ':everything';
 
 use Interface::Wx::MainFrame;

@@ -23,9 +23,9 @@
 #########################################################################
 package Interface::Wx::MainFrame;
 use strict;
-use base 'Wx::Frame';
 
 use Wx ':everything';
+use base 'Wx::Frame';
 use Wx::AUI;
 use Wx::Event ':everything';
 use Time::HiRes qw(time sleep);
@@ -67,7 +67,7 @@ sub new {
 	#$self->SetSizeHints(300, 250);
 	$self->SetClientSize(950, 680);
 	if (-f (my $icon = "$RealBin/src/build/openkore.ico")) {
-		$self->SetIcon(new Wx::Icon($icon, wxBITMAP_TYPE_ANY));
+		$self->SetIcon(new Wx::Icon($icon, wxBITMAP_TYPE_ICO));
 	}
 	
 	EVT_CLOSE($self, sub {

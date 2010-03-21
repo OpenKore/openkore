@@ -1,8 +1,8 @@
 package Interface::Wx::List;
 
 use strict;
-use base 'Wx::Panel';
 use Wx ':everything';
+use base 'Wx::Panel';
 use Wx::Event qw/EVT_MENU EVT_LIST_ITEM_SELECTED EVT_LIST_ITEM_DESELECTED EVT_LIST_ITEM_ACTIVATED EVT_LIST_ITEM_RIGHT_CLICK/;
 
 use constant {

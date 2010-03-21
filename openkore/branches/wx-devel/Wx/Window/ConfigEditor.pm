@@ -1,10 +1,9 @@
 package Interface::Wx::Window::ConfigEditor;
 use strict;
 
-use base 'Wx::Panel';
-
 use Wx ':everything';
 use Wx::Event ':everything';
+use base 'Wx::Panel';
 
 use Interface::Wx::ConfigEditor;
 

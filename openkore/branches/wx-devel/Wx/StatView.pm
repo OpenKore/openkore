@@ -1,8 +1,8 @@
 package Interface::Wx::StatView;
 
 use strict;
-use base 'Wx::Panel';
 use Wx ':everything';
+use base 'Wx::Panel';
 use Wx::Event qw/EVT_BUTTON/;
 use Utils qw/formatNumber/;
 
