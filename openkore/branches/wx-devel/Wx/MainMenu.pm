@@ -139,7 +139,13 @@ sub new {
 		},
 	], 'view'), T('&View'));
 	
-	$self->{menuBar}->Append($self->createMenu([], 'settings'), T('&Settings'));
+	$self->{menuBar}->Append($self->createMenu([
+		{
+			key => 'toggleWindow_configEditor', title => T('&Advanced...'), type => 'check',
+			sub => sub { $self->{frame}->toggleWindow('configEditor', T('Advanced configuration'), 'Interface::Wx::Window::ConfigEditor', 'notebook') },
+			help => T('Edit advanced configuration options.'),
+		},
+	], 'settings'), T('&Settings'));
 	
 	$self->{menuBar}->Append($self->createMenu([
 		{title => T('Website'), sub => sub { launchURL($Settings::WEBSITE) }, help => $Settings::WEBSITE},
@@ -296,13 +302,6 @@ __END__
 	
 	$self->{aliasMenu} = new Wx::Menu;
 	$menu->Append ($self->{aliasMenu}, T('&Alias'));
-	
-	# Settings menu
-	my $settingsMenu = new Wx::Menu;
-	$self->createSettingsMenu($settingsMenu) if ($self->can('createSettingsMenu'));
-	$self->addMenu($settingsMenu, T('&Advanced...'), \&onAdvancedConfig, T('Edit advanced configuration options.'));
-	$menu->Append($settingsMenu, T('&Settings'));
-	$self->createSettingsMenu2($settingsMenu) if ($self->can('createSettingsMenu2'));
 }
 
 sub createSettingsMenu {

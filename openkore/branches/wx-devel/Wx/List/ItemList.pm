@@ -3,12 +3,37 @@ package Interface::Wx::List::ItemList;
 use strict;
 use base 'Interface::Wx::List';
 
+use Wx ':everything';
+
 use Globals qw/%equipTypes_lut/;
+use Translation qw/T TF/;
 
 sub new {
 	my ($class, $parent, $id) = (shift, shift, shift);
 	
 	my $self = $class->SUPER::new ($parent, $id, @_);
+	
+	$self->{list}->InsertColumn (0, '');
+	$self->{list}->InsertColumn (1, '');
+	$self->{list}->InsertColumn (2, '');
+	$self->{list}->SetColumn(0, do {
+		$_ = Wx::ListItem->new;
+		$_->SetText(T('#'));
+		$_->SetAlign(wxLIST_FORMAT_RIGHT);
+		$_->SetWidth(26);
+	$_ });
+	$self->{list}->SetColumn(1, do {
+		$_ = Wx::ListItem->new;
+		$_->SetText(T('Amount'));
+		$_->SetAlign(wxLIST_FORMAT_RIGHT);
+		$_->SetWidth(50);
+	$_ });
+	$self->{list}->SetColumn(2, do {
+		$_ = Wx::ListItem->new;
+		$_->SetText(T('Item'));
+		#$_->SetWidth(wxLIST_AUTOSIZE);
+		$_->SetWidth(150);
+	$_ });
 	
 	return $self;
 }
