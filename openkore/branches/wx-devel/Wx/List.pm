@@ -41,13 +41,6 @@ sub new {
 		}
 	}
 	
-	$self->{list}->InsertColumn (0, '');
-	$self->{list}->InsertColumn (1, '');
-	$self->{list}->InsertColumn (2, '');
-	$self->{list}->SetColumnWidth (0, 26);
-	$self->{list}->SetColumnWidth (1, 50);
-	$self->{list}->SetColumnWidth (2, 320);
-	
 	EVT_LIST_ITEM_SELECTED ($self, $self->{list}->GetId, sub { $self->_onSelectionChange; });
 	EVT_LIST_ITEM_DESELECTED ($self, $self->{list}->GetId, sub { $self->_onSelectionChange; });
 	EVT_LIST_ITEM_ACTIVATED ($self, $self->{list}->GetId, sub { $self->_onActivate; });
