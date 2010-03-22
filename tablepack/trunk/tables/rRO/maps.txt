@@ -14,17 +14,7 @@ abbey02.rsw#Монастырь #
 abbey03.rsw#Монастырь #
 que_temsky.rsw#Небесный сад #
 z_agit.rsw#Бандитский притон #
-evt_zombie.rsw#город зомби#
-que_qsch01.rsw#Экелнир#
-que_qsch02.rsw#Экелнир#
-que_qsch03.rsw#Экелнир#
-que_qsch04.rsw#Экелнир#
-que_qsch05.rsw#Экелнир#
-que_qaru01.rsw#Экелнир#
-que_qaru02.rsw#Экелнир#
-que_qaru03.rsw#Экелнир#
-que_qaru04.rsw#Экелнир#
-que_qaru05.rsw#Экелнир#
+evt_zombie.rsw#Город зомби#
 arug_cas01.rsw#Мардол #
 arug_cas02.rsw#Шейт #
 arug_cas03.rsw#Хорн #
@@ -92,7 +82,7 @@ ice_dun04.rsw#Ледяная Пещера #
 moscovia.rsw#Московия #
 mosk_in.rsw#Московия #
 mosk_ship.rsw#Корабль #
-mosk_fild01.rsw#Окрестности Московии #
+mosk_fild01.rsw#Остров Кита #
 mosk_fild02.rsw#Окрестности Московии #
 mosk_dun01.rsw#Лес #
 mosk_dun02.rsw#Темный лес #
@@ -652,4 +642,38 @@ pvp_y_6-5.rsw#Арена #
 pvp_y_7-5.rsw#Арена #
 pvp_y_8-5.rsw#Арена #
 pvp_2vs2.rsw#Арена #
+//---------- Ep. 12 -----------
+1@cata.rsw#Катакомбы #
+2@cata.rsw#Запечатанная Святыня #
+e_tower.rsw#Туманный остров #
+1@tower.rsw#Бесконечная Башня #
+2@tower.rsw#Бесконечная Башня #
+3@tower.rsw#Бесконечная Башня #
+4@tower.rsw#Бесконечная Башня #
+5@tower.rsw#Бесконечная Башня #
+6@tower.rsw#Бесконечная Башня (Неизвестная зона) #
+bat_room.rsw#Арена: Зал ожидания #
+bat_a01.rsw#Каньон Тиера #
+bat_a02.rsw#Каньон Тиера #
+bat_b01.rsw#Флавиан #
+bat_b02.rsw#Флавиан #
+que_qsch01.rsw#Окольнир #
+que_qsch02.rsw#Окольнир #
+que_qsch03.rsw#Окольнир #
+que_qsch04.rsw#Окольнир #
+que_qsch05.rsw#Окольнир #
+que_qaru01.rsw#Окольнир #
+que_qaru02.rsw#Окольнир #
+que_qaru03.rsw#Окольнир #
+que_qaru04.rsw#Окольнир #
+que_qaru05.rsw#Окольнир #
+cave.rsw#Пещерная деревня #
+moc_fild20.rsw#Разлом Пространства #
+moc_fild21.rsw#Разлом Пространства #
+moc_fild22.rsw#Разлом Пространства #
+//---------- WoE SE Dungeons -----------
+arug_que01.rsw#Морстонские Прерии #
+schg_que01.rsw#Морстонские Прерии #
+arug_dun01.rsw#Подземелье Арунафельца #
+schg_dun01.rsw#Подземелье Шварцвальда #
 //-------------------------file end
