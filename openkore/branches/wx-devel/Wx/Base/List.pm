@@ -1,4 +1,4 @@
-package Interface::Wx::List;
+package Interface::Wx::Base::List;
 
 use strict;
 use Wx ':everything';

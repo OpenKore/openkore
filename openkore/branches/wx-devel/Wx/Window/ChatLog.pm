@@ -3,7 +3,7 @@ use strict;
 
 use Wx ':everything';
 use Wx::Event ':everything';
-use base 'Interface::Wx::LogView';
+use base 'Interface::Wx::Base::LogView';
 
 use Translation qw/T TF/;
 

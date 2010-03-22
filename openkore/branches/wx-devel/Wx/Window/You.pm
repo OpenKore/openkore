@@ -1,7 +1,7 @@
-package Interface::Wx::StatView::You;
+package Interface::Wx::Window::You;
 
 use strict;
-use base 'Interface::Wx::StatView';
+use base 'Interface::Wx::Base::StatView';
 
 use Globals qw/$char %config %jobs_lut %sex_lut $conState $accountID/;
 

@@ -1,7 +1,7 @@
 package Interface::Wx::Window::Console;
 use strict;
 
-use base 'Interface::Wx::Console';
+use base 'Interface::Wx::Base::Console';
 
 use Translation qw/T TF/;
 

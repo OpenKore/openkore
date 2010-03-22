@@ -19,7 +19,7 @@
 #  $Id$
 #
 #########################################################################
-package Interface::Wx::Input;
+package Interface::Wx::Base::Input;
 
 use strict;
 use Wx ':everything';

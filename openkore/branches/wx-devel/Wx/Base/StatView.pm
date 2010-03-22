@@ -1,4 +1,4 @@
-package Interface::Wx::StatView;
+package Interface::Wx::Base::StatView;
 
 use strict;
 use Wx ':everything';

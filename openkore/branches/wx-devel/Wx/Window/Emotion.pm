@@ -1,4 +1,4 @@
-package Interface::Wx::EmotionList;
+package Interface::Wx::Window::Emotion;
 
 use strict;
 use Wx ':everything';

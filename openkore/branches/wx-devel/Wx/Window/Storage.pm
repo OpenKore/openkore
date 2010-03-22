@@ -1,7 +1,7 @@
-package Interface::Wx::List::ItemList::Storage;
+package Interface::Wx::Window::Storage;
 
 use strict;
-use base 'Interface::Wx::List::ItemList';
+use base 'Interface::Wx::Base::ItemList';
 
 use Globals qw/$char $conState %cart %storage @storageID/;
 use Misc qw/storageGet/;

@@ -9,7 +9,7 @@ use Globals qw/$conState $messageSender $interface/;
 use Misc qw/sendMessage/;
 use Translation qw/T TF/;
 
-use Interface::Wx::Input;
+use Interface::Wx::Base::Input;
 
 sub new {
 	my ($class, $parent, $id) = @_;
@@ -34,7 +34,7 @@ sub new {
 	});
 	
 	# input field
-	$sizer->Add($self->{inputBox} = new Interface::Wx::Input($self), 1, wxGROW);
+	$sizer->Add($self->{inputBox} = new Interface::Wx::Base::Input($self), 1, wxGROW);
 	
 	$self->{inputBox}->onEnter($self, \&onInputEnter);
 	

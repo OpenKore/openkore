@@ -1,7 +1,7 @@
-package Interface::Wx::StatView::Mercenary;
+package Interface::Wx::Window::Mercenary;
 
 use strict;
-use base 'Interface::Wx::StatView';
+use base 'Interface::Wx::Base::StatView';
 
 use Globals qw/$char %jobs_lut $conState/;
 use Utils qw/getFormattedDate/;

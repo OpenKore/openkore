@@ -1,7 +1,7 @@
-package Interface::Wx::List::ItemList::Inventory;
+package Interface::Wx::Window::Inventory;
 
 use strict;
-use base 'Interface::Wx::List::ItemList';
+use base 'Interface::Wx::Base::ItemList';
 
 use Globals qw/$char %cart %storage %equipTypes_lut/;
 
