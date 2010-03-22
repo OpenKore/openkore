@@ -17,7 +17,7 @@ sub new {
 	
 	my $self = $class->SUPER::new ($parent, $id);
 	
-	$self->{bitmapDir} = 'bitmaps/emotions/';
+	$self->{bitmapDir} = 'bitmaps/emotion/';
 	
 	Scalar::Util::weaken(my $weak = $self);
 
@@ -89,7 +89,7 @@ sub _createButtons {
 					$self, wxID_ANY, $self->{emotions}{$e}{command}, wxDefaultPosition, [BUTTON_SIZE, BUTTON_SIZE]
 				);
 			}
-			$button->SetToolTip ($self->{emotions}{$e}{display});
+			$button->SetToolTip (sprintf '%s: %s', $self->{emotions}{$e}{command}, $self->{emotions}{$e}{display});
 			{
 				my $cmd = $self->{emotions}{$e}{command};
 				EVT_BUTTON ($self, $button->GetId, sub {$self->_onEmotion ($cmd)});
