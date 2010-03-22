@@ -1,7 +1,7 @@
-package Interface::Wx::StatView::Exp;
+package Interface::Wx::Window::Exp;
 
 use strict;
-use base 'Interface::Wx::StatView';
+use base 'Interface::Wx::Base::StatView';
 
 use Globals qw/$char $conState $startTime_EXP $startingzeny $totalBaseExp $totalJobExp $bytesSent $bytesReceived/;
 use Translation qw/T TF/;

@@ -100,42 +100,42 @@ sub new {
 		{},
 		{
 			key => 'toggleWindow_character', title => T('Character'), type => 'check',
-			sub => sub { $self->{frame}->toggleWindow('character', T('Character'), 'Interface::Wx::StatView::You', 'right') },
+			sub => sub { $self->{frame}->toggleWindow('character', T('Character'), 'Interface::Wx::Window::You', 'right') },
 		},
 		{
 			key => 'toggleWindow_homunculus', title => T('Homunculus'), type => 'check',
-			sub => sub { $self->{frame}->toggleWindow('homunculus', T('Homunculus'), 'Interface::Wx::StatView::Homunculus', 'right') },
+			sub => sub { $self->{frame}->toggleWindow('homunculus', T('Homunculus'), 'Interface::Wx::Window::Homunculus', 'right') },
 		},
 		{
 			key => 'toggleWindow_mercenary', title => T('Mercenary'), type => 'check',
-			sub => sub { $self->{frame}->toggleWindow('mercenary', T('Mercenary'), 'Interface::Wx::StatView::Mercenary', 'right') },
+			sub => sub { $self->{frame}->toggleWindow('mercenary', T('Mercenary'), 'Interface::Wx::Window::Mercenary', 'right') },
 		},
 		{
 			key => 'toggleWindow_pet', title => T('Pet'), type => 'check',
-			sub => sub { $self->{frame}->toggleWindow('pet', T('Pet'), 'Interface::Wx::StatView::Pet', 'right') },
+			sub => sub { $self->{frame}->toggleWindow('pet', T('Pet'), 'Interface::Wx::Window::Pet', 'right') },
 		},
 		{},
 		{
 			key => 'toggleWindow_inventory', title => T('Inventory'), type => 'check',
-			sub => sub { $self->{frame}->toggleWindow('inventory', T('Inventory'), 'Interface::Wx::List::ItemList::Inventory', 'right') },
+			sub => sub { $self->{frame}->toggleWindow('inventory', T('Inventory'), 'Interface::Wx::Window::Inventory', 'right') },
 		},
 		{
 			key => 'toggleWindow_cart', title => T('Cart'), type => 'check',
-			sub => sub { $self->{frame}->toggleWindow('cart', T('Cart'), 'Interface::Wx::List::ItemList::Cart', 'right') },
+			sub => sub { $self->{frame}->toggleWindow('cart', T('Cart'), 'Interface::Wx::Window::Cart', 'right') },
 		},
 		{
 			key => 'toggleWindow_storage', title => T('Storage'), type => 'check',
-			sub => sub { $self->{frame}->toggleWindow('storage', T('Storage'), 'Interface::Wx::List::ItemList::Storage', 'right') },
+			sub => sub { $self->{frame}->toggleWindow('storage', T('Storage'), 'Interface::Wx::Window::Storage', 'right') },
 		},
 		{},
 		{
 			key => 'toggleWindow_emotion', title => T('Emotions'), type => 'check',
-			sub => sub { $self->{frame}->toggleWindow('emotion', T('Emotions'), 'Interface::Wx::EmotionList', 'right') },
+			sub => sub { $self->{frame}->toggleWindow('emotion', T('Emotions'), 'Interface::Wx::Window::Emotion', 'right') },
 		},
 		{},
 		{
 			key => 'toggleWindow_exp', title => T('Experience report'), type => 'check',
-			sub => sub { $self->{frame}->toggleWindow('exp', T('Experience report'), 'Interface::Wx::StatView::Exp', 'right') },
+			sub => sub { $self->{frame}->toggleWindow('exp', T('Experience report'), 'Interface::Wx::Window::Exp', 'right') },
 		},
 	], 'view'), T('&View'));
 	

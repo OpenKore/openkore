@@ -43,8 +43,7 @@ use Interface::Wx::MainMenu;
 use Interface::Wx::Window::Input;
 use Interface::Wx::Window::Console;
 use Interface::Wx::Window::ChatLog;
-use Interface::Wx::Console;
-use Interface::Wx::StatView::Exp;
+use Interface::Wx::Window::Exp;
 
 use AI;
 use Settings qw(%sys);
@@ -103,7 +102,7 @@ sub new {
 	
 	$self->toggleWindow('console', T('Console'), 'Interface::Wx::Window::Console', 'notebook');
 	$self->toggleWindow('chatLog', T('Chat log'), 'Interface::Wx::Window::ChatLog', 'notebook');
-	$self->toggleWindow('exp', T('Experience report'), 'Interface::Wx::StatView::Exp', 'right');
+	$self->toggleWindow('exp', T('Experience report'), 'Interface::Wx::Window::Exp', 'right');
 	
 	$self->{aui}->Update;
 	

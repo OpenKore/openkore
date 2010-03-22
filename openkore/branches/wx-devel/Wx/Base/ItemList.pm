@@ -1,7 +1,7 @@
-package Interface::Wx::List::ItemList;
+package Interface::Wx::Base::ItemList;
 
 use strict;
-use base 'Interface::Wx::List';
+use base 'Interface::Wx::Base::List';
 
 use Wx ':everything';
 

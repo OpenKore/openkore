@@ -22,7 +22,7 @@
 #  $Id$
 #
 #########################################################################
-package Interface::Wx::LogView;
+package Interface::Wx::Base::LogView;
 
 use strict;
 use Wx ':everything';

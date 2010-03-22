@@ -1,7 +1,7 @@
-package Interface::Wx::StatView::Pet;
+package Interface::Wx::Window::Pet;
 
 use strict;
-use base 'Interface::Wx::StatView';
+use base 'Interface::Wx::Base::StatView';
 
 use Globals qw/$char %pet %jobs_lut $conState/;
 use Misc qw/itemNameSimple monsterName/;

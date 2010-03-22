@@ -1,10 +1,9 @@
-package Interface::Wx::ConfigEditor;
+package Interface::Wx::Base::ConfigEditor;
 
 use strict;
 use Wx ':everything';
 use Wx::Event qw(EVT_LISTBOX);
 use base qw(Wx::Panel);
-use Interface::Wx::ConfigEditor;
 use encoding 'utf8';
 
 

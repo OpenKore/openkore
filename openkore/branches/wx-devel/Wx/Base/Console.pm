@@ -24,7 +24,7 @@
 #
 # This control emulates a console, similar to xterm/gnome-terminal/the DOS box.
 # It supports automatic scrolling, colored text, and a bounded scrollback buffer.
-package Interface::Wx::Console;
+package Interface::Wx::Base::Console;
 
 use strict;
 use Wx ':everything';

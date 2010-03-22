@@ -5,7 +5,7 @@ use Wx ':everything';
 use Wx::Event ':everything';
 use base 'Wx::Panel';
 
-use Interface::Wx::ConfigEditor;
+use Interface::Wx::Base::ConfigEditor;
 
 use Globals qw/%config/;
 use Misc qw/configModify/;
@@ -19,7 +19,7 @@ sub new {
 	my $vsizer = new Wx::BoxSizer(wxVERTICAL);
 	$self->SetSizer($vsizer);
 
-	my $cfg = new Interface::Wx::ConfigEditor($self, wxID_ANY);
+	my $cfg = new Interface::Wx::Base::ConfigEditor($self, wxID_ANY);
 	$cfg->setConfig(\%config);
 	$cfg->addCategory('All', 'Grid');
 	$cfg->addCategory('server', 'Grid', ['master', 'server', 'username', 'password', 'char', 'serverType']);

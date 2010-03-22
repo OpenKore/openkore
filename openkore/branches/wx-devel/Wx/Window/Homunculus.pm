@@ -1,7 +1,7 @@
-package Interface::Wx::StatView::Homunculus;
+package Interface::Wx::Window::Homunculus;
 
 use strict;
-use base 'Interface::Wx::StatView';
+use base 'Interface::Wx::Base::StatView';
 
 use Globals qw/$char %jobs_lut $conState/;
 
