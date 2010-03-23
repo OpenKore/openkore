@@ -57,7 +57,7 @@ sub DESTROY {
 sub _onSize {
 	my ($self) = @_;
 	
-	my $cols = int + ($self->GetSize->GetWidth + BUTTON_BORDER) / (BUTTON_SIZE + BUTTON_BORDER);
+	my $cols = int (($self->GetSize->GetWidth + BUTTON_BORDER) / (BUTTON_SIZE + BUTTON_BORDER));
 	
 	unless (defined $self->{cols} && $self->{cols} == $cols) {
 		$self->{grid}->SetCols ($self->{cols} = $cols);

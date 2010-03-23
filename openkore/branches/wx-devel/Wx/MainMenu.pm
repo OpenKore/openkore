@@ -129,6 +129,11 @@ sub new {
 		},
 		{},
 		{
+			key => 'toggleWindow_skills', title => T('Skills'), type => 'check',
+			sub => sub { $self->{frame}->toggleWindow('skills', T('Skills'), 'Interface::Wx::Window::Skills', 'right') },
+		},
+		{},
+		{
 			key => 'toggleWindow_emotion', title => T('Emotions'), type => 'check',
 			sub => sub { $self->{frame}->toggleWindow('emotion', T('Emotions'), 'Interface::Wx::Window::Emotion', 'right') },
 		},
