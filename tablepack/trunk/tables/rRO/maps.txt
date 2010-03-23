@@ -667,6 +667,7 @@ que_qaru02.rsw#Окольнир #
 que_qaru03.rsw#Окольнир #
 que_qaru04.rsw#Окольнир #
 que_qaru05.rsw#Окольнир #
+que_ba.rsw#Непонятное место#
 cave.rsw#Пещерная деревня #
 moc_fild20.rsw#Разлом Пространства #
 moc_fild21.rsw#Разлом Пространства #
