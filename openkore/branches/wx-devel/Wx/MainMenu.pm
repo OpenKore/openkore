@@ -6,7 +6,7 @@ use Wx::Event ':everything';
 
 use FindBin qw($RealBin);
 
-use Globals qw/$AI $conState $char/;
+use Globals qw/$AI $conState $char @chars %jobs_lut/;
 use Misc qw/configModify launchURL/;
 use Translation qw/T TF/;
 
@@ -52,11 +52,9 @@ sub new {
 			help => T('Disconnect and reconnect'),
 		},
 		{
-			title => T('&Character Select'), key => 'charselect', sub => sub {
-				configModify('char', undef, 1);
-				Commands::run('charselect');
-			},
-			help => T('Exit to the character selection screen'),
+			title => T('&Character Select'), key => 'charselect', submenu => [[
+				{title => T('Exit to the character selection screen'), command => 'conf char none;;charselect'},
+			], 'charselect'],
 		},
 		{},
 		{
@@ -206,13 +204,14 @@ sub onAddMenuItem {
 	}
 	
 	$menu->Append(my $item = new Wx::MenuItem(undef, wxID_ANY, $args->{title}, $args->{help},
-		$args->{type} eq 'check' ? wxITEM_CHECK : $args->{type} eq 'radio' ? wxITEM_RADIO : wxITEM_NORMAL
+		$args->{type} eq 'check' ? wxITEM_CHECK : $args->{type} eq 'radio' ? wxITEM_RADIO : wxITEM_NORMAL,
+		$args->{submenu} ? $self->createMenu(@{$args->{submenu}}) : undef
 	));
-	EVT_MENU($self->{frame}, $item->GetId,
-		$args->{command} ? sub { Commands::run($args->{command}) }
-		: $args->{sub} ? $args->{sub}
-		: sub {}
-	);
+	if ($args->{command}) {
+		EVT_MENU($self->{frame}, $item->GetId, sub { Commands::run($args->{command}) });
+	} elsif ($args->{sub}) {
+		EVT_MENU($self->{frame}, $item->GetId, $args->{sub});
+	}
 	
 	$self->{items}{$args->{key}} = $item if $args->{key};
 }
@@ -232,7 +231,14 @@ sub onMenuOpen {
 	my ($self) = @_;
 	
 	$self->{items}{"ai_$_"}->Check($AI == $_) for (0 .. 2);
-	$self->{items}{charselect}->Enable($conState == Network::IN_GAME);
+	
+	onRemoveMenuItem(undef, {key => $_}, $self)
+	for grep /^charselect_/, keys %{$self->{items}};
+	
+	onAddMenuItem(undef, {key => "charselect_$_", title => (
+		sprintf '%d: %s %d/%d %s', $_, $chars[$_]{name}, $chars[$_]{lv}, $chars[$_]{lv_job}, $jobs_lut{$chars[$_]{jobID}}
+	), command => "conf char $_;;charselect", menu => 'charselect'}, $self)
+	for grep {$chars[$_]} (0 .. @chars-1);
 	
 	$self->{items}{"toggleWindow_$_"}->Check(!!$self->{frame}{windows}{$_})
 	for map /^toggleWindow_(.+)$/, keys %{$self->{items}};
