@@ -70,6 +70,8 @@ sub _onRightClick {
 	
 	return unless scalar (my @selection = $self->getSelection);
 	
+	Scalar::Util::weaken(my $weak = $self);
+	
 	my $title;
 	if (@selection > 3) {
 		my $total = 0;
@@ -86,8 +88,8 @@ sub _onRightClick {
 	
 	my ($canStorage) = (%storage && $storage{opened});
 	
-	push @menu, {title => 'Move to inventory' . "\tDblClick", callback => sub { $self->_onActivate; }};
-	push @menu, {title => 'Move to storage', callback => sub { $self->_onStorage; }} if $canStorage;
+	push @menu, {title => 'Move to inventory' . "\tDblClick", callback => sub { $weak->_onActivate }};
+	push @menu, {title => 'Move to storage', callback => sub { $weak->_onStorage }} if $canStorage;
 	
 	$self->contextMenu (\@menu);
 }

@@ -2877,6 +2877,7 @@ sub guild_member_setting_list {
 	}
 }
 
+# TODO: merge with skills_list?
 sub guild_skills_list {
 	my ($self, $args) = @_;
 	my $msg = $args->{RAW_MSG};
@@ -5714,6 +5715,7 @@ sub skills_list {
 	
 	my $skillsIDref = $slave ? \@{$slave->{slave_skillsID}} : \@skillsID;
 	
+	# TODO: $slave can be undefined here
 	undef @{$slave->{slave_skillsID}};
 	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 37) {
 		my ($skillID, $targetType, $level, $sp, $range, $handle, $up)

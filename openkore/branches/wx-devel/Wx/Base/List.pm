@@ -30,14 +30,16 @@ sub new {
 			$self->{statusSizer}->Add (my $sizer2 = new Wx::BoxSizer (wxVERTICAL), 1, wxGROW);
 			$sizer2->Add (my $sizer3 = new Wx::BoxSizer (wxHORIZONTAL), 0, wxGROW);
 			$sizer3->Add (my $label = new Wx::StaticText ($self, wxID_ANY, $stat->{title}), 0, wxGROW);
-			$sizer3->Add ($self->{stats}{$stat->{key}}{displayGauge} = new Wx::Gauge (
-				$self, wxID_ANY, $stat->{max} || 100, wxDefaultPosition, [0, $label->GetBestSize->GetHeight + 2],
-				wxHORIZONTAL | wxGA_SMOOTH
-			), 1, wxGROW | wxLEFT, BORDER);
-			$sizer2->Add (my $sizer4 = new Wx::BoxSizer (wxHORIZONTAL), 0, wxGROW | wxTOP, BORDER);
-			$sizer4->Add ($self->{stats}{$stat->{key}}{displayValue} = new Wx::StaticText ($self, wxID_ANY, ''), 1, wxGROW);
-			#$sizer4->Add (new Wx::StaticText ($self, wxID_ANY, '/'), 0, wxGROW | wxLEFT | wxRIGHT, BORDER);
-			#$sizer4->Add ($self->{stats}{$stat->{key}}{displayMax} = new Wx::StaticText ($self, wxID_ANY, $stat->{max}), 1, wxGROW);
+			if ($stat->{max}) {
+				$sizer3->Add ($self->{stats}{$stat->{key}}{displayGauge} = new Wx::Gauge (
+					$self, wxID_ANY, $stat->{max} || 100, wxDefaultPosition, [0, $label->GetBestSize->GetHeight + 2],
+					wxHORIZONTAL | wxGA_SMOOTH
+				), 1, wxGROW | wxLEFT, BORDER);
+				$sizer2->Add (my $sizer4 = new Wx::BoxSizer (wxHORIZONTAL), 0, wxGROW | wxTOP, BORDER);
+				$sizer4->Add ($self->{stats}{$stat->{key}}{displayValue} = new Wx::StaticText ($self, wxID_ANY, ''), 1, wxGROW);
+			} else {
+				$sizer3->Add ($self->{stats}{$stat->{key}}{displayValue} = new Wx::StaticText ($self, wxID_ANY, ''), 1, wxGROW, BORDER);
+			}
 		}
 	}
 	
@@ -51,14 +53,34 @@ sub new {
 	return $self;	
 }
 
+sub setItem {
+	my ($self, $index, $cols) = @_;
+	
+	if ($cols) {
+		my $i;
+		if (-1 == ($i = $self->{list}->FindItemData (-1, $index))) {
+			(my $listItem = new Wx::ListItem)->SetData ($index);
+			$i = $self->{list}->InsertItem ($listItem);
+		}
+		
+		$self->{list}->SetItem($i, $_, $cols->[$_]) for 0 .. @$cols-1;
+	} else {
+		$self->{list}->DeleteItem ($self->{list}->FindItemData (-1, $index));
+	}
+}
+
 sub setStat {
 	my ($self, $key, $value, $max) = @_;
 	
 	return unless $self->{stats}{$key};
 	
-	$self->{stats}{$key}{displayGauge}->SetRange ($max);
-	$self->{stats}{$key}{displayGauge}->SetValue ($value);
-	$self->{stats}{$key}{displayValue}->SetLabel ($value . ' / ' . $max);
+	if ($self->{stats}{$key}{displayGauge}) {
+		$self->{stats}{$key}{displayGauge}->SetRange ($max);
+		$self->{stats}{$key}{displayGauge}->SetValue ($value);
+		$self->{stats}{$key}{displayValue}->SetLabel ($value . ' / ' . $max);
+	} else {
+		$self->{stats}{$key}{displayValue}->SetLabel ($value);
+	}
 }
 
 sub contextMenu {

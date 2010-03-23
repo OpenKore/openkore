@@ -16,18 +16,17 @@ sub new {
 	my $self = $class->SUPER::new ($parent, $id, @_);
 	
 	$self->{list}->InsertColumn(0, do {
-		$_ = Wx::ListItem->new;
+		local $_ = Wx::ListItem->new;
 		$_->SetAlign(wxLIST_FORMAT_RIGHT);
 		$_->SetWidth(26);
 	$_ });
 	$self->{list}->InsertColumn(1, do {
-		$_ = Wx::ListItem->new;
+		local $_ = Wx::ListItem->new;
 		$_->SetAlign(wxLIST_FORMAT_RIGHT);
 		$_->SetWidth(50);
 	$_ });
 	$self->{list}->InsertColumn(2, do {
-		$_ = Wx::ListItem->new;
-		#$_->SetWidth(wxLIST_AUTOSIZE);
+		local $_ = Wx::ListItem->new;
 		$_->SetWidth(150);
 	$_ });
 	
@@ -38,22 +37,17 @@ sub setItem {
 	my ($self, $index, $item) = @_;
 	
 	if ($item && $item->{amount}) {
-		my $i;
-		if (-1 == ($i = $self->{list}->FindItemData (-1, $index))) {
-		 	my $listItem = new Wx::ListItem;
-		 	$listItem->SetData ($index);
-			$i = $self->{list}->InsertItem ($listItem);
-		}
-		
-		$self->{list}->SetItemText ($i, $index);
-		$self->{list}->SetItem ($i, 1, $item->{amount});
-		$self->{list}->SetItem ($i, 2,
+		$self->SUPER::setItem($index, [
+			$index,
+			$item->{amount},
 			$item->{name}
-			. ($item->{equipped} ? ($equipTypes_lut{$item->{equipped}} ? ' ('.$equipTypes_lut{$item->{equipped}}.')' : ' (Equipped)') : '')
+			. ($item->{equipped} ? (
+				$equipTypes_lut{$item->{equipped}} ? ' ('.$equipTypes_lut{$item->{equipped}}.')' : ' (Equipped)'
+			) : '')
 			. ($item->{identified} ? '' : ' (Not identified)')
-		);
+		]);
 	} else {
-		$self->{list}->DeleteItem ($self->{list}->FindItemData (-1, $index));
+		$self->SUPER::setItem($index);
 	}
 }
 
@@ -97,7 +91,7 @@ sub contextMenu {
 		
 		if ($shop{items} and ($control) = grep {$_->{name} eq $item->{name}} @{$shop{items}}) {
 			push @$items, {}, {title => $control->{amount}
-				? TF('Vend %d for %s', $control->{amount}, formatNumber($control->{price}))
+				? TF('Vend %s for %s', formatNumber($control->{amount}), formatNumber($control->{price}))
 				: TF('Vend for %s', formatNumber($control->{price}))
 			};
 		}

@@ -126,6 +126,8 @@ sub _onRightClick {
 	
 	return unless scalar (my @selection = $self->getSelection);
 	
+	Scalar::Util::weaken(my $weak = $self);
+	
 	my $title;
 	if (@selection > 3) {
 		my $total = 0;
@@ -161,15 +163,15 @@ sub _onRightClick {
 			$canActivate = 'Start card merging';
 		}
 		
-		push @menu, {title => $canActivate . "\tDblClick", callback => sub { $self->_onActivate; }} if $canActivate;
-		push @menu, {title => 'Drop 1', callback => sub { $self->_onDropOne; }} if $canDrop;
+		push @menu, {title => $canActivate . "\tDblClick", callback => sub { $weak->_onActivate }} if $canActivate;
+		push @menu, {title => 'Drop 1', callback => sub { $weak->_onDropOne }} if $canDrop;
 	} else {
 		#
 	}
 	
-	push @menu, {title => 'Move to cart', callback => sub { $self->_onCart; }} if $canCart;
-	push @menu, {title => 'Move to storage', callback => sub { $self->_onStorage; }} if $canStorage;
-	push @menu, {title => 'Sell', callback => sub { $self->_onSell; }};
+	push @menu, {title => 'Move to cart', callback => sub { $weak->_onCart }} if $canCart;
+	push @menu, {title => 'Move to storage', callback => sub { $weak->_onStorage }} if $canStorage;
+	push @menu, {title => 'Sell', callback => sub { $weak->_onSell }};
 	
 	$self->contextMenu (\@menu);
 }
