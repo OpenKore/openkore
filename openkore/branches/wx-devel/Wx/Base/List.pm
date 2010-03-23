@@ -64,24 +64,41 @@ sub setStat {
 sub contextMenu {
 	my ($self, $items) = @_;
 	
-	my $menu;
+	my $menu = $self->createMenu($items);
 	
-	if (@$items) {
-		my $item = shift @$items;
-		$menu = new Wx::Menu ($item->{title});
-	} else {
-		$menu = new Wx::Menu;
-	}
+	$self->PopupMenu ($menu, wxDefaultPosition);
+}
+
+sub createMenu {
+	my ($self, $items) = @_;
+	
+	my $menu = new Wx::Menu;
 	
 	if (@$items) {
 		foreach (@$items) {
-			EVT_MENU ($menu, $menu->Append (wxID_ANY, $_->{title})->GetId, $_->{callback});
+			if (scalar %$_) {
+				$menu->Append(
+					my $item = new Wx::MenuItem(
+						undef, wxID_ANY, $_->{title}, undef,
+						exists $_->{check} ? wxITEM_CHECK : exists $_->{radio} ? wxITEM_RADIO : wxITEM_NORMAL,
+						$_->{menu} ? $self->createMenu($_->{menu}) : undef,
+					)
+				);
+				$item->Check(1) if $_->{check} || $_->{radio};
+				if ($_->{callback}) {
+					EVT_MENU ($menu, $item->GetId, $_->{callback});
+				} elsif (!$_->{menu}) {
+					$item->Enable(0);
+				}
+			} else {
+				$menu->AppendSeparator;
+			}
 		}
 	} else {
 		$menu->Enable ($menu->Append (wxID_ANY, 'No actions')->GetId, 0);
 	}
 	
-	$self->PopupMenu ($menu, wxDefaultPosition);
+	return $menu;
 }
 
 sub _onSelectionChange {
