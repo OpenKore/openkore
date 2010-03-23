@@ -4034,9 +4034,14 @@ sub message_string {
 	} elsif ($args->{msg_id} == 0x04F5) {
 		message T("Your mercenary soldier has ran away.\n"), "info";
 		$self->mercenary_off ();
-								
+		
 	} elsif ($args->{msg_id} ==	0x054D) {
 		message T("View player equip request denied.\n"), "info";
+		
+	} elsif ($args->{msg_id} == 0x06AF) {
+		#  "Невозможно отправлять личные сообщения до 10 уровня."
+		message T("You need to be at least base level 10 to send private messages.\n"), "info";
+		
 	} else {
 		warning TF("msg_id: %s gave unknown results in: %s\n", $args->{msg_id}, $self->{packet_list}{$args->{switch}}->[0]);
 	}
@@ -5264,6 +5269,8 @@ sub shop_skill {
 	# Used the shop skill.
 	my $number = $args->{number};
 	message TF("You can sell %s items!\n", $number);
+	
+	# TODO: mark that skill cast has been successful
 }
 
 sub show_eq {
