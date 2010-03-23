@@ -82,12 +82,12 @@ sub _onRightClick {
 	$title .= '...';
 	
 	my @menu;
-	push @menu, {title => $title};
+	push @menu, {title => $title}, {};
 	
 	my ($canStorage) = (%storage && $storage{opened});
 	
-	push @menu, {title => 'Move all to inventory' . "\tDblClick", callback => sub { $self->_onActivate; }};
-	push @menu, {title => 'Move all to storage', callback => sub { $self->_onStorage; }} if $canStorage;
+	push @menu, {title => 'Move to inventory' . "\tDblClick", callback => sub { $self->_onActivate; }};
+	push @menu, {title => 'Move to storage', callback => sub { $self->_onStorage; }} if $canStorage;
 	
 	$self->contextMenu (\@menu);
 }

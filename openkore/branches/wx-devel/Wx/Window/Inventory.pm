@@ -138,7 +138,7 @@ sub _onRightClick {
 	$title .= '...';
 	
 	my @menu;
-	push @menu, {title => $title};
+	push @menu, {title => $title}, {};
 	
 	my ($canStorage, $canCart) = (%storage && $storage{opened}, %cart && $cart{exists});
 	
@@ -167,9 +167,9 @@ sub _onRightClick {
 		#
 	}
 	
-	push @menu, {title => 'Move all to cart', callback => sub { $self->_onCart; }} if $canCart;
-	push @menu, {title => 'Move all to storage', callback => sub { $self->_onStorage; }} if $canStorage;
-	push @menu, {title => 'Sell all', callback => sub { $self->_onSell; }};
+	push @menu, {title => 'Move to cart', callback => sub { $self->_onCart; }} if $canCart;
+	push @menu, {title => 'Move to storage', callback => sub { $self->_onStorage; }} if $canStorage;
+	push @menu, {title => 'Sell', callback => sub { $self->_onSell; }};
 	
 	$self->contextMenu (\@menu);
 }

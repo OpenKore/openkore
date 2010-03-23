@@ -82,12 +82,12 @@ sub _onRightClick {
 	$title .= '...';
 	
 	my @menu;
-	push @menu, {title => $title};
+	push @menu, {title => $title}, {};
 	
 	my ($canCart) = (%cart && $cart{exists});
 	
-	push @menu, {title => 'Move all to inventory' . "\tDblClick", callback => sub { $self->_onActivate; }};
-	push @menu, {title => 'Move all to cart', callback => sub { $self->_onCart; }} if $canCart;
+	push @menu, {title => 'Move to inventory' . "\tDblClick", callback => sub { $self->_onActivate; }};
+	push @menu, {title => 'Move to cart', callback => sub { $self->_onCart; }} if $canCart;
 	
 	$self->contextMenu (\@menu);
 }
