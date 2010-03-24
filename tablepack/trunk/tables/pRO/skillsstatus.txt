@@ -133,16 +133,16 @@
 132 Auto Berserk
 133 Sprint
 134 Ready Spurt
-135 Prepare Tornado Kick
+135 Tornado Stance
 136 Tornado Kick
-137 Prepare Heel Drop Kick
+137 Heel Drop Stance
 138 Heel Drop Kick
-139 Prepare Roundhouse Kick
+139 Roundhouse Stance
 140 Roundhouse Kick
-141 Prepare Counter Kick
+141 Counter Kick Stance
 142 Counter Kick
 143 Tumbling
-144 Flying Side Kick
+144 Flying Kick
 145 Spurt
 146 Dark Weapon
 147 Full Adrenaline Rush
@@ -245,9 +245,9 @@
 244 INT Food
 245 DEX Food
 246 LUK Food
-247 Honey Pastry
-248 Sesame Pastry
-249 FOODCRI
+247 Increase Flee
+248 Increase Hit
+249 Increase Crit
 250 Field Manual
 251 Life Insurance
 252 Bubble Gum
@@ -306,7 +306,7 @@
 305 STEAMPACK
 306 REUSE LIMIT B
 307 Field Manual Delay
-308 REUSE LIMIT D
+308 Bubble Gum Delay
 309 REUSE LIMIT E
 310 REUSE LIMIT F
 311 Invincible

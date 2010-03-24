@@ -32448,7 +32448,7 @@ Jobs : ^777777All Jobs^000000
 A hat which can get when they graduate the magician school with high grade.
 There's a saying that this hat can be a standard for distingusihing a elite magician.
 INT + 2, DEX + 2.
-Autocast Lv 1 Suffragium for yourself by low chance when cast magical attack.
+Autocast Lv 1 Assumptio for yourself by low chance when cast magical attack.
 Class : ^777777Headgear^000000    Def : ^7777773^000000
 Location : ^777777Upper^000000    Weight : ^77777750^000000
 Jobs : ^777777All Jobs^000000
@@ -32845,4 +32845,155 @@ Unlicensed medical service is against the law.
 Item Class : ^777777Headgear^000000 Defense : ^7777770^000000
 Location :  ^777777Upper^000000 Weight : ^7777770^000000
 Jobs : ^777777All Jobs^000000
+#
+//---------- 3ｿ・ﾃﾟﾃｵ ﾄｳｽｬﾅﾛ ---------------
+5656#
+An equipment for safe when you ride a scooter. It's too strong to be broken.
+Indestructible.
+Item Class : ^777777Headgear^000000 Defense : ^7777777^000000
+Location : ^777777Upper^000000 Weight : ^777777100^000000
+Required Level : ^77777750^000000
+Jobs : ^777777All Jobs^000000
+#
+5657#
+An antique pipe for making a perfect fashion of captain.
+When you have it with captain hat, long distance physical attack increases as the level of refinement of the pipe.
+Item Class : ^777777Headgear^000000    Defense : ^7777770^000000
+Location : ^777777Low^000000    Weight : ^77777710^000000
+Required Level : ^77777730^000000
+Jobs : ^777777All Jobs^000000
+#
+
+5547#
+A Katusa with a small and willowy flower.
+Earth spike, Heaven's drive damage + 15%, decrease 25% of changing cast time.
+1% of Heaven's drive damage, Earth spike damage increases whenever the number of refinement increases +1 .
+Item Class : ^777777Headgear^000000 Defense : ^7777771^000000
+Location : ^777777Upper^000000 Weight : ^77777720^000000
+Required Level : ^7777770^000000
+Jobs : ^777777All Jobs^000000
+#
+16228#
+A box contains 1 RJC Flower Katusa in it.
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+
+5549#
+A diadem that represents Taurus which is the second sign of Zodiac. An emerald, the birthstone, is embedded on it.
+When you are attcked physically, it stuns to enermy as regular probability.
+MATK + 2%, Decrease 2% delay after skill.
+Item Class : ^777777Headgear^000000 Defense : ^7777773^000000
+Location : ^777777Upper^000000 Weight : ^77777730^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All Jobs^000000
+#
+5550#
+A crown that represents Taurus which is the second sign of Zodiac. An emerald, the birthstone, is embedded on it.
+When you are attcked physically, it stuns to enermy as regular probability.
+ATK + 2%,  Decrease 2% delay after skill.
+When it's over 7 refine, adds STR + 1, ATK + 1%.
+Item Class : ^777777Headgear^000000 Defense : ^7777773^000000
+Location : ^777777Upper^000000 Weight : ^77777730^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All Jobs^000000
+#
+16230#
+A box contains 1 Taurus Diadem in it.
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+16231#
+A box contains 1 Taurus Crown in it.
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+
+
+13634#
+It says "One hour hunting will be enough for brave warriors!".
+2 Field Manual, 2 Steamed Tongue, 2 Steamed Scorpion, 15 LV10 Agil Scroll, 15 LV10 Blessing Scroll, 1 Kafra Card and 1 Token Of Ziegfried will be dropped randomly.
+^ff0000This item is not refundable.^000000
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+
+13635#
+It says "One hour hunting will be enough for brave warriors!".
+2 Field Manual, 2 Steamed Tongue, 2 Stew Of Immortality, 15 LV10 Agil Scroll, 15 LV10 Blessing Scroll, 1 Kafra Card and 1 Token Of Ziegfried will be dropped randomly.
+^ff0000This item is not refundable.^000000
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+
+13636#
+It says "One hour hunting will be enough for brave warriors!".
+2 Field Manual, 2 Dragon Breath Cocktail, 2 Hwergelmir's Tonic, 15 LV10 Agil Scroll, 15 LV10 Blessing Scroll, 1 Kafra Card and 1 Token Of Ziegfried will be dropped randomly.
+^ff0000This item is not refundable.^000000
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+
+13637#
+It says "One hour hunting will be enough for brave warriors!".
+2 Field Manual, 2 Dragon Breath Cocktail, 2 Stew Of Immortality, 15 LV10 Agil Scroll, 15 LV10 Blessing Scroll, 1 Kafra Card and 1 Token Of Ziegfried will be dropped randomly.
+^ff0000This item is not refundable.^000000
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+
+13638#
+It says "One hour hunting will be enough for brave warriors!".
+2 Field Manual, 2 Dragon Breath Cocktail, 2 Steamed Tongue, 15 LV10 Agil Scroll, 15 LV10 Blessing Scroll, 1 Kafra Card and 1 Token Of Ziegfried will be dropped randomly.
+^ff0000This item is not refundable.^000000
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+
+13640#
+It says "2 hours hunting will be enough for brave warriors!".
+4 Field Manual, 4 Steamed Tongue, 4 Steamed Scorpion, 30 LV10 Agil Scroll, 30 LV10 Blessing Scroll, 2 Kafra Card and 2 Token Of Ziegfried will be dropped randomly.
+^ff0000This item is not refundable.^000000
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+
+13641#
+It says "2 hours hunting will be enough for brave warriors!".
+4 Field Manual, 4 Steamed Tongue, 4 Stew Of Immortality, 30 LV10 Agil Scroll, 30 LV10 Blessing Scroll, 2 Kafra Card and 2 Token Of Ziegfried will be dropped randomly.
+^ff0000This item is not refundable.^000000
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+
+13642#
+It says "2 hours hunting will be enough for brave warriors!".
+4 Field Manual, 4 Dragon Breath Cocktail, 4 Hwergelmir's Tonic, 30 LV10 Agil Scroll, 30 LV10 Blessing Scroll, 2 Kafra Card and 2 Token Of Ziegfried will be dropped randomly.
+^ff0000This item is not refundable.^000000
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+
+13643#
+It says "2 hours hunting will be enough for brave warriors!".
+4 Field Manual, 4 Dragon Breath Cocktail, 4 Stew Of Immortality, 30 LV10 Agil Scroll, 30 LV10 Blessing Scroll, 2 Kafra Card and 2 Token Of Ziegfried will be dropped randomly.
+^ff0000This item is not refundable.^000000
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+
+13644#
+It says "2 hours hunting will be enough for brave warriors!".
+4 Field Manual, 4 Dragon Breath Cocktail, 4 Steamed Tongue, 30 LV10 Agil Scroll, 30 LV10 Blessing Scroll, 2 Kafra Card and 2 Token Of Ziegfried will be dropped randomly.
+^ff0000This item is not refundable.^000000
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+
+13645#
+It says "2 hours hunting will be enough for brave warriors!".
+4 Field Manual, 4 Steamed Scorpion, 4 Steamed Tongue, 48 LV5 Adrenaline Scroll, 40 LV5 Aspersio Scroll, 2 Kafra Card and 2 Token Of Ziegfried will be dropped randomly.
+^ff0000This item is not refundable.^000000
+^ffffff_^000000
+Weight : ^7777771^000000
 #
