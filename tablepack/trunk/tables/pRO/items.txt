@@ -4369,7 +4369,7 @@
 14307#RWC_Limited_Scroll#
 14308#Ardor_Scroll#
 // ------------ 2008 ｴ・ｸ 11ｿ・ｽｺﾅｩｷﾑ -----------
-14363#Happy_Valentines_Scroll#
+14363#Heart_Scroll#
 14298#New_Year_Scroll#
 // ---------- ｴ・ｸｹﾟｷｻﾅｸﾀﾎ ｽｺﾅｩｷﾑ -------------
 13941#Valentine_Scroll#
@@ -4746,5 +4746,25 @@
 //------2010 ｸｸｿ・---------
 5848#Robin_Eyepatch#
 5849#Doctor_Hairband#
+//---------- 3ｿ・ﾃﾟﾃｵ ﾄｳｽｬﾅﾛ ---------------
+5656#Scooter_Helmet#
+5657#Captain_Pipe#
+5547#RJC_Flower_Katusa#
+16228#RJC_Flower_Katusa_Box#
+5549#Taurus_Diadem#
+5550#Taurus_Crown#
+16230#Taurus_Diadem_Box#
+16231#Taurus_Crown_Box#
+13634#Vigorgra_Package_Vol_1#
+13635#Vigorgra_Package_Vol_2#
+13636#Vigorgra_Package_Vol_3#
+13637#Vigorgra_Package_Vol_4#
+13638#Vigorgra_Package_Vol_5#
+13640#Vigorgra_Package_Vol_7#
+13641#Vigorgra_Package_Vol_8#
+13642#Vigorgra_Package_Vol_9#
+13643#Vigorgra_Package_Vol_10#
+13644#Vigorgra_Package_Vol_11#
+13645#Vigorgra_Package_Vol_12#
 
 //file end

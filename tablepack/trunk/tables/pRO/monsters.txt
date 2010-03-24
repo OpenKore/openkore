@@ -1,4 +1,4 @@
-1001 Scorpion
+﻿1001 Scorpion
 1002 Poring
 1004 Hornet
 1005 Familiar
@@ -273,6 +273,7 @@
 1379 Nightmare Terror
 1380 Driller
 1381 Grizzly
+1382 Diabolic
 1383 Explosion
 1384 Sky Deleter
 1385 Earth Deleter
@@ -425,8 +426,8 @@
 1782 Roween
 1783 Galion
 1784 Stapo
-1791 Galion Mob
 1789 Iceicle
+1791 Galion Mob
 1794 Roween Mob
 1815 Hot Rice cake
 1829 Sword Guardian
@@ -454,4 +455,16 @@
 1920 Incarnation of Morocc Human
 1921 Incarnation of Morocc Ghost
 1966 Doppelganger
+1985 Dandelion Member
+1986 Tatacho
+1987 Centipede
+1988 Nepnethes
+1989 Hillsrion
+1991 Tendrilrion
+1992 Cornus#alba03
+1993 Naga
+1994 Luciola Vespa
+1995 Pinguicula
+1999 Centipede Larva
+2024 Bradium Golem
 2057 Sticky Rat

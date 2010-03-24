@@ -4312,3 +4312,12 @@ Go and talk to botanist#
 2208#Ghost of Restroom#SG_FEEL#QUE_NOIMAGE#
 Let's go and seek the Ghost of restroom with spcial spell that Fedro told you.#
 Summon the Ghost of restroom in museum#
+
+//-----게펜 데일리 3종 퀘스트(버그수정) --------
+9070#Gloria's Study#SG_FEEL#QUE_NOIMAGE#
+You have to refine ^006400Ordinary Armor^000000 by using ^0000FFNew refining machine^000000 up to ^0000FF+5 level^000000 or above. Bring refined Armor to ^0000FFGloria^000000 in ^8B4513Geffen^000000.#
+Refine ^0000FFGloria's^000000 ^006400Ordinary Armor^000000 up to ^0000FF+5 level^000000.#
+
+9071#Gloria's Study: Present#SG_FEEL#QUE_NOIMAGE#
+I have completed helping Gloria for today.Need to wait till 20 hours have passed.#
+Come back 20 hours later.#
