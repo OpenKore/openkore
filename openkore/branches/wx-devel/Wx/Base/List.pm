@@ -54,7 +54,9 @@ sub new {
 }
 
 sub setItem {
-	my ($self, $index, $cols) = @_;
+	my ($self, $index, $cols, $color) = @_;
+	
+	$self->Freeze;
 	
 	if ($cols) {
 		my $i;
@@ -64,9 +66,12 @@ sub setItem {
 		}
 		
 		$self->{list}->SetItem($i, $_, $cols->[$_]) for 0 .. @$cols-1;
+		$self->{list}->SetItemTextColour($i, $color) if $color && $color->isa('Wx::Colour');
 	} else {
 		$self->{list}->DeleteItem ($self->{list}->FindItemData (-1, $index));
 	}
+	
+	$self->Thaw;
 }
 
 sub setStat {

@@ -1,6 +1,9 @@
 package Interface::Wx::Window::Console;
 use strict;
 
+use Wx ':everything';
+use Wx::Event ':everything';
+
 use base 'Interface::Wx::Base::Console';
 
 use Translation qw/T TF/;
@@ -32,6 +35,7 @@ sub new {
 	});
 	
 	Plugins::callHook('interface/addMenuItem', {
+		wxID => wxID_CLEAR,
 		key => 'console_clear',
 		menu => 'view',
 		title => T('Clear Console'), help => T('Clear content of console'),

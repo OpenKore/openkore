@@ -6,7 +6,7 @@ use Wx::Event ':everything';
 
 use FindBin qw($RealBin);
 
-use Globals qw/$AI $conState $char @chars %jobs_lut/;
+use Globals qw/$AI $conState $char @chars %jobs_lut %config/;
 use Misc qw/configModify launchURL/;
 use Translation qw/T TF/;
 
@@ -52,15 +52,10 @@ sub new {
 			help => T('Disconnect and reconnect'),
 		},
 		{
-			title => T('&Character Select'), key => 'charselect', submenu => [[
-				{title => T('Exit to the character selection screen'), command => 'conf char none;;charselect'},
-			], 'charselect'],
+			title => T('&Character Select'), key => 'charselect', submenu => [[], 'charselect'],
 		},
 		{},
-		{
-			title => T('E&xit'), command => 'quit',
-			help => T('Exit this program'),
-		},
+		{wxID => wxID_EXIT, command => 'quit'},
 	], 'program'), T('P&rogram'));
 	
 	$self->{menuBar}->Append($self->createMenu([
@@ -156,7 +151,7 @@ sub new {
 		{title => T('&Wiki'), sub => sub { launchURL('http://wiki.openkore.com/') }},
 		{title => T('&Forum'), sub => sub { launchURL('http://forums.openkore.com/') }, help => 'Visit the forum'},
 		{},
-		{title => T('&About'), sub => \&onAbout},
+		{wxID => wxID_ABOUT, sub => \&onAbout},
 	], 'help'), T('&Help'));
 	
 	EVT_MENU_OPEN($self->{frame}, sub { $self->onMenuOpen });
@@ -203,8 +198,8 @@ sub onAddMenuItem {
 		$menu = $menu->{menu};
 	}
 	
-	$menu->Append(my $item = new Wx::MenuItem(undef, wxID_ANY, $args->{title}, $args->{help},
-		$args->{type} eq 'check' ? wxITEM_CHECK : $args->{type} eq 'radio' ? wxITEM_RADIO : wxITEM_NORMAL,
+	$menu->Append(my $item = new Wx::MenuItem(undef, $args->{wxID} || wxID_ANY, $args->{title}, $args->{help},
+		$args->{type} eq 'check' ? wxITEM_CHECK : $args->{type} eq 'radio' ? wxITEM_RADIO : undef,
 		$args->{submenu} ? $self->createMenu(@{$args->{submenu}}) : undef
 	));
 	if ($args->{command}) {
@@ -230,22 +225,30 @@ sub onRemoveMenuItem {
 sub onMenuOpen {
 	my ($self) = @_;
 	
-	$self->{items}{"ai_$_"}->Check($AI == $_) for (0 .. 2);
+	$self->{items}{"ai_" . ($AI || 0)} && $self->{items}{"ai_" . ($AI || 0)}->Check(1);
+	
+	# Wx::MenuItem->SetSubMenu does not work
 	
 	onRemoveMenuItem(undef, {key => $_}, $self)
 	for grep /^charselect_/, keys %{$self->{items}};
 	
+	onAddMenuItem(undef, {key => "charselect_undef", title => T('Exit to the character selection screen'), command => 'conf char none;;charselect', type => 'radio', menu => $self->{menus}{charselect}{menu}}, $self);
 	onAddMenuItem(undef, {key => "charselect_$_", title => (
 		sprintf '%d: %s %d/%d %s', $_, $chars[$_]{name}, $chars[$_]{lv}, $chars[$_]{lv_job}, $jobs_lut{$chars[$_]{jobID}}
-	), command => "conf char $_;;charselect", menu => 'charselect'}, $self)
+	), command => "conf char $_;;charselect", type => 'radio', menu => $self->{menus}{charselect}{menu}}, $self)
 	for grep {$chars[$_]} (0 .. @chars-1);
+	
+	if (defined $config{char} && $self->{items}{"charselect_$config{char}"}) {
+		$self->{items}{"charselect_$config{char}"}->Check(1);
+	} else {
+		$self->{items}{charselect_undef}->Check(1);
+	}
 	
 	$self->{items}{"toggleWindow_$_"}->Check(!!$self->{frame}{windows}{$_})
 	for map /^toggleWindow_(.+)$/, keys %{$self->{items}};
 	
 =pod
 	$self->{infoBarToggle}->Check($self->{infoPanel}->IsShown);
-	$self->{chatLogToggle}->Check(defined $self->{notebook}->hasPage('Chat Log') ? 1 : 0);
 	
 	while (my ($setting, $menu) = each (%{$self->{mBooleanSetting}})) {
 		$menu->Check ($config{$setting} ? 1 : 0);
@@ -287,7 +290,23 @@ sub onAbout {
 		$_->SetDescription(T('Custom Ragnarok Online client'));
 		$_->SetCopyright(T('(C) OpenKore developers'));
 		$_->SetWebSite($Settings::WEBSITE);
-		$_->SetLicence('test');
+		
+=pod
+		$_->SetDevelopers([
+			'',
+			'',
+		]);
+		
+		$_->SetDocWriters([
+			'',
+			'',
+		]);
+		
+		$_->SetTranslators([
+			'',
+			'',
+		]);
+=cut
 		
 		if (-f (my $license = "$RealBin/LICENSE.TXT")) {
 			$_->SetLicense(do { open my $f, $license; local $/; <$f> });

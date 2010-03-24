@@ -93,10 +93,6 @@ sub _removeCallbacks {
 	delete $self->{ids}
 }
 
-sub isUsable { $_[-1]{type} <= 2 }
-sub isEquip { (0, 0, 0, 0, 1, 1, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1) [$_[-1]{type}] }
-sub isCard { $_[-1]{type} == 6 }
-
 sub getSelection { map { $char->inventory->get ($_) } @{$_[0]{selection}} }
 
 sub onInventoryListRemove { $_[0]->setItem ($_[2][1]) }

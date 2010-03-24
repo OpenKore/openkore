@@ -36,6 +36,15 @@ sub new {
 		$_->SetWidth(26);
 	$_ });
 	
+	$self->{color} = {
+		enemy => new Wx::Colour('FIREBRICK'),
+		location => new Wx::Colour('BLUE'),
+		self => new Wx::Colour('DARK GREEN'),
+		actors => new Wx::Colour('DARK GREEN'),
+		unavailable => new Wx::Colour('DARK GREY'),
+		other => new Wx::Colour('BLACK'),
+	};
+	
 	return $self;
 }
 
@@ -58,7 +67,14 @@ sub setItem {
 			$level,
 			$item->getName,
 			$target != Skill::TARGET_PASSIVE && $level && $item->getSP($level) || '',
-		]);
+		], (
+			!$level ? $self->{color}{unavailable}
+			: $target == Skill::TARGET_ENEMY ? $self->{color}{enemy}
+			: $target == Skill::TARGET_LOCATION ? $self->{color}{location}
+			: $target == Skill::TARGET_SELF ? $self->{color}{self}
+			: $target == Skill::TARGET_ACTORS ? $self->{color}{actors}
+			: $self->{color}{other}
+		));
 	} else {
 		$self->SUPER::setItem($index);
 	}

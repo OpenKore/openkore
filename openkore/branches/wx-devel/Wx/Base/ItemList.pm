@@ -30,8 +30,21 @@ sub new {
 		$_->SetWidth(150);
 	$_ });
 	
+	$self->{color} = {
+		usable => new Wx::Colour('DARK GREEN'),
+		equip => new Wx::Colour('FIREBRICK'),
+		card => new Wx::Colour('BLUE'),
+		notIdent => new Wx::Colour('DARK GREY'),
+		other => new Wx::Colour('BLACK'),
+	};
+	
 	return $self;
 }
+
+# TODO: move item type detection to Actor::Item?
+sub isUsable { $_[-1]{type} <= 2 }
+sub isEquip { (0, 0, 0, 0, 1, 1, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1) [$_[-1]{type}] }
+sub isCard { $_[-1]{type} == 6 }
 
 sub setItem {
 	my ($self, $index, $item) = @_;
@@ -45,7 +58,13 @@ sub setItem {
 				$equipTypes_lut{$item->{equipped}} ? ' ('.$equipTypes_lut{$item->{equipped}}.')' : ' (Equipped)'
 			) : '')
 			. ($item->{identified} ? '' : ' (Not identified)')
-		]);
+		], (
+			!$item->{identified} ? $self->{color}{notIdent}
+			: $self->isUsable($item) ? $self->{color}{usable}
+			: $self->isEquip($item) ? $self->{color}{equip}
+			: $self->isCard($item) ? $self->{color}{card}
+			: $self->{color}{other}
+		));
 	} else {
 		$self->SUPER::setItem($index);
 	}
@@ -73,7 +92,7 @@ sub contextMenu {
 		) {
 			my $value = join ' ', $item->{name},
 			map {$_ || 0} @{{%$control, @$_[0] => $control->{@$_[0]} ? 0 : 1}} {qw/keep storage sell cart_add cart_get/};
-			$value =~ s/\s+[ 0]*$//;
+			$value =~ s/\s+\S+\K\s+[ 0]*$//;
 			push @$items, {title => @$_[1], check => $control->{@$_[0]}, callback => sub { Commands::run("iconf $value") }};
 		}
 		

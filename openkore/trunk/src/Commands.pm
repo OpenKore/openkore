@@ -2794,6 +2794,7 @@ sub cmdInventory {
 		my ($i, $display, $index, $sell);
 
 		foreach my $item (@{$char->inventory->getItems()}) {
+			# TODO: move item type detection to Actor::Item?
 			if (($item->{type} == 3 ||
 			     $item->{type} == 6 ||
 			     $item->{type} == 10 ||
