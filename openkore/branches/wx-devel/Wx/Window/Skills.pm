@@ -58,7 +58,7 @@ sub update {
 	$self->Freeze;
 	$self->setItem($char->{skills}{$_}{ID},
 		new Skill(handle => $_, level => $char->{skills}{$_}{lv})
-	) for keys %{$char->{skills}};
+	) for sort {$char->{skills}{$a}{ID} <=> $char->{skills}{$b}{ID}} keys %{$char->{skills}};
 	
 	$self->onStatInfo;
 	
