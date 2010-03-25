@@ -9382,7 +9382,7 @@ Can be hatched by
 using a ^33CC33Pet Incubator^000000.
 ^33CC33Cordial/Loyal Bonus^000000
 When summoned,
-Def +2, MDef +2,
+Def -2, MDef -2,
 Aspd -1% (after-attack delay)
 Class: ^777777Monster Egg^000000
 #
@@ -12460,7 +12460,7 @@ Weight: ^7777771^000000
 #
 2638#
 A incense bag which is carried to avoid bad things.
-STR +1, LUK Â£Â« 1
+STR +1, LUK £« 1
 Class: ^777777Accessory^000000
 Defense: ^7777770^000000     Weight: ^77777710^000000
 Required Level: ^777777NA^000000
@@ -15480,7 +15480,7 @@ Class: ^777777Card^000000
 Slot: ^777777Accessory^000000
 Weight: ^7777771^000000
 #
-// ------Â¤Ã‘mobile item -------
+// ------¤Ñmobile item -------
 2511#
 A manteau which is worn by soldier skeletons.
 STR +2, DEX +2, LUK +2.
@@ -18845,7 +18845,7 @@ random food item.
 ^FFFFFF ^000000
 Weight: ^77777720^000000
 #
-// -------------- ÃƒÃŸÂ°Â¡Â½ÂºÃ…Â³Â¿Ã« Â¾Ã†Ã€ÃŒÃ…Ã› --------------
+// -------------- Ãß°¡½ºÅ³¿ë ¾ÆÀÌÅÛ --------------
 1771#
 A throwing knife
 laced with toxin that
@@ -19830,7 +19830,7 @@ sublimely delicious.
 ^FFFFFF ^000000
 Weight: ^7777777^000000
 #
-// ------------ Â¿Ã¤Â¸Â®ÃÂ¦ÃÂ¶ --------------
+// ------------ ¿ä¸®Á¦Á¶ --------------
 
 7472#
 Level 1 Recipes
@@ -21825,7 +21825,7 @@ and September 25th 2007.^000000
 Weight : ^7777770^000000
 #
 //--------------------11.1 Rachel------------------------
-// -------------------------- Â¼Ã’Ã„ÃÃ€ÃŽÃƒÂ¦Ã†Â® Â½Ã…Â±Ã”Â¹Â«Â±Ã¢ÃƒÃŸÂ°Â¡ ----------------------------
+// -------------------------- ¼ÒÄÏÀÎÃ¦Æ® ½Å±Ô¹«±âÃß°¡ ----------------------------
 
 1816#
 A pair of fierce claws
@@ -21850,16 +21850,13 @@ Required Level: ^77777727^000000
 Jobs: ^777777Acolyte Class^000000
 #
 1418#
-A legendary spear that
-is famous for never
-missing its target.
-Each strike has a 10%
-chance of being an
-inescapable attack.
-Increases Accuracy by 30%. Class: ^777777Spear^000000
+A legendary spear that is known for its ability to never miss its target.
+Has a 25% chance of
+performing a guided attack that a target can't evade.
+Accuracy rate +30%
+Weapon Class: ^777777Spear^000000
 Attack Strength: ^777777120^000000
 Weight: ^77777750^000000
-Property: ^777777Wind^000000
 Weapon Level: ^7777774^000000
 Required Level: ^7777774^000000
 Jobs: ^777777Swordman Class^000000
@@ -22264,10 +22261,10 @@ Jobs: ^777777All Jobs^000000
 #
 
 
-// ------------------- 2006 Â»Ã³Â¹ÃÂ±Ã¢ Â½Ã…Â±Ã”Ã„Â«ÂµÃ¥ ÃƒÃŸÂ°Â¡.-----------------------
-//Â¿ÂµÂ¹Â®Â±Ã‡ 11.1 Â¿Â¡Â¼Â­ Â¾Ã·ÂµÂ¥Ã€ÃŒÃ†Â® ÃÂ¦Â¿ÃœÃ‡ÃÂ±Ã¢Â·ÃŽ Ã‡Ã•Â´ÃÂ´Ã™.
+// ------------------- 2006 »ó¹Ý±â ½Å±ÔÄ«µå Ãß°¡.-----------------------
+//¿µ¹®±Ç 11.1 ¿¡¼­ ¾÷µ¥ÀÌÆ® Á¦¿ÜÇÏ±â·Î ÇÕ´Ï´Ù.
 
-// ------------- Â¾Ã†Â·Ã§Â³Âª Â»Ã³Â¹ÃÂ±Ã¢ -----------
+// ------------- ¾Æ·ç³ª »ó¹Ý±â -----------
 
 7561#
 A frozen heart that
@@ -22386,7 +22383,7 @@ Acolyte Classes;
 Soul Linker Job^000000
 #
 
-//----------------------20060610 Â½Ã…Â±Ã”ÃƒÃŸÂ°Â¡Â¾Ã†Ã€ÃŒÃ…Ã›-------------------------
+//----------------------20060610 ½Å±ÔÃß°¡¾ÆÀÌÅÛ-------------------------
 5169#
 A white mask with
 red blush that is
@@ -22509,7 +22506,7 @@ Required Level: ^77777740^000000
 Jobs: ^777777All Jobs^000000
 #
 
-// -------------- 2006 ÃƒÃŸÂ°Â¡Â¾Ã†Ã€ÃŒÃ…Ã› -------------
+// -------------- 2006 Ãß°¡¾ÆÀÌÅÛ -------------
 
 5184#
 Once owned by a famous
@@ -22693,7 +22690,7 @@ Level Requirement: ^77777710^000000
 Jobs: ^777777Every
 Job except Novice^000000
 #
-// ------------- Â¹ÃŒÂ±Â¹ Ã‡Ã˜Ã€Ã»Ã€Ã‡ Â³Â¯ Ã€ÃŒÂºÂ¥Ã†Â® Â¾Ã†Ã€ÃŒÃ…Ã› --------------
+// ------------- ¹Ì±¹ ÇØÀûÀÇ ³¯ ÀÌº¥Æ® ¾ÆÀÌÅÛ --------------
 7875#
 A recovered Treasure box
 that was Lost by 
@@ -23279,38 +23276,75 @@ rate by 100% for
 Weight: ^7777771^000000
 #
 12903#
-A box containing
-10 STR +10 dishes.
+A box containing 10 Steamed Tongue
+^ffffff_^000000
+A very pricey
+Louyang dish that
+tastes absolutely
+superb. STR +10,
+30 minute duration.
 ^ffffff_^000000
 Weight: ^7777771^000000
 #
 12904#
-A box containing
-10 AGI +10 dishes.
+A box containing 10 Steamed Scorpion
+^ffffff_^000000
+This scorpion dish
+is cooked with the
+heat of the desert
+sand, and is one of
+the four best dishes
+in Sograt Desert
+cuisine. AGI +10,
+30 minute duration.
 ^ffffff_^000000
 Weight: ^7777771^000000
 #
 12905#
-A box containing
-10 INT +10 dishes.
+A box containing 10 Dragon Breath Cocktail
+^ffffff_^000000
+A cocktail whose
+unforgettable flavor
+is as potent as the
+breath of a dragon.
+INT +10, 30 minute
+duration.
 ^ffffff_^000000
 Weight: ^7777771^000000
 #
 12906#
-A box containing
-10 DEX +10 dishes.
+A box containing 10 Hwergelmir's Tonic
+^ffffff_^000000
+This beverage is
+named after the
+legendary spring
+that is believed to
+be the source of the
+world's rivers, and
+is famous for its pure,^FFFFFF   ^000000 amazing taste. DEX +10,
+30 minute duration.
 ^ffffff_^000000
 Weight: ^7777771^000000
 #
 12907#
-A box containing
-10 LUK +10 dishes.
+A box containing 10 Cooked Nine Tail's Tails
+^ffffff_^000000
+A rare, specialty
+Payon dish that bestows^FFFFFF   ^000000 luck to those fortunate
+enough to eat it. LUK +10, 30 minute duration.
 ^ffffff_^000000
 Weight: ^7777771^000000
 #
 12908#
-A box containing
-10 VIT +10 dishes.
+A box containing 10 Stew of Immortality
+^ffffff_^000000
+A funky smelling,
+suspicious looking
+stew that really does
+make you feel like
+an immortal when
+you eat it. VIT +10,
+30 minute duration.
 ^ffffff_^000000
 Weight: ^7777771^000000
 #
@@ -23817,7 +23851,7 @@ enough to eat it. LUK +10, 30 minute duration.
 Weight: ^7777771^000000
 #
 12207#
-A funkly smelling,
+A funky smelling,
 suspicious looking
 stew that really does
 make you feel like
@@ -24798,7 +24832,7 @@ Weapon Level: ^7777774^000000
 Required Level: ^7777771^000000
 Jobs: ^777777Priest, Monk^000000
 #
-// ------------------- 2006 Â»Ã³Â¹ÃÂ±Ã¢ Â½Ã…Â±Ã”Ã„Â«ÂµÃ¥ ÃƒÃŸÂ°Â¡.-----------------------
+// ------------------- 2006 »ó¹Ý±â ½Å±ÔÄ«µå Ãß°¡.-----------------------
 
 4332#
 ATK +5, INT +1
@@ -25586,7 +25620,8 @@ and Thief class
 characters, this card
 adds STR +2 and
 Max HP +5%. When
-equipped by Archer
+equipped by Archer,
+Acolyte, and Mage
 class characters, this
 card adds INT +2
 and Max SP +5%.
@@ -25650,7 +25685,7 @@ Compound on: ^777777Weapon^000000
 Weight: ^7777771^000000
 #
 
-// ------------- ÃƒÂ¥Ã€ÃÂ±Ã¢ ----------------------
+// ------------- Ã¥ÀÐ±â ----------------------
 
 11001#
 A new novel from best
@@ -25731,7 +25766,7 @@ fiction author.
 Weight: ^7777771^000000
 #
 
-// ----------------------- Ã…Ã¤Â¸Â£ÃˆÂ­Â»Ãª Ã„Ã¹Â½ÂºÃ†Â® Â¾Ã†Ã€ÃŒÃ…Ã› ----------------------
+// ----------------------- Åä¸£È­»ê Äù½ºÆ® ¾ÆÀÌÅÛ ----------------------
 7704#
 A device that can
 measure the ground's
@@ -25753,7 +25788,7 @@ by a Geologist.
 Weight: ^7777770^000000
 #
 
-// ---------------------- Ã…Ã¤Â¸Â£ÃˆÂ­Â»Ãª Â½Ã…Â±Ã” Ã€Ã¥ÂºÃ± Â¾Ã†Ã€ÃŒÃ…Ã› ----------------------
+// ---------------------- Åä¸£È­»ê ½Å±Ô Àåºñ ¾ÆÀÌÅÛ ----------------------
 1370#
 A gigantic and
 ridiculously heavy
@@ -26523,7 +26558,7 @@ for 3 minutes.
 ^ffffff_^000000
 Weight: ^7777771^000000
 #
-// ---------------- Ã€ÃŽÂµÂµÂ³Ã—Â½ÃƒÂ¾Ã† Â°Â¡ÂºÂ­Â¿Ã® Ã„Â³Â½Â¬ Â¾Ã†Ã€ÃŒÃ…Ã› --------------	
+// ---------------- ÀÎµµ³×½Ã¾Æ °¡º­¿î Ä³½¬ ¾ÆÀÌÅÛ --------------	
 	
 12999#	
 A box that contains	
@@ -27059,7 +27094,7 @@ Weight: ^77777750^000000
 Required Lvl: ^77777730^000000
 Job: ^777777All^000000
 #
-// ------------- 2007 Ã‡Ã’Â·ÃŽÃ€Â© ÃƒÃ ÃÂ¦Â¸Ã°Ã€Ãš ---------------
+// ------------- 2007 ÇÒ·ÎÀ© ÃàÁ¦¸ðÀÚ ---------------
 5356#
 A pumpkin hat for
 celebrating Halloween:
@@ -27087,7 +27122,7 @@ that have shaped
 your life.							
 ^ffffff_^000000							
 #							
-// -------- 2007 Ã€ÃÂºÂ» Â¿Â¬Â¸Â» Ã„Â³Â½Â¬Â¾Ã†Ã€ÃŒÃ…Ã› ----------							
+// -------- 2007 ÀÏº» ¿¬¸» Ä³½¬¾ÆÀÌÅÛ ----------							
 5380#							
 A gaping fish head							
 fashioned into a hat.							
@@ -27266,7 +27301,7 @@ abnormal statuses^000088,
 ^ffffff_^000000			
 Weight: ^77777715^000000			
 #			
-// ----- Ã…Â©Â¸Â®Â½ÂºÂ¸Â¶Â½Âº Ã€ÃŒÂºÂ¥Ã†Â® Â»ÃªÃ…Â¸ Â¼Ã¶Â¿Â° --------					
+// ----- Å©¸®½º¸¶½º ÀÌº¥Æ® »êÅ¸ ¼ö¿° --------					
 //5811#					
 //A beard that makes					
 //you want to laugh					
@@ -27340,7 +27375,7 @@ outside of the machine.
 Weight : ^7777770^000000							
 #
 //----------------------- 2008 Lunar New Year Event ----------
-// ----------- Â´Ã«Â¸Â¸ Ã†Ãª ÃƒÃŸÂ°Â¡ ------------------						
+// ----------- ´ë¸¸ Æê Ãß°¡ ------------------						
 9038#						
 An egg in which the						
 New Year Doll Cute						
@@ -27410,7 +27445,7 @@ LUK +21.
 ^ffffff_^000000						
 Weight: ^77777710^000000						
 #						
-//============2008 Â¹ÃŒÂ±Â¹ Â¼Â¼Ã€ÃŽÃ†Â®Ã†ÃÃ†Â®Â¸Â¯ Ã€ÃŒÂºÂ¥Ã†Â® Â¾Ã†Ã€ÃŒÃ…Ã›============					
+//============2008 ¹Ì±¹ ¼¼ÀÎÆ®ÆÐÆ®¸¯ ÀÌº¥Æ® ¾ÆÀÌÅÛ============					
 12715#					
 [This item will be removed
 
@@ -27452,7 +27487,7 @@ Somehow this box is easily stolen by snakes.
 ^ffffff_^000000
 Weight: ^7777770^000000
 #
-// ---------------------- Â¿Ã«ÂºÂ´Â¼Ã’ÃˆÂ¯Â¼Â­ -------------------------------
+// ---------------------- ¿ëº´¼ÒÈ¯¼­ -------------------------------
 
 12153#
 Summon a 1st
@@ -27661,7 +27696,7 @@ targeted Mercenary.
 ^ffffff_^000000
 Weight: ^77777710^000000
 #
-// ------------------ Â¿Ã«ÂºÂ´Â¿Ã« Ã†Ã·Â¼Ã‡ ------------------
+// ------------------ ¿ëº´¿ë Æ÷¼Ç ------------------
 12241#
 A Concentration Potion
 for Mercenaries that
@@ -27687,7 +27722,7 @@ Attack Speed.
 Weight: ^77777710^000000
 #
 
-// ---------------- Â¸Â±Â·Â¹Ã€ÃŒ Ã„Ã¹Â½ÂºÃ†Â® Â¾Ã†Ã€ÃŒÃ…Ã› ------------------
+// ---------------- ¸±·¹ÀÌ Äù½ºÆ® ¾ÆÀÌÅÛ ------------------
 7730#
 A ticket proving
 that the bearer has
@@ -27812,7 +27847,7 @@ a new mission.
 ^ffffff_^000000
 Weight: ^7777771^000000
 #
-// -------------- 11.3 Ã€Ã¢Ã…Ã› -------------------
+// -------------- 11.3 ÀâÅÛ -------------------
 7751#
 A worn-out white
 cloth that can be
@@ -27853,7 +27888,7 @@ Merchant NPCs.
 Weight: ^7777771^000000
 #
 
-// ------------ Ã„Ã¹Â½ÂºÃ†Â® Â¾Ã†Ã€ÃŒÃ…Ã› -----------------
+// ------------ Äù½ºÆ® ¾ÆÀÌÅÛ -----------------
 7755#
 Much of the writing
 on this note isn't
@@ -27872,7 +27907,7 @@ Weight: ^7777771^000000
 #
 
 
-// ------------------- 11.3 Â½Ã…Â±Ã” Ã€Ã¥ÂºÃ± Â¾Ã†Ã€ÃŒÃ…Ã› --------------------------
+// ------------------- 11.3 ½Å±Ô Àåºñ ¾ÆÀÌÅÛ --------------------------
 2122#
 A magnificent
 platinum shield that
@@ -29270,7 +29305,7 @@ Required Level: ^77777770^000000
 Jobs: ^777777Gunslinger Job^000000
 #
 
-// ------------ 11.3 Ã„Ã¹Â½ÂºÃ†Â® Â¾Ã†Ã€ÃŒÃ…Ã› --------------
+// ------------ 11.3 Äù½ºÆ® ¾ÆÀÌÅÛ --------------
 7722#
 A loan document
 that includes the
@@ -29318,7 +29353,7 @@ seal of the King of the Rune-Midgarts Kingdom.
 Weight: ^7777770^000000
 #
 
-// ----------------- 20070808 Â½Ã…Â±Ã”Card 34ÃÂ¾ -----------------
+// ----------------- 20070808 ½Å±ÔCard 34Á¾ -----------------
 4408#
 Increases Physical
 damage to Holy,
@@ -29679,7 +29714,7 @@ it's been cooked.
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
-// ------------------- Â¸Â¶Â·Ã‚Ã€ÃŒ Â±ÂEÂEÃ„Â«ÂµÃ¥ÃƒÂ¸ ------------------
+// ------------------- ¸¶·ÂÀÌ ±EEÄ«µåÃ¸ ------------------
 12246#
 Powerful spirits are 
 sealed within this album.  
@@ -29688,7 +29723,7 @@ if the seal is undone?
 ^ffffff_^000000
 Weight: ^7777775^000000
 #
-// -------- Â¹ÃŒÂ±Â¹ Ã€ÃŒÂºÂ¥Ã†Â® Â¾Ã†Ã€ÃŒÃ…Ã› ----------------
+// -------- ¹Ì±¹ ÀÌº¥Æ® ¾ÆÀÌÅÛ ----------------
 5409#
 A hat, symbolizing western frontiers, made to celebrate the festival.
 INT +2 , VIT +2 , SP +50
@@ -29708,7 +29743,7 @@ Head Position : ^777777Upper-Mid-Lower^000000
 Weight : ^77777720^000000
 Job : ^777777All^000000
 #
-// -------- Â¹ÃŒÂ±Â¹ Ã†Ã¤Â½ÂºÃ†Â¼Â¹Ãº Ã†Â¼Ã„Ã ----------
+// -------- ¹Ì±¹ Æä½ºÆ¼¹ú Æ¼ÄÏ ----------
 7919#
 Evidence that you really enjoyed the festival!
 ^ffffff_^000000
@@ -29716,13 +29751,13 @@ This item cannot be dropped, traded, mailed or vended.
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
-// -------- Â¹ÃŒÂ±Â¹ Ã€ÃŒÂºÂ¥Ã†Â® Â¾Ã†Ã€ÃŒÃ…Ã› ----------------				
+// -------- ¹Ì±¹ ÀÌº¥Æ® ¾ÆÀÌÅÛ ----------------				
 6025#				
 A towel that helps you remember those that have passed on.				
 ^ffffff_^000000				
 Weight: ^7777770^000000				
 #
-// -------- ÃƒÃŠÂºÂ¸Ã€ÃšÃÂ¸ Â¾Ã†Ã€ÃŒÃ…Ã› -----------
+// -------- ÃÊº¸ÀÚÁ¸ ¾ÆÀÌÅÛ -----------
 12323#
 An enchanted fly's wing that instantly sends its user to a random spot when waved in the air. ^000088Instant teleport.^000000
 ^ffffff_^000000
@@ -29848,7 +29883,7 @@ A tribute to luck and fortune throughout the year.
 ^ffffff_^000000
 Weight : ^7777770^000000
 #
-// ---------- Â¸Ã°Â¹Ã™Ã€Ã Â°Ã‹Â»Ã§Ã†Ã­ Ã…ÃƒÃ†Â½Â½Âº ----------
+// ---------- ¸ð¹ÙÀÏ °Ë»çÆí ÅÃÆ½½º ----------
 5129#
 A mysterious bird's nest that makes the wearer feel like flying.
 AGI +2
@@ -29881,7 +29916,7 @@ Required Level : ^77777730^000000
 Jobs : ^777777Magician Class/Soul Linker^000000
 #
 
-// ------------------ÃÃŸÂ±Â¹Ã€ÃŒÂºÂ¥Ã†Â® ÂºÃ€Â°Ã¼--------------------
+// ------------------Áß±¹ÀÌº¥Æ® ºÀ°ü--------------------
 5152#
 A heavy-looking hat which is decorated with blue and silver gems. It looks suitable for splendid events like weddings.
 Additional 10% tolerance to Stun.
@@ -29951,7 +29986,7 @@ Required Level : ^77777730^000000
 Jobs : ^777777All^000000
 #
 
-// ------------------ 2006 Ã€ÃÂºÂ» Â¾Ã–Â´ÃÂ¹Ã¶Â¼Â­Â¸Â® Headgear -----------------
+// ------------------ 2006 ÀÏº» ¾Ö´Ï¹ö¼­¸® Headgear -----------------
 5211#
 A tiny and cute hat that can decorate a part of the head.
 This hat, along with a pretty dress, makes the wearer want to go on a picnic.
@@ -29968,7 +30003,7 @@ Required Level : ^77777720^000000
 Jobs : ^777777All^000000
 #
 
-// ------------------ ÂºÃªÂ¶Ã³ÃÃº Â°Â¡Â¹ÃŸ Â½ÃƒÂ¸Â®ÃÃ® -----------------------
+// ------------------ ºê¶óÁú °¡¹ß ½Ã¸®Áî -----------------------
 5273#
 Wig with green, white and red colors.
 When equipped, increases movement speed.
@@ -30009,7 +30044,7 @@ Location : ^777777Upper-Mid^000000    Weight : ^77777710^000000
 Jobs : ^777777All^000000
 #
 
-// --------------- ÂºÃªÂ¶Ã³ÃÃº Ã„Â³Â½Â¬ Â¾Ã†Ã€ÃŒÃ…Ã› 20070605 ------------
+// --------------- ºê¶óÁú Ä³½¬ ¾ÆÀÌÅÛ 20070605 ------------
 5307#
 A hat made with tropical fruits. It looks delicious.
 MDEF + 3
@@ -30019,7 +30054,7 @@ Location : ^777777Upper^000000    Weight : ^77777740^000000
 Jobs : ^777777All^000000
 #
 
-// -------------- Ã…Ã‚Â±Â¹ Ã„Â³Â½Â¬Â¾Ã†Ã€ÃŒÃ…Ã› Headgear ÃƒÃŸÂ°Â¡ 20070809 --------------
+// -------------- ÅÂ±¹ Ä³½¬¾ÆÀÌÅÛ Headgear Ãß°¡ 20070809 --------------
 5325#
 A weird item that spreads a strange-shaped beam around the eyes. It seems to have been made in outer space.
 ATK, MATK + 2%, Dex + 1
@@ -30030,7 +30065,7 @@ Required Level : ^77777710^000000
 Jobs : ^777777All^000000
 #
 
-// -------------- 2007Â³Ã¢ 9Â¿Ã¹ Ã€ÃÂºÂ» Â¸Ã°Â¹Ã™Ã€Ã Headgear 13ÃÂ¾ -----------------
+// -------------- 2007³â 9¿ù ÀÏº» ¸ð¹ÙÀÏ Headgear 13Á¾ -----------------
 5333#
 A hat designed to transmit electric waves. Sometimes it receives electric waves from external worlds.
 MDEF + 2
@@ -30063,32 +30098,36 @@ Weight : ^77777730^000000
 Jobs : ^777777All^000000
 #
 5336#
-A helm with Guild Member wanted ad on it. Won't you join us?
-Class : ^777777Headgear^000000    Def : ^7777772^000000
+A helm with Guild Member wanted ad on it. Recruit friends and strangers alike.
+Class : ^777777Headgear^000000
+Defense : ^7777772^000000
 Location : ^777777Upper^000000
 Weight : ^77777770^000000
 Required Level : ^77777710^000000
 Jobs : ^777777All^000000
 #
 5337#
-A helm with a Party Member wanted ad on it. Let's level up together!!
-Class : ^777777Headgear^000000    Def : ^7777772^000000
+A helm with a Party Member wanted ad on it. Your next party member could be your newest friend.
+Class : ^777777Headgear^000000
+Defense : ^7777772^000000
 Location : ^777777Upper^000000
 Weight : ^77777770^000000
 Required Level : ^77777710^000000
 Jobs : ^777777All^000000
 #
 5338#
-A helm with boyfriend wanted ad on it. Let's introduce her to a boy!
-Class : ^777777Headgear^000000    Def : ^7777772^000000
+A helm with boyfriend wanted ad on it. Only use this in severe cases of loneliness!
+Class : ^777777Headgear^000000
+Defense : ^7777772^000000
 Location : ^777777Upper^000000
 Weight : ^77777770^000000
 Required Level : ^77777710^000000
 Jobs : ^777777All^000000
 #
 5339#
-A helm with friend wanted ad on it. Do you have many friends?
-Class : ^777777Headgear^000000    Def : ^7777772^000000
+A helm with friend wanted ad on it. Never go lonely again with this advertisement.
+Class : ^777777Headgear^000000
+Defense : ^7777772^000000
 Location : ^777777Upper^000000
 Weight : ^77777770^000000
 Required Level : ^77777710^000000
@@ -30161,7 +30200,7 @@ Required Level : ^77777760^000000
 Jobs : ^777777All^000000
 #
 5346#
-A helm with a girlfriend wanted ad on it. Let's introduce him to a girl!
+A helm with a girlfriend wanted ad on it. Don't let those dating services fool you. This method is fullproof.
 Class : ^777777Headgear^000000    Def : ^7777772^000000
 Location : ^777777Upper^000000
 Weight : ^77777770^000000
@@ -30169,7 +30208,7 @@ Required Level : ^77777710^000000
 Jobs : ^777777All^000000
 #
 
-// --------- Ã…Ã‚Â±Â¹ Â¸Ã°Ã€Ãš Â¾Ã†Ã€ÃŒÃ…Ã› -------------
+// --------- ÅÂ±¹ ¸ðÀÚ ¾ÆÀÌÅÛ -------------
 5387#
 A hairband that mixes Kafra Style and Cat Hairband Style. It looks so cute!
 Inflicts a random abnormal status to an enemy when physically attacked.
@@ -30180,7 +30219,7 @@ Required Level : ^77777730^000000
 Jobs : ^777777All^000000
 #
 
-// -------------- 2008 Ã€ÃÂºÂ» Â¾Ã†Ã€ÃŒÃ…Ã› ÃÂ¦ 2Ã…Âº -----------------
+// -------------- 2008 ÀÏº» ¾ÆÀÌÅÛ Á¦ 2Åº -----------------
 5401#
 Dark-colored plastic frame Locs.
 INT + 1, MDEF + 2
@@ -30228,7 +30267,7 @@ Required Level : ^77777780^000000
 Jobs : ^777777All^000000
 #
 
-// --------------- Ã‡ÃŠÂ¸Â®Ã†Ã‡ Ã€ÃšÃƒÂ¼ÃÂ¦Ã€Ã› Headgear 7ÃÂ¾ -------------
+// --------------- ÇÊ¸®ÆÇ ÀÚÃ¼Á¦ÀÛ Headgear 7Á¾ -------------
 5372#
 A magical kitty hat which shows various expressions on its face.
 Reduces Cast Delay of all skills by 3%.
@@ -30357,7 +30396,7 @@ Jobs : ^777777All^000000
 Weight : ^7777771^000000
 #
 
-// ------Â¾Ã‹ÂµÂ¥Â¹Ã™Â¶ÃµÃ…ÃÂºÂ¸Ã†Â®Â·Â¢------
+// ------¾Ëµ¥¹Ù¶õÅÍº¸Æ®·¢------
 12016#
 A potion which increases the moving speed of a character for a set duration.
 ^ffffff_^000000
@@ -30369,7 +30408,7 @@ A potion which decreases the moving speed of a character for a set duration.
 Weight : ^77777710^000000
 #
 
-// ---------- Ã‡ÃŠÂ¸Â®Ã‡Ã‰ 4Â¿Ã¹ Â¹ÃšÂ½Âº Ã†ÃÃ…Â°ÃÃ¶ ----------------
+// ---------- ÇÊ¸®ÇÉ 4¿ù ¹Ú½º ÆÐÅ°Áö ----------------
 13994#
 A box containing 5 Speed Potions.
 ^ff0000For this item, the cancellation of purchase or refund is not allowed.^000000
@@ -30404,7 +30443,7 @@ A box that contains 1 coupon to dye your clothes to the original color.
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
-// -------- Â¹ÃŒÂ±Â¹ Ã€ÃŒÂºÂ¥Ã†Â® Â¾Ã†Ã€ÃŒÃ…Ã› ----------------
+// -------- ¹Ì±¹ ÀÌº¥Æ® ¾ÆÀÌÅÛ ----------------
 2776#
 This trusty towel truly is the sidearm of an experienced adventurer.
 Allowing one to remain cool in the face of adversity.
@@ -30415,7 +30454,7 @@ Cannot be Dropped or Traded.
 ^ffffff_^000000
 Weight: ^77777710^000000
 #
-// ------------- Â½Ã…Â±Ã” Â½Ã…Â±Ãž Â¾Ã†Ã€ÃŒÃ…Ã› GOD ITEMS --------------
+// ------------- ½Å±Ô ½Å±Þ ¾ÆÀÌÅÛ GOD ITEMS --------------
 2383#
 Brynhild is one of the valiant valkyries, meaning 'the warrior's armor'.
 Base level*20 MHP increase. Base Lv*5 MSP increase.
@@ -30502,7 +30541,7 @@ You can exchange it for a gift.
 ^ffffff_^000000
 Weight : ^7777770^000000
 #
-// ---------------- Ã…Ã—Â½ÂºÃ†Â®Â¿Ã« Ã„Â³Â½Â¬Â¾Ã†Ã€ÃŒÃ…Ã› Â»Ã³Ã€Ãš Town B-wings -----------------
+// ---------------- Å×½ºÆ®¿ë Ä³½¬¾ÆÀÌÅÛ »óÀÚ Town B-wings -----------------
 13849#
 A box containing 5 scrolls on which the towns of Run Midgartz are written. You may be moving to the town when using it.
 "Prontera", "Geffen", "Payon", "Morocc", "Al De Baran", "Alberta"
@@ -30559,7 +30598,7 @@ Locations: "Ayothaya", "Amatsu", "Luoyang", "Kunlun", "Moscovia
 Weight : ^7777771^000000
 #
 
-// ----------- 20071004 Ã„Â³Â½ÃƒÂ¾Ã†Ã€ÃŒÃ…Ã› -----------
+// ----------- 20071004 Ä³½Ã¾ÆÀÌÅÛ -----------
 14582#
 An enchanted butterfly's wing that instantly sends its user to the towns of the Rune Midgarts Kingdom.
 Locations: "Prontera", "Geffen", "Payon", "Morroc", "Al De Baran" or "Alberta" when waved in the air.
@@ -30953,7 +30992,7 @@ Jobs : ^777777All^000000
 #
 
 // --------------------- Ep. 12 --------------------------
-// ------------- Ã€Ã¼Ã€Ã¥ ÂºÂ¸Â»Ã³ Â¾Ã†Ã€ÃŒÃ…Ã› ---------------
+// ------------- ÀüÀå º¸»ó ¾ÆÀÌÅÛ ---------------
 13036#
 A dagger especially used for assassinations such as killing Demihumans.
 STR + 1, AGI + 1
@@ -31672,10 +31711,10 @@ A sealed paper envelope. It seems to contain an important message in it.
 Weight: ^7777771^000000
 #
 
-// ------------ Â¸ÃžÂ¸Ã°Â¸Â®Â¾Ã³ Â´Ã¸Ã€Ã¼ ÂºÂ¸Â»Ã³Ã…Ã› ----------------
+// ------------ ¸Þ¸ð¸®¾ó ´øÀü º¸»óÅÛ ----------------
 13412#
 One of the twin swords of Naght Sieger. The blue blade shows the sharpness of this sword.
-Has a chance to ignore the defense of one's opponent for 5 seconds when the wearer receives physical damage.
+When attacking there is a chance that for 5 seconds you will completely disregard the defense of the opponent.
 Enables the use ^FF0000Lv. 5 Frost Diver^000000.
 Weapon Class: ^777777Sword^000000
 Attack Strength: ^777777150^000000
@@ -31687,7 +31726,7 @@ Jobs: ^777777Transcendent Swordman, Merchant, Thief Classes^000000
 #
 13413#
 One of the twin swords of Naght Sieger. The red blade shows the destructive power of this sword.
-Has a chance to ignore the defense of one's opponent for 5 seconds when the wearer receives physical damage.
+When attacking there is a chance that for 5 seconds you will completely disregard the defense of the opponent.
 Enables the use of ^FF0000Lv. 3 Meteor Storm^000000.
 Weapon Class: ^777777Sword^000000
 Attack Strength: ^777777160^000000
@@ -31711,7 +31750,7 @@ Jobs: ^777777Transcendent Mage, Acolyte^000000
 #
 1185#
 A huge violet Two-Handed Sword that's made from the Twin Swords of Naght Sieger.
-Has a chance to ignore the defense of one's opponent for 5 seconds when the wearer receives physical damage.
+When attacking there is a chance that for 5 seconds you will completely disregard the defense of the opponent.
 Has a chance of autocasting ^FF0000Lv. 3 Meteor Storm^000000 and/or ^FF0000Lv. 5 Frost Nova^000000 with each physical attack.
 Weapon Class: ^777777Two-handed Sword^000000
 Attack Strength: ^777777275^000000
@@ -31732,7 +31771,7 @@ Required Level: ^77777770^000000
 Jobs: ^777777All Transcendent Jobs except Novice^000000
 #
 
-//Â¸Ã°Â·ÃŽÃ…Â© Ã„ÃÃ†Â¼Â³Ã™Ã…Â» Â°Â¡ÂµÃ¥ Ã€ÃŽÃÃµÂ¼Â­
+//¸ð·ÎÅ© ÄÁÆ¼³ÙÅ» °¡µå ÀÎÁõ¼­
 7826#
 It certifies that this adventurer has enough power and courage to be a member of the Continental Guard.
 ^ffffff_^000000
@@ -31741,7 +31780,7 @@ Continental Guard. Balrog.
 Weight: ^7777770^000000
 #
 
-// ------------ Â¸Â¶Â¿Ã• Â¸Ã°Â·ÃŽÃ…Â© ----------------
+// ------------ ¸¶¿Õ ¸ð·ÎÅ© ----------------
 2536#
 Lucifer's skin, cursed by the devil's language. It can be worn as a robe.
 MDEF +2, MaxHP +200,
@@ -31858,7 +31897,7 @@ Weight: ^77777725^000000
 Jobs: ^777777Above Transcendent 2-1 Classes^000000
 #
 
-// ---------- Ã‡Ã’Ã‚Â¦ Ã…Ã—Â½ÂºÃ†Â® -----------
+// ---------- ÇÒÂ¦ Å×½ºÆ® -----------
 2129#
 A thick book that contains basic skills for the clergy. 
 HP, SP Recovery 3%. INT + 1.
@@ -32190,7 +32229,7 @@ Required Level : ^77777770^000000
 Jobs : ^777777Priest, Sage, Taekwon Master^000000
 #
 
-// ------------- Ã€Ã¼Ã€Ã¥ ÃˆÃ–Ã€Ã¥ ---------------
+// ------------- ÀüÀå ÈÖÀå ---------------
 7828#
 A badge that is provided to warriors who have brought great honor from the Battlefield. 
 ^ffffff_^000000
@@ -32200,7 +32239,7 @@ A badge that is provided to warriors who have brought great honor from the Battl
 ^ffffff_^000000
 #
 
-// -------- ÂºÃ€Ã€ÃŽÃ€Ã‡ Â½Ã…Ã€Ã¼ Â¾Ã†Ã€ÃŒÃ…Ã› ------------
+// -------- ºÀÀÎÀÇ ½ÅÀü ¾ÆÀÌÅÛ ------------
 6001#
 An essence of fire that is holding the pure spirit of Thor, god of thunder. It has the mysterious force to restrain vices and darkness.
 ^ffffff_^000000
@@ -32219,14 +32258,14 @@ A pendant that was been used to confine wandered souls from unknown places.
 Weight: ^7777771^000000
 #
 
-// ----------------- Â¸Â¶Â·Ã‚Ã€ÃŒ Â±ÃªÂµÃ§ Â¹Ã™Ã†Ã·Â¸ÃžÃ†Â® Ã€ÃŽÃ‡Ã¼ -----------------
+// ----------------- ¸¶·ÂÀÌ ±êµç ¹ÙÆ÷¸ÞÆ® ÀÎÇü -----------------
 6004#
 A Doll imbued with Baphomet's curse. It seems to be compounded with something.
 ^ffffff_^000000
 Weight: ^7777771^000000
 #
 
-// ------------------- 12.1 Ã„Ã¹Â½ÂºÃ†Â® Â¾Ã†Ã€ÃŒÃ…Ã› ----------------------
+// ------------------- 12.1 Äù½ºÆ® ¾ÆÀÌÅÛ ----------------------
 7798#
 A dark fragment imbued with a gloomy spirit. Once you stare into it, you might feel absorbed into it.
 ^ffffff_^000000
@@ -32239,7 +32278,7 @@ You might feel a strong dangerous power from this crystal. When you are close to
 Weight: ^7777771^000000
 #
 
-// --------------- Ã‡ÃŠÂ¸Â®Ã‡Ã‰ Ã€ÃšÃƒÂ¼ÃÂ¦Ã€Ã› Ã…ÃµÂ±Â¸ 7ÃÂ¾ ----
+// --------------- ÇÊ¸®ÇÉ ÀÚÃ¼Á¦ÀÛ Åõ±¸ 7Á¾ ----
 5374#
 A headgear forged from the horns of the Unsealed Baphomet.
 Increases Physical Damage to Demihuman monsters by 12%.
@@ -32251,7 +32290,7 @@ Weight: ^77777780^000000
 Jobs: ^777777All Jobs^000000
 #
 
-// ------------------- Ã€ÃŒÂºÂ¥Ã†Â® Â¾Ã†Ã€ÃŒÃ…Ã› ------------------
+// ------------------- ÀÌº¥Æ® ¾ÆÀÌÅÛ ------------------
 6000#
 A dark ash imbued with mysterious magical power and darkness.
 ^ffffff_^000000
@@ -32288,7 +32327,7 @@ Stepmother - karma from a previous life?"
 Weight: ^7777771^000000
 #
 
-// ------------------ Ã‡ÃÂ¾Ã‡ Ã…Ã—Â½ÂºÃ†Â® (Â¼Ã’Ã„Ã)----------------
+// ------------------ ÇÏ¾Ç Å×½ºÆ® (¼ÒÄÏ)----------------
 1568#
 A hefty book with
 a hard cover that has
@@ -33112,7 +33151,7 @@ Job : ^777777All^000000
 #
 12354#
 A chocolate roll cake in the form of firewood covered with snow. When you see it, you can feel Christmas is coming.
-Increase restoration power by 3% for 10 minutes. HIT+3, Critical +7.
+Increases HP & SP restoration by 3%,  Hit +3, and Critical +7 for 10 minutes.
 ^ffffff_^000000
 Weight : ^7777775^000000
 #
@@ -33573,7 +33612,7 @@ A box containing one Crown of Deceit
 Weight : ^7777771^000000
 #
 
-// 2009-01-16 Â¹ÃŒÂ±Â¹ Â¿Ã¤ÃƒÂ» Â¾Ã†Ã€ÃŒÃ…Ã›
+// 2009-01-16 ¹Ì±¹ ¿äÃ» ¾ÆÀÌÅÛ
 6125#
 A box that brings a feeling of prosperity. Every time you think about opening it you resist the temptation. Perhaps a professional ^00FF00"Gift Opener"^000000  could be of assistance.
 
@@ -33603,7 +33642,7 @@ Weight: ^7777771^000000
 ^FF0000This item can only be opened until Aug. 25, 2009^000000
 #
 
-//Â¹ÃŸÂ·Â»Ã…Â¸Ã€ÃŽ
+//¹ß·»Å¸ÀÎ
 12742#
 A box containing a ring which is an exchanging gift for Valentine's Day.
 ^ffffff_^000000
@@ -33659,7 +33698,7 @@ Weight : ^7777770^000000
 Jobs : ^777777All Jobs^000000
 #
 
-// ----------- Ã†Ã·Â¸ÂµÂ´Ã«Ã€Ã¼ ÂºÂ¸Â»Ã³Ã‡Â° Â¾Ã†Ã€ÃŒÃ…Ã› ------------01/07/09
+// ----------- Æ÷¸µ´ëÀü º¸»óÇ° ¾ÆÀÌÅÛ ------------01/07/09
 2765#					
 A fine figure of a Novice. A mere glance at it makes you feel like you have more strength.					
 HP + 70, extra effect of HP + 30 when equipped on Novice			
@@ -33723,18 +33762,18 @@ Weight : ^7777770^000000
 Jobs : ^777777All^000000					
 #						
 			
-// ---------------- Ã†Ã·Â¸ÂµÃ„ÃšÃ€ÃŽ -----------------			
+// ---------------- Æ÷¸µÄÚÀÎ -----------------			
 7539#			
 A small coin with a monster Poring engraved in it.			
 #			
 			
-// ------------- Ã€Ã¼Ã…ÃµÃˆÃ–Ã€Ã¥ ---------------			
+// ------------- ÀüÅõÈÖÀå ---------------			
 7773#			
 A badge indicating that the wearer is currently participated in the war.  It was taken off from a failure of the battle.			
 ^ffffff_^000000			
 #			
 		
-// 2009-02-16 Â¹ÃŒÂ±Â¹ ÂºÂ¸ÂºÂ´Â±Ãƒ Â½Ã–Â¾Ã®Â±Ãƒ ÃƒÃŸÂ°Â¡			
+// 2009-02-16 ¹Ì±¹ º¸º´±Ã ½Ö¾î±Ã Ãß°¡			
 5512#
 This diadem honors Aquarius, the 11th astrological sign in the zodiac calendar. Its power increases defense from Wind attacks. 
 STR + 2, FLEE + 10, 
@@ -34485,7 +34524,7 @@ Beautiful long, white colored horn with the very strong magical power. It can be
 Weight : ^7777771^000000
 #
 
-// --------- EP13 Â½Ã…Â±Ã” Ã€Ã¥ÂºÃ± Â¾Ã†Ã€ÃŒÃ…Ã› ---------------
+// --------- EP13 ½Å±Ô Àåºñ ¾ÆÀÌÅÛ ---------------
 5398#
 Headgear made of the skull of a dragon. So hard that it does not easily break.
 STR +2, MDEF +5,
@@ -35122,7 +35161,7 @@ A pie covered with sweet chocolate.  This isn't pretty but the taste is excellen
 ^ffffff_^000000
 Weight : ^77777730^000000
 
-// ---------- Ã…Â©Â¸Â®Â°Ã… ÂºÂ¸Â»Ã³ Â¾Ã†Ã€ÃŒÃ…Ã› ----------
+// ---------- Å©¸®°Å º¸»ó ¾ÆÀÌÅÛ ----------
 13416#
 Physical Attack against Demihuman monsters +75%.
 Ignore 20% of Physical Defense of Demihuman monsters.
@@ -35587,7 +35626,7 @@ Required Level : ^77777781^000000
 Job : ^777777All excpet Novice Class^000000
 #
 
-// ---------- Ã…Â©Â¸Â®Â°Ã… ÂºÂ¸Â»Ã³ Â¾Ã†Ã€ÃŒÃ…Ã› ÃƒÃŸÂ°Â¡ DefenseÂ±Â¸ ----------
+// ---------- Å©¸®°Å º¸»ó ¾ÆÀÌÅÛ Ãß°¡ Defense±¸ ----------
 2445#
 HP & SP +5%
 Class : ^777777Shoes^000000
@@ -35639,7 +35678,7 @@ Weight : ^7777770^000000
 Jobs : ^777777All Jobs except Novice^000000
 #
 
-// ----------- Â¿Â¡Ã‡Ã‡Â¼Ã’ÂµÃ¥ 13 Â³Â¬Â½Ãƒ ------------
+// ----------- ¿¡ÇÇ¼Òµå 13 ³¬½Ã ------------
 2775#
 Artificially made fishing lure.
 Decrease the fishing casting time by 1 seconds.
@@ -35658,7 +35697,7 @@ Weight : ^77777720^000000
 Job : ^777777All^000000
 #
 
-// ----------- Ã€ÃŒÂºÂ¥Ã†Â® Â¾Ã†Ã€ÃŒÃ…Ã› ------------
+// ----------- ÀÌº¥Æ® ¾ÆÀÌÅÛ ------------
 2443#
 Waterproof boots.
 Decrease fishing casting time by 2 seconds.
@@ -35903,7 +35942,7 @@ Restore 10% of Max HP.
 Weight : ^7777771^000000
 #
 
-//--------------------Â¹ÃŒÂ±Â¹ Ã„Â³Â½Â¬ 2009.10.07---------------------------
+//--------------------¹Ì±¹ Ä³½¬ 2009.10.07---------------------------
 1194#
 ^000088Rental Item^000000
 A gruesome sword used
@@ -37742,37 +37781,77 @@ rate by 100% for
 Weight: ^7777771^000000
 #
 14159#
-A box containing
-10 STR +10 dishes.
+A box containing 10 Steamed Tongue
+^ffffff_^000000
+A very pricey
+Louyang dish that
+tastes absolutely
+superb. STR +10,
+30 minute duration.
 ^ffffff_^000000
 Weight: ^7777771^000000
 #
 14160#
-A box containing
-10 AGI +10 dishes.
+A box containing 10 Steamed Scorpion
+^ffffff_^000000
+This scorpion dish
+is cooked with the
+heat of the desert
+sand, and is one of
+the four best dishes
+in Sograt Desert
+cuisine. AGI +10,
+30 minute duration.
 ^ffffff_^000000
 Weight: ^7777771^000000
 #
 14161#
-A box containing
-10 INT +10 dishes.
+A box containing 10 Dragon Breath Cocktail
+^ffffff_^000000
+A cocktail whose
+unforgettable flavor
+is as potent as the
+breath of a dragon.
+INT +10, 30 minute
+duration.
 ^ffffff_^000000
 Weight: ^7777771^000000
 #
 14162#
-A box containing
-10 DEX +10 dishes.
+A box containing 10 Hwergelmir's Tonic
+^ffffff_^000000
+This beverage is
+named after the
+legendary spring
+that is believed to
+be the source of the
+world's rivers, and
+is famous for its pure,^FFFFFF   ^000000 amazing taste. DEX +10,
+30 minute duration.
 ^ffffff_^000000
 Weight: ^7777771^000000
 #
 14163#
-A box containing
-10 LUK +10 dishes.
+A box containing 10 Cooked Nine Tail's Tails
+^ffffff_^000000
+A rare, specialty
+Payon dish that bestows^FFFFFF   ^000000 luck to those fortunate
+enough to eat it. LUK +10, 30 minute duration.
 ^ffffff_^000000
 Weight: ^7777771^000000
 #
 14164#
-v
+A box containing 10 Stew of Immortality
+^ffffff_^000000
+A funky smelling,
+suspicious looking
+stew that really does
+make you feel like
+an immortal when
+you eat it. VIT +10,
+30 minute duration.
+^ffffff_^000000
+Weight: ^7777771^000000
 #
 14165#
 A box containing
@@ -38506,7 +38585,14 @@ placeholder
 placeholder
 #
 5379#
-placeholder
+A large knitted hat that can be used to conceal long hair.
+Magic attack increases with each refine level.
+Class: ^777777Headgear^000000
+Defense: ^7777773^000000
+Location: ^777777Upper^000000
+Weight: ^77777780^000000
+Required Level: ^77777750^000000
+Jobs: ^777777All^000000
 #
 5383#
 This hat is made especially for hunting Brute type Monsters!
@@ -38547,7 +38633,14 @@ placeholder
 placeholder
 #
 5395#
-placeholder
+A striped hat worn by drifters who consider themselves lucky.
+MaxHP increases with each refine level.
+Class: ^777777Headgear^000000
+Defense: ^7777772^000000
+Location: ^777777Upper^000000
+Weight: ^77777750^000000
+Required Level: ^77777750^000000
+Jobs: ^777777All^000000
 #
 5396#
 placeholder
@@ -39320,9 +39413,9 @@ Job : ^777777Sniper Only^000000
 
 2004#
 This piece's upper part is decorated with a golden dragon and a crystal with strong magical power compressed into it. It looks nice, but it's too heavy to easily carry around.
-Matk +20%. Int +3, MaxHP +300.
+Matk +20%, Int +3, MaxHP +300
 For every 2 refine Levels, Int +1, MaxHP +50.
-When attacking with a magical spell has a chance of adding Matk +12% and consumed SP increases by 20% for 5seconds.
+When attacking with a magical spell has a chance of adding Matk +12% and consumed SP decreases by 20% for 5 seconds.
 Type : ^777777Two-Handed Staff^000000
 Attack : ^77777730^000000
 Weight : ^777777100^000000
@@ -39719,15 +39812,6 @@ Green Maidens have been seen munching on this tasty treat.
 Class: ^777777Pet Food^000000
 Weight: ^7777771^000000
 #
-6070#
-Ancient Scroll Of Shaman
-#
-6071#
-Broken Sword
-#
-6072#
-Feather Of Bizofnil
-#
 16554#
 A box that contains 1 pair of Elven Sunglasses
 Description:
@@ -39899,4 +39983,756 @@ Weight : ^7777770^000000
 12746#
 When consumed, you have the choice of receiving moderate HP & SP restoration, Lv. 10 Endure, Restore all SP or returning to your save point.
 Weight : ^7777770^000000
+#
+
+
+2777#
+A ring worn only by those belonging to the Shaman order.
+It can teleport it's wearer in Glast Heim with the help of Sapphires.
+Sapphires can be found at the Entrance to Glast Heim, Chivalry, St. Abbey, and Culvert.
+MaxHP +50,
+SP recovery +3%.
+^FF0000Shaman Set^000000
+^0000FFShaman Ring^000000
+^0000FFShaman's Hair Ornament^000000
+^0000FFShaman Earring^000000.
+MHP +300,
+Matk +5%,
+Increases resistance to Neutral property by 5%.
+Class : ^777777Accessory^000000
+Defense : ^7777770^000000
+Weight : ^77777710^000000
+Required lvl : ^77777730^000000
+Jobs : ^777777All^000000
+#
+2778#
+Int +2.
+^FF0000Shaman Set^000000
+^0000FFShaman Ring^000000
+^0000FFShaman's Hair Ornament^000000
+^0000FFShaman Earring^000000.
+MHP +300,
+Matk +5%,
+Increases resistance to Neutral property by 5%.
+Class : ^777777Accessory^000000
+Defense : ^7777770^000000
+Weight : ^77777710^000000
+Required lvl : ^77777730^000000
+Jobs : ^777777All^000000
+#
+2779#
+A belt once worn by a Knight shrouded in darkness that gives strength to those who wear it. 
+Str +2, Agi +1.
+^99FF66Dark Knight Set^000000
+^99FF66Dark Knight Mask^000000
+^99FF66Dark Knight Belt^000000
+^99FF66Dark Knight Glove^000000
+Matk +15%, Int +5,
+10% of the damage is decreased when attacked by angel-type monsters.
+Class : ^777777Accessory^000000
+Defense : ^7777771^000000
+Weight : ^77777750^000000
+Required lvl : ^77777780^000000
+Jobs : ^777777All^000000
+#
+2780#
+A glove worn by a cursed Dark Knight.
+When attacking, increase the ASPD by 2% for 10 seconds with a low chance.
+^99FF66Dark Knight Set^000000
+^99FF66Dark Knight Mask^000000
+^99FF66Dark Knight Belt^000000
+^99FF66Dark Knight Glove^000000
+Matk +15%, Int +5,
+10% of the damage is decreased when attacked by angel-type monsters.
+Class : ^777777Accessory^000000
+Defense : ^7777771^000000
+Weight : ^77777750^000000
+Required lvl : ^77777780^000000
+Jobs : ^777777All^000000
+#
+2825#
+Int +2.
+^FF0000Shaman Set^000000
+^0000FFShaman Ring^000000
+^0000FFShaman's Hair Ornament^000000
+^0000FFShaman Earring^000000.
+MHP +300,
+Increase tolerance to Neutral property by 5%,
+Skill casting cannot be interrupted by damage from enemies but increases cast-time by 15%.
+Class : ^777777Accessory^000000
+Defense : ^7777770^000000
+Weight : ^77777710^000000
+Required lvl : ^77777730^000000
+Jobs : ^777777All^000000
+#
+2826#
+A belt once worn by a Knight shrouded in darkness that gives dexterity to those who wear it.
+Dex +2, Agi +1
+^99FF66Dark Knight Set^000000
+^99FF66Dark Knight Mask^000000
+^99FF66Dark Knight Belt^000000
+^99FF66Dark Knight Glove^000000
+Matk +15%, Int +5,
+10% of the damage is decreased when attacked by angel-type monsters.
+Class : ^777777Accessory^000000
+Defense : ^7777771^000000
+Weight : ^77777750^000000
+Required lvl : ^77777780^000000
+Jobs : ^777777All^000000
+#
+2827#
+A glove worn by a cursed Dark Knight.
+When attacked, has a chance of increasing MaxHP by 10% for 10 seconds.
+^99FF66Dark Knight Set^000000
+^99FF66Dark Knight Mask^000000
+^99FF66Dark Knight Belt^000000
+^99FF66Dark Knight Glove^000000
+Matk +15%, Int +5,
+10% of the damage is decreased when attacked by angel-type monsters.
+Class : ^777777Accessory^000000
+Defense : ^7777771^000000
+Weight : ^77777750^000000
+Required lvl : ^77777780^000000
+Jobs : ^777777All^000000
+
+#
+5479#
+A hair ornament with pink feathers of a Shaman.
+MaxHP +50, Mdef +3,
+Increases resistance to Neutral property by 5%.
+^FF0000Shaman Set^000000
+^0000FFShaman Ring^000000
+^0000FFShaman's Hair Ornament^000000
+^0000FFShaman Earring^000000.
+MaxHP +300, Matk +5%,
+Increases resistance to Neutral property by 5%.
+Class : ^777777Headgear^000000
+Defense : ^7777771^000000
+Head Position : ^777777Upper^000000
+Weight : ^77777730^000000
+Required lvl : ^77777730^000000
+Jobs : ^777777All^000000
+#
+5480#
+A hat made to honor Bijofnil, the legendary bird that lives above the Yggdrasil tree.
+Adds the chance of auto casting level 3 Impositio Manus on its wearer when physically attacking.
+Class : ^777777Headgear^000000
+Defense : ^7777773^000000
+Location : ^777777Upper^000000
+Weight : ^777777100^000000
+Required lvl : ^77777730^000000
+Jobs : ^777777All^000000
+#
+5482#
+A mask worn by a knight that used dark magic to curse anyone who wore it but him.
+Str +3.
+^99FF66Dark Knight Set^000000
+^99FF66Dark Knight Mask^000000
+^99FF66Dark Knight Belt^000000
+^99FF66Dark Knight Glove^000000
+Matk +15%, Int +5,
+10% of the damage is decreased when attacked by angel-type monsters.
+Class : ^777777Headgear^000000
+Defense : ^7777775^000000
+Head Position : ^777777Upper-Mid-Low^000000
+Weight : ^777777300^000000
+Required lvl : ^77777780^000000
+Jobs : ^777777All^000000
+#
+5577#
+A mask worn by a knight that used dark magic to curse anyone who wore it but him.
+Dex +3.
+^99FF66Dark Knight Set^000000
+^99FF66Dark Knight Mask^000000
+^99FF66Dark Knight Belt^000000
+^99FF66Dark Knight Glove^000000
+Matk +15%, Int +5,
+10% of the damage is decreased when attacked by angel-type monsters.
+Class : ^777777Headgear^000000
+Defense : ^7777775^000000
+Head Position : ^777777Upper-Mid-Low^000000
+Weight : ^777777300^000000
+Required lvl : ^77777780^000000
+Jobs : ^777777All^000000
+#
+6070#
+An ancient manuscript that can only be read by those familiar with the old Shaman language.
+A strange woman at the northeastern corner of the city of Rachel can help you read it.
+Weight : ^7777771^000000
+#
+6071#
+The remains of a sword that was fabled to have broken the curse of a Dark Knight.
+There is a soldier in the Northwest corner of Glast Heim that may have fallen under the Dark Knight's curse.
+Weight : ^7777771^000000
+#
+6072#
+A beautiful feather from a legendary bird named Bijofnil with mysterious powers.
+There is a chicken researcher in the southwestern part of Geffen that knows about Bijofnil.
+Weight : ^7777771^000000
+#
+5744#
+A magnificent crown created to pay tribute to the 10th sign of the zodiac, Capricorn the Goat.  Attached to the crown is a Garnet gemstone, the birthstone for those born under this sign.
+Dex +2, Vit +2
+If refined to 7 or higher, when melee-attacking, has a chance of auto-casting Lv 1 Mild Wind (Earth endow).
+Class : ^777777Headgear^000000
+Defense : ^7777773^000000
+Head Location: ^777777Upper ^000000
+Weight : ^77777730^000000
+Required lvl : ^7777771^000000
+Jobs : ^777777All^000000
+#
+5745#
+A magnificent diadem created to pay tribute to the 10th sign of the zodiac, Capricorn the Goat.  Attached to the crown is a Garnet gemstone, the birthstone for those born under this sign.
+Dex +2, Mdef +5.
+Increases resistance to Earth property by 5%.
+If refined to 7 or higher, Int +2.
+If refined to 8 or higher, decreases casting time by 3%.
+If refined to 9 or higher, increases the effectiveness of Heal and Sanctuary skills by 4%.
+If refined to 10 or higher, when attacked, has a low chance of auto-casting Lv 5 Hammer Fall.
+Class : ^777777Headgear^000000
+Defense : ^7777773^000000
+Head Location: ^777777Upper ^000000
+Weight : ^77777730^000000
+Required lvl : ^7777771^000000
+Jobs : ^777777All^000000
+#
+16565#
+A box that cotains 1 Capricorn Crown
+Dex +2, Vit +2
+If refined to 7 or higher, when melee-attacking, has a chance of auto-casting Lv 1 Mild Wind (Earth endow).
+Class : ^777777Headgear^000000
+Defense : ^7777773^000000
+Head Location: ^777777Upper ^000000
+Weight : ^77777730^000000
+Required lvl : ^7777771^000000
+Jobs : ^777777All^000000
+^FFFFFF_^000000
+Weight : ^7777771^000000
+#
+16566#
+A box that cotains 1 Capricorn Crown
+Dex +2, Vit +2
+If refined to 7 or higher, when melee-attacking, has a chance of auto-casting Lv 1 Mild Wind (Earth endow).
+Class : ^777777Headgear^000000
+Defense : ^7777773^000000
+Head Location: ^777777Upper ^000000
+Weight : ^77777730^000000
+Required lvl : ^7777771^000000
+Jobs : ^777777All^000000
+^FFFFFF_^000000
+Weight : ^7777771^000000
+#
+16567#
+A box that cotains 1 Capricorn Diadem
+Dex +2, Mdef +5.
+Increases resistance to Earth property by 5%.
+If refined to 7 or higher, Int +2.
+If refined to 8 or higher, decreases casting time by 3%.
+If refined to 9 or higher, increases the effectiveness of Heal and Sanctuary skills by 4%.
+If refined to 10 or higher, when attacked, has a low chance of auto-casting Lv 5 Hammer Fall.
+Class : ^777777Headgear^000000
+Defense : ^7777773^000000
+Head Location: ^777777Upper ^000000
+Weight : ^77777730^000000
+Required lvl : ^7777771^000000
+Jobs : ^777777All^000000
+^FFFFFF_^000000
+Weight : ^7777771^000000
+#
+16568#
+A box that cotains 1 Capricorn Diadem
+Dex +2, Mdef +5.
+Increases resistance to Earth property by 5%.
+If refined to 7 or higher, Int +2.
+If refined to 8 or higher, decreases casting time by 3%.
+If refined to 9 or higher, increases the effectiveness of Heal and Sanctuary skills by 4%.
+If refined to 10 or higher, when attacked, has a low chance of auto-casting Lv 5 Hammer Fall.
+Class : ^777777Headgear^000000
+Defense : ^7777773^000000
+Head Location: ^777777Upper ^000000
+Weight : ^77777730^000000
+Required lvl : ^7777771^000000
+Jobs : ^777777All^000000
+^FFFFFF_^000000
+Weight : ^7777771^000000
+#
+
+6094#Traditional_Cookie#
+6095#Flavored_Alcohol#
+6096#Fish_With_Blue_Back#
+6097#Pumpkin_Pie_#
+6098#Small_Snow_Flower#
+6099#Grilled_Rice_Cake#
+6100#Damp_Darkness#
+6104#Big_Cell#
+6105#Morning_Dew#
+6106#Well_Ripened_Berry#
+6107#Sunset_On_The_Rock#
+6108#Apple_Pudding#
+6109#Plant_Neutrient#
+6110#Vital_Flower#
+6111#Mystic_Stone#
+6112#Fresh_Plant#
+7766#Bok_Choy#
+7821#Green_Apple#
+7822#Whole_Barbecue#
+7823#Meat_Veg_Skewer#
+7824#
+This highly toxic liquid is consumed by Wandering souls.
+Weight: ^7777775^000000
+#
+
+12357#Shiny_Wing_Gown#
+12358#Fan_Of_Wind#
+12359#Very_Soft_Plant#
+12360#Very_Red_Juice#
+12361#Delicious_Shaved_Ice#
+12362#Kuloren#
+12363#Fit_Pipe#
+12364#Staff_Of_Leader#
+12365#Charming_Lotus#
+12366#Gril_Doll#
+12367#Luxury_Whisky_Bottle#
+12368#Splendid_Mirror#
+12369#Oilpalm_Coconut#
+12370#Gril's_Naivety#
+12371#Magical_Lithography#
+12372#Hell_Contract#
+14569#Knife_Goblin_Ring#
+14570#Flail_Goblin_Ring#
+14571#Hammer_Goblin_Ring#
+14572#Holy_Marble#
+14573#Red_Burning_Stone#
+14574#
+A skull of a vagabond soul.
+Wanderers seek these eerie trophies.
+Class: ^777777Taming Item^000000
+Weight: ^7777775^000000
+#
+
+9030#Chung_E_Egg#
+9031#Spring_Rabbit_Egg#
+9032#Knife_Goblin_Egg#
+9033#Flail_Goblin_Egg#
+9034#Hammer_Goblin_Egg#
+9035#Red_Deleter_Egg#
+9036#Diabolic_Egg#
+9037#
+An egg in which a
+Wanderer Pet rests.
+Can be hatched by
+using a ^33CC33Pet Incubator^000000.
+Class: ^777777Monster Egg^000000
+#
+9038#New_Year_Doll_Egg#
+9039#Bacsojin_Egg#
+9040#Civil_Servant_Egg#
+9041#Leaf_Cat_Egg#
+9042#Loli_Ruri_Egg#
+9043#Marionette_Egg#
+9044#Shinobi_Egg#
+9045#Whisper_Egg#
+9046#Goblin_Leader_Egg#
+9047#Wicked_Nymph_Egg#
+9048#Miyabi_Ningyo_Egg#
+9049#Dullahan_Egg#
+9050#Medusa_Egg#
+9051#Stone_Shooter_Egg#
+9052#Incubus_Egg#
+9053#Golem_Egg#
+9054#Nightmare_Terror_Egg#
+
+7975#
+A chocolate received from Cupid's Fairy to commemorate Valentine's Day.
+Remember to give it to someone special.
+Weight: ^7777770^000000
+#
+2781#
+Hidden within this monster's tooth is the ability to extract energy.
+Receive 5% more exp when defeating monsters while receiving 5% more damage from normal attacks.
+Class: ^777777Accessory^000000
+Defense: ^7777770^000000
+Weight: ^77777710^000000
+Required Level: ^7777771^000000
+Jobs: ^777777All^000000
+#
+5481#
+A cap worn by a desert assassin who fought with incredible speed.
+Aspd +10%,
+Atk -20, Matk -10%.
+Class: ^777777Headgear^000000
+Location: ^777777Upper^000000
+Defense: ^7777771^000000
+Weight: ^777777100^000000
+Required Level: ^7777771^000000
+Jobs: ^777777All^000000
+#
+5483#
+A mask worn once worn by Odin during a fierce battle between the gods and humans.
+Hit -10,
+Increases damage to Demihuman monsters by 6%.
+Class: ^777777Headgear^000000
+Location: ^777777Middle & Lower^000000
+Defense: ^7777771^000000
+Weight: ^77777710^000000
+Required Level: ^77777750^000000
+Jobs: ^777777Every Job except Novice^000000
+#
+5601#
+A two-toned banana yellow and green colored beret.
+From ^FF0000March 1st^000000 through ^FF0000March 31st^000000 this item gives +3 to all Stats and MDef +1.
+During the ^FF0000April 1st^000000 Maintenance it's effects will be Luk +3, MDef +1.
+Class : ^777777Headgear^000000
+Defense : ^7777771^000000
+Head Position: ^777777Upper ^000000
+Weight : ^77777710^000000
+Required lvl : ^7777771^000000
+Jobs : ^777777All^000000
+#
+
+13572#
+A box containing 30 Hwergelmir's Tonic
+^ffffff_^000000
+This beverage is
+named after the
+legendary spring
+that is believed to
+be the source of the
+world's rivers, and
+is famous for its pure,^FFFFFF   ^000000 amazing taste. DEX +10,
+30 minute duration.
+^ffffff_^000000
+Weight: ^7777771^000000
+#
+13573#
+A box containing 50 Hwergelmir's Tonic
+^ffffff_^000000
+This beverage is
+named after the
+legendary spring
+that is believed to
+be the source of the
+world's rivers, and
+is famous for its pure,^FFFFFF   ^000000 amazing taste. DEX +10,
+30 minute duration.
+^ffffff_^000000
+Weight: ^7777771^000000
+#
+13574#
+A box containing 30 Cooked Nine Tail's Tails
+^ffffff_^000000
+A rare, specialty
+Payon dish that bestows^FFFFFF   ^000000 luck to those fortunate
+enough to eat it. LUK +10, 30 minute duration.
+^ffffff_^000000
+Weight: ^7777771^000000
+#
+13575#
+A box containing 50 Cooked Nine Tail's Tails
+^ffffff_^000000
+A rare, specialty
+Payon dish that bestows^FFFFFF   ^000000 luck to those fortunate
+enough to eat it. LUK +10, 30 minute duration.
+^ffffff_^000000
+Weight: ^7777771^000000
+#
+13578#
+A box containing 30 Stew of Immortality
+^ffffff_^000000
+A funky smelling,
+suspicious looking
+stew that really does
+make you feel like
+an immortal when
+you eat it. VIT +10,
+30 minute duration.
+^ffffff_^000000
+Weight: ^7777771^000000
+#
+13579#
+A box containing 50 Stew of Immortality
+^ffffff_^000000
+A funky smelling,
+suspicious looking
+stew that really does
+make you feel like
+an immortal when
+you eat it. VIT +10,
+30 minute duration.
+^ffffff_^000000
+Weight: ^7777771^000000
+#
+13592#
+A box containing 30 Steamed Scorpion
+^ffffff_^000000
+This scorpion dish
+is cooked with the
+heat of the desert
+sand, and is one of
+the four best dishes
+in Sograt Desert
+cuisine. AGI +10,
+30 minute duration.
+^ffffff_^000000
+Weight: ^7777771^000000
+#
+13593#
+A box containing 50 Steamed Scorpion
+^ffffff_^000000
+This scorpion dish
+is cooked with the
+heat of the desert
+sand, and is one of
+the four best dishes
+in Sograt Desert
+cuisine. AGI +10,
+30 minute duration.
+^ffffff_^000000
+Weight: ^7777771^000000
+#
+13596#
+A box containing 30 Dragon Breath Cocktail
+^ffffff_^000000
+A cocktail whose
+unforgettable flavor
+is as potent as the
+breath of a dragon.
+INT +10, 30 minute
+duration.
+^ffffff_^000000
+Weight: ^7777771^000000
+#
+13597#
+A box containing 50 Dragon Breath Cocktail
+^ffffff_^000000
+A cocktail whose
+unforgettable flavor
+is as potent as the
+breath of a dragon.
+INT +10, 30 minute
+duration.
+^ffffff_^000000
+Weight: ^7777771^000000
+#
+13604#
+A box containing 30 Steamed Tongue
+^ffffff_^000000
+A very pricey
+Louyang dish that
+tastes absolutely
+superb. STR +10,
+30 minute duration.
+^ffffff_^000000
+Weight: ^7777771^000000
+#
+13605#
+A box containing 50 Steamed Tongue
+^ffffff_^000000
+A very pricey
+Louyang dish that
+tastes absolutely
+superb. STR +10,
+30 minute duration.
+^ffffff_^000000
+Weight: ^7777771^000000
+#
+
+14181#
+A box containing 30 Hwergelmir's Tonic
+^ff0000This box will be made trade-able and storage-able during the 03/25/10 maintenance.^000000
+^ffffff_^000000
+This beverage is
+named after the
+legendary spring
+that is believed to
+be the source of the
+world's rivers, and
+is famous for its pure,^FFFFFF   ^000000 amazing taste. DEX +10,
+30 minute duration.
+^ffffff_^000000
+Weight: ^7777771^000000
+#
+14182#
+A box containing 50 Hwergelmir's Tonic
+^ffffff_^000000
+This beverage is
+named after the
+legendary spring
+that is believed to
+be the source of the
+world's rivers, and
+is famous for its pure,^FFFFFF   ^000000 amazing taste. DEX +10,
+30 minute duration.
+^ffffff_^000000
+Weight: ^7777771^000000
+#
+14183#
+A box containing 30 Cooked Nine Tail's Tails
+^ff0000This box will be made trade-able and storage-able during the 03/25/10 maintenance.^000000
+^ffffff_^000000
+A rare, specialty
+Payon dish that bestows^FFFFFF   ^000000 luck to those fortunate
+enough to eat it. LUK +10, 30 minute duration.
+^ffffff_^000000
+Weight: ^7777771^000000
+#
+14184#
+A box containing 50 Cooked Nine Tail's Tails
+^ffffff_^000000
+A rare, specialty
+Payon dish that bestows^FFFFFF   ^000000 luck to those fortunate
+enough to eat it. LUK +10, 30 minute duration.
+^ffffff_^000000
+Weight: ^7777771^000000
+#
+14187#
+A box containing 30 Stew of Immortality
+^ff0000This box will be made trade-able and storage-able during the 03/25/10 maintenance.^000000
+^ffffff_^000000
+A funky smelling,
+suspicious looking
+stew that really does
+make you feel like
+an immortal when
+you eat it. VIT +10,
+30 minute duration.
+^ffffff_^000000
+Weight: ^7777771^000000
+#
+14188#
+A box containing 50 Stew of Immortality
+^ffffff_^000000
+A funky smelling,
+suspicious looking
+stew that really does
+make you feel like
+an immortal when
+you eat it. VIT +10,
+30 minute duration.
+^ffffff_^000000
+Weight: ^7777771^000000
+#
+14201#
+A box containing 30 Steamed Scorpion
+^ff0000This box will be made trade-able and storage-able during the 03/25/10 maintenance.^000000
+^ffffff_^000000
+This scorpion dish
+is cooked with the
+heat of the desert
+sand, and is one of
+the four best dishes
+in Sograt Desert
+cuisine. AGI +10,
+30 minute duration.
+^ffffff_^000000
+Weight: ^7777771^000000
+#
+14202#
+A box containing 50 Steamed Scorpion
+^ffffff_^000000
+This scorpion dish
+is cooked with the
+heat of the desert
+sand, and is one of
+the four best dishes
+in Sograt Desert
+cuisine. AGI +10,
+30 minute duration.
+^ffffff_^000000
+Weight: ^7777771^000000
+#
+14205#
+A box containing 30 Dragon Breath Cocktail
+^ff0000This box will be made trade-able and storage-able during the 03/25/10 maintenance.^000000
+^ffffff_^000000
+A cocktail whose
+unforgettable flavor
+is as potent as the
+breath of a dragon.
+INT +10, 30 minute
+duration.
+^ffffff_^000000
+Weight: ^7777771^000000
+#
+14206#
+A box containing 50 Dragon Breath Cocktail
+^ffffff_^000000
+A cocktail whose
+unforgettable flavor
+is as potent as the
+breath of a dragon.
+INT +10, 30 minute
+duration.
+^ffffff_^000000
+Weight: ^7777771^000000
+#
+14213#
+A box containing 30 Steamed Tongue
+^ff0000This box will be made trade-able and storage-able during the 03/25/10 maintenance.^000000
+^ffffff_^000000
+A very pricey
+Louyang dish that
+tastes absolutely
+superb. STR +10,
+30 minute duration.
+^ffffff_^000000
+Weight: ^7777771^000000
+#
+14214#
+A box containing 50 Steamed Tongue
+^ffffff_^000000
+A very pricey
+Louyang dish that
+tastes absolutely
+superb. STR +10,
+30 minute duration.
+^ffffff_^000000
+Weight: ^7777771^000000
+#
+
+7959#
+The UP Coin is a Gift from O'Riley the Leprechaun.
+You can acquire more by purchasing them at PlaySpan.com. Use them to purchase kafra points and packages to improve your Ragnarok Adventure!
+#
+5474#
+A sign that says you are Away From your Keyboard. Whether or not you are telling the truth is another story.
+Class: ^777777Headgear^000000
+Def: ^7777772^000000
+Location: ^777777Upper^000000
+Weight: ^77777770^000000
+Required Level: ^77777710^000000
+Jobs: ^777777All^000000
+#
+16588#
+A box that contains 6 headgears. Open the box and receive one of 6 thought bubble headgears.
+Contains one of the following:
+Guildsman Recruiter Hat
+Party Recruiter Hat
+Friend Recruiter Hat
+Bf Recruiter Hat
+Gf Recruiter Hat
+AFK Hat
+Weight : ^7777771^000000
+#
+16589#
+A box that contains 6 headgears. Open the box and receive one of 6 thought bubble headgears.
+Contains one of the following:
+Guildsman Recruiter Hat
+Party Recruiter Hat
+Friend Recruiter Hat
+Bf Recruiter Hat
+Gf Recruiter Hat
+AFK Hat
+Weight : ^7777771^000000
+#
+16590#
+A box that contains 6 headgears. Open the box and receive one of 6 thought bubble headgears.
+Contains one of the following:
+Guildsman Recruiter Hat
+Party Recruiter Hat
+Friend Recruiter Hat
+Bf Recruiter Hat
+Gf Recruiter Hat
+AFK Hat
+Weight : ^7777771^000000
 #
