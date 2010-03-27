@@ -3,7 +3,7 @@ package Interface::Wx::Window::Inventory;
 use strict;
 use base 'Interface::Wx::Base::ItemList';
 
-use Globals qw/$char %cart %storage %equipTypes_lut/;
+use Globals qw/$char %cart %storage %equipTypes_lut $cardMergeIndex @cardMergeItemsID/;
 
 sub new {
 	my ($class, $parent, $id) = @_;
@@ -161,6 +161,16 @@ sub _onRightClick {
 		
 		push @menu, {title => $canActivate . "\tDblClick", callback => sub { $weak->_onActivate }} if $canActivate;
 		push @menu, {title => 'Drop 1', callback => sub { $weak->_onDropOne }} if $canDrop;
+		
+		# FIXME: if your items change order or are used, this list will be wrong
+		for (@cardMergeItemsID) {
+			if ($item->{invIndex} == $_) {
+				push @menu, {title => (
+					sprintf 'Merge with %s', $char->inventory->get($cardMergeIndex)->{name}
+				), callback => sub { $weak->_onMerge }};
+				last;
+			}
+		}
 	} else {
 		#
 	}
@@ -218,6 +228,14 @@ sub _onDropOne {
 	return unless 1 == (my ($item) = $self->getSelection);
 	
 	Commands::run ('drop ' . $item->{invIndex} . ' 1');
+}
+
+sub _onMerge {
+	my ($self) = @_;
+	
+	return unless 1 == (my ($item) = $self->getSelection);
+	
+	Commands::run ('card merge ' . $item->{invIndex});
 }
 
 1;
