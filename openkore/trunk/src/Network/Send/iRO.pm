@@ -21,6 +21,9 @@ use Log qw(error debug);
 use I18N qw(stringToBytes);
 use Utils qw(getTickCount getHex getCoordString);
 
+use Network::Send::kRO::RagexeRE_2009_12_08a ();
+*sendBuyBulkVender = *Network::Send::kRO::RagexeRE_2009_12_08a::sendBuyBulkVender;
+
 sub new {
    my ($class) = @_;
    return $class->SUPER::new(@_);
@@ -47,4 +50,5 @@ sub sendHomunculusMove {
 	$self->sendToServer($msg);
 	debug "Sent Homunculus move to: $x, $y\n", "sendPacket", 2;
 }
+
 1;
