@@ -2218,9 +2218,9 @@ sub deal_begin {
 	my ($self, $args) = @_;
 
 	if ($args->{type} == 0) {
-		error T("That person is too far from you to trade.\n");
+		error T("That person is too far from you to trade.\n"), "deal";
 	} elsif ($args->{type} == 2) {
-		error T("That person is in another deal.\n");
+		error T("That person is in another deal.\n"), "deal";
 	} elsif ($args->{type} == 3) {
 		if (%incomingDeal) {
 			$currentDeal{name} = $incomingDeal{name};
@@ -2238,8 +2238,10 @@ sub deal_begin {
 			undef %outgoingDeal;
 		}
 		message TF("Engaged Deal with %s\n", $currentDeal{name}), "deal";
+	} elsif ($args->{type} == 5) {
+		error T("That person is in Kafra storage.\n"), "deal";
 	} else {
-		error TF("Deal request failed (unknown error %s).\n", $args->{type});
+		error TF("Deal request failed (unknown error %s).\n", $args->{type}), "deal";
 	}
 }
 
