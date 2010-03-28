@@ -270,6 +270,7 @@ ignoreAll 0
 itemHistory 0
 autoTalkCont 1
 noAutoSkill 0
+portalCompile 1
 portalRecord 2
 missDamage 0
 

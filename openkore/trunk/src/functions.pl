@@ -335,10 +335,19 @@ sub initNetworking {
 }
 
 sub initPortalsDatabase {
+	# $config{portalCompile}
+	# -1: skip compile
+	#  0: ask user
+	#  1: auto compile
+	
+	# TODO: detect when another instance already compiles portals?
+	
+	return if $config{portalCompile} < 0;
+	
 	Log::message(T("Checking for new portals... "));
 	if (compilePortals_check()) {
 		Log::message(T("found new portals!\n"));
-		my $choice = $interface->showMenu(
+		my $choice = $config{portalCompile} ? 0 : $interface->showMenu(
 			T("New portals have been added to the portals database. " .
 			"The portals database must be compiled before the new portals can be used. " .
 			"Would you like to compile portals now?\n"),
