@@ -138,6 +138,7 @@ sub new {
 		'00C7' => ['npc_sell_list'],
 		'00D1' => ['ignore_player_result', 'C2', [qw(type error)]],
 		'00D2' => ['ignore_all_result', 'C2', [qw(type error)]],
+		'00D4' => ['whisper_list'],
 		'00D6' => ['chat_created'],
 		'00D7' => ['chat_info', 'x2 a4 a4 v2 C a*', [qw(ownerID ID limit num_users public title)]],
 		'00D8' => ['chat_removed', 'a4', [qw(ID)]],
@@ -3192,6 +3193,14 @@ sub ignore_player_result {
 			message T("Player unignored\n");
 		}
 	}
+}
+
+sub whisper_list {
+	my ($self, $args) = @_;
+	
+	my @whisperList = unpack 'x4' . (' Z24' x (($args->{RAW_MSG_SIZE}-4)/24)), $args->{RAW_MSG};
+	
+	debug "whisper_list: @whisperList\n", "parseMsg";
 }
 
 sub inventory_item_added {
