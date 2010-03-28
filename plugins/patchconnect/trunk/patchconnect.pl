@@ -7,13 +7,15 @@
 
 package patchconnect;
 
-our $Version = "0.3";
+our $Version = "0.4";
 
 use strict;
 use IO::Socket;
 use Plugins;
 use Globals;
 use Utils;
+use Settings qw(%sys);
+use Translation qw(T TF);
 use Log qw(message error warning);
 
 my %cache = (timeout => 30);
@@ -39,10 +41,10 @@ sub Unload {
 sub checkConfig {
 	my $master = $masterServers{$config{master}};
 	if (!$master->{patchserver}) {
-		warning "No patchserver specified. Login will always be granted.\n";
+		warning "No patchserver specified. Login will always be granted.\n", 'connection';
 		return
 	}
-	warning "No path for patch_allow.txt specified. Using default value: /patch02\n"
+	warning "No path for patch_allow.txt specified. Using default value: /patch02\n", 'connection'
 		unless $master->{patchpath}
 }
 
@@ -55,7 +57,7 @@ sub checkConfig {
 sub patchClient {
 	my $master = $masterServers{$config{master}};
 
-	return 1 unless $master->{patchserver};
+	return 1 unless my $server = $master->{patchserver};
 	my $patch;
 
 	if ($master->{patchpath}) {
@@ -64,19 +66,30 @@ sub patchClient {
 		$patch = "/patch02"
 	}
 	$patch .= "/patch_allow.txt";
-
+	
+	if ($sys{patchconnect_proxy} =~ m|^http://([^/]+)(/.*)$|) {
+		$patch = sprintf '%s?url=http://%s%s', $2, $server, $patch;
+		$server = $1;
+	}
+	
+	message TF("Contacting patchserver (%s)... ", $server), 'connection';
+	
 	my $sock = new IO::Socket::INET(
-		PeerAddr => $master->{patchserver},
+		PeerAddr => $server,
 		PeerPort => 'http(80)',
 		Proto => 'tcp');
 	unless ($sock) {
-		error "[patchconnect] error opening socket: $@\n";
+		error "error opening socket: $@\n", 'connection';
 		return 2
 	}
 
-	print $sock "GET $patch HTTP/1.0\r\nAccept: */*\r\n".
-		"Host: ".$master->{patchserver}."\r\nUser-Agent: Patch Client\r\n".
-		"Connection: Close\r\n\r\n";
+	print $sock join "\r\n", (
+		"GET $patch HTTP/1.1",
+		"User-Agent: Patch Client",
+		"Host: $server",
+		"Cache-Control: no-cache",
+		"", ""
+	);
 
 	foreach (<$sock>) {
 		s/[\r\n]?$//;
@@ -90,29 +103,27 @@ sub patchCheck {
 	my (undef, $arg) = @_;
 	my $access;
 	if (timeOut($timeout{patchserver})) {
-		message "checking patchserver access control...\n";
 		my $access;
 		if (timeOut(\%cache)) {
-			message "contacting patchserver...\n";
 			$access = $cache{response} = patchClient();
 			$cache{time} = time
 		} else {
-			message "answer is still in cache.\n";
+			message T("Using cached patchserver's answer, "), 'connection';
 			$access = $cache{response}
 		}
 		if ($access == 1) {
-			message "patchserver grants login.\n";
+			message T("login granted\n"), 'connection';
 			${$arg->{return}} = 0;
 			return
 		} elsif ($access == 0) {
-			warning "patchserver prohibits login.\n";
+			warning T("login prohibited\n"), 'connection';
 			$timeout{patchserver}{time} = time
 		} else {
-			error "unable to connect to patchserver or neither 'allow' nor 'deny' received.\n";
-			error "disallowing connect.\n"
+			error T("couldn't connect or neither 'allow' nor 'deny' received"), 'connection';
+			error T(", disallowing connect\n"), 'connection';
 		}
 	} else {
-		warning "disallowing connect until next check.\n"
+		warning "disallowing connect until next check.\n, 'connection'"
 	}
 	${$arg->{return}} = 1
 }
@@ -125,14 +136,13 @@ sub commandHandler {
 		return
 	}
 	if ($arg eq 'check') {
-		message "checking patchserver...\n";
 		my $access = patchClient();
 		if ($access == 0) {
-			message "patchserver prohibits login.\n"
+			message T("login prohibited\n"), 'connection';
 		} elsif ($access == 1) {
-			message "patchserver grants login.\n"
+			message T("login granted\n"), 'connection';
 		} else {
-			message "could not connect to patchserver or reply is neither allow nor deny.\n"
+			message T("couldn't connect or neither 'allow' nor 'deny' received\n"), 'connection';
 		}
 	} elsif ($arg eq 'version') {
 		message "patchconnect plugin version $Version\n", "list"
