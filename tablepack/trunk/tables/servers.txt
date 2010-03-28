@@ -95,7 +95,7 @@ serverEncoding Western
 paddedPackets 0
 paddedPackets_attackID 0x72
 paddedPackets_skillUseID 0xF5
-patchserver ewpatch.ragnarok.co.kr
+patchserver ropatch1.gravityus.com
 patchpath /patch02
 
 [International - iRO: Sakray]
@@ -119,8 +119,8 @@ serverEncoding Western
 paddedPackets 0
 paddedPackets_attackID 0x72
 paddedPackets_skillUseID 0xF5
-patchserver ewpatch.ragnarok.co.kr
-patchpath /patch02
+patchserver ropatch1.gravityus.com
+patchpath /fpatch
 
 [Japan - jRO: Verdandi]
 ip 61.215.212.13
