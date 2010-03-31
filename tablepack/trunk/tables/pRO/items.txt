@@ -4766,5 +4766,11 @@
 13643#Vigorgra_Package_Vol_10#
 13644#Vigorgra_Package_Vol_11#
 13645#Vigorgra_Package_Vol_12#
+//-------2010 ｺﾎﾈｰﾀ----------------
+5852#Easter_Egg_Shell#
+//--------- ｹ霤ｻｼﾒ ﾀﾌｺ･ﾆｮ ｺｸｻ・ﾃﾟｰ｡ 2010 03ｿ・-----------------
+5772#Blood_Admiral's_Hat#
+5773#Navy_Blue_Beret#
+5774#First_Mate's_Bandana#
 
 //file end

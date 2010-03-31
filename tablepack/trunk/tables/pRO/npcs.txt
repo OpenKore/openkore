@@ -557,6 +557,7 @@ payon 143 165 Repair Man
 payon 144 173 Antonio
 payon 145 178 Begnahd
 payon 153 182 Cool Event Voting Staff
+payon 153 94 [Quest] Elite Mercenary
 payon 154 170 Hagin
 payon 157 141 Phoenix
 payon 158 182 Kafra Voting Staff#payo

@@ -4321,3 +4321,53 @@ Refine ^0000FFGloria's^000000 ^006400Ordinary Armor^000000 up to ^0000FF+5 level
 9071#Gloria's Study: Present#SG_FEEL#QUE_NOIMAGE#
 I have completed helping Gloria for today.Need to wait till 20 hours have passed.#
 Come back 20 hours later.#
+//-------- 2010 부활절 이벤트---------------
+9117#Oath-Taking Ceremony - 1st Adventure#SG_FEEL#QUE_NOIMAGE#
+You need to complete the 1st task to release the curse of ^0000FFRina^000000 who visited ^8B4513Prontera^000000. When you are ready, go to ^0000FFRina^000000.#
+To complete the 1st task of ^0000FFRina^000000#
+
+9118#Oath-Taking Ceremony - Kill DEVIRUCHI#SG_FEEL#QUE_NOIMAGE#
+Among ^FF0000DEVIRUCHI^000000, ^FF0000WRAITH DEAD^000000, ^FF0000DULLAHAN^000000, ^FF0000NIGHTMARE TERROR^000000, kill one kind of monster more than ^00640050^000000 and then go back to ^0000FFRina^000000.#
+^0000FFKill monsters to release the curse^000000#
+
+9119#Oath-Taking Ceremony - Kill WRAITH DEAD#SG_FEEL#QUE_NOIMAGE#
+Among ^FF0000DEVIRUCHI^000000, ^FF0000WRAITH DEAD^000000, ^FF0000DULLAHAN^000000, ^FF0000NIGHTMARE TERROR^000000, kill one kind of monster more than ^00640050^000000 and then go back to ^0000FFRina^000000.#
+^0000FFKill monsters to release the curse^000000#
+
+9120#Oath-Taking Ceremony - Kill DULLAHAN#SG_FEEL#QUE_NOIMAGE#
+Among ^FF0000DEVIRUCHI^000000, ^FF0000WRAITH DEAD^000000, ^FF0000DULLAHAN^000000, ^FF0000NIGHTMARE TERROR^000000, kill one kind of monster more than ^00640050^000000 and then go back to ^0000FFRina^000000.#
+^0000FFKill monsters to release the curse^000000#
+
+9121#Oath-Taking Ceremony - KILL NIGHTMARE TERROR#SG_FEEL#QUE_NOIMAGE#
+Among ^FF0000DEVIRUCHI^000000, ^FF0000WRAITH DEAD^000000, ^FF0000DULLAHAN^000000, ^FF0000NIGHTMARE TERROR^000000, kill one kind of monster more than ^00640050^000000 and then go back to ^0000FFRina^000000.#
+^0000FFKill monsters to release the curse^000000#
+
+9122#Oath-Taking Ceremony - 2nd Adventure#SG_FEEL#QUE_NOIMAGE#
+You need to complete the 2nd task to release the curse of ^0000FFRina^000000 who visited ^8B4513Prontera^000000.#
+To complete the 2nd task of ^0000FFRina^000000#
+
+9123#Oath-Taking Ceremony - Go to Prontera~!#SG_FEEL#QUE_NOIMAGE#
+It seems ^0000FFRina^000000's curse has been released. Go back to Rina.#
+To go back to ^0000FFRina^000000#
+
+// 필리핀 : "현상 수배 -마스터 시프-"	
+
+9035#Wanted: Master Thief#SG_FEEL#QUE_NOIMAGE#
+^0000FFGeffen Enforcer's^000000 message from ^8B4513Geffen^000000: "^404040Please capture the Master Thief^000000"#
+Find the ^FF0000Injured Master Thief^000000 at ^8B4513Geffen^000000!!#
+
+9036#Wanted: Master Thief#SG_FEEL#QUE_NOIMAGE#
+^0000FFGeffen Enforcer's^000000 message from ^8B4513Geffen^000000: "^404040Please capture the Master Thief^000000"#
+Bring ^FF0000Injured Master Thief^000000 to ^0000FFGeffen Enforcer^000000 in ^8B4513Geffen^000000.#
+
+9037#Wanted: Master Thief#SG_FEEL#QUE_NOIMAGE#
+^0000FFGeffen Enforcer's^000000 message from ^8B4513Geffen^000000: "^404040Let's help Master Thief. Life is always important.^000000"#
+Bring ^00640010 Green Herb^000000 to ^0000FFGeffen Enforcer^000000 in ^8B4513Geffen^000000.#
+
+9038#Wanted: Master Thief#SG_FEEL#QUE_NOIMAGE#
+^0000FFCaptain Enforcer's^000000 message from ^8B4513Alberta^000000: "^404040I have heard about your big help. I'd like to meet you.^000000"#
+Let's meet ^0000FFCaptain Enforcer^000000 in ^8B4513Alberta^000000.#
+
+9039#Wanted: Master Thief#SG_FEEL#QUE_NOIMAGE#
+^0000FFGeffen Enforcer's^000000 message from ^8B4513Geffen^000000: "^404040Thanks for helping. If you want to help me again, please come back 20 hours later.^000000"#
+^FF0000Wanted: Master Thief^000000  I have completed helping Geffen Enforcer for today. Need to wait till 20 hours have passed.#
