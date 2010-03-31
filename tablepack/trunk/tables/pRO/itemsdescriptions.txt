@@ -32671,7 +32671,7 @@ Jobs : ^777777All Jobs^000000
 5837#
 Enhanced version of Sunglasses from the Midgard Crowd Control event.
 Reduce damage from Demi-Human by 2%
-Item Class : ^777777Headgear^000000 Defense : ^7777770^000000
+Item Class : ^777777Headgear^000000 Defense : ^7777772^000000
 Location : ^777777Mid ^000000 Weight : ^7777771^000000
 Required Level : ^77777770^000000
 Jobs : ^777777All Jobs^000000
@@ -32679,7 +32679,7 @@ Jobs : ^777777All Jobs^000000
 5838#
 Enhanced version of Fin Helm from the Midgard Crowd Control event.
 Reduce damage from Demi-Human by 2%
-Item Class : ^777777Headgear^000000 Defense : ^7777770^000000
+Item Class : ^777777Headgear^000000 Defense : ^7777772^000000
 Location : ^777777Mid ^000000 Weight : ^7777771^000000
 Required Level : ^77777770^000000
 Jobs : ^777777All Jobs^000000
@@ -32687,7 +32687,7 @@ Jobs : ^777777All Jobs^000000
 5839#
 Enhanced version of Blush from the Midgard Crowd Control event.
 Reduce damage from Demi-Human by 2%
-Item Class : ^777777Headgear^000000 Defense : ^7777770^000000
+Item Class : ^777777Headgear^000000 Defense : ^7777772^000000
 Location : ^777777Mid ^000000 Weight : ^7777771^000000
 Required Level : ^77777770^000000
 Jobs : ^777777All Jobs^000000
@@ -32695,7 +32695,7 @@ Jobs : ^777777All Jobs^000000
 5840#
 Enhanced version of Elven Ears from the Midgard Crowd Control event.
 Reduce damage from Demi-Human by 2%
-Item Class : ^777777Headgear^000000 Defense : ^7777770^000000
+Item Class : ^777777Headgear^000000 Defense : ^7777772^000000
 Location : ^777777Mid ^000000 Weight : ^7777771^000000
 Required Level : ^77777770^000000
 Jobs : ^777777All Jobs^000000
@@ -32996,4 +32996,41 @@ It says "2 hours hunting will be enough for brave warriors!".
 ^ff0000This item is not refundable.^000000
 ^ffffff_^000000
 Weight : ^7777771^000000
+#
+//------------2010 ｺﾎﾈｰﾀ----------------
+5852#
+A colorful egg shell that seems fragile but has mysterious power in it.
+MDEF - 7.
+Recover HP by 1% in every 10 seconds.
+If refined higher than +7, increase FLEE + 2.
+If refined higher than +9, recover SP by 1% in every 10 seconds.
+Class: ^777777Headgear^000000 Defense: ^777777-7^000000
+Head Position: ^777777Upper^000000 Weight: ^77777750^000000
+Required Level: ^77777740^000000
+Jobs : ^777777All^000000
+#
+//--------- ｹ霤ｻｼﾒ ﾀﾌｺ･ﾆｮ ｺｸｻ・ﾃﾟｰ｡ 2010 03ｿ・-----------------
+5772#
+This is the hat worn by great Admirals of the navy fleet that defends the port of Alberta. Only those who have spent a lot of time helping the people of Alberta can earn this honorable hat.
+10% reduced damage from Demi-human.
+Item Class : ^777777Headgear^000000 Defense : ^7777771^000000
+Location : ^777777Upper^000000 Weight : ^77777750^000000
+Required Level : ^77777795^000000
+Jobs : ^777777All Jobs^000000
+#
+5773#
+This is a navy blue beret worn by the elite soldiers of the Navy of Alberta. It is very effective when battling pirates on the high seas.
+10% reduced damage from Demi-human.
+Item Class : ^777777Headgear^000000 Defense : ^7777771^000000
+Location : ^777777Upper^000000 Weight : ^77777750^000000
+Required Level : ^77777795^000000
+Jobs : ^777777All Jobs^000000
+#
+5774#
+A bandana usually worn by the first mate of a pirate ship. It commands respect from the crew and is effective when dealing with other pirates.
+10% reduced damage from Demi-human.
+Item Class : ^777777Headgear^000000 Defense : ^7777771^000000
+Location : ^777777Upper^000000 Weight : ^77777750^000000
+Required Level : ^77777795^000000
+Jobs : ^777777All Jobs^000000
 #
