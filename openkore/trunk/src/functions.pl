@@ -464,6 +464,15 @@ sub finalInitialization {
 	require Task::RaiseSkill;
 	$taskManager->add(new Task::RaiseSkill());
 
+	# protect actor hashes from autovivification
+	require Utils::ActorHashTie;
+	tie %items, 'Tie::ActorHash';
+	tie %monsters, 'Tie::ActorHash';
+	tie %portals, 'Tie::ActorHash';
+	tie %pets, 'Tie::ActorHash';
+	tie %npcs, 'Tie::ActorHash';
+	tie %slaves, 'Tie::ActorHash';
+
 	$itemsList = new ActorList('Actor::Item');
 	$monstersList = new ActorList('Actor::Monster');
 	$playersList = new ActorList('Actor::Player');
