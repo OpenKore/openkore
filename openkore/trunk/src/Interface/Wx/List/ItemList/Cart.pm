@@ -4,13 +4,14 @@ use strict;
 use base 'Interface::Wx::List::ItemList';
 
 use Globals qw/$char $conState %cart %storage/;
+use Translation qw/T TF/;
 
 sub new {
 	my ($class, $parent, $id) = @_;
 	
 	my $self = $class->SUPER::new ($parent, $id, [
 		{key => 'count', max => %cart && $cart{items_max} ? $cart{items_max} : '100'},
-		{key => 'weight', title => 'Weight', max => %cart && $cart{weight_max} ? $cart{weight_max} : '100'},
+		{key => 'weight', title => T('Weight'), max => %cart && $cart{weight_max} ? $cart{weight_max} : '100'},
 	]);
 	
 	$self->{hooks} = Plugins::addHooks (
@@ -84,8 +85,8 @@ sub _onRightClick {
 	
 	my ($canStorage) = (%storage && $storage{opened});
 	
-	push @menu, {title => 'Move all to inventory' . "\tDblClick", callback => sub { $self->_onActivate; }};
-	push @menu, {title => 'Move all to storage', callback => sub { $self->_onStorage; }} if $canStorage;
+	push @menu, {title => T('Move all to inventory') . "\tDblClick", callback => sub { $self->_onActivate; }};
+	push @menu, {title => T('Move all to storage'), callback => sub { $self->_onStorage; }} if $canStorage;
 	
 	$self->contextMenu (\@menu);
 }

@@ -7,6 +7,7 @@ use base 'Wx::Panel';
 
 use Globals;
 use Misc qw/configModify/;
+use Translation qw/T TF/;
 
 sub new {
 	my ($class, $parent, $id) = @_;
@@ -67,22 +68,22 @@ sub new {
 	my $hsizer = new Wx::BoxSizer (wxHORIZONTAL);
 	$sizer->Add ($hsizer, 0, wxGROW | wxALL, 4);
 	
-	$self->{okButton} = new Wx::Button ($self, wxID_ANY, '&OK');
-	$self->{okButton}->SetToolTip ('Continue talking / submit response');
+	$self->{okButton} = new Wx::Button ($self, wxID_ANY, T('&OK'));
+	$self->{okButton}->SetToolTip (T('Continue talking / submit response'));
 	$self->{okButton}->Enable (0);
 	EVT_BUTTON ($self, $self->{okButton}->GetId, sub { $self->_onOk; });
 	$hsizer->Add ($self->{okButton}, 0, wxRIGHT, 4);
 	
-	$self->{autoButton} = new Wx::Button ($self, wxID_ANY, '&Auto');
-	$self->{autoButton}->SetToolTip ('Auto-continuing talking');
+	$self->{autoButton} = new Wx::Button ($self, wxID_ANY, T('&Auto'));
+	$self->{autoButton}->SetToolTip (T('Auto-continuing talking'));
 	$self->{autoButton}->Enable (0);
 	EVT_BUTTON ($self, $self->{autoButton}->GetId, sub { $self->_onAuto; });
 	$hsizer->Add ($self->{autoButton}, 0, wxRIGHT, 4);
 	
 	$hsizer->AddStretchSpacer;
 	
-	$self->{cancelButton} = new Wx::Button ($self, wxID_ANY, '&Cancel');
-	$self->{cancelButton}->SetToolTip ('Cancel talking');
+	$self->{cancelButton} = new Wx::Button ($self, wxID_ANY, T('&Cancel'));
+	$self->{cancelButton}->SetToolTip (T('Cancel talking'));
 	$self->{cancelButton}->Enable (0);
 	EVT_BUTTON ($self, $self->{cancelButton}->GetId, sub { $self->_onCancel; });
 	$hsizer->Add ($self->{cancelButton}, 0);
@@ -236,7 +237,7 @@ sub npcTalk {
 }
 
 sub npcContinue {
-	$_[0]->_onAction ('continue', 'Continue talking');
+	$_[0]->_onAction ('continue', T('Continue talking'));
 }
 
 sub npcResponses {
@@ -245,21 +246,21 @@ sub npcResponses {
 	$self->{listResponses}->Clear;
 	$self->{listResponses}->Append ($_) foreach $responses;
 	
-	$self->_onAction ('responses', 'Choose a response');
+	$self->_onAction ('responses', T('Choose a response'));
 }
 
 sub npcNumber {
-	$_[0]->_onAction ('number', 'Input a number');
+	$_[0]->_onAction ('number', T('Input a number'));
 }
 
 sub npcText {
-	$_[0]->_onAction ('number', 'Respond to NPC');
+	$_[0]->_onAction ('number', T('Respond to NPC'));
 }
 
 sub npcClose {
 	my ($self) = @_;
 	
-	$self->_onAction (undef, 'Done talking');
+	$self->_onAction (undef, T('Done talking'));
 	$self->{closed} = 1;
 }
 

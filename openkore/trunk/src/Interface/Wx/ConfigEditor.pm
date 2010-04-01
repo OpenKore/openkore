@@ -7,6 +7,7 @@ use base qw(Wx::Panel);
 use Interface::Wx::ConfigEditor;
 use encoding 'utf8';
 
+use Translation qw/T TF/;
 
 sub new {
 	my $class = shift;
@@ -21,7 +22,7 @@ sub new {
 	my $vsizer = new Wx::BoxSizer(wxVERTICAL);
 	$hsizer->Add($vsizer, 0, wxGROW | wxRIGHT, 8);
 
-	my $label = new Wx::StaticText($self, wxID_ANY, 'Categories:');
+	my $label = new Wx::StaticText($self, wxID_ANY, T('Categories:'));
 	$vsizer->Add($label, 0);
 
 	my $list = $self->{list} = new Wx::ListBox($self, 81, wxDefaultPosition, wxDefaultSize,
@@ -72,7 +73,7 @@ sub onRevertEnable {
 sub _displayIntro {
 	my $self = shift;
 	my $label = $self->{intro} = new Wx::StaticText($self, wxID_ANY,
-		'Click on one of the categories on the left to begin.',
+		T('Click on one of the categories on the left to begin.'),
 		wxDefaultPosition, wxDefaultSize, wxALIGN_CENTRE);
 	$self->{hsizer}->Add($label, 1, wxALIGN_CENTER);
 }
@@ -135,6 +136,7 @@ use Wx::Event qw(EVT_GRID_CELL_CHANGE EVT_GRID_CELL_LEFT_CLICK EVT_TIMER EVT_BUT
 use Wx::Html;
 use base qw(Wx::Panel);
 
+use Translation qw/T TF/;
 use Utils::HttpReader;
 
 our $manual;
@@ -159,8 +161,8 @@ sub new {
 	$grid->CreateGrid(0, 2);
 	$grid->SetRowLabelSize(0);
 	$grid->SetColLabelSize(22);
-	$grid->SetColLabelValue(0, "Option");
-	$grid->SetColLabelValue(1, "Value");
+	$grid->SetColLabelValue(0, T("Option"));
+	$grid->SetColLabelValue(1, T("Value"));
 	$grid->EnableDragRowSize(0);
 	EVT_GRID_CELL_LEFT_CLICK($grid, sub { $self->_onClick(@_); });
 	EVT_GRID_CELL_CHANGE($grid, sub { $self->_changed(@_); });
@@ -196,9 +198,9 @@ sub downloadManual {
 		close $f;
 
 	} else {
-		my $dialog = new Wx::Dialog($parent->GetGrandParent, wxID_ANY, "Downloading");
+		my $dialog = new Wx::Dialog($parent->GetGrandParent, wxID_ANY, T("Downloading"));
 		my $sizer = new Wx::BoxSizer(wxVERTICAL);
-		my $label = new Wx::StaticText($dialog, wxID_ANY, "Downloading manual, please wait...");
+		my $label = new Wx::StaticText($dialog, wxID_ANY, T("Downloading manual, please wait..."));
 		$sizer->Add($label, 1, wxGROW | wxALL, 8);
 		my $gauge = new Wx::Gauge($dialog, wxID_ANY, 100, wxDefaultPosition,
 			[0, 16], wxGA_SMOOTH | wxGA_HORIZONTAL);
@@ -324,10 +326,10 @@ sub _changed {
 sub _help {
 	my ($name) = @_;
 	if ($manual eq '') {
-		return 'Unable to download the manual.';
+		return T('Unable to download the manual.');
 	} else {
 		my ($found) = $manual =~ /(<span class=\"mw-headline\">$name<\/span><\/h3>.*?)<hr \/>/s;
-		$found = "No help available for \"$name\"." if ($found eq '');
+		$found = TF('No help available for "%s".', $name) if ($found eq '');
 		return $found;
 	}
 }

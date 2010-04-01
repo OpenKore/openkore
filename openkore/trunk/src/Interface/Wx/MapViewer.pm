@@ -31,7 +31,7 @@ use FastUtils;
 # vcl code use Utils::CallbackList;
 use Log qw(message);
 use Globals;
-use Translation qw(TF);
+use Translation qw(T TF);
 
 use constant PI => 3.14;
 
@@ -367,7 +367,7 @@ sub _onRightClick {
 		
 		my $map = $field{name};
 		AI::clear(qw/move route mapRoute/);
-		message TF("Walking to waypoint: $x, $y\n"), "success";
+		message TF("Walking to waypoint: %s, %s\n", $x, $y), "success";
 		main::ai_route($map, $x, $y,
 		attackOnRoute => 2,
 		noSitAuto => 1,

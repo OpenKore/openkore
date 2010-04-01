@@ -28,6 +28,7 @@ use Wx::Event qw(EVT_LIST_ITEM_ACTIVATED EVT_LIST_ITEM_RIGHT_CLICK);
 use File::Spec;
 use Scalar::Util;
 
+use Translation qw/T TF/;
 
 sub new {
 	my $class = shift;
@@ -35,7 +36,7 @@ sub new {
 	my $self = $class->SUPER::new($parent, 622, wxDefaultPosition, wxDefaultSize,
 		wxLC_REPORT | wxLC_VIRTUAL | wxLC_SINGLE_SEL);
 
-	$self->InsertColumn(0, "Players, Monsters & Items");
+	$self->InsertColumn(0, T("Players, Monsters & Items"));
 	$self->SetColumnWidth(0, -2);
 	EVT_LIST_ITEM_ACTIVATED($self, 622, \&_onActivate);
 	EVT_LIST_ITEM_RIGHT_CLICK($self, 622, \&_onRightClick);

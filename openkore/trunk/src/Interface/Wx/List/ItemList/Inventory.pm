@@ -4,6 +4,7 @@ use strict;
 use base 'Interface::Wx::List::ItemList';
 
 use Globals qw/$char %cart %storage %equipTypes_lut/;
+use Translation qw/T TF/;
 
 sub new {
 	my ($class, $parent, $id) = @_;
@@ -145,29 +146,29 @@ sub _onRightClick {
 		
 		my ($canActivate, $canDrop) = (undef, 1);
 		if ($self->isUsable ($item)) {
-			$canActivate = 'Use 1 on self';
+			$canActivate = T('Use 1 on self');
 		} elsif ($self->isEquip ($item)) {
 			unless ($item->{equipped}) {
-				$canActivate = 'Equip' if $item->{identified};
+				$canActivate = T('Equip') if $item->{identified};
 			} else {
-				$canActivate = 'Unequip';
+				$canActivate = T('Unequip');
 				$canCart = 0;
 				$canStorage = 0;
 				$canDrop = 0;
 			}
 		} elsif ($self->isCard ($item)) {
-			$canActivate = 'Start card merging';
+			$canActivate = T('Start card merging');
 		}
 		
 		push @menu, {title => $canActivate . "\tDblClick", callback => sub { $self->_onActivate; }} if $canActivate;
-		push @menu, {title => 'Drop 1', callback => sub { $self->_onDropOne; }} if $canDrop;
+		push @menu, {title => T('Drop 1'), callback => sub { $self->_onDropOne; }} if $canDrop;
 	} else {
 		#
 	}
 	
-	push @menu, {title => 'Move all to cart', callback => sub { $self->_onCart; }} if $canCart;
-	push @menu, {title => 'Move all to storage', callback => sub { $self->_onStorage; }} if $canStorage;
-	push @menu, {title => 'Sell all', callback => sub { $self->_onSell; }};
+	push @menu, {title => T('Move all to cart'), callback => sub { $self->_onCart; }} if $canCart;
+	push @menu, {title => T('Move all to storage'), callback => sub { $self->_onStorage; }} if $canStorage;
+	push @menu, {title => T('Sell all'), callback => sub { $self->_onSell; }};
 	
 	$self->contextMenu (\@menu);
 }
