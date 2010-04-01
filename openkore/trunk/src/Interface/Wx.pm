@@ -246,7 +246,7 @@ sub query {
 	my $message = shift;
 	my %args = @_;
 
-	$args{title} = "Query" if (!defined $args{title});
+	$args{title} = T("Query") if (!defined $args{title});
 	$args{cancelable} = 1 if (!exists $args{cancelable});
 
 	$message = wrapText($message, 70);
@@ -281,7 +281,7 @@ sub showMenu {
 	my $choices = shift;
 	my %args = @_;
 
-	$args{title} = "Menu" if (!defined $args{title});
+	$args{title} = T("Menu") if (!defined $args{title});
 	$args{cancelable} = 1 if (!exists $args{cancelable});
 
 	$message = wrapText($message, 70);
@@ -338,7 +338,7 @@ sub errorDialog {
 	my $msg = shift;
 	my $fatal = shift;
 
-	my $title = ($fatal) ? "Fatal error" : "Error";
+	my $title = ($fatal) ? T("Fatal error") : T("Error");
 	$self->{iterating}++;
 	Wx::MessageBox($msg, "$title - $Settings::NAME", wxICON_ERROR, $self->{frame});
 	$self->{iterating}--;
@@ -407,7 +407,7 @@ sub createInterface {
 	my $timer = new Wx::Timer($self, 73289);
 	EVT_TIMER($self, 73289, sub {
 		$self->{inputBox}->SetFocus;
-		$self->{notebook}->switchPage('Console');
+		$self->{notebook}->switchPage(T('Console'));
 #		$splitter->SetSashGravity(1);
 	});
 	$timer->Start(500, 1);
@@ -446,16 +446,16 @@ sub createMenuBar {
 
 	# Info menu
 	my $infoMenu = new Wx::Menu;
-	$self->addMenu($infoMenu, '&Status	Alt-S',	sub { Commands::run("s"); });
-	$self->addMenu($infoMenu, 'S&tatistics',	sub { Commands::run("st"); });
-	$self->addMenu($infoMenu, '&Inventory	Alt-I',	sub { Commands::run("i"); });
-	$self->addMenu($infoMenu, 'S&kills',		sub { Commands::run("skills"); });
+	$self->addMenu($infoMenu, T('&Status').'	Alt-S',	sub { Commands::run("s"); });
+	$self->addMenu($infoMenu, T('S&tatistics'),	sub { Commands::run("st"); });
+	$self->addMenu($infoMenu, T('&Inventory').'	Alt-I',	sub { Commands::run("i"); });
+	$self->addMenu($infoMenu, T('S&kills'),		sub { Commands::run("skills"); });
 	$infoMenu->AppendSeparator;
-	$self->addMenu($infoMenu, '&Players	Alt-P',	sub { Commands::run("pl"); });
-	$self->addMenu($infoMenu, '&Monsters	Alt-M',	sub { Commands::run("ml"); });
-	$self->addMenu($infoMenu, '&NPCs',		sub { Commands::run("nl"); });
+	$self->addMenu($infoMenu, T('&Players').'	Alt-P',	sub { Commands::run("pl"); });
+	$self->addMenu($infoMenu, T('&Monsters').'	Alt-M',	sub { Commands::run("ml"); });
+	$self->addMenu($infoMenu, T('&NPCs'),		sub { Commands::run("nl"); });
 	$infoMenu->AppendSeparator;
-	$self->addMenu($infoMenu, '&Experience Report',	sub { Commands::run("exp"); });
+	$self->addMenu($infoMenu, T('&Experience Report'),	sub { Commands::run("exp"); });
 	$menu->Append($infoMenu, T('I&nfo'));
 
 	# View menu
@@ -487,7 +487,7 @@ sub createMenuBar {
 	$viewMenu->AppendSeparator;
 	
 	$self->addMenu($viewMenu, T('&Experience Report') . "\tCtrl+E", sub {
-		$self->openWindow ('Report', 'Interface::Wx::StatView::Exp', 1) 
+		$self->openWindow (T('Report'), 'Interface::Wx::StatView::Exp', 1) 
 	});
 	
 	$viewMenu->AppendSeparator;
@@ -560,7 +560,7 @@ sub createInfoPanel {
 	my $infoPanel = $self->{infoPanel} = new Wx::Panel($frame, wxID_ANY);
 
 	my $hsizer = new Wx::BoxSizer(wxHORIZONTAL);
-	my $label = new Wx::StaticText($infoPanel, wxID_ANY, "HP: ");
+	my $label = new Wx::StaticText($infoPanel, wxID_ANY, T("HP: "));
 	$hsizer->Add($label, 0, wxLEFT, 3);
 
 
@@ -570,7 +570,7 @@ sub createInfoPanel {
 		wxGA_HORIZONTAL | wxGA_SMOOTH);
 	$hsizer->Add($hpBar, 1, wxRIGHT, 8);
 
-	$label = new Wx::StaticText($infoPanel, wxID_ANY, "SP: ");
+	$label = new Wx::StaticText($infoPanel, wxID_ANY, T("SP: "));
 	$hsizer->Add($label, 0);
 
 	## SP
@@ -579,7 +579,7 @@ sub createInfoPanel {
 		wxGA_HORIZONTAL | wxGA_SMOOTH);
 	$hsizer->Add($spBar, 1, wxRIGHT, 8);
 
-	$label = new Wx::StaticText($infoPanel, wxID_ANY, "Exp: ");
+	$label = new Wx::StaticText($infoPanel, wxID_ANY, T("Exp: "));
 	$hsizer->Add($label, 0);
 
 	## Exp and job exp
@@ -592,7 +592,7 @@ sub createInfoPanel {
 		wxGA_HORIZONTAL | wxGA_SMOOTH);
 	$hsizer->Add($jobExpBar, 1, wxRIGHT, 8);
 
-	$label = new Wx::StaticText($infoPanel, wxID_ANY, "Weight: ");
+	$label = new Wx::StaticText($infoPanel, wxID_ANY, T("Weight: "));
 	$hsizer->Add($label, 0);
 
 	## Weight
@@ -625,7 +625,7 @@ sub createInputField {
 	$hsizer->Add($inputBox, 1, wxGROW);
 
 	my $choice = $self->{inputType} = new Wx::Choice($frame, 456, wxDefaultPosition, wxDefaultSize,
-			['Command', 'Public chat', 'Party chat', 'Guild chat']);
+			[T('Command'), T('Public chat'), T('Party chat'), T('Guild chat')]);
 	$choice->SetSelection(0);
 	EVT_CHOICE($self, 456, sub { $inputBox->SetFocus; });
 	$hsizer->Add($choice, 0, wxGROW);
@@ -639,11 +639,11 @@ sub createSplitterContent {
 	## Dockable notebook with console and chat log
 	my $notebook = $self->{notebook} = new Interface::Wx::DockNotebook($splitter, wxID_ANY);
 	$notebook->SetName('notebook');
-	my $page = $notebook->newPage(0, 'Console');
+	my $page = $notebook->newPage(0, T('Console'));
 	my $console = $self->{console} = new Interface::Wx::Console($page);
 	$page->set($console);
 
-	$page = $notebook->newPage(1, 'Chat Log', 0);
+	$page = $notebook->newPage(1, T('Chat Log'), 0);
 	my $chatLog = $self->{chatLog} = new Interface::Wx::LogView($page);
 	$page->set($chatLog);
 	$chatLog->addColor("selfchat", 0, 148, 0);
@@ -666,7 +666,7 @@ sub createSplitterContent {
 
 
 	# Dock
-	my $mapDock = $self->{mapDock} = new Interface::Wx::Dock($subSplitter, wxID_ANY, 'Map');
+	my $mapDock = $self->{mapDock} = new Interface::Wx::Dock($subSplitter, wxID_ANY, T('Map'));
 	$mapDock->Show(0);
 	$mapDock->setHideFunc($self, sub {
 		$subSplitter->Unsplit($mapDock);
@@ -759,13 +759,13 @@ sub updateStatusBar {
 	my ($statText, $xyText, $aiText) = ('', '', '');
 
 	if ($self->{loadingFiles}) {
-		$statText = sprintf("Loading files... %.0f%%", $self->{loadingFiles}{percent} * 100);
+		$statText = TF("Loading files... %.0f%%", $self->{loadingFiles}{percent} * 100);
 	} elsif (!$conState) {
-		$statText = "Initializing...";
+		$statText = T("Initializing...");
 	} elsif ($conState == 1) {
-		$statText = "Not connected";
+		$statText = T("Not connected");
 	} elsif ($conState > 1 && $conState < 5) {
-		$statText = "Connecting...";
+		$statText = T("Connecting...");
 	} elsif ($self->{mouseMapText}) {
 		$statText = $self->{mouseMapText};
 	}
@@ -788,7 +788,7 @@ sub updateStatusBar {
 				$aiText = "";
 			}
 		} else {
-			$aiText = "Paused";
+			$aiText = T("Paused");
 		}
 	}
 
@@ -903,7 +903,7 @@ sub onInputEnter {
 	}
 
 	if ($conState != 5) {
-		$self->{console}->add("error", "You're not logged in.\n");
+		$self->{console}->add("error", T("You're not logged in.\n"));
 		return;
 	}
 
@@ -924,7 +924,7 @@ sub onMenuOpen {
 	$self->{mManual}->Enable($AI != 1);
 	$self->{mResume}->Enable($AI != 2);
 	$self->{infoBarToggle}->Check($self->{infoPanel}->IsShown);
-	$self->{chatLogToggle}->Check(defined $self->{notebook}->hasPage('Chat Log') ? 1 : 0);
+	$self->{chatLogToggle}->Check(defined $self->{notebook}->hasPage(T('Chat Log')) ? 1 : 0);
 	
 	while (my ($setting, $menu) = each (%{$self->{mBooleanSetting}})) {
 		$menu->Check ($config{$setting} ? 1 : 0);
@@ -1002,12 +1002,12 @@ sub onBooleanSetting {
 
 sub onAdvancedConfig {
 	my $self = shift;
-	if ($self->{notebook}->hasPage('Advanced Configuration')) {
-		$self->{notebook}->switchPage('Advanced Configuration');
+	if ($self->{notebook}->hasPage(T('Advanced Configuration'))) {
+		$self->{notebook}->switchPage(T('Advanced Configuration'));
 		return;
 	}
 
-	my $page = $self->{notebook}->newPage(1, 'Advanced Configuration');
+	my $page = $self->{notebook}->newPage(1, T('Advanced Configuration'));
 	my $panel = new Wx::Panel($page, wxID_ANY);
 
 	my $vsizer = new Wx::BoxSizer(wxVERTICAL);
@@ -1016,7 +1016,7 @@ sub onAdvancedConfig {
 	require Interface::Wx::ConfigEditor;
 	my $cfg = new Interface::Wx::ConfigEditor($panel, wxID_ANY);
 	$cfg->setConfig(\%config);
-	$cfg->addCategory('All', 'Grid');
+	$cfg->addCategory(T('All'), 'Grid');
 	$cfg->addCategory('server', 'Grid', ['master', 'server', 'username', 'password', 'char', 'serverType']);
 	$cfg->addCategory('X-Kore', 'Grid', ['XKore', 'XKore_silent', 'XKore_bypassBotDetection', 'XKore_exeName', 'XKore_listenIp', 'XKore_listenPort', 'XKore_publicIp', 'secureAdminPassword', 'adminPassword', 'callSign', 'commandPrefix']);
 	$cfg->addCategory('lockMap', 'Grid', ['lockMap', 'lockMap_x', 'lockMap_y', 'lockMap_randX', 'lockMap_randY']);
@@ -1039,8 +1039,8 @@ sub onAdvancedConfig {
 	my $sizer = new Wx::BoxSizer(wxHORIZONTAL);
 	$vsizer->Add($sizer, 0, wxGROW | wxLEFT | wxRIGHT | wxBOTTOM, 8);
 
-	my $revert = new Wx::Button($panel, 46, '&Revert');
-	$revert->SetToolTip('Revert settings to before you opened the selected category');
+	my $revert = new Wx::Button($panel, 46, T('&Revert'));
+	$revert->SetToolTip(T('Revert settings to before you opened the selected category'));
 	$sizer->Add($revert, 0);
 	EVT_BUTTON($revert, 46, sub {
 		$cfg->revert;
@@ -1053,12 +1053,12 @@ sub onAdvancedConfig {
 	my $pad = new Wx::Window($panel, wxID_ANY);
 	$sizer->Add($pad, 1);
 
-	my $close = new Wx::Button($panel, 47, '&Close');
-	$close->SetToolTip('Close this panel/dialog');
+	my $close = new Wx::Button($panel, 47, T('&Close'));
+	$close->SetToolTip(T('Close this panel/dialog'));
 	$close->SetDefault;
 	$sizer->Add($close, 0);
 	EVT_BUTTON($close, 47, sub {
-		$self->{notebook}->closePage('Advanced Configuration');
+		$self->{notebook}->closePage(T('Advanced Configuration'));
 	});
 
 	$page->set($panel);
@@ -1078,10 +1078,10 @@ sub onInfoBarToggle {
 sub onChatLogToggle {
 	my $self = shift;
 	if (!$self->{chatLogToggle}->IsChecked) {
-		$self->{notebook}->closePage('Chat Log');
+		$self->{notebook}->closePage(T('Chat Log'));
 
-	} elsif (!$self->{notebook}->hasPage('Chat Log')) {
-		my $page = $self->{notebook}->newPage(1, 'Chat Log', 0);
+	} elsif (!$self->{notebook}->hasPage(T('Chat Log'))) {
+		my $page = $self->{notebook}->newPage(1, T('Chat Log'), 0);
 		my $chatLog = $self->{chatLog} = new Interface::Wx::LogView($page);
 		$page->set($chatLog);
 		$chatLog->addColor("selfchat", 0, 148, 0);
@@ -1092,7 +1092,7 @@ sub onChatLogToggle {
 		$page->set($chatLog);
 
 	} else {
-		$self->{notebook}->switchPage('Chat Log');
+		$self->{notebook}->switchPage(T('Chat Log'));
 	}
 }
 
@@ -1125,56 +1125,56 @@ sub openWindow {
 
 sub openStats {
 	my ($self, $create) = @_;
-	my ($page, $window) = $self->openWindow ('Status', 'Interface::Wx::StatView::You', $create);
+	my ($page, $window) = $self->openWindow (T('Status'), 'Interface::Wx::StatView::You', $create);
 	
 	return ($page, $window);
 }
 
 sub openHomunculus {
 	my ($self, $create) = @_;
-	my ($page, $window) = $self->openWindow ('Homunculus', 'Interface::Wx::StatView::Homunculus', $create);
+	my ($page, $window) = $self->openWindow (T('Homunculus'), 'Interface::Wx::StatView::Homunculus', $create);
 	
 	return ($page, $window);
 }
 
 sub openMercenary {
 	my ($self, $create) = @_;
-	my ($page, $window) = $self->openWindow ('Mercenary', 'Interface::Wx::StatView::Mercenary', $create);
+	my ($page, $window) = $self->openWindow (T('Mercenary'), 'Interface::Wx::StatView::Mercenary', $create);
 	
 	return ($page, $window);
 }
 
 sub openPet {
 	my ($self, $create) = @_;
-	my ($page, $window) = $self->openWindow ('Pet', 'Interface::Wx::StatView::Pet', $create);
+	my ($page, $window) = $self->openWindow (T('Pet'), 'Interface::Wx::StatView::Pet', $create);
 	
 	return ($page, $window);
 }
 
 sub openInventory {
 	my ($self, $create) = @_;
-	my ($page, $window) = $self->openWindow ('Inventory', 'Interface::Wx::List::ItemList::Inventory', $create);
+	my ($page, $window) = $self->openWindow (T('Inventory'), 'Interface::Wx::List::ItemList::Inventory', $create);
 	
 	return ($page, $window);
 }
 
 sub openCart {
 	my ($self, $create) = @_;
-	my ($page, $window) = $self->openWindow ('Cart', 'Interface::Wx::List::ItemList::Cart', $create);
+	my ($page, $window) = $self->openWindow (T('Cart'), 'Interface::Wx::List::ItemList::Cart', $create);
 	
 	return ($page, $window);
 }
 
 sub openStorage {
 	my ($self, $create) = @_;
-	my ($page, $window) = $self->openWindow ('Storage', 'Interface::Wx::List::ItemList::Storage', $create);
+	my ($page, $window) = $self->openWindow (T('Storage'), 'Interface::Wx::List::ItemList::Storage', $create);
 	
 	return ($page, $window);
 }
 
 sub openEmotions {
 	my ($self, $create) = @_;
-	my ($page, $window) = $self->openWindow ('Emotions', 'Interface::Wx::EmotionList', $create);
+	my ($page, $window) = $self->openWindow (T('Emotions'), 'Interface::Wx::EmotionList', $create);
 	
 	if ($window) {
 		$window->onEmotion (sub {
@@ -1190,7 +1190,7 @@ sub openEmotions {
 sub openNpcTalk {
 	my ($self, $create) = @_;
 	return unless $config{wx_npcTalk};
-	my ($page, $window) = $self->openWindow ('NPC Talk', 'Interface::Wx::NpcTalk', $create);
+	my ($page, $window) = $self->openWindow (T('NPC Talk'), 'Interface::Wx::NpcTalk', $create);
 	
 	if ($window) {
 		$window->onContinue  (sub { Commands::run ('talk cont'); });
@@ -1224,7 +1224,7 @@ sub onItemListActivate {
 		main::attack($actor->{ID});
 
 	} elsif ($actor->isa('Actor::Item')) {
-		$self->{console}->add("message", "Taking item " . $actor->nameIdx . "\n", "info");
+		$self->{console}->add("message", TF("Taking item %s\n", $actor->nameIdx), "info");
 		main::take($actor->{ID});
 
 	} elsif ($actor->isa('Actor::NPC')) {
@@ -1267,7 +1267,7 @@ sub onChatAdd {
 	if ($tmpdate[1] < 10) {$tmpdate[1] = "0".$tmpdate[1]};
 	if ($tmpdate[2] < 10) {$tmpdate[2] = "0".$tmpdate[2]};
 
-	return if (!$self->{notebook}->hasPage('Chat Log'));
+	return if (!$self->{notebook}->hasPage(T('Chat Log')));
 	if ($hook eq "ChatQueue::add" && $params->{type} ne "pm") {
 		my $msg = '';
 		if ($params->{type} ne "c") {
@@ -1295,7 +1295,7 @@ sub onMapMouseMove {
 
 	$walkable = $field->isWalkable($x, $y);
 	if ($x >= 0 && $y >= 0 && $walkable) {
-		$self->{mouseMapText} = "Mouse over: $x, $y";
+		$self->{mouseMapText} = TF("Mouse over: %s, %s", $x, $y);
 	} else {
 		delete $self->{mouseMapText};
 	}
@@ -1318,7 +1318,7 @@ sub onMapClick {
 			if (distance($portal,{x=>$x,y=>$y}) <= ($config{wx_map_portalSticking} || 5)) {
 				$x = $portal->{x};
 				$y = $portal->{y};
-				$self->writeOutput("message", "Moving to Portal $x, $y\n", "info");
+				$self->writeOutput("message", TF("Moving to Portal %s, %s\n", $x, $y), "info");
 				$checkPortal = 1;
 				last;
 			}
@@ -1342,7 +1342,7 @@ sub onMapClick {
 	}
 	
 	unless ($noMove) {
-		$self->writeOutput("message", "Moving to $x, $y\n", "info") unless $checkPortal;
+		$self->writeOutput("message", TF("Moving to %s, %s\n", $x, $y), "info") unless $checkPortal;
 		AI::clear("mapRoute", "route", "move");
 		main::ai_route($field->name(), $x, $y, attackOnRoute => 1);
 	}
