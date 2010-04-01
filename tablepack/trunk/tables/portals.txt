@@ -2598,8 +2598,82 @@ y_airport 143 49 y_airport 142 40 0 c r0 c r0
 y_airport 140 63 yuno 47 244 0 c r0
 y_airport 145 63 yuno 59 244 0 c r0 
 
+# Lighthalzen airport
+lhz_airport 143 43 lhz_airport 148 51 1200 c r0 c r0
+lhz_airport 143 49 lhz_airport 142 40 0 c r0 c r0
+
 # Izlude airship
 izlude 206 55 airplane_01 244 58 1200 c r0 c r0
 
 # Rachel airship
 #(portal with dialog) ra_fild12 295 208 airplane_01 245 60 1200 c r0
+
+prt_fild03 371 256 prt_monk 25 248
+prt_monk 245 137 monk_in 98 183
+monk_in 98 186 prt_monk 245 139
+monk_in 99 141 monk_in 99 100
+monk_in 99 102 monk_in 99 143
+monk_in 128 84 monk_in 161 90
+monk_in 159 90 monk_in 126 84
+monk_in 69 84 monk_in 38 92
+monk_in 40 92 monk_in 71 84
+monk_in 128 46 monk_in 161 38
+monk_in 159 38 monk_in 126 46
+monk_in 69 46 monk_in 38 38
+monk_in 40 38 monk_in 71 46
+monk_in 98 27 prt_monk 245 104
+prt_monk 245 106 monk_in 98 30
+job_monk 225 180 prt_monk 194 168 0 c
+monk_test 329 76 monk_test 259 118
+monk_test 259 115 monk_test 329 71
+monk_test 272 125 monk_test 301 127
+monk_test 298 127 monk_test 268 125
+monk_test 166 278 prt_monk 196 168
+monk_test 329 47 prt_monk 193 166
+
+# Aldebaran - alchemist guild
+aldebaran 65 53 alde_alche 20 175
+alde_alche 13 184 alde_alche 88 113
+alde_alche 88 117 alde_alche 13 181
+alde_alche 46 104 alde_alche 157 17
+alde_alche 160 17 alde_alche 50 103
+alde_alche 133 103 alde_alche 164 164
+alde_alche 158 163 alde_alche 129 103
+alde_alche 46 77 alde_alche 88 17
+alde_alche 93 17 alde_alche 50 77
+alde_alche 133 77 alde_alche 162 107
+alde_alche 158 107 alde_alche 129 77
+alde_alche 89 62 alde_alche 17 23
+alde_alche 17 29 alde_alche 89 67
+aldebaran 53 65 alde_alche 42 175
+alde_alche 42 171 aldebaran 56 68
+alde_alche 41 186 alde_alche 113 178
+alde_alche 114 183 alde_alche 42 182
+
+lhz_airport 142 13 lighthalzen 262 75
+
+# Lighthalzen Rekenber HQ - entrance
+lighthalzen 106 248 lhz_in01 116 126
+lhz_in01 116 121 lighthalzen 106 243
+
+# Lighthalzen Rekenber HQ - alchemist area entrance
+lhz_in01 35 226 lhz_in01 37 225 0 n
+lhz_in01 40 224 lhz_in01 19 129
+lhz_in01 15 129 lhz_in01 34 224
+
+lhz_in01 191 127 lhz_in01 53 129
+lhz_in01 43 114 lhz_in01 277 130
+lhz_in01 278 132 lhz_in01 43 120
+lhz_in01 43 144 lhz_in01 278 161
+lhz_in01 278 157 lhz_in01 43 139
+lighthalzen 159 133 lhz_in02 232 265
+lhz_in02 232 261 lighthalzen 158 129
+lhz_in02 250 278 lhz_in02 265 278
+lhz_in02 261 278 lhz_in02 246 278
+lhz_in01 58 129 lhz_in01 196 127
+lighthalzen 236 276 lhz_in02 133 199
+lhz_in02 129 199 lighthalzen 232 275
+lighthalzen 198 257 lhz_in02 39 28
+lhz_in02 44 28 lighthalzen 203 257
+lighthalzen 251 299 lhz_in03 97 21
+lhz_in03 93 21 lighthalzen 247 299
