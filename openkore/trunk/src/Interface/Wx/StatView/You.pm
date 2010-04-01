@@ -4,6 +4,7 @@ use strict;
 use base 'Interface::Wx::StatView';
 
 use Globals qw/$char %config %jobs_lut %sex_lut $conState/;
+use Translation qw/T TF/;
 
 sub new {
 	my ($class, $parent, $id) = @_;
@@ -15,28 +16,28 @@ sub new {
 			{key => 'jobLevel', title => '/', type => 'name'},
 			{key => 'type', type => 'type'},
 			{key => 'sex', type => 'type'},
-			{key => 'hp', title => 'HP', type => 'gauge', color => 'smooth'},
-			{key => 'sp', title => 'SP', type => 'gauge', color => 'smooth'},
-			{key => 'exp', title => 'Exp', type => 'gauge'},
-			{key => 'jobExp', title => 'Job', type => 'gauge'},
-			{key => 'weight', title => 'Weight', type => 'gauge', color => 'weight'},
-			{key => 'str', title => 'Str', type => 'stat', bonus => 1, increment => 1},
-			{key => 'agi', title => 'Agi', type => 'stat', bonus => 1, increment => 1},
-			{key => 'vit', title => 'Vit', type => 'stat', bonus => 1, increment => 1},
-			{key => 'int', title => 'Int', type => 'stat', bonus => 1, increment => 1},
-			{key => 'dex', title => 'Dex', type => 'stat', bonus => 1, increment => 1},
-			{key => 'luk', title => 'Luk', type => 'stat', bonus => 1, increment => 1},
-			{key => 'speed', title => 'Walk speed', type => 'stat'},
-			{key => 'atk', title => 'Atk', type => 'substat', bonus => 1},
-			{key => 'matk', title => 'Matk', type => 'substat', range => 1},
-			{key => 'hit', title => 'Hit', type => 'substat'},
-			{key => 'crit', title => 'Critical', type => 'substat'},
-			{key => 'def', title => 'Def', type => 'substat', bonus => 1},
-			{key => 'mdef', title => 'Mdef', type => 'substat', bonus => 1},
-			{key => 'flee', title => 'Flee', type => 'substat', bonus => 1},
-			{key => 'aspd', title => 'Aspd', type => 'substat'},
-			{key => 'statPoint', title => 'Status point', type => 'substat'},
-			{key => 'skillPoint', title => 'Skill point', type => 'substat'},
+			{key => 'hp', title => T('HP'), type => 'gauge', color => 'smooth'},
+			{key => 'sp', title => T('SP'), type => 'gauge', color => 'smooth'},
+			{key => 'exp', title => T('Exp'), type => 'gauge'},
+			{key => 'jobExp', title => T('Job'), type => 'gauge'},
+			{key => 'weight', title => T('Weight'), type => 'gauge', color => 'weight'},
+			{key => 'str', title => T('Str'), type => 'stat', bonus => 1, increment => 1},
+			{key => 'agi', title => T('Agi'), type => 'stat', bonus => 1, increment => 1},
+			{key => 'vit', title => T('Vit'), type => 'stat', bonus => 1, increment => 1},
+			{key => 'int', title => T('Int'), type => 'stat', bonus => 1, increment => 1},
+			{key => 'dex', title => T('Dex'), type => 'stat', bonus => 1, increment => 1},
+			{key => 'luk', title => T('Luk'), type => 'stat', bonus => 1, increment => 1},
+			{key => 'speed', title => T('Walk speed'), type => 'stat'},
+			{key => 'atk', title => T('Atk'), type => 'substat', bonus => 1},
+			{key => 'matk', title => T('Matk'), type => 'substat', range => 1},
+			{key => 'hit', title => T('Hit'), type => 'substat'},
+			{key => 'crit', title => T('Critical'), type => 'substat'},
+			{key => 'def', title => T('Def'), type => 'substat', bonus => 1},
+			{key => 'mdef', title => T('Mdef'), type => 'substat', bonus => 1},
+			{key => 'flee', title => T('Flee'), type => 'substat', bonus => 1},
+			{key => 'aspd', title => T('Aspd'), type => 'substat'},
+			{key => 'statPoint', title => T('Status point'), type => 'substat'},
+			{key => 'skillPoint', title => T('Skill point'), type => 'substat'},
 		],
 	);
 	

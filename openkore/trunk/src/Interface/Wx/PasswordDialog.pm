@@ -26,12 +26,14 @@ use Wx ':everything';
 use Wx::Event qw(EVT_TEXT_ENTER EVT_BUTTON);
 use base qw(Wx::Dialog);
 
+use Translation qw/T TF/;
+
 use constant DEFAULT_WIDTH => 250;
 
 
 sub new {
 	my ($class, $parent, $message, $title) = @_;
-	$title = 'Enter password' if (!defined($title));
+	$title = T('Enter password') if (!defined($title));
 	my $self = $class->SUPER::new($parent, wxID_ANY, $title);
 	$self->_buildGUI($message);
 	return $self;
@@ -64,12 +66,12 @@ sub _buildGUI {
 	$buttonSizer = new Wx::BoxSizer(wxHORIZONTAL);
 	$sizer->Add($buttonSizer, 0, wxALIGN_CENTER | wxLEFT | wxRIGHT | wxBOTTOM, 8);
 
-	$ok = new Wx::Button($self, wxID_ANY, 'OK', wxDefaultPosition, wxDefaultSize);
+	$ok = new Wx::Button($self, wxID_ANY, T('OK'), wxDefaultPosition, wxDefaultSize);
 	$ok->SetDefault();
 	$buttonSizer->Add($ok, 1, wxRIGHT, 8);
 	EVT_BUTTON($self, $ok->GetId, \&_onOK);
 
-	$cancel = new Wx::Button($self, wxID_ANY, 'Cancel');
+	$cancel = new Wx::Button($self, wxID_ANY, T('Cancel'));
 	$buttonSizer->Add($cancel, 1);
 	EVT_BUTTON($self, $cancel->GetId, \&_onCancel);
 

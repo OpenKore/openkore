@@ -4,6 +4,7 @@ use strict;
 use base 'Interface::Wx::List';
 
 use Globals qw/%equipTypes_lut/;
+use Translation qw/T TF/;
 
 sub new {
 	my ($class, $parent, $id) = (shift, shift, shift);
@@ -28,8 +29,8 @@ sub setItem {
 		$self->{list}->SetItem ($i, 1, $item->{amount});
 		$self->{list}->SetItem ($i, 2,
 			$item->{name}
-			. ($item->{equipped} ? ($equipTypes_lut{$item->{equipped}} ? ' ('.$equipTypes_lut{$item->{equipped}}.')' : ' (Equipped)') : '')
-			. ($item->{identified} ? '' : ' (Not identified)')
+			. ($item->{equipped} ? ($equipTypes_lut{$item->{equipped}} ? ' ('.$equipTypes_lut{$item->{equipped}}.')' : T(' (Equipped)')) : '')
+			. ($item->{identified} ? '' : T(' (Not identified)'))
 		);
 	} else {
 		$self->{list}->DeleteItem ($self->{list}->FindItemData (-1, $index));

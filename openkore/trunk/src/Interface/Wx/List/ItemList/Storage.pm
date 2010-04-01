@@ -5,6 +5,7 @@ use base 'Interface::Wx::List::ItemList';
 
 use Globals qw/$char $conState %cart %storage @storageID/;
 use Misc qw/storageGet/;
+use Translation qw/T TF/;
 
 sub new {
 	my ($class, $parent, $id) = @_;
@@ -72,8 +73,8 @@ sub _onRightClick {
 	if (@selection > 3) {
 		my $total = 0;
 		$total += $_->{amount} foreach @selection;
-		$title = @selection . ' items';
-		$title .= ' (' . $total . ' total)' unless $total == @selection;
+		$title = TF('%d items', scalar @selection);
+		$title .= TF('%d total)', $total) unless $total == @selection;
 	} else {
 		$title = join '; ', map { join ' ', @$_{'amount', 'name'} } @selection;
 	}
@@ -84,8 +85,8 @@ sub _onRightClick {
 	
 	my ($canCart) = (%cart && $cart{exists});
 	
-	push @menu, {title => 'Move all to inventory' . "\tDblClick", callback => sub { $self->_onActivate; }};
-	push @menu, {title => 'Move all to cart', callback => sub { $self->_onCart; }} if $canCart;
+	push @menu, {title => T('Move all to inventory') . "\tDblClick", callback => sub { $self->_onActivate; }};
+	push @menu, {title => T('Move all to cart'), callback => sub { $self->_onCart; }} if $canCart;
 	
 	$self->contextMenu (\@menu);
 }

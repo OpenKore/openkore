@@ -5,6 +5,7 @@ use base 'Interface::Wx::StatView';
 
 use Globals qw/$char %pet %jobs_lut $conState/;
 use Misc qw/itemNameSimple monsterName/;
+use Translation qw/T TF/;
 
 sub new {
 	my ($class, $parent, $id) = @_;
@@ -14,13 +15,13 @@ sub new {
 			{key => 'name', type => 'name'},
 			{key => 'level', type => 'name'},
 			{key => 'type', type => 'type'},
-			{key => 'intimacy', title => 'Intimacy', type => 'gauge'},
-			{key => 'hunger', title => 'Hunger', type => 'gauge', color => 'smooth'},
-			{key => 'accessory', title => 'Accessory', type => 'stat'},
-			{key => 'feed', title => 'Feed', type => 'control'},
-			{key => 'performance', title => 'Performance', type => 'control'},
-			{key => 'unequip', title => 'Unequip', type => 'control'},
-			{key => 'return', title => 'Return', type => 'control'},
+			{key => 'intimacy', title => T('Intimacy'), type => 'gauge'},
+			{key => 'hunger', title => T('Hunger'), type => 'gauge', color => 'smooth'},
+			{key => 'accessory', title => T('Accessory'), type => 'stat'},
+			{key => 'feed', title => T('Feed'), type => 'control'},
+			{key => 'performance', title => T('Performance'), type => 'control'},
+			{key => 'unequip', title => T('Unequip'), type => 'control'},
+			{key => 'return', title => T('Return'), type => 'control'},
 		],
 	);
 	

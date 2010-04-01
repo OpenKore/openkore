@@ -25,6 +25,8 @@ use Wx ':everything';
 use Wx::Event qw(EVT_PAINT EVT_TOOL);
 use base qw(Wx::Panel);
 
+use Translation qw/T TF/;
+
 use Interface::Wx::Utils qw(dataFile);
 
 
@@ -68,8 +70,8 @@ sub new {
 			wxTB_HORIZONTAL | wxNO_BORDER | wxTB_3DBUTTONS | wxTB_FLAT);
 		$toolbar->SetBackgroundColour(Wx::SystemSettings::GetColour(wxSYS_COLOUR_BTNFACE));
 		$toolbar->SetToolBitmapSize(new Wx::Size(12, 12));
-		$toolbar->AddTool(1, 'Detach', $detachBitmap, 'Detach tab');
-		$toolbar->AddTool(2, 'Close', $closeBitmap, 'Close tab');
+		$toolbar->AddTool(1, T('Detach'), $detachBitmap, T('Detach tab'));
+		$toolbar->AddTool(2, T('Close'), $closeBitmap, T('Close tab'));
 		$toolbar->Realize;
 		$hsizer->Add($toolbar, 0, wxGROW);
 		$hsizer->SetItemMinSize($toolbar, $toolbar->GetBestSize->GetWidth, $size);

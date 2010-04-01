@@ -4,6 +4,7 @@ use strict;
 use base 'Interface::Wx::StatView';
 
 use Globals qw/$char %jobs_lut $conState/;
+use Translation qw/T TF/;
 use Utils qw/getFormattedDate/;
 
 sub new {
@@ -14,22 +15,22 @@ sub new {
 			{key => 'name', type => 'name'},
 			{key => 'level', type => 'name'},
 			{key => 'type', type => 'type'},
-			{key => 'hp', title => 'HP', type => 'gauge', color => 'smooth'},
-			{key => 'sp', title => 'SP', type => 'gauge', color => 'smooth'},
-			{key => 'loyalty', title => 'Loyalty', type => 'gauge'},
-			{key => 'atk', title => 'Atk', type => 'stat'},
-			{key => 'matk', title => 'Matk', type => 'stat'},
-			{key => 'hit', title => 'Hit', type => 'stat'},
-			{key => 'crit', title => 'Critical', type => 'stat'},
-			{key => 'def', title => 'Def', type => 'stat'},
-			{key => 'mdef', title => 'Mdef', type => 'stat'},
-			{key => 'flee', title => 'Flee', type => 'stat'},
-			{key => 'aspd', title => 'Aspd', type => 'stat'},
+			{key => 'hp', title => T('HP'), type => 'gauge', color => 'smooth'},
+			{key => 'sp', title => T('SP'), type => 'gauge', color => 'smooth'},
+			{key => 'loyalty', title => T('Loyalty'), type => 'gauge'},
+			{key => 'atk', title => T('Atk'), type => 'stat'},
+			{key => 'matk', title => T('Matk'), type => 'stat'},
+			{key => 'hit', title => T('Hit'), type => 'stat'},
+			{key => 'crit', title => T('Critical'), type => 'stat'},
+			{key => 'def', title => T('Def'), type => 'stat'},
+			{key => 'mdef', title => T('Mdef'), type => 'stat'},
+			{key => 'flee', title => T('Flee'), type => 'stat'},
+			{key => 'aspd', title => T('Aspd'), type => 'stat'},
 			#{key => 'speed', title => 'Walk speed', type => 'substat'},
-			{key => 'time', title => 'Contract ends', type => 'substat'},
-			{key => 'kills', title => 'Kills', type => 'substat'},
-			{key => 'summons', title => 'Summons', type => 'substat'},
-			{key => 'dismiss', title => 'Dismiss', type => 'control'},
+			{key => 'time', title => T('Contract ends'), type => 'substat'},
+			{key => 'kills', title => T('Kills'), type => 'substat'},
+			{key => 'summons', title => T('Summons'), type => 'substat'},
+			{key => 'dismiss', title => T('Dismiss'), type => 'control'},
 		],
 	);
 	
