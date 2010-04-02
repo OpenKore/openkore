@@ -754,12 +754,8 @@ sub actor_died_or_disappeared {
 		my $player = $playersList->getByID($ID);
 		if ($args->{type} == 1) {
 			message TF("Player Died: %s (%d) %s %s\n", $player->name, $player->{binID}, $sex_lut{$player->{sex}}, $jobs_lut{$player->{jobID}});
-			if ($char->{homunculus} && $char->{homunculus}{ID} eq $player->{ID}) {
-				$playersList->remove($player);
-			} else {
-				$player->{dead} = 1;
-				$player->{dead_time} = time;
-			}
+			$player->{dead} = 1;
+			$player->{dead_time} = time;
 		} else {
 			if ($args->{type} == 0) {
 				debug "Player Disappeared: " . $player->name . " ($player->{binID}) $sex_lut{$player->{sex}} $jobs_lut{$player->{jobID}} ($player->{pos_to}{x}, $player->{pos_to}{y})\n", "parseMsg_presence";
