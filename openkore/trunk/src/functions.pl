@@ -468,9 +468,10 @@ sub finalInitialization {
 	require Utils::ActorHashTie;
 	tie %items, 'Tie::ActorHash';
 	tie %monsters, 'Tie::ActorHash';
-	tie %portals, 'Tie::ActorHash';
+	tie %players, 'Tie::ActorHash';
 	tie %pets, 'Tie::ActorHash';
 	tie %npcs, 'Tie::ActorHash';
+	tie %portals, 'Tie::ActorHash';
 	tie %slaves, 'Tie::ActorHash';
 
 	$itemsList = new ActorList('Actor::Item');
