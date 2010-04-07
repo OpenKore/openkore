@@ -155,6 +155,7 @@ geffen 120 132 Yisnelf
 geffen 120 62 Kafra Employee
 geffen 122 37 Kafra Voting Staff#geff
 geffen 122 77 Nia#yagu
+geffen 124 169 Bossnia staff
 geffen 124 65 Bulletin Board#geffen
 geffen 127 130 Berggel
 geffen 128 153 Leblo
@@ -197,6 +198,11 @@ geffen 83 189 SanShee
 geffen 90 130 Scholar
 geffen 90 67 Promotional staff
 geffen 91 36 Rogue Guild Agent#nd1
+geffen_in 22 171 Weapon Dealer
+geffen_in 26 178 Armor Dealer
+geffen_in 30 178 Weapon Dealer
+geffen_in 34 166 Repair Man
+geffen_in 34 170 Young Man
 gl_prison 17 73 [Quest] Mercenary Scout
 glast_01 369 308 Bulletin Board#castle
 hu_fild01 140 163 Tower Keeper
@@ -443,6 +449,7 @@ mid_campin 85 118 Instructor Igrid
 mid_campin 90 121 Hibba Agip
 mid_campin 94 118 Staff Officer Abidal
 mjo_dun02 78 298 Fearsome Demon#ppl1
+mjo_dun02 88 295 Flaming Spirit Man
 mjolnir_02 76 362 Bulletin Board#coal
 mjolnir_02 82 362 Kafra Employee
 mjolnir_02 85 362 Blacksmith Miner
@@ -454,6 +461,7 @@ mjolnir_07 26 373 #mj07_find_1
 mjolnir_07 26 78 #mj07_find_5
 mjolnir_07 372 355 #mj07_find_3
 mjolnir_07 375 233 #mj07_find_4
+mjolnir_08 36 344 #mj08_find_2
 mjolnir_08 39 239 #mj08_find_1
 moc_fild11 205 52 battle_traces#5
 moc_fild11 39 163 battle_traces#4
@@ -551,6 +559,7 @@ payon 103 63 Gaeho
 payon 115 131 KoneKone
 payon 132 235 Monster Scholar#02
 payon 134 211 Young Man
+payon 137 178 Hakhim
 payon 140 151 Seiyablem#pay
 payon 143 143 Young Man#pay
 payon 143 165 Repair Man
@@ -623,6 +632,7 @@ prontera 134 125 #suprise_12
 prontera 140 304 Old Soldier
 prontera 143 203 Lazrigs
 prontera 144 301 Mage#tu
+prontera 146 101 Cupid#prontera
 prontera 146 194 Svanhilt
 prontera 146 86 An event usher#xmas_04
 prontera 146 89 Kafra Employee
@@ -806,6 +816,7 @@ schg_cas03 266 206 Bidblind
 schg_cas03 273 205 control device03#sch03_
 schg_cas03 283 197 Bidblind
 schg_cas03 320 283 Bidblind
+schg_cas04 99 77 Hueluid
 spl_fild02 122 106 ????#ep13_mdplant02
 spl_fild02 232 145 Tree#ep13bs2
 spl_fild02 25 211 Cat Hand Agent

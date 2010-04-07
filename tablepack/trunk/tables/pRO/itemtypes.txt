@@ -6,7 +6,7 @@
 5 Weapon
 6 Card
 7 Egg
-8 Pet Armor
+8 Bow
 9 Weapon
 10 Arrows
 11 Helmet
