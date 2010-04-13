@@ -4612,14 +4612,13 @@ sub cmdTank {
 
 	} else {
 		my $name;
-		foreach my $ID (@playersID, @slavesID) {
-			next if !$ID;
-			if (lc $players{$ID}{name} eq lc $arg) {
-				$name = $players{$ID}{name};
+		for (@{$playersList->getItems}, @{$slavesList->getItems}) {
+			if (lc $_->{name} eq lc $arg) {
+				$name = $_->{name};
 				last;
-			} elsif($char->{homunculus} && $ID eq $char->{homunculus}{ID} && $arg eq '@homunculus' ||
-					$char->{mercenary} && $ID eq $char->{mercenary}{ID} && $arg eq '@mercenary') {
-				$name = $arg;
+			} elsif($char->{homunculus} && $_->{ID} eq $char->{homunculus}{ID} && $arg eq '@homunculus' ||
+					$char->{mercenary} && $_->{ID} eq $char->{mercenary}{ID} && $arg eq '@mercenary') {
+					$name = $arg;
 				last;
 			}
 		}
