@@ -20,7 +20,7 @@ sub STORE {
 	. (unpack 'H*', $key) . "\n"
 	. "Value:\n"
 	. Data::Dumper::Dumper($value) . "\n"
-	unless $value && $value->isa('Actor');
+	unless $value && UNIVERSAL::isa($value, 'Actor');
 	
 	$hashref->{$key} = $value;
 }
