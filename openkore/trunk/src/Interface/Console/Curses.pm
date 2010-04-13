@@ -161,7 +161,7 @@ sub writeOutput {
 			$self->printw($self->{winChat}, $self->{winChatHeight} - 2, 0, "{normal}@<<<<<<< $color@*", $time, $s);
 		} else {
 			scroll $self->{winLog};
-			$self->printw($self->{winLog}, $self->{winLogHeight} - 1, 0, "{normal}@<<<<<<< $color@*", $time, $s);
+			$self->printw($self->{winLog}, $self->{winLogHeight} - 1, 0, "{normal}$color@*", $s);
 		}
 	}
 	noutrefresh $self->{winFight} if $self->{winFight};
@@ -189,7 +189,8 @@ sub errorDialog {
 	my $fatal = shift;
 
 	# FIXME: Need better error dialog
-	print "ERROR: $msg";
+	#print "ERROR: $msg";
+	$self->writeOutput('error', $msg, 'default');
 }
 
 ################################
