@@ -647,22 +647,26 @@ prontera 150 326 Wanted Notice#edq
 prontera 151 29 Kafra Employee
 prontera 151 330 North Gate-Guide
 prontera 152 192 Pumpkin Hat Researcher#
+prontera 152 279 Juliet#prontera2
 prontera 152 326 Kafra Employee
 prontera 153 353 Messenger#prince1
 prontera 154 187 Guide
 prontera 155 190 Creamhilt
+prontera 155 282 Juliet#prontera3
 prontera 155 285 moonfestivalstaff#09_mo
 prontera 156 120 #suprise_20
 prontera 156 185 Event Manager#nk
 prontera 156 188 Halloween Trick Wizard 
 prontera 156 212 Chef Assistant
 prontera 156 218 #suprise_9
+prontera 156 282 Romeo#prontera3
 prontera 156 283 #suprise_19
 prontera 156 321 #suprise_2
 prontera 156 353 #suprise_17
 prontera 157 187 Smile Helper
 prontera 158 285 [Info]Reno's Dog#pronte
 prontera 159 191 [Quest] Army Officer#nk
+prontera 159 284 Romeo#prontera2
 prontera 160 133 Norby
 prontera 160 29 South Gate-Guide
 prontera 160 330 Guard
