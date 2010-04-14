@@ -3,21 +3,31 @@
 # updates openkore.pot and *.po, and compiles *.po to .mo.
 set -e
 
-LANGUAGES="tl id pt zh_CN zh th ko"
+LANGUAGES="tl id pt zh_CN zh th ko ru"
 
 echo "Extracting messages from source..."
-xgettext -L Perl --force-po -o openkore.pot --keyword=T --keyword=TF \
+xgettext --from-code=utf-8 -L Perl --force-po -o openkore.pot --keyword=T --keyword=TF \
 	--add-comments='Translation Comment:' \
-	../*.pm \
-	../Network/*.pm \
-	../Network/Receive/*.pm \
-	../Network/Send/*.pm \
-	../Poseidon/EmbedServer.pm \
-	../AI/*.pm \
-	../Task/*.pm \
 	../../openkore.pl \
+	../Actor/*.pm \
+	../AI/*.pm \
+	../AI/Slave/*.pm \
+	../Interface/Wx/List/ItemList/*.pm \
+	../Interface/Wx/List/*.pm \
+	../Interface/Wx/StatView/*.pm \
+	../Interface/Wx/*.pm \
+	../Interface/*.pm \
+	../Network/Receive/bRO/*.pm \
+	../Network/Receive/kRO/*.pm \
+	../Network/Receive/*.pm \
+	../Network/Send/bRO/*.pm \
+	../Network/Send/kRO/*.pm \
+	../Network/Send/*.pm \
+	../Network/*.pm \
+	../Poseidon/*.pm \
+	../Task/*.pm \
+	../*.pm \
 	../functions.pl
-
 sed 's/charset=CHARSET/charset=UTF-8/; s/^# SOME DESCRIPTIVE TITLE\.$/# LANGUAGE translation for OpenKore/; s/# This file is distributed under the same license as the PACKAGE package\./# This file is distributed under the same license as OpenKore./' openkore.pot > openkore.pot.2
 mv openkore.pot.2 openkore.pot
 
