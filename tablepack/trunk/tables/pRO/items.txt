@@ -4472,10 +4472,10 @@
 1285#Cakram#
 1311#Vecer_Axe#
 1387#Giant_Axe#
-1646#Staff#
-1647#Staff#
-1648#Staff#
-1745#Bow#
+1646#Lacryma_Stick#
+1647#Croce_Staff#
+1648#Bordeaux_Staff#
+1745#Falken_Blitz#
 2004#Kronos#
 2005#Dea_Staff#
 13046#Krieg#
