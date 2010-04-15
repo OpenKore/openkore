@@ -2705,7 +2705,6 @@ sub mercenary_init {
 	$slave->{name} = bytesToString($args->{name});
 
 	slave_calcproperty_handler($slave, $args);
-	$slave->{expPercent}   = ($args->{exp_max}) ? ($args->{exp} / $args->{exp_max}) * 100 : 0;
 	
 	# ST0's counterpart for ST kRO, since it attempts to support all servers
 	# TODO: we do this for homunculus, mercenary and our char... make 1 function and pass actor and attack_range?
@@ -2780,6 +2779,7 @@ sub slave_calcproperty_handler {
 	$slave->{aspdDisp}     = int (200 - (($args->{aspd} < 10) ? 10 : ($args->{aspd} / 10)));
 	$slave->{hpPercent}    = ($slave->{hp} / $slave->{hp_max}) * 100;
 	$slave->{spPercent}    = ($slave->{sp} / $slave->{sp_max}) * 100;
+	$slave->{expPercent}   = ($args->{exp_max}) ? ($args->{exp} / $args->{exp_max}) * 100 : 0;
 }
 
 sub gameguard_grant {

@@ -1901,15 +1901,15 @@ sub cmdSlave {
 		my $contractend_string = defined $slave->{contract_end} ? getFormattedDate(int($slave->{contract_end})) : 'N/A';
 		
 		my $msg = swrite(
-		T("-------------------- Slave Status ----------------------\n" .
-		"Name: \@<<<<<<<<<<<<<<<<<<<<<<<<< HP: \@>>>>>>>>>>>>>>>>>>\n" .
+		center(T(" Slave Status "), 78, '-') . "\n" .
+		T("Name: \@<<<<<<<<<<<<<<<<<<<<<<<<< HP: \@>>>>>>>>>>>>>>>>>>\n" .
 		"Type: \@<<<<<<<<<<<<<<<<<<<<<<<<< SP: \@>>>>>>>>>>>>>>>>>>\n" .
-		"Level: \@<<   \@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n" .
-		"--------------------------------------------------------\n" .
-		"Atk: \@>>>    Matk:     \@>>>    Hunger:    \@>>>\n" .
-		"Hit: \@>>>    Critical: \@>>>    \@<<<<<<<<< \@>>>\n" .
-		"Def: \@>>>    Mdef:     \@>>>    Accessory: \@>>>\n" .
-		"Flee:\@>>>    Aspd:     \@>>>    Summons:   \@>>>\n" .
+		"Level: \@<<   \@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n") .
+		('-'x78) . "\n" .
+		T("Atk: \@>>>    Matk:     \@>>>    Hunger:      \@>>>\n" .
+		"Hit: \@>>>    Critical: \@>>>    \@<<<<<<<<<   \@>>>\n" .
+		"Def: \@>>>    Mdef:     \@>>>    Accessory:   \@>>>\n" .
+		"Flee:\@>>>    Aspd:     \@>>>    Summons:     \@>>>\n" .
 		"Range: \@<<   Skill pt: \@>>>    Contract End: \@>>>>>>>>>>\n"),
 		[$slave->{'name'}, $hp_string,
 		$slave->{actorType}, $sp_string,
@@ -1928,7 +1928,7 @@ sub cmdSlave {
 			$statuses = join(", ", keys %{$slave->{statuses}});
 		}
 		$msg .= TF("Statuses: %s \n", $statuses);
-		$msg .= "--------------------------------------------------------\n";
+		$msg .= ('-'x78) . "\n";
 		
 		message $msg, "info";
 

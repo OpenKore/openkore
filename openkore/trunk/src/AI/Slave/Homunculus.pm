@@ -46,9 +46,9 @@ sub iterate {
 			&& (existsInList($config{homunculus_autoFeedAllowedMaps}, $field{'name'}) || !$config{homunculus_autoFeedAllowedMaps})) {
 			
 			$slave->processFeeding();
-			message T("Auto-feeding your Homunculus (".$slave->{hunger}." hunger).\n"), 'slave';
+			message TF("Auto-feeding your Homunculus (%d hunger).\n", $slave->{hunger}), 'slave';
 			$messageSender->sendHomunculusCommand(1);
-			message ("Next feeding at: ".$slave->{hungerThreshold}." hunger.\n"), 'slave';
+			message TF("Next feeding at: %d hunger.\n", $slave->{hungerThreshold}), 'slave';
 		
 		# No random value at initial start of Kore, lets make a few =)
 		} elsif ($slave->{actorType} eq 'Homunculus' && !$slave->{hungerThreshold}) {
