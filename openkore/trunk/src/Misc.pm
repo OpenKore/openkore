@@ -1707,7 +1707,7 @@ sub itemName {
 	my %cards;
 	for (my $i = 0; $i < 4; $i++) {
 		my $card = unpack("v1", substr($item->{cards}, $i*2, 2));
-		last unless $card;
+		next unless $card;
 		push(@cards, $card);
 		($cards{$card} ||= 0) += 1;
 	}
