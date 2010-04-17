@@ -256,7 +256,7 @@ sub new {
 		'019A' => ['pvp_rank', 'V3', [qw(ID rank num)]],
 		'019B' => ['unit_levelup', 'a4 V', [qw(ID type)]],
 		'019E' => ['pet_capture_process'],
-		'01A0' => ['pet_capture_result', 'C', [qw(type)]],	
+		'01A0' => ['pet_capture_result', 'C', [qw(success)]],	
 		#'01A2' => ($rpackets{'01A2'} == 35 # or 37
 		#	? ['pet_info', 'Z24 C v4', [qw(name renameflag level hungry friendly accessory)]]
 		#	: ['pet_info', 'Z24 C v5', [qw(name renameflag level hungry friendly accessory type)]]
