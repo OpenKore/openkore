@@ -390,7 +390,7 @@ sub new {
 		# 0x019d is sent packet
 		'019E' => ['pet_capture_process'], # 2
 		# 0x019f is sent packet
-		'01A0' => ['pet_capture_result', 'C', [qw(type)]], # 3
+		'01A0' => ['pet_capture_result', 'C', [qw(success)]], # 3
 		# 0x01a1 is sent packet
 		'01A2' => ['pet_info', 'Z24 C v4', [qw(name renameflag level hungry friendly accessory)]], # 35
 		'01A3' => ['pet_food', 'C v', [qw(success foodID)]], # 5
