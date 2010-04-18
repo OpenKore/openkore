@@ -3416,11 +3416,11 @@ sub cmdPlayerList {
 				$maxpl = @{$playersList->getItems()};
 			}
 		}
-		$msg .= "Total guild players: $maxplg \n";
+		$msg .= TF("Total guild players: %s \n",$maxplg);
 		if ($maxpl ne "") {
-			$msg .= "Total players: $maxpl \n";
+			$msg .= TF("Total players: %s \n",$maxpl);
 		} else {
-			$msg .= "There are no players near you.\n";
+			$msg .= T("There are no players near you.\n");
 		}
 		$msg .= "---------------------------------\n";
 		message($msg, "list");
@@ -3455,11 +3455,11 @@ sub cmdPlayerList {
 				$maxpl = @{$playersList->getItems()};
 			}
 		}
-		$msg .= "Total party players: $maxplp \n";
+		$msg .= TF("Total party players: %s \n",$maxplp);
 		if ($maxpl ne "") {
-			$msg .= "Total players: $maxpl \n";
+			$msg .= TF("Total players: %s \n",$maxpl);
 		} else {
-			$msg .= "There are no players near you.\n";
+			$msg .= T("There are no players near you.\n");
 		}
 		$msg .= "---------------------------------\n";
 		message($msg, "list");
@@ -3574,8 +3574,8 @@ sub cmdPlayerList {
 			}
 		}
 		if ($maxpl ne "") {
-			$msg .= "Total players: $maxpl \n";
-		} else	{$msg .= "There are no players near you.\n";}
+			$msg .= TF("Total players: %s \n",$maxpl);
+		} else	{$msg .= T("There are no players near you.\n");}
 		$msg .= "---------------------------------\n";
 		message($msg, "list");
 	}
