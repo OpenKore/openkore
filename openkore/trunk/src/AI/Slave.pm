@@ -556,7 +556,7 @@ sub processAttack {
 			$slave->sendMove ($realMyPos->{x}, $realMyPos->{y});
 			$slave->dequeue;
 			if ($config{$slave->{slave_configPrefix}.'teleportAuto_dropTargetKS'}) {
-				message T("Teleporting due to dropping slave attack target\n"), 'teleport';
+				message T("Teleport due to dropping slave attack target\n"), 'teleport';
 				useTeleport(1);
 			}
 

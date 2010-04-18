@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenKore 1.9.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-04-07 22:41+0200\n"
+"POT-Creation-Date: 2010-04-18 18:56+0200\n"
 "PO-Revision-Date: 2010-01-17 19:09+0700\n"
 "Last-Translator: Richard Samuel <dewa5227@gmail.com>\n"
 "Language-Team: littlewens <littlewens@yahoo.com.tw>\n"
@@ -86,7 +86,7 @@ msgstr ""
 msgid "Inventory Item: %s is already equipped in slot: %s\n"
 msgstr "物品欄的物品 '%s' 已裝備.\n"
 
-#: ../Actor/Item.pm:434 ../Commands.pm:4743
+#: ../Actor/Item.pm:434 ../Commands.pm:4742
 #, perl-format
 msgid "No such equipped Inventory Item: %s in slot: %s\n"
 msgstr "物品欄裡沒有這種 equipped 的物品: %s 於裝備部位: %s\n"
@@ -462,7 +462,7 @@ msgstr "正要攻擊: %s\n"
 msgid "Slave can't reach or damage target, dropping target\n"
 msgstr "無法到達或傷害到目標, 放棄目標\n"
 
-#: ../AI/Slave.pm:435 ../AI/Slave.pm:694 ../AI/Slave.pm:753
+#: ../AI/Slave.pm:435 ../AI/Slave.pm:559 ../AI/Slave.pm:694 ../AI/Slave.pm:753
 #, fuzzy
 msgid "Teleport due to dropping slave attack target\n"
 msgstr "因放棄要攻擊的目標而瞬移\n"
@@ -481,11 +481,6 @@ msgstr "目標已失去\n"
 #, fuzzy
 msgid "Dropping target - slave will not kill steal others\n"
 msgstr "放棄目標 - 您不可搶別人的怪\n"
-
-#: ../AI/Slave.pm:559
-#, fuzzy
-msgid "Teleporting due to dropping slave attack target\n"
-msgstr "因放棄要攻擊的目標而瞬移\n"
 
 #: ../AI/Slave.pm:599
 #, fuzzy, perl-format
@@ -508,9 +503,14 @@ msgid "Slave is stuck at %s (%d,%d), while walking from (%d,%d) to (%d,%d)."
 msgstr "人工生命體在 %s (%d,%d) 呆住, 當要從 (%d,%d) 走到 (%d,%d) 的時候."
 
 #: ../AI/Slave/Homunculus.pm:49
-#, fuzzy
-msgid "Auto-feeding your Homunculus ("
+#, fuzzy, perl-format
+msgid "Auto-feeding your Homunculus (%d hunger).\n"
 msgstr "正在餵食您的人工生命體.\n"
+
+#: ../AI/Slave/Homunculus.pm:51
+#, perl-format
+msgid "Next feeding at: %d hunger.\n"
+msgstr ""
 
 #: ../Interface/Wx/List/ItemList/Cart.pm:14 ../Interface/Wx/StatView/You.pm:23
 msgid "Weight"
@@ -1434,6 +1434,11 @@ msgstr "您站了起來.\n"
 msgid "%s is standing.\n"
 msgstr "%s 站了起來.\n"
 
+#: ../Network/Receive/kRO/Sakexe_0.pm:715
+#: ../Network/Receive/ServerType0.pm:648
+msgid "Miss!"
+msgstr ""
+
 #: ../Network/Receive/kRO/Sakexe_0.pm:780
 #: ../Network/Receive/ServerType0.pm:713
 msgid "You have died\n"
@@ -1450,6 +1455,14 @@ msgstr "玩家已死亡: %s (%d) %s %s\n"
 #, fuzzy, perl-format
 msgid "Slave Died: %s (%d) %s\n"
 msgstr "玩家已死亡: %s (%d) %s %s\n"
+
+#: ../Network/Receive/kRO/Sakexe_0.pm:957
+#: ../Network/Receive/ServerType0.pm:886
+#, perl-format
+msgid ""
+"Removed actor with off map coordinates: (%d,%d)->(%d,%d), field max: (%d,%"
+"d)\n"
+msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:1225
 #: ../Network/Receive/ServerType0.pm:1137
@@ -1555,6 +1568,23 @@ msgstr "插卡失敗\n"
 #, perl-format
 msgid "%s has been successfully merged into %s\n"
 msgstr "%s 已成功插入 %s\n"
+
+#: ../Network/Receive/kRO/Sakexe_0.pm:1728
+#: ../Network/Receive/ServerType0.pm:1639
+#, fuzzy
+msgid "overweight"
+msgstr "您已負重 %s.\n"
+
+#: ../Network/Receive/kRO/Sakexe_0.pm:1730
+#: ../Network/Receive/ServerType0.pm:1641
+msgid "too many items"
+msgstr ""
+
+#: ../Network/Receive/kRO/Sakexe_0.pm:1732
+#: ../Network/Receive/ServerType0.pm:1643
+#, fuzzy, perl-format
+msgid "Unknown code %s"
+msgstr "未知的錯誤 %s\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:1734
 #: ../Network/Receive/ServerType0.pm:1645
@@ -1674,6 +1704,12 @@ msgstr "%s 已離開這個聊天室\n"
 msgid "You have joined the Chat Room %s\n"
 msgstr "您已加入這個聊天室 %s\n"
 
+#: ../Network/Receive/kRO/Sakexe_0.pm:2244
+#: ../Network/Receive/ServerType0.pm:2152
+#, fuzzy
+msgid "Unknown"
+msgstr "未知域,"
+
 #: ../Network/Receive/kRO/Sakexe_0.pm:2246
 #: ../Network/Receive/ServerType0.pm:2154
 #, perl-format
@@ -1723,6 +1759,12 @@ msgstr "對方距離您太遠以致於無法交易.\n"
 #: ../Network/Receive/ServerType0.pm:2220
 msgid "That person is in another deal.\n"
 msgstr "對方正在進行另一個交易中.\n"
+
+#: ../Network/Receive/kRO/Sakexe_0.pm:2325
+#: ../Network/Receive/ServerType0.pm:2233
+#, fuzzy
+msgid "Unknown #"
+msgstr "未知域,"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2329
 #: ../Network/Receive/ServerType0.pm:2237
@@ -1786,6 +1828,11 @@ msgstr "[距離=%s] %s (%d): %s\n"
 #, fuzzy, perl-format
 msgid "[dist=%s] %s %s (%d): %s\n"
 msgstr "[距離=%s] %s (%d): %s\n"
+
+#: ../Network/Receive/kRO/Sakexe_0.pm:2453
+#: ../Network/Receive/ServerType0.pm:2363
+msgid "unknown"
+msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2459
 #: ../Network/Receive/ServerType0.pm:2369
@@ -2007,22 +2054,22 @@ msgid "Failed to feed homunculus with %s: no food in inventory.\n"
 msgstr "以 %s 餵食人工生命體失敗: 物品欄中沒有食物了.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2835
-#: ../Network/Receive/ServerType0.pm:2759
+#: ../Network/Receive/ServerType0.pm:2758
 msgid "Your Homunculus was vaporized!\n"
 msgstr "您的人工生命體被蒸發了!\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2837
-#: ../Network/Receive/ServerType0.pm:2761
+#: ../Network/Receive/ServerType0.pm:2760
 msgid "Your Homunculus died!\n"
 msgstr "您的人工生命體已死亡!\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2842
-#: ../Network/Receive/ServerType0.pm:2766
+#: ../Network/Receive/ServerType0.pm:2765
 msgid "Your Homunculus was recalled!\n"
 msgstr "您的人工生命體已被召回!\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2844
-#: ../Network/Receive/ServerType0.pm:2768
+#: ../Network/Receive/ServerType0.pm:2767
 msgid "Your Homunculus was resurrected!\n"
 msgstr "您的人工生命體已被復活\n"
 
@@ -2084,6 +2131,29 @@ msgstr "公會創造失敗: 需要華麗金屬.\n"
 #, perl-format
 msgid "Guild create: Unknown error %s\n"
 msgstr "公會創造: 未知的錯誤 %s\n"
+
+#: ../Network/Receive/kRO/Sakexe_0.pm:3047
+#: ../Network/Receive/ServerType0.pm:2973
+#, fuzzy
+msgid "Target is already in a guild."
+msgstr "您並沒有在一個公會中.\n"
+
+#: ../Network/Receive/kRO/Sakexe_0.pm:3048
+#: ../Network/Receive/ServerType0.pm:2974
+#, fuzzy
+msgid "Target has denied."
+msgstr "目標已死亡\n"
+
+#: ../Network/Receive/kRO/Sakexe_0.pm:3049
+#: ../Network/Receive/ServerType0.pm:2975
+#, fuzzy
+msgid "Target has accepted."
+msgstr "目標已失去."
+
+#: ../Network/Receive/kRO/Sakexe_0.pm:3050
+#: ../Network/Receive/ServerType0.pm:2976
+msgid "Your guild is full."
+msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:3053
 #: ../Network/Receive/ServerType0.pm:2979
@@ -2264,16 +2334,27 @@ msgstr "%s 使用了物品:  %s - 剩餘 %s\n"
 msgid "%s got married!\n"
 msgstr "%s 結婚了!\n"
 
+#: ../Network/Receive/kRO/Sakexe_0.pm:3398
+#: ../Network/Receive/ServerType0.pm:3344
+#, fuzzy
+msgid "coin"
+msgstr "無"
+
+#: ../Network/Receive/kRO/Sakexe_0.pm:3398
+#: ../Network/Receive/ServerType0.pm:3344
+msgid "spirit"
+msgstr ""
+
 #: ../Network/Receive/kRO/Sakexe_0.pm:3401
 #: ../Network/Receive/ServerType0.pm:3347
-#, perl-format
-msgid "You have %s "
+#, fuzzy, perl-format
+msgid "You have %s %s(s) now\n"
 msgstr "您有 %s"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:3405
 #: ../Network/Receive/ServerType0.pm:3351
-#, perl-format
-msgid "%s has %s "
+#, fuzzy, perl-format
+msgid "%s has %s %s(s) now\n"
 msgstr "%s 有 %s "
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:3557
@@ -2983,6 +3064,56 @@ msgstr "魔物技能 - 轉換目標為 : %s (%d)\n"
 msgid "Avoid casting Skill - switch position to : %s,%s\n"
 msgstr "避開正在詠唱的技能 - 移動位置至 : %s,%s\n"
 
+#: ../Network/Receive/kRO/Sakexe_0.pm:5662
+#: ../Network/Receive/ServerType0.pm:5574
+msgid "Basic"
+msgstr ""
+
+#: ../Network/Receive/kRO/Sakexe_0.pm:5663
+#: ../Network/Receive/ServerType0.pm:5575
+msgid "Insufficient SP"
+msgstr ""
+
+#: ../Network/Receive/kRO/Sakexe_0.pm:5664
+#: ../Network/Receive/ServerType0.pm:5576
+msgid "Insufficient HP"
+msgstr ""
+
+#: ../Network/Receive/kRO/Sakexe_0.pm:5665
+#: ../Network/Receive/ServerType0.pm:5577
+msgid "No Memo"
+msgstr ""
+
+#: ../Network/Receive/kRO/Sakexe_0.pm:5666
+#: ../Network/Receive/ServerType0.pm:5578
+msgid "Mid-Delay"
+msgstr ""
+
+#: ../Network/Receive/kRO/Sakexe_0.pm:5667
+#: ../Network/Receive/ServerType0.pm:5579
+msgid "No Zeny"
+msgstr ""
+
+#: ../Network/Receive/kRO/Sakexe_0.pm:5668
+#: ../Network/Receive/ServerType0.pm:5580
+msgid "Wrong Weapon Type"
+msgstr ""
+
+#: ../Network/Receive/kRO/Sakexe_0.pm:5669
+#: ../Network/Receive/ServerType0.pm:5581
+msgid "Red Gem Needed"
+msgstr ""
+
+#: ../Network/Receive/kRO/Sakexe_0.pm:5670
+#: ../Network/Receive/ServerType0.pm:5582
+msgid "Blue Gem Needed"
+msgstr ""
+
+#: ../Network/Receive/kRO/Sakexe_0.pm:5672
+#: ../Network/Receive/ServerType0.pm:5584
+msgid "Requirement"
+msgstr ""
+
 #: ../Network/Receive/kRO/Sakexe_0.pm:5674
 #: ../Network/Receive/ServerType0.pm:5586
 #, perl-format
@@ -3337,7 +3468,7 @@ msgstr ""
 "格\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6823
-#: ../Network/Receive/ServerType0.pm:6701 ../Commands.pm:5028
+#: ../Network/Receive/ServerType0.pm:6701 ../Commands.pm:5027
 msgid ""
 "----------------- Warp Portal --------------------\n"
 "#  Place                           Map\n"
@@ -3433,533 +3564,588 @@ msgstr "公會創造成功.\n"
 msgid "New mail from sender: %s titled: %s.\n"
 msgstr ""
 
-#: ../Network/Receive/kRO/Sakexe_0.pm:6926
-#: ../Network/Receive/ServerType0.pm:6799
+#: ../Network/Receive/kRO/Sakexe_0.pm:6927
+#: ../Network/Receive/ServerType0.pm:6800
 #, fuzzy, perl-format
-msgid "%s to attach %s.\n"
+msgid "Failed to attach %s.\n"
 msgstr "%s 詠唱 %s 失敗\n"
 
-#: ../Network/Receive/kRO/Sakexe_0.pm:6931
-#: ../Network/Receive/ServerType0.pm:6804
-#, perl-format
-msgid "%s to delete mail with ID: %s.\n"
+#: ../Network/Receive/kRO/Sakexe_0.pm:6927
+#: ../Network/Receive/kRO/Sakexe_0.pm:6929
+#: ../Network/Receive/ServerType0.pm:6800
+#: ../Network/Receive/ServerType0.pm:6802
+msgid "item: "
 msgstr ""
+
+#: ../Network/Receive/kRO/Sakexe_0.pm:6927
+#: ../Network/Receive/kRO/Sakexe_0.pm:6929
+#: ../Network/Receive/ServerType0.pm:6800
+#: ../Network/Receive/ServerType0.pm:6802
+msgid "zeny"
+msgstr ""
+
+#: ../Network/Receive/kRO/Sakexe_0.pm:6929
+#: ../Network/Receive/ServerType0.pm:6802
+#, fuzzy, perl-format
+msgid "Succeeded to attach %s.\n"
+msgstr "%s 詠唱 %s 失敗\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6936
 #: ../Network/Receive/ServerType0.pm:6809
+#, fuzzy, perl-format
+msgid "Failed to delete mail with ID: %s.\n"
+msgstr "執行 %s 失敗\n"
+
+#: ../Network/Receive/kRO/Sakexe_0.pm:6939
+#: ../Network/Receive/ServerType0.pm:6812
 #, perl-format
-msgid "Mail window is now %s.\n"
+msgid "Succeeded to delete mail with ID: %s.\n"
 msgstr ""
 
-#: ../Network/Receive/kRO/Sakexe_0.pm:6942
-#: ../Network/Receive/ServerType0.pm:6815
+#: ../Network/Receive/kRO/Sakexe_0.pm:6946
+#: ../Network/Receive/ServerType0.pm:6819
+msgid "Mail window is now closed.\n"
+msgstr ""
+
+#: ../Network/Receive/kRO/Sakexe_0.pm:6949
+#: ../Network/Receive/ServerType0.pm:6822
+msgid "Mail window is now opened.\n"
+msgstr ""
+
+#: ../Network/Receive/kRO/Sakexe_0.pm:6956
+#: ../Network/Receive/ServerType0.pm:6829
 #, fuzzy, perl-format
 msgid "The mail with ID: %s does not exist.\n"
 msgstr "手推車的物品 '%s' 並不存在.\n"
 
-#: ../Network/Receive/kRO/Sakexe_0.pm:6943
-#: ../Network/Receive/ServerType0.pm:6816
+#: ../Network/Receive/kRO/Sakexe_0.pm:6957
+#: ../Network/Receive/ServerType0.pm:6830
 #, perl-format
 msgid "The mail with ID: %s is returned to the sender.\n"
 msgstr ""
 
-#: ../Network/Receive/kRO/Sakexe_0.pm:6951
-#: ../Network/Receive/ServerType0.pm:6824
-msgid "You have failed to bid into the auction.\n"
-msgstr ""
-
-#: ../Network/Receive/kRO/Sakexe_0.pm:6953
-#: ../Network/Receive/ServerType0.pm:6826
-#, fuzzy
-msgid "You have successfully bid in the auction.\n"
-msgstr "您成功地製造了藥水 (ID %s)!\n"
-
-#: ../Network/Receive/kRO/Sakexe_0.pm:6955
-#: ../Network/Receive/ServerType0.pm:6828
-#, fuzzy
-msgid "The auction has been canceled.\n"
-msgstr "施法已被取消."
-
-#: ../Network/Receive/kRO/Sakexe_0.pm:6957
-#: ../Network/Receive/ServerType0.pm:6830
-msgid "An auction with at least one bidder cannot be canceled.\n"
-msgstr ""
-
-#: ../Network/Receive/kRO/Sakexe_0.pm:6959
-#: ../Network/Receive/ServerType0.pm:6832
-msgid "You cannot register more than 5 items in an auction at a time.\n"
-msgstr ""
-
-#: ../Network/Receive/kRO/Sakexe_0.pm:6961
-#: ../Network/Receive/ServerType0.pm:6834
-msgid "You do not have enough Zeny to pay the Auction Fee.\n"
-msgstr ""
-
-#: ../Network/Receive/kRO/Sakexe_0.pm:6963
-#: ../Network/Receive/ServerType0.pm:6836
-#, fuzzy
-msgid "You have won the auction.\n"
-msgstr "您已加入這個聊天室 %s\n"
-
 #: ../Network/Receive/kRO/Sakexe_0.pm:6965
 #: ../Network/Receive/ServerType0.pm:6838
-#, fuzzy
-msgid "You have failed to win the auction.\n"
-msgstr "您已加入這個聊天室 %s\n"
+msgid "You have failed to bid into the auction.\n"
+msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6967
 #: ../Network/Receive/ServerType0.pm:6840
 #, fuzzy
-msgid "You do not have enough Zeny.\n"
-msgstr "您並沒有露天商店開啟.\n"
+msgid "You have successfully bid in the auction.\n"
+msgstr "您成功地製造了藥水 (ID %s)!\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6969
 #: ../Network/Receive/ServerType0.pm:6842
+#, fuzzy
+msgid "The auction has been canceled.\n"
+msgstr "施法已被取消."
+
+#: ../Network/Receive/kRO/Sakexe_0.pm:6971
+#: ../Network/Receive/ServerType0.pm:6844
+msgid "An auction with at least one bidder cannot be canceled.\n"
+msgstr ""
+
+#: ../Network/Receive/kRO/Sakexe_0.pm:6973
+#: ../Network/Receive/ServerType0.pm:6846
+msgid "You cannot register more than 5 items in an auction at a time.\n"
+msgstr ""
+
+#: ../Network/Receive/kRO/Sakexe_0.pm:6975
+#: ../Network/Receive/ServerType0.pm:6848
+msgid "You do not have enough Zeny to pay the Auction Fee.\n"
+msgstr ""
+
+#: ../Network/Receive/kRO/Sakexe_0.pm:6977
+#: ../Network/Receive/ServerType0.pm:6850
+#, fuzzy
+msgid "You have won the auction.\n"
+msgstr "您已加入這個聊天室 %s\n"
+
+#: ../Network/Receive/kRO/Sakexe_0.pm:6979
+#: ../Network/Receive/ServerType0.pm:6852
+#, fuzzy
+msgid "You have failed to win the auction.\n"
+msgstr "您已加入這個聊天室 %s\n"
+
+#: ../Network/Receive/kRO/Sakexe_0.pm:6981
+#: ../Network/Receive/ServerType0.pm:6854
+#, fuzzy
+msgid "You do not have enough Zeny.\n"
+msgstr "您並沒有露天商店開啟.\n"
+
+#: ../Network/Receive/kRO/Sakexe_0.pm:6983
+#: ../Network/Receive/ServerType0.pm:6856
 msgid "You cannot place more than 5 bids at a time.\n"
 msgstr ""
 
-#: ../Network/Receive/kRO/Sakexe_0.pm:6971
-#: ../Network/Receive/kRO/Sakexe_0.pm:7043
-#: ../Network/Receive/kRO/Sakexe_0.pm:7100
-#: ../Network/Receive/kRO/Sakexe_0.pm:7120
-#: ../Network/Receive/kRO/Sakexe_0.pm:7147
-#: ../Network/Receive/kRO/Sakexe_0.pm:7345
-#: ../Network/Receive/kRO/Sakexe_0.pm:7447
-#: ../Network/Receive/ServerType0.pm:6844
-#: ../Network/Receive/ServerType0.pm:6917
-#: ../Network/Receive/ServerType0.pm:6974
-#: ../Network/Receive/ServerType0.pm:6994
-#: ../Network/Receive/ServerType0.pm:7022
-#: ../Network/Receive/ServerType0.pm:7219
-#: ../Network/Receive/ServerType0.pm:7321
+#: ../Network/Receive/kRO/Sakexe_0.pm:6985
+#: ../Network/Receive/kRO/Sakexe_0.pm:7057
+#: ../Network/Receive/kRO/Sakexe_0.pm:7124
+#: ../Network/Receive/kRO/Sakexe_0.pm:7144
+#: ../Network/Receive/kRO/Sakexe_0.pm:7175
+#: ../Network/Receive/kRO/Sakexe_0.pm:7373
+#: ../Network/Receive/kRO/Sakexe_0.pm:7475
+#: ../Network/Receive/ServerType0.pm:6858
+#: ../Network/Receive/ServerType0.pm:6931
+#: ../Network/Receive/ServerType0.pm:6998
+#: ../Network/Receive/ServerType0.pm:7018
+#: ../Network/Receive/ServerType0.pm:7050
+#: ../Network/Receive/ServerType0.pm:7247
+#: ../Network/Receive/ServerType0.pm:7349
 #, perl-format
 msgid "flag: %s gave unknown results in: %s\n"
 msgstr ""
 
-#: ../Network/Receive/kRO/Sakexe_0.pm:6984
-#: ../Network/Receive/ServerType0.pm:6856
+#: ../Network/Receive/kRO/Sakexe_0.pm:6998
+#: ../Network/Receive/ServerType0.pm:6870
 msgid "No item in auction.\n"
 msgstr ""
 
-#: ../Network/Receive/kRO/Sakexe_0.pm:6988
-#: ../Network/Receive/ServerType0.pm:6860
+#: ../Network/Receive/kRO/Sakexe_0.pm:7002
+#: ../Network/Receive/ServerType0.pm:6874
 #, fuzzy, perl-format
 msgid "Found %s items in auction.\n"
 msgstr "已賣出 %s 物品.\n"
 
-#: ../Network/Receive/kRO/Sakexe_0.pm:6990
-#: ../Network/Receive/ServerType0.pm:6862
+#: ../Network/Receive/kRO/Sakexe_0.pm:7004
+#: ../Network/Receive/ServerType0.pm:6876
 #, fuzzy
 msgid "Auction"
 msgstr "解決方法\n"
 
-#: ../Network/Receive/kRO/Sakexe_0.pm:6991
-#: ../Network/Receive/kRO/Sakexe_0.pm:7022
-#: ../Network/Receive/ServerType0.pm:6863
-#: ../Network/Receive/ServerType0.pm:6896
+#: ../Network/Receive/kRO/Sakexe_0.pm:7005
+#: ../Network/Receive/kRO/Sakexe_0.pm:7036
+#: ../Network/Receive/ServerType0.pm:6877
+#: ../Network/Receive/ServerType0.pm:6910
 #, perl-format
 msgid "@%s @%s @%s @%s @%s"
 msgstr ""
 
-#: ../Network/Receive/kRO/Sakexe_0.pm:7037
-#: ../Network/Receive/ServerType0.pm:6911
+#: ../Network/Receive/kRO/Sakexe_0.pm:7051
+#: ../Network/Receive/ServerType0.pm:6925
 #, fuzzy
 msgid "You have ended the auction.\n"
 msgstr "您已加入這個聊天室 %s\n"
 
-#: ../Network/Receive/kRO/Sakexe_0.pm:7039
-#: ../Network/Receive/ServerType0.pm:6913
+#: ../Network/Receive/kRO/Sakexe_0.pm:7053
+#: ../Network/Receive/ServerType0.pm:6927
 #, fuzzy
 msgid "You cannot end the auction.\n"
 msgstr "您無法交易 (fail code %s).\n"
 
-#: ../Network/Receive/kRO/Sakexe_0.pm:7041
-#: ../Network/Receive/ServerType0.pm:6915
+#: ../Network/Receive/kRO/Sakexe_0.pm:7055
+#: ../Network/Receive/ServerType0.pm:6929
 msgid "Bid number is incorrect.\n"
 msgstr ""
 
-#: ../Network/Receive/kRO/Sakexe_0.pm:7049
-#: ../Network/Receive/ServerType0.pm:6923
+#: ../Network/Receive/kRO/Sakexe_0.pm:7064
+#: ../Network/Receive/ServerType0.pm:6938
+#, fuzzy
+msgid "Auction window is now closed.\n"
+msgstr "一個露店尚未開啟.\n"
+
+#: ../Network/Receive/kRO/Sakexe_0.pm:7067
+#: ../Network/Receive/ServerType0.pm:6941
+#, fuzzy
+msgid "Auction window is now opened.\n"
+msgstr "一個露店尚未開啟.\n"
+
+#: ../Network/Receive/kRO/Sakexe_0.pm:7074
+#: ../Network/Receive/ServerType0.pm:6948
 #, perl-format
-msgid "Auction window is now %s.\n"
+msgid ""
+"Failed (note: usable items can't be auctioned) to add item with index: %s.\n"
 msgstr ""
 
-#: ../Network/Receive/kRO/Sakexe_0.pm:7054
-#: ../Network/Receive/ServerType0.pm:6928
+#: ../Network/Receive/kRO/Sakexe_0.pm:7077
+#: ../Network/Receive/ServerType0.pm:6951
 #, fuzzy, perl-format
-msgid "%s to add item with index: %s.\n"
+msgid "Succeeded to add item with index: %s.\n"
 msgstr "%s 詠唱 %s 失敗\n"
 
-#: ../Network/Receive/kRO/Sakexe_0.pm:7062
-#: ../Network/Receive/ServerType0.pm:6936
+#: ../Network/Receive/kRO/Sakexe_0.pm:7086
+#: ../Network/Receive/ServerType0.pm:6960
 msgid "Hotkeys"
 msgstr ""
 
-#: ../Network/Receive/kRO/Sakexe_0.pm:7064
-#: ../Network/Receive/ServerType0.pm:6938
+#: ../Network/Receive/kRO/Sakexe_0.pm:7088
+#: ../Network/Receive/ServerType0.pm:6962
 msgid "Name"
 msgstr ""
 
-#: ../Network/Receive/kRO/Sakexe_0.pm:7064
-#: ../Network/Receive/ServerType0.pm:6938
+#: ../Network/Receive/kRO/Sakexe_0.pm:7088
+#: ../Network/Receive/ServerType0.pm:6962
 msgid "Type"
 msgstr ""
 
-#: ../Network/Receive/kRO/Sakexe_0.pm:7064
-#: ../Network/Receive/ServerType0.pm:6938
+#: ../Network/Receive/kRO/Sakexe_0.pm:7088
+#: ../Network/Receive/ServerType0.pm:6962
 msgid "Lv"
 msgstr ""
 
-#: ../Network/Receive/kRO/Sakexe_0.pm:7072
-#: ../Network/Receive/ServerType0.pm:6946
+#: ../Network/Receive/kRO/Sakexe_0.pm:7096
+#: ../Network/Receive/ServerType0.pm:6970
 #, fuzzy, perl-format
 msgid "@%s @%s @%s @%s"
 msgstr "%s 有 %s "
 
-#: ../Network/Receive/kRO/Sakexe_0.pm:7074
-#: ../Network/Receive/ServerType0.pm:6948
+#: ../Network/Receive/kRO/Sakexe_0.pm:7098
+#: ../Network/Receive/ServerType0.pm:6972
 msgid "skill"
 msgstr ""
 
-#: ../Network/Receive/kRO/Sakexe_0.pm:7074
-#: ../Network/Receive/ServerType0.pm:6948
+#: ../Network/Receive/kRO/Sakexe_0.pm:7098
+#: ../Network/Receive/ServerType0.pm:6972
 msgid "item"
 msgstr ""
 
-#: ../Network/Receive/kRO/Sakexe_0.pm:7083
-#: ../Network/Receive/ServerType0.pm:6957
+#: ../Network/Receive/kRO/Sakexe_0.pm:7107
+#: ../Network/Receive/ServerType0.pm:6981
 #, fuzzy
 msgid ""
 "Error: You have been forced to disconnect by a Hack Shield.\n"
 " Please check Poseidon.\n"
 msgstr "錯誤: 您已被GM強迫斷線\n"
 
-#: ../Network/Receive/kRO/Sakexe_0.pm:7090
-#: ../Network/Receive/ServerType0.pm:6964
-msgid "Already allied.\n"
-msgstr ""
-
-#: ../Network/Receive/kRO/Sakexe_0.pm:7092
-#: ../Network/Receive/ServerType0.pm:6966
-#, fuzzy
-msgid "You rejected the offer.\n"
-msgstr "%s 拒絕當您的朋友\n"
-
-#: ../Network/Receive/kRO/Sakexe_0.pm:7094
-#: ../Network/Receive/ServerType0.pm:6968
-#, fuzzy
-msgid "You accepted the offer.\n"
-msgstr "您接受了最終的交易\n"
-
-#: ../Network/Receive/kRO/Sakexe_0.pm:7096
-#: ../Network/Receive/ServerType0.pm:6970
-msgid "They have too any alliances\n"
-msgstr ""
-
-#: ../Network/Receive/kRO/Sakexe_0.pm:7098
-#: ../Network/Receive/ServerType0.pm:6972
-#, fuzzy
-msgid "You have too many alliances.\n"
-msgstr "您已加入這個聊天室 %s\n"
-
-#: ../Network/Receive/kRO/Sakexe_0.pm:7106
-#: ../Network/Receive/ServerType0.pm:6980
-#, perl-format
-msgid "%s's talkie box message: %s.\n"
-msgstr ""
-
-#: ../Network/Receive/kRO/Sakexe_0.pm:7112
-#: ../Network/Receive/ServerType0.pm:6986
-#, fuzzy
-msgid "A manner point has been successfully aligned.\n"
-msgstr "%s 已成功插入 %s\n"
-
 #: ../Network/Receive/kRO/Sakexe_0.pm:7114
 #: ../Network/Receive/ServerType0.pm:6988
-msgid "Chat Block has been applied by GM due to your ill-mannerous action.\n"
+msgid "Already allied.\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7116
 #: ../Network/Receive/ServerType0.pm:6990
-msgid "Automated Chat Block has been applied due to Anti-Spam System.\n"
-msgstr ""
+#, fuzzy
+msgid "You rejected the offer.\n"
+msgstr "%s 拒絕當您的朋友\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7118
 #: ../Network/Receive/ServerType0.pm:6992
+#, fuzzy
+msgid "You accepted the offer.\n"
+msgstr "您接受了最終的交易\n"
+
+#: ../Network/Receive/kRO/Sakexe_0.pm:7120
+#: ../Network/Receive/ServerType0.pm:6994
+msgid "They have too any alliances\n"
+msgstr ""
+
+#: ../Network/Receive/kRO/Sakexe_0.pm:7122
+#: ../Network/Receive/ServerType0.pm:6996
+#, fuzzy
+msgid "You have too many alliances.\n"
+msgstr "您已加入這個聊天室 %s\n"
+
+#: ../Network/Receive/kRO/Sakexe_0.pm:7130
+#: ../Network/Receive/ServerType0.pm:7004
+#, perl-format
+msgid "%s's talkie box message: %s.\n"
+msgstr ""
+
+#: ../Network/Receive/kRO/Sakexe_0.pm:7136
+#: ../Network/Receive/ServerType0.pm:7010
+#, fuzzy
+msgid "A manner point has been successfully aligned.\n"
+msgstr "%s 已成功插入 %s\n"
+
+#: ../Network/Receive/kRO/Sakexe_0.pm:7138
+#: ../Network/Receive/ServerType0.pm:7012
+msgid "Chat Block has been applied by GM due to your ill-mannerous action.\n"
+msgstr ""
+
+#: ../Network/Receive/kRO/Sakexe_0.pm:7140
+#: ../Network/Receive/ServerType0.pm:7014
+msgid "Automated Chat Block has been applied due to Anti-Spam System.\n"
+msgstr ""
+
+#: ../Network/Receive/kRO/Sakexe_0.pm:7142
+#: ../Network/Receive/ServerType0.pm:7016
 msgid "You got a good point.\n"
 msgstr ""
 
-#: ../Network/Receive/kRO/Sakexe_0.pm:7127
-#: ../Network/Receive/ServerType0.pm:7001
+#: ../Network/Receive/kRO/Sakexe_0.pm:7151
+#: ../Network/Receive/ServerType0.pm:7025
 #, fuzzy, perl-format
-msgid "You have been: %s by %s.\n"
+msgid "You have been: muted by %s.\n"
 msgstr "您有 %s"
 
-#: ../Network/Receive/kRO/Sakexe_0.pm:7135
-#: ../Network/Receive/ServerType0.pm:7010
+#: ../Network/Receive/kRO/Sakexe_0.pm:7154
+#: ../Network/Receive/ServerType0.pm:7028
+#, fuzzy, perl-format
+msgid "You have been: unmuted by %s.\n"
+msgstr "您有 %s"
+
+#: ../Network/Receive/kRO/Sakexe_0.pm:7163
+#: ../Network/Receive/ServerType0.pm:7038
 #, perl-format
 msgid "You have now marked: %s as Place of the %s.\n"
 msgstr ""
 
-#: ../Network/Receive/kRO/Sakexe_0.pm:7137
-#: ../Network/Receive/ServerType0.pm:7012
+#: ../Network/Receive/kRO/Sakexe_0.pm:7165
+#: ../Network/Receive/ServerType0.pm:7040
 #, perl-format
 msgid "%s is marked as Place of the %s.\n"
 msgstr ""
 
-#: ../Network/Receive/kRO/Sakexe_0.pm:7139
-#: ../Network/Receive/ServerType0.pm:7014
+#: ../Network/Receive/kRO/Sakexe_0.pm:7167
+#: ../Network/Receive/ServerType0.pm:7042
 #, perl-format
 msgid "You have now marked %s as Target of the %s.\n"
 msgstr ""
 
-#: ../Network/Receive/kRO/Sakexe_0.pm:7141
-#: ../Network/Receive/ServerType0.pm:7016
+#: ../Network/Receive/kRO/Sakexe_0.pm:7169
+#: ../Network/Receive/ServerType0.pm:7044
 #, perl-format
 msgid "%s is marked as Target of the %s.\n"
 msgstr ""
 
-#: ../Network/Receive/kRO/Sakexe_0.pm:7143
-#: ../Network/Receive/ServerType0.pm:7018
+#: ../Network/Receive/kRO/Sakexe_0.pm:7171
+#: ../Network/Receive/ServerType0.pm:7046
 #, fuzzy
 msgid "[TaeKwon Mission] Target Monster : %s (%d%)\n"
 msgstr "跆拳任務: "
 
-#: ../Network/Receive/kRO/Sakexe_0.pm:7145
-#: ../Network/Receive/ServerType0.pm:7020
+#: ../Network/Receive/kRO/Sakexe_0.pm:7173
+#: ../Network/Receive/ServerType0.pm:7048
 #, fuzzy
 msgid "Your Hate and Feel targets have been resetted.\n"
 msgstr "您已被復活\n"
 
-#: ../Network/Receive/kRO/Sakexe_0.pm:7158
-#: ../Network/Receive/ServerType0.pm:7033
+#: ../Network/Receive/kRO/Sakexe_0.pm:7183
+#: ../Network/Receive/ServerType0.pm:7058
+#, fuzzy
+msgid "You are not a guildmaster.\n"
+msgstr "您並沒有在一個公會中.\n"
+
+#: ../Network/Receive/kRO/Sakexe_0.pm:7186
+#: ../Network/Receive/ServerType0.pm:7061
 #, perl-format
 msgid "type: %s gave unknown results in: %s\n"
 msgstr ""
 
-#: ../Network/Receive/kRO/Sakexe_0.pm:7161
-#: ../Network/Receive/ServerType0.pm:7036
-#, fuzzy, perl-format
-msgid "You are %sa guildmaster.\n"
+#: ../Network/Receive/kRO/Sakexe_0.pm:7189
+#: ../Network/Receive/ServerType0.pm:7064
+#, fuzzy
+msgid "You are a guildmaster.\n"
 msgstr "您並沒有在一個公會中.\n"
 
-#: ../Network/Receive/kRO/Sakexe_0.pm:7225
-#: ../Network/Receive/ServerType0.pm:7100
+#: ../Network/Receive/kRO/Sakexe_0.pm:7253
+#: ../Network/Receive/ServerType0.pm:7128
 #, perl-format
 msgid "Blade Stop by %s on %s is deactivated.\n"
 msgstr ""
 
-#: ../Network/Receive/kRO/Sakexe_0.pm:7227
-#: ../Network/Receive/ServerType0.pm:7102
+#: ../Network/Receive/kRO/Sakexe_0.pm:7255
+#: ../Network/Receive/ServerType0.pm:7130
 #, perl-format
 msgid "Blade Stop by %s on %s is active.\n"
 msgstr ""
 
-#: ../Network/Receive/kRO/Sakexe_0.pm:7233
-#: ../Network/Receive/ServerType0.pm:7108
+#: ../Network/Receive/kRO/Sakexe_0.pm:7261
+#: ../Network/Receive/ServerType0.pm:7136
 #, perl-format
 msgid "%s and %s have divorced from each other.\n"
 msgstr ""
 
-#: ../Network/Receive/kRO/Sakexe_0.pm:7241
-#: ../Network/Receive/ServerType0.pm:7116
+#: ../Network/Receive/kRO/Sakexe_0.pm:7269
+#: ../Network/Receive/ServerType0.pm:7144
 msgid "Upgrade List"
 msgstr ""
 
-#: ../Network/Receive/kRO/Sakexe_0.pm:7258
-#: ../Network/Receive/kRO/Sakexe_0.pm:7260
-#: ../Network/Receive/ServerType0.pm:7132
-#: ../Network/Receive/ServerType0.pm:7134
+#: ../Network/Receive/kRO/Sakexe_0.pm:7286
+#: ../Network/Receive/kRO/Sakexe_0.pm:7288
+#: ../Network/Receive/ServerType0.pm:7160
+#: ../Network/Receive/ServerType0.pm:7162
 #, fuzzy, perl-format
 msgid "Weapon upgraded: %s\n"
 msgstr "物品 %s 已被精鍊至 +%s\n"
 
-#: ../Network/Receive/kRO/Sakexe_0.pm:7262
-#: ../Network/Receive/ServerType0.pm:7136
+#: ../Network/Receive/kRO/Sakexe_0.pm:7290
+#: ../Network/Receive/ServerType0.pm:7164
 #, perl-format
 msgid "Cannot upgrade %s until you level up the upgrade weapon skill.\n"
 msgstr ""
 
-#: ../Network/Receive/kRO/Sakexe_0.pm:7264
-#: ../Network/Receive/ServerType0.pm:7138
+#: ../Network/Receive/kRO/Sakexe_0.pm:7292
+#: ../Network/Receive/ServerType0.pm:7166
 #, perl-format
 msgid "You lack item %s to upgrade the weapon.\n"
 msgstr ""
 
-#: ../Network/Receive/kRO/Sakexe_0.pm:7275
-#: ../Network/Receive/ServerType0.pm:7149
+#: ../Network/Receive/kRO/Sakexe_0.pm:7303
+#: ../Network/Receive/ServerType0.pm:7177
 msgid "Cooking List"
 msgstr ""
 
-#: ../Network/Receive/kRO/Sakexe_0.pm:7284
-#: ../Network/Receive/ServerType0.pm:7158
+#: ../Network/Receive/kRO/Sakexe_0.pm:7312
+#: ../Network/Receive/ServerType0.pm:7186
 #, fuzzy
 msgid "You can now use the 'cook' command.\n"
 msgstr "您無法交易 (fail code %s).\n"
 
-#: ../Network/Receive/kRO/Sakexe_0.pm:7301
-#: ../Network/Receive/ServerType0.pm:7175
+#: ../Network/Receive/kRO/Sakexe_0.pm:7329
+#: ../Network/Receive/ServerType0.pm:7203
 #, fuzzy, perl-format
 msgid "Party member %s has picked up item %s.\n"
 msgstr "物品 %s 已被精鍊至 +%s\n"
 
-#: ../Network/Receive/kRO/Sakexe_0.pm:7337
-#: ../Network/Receive/ServerType0.pm:7211
+#: ../Network/Receive/kRO/Sakexe_0.pm:7365
+#: ../Network/Receive/ServerType0.pm:7239
 msgid "The Memorial Dungeon expired it has been destroyed.\n"
 msgstr ""
 
-#: ../Network/Receive/kRO/Sakexe_0.pm:7339
-#: ../Network/Receive/ServerType0.pm:7213
+#: ../Network/Receive/kRO/Sakexe_0.pm:7367
+#: ../Network/Receive/ServerType0.pm:7241
 msgid ""
 "The Memorial Dungeon's entry time limit expired it has been destroyed.\n"
 msgstr ""
 
-#: ../Network/Receive/kRO/Sakexe_0.pm:7341
-#: ../Network/Receive/ServerType0.pm:7215
+#: ../Network/Receive/kRO/Sakexe_0.pm:7369
+#: ../Network/Receive/ServerType0.pm:7243
 #, fuzzy
 msgid "The Memorial Dungeon has been removed.\n"
 msgstr "施法已被取消."
 
-#: ../Network/Receive/kRO/Sakexe_0.pm:7343
-#: ../Network/Receive/ServerType0.pm:7217
+#: ../Network/Receive/kRO/Sakexe_0.pm:7371
+#: ../Network/Receive/ServerType0.pm:7245
 msgid ""
 "The instance windows has been removed, possibly due to party/guild leave.\n"
 msgstr ""
 
-#: ../Network/Receive/kRO/Sakexe_0.pm:7365
-#: ../Network/Receive/ServerType0.pm:7239
+#: ../Network/Receive/kRO/Sakexe_0.pm:7393
+#: ../Network/Receive/ServerType0.pm:7267
 #, perl-format
 msgid "Battleground score - Lions: '%d' VS Eagles: '%d'\n"
 msgstr ""
 
-#: ../Network/Receive/kRO/Sakexe_0.pm:7387
-#: ../Network/Receive/ServerType0.pm:7261
+#: ../Network/Receive/kRO/Sakexe_0.pm:7415
+#: ../Network/Receive/ServerType0.pm:7289
 #, fuzzy
 msgid "Attempting to capture pet (slot machine).\n"
 msgstr "試圖與 %s 交易\n"
 
-#: ../Network/Receive/kRO/Sakexe_0.pm:7400
-#: ../Network/Receive/ServerType0.pm:7274
+#: ../Network/Receive/kRO/Sakexe_0.pm:7428
+#: ../Network/Receive/ServerType0.pm:7302
 #, perl-format
 msgid "The '%s' item will disappear in %d minutes.\n"
 msgstr ""
 
-#: ../Network/Receive/kRO/Sakexe_0.pm:7406
-#: ../Network/Receive/ServerType0.pm:7280
+#: ../Network/Receive/kRO/Sakexe_0.pm:7434
+#: ../Network/Receive/ServerType0.pm:7308
 #, fuzzy, perl-format
 msgid "Rental item '%s' has expired!\n"
 msgstr "物品欄的物品 '%s' 已裝備.\n"
 
-#: ../Network/Receive/kRO/Sakexe_0.pm:7419
-#: ../Network/Receive/ServerType0.pm:7293
+#: ../Network/Receive/kRO/Sakexe_0.pm:7447
+#: ../Network/Receive/ServerType0.pm:7321
 #, fuzzy
 msgid "You cannot adopt more than 1 child.\n"
 msgstr "您無法交易 (fail code %s).\n"
 
-#: ../Network/Receive/kRO/Sakexe_0.pm:7421
-#: ../Network/Receive/ServerType0.pm:7295
+#: ../Network/Receive/kRO/Sakexe_0.pm:7449
+#: ../Network/Receive/ServerType0.pm:7323
 msgid "You must be at least character level 70 in order to adopt someone.\n"
 msgstr ""
 
-#: ../Network/Receive/kRO/Sakexe_0.pm:7423
-#: ../Network/Receive/ServerType0.pm:7297
+#: ../Network/Receive/kRO/Sakexe_0.pm:7451
+#: ../Network/Receive/ServerType0.pm:7325
 #, fuzzy
 msgid "You cannot adopt a married person.\n"
 msgstr "您無法交易 (fail code %s).\n"
 
-#: ../Network/Receive/kRO/Sakexe_0.pm:7430
-#: ../Network/Receive/ServerType0.pm:7304
+#: ../Network/Receive/kRO/Sakexe_0.pm:7458
+#: ../Network/Receive/ServerType0.pm:7332
 #, perl-format
 msgid "%s wishes to adopt you. Do you accept?\n"
 msgstr ""
 
-#: ../Network/Receive/kRO/Sakexe_0.pm:7438
-#: ../Network/Receive/ServerType0.pm:7312
+#: ../Network/Receive/kRO/Sakexe_0.pm:7466
+#: ../Network/Receive/ServerType0.pm:7340
 msgid "You cannot find any trace of a Boss Monster in this area.\n"
 msgstr ""
 
-#: ../Network/Receive/kRO/Sakexe_0.pm:7440
-#: ../Network/Receive/ServerType0.pm:7314
+#: ../Network/Receive/kRO/Sakexe_0.pm:7468
+#: ../Network/Receive/ServerType0.pm:7342
 #, fuzzy, perl-format
 msgid "MVP Boss %s is now on location: (%d, %d)\n"
 msgstr "您施展 %s 於地面座標 (%d, %d)\n"
 
-#: ../Network/Receive/kRO/Sakexe_0.pm:7442
-#: ../Network/Receive/ServerType0.pm:7316
+#: ../Network/Receive/kRO/Sakexe_0.pm:7470
+#: ../Network/Receive/ServerType0.pm:7344
 #, perl-format
 msgid "MVP Boss %s has been detected on this map!\n"
 msgstr ""
 
-#: ../Network/Receive/kRO/Sakexe_0.pm:7444
-#: ../Network/Receive/ServerType0.pm:7318
+#: ../Network/Receive/kRO/Sakexe_0.pm:7472
+#: ../Network/Receive/ServerType0.pm:7346
 #, perl-format
 msgid ""
 "MVP Boss %s is dead, but will spawn again in %d hour(s) and %d minutes(s).\n"
 msgstr ""
 
-#: ../Network/Receive/kRO/Sakexe_0.pm:7495
-#: ../Network/Receive/ServerType0.pm:7371
+#: ../Network/Receive/kRO/Sakexe_0.pm:7523
+#: ../Network/Receive/ServerType0.pm:7399
 #, fuzzy, perl-format
 msgid "Quest: %s has been added.\n"
 msgstr "%s 已被復活\n"
 
-#: ../Network/Receive/kRO/Sakexe_0.pm:7517
-#: ../Network/Receive/ServerType0.pm:7394
+#: ../Network/Receive/kRO/Sakexe_0.pm:7545
+#: ../Network/Receive/ServerType0.pm:7422
 #, fuzzy, perl-format
 msgid "Quest: %s has been deleted.\n"
 msgstr "%s 已被復活\n"
 
-#: ../Network/Receive/kRO/Sakexe_0.pm:7540
-#: ../Network/Receive/ServerType0.pm:7417 ../Commands.pm:5368
+#: ../Network/Receive/kRO/Sakexe_0.pm:7568
+#: ../Network/Receive/ServerType0.pm:7445 ../Commands.pm:5367
 msgid "active"
 msgstr ""
 
-#: ../Network/Receive/kRO/Sakexe_0.pm:7540
-#: ../Network/Receive/ServerType0.pm:7417 ../Commands.pm:5368
+#: ../Network/Receive/kRO/Sakexe_0.pm:7568
+#: ../Network/Receive/ServerType0.pm:7445 ../Commands.pm:5367
 msgid "inactive"
 msgstr ""
 
-#: ../Network/Receive/kRO/Sakexe_0.pm:7541
-#: ../Network/Receive/ServerType0.pm:7418
+#: ../Network/Receive/kRO/Sakexe_0.pm:7569
+#: ../Network/Receive/ServerType0.pm:7446
 #, fuzzy, perl-format
 msgid "Quest: %s is now %s.\n"
 msgstr "魔物 %s (%d) 現在為: %s\n"
 
-#: ../Network/Receive/kRO/Sakexe_0.pm:7547
-#: ../Network/Receive/ServerType0.pm:7436
+#: ../Network/Receive/kRO/Sakexe_0.pm:7575
+#: ../Network/Receive/ServerType0.pm:7464
 #, perl-format
 msgid "The accountName for ID %s is %s.\n"
 msgstr ""
 
-#: ../Network/Receive/kRO/Sakexe_0.pm:7556
+#: ../Network/Receive/kRO/Sakexe_0.pm:7584
 #, fuzzy
 msgid "Sell failed.\n"
 msgstr "技能 %s 失敗 (%s)\n"
 
-#: ../Network/Receive/kRO/Sakexe_0.pm:7558
+#: ../Network/Receive/kRO/Sakexe_0.pm:7586
 #, fuzzy
 msgid "Sell completed.\n"
 msgstr "購買完成.\n"
 
-#: ../Network/Receive/kRO/Sakexe_0.pm:7567
-#: ../Network/Receive/ServerType0.pm:7428
+#: ../Network/Receive/kRO/Sakexe_0.pm:7595
+#: ../Network/Receive/ServerType0.pm:7456
 #, fuzzy
 msgid "You can't logout, retry in 10 sec.\n"
 msgstr "您無法交易 (fail code %s).\n"
 
-#: ../Network/Receive/kRO/Sakexe_0.pm:7569
-#: ../Network/Receive/ServerType0.pm:7430
+#: ../Network/Receive/kRO/Sakexe_0.pm:7597
+#: ../Network/Receive/ServerType0.pm:7458
 msgid "Logged out from the server succesfully.\n"
 msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_2005_05_30a.pm:54
-#: ../Network/Receive/ServerType0.pm:2736
+#: ../Network/Receive/ServerType0.pm:2735
 #, fuzzy, perl-format
 msgid "Autodetected attackDistance for homunculus = %s\n"
 msgstr "已自動偵測 attackDistance = %s\n"
 
 #: ../Network/Receive/kRO/Sakexe_2007_11_06a.pm:52
-#: ../Network/Receive/ServerType0.pm:2713
+#: ../Network/Receive/ServerType0.pm:2712
 #, fuzzy, perl-format
 msgid "Autodetected attackDistance for mercenary = %s\n"
 msgstr "已自動偵測 attackDistance = %s\n"
@@ -4603,12 +4789,12 @@ msgstr "失效的工作項目: %s\n"
 #: ../Commands.pm:3309 ../Commands.pm:3731 ../Commands.pm:3802
 #: ../Commands.pm:3822 ../Commands.pm:3834 ../Commands.pm:3945
 #: ../Commands.pm:3982 ../Commands.pm:4049 ../Commands.pm:4067
-#: ../Commands.pm:4489 ../Commands.pm:4639 ../Commands.pm:4683
-#: ../Commands.pm:4728 ../Commands.pm:4761 ../Commands.pm:4787
-#: ../Commands.pm:4812 ../Commands.pm:4837 ../Commands.pm:4937
-#: ../Commands.pm:4997 ../Commands.pm:5117 ../Commands.pm:5233
-#: ../Commands.pm:5349 ../Commands.pm:5399 ../Commands.pm:5422
-#: ../Commands.pm:5435
+#: ../Commands.pm:4489 ../Commands.pm:4638 ../Commands.pm:4682
+#: ../Commands.pm:4727 ../Commands.pm:4760 ../Commands.pm:4786
+#: ../Commands.pm:4811 ../Commands.pm:4836 ../Commands.pm:4936
+#: ../Commands.pm:4996 ../Commands.pm:5116 ../Commands.pm:5232
+#: ../Commands.pm:5348 ../Commands.pm:5398 ../Commands.pm:5421
+#: ../Commands.pm:5434
 #, perl-format
 msgid "You must be logged in the game to use this command (%s)\n"
 msgstr "您必須已登入遊戲中才能使用本指令 (%s)\n"
@@ -5304,7 +5490,7 @@ msgstr ""
 "使用方法: e <指令>\n"
 
 #. Translation Comment: List of equiped items on each slot
-#: ../Commands.pm:1522 ../Commands.pm:4723
+#: ../Commands.pm:1522 ../Commands.pm:4722
 msgid "Slots:\n"
 msgstr "裝備部位:\n"
 
@@ -5517,16 +5703,24 @@ msgid "Error: No slave detected.\n"
 msgstr "錯誤: 沒有偵測到 slave.\n"
 
 #: ../Commands.pm:1904
+#, fuzzy
+msgid " Slave Status "
+msgstr "目標已死亡\n"
+
+#: ../Commands.pm:1905
 msgid ""
-"-------------------- Slave Status ----------------------\n"
 "Name: @<<<<<<<<<<<<<<<<<<<<<<<<< HP: @>>>>>>>>>>>>>>>>>>\n"
 "Type: @<<<<<<<<<<<<<<<<<<<<<<<<< SP: @>>>>>>>>>>>>>>>>>>\n"
 "Level: @<<   @>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n"
-"--------------------------------------------------------\n"
-"Atk: @>>>    Matk:     @>>>    Hunger:    @>>>\n"
-"Hit: @>>>    Critical: @>>>    @<<<<<<<<< @>>>\n"
-"Def: @>>>    Mdef:     @>>>    Accessory: @>>>\n"
-"Flee:@>>>    Aspd:     @>>>    Summons:   @>>>\n"
+msgstr ""
+
+#: ../Commands.pm:1909
+#, fuzzy
+msgid ""
+"Atk: @>>>    Matk:     @>>>    Hunger:      @>>>\n"
+"Hit: @>>>    Critical: @>>>    @<<<<<<<<<   @>>>\n"
+"Def: @>>>    Mdef:     @>>>    Accessory:   @>>>\n"
+"Flee:@>>>    Aspd:     @>>>    Summons:     @>>>\n"
 "Range: @<<   Skill pt: @>>>    Contract End: @>>>>>>>>>>\n"
 msgstr ""
 "-------------------- Slave 狀態 ----------------------\n"
@@ -6292,6 +6486,26 @@ msgstr ""
 "------------玩家清單-------------\n"
 "#    名稱                                性別  Lv  Job         距離  座標\n"
 
+#: ../Commands.pm:3419
+#, fuzzy, perl-format
+msgid "Total guild players: %s \n"
+msgstr "總傷害取得: %s\n"
+
+#: ../Commands.pm:3421 ../Commands.pm:3460 ../Commands.pm:3577
+#, fuzzy, perl-format
+msgid "Total players: %s \n"
+msgstr "總傷害取得: %s\n"
+
+#: ../Commands.pm:3423 ../Commands.pm:3462 ../Commands.pm:3578
+#, fuzzy
+msgid "There are no players near you.\n"
+msgstr "無角色在此帳號.\n"
+
+#: ../Commands.pm:3458
+#, fuzzy, perl-format
+msgid "Total party players: %s \n"
+msgstr "總傷害取得: %s\n"
+
 #: ../Commands.pm:3472
 #, perl-format
 msgid "Player \"%s\" does not exist.\n"
@@ -7012,7 +7226,7 @@ msgstr ""
 "'tank' 功能語法錯誤 (幫玩家擋怪)\n"
 "玩家 %s 並不存在.\n"
 
-#: ../Commands.pm:4631
+#: ../Commands.pm:4630
 #, fuzzy, perl-format
 msgid ""
 "Error in function 'tank' (Tank for a Player/Slave)\n"
@@ -7021,7 +7235,7 @@ msgstr ""
 "'tank' 功能語法錯誤 (幫玩家擋怪)\n"
 "玩家 %s 並不存在.\n"
 
-#: ../Commands.pm:4652
+#: ../Commands.pm:4651
 #, perl-format
 msgid ""
 "%s\n"
@@ -7030,12 +7244,12 @@ msgstr ""
 "%s\n"
 "名稱                                      數量    價格 \n"
 
-#: ../Commands.pm:4660
+#: ../Commands.pm:4659
 #, perl-format
 msgid "Total of %d items to sell.\n"
 msgstr "Total of %d items to sell.\n"
 
-#: ../Commands.pm:4668
+#: ../Commands.pm:4667
 msgid ""
 "Syntax Error in function 'timeout' (set a timeout)\n"
 "Usage: timeout <type> [<seconds>]\n"
@@ -7043,7 +7257,7 @@ msgstr ""
 "'timeout' 功能語法錯誤 (設定時間)\n"
 "使用方法: timeout <類型> [<秒數>]\n"
 
-#: ../Commands.pm:4671
+#: ../Commands.pm:4670
 #, perl-format
 msgid ""
 "Error in function 'timeout' (set a timeout)\n"
@@ -7052,12 +7266,12 @@ msgstr ""
 "'timeout' 功能錯誤 (設定時間)\n"
 "時間 %s 並不存在\n"
 
-#: ../Commands.pm:4674
+#: ../Commands.pm:4673
 #, perl-format
 msgid "Timeout '%s' is %s\n"
 msgstr "時間設定 '%s' 是 %s\n"
 
-#: ../Commands.pm:4690
+#: ../Commands.pm:4689
 msgid ""
 "Function 'top10' (Show Top 10 Lists)\n"
 "Usage: top10 <b|a|t|p> | <black|alche|tk|pk> | <blacksmith|alchemist|taekwon|"
@@ -7067,7 +7281,7 @@ msgstr ""
 "使用方法: top10 <b|a|t|p> | <black|alche|tk|pk> | <blacksmith|alchemist|"
 "taekwon|pvp>\n"
 
-#: ../Commands.pm:4701
+#: ../Commands.pm:4700
 msgid ""
 "Syntax Error in function 'top10' (Show Top 10 Lists)\n"
 "Usage: top10 <b|a|t|p> |\n"
@@ -7079,12 +7293,12 @@ msgstr ""
 "                <black|alche|tk|pk> |\n"
 "                <blacksmith|alchemist|taekwon|pvp>\n"
 
-#: ../Commands.pm:4748
+#: ../Commands.pm:4747
 #, perl-format
 msgid "Inventory Item %s (%s) can't be unequipped.\n"
 msgstr "物品欄的物品 %s (%s) 無法被卸下.\n"
 
-#: ../Commands.pm:4769
+#: ../Commands.pm:4768
 msgid ""
 "Syntax Error in function 'im' (Use Item on Monster)\n"
 "Usage: im <item #> <monster #>\n"
@@ -7092,7 +7306,7 @@ msgstr ""
 "'im' 功能語法錯誤 (使用物品在魔物身上)\n"
 "使用方法: im <物品編號> <魔物編號>\n"
 
-#: ../Commands.pm:4772
+#: ../Commands.pm:4771
 #, perl-format
 msgid ""
 "Error in function 'im' (Use Item on Monster)\n"
@@ -7101,7 +7315,7 @@ msgstr ""
 "'im' 功能錯誤 (使用物品在魔物身上)\n"
 "物品欄的物品 %s 並不存在.\n"
 
-#: ../Commands.pm:4775
+#: ../Commands.pm:4774
 #, perl-format
 msgid ""
 "Error in function 'im' (Use Item on Monster)\n"
@@ -7110,7 +7324,7 @@ msgstr ""
 "'im' 功能錯誤 (使用物品在魔物身上)\n"
 "物品欄的物品 %s 非可使用物品.\n"
 
-#: ../Commands.pm:4778
+#: ../Commands.pm:4777
 #, perl-format
 msgid ""
 "Error in function 'im' (Use Item on Monster)\n"
@@ -7119,7 +7333,7 @@ msgstr ""
 "'im' 功能錯誤 (使用物品在魔物身上)\n"
 "魔物 %s 並不存在.\n"
 
-#: ../Commands.pm:4794
+#: ../Commands.pm:4793
 msgid ""
 "Syntax Error in function 'ip' (Use Item on Player)\n"
 "Usage: ip <item #> <player #>\n"
@@ -7127,7 +7341,7 @@ msgstr ""
 "'ip' 功能語法錯誤 (使用物品在玩家身上)\n"
 "使用方法: ip <物品編號> <玩家編號>\n"
 
-#: ../Commands.pm:4797
+#: ../Commands.pm:4796
 #, perl-format
 msgid ""
 "Error in function 'ip' (Use Item on Player)\n"
@@ -7136,7 +7350,7 @@ msgstr ""
 "'ip' 功能錯誤 (使用物品在玩家身上)\n"
 "物品欄的物品 %s 並不存在.\n"
 
-#: ../Commands.pm:4800
+#: ../Commands.pm:4799
 #, perl-format
 msgid ""
 "Error in function 'ip' (Use Item on Player)\n"
@@ -7145,7 +7359,7 @@ msgstr ""
 "'ip' 功能錯誤 (使用物品在玩家身上)\n"
 "物品欄的物品 %s 非可使用物品.\n"
 
-#: ../Commands.pm:4803
+#: ../Commands.pm:4802
 #, perl-format
 msgid ""
 "Error in function 'ip' (Use Item on Player)\n"
@@ -7154,7 +7368,7 @@ msgstr ""
 "'ip' 功能錯誤 (使用物品在玩家身上)\n"
 "玩家 %s 並不存在.\n"
 
-#: ../Commands.pm:4817
+#: ../Commands.pm:4816
 msgid ""
 "Syntax Error in function 'is' (Use Item on Yourself)\n"
 "Usage: is <item>\n"
@@ -7162,7 +7376,7 @@ msgstr ""
 "'is' 功能語法錯誤 (使用物品在自己身上)\n"
 "使用方法: is <物品>\n"
 
-#: ../Commands.pm:4823
+#: ../Commands.pm:4822
 #, perl-format
 msgid ""
 "Error in function 'is' (Use Item on Yourself)\n"
@@ -7171,7 +7385,7 @@ msgstr ""
 "'is' 功能錯誤 (使用物品在自己身上)\n"
 "物品欄的物品 %s 並不存在.\n"
 
-#: ../Commands.pm:4828
+#: ../Commands.pm:4827
 #, perl-format
 msgid ""
 "Error in function 'is' (Use Item on Yourself)\n"
@@ -7180,7 +7394,7 @@ msgstr ""
 "'is' 功能錯誤 (使用物品在自己身上)\n"
 "物品欄的物品 %s 非可使用物品.\n"
 
-#: ../Commands.pm:4848
+#: ../Commands.pm:4847
 msgid ""
 "Syntax error in function 'sl' (Use Skill on Location)\n"
 "Usage: sl <skill #> <x> <y> [level]\n"
@@ -7188,7 +7402,7 @@ msgstr ""
 "'sl' 功能語法錯誤 (使用地面技能)\n"
 "使用方法: sl <技能編號> < x 座標> < y 座標> [技能等級]\n"
 
-#: ../Commands.pm:4852
+#: ../Commands.pm:4851
 msgid ""
 "Error in function 'sl' (Use Skill on Location)\n"
 "Invalid coordinates given.\n"
@@ -7196,7 +7410,7 @@ msgstr ""
 "'sl' 功能錯誤 (使用地面技能)\n"
 "給定的是無效的座標.\n"
 
-#: ../Commands.pm:4867
+#: ../Commands.pm:4866
 msgid ""
 "Syntax error in function 'ss' (Use Skill on Self)\n"
 "Usage: ss <skill #> [level]\n"
@@ -7204,7 +7418,7 @@ msgstr ""
 "'ss' 功能語法錯誤 (對自己使用技能)\n"
 "使用方法: ss <技能編號> [技能等級]\n"
 
-#: ../Commands.pm:4877
+#: ../Commands.pm:4876
 msgid ""
 "Syntax error in function 'sp' (Use Skill on Player)\n"
 "Usage: sp <skill #> <player #> [level]\n"
@@ -7212,7 +7426,7 @@ msgstr ""
 "'sp' 功能語法錯誤 (向玩家使用技能)\n"
 "使用方法: sp <技能編號> <玩家編號> [技能等級]\n"
 
-#: ../Commands.pm:4883
+#: ../Commands.pm:4882
 #, perl-format
 msgid ""
 "Error in function 'sp' (Use Skill on Player)\n"
@@ -7221,7 +7435,7 @@ msgstr ""
 "'sp' 功能錯誤 (向玩家使用技能)\n"
 "玩家 '%s' 並不存在.\n"
 
-#: ../Commands.pm:4893
+#: ../Commands.pm:4892
 msgid ""
 "Syntax error in function 'sm' (Use Skill on Monster)\n"
 "Usage: sm <skill #> <monster #> [level]\n"
@@ -7229,7 +7443,7 @@ msgstr ""
 "'sm' 功能語法錯誤 (使用技能在魔物身上)\n"
 "使用方法: sm <技能編號> <魔物編號> [技能等級]\n"
 
-#: ../Commands.pm:4899
+#: ../Commands.pm:4898
 #, perl-format
 msgid ""
 "Error in function 'sm' (Use Skill on Monster)\n"
@@ -7238,7 +7452,7 @@ msgstr ""
 "'sm' 功能錯誤 (使用技能在魔物身上)\n"
 "魔物 %d 並不存在.\n"
 
-#: ../Commands.pm:4909
+#: ../Commands.pm:4908
 msgid ""
 "Syntax error in function 'ssp' (Use Skill on Area Spell Location)\n"
 "Usage: ssp <skill #> <spell #> [level]\n"
@@ -7246,12 +7460,12 @@ msgstr ""
 "'ssp' 功能語法錯誤 (在指定範圍效果中使用技能)\n"
 "使用方法: ssp <技能編號> <範圍效果編號> [技能等級]\n"
 
-#: ../Commands.pm:4915
+#: ../Commands.pm:4914
 #, perl-format
 msgid "Spell %d does not exist.\n"
 msgstr "魔法 %d 並不存在.\n"
 
-#: ../Commands.pm:4945
+#: ../Commands.pm:4944
 msgid ""
 "Syntax error in function 'vender' (Vender Shop)\n"
 "Usage: vender <vender # | end> [<item #> <amount>]\n"
@@ -7259,7 +7473,7 @@ msgstr ""
 "'vender' 功能語法錯誤 (查看露天商店或購買)\n"
 "使用方法: vender <露天商店編號 | end> [<物品編號> <數量>]\n"
 
-#: ../Commands.pm:4952
+#: ../Commands.pm:4951
 #, perl-format
 msgid ""
 "Error in function 'vender' (Vender Shop)\n"
@@ -7268,7 +7482,7 @@ msgstr ""
 "'vender' 功能錯誤 (查看露天商店或購買)\n"
 "露天商店 %s 並不存在.\n"
 
-#: ../Commands.pm:4957
+#: ../Commands.pm:4956
 msgid ""
 "Error in function 'vender' (Vender Shop)\n"
 "Vender ID is wrong.\n"
@@ -7276,7 +7490,7 @@ msgstr ""
 "'vender' 功能錯誤 (查看露天商店或購買)\n"
 "露天商店ID是錯誤的.\n"
 
-#: ../Commands.pm:4968
+#: ../Commands.pm:4967
 msgid ""
 "-----------Vender List-----------\n"
 "#   Title                                Coords     Owner\n"
@@ -7284,7 +7498,7 @@ msgstr ""
 "----------露天商店清單-----------\n"
 "#   商店名稱                             座標       擁有人\n"
 
-#: ../Commands.pm:5003
+#: ../Commands.pm:5002
 msgid ""
 "Error in function 'warp' (Open/List Warp Portal)\n"
 "Usage: warp <map name | map number# | list>\n"
@@ -7292,30 +7506,30 @@ msgstr ""
 "'warp' 功能錯誤 (開啟/列出 傳送點)\n"
 "使用方法: warp <地圖名稱 | 地圖編號 | list>\n"
 
-#: ../Commands.pm:5008 ../Commands.pm:5024
+#: ../Commands.pm:5007 ../Commands.pm:5023
 msgid "You didn't cast warp portal.\n"
 msgstr "您沒有先詠唱傳送點.\n"
 
-#: ../Commands.pm:5013
+#: ../Commands.pm:5012
 #, perl-format
 msgid "Invalid map number %s.\n"
 msgstr "無效的地圖編號 %s.\n"
 
-#: ../Commands.pm:5017 ../Commands.pm:5044
+#: ../Commands.pm:5016 ../Commands.pm:5043
 #, perl-format
 msgid "Attempting to open a warp portal to %s (%s)\n"
 msgstr "嘗試開啟一個傳送點至 %s (%s)\n"
 
-#: ../Commands.pm:5040
+#: ../Commands.pm:5039
 #, perl-format
 msgid "Map '%s' does not exist.\n"
 msgstr "地圖 '%s' 並不存在.\n"
 
-#: ../Commands.pm:5052
+#: ../Commands.pm:5051
 msgid "Character weight information not yet available.\n"
 msgstr "角色負重資訊尚未有效.\n"
 
-#: ../Commands.pm:5060
+#: ../Commands.pm:5059
 msgid ""
 "Syntax error in function 'weight' (Inventory Weight Info)\n"
 "Usage: weight [item weight]\n"
@@ -7323,34 +7537,34 @@ msgstr ""
 "'weight' 功能語法錯誤 (物品欄負重資訊)\n"
 "使用方法: weight [物品重量]\n"
 
-#: ../Commands.pm:5066
+#: ../Commands.pm:5065
 msgid "Weight: %s/%s (%s%)\n"
 msgstr "負重: %s/%s (%s%)\n"
 
-#: ../Commands.pm:5070 ../Commands.pm:5076
+#: ../Commands.pm:5069 ../Commands.pm:5075
 #, perl-format
 msgid "You can carry %s%s before %s overweight.\n"
 msgstr "您可以再攜帶 %s%s 在負重 %s 之前.\n"
 
-#: ../Commands.pm:5073 ../Commands.pm:5079
+#: ../Commands.pm:5072 ../Commands.pm:5078
 #, perl-format
 msgid "You are %s overweight.\n"
 msgstr "您已負重 %s.\n"
 
-#: ../Commands.pm:5085
+#: ../Commands.pm:5084
 msgid "Location not yet available.\n"
 msgstr "地圖座標尚未有效.\n"
 
-#: ../Commands.pm:5089
+#: ../Commands.pm:5088
 #, perl-format
 msgid "Location %s (%s) : %d, %d\n"
 msgstr "位置 %s (%s) : %d, %d\n"
 
-#: ../Commands.pm:5103
+#: ../Commands.pm:5102
 msgid "Character information not yet available.\n"
 msgstr "角色資訊尚未有效.\n"
 
-#: ../Commands.pm:5108
+#: ../Commands.pm:5107
 #, perl-format
 msgid ""
 "Name:    %s (Level %s %s %s)\n"
@@ -7361,46 +7575,46 @@ msgstr ""
 "角色 ID: %s\n"
 "Acct ID: %s\n"
 
-#: ../Commands.pm:5127
+#: ../Commands.pm:5126
 msgid "Usage: ms <receiver> <title> <message>\n"
 msgstr ""
 
-#: ../Commands.pm:5137
+#: ../Commands.pm:5136
 msgid "Usage: mo <mail #>\n"
 msgstr ""
 
-#: ../Commands.pm:5140 ../Commands.pm:5169 ../Commands.pm:5203
-#: ../Commands.pm:5217
+#: ../Commands.pm:5139 ../Commands.pm:5168 ../Commands.pm:5202
+#: ../Commands.pm:5216
 #, perl-format
 msgid "No mail found with index: %s. (might need to re-open mailbox)\n"
 msgstr ""
 
-#: ../Commands.pm:5142 ../Commands.pm:5171 ../Commands.pm:5205
-#: ../Commands.pm:5219
+#: ../Commands.pm:5141 ../Commands.pm:5170 ../Commands.pm:5204
+#: ../Commands.pm:5218
 #, fuzzy
 msgid "Mailbox has not been opened or is empty.\n"
 msgstr "一個露店尚未開啟.\n"
 
-#: ../Commands.pm:5156
+#: ../Commands.pm:5155
 msgid "Usage: mw [0|1|2] (0:write, 1:take item back, 2:zeny input ok)\n"
 msgstr ""
 
-#: ../Commands.pm:5160
+#: ../Commands.pm:5159
 msgid ""
 "Syntax error in function 'mw' (mailbox window)\n"
 "Usage: mw [0|1|2] (0:write, 1:take item back, 2:zeny input ok)\n"
 msgstr ""
 
-#: ../Commands.pm:5178
+#: ../Commands.pm:5177
 msgid "Usage: ma add [zeny <amount>]|[item <amount> (<item #>|<item name>)]\n"
 msgstr ""
 
-#: ../Commands.pm:5187
+#: ../Commands.pm:5186
 #, fuzzy, perl-format
 msgid "Item with index or name: %s does not exist in inventory.\n"
 msgstr "索引物品: %s 不是不存在就是待修理清單是空的.\n"
 
-#: ../Commands.pm:5190
+#: ../Commands.pm:5189
 #, fuzzy
 msgid ""
 "Syntax error in function 'ma' (mail attachment control)\n"
@@ -7409,145 +7623,145 @@ msgstr ""
 "'im' 功能語法錯誤 (使用物品在魔物身上)\n"
 "使用方法: im <物品編號> <魔物編號>\n"
 
-#: ../Commands.pm:5194
+#: ../Commands.pm:5193
 msgid ""
 "Usage: ma (get <mail #>)|(add [zeny <amount>]|[item <amount> (<item #>|<item "
 "name>)])\n"
 msgstr ""
 
-#: ../Commands.pm:5200
+#: ../Commands.pm:5199
 msgid "Usage: md <mail #>\n"
 msgstr ""
 
-#: ../Commands.pm:5214
+#: ../Commands.pm:5213
 msgid "Usage: mr <mail #>\n"
 msgstr ""
 
-#: ../Commands.pm:5227
+#: ../Commands.pm:5226
 msgid "Mail commands: ms, mi, mo, md, mw, mr, ma\n"
 msgstr ""
 
-#: ../Commands.pm:5244
+#: ../Commands.pm:5243
 msgid "Usage: aua (<item #>|<item name>) <amount>\n"
 msgstr ""
 
-#: ../Commands.pm:5255
+#: ../Commands.pm:5254
 msgid "Usage: auc <current price> <instant buy price> <hours>\n"
 msgstr ""
 
-#: ../Commands.pm:5263
+#: ../Commands.pm:5262
 msgid "Usage: aub <id> <price>\n"
 msgstr ""
 
-#: ../Commands.pm:5267 ../Commands.pm:5291 ../Commands.pm:5306
+#: ../Commands.pm:5266 ../Commands.pm:5290 ../Commands.pm:5305
 #, perl-format
 msgid ""
 "No auction item found with index: %s. (might need to re-open auction "
 "window)\n"
 msgstr ""
 
-#: ../Commands.pm:5269 ../Commands.pm:5293 ../Commands.pm:5308
+#: ../Commands.pm:5268 ../Commands.pm:5292 ../Commands.pm:5307
 #, fuzzy
 msgid "Auction window has not been opened or is empty.\n"
 msgstr "一個露店尚未開啟.\n"
 
-#: ../Commands.pm:5279
+#: ../Commands.pm:5278
 msgid "Usage: aui (selling|buying)\n"
 msgstr ""
 
-#: ../Commands.pm:5287
+#: ../Commands.pm:5286
 msgid "Usage: aud <index>\n"
 msgstr ""
 
-#: ../Commands.pm:5302
+#: ../Commands.pm:5301
 msgid "Usage: aue <index>\n"
 msgstr ""
 
-#: ../Commands.pm:5318
+#: ../Commands.pm:5317
 msgid ""
 "Usage: aus <type> [<price>|<text>]\n"
 "      types (0:Armor 1:Weapon 2:Card 3:Misc 4:By Text 5:By Price 6:Sell 7:"
 "Buy)\n"
 msgstr ""
 
-#: ../Commands.pm:5326
+#: ../Commands.pm:5325
 msgid "Usage: aus 5 <text>\n"
 msgstr ""
 
-#: ../Commands.pm:5333
+#: ../Commands.pm:5332
 msgid "Usage: aus 6 <price>\n"
 msgstr ""
 
-#: ../Commands.pm:5338
+#: ../Commands.pm:5337
 msgid ""
 "Possible value's for the <type> parameter are:\n"
 "(0:Armor 1:Weapon 2:Card 3:Misc 4:By Text 5:By Price 6:Sell 7:Buy)\n"
 msgstr ""
 
-#: ../Commands.pm:5343
+#: ../Commands.pm:5342
 msgid "Auction commands: aua, aur, auc, aub, aui, aud, aue, aus\n"
 msgstr ""
 
-#: ../Commands.pm:5359
+#: ../Commands.pm:5358
 msgid "Usage: quest set <questID> <on|off>\n"
 msgstr ""
 
-#: ../Commands.pm:5364
+#: ../Commands.pm:5363
 msgid "Quest List"
 msgstr ""
 
-#: ../Commands.pm:5382
+#: ../Commands.pm:5381
 msgid "Quest Info"
 msgstr ""
 
-#: ../Commands.pm:5383
+#: ../Commands.pm:5382
 #, fuzzy, perl-format
 msgid "%s\n"
 msgstr "%s%s\n"
 
-#: ../Commands.pm:5384
+#: ../Commands.pm:5383
 #, fuzzy, perl-format
 msgid "Objective: %s\n"
 msgstr "有效的工作項目: %s\n"
 
-#: ../Commands.pm:5387
+#: ../Commands.pm:5386
 #, fuzzy
 msgid "Unknown quest\n"
 msgstr "未知的錯誤 %s\n"
 
-#: ../Commands.pm:5390
+#: ../Commands.pm:5389
 msgid "Usage: quest info <questID>\n"
 msgstr ""
 
-#: ../Commands.pm:5393
+#: ../Commands.pm:5392
 #, fuzzy
 msgid "Quest commands: set, list, info\n"
 msgstr "這些指令不存在: %s\n"
 
-#: ../Commands.pm:5407
+#: ../Commands.pm:5406
 #, fuzzy, perl-format
 msgid "Requesting equipment information for: %s\n"
 msgstr "正在獲得公會資訊...\n"
 
-#: ../Commands.pm:5409
+#: ../Commands.pm:5408
 #, perl-format
 msgid "No player found with specified information: %s\n"
 msgstr ""
 
-#: ../Commands.pm:5411
+#: ../Commands.pm:5410
 msgid "Usage: showeq p <index|name|partialname>\n"
 msgstr ""
 
-#: ../Commands.pm:5416
+#: ../Commands.pm:5415
 msgid "Usage: showeq [p <index|name|partialname>] | [me <on|off>]\n"
 msgstr ""
 
-#: ../Commands.pm:5429
+#: ../Commands.pm:5428
 #, perl-format
 msgid "Item with 'Cooking List' index: %s not found.\n"
 msgstr ""
 
-#: ../Commands.pm:5442
+#: ../Commands.pm:5441
 #, fuzzy, perl-format
 msgid "Item with name or id: %s not found.\n"
 msgstr "無法重新載入程式碼: %s 未被發現\n"
@@ -8602,6 +8816,10 @@ msgstr "%s連線中 - %s"
 #: ../functions.pl:1069
 msgid "Map loaded\n"
 msgstr "地圖已載入\n"
+
+#, fuzzy
+#~ msgid "Teleporting due to dropping slave attack target\n"
+#~ msgstr "因放棄要攻擊的目標而瞬移\n"
 
 #~ msgid ""
 #~ "Syntax Error in function 'g' (Guild Chat)\n"

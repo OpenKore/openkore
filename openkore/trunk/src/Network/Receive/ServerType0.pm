@@ -645,7 +645,7 @@ sub actor_action {
 		my $dmgdisplay;
 		my $totalDamage = $args->{damage} + $args->{dual_wield_damage};
 		if ($totalDamage == 0) {
-			$dmgdisplay = "Miss!";
+			$dmgdisplay = T("Miss!");
 			$dmgdisplay .= "!" if ($args->{type} == 11); # lucky dodge
 		} else {
 			$dmgdisplay = $args->{damage};
@@ -883,7 +883,7 @@ sub actor_display {
 	#  - server sending us false actors
 	#  - actor packets not being parsed correctly
 	if (defined $field && ($field->isOffMap($coordsFrom{x}, $coordsFrom{y}) || $field->isOffMap($coordsTo{x}, $coordsTo{y}))) {
-		warning "Removed actor with off map coordinates: ($coordsFrom{x},$coordsFrom{y})->($coordsTo{x},$coordsTo{y}), field max: (" .$field->width(). "," .$field->height(). ")\n";
+		warning TF("Removed actor with off map coordinates: (%d,%d)->(%d,%d), field max: (%d,%d)\n",$coordsFrom{x},$coordsFrom{y},$coordsTo{x},$coordsTo{y},$field->width(),$field->height());
 		return;
 	}
 
@@ -1636,11 +1636,11 @@ sub cart_add_failed {
 
 	my $reason;
 	if ($args->{fail} == 0) {
-		$reason = 'overweight';
+		$reason = T('overweight');
 	} elsif ($args->{fail} == 1) {
-		$reason = 'too many items';
+		$reason = T('too many items');
 	} else {
-		$reason = "Unknown code $args->{fail}";
+		$reason = TF("Unknown code %s",$args->{fail});
 	}
 	error TF("Can't Add Cart Item (%s)\n", $reason);
 }
@@ -2149,7 +2149,7 @@ sub cast_cancelled {
 	my $source = Actor::get($ID);
 	$source->{cast_cancelled} = time;
 	my $skill = $source->{casting}->{skill};
-	my $skillName = $skill ? $skill->getName() : 'Unknown';
+	my $skillName = $skill ? $skill->getName() : T('Unknown');
 	my $domain = ($ID eq $accountID) ? "selfSkill" : "skill";
 	message TF("%s failed to cast %s\n", $source, $skillName), $domain;
 	Plugins::callHook('packet_castCancelled', {
@@ -2230,7 +2230,7 @@ sub deal_begin {
 			if ($player) {
 				$currentDeal{name} = $player->{name};
 			} else {
-				$currentDeal{name} = 'Unknown #' . unpack("V", $ID);
+				$currentDeal{name} = T('Unknown #') . unpack("V", $ID);
 			}
 			undef %outgoingDeal;
 		}
@@ -2360,7 +2360,7 @@ sub emoticon {
 		my $actor = Actor::get($args->{ID});
 		my $name = $actor->name;
 
-		my $dist = "unknown";
+		my $dist = T("unknown");
 		if (!$actor->isa('Actor::Unknown')) {
 			$dist = distance($char->{pos_to}, $actor->{pos_to});
 			$dist = sprintf("%.1f", $dist) if ($dist =~ /\./);
@@ -2970,10 +2970,10 @@ sub guild_invite_result {
 	my $type = $args->{type};
 
 	my %types = (
-		0 => 'Target is already in a guild.',
-		1 => 'Target has denied.',
-		2 => 'Target has accepted.',
-		3 => 'Your guild is full.'
+		0 => T('Target is already in a guild.'),
+		1 => T('Target has denied.'),
+		2 => T('Target has accepted.'),
+		3 => T('Your guild is full.')
 	);
 	if ($types{$type}) {
 	    message TF("Guild join request: %s\n", $types{$type});
@@ -3341,14 +3341,14 @@ sub revolving_entity {
 	# Monk Spirits or Gunslingers' coins
 	my $sourceID = $args->{sourceID};
 	my $entities = $args->{entity};
-	my $entityType = (Actor::get($sourceID)->{jobID} == 24) ? "coin" : "spirit";
+	my $entityType = (Actor::get($sourceID)->{jobID} == 24) ? T("coin") : T("spirit");
 
 	if ($sourceID eq $accountID) {
-		message TF("You have %s ".$entityType."(s) now\n", $entities), "parseMsg_statuslook", 1 if $entities != $char->{spirits};
+		message TF("You have %s %s(s) now\n", $entities,$entityType), "parseMsg_statuslook", 1 if $entities != $char->{spirits};
 		$char->{spirits} = $entities;
 	} elsif (my $actor = Actor::get($sourceID)) {
 		$actor->{spirits} = $entities;
-		message TF("%s has %s ".$entityType."(s) now\n", $actor, $entities), "parseMsg_statuslook", 2 if $entities != $actor->{spirits};
+		message TF("%s has %s %s(s) now\n", $actor, $entities,$entityType), "parseMsg_statuslook", 2 if $entities != $actor->{spirits};
 	}
 
 }
@@ -5571,17 +5571,17 @@ sub skill_use_failed {
 	my $type = $args->{type};
 
 	my %failtype = (
-		0 => 'Basic',
-		1 => 'Insufficient SP',
-		2 => 'Insufficient HP',
-		3 => 'No Memo',
-		4 => 'Mid-Delay',
-		5 => 'No Zeny',
-		6 => 'Wrong Weapon Type',
-		7 => 'Red Gem Needed',
-		8 => 'Blue Gem Needed',
+		0 => T('Basic'),
+		1 => T('Insufficient SP'),
+		2 => T('Insufficient HP'),
+		3 => T('No Memo'),
+		4 => T('Mid-Delay'),
+		5 => T('No Zeny'),
+		6 => T('Wrong Weapon Type'),
+		7 => T('Red Gem Needed'),
+		8 => T('Blue Gem Needed'),
 		9 => '90% Overweight',
-		10 => 'Requirement'
+		10 => T('Requirement')
 		);
 	warning TF("Skill %s failed (%s)\n", Skill->new(idn => $skillID)->getName(), $failtype{$type}), "skill";
 	Plugins::callHook('packet_skillfail', {
@@ -6796,17 +6796,31 @@ sub mail_new {
 
 sub mail_setattachment {
 	my ($self, $args) = @_;
-	message TF("%s to attach %s.\n", ($args->{fail}) ? "Failed" : "Succeeded", ($args->{index}) ? "item: ".$char->inventory->getByServerIndex($args->{index}) : "zeny"), "info";
+	if ($args->{fail}) {
+		message TF("Failed to attach %s.\n", ($args->{index}) ? T("item: ").$char->inventory->getByServerIndex($args->{index}) : T("zeny")), "info";
+	} else {
+		message TF("Succeeded to attach %s.\n", ($args->{index}) ? T("item: ").$char->inventory->getByServerIndex($args->{index}) : T("zeny")), "info";
+	}
 }
 
 sub mail_delete {
 	my ($self, $args) = @_;
-	message TF("%s to delete mail with ID: %s.\n", ($args->{fail}) ? "Failed" : "Succeeded", $args->{mailID}), "info";
+	if ($args->{fail}) { 
+		message TF("Failed to delete mail with ID: %s.\n", $args->{mailID}), "info";
+	} 
+	else {			 
+		message TF("Succeeded to delete mail with ID: %s.\n", $args->{mailID}), "info";
+	}
 }
 
 sub mail_window {
 	my ($self, $args) = @_;
-	message TF("Mail window is now %s.\n", ($args->{flag}) ? "closed" : "opened"), "info";
+	if ($args->{flag}) {
+		message T("Mail window is now closed.\n"), "info";
+	}
+	else {
+		message T("Mail window is now opened.\n"), "info";
+	}
 }
 
 sub mail_return {
@@ -6920,12 +6934,22 @@ sub auction_my_sell_stop {
 
 sub auction_windows {
 	my ($self, $args) = @_;
-	message TF("Auction window is now %s.\n", ($args->{flag}) ? "closed" : "opened"), "info";
+	if ($args->{flag}) {
+		message T("Auction window is now closed.\n"), "info";
+	}
+	else {
+		message T("Auction window is now opened.\n"), "info";
+	}
 }
 
 sub auction_add_item {
 	my ($self, $args) = @_;
-	message TF("%s to add item with index: %s.\n", ($args->{fail}) ? "Failed (note: usable items can't be auctioned)" : "Succeeded", $args->{index}), "info";
+	if ($args->{fail}) {
+		message TF("Failed (note: usable items can't be auctioned) to add item with index: %s.\n", $args->{index}), "info";
+	}
+	else {
+		message TF("Succeeded to add item with index: %s.\n", $args->{index}), "info";
+	}
 }
 
 # this info will be sent to xkore 2 clients
@@ -6997,8 +7021,12 @@ sub manner_message {
 
 sub GM_silence {
 	my ($self, $args) = @_;
-	my $action = $args->{flag} ? "muted" : "unmuted";
-	message TF("You have been: %s by %s.\n", $action, bytesToString($args->{name})), "info";
+	if ($args->{flag}) {
+		message TF("You have been: muted by %s.\n", bytesToString($args->{name})), "info";
+	}
+	else {
+		message TF("You have been: unmuted by %s.\n", bytesToString($args->{name})), "info";
+	}
 }
 
 # TODO test if we must use ID to know if the packets are meant for us.
@@ -7025,15 +7053,15 @@ sub taekwon_packets {
 
 sub guild_master_member {
 	my ($self, $args) = @_;
-	my $string;
 	if ($args->{type} == 0xd7) {
 	} elsif ($args->{type} == 0x57) {
-		$string = "not ";
+		message T("You are not a guildmaster.\n"), "info";
+		return;
 	} else {
 		warning TF("type: %s gave unknown results in: %s\n", $args->{type}, $self->{packet_list}{$args->{switch}}->[0]);
 		return;
 	}
-	message TF("You are %sa guildmaster.\n", $string), "info";
+	message T("You are a guildmaster.\n"), "info";
 }
 
 # 0152
