@@ -1083,12 +1083,6 @@ sub sendQuit {
 	debug "Sent Quit\n", "sendPacket", 2;
 }
 
-sub sendQuitToCharSelect {
-	my $msg = pack("C*", 0xB2, 0x00, 0x01);
-	$_[0]->sendToServer($msg);
-	debug "Sent Quit To Char Selection\n", "sendPacket", 2;
-}
-
 sub sendRaw {
 	my $self = shift;
 	my $raw = shift;
@@ -1132,11 +1126,22 @@ sub sendRepairItem {
 	debug ("Sent repair item: ".$args->{index}."\n", "sendPacket", 2);
 }
 
+# for old plugin compatibility, use sendRestart instead!
 sub sendRespawn {
-	my $self = shift;
-	my $msg = pack("C*", 0xB2, 0x00, 0x00);
-	$self->sendToServer($msg);
-	debug "Sent Respawn\n", "sendPacket", 2;
+	sendRestart(0);
+}
+
+# for old plugin compatibility, use sendRestart instead!
+sub sendQuitToCharSelect {
+	sendRestart(1);
+}
+
+# 0x00b2,3,restart,2
+# type: 0=respawn ; 1=return to char select
+sub sendRestart {
+	my ($self, $type) = @_;
+	$self->sendToServer(pack('v C', 0x00B2, $type));
+	debug "Sent Restart: " . ($type ? 'Quit To Char Selection' : 'Respawn') . "\n", "sendPacket", 2;
 }
 
 sub sendSell {
