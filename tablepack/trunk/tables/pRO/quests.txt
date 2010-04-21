@@ -4371,3 +4371,15 @@ Let's meet ^0000FFCaptain Enforcer^000000 in ^8B4513Alberta^000000.#
 9039#Wanted: Master Thief#SG_FEEL#QUE_NOIMAGE#
 ^0000FFGeffen Enforcer's^000000 message from ^8B4513Geffen^000000: "^404040Thanks for helping. If you want to help me again, please come back 20 hours later.^000000"#
 ^FF0000Wanted: Master Thief^000000  I have completed helping Geffen Enforcer for today. Need to wait till 20 hours have passed.#
+
+9052#Midgard Crowd Control event#SG_FEEL#QUE_NOIMAGE#
+^0000FFElite Mercenary^000000 : "^404040Visit Mercenary Scout^000000"#
+Find ^FF0000Mercenary Scout^000000 in the ^8B4513Ice Cave^000000!!#
+
+9053#Midgard Crowd Control event#SG_FEEL#QUE_NOIMAGE#
+^0000FFMercenary Scout^000000 : "^404040Defeat 150 Ice Titan^000000"#
+Kill 150 ^FF0000Ice Titan^000000, then you can get rewards from ^FF0000Mercenary Scout^000000!!#
+
+9054#Midgard Crowd Control event#SG_FEEL#QUE_NOIMAGE#
+^0000FFElite Mercenary^000000, ^0000FFMercenary Scout^000000 : "^404040Well done! You did a good job^000000"#
+Defeated ^FF0000Ice Titan^000000. Now, ^8B4513Ice Cave^000000 is in a peace.#

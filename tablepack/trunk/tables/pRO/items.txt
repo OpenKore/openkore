@@ -4772,5 +4772,32 @@
 5772#Blood_Admiral's_Hat#
 5773#Navy_Blue_Beret#
 5774#First_Mate's_Bandana#
+//-------2010ｳ・2ｺﾐｱ・ﾃﾟﾃｵ ﾄｳｽｬﾅﾛ ----------------------
+16409#Chrysanthemum_Scroll#
+16446#Pegasus_Scroll#
+16457#Bough_Scroll#
+5569#Gemini_Diadem#
+5570#Gemini_Crown#
+16251#Gemini_Diadem_Box#
+16252#Gemini_Crown_Box#
+5588#Leo_Crown #
+5589#Leo_Diadem#
+16273#Leo_Crown_Box #
+16274#Leo_Diadem_Box#
+// ------------ ｺ・・1ﾂ・ﾆﾐﾅｰﾁ・ｻﾚ --------------
+13945#Sword_Package#
+13946#Mage_Package#
+13947#Acolyte_Package#
+13948#Archer_Package#
+13949#Merchant_Package#
+13950#Thief_Package#
+5658#Imp_Hat#
+5659#Sleeper_Hat#
+5660#Gryphon_Hat#
+5532#Pirate_Dagger#
+5533#Emperor_Wreath#
+5534#Fox_Hat#
+5383#Hunting_Cap#
+12232#Ginger_Bread#
 
 //file end

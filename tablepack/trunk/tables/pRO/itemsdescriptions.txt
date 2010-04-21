@@ -21216,6 +21216,7 @@ Jobs : ^777777Swordman, Merchant, Thief class^000000
 5313#
 A Headgear which is made of jewelry of love. A person who wears it can find real love. 
 Int + 1, Matk + 3%, Reduce  3% casting time.
+Increase 3% HP rate what user use by yourself HEAL,SANCTUARY,POTIONPITCHER.
 Item Class : ^777777Headgear^000000    Defense : ^7777773^000000
 Head Position : ^777777Upper, Middle^000000    Weight : ^77777710^000000
 Jobs : ^777777All Jobs^000000
@@ -24100,7 +24101,7 @@ Jobs : ^777777All^000000
 #
 5389#
 A golden mask rumored to be worn by some ancient Goddess.
-HIT + 15, STR + 2
+ATK, MATK + 2%. STR + 1
 Item Class : ^777777Headgear^000000    Defense : ^7777770^000000
 Location : ^777777Mid^000000    Weight : ^77777720^000000
 Jobs : ^777777All^000000
@@ -33033,4 +33034,176 @@ Item Class : ^777777Headgear^000000 Defense : ^7777771^000000
 Location : ^777777Upper^000000 Weight : ^77777750^000000
 Required Level : ^77777795^000000
 Jobs : ^777777All Jobs^000000
+#
+//-------2010ｳ・2ｺﾐｱ・ﾃﾟﾃｵ ﾄｳｽｬﾅﾛ ----------------------
+16409#
+A chrysanthemum scroll that represents of beautiful fall season.
+Weight : ^7777771^000000
+#
+16446#
+A Pegasus scroll.
+Weight : ^7777771^000000
+#
+16457#
+A bough scroll.
+Weight : ^7777771^000000
+#
+5569#
+A diadem that represents Gemini which is the third sign of Zodiac. An alexandrite, the birthstone, is embedded on it.
+AGI + 2, FLEE + 5, 5% resistance against to Wind property attack.
+Over refine LV 7 HIT + 5, ATK + 10.
+Item Class : ^777777Headgear^000000 Defense : ^7777773^000000
+Location : ^777777Upper^000000 Weight : ^77777730^000000
+Required Level : ^77777770^000000
+Jobs : ^777777All Jobs^000000
+#
+5570#
+A crown that represents Gemini which is the third sign of Zodiac. An alexandrite, the birthstone, is embedded on it.
+AGI + 2, CRI + 3, 5% resistance against to Wind property attack.
+Over refine LV 7 CRI + 5, ATK + 10.
+Item Class : ^777777Headgear^000000 Defense : ^7777773^000000
+Location : ^777777Upper^000000 Weight : ^77777730^000000
+Required Level : ^77777770^000000
+Jobs : ^777777All Jobs^000000
+#
+16251#
+A box has one Gemini Diadem.
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+16252#
+A box has one Gemini Crown.
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+5588#
+A crown that represents Leo which is the fifth sign of Zodiac. A peridot, the birthstone, is embedded on it.
+STR + 1, 5% resistance against to Fire property attack, ATK + 5.
+Over refine LV 7 FLEE + 10, CRI + 2
+Item Class : ^777777Headgear^000000 Defense : ^7777773^000000
+Location : ^777777Upper^000000 Weight : ^77777730^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All Jobs^000000
+#
+5589#
+A diadem that represents Leo which is the fifth sign of Zodiac. A peridot, the birthstone, is embedded on it.
+DEX + 1, 5% resistance against to Fire property attack, ATK + 5.
+Over refine LV 7 FLEE + 10, ASPD + 3%
+Item Class : ^777777Headgear^000000 Defense : ^7777773^000000
+Location : ^777777Upper^000000 Weight : ^77777730^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All Jobs^000000
+#
+16273#
+A box has one Leo Crown.
+Weight : ^7777771^000000
+#
+16274#
+A box has one Leo Diadem.
+Weight : ^7777771^000000
+#
+// ------------ ｺ・・1ﾂ・ﾆﾐﾅｰﾁ・ｻﾚ --------------
+13945#
+A collecting gift box for Knight.
+Full Plate[1], Shield[1], Boots[1], Manteau[1], Pupa Card 1, Raydric Card 1, Clip 2, Helm[1], Iron Cain 1.
+^ff0000This item is not refundable.^000000
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+13946#
+A collecting gift box for Magician.
+Silk Robe[1], Guard[1], Shoes[1], Muffler[1], Pupa Card 1, Phen Card 1, Clip 2, Mage Hat 1.
+^ff0000This item is not refundable.^000000
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+13947#
+A collecting gift box for Acolyte.
+Saint's Robe[1], Buckler[1], Shoes[1], Muffler[1], Pupa Card 1, Sohee Card 1, Clip 2, Biretta[1].
+^ff0000This item is not refundable.^000000
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+13948#
+A collecting gift box for Archer.
+Tights[1]. Gakkung[2], Boots[1], Muffler[1], Zerom Card 1, Whisper Card 1, Clip 2, Apple of Archer 1.
+^ff0000This item is not refundable.^000000
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+13949#
+A collecting gift box for Merchant.
+Chain Mail[1], Buckler[1], Boots[1], Manteau[1], Pupa Card 1, Raydric Card 1, Clip 2, Money Loser's Grief 1.
+^ff0000This item is not refundable.^000000
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+13950#
+A collecting gift box for Thief.
+Thief Clothes[1], Buckler[1], Boots[1], Manteau[1], Matyr Card 1, Whisper Card 1, Clip 2, Ghost Bandana 1.
+^ff0000This item is not refundable.^000000
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+5658#
+A hat is modeled on Imp of mascot in Thor sungeon.
+When use physical attack casting LV1 FLAMELAUNCHER as regular chance.
+Item Class : ^777777Headgear^000000 Defense : ^7777771^000000
+Location : ^777777Upper^000000 Weight : ^77777740^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All Jobs^000000
+#
+5659#
+A hat is modeled on Sleeper of monster in Sograt desert.
+When use physical attack casting LV1 SEISMICWEAPON as regular chance.
+Item Class : ^777777Headgear^000000 Defense : ^7777771^000000
+Location : ^777777Upper^000000 Weight : ^77777740^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All Jobs^000000
+#
+5660#
+A hat is modeled on GRYPHON, symbol of brave.
+When use physical attack casting LV1 LIGHTNINGLOADER as regular chance.
+Item Class : ^777777Headgear^000000 Defense : ^7777771^000000
+Location : ^777777Upper^000000 Weight : ^77777740^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All Jobs^000000
+#
+5532#
+It holds the knife in mouth to make a battle in the water. It's prohibitted to children.
+Reflect 1% when get a short range physical attack.
+Item Class : ^777777Headgear^000000    Defense : ^7777770^000000
+Location : ^777777Low^000000    Weight : ^77777710^000000
+Jobs : ^777777All Jobs^000000
+#
+5533#
+A crown is made of laurel what emperor used in coronation. A symbol of victory and glory.
+ALL State + 1.
+Item Class : ^777777Headgear^000000 Defense : ^7777776^000000
+Location : ^777777Upper^000000 Weight : ^77777780^000000
+Required Level : ^77777780^000000
+Jobs : ^777777All Jobs^000000
+#
+5534#
+A mask is modeled on white fox. One of east aisa country believes fox as god.
+AGI + 1, Perfect Flee + 2.
+Item Class : ^777777Headgear^000000 Defense : ^7777771^000000
+Location : ^777777Mid,Lower^000000 Weight : ^77777710^000000
+Required Level : ^77777770^000000
+Jobs : ^777777All Jobs^000000
+#
+5383#
+A fashionable hat often worn by coolest people. It is rumored that it will bring people good luck if people wearing it while hunting monsters.
+Give extra 10% physical damage to Animal class opponent. Give extra 5% magical damage to Animal class opponent. 
+LUK + 1
+Item Class : ^777777Headgear^000000    Defense : ^7777776^000000
+Location : ^777777Upper^000000    Weight : ^77777725^000000
+Required Level : ^77777750^000000
+Jobs : ^777777All Jobs Except Novice^000000
+#
+12232#
+A brown bread mixed with milk, flour, honey and other healthy ingredients. It is flat squared with decorations on the top and has crunchy texture.
+Attack and Moving Speed increases for 15mins.
+^ffffff_^000000
+Weight : ^77777715^000000
 #
