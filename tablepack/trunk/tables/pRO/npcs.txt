@@ -134,12 +134,15 @@ einbroch 239 205 First_Cash_Seller
 einbroch 242 205 Kafra Employee#ein2
 einbroch 245 205 Second_Cash_Seller
 einbroch 253 203 Bulletin Board
+gef_dun01 203 48  #lowentrace1
+gef_dun01 89 192  #lowentrace
 gef_fild05 80 149 Myu#08_hat
 gef_fild08 182 182 #CallGhost
 gef_fild08 182 185 The Wanderer
 gef_fild13 290 243 Jyolbriger
 gef_fild13 297 242 Soldier#277
 gef_fild13 303 243 Jyolbriger
+gef_tower 55 142 Bulletin Board#gefdun
 geffen 109 123 Lefrion
 geffen 109 66 Maroll Battle Recruiter
 geffen 110 117 Ford#11
@@ -189,6 +192,7 @@ geffen 196 167 Young Woman#sch
 geffen 203 116 Guide
 geffen 203 123 Kafra Employee
 geffen 203 146 Citizen
+geffen 207 114 #Hiddne01Easter
 geffen 46 164 Bysliter#BLS
 geffen 59 143 Lady
 geffen 61 174 Sign#M
@@ -203,6 +207,7 @@ geffen_in 26 178 Armor Dealer
 geffen_in 30 178 Weapon Dealer
 geffen_in 34 166 Repair Man
 geffen_in 34 170 Young Man
+geffen_in 74 144 Trader
 gl_prison 17 73 [Quest] Mercenary Scout
 glast_01 369 308 Bulletin Board#castle
 hu_fild01 140 163 Tower Keeper
@@ -448,6 +453,8 @@ mid_campin 68 185 Pursuit Party Leader#ep
 mid_campin 85 118 Instructor Igrid
 mid_campin 90 121 Hibba Agip
 mid_campin 94 118 Staff Officer Abidal
+mjo_dun02 124 36  #brisingminewarp
+mjo_dun02 126 36  #4
 mjo_dun02 78 298 Fearsome Demon#ppl1
 mjo_dun02 88 295 Flaming Spirit Man
 mjolnir_02 76 362 Bulletin Board#coal
@@ -614,6 +621,7 @@ payon_in01 5 129 Weapon Dealer
 payon_in01 5 134 Inventor Jaax
 payon_in01 5 49 Tool Dealer
 payon_in01 7 119 Armor Dealer
+prontera 101 288 Man
 prontera 102 75 First_Cash_Merchant
 prontera 102 77 Second_Cash_Merchant
 prontera 102 81 Odin's Cash manager#phi
@@ -625,8 +633,10 @@ prontera 112 48 #suprise_11
 prontera 113 123 Customer Support Info#
 prontera 113 42 Flower Lady
 prontera 113 57 #suprise_7
+prontera 116 82 Traveler#01Easter
 prontera 123 102 Merchant#pron
 prontera 123 83 Maroll Battle Recruiter
+prontera 124 297 Tialfi
 prontera 132 125 Bossnia staff
 prontera 134 125 #suprise_12
 prontera 140 304 Old Soldier
@@ -672,6 +682,7 @@ prontera 160 29 South Gate-Guide
 prontera 160 330 Guard
 prontera 162 188 [Quest] Odin's Knight#n
 prontera 162 191 Happy Citizen
+prontera 163 194 Traveler#02Easter
 prontera 163 204 Man from Morroc
 prontera 163 53 Promotional staff
 prontera 164 125 Kafra Voting Staff#pron
@@ -689,6 +700,9 @@ prontera 174 328 Yong Man#bard_q1
 prontera 179 192 #suprise_1
 prontera 183 333 Aelle#qsk_dan02
 prontera 202 122 Kid#sch
+prontera 202 297 Rina#Easter
+prontera 204 297 Rina's little friend#Ea
+prontera 216 70 Stellaip
 prontera 218 211 Pet Groomer
 prontera 223 99 Soldier
 prontera 224 307 Girl#sim
@@ -820,6 +834,7 @@ schg_cas03 266 206 Bidblind
 schg_cas03 273 205 control device03#sch03_
 schg_cas03 283 197 Bidblind
 schg_cas03 320 283 Bidblind
+schg_cas03 337 283 Bidblind
 schg_cas04 99 77 Hueluid
 spl_fild02 122 106 ????#ep13_mdplant02
 spl_fild02 232 145 Tree#ep13bs2
@@ -888,6 +903,11 @@ valkyrie 53 42 Champion#Valkyrie#
 valkyrie 53 47 Scholar#Valkyrie#
 valkyrie 53 50 Biochemist#Valkyrie#
 ve_fild03 351 219 #ve_find_1
+xmas 144 52 #Hiddne02Easter
+xmas 146 136 Christmas clown
+xmas 147 311 Bulletin Board#toy
+xmas 152 127 Kafra Employee#pRO_Prem
+xmas 152 137 Chef Assistant
 yuno 109 167 Heemin
 yuno 110 171 Andlerangh
 yuno 111 156 Euslan#02
@@ -904,6 +924,7 @@ yuno 151 183 Second_Cash_Seller
 yuno 152 187 Kafra Employee
 yuno 153 113 Bulletin Board#juno
 yuno 153 191 Cool Event Voting Staff
+yuno 153 47 Juno Guide
 yuno 157 205 A craftsman of Juno
 yuno 157 87 a Juno resident
 yuno 158 183 Odin's Cash manager#phi
@@ -911,6 +932,7 @@ yuno 162 191 Kafra Voting Staff#yuno
 yuno 163 187 Magic Tool Dealer
 yuno 164 183 First_Cash_Seller
 yuno 164 200 Noyee#G
+yuno 164 46 #Hiddne03Easter
 yuno 165 111 A sage of Juno
 yuno 165 228 The Juno soldier
 yuno 165 283 The Juno soldier
