@@ -995,7 +995,7 @@ sub processDead {
 	}
 
 	if (AI::action eq "dead" && $config{dcOnDeath} != -1 && time - $char->{dead_time} >= $timeout{ai_dead_respawn}{timeout}) {
-		$messageSender->sendRespawn();
+		$messageSender->sendRestart(0);
 		$char->{'dead_time'} = time;
 	}
 

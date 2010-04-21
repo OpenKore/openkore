@@ -938,7 +938,7 @@ sub cmdCharSelect {
 		return;
 	}
 	
-	$messageSender->sendQuitToCharSelect;
+	$messageSender->sendRestart(1);
 }
 
 # chat, party chat, guild chat, battlegrounds chat
@@ -3823,7 +3823,7 @@ sub cmdRespawn {
 		return;
 	}
 	if ($char->{dead}) {
-		$messageSender->sendRespawn();
+		$messageSender->sendRestart(0);
 	} else {
 		main::useTeleport(2);
 	}

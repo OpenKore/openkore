@@ -318,9 +318,11 @@ sub sendUnequip {
 # 0x00b1,8
 
 # 0x00b2,3,restart,2
-sub sendRespawn {
-	$_[0]->sendToServer(pack('v C', 0x00B2, 0));
-	debug "Sent Respawn\n", "sendPacket", 2;
+# type: 0=respawn ; 1=return to char select
+sub sendRestart {
+	my ($self, $type) = @_;
+	$self->sendToServer(pack('v C', 0x00B2, $type));
+	debug "Sent Restart: " . ($type ? 'Quit To Char Selection' : 'Respawn') . "\n", "sendPacket", 2;
 }
 
 # 0x00b3,3

@@ -7588,7 +7588,7 @@ sub sell_result {
 }
 
 # 018B
-# TODO: add real client messages
+# TODO: add real client messages and logic?
 sub quit_response {
 	my ($self, $args) = @_;
 	if ($args->{fail}) {
@@ -7596,6 +7596,13 @@ sub quit_response {
 	} else {
 		message T("Logged out from the server succesfully.\n"), "success";
 	}
+}
+
+# 003B
+# TODO: add real client messages and logic?
+sub respawn_result {
+	my ($self, $args) = @_;
+	debug "respawn result: $args->{result}\n";
 }
 
 1;
