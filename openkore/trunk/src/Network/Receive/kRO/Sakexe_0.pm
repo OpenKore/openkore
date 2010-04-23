@@ -121,7 +121,7 @@ sub new {
 		# // 0x008f,0
 		# 0x0090 is sent packet
 		'0091' => ['map_change', 'Z16 v2', [qw(map x y)]], # 22
-		'0092' => ['map_changed', 'Z16 v2 a4 v', [qw(map xPos yPos IP port)]], # 28
+		'0092' => ['map_changed', 'Z16 v2 a4 v', [qw(map x y IP port)]], # 28
 		'0093' => ['npc_ack_enable'], # 2
 		# 0x0094 is sent packet
 		'0095' => ['actor_info', 'a4 Z24', [qw(ID name)]], # 30
@@ -3911,6 +3911,13 @@ sub map_changed {
 			die $@;
 		}
 	}
+	
+	my %coords = (
+		x => $args->{x},
+		y => $args->{y}
+	);
+	$char->{pos} = {%coords};
+	$char->{pos_to} = {%coords};
 
 	undef $conState_tries;
 	for (my $i = 0; $i < @ai_seq; $i++) {
