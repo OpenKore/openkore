@@ -101,7 +101,7 @@ sub new {
 		'008D' => ['public_chat', 'v a4 Z*', [qw(len ID message)]],
 		'008E' => ['self_chat', 'x2 Z*', [qw(message)]],
 		'0091' => ['map_change', 'Z16 v2', [qw(map x y)]],
-		'0092' => ['map_changed', 'Z16 x4 a4 v', [qw(map IP port)]],
+		'0092' => ['map_changed', 'Z16 v2 a4 v', [qw(map x y IP port)]], # 28
 		'0095' => ['actor_info', 'a4 Z24', [qw(ID name)]],
 		'0097' => ['private_message', 'v Z24 Z*', [qw(len privMsgUser privMsg)]],
 		'0098' => ['private_message_sent', 'C', [qw(type)]],
@@ -3853,6 +3853,13 @@ sub map_changed {
 			die $@;
 		}
 	}
+	
+	my %coords = (
+		x => $args->{x},
+		y => $args->{y}
+	);
+	$char->{pos} = {%coords};
+	$char->{pos_to} = {%coords};
 
 	undef $conState_tries;
 	for (my $i = 0; $i < @ai_seq; $i++) {

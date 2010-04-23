@@ -182,7 +182,7 @@ sub parse {
 				Misc::checkValidity("Packet: " . $handler->[0]);
 			} else {
 				warning "Packet Parser: Unhandled Packet: $switch Handler: $handler->[0]\n";
-				debug ("Unpacked: " . join(', ', @{\%args}{@{$handler->[2]}}) . "\n"), "packetParser", 2;
+				debug ("Unpacked: " . join(', ', @{\%args}{@{$handler->[2]}}) . "\n"), "packetParser", 2 if $handler->[2];
 			}
 		}
 	} else {
@@ -194,7 +194,7 @@ sub parse {
 			Misc::checkValidity("Packet: " . $handler->[0]);
 		} else {
 			warning "Packet Parser: Unhandled Packet: $switch Handler: $handler->[0]\n";
-			debug ("Unpacked: " . join(', ', @{\%args}{@{$handler->[2]}}) . "\n"), "packetParser", 2;
+			debug ("Unpacked: " . join(', ', @{\%args}{@{$handler->[2]}}) . "\n"), "packetParser", 2 if $handler->[2];
 		}
 	}
 
