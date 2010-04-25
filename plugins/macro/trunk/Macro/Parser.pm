@@ -229,21 +229,27 @@ sub subvars {
 # should be working now
 	my ($pre, $nick) = @_;
 	my ($var, $tmp);
-
+	
 	# variables
+	$pre =~ s/(?:^|(?<=[^\\]))\$(\.?[a-z][a-z\d]*)/defined $varStack{$1} ? $varStack{$1} : ''/gei;
+=pod
 	while (($var) = $pre =~ /(?:^|[^\\])\$(\.?[a-z][a-z\d]*)/i) {
 		$tmp = (defined $varStack{$var})?$varStack{$var}:"";
 		$var = q4rx $var;
 		$pre =~ s/(^|[^\\])\$$var([^a-zA-Z\d]|$)/$1$tmp$2/g;
 		last if defined $nick
 	}
-
+=cut
+	
 	# doublevars
+	$pre =~ s/\$\{(.*?)\}/defined $varStack{"#$1"} ? $varStack{"#$1"} : ''/gei;
+=pod
 	while (($var) = $pre =~ /\$\{(.*?)\}/i) {
 		$tmp = (defined $varStack{"#$var"})?$varStack{"#$var"}:"";
 		$var = q4rx $var;
 		$pre =~ s/\$\{$var\}/$tmp/g
 	}
+=cut
 
 	return $pre
 }
