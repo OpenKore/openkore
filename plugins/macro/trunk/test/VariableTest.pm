@@ -1,4 +1,3 @@
-# Unit test for Network
 package VariableTest;
 
 use Test::More;
