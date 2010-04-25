@@ -190,15 +190,16 @@ sub getConfig {
 
 # sets and/or refreshes global variables
 sub refreshGlobal {
-	return unless $net->getState() == Network::IN_GAME;
 	my $var = $_[0];
 
-	$varStack{".map"} = (defined $field)?$field->name:"undef";
-	my $pos = calcPosition($char); $varStack{".pos"} = sprintf("%d %d", $pos->{x}, $pos->{y});
 	$varStack{".time"} = time;
 	$varStack{".datetime"} = scalar localtime;
-	my @time = split(/ /, $varStack{".datetime"});
-	($varStack{".hour"}, $varStack{".minute"}, $varStack{".second"}) = split(/:/, $time[4], 3);
+	($varStack{".second"}, $varStack{".minute"}, $varStack{".hour"}) = localtime;
+	
+	return unless $net && $net->getState == Network::IN_GAME;
+	
+	$varStack{".map"} = (defined $field)?$field->name:"undef";
+	my $pos = calcPosition($char); $varStack{".pos"} = sprintf("%d %d", $pos->{x}, $pos->{y});
 	
 	$varStack{".hp"} = $char->{hp};
 	$varStack{".sp"} = $char->{sp};
