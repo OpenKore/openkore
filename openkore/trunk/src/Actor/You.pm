@@ -26,6 +26,7 @@ use Globals;
 use Log qw(message);
 use base qw(Actor);
 use InventoryList;
+use Translation;
 
 ##
 # Skill $char->{permitSkill}
@@ -76,9 +77,9 @@ sub new {
 sub nameString {
 	my ($self, $otherActor) = @_;
 
-	return 'yourself' if $self->{ID} eq $otherActor->{ID};
-	return 'you' if UNIVERSAL::isa($otherActor, 'Actor');
-	return 'You';
+	return T('yourself') if $self->{ID} eq $otherActor->{ID};
+	return T('you') if UNIVERSAL::isa($otherActor, 'Actor');
+	return T('You');
 }
 
 ##

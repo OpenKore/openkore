@@ -2264,20 +2264,26 @@ sub setStatus {
 	assert(defined $actor) if DEBUG;
 	assert(UNIVERSAL::isa($actor, 'Actor')) if DEBUG;
 	my $verbosity = $actor->{ID} eq $accountID ? 1 : 2;
-	my $are = $actor->verb('are', 'is');
-	my $have = $actor->verb('have', 'has');
 	my $changed = 0;
 
 	foreach (keys %skillsState) {
 		if ($opt1 == $_) {
 			if (!$actor->{statuses}{$skillsState{$_}}) {
 				$actor->{statuses}{$skillsState{$_}} = 1;
-				message TF("%s %s in %s state.\n", $actor->nameString(), $are, $skillsState{$_}), "parseMsg_statuslook", $verbosity;
+				if ($actor->isa('Actor::You')) {
+					message TF("%s are in %s state.\n", $actor->nameString(), $skillsState{$_}), "parseMsg_statuslook", $verbosity;
+				} else {
+					message TF("%s is in %s state.\n", $actor->nameString(), $skillsState{$_}), "parseMsg_statuslook", $verbosity;
+				}
+				
 				$changed = 1;
 			}
 		} elsif ($actor->{statuses}{$skillsState{$_}}) {
 			delete $actor->{statuses}{$skillsState{$_}};
-			message TF("%s %s out of %s state.\n", $actor->nameString(), $are, $skillsState{$_}), "parseMsg_statuslook", $verbosity;
+			if ($actor->isa('Actor::You')) {
+				message TF("%s are out of %s state.\n", $actor->nameString(), $skillsState{$_}), "parseMsg_statuslook", $verbosity;
+			} else {
+				message TF("%s is out of %s state.\n", $actor->nameString(), $skillsState{$_}), "parseMsg_statuslook", $verbosity;	}
 			$changed = 1;
 		}
 	}
@@ -2286,12 +2292,20 @@ sub setStatus {
 		if (($opt2 & $_) == $_) {
 			if (!$actor->{statuses}{$skillsAilments{$_}}) {
 				$actor->{statuses}{$skillsAilments{$_}} = 1;
-				message TF("%s %s ailment: %s.\n", $actor->nameString(), $have, $skillsAilments{$_}), "parseMsg_statuslook", $verbosity;
+				if ($actor->isa('Actor::You')) {
+					message TF("%s have ailment: %s.\n", $actor->nameString(), $skillsAilments{$_}), "parseMsg_statuslook", $verbosity;
+				} else {
+					message TF("%s has ailment: %s.\n", $actor->nameString(), $skillsAilments{$_}), "parseMsg_statuslook", $verbosity;
+				}
 				$changed = 1;
 			}
 		} elsif ($actor->{statuses}{$skillsAilments{$_}}) {
 			delete $actor->{statuses}{$skillsAilments{$_}};
-			message TF("%s %s out of ailment: %s.\n", $actor->nameString(), $are, $skillsAilments{$_}), "parseMsg_statuslook", $verbosity;
+			if ($actor->isa('Actor::You')) {
+				message TF("%s are out of ailment: %s.\n", $actor->nameString(), $skillsAilments{$_}), "parseMsg_statuslook", $verbosity;
+			} else {
+				message TF("%s is out of ailment: %s.\n", $actor->nameString(), $skillsAilments{$_}), "parseMsg_statuslook", $verbosity;
+			}
 			$changed = 1;
 		}
 	}
@@ -2300,12 +2314,20 @@ sub setStatus {
 		if (($option & $_) == $_) {
 			if (!$actor->{statuses}{$skillsLooks{$_}}) {
 				$actor->{statuses}{$skillsLooks{$_}} = 1;
-				message TF("%s %s look: %s.\n", $actor->nameString(), $have, $skillsLooks{$_}), "parseMsg_statuslook", $verbosity;
+				if ($actor->isa('Actor::You')) {
+					message TF("%s have look: %s.\n", $actor->nameString(), $skillsLooks{$_}), "parseMsg_statuslook", $verbosity;
+				} else {
+					message TF("%s has look: %s.\n", $actor->nameString(), $skillsLooks{$_}), "parseMsg_statuslook", $verbosity;
+				}
 				$changed = 1;
 			}
 		} elsif ($actor->{statuses}{$skillsLooks{$_}}) {
 			delete $actor->{statuses}{$skillsLooks{$_}};
-			message TF("%s %s out of look: %s.\n", $actor->nameString(), $are, $skillsLooks{$_}), "parseMsg_statuslook", $verbosity;
+			if ($actor->isa('Actor::You')) {
+				message TF("%s are out of look: %s.\n", $actor->nameString(), $skillsLooks{$_}), "parseMsg_statuslook", $verbosity;
+			} else {
+				message TF("%s is out of look: %s.\n", $actor->nameString(), $skillsLooks{$_}), "parseMsg_statuslook", $verbosity;
+			}
 			$changed = 1;
 		}
 	}
@@ -3161,14 +3183,21 @@ sub skillCast_string {
 	assert(UNIVERSAL::isa($source, 'Actor')) if DEBUG;
 	assert(UNIVERSAL::isa($target, 'Actor')) if DEBUG;
 	
-	return sprintf("%s %s %s %s %s %s %s\n",
+	if ($source->isa('Actor::You')) {
+	return TF("%s are casting %s on %s (Delay: %sms)\n",
 		$source->nameString(),
-		$source->verb(T('are'), T('is')),
-		T('casting'),
 		$skillName,
-		T('on'),
 		($x != 0 || $y != 0) ? TF("location (%d, %d)", $x, $y) : $target->nameString($source),
-		TF("(Delay: %sms)", $delay));
+		$delay);
+	} else {
+	return TF("%s is casting %s on %s (Delay: %sms)\n",
+		$source->nameString(),
+		$skillName,
+		($x != 0 || $y != 0) ? TF("location (%d, %d)", $x, $y) : $target->nameString($source),
+		$delay);
+	}
+	
+	
 }
 
 sub skillUse_string {
@@ -3220,12 +3249,20 @@ sub status_string {
 	my ($source, $statusName, $mode, $seconds) = @_;
 	assert(UNIVERSAL::isa($source, 'Actor')) if DEBUG;
 
-	return sprintf("%s %s %s: %s%s\n",
+	if ($source->isa('Actor::You')) {
+	return TF("%s are %s: %s%s\n",
 		$source->nameString(),
-		$source->verb(T('are'), T('is')),
 		($mode eq 'now') ? T('now') : ($mode eq 'again') ? T('again') : ($mode eq 'no longer') ? T('no longer') : $mode,
 		$statusName,
 		$seconds ? ' ' . TF("(Duration: %ss)", $seconds) : '');
+	} else {
+	return TF("%s is %s: %s%s\n",
+		$source->nameString(),
+		($mode eq 'now') ? T('now') : ($mode eq 'again') ? T('again') : ($mode eq 'no longer') ? T('no longer') : $mode,
+		$statusName,
+		$seconds ? ' ' . TF("(Duration: %ss)", $seconds) : '');
+	}
+	
 }
 
 #######################################
