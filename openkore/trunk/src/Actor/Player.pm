@@ -25,6 +25,7 @@ use strict;
 use Actor;
 use Globals;
 use base qw(Actor);
+use Translation;
 
 sub new {
 	my ($class) = @_;
@@ -34,7 +35,7 @@ sub new {
 sub selfString {
 	my ($self) = @_;
 
-	return $self->{sex} ? 'himself' : 'herself';
+	return $self->{sex} ? T('himself') : T('herself');
 }
 
 ##
