@@ -175,6 +175,7 @@ sub updateStatusBar {
 
 		if ($AI) {
 			if (@ai_seq) {
+=pod
 				my @seqs = @ai_seq;
 				foreach (@seqs) {
 					s/^route_//;
@@ -184,6 +185,19 @@ sub updateStatusBar {
 				}
 				substr($seqs[0], 0, 1) = uc substr($seqs[0], 0, 1);
 				$aiText = join(', ', @seqs);
+=cut
+				my @seqs = ();
+				for (@ai_seq) {
+					push @seqs, do {
+						my $args = AI::args(scalar @seqs);
+						
+						return sprintf('%s (%s)', $_, $Macro::Data::queue->name) if /^macro$/ and (
+							$Macro::Data::queue && ref $Macro::Data::queue && $Macro::Data::queue->can('name')
+						);
+						
+						$_;
+					}
+				}
 			} else {
 				$aiText = "";
 			}

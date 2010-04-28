@@ -5,25 +5,25 @@ use base 'Interface::Wx::Base::StatView';
 
 use Globals qw/$char $conState $startTime_EXP $startingzeny $totalBaseExp $totalJobExp $bytesSent $bytesReceived/;
 use Translation qw/T TF/;
-use Utils qw/formatNumber timeConvert timeOut/;
+use Utils qw/formatNumber timeOut/;
 
 sub new {
 	my ($class, $parent, $id) = @_;
 	
 	my $self = $class->SUPER::new ($parent, $id,
 		[
-			{key => 'time', title => T('Botting time'), type => 'stat'},
-			{key => 'baseExp', title => T('BaseExp'), type => 'stat'},
-			{key => 'baseExpPerHour', title => T('BaseExp/Hour'), type => 'stat'},
-			{key => 'jobExp', title => T('JobExp'), type => 'stat'},
-			{key => 'jobExpPerHour', title => T('JobExp/Hour'), type => 'stat'},
+			{key => 'time', title => T('Botting'), type => 'stat'},
+			{key => 'baseExp', title => T('Base'), type => 'stat'},
+			{key => 'baseExpPerHour', title => T('/Hour'), type => 'stat'},
+			{key => 'baseEstimation', title => T('Levelup'), type => 'stat'},
+			{key => 'jobExp', title => T('Job'), type => 'stat'},
+			{key => 'jobExpPerHour', title => T('/Hour'), type => 'stat'},
+			{key => 'jobEstimation', title => T('Levelup'), type => 'stat'},
 			{key => 'zeny', title => T('Zeny'), type => 'stat'},
-			{key => 'zenyPerHour', title => T('Zeny/Hour'), type => 'stat'},
-			{key => 'baseEstimation', title => T('Base Levelup Est.'), type => 'stat'},
-			{key => 'jobEstimation', title => T('Job Levelup Est.'), type => 'stat'},
+			{key => 'zenyPerHour', title => T('/Hour'), type => 'stat'},
 			{key => 'deaths', title => T('Died'), type => 'stat'},
-			{key => 'bytesSent', title => T('Bytes Sent'), type => 'stat'},
-			{key => 'bytesReceived', title => T('Bytes Received'), type => 'stat'},
+			{key => 'bytesSent', title => T('Bytes sent'), type => 'stat'},
+			{key => 'bytesReceived', title => T('Received'), type => 'stat'},
 			
 			{key => 'reset', title => T('Reset'), type => 'control'},
 		],
@@ -46,6 +46,10 @@ sub DESTROY {
 	my ($self) = @_;
 	
 	Plugins::delHooks ($self->{hooks});
+}
+
+sub timeConvert {
+	join ' ', (split /\s+/, Utils::timeConvert(shift))[0, 1];
 }
 
 sub update {
