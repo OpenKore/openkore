@@ -3293,11 +3293,11 @@
 12165#Fencer_Scroll_3#
 12166#Fencer_Scroll_4#
 12167#Fencer_Scroll_5#
-12168#Fencer_Scroll_6#
-12169#Fencer_Scroll_7#
-12170#Fencer_Scroll_8#
-12171#Fencer_Scroll_9#
-12172#Fencer_Scroll_10#
+12168#Fencer_Scroll6#
+12169#Fencer_Scroll7#
+12170#Fencer_Scroll8#
+12171#Fencer_Scroll9#
+12172#Fencer_Scroll10#
 12173#Spearman_Scroll_1#
 12174#Spearman_Scroll_2#
 12175#Spearman_Scroll_3#
@@ -4799,5 +4799,17 @@
 5534#Fox_Hat#
 5383#Hunting_Cap#
 12232#Ginger_Bread#
+// ------------- 2008 ｴ・ｸ ｺｹｿ鋓ﾎﾀ・---------------
+12327#Lucky_Charm#
+12328#Lucky_Charm#
+// ----------------- ｴ・ｸ ｺ｣ｻ酣ｩﾀﾇｳｯ ﾀﾌｺ･ﾆｮ-----------------
+7553#Lotus_Blossom#
+7554#Striped_Candle#
+7555#Green_Incense#
+// --------------- ｸｻｷｹﾀﾌｽﾃｾﾆ ｳ・ｿﾀ ﾀﾌｺ･ﾆｮ --------------
+5302#Lotus_Flower_Hat#
+//------ 2010 ﾇﾊｸｮﾇﾉ ｽ貂ﾓ ﾆ菴ｺﾆｼｹ・ﾀﾌｺ･ﾆｮ ---------------
+5851#Helm_Of_Summer#
+12765#Helm_Of_Summer_Box#
 
 //file end

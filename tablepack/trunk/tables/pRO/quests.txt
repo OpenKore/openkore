@@ -4383,3 +4383,128 @@ Kill 150 ^FF0000Ice Titan^000000, then you can get rewards from ^FF0000Mercenary
 9054#Midgard Crowd Control event#SG_FEEL#QUE_NOIMAGE#
 ^0000FFElite Mercenary^000000, ^0000FFMercenary Scout^000000 : "^404040Well done! You did a good job^000000"#
 Defeated ^FF0000Ice Titan^000000. Now, ^8B4513Ice Cave^000000 is in a peace.#
+
+// 2010 ÇÊ¸®ÇÉ ¿©¸§ÃàÁ¦- ½æ¸ÓÆä½ºÆ¼¹ú
+9074#Summer Festival#SG_FEEL#QUE_NOIMAGE#
+Let's find Summer Ticket Girl in Let's find Summer Ticket Girl in ^000077Prontera Culverts^000000.#
+1 Ticket.#
+
+9075#Summer Festival#SG_FEEL#QUE_NOIMAGE#
+Let's find Summer Ticket Girl in ^000077Izlude Dungeon^000000.#
+1 Ticket.#
+
+9076#Summer Festival#SG_FEEL#QUE_NOIMAGE#
+Let's find Summer Ticket Girl in ^000077Payon Dungeon^000000.#
+1 Ticket.#
+
+9077#Summer Festival#SG_FEEL#QUE_NOIMAGE#
+Let's find Summer Ticket Girl in ^000077Coal Mines^000000.#
+1 Ticket.#
+
+9078#Summer Festival#SG_FEEL#QUE_NOIMAGE#
+Let's find Summer Ticket Girl in ^000077Orc Dungeon^000000.#
+1 Ticket.#
+
+9079#Summer Festival#SG_FEEL#QUE_NOIMAGE#
+Let's find Summer Ticket Girl in ^000077Kunlun Dungeon!^000000.#
+1 Ticket.#
+
+9080#Summer Festival#SG_FEEL#QUE_NOIMAGE#
+Let's find Summer Ticket Girl in ^000077Geffen Dungeon^000000.#
+1 Ticket.#
+
+9081#Summer Festival#SG_FEEL#QUE_NOIMAGE#
+Let's find Summer Ticket Girl in ^000077Toy Factory^000000.#
+1 Ticket.#
+
+9082#Summer Festival#SG_FEEL#QUE_NOIMAGE#
+Let's find Summer Ticket Girl in ^000077Morroc Pyramids^000000.#
+3 Ticket.#
+
+9083#Summer Festival#SG_FEEL#QUE_NOIMAGE#
+Let's find Summer Ticket Girl in ^000077Sphynx Dungeon^000000.#
+3 Ticket.#
+
+9084#Summer Festival#SG_FEEL#QUE_NOIMAGE#
+Let's find Summer Ticket Girl in ^000077Ice Dungeon^000000.#
+3 Ticket.#
+
+9085#Summer Festival#SG_FEEL#QUE_NOIMAGE#
+Let's find Summer Ticket Girl in ^000077Louyang Dungeon^000000.#
+3 Ticket.#
+
+9086#Summer Festival#SG_FEEL#QUE_NOIMAGE#
+Let's find Summer Ticket Girl in ^000077Magma Dungeon^000000.#
+3 Ticket.#
+
+9087#Summer Festival#SG_FEEL#QUE_NOIMAGE#
+Let's find Summer Ticket Girl in ^000077Sunken Ship^000000.#
+3 Ticket.#
+
+9088#Summer Festival#SG_FEEL#QUE_NOIMAGE#
+Let's find Summer Ticket Girl in ^000077Glast Heim Prisons^000000.#
+3 Ticket.#
+
+9089#Summer Festival#SG_FEEL#QUE_NOIMAGE#
+Let's find Summer Ticket Girl in ^000077Glast Heim Staircase^000000.#
+3 Ticket.#
+
+9090#Summer Festival#SG_FEEL#QUE_NOIMAGE#
+Let's find Summer Ticket Girl in ^000077Glast Heim Castle^000000.#
+3 Ticket.#
+
+9091#Summer Festival#SG_FEEL#QUE_NOIMAGE#
+Let's find Summer Ticket Girl in ^000077Mind Dungeon in Einbech^000000.#
+3 Ticket.#
+
+9092#Summer Festival#SG_FEEL#QUE_NOIMAGE#
+Let's find Summer Ticket Girl in ^000077Turtle Island Dungeon^000000.#
+3 Ticket.#
+
+9093#Summer Festival#SG_FEEL#QUE_NOIMAGE#
+Let's find Summer Ticket Girl in ^000077Umbala Dungeon^000000.#
+3 Ticket.#
+
+9094#Summer Festival#SG_FEEL#QUE_NOIMAGE#
+Let's find Summer Ticket Girl in ^000077Comodo Dungeons^000000.#
+3 Ticket.#
+
+9095#Summer Festival#SG_FEEL#QUE_NOIMAGE#
+Let's find Summer Ticket Girl in ^000077The first floor of the Clock Tower^000000.#
+5 Ticket.#
+
+9096#Summer Festival#SG_FEEL#QUE_NOIMAGE#
+Let's find Summer Ticket Girl in ^000077The second basement of Clock Tower^000000.#
+5 Ticket.#
+
+9097#Summer Festival#SG_FEEL#QUE_NOIMAGE#
+Let's find Summer Ticket Girl in ^000077The sealed fourth floor of Clock Tower^000000.#
+5 Ticket.#
+
+9098#Summer Festival#SG_FEEL#QUE_NOIMAGE#
+Let's find Summer Ticket Girl in ^000077The first floor of Thor's Volcano^000000.#
+5 Ticket.#
+
+9099#Summer Festival#SG_FEEL#QUE_NOIMAGE#
+Let's find Summer Ticket Girl in ^000077The second level of Thor's Volcano^000000.#
+5 Ticket.#
+
+9100#Summer Festival#SG_FEEL#QUE_NOIMAGE#
+Let's find Summer Ticket Girl in ^000077The third level of Thor's Volcano^000000.#
+5 Ticket.#
+
+9101#Summer Festival#SG_FEEL#QUE_NOIMAGE#
+Let's find Summer Ticket Girl in ^000077Payon Guild Dungeon^000000.#
+5 Ticket.#
+
+9102#Summer Festival#SG_FEEL#QUE_NOIMAGE#
+Let's find Summer Ticket Girl in ^000077Aldebaran Guild Dungeon^000000.#
+5 Ticket.#
+
+9103#Summer Festival#SG_FEEL#QUE_NOIMAGE#
+Let's find Summer Ticket Girl in ^000077Prontera Guild Dungeon^000000.#
+5 Ticket.#
+
+9104#Summer Festival#SG_FEEL#QUE_NOIMAGE#
+Let's find Summer Ticket Girl in ^000077Geffen Guild Dungeon^000000.#
+5 Ticket.#

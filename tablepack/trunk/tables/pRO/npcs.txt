@@ -125,15 +125,23 @@ comodo 228 159 Hair Band Girl
 comodo 322 178 Comodo Tour Leader
 e_tower 69 117 Purification Stone#102t
 e_tower 81 105 Tower Protection Stone
+ein_in01 16 36 Morriphen
+ein_in01 18 28 Guildsman#BLS
+ein_in01 24 41 Blacksmith Guildsman#mo
+ein_in01 38 29 Paul Spanner
+einbroch 152 46 Bulletin Board#einbroch
+einbroch 155 43 Guide
 einbroch 162 256 Bulletin Board#einbroch
 einbroch 162 317 Guide
 einbroch 224 207 Chef Assistant
+einbroch 228 121 Little Toby#ein-1
 einbroch 232 255 Khowropher
 einbroch 236 191 Young Man#ein
 einbroch 239 205 First_Cash_Seller
 einbroch 242 205 Kafra Employee#ein2
 einbroch 245 205 Second_Cash_Seller
 einbroch 253 203 Bulletin Board
+einbroch 260 128 Gatan#einbroch
 gef_dun01 203 48  #lowentrace1
 gef_dun01 89 192  #lowentrace
 gef_fild05 80 149 Myu#08_hat
@@ -171,6 +179,7 @@ geffen 130 50 Second_Cash_Seller
 geffen 131 123 Merlcesdets
 geffen 132 38 Bard#2
 geffen 135 53 Kafra Employee#pRO_prem
+geffen 138 30 Injured Master Thief#ge
 geffen 140 54 [Quest] Elite Mercenary
 geffen 143 126 Kris#edu
 geffen 143 133 Ernie#edu
@@ -184,6 +193,7 @@ geffen 165 89 New refining machine#Ha
 geffen 168 175 Sign
 geffen 172 52 Goodman
 geffen 173 88 Merchant#geff
+geffen 175 98 Injured Master Thief#ge
 geffen 178 72 Akkie
 geffen 181 114 Aure Dupon
 geffen 193 152 Pet Groomer
@@ -213,6 +223,7 @@ glast_01 369 308 Bulletin Board#castle
 hu_fild01 140 163 Tower Keeper
 hu_fild04 235 103 Heap of Earth#mao2_obje
 hu_fild04 321 131 Traces#mao2_object02
+ice_dun02 120 105 Man in the Ice#cave
 in_orcs01 20 109 Stylist
 in_sphinx2 13 146 Stone Statue#2
 in_sphinx2 13 163 Stone Statue#1
@@ -726,6 +737,8 @@ prontera 282 200 Kafra Employee
 prontera 282 208 East Gate-Guide
 prontera 29 200 West Gate-Guide
 prontera 29 207 Kafra Employee
+prontera 45 67  #prt_key-1-1
+prontera 48 58 Vegetable Gardener
 prontera 54 240 Terno
 prontera 73 134 Vendor from Milk Ranch
 prontera 73 140 Milk Vendor
