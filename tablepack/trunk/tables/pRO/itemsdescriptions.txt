@@ -32752,7 +32752,7 @@ Weight : ^7777771^000000
 Scarlet rose in a mouth. Did they even remove the thorns?
 When you defeated a monster, the monster drops a Witherless Rose at a certain rate. DEX + 1.
 Item Class : ^777777Headgear^000000 Defense : ^7777770^000000
-Location : ^777777Upper^000000 Weight : ^77777710^000000
+Location : ^777777Low^000000 Weight : ^77777710^000000
 Required Level : ^77777750^000000
 Jobs : ^777777All Jobs^000000
 #
@@ -33206,4 +33206,56 @@ A brown bread mixed with milk, flour, honey and other healthy ingredients. It is
 Attack and Moving Speed increases for 15mins.
 ^ffffff_^000000
 Weight : ^77777715^000000
+#
+
+// ------------- 2008 ｴ・ｸ ｺｹｿ鋓ﾎﾀ・---------------
+12327#
+Do you need a luck? Use this lucky charm. All the fortune will follow after you.
+LUK + 20 for an hour.
+^ffffff_^000000
+Weight : ^7777775^000000
+#
+
+12328#
+An love charm. Use this love charm to make your relationship tight. 
+All stats + 10 for 20 seconds.
+^ffffff_^000000
+Weight : ^77777710^000000
+#
+// ----------------- ｴ・ｸ ｺ｣ｻ酣ｩﾀﾇｳｯ ﾀﾌｺ･ﾆｮ-----------------
+7553#
+A fragrant pink flower that represents awareness and naivety.
+^ffffff_^000000
+#
+7554#
+A red and white striped candle.
+^ffffff_^000000
+#
+7555#
+A green aromatic stick.
+^ffffff_^000000
+#
+// --------------- ｸｻｷｹﾀﾌｽﾃｾﾆ ｳ・ｿﾀ ﾀﾌｺ･ﾆｮ --------------
+5302#
+A lotus blossom shaped hat. It is sophisticated and elegant.
+Item Class : ^777777Headgear^000000    Defense : ^7777771^000000
+Location : ^777777Upper^000000    Weight : ^77777710^000000
+Required Level : ^77777730^000000
+Jobs : ^777777All Jobs^000000
+#
+//------ 2010 ﾇﾊｸｮﾇﾉ ｽ貂ﾓ ﾆ菴ｺﾆｼｹ・ﾀﾌｺ･ﾆｮ ---------------
+5851#
+^00008830 days Rental Item.^000000
+A hat that holds spirit of sun. 
+Reduce Demi-human damage by 10%.
+Add chance to cast Lv1 ｡ｰSight｡ｱ skill or Lv1 ｡ｰSight Thrasher｡ｱ when being hit by physical or magical attacks.
+Item Class : ^777777Headgear^000000    Defense : ^7777771^000000
+Location : ^777777Upper,Middle^000000 Weight : ^7777770^000000
+Required Level : ^77777760^000000
+Jobs : ^777777All Jobs^000000
+#
+12765#
+A box contains 1 Helm Of Summer in it.
+30 days Rental Item.
+Weight : ^7777770^000000
 #
