@@ -1072,7 +1072,7 @@ sub writeDataFileIntact {
 	my $diffs = shift || {};
 	my $readOnly = shift;
 
-	my (@lines, $key, $value, $inBlock, $commentBlock);
+	my (%data, @lines, $key, $value, $inBlock, $commentBlock);
 	my $reader = new Utils::TextReader($file);
 	while (!$reader->eof()) {
 		my $lines = $reader->readLine();
@@ -1165,6 +1165,7 @@ sub writeDataFileIntact {
 				push @lines, $line;
 				
 				$diffs->{$key} = $r_hash->{$key} if $readOnly && $r_hash->{$key} ne $value;
+				$data{$key} = 1;
 			}
 		}
 	}
@@ -1174,6 +1175,7 @@ sub writeDataFileIntact {
 	debug TF("Saving %s...\n", $file), 'writeFile';
 
 	# options that are different in memory and file data, but defined in !include'd (read only) files
+	%$diffs = map { $_ => $diffs->{$_} } grep { !$data{$_} } keys %$diffs;
 	if (%$diffs) {
 		push @lines, map { $diffs->{$_} ne '' ? "$_ $r_hash->{$_}" : "$_" } keys %$diffs;
 		debug TF("Creating overrides for %s\n", (join ', ', keys %$diffs)), 'writeFile';
