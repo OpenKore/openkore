@@ -124,6 +124,19 @@ sub onMapChanged {
 	$self->setState(UPGRADE_SKILL) if $self->{state} == AWAIT_ANSWER;
 }
 
+sub check {
+	my ($self) = @_;
+	
+	if ($self->{state} == Task::Raise::IDLE && @{$self->{queue}} && $self->canRaise($self->{queue}[0])) {
+		$self->setState(Task::Raise::UPGRADE_SKILL);
+	} elsif (!(@{$self->{queue}} && $self->canRaise($self->{queue}[0]))) {
+		$self->setState(Task::Raise::IDLE);
+	} elsif ($self->{state} == Task::Raise::AWAIT_ANSWER && defined $self->{expected} && &{$self->{expected}}) {
+		debug __PACKAGE__."::check expectation met\n", __PACKAGE__, 2 if DEBUG;
+		delete $self->{expected};
+	}
+}
+
 # overriding Task's stop (this task is unstoppable! :P)
 sub stop {
 }

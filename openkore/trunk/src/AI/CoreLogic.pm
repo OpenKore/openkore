@@ -145,7 +145,7 @@ sub iterate {
 
 	Benchmark::begin("AI (part 3.2)") if DEBUG;
 	processLockMap();
-	processAutoStatsRaise();
+	#processAutoStatsRaise(); moved to a task
 	#processAutoSkillsRaise(); moved to a task
 	#processTask("skill_raise");
 	processRandomWalk();
@@ -1850,6 +1850,7 @@ sub processLockMap {
 	}
 }
 
+=pod moved to task
 ##### AUTO STATS RAISE #####
 sub processAutoStatsRaise {
 	if (!$statChanged && $config{statsAddAuto}) {
@@ -1908,6 +1909,7 @@ sub processAutoStatsRaise {
 		}
 	}
 }
+=cut
 
 =pod moved to task
 ##### AUTO SKILLS RAISE #####
