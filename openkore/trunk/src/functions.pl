@@ -461,8 +461,10 @@ sub finalInitialization {
 	$startTime_EXP = time;
 	$taskManager = new TaskManager();
 	# run 'permanent' tasks
-	require Task::RaiseSkill;
-	$taskManager->add(new Task::RaiseSkill());
+	for (qw/Task::RaiseStat Task::RaiseSkill/) {
+		eval "require $_";
+		$taskManager->add($_->new);
+	}
 
 	# protect actor hashes from autovivification
 	require Utils::ActorHashTie;
@@ -654,7 +656,6 @@ sub initStatVars {
 	$monkilltime = 0;
 	$elasped = 0;
 	$totalelasped = 0;
-	$statChanged = 0;
 }
 
 

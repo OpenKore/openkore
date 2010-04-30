@@ -5898,33 +5898,26 @@ sub stats_added {
 		if ($args->{type} == 13) {
 			$char->{str} = $args->{val};
 			debug "Strength: $args->{val}\n", "parseMsg";
-			# Reset $statChanged back to 0 to tell kore that a stat can be raised again
-			$statChanged = 0 if ($statChanged eq "str");
 
 		} elsif ($args->{type} == 14) {
 			$char->{agi} = $args->{val};
 			debug "Agility: $args->{val}\n", "parseMsg";
-			$statChanged = 0 if ($statChanged eq "agi");
 
 		} elsif ($args->{type} == 15) {
 			$char->{vit} = $args->{val};
 			debug "Vitality: $args->{val}\n", "parseMsg";
-			$statChanged = 0 if ($statChanged eq "vit");
 
 		} elsif ($args->{type} == 16) {
 			$char->{int} = $args->{val};
 			debug "Intelligence: $args->{val}\n", "parseMsg";
-			$statChanged = 0 if ($statChanged eq "int");
 
 		} elsif ($args->{type} == 17) {
 			$char->{dex} = $args->{val};
 			debug "Dexterity: $args->{val}\n", "parseMsg";
-			$statChanged = 0 if ($statChanged eq "dex");
 
 		} elsif ($args->{type} == 18) {
 			$char->{luk} = $args->{val};
 			debug "Luck: $args->{val}\n", "parseMsg";
-			$statChanged = 0 if ($statChanged eq "luk");
 
 		} else {
 			debug "Something: $args->{val}\n", "parseMsg";

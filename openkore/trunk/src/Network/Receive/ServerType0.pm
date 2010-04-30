@@ -5796,33 +5796,26 @@ sub stats_added {
 		if ($args->{type} == 13) {
 			$char->{str} = $args->{val};
 			debug "Strength: $args->{val}\n", "parseMsg";
-			# Reset $statChanged back to 0 to tell kore that a stat can be raised again
-			$statChanged = 0 if ($statChanged eq "str");
 
 		} elsif ($args->{type} == 14) {
 			$char->{agi} = $args->{val};
 			debug "Agility: $args->{val}\n", "parseMsg";
-			$statChanged = 0 if ($statChanged eq "agi");
 
 		} elsif ($args->{type} == 15) {
 			$char->{vit} = $args->{val};
 			debug "Vitality: $args->{val}\n", "parseMsg";
-			$statChanged = 0 if ($statChanged eq "vit");
 
 		} elsif ($args->{type} == 16) {
 			$char->{int} = $args->{val};
 			debug "Intelligence: $args->{val}\n", "parseMsg";
-			$statChanged = 0 if ($statChanged eq "int");
 
 		} elsif ($args->{type} == 17) {
 			$char->{dex} = $args->{val};
 			debug "Dexterity: $args->{val}\n", "parseMsg";
-			$statChanged = 0 if ($statChanged eq "dex");
 
 		} elsif ($args->{type} == 18) {
 			$char->{luk} = $args->{val};
 			debug "Luck: $args->{val}\n", "parseMsg";
-			$statChanged = 0 if ($statChanged eq "luk");
 
 		} else {
 			debug "Something: $args->{val}\n", "parseMsg";
@@ -6806,6 +6799,12 @@ sub mail_setattachment {
 	if ($args->{fail}) {
 		message TF("Failed to attach %s.\n", ($args->{index}) ? T("item: ").$char->inventory->getByServerIndex($args->{index}) : T("zeny")), "info";
 	} else {
+		# TODO: remove attached item/zeny from inventory here
+		# * amount isn't in this packet?
+		# * more than you have (item/zeny) can be "attached" without any error
+		# * after canceling mail writing, server WILL add attached items back, but not for zeny
+		
+		# TODO: tweak this message?
 		message TF("Succeeded to attach %s.\n", ($args->{index}) ? T("item: ").$char->inventory->getByServerIndex($args->{index}) : T("zeny")), "info";
 	}
 }

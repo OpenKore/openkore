@@ -22,6 +22,7 @@ use strict;
 use Task::Raise;
 use base 'Task::Raise';
 
+# TODO: cleanup
 use Carp::Assert;
 use Modules 'register';
 use Globals qw(%config $net $char $messageSender);
@@ -37,13 +38,12 @@ sub new {
 	my $class = shift;
 	my %args = @_;
 	my $self = $class->SUPER::new(@_);
-
-	my @holder = ($self);
-	Scalar::Util::weaken($holder[0]);
+	
+	Scalar::Util::weaken(my $weak = $self);
 	push @{$self->{hookHandles}}, Plugins::addHooks(
-		['packet_charSkills', \&onSkillInfo,  \@holder],
-		['packet_homunSkills', \&onSkillInfo,  \@holder],
-		['packet/stat_info', \&onStatInfo, \@holder],
+		['packet_charSkills', sub { $weak->check }],
+		['packet_homunSkills', sub { $weak->check }],
+		['packet/stat_info', sub { $weak->check if $_[1]{type} == 12 }], # 12 is points_skill
 	);
 
 	return $self;
@@ -54,54 +54,22 @@ sub initQueue {
 	
 	my @queue;
 	
-	for my $item (split /\s*,+\s*/, lc $config{skillsAddAuto_list}) {
-		my ($sk, undef, $num) = $item =~ /^(.*?)(\s+(\d+))?$/;
+	for (split /\s*,+\s*/, lc $config{skillsAddAuto_list}) {
+		my ($sk, undef, $num) = /^(.*?)(\s+(\d+))?$/;
 		my $skill = new Skill(auto => $sk, level => (defined $num) ? $num : 1);
-		if (!$skill->getIDN) {
+		if ($skill->getIDN) {
+			push @queue, $skill;
+		} else {
 			error TF("Unknown skill '%s'; disabling skillsAddAuto %s\n", $sk, $skill->getName);
 			$config{skillsAddAuto} = 0;
 			return;
-		} else {
-			push @queue, $skill;
 		}
 	}
 	
 	@queue
 }
 
-# Called when receiving: skill_update, skill_add, skills_list
-sub onSkillInfo {
-	my (undef, $args, $holder) = @_;
-	my $self = $holder->[0];
-	if ($self->{state} == Task::Raise::AWAIT_ANSWER && defined $self->{expected} && &{$self->{expected}}) {
-		debug __PACKAGE__."::onStatInfo got expected state\n", __PACKAGE__, 2 if DEBUG;
-		delete $self->{expected};
-	}
-}
-
-# Called when receiving: stat_info
-sub onStatInfo {
-	my (undef, $args, $holder) = @_;
-	my $self = $holder->[0];
-	if ($args->{type} == 12) { # 12 is points_skill
-		if ($self->{state} == Task::Raise::IDLE && $args->{val} > 0 && @{$self->{queue}}) {
-			$self->setState(Task::Raise::UPGRADE_SKILL);
-		} elsif (!$args->{val}) { # any state, when points_skill == 0
-			$self->setState(Task::Raise::IDLE);
-		} elsif ($self->{state} == Task::Raise::AWAIT_ANSWER && defined $self->{expected} && &{$self->{expected}}) {
-			debug __PACKAGE__."::onStatInfo got expected state\n", __PACKAGE__, 2 if DEBUG;
-			delete $self->{expected};
-		}
-	}
-}
-
-sub canRaise {
-	my ($self, $skill) = @_;
-	
-	return unless $char && $char->{points_skill};
-	
-	1
-}
+sub canRaise { $char && $char->{points_skill} }
 
 sub raise {
 	my ($self, $skill) = @_;
@@ -114,6 +82,7 @@ sub raise {
 	message TF("Auto-adding skill %s to %s\n", $skill->getName, $expectedLevel);
 	$messageSender->sendAddSkillPoint($skill->getIDN);
 	
+	# TODO: what if we'll get a level up?
 	sub { $char && $char->getSkillLevel($skill) == $expectedLevel && $char->{points_skill} == $expectedPoints }
 }
 
