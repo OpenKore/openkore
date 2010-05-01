@@ -1,0 +1,10 @@
+ipk.py
+msi.py
+rpm.py
+src_tarbz2.py
+src_targz.py
+src_zip.py
+tarbz2.py
+targz.py
+zip.py
+__init__.py

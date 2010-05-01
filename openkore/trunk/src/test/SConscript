@@ -24,14 +24,19 @@ if not win32:
 dir = XSTools_dir + '/utils'
 e = env.Clone()
 e.Append(CPPPATH = dir)
+
 if win32:
 	e.Append(LIBS = ['wininet'])
 else:
 	e.Append(LIBS = ['pthread'])
 	e.ParseConfig('curl-config --cflags --libs')
-e.Program('http-reader-test', [
-	'http-reader-test.cpp',
-	dir + '/http-reader.cpp',
-	dir + '/std-http-reader.cpp',
-	dir + '/mirror-http-reader.cpp'
-])
+
+http_src = ['http-reader-test.cpp']
+
+# Only For TestOnly mode we require to build this libs
+if int(ARGUMENTS.get('TESTS_ONLY', 0)):
+	http_src += [dir + '/http-reader.cpp']
+	http_src += [dir + '/std-http-reader.cpp']
+	http_src += [dir + '/mirror-http-reader.cpp']
+
+e.Program('http-reader-test', http_src)

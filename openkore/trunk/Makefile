@@ -11,10 +11,10 @@
 # http://www.openkore.com/compilation.php
 
 all:
-	@python src/scons-local-0.98.5/scons.py || echo -e "\e[1;31mCompilation failed. Please read http://www.openkore.com/compilation.php for help.\e[0m"
+	@python src/scons-local-1.3.0/scons.py || echo -e "\e[1;31mCompilation failed. Please read http://www.openkore.com/compilation.php for help.\e[0m"
 
 clean:
-	python src/scons-local-0.98.5/scons.py -c
+	python src/scons-local-1.3.0/scons.py -c
 
 dist:
 	bash makedist.sh
