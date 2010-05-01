@@ -22,6 +22,7 @@ EXTRA_COMPILER_FLAGS = ['-Wall', '-g', '-O2', '-pipe']
 
 import os
 import sys
+import subprocess
 
 ### Platform configuration ###
 
@@ -78,9 +79,9 @@ def CheckPerl(context):
 			# in PATH yet. So add the default Perl installation folder
 			# to PATH.
 			os.environ['PATH'] += os.path.pathsep + "/cygdrive/c/Perl/bin"
-		ret = os.spawnlp(os.P_WAIT, "wperl", "wperl", ".perltest.pl")
+		ret = subprocess.call(["wperl", ".perltest.pl"])
 	else:
-		ret = os.spawnlp(os.P_WAIT, "perl", "perl", ".perltest.pl")
+		ret = subprocess.call(["perl", ".perltest.pl"])
 	context.Result(ret == 0)
 
 	os.unlink(".perltest.pl")
@@ -220,7 +221,7 @@ if cygwin:
 			'--export-all-symbols',
 			'--add-stdcall-alias'] + sources
 		print ' '.join(command)
-		ret = os.spawnvp(os.P_WAIT, command[0], command)
+		ret = subprocess.call([command[0], command])
 		if ret != 0:
 			return 0
 
@@ -236,7 +237,7 @@ if cygwin:
 		command += ['-lstdc++']
 
 		print ' '.join(command)
-		return os.spawnvp(os.P_WAIT, command[0], command)
+		return subprocess.call([command[0], command])
 
 	NativeDLLBuilder = Builder(action = linkDLLAction,
 		emitter = '$LIBEMITTER',
@@ -260,7 +261,7 @@ elif darwin:
 				command += ['-l' + flag]
 
 		print ' '.join(command)
-		return os.spawnvp(os.P_WAIT, command[0], command)
+		return subprocess.call([command[0], command])
 
 	NativeDLLBuilder = Builder(action = linkBundleAction,
 				   emitter = '$LIBEMITTER',
@@ -321,7 +322,7 @@ def buildXS(target, source, env):
 
 	print "Creating", str(target[0]), "..."
 	command = [
-		perlconfig['perl'],
+		#perlconfig['perl'],
 		'-e',
 		code,
 		str(target[0]),
@@ -330,7 +331,7 @@ def buildXS(target, source, env):
 		'-typemap',
 		perlconfig['typemap'],
 		str(source[0])]
-	return os.spawnvp(os.P_WAIT, perlconfig['perl'], command)
+	return subprocess.call([perlconfig['perl'], command])
 
 perlenv.Append(BUILDERS = { 'XS' : Builder(action = buildXS) })
 
