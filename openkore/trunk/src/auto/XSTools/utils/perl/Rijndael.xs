@@ -30,10 +30,11 @@ CODE:
 SV *
 CRijndael::Encrypt(char* in, char* not_used, size_t n, int iMode)
 INIT:
-	char result[n];
+	char *result = new char [n];
 CODE:
 	THIS->Encrypt(in, result, n, iMode);
 	RETVAL = newSVpv(result, n);
+	delete[] result;
 OUTPUT:
 	RETVAL
 
@@ -41,9 +42,10 @@ OUTPUT:
 SV *
 CRijndael::Decrypt(char* in, char* not_used, size_t n, int iMode)
 INIT:
-	char result[n];
+	char *result = new char [n];
 CODE:
 	THIS->Decrypt(in, result, n, iMode);
 	RETVAL = newSVpv(result, n);
+	delete[] result;
 OUTPUT:
 	RETVAL

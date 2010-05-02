@@ -111,7 +111,7 @@ InjectDLL (DWORD ProcID, const char *dll)
 		HMODULE lib;
 		int i;
 		HWND hwnd;
-		typedef int WINAPI __declspec(dllexport) (*injectSelfFunc) (HWND hwnd);
+		typedef int (WINAPI *injectSelfFunc) (HWND hwnd);
 		injectSelfFunc injectSelf;
 
 		// The window may not appear immediately so we try for at least 5 seconds
