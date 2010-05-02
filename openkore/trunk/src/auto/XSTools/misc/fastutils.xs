@@ -1,10 +1,10 @@
 /* Utility functions rewritten in C for speed */
-#include "EXTERN.h"
-#include "perl.h"
-#include "XSUB.h"
 #include <stdio.h>
 #include <string.h>
 #include <string>
+#include "EXTERN.h"
+#include "perl.h"
+#include "XSUB.h"
 
 typedef double (*NVtime_t) ();
 static void *NVtime = NULL;
