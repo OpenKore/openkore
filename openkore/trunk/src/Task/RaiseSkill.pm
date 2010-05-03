@@ -13,7 +13,7 @@
 # MODULE DESCRIPTION: AutoRaise task
 #
 # This task is specialized in:
-# TODO
+# Auto Skill raise
 
 package Task::RaiseSkill;
 
@@ -77,13 +77,16 @@ sub raise {
 	my $skillLevel = $char->getSkillLevel($skill);
 	return unless $skillLevel < $skill->getLevel;
 	
-	my ($expectedLevel, $expectedPoints) = ($skillLevel+1, $char->{points_skill}-1);
+	my ($expectedLevel, $expectedPoints, $expectedJob) = ($skillLevel+1, $char->{points_skill}-1, $char->{lv_job});
 	
 	message TF("Auto-adding skill %s to %s\n", $skill->getName, $expectedLevel);
 	$messageSender->sendAddSkillPoint($skill->getIDN);
 	
-	# TODO: what if we'll get a level up?
-	sub { $char && $char->getSkillLevel($skill) == $expectedLevel && $char->{points_skill} == $expectedPoints }
+	sub {
+		$char
+		and $char->getSkillLevel($skill) == $expectedLevel
+		and $char->{points_skill} == $expectedPoints || $char->{lv_job} != $expectedJob
+	}
 }
 
 				########## TEST ###########"
