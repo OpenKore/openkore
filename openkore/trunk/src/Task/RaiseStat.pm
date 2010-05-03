@@ -13,7 +13,7 @@
 # MODULE DESCRIPTION: AutoRaise task
 #
 # This task is specialized in:
-# TODO
+# Auto Stat raise
 
 package Task::RaiseStat;
 
@@ -81,7 +81,11 @@ sub raise {
 	
 	return unless $amount < $item->{value} and $char->{$item->{stat}} < 99 || $config{statsAdd_over_99};
 	
-	my ($expectedValue, $expectedPoints) = ($char->{$item->{stat}}+1, $char->{points_free} - $char->{"points_$item->{stat}"});
+	my ($expectedValue, $expectedPoints, $expectedBase) = (
+		$char->{$item->{stat}}+1,
+		$char->{points_free} - $char->{"points_$item->{stat}"},
+		$char->{lv},
+	);
 	
 	message TF("Auto-adding stat %s to %s\n", $item->{stat}, $expectedValue);
 	# TODO: move these IDs to Network
@@ -94,8 +98,11 @@ sub raise {
 		luk => 0x12,
 	}->{$item->{stat}});
 	
-	# TODO: what if we'll get a level up?
-	sub { $char && $char->{$item->{stat}} == $expectedValue && $char->{points_free} == $expectedPoints }
+	sub {
+		$char
+		and $char->{$item->{stat}} == $expectedValue
+		and $char->{points_free} == $expectedPoints || $char->{lv} != $expectedBase
+	}
 }
 
 1;

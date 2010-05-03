@@ -12,8 +12,7 @@
 ##
 # MODULE DESCRIPTION: AutoRaise task
 #
-# This task is specialized in:
-# TODO
+# This task is the base for Raise tasks
 
 package Task::Raise;
 
@@ -33,7 +32,7 @@ use Utils::ObjectList;
 # States
 use enum qw(
 	IDLE
-	UPGRADE_SKILL
+	UPGRADE
 	AWAIT_ANSWER
 );
 
@@ -93,7 +92,7 @@ sub init {
 	
 	if (@{$self->{queue} = [$self->initQueue]}) {
 		debug sprintf(__PACKAGE__."::init queue size: %d\n", scalar @{$self->{queue}}), __PACKAGE__, 2 if DEBUG;
-		$self->setState(UPGRADE_SKILL);
+		$self->setState(UPGRADE);
 	} else {
 		debug __PACKAGE__."::init queue empty\n", __PACKAGE__, 2 if DEBUG;
 		$self->setState(IDLE);
@@ -121,14 +120,14 @@ sub onMapChanged {
 	my (undef, $args, $holder) = @_;
 	my $self = $holder->[0];
 	
-	$self->setState(UPGRADE_SKILL) if $self->{state} == AWAIT_ANSWER;
+	$self->setState(UPGRADE) if $self->{state} == AWAIT_ANSWER;
 }
 
 sub check {
 	my ($self) = @_;
 	
 	if ($self->{state} == Task::Raise::IDLE && @{$self->{queue}} && $self->canRaise($self->{queue}[0])) {
-		$self->setState(Task::Raise::UPGRADE_SKILL);
+		$self->setState(Task::Raise::UPGRADE);
 	} elsif (!(@{$self->{queue}} && $self->canRaise($self->{queue}[0]))) {
 		$self->setState(Task::Raise::IDLE);
 	} elsif ($self->{state} == Task::Raise::AWAIT_ANSWER && defined $self->{expected} && &{$self->{expected}}) {
@@ -147,7 +146,7 @@ sub iterate {
 	return if ($self->{state} == IDLE || !$char || $net->getState() != Network::IN_GAME);
 	$self->SUPER::iterate;
 	
-	if ($self->{state} == UPGRADE_SKILL) {
+	if ($self->{state} == UPGRADE) {
 		while (@{$self->{queue}}) {
 			return unless $self->canRaise($self->{queue}[0]);
 			
@@ -162,7 +161,7 @@ sub iterate {
 		
 		$self->setState(IDLE);
 	} elsif ($self->{state} == AWAIT_ANSWER) {
-		$self->setState(UPGRADE_SKILL) unless defined $self->{expected};
+		$self->setState(UPGRADE) unless defined $self->{expected};
 	}
 }
 
