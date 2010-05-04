@@ -7588,18 +7588,18 @@ sub sell_result {
 }
 
 # 018B
-# TODO: add real client messages and logic?
 sub quit_response {
 	my ($self, $args) = @_;
-	if ($args->{fail}) {
-		error T("You can't logout, retry in 10 sec.\n");
-	} else {
+	if ($args->{fail}) { # NOTDISCONNECTABLE_STATE =  0x1
+		error T("Please wait 10 seconds before trying to log out.\n"); # MSI_CANT_EXIT_NOW =  0x1f6
+	} else { # DISCONNECTABLE_STATE =  0x0
 		message T("Logged out from the server succesfully.\n"), "success";
 	}
 }
 
-# 003B
+# 00B3
 # TODO: add real client messages and logic?
+# ClientLogic: LoginStartMode = 5; ShowLoginScreen;
 sub respawn_result {
 	my ($self, $args) = @_;
 	debug "respawn result: $args->{result}\n";
