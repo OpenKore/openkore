@@ -5001,7 +5001,6 @@ sub blacksmith_points {
 	message TF("[POINT] Blacksmist Ranking Point is increasing by %s. Now, The total is %s points.\n", $args->{points}, $args->{total}, "list");
 }
 
-
 sub alchemist_point {
 	my ($self, $args) = @_;
 	message TF("[POINT] Alchemist Ranking Point is increasing by %s. Now, The total is %s points.\n", $args->{points}, $args->{total}, "list");
@@ -6283,16 +6282,24 @@ sub storage_password_request {
 	}
 }
 
+# TODO
 sub storage_password_result {
 	my ($self, $args) = @_;
+	
+	# TODO:
+    # STORE_PASSWORD_EMPTY =  0x0
+    # STORE_PASSWORD_EXIST =  0x1
+    # STORE_PASSWORD_CHANGE =  0x2
+    # STORE_PASSWORD_CHECK =  0x3
+    # STORE_PASSWORD_PANALTY =  0x8
 
-	if ($args->{type} == 4) {
+	if ($args->{type} == 4) { # STORE_PASSWORD_CHANGE_OK =  0x4
 		message T("Successfully changed storage password.\n"), "success";
-	} elsif ($args->{type} == 5) {
+	} elsif ($args->{type} == 5) { # STORE_PASSWORD_CHANGE_NG =  0x5
 		error T("Error: Incorrect storage password.\n");
-	} elsif ($args->{type} == 6) {
+	} elsif ($args->{type} == 6) { # STORE_PASSWORD_CHECK_OK =  0x6
 		message T("Successfully entered storage password.\n"), "success";
-	} elsif ($args->{type} == 7) {
+	} elsif ($args->{type} == 7) { # STORE_PASSWORD_CHECK_NG =  0x7
 		error T("Error: Incorrect storage password.\n");
 		# disable storageAuto or the Kafra storage will be blocked
 		configModify("storageAuto", 0);
@@ -6635,6 +6642,7 @@ sub vender_buy_fail {
 	}
 }
 
+# TODO
 sub vending_start {
 	my ($self, $args) = @_;
 
@@ -6794,6 +6802,7 @@ sub mail_new {
 	message TF("New mail from sender: %s titled: %s.\n", bytesToString($args->{sender}), bytesToString($args->{title})), "info";
 }
 
+# TODO
 sub mail_setattachment {
 	my ($self, $args) = @_;
 	if ($args->{fail}) {
@@ -7036,10 +7045,10 @@ sub GM_silence {
 }
 
 # TODO test if we must use ID to know if the packets are meant for us.
-# ID is monster's?
+# ID is monsterID
 sub taekwon_packets {
 	my ($self, $args) = @_;
-	my $string = ($args->{value} == 1) ? "Sun" : ($args->{value} == 2) ? "Moon" : ($args->{value} == 3) ? "Stars" : "unknown";
+	my $string = ($args->{value} == 1) ? T("Sun") : ($args->{value} == 2) ? T("Moon") : ($args->{value} == 3) ? T("Stars") : T("unknown");
 	if ($args->{flag} == 0) { # Info about Star Gladiator save map: Map registered
 		message TF("You have now marked: %s as Place of the %s.\n", bytesToString($args->{name}), $string), "info";
 	} elsif ($args->{flag} == 1) { # Info about Star Gladiator save map: Information
@@ -7127,7 +7136,6 @@ sub map_change_cell {
 }
 
 # 01D1
-# TODO: the actual status is sent to us in opt3
 sub blade_stop {
 	my ($self, $args) = @_;
 	if($args->{active} == 0) {
@@ -7143,7 +7151,7 @@ sub divorced {
 }
 
 # 0221
-# TODO
+# TODO -> Check If we use correct unpack string
 sub upgrade_list {
 	my ($self, $args) = @_;
 	my $msg;
@@ -7158,17 +7166,16 @@ sub upgrade_list {
 }
 
 # 0223
-# TODO: can we use itemName? and why is type 0 equal to type 1?
-# doesn't seem to be used by eA
 sub upgrade_message {
 	my ($self, $args) = @_;
-	if($args->{type} == 0) {
+	if($args->{type} == 0) { # Success
 		message TF("Weapon upgraded: %s\n", itemName(Actor::Item::get($args->{nameID}))), "info";
-	} elsif($args->{type} == 1) {
-		message TF("Weapon upgraded: %s\n", itemName(Actor::Item::get($args->{nameID}))), "info";
-	} elsif($args->{type} == 2) {
+	} elsif($args->{type} == 1) { # Fail
+		message TF("Weapon not upgraded: %s\n", itemName(Actor::Item::get($args->{nameID}))), "info";
+		# message TF("Weapon upgraded: %s\n", itemName(Actor::Item::get($args->{nameID}))), "info";
+	} elsif($args->{type} == 2) { # Fail Lvl
 		message TF("Cannot upgrade %s until you level up the upgrade weapon skill.\n", itemName(Actor::Item::get($args->{nameID}))), "info";
-	} elsif($args->{type} == 3) {
+	} elsif($args->{type} == 3) { # Fail Item
 		message TF("You lack item %s to upgrade the weapon.\n", itemNameSimple($args->{nameID})), "info";
 	}
 }
@@ -7192,7 +7199,6 @@ sub cooking_list {
 	message T("You can now use the 'cook' command.\n"), "info";
 }
 
-# TODO: test whether the message is correct: tech: i haven't seen this in action yet
 sub party_show_picker {
 	my ($self, $args) = @_;
 	
@@ -7234,20 +7240,24 @@ sub instance_window_join {
 }
 
 # 02CE
-#1 = The Memorial Dungeon expired; it has been destroyed
-#2 = The Memorial Dungeon's entry time limit expired; it has been destroyed
-#3 = The Memorial Dungeon has been removed.
-#4 = Just remove the window, maybe party/guild leave
+#0 = "The Memorial Dungeon reservation has been canceled."
+#    Re-innit Window, in some rare cases.
+#1 = "The Memorial Dungeon expired; it has been destroyed."
+#2 = "The Memorial Dungeon's entry time limit expired; it has been destroyed."
+#3 = "The Memorial Dungeon has been removed."
+#4 = "A system error has occurred in the Memorial Dungeon. Please relog in to the game to continue playing."
+#    Just remove the window, maybe party/guild leave.
 # TODO: test if correct message displays, no type == 0 ?
 sub instance_window_leave {
 	my ($self, $args) = @_;
-	if($args->{type} == 1) {
+	# TYPE_NOTIFY =  0x0; Ihis one will make Window, as Client logic do.
+	if($args->{type} == 1) { # TYPE_DESTROY_LIVE_TIMEOUT =  0x1
 		message T("The Memorial Dungeon expired it has been destroyed.\n"), "info";
-	} elsif($args->{type} == 2) {
+	} elsif($args->{type} == 2) { # TYPE_DESTROY_ENTER_TIMEOUT =  0x2
 		message T("The Memorial Dungeon's entry time limit expired it has been destroyed.\n"), "info";
-	} elsif($args->{type} == 3) {
+	} elsif($args->{type} == 3) { # TYPE_DESTROY_USER_REQUEST =  0x3
 		message T("The Memorial Dungeon has been removed.\n"), "info";
-	} elsif ($args->{type} == 4) {
+	} elsif ($args->{type} == 4) { # TYPE_CREATE_FAIL =  0x4
 		message T("The instance windows has been removed, possibly due to party/guild leave.\n"), "info";
 	} else {
 		warning TF("flag: %s gave unknown results in: %s\n", $args->{flag}, $self->{packet_list}{$args->{switch}}->[0]);
@@ -7357,20 +7367,17 @@ sub boss_map_info {
 }
 
 # 02B1
-# TODO
 sub quest_all_list {
 	my ($self, $args) = @_;
 	$questList = {};
 	for (my $i = 8; $i < $args->{amount}*5+8; $i += 5) {
 		my ($questID, $active) = unpack('V C', substr($args->{RAW_MSG}, $i, 5));
-		# make a set/array with questID's here
 		$questList->{$questID}->{active} = $active;
 		debug "$questID $active\n", "info";
 	}
 }
 
 # 02B2
-# TODO
 # note: this packet shows all quests + their missions and has variable length
 sub quest_all_mission {
 	my ($self, $args) = @_;
@@ -7393,11 +7400,9 @@ sub quest_all_mission {
 }
 
 # 02B3
-# TODO
 # note: this packet shows all missions for 1 quest and has fixed length
 sub quest_add {
 	my ($self, $args) = @_;
-	# add to the set/array with questID's here
 	my $questID = $args->{questID};
 	my $quest = \%{$questList->{$questID}};
 	
@@ -7420,18 +7425,14 @@ sub quest_add {
 }
 
 # 02B4
-# TODO
 sub quest_delete {
 	my ($self, $args) = @_;
-	# remove from set/array with questID's here
 	my $questID = $args->{questID};
 	message TF("Quest: %s has been deleted.\n", $quests_lut{$questID} ? "$quests_lut{$questID}{title} ($questID)" : $questID), "info";
 	delete $questList->{$questID};
 }
 
 # 02B5
-# TODO: i'm not sure if the order here is the same as the order in quest_objective_update for the objectives, i sure do hope so
-# TODO: nvm previous todo, now we use 
 # note: this packet updates the objectives counters
 sub quest_update_mission_hunt {
 	my ($self, $args) = @_;
@@ -7445,22 +7446,20 @@ sub quest_update_mission_hunt {
 }
 
 # 02B7
-# TODO questID -> questName with a new table file
 sub quest_active {
 	my ($self, $args) = @_;
 	my $string = $args->{active} ? T ("active") : T("inactive");
-	message TF("Quest: %s is now %s.\n", $args->{questID}, $string), "info";
+	my $questID = $args->{questID};
+	message TF("Quest: %s is now %s.\n", $quests_lut{$questID} ? "$quests_lut{$questID}{title} ($questID)" : $questID, $string), "info";
 	$questList->{$args->{questID}}->{active} = $args->{active};
 }
 
-# ported from kRO_Sakexe_0
 # 018B
-# TODO: add real client messages
 sub quit_response {
 	my ($self, $args) = @_;
-	if ($args->{fail}) {
-		error T("You can't logout, retry in 10 sec.\n");
-	} else {
+	if ($args->{fail}) { # NOTDISCONNECTABLE_STATE =  0x1
+		error T("Please wait 10 seconds before trying to log out.\n"); # MSI_CANT_EXIT_NOW =  0x1f6
+	} else { # DISCONNECTABLE_STATE =  0x0
 		message T("Logged out from the server succesfully.\n"), "success";
 	}
 }
