@@ -17,27 +17,18 @@
 package Task::Raise;
 
 use strict;
+
+use base 'Task';
+
 use Carp::Assert;
-use base qw(Task);
 use Modules 'register';
 use Globals qw(%config $net $char $messageSender);
-use Network;
-use Plugins;
-use Skill;
 use Log qw(message debug error);
 use Translation qw(T TF);
-use Utils::Exceptions;
-use Utils::ObjectList;
 
 # States
-use enum qw(
-	IDLE
-	UPGRADE
-	AWAIT_ANSWER
-);
-
- 
-my @name = ('Idle', 'Upgrading', 'Awaiting');
+use enum qw(IDLE UPGRADE AWAIT_ANSWER);
+my @name = qw(Idle Upgrading Awaiting);
 
 sub getStateName {
 	my ($self) = @_;
@@ -137,8 +128,7 @@ sub check {
 }
 
 # overriding Task's stop (this task is unstoppable! :P)
-sub stop {
-}
+sub stop {}
 
 # overriding Task's iterate
 sub iterate {
@@ -164,12 +154,5 @@ sub iterate {
 		$self->setState(UPGRADE) unless defined $self->{expected};
 	}
 }
-
-=pod
-if ($self->{last_skill} && !$char->getSkillLevel($self->{last_skill})) {
-		# we don't have last added skill anymore, for example after @reset, recalc everything
-		$self->init();
-	}
-=cut
 
 1;
