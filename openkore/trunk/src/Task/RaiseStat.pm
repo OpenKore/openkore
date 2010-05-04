@@ -19,20 +19,13 @@ package Task::RaiseStat;
 
 use strict;
 
-use Task::Raise;
 use base 'Task::Raise';
 
-# TODO: cleanup
 use Carp::Assert;
 use Modules 'register';
 use Globals qw(%config $net $char $messageSender);
-use Network;
-use Plugins;
-use Skill;
 use Log qw(message debug error);
 use Translation qw(T TF);
-use Utils::Exceptions;
-use Utils::ObjectList;
 
 sub new {
 	my $class = shift;

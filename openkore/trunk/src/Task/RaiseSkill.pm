@@ -19,20 +19,14 @@ package Task::RaiseSkill;
 
 use strict;
 
-use Task::Raise;
 use base 'Task::Raise';
 
-# TODO: cleanup
 use Carp::Assert;
 use Modules 'register';
 use Globals qw(%config $net $char $messageSender);
-use Network;
-use Plugins;
 use Skill;
 use Log qw(message debug error);
 use Translation qw(T TF);
-use Utils::Exceptions;
-use Utils::ObjectList;
 
 sub new {
 	my $class = shift;
@@ -54,7 +48,7 @@ sub initQueue {
 	
 	my @queue;
 	
-	for (split /\s*,+\s*/, lc $config{skillsAddAuto_list}) {
+	for (split /\s*,+\s*/, $config{skillsAddAuto_list}) {
 		my ($sk, undef, $num) = /^(.*?)(\s+(\d+))?$/;
 		my $skill = new Skill(auto => $sk, level => (defined $num) ? $num : 1);
 		if ($skill->getIDN) {
