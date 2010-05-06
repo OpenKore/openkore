@@ -981,12 +981,15 @@ sub processDead {
 				AI::queue("storageAuto");
 			}
 
-			if ($config{autoMoveOnDeath} && $config{autoMoveOnDeath_x} && $config{autoMoveOnDeath_y} && $config{autoMoveOnDeath_map}) {
-				message TF("Moving to %s - %d,%d\n", $config{autoMoveOnDeath_map}, $config{autoMoveOnDeath_x}, $config{autoMoveOnDeath_y});
+			if ($config{autoMoveOnDeath} && $config{autoMoveOnDeath_map}) {
+				if ($config{autoMoveOnDeath_x} && $config{autoMoveOnDeath_y}) {
+					message TF("Moving to %s - %d,%d\n", $config{autoMoveOnDeath_map}, $config{autoMoveOnDeath_x}, $config{autoMoveOnDeath_y});
+				} else {
+					message TF("Moving to %s\n", $config{autoMoveOnDeath_map});
+				}
 				AI::queue("sitAuto");
 				ai_route($config{autoMoveOnDeath_map}, $config{autoMoveOnDeath_x}, $config{autoMoveOnDeath_y});
-				}
-
+			}
 		}
 
 	} elsif (AI::action ne "dead" && AI::action ne "deal" && $char->{'dead'}) {
