@@ -166,6 +166,7 @@ sub initHandlers {
 	sm                 => \&cmdUseSkill,
 	sp                 => \&cmdUseSkill,
 	ss                 => \&cmdUseSkill,
+	ssl                => \&cmdUseSkill,
 	ssp                => \&cmdUseSkill,
 	st                 => \&cmdStats,
 	stand              => \&cmdStand,
@@ -4900,6 +4901,22 @@ sub cmdUseSkill {
 				return;
 			}
 			$actorList = $monstersList;
+			$level = $args[2];
+		}
+
+	} elsif ($cmd eq 'ssl') {
+		if (@args < 2 || @args > 3) {
+			error T("Syntax error in function 'ssl' (Use Skill on Slave)\n" .
+				"Usage: ssl <skill #> <slave #> [level]\n");
+			return;
+		} else {
+			$target = $slavesList->get($args[1]);
+			if (!$target) {
+				error TF("Error in function 'ssl' (Use Skill on Slave)\n" .
+					"Slave %d does not exist.\n", $args[1]);
+				return;
+			}
+			$actorList = $slavesList;
 			$level = $args[2];
 		}
 
