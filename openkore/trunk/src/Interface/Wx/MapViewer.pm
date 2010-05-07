@@ -136,21 +136,11 @@ sub set {
 	}
 }
 
-=pod
+# UNUSED
 sub setDest {
 	my ($self, $x, $y) = @_;
-	if (defined $x) {
-		if ($self->{dest}{x} ne $x && $self->{dest}{y} ne $y) {
-			$self->{dest}{x} = $x;
-			$self->{dest}{y} = $y;
-			$self->{needUpdate} = 1;
-		}
-	} elsif (defined $self->{dest}) {
-		undef $self->{dest};
-		$self->{needUpdate} = 1;
-	}
+	$self->setRoute(defined $x ? [x => $x, y => $y] : undef);
 }
-=cut
 
 sub setRoute {
 	my ($self, $solution) = @_;
