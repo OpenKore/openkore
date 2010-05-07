@@ -34,6 +34,9 @@ sub check_svn_util {
 
 sub upgrade {
 	my ($path, $repos_name) = @_;
+	
+	return unless -d "$path/.svn" && !-l $path;
+	
 	print "Checking " . $repos_name . " for updates...";
 	my $sa = SVN::Updater->load({ path => $path });
 
@@ -50,9 +53,10 @@ sub upgrade {
 
 print "-===================== OpenKore Auto Update tool =====================-\n";
 if (check_svn_util() == 1) {
-	upgrade("$RealBin", "OpenKore core files") if (-d "$RealBin/src/.svn");
-	upgrade("$RealBin/tables", "OpenKore table data files") if (-d "$RealBin/tables/.svn");
-	upgrade("$RealBin/fields", "OpenKore map data files") if (-d "$RealBin/fields/.svn");
+	upgrade("$RealBin", "OpenKore core files");
+	upgrade("$RealBin/tables", "OpenKore table data files");
+	upgrade("$RealBin/fields", "OpenKore map data files");
+	upgrade($_, $_) while <$RealBin/plugins/*>;
 };
 print "-=========================== Done Updating ===========================-\n\n\n";
 
