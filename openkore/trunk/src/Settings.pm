@@ -92,6 +92,7 @@ our @pluginsFolders;
 our $files;
 # System configuration.
 our %sys;
+our %options;
 
 our $fields_folder;
 our $logs_folder;
@@ -120,7 +121,7 @@ sub MODINIT {
 	$files = new ObjectList();
 }
 use Modules 'register';
-our @EXPORT_OK = qw(%sys);
+our @EXPORT_OK = qw(%sys %options);
 
 
 ###################################
@@ -140,7 +141,7 @@ our @EXPORT_OK = qw(%sys);
 #
 # If the arguments are not correct, then an ArgumentException is thrown.
 sub parseArguments {
-	my %options;
+	# my %options;
 
 	undef $fields_folder;
 	undef $logs_folder;

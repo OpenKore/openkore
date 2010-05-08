@@ -18,7 +18,7 @@ use encoding 'utf8';
 
 use Globals;
 use Modules;
-use Settings qw(%sys);
+use Settings qw(%sys %options);
 use Log qw(message warning error debug);
 use Interface;
 use Network::Receive;
@@ -178,6 +178,23 @@ sub loadDataFiles {
 	# Load RecvPackets.txt second
  	Settings::addTableFile(Settings::getRecvPacketsFilename(),
  		loader => [\&parseDataFile2, \%rpackets]);
+
+	# Add 'Old' table pack, if user set
+	if ( $sys{locale_compat} == 1) {
+		# Holder for new path
+		my @new_tables;
+		my $pathDelimiter = ($^O eq 'MSWin32') ? ';' : ':';
+		if ($options{tables}) {
+			foreach my $dir ( split($pathDelimiter, $options{tables}) ) {
+				push @new_tables, $dir . '\\Old';
+			}
+		} else {
+			push @new_tables, 'tables\\Old';
+		}
+		# now set up new path to table folder
+		Settings::setTablesFolders(@new_tables, Settings::getTablesFolders());
+	}
+
 	# Load all other tables
 	Settings::addTableFile('cities.txt',
 		loader => [\&parseROLUT, \%cities_lut]);
