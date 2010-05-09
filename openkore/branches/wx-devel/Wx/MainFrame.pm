@@ -81,6 +81,7 @@ sub new {
 		['loadfiles',     \&onLoadFiles, $self],
 		['postloadfiles', \&onLoadFiles, $self],
 		['mainLoop_pre',  \&onUpdate, $self],
+		['interface/helpcontext', \&onHelpContext, $self],
 	);
 	
 	$self->{windows} = {};
@@ -103,6 +104,7 @@ sub new {
 	$self->toggleWindow('console', T('Console'), 'Interface::Wx::Window::Console', 'notebook');
 	$self->toggleWindow('chatLog', T('Chat log'), 'Interface::Wx::Window::ChatLog', 'notebook');
 	$self->toggleWindow('exp', T('Experience report'), 'Interface::Wx::Window::Exp', 'right');
+	$self->toggleWindow('map', T('Map'), 'Interface::Wx::Window::Map', 'right');
 	
 	$self->{aui}->Update;
 	
@@ -137,13 +139,18 @@ sub onUpdate {
 	
 	if (timeOut($updateUITime, 0.15)) {
 		$self->updateStatusBar;
-		#$self->updateMapViewer;
 		$updateUITime = time;
 	}
 	if (timeOut($updateUITime2, 0.35)) {
 		#$self->updateItemList;
 		$updateUITime2 = time;
 	}
+}
+
+sub onHelpContext {
+	my (undef, $args, $self) = @_;
+	
+	$self->{statusBar}->SetStatusText($args->{message}, 0);
 }
 
 sub createStatusBar {
@@ -227,11 +234,11 @@ sub toggleWindow {
 	unless ($self->{windows}{$key}) {
 		eval "require $class";
 		if ($@) {
-			Log::warning "Unable to load $class\n$@", 'interface';
+			Log::warning TF("Unable to load %s\n%s", $class, $@), 'interface';
 			return;
 		}
 		unless ($class->can('new')) {
-			Log::warning "Unable to create instance of $class\n", 'interface';
+			Log::warning TF("Unable to create instance of %s\n", $class), 'interface';
 			return;
 		}
 		
@@ -272,7 +279,6 @@ sub OnInit {
 	
 	$self->{hooks} = Plugins::addHooks(
 		['initialized',                         sub { $self->onInitialized(@_); }],
-		['packet/minimap_indicator',            sub { $self->onMapIndicator (@_); }],
 		
 		# npc
 		['packet/npc_image',              sub { $self->onNpcImage (@_); }],
@@ -328,21 +334,6 @@ sub createSplitterContent {
 		$self->{inputBox}->SetFocus;
 	});
 
-	# Map viewer
-	my $mapView = $self->{mapViewer} = new Interface::Wx::MapViewer($mapDock);
-	$mapDock->setParentFrame($frame);
-	$mapDock->set($mapView);
-# vcl code 	$mapView->onMouseMove($self, \&onMapMouseMove);
-# vcl code 	$mapView->onClick->add($self, \&onMapClick);
-# vcl code 	$mapView->onMapChange($self, \&onMap_MapChange, $mapDock);
-	$mapView->onMouseMove(\&onMapMouseMove, $self);
-	$mapView->onClick(\&onMapClick, $self);
-	$mapView->onMapChange(\&onMap_MapChange, $mapDock);
-	$mapView->parsePortals(Settings::getTableFilename("portals.txt"));
-	if ($field && $char) {
-		$mapView->set($field->name(), $char->{pos_to}{x}, $char->{pos_to}{y}, $field);
-	}
-
 	my $position;
 	if (Wx::wxMSW()) {
 		$position = 600;
@@ -383,43 +374,6 @@ sub addCheckMenu {
 }
 
 
-##########################
-## INTERFACE UPDATING
-##########################
-
-sub updateMapViewer {
-	my $self = shift;
-	my $map = $self->{mapViewer};
-	return unless ($map && $field && $char);
-
-	my $myPos;
-	$myPos = calcPosition($char);
-
-	$map->set($field->name(), $myPos->{x}, $myPos->{y}, $field, $char->{look});
-	
-	my ($i, $args, $routeTask, $solution);
-	if (
-		defined ($i = AI::findAction ('route')) && ($args = AI::args ($i)) && (
-			($routeTask = $args->getSubtask) && %{$routeTask} && ($solution = $routeTask->{solution}) && @$solution
-			||
-			$args->{dest} && $args->{dest}{pos} && ($solution = [{x => $args->{dest}{pos}{x}, y => $args->{dest}{pos}{y}}])
-		)
-	) {
-		$map->setRoute ([@$solution]);
-	} else {
-		$map->setRoute;
-	}
-	
-	$map->setPlayers ([values %players]);
-	$map->setParty ([values %{$char->{party}{users}}]) if $char->{party} && $char->{party}{users};
-	$map->setMonsters ([values %monsters]);
-	$map->setNPCs ([values %npcs]);
-	$map->setSlaves ([values %slaves]);
-	
-	$map->update;
-	$self->{mapViewTimeout}{time} = time;
-}
-
 ##################
 ## Callbacks
 ##################
@@ -428,26 +382,6 @@ sub onBooleanSetting {
 	my ($self, $setting) = @_;
 	
 	configModify ($setting, !$config{$setting}, 1);
-}
-
-sub onMapToggle {
-	my $self = shift;
-	$self->{mapDock}->attach;
-}
-
-sub openEmotions {
-	my ($self, $create) = @_;
-	my ($page, $window) = $self->openWindow ('Emotions', 'Interface::Wx::EmotionList', $create);
-	
-	if ($window) {
-		$window->onEmotion (sub {
-			Commands::run ('e ' . shift);
-			$self->{inputBox}->SetFocus;
-		});
-		$window->setEmotions (\%emotions_lut);
-	}
-	
-	return ($page, $window);
 }
 
 sub openNpcTalk {
@@ -494,86 +428,6 @@ sub onInitialized {
 			$playersList, undef,
 			$monstersList, new Wx::Colour(200, 0, 0),
 			$itemsList, new Wx::Colour(0, 0, 200));
-}
-
-sub onMapMouseMove {
-	# Mouse moved over the map viewer control
-#vcl code	my ($self, undef, $args) = @_;
-#vcl code	my ($x, $y) = @{$args};
-	my ($self, $x, $y) = @_;
-	my $walkable;
-
-	$walkable = $field->isWalkable($x, $y);
-	if ($x >= 0 && $y >= 0 && $walkable) {
-		$self->{mouseMapText} = "Mouse over: $x, $y";
-	} else {
-		delete $self->{mouseMapText};
-	}
-	$self->{statusbar}->SetStatusText($self->{mouseMapText}, 0);
-}
-
-sub onMapClick {
-	# Clicked on map viewer control
-#vcl code	my ($self, undef, $args) = @_;
-#vcl code	my ($x, $y) = @{$args};
-	my ($self, $x, $y) = @_;
-	my $checkPortal = 0;
-	my $noMove = 0;
-	delete $self->{mouseMapText};
-	if ($self->{mapViewer} && $self->{mapViewer}->{portals}
-		&& $self->{mapViewer}->{portals}->{$field->name()}
-		&& @{$self->{mapViewer}->{portals}->{$field->name()}}){
-
-		foreach my $portal (@{$self->{mapViewer}->{portals}->{$field->name()}}){
-			if (distance($portal,{x=>$x,y=>$y}) <= ($config{wx_map_portalSticking} || 5)) {
-				$x = $portal->{x};
-				$y = $portal->{y};
-				$self->writeOutput("message", "Moving to Portal $x, $y\n", "info");
-				$checkPortal = 1;
-				last;
-			}
-		}
-		
-		foreach my $monster (@{$self->{mapViewer}->{monsters}}){
-			if (distance($monster->{pos},{x=>$x,y=>$y}) <= ($config{wx_map_monsterSticking} || 1)) {
-				main::attack($monster->{ID});
-				$noMove = 1;
-				last;
-			}
-		}
-		
-		foreach my $npc (@{$self->{mapViewer}->{npcs}}){
-			if (distance($npc->{pos},{x=>$x,y=>$y}) <= ($config{wx_map_npcSticking} || 1)) {
-				Commands::run("talk " . $npc->{binID});
-				$noMove = 1;
-				last;
-			}
-		}
-	}
-	
-	unless ($noMove) {
-		$self->writeOutput("message", "Moving to $x, $y\n", "info") unless $checkPortal;
-		AI::clear("mapRoute", "route", "move");
-		main::ai_route($field->name(), $x, $y, attackOnRoute => 1);
-	}
-	$self->{inputBox}->SetFocus;
-}
-
-sub onMap_MapChange {
-#vcl code	my (undef, undef, undef, $mapDock) = @_;
-	my ($mapDock) = @_;
-	$mapDock->title($field->name());
-	$mapDock->Fit;
-}
-
-### Map ###
-
-sub onMapIndicator {
-	my ($self, undef, $args) = @_;
-	
-	if ($self->{mapViewer}) {
-		$self->{mapViewer}->mapIndicator ($args->{type} != 2, $args->{x}, $args->{y}, $args->{red}, $args->{green}, $args->{blue}, $args->{alpha});
-	}
 }
 
 ### NPC Talk ###
