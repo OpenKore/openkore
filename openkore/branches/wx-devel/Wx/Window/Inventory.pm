@@ -4,6 +4,7 @@ use strict;
 use base 'Interface::Wx::Base::ItemList';
 
 use Globals qw/$char %cart %storage %equipTypes_lut $cardMergeIndex @cardMergeItemsID/;
+use Translation qw/T TF/;
 
 sub new {
 	my ($class, $parent, $id) = @_;
@@ -59,6 +60,8 @@ sub new {
 			$weak->update
 		}],
 	);
+	
+	$self->{title} = T('Inventory');
 	
 	$self->_addCallbacks;
 	$self->update;

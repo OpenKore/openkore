@@ -12,6 +12,8 @@ sub new {
 	
 	my $self = $class->SUPER::new($parent, $id);
 	
+	$self->{title} = T('Chat Log');
+	
 	Scalar::Util::weaken (my $weak = $self);
 	
 	$self->addColor("selfchat", 0, 148, 0);

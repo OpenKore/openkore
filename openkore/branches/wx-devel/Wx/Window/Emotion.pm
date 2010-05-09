@@ -6,6 +6,7 @@ use Wx::Event qw/EVT_SIZE EVT_BUTTON/;
 use base 'Wx::Panel';
 
 use Globals qw/%emotions_lut/;
+use Translation qw/T TF/;
 
 use constant {
 	BUTTON_SIZE => 26,
@@ -16,6 +17,8 @@ sub new {
 	my ($class, $parent, $id) = @_;
 	
 	my $self = $class->SUPER::new ($parent, $id);
+	
+	$self->{title} = T('Emotions');
 	
 	$self->{bitmapDir} = 'bitmaps/emotion/';
 	

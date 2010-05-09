@@ -29,6 +29,8 @@ sub new {
 		],
 	);
 	
+	$self->{title} = T('Experience Report');
+	
 	Scalar::Util::weaken(my $weak = $self);
 	
 	$self->{hooks} = Plugins::addHooks (

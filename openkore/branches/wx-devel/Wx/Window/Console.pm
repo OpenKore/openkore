@@ -13,6 +13,8 @@ sub new {
 	
 	my $self = $class->SUPER::new($parent, $id);
 	
+	$self->{title} = T('Console');
+	
 	Scalar::Util::weaken (my $weak = $self);
 	
 	$self->{hooks} = Plugins::addHooks(

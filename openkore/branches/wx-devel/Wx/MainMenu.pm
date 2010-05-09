@@ -26,7 +26,7 @@ sub new {
 	
 	$self->{menuBar}->Append($self->createMenu([
 		{
-			title => T('&Pause botting'), key => 'ai_0', command => 'ai off', type => 'radio',
+			title => T('&Pause Botting'), key => 'ai_0', command => 'ai off', type => 'radio',
 			help => T('Pause all automated botting activity'),
 		},
 		{
@@ -56,7 +56,7 @@ sub new {
 		},
 		{},
 		{wxID => wxID_EXIT, command => 'quit'},
-	], 'program'), T('P&rogram'));
+	], 'program'), T('Pr&ogram'));
 	
 	$self->{menuBar}->Append($self->createMenu([
 		{title => T('&Status'), command => 's'},
@@ -72,91 +72,96 @@ sub new {
 		{title => T('Deal'), command => 'dl'},
 		{},
 		{title => T('&Players'), command => 'pl'},
+		{title => T('Party')."\tAlt+Z", command => 'party'},
+		{title => T('Friends')."\tAlt+H", command => 'friend'},
 		{title => T('&Monsters'), command => 'ml'},
 		{title => T('&NPCs'), command => 'nl'},
+		{title => T('Chatrooms')."\tAlt+C", command => 'chat list'},
 		{},
-		{title => T('&Experience report'), command => 'exp'},
-		{title => T('Monster killed report'), command => 'exp monster'},
-		{title => T('Damage taken report'), command => 'damage'},
-		{title => T('Item change report'), command => 'exp item'},
-		{title => T('Chat log'), command => 'chist'},
-		{title => T('Item log'), command => 'ihist'},
+		{title => T('&Experience Report'), command => 'exp'},
+		{title => T('Monster Killed Report'), command => 'exp monster'},
+		{title => T('Damage Taken Report'), command => 'damage'},
+		{title => T('Item Change Report'), command => 'exp item'},
+		{title => T('Chat Log'), command => 'chist'},
+		{title => T('Item Log'), command => 'ihist'},
 		{},
-		{title => T('Account information'), command => 'whoami'},
+		{title => T('Account Information'), command => 'whoami'},
 	], 'info'), T('I&nfo'));
 	
 	$self->{menuBar}->Append($self->createMenu([
 		{
-			key => 'toggleWindow_map', title => T('&Map'), type => 'check',
-			sub => sub { $self->{frame}->toggleWindow('map', T('Map'), 'Interface::Wx::Window::Map', 'right') },
+			key => 'toggleWindow_map', title => T('&Map')."\tCtrl+M", type => 'check',
+			sub => sub { $self->{frame}->toggleWindow('map', 'Interface::Wx::Window::Map', 'right') },
 		},
 		{
-			key => 'toggleWindow_chatLog', title => T('Chat &log'), type => 'check',
-			sub => sub { $self->{frame}->toggleWindow('chatLog', T('Chat log'), 'Interface::Wx::Window::ChatLog', 'notebook') },
-		},
-		{},
-		{
-			key => 'toggleWindow_character', title => T('Character'), type => 'check',
-			sub => sub { $self->{frame}->toggleWindow('character', T('Character'), 'Interface::Wx::Window::You', 'right') },
-		},
-		{
-			key => 'toggleWindow_homunculus', title => T('Homunculus'), type => 'check',
-			sub => sub { $self->{frame}->toggleWindow('homunculus', T('Homunculus'), 'Interface::Wx::Window::Homunculus', 'right') },
-		},
-		{
-			key => 'toggleWindow_mercenary', title => T('Mercenary'), type => 'check',
-			sub => sub { $self->{frame}->toggleWindow('mercenary', T('Mercenary'), 'Interface::Wx::Window::Mercenary', 'right') },
-		},
-		{
-			key => 'toggleWindow_pet', title => T('Pet'), type => 'check',
-			sub => sub { $self->{frame}->toggleWindow('pet', T('Pet'), 'Interface::Wx::Window::Pet', 'right') },
+			key => 'toggleWindow_chatLog', title => T('Chat &Log'), type => 'check',
+			sub => sub { $self->{frame}->toggleWindow('chatLog', 'Interface::Wx::Window::ChatLog', 'notebook') },
 		},
 		{},
 		{
-			key => 'toggleWindow_inventory', title => T('Inventory'), type => 'check',
-			sub => sub { $self->{frame}->toggleWindow('inventory', T('Inventory'), 'Interface::Wx::Window::Inventory', 'right') },
+			key => 'toggleWindow_character', title => T('Status')."\tAlt+A", type => 'check',
+			sub => sub { $self->{frame}->toggleWindow('character', 'Interface::Wx::Window::You', 'notebook') },
 		},
 		{
-			key => 'toggleWindow_cart', title => T('Cart'), type => 'check',
-			sub => sub { $self->{frame}->toggleWindow('cart', T('Cart'), 'Interface::Wx::Window::Cart', 'right') },
+			key => 'toggleWindow_homunculus', title => T('Homunculus')."\tAlt+R", type => 'check',
+			sub => sub { $self->{frame}->toggleWindow('homunculus', 'Interface::Wx::Window::Homunculus', 'right') },
+		},
+		{
+			key => 'toggleWindow_mercenary', title => T('Mercenary')."\tCtrl+R", type => 'check',
+			sub => sub { $self->{frame}->toggleWindow('mercenary', 'Interface::Wx::Window::Mercenary', 'right') },
+		},
+		{
+			key => 'toggleWindow_pet', title => T('Pet')."\tAlt+J", type => 'check',
+			sub => sub { $self->{frame}->toggleWindow('pet', 'Interface::Wx::Window::Pet', 'right') },
+		},
+		{},
+		{
+			key => 'toggleWindow_inventory', title => T('Inventory')."\tAlt+E", type => 'check',
+			sub => sub { $self->{frame}->toggleWindow('inventory', 'Interface::Wx::Window::Inventory', 'right') },
+		},
+		{
+			key => 'toggleWindow_cart', title => T('Cart')."\tAlt+W", type => 'check',
+			sub => sub { $self->{frame}->toggleWindow('cart', 'Interface::Wx::Window::Cart', 'right') },
 		},
 		{
 			key => 'toggleWindow_storage', title => T('Storage'), type => 'check',
-			sub => sub { $self->{frame}->toggleWindow('storage', T('Storage'), 'Interface::Wx::Window::Storage', 'right') },
+			sub => sub { $self->{frame}->toggleWindow('storage', 'Interface::Wx::Window::Storage', 'right') },
 		},
 		{},
 		{
-			key => 'toggleWindow_skills', title => T('Skills'), type => 'check',
-			sub => sub { $self->{frame}->toggleWindow('skills', T('Skills'), 'Interface::Wx::Window::Skills', 'right') },
+			key => 'toggleWindow_skills', title => T('Skills')."\tAlt+S", type => 'check',
+			sub => sub { $self->{frame}->toggleWindow('skills', 'Interface::Wx::Window::Skills', 'right') },
 		},
 		{},
 		{
-			key => 'toggleWindow_emotion', title => T('Emotions'), type => 'check',
-			sub => sub { $self->{frame}->toggleWindow('emotion', T('Emotions'), 'Interface::Wx::Window::Emotion', 'right') },
+			key => 'toggleWindow_emotion', title => T('Emotions')."\tAlt+L", type => 'check',
+			sub => sub { $self->{frame}->toggleWindow('emotion', 'Interface::Wx::Window::Emotion', 'right') },
 		},
 		{},
 		{
-			key => 'toggleWindow_exp', title => T('Experience report'), type => 'check',
-			sub => sub { $self->{frame}->toggleWindow('exp', T('Experience report'), 'Interface::Wx::Window::Exp', 'right') },
+			key => 'toggleWindow_exp', title => T('Experience Report')."\tCtrl+E", type => 'check',
+			sub => sub { $self->{frame}->toggleWindow('exp', 'Interface::Wx::Window::Exp', 'right') },
 		},
-	], 'view'), T('&View'));
+	], 'view'), T('V&iew'));
 	
 	$self->{menuBar}->Append($self->createMenu([
 		{
 			key => 'toggleWindow_configEditor', title => T('&Advanced...'), type => 'check',
-			sub => sub { $self->{frame}->toggleWindow('configEditor', T('Advanced configuration'), 'Interface::Wx::Window::ConfigEditor', 'notebook') },
+			sub => sub { $self->{frame}->toggleWindow('configEditor', 'Interface::Wx::Window::ConfigEditor', 'notebook') },
 			help => T('Edit advanced configuration options.'),
 		},
-	], 'settings'), T('&Settings'));
+	], 'settings'), T('Se&ttings'));
 	
 	$self->{menuBar}->Append($self->createMenu([
-		{title => T('Website'), sub => sub { launchURL($Settings::WEBSITE) }, help => $Settings::WEBSITE},
-		{title => T('&Manual'), sub => sub { launchURL('http://wiki.openkore.com/index.php?title=Manual') }, help => 'Read the manual'},
-		{title => T('&Wiki'), sub => sub { launchURL('http://wiki.openkore.com/') }},
-		{title => T('&Forum'), sub => sub { launchURL('http://forums.openkore.com/') }, help => 'Visit the forum'},
+		{title => T('&Command List')."\tAlt+Y", command => 'help'},
+		{},
+		{title => T('Web&site'), sub => sub { launchURL($Settings::WEBSITE) }, help => $Settings::WEBSITE},
+		{title => T('&Manual')."\tF1", sub => sub { launchURL('http://wiki.openkore.com/index.php?title=Manual') }, help => 'Read the manual'},
+		{title => T('&Wiki'), sub => sub { launchURL('http://wiki.openkore.com/') }, help => 'Read and write the wiki'},
+		{title => T('&Forum')."\tShift+F1", sub => sub { launchURL('http://forums.openkore.com/') }, help => 'Visit the forum'},
 		{},
 		{wxID => wxID_ABOUT, sub => \&onAbout},
-	], 'help'), T('&Help'));
+	], 'help'), T('Hel&p'));
 	
 	EVT_MENU_OPEN($self->{frame}, sub { $self->onMenuOpen });
 	
