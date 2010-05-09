@@ -1,7 +1,7 @@
 package Interface::Wx::Extras;
 
 use Globals qw/$interface/;
-use Log qw/warning/;
+use Log qw/message warning/;
 
 BEGIN {
 	eval "require Interface::Wx::Utils";
@@ -40,7 +40,14 @@ my $commands = Commands::register(
 			return;
 		}
 		
-		if ($args eq 'start') {
+		if ($args eq 'switch') {
+			message "*** INTERFACE INACTIVE ***\nClose Wx interface to get back\n";
+			my $oldInterface = $interface;
+			$interface = Interface->loadInterface('Wx');
+			$interface->mainLoop;
+			$interface = $oldInterface;
+			message "\n*** INTERFACE ACTIVE ***\n";
+		} elsif ($args eq 'start') {
 			unless ($app) {
 				$app = new Wx::SimpleApp;
 				(new Wx::Frame(undef, wxID_ANY, 'Wx Event Handler'));
