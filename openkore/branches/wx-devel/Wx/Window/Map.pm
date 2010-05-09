@@ -19,19 +19,20 @@
 #  $Id$
 #
 #########################################################################
-package Interface::Wx::MapViewer;
+package Interface::Wx::Window::Map;
+
+# TODO: rewrite a lot
 
 use strict;
 use Wx ':everything';
-# vcl code use Wx::Event qw(EVT_PAINT EVT_LEFT_DOWN EVT_MOTION EVT_ERASE_BACKGROUND);
 use Wx::Event qw(EVT_SIZE EVT_PAINT EVT_LEFT_DOWN EVT_RIGHT_DOWN EVT_MOTION EVT_MOUSEWHEEL EVT_ERASE_BACKGROUND);
 use File::Spec;
 use base 'Wx::Panel';
 use FastUtils;
-# vcl code use Utils::CallbackList;
 use Log qw(message);
 use Globals;
 use Translation qw(TF);
+use Utils qw(calcPosition distance timeOut);
 
 use constant PI => 3.14;
 
@@ -77,7 +78,99 @@ sub new {
 	EVT_MOUSEWHEEL($self, \&_onWheel);
 	EVT_ERASE_BACKGROUND($self, \&_onErase);
 	
+	Scalar::Util::weaken(my $weak = $self);
+	
+	$self->{hooks} = Plugins::addHooks (
+		['packet/minimap_indicator', sub {
+			my (undef, $args) = @_;
+			
+			$weak->indicator(
+				$args->{type} != 2,
+				$args->{x}, $args->{y},
+				$args->{red}, $args->{green}, $args->{blue}, $args->{alpha}
+			);
+		}],
+		['mainLoop_pre', sub {
+			my (undef, $args) = @_;
+			
+			if (timeOut($weak->{updateTime}, 0.15)) {
+				$weak->updateGlue;
+				$weak->{updateTime} = time;
+			}
+		}],
+	);
+	
+	$self->onClick(sub { $weak->onMapClick(@_[1,-1]) });
+	
+	$self->parsePortals(Settings::getTableFilename("portals.txt"));
+	if ($field && $char) {
+		$self->set($field->name(), $char->{pos_to}{x}, $char->{pos_to}{y}, $field);
+	}
+	
+	$self->{npcs} = [];
+	$self->{monsters} = [];
+	$self->{slaves} = [];
+	
 	return $self;
+}
+
+sub DESTROY {
+	my ($self) = @_;
+	
+	Plugins::delHooks($self->{hooks});
+}
+
+sub updateGlue {
+	my $self = shift;
+	return unless ($field && $char);
+
+	my $myPos = calcPosition($char);
+
+	$self->set($field->name(), $myPos->{x}, $myPos->{y}, $field, $char->{look});
+	
+	my ($i, $args, $routeTask, $route);
+	$self->setRoute(
+		defined ($i = AI::findAction ('route')) && ($args = AI::args ($i)) && (
+			($routeTask = $args->getSubtask) && %{$routeTask} && ($route = $routeTask->{solution}) && @$route
+			||
+			$args->{dest} && $args->{dest}{pos} && ($route = [{x => $args->{dest}{pos}{x}, y => $args->{dest}{pos}{y}}])
+		) ? [@$route] : ()
+	);
+	
+	$self->setPlayers ([values %players]);
+	$self->setParty ([values %{$char->{party}{users}}]) if $char->{party} && $char->{party}{users};
+	$self->setMonsters ([values %monsters]);
+	$self->setNPCs ([values %npcs]);
+	$self->setSlaves ([values %slaves]);
+	
+	$self->update;
+	#$self->{mapViewTimeout}{time} = time;
+}
+
+sub onMapClick {
+	# Clicked on map viewer control
+	my ($self, $x, $y) = @_;
+	
+	Plugins::callHook('interface/helpcontext', {});
+	Plugins::callHook('interface/defaultFocus', {});
+	
+	for (
+		(map {[$_, $_->{pos}, $config{wx_map_npcSticking} || 1, "talk $_->{binID}"]} @{$self->{npcs}}),
+		(map {[$_, $_->{pos}, $config{wx_map_monsterSticking} || 1, "a $_->{binID}"]} @{$self->{monsters}}),
+		($self->{portals}{$field->name} ? map {[$_, {x=>$_->{x}, y=>$_->{y}}, $config{wx_map_portalSticking} || 5]} @{$self->{portals}{$field->name}} : ()),
+	) {
+		my ($actor, $pos, $distance, $command) = @$_;
+		
+		if (distance($pos, {x=>$x, y=>$y}) <= $distance) {
+			if ($command) {
+				Commands::run($command);
+				return;
+			}
+			($x, $y) = @$pos{qw/x y/};
+		}
+	}
+	
+	Commands::run("move $x $y");
 }
 
 #### Events ####
@@ -136,22 +229,6 @@ sub set {
 	}
 }
 
-=pod
-sub setDest {
-	my ($self, $x, $y) = @_;
-	if (defined $x) {
-		if ($self->{dest}{x} ne $x && $self->{dest}{y} ne $y) {
-			$self->{dest}{x} = $x;
-			$self->{dest}{y} = $y;
-			$self->{needUpdate} = 1;
-		}
-	} elsif (defined $self->{dest}) {
-		undef $self->{dest};
-		$self->{needUpdate} = 1;
-	}
-}
-=cut
-
 sub setRoute {
 	my ($self, $solution) = @_;
 	
@@ -186,11 +263,12 @@ sub setMonsters {
 	}
 }
 
-sub setPortals {
-	my $self = shift;
-	$self->{portals} = shift;
-	$self->{needUpdate} = 1;
-}
+# UNUSED
+#sub setPortals {
+#	my $self = shift;
+#	$self->{portals} = shift;
+#	$self->{needUpdate} = 1;
+#}
 
 sub setPlayers {
 	my $self = shift;
@@ -281,7 +359,7 @@ sub setSlaves {
 	}
 }
 
-sub mapIndicator {
+sub indicator {
 	my ($self, $show, $x, $y, $r, $g, $b, $a) = @_;
 	
 	if ($show) {
@@ -377,8 +455,16 @@ sub _onRightClick {
 
 sub _onMotion {
 	my ($self, $event) = @_;
-	if ($self->{mouseMoveCb} && $self->{field}{width} && $self->{field}{height}) {
-		$self->{mouseMoveCb}->($self->{mouseMoveData}, $self->_viewToPosXY ($event->GetX, $event->GetY));
+	
+	if ($self->{field}{width} && $self->{field}{height}) {
+		my ($x, $y) = $self->_viewToPosXY ($event->GetX, $event->GetY);
+		if ($x >= 0 && $y >= 0 && $field->isWalkable($x, $y)) {
+			Plugins::callHook('interface/helpcontext', {
+				message => TF("Mouse over: %d, %d", $x, $y)
+			});
+		} else {
+			Plugins::callHook('interface/helpcontext', {});
+		}
 	}
 }
 
@@ -386,6 +472,8 @@ sub _onWheel {
 	my ($self, $event) = @_;
 	
 	$self->{zoom} *= 2 ** ($event->GetWheelRotation <=> 0);
+	$self->{zoom} = 8 if $self->{zoom} > 8;
+	$self->{zoom} = 0.5 if $self->{zoom} < 0.5;
 	$self->_updateBitmap;
 	$self->{needUpdate} = 1;
 }
@@ -413,10 +501,11 @@ sub _updateBitmap {
 	
 	$self->SetSizeHints ($w, $h);
 	
-	if ($self->GetParent && $self->GetParent->GetSizer) {
-		my $sizer = $self->GetParent->GetSizer;
-		$sizer->SetItemMinSize ($self, $w, $h);
-	}
+	## introduces problems with AUI
+	#if ($self->GetParent && $self->GetParent->GetSizer) {
+	#	my $sizer = $self->GetParent->GetSizer;
+	#	$sizer->SetItemMinSize ($self, $w, $h);
+	#}
 	
 	($self->{view}{xscale}, $self->{view}{yscale}) = (
 		$self->{bitmap}->GetWidth / $self->{field}{width},
@@ -431,29 +520,10 @@ sub _loadImage {
 	
 	my ($ext) = $file =~ /.*(\..*?)$/;
 	my ($handler, $mime);
-
-	# handlers moved to Wx.pm OnInit
-# 	# Initialize required image handler
-# 	if (!$addedHandlers{$ext}) {
-# 		$ext = lc $ext;
-# 		if ($ext eq '.png') {
-# 			$handler = new Wx::PNGHandler();
-# 		} elsif ($ext eq '.jpg' || $ext eq '.jpeg') {
-# 			$handler = new Wx::JPEGHandler();
-# 		} elsif ($ext eq '.bmp') {
-# 			$handler = new Wx::BMPHandler();
-# 		} elsif ($ext eq '.xpm') {
-# 			$handler = new Wx::XPMHandler();
-# 		}
-# 
-# 		return unless $handler;
-# 		Wx::Image::AddHandler($handler);
-# 		$addedHandlers{$ext} = 1;
-# 	}
-
+	
 	my $image = Wx::Image->newNameType($file, wxBITMAP_TYPE_ANY);
 	
-	if ($scale && $scale != 1) {
+	if (defined $scale && $scale != 1) {
 		$image->Rescale ($image->GetWidth * $scale, $image->GetHeight * $scale);
 	}
 	
