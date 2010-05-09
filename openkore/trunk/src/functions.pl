@@ -186,10 +186,10 @@ sub loadDataFiles {
 		my $pathDelimiter = ($^O eq 'MSWin32') ? ';' : ':';
 		if ($options{tables}) {
 			foreach my $dir ( split($pathDelimiter, $options{tables}) ) {
-				push @new_tables, $dir . '\\Old';
+				push @new_tables, $dir . '/Old';
 			}
 		} else {
-			push @new_tables, 'tables\\Old';
+			push @new_tables, 'tables/Old';
 		}
 		# now set up new path to table folder
 		Settings::setTablesFolders(@new_tables, Settings::getTablesFolders());
@@ -447,9 +447,9 @@ sub processServerSettings {
 		foreach my $dir ( Settings::getTablesFolders() ) {
 			# If the ServerType is with sub type
 			if (defined($st_param) && $st_param ne '') {
-				push @new_tables, $dir . '\\' . $st_type . '\\' . $st_param;
+				push @new_tables, $dir . '/' . $st_type . '/' . $st_param;
 			}
-			push @new_tables, $dir . '\\' . $st_type;
+			push @new_tables, $dir . '/' . $st_type;
 		}
 		# now set up new path to table folders
 		Settings::setTablesFolders(@new_tables, Settings::getTablesFolders());
