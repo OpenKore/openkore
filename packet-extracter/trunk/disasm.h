@@ -33,7 +33,6 @@
 # include <stdlib.h>
 # include <stdarg.h>
 # include <string.h>
-# include <malloc.h>
 # include <ctype.h>
 
 # define pr1ntf(x)         if(printMode==1)printf(x);else
