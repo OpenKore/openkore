@@ -152,7 +152,7 @@ sub onMapClick {
 	my ($self, $x, $y) = @_;
 	
 	Plugins::callHook('interface/helpcontext', {});
-	Plugins::callHook('interface/defaultFocus', {});
+	Plugins::callHook('interface/defaultFocus');
 	
 	for (
 		(map {[$_, $_->{pos}, $config{wx_map_npcSticking} || 1, "talk $_->{binID}"]} @{$self->{npcs}}),

@@ -103,12 +103,12 @@ sub new {
 	
 	$self->toggleWindow('console', T('Console'), 'Interface::Wx::Window::Console', 'notebook');
 	$self->toggleWindow('chatLog', T('Chat log'), 'Interface::Wx::Window::ChatLog', 'notebook');
-	$self->toggleWindow('exp', T('Experience report'), 'Interface::Wx::Window::Exp', 'right');
 	$self->toggleWindow('map', T('Map'), 'Interface::Wx::Window::Map', 'right');
+	$self->toggleWindow('environment', T('Environment'), 'Interface::Wx::Window::Environment', 'right', 1, [150, -1], 1);
 	
 	$self->{aui}->Update;
 	
-	#$self->{notebook}->Split(1, wxBOTTOM);
+	$self->{notebook}->Split(1, wxBOTTOM);
 	$self->{notebook}->SetSelection(0);
 	
 	return $self;
@@ -229,7 +229,7 @@ sub updateStatusBar {
 }
 
 sub toggleWindow {
-	my ($self, $key, $title, $class, $target) = @_;
+	my ($self, $key, $title, $class, $target, $layer, $bestSize, $noCloseButton) = @_;
 	
 	unless ($self->{windows}{$key}) {
 		eval "require $class";
@@ -252,7 +252,10 @@ sub toggleWindow {
 			'left' => wxAUI_DOCK_LEFT,
 		}->{$target}) {
 			$self->{aui}->AddPane($window,
-				Wx::AuiPaneInfo->new->Caption($title)->Direction($pos)->BestSize(250, 250)->DestroyOnClose
+				Wx::AuiPaneInfo->new->Caption($title)
+				->Direction($pos)->Layer($layer || 0)
+				->BestSize($bestSize ? @$bestSize : (250, 250))
+				->DestroyOnClose->CloseButton(!$noCloseButton)->CaptionVisible(!$noCloseButton)
 			);
 			$self->{aui}->Update;
 		} elsif ($target eq 'notebook') {
@@ -278,8 +281,6 @@ sub OnInit {
 	$self->iterate;
 	
 	$self->{hooks} = Plugins::addHooks(
-		['initialized',                         sub { $self->onInitialized(@_); }],
-		
 		# npc
 		['packet/npc_image',              sub { $self->onNpcImage (@_); }],
 		['npc_talk',                      sub { $self->onNpcTalk (@_); }],
@@ -298,81 +299,6 @@ sub OnInit {
 	
 	return 1;
 }
-
-#########################
-## INTERFACE CREATION
-#########################
-
-sub createSplitterContent {
-	my $self = shift;
-	my $splitter = $self->{splitter};
-	my $frame = $self->{frame};
-
-	## Parallel to the notebook is another sub-splitter
-	my $subSplitter = new Wx::SplitterWindow($splitter, 583,
-		wxDefaultPosition, wxDefaultSize, wxSP_LIVE_UPDATE);
-
-	## Inside this splitter is a player/monster/item list, and a dock with map viewer
-
-	my $itemList = $self->{itemList} = new Interface::Wx::ItemList($subSplitter);
-	$itemList->onActivate(\&onItemListActivate, $self);
-	$self->customizeItemList($itemList) if ($self->can('customizeItemList'));
-	$subSplitter->Initialize($itemList);
-
-
-	# Dock
-	my $mapDock = $self->{mapDock} = new Interface::Wx::Dock($subSplitter, wxID_ANY, 'Map');
-	$mapDock->Show(0);
-	$mapDock->setHideFunc($self, sub {
-		$subSplitter->Unsplit($mapDock);
-		$mapDock->Show(0);
-		$self->{inputBox}->SetFocus;
-	});
-	$mapDock->setShowFunc($self, sub {
-		$subSplitter->SplitVertically($itemList, $mapDock, -$mapDock->GetBestSize->GetWidth);
-		$mapDock->Show(1);
-		$self->{inputBox}->SetFocus;
-	});
-
-	my $position;
-	if (Wx::wxMSW()) {
-		$position = 600;
-	} else {
-		$position = 545;
-	}
-	$splitter->SplitVertically($notebook, $subSplitter, $position);
-}
-
-
-sub addMenu {
-	my ($self, $menu, $label, $callback, $help) = @_;
-
-	$self->{menuIDs}++;
-	my $item = new Wx::MenuItem(undef, $self->{menuIDs}, $label, $help);
-	$menu->Append($item);
-	EVT_MENU($self->{frame}, $self->{menuIDs}, sub { $callback->($self); });
-	return $item;
-}
-
-sub addSubMenu {
-	my ($self, $menu, $label, $subMenu, $help) = @_;
-
-	$self->{menuIDs}++;
-	my $item = new Wx::MenuItem(undef, $self->{menuIDs}, $label, $help, wxITEM_NORMAL, $subMenu);
-	$menu->Append($item);
-	return $item;
-}
-
-sub addCheckMenu {
-	my ($self, $menu, $label, $callback, $help) = @_;
-
-	$self->{menuIDs}++;
-	my $item = new Wx::MenuItem(undef, $self->{menuIDs}, $label, $help, wxITEM_CHECK);
-	$menu->Append($item);
-	EVT_MENU($self->{frame}, $self->{menuIDs}, sub { $callback->($self); }) if ($callback);
-	return $item;
-}
-
 
 ##################
 ## Callbacks
@@ -398,36 +324,6 @@ sub openNpcTalk {
 	}
 	
 	return ($page, $window);
-}
-
-sub onItemListActivate {
-	my ($self, $actor) = @_;
-
-	if ($actor->isa('Actor::Player')) {
-		Commands::run("lookp " . $actor->{binID});
-		Commands::run("pl " . $actor->{binID});
-
-	} elsif ($actor->isa('Actor::Monster')) {
-		main::attack($actor->{ID});
-
-	} elsif ($actor->isa('Actor::Item')) {
-		$self->{console}->add("message", "Taking item " . $actor->nameIdx . "\n", "info");
-		main::take($actor->{ID});
-
-	} elsif ($actor->isa('Actor::NPC')) {
-		Commands::run("talk " . $actor->{binID});
-	}
-
-	$self->{inputBox}->SetFocus;
-}
-
-sub onInitialized {
-	my ($self) = @_;
-	$self->{itemList}->init($npcsList, new Wx::Colour(103, 0, 162),
-			$slavesList, new Wx::Colour(200, 100, 0),
-			$playersList, undef,
-			$monstersList, new Wx::Colour(200, 0, 0),
-			$itemsList, new Wx::Colour(0, 0, 200));
 }
 
 ### NPC Talk ###
