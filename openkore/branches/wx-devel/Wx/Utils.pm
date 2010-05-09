@@ -13,7 +13,7 @@ use Wx::Event ':everything';
 use Globals qw(%config $quit $interface);
 use Log qw(debug);
 
-our @EXPORT = qw(loadDialog loadPNG setupDialog dataFile startMainLoop);
+our @EXPORT = qw(loadDialog loadPNG setupDialog dataFile startMainLoop stopMainLoop);
 our %files;
 our @searchPath;
 our $pngAdded;
@@ -28,7 +28,6 @@ Wx::InitAllImageHandlers;
 		
 		return if $inside;
 		$inside = 1;
-		undef $quitting;
 		
 		$app->SetAppName($Settings::NAME);
 		
@@ -56,7 +55,7 @@ Wx::InitAllImageHandlers;
 		debug "startMainLoop: passing control to wx\n", __PACKAGE__ if DEBUG;
 		$app->MainLoop;
 		debug "startMainLoop: regained control from wx\n", __PACKAGE__ if DEBUG;
-		undef $app, $timer, $inside, $quitting;
+		($app, $timer, $inside, $quitting) = ();
 	}
 	
 	sub stopMainLoop {

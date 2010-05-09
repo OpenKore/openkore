@@ -39,6 +39,8 @@ use Modules;
 use Field;
 use I18N qw/bytesToString/;
 
+use Interface::Wx::Utils;
+
 use Interface::Wx::MainMenu;
 use Interface::Wx::Window::Input;
 use Interface::Wx::Window::Console;
@@ -71,10 +73,8 @@ sub new {
 	
 	EVT_CLOSE($self, sub {
 		my ($self, $event) = @_;
-		quit();
-		if ($event->CanVeto) {
-			$self->Show(0);
-		}
+		stopMainLoop;
+		$self->Show(0) if $event->CanVeto;
 	});
 	
 	$self->{hooks} = Plugins::addHooks(
