@@ -33,10 +33,6 @@ use Interface::Wx::MainFrame;
 sub OnInit {
 	my $self = shift;
 	
-	$self->SetAppName($Settings::NAME);
-	
-	Wx::InitAllImageHandlers;
-	
 	($self->{mainFrame} = new Interface::Wx::MainFrame)->Show;
 	
 	return 1;

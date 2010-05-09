@@ -1,18 +1,74 @@
 package Interface::Wx::Utils;
 
 use strict;
+use Carp::Assert;
 use FindBin qw($RealBin);
 use File::Spec;
 use Exporter;
 use base qw(Exporter);
 
 use Wx ':everything';
-use Wx::Event qw(EVT_BUTTON);
+use Wx::Event ':everything';
 
-our @EXPORT = qw(loadDialog loadPNG setupDialog dataFile);
+use Globals qw(%config $quit $interface);
+use Log qw(debug);
+
+our @EXPORT = qw(loadDialog loadPNG setupDialog dataFile startMainLoop);
 our %files;
 our @searchPath;
 our $pngAdded;
+
+Wx::InitAllImageHandlers;
+
+{
+	my ($app, $timer, $inside, $quitting);
+	
+	sub startMainLoop {
+		($app) = @_;
+		
+		return if $inside;
+		$inside = 1;
+		undef $quitting;
+		
+		$app->SetAppName($Settings::NAME);
+		
+		debug "startMainLoop\n", __PACKAGE__ if DEBUG;
+		
+		# Start the real main loop in 100 msec, so that the UI has
+		# the chance to layout correctly.
+		$timer = new Wx::Timer($app->GetTopWindow);
+		EVT_TIMER($app->GetTopWindow, $timer->GetId, sub { # realMainLoop
+			debug "realMainLoop\n", __PACKAGE__ if DEBUG;
+			
+			EVT_TIMER($app->GetTopWindow, $timer->GetId, sub {
+				return if $quitting || $app->{iterating};
+				&stopMainLoop, return if $quit;
+				
+				$app->{iterating}++;
+				$interface->iterate unless $interface->isa('Interface::Wx');
+				&main::mainLoop;
+				$app->{iterating}--;
+			});
+			$timer->Start($config{sleepTime} / 1000 || 10);
+		});
+		$timer->Start(100, wxTIMER_ONE_SHOT);
+		
+		debug "startMainLoop: passing control to wx\n", __PACKAGE__ if DEBUG;
+		$app->MainLoop;
+		debug "startMainLoop: regained control from wx\n", __PACKAGE__ if DEBUG;
+		undef $app, $timer, $inside, $quitting;
+	}
+	
+	sub stopMainLoop {
+		return unless $inside;
+		
+		debug "stopMainLoop\n", __PACKAGE__ if DEBUG;
+		
+		$quitting = 1;
+		$app->ExitMainLoop;
+		$timer->Stop;
+	}
+}
 
 sub loadDialog {
 	my ($file, $parent, $name) = @_;

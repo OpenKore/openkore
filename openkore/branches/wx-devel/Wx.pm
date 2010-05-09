@@ -57,72 +57,30 @@ use Commands;
 use Utils qw/timeOut wrapText/;
 use Translation qw/T TF/;
 
+use Interface::Wx::Utils;
+
 our ($iterationTime, $updateUITime, $updateUITime2);
 
 sub new { bless {
 	title => '',
-	iterating => 0,
 }, $_[0] }
 
 sub mainLoop {
 	my ($self) = @_;
-	
-	$self->{app} = new Interface::Wx::App;
-	
-	# Start the real main loop in 100 msec, so that the UI has
-	# the chance to layout correctly.
-	EVT_TIMER($self->{app}{mainFrame}, (
-		my $timer = new Wx::Timer($self->{app}{mainFrame})
-	)->GetId, sub { $self->realMainLoop });
-	$timer->Start(100, 1);
 	
 	# Hide console on Win32
 	if ($^O eq 'MSWin32' && $sys{wxHideConsole}) {
 		eval 'use Win32::Console; Win32::Console->new(STD_OUTPUT_HANDLE)->Free();';
 	}
 	
-	$self->{app}->MainLoop;
+	startMainLoop($self->{app} = new Interface::Wx::App);
 }
 
-sub realMainLoop {
-	my ($self) = @_;
-	my $timer = new Wx::Timer($self->{app}{mainFrame});
-	my $sleepTime = $config{sleepTime};
-	my $quitting;
-	my $sub = sub {
-		return if ($quitting);
-		if ($quit) {
-			$quitting = 1;
-			$self->{app}->ExitMainLoop;
-			$timer->Stop;
-			return;
-		} elsif ($self->{iterating}) {
-			return;
-		}
-
-		$self->{iterating}++;
-
-		if ($sleepTime ne $config{sleepTime}) {
-			$sleepTime = $config{sleepTime};
-			$timer->Start(($sleepTime / 1000) > 0
-				? ($sleepTime / 1000)
-				: 10);
-		}
-		main::mainLoop();
-
-		$self->{iterating}--;
-	};
-
-	EVT_TIMER($self->{app}{mainFrame}, $timer->GetId, $sub);
-	$timer->Start(($sleepTime / 1000) > 0
-		? ($sleepTime / 1000)
-		: 10);
-}
-
+# called only from Interface::writeOutput?
 sub iterate {
 	my $self = shift;
 
-	if ($self->{iterating} == 0) {
+	if ($self->{app}{iterating} == 0) {
 		Plugins::callHook('interface/updateConsole');
 	}
 	$self->{app}->Yield();
@@ -201,7 +159,13 @@ sub showMenu {
 sub writeOutput {
 	my ($self, @args) = @_;
 	
-	Plugins::callHook('interface/output', \@args);
+	if (Plugins::hasHook('interface/output')) {
+		Plugins::callHook('interface/output', \@args);
+	} else {
+		print STDOUT $args[2];
+		STDOUT->flush;
+	}
+	
 	# Make sure we update the GUI. This is to work around the effect
 	# of functions that block for a while
 	$self->iterate if (timeOut($iterationTime, 0.05));
@@ -222,14 +186,14 @@ sub displayUsage { print $_[1] }
 sub errorDialog {
 	my ($self, $msg, $fatal) = @_;
 	
-	$self->{iterating}++;
+	$self->{app}{iterating}++;
 	Wx::MessageBox(
 		$msg,
 		(sprintf '%s - %s', $fatal ? T('Fatal error') : T('Error'), $Settings::NAME),
 		$fatal ? wxICON_ERROR : wxICON_EXCLAMATION,
 		$self->{app}{mainFrame},
 	);
-	$self->{iterating}--;
+	$self->{app}{iterating}--;
 }
 
 sub beep { Wx::Bell }
