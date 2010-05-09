@@ -31,7 +31,7 @@ use base 'Wx::Panel';
 use FastUtils;
 use Log qw(message);
 use Globals;
-use Translation qw(TF);
+use Translation qw(T TF);
 use Utils qw(calcPosition distance timeOut);
 
 use constant PI => 3.14;
@@ -41,6 +41,9 @@ our %addedHandlers;
 sub new {
 	my $class = shift;
 	my $self = $class->SUPER::new(@_);
+	
+	$self->{title} = T('Map');
+	
 	$self->{mapDir} = 'map';
 	$self->{points} = [];
 	$self->SetBackgroundColour(new Wx::Colour(0, 0, 0));

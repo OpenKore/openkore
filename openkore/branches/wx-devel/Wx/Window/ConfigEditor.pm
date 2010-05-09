@@ -15,6 +15,8 @@ sub new {
 	my ($class, $parent, $id) = @_;
 
 	my $self = $class->SUPER::new($parent, $id);
+	
+	$self->{title} = T('Config Editor');
 
 	my $vsizer = new Wx::BoxSizer(wxVERTICAL);
 	$self->SetSizer($vsizer);

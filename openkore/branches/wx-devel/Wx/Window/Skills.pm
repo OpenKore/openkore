@@ -13,6 +13,8 @@ sub new {
 		{key => 'points', title => 'Skill points:'},
 	]);
 	
+	$self->{title} = T('Skills');
+	
 	Scalar::Util::weaken(my $weak = $self);
 	
 	$self->{hooks} = Plugins::addHooks(

@@ -101,10 +101,10 @@ sub new {
 		Wx::AuiPaneInfo->new->ToolbarPane->Bottom->BestSize($input->GetBestSize)->CloseButton(0)->Resizable->LeftDockable(0)->RightDockable(0)
 	);
 	
-	$self->toggleWindow('console', T('Console'), 'Interface::Wx::Window::Console', 'notebook');
-	$self->toggleWindow('chatLog', T('Chat log'), 'Interface::Wx::Window::ChatLog', 'notebook');
-	$self->toggleWindow('map', T('Map'), 'Interface::Wx::Window::Map', 'right');
-	$self->toggleWindow('environment', T('Environment'), 'Interface::Wx::Window::Environment', 'right', 1, [150, -1], 1);
+	$self->toggleWindow('console', 'Interface::Wx::Window::Console', 'notebook');
+	$self->toggleWindow('chatLog', 'Interface::Wx::Window::ChatLog', 'notebook');
+	$self->toggleWindow('map', 'Interface::Wx::Window::Map', 'right');
+	$self->toggleWindow('environment', 'Interface::Wx::Window::Environment', 'right', 1, [150, -1], 1);
 	
 	$self->{aui}->Update;
 	
@@ -229,7 +229,7 @@ sub updateStatusBar {
 }
 
 sub toggleWindow {
-	my ($self, $key, $title, $class, $target, $layer, $bestSize, $noCloseButton) = @_;
+	my ($self, $key, $class, $target, $layer, $bestSize, $noCloseButton) = @_;
 	
 	unless ($self->{windows}{$key}) {
 		eval "require $class";
@@ -252,14 +252,14 @@ sub toggleWindow {
 			'left' => wxAUI_DOCK_LEFT,
 		}->{$target}) {
 			$self->{aui}->AddPane($window,
-				Wx::AuiPaneInfo->new->Caption($title)
+				Wx::AuiPaneInfo->new->Caption($window->{title})
 				->Direction($pos)->Layer($layer || 0)
 				->BestSize($bestSize ? @$bestSize : (250, 250))
 				->DestroyOnClose->CloseButton(!$noCloseButton)->CaptionVisible(!$noCloseButton)
 			);
 			$self->{aui}->Update;
 		} elsif ($target eq 'notebook') {
-			$self->{notebook}->AddPage($window, $title, 1);
+			$self->{notebook}->AddPage($window, $window->{title}, 1);
 		}
 		
 		Scalar::Util::weaken($self->{windows}{$key} = $window);

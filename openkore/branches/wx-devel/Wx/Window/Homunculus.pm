@@ -4,6 +4,7 @@ use strict;
 use base 'Interface::Wx::Base::StatView';
 
 use Globals qw/$char %jobs_lut $conState/;
+use Translation qw/T TF/;
 
 use constant {
 	HO_STATE_ALIVE => 0,
@@ -25,27 +26,29 @@ sub new {
 			{key => 'name', type => 'name'},
 			{key => 'level', type => 'name'},
 			{key => 'type', type => 'type'},
-			{key => 'hp', title => 'HP', type => 'gauge', color => 'smooth'},
-			{key => 'sp', title => 'SP', type => 'gauge', color => 'smooth'},
-			{key => 'exp', title => 'Exp', type => 'gauge'},
-			{key => 'intimacy', title => 'Intimacy', type => 'gauge'},
-			{key => 'hunger', title => 'Hunger', type => 'gauge', color => 'hunger'},
-			{key => 'atk', title => 'Atk', type => 'stat'},
-			{key => 'matk', title => 'Matk', type => 'stat'},
-			{key => 'hit', title => 'Hit', type => 'stat'},
-			{key => 'crit', title => 'Critical', type => 'stat'},
-			{key => 'def', title => 'Def', type => 'stat'},
-			{key => 'mdef', title => 'Mdef', type => 'stat'},
-			{key => 'flee', title => 'Flee', type => 'stat'},
-			{key => 'aspd', title => 'Aspd', type => 'stat'},
-			#{key => 'speed', title => 'Walk speed', type => 'substat'},
-			{key => 'skillPoint', title => 'Skill point', type => 'substat'},
-			{key => 'feed', title => 'Feed', type => 'control'},
-			{key => 'vaporize', title => 'Vaporize', type => 'control'},
-			{key => 'call', title => 'Call', type => 'control'},
-			{key => 'resurrect', title => 'Resurrect', type => 'control'},
+			{key => 'hp', title => T('HP'), type => 'gauge', color => 'smooth'},
+			{key => 'sp', title => T('SP'), type => 'gauge', color => 'smooth'},
+			{key => 'exp', title => T('Exp'), type => 'gauge'},
+			{key => 'intimacy', title => T('Int'), type => 'gauge'},
+			{key => 'hunger', title => T('Rep'), type => 'gauge', color => 'hunger'},
+			{key => 'atk', title => T('Atk'), type => 'stat'},
+			{key => 'matk', title => T('Matk'), type => 'stat'},
+			{key => 'hit', title => T('Hit'), type => 'stat'},
+			{key => 'crit', title => T('Crit'), type => 'stat'},
+			{key => 'def', title => T('Def'), type => 'stat'},
+			{key => 'mdef', title => T('Mdef'), type => 'stat'},
+			{key => 'flee', title => T('Flee'), type => 'stat'},
+			{key => 'aspd', title => T('Aspd'), type => 'stat'},
+			#{key => 'speed', title => 'Walk speed', type => 'stat'},
+			{key => 'skillPoint', title => T('Skill'), type => 'stat'},
+			{key => 'feed', title => T('Feed'), type => 'control'},
+			{key => 'vaporize', title => T('Vaporize'), type => 'control'},
+			{key => 'call', title => T('Call'), type => 'control'},
+			{key => 'resurrect', title => T('Res'), type => 'control'},
 		],
 	);
+	
+	$self->{title} = T('Homunculus');
 	
 	Scalar::Util::weaken(my $weak = $self);
 	my $hook = sub {

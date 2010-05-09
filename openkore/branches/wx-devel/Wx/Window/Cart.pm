@@ -4,6 +4,7 @@ use strict;
 use base 'Interface::Wx::Base::ItemList';
 
 use Globals qw/$char $conState %cart %storage/;
+use Translation qw/T TF/;
 
 sub new {
 	my ($class, $parent, $id) = @_;
@@ -12,6 +13,8 @@ sub new {
 		{key => 'count', max => %cart && $cart{items_max} ? $cart{items_max} : '100'},
 		{key => 'weight', title => 'Weight', max => %cart && $cart{weight_max} ? $cart{weight_max} : '100'},
 	]);
+	
+	$self->{title} = T('Cart');
 	
 	Scalar::Util::weaken(my $weak = $self);
 	
