@@ -90,7 +90,6 @@ sub new {
 			key => 'toggleWindow_map', title => T('&Map'), type => 'check',
 			sub => sub { $self->{frame}->toggleWindow('map', T('Map'), 'Interface::Wx::Window::Map', 'right') },
 		},
-		{},
 		{
 			key => 'toggleWindow_chatLog', title => T('Chat &log'), type => 'check',
 			sub => sub { $self->{frame}->toggleWindow('chatLog', T('Chat log'), 'Interface::Wx::Window::ChatLog', 'notebook') },

@@ -19,7 +19,9 @@
 #  $Id$
 #
 #########################################################################
-package Interface::Wx::ItemList;
+package Interface::Wx::Window::Environment;
+
+# TODO: rewrite a lot, add context menus
 
 use strict;
 use Wx ':everything';
@@ -27,7 +29,8 @@ use base qw(Wx::ListCtrl);
 use Wx::Event qw(EVT_LIST_ITEM_ACTIVATED EVT_LIST_ITEM_RIGHT_CLICK);
 use File::Spec;
 use Scalar::Util;
-
+use Globals;
+use Translation qw/T TF/;
 
 sub new {
 	my $class = shift;
@@ -35,14 +38,34 @@ sub new {
 	my $self = $class->SUPER::new($parent, 622, wxDefaultPosition, wxDefaultSize,
 		wxLC_REPORT | wxLC_VIRTUAL | wxLC_SINGLE_SEL);
 
-	$self->InsertColumn(0, "Players, Monsters & Items");
+	$self->InsertColumn(0, T("Players, Monsters & Items"));
 	$self->SetColumnWidth(0, -2);
 	EVT_LIST_ITEM_ACTIVATED($self, 622, \&_onActivate);
 	EVT_LIST_ITEM_RIGHT_CLICK($self, 622, \&_onRightClick);
+	
+	Scalar::Util::weaken(my $weak = $self);
+	
+	$self->{hooks} = Plugins::addHooks(
+		['initialized', sub {
+			$weak->init(
+				$npcsList, new Wx::Colour(103, 0, 162),
+				$slavesList, new Wx::Colour(200, 100, 0),
+				$playersList, undef,
+				$monstersList, new Wx::Colour(200, 0, 0),
+				$itemsList, new Wx::Colour(0, 0, 200)
+			)
+		}],
+	);
+	$self->onActivate(sub { $weak->onItemListActivate($_[1]) });
+	
 	return $self;
 }
 
 sub DESTROY {
+	my ($self) = @_;
+	
+	Plugins::delHooks ($self->{hooks});
+	
 	my $lists = $_[0]->{lists};
 	foreach my $l (@{$lists}) {
 		my $actorList = $l->{actorList};
@@ -51,6 +74,24 @@ sub DESTROY {
 		$actorList->onClearBegin()->remove($l->{clearBeginID});
 		$actorList->onClearEnd()->remove($l->{clearEndID});
 	}
+}
+
+sub onItemListActivate {
+	my ($self, $actor) = @_;
+	
+	if ($actor->isa('Actor::Player')) {
+		Commands::run("lookp $actor->{binID}");
+		Commands::run("pl $actor->{binID}");
+	} elsif ($actor->isa('Actor::Monster')) {
+		Commands::run("a $actor->{binID}");
+	} elsif ($actor->isa('Actor::Item')) {
+		Plugins::callHook('interface/output', ['info', TF("Taking item %s\n", $actor->nameIdx)]);
+		Commands::run("take $actor->{binID}");
+	} elsif ($actor->isa('Actor::NPC')) {
+		Commands::run("talk $actor->{binID}");
+	}
+	
+	Plugins::callHook('interface/defaultFocus');
 }
 
 sub init {
