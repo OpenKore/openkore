@@ -6,24 +6,6 @@ use base 'Interface::Wx::Base::StatView';
 use Globals qw/$char %pet %jobs_lut $conState/;
 use Misc qw/itemNameSimple monsterName/;
 
-=pod
-		['packet/map_changed',                  sub { $self->onSlaveStatChange (@_); $self->onPetStatChange (@_); }],
-		['packet/homunculus_info',              $onSlaveStatChange],
-		['packet/mercenary_init',               $onSlaveStatChange],
-		['packet/homunculus_property',          $onSlaveStatChange],
-		['packet/mercenary_param_change',       $onSlaveStatChange],
-		['packet/mercenary_off',                $onSlaveStatChange],
-		['packet/message_string',               $onSlaveStatChange],
-		['packet/pet_info',                     $onPetStatChange],
-		['packet/pet_info2',                    $onPetStatChange],
-sub onPetStatChange {
-	my ($self, $hook, $args) = @_;
-	
-	my (undef, $window) = $self->openPet;
-	$window->update if $window;
-}
-=cut
-
 sub new {
 	my ($class, $parent, $id) = @_;
 	
@@ -42,9 +24,27 @@ sub new {
 		],
 	);
 	
+	Scalar::Util::weaken(my $weak = $self);
+	my $hook = sub {
+		my ($hook, $args) = @_;
+		
+		$weak->update;
+	};
+	$self->{hooks} = Plugins::addHooks (
+		['packet/map_changed', $hook],
+		['packet/pet_info',    $hook],
+		['packet/pet_info2',   $hook],
+	);
+	
 	$self->update;
 	
 	return $self;
+}
+
+sub DESTROY {
+	my ($self) = @_;
+	
+	Plugins::delHooks($self->{hooks});
 }
 
 sub update {

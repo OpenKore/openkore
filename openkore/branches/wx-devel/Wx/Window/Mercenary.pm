@@ -6,26 +6,6 @@ use base 'Interface::Wx::Base::StatView';
 use Globals qw/$char %jobs_lut $conState/;
 use Utils qw/getFormattedDate/;
 
-=pod
-		['packet/map_changed',                  sub { $self->onSlaveStatChange (@_); $self->onPetStatChange (@_); }],
-		['packet/homunculus_info',              $onSlaveStatChange],
-		['packet/mercenary_init',               $onSlaveStatChange],
-		['packet/homunculus_property',          $onSlaveStatChange],
-		['packet/mercenary_param_change',       $onSlaveStatChange],
-		['packet/mercenary_off',                $onSlaveStatChange],
-		['packet/message_string',               $onSlaveStatChange],
-sub onSlaveStatChange {
-	my ($self, $hook, $args) = @_;
-	my $window;
-	
-	(undef, $window) = $self->openHomunculus;
-	$window->update if $window;
-	
-	(undef, $window) = $self->openMercenary;
-	$window->update if $window;
-}
-=cut
-
 sub new {
 	my ($class, $parent, $id) = @_;
 	
@@ -53,9 +33,29 @@ sub new {
 		],
 	);
 	
+	Scalar::Util::weaken(my $weak = $self);
+	my $hook = sub {
+		my ($hook, $args) = @_;
+		
+		$weak->update;
+	};
+	$self->{hooks} = Plugins::addHooks (
+		['packet/map_changed',            $hook],
+		['packet/mercenary_init',         $hook],
+		['packet/mercenary_param_change', $hook],
+		['packet/mercenary_off',          $hook],
+		['packet/message_string',         $hook],
+	);
+	
 	$self->update;
 	
 	return $self;
+}
+
+sub DESTROY {
+	my ($self) = @_;
+	
+	Plugins::delHooks($self->{hooks});
 }
 
 sub update {

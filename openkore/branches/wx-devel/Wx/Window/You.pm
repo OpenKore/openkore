@@ -41,7 +41,6 @@ sub new {
 	);
 	
 	Scalar::Util::weaken(my $weak = $self);
-	
 	my $hook = sub {
 		my ($hook, $args) = @_;
 		
