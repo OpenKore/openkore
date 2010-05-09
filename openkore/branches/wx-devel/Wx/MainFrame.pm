@@ -265,7 +265,9 @@ sub toggleWindow {
 		Scalar::Util::weaken($self->{windows}{$key} = $window);
 	} else {
 		if ($self->{aui}->GetPane($self->{windows}{$key})->IsOk) {
-			# TODO: close window in AuiManager
+			$self->{aui}->DetachPane($self->{windows}{$key});
+			$self->{windows}{$key}->Destroy;
+			$self->{aui}->Update;
 		} else {
 			ref $self->{notebook}->GetPage($_) eq ref $self->{windows}{$key} && $self->{notebook}->DeletePage($_)
 			for (0 .. $self->{notebook}->GetPageCount-1);
