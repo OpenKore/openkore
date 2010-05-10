@@ -1,4 +1,4 @@
-2101#Vembrassa#
+﻿2101#Vembrassa#
 2102#Vembrassa#
 2103#Broquel#
 2104#Broquel#
@@ -1388,7 +1388,6 @@
 12122#Ovinhos_Coloridos#
 12123#Biscoito_de_Mel#
 12124#Bolo Arco-Íris#
-7173#Mochila_dos_GMs#
 
 // ---- ????? ?? ??? ?? Christmas -----------
 
@@ -1670,7 +1669,7 @@
 7547#Bola_de_Futebol#
 7548#Calçados_de_Treino#
 7549#Bandeira_Nacional#
-7550#Ticket de Promoção#
+7550#Ticket Especial#
 7551#Ticket de Segunda Profissão#
 7552#Nota_com_Horários_dos_Jogos#
 //event - Roberto Magnus Quiz Show 
@@ -3847,7 +3846,7 @@
 12319#Bolo de Morango de Rune-Midgard#
 12320#Jubileu de Abacaxi de Schwartzwald#
 12321#Sanduíche do Deserto de Arunafeltz#
-12322#Torta de Chocolate#
+12322#Chocolate Puro#
 
 // ----------- ¿¡ÇÇ¼Òµå 13 ppl ¾ÆÀÌÅÛ -----------
 6051#Mineral Cinza#
@@ -4313,41 +4312,35 @@
 // ----------- Ep 13.2 Reward Items ------------
 2782#Anel do Rei Sábio#
 6073#Crina de Dragão#
-6074#Caderno de Bajet#
+6074#Caderno de Bazett#
 6075#Lágrima Cristalizada#
 6076#Caixa de Ferramentas Portátil#
 6077#Mineral Bruto#
 6078#Fragmento de Pedra#
 6079#Flor de Alfheim#
 6080#Moeda Manuk#
-6081#Moeda Splendide#
+6081#Moeda Esplendor#
 6082#Espírito de Alfheim#
-6084#Fragmentos de Brádio#
+6084#Fragmentos de Bradium#
 6085#Sobrepeliz Amarrotado#
-11018#Itens de Splendide à Venda#
-11019#Itens de Splendide à Venda#
+11018#Itens de Esplendor à Venda#
+11019#Itens de Esplendor à Venda#
 12342#Oportunidade de Manuk#
 12343#Coragem de Manuk#
-12344#Geleia de Frutas de Pinguicula#
-12345#Geleia de Mel de Luciola#
+12344#Geleia de Fruta de Pinguicula#
+12345#Geleia de Mel de Vagalume#
 12346#Avelã Verde#
 12347#Geleia de Avelã #
 12348#Fé de Manuk#
 12349#Lágrimas de Cornus#
 
 // ----------- New Combination Headgear Items ------------
-5436#Tiara de Noiva#
-//5437#Flor de Fadas#
-5438#Fita Verde#
-5439#Fita Vermelha#
-5440#Fita Azul#
-5441#Fita Branca#
-//5442#Gravata#
+5438#Laço Meigo Verde#
+5439#Laço Meigo Vermelho#
+5440#Laço Meigo Azul#
+5441#Laço Meigo Branco#
 5443#Estátua de Bebê Anjo#
-//5444#Escova de Cabelo#
 5445#Bengala Doce na Boca#
-//5446#Grampo de Pata de Gato#
-//5447#Chapéu de Sapo#
 5448#Caixa para Brincar Só 1#
 5449#Caixa para Brincar Só 2#
 
@@ -4355,45 +4348,48 @@
 1643#Cajado da Árvore Morta#
 2783#Anel da Pedra do Olho#
 6086#Flor Murcha#
-6087#Crista Espiritual#
-6088#Crista Espiritual#
+6087#Crista Espiritual Azul#
+6088#Crista Espiritual Vermelha#
 6089#Fragmento Sombrio#
-6090#Brádio Refinado#
+6090#Bradium Purificado#
 6091#Escama Vermelha-Escura#
 12353#Garrafa Pequena#
 6093#Ovo de Dragão#
+6101#Cartão de Presença#
+6102#Relatório do Esplendor#
+6103#Relatório de Manuk#
 
 // ----------- EP13.2 Newly Added Items ------------
 1188#Espada Veterana#
 1384#Machado Veterano#
-1385#Martelo Quebra-Pedra de Brádio#
+1385#Martelo Quebra-Pedra de Bradium#
 1548#Martelo Veterano#
-2138#Escudo de Brádio#
+2138#Escudo de Bradium#
 2399#Colete do Dragão#
 2450#Sapatos da Árvore da Vida#
 2553#Manteau do Dragão#
-2554#Pedaço de Pele de Lacaio#
+2554#Pedaço de Pele do Guardião#
 2787#Broche da Gota d'Água#
-2788#Brinco de Brádio#
-2789#Anel de Brádio#
-2790#Broche de Brádio#
+2788#Brinco de Bradium#
+2789#Anel de Bradium#
+2790#Broche de Bradium#
 15000#Armadura de Placas de Ossos#
 
 // -----------  Ep 13.2 additional equipment items ------------
 1189#Krasnaya#
 1284#Krishna#
-1285#Cakram#
+1285#Chakram#
 1311#Machado Vecer#
 1387#Machado Gigante#
-1646#Cajado#
-1647#Cajado#
-1648#Cajado#
-1745#Arco#
+1646#Bastão de Lágrimas#
+1647#Cajado da Cruz#
+1648#Cajado do Maestro#
+1745#Assalto do Falcão#
 2004#Kronos#
 2005#Cajado Dea#
 13046#Krieg#
 13047#Weihna#
-13421#Ruber#
+13421#Roubel#
 16000#Erde#
 16001#Bolsa Quadrada Vermelha#
 
@@ -4474,8 +4470,119 @@
 //----CASH Items January 2010----
 5588#Coroa de Leão#
 5589#Diadema de Leão#
-16257#Pergaminho Buda#
+16257#Ovo do Amanhecer#
 12261#Medicina Secreta#
 5567#Fúria Brilhante#
+15022#Roupa de Mergulho#
+16569#Ovo de Brasilis#
+
+//----Summer event 2010----
+5586#Chapéu Repelente#
+5587#Chapéu Repelente Descartável#
+
+//----CASH Items February 2010----
+5575#Chapéu de Onigiri#
+5591#Turbante Real#
+5667#Capuz do Vazio#
+5598#Coroa de Virgem#
+5599#Diadema de Virgem#
+5454#Boneco de Cachorrinho#
+5584#Chifres Majestosos Malignos#
+16304#Ovo do Mal Encarnado#
+2149#Vembrassa Evoluída#
+2150#Broquel Evoluído#
+2151#Escudo Evoluído#
+5056#Fruto do Amor#
+13705#Esfera do Dragão Vermelho#
+
+//----Ano Novo Chinês 2010----
+5841#Chapéu Alado Chinês#
+7624#Cartão Chinês 23#
+7978#Cartão Chinês 1#
+7979#Cartão Chinês 2#
+7980#Cartão Chinês 3#
+7981#Cartão Chinês 4#
+7982#Cartão Chinês 5#
+7983#Cartão Chinês 6#
+7984#Cartão Chinês 7#
+7985#Cartão Chinês 8#
+7986#Cartão Chinês 9#
+7987#Cartão Chinês 10#
+7988#Cartão Chinês 11#
+7989#Cartão Chinês 12#
+7990#Cartão Chinês 13#
+7991#Cartão Chinês 14#
+7992#Cartão Chinês 15#
+7993#Cartão Chinês 16#
+7994#Cartão Chinês 17#
+7995#Cartão Chinês 18#
+7996#Cartão Chinês 19#
+7997#Cartão Chinês 20#
+7998#Cartão Chinês 21#
+7999#Cartão Chinês 22#
+12754#Pastel Chinês#
+12755#Fogos de Artifício Chineses#
+12756#Envelope do Ano Novo Chinês#
+12247#Salada de Frutas Tropicais#
+12232#Biscoito de Gengibre#
+12328#Amuleto Milagroso#
+12246#Álbum Mágico de Cartas#
+
+//---- Golden Savage Event ----
+5850#Chapéu de Selvagem Dourado#
+
+//---- Buzzy Bol Event ----
+5845#Placa Buzzy Bol#
+5846#Chapéu Goma de Mascar#
+7626#Buzzy Point#
+9028#Ovo de Mascote Buzzy Brother#
+12760#Buzzy Bol Hortelã#
+12761#Buzzy Bol Limão#
+12762#Buzzy Bol Laranja#
+12763#Buzzy Bol Morango#
+
+//---- CASH Items March 2010 ----
+5676#Coroa de Escorpião#
+5677#Diadema de Escorpião#
+2565#Toalha de Praia#
+5770#Chapéu de Pouring#
+16591#Ovo de Kotakahuana#
+5761#Chapéu do Bicho Preguiça#
+5762#Elmo de Duneyrr#
+14532#Basic_Field_Manual#
+14244#Caixa de Anel do Ganhador [A]#
+14245#Caixa de Anel do Devastador [A]#
+14246#Caixa de Anel do Colecionador de Insetos [A]#
+14247#Caixa de Anel de Pescador [A]#
+14248#Caixa de Anel do Exorcista [A]#
+14250#Caixa de Anel do Anjo Caído [A]#
+14251#Caixa de Anel do Caçador de Dragões [A]#
+16195#Ovo das Tartarugas#
+16576#Ovo de Oboro#
+
+//---- CASH Items April 2010 ----
+13989#Caixa de Bomba Ácida [10]#
+14605#Pergaminho de Senhor dos Orcs#
+14598#Pergaminho de Ghostring#
+16562#Ovo do Mal Majestoso#
+16323#Caixa de Presilha Evoluída#
+2828#Presilha Evoluída#
+12965#Caixa de Chamado Urgente#
+12968#Pergaminho de Chamado Urgente#
+7825#Pedra do Herói#
+6125#Pacote de Doces de Halloween#
+13696#Caixa de Grimório de Combate#
+5778#Chapéu de Arara Azul#
+5779#Boto Cor-de-Rosa#
+5780#Chapéu de Tendrillion#
+
+//---- April Fool's Day Event 2010 ----
+5848#Disfarce de Bandido#
+5849#Disfarce de Médico#
+12396#Caixa de Piada 1#
+12397#Caixa de Piada 2#
+
+//---- Easter Event 2010 ----
+5852#Casca de Ovo de Páscoa#
 
 //file end

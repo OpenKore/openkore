@@ -1,4 +1,4 @@
-// ÇÏÄ¡¿ø
+﻿// ÇÏÄ¡¿ø
 1000#Transcendental#SG_FEEL#QUE_NOIMAGE#
 Você pode se tornar um herói com o Livro de Ymir. Encontre o Hall da Valquíria e se torne um novo herói.#
 #
@@ -531,7 +531,7 @@ Morestone te mostra o local misterioso que ele encontrou.#
 // EP13
 2147#Nova Atitude#SG_FEEL#QUE_NOIMAGE#
 Lumis Block, o monstrólogo, quer desistir de seu estudo porque teme a Nepenthes.#
-Derrote uma Nepenthes e traga o Caule Murcho.#
+Derrote uma Nepenthes e traga a Trepadeira Resistente.#
 
 2148#Nova Atitude#SG_FEEL#QUE_NOIMAGE#
 Rumis espera que você colete amostras.#
@@ -550,7 +550,7 @@ Terris quer que você derrote monstros com chifres que destruíram sua pesquisa.
 Derrote 10 Cornus.#
 
 2152#Nova Atitude#SG_FEEL#QUE_NOIMAGE#
-Terris quer que você traga as os caules apodrecidos ao purificador na ponte.#
+Terris quer que você traga os caules murchos ao purificador na ponte.#
 Fale com Terris na frente da máquina em forma de cogumelo.#
 
 2153#Nova Atitude#SG_FEEL#QUE_NOIMAGE#
@@ -581,36 +581,37 @@ Fale com o capitão da Expedição da Aliança#
 Você encontrou uma nova criatura, o Homem-Árvore. Você decide reportar à aliança.#
 Fale com o capitão da Expedição da Aliança#
 
-2179#Continuous Research#SG_FEEL#QUE_NOIMAGE#
-¸¶´©Å©ÀÇ °úÇÐÀÚ ¸®Æä°¡µå´Â ¹Ìµå°¡¸£µåÀÇ ±¤¼®À» ¿øÇÏ¸ç, ±×°ÍÀº Å½»ö±â¸¦ ÅëÇØ ·é ¹Ìµå°¡Ã÷ ¿Õ±¹ÀÇ ¹¦¸£´Ò »ê¸Æ¿¡¼­ ¹ß°ßÇÒ ¼ö ÀÖ´Ù°í ÇÏ¿´´Ù.#
-Á¤Á¦µÇÁö ¾ÊÀº ±¤¼® 20°³#
+// Ep13.2
+2179#A Pesquisa Continua#SG_FEEL#QUE_NOIMAGE#
+O cientista Lifeguard de Manuk quer que você leve um mineral de Midgard para ele. O mineral pode ser encontrado no Monte Mjolnir com um radar.#
+10 Minerais Brutos#
 
-2180#Continuous Research#SG_FEEL#QUE_NOIMAGE#
-¸¶´©Å©ÀÇ °úÇÐÀÚ ¸®Æä°¡µå´Â ¹Ìµå°¡¸£µåÀÇ ±¤¼®À» ¿øÇÏ¸ç, ±×°ÍÀº Å½»ö±â¸¦ ÅëÇØ ½´¹ßÃ÷ ¹ßµåÀÇ ¿ëµéÀÌ »ç´Â °÷ ÁÖº¯¿¡¼­ ¹ß°ßÇÒ ¼ö ÀÖ´Ù°í ÇÏ¿´´Ù.#
-Á¤Á¦µÇÁö ¾ÊÀº ±¤¼® 5°³#
+2180#Research Continues#SG_FEEL#QUE_NOIMAGE#
+O cientista Lifeguard de Manuk quer que você leve um mineral de Midgard para ele. O mineral pode ser encontrado em Schwartzwald, na morada de um dragão, com um radar.#
+5 Minerais Brutos#
 
-2181#Continuous Research#SG_FEEL#QUE_NOIMAGE#
-¸¶´©Å©ÀÇ °úÇÐÀÚ ¸®Æä°¡µå´Â ¹Ìµå°¡¸£µåÀÇ ±¤¼®À» ¿øÇÏ¸ç, ±×°ÍÀº Å½»ö±â¸¦ ÅëÇØ ¾Æ·ç³ªÆçÃ÷ÀÇ Åä¸£ È­»ê ÁÖº¯¿¡¼­ ¹ß°ßÇÒ ¼ö ÀÖ´Ù°í ÇÏ¿´´Ù.#
-Á¤Á¦µÇÁö ¾ÊÀº ±¤¼® 5°³#
+2181#Research Continues#SG_FEEL#QUE_NOIMAGE#
+O cientista Lifeguard de Manuk quer que você leve um mineral de Midgard para ele. O mineral pode ser encontrado em Arunafeltz, perto do Vulcão de Thor, com um radar.#
+5 Minerais Brutos#
 
-2182#Continuous Research#SG_FEEL#QUE_NOIMAGE#
-°úÇÐÀÚ ¸®Æä°¡µå´Â ´ç½Å¿¡°Ô °¨»ç¸¦ Ç¥ÇÏ¸ç ¾ÕÀ¸·Îµµ ¸¹Àº µµ¿òÀ» ¹Ù¶õ´Ù°í ÀüÇß´Ù.#
+2182#Research Continues#SG_FEEL#QUE_NOIMAGE#
+O cientista Lifeguard agradece por sua ajuda e está ansioso para tê-la de novo em breve.#
 #
 
 2183#Perfume#SG_FEEL#QUE_NOIMAGE#
-±×·ç´©ÀÌ´Â ÇÃ¶ó¿ö¸®·ÎºÎÅÍ ¾ËÇÁÇìÀÓ ²É¾¾¸¦ ¹Þ¾Æ È¯°æÁ¤È­ ÀåÄ¡¸¦ ÅëÇØ ²ÉÀ» ÇÇ¿ö¿À¶ó°í Çß´Ù.# 
-±×·ç´©ÀÌ¿¡°Ô ¾ËÇÁÇìÀÓÀÇ ²É Àü´Þ#
+Grenouille pediu para você buscar uma semente de flor de Alfheim e usar o Equipamento de Purificação Ambiental para fazê-la brotar.# 
+Entregue a Flor de Alfheim a Grenouille.#
 
 2184#Perfume#SG_FEEL#QUE_NOIMAGE#
-±×·ç´©ÀÌ´Â Perfume¸¦ ¸¸µé°Ú³ë¶ó¸ç Àá½Ã ±â´Ù·Á ´Þ¶ó°í Çß´Ù.#
+Grenouille pediu para esperar que ele termine o perfume.#
 #
 
 2185#Perfume#SG_FEEL#QUE_NOIMAGE#
-±×·ç´©ÀÌ´Â Perfume¸¦ °Ç³×¸ç º´»çµéÀ» Ä¡·áÇÏ°í °á°ú¸¦ ¾Ë·Á´Þ¶ó ¸»Çß´Ù.#
-ÁöÃÄÀÖ´Â ÀüÅõº´ 5¸í¿¡°Ô Perfume »ç¿ë#
+Grenouille lhe entregou o perfume e pediu para usá-lo para confortar os soldados, e então voltar e contar o resultado.#
+Use o perfume em 5 soldados exaustos.#
 
 2186#Perfume#SG_FEEL#QUE_NOIMAGE#
-½ºÇÃ¶ûµðµåÀÇ ±×·ç´©ÀÌ´Â ´ç½Å¿¡°Ô °¨»ç¸¦ Ç¥Çß´Ù.#
+Grenouille de Splendide expressou sua gratidão.#
 #
 
 // ±èÀºµ¿
@@ -1134,60 +1135,77 @@ Penetração#
 
 
 //--------------------±¹¿Õ¼±Ãâ--------------------------------
-4015#Tornando-se um Avaliador#SG_FEEL##
-Encontre-se com o inspetor do reino e torne-se um avaliador.##
+4015#Tornando-se um Avaliador#SG_FEEL#
+Encontre-se com o inspetor do reino e torne-se um avaliador.#
+#
 
-4016#Prova de Qualificação#SG_FEEL##
-Prove sua força, trazendo 2 Rédeas.##
+4016#Prova de Qualificação#SG_FEEL#
+Prove sua força, trazendo 2 Rédeas.#
+#
 
-4017#Teste de Qualificação#SG_FEEL##
-Passe no teste de aptidão para se qualificar.##
+4017#Teste de Qualificação#SG_FEEL#
+Passe no teste de aptidão para se qualificar.#
+#
 
-4018#Encontro dos Príncipes#SG_FEEL##
-Fale com o inspetor de novo e prepare-se para encontrar os príncipes.##
+4018#Encontro dos Príncipes#SG_FEEL#
+Fale com o inspetor de novo e prepare-se para encontrar os príncipes.#
+#
 
-4020#Entrevista com o Príncipe#SG_FEEL##
-Fale com o príncipe da família Gaebolg.##
+4020#Entrevista com o Príncipe#SG_FEEL#
+Fale com o príncipe da família Gaebolg.#
+#
 
-4021#Entrevista com o Príncipe#SG_FEEL##
-Fale com o príncipe da família Walter.##
+4021#Entrevista com o Príncipe#SG_FEEL#
+Fale com o príncipe da família Walter.#
+#
 
-4022#Entrevista com o Príncipe#SG_FEEL##
-Fale com o príncipe da família Richard.##
+4022#Entrevista com o Príncipe#SG_FEEL#
+Fale com o príncipe da família Richard.#
+#
 
-4023#Entrevista com o Príncipe#SG_FEEL##
-Fale com o príncipe da família Heine.##
+4023#Entrevista com o Príncipe#SG_FEEL#
+Fale com o príncipe da família Heine.#
+#
 
-4024#Entrevista com o Príncipe#SG_FEEL##
-Fale com o príncipe da família Wigner.##
+4024#Entrevista com o Príncipe#SG_FEEL#
+Fale com o príncipe da família Wigner.#
+#
 
-4025#Entrevista com o Príncipe#SG_FEEL##
-Fale com o príncipe da família Roewenburg.##
+4025#Entrevista com o Príncipe#SG_FEEL#
+Fale com o príncipe da família Roewenburg.#
+#
 
-4026#Entrevista com o Príncipe#SG_FEEL##
-Fale com o príncipe da família Nerius.##
+4026#Entrevista com o Príncipe#SG_FEEL#
+Fale com o príncipe da família Nerius.#
+#
 
-4027#Entrevista com o Príncipe#SG_FEEL##
-Escute a história um pouco mais.##
+4027#Entrevista com o Príncipe#SG_FEEL#
+Escute a história um pouco mais.#
+#
 
-4028#O Favor de Peter#SG_FEEL##
-Encontre a garota que escreveu a carta ao príncipe Peter, e entregue as flores por ele.##
+4028#O Favor de Peter#SG_FEEL#
+Encontre a garota que escreveu a carta ao príncipe Peter, e entregue as flores por ele.#
+#
 
-4029#O Favor da Garota#SG_FEEL##
-Entregue a flor da garota a Peter.##
+4029#O Favor da Garota#SG_FEEL#
+Entregue a flor da garota a Peter.#
+#
 
-4030#A História de Ahrum e Ernst#SG_FEEL##
-Ouça a história de Ahrum e Ernst.##
+4030#A História de Ahrum e Ernst#SG_FEEL#
+Ouça a história de Ahrum e Ernst.#
+#
 
-4031#A História de Ahrum e Ernst#SG_FEEL##
-Você soube que uma pessoa da família Walter está aqui. Mas como?##
+4031#A História de Ahrum e Ernst#SG_FEEL#
+Você soube que uma pessoa da família Walter está aqui. Mas como?#
+#
 
-4032#Conspiração das duas famílias#SG_FEEL##
-Há uma conspiração entre as famílias Walter e Richard. Você precisa contar isso a alguém.##
+4032#Conspiração das duas famílias#SG_FEEL#
+Há uma conspiração entre as famílias Walter e Richard. Você precisa contar isso a alguém.#
+#
 
-4033#Morte de Ahrum#SG_FEEL##
-O príncipe Ahrum foi morto por Ernst. Você precisa relatar isso o mais rápido possível.##
-
+4033#Morte de Ahrum#SG_FEEL#
+O príncipe Ahrum foi morto por Ernst. Você precisa relatar isso o mais rápido possível.#
+#
 
 // ±Ç¿À¹Î
 
@@ -1509,82 +1527,6 @@ Encontre outro selo na Torre#
 7053#Torre de Thanatos#SG_FEEL#QUE_NOIMAGE#
 Quando o quarto selo foi encontrado, você também encontrou o diário de Varmunt. Talvez seja este diário que Rekenber procurava! Devo informar Burled.#
 Entregue o diário de Varmunt para Burled#
-
-//--- ½Å±Ô¸ðÀÚ Á¦ÀÛ 2008³â °í¾çÀÌ¹ß¸Ó¸®ÇÉ
-
-7054#Mue's Favor - Teach them a lesson!#SG_FEEL#QUE_NOIMAGE#
-You've got a mission to warn the Kobold Archer to protect the Wild Rose's home.#
-Beat up 1000 Kobold Archers.#
-
-7055#Mue's Favor - Not the cat!#SG_FEEL#QUE_NOIMAGE#
-Mue's asking for one more favor! Since you're protecting Wild Rose, you are never to hit Wild Rose....#
-Don't hit the Wild Rose!#
-
-//--- ep13.2 [¸Þ½ÅÀú]
-
-7056#Messenger - Arch's Favor#SG_FEEL#QUE_NOIMAGE#
-At the Raffine's post called, 'Splendide,' you met a Raffine, 'Arch' who asked you to find the friend, 'Terra.'  He says Terra usually leaves traces by plaiting straws.#
-Find the traces of Terra.#
-
-7057#Messenger - Arch's Favor#SG_FEEL#QUE_NOIMAGE#
-You've found a trace near Splendide. Looks like the traces are taking the direction of South. Let's keep looking.#
-Find the traces of Terra.#
-
-7058#Messenger - Arch's Favor#SG_FEEL#QUE_NOIMAGE#
-You fell on the place between giant roots of a tree. You've found a giant tribe called 'Sapa,' hard as rocks and big as mountain. Seems like there's no more traces left for Terra.#
-Report to Arch#
-
-7059#Messenger - Terra's Whereabouts#SG_FEEL#QUE_NOIMAGE#
-Arch's worrying about Terra went off with Bradium from the Lab without permission. Terra could have gone to 'Sapa' in that 'Cave' with Bradium.#
-Go find Terra..#
-
-7060#Messenger - Terra's Whereabouts#SG_FEEL#QUE_NOIMAGE#
-When you arrived to see Sapa, Terra has already long gone. Very bright pieces of mineral were scattered around the hardened giant. These pieces must be the Bradium.#
-If Bradium is related.. would it be Sapa?#
-
-7061#Messenger - Terra's Whereabouts#SG_FEEL#QUE_NOIMAGE#
-In the town of 'Sapa,' you overheard something at 'Manuk,' that a 'Raffine' is captured.#
-You must find the captured Raffine.#
-
-7062#Messenger - Terra's Whereabouts#SG_FEEL#QUE_NOIMAGE#
-You heard that this Raffine captured in Manuk is injured.  Maybe you'll be able to see her if you get some remedy.#
-Ask Arch#
-
-7063#Messenger - Terra's Whereabouts#SG_FEEL#QUE_NOIMAGE#
-You found out that 'Yggdrasil berry' is the best remedy for the Raffine. You should collect some Yggdrasil berries around the gigantic tree.#
-Collect at least 6 Yggdrasil berries#
-
-7064#Messenger - Terra's Whereabouts#SG_FEEL#QUE_NOIMAGE#
-You've collected the last Yggdrasil berry. You must deliver these to Snorren at Manuk.#
-Deliver the Yggdrasil berries to Snorren#
-
-7065#Messenger - Terra's Whereabouts#SG_FEEL#QUE_NOIMAGE#
-You could talk to the captured Raffine through Snorren's help. You must interpret the conversation with the Raffine to Snorren and Luik.#
-Conversation with Raffine#
-
-7066#Messenger - Prove the Truth#SG_FEEL#QUE_NOIMAGE#
-Luik doubts Terra's story about discovering the gigantic cave inside the roots of gigantic tree and the dying Sapa. Snorren suspects that the hardened Sapa might be his friend, 'Ogen' and requests to see the evidence.#
-Go back to the cave and find some evidences#
-
-7067#Messenger - Prove the Truth#SG_FEEL#QUE_NOIMAGE#
-You've got some 'Bradium's  fragments' from the hardened body of Sapa and a 'Shabby Muffler.' These will just do!#
-Show the evidences to Luik and Snorren#
-
-7068#Messenger - Prove the Truth#SG_FEEL#QUE_NOIMAGE#
-Looks like the 'Shabby Muffler' is the one from a friend of Snorren's. It was also proved that Terra was really trying to save 'Ogen' with 'Bradium's fragments'. You and Snorren decided to go save Ogen.#
-Go to Ogen before it's too late#
-
-7069#Messenger - Too late!#SG_FEEL#QUE_NOIMAGE#
-Looks like you're too late for saving Ogen. Snorren turned his back and started to walk back to the town. You should pick up Terra.#
-#
-
-7070#Messenger - Terra's Return#SG_FEEL#QUE_NOIMAGE#
-You heard from Snorren that Terra has been released.#
-#
-
-7071#Messenger - Invitation#SG_FEEL#QUE_NOIMAGE#
-Arch invited you to Terra's residence to talk about the details. Terra's home is one of hundreds of Yai hanging on the leaves, located at the South-East area of the post.#
-Go to Terra's Yai.#
 
 // ÀÌ°æ¼÷
 //--------------------¾î½ê½ÅÀüÁ÷--------------------------------
@@ -3070,13 +3012,13 @@ Talk to the witch, Clint Kana to escape.#
 
 //---------------------------¿ìÅº ÃßÀå ¹ø¿ª Äù--------------------------------
 
-10055#Understanding the culture of Utan#SG_FEEL#QUE_NOIMAGE#
-The Chief of Utan tribe suggests that you try learning Utan's culture.#
-How come those people of Utan all wear masks?#
+10055#Cultura de Wootan#SG_FEEL#QUE_NOIMAGE#
+O Chefe da tribo Wootan sugere que você continue a aprender sobre essa cultura.#
+Como todos desse povo usam máscaras?#
 
-10056#Learning Utan Language#SG_FEEL#QUE_NOIMAGE#
-You'll be able to learn Utan language if you bring certain materials.#
-10 Oil Paper, 5 Slick Paper, 1 Squid Ink, 1 Feather of Birds#
+10056#Idioma Wootan#SG_FEEL#QUE_NOIMAGE#
+Você aprenderá o idioma Wootan se trouxer certos itens.#
+10 Papéis Amarelados, 5 Pedaços de Papel, 1 Tinta de Polvo, 1 Plumas de Ave#
 
 // --------------EP13------------------------------------------
 //---------------------------ÀÌ°è·Î °¡ÀÚ--------------------------------
@@ -3562,8 +3504,8 @@ Registration is quite simple. Just go to the registration staff in the building 
 Now let's go to him!#
 
 11086#Familiarizing Yourself with New Surroundings#SG_FEEL#QUE_NOIMAGE#
-#
 You ended up registering with an illiberal staff. Just go back to the Instructor Lugen.#
+#
 
 11087#Repairing the Tent#SG_FEEL#QUE_NOIMAGE#
 There are several branch arond the camp, you can get them easily. And you can get rope from Nepenthes Vines on the eastern part.#
@@ -3829,8 +3771,8 @@ Find Torpy's mother out of the village.#
 Finding Torpy's mother#
 
 12045#Soothing a crying child 2#SG_FEEL#QUE_NOIMAGE#
-Deliver the mother's message to Torpy. [I'll be back…]#
-I'll be back…#
+Deliver the mother's message to Torpy. [I'll be back…] #
+I'll be back…  #
 
 12046#Soothing a crying child 3#SG_FEEL#QUE_NOIMAGE#
 Find Torpy's father who caused all the trouble. He must be hiding somewhere in the village.#
@@ -3915,19 +3857,19 @@ Capture-as usando uma ^006400Rede de Captura^000000 recebida da Bióloga Lucia.#
 Mensagem da ^0000FFLucia^000000 que está em ^8B4513Brasilis^000000: "^404040Obrigada pela sua ajuda.Mas somente poderei entregar uma nova ^006400Esfera de Captura^404040 para você amanhã. ^000000"#
 Se quiser capturar mais ^FF0000Anêmonas^000000, volte a falar com a ^0000FFBióloga Lucia^000000 depois de 24 horas.#
 
-//---------------------------¿ìÅº ÃßÀå ¹ø¿ª Äù--------------------------------
-
-10055#Cultura de Wootan#SG_FEEL#QUE_NOIMAGE#
-O Chefe da tribo Wootan sugere que você continue a aprender sobre essa cultura.#
-Como todos desse povo usam máscaras?#
-
-10056#Idioma Wootan#SG_FEEL#QUE_NOIMAGE#
-Você aprenderá o idioma Wootan se trouxer certos itens.#
-10 Papéis Amarelados, 5 Pedaços de Papel, 1 Tinta de Polvo, 1 Plumas de Ave#
-
 9020#Entrega Especial#SG_FEEL#QUE_NOIMAGE#
 Você completou a quest da entrega especial.#
 Entrega Especial#
+
+// ???????????
+// ???
+9025#Limpe o Convés#SG_FEEL#QUE_NOIMAGE#
+Ratons Fujões invadiram o barco de ^8B4513Alberta^000000. Capture-os com a ^006400Esfera de Captura^000000.#
+Colete ^006400Esfera Mística^000000 que pode ser derrubada pelos ^FF0000Ratos Fujões^000000.#
+
+9026#Limpe o Convés: status#SG_FEEL#QUE_NOIMAGE#
+Mensagem do "First Mate": "^404040Muito obrigado por me ajuda. Se quiser, volte em 20 horas.^000000"#
+Você pode falar com o ^0000FFFirst Mate^000000 depois que 20 horas se passarem, para repetir a quest.#
 
 4034#Entrega da Mensagem#SG_FEEL#QUE_NOIMAGE#
 Entregue essa carta para ^000077Donovan^000000 que está na parte norte de Alberta.#
@@ -3935,20 +3877,449 @@ Entregue a carta para ele.#
 
 4035#Entrega da Mensagem#SG_FEEL#QUE_NOIMAGE#
 Entregue essa carta para ^000077Richard^000000 que está na Ilha do Navio Fantasma.#
-Deliver the letter to him.#
+Entregue a carta a ele.#
 
 4036#Entrega da Mensagem#SG_FEEL#QUE_NOIMAGE#
 Entregue essa carta para ^000077Lion^000000 que está em Prontera.#
-Deliver the letter to him.#
+Entregue a carta a ele.#
 
 4037#Entrega da Mensagem#SG_FEEL#QUE_NOIMAGE#
 Entregue essa carta para ^000077Midetz^000000 que está em Izlude.#
-Deliver the letter to him.#
+Entregue a carta a ele.#
 
 4038#Entrega da Mensagem#SG_FEEL#QUE_NOIMAGE#
 Entregue essa carta para ^000077Greivous^000000 que está na Ilha das Tartarugas.#
-Deliver the letter to him.#
+Entregue a carta a ele.#
 
 4100#Completar a Entrega da Mensagem#SG_FEEL#QUE_NOIMAGE#
 Eu completei a quest de Entrega da Mensagem. Tenho que esperar 20 horas agora.#
 Volte em 20 horas.#
+
+
+2184#Perfume#SG_FEEL#QUE_NOIMAGE#
+Grenouille pediu para esperar que ele termine o perfume.#
+#
+
+2185#Perfume#SG_FEEL#QUE_NOIMAGE#
+Grenouille lhe entregou o perfume e pediu para usá-lo para confortar os soldados, e então voltar e contar o resultado.#
+Use o perfume em 5 soldados exaustos.#
+
+2186#Perfume#SG_FEEL#QUE_NOIMAGE#
+Grenouille de Splendide expressou sua gratidão.#
+#
+
+3135#Yggdrasil danificada - Estabilização do Covil#SG_FEEL#QUE_NOIMAGE#
+A árvore Yggdrasil foi gravemente ferida pela Sombra de Nydhogg. O poder de autopurificação de Yggdrasil vai durar aproximadamente 3 dias.#
+#
+
+//--- New Hat Making 2008 Cat Foot Hairpin
+
+7054#Pedido de Myu - Inimigos#SG_FEEL#QUE_NOIMAGE#
+Aceitei o pedido de Myu para 'alertar' os Kobolds Arqueiros e proteger as Rosas Selvagens. Mas esse 'alerta' é... .. ?#
+Puna 1.000 Kobolds Arqueiros.#
+
+7055#Pedido de Myu - Essa gata de novo, NÃO!#SG_FEEL#QUE_NOIMAGE#
+Mais um pedido de Myu! Você vai punir os Kobolds Arqueiros para proteger as Rosas Selvagens. É claro que você não deve ferir nenhuma Rosa Selvagem. Se você quebrar essa regra...#
+Não ataque nenhuma Rosa Selvagem!#
+
+//--- ep13.2 [Messenger]
+
+7056#Mensageiro - Pedido de Arc#SG_FEEL#QUE_NOIMAGE#
+Arc, de Splendide, posto avançado dos Laphines, me pediu para procurar sua amiga Terra. Ela tem o hábito de marcar seu caminho com nós nas plantas.#
+Procure o rastro de Terra.#
+
+7057#Mensageiro - Pedido de Arc#SG_FEEL#QUE_NOIMAGE#
+Encontrei o rastro de Terra perto de Splendide. Os vestígios levam para o sul. Vou continuar procurando.#
+Procure o rastro de Terra.#
+
+7058#Mensageiro - Pedido de Arc#SG_FEEL#QUE_NOIMAGE#
+Procurando o rastro de Terra, caí no buraco junto a uma raiz de árvore enorme. Na grande caverna subterrânea, encontrei um gigante Sapha petrificado. Não há mais vestígios de Terra...#
+Volte até Arc e conte seu progresso.#
+
+7059#Mensageiro - Paradeiro de Terra#SG_FEEL#QUE_NOIMAGE#
+Arc está preocupado com Terra, que pegou uma amostra de brádio das instalações de pesquisa sem permissão. Talvez Terra tenha ido encontrar o Sapha na Caverna.#
+Em busca de Terra...#
+
+7060#Mensageiro - Paradeiro de Terra#SG_FEEL#QUE_NOIMAGE#
+Terra já tinha ido quando cheguei na Caverna. Fragmentos brilhantes de um minério estavam espalhados sobre o Sapha petrificado.#
+Será que o Sapha tem algo a ver com o brádio?#
+
+7061#Mensageiro - Paradeiro de Terra#SG_FEEL#QUE_NOIMAGE#
+Manuk é a vila dos gigantes Saphas. Ouvi dois Saphas falando sobre uma Laphine capturada em uma prisão.#
+Procure pela Laphine capturada.#
+
+7062#Mensageiro - Paradeiro de Terra#SG_FEEL#QUE_NOIMAGE#
+A Laphine prisioneira em Manuk está ferida. Se eu voltar com algum remédio para ela, talvez consiga vê-la.#
+Pergunte a Arc sobre a cura.#
+
+7063#Mensageiro - Paradeiro de Terra#SG_FEEL#QUE_NOIMAGE#
+O Fruto de Yggdrasil é a melhor cura para os Laphines. Preciso coletar alguns Frutos de Yggdrasil perto da Árvore Gigante.#
+Colete mais de 6 Frutos de Yggdrasil.#
+
+7064#Mensageiro - Paradeiro de Terra#SG_FEEL#QUE_NOIMAGE#
+Colhi o último Fruto de Yggdrasil. Vamos levar todos para Snorren em Manuk.#
+Entregue os Frutos de Yggdrasil para Snorren#
+
+7065#Mensageiro - Paradeiro de Terra#SG_FEEL#QUE_NOIMAGE#
+Agora posso falar com a Laphine prisioneira, graças a Snorren. Preciso agir como intérprete entre a prisioneira e Snorren e Luik.#
+Fale com a Laphine#
+
+7066#Mensageiro - Prove a Verdade#SG_FEEL#QUE_NOIMAGE#
+Luik duvida da história de Terra sobre a caverna enorme sob as raízes da árvore e o Sapha ferido. O Sapha petrificado pode ser Ogen, mas ele exige provas concretas.#
+Volte à Caverna e procure pelas provas.#
+
+7067#Mensageiro - Prove a Verdade#SG_FEEL#QUE_NOIMAGE#
+Consegui os Fragmentos de Brádio e a Sobrepeliz Amarrotada junto ao Sapha petrificado. Vamos voltar a Manuk e apresentá-los como provas.#
+Mostre as provas para Luik e Snorren.#
+
+7068#Mensageiro - Prove a Verdade#SG_FEEL#QUE_NOIMAGE#
+Parece que a Sobrepeliz Amarrotada pertence mesmo a Ogen, amigo de Snorren. Agora provei que Terra estava tentando salvar Ogen. Resolvi voltar à Caverna com Snorren para salvar Ogen.#
+Volte até Ogen antes que seja tarde demais.#
+
+7069#Mensageiro - Tarde Demais!!#SG_FEEL#QUE_NOIMAGE#
+Parece que chegamos tarde para salvar Ogen. Snorren sofreu um grande pesar, e voltou para a vila. É melhor eu voltar também, para trazer Terra de volta.#
+#
+
+7070#Mensageiro - Retorno de Terra#SG_FEEL#QUE_NOIMAGE#
+Assim que cheguei à cidade, Snorren disse que Terra foi libertada.#
+#
+
+7071#Mensageiro - Convite#SG_FEEL#QUE_NOIMAGE#
+Arc me convidou para a casa de Terra. É um dos muitos Yais pendurados nas folhas. Eles ficam a sudeste de Splendide.#
+Vamos até o Yai de Terra.#
+
+//----Manuk Galten - Hunt down Lata and Duneir.
+7074#Prova de Bravura - Rata#SG_FEEL#QUE_NOIMAGE#
+Para provar minha valentia a Strom, Jardineiro de Manuk, decidi ir caçar uma Rata. As Ratas se encontram na caverna profunda chamada Ferida da Fúria.#
+Mate 1 Rata#
+
+7075#Prova de Bravura - Duneyrr#SG_FEEL#QUE_NOIMAGE#
+Para provar minha valentia a Strom, Jardineiro de Manuk, decidi ir caçar um Duneyrr. Os Duneyrrs se encontram na caverna profunda chamada Ferida da Fúria.#
+Mate 1 Duneyrr#
+
+//---Expedition Camp Wanted
+7076#Procurado - Os Últimos Fugitivos#SG_FEEL#QUE_NOIMAGE#
+Rin procura alguém para caçar os últimos membros da Dandelion que fugiram para Ash Vacuum. O fugitivo deve estar escondido na Ferida da Fúria.#
+Mate todos os Fugitivos Dandelions e volte a falar com Pinedel.#
+
+//---Expedition Camp Cute Pet Research
+7077#Bichinho Fofinho - Coletar o Ovo de Dragão#SG_FEEL#QUE_NOIMAGE#
+Colete ovos de Dragão para Pinedel.#
+Colete 10 Ovos de Dragão#
+
+7078#Bichinho Fofinho - Até a próxima vez#SG_FEEL#QUE_NOIMAGE#
+Pinedel precisa de muitas amostras para sua pesquisa sobre bichinhos. Vamos voltar daqui a um dia.#
+#
+
+//---Manuk - Collect purified bradium
+7079#Mineral Misterioso - Brádio Purificado#SG_FEEL#QUE_NOIMAGE#
+Ajude o Engenheiro de Manuk a se livrar dos Golens de Brádio e coletar Brádio Purificado.#
+Colete 20 Brádios Purificados do Golem de Brádio.#
+
+7080#Mineral Misterioso - Até a próxima vez#SG_FEEL#QUE_NOIMAGE#
+O Brádio é essencial para os Saphas. Volte a falar com o Engenheiro de Manuk daqui a um dia.#
+#
+
+//--- Splendide - Collect materials for a Yai
+7081#Artesanato - Materiais de decoração para um Yai#SG_FEEL#QUE_NOIMAGE#
+Ajude o Artesão de Yais de Splendide a coletar materiais de decoração.#
+Colete 15 Líquidos Fluorescentes e 15 Lágrimas Cristalizadas.#
+
+7082#Artesanato - Até a próxima vez#SG_FEEL#QUE_NOIMAGE#
+A decoração do Yai é muito importante para os Laphines, que valorizam a beleza. Volte a falar com o Artesão de Splendide daqui a um dia.#
+#
+
+// Tutorial Quest : Swordman (tu_sword.sc)
+
+8211#Aula de Shurank#SG_FEEL#QUE_NOIMAGE#
+Você ainda não aprendeu o Golpe Fulminante. Você não está pronto para... ah, bem, você ainda vai passar por muita coisa. Enfim, primeiro você precisa aprender o Golpe Fulminante. Ele é a base da arte do espadachim. Não esqueça!!#
+Volte a falar com Shurank depois de aprender a habilidade Golpe Fulminante.#
+
+8212#Aula de Shurank#SG_FEEL#QUE_NOIMAGE#
+Hum, enfim você aprendeu o Golpe Fulminante, mas ainda está 'verde'. Continue treinando! Vou ficar esperando.#
+Volte a falar com Shurank depois de aprender um nível mais alto na habilidade Golpe Fulminante.#
+
+8213#Aula de Shurank#SG_FEEL#QUE_NOIMAGE#
+Hum... Agora você está muito bom com o Golpe Fulminante, não é? Mas ainda não é o bastante. Continue com o treinamento! Vou ficar esperando.#
+Volte a falar com Shurank depois de dominar a habilidade Golpe Fulminante.#
+
+8214#Aula de Shurank#SG_FEEL#QUE_NOIMAGE#
+Hum... Você dominou o Golpe Fulminante! Impressionante. Mas não fique muito convencido. Continue treinando! Você só concluiu o básico, o caminho a seguir ainda é longo.#
+Assista à aula de Shurank#
+
+8215#Aula de Shurank#SG_FEEL#QUE_NOIMAGE#
+Vamos terminar de falar sobre Aumentar Recuperação de HP, e o que mais? Ah, é mesmo, Provocar! Vamos começar com as aulas sobre Provocar. Mas preciso prepará-las. Fale comigo daqui a pouco.#
+Assista à aula de Shurank#
+
+8216#Tarefas de Shurank#SG_FEEL#QUE_NOIMAGE#
+Encontre o Cavaleiro ^FF0000Dequ'ee^000000 que foi a ^FF0000Geffen^000000 para uma investigação, e leve meu recado. ^0000FFComo está sua investigação sobre o assassino? Você descobriu quem ele é? Se descobriu, o que devemos fazer agora?^000000... Essa é minha mensagem.#
+Encontre Dequ'ee em Geffen e entregue o recado de Shurank.#
+
+8217#Mensagem de Dequ'ee#SG_FEEL#QUE_NOIMAGE#
+Então foi isso que Shurank perguntou, hein? Entendi... diga isso a ele: Ainda não, mas não vai demorar muito, vou precisar da sua ajuda quando o momento chegar. Câmbio!#
+Leve o recado de Dequ'ee a Shurank em Izlude.#
+
+8218#Aula de Shurank#SG_FEEL#QUE_NOIMAGE#
+Hum, você ainda não aprendeu Provocar. É bom saber o básico, mas você precisa conhecer essas habilidades práticas para ser um verdadeiro espadachim! De agora em diante, concentre-se no treinamento de Provocar.#
+Aprenda a habilidade Provocar e volte a falar com Shurank#
+
+8219#Aula de Shurank#SG_FEEL#QUE_NOIMAGE#
+Hum. Então, você aprendeu Provocar... Mas não é o bastante. Concentre-se em treinar Provocar ainda mais.#
+Aprenda um nível mais alto da habilidade Provocar e volte a falar com Shurank#
+
+8220#Aula de Shurank#SG_FEEL#QUE_NOIMAGE#
+Bem, para a próxima aula... ah, sim, vou lhe ensinar sobre ^FF0000Vigor^00000. Vá lá fora, tome um pouco de ar fresco e volte para falar comigo.#
+Assista à aula de Shurank#
+
+8221#Aula de Shurank#SG_FEEL#QUE_NOIMAGE#
+Vigor é basicamente uma habilidade para tolerar o ataque inimigo. Em outras palavras, ela vai fazer com que você continue se sentindo bem, mesmo levando uma surra dos inimigos. De agora em diante, concentre-se no treinamento de Vigor!!#
+Aprenda a habilidade Vigor e volte a falar com Shurank#
+
+8222#Tarefas de Shurank#SG_FEEL#QUE_NOIMAGE#
+Vamos parar um pouco com as aulas. Você tem um trabalho para fazer. É parecido com o que você fez para mim da outra vez. Lembra do Dequ'ee? Ele precisa da sua ajuda. Apresse-se. Volte depois de ajudá-lo...#
+Vá ver Dequ'ee.#
+
+8223#Tarefas de Dequ'ee#SG_FEEL#QUE_NOIMAGE#
+^FF0000Vá até Morroc e encontre estas pessoas: Muetro, Gale, Hans e Bankley^000000. Então, descubra quem é o verdadeiro assassino! Essa é a sua missão. Fale com os quatro e depois volte para cá.#
+Encontre as provas do assassinato e volte a falar com Dequ'ee.#
+
+8224#Provas dos Criminosos#SG_FEEL#QUE_NOIMAGE#
+Oéteovtra, nemmalazoloncome, culpBanmosasel, adokleyprcone...  Que palavras estranhas. O que isso quer dizer? Preciso pensar... Não faço idéia. Mas sei que são as pistas mais importantes para descobrir o culpado.#
+#
+
+8225#Dedução de Dequ'ee#SG_FEEL#QUE_NOIMAGE#
+É Bankley!! Ele é o assassino!! Vá a Morroc imediatamente e o vigie! Avise se alguma coisa acontecer!#
+Fique de olho em Bankley, em Morroc.#
+
+8226#Morte de Bankley#SG_FEEL#QUE_NOIMAGE#
+Ele está morto. Seu rosto demonstra ressentimento e mágoa, como se tivesse sido acusado injustamente. A julgar pelo sangue derramado, parece que não faz muito tempo que ele morreu. Há uma ferida profunda em seu peito, e uma faca encharcada de sangue apertada na mão direita.#
+Avise Dequ'ee sobre a morte de Bankley.#
+
+8227#Volta para Shurank#SG_FEEL#QUE_NOIMAGE#
+Há circunstâncias misteriosas por trás disso tudo, mas não podemos fazer nada por enquanto. Você estava no meio das aulas, não estava? Volte a falar com Shurank. Você fez um ótimo trabalho. Obrigado.#
+Volte a falar com Shurank#
+
+8228#Aula de Shurank#SG_FEEL#QUE_NOIMAGE#
+Para terminar, vou falar do Impacto Explosivo. Preciso me preparar, então volte daqui a pouco.#
+Assista à aula de Shurank#
+
+// Tutorial Quest : Merchant (tu_merchant.sc)
+
+8229#Aula de Guarnien#SG_FEEL#QUE_NOIMAGE#
+Você ainda não está pronto para aprender a ser um Mercador. O básico para ser um Mercador é... A habilidade ^FF0000Aumentar Capacidade de Carga^000000! Chegue ao nível 4 nessa habilidade, e poderemos começar seus estudos.#
+Aprenda a habilidade Aumentar Capacidade de Carga até o nível 4 e volte a falar com Guarnien.#
+
+8230#Aula de Guarnien#SG_FEEL#QUE_NOIMAGE#
+Na próxima aula, vou explicar como identificar itens, e a habilidade básica Mammonita. Por enquanto, descanse um pouco! Volte quando estiver pronto.#
+Assista à aula de Guarnien.#
+
+8231#Aula de Guarnien#SG_FEEL#QUE_NOIMAGE#
+Na próxima aula, vou lhe ensinar a habilidade ^FF0000Desconto^000000! Fique ligado!#
+Assista à aula de Guarnien.#
+
+8232#Aula de Guarnien#SG_FEEL#QUE_NOIMAGE#
+Volte depois de aprender o nível 4 de Desconto! Gostaria que você dominasse a habilidade, mas temos muita coisa a tratar... Então... Nível 4!!! Tudo bem se você for além, mas isso é o mínimo!#
+Aprenda a habilidade Desconto até o nível 4, no mínimo, e volte a falar com Guarnien.#
+
+8233#Aula de Guarnien#SG_FEEL#QUE_NOIMAGE#
+Você chegou longe, vou lhe dar um teste. É simples, não se preocupe. Volte quando estiver pronto... hehehe.#
+Assista à aula de Guarnien.#
+
+8234#Pesquisa de Mercado em Prontera#SG_FEEL#QUE_NOIMAGE#
+Vá a Prontera e compre 10 Poções Vermelhas! Mas não as compre em qualquer lugar, você deve encontrar o preço mais barato. É claro que você deve comprá-las de NPCs, e não de jogadores.#
+Compre 10 Poções Vermelhas pelo preço mais barato e volte a falar com Guarnien.#
+
+8235#Aula de Guarnien#SG_FEEL#QUE_NOIMAGE#
+Certo, da próxima vez vou falar da habilidade ^FF0000Superfaturar^000000. Hahaha.#
+Assista à aula de Guarnien.#
+
+8236#Aula de Guarnien#SG_FEEL#QUE_NOIMAGE#
+Superfaturar é a habilidade que lhe permite vender itens por um preço mais alto em lojas de NPCs. É uma habilidade importante para Mercadores. Portanto, você precisa aprendê-la até certo nível. Hum... que tal o nível 4?#
+Aprenda a habilidade Superfaturar até o nível 4 e volte a falar com Guarnien.#
+
+8237#Aula de Guarnien#SG_FEEL#QUE_NOIMAGE#
+Da próxima vez vou lhe ensinar sobre a habilidade Usar Carrinho. Essa habilidade também é essencial para Mercadores. Portanto, esteja preparado!... Se bem que não existem habilidades que não sejam importantes...#
+Assista à aula de Guarnien.#
+
+8238#Aula de Guarnien#SG_FEEL#QUE_NOIMAGE#
+A habilidade ^FF0000Usar Carrinho^FF0000 vai aparecer quando você atingir o nível 5 de Aumentar Capacidade de Carga. Ela não tem relação nenhuma com Superfaturar ou com Desconto. Enfim, volte a falar comigo quanto tiver ao menos o nível 4 dessa habilidade importante!#
+Aprenda a habilidade Usar Carrinho até o nível 4 e volte a falar com Guarnien.#
+
+8239#Aula de Guarnien#SG_FEEL#QUE_NOIMAGE#
+Hum, então para terminar, vou ensinar sobre a habilidade Comércio. Volte quando estiver pronto.#
+Assista à aula de Guarnien.#
+
+8240#Aula de Guarnien#SG_FEEL#QUE_NOIMAGE#
+Uma última tarefa para você. Aprenda a habilidade Comércio até o nível 4 e volte. Quero lhe dar um presentinho, mas só quando você estiver nesse nível de habilidade.#
+Aprenda a habilidade Comércio até o nível 4 e volte a falar com Guarnien.#
+
+// ep13 : Translator Quest (ep13_2_rhea.sc)
+
+8241#Busca da Gema Vermelha#SG_FEEL#QUE_NOIMAGE#
+Você tirou a Gema Vermelha de um monte de terra! #
+Leve a Gema de volta ao Mago de Rune-Midgard em Ash Vacuum.#
+
+8242#Busca da Gema Azul#SG_FEEL#QUE_NOIMAGE#
+Você tirou a Gema Azul de um monte de terra! #
+Leve a Gema de volta ao Mago de Rune-Midgard em Ash Vacuum.#
+
+8243#Línguas do Outro Mundo#SG_FEEL#QUE_NOIMAGE#
+Nos arredores de Ash Vacuum, há duas tribos que falam línguas estranhas e desconhecidas em Midgard. O Grupo de Pesquisa da Aliança Tripartite está pesquisando sobre essas línguas... Como será que o ^0000ffLinguista de Arunafeltz^000000 está se saindo com o processo de decodificação?#
+#
+
+8244#A Fada e o Gigante de Madeira#SG_FEEL#QUE_NOIMAGE#
+Vá aos arredores do Acampamento da Expedição, encontre a Fada e o Gigante e conte EXATAMENTE o que disserem.#
+Encontre a Fada e o Gigante de Madeira, e então volte a falar com o Linguista de Arunafeltz.#
+
+8245#Pesquisa sobre Amostras de Linguagem#SG_FEEL#QUE_NOIMAGE#
+Ouvi dizer que o ^0000ffMago de Rune-Midgard^000000 sabe como pesquisar com amostras de linguagem, que tal ir vê-lo e descobrir como? É difícil prosseguir com a pesquisa sem amostras adequadas das línguas.#
+#
+
+8246#Pesquisa sobre Amostras de Linguagem#SG_FEEL#QUE_NOIMAGE#
+Então, você encontrou as duas raças do Outro Mundo. Nossos mercenários enterraram jóias, em segredo, em suas vilas. Você precisa tomar cuidado ao recuperá-las. Os mercenários instalaram armadilhas junto com elas.#
+Recupere as Gemas e volte a falar com o Mago de Rune-Midgard.#
+
+8247#Conferir o Progresso da Pesquisa#SG_FEEL#QUE_NOIMAGE#
+Vou extrair as vozes armazenadas nas Gemas e entregá-las ao Linguista de Arunafeltz. Quando puder, visite o Linguista e confira seu progresso.#
+#
+
+8248#Conferir o Progresso da Pesquisa#SG_FEEL#QUE_NOIMAGE#
+O processo de decodificação está indo bem. Mas o problema é: como vamos armazenar todas essas informações?... Pode ir falar com o Engenheiro Mecânico de Schwartzwald e descobrir o que aconteceu?#
+#
+
+8249#Como Armazenar as Informações#SG_FEEL#QUE_NOIMAGE#
+Ouvi dizer que, com um feitiço de Rune-Midgard, podemos converter a informação em energia mágica e armazená-la em uma joia... Quero ouvir a sugestão do Mago de Rune-Midgard. Pode ir perguntar a ele?#
+#
+
+8250#Mineral do Outro Mundo#SG_FEEL#QUE_NOIMAGE#
+Ouvi dizer que, na área fria de um dos campos nos arredores do Acampamento da Expedição, há ^0000ffum mineral misterioso e desconhecido de Midgard^000000. Talvez eu consiga alguma coisa com esse mineral. Pode ir encontrar esse mineral misterioso para mim?#
+Consiga o mineral misterioso e não-identificado, e volte a falar com o Mago de Rune-Midgard.#
+
+8251#Inserção do Poder Mágico#SG_FEEL#QUE_NOIMAGE#
+Por favor, espere um pouco. Vou criar uma joia com esse mineral, e inserir as informações mágicas. Você parece estar exausto...#
+#
+
+8252#Joia Criada#SG_FEEL#QUE_NOIMAGE#
+Faça-me um último favor. Entregue esta joia ao Engenheiro Mecânico de Schwartzwald.#
+#
+
+8253#Tradutor de Línguas do Outro Mundo#SG_FEEL#QUE_NOIMAGE#
+Precisamos de uma máquina que leia o poder mágico imbuído nesta joia e possa aproveitá-lo imediatamente. Já fiz todos os preparativos, vou levar cerca de uma hora.#
+Volte a falar com o Engenheiro Mecânico de Schwartzwald daqui a uma hora.#
+
+10079#Não fuja da realidade, saia para ver o mundo#SG_FEEL#QUE_NOIMAGE#
+Esta mãe está preocupada com seu filho que não sai de casa.#
+Tente falar com Eromo.#
+
+10080#Não fuja da realidade, saia para ver o mundo#SG_FEEL#QUE_NOIMAGE#
+Eromo não se sente bem porque não pode comer sua comida favorita.#
+Deve haver alguém na cidade que saiba do que Eromo gosta.#
+
+10081#Não fuja da realidade, saia para ver o mundo#SG_FEEL#QUE_NOIMAGE#
+Encontrei um amigo de Eromo!#
+Preciso levar uma banana para ele.#
+
+10082#Não fuja da realidade, saia para ver o mundo#SG_FEEL#QUE_NOIMAGE#
+O amigo de Eromo está comendo banana.#
+Vamos tentar falar com ele de novo.#
+
+10083#Não fuja da realidade, saia para ver o mundo#SG_FEEL#QUE_NOIMAGE#
+Finalmente descobri do que Eromo gosta!#
+Prepare Ração para Monstros e uma Poção Vermelha, e volte a falar com Eromo.#
+
+10084#Não fuja da realidade, saia para ver o mundo#SG_FEEL#QUE_NOIMAGE#
+Descobri por que Eromo não quer sair de casa.#
+Se eu me livrar da Rosa Selvagem, talvez Eromo tenha coragem de sair.#
+
+10085#Não fuja da realidade, saia para ver o mundo#SG_FEEL#QUE_NOIMAGE#
+Livrei-me de todas as Rosas Selvagens, mas não é fácil convencer Eromo a sair de casa.#
+Vamos fazer como a mãe de Eromo pediu.#
+
+10086#Não fuja da realidade, saia para ver o mundo#SG_FEEL#QUE_NOIMAGE#
+Novas informações! Eromo quer um irmão. #
+Conte a ele sobre os irmãos que você conhece. Se você não tem nenhuma história para contar, encontre uma história de irmãos, a vivencie, e então volte e fale com Eromo.#
+
+10087#Não fuja da realidade, saia para ver o mundo#SG_FEEL#QUE_NOIMAGE#
+Eu lhe contei a história, mas não funcionou. Ele não progride. #
+A paciência é uma virtude. Vamos fazer como a mãe de Eromo pediu.#
+
+10088#Não fuja da realidade, saia para ver o mundo#SG_FEEL#QUE_NOIMAGE#
+Ele é muito pessimista sobre a amizade. #
+Conte a ele sobre os amigos que você conhece. Se você não tem nenhuma história para contar, encontre uma história de amigos, a vivencie, e então volte e fale com Eromo.#
+
+10089#Não fuja da realidade, saia para ver o mundo#SG_FEEL#QUE_NOIMAGE#
+Parece que ele está um pouco abalado. #
+O que resta não são histórias de outras pessoas, mas sim sua própria história e experiência. Conte a ele sobre a agradável sensação da aventura.#
+
+11101#Anotações de Bazett#SG_FEEL#QUE_NOIMAGE#
+Ajude Bazett em sua pesquisa sobre fadas e gigantes.#
+Parta depois de receber materiais para a pesquisa.#
+
+11102#Anotações de Bazett#SG_FEEL#QUE_NOIMAGE#
+Examine os gigantes do leste.#
+Entregue o caderno depois da investigação.#
+
+11103#Anotações de Bazett#SG_FEEL#QUE_NOIMAGE#
+#
+#
+
+11104#Folga#SG_FEEL#QUE_NOIMAGE#
+A investigação foi concluída com segurança. Preciso descansar para a próxima.#
+Descanse um pouco.#
+
+11105#Chifre de Hilsrion#SG_FEEL#QUE_NOIMAGE#
+Preciso de pregos para consertar esta barraca, podemos consegui-los com o animal chamado ^0000FFHilsrion^000000. ^0000FF30 deles^000000 devem bastar.#
+Consiga 30 Chifres de Hilsrion.#
+
+12070#Tempo de Acesso Limitado#SG_FEEL#QUE_NOIMAGE#
+Você pode entrar na Torre Sem Fim, aberta por tempo limitado.#
+Tempo de acesso limitado#
+
+12071#Tempo de Acesso Limitado#SG_FEEL#QUE_NOIMAGE#
+Você recebeu uma tabela e marcou um horário. Os detalhes são dados separadamente.#
+Confira a participação#
+
+11134#Acabe com o Pernilongo Mestre#SG_FEEL#QUE_NOIMAGE#
+Derrote 10 Pernilongos.#
+#
+
+9047#Combater as Mulas Sem Cabeça#SG_FEEL#QUE_NOIMAGE#
+Proteja a ^D2691ENaomi ^000000 que está cuidando do carregamento de palha.# 
+^800000Mula Sem Cabeça^FF000010 ^000000 eliminadas.#
+
+9048#Combater as Mulas Sem Cabeça#SG_FEEL#QUE_NOIMAGE#
+Proteja a ^D2691ENaomi ^000000 que está cuidando do carregamento de palha.# 
+^800000Mula Sem Cabeça^FF000010 ^000000 eliminadas. Repita a quest daqui a 20 horas.#
+
+9027#Doação para a Igreja#SG_FEEL#QUE_NOIMAGE#
+Você realizou a Quest de Doação para a Igreja.#
+Quest de Doação para a Igreja#
+
+//-------------2010EasterEvent--------------
+9117#A Cerimônia - 1a aventura#SG_FEEL#QUE_NOIMAGE#
+Você precisa completar a primeira tarefa para encerrar a maldição de ^0000FFRina^000000, em ^8B4513Prontera^000000. Quando estiver pronto, fale com ^0000FFRina^000000.#
+Para completar a 1a tarefa de ^0000FFRina^000000#
+
+9118#A Cerimônia - Derrotar Deviruchis#SG_FEEL#QUE_NOIMAGE#
+Entre ^FF0000Deviruchi^000000, ^FF0000Aparição^000000, ^FF0000Dullahan^000000, e ^FF0000Pesadelo Sombrio^000000, escolha um tipo de monstro e derrotemais que ^00640050^000000 vezes. Depois fale com ^0000FFRina^000000.#
+^0000FFDerrote monstros para encerrar a maldição^000000#
+
+9119#A Cerimônia - Derrotar Aparições#SG_FEEL#QUE_NOIMAGE#
+Entre ^FF0000Deviruchi^000000, ^FF0000Aparição^000000, ^FF0000Dullahan^000000, e ^FF0000Pesadelo Sombrio^000000, escolha um tipo de monstro e derrotemais que ^00640050^000000 vezes. Depois fale com ^0000FFRina^000000.#
+^0000FFDerrote monstros para encerrar a maldição^000000#
+
+9120#A Cerimônia - Derrotar Dullahans#SG_FEEL#QUE_NOIMAGE#
+Entre ^FF0000Deviruchi^000000, ^FF0000Aparição^000000, ^FF0000Dullahan^000000, e ^FF0000Pesadelo Sombrio^000000, escolha um tipo de monstro e derrotemais que ^00640050^000000 vezes. Depois fale com ^0000FFRina^000000.#
+^0000FFDerrote monstros para encerrar a maldição^000000#
+
+9121#A Cerimônia - Derrotar Pesadelos Sombrios#SG_FEEL#QUE_NOIMAGE#
+Entre ^FF0000Deviruchi^000000, ^FF0000Aparição^000000, ^FF0000Dullahan^000000, e ^FF0000Pesadelo Sombrio^000000, escolha um tipo de monstro e derrotemais que ^00640050^000000 vezes. Depois fale com ^0000FFRina^000000.#
+^0000FFDerrote monstros para encerrar a maldição^000000#
+
+9122#A Cerimônia - 2a aventura#SG_FEEL#QUE_NOIMAGE#
+Você precisa completar a segunda tarefa para encerrar a maldição de ^0000FFRina^000000, em ^8B4513Prontera^000000#
+Para completar a 2a tarefa de ^0000FFRina^000000#
+
+9123#A Cerimônia - Vá a Prontera!#SG_FEEL#QUE_NOIMAGE#
+A maldição de ^0000FFRina^000000 foi encerrada. Fale com Rina.#
+Volte a ^0000FFRina^000000#
