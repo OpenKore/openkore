@@ -760,7 +760,7 @@ sub objectIsMovingTowardsPlayer {
 			next if (
 			     ($ignore_party_members && $char->{party} && $char->{party}{users}{$ID})
 			  || (defined($player->{name}) && existsInList($config{tankersList}, $player->{name}))
-			  || $player->{statuses}{EFFECTSTATE_SPECIALHIDING});
+			  || $player->statusActive('EFFECTSTATE_SPECIALHIDING'));
 			if (checkMovementDirection($obj->{pos}, \%vec, $player->{pos}, 15)) {
 				return 1;
 			}
@@ -2089,7 +2089,7 @@ sub processNameRequestQueue {
 
 		# Some private servers ban you if you request info for an object with
 		# GM Perfect Hide status
-		if (!$actor || defined($actor->{name}) || $actor->{statuses}{EFFECTSTATE_SPECIALHIDING}) {
+		if (!$actor || defined($actor->{name}) || $actor->statusActive('EFFECTSTATE_SPECIALHIDING')) {
 			shift @{$queue};
 			next;
 		}
@@ -2332,7 +2332,7 @@ sub setStatus {
 	Plugins::callHook('changed_status',{actor => $actor, changed => $changed});
 
 	# Remove perfectly hidden objects
-	if ($actor->{statuses}{EFFECTSTATE_SPECIALHIDING}) {
+	if ($actor->statusActive('EFFECTSTATE_SPECIALHIDING')) {
 		if (UNIVERSAL::isa($actor, "Actor::Player")) {
 			message TF("Found perfectly hidden %s\n", $actor->nameString());
 			# message TF("Remove perfectly hidden %s\n", $actor->nameString());
@@ -3098,7 +3098,7 @@ sub isSafeActorQuery {
 		if ($actor) {
 			# Do not AutoVivify here!
 			if (defined $actor->{statuses} && %{$actor->{statuses}}) {
-				if ($actor->{statuses}{EFFECTSTATE_SPECIALHIDING}) {
+				if ($actor->statusActive('EFFECTSTATE_SPECIALHIDING')) {
 					return 0;
 				}
 			}
