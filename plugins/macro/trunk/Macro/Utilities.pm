@@ -455,7 +455,11 @@ sub processCmd {
 	} else {
 		my $name = (defined $queue->{subcall}) ? $queue->{subcall}->name : $queue->name;
 		my $error = $queue->error;
-		my $errorMsg = sprintf("[macro] %s error: %s\n", $name, $error);
+		my $errorMsg = sprintf(
+			"[macro] %s error: %s\n",
+			$name =~ /^tempMacro\d+$/ && $varStack{'.caller'} ? $varStack{'.caller'}.'.call' : $name,
+			$error
+		);
 		
 		my $hookArgs = {
 			'message' => $errorMsg,
