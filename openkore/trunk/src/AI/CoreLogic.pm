@@ -1743,7 +1743,7 @@ sub processAutoCart {
 		my $hasCart = $cart{exists};
 		if ($char->{statuses}) {
 			foreach (keys %{$char->{statuses}}) {
-				if ($_ =~ /^Level \d Cart$/) {
+				if ($_ =~ /^EFFECTSTATE_PUSHCART\d?$/) {
 					$hasCart = 1;
 					last;
 				}

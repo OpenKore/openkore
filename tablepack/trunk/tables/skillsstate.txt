@@ -1,8 +1,0 @@
-1 Petrified
-2 Frozen
-3 Stunned
-4 Sleeping
-5 Undead
-6 Petrifying
-# test Burning
-7 Burning

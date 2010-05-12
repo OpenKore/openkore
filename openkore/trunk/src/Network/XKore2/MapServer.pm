@@ -142,7 +142,7 @@ sub handleMapLoaded {
 	# TODO: Find a faster/better way of doing this? This seems cumbersome.
 	$output = '';
 	foreach my $ID (keys %{$char->{statuses}}) {
-		while (my ($statusID, $statusName) = each %skillsStatus) {
+		while (my ($statusID, $statusName) = each %statusHandle) {
 			if ($ID eq $statusName) {
 				$output .= pack('C2 v a4 C', 0x96, 0x01, $statusID, $char->{ID}, 1);
 			}

@@ -156,9 +156,6 @@ our @EXPORT = (
 	useTeleport
 	top10Listing
 	whenGroundStatus
-	whenStatusActive
-	whenStatusActiveMon
-	whenStatusActivePL
 	writeStorageLog
 	getBestTarget
 	isSafe
@@ -763,7 +760,7 @@ sub objectIsMovingTowardsPlayer {
 			next if (
 			     ($ignore_party_members && $char->{party} && $char->{party}{users}{$ID})
 			  || (defined($player->{name}) && existsInList($config{tankersList}, $player->{name}))
-			  || $player->{statuses}{"GM Perfect Hide"});
+			  || $player->{statuses}{EFFECTSTATE_SPECIALHIDING});
 			if (checkMovementDirection($obj->{pos}, \%vec, $player->{pos}, 15)) {
 				return 1;
 			}
@@ -2092,7 +2089,7 @@ sub processNameRequestQueue {
 
 		# Some private servers ban you if you request info for an object with
 		# GM Perfect Hide status
-		if (!$actor || defined($actor->{name}) || $actor->{statuses}{"GM Perfect Hide"}) {
+		if (!$actor || defined($actor->{name}) || $actor->{statuses}{EFFECTSTATE_SPECIALHIDING}) {
 			shift @{$queue};
 			next;
 		}
@@ -2266,24 +2263,24 @@ sub setStatus {
 	my $verbosity = $actor->{ID} eq $accountID ? 1 : 2;
 	my $changed = 0;
 
-	foreach (keys %skillsState) {
+	foreach (keys %stateHandle) {
 		if ($opt1 == $_) {
-			if (!$actor->{statuses}{$skillsState{$_}}) {
-				$actor->{statuses}{$skillsState{$_}} = 1;
+			if (!$actor->{statuses}{$stateHandle{$_}}) {
+				$actor->{statuses}{$stateHandle{$_}} = 1;
 				if ($actor->isa('Actor::You')) {
-					message TF("%s are in %s state.\n", $actor->nameString(), $skillsState{$_}), "parseMsg_statuslook", $verbosity;
+					message TF("%s are in %s state.\n", $actor->nameString, $statusName{$stateHandle{$_}} || $stateHandle{$_}), "parseMsg_statuslook", $verbosity;
 				} else {
-					message TF("%s is in %s state.\n", $actor->nameString(), $skillsState{$_}), "parseMsg_statuslook", $verbosity;
+					message TF("%s is in %s state.\n", $actor->nameString, $statusName{$stateHandle{$_}} || $stateHandle{$_}), "parseMsg_statuslook", $verbosity;
 				}
 				
 				$changed = 1;
 			}
-		} elsif ($actor->{statuses}{$skillsState{$_}}) {
-			delete $actor->{statuses}{$skillsState{$_}};
+		} elsif ($actor->{statuses}{$stateHandle{$_}}) {
+			delete $actor->{statuses}{$stateHandle{$_}};
 			if ($actor->isa('Actor::You')) {
-				message TF("%s are out of %s state.\n", $actor->nameString(), $skillsState{$_}), "parseMsg_statuslook", $verbosity;
+				message TF("%s are out of %s state.\n", $actor->nameString, $statusName{$stateHandle{$_}} || $stateHandle{$_}), "parseMsg_statuslook", $verbosity;
 			} else {
-				message TF("%s is out of %s state.\n", $actor->nameString(), $skillsState{$_}), "parseMsg_statuslook", $verbosity;	}
+				message TF("%s is out of %s state.\n", $actor->nameString, $statusName{$stateHandle{$_}} || $stateHandle{$_}), "parseMsg_statuslook", $verbosity;	}
 			$changed = 1;
 		}
 	}
@@ -2310,23 +2307,23 @@ sub setStatus {
 		}
 	}
 
-	foreach (keys %skillsLooks) {
+	foreach (keys %lookHandle) {
 		if (($option & $_) == $_) {
-			if (!$actor->{statuses}{$skillsLooks{$_}}) {
-				$actor->{statuses}{$skillsLooks{$_}} = 1;
+			if (!$actor->{statuses}{$lookHandle{$_}}) {
+				$actor->{statuses}{$lookHandle{$_}} = 1;
 				if ($actor->isa('Actor::You')) {
-					message TF("%s have look: %s.\n", $actor->nameString(), $skillsLooks{$_}), "parseMsg_statuslook", $verbosity;
+					message TF("%s have look: %s.\n", $actor->nameString, $statusName{$lookHandle{$_}} || $lookHandle{$_}), "parseMsg_statuslook", $verbosity;
 				} else {
-					message TF("%s has look: %s.\n", $actor->nameString(), $skillsLooks{$_}), "parseMsg_statuslook", $verbosity;
+					message TF("%s has look: %s.\n", $actor->nameString, $statusName{$lookHandle{$_}} || $lookHandle{$_}), "parseMsg_statuslook", $verbosity;
 				}
 				$changed = 1;
 			}
-		} elsif ($actor->{statuses}{$skillsLooks{$_}}) {
-			delete $actor->{statuses}{$skillsLooks{$_}};
+		} elsif ($actor->{statuses}{$lookHandle{$_}}) {
+			delete $actor->{statuses}{$lookHandle{$_}};
 			if ($actor->isa('Actor::You')) {
-				message TF("%s are out of look: %s.\n", $actor->nameString(), $skillsLooks{$_}), "parseMsg_statuslook", $verbosity;
+				message TF("%s are out of look: %s.\n", $actor->nameString, $statusName{$lookHandle{$_}} || $lookHandle{$_}), "parseMsg_statuslook", $verbosity;
 			} else {
-				message TF("%s is out of look: %s.\n", $actor->nameString(), $skillsLooks{$_}), "parseMsg_statuslook", $verbosity;
+				message TF("%s is out of look: %s.\n", $actor->nameString, $statusName{$lookHandle{$_}} || $lookHandle{$_}), "parseMsg_statuslook", $verbosity;
 			}
 			$changed = 1;
 		}
@@ -2335,7 +2332,7 @@ sub setStatus {
 	Plugins::callHook('changed_status',{actor => $actor, changed => $changed});
 
 	# Remove perfectly hidden objects
-	if ($actor->{statuses}{'GM Perfect Hide'}) {
+	if ($actor->{statuses}{EFFECTSTATE_SPECIALHIDING}) {
 		if (UNIVERSAL::isa($actor, "Actor::Player")) {
 			message TF("Found perfectly hidden %s\n", $actor->nameString());
 			# message TF("Remove perfectly hidden %s\n", $actor->nameString());
@@ -2509,13 +2506,13 @@ sub updateDamageTables {
 					$teleport = 1;
 
 				} elsif ($config{teleportAuto_deadly} && $damage >= $char->{hp}
-				      && !whenStatusActive($skillsStatus{'34'})) { # Hallucination
+				      && !$char->statusActive('EFST_ILLUSION')) {
 					message TF("Next %d dmg could kill you. Teleporting...\n",
 						$damage), "teleport";
 					$teleport = 1;
 
 				} elsif ($config{teleportAuto_maxDmg} && $damage >= $config{teleportAuto_maxDmg}
-				      && !whenStatusActive($skillsStatus{'34'})  # Hallucination
+				      && !$char->statusActive('EFST_ILLUSION')
 				      && !($config{teleportAuto_maxDmgInLock} && $field{name} eq $config{lockMap})) {
 					message TF("%s hit you for more than %d dmg. Teleporting...\n",
 						$monster->{name}, $config{teleportAuto_maxDmg}), "teleport";
@@ -2523,7 +2520,7 @@ sub updateDamageTables {
 
 				} elsif ($config{teleportAuto_maxDmgInLock} && $field{name} eq $config{lockMap}
 				      && $damage >= $config{teleportAuto_maxDmgInLock}
-				      && !whenStatusActive($skillsStatus{'34'})) {  # Hallucination
+				      && !$char->statusActive('EFST_ILLUSION')) {
 					message TF("%s hit you for more than %d dmg in lockMap. Teleporting...\n",
 						$monster->{name}, $config{teleportAuto_maxDmgInLock}), "teleport";
 					$teleport = 1;
@@ -2536,7 +2533,7 @@ sub updateDamageTables {
 
 				} elsif ($config{teleportAuto_totalDmg}
 				      && $monster->{dmgToYou} >= $config{teleportAuto_totalDmg}
-				      && !whenStatusActive($skillsStatus{'34'})  # Hallucination
+				      && !$char->statusActive('EFST_ILLUSION')
 				      && !($config{teleportAuto_totalDmgInLock} && $field{name} eq $config{lockMap})) {
 					message TF("%s hit you for a total of more than %d dmg. Teleporting...\n",
 						$monster->{name}, $config{teleportAuto_totalDmg}), "teleport";
@@ -2544,7 +2541,7 @@ sub updateDamageTables {
 
 				} elsif ($config{teleportAuto_totalDmgInLock} && $field{name} eq $config{lockMap}
 				      && $monster->{dmgToYou} >= $config{teleportAuto_totalDmgInLock}
-				      && !whenStatusActive($skillsStatus{'34'})) {  # Hallucination
+				      && !$char->statusActive('EFST_ILLUSION')) {
 					message TF("%s hit you for a total of more than %d dmg in lockMap. Teleporting...\n",
 						$monster->{name}, $config{teleportAuto_totalDmgInLock}), "teleport";
 					$teleport = 1;
@@ -2622,13 +2619,13 @@ sub updateDamageTables {
 					$teleport = 1;
 
 				} elsif ($config{$char->{slaves}{$ID2}{slave_configPrefix}.'teleportAuto_deadly'} && $damage >= $char->{slaves}{$ID2}{hp}
-				      && !whenStatusActive($skillsStatus{'34'})) {  # Hallucination
+				      && !$player->statusActive('EFST_ILLUSION')) {
 					message TF("Next %d dmg could kill your slave. Teleporting...\n",
 						$damage), "teleport";
 					$teleport = 1;
 
 				} elsif ($config{$char->{slaves}{$ID2}{slave_configPrefix}.'teleportAuto_maxDmg'} && $damage >= $config{$char->{slaves}{$ID2}{slave_configPrefix}.'teleportAuto_maxDmg'}
-				      && !whenStatusActive($skillsStatus{'34'})  # Hallucination
+				      && !$player->statusActive('EFST_ILLUSION')
 				      && !($config{$char->{slaves}{$ID2}{slave_configPrefix}.'teleportAuto_maxDmgInLock'} && $field{name} eq $config{lockMap})) {
 					message TF("%s hit your slave for more than %d dmg. Teleporting...\n",
 						$monster->{name}, $config{$char->{slaves}{$ID2}{slave_configPrefix}.'teleportAuto_maxDmg'}), "teleport";
@@ -2636,14 +2633,14 @@ sub updateDamageTables {
 
 				} elsif ($config{$char->{slaves}{$ID2}{slave_configPrefix}.'teleportAuto_maxDmgInLock'} && $field{name} eq $config{lockMap}
 				      && $damage >= $config{$char->{slaves}{$ID2}{slave_configPrefix}.'teleportAuto_maxDmgInLock'}
-				      && !whenStatusActive($skillsStatus{'34'})) {  # Hallucination
+				      && !$player->statusActive('EFST_ILLUSION')) { 
 					message TF("%s hit your slave for more than %d dmg in lockMap. Teleporting...\n",
 						$monster->{name}, $config{$char->{slaves}{$ID2}{slave_configPrefix}.'teleportAuto_maxDmgInLock'}), "teleport";
 					$teleport = 1;
 
 				} elsif ($config{$char->{slaves}{$ID2}{slave_configPrefix}.'teleportAuto_totalDmg'}
 				      && $monster->{dmgToPlayer}{$ID2} >= $config{$char->{slaves}{$ID2}{slave_configPrefix}.'teleportAuto_totalDmg'}
-				      && !whenStatusActive($skillsStatus{'34'})  # Hallucination
+				      && !$player->statusActive('EFST_ILLUSION')
 				      && !($config{$char->{slaves}{$ID2}{slave_configPrefix}.'teleportAuto_totalDmgInLock'} && $field{name} eq $config{lockMap})) {
 					message TF("%s hit your slave for a total of more than %d dmg. Teleporting...\n",
 						$monster->{name}, $config{$char->{slaves}{$ID2}{slave_configPrefix}.'teleportAuto_totalDmg'}), "teleport";
@@ -2651,7 +2648,7 @@ sub updateDamageTables {
 
 				} elsif ($config{$char->{slaves}{$ID2}{slave_configPrefix}.'teleportAuto_totalDmgInLock'} && $field{name} eq $config{lockMap}
 				      && $monster->{dmgToPlayer}{$ID2} >= $config{$char->{slaves}{$ID2}{slave_configPrefix}.'teleportAuto_totalDmgInLock'}
-				      && !whenStatusActive($skillsStatus{'34'})) {  # Hallucination
+				      && !$player->statusActive('EFST_ILLUSION')) {
 					message TF("%s hit your slave for a total of more than %d dmg in lockMap. Teleporting...\n",
 						$monster->{name}, $config{$char->{slaves}{$ID2}{slave_configPrefix}.'teleportAuto_totalDmgInLock'}), "teleport";
 					$teleport = 1;
@@ -2957,52 +2954,6 @@ sub whenGroundStatus {
 	return 0;
 }
 
-sub whenStatusActive {
-	my $statuses = shift;
-	my @arr = split /\s*,\s*/, $statuses;
-	foreach (@arr) {
-		return 1 if exists($char->{statuses}{$_});
-	}
-	return 0;
-}
-
-sub whenStatusActiveMon {
-	my ($monster, $statuses) = @_;
-	my @arr = split /\s*,\s*/, $statuses;
-	foreach (@arr) {
-		return 1 if $monster->{statuses}{$_};
-	}
-	return 0;
-}
-
-sub whenStatusActivePL {
-	my ($ID, $statuses) = @_;
-	
-	# Incase this method was called with empty values, send TRUE back... since the user doesnt have any statusses they want to check
-	return 1 if (!$ID || !$statuses);
-	return whenStatusActive($statuses) if ($ID eq $accountID);
-
-	if (my $player = $playersList->getByID($ID)) {
-		my @arr = split /\s*,\s*/, $statuses;
-		foreach (@arr) {
-			return 1 if $player->{statuses}{$_};
-		}
-	}
-	if ($char->{party}{users}{$ID} && $char->{party}{users}{$ID}{online}) {
-		my @arr = split /\s*,\s*/, $statuses;
-		foreach (@arr) {
-			return 1 if $char->{party}{users}{$ID}{statuses}{$_};
-		}
-	}
-	if (my $slave = $slavesList->getByID($ID)) {
-		my @arr = split /\s*,\s*/, $statuses;
-		foreach (@arr) {
-			return 1 if $slave->{statuses}{$_};
-		}
-	}
-	return 0;
-}
-
 sub writeStorageLog {
 	my ($show_error_on_fail) = @_;
 	my $f;
@@ -3147,7 +3098,7 @@ sub isSafeActorQuery {
 		if ($actor) {
 			# Do not AutoVivify here!
 			if (defined $actor->{statuses} && %{$actor->{statuses}}) {
-				if ($actor->{statuses}{'GM Perfect Hide'}) {
+				if ($actor->{statuses}{EFFECTSTATE_SPECIALHIDING}) {
 					return 0;
 				}
 			}
@@ -3709,8 +3660,12 @@ sub checkSelfCondition {
 			}
 		}
 
-		if ($config{$prefix . "_mercenary_whenStatusActive"}) { return 0 unless (whenStatusActivePL($char->{mercenary}{ID}, $config{$prefix . "_mercenary_whenStatusActive"})); }
-		if ($config{$prefix . "_mercenary_whenStatusInactive"}) { return 0 if (whenStatusActivePL($char->{mercenary}{ID}, $config{$prefix . "_mercenary_whenStatusInactive"})); }
+		if ($config{$prefix . "_mercenary_whenStatusActive"}) {
+			return 0 unless $char->{mercenary}->statusActive($config{$prefix . "_mercenary_whenStatusActive"});
+		}
+		if ($config{$prefix . "_mercenary_whenStatusInactive"}) {
+			return 0 if $char->{mercenary}->statusActive($config{$prefix . "_mercenary_whenStatusInactive"});
+		}
 	}
 
 	# check skill use SP if this is a 'use skill' condition
@@ -3741,8 +3696,12 @@ sub checkSelfCondition {
 		return 0 if (!checkFollowMode());
 	}
 
-	if ($config{$prefix . "_whenStatusActive"}) { return 0 unless (whenStatusActive($config{$prefix . "_whenStatusActive"})); }
-	if ($config{$prefix . "_whenStatusInactive"}) { return 0 if (whenStatusActive($config{$prefix . "_whenStatusInactive"})); }
+	if ($config{$prefix . "_whenStatusActive"}) {
+		return 0 unless $char->statusActive($config{$prefix . "_whenStatusActive"}); 
+	}
+	if ($config{$prefix . "_whenStatusInactive"}) {
+		return 0 if $char->statusActive($config{$prefix . "_whenStatusInactive"});
+	}
 
 	if ($config{$prefix . "_onAction"}) { return 0 unless (existsInList($config{$prefix . "_onAction"}, AI::action())); }
 	if ($config{$prefix . "_notOnAction"}) { return 0 if (existsInList($config{$prefix . "_notOnAction"}, AI::action())); }
@@ -3876,8 +3835,12 @@ sub checkPlayerCondition {
 	my $player = $playersList->getByID($id) || $slavesList->getByID($id);
 
 	if ($config{$prefix . "_timeout"}) { return 0 unless timeOut($ai_v{$prefix . "_time"}{$id}, $config{$prefix . "_timeout"}) }
-	if ($config{$prefix . "_whenStatusActive"}) { return 0 unless (whenStatusActivePL($id, $config{$prefix . "_whenStatusActive"})); }
-	if ($config{$prefix . "_whenStatusInactive"}) { return 0 if (whenStatusActivePL($id, $config{$prefix . "_whenStatusInactive"})); }
+	if ($config{$prefix . "_whenStatusActive"}) {
+		return 0 unless $player->statusActive($config{$prefix . "_whenStatusActive"});
+	}
+	if ($config{$prefix . "_whenStatusInactive"}) {
+		return 0 if $player->statusActive($config{$prefix . "_whenStatusInactive"});
+	}
 	if ($config{$prefix . "_notWhileSitting"} > 0) { return 0 if ($player->{sitting}); }
 
 	# we will have player HP info (only) if we are in the same party
@@ -3998,10 +3961,10 @@ sub checkMonsterCondition {
 	}
 
 	if ($config{$prefix . "_whenStatusActive"}) {
-		return 0 unless (whenStatusActiveMon($monster, $config{$prefix . "_whenStatusActive"}));
+		return 0 unless $monster->statusActive($config{$prefix . "_whenStatusActive"});
 	}
 	if ($config{$prefix . "_whenStatusInactive"}) {
-		return 0 if (whenStatusActiveMon($monster, $config{$prefix . "_whenStatusInactive"}));
+		return 0 if $monster->statusActive($config{$prefix . "_whenStatusInactive"});
 	}
 
 	if ($config{$prefix."_whenGround"}) {

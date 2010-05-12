@@ -250,14 +250,16 @@ sub loadDataFiles {
 		loader => [\&parseSkillsSPLUT, \%skillsSP_lut]);
 	Settings::addTableFile('skillssp.txt',
 		loader => \&Skill::StaticInfo::parseSPDatabase);
-	Settings::addTableFile('skillsstatus.txt',
-		loader => [\&parseDataFile2, \%skillsStatus]);
+	Settings::addTableFile('STATUS_id_handle.txt',
+		loader => [\&parseDataFile2, \%statusHandle]);
+	Settings::addTableFile('STATE_id_handle.txt',
+		loader => [\&parseDataFile2, \%stateHandle]);
+	Settings::addTableFile('LOOK_id_handle.txt',
+		loader => [\&parseDataFile2, \%lookHandle]);
+	Settings::addTableFile('statusnametable.txt',
+		loader => [\&parseDataFile2, \%statusName]);
 	Settings::addTableFile('skillsailments.txt',
 		loader => [\&parseDataFile2, \%skillsAilments]);
-	Settings::addTableFile('skillsstate.txt',
-		loader => [\&parseDataFile2, \%skillsState]);
-	Settings::addTableFile('skillslooks.txt',
-		loader => [\&parseDataFile2, \%skillsLooks]);
 	Settings::addTableFile('skillsarea.txt',
 		loader => [\&parseDataFile2, \%skillsArea]);
 	Settings::addTableFile('skillsencore.txt',
