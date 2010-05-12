@@ -792,15 +792,7 @@ sub cmdCart {
 	my (undef, $input) = @_;
 	my ($arg1, $arg2) = split(' ', $input, 2);
 
-	my $hasCart = $cart{exists};
-	if ($char && $char->{statuses}) {
-		foreach (keys %{$char->{statuses}}) {
-			if ($_ =~ /^Level \d Cart$/) {
-				$hasCart = 1;
-				last;
-			}
-		}
-	}
+	my $hasCart = ($cart{exists} or $char && $char->cartActive);
 
 	if (!$hasCart) {
 		error T("Error in function 'cart' (Cart Management)\n" .
@@ -1701,15 +1693,7 @@ sub cmdExp {
 sub cmdFalcon {
 	my (undef, $arg1) = @_;
 
-	my $hasFalcon;
-	if ($char) {
-		foreach my $ID (keys %{$char->{statuses}}) {
-			if ($ID eq "Falcon") {
-				$hasFalcon = 1;
-				last;
-			}
-		}
-	}
+	my $hasFalcon = $char && $char->statusActive('EFFECTSTATE_BIRD');
 	if ($arg1 eq "") {
 		if ($hasFalcon) {
 			message T("Your falcon is active\n");
@@ -1921,14 +1905,7 @@ sub cmdSlave {
 		$slave->{'flee'}, $slave->{'aspdDisp'}, $summons_string,
 		$range_string, $skillpt_string, $contractend_string]);
 		
-#############################################################
-#Statuses
-#############################################################
-		my $statuses = 'none';
-		if (defined $slave->{statuses} && %{$slave->{statuses}}) {
-			$statuses = join(", ", keys %{$slave->{statuses}});
-		}
-		$msg .= TF("Statuses: %s \n", $statuses);
+		$msg .= TF("Statuses: %s \n", $slave->statusesString);
 		$msg .= ('-'x78) . "\n";
 		
 		message $msg, "info";
@@ -3273,15 +3250,7 @@ sub cmdParty {
 sub cmdPecopeco {
 	my (undef, $arg1) = @_;
 
-	my $hasPecopeco;
-	if ($char) {
-		foreach my $ID (keys %{$char->{statuses}}) {
-			if ($ID eq "Pecopeco") {
-				$hasPecopeco = 1;
-				last;
-			}
-		}
-	}
+	my $hasPecopeco = $char && $char->statusActive('EFFECTSTATE_CHICKEN');
 	if ($arg1 eq "") {
 		if ($hasPecopeco) {
 			message T("Your Pecopeco is active\n");
@@ -3541,14 +3510,7 @@ sub cmdPlayerList {
 			$msg .= T("Player is facing towards you.\n");
 		}
 		$msg .= "------------------- Statuses -------------------\n";
-#############################################################
-#Statuses
-#############################################################
-		my $statuses = 'none';
-		if (defined $player->{statuses} && %{$player->{statuses}}) {
-			$statuses = join(", ", keys %{$player->{statuses}});
-		}
-		$msg .= TF("Statuses: %s \n", $statuses);
+		$msg .= TF("Statuses: %s \n", $player->statusesString);
 		$msg .= "-------------------------------------------------\n";
 		message $msg, "info";
 		return;
@@ -4183,12 +4145,6 @@ sub cmdStatus {
 	$job_name_string = "$jobs_lut{$char->{'jobID'}} $sex_lut{$char->{'sex'}}";
 	$zeny_string = formatNumber($char->{'zeny'}) if (defined($char->{'zeny'}));
 
-	# Translation Comment: No status effect on player		
-	my $statuses = 'none';
-	if (defined $char->{statuses} && %{$char->{statuses}}) {
-		$statuses = join(", ", keys %{$char->{statuses}});
-	}
-
 	my $dmgpsec_string = sprintf("%.2f", $dmgpsec);
 	my $totalelasped_string = sprintf("%.2f", $totalelasped);
 	my $elasped_string = sprintf("%.2f", $elasped);
@@ -4207,7 +4163,7 @@ sub cmdStatus {
 		"Total Time spent (sec): \@>>>>>>>>\n" .
 		"Last Monster took (sec): \@>>>>>>>\n" .
 		"--------------------------------------------------------",
-		$statuses, (exists $char->{spirits} ? $char->{spirits} : 0)),
+		$char->statusesString, (exists $char->{spirits} ? $char->{spirits} : 0)),
 		[$char->{'name'}, $hp_string, $job_name_string, $sp_string,
 		$char->{'lv'}, $base_string, $char->{'lv_job'}, $job_string, $zeny_string, $weight_string,
 		$totaldmg, $dmgpsec_string, $totalelasped_string, $elasped_string]);

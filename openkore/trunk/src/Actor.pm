@@ -39,6 +39,7 @@ use Utils;
 use Utils::CallbackList;
 use Log qw(message error debug);
 use Misc;
+use Translation qw(T TF);
 use Actor::Unknown;
 
 # Make it so that
@@ -417,6 +418,21 @@ sub statusActive {
 	}
 	
 	return;
+}
+
+sub statusesString {
+	my ($self) = @_;
+	
+	$self->{statuses} && %{$self->{statuses}}
+	? join ', ', map { $statusName{$_} || $_ } keys %{$self->{statuses}}
+	# Translation Comment: No status effect on actor
+	: T('none');
+}
+
+sub cartActive {
+	my ($self) = @_;
+	
+	$self->statusActive('EFFECTSTATE_PUSHCART, EFFECTSTATE_PUSHCART2, EFFECTSTATE_PUSHCART3, EFFECTSTATE_PUSHCART4, EFFECTSTATE_PUSHCART5')
 }
 
 1;
