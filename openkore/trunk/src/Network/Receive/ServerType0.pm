@@ -1078,6 +1078,30 @@ sub actor_display {
 
 	# Note that these are flags, and you can mix and match them
 	# Example: 0x000C (0x0008 & 0x0004) = gray tint with slow lightning
+	
+=pod
+typedef enum <unnamed-tag> {
+  SHOW_EFST_NORMAL =  0x0,
+  SHOW_EFST_QUICKEN =  0x1,
+  SHOW_EFST_OVERTHRUST =  0x2,
+  SHOW_EFST_ENERGYCOAT =  0x4,
+  SHOW_EFST_EXPLOSIONSPIRITS =  0x8,
+  SHOW_EFST_STEELBODY =  0x10,
+  SHOW_EFST_BLADESTOP =  0x20,
+  SHOW_EFST_AURABLADE =  0x40,
+  SHOW_EFST_REDBODY =  0x80,
+  SHOW_EFST_LIGHTBLADE =  0x100,
+  SHOW_EFST_MOON =  0x200,
+  SHOW_EFST_PINKBODY =  0x400,
+  SHOW_EFST_ASSUMPTIO =  0x800,
+  SHOW_EFST_SUN_WARM =  0x1000,
+  SHOW_EFST_REFLECT =  0x2000,
+  SHOW_EFST_BUNSIN =  0x4000,
+  SHOW_EFST_SOULLINK =  0x8000,
+  SHOW_EFST_UNDEAD =  0x10000,
+  SHOW_EFST_CONTRACT =  0x20000,
+} <unnamed-tag>;
+=cut
 
 	# Save these parameters ...
 	$actor->{opt1} = $args->{opt1}; # nonstackable
