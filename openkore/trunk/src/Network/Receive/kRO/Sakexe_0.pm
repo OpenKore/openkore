@@ -1467,7 +1467,10 @@ sub actor_status_active {
 	my ($type, $ID, $flag) = @{$args}{qw(type ID flag)};
 
 	my $tick = ($args->{switch} eq "043F") ? $args->{tick} : undef;
-	my $status = (defined($skillsStatus{$type})) ? $skillsStatus{$type} : "Unknown $type";
+	
+	my $status = defined $statusHandle{$type} ? $statusHandle{$type} : "UNKNOWN_STATUS_$type";
+	my $status_name = defined $statusName{$status} ? $statusName{$status} : "Unknown $type";
+	
 	$args->{skillName} = $status;
 	my $actor = Actor::get($ID);
 	$args->{actor} = $actor;
@@ -1484,14 +1487,14 @@ sub actor_status_active {
 			$again = 'again' if $char->{party}{users}{$ID}{statuses}{$status};
 			$char->{party}{users}{$ID}{statuses}{$status} = 1;
 		}
-		my $disp = status_string($actor, $status, $again, $tick/1000);
+		my $disp = status_string($actor, $status_name, $again, $tick/1000);
 		message $disp, "parseMsg_statuslook", ($ID eq $accountID or $char->{slaves} && $char->{slaves}{$ID}) ? 1 : 2;
 
 	} else {
 		# Skill de-activated (expired)
 		delete $actor->{statuses}{$status} if $actor;
 		delete $char->{party}{users}{$ID}{statuses}{$status} if ($char->{party}{users}{$ID} && $char->{party}{users}{$ID}{name});
-		my $disp = status_string($actor, $status, 'no longer');
+		my $disp = status_string($actor, $status_name, 'no longer');
 		message $disp, "parseMsg_statuslook", ($ID eq $accountID or $char->{slaves} && $char->{slaves}{$ID}) ? 1 : 2;
 	}
 }

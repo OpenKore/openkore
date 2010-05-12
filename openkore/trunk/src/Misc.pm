@@ -543,6 +543,7 @@ sub calcRectArea2 {
 # Check whether you can snipe a target standing at $to,
 # from the position $from, without being blocked by any
 # obstacles.
+# TODO: move to Field?
 sub checkLineSnipable {
 	return 0 if (!$field);
 	my $from = shift;
@@ -627,6 +628,7 @@ sub checkLineSnipable {
 # straight line, without obstacles that are too large.
 # Obstacles are considered too large, if they are at least
 # the size of a rectangle with "radius" $min_obstacle_size.
+# TODO: move to Field?
 sub checkLineWalkable {
 	return 0 if (!$field);
 	my $from = shift;
@@ -686,6 +688,7 @@ sub checkWallLength {
 # If the position specified in $pos is walkable, this function will do nothing.
 # If it's not walkable, this function will find the closest position that is walkable (up to 2 blocks away),
 # and modify the x and y values in $pos.
+# TODO: move to Field?
 sub closestWalkableSpot {
 	my $field = shift;
 	my $pos = shift;
@@ -776,6 +779,7 @@ sub objectIsMovingTowardsPlayer {
 #########################################
 #########################################
 
+# TODO: merge?
 sub itemLog {
 	my $crud = shift;
 	return if (!$config{'itemHistory'});
@@ -858,7 +862,7 @@ EOF
 
 		my ($r, $w, $desktop);
 		
-		# WHY it depends on bash? Fails if it's not installed
+		# TODO: WHY it depends on bash? Fails if it's not installed
 		my $pid = IPC::Open2::open2($r, $w, '/bin/bash');
 		print $w $detectionScript;
 		close $w;
@@ -899,6 +903,7 @@ EOF
 #######################################
 #######################################
 
+# TODO: move actorAdded/Removed to Actor?
 sub actorAddedRemovedVars {
 	my ($actor) = @_;
 	# returns (type, list, hash)
@@ -2256,6 +2261,7 @@ sub setPartySkillTimer {
 #
 # Sets the state, ailment, and "look" statuses of the actor.
 # Does not include skillsstatus.txt items.
+# TODO: move to Actor?
 sub setStatus {
 	my ($actor, $opt1, $opt2, $option) = @_;
 	assert(defined $actor) if DEBUG;
