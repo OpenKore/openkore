@@ -399,4 +399,24 @@ sub onUpdate {
 	return $_[0]->{onUpdate};
 }
 
+sub statusActive {
+	my ($self, $statuses) = @_;
+	
+	# Incase this method was called with empty values, send TRUE back... since the user doesnt have any statusses they want to check
+	return 1 unless $statuses;
+	
+	return unless $self->{statuses};
+	
+	for my $status (split /\s*,\s*/, $statuses) {
+		return 1 if exists $self->{statuses}{$status};
+		
+		# TODO quick status handle lookup
+		($status) = grep { $statusName{$_} eq $status } keys %statusName;
+		
+		return 1 if exists $self->{statuses}{$status};
+	}
+	
+	return;
+}
+
 1;

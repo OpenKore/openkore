@@ -374,9 +374,11 @@ sub parseDataFile2 {
 		next if (length($line) == 0);
 
 		my ($key, $value) = split / /, $line, 2;
+		$key =~ s/^(0x[0-9a-f]+)$/hex $1/e;
 		$r_hash->{$key} = $value;
 	}
 	close FILE;
+	
 	return 1;
 }
 
