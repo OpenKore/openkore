@@ -4,26 +4,61 @@
 
 Features:
 - New ServerTypes and localized tables for official servers (kLabMouse, Technology, h4rry_84, EternalHarvest)
-- A lot of changes and additions in network, kRO ServerType tree (Technology)
-- Additions in Wx interface, including captcha input dialog (EternalHarvest)
-- "party request PlayerName" (EternalHarvest)
-- Messages about unknown and unhandled packets (Technology)
+- Support for skill and status handles in configuration, allows to use duplicate names (Technology, EternalHarvest)
+- A lot of changes and additions in network; kRO ServerType tree (Technology)
+- Default fieldpack updates: New World, Brasilis (midnytblu)
+- Default tablepack updates (Mushroom, help_us, Technology, EternalHarvest)
+- Additions in Wx interface (EternalHarvest)
 - Captcha support (Technology)
+- "party request PlayerName" (EternalHarvest)
 - Pet system improvements: capture, hatch, info, feed; equip armors trough eq (Technology)
-- target_isNotMyDevotee config option (Technology)
-- Quest system: quest command; tables/quests.txt (Technology, kLabMouse, obsc)
-- Cooking: cook command (Technology)
-- Refining: refine command (Technology)
-- Show Equip: se command (Technology)
-- Deleting homunculus: homun fire (Technology)
+- Quest system: "quest" command; tables/quests.txt (Technology, kLabMouse, obsc)
+- Cooking: "cook" command (Technology)
+- Refining: "refine" command (Technology)
+- Show Equip: "se" command (Technology)
+- Deleting homunculus: "homun fire" (Technology)
+- Use skill on homun/merc: "ssl" command (EternalHarvest)
+- Battleground chat: "bg" command (EternalHarvest)
 - Map aliases and instances support (Technology)
+- Hidden Enchant support (EternalHarvest)
+- target_isNotMyDevotee config option (Technology)
+- "devotion" message domain, so you can squelch it (Technology)
+- state.yml generator moved to a plugin (EternalHarvest)
+- Improved messages about unknown and unhandled packets (Technology)
+- Protect actor hashes from autovivification (kLabMouse, EternalHarvest)
+- Local SCons update (kLabMouse)
 
 Translation updates by:
-- h4rry_84
-- littlewens (Traditional Chinese)
-- Mushroom (Portuguese)
+- Indonesian: h4rry_84
+- Traditional Chinese: littlewens
+- Portuguese: Mushroom
+- Russian: DeniZka, manticora
+
+Supported servers updates by:
+-  bRO: Mushroom, dejaime
+- euRO: EternalHarvest
+-  fRO: MiDaM
+- idRO: h4rry_84
+- inRO: ???
+-  iRO: twist3d, Motivus, EternalHarvest
+-  kRO: Technology
+-  mRO: help_us
+-  pRO: midnytblu
+-  rRO: kLabMouse, 4epT, EternalHarvest
+-  tRO: UltimaWeapon
+- twRO: littlewens
 
 Fixes:
+- Rewrite of autoSkill/StatRaise, they're Tasks now (Technology, EternalHarvest)
+- autoMoveOnDeath_x and _y are now optional (EternalHarvest)
+- Wrong message in pet capture result (EternalHarvest)
+- Fix autovivification in attackAuto+tankMode (EternalHarvest)
+- Missing message for failing deal because of storage (EternalHarvest)
+- Missing Task::WithSubtask::DESTROY (Technology)
+- calcRectArea checking for nonwalkable tiles on the wrong side (allanon256)
+- Create log directory recursively (EternalHarvest)
+- Empty filenames in "unable to load" errors (EternalHarvest)
+- Fixes in plugins processing (Technology)
 - New vender packet (Technology)
 - Incoming ingame mail message (Technology)
 - cities.txt update (help_us)
@@ -35,7 +70,7 @@ Fixes:
 - Monster name and points in Taekwon Mission (Technology, woozc)
 - Private message packet structure for ST22 (UltimaWeapon)
 - "Deal cancelled" spam (EternalHarvest)
-- SVN AutoUpdater (kLabMouse, EternalHarvest)
+- SVN AutoUpdater fixes (kLabMouse, EternalHarvest)
 - Guild allies and enemies (EternalHarvest)
 - Crash with loginPinCode (kLabMouse)
 - Incorrect storage password on BSD, Linux (EternalHarvest)
