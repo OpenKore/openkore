@@ -871,9 +871,9 @@ sub updateItemList {
 			$value = $char->{weight} / $char->{weight_max} * 100;
 			$self->{weightBar}->SetValue ($value);
 			$self->{weightBar}->SetToolTip (sprintf '%s / %s (%.2f%)', formatNumber ($char->{weight}), formatNumber ($char->{weight_max}), $value);
-			if (whenStatusActive ('Owg 90%')) {
+			if ($char->statusActive('EFST_WEIGHTOVER90')) {
 				$self->{weightBar}->SetForegroundColour (new Wx::Colour (255, 0, 50));
-			} elsif (whenStatusActive ('Owg 50%')) {
+			} elsif ($char->statusActive('EFST_WEIGHTOVER50')) {
 				$self->{weightBar}->SetForegroundColour (new Wx::Colour (127, 63, 50));
 			} else {
 				$self->{weightBar}->SetForegroundColour (new Wx::Colour (0, 127, 50));

@@ -540,9 +540,7 @@ sub updateStatus {
 	my $weightbar = $self->makeBar($width-29, $char->{weight}, $char->{weight_max}, "cyan", 50, "red");
 	$self->printw($self->{winStatus}, 2, $width, "{bold|yellow} Weight:{normal} @####/@#### $weightbar (@##%)",
 		$char->{weight}, $char->{weight_max}, $char->{weight_max} ? int($char->{weight} / $char->{weight_max} * 100) : 0);
-	my $statuses = ($char->{statuses}) ? join(",", keys %{$char->{statuses}}) : "none";
-	$self->printw($self->{winStatus}, 3, $width, "{bold|yellow} Status:{normal} @*",
-		$statuses);
+	$self->printw($self->{winStatus}, 3, $width, "{bold|yellow} Status:{normal} @*", $char->statusesString);
 
 	$self->{heartBeat} = !$self->{heartBeat};
 	addstr $self->{winStatus}, 0, 0, $self->{heartBeat} ? ":" : ".";

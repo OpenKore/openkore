@@ -97,7 +97,7 @@ sub update {
 	$self->set ('skillPoint', $char->{homunculus}{points_skill});
 	#$self->set ('speed', sprintf '%.2f', 1 / $char->{walk_speed}) if $char->{walk_speed};
 	
-	$self->setStatus (defined $char->{homunculus}{statuses} && %{$char->{homunculus}{statuses}} ? join ', ', keys %{$char->{homunculus}{statuses}} : undef);
+	$self->setStatus ($char->{homunculus}->statusesString);
 	
 	$self->setImage ('bitmaps/actors/' . $char->{homunculus}{jobID} . '.png');
 	

@@ -697,12 +697,12 @@ Commands::run("exp");
 sub UpdateCharacter {
 	my $self = shift;
 	return if (!$char || !$char->{'hp_max'} || !$char->{'sp_max'} || !$char->{'weight_max'});
-	return if ($currentStatus eq join(", ", keys %{$chars[$config{char}]{statuses}}) && $char->{'hp'} == $currentHP && $char->{'sp'} == $currentSP && $char->{'exp'} == $currentLvl && $char->{'exp_job'} == $currentJob);
+	return if ($currentStatus eq $char->statusesString && $char->{'hp'} == $currentHP && $char->{'sp'} == $currentSP && $char->{'exp'} == $currentLvl && $char->{'exp_job'} == $currentJob);
 
 	$self->{name}->Text($char->{'name'});
 	$self->{gender}->Text($sex_lut{$char->{'sex'}});
 	$self->{class}->Text($jobs_lut{$char->{'jobID'}});
-	$self->{status}->Text(join(", ", keys %{$chars[$config{char}]{statuses}}));
+	$self->{status}->Text($char->statusesString);
 	
 	$self->{base}->Text($char->{'lv'});
 	$self->{job}->Text($char->{'lv_job'});
@@ -756,7 +756,7 @@ sub UpdateCharacter {
 	$currentSP = $char->{'sp'};
 	$currentLvl = $char->{'exp'};
 	$currentJob = $char->{'exp_job'};
-	$currentStatus = join(", ", keys %{$chars[$config{char}]{statuses}});
+	$currentStatus = $char->statusesString;
 }
 
 %fgcolors = (

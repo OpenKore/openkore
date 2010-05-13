@@ -69,7 +69,7 @@ sub update {
 	$self->set ('summons', $char->{mercenary}{summons});
 	#$self->set ('speed', sprintf '%.2f', 1 / $char->{walk_speed}) if $char->{walk_speed};
 	
-	$self->setStatus (defined $char->{mercenary}{statuses} && %{$char->{mercenary}{statuses}} ? join ', ', keys %{$char->{mercenary}{statuses}} : undef);
+	$self->setStatus ($char->{mercenary}->statusesString);
 	
 	$self->setImage ('bitmaps/actors/' . $char->{mercenary}{jobID} . '.png');
 	
