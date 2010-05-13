@@ -265,13 +265,8 @@ sub checkStatus {
 		return 0
 	}
 
-	my $status = lc($_[0]);
-	my $not = ($status =~ s/^not +//)?1:0;
-
-	foreach (split(',', $varStack{".status"})) {
-		if (lc($_) eq $status) {return $not?0:1}
-	}
-	return $not?1:0
+	my $status = $_[0];
+	return ($status =~ s/^not +//i xor $char->statusActive($status));
 }
 
 # checks for item conditions ##############################
