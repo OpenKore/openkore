@@ -415,6 +415,7 @@ port 6900
 private 1
 master_version 20
 version 23
-serverType kRO_RagexeRE_2009_12_22a
+serverType kRO_RagexeRE_2010_01_26a
 serverEncoding Western
 charBlockSize 112
+chatLangCode 1
