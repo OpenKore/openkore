@@ -57,7 +57,7 @@ use Plugins;
 use Globals qw(%config %monsters $accountID %equipSlot_lut @ai_seq @ai_seq_args);
 use Settings;
 use Log qw(message warning error debug);
-use Misc qw(whenStatusActiveMon bulkConfigModify);
+use Misc qw(bulkConfigModify);
 use Utils;
 
 
@@ -88,8 +88,9 @@ sub loadMonDB {
 	@monsterDB = undef;
 	my @temp;
 	debug ("MonsterDB: Loading DataBase\n",'monsterDB',2);
-	error ("MonsterDB: cannot load $Settings::tables_folder/monsterDB.txt\n",'monsterDB',0) unless (-r "$Settings::tables_folder/monsterDB.txt");
-	open MDB ,"<$Settings::tables_folder/monsterDB.txt";
+	my $file = Settings::getTableFilename('monsterDB.txt');
+	error ("MonsterDB: cannot load $file\n",'monsterDB',0) unless (-r $file);
+	open MDB, '<', $file;
 	@temp = <MDB>;
 	close MDB;
 	my $i = 0;
@@ -124,12 +125,12 @@ sub extendedCheck {
 		debug("monsterDB: Monster $args->{monster}->{name} has changed element to $args->{monster}->{element}\n", 'monsterDB', 3);
 	}
 
-	if (whenStatusActiveMon($args->{monster},'Petrified')) {
+	if ($args->{monster}->statusActive('BODYSTATE_STONECURSE', 'BODYSTATE_STONECURSE_ING')) {
 		$element = 'Earth';
 		debug("monsterDB: Monster $args->{monster}->{name} is petrified changing element to Earth\n", 'monsterDB', 3);
 	}
 
-	if (whenStatusActiveMon($args->{monster},'Frozen')) {
+	if ($args->{monster}->statusActive('BODYSTATE_FREEZING')) {
 		$element = 'Water';
 		debug("monsterDB: Monster $args->{monster}->{name} is frozen changing element to Water\n", 'monsterDB', 3);
 	}
@@ -241,7 +242,7 @@ sub monsterHp {
 	return 1 unless $monster && $monster->{nameID};
 	my $monsterInfo = $monsterDB[(int($monster->{nameID}) - 1000)];
 	return 1 unless defined $monsterInfo;
-	message 'Monster has ['.($monsterInfo->[0] + $monster->{deltaHp}).'/'.$monsterInfo->[0]."] HP Left\n",'attackMon';
+	message $monster->nameString . ' has ['.($monsterInfo->[0] + $monster->{deltaHp}).'/'.$monsterInfo->[0]."] HP left\n",'attackMon';
 }
 
 sub onAttackStart {
