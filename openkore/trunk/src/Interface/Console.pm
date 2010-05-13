@@ -45,8 +45,8 @@ sub new {
 		# on FreeBSD.
 		
 		# Load Curses, if available, because Simple has bad keyboard input handling
-		eval 'use Curses';
-		$mod = 'Interface::Console::Curses' unless $@;
+		#eval 'use Curses';
+		#$mod = 'Interface::Console::Curses' unless $@;
 	}
 	
 	eval "use $mod";
