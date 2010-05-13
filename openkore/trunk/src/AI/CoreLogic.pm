@@ -784,7 +784,7 @@ sub processTake {
 	} elsif (AI::action eq "take" && timeOut(AI::args->{ai_take_giveup})) {
 		my $item = $items{AI::args->{ID}};
 		message TF("Failed to take %s (%s) from (%s, %s) to (%s, %s)\n", $item->{name}, $item->{binID}, $char->{pos}{x}, $char->{pos}{y}, $item->{pos}{x}, $item->{pos}{y});
-		$items{AI::args->{ID}}{take_failed}++;
+		$item->{take_failed}++;
 		AI::dequeue;
 
 	} elsif (AI::action eq "take") {
