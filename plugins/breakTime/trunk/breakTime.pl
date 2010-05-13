@@ -13,7 +13,7 @@ my $hooks = Plugins::addHooks(
 
 Plugins::register('breakTime', 'config.autoBreakTime', sub { Plugins::delHooks($hooks) });
 
-*AI::CoreLogic::processAutoBreakTime = sub {};
+*AI::CoreLogic::processAutoBreakTime = sub {}; # for pre-2.1
 
 our $timeout;
 my @wdays = qw/sun mon tue wed thu fri sat/;
