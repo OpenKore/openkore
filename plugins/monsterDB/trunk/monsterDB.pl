@@ -125,7 +125,7 @@ sub extendedCheck {
 		debug("monsterDB: Monster $args->{monster}->{name} has changed element to $args->{monster}->{element}\n", 'monsterDB', 3);
 	}
 
-	if ($args->{monster}->statusActive('BODYSTATE_STONECURSE', 'BODYSTATE_STONECURSE_ING')) {
+	if ($args->{monster}->statusActive('BODYSTATE_STONECURSE, BODYSTATE_STONECURSE_ING')) {
 		$element = 'Earth';
 		debug("monsterDB: Monster $args->{monster}->{name} is petrified changing element to Earth\n", 'monsterDB', 3);
 	}
