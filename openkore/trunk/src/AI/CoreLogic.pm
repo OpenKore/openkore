@@ -778,20 +778,17 @@ sub processTake {
 		delete AI::args->{suspended};
 	}
 
-	if (AI::action eq "take" && ( !$items{AI::args->{ID}} || !%{$items{AI::args->{ID}}} )) {
+	if (AI::action eq "take" && !(my $item = $items{AI::args->{ID}})) {
 		AI::dequeue;
 
 	} elsif (AI::action eq "take" && timeOut(AI::args->{ai_take_giveup})) {
-		my $item = $items{AI::args->{ID}};
 		message TF("Failed to take %s (%s) from (%s, %s) to (%s, %s)\n", $item->{name}, $item->{binID}, $char->{pos}{x}, $char->{pos}{y}, $item->{pos}{x}, $item->{pos}{y});
 		$item->{take_failed}++;
 		AI::dequeue;
 
 	} elsif (AI::action eq "take") {
-		my $ID = AI::args->{ID};
 		my $myPos = $char->{pos_to};
-		my $dist = round(distance($items{$ID}{pos}, $myPos));
-		my $item = $items{AI::args->{ID}};
+		my $dist = round(distance($item->{pos}, $myPos));
 		debug "Planning to take $item->{name} ($item->{binID}), distance $dist\n", "drop";
 
 		if ($char->{sitting}) {
@@ -815,7 +812,7 @@ sub processTake {
 			getVector(\%vec, $item->{pos}, $myPos);
 			$direction = int(sprintf("%.0f", (360 - vectorToDegree(\%vec)) / 45)) % 8;
 			$messageSender->sendLook($direction, 0) if ($direction != $char->{look}{body});
-			$messageSender->sendTake($ID);
+			$messageSender->sendTake($item->{ID});
 			$timeout{ai_take}{time} = time;
 		}
 	}
