@@ -1030,24 +1030,27 @@ sub parseOutgoingClientMessage {
 	}
 
 	Plugins::callHook('RO_sendMsg_pre', {switch => $switch, msg => $msg, realMsg => \$sendMsg});
-	
 	my $serverType = $masterServer->{serverType};
 
 	# If the player tries to manually do something in the RO client, disable AI for a small period
 	# of time using ai_clientSuspend().
 
+# sendSync
 	if ($masterServer->{syncID} && $switch eq sprintf('%04X', hex($masterServer->{syncID}))) {
 		#syncSync support for XKore 1 mode
 		$syncSync = substr($msg, $masterServer->{syncTickOffset}, 4);
 
+# sendGameLogin
 	} elsif ($switch eq "0065") {
 		# Login to character server
 		$incomingMessages->nextMessageMightBeAccountID();
 
+# sendCharLogin
 	} elsif ($switch eq "0066") {
 		# Login character selected
 		configModify("char", unpack("C*",substr($msg, 2, 1)));
 
+# sendMapLogin
 	} elsif (
 		($switch eq "0072" && ($serverType == 0 || $serverType == 21 || $serverType == 22)) ||
 		($switch eq "00F3" && $serverType == 18)
@@ -1058,16 +1061,19 @@ sub parseOutgoingClientMessage {
 			$sendMsg = substr($sendMsg, 0, 18) . pack("C",$config{'sex'});
 		}
 
+# sendSync
 	} elsif ($switch eq "00A7") {
 		if($masterServer && $masterServer->{paddedPackets}) {
 			$syncSync = substr($msg, 8, 4);
 		}
 
+# sendSync
 	} elsif ($switch eq "007E") {
 		if ($masterServer && $masterServer->{paddedPackets}) {
 			$syncSync = substr($msg, 4, 4);
 		}
 
+# sendMapLoaded
 	} elsif ($switch eq "007D") {
 		# Map loaded
 		$packetParser->changeToInGameState();
@@ -1090,6 +1096,7 @@ sub parseOutgoingClientMessage {
 		
 		Plugins::callHook('map_loaded');
 
+# sendMove
 	} elsif ($switch eq "0085") {
 		#if ($masterServer->{serverType} == 0 || $masterServer->{serverType} == 1 || $masterServer->{serverType} == 2) {
 		#	#Move
@@ -1098,6 +1105,7 @@ sub parseOutgoingClientMessage {
 		#	ai_clientSuspend($switch, (distance($char->{'pos'}, \%coords) * $char->{walk_speed}) + 4);
 		#}
 
+# sendAction
 	} elsif ($switch eq "0089") {
 		if ($masterServer->{serverType} == 0) {
 			# Attack
@@ -1108,8 +1116,8 @@ sub parseOutgoingClientMessage {
 				undef $sendMsg;
 			}
 		}
-		#undef $sendMsg;
 
+# sendChat
 	} elsif (($switch eq "008C" && ($masterServer->{serverType} == 0 || $masterServer->{serverType} == 1 || $masterServer->{serverType} == 2 || $masterServer->{serverType} == 6 || $masterServer->{serverType} == 7 || $masterServer->{serverType} == 10 || $masterServer->{serverType} == 11 || $masterServer->{serverType} == 21 || $masterServer->{serverType} == 22)) ||
 		($switch eq "00F3" && ($masterServer->{serverType} == 3 || $masterServer->{serverType} == 5 || $masterServer->{serverType} == 8 || $masterServer->{serverType} == 9 || $masterServer->{serverType} == 15)) ||
 		($switch eq "009F" && $masterServer->{serverType} == 4) ||
@@ -1117,8 +1125,10 @@ sub parseOutgoingClientMessage {
 		($switch eq "0190" && ($masterServer->{serverType} == 13 || $masterServer->{serverType} == 18)) ||
 		($switch eq "0085" && $masterServer->{serverType} == 14) ||	# Public chat
 
+# sendPartyChat
 		$switch eq "0108" ||	# Party chat
 
+# sendGuildChat
 		$switch eq "017E") {	# Guild chat
 
 		my $length = unpack("v",substr($msg,2,2));
@@ -1138,6 +1148,7 @@ sub parseOutgoingClientMessage {
 			undef $sendMsg;
 		}
 
+# sendPrivateMsg
 	} elsif ($switch eq "0096") {
 		# Private message
 		my $length = unpack("v",substr($msg,2,2));
@@ -1164,6 +1175,7 @@ sub parseOutgoingClientMessage {
 			push @lastpm, {%lastpm};
 		}
 
+# sendLook
 	} elsif (($switch eq "009B" && $masterServer->{serverType} == 0) ||
 		($switch eq "009B" && $masterServer->{serverType} == 1) ||
 		($switch eq "009B" && $masterServer->{serverType} == 2) ||
@@ -1197,6 +1209,7 @@ sub parseOutgoingClientMessage {
 			}
 		}
 
+# sendTake
 	} elsif ($switch eq "009F") {
 		if ($masterServer->{serverType} == 0) {
 			# Take
@@ -1204,24 +1217,29 @@ sub parseOutgoingClientMessage {
 			ai_clientSuspend($switch, 2, substr($msg,2,4));
 		}
 
+# sendRestart
 	} elsif ($switch eq "00B2") {
 		# Trying to exit (respawn)
 		AI::clear("clientSuspend");
 		ai_clientSuspend($switch, 10);
 
+# sendQuit
 	} elsif ($switch eq "018A") {
 		# Trying to exit
 		AI::clear("clientSuspend");
 		ai_clientSuspend($switch, 10);
 
+# sendAlignment (makes no sense since this is a GM sent packet?)
 	} elsif ($switch eq "0149") {
 		# Chat/skill mute
 		undef $sendMsg;
 
+# sendOpenShop
 	} elsif ($switch eq "01B2") {
 		# client started a shop manually
 		$shopstarted = 1;
-		
+
+# sendCloseShop
 	} elsif ($switch eq "012E") {
 		# client stopped shop manually
 		$shopstarted = 0;
