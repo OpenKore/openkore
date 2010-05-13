@@ -121,7 +121,7 @@ sub iterate {
 	processGuildAutoDeny();
 
 	Misc::checkValidity("AI part 1.1");
-	processAutoBreakTime();
+	#processAutoBreakTime(); moved to a plugin
 	processDead();
 	processStorageGet();
 	processCartAdd();
@@ -926,6 +926,7 @@ sub processGuildAutoDeny {
 	}
 }
 
+=pod moved to a plugin
 ##### AUTOBREAKTIME #####
 # Break time: automatically disconnect at certain times of the day
 sub processAutoBreakTime {
@@ -963,7 +964,7 @@ sub processAutoBreakTime {
 		$AI::Timeouts::autoBreakTime = time;
 	}
 }
-
+=cut
 
 ##### DEAD #####
 sub processDead {
