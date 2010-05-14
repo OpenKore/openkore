@@ -39,7 +39,6 @@ Supported servers updates by:
 - euRO: EternalHarvest
 -  fRO: MiDaM
 - idRO: h4rry_84
-- inRO: ???
 -  iRO: twist3d, Motivus, EternalHarvest
 -  kRO: Technology
 -  mRO: help_us
