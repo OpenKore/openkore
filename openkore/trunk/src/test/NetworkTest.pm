@@ -45,7 +45,6 @@ sub testServerTypeTree {
 		euRO
 		fRO
 		idRO
-		inRO
 		iRO
 		mRO
 		pRO
