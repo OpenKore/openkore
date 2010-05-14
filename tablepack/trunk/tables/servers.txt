@@ -109,6 +109,7 @@ paddedPackets_skillUseID 0xF5
 patchserver ropatch1.gravityus.com
 patchpath /fpatch
 
+# TODO: needs a servertype & table folder
 [Japan - jRO: Verdandi]
 ip 61.215.212.13
 port 6900
@@ -117,6 +118,7 @@ version 10
 serverType 7
 secureLogin 1
 serverEncoding Japanese
+addTableFolders tables/Old
 
 [Korea - kRO: Sara/Rangidis/Thanatos]
 ip 112.175.128.137
@@ -350,6 +352,7 @@ serverEncoding Western
 paddedPackets 1
 paddedPackets_attackID 0x0190
 paddedPackets_skillUseID 0x0085
+addTableFolders tables/Old
 
 ## http://www.rovietnam.com.vn/
 [Vietnam - vRO: Thu Thach]
@@ -366,6 +369,7 @@ serverEncoding Western
 paddedPackets 1
 paddedPackets_attackID 0x0193
 paddedPackets_skillUseID 0x0089
+addTableFolders tables/Old
 
 ####################
 # Private RO Servers

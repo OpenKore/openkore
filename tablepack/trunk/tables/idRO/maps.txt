@@ -428,7 +428,7 @@ pvp_y_6-5.rsw#PvP : Ruangan Morroc#
 pvp_y_7-5.rsw#PvP : Ruangan Morroc#
 pvp_y_8-5.rsw#PvP : Ruangan Morroc#
 pvp_2vs2.rsw#PvP : Colosseum#
-//------¿ò¹ß¶ó °ü·Ã Ãß°¡------------------
+//------Â¿Ã²Â¹ÃŸÂ¶Ã³ Â°Ã¼Â·Ãƒ ÃƒÃŸÂ°Â¡------------------
 um_dun01.rsw#Toko Tukang Kayu di Dalam Hutan#
 um_dun02.rsw#Jalan Menuju ke Dunia Lain#
 um_in.rsw#Dalam Umbala#
@@ -437,7 +437,7 @@ um_fild02.rsw#Hutan Humga#
 um_fild03.rsw#Rawa-rawa Karara#
 um_fild04.rsw#Hutan Humga#
 umbala.rsw#Umbala, Desa Suku Wootan#
-//--------------´ÏÇÃÇìÀÓ-----------
+//--------------Å½ÃÃ‡ÃƒÃ‡Ã¬Ã€Ã“-----------
 nif_in.rsw#Dalam Niflheim#
 yggdrasil01.rsw#Pulau Herbet Camlet (Batang Pohon Yggdrasil)#
 nif_fild02.rsw#Kubah Setan#
