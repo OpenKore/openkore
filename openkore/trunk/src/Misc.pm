@@ -3676,8 +3676,8 @@ sub checkSelfCondition {
 
 	# check skill use SP if this is a 'use skill' condition
 	if ($prefix =~ /skill/i) {
-		my $skill_handle = Skill->new(name => lc($config{$prefix}))->getHandle();
-		return 0 unless (($char->{skills}{$skill_handle} && $char->{skills}{$skill_handle}{lv} >= 1)
+		my $skill = Skill->new(name => lc($config{$prefix}));
+		return 0 unless ($char->getSkillLevel($skill)
 						|| ($char->{permitSkill} && $char->{permitSkill}->getName() eq $config{$prefix})
 						|| $config{$prefix."_equip_leftAccessory"}
 						|| $config{$prefix."_equip_rightAccessory"}
@@ -3685,7 +3685,7 @@ sub checkSelfCondition {
 						|| $config{$prefix."_equip_rightHand"}
 						|| $config{$prefix."_equip_robe"}
 						);
-		return 0 unless ($char->{sp} >= $skillsSP_lut{$skill_handle}{$config{$prefix . "_lvl"}});
+		return 0 unless ($char->{sp} >= $skill->getSP($config{$prefix . "_lvl"}));
 	}
 
 	if (defined $config{$prefix . "_aggressives"}) {

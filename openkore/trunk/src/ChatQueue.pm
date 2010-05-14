@@ -22,7 +22,7 @@ use AI;
 use Commands;
 use Globals qw($accountID $AI %ai_v $char @chatResponses %cities_lut
 		%config %field %itemChange @monsters_Killed %maps_lut $net %overallAuth
-		%players %responseVars %skillsSP_lut $startTime_EXP %timeout
+		%players %responseVars $startTime_EXP %timeout
 		$totalBaseExp $totalJobExp $messageSender
 		);
 use Log qw(message error);
@@ -417,13 +417,14 @@ sub processChatCommand {
 
 	} elsif ($switch eq "agi"){
 		my $targetID = getIDFromChat(\%players, $user, $after);
+		my $skill = Skill->new(handle => 'AL_INCAGI');
 		if ($targetID eq "") {
 			sendMessage($messageSender, $type, getResponse("healF1"), $user) if $config{verbose};
 
-		} elsif ($char->{skills}{AL_INCAGI}{lv} > 0) {
+		} elsif (my $lv = $char->getSkillLevel($skill)) {
 			my $failed = 1;
-			for (my $i = $char->{skills}{AL_INCAGI}{lv}; $i >=1; $i--) {
-				if ($char->{sp} >= $skillsSP_lut{AL_INCAGI}{$i}) {
+			for (my $i = $lv; $i >=1; $i--) {
+				if ($char->{sp} >= $skill->getSP($i)) {
 					main::ai_skillUse('AL_INCAGI', $i, 0, 0, $targetID);
 					$failed = 0;
 					last;
@@ -436,19 +437,20 @@ sub processChatCommand {
 			}
 
 		} else {
-			sendMessage($messageSender, $type, getResponse("healF3"), $user) if $config{'verbose'};
+			sendMessage($messageSender, $type, getResponse("healF3"), $user) if $config{verbose};
 		}
 		$timeout{ai_thanks_set}{time} = time;
 
 	} elsif ($switch eq "bless" || $switch eq "blessing"){
 		my $targetID = getIDFromChat(\%players, $user, $after);
+		my $skill = Skill->new(handle => 'AL_BLESSING');
 		if ($targetID eq "") {
 			sendMessage($messageSender, $type, getResponse("healF1"), $user) if $config{verbose};
 
-		} elsif ($char->{skills}{AL_BLESSING}{lv} > 0) {
+		} elsif (my $lv = $char->getSkillLevel($skill)) {
 			my $failed = 1;
-			for (my $i = $char->{skills}{AL_BLESSING}{lv}; $i >=1; $i--) {
-				if ($char->{sp} >= $skillsSP_lut{AL_BLESSING}{$i}) {
+			for (my $i = $lv; $i >=1; $i--) {
+				if ($char->{sp} >= $skill->getSP($i)) {
 					main::ai_skillUse('AL_BLESSING', $i, 0, 0, $targetID);
 					$failed = 0;
 					last;
@@ -541,13 +543,14 @@ sub processChatCommand {
 
 	} elsif ($switch eq "kyrie"){
 		my $targetID = getIDFromChat(\%players, $user, $after);
+		my $skill = Skill->new(handle => 'PR_KYRIE');
 		if ($targetID eq "") {
 			sendMessage($messageSender, $type, getResponse("healF1"), $user) if $config{verbose};
 
-		} elsif ($char->{skills}{PR_KYRIE}{lv} > 0) {
+		} elsif (my $lv = $char->getSkillLevel($skill)) {
 			my $failed = 1;
-			for (my $i = $char->{skills}{PR_KYRIE}{lv}; $i >= 1; $i--) {
-				if ($char->{sp} >= $skillsSP_lut{PR_KYRIE}{$i}) {
+			for (my $i = $lv; $i >= 1; $i--) {
+				if ($char->{sp} >= $skill->getSP($i)) {
 					main::ai_skillUse('PR_KYRIE', $i, 0, 0, $targetID);
 					$failed = 0;
 					last;
@@ -567,10 +570,11 @@ sub processChatCommand {
 
 	} elsif ($switch eq "mag"){
 		my $targetID = $accountID;
-		if ($char->{skills}{PR_MAGNIFICAT}{lv} > 0) {
+		my $skill = Skill->new(handle => 'PR_MAGNIFICAT');
+		if (my $lv = $char->getSkillLevel($skill)) {
 			my $failed = 1;
-			for (my $i = $char->{skills}{PR_MAGNIFICAT}{lv}; $i >= 1; $i--) {
-				if ($char->{sp} >= $skillsSP_lut{PR_MAGNIFICAT}{$i}) {
+			for (my $i = $lv; $i >= 1; $i--) {
+				if ($char->{sp} >= $skill->getSP($i)) {
 					main::ai_skillUse('PR_MAGNIFICAT', $i, 0, 0, $targetID);
 					$failed = 0;
 					last;
