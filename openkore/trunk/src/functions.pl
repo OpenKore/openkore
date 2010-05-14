@@ -247,8 +247,6 @@ sub loadDataFiles {
 	Settings::addTableFile('skillsdescriptions.txt',
 		loader => [\&parseRODescLUT, \%skillsDesc_lut]);
 	Settings::addTableFile('skillssp.txt',
-		loader => [\&parseSkillsSPLUT, \%skillsSP_lut]);
-	Settings::addTableFile('skillssp.txt',
 		loader => \&Skill::StaticInfo::parseSPDatabase);
 	Settings::addTableFile('STATUS_id_handle.txt',
 		loader => [\&parseDataFile2, \%statusHandle]);
