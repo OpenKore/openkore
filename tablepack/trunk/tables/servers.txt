@@ -57,19 +57,6 @@ serverEncoding Western
 secureLogin 1
 secureLogin_type 0
 
-[India - inRO]
-ip 202.92.9.35
-port 6900
-version 1
-master_version 21
-serverType inRO
-secureLogin 1
-secureLogin_type 0
-secureLogin_requestCode
-secureLogin_account 0
-serverEncoding Western
-gameGuard 1
-
 [Indonesia - idRO: Thor - Legend - Fnc - Heroes]
 ip 202.43.167.67
 port 6900
