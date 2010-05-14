@@ -4082,7 +4082,7 @@ Unidentified item, can be identified with [Spectacles] from merchant.
 Unidentified item, can be identified with [Spectacles] from merchant.
 #
 
-// ---- RO PVP ÃŒÃ¦ÃÃ¼Ã­Ã Ã±Ã²?Ã®ÃœÃšÂª? arena additional items ------
+// ---- RO PVP ÌæĞüíŞ ñò?îÜÚª? arena additional items ------
 
 7028#
 Participation ticket.
@@ -4093,7 +4093,7 @@ Gift ticket.
 ^ffffff_^000000
 #
 
-// ---- EP 2.0 Ã¤Â²Ã®ÃœÃÃ›Ã©Ã’ÃÃ–ÃšÂª Ã±Ã²?Ã®ÃœÃšÂª? my monster friends additional items
+// ---- EP 2.0 ä²îÜİÛéÒÎÖÚª ñò?îÜÚª? my monster friends additional items
 
 
 2621#
@@ -4470,7 +4470,7 @@ Piece of butter cake that is very tasty. Can restore health.
 Weight: ^77777710^000000
 #
 
-// ---- Ep 3.0 ÃÂº?Ã“Ã¶ ----------------
+// ---- Ep 3.0 Ğº?Óö ----------------
 
 7038#
 Well-tangled white yarn.
@@ -5454,7 +5454,7 @@ AGI+1,  INT+1
 Weight : ^77777710^000000
 #
 
-// ----------- Â¾Ã†Â¸Â¶Ã‚Ãª -----------------------
+// ----------- ¾Æ¸¶Âê -----------------------
 663#
 Fill the rice into a container of a certain size that is braided with straw and then cover the cone-shaped container with the pine needle.
 This is one of the popular food in Korean traditional festival.
@@ -5528,7 +5528,7 @@ It has a sour taste mixed with the scent of sasimi.
 ^ffffff_^000000
 Weight: ^7777775^000000
 #
-// ----Â°Ã¯Â·Ã»- 01 -----------
+// ----°ï·û- 01 -----------
 553#
 One of the favorite food in the ancient eastern country. Inside the hot pastry, it has the meat that tastes delicious. Now, it has different flavors.
 ^ffffff_^000000
@@ -5633,7 +5633,7 @@ A solid and shiny paper that is used to wrap and decorate a gift box.
 Weight: ^7777771^000000
 #
 
-// ---- Â¼ÂºÃ…ÂºÃ€Ã½ ÃÃµÂ°Â¡ÂµÃˆÂ¹Â°Ã‡Â° -----------
+// ---- ¼ºÅºÀı Áõ°¡µÈ¹°Ç° -----------
 664#
 Once you opened the box, you will receive a present in it. However, you will never know what you get before you open it.
 Weight : ^77777720^000000
@@ -5669,7 +5669,7 @@ A white wheel that has fallen from a faulty device
 Weight : ^7777771^000000
 #
 
-// ----- Â¿Ã²Â¹ÃŸÂ¶Ã³Â¾Ã†Ã€ÃŒÃ…Ã›-----------
+// ----- ¿ò¹ß¶ó¾ÆÀÌÅÛ-----------
 
 7185#
 A coupon that allows you to take part in the OX quiz
@@ -5772,7 +5772,7 @@ A black substances that has a smelly odour, will cause a great explosion if it i
 Weight : ^7777771^000000
 #
 
-// ----- Â´ÃÃ‡ÃƒÃ‡Ã¬Ã€Ã“-----------
+// ----- ´ÏÇÃÇìÀÓ-----------
 
 7205#
 A small black tag that is hard to be seen in the dark
@@ -5885,7 +5885,7 @@ A black and round medicine that seems to have a bitter taste just by looking at 
 Weight : ^7777771^000000
 #
 
-// -----Â±ÃÂ¼Ã“ÃˆÂ­Ã†Ã³------
+// -----±İ¼ÓÈ­Æó------
 
 7228#
 A ladder-shape gold piece that was extracted from the gold ore. The mineral is flexible and can be stretched. Since the substance of the mineral is stable, it is made into coins of currency.
@@ -5963,7 +5963,7 @@ A bottle with a skull label that contains deadly poison. Anyone who drinks it wi
 Weight : ^77777710^000000
 #
 
-// ----- Â¸Â±Â·Â¹Ã€ÃŒÃ„Ã¹Â½ÂºÃ†Â® -----
+// ----- ¸±·¹ÀÌÄù½ºÆ® -----
 
 7234#
 Heart of sportmanship that belongs to the Guild Member
@@ -6092,7 +6092,7 @@ Cheese is put between the breads and places with sauces and ingredients before i
 Weight : ^77777715^000000
 #
 
-// ------------------- Â¸Ã“Â¸Â®Â¾Ã†Ã€ÃŒÃ…Ã›  -----------------
+// ------------------- ¸Ó¸®¾ÆÀÌÅÛ  -----------------
 
 5057#
 Unidentified item, can be identified with [Spectacles] from merchant.
@@ -6214,7 +6214,7 @@ A flower given as a token of appreciation during Teacher's Day or Mother's Day. 
 Weight : ^777777100^000000
 #
 
-// ----Â¿Ã«ÃÃ¶Â¼Âº-----------
+// ----¿ëÁö¼º-----------
 7262#
 A simple instrument that will produce wind. Useful in the hot weather.
 ^ffffff_^000000
@@ -6261,7 +6261,7 @@ A bottle containing milk that is used to feed the baby.
 Weight : ^7777771^000000
 #
 
-// ----Ã€ÃšÂ¿ÃÃ€ÃŒ-----------
+// ----ÀÚ¿ÍÀÌ-----------
 
 681#
 A photo album that contains the memory of honeymoon. You will feel the passion when you open it.
@@ -6270,7 +6270,7 @@ A photo album that contains the memory of honeymoon. You will feel the passion w
 Weight : ^7777771^000000
 #
 
-// ----Ã‡Ã‘Â±Â¹ Ã€ÃŒÂºÂ¥Ã†Â®Â°Ã¼Â·Ãƒ Â¾Ã†Ã€ÃŒÃ…Ã›ÂµÃ©-----------
+// ----ÇÑ±¹ ÀÌº¥Æ®°ü·Ã ¾ÆÀÌÅÛµé-----------
 
 7273#
 A golden necklace carved with the word of 'RWC' for commemoration of a particular event.
@@ -6358,7 +6358,7 @@ Unidentified item, can be identified with [Spectacles] from merchant.
 Unidentified item, can be identified with [Spectacles] from merchant.
 #
 
-// ----Â¸Â»Â·Â¹Ã€ÃŒÂ½ÃƒÂ¾Ã† Ã€ÃŒÂºÂ¥Ã†Â®Â°Ã¼Â·Ãƒ -----------
+// ----¸»·¹ÀÌ½Ã¾Æ ÀÌº¥Æ®°ü·Ã -----------
 
 684#
 A large green fruit with a strang odour that is known as the King of fruits. The ATK and Matk will be increased after you've taken it.
@@ -6367,7 +6367,7 @@ ATK + 10, MATK + 10
 Weight : ^77777730^000000
 #
 
-// ----4 Level Weapon Â°Ã¼Â·Ãƒ Â¾Ã†Ã€ÃŒÃ…Ã›-----------
+// ----4 Level Weapon °ü·Ã ¾ÆÀÌÅÛ-----------
 
 7289#
 Some of it is known as the Green Olive Stone. It is a very precious ore.
@@ -6519,19 +6519,19 @@ A small boat made of banana leaves and decorated with flowers. It is used to mak
 Weight : ^7777771^000000
 #
 
-// ------- japan mobile event item(Ã¬Ã­ÃœÃ¢Ã¢Â¢Ã‘Â¦Ã¼Ã€Ã”Ã‘Ã©Ã„ ÃšÂªÃ¹Â¡)-----
+// ------- japan mobile event item(ìíÜââ¢Ñ¦üÀÔÑéÄ Úªù¡)-----
 5099#
 Unidentified item, can be identified with [Spectacles] from merchant.
 #
 
-// -------Ã€ÃÂ´Ã Â¶Ã³Â¸Â¶Â´Ãœ (Ã¬Ã”Ã’Ã¹ RAMADAN)  -----
+// -------ÀÎ´Ï ¶ó¸¶´Ü (ìÔÒù RAMADAN)  -----
 685#
 Means 9 months in a country from certain desert. It means the holy moon where everyone has to lead a life without desire and food in this period of time.
 ^ffffff_^000000
 Weight : ^77777730^000000
 #
 
-// ------- Â¾Ã‹ÂµÂ¥Â¹Ã™Â¶Ãµ Ã…ÃÂºÂ¸Ã†Â®Â·Â¢ ÂºÂ¸Â»Ã³Â¾Ã†Ã€ÃŒÃ…Ã›-----
+// ------- ¾Ëµ¥¹Ù¶õ ÅÍº¸Æ®·¢ º¸»ó¾ÆÀÌÅÛ-----
 9026#
 Egg of Zealotus. You can wake up Zealotus with the Pet Incubator
 Type : ^777777Monster's Egg^000000
@@ -6716,7 +6716,7 @@ Bag made of straw which is used to keep grain. If it is not carefully kept, it m
 Weight : ^77777780^000000
 #
 
-// ------- 2005Â³Ã¢ ÃÃµÂ°Â¡ÂµÃˆ Ã„Â«ÂµÃ¥
+// ------- 2005³â Áõ°¡µÈ Ä«µå
 4149#
 There is a certain rate to obtain 'Thunder Box' when character defeats an Insect class monster.
 Series : ^777777Card^000000
@@ -7931,7 +7931,7 @@ Equipped by : ^777777Robe^000000
 Weight : ^7777771^000000
 #
 
-// ------Â¸Ã°Â¹Ã™Ã€Ã Â¾Ã†Ã€ÃŒÃ…Ã›-------
+// ------¸ğ¹ÙÀÏ ¾ÆÀÌÅÛ-------
 2511#
 Unidentified item, can be identified with [Spectacles] from merchant.
 #
@@ -8076,7 +8076,7 @@ The lantern that is fixed on the miner's hat. It is a useful tool that shines yo
 Weight : ^7777771^000000
 #
 
-// ------- 2005 Â¤Ã¢Â¾Ã·ÂªÂ«? ÂµsÂ¸Ã©Â½g -----
+// ------- 2005 ¤â¾÷ª«? µs¸é½g -----
 2645#
 Unidentified item, can be identified with [Spectacles] from merchant.
 #
@@ -8087,7 +8087,7 @@ Unidentified item, can be identified with [Spectacles] from merchant.
 Unidentified item, can be identified with [Spectacles] from merchant.
 #
 
-// ------- Ã…Ã‚Â±Â¹ Â¼Ã›Â²Ã´Â¶Ãµ Ã€ÃŒÂºÂ¥Ã†Â®(Â¼Â³Â³Â¯) --------
+// ------- ÅÂ±¹ ¼Û²ô¶õ ÀÌº¥Æ®(¼³³¯) --------
 7328#
 Scroll that records the legend of New Year.
 It is written in ancient writing and the content cannot be interpreted.
@@ -8101,7 +8101,7 @@ Although it looks old, it seems to have no problem to open the boxes.
 Weight : ^7777771^000000
 #
 
-//-----Â¾Ã®Â¸Ã“Â´ÃÂ³Â¯ Ã€ÃŒÂºÂ¥Ã†Â®
+//-----¾î¸Ó´Ï³¯ ÀÌº¥Æ®
 2646#
 Unidentified item, can be identified with [Spectacles] from merchant.
 #
@@ -8257,7 +8257,7 @@ Unidentified item, can be identified with [Spectacles] from merchant.
 #
 
 
-// -------- (ÃšÂ¸ÃÃRO 2Ã±ÃÃ’Â´Ã‘ÂºÃ’Â· Ã¼Ã€Ã”Ã‘)--------
+// -------- (Ú¸ÏĞRO 2ñÎÒ´ÑºÒ· üÀÔÑ)--------
 2647#
 Unidentified item, can be identified with [Spectacles] from merchant.
 #
@@ -8279,7 +8279,7 @@ This is the final praying for the fallen companions. Those who seek the gem of H
 7337#
 Eyes obtained from Hellion.Bellonte
 #
-// --------- (Ã£Ã¦Ã®ÃœÃ™Ã«ÃÃ¯Patch) ----------
+// --------- (ãæîÜÙëĞïPatch) ----------
 1262#
 Unidentified item, can be identified with [Spectacles] from merchant.
 #
@@ -8398,7 +8398,7 @@ Unidentified item, can be identified with [Spectacles] from merchant.
 Unidentified item, can be identified with [Spectacles] from merchant.
 #
 
-// ---------- ÃƒÃŸÂ°Â¡ Â¹Â«Â±Ã¢Â¿Ã Â¹Ã¦Â¾Ã®Â±Â¸(Ã±Ã²ÃŠÂ¥Ã®ÃœÃ™Ã«ÃÃ¯Ã»ÃºÃ›ÃÃÃ½) ----------
+// ---------- Ãß°¡ ¹«±â¿Í ¹æ¾î±¸(ñòÊ¥îÜÙëĞïûúÛÁÎı) ----------
 2113#
 Unidentified item, can be identified with [Spectacles] from merchant.
 #
@@ -8509,7 +8509,7 @@ Unidentified item, can be identified with [Spectacles] from merchant.
 Unidentified item, can be identified with [Spectacles] from merchant.
 #
 
-// ---------- (Ã£Ã¦Ã±Ã²ÃŠÂ¥Ã®ÃœÃ”Ã©ÃÃ½)-----------
+// ---------- (ãæñòÊ¥îÜÔéÎı)-----------
 5107#
 Unidentified item, can be identified with [Spectacles] from merchant.
 #
@@ -8556,7 +8556,7 @@ Unidentified item, can be identified with [Spectacles] from merchant.
 Unidentified item, can be identified with [Spectacles] from merchant.
 #
 
-// ------- (Ã°Â¯3Ã³Â­ Ã£Ã¦Ã®ÃœÃ™Ã«ÃÃ¯Ã»ÃºÃ›ÃÃÃ½) --------
+// ------- (ğ¯3ó­ ãæîÜÙëĞïûúÛÁÎı) --------
 5122#
 Unidentified item, can be identified with [Spectacles] from merchant. 
 #
@@ -8591,7 +8591,7 @@ Unidentified item, can be identified with [Spectacles] from merchant.
 Unidentified item, can be identified with [Spectacles] from merchant.
 #
 
-// -------(ÃÃªÃ¥Ã¶Ã”Â´Ã£Â¼ Ã—Ã¬Ã½Ã±Ã·Â²Ã¤Ã…?)----------
+// -------(ĞêåöÔ´ã¼ ×ìıñ÷²äÅ?)----------
 
 576#
 Fruit with thorn and strong sweet scent. It can recovers some HP and SP^000088Restores small amount of HP and SP^000000
@@ -8645,7 +8645,7 @@ An old diary that seems to have nothing important inside of it.
 Unidentified item, can be identified with [Spectacles] from merchant.
 #
 
-// -------- (ÃÂ¯Ã“Ã›Ã®ÃœÃ«Â¶ÃšÂª Ã©ÃÃ¸Â©?ÃÃ™ )---------- 
+// -------- (Í¯ÓÛîÜë¶Úª éĞø©?ŞÙ )---------- 
 7352#
 A mysterious transparent tablet made of some unknown susbstance. There are some unidentified writings on it.
 Weight : ^7777771^000000
@@ -8679,7 +8679,7 @@ Fragment of an ancient badge. There are a lot of sharp thorns behind it but the 
 Weight : ^7777771^000000
 #
 
-// --- (Ã¸ÃºÃ¯Ã— ÃŸÃ•Ã­Â­)---
+// --- (øúï× ßÕí­)---
 
 12027#
 There is a 30% rate of getting cursed for 30 seconds. Recovers 9% of HP.
@@ -8722,14 +8722,14 @@ Weight : ^77777720^000000
 Weight : ^77777720^000000
 #
 
-// ---------- (Ã Â¹ÃŒÃ‘Ã¼Ã€Ã”Ã‘) ----------
+// ---------- (à¹ÌÑüÀÔÑ) ----------
 7360#
 Written in language of other world [Take part in RO event to get a doll!] 
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
 
-// ---------- (Ã©ÃÃ¸Â©?ÃÃ™) ----------
+// ---------- (éĞø©?ŞÙ) ----------
 2659#
 Unidentified item, can be identified with [Spectacles] from merchant.
 #
@@ -8743,7 +8743,7 @@ Unidentified item, can be identified with [Spectacles] from merchant.
 Unidentified item, can be identified with [Spectacles] from merchant.
 #
 
-// ----------(Ã¬Ã”Ã’Ã¹Ã”Â¼Ã˜Â¡Ã¼Ã€Ã”Ã‘) ---------
+// ----------(ìÔÒùÔ¼Ø¡üÀÔÑ) ---------
 
 7399#
 selamat'  is written in the middle of the white paper.
@@ -8776,7 +8776,7 @@ ke-60'  is written in the middle of the white paper.
 Weight : ^7777771^000000
 #
 
-// ---------- (Ã¢Â¢Ã‘Â¦ Ã‹Ã¼ÃÃÃ¸Â¹  Ã®ÃºÃ¢Ãº) ----------
+// ---------- (â¢Ñ¦ ËüŞÍø¹  îúâú) ----------
 
 5129#
 Unidentified item, can be identified with [Spectacles] from merchant.
@@ -8797,7 +8797,7 @@ Unidentified item, can be identified with [Spectacles] from merchant.
 Unidentified item, can be identified with [Spectacles] from merchant.
 #
 
-// ------------  (Ã°Â¯3ÃŒÃ¹ ÃšÂªÃ¹Â¡)-----------
+// ------------  (ğ¯3Ìù Úªù¡)-----------
 12040#
 An illusionary stone with mysterious power that turns the metal into gold. It is soft,warm and red in color.
 ^ffffff_^000000
@@ -8807,7 +8807,7 @@ Weight : ^77777730^000000
 Unidentified item, can be identified with [Spectacles] from merchant.
 #
 
-// ----------- (30Ã°ÃºÃ–Ã¹Ã—Ã¢) ------------
+// ----------- (30ğúÖù×â) ------------
 12041#
 A simple dish made by the Novice. You can feel the taste of green grass.
 STR + 1.
@@ -9172,21 +9172,21 @@ Weight : ^77777750^000000
 #
 
 
-// ---------- PPLÂ¸Â³Ã…Ã¦(Ã˜Â¡Ã”Ã‹) ----------
+// ---------- PPL¸³Åæ(Ø¡ÔË) ----------
 7405#
 A battered, green iron can. It feels like there's something in it when you shake it.
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
 
-// ------------ 2005(Ã¬Ã”Ã’Ã¹ÃšÂªÃ¹Â¡) ---------------
+// ------------ 2005(ìÔÒùÚªù¡) ---------------
 7415#
 Fragment of Tag that contains the essence of nature. It is said to be used in certain summoning rituals.
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
 
-// ----------- (ÃŸÃ‚Ã¹Â¡ÃšÂªÃ¹Â¡) ---------------
+// ----------- (ßÂù¡Úªù¡) ---------------
 12103#
 With uncounted miserable aged, it can summon ferocious monsters after agreed between magical sprig and blood.
 ^ffffff_^000000
@@ -9233,7 +9233,7 @@ A package that keeps the delicious food
 Weight : ^77777720^000000
 #
 
-//--------Ã€ÃÂµÂµÂ³Ã—Â½ÃƒÂ¾Ã† 2ÃÃ–Â³Ã¢--------
+//--------ÀÎµµ³×½Ã¾Æ 2ÁÖ³â--------
 575#
 Made to comemorate the RO 2nd Annivessary. The big and delicious cake can recover your health.
 Weight : ^77777710^000000
@@ -9250,7 +9250,7 @@ Can wear  ^000088Santa^000000's clothes for 10 minute.
 Weight : ^77777720^000000
 #
 
-// --------- Â´Ã«Â¸Â¸ Â·ÃÂ¶Ã‡ Ã€ÃŒÂºÂ¥Ã†Â® 2006 ----------
+// --------- ´ë¸¸ ·Î¶Ç ÀÌº¥Æ® 2006 ----------
 
 7361#
 The number '1' is written on the ball.
@@ -9503,8 +9503,8 @@ The number '45' is written on the ball.
 Weight : ^7777771^000000
 #
 
-//----------2006Ã’Â´ Ep10.3 lightalzen------------------
-//------------Â¸ÃÃ€ÃÃ„Ã¹Â½ÂºÃ†Â®
+//----------2006Ò´ Ep10.3 lightalzen------------------
+//------------¸ŞÀÎÄù½ºÆ®
 
 7416#
 The letter is written by the person in charge for the purpose to assist the person
@@ -9536,7 +9536,7 @@ A most welcome drink by ladies with the bright and fresh color of vemillion that
 ^ffffff_^000000
 Weight : ^77777710^000000
 #
-//-------------------ÃƒÃŸÂ°Â¡Â½ÂºÃ…Â³Â¿Ã« Â¾Ã†Ã€ÃŒÃ…Ã›
+//-------------------Ãß°¡½ºÅ³¿ë ¾ÆÀÌÅÛ
 1771#
 A dagger with poison, will infect the enemy with the poison effect when throwing to them.
 Series : ^777777Throwing Dagger^000000
@@ -9589,14 +9589,14 @@ The potion to increase the resistance toward the element of 'Wind', but will rec
 Weight : ^7777771^000000
 #
 
-//-------------------PVPÂ¾Ã†Ã€ÃŒÃ…Ã›
+//-------------------PVP¾ÆÀÌÅÛ
 7420#
 A skeleton head with a person name on it. 
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
 
-//-------------------3ÂºÃÂ±Ã¢ Ã„Ã¹Â½ÂºÃ†Â®Â¾Ã†Ã€ÃŒÃ…Ã›
+//-------------------3ºĞ±â Äù½ºÆ®¾ÆÀÌÅÛ
 7421#
 A thin and transparent key which shines with the color of red.
 ^ffffff_^000000
@@ -9658,7 +9658,7 @@ A book that neaten all the information of the method to create elemental potion.
 Weight : ^7777771^000000
 #
 
-//-------------------3ÂºÃÂ±Ã¢ Â¾Ã†Ã€ÃŒÃ…Ã›
+//-------------------3ºĞ±â ¾ÆÀÌÅÛ
 7435#
 A shinny elegant and trendy accessory, but seems like it is not created by human.
 ^ffffff_^000000
@@ -9830,7 +9830,7 @@ It is said that if cook with this legendary fantastic cooking kits, any foods wi
 Weight : ^7777777^000000
 #
 
-//-------------------Â¸Ã°Â¹Ã™Ã€ÃÃ€ÃŒÂºÂ¥Ã†Â®(ÂºÂ¹Â»Ã§)
+//-------------------¸ğ¹ÙÀÏÀÌº¥Æ®(º¹»ç)
 2356#
 Unidentified item, can be identified with [Spectacles] from merchant.
 #
@@ -9841,7 +9841,7 @@ Unidentified item, can be identified with [Spectacles] from merchant.
 Unidentified item, can be identified with [Spectacles] from merchant.
 #
 
-//-------------------Â¿Ã¤Â¸Â®ÃÂ¦ÃÂ¶
+//-------------------¿ä¸®Á¦Á¶
 7472#
 An Impressive book which the cover page title as "Even you're alone, you will be able to survive in any places with this".  
 Recorded all Level 1 cooking recipes.
@@ -10347,19 +10347,19 @@ A cooking kit that uses to cook the food, the cooking style will usually depend 
 Weight : ^7777771^000000
 #
 
-//-------------------Ã‡Ã˜Â¿Ãœ Ã€ÃŒÂºÂ¥Ã†Â® Â¾Ã†Ã€ÃŒÃ…Ã›
+//-------------------ÇØ¿Ü ÀÌº¥Æ® ¾ÆÀÌÅÛ
 7483#
 The No. 8 Sealed Key that can uses to open the Ancient City of Geponia.
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
 
-//-------------------Â¸Ã°Â¹Ã™Ã€Ã Ã€ÃŒÂºÂ¥Ã†Â® (Â±ÃƒÂ¼Ã¶Ã†Ã­)
+//-------------------¸ğ¹ÙÀÏ ÀÌº¥Æ® (±Ã¼öÆí)
 5135#
 Unidentified item, can be identified with [Spectacles] from merchant.
 #
 
-//-------------------ÃƒÃŸÂ°Â¡ÃÃ·Â¾Ã·Â±Âº
+//-------------------Ãß°¡Á÷¾÷±º
 2667#
 Unidentified item, can be identified with [Spectacles] from merchant.
 #
@@ -10367,7 +10367,7 @@ Unidentified item, can be identified with [Spectacles] from merchant.
 Unidentified item, can be identified with [Spectacles] from merchant.
 #
 
-//-------------------Ã‡Ã‘Â±Â¹Â¼Ã¶Â´Ã‰Ã€ÃŒÂºÂ¥Ã†Â®
+//-------------------ÇÑ±¹¼ö´ÉÀÌº¥Æ®
 12131#
 An expired drink that had been keeped since long time ago, will not having any effect even drink it. 
 ^ffffff_^000000
@@ -10512,8 +10512,8 @@ Unidentified item, can be identified with [Spectacles] from merchant.
 
 
 //-----------------  10.4 updata new item  -----------------
-// ------------------ Ã±Ã²ÃŠÂ¥Ã–Ãµ Ã¬Ã›Ã­Âº ------------------------
-// --------------- ? ÃºÂ­Ã¬Â¥Ã•Â¦ ÃÂ¯Ã®Ã Ã¬Ã²Ã™Ã¢ ----------------
+// ------------------ ñòÊ¥Öõ ìÛíº ------------------------
+// --------------- ? ú­ì¥Õ¦ Î¯îĞ ìòÙâ ----------------
 7487#
 Cooking Wine obtained from the inn in Juno. Have nice and sweet smell.
 ^ffffff_^000000
@@ -10626,7 +10626,7 @@ A key that looks fancy and has different kinds of colors. You can use it to ente
 Green key that is flat and transparent. It is a key to a secret treasure store in some unknown place.
 ^ffffff_^000000
 #
-// ------------- Ã°Â¯4ÃŒÃ¹ ÃšÂªÃ¹Â¡ --------------
+// ------------- ğ¯4Ìù Úªù¡ --------------
 2357#
 Unidentified item, can be identified with [Spectacles] from merchant.
 #
@@ -10656,7 +10656,7 @@ Although it looks old, the silver pocket watch looks classy.
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
-// -------------- ÃºÂ­Ã¨Ã¢Ã¼Ã€Ã”Ã‘ÃšÂªÃ¹Â¡ -------------
+// -------------- ú­èâüÀÔÑÚªù¡ -------------
 584#
 Soup of meat that contains a lot of fish ball. Looks delicious.
 ^ffffff_^000000
@@ -10669,7 +10669,7 @@ Can only be purchased until ^000088X Month X Day^000000
 ^ffffff_^000000
 Weight : ^7777778^000000
 #
-// -------------- Ã˜ÂªÃšÂªÃŸÃŸ? -----------------
+// -------------- ØªÚªßß? -----------------
 7514#
 Ticket that is the proof of monster race. The number of your bet is recorded in the ticket and it can be used in the arena.
 ^ffffff_^000000
@@ -10678,12 +10678,12 @@ Ticket that is the proof of monster race. The number of your bet is recorded in 
 Medal made from the steel that is produced in Schwaltzvalt Republic. Not tradable.
 ^ffffff_^000000
 #
-// --------------- ÃšÂ¸ÃÃÃ¡Â¶?Ã·Ã½Ã®ÃœÃ¼Ã€Ã”Ã‘---------------------
+// --------------- Ú¸ÏĞá¶?÷ıîÜüÀÔÑ---------------------
 12134#
 Red Envelope that is sealed with the wish of New Year.
 Weight : ^7777771^000000
 #
-// --------------- ?Ã¹Â¡Ã¸ÃÃšÂªÃ¹Â¡ ----------------
+// --------------- ?ù¡øĞÚªù¡ ----------------
 5137#
 Unidentified item, can be identified with [Spectacles] from merchant.
 #
@@ -10702,11 +10702,11 @@ Unidentified item, can be identified with [Spectacles] from merchant.
 5143#
 Unidentified item, can be identified with [Spectacles] from merchant.
 #
-// --------------- ÃÂ£Ã—ÃˆÃÂ¹ -------------------
+// --------------- Ş£×ÈŞ¹ -------------------
 5144#
 Unidentified item, can be identified with [Spectacles] from merchant.
 #
-// --------------- ÃšÂ¸ÃÃ ---------------------
+// --------------- Ú¸ÏĞ ---------------------
 12135#
 A drink that makes one feels happy after drinking it. However, bad things might happen if you take too much of it.
 ^ffffff_^000000
@@ -10717,38 +10717,38 @@ Magic coin that is kept in the urn and seems to be very important.
 ^ffffff_^000000
 Weight : ^77777710^000000
 #
-// ---------------- Ã·Ã©Ã Â¤ ----------------
+// ---------------- ÷éà¤ ----------------
 7525#
 A ticket that allows you to join the Summer Feast.
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
-// --------------- Ã°Â¯4ÃŒÃ¹Ã¼Ã€Ã”Ã‘ ---------------
+// --------------- ğ¯4ÌùüÀÔÑ ---------------
 7526#
 Part of manuscript that Joshua has lost. After browsing it, you find ... some extraordinary content.
 ^ffffff_^000000
 #
-// --------------- ÃÂ±Ã±Â½Ã¡Â¶?Ã·Ã½Ã®ÃœÃ¼Ã€Ã”Ã‘ --------------
+// --------------- Ï±ñ½á¶?÷ıîÜüÀÔÑ --------------
 585
 Traditional sausage that has a tasty apperance and sweet scent. It will taste great if you eat it together with wine.
 ^000088Restores small amount of HP^000000,cast level 3 Gloria
 ^ffffff_^000000
 Weight : ^7777774^000000
 #
-// ---------------- Ã·Ã©Ã Â¤ ----------------
+// ---------------- ÷éà¤ ----------------
 5145#
 Unidentified item, can be identified with [Spectacles] from merchant.
 #
-// ------------------ Ã¬Ã”Ã“Ã¸ --------------------
+// ------------------ ìÔÓø --------------------
 586#
 A small cake that will let you feel the warmth of a mother. ^000088Recovers 325HP^000000 
 Weight : ^77777710^000000
 #
-// ------------------ Ã¬Ã­ÃœÃ¢Ã¡Â¶?Ã·Ã½Ã®ÃœÃ¼Ã€Ã”Ã‘ ---------------------
+// ------------------ ìíÜâá¶?÷ıîÜüÀÔÑ ---------------------
 2669#
 Unidentified item, can be identified with [Spectacles] from merchant.
 #
-// ------------------ ÃÂ­Ã“Â«ÃšÂªÃ¹Â¡ ---------------------
+// ------------------ Í­Ó«Úªù¡ ---------------------
 12137#
 1st level item
 #
@@ -11145,12 +11145,12 @@ Case that contains 500 silver bullets which seem to be cleansed with the holy es
 ^ffffff_^000000
 Weight : ^77777725^000000
 #
-// -----------------ÃÂ±Ã±Â½Ã¡Â¶?Ã·Ã½Ã®ÃœÃ¼Ã€Ã”Ã‘-------------------
+// -----------------Ï±ñ½á¶?÷ıîÜüÀÔÑ-------------------
 5148#
 Unidentified item, can be identified with [Spectacles] from merchant.
 #
 
-// -----------------Ã·Ã©Ã Â¤Ã¡Â¶?Ã·Ã½Ã®ÃœÃ¼Ã€Ã”Ã‘-------------------
+// -----------------÷éà¤á¶?÷ıîÜüÀÔÑ-------------------
 
 5150#
 Unidentified item, can be identified with [Spectacles] from merchant.
@@ -11192,18 +11192,18 @@ Date : ^000088June 22. P.M:04^000000
 Weight : ^7777771^000000
 #
 
-// ------------------ÃÂ±Ã±Â½Ã°Â«Ã¤Â¹Ã•Ãƒ Ã¡Â¶?Ã·Ã½Ã®ÃœÃ¼Ã€Ã”Ã‘--------------------
+// ------------------Ï±ñ½ğ«ä¹ÕÃ á¶?÷ıîÜüÀÔÑ--------------------
 5149#
 Unidentified item, can be identified with [Spectacles] from merchant.
 #
 
 
-// ------------------RO OST Ã·Ã¼Ã˜Ã£Ã‘ÂºÃ’Â· ÃšÂªÃ¹Â¡-------------------
+// ------------------RO OST ÷üØãÑºÒ· Úªù¡-------------------
 5151#
 Unidentified item, can be identified with [Spectacles] from merchant.
 #
 
-// ---------------------- Ã¬Ã”Ã“Ã¸ÃÂ«Ã¶Ã‘Ã¯Â½Ã¼Ã€Ã”Ã‘ -----------------------
+// ---------------------- ìÔÓøİ«öÑï½üÀÔÑ -----------------------
 5154#
 Unidentified item, can be identified with [Spectacles] from merchant.
 #
@@ -11992,7 +11992,7 @@ Unidentified item, can be identified with [Spectacles] from merchant.
 5167#
 Unidentified item, can be identified with [Spectacles] from merchant.
 #
-// ------------- Â¸Â»Â·Â¹Ã€ÃŒÂ½ÃƒÂ¾Ã† PVP Ã€ÃŒÂµÂ¿Â½ÂºÃ…Â©Â·Ã‘ ------------
+// ------------- ¸»·¹ÀÌ½Ã¾Æ PVP ÀÌµ¿½ºÅ©·Ñ ------------
 13569#
 Box that contains 10 PVP Teleport Scroll.
 Allow character to teleport to the PVP Room.
@@ -12107,7 +12107,7 @@ Unidentified item, can be identified with [Spectacles] from merchant.
 #
 
 
-// ------------- Â¾Ã†Â·Ã§Â³Âª Â»Ã³Â¹ÃÂ±Ã¢ -----------
+// ------------- ¾Æ·ç³ª »ó¹İ±â -----------
 
 7561#
 A frozen heart that will give you chills if you touch it.
@@ -12185,7 +12185,7 @@ Weight : ^7777774^000000
 Unidentified item, can be identified with [Spectacles] from merchant.
 #
 
-//----------------------20060610 Â½Ã…Â±Ã”ÃƒÃŸÂ°Â¡Â¾Ã†Ã€ÃŒÃ…Ã›-------------------------
+//----------------------20060610 ½Å±ÔÃß°¡¾ÆÀÌÅÛ-------------------------
 5169#
 Unidentified item, can be identified with [Spectacles] from merchant.
 #
@@ -12214,7 +12214,7 @@ Unidentified item, can be identified with [Spectacles] from merchant.
 Unidentified item, can be identified with [Spectacles] from merchant.
 #
 
-// -------------- 2006 ÃƒÃŸÂ°Â¡Â¾Ã†Ã€ÃŒÃ…Ã› -------------
+// -------------- 2006 Ãß°¡¾ÆÀÌÅÛ -------------
 
 5184#
 Unidentified item, can be identified with [Spectacles] from merchant.
@@ -12391,8 +12391,8 @@ A scroll that gives a random amount of zeny.
 Weight : ^7777771^000000
 #
 
-// --------- Â¸Â»Â·Â¹Ã€ÃŒÂ½ÃƒÂ¾Ã† 20070614 Ã†ÃªÂ¾Ã‹ Â½ÂºÃ…Â©Â·Ã‘ --------
-// --------------------- Â¸Â»Â·Â¹Ã€ÃŒÂ½ÃƒÂ¾Ã† Ã„Â³Â½Â¬ Â¾Ã†Ã€ÃŒÃ…Ã› --------------------
+// --------- ¸»·¹ÀÌ½Ã¾Æ 20070614 Æê¾Ë ½ºÅ©·Ñ --------
+// --------------------- ¸»·¹ÀÌ½Ã¾Æ Ä³½¬ ¾ÆÀÌÅÛ --------------------
 13701#
  A box that Contains 1 Egg Scroll, there are chances to obtain Flying Angel, Zeny egg scroll, Elven ears and other items .
 ^ffffff_^000000
@@ -12552,7 +12552,7 @@ A golden color Pet Egg Scroll which is said to have chances to give a Super Pet 
 Weight : ^7777771^000000
 #
 //--------7~9 event ---------------------------------------------------
-// -------------- Â¸Â»Â·Â¹Ã€ÃŒÂ½ÃƒÂ¾Ã†/Â½ÃŒÂ°Â¡Ã†Ãº Ã€ÃŒÂºÂ¥Ã†Â® Â¾Ã†Ã€ÃŒÃ…Ã› ---------------
+// -------------- ¸»·¹ÀÌ½Ã¾Æ/½Ì°¡Æú ÀÌº¥Æ® ¾ÆÀÌÅÛ ---------------
 7884#
 A broken jade that seems valuable, no one knows who it belongs to.
 ^ffffff_^000000
@@ -13163,7 +13163,7 @@ Unidentified item, can be identified with [Spectacles] from merchant.
 5355#
 Unidentified item, can be identified with [Spectacles] from merchant.
 #
-// ----- Ã…Â©Â¸Â®Â½ÂºÂ¸Â¶Â½Âº Ã€ÃŒÂºÂ¥Ã†Â® Â»ÃªÃ…Â¸ Â¼Ã¶Â¿Â° --------
+// ----- Å©¸®½º¸¶½º ÀÌº¥Æ® »êÅ¸ ¼ö¿° --------
 //5811#
 //Unknown Item, can be identified by [Magnifier].
 //#
@@ -13190,7 +13190,7 @@ Yulia claims that this hat was robbed by a suspicious man while going an errand 
 Weight : ^7777771^000000
 #
 
-// ------------------- 2006 Â»Ã³Â¹ÃÂ±Ã¢ Â½Ã…Â±Ã”Ã„Â«ÂµÃ¥ ÃƒÃŸÂ°Â¡.-----------------------
+// ------------------- 2006 »ó¹İ±â ½Å±ÔÄ«µå Ãß°¡.-----------------------
 
 4332#
 ATK +5, INT +1
@@ -14040,7 +14040,7 @@ Compound on: ^777777Weapon^000000
 Weight: ^7777771^000000
 #
 
-// ------------- ÃƒÂ¥Ã€ÃÂ±Ã¢ ----------------------
+// ------------- Ã¥ÀĞ±â ----------------------
 11000#
 A book documenting the history of Prontera.
 There's a whole chapter dedicated to Tristam III.
@@ -14125,7 +14125,7 @@ fiction author.
 Weight: ^7777771^000000
 #
 
-// ----------------------- Ã…Ã¤Â¸Â£ÃˆÂ­Â»Ãª Ã„Ã¹Â½ÂºÃ†Â® Â¾Ã†Ã€ÃŒÃ…Ã› ----------------------
+// ----------------------- Åä¸£È­»ê Äù½ºÆ® ¾ÆÀÌÅÛ ----------------------
 7704#
 A device that can
 measure the ground's
@@ -14147,7 +14147,7 @@ by a Geologist.
 Weight: ^7777770^000000
 #
 
-// ----------------------- Ã…Ã¤Â¸Â£ÃˆÂ­Â»Ãª Â½Ã…Â±Ã” Ã€Ã¥ÂºÃ± Â¾Ã†Ã€ÃŒÃ…Ã› ------------------------
+// ----------------------- Åä¸£È­»ê ½Å±Ô Àåºñ ¾ÆÀÌÅÛ ------------------------
 1370#
 Unknown item
 requiring Appraisal.
@@ -14238,7 +14238,7 @@ requiring Appraisal.
 Can be identified by
 using a Magnifier.
 #
-// -------- 2007 Ã€ÃÂºÂ» Â¿Â¬Â¸Â» Ã„Â³Â½Â¬Â¾Ã†Ã€ÃŒÃ…Ã› ----------
+// -------- 2007 ÀÏº» ¿¬¸» Ä³½¬¾ÆÀÌÅÛ ----------
 5380#
 Unknown Item, can be identified by [Magnifier].
 #
@@ -14492,7 +14492,7 @@ Gives Holy property to a character for 30 minutes.
 Weight : ^7777771^000000
 #
 
-// ---------------------- Â¿Ã«ÂºÂ´Â¼Ã’ÃˆÂ¯Â¼Â­ -------------------------------
+// ---------------------- ¿ëº´¼ÒÈ¯¼­ -------------------------------
 
 12153#
 Summon a 1st
@@ -14701,7 +14701,7 @@ targeted Mercenary.
 ^ffffff_^000000
 Weight: ^77777710^000000
 #
-// ------------------ Â¿Ã«ÂºÂ´Â¿Ã« Ã†Ã·Â¼Ã‡ ------------------
+// ------------------ ¿ëº´¿ë Æ÷¼Ç ------------------
 12241#
 A Concentration Potion
 for Mercenaries that
@@ -14727,7 +14727,7 @@ Attack Speed.
 Weight: ^77777710^000000
 #
 
-// ---------------- Â¸Â±Â·Â¹Ã€ÃŒ Ã„Ã¹Â½ÂºÃ†Â® Â¾Ã†Ã€ÃŒÃ…Ã› ------------------
+// ---------------- ¸±·¹ÀÌ Äù½ºÆ® ¾ÆÀÌÅÛ ------------------
 7730#
 A ticket proving
 that the bearer has
@@ -14849,7 +14849,7 @@ a new mission.
 Weight: ^7777771^000000
 #
 
-// -------------- 11.3 Ã€Ã¢Ã…Ã› -------------------
+// -------------- 11.3 ÀâÅÛ -------------------
 7751#
 A worn-out white
 cloth that can be
@@ -14890,7 +14890,7 @@ Merchant NPCs.
 Weight: ^7777771^000000
 #
 
-// ------------ Ã„Ã¹Â½ÂºÃ†Â® Â¾Ã†Ã€ÃŒÃ…Ã› -----------------
+// ------------ Äù½ºÆ® ¾ÆÀÌÅÛ -----------------
 7755#
 Much of the writing
 on this note isn't
@@ -14910,7 +14910,7 @@ Weight: ^7777771^000000
 
 
 
-// ------------------- 11.3 Â½Ã…Â±Ã” Ã€Ã¥ÂºÃ± Â¾Ã†Ã€ÃŒÃ…Ã› --------------------------
+// ------------------- 11.3 ½Å±Ô Àåºñ ¾ÆÀÌÅÛ --------------------------
 2122#
 Unknown item
 requiring Appraisal.
@@ -15373,7 +15373,7 @@ Can be identified by
 using a Magnifier.
 #
 
-// ------------ 11.3 Ã„Ã¹Â½ÂºÃ†Â® Â¾Ã†Ã€ÃŒÃ…Ã› --------------
+// ------------ 11.3 Äù½ºÆ® ¾ÆÀÌÅÛ --------------
 7722#
 A loan document
 that includes the
@@ -15641,7 +15641,7 @@ Adds Accuracy +30 for 30 minutes. No longer effective if the character dies. v
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
-// ------------- 2008 Â´Ã«Â¸Â¸ Â´ÃœÂ¿Ã€Ã€Ã½ ---------------
+// ------------- 2008 ´ë¸¸ ´Ü¿ÀÀı ---------------
 11505#
 The plant brings up the spirit.
 ^000088Restores 105SP.^000000
@@ -15652,7 +15652,7 @@ Weight : ^7777773^000000
 Unidentified item, can be identified with [Spectacles] from merchant.
 #
 
-//--------------2008 Â¸Â»Â½ÃŒ Â±Â¹Â°Ã¦Ã€Ã--------------
+//--------------2008 ¸»½Ì ±¹°æÀÏ--------------
 12709#
 Candy that made from Guyak. Tasty candy that is sweet and sour,restores HP and SP 30%.
 ^ffffff_^000000
@@ -15669,7 +15669,7 @@ Item that made specially for celebrating National day.
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
-//--------------2008 Ã‡Ã’Â·ÃÃ€Â© Ã€ÃŒÂºÂ¥Ã†Â® --------------
+//--------------2008 ÇÒ·ÎÀ© ÀÌº¥Æ® --------------
 5292#
 Unidentified item, can be identified with [Spectacles] from merchant.
 #
@@ -15690,7 +15690,7 @@ Unidentified item, can be identified with [Spectacles] from merchant.
 #
 
 
-// 22008.11.26 Ã„Â³Â½Â¬ Â¾Ã†Ã€ÃŒÃ…Ã› Â¾Ã·ÂµÂ¥Ã€ÃŒÃ†Â®
+// 22008.11.26 Ä³½¬ ¾ÆÀÌÅÛ ¾÷µ¥ÀÌÆ®
 13804#
 A box which contains 10x [I Love You] Firecracker
 ^ffffff_^000000
@@ -15798,7 +15798,7 @@ Weight : ^7777771^000000
 Unidentified item, can be identified with [Spectacles] from merchant.
 #
 
-// Ã†ÃÃ…Â°ÃÃ¶Â¿Â¡ Ã†Ã·Ã‡Ã”ÂµÃˆ Â¾Ã†Ã€ÃŒÃ…Ã› ÃƒÃŸÂ°Â¡
+// ÆĞÅ°Áö¿¡ Æ÷ÇÔµÈ ¾ÆÀÌÅÛ Ãß°¡
 2684#
 Unidentified item, can be identified with [Spectacles] from merchant.
 #
@@ -15895,7 +15895,7 @@ Monster Goblin love to eat.
 Weight : ^7777771^000000
 #
 
-// 2008.12.03 Ã„Â³Â½Â¬ Â¾Ã†Ã€ÃŒÃ…Ã› Â¾Ã·ÂµÂ¥Ã€ÃŒÃ†Â®
+// 2008.12.03 Ä³½¬ ¾ÆÀÌÅÛ ¾÷µ¥ÀÌÆ®
 5291#
 Unidentified item, can be identified with [Spectacles] from merchant.
 #
@@ -16048,7 +16048,7 @@ A box that contains 1 Spiritual Ring. Handle with care!
 A box that contains 1 Variant Shoes. Handle with care!
 #
 
-// 2008 Ã…Â©Â¸Â®Â½ÂºÂ¸Â¶Â½Âº Ã€ÃŒÂºÂ¥Ã†Â®
+// 2008 Å©¸®½º¸¶½º ÀÌº¥Æ®
 2784#
 Unknown item requiring Appraisal. Can be identified by using a Magnifier.
 #
@@ -16080,7 +16080,7 @@ A cool summer outfit. When you wear it, it is so light that you believe you can 
 Weight : ^77777710^000000
 #
 
-//20081217 Ã„Â³Â½Â¬ Â¾Ã†Ã€ÃŒÃ…Ã› Â¾Ã·ÂµÂ¥Ã€ÃŒÃ†Â®
+//20081217 Ä³½¬ ¾ÆÀÌÅÛ ¾÷µ¥ÀÌÆ®
 5191#
 Unidentified item, can be identified with [Spectacles] from merchant.
 #
@@ -16129,7 +16129,7 @@ can only be learned up to Level 10.
 Weight : ^7777771^000000
 #
 
-//2008.12.31 Ã„Â³Â½Â¬ Â¾Ã†Ã€ÃŒÃ…Ã› Â¾Ã·ÂµÂ¥Ã€ÃŒÃ†Â®
+//2008.12.31 Ä³½¬ ¾ÆÀÌÅÛ ¾÷µ¥ÀÌÆ®
 13744#
 A box that contains 10 Holy Armor Scrolls,
 which can endow a character with the Holy property for a 30 minute duration.
@@ -16171,7 +16171,7 @@ Weight: ^7777771^000000
 #
 
 // ------------- Ep. 12 ---------------
-// ------------- Ã€Ã¼Ã€Ã¥ ÂºÂ¸Â»Ã³ Â¾Ã†Ã€ÃŒÃ…Ã› ---------------
+// ------------- ÀüÀå º¸»ó ¾ÆÀÌÅÛ ---------------
 13036#
 A dagger that is specialized for assassination and killing humanoids.
 STR + 1, AGI + 1
@@ -16827,7 +16827,7 @@ A sealed paper envelope. It seems to be contained important message in it.
 Weight: ^7777771^000000
 #
 
-// ------------ Â¸ÃÂ¸Ã°Â¸Â®Â¾Ã³ Â´Ã¸Ã€Ã¼ ÂºÂ¸Â»Ã³Ã…Ã› ----------------
+// ------------ ¸Ş¸ğ¸®¾ó ´øÀü º¸»óÅÛ ----------------
 13412#
 Unknown Item, can be identified by [Magnifier].
 #
@@ -16847,7 +16847,7 @@ Unknown Item, can be identified by [Magnifier].
 2542#
 Unknown Item, can be identified by [Magnifier].
 #
-//Â¸Ã°Â·ÃÃ…Â© Ã„ÃÃ†Â¼Â³Ã™Ã…Â» Â°Â¡ÂµÃ¥ Ã€ÃÃÃµÂ¼Â­
+//¸ğ·ÎÅ© ÄÁÆ¼³ÙÅ» °¡µå ÀÎÁõ¼­
 7826#
 It certifies this adventurer have enough power and courage to be a member of Continental Guard.
 ^ffffff_^000000
@@ -16855,7 +16855,7 @@ Continental Guard. Baloq.
 ^ffffff_^000000
 Weight: ^7777770^000000
 #
-// ------------ Â¸Â¶Â¿Ã• Â¸Ã°Â·ÃÃ…Â© ----------------
+// ------------ ¸¶¿Õ ¸ğ·ÎÅ© ----------------
 2536#
 Unknown Item, can be identified by [Magnifier].
 #
@@ -16889,7 +16889,7 @@ Unknown Item, can be identified by [Magnifier].
 2433#
 Unknown Item, can be identified by [Magnifier].
 #
-// ---------- Ã‡Ã’Ã‚Â¦ Ã…Ã—Â½ÂºÃ†Â® -----------
+// ---------- ÇÒÂ¦ Å×½ºÆ® -----------
 2129#
 Unknown Item, can be identified by [Magnifier].
 #
@@ -16971,7 +16971,7 @@ Unknown Item, can be identified by [Magnifier].
 1182#
 Unknown Item, can be identified by [Magnifier].
 #
-// ------------- Ã€Ã¼Ã€Ã¥ ÃˆÃ–Ã€Ã¥ ---------------
+// ------------- ÀüÀå ÈÖÀå ---------------
 7828#
 A badge that is provided to warrior who brought great honor in the Battle field. 
 ^ffffff_^000000
@@ -16981,7 +16981,7 @@ A badge that is provided to warrior who brought great honor in the Battle field.
 ^ffffff_^000000
 #
 
-// -------- ÂºÃ€Ã€ÃÃ€Ã‡ Â½Ã…Ã€Ã¼ Â¾Ã†Ã€ÃŒÃ…Ã› ------------
+// -------- ºÀÀÎÀÇ ½ÅÀü ¾ÆÀÌÅÛ ------------
 6001#
 An essence of fire that is holding pure spirit of Thor, god of thunder. It has mystery force to restrain of vice and darkness.
 ^ffffff_^000000
@@ -16998,14 +16998,14 @@ A pendant that used to be use for confining wandered soul from unknown places.
 Weight: ^7777771^000000
 #
 
-// ----------------- Â¸Â¶Â·Ã‚Ã€ÃŒ Â±ÃªÂµÃ§ Â¹Ã™Ã†Ã·Â¸ÃÃ†Â® Ã€ÃÃ‡Ã¼ -----------------
+// ----------------- ¸¶·ÂÀÌ ±êµç ¹ÙÆ÷¸ŞÆ® ÀÎÇü -----------------
 6004#
 A Doll imbued with Baphomet's curse. It seems like to be compounded with something.
 ^ffffff_^000000
 Weight: ^7777771^000000
 #
 
-// ------------------- 12.1 Ã„Ã¹Â½ÂºÃ†Â® Â¾Ã†Ã€ÃŒÃ…Ã› ----------------------
+// ------------------- 12.1 Äù½ºÆ® ¾ÆÀÌÅÛ ----------------------
 7798#
 A dark fragment imbued with gloominess spirit. Once you stare it, you might feel absorbed into it.
 ^ffffff_^000000
@@ -17020,7 +17020,7 @@ Weight: ^7777771^000000
 5374#
 Unknown Item, can be identified by [Magnifier].
 #
-// ------------------- Ã€ÃŒÂºÂ¥Ã†Â® Â¾Ã†Ã€ÃŒÃ…Ã› ------------------
+// ------------------- ÀÌº¥Æ® ¾ÆÀÌÅÛ ------------------
 6000#
 A dark ash imbued with mystery magical power and darkness.
 ^ffffff_^000000
@@ -17056,7 +17056,7 @@ Stepmother - Karma in a previous life? "
 ^ffffff_^000000
 Weight: ^7777771^000000
 #
-// ------------------ Ã‡ÃÂ¾Ã‡ Ã…Ã—Â½ÂºÃ†Â® (Â¼Ã’Ã„Ã)----------------
+// ------------------ ÇÏ¾Ç Å×½ºÆ® (¼ÒÄÏ)----------------
 5353#
 Unknown Item, can be identified by [Magnifier].
 #
@@ -17174,7 +17174,7 @@ Unknown Item, can be identified by [Magnifier].
 1180#
 Unknown Item, can be identified by [Magnifier].
 #
-// ----------------- Â¸Ã°Â½ÂºÃ„ÃšÂºÃ±Â¾Ã†(Â·Â¯Â½ÃƒÂ¾Ã† Â·ÃÃ„ÃƒÂ¶Ã³Ã€ÃŒÃ‚Â¡)------------------
+// ----------------- ¸ğ½ºÄÚºñ¾Æ(·¯½Ã¾Æ ·ÎÄÃ¶óÀÌÂ¡)------------------
 7760#
 It's an aged lady, Yaga's magic book which tells about how to practice the strongest black art.
 ^ffffff_^000000
@@ -17215,7 +17215,7 @@ Weight : ^7777771^000000
 Unknown Item, can be identified by [Magnifier].
 #
 
-//----Â¸Ã°Â½ÂºÃ„ÃšÂºÃ±Â¾Ã† 2Ã‚Ã·---------- Â·Â¯Â½ÃƒÂ¾Ã† ÂºÃ’Â»Ã§Â½Ã… Ã„ÃšÂ½Â¦Ã€ÃŒ Â¾Ã†Ã€ÃŒÃ…Ã› ---------------
+//----¸ğ½ºÄÚºñ¾Æ 2Â÷---------- ·¯½Ã¾Æ ºÒ»ç½Å ÄÚ½¦ÀÌ ¾ÆÀÌÅÛ ---------------
 7876#
 Golden shiny Key.
 ^ffffff_^000000
@@ -17272,7 +17272,7 @@ Unknown Item, can be identified by [Magnifier].
 Unknown Item, can be identified by [Magnifier].
 #
 
-// ----------------- 20070808 Â½Ã…Â±Ã”Card 34ÃÂ¾ -----------------
+// ----------------- 20070808 ½Å±ÔCard 34Á¾ -----------------
 4408#
 Increases Physical
 damage to Holy,
@@ -17556,7 +17556,7 @@ chance of inflicting
 the Bleeding status
 to the wearer; wearing
 the Zombie Slaughterer
-Card wilÂ¤Ã“ recover
+Card wil¤Ó recover
 2 SP each time a
 monster is defeated.
 Slot: ^777777Accessory^000000
@@ -17623,7 +17623,7 @@ Slot: ^777777Shoes^000000
 Weight: ^7777771^000000
 #
 
-//2009.01.21 Ã„Â³Â½Â¬Â¾Ã†Ã€ÃŒÃ…Ã›
+//2009.01.21 Ä³½¬¾ÆÀÌÅÛ
 13822#
 A box which contains 10x BBQ Whole Barbecue Hog
 Whole Barbecue Hog - Monster Deleter  love to eat.
@@ -17668,7 +17668,7 @@ A stone colored in red. Monster Deleter takes a fancy to it.
 Series : ^777777Taming Item^000000
 #
 
-//2009.01.21 Â±Â¸ÃÂ¤Ã€ÃŒÂºÂ¥Ã†Â®
+//2009.01.21 ±¸Á¤ÀÌº¥Æ®
 11708#
 The lean portion of meat located at the lower part of the beef
 Restores a minimal amount of HP,SP
@@ -17694,7 +17694,7 @@ Recover 10% of HP SP
 Weight : ^77777730^000000
 #
 
-//2009.02.05 Ã„Â³Â½Â¬Â¾Ã†Ã€ÃŒÃ…Ã›
+//2009.02.05 Ä³½¬¾ÆÀÌÅÛ
 13634#
 For those who wish to experience the greater effect within 1 hour period] is written on the box  
 A box which contains 2x Battle Manual, 2x Str Dish, 2x Agi Dish, 15xInc Agi Scroll, 15x Blessing Scroll , 1xKafra Card, 1xToken Of Siegfried
@@ -17764,7 +17764,7 @@ Unidentified item, can be identified with [Spectacles] from merchant.
 Unidentified item, can be identified with [Spectacles] from merchant.
 #
 
-//2009.02.11 Â¹ÃŸÂ·Â»Ã…Â¸Ã€Ã
+//2009.02.11 ¹ß·»Å¸ÀÎ
 12742#
 A box containing a ring which is an exchanging gift for Valentine's Day.
 ^ffffff_^000000
@@ -17813,12 +17813,12 @@ Weight : ^7777770^000000
 Unknown Item, can be identified by [Magnifier].
 #
 
-//Â¸Â¶ÃÂ¦Â½ÂºÃ†Â½Â°Ã­Â¿Ã¬Ã†Â®2
+//¸¶Á¦½ºÆ½°í¿ìÆ®2
 5518#
 Unknown Item, can be identified by [Magnifier].
 #
 
-//2009.02.25 Ã„Â³Â½Â¬Â¾Ã†Ã€ÃŒÃ…Ã› Â¾Ã·ÂµÂ¥Ã€ÃŒÃ†Â®
+//2009.02.25 Ä³½¬¾ÆÀÌÅÛ ¾÷µ¥ÀÌÆ®
 13635#
 [For those who wish to experience the greater effect within 1 hour period] is written on the box
 A box which contains 2xBattle Manual,2x Str Dish,2x Vit Dish,15xInc Agi Scroll,15x Blessing Scroll,1xKafra Card,1xToken Of Siegfried
@@ -17866,7 +17866,7 @@ this could be a skeleton of someone. Monster Wanderer takes a fancy to it.
 Series : ^777777Taming Item^000000
 #
 
-// ---------------- Ã„Â³Â½Â¬Â¾Ã†Ã€ÃŒÃ…Ã› 20070801 ----------------- Â¼Â³Â¸Ã­ÃƒÃŸÂ°Â¡
+// ---------------- Ä³½¬¾ÆÀÌÅÛ 20070801 ----------------- ¼³¸íÃß°¡
 13746#
 A box containing 10 Small Defence Potions.
 Adds 3% resistance against Physical Attack for 1 minute.
@@ -17940,7 +17940,7 @@ Adds 3% resistance against Magical Attack for 3 minutes.
 Weight : ^7777771^000000
 #
 
-//2009.04.01 Â¸Â¸Â¿Ã¬Ã€Ã½ Ã€ÃŒÂºÂ¥Ã†Â®
+//2009.04.01 ¸¸¿ìÀı ÀÌº¥Æ®
 12396#
 A very suspicious box. No one can guess what is happening or what is coming out of it.
 Weight : ^7777771^000000
@@ -17950,14 +17950,14 @@ A very suspicious box. No one can guess what is happening or what is coming out 
 Weight : ^7777771^000000
 #
 
-//2009.04.08 ÂºÂ¸Â½ÂºÂ´ÃÂ¾Ã†Ã€ÃŒÂºÂ¥Ã†Â®
+//2009.04.08 º¸½º´Ï¾ÆÀÌº¥Æ®
 7227#
 We want to see Bosses!
 ^ffffff_^000000
 Weight: ^7777771^000000
 #
 
-//2009.04.22 Ã„Â³Â½Â¬ Â¾Ã†Ã€ÃŒÃ…Ã›
+//2009.04.22 Ä³½¬ ¾ÆÀÌÅÛ
 14600#
 A potion that will make you full of spirit.
 MSP increases by 10% for 30 minutes. SP consumption decreases by 10%.
@@ -17974,7 +17974,7 @@ Item option disappears when its owner has drained all energy.
 Weight : ^7777771^000000
 #
 
-//2009.05.06 Ã„Â³Â½Â¬Â¾Ã†Ã€ÃŒÃ…Ã›
+//2009.05.06 Ä³½¬¾ÆÀÌÅÛ
 
 5371#
 A hat that was worn by a competent judge. When you wear it, you will feel like becoming a judge who is seeking justice.
@@ -17997,15 +17997,15 @@ A box containing Battle Manual, Bubble Gums and Life Insurances 5 each.
 Weight : ^7777771^000000
 #
 
-//2009.05.20 Ã„Â³Â½Â¬Â¾Ã†Ã€ÃŒÃ…Ã›
-// ------------ 2008 Â´Ã«Â¸Â¸ 9Â¿Ã¹ Â½ÂºÃ…Â©Â·Ã‘ -----------
+//2009.05.20 Ä³½¬¾ÆÀÌÅÛ
+// ------------ 2008 ´ë¸¸ 9¿ù ½ºÅ©·Ñ -----------
 14317#
 Bacsojin Scroll. If you are lucky, you will be suprised once you open it.
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
 
-// -------- Ã…Ã‚Â±Â¹ Â·ÃÃ€ÃŒÃ…Â©Â¶Ã³Ã…Ã« Â³Â­ÃƒÃŠÂ¸Ã“Â¸Â®Â¶Ã¬ ---------
+// -------- ÅÂ±¹ ·ÎÀÌÅ©¶óÅë ³­ÃÊ¸Ó¸®¶ì ---------
 5370#
 A hair band made by orchid and it smells like a scent of a flower.
 INT + 1
@@ -18021,7 +18021,7 @@ A box containing Dragon Breath Cocktails, Hwergelmir's Tonics and Cooked Nine Ta
 Weight : ^7777771^000000
 #
 
-// Â¹Ã©Â¼Ã’ÃÃ¸ Â½ÂºÃ…Â©Â·Ã‘Â³Â» Â¾Ã†Ã€ÃŒÃ…Ã›
+// ¹é¼ÒÁø ½ºÅ©·Ñ³» ¾ÆÀÌÅÛ
 12190#
 A sweet and finest moon cake. It makes your body feel light.
 Increase ^000088Movement Speed^000000 for a while.
@@ -18089,7 +18089,7 @@ Weight : ^7777770^000000
 
 //2009.05.27 Danwu Festival_Dragon Boat festival
 11505#
-Leaf as sharp and long as a swordÂ£Â¬The special scent will lift your spiritsÂ¡Â£
+Leaf as sharp and long as a sword£¬The special scent will lift your spirits¡£
 ^000088Replenishes 150 SP ^000000 
 ^ffffff_^000000
 Weight : ^7777773^000000
@@ -18099,7 +18099,7 @@ Weight : ^7777773^000000
 Unknown Item, can be identified by [Magnifier].
 #
 
-//2009.06.03 Ã„Â³Â½Â¬Â¾Ã†Ã€ÃŒÃ…Ã›
+//2009.06.03 Ä³½¬¾ÆÀÌÅÛ
 13905#
 A box containing Field Manuals, Bubble Gums and Life Insurances 10 each.
 ^ff0000This item is not refundable.^000000
@@ -18162,7 +18162,7 @@ A box that contains 1 coupon to dye your clothes to the original color.
 Weight : ^7777771^000000
 #
 
-//2009.06.17 Ã„Â³Â½Â¬ Â¾Ã†Ã€ÃŒÃ…Ã›
+//2009.06.17 Ä³½¬ ¾ÆÀÌÅÛ
 5367#		
 A Monster Hyegun's hat. It looks nasty and tattered but it has better defense than what you thought.		
 10 % resistance against demon monsters.		
@@ -18232,7 +18232,7 @@ Required Level : ^7777771^000000
 Jobs : ^777777All Jobs^000000		
 #
 
-//2009.07.01 Ã„Â³Â½Â¬Â¾Ã†Ã€ÃŒÃ…Ã› 
+//2009.07.01 Ä³½¬¾ÆÀÌÅÛ 
 5431#
 Chicken is on your head! It might have alarm option for waking you up in the morning.
 When physically attacked from a close distance, STR + 3 for 10 seconds at a certain rate.
@@ -18280,7 +18280,7 @@ Mercenary disappears when its owner has drained all energy.
 Weight : ^7777771^000000
 #
 
-//2009.07.01 RWC ÂºÂ¸Â»Ã³Â¾Ã†Ã€ÃŒÃ…Ã›
+//2009.07.01 RWC º¸»ó¾ÆÀÌÅÛ
 5451#
 Unidentified item, can be identified with [Spectacles] from merchant.
 #
@@ -18293,7 +18293,7 @@ Unidentified item, can be identified with [Spectacles] from merchant.
 Unidentified item, can be identified with [Spectacles] from merchant.
 #
 
-//2009.07.08 Ã„Â³Â½Â¬ Â¾Ã†Ã€ÃŒÃ…Ã›
+//2009.07.08 Ä³½¬ ¾ÆÀÌÅÛ
 5385#
 An adorable hat, it looks like an impish monster YoYo.
 Enables use of Hiding Lv 1
@@ -18338,7 +18338,7 @@ An egg that has Cute-pet Diabolic sleeping in it.  You can wake it with [Pet Inc
 Class : ^777777Monster Egg^000000
 #
 
-//2009.07.29 Ã„Â³Â½Â¬Â¾Ã†Ã€ÃŒÃ…Ã›
+//2009.07.29 Ä³½¬¾ÆÀÌÅÛ
 
 13849#
 It contains 5 scrolls that recorded about legendary history of Rune-Midgard.
@@ -18382,7 +18382,7 @@ Decrease 100 Hp in every 10 seconds and has 3 minutes of cool time after use.
 Weight : ^7777771^000000
 #
 
-//2009.08.12 Ã„Â³Â½Â¬Â¾Ã†Ã€ÃŒÃ…Ã›
+//2009.08.12 Ä³½¬¾ÆÀÌÅÛ
 5429#
 A hobgoblin's cute hat. 
 Increases HP and SP recovery rate by 5%.
@@ -18434,7 +18434,7 @@ Required Level : ^7777771^000000
 Jobs : ^777777All Jobs^000000
 #
 
-//2009.08.25 kRO Â¿Â©Â¸Â§Ã€ÃŒÂºÂ¥Ã†Â®
+//2009.08.25 kRO ¿©¸§ÀÌº¥Æ®
 5586#
 Unkown item requiring appraisal. Can be identified by using a magnifier
 #
@@ -18442,7 +18442,7 @@ Unkown item requiring appraisal. Can be identified by using a magnifier
 Unkown item requiring appraisal. Can be identified by using a magnifier
 #
 
-// 2009-01-08 Â´Ã«Â¸Â¸ Ã€Â¯Ã€ÃºÂ°Ã¸Â¸Ã° Â¾Ã†Ã€ÃŒÃ…Ã›
+// 2009-01-08 ´ë¸¸ À¯Àú°ø¸ğ ¾ÆÀÌÅÛ
 
 5496#
 Unknown item requiring apprasial. Can be identified by using a magnifier.
@@ -18478,14 +18478,14 @@ Want something really different? Something that can make you one of a kind?
 Weight : ^7777771^000000
 #
 
-// ------------ 2008 Â´Ã«Â¸Â¸ 11Â¿Ã¹ Â½ÂºÃ…Â©Â·Ã‘ -----------
+// ------------ 2008 ´ë¸¸ 11¿ù ½ºÅ©·Ñ -----------
 14363#
 A scroll in the form of a heart. You seem to feel the warmth with it.
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
 
-//-----------------Ã€ÃÂºÂ»_3Â¿Ã¹Â¸Ã°Â¹Ã™Ã€Ã
+//-----------------ÀÏº»_3¿ù¸ğ¹ÙÀÏ
 5508#
 Unknown item requiring apppraisal. Can be identified by using a magnifier.
 #
@@ -18505,12 +18505,12 @@ Job : ^777777All^000000
 Weight : ^7777771^000000
 #
 
-// -------------- 2008 Ã€ÃÂºÂ» Ã…ÃµÂ±Â¸Â¾Ã†Ã€ÃŒÃ…Ã› ÂµÃ°Ã€ÃšÃ€Ã Ã„ÃÃ…Ã—Â½ÂºÃ†Â® -----------------
+// -------------- 2008 ÀÏº» Åõ±¸¾ÆÀÌÅÛ µğÀÚÀÎ ÄÁÅ×½ºÆ® -----------------
 5470#
 Unknow item requiring appraisal. Can be indentified by using a magnifier.
 #
 
-// ------------ 2009/9/30 Â¸Â»Â·Â¹Ã€ÃŒÂ½ÃƒÂ¾Ã† Ã„Â³Â½Â¬Â¾Ã†Ã€ÃŒÃ…Ã› -----------
+// ------------ 2009/9/30 ¸»·¹ÀÌ½Ã¾Æ Ä³½¬¾ÆÀÌÅÛ -----------
 5467#
 Unknown items, Can be identified by using a magnifier.
 #
@@ -18523,12 +18523,12 @@ It has all kinds of animals in it. If you like animals, grab it!
 Weight : ^7777771^000000
 #
 
-// -------------------------- Ã„Ã¹Â½ÂºÃ†Â®ÂºÃ Â¾Ã†Ã€ÃŒÃ…Ã› ------------------------------
+// -------------------------- Äù½ºÆ®ºÏ ¾ÆÀÌÅÛ ------------------------------
 5259#
 Unknown items, Can be identified by using a magnifier.
 #
 
-//------------2009/9/29 Â¸Â»Â·Â¹Ã€ÃŒÂ½ÃƒÂ¾Ã† ÃƒÃŸÂ¼Â®Ã€ÃŒÂºÂ¥Ã†Â® ÃƒÃŸÂ°Â¡Â¾Ã†Ã€ÃŒÃ…Ã›---------
+//------------2009/9/29 ¸»·¹ÀÌ½Ã¾Æ Ãß¼®ÀÌº¥Æ® Ãß°¡¾ÆÀÌÅÛ---------
 5457#
 Unknown item requiring appraisal. Can be identified by using a magnifier.
 #
@@ -18539,7 +18539,7 @@ Furthermore, you can tame a monster 'Hot Rice Cake' by using this item.
 Weight : ^7777771^000000
 #
 
-// ------------------2009/10/14 Ã‡Ã’Â·ÃÂ¿Ã¸ Ã€ÃŒÂºÂ¥Ã†Â®----------------------
+// ------------------2009/10/14 ÇÒ·Î¿ø ÀÌº¥Æ®----------------------
 
 
 // ------------ 2009.Oct. Malaysia cashitem -----------
@@ -19084,7 +19084,7 @@ Requied Level : ^7777771^000000
 Jobs : ^777777All Jobs^000000
 #
 
-//---------------------Ã…Â©Â¸Â®Â½ÂºÂ¸Â¶Â½Âº12.15
+//---------------------Å©¸®½º¸¶½º12.15
 7974#
 A piece that illusion left
 Weight : ^7777770^000000
@@ -19100,7 +19100,7 @@ Attention : you can't put out the fire with this item!
 Weight  : ^7777771^000000
 #
 
-//-----------------Ã„Â³Â½Â¬Â¾Ã†Ã€ÃŒÃ…Ã›------12.15----
+//-----------------Ä³½¬¾ÆÀÌÅÛ------12.15----
 5556#
 Unknown item requiring Appraisal. Can be identified by using a Magnifier.
 #
@@ -19125,7 +19125,7 @@ Weight : ^7777775^000000
 5584#
 Unknown item requiring Appraisal. Can be identified by using a Magnifier.
 #
-// ---Â½ÂºÃ…ÃˆÂ¸Â®Â¼Ã‚-------12.18
+// ---½ºÅÈ¸®¼Â-------12.18
 6320#
 There's a rumor that when you find and see the man who knows about this stone, he would reset your status.
 Weight : ^7777770^000000
@@ -19139,7 +19139,7 @@ Weight : ^7777770^000000
 Weight : ^7777771^000000
 #
 
-//-------Â½ÂºÃ…Â©Â·Ã‘-------12.18
+//-------½ºÅ©·Ñ-------12.18
 16562#
 An egg shines with the essence of magic. There might comes out an item such as Majestic Devil Horn!
 ^ff0000Cancellation of purchase or refund for this item is not available.^000000
@@ -19190,3 +19190,397 @@ Weight : ^7777771^000000
 5468#
 Unknown item requiring Appraisal. Can be identified by using a Magnifier.
 #
+
+//---------------±¸Á¤ÀÌº¥Æ®2010.1.28------------------
+5841#
+Unknown item requiring appraisal. Can be identified by using a magnifier.
+#
+7624#
+and amazing!
+Weight : ^7777771^000000
+#
+7978#
+The best of
+Weight : ^7777771^000000
+#
+7979#
+luck to you!
+Weight : ^7777771^000000
+#
+7980#
+Hope you make
+Weight : ^7777771^000000
+#
+7981#
+a huge success!
+Weight : ^7777771^000000
+#
+7982#
+May you stay
+Weight : ^7777771^000000
+#
+7983#
+forever young!
+Weight : ^7777771^000000
+#
+7984#
+This is your
+Weight : ^7777771^000000
+#
+7985#
+dream-come-true year!
+Weight : ^7777771^000000
+#
+7986#
+Best wishes
+Weight : ^7777771^000000
+#
+7987#
+for you!
+Weight : ^7777771^000000
+#
+7988#
+May you be
+Weight : ^7777771^000000
+#
+7989#
+happy forever!
+Weight : ^7777771^000000
+#
+7990#
+Hit
+Weight : ^7777771^000000
+#
+7991#
+the jackpot!
+Weight : ^7777771^000000
+#
+7992#
+May the force
+Weight : ^7777771^000000
+#
+7993#
+be with you
+Weight : ^7777771^000000
+#
+7994#
+in new year!
+Weight : ^7777771^000000
+#
+7995#
+May your
+Weight : ^7777771^000000
+#
+7996#
+new year
+Weight : ^7777771^000000
+#
+7997#
+be full of happiness!
+Weight : ^7777771^000000
+#
+7998#
+May
+Weight : ^7777771^000000
+#
+7999#
+your new year be wonderful
+Weight : ^7777771^000000
+#
+12754#
+A bun made for a special day.
+Weight : ^7777771^000000
+#
+12755#
+[Spring] and [Fortune] are embroidered on the surface. In some province, it is traditionally used to expel evils for a new year.
+Weight : ^7777771^000000
+#
+12756#
+A gift envelope distributed to commemorate the traditional day in a specific province.
+Weight : ^7777771^000000
+#
+12232#
+A baked bread with a jam made of milk, wheat powder, honey and other materials mixed. 
+It's a flat square shape, solid and the surface is decorated with brown color. 
+AtK speed and moving speed increase for 15 minutes. 
+^ffffff_^000000
+weight : ^77777715^000000
+#
+12328#
+According to legend when lovers use this charm they can overcome all difficulties.
+All stats + 10 for 20 seconds.
+^ffffff_^000000
+weight : ^77777710^000000
+#
+12247#
+A drink that has various kinds of fruits and lots of slushed ice and milk. It's one of the desserts to get over hot weather.
+All stats + 3 for 10 minutes.
+Players who are over Lv.20 can use this. 
+^ffffff_^000000
+weight : ^77777710^000000
+#
+//-------------¹ß·»Å¸ÀÎ 1.29-----------
+11502#
+A potion made from
+grinded Blue Herbs that restores about ^00008860 SP^000000.
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+7975#
+St.Valentine À» ±â³äÇØ Å¥ÇÇµåÀÇ ¿äÁ¤¿¡°Ô ¹ŞÀ» ¼ö ÀÖ´Â ÃÊÄİ¸´.
+Only one for one person.
+Weight : ^7777770^000000
+#
+//------------------Ä³½¬¾ÆÀÌÅÛ 2.18--------
+14439#
+A box containing 1 Power of Thor.
+^ffffff_^000000
+Weight : ^777771^000000
+#
+16414#
+A box containg 1 Turtle Hat.
+Weight : ^7777771^000000
+#
+16543#
+A box containing 1 snow man hat. 
+#
+16257#
+A scroll that consists Buddha's mind.
+Weight : ^7777771^000000
+#
+14304#
+A box that contains 1 scuba mask.
+^ffffff_^000000
+A scuba glasses for divers. When you wear it on the ground, people would think you've lost your mind.
+Increases resistance to water property by 5%.
+When killing fish type monsters, acquired exp increases by 10%.
+Item Class : ^777777Helm^000000    Defense : ^7777770^000000
+Location : ^777777Mid^000000    Weight : ^77777710^000000
+Level : ^777777All^000000
+^ff0000This item is excluded from subscription withdrawal or refund.^000000
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+13858#
+A Box contains 10 funny popping candies. Must need to brush teeth after having this candy otherwise you would get a cavity.
+ATK + 20 for 1 minute, Adds Attack Speed by 25% , enable to Endure all the time. 
+Decrease 100 Hp in every 10 seconds and has 3 minutes of cool time after use.
+When a character is incapable of combat, the effect of item disappears.
+^ff0000This item is not refundable.^000000
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+5738#
+Unidentified. You can identify it with a Magnifier.
+#
+5397#
+Unidentified. You can identify it with a Magnifier.
+#
+5395#
+Unidentified. You can identify it with a Magnifier.
+#
+5495#
+Unidentified. You can identify it with a Magnifier.
+#
+5611#
+Unidentified. You can identify it with a Magnifier.
+#
+5299#
+Unidentified. You can identify it with a Magnifier.
+#
+12261#
+A liquid medicine which is extracted from the root of fantasy flower.
+^ffffff_^000000
+Weight : ^7777770^000000
+#
+//------------------Ä³½¬¾ÆÀÌÅÛ 3.3--------
+5332#
+Unidentified. You can identify it with a Magnifier.
+#
+5465#
+Unidentified. You can identify it with a Magnifier.
+#
+//----------------2010. 3.31.¸¸¿ìÀı-----------
+5848#
+Unidentified item, can be identified with [Magnifier].
+#
+5849#
+Unidentified item, can be identified with [Magnifier].
+#
+
+//-------------2010.3.31 ºÎÈ°Àı-------------
+5852#
+Unknown item requiring Appraisal. Can be identified by using a [Magnifier].
+#
+//-----------2010.4¿ù ºĞ Ä³½¬¾ÆÀÌÅÛ--------------
+5609#
+Unknown item requiring Appraisal. Can be identified by using a Magnifier.
+#
+5610#
+Unknown item requiring Appraisal. Can be identified by using a Magnifier.
+#
+16410#
+A box of a Chung Hairband.
+Weight : ^7777771^000000
+#
+16412#
+A box of a Ice wing ear.
+Weight : ^7777770^000000
+#
+14229#
+A special promo Scroll that will be selling just during lovely spring!
+It will bring you a sweet smell of good luck!
+^ff0000This item is not refundable.^000000
+Weight : ^7777771^000000
+#
+14438#
+A box containing 1 Honglyun's Sword.
+^ffffff_^000000
+Weight : ^777771^000000
+#
+16131#
+A Box with a Lady Tanee Doll inside.
+^ffffff_^000000
+
+
+14499#
+A box has a 1 peacock Reather.
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+14444#
+A Box with an Ice Cream Hat inside.
+^ffffff_^000000
+Weight : ^777771^000000
+#
+5526#
+Unknown item requiring Appraisal. Can be identified by using a Magnifier.
+#
+5519#
+Unknown item requiring Appraisal. Can be identified by using a Magnifier.
+#
+5333#
+Unknown item requiring Appraisal. Can be identified by using a Magnifier.
+#
+5491#
+Unknown item requiring Appraisal. Can be identified by using a Magnifier.
+#
+5500#
+Unknown item requiring Appraisal. Can be identified by using a Magnifier.
+#
+13420#
+Unknown item requiring Appraisal. Can be identified by using a Magnifier.
+#
+
+//-----------------5¿ù Ä³½¬¾ÆÀÌÅÛ-------------
+16133#
+A Box with a Sunshine Staff inside.
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+14461#
+A box containing 1 Asara Fairy Hat.
+^ffffff_^000000
+Weight : ^777771^000000
+#
+16132#
+A Box with a Lunatic Hat inside.
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+14459#
+A box containing 1 Rabbit Magic Hat.
+^ffffff_^000000
+Weight : ^777771^000000
+#
+14494#
+A box has a 1 samambaia hat.
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+14234#
+A box that contains 25 Dead Branch inside.
+^ff0000This item is not refundable.^000000
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+5527#
+Unidentified item, can be identified with [Magnifier].
+#
+5503#
+Unknown Item, can be identified by [Magnifier].
+#
+5509#
+Unknown Item, can be identified by [Magnifier].
+#
+5505#
+Unknown Item, can be identified by [Magnifier].
+#
+5511#
+Unknown Item, can be identified by [Magnifier].
+#
+2006#
+Unknown Item, can be identified by [Magnifier].
+#
+16371#
+Taiwan August Scroll.
+Weight : ^7777771^000000
+#
+16304#
+Taiwan July Scroll.
+Weight : ^7777771^000000
+#
+5469#
+Unidentified item, can be identified with [Magnifier].
+#
+5595#
+A horn with full of Devel Spirit. It seems like full of spirits.
+MDEF + 2.
+For Swordman, Merchant, Thief Item Class,  AGI + 2 , None property, Neutral property damage decrease and VIT increase by the figure of (Job Level/14).
+For Mage, Archer, Acolyte Item Class, INT + 2, None property, Neutral property damage decrease by the figure of (Job Level/14).
+Item Class : ^777777Headgear^000000 Defense : ^7777772^000000
+Location: ^777777Upper ^000000 Weight : ^77777740^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All Jobs^000000
+#
+
+//------ 5¿ù Ä³½¬ ´©¶ô ¾ÆÀÌÅÛ Ãß°¡ -------
+
+5056#
+Hairpin with three red berries attached which
+symbolize the self, family and neighbor. The
+stem uniting the three berries together symbolizes society.
+This hairpin appears to represent cooperation and trust of humankind.
+Class: ^777777Headgear^000000    Defense: ^7777770^000000
+Location: ^777777Upper^000000    Weight: ^77777720^000000
+Job: ^777777Every Job^000000
+#
+5188#
+Unidentified item, can be identified with [Magnifier].
+#
+5387#
+Unidentified item, can be identified with [Magnifier].
+#
+5528#
+Unidentified item, can be identified with [Magnifier].
+#
+16134#
+A box that contains 1 Frog King Hat.
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+//--------- 2010. 05. 12 ³ëµ¿Àı ÀÌº¥Æ® -------------
+2237#
+Legendary beard. when attached it, you look cool than before.
+If you want to be seem like a grown-up person, attach it right now.
+Class : ^777777Headgear^000000 Defense : ^7777770^000000
+Location: ^777777Low ^000000 Weight : ^77777710^000000
+Required lvl : ^7777770^000000
+Jobs : ^777777All^000000
+#
+12766#
+If activate this manual, increase Job EXP by 25% for 30 minutes. It is known that it has opened a new prospect in the field of battle manual.
+Can use this with Battle Manual at the same time.
+Weight : ^7777770^000000
+#
+
