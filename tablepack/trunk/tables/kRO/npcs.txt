@@ -26,3 +26,5 @@ prontera 141 97 친절한 아주머니#job_min
 prontera 164 97 홀그렌
 prontera 147 107 큐펫연구자#ryu
 prontera 101 288 Shuger#pront
+prontera 113 42 Flower Lady#prt
+prontera 104 49 Fruit Gardener#prt

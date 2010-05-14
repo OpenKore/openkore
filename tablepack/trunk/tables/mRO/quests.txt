@@ -1,4 +1,4 @@
-// Ã‡ÃÃ„Â¡Â¿Ã¸
+// ÇÏÄ¡¿ø
 1000#Transcendent#SG_FEEL#QUE_NOIMAGE#
 You could become a hero through the Book of Ymir. Find the Hall of Honor in Valkyrie, you will be a new hero of Valkyrie.#
 #
@@ -59,7 +59,7 @@ Gather Orange Net Mushroom and Orange Gooey Mushroom#
 Sign up on the swordman application. For the test, player needs to get a success messages from the manager located at the last check point after pass the all of test courses.#
 Pass the all test courses.#
 
-// ÃÂ¶Â¹ÃŒÃÂ¤
+// Á¶¹ÌÁ¤
 
 2000#Job Changes to Blacksmith#SG_FEEL#QUE_NOIMAGE#
 We want to check the dedication and eagerness of Merchants who apply to us to become Blacksmiths. For the first test, go to Einbech and help one of our guild members Getsufenst.#
@@ -337,7 +337,7 @@ Talk with Benjamin in Morroc#
 I decided to read the <The Trace of the Fate> as Benjamin suggested.#
 Go back to Juno Library#
 
-// Â±Ã¨Ã€ÂºÂµÂ¿
+// ±èÀºµ¿
 
 3000#Job Changes to Bard - Beautiful Song#SG_FEEL#QUE_NOIMAGE#
 I have met a beautiful singer Bard. I want to be a Bard...Should I ask him about becoming Bard?#
@@ -514,7 +514,7 @@ You stretch your hand and pick up a lusterless fragment. It's a piece of the Sat
 "Congratulations, soldier. You just saved this world and people from being consumed by destruction and evil. I have three items. Which one do you like to receive?"#
  #
 
-//--------------------ÂºÂ£Ã€ÃÂ½ÂºÃ€Ã‡ Â³Â²Â¸Ã…---------------------------------
+//--------------------º£ÀÎ½ºÀÇ ³²¸Å---------------------------------
 3060#Kids in Veins - Where's the Little Sis?#SG_FEEL#QUE_NOIMAGE#
 A kid name Karyn has lost his little sister when they went to Thor Volcano in Veins. You must help him finding his sis Curdie.#
  #
@@ -612,8 +612,8 @@ Curdie is now safely back to town.  Whatever it is, this place is hiding somethi
   #
 
 
-// Â¿Ã€Â³Â²Â°Ã¦
-//----------------------Ã‡Ã¥Ã…ÃÃ€Ã¼ÃÃ·------------------------------
+// ¿À³²°æ
+//----------------------ÇåÅÍÀüÁ÷------------------------------
 4000#Shelin's Job Interview#SG_FEEL#QUE_NOIMAGE#
 You've got to pass Shelin's test to take a step forward.#
 #
@@ -671,7 +671,7 @@ Go back to the Hunter Guild and report that you've passed the exam.#
 Penetration#
 
 
-//--------------------Â±Â¹Â¿Ã•Â¼Â±ÃƒÃ¢--------------------------------
+//--------------------±¹¿Õ¼±Ãâ--------------------------------
 4015#Becoming an Adventurer Appraiser#SG_FEEL##
 Meet the inspector of the kingdom and become an advanturer appraiser##
 
@@ -727,11 +727,11 @@ There's a conspiracy between Walter and Richard Family. You must report to someo
 The prince Ahrum is killed by Ernst. You need to report ASAP.##
 
 
-// Â±Ã‡Â¿Ã€Â¹Ã
+// ±Ç¿À¹Î
 
 
 
-//Ã…Ã‚Â±Ã‡Ã€Ã¼ÃÃ·
+//ÅÂ±ÇÀüÁ÷
 
 6000#Job Changes to Taekwon#SG_FEEL#QUE_NOIMAGE#
 You've chosen you're path to become a Taekwon. You must increase your base level and talk to Phoenix.#
@@ -748,7 +748,7 @@ You finally can become a Taekwon by having a conversation with Phoenix.#
 
 
 
-//Â¼Ã’Â¿Ã¯Â¸ÂµÃ„Â¿Ã€Ã¼ÃÃ·
+//¼Ò¿ï¸µÄ¿ÀüÁ÷
 
 6005#Job Changes to Soul-Linker#SG_FEEL#QUE_NOIMAGE#
 If you want to rule the power of spirits, you need to proceed a ceremony using some materials. You must gather 1 Witherless Rose, 3 Carat Diamond and 1 Immortal Heart.#
@@ -769,7 +769,7 @@ The acho of the spirits are remaining in your heart. Talk with Maia again.#
 
 
 
-//Â½Â´Â³Ã«
+//½´³ë
 6010#Job Changes to Super Novice#SG_FEEL#QUE_NOIMAGE#
 If you really want to enjoy the ordinary life of Novice, you must gather 2 kinds of very ordinary items.#
 30 Sticky Mucus, 30 Resin#
@@ -777,7 +777,7 @@ If you really want to enjoy the ordinary life of Novice, you must gather 2 kinds
 
 
 
-//Â´Ã‘Ã€Ãš
+//´ÑÀÚ
 6015#A favor from Cougar#SG_FEEL#QUE_NOIMAGE#
 Go find Wildcat Joe in Einbroch and talk to him.#
 #
@@ -797,7 +797,7 @@ Hurry and bring 5 Cyfars and 1 Phracon to Cougar.#
 
 
 
-//Â°Ã‡Â½Â½Â¸ÂµÂ°Ã…
+//°Ç½½¸µ°Å
 6020#Master Miller's Letter#SG_FEEL#QUE_NOIMAGE#
 Take the letter to Mr. Wise Bull Horn in Payon.#
 #
@@ -820,8 +820,8 @@ It's going to take a little while. Talk to him again a bit later.#
 
 
 
-// Â¹Ã¨Ã‡Ã½Â·Ã‰
-//-------Â´Ã­Â¼Â­Ã€Ã¼ÃÃ· ÂºÃÂºÃ---------------
+// ¹èÇı·É
+//-------´í¼­ÀüÁ÷ ºÎºĞ---------------
 
 7000#Job Changes to Dancer! Fill out the Application!#SG_FEEL#QUE_NOIMAGE#
 You went to Comodo Dance School to become a Dancer. You've filled out the application form..#
@@ -851,7 +851,7 @@ Lst's Dance!#
 Your steps and body waves were fantastic! The instructor, Borwaju must be so impressed. Let's find out what she really thinks..#
 Conversation with Borwaju#
 
-//------ Â±Ã‡Â¼Âº Ã€Ã¼ÃÃ·
+//------ ±Ç¼º ÀüÁ÷
 7007#Warrior of the Sun, the Moon, and the Stars#SG_FEEL#QUE_NOIMAGE#
 You can find 'Moogang' in Comodo, supposedly at the place that's closest tot he sky.#
 Conversation with 'Moogang'#
@@ -872,8 +872,8 @@ A piece of a star, the sand of a star#
 If you are all done and satisfied, please go back to 'Moogang.'#
 Conversation with 'Moogang'#
 
-// Ã€ÃŒÂ°Ã¦Â¼Ã·
-//--------------------Â¾Ã®Â½ÃªÂ½Ã…Ã€Ã¼ÃÃ·--------------------------------
+// ÀÌ°æ¼÷
+//--------------------¾î½ê½ÅÀüÁ÷--------------------------------
 8000#Quitting Job Changes to Assassin#SG_FEEL#QUE_NOIMAGE#
 Give up to change the job to Assassin and go back to town. #
 Quitting Job Changes to Assassin#
@@ -911,7 +911,7 @@ You've now become an Assassin !!#
 Job Changes to Assassin#
 
 
-//Ã‡ÃÂ¸Â®Â½ÂºÃ†Â® Ã€Ã¼ÃÃ·
+//ÇÁ¸®½ºÆ® ÀüÁ÷
 
 8009#Applying for Job Change to Priest#SG_FEEL#QUE_NOIMAGE#
 Accept the Three Trials of Priesthood to change the job.#
@@ -950,7 +950,7 @@ Applying for Job Change to Priest#
 You've now become a Priest!!#
 You've now become a Priest!#
 
-// Â¾Ã†Ã€ÃÂºÃªÂ·ÃÃ…Â© Â°Ã¸Ã€Ã¥ Ã„Ã¹Â½ÂºÃ†Â®
+// ¾ÆÀÎºê·ÎÅ© °øÀå Äù½ºÆ®
 
 8017#Inspecting Einbroch Factory#SG_FEEL#QUE_NOIMAGE#
 If you would, please inspect the 2nd control panel that seems to have been broken for a while...#
@@ -1014,7 +1014,7 @@ We need at least 20 ^FF0000Flexible Tubes^000000, 10 ^FF0000Rusty Screw^000000 a
 
 
 
-// Â¸Â®ÃˆÃ·Ã…Â¸Â¸Â£ÃÂ¨ : ÂºÃ±Â°Ã¸ÃÂ¤ Ã„Ã¹Â½ÂºÃ†Â®
+// ¸®È÷Å¸¸£Á¨ : ºñ°øÁ¤ Äù½ºÆ®
 
 8032#Tarlock's Favor#SG_FEEL#QUE_NOIMAGE#
 I have a younger brother who I rarely see since he's also an Airship Captain that's always traveling. Would you bring this letter to my brother, Ferlock? Also, please make sure that you come back with his reply, alright?#
@@ -1033,7 +1033,7 @@ Oh, so you've delivered my letter? Great, and you've even brought back a reply. 
  #
 
 
-// Â¸Â®ÃˆÃ·Ã…Â¸Â¸Â£ÃÂ¨ : Ã€Â¯Â»Ã§ Ã€ÃŒÂ¹ÃŒÂ¸Â£ Ã„Ã¹Â½ÂºÃ†Â®
+// ¸®È÷Å¸¸£Á¨ : À¯»ç ÀÌ¹Ì¸£ Äù½ºÆ®
 
 8036#Hallen's Favor#SG_FEEL#QUE_NOIMAGE#
 Would you go and deliver this letter to Kaci for me? It's from some guy named Mr. Mawong, her mentor or something like that.#
@@ -1068,7 +1068,7 @@ You were asking me about the Airship's flight mechanics. So you're not an employ
 You must go and see Ferlock.#
 
 
-// ÃˆÃ–Â°Ã– : Â¾Ã  Â±Â¸Ã‡ÃÂ±Ã¢ Ã„Ã¹Â½ÂºÃ†Â®
+// ÈÖ°Ö : ¾à ±¸ÇÏ±â Äù½ºÆ®
 
 8044#Euslan's Fiancee#SG_FEEL#QUE_NOIMAGE#
 ...Are you really willing to go out and look for Thierry for me? Oh, thank you so much! You don't know how much your kind offer means to me. Thierry went on a trip, traveling on one of the Airships, to find some medicine that the doctors say I need for my illness.#
@@ -1107,7 +1107,7 @@ Please understand that I want to see her as soon as I can, but I have to wait un
 Deliver the medicine to Euslan.#
 
 
-// ÃˆÃ–Â°Ã– : Â¾Ã ÃƒÃŠ Ã„Ã¹Â½ÂºÃ†Â® (hg_herv.sc)
+// ÈÖ°Ö : ¾àÃÊ Äù½ºÆ® (hg_herv.sc)
 
 8053#Allen's Medicine#SG_FEEL#QUE_NOIMAGE#
 I need you to find my son Postell and to tell him to bring my medicine! Please head east, go outside of town, and you should be able to find Postell.#
@@ -1126,7 +1126,7 @@ Please take a look inside the medicine drawer, and help yourself to whatever you
 Look inside the medicine drawer.#
 
 
-// ÃˆÃ–Â°Ã– : ÃƒÃŸÂ¾Ã¯ Ã„Ã¹Â½ÂºÃ†Â® (hg_memo.sc)
+// ÈÖ°Ö : Ãß¾ï Äù½ºÆ® (hg_memo.sc)
 
 8057#Grumbling Manainne#SG_FEEL#QUE_NOIMAGE#
 This tree means so much to everyone in this town, and we all have special memories of this place. But that El Schatt fellow plans to chop it down for his shop...#
@@ -1157,7 +1157,7 @@ Go back to Hugel#
  #
 
 
-// ÃˆÃ–Â°Ã– : Â¿Ã€ÂµÂ­ Ã„Ã¹Â½ÂºÃ†Â® (hg_odeng.sc)
+// ÈÖ°Ö : ¿Àµ­ Äù½ºÆ® (hg_odeng.sc)
 
 8064#Cellette's Fish Cake Soup#SG_FEEL#QUE_NOIMAGE#
 Please take this order of Fish Cake Soup to my friend Neha. I'm grateful that she's a regular customer..#
@@ -1208,7 +1208,7 @@ You are dismissed. Please take your leave, and return to Cellette with my noble 
 You've successfully delivered the Fish Soup.#
 
 
-// Â¾Ã†Ã€ÃÂºÃªÂ·ÃÃ…Â© : Â¿Â¬Ã€Ã Ã„Ã¹Â½ÂºÃ†Â® (ein_ryu.sc)
+// ¾ÆÀÎºê·ÎÅ© : ¿¬ÀÎ Äù½ºÆ® (ein_ryu.sc)
 
 8076#Clitzer and Calla#SG_FEEL#QUE_NOIMAGE#
 I know I'm acting like a complete idiot. But I'd give anything to see Calla... Just don't listen to anything I say. I'm just a poor fool in love with the wrong person. That has to be it....#
@@ -1263,7 +1263,7 @@ You've really opened my eyes. From now on, I'll do my best to earn the approval 
  #
 
 
-// Â¶Ã³Ã‡Ã¯ : Ã€ÃŸÂ¸Ã¸ÂµÃˆ Â½Ã‰ÂºÃÂ¸Â§ Ã„Ã¹Â½ÂºÃ†Â® (rachel_wonjumin.sc)
+// ¶óÇï : Àß¸øµÈ ½ÉºÎ¸§ Äù½ºÆ® (rachel_wonjumin.sc)
 
 8089#Stolen Gemstone#SG_FEEL#QUE_NOIMAGE#
 I don't have any proof, but I suspect it was stolen by Phobe, a servant that disappeared about the same time the gem disappeared. You might want to question the other servants of her whereabouts.#
@@ -1310,7 +1310,7 @@ This note is a letter of recommendation hat I have written for you. Please deliv
 Go see Sir Zhed.#
 
 
-// Â¶Ã³Ã‡Ã¯ : Â½Ã…Â°Ã¼ Ã„Ã¹Â½ÂºÃ†Â® (rachel_ma1.sc)
+// ¶óÇï : ½Å°ü Äù½ºÆ® (rachel_ma1.sc)
 
 8100#Recommendation from High Priest Zhed#SG_FEEL#QUE_NOIMAGE#
 While I finish writing this recommendation, let me tell you how to get to the pope's office where you must go once you gather 40 Glacial Hearts.#
@@ -1337,7 +1337,7 @@ I warned Bekento that he might cause trouble for you, but it seems that you've c
 Go back to Zhed.#
 
 
-// Â¶Ã³Ã‡Ã¯ : Â°Â³ÃƒÂ´Ã‡ÃÃÃ¶ Â¸Ã¸Ã‡Ã‘ Â¿Ã®Â¸Ã­ Ã„Ã¹Â½ÂºÃ†Â® (rachel_ryu.sc)
+// ¶óÇï : °³Ã´ÇÏÁö ¸øÇÑ ¿î¸í Äù½ºÆ® (rachel_ryu.sc)
 
 8106#Bruspetti's Whereabouts#SG_FEEL#QUE_NOIMAGE#
 I just found out that my precious daughter has been going out with someone. She went to some other town for this boy, and I haven't heard a word from her since! Probably on some lovey dovey trip with whoever that boy is.#
@@ -1409,17 +1409,17 @@ He's still resisting me... How can I get him to reveal the truth? Maybe there's 
 Go to Freya's Spring.#
 
 
-// Â¹ÃšÂ¼Â±Â±Â¸
+// ¹Ú¼±±¸
 
-//================================Â³ÂªÃ€ÃŒÃ†Â® Ã€Ã¼ÃÃ·==========================================
+//================================³ªÀÌÆ® ÀüÁ÷==========================================
 
-//-----------------Ã‡Ã¬Â¸Â£Â¸Â¸------------------------
+//-----------------Çì¸£¸¸------------------------
 
 9000#Job Changes to Knight#SG_FEEL#QUE_NOIMAGE#
 The Chivalry Captain 'Herman' says you need to get approvals by other Knights in order to become a Knight. #
 Talk to other members of Chivalry.#
 
-//-----------------Â¿Â£ÂµÃ¥Â·Ã¹-----------------------
+//-----------------¿£µå·ù-----------------------
 
 // 1st test - 1
 9001#Loyalty of a Knight#SG_FEEL#QUE_NOIMAGE#
@@ -1436,14 +1436,14 @@ The first test by Sir Andrew!#
 Sir Andrew tells you to visit Sir James to continue the tests.#
 Conversation with 'Sir James'#
 
-//----------------ÃÂ¦Ã€Ã“Â½Âº--------------------------
+//----------------Á¦ÀÓ½º--------------------------
 
 // 2nd test
 9004#The Honor of a Knight#SG_FEEL#QUE_NOIMAGE#
 'James Scythe' tells you to visit Sir Windser to continue the tests.#
 Conversation with 'Sir Windser'#
 
-//----------------Ã€Â©Ã€Ãº--------------------------
+//----------------À©Àú--------------------------
 
 // 3rd test
 9005#Tenacity of a Knight#SG_FEEL#QUE_NOIMAGE#
@@ -1462,7 +1462,7 @@ Kill all monsters in 3 minutes#
 'Sir Windser' tells you to visit 'Amy Beatrice' for the next test.#
 Conversation with 'Amy Beatrice'#
 
-//----------------Â¿Â¡Ã€ÃŒÂ¹ÃŒ--------------------------
+//----------------¿¡ÀÌ¹Ì--------------------------
 
 
 // 3rd test
@@ -1478,7 +1478,7 @@ Conversation with 'Amy Beatrice'#
 Conversation with 'Sir Edmond'#
 
 
-//----------------Â¾Ã–ÂµÃ¥Â¸Ã³ÂµÃ¥--------------------------
+//----------------¾Öµå¸óµå--------------------------
 
 // 4th test
 9010#Quality of reverence#SG_FEEL#QUE_NOIMAGE#
@@ -1490,21 +1490,21 @@ Meditation#
 'Sir Edmond' tells you to find 'Sir Grey' for the final test.#
 Conversation with 'Sir Grey'#
 
-//-----------------Â±Ã—Â·Â¹Ã€ÃŒ----------------------------
+//-----------------±×·¹ÀÌ----------------------------
 
 // 6th test
 9012#Glory of a Knight!#SG_FEEL#QUE_NOIMAGE#
 'Sir Grey' tells you to change your job by seeing the captain, since you've talked to every other member. It is finally the time to become a Knight!# 
 Conversation with 'Sir Grey'#
 
-//=======================ÃÂ¾Â·Ã¡======================================
+//=======================Á¾·á======================================
 
 
 
 
-//= =====================Ã€Â§Ã€ÃšÂµÃ¥ ==============================
+//= =====================À§ÀÚµå ==============================
 
-//---------------------------Ã„Â«Ã†Â®Â¸Â°Â´Ã€--------------------------------
+//---------------------------Ä«Æ®¸°´À--------------------------------
 9013#Let's become a Wizard!#SG_FEEL#QUE_NOIMAGE#
 The Wizard Guildman, Cartrin's first test is to gather Gemstones.#
 Collect 3 of each Red, Blue, Yellow Gemstone.#
@@ -1520,7 +1520,7 @@ You passed the first test by 'Cartrin.'  She says you should go see the Dismal W
 Find and have a conversation with 'Dismal Wizard.'#
 
 
-//---------------------------Â¶Ã³Â¿Ã¬Â·Â» ( Ã€Â½Ã„Â§Ã‡Ã‘ Â³Â²Ã€Ãš )--------------------------------
+//---------------------------¶ó¿ì·» ( À½Ä§ÇÑ ³²ÀÚ )--------------------------------
 
 9016#Understanding of Magic and Matter#SG_FEEL#QUE_NOIMAGE#
 The second step of the Job Change test is to give correct answers to the questions given by 'Laurel.'#
@@ -1534,7 +1534,7 @@ Practical test using 3 different properties#
 You have passed all the tests given by 'Laurel.' Talk to Cartrin for the last!#
 Conversation with 'Cartrin'#
 
-//---------------------------Ã€Ã¼Ã€Ã¥--------------------------------
+//---------------------------ÀüÀå--------------------------------
 2069#Tierra Gorge Battle#SG_FEEL#QUE_NOIMAGE#
 You have received an indicator showing that you've participated in the Battle at Tierra Gorge.  Guillaume Army wouldn't let you participate in any ather battles until the indicator goes off.#
 Stand-by for Tierra Gorge Battle until the time recorded on Limited.#
@@ -1556,7 +1556,7 @@ Defeat Nacht Sieger on the 102nd floor of Endless tower.#
 Due to the death inside the tower, it is not possible to enter until the regeneration of the tower.#
 #
 
-//---------------------------Â¿Ã•Ã€Â§ÃÂ¶Â·ÃŠ--------------------------------
+//---------------------------¿ÕÀ§Á¶·Ê--------------------------------
 10000#To the Prontera Royal Court#SG_FEEL#QUE_NOIMAGE#
 As the messenger says, go to the Prontera Royal Court and talk to the Inspector.#
 #
@@ -1662,8 +1662,8 @@ Report to the inspector about all you have gone through.#
 #
 
 
-// Â¼Ã›Â¼Ã›Ã€ÃŒ
-// ----------Â¿Ã€ÂµÃ²Â½Ã…Ã€Ã¼, Â»Ã½ÃƒÂ¼Â¿Â¬Â±Â¸, ÂµÂµÂ¼Â­Â°Ã¼, ÂµÂ¹ÃÃÂ´Ã‚Â³Ã«Ã€Ã
+// ¼Û¼ÛÀÌ
+// ----------¿Àµò½ÅÀü, »ıÃ¼¿¬±¸, µµ¼­°ü, µ¹Áİ´Â³ëÀÎ
 11000#Inspection of Odin Shrine#SG_FEEL#QUE_NOIMAGE#
 Anyway, if you'd like to help us, please take a look around the shrine and see if you'd want to work for us. Please talk to the Boatman to travel to the shrine, okay?#
 Talk to Alex again after investigating the Shrine.#
@@ -1781,13 +1781,13 @@ Bring the rocks to Bahed.#
 Those rocks were called 'Hetarium' which are sold to Rekenber.#
 Go back to Zabaroo.#
 
-// Â¹ÃšÃ€ÃÂ¿Ã«
-//---------------Ã„Â£Â±Â¸, Â¹Â«Â±Ã¢Â°Ã¸Â±Ã------------------------
+// ¹ÚÀÏ¿ë
+//---------------Ä£±¸, ¹«±â°ø±Ş------------------------
 12000#Friends:Dissonant#SG_FEEL#QUE_NOIMAGE#
 Find Maku's another friend and talk with him.#
 Meet Maku's another friend.#
 
-12001#Friends:So close, yet farÂ¡Â¦#SG_FEEL#QUE_NOIMAGE#
+12001#Friends:So close, yet far¡¦#SG_FEEL#QUE_NOIMAGE#
 Go back to Maku and have a conversation with him.#
 Go back to Maku.#
 
@@ -1838,3 +1838,36 @@ Protect Packages.#
 12013#Weapon Supply-6#SG_FEEL#QUE_NOIMAGE#
 Find out what those packages really are by talking to Lyozien.#
 Discussion over packages#
+
+
+
+//---------------2010 ºÎÈ°Àı3.31--------------
+
+9117#Oath-Taking Ceremony - 1st Adventure#SG_FEEL#QUE_NOIMAGE#
+You need to complete the 1st task to release the curse of ^0000FFRina^000000 who visited ^8B4513Prontera^000000. When you are ready, go to ^0000FFRina^000000.#
+To complete the 1st task of ^0000FFRina^000000#
+
+9118#Oath-Taking Ceremony - Kill DEVIRUCHI#SG_FEEL#QUE_NOIMAGE#
+Among ^FF0000DEVIRUCHI^000000, ^FF0000WRAITH DEAD^000000, ^FF0000DULLAHAN^000000, ^FF0000NIGHTMARE TERROR^000000, kill one kind of monster more than ^00640050^000000 and then go back to ^0000FFRina^000000.#
+^0000FFKill monsters to release the curse^000000#
+
+9119#Oath-Taking Ceremony - Kill WRAITH DEAD#SG_FEEL#QUE_NOIMAGE#
+Among ^FF0000DEVIRUCHI^000000, ^FF0000WRAITH DEAD^000000, ^FF0000DULLAHAN^000000, ^FF0000NIGHTMARE TERROR^000000, kill one kind of monster more than ^00640050^000000 and then go back to ^0000FFRina^000000.#
+^0000FFKill monsters to release the curse^000000#
+
+9120#Oath-Taking Ceremony - Kill DULLAHAN#SG_FEEL#QUE_NOIMAGE#
+Among ^FF0000DEVIRUCHI^000000, ^FF0000WRAITH DEAD^000000, ^FF0000DULLAHAN^000000, ^FF0000NIGHTMARE TERROR^000000, kill one kind of monster more than ^00640050^000000 and then go back to ^0000FFRina^000000.#
+^0000FFKill monsters to release the curse^000000#
+
+9121#Oath-Taking Ceremony - KILL NIGHTMARE TERROR#SG_FEEL#QUE_NOIMAGE#
+Among ^FF0000DEVIRUCHI^000000, ^FF0000WRAITH DEAD^000000, ^FF0000DULLAHAN^000000, ^FF0000NIGHTMARE TERROR^000000, kill one kind of monster more than ^00640050^000000 and then go back to ^0000FFRina^000000.#
+^0000FFKill monsters to release the curse^000000#
+
+9122#Oath-Taking Ceremony - 2nd Adventure#SG_FEEL#QUE_NOIMAGE#
+You need to complete the 2nd task to release the curse of ^0000FFRina^000000 who visited ^8B4513Prontera^000000.#
+To complete the 2nd task of ^0000FFRina^000000#
+
+9123#Oath-Taking Ceremony - Go to Prontera~!#SG_FEEL#QUE_NOIMAGE#
+It seems ^0000FFRina^000000's curse has been released. Go back to Rina.#
+To go back to ^0000FFRina^000000#
+

@@ -684,3 +684,7 @@ abbey02.rsw#Monastery#
 abbey03.rsw#Monastery#
 que_temsky.rsw#Pope's Office - The Garden of Heaven#
 z_agit.rsw#Z Gang's Hideout#
+
+//--- 2010 ³ëµ¿Àý
+evt_mobroom.rsw#Monster's Cave#
+
