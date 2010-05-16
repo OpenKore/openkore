@@ -1519,7 +1519,7 @@ sub processAutoSell {
 				my $realpos = {};
 				getNPCInfo($config{"sellAuto_npc"}, $realpos);
 
-				ai_talkNPC($realpos->{pos}{x}, $realpos->{pos}{y}, 's e');
+				ai_talkNPC($realpos->{pos}{x}, $realpos->{pos}{y}, $config{sellAuto_npc_steps} || 's e');
 
 				return;
 			}
@@ -1720,7 +1720,7 @@ sub processAutoBuy {
 				my $realpos = {};
 				getNPCInfo($config{"buyAuto_$args->{index}"."_npc"}, $realpos);
 
-				ai_talkNPC($realpos->{pos}{x}, $realpos->{pos}{y}, 'b e');
+				ai_talkNPC($realpos->{pos}{x}, $realpos->{pos}{y}, $config{"buyAuto_$args->{index}"."_npc_steps"} || 'b e');
 				return;
 			}
 
