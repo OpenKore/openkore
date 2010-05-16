@@ -1311,6 +1311,7 @@ sub actor_info {
 		updatePlayerNameCache($slave);
 	}
 
+	# TODO: $args->{ID} eq $accountID
 }
 
 sub actor_look_at {
