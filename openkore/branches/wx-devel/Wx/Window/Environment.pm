@@ -32,6 +32,9 @@ use Scalar::Util;
 use Globals;
 use Translation qw/T TF/;
 
+use Interface::Wx::Context::Item;
+use Interface::Wx::Context::NPC;
+
 sub new {
 	my $class = shift;
 	my $parent = shift;
@@ -57,6 +60,7 @@ sub new {
 		}],
 	);
 	$self->onActivate(sub { $weak->onItemListActivate($_[1]) });
+	$self->onRightClick(sub { $weak->onItemListRightClick($_[1]) });
 	
 	return $self;
 }
@@ -89,6 +93,20 @@ sub onItemListActivate {
 		Commands::run("take $actor->{binID}");
 	} elsif ($actor->isa('Actor::NPC')) {
 		Commands::run("talk $actor->{binID}");
+	}
+	
+	Plugins::callHook('interface/defaultFocus');
+}
+
+sub onItemListRightClick {
+	my ($self, $actor) = @_;
+	
+	if ($actor->isa('Actor::Player')) {
+	} elsif ($actor->isa('Actor::Monster')) {
+	} elsif ($actor->isa('Actor::Item')) {
+		Interface::Wx::Context::Item->new($self, [$actor])->popup;
+	} elsif ($actor->isa('Actor::NPC')) {
+		Interface::Wx::Context::NPC->new($self, [$actor])->popup;
 	}
 	
 	Plugins::callHook('interface/defaultFocus');

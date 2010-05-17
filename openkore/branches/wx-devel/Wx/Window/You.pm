@@ -103,7 +103,7 @@ sub update {
 	$self->set ('skillPoint', $char->{points_skill});
 	$self->set ('speed', sprintf '%.2f', 1 / $char->{walk_speed}) if $char->{walk_speed};
 	
-	$self->setStatus (defined $char->{statuses} && %{$char->{statuses}} ? join ', ', keys %{$char->{statuses}} : undef);
+	$self->setStatus ($char->statusesString);
 	
 	$self->setImage ('bitmaps/heads/' . $char->{sex} . '/' . $char->{hair_style} . '.gif', {x => 1, y => $char->{hair_color}, w => 8, h => 9});
 	
