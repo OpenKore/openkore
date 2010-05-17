@@ -10,6 +10,8 @@ use Misc qw/items_control pickupitems/;
 use Translation qw/T TF/;
 use Utils qw/formatNumber/;
 
+use Interface::Wx::Utils qw(isUsable isEquip isCard);
+
 sub new {
 	my ($class, $parent, $id) = (shift, shift, shift);
 	
@@ -41,11 +43,6 @@ sub new {
 	return $self;
 }
 
-# TODO: move item type detection to Actor::Item?
-sub isUsable { $_[-1]{type} <= 2 }
-sub isEquip { (0, 0, 0, 0, 1, 1, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1) [$_[-1]{type}] }
-sub isCard { $_[-1]{type} == 6 }
-
 sub setItem {
 	my ($self, $index, $item) = @_;
 	
@@ -60,9 +57,9 @@ sub setItem {
 			. ($item->{identified} ? '' : ' (Not identified)')
 		], (
 			!$item->{identified} ? $self->{color}{notIdent}
-			: $self->isUsable($item) ? $self->{color}{usable}
-			: $self->isEquip($item) ? $self->{color}{equip}
-			: $self->isCard($item) ? $self->{color}{card}
+			: isUsable($item) ? $self->{color}{usable}
+			: isEquip($item) ? $self->{color}{equip}
+			: isCard($item) ? $self->{color}{card}
 			: $self->{color}{other}
 		));
 	} else {
@@ -74,54 +71,6 @@ sub removeAllItems {
 	my ($self) = @_;
 	
 	$self->{list}->DeleteAllItems;
-}
-
-sub contextMenu {
-	my ($self, $items) = (shift, shift);
-	
-	my @selection = $self->getSelection;
-	
-	if (@selection == 1 and my $item = $selection[0]) {
-		my $control = items_control($item->{name});
-		push @$items, {}, {title => TF('Keep %s minimum', formatNumber($control->{keep}))};
-		for (
-			['storage', T('Auto-store')],
-			['sell', T('Auto-sell')],
-			['cart_add', T('Auto-put in cart')],
-			['cart_get', T('Auto-get from cart')],
-		) {
-			my $value = join ' ', $item->{name},
-			map {$_ || 0} @{{%$control, @$_[0] => $control->{@$_[0]} ? 0 : 1}} {qw/keep storage sell cart_add cart_get/};
-			$value =~ s/\s+\S+\K\s+[ 0]*$//;
-			push @$items, {title => @$_[1], check => $control->{@$_[0]}, callback => sub { Commands::run("iconf $value") }};
-		}
-		
-		$control = pickupitems($item->{name});
-		push @$items, {};
-		for (
-			[-1, T('Auto-drop')],
-			[0, T('Ignore')],
-			[1, T('Auto-pick up')],
-			[2, T('Auto-pick up quickly')],
-		) {
-			my $value = join ' ', $item->{name}, @$_[0];
-			push @$items, {title => @$_[1], radio => $control == @$_[0], callback => sub { Commands::run("pconf $value") }};
-		}
-		
-		if ($shop{items} and ($control) = grep {$_->{name} eq $item->{name}} @{$shop{items}}) {
-			push @$items, {}, {title => $control->{amount}
-				? TF('Vend %s for %s', formatNumber($control->{amount}), formatNumber($control->{price}))
-				: TF('Vend for %s', formatNumber($control->{price}))
-			};
-		}
-		
-		if ($control = $itemsDesc_lut{$item->{nameID}}) {
-			chomp $control;
-			push @$items, {}, {title => T('Description'), menu => [{title => $control}]};
-		}
-	}
-	
-	return $self->SUPER::contextMenu ($items, @_);
 }
 
 1;

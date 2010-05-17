@@ -3,8 +3,10 @@ package Interface::Wx::Window::Inventory;
 use strict;
 use base 'Interface::Wx::Base::ItemList';
 
-use Globals qw/$char %cart %storage %equipTypes_lut $cardMergeIndex @cardMergeItemsID/;
+use Globals qw/$char/;
 use Translation qw/T TF/;
+
+use Interface::Wx::Context::InventoryItem;
 
 sub new {
 	my ($class, $parent, $id) = @_;
@@ -123,122 +125,8 @@ sub clear {
 sub _onRightClick {
 	my ($self) = @_;
 	
-	return unless scalar (my @selection = $self->getSelection);
-	
-	Scalar::Util::weaken(my $weak = $self);
-	
-	my $title;
-	if (@selection > 3) {
-		my $total = 0;
-		$total += $_->{amount} foreach @selection;
-		$title = @selection . ' items';
-		$title .= ' (' . $total . ' total)' unless $total == @selection;
-	} else {
-		$title = join '; ', map { join ' ', @$_{'amount', 'name'} } @selection;
-	}
-	$title .= '...';
-	
-	my @menu;
-	push @menu, {title => $title}, {};
-	
-	my ($canStorage, $canCart) = (%storage && $storage{opened}, %cart && $cart{exists});
-	
-	if (@selection == 1) {
-		my ($item) = @selection;
-		
-		my ($canActivate, $canDrop) = (undef, 1);
-		if ($self->isUsable ($item)) {
-			$canActivate = 'Use 1 on self';
-		} elsif ($self->isEquip ($item)) {
-			unless ($item->{equipped}) {
-				$canActivate = 'Equip' if $item->{identified};
-			} else {
-				$canActivate = 'Unequip';
-				$canCart = 0;
-				$canStorage = 0;
-				$canDrop = 0;
-			}
-		} elsif ($self->isCard ($item)) {
-			$canActivate = 'Start card merging';
-		}
-		
-		push @menu, {title => $canActivate . "\tDblClick", callback => sub { $weak->_onActivate }} if $canActivate;
-		push @menu, {title => 'Drop 1', callback => sub { $weak->_onDropOne }} if $canDrop;
-		
-		# FIXME: if your items change order or are used, this list will be wrong
-		for (@cardMergeItemsID) {
-			if ($item->{invIndex} == $_) {
-				push @menu, {title => (
-					sprintf 'Merge with %s', $char->inventory->get($cardMergeIndex)->{name}
-				), callback => sub { $weak->_onMerge }};
-				last;
-			}
-		}
-	} else {
-		#
-	}
-	
-	push @menu, {title => 'Move to cart', callback => sub { $weak->_onCart }} if $canCart;
-	push @menu, {title => 'Move to storage', callback => sub { $weak->_onStorage }} if $canStorage;
-	push @menu, {title => 'Sell', callback => sub { $weak->_onSell }};
-	
-	$self->contextMenu (\@menu);
-}
-
-sub _onActivate {
-	my ($self) = @_;
-	
-	return unless 1 == (my ($item) = $self->getSelection);
-	
-	if ($self->isUsable ($item)) {
-		$item->use;
-	} elsif ($self->isEquip ($item)) {
-		unless ($item->{equipped}) {
-			$item->equip;
-		} else {
-			$item->unequip;
-		}
-	} elsif ($self->isCard ($item)) {
-		Commands::run ('card use ' . $item->{invIndex});
-	}
-}
-
-sub _onCart {
-	my ($self) = @_;
-	
-	foreach ($self->getSelection) {
-		Commands::run ('cart add ' . $_->{invIndex});
-	}
-}
-
-sub _onStorage {
-	my ($self) = @_;
-	
-	foreach ($self->getSelection) {
-		Commands::run ('storage add ' . $_->{invIndex});
-	}
-}
-
-sub _onSell {
-	my ($self) = @_;
-	
-	Commands::run ('sell ' . (join ',', map { $_->{invIndex} } $self->getSelection) . ';;sell done');
-}
-
-sub _onDropOne {
-	my ($self) = @_;
-	
-	return unless 1 == (my ($item) = $self->getSelection);
-	
-	Commands::run ('drop ' . $item->{invIndex} . ' 1');
-}
-
-sub _onMerge {
-	my ($self) = @_;
-	
-	return unless 1 == (my ($item) = $self->getSelection);
-	
-	Commands::run ('card merge ' . $item->{invIndex});
+	return unless scalar(my @selection = $self->getSelection);
+	Interface::Wx::Context::InventoryItem->new($self, \@selection)->popup;
 }
 
 1;

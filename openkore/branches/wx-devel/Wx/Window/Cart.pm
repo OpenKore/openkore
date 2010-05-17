@@ -6,6 +6,8 @@ use base 'Interface::Wx::Base::ItemList';
 use Globals qw/$char $conState %cart %storage/;
 use Translation qw/T TF/;
 
+use Interface::Wx::Context::CartItem;
+
 sub new {
 	my ($class, $parent, $id) = @_;
 	
@@ -71,46 +73,8 @@ sub getSelection { map { $cart{inventory}[$_] } @{$_[0]{selection}} }
 sub _onRightClick {
 	my ($self) = @_;
 	
-	return unless scalar (my @selection = $self->getSelection);
-	
-	Scalar::Util::weaken(my $weak = $self);
-	
-	my $title;
-	if (@selection > 3) {
-		my $total = 0;
-		$total += $_->{amount} foreach @selection;
-		$title = @selection . ' items';
-		$title .= ' (' . $total . ' total)' unless $total == @selection;
-	} else {
-		$title = join '; ', map { join ' ', @$_{'amount', 'name'} } @selection;
-	}
-	$title .= '...';
-	
-	my @menu;
-	push @menu, {title => $title}, {};
-	
-	my ($canStorage) = (%storage && $storage{opened});
-	
-	push @menu, {title => 'Move to inventory' . "\tDblClick", callback => sub { $weak->_onActivate }};
-	push @menu, {title => 'Move to storage', callback => sub { $weak->_onStorage }} if $canStorage;
-	
-	$self->contextMenu (\@menu);
-}
-
-sub _onActivate {
-	my ($self) = @_;
-	
-	foreach ($self->getSelection) {
-		Commands::run ('cart get ' . $_->{index});
-	}
-}
-
-sub _onStorage {
-	my ($self) = @_;
-	
-	foreach ($self->getSelection) {
-		Commands::run ('storage addfromcart ' . $_->{index});
-	}
+	return unless scalar(my @selection = $self->getSelection);
+	Interface::Wx::Context::CartItem->new($self, \@selection)->popup;
 }
 
 1;

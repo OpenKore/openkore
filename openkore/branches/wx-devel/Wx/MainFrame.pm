@@ -65,7 +65,6 @@ sub new {
 	$self->{menu} = new Interface::Wx::MainMenu($self);
 	$self->createStatusBar;
 	
-	#$self->SetSizeHints(300, 250);
 	$self->SetClientSize(950, 680);
 	if (-f (my $icon = "$RealBin/src/build/openkore.ico")) {
 		$self->SetIcon(new Wx::Icon($icon, wxBITMAP_TYPE_ICO));
@@ -103,7 +102,7 @@ sub new {
 	
 	$self->toggleWindow('console', 'Interface::Wx::Window::Console', 'notebook');
 	$self->toggleWindow('chatLog', 'Interface::Wx::Window::ChatLog', 'notebook');
-	$self->toggleWindow('map', 'Interface::Wx::Window::Map', 'right');
+	$self->toggleWindow('map', 'Interface::Wx::Window::Map', 'right', undef, [250, 250]);
 	$self->toggleWindow('environment', 'Interface::Wx::Window::Environment', 'right', 1, [150, -1], 1);
 	
 	$self->{aui}->Update;
@@ -254,8 +253,9 @@ sub toggleWindow {
 			$self->{aui}->AddPane($window,
 				Wx::AuiPaneInfo->new->Caption($window->{title})
 				->Direction($pos)->Layer($layer || 0)
-				->BestSize($bestSize ? @$bestSize : (250, 250))
+				->BestSize($bestSize ? @$bestSize : $window->GetBestSize)
 				->DestroyOnClose->CloseButton(!$noCloseButton)->CaptionVisible(!$noCloseButton)
+				->Gripper($noCloseButton)->GripperTop($pos == wxAUI_DOCK_LEFT || $pos == wxAUI_DOCK_RIGHT)
 			);
 			$self->{aui}->Update;
 		} elsif ($target eq 'notebook') {

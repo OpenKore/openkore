@@ -6,6 +6,8 @@ use base 'Interface::Wx::Base::SkillList';
 use Globals qw/$char/;
 use Translation qw/T TF/;
 
+use Interface::Wx::Context::Skill;
+
 sub new {
 	my ($class, $parent, $id) = @_;
 	
@@ -73,48 +75,9 @@ sub clear {
 
 sub _onRightClick {
 	my ($self) = @_;
-	return unless my $skill = $self->getSelection;
 	
-	Scalar::Util::weaken(my $weak = $self);
-	
-	my @menu = {title => $skill->getName . '...'}, {};
-	
-	my $target = $skill->getTargetType;
-	
-	if ($target == Skill::TARGET_SELF || $target == Skill::TARGET_ACTORS) {
-		push @menu, {title => T('Use on self'), callback => sub { $weak->_onActivate }};
-	}
-	# TODO: submenus with current environment?
-	if ($target == Skill::TARGET_ACTORS) {
-		push @menu, {title => T('Use on player')};
-	}
-	if ($target == Skill::TARGET_ENEMY) {
-		push @menu, {title => T('Use on monster')};
-	}
-	
-	if ($char->{skills}{$skill->getHandle} && $char->{skills}{$skill->getHandle}{up}) {
-		push @menu, {}, {title => T('Level up'), callback => sub { $weak->_onLevelUp }};
-	}
-	
-	$self->contextMenu(\@menu);
-}
-
-sub _onActivate {
-	my ($self) = @_;
-	return unless my $skill = $self->getSelection;
-	
-	my $target = $skill->getTargetType;
-	
-	if ($target == Skill::TARGET_SELF || $target == Skill::TARGET_ACTORS) {
-		Commands::run("ss " . $skill->getIDN);
-	}
-}
-
-sub _onLevelUp {
-	my ($self) = @_;
-	return unless my $skill = $self->getSelection;
-	
-	Commands::run("skills add " . $skill->getIDN);
+	return unless scalar(my @selection = $self->getSelection);
+	Interface::Wx::Context::Skill->new($self, \@selection)->popup;
 }
 
 1;

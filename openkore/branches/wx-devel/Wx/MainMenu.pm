@@ -3,6 +3,7 @@ use strict;
 
 use Wx ':everything';
 use Wx::Event ':everything';
+use Wx::ArtProvider qw/:artid :clientid/;
 
 use FindBin qw($RealBin);
 
@@ -97,6 +98,12 @@ sub new {
 			key => 'toggleWindow_chatLog', title => T('Chat &Log'), type => 'check',
 			sub => sub { $self->{frame}->toggleWindow('chatLog', 'Interface::Wx::Window::ChatLog', 'notebook') },
 		},
+=pod
+		{
+			key => 'toggleWindow_toolbar', title => T('Toolbar'), type => 'check',
+			sub => sub { $self->{frame}->toggleWindow('toolbar', 'Interface::Wx::Window::ToolBar', 'top', 1, undef, 1) },
+		},
+=cut
 		{},
 		{
 			key => 'toggleWindow_character', title => T('Status')."\tAlt+A", type => 'check',
@@ -156,7 +163,8 @@ sub new {
 		{title => T('&Command List')."\tAlt+Y", command => 'help'},
 		{},
 		{title => T('Web&site'), sub => sub { launchURL($Settings::WEBSITE) }, help => $Settings::WEBSITE},
-		{title => T('&Manual')."\tF1", sub => sub { launchURL('http://wiki.openkore.com/index.php?title=Manual') }, help => 'Read the manual'},
+		{title => T('&Manual')."\tF1", sub => sub { launchURL('http://wiki.openkore.com/index.php?title=Manual') },
+		art => wxART_HELP, help => 'Read the manual'},
 		{title => T('&Wiki'), sub => sub { launchURL('http://wiki.openkore.com/') }, help => 'Read and write the wiki'},
 		{title => T('&Forum')."\tShift+F1", sub => sub { launchURL('http://forums.openkore.com/') }, help => 'Visit the forum'},
 		{},
@@ -207,10 +215,15 @@ sub onAddMenuItem {
 		$menu = $menu->{menu};
 	}
 	
-	$menu->Append(my $item = new Wx::MenuItem(undef, $args->{wxID} || wxID_ANY, $args->{title}, $args->{help},
-		$args->{type} eq 'check' ? wxITEM_CHECK : $args->{type} eq 'radio' ? wxITEM_RADIO : undef,
+	my $item = new Wx::MenuItem(undef, $args->{wxID} || wxID_ANY, $args->{title}, $args->{help},
+		$args->{type} eq 'check' ? wxITEM_CHECK : $args->{type} eq 'radio' ? wxITEM_RADIO : wxITEM_NORMAL,
 		$args->{submenu} ? $self->createMenu(@{$args->{submenu}}) : undef
-	));
+	);
+	
+	$item->SetBitmap(Wx::ArtProvider::GetBitmap($args->{art}, wxART_MENU)) if $args->{art};
+	
+	$menu->Append($item);
+	
 	if ($args->{command}) {
 		EVT_MENU($self->{frame}, $item->GetId, sub { Commands::run($args->{command}) });
 	} elsif ($args->{sub}) {
@@ -241,17 +254,15 @@ sub onMenuOpen {
 	onRemoveMenuItem(undef, {key => $_}, $self)
 	for grep /^charselect_/, keys %{$self->{items}};
 	
-	onAddMenuItem(undef, {key => "charselect_undef", title => T('Exit to the character selection screen'), command => 'conf char none;;charselect', type => 'radio', menu => $self->{menus}{charselect}{menu}}, $self);
 	onAddMenuItem(undef, {key => "charselect_$_", title => (
-		sprintf '%d: %s %d/%d %s', $_, $chars[$_]{name}, $chars[$_]{lv}, $chars[$_]{lv_job}, $jobs_lut{$chars[$_]{jobID}}
+		$_ eq 'none' ? T('Exit to the character selection screen')
+		: sprintf '%d: %s %d/%d %s', $_, $chars[$_]{name}, $chars[$_]{lv}, $chars[$_]{lv_job}, $jobs_lut{$chars[$_]{jobID}}
 	), command => "conf char $_;;charselect", type => 'radio', menu => $self->{menus}{charselect}{menu}}, $self)
-	for grep {$chars[$_]} (0 .. @chars-1);
+	for (($self->{items}{charselect_none} ? () : 'none'), grep {$chars[$_]} (0 .. @chars-1));
 	
-	if (defined $config{char} && $self->{items}{"charselect_$config{char}"}) {
-		$self->{items}{"charselect_$config{char}"}->Check(1);
-	} else {
-		$self->{items}{charselect_undef}->Check(1);
-	}
+	$self->{items}{'charselect_' . (
+		defined $config{char} && $self->{items}{"charselect_$config{char}"} ? $config{char} : 'none'
+	)}->Check(1);
 	
 	$self->{items}{"toggleWindow_$_"}->Check(!!$self->{frame}{windows}{$_})
 	for map /^toggleWindow_(.+)$/, keys %{$self->{items}};
