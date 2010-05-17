@@ -5,7 +5,7 @@ use base 'Interface::Wx::Base::Context';
 
 use Wx ':everything';
 
-use Globals qw/%itemsDesc_lut %shop/;
+use Globals qw/$char %config %itemsDesc_lut %shop %arrowcraft_items %items_control %pickupitems/;
 use Misc qw/items_control pickupitems/;
 use Translation qw/T TF/;
 use Utils qw/formatNumber/;
@@ -20,52 +20,84 @@ sub new {
 	
 	push @{$self->{head}}, {}, {
 		title => @$objects > 3
-		? TF('%d items (%d total)', scalar @$objects, List::Util::sum map { $_->{amount} } @$objects)
+		? TF('%d Items (%d Total)', scalar @$objects, List::Util::sum map { $_->{amount} } @$objects)
 		: join '; ', map { join ' ', @$_{'amount', 'name'} } @$objects
 	};
 	
 	if (@$objects == 1) {
 		my ($object) = @$objects;
+		my $name = $object->{name};
 		
-		my $control = items_control($object->{name});
-		push @tail, {}, {title => TF('Keep %s minimum', formatNumber($control->{keep}))};
-		for (
-			['storage', T('Auto-store')],
-			['sell', T('Auto-sell')],
-			['cart_add', T('Auto-put in cart')],
-			['cart_get', T('Auto-get from cart')],
-		) {
-			my $value = join ' ', $object->{name},
-			map {$_ || 0} @{{%$control, @$_[0] => $control->{@$_[0]} ? 0 : 1}} {qw/keep storage sell cart_add cart_get/};
-			$value =~ s/\s+\S+\K\s+[ 0]*$//;
-			push @tail, {
-				title => @$_[1], check => $control->{@$_[0]},
-				$Commands::customCommands{iconf} && (command => "iconf $value")
-			}
-		}
-		
-		$control = pickupitems($object->{name});
 		push @tail, {};
-		for (
-			[-1, T('Auto-drop')],
-			[0, T('Ignore')],
-			[1, T('Auto-pick up')],
-			[2, T('Auto-pick up quickly')],
-		) {
-			push @tail, {
-				title => @$_[1], radio => $control == @$_[0],
-				$Commands::customCommands{pconf} && (command => "pconf " . (join ' ', $object->{name}, @$_[0]))
+		
+		# TODO: more grained item type check for each option
+		if (isEquip($object)) {
+			my @submenu;
+			for (
+				['autoSwitch_default_rightHand', T('Default for Right Hand')],
+				['autoSwitch_default_leftHand', T('Default for Left Hand')],
+				['autoSwitch_default_arrow', T('Default for Arrows')],
+			) {
+				my ($option, $title) = @$_;
+				my $check = lc $name eq lc $config{$option};
+				push @submenu, {
+					title => $title, check => $check,
+					callback => sub { Misc::bulkConfigModify({$option => $check ? undef : $name}, 1) }
+				}
 			}
+			push @tail, {title => T('Auto-Equip'), menu => \@submenu};
 		}
 		
-		if ($shop{items} and ($control) = grep {$_->{name} eq $object->{name}} @{$shop{items}}) {
-			push @tail, {}, {title => $control->{amount}
-				? TF('Vend %s for %s each', formatNumber($control->{amount}), formatNumber($control->{price}))
-				: TF('Vend for %s each', formatNumber($control->{price}))
+		{
+			my $control = items_control($name);
+			my @submenu;
+			push @submenu, {title => TF('Keep %s Minimum', formatNumber($control->{keep}))};
+			for (
+				['storage', T('Auto-Store')],
+				['sell', T('Auto-Sell')],
+				['cart_add', T('Auto-Put in Cart')],
+				['cart_get', T('Auto-Get from Cart')],
+			) {
+				my $value = join ' ', $name,
+				map {$_ || 0} @{{%$control, @$_[0] => $control->{@$_[0]} ? 0 : 1}} {qw/keep storage sell cart_add cart_get/};
+				$value =~ s/\s+\S+\K\s+[ 0]*$//;
+				push @submenu, {
+					title => @$_[1], check => $control->{@$_[0]},
+					$Commands::customCommands{iconf} && (command => "iconf $value")
+				}
+			}
+			push @tail, {title => TF('Item Control%s', $items_control{lc $name} ? T(' (Configured)') : T(' (Default)')), menu => \@submenu};
+		}
+		
+		{
+			my $control = pickupitems($name);
+			my @submenu;
+			for (
+				[-1, T('Auto-Drop')],
+				[0, T('Ignore')],
+				[1, T('Auto-Pick Up')],
+				[2, T('Auto-Pick Up Quickly')],
+			) {
+				push @submenu, {
+					title => @$_[1], radio => $control == @$_[0],
+					$Commands::customCommands{pconf} && (command => "pconf " . (join ' ', $name, @$_[0]))
+				}
+			}
+			push @tail, {title => TF('Pickup%s', $pickupitems{lc $name} ? T(' (Configured)') : T(' (Default)')), menu => \@submenu};
+		}
+		
+		push @tail, {};
+		if ($shop{items} and my ($control) = grep {$_->{name} eq $name} @{$shop{items}}) {
+			push @tail, {title => $control->{amount}
+				? TF('Vend %s for %s Each', formatNumber($control->{amount}), formatNumber($control->{price}))
+				: TF('Vend for %s Each', formatNumber($control->{price}))
 			};
 		}
+		if ($char->{skills}{AC_MAKINGARROW} && $char->{skills}{AC_MAKINGARROW}{lv}) {
+			push @tail, {title => TF('Auto Arrow Crafting'), check => $arrowcraft_items{lc $name}};
+		}
 		
-		if ($control = $itemsDesc_lut{$object->{nameID}}) {
+		if (my $control = $itemsDesc_lut{$object->{nameID}}) {
 			chomp $control;
 			push @tail, {}, {title => T('Description'), menu => [{title => $control}]};
 		}	

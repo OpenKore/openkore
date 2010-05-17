@@ -8,8 +8,8 @@ sub new {
 	my $self = bless {}, shift;
 	
 	$self->{parent} = shift;
-	$self->{tail} = shift || [];
 	$self->{head} = shift || [];
+	$self->{tail} = shift || [];
 	
 	return $self;
 }

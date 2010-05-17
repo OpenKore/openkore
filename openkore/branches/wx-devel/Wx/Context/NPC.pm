@@ -35,21 +35,47 @@ sub new {
 		}
 		
 		push @tail, {};
-		push @tail, {
-			title => T('Auto-sell disabled'),
-			radio => !$config{sellAuto},
-			callback => sub { Misc::bulkConfigModify({sellAuto => 0}, 1) }
-		};
-		push @tail, {
-			title => TF('Auto-sell as configured (%s)', $config{sellAuto_npc}),
-			radio => $config{sellAuto},
-			callback => sub { Misc::bulkConfigModify({sellAuto => 1}, 1) }
-		} if $config{sellAuto_npc} && $config{sellAuto_npc} ne $location;
-		push @tail, {
-			title => T('Auto-sell with this NPC'),
-			radio => $config{sellAuto} && $config{sellAuto_npc} eq $location,
-			callback => sub { Misc::bulkConfigModify({sellAuto => 1, sellAuto_npc => $location}, 1) }
-		};
+		
+		{
+			# TODO: storageAuto_npc_type/steps?
+			my @submenu;
+			push @submenu, {
+				title => T('Disabled'),
+				radio => !$config{storageAuto},
+				callback => sub { Misc::bulkConfigModify({sellAuto => 0}, 1) }
+			};
+			push @submenu, {
+				title => TF('As Configured (%s)', $config{storageAuto_npc}),
+				radio => $config{storageAuto},
+				callback => sub { Misc::bulkConfigModify({storageAuto => 1}, 1) }
+			} if $config{storageAuto_npc} && $config{storageAuto_npc} ne $location;
+			push @submenu, {
+				title => T('With This NPC'),
+				radio => $config{storageAuto} && $config{storageAuto_npc} eq $location,
+				callback => sub { Misc::bulkConfigModify({storageAuto => 1, storageAuto_npc => $location}, 1) }
+			};
+			push @tail, {title => T('Auto-Storage'), menu => \@submenu};
+		}
+		
+		{
+			my @submenu;
+			push @submenu, {
+				title => T('Disabled'),
+				radio => !$config{sellAuto},
+				callback => sub { Misc::bulkConfigModify({sellAuto => 0}, 1) }
+			};
+			push @submenu, {
+				title => TF('As Configured (%s)', $config{sellAuto_npc}),
+				radio => $config{sellAuto},
+				callback => sub { Misc::bulkConfigModify({sellAuto => 1}, 1) }
+			} if $config{sellAuto_npc} && $config{sellAuto_npc} ne $location;
+			push @submenu, {
+				title => T('With This NPC'),
+				radio => $config{sellAuto} && $config{sellAuto_npc} eq $location,
+				callback => sub { Misc::bulkConfigModify({sellAuto => 1, sellAuto_npc => $location}, 1) }
+			};
+			push @tail, {title => T('Auto-Sell'), menu => \@submenu};
+		}
 	}
 	
 	my @portals;
