@@ -5088,6 +5088,7 @@ sub resurrection {
 
 sub sage_autospell {
 	# Sage Autospell - list of spells availible sent from server
+	# TODO: and where is that list of spells?
 	if ($config{autoSpell}) {
 		my $skill = new Skill(auto => $config{autoSpell});
 		$messageSender->sendAutoSpell($skill->getIDN());
