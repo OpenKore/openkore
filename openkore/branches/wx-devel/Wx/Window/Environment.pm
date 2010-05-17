@@ -32,6 +32,8 @@ use Scalar::Util;
 use Globals;
 use Translation qw/T TF/;
 
+use Interface::Wx::Context::Player;
+use Interface::Wx::Context::Monster;
 use Interface::Wx::Context::Item;
 use Interface::Wx::Context::NPC;
 
@@ -102,7 +104,9 @@ sub onItemListRightClick {
 	my ($self, $actor) = @_;
 	
 	if ($actor->isa('Actor::Player')) {
+		Interface::Wx::Context::Player->new($self, [$actor])->popup;
 	} elsif ($actor->isa('Actor::Monster')) {
+		Interface::Wx::Context::Monster->new($self, [$actor])->popup;
 	} elsif ($actor->isa('Actor::Item')) {
 		Interface::Wx::Context::Item->new($self, [$actor])->popup;
 	} elsif ($actor->isa('Actor::NPC')) {

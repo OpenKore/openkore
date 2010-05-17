@@ -5,7 +5,7 @@ use base 'Interface::Wx::Base::Context';
 
 use Wx ':everything';
 
-use Globals qw/$char %skillsDesc_lut/;
+use Globals qw/$char %config %skillsDesc_lut/;
 use Translation qw/T TF/;
 
 sub new {
@@ -17,26 +17,37 @@ sub new {
 	
 	push @{$self->{head}}, {}, {
 		title => @$objects > 3
-		? TF('%d skills', scalar @$objects)
+		? TF('%d Skills', scalar @$objects)
 		: join '; ', map { $_->getName } @$objects
 	};
 	
 	if (@$objects == 1) {
 		my ($object) = @$objects;
+		my $handle = $object->getHandle;
 		my $target = $object->getTargetType;
 		
 		if ($target == Skill::TARGET_SELF || $target == Skill::TARGET_ACTORS) {
-			push @{$self->{head}}, {}, {title => T('Use on self'), command => "ss " . $object->getIDN};
+			push @{$self->{head}}, {}, {title => T('Use on Self'), command => "ss " . $object->getIDN};
 		}
 		
 		if ($char->{skills}{$object->getHandle} && $char->{skills}{$object->getHandle}{up}) {
-			push @{$self->{head}}, {}, {title => T('Level up'), command => "skills add " . $object->getIDN};
+			push @{$self->{head}}, {}, {title => T('Level Up'), command => "skills add " . $object->getIDN};
+		}
+		
+		if ($char->{skills}{SA_AUTOSPELL} && $char->{skills}{SA_AUTOSPELL}{lv}) {
+			# TODO: Network::Receive::sage_autospell lacks skill list parsing. Add check here and command for single use
+			my $check = $config{autoSpell} && Skill->new(auto => $config{autoSpell})->getHandle eq $object->getHandle;
+			push @tail, {}, {
+				title => Skill->new(handle => 'SA_AUTOSPELL')->getName,
+				check => $check,
+				callback => sub { Misc::bulkConfigModify({autoSpell => $check ? undef : $handle}, 1) }
+			}
 		}
 		
 		if (my $control = $skillsDesc_lut{$object->getHandle}) {
 			chomp $control;
 			push @tail, {}, {title => T('Description'), menu => [{title => $control}]};
-		}	
+		}
 	}
 	
 	push @{$self->{tail}}, reverse @tail;

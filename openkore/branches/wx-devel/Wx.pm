@@ -79,7 +79,9 @@ sub mainLoop {
 # called only from Interface::writeOutput?
 sub iterate {
 	my $self = shift;
-
+	
+	return unless $self->{app};
+	
 	if ($self->{app}{iterating} == 0) {
 		Plugins::callHook('interface/updateConsole');
 	}
@@ -165,7 +167,7 @@ sub writeOutput {
 		print STDOUT $args[2];
 		STDOUT->flush;
 	}
-	
+
 	# Make sure we update the GUI. This is to work around the effect
 	# of functions that block for a while
 	$self->iterate if (timeOut($iterationTime, 0.05));
