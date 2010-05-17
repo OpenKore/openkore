@@ -3207,6 +3207,7 @@ sub ignore_all_result {
 	}
 }
 
+# TODO: store list of ignored players
 sub ignore_player_result {
 	my ($self, $args) = @_;
 	if ($args->{type} == 0) {
