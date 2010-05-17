@@ -98,12 +98,6 @@ sub new {
 			key => 'toggleWindow_chatLog', title => T('Chat &Log'), type => 'check',
 			sub => sub { $self->{frame}->toggleWindow('chatLog', 'Interface::Wx::Window::ChatLog', 'notebook') },
 		},
-=pod
-		{
-			key => 'toggleWindow_toolbar', title => T('Toolbar'), type => 'check',
-			sub => sub { $self->{frame}->toggleWindow('toolbar', 'Interface::Wx::Window::ToolBar', 'top', 1, undef, 1) },
-		},
-=cut
 		{},
 		{
 			key => 'toggleWindow_character', title => T('Status')."\tAlt+A", type => 'check',
