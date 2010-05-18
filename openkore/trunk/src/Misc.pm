@@ -2293,23 +2293,23 @@ sub setStatus {
 		}
 	}
 
-	foreach (keys %skillsAilments) {
+	foreach (keys %ailmentHandle) {
 		if (($opt2 & $_) == $_) {
-			if (!$actor->{statuses}{$skillsAilments{$_}}) {
-				$actor->{statuses}{$skillsAilments{$_}} = 1;
+			if (!$actor->{statuses}{$ailmentHandle{$_}}) {
+				$actor->{statuses}{$ailmentHandle{$_}} = 1;
 				if ($actor->isa('Actor::You')) {
-					message TF("%s have ailment: %s.\n", $actor->nameString(), $skillsAilments{$_}), "parseMsg_statuslook", $verbosity;
+					message TF("%s have ailment: %s.\n", $actor->nameString(), $statusName{$ailmentHandle{$_}} || $ailmentHandle{$_}), "parseMsg_statuslook", $verbosity;
 				} else {
-					message TF("%s has ailment: %s.\n", $actor->nameString(), $skillsAilments{$_}), "parseMsg_statuslook", $verbosity;
+					message TF("%s has ailment: %s.\n", $actor->nameString(), $statusName{$ailmentHandle{$_}} || $ailmentHandle{$_}), "parseMsg_statuslook", $verbosity;
 				}
 				$changed = 1;
 			}
-		} elsif ($actor->{statuses}{$skillsAilments{$_}}) {
-			delete $actor->{statuses}{$skillsAilments{$_}};
+		} elsif ($actor->{statuses}{$ailmentHandle{$_}}) {
+			delete $actor->{statuses}{$ailmentHandle{$_}};
 			if ($actor->isa('Actor::You')) {
-				message TF("%s are out of ailment: %s.\n", $actor->nameString(), $skillsAilments{$_}), "parseMsg_statuslook", $verbosity;
+				message TF("%s are out of ailment: %s.\n", $actor->nameString(), $statusName{$ailmentHandle{$_}} || $ailmentHandle{$_}), "parseMsg_statuslook", $verbosity;
 			} else {
-				message TF("%s is out of ailment: %s.\n", $actor->nameString(), $skillsAilments{$_}), "parseMsg_statuslook", $verbosity;
+				message TF("%s is out of ailment: %s.\n", $actor->nameString(), $statusName{$ailmentHandle{$_}} || $ailmentHandle{$_}), "parseMsg_statuslook", $verbosity;
 			}
 			$changed = 1;
 		}

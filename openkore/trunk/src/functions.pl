@@ -254,10 +254,10 @@ sub loadDataFiles {
 		loader => [\&parseDataFile2, \%stateHandle]);
 	Settings::addTableFile('LOOK_id_handle.txt',
 		loader => [\&parseDataFile2, \%lookHandle]);
+	Settings::addTableFile('AILMENT_id_handle.txt',
+		loader => [\&parseDataFile2, \%ailmentHandle]);
 	Settings::addTableFile('statusnametable.txt',
 		loader => [\&parseDataFile2, \%statusName]);
-	Settings::addTableFile('skillsailments.txt',
-		loader => [\&parseDataFile2, \%skillsAilments]);
 	Settings::addTableFile('skillsarea.txt',
 		loader => [\&parseDataFile2, \%skillsArea]);
 	Settings::addTableFile('skillsencore.txt',
