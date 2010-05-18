@@ -74,10 +74,12 @@ sub getInput {
 
 sub writeOutput {
 	my ($self, $type, $message, $domain) = @_;
-	my $code = Utils::Unix::getColorForMessage(\%consoleColors, $type, $domain);
-	print STDOUT $code;
-	print STDOUT $message;
-	print STDOUT Utils::Unix::getColor('reset');
+	my ($code, $reset) = (
+		Utils::Unix::getColorForMessage(\%consoleColors, $type, $domain),
+		Utils::Unix::getColor('reset'),
+	);
+	$message =~ s/(^|\n|$)/$reset$1$code/gs;
+	print STDOUT $code . $message . $reset;
 	STDOUT->flush;
 }
 
