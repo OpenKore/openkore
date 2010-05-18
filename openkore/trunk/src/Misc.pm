@@ -862,7 +862,6 @@ EOF
 
 		my ($r, $w, $desktop);
 		
-		# TODO: WHY it depends on bash? Fails if it's not installed
 		my $pid = IPC::Open2::open2($r, $w, '/bin/bash');
 		print $w $detectionScript;
 		close $w;
@@ -878,7 +877,10 @@ EOF
 			return 0;
 		}
 
-		if ($desktop eq "gnome" && checkCommand('gnome-open')) {
+		if (checkCommand('xdg-open')) {
+			launchApp(1, 'xdg-open', $url);
+
+		} elsif ($desktop eq "gnome" && checkCommand('gnome-open')) {
 			launchApp(1, 'gnome-open', $url);
 
 		} elsif ($desktop eq "kde") {
@@ -887,7 +889,7 @@ EOF
 		} else {
 			if (checkCommand('firefox')) {
 				launchApp(1, 'firefox', $url);
-			} elsif (checkCommand('mozillaa')) {
+			} elsif (checkCommand('mozilla')) {
 				launchApp(1, 'mozilla', $url);
 			} else {
 				$interface->errorDialog(TF("No suitable browser detected. Please launch your favorite browser and go to:\n%s", $url));
