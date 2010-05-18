@@ -91,8 +91,12 @@ sub sendShowEquipTickbox {
 sub sendBattlegroundChat {
 	my ($self, $message) = @_;
 	$message = "|00$message" if ($config{chatLangCode} && $config{chatLangCode} ne "none");
-	my $msg = pack('v2 Z*', 0x02DB, length($message)+4, stringToBytes($message));
-	$self->sendToServer($msg);
+
+	$message = stringToBytes($message); # Type: Bytes
+
+	my $data = pack('v2 Z*', 0x02DB, length($message)+5, $message);
+
+	$self->sendToServer($data);
 	debug "Sent Battleground chat.\n", "sendPacket", 2;
 }
 

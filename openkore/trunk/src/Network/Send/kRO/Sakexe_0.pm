@@ -189,7 +189,7 @@ sub sendChat {
 
 	my ($data, $charName); # Type: Bytes
 	$message = stringToBytes($message); # Type: Bytes
-	$charName = stringToBytes($char->{name});
+	$charName = stringToBytes($char->{name}); # Type: Bytes
 
 	$data = pack('v2 Z*', 0x008C, length($charName) + length($message) + 8, $charName . " : " . $message);
 
@@ -226,8 +226,13 @@ sub sendGetPlayerInfo {
 sub sendPrivateMsg {
 	my ($self, $user, $message) = @_;
 	$message = "|00$message" if ($config{chatLangCode} && $config{chatLangCode} ne "none");
-	my $msg = pack('v2 Z24 Z*', 0x0096, length($message) + 29, stringToBytes($user), stringToBytes($message));
-	$self->sendToServer($msg);
+
+	$message = stringToBytes($message); # Type: Bytes
+	$user = stringToBytes($user); # Type: Bytes
+
+	my $data = pack('v2 Z24 Z*', 0x0096, length($message) + 29, $user, $message);
+
+	$self->sendToServer($data);
 }
 
 # 0x0097,-1
@@ -237,7 +242,8 @@ sub sendPrivateMsg {
 # TODO: implement + test
 sub sendGMMessage {
 	my ($self, $message) = @_; # to colorize, add in front of message: micc | ssss | blue | tool ?
-	my $msg = pack('v2 Z*', 0x0099, length($message) + 4, stringToBytes($message));
+	$message = stringToBytes($message);
+	my $msg = pack('v2 Z*', 0x0099, length($message) + 5, $message);
 	$self->sendToServer($msg);
 }
 
@@ -685,8 +691,13 @@ sub sendPartyKick {
 sub sendPartyChat {
 	my ($self, $message) = @_;
 	$message = "|00$message" if ($config{chatLangCode} && $config{chatLangCode} ne "none");
-	my $msg = pack('v2 Z*',0x0108, length($char->{name}) + length($message) + 8, stringToBytes($char->{name}) . " : " . stringToBytes($message));
-	$self->sendToServer($msg);
+
+	my ($data, $charName); # Type: Bytes
+	$message = stringToBytes($message); # Type: Bytes
+	$charName = stringToBytes($char->{name}); # Type: Bytes
+
+	$data = pack('v2 Z*',0x0108, length($charName) + length($message) + 8, $charName . " : " . $message);
+	$self->sendToServer($data);
 }
 
 # 0x0109,-1
@@ -1163,7 +1174,12 @@ sub sendCardMerge {
 sub sendGuildChat {
 	my ($self, $message) = @_;
 	$message = "|00$message" if ($config{chatLangCode} && $config{chatLangCode} ne "none");
-	my $data = pack('v2 Z*',0x017E, length($char->{name}) + length($message) + 8, stringToBytes($char->{name}) . " : " . stringToBytes($message));
+
+	my ($data, $charName); # Type: Bytes
+	$message = stringToBytes($message); # Type: Bytes
+	$charName = stringToBytes($char->{name}); # Type: Bytes
+
+	$data = pack('v2 Z*',0x017E, length($charName) + length($message) + 8, $charName . " : " . $message);
 	$self->sendToServer($data);
 }
 
