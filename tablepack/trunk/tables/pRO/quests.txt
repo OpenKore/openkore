@@ -4478,7 +4478,7 @@ Let's find Summer Ticket Girl in ^000077The second basement of Clock Tower^00000
 5 Ticket.#
 
 9097#Summer Festival#SG_FEEL#QUE_NOIMAGE#
-Let's find Summer Ticket Girl in ^000077The sealed fourth floor of Clock Tower^000000.#
+Let's find Summer Ticket Girl in ^000077Brasilis Waterfall Cave^000000.#
 5 Ticket.#
 
 9098#Summer Festival#SG_FEEL#QUE_NOIMAGE#
@@ -4486,7 +4486,7 @@ Let's find Summer Ticket Girl in ^000077The first floor of Thor's Volcano^000000
 5 Ticket.#
 
 9099#Summer Festival#SG_FEEL#QUE_NOIMAGE#
-Let's find Summer Ticket Girl in ^000077The second level of Thor's Volcano^000000.#
+Let's find Summer Ticket Girl in ^000077Brasilis Waterfall Cave 2^000000.#
 5 Ticket.#
 
 9100#Summer Festival#SG_FEEL#QUE_NOIMAGE#
@@ -4508,3 +4508,11 @@ Let's find Summer Ticket Girl in ^000077Prontera Guild Dungeon^000000.#
 9104#Summer Festival#SG_FEEL#QUE_NOIMAGE#
 Let's find Summer Ticket Girl in ^000077Geffen Guild Dungeon^000000.#
 5 Ticket.#
+
+9068#Let's clean up the beach#SG_FEEL#QUE_NOIMAGE#
+^0000FFBeach Manager^000000 in ^8B4513Comodo^000000 : "^404040Please make Clean Beach Broom and clean up the beach.^000000"#
+Pick up 20 ^006400Trash Debris^000000 near ^8B4513Comodo^000000 beach and visit ^0000FFBeach Manager^000000.#
+
+9069#Let's clean up the beach#SG_FEEL#QUE_NOIMAGE#
+^0000FFBeach Manager^000000 in ^8B4513Comodo^000000 : "^404040Now, the beach is clean. But, tourists will ruin the beach again tomorrow. Please help us again after 20 hours have passed.^000000"#
+If you want ^FF0000clean the beach^000000 one more time, visit ^0000FFBeach Manager^000000 in ^8B4513Comodo^000000 after 20 hours have passed.#
