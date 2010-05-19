@@ -1,4 +1,5 @@
-﻿alberta 102 80 Jhonnita
+﻿alberta 101 48 Captain Enforcer#albert
+alberta 102 80 Jhonnita
 alberta 104 60 [Quest] First Mate#Ship
 alberta 106 63 Stylist
 alberta 107 59 [Quest] Second Mate#Shi
@@ -58,10 +59,17 @@ alberta_in 70 51 Guarnien
 alde_alche 24 188 Guild Dealer
 alde_alche 27 185 Alchemist Guildsman
 alde_alche 38 184 Material Seller#alche
+aldeba_in 142 238 Kafra Service
+aldeba_in 155 240 Kafra Employee#lt3
+aldeba_in 84 166 Kafra Service
+aldeba_in 96 181 Kafra Service
 aldebaran 114 56 Rogue Agent#nd0
+aldebaran 117 181 Phracon Young Man 
+aldebaran 121 231 Alchemy Guy 
 aldebaran 127 138 Promotional staff
 aldebaran 128 97 Lotenbruek
 aldebaran 131 97 Virchbruek
+aldebaran 132 184 Girl#prince
 aldebaran 133 108 Soldier
 aldebaran 133 116 An event usher#xmas_02
 aldebaran 134 97 Nuirenbergk
@@ -88,16 +96,25 @@ aldebaran 46 129 Canal Young Man
 aldebaran 49 93 Weapon Level Young Man 
 aldebaran 60 70 Lady
 aldebaran 64 104 Mr Quaetro
+aldebaran 66 213 Lady#megin
 aldebaran 67 154 Young Mountaineer 
 aldebaran 81 61 Clam-picking Girl 
+aldebaran 86 228 Kid 
 aldebaran 90 170 Slots Young Man
 aldebaran 93 80 Long-leg Youth 
+aldeg_cas04 133 220 Wurzburg
 amatsu 179 107 John
 amatsu 185 115 Druken Man
 amatsu 194 79 Sea Captain#1
 amatsu 207 89 Amatsu Guide
 aru_gld 80 41 Scheit
 aru_gld 80 52 Scheit
+arug_cas01 102 120 Mardol
+arug_cas01 117 120 Mardol
+arug_cas01 118 131 Control Device02#aru01_
+arug_cas03 45 158 Horn
+arug_cas03 65 171 The first guardian ston
+arug_cas05 136 158 Control Device01#aru05_
 c_tower3 10 249 Gatekeeper#Riku
 cmd_fild01 55 160 Heap of Earth
 comodo 112 182 Munak's grandma
@@ -168,11 +185,13 @@ geffen 122 37 Kafra Voting Staff#geff
 geffen 122 77 Nia#yagu
 geffen 124 169 Bossnia staff
 geffen 124 65 Bulletin Board#geffen
+geffen 127 115 Geffen Enforcer#geffen
 geffen 127 130 Berggel
 geffen 128 153 Leblo
 geffen 128 69 An event usher#xmas_03
 geffen 128 90 Continental Messenger#g
 geffen 129 148 Aeroken
+geffen 130 115 Cured Master Thief#geff
 geffen 130 45 First_Cash_Seller
 geffen 130 48 Odin's Cash manager#phi
 geffen 130 50 Second_Cash_Seller
@@ -185,6 +204,7 @@ geffen 143 126 Kris#edu
 geffen 143 133 Ernie#edu
 geffen 145 130 Sheila#edu
 geffen 146 148 Backalley Merchant
+geffen 147 163 Injured Master Thief#ge
 geffen 151 44 Young Man
 geffen 154 143 Dequ'ee
 geffen 156 190 Young Man
@@ -522,6 +542,7 @@ moc_ruins 77 167 Foreign Merchant#aru1
 moc_ruins 86 149 #ForeignMerchant1
 moc_ruins 90 149 Trader
 moc_ruins 91 150 Part-timer
+monk_test 329 61 An Assistant#1
 morocc 102 298 Man
 morocc 106 83 Ibrahim
 morocc 116 39 Rogue Guild Agent#nd4
@@ -547,6 +568,7 @@ morocc 168 265 Sign
 morocc 170 108 Injured Elite#nk
 morocc 176 103 Continental Official
 morocc 180 259 Merchant#morroc
+morocc 201 30 Morroc Hordes
 morocc 202 110 Volunteer-Morroc#07rhea
 morocc 202 244 Volunteer - Morroc#07rh
 morocc 223 102 Volunteer-Morroc#07rhea
@@ -572,11 +594,14 @@ pay_gld 137 160 Hong-Roo
 pay_gld 153 166 Hong-Roo
 pay_gld 199 268 Jukk-Rim-Hyun
 pay_gld 291 135 Chun-Dan
+payg_cas05 273 15 Dosuhlji
+payg_cas05 283 24 Yayula
 payon 103 113 Ledrion#payon
 payon 103 63 Gaeho
 payon 115 131 KoneKone
 payon 132 235 Monster Scholar#02
 payon 134 211 Young Man
+payon 135 320 Chungwolmang
 payon 137 178 Hakhim
 payon 140 151 Seiyablem#pay
 payon 143 143 Young Man#pay
@@ -592,6 +617,7 @@ payon 159 129 Wooden Floor#paypuzz5
 payon 159 96 Tool Dealer
 payon 160 183 Sign
 payon 161 64 Guide
+payon 165 150 Bossnia staff
 payon 166 101 Odin's Cash manager#phi
 payon 166 104 First_Cash_Seller
 payon 166 107 Second_Cash_Seller
@@ -599,6 +625,7 @@ payon 166 161 Bamboo Forest Hermitage
 payon 166 165 Red Palace
 payon 166 169 Shadow of Buddha
 payon 166 173 Garden of Heaven
+payon 166 177 Arbor of Light
 payon 173 111 moonfestivalstaff#09_mo
 payon 176 85 Young Man
 payon 177 131 Pet Groomer
@@ -780,9 +807,15 @@ prt_fild08 159 371 Warrior Recruiter#wop
 prt_fild08 175 374 Bard#brising
 prt_gld 147 136 Lazreagues
 prt_gld 147 140 Lazreagues
+prt_monk 136 261 Weapon Merchant#tu
+prt_monk 28 260 Hedrick
+prt_monk 59 247 A Monk#1
+prtg_cas03 181 215 Kafra staff
+prtg_cas03 183 215 Diligo
 pvp_n_room 70 85 Fight Square Reception 
 pvp_n_room 78 85 Fight Square Reception 
 pvp_n_room 86 85 Fight Square Reception 
+pvp_y_room 62 85 Fight Square Reception 
 pvp_y_room 70 85 Fight Square Reception 
 pvp_y_room 77 85 Guild Battle Guide
 pvp_y_room 78 85 Fight Square Reception 
@@ -849,6 +882,7 @@ schg_cas03 283 197 Bidblind
 schg_cas03 320 283 Bidblind
 schg_cas03 337 283 Bidblind
 schg_cas04 99 77 Hueluid
+schg_cas05 95 247 Schatirnil
 spl_fild02 122 106 ????#ep13_mdplant02
 spl_fild02 232 145 Tree#ep13bs2
 spl_fild02 25 211 Cat Hand Agent

@@ -2165,10 +2165,10 @@
 12034#Box_of_Panting#
 
 // ---------- Juperos ----------
-2659#Vesper_Core_01#
-2660#Vesper_Core_02#
-2661#Vesper_Core_03#
-2662#Vesper_Core_04#
+2659#Vesper_Core01#
+2660#Vesper_Core02#
+2661#Vesper_Core03#
+2662#Vesper_Core04#
 12040#Stone_of_Sage#
 
 //------------2nd anniversary event
@@ -3278,36 +3278,36 @@
 // ---------------------- ｿ・ｴｼﾒﾈｯｼｭ -------------------------------
 
 
-12153#Bowman_Scroll_1#
-12154#Bowman_Scroll_2#
-12155#Bowman_Scroll_3#
-12156#Bowman_Scroll_4#
-12157#Bowman_Scroll_5#
-12158#Bowman_Scroll_6#
-12159#Bowman_Scroll_7#
-12160#Bowman_Scroll_8#
-12161#Bowman_Scroll_9#
-12162#Bowman_Scroll_10#
-12163#Fencer_Scroll_1#
-12164#Fencer_Scroll_2#
-12165#Fencer_Scroll_3#
-12166#Fencer_Scroll_4#
-12167#Fencer_Scroll_5#
+12153#Bowman_Scroll1#
+12154#Bowman_Scroll2#
+12155#Bowman_Scroll3#
+12156#Bowman_Scroll4#
+12157#Bowman_Scroll5#
+12158#Bowman_Scroll6#
+12159#Bowman_Scroll7#
+12160#Bowman_Scroll8#
+12161#Bowman_Scroll9#
+12162#Bowman_Scroll10#
+12163#Fencer_Scroll1#
+12164#Fencer_Scroll2#
+12165#Fencer_Scroll3#
+12166#Fencer_Scroll4#
+12167#Fencer_Scroll5#
 12168#Fencer_Scroll6#
 12169#Fencer_Scroll7#
 12170#Fencer_Scroll8#
 12171#Fencer_Scroll9#
 12172#Fencer_Scroll10#
-12173#Spearman_Scroll_1#
-12174#Spearman_Scroll_2#
-12175#Spearman_Scroll_3#
-12176#Spearman_Scroll_4#
-12177#Spearman_Scroll_5#
-12178#Spearman_Scroll_6#
-12179#Spearman_Scroll_7#
-12180#Spearman_Scroll_8#
-12181#Spearman_Scroll_9#
-12182#Spearman_Scroll_10#
+12173#Spearman_Scroll1#
+12174#Spearman_Scroll2#
+12175#Spearman_Scroll3#
+12176#Spearman_Scroll4#
+12177#Spearman_Scroll5#
+12178#Spearman_Scroll6#
+12179#Spearman_Scroll7#
+12180#Spearman_Scroll8#
+12181#Spearman_Scroll9#
+12182#Spearman_Scroll10#
 12184#Mercenary_Red_Potion#
 12185#Mercenary_Blue_Potion#
 // ------------------ Mercenary_Pot ------------------
@@ -4058,7 +4058,7 @@
 5553#Festival_Bunny_Band#
 16233#Festival_Grand_Circlet_Box#
 16234#Festival_Bunny_Band_Box#
-7955#6th_Anniversary_Festival_Ticket#
+7955#Summer_Festival_Ticket#
 
 //********Ep13****************
 // ---------- ｿ｡ﾇﾇｼﾒｵ・13 ﾄｺﾆｮ ｾﾆﾀﾌﾅﾛ ------------
@@ -4811,5 +4811,19 @@
 //------ 2010 ﾇﾊｸｮﾇﾉ ｽ貂ﾓ ﾆ菴ｺﾆｼｹ・ﾀﾌｺ･ﾆｮ ---------------
 5851#Helm_Of_Summer#
 12765#Helm_Of_Summer_Box#
+//---------2010 ﾇﾊｸｮﾇﾉ ﾅｬｸｰｾ・ｺ｡-------------
+7630#Clean_Beach_Broom#
+7631#Trash_Debris#
+// ------ 2010 ﾇﾊｸｮﾇﾉ ﾁｦｴﾏｼﾒｸ・ﾀﾌｺ･ﾆｮ (ｱ簔ｸｾﾆﾀﾌﾅﾛ ﾀ・ｻ鄙・ --------
+7606#Norse_Coin#
+5584#Majestic_Devil_Horn#
+12261#Miracle_Medicine#
+//--------- 2010 ﾅ莎｢ｸﾓｸｮｶ・ﾁｦｷﾃ ﾀﾌｺ･ﾆｮ ｾﾆﾀﾌﾅﾛ ---------------------
+5783#Yellow_Bunny_Band#
+5784#Pink_Bunny_Band#
+5785#Green_Bunny_Band#
+16619#Yellow_Bunny_Band_Box#
+16621#Pink_Bunny_Band_Box#
+16623#Green_Bunny_Band_Box#
 
 //file end

@@ -28081,7 +28081,7 @@ A box that contains 1 Festival Bunny Band.
 Weight : ^7777771^000000
 #
 7955#
-PhRO 6th Anniversary Festival ticket!
+PhRO Summer Festival 2010 Ticket!
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
@@ -33258,4 +33258,87 @@ Jobs : ^777777All Jobs^000000
 A box contains 1 Helm Of Summer in it.
 30 days Rental Item.
 Weight : ^7777770^000000
+#
+//---------2010 ﾇﾊｸｮﾇﾉ ﾅｬｸｰｾ・ｺ｡-------------
+7630#
+A clean, aromatic broom which looks perfect for cleaning the beach.
+Weight : ^7777770^000000
+#
+7631#
+Very very sticky trash. It smells so bad.
+Let's clean it up.
+Weight : ^7777770^000000
+#
+// ------ 2010 ﾇﾊｸｮﾇﾉ ﾁｦｴﾏｼﾒｸ・ﾀﾌｺ･ﾆｮ (ｱ簔ｸｾﾆﾀﾌﾅﾛ ﾀ・ｻ鄙・ --------
+7606#
+Legendary coin bestowed by the gods as a reward for heroic deeds. 
+It is the only type of bribe accepted by Heimdall guardian of the Rainbow Bridge to Asgard, the realm of the gods.
+^ffffff_^000000
+Weight : ^7777770^000000
+#
+
+5584#
+The horns imbued with full of Devil Spirit. Feels so tight and harsh.
+Reduce damage from demon monsters by 3%.
+Recover 1 SP when kill the enemies by using short range physical attack or magical attack.
+Item Class : ^777777Headgear^000000    Defense : ^7777772^000000
+Location : ^777777Upper ^000000 Weight : ^77777740^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All Jobs^000000
+#
+
+12261#
+An enchanted medicine that made by roots of dream flower.
+^ffffff_^000000
+Weight : ^7777770^000000
+#
+
+//--------- 2010 ﾅ莎｢ｸﾓｸｮｶ・ﾁｦｷﾃ ﾀﾌｺ･ﾆｮ ｾﾆﾀﾌﾅﾛ ---------------------
+5783#
+A hairband that attracts men.
+You can wear it when you want to look sexy. Your sexyness increases to 100 %
+STR+ 1, INT + 1, DEX + 2,
+If refined to 9, increase ATK and MATK by 2%.
+If refined to 10, increase ATK and MATK by 2% in addition.
+Item Class : ^777777Headgear^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000 Weight : ^77777720^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All Jobs 1048575^000000
+#
+5784#
+A hairband that attracts men.
+You can wear it when you want to look sexy. Your sexyness increases to 100 %
+STR+ 1, INT + 2, DEX + 1,
+If refined to 9, increase ATK and MATK by 2%.
+If refined to 10, increase ATK and MATK by 2% in addition.
+Item Class : ^777777Headgear^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000 Weight : ^77777720^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All Jobs 1048575^000000
+#
+5785#
+A hairband that attracts men.
+You can wear it when you want to look sexy. Your sexyness increases to 100 %
+STR+ 2, INT + 1, DEX + 1,
+If refined to 9, increase ATK and MATK by 2%.
+If refined to 10, increase ATK and MATK by 2% in addition.
+Item Class : ^777777Headgear^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000 Weight : ^77777720^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All Jobs 1048575^000000
+#
+16619#
+A box contains 1 Yellow Bunny Band in it.
+^ff0000This item is not refundable.^000000
+Weight : ^7777771^000000
+#
+16621#
+A box contains 1 Pink Bunny Band in it.
+^ff0000This item is not refundable.^000000
+Weight : ^7777771^000000
+#
+16623#
+A box contains 1 Green Bunny Band in it.
+^ff0000This item is not refundable.^000000
+Weight : ^7777771^000000
 #

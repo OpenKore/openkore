@@ -303,6 +303,7 @@
 1427 Nightmare
 1431 Barphomet
 1433 Deviruchi
+1438 Khalitzburg
 1474 Mimic
 1477 Arclouse
 1492 Incantation Samurai
@@ -321,6 +322,7 @@
 1508 Quve
 1509 Lude
 1510 Hylozoist
+1511 Amon Ra
 1512 Hyegun
 1513 Cat Official
 1514 Dancing Dragon
@@ -386,6 +388,7 @@
 1680 Hill Wind
 1681 Gemini-S58
 1682 Remover
+1685 Vesper
 1686 Orc Baby
 1687 Grove
 1692 Breeze
@@ -466,6 +469,7 @@
 1883 Uzhas
 1884 Mavka
 1905 Barricade
+1907 The first guardian ston
 1918 Incarnation of Morocc Angel
 1919 Incarnation of Morocc Golem
 1920 Incarnation of Morocc Human
