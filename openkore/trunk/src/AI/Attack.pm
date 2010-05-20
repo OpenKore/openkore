@@ -298,10 +298,6 @@ sub main {
 
 	# Determine what combo skill to use
 	delete $args->{attackMethod};
-	my $lastSkill;
-	if ($char->{last_skill_used}) {
-		$lastSkill = Skill->new(idn => $char->{last_skill_used})->getName();
-	}
 	my $i = 0;
 	while (exists $config{"attackComboSlot_$i"}) {
 		if (!$config{"attackComboSlot_$i"}) {
@@ -309,7 +305,7 @@ sub main {
 			next;
 		}
 
-		if ($config{"attackComboSlot_${i}_afterSkill"} eq $lastSkill
+		if (Skill->new(auto => $config{"attackComboSlot_${i}_afterSkill"})->getIDN == $char->{last_skill_used}
 		 && ( !$config{"attackComboSlot_${i}_maxUses"} || $args->{attackComboSlot_uses}{$i} < $config{"attackComboSlot_${i}_maxUses"} )
 		 && ( !$config{"attackComboSlot_${i}_autoCombo"} || ($char->{combo_packet} && $config{"attackComboSlot_${i}_autoCombo"}) )
 		 && ( !defined($args->{ID}) || $args->{ID} eq $char->{last_skill_target} || !$config{"attackComboSlot_${i}_isSelfSkill"})
@@ -626,7 +622,7 @@ sub main {
 		} elsif ($args->{attackMethod}{type} eq "combo") {
 			my $slot = $args->{attackMethod}{comboSlot};
 			my $isSelfSkill = $args->{attackMethod}{isSelfSkill};
-			my $skill = Skill->new(name => $config{"attackComboSlot_$slot"})->getHandle();
+			my $skill = Skill->new(auto => $config{"attackComboSlot_$slot"})->getHandle;
 			delete $args->{attackMethod};
 
 			if (!ai_getSkillUseType($skill)) {
