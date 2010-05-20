@@ -410,7 +410,7 @@ sub statusActive {
 	
 	return unless $self->{statuses};
 	
-	for my $status (map /^(?|.*\((.+)\)|(.*))$/, split /\s*,\s*/, $commaSeparatedStatuses) {
+	for my $status (split /\s*,\s*/, $commaSeparatedStatuses) {
 		return 1 if exists $self->{statuses}{$status} || grep { $statusName{$_} eq $status } keys %{$self->{statuses}};
 	}
 	

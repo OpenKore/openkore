@@ -125,10 +125,6 @@ sub new {
 		}
 	}
 	
-	if($args{name} =~ /\((.*)\)/) { # skillname (HANDLE)
-		$args{handle} = $1;
-	}
-
 	if (defined $args{idn}) {
 		$self{idn} = $args{idn};
 	} elsif (defined $args{handle}) {
