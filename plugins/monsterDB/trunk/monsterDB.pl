@@ -58,17 +58,18 @@ use Globals qw(%config %monsters $accountID %equipSlot_lut @ai_seq @ai_seq_args)
 use Settings;
 use Log qw(message warning error debug);
 use Misc qw(bulkConfigModify);
+use Translation qw(T TF);
 use Utils;
 
 
 Plugins::register('monsterDB', 'extends Monster infos', \&onUnload);
 my $hooks = Plugins::addHooks(
 	['checkMonsterCondition', \&extendedCheck, undef],
-	['packet/skill_use', \&onPacketSkillUse, undef],
+	['packet_skilluse', \&onPacketSkillUse, undef],
 	['packet/skill_use_no_damage', \&onPacketSkillUseNoDamage, undef],
-	['packet/actor_action', \&onPacketAttack,undef],
-	['attack_start', \&onAttackStart,undef],
-	['changed_status', \&onStatusChange,undef]
+	['packet_attack', \&onPacketAttack, undef],
+	['attack_start', \&onAttackStart, undef],
+	['changed_status', \&onStatusChange, undef],
 );
 
 
@@ -175,16 +176,11 @@ sub extendedCheck {
     return 1;
 }
 
-sub onPacketSkillUse {
-	my (undef,$args) = @_;
-	return 1 unless $monsters{$args->{targetID}} && $monsters{$args->{targetID}}{nameID};
-	monsterHp ($monsters{$args->{targetID}});
-}
+sub onPacketSkillUse { monsterHp($monsters{$_[1]->{targetID}}, $_[1]->{disp}) if $_[1]->{disp} }
 
 sub onPacketSkillUseNoDmg {
 	my (undef,$args) = @_;
 	return 1 unless $monsters{$args->{targetID}} && $monsters{$args->{targetID}}{nameID};
-	monsterHp ($monsters{$args->{targetID}});
 	if (($args->{targetID} eq $args->{sourceID}) && ($args->{targetID} ne $accountID)){
 		if ($args->{skillID} eq 'NPC_CHANGEWATER'){
 			$monsters{$args->{targetID}}{element} = 'Water';
@@ -229,20 +225,14 @@ sub onPacketSkillUseNoDmg {
 	}
 }
 
-sub onPacketAttack {
-	my (undef,$args) = @_;
-	return 1 unless $args->{type} == 0 || $args->{type} > 3;
-	return 1 unless $monsters{$args->{targetID}} && $monsters{$args->{targetID}}{nameID};
-	monsterHp ($monsters{$args->{targetID}});
-
-}
+sub onPacketAttack { monsterHp($monsters{$_[1]->{targetID}}, $_[1]->{msg}) if $_[1]->{msg} }
 
 sub monsterHp {
-	my $monster = shift;
+	my ($monster, $message) = @_;
 	return 1 unless $monster && $monster->{nameID};
-	my $monsterInfo = $monsterDB[(int($monster->{nameID}) - 1000)];
-	return 1 unless defined $monsterInfo;
-	message $monster->nameString . ' has ['.($monsterInfo->[0] + $monster->{deltaHp}).'/'.$monsterInfo->[0]."] HP left\n",'attackMon';
+	
+	return 1 unless my $monsterInfo = $monsterDB[(int($monster->{nameID}) - 1000)];
+	$$message =~ s~(?=\n)~TF(" (HP: %d/%d)", $monsterInfo->[0] + $monster->{deltaHp}, $monsterInfo->[0])~se;
 }
 
 sub onAttackStart {
