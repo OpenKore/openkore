@@ -3702,7 +3702,7 @@ sub checkSelfCondition {
 	if ($prefix =~ /skill/i) {
 		my $skill = Skill->new(auto => $config{$prefix});
 		return 0 unless ($char->getSkillLevel($skill)
-						|| ($char->{permitSkill} && $char->{permitSkill}->getIDN == Skill->new(auto => $config{$prefix})->getIDN)
+						|| ($char->{permitSkill} && $char->{permitSkill}->getIDN == $skill->getIDN)
 						|| $config{$prefix."_equip_leftAccessory"}
 						|| $config{$prefix."_equip_rightAccessory"}
 						|| $config{$prefix."_equip_leftHand"}

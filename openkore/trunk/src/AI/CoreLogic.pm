@@ -2334,6 +2334,7 @@ sub processAutoSkillUse {
 				$self_skill{ID} = $self_skill{skillObject}->getHandle();
 				$self_skill{owner} = $self_skill{skillObject}->getOwner();
 				unless ($self_skill{ID}) {
+					# we will never get here, if the skill doesn't exist then checkSelfCondition will return false already for $char->getSkillLevel($skill)
 					error "Unknown skill name '".$config{"useSelf_skill_$i"}."' in useSelf_skill_$i\n";
 					configModify("useSelf_skill_${i}_disabled", 1);
 					next;
@@ -2387,7 +2388,8 @@ sub processPartySkillUse {
 		my %party_skill;
 		for (my $i = 0; exists $config{"partySkill_$i"}; $i++) {
 			next if (!$config{"partySkill_$i"});
-			$party_skill{owner} = Skill->new(auto => $config{"partySkill_$i"})->getOwner;
+			$party_skill{skillObject} = Skill->new(auto => $config{"partySkill_$i"});
+			$party_skill{owner} = $party_skill{skillObject}->getOwner;
 			
 			foreach my $ID ($accountID, @slavesID, @playersID) {
 				next if $ID eq '' || $ID eq $party_skill{owner}{ID};
@@ -2424,7 +2426,7 @@ sub processPartySkillUse {
 					&& checkPlayerCondition("partySkill_$i"."_target", $ID)
 					&& checkSelfCondition("partySkill_$i")
 				){
-					$party_skill{ID} = Skill->new(auto => $config{"partySkill_$i"})->getHandle;
+					$party_skill{ID} = $party_skill{skillObject}->getHandle;
 					$party_skill{lvl} = $config{"partySkill_$i"."_lvl"};
 					$party_skill{target} = $player->{name};
 					my $pos = $player->position;
