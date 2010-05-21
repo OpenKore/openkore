@@ -118,7 +118,7 @@ sub new {
 	if (defined $args{auto}) {
 		if ($args{auto} =~ /^\d+$/) {
 			$args{idn} = $args{auto};
-		} elsif (uc($args{auto}) eq $args{auto}) {
+		} elsif (uc($args{auto}) eq $args{auto} && lc($args{auto}) ne $args{auto}) {	# without second check, korean|chinese skills would get recognized as handle
 			$args{handle} = $args{auto};
 		} else {
 			$args{name} = $args{auto};
