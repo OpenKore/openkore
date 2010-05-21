@@ -2293,6 +2293,28 @@ sub setStatus {
 		}
 	}
 
+=pod Replacement for two following for-s
+	for (
+		[$opt2, \%ailmentHandle],
+		[$option, \%lookHandle],
+	) {
+		my ($option, $handle) = @$_;
+		for (keys %$handle) {
+			if ($option & $_) { # $_ == 0 isn't needed
+				unless ($actor->{statuses}{$handle->{$_}}) {
+					$actor->{statuses}{$handle->{$_}} = 1;
+					status_string($actor, $statusName{$handle->{$_}}, 'now');
+					$changed = 1;
+				}
+			} elsif ($actor->{statuses}{$handle->{$_}}) {
+				delete $actor->{statuses}{$handle->{$_}};
+				status_string($actor, $statusName{$handle->{$_}}, 'no longer');
+				$changed = 1;
+			}
+		}
+	}
+=cut
+	
 	foreach (keys %ailmentHandle) {
 		if (($opt2 & $_) == $_) {
 			if (!$actor->{statuses}{$ailmentHandle{$_}}) {
@@ -3678,9 +3700,9 @@ sub checkSelfCondition {
 
 	# check skill use SP if this is a 'use skill' condition
 	if ($prefix =~ /skill/i) {
-		my $skill = Skill->new(name => lc($config{$prefix}));
+		my $skill = Skill->new(auto => $config{$prefix});
 		return 0 unless ($char->getSkillLevel($skill)
-						|| ($char->{permitSkill} && $char->{permitSkill}->getName() eq $config{$prefix})
+						|| ($char->{permitSkill} && $char->{permitSkill}->getIDN == Skill->new(auto => $config{$prefix})->getIDN)
 						|| $config{$prefix."_equip_leftAccessory"}
 						|| $config{$prefix."_equip_rightAccessory"}
 						|| $config{$prefix."_equip_leftHand"}
@@ -3780,12 +3802,12 @@ sub checkSelfCondition {
 
 	if ($config{$prefix."_whenPermitSkill"}) {
 		return 0 unless $char->{permitSkill} &&
-			$char->{permitSkill}->getName() eq $config{$prefix."_whenPermitSkill"};
+			$char->{permitSkill}->getIDN == Skill->new(auto => $config{$prefix."_whenPermitSkill"})->getIDN;
 	}
 
 	if ($config{$prefix."_whenNotPermitSkill"}) {
 		return 0 if $char->{permitSkill} &&
-			$char->{permitSkill}->getName() eq $config{$prefix."_whenNotPermitSkill"};
+			$char->{permitSkill}->getIDN == Skill->new(auto => $config{$prefix."_whenNotPermitSkill"})->getIDN;
 	}
 
 	if ($config{$prefix."_whenFlag"}) {

@@ -2330,7 +2330,7 @@ sub processAutoSkillUse {
 		for (my $i = 0; exists $config{"useSelf_skill_$i"}; $i++) {
 			if ($config{"useSelf_skill_$i"} && checkSelfCondition("useSelf_skill_$i")) {
 				$ai_v{"useSelf_skill_$i"."_time"} = time;
-				$self_skill{skillObject} = Skill->new(name => lc($config{"useSelf_skill_$i"}));
+				$self_skill{skillObject} = Skill->new(auto => $config{"useSelf_skill_$i"});
 				$self_skill{ID} = $self_skill{skillObject}->getHandle();
 				$self_skill{owner} = $self_skill{skillObject}->getOwner();
 				unless ($self_skill{ID}) {
@@ -2387,7 +2387,7 @@ sub processPartySkillUse {
 		my %party_skill;
 		for (my $i = 0; exists $config{"partySkill_$i"}; $i++) {
 			next if (!$config{"partySkill_$i"});
-			$party_skill{owner} = Skill->new(name => lc($config{"partySkill_$i"}))->getOwner();
+			$party_skill{owner} = Skill->new(auto => $config{"partySkill_$i"})->getOwner;
 			
 			foreach my $ID ($accountID, @slavesID, @playersID) {
 				next if $ID eq '' || $ID eq $party_skill{owner}{ID};
@@ -2424,7 +2424,7 @@ sub processPartySkillUse {
 					&& checkPlayerCondition("partySkill_$i"."_target", $ID)
 					&& checkSelfCondition("partySkill_$i")
 				){
-					$party_skill{ID} = Skill->new(name => lc($config{"partySkill_$i"}))->getHandle();
+					$party_skill{ID} = Skill->new(auto => $config{"partySkill_$i"})->getHandle;
 					$party_skill{lvl} = $config{"partySkill_$i"."_lvl"};
 					$party_skill{target} = $player->{name};
 					my $pos = $player->position;
