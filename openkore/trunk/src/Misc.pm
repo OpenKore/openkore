@@ -1155,43 +1155,44 @@ sub charSelectScreen {
 		return 1;
 	}
 
+	my @choices = @charNames;
+	push @choices, T('Create a new character');
 	if (@chars) {
-		my @choices = @charNames;
-		push @choices, (T('Create a new character'), T('Delete a character'));
-		my $choice = $interface->showMenu(
-			T("Please choose a character or an action."), \@choices,
-			title => T("Character selection"));
-		if ($choice == -1) {
-			# User cancelled
-			quit();
-			return 0;
-
-		} elsif ($choice < @charNames) {
-			# Character chosen
-			configModify('char', $charNameIndices[$choice], 1);
-			$messageSender->sendCharLogin($config{char});
-			$timeout{charlogin}{time} = time;
-			return 1;
-
-		} elsif ($choice == @charNames) {
-			# 'Create character' chosen
-			$mode = "create";
-
-		} else {
-			# 'Delete character' chosen
-			$mode = "delete";
-		}
+		push @choices, T('Delete a character');
 	} else {
 		message T("There are no characters on this account.\n"), "connection";
-		$mode = "create";
 	}
+	
+	my $choice = $interface->showMenu(
+		T("Please choose a character or an action."), \@choices,
+		title => T("Character selection"));
+	if ($choice == -1) {
+		# User cancelled
+		quit();
+		return 0;
 
+	} elsif ($choice < @charNames) {
+		# Character chosen
+		configModify('char', $charNameIndices[$choice], 1);
+		$messageSender->sendCharLogin($config{char});
+		$timeout{charlogin}{time} = time;
+		return 1;
+
+	} elsif ($choice == @charNames) {
+		# 'Create character' chosen
+		$mode = "create";
+
+	} else {
+		# 'Delete character' chosen
+		$mode = "delete";
+	}
+	
 	if ($mode eq "create") {
 		while (1) {
 			my $message = T("Please enter the desired properties for your characters, in this form:\n" .
 				"(slot) \"(name)\" [ (str) (agi) (vit) (int) (dex) (luk) [ (hairstyle) [(haircolor)] ] ]");
 			my $input = $interface->query($message);
-			if (!defined($input)) {
+			unless ($input =~ /\S/) {
 				goto TOP;
 			} else {
 				my @args = parseArgs($input);
