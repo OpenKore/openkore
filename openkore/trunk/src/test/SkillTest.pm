@@ -94,29 +94,32 @@ sub testDuplicateNames {
 	Skill::DynamicInfo::clear;
 	Skill::DynamicInfo::add(9001, 'DUP_BLESSING', 3, 5, 1, Skill::TARGET_ACTORS, Skill::OWNER_CHAR);
 	
-	my $skill = new Skill(name => 'Blessing');
+	my $skill = new Skill(auto => 'Blessing');
 	is($skill->getName, 'Blessing (DUP_BLESSING)');
 	is($skill->getIDN, 9001);
 	is($skill->getHandle, 'DUP_BLESSING');
 	
 	$skill = new Skill(name => 'Blessing (DUP_BLESSING)');
+	ok(!$skill->getIDN, 'Discontinued form of skill names with handles');
+	
+	$skill = new Skill(auto => 'DUP_BLESSING');
 	is($skill->getName, 'Blessing (DUP_BLESSING)');
 	is($skill->getIDN, 9001);
 	is($skill->getHandle, 'DUP_BLESSING');
 	
 	Skill::DynamicInfo::add(34, 'AL_BLESSING', 3, 5, 1, Skill::TARGET_ACTORS, Skill::OWNER_CHAR);
 	
-	$skill = new Skill(name => 'Blessing');
+	$skill = new Skill(auto => 'Blessing');
 	is($skill->getName, 'Blessing');
 	is($skill->getIDN, 34);
 	is($skill->getHandle, 'AL_BLESSING');
 	
-	$skill = new Skill(name => 'Blessing (AL_BLESSING)');
+	$skill = new Skill(auto => 'AL_BLESSING');
 	is($skill->getName, 'Blessing');
 	is($skill->getIDN, 34);
 	is($skill->getHandle, 'AL_BLESSING');
 	
-	$skill = new Skill(name => 'Blessing (DUP_BLESSING)');
+	$skill = new Skill(auto => 'DUP_BLESSING');
 	is($skill->getName, 'Blessing (DUP_BLESSING)');
 	is($skill->getIDN, 9001);
 	is($skill->getHandle, 'DUP_BLESSING');
