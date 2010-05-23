@@ -26,38 +26,29 @@ no encoding 'utf8';
 
 use Globals qw(%consoleColors);
 use Interface;
-use base qw(Interface);
+use base 'Interface::Console::Simple';
 use Utils qw(timeOut);
 use I18N qw(UTF8ToString);
 use Utils::Unix;
 
-
 sub new {
 	my $class = shift;
-	my %self;
-
-	if (POSIX::ttyname(0) && POSIX::tcgetpgrp(0) == POSIX::getpgrp()) {
-		# Only initialize readline if we have a controlling
-		# terminal to read input from.
-		$self{readline} = 1;
-		Utils::Unix::ConsoleUI::start();
-	}
-
-	return bless \%self, $class;
+	
+	# Only initialize readline if we have a controlling
+	# terminal to read input from.
+	return new Interface::Console::Simple(@_) unless POSIX::ttyname(0) && POSIX::tcgetpgrp(0) == POSIX::getpgrp;
+	
+	Utils::Unix::ConsoleUI::start();
+	return bless {}, $class;
 }
 
 sub DESTROY {
-	my $self = shift;
-	Utils::Unix::ConsoleUI::stop() if ($self->{readline});
-	print Utils::Unix::getColor('default');
-	STDOUT->flush;
+	Utils::Unix::ConsoleUI::stop;
 }
 
 sub getInput {
 	my ($self, $timeout) = @_;
 	my $line;
-
-	return if (!$self->{readline});
 
 	if ($timeout < 0) {
 		do {
@@ -86,41 +77,21 @@ sub errorDialog {
 	# so don't block execution
 	my ($self, $message) = @_;
 	$self->writeOutput("error", $message . "\n");
-	Utils::Unix::ConsoleUI::waitUntilPrinted() if ($self->{readline});
+	Utils::Unix::ConsoleUI::waitUntilPrinted;
 }
 
 sub writeOutput {
 	my ($self, $type, $message, $domain) = @_;
-	my $code;
-
+	
 	# Hide prompt and input buffer
-	$code = Utils::Unix::getColorForMessage(\%consoleColors, $type, $domain);
-
-	if (!$self->{readline}) {
-		print STDOUT $code . $message . Utils::Unix::getColor('reset');
-		STDOUT->flush;
-	} else {
-		while (length($message) > 0) {
-			$message =~ /^(.*?)(\n|$)(.*)/s;
-			my $line = $1 . $2;
-			$message = $3;
-			Utils::Unix::ConsoleUI::print($code . $line);
-		}
-	}
-}
-
-sub title {
-	my ($self, $title) = @_;
-
-	if ($title) {
-		$self->{title} = $title;
-		if ($ENV{TERM} eq 'xterm' || $ENV{TERM} eq 'screen') {
-			print STDOUT "\e]2;" . $title . "\a";
-			STDOUT->flush;
-		}
-	} else {
-		return $self->{title};
-	}
+	my ($code, $reset) = (
+		Utils::Unix::getColorForMessage(\%consoleColors, $type, $domain),
+		Utils::Unix::getColor('reset'),
+	);
+	$message =~ s/\n/$reset\n$code/sg;
+	$message = $code.$message.$reset;
+	
+	Utils::Unix::ConsoleUI::print($_) for split /(?<=\n)/, $message;
 }
 
 1;

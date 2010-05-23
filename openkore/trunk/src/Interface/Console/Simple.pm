@@ -40,6 +40,11 @@ sub new {
 	return bless {}, $class;
 }
 
+sub DESTROY {
+	print STDOUT Utils::Unix::getColor('default');
+	STDOUT->flush;
+}
+
 sub getInput {
 	my ($self, $timeout) = @_;
 	my $line;
@@ -78,8 +83,10 @@ sub writeOutput {
 		Utils::Unix::getColorForMessage(\%consoleColors, $type, $domain),
 		Utils::Unix::getColor('reset'),
 	);
-	$message =~ s/(^|\n|$)/$reset$1$code/gs;
-	print STDOUT $code . $message . $reset;
+	$message =~ s/\n/$reset\n$code/sg;
+	$message = $code.$message.$reset;
+	
+	print STDOUT $message;
 	STDOUT->flush;
 }
 
@@ -90,9 +97,7 @@ sub title {
 		if (!defined($self->{title}) || $self->{title} ne $title) {
 			$self->{title} = $title;
 			if ($ENV{TERM} eq 'xterm' || $ENV{TERM} eq 'screen') {
-				print STDOUT "\e]2;";
-				print $title;
-				print "\a";
+				print STDOUT "\e]2;" . $title . "\a";
 				STDOUT->flush;
 			}
 		}
