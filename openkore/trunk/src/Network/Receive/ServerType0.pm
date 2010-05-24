@@ -3196,6 +3196,7 @@ sub identify_list {
 	message TF("Received Possible Identify List (%s item(s)) - type 'identify'\n", $num), 'info';
 }
 
+# TODO: store this state
 sub ignore_all_result {
 	my ($self, $args) = @_;
 	if ($args->{type} == 0) {
@@ -4410,6 +4411,7 @@ sub npc_talk_text {
 	$ai_v{npc_talk}{time} = time;
 }
 
+# TODO: store this state
 sub party_allow_invite {
    my ($self, $args) = @_;
 
