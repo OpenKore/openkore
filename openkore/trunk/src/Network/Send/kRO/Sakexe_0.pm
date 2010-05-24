@@ -476,7 +476,10 @@ sub sendIgnoreListGet {
 # 0x00d5,-1,createchatroom,2:4:6:7:15
 sub sendChatRoomCreate {
 	my ($self, $title, $limit, $public, $password) = @_;
-	my $msg = pack('v3 C Z8 a*', 0x00D5, length($title) + 15, $limit, $public, stringToBytes($password), stringToBytes($title));
+
+	$title = stringToBytes($title);
+
+	my $msg = pack('v3 C Z8 a*', 0x00D5, length($title) + 15, $limit, $public, stringToBytes($password), $title);
 	$self->sendToServer($msg);
 	debug "Sent Create Chat Room: $title, $limit, $public, $password\n", "sendPacket", 2;
 }
@@ -490,7 +493,7 @@ sub sendChatRoomJoin {
 	my ($self, $ID, $password) = @_;
 	my $msg = pack('v a4 Z8', 0x00D9, $ID, stringToBytes($password));
 	$self->sendToServer($msg);
-	debug "Sent Join Chat Room: ".getHex($ID)." $password\n", "sendPacket", 2;
+	debug "Sent Join Chat Room: ".getHex($ID).", $password\n", "sendPacket", 2;
 }
 
 # 0x00da,3
@@ -501,7 +504,10 @@ sub sendChatRoomJoin {
 # 0x00de,-1,chatroomstatuschange,2:4:6:7:15
 sub sendChatRoomChange {
 	my ($self, $title, $limit, $public, $password) = @_;
-	my $msg = pack('v3 C Z8 a*', 0x00DE, length($title) + 15, $limit, $public, stringToBytes($password), stringToBytes($title));
+
+	$title = stringToBytes($title);
+
+	my $msg = pack('v3 C Z8 a*', 0x00DE, length($title) + 15, $limit, $public, stringToBytes($password), $title);
 	$self->sendToServer($msg);
 	debug "Sent Change Chat Room: $title, $limit, $public, $password\n", "sendPacket", 2;
 }
