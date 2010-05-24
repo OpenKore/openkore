@@ -86,14 +86,18 @@ sub new {
 			push @tail, {title => TF('Pickup%s', $pickupitems{lc $name} ? T(' (Configured)') : T(' (Default)')), menu => \@submenu};
 		}
 		
-		push @tail, {};
-		if ($shop{items} and my ($control) = grep {$_->{name} eq $name} @{$shop{items}}) {
+		if (
+			$char->{skills}{MC_VENDING} && $char->{skills}{MC_VENDING}{lv}
+			&& $shop{items} and my ($control) = grep {$_->{name} eq $name} @{$shop{items}}
+		) {
+			# TODO
 			push @tail, {title => $control->{amount}
 				? TF('Vend %s for %s Each', formatNumber($control->{amount}), formatNumber($control->{price}))
 				: TF('Vend for %s Each', formatNumber($control->{price}))
 			};
 		}
 		if ($char->{skills}{AC_MAKINGARROW} && $char->{skills}{AC_MAKINGARROW}{lv}) {
+			# TODO
 			push @tail, {title => TF('Auto Arrow Crafting'), check => $arrowcraft_items{lc $name}};
 		}
 		

@@ -9,8 +9,8 @@ use Globals qw/%emotions_lut/;
 use Translation qw/T TF/;
 
 use constant {
-	BUTTON_SIZE => 26,
-	BUTTON_BORDER => 2,
+	BUTTON_SIZE => 32,
+	BUTTON_BORDER => 0,
 };
 
 sub new {
@@ -44,8 +44,7 @@ sub new {
 	$self->setEmotions(\%emotions_lut) if scalar keys %emotions_lut;
 	
 	$self->onEmotion (sub {
-		Commands::run ('e ' . shift);
-		#$self->{inputBox}->SetFocus; # TODO: plugin hook setfocus on inputbox?
+		Commands::run ("e $_[0]");
 	});
 	
 	return $self;
@@ -85,11 +84,11 @@ sub _createButtons {
 			if (-f $imageFile) {
 				$button = new Wx::BitmapButton (
 					$self, wxID_ANY, new Wx::Bitmap (new Wx::Image ($imageFile, wxBITMAP_TYPE_ANY)),
-					wxDefaultPosition, [BUTTON_SIZE, BUTTON_SIZE], wxBU_AUTODRAW
+					wxDefaultPosition, [BUTTON_SIZE, BUTTON_SIZE], wxNO_BORDER
 				);
 			} else {
 				$button = new Wx::Button (
-					$self, wxID_ANY, $self->{emotions}{$e}{command}, wxDefaultPosition, [BUTTON_SIZE, BUTTON_SIZE]
+					$self, wxID_ANY, $self->{emotions}{$e}{command}, wxDefaultPosition, [BUTTON_SIZE, BUTTON_SIZE], wxNO_BORDER
 				);
 			}
 			$button->SetToolTip (sprintf '%s: %s', $self->{emotions}{$e}{command}, $self->{emotions}{$e}{display});
@@ -120,6 +119,7 @@ sub _onEmotion {
 	my ($self, $key) = @_;
 	
 	$self->{callback}{emotion}->($key) if $self->{callback}{emotion};
+	Plugins::callHook('interface/defaultFocus');
 }
 
 sub setEmotions {

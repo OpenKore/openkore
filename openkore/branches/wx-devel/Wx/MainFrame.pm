@@ -95,6 +95,12 @@ sub new {
 		Wx::AuiPaneInfo->new->CenterPane
 	);
 	
+=pod TODO
+	wxEVT_AUINOTEBOOK_PAGE_CHANGED($self, $self->{notebook}->GetId, sub {
+		Plugins::callHook('interface/defaultFocus')
+	});
+=cut
+	
 	my $input = new Interface::Wx::Window::Input($self);
 	$self->{aui}->AddPane($input,
 		Wx::AuiPaneInfo->new->ToolbarPane->Bottom->BestSize($input->GetBestSize)->CloseButton(0)->Resizable->LeftDockable(0)->RightDockable(0)
@@ -273,6 +279,8 @@ sub toggleWindow {
 			for (0 .. $self->{notebook}->GetPageCount-1);
 		}
 	}
+	
+	Plugins::callHook('interface/defaultFocus');
 }
 
 =pod

@@ -86,17 +86,4 @@ sub removeAllItems {
 	$self->{list}->DeleteAllItems;
 }
 
-sub contextMenu {
-	my ($self, $items) = (shift, shift);
-	
-	if (my $skill = $self->getSelection) {
-		if (my $control = $skillsDesc_lut{$skill->getHandle}) {
-			chomp $control;
-			push @$items, {}, {title => T('Description'), menu => [{title => $control}]};
-		}
-	}
-	
-	return $self->SUPER::contextMenu($items, @_);
-}
-
 1;

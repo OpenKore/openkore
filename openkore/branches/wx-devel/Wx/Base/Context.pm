@@ -31,7 +31,7 @@ sub add {
 				EVT_MENU ($self->{menu}, $menuItem->GetId, $item->{callback});
 			} elsif ($item->{command}) {
 				EVT_MENU ($self->{menu}, $menuItem->GetId, sub { Commands::run($item->{command}) });
-			} elsif (!$item->{menu}) {
+			} elsif (!$item->{menu} || !$menuItem->GetSubMenu->GetMenuItemCount) {
 				$menuItem->Enable(0);
 			}
 		} elsif ($self->{menu}->GetMenuItemCount && scalar @_) {
