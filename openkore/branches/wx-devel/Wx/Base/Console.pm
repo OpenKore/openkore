@@ -38,14 +38,10 @@ use Utils::StringScanner;
 use constant STYLE_SLOT => 4;
 use constant MAX_LINES => 1000;
 
-our %fgcolors;
+our (%fgcolors, %bgcolors);
 # Maps color names to color codes and font weights.
 # Format: [R, G, B, bold]
-%fgcolors = (
-	'reset'		=> [255, 255, 255],
-	'default'	=> [255, 255, 255],
-	'input'   => [200, 200, 200],
-
+%fgcolors = %bgcolors = (
 	'black'		=> [0, 0, 0],
 	'darkgray'	=> [85, 85, 85],
 	'darkgrey'	=> [85, 85, 85],
@@ -72,7 +68,18 @@ our %fgcolors;
 	'grey'		=> [170, 170, 170],
 	'white'		=> [255, 255, 255, 1],
 );
-
+%fgcolors = (
+	%fgcolors,
+	'reset'		=> [255, 255, 255],
+	'default'	=> [255, 255, 255],
+	'input'   => [200, 200, 200],
+);
+%bgcolors = (
+	%bgcolors,
+	'reset'		=> [0, 0, 0],
+	'default'	=> [0, 0, 0],
+	'input'   => [0, 0, 0],
+);
 
 ##
 # Interface::Wx::Console->new(Wx::Window parent)
@@ -170,52 +177,29 @@ sub copyLastLines {
 	$self->Copy();
 }
 
-=pod
-sub determineFontStyle {
-	my ($self, $type, $domain) = @_;
-
-	if ($type eq 'input') {
-		return $self->{inputStyle};
-	} elsif ($consoleColors{$type}) {
-		my $result;
-		$domain = 'default' if (!$consoleColors{$type}{$domain});
-
-		my $colorName = $consoleColors{$type}{$domain};
-		if ($fgcolors{$colorName} && $colorName ne "default" && $colorName ne "reset") {
-			if ($fgcolors{$colorName}[STYLE_SLOT]) {
-				$result = $fgcolors{$colorName}[STYLE_SLOT];
-			} else {
-				$result = {
-					color => Wx::Colour->newRGB (
-						$fgcolors{$colorName}[0],
-						$fgcolors{$colorName}[1],
-						$fgcolors{$colorName}[2]),
-					bold => $fgcolors{$colorName}[3]
-				};
-				$fgcolors{$colorName}[STYLE_SLOT] = $result;
-			}
-		} else {
-			$result = {
-				color => Wx::Colour->newRGB (255, 255, 255)
-			};
-			$fgcolors{$colorName}[STYLE_SLOT] = $result;
-		}
-		return $result;
-	}
-}
-=cut
-
 sub determineFontStyle {
 	my ($self, $type, $domain) = @_;
 
 	return unless $consoleColors{$type};
 	
-	my $fg = $fgcolors{$consoleColors{$type}{$domain} || $consoleColors{$type}{default}} || $fgcolors{default};
-	return $fg->[STYLE_SLOT] ||= {
-		color => Wx::Colour->newRGB ($fg->[0], $fg->[1], $fg->[2]),
+	my $fgcolor = $consoleColors{$type}{$domain} || $consoleColors{$type}{default};
+	my ($bgcolor) = $fgcolor =~ s~/(.*)~~;
+	
+	my ($fg, $bg) = ($fgcolors{$fgcolor} || $fgcolors{default}, $bgcolors{$bgcolor} || $bgcolors{default});
+	
+	$fg->[STYLE_SLOT] ||= {
+		color => new Wx::Colour(@$fg[0..2]),
 		bold => $fg->[3],
-	}
-	# implied: return $fg->[STYLE_SLOT]
+	};
+	$bg->[STYLE_SLOT] ||= {
+		color => new Wx::Colour(@$bg[0..2]),
+	};
+	
+	my $style = new Wx::TextAttrEx;
+	$style->SetTextColour($fg->[STYLE_SLOT]{color});
+	$style->SetBackgroundColour($bg->[STYLE_SLOT]{color});
+	#$style->SetFontWeight(wxBOLD) if $fg->[STYLE_SLOT]{bold};
+	return ($style, $fg->[STYLE_SLOT]{bold});
 }
 
 sub isAtBottom {
@@ -248,17 +232,18 @@ sub add {
 
 	# Apply the appropriate font style, then add the text, then revert
 	# back to the previous font style.
-	my $style = $self->determineFontStyle($type, $domain);
+	my ($style, $bold) = $self->determineFontStyle($type, $domain);
+	
 	if ($style) {
-		$self->BeginTextColour($style->{color});
-		$self->BeginBold() if ($style->{bold});
+		$self->BeginStyle($style);
+		$self->BeginBold if $bold;
 	}
 	$self->AppendText($msg);
 	if ($style) {
-		$self->EndTextColour();
-		$self->EndBold() if ($style->{bold});
+		$self->EndBold if $bold;
+		$self->EndStyle;
 	}
-
+	
 	$self->finalizePrinting($atBottom);
 }
 

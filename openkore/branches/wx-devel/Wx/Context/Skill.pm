@@ -26,11 +26,14 @@ sub new {
 		my $handle = $object->getHandle;
 		my $target = $object->getTargetType;
 		
-		if ($target == Skill::TARGET_SELF || $target == Skill::TARGET_ACTORS) {
+		if (
+			$char->{skills}{$handle} && $char->{skills}{$handle}{lv}
+			&& {Skill::TARGET_SELF => 1, Skill::TARGET_ACTORS => 1}->{$target}
+		) {
 			push @{$self->{head}}, {}, {title => T('Use on Self'), command => "ss " . $object->getIDN};
 		}
 		
-		if ($char->{skills}{$object->getHandle} && $char->{skills}{$object->getHandle}{up}) {
+		if ($char->{skills}{$handle} && $char->{skills}{$handle}{up} && $char->{points_skill}) {
 			push @{$self->{head}}, {}, {title => T('Level Up'), command => "skills add " . $object->getIDN};
 		}
 		

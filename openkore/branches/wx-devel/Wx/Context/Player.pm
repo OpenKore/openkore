@@ -5,9 +5,11 @@ use base 'Interface::Wx::Base::Context';
 
 use Wx ':everything';
 
-use Globals qw($char %overallAuth @partyUsersID %sex_lut $pvp);
+use Globals qw($char %config %overallAuth @partyUsersID %sex_lut $pvp);
 use Translation qw(T TF);
 use Utils qw(binFind);
+
+use Interface::Wx::Utils;
 
 sub new {
 	my ($class, $parent, $objects) = @_;
@@ -26,11 +28,24 @@ sub new {
 	
 	if (@$objects == 1) {
 		my ($object) = @$objects;
-		my $name = $object->{name};
+		my ($ID, $binID, $name) = @{$object}{qw(ID binID name)};
 		
-		if ($object->{party} && $object->{party}{name}) {
+		if (
+			$object->{party} && $object->{party}{name}
+			&& !($char && $char->{party} && $char->{party}{users}{$object->{ID}})
+		) {
 			push @{$self->{head}}, {
 				title => TF('Party: %s', $object->{party}{name})
+			}
+		} elsif ($char && $char->{party}) {
+			unless ($char->{party}{users}{$object->{ID}}) {
+				push @{$self->{head}}, {
+					title => T('Invite to Party'), command => "party request $name"
+				}
+			} else {
+				push @{$self->{head}}, {
+					title => T('Expel from Party'), command => "party kick " . binFind(\@partyUsersID, $ID)
+				}
 			}
 		}
 		
@@ -40,28 +55,55 @@ sub new {
 			}
 		}
 		
+		push @{$self->{head}}, {};
+		
 		if ($pvp) {
 			push @{$self->{head}}, {
-				title => T('Attack'), command => "kill $object->{binID}"
+				title => T('Attack'), command => "kill $binID"
+			}
+		}
+		
+		push @{$self->{head}}, {
+			title => T('Use Skill'), menu => [skillListMenuList(
+				sub { $_[0]->getLevel && {
+					Skill::TARGET_LOCATION => 1,
+					Skill::TARGET_ACTORS => 1,
+					$pvp && (Skill::TARGET_ENEMY => 1),
+				}->{$_[0]->getTargetType} },
+				sub { command => sprintf "sp %d %d", $_[0]->getIDN, $binID }
+			)]
+		};
+		
+		push @{$self->{head}}, {
+			title => T('Look'), command => "lookp $binID"
+		};
+		
+		push @{$self->{head}}, {};
+		
+		unless ($config{follow} && $config{followTarget} eq $name) {
+			push @{$self->{head}}, {
+				title => T('Follow'), command => "follow $binID"
+			}
+		} else {
+			push @{$self->{head}}, {
+				title => T('Stop Following'), command => "follow stop"
+			}
+		}
+		
+		unless ($config{tankMode} && $config{tankModeTarget} eq $name) {
+			push @{$self->{head}}, {
+				title => T('Tank'), command => "tank $binID"
+			}
+		} else {
+			push @{$self->{head}}, {
+				title => T('Stop Tanking'), command => "tank stop"
 			}
 		}
 		
 		push @{$self->{head}}, {};
 		
-		if ($char && $char->{party}) {
-			unless ($char->{party}{users}{$object->{ID}}) {
-				push @{$self->{head}}, {
-					title => T('Invite to Party'), command => "party request $name"
-				}
-			} else {
-				push @{$self->{head}}, {
-					title => T('Expel from Party'), command => "party kick " . binFind(\@partyUsersID, $object->{ID})
-				}
-			}
-		}
-		
 		push @{$self->{head}}, {
-			title => T('Look'), command => "lookp $object->{binID}"
+			title => T('Show Info'), command => "pl $name"
 		};
 		
 		push @{$self->{head}}, {

@@ -156,11 +156,10 @@ sub new {
 	$self->{menuBar}->Append($self->createMenu([
 		{title => T('&Command List')."\tAlt+Y", command => 'help'},
 		{},
-		{title => T('Web&site'), sub => sub { launchURL($Settings::WEBSITE) }, help => $Settings::WEBSITE},
-		{title => T('&Manual')."\tF1", sub => sub { launchURL('http://wiki.openkore.com/index.php?title=Manual') },
-		art => wxART_HELP, help => 'Read the manual'},
-		{title => T('&Wiki'), sub => sub { launchURL('http://wiki.openkore.com/') }, help => 'Read and write the wiki'},
-		{title => T('&Forum')."\tShift+F1", sub => sub { launchURL('http://forums.openkore.com/') }, help => 'Visit the forum'},
+		{title => T('Web&site'), url => $Settings::WEBSITE },
+		{title => T('&Manual')."\tF1", url => 'http://wiki.openkore.com/index.php?title=Manual', art => wxART_HELP },
+		{title => T('&Wiki'), url => 'http://wiki.openkore.com/' },
+		{title => T('&Forum')."\tShift+F1", url => 'http://forums.openkore.com/' },
 		{},
 		{wxID => wxID_ABOUT, sub => \&onAbout},
 	], 'help'), T('Hel&p'));
@@ -209,7 +208,7 @@ sub onAddMenuItem {
 		$menu = $menu->{menu};
 	}
 	
-	my $item = new Wx::MenuItem(undef, $args->{wxID} || wxID_ANY, $args->{title}, $args->{help},
+	my $item = new Wx::MenuItem(undef, $args->{wxID} || wxID_ANY, $args->{title}, $args->{help} || $args->{url},
 		$args->{type} eq 'check' ? wxITEM_CHECK : $args->{type} eq 'radio' ? wxITEM_RADIO : wxITEM_NORMAL,
 		$args->{submenu} ? $self->createMenu(@{$args->{submenu}}) : undef
 	);
@@ -220,6 +219,8 @@ sub onAddMenuItem {
 	
 	if ($args->{command}) {
 		EVT_MENU($self->{frame}, $item->GetId, sub { Commands::run($args->{command}) });
+	} elsif ($args->{url}) {
+		EVT_MENU($self->{frame}, $item->GetId, sub { launchUrl($args->{url}) });
 	} elsif ($args->{sub}) {
 		EVT_MENU($self->{frame}, $item->GetId, $args->{sub});
 	}
@@ -332,21 +333,6 @@ sub onAbout {
 1;
 
 __END__
-
-	# View menu
-	my $viewMenu = $self->{viewMenu} = new Wx::Menu;
-	$self->addMenu (
-		$viewMenu, T('&Map') . "\tCtrl-M", \&onMapToggle, T('Show where you are on the current map')
-	);
-	$self->{infoBarToggle} = $self->addCheckMenu (
-		$viewMenu, T('&Info Bar'), \&onInfoBarToggle, T('Show or hide the information bar.')
-	);
-	
-	$menu->Append($viewMenu, T('&View'));
-	
-	$self->{aliasMenu} = new Wx::Menu;
-	$menu->Append ($self->{aliasMenu}, T('&Alias'));
-}
 
 sub createSettingsMenu {
 	my ($self, $parentMenu) = @_;
