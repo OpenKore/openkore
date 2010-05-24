@@ -1018,7 +1018,7 @@ sub cmdChatRoom {
 
 	} elsif ($arg1 eq "join") {
 		my ($arg2) = $args =~ /^\w+ (\d+)/;
-		my ($arg3) = $args =~ /^\w+ \d+ (\d+)/;
+		my ($arg3) = $args =~ /^\w+ \d+ (\w+)/;
 
 		if ($arg2 eq "") {
 			error T("Syntax Error in function 'chat join' (Join Chat Room)\n" .
