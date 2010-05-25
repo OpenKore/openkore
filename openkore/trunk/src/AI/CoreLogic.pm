@@ -3026,9 +3026,9 @@ sub processAutoResponse {
 			AI::dequeue;
 		} elsif (timeOut($args)) {
 			if ($args->{type} eq "c") {
-				sendMessage("c", $args->{reply});
+				sendMessage($messageSender, "c", $args->{reply});
 			} elsif ($args->{type} eq "pm") {
-				sendMessage("pm", $args->{reply}, $args->{from});
+				sendMessage($messageSender, "pm", $args->{reply}, $args->{from});
 			}
 			AI::dequeue;
 		}
