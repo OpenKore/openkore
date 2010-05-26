@@ -34,14 +34,14 @@ sub parseMacroFile {
 	my $tempmacro = 0;
 	my $inBlock = 0;
 	my ($macro_subs, @perl_lines);
-	open FILE, "<:utf8", $file or return 0;
-	while (<FILE>) {
+	open my $fp, "<:utf8", $file or return 0;
+	while (<$fp>) {
 		$. == 1 && s/^\x{FEFF}//; # utf bom
 		s/(.*)[\s\t]+#.*$/$1/;	# remove last comments
 		s/^\s*#.*$//;		# remove comments
 		s/^\s*//;		# remove leading whitespaces
 		s/\s*[\r\n]?$//g;	# remove trailing whitespaces and eol
-		s/  +/ /g;		# trim down spaces
+		s/  +/ /g;		# trim down spaces - very cool for user's string data?
 		next unless ($_);
 
 		if (!%block && /{$/) {
@@ -150,7 +150,7 @@ sub parseMacroFile {
 			}
 		}
 	}
-	close FILE;
+	#close $fp;
 	return 0 if %block;
 	return 1
 }
