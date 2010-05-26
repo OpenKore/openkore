@@ -165,7 +165,7 @@ sub getArgs {
 
 # gets word from message
 sub getWord {
-	my ($message, $wordno) = $_[0] =~ /^"(.*?)",\s?(\d+|\$[a-zA-Z][a-zA-Z\d]*)$/s;
+	my ($message, $wordno) = $_[0] =~ /^"(.*?)"\s*,\s?(\d+|\$[a-zA-Z][a-zA-Z\d]*)$/s;
 	my @words = split(/[ ,.:;\"\'!?\r\n]/, $message);
 	my $no = 1;
 	if ($wordno =~ /^\$/) {
@@ -185,7 +185,27 @@ sub getWord {
 
 # gets openkore setting
 sub getConfig {
-	return (defined $::config{$_[0]})?$::config{$_[0]}:""
+	my ($arg1) = $_[0] =~ /^\s*(\w*\.*\w+)\s*$/;
+	# Basic Support for "label" in blocks. Thanks to "piroJOKE" (from Commands.pm, sub cmdConf)
+	if ($arg1 =~ /\./) {
+		$arg1 =~ s/\.+/\./; # Filter Out Unnececary dot's
+		my ($label, $param) = split /\./, $arg1, 2; # Split the label form parameter
+		foreach (%::config) {
+			if ($_ =~ /_\d+_label/){ # we only need those blocks witch have labels
+				if ($::config{$_} eq $label) {
+					my ($real_key, undef) = split /_label/, $_, 2;
+					# "<label>.block" param support. Thanks to "vit"
+					if ($param ne "block") {
+						$real_key .= "_";
+						$real_key .= $param;
+					}
+					$arg1 = $real_key;
+					last;
+				};
+			};
+		};
+	};
+	return (defined $::config{$arg1})?$::config{$arg1}:"";
 }
 
 # sets and/or refreshes global variables
