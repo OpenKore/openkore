@@ -588,7 +588,7 @@ sub main {
 			delete $args->{attackMethod};
 
 			ai_setSuspend(0);
-			my $skill = new Skill(auto => lc($config{"attackSkillSlot_$slot"}));
+			my $skill = new Skill(auto => $config{"attackSkillSlot_$slot"});
 			if (!ai_getSkillUseType($skill->getHandle())) {
 				ai_skillUse(
 					$skill->getHandle(),
