@@ -10,7 +10,7 @@ alberta 245 93 amatsu 197 83 10000 c r1 c c c r0 n
 amatsu 194 79 alberta 243 91 0 c r0 n
 alberta 245 69 gon_fild01 258 82 0 c r1 c c r0 n
 gon_fild01 255 79 alberta 243 67 0 c r0 n
-izlude 201 181 izlu2dun 107 50 500 c r0
+izlude 201 181 izlu2dun 107 50 150 c r0
 izlu2dun 108 27 izlude 176 182 0 c r0
 prt_fild05 270 212 prt_sewb1 135 248 0 c r0
 aldebaran 223 222 xmas_fild01 78 68 0 c r1 c c n
@@ -2677,3 +2677,12 @@ lighthalzen 198 257 lhz_in02 39 28
 lhz_in02 44 28 lighthalzen 203 257
 lighthalzen 251 299 lhz_in03 97 21
 lhz_in03 93 21 lighthalzen 247 299
+
+# Rogue Guild
+
+cmd_fild07 193 117 in_rogue 379 46
+in_rogue 375 46 cmd_fild07 196 117
+
+in_rogue 375 33 in_rogue 380 125
+in_rogue 375 125 in_rogue 379 33
+
