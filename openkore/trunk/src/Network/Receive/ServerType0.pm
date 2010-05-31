@@ -648,7 +648,10 @@ sub actor_action {
 			$dmgdisplay = T("Miss!");
 			$dmgdisplay .= "!" if ($args->{type} == 11); # lucky dodge
 		} else {
-			$dmgdisplay = $args->{damage};
+			$dmgdisplay = $args->{div} > 1
+				? sprintf '%d*%d', $args->{damage} / $args->{div}, $args->{div}
+				: $args->{damage}
+			;
 			$dmgdisplay .= "!" if ($args->{type} == 10); # critical hit
 			$dmgdisplay .= " + $args->{dual_wield_damage}" if $args->{dual_wield_damage};
 		}
@@ -3599,7 +3602,7 @@ sub item_skill {
 	my $skillName = $args->{skillName};
 
 	my $skill = new Skill(idn => $skillID, level => $skillLv);
-	message TF("Permitted to use %s (%d), level %d\n", $skill->getName, $skill->getIDN, $skill->level);
+	message TF("Permitted to use %s (%d), level %d\n", $skill->getName, $skill->getIDN, $skill->getLevel);
 
 	unless ($config{noAutoSkill}) {
 		$messageSender->sendSkillUse($skillID, $skillLv, $accountID);
