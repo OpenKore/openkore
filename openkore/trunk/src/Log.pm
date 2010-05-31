@@ -196,6 +196,7 @@ sub processMsg {
 	if (existsInList($config{showTimeDomains}, $domain)) {
 		my @tmpdate = localtime();
 		$tmpdate[5] += 1900;
+		$tmpdate[4]++;
 		for (my $i = 0; $i < @tmpdate; $i++) {
 			if ($tmpdate[$i] < 10) {$tmpdate[$i] = "0".$tmpdate[$i]};
 		}
