@@ -106,10 +106,10 @@ use enum qw(OWNER_CHAR OWNER_HOMUN OWNER_MERC);
 #
 # Example:
 # $heal = new Skill(name => 'Heal');
-# $heal->level();  # returns undef
+# $heal->getLevel;  # returns undef
 #
 # $heal = new Skill(name => 'Heal', level => 5);
-# $heal->level();  # returns 5
+# $heal->getLevel;  # returns 5
 sub new {
 	my $class = shift;
 	my %args = @_;
