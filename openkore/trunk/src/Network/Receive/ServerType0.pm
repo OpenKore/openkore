@@ -3598,8 +3598,8 @@ sub item_skill {
 	my $sp = $args->{sp}; # we don't use this yet
 	my $skillName = $args->{skillName};
 
-	my $skill = new Skill(idn => $skillID);
-	message TF("Permitted to use %s (%d), level %d\n", $skill->getName(), $skillID, $skillLv);
+	my $skill = new Skill(idn => $skillID, level => $skillLv);
+	message TF("Permitted to use %s (%d), level %d\n", $skill->getName, $skill->getIDN, $skill->level);
 
 	unless ($config{noAutoSkill}) {
 		$messageSender->sendSkillUse($skillID, $skillLv, $accountID);

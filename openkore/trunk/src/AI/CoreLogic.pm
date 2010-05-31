@@ -2371,7 +2371,7 @@ sub processAutoSkillUse {
 			# Use Encore skill instead if applicable
 			$self_skill{ID} = 'BD_ENCORE';
 		}
-		if ($self_skill{lvl} > 0) {
+		if ($self_skill{ID}) {
 			debug qq~Auto-skill on self: $config{$self_skill{prefix}} (lvl $self_skill{lvl})\n~, "ai";
 			if (!ai_getSkillUseType($self_skill{ID})) {
 				ai_skillUse($self_skill{ID}, $self_skill{lvl}, $self_skill{maxCastTime}, $self_skill{minCastTime}, $self_skill{owner}{ID}, undef, undef, undef, undef, $self_skill{prefix});

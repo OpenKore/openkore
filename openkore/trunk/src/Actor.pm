@@ -32,6 +32,7 @@ package Actor;
 use strict;
 use Carp::Assert;
 use Scalar::Util;
+use List::MoreUtils;
 use Data::Dumper;
 use Storable;
 use Globals;
@@ -411,7 +412,7 @@ sub statusActive {
 	return unless $self->{statuses};
 	
 	for my $status (split /\s*,\s*/, $commaSeparatedStatuses) {
-		return 1 if exists $self->{statuses}{$status} || grep { $statusName{$_} eq $status } keys %{$self->{statuses}};
+		return 1 if exists $self->{statuses}{$status} || List::MoreUtils::any { $statusName{$_} eq $status } keys %{$self->{statuses}};
 	}
 	
 	return;

@@ -93,6 +93,8 @@ sub getSkillLevel {
 	my $handle = $skill->getHandle();
 	if ($self->{skills}{$handle}) {
 		return $self->{skills}{$handle}{lv};
+	} elsif ($self->{permitSkill} && $self->{permitSkill}->getHandle eq $handle) {
+		return $self->{permitSkill}->getLevel;
 	} else {
 		return 0;
 	}
