@@ -2682,7 +2682,13 @@ lhz_in03 93 21 lighthalzen 247 299
 
 cmd_fild07 193 117 in_rogue 379 46
 in_rogue 375 46 cmd_fild07 196 117
-
 in_rogue 375 33 in_rogue 380 125
 in_rogue 375 125 in_rogue 379 33
 
+#(portal with dialog) cmd_fild09 335 143 in_rogue 169 34 0 c r0 r2 r4 r0 c
+in_rogue 172 34 cmd_fild09 341 143
+# maze entrance
+#in_rogue 160 34 in_rogue x y 0 c c c c c c r0
+
+# maze exit
+in_rogue 370 320 in_rogue 378 113
