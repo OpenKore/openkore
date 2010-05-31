@@ -7376,6 +7376,7 @@ sub adopt_reply {
 sub adopt_request {
 	my ($self, $args) = @_;
 	message TF("%s wishes to adopt you. Do you accept?\n", $args->{name}), "info";
+	# TODO how to accept?
 }
 
 # 0293
@@ -7478,9 +7479,13 @@ sub quest_update_mission_hunt {
 # 02B7
 sub quest_active {
 	my ($self, $args) = @_;
-	my $string = $args->{active} ? T ("active") : T("inactive");
 	my $questID = $args->{questID};
-	message TF("Quest: %s is now %s.\n", $quests_lut{$questID} ? "$quests_lut{$questID}{title} ($questID)" : $questID, $string), "info";
+	
+	message $args->{active}
+		? TF("Quest %s is now active.\n", $quests_lut{$questID} ? "$quests_lut{$questID}{title} ($questID)" : $questID)
+		: TF("Quest %s is now inactive.\n", $quests_lut{$questID} ? "$quests_lut{$questID}{title} ($questID)" : $questID)
+	, "info";
+	
 	$questList->{$args->{questID}}->{active} = $args->{active};
 }
 
