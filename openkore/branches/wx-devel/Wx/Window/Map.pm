@@ -134,7 +134,7 @@ sub updateGlue {
 	my ($i, $args, $routeTask, $route);
 	$self->setRoute(
 		defined ($i = AI::findAction ('route')) && ($args = AI::args ($i)) && (
-			($routeTask = $args->getSubtask) && %{$routeTask} && ($route = $routeTask->{solution}) && @$route
+			($routeTask = $args->getSubtask) && $routeTask->{stage} eq 'Walk the Route Solution' && ($route = $routeTask->{solution}) && @$route
 			||
 			$args->{dest} && $args->{dest}{pos} && ($route = [{x => $args->{dest}{pos}{x}, y => $args->{dest}{pos}{y}}])
 		) ? [@$route] : ()
@@ -829,7 +829,7 @@ sub _onPaint {
 		
 		if ($config{wx_map_route}) {
 			my $i = 0;
-			for (grep {not $i++ % ($portal_d * 2)} reverse @{$self->{route}}) {
+			for ((grep {not $i++ % ($portal_d * 2)} reverse @{$self->{route}})[0 .. @{$self->{route}}/($portal_d*2)-1]) {
 				($x, $y) = $self->_posXYToView ($_->{x}, $_->{y});
 				$dc->DrawEllipse($x - $portal_r, $y - $portal_r, $portal_d, $portal_d);
 			}
