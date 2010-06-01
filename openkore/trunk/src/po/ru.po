@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Openkore\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-05-20 10:00+0700\n"
-"PO-Revision-Date: 2010-05-20 11:40+0700\n"
+"POT-Creation-Date: 2010-06-01 14:11+0700\n"
+"PO-Revision-Date: 2010-06-01 14:12+0700\n"
 "Last-Translator: Richard Samuel <dewa5227@gmail.com>\n"
 "Language-Team: DeniZka (all in 1)\n"
 "MIME-Version: 1.0\n"
@@ -111,14 +111,14 @@ msgstr "Вы"
 
 #: ../AI/Attack.pm:111
 #: ../AI/Attack.pm:228
-#: ../AI/Attack.pm:402
+#: ../AI/Attack.pm:398
 msgid "Dropping target - you will not kill steal others\n"
 msgstr "Цель оставлена - вы не будите килл-стилить.\n"
 
 #: ../AI/Attack.pm:123
 #: ../AI/Attack.pm:164
 #: ../AI/Attack.pm:240
-#: ../AI/Attack.pm:555
+#: ../AI/Attack.pm:551
 msgid "Teleport due to dropping attack target\n"
 msgstr "Телепорт чтобы оставить атакуемую цель.\n"
 
@@ -143,18 +143,18 @@ msgstr "Цель потеряна, телепорт.\n"
 msgid "Target lost\n"
 msgstr "Цель потеряна.\n"
 
-#: ../AI/Attack.pm:459
+#: ../AI/Attack.pm:455
 #: ../AI/Slave.pm:596
 #, perl-format
 msgid "%s; moving to (%s, %s)\n"
 msgstr "%s; движение к (%s, %s)\n"
 
-#: ../AI/Attack.pm:468
+#: ../AI/Attack.pm:464
 #, perl-format
 msgid "%s; no acceptable place to stand\n"
 msgstr "%s; нет подходящего места, чтобы встать.\n"
 
-#: ../AI/Attack.pm:553
+#: ../AI/Attack.pm:549
 msgid "Unable to calculate a route to target, dropping target\n"
 msgstr "Невозможно расчитать маршрут до цели, цель оставлена.\n"
 
@@ -194,7 +194,7 @@ msgid "Failed to take %s (%s) from (%s, %s) to (%s, %s)\n"
 msgstr "Не получилось поднять %s (%s) стоя на (%s, %s) лежащий тут (%s, %s) предмет.\n"
 
 #: ../AI/CoreLogic.pm:805
-#: ../AI/CoreLogic.pm:2842
+#: ../AI/CoreLogic.pm:2844
 #, perl-format
 msgid "Routing to (%s, %s) to take %s (%s), distance %s\n"
 msgstr "Движение к (%s, %s), чтобы поднять %s (%s), дистанция %s.\n"
@@ -399,73 +399,73 @@ msgstr "Не получилось найти ведущего, попытки н
 msgid "My master warped at (%s, %s) - moving to warp point\n"
 msgstr "Мой ведущий варпнулся в  (%s, %s) - двигаюсь в точку варпа.\n"
 
-#: ../AI/CoreLogic.pm:2796
+#: ../AI/CoreLogic.pm:2798
 #, perl-format
 msgid "Gathering: %s (%s)\n"
 msgstr "Сбор: %s (%s)\n"
 
-#: ../AI/CoreLogic.pm:2813
+#: ../AI/CoreLogic.pm:2815
 #, perl-format
 msgid "Failed to gather %s (%s) : Lost target\n"
 msgstr "Не получилось собрать %s (%s) : Цель потеряна.\n"
 
-#: ../AI/CoreLogic.pm:2821
+#: ../AI/CoreLogic.pm:2823
 #, perl-format
 msgid "Failed to gather %s (%s) : No looting!\n"
 msgstr "Не получилось собрать %s (%s) : Нельзя лутить!\n"
 
-#: ../AI/CoreLogic.pm:2825
+#: ../AI/CoreLogic.pm:2827
 #, perl-format
 msgid "Failed to gather %s (%s) : Timeout\n"
 msgstr "Не получилось собрать %s (%s) : Таймаут.\n"
 
-#: ../AI/CoreLogic.pm:2877
+#: ../AI/CoreLogic.pm:2879
 msgid "Teleporting to avoid all players\n"
 msgstr "Телепорт, чтобы избежать встречи с любым игроком.\n"
 
-#: ../AI/CoreLogic.pm:2917
+#: ../AI/CoreLogic.pm:2919
 msgid "Teleporting due to insufficient HP/SP or too many aggressives\n"
 msgstr "Телепорт из-за нехватки HP/SP, слишком много агрессоров.\n"
 
-#: ../AI/CoreLogic.pm:2929
+#: ../AI/CoreLogic.pm:2931
 #, perl-format
 msgid "Teleporting to avoid %s\n"
 msgstr "Телепорт, чтобы избежать встречи с %s.\n"
 
-#: ../AI/CoreLogic.pm:2939
+#: ../AI/CoreLogic.pm:2941
 #, perl-format
 msgid "Teleporting due to monster being too close %s\n"
 msgstr "Телепорт, ибо моб %s слишком близко.\n"
 
-#: ../AI/CoreLogic.pm:2957
+#: ../AI/CoreLogic.pm:2959
 msgid "Teleporting due to idle\n"
 msgstr "Телепорт из-за того, что нечего делать.\n"
 
-#: ../AI/CoreLogic.pm:2969
+#: ../AI/CoreLogic.pm:2971
 msgid "Teleporting to avoid portal\n"
 msgstr "Телепорт, чтобы не попасть в портал.\n"
 
-#: ../AI/CoreLogic.pm:2991
-#: ../Misc.pm:1259
+#: ../AI/CoreLogic.pm:2993
+#: ../Misc.pm:1260
 #, perl-format
 msgid "The current map (%s) is not on the list of allowed maps.\n"
 msgstr "Текущая локация (%s) не входит в список разрешенных.\n"
 
-#: ../AI/CoreLogic.pm:2992
-#: ../Misc.pm:1260
+#: ../AI/CoreLogic.pm:2994
+#: ../Misc.pm:1261
 #, perl-format
 msgid "** The current map (%s) is not on the list of allowed maps.\n"
 msgstr "** Текущая локация (%s) не входит в список разрешенных.\n"
 
-#: ../AI/CoreLogic.pm:2994
+#: ../AI/CoreLogic.pm:2996
 msgid "Respawning to save point.\n"
 msgstr "Возврат в точку сохранения.\n"
 
-#: ../AI/CoreLogic.pm:2995
+#: ../AI/CoreLogic.pm:2997
 msgid "** Respawning to save point.\n"
 msgstr "** Возврат в точку сохранения.\n"
 
-#: ../AI/CoreLogic.pm:3046
+#: ../AI/CoreLogic.pm:3048
 #, perl-format
 msgid "Disconnecting for 30 secs to avoid %s\n"
 msgstr "Отключение на 30 секунд, чтобы избежать встречи с мобом %s!\n"
@@ -1486,164 +1486,164 @@ msgid "Miss!"
 msgstr "Промах!"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:780
-#: ../Network/Receive/ServerType0.pm:713
+#: ../Network/Receive/ServerType0.pm:716
 msgid "You have died\n"
 msgstr "Вы погибли.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:823
-#: ../Network/Receive/ServerType0.pm:756
+#: ../Network/Receive/ServerType0.pm:759
 #, perl-format
 msgid "Player Died: %s (%d) %s %s\n"
 msgstr "Игрок погиб: %s (%d) %s %s.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:887
-#: ../Network/Receive/ServerType0.pm:816
+#: ../Network/Receive/ServerType0.pm:819
 #, perl-format
 msgid "Slave Died: %s (%d) %s\n"
 msgstr "Гомункул погиб: %s (%d) %s.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:957
-#: ../Network/Receive/ServerType0.pm:886
+#: ../Network/Receive/ServerType0.pm:889
 #, perl-format
 msgid "Removed actor with off map coordinates: (%d,%d)->(%d,%d), field max: (%d,%d)\n"
 msgstr "Удалён актор с координатами за пределами локации (%d,%d)->(%d,%d), размеры локации: (%d,%d)\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:1225
-#: ../Network/Receive/ServerType0.pm:1161
+#: ../Network/Receive/ServerType0.pm:1164
 #, perl-format
 msgid "NPC Exists: %s (%d, %d) (ID %d) - (%d)\n"
 msgstr "Появилась непись: %s (%d, %d) (ID %d) - (%d).\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:1228
-#: ../Network/Receive/ServerType0.pm:1164
+#: ../Network/Receive/ServerType0.pm:1167
 #, perl-format
 msgid "Portal Exists: %s (%s, %s) - (%s)\n"
 msgstr "Появился портал: %s (%s, %s) - (%s).\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:1421
-#: ../Network/Receive/ServerType0.pm:1356
+#: ../Network/Receive/ServerType0.pm:1359
 #, perl-format
 msgid "%s is muted for %d minutes\n"
 msgstr "%s в молчанке на %d минут.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:1423
-#: ../Network/Receive/ServerType0.pm:1358
+#: ../Network/Receive/ServerType0.pm:1361
 #, perl-format
 msgid "%s is no longer muted\n"
 msgstr "%s больше не в молчанке.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:1530
-#: ../Network/Receive/ServerType0.pm:1464
+#: ../Network/Receive/ServerType0.pm:1467
 #, perl-format
 msgid "%s opened Warp Portal on (%d, %d)\n"
 msgstr "Игрок %s открыл варп-портал в (%d, %d).\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:1535
-#: ../Network/Receive/ServerType0.pm:1469
+#: ../Network/Receive/ServerType0.pm:1472
 #, perl-format
 msgid "%s has scribbled: %s on (%d, %d)\n"
 msgstr "Игрок %s намалевал: %s по координатам (%d, %d).\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:1568
-#: ../Network/Receive/ServerType0.pm:1503
+#: ../Network/Receive/ServerType0.pm:1506
 #, perl-format
 msgid "Arrow/Bullet equipped: %s (%d)\n"
 msgstr "Стрел/патронов экипировано: %s (%d).\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:1579
-#: ../Network/Receive/ServerType0.pm:1514
+#: ../Network/Receive/ServerType0.pm:1517
 msgid "Please equip arrow first."
 msgstr "Пожалуйста, экипируйте стрелы сначала."
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:1582
-#: ../Network/Receive/ServerType0.pm:1517
+#: ../Network/Receive/ServerType0.pm:1520
 msgid "Please equip arrow first.\n"
 msgstr "Пожалуйста, экипируйте стрелы сначала.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:1609
-#: ../Network/Receive/ServerType0.pm:1544
+#: ../Network/Receive/ServerType0.pm:1547
 msgid "Received Possible Arrow Craft List - type 'arrowcraft'\n"
 msgstr "Получен список стрел, которые можно создать - введите 'arrowcraft'\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:1621
-#: ../Network/Receive/ServerType0.pm:1556
+#: ../Network/Receive/ServerType0.pm:1559
 #, perl-format
 msgid "Autodetected attackDistance = %s\n"
 msgstr "Автоматически настроена дистанция атаки attackDistance = %s.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:1630
-#: ../Network/Receive/ServerType0.pm:1565
+#: ../Network/Receive/ServerType0.pm:1568
 msgid "Buy completed.\n"
 msgstr "Покупка завершена.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:1632
-#: ../Network/Receive/ServerType0.pm:1567
+#: ../Network/Receive/ServerType0.pm:1570
 msgid "Buy failed (insufficient zeny).\n"
 msgstr "Покупка не удалась (недостаточно зени).\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:1634
-#: ../Network/Receive/ServerType0.pm:1569
+#: ../Network/Receive/ServerType0.pm:1572
 msgid "Buy failed (insufficient weight capacity).\n"
 msgstr "Покупка не удалась (недостаточно свободного места).\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:1636
-#: ../Network/Receive/ServerType0.pm:1571
+#: ../Network/Receive/ServerType0.pm:1574
 msgid "Buy failed (too many different inventory items).\n"
 msgstr "Покупка не удалась (слишком много разных предметов).\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:1638
-#: ../Network/Receive/ServerType0.pm:1573
+#: ../Network/Receive/ServerType0.pm:1576
 #, perl-format
 msgid "Buy failed (failure code %s).\n"
 msgstr "Покупка не удалась (код ошибки %s).\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:1654
-#: ../Network/Receive/ServerType0.pm:1589
+#: ../Network/Receive/ServerType0.pm:1592
 #: ../Commands.pm:715
 msgid "-----Card Merge Candidates-----\n"
 msgstr "---- Вещи для вставки карты ---\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:1677
-#: ../Network/Receive/ServerType0.pm:1612
+#: ../Network/Receive/ServerType0.pm:1615
 msgid "Card merging failed\n"
 msgstr "Вставка карты не удалась.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:1681
-#: ../Network/Receive/ServerType0.pm:1616
+#: ../Network/Receive/ServerType0.pm:1619
 #, perl-format
 msgid "%s has been successfully merged into %s\n"
 msgstr "Карта %s удачно вставлена в вещь %s.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:1731
-#: ../Network/Receive/ServerType0.pm:1666
+#: ../Network/Receive/ServerType0.pm:1669
 msgid "overweight"
 msgstr "перевес"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:1733
-#: ../Network/Receive/ServerType0.pm:1668
+#: ../Network/Receive/ServerType0.pm:1671
 msgid "too many items"
 msgstr "слишком много предметов"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:1735
-#: ../Network/Receive/ServerType0.pm:1670
+#: ../Network/Receive/ServerType0.pm:1673
 #, perl-format
 msgid "Unknown code %s"
 msgstr "Непонятный код %s"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:1737
-#: ../Network/Receive/ServerType0.pm:1672
+#: ../Network/Receive/ServerType0.pm:1675
 #, perl-format
 msgid "Can't Add Cart Item (%s)\n"
 msgstr "Невозможно добавить предмет в телегу (%s).\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:1804
-#: ../Network/Receive/ServerType0.pm:1738
+#: ../Network/Receive/ServerType0.pm:1741
 #, perl-format
 msgid "Cart Item Added: %s (%d) x %s\n"
 msgstr "Предмет добавлен в телегу: %s (%d) x %s.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:1884
-#: ../Network/Receive/ServerType0.pm:1817
+#: ../Network/Receive/ServerType0.pm:1820
 #, perl-format
 msgid ""
 "------------CashList (Cash Point: %-5d)-------------\n"
@@ -1653,260 +1653,260 @@ msgstr ""
 "#  Название              Тип                 Цена\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:1916
-#: ../Network/Receive/ServerType0.pm:1849
+#: ../Network/Receive/ServerType0.pm:1852
 #, perl-format
 msgid "Cart Item Removed: %s (%d) x %s\n"
 msgstr "Предмет удален из телеги: %s (%d) шт. %s.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:1954
-#: ../Network/Receive/ServerType0.pm:1887
+#: ../Network/Receive/ServerType0.pm:1890
 msgid "Charname already exists.\n"
 msgstr "Персонаж с таким именем уже есть.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:1956
-#: ../Network/Receive/ServerType0.pm:1889
+#: ../Network/Receive/ServerType0.pm:1892
 msgid "Char creation denied.\n"
 msgstr "Создание персонажа отклонено.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:1958
-#: ../Network/Receive/ServerType0.pm:1891
+#: ../Network/Receive/ServerType0.pm:1894
 msgid "You are underaged.\n"
 msgstr "Вы слишком молоды.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:1960
-#: ../Network/Receive/ServerType0.pm:1893
+#: ../Network/Receive/ServerType0.pm:1896
 msgid "Character creation failed. If you didn't make any mistake, then the name you chose already exists.\n"
 msgstr "Не удалось создать персонажа. Если вы не допустили ошибок, значит такое имя уже существует.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:1986
-#: ../Network/Receive/ServerType0.pm:1919
+#: ../Network/Receive/ServerType0.pm:1922
 #, perl-format
 msgid "Character %s (%d) created.\n"
 msgstr "Персонаж %s (%d) создан.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:1996
-#: ../Network/Receive/ServerType0.pm:1929
+#: ../Network/Receive/ServerType0.pm:1932
 #, perl-format
 msgid "Character %s (%d) deleted.\n"
 msgstr "Персонаж %s (%d) удалён.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2003
-#: ../Network/Receive/ServerType0.pm:1936
+#: ../Network/Receive/ServerType0.pm:1939
 msgid "Character deleted.\n"
 msgstr "Персонаж удалён.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2015
-#: ../Network/Receive/ServerType0.pm:1948
+#: ../Network/Receive/ServerType0.pm:1951
 msgid "Character cannot be deleted. Your e-mail address was probably wrong.\n"
 msgstr "Персонаж не может быть удален. Возможно, из-за неверно введённого e-mail адреса.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2090
-#: ../Network/Receive/ServerType0.pm:2023
+#: ../Network/Receive/ServerType0.pm:2026
 msgid "Chat Room Created\n"
 msgstr "Чат создан.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2116
-#: ../Network/Receive/ServerType0.pm:2049
+#: ../Network/Receive/ServerType0.pm:2052
 msgid "Can't join Chat Room - Incorrect Password\n"
 msgstr "Не получилось войти в чат - неверный пароль.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2118
-#: ../Network/Receive/ServerType0.pm:2051
+#: ../Network/Receive/ServerType0.pm:2054
 msgid "Can't join Chat Room - You're banned\n"
 msgstr "Не получилось войти в чат - вас забанили.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2144
-#: ../Network/Receive/ServerType0.pm:2077
+#: ../Network/Receive/ServerType0.pm:2080
 msgid "Chat Room Properties Modified\n"
 msgstr "Настройки чата изменились.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2183
-#: ../Network/Receive/ServerType0.pm:2116
+#: ../Network/Receive/ServerType0.pm:2119
 #, perl-format
 msgid "%s has joined the Chat Room\n"
 msgstr "Игрок %s вошел в чат.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2199
-#: ../Network/Receive/ServerType0.pm:2132
+#: ../Network/Receive/ServerType0.pm:2135
 msgid "You left the Chat Room\n"
 msgstr "Вы покинули чат.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2201
-#: ../Network/Receive/ServerType0.pm:2134
+#: ../Network/Receive/ServerType0.pm:2137
 #, perl-format
 msgid "%s has left the Chat Room\n"
 msgstr "Игрок %s покинул чат.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2235
-#: ../Network/Receive/ServerType0.pm:2167
+#: ../Network/Receive/ServerType0.pm:2170
 #, perl-format
 msgid "You have joined the Chat Room %s\n"
 msgstr "Вы вошли в чат %s.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2247
-#: ../Network/Receive/ServerType0.pm:2179
+#: ../Network/Receive/ServerType0.pm:2182
 msgid "Unknown"
 msgstr "неизв. умение"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2249
-#: ../Network/Receive/ServerType0.pm:2181
+#: ../Network/Receive/ServerType0.pm:2184
 #, perl-format
 msgid "%s failed to cast %s\n"
 msgstr "%s не смог скастовать %s.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2275
-#: ../Network/Receive/ServerType0.pm:2207
+#: ../Network/Receive/ServerType0.pm:2210
 #, perl-format
 msgid "%s added Item to Deal: %s x %s\n"
 msgstr "%s добавил предмет к сделке: %s шт. %s.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2279
-#: ../Network/Receive/ServerType0.pm:2211
+#: ../Network/Receive/ServerType0.pm:2214
 #, perl-format
 msgid "%s added %s z to Deal\n"
 msgstr "%s добавил %s зени к сделке.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2287
-#: ../Network/Receive/ServerType0.pm:2219
+#: ../Network/Receive/ServerType0.pm:2222
 msgid "That person is overweight; you cannot trade.\n"
 msgstr "У этого персонажа перевес; вы не можете торговать.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2290
-#: ../Network/Receive/ServerType0.pm:2222
+#: ../Network/Receive/ServerType0.pm:2225
 msgid "This item cannot be traded.\n"
 msgstr "Предмет не может быть продан.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2293
-#: ../Network/Receive/ServerType0.pm:2225
+#: ../Network/Receive/ServerType0.pm:2228
 #, perl-format
 msgid "You cannot trade (fail code %s).\n"
 msgstr "Вы не можете торговать (код ошибки %s).\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2302
-#: ../Network/Receive/ServerType0.pm:2234
+#: ../Network/Receive/ServerType0.pm:2237
 #, perl-format
 msgid "You added Item to Deal: %s x %s\n"
 msgstr "Вы добавили предмет к сделке: %s шт. %s.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2313
-#: ../Network/Receive/ServerType0.pm:2245
+#: ../Network/Receive/ServerType0.pm:2248
 msgid "That person is too far from you to trade.\n"
 msgstr "Этот персонаж слишком далеко, чтобы торговать.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2315
-#: ../Network/Receive/ServerType0.pm:2247
+#: ../Network/Receive/ServerType0.pm:2250
 msgid "That person is in another deal.\n"
 msgstr "Этот персонаж занят другой сделкой.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2328
-#: ../Network/Receive/ServerType0.pm:2260
+#: ../Network/Receive/ServerType0.pm:2263
 msgid "Unknown #"
 msgstr "Неизвестный №"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2332
-#: ../Network/Receive/ServerType0.pm:2264
+#: ../Network/Receive/ServerType0.pm:2267
 #, perl-format
 msgid "Engaged Deal with %s\n"
 msgstr "Занят сделкой с %s.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2334
-#: ../Network/Receive/ServerType0.pm:2268
+#: ../Network/Receive/ServerType0.pm:2271
 #, perl-format
 msgid "Deal request failed (unknown error %s).\n"
 msgstr "Неудачное приглашение начать сделку (непонятная ошибка %s).\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2342
-#: ../Network/Receive/ServerType0.pm:2276
+#: ../Network/Receive/ServerType0.pm:2279
 msgid "Deal Cancelled\n"
 msgstr "Сделка отменена.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2349
-#: ../Network/Receive/ServerType0.pm:2283
+#: ../Network/Receive/ServerType0.pm:2286
 msgid "Deal Complete\n"
 msgstr "Сделка завершена.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2356
-#: ../Network/Receive/ServerType0.pm:2290
+#: ../Network/Receive/ServerType0.pm:2293
 #, perl-format
 msgid "%s finalized the Deal\n"
 msgstr "%s подтвердил сделку.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2362
-#: ../Network/Receive/ServerType0.pm:2296
+#: ../Network/Receive/ServerType0.pm:2299
 msgid "You finalized the Deal\n"
 msgstr "Вы подтвердили сделку.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2373
-#: ../Network/Receive/ServerType0.pm:2307
+#: ../Network/Receive/ServerType0.pm:2310
 #, perl-format
 msgid "%s (level %s) Requests a Deal\n"
 msgstr "%s (%s уровня) приглашает заключить сделку.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2374
-#: ../Network/Receive/ServerType0.pm:2308
+#: ../Network/Receive/ServerType0.pm:2311
 msgid "Type 'deal' to start dealing, or 'deal no' to deny the deal.\n"
 msgstr "Введите 'deal' чтобы начать сделку, или 'deal no' чтобы отвергнуть.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2397
-#: ../Network/Receive/ServerType0.pm:2331
+#: ../Network/Receive/ServerType0.pm:2334
 msgid "----- Egg Hatch Candidates -----\n"
 msgstr "----- Список яиц питомцев ------\n"
 
 #. Translation Comment: "[dist=$dist] $name ($player->{binID}): $emotion\n"
 #: ../Network/Receive/kRO/Sakexe_0.pm:2422
-#: ../Network/Receive/ServerType0.pm:2356
+#: ../Network/Receive/ServerType0.pm:2359
 #, perl-format
 msgid "[dist=%s] %s (%d): %s\n"
 msgstr "[дист=%s] %s (%d): %s\n"
 
 #. Translation Comment: "[dist=$dist] $monster->name ($monster->{binID}): $emotion\n"
 #: ../Network/Receive/kRO/Sakexe_0.pm:2450
-#: ../Network/Receive/ServerType0.pm:2384
+#: ../Network/Receive/ServerType0.pm:2387
 #, perl-format
 msgid "[dist=%s] %s %s (%d): %s\n"
 msgstr "[дист=%s] %s %s (%d): %s\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2456
-#: ../Network/Receive/ServerType0.pm:2390
-#: ../Network/Receive/ServerType0.pm:7079
+#: ../Network/Receive/ServerType0.pm:2393
+#: ../Network/Receive/ServerType0.pm:7084
 msgid "unknown"
 msgstr "неизвестно"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2462
-#: ../Network/Receive/ServerType0.pm:2396
+#: ../Network/Receive/ServerType0.pm:2399
 #, perl-format
 msgid "[dist=%s] %s: %s\n"
 msgstr "[дист=%s] %s: %s\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2471
-#: ../Network/Receive/ServerType0.pm:2405
+#: ../Network/Receive/ServerType0.pm:2408
 #, perl-format
 msgid "You can't put on %s (%d)\n"
 msgstr "Вы не можете экипировать %s (%d).\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2484
-#: ../Network/Receive/ServerType0.pm:2418
+#: ../Network/Receive/ServerType0.pm:2421
 #, perl-format
 msgid "You equip %s (%d) - %s (type %s)\n"
 msgstr "Вы экипировали %s (%d) - %s (тип %s)\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2499
-#: ../Network/Receive/ServerType0.pm:2433
+#: ../Network/Receive/ServerType0.pm:2436
 msgid "Lost connection; exiting\n"
 msgstr "Подключение утерянно; завершение работы.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2512
-#: ../Network/Receive/ServerType0.pm:2446
+#: ../Network/Receive/ServerType0.pm:2449
 msgid "Server shutting down\n"
 msgstr "Сервер выключается.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2514
-#: ../Network/Receive/ServerType0.pm:2448
+#: ../Network/Receive/ServerType0.pm:2451
 msgid "Error: Server is closed\n"
 msgstr "Ошибка: сервер закрыт.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2517
-#: ../Network/Receive/ServerType0.pm:2451
+#: ../Network/Receive/ServerType0.pm:2454
 #, perl-format
 msgid ""
 "Critical Error: Dual login prohibited - Someone trying to login!\n"
@@ -1919,194 +1919,194 @@ msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2521
 #: ../Network/Receive/kRO/Sakexe_0.pm:2525
-#: ../Network/Receive/ServerType0.pm:2455
-#: ../Network/Receive/ServerType0.pm:2459
+#: ../Network/Receive/ServerType0.pm:2458
+#: ../Network/Receive/ServerType0.pm:2462
 msgid "Critical Error: Dual login prohibited - Someone trying to login!\n"
 msgstr "Критическая ошибка: двойной вход запрещен - кто-то пытается залогиниться!\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2522
-#: ../Network/Receive/ServerType0.pm:2456
+#: ../Network/Receive/ServerType0.pm:2459
 #: ../Misc.pm:1051
 #: ../Misc.pm:1065
-#: ../Misc.pm:3356
-#: ../Misc.pm:3377
+#: ../Misc.pm:3379
+#: ../Misc.pm:3400
 #, perl-format
 msgid "Disconnect for %s seconds...\n"
 msgstr "Отключение через %s секунд...\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2529
-#: ../Network/Receive/ServerType0.pm:2463
+#: ../Network/Receive/ServerType0.pm:2466
 msgid "Error: Out of sync with server\n"
 msgstr "Ошибка: синхронизация с сервером утеряна.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2531
-#: ../Network/Receive/ServerType0.pm:2465
+#: ../Network/Receive/ServerType0.pm:2468
 msgid "Error: Server is jammed due to over-population.\n"
 msgstr "Ошибка: сервер забит полностью, слишком много игроков.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2533
-#: ../Network/Receive/ServerType0.pm:2467
+#: ../Network/Receive/ServerType0.pm:2470
 msgid "Error: You are underaged and cannot join this server.\n"
 msgstr "Ошибка: вы еще слишком малы, чтобы играть на этом сервере.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2535
-#: ../Network/Receive/ServerType0.pm:2469
+#: ../Network/Receive/ServerType0.pm:2472
 msgid "Critical Error: You must pay to play this account!\n"
 msgstr "Критическая ошибка: вы должны заплатить, чтобы играть на этом аккаунте!\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2538
-#: ../Network/Receive/ServerType0.pm:2472
+#: ../Network/Receive/ServerType0.pm:2475
 msgid "Error: The server still recognizes your last connection\n"
 msgstr "Ошибка: сервер до сих пор обрабатывает ваше предыдущее подключение.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2540
-#: ../Network/Receive/ServerType0.pm:2474
+#: ../Network/Receive/ServerType0.pm:2477
 msgid "Error: IP capacity of this Internet Cafe is full. Would you like to pay the personal base?\n"
 msgstr "Ошибка: диапозон IP-адресов этого интернет-кафе заполнен. Хотите ли заплатить за личную базу?\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2542
-#: ../Network/Receive/ServerType0.pm:2476
+#: ../Network/Receive/ServerType0.pm:2479
 msgid "Error: You are out of available time paid for\n"
 msgstr "Ошибка: оплаченное время истекло.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2544
-#: ../Network/Receive/ServerType0.pm:2478
+#: ../Network/Receive/ServerType0.pm:2481
 msgid "Error: You have been forced to disconnect by a GM\n"
 msgstr "Ошибка: вы были принудительно отключены GM-ом.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2546
-#: ../Network/Receive/ServerType0.pm:2480
+#: ../Network/Receive/ServerType0.pm:2483
 msgid "Error: Your account has been suspended until the next maintenance period for possible use of 3rd party programs\n"
 msgstr "Ошибка: ваш аккаунт заблокирован до следующей профилактики за возможное использование посторонних программ.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2548
-#: ../Network/Receive/ServerType0.pm:2482
+#: ../Network/Receive/ServerType0.pm:2485
 msgid "Error: For an hour, more than 10 connections having same IP address, have made. Please check this matter.\n"
 msgstr "Ошибка: в течение часа с одного IP-адреса в игру зашло более 10 учетных записей. Пожалуйста, проверьте причину этого.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2550
-#: ../Network/Receive/ServerType0.pm:2484
+#: ../Network/Receive/ServerType0.pm:2487
 #, perl-format
 msgid "Unknown error %s\n"
 msgstr "Непонятная ошибка %s.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2601
-#: ../Network/Receive/ServerType0.pm:2535
+#: ../Network/Receive/ServerType0.pm:2538
 #, perl-format
 msgid "Exp gained: %d/%d (%.2f%%/%.2f%%)\n"
 msgstr "Получено опыта: %d/%d (%.2f%%/%.2f%%).\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2607
-#: ../Network/Receive/ServerType0.pm:2541
+#: ../Network/Receive/ServerType0.pm:2544
 #, perl-format
 msgid "You gained %s zeny.\n"
 msgstr "Вы получили %s зени.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2609
-#: ../Network/Receive/ServerType0.pm:2543
+#: ../Network/Receive/ServerType0.pm:2546
 #, perl-format
 msgid "You lost %s zeny.\n"
 msgstr "Вы потеряли %s зени.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2611
-#: ../Network/Receive/ServerType0.pm:2545
+#: ../Network/Receive/ServerType0.pm:2548
 #, perl-format
 msgid "Disconnecting due to zeny lower than %s."
 msgstr "Отключение, ибо у персонажа меньше чем %s зени."
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2620
-#: ../Network/Receive/ServerType0.pm:2554
+#: ../Network/Receive/ServerType0.pm:2557
 #, perl-format
 msgid "Required Exp: %s\n"
 msgstr "Необходимо опыта: %s.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2629
-#: ../Network/Receive/ServerType0.pm:2563
+#: ../Network/Receive/ServerType0.pm:2566
 #, perl-format
 msgid "BaseExp: %s | JobExp: %s\n"
 msgstr "Базовый опыт: %s. | Профессиональный опыт: %s.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2636
-#: ../Network/Receive/ServerType0.pm:2570
+#: ../Network/Receive/ServerType0.pm:2573
 msgid "========Forge List========\n"
 msgstr "====== Список ковки ======\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2682
-#: ../Network/Receive/ServerType0.pm:2614
+#: ../Network/Receive/ServerType0.pm:2617
 #, perl-format
 msgid "Friend %s has disconnected\n"
 msgstr "Друг %s отключился.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2684
-#: ../Network/Receive/ServerType0.pm:2616
+#: ../Network/Receive/ServerType0.pm:2619
 #, perl-format
 msgid "Friend %s has connected\n"
 msgstr "Друг %s подключился.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2698
-#: ../Network/Receive/ServerType0.pm:2630
+#: ../Network/Receive/ServerType0.pm:2633
 #, perl-format
 msgid "%s wants to be your friend\n"
 msgstr "%s хочет быть вашим другом.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2699
-#: ../Network/Receive/ServerType0.pm:2631
+#: ../Network/Receive/ServerType0.pm:2634
 #, perl-format
 msgid "Type 'friend accept' to be friend with %s, otherwise type 'friend reject'\n"
 msgstr "Введите 'friend accept' чтобы принять дружбу от %s, или 'friend reject' чтобы отказаться.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2710
-#: ../Network/Receive/ServerType0.pm:2642
+#: ../Network/Receive/ServerType0.pm:2645
 #, perl-format
 msgid "%s is no longer your friend\n"
 msgstr "%s больше вам не друг.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2725
-#: ../Network/Receive/ServerType0.pm:2657
+#: ../Network/Receive/ServerType0.pm:2660
 #, perl-format
 msgid "%s rejected to be your friend\n"
 msgstr "%s не хочет быть вашим другом.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2733
-#: ../Network/Receive/ServerType0.pm:2665
+#: ../Network/Receive/ServerType0.pm:2668
 #, perl-format
 msgid "%s is now your friend\n"
 msgstr "%s стал(а) вашим другом.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2740
-#: ../Network/Receive/ServerType0.pm:2672
+#: ../Network/Receive/ServerType0.pm:2675
 #, perl-format
 msgid "Fed homunculus with %s\n"
 msgstr "Кормление Гомункула %s.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2742
-#: ../Network/Receive/ServerType0.pm:2674
+#: ../Network/Receive/ServerType0.pm:2677
 #, perl-format
 msgid "Failed to feed homunculus with %s: no food in inventory.\n"
 msgstr "Не получается покормить Гомункула %s: нет корма.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2838
-#: ../Network/Receive/ServerType0.pm:2785
+#: ../Network/Receive/ServerType0.pm:2788
 msgid "Your Homunculus was vaporized!\n"
 msgstr "Ваш Гомункул испарился!\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2840
-#: ../Network/Receive/ServerType0.pm:2787
+#: ../Network/Receive/ServerType0.pm:2790
 msgid "Your Homunculus died!\n"
 msgstr "Ваш Гомункул погиб!\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2845
-#: ../Network/Receive/ServerType0.pm:2792
+#: ../Network/Receive/ServerType0.pm:2795
 msgid "Your Homunculus was recalled!\n"
 msgstr "Ваш гомункул был призван!\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2847
-#: ../Network/Receive/ServerType0.pm:2794
+#: ../Network/Receive/ServerType0.pm:2797
 msgid "Your Homunculus was resurrected!\n"
 msgstr "Ваш Гомункул был воскрешен!\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2868
-#: ../Network/Receive/ServerType0.pm:2816
+#: ../Network/Receive/ServerType0.pm:2819
 msgid ""
 "The server Denied the login because GameGuard packets where not replied correctly or too many time has been spent to send the response.\n"
 "Please verify the version of your poseidon server and try again\n"
@@ -2115,88 +2115,88 @@ msgstr ""
 "Пожалуйста, проверьте версию вашего Poseidon-сервера и попытайтесь снова.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2873
-#: ../Network/Receive/ServerType0.pm:2821
+#: ../Network/Receive/ServerType0.pm:2824
 msgid "Server granted login request to account server\n"
 msgstr "Предоставлен запрос на вход в аккаунт-сервер.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2875
-#: ../Network/Receive/ServerType0.pm:2823
+#: ../Network/Receive/ServerType0.pm:2826
 msgid "Server granted login request to char/map server\n"
 msgstr "Предоставлен запрос на вход в чар/мап-сервер.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2926
-#: ../Network/Receive/ServerType0.pm:2874
+#: ../Network/Receive/ServerType0.pm:2877
 #, perl-format
 msgid "Incoming Request to Ally Guild '%s'\n"
 msgstr "Гильдия '%s' предлагает вам заключить альянс с ними.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2936
-#: ../Network/Receive/ServerType0.pm:2884
+#: ../Network/Receive/ServerType0.pm:2887
 msgid "Guild broken.\n"
 msgstr "Гильдия распущена.\n"
 
 #. Translation Comment: Guild Chat
 #: ../Network/Receive/kRO/Sakexe_0.pm:2996
-#: ../Network/Receive/ServerType0.pm:2945
+#: ../Network/Receive/ServerType0.pm:2948
 #, perl-format
 msgid "[Guild] %s\n"
 msgstr "[Гильдия] %s\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:3011
-#: ../Network/Receive/ServerType0.pm:2960
+#: ../Network/Receive/ServerType0.pm:2963
 msgid "Guild create successful.\n"
 msgstr "Создание гильдии удалось.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:3012
-#: ../Network/Receive/ServerType0.pm:2961
+#: ../Network/Receive/ServerType0.pm:2964
 msgid "Guild create failed: Guild name already exists.\n"
 msgstr "Неудачное создание гильдии: гильдия с таким именем уже существует.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:3013
-#: ../Network/Receive/ServerType0.pm:2962
+#: ../Network/Receive/ServerType0.pm:2965
 msgid "Guild create failed: Emperium is needed.\n"
 msgstr "Неудачное созадние гильдии: необходим предмет империум.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:3018
-#: ../Network/Receive/ServerType0.pm:2967
+#: ../Network/Receive/ServerType0.pm:2970
 #, perl-format
 msgid "Guild create: Unknown error %s\n"
 msgstr "Создание гильдии: непонятная ошибка %s.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:3050
-#: ../Network/Receive/ServerType0.pm:3000
+#: ../Network/Receive/ServerType0.pm:3003
 msgid "Target is already in a guild."
 msgstr "Указанный игрок уже в гильдии."
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:3051
-#: ../Network/Receive/ServerType0.pm:3001
+#: ../Network/Receive/ServerType0.pm:3004
 msgid "Target has denied."
 msgstr "Указанный игрок отказался."
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:3052
-#: ../Network/Receive/ServerType0.pm:3002
+#: ../Network/Receive/ServerType0.pm:3005
 msgid "Target has accepted."
 msgstr "Указанный игрок согласился."
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:3053
-#: ../Network/Receive/ServerType0.pm:3003
+#: ../Network/Receive/ServerType0.pm:3006
 msgid "Your guild is full."
 msgstr "Ваша гильдия заполнена."
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:3056
-#: ../Network/Receive/ServerType0.pm:3006
+#: ../Network/Receive/ServerType0.pm:3009
 #, perl-format
 msgid "Guild join request: %s\n"
 msgstr "Результат приглашения в гильдию: %s.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:3058
-#: ../Network/Receive/ServerType0.pm:3008
+#: ../Network/Receive/ServerType0.pm:3011
 #, perl-format
 msgid "Guild join request: Unknown %s\n"
 msgstr "Результат приглашения в гильдию: %s - непонятно.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:3075
-#: ../Network/Receive/ServerType0.pm:3025
+#: ../Network/Receive/ServerType0.pm:3028
 #, perl-format
 msgid ""
 "%s has left the guild.\n"
@@ -2206,7 +2206,7 @@ msgstr ""
 "Причина: %s.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:3082
-#: ../Network/Receive/ServerType0.pm:3032
+#: ../Network/Receive/ServerType0.pm:3035
 #, perl-format
 msgid ""
 "%s has been removed from the guild.\n"
@@ -2216,25 +2216,25 @@ msgstr ""
 "Причина: %s.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:3124
-#: ../Network/Receive/ServerType0.pm:3075
+#: ../Network/Receive/ServerType0.pm:3078
 #, perl-format
 msgid "Guild member %s logged in.\n"
 msgstr "Член гильдии %s вошел в игру.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:3126
-#: ../Network/Receive/ServerType0.pm:3077
+#: ../Network/Receive/ServerType0.pm:3080
 #, perl-format
 msgid "Guild member %s logged out.\n"
 msgstr "Член гильдии %s вышел из игры.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:3135
-#: ../Network/Receive/ServerType0.pm:3086
+#: ../Network/Receive/ServerType0.pm:3089
 #, perl-format
 msgid "%s uses effect: %s\n"
 msgstr "%s применяет эффект: %s.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:3178
-#: ../Network/Receive/ServerType0.pm:3136
+#: ../Network/Receive/ServerType0.pm:3139
 #, perl-format
 msgid ""
 "---Guild Notice---\n"
@@ -2250,225 +2250,225 @@ msgstr ""
 "---------------------------\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:3198
-#: ../Network/Receive/ServerType0.pm:3160
+#: ../Network/Receive/ServerType0.pm:3163
 #, perl-format
 msgid "Incoming Request to join Guild '%s'\n"
 msgstr "Входящее предложение вступить в гильдию '%s'.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:3210
-#: ../Network/Receive/ServerType0.pm:3172
+#: ../Network/Receive/ServerType0.pm:3175
 #, perl-format
 msgid "Item Identified: %s (%d)\n"
 msgstr "Предмет идентифицирован: %s (%d).\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:3212
-#: ../Network/Receive/ServerType0.pm:3174
+#: ../Network/Receive/ServerType0.pm:3177
 msgid "Item Appraisal has failed.\n"
 msgstr "Идентификация предмета не удалась.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:3234
-#: ../Network/Receive/ServerType0.pm:3196
+#: ../Network/Receive/ServerType0.pm:3199
 #, perl-format
 msgid "Received Possible Identify List (%s item(s)) - type 'identify'\n"
 msgstr "Получен список предметов для идентификации (%s шт.) - Введите консольную команду 'identify'.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:3240
-#: ../Network/Receive/ServerType0.pm:3202
+#: ../Network/Receive/ServerType0.pm:3206
 msgid "All Players ignored\n"
 msgstr "Игнор всех игроков.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:3243
-#: ../Network/Receive/ServerType0.pm:3205
+#: ../Network/Receive/ServerType0.pm:3209
 msgid "All players unignored\n"
 msgstr "Никого больше не игнорим.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:3251
-#: ../Network/Receive/ServerType0.pm:3214
+#: ../Network/Receive/ServerType0.pm:3218
 msgid "Player ignored\n"
 msgstr "Игрок игнорируется.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:3254
-#: ../Network/Receive/ServerType0.pm:3217
+#: ../Network/Receive/ServerType0.pm:3221
 msgid "Player unignored\n"
 msgstr "Игрок больше не игнорируется.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:3293
-#: ../Network/Receive/ServerType0.pm:3264
+#: ../Network/Receive/ServerType0.pm:3268
 #, perl-format
 msgid "Item added to inventory: %s (%d) x %d - %s"
 msgstr "Предмет добавлен в инвентарь: %s (%d) x %d шт. - %s."
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:3313
-#: ../Network/Receive/ServerType0.pm:3284
+#: ../Network/Receive/ServerType0.pm:3288
 #, perl-format
 msgid "Auto-dropping item: %s (%d) x %d\n"
 msgstr "Авто-выбрасывание предмета: %s (%d) x %d шт.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:3318
-#: ../Network/Receive/ServerType0.pm:3289
+#: ../Network/Receive/ServerType0.pm:3293
 msgid "Can't loot item...wait...\n"
 msgstr "Не получается слутить предмет...ждём...\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:3320
-#: ../Network/Receive/ServerType0.pm:3291
+#: ../Network/Receive/ServerType0.pm:3295
 msgid "Cannot pickup item (inventory full)\n"
 msgstr "Не получается поднять предмет (инвентарь забит).\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:3322
-#: ../Network/Receive/ServerType0.pm:3293
+#: ../Network/Receive/ServerType0.pm:3297
 msgid "Cannot pickup item (you're Frozen?)\n"
 msgstr "Не получается поднять предмет (вы заможрожены?).\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:3324
-#: ../Network/Receive/ServerType0.pm:3295
+#: ../Network/Receive/ServerType0.pm:3299
 #, perl-format
 msgid "Cannot pickup item (failure code %d)\n"
 msgstr "Не получается поднять предмет (код ошибки %d).\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:3358
-#: ../Network/Receive/ServerType0.pm:3329
+#: ../Network/Receive/ServerType0.pm:3333
 #, perl-format
 msgid "You used Item: %s (%d) x %d - %d left\n"
 msgstr "Вы использовали предмет: %s (%d) x %d шт. - осталось %d шт.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:3371
-#: ../Network/Receive/ServerType0.pm:3342
+#: ../Network/Receive/ServerType0.pm:3346
 #, perl-format
 msgid "You failed to use item: %s (%d)\n"
 msgstr "У вас не получилось использовать предмет: %s (%d).\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:3375
-#: ../Network/Receive/ServerType0.pm:3346
+#: ../Network/Receive/ServerType0.pm:3350
 #, perl-format
 msgid "You used unknown item #%d - %d left\n"
 msgstr "Вы использовали непонятный предмет №%d - %d шт. осталось.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:3377
-#: ../Network/Receive/ServerType0.pm:3348
+#: ../Network/Receive/ServerType0.pm:3352
 #, perl-format
 msgid "You failed to use unknown item #%d - %d left\n"
 msgstr "У вас не получилось использовать непонятный предмет №%d - %d шт. осталось.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:3383
-#: ../Network/Receive/ServerType0.pm:3354
+#: ../Network/Receive/ServerType0.pm:3358
 #, perl-format
 msgid "%s used Item: %s - %s left\n"
 msgstr "%s использовал предмет: %s - осталось %s.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:3392
-#: ../Network/Receive/ServerType0.pm:3363
+#: ../Network/Receive/ServerType0.pm:3367
 #, perl-format
 msgid "%s got married!\n"
 msgstr "%s вступил(а) в брак!\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:3401
-#: ../Network/Receive/ServerType0.pm:3372
+#: ../Network/Receive/ServerType0.pm:3376
 msgid "coin"
 msgstr "монет"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:3401
-#: ../Network/Receive/ServerType0.pm:3372
+#: ../Network/Receive/ServerType0.pm:3376
 msgid "spirit"
 msgstr "сфер"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:3404
-#: ../Network/Receive/ServerType0.pm:3375
+#: ../Network/Receive/ServerType0.pm:3379
 #, perl-format
 msgid "You have %s %s(s) now\n"
 msgstr "У вас сейчас %s шт. %s\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:3408
-#: ../Network/Receive/ServerType0.pm:3379
+#: ../Network/Receive/ServerType0.pm:3383
 #, perl-format
 msgid "%s has %s %s(s) now\n"
 msgstr "У %s сейчас %s шт. %s\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:3560
-#: ../Network/Receive/ServerType0.pm:3529
+#: ../Network/Receive/ServerType0.pm:3533
 #, perl-format
 msgid "Item Appeared: %s (%d) x %d (%d, %d)\n"
 msgstr "Появился предмет: %s (%d) x %d шт. (%d, %d).\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:3607
-#: ../Network/Receive/ServerType0.pm:3576
+#: ../Network/Receive/ServerType0.pm:3580
 #, perl-format
 msgid "Attack Looter: %s looted %s\n"
 msgstr "Атака лутера: %s слутил %s.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:3632
-#: ../Network/Receive/ServerType0.pm:3601
+#: ../Network/Receive/ServerType0.pm:3605
 #, perl-format
 msgid "Permitted to use %s (%d), level %d\n"
 msgstr "Разрешено к использованию %s (%d), %d уровень.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:3655
-#: ../Network/Receive/ServerType0.pm:3624
+#: ../Network/Receive/ServerType0.pm:3628
 #, perl-format
 msgid "Item %s has been upgraded to +%s\n"
 msgstr "Предмет %s улучшен до +%s.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:3670
-#: ../Network/Receive/ServerType0.pm:3639
+#: ../Network/Receive/ServerType0.pm:3643
 #, perl-format
 msgid "%s changed job to: %s\n"
 msgstr "%s сменил профессию на: %s.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:3674
-#: ../Network/Receive/ServerType0.pm:3643
+#: ../Network/Receive/ServerType0.pm:3647
 #, perl-format
 msgid "%s changed bottom headgear to: %s\n"
 msgstr "%s головной убор(низ) на: %s.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:3679
-#: ../Network/Receive/ServerType0.pm:3648
+#: ../Network/Receive/ServerType0.pm:3652
 #, perl-format
 msgid "%s changed top headgear to: %s\n"
 msgstr "%s сменил головной убор(верх) на: %s.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:3684
-#: ../Network/Receive/ServerType0.pm:3653
+#: ../Network/Receive/ServerType0.pm:3657
 #, perl-format
 msgid "%s changed middle headgear to: %s\n"
 msgstr "%s сменил головной убор(центр) на: %s.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:3690
-#: ../Network/Receive/ServerType0.pm:3659
+#: ../Network/Receive/ServerType0.pm:3663
 #, perl-format
 msgid "%s changed hair color to: %s (%s)\n"
 msgstr "%s сменил цвет волос на: %s (%s).\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:3775
-#: ../Network/Receive/ServerType0.pm:3742
+#: ../Network/Receive/ServerType0.pm:3746
 msgid "Account name doesn't exist\n"
 msgstr "Аккаунта с таким именем нет.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:3777
-#: ../Network/Receive/ServerType0.pm:3744
+#: ../Network/Receive/ServerType0.pm:3748
 msgid "Enter your Ragnarok Online username again."
 msgstr "Введите ваш логин Ragnarok Online снова."
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:3788
-#: ../Network/Receive/ServerType0.pm:3755
+#: ../Network/Receive/ServerType0.pm:3759
 msgid "Password Error\n"
 msgstr "Неверный пароль.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:3790
-#: ../Network/Receive/ServerType0.pm:3757
+#: ../Network/Receive/ServerType0.pm:3761
 msgid "Enter your Ragnarok Online password again."
 msgstr "Введите ваш пароль Ragnarok Online снова."
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:3801
-#: ../Network/Receive/ServerType0.pm:3768
+#: ../Network/Receive/ServerType0.pm:3772
 msgid "The server has denied your connection.\n"
 msgstr "Сервер отказал вам в соединении.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:3803
-#: ../Network/Receive/ServerType0.pm:3770
+#: ../Network/Receive/ServerType0.pm:3774
 msgid "Critical Error: Your account has been blocked."
 msgstr "Критическая ошибка: ваш аккаунт заблокирован."
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:3807
-#: ../Network/Receive/ServerType0.pm:3774
+#: ../Network/Receive/ServerType0.pm:3778
 #, perl-format
 msgid ""
 "Connect failed, something is wrong with the login settings:\n"
@@ -2482,110 +2482,110 @@ msgstr ""
 "serverType: %s\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:3813
-#: ../Network/Receive/ServerType0.pm:3780
+#: ../Network/Receive/ServerType0.pm:3784
 msgid "The server is temporarily blocking your connection\n"
 msgstr "Севрер временно блокирует ваши подключения.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:3822
-#: ../Network/Receive/ServerType0.pm:3789
+#: ../Network/Receive/ServerType0.pm:3793
 msgid "Error logging into Character Server (invalid character specified)...\n"
 msgstr "Ошибка: не получилось подключиться к чар-серверу (неверное указан персонаж)...\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:3849
 #: ../Network/Receive/kRO/Sakexe_0.pm:3911
 #: ../Network/Receive/kRO/Sakexe_0.pm:4989
-#: ../Network/Receive/ServerType0.pm:3816
-#: ../Network/Receive/ServerType0.pm:3878
-#: ../Network/Receive/ServerType0.pm:4982
+#: ../Network/Receive/ServerType0.pm:3820
+#: ../Network/Receive/ServerType0.pm:3882
+#: ../Network/Receive/ServerType0.pm:4987
 #, perl-format
 msgid "Cannot load field %s: %s\n"
 msgstr "Не получается загрузить локацию %s: %s.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:3876
-#: ../Network/Receive/ServerType0.pm:3843
+#: ../Network/Receive/ServerType0.pm:3847
 #, perl-format
 msgid "Map Change: %s (%s, %s)\n"
 msgstr "Локация сменилась на: %s (%s, %s).\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:3945
-#: ../Network/Receive/ServerType0.pm:3912
+#: ../Network/Receive/ServerType0.pm:3916
 #: ../Network/XKoreProxy.pm:490
 msgid "Closing connection to Map Server\n"
 msgstr "Закрытие подключения к мап-серверу.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:4043
-#: ../Network/Receive/ServerType0.pm:4010
+#: ../Network/Receive/ServerType0.pm:4014
 msgid "Memo Failed\n"
 msgstr "Вы не можете запомнить это место для Портала.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:4045
-#: ../Network/Receive/ServerType0.pm:4012
+#: ../Network/Receive/ServerType0.pm:4016
 msgid "Memo Succeeded\n"
 msgstr "Место запомнено.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:4098
-#: ../Network/Receive/ServerType0.pm:4065
+#: ../Network/Receive/ServerType0.pm:4069
 msgid "Mercenary soldier's duty hour is over.\n"
 msgstr "Время службы наёмника подошло к концу.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:4102
-#: ../Network/Receive/ServerType0.pm:4069
+#: ../Network/Receive/ServerType0.pm:4073
 msgid "Your mercenary soldier has been killed.\n"
 msgstr "Ваш наёмник погиб.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:4106
-#: ../Network/Receive/ServerType0.pm:4073
+#: ../Network/Receive/ServerType0.pm:4077
 msgid "Your mercenary soldier has been fired.\n"
 msgstr "Ваш наёмник был уволен.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:4110
-#: ../Network/Receive/ServerType0.pm:4077
+#: ../Network/Receive/ServerType0.pm:4081
 msgid "Your mercenary soldier has ran away.\n"
 msgstr "Ваш наёмник дезертировал.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:4114
-#: ../Network/Receive/ServerType0.pm:4081
+#: ../Network/Receive/ServerType0.pm:4085
 msgid "View player equip request denied.\n"
 msgstr "Запрос на просмотр экипировки другого игрока был отклонён.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:4116
-#: ../Network/Receive/ServerType0.pm:4088
+#: ../Network/Receive/ServerType0.pm:4092
 #, perl-format
 msgid "msg_id: %s gave unknown results in: %s\n"
 msgstr "msg_id: %s дал непонятный ответ: %s\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:4124
-#: ../Network/Receive/ServerType0.pm:4096
+#: ../Network/Receive/ServerType0.pm:4100
 #, perl-format
 msgid "Minimap indicator at location %d, %d with the color %s cleared\n"
 msgstr "Индикатор на миникарте локации %d, %d %s цветом очищен.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:4328
-#: ../Network/Receive/ServerType0.pm:4300
+#: ../Network/Receive/ServerType0.pm:4304
 #, perl-format
 msgid "%s: Done talking\n"
 msgstr "%s: разговор завершен.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:4357
-#: ../Network/Receive/ServerType0.pm:4329
+#: ../Network/Receive/ServerType0.pm:4333
 #, perl-format
 msgid "%s: Auto-continuing talking\n"
 msgstr "%s: авто-продолжение разговора.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:4362
-#: ../Network/Receive/ServerType0.pm:4334
+#: ../Network/Receive/ServerType0.pm:4338
 #, perl-format
 msgid "%s: Type 'talk cont' to continue talking\n"
 msgstr "%s: напишите 'talk cont' для продолжения разговора.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:4375
-#: ../Network/Receive/ServerType0.pm:4347
+#: ../Network/Receive/ServerType0.pm:4351
 #, perl-format
 msgid "%s: Type 'talk num <number #>' to input a number.\n"
 msgstr "%s: напишите 'talk num <число>' для ввода числа.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:4412
-#: ../Network/Receive/ServerType0.pm:4384
+#: ../Network/Receive/ServerType0.pm:4388
 msgid ""
 "----------Responses-----------\n"
 "#  Response\n"
@@ -2594,220 +2594,220 @@ msgstr ""
 "#  Ответ\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:4427
-#: ../Network/Receive/ServerType0.pm:4399
+#: ../Network/Receive/ServerType0.pm:4403
 #, perl-format
 msgid "%s: Type 'talk resp #' to choose a response.\n"
 msgstr "%s: напишите 'talk resp #' для выбора варианта ответа.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:4436
-#: ../Network/Receive/ServerType0.pm:4408
+#: ../Network/Receive/ServerType0.pm:4412
 #, perl-format
 msgid "%s: Type 'talk text' (Respond to NPC)\n"
 msgstr "%s: напишите 'talk text <текст>' для ввода текста.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:4445
-#: ../Network/Receive/ServerType0.pm:4417
+#: ../Network/Receive/ServerType0.pm:4422
 msgid "Not allowed other player invite to Party\n"
 msgstr "Нельзя приглашать других игроков в пати.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:4447
-#: ../Network/Receive/ServerType0.pm:4419
+#: ../Network/Receive/ServerType0.pm:4424
 msgid "Allowed other player invite to Party\n"
 msgstr "Можно приглашать других игроков в пати.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:4465
-#: ../Network/Receive/ServerType0.pm:4437
+#: ../Network/Receive/ServerType0.pm:4442
 #, perl-format
 msgid "[Party] %s\n"
 msgstr "[Пати] %s\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:4482
-#: ../Network/Receive/ServerType0.pm:4453
+#: ../Network/Receive/ServerType0.pm:4458
 msgid "Party EXP set to Individual Take\n"
 msgstr "Каждый в пати сам набивает себе опыт.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:4484
-#: ../Network/Receive/ServerType0.pm:4455
+#: ../Network/Receive/ServerType0.pm:4460
 msgid "Party EXP set to Even Share\n"
 msgstr "Набитый опыт делится поровну между всеми в пати.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:4486
-#: ../Network/Receive/ServerType0.pm:4457
+#: ../Network/Receive/ServerType0.pm:4462
 msgid "Error setting party option\n"
 msgstr "Ошибка при настройке пати.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:4502
-#: ../Network/Receive/ServerType0.pm:4473
+#: ../Network/Receive/ServerType0.pm:4478
 #, perl-format
 msgid "Incoming Request to join party '%s'\n"
 msgstr "Входящий приглашение вступить в пати '%s'.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:4511
-#: ../Network/Receive/ServerType0.pm:4494
+#: ../Network/Receive/ServerType0.pm:4499
 #, perl-format
 msgid "Join request failed: %s is already in a party\n"
 msgstr "Приглашение не удалось: %s уже в пати.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:4513
-#: ../Network/Receive/ServerType0.pm:4496
+#: ../Network/Receive/ServerType0.pm:4501
 #, perl-format
 msgid "Join request failed: %s denied request\n"
 msgstr "Приглашение не удалось: %s предложение отвергнуто.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:4515
-#: ../Network/Receive/ServerType0.pm:4498
+#: ../Network/Receive/ServerType0.pm:4503
 #, perl-format
 msgid "%s accepted your request\n"
 msgstr "%s принял ваше предложение.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:4517
-#: ../Network/Receive/ServerType0.pm:4500
+#: ../Network/Receive/ServerType0.pm:4505
 msgid "Join request failed: Party is full.\n"
 msgstr "Нельзя пригласить в пати, ибо она уже полная.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:4519
-#: ../Network/Receive/ServerType0.pm:4502
+#: ../Network/Receive/ServerType0.pm:4507
 #, perl-format
 msgid "Join request failed: same account of %s allready joined the party.\n"
 msgstr "Нельзя пригласить в пати, ибо персонаж %s с этого же аккаунта уже в пати.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:4534
-#: ../Network/Receive/ServerType0.pm:4525
+#: ../Network/Receive/ServerType0.pm:4530
 #, perl-format
 msgid "You joined party '%s'\n"
 msgstr "Вы присоединились к пати '%s'.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:4537
-#: ../Network/Receive/ServerType0.pm:4528
+#: ../Network/Receive/ServerType0.pm:4533
 #, perl-format
 msgid "%s joined your party '%s'\n"
 msgstr "%s присоединился к вашей пати '%s'.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:4583
-#: ../Network/Receive/ServerType0.pm:4575
+#: ../Network/Receive/ServerType0.pm:4580
 msgid "You left the party\n"
 msgstr "Вы покинули пати.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:4587
-#: ../Network/Receive/ServerType0.pm:4579
+#: ../Network/Receive/ServerType0.pm:4584
 #, perl-format
 msgid "%s left the party\n"
 msgstr "%s покинул пати.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:4607
-#: ../Network/Receive/ServerType0.pm:4602
+#: ../Network/Receive/ServerType0.pm:4607
 msgid "Can't organize party - party name exists\n"
 msgstr "Не получилось организовать пати - уже есть пати с таким названием.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:4630
-#: ../Network/Receive/ServerType0.pm:4624
+#: ../Network/Receive/ServerType0.pm:4629
 #, perl-format
 msgid "Party Member: %s\n"
 msgstr "Сопартиец: %s.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:4647
-#: ../Network/Receive/ServerType0.pm:4641
+#: ../Network/Receive/ServerType0.pm:4646
 msgid "Pet capture success\n"
 msgstr "Приручение питомца удалось.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:4649
-#: ../Network/Receive/ServerType0.pm:4643
+#: ../Network/Receive/ServerType0.pm:4648
 msgid "Pet capture failed\n"
 msgstr "Не получилось приручить питомца.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:4667
-#: ../Network/Receive/ServerType0.pm:4661
+#: ../Network/Receive/ServerType0.pm:4666
 #, perl-format
 msgid "Fed pet with %s\n"
 msgstr "Питомец %s был покормлен.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:4669
-#: ../Network/Receive/ServerType0.pm:4663
+#: ../Network/Receive/ServerType0.pm:4668
 #, perl-format
 msgid "Failed to feed pet with %s: no food in inventory.\n"
 msgstr "Не получилось покормть питомца %s: нет корма в инвентаре.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:4751
-#: ../Network/Receive/ServerType0.pm:4745
+#: ../Network/Receive/ServerType0.pm:4750
 #, perl-format
 msgid "%s changed Weapon to %s\n"
 msgstr "%s сменил оружие на %s.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:4755
-#: ../Network/Receive/ServerType0.pm:4749
+#: ../Network/Receive/ServerType0.pm:4754
 #, perl-format
 msgid "%s changed Shield to %s\n"
 msgstr "%s сменил щит на %s.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:4766
-#: ../Network/Receive/ServerType0.pm:4760
+#: ../Network/Receive/ServerType0.pm:4765
 #, perl-format
 msgid "%s changed Shoes to: %s\n"
 msgstr "%s сменил обувь на: %s.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:4798
-#: ../Network/Receive/ServerType0.pm:4792
+#: ../Network/Receive/ServerType0.pm:4797
 msgid "Unknown field,"
 msgstr "Неизвестная локация,"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:4810
-#: ../Network/Receive/ServerType0.pm:4804
+#: ../Network/Receive/ServerType0.pm:4809
 #, perl-format
 msgid "%s%s\n"
 msgstr "%s%s\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:4842
 #: ../Network/Receive/kRO/Sakexe_0.pm:4843
-#: ../Network/Receive/ServerType0.pm:4836
-#: ../Network/Receive/ServerType0.pm:4837
+#: ../Network/Receive/ServerType0.pm:4841
+#: ../Network/Receive/ServerType0.pm:4842
 #, perl-format
 msgid "(From: %s) : %s\n"
 msgstr "(От: %s) : %s\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:4854
-#: ../Network/Receive/ServerType0.pm:4848
+#: ../Network/Receive/ServerType0.pm:4853
 msgid "*** You were PM'd, auto disconnect! ***\n"
 msgstr "*** Вам послали личное сообщение, авто-отключение! ***\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:4855
-#: ../Network/Receive/ServerType0.pm:4849
+#: ../Network/Receive/ServerType0.pm:4854
 msgid "Disconnecting on PM!\n"
 msgstr "Отключение из-за полученного личного сообщения!\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:4863
-#: ../Network/Receive/ServerType0.pm:4857
+#: ../Network/Receive/ServerType0.pm:4862
 #, perl-format
 msgid "(To %s) : %s\n"
 msgstr "(Для: %s) : %s.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:4872
-#: ../Network/Receive/ServerType0.pm:4866
+#: ../Network/Receive/ServerType0.pm:4871
 #, perl-format
 msgid "%s is not online\n"
 msgstr "%s в оффлайне.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:4874
-#: ../Network/Receive/ServerType0.pm:4868
+#: ../Network/Receive/ServerType0.pm:4873
 msgid "Player ignored your message\n"
 msgstr "Игрок не хочет получать ваши сообщения.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:4876
-#: ../Network/Receive/ServerType0.pm:4870
+#: ../Network/Receive/ServerType0.pm:4875
 msgid "Player doesn't want to receive messages\n"
 msgstr "Игрок не настроен разговаривать с кем-либо.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:4904
-#: ../Network/Receive/ServerType0.pm:4897
+#: ../Network/Receive/ServerType0.pm:4902
 msgid "Received characters from Character Server\n"
 msgstr "От чар-сервера получен список персонажей.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:4971
-#: ../Network/Receive/ServerType0.pm:4964
+#: ../Network/Receive/ServerType0.pm:4969
 msgid "Received character ID and Map IP from Character Server\n"
 msgstr "От чар-сервера получен ID чара и IP-адрес мап-сервера.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:4999
-#: ../Network/Receive/ServerType0.pm:4992
+#: ../Network/Receive/ServerType0.pm:4997
 #, perl-format
 msgid ""
 "----------Game Info----------\n"
@@ -2825,138 +2825,138 @@ msgstr ""
 "------------------------------------------\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:5008
-#: ../Network/Receive/ServerType0.pm:5001
+#: ../Network/Receive/ServerType0.pm:5006
 #: ../Network/XKoreProxy.pm:488
 msgid "Closing connection to Character Server\n"
 msgstr "Закрывается подключение к чар-серверу.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:5022
-#: ../Network/Receive/ServerType0.pm:5015
+#: ../Network/Receive/ServerType0.pm:5020
 #, perl-format
 msgid "You successfully refined a weapon (ID %s)!\n"
 msgstr "Оружие было удачно улучшено (ID %s)!\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:5024
-#: ../Network/Receive/ServerType0.pm:5017
+#: ../Network/Receive/ServerType0.pm:5022
 #, perl-format
 msgid "You failed to refine a weapon (ID %s)!\n"
 msgstr "Неудачей закончилось улучшение оружия (ID %s)!\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:5026
-#: ../Network/Receive/ServerType0.pm:5019
+#: ../Network/Receive/ServerType0.pm:5024
 #, perl-format
 msgid "You successfully made a potion (ID %s)!\n"
 msgstr "Зелье было удачно создано (ID %s)!\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:5028
-#: ../Network/Receive/ServerType0.pm:5021
+#: ../Network/Receive/ServerType0.pm:5026
 #, perl-format
 msgid "You failed to make a potion (ID %s)!\n"
 msgstr "Сотворение зелья закончилось неудачей (ID %s)!\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:5030
-#: ../Network/Receive/ServerType0.pm:5023
+#: ../Network/Receive/ServerType0.pm:5028
 #, perl-format
 msgid "You tried to refine a weapon (ID %s); result: unknown %s\n"
 msgstr "Вы пытались улучшить оружие (ID %s); результат: %s - непонятно.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:5036
-#: ../Network/Receive/ServerType0.pm:5029
+#: ../Network/Receive/ServerType0.pm:5034
 #, perl-format
 msgid "[POINT] Blacksmist Ranking Point is increasing by %s. Now, The total is %s points.\n"
 msgstr "[POINT] Рейтинг кузнеца увеличился на %s. Всего сейчас %s.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:5042
-#: ../Network/Receive/ServerType0.pm:5034
+#: ../Network/Receive/ServerType0.pm:5039
 #, perl-format
 msgid "[POINT] Alchemist Ranking Point is increasing by %s. Now, The total is %s points.\n"
 msgstr "[POINT] Рейтинг алхимика увеличился на %s. Всего сейчас %s.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:5048
-#: ../Network/Receive/ServerType0.pm:5039
+#: ../Network/Receive/ServerType0.pm:5044
 msgid "--------Repair List--------\n"
 msgstr "----- Список к починке ----\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:5072
-#: ../Network/Receive/ServerType0.pm:5062
+#: ../Network/Receive/ServerType0.pm:5067
 #, perl-format
 msgid "Repair of %s failed.\n"
 msgstr "Починка %s неудалась.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:5074
-#: ../Network/Receive/ServerType0.pm:5064
+#: ../Network/Receive/ServerType0.pm:5069
 #, perl-format
 msgid "Successfully repaired %s.\n"
 msgstr "%s удачно починено.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:5086
-#: ../Network/Receive/ServerType0.pm:5076
+#: ../Network/Receive/ServerType0.pm:5081
 msgid "You have been resurrected\n"
 msgstr "Вас воскресили.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:5096
-#: ../Network/Receive/ServerType0.pm:5086
+#: ../Network/Receive/ServerType0.pm:5091
 #, perl-format
 msgid "%s has been resurrected\n"
 msgstr "%s был воскрешен.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:5151
-#: ../Network/Receive/ServerType0.pm:5142
+#: ../Network/Receive/ServerType0.pm:5147
 msgid "Sync packet requested for wrong ID\n"
 msgstr "Неверный ID запрошен для синхронизации пакетов.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:5158
-#: ../Network/Receive/ServerType0.pm:5149
+#: ../Network/Receive/ServerType0.pm:5154
 msgid "TaeKwon Mission Rank : "
 msgstr "Ранг в Миссии Тэквондиста :"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:5164
-#: ../Network/Receive/ServerType0.pm:5157
+#: ../Network/Receive/ServerType0.pm:5162
 msgid "All abnormal status effects have been removed.\n"
 msgstr "Действие всех отрицательных эффектов закончилось.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:5166
-#: ../Network/Receive/ServerType0.pm:5159
+#: ../Network/Receive/ServerType0.pm:5164
 msgid "You will be immune to abnormal status effects for the next minute.\n"
 msgstr "Вы защищены от всех плохих эффектов на 1 минуту.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:5168
-#: ../Network/Receive/ServerType0.pm:5161
+#: ../Network/Receive/ServerType0.pm:5166
 msgid "Your Max HP will stay increased for the next minute.\n"
 msgstr "Максимальное количество ваших HP увеличилось на 1 минуту.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:5170
-#: ../Network/Receive/ServerType0.pm:5163
+#: ../Network/Receive/ServerType0.pm:5168
 msgid "Your Max SP will stay increased for the next minute.\n"
 msgstr "Максимальное количество ваших SP увеличилось на 1 минуту.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:5172
-#: ../Network/Receive/ServerType0.pm:5165
+#: ../Network/Receive/ServerType0.pm:5170
 msgid "All of your Stats will stay increased for the next minute.\n"
 msgstr "Все ваши статы будут оставаться увеличенными в течении следующей минуты.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:5174
-#: ../Network/Receive/ServerType0.pm:5167
+#: ../Network/Receive/ServerType0.pm:5172
 msgid "Your weapon will remain blessed with Holy power for the next minute.\n"
 msgstr "Ваше оружие наделено Святой Силой на 1 минуту.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:5176
-#: ../Network/Receive/ServerType0.pm:5169
+#: ../Network/Receive/ServerType0.pm:5174
 msgid "Your armor will remain blessed with Holy power for the next minute.\n"
 msgstr "Ваши доспехи наделены Святой Силой на 1 минуту.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:5178
-#: ../Network/Receive/ServerType0.pm:5171
+#: ../Network/Receive/ServerType0.pm:5176
 msgid "Your Defense will stay increased for the next 10 seconds.\n"
 msgstr "Ваша защита увеличена на 10 секунд.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:5180
-#: ../Network/Receive/ServerType0.pm:5173
+#: ../Network/Receive/ServerType0.pm:5178
 msgid "Your Attack strength will stay increased for the next minute.\n"
 msgstr "Сила вашей атаки увеличена на 1 минуту.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:5182
-#: ../Network/Receive/ServerType0.pm:5175
+#: ../Network/Receive/ServerType0.pm:5180
 msgid "Your Accuracy and Flee Rate will stay increased for the next minute.\n"
 msgstr "Ваши точность и уворот увеличены на 1 минуту.\n"
 
@@ -2965,48 +2965,48 @@ msgid "Unknown buff from Gospel: "
 msgstr "Непонятный бафф от Госпеля:"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:5216
-#: ../Network/Receive/ServerType0.pm:5186
+#: ../Network/Receive/ServerType0.pm:5191
 msgid "Unavailable Area To Teleport\n"
 msgstr "Телепорт недоступен на данной локации.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:5219
-#: ../Network/Receive/ServerType0.pm:5189
+#: ../Network/Receive/ServerType0.pm:5194
 msgid "Unavailable Area To Memo\n"
 msgstr "Нельзя запомнить место для варпа на данной локации.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:5221
-#: ../Network/Receive/ServerType0.pm:5191
+#: ../Network/Receive/ServerType0.pm:5196
 #, perl-format
 msgid "Unavailable Area To Teleport (fail code %s)\n"
 msgstr "Телепорт недоступен на данной локации  (%s - код ошибки).\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:5242
 #: ../Network/Receive/kRO/Sakexe_0.pm:5291
-#: ../Network/Receive/ServerType0.pm:5203
-#: ../Network/Receive/ServerType0.pm:5226
+#: ../Network/Receive/ServerType0.pm:5208
+#: ../Network/Receive/ServerType0.pm:5231
 msgid "PvP Display Mode\n"
 msgstr "Отображен режим PvP\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:5245
 #: ../Network/Receive/kRO/Sakexe_0.pm:5294
-#: ../Network/Receive/ServerType0.pm:5206
-#: ../Network/Receive/ServerType0.pm:5229
+#: ../Network/Receive/ServerType0.pm:5211
+#: ../Network/Receive/ServerType0.pm:5234
 msgid "GvG Display Mode\n"
 msgstr "Отображен режим GvG\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:5297
-#: ../Network/Receive/ServerType0.pm:5232
+#: ../Network/Receive/ServerType0.pm:5237
 msgid "Battleground Display Mode\n"
 msgstr "Battleground Display Mode\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:5322
-#: ../Network/Receive/ServerType0.pm:5257
+#: ../Network/Receive/ServerType0.pm:5262
 #, perl-format
 msgid "Your PvP rank is: %s/%s\n"
 msgstr "Ваш ранг в PvP: %s/%s\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:5332
-#: ../Network/Receive/ServerType0.pm:5267
+#: ../Network/Receive/ServerType0.pm:5272
 #, perl-format
 msgid ""
 "=====================Sense========================\n"
@@ -3032,201 +3032,201 @@ msgstr ""
 "====================================================\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:5359
-#: ../Network/Receive/ServerType0.pm:5294
+#: ../Network/Receive/ServerType0.pm:5299
 #, perl-format
 msgid "sold: %s - %s %sz\n"
 msgstr "продано: %s шт. - %s, получено %s зени.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:5363
-#: ../Network/Receive/ServerType0.pm:5298
+#: ../Network/Receive/ServerType0.pm:5303
 #, perl-format
 msgid "sold out: %s\n"
 msgstr "проданы все предметы: %s.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:5366
-#: ../Network/Receive/ServerType0.pm:5301
+#: ../Network/Receive/ServerType0.pm:5306
 msgid "Items have been sold out.\n"
 msgstr "Все предметы проданы.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:5377
-#: ../Network/Receive/ServerType0.pm:5312
+#: ../Network/Receive/ServerType0.pm:5317
 #, perl-format
 msgid "You can sell %s items!\n"
 msgstr "Вы можете продавать %s предметов за раз!\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:5419
-#: ../Network/Receive/ServerType0.pm:5356
+#: ../Network/Receive/ServerType0.pm:5361
 msgid "Allowed to view the other player's Equipment.\n"
 msgstr "Можно просматривать экипировку других игроков.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:5421
-#: ../Network/Receive/ServerType0.pm:5358
+#: ../Network/Receive/ServerType0.pm:5363
 msgid "Not allowed to view the other player's Equipment.\n"
 msgstr "Нельзя просматривать экипировку других игроков.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:5428
-#: ../Network/Receive/ServerType0.pm:5365
+#: ../Network/Receive/ServerType0.pm:5370
 msgid "Other players are allowed to view your Equipment.\n"
 msgstr "Показывать экипировку персонажа другим игрокам.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:5430
-#: ../Network/Receive/ServerType0.pm:5367
+#: ../Network/Receive/ServerType0.pm:5372
 msgid "Other players are not allowed to view your Equipment.\n"
 msgstr "Скрывать экипировку персонажа от других игроков.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:5514
-#: ../Network/Receive/ServerType0.pm:5451
+#: ../Network/Receive/ServerType0.pm:5456
 #, perl-format
 msgid "Monster Skill - switch Target to : %s (%d)\n"
 msgstr "Моб кастует умение - перевод атаки на него : %s (%d)\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:5543
-#: ../Network/Receive/ServerType0.pm:5480
+#: ../Network/Receive/ServerType0.pm:5485
 #, perl-format
 msgid "Avoid casting Skill - switch position to : %s,%s\n"
 msgstr "Уклонение от умения - смена позиции на: %s,%s.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:5671
-#: ../Network/Receive/ServerType0.pm:5608
+#: ../Network/Receive/ServerType0.pm:5613
 msgid "Basic"
 msgstr "Базовая информация"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:5672
-#: ../Network/Receive/ServerType0.pm:5609
+#: ../Network/Receive/ServerType0.pm:5614
 msgid "Insufficient SP"
 msgstr "Нехватка SP"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:5673
-#: ../Network/Receive/ServerType0.pm:5610
+#: ../Network/Receive/ServerType0.pm:5615
 msgid "Insufficient HP"
 msgstr "Нехватра HP"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:5674
-#: ../Network/Receive/ServerType0.pm:5611
+#: ../Network/Receive/ServerType0.pm:5616
 msgid "No Memo"
 msgstr "Не запомнена точка варпа"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:5675
-#: ../Network/Receive/ServerType0.pm:5612
+#: ../Network/Receive/ServerType0.pm:5617
 msgid "Mid-Delay"
 msgstr "ещё откат"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:5676
-#: ../Network/Receive/ServerType0.pm:5613
+#: ../Network/Receive/ServerType0.pm:5618
 msgid "No Zeny"
 msgstr "Нет зени"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:5677
-#: ../Network/Receive/ServerType0.pm:5614
+#: ../Network/Receive/ServerType0.pm:5619
 msgid "Wrong Weapon Type"
 msgstr "Вы не можете использовать это умение с этим оружием."
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:5678
-#: ../Network/Receive/ServerType0.pm:5615
+#: ../Network/Receive/ServerType0.pm:5620
 msgid "Red Gem Needed"
 msgstr "Требуется Красный драгоценный камень."
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:5679
-#: ../Network/Receive/ServerType0.pm:5616
+#: ../Network/Receive/ServerType0.pm:5621
 msgid "Blue Gem Needed"
 msgstr "Требуется Синий драгоценный камень."
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:5681
-#: ../Network/Receive/ServerType0.pm:5618
+#: ../Network/Receive/ServerType0.pm:5623
 msgid "Requirement"
 msgstr "Требование"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:5683
-#: ../Network/Receive/ServerType0.pm:5620
+#: ../Network/Receive/ServerType0.pm:5625
 #, perl-format
 msgid "Skill %s failed (%s)\n"
 msgstr "Не удалось умение %s (%s).\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:5898
-#: ../Network/Receive/ServerType0.pm:5821
+#: ../Network/Receive/ServerType0.pm:5826
 msgid "Not enough stat points to add\n"
 msgstr "Недостаточно стат-поинтов для прокачки стата.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:5995
-#: ../Network/Receive/ServerType0.pm:5918
+#: ../Network/Receive/ServerType0.pm:5923
 msgid "Mute period expired.\n"
 msgstr "Молчанка закончилась.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6001
-#: ../Network/Receive/ServerType0.pm:5924
+#: ../Network/Receive/ServerType0.pm:5929
 #, perl-format
 msgid "You've been muted for %s minutes, auto disconnect!\n"
 msgstr "Вы в молчанке на %s минут, авто-отключение!\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6002
-#: ../Network/Receive/ServerType0.pm:5925
+#: ../Network/Receive/ServerType0.pm:5930
 #, perl-format
 msgid "*** You have been muted for %s minutes, auto disconnect! ***\n"
 msgstr "*** Вы в молчанке на %s минут, авто-отключение! ***\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6005
-#: ../Network/Receive/ServerType0.pm:5928
+#: ../Network/Receive/ServerType0.pm:5933
 #, perl-format
 msgid "You've been muted for %s minutes\n"
 msgstr "Вы в молчанке на %s минут.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6025
-#: ../Network/Receive/ServerType0.pm:5948
+#: ../Network/Receive/ServerType0.pm:5953
 #, perl-format
 msgid "You are now level %s\n"
 msgstr "Ваш персонаж стал %s-го уровня!\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6027
 #: ../Network/Receive/kRO/Sakexe_0.pm:6028
-#: ../Network/Receive/ServerType0.pm:5950
-#: ../Network/Receive/ServerType0.pm:5951
+#: ../Network/Receive/ServerType0.pm:5955
+#: ../Network/Receive/ServerType0.pm:5956
 #, perl-format
 msgid "Disconnecting on level %s!\n"
 msgstr "Отключение из-за получения %s уровня!\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6082
-#: ../Network/Receive/ServerType0.pm:6005
+#: ../Network/Receive/ServerType0.pm:6010
 #, perl-format
 msgid "You are now job level %s\n"
 msgstr "Ваш персонаж стал %s-го проф-уровеня!\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6084
 #: ../Network/Receive/kRO/Sakexe_0.pm:6085
-#: ../Network/Receive/ServerType0.pm:6007
-#: ../Network/Receive/ServerType0.pm:6008
+#: ../Network/Receive/ServerType0.pm:6012
+#: ../Network/Receive/ServerType0.pm:6013
 #, perl-format
 msgid "Disconnecting on job level %s!\n"
 msgstr "Отключение из-за получения %s проф-уровня!\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6154
-#: ../Network/Receive/ServerType0.pm:6077
+#: ../Network/Receive/ServerType0.pm:6082
 msgid "Storage closed.\n"
 msgstr "Склад закрыт.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6185
-#: ../Network/Receive/ServerType0.pm:6108
+#: ../Network/Receive/ServerType0.pm:6113
 #, perl-format
 msgid "Storage Item Added: %s (%d) x %s\n"
 msgstr "Предмет добавлен на склад: %s (%d) x %s шт.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6197
-#: ../Network/Receive/ServerType0.pm:6120
+#: ../Network/Receive/ServerType0.pm:6125
 #, perl-format
 msgid "Storage Item Removed: %s (%d) x %s\n"
 msgstr "Предмет взят со склада: %s (%d) x %s шт.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6303
-#: ../Network/Receive/ServerType0.pm:6224
+#: ../Network/Receive/ServerType0.pm:6229
 msgid "Storage opened.\n"
 msgstr "Склад открыт.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6313
-#: ../Network/Receive/ServerType0.pm:6234
+#: ../Network/Receive/ServerType0.pm:6239
 msgid "Please enter a new character password:\n"
 msgstr "Пожалуйста, введите новый пароль для доступа к персонажу:\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6316
-#: ../Network/Receive/ServerType0.pm:6237
+#: ../Network/Receive/ServerType0.pm:6242
 msgid ""
 "You've never set a storage password before.\n"
 "You must set a storage password before you can use the storage.\n"
@@ -3238,61 +3238,61 @@ msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6327
 #: ../Network/Receive/kRO/Sakexe_0.pm:6363
-#: ../Network/Receive/ServerType0.pm:6248
-#: ../Network/Receive/ServerType0.pm:6284
+#: ../Network/Receive/ServerType0.pm:6253
+#: ../Network/Receive/ServerType0.pm:6289
 msgid "Unable to send character password. You must set the 'storageEncryptKey' option in config.txt or servers.txt.\n"
 msgstr "Не получилось отправить пароль для доступа к персонажу. Необходимо установить  'storageEncryptKey' в config.txt или в servers.txt.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6328
 #: ../Network/Receive/kRO/Sakexe_0.pm:6364
-#: ../Network/Receive/ServerType0.pm:6249
-#: ../Network/Receive/ServerType0.pm:6285
+#: ../Network/Receive/ServerType0.pm:6254
+#: ../Network/Receive/ServerType0.pm:6290
 msgid "Unable to send storage password. You must set the 'storageEncryptKey' option in config.txt or servers.txt.\n"
 msgstr "Не получилось отправить пароль для достпуна на склад. Необходимо установить 'storageEncryptKey' в config.txt или в servers.txt.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6335
 #: ../Network/Receive/kRO/Sakexe_0.pm:6356
-#: ../Network/Receive/ServerType0.pm:6256
-#: ../Network/Receive/ServerType0.pm:6277
+#: ../Network/Receive/ServerType0.pm:6261
+#: ../Network/Receive/ServerType0.pm:6282
 #, perl-format
 msgid "Storage password set to: %s\n"
 msgstr "Пароль для доступа к складу установлен: %s\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6342
-#: ../Network/Receive/ServerType0.pm:6263
+#: ../Network/Receive/ServerType0.pm:6268
 msgid "Please enter your character password."
 msgstr "Пожалуйста, введите пароль для доступа к персонажу."
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6347
-#: ../Network/Receive/ServerType0.pm:6268
+#: ../Network/Receive/ServerType0.pm:6273
 #, perl-format
 msgid "Character password set to: %s\n"
 msgstr "Пароль для доступа к персонажу установлен: %s.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6351
-#: ../Network/Receive/ServerType0.pm:6272
+#: ../Network/Receive/ServerType0.pm:6277
 msgid "Please enter your storage password."
 msgstr "Пожалуйста, введите ваш пароль для доступа на склад."
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6375
-#: ../Network/Receive/ServerType0.pm:6296
+#: ../Network/Receive/ServerType0.pm:6301
 msgid "You have entered the wrong password 5 times. Please try again later.\n"
 msgstr "Вы 5 раз неправильно ввели пароль. Пожалуйста, попробуйте позже.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6396
-#: ../Network/Receive/ServerType0.pm:6325
+#: ../Network/Receive/ServerType0.pm:6330
 msgid "Successfully changed storage password.\n"
 msgstr "Пароль для доступа на склад был удачно изменён.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6398
 #: ../Network/Receive/kRO/Sakexe_0.pm:6402
-#: ../Network/Receive/ServerType0.pm:6327
-#: ../Network/Receive/ServerType0.pm:6331
+#: ../Network/Receive/ServerType0.pm:6332
+#: ../Network/Receive/ServerType0.pm:6336
 msgid "Error: Incorrect storage password.\n"
 msgstr "Ошибка: неверный пароль для доступа на склад.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6400
-#: ../Network/Receive/ServerType0.pm:6329
+#: ../Network/Receive/ServerType0.pm:6334
 msgid "Successfully entered storage password.\n"
 msgstr "Пароль для доступа на склад был удачно введён.\n"
 
@@ -3300,52 +3300,52 @@ msgstr "Пароль для доступа на склад был удачно �
 #: ../Network/Receive/kRO/Sakexe_0.pm:6440
 #: ../Network/Receive/kRO/Sakexe_0.pm:6466
 #: ../Network/Receive/kRO/Sakexe_0.pm:6479
-#: ../Network/Receive/ServerType0.pm:6358
-#: ../Network/Receive/ServerType0.pm:6369
-#: ../Network/Receive/ServerType0.pm:6395
-#: ../Network/Receive/ServerType0.pm:6408
+#: ../Network/Receive/ServerType0.pm:6363
+#: ../Network/Receive/ServerType0.pm:6374
+#: ../Network/Receive/ServerType0.pm:6400
+#: ../Network/Receive/ServerType0.pm:6413
 msgid "Unable to send PIN code. You must set the 'PINEncryptKey' option in servers.txt."
 msgstr "Невозможно отправить пин-код. Необходимо установить параметр 'PINEncryptKey' в файле servers.txt."
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6447
-#: ../Network/Receive/ServerType0.pm:6376
+#: ../Network/Receive/ServerType0.pm:6381
 msgid "Login PIN code has been changed successfully.\n"
 msgstr "Логин пин-код был успешно изменён.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6450
-#: ../Network/Receive/ServerType0.pm:6379
+#: ../Network/Receive/ServerType0.pm:6384
 msgid "Failed to change the login PIN code. Please try again.\n"
 msgstr "Не получилось изменить логин пин-код. Пожалуйста, попробуйте снова.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6453
-#: ../Network/Receive/ServerType0.pm:6382
+#: ../Network/Receive/ServerType0.pm:6387
 msgid "Please enter your old login PIN code:"
 msgstr "Пожалуйста, введите ваш старый логин пин-код:"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6458
-#: ../Network/Receive/ServerType0.pm:6387
+#: ../Network/Receive/ServerType0.pm:6392
 msgid "Please enter a new login PIN code:"
 msgstr "Пожалуйста, введите новый логин пин-код:"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6475
-#: ../Network/Receive/ServerType0.pm:6404
+#: ../Network/Receive/ServerType0.pm:6409
 msgid "The login PIN code that you entered is incorrect. Please re-enter your login PIN code."
 msgstr "Введённый вами логин пин-код неверен. Пожалуйста, попробуйте снова ввести логин пин-код."
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6487
-#: ../Network/Receive/ServerType0.pm:6416
+#: ../Network/Receive/ServerType0.pm:6421
 msgid "You have entered 3 incorrect login PIN codes in a row. Reconnecting...\n"
 msgstr "Вы ввели три раза неправильный логин пин-код. Реконнект...\n"
 
 #. Translation Comment: System/GM chat
 #: ../Network/Receive/kRO/Sakexe_0.pm:6548
-#: ../Network/Receive/ServerType0.pm:6462
+#: ../Network/Receive/ServerType0.pm:6467
 #, perl-format
 msgid "[GM] %s\n"
 msgstr "[GM] %s\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6560
-#: ../Network/Receive/ServerType0.pm:6474
+#: ../Network/Receive/ServerType0.pm:6479
 #, perl-format
 msgid ""
 "============= ALCHEMIST RANK ================\n"
@@ -3357,7 +3357,7 @@ msgstr ""
 "%s=============================================\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6570
-#: ../Network/Receive/ServerType0.pm:6484
+#: ../Network/Receive/ServerType0.pm:6489
 #, perl-format
 msgid ""
 "============= BLACKSMITH RANK ===============\n"
@@ -3369,7 +3369,7 @@ msgstr ""
 "%s=============================================\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6580
-#: ../Network/Receive/ServerType0.pm:6494
+#: ../Network/Receive/ServerType0.pm:6499
 #, perl-format
 msgid ""
 "================ PVP RANK ===================\n"
@@ -3381,7 +3381,7 @@ msgstr ""
 "%s=============================================\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6590
-#: ../Network/Receive/ServerType0.pm:6504
+#: ../Network/Receive/ServerType0.pm:6509
 #, perl-format
 msgid ""
 "=============== TAEKWON RANK ================\n"
@@ -3393,49 +3393,49 @@ msgstr ""
 "%s=============================================\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6614
-#: ../Network/Receive/ServerType0.pm:6528
+#: ../Network/Receive/ServerType0.pm:6533
 #, perl-format
 msgid "You unequip %s (%d) - %s\n"
 msgstr "Вы сняли %s (%d) - %s\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6627
-#: ../Network/Receive/ServerType0.pm:6541
+#: ../Network/Receive/ServerType0.pm:6546
 #, perl-format
 msgid "%s gained a level!\n"
 msgstr "%s получил уровень!\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6630
-#: ../Network/Receive/ServerType0.pm:6544
+#: ../Network/Receive/ServerType0.pm:6549
 #, perl-format
 msgid "%s gained a job level!\n"
 msgstr "%s получил проф-уровень!\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6633
-#: ../Network/Receive/ServerType0.pm:6547
+#: ../Network/Receive/ServerType0.pm:6552
 #, perl-format
 msgid "%s failed to refine a weapon!\n"
 msgstr "%s неудачное улучшение оружия!\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6635
-#: ../Network/Receive/ServerType0.pm:6549
+#: ../Network/Receive/ServerType0.pm:6554
 #, perl-format
 msgid "%s successfully refined a weapon!\n"
 msgstr "%s удачное улучше оружия!\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6646
-#: ../Network/Receive/ServerType0.pm:6560
+#: ../Network/Receive/ServerType0.pm:6565
 #, perl-format
 msgid "You used Item: %s (%d) x %s\n"
 msgstr "Вы использовали: %s (%d) x %s шт.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6655
-#: ../Network/Receive/ServerType0.pm:6570
+#: ../Network/Receive/ServerType0.pm:6575
 #, perl-format
 msgid "There are currently %s users online\n"
 msgstr "На данный момент в онлайне %s игроков.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6691
-#: ../Network/Receive/ServerType0.pm:6606
+#: ../Network/Receive/ServerType0.pm:6611
 #, perl-format
 msgid ""
 "%s\n"
@@ -3445,25 +3445,25 @@ msgstr ""
 "#  Имя                                          Тип             Кол-во.       Цена\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6750
-#: ../Network/Receive/ServerType0.pm:6665
+#: ../Network/Receive/ServerType0.pm:6670
 #, perl-format
 msgid "Failed to buy %s of item #%s from vender (insufficient zeny).\n"
 msgstr "Неудачная покупка %s шт. предмета №%s у торговца (недостаточно зени).\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6752
-#: ../Network/Receive/ServerType0.pm:6667
+#: ../Network/Receive/ServerType0.pm:6672
 #, perl-format
 msgid "Failed to buy %s of item #%s from vender (overweight).\n"
 msgstr "Неудачная покупка %s шт. предмета №%s у торговца (перевес).\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6754
-#: ../Network/Receive/ServerType0.pm:6669
+#: ../Network/Receive/ServerType0.pm:6674
 #, perl-format
 msgid "Failed to buy %s of item #%s from vender (unknown code %s).\n"
 msgstr "Неудачная покупка %s шт. предмета №%s у торговца (неизвестный код %s).\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6771
-#: ../Network/Receive/ServerType0.pm:6687
+#: ../Network/Receive/ServerType0.pm:6692
 #, perl-format
 msgid ""
 "%s\n"
@@ -3473,7 +3473,7 @@ msgstr ""
 "#  Имя                                             Тип         Кол-во         Цена\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6825
-#: ../Network/Receive/ServerType0.pm:6737
+#: ../Network/Receive/ServerType0.pm:6742
 #: ../Commands.pm:5000
 msgid ""
 "----------------- Warp Portal --------------------\n"
@@ -3483,52 +3483,52 @@ msgstr ""
 "#  Место                         Локация\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6844
-#: ../Network/Receive/ServerType0.pm:6756
+#: ../Network/Receive/ServerType0.pm:6761
 msgid "There is no mail in your inbox.\n"
 msgstr "В почтовом ящике нет писем.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6848
-#: ../Network/Receive/ServerType0.pm:6760
+#: ../Network/Receive/ServerType0.pm:6765
 #, perl-format
 msgid "You've got Mail! (%s)\n"
 msgstr "Вам пришла почта! (%s)\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6850
-#: ../Network/Receive/ServerType0.pm:6762
+#: ../Network/Receive/ServerType0.pm:6767
 msgid "Inbox"
 msgstr "Почтовый ящик"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6853
-#: ../Network/Receive/ServerType0.pm:6765
+#: ../Network/Receive/ServerType0.pm:6770
 #, perl-format
 msgid "@> R @%s @%s @%s"
 msgstr "@> R @%s @%s @%s"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6869
-#: ../Network/Receive/ServerType0.pm:6777
+#: ../Network/Receive/ServerType0.pm:6782
 #, perl-format
 msgid "@> %s @%s @%s @%s"
 msgstr "@> %s @%s @%s @%s"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6889
-#: ../Network/Receive/ServerType0.pm:6797
+#: ../Network/Receive/ServerType0.pm:6802
 msgid "Mail"
 msgstr "Почта"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6890
-#: ../Network/Receive/ServerType0.pm:6798
+#: ../Network/Receive/ServerType0.pm:6803
 #, perl-format
 msgid "Title: @%s Sender: @%s"
 msgstr "Тема: @%s Отправитель: @%s"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6892
-#: ../Network/Receive/ServerType0.pm:6800
+#: ../Network/Receive/ServerType0.pm:6805
 #, perl-format
 msgid "Message: %s\n"
 msgstr "Послание: %s\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6894
-#: ../Network/Receive/ServerType0.pm:6802
+#: ../Network/Receive/ServerType0.pm:6807
 #, perl-format
 msgid ""
 "Item: %s %s\n"
@@ -3538,143 +3538,143 @@ msgstr ""
 "Зени:    %s\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6905
-#: ../Network/Receive/ServerType0.pm:6813
+#: ../Network/Receive/ServerType0.pm:6818
 msgid "Successfully added attachment to inventory.\n"
 msgstr "Приложение из письма было удачно переложено в инвентарь.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6907
-#: ../Network/Receive/ServerType0.pm:6815
+#: ../Network/Receive/ServerType0.pm:6820
 msgid "Failed to get the attachment to inventory due to your weight.\n"
 msgstr "Не получилось вытащить вложение из-за веса вашего инвентаря.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6909
-#: ../Network/Receive/ServerType0.pm:6817
+#: ../Network/Receive/ServerType0.pm:6822
 msgid "Failed to get the attachment to inventory.\n"
 msgstr "Не удалось переложить приложение из письма в инвентарь.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6916
-#: ../Network/Receive/ServerType0.pm:6824
+#: ../Network/Receive/ServerType0.pm:6829
 msgid "Failed to send mail, the recipient does not exist.\n"
 msgstr "Не получилось отправить письмо, ибо такого получателя не существут.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6917
-#: ../Network/Receive/ServerType0.pm:6825
+#: ../Network/Receive/ServerType0.pm:6830
 msgid "Mail sent succesfully.\n"
 msgstr "Почта была успешно отправлена.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6922
-#: ../Network/Receive/ServerType0.pm:6830
+#: ../Network/Receive/ServerType0.pm:6835
 #, perl-format
 msgid "New mail from sender: %s titled: %s.\n"
 msgstr "Новое письмо от: %s тема: %s.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6929
-#: ../Network/Receive/ServerType0.pm:6837
+#: ../Network/Receive/ServerType0.pm:6842
 #, perl-format
 msgid "Failed to attach %s.\n"
 msgstr "Не получилось приложить %s.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6929
 #: ../Network/Receive/kRO/Sakexe_0.pm:6931
-#: ../Network/Receive/ServerType0.pm:6837
-#: ../Network/Receive/ServerType0.pm:6845
+#: ../Network/Receive/ServerType0.pm:6842
+#: ../Network/Receive/ServerType0.pm:6850
 msgid "item: "
 msgstr "предмет: "
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6929
 #: ../Network/Receive/kRO/Sakexe_0.pm:6931
-#: ../Network/Receive/ServerType0.pm:6837
-#: ../Network/Receive/ServerType0.pm:6845
+#: ../Network/Receive/ServerType0.pm:6842
+#: ../Network/Receive/ServerType0.pm:6850
 msgid "zeny"
 msgstr "зени"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6931
-#: ../Network/Receive/ServerType0.pm:6845
+#: ../Network/Receive/ServerType0.pm:6850
 #, perl-format
 msgid "Succeeded to attach %s.\n"
 msgstr "Получилось приложить %s.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6938
-#: ../Network/Receive/ServerType0.pm:6852
+#: ../Network/Receive/ServerType0.pm:6857
 #, perl-format
 msgid "Failed to delete mail with ID: %s.\n"
 msgstr "Не получилось удалить письмо с ID: %s.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6941
-#: ../Network/Receive/ServerType0.pm:6855
+#: ../Network/Receive/ServerType0.pm:6860
 #, perl-format
 msgid "Succeeded to delete mail with ID: %s.\n"
 msgstr "Удалено письмо с ID: %s.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6948
-#: ../Network/Receive/ServerType0.pm:6862
+#: ../Network/Receive/ServerType0.pm:6867
 msgid "Mail window is now closed.\n"
 msgstr "Окно с письмом сейчас закрыто.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6951
-#: ../Network/Receive/ServerType0.pm:6865
+#: ../Network/Receive/ServerType0.pm:6870
 msgid "Mail window is now opened.\n"
 msgstr "Окно с письмом сейчас открыто.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6958
-#: ../Network/Receive/ServerType0.pm:6872
+#: ../Network/Receive/ServerType0.pm:6877
 #, perl-format
 msgid "The mail with ID: %s does not exist.\n"
 msgstr "Письмо с ID: %s не существует.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6959
-#: ../Network/Receive/ServerType0.pm:6873
+#: ../Network/Receive/ServerType0.pm:6878
 #, perl-format
 msgid "The mail with ID: %s is returned to the sender.\n"
 msgstr "Письмо с ID: %s было возвращено отправителю.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6967
-#: ../Network/Receive/ServerType0.pm:6881
+#: ../Network/Receive/ServerType0.pm:6886
 msgid "You have failed to bid into the auction.\n"
 msgstr "У вас не получилось участвовать в аукционе.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6969
-#: ../Network/Receive/ServerType0.pm:6883
+#: ../Network/Receive/ServerType0.pm:6888
 msgid "You have successfully bid in the auction.\n"
 msgstr "Вы успешно предложили цену на аукционе.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6971
-#: ../Network/Receive/ServerType0.pm:6885
+#: ../Network/Receive/ServerType0.pm:6890
 msgid "The auction has been canceled.\n"
 msgstr "Аукцион был отменён.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6973
-#: ../Network/Receive/ServerType0.pm:6887
+#: ../Network/Receive/ServerType0.pm:6892
 msgid "An auction with at least one bidder cannot be canceled.\n"
 msgstr "Нельзя отменить аукцион, если в нём участвует хотя бы один игрок.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6975
-#: ../Network/Receive/ServerType0.pm:6889
+#: ../Network/Receive/ServerType0.pm:6894
 msgid "You cannot register more than 5 items in an auction at a time.\n"
 msgstr "Вы не можете выставить на аукцион более 5 предметов за раз.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6977
-#: ../Network/Receive/ServerType0.pm:6891
+#: ../Network/Receive/ServerType0.pm:6896
 msgid "You do not have enough Zeny to pay the Auction Fee.\n"
 msgstr "У вас не хватает денег, чтобы оплатить стоимость заявки на аукцион.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6979
-#: ../Network/Receive/ServerType0.pm:6893
+#: ../Network/Receive/ServerType0.pm:6898
 msgid "You have won the auction.\n"
 msgstr "Вы победили в аукционе.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6981
-#: ../Network/Receive/ServerType0.pm:6895
+#: ../Network/Receive/ServerType0.pm:6900
 msgid "You have failed to win the auction.\n"
 msgstr "Вам не удалось победить в аукционе.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6983
-#: ../Network/Receive/ServerType0.pm:6897
+#: ../Network/Receive/ServerType0.pm:6902
 msgid "You do not have enough Zeny.\n"
 msgstr "У вас недостаточно зени.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6985
-#: ../Network/Receive/ServerType0.pm:6899
+#: ../Network/Receive/ServerType0.pm:6904
 msgid "You cannot place more than 5 bids at a time.\n"
 msgstr "Вы не можете сделать более 5 ставок за раз.\n"
 
@@ -3685,116 +3685,116 @@ msgstr "Вы не можете сделать более 5 ставок за р�
 #: ../Network/Receive/kRO/Sakexe_0.pm:7177
 #: ../Network/Receive/kRO/Sakexe_0.pm:7375
 #: ../Network/Receive/kRO/Sakexe_0.pm:7477
-#: ../Network/Receive/ServerType0.pm:6901
-#: ../Network/Receive/ServerType0.pm:6974
-#: ../Network/Receive/ServerType0.pm:7041
-#: ../Network/Receive/ServerType0.pm:7061
-#: ../Network/Receive/ServerType0.pm:7093
-#: ../Network/Receive/ServerType0.pm:7291
-#: ../Network/Receive/ServerType0.pm:7393
+#: ../Network/Receive/ServerType0.pm:6906
+#: ../Network/Receive/ServerType0.pm:6979
+#: ../Network/Receive/ServerType0.pm:7046
+#: ../Network/Receive/ServerType0.pm:7066
+#: ../Network/Receive/ServerType0.pm:7098
+#: ../Network/Receive/ServerType0.pm:7296
+#: ../Network/Receive/ServerType0.pm:7399
 #, perl-format
 msgid "flag: %s gave unknown results in: %s\n"
 msgstr "flag: %s дал непонятный ответ: %s\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7000
-#: ../Network/Receive/ServerType0.pm:6913
+#: ../Network/Receive/ServerType0.pm:6918
 msgid "No item in auction.\n"
 msgstr "На аукцион не выставлен ни один предмет.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7004
-#: ../Network/Receive/ServerType0.pm:6917
+#: ../Network/Receive/ServerType0.pm:6922
 #, perl-format
 msgid "Found %s items in auction.\n"
 msgstr "В аукционе найдено %s предметов.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7006
-#: ../Network/Receive/ServerType0.pm:6919
+#: ../Network/Receive/ServerType0.pm:6924
 msgid "Auction"
 msgstr "Аукцион"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7007
 #: ../Network/Receive/kRO/Sakexe_0.pm:7038
-#: ../Network/Receive/ServerType0.pm:6920
-#: ../Network/Receive/ServerType0.pm:6953
+#: ../Network/Receive/ServerType0.pm:6925
+#: ../Network/Receive/ServerType0.pm:6958
 #, perl-format
 msgid "@%s @%s @%s @%s @%s"
 msgstr "@%s @%s @%s @%s @%s"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7053
-#: ../Network/Receive/ServerType0.pm:6968
+#: ../Network/Receive/ServerType0.pm:6973
 msgid "You have ended the auction.\n"
 msgstr "Вы завершили аукцион.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7055
-#: ../Network/Receive/ServerType0.pm:6970
+#: ../Network/Receive/ServerType0.pm:6975
 msgid "You cannot end the auction.\n"
 msgstr "Вы не можете завершить аукцион.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7057
-#: ../Network/Receive/ServerType0.pm:6972
+#: ../Network/Receive/ServerType0.pm:6977
 msgid "Bid number is incorrect.\n"
 msgstr "Неправильный номер ставки.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7066
-#: ../Network/Receive/ServerType0.pm:6981
+#: ../Network/Receive/ServerType0.pm:6986
 msgid "Auction window is now closed.\n"
 msgstr "Окно аукциона сейчас закрыто.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7069
-#: ../Network/Receive/ServerType0.pm:6984
+#: ../Network/Receive/ServerType0.pm:6989
 msgid "Auction window is now opened.\n"
 msgstr "Окно аукциона сейчас открыто.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7076
-#: ../Network/Receive/ServerType0.pm:6991
+#: ../Network/Receive/ServerType0.pm:6996
 #, perl-format
 msgid "Failed (note: usable items can't be auctioned) to add item with index: %s.\n"
 msgstr "Не получилось добавить предмет с индексом (примечание: используемые предметы нельзя выставлять на аукцион): %s.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7079
-#: ../Network/Receive/ServerType0.pm:6994
+#: ../Network/Receive/ServerType0.pm:6999
 #, perl-format
 msgid "Succeeded to add item with index: %s.\n"
 msgstr "Предмет с индексом %s был успешно добавлен в аукцион.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7088
-#: ../Network/Receive/ServerType0.pm:7003
+#: ../Network/Receive/ServerType0.pm:7008
 msgid "Hotkeys"
 msgstr "Горячие клавиши"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7090
-#: ../Network/Receive/ServerType0.pm:7005
+#: ../Network/Receive/ServerType0.pm:7010
 msgid "Name"
 msgstr "Имя"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7090
-#: ../Network/Receive/ServerType0.pm:7005
+#: ../Network/Receive/ServerType0.pm:7010
 msgid "Type"
 msgstr "Тип"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7090
-#: ../Network/Receive/ServerType0.pm:7005
+#: ../Network/Receive/ServerType0.pm:7010
 msgid "Lv"
 msgstr "Уровень"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7098
-#: ../Network/Receive/ServerType0.pm:7013
+#: ../Network/Receive/ServerType0.pm:7018
 #, perl-format
 msgid "@%s @%s @%s @%s"
 msgstr "@%s @%s @%s @%s"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7100
-#: ../Network/Receive/ServerType0.pm:7015
+#: ../Network/Receive/ServerType0.pm:7020
 msgid "skill"
 msgstr "умение"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7100
-#: ../Network/Receive/ServerType0.pm:7015
+#: ../Network/Receive/ServerType0.pm:7020
 msgid "item"
 msgstr "предмет"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7109
-#: ../Network/Receive/ServerType0.pm:7024
+#: ../Network/Receive/ServerType0.pm:7029
 msgid ""
 "Error: You have been forced to disconnect by a Hack Shield.\n"
 " Please check Poseidon.\n"
@@ -3803,295 +3803,292 @@ msgstr ""
 "Пожалуйста, проверьте Poseidon.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7116
-#: ../Network/Receive/ServerType0.pm:7031
+#: ../Network/Receive/ServerType0.pm:7036
 msgid "Already allied.\n"
 msgstr "Вы уже заключили с ними альянс.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7118
-#: ../Network/Receive/ServerType0.pm:7033
+#: ../Network/Receive/ServerType0.pm:7038
 msgid "You rejected the offer.\n"
 msgstr "Вы отклонили предложение заключить альянс с другой гильдией.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7120
-#: ../Network/Receive/ServerType0.pm:7035
+#: ../Network/Receive/ServerType0.pm:7040
 msgid "You accepted the offer.\n"
 msgstr "Вы приняли предложение заключить альянс с другой гильдией.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7122
-#: ../Network/Receive/ServerType0.pm:7037
+#: ../Network/Receive/ServerType0.pm:7042
 msgid "They have too any alliances\n"
 msgstr "У них слишком много союзников.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7124
-#: ../Network/Receive/ServerType0.pm:7039
+#: ../Network/Receive/ServerType0.pm:7044
 msgid "You have too many alliances.\n"
 msgstr "У вас слишком много союзников.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7132
-#: ../Network/Receive/ServerType0.pm:7047
+#: ../Network/Receive/ServerType0.pm:7052
 #, perl-format
 msgid "%s's talkie box message: %s.\n"
 msgstr "Сообщение говорящей коробки игрока %s: %s.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7138
-#: ../Network/Receive/ServerType0.pm:7053
+#: ../Network/Receive/ServerType0.pm:7058
 msgid "A manner point has been successfully aligned.\n"
 msgstr "Добавлен пункт за хорошее поведение.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7140
-#: ../Network/Receive/ServerType0.pm:7055
+#: ../Network/Receive/ServerType0.pm:7060
 msgid "Chat Block has been applied by GM due to your ill-mannerous action.\n"
 msgstr "Ваш чат был заблокирован игровым мастером.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7142
-#: ../Network/Receive/ServerType0.pm:7057
+#: ../Network/Receive/ServerType0.pm:7062
 msgid "Automated Chat Block has been applied due to Anti-Spam System.\n"
 msgstr "Ваш чат был автоматически заблокирован системой анти-спама.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7144
-#: ../Network/Receive/ServerType0.pm:7059
+#: ../Network/Receive/ServerType0.pm:7064
 msgid "You got a good point.\n"
 msgstr "Вы получили хороший пункт.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7153
-#: ../Network/Receive/ServerType0.pm:7068
+#: ../Network/Receive/ServerType0.pm:7073
 #, perl-format
 msgid "You have been: muted by %s.\n"
 msgstr "Игровой мастер %s заблокировал ваш чат.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7156
-#: ../Network/Receive/ServerType0.pm:7071
+#: ../Network/Receive/ServerType0.pm:7076
 #, perl-format
 msgid "You have been: unmuted by %s.\n"
 msgstr "Игровой мастре %s разблокировал ваш чат.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7165
-#: ../Network/Receive/ServerType0.pm:7081
+#: ../Network/Receive/ServerType0.pm:7086
 #, perl-format
 msgid "You have now marked: %s as Place of the %s.\n"
 msgstr "Тэквондист выбрал локацию %s Местом %s.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7167
-#: ../Network/Receive/ServerType0.pm:7083
+#: ../Network/Receive/ServerType0.pm:7088
 #, perl-format
 msgid "%s is marked as Place of the %s.\n"
 msgstr "Тэквондист выбрал локацию %s Местом %s.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7169
-#: ../Network/Receive/ServerType0.pm:7085
+#: ../Network/Receive/ServerType0.pm:7090
 #, perl-format
 msgid "You have now marked %s as Target of the %s.\n"
 msgstr "Тэквондист выбрал %s Мобом %s.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7171
-#: ../Network/Receive/ServerType0.pm:7087
+#: ../Network/Receive/ServerType0.pm:7092
 #, perl-format
 msgid "%s is marked as Target of the %s.\n"
 msgstr "Тэквондист выбрал %s Мобом %s.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7173
-#: ../Network/Receive/ServerType0.pm:7089
+#: ../Network/Receive/ServerType0.pm:7094
 msgid "[TaeKwon Mission] Target Monster : %s (%d%)\n"
 msgstr "[Миссия Таэквондиста] Ваша цель : %s (%d%)\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7175
-#: ../Network/Receive/ServerType0.pm:7091
+#: ../Network/Receive/ServerType0.pm:7096
 msgid "Your Hate and Feel targets have been resetted.\n"
 msgstr "[Ангел Солнца, Луны и Звезды] Запомненные места и монстры были сброшены.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7185
-#: ../Network/Receive/ServerType0.pm:7101
+#: ../Network/Receive/ServerType0.pm:7106
 msgid "You are not a guildmaster.\n"
 msgstr "Вы не глава гильдии.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7188
-#: ../Network/Receive/ServerType0.pm:7104
+#: ../Network/Receive/ServerType0.pm:7109
 #, perl-format
 msgid "type: %s gave unknown results in: %s\n"
 msgstr "type: %s дал непонятный ответ: %s\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7191
-#: ../Network/Receive/ServerType0.pm:7107
+#: ../Network/Receive/ServerType0.pm:7112
 msgid "You are a guildmaster.\n"
 msgstr "Вы - глава гильдии.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7255
-#: ../Network/Receive/ServerType0.pm:7170
+#: ../Network/Receive/ServerType0.pm:7175
 #, perl-format
 msgid "Blade Stop by %s on %s is deactivated.\n"
 msgstr "Умение Остановить удар игрока %s прекратило действие на %s.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7257
-#: ../Network/Receive/ServerType0.pm:7172
+#: ../Network/Receive/ServerType0.pm:7177
 #, perl-format
 msgid "Blade Stop by %s on %s is active.\n"
 msgstr "Умение Остановить удар игрока %s подействовало на %s.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7263
-#: ../Network/Receive/ServerType0.pm:7178
+#: ../Network/Receive/ServerType0.pm:7183
 #, perl-format
 msgid "%s and %s have divorced from each other.\n"
 msgstr "Игроки %s и %s получили развод.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7271
-#: ../Network/Receive/ServerType0.pm:7186
+#: ../Network/Receive/ServerType0.pm:7191
 msgid "Upgrade List"
 msgstr "Список улучшения"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7288
 #: ../Network/Receive/kRO/Sakexe_0.pm:7290
-#: ../Network/Receive/ServerType0.pm:7200
+#: ../Network/Receive/ServerType0.pm:7205
 #, perl-format
 msgid "Weapon upgraded: %s\n"
 msgstr "Оружие улучшено: %s\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7292
-#: ../Network/Receive/ServerType0.pm:7205
+#: ../Network/Receive/ServerType0.pm:7210
 #, perl-format
 msgid "Cannot upgrade %s until you level up the upgrade weapon skill.\n"
 msgstr "Вам не хватает умения, чтобы заточить %s.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7294
-#: ../Network/Receive/ServerType0.pm:7207
+#: ../Network/Receive/ServerType0.pm:7212
 #, perl-format
 msgid "You lack item %s to upgrade the weapon.\n"
 msgstr "Вы не можете заточить это из-за нехватки материала %s.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7305
-#: ../Network/Receive/ServerType0.pm:7218
+#: ../Network/Receive/ServerType0.pm:7223
 msgid "Cooking List"
 msgstr "Список блюд"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7314
-#: ../Network/Receive/ServerType0.pm:7227
+#: ../Network/Receive/ServerType0.pm:7232
 msgid "You can now use the 'cook' command.\n"
 msgstr "Вы можете теперь использовать консольную команду 'cook'.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7331
-#: ../Network/Receive/ServerType0.pm:7243
+#: ../Network/Receive/ServerType0.pm:7248
 #, perl-format
 msgid "Party member %s has picked up item %s.\n"
 msgstr "Сопартиец %s поднял предмет %s.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7367
-#: ../Network/Receive/ServerType0.pm:7283
+#: ../Network/Receive/ServerType0.pm:7288
 msgid "The Memorial Dungeon expired it has been destroyed.\n"
 msgstr "Срок существования Усыпальницы истёк; она уничтожена.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7369
-#: ../Network/Receive/ServerType0.pm:7285
+#: ../Network/Receive/ServerType0.pm:7290
 msgid "The Memorial Dungeon's entry time limit expired it has been destroyed.\n"
 msgstr "Лимит времени для входа в Усыпальницу истёк; она уничтожена.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7371
-#: ../Network/Receive/ServerType0.pm:7287
+#: ../Network/Receive/ServerType0.pm:7292
 msgid "The Memorial Dungeon has been removed.\n"
 msgstr "Усыпальница удалена.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7373
-#: ../Network/Receive/ServerType0.pm:7289
+#: ../Network/Receive/ServerType0.pm:7294
 msgid "The instance windows has been removed, possibly due to party/guild leave.\n"
 msgstr "Окно Усыпальницы было закрыто, возможно из-за выхода из пати или гильдии.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7395
-#: ../Network/Receive/ServerType0.pm:7311
+#: ../Network/Receive/ServerType0.pm:7316
 #, perl-format
 msgid "Battleground score - Lions: '%d' VS Eagles: '%d'\n"
 msgstr "Счёт турнира - Львы: '%d' против Орлы: '%d'\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7417
-#: ../Network/Receive/ServerType0.pm:7333
+#: ../Network/Receive/ServerType0.pm:7338
 msgid "Attempting to capture pet (slot machine).\n"
 msgstr "Попытка приручить питомца (игровой автомат).\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7430
-#: ../Network/Receive/ServerType0.pm:7346
+#: ../Network/Receive/ServerType0.pm:7351
 #, perl-format
 msgid "The '%s' item will disappear in %d minutes.\n"
 msgstr "Взятый напрокат предмет '%s' исчезнет через %d мин.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7436
-#: ../Network/Receive/ServerType0.pm:7352
+#: ../Network/Receive/ServerType0.pm:7357
 #, perl-format
 msgid "Rental item '%s' has expired!\n"
 msgstr "Взятый напрокат предмет '%s' закончился!\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7449
-#: ../Network/Receive/ServerType0.pm:7365
+#: ../Network/Receive/ServerType0.pm:7370
 msgid "You cannot adopt more than 1 child.\n"
 msgstr "Вы не можете иметь больше чем одного приёмного ребёнка.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7451
-#: ../Network/Receive/ServerType0.pm:7367
+#: ../Network/Receive/ServerType0.pm:7372
 msgid "You must be at least character level 70 in order to adopt someone.\n"
 msgstr "Будущие родители должны быть 70 уровня или выше.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7453
-#: ../Network/Receive/ServerType0.pm:7369
+#: ../Network/Receive/ServerType0.pm:7374
 msgid "You cannot adopt a married person.\n"
 msgstr "Вы не можете усыновить персонажа, состоящего в браке.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7460
-#: ../Network/Receive/ServerType0.pm:7376
+#: ../Network/Receive/ServerType0.pm:7381
 #, perl-format
 msgid "%s wishes to adopt you. Do you accept?\n"
 msgstr "Игрок %s желает стать вам приёмным родителем. Согласны ли вы стать приёмым ребёнком?\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7468
-#: ../Network/Receive/ServerType0.pm:7384
+#: ../Network/Receive/ServerType0.pm:7390
 msgid "You cannot find any trace of a Boss Monster in this area.\n"
 msgstr "На этой локации нет MVP-боссов.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7470
-#: ../Network/Receive/ServerType0.pm:7386
+#: ../Network/Receive/ServerType0.pm:7392
 #, perl-format
 msgid "MVP Boss %s is now on location: (%d, %d)\n"
 msgstr "MVP-босс %s находится сейчас по координатам: (%d, %d).\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7472
-#: ../Network/Receive/ServerType0.pm:7388
+#: ../Network/Receive/ServerType0.pm:7394
 #, perl-format
 msgid "MVP Boss %s has been detected on this map!\n"
 msgstr "MVP-босс %s был замечен на этой локации!\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7474
-#: ../Network/Receive/ServerType0.pm:7390
+#: ../Network/Receive/ServerType0.pm:7396
 #, perl-format
 msgid "MVP Boss %s is dead, but will spawn again in %d hour(s) and %d minutes(s).\n"
 msgstr "MVP-босс %s был убит, но появится снова через %d ч. %d мин.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7525
-#: ../Network/Receive/ServerType0.pm:7438
+#: ../Network/Receive/ServerType0.pm:7444
 #, perl-format
 msgid "Quest: %s has been added.\n"
 msgstr "Добавлен квест: %s.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7547
-#: ../Network/Receive/ServerType0.pm:7459
+#: ../Network/Receive/ServerType0.pm:7465
 #, perl-format
 msgid "Quest: %s has been deleted.\n"
 msgstr "Удалён квест: %s.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7570
-#: ../Network/Receive/ServerType0.pm:7479
 #: ../Commands.pm:5340
 msgid "active"
 msgstr "выполняется"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7570
-#: ../Network/Receive/ServerType0.pm:7479
 #: ../Commands.pm:5340
 msgid "inactive"
 msgstr "не выполняется"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7571
-#: ../Network/Receive/ServerType0.pm:7481
 #, perl-format
 msgid "Quest: %s is now %s.\n"
 msgstr "Квест %s теперь: %s (active - активен, inactive - неактивен).\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7577
-#: ../Network/Receive/ServerType0.pm:7497
+#: ../Network/Receive/ServerType0.pm:7507
 #, perl-format
 msgid "The accountName for ID %s is %s.\n"
 msgstr "ID -  %s, accountName - %s.\n"
@@ -4105,72 +4102,82 @@ msgid "Sell completed.\n"
 msgstr "Продажа предметов завершена.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7596
-#: ../Network/Receive/ServerType0.pm:7489
+#: ../Network/Receive/ServerType0.pm:7499
 msgid "Please wait 10 seconds before trying to log out.\n"
 msgstr "Пожалуйста, подождите 10 секунд прежде чем попытаться выйти.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:7598
-#: ../Network/Receive/ServerType0.pm:7491
+#: ../Network/Receive/ServerType0.pm:7501
 msgid "Logged out from the server succesfully.\n"
 msgstr "Успешно отсоединились от сервера.\n"
 
 #: ../Network/Receive/kRO/Sakexe_2005_05_30a.pm:54
-#: ../Network/Receive/ServerType0.pm:2762
+#: ../Network/Receive/ServerType0.pm:2765
 #, perl-format
 msgid "Autodetected attackDistance for homunculus = %s\n"
 msgstr "Автоопределение дистанции атаки для Гомункула: attackDistance = %s.\n"
 
 #: ../Network/Receive/kRO/Sakexe_2007_11_06a.pm:52
-#: ../Network/Receive/ServerType0.pm:2739
+#: ../Network/Receive/ServerType0.pm:2742
 #, perl-format
 msgid "Autodetected attackDistance for mercenary = %s\n"
 msgstr "Автоопределение дистанции атаки для наёмника: attackDistance = %s.\n"
 
-#: ../Network/Receive/ServerType0.pm:2266
+#: ../Network/Receive/ServerType0.pm:2269
 msgid "That person is in Kafra storage.\n"
 msgstr "Этот персонаж сейчас занят на складе Кафры.\n"
 
-#: ../Network/Receive/ServerType0.pm:4085
+#: ../Network/Receive/ServerType0.pm:4089
 msgid "You need to be at least base level 10 to send private messages.\n"
 msgstr "Невозможно отправлять личные сообщения до 10 уровня\n"
 
-#: ../Network/Receive/ServerType0.pm:4504
+#: ../Network/Receive/ServerType0.pm:4509
 msgid "Join request failed: ANSWER_JOINMSG_REFUSE.\n"
 msgstr "Предложение вступить в пати провалилось: ANSWER_JOINMSG_REFUSE.\n"
 
-#: ../Network/Receive/ServerType0.pm:4506
+#: ../Network/Receive/ServerType0.pm:4511
 msgid "Join request failed: unknown error.\n"
 msgstr "Неудачное приглашение в пати, из-за непонятной ошибки.\n"
 
-#: ../Network/Receive/ServerType0.pm:4508
+#: ../Network/Receive/ServerType0.pm:4513
 msgid "Join request failed: the character is not currently online or does not exist.\n"
 msgstr "Предложение вступить в пати провалилось: указанного персонажа нет в онлайне или же его нет вообще.\n"
 
-#: ../Network/Receive/ServerType0.pm:4510
+#: ../Network/Receive/ServerType0.pm:4515
 msgid "Join request failed: ANSWER_INVALID_MAPPROPERTY.\n"
 msgstr "Предложение вступить в пати провалилось: ANSWER_INVALID_MAPPROPERTY.\n"
 
-#: ../Network/Receive/ServerType0.pm:4582
+#: ../Network/Receive/ServerType0.pm:4587
 #, perl-format
 msgid "%s failed to leave party (%d)\n"
 msgstr "Игроку %s не удалось покинуть пати (%d).\n"
 
-#: ../Network/Receive/ServerType0.pm:7079
+#: ../Network/Receive/ServerType0.pm:7084
 msgid "Sun"
 msgstr "Солнце"
 
-#: ../Network/Receive/ServerType0.pm:7079
+#: ../Network/Receive/ServerType0.pm:7084
 msgid "Moon"
 msgstr "Луна"
 
-#: ../Network/Receive/ServerType0.pm:7079
+#: ../Network/Receive/ServerType0.pm:7084
 msgid "Stars"
 msgstr "Звёзды"
 
-#: ../Network/Receive/ServerType0.pm:7202
+#: ../Network/Receive/ServerType0.pm:7207
 #, perl-format
 msgid "Weapon not upgraded: %s\n"
 msgstr "Оружие не было улучшено: %s\n"
+
+#: ../Network/Receive/ServerType0.pm:7488
+#, fuzzy, perl-format
+msgid "Quest %s is now active.\n"
+msgstr "Квест %s теперь: %s (active - активен, inactive - неактивен).\n"
+
+#: ../Network/Receive/ServerType0.pm:7489
+#, fuzzy, perl-format
+msgid "Quest %s is now inactive.\n"
+msgstr "Квест %s теперь: %s (active - активен, inactive - неактивен).\n"
 
 #: ../Network/DirectConnection.pm:148
 #, perl-format
@@ -4669,7 +4676,7 @@ msgid "Change Attack useWeapon to default : %s\n"
 msgstr "Смена 'attackUseWeapon' на по-умолчанию: %s.\n"
 
 #. Translation Comment: No status effect on actor
-#: ../Actor.pm:426
+#: ../Actor.pm:427
 msgid "none"
 msgstr "пусто"
 
@@ -5910,7 +5917,7 @@ msgstr ""
 
 #: ../Commands.pm:2072
 #: ../Commands.pm:3965
-#: ../Misc.pm:2080
+#: ../Misc.pm:2081
 msgid "Error: No description available.\n"
 msgstr "Ошибка: описание недоступно.\n"
 
@@ -6188,7 +6195,7 @@ msgstr "Инвентарь пуст\n"
 #. Translation Comment: Mark to show not identified items
 #: ../Commands.pm:2793
 #: ../Commands.pm:4235
-#: ../Misc.pm:2977
+#: ../Misc.pm:3000
 msgid "Not Identified"
 msgstr "Не идентифицированно"
 
@@ -8086,27 +8093,27 @@ msgstr ""
 "%s\n"
 "------------------------------------------\n"
 
-#: ../Misc.pm:1160
+#: ../Misc.pm:1159
 msgid "Create a new character"
 msgstr "Создать нового персонажа"
 
-#: ../Misc.pm:1160
+#: ../Misc.pm:1161
 msgid "Delete a character"
 msgstr "Удалить персонажа"
 
-#: ../Misc.pm:1162
-msgid "Please choose a character or an action."
-msgstr "Пожалуйста, выберите персонажа или действие."
-
 #: ../Misc.pm:1163
-msgid "Character selection"
-msgstr "Выбор персонажа"
-
-#: ../Misc.pm:1185
 msgid "There are no characters on this account.\n"
 msgstr "Персонажи в данном аккаунте отсутствуют.\n"
 
-#: ../Misc.pm:1191
+#: ../Misc.pm:1167
+msgid "Please choose a character or an action."
+msgstr "Пожалуйста, выберите персонажа или действие."
+
+#: ../Misc.pm:1168
+msgid "Character selection"
+msgstr "Выбор персонажа"
+
+#: ../Misc.pm:1192
 msgid ""
 "Please enter the desired properties for your characters, in this form:\n"
 "(slot) \"(name)\" [ (str) (agi) (vit) (int) (dex) (luk) [ (hairstyle) [(haircolor)] ] ]"
@@ -8114,24 +8121,24 @@ msgstr ""
 "Пожалуйста, введите желаемые характеристики вашего персонажа в эту форму:\n"
 "(слот) \"(имя)\" [ (str) (agi) (vit) (int) (dex) (luk) [ (тип волос) [(цвет волос)] ] ]"
 
-#: ../Misc.pm:1199
+#: ../Misc.pm:1200
 msgid "You didn't specify enough parameters."
 msgstr "Вы указали недостаточно параметров."
 
-#: ../Misc.pm:1203
+#: ../Misc.pm:1204
 #, perl-format
 msgid "Creating character \"%s\" in slot \"%s\"...\n"
 msgstr "Создание персонажа \"%s\" в слоте \"%s\"...\n"
 
-#: ../Misc.pm:1211
+#: ../Misc.pm:1212
 msgid "Select the character you want to delete."
 msgstr "Выберите чара, которого желаете удалить."
 
-#: ../Misc.pm:1213
+#: ../Misc.pm:1214
 msgid "Delete character"
 msgstr "Удаление персонажа"
 
-#: ../Misc.pm:1225
+#: ../Misc.pm:1226
 #, perl-format
 msgid ""
 "Are you ABSOLUTELY SURE you want to delete:\n"
@@ -8140,67 +8147,67 @@ msgstr ""
 "Вы АБСОЛЮТНО УВЕРЕНЫ в том, что хотите удалить персонажа?\n"
 "%s"
 
-#: ../Misc.pm:1226
+#: ../Misc.pm:1227
 msgid "No, don't delete"
 msgstr "Нет, не удалять"
 
-#: ../Misc.pm:1226
+#: ../Misc.pm:1227
 msgid "Yes, delete"
 msgstr "Да, удалить"
 
-#: ../Misc.pm:1227
+#: ../Misc.pm:1228
 msgid "Confirm delete"
 msgstr "Подтверждение удаления"
 
-#: ../Misc.pm:1233
+#: ../Misc.pm:1234
 #, perl-format
 msgid "Deleting character %s...\n"
 msgstr "Удаление персонажа %s...\n"
 
-#: ../Misc.pm:1261
+#: ../Misc.pm:1262
 msgid "** Exiting...\n"
 msgstr "** Завершение...\n"
 
-#: ../Misc.pm:1399
+#: ../Misc.pm:1400
 msgid "We're not currently connected to the character login server."
 msgstr "На данный момент мы не подключены к чар-серверу."
 
-#: ../Misc.pm:1402
+#: ../Misc.pm:1403
 #, perl-format
 msgid "Slot \"%s\" is not a valid number."
 msgstr "Номер слота \"%s\" неверен."
 
-#: ../Misc.pm:1405
+#: ../Misc.pm:1406
 msgid "The slot must be comprised between 0 and 4."
 msgstr "Номер слота может быть от 0 до 4 включительно."
 
-#: ../Misc.pm:1408
+#: ../Misc.pm:1409
 #, perl-format
 msgid "Slot %s already contains a character (%s)."
 msgstr "В слоте %s уже есть персонаж  (%s)."
 
-#: ../Misc.pm:1411
+#: ../Misc.pm:1412
 msgid "Name must not be longer than 23 characters."
 msgstr "Имя не может быть длиннее 23 символов."
 
-#: ../Misc.pm:1417
+#: ../Misc.pm:1418
 msgid "Stats must be comprised between 1 and 9."
 msgstr "Статы должны быть распределены от 1 до 9 включительно."
 
-#: ../Misc.pm:1423
+#: ../Misc.pm:1424
 msgid "The sums Str + Int, Agi + Luk and Vit + Dex must all be equal to 10."
 msgstr "Суммы Str + Int, Agi + Luk и Vit + Dex дложны быть равны 10."
 
-#: ../Misc.pm:1517
+#: ../Misc.pm:1518
 msgid "Message Dumped into DUMP.txt!\n"
 msgstr "Дамп сообщения записан в DUMP.txt!\n"
 
-#: ../Misc.pm:1658
+#: ../Misc.pm:1659
 #, perl-format
 msgid "Inventory Item Removed: %s (%d) x %d\n"
 msgstr "Предмет удалён из инвентаря: %s (%d) x %d шт.\n"
 
-#: ../Misc.pm:2081
+#: ../Misc.pm:2082
 #, perl-format
 msgid ""
 "===============Item Description===============\n"
@@ -8211,216 +8218,216 @@ msgstr ""
 "Предмет : %s\n"
 "\n"
 
-#: ../Misc.pm:2122
+#: ../Misc.pm:2123
 msgid "Exiting...\n"
 msgstr "Завершение...\n"
 
-#: ../Misc.pm:2133
+#: ../Misc.pm:2134
 #, perl-format
 msgid "Relogging in %d seconds...\n"
 msgstr "Переподключение через %d секунд...\n"
 
-#: ../Misc.pm:2279
+#: ../Misc.pm:2280
 #, perl-format
 msgid "%s are in %s state.\n"
 msgstr "%s находитесь в состоянии %s.\n"
 
-#: ../Misc.pm:2281
+#: ../Misc.pm:2282
 #, perl-format
 msgid "%s is in %s state.\n"
 msgstr "%s находится в состоянии %s.\n"
 
-#: ../Misc.pm:2289
+#: ../Misc.pm:2290
 #, perl-format
 msgid "%s are out of %s state.\n"
 msgstr "%s вышли из состояния %s.\n"
 
-#: ../Misc.pm:2291
+#: ../Misc.pm:2292
 #, perl-format
 msgid "%s is out of %s state.\n"
 msgstr "%s вышел из состояния %s.\n"
 
-#: ../Misc.pm:2301
+#: ../Misc.pm:2324
 #, perl-format
 msgid "%s have ailment: %s.\n"
 msgstr "%s заболели: %s.\n"
 
-#: ../Misc.pm:2303
+#: ../Misc.pm:2326
 #, perl-format
 msgid "%s has ailment: %s.\n"
 msgstr "%s заболел: %s.\n"
 
-#: ../Misc.pm:2310
+#: ../Misc.pm:2333
 #, perl-format
 msgid "%s are out of ailment: %s.\n"
 msgstr "%s выздоровели от: %s.\n"
 
-#: ../Misc.pm:2312
+#: ../Misc.pm:2335
 #, perl-format
 msgid "%s is out of ailment: %s.\n"
 msgstr "%s выздоровел от: %s.\n"
 
-#: ../Misc.pm:2323
+#: ../Misc.pm:2346
 #, perl-format
 msgid "%s have look: %s.\n"
 msgstr "%s выглядите как: %s.\n"
 
-#: ../Misc.pm:2325
+#: ../Misc.pm:2348
 #, perl-format
 msgid "%s has look: %s.\n"
 msgstr "%s выглядит как: %s.\n"
 
-#: ../Misc.pm:2332
+#: ../Misc.pm:2355
 #, perl-format
 msgid "%s are out of look: %s.\n"
 msgstr "%s перестали выглядеть как: %s.\n"
 
-#: ../Misc.pm:2334
+#: ../Misc.pm:2357
 #, perl-format
 msgid "%s is out of look: %s.\n"
 msgstr "%s перестал выглядеть как: %s.\n"
 
-#: ../Misc.pm:2345
-#: ../Misc.pm:2353
-#: ../Misc.pm:2359
-#: ../Misc.pm:2364
+#: ../Misc.pm:2368
+#: ../Misc.pm:2376
+#: ../Misc.pm:2382
+#: ../Misc.pm:2387
 #, perl-format
 msgid "Found perfectly hidden %s\n"
 msgstr "Обнаружен игрок в перфект-хайде %s\n"
 
-#: ../Misc.pm:2435
+#: ../Misc.pm:2458
 #, perl-format
 msgid "%s does not exist.\n"
 msgstr "%s отсутствует\n"
 
-#: ../Misc.pm:2475
+#: ../Misc.pm:2498
 msgid "Teleporting because of attack miss\n"
 msgstr "Телепорт, так как слишком много промахов.\n"
 
-#: ../Misc.pm:2479
+#: ../Misc.pm:2502
 #, perl-format
 msgid "Teleporting after attacking a monster %d times\n"
 msgstr "Телепорт после %d неудачных попыток атаковать моба.\n"
 
-#: ../Misc.pm:2485
-#: ../Misc.pm:2593
+#: ../Misc.pm:2508
+#: ../Misc.pm:2616
 #, perl-format
 msgid "%s (%s) has been provoked, searching another monster\n"
 msgstr "%s (%s) был спровоцирован, поиск следующего моба.\n"
 
-#: ../Misc.pm:2512
+#: ../Misc.pm:2535
 #, perl-format
 msgid "Teleporting due to attack from %s\n"
 msgstr "Теплепорт, из-за атаки %s.\n"
 
-#: ../Misc.pm:2518
+#: ../Misc.pm:2541
 #, perl-format
 msgid "Next %d dmg could kill you. Teleporting...\n"
 msgstr "Ещё %d ед. урона могут убить вас. Телепорт...\n"
 
-#: ../Misc.pm:2525
+#: ../Misc.pm:2548
 #, perl-format
 msgid "%s hit you for more than %d dmg. Teleporting...\n"
 msgstr "%s нанес вам более чем %d ед. урона. Телепорт...\n"
 
-#: ../Misc.pm:2532
+#: ../Misc.pm:2555
 #, perl-format
 msgid "%s hit you for more than %d dmg in lockMap. Teleporting...\n"
 msgstr "%s нанес вам более чем %d ед. урона на локации lockMap. Телепорт...\n"
 
-#: ../Misc.pm:2538
+#: ../Misc.pm:2561
 #, perl-format
 msgid "%s attacks you while you are sitting. Teleporting...\n"
 msgstr "%s атаковал вас пока вы сидели. Телепорт...\n"
 
-#: ../Misc.pm:2546
+#: ../Misc.pm:2569
 #, perl-format
 msgid "%s hit you for a total of more than %d dmg. Teleporting...\n"
 msgstr "%s всего нанес вам больше чем %d ед. урона. Телепорт...\n"
 
-#: ../Misc.pm:2553
+#: ../Misc.pm:2576
 #, perl-format
 msgid "%s hit you for a total of more than %d dmg in lockMap. Teleporting...\n"
 msgstr "%s всего нанес вам %d урона на локации lockMap. Телепорт...\n"
 
-#: ../Misc.pm:2558
+#: ../Misc.pm:2581
 #, perl-format
 msgid "%s hit you when your HP is too low. Teleporting...\n"
 msgstr "%s атаковал вас, когда у вас мало HP. Телепорт...\n"
 
-#: ../Misc.pm:2580
+#: ../Misc.pm:2603
 #, perl-format
 msgid "Change target to aggressive : %s (%s)\n"
 msgstr "Смена цели на агрессора: %s (%s)\n"
 
-#: ../Misc.pm:2625
+#: ../Misc.pm:2648
 #, perl-format
 msgid "Slave teleporting due to attack from %s\n"
 msgstr "Телепорт из-за того, что ваш слуга был атакован мобом %s.\n"
 
-#: ../Misc.pm:2631
+#: ../Misc.pm:2654
 #, perl-format
 msgid "Next %d dmg could kill your slave. Teleporting...\n"
 msgstr "Ещё %d ед. урона  могут убить вашего слуги. Телепорт...\n"
 
-#: ../Misc.pm:2638
+#: ../Misc.pm:2661
 #, perl-format
 msgid "%s hit your slave for more than %d dmg. Teleporting...\n"
 msgstr "%s нанёс вашему спутнику более чем %d ед. урона. Телепорт...\n"
 
-#: ../Misc.pm:2645
+#: ../Misc.pm:2668
 #, perl-format
 msgid "%s hit your slave for more than %d dmg in lockMap. Teleporting...\n"
 msgstr "%s нанёс вашему спутнику более чем %d ед. урона в локации lockMap. Телепорт...\n"
 
-#: ../Misc.pm:2653
+#: ../Misc.pm:2676
 #, perl-format
 msgid "%s hit your slave for a total of more than %d dmg. Teleporting...\n"
 msgstr "%s нанёс в сумме вашему спутнику %d ед. урона. Телепорт...\n"
 
-#: ../Misc.pm:2660
+#: ../Misc.pm:2683
 #, perl-format
 msgid "%s hit your slave for a total of more than %d dmg in lockMap. Teleporting...\n"
 msgstr "%s нанёс в сумме вашему спутнику %d ед. урона в локации lockMap. Телепорт...\n"
 
-#: ../Misc.pm:2665
+#: ../Misc.pm:2688
 #, perl-format
 msgid "%s hit your slave when your homunculus' HP is too low. Teleporting...\n"
 msgstr "%s атаковал Гомункула, а у того мало HP. Телепорт...\n"
 
-#: ../Misc.pm:2692
+#: ../Misc.pm:2715
 #, perl-format
 msgid "Slave change target to aggressive : %s (%s)\n"
 msgstr "Слуга изменил цель на агрессора: %s (%s)\n"
 
-#: ../Misc.pm:2842
+#: ../Misc.pm:2865
 msgid "Using Teleport Skill Level 2 though we not have it!\n"
 msgstr "Использование Телепорт 2-ур, хотя у персонажа его нет!\n"
 
-#: ../Misc.pm:2901
+#: ../Misc.pm:2924
 msgid "No Fly Wing or Butterfly Wing, fallback to Teleport Skill\n"
 msgstr "Нет Крыльев мухи/бабочки, использование умения Телепорт.\n"
 
-#: ../Misc.pm:2906
+#: ../Misc.pm:2929
 msgid "You don't have the Teleport skill or a Fly Wing\n"
 msgstr "Нет умения Телепорт, нет Крыльев мухи.\n"
 
-#: ../Misc.pm:2908
+#: ../Misc.pm:2931
 msgid "You don't have the Teleport skill or a Butterfly Wing\n"
 msgstr "Нет умения Телепорт, нет Крыльев бабочки\n"
 
-#: ../Misc.pm:2970
+#: ../Misc.pm:2993
 #, perl-format
 msgid "---------- Storage %s -----------\n"
 msgstr "---------- Склад %s -------------\n"
 
 #. Translation Comment: Mark to show broken items
-#: ../Misc.pm:2979
+#: ../Misc.pm:3002
 msgid "Broken"
 msgstr "Сломано"
 
 #. Translation Comment: Storage Capacity
-#: ../Misc.pm:2983
+#: ../Misc.pm:3006
 #, perl-format
 msgid ""
 "\n"
@@ -8429,176 +8436,176 @@ msgstr ""
 "\n"
 "Вместительность: %d/%d\n"
 
-#: ../Misc.pm:2987
+#: ../Misc.pm:3010
 msgid "Storage logged\n"
 msgstr "Записан лог склада.\n"
 
-#: ../Misc.pm:2990
+#: ../Misc.pm:3013
 #, perl-format
 msgid "Unable to write to %s\n"
 msgstr "Невозможно записать в %s\n"
 
-#: ../Misc.pm:3133
+#: ../Misc.pm:3156
 #, perl-format
 msgid "%s %s %s (Dmg: %s) (Delay: %s)\n"
 msgstr "%s %s %s (урон: %s) (задержка: %s)\n"
 
-#: ../Misc.pm:3146
+#: ../Misc.pm:3169
 #, perl-format
 msgid "%s are casting %s on %s (Delay: %sms)\n"
 msgstr "%s кастуете умение %s на %s (задержка: %sмс)\n"
 
-#: ../Misc.pm:3149
-#: ../Misc.pm:3155
+#: ../Misc.pm:3172
+#: ../Misc.pm:3178
 #, perl-format
 msgid "location (%d, %d)"
 msgstr "координатам (%d, %d)"
 
-#: ../Misc.pm:3152
+#: ../Misc.pm:3175
 #, perl-format
 msgid "%s is casting %s on %s (Delay: %sms)\n"
 msgstr "%s кастует умение %s на %s (задержка: %sмс)\n"
 
-#: ../Misc.pm:3169
-#: ../Misc.pm:3184
+#: ../Misc.pm:3192
+#: ../Misc.pm:3207
 msgid "use"
 msgstr "используете"
 
-#: ../Misc.pm:3169
-#: ../Misc.pm:3184
+#: ../Misc.pm:3192
+#: ../Misc.pm:3207
 msgid "uses"
 msgstr "использует"
 
-#: ../Misc.pm:3171
-#: ../Misc.pm:3186
+#: ../Misc.pm:3194
+#: ../Misc.pm:3209
 #, perl-format
 msgid "(Lv: %s)"
 msgstr "(ур: %s)"
 
-#: ../Misc.pm:3172
+#: ../Misc.pm:3195
 msgid "on"
 msgstr "на"
 
-#: ../Misc.pm:3174
+#: ../Misc.pm:3197
 #, perl-format
 msgid "(Dmg: %s)"
 msgstr "(урон: %s)"
 
-#: ../Misc.pm:3174
+#: ../Misc.pm:3197
 msgid "Miss"
 msgstr "Промах"
 
-#: ../Misc.pm:3175
+#: ../Misc.pm:3198
 #, perl-format
 msgid "(delay: %s)"
 msgstr "(задержка: %s)"
 
-#: ../Misc.pm:3187
+#: ../Misc.pm:3210
 msgid "on location"
 msgstr "по координатам"
 
-#: ../Misc.pm:3212
+#: ../Misc.pm:3235
 #, perl-format
 msgid "%s are %s: %s%s\n"
 msgstr "%s %s имеете статус: %s%s\n"
 
-#: ../Misc.pm:3214
-#: ../Misc.pm:3220
+#: ../Misc.pm:3237
+#: ../Misc.pm:3243
 msgid "now"
 msgstr "сейчас"
 
-#: ../Misc.pm:3214
-#: ../Misc.pm:3220
+#: ../Misc.pm:3237
+#: ../Misc.pm:3243
 msgid "again"
 msgstr "снова"
 
-#: ../Misc.pm:3214
-#: ../Misc.pm:3220
+#: ../Misc.pm:3237
+#: ../Misc.pm:3243
 msgid "no longer"
 msgstr "больше не"
 
-#: ../Misc.pm:3216
-#: ../Misc.pm:3222
+#: ../Misc.pm:3239
+#: ../Misc.pm:3245
 #, perl-format
 msgid "(Duration: %ss)"
 msgstr "(длительность: %s с)"
 
-#: ../Misc.pm:3218
+#: ../Misc.pm:3241
 #, perl-format
 msgid "%s is %s: %s%s\n"
 msgstr "%s %s имеет статус: %s%s\n"
 
-#: ../Misc.pm:3313
+#: ../Misc.pm:3336
 #, perl-format
 msgid "GM %s is nearby, teleport & disconnect for %d seconds"
 msgstr "GM %s рядом, телепорт и отключение на %d секунд"
 
-#: ../Misc.pm:3318
+#: ../Misc.pm:3341
 #, perl-format
 msgid "GM %s is nearby, disconnect for %s seconds"
 msgstr "GM %s рядом, отключение на %s секунд"
 
-#: ../Misc.pm:3324
+#: ../Misc.pm:3347
 #, perl-format
 msgid "GM %s is nearby, teleporting"
 msgstr "GM %s рядом, телепорт"
 
-#: ../Misc.pm:3329
+#: ../Misc.pm:3352
 #, perl-format
 msgid "GM %s is nearby, respawning"
 msgstr "GM %s рядом, возврат на точку сохранения"
 
-#: ../Misc.pm:3354
+#: ../Misc.pm:3377
 #, perl-format
 msgid "%s (%s) is nearby, disconnecting...\n"
 msgstr "%s (%s) рядом, отключение...\n"
 
-#: ../Misc.pm:3355
+#: ../Misc.pm:3378
 #, perl-format
 msgid "*** Found %s (%s) nearby and disconnected ***\n"
 msgstr "*** %s (%s) был обнаружен рядом и отключился ***\n"
 
-#: ../Misc.pm:3361
+#: ../Misc.pm:3384
 #, perl-format
 msgid "Teleporting to avoid player %s (%s)\n"
 msgstr "Телепорт, чтобы избежать встречи с игроком %s (%s).\n"
 
-#: ../Misc.pm:3362
+#: ../Misc.pm:3385
 #, perl-format
 msgid "*** Found %s (%s) nearby and teleported ***\n"
 msgstr "*** %s (%s) был обнаружен рядом и телепортировался ***\n"
 
-#: ../Misc.pm:3375
+#: ../Misc.pm:3398
 #, perl-format
 msgid "%s is nearby, disconnecting...\n"
 msgstr "%s рядом, отключение...\n"
 
-#: ../Misc.pm:3376
+#: ../Misc.pm:3399
 #, perl-format
 msgid "*** Found %s nearby and disconnected ***\n"
 msgstr "*** %s обнаружен рядом и отключился ***\n"
 
-#: ../Misc.pm:3409
+#: ../Misc.pm:3432
 #, perl-format
 msgid "Processing map %s...\n"
 msgstr "Обработка локации %s...\n"
 
-#: ../Misc.pm:3444
+#: ../Misc.pm:3467
 #, perl-format
 msgid "Wrote portals Line of Sight table to '%s'\n"
 msgstr "Записаны данные о прямой видимости (LoS) порталов в табличный файл '%s'\n"
 
-#: ../Misc.pm:3448
-#: ../Misc.pm:3452
+#: ../Misc.pm:3471
+#: ../Misc.pm:3475
 msgid "----------------------------Error Summary----------------------------\n"
 msgstr "-------------------------- Итог ошибок ------------------------------\n"
 
-#: ../Misc.pm:3449
+#: ../Misc.pm:3472
 #, perl-format
 msgid "Missing: %s.fld\n"
 msgstr "Потерян: %s.fld\n"
 
-#: ../Misc.pm:3450
+#: ../Misc.pm:3473
 msgid ""
 "Note: LOS information for the above listed map(s) will be inaccurate;\n"
 "      however it is safe to ignore if those map(s) are not used\n"
@@ -8606,47 +8613,47 @@ msgstr ""
 "Примечание: Информация о Линии Видимости (LOS) на данной локации может быть неточной;\n"
 "      тем не менее, ничего страшного в этом нет\n"
 
-#: ../Misc.pm:3586
+#: ../Misc.pm:3609
 #, perl-format
 msgid "Invalid NPC information for autoBuy, autoSell or autoStorage! (%s)\n"
 msgstr "Неверная информация о неписи в параметрах конфига autoBuy, autoSell или autoStorage! (%s)\n"
 
-#: ../Misc.pm:4062
+#: ../Misc.pm:4084
 msgid "A shop has already been opened.\n"
 msgstr "Торговая лавка уже открыта.\n"
 
-#: ../Misc.pm:4069
+#: ../Misc.pm:4091
 msgid "You don't have the Vending skill.\n"
 msgstr "У вас нет умения для открытия торговой лавки.\n"
 
-#: ../Misc.pm:4074
+#: ../Misc.pm:4096
 msgid "Your shop does not have a title.\n"
 msgstr "У вашей торговой лавки нет названия.\n"
 
-#: ../Misc.pm:4106
+#: ../Misc.pm:4128
 msgid "There are no items to sell.\n"
 msgstr "Отсутствуют предметы для продажи.\n"
 
-#: ../Misc.pm:4121
+#: ../Misc.pm:4143
 #, perl-format
 msgid "Shop opened (%s) with %d selling items.\n"
 msgstr "Торговая лавка открыта - (%s). Предметов для продажи - %d  шт.\n"
 
-#: ../Misc.pm:4128
+#: ../Misc.pm:4150
 msgid "A shop has not been opened.\n"
 msgstr "Не получилось открыть торговую лавку.\n"
 
-#: ../Misc.pm:4136
+#: ../Misc.pm:4158
 msgid "Shop closed.\n"
 msgstr "Торговая лавка закрыта.\n"
 
-#: ../Misc.pm:4157
+#: ../Misc.pm:4179
 #: ../functions.pl:275
 #, perl-format
 msgid "Loading %s...\n"
 msgstr "Загрузка %s...\n"
 
-#: ../Misc.pm:4168
+#: ../Misc.pm:4190
 #: ../functions.pl:281
 #, perl-format
 msgid ""
