@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: Openkore\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-06-01 14:11+0700\n"
-"PO-Revision-Date: 2010-06-01 14:12+0700\n"
-"Last-Translator: Richard Samuel <dewa5227@gmail.com>\n"
+"PO-Revision-Date: 2010-06-01 12:31+0100\n"
+"Last-Translator: manticora <the-manticora@yandex.ru>\n"
 "Language-Team: DeniZka (all in 1)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -476,7 +476,7 @@ msgstr "Ваш слуга нашeлся!\n"
 
 #: ../AI/Slave.pm:189
 msgid "Teleporting to get slave back\n"
-msgstr "Телепорт, чтобы найти слугу.\n"
+msgstr "Телепорт, чтобы найти слугу\n"
 
 #: ../AI/Slave.pm:198
 #, perl-format
@@ -490,7 +490,7 @@ msgstr "Вы потеряли своего Гомункула!\n"
 #: ../AI/Slave.pm:228
 #, perl-format
 msgid "Your Slave moves too far (distance: %.2f) - Moving near your Slave\n"
-msgstr "Ваш слуга отошел слишком далеко (дистанция: %.2f) - подходим к нему поближе.\n"
+msgstr "Ваш слуга отошел слишком далеко (дистанция: %.2f) - подходим к нему поближе\n"
 
 #: ../AI/Slave.pm:302
 #, perl-format
@@ -499,41 +499,41 @@ msgstr "Слуга атакует: %s\n"
 
 #: ../AI/Slave.pm:433
 msgid "Slave can't reach or damage target, dropping target\n"
-msgstr "Слуга не может достать или повредить цель, цель брошена.\n"
+msgstr "Слуга не может достать или повредить цель, цель брошена\n"
 
 #: ../AI/Slave.pm:435
 #: ../AI/Slave.pm:559
 #: ../AI/Slave.pm:694
 #: ../AI/Slave.pm:753
 msgid "Teleport due to dropping slave attack target\n"
-msgstr "Телепорт, ибо слуга бросил свою цель.\n"
+msgstr "Телепорт, ибо слуга бросил свою цель\n"
 
 #: ../AI/Slave.pm:446
 msgid "Slave target died\n"
-msgstr "Цель слуги мертва.\n"
+msgstr "Цель слуги мертва\n"
 
 #: ../AI/Slave.pm:482
 msgid "Slave target lost\n"
-msgstr "Цель слуги потеряна.\n"
+msgstr "Цель слуги потеряна\n"
 
 #: ../AI/Slave.pm:555
 #: ../AI/Slave.pm:741
 msgid "Dropping target - slave will not kill steal others\n"
-msgstr "Цель брошена, слуга не килл-стилит у других.\n"
+msgstr "Цель брошена, слуга не килл-стилит у других\n"
 
 #: ../AI/Slave.pm:599
 #, perl-format
 msgid "%s; no acceptable place for slave to stand\n"
-msgstr "%s; нет подходящего места для слуги, чтобы тот мог встать.\n"
+msgstr "%s; нет подходящего места для слуги, чтобы тот мог встать\n"
 
 #: ../AI/Slave.pm:692
 msgid "Unable to calculate a route to slave target, dropping target\n"
-msgstr "Нельзя проложить маршрут до цели слуги, цель брошена.\n"
+msgstr "Нельзя проложить маршрут до цели слуги, цель брошена\n"
 
 #: ../AI/Slave.pm:835
 #: ../AI/Slave.pm:927
 msgid "Slave destination reached.\n"
-msgstr "Слуга дошел до места.\n"
+msgstr "Местоположение слуги достигнуто.\n"
 
 #: ../AI/Slave.pm:862
 #, perl-format
@@ -643,11 +643,11 @@ msgstr "Зеней в час"
 
 #: ../Interface/Wx/StatView/Exp.pm:22
 msgid "Base Levelup Time Estimation"
-msgstr "Примерное время до левелапа"
+msgstr "Примерное время до повышения уровня"
 
 #: ../Interface/Wx/StatView/Exp.pm:23
 msgid "Job Levelup Time Estimation"
-msgstr "Примерное время до проф-левелапа"
+msgstr "Примерное время до повышения проф. уровня"
 
 #: ../Interface/Wx/StatView/Exp.pm:24
 msgid "Died"
@@ -1455,30 +1455,30 @@ msgstr "Принудительное подключение к чар-серве
 #: ../Network/Receive/ServerType17.pm:98
 #, perl-format
 msgid "Server %s selected\n"
-msgstr "Сервер %s выбран\n"
+msgstr "Выбран сервер %s\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:684
 #: ../Network/Receive/ServerType0.pm:617
 #: ../Commands.pm:4094
 msgid "You are sitting.\n"
-msgstr "Вы сидите.\n"
+msgstr "Вы сели.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:688
 #: ../Network/Receive/ServerType0.pm:621
 #, perl-format
 msgid "%s is sitting.\n"
-msgstr "%s сидит.\n"
+msgstr "%s сел.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:698
 #: ../Network/Receive/ServerType0.pm:631
 msgid "You are standing.\n"
-msgstr "Вы стоите.\n"
+msgstr "Вы встали.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:704
 #: ../Network/Receive/ServerType0.pm:637
 #, perl-format
 msgid "%s is standing.\n"
-msgstr "%s стоит.\n"
+msgstr "%s встал.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:715
 #: ../Network/Receive/ServerType0.pm:648
@@ -1500,7 +1500,7 @@ msgstr "Игрок погиб: %s (%d) %s %s.\n"
 #: ../Network/Receive/ServerType0.pm:819
 #, perl-format
 msgid "Slave Died: %s (%d) %s\n"
-msgstr "Гомункул погиб: %s (%d) %s.\n"
+msgstr "Слуга погиб: %s (%d) %s.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:957
 #: ../Network/Receive/ServerType0.pm:889
@@ -1698,7 +1698,7 @@ msgstr "Персонаж удалён.\n"
 #: ../Network/Receive/kRO/Sakexe_0.pm:2015
 #: ../Network/Receive/ServerType0.pm:1951
 msgid "Character cannot be deleted. Your e-mail address was probably wrong.\n"
-msgstr "Персонаж не может быть удален. Возможно, из-за неверно введённого e-mail адреса.\n"
+msgstr "Персонаж не может быть удалён. Возможно, из-за неверно введённого e-mail адреса.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2090
 #: ../Network/Receive/ServerType0.pm:2026
@@ -1840,7 +1840,7 @@ msgstr "Вы подтвердили сделку.\n"
 #: ../Network/Receive/ServerType0.pm:2310
 #, perl-format
 msgid "%s (level %s) Requests a Deal\n"
-msgstr "%s (%s уровня) приглашает заключить сделку.\n"
+msgstr "%s (%s ур.) приглашает заключить сделку.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2374
 #: ../Network/Receive/ServerType0.pm:2311
@@ -3188,7 +3188,7 @@ msgstr "Отключение из-за получения %s уровня!\n"
 #: ../Network/Receive/ServerType0.pm:6010
 #, perl-format
 msgid "You are now job level %s\n"
-msgstr "Ваш персонаж стал %s-го проф-уровеня!\n"
+msgstr "Ваш персонаж стал %s-го проф-уровня!\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6084
 #: ../Network/Receive/kRO/Sakexe_0.pm:6085
@@ -3402,25 +3402,25 @@ msgstr "Вы сняли %s (%d) - %s\n"
 #: ../Network/Receive/ServerType0.pm:6546
 #, perl-format
 msgid "%s gained a level!\n"
-msgstr "%s получил уровень!\n"
+msgstr "%s - получение уровня!\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6630
 #: ../Network/Receive/ServerType0.pm:6549
 #, perl-format
 msgid "%s gained a job level!\n"
-msgstr "%s получил проф-уровень!\n"
+msgstr "%s - получение проф-уровня!\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6633
 #: ../Network/Receive/ServerType0.pm:6552
 #, perl-format
 msgid "%s failed to refine a weapon!\n"
-msgstr "%s неудачное улучшение оружия!\n"
+msgstr "%s - неудачное улучшение оружия!\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6635
 #: ../Network/Receive/ServerType0.pm:6554
 #, perl-format
 msgid "%s successfully refined a weapon!\n"
-msgstr "%s удачное улучше оружия!\n"
+msgstr "%s - удачное улучшение оружия!\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:6646
 #: ../Network/Receive/ServerType0.pm:6565
@@ -4170,14 +4170,14 @@ msgid "Weapon not upgraded: %s\n"
 msgstr "Оружие не было улучшено: %s\n"
 
 #: ../Network/Receive/ServerType0.pm:7488
-#, fuzzy, perl-format
+#, perl-format
 msgid "Quest %s is now active.\n"
-msgstr "Квест %s теперь: %s (active - активен, inactive - неактивен).\n"
+msgstr "Квест %s сейчас активен.\n"
 
 #: ../Network/Receive/ServerType0.pm:7489
-#, fuzzy, perl-format
+#, perl-format
 msgid "Quest %s is now inactive.\n"
-msgstr "Квест %s теперь: %s (active - активен, inactive - неактивен).\n"
+msgstr "Квест %s сейчас неактивен.\n"
 
 #: ../Network/DirectConnection.pm:148
 #, perl-format
@@ -4704,7 +4704,7 @@ msgstr "Тут нельзя использовать консольную ком
 #: ../Commands.pm:292
 #, perl-format
 msgid "Unknown command '%s'. Please read the documentation for a list of commands.\n"
-msgstr "Непонятная консольная команда '%s'. Пожалуста, прочитайте документацию по консольным командам.\n"
+msgstr "Непонятная консольная команда '%s'. Пожалуйста, прочитайте документацию по консольным командам.\n"
 
 #: ../Commands.pm:454
 msgid "AI sequences cleared\n"
@@ -5653,11 +5653,11 @@ msgstr ""
 
 #: ../Commands.pm:1699
 msgid "Your falcon is active\n"
-msgstr "Ваш Сокол активен.\n"
+msgstr "У вас есть сокол\n"
 
 #: ../Commands.pm:1701
 msgid "Your falcon is inactive\n"
-msgstr "Ваш Сокол не активен.\n"
+msgstr "У вас нет сокола\n"
 
 #: ../Commands.pm:1705
 msgid ""
@@ -5682,7 +5682,7 @@ msgid ""
 "Player %s either not visible or not online in party.\n"
 msgstr ""
 "Ошибка в консольной команде 'follow' (следовать за игроком)\n"
-"Не видно игрока %s или же не в онлайне.\n"
+"Не видно игрока %s или же он не в онлайне.\n"
 
 #: ../Commands.pm:1748
 msgid ""
@@ -5760,7 +5760,7 @@ msgstr ""
 
 #: ../Commands.pm:1836
 msgid "Error: Can't detect slaves - character is not yet ready\n"
-msgstr "Ошибка: Не могу найти спутников, персонаж ещё не готов.\n"
+msgstr "Ошибка: Не могу найти слуг персонаж ещё не готов.\n"
 
 #: ../Commands.pm:1846
 msgid "Error: Unknown command in cmdSlave\n"
@@ -5939,7 +5939,7 @@ msgid ""
 "Syntax Error in function 'slave skills' (Slave Skills Functions)\n"
 "Usage: %s skills [(<add | desc>) [<skill #>]]\n"
 msgstr ""
-"Синтаксическая ошибка в консольной команде 'slave skills' (команды для умений спутников)\n"
+"Синтаксическая ошибка в консольной команде 'slave skills' (команды для умений слуг)\n"
 "Использование: %s skills [(<add | desc>) [<skill #>]]\n"
 
 #: ../Commands.pm:2085
@@ -6339,7 +6339,7 @@ msgid ""
 "-----------NPC List-----------\n"
 "#    Name                         Coordinates   ID\n"
 msgstr ""
-"--------- Список неписей --------\n"
+"-------- Список неписей ------\n"
 "#    Имя                          Координаты    ID\n"
 
 #: ../Commands.pm:3098
@@ -6911,7 +6911,7 @@ msgid ""
 "-----------Slave List-----------\n"
 "#   Name                                   Type        Distance    Coordinates\n"
 msgstr ""
-"------- Список спутников -------\n"
+"---------- Список слуг ---------\n"
 "#   Имя                                   Тип        Дистанция    Координаты\n"
 
 #: ../Commands.pm:3999
@@ -7869,7 +7869,7 @@ msgid ""
 "%s"
 msgstr ""
 "Данная программа - OpenKore, столкнулась с неожиданной проблемой. Это могло\n"
-"произойти из-за недавнего обновления на сервере, ошибке в самой программе или\n"
+"произойти из-за недавнего обновления на сервере, ошибки в самой программе или\n"
 "же в одном из её плагинов. Мы приносим извинения за эту проблему. Вы можете\n"
 "обратиться за помощью по IRC или на форуме.\n"
 "\n"
@@ -8103,7 +8103,7 @@ msgstr "Удалить персонажа"
 
 #: ../Misc.pm:1163
 msgid "There are no characters on this account.\n"
-msgstr "Персонажи в данном аккаунте отсутствуют.\n"
+msgstr "Персонажи на данном аккаунте отсутствуют.\n"
 
 #: ../Misc.pm:1167
 msgid "Please choose a character or an action."
@@ -8298,27 +8298,27 @@ msgstr "Обнаружен игрок в перфект-хайде %s\n"
 #: ../Misc.pm:2458
 #, perl-format
 msgid "%s does not exist.\n"
-msgstr "%s отсутствует\n"
+msgstr "%s не существует\n"
 
 #: ../Misc.pm:2498
 msgid "Teleporting because of attack miss\n"
-msgstr "Телепорт, так как слишком много промахов.\n"
+msgstr "Телепорт, так как слишком много промахов\n"
 
 #: ../Misc.pm:2502
 #, perl-format
 msgid "Teleporting after attacking a monster %d times\n"
-msgstr "Телепорт после %d неудачных попыток атаковать моба.\n"
+msgstr "Телепорт после %d неудачных попыток атаковать моба\n"
 
 #: ../Misc.pm:2508
 #: ../Misc.pm:2616
 #, perl-format
 msgid "%s (%s) has been provoked, searching another monster\n"
-msgstr "%s (%s) был спровоцирован, поиск следующего моба.\n"
+msgstr "%s (%s) был спровоцирован, поиск следующего моба\n"
 
 #: ../Misc.pm:2535
 #, perl-format
 msgid "Teleporting due to attack from %s\n"
-msgstr "Теплепорт, из-за атаки %s.\n"
+msgstr "Теплепорт, из-за атаки %s\n"
 
 #: ../Misc.pm:2541
 #, perl-format
@@ -8363,7 +8363,7 @@ msgstr "Смена цели на агрессора: %s (%s)\n"
 #: ../Misc.pm:2648
 #, perl-format
 msgid "Slave teleporting due to attack from %s\n"
-msgstr "Телепорт из-за того, что ваш слуга был атакован мобом %s.\n"
+msgstr "Телепорт из-за того, что ваш слуга был атакован мобом %s\n"
 
 #: ../Misc.pm:2654
 #, perl-format
@@ -8373,27 +8373,27 @@ msgstr "Ещё %d ед. урона  могут убить вашего слуг�
 #: ../Misc.pm:2661
 #, perl-format
 msgid "%s hit your slave for more than %d dmg. Teleporting...\n"
-msgstr "%s нанёс вашему спутнику более чем %d ед. урона. Телепорт...\n"
+msgstr "%s нанёс вашему слуге более чем %d ед. урона. Телепорт...\n"
 
 #: ../Misc.pm:2668
 #, perl-format
 msgid "%s hit your slave for more than %d dmg in lockMap. Teleporting...\n"
-msgstr "%s нанёс вашему спутнику более чем %d ед. урона в локации lockMap. Телепорт...\n"
+msgstr "%s нанёс вашему слуге более чем %d ед. урона в локации lockMap. Телепорт...\n"
 
 #: ../Misc.pm:2676
 #, perl-format
 msgid "%s hit your slave for a total of more than %d dmg. Teleporting...\n"
-msgstr "%s нанёс в сумме вашему спутнику %d ед. урона. Телепорт...\n"
+msgstr "%s нанёс в сумме вашему слуге %d ед. урона. Телепорт...\n"
 
 #: ../Misc.pm:2683
 #, perl-format
 msgid "%s hit your slave for a total of more than %d dmg in lockMap. Teleporting...\n"
-msgstr "%s нанёс в сумме вашему спутнику %d ед. урона в локации lockMap. Телепорт...\n"
+msgstr "%s нанёс в сумме вашему слуге %d ед. урона в локации lockMap. Телепорт...\n"
 
 #: ../Misc.pm:2688
 #, perl-format
 msgid "%s hit your slave when your homunculus' HP is too low. Teleporting...\n"
-msgstr "%s атаковал Гомункула, а у того мало HP. Телепорт...\n"
+msgstr "%s ударил вашего слугу, когда у него было мало HP. Телепорт...\n"
 
 #: ../Misc.pm:2715
 #, perl-format
@@ -8406,11 +8406,11 @@ msgstr "Использование Телепорт 2-ур, хотя у перс
 
 #: ../Misc.pm:2924
 msgid "No Fly Wing or Butterfly Wing, fallback to Teleport Skill\n"
-msgstr "Нет Крыльев мухи/бабочки, использование умения Телепорт.\n"
+msgstr "Нет Крыльев мухи/бабочки, использование умения Телепорт\n"
 
 #: ../Misc.pm:2929
 msgid "You don't have the Teleport skill or a Fly Wing\n"
-msgstr "Нет умения Телепорт, нет Крыльев мухи.\n"
+msgstr "Нет умения Телепорт, нет Крыльев мухи\n"
 
 #: ../Misc.pm:2931
 msgid "You don't have the Teleport skill or a Butterfly Wing\n"
@@ -8438,7 +8438,7 @@ msgstr ""
 
 #: ../Misc.pm:3010
 msgid "Storage logged\n"
-msgstr "Записан лог склада.\n"
+msgstr "Записан лог склада\n"
 
 #: ../Misc.pm:3013
 #, perl-format
@@ -8480,7 +8480,7 @@ msgstr "использует"
 #: ../Misc.pm:3209
 #, perl-format
 msgid "(Lv: %s)"
-msgstr "(ур: %s)"
+msgstr "(%s ур.)"
 
 #: ../Misc.pm:3195
 msgid "on"
@@ -8507,7 +8507,7 @@ msgstr "по координатам"
 #: ../Misc.pm:3235
 #, perl-format
 msgid "%s are %s: %s%s\n"
-msgstr "%s %s имеете статус: %s%s\n"
+msgstr "%s %s получили статус: %s%s\n"
 
 #: ../Misc.pm:3237
 #: ../Misc.pm:3243
@@ -8568,7 +8568,7 @@ msgstr "*** %s (%s) был обнаружен рядом и отключился
 #: ../Misc.pm:3384
 #, perl-format
 msgid "Teleporting to avoid player %s (%s)\n"
-msgstr "Телепорт, чтобы избежать встречи с игроком %s (%s).\n"
+msgstr "Телепорт, чтобы избежать встречи с игроком %s (%s)\n"
 
 #: ../Misc.pm:3385
 #, perl-format
@@ -8760,7 +8760,6 @@ msgstr ""
 "Плагин содержит синтаксическую ошибку:\n"
 "%s"
 
-#. Translation Comment: Version String
 #: ../Settings.pm:83
 msgid "Custom Ragnarok Online client"
 msgstr "Custom Ragnarok Online client"
@@ -8788,7 +8787,7 @@ msgid ""
 "The error message is:\n"
 "%s"
 msgstr ""
-"Плагин не может быть загружен из-за проблемы в нём. Пожалуста, сообщите автору плагина, или удалите плагин, тогда %s сможет запуститься.\n"
+"Плагин не может быть загружен из-за проблемы в нём. Пожалуйста, сообщите автору плагина, или удалите плагин, тогда %s сможет запуститься.\n"
 "\n"
 "Сообщение об ошибке:\n"
 "%s"
@@ -8912,5 +8911,3 @@ msgstr "%sПодключение - %s "
 msgid "Map loaded\n"
 msgstr "Локация загружена\n"
 
-#~ msgid " (SVN Version) "
-#~ msgstr "(SVN версия)"
