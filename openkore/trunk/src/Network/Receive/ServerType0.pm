@@ -1805,6 +1805,7 @@ sub cash_dealer {
 	for (my $i = 8; $i < $args->{RAW_MSG_SIZE}; $i += 11) {
 		my ($price, $dcprice, $type, $ID) = unpack("V2 C v", substr($args->{RAW_MSG}, $i, 11));
 		my $store = $cashList[$cashList] = {};
+		# TODO: use itemName() or itemNameSimple()?
 		my $display = ($items_lut{$ID} ne "") ? $items_lut{$ID} : "Unknown $ID";
 		$store->{name} = $display;
 		$store->{nameID} = $ID;
@@ -4226,6 +4227,7 @@ sub npc_store_info {
 		my $ID = unpack("v1", substr($msg, $i + 9, 2));
 
 		my $store = $storeList[$storeList] = {};
+		# TODO: use itemName() or itemNameSimple()?
 		my $display = ($items_lut{$ID} ne "")
 			? $items_lut{$ID}
 			: "Unknown ".$ID;
