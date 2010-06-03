@@ -474,6 +474,8 @@ sub _onMotion {
 sub _onWheel {
 	my ($self, $event) = @_;
 	
+	return unless $self->{field}{object};
+	
 	$self->{zoom} *= 2 ** ($event->GetWheelRotation <=> 0);
 	$self->{zoom} = 8 if $self->{zoom} > 8;
 	$self->{zoom} = 0.5 if $self->{zoom} < 0.5;
