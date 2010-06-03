@@ -42,10 +42,8 @@ use I18N qw/bytesToString/;
 use Interface::Wx::Utils;
 
 use Interface::Wx::MainMenu;
+use Interface::Wx::ToolBar;
 use Interface::Wx::Window::Input;
-use Interface::Wx::Window::Console;
-use Interface::Wx::Window::ChatLog;
-use Interface::Wx::Window::Exp;
 
 use AI;
 use Settings qw(%sys);
@@ -82,6 +80,8 @@ sub new {
 		['mainLoop_pre',  \&onUpdate, $self],
 		['interface/helpcontext', \&onHelpContext, $self],
 	);
+	
+	$self->CreateToolBar;
 	
 	$self->{windows} = {};
 	
@@ -125,6 +125,11 @@ sub DESTROY {
 	$self->{aui}->UnInit;
 	
 	Plugins::delHooks($self->{hooks});
+}
+
+sub OnCreateToolBar {
+	my ($self, $style, $id, $name) = @_;
+	new Interface::Wx::ToolBar($self, $id, wxDefaultPosition, wxDefaultSize, $style, $name)
 }
 
 sub onLoadFiles {
@@ -183,6 +188,8 @@ sub updateStatusBar {
 	}
 
 	if ($conState == Network::IN_GAME) {
+		# TODO: B/J remaining time; current zeny
+		
 		$xyText = "$char->{pos_to}{x}, $char->{pos_to}{y}";
 
 		if ($AI) {
