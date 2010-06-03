@@ -22,7 +22,7 @@ use Translation qw(T TF);
 		
 		$self
 	}
-
+	
 	sub DESTROY { Plugins::delHooks($hooks) }
 }
 

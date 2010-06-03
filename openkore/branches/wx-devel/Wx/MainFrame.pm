@@ -284,32 +284,6 @@ sub toggleWindow {
 }
 
 =pod
-sub OnInit {
-	my $self = shift;
-	
-	$self->createInterface;
-	$self->iterate;
-	
-	$self->{hooks} = Plugins::addHooks(
-		# npc
-		['packet/npc_image',              sub { $self->onNpcImage (@_); }],
-		['npc_talk',                      sub { $self->onNpcTalk (@_); }],
-		['packet/npc_talk',               sub { $self->onNpcTalkPacket (@_); }],
-		['packet/npc_talk_continue',      sub { $self->onNpcContinue (@_); }],
-		['npc_talk_responses',            sub { $self->onNpcResponses (@_); }],
-		['packet/npc_talk_number',        sub { $self->onNpcNumber (@_); }],
-		['packet/npc_talk_text',          sub { $self->onNpcText (@_); }],
-		['npc_talk_done',                 sub { $self->onNpcClose (@_); }],
-	);
-	
-	$self->{history} = [];
-	$self->{historyIndex} = -1;
-
-	$self->{frame}->Update;
-	
-	return 1;
-}
-
 ##################
 ## Callbacks
 ##################
@@ -318,88 +292,6 @@ sub onBooleanSetting {
 	my ($self, $setting) = @_;
 	
 	configModify ($setting, !$config{$setting}, 1);
-}
-
-sub openNpcTalk {
-	my ($self, $create) = @_;
-	return unless $config{wx_npcTalk};
-	my ($page, $window) = $self->openWindow ('NPC Talk', 'Interface::Wx::NpcTalk', $create);
-	
-	if ($window) {
-		$window->onContinue  (sub { Commands::run ('talk cont'); });
-		$window->onResponses (sub { Commands::run ('talk resp ' . shift); });
-		$window->onNumber    (sub { Commands::run ('talk num ' . shift); });
-		$window->onText      (sub { Commands::run ('talk text ' . shift); });
-		$window->onCancel    (sub { Commands::run ('talk no'); });
-	}
-	
-	return ($page, $window);
-}
-
-### NPC Talk ###
-
-sub onNpcImage {
-	my ($self, undef, $args) = @_;
-	
-	if (my ($npcTalk) = $self->openNpcTalk (1)) {
-		$npcTalk->{child}->npcImage ($args->{type} == 2, bytesToString ($args->{npc_image}));
-	}
-}
-
-sub onNpcTalk {
-	my ($self, undef, $args) = @_;
-	
-	if (my ($npcTalk) = $self->openNpcTalk (1)) {
-		$npcTalk->{child}->npcName ($args->{ID}, $args->{name});
-	}
-}
-
-sub onNpcTalkPacket {
-	my ($self, undef, $args) = @_;
-	
-	if (my ($npcTalk) = $self->openNpcTalk (1)) {
-		$npcTalk->{child}->npcTalk (bytesToString ($args->{msg}));
-	}
-}
-
-sub onNpcContinue {
-	my ($self, undef, $args) = @_;
-	
-	if (my ($npcTalk) = $self->openNpcTalk (1)) {
-		$npcTalk->{child}->npcContinue unless $config{autoTalkCont};
-	}
-}
-
-sub onNpcResponses {
-	my ($self, undef, $args) = @_;
-	
-	if (my ($npcTalk) = $self->openNpcTalk (1)) {
-		$npcTalk->{child}->npcResponses ($args->{responses});
-	}
-}
-
-sub onNpcNumber {
-	my ($self) = @_;
-	
-	if (my ($npcTalk) = $self->openNpcTalk (1)) {
-		$npcTalk->{child}->npcNumber;
-	}
-}
-
-sub onNpcText {
-	my ($self) = @_;
-	
-	if (my ($npcTalk) = $self->openNpcTalk (1)) {
-		$npcTalk->{child}->npcText;
-	}
-}
-
-sub onNpcClose {
-	my ($self) = @_;
-	
-	if (my ($npcTalk) = $self->openNpcTalk (1)) {
-		$npcTalk->{child}->npcClose;
-	}
 }
 =cut
 1;
