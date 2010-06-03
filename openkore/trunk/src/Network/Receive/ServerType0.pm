@@ -2233,7 +2233,11 @@ sub deal_add_you {
 	return unless $args->{index} > 0;
 
 	my $item = $char->inventory->getByServerIndex($args->{index});
+	# FIXME: quickly add two items => lastItemAmount is lost => inventory corruption; see also Misc::dealAddItem
+	# FIXME: what will be in case of two items with the same nameID?
+	# TODO: no info about items is stored
 	$currentDeal{you}{$item->{nameID}}{amount} += $currentDeal{lastItemAmount};
+	$currentDeal{you}{$item->{nameID}}{nameID} = $item->{nameID};
 	$item->{amount} -= $currentDeal{lastItemAmount};
 	message TF("You added Item to Deal: %s x %s\n", $item->{name}, $currentDeal{lastItemAmount}), "deal";
 	$itemChange{$item->{name}} -= $currentDeal{lastItemAmount};
@@ -2303,7 +2307,7 @@ sub deal_finalize {
 
 sub deal_request {
 	my ($self, $args) = @_;
-	my $level = $args->{level} || 'Unknown';
+	my $level = $args->{level} || 'Unknown'; # TODO: store this info
 	my $user = bytesToString($args->{user});
 
 	$incomingDeal{name} = $user;

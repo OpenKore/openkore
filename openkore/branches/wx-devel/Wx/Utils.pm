@@ -10,6 +10,10 @@ use base qw(Exporter);
 use Wx ':everything';
 use Wx::Event ':everything';
 
+# for all modules
+use Scalar::Util;
+use List::Util;
+
 use Globals qw($char %config $quit $interface);
 use Log qw(debug);
 use Translation qw(T TF);
