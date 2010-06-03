@@ -140,6 +140,10 @@ sub new {
 		},
 		{},
 		{
+			key => 'toggleWindow_npcTalk', title => T('NPC Talk'), type => 'check',
+			sub => sub { $self->{frame}->toggleWindow('npcTalk', 'Interface::Wx::Window::NPCTalk', 'notebook') },
+		},
+		{
 			key => 'toggleWindow_npcStore', title => T('NPC Store'), type => 'check',
 			sub => sub { $self->{frame}->toggleWindow('npcStore', 'Interface::Wx::Window::NPCStore', 'notebook') },
 		},
