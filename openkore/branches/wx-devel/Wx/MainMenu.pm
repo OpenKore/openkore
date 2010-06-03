@@ -140,6 +140,19 @@ sub new {
 		},
 		{},
 		{
+			key => 'toggleWindow_npcStore', title => T('NPC Store'), type => 'check',
+			sub => sub { $self->{frame}->toggleWindow('npcStore', 'Interface::Wx::Window::NPCStore', 'notebook') },
+		},
+		{
+			key => 'toggleWindow_playerStore', title => T('Player Store'), type => 'check',
+			sub => sub { $self->{frame}->toggleWindow('playerStore', 'Interface::Wx::Window::PlayerStore', 'notebook') },
+		},
+		{
+			key => 'toggleWindow_deal', title => T('Deal'), type => 'check',
+			sub => sub { $self->{frame}->toggleWindow('deal', 'Interface::Wx::Window::Deal', 'notebook') },
+		},
+		{},
+		{
 			key => 'toggleWindow_exp', title => T('Experience Report')."\tCtrl+E", type => 'check',
 			sub => sub { $self->{frame}->toggleWindow('exp', 'Interface::Wx::Window::Exp', 'right') },
 		},

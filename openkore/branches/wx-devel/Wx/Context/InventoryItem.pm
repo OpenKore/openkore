@@ -3,7 +3,7 @@ package Interface::Wx::Context::InventoryItem;
 use strict;
 use base 'Interface::Wx::Context::Item';
 
-use Globals qw/$char %storage $cardMergeIndex @cardMergeItemsID/;
+use Globals qw/$char %storage $cardMergeIndex @cardMergeItemsID %currentDeal/;
 use Translation qw/T TF/;
 
 sub new {
@@ -19,7 +19,7 @@ sub new {
 		
 		my ($canActivate, $canDrop) = (undef, 1);
 		if ($self->isUsable ($object)) {
-			$canActivate = T('Use 1 on self');
+			$canActivate = T('Use 1 on Self');
 		} elsif ($self->isEquip ($object)) {
 			unless ($object->{equipped}) {
 				$canActivate = T('Equip') if $object->{identified};
@@ -30,7 +30,7 @@ sub new {
 				$canDrop = 0;
 			}
 		} elsif ($self->isCard ($object)) {
-			$canActivate = T('Request merge list');
+			$canActivate = T('Request Merge List');
 		}
 		
 		push @{$self->{head}}, {};
@@ -39,6 +39,12 @@ sub new {
 			: $self->isEquip($object) ? ($object->{equipped} ? $object->unequip : $object->equip)
 			: $self->isCard($object) && Commands::run ("card use $object->{invIndex}");
 		}} if $canActivate;
+		
+		# Network bugs prevent from adding multiple items at once
+		push @{$self->{head}}, {
+			title => T('Add to Deal'),
+			command => join ';;', map { "deal add $_" } $invIndex
+		} if %currentDeal && !$currentDeal{you_finalize} && $currentDeal{you_items} + @$objects <= 10;
 		
 		# FIXME: if your items change order or are used, this list will be wrong
 		for (@cardMergeItemsID) {
@@ -59,11 +65,11 @@ sub new {
 	push @{$self->{head}}, {};
 	my @invIndexes = map { $_->{invIndex} } @$objects;
 	push @{$self->{head}}, {
-		title => T('Move to cart'),
+		title => T('Move to Cart'),
 		command => join ';;', map { "cart add $_" } @invIndexes
 	} if $canCart;
 	push @{$self->{head}}, {
-		title => T('Move to storage'),
+		title => T('Move to Storage'),
 		command => join ';;', map { "storage add $_" } @invIndexes
 	} if $canStorage;
 	push @{$self->{head}}, {

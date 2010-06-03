@@ -5,7 +5,7 @@ use base 'Interface::Wx::Base::Context';
 
 use Wx ':everything';
 
-use Globals qw($char %config %overallAuth @partyUsersID %sex_lut $pvp);
+use Globals qw($char %config %overallAuth @partyUsersID %sex_lut $pvp %currentDeal %incomingDeal);
 use Translation qw(T TF);
 use Utils qw(binFind);
 
@@ -74,6 +74,9 @@ sub new {
 			)]
 		};
 		
+		push @{$self->{head}}, {
+			title => T('Deal'), command => "deal $binID"
+		} unless %currentDeal || %incomingDeal;
 		push @{$self->{head}}, {
 			title => T('Look'), command => "lookp $binID"
 		};
