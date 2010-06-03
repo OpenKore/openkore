@@ -31,8 +31,16 @@ alberta 214 77 Captain Janssen
 alberta 23 238 Guide
 alberta 232 104 Deadly Cargo [2]#
 alberta 232 106 Gusangs
+alberta 243 43 Deadly Cargo [5]#
+alberta 245 45 Kunyang#0
+alberta 245 66 Moscovia Publicity Rep#
+alberta 245 67 Deadly Cargo [4]#
+alberta 245 69 Kunlun Advertiser#0
 alberta 245 93 Sea Captain#0
 alberta 246 87 Deadly Cargo [3]#
+alberta 247 115 crew of brit ship#bra2
+alberta 247 122 Sailor
+alberta 247 42 Aibakthing#0
 alberta 248 89 Turtle Island scholar
 alberta 248 93 A voyage log
 alberta 26 229 Kafra Employee
@@ -115,6 +123,49 @@ arug_cas01 118 131 Control Device02#aru01_
 arug_cas03 45 158 Horn
 arug_cas03 65 171 The first guardian ston
 arug_cas05 136 158 Control Device01#aru05_
+bra_dun01 87 43 Pipe#bra
+bra_dun02 67 205 recluse in cave#bra
+bra_dun02 71 200 water lily#bra
+bra_fild01 234 101 Puppy#d1
+bra_fild01 245 52 monkey#bra
+bra_fild01 260 60 Puppy#c3
+bra_fild01 59 116 Puppy#a2
+bra_fild01 62 142 Puppy#a3
+bra_fild01 80 163 Puppy#b1
+bra_fild01 98 96 Puppy#a1
+bra_in01 134 189 tap#bra
+bra_in01 138 184 carpet#bra
+bra_in01 142 27 wiser Marta#bra
+bra_in01 144 187 chamber pot#bra
+bra_in01 145 27 brasilis boy#bra
+bra_in01 149 184 door#bra
+bra_in01 151 180 mirror#bra
+bra_in01 206 188 opened half whole#todun
+bra_in01 27 24 hotel keeper#bra1
+bra_in01 7 181 curator#bra
+bra_in01 95 179 Chetro
+brasilis 137 77 Ice-cream beibe
+brasilis 155 165 signpost#bra
+brasilis 180 249 Daniel#bra
+brasilis 181 250 Fabio#bra
+brasilis 185 246 Fedro#bra
+brasilis 187 162 Candy maker
+brasilis 187 244 Mariana#bra
+brasilis 195 231 signpost#bra
+brasilis 197 221 Kafra Employee
+brasilis 201 309 Pet Groomer#bra
+brasilis 203 286 Botanist Karmen#bra
+brasilis 203 64 strange kid#bra
+brasilis 219 97 Brasilis Guide
+brasilis 221 128 Fruit Dealer#bra
+brasilis 270 145 brasilis girl#bra
+brasilis 278 137 signpost#bra
+brasilis 297 307 Angelo#br
+brasilis 303 309 signpost#bra
+brasilis 315 334 Shaman#nk
+brasilis 316 57 crew of brit ship#bra1
+brasilis 56 224 Magician Paje#bra
+brasilis 59 226 Poring#bra
 c_tower3 10 249 Gatekeeper#Riku
 cmd_fild01 55 160 Heap of Earth
 comodo 112 182 Munak's grandma
@@ -249,6 +300,7 @@ in_sphinx2 13 146 Stone Statue#2
 in_sphinx2 13 163 Stone Statue#1
 in_sphinx2 212 267 Old Coffin#2
 in_sphinx2 259 213 Old Coffin#1
+iz_dun04 129 227 Summer Ticket Girl#nk2
 izlu2dun 104 91 Bulletin Board#izlude
 izlu2dun 106 58 Kafra Employee
 izlu2dun 108 27 Sailor
@@ -687,11 +739,13 @@ prontera 146 89 Kafra Employee
 prontera 146 98 Kafra Employee#pRO_prem
 prontera 147 125 Cool Event Voting Staff
 prontera 147 305 Sign
+prontera 148 192 Festival Adventurer#nk
 prontera 148 326 Chief Officer#edq
 prontera 148 49 Bulletin Board#pron
 prontera 149 202 Jorlo
 prontera 150 280 Saint Gravity#im
 prontera 150 326 Wanted Notice#edq
+prontera 151 192 Summer Ticket Girl#nk
 prontera 151 29 Kafra Employee
 prontera 151 330 North Gate-Guide
 prontera 152 192 Pumpkin Hat Researcher#
@@ -712,6 +766,7 @@ prontera 156 283 #suprise_19
 prontera 156 321 #suprise_2
 prontera 156 353 #suprise_17
 prontera 157 187 Smile Helper
+prontera 157 196 Ticket Redemption NPC#n
 prontera 158 285 [Info]Reno's Dog#pronte
 prontera 159 191 [Quest] Army Officer#nk
 prontera 159 284 Romeo#prontera2
@@ -729,6 +784,7 @@ prontera 165 191 Church Worker#
 prontera 165 194 Goyindle
 prontera 165 232 Night Phya
 prontera 165 60 Apprentice Craftsman
+prontera 166 299 Mursen Dragonov#mod
 prontera 167 203 Squegle
 prontera 167 281 New Guild Master#tu
 prontera 168 189 [Quest] Elite Mercenary

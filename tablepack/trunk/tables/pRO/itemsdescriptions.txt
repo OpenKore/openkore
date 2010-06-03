@@ -33342,3 +33342,66 @@ A box contains 1 Green Bunny Band in it.
 ^ff0000This item is not refundable.^000000
 Weight : ^7777771^000000
 #
+//--------2010 ｾﾆｹﾇ ｳｯ --------------
+7632#
+The happiness isn't related to the scores.  It explains that you are a quite troublemaker.
+If you are a cold city student, it's not that serious score!
+weight : ^7777770^000000
+#
+7633#
+The happiness is according to the scores! It explains that you are a decent student!
+You are just good sons & daughters!
+weight : ^7777770^000000
+#
+7634#
+There's one rose which is the present for father!
+weight : ^7777770^000000
+#
+//-------2010 RWC ｾﾆﾀﾌﾅﾛﾀﾎｵ･ ﾇﾊｸｮﾇﾉ ﾅｬｶ｡ ｾﾂｰﾅ ----------
+5364#
+The hat of Dark Snake Lord. When put this cap on, feels like an emperor.
+STR + 1, INT + 1, AGI + 2
+Item Class : ^777777Helm^000000    Def : ^7777772^000000
+Head Position : ^777777Upper^000000    Weight : ^77777750^000000
+Required Level : ^77777760^000000
+Jobs : ^777777All^000000
+#
+5365#
+It seems like an egg fry on head... But in fact, this is a furious monster Magnolia.
+Able to use Lv.1 Flasher.
+5% tolerance to the Stun
+Cannot be upgraded.
+Item Class : ^777777Helm^000000    Def : ^7777773^000000
+Head Position : ^777777Upper^000000    Weight : ^777777100^000000
+Jobs : ^777777All^000000
+#
+5307#
+A hat made of tropical fruits. It seems very fresh and eatable.
+MDEF + 3
+Has a chance to auto-cast Charming_Wink each time the wearer is attacked.
+Item Class : ^777777Helm^000000    Def : ^7777773^000000
+Head Position : ^777777Upper^000000    Weight : ^77777740^000000
+Jobs : ^777777All^000000
+#
+5304#
+The fabric purple hood suitable for gloomy human face.It prevent from the Darkness status from enemies.
+When the wearer receives physical damages, implemented the Autospell evilland 5LV.
+Class : ^777777Helmet^000000    Defense : ^7777774^000000
+Location : ^777777Upper, Mid, Lower^000000    Weight : ^77777780^000000
+Required Level : ^77777730^000000
+Jobs : ^777777All^000000
+#
+5305#
+A small silver knife that 
+is held between your teeth 
+to allow free use of your 
+hands. Reward for helping 
+Pirate Captain Wesley 
+during the 2007 
+4th anniversary 
+celebration.
+ATK+5
+Class : ^777777Headgear^000000    DEF: ^7777770^000000
+Location: ^777777Lower^000000    Weight: ^77777710^000000
+Job: ^777777Every Job^000000
+#

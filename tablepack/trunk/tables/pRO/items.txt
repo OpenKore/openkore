@@ -2884,10 +2884,10 @@
 2693#Neo_Brooch#
 2694#Neo_Rosary#
 2695#Neo_Safety_Ring#
-2696#Neo_Vesper_Core_01#
-2697#Neo_Vesper_Core_02#
-2698#Neo_Vesper_Core_03#
-2699#Neo_Vesper_Core_04#
+2696#Neo_Vesper_Core01#
+2697#Neo_Vesper_Core02#
+2698#Neo_Vesper_Core03#
+2699#Neo_Vesper_Core04#
 5265#Neo_Apple_of_Archer#
 5266#Neo_Bunny_Band#
 5267#Neo_Sakkat#
@@ -4825,5 +4825,15 @@
 16619#Yellow_Bunny_Band_Box#
 16621#Pink_Bunny_Band_Box#
 16623#Green_Bunny_Band_Box#
+//--------2010 ｾﾆｹﾇ ｳｯ --------------
+7632#Afterlife_Report#
+7633#Heaven_Report#
+7634#Father_Rose#
+//-------2010 RWC ｾﾆﾀﾌﾅﾛﾀﾎｵ･ ﾇﾊｸｮﾇﾉ ﾅｬｶ｡ ｾﾂｰﾅ ----------
+5364#Dark Snake Lord Hat#
+5365#Fried Egg#
+5307#Carmen Miranda's Hat#
+5304#Bongun_Hat#
+5305#Pirate_Dagger#
 
 //file end

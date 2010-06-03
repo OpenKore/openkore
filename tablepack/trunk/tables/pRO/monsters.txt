@@ -493,3 +493,10 @@
 2024 Bradium Golem
 2025 Wild Gift Box
 2057 Sticky Rat
+2069 Iara
+2070 Piranha
+2071 Headless Mule
+2072 Jaguar
+2073 Toucan
+2074 Curupira
+2081 Weirdo Hydra
