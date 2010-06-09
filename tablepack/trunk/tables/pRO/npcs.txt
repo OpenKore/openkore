@@ -279,6 +279,7 @@ geffen 59 143 Lady
 geffen 61 174 Sign#M
 geffen 67 180 New_Mage_Manager#M
 geffen 67 87 Ayeepu
+geffen 77 96 Injured Master Thief#ge
 geffen 83 189 SanShee
 geffen 90 130 Scholar
 geffen 90 67 Promotional staff

@@ -4516,3 +4516,23 @@ Pick up 20 ^006400Trash Debris^000000 near ^8B4513Comodo^000000 beach and visit 
 9069#Let's clean up the beach#SG_FEEL#QUE_NOIMAGE#
 ^0000FFBeach Manager^000000 in ^8B4513Comodo^000000 : "^404040Now, the beach is clean. But, tourists will ruin the beach again tomorrow. Please help us again after 20 hours have passed.^000000"#
 If you want ^FF0000clean the beach^000000 one more time, visit ^0000FFBeach Manager^000000 in ^8B4513Comodo^000000 after 20 hours have passed.#
+
+9040#Geffen Mage Hunter#SG_FEEL#QUE_NOIMAGE#
+Rebel mages cause trouble for the citizens of Geffen city and then run into the PvP rooms. Please go to PVP Room and capture the Mages.#
+Capture the Mages at Izlude ^0000FFPVP Room^000000.#
+
+9041#Geffen Mage Hunter: Present#SG_FEEL#QUE_NOIMAGE#
+You have brought Geffen city a peace. If you want to help me again, please come back 20 hours later.#
+I have completed helping Geffen Mage Hunter for today. Need to wait till 20 hours have passed.#
+
+9055#Midgard Crowd Control event#SG_FEEL#QUE_NOIMAGE#
+^0000FFElite Mercenary^000000 : "^404040Visit Mercenary Scout^000000"#
+Find ^FF0000Mercenary Scout^000000 in the ^8B4513Sphinx^000000!!#
+
+9056#Midgard Crowd Control event#SG_FEEL#QUE_NOIMAGE#
+^0000FFMercenary Scout^000000 : "^404040Defeat 150 Anubis^000000"#
+Kill 150 ^FF0000Anubis^000000, then you can get rewards from ^FF0000Mercenary Scout^000000!!#
+
+9057#Midgard Crowd Control event#SG_FEEL#QUE_NOIMAGE#
+^0000FFElite Mercenary^000000, ^0000FFMercenary Scout^000000 : "^404040Well done! You did a good job^000000"#
+Defeated ^FF0000Anubis^000000. Now, ^8B4513Sphinx^000000 is in a peace.#
