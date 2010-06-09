@@ -6959,6 +6959,11 @@ sub mail_return {
 		message TF("The mail with ID: %s is returned to the sender.\n", $args->{mailID}), "info";
 }
 
+sub premium_rates_info {
+	my ($self, $args) = @_;
+	message TF("Premium rates: exp %+i%%, death %+i%%, drop %+i%%.\n", $args->{exp}, $args->{death}, $args->{drop}), "info";
+}
+
 sub auction_result {
 	my ($self, $args) = @_;
 	my $flag = $args->{flag};

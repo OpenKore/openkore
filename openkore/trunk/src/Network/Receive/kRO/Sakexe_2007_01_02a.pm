@@ -31,7 +31,7 @@ sub new {
 		# 0x0278,2
 		# 0x0279,2
 		# 0x027a,-1
-		# 0x027b,14
+		'027B' => ['premium_rates_info', 'V3', [qw(exp death drop)]], #v 14
 		# 0x027c,60
 		# 0x027d,62 TODO
 		# 0x027e,-1

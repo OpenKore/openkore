@@ -370,6 +370,7 @@ sub new {
 		'0260' => ['mail_window', 'v', [qw(flag)]],
 		'0274' => ['mail_return', 'V v', [qw(mailID fail)]],
 		# mail_return packet: '0274' => ['account_server_info', 'x2 a4 a4 a4 x30 C1 x4 a*', [qw(sessionID accountID sessionID2 accountSex serverInfo)]],
+		'027B' => ['premium_rates_info', 'V3', [qw(exp death drop)]],
 		# tRO new packets, need some work on them
 		'0283' => ['account_id', 'V', [qw(accountID)]],
 		'0287' => ['cash_dealer'],
@@ -6884,6 +6885,11 @@ sub mail_return {
 	($args->{fail}) ?
 		error TF("The mail with ID: %s does not exist.\n", $args->{mailID}), "info" :
 		message TF("The mail with ID: %s is returned to the sender.\n", $args->{mailID}), "info";
+}
+
+sub premium_rates_info {
+	my ($self, $args) = @_;
+	message TF("Premium rates: exp %+i%%, death %+i%%, drop %+i%%.\n", $args->{exp}, $args->{death}, $args->{drop}), "info";
 }
 
 sub auction_result {
