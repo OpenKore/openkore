@@ -42,6 +42,7 @@ sub __start {
 	use Globals;
 	use Interface;
 	$interface = Interface->loadInterface($Settings::interface);
+	$interface->title($Settings::NAME);
 	selfCheck();
 
 	##### LOAD OPENKORE MODULES #####
