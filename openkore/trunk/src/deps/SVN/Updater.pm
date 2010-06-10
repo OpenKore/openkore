@@ -10,7 +10,10 @@ our $VERSION = 0.01;
 
 sub _svn_command {
 	my ($self, $cmd, @params) = @_;
-	my $cmd_line = "svn $cmd " . join(' ', map { quotemeta($_) } @params, $self->path);
+	my $cmd_line = "svn $cmd " . join(' ', map {
+		$^O eq 'MSWin32' ? qq("$_") : # FIXME
+		quotemeta($_)
+	} @params, $self->path);
 	my @res = `$cmd_line 2>&1`;
 	return -1 if ($cmd eq "help" && $?);
 	confess "Unable to do $cmd_line\n" . join('', @res) if $?;
