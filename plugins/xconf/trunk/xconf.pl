@@ -124,7 +124,7 @@ sub filewrite {
    my ($file, $key, $value) = @_;
    my @folders = Settings::getControlFolders();
 debug "sub WRITE = FILE: $file, KEY: $key, VALUE: $value\n";
-   open (FILE, "$folders[0]/$file");
+   open (FILE, "<:utf8", "$folders[0]/$file");
    my @lines = <FILE>;
    close (FILE);
    chomp @lines;
@@ -151,7 +151,7 @@ debug "sub WRITE = FILE: $file, KEY: $key, VALUE: $value\n";
    }
    }
 
-   open (WRITE, ">$folders[0]/$file");
+   open (WRITE, ">:utf8", "$folders[0]/$file");
    print WRITE join ("\n", @new);
    close (WRITE);
    message "\n $file:\n------------------------------\n $key $value\n------------------------------\n\n", 'system';
