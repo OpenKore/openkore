@@ -74,15 +74,26 @@ my $hooks = Plugins::addHooks(
 
 
 my @monsterDB;
-my @element_lut = ('Neutral','Water','Earth','Fire','Wind','Poison','Holy','Dark','Sense','Undead');
-my @race_lut = ('Formless','Undead','Brute','Plant','Insect','Fish','Demon','Demi-Human','Angel','Dragon');
-my @size_lut = ('Small','Medium','Large');
+my @element_lut = qw(Neutral Water Earth Fire Wind Poison Holy Dark Sense Undead);
+my @race_lut = qw(Formless Undead Brute Plant Insect Fish Demon Demi-Human Angel Dragon);
+my @size_lut = qw(Small Medium Large);
+my %skillChangeElement = qw(
+	NPC_CHANGEWATER Water
+	NPC_CHANGEGROUND Earth
+	NPC_CHANGEFIRE Fire
+	NPC_CHANGEWIND Wind
+	NPC_CHANGEPOISON Poison
+	NPC_CHANGEHOLY Holy
+	NPC_CHANGEDARKNESS Dark
+	NPC_CHANGETELEKINESIS Sense
+);
+
 debug ("MonsterDB: Finished init.\n",'monsterDB',2);
 loadMonDB(); # Load MonsterDB into Memory
 
 sub onUnload {
-    Plugins::delHooks($hooks);
-    @monsterDB = undef;
+	Plugins::delHooks($hooks);
+	@monsterDB = undef;
 }
 
 sub loadMonDB {
@@ -91,35 +102,33 @@ sub loadMonDB {
 	debug ("MonsterDB: Loading DataBase\n",'monsterDB',2);
 	my $file = Settings::getTableFilename('monsterDB.txt');
 	error ("MonsterDB: cannot load $file\n",'monsterDB',0) unless (-r $file);
-	open MDB, '<', $file;
-	@temp = <MDB>;
-	close MDB;
+	{ open my $fp, '<', $file; @temp = <$fp> }
 	my $i = 0;
 	foreach my $line (@temp) {
 		next unless ($line =~ /(\d{4})\s+(\d+)\s+(\d)\s+(\d)\s+(\d+)/);
 		$monsterDB[(int($1) - 1000)] = [$2,$3,$4,$5];
 		$i++;
 	}
-	message "MonsterDB: loaded $i Monsters\n",'monsterDB';
+	message TF("%d monsters in database\n", $i), 'monsterDB';
 }
 
 sub extendedCheck {
-    my (undef,$args) = @_;
+	my (undef, $args) = @_;
 
 	return 0 if !$args->{monster} || $args->{monster}->{nameID} eq '';
 
 	my $monsterInfo = $monsterDB[(int($args->{monster}->{nameID}) - 1000)];
 
-    if (!defined $monsterInfo) {
-    	debug("monsterDB: Monster {$args->{monster}->{name}} not found\n", 'monsterDB', 2);
-    	return 0;
-    } #return if monster is not in DB
+	if (!defined $monsterInfo) {
+		debug("monsterDB: Monster {$args->{monster}->{name}} not found\n", 'monsterDB', 2);
+		return 0;
+	} #return if monster is not in DB
 
 
-    my $element = $element_lut[($monsterInfo->[3] % 10)];
-    my $element_lvl = int($monsterInfo->[3] / 20);
-    my $race = $race_lut[$monsterInfo->[2]];
-    my $size = $size_lut[$monsterInfo->[1]];
+	my $element = $element_lut[($monsterInfo->[3] % 10)];
+	my $element_lvl = int($monsterInfo->[3] / 20);
+	my $race = $race_lut[$monsterInfo->[2]];
+	my $size = $size_lut[$monsterInfo->[1]];
 
 	if ($args->{monster}->{element} && $args->{monster}->{element} ne '') {
 		$element = $args->{monster}->{element};
@@ -136,44 +145,44 @@ sub extendedCheck {
 		debug("monsterDB: Monster $args->{monster}->{name} is frozen changing element to Water\n", 'monsterDB', 3);
 	}
 
-    if ($config{$args->{prefix} . '_Element'}
-    && (!existsInList($config{$args->{prefix} . '_Element'},$element)
-    	&& !existsInList($config{$args->{prefix} . '_Element'},$element.$element_lvl))) {
-		return $args->{return} = 0;
-    }
+	if ($config{$args->{prefix} . '_Element'}
+	&& (!existsInList($config{$args->{prefix} . '_Element'},$element)
+		&& !existsInList($config{$args->{prefix} . '_Element'},$element.$element_lvl))) {
+	return $args->{return} = 0;
+	}
 
-    if ($config{$args->{prefix} . '_notElement'}
-    && (existsInList($config{$args->{prefix} . '_notElement'},$element)
-    	|| existsInList($config{$args->{prefix} . '_notElement'},$element.$element_lvl))) {
-		return $args->{return} = 0;
-    }
+	if ($config{$args->{prefix} . '_notElement'}
+	&& (existsInList($config{$args->{prefix} . '_notElement'},$element)
+		|| existsInList($config{$args->{prefix} . '_notElement'},$element.$element_lvl))) {
+	return $args->{return} = 0;
+	}
 
-    if ($config{$args->{prefix} . '_Race'}
-    && !existsInList($config{$args->{prefix} . '_Race'},$race)) {
-		return $args->{return} = 0;
-    }
+	if ($config{$args->{prefix} . '_Race'}
+	&& !existsInList($config{$args->{prefix} . '_Race'},$race)) {
+	return $args->{return} = 0;
+	}
 
-    if ($config{$args->{prefix} . '_notRace'}
-    && existsInList($config{$args->{prefix} . '_notRace'},$race)) {
-		return $args->{return} = 0;
-    }
+	if ($config{$args->{prefix} . '_notRace'}
+	&& existsInList($config{$args->{prefix} . '_notRace'},$race)) {
+	return $args->{return} = 0;
+	}
 
-    if ($config{$args->{prefix} . '_Size'}
-    && !existsInList($config{$args->{prefix} . '_Size'},$size)) {
-		return $args->{return} = 0;
-    }
+	if ($config{$args->{prefix} . '_Size'}
+	&& !existsInList($config{$args->{prefix} . '_Size'},$size)) {
+	return $args->{return} = 0;
+	}
 
-    if ($config{$args->{prefix} . '_notSize'}
-    && existsInList($config{$args->{prefix} . '_notSize'},$size)) {
-		return $args->{return} = 0;
-    }
+	if ($config{$args->{prefix} . '_notSize'}
+	&& existsInList($config{$args->{prefix} . '_notSize'},$size)) {
+	return $args->{return} = 0;
+	}
 
-    if ($config{$args->{prefix} . '_hpLeft'}
-    && !inRange(($monsterInfo->[0] + $args->{monster}->{deltaHp}),$config{$args->{prefix} . '_hpLeft'})) {
-		return $args->{return} = 0;
-    }
+	if ($config{$args->{prefix} . '_hpLeft'}
+	&& !inRange(($monsterInfo->[0] + $args->{monster}->{deltaHp}),$config{$args->{prefix} . '_hpLeft'})) {
+	return $args->{return} = 0;
+	}
 
-    return 1;
+	return 1;
 }
 
 sub onPacketSkillUse { monsterHp($monsters{$_[1]->{targetID}}, $_[1]->{disp}) if $_[1]->{disp} }
@@ -181,47 +190,13 @@ sub onPacketSkillUse { monsterHp($monsters{$_[1]->{targetID}}, $_[1]->{disp}) if
 sub onPacketSkillUseNoDmg {
 	my (undef,$args) = @_;
 	return 1 unless $monsters{$args->{targetID}} && $monsters{$args->{targetID}}{nameID};
-	if (($args->{targetID} eq $args->{sourceID}) && ($args->{targetID} ne $accountID)){
-		if ($args->{skillID} eq 'NPC_CHANGEWATER'){
-			$monsters{$args->{targetID}}{element} = 'Water';
-			monsterEquip($monsters{$args->{targetID}});
-			return 1;
-		}
-		elsif ($args->{skillID} eq 'NPC_CHANGEGROUND'){
-			$monsters{$args->{targetID}}{element} = 'Earth';
-			monsterEquip($monsters{$args->{targetID}});
-			return 1;
-		}
-		elsif ($args->{skillID} eq 'NPC_CHANGEFIRE'){
-			$monsters{$args->{targetID}}{element} = 'Fire';
-			monsterEquip($monsters{$args->{targetID}});
-			return 1;
-		}
-		elsif ($args->{skillID} eq 'NPC_CHANGEWIND'){
-			$monsters{$args->{targetID}}{element} = 'Wind';
-			monsterEquip($monsters{$args->{targetID}});
-			return 1;
-		}
-		elsif ($args->{skillID} eq 'NPC_CHANGEPOISON'){
-			$monsters{$args->{targetID}}{element} = 'Poison';
-			monsterEquip($monsters{$args->{targetID}});
-			return 1;
-		}
-		elsif ($args->{skillID} eq 'NPC_CHANGEHOLY'){
-			$monsters{$args->{targetID}}{element} = 'Holy';
-			monsterEquip($monsters{$args->{targetID}});
-			return 1;
-		}
-		elsif ($args->{skillID} eq 'NPC_CHANGEDARKNESS'){
-			$monsters{$args->{targetID}}{element} = 'Dark';
-			monsterEquip($monsters{$args->{targetID}});
-			return 1;
-		}
-		elsif ($args->{skillID} eq 'NPC_CHANGETELEKINESIS'){
-			$monsters{$args->{targetID}}{element} = 'Sense';
-			monsterEquip($monsters{$args->{targetID}});
-			return 1;
-		}
+	if (
+		$args->{targetID} eq $args->{sourceID} && $args->{targetID} ne $accountID
+		&& $skillChangeElement{$args->{skillID}}
+	) {
+		$monsters{$args->{targetID}}{element} = $skillChangeElement{$args->{skillID}};
+		monsterEquip($monsters{$args->{targetID}});
+		return 1;
 	}
 }
 
