@@ -413,6 +413,7 @@
 1736 Aliot
 1737 Aliza
 1738 Constant
+1751 Valkyrie Randgris
 1752 Skogul
 1753 Frus
 1754 Skeggiold
@@ -425,6 +426,7 @@
 1762 Frus
 1763 Skeggiold Mob
 1764 Skeggiold Mob
+1765 Valkyrie
 1768 Gloom Under Night
 1769 Agav
 1770 Echio
@@ -468,6 +470,7 @@
 1882 Vavayaga
 1883 Uzhas
 1884 Mavka
+1891 Valkyrie Mob
 1905 Barricade
 1907 The first guardian ston
 1918 Incarnation of Morocc Angel
@@ -500,8 +503,3 @@
 2073 Toucan
 2074 Curupira
 2081 Weirdo Hydra
-1555 Vittoria Vetra`
-1555 Vittoria Vetra`
-1555 Vittoria Vetra`
-1555 Vittoria Vetra`
-1555 Vittoria Vetra`

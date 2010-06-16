@@ -33405,3 +33405,98 @@ Class : ^777777Headgear^000000    DEF: ^7777770^000000
 Location: ^777777Lower^000000    Weight: ^77777710^000000
 Job: ^777777Every Job^000000
 #
+
+//-----2010 ｿ蠧ﾅ ﾀﾌｺ･ﾆｮ -----------------
+5856#
+A hat which makes you feel the air of festivity.
+Play all over the ground with amazing vitality!!
+STR+ 1, INT+ 1, VIT+ 2, DEX+ 2, AGI+ 2, LUK+ 2.
+MDEF+1.
+Class : ^777777Headgear^000000 Defense : ^7777771^000000
+Location: ^777777Upper ^000000 Weight : ^7777770^000000
+Required lv : ^7777771^000000
+Jobs : ^777777All^000000
+#
+5857#
+A hat which makes you feel the air of festivity.
+Throw a great shot with the outstanding strength!!
+STR+ 2, INT+ 1, VIT+ 1, DEX+ 2, AGI+ 2, LUK+ 2.
+MDEF+1.
+Class : ^777777Headgear^000000 Defense : ^7777771^000000
+Location: ^777777Upper ^000000 Weight : ^7777770^000000
+Required lv : ^7777771^000000
+Jobs : ^777777All^000000
+#
+5858#
+A hat which makes you feel the air of festivity.
+Make the other team overwhelmed with your smart strategy!!
+STR+ 1, INT+ 2, VIT+ 1, DEX+ 2, AGI+ 2, LUK+ 2.
+MDEF+1.
+Class : ^777777Headgear^000000 Defense : ^7777771^000000
+Location: ^777777Upper ^000000 Weight : ^7777770^000000
+Required lv : ^7777771^000000
+Jobs : ^777777All^000000
+#
+5859#
+A hat which makes you feel the air of festivity.
+Fight to death for the moment of glory!!
+ALL STATE + 3.
+MDEF+1.
+Class : ^777777Headgear^000000 Defense : ^7777771^000000
+Location: ^777777Upper ^000000 Weight : ^7777770^000000
+Required lv : ^7777771^000000
+Jobs : ^777777All^000000
+#
+12767#
+A box contains 1 Worldcup Hat of Passion.
+1 hour duration.
+Weight : ^7777770^000000
+#
+12768#
+A box contains 1 Worldcup Hat of Fight.
+1 hour duration.
+Weight : ^7777770^000000
+#
+12769#
+A box contains 1 Worldcup Hat of Victory.
+1 hour duration.
+Weight : ^7777770^000000
+#
+12770#
+A box contains 1 Worldcup Hat of Honor.
+24 hours duration.
+Weight : ^7777770^000000
+#
+12771#
+A box contains 1 Worldcup Hat of Passion.
+6 hours duration.
+Weight : ^7777770^000000
+#
+12772#
+A box contains 1 Worldcup Hat of Fight.
+6 hours duration.
+Weight : ^7777770^000000
+#
+12773#
+A box contains 1 Worldcup Hat of Victory.
+6 hours duration.
+Weight : ^7777770^000000
+#
+7547#
+Everybody cheers when you kick this ball into the 'net'. People tell us not to touch it by the hands.
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+7548#
+When you are running with these bumpy soles, you'll never be slippery.
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+5203#
+A Mask sticking out it's tongue
+Increases Movement Speed when equipped.
+Item Class : ^777777Headgear^000000    Defense : ^7777772^000000
+Location : ^777777Mid,Lower^000000
+Weight : ^77777720^000000
+Jobs : ^777777All Jobs^000000	
+#
