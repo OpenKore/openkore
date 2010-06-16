@@ -4835,5 +4835,19 @@
 5307#Carmen Miranda's Hat#
 5304#Bongun_Hat#
 5305#Pirate_Dagger#
-
+//-----2010 ｿ蠧ﾅ ﾀﾌｺ･ﾆｮ -----------------
+5856#Worldcup_Hat_of_Passion#
+5857#Worldcup_Hat_of_Fight#
+5858#Worldcup_Hat_of_Victory#
+5859#Worldcup_Hat_of_Honor#
+12767#Worldcup_Hat_of_Passion_Box#
+12768#Worldcup_Hat_of_Fight_Box#
+12769#Worldcup_Hat_of_Victory_Box#
+12770#Worldcup_Hat_of_Honor_Box#
+12771#Worldcup_Hat_of_Passion_Box･ｱ#
+12772#Worldcup_Hat_of_Fight_Box･ｱ#
+12773#Worldcup_Hat_of_Victory_Box･ｱ#
+7547#Football#
+7548#Soccer_Shoes#
+5203#Tongue_Mask#
 //file end
