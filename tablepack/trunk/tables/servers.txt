@@ -250,7 +250,7 @@ recvpackets recvpackets-sakray.txt
 
 ## http://www.raggame.ru/
 [Russia - rRO]
-ip 81.177.13.7
+ip 109.105.144.66
 port 6900
 master_version 25
 version 112112
