@@ -106,7 +106,7 @@ sub start {
 sub serverRecv {
 	my (undef, $args) = @_;
 	
-	return if $net->getState > Network::CONNECTED_TO_MASTER_SERVER;
+	return unless $net->getState < Network::CONNECTED_TO_MASTER_SERVER;
 	
 	$encrypter->($args->{msg});
 }
