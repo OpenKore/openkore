@@ -450,9 +450,10 @@ sub processServerSettings {
 				push @new_tables, $dir . '/' . $st_type . '/' . $st_param;
 			}
 			push @new_tables, $dir . '/' . $st_type;
+			push @new_tables, $dir;
 		}
 		# now set up new path to table folders
-		Settings::setTablesFolders(@new_tables, Settings::getTablesFolders());
+		Settings::setTablesFolders(grep -d, @new_tables);
 	}
 	
 	# Process adding Custom Table folders
