@@ -88,7 +88,7 @@ sub start {
 		
 		if ($action eq 'generate') {
 			if (@data_key) {
-				saveKey(Settings::getTableFilename(CF_KEY) || File::Spec->catfile((Settings::getControlFolders)[0], CF_KEY), \@data_key);
+				saveKey(Settings::getTableFilename(CF_KEY) || File::Spec->catfile((Settings::getTablesFolders)[0], CF_KEY), \@data_key);
 				@key = @data_key;
 				undef $mtime_data;
 			} else {
