@@ -60,7 +60,6 @@ use Log qw(message);
 Plugins::register('macroinclude','On-Off !include in macros.txt. manticora', \&Unload); 
 
 my $chooks = Commands::register(['include', 'macros.txt, !include on/off', \&main]);
-my @folders = Settings::getControlFolders();
 
 sub Unload {
    Commands::unregister($chooks);
@@ -72,23 +71,14 @@ sub main {
 	my ($key, $filename) = split(" ", $args);
 	my @lines = ();
 	my $needrewrite = 0;
-	my $macro_file = (defined $config{macro_file})?$config{macro_file}:"macros.txt";
-	my $macro = "";#Full name of macro-file
+	my $macro_file = Settings::getControlFilename($config{macro_file} || 'macros.txt');
 
-	foreach my $dir (@folders) {
-		my $f = File::Spec->catfile($dir, $macro_file);
-		if (-f $f) {
-			$macro = $f;
-			last;
-		}
-	}
-
-	if ($macro eq "") {
+	if ($macro_file eq "") {
 		message "The macros.txt file is not found\nmacro plugin is not installed\nmacroinclude plugin dont work\n",'list';
 		return 0;
 	}
-
-	open(my $fp,"<:utf8",$macro);	my @lines = <$fp>;	close($fp);
+	
+	open(my $fp,"<:utf8",$macro_file);	my @lines = <$fp>;	close($fp);
 	if ($key eq 'list') {
 		my $on = "\n------on-------\n";
 		my $off = "\n------off------\n";
@@ -96,7 +86,7 @@ sub main {
 			$on .= $_ if /^!include/;
 			$off .= $_ if /^#[# ]*!include/;
 		}	
-		message "$on$off", 'list' ;
+		message "$on$off", 'list';
 	} elsif ($key eq 'on') {
 		if ($filename eq 'all') {
 			foreach (@lines) {
@@ -141,7 +131,7 @@ sub main {
 				"include off all\n".
 				"include list\n", 'list';
 	}
-	if ($needrewrite) { open ($fp,">:utf8",$macro); print $fp join ("", @lines); close($fp); }
+	if ($needrewrite) { open (my $fp,">:utf8",$macro_file); print $fp join ("", @lines); close($fp); }
 	return 1;
 }
 
