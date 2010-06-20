@@ -121,7 +121,6 @@ desc <cart item #> [<amount>]	displays cart item description
 
 [charselect]
 Ask server to exit to the character selection screen.
-This request can fail if you're not idle (in fight with monsters etc).
 
 [chat]
 Chat room management.
@@ -153,8 +152,8 @@ Change a configuration key
 <key>				displays value of <key>
 <key> <value>		sets value of <key> to <value>
 <key> none			unsets <key>
-<label.attribute> <value>	Set a new value for the specified configuration key through label
-<label.attribute> none		Unset the specified configuration key through label
+<label.attribute> <value>	set a new value for the specified configuration key through label
+<label.attribute> none		unset the specified configuration key through label
 
 [cook]
 Attempt to create a food item.
@@ -214,8 +213,8 @@ Experience report.
 reset				resets the experience report
 [falcon]
 Falcon status.
-falcon				Display falcon status. 
-falcon release 		Release your falcon.
+falcon				displays falcon status.
+falcon release 		releases your falcon
 [follow]
 Follow another player.
 <player name|player #>		follow the specified player
@@ -249,23 +248,23 @@ Help displays commands
 
 [homun]
 Interact with homunculus.
-s				Display homunculus status
-status			Display homunculus status
-feed			Feed your homunculus. (Food needed)
-fire			Deletes your homunculus
-move <x> <y>	Moves your homunculus
-standby 		Makes your homunculus standby
-aiv 			Display current homunculus AI 
-ai				Toggles AI on, off or manual 
-on 				Turns homunculus AI on
-auto			Turns homunculus AI on
-manual			Turns homunculus AI to manual
-off				Turns homunculus AI off
-clear			Clears homunculus AI
-print			Prints homunculus AI
-skills			Displays homunculus skills
-skills add <skill #>	Add a skill point to the current homunculus skill
-desc <skill #>	Display a description of the specified homunculus skill
+s				display homunculus status
+status			display homunculus status
+feed			feed your homunculus. (Food needed)
+fire			deletes your homunculus
+move <x> <y>	moves your homunculus
+standby 		akes your homunculus standby
+aiv 			display current homunculus AI 
+ai				toggles AI on, off or manual 
+on 				turns homunculus AI on
+auto			turns homunculus AI on
+manual			turns homunculus AI to manual
+off				turns homunculus AI off
+clear			clears homunculus AI
+print			prints homunculus AI
+skills			displays homunculus skills
+skills add <skill #>	add a skill point to the current homunculus skill
+desc <skill #>	display a description of the specified homunculus skill
 
 [i]
 Display inventory items.
@@ -556,7 +555,7 @@ Set a timeout.
 <type>				displays value of <type>
 <type> <second>		sets value of <type> to <seconds>
 [top10]
-Displays top10 ranking
+Displays top10 ranking.
 top10 (a | alche | alchemist)		displays Alchemist's top10 ranking
 top10 (b | black | blacksmith)		displays Blackmith's top10 ranking
 top10 (p | pk | pvp)				displays PVP top10 ranking
