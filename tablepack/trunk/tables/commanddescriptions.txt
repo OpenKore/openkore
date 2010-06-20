@@ -13,12 +13,12 @@ Attack a monster.
 
 [ai]
 Enable/disable AI.
-				Toggles AI on/off.
-on				Enables AI.
-off				Disables AI.
-ai_v				Displays the contents of the %ai_v hash, for debugging purposes.
-clear				Clears AI sequences.
-print				Displays detailed info about current AI sequence.
+				toggles AI on/off
+on				enables AI
+off				disables AI
+ai_v			displays the contents of the %ai_v hash, for debugging purposes
+clear			clears AI sequences
+print			displays detailed info about current AI sequence
 
 [aiv]
 Display current AI sequences.
@@ -28,17 +28,53 @@ Display the status of your vending shop.
 
 [arrowcraft]
 Create Arrows.
-				Lists available arrow-crafting items.
-use				Use the Archer's Arrow Craft skill.
-<arrowcraft #>			Create arrows using an item from the 'arrowcraft' list.
-forceuse <inventory item #>	Craft arrows immediately from an item without using the skill.
+				lists available arrow-crafting items
+use				use the Archer's Arrow Craft skill
+<arrowcraft #>			create arrows using an item from the 'arrowcraft' list
+forceuse <inventory item #>	craft arrows immediately from an item without using the skill
 
 [as]
 Stop attacking a monster.
 
+[au]
+Display possible commands for auction.
+
+[aua]
+Adds an item to the auction.
+<inventory item> <amount>	adds an item to the auction
+
+[aub]
+Bids an auction.
+<id> <price>	bids an auction
+
+[auc]
+Creates an auction.
+<current price> <instant buy price> <hours>		creates an auction
+
+[aud]
+Deletes an auction.
+<index>		deletes an auction
+
+[aue]
+Ends an auction.
+<index>		ends an auction
+
+[aui]
+Displays your auction info.
+selling		display selling info
+buying		display buying info
+
+[aur]
+Removes item from auction.
+
+[aus]
+Search for an auction according to the criteria.
+<type> <price> <text>	Item's search criteria. Type: 1 Armor, 2 Weapon, 3 Card, 4 Misc, 5 By Text, 6 By Price, 7 Sell, 8 Buy
+
 [auth]
 (Un)authorize a user for using Kore chat commands.
-<player name> <flag>		authorize <player name> if <flag> is 1, unauthorize if 0
+<player name> 0		unauthorize <player name>
+<player name> 1		authorize <player name>
 
 [autobuy]
 Initiate auto-buy AI sequence.
@@ -51,6 +87,10 @@ Initiate auto-storage AI sequence.
 
 [bangbang]
 Does a bangbang body turn.
+
+[bg]
+Send a message in the battlegrounds chat.
+<message>		send <message> in the battlegrounds chat
 
 [bingbing]
 Does a bingbing body turn.
@@ -66,7 +106,7 @@ Chat in the public chat.
 [card]
 Card compounding.
 list				lists cards in the inventory
-use <card #>			initiate card compounding using the specified card
+use <card #>		initiate card compounding using the specified card
 mergelist			lists items to merge card with
 mergecancel			cancel a card merge request
 merge <card merge #>		merge card with item and finalize card compounding
@@ -79,6 +119,10 @@ add <inventory item #> [<amount>]	add <amount> items from inventory to cart
 get <cart item #> [<amount>]	get <amount> items from cart to inventory
 desc <cart item #> [<amount>]	displays cart item description
 
+[charselect]
+Ask server to exit to the character selection screen.
+This request can fail if you're not idle (in fight with monsters etc).
+
 [chat]
 Chat room management.
 list				lists chat rooms on screen
@@ -89,25 +133,38 @@ create \"<title>\" [<limit #> <public flag> <password>]	create a chat room
 modify \"<title>\" [<limit #> <public flag> <password>]	modify the current chat room
 bestow <user #>			bestow admin to chat room user
 kick <user #>			kick a chat room user
+
 [chist]
 Display last few entries from the chat log.
 				display last 5 entries
-<number>			display last <number> entries
+<number>		display last <number> entries
+
 [cil]
 Clear the item log.
+
 [cl]
 Clear the chat log.
+
 [closeshop]
 Close your vending shop.
+
 [conf]
 Change a configuration key
 <key>				displays value of <key>
-<key> <value>			sets value of <key> to <value>
+<key> <value>		sets value of <key> to <value>
 <key> none			unsets <key>
+<label.attribute> <value>	Set a new value for the specified configuration key through label
+<label.attribute> none		Unset the specified configuration key through label
+
+[cook]
+Attempt to create a food item.
+<cook list #>	attempt to create a food item
+
 [damage]
 Damage taken report
 				displays the damage taken report
-reset				resets the damage taken report
+reset			resets the damage taken report
+
 [deal]
 Trade items with another player.
 				accept an incoming deal/finalize the current deal/trade
@@ -115,36 +172,50 @@ Trade items with another player.
 add <inventory item #> [<amount>]	add items to current deal
 add z [<amount>]		add zenny to current deal
 no				deny an incoming deal/cancel the current deal
+
 [debug]
 Toggle debug on/off.
 <level>				sets debug level to <level>
 info				displays debug information
+
 [dl]
 List items in the current deal.
+
 [doridori]
 Does a doridori head turn.
+
 [drop]
 Drop an item from the inventory.
 <inventory item #> [<amount>]	drop an item from inventory
+
 [dump]
 Dump the current packet receive buffer and quit.
+
 [dumpnow]
 Dump the current packet receive buffer without quitting.
+
 [e]
 Show emotion.
 <emotion>			show specified emotion (see tables\emotions.txt)
+
 [eq]
 Equip an item.
 <inventory item #>		equips the specified item
 <slotname> <inventory item #>	equips the specified item on the specified slot
 slots				lists slot names
+
 [eval]
 Evaluate a Perl expression (developers only).
 <expression>			evaluate a Perl expression
+
 [exp]
 Experience report.
 				displays the experience report
 reset				resets the experience report
+[falcon]
+Falcon status.
+falcon				Display falcon status. 
+falcon release 		Release your falcon.
 [follow]
 Follow another player.
 <player name|player #>		follow the specified player
@@ -175,6 +246,27 @@ leave				leave the guild
 Help displays commands
 				lists available commands
 <command>*			displays detailed information about a command
+
+[homun]
+Interact with homunculus.
+s				Display homunculus status
+status			Display homunculus status
+feed			Feed your homunculus. (Food needed)
+fire			Deletes your homunculus
+move <x> <y>	Moves your homunculus
+standby 		Makes your homunculus standby
+aiv 			Display current homunculus AI 
+ai				Toggles AI on, off or manual 
+on 				Turns homunculus AI on
+auto			Turns homunculus AI on
+manual			Turns homunculus AI to manual
+off				Turns homunculus AI off
+clear			Clears homunculus AI
+print			Prints homunculus AI
+skills			Displays homunculus skills
+skills add <skill #>	Add a skill point to the current homunculus skill
+desc <skill #>	Display a description of the specified homunculus skill
+
 [i]
 Display inventory items.
 				display all inventory items.
@@ -215,16 +307,60 @@ Look in a certain direction.
 [lookp]
 Look at a certain player.
 <player #>			look at player
+[m]
+Displays Mail commands.
+[ma]
+Mail & Attachment
+get <mail #>		takes items attached from mail. <mail #> - a corresponding number from the mail list when you open your mailbox
+add zeny <amount> 	attaches zenys in the mail
+add item <amount> <inventory item>		Attaches items in the mail
+[md]
+Deletes a Mail.
+<mail #>		delete a mail with a corresponding number from the mail list when you open your mailbox
 [memo]
 Save current position for warp portal.
+[merc]
+Interact with Mercenary.
+s				display mercenary status
+status			display mercenary status
+fire			fires your mercenary
+move <x> <y>	moves your mercenary
+standby			makes your mercenary standby
+aiv				display current mercenary AI
+ai				toggles AI on, off or manual
+on				turns mercenary AI on
+auto			turns mercenary AI on
+manual			turns mercenary AI to manual
+off				turns mercenary AI off
+clear			clears mercenary AI
+print			prints mercenary AI
+skills			displays mercenary skills
+skills add <skill #>	add a skill point to the current mercenary skill
+desc <skill #>	display a description of the specified mercenary skill
+[mi]
+Opens Mailbox.
 [ml]
 List monsters that are on screen.
+[mo]
+Open a mail.
+<mail #>	open the mail whit a corresponding number from the mail list when you open your mailbox
 [move]
 Move your character.
 <x> <y> [<map name>]		move to the coordinates on a map
 <map name> 			move to map
 <portal #>			move to nearby portal
 stop				stop all movement
+[mr]
+Returns the mail to the sender.
+<mail #>	a corresponding number from the mail list when you open your mailbox
+[ms]
+Sends Mail.
+<receiver> <tittle>	<message>	sends mail to <receiver>
+[mw]
+Interacts with mail box window.
+0	write mail
+1	take attached items back
+2	inputs zenys
 [nl]
 List NPCs that are on screen.
 [openshop]
@@ -241,6 +377,13 @@ request <player #>		request player to join your party
 join <flag>			accept a party join request if <flag> is 1, deny if 0
 kick <party member #>		kick party member from party
 leave				leave the party
+[pause]
+Delay the next console commands.
+<seconds>		delay the next console commands by a specified number of seconds (default: 1 sec.)
+[pecopeco]
+Pecopeco status.
+				display pecopeco status
+release			release your pecopeco
 #[pet]
 #Pet management.
 #s				displays pet status
@@ -249,7 +392,7 @@ List pets that are on screen.
 [pl]
 List players that are on screen.
 				lists players on screen
-<player #>			displays detailed info about a player
+<player #>		displays detailed info about a player
 p				lists party players on screen
 g				lists guild players on screen
 [plugin]
@@ -266,12 +409,21 @@ Send a private message.
 Quick PM list.
 [portals]
 List portals that are on screen.
+[quest]
+Quest management.
+						displays possible commands for quest
+set <questID> on		enable quest
+set <questID> off		disable quest
+list					displays a list of your quests
 [quit]
 Exit this program.
 [rc]
 Reload source code files.
 				reload functions.pl
 <module names>			reload module files in the space-separated <module names>
+[refine]
+Refine an item (using the whitesmith skill)
+refine (<item name> | <item index>) 
 [reload]
 Reload configuration files.
 all				reload all config and table files
@@ -289,50 +441,70 @@ Display character status.
 
 [sell]
 Sell items to an NPC.
-<inventory item #> [<amount>]	Put inventory items in sell list.
-list				Show items in the sell list.
-done				Sell everything in the sell list.
-cancel				Clear the sell list.
+<inventory item #> [<amount>]	put inventory items in sell list
+list				show items in the sell list
+done				sell everything in the sell list
+cancel				clear the sell list
 
 [send]
 Send a raw packet to the server.
-<hex string>			Sends a raw packet to connected server.
+<hex string>			sends a raw packet to connected server
+
+[showeq]
+Equipment showing.
+<player>	request equipment information for player
+me on		enables equipment showing
+me off		disables equipment showing
 
 [sit]
 Sit down.
 
-[spells]
-List area effect spells on screen.
-
 [skills]
 Show skills or add skill point.
 				Lists available skills.
-add <skill #>			Add a skill point.
-desc <skill #>			Displays skill description.
+add <skill #>			add a skill point
+desc <skill #>			displays skill description
 
 [sl]
 Use skill on location.
-<skill #> <x> <y> [<level>]	Use skill on location.
+<skill #> <x> <y> [<level>]		use skill on location
+
+[sll]
+Display a list of slaves in your immediate area.
 
 [sm]
 Use skill on monster.
-<skill #> <monster #> [<level>]	Use skill on monster.
+<skill #> <monster #> [<level>]		use skill on monster
 
 [sp]
 Use skill on player.
-<skill #> <player #> [<level>]	Use skill on player.
+<skill #> <player #> [<level>]		use skill on player
+
+[spells]
+List area effect spells on screen.
 
 [ss]
 Use skill on self.
-<skill #> [<level>]		Use skill on self.
+<skill #> [<level>]					use skill on self
+
+[ssl]
+Use skill on slave.
+<skill #> <target #> <skill level>	use skill on slave
+
+[ssp]
+Use skill on ground spell.
+<skill #> <target #> [<skill level>]	use skill on ground spell
 
 [st]
 Display stats.
+
 [stand]
 Stand up.
+
 [stat_add]
 Add status point.
 str|agi|int|vit|dex|luk		add status points to a stat
+
 [storage]
 Handle items in Kafra storage.
 				lists items in storage
@@ -352,22 +524,22 @@ desc <store item #>		displays store item description
 
 [switchconf]
 Switch configuration file.
-<filename>			Switches configuration file to <filename>.
+<filename>			switches configuration file to <filename>
 
 [take]
 Take an item from the ground.
-<item #>			Take an item from the ground.
-first				Take the first item on the ground.
+<item #>			take an item from the ground
+first				take the first item on the ground
 
 [talk]
 Manually talk to an NPC.
 <NPC #>				talk to an NPC
 cont				continue talking to NPC
 resp				lists response options to NPC
-resp <response #>		select a response to NPC
-num <number>			send a number to NPC
-text <string>			send text to NPC
-no				ends/cancels conversation with NPC
+resp <response #>	select a response to NPC
+num <number>		send a number to NPC
+text <string>		send text to NPC
+no					ends/cancels conversation with NPC
 [talknpc]
 Send a sequence of responses to an NPC.
 <x> <y> <NPC talk codes>	talk to the NPC standing at <x> <y> and use <NPC talk codes>
@@ -382,7 +554,13 @@ Show what your vending shop would sell.
 [timeout]
 Set a timeout.
 <type>				displays value of <type>
-<type> <second>			sets value of <type> to <seconds>
+<type> <second>		sets value of <type> to <seconds>
+[top10]
+Displays top10 ranking
+top10 (a | alche | alchemist)		displays Alchemist's top10 ranking
+top10 (b | black | blacksmith)		displays Blackmith's top10 ranking
+top10 (p | pk | pvp)				displays PVP top10 ranking
+top10 (t | tk | taekwon)			displays Taekwon's top10 ranking
 [uneq]
 Unequp an item.
 <inventory item #>		unequips the specified item
