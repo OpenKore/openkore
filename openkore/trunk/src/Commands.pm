@@ -2644,11 +2644,7 @@ sub helpIndent {
 	my @words;
 	my $length = 0;
 
-	$message = TF(" Help for '%s' ", $cmd);
-	my $msglen = length($message);
-	my $l2 = ($msglen < 50) ? int ((50 - $msglen)/2) : 2;#2 - default
-	my $l1 = $l2 + $msglen % 2;
-	$message = "-" x $l1 . $message . "-" x $l2 . "\n";
+	$message = center(TF(" Help for '%s' ", $cmd), 50, "-")."\n";
 	$message .= shift(@tmp) . "\n";
 
 	foreach (@tmp) {

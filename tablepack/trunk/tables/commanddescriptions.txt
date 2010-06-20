@@ -213,8 +213,8 @@ Experience report.
 reset				resets the experience report
 [falcon]
 Falcon status.
-falcon				displays falcon status.
-falcon release 		releases your falcon
+				displays falcon status
+release 		releases your falcon
 [follow]
 Follow another player.
 <player name|player #>		follow the specified player
@@ -309,10 +309,10 @@ Look at a certain player.
 [m]
 Displays Mail commands.
 [ma]
-Mail & Attachment
-get <mail #>		takes items attached from mail. <mail #> - a corresponding number from the mail list when you open your mailbox
+Mail & Attachment.
+get <mail #>		takes items attached from mail
 add zeny <amount> 	attaches zenys in the mail
-add item <amount> <inventory item>		Attaches items in the mail
+add item <amount> <inventory item>		attaches items in the mail
 [md]
 Deletes a Mail.
 <mail #>		delete a mail with a corresponding number from the mail list when you open your mailbox
