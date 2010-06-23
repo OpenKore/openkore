@@ -1862,10 +1862,8 @@ yuno 323 284 yuno_in03 167 19
 yuno 342 203 yuno_in04 29 58
 yuno_fild01 208 18 aldebaran 140 243
 yuno_fild01 26 246 yuno_fild12 373 239
-yuno_fild01 70 377 yuno_fild02 69 23
-yuno_fild01 286 367 yuno_fild02 287 16
-yuno_fild02 69 23 yuno_fild01 70 377
-yuno_fild02 287 16 yuno_fild01 286 367
+yuno_fild01 70 377 yuno_fild09 70 21
+yuno_fild01 287 367 yuno_fild09 280 32
 yuno_fild02 19 340 yuno_fild03 382 331
 yuno_fild02 117 375 hu_fild04 122 35
 yuno_fild03 20 79 yuno_fild04 374 82
@@ -2692,3 +2690,8 @@ in_rogue 172 34 cmd_fild09 341 143
 
 # maze exit
 in_rogue 370 320 in_rogue 378 113
+
+# Louyang Tower
+louyang 133 245 lou_in01 25 19
+lou_in01 28 19 louyang 136 245
+# bug: Kore can't use this portal properly lou_in01 25 23 lou_in01 17 19 500 c c r1 c
