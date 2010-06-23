@@ -8,6 +8,7 @@ Features:
 - A lot of changes and additions in network; kRO ServerType tree (Technology)
 - Default fieldpack updates: New World, Brasilis (midnytblu)
 - Default tablepack updates (Mushroom, help_us, Technology, EternalHarvest)
+- Builtin console command help updates (manticora)
 - Additions in Wx interface (EternalHarvest)
 - Captcha support (Technology)
 - "party request PlayerName" (EternalHarvest)
@@ -21,6 +22,8 @@ Features:
 - Battleground chat: "bg" command (EternalHarvest)
 - Map aliases and instances support (Technology)
 - Hidden Enchant support (EternalHarvest)
+- Server rates info (Zloba)
+- Custom NPC sequences before standard b/s dialog: sellAuto_npc_steps, buyAuto.npc_steps (EternalHarvest)
 - target_isNotMyDevotee config option (Technology)
 - "devotion" message domain, so you can squelch it (Technology)
 - state.yml generator moved to a plugin (EternalHarvest)
@@ -34,7 +37,7 @@ Translation updates by:
 - Portuguese: Mushroom
 - Russian: DeniZka, manticora
 
-Supported servers updates by:
+Ongoing updates for supported servers by:
 -  bRO: Mushroom, dejaime
 - euRO: EternalHarvest
 -  fRO: MiDaM
@@ -48,6 +51,12 @@ Supported servers updates by:
 - twRO: littlewens
 
 Fixes:
+- help console command output (manticora)
+- Allow lvl to be optional in useSelf_skill (EternalHarvest)
+- Wrong month in showTimeDomainsFormat (lolzorbot)
+- autoResponse not working (EternalHarvest)
+- Excess flooding with background color in Console (EternalHarvest)
+- Outgoing chat and chatroom encoding (Technology)
 - Rewrite of autoSkill/StatRaise, they're Tasks now (Technology, EternalHarvest)
 - autoMoveOnDeath_x and _y are now optional (EternalHarvest)
 - Wrong message in pet capture result (EternalHarvest)
