@@ -1895,6 +1895,7 @@ yuno_fild08 285 385 yuno_fild02 290 20
 yuno_fild08 375 194 yuno_fild09 23 193
 yuno_fild09 280 29 yuno_fild01 287 364
 yuno_fild09 70 18 yuno_fild01 70 374
+yuno_fild09 20 193 yuno_fild08 372 194
 yuno_fild11 368 361 yuno_fild12 27 336
 yuno_fild11 28 266 ein_fild07 378 264
 yuno_fild11 91 372 yuno_fild07 92 31
