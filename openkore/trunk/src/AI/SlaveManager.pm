@@ -21,15 +21,15 @@ sub addSlave {
 	$actor->{slave_AI} = 2;
 
 	if ($actor->{actorType} eq 'Homunculus') {
-		$actor->{slave_configPrefix} = 'homunculus_';
+		$actor->{configPrefix} = 'homunculus_';
 		bless $actor, 'AI::Slave::Homunculus';
 		
 	} elsif ($actor->{actorType} eq 'Mercenary') {
-		$actor->{slave_configPrefix} = 'mercenary_';
+		$actor->{configPrefix} = 'mercenary_';
 		bless $actor, 'AI::Slave::Mercenary';
 		
 	} else {
-		$actor->{slave_configPrefix} = 'slave_';
+		$actor->{configPrefix} = 'slave_';
 		bless $actor, 'AI::Slave';
 	}
 
