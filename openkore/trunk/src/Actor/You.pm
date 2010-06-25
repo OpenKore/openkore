@@ -70,6 +70,7 @@ sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new('You');
 	$self->{__inventory} = new InventoryList();
+	$self->{slave_configPrefix} = '';
 
 	return $self;
 }
@@ -182,5 +183,11 @@ sub master {
 	# Master is not visible and not in party
 	return undef;
 }
+
+sub action { shift; goto &AI::action }
+sub args { shift; goto &AI::args }
+sub dequeue { shift; goto &AI::dequeue }
+sub attack { shift; goto &AI::attack }
+sub stopAttack { shift; goto &Misc::stopAttack }
 
 1;
