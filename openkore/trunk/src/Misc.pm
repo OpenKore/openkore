@@ -3183,7 +3183,7 @@ sub attack_string {
 
 	return TF("%s %s %s (Dmg: %s) (Delay: %s)\n",
 		$source->nameString,
-		$source->verb('attack', 'attacks'),
+		$source->verb(T('attack'), T('attacks')),
 		$target->nameString($source),
 		$damage, $delay);
 }
@@ -3193,21 +3193,12 @@ sub skillCast_string {
 	assert(UNIVERSAL::isa($source, 'Actor')) if DEBUG;
 	assert(UNIVERSAL::isa($target, 'Actor')) if DEBUG;
 	
-	if ($source->isa('Actor::You')) {
-	return TF("%s are casting %s on %s (Delay: %sms)\n",
+	return TF("%s %s casting %s on %s (Delay: %sms)\n",
 		$source->nameString(),
+		$source->verb(T('are'), T('is')),
 		$skillName,
 		($x != 0 || $y != 0) ? TF("location (%d, %d)", $x, $y) : $target->nameString($source),
 		$delay);
-	} else {
-	return TF("%s is casting %s on %s (Delay: %sms)\n",
-		$source->nameString(),
-		$skillName,
-		($x != 0 || $y != 0) ? TF("location (%d, %d)", $x, $y) : $target->nameString($source),
-		$delay);
-	}
-	
-	
 }
 
 sub skillUse_string {
