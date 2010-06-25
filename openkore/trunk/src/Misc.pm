@@ -2276,20 +2276,12 @@ sub setStatus {
 		if ($opt1 == $_) {
 			if (!$actor->{statuses}{$stateHandle{$_}}) {
 				$actor->{statuses}{$stateHandle{$_}} = 1;
-				if ($actor->isa('Actor::You')) {
-					message TF("%s are in %s state.\n", $actor->nameString, $statusName{$stateHandle{$_}} || $stateHandle{$_}), "parseMsg_statuslook", $verbosity;
-				} else {
-					message TF("%s is in %s state.\n", $actor->nameString, $statusName{$stateHandle{$_}} || $stateHandle{$_}), "parseMsg_statuslook", $verbosity;
-				}
-				
+				message TF("%s %s in %s state.\n", $actor->nameString, $actor->verb('are', 'is'), $statusName{$stateHandle{$_}} || $stateHandle{$_}), "parseMsg_statuslook", $verbosity;
 				$changed = 1;
 			}
 		} elsif ($actor->{statuses}{$stateHandle{$_}}) {
 			delete $actor->{statuses}{$stateHandle{$_}};
-			if ($actor->isa('Actor::You')) {
-				message TF("%s are out of %s state.\n", $actor->nameString, $statusName{$stateHandle{$_}} || $stateHandle{$_}), "parseMsg_statuslook", $verbosity;
-			} else {
-				message TF("%s is out of %s state.\n", $actor->nameString, $statusName{$stateHandle{$_}} || $stateHandle{$_}), "parseMsg_statuslook", $verbosity;	}
+			message TF("%s %s out of %s state.\n", $actor->nameString, $actor->verb('are', 'is'), $statusName{$stateHandle{$_}} || $stateHandle{$_}), "parseMsg_statuslook", $verbosity;
 			$changed = 1;
 		}
 	}
