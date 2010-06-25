@@ -2696,3 +2696,7 @@ in_rogue 370 320 in_rogue 378 113
 louyang 133 245 lou_in01 25 19
 lou_in01 28 19 louyang 136 245
 # bug: Kore can't use this portal properly lou_in01 25 23 lou_in01 17 19 500 c c r1 c
+
+# Mushroom Farm
+moc_ruins 141 125 job_thief1 133 333 0 c # random endpoint
+job_thief1 180 15 moc_ruins 145 117
