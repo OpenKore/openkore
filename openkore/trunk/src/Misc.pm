@@ -2643,63 +2643,64 @@ sub updateDamageTables {
 			OpenKoreMod::updateDamageTables($monster) if (defined &OpenKoreMod::updateDamageTables);
 
 			if ($AI == 2 && ($char->{slaves} && $char->{slaves}{$ID2})) {
+				# attacked player is a slave controlled by char
 				my $teleport = 0;
 				if (mon_control($monster->{name},$monster->{nameID})->{teleport_auto} == 2 && $damage){
-					message TF("Slave teleporting due to attack from %s\n",
-						$monster->{name}), "teleport";
+					message TF("%s hit %s. Teleporting...\n",
+						$monster->nameString, $player->nameString), "teleport";
 					$teleport = 1;
 
-				} elsif ($config{$char->{slaves}{$ID2}{slave_configPrefix}.'teleportAuto_deadly'} && $damage >= $char->{slaves}{$ID2}{hp}
+				} elsif ($config{$player->{slave_configPrefix}.'teleportAuto_deadly'} && $damage >= $player->{hp}
 				      && !$player->statusActive('EFST_ILLUSION')) {
-					message TF("Next %d dmg could kill your slave. Teleporting...\n",
-						$damage), "teleport";
+					message TF("%s can kill %s with the next %d dmg. Teleporting...\n",
+						$monster->nameString, $player->nameString, $damage), "teleport";
 					$teleport = 1;
 
-				} elsif ($config{$char->{slaves}{$ID2}{slave_configPrefix}.'teleportAuto_maxDmg'} && $damage >= $config{$char->{slaves}{$ID2}{slave_configPrefix}.'teleportAuto_maxDmg'}
+				} elsif ($config{$player->{slave_configPrefix}.'teleportAuto_maxDmg'} && $damage >= $config{$player->{slave_configPrefix}.'teleportAuto_maxDmg'}
 				      && !$player->statusActive('EFST_ILLUSION')
-				      && !($config{$char->{slaves}{$ID2}{slave_configPrefix}.'teleportAuto_maxDmgInLock'} && $field{name} eq $config{lockMap})) {
-					message TF("%s hit your slave for more than %d dmg. Teleporting...\n",
-						$monster->{name}, $config{$char->{slaves}{$ID2}{slave_configPrefix}.'teleportAuto_maxDmg'}), "teleport";
+				      && !($config{$player->{slave_configPrefix}.'teleportAuto_maxDmgInLock'} && $field{name} eq $config{lockMap})) {
+					message TF("%s hit %s for more than %d dmg. Teleporting...\n",
+						$monster->nameString, $player->nameString, $config{$player->{slave_configPrefix}.'teleportAuto_maxDmg'}), "teleport";
 					$teleport = 1;
 
-				} elsif ($config{$char->{slaves}{$ID2}{slave_configPrefix}.'teleportAuto_maxDmgInLock'} && $field{name} eq $config{lockMap}
-				      && $damage >= $config{$char->{slaves}{$ID2}{slave_configPrefix}.'teleportAuto_maxDmgInLock'}
+				} elsif ($config{$player->{slave_configPrefix}.'teleportAuto_maxDmgInLock'} && $field{name} eq $config{lockMap}
+				      && $damage >= $config{$player->{slave_configPrefix}.'teleportAuto_maxDmgInLock'}
 				      && !$player->statusActive('EFST_ILLUSION')) { 
-					message TF("%s hit your slave for more than %d dmg in lockMap. Teleporting...\n",
-						$monster->{name}, $config{$char->{slaves}{$ID2}{slave_configPrefix}.'teleportAuto_maxDmgInLock'}), "teleport";
+					message TF("%s hit %s for more than %d dmg in lockMap. Teleporting...\n",
+						$monster->nameString, $player->nameString, $config{$player->{slave_configPrefix}.'teleportAuto_maxDmgInLock'}), "teleport";
 					$teleport = 1;
 
-				} elsif ($config{$char->{slaves}{$ID2}{slave_configPrefix}.'teleportAuto_totalDmg'}
-				      && $monster->{dmgToPlayer}{$ID2} >= $config{$char->{slaves}{$ID2}{slave_configPrefix}.'teleportAuto_totalDmg'}
+				} elsif ($config{$player->{slave_configPrefix}.'teleportAuto_totalDmg'}
+				      && $monster->{dmgToPlayer}{$ID2} >= $config{$player->{slave_configPrefix}.'teleportAuto_totalDmg'}
 				      && !$player->statusActive('EFST_ILLUSION')
-				      && !($config{$char->{slaves}{$ID2}{slave_configPrefix}.'teleportAuto_totalDmgInLock'} && $field{name} eq $config{lockMap})) {
-					message TF("%s hit your slave for a total of more than %d dmg. Teleporting...\n",
-						$monster->{name}, $config{$char->{slaves}{$ID2}{slave_configPrefix}.'teleportAuto_totalDmg'}), "teleport";
+				      && !($config{$player->{slave_configPrefix}.'teleportAuto_totalDmgInLock'} && $field{name} eq $config{lockMap})) {
+					message TF("%s hit %s for a total of more than %d dmg. Teleporting...\n",
+						$monster->nameString, $player->nameString, $config{$player->{slave_configPrefix}.'teleportAuto_totalDmg'}), "teleport";
 					$teleport = 1;
 
-				} elsif ($config{$char->{slaves}{$ID2}{slave_configPrefix}.'teleportAuto_totalDmgInLock'} && $field{name} eq $config{lockMap}
-				      && $monster->{dmgToPlayer}{$ID2} >= $config{$char->{slaves}{$ID2}{slave_configPrefix}.'teleportAuto_totalDmgInLock'}
+				} elsif ($config{$player->{slave_configPrefix}.'teleportAuto_totalDmgInLock'} && $field{name} eq $config{lockMap}
+				      && $monster->{dmgToPlayer}{$ID2} >= $config{$player->{slave_configPrefix}.'teleportAuto_totalDmgInLock'}
 				      && !$player->statusActive('EFST_ILLUSION')) {
-					message TF("%s hit your slave for a total of more than %d dmg in lockMap. Teleporting...\n",
-						$monster->{name}, $config{$char->{slaves}{$ID2}{slave_configPrefix}.'teleportAuto_totalDmgInLock'}), "teleport";
+					message TF("%s hit %s for a total of more than %d dmg in lockMap. Teleporting...\n",
+						$monster->nameString, $player->nameString, $config{$player->{slave_configPrefix}.'teleportAuto_totalDmgInLock'}), "teleport";
 					$teleport = 1;
 
-				} elsif ($config{$char->{slaves}{$ID2}{slave_configPrefix}.'teleportAuto_hp'} && $char->{slaves}{$ID2}{hpPercent} <= $config{$char->{slaves}{$ID2}{slave_configPrefix}.'teleportAuto_hp'}) {
-					message TF("%s hit your slave when your homunculus' HP is too low. Teleporting...\n",
-						$monster->{name}), "teleport";
+				} elsif ($config{$player->{slave_configPrefix}.'teleportAuto_hp'} && $player->{hpPercent} <= $config{$player->{slave_configPrefix}.'teleportAuto_hp'}) {
+					message TF("%s hit %s when your its HP is under %d. Teleporting...\n",
+						$monster->nameString, $player->nameString, $config{$player->{slave_configPrefix}.'teleportAuto_hp'}), "teleport";
 					$teleport = 1;
 
 				} elsif (
-					$config{$char->{slaves}{$ID2}{slave_configPrefix}.'attackChangeTarget'}
+					$config{$player->{slave_configPrefix}.'attackChangeTarget'}
 					&& (
-						$char->{slaves}{$ID2}->action eq 'route' && $char->{slaves}{$ID2}->action(1) eq 'attack'
-						or $char->{slaves}{$ID2}->action eq 'move' && $char->{slaves}{$ID2}->action(2) eq 'attack'
+						$player->action eq 'route' && $player->action(1) eq 'attack'
+						or $player->action eq 'move' && $player->action(2) eq 'attack'
 					)
-					&& $char->{slaves}{$ID2}->args->{attackID} && $char->{slaves}{$ID2}->args->{attackID} ne $ID1
+					&& $player->args->{attackID} && $player->args->{attackID} ne $ID1
 				) {
-					my $attackTarget = Actor::get($char->{slaves}{$ID2}->args->{attackID});
-					my $attackSeq = ($char->{slaves}{$ID2}->action eq 'route') ? $char->{slaves}{$ID2}->args(1) : $char->{slaves}{$ID2}->args(2);
-					if (!$attackTarget->{dmgToPlayer}{$ID2} && !$attackTarget->{dmgFromPlayer}{$ID2} && distance($monster->{pos_to}, calcPosition($char->{slaves}{$ID2})) <= $attackSeq->{attackMethod}{distance}) {
+					my $attackTarget = Actor::get($player->args->{attackID});
+					my $attackSeq = ($player->action eq 'route') ? $player->args(1) : $player->args(2);
+					if (!$attackTarget->{dmgToPlayer}{$ID2} && !$attackTarget->{dmgFromPlayer}{$ID2} && distance($monster->{pos_to}, calcPosition($player)) <= $attackSeq->{attackMethod}{distance}) {
 						my $ignore = 0;
 						# Don't attack ignored monsters
 						if ((my $control = mon_control($monster->{name},$monster->{nameID}))) {
@@ -2712,12 +2713,12 @@ sub updateDamageTables {
 						}
 						if (!$ignore) {
 							# Change target to closer aggressive monster
-							message TF("Slave change target to aggressive : %s (%s)\n", $monster->name, $monster->{binID});
-							$char->{slaves}{$ID2}->slave_stopAttack();
-							$char->{slaves}{$ID2}->dequeue;
-							$char->{slaves}{$ID2}->dequeue if $char->{slaves}{$ID2}->action eq 'route';
-							$char->{slaves}{$ID2}->dequeue;
-							$char->{slaves}{$ID2}->slave_attack($ID1);
+							message TF("%s changes target to aggressive %s\n", $player->nameString, $monster->nameString);
+							$player->slave_stopAttack;
+							$player->dequeue;
+							$player->dequeue if $player->action eq 'route';
+							$player->dequeue;
+							$player->slave_attack($ID1);
 						}
 					}
 
