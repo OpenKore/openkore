@@ -2465,7 +2465,7 @@ sub switchConfigFile {
 }
 
 sub updateDamageTables {
-	my ($ID1, $ID2, $damage) = @_;
+	my ($sourceID, $targetID, $damage) = @_;
 
 	# Track deltaHp
 	#
@@ -2476,13 +2476,13 @@ sub updateDamageTables {
 	#
 	# Someone with a lot of negative deltaHp is probably in need of healing.
 	# This allows us to intelligently heal non-party members.
-	if (my $target = Actor::get($ID2)) {
+	if (my $target = Actor::get($targetID)) {
 		$target->{deltaHp} -= $damage;
 		$target->{deltaHp} = 0 if $target->{deltaHp} > 0;
 	}
 
-	if ($ID1 eq $accountID) {
-		if ((my $monster = $monstersList->getByID($ID2))) {
+	if ($sourceID eq $accountID) {
+		if ((my $monster = $monstersList->getByID($targetID))) {
 			# You attack monster
 			$monster->{dmgTo} += $damage;
 			$monster->{dmgFromYou} += $damage;
@@ -2514,8 +2514,8 @@ sub updateDamageTables {
 		}
 
 =pod
-	} elsif ($ID2 eq $accountID) {
-		if ((my $monster = $monstersList->getByID($ID1))) {
+	} elsif ($targetID eq $accountID) {
+		if ((my $monster = $monstersList->getByID($sourceID))) {
 			# Monster attacks you
 			$monster->{dmgFrom} += $damage;
 			$monster->{dmgToYou} += $damage;
@@ -2528,7 +2528,7 @@ sub updateDamageTables {
 					$monster->{missedFromPlayer} ||
 					$monster->{missedToPlayer}
 				);
-			$monster->{target} = $ID2;
+			$monster->{target} = $targetID;
 
 			if ($AI == 2) {
 				my $teleport = 0;
@@ -2584,7 +2584,7 @@ sub updateDamageTables {
 					$teleport = 1;
 
 				} elsif ($config{attackChangeTarget} && ((AI::action eq "route" && AI::action(1) eq "attack") || (AI::action eq "move" && AI::action(2) eq "attack"))
-				   && AI::args->{attackID} && AI::args()->{attackID} ne $ID1) {
+				   && AI::args->{attackID} && AI::args()->{attackID} ne $sourceID) {
 					my $attackTarget = Actor::get(AI::args->{attackID});
 					my $attackSeq = (AI::action eq "route") ? AI::args(1) : AI::args(2);
 					if (!$attackTarget->{dmgToYou} && !$attackTarget->{dmgFromYou} && distance($monster->{pos_to}, calcPosition($char)) <= $attackSeq->{attackMethod}{distance}) {
@@ -2606,7 +2606,7 @@ sub updateDamageTables {
 							AI::dequeue;
 							AI::dequeue if (AI::action eq "route");
 							AI::dequeue;
-							attack($ID1);
+							attack($sourceID);
 						}
 					}
 
@@ -2624,33 +2624,33 @@ sub updateDamageTables {
 		}
 =cut
 
-	} elsif ((my $monster = $monstersList->getByID($ID1))) {
-		if (my $player = ($accountID eq $ID2 && $char) || $playersList->getByID($ID2) || $slavesList->getByID($ID2)) {
-			# Monster attacks player
+	} elsif ((my $monster = $monstersList->getByID($sourceID))) {
+		if (my $player = ($accountID eq $targetID && $char) || $playersList->getByID($targetID) || $slavesList->getByID($targetID)) {
+			# Monster attacks player or slave
 			$monster->{dmgFrom} += $damage;
-			($accountID eq $ID2 ? $monster->{dmgToYou} : $monster->{dmgToPlayer}{$ID2}) += $damage;
-			$player->{dmgFromMonster}{$ID1} += $damage;
+			($accountID eq $targetID ? $monster->{dmgToYou} : $monster->{dmgToPlayer}{$targetID}) += $damage;
+			$player->{dmgFromMonster}{$sourceID} += $damage;
 			if ($damage == 0) {
-				($accountID eq $ID2 ? $monster->{missedYou} : $monster->{missedToPlayer}{$ID2}) += 1;
-				$player->{missedFromMonster}{$ID1}++;
+				($accountID eq $targetID ? $monster->{missedYou} : $monster->{missedToPlayer}{$targetID}) += 1;
+				$player->{missedFromMonster}{$sourceID}++;
 			}
-			$accountID eq $ID2 && $monster->{attackedYou}++ unless (
+			$accountID eq $targetID && $monster->{attackedYou}++ unless (
 					scalar(keys %{$monster->{dmgFromPlayer}}) ||
 					scalar(keys %{$monster->{dmgToPlayer}}) ||
 					$monster->{missedFromPlayer} ||
 					$monster->{missedToPlayer}
 				);
 			if (existsInList($config{tankersList}, $player->{name}) ||
-			    ($char->{slaves} && %{$char->{slaves}} && $char->{slaves}{$ID2} && %{$char->{slaves}{$ID2}}) ||
-			    ($char->{party} && %{$char->{party}} && $char->{party}{users}{$ID2} && %{$char->{party}{users}{$ID2}})) {
-				# Monster attacks party member
+			    ($char->{slaves} && %{$char->{slaves}} && $char->{slaves}{$targetID} && %{$char->{slaves}{$targetID}}) ||
+			    ($char->{party} && %{$char->{party}} && $char->{party}{users}{$targetID} && %{$char->{party}{users}{$targetID}})) {
+				# Monster attacks party member or our slave
 				$monster->{dmgToParty} += $damage;
 				$monster->{missedToParty}++ if ($damage == 0);
 			}
-			$monster->{target} = $ID2;
+			$monster->{target} = $targetID;
 			OpenKoreMod::updateDamageTables($monster) if (defined &OpenKoreMod::updateDamageTables);
 
-			if ($AI == 2 && ($accountID eq $ID2 or $char->{slaves} && $char->{slaves}{$ID2})) {
+			if ($AI == 2 && ($accountID eq $targetID or $char->{slaves} && $char->{slaves}{$targetID})) {
 				# object under our control
 				my $teleport = 0;
 				if (mon_control($monster->{name},$monster->{nameID})->{teleport_auto} == 2 && $damage){
@@ -2658,65 +2658,65 @@ sub updateDamageTables {
 						$monster->nameString, $player->nameString), "teleport";
 					$teleport = 1;
 
-				} elsif ($config{$player->{slave_configPrefix}.'teleportAuto_deadly'} && $damage >= $player->{hp}
+				} elsif ($config{$player->{configPrefix}.'teleportAuto_deadly'} && $damage >= $player->{hp}
 				      && !$player->statusActive('EFST_ILLUSION')) {
 					message TF("%s can kill %s with the next %d dmg. Teleporting...\n",
 						$monster->nameString, $player->nameString, $damage), "teleport";
 					$teleport = 1;
 
-				} elsif ($config{$player->{slave_configPrefix}.'teleportAuto_maxDmg'} && $damage >= $config{$player->{slave_configPrefix}.'teleportAuto_maxDmg'}
+				} elsif ($config{$player->{configPrefix}.'teleportAuto_maxDmg'} && $damage >= $config{$player->{configPrefix}.'teleportAuto_maxDmg'}
 				      && !$player->statusActive('EFST_ILLUSION')
-				      && !($config{$player->{slave_configPrefix}.'teleportAuto_maxDmgInLock'} && $field{name} eq $config{lockMap})) {
+				      && !($config{$player->{configPrefix}.'teleportAuto_maxDmgInLock'} && $field{name} eq $config{lockMap})) {
 					message TF("%s hit %s for more than %d dmg. Teleporting...\n",
-						$monster->nameString, $player->nameString, $config{$player->{slave_configPrefix}.'teleportAuto_maxDmg'}), "teleport";
+						$monster->nameString, $player->nameString, $config{$player->{configPrefix}.'teleportAuto_maxDmg'}), "teleport";
 					$teleport = 1;
 
-				} elsif ($config{$player->{slave_configPrefix}.'teleportAuto_maxDmgInLock'} && $field{name} eq $config{lockMap}
-				      && $damage >= $config{$player->{slave_configPrefix}.'teleportAuto_maxDmgInLock'}
+				} elsif ($config{$player->{configPrefix}.'teleportAuto_maxDmgInLock'} && $field{name} eq $config{lockMap}
+				      && $damage >= $config{$player->{configPrefix}.'teleportAuto_maxDmgInLock'}
 				      && !$player->statusActive('EFST_ILLUSION')) { 
 					message TF("%s hit %s for more than %d dmg in lockMap. Teleporting...\n",
-						$monster->nameString, $player->nameString, $config{$player->{slave_configPrefix}.'teleportAuto_maxDmgInLock'}), "teleport";
+						$monster->nameString, $player->nameString, $config{$player->{configPrefix}.'teleportAuto_maxDmgInLock'}), "teleport";
 					$teleport = 1;
 
-				} elsif (AI::inQueue("sitAuto") && $config{$player->{slave_configPrefix}.'teleportAuto_attackedWhenSitting'}
+				} elsif (AI::inQueue("sitAuto") && $config{$player->{configPrefix}.'teleportAuto_attackedWhenSitting'}
 							&& $damage) {
 					message TF("%s hit %s while you are sitting. Teleporting...\n",
 						$monster->nameString, $player->nameString), "teleport";
 					$teleport = 1;
 
-				} elsif ($config{$player->{slave_configPrefix}.'teleportAuto_totalDmg'}
-				      && ($accountID eq $ID2 ? $monster->{dmgToYou} : $monster->{dmgToPlayer}{$ID2}) >= $config{$player->{slave_configPrefix}.'teleportAuto_totalDmg'}
+				} elsif ($config{$player->{configPrefix}.'teleportAuto_totalDmg'}
+				      && ($accountID eq $targetID ? $monster->{dmgToYou} : $monster->{dmgToPlayer}{$targetID}) >= $config{$player->{configPrefix}.'teleportAuto_totalDmg'}
 				      && !$player->statusActive('EFST_ILLUSION')
-				      && !($config{$player->{slave_configPrefix}.'teleportAuto_totalDmgInLock'} && $field{name} eq $config{lockMap})) {
+				      && !($config{$player->{configPrefix}.'teleportAuto_totalDmgInLock'} && $field{name} eq $config{lockMap})) {
 					message TF("%s hit %s for a total of more than %d dmg. Teleporting...\n",
-						$monster->nameString, $player->nameString, $config{$player->{slave_configPrefix}.'teleportAuto_totalDmg'}), "teleport";
+						$monster->nameString, $player->nameString, $config{$player->{configPrefix}.'teleportAuto_totalDmg'}), "teleport";
 					$teleport = 1;
 
-				} elsif ($config{$player->{slave_configPrefix}.'teleportAuto_totalDmgInLock'} && $field{name} eq $config{lockMap}
-				      && ($accountID eq $ID2 ? $monster->{dmgToYou} : $monster->{dmgToPlayer}{$ID2}) >= $config{$player->{slave_configPrefix}.'teleportAuto_totalDmgInLock'}
+				} elsif ($config{$player->{configPrefix}.'teleportAuto_totalDmgInLock'} && $field{name} eq $config{lockMap}
+				      && ($accountID eq $targetID ? $monster->{dmgToYou} : $monster->{dmgToPlayer}{$targetID}) >= $config{$player->{configPrefix}.'teleportAuto_totalDmgInLock'}
 				      && !$player->statusActive('EFST_ILLUSION')) {
 					message TF("%s hit %s for a total of more than %d dmg in lockMap. Teleporting...\n",
-						$monster->nameString, $player->nameString, $config{$player->{slave_configPrefix}.'teleportAuto_totalDmgInLock'}), "teleport";
+						$monster->nameString, $player->nameString, $config{$player->{configPrefix}.'teleportAuto_totalDmgInLock'}), "teleport";
 					$teleport = 1;
 
-				} elsif ($config{$player->{slave_configPrefix}.'teleportAuto_hp'} && $player->{hpPercent} <= $config{$player->{slave_configPrefix}.'teleportAuto_hp'}) {
+				} elsif ($config{$player->{configPrefix}.'teleportAuto_hp'} && $player->{hpPercent} <= $config{$player->{configPrefix}.'teleportAuto_hp'}) {
 					message TF("%s hit %s when %s HP is under %d. Teleporting...\n",
-						$monster->nameString, $player->nameString, $player->verb(T('your'), T('its')), $config{$player->{slave_configPrefix}.'teleportAuto_hp'}), "teleport";
+						$monster->nameString, $player->nameString, $player->verb(T('your'), T('its')), $config{$player->{configPrefix}.'teleportAuto_hp'}), "teleport";
 					$teleport = 1;
 
 				} elsif (
-					$config{$player->{slave_configPrefix}.'attackChangeTarget'}
+					$config{$player->{configPrefix}.'attackChangeTarget'}
 					&& (
 						$player->action eq 'route' && $player->action(1) eq 'attack'
 						or $player->action eq 'move' && $player->action(2) eq 'attack'
 					)
-					&& $player->args->{attackID} && $player->args->{attackID} ne $ID1
+					&& $player->args->{attackID} && $player->args->{attackID} ne $sourceID
 				) {
 					my $attackTarget = Actor::get($player->args->{attackID});
 					my $attackSeq = ($player->action eq 'route') ? $player->args(1) : $player->args(2);
 					if (
-						!($accountID eq $ID2 ? $attackTarget->{dmgToYou} : $attackTarget->{dmgToPlayer}{$ID2})
-						&& !($accountID eq $ID2 ? $attackTarget->{dmgToYou} : $attackTarget->{dmgFromPlayer}{$ID2})
+						!($accountID eq $targetID ? $attackTarget->{dmgToYou} : $attackTarget->{dmgToPlayer}{$targetID})
+						&& !($accountID eq $targetID ? $attackTarget->{dmgToYou} : $attackTarget->{dmgFromPlayer}{$targetID})
 						&& distance($monster->{pos_to}, calcPosition($player)) <= $attackSeq->{attackMethod}{distance}
 					) {
 						my $ignore = 0;
@@ -2727,7 +2727,7 @@ sub updateDamageTables {
 								|| ($control->{attack_jlvl} ne "" && $control->{attack_jlvl} > $char->{lv_job})
 								|| ($control->{attack_hp}  ne "" && $control->{attack_hp} > $char->{hp})
 								|| ($control->{attack_sp}  ne "" && $control->{attack_sp} > $char->{sp})
-								|| ($accountID eq $ID2 && $control->{attack_auto} == 3 && ($monster->{dmgToYou} || $monster->{missedYou} || $monster->{dmgFromYou}))
+								|| ($accountID eq $targetID && $control->{attack_auto} == 3 && ($monster->{dmgToYou} || $monster->{missedYou} || $monster->{dmgFromYou}))
 								);
 						}
 						unless ($ignore) {
@@ -2738,11 +2738,11 @@ sub updateDamageTables {
 							$player->dequeue;
 							$player->dequeue if $player->action eq 'route';
 							$player->dequeue;
-							$player->attack($ID1);
+							$player->attack($sourceID);
 						}
 					}
 
-				} elsif ($accountID eq $ID2 && $player->action eq "attack" && mon_control($monster->{name}, $monster->{nameID})->{attack_auto} == 3
+				} elsif ($accountID eq $targetID && $player->action eq "attack" && mon_control($monster->{name}, $monster->{nameID})->{attack_auto} == 3
 					&& ($monster->{dmgToYou} || $monster->{missedYou} || $monster->{dmgFromYou})) {
 
 					# Mob-training, stop attacking the monster if it has been attacking you
@@ -2754,21 +2754,21 @@ sub updateDamageTables {
 			}
 		}
 
-	} elsif ((my $player = $playersList->getByID($ID1) || $slavesList->getByID($ID1))) {
-		if ((my $monster = $monstersList->getByID($ID2))) {
-			# Player attacks monster
+	} elsif ((my $player = $playersList->getByID($sourceID) || $slavesList->getByID($sourceID))) {
+		if ((my $monster = $monstersList->getByID($targetID))) {
+			# Player or Slave attacks monster
 			$monster->{dmgTo} += $damage;
-			$monster->{dmgFromPlayer}{$ID1} += $damage;
-			$monster->{lastAttackFrom} = $ID1;
-			$player->{dmgToMonster}{$ID2} += $damage;
+			$monster->{dmgFromPlayer}{$sourceID} += $damage;
+			$monster->{lastAttackFrom} = $sourceID;
+			$player->{dmgToMonster}{$targetID} += $damage;
 
 			if ($damage == 0) {
-				$monster->{missedFromPlayer}{$ID1}++;
-				$player->{missedToMonster}{$ID2}++;
+				$monster->{missedFromPlayer}{$sourceID}++;
+				$player->{missedToMonster}{$targetID}++;
 			}
 
-			if (existsInList($config{tankersList}, $player->{name}) || ($char->{slaves} && $char->{slaves}{$ID1}) ||
-			    ($char->{party} && %{$char->{party}} && $char->{party}{users}{$ID1} && %{$char->{party}{users}{$ID1}})) {
+			if (existsInList($config{tankersList}, $player->{name}) || ($char->{slaves} && $char->{slaves}{$sourceID}) ||
+			    ($char->{party} && %{$char->{party}} && $char->{party}{users}{$sourceID} && %{$char->{party}{users}{$sourceID}})) {
 				$monster->{dmgFromParty} += $damage;
 			}
 			OpenKoreMod::updateDamageTables($monster) if (defined &OpenKoreMod::updateDamageTables);

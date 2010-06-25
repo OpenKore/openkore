@@ -191,7 +191,7 @@ sub iterate {
 				} else {
 					my $x = $slave->{pos_to}{x};
 					my $y = $slave->{pos_to}{y};
-					my $distFromGoal = $config{$slave->{slave_configPrefix}.'followDistanceMax'};
+					my $distFromGoal = $config{$slave->{configPrefix}.'followDistanceMax'};
 					$distFromGoal = MAX_DISTANCE if ($distFromGoal > MAX_DISTANCE);
 					main::ai_route($field{name}, $x, $y, distFromGoal => $distFromGoal, attackOnRoute => 1, noSitAuto => 1);
 					$slave->args->{lost_route} = 1 if $slave->action eq 'route';
@@ -209,7 +209,7 @@ sub iterate {
 		} elsif (
 			$slave->{slave_AI} == 2
 			&& $slave->isIdle
-			&& $slave_dist > ($config{$slave->{slave_configPrefix}.'followDistanceMin'} || 3)
+			&& $slave_dist > ($config{$slave->{configPrefix}.'followDistanceMin'} || 3)
 			&& $slave_dist < MAX_DISTANCE
 			&& timeOut($slave->{standby_time}, 2)
 		) {
@@ -221,10 +221,10 @@ sub iterate {
 		} elsif (
 			$slave->{actorType} eq 'Homunculus' &&
 			$AI == 2 && AI::isIdle && !$slave->isIdle
-			&& $config{$slave->{slave_configPrefix}.'followDistanceMax'}
-			&& $slave_dist > $config{$slave->{slave_configPrefix}.'followDistanceMax'}
+			&& $config{$slave->{configPrefix}.'followDistanceMax'}
+			&& $slave_dist > $config{$slave->{configPrefix}.'followDistanceMax'}
 		) {
-			main::ai_route($field{name}, $slave->{pos_to}{x}, $slave->{pos_to}{y}, distFromGoal => ($config{$slave->{slave_configPrefix}.'followDistanceMin'} || 3), attackOnRoute => 1, noSitAuto => 1);
+			main::ai_route($field{name}, $slave->{pos_to}{x}, $slave->{pos_to}{y}, distFromGoal => ($config{$slave->{configPrefix}.'followDistanceMin'} || 3), attackOnRoute => 1, noSitAuto => 1);
 			message TF("Your Slave moves too far (distance: %.2f) - Moving near your Slave\n", $slave->distance()), 'homunculus';
 	
 		# Main Homunculus AI
@@ -425,13 +425,13 @@ sub processAttack {
 	if ($slave->action eq "attack" &&
 	    (timeOut($slave->args->{ai_attack_giveup}) ||
 		 $slave->args->{unstuck}{count} > 5) &&
-		!$config{$slave->{slave_configPrefix}.'attackNoGiveup'}) {
+		!$config{$slave->{configPrefix}.'attackNoGiveup'}) {
 		my $ID = $slave->args->{ID};
 		my $target = Actor::get($ID);
 		$target->{homunculus_attack_failed} = time if $monsters{$ID};
 		$slave->dequeue;
 		message T("Slave can't reach or damage target, dropping target\n"), 'homunculus_attack';
-		if ($config{$slave->{slave_configPrefix}.'teleportAuto_dropTarget'}) {
+		if ($config{$slave->{configPrefix}.'teleportAuto_dropTarget'}) {
 			message T("Teleport due to dropping slave attack target\n"), 'teleport';
 			useTeleport(1);
 		}
@@ -497,7 +497,7 @@ sub processAttack {
 		my $realMyPos = calcPosition($slave);
 		my $realMonsterPos = calcPosition($target);
 		my $realMonsterDist = distance($realMyPos, $realMonsterPos);
-		if (!$config{$slave->{slave_configPrefix}.'runFromTarget'}) {
+		if (!$config{$slave->{configPrefix}.'runFromTarget'}) {
 			$myPos = $realMyPos;
 			$monsterPos = $realMonsterPos;
 		}
@@ -543,8 +543,8 @@ sub processAttack {
 		}
 		### attackSkillSlot end
 		
-		$args->{attackMethod}{maxDistance} = $config{$slave->{slave_configPrefix}.'attackMaxDistance'};
-		$args->{attackMethod}{distance} = ($config{$slave->{slave_configPrefix}.'runFromTarget'} && $config{$slave->{slave_configPrefix}.'runFromTarget_dist'} > $config{$slave->{slave_configPrefix}.'attackDistance'}) ? $config{$slave->{slave_configPrefix}.'runFromTarget_dist'} : $config{$slave->{slave_configPrefix}.'attackDistance'};
+		$args->{attackMethod}{maxDistance} = $config{$slave->{configPrefix}.'attackMaxDistance'};
+		$args->{attackMethod}{distance} = ($config{$slave->{configPrefix}.'runFromTarget'} && $config{$slave->{configPrefix}.'runFromTarget_dist'} > $config{$slave->{configPrefix}.'attackDistance'}) ? $config{$slave->{configPrefix}.'runFromTarget_dist'} : $config{$slave->{configPrefix}.'attackDistance'};
 		if ($args->{attackMethod}{maxDistance} < $args->{attackMethod}{distance}) {
 			$args->{attackMethod}{maxDistance} = $args->{attackMethod}{distance};
 		}
@@ -555,12 +555,12 @@ sub processAttack {
 			message T("Dropping target - slave will not kill steal others\n"), 'homunculus_attack';
 			$slave->sendMove ($realMyPos->{x}, $realMyPos->{y});
 			$slave->dequeue;
-			if ($config{$slave->{slave_configPrefix}.'teleportAuto_dropTargetKS'}) {
+			if ($config{$slave->{configPrefix}.'teleportAuto_dropTargetKS'}) {
 				message T("Teleport due to dropping slave attack target\n"), 'teleport';
 				useTeleport(1);
 			}
 
-		} elsif ($config{$slave->{slave_configPrefix}.'attackCheckLOS'} &&
+		} elsif ($config{$slave->{configPrefix}.'attackCheckLOS'} &&
 			 $args->{attackMethod}{distance} > 2 &&
 			 !checkLineSnipable($realMyPos, $realMonsterPos)) {
 			# We are a ranged attacker without LOS
@@ -569,7 +569,7 @@ sub processAttack {
 			# closer than runFromTarget_dist
 			my @stand = calcRectArea2($realMonsterPos->{x}, $realMonsterPos->{y},
 						  $args->{attackMethod}{distance},
-									  $config{$slave->{slave_configPrefix}.'runFromTarget'} ? $config{$slave->{slave_configPrefix}.'runFromTarget_dist'} : 0);
+									  $config{$slave->{configPrefix}.'runFromTarget'} ? $config{$slave->{configPrefix}.'runFromTarget_dist'} : 0);
 
 			# Determine which of these spots are snipable
 			my $best_spot;
@@ -600,13 +600,13 @@ sub processAttack {
 				$slave->dequeue;
 			}
 
-		} elsif ($config{$slave->{slave_configPrefix}.'runFromTarget'} && ($monsterDist < $config{$slave->{slave_configPrefix}.'runFromTarget_dist'} || $hitYou)) {
+		} elsif ($config{$slave->{configPrefix}.'runFromTarget'} && ($monsterDist < $config{$slave->{configPrefix}.'runFromTarget_dist'} || $hitYou)) {
 			#my $begin = time;
 			# Get a list of blocks that we can run to
 			my @blocks = calcRectArea($myPos->{x}, $myPos->{y},
 				# If the monster hit you while you're running, then your recorded
 				# location may be out of date. So we use a smaller distance so we can still move.
-				($hitYou) ? $config{$slave->{slave_configPrefix}.'runFromTarget_dist'} / 2 : $config{$slave->{slave_configPrefix}.'runFromTarget_dist'});
+				($hitYou) ? $config{$slave->{configPrefix}.'runFromTarget_dist'} / 2 : $config{$slave->{configPrefix}.'runFromTarget_dist'});
 
 			# Find the distance value of the block that's farthest away from a wall
 			my $highest;
@@ -634,7 +634,7 @@ sub processAttack {
 					start => $myPos,
 					dest => $blocks[$i]);
 				my $ret = $pathfinding->runcount;
-				if ($ret <= 0 || $ret > $config{$slave->{slave_configPrefix}.'runFromTarget_dist'} * 2) {
+				if ($ret <= 0 || $ret > $config{$slave->{configPrefix}.'runFromTarget_dist'} * 2) {
 					delete $blocks[$i];
 					next;
 				}
@@ -657,7 +657,7 @@ sub processAttack {
 			$slave->args->{avoiding} = 1;
 			$slave->slave_move($bestBlock->{x}, $bestBlock->{y}, $ID);
 
-		} elsif (!$config{$slave->{slave_configPrefix}.'runFromTarget'} && $monsterDist > $args->{attackMethod}{maxDistance}
+		} elsif (!$config{$slave->{configPrefix}.'runFromTarget'} && $monsterDist > $args->{attackMethod}{maxDistance}
 		  && timeOut($args->{ai_attack_giveup}, 0.5)) {
 			# The target monster moved; move to target
 			$args->{move_start} = time;
@@ -681,7 +681,7 @@ sub processAttack {
 
 			my $result = $slave->slave_route($pos->{x}, $pos->{y},
 				distFromGoal => $args->{attackMethod}{distance},
-				maxRouteTime => $config{$slave->{slave_configPrefix}.'attackMaxRouteTime'},
+				maxRouteTime => $config{$slave->{configPrefix}.'attackMaxRouteTime'},
 				attackID => $ID,
 				noMapRoute => 1,
 				noAvoidWalls => 1);
@@ -690,14 +690,14 @@ sub processAttack {
 				$target->{homunculus_attack_failed} = time;
 				$slave->dequeue;
  				message T("Unable to calculate a route to slave target, dropping target\n"), 'homunculus_attack';
-				if ($config{$slave->{slave_configPrefix}.'teleportAuto_dropTarget'}) {
+				if ($config{$slave->{configPrefix}.'teleportAuto_dropTarget'}) {
 					message T("Teleport due to dropping slave attack target\n"), 'teleport';
 					useTeleport(1);
 				}
 			}
 
-		} elsif ((!$config{$slave->{slave_configPrefix}.'runFromTarget'} || $realMonsterDist >= $config{$slave->{slave_configPrefix}.'runFromTarget_dist'})
-		 && (!$config{$slave->{slave_configPrefix}.'tankMode'} || !$target->{dmgFromPlayer}{$slave->{ID}})) {
+		} elsif ((!$config{$slave->{configPrefix}.'runFromTarget'} || $realMonsterDist >= $config{$slave->{configPrefix}.'runFromTarget_dist'})
+		 && (!$config{$slave->{configPrefix}.'tankMode'} || !$target->{dmgFromPlayer}{$slave->{ID}})) {
 			# Attack the target. In case of tanking, only attack if it hasn't been hit once.
 			if (!$slave->args->{firstAttack}) {
 				$slave->args->{firstAttack} = 1;
@@ -724,7 +724,7 @@ sub processAttack {
 				delete $args->{attackMethod};
 			}
 
-		} elsif ($config{$slave->{slave_configPrefix}.'tankMode'}) {
+		} elsif ($config{$slave->{configPrefix}.'tankMode'}) {
 			if ($args->{'dmgTo_last'} != $target->{dmgFromPlayer}{$slave->{ID}}) {
 				$args->{'ai_attack_giveup'}{'time'} = time;
 				$slave->stopAttack;
@@ -749,7 +749,7 @@ sub processAttack {
 			$slave->dequeue;
 			$slave->dequeue;
 			$slave->dequeue if ($slave->action eq "attack");
-			if ($config{$slave->{slave_configPrefix}.'teleportAuto_dropTargetKS'}) {
+			if ($config{$slave->{configPrefix}.'teleportAuto_dropTargetKS'}) {
 				message T("Teleport due to dropping slave attack target\n"), 'teleport';
 				useTeleport(1);
 			}
@@ -861,10 +861,10 @@ sub processRouteAI {
 					# We're stuck
 					my $msg = TF("Slave is stuck at %s (%d,%d), while walking from (%d,%d) to (%d,%d).", 
 						$field{name}, $slave->{pos_to}{x}, $slave->{pos_to}{y}, $cur_x, $cur_y, $args->{dest}{pos}{x}, $args->{dest}{pos}{y});
-					$msg .= T(" Teleporting to unstuck.") if $config{$slave->{slave_configPrefix}.'teleportAuto_unstuck'};
+					$msg .= T(" Teleporting to unstuck.") if $config{$slave->{configPrefix}.'teleportAuto_unstuck'};
 					$msg .= "\n";
 					warning $msg, "route";
-					useTeleport(1) if $config{$slave->{slave_configPrefix}.'teleportAuto_unstuck'};
+					useTeleport(1) if $config{$slave->{configPrefix}.'teleportAuto_unstuck'};
 					$slave->dequeue;
 				} else {
 					$args->{time_step} = time;
@@ -874,8 +874,8 @@ sub processRouteAI {
 				# We're either starting to move or already moving, so send out more
 				# move commands periodically to keep moving and updating our position
 				my $solution = $args->{solution};
-				$args->{index} = $config{$slave->{slave_configPrefix}.'route_step'} unless $args->{index};
-				$args->{index}++ if ($args->{index} < $config{$slave->{slave_configPrefix}.'route_step'});
+				$args->{index} = $config{$slave->{configPrefix}.'route_step'} unless $args->{index};
+				$args->{index}++ if ($args->{index} < $config{$slave->{configPrefix}.'route_step'});
 
 				if (defined($args->{old_x}) && defined($args->{old_y})) {
 					# See how far we've walked since the last move command and
@@ -910,7 +910,7 @@ sub processRouteAI {
 					# If it is, then we've moved to an unexpected place. This could be caused by auto-attack,
 					# for example.
 					my %nextPos = (x => $args->{new_x}, y => $args->{new_y});
-					if (distance(\%nextPos, $pos) > $config{$slave->{slave_configPrefix}.'route_step'}) {
+					if (distance(\%nextPos, $pos) > $config{$slave->{configPrefix}.'route_step'}) {
 						debug "Slave route - movement interrupted: reset route\n", "route";
 						$args->{stage} = '';
 
@@ -1050,17 +1050,17 @@ sub processAutoAttack {
 	if ((($slave->isIdle || $slave->action eq 'route') && (AI::isIdle || AI::is(qw(follow sitAuto take items_gather items_take attack skill_use))))
 	     # Don't auto-attack monsters while taking loot, and itemsTake/GatherAuto >= 2
 	  && timeOut($timeout{ai_homunculus_attack_auto})
-	  && (!$config{$slave->{slave_configPrefix}.'attackAuto_notInTown'} || !$cities_lut{$field{name}.'.rsw'})) {
+	  && (!$config{$slave->{configPrefix}.'attackAuto_notInTown'} || !$cities_lut{$field{name}.'.rsw'})) {
 
 		# If we're in tanking mode, only attack something if the person we're tanking for is on screen.
 		my $foundTankee;
-		if ($config{$slave->{slave_configPrefix}.'tankMode'}) {
-			if ($config{$slave->{slave_configPrefix}.'tankModeTarget'} eq $char->{name}) {
+		if ($config{$slave->{configPrefix}.'tankMode'}) {
+			if ($config{$slave->{configPrefix}.'tankModeTarget'} eq $char->{name}) {
 				$foundTankee = 1;
 			} else {
 				foreach (@playersID) {
 					next if (!$_);
-					if ($config{$slave->{slave_configPrefix}.'tankModeTarget'} eq $players{$_}{'name'}) {
+					if ($config{$slave->{configPrefix}.'tankModeTarget'} eq $players{$_}{'name'}) {
 						$foundTankee = 1;
 						last;
 					}
@@ -1071,7 +1071,7 @@ sub processAutoAttack {
 		my $attackTarget;
 		my $priorityAttack;
 
-		if (!$config{$slave->{slave_configPrefix}.'tankMode'} || $foundTankee) {
+		if (!$config{$slave->{configPrefix}.'tankMode'} || $foundTankee) {
 			# This variable controls how far monsters must be away from portals and players.
 			my $portalDist = $config{'attackMinPortalDistance'} || 4;
 			my $playerDist = $config{'attackMinPlayerDistance'};
@@ -1091,7 +1091,7 @@ sub processAutoAttack {
 			my @cleanMonsters;
 
 			# List aggressive monsters
-			@aggressives = ai_getPlayerAggressives($slave->{ID}) if ($config{$slave->{slave_configPrefix}.'attackAuto'} && $attackOnRoute);
+			@aggressives = ai_getPlayerAggressives($slave->{ID}) if ($config{$slave->{configPrefix}.'attackAuto'} && $attackOnRoute);
 
 			# There are two types of non-aggressive monsters. We generate two lists:
 			foreach (@monstersID) {
@@ -1110,8 +1110,8 @@ sub processAutoAttack {
 				my $pos = calcPosition($monster);
 
 				# List monsters that party members are attacking
-				if ($config{$slave->{slave_configPrefix}.'attackAuto_party'} && $attackOnRoute
-				 && ((($monster->{dmgFromYou} || $monster->{dmgFromParty}) && $config{$slave->{slave_configPrefix}.'attackAuto_party'} != 2) ||
+				if ($config{$slave->{configPrefix}.'attackAuto_party'} && $attackOnRoute
+				 && ((($monster->{dmgFromYou} || $monster->{dmgFromParty}) && $config{$slave->{configPrefix}.'attackAuto_party'} != 2) ||
 				     $monster->{dmgToYou} || $monster->{dmgToParty} || $monster->{missedYou} || $monster->{missedToParty})
 				 && timeOut($monster->{homunculus_attack_failed}, $timeout{ai_attack_unfail}{timeout})) {
 					push @partyMonsters, $_;
@@ -1129,14 +1129,14 @@ sub processAutoAttack {
 				next if (( $monster->{statuses} && scalar(keys %{$monster->{statuses}}) )
 					|| objectInsideSpell($monster)
 					|| objectIsMovingTowardsPlayer($monster));
-				if ($config{$slave->{slave_configPrefix}.'attackCanSnipe'}) {
+				if ($config{$slave->{configPrefix}.'attackCanSnipe'}) {
 					next if (!checkLineSnipable($slave->{pos_to}, $pos));
 				} else {
 					next if (!checkLineWalkable($slave->{pos_to}, $pos));
 				}
 
 				my $safe = 1;
-				if ($config{$slave->{slave_configPrefix}.'attackAuto_onlyWhenSafe'}) {
+				if ($config{$slave->{configPrefix}.'attackAuto_onlyWhenSafe'}) {
 					foreach (@playersID) {
 						next if ($_ eq $slave->{ID});
 						if ($_ && !$char->{party}{users}{$_}) {
@@ -1146,7 +1146,7 @@ sub processAutoAttack {
 					}
 				}
 
-				if ($config{$slave->{slave_configPrefix}.'attackAuto'} >= 2
+				if ($config{$slave->{configPrefix}.'attackAuto'} >= 2
 				 && $attackOnRoute >= 2 && !$monster->{dmgFromYou} && $safe
 				 && !positionNearPlayer($pos, $playerDist) && !positionNearPortal($pos, $portalDist)
 				 && timeOut($monster->{homunculus_attack_failed}, $timeout{ai_attack_unfail}{timeout})) {

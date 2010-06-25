@@ -70,7 +70,7 @@ sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new('You');
 	$self->{__inventory} = new InventoryList();
-	$self->{slave_configPrefix} = '';
+	$self->{configPrefix} = '';
 
 	return $self;
 }
