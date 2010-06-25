@@ -273,7 +273,7 @@ sub slave_setMapChanged {
 	}
 }
 
-sub slave_stopAttack {
+sub stopAttack {
 	my $slave = shift;
 	
 	#$messageSender->sendHomunculusStandBy($char->{homunculus}{ID});
@@ -281,7 +281,7 @@ sub slave_stopAttack {
 	$slave->sendMove ($pos->{x}, $pos->{y});
 }
 
-sub slave_attack {
+sub attack {
 	my ($slave, $ID) = @_;
 	#my $priorityAttack = shift;
 	my %args;
@@ -727,7 +727,7 @@ sub processAttack {
 		} elsif ($config{$slave->{slave_configPrefix}.'tankMode'}) {
 			if ($args->{'dmgTo_last'} != $target->{dmgFromPlayer}{$slave->{ID}}) {
 				$args->{'ai_attack_giveup'}{'time'} = time;
-				$slave->slave_stopAttack ();
+				$slave->stopAttack;
 			}
 			$args->{'dmgTo_last'} = $target->{dmgFromPlayer}{$slave->{ID}};
 		}
@@ -739,7 +739,7 @@ sub processAttack {
 		if ((my $target = $monsters{$ID}) && !checkMonsterCleanness($ID)) {
 			$target->{homunculus_attack_failed} = time;
 			message T("Dropping target - slave will not kill steal others\n"), 'homunculus_attack';
-			$slave->slave_stopAttack();
+			$slave->stopAttack;
 			$monsters{$ID}{homunculus_ignore} = 1;
 
 			# Right now, the queue is either
@@ -1274,7 +1274,7 @@ sub processAutoAttack {
 		# If an appropriate monster's found, attack it. If not, wait ai_attack_auto secs before searching again.
 		if ($attackTarget) {
 			$slave->slave_setSuspend(0);
-			$slave->slave_attack($attackTarget, $priorityAttack);
+			$slave->attack($attackTarget, $priorityAttack);
 		} else {
 			$timeout{'ai_homunculus_attack_auto'}{'time'} = time;
 		}
