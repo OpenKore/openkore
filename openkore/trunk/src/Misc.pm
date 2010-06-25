@@ -2655,33 +2655,33 @@ sub updateDamageTables {
 				my $teleport = 0;
 				if (mon_control($monster->{name},$monster->{nameID})->{teleport_auto} == 2 && $damage){
 					message TF("%s hit %s. Teleporting...\n",
-						$monster->nameString, $player->nameString), "teleport";
+						$monster, $player), "teleport";
 					$teleport = 1;
 
 				} elsif ($config{$player->{configPrefix}.'teleportAuto_deadly'} && $damage >= $player->{hp}
 				      && !$player->statusActive('EFST_ILLUSION')) {
 					message TF("%s can kill %s with the next %d dmg. Teleporting...\n",
-						$monster->nameString, $player->nameString, $damage), "teleport";
+						$monster, $player, $damage), "teleport";
 					$teleport = 1;
 
 				} elsif ($config{$player->{configPrefix}.'teleportAuto_maxDmg'} && $damage >= $config{$player->{configPrefix}.'teleportAuto_maxDmg'}
 				      && !$player->statusActive('EFST_ILLUSION')
 				      && !($config{$player->{configPrefix}.'teleportAuto_maxDmgInLock'} && $field{name} eq $config{lockMap})) {
 					message TF("%s hit %s for more than %d dmg. Teleporting...\n",
-						$monster->nameString, $player->nameString, $config{$player->{configPrefix}.'teleportAuto_maxDmg'}), "teleport";
+						$monster, $player, $config{$player->{configPrefix}.'teleportAuto_maxDmg'}), "teleport";
 					$teleport = 1;
 
 				} elsif ($config{$player->{configPrefix}.'teleportAuto_maxDmgInLock'} && $field{name} eq $config{lockMap}
 				      && $damage >= $config{$player->{configPrefix}.'teleportAuto_maxDmgInLock'}
 				      && !$player->statusActive('EFST_ILLUSION')) { 
 					message TF("%s hit %s for more than %d dmg in lockMap. Teleporting...\n",
-						$monster->nameString, $player->nameString, $config{$player->{configPrefix}.'teleportAuto_maxDmgInLock'}), "teleport";
+						$monster, $player, $config{$player->{configPrefix}.'teleportAuto_maxDmgInLock'}), "teleport";
 					$teleport = 1;
 
 				} elsif (AI::inQueue("sitAuto") && $config{$player->{configPrefix}.'teleportAuto_attackedWhenSitting'}
 							&& $damage) {
 					message TF("%s hit %s while you are sitting. Teleporting...\n",
-						$monster->nameString, $player->nameString), "teleport";
+						$monster, $player), "teleport";
 					$teleport = 1;
 
 				} elsif ($config{$player->{configPrefix}.'teleportAuto_totalDmg'}
@@ -2689,19 +2689,19 @@ sub updateDamageTables {
 				      && !$player->statusActive('EFST_ILLUSION')
 				      && !($config{$player->{configPrefix}.'teleportAuto_totalDmgInLock'} && $field{name} eq $config{lockMap})) {
 					message TF("%s hit %s for a total of more than %d dmg. Teleporting...\n",
-						$monster->nameString, $player->nameString, $config{$player->{configPrefix}.'teleportAuto_totalDmg'}), "teleport";
+						$monster, $player, $config{$player->{configPrefix}.'teleportAuto_totalDmg'}), "teleport";
 					$teleport = 1;
 
 				} elsif ($config{$player->{configPrefix}.'teleportAuto_totalDmgInLock'} && $field{name} eq $config{lockMap}
 				      && ($accountID eq $targetID ? $monster->{dmgToYou} : $monster->{dmgToPlayer}{$targetID}) >= $config{$player->{configPrefix}.'teleportAuto_totalDmgInLock'}
 				      && !$player->statusActive('EFST_ILLUSION')) {
 					message TF("%s hit %s for a total of more than %d dmg in lockMap. Teleporting...\n",
-						$monster->nameString, $player->nameString, $config{$player->{configPrefix}.'teleportAuto_totalDmgInLock'}), "teleport";
+						$monster, $player, $config{$player->{configPrefix}.'teleportAuto_totalDmgInLock'}), "teleport";
 					$teleport = 1;
 
 				} elsif ($config{$player->{configPrefix}.'teleportAuto_hp'} && $player->{hpPercent} <= $config{$player->{configPrefix}.'teleportAuto_hp'}) {
 					message TF("%s hit %s when %s HP is under %d. Teleporting...\n",
-						$monster->nameString, $player->nameString, $player->verb(T('your'), T('its')), $config{$player->{configPrefix}.'teleportAuto_hp'}), "teleport";
+						$monster, $player, $player->verb(T('your'), T('its')), $config{$player->{configPrefix}.'teleportAuto_hp'}), "teleport";
 					$teleport = 1;
 
 				} elsif (
@@ -2733,7 +2733,7 @@ sub updateDamageTables {
 						unless ($ignore) {
 							# Change target to closer aggressive monster
 							message TF("%s %s target to aggressive %s\n",
-								$player->nameString, $player->verb(T('change'), T('changes')), $monster->nameString);
+								$player, $player->verb(T('change'), T('changes')), $monster);
 							$player->stopAttack;
 							$player->dequeue;
 							$player->dequeue if $player->action eq 'route';
@@ -2746,7 +2746,7 @@ sub updateDamageTables {
 					&& ($monster->{dmgToYou} || $monster->{missedYou} || $monster->{dmgFromYou})) {
 
 					# Mob-training, stop attacking the monster if it has been attacking you
-					message TF("%s has been provoked, searching another monster\n", $monster->nameString);
+					message TF("%s has been provoked, searching another monster\n", $monster);
 					$player->stopAttack;
 					$player->dequeue;
 				}
