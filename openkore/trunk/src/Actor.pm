@@ -453,4 +453,41 @@ sub attack {
 	1;
 }
 
+sub processMove {
+	my ($self) = @_;
+	
+	if ($self->action eq "move") {
+		my $args = $self->args;
+		$args->{ai_move_giveup}{time} = time unless $args->{ai_move_giveup}{time};
+		my $move_retry = $self->isa('Actor::You') ? \$AI::Timeouts::move_retry : \$self->{slave_move_retry};
+
+		# Wait until we've stand up, if we're sitting
+		if ($self->{sitting}) {
+			$args->{ai_move_giveup}{time} = 0;
+			AI::stand;
+
+		# Stop if the map changed
+		} elsif ($args->{mapChanged}) {
+			debug "$self move - map change detected\n", "ai_move";
+			$self->dequeue;
+
+		# Stop if we've moved
+		} elsif ($args->{time_move} != $self->{time_move}) {
+			debug "$self move - moving\n", "ai_move";
+			$self->dequeue;
+
+		# Stop if we've timed out
+		} elsif (timeOut($args->{ai_move_giveup})) {
+			debug "$self move - timeout\n", "ai_move";
+			$self->dequeue;
+
+		} elsif (timeOut($$move_retry, 0.5)) {
+			# No update yet, send move request again.
+			# We do this every 0.5 secs
+			$$move_retry = time;
+			$self->sendMove(@{$args->{move_to}}{qw(x y)});
+		}
+	}
+}
+
 1;

@@ -87,7 +87,7 @@ sub iterate {
 		}
 	});
 	processTake();
-	processMove();
+	$char->processMove;
 	Benchmark::end("AI (part 1.3)") if DEBUG;
 
 	Benchmark::begin("AI (part 1.4)") if DEBUG;
@@ -814,40 +814,6 @@ sub processTake {
 			$messageSender->sendLook($direction, 0) if ($direction != $char->{look}{body});
 			$messageSender->sendTake($item->{ID});
 			$timeout{ai_take}{time} = time;
-		}
-	}
-}
-
-##### MOVE #####
-sub processMove {
-	if (AI::action eq "move") {
-		AI::args->{ai_move_giveup}{time} = time unless AI::args->{ai_move_giveup}{time};
-
-		# Wait until we've stand up, if we're sitting
-		if ($char->{sitting}) {
-			AI::args->{ai_move_giveup}{time} = 0;
-			stand();
-
-		# Stop if the map changed
-		} elsif (AI::args->{mapChanged}) {
-			debug "Move - map change detected\n", "ai_move";
-			AI::dequeue;
-
-		# Stop if we've moved
-		} elsif (AI::args->{time_move} != $char->{time_move}) {
-			debug "Move - moving\n", "ai_move";
-			AI::dequeue;
-
-		# Stop if we've timed out
-		} elsif (timeOut(AI::args->{ai_move_giveup})) {
-			debug "Move - timeout\n", "ai_move";
-			AI::dequeue;
-
-		} elsif (timeOut($AI::Timeouts::move_retry, 0.5)) {
-			# No update yet, send move request again.
-			# We do this every 0.5 secs
-			$AI::Timeouts::move_retry = time;
-			$messageSender->sendMove(AI::args->{move_to}{x}, AI::args->{move_to}{y});
 		}
 	}
 }
