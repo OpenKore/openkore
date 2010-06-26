@@ -149,22 +149,7 @@ sub is {
 ##########################################
 
 
-##
-# ai_clientSuspend(packet_switch, duration, args...)
-# initTimeout: a number of seconds.
-#
-# Freeze the AI for $duration seconds. $packet_switch and @args are only
-# used internally and are ignored unless XKore mode is turned on.
-sub ai_clientSuspend {
-	my ($type, $duration, @args) = @_;
-	my %args;
-	$args{type} = $type;
-	$args{time} = time;
-	$args{timeout} = $duration;
-	@{$args{args}} = @args;
-	AI::queue("clientSuspend", \%args);
-	debug "AI suspended by clientSuspend for $args{timeout} seconds\n";
-}
+sub ai_clientSuspend { $char->clientSuspend(@_) }
 
 ##
 # ai_drop(items, max)
@@ -535,13 +520,7 @@ sub ai_setMapChanged {
 	}
 }
 
-sub ai_setSuspend {
-	my $index = shift;
-	$index = 0 if ($index eq "");
-	if ($index < @ai_seq_args) {
-		$ai_seq_args[$index]{'suspended'} = time;
-	}
-}
+sub ai_setSuspend { $char->setSuspend(@_) }
 
 sub ai_skillUse {
 	return if ($char->{muted});

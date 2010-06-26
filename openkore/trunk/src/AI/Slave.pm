@@ -180,12 +180,12 @@ sub iterate {
 					$slave->sendStandBy;
 					$slave->{standby_time} = time;
 				}
-				message T("Found your Slave!\n"), 'homunculus';
+				message TF("Found %s!\n", $slave), 'homunculus';
 	
 			# attempt to find homunculus on it's last known coordinates
 			} elsif ($AI == 2 && !$slave->{lostRoute}) {
 				if ($config{teleportAuto_lostHomunculus}) {
-					message T("Teleporting to get slave back\n"), 'teleport';
+					message TF("Teleporting to get %s back\n", $slave), 'teleport';
 					useTeleport(1);
 				} else {
 					my $x = $slave->{pos_to}{x};
@@ -194,7 +194,7 @@ sub iterate {
 					$distFromGoal = MAX_DISTANCE if ($distFromGoal > MAX_DISTANCE);
 					main::ai_route($field{name}, $x, $y, distFromGoal => $distFromGoal, attackOnRoute => 1, noSitAuto => 1);
 					$slave->args->{lost_route} = 1 if $slave->action eq 'route';
-					message TF("Trying to find your slave at location %d, %d (you are currently at %d, %d)\n", $x, $y, $char->{pos_to}{x}, $char->{pos_to}{y}), 'homunculus';
+					message TF("Trying to find %s at location %d, %d (you are currently at %d, %d)\n", $slave, $x, $y, $char->{pos_to}{x}, $char->{pos_to}{y}), 'homunculus';
 				}
 				$slave->{lostRoute} = 1;
 			}
@@ -202,7 +202,7 @@ sub iterate {
 		# homunculus is lost
 		} elsif ($slave->{actorType} eq 'Homunculus' && $slave_dist >= MAX_DISTANCE && !$slave->{slave_lost}) {
 			$slave->{slave_lost} = 1;
-			message T("You lost your Homunculus!\n"), 'homunculus';
+			message TF("You lost %s!\n", $slave), 'homunculus';
 	 
 		# if your homunculus is idle, make it move near you
 		} elsif (
@@ -224,7 +224,7 @@ sub iterate {
 			&& $slave_dist > $config{$slave->{configPrefix}.'followDistanceMax'}
 		) {
 			main::ai_route($field{name}, $slave->{pos_to}{x}, $slave->{pos_to}{y}, distFromGoal => ($config{$slave->{configPrefix}.'followDistanceMin'} || 3), attackOnRoute => 1, noSitAuto => 1);
-			message TF("Your Slave moves too far (distance: %.2f) - Moving near your Slave\n", $slave->distance()), 'homunculus';
+			message TF("%s moves too far (distance: %.2f) - Moving near\n", $slave, $slave->distance), 'homunculus';
 	
 		# Main Homunculus AI
 		} else {
@@ -236,31 +236,6 @@ sub iterate {
 			return unless $slave->{slave_AI} == 2;
 			$slave->processAutoAttack;
 		}
-	}
-}
-
-##
-# ai_clientSuspend(packet_switch, duration, args...)
-# initTimeout: a number of seconds.
-#
-# Freeze the AI for $duration seconds. $packet_switch and @args are only
-# used internally and are ignored unless XKore mode is turned on.
-sub slave_clientSuspend {
-	my ($slave, $type, $duration, @args) = @_;
-	my %args;
-	$args{type} = $type;
-	$args{time} = time;
-	$args{timeout} = $duration;
-	@{$args{args}} = @args;
-	$slave->queue("clientSuspend", \%args);
-	debug "Slave AI suspended by clientSuspend for $args{timeout} seconds\n";
-}
-
-sub slave_setSuspend {
-	my ($slave, $index) = @_;
-	$index = 0 if ($index eq "");
-	if ($index < @{$slave->{slave_ai_seq_args}}) {
-		$slave->{slave_ai_seq_args}[$index]{'suspended'} = time;
 	}
 }
 
@@ -383,9 +358,9 @@ sub processAttack {
 		my $target = Actor::get($ID);
 		$target->{homunculus_attack_failed} = time if $monsters{$ID};
 		$slave->dequeue;
-		message T("Slave can't reach or damage target, dropping target\n"), 'homunculus_attack';
+		message TF("%s can't reach or damage target, dropping target\n", $slave), 'homunculus_attack';
 		if ($config{$slave->{configPrefix}.'teleportAuto_dropTarget'}) {
-			message T("Teleport due to dropping slave attack target\n"), 'teleport';
+			message TF("Teleport due to dropping %s attack target\n", $slave), 'teleport';
 			useTeleport(1);
 		}
 
@@ -396,7 +371,7 @@ sub processAttack {
 		$slave->dequeue;
 
 		if ($monsters_old{$ID} && $monsters_old{$ID}{dead}) {
-			message T("Slave target died\n"), 'homunculus_attack';
+			message TF("%s target died\n", $slave), 'homunculus_attack';
 			Plugins::callHook("homonulus_target_died");
 			monKilled();
 
@@ -407,7 +382,7 @@ sub processAttack {
 					$monsters_old{$ID}{pos_to}{x}, $monsters_old{$ID}{pos_to}{y});
 			} else {
 				# Cheap way to suspend all movement to make it look real
-				$slave->slave_clientSuspend(0, $timeout{'ai_attack_waitAfterKill'}{'timeout'});
+				$slave->clientSuspend(0, $timeout{'ai_attack_waitAfterKill'}{'timeout'});
 			}
 
 			## kokal start
@@ -432,7 +407,7 @@ sub processAttack {
 			## kokal end
 
 		} else {
-			message T("Slave target lost\n"), 'homunculus_attack';
+			message TF("%s target lost\n", $slave), 'homunculus_attack';
 		}
 
 	} elsif ($slave->action eq "attack") {
@@ -505,11 +480,11 @@ sub processAttack {
 		if (!$cleanMonster) {
 			# Drop target if it's already attacked by someone else
 			$target->{homunculus_attack_failed} = time if $monsters{$ID};
-			message T("Dropping target - slave will not kill steal others\n"), 'homunculus_attack';
+			message TF("Dropping target - %s will not kill steal others\n", $slave), 'homunculus_attack';
 			$slave->sendMove ($realMyPos->{x}, $realMyPos->{y});
 			$slave->dequeue;
 			if ($config{$slave->{configPrefix}.'teleportAuto_dropTargetKS'}) {
-				message T("Teleport due to dropping slave attack target\n"), 'teleport';
+				message TF("Teleport due to dropping %s attack target\n", $slave), 'teleport';
 				useTeleport(1);
 			}
 
@@ -544,12 +519,12 @@ sub processAttack {
 			}
 
 			# Move to the closest spot
-			my $msg = "Slave has no LOS from ($realMyPos->{x}, $realMyPos->{y}) to target ($realMonsterPos->{x}, $realMonsterPos->{y})";
+			my $msg = TF("%s has no LOS from (%d, %d) to target (%d, %d)", $slave, $realMyPos->{x}, $realMyPos->{y}, $realMonsterPos->{x}, $realMonsterPos->{y});
 			if ($best_spot) {
 				message TF("%s; moving to (%s, %s)\n", $msg, $best_spot->{x}, $best_spot->{y}), 'homunculus_attack';
 				$slave->slave_route($best_spot->{x}, $best_spot->{y});
 			} else {
-				warning TF("%s; no acceptable place for slave to stand\n", $msg);
+				warning TF("%s; no acceptable place to stand\n", $msg);
 				$slave->dequeue;
 			}
 
@@ -642,9 +617,9 @@ sub processAttack {
 				# Unable to calculate a route to target
 				$target->{homunculus_attack_failed} = time;
 				$slave->dequeue;
- 				message T("Unable to calculate a route to slave target, dropping target\n"), 'homunculus_attack';
+ 				message TF("Unable to calculate a route to %s target, dropping target\n", $slave), 'homunculus_attack';
 				if ($config{$slave->{configPrefix}.'teleportAuto_dropTarget'}) {
-					message T("Teleport due to dropping slave attack target\n"), 'teleport';
+					message TF("Teleport due to dropping %s attack target\n", $slave), 'teleport';
 					useTeleport(1);
 				}
 			}
@@ -691,7 +666,7 @@ sub processAttack {
 		my $ID = $slave->args->{attackID};
 		if ((my $target = $monsters{$ID}) && !checkMonsterCleanness($ID)) {
 			$target->{homunculus_attack_failed} = time;
-			message T("Dropping target - slave will not kill steal others\n"), 'homunculus_attack';
+			message TF("Dropping target - %s will not kill steal others\n", $slave), 'homunculus_attack';
 			$slave->stopAttack;
 			$monsters{$ID}{homunculus_ignore} = 1;
 
@@ -703,7 +678,7 @@ sub processAttack {
 			$slave->dequeue;
 			$slave->dequeue if ($slave->action eq "attack");
 			if ($config{$slave->{configPrefix}.'teleportAuto_dropTargetKS'}) {
-				message T("Teleport due to dropping slave attack target\n"), 'teleport';
+				message TF("Teleport due to dropping %s attack target\n", $slave), 'teleport';
 				useTeleport(1);
 			}
 		}
@@ -785,7 +760,7 @@ sub processRouteAI {
 			unless (@{$args->{solution}}) {
 				# No more points to cover; we've arrived at the destination
 				if ($args->{notifyUponArrival}) {
- 					message T("Slave destination reached.\n"), "success";
+ 					message TF("%s destination reached.\n", $slave), "success";
 				} else {
 					debug "Slave destination reached.\n", "route";
 				}
@@ -877,7 +852,7 @@ sub processRouteAI {
 				} else {
 					# No more points to cover
 					if ($args->{notifyUponArrival}) {
- 						message T("Slave destination reached.\n"), "success";
+ 						message TF("%s destination reached.\n", $slave), "success";
 					} else {
 						debug "Slave destination reached.\n", "route";
 					}
@@ -1193,7 +1168,7 @@ sub processAutoAttack {
 		}
 		# If an appropriate monster's found, attack it. If not, wait ai_attack_auto secs before searching again.
 		if ($attackTarget) {
-			$slave->slave_setSuspend(0);
+			$slave->setSuspend(0);
 			$slave->attack($attackTarget, $priorityAttack);
 		} else {
 			$timeout{'ai_homunculus_attack_auto'}{'time'} = time;

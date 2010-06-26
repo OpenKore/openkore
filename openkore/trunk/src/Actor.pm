@@ -223,7 +223,9 @@ sub nameString {
 
 	return $self->selfString if $self->{ID} eq $otherActor->{ID};
 
-	my $nameString = "$self->{actorType} " . $self->name;
+	my $nameString = "";
+	$nameString .= T('Your ') if $char && exists $char->{slaves}{$self->{ID}};
+	$nameString .= "$self->{actorType} " . $self->name;
 	$nameString .= " ($self->{binID})" if defined $self->{binID};
 	return $nameString;
 }
@@ -431,6 +433,36 @@ sub cartActive {
 	my ($self) = @_;
 	
 	$self->statusActive('EFFECTSTATE_PUSHCART, EFFECTSTATE_PUSHCART2, EFFECTSTATE_PUSHCART3, EFFECTSTATE_PUSHCART4, EFFECTSTATE_PUSHCART5')
+}
+
+##
+# ai_clientSuspend(packet_switch, duration, args...)
+# initTimeout: a number of seconds.
+#
+# Freeze the AI for $duration seconds. $packet_switch and @args are only
+# used internally and are ignored unless XKore mode is turned on.
+sub clientSuspend {
+	my ($self, $type, $duration, @args) = @_;
+	
+	my %args = (
+		type => $type,
+		time => time,
+		timeout => $duration,
+		args => [@args],
+	);
+	
+	debug "$self AI suspended by clientSuspend for $args{timeout} seconds\n";
+	$self->queue("clientSuspend", \%args);
+}
+
+sub setSuspend {
+	my ($self, $index) = @_;
+	$index = 0 if $index eq '';
+	if ($index < $self->isa('Actor::You') ? @AI::ai_seq_args : @{$self->{slave_ai_seq_args}}) {
+		(
+			$self->isa('Actor::You') ? $AI::ai_seq_args[$index] : $self->{slave_ai_seq_args}->[$index]
+		)->{suspended} = time;
+	}
 }
 
 sub attack {
