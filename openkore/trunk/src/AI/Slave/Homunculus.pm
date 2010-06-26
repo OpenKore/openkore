@@ -44,7 +44,7 @@ sub iterate {
 			&& (existsInList($config{homunculus_autoFeedAllowedMaps}, $field{'name'}) || !$config{homunculus_autoFeedAllowedMaps})) {
 			
 			$slave->processFeeding();
-			message TF("Auto-feeding your Homunculus (%d hunger).\n", $slave->{hunger}), 'slave';
+			message TF("Auto-feeding %s (%d hunger).\n", $slave, $slave->{hunger}), 'slave';
 			$messageSender->sendHomunculusCommand(1);
 			message TF("Next feeding at: %d hunger.\n", $slave->{hungerThreshold}), 'slave';
 		
