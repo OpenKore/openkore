@@ -689,28 +689,7 @@ sub gather {
 	debug "Targeting for Gather: $items{$ID}{name} ($items{$ID}{binID})\n";
 }
 
-sub move {
-	my $x = shift;
-	my $y = shift;
-	my $attackID = shift;
-	my %args;
-	my $dist;
-	$args{move_to}{x} = $x;
-	$args{move_to}{y} = $y;
-	$args{attackID} = $attackID;
-	$args{time_move} = $char->{time_move};
-	$dist = distance($char->{pos}, $args{move_to});
-	$args{ai_move_giveup}{timeout} = $timeout{ai_move_giveup}{timeout};
-
-	if ($x == 0 && $y == 0) {
-		# die "BUG: move(0, 0) called!\n";
-		error "BUG: move(0, 0) called!\n";
-		return;
-	}
-	debug sprintf("Sending move from (%d,%d) to (%d,%d) - distance %.2f\n",
-		$char->{pos}{x}, $char->{pos}{y}, $x, $y, $dist), "ai_move";
-	AI::queue("move", \%args);
-}
+sub move { $char->move(@_) }
 
 sub sit {
 	require Task::SitStand;
