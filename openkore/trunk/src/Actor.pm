@@ -453,6 +453,26 @@ sub attack {
 	1;
 }
 
+sub move {
+	my ($self, $x, $y, $attackID) = @_;
+	
+	unless ($x || $y) {
+		error "BUG: Actor::move(0, 0) called!\n";
+		return;
+	}
+	
+	my %args = (
+		move_to => { x => $x, y => $y },
+		attackID => $attackID,
+		time_move => $self->{time_move},
+		ai_move_giveup => { timeout => $timeout{ai_move_giveup}{timeout} },
+	);
+	
+	debug sprintf("%s sending move from (%d,%d) to (%d,%d) - distance %.2f\n",
+		$self, @{$self->{pos}}{qw(x y)}, $x, $y, Utils::distance($self->{pos}, $args{move_to})), "ai_move";
+	$self->queue("move", \%args);
+}
+
 sub processMove {
 	my ($self) = @_;
 	

@@ -280,30 +280,6 @@ sub stopAttack {
 	$slave->sendMove ($pos->{x}, $pos->{y});
 }
 
-sub slave_move {
-	my $slave = shift;
-	my $x = shift;
-	my $y = shift;
-	my $attackID = shift;
-	my %args;
-	my $dist;
-	$args{move_to}{x} = $x;
-	$args{move_to}{y} = $y;
-	$args{attackID} = $attackID;
-	$args{time_move} = $slave->{time_move};
-	$dist = distance($slave->{pos}, $args{move_to});
-	$args{ai_move_giveup}{timeout} = $timeout{ai_move_giveup}{timeout};
-
-	if ($x == 0 && $y == 0) {
-		error "BUG: move(0, 0) called!\n";
-		return;
-	}
-	
-	debug sprintf("Sending slave move from (%d,%d) to (%d,%d) - distance %.2f\n",
-		$slave->{pos}{x}, $slave->{pos}{y}, $x, $y, $dist), "ai_move";
-	$slave->queue("move", \%args);
-}
-
 sub slave_route {
 	my $slave = shift;
 	my $map = $field{name};
@@ -632,7 +608,7 @@ sub processAttack {
 			#message "Time spent: " . (time - $begin) . "\n";
 			#debug_showSpots('runFromTarget', \@blocks, $bestBlock);
 			$slave->args->{avoiding} = 1;
-			$slave->slave_move($bestBlock->{x}, $bestBlock->{y}, $ID);
+			$slave->move($bestBlock->{x}, $bestBlock->{y}, $ID);
 
 		} elsif (!$config{$slave->{configPrefix}.'runFromTarget'} && $monsterDist > $args->{attackMethod}{maxDistance}
 		  && timeOut($args->{ai_attack_giveup}, 0.5)) {
@@ -690,7 +666,7 @@ sub processAttack {
 				# Our recorded position might be out of sync, so try to unstuck
 				$args->{unstuck}{time} = time;
 				debug("Slave attack - trying to unstuck\n", "ai_attack");
-				$slave->slave_move($myPos->{x}, $myPos->{y});
+				$slave->move($myPos->{x}, $myPos->{y});
 				$args->{unstuck}{count}++;
 			}
 
@@ -832,7 +808,7 @@ sub processRouteAI {
 						$args->{new_x} = $args->{solution}[$args->{index}]{x};
 						$args->{new_y} = $args->{solution}[$args->{index}]{y};
 						$args->{time_step} = time;
-						$slave->slave_move($args->{new_x}, $args->{new_y}, $args->{attackID});
+						$slave->move($args->{new_x}, $args->{new_y}, $args->{attackID});
 					}
 				} elsif (!$wasZero) {
 					# We're stuck
@@ -896,7 +872,7 @@ sub processRouteAI {
 						$args->{old_y} = $cur_y;
 						$args->{time_step} = time if ($cur_x != $args->{old_x} || $cur_y != $args->{old_y});
 						debug "Slave route - next step moving to ($args->{new_x}, $args->{new_y}), index $args->{index}, $stepsleft steps left\n", "route";
-						$slave->slave_move($args->{new_x}, $args->{new_y}, $args->{attackID});
+						$slave->move($args->{new_x}, $args->{new_y}, $args->{attackID});
 					}
 				} else {
 					# No more points to cover
