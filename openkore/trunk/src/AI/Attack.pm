@@ -109,7 +109,7 @@ sub process {
 		# Check for kill steal while moving
 		if ($monster && !Misc::checkMonsterCleanness($ID)) {
 			message T("Dropping target - you will not kill steal others\n");
-			stopAttack();
+			$char->stopAttack;
 			$monster->{ignore} = 1;
 
 			# Right now, the queue is either
@@ -131,7 +131,7 @@ sub process {
 				&& ($monster->{dmgToYou} || $monster->{missedYou} || $monster->{dmgFromYou})) {
 
 				message TF("Dropping target - %s (%s) has been provoked\n", $monster->{name}, $monster->{binID});
-				stopAttack();
+				$char->stopAttack;
 				$monster->{ignore} = 1;
 				# Right now, the queue is either
 				#   move, route, attack
@@ -226,7 +226,7 @@ sub finishAttacking {
 sub dropTargetWhileMoving {
 	my $ID = AI::args->{attackID};
 	message T("Dropping target - you will not kill steal others\n");
-	stopAttack();
+	$char->stopAttack;
 	$monsters{$ID}{ignore} = 1;
 
 	# Right now, the queue is either

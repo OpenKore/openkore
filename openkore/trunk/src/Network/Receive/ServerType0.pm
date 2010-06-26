@@ -5463,7 +5463,7 @@ sub skill_cast {
 	if ($AI == 2 && $control->{skillcancel_auto}) {
 		if ($targetID eq $accountID || $dist > 0 || (AI::action eq "attack" && AI::args->{ID} ne $sourceID)) {
 			message TF("Monster Skill - switch Target to : %s (%d)\n", $monster->name, $monster->{binID});
-			stopAttack();
+			$char->stopAttack;
 			AI::dequeue;
 			attack($sourceID);
 		}

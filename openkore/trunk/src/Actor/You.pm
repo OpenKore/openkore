@@ -186,8 +186,173 @@ sub master {
 
 sub action { shift; goto &AI::action }
 sub args { shift; goto &AI::args }
+sub queue { shift; goto &AI::queue }
 sub dequeue { shift; goto &AI::dequeue }
-sub attack { shift; goto &AI::attack }
-sub stopAttack { shift; goto &Misc::stopAttack }
+
+sub attack {
+	my ($self, $targetID) = @_;
+	
+	return unless $self->SUPER::attack($targetID);
+	
+	my $target = Actor::get($targetID);
+	
+	$startedattack = 1;
+
+	Plugins::callHook('attack_start', {ID => $targetID});
+
+	#Mod Start
+	AUTOEQUIP: {
+		last AUTOEQUIP if (UNIVERSAL::isa($target, 'Actor::Player'));
+
+
+		my $i = 0;
+		my $Lequip = 0;
+		my $Runeq =0;
+		my (%eq_list,$Req,$Leq,$arrow,$j);
+		while (exists $config{"autoSwitch_$i"}) {
+			if (!$config{"autoSwitch_$i"}) {
+				$i++;
+				next;
+			}
+
+			if (existsInList($config{"autoSwitch_$i"}, $monsters{$targetID}{'name'})) {
+				message TF("Encounter Monster : %s\n", $monsters{$targetID}{'name'});
+				if ($config{"autoSwitch_$i"."_rightHand"}) {
+
+					if ($config{"autoSwitch_$i"."_rightHand"} eq "[NONE]" && $char->{equipment}{'rightHand'}) {
+						$Runeq = 1;
+						message TF("Auto UnEquiping [R]: %s\n", $config{"autoSwitch_$i"."_rightHand"}), "equip";
+						$char->{equipment}{'rightHand'}->unequip();
+					}
+					$Req = $char->inventory->getByName($config{"autoSwitch_${i}_rightHand"});
+					if ($Req && !$Req->{equipped}){
+						message TF("Auto Equiping [R]: %s\n", $config{"autoSwitch_$i"."_rightHand"}), "equip";
+						%eq_list = (rightHand => $Req->{invIndex});
+					}
+
+				}
+
+				if ($config{"autoSwitch_${i}_leftHand"}) {
+					if ($config{"autoSwitch_${i}_leftHand"} eq "[NONE]" && $char->{equipment}{leftHand}) {
+						if (!($Runeq && $char->{equipment}{rightHand} == $char->{equipment}{leftHand})) {
+							message TF("Auto UnEquiping [L]: %s\n", $config{"autoSwitch_${i}_rightHand"}), "equip";
+							$char->{equipment}{leftHand}->unequip();
+						}
+					}
+					$Leq = $char->inventory->getByName($config{"autoSwitch_${i}_leftHand"});
+					if ($Leq && !$Leq->{equipped}) {
+						if ($Req == $Leq) {
+							undef $Leq;
+							foreach my $item (@{$char->inventory->getItems()}) {
+								if ($item->{name} eq $config{"autoSwitch_${i}_leftHand"} && $item != $Req) {
+									$Leq = $item;
+									last;
+								}
+							}
+						}
+
+						if ($Leq) {
+							message TF("Auto Equiping [L]: %s (%s)\n", $config{"autoSwitch_$i"."_leftHand"}, $Leq), "equip";
+							$eq_list{leftHand} = $Leq->{invIndex};
+						}
+					}
+				}
+				if (%eq_list) {
+					Actor::Item::bulkEquip(\%eq_list);
+				}
+
+				$arrow = $char->inventory->getByName($config{"autoSwitch_${i}_arrow"}) if ($config{"autoSwitch_${i}_arrow"});
+				if ($arrow && !$arrow->{equipped}) {
+					message TF("Auto Equiping [A]: %s\n", $config{"autoSwitch_$i"."_arrow"}), "equip";
+					$arrow->equip();
+				}
+				if ($config{"autoSwitch_$i"."_distance"} && $config{"autoSwitch_$i"."_distance"} != $config{'attackDistance'}) {
+					$ai_v{'attackDistance'} = $config{'attackDistance'};
+					$config{'attackDistance'} = $config{"autoSwitch_$i"."_distance"};
+					message TF("Change Attack Distance to : %s\n", $config{'attackDistance'}), "equip";
+				}
+				if ($config{"autoSwitch_$i"."_useWeapon"} ne "") {
+					$ai_v{'attackUseWeapon'} = $config{'attackUseWeapon'};
+					$config{'attackUseWeapon'} = $config{"autoSwitch_$i"."_useWeapon"};
+					message TF("Change Attack useWeapon to : %s\n", $config{'attackUseWeapon'}), "equip";
+				}
+				last AUTOEQUIP;
+			}
+			$i++;
+		}
+
+
+		undef $Leq;
+		undef $Req;
+
+		if ($config{"autoSwitch_default_rightHand"}) {
+
+			if ($config{"autoSwitch_default_rightHand"} eq "[NONE]" && $char->{equipment}{'rightHand'}) {
+				$Runeq = 1;
+				message TF("Auto UnEquiping [R]: %s\n", $config{"autoSwitch_default_rightHand"}), "equip";
+				$char->{equipment}{'rightHand'}->unequip();
+			}
+			$Req = $char->inventory->getByName($config{"autoSwitch_default_rightHand"});
+			if ($Req && !$Req->{equipped}){
+				message TF("Auto Equiping [R]: %s\n", $config{"autoSwitch_default_rightHand"}), "equip";
+				%eq_list = (rightHand => $Req->{invIndex});
+			}
+
+		}
+
+		if ($config{"autoSwitch_default_leftHand"}) {
+			if ($config{"autoSwitch_default_leftHand"} eq "[NONE]" && $char->{equipment}{'leftHand'}) {
+				if (!($Runeq && $char->{equipment}{'rightHand'} == $char->{equipment}{'leftHand'})) {
+					message TF("Auto UnEquiping [L]: %s\n", $config{"autoSwitch_default_leftHand"}), "equip";
+					$char->{equipment}{'leftHand'}->unequip();
+				}
+			}
+			$Leq = $char->inventory->getByName($config{"autoSwitch_default_leftHand"});
+
+			if ($Leq && !$Leq->{equipped}) {
+				if ($Req == $Leq) {
+					undef $Leq;
+					foreach my $item (@{$char->inventory->getItems()}) {
+						if ($item->{name} eq $config{"autoSwitch_default_leftHand"} && $item != $Req) {
+							$Leq = $item;
+							last;
+						}
+					}
+				}
+
+				if ($Leq) {
+					message TF("Auto Equiping [L]: %s\n", $config{"autoSwitch_default_leftHand"}), "equip";
+					$eq_list{leftHand} = $Leq->{invIndex};
+				}
+			}
+		}
+		if (%eq_list) {
+			Actor::Item::bulkEquip(\%eq_list);
+		}
+
+
+		if ($config{'autoSwitch_default_arrow'}) {
+			$arrow = $char->inventory->getByName($config{"autoSwitch_default_arrow"});
+			if ($arrow && !$arrow->{equipped}) {
+				message TF("Auto equiping default [A]: %s\n", $config{'autoSwitch_default_arrow'}), "equip";
+				$arrow->equip();
+			}
+		}
+		if ($ai_v{'attackDistance'} && $config{'attackDistance'} != $ai_v{'attackDistance'}) {
+			$config{'attackDistance'} = $ai_v{'attackDistance'};
+			message TF("Change Attack Distance to Default : %s\n", $config{'attackDistance'}), "equip";
+		}
+		if ($ai_v{'attackUseWeapon'} ne "" && $config{'attackUseWeapon'} != $ai_v{'attackUseWeapon'}) {
+			$config{'attackUseWeapon'} = $ai_v{'attackUseWeapon'};
+			message TF("Change Attack useWeapon to default : %s\n", $config{'attackUseWeapon'}), "equip";
+		}
+	} #END OF BLOCK AUTOEQUIP
+}
+
+sub stopAttack {
+	my ($self) = @_;
+	
+	$messageSender->sendMove(@{Utils::calcPosition($self)}{qw(x y)});
+}
 
 1;
