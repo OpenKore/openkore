@@ -255,7 +255,7 @@ sub parseServerType {
 # Return the usage text that should be displayed.
 sub getUsageText {
 	my $text = qq{
-		Usage: openkore.exe [options...]
+		Usage: openkore.pl [options...]
 
 		General path options:
 		--control=PATHS           Specify folders in which to look for control files.
