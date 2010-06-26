@@ -916,39 +916,6 @@ sub processRouteAI {
 	}
 }
 
-##### MOVE #####
-sub processMove {
-	my $slave = shift;
-	
-	if ($slave->action eq "move") {
-		my $args = $slave->args;
-		$args->{ai_move_giveup}{time} = time unless $args->{ai_move_giveup}{time};
-
-		# Stop if the map changed
-		if ($args->{mapChanged}) {
-			debug "Slave move - map change detected\n", "ai_move";
-			$slave->dequeue;
-
-		# Stop if we've moved
-		} elsif ($args->{time_move} != $slave->{time_move}) {
-			debug "Slave move - moving\n", "ai_move";
-			$slave->dequeue;
-
-		# Stop if we've timed out
-		} elsif (timeOut($args->{ai_move_giveup})) {
-			debug "Slave move - timeout\n", "ai_move";
-			$slave->dequeue;
-
-		#} elsif (timeOut($slave->{slave_move_retry}, 0.5)) {
-		} elsif ($slave->{slave_move_retry} + 0.5 <= time) {
-			# No update yet, send move request again.
-			# We do this every 0.5 secs
-			$slave->{slave_move_retry} = time;
-			$slave->sendMove ($args->{move_to}{x}, $args->{move_to}{y});
-		}
-	}
-}
-
 sub processClientSuspend {
 	my $slave = shift;
 	##### CLIENT SUSPEND #####
