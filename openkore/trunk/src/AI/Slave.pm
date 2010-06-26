@@ -4,7 +4,6 @@ use strict;
 use base qw/Actor::Slave/;
 use Globals;
 use Log qw/message warning error debug/;
-use AI;
 use Utils;
 use Misc;
 use Translation;
@@ -279,28 +278,6 @@ sub stopAttack {
 	#$messageSender->sendHomunculusStandBy($char->{homunculus}{ID});
 	my $pos = calcPosition($slave);
 	$slave->sendMove ($pos->{x}, $pos->{y});
-}
-
-sub attack {
-	my ($slave, $ID) = @_;
-	#my $priorityAttack = shift;
-	my %args;
-
-	my $target = Actor::get($ID);
-
-	$args{'ai_attack_giveup'}{'time'} = time;
-	$args{'ai_attack_giveup'}{'timeout'} = $timeout{'ai_attack_giveup'}{'timeout'};
-	$args{'ID'} = $ID;
-	$args{'unstuck'}{'timeout'} = ($timeout{'ai_attack_unstuck'}{'timeout'} || 1.5);
-	%{$args{'pos_to'}} = %{$target->{'pos_to'}};
-	%{$args{'pos'}} = %{$target->{'pos'}};
-	$slave->queue("attack", \%args);
-
-	#if ($priorityAttack) {
-	#	message TF("Priority Attacking: %s\n", $target);
-	#} else {
-		message TF("Slave attacking: %s\n", $target), 'homunculus_attack';
-	#}
 }
 
 sub slave_move {
@@ -1091,7 +1068,7 @@ sub processAutoAttack {
 			my @cleanMonsters;
 
 			# List aggressive monsters
-			@aggressives = ai_getPlayerAggressives($slave->{ID}) if ($config{$slave->{configPrefix}.'attackAuto'} && $attackOnRoute);
+			@aggressives = AI::ai_getPlayerAggressives($slave->{ID}) if ($config{$slave->{configPrefix}.'attackAuto'} && $attackOnRoute);
 
 			# There are two types of non-aggressive monsters. We generate two lists:
 			foreach (@monstersID) {

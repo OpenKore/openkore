@@ -148,7 +148,6 @@ our @EXPORT = (
 	setPartySkillTimer
 	setStatus
 	countCastOn
-	stopAttack
 	stripLanguageCode
 	switchConfigFile
 	updateDamageTables
@@ -2414,11 +2413,6 @@ sub countCastOn {
 	}
 }
 
-sub stopAttack {
-	my $pos = calcPosition($char);
-	$messageSender->sendMove($pos->{x}, $pos->{y});
-}
-
 ##
 # boolean stripLanguageCode(String* msg)
 # msg: a chat message, as sent by the RO server.
@@ -2498,8 +2492,8 @@ sub updateDamageTables {
 			if (AI::action eq "attack" && mon_control($monster->{name},$monster->{nameID})->{attack_auto} == 3 && $damage) {
 				# Mob-training, you only need to attack the monster once to provoke it
 				message TF("%s (%s) has been provoked, searching another monster\n", $monster->{name}, $monster->{binID});
-				stopAttack();
-				AI::dequeue();
+				$char->stopAttack;
+				$char->dequeue;
 			}
 
 

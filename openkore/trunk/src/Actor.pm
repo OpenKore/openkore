@@ -433,4 +433,24 @@ sub cartActive {
 	$self->statusActive('EFFECTSTATE_PUSHCART, EFFECTSTATE_PUSHCART2, EFFECTSTATE_PUSHCART3, EFFECTSTATE_PUSHCART4, EFFECTSTATE_PUSHCART5')
 }
 
+sub attack {
+	my ($self, $targetID) = @_;
+	
+	my $target = Actor::get($targetID);
+	return unless $target->{pos} && $target->{pos_to};
+	
+	my %args = (
+		ai_attack_giveup => { time => time, timeout => $timeout{ai_attack_giveup}{timeout} },
+		ID => $targetID,
+		unstuck => { timeout => $timeout{ai_attack_unstuck}{timeout} || 1.5 },
+		pos => { %{$target->{pos}} },
+		pos_to => { %{$target->{pos_to}} },
+	);
+	
+	$self->queue('attack', \%args);
+	
+	message TF("%s %s now attacking %s\n", $self, $self->verb('are', 'is'), $target);
+	1;
+}
+
 1;
