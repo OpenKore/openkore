@@ -1,5 +1,5 @@
 # Please Read the Users Manual
-# The Manual is located at http://openkore.sourceforge.net/manual/
+# The Manual is located at http://wiki.openkore.com/index.php?title=Manual
 
 ######## Login options and server-specific options ########
 
@@ -9,11 +9,10 @@ username
 password
 loginPinCode
 char
-sex
 
 bindIp
 # For an overview of all servertypes please go to the following URL:
-# http://www.openkore.com/wiki/index.php/ServerType#English
+# http://wiki.openkore.com/index.php?title=ServerType
 serverType 0
 
 # 1 = hook into RO client, 2 = Act as stand-alone proxy, proxy = act as true proxy
@@ -84,6 +83,7 @@ attackEquip_armor
 attackEquip_shoes
 attackEquip_arrow
 
+#You need the breakTime plugin: http://wiki.openkore.com/index.php?title=BreakTime
 autoBreakTime {
 	startTime
 	stopTime
@@ -597,6 +597,7 @@ useSelf_item {
 
 buyAuto {
 	npc
+	npc_steps
 	standpoint
 	distance 5
 	price
@@ -606,6 +607,7 @@ buyAuto {
 
 sellAuto 0
 sellAuto_npc
+sellAuto_npc_steps
 sellAuto_standpoint
 sellAuto_distance 5
 
