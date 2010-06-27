@@ -196,7 +196,11 @@ sub parseCommandsDescription {
 
 		} elsif ($line =~ /^(.*?)\t+(.*)$/) {
 			push @{$r_hash->{$key}}, [$1, $2];
+		
+		} elsif ($line !~ /\t/) {	#if a console command is without any params
+			push @{$r_hash->{$key}}, ["", $line];
 		}
+		
 	}
 	return 1;
 }
