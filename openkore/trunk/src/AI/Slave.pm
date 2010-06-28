@@ -378,7 +378,7 @@ sub processAttack {
 			# Pickup loot when monster's dead
 			if ($AI == 2 && $config{itemsTakeAuto} && $monsters_old{$ID}{dmgFromPlayer}{$slave->{ID}} > 0 && !$monsters_old{$ID}{homunculus_ignore}) {
 				AI::clear("items_take");
-				ai_items_take($monsters_old{$ID}{pos}{x}, $monsters_old{$ID}{pos}{y},
+				AI::ai_items_take($monsters_old{$ID}{pos}{x}, $monsters_old{$ID}{pos}{y},
 					$monsters_old{$ID}{pos_to}{x}, $monsters_old{$ID}{pos_to}{y});
 			} else {
 				# Cheap way to suspend all movement to make it look real
@@ -464,7 +464,7 @@ sub processAttack {
 				my $minCastTime = $config{"${prefix}_minCastTime"};
 				debug "Slave attackSkillSlot on $target->{name} ($target->{binID}): ".$skill->getName()." (lvl $lvl)\n", "monsterSkill";
 				my $skillTarget = $config{"${prefix}_isSelfSkill"} ? $slave : $target;
-				ai_skillUse2($skill, $lvl, $maxCastTime, $minCastTime, $skillTarget, $prefix);
+				AI::ai_skillUse2($skill, $lvl, $maxCastTime, $minCastTime, $skillTarget, $prefix);
 				$ai_v{$prefix . "_time"}{$ID} = time;
 				last;
 			}
